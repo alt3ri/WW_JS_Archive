@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleBreach = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const DicIntInt_1 = require("./SubType/DicIntInt");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  DicIntInt_1 = require("./SubType/DicIntInt");
 class RoleBreach {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -42,26 +42,26 @@ class RoleBreach {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   breachgroupid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   breachlevel() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   maxlevel() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetBreachconsumeAt(t, e) {
     return this.breachconsume(t);
   }
   breachconsume(t, e) {
-    const r = this.J7.__offset(this.z7, 12);
+    var r = this.J7.__offset(this.z7, 12);
     return r
       ? (e || new DicIntInt_1.DicIntInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -70,17 +70,17 @@ class RoleBreach {
       : null;
   }
   breachconsumeLength() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   breachreward() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   conditionid() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.RoleBreach = RoleBreach;
-// # sourceMappingURL=RoleBreach.js.map
+//# sourceMappingURL=RoleBreach.js.map

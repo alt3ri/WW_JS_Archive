@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MarkIconOption = void 0);
-const UE = require("ue");
-const GlobalData_1 = require("../../../../GlobalData");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
 class MarkIconOption extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(), (this.Config = void 0), (this.Dko = void 0);
@@ -29,7 +29,7 @@ class MarkIconOption extends UiPanelBase_1.UiPanelBase {
       (this.GetExtendToggle(1).bLockStateOnSelect = !0);
   }
   SetOnclick(t) {
-    const e = this.GetExtendToggle(1);
+    var e = this.GetExtendToggle(1);
     e.OnStateChange.Clear(), e.OnStateChange.Add(t);
   }
   SetToggleChecked() {
@@ -40,4 +40,4 @@ class MarkIconOption extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.MarkIconOption = MarkIconOption;
-// # sourceMappingURL=MarkIconOption.js.map
+//# sourceMappingURL=MarkIconOption.js.map

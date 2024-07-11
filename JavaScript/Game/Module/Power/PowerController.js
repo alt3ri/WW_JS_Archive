@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PowerController = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const ShopController_1 = require("../Shop/ShopController");
-const PowerDefines_1 = require("./PowerDefines");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  ShopController_1 = require("../Shop/ShopController"),
+  PowerDefines_1 = require("./PowerDefines");
 class PowerController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
     Net_1.Net.Register(3944, (e) => {
@@ -107,7 +107,7 @@ class PowerController extends UiControllerBase_1.UiControllerBase {
       UiManager_1.UiManager.CloseView("PowerView");
   }),
   (PowerController.cio = () => {
-    const e = ConfigManager_1.ConfigManager.PowerConfig.GetPowerShopIds().size;
+    var e = ConfigManager_1.ConfigManager.PowerConfig.GetPowerShopIds().size;
     if (!(ModelManager_1.ModelManager.PowerModel.PowerShopCount >= e))
       for (const r of ConfigManager_1.ConfigManager.PowerConfig.GetPowerShopIds())
         ShopController_1.ShopController.SendShopUpdateRequest(r);
@@ -116,14 +116,14 @@ class PowerController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.PowerModel.AddOnePowerShopCount(e);
   }),
   (PowerController.Pmi = () => {
-    let e;
+    var e;
     UiManager_1.UiManager.IsViewShow("InventoryView") ||
       (ModelManager_1.ModelManager.PowerModel.ConfirmBoxData &&
         ((e = new PowerDefines_1.PowerViewData()),
         UiManager_1.UiManager.OpenView("PowerView", e)));
   }),
   (PowerController.SendUpdatePowerRequest = () => {
-    const e = Protocol_1.Aki.Protocol.XXn.create();
+    var e = Protocol_1.Aki.Protocol.XXn.create();
     Net_1.Net.Call(28678, e, (e) => {
       e &&
         (e.X5n === Protocol_1.Aki.Protocol.lkn.Sys
@@ -137,4 +137,4 @@ class PowerController extends UiControllerBase_1.UiControllerBase {
             ));
     });
   });
-// # sourceMappingURL=PowerController.js.map
+//# sourceMappingURL=PowerController.js.map

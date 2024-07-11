@@ -30,7 +30,7 @@ class HotFixSequencePlayer {
       : (LauncherLog_1.LauncherLog.Warn("关卡序列不存在"), t?.(), !1);
   }
   StopSequence(e, t = !1, i = void 0) {
-    let s, r;
+    var s, r;
     return !(
       !this.jPt.LevelSequences.Get(e) ||
       !(s = this.HPt.GetSequencePlayerByKey(e)) ||
@@ -53,4 +53,4 @@ class HotFixSequencePlayer {
   }
 }
 exports.HotFixSequencePlayer = HotFixSequencePlayer;
-// # sourceMappingURL=HotFixSequencePlayer.js.map
+//# sourceMappingURL=HotFixSequencePlayer.js.map

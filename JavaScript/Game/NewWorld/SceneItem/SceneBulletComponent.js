@@ -1,34 +1,39 @@
 "use strict";
-let SceneBulletComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, s) {
-    let n;
-    const o = arguments.length;
-    let r =
-      o < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(t, e, i, s);
-    else
-      for (let h = t.length - 1; h >= 0; h--)
-        (n = t[h]) && (r = (o < 3 ? n(r) : o > 3 ? n(e, i, r) : n(e, i)) || r);
-    return o > 3 && r && Object.defineProperty(e, i, r), r;
-  };
+var SceneBulletComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, s) {
+      var n,
+        o = arguments.length,
+        r =
+          o < 3
+            ? e
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        r = Reflect.decorate(t, e, i, s);
+      else
+        for (var h = t.length - 1; 0 <= h; h--)
+          (n = t[h]) &&
+            (r = (o < 3 ? n(r) : 3 < o ? n(e, i, r) : n(e, i)) || r);
+      return 3 < o && r && Object.defineProperty(e, i, r), r;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneBulletComponent = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const Transform_1 = require("../../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const BulletController_1 = require("../Bullet/BulletController");
+const Log_1 = require("../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  Transform_1 = require("../../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  BulletController_1 = require("../Bullet/BulletController");
 class BulletData {
   constructor(t, e) {
     (this.BulletEntityId = void 0),
@@ -88,7 +93,7 @@ let SceneBulletComponent =
         (this.Cmn = Vector_1.Vector.Create(0, 0, 0)),
         (this.fmn = new Map());
       for (const i of t.GetParam(SceneBulletComponent_1)[0].BulletGroups) {
-        const e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
+        var e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
           i.EntityState,
         );
         this.fmn.has(e) || this.fmn.set(e, []),
@@ -116,7 +121,7 @@ let SceneBulletComponent =
         this.ktn
           ? this.ktn.AddOnEntityOverlapCallback(this.vmn)
           : (this.pmn = !0);
-      const t = this.Entity.GetComponent(177);
+      var t = this.Entity.GetComponent(177);
       for (const e of this.fmn.keys())
         if (t.HasTag(e)) {
           this.Mke = e;
@@ -140,24 +145,24 @@ let SceneBulletComponent =
       );
     }
     szo(t) {
-      if (this.fmn.has(t) && this.fmn.get(t).length !== 0)
+      if (this.fmn.has(t) && 0 !== this.fmn.get(t).length)
         for (const n of this.fmn.get(t)) {
           if (n.BulletEntityId) return;
           this.Mmn(n);
-          const e = n.BulletGroup;
-          var i = n.BulletTransform;
+          var e = n.BulletGroup,
+            i = n.BulletTransform;
           let t = void 0;
           e.Range &&
             (this.gmn.Set(e.Range.X, e.Range.Y, e.Range.Z),
             (t = { Size: this.gmn }));
-          var s;
-          var i = BulletController_1.BulletController.CreateBulletCustomTarget(
-            Global_1.Global.BaseCharacter.CharacterActorComponent.Actor,
-            e.BulletId.toString(),
-            i.ToUeTransform(),
-            t,
-            this.jDn,
-          );
+          var s,
+            i = BulletController_1.BulletController.CreateBulletCustomTarget(
+              Global_1.Global.BaseCharacter.CharacterActorComponent.Actor,
+              e.BulletId.toString(),
+              i.ToUeTransform(),
+              t,
+              this.jDn,
+            );
           i?.GetComponent(152)?.Owner?.IsValid() &&
             (((s =
               BulletController_1.BulletController.GetActionCenter().CreateBulletActionInfo(
@@ -194,10 +199,10 @@ let SceneBulletComponent =
         }
     }
     K5o(t) {
-      if (this.fmn.has(t) && this.fmn.get(t).length !== 0)
+      if (this.fmn.has(t) && 0 !== this.fmn.get(t).length)
         for (const i of this.fmn.get(t)) {
           if (!i.BulletEntityId) return;
-          const e = EntitySystem_1.EntitySystem.Get(i.BulletEntityId);
+          var e = EntitySystem_1.EntitySystem.Get(i.BulletEntityId);
           e?.Valid && e.GetComponent(152).Owner?.K2_DetachFromActor(1, 1, 1),
             BulletController_1.BulletController.DestroyBullet(
               i.BulletEntityId,
@@ -264,4 +269,4 @@ let SceneBulletComponent =
     SceneBulletComponent,
   )),
   (exports.SceneBulletComponent = SceneBulletComponent);
-// # sourceMappingURL=SceneBulletComponent.js.map
+//# sourceMappingURL=SceneBulletComponent.js.map

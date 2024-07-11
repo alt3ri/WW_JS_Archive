@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityLongShanController = void 0);
-const LongShanStageById_1 = require("../../../../../Core/Define/ConfigQuery/LongShanStageById");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../../Core/Net/Net");
-const LevelGeneralCommons_1 = require("../../../../LevelGamePlay/LevelGeneralCommons");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const ActivityControllerBase_1 = require("../../ActivityControllerBase");
-const ActivityLongShanData_1 = require("./ActivityLongShanData");
-const ActivitySubViewLongShan_1 = require("./ActivitySubViewLongShan");
+const LongShanStageById_1 = require("../../../../../Core/Define/ConfigQuery/LongShanStageById"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  LevelGeneralCommons_1 = require("../../../../LevelGamePlay/LevelGeneralCommons"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  ActivityControllerBase_1 = require("../../ActivityControllerBase"),
+  ActivityLongShanData_1 = require("./ActivityLongShanData"),
+  ActivitySubViewLongShan_1 = require("./ActivitySubViewLongShan");
 class ActivityLongShanController extends ActivityControllerBase_1.ActivityControllerBase {
   constructor() {
     super(...arguments),
@@ -60,7 +60,7 @@ class ActivityLongShanController extends ActivityControllerBase_1.ActivityContro
     );
   }
   static TakeTaskReward(t) {
-    let e;
+    var e;
     this.DOe.includes(t) ||
       (this.DOe.push(t),
       ((e = Protocol_1.Aki.Protocol.Eds.create()).XFn = [t]),
@@ -74,4 +74,4 @@ class ActivityLongShanController extends ActivityControllerBase_1.ActivityContro
 }
 ((exports.ActivityLongShanController = ActivityLongShanController).LOe = 0),
   (ActivityLongShanController.DOe = []);
-// # sourceMappingURL=ActivityLongShanController.js.map
+//# sourceMappingURL=ActivityLongShanController.js.map

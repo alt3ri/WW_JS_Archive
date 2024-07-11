@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExchangeReward = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const DicIntInt_1 = require("./SubType/DicIntInt");
-const DicIntIntIntMap_1 = require("./SubType/DicIntIntIntMap");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  DicIntInt_1 = require("./SubType/DicIntInt"),
+  DicIntIntIntMap_1 = require("./SubType/DicIntIntIntMap");
 class ExchangeReward {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -48,22 +48,22 @@ class ExchangeReward {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   sharedid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   maxcount() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetCostAt(t, i) {
     return this.cost(t);
   }
   cost(t, i) {
-    const e = this.J7.__offset(this.z7, 10);
+    var e = this.J7.__offset(this.z7, 10);
     return e
       ? (i || new DicIntInt_1.DicIntInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + e) + 4 * t),
@@ -72,14 +72,14 @@ class ExchangeReward {
       : null;
   }
   costLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetRewardidAt(t, i) {
     return this.rewardid(t);
   }
   rewardid(t, i) {
-    const e = this.J7.__offset(this.z7, 12);
+    var e = this.J7.__offset(this.z7, 12);
     return e
       ? (i || new DicIntInt_1.DicIntInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + e) + 4 * t),
@@ -88,14 +88,14 @@ class ExchangeReward {
       : null;
   }
   rewardidLength() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetPreviewrewardAt(t, i) {
     return this.previewreward(t);
   }
   previewreward(t, i) {
-    const e = this.J7.__offset(this.z7, 14);
+    var e = this.J7.__offset(this.z7, 14);
     return e
       ? (i || new DicIntIntIntMap_1.DicIntIntIntMap()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + e) + 4 * t),
@@ -104,9 +104,9 @@ class ExchangeReward {
       : null;
   }
   previewrewardLength() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.ExchangeReward = ExchangeReward;
-// # sourceMappingURL=ExchangeReward.js.map
+//# sourceMappingURL=ExchangeReward.js.map

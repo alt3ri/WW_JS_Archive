@@ -6,22 +6,22 @@ class InputViewRecord {
     this.Ncr = new Map();
   }
   Add(t) {
-    var r = this.Ncr.get(t);
-    var r = r ? r + 1 : 1;
+    var r = this.Ncr.get(t),
+      r = r ? r + 1 : 1;
     return this.Ncr.set(t, r), r;
   }
   Remove(t) {
-    let r = this.Ncr.get(t);
+    var r = this.Ncr.get(t);
     return void 0 === r
       ? 0
-      : ((r = r - 1) > 0 ? this.Ncr.set(t, r) : this.Ncr.delete(t), r);
+      : (0 < (r = r - 1) ? this.Ncr.set(t, r) : this.Ncr.delete(t), r);
   }
   Has(t) {
     t = this.Ncr.get(t);
-    return !!t && t > 0;
+    return !!t && 0 < t;
   }
   HasAny() {
-    for (const t of this.Ncr.values()) if (t > 0) return !0;
+    for (const t of this.Ncr.values()) if (0 < t) return !0;
     return !1;
   }
   Size() {
@@ -32,4 +32,4 @@ class InputViewRecord {
   }
 }
 exports.InputViewRecord = InputViewRecord;
-// # sourceMappingURL=InputViewRecord.js.map
+//# sourceMappingURL=InputViewRecord.js.map

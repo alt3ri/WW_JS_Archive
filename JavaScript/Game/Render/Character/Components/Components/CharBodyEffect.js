@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharBodyEffect = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const EffectEnvironment_1 = require("../../../../../Core/Effect/EffectEnvironment");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RenderConfig_1 = require("../../../Config/RenderConfig");
-const CharRenderBase_1 = require("../../Manager/CharRenderBase");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  EffectEnvironment_1 = require("../../../../../Core/Effect/EffectEnvironment"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RenderConfig_1 = require("../../../Config/RenderConfig"),
+  CharRenderBase_1 = require("../../Manager/CharRenderBase");
 class CharBodyEffect extends CharRenderBase_1.CharRenderBase {
   constructor() {
     super(...arguments),
@@ -51,11 +51,11 @@ class CharBodyEffect extends CharRenderBase_1.CharRenderBase {
         e.Id,
       ]),
       this.EffectHandles.push(e),
-      (this.Opacity === 1 && this.Visible) ||
+      (1 === this.Opacity && this.Visible) ||
         e.GetEffectSpec()?.UpdateBodyEffect(this.Opacity, this.Visible),
       e.AddFinishCallback((t) => {
-        const e = this.EffectHandles.findIndex((e) => e.Id === t);
-        e > 0 &&
+        var e = this.EffectHandles.findIndex((e) => e.Id === t);
+        0 < e &&
           (EffectEnvironment_1.EffectEnvironment.UseLog &&
             Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -69,7 +69,7 @@ class CharBodyEffect extends CharRenderBase_1.CharRenderBase {
   }
   Start() {
     this.Opacity = 1;
-    const e = this.GetRenderingComponent().GetOwner();
+    var e = this.GetRenderingComponent().GetOwner();
     e instanceof TsBaseCharacter_1.default &&
       e.CharacterActorComponent?.Entity &&
       ((this.Entity = e.CharacterActorComponent.Entity),
@@ -129,4 +129,4 @@ class CharBodyEffect extends CharRenderBase_1.CharRenderBase {
   }
 }
 exports.CharBodyEffect = CharBodyEffect;
-// # sourceMappingURL=CharBodyEffect.js.map
+//# sourceMappingURL=CharBodyEffect.js.map

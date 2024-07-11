@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BoxPanel = void 0);
-const WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi");
-const WorldMapDefine_1 = require("../../WorldMapDefine");
+const WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
+  WorldMapDefine_1 = require("../../WorldMapDefine");
 class BoxPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments), (this.dko = void 0);
@@ -34,4 +34,4 @@ class BoxPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
 }
 exports.BoxPanel = BoxPanel;
-// # sourceMappingURL=BoxPanel.js.map
+//# sourceMappingURL=BoxPanel.js.map

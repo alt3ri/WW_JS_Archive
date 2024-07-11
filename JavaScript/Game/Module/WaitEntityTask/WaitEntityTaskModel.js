@@ -20,16 +20,16 @@ class WaitEntityTaskModel extends ModelBase_1.ModelBase {
   }
   OnAddEntity(e, s) {
     for (let t = 0; t < this.QY.size; t++) {
-      const i = this.QY.get(t);
+      var i = this.QY.get(t);
       i && i.OnAddEntity(e, s);
     }
   }
   OnRemoveEntity(e, s) {
     for (let t = 0; t < this.QY.size; t++) {
-      const i = this.QY.get(t);
+      var i = this.QY.get(t);
       i && i.OnRemoveEntity(e, s);
     }
   }
 }
 exports.WaitEntityTaskModel = WaitEntityTaskModel;
-// # sourceMappingURL=WaitEntityTaskModel.js.map
+//# sourceMappingURL=WaitEntityTaskModel.js.map

@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TeleportAssistant = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../Core/Net/Net");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase");
-const LevelLoadingController_1 = require("../../LevelLoading/LevelLoadingController");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const WorldMapController_1 = require("../../WorldMap/WorldMapController");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const GM_UNLOCK_ALL_TELEPORT = "activateteleport 0";
+const Log_1 = require("../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase"),
+  LevelLoadingController_1 = require("../../LevelLoading/LevelLoadingController"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  WorldMapController_1 = require("../../WorldMap/WorldMapController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  GM_UNLOCK_ALL_TELEPORT = "activateteleport 0";
 class TeleportAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor() {
     super(...arguments),
@@ -45,7 +45,7 @@ class TeleportAssistant extends ControllerAssistantBase_1.ControllerAssistantBas
         e.FlowListName === this.uLi &&
           e.FlowId === this.cLi &&
           ((this.xK = !1),
-          this._Li.Type === 1
+          1 === this._Li.Type
             ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                 "TeleporterUnlockBig",
               )
@@ -101,16 +101,16 @@ class TeleportAssistant extends ControllerAssistantBase_1.ControllerAssistantBas
       );
   }
   CLi(e) {
-    let t;
+    var t;
     this.mLi ||
       this.xK ||
       (e &&
-        e.length !== 0 &&
+        0 !== e.length &&
         (e = ConfigManager_1.ConfigManager.MapConfig.GetTeleportConfigById(
           e[0],
         )) &&
         !StringUtils_1.StringUtils.IsEmpty(e.Plot) &&
-        (t = e.Plot.split(",")).length > 2 &&
+        2 < (t = e.Plot.split(",")).length &&
         ((this.uLi = t[0]),
         (this.cLi = Number(t[1])),
         (t = Number(t[2])),
@@ -123,8 +123,8 @@ class TeleportAssistant extends ControllerAssistantBase_1.ControllerAssistantBas
         )));
   }
   async RequestTeleportData() {
-    var e = Protocol_1.Aki.Protocol._us.create();
-    var e = await Net_1.Net.CallAsync(2779, e);
+    var e = Protocol_1.Aki.Protocol._us.create(),
+      e = await Net_1.Net.CallAsync(2779, e);
     e &&
       (e.X5n !== Protocol_1.Aki.Protocol.lkn.Sys
         ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
@@ -134,7 +134,7 @@ class TeleportAssistant extends ControllerAssistantBase_1.ControllerAssistantBas
         : ModelManager_1.ModelManager.MapModel.UnlockTeleports(e.j4n, !0));
   }
   RequestUnlockTeleport(t) {
-    const e = Protocol_1.Aki.Protocol.mus.create({ Ekn: t });
+    var e = Protocol_1.Aki.Protocol.mus.create({ Ekn: t });
     Net_1.Net.Call(20281, e, (e) => {
       e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
         ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
@@ -146,4 +146,4 @@ class TeleportAssistant extends ControllerAssistantBase_1.ControllerAssistantBas
   }
 }
 exports.TeleportAssistant = TeleportAssistant;
-// # sourceMappingURL=TeleportAssistant.js.map
+//# sourceMappingURL=TeleportAssistant.js.map

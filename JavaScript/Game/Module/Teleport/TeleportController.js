@@ -1,43 +1,43 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TeleportController = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const TickSystem_1 = require("../../../Core/Tick/TickSystem");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const CameraController_1 = require("../../Camera/CameraController");
-const CameraUtility_1 = require("../../Camera/CameraUtility");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ScreenEffectSystem_1 = require("../../Render/Effect/ScreenEffectSystem/ScreenEffectSystem");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const WorldDefine_1 = require("../../World/Define/WorldDefine");
-const AsyncTask_1 = require("../../World/Task/AsyncTask");
-const TaskSystem_1 = require("../../World/Task/TaskSystem");
-const AreaController_1 = require("../Area/AreaController");
-const DeadReviveController_1 = require("../DeadRevive/DeadReviveController");
-const LevelLoadingController_1 = require("../LevelLoading/LevelLoadingController");
-const PlotData_1 = require("../Plot/PlotData");
-const RoleController_1 = require("../RoleUi/RoleController");
-const TeleportDefine_1 = require("../Teleport/TeleportDefine");
-const VideoLauncher_1 = require("../Video/VideoLauncher");
-const DISTANCE_THRESHOLD_1 = 3e3;
-const DISTANCE_THRESHOLD_2 = MathUtils_1.MathUtils.MaxFloat;
-const SKIP_FALL_INJURE_TIME = 1e3;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  TickSystem_1 = require("../../../Core/Tick/TickSystem"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  CameraUtility_1 = require("../../Camera/CameraUtility"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ScreenEffectSystem_1 = require("../../Render/Effect/ScreenEffectSystem/ScreenEffectSystem"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  WorldDefine_1 = require("../../World/Define/WorldDefine"),
+  AsyncTask_1 = require("../../World/Task/AsyncTask"),
+  TaskSystem_1 = require("../../World/Task/TaskSystem"),
+  AreaController_1 = require("../Area/AreaController"),
+  DeadReviveController_1 = require("../DeadRevive/DeadReviveController"),
+  LevelLoadingController_1 = require("../LevelLoading/LevelLoadingController"),
+  PlotData_1 = require("../Plot/PlotData"),
+  RoleController_1 = require("../RoleUi/RoleController"),
+  TeleportDefine_1 = require("../Teleport/TeleportDefine"),
+  VideoLauncher_1 = require("../Video/VideoLauncher"),
+  DISTANCE_THRESHOLD_1 = 3e3,
+  DISTANCE_THRESHOLD_2 = MathUtils_1.MathUtils.MaxFloat,
+  SKIP_FALL_INJURE_TIME = 1e3;
 class TeleportController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -70,7 +70,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
         !1);
   }
   static QueryCanTeleportNoLoading(e) {
-    const o = Global_1.Global.BaseCharacter;
+    var o = Global_1.Global.BaseCharacter;
     return o?.IsValid()
       ? UE.Vector.Dist(o.CharacterActorComponent.ActorLocation, e) <
           (ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() &&
@@ -144,7 +144,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
     });
   }
   static async qyo(e, o, r, t, l = 0) {
-    const a = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var a = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     let _ = void 0;
     a && (_ = a.Entity.GetComponent(3));
     const n = ModelManager_1.ModelManager.TeleportModel;
@@ -278,7 +278,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
         ["Reason", o],
       ),
       (r.IsTeleport = !0);
-    const t = new AsyncTask_1.AsyncTask(
+    var t = new AsyncTask_1.AsyncTask(
       "FakeTeleportToPositionImpl",
       async () => (
         r.CreatePromise(),
@@ -306,7 +306,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
     );
   }
   static async Gyo(o, e, r, t) {
-    const l = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var l = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     let a = void 0;
     l && (a = l.Entity.GetComponent(3));
     const _ = ModelManager_1.ModelManager.TeleportModel;
@@ -393,7 +393,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
             case Protocol_1.Aki.Protocol.wkn.Proto_PlayEffect:
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("Teleport", 46, "TransitionType.PlayEffect开始"),
-                t.Option.Nkn !== "" &&
+                "" !== t.Option.Nkn &&
                   ResourceSystem_1.ResourceSystem.LoadAsync(
                     t.Option.Nkn,
                     UE.EffectScreenPlayData_C,
@@ -428,8 +428,8 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       r,
     ),
       (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 4),
-      (ModelManager_1.ModelManager.TeleportModel.TeleportMode !== 2 &&
-        ModelManager_1.ModelManager.TeleportModel.TeleportMode !== 1) ||
+      (2 !== ModelManager_1.ModelManager.TeleportModel.TeleportMode &&
+        1 !== ModelManager_1.ModelManager.TeleportModel.TeleportMode) ||
         UE.KuroStaticLibrary.ForceGarbageCollection(!1),
       this.Oyo(),
       EventSystem_1.EventSystem.Add(
@@ -444,9 +444,9 @@ class TeleportController extends ControllerBase_1.ControllerBase {
         (TeleportController.Wyo = !0),
         Log_1.Log.CheckInfo()) &&
         Log_1.Log.Info("Teleport", 30, "传送:时停解除(开始)", ["Reason", r]);
-      const e =
-        ModelManager_1.ModelManager.TeleportModel.TeleportMode === 2 ||
-        ModelManager_1.ModelManager.TeleportModel.TeleportMode === 1;
+      var e =
+        2 === ModelManager_1.ModelManager.TeleportModel.TeleportMode ||
+        1 === ModelManager_1.ModelManager.TeleportModel.TeleportMode;
       switch (
         ((ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 11),
         Log_1.Log.CheckInfo() &&
@@ -617,48 +617,48 @@ class TeleportController extends ControllerBase_1.ControllerBase {
   }
   static O6s(r, t) {
     const l = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
-      GlobalData_1.GlobalData.World,
-      UE.WorldPartitionSubsystem.StaticClass(),
-    );
-    const a =
-      ((TeleportController.Qyo = 3e3),
-      TimerSystem_1.TimerSystem.Forever(() => {
-        let e, o;
-        ModelManager_1.ModelManager.GameModeModel.StreamingSource?.IsValid() &&
-          ((e = new UE.WorldPartitionStreamingQuerySource(
-            ModelManager_1.ModelManager.GameModeModel.StreamingSource.K2_GetActorLocation(),
-            ResourceSystem_1.STREAMING_SOURCE_RADIUS,
-            !1,
-            !1,
-            void 0,
-            !1,
-            !0,
-            t,
-          )),
-          (o = UE.NewArray(UE.WorldPartitionStreamingQuerySource)).Add(e),
-          l && l.IsStreamingCompleted(2, o, !1, void 0, void 0, !0)
-            ? ((TeleportController.Qyo = 0),
-              TimerSystem_1.TimerSystem.Remove(a),
-              r.SetResult(!0))
-            : ((TeleportController.Qyo +=
-                ResourceSystem_1.CHECK_STREAMING_INTERVAL),
-              TeleportController.Qyo > 3e3 &&
-                ((TeleportController.Qyo = 0), Log_1.Log.CheckDebug()) &&
-                Log_1.Log.Debug(
-                  "Teleport",
-                  30,
-                  "无加载传送:流送中",
-                  [
-                    "StreamingSource",
-                    ModelManager_1.ModelManager.GameModeModel.StreamingSource.K2_GetActorLocation(),
-                  ],
-                  ["QuerySource", e.Location],
-                )));
-      }, ResourceSystem_1.CHECK_STREAMING_INTERVAL));
+        GlobalData_1.GlobalData.World,
+        UE.WorldPartitionSubsystem.StaticClass(),
+      ),
+      a =
+        ((TeleportController.Qyo = 3e3),
+        TimerSystem_1.TimerSystem.Forever(() => {
+          var e, o;
+          ModelManager_1.ModelManager.GameModeModel.StreamingSource?.IsValid() &&
+            ((e = new UE.WorldPartitionStreamingQuerySource(
+              ModelManager_1.ModelManager.GameModeModel.StreamingSource.K2_GetActorLocation(),
+              ResourceSystem_1.STREAMING_SOURCE_RADIUS,
+              !1,
+              !1,
+              void 0,
+              !1,
+              !0,
+              t,
+            )),
+            (o = UE.NewArray(UE.WorldPartitionStreamingQuerySource)).Add(e),
+            l && l.IsStreamingCompleted(2, o, !1, void 0, void 0, !0)
+              ? ((TeleportController.Qyo = 0),
+                TimerSystem_1.TimerSystem.Remove(a),
+                r.SetResult(!0))
+              : ((TeleportController.Qyo +=
+                  ResourceSystem_1.CHECK_STREAMING_INTERVAL),
+                3e3 < TeleportController.Qyo &&
+                  ((TeleportController.Qyo = 0), Log_1.Log.CheckDebug()) &&
+                  Log_1.Log.Debug(
+                    "Teleport",
+                    30,
+                    "无加载传送:流送中",
+                    [
+                      "StreamingSource",
+                      ModelManager_1.ModelManager.GameModeModel.StreamingSource.K2_GetActorLocation(),
+                    ],
+                    ["QuerySource", e.Location],
+                  )));
+        }, ResourceSystem_1.CHECK_STREAMING_INTERVAL));
     return a;
   }
   static async Fyo(o = !1) {
-    const r = ModelManager_1.ModelManager.TeleportModel;
+    var r = ModelManager_1.ModelManager.TeleportModel;
     if (ModelManager_1.ModelManager.GameModeModel.UseWorldPartition) {
       ModelManager_1.ModelManager.GameModeModel.StreamingSource?.IsValid() &&
         !o &&
@@ -667,7 +667,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
           !0,
           !0,
         );
-      const t = o ? r.VoxelStreamingCompleted : r.StreamingCompleted;
+      var t = o ? r.VoxelStreamingCompleted : r.StreamingCompleted;
       let e = void 0;
       o && (e = UE.NewSet(UE.BuiltinName)).Add(WorldDefine_1.VOXEL_GRID_NAME),
         (r.CheckStreamingCompletedTimerId = this.O6s(t, e)),
@@ -681,62 +681,62 @@ class TeleportController extends ControllerBase_1.ControllerBase {
         "Teleport",
         61,
         "传送:检测参数",
-        ["dataLayers", r != null && r.Num() > 0 ? r.Get(0).toString() : void 0],
+        ["dataLayers", null != r && 0 < r.Num() ? r.Get(0).toString() : void 0],
         [
           "targetGrids",
-          t != null && t.Num() > 0 ? t.Get(0).toString() : void 0,
+          null != t && 0 < t.Num() ? t.Get(0).toString() : void 0,
         ],
       );
     const l = new UE.WorldPartitionStreamingQuerySource(
-      e,
-      ResourceSystem_1.STREAMING_SOURCE_RADIUS,
-      !0,
-      r != null && r.Num() > 0,
-      r,
-      !1,
-      !0,
-      t,
-    );
-    const a = UE.NewArray(UE.WorldPartitionStreamingQuerySource);
-    const _ =
-      (a.Add(l),
-      UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
-        GlobalData_1.GlobalData.World,
-        UE.WorldPartitionSubsystem.StaticClass(),
-      ));
-    const n =
-      ((TeleportController.Qyo = 3e3),
-      TimerSystem_1.TimerSystem.Forever(() => {
-        _ && _.IsStreamingCompleted(2, a, !1, void 0, void 0, !0)
-          ? ((TeleportController.Qyo = 0),
-            TimerSystem_1.TimerSystem.Remove(n),
-            o.SetResult(!0))
-          : ((TeleportController.Qyo +=
-              ResourceSystem_1.CHECK_STREAMING_INTERVAL),
-            TeleportController.Qyo > 3e3 &&
-              (_ && !_.IsStreamingEnable() && _.SetStreamingEnable(!0),
-              (TeleportController.Qyo = 0),
-              Log_1.Log.CheckInfo()) &&
-              Log_1.Log.Info(
-                "Teleport",
-                30,
-                "传送:流送中",
-                ["StreamingSource", e],
-                ["QuerySource", l.Location],
-              ));
-      }, ResourceSystem_1.CHECK_STREAMING_INTERVAL));
+        e,
+        ResourceSystem_1.STREAMING_SOURCE_RADIUS,
+        !0,
+        null != r && 0 < r.Num(),
+        r,
+        !1,
+        !0,
+        t,
+      ),
+      a = UE.NewArray(UE.WorldPartitionStreamingQuerySource),
+      _ =
+        (a.Add(l),
+        UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
+          GlobalData_1.GlobalData.World,
+          UE.WorldPartitionSubsystem.StaticClass(),
+        )),
+      n =
+        ((TeleportController.Qyo = 3e3),
+        TimerSystem_1.TimerSystem.Forever(() => {
+          _ && _.IsStreamingCompleted(2, a, !1, void 0, void 0, !0)
+            ? ((TeleportController.Qyo = 0),
+              TimerSystem_1.TimerSystem.Remove(n),
+              o.SetResult(!0))
+            : ((TeleportController.Qyo +=
+                ResourceSystem_1.CHECK_STREAMING_INTERVAL),
+              3e3 < TeleportController.Qyo &&
+                (_ && !_.IsStreamingEnable() && _.SetStreamingEnable(!0),
+                (TeleportController.Qyo = 0),
+                Log_1.Log.CheckInfo()) &&
+                Log_1.Log.Info(
+                  "Teleport",
+                  30,
+                  "传送:流送中",
+                  ["StreamingSource", e],
+                  ["QuerySource", l.Location],
+                ));
+        }, ResourceSystem_1.CHECK_STREAMING_INTERVAL));
     return n;
   }
   static async Kyo(r = !1) {
-    const t = ModelManager_1.ModelManager.TeleportModel;
+    var t = ModelManager_1.ModelManager.TeleportModel;
     if (ModelManager_1.ModelManager.GameModeModel.UseWorldPartition) {
-      const l = t.TargetPosition.ToUeVector();
+      var l = t.TargetPosition.ToUeVector();
       (r
         ? ModelManager_1.ModelManager.GameModeModel.VoxelStreamingSource
         : ModelManager_1.ModelManager.GameModeModel.StreamingSource
       ).K2_SetActorLocation(l, !1, void 0, !1);
-      let o = void 0;
-      let e = void 0;
+      let o = void 0,
+        e = void 0;
       if (r) (e = UE.NewSet(UE.BuiltinName)).Add(WorldDefine_1.VOXEL_GRID_NAME);
       else {
         o = UE.NewArray(UE.BuiltinName);
@@ -756,7 +756,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
             o.Add((0, puerts_1.$unref)(a));
         } else
           for (const n of WorldDefine_1.dataLayerRuntimeHLOD) {
-            const _ = (0, puerts_1.$ref)(void 0);
+            var _ = (0, puerts_1.$ref)(void 0);
             (e = FNameUtil_1.FNameUtil.GetDynamicFName(n)),
               UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldPartitionDataLayerNameByLabel(
                 GlobalData_1.GlobalData.World,
@@ -773,7 +773,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
     } else (r ? t.VoxelStreamingCompleted : t.StreamingCompleted).SetResult(!0);
   }
   static Hyo() {
-    const e = new Protocol_1.Aki.Protocol.fus();
+    var e = new Protocol_1.Aki.Protocol.fus();
     Net_1.Net.Call(5004, e, (e) => {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -793,9 +793,9 @@ class TeleportController extends ControllerBase_1.ControllerBase {
     });
   }
   static kyo() {
-    let e;
-    let o;
-    const r = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var e,
+      o,
+      r = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     r?.Valid
       ? ((e = r.Entity.GetComponent(3)),
         (o = ModelManager_1.ModelManager.TeleportModel),
@@ -819,14 +819,14 @@ class TeleportController extends ControllerBase_1.ControllerBase {
           CameraUtility_1.CameraUtility.GetCameraDefaultFocusUeRotator(),
         ),
         CameraController_1.CameraController.FightCamera.LogicComponent.ResetFightCameraLogic(),
-        o.CallSource === 1 &&
+        1 === o.CallSource &&
           DeadReviveController_1.DeadReviveController.PlayerReviveEnded(),
         r.Entity.GetComponent(172)?.ResetDrowning())
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("Teleport", 30, "传送:失败,找不到当前实体");
   }
   static $yo(e) {
-    let o;
+    var o;
     return ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() ||
       (Global_1.Global.BaseCharacter?.IsValid() &&
         ((o = Global_1.Global.BaseCharacter.CharacterActorComponent),
@@ -924,7 +924,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       (TimerSystem_1.TimerSystem.Remove(TeleportController.Xyo),
       (TeleportController.Xyo = void 0)),
       (ModelManager_1.ModelManager.DeadReviveModel.SkipFallInjure = !0);
-    let e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     e?.Valid &&
       (e = e.Entity.GetComponent(3))?.Valid &&
       e.Actor?.IsValid() &&
@@ -932,22 +932,22 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       e.Actor.CharacterMovement.SetMovementMode(0);
   }),
   (TeleportController.wyo = (e) => {
-    const o = e.Hms;
-    const r = e.Bkn;
-    var t =
-      ModelManager_1.ModelManager.WorldMapModel.WaitToTeleportMarkItem
-        ?.MarkConfigId;
-    var t =
-      ((ModelManager_1.ModelManager.LoadingModel.TargetTeleportId = t),
-      new TeleportDefine_1.TeleportContext(
-        e.V5n,
-        t,
-        void 0,
-        o ? o.Xms : void 0,
-        r,
-      ));
-    const l = new UE.Vector(e.N6n, e.k6n, e.O6n);
-    const a = new UE.Rotator(0, e.IIs, 0);
+    var o = e.Hms,
+      r = e.Bkn,
+      t =
+        ModelManager_1.ModelManager.WorldMapModel.WaitToTeleportMarkItem
+          ?.MarkConfigId,
+      t =
+        ((ModelManager_1.ModelManager.LoadingModel.TargetTeleportId = t),
+        new TeleportDefine_1.TeleportContext(
+          e.V5n,
+          t,
+          void 0,
+          o ? o.Xms : void 0,
+          r,
+        )),
+      l = new UE.Vector(e.N6n, e.k6n, e.O6n),
+      a = new UE.Rotator(0, e.IIs, 0);
     let _ = "";
     try {
       _ = JSON.stringify(o);
@@ -1022,4 +1022,4 @@ class TeleportController extends ControllerBase_1.ControllerBase {
   (TeleportController.Byo = (e) => {
     ModelManager_1.ModelManager.DeadReviveModel.SkipDeathAnim = !1;
   });
-// # sourceMappingURL=TeleportController.js.map
+//# sourceMappingURL=TeleportController.js.map

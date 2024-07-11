@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskCalculateBackwardPosition extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -24,23 +24,23 @@ class TsTaskCalculateBackwardPosition extends TsTaskAbortImmediatelyBase_1.defau
     var r = e.AiController;
     if (r) {
       this.InitTsVariables();
-      var r = r.CharActorComp;
-      const o = r.ActorLocationProxy;
+      var r = r.CharActorComp,
+        o = r.ActorLocationProxy;
       let e = r.ActorForwardProxy;
       var a =
-        BlackboardController_1.BlackboardController.GetVectorValueByEntity(
-          r.Entity.Id,
-          "InputDirect",
-        );
-      var a =
-        (a &&
-          ((e = Vector_1.Vector.Create(a)).IsNearlyZero() &&
-            (e = r.ActorForwardProxy),
-          BlackboardController_1.BlackboardController.RemoveValueByEntity(
+          BlackboardController_1.BlackboardController.GetVectorValueByEntity(
             r.Entity.Id,
             "InputDirect",
-          )),
-        Vector_1.Vector.Create(e));
+          ),
+        a =
+          (a &&
+            ((e = Vector_1.Vector.Create(a)).IsNearlyZero() &&
+              (e = r.ActorForwardProxy),
+            BlackboardController_1.BlackboardController.RemoveValueByEntity(
+              r.Entity.Id,
+              "InputDirect",
+            )),
+          Vector_1.Vector.Create(e));
       a.MultiplyEqual(-this.TsDistance),
         a.AdditionEqual(o),
         BlackboardController_1.BlackboardController.SetVectorValueByEntity(
@@ -61,4 +61,4 @@ class TsTaskCalculateBackwardPosition extends TsTaskAbortImmediatelyBase_1.defau
   }
 }
 exports.default = TsTaskCalculateBackwardPosition;
-// # sourceMappingURL=TsTaskCalculateBackwardPosition.js.map
+//# sourceMappingURL=TsTaskCalculateBackwardPosition.js.map

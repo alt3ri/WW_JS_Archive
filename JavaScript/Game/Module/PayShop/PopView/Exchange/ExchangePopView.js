@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExchangePopView = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const LguiResourceManager_1 = require("../../../../Ui/LguiResourceManager");
-const NumberSelectComponent_1 = require("../../../Common/NumberSelect/NumberSelectComponent");
-const ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const PayShopItem_1 = require("../../PayShopTab/TabItem/PayShopItem");
-const COLOR = "FED12E";
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  LguiResourceManager_1 = require("../../../../Ui/LguiResourceManager"),
+  NumberSelectComponent_1 = require("../../../Common/NumberSelect/NumberSelectComponent"),
+  ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  PayShopItem_1 = require("../../PayShopTab/TabItem/PayShopItem"),
+  COLOR = "FED12E";
 class ExchangePopView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -33,7 +33,7 @@ class ExchangePopView extends UiViewBase_1.UiViewBase {
         this.CloseMe();
       }),
       (this.xUt = () => {
-        let e = this.Goods.GetGoodsData();
+        var e = this.Goods.GetGoodsData();
         this.IsEnoughMoney()
           ? ControllerHolder_1.ControllerHolder.PayShopController.SendRequestPayShopBuy(
               e.Id,
@@ -53,7 +53,7 @@ class ExchangePopView extends UiViewBase_1.UiViewBase {
         this.Og();
       }),
       (this.KGe = (e) => {
-        const t =
+        var t =
           ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
             "BugCount",
           );
@@ -66,35 +66,35 @@ class ExchangePopView extends UiViewBase_1.UiViewBase {
         this.CloseMe();
       }),
       (this.SetEndTime = () => {
-        let e;
-        let t = this.Goods.GetCountDownData();
-        t[2] !== 0 &&
+        var e,
+          t = this.Goods.GetCountDownData();
+        0 !== t[2] &&
         ((e = this.Goods.GetCountDownData()[1]),
-        this.GetText(14).SetUIActive(t[0] === 3),
-        t[0] === 3
+        this.GetText(14).SetUIActive(3 === t[0]),
+        3 === t[0]
           ? this.GetText(14).ShowTextNew("DownShopItem")
-          : t[0] === 2
+          : 2 === t[0]
             ? this.GetText(14).ShowTextNew("ReUpShopItem")
-            : t[0] === 1 && this.GetText(14).ShowTextNew("DiscountItem"),
+            : 1 === t[0] && this.GetText(14).ShowTextNew("DiscountItem"),
         e)
           ? (this.GetItem(15).SetUIActive(!0),
             (this.o3i = !0),
             (t = this.GetText(1)),
-            typeof e === "string"
+            "string" == typeof e
               ? t.SetText(e)
               : LguiUtil_1.LguiUtil.SetLocalText(t, e.TextId, e.TimeValue))
           : (this.GetItem(15).SetUIActive(!1), (this.o3i = !1));
       }),
       (this.PFi = () => {
         this.RemoveResellTimer();
-        const e = this.Goods.GetExchangePopViewResellText();
+        var e = this.Goods.GetExchangePopViewResellText();
         if (this.Goods.GetIfNeedExtraLimitText())
           (i = this.Goods.GetExtraLimitText()) &&
             (this.GetItem(11).SetUIActive(!0), this.GetText(12).ShowTextNew(i));
         else if (this.Goods.GetPriceData().Enough) {
-          var t;
-          var i = this.Goods.GetCountDownData();
-          if (i[0] !== 2)
+          var t,
+            i = this.Goods.GetCountDownData();
+          if (2 !== i[0])
             if (!this.Goods.GetPriceData().Enough)
               return (
                 this.GetItem(11).SetUIActive(!0),
@@ -115,7 +115,7 @@ class ExchangePopView extends UiViewBase_1.UiViewBase {
                 ? this.GetItem(11).SetUIActive(!1)
                 : (this.GetItem(11).SetUIActive(!0),
                   this.GetText(12).ShowTextNew(e)),
-              i[2] > 0 &&
+              0 < i[2] &&
                 (this.ResellTimerId = TimerSystem_1.RealTimeTimerSystem.Delay(
                   this.PFi,
                   i[2] * CommonDefine_1.MILLIONSECOND_PER_SECOND,
@@ -169,11 +169,11 @@ class ExchangePopView extends UiViewBase_1.UiViewBase {
       ]);
   }
   OnBeforeCreate() {
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     this.Goods = e.PayShopGoods;
   }
   async OnCreateAsync() {
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     const t = new CustomPromise_1.CustomPromise();
     LguiResourceManager_1.LguiResourceManager.LoadPrefabByResourceId(
       e.ShopItemResource,
@@ -214,7 +214,7 @@ class ExchangePopView extends UiViewBase_1.UiViewBase {
       (this.WGe = new NumberSelectComponent_1.NumberSelectComponent(
         this.GetItem(9),
       ));
-    const e = {
+    var e = {
       MaxNumber: this.n3i,
       GetExchangeTableText: this.KGe,
       ValueChangeFunction: this.QGe,
@@ -234,7 +234,7 @@ class ExchangePopView extends UiViewBase_1.UiViewBase {
       this.vIt();
   }
   Og() {
-    const e = this.GetItem(2);
+    var e = this.GetItem(2);
     this.i3i.GetRootItem().SetUIParent(e),
       this.i3i.HideExchangePopViewElement(),
       this.i3i.Refresh(this.Goods, !1, 0),
@@ -246,34 +246,33 @@ class ExchangePopView extends UiViewBase_1.UiViewBase {
       this.h3i();
   }
   async vIt() {
-    var e = [this.Goods.GetPriceData().CurrencyId];
-    const t = this.ChildPopView.PopItem;
-    var e =
-      (await t.SetCurrencyItemList(e),
-      t.GetCurrencyComponent().GetCurrencyItemList()[0]);
+    var e = [this.Goods.GetPriceData().CurrencyId],
+      t = this.ChildPopView.PopItem,
+      e =
+        (await t.SetCurrencyItemList(e),
+        t.GetCurrencyComponent().GetCurrencyItemList()[0]);
     e.SetBeforeButtonFunction(this.PCi), e.SetToPayShopFunction();
   }
   OnBeforeDestroy() {
     this.WGe.Destroy(), this.i3i.Destroy(), this.RemoveResellTimer();
   }
   SetMaxCanBuyCount() {
-    const e = this.Goods.GetGoodsData();
-    var t = e.Price.Id;
-    var t =
-      ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(t);
-    var t = Math.trunc(t / e.GetNowPrice());
-    var t =
-      (e.HasBuyLimit()
-        ? (this.n3i = Math.min(e.GetRemainingCount(), t))
-        : (this.n3i = t),
-      ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-        e.ItemId,
-      ));
-    let i =
-      ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
-        e.ItemId,
-      );
-    t && i === 1 && t.ShowTypes.includes(30) && (this.n3i = 1),
+    var e = this.Goods.GetGoodsData(),
+      t = e.Price.Id,
+      t = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(t),
+      t = Math.trunc(t / e.GetNowPrice()),
+      t =
+        (e.HasBuyLimit()
+          ? (this.n3i = Math.min(e.GetRemainingCount(), t))
+          : (this.n3i = t),
+        ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+          e.ItemId,
+        )),
+      i =
+        ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
+          e.ItemId,
+        );
+    t && 1 === i && t.ShowTypes.includes(30) && (this.n3i = 1),
       t.ShowTypes.includes(30) &&
         ((i = ModelManager_1.ModelManager.RoleModel.GetResonantItemRoleId(
           e.ItemId,
@@ -282,7 +281,7 @@ class ExchangePopView extends UiViewBase_1.UiViewBase {
           ModelManager_1.ModelManager.RoleModel.GetRoleLeftResonantCountWithInventoryItem(
             i[0],
           )),
-        (this.n3i = this.n3i > (t = t === 0 ? 1 : t) ? t : this.n3i));
+        (this.n3i = this.n3i > (t = 0 === t ? 1 : t) ? t : this.n3i));
   }
   SetInteractionGroup() {
     this.Goods.IsLocked() ||
@@ -293,28 +292,28 @@ class ExchangePopView extends UiViewBase_1.UiViewBase {
       : this.r3i.SetInteractable(!0);
   }
   SetPriceIcon() {
-    var e = this.Goods.GetGoodsData();
-    var t = this.GetTexture(3);
-    var t = (this.SetItemIcon(t, e.Price.Id), this.GetText(4));
-    var e = this.s3i * e.GetNowPrice();
+    var e = this.Goods.GetGoodsData(),
+      t = this.GetTexture(3),
+      t = (this.SetItemIcon(t, e.Price.Id), this.GetText(4)),
+      e = this.s3i * e.GetNowPrice();
     t.SetText(e.toString());
   }
   SetPrice() {
-    var e = this.Goods.GetGoodsData();
-    const t = this.GetText(4);
-    var e = this.s3i * e.GetNowPrice();
-    const i = this.IsEnoughMoney();
+    var e = this.Goods.GetGoodsData(),
+      t = this.GetText(4),
+      e = this.s3i * e.GetNowPrice(),
+      i = this.IsEnoughMoney();
     t.SetChangeColor(!i, t.changeColor), t.SetText(e.toString());
   }
   SetNameAndDescribe() {
-    const e = this.Goods.GetGoodsData();
-    const t =
-      ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
-        e.ItemId,
-      );
+    var e = this.Goods.GetGoodsData(),
+      t =
+        ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
+          e.ItemId,
+        );
     let i = "";
     (i =
-      t === 1
+      1 === t
         ? ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e.ItemId)
             .Introduction
         : ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
@@ -334,22 +333,22 @@ class ExchangePopView extends UiViewBase_1.UiViewBase {
           ));
       if (this.s3i > e) return !1;
     }
-    var e = this.Goods.GetGoodsData();
-    const t = e.Price.Id;
+    var e = this.Goods.GetGoodsData(),
+      t = e.Price.Id;
     return (
       ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(t) >=
       e.GetNowPrice() * this.s3i
     );
   }
   h3i() {
-    var e = this.Goods.GetBuyLimitText();
-    var e = this.o3i || !StringUtils_1.StringUtils.IsEmpty(e);
+    var e = this.Goods.GetBuyLimitText(),
+      e = this.o3i || !StringUtils_1.StringUtils.IsEmpty(e);
     this.GetItem(8).SetUIActive(e);
   }
   KFi() {
-    const e = this.Goods.GetExchangeViewShopTipsText();
+    var e = this.Goods.GetExchangeViewShopTipsText();
     let t = void 0;
-    (t = this.o3i ? this.GetText(10) : this.GetText(16)).SetUIActive(e !== ""),
+    (t = this.o3i ? this.GetText(10) : this.GetText(16)).SetUIActive("" !== e),
       t.SetText(e),
       t?.SetColor(UE.Color.FromHex(COLOR));
   }
@@ -360,4 +359,4 @@ class ExchangePopView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.ExchangePopView = ExchangePopView;
-// # sourceMappingURL=ExchangePopView.js.map
+//# sourceMappingURL=ExchangePopView.js.map

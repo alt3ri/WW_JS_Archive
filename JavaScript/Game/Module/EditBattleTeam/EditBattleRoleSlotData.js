@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EditBattleRoleSlotData = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const EditBattleRoleData_1 = require("./EditBattleRoleData");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  EditBattleRoleData_1 = require("./EditBattleRoleData");
 class EditBattleRoleSlotData {
   constructor(t) {
     (this.wnt = void 0), (this.cC = t);
@@ -11,13 +11,13 @@ class EditBattleRoleSlotData {
     this.wnt = t;
   }
   SetRoleDataByPrewarInfo(t) {
-    const e = t.GetConfigId();
-    const a = t.GetOnlineNumber();
-    const i = t.GetPlayerName();
-    const o = t.GetPlayerId();
-    const r = t.GetLevel();
-    const s = t.IsSelf();
-    var t = t.GetIsReady();
+    var e = t.GetConfigId(),
+      a = t.GetOnlineNumber(),
+      i = t.GetPlayerName(),
+      o = t.GetPlayerId(),
+      r = t.GetLevel(),
+      s = t.IsSelf(),
+      t = t.GetIsReady();
     this.wnt || (this.wnt = new EditBattleRoleData_1.EditBattleRoleData()),
       this.wnt.Init(o, e, a, i, r, s, t);
   }
@@ -28,7 +28,7 @@ class EditBattleRoleSlotData {
     return this.wnt;
   }
   get GetRoleConfigId() {
-    const t = this.GetRoleData;
+    var t = this.GetRoleData;
     if (t) return t.ConfigId;
   }
   get HasRole() {
@@ -38,13 +38,13 @@ class EditBattleRoleSlotData {
     return this.cC;
   }
   get IsProhibit() {
-    let t;
-    let e = ModelManager_1.ModelManager.EditBattleTeamModel;
+    var t,
+      e = ModelManager_1.ModelManager.EditBattleTeamModel;
     return (
       !e.IsMultiInstanceDungeon &&
       (e.GetLeaderIsSelf
         ? ((t = this.GetPosition),
-          (e = e.GetMaxLimitRoleCount()) !== 0 && e < t)
+          0 !== (e = e.GetMaxLimitRoleCount()) && e < t)
         : !this.HasRole || !this.GetRoleData.IsSelf)
     );
   }
@@ -58,4 +58,4 @@ class EditBattleRoleSlotData {
   }
 }
 exports.EditBattleRoleSlotData = EditBattleRoleSlotData;
-// # sourceMappingURL=EditBattleRoleSlotData.js.map
+//# sourceMappingURL=EditBattleRoleSlotData.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GenericLayout = void 0);
-const UE = require("ue");
-const Queue_1 = require("../../../../Core/Container/Queue");
-const InTurnGridAppearAnimation_1 = require("../Grid/GridAnimation/InTurnGridAppearAnimation");
-const LguiUtil_1 = require("../LguiUtil");
-const ScrollViewDelegate_1 = require("../ScrollView/ScrollViewDelegate");
+const UE = require("ue"),
+  Queue_1 = require("../../../../Core/Container/Queue"),
+  InTurnGridAppearAnimation_1 = require("../Grid/GridAnimation/InTurnGridAppearAnimation"),
+  LguiUtil_1 = require("../LguiUtil"),
+  ScrollViewDelegate_1 = require("../ScrollView/ScrollViewDelegate");
 class OperationParam {
   constructor(t = void 0, i = void 0, e = !1) {
     (this.Data = t), (this.CallBack = i), (this.PlayGridAnim = e);
@@ -45,7 +45,7 @@ class GenericLayout {
     this.pHt = !0;
   }
   O0t() {
-    let t;
+    var t;
     (this.pHt = !1),
       this.gjt.Empty ||
         ((t = this.gjt.Pop()),
@@ -62,16 +62,16 @@ class GenericLayout {
   }
   GetKey(t) {
     if (!(t < 0 || t >= this.pqo.length)) {
-      const i = this.pqo[t];
+      var i = this.pqo[t];
       if (i) {
-        const e = this.dqo.GetDatas()[t];
+        var e = this.dqo.GetDatas()[t];
         if (e) return i.GetKey(e, t);
       }
     }
   }
   ClearChildren() {
     for (const i of this.gqo) {
-      const t = i.GetOwner();
+      var t = i.GetOwner();
       t?.IsValid() && t.K2_DestroyActor();
     }
     (this.gqo.length = 0),
@@ -80,19 +80,19 @@ class GenericLayout {
       this.vqo.clear();
   }
   async LoadGrid(i) {
-    const e = [];
+    var e = [];
     for (let t = this.gqo.length; t < i; t++) {
-      const s = this.Tke();
+      var s = this.Tke();
       e.push(this.dqo.CreateGridProxyAsync(t, s.GetOwner())), this.gqo.push(s);
     }
     await Promise.all(e);
   }
   RefreshByDataDirectly(t) {
-    const i = t.length;
+    var i = t.length;
     if (i > this.gqo.length) return !1;
     this.dqo.SetData(t), this.dqo.ClearSelectInfo(), this.vqo.clear();
     for (let t = this.fqo.length; t < i; t++) {
-      const e = this.gqo[t];
+      var e = this.gqo[t];
       e.SetUIActive(!0),
         this.fqo.push(e),
         this.pqo.push(this.dqo.GetGridProxy(t));
@@ -100,7 +100,7 @@ class GenericLayout {
     return this.Eqo(), !0;
   }
   RefreshByData(t, i, e = !1) {
-    let s;
+    var s;
     this.RHt
       ? ((s = new OperationParam(t, i, e)), this.gjt.Push(s))
       : (this.UHt(),
@@ -113,43 +113,43 @@ class GenericLayout {
       i && this.Cqo && this.Cqo.PlayGridAnim(this.GetDisplayGridNum());
   }
   Eqo() {
-    if (this.fqo.length !== 0)
+    if (0 !== this.fqo.length)
       for (let t = 0; t < this.fqo.length; t++) this.Iqo(t);
   }
   Iqo(t) {
     this.dqo.RefreshGridProxy(t, t);
-    const i = this.pqo[t];
+    var i = this.pqo[t];
     this.vqo.set(this.GetKey(t), i);
   }
   async yqo(t) {
-    const i = t.length;
-    const e =
-      (this.dqo.SetData(t),
-      this.dqo.ClearSelectInfo(),
-      this.vqo.clear(),
-      this.fqo.length);
+    var i = t.length,
+      e =
+        (this.dqo.SetData(t),
+        this.dqo.ClearSelectInfo(),
+        this.vqo.clear(),
+        this.fqo.length);
     if (i <= e) {
       for (let t = i; t < e; t++) this.gqo[t].SetUIActive(!1);
       (this.fqo.length = i), (this.pqo.length = i), this.Eqo();
     } else if (this.gqo.length >= i) {
       for (let t = e; t < i; t++) {
-        const s = this.gqo[t];
+        var s = this.gqo[t];
         s.SetUIActive(!0),
           this.fqo.push(s),
           this.pqo.push(this.dqo.GetGridProxy(t));
       }
       this.Eqo();
     } else {
-      const r = this.gqo.length;
+      var r = this.gqo.length;
       for (let t = e; t < r; t++) {
-        const h = this.gqo[t];
+        var h = this.gqo[t];
         h.SetUIActive(!0),
           this.fqo.push(h),
           this.pqo.push(this.dqo.GetGridProxy(t));
       }
       this.Eqo(), await this.LoadGrid(i);
       for (let t = r; t < this.gqo.length; t++) {
-        const a = this.gqo[t];
+        var a = this.gqo[t];
         a.SetUIActive(!0),
           this.fqo.push(a),
           this.pqo.push(this.dqo.GetGridProxy(t)),
@@ -174,7 +174,7 @@ class GenericLayout {
     return this.pqo;
   }
   GetLayoutItemByIndex(t) {
-    const i = this.dqo.IsProxyValid(t);
+    var i = this.dqo.IsProxyValid(t);
     if (i && !(t >= this.pqo.length)) return this.pqo[t];
   }
   GetDatas() {
@@ -242,4 +242,4 @@ class GenericLayout {
   }
 }
 exports.GenericLayout = GenericLayout;
-// # sourceMappingURL=GenericLayout.js.map
+//# sourceMappingURL=GenericLayout.js.map

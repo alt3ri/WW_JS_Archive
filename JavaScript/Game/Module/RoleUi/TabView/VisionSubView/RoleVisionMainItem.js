@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleVisionMainItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const RoleVisionCommonItem_1 = require("./RoleVisionCommonItem");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  RoleVisionCommonItem_1 = require("./RoleVisionCommonItem");
 class RoleVisionMainItem extends RoleVisionCommonItem_1.RoleVisionCommonItem {
   constructor() {
     super(...arguments), (this.T7e = () => !1);
@@ -46,29 +46,29 @@ class RoleVisionMainItem extends RoleVisionCommonItem_1.RoleVisionCommonItem {
       (this.BtnBindInfo = [[0, this.OnClickVision]]);
   }
   OnStart() {
-    const t = this.GetExtendToggle(0);
+    var t = this.GetExtendToggle(0);
     this.GetTexture(1).SetUIActive(!1),
       t.CanExecuteChange.Bind(() => this.T7e());
   }
   OnUpdateTrialItem(t) {}
   OnUpdateItem(t) {
-    var e = t?.GetCurrentSkillId();
-    const i = t?.GetIfActivePersonalSkill();
-    var e =
-      ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSkillBySkillId(
-        e,
-      );
-    var e =
-      (e &&
-        (this.SetTextureByPath(
-          i ? e.BattleViewIcon : e.SpecialBattleViewIcon,
-          this.GetTexture(1),
+    var e = t?.GetCurrentSkillId(),
+      i = t?.GetIfActivePersonalSkill(),
+      e =
+        ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSkillBySkillId(
+          e,
         ),
-        this.GetTexture(1).SetUIActive(!0)),
-      this.GetTexture(1));
+      e =
+        (e &&
+          (this.SetTextureByPath(
+            i ? e.BattleViewIcon : e.SpecialBattleViewIcon,
+            this.GetTexture(1),
+          ),
+          this.GetTexture(1).SetUIActive(!0)),
+        this.GetTexture(1));
     e.SetChangeColor(i, e.changeColor),
       this.GetItem(7).SetUIActive(t?.GetIfActivePersonalSkill());
   }
 }
 exports.RoleVisionMainItem = RoleVisionMainItem;
-// # sourceMappingURL=RoleVisionMainItem.js.map
+//# sourceMappingURL=RoleVisionMainItem.js.map

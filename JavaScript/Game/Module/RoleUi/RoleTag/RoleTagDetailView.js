@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleTagDetailView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const RoleTagDetailItem_1 = require("./RoleTagDetailItem");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  RoleTagDetailItem_1 = require("./RoleTagDetailItem");
 class RoleTagDetailView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -28,7 +28,7 @@ class RoleTagDetailView extends UiViewBase_1.UiViewBase {
     ];
   }
   OnStart() {
-    let e = this.OpenParam;
+    var e = this.OpenParam;
     void 0 === e
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("Role", 59, "RoleTagDetailView无效tagList")
@@ -50,4 +50,4 @@ class RoleTagDetailView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RoleTagDetailView = RoleTagDetailView;
-// # sourceMappingURL=RoleTagDetailView.js.map
+//# sourceMappingURL=RoleTagDetailView.js.map

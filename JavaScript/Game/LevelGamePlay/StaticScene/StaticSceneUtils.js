@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.StaticSceneUtils = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class StaticSceneUtils {
   static GetActorRefByPbDataId(e) {
     if (e) {
-      let t = ModelManager_1.ModelManager.CreatureModel.GetActorRefData();
+      var t = ModelManager_1.ModelManager.CreatureModel.GetActorRefData();
       if (t) {
-        var a = ModelManager_1.ModelManager.GameModeModel.MapPath;
-        var o = a.split("/");
-        var a = a + "." + o[o.length - 1];
-        var o = e;
-        var e = t.get(a);
+        var a = ModelManager_1.ModelManager.GameModeModel.MapPath,
+          o = a.split("/"),
+          a = a + "." + o[o.length - 1],
+          o = e,
+          e = t.get(a);
         if (e)
           return (
             (t = e.get(o)) ||
@@ -42,4 +42,4 @@ class StaticSceneUtils {
   }
 }
 exports.StaticSceneUtils = StaticSceneUtils;
-// # sourceMappingURL=StaticSceneUtils.js.map
+//# sourceMappingURL=StaticSceneUtils.js.map

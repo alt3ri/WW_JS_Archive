@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RenderUtil = void 0);
-const UE = require("ue");
-const GlobalData_1 = require("../../GlobalData");
-const CharBodyEffect_1 = require("../Character/Components/Components/CharBodyEffect");
-const CharDecalShadow_1 = require("../Character/Components/Components/CharDecalShadow");
-const CharDitherEffect_1 = require("../Character/Components/Components/CharDitherEffect");
-const CharNpcDitherEffect_1 = require("../Character/Components/Components/CharNpcDitherEffect");
-const CharPropertyModifier_1 = require("../Character/Components/Components/CharPropertyModifier");
-const CharSceneInteraction_1 = require("../Character/Components/Components/CharSceneInteraction");
-const CharMaterialContainer_1 = require("../Character/Components/MaterialContainer/CharMaterialContainer");
-const CharMaterialController_1 = require("../Character/Components/MaterialController/CharMaterialController");
+const UE = require("ue"),
+  GlobalData_1 = require("../../GlobalData"),
+  CharBodyEffect_1 = require("../Character/Components/Components/CharBodyEffect"),
+  CharDecalShadow_1 = require("../Character/Components/Components/CharDecalShadow"),
+  CharDitherEffect_1 = require("../Character/Components/Components/CharDitherEffect"),
+  CharNpcDitherEffect_1 = require("../Character/Components/Components/CharNpcDitherEffect"),
+  CharPropertyModifier_1 = require("../Character/Components/Components/CharPropertyModifier"),
+  CharSceneInteraction_1 = require("../Character/Components/Components/CharSceneInteraction"),
+  CharMaterialContainer_1 = require("../Character/Components/MaterialContainer/CharMaterialContainer"),
+  CharMaterialController_1 = require("../Character/Components/MaterialController/CharMaterialController");
 class RenderUtil {
   static GetRenderComps(e) {
-    const r = new Array();
+    var r = new Array();
     switch (e) {
       case 0:
       case 1:
@@ -115,6 +115,7 @@ class RenderUtil {
       case 2:
         return e.End;
       default:
+        return;
     }
   }
   static Lerp(e, r, a) {
@@ -127,7 +128,7 @@ class RenderUtil {
     return e < r ? e : r;
   }
   static Clamp(e, r, a) {
-    const t = a <= e ? a : e <= r ? r : e;
+    let t = a <= e ? a : e <= r ? r : e;
     return t;
   }
   static LerpVector(e, r, a, t) {
@@ -137,7 +138,7 @@ class RenderUtil {
       (t[2] = this.Lerp(e.Z, r.Z, a));
   }
   static StringIsNullOrEmpty(e) {
-    return e.length === 0;
+    return 0 === e.length;
   }
   static GetSelectedChannel(e) {
     switch (e) {
@@ -199,4 +200,4 @@ class RenderUtil {
   }
 }
 exports.RenderUtil = RenderUtil;
-// # sourceMappingURL=RenderUtil.js.map
+//# sourceMappingURL=RenderUtil.js.map

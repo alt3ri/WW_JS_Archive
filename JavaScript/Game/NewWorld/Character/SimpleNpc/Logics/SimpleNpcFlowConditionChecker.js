@@ -60,13 +60,13 @@ class SimpleNpcFlowConditionChecker {
   }
   static oir(e) {
     return (
-      e === 0 ||
-      ModelManager_1.ModelManager.QuestNewModel.GetQuestState(e) === 2
+      0 === e ||
+      2 === ModelManager_1.ModelManager.QuestNewModel.GetQuestState(e)
     );
   }
   static rir(e) {
     return (
-      e === 0 || ModelManager_1.ModelManager.QuestNewModel.CheckQuestFinished(e)
+      0 === e || ModelManager_1.ModelManager.QuestNewModel.CheckQuestFinished(e)
     );
   }
   static CheckFirstEnter(e) {
@@ -78,4 +78,4 @@ class SimpleNpcFlowConditionChecker {
 }
 (exports.SimpleNpcFlowConditionChecker = SimpleNpcFlowConditionChecker).nir =
   new Set();
-// # sourceMappingURL=SimpleNpcFlowConditionChecker.js.map
+//# sourceMappingURL=SimpleNpcFlowConditionChecker.js.map

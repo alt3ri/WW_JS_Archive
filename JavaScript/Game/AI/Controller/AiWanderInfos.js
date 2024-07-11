@@ -18,7 +18,7 @@ class AiWanderInfos {
     return this.AiBattleWanderGroups[this.CurrentBattleWanderIndex];
   }
   RandomBattleWanderEndTime() {
-    let t;
+    var t;
     return this.wre && this.wre <= this.Bre
       ? MathUtils_1.MathUtils.GetRandomRange(this.wre, this.Bre)
       : ((t = this.GetCurrentBattleWander().SumWanderTime),
@@ -26,4 +26,4 @@ class AiWanderInfos {
   }
 }
 exports.AiWanderInfos = AiWanderInfos;
-// # sourceMappingURL=AiWanderInfos.js.map
+//# sourceMappingURL=AiWanderInfos.js.map

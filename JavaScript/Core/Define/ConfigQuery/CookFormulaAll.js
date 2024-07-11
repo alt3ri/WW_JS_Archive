@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configCookFormulaAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const CookFormula_1 = require("../Config/CookFormula");
-const DB = "db_cook.db";
-const FILE = "p.烹饪.xlsx";
-const TABLE = "CookFormula";
-const COMMAND = "select BinData from `CookFormula`";
-const KEY_PREFIX = "CookFormulaAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  CookFormula_1 = require("../Config/CookFormula"),
+  DB = "db_cook.db",
+  FILE = "p.烹饪.xlsx",
+  TABLE = "CookFormula",
+  COMMAND = "select BinData from `CookFormula`",
+  KEY_PREFIX = "CookFormulaAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configCookFormulaAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configCookFormulaAll = {
     );
   },
   GetConfigList: (o = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configCookFormulaAll = {
       }
       const r = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let i = void 0;
+        var i = void 0;
         if (
           (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configCookFormulaAll = {
     }
   },
 };
-// # sourceMappingURL=CookFormulaAll.js.map
+//# sourceMappingURL=CookFormulaAll.js.map

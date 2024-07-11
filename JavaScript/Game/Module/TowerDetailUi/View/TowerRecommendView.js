@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerRecommendView = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew");
-const TowerRecommendItem_1 = require("./TowerRecommendItem");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
+  TowerRecommendItem_1 = require("./TowerRecommendItem");
 class TowerRecommendView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -33,7 +33,7 @@ class TowerRecommendView extends UiViewBase_1.UiViewBase {
   }
   Og() {
     ModelManager_1.ModelManager.TowerModel.RecommendFormation &&
-    ModelManager_1.ModelManager.TowerModel.RecommendFormation?.length > 0
+    0 < ModelManager_1.ModelManager.TowerModel.RecommendFormation?.length
       ? (this.aDo.SetActive(!0),
         this.aDo.RefreshByData(
           ModelManager_1.ModelManager.TowerModel.RecommendFormation,
@@ -50,4 +50,4 @@ class TowerRecommendView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.TowerRecommendView = TowerRecommendView;
-// # sourceMappingURL=TowerRecommendView.js.map
+//# sourceMappingURL=TowerRecommendView.js.map

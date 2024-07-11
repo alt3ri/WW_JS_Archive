@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestUtil = void 0);
-const ue_1 = require("ue");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils");
-const GeneralLogicTreeUtil_1 = require("../GeneralLogicTree/GeneralLogicTreeUtil");
-const MapDefine_1 = require("../Map/MapDefine");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
+const ue_1 = require("ue"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
+  GeneralLogicTreeUtil_1 = require("../GeneralLogicTree/GeneralLogicTreeUtil"),
+  MapDefine_1 = require("../Map/MapDefine"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager");
 class QuestUtil {
   static SetTrackDistanceText(e, r) {
     if (!ObjectUtils_1.ObjectUtils.IsValid(e)) return !1;
     if (!r) return !1;
-    let t = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
+    var t = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
     if (!t) return !1;
     let i = 0;
     (i =
@@ -24,7 +24,7 @@ class QuestUtil {
     let a = i.toString();
     return (
       (a =
-        t > 300
+        300 < t
           ? `<texture=${ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath("T_YellowArrowDown")}/>` +
             i
           : t < -300
@@ -37,4 +37,4 @@ class QuestUtil {
   }
 }
 exports.QuestUtil = QuestUtil;
-// # sourceMappingURL=QuestUtil.js.map
+//# sourceMappingURL=QuestUtil.js.map

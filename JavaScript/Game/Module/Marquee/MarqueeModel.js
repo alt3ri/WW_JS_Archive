@@ -7,18 +7,18 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.MarqueeContent =
     exports.MarqueeDataEx =
       void 0);
-const Json_1 = require("../../../Core/Common/Json");
-const LanguageSystem_1 = require("../../../Core/Common/LanguageSystem");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const LocalStorage_1 = require("../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../Common/LocalStorageDefine");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const MARQUEEPLATFORMPC = 1;
-const MARQUEEPLATFORMIOS = 2;
-const MARQUEEPLATFORMANDROID = 3;
+const Json_1 = require("../../../Core/Common/Json"),
+  LanguageSystem_1 = require("../../../Core/Common/LanguageSystem"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  LocalStorage_1 = require("../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  MARQUEEPLATFORMPC = 1,
+  MARQUEEPLATFORMIOS = 2,
+  MARQUEEPLATFORMANDROID = 3;
 class MarqueeDataEx extends Json_1.JsonObjBase {
   constructor() {
     super(...arguments),
@@ -66,7 +66,7 @@ class MarqueeData {
         }
       e && (this.Content = e.content),
         this.Content ||
-          (this.Contents && this.Contents.length > 0
+          (this.Contents && 0 < this.Contents.length
             ? (this.Content = this.Contents[0].content)
             : (this.Content = ""));
     }
@@ -89,16 +89,16 @@ class MarqueeData {
       (ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
         (e =
           ControllerHolder_1.ControllerHolder.KuroSdkController.GetChannelId()),
-      this.Channel && this.Channel.length > 0 && !this.Channel.includes(e))
+      this.Channel && 0 < this.Channel.length && !this.Channel.includes(e))
     )
       return !1;
     let t = MARQUEEPLATFORMPC;
     return (
-      ModelManager_1.ModelManager.PlatformModel.PlatformType === 2
+      2 === ModelManager_1.ModelManager.PlatformModel.PlatformType
         ? (t = MARQUEEPLATFORMIOS)
-        : ModelManager_1.ModelManager.PlatformModel.PlatformType === 1 &&
+        : 1 === ModelManager_1.ModelManager.PlatformModel.PlatformType &&
           (t = MARQUEEPLATFORMANDROID),
-      !(this.Platform && this.Platform.length > 0 && !this.Platform.includes(t))
+      !(this.Platform && 0 < this.Platform.length && !this.Platform.includes(t))
     );
   }
 }
@@ -155,15 +155,15 @@ class MarqueeModel extends ModelBase_1.ModelBase {
   }
   AddOrUpdateMarqueeDate(r) {
     if (r.CheckPlatformAndChannelIfShow()) {
-      const e = TimeUtil_1.TimeUtil.GetServerTime();
+      var e = TimeUtil_1.TimeUtil.GetServerTime();
       if (!(r.EndTime <= e)) {
-        const t = this.GetScrollingTime(r);
+        var t = this.GetScrollingTime(r);
         if (!(t >= r.ScrollTimes)) {
           let t = -1;
           for (let e = 0; e < this.YUi.length; e++)
             this.YUi[e].Id === r.Id && (t = e);
-          t >= 0
-            ? ((this.YUi[t] = r), t === 0 && (this.$Ui = r))
+          0 <= t
+            ? ((this.YUi[t] = r), 0 === t && (this.$Ui = r))
             : this.YUi.push(r),
             this.ZUi(r),
             this.CleanMarqueeStorageDataMap(e),
@@ -173,9 +173,9 @@ class MarqueeModel extends ModelBase_1.ModelBase {
     }
   }
   CleanMarqueeStorageDataMap(e) {
-    let t;
-    let r;
-    const a = new Array();
+    var t,
+      r,
+      a = new Array();
     for ([t, r] of this.JUi) r.EndTime <= e && a.push(t);
     for (const i of a) this.JUi.delete(i);
   }
@@ -212,7 +212,7 @@ class MarqueeModel extends ModelBase_1.ModelBase {
   }
   RemoveMarqueeData(t) {
     for (let e = 0; e < this.YUi.length; e++) {
-      const r = this.YUi[e];
+      var r = this.YUi[e];
       if (r.Id === t) return this.YUi.splice(e, 1), r;
     }
   }
@@ -228,4 +228,4 @@ class MarqueeModel extends ModelBase_1.ModelBase {
   }
 }
 (exports.MarqueeModel = MarqueeModel).zUi = void 0;
-// # sourceMappingURL=MarqueeModel.js.map
+//# sourceMappingURL=MarqueeModel.js.map

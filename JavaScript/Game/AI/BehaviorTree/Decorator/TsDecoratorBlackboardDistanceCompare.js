@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsAiController_1 = require("../../Controller/TsAiController");
-const MAX_ERROR = 10;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsAiController_1 = require("../../Controller/TsAiController"),
+  MAX_ERROR = 10;
 class TsDecoratorBlackboardDistanceCompare extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -37,10 +37,10 @@ class TsDecoratorBlackboardDistanceCompare extends UE.BTDecorator_BlueprintBase 
           ]),
         !1
       );
-    let e = r.GetEntity();
+    var e = r.GetEntity();
     if (!e) return !1;
     this.InitTsVariables();
-    const o = r.AiController.CharActorComp;
+    var o = r.AiController.CharActorComp;
     if (
       (this.LocationCache || (this.LocationCache = Vector_1.Vector.Create()),
       this.LocationCache.DeepCopy(o.ActorLocationProxy),
@@ -68,11 +68,11 @@ class TsDecoratorBlackboardDistanceCompare extends UE.BTDecorator_BlueprintBase 
       this.OtherLocationCache.DeepCopy(e);
     }
     if (!this.LocationCache || !this.OtherLocationCache) return !1;
-    const i = Vector_1.Vector.DistSquared(
-      this.LocationCache,
-      this.OtherLocationCache,
-    );
-    const s = this.TsCompareValue * this.TsCompareValue;
+    var i = Vector_1.Vector.DistSquared(
+        this.LocationCache,
+        this.OtherLocationCache,
+      ),
+      s = this.TsCompareValue * this.TsCompareValue;
     switch (this.TsCompareType) {
       case 0:
         return Math.abs(i - s) <= MAX_ERROR;
@@ -99,4 +99,4 @@ class TsDecoratorBlackboardDistanceCompare extends UE.BTDecorator_BlueprintBase 
   }
 }
 exports.default = TsDecoratorBlackboardDistanceCompare;
-// # sourceMappingURL=TsDecoratorBlackboardDistanceCompare.js.map
+//# sourceMappingURL=TsDecoratorBlackboardDistanceCompare.js.map

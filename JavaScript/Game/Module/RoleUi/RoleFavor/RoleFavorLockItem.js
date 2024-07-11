@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleFavorLockItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class RoleFavorLockItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, s) {
     super(), (this.c_o = s), e && this.CreateThenShowByActor(e.GetOwner());
@@ -16,7 +16,7 @@ class RoleFavorLockItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    let e, s;
+    var e, s;
     this.c_o &&
       ((e = this.c_o.Desc),
       (s = this.c_o.IsLock),
@@ -30,4 +30,4 @@ class RoleFavorLockItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleFavorLockItem = RoleFavorLockItem;
-// # sourceMappingURL=RoleFavorLockItem.js.map
+//# sourceMappingURL=RoleFavorLockItem.js.map

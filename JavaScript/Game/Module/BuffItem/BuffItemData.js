@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BuffItemData = void 0);
-const Time_1 = require("../../../Core/Common/Time");
-const TimeUtil_1 = require("../../Common/TimeUtil");
+const Time_1 = require("../../../Core/Common/Time"),
+  TimeUtil_1 = require("../../Common/TimeUtil");
 class BuffItemData {
   constructor(t, e, i) {
     (this.Igt = 0),
@@ -27,7 +27,7 @@ class BuffItemData {
     this.Rgt = t;
   }
   GetBuffItemRemainCdTime() {
-    const t = this.Igt - (Time_1.Time.WorldTimeSeconds - this.Lgt + this.Tgt);
+    var t = this.Igt - (Time_1.Time.WorldTimeSeconds - this.Lgt + this.Tgt);
     return Math.max(t, 0);
   }
   GetBuffItemTotalCdTime() {
@@ -35,4 +35,4 @@ class BuffItemData {
   }
 }
 exports.BuffItemData = BuffItemData;
-// # sourceMappingURL=BuffItemData.js.map
+//# sourceMappingURL=BuffItemData.js.map

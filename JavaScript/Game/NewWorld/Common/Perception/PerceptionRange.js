@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PerceptionRange = void 0);
-const cpp_1 = require("cpp");
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
+const cpp_1 = require("cpp"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector");
 class PerceptionRange {
   constructor() {
     (this.$ir = void 0),
@@ -27,7 +27,7 @@ class PerceptionRange {
       ));
   }
   InitStatic(i, t, s, o = !1, h = void 0, e = void 0, r = void 0) {
-    this.zir !== 0
+    0 !== this.zir
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("Perception", 37, "重复初始化静态感知范围")
       : o || e || r
@@ -44,7 +44,7 @@ class PerceptionRange {
             this.w_e ? this.tor : void 0,
             this.Yir ? this.ior : void 0,
           )),
-          this.zir === 0 &&
+          0 === this.zir &&
             Log_1.Log.CheckError() &&
             Log_1.Log.Error("Perception", 37, "初始化静态感知范围失败"))
         : Log_1.Log.CheckError() &&
@@ -59,7 +59,7 @@ class PerceptionRange {
             37,
             "初始化动态感知范围时，感知范围大小非法",
           )
-        : this.zir !== 0
+        : 0 !== this.zir
           ? Log_1.Log.CheckError() &&
             Log_1.Log.Error("Perception", 37, "重复初始化动态感知范围")
           : c || o || h
@@ -78,7 +78,7 @@ class PerceptionRange {
                   this.w_e ? this.tor : void 0,
                   this.Yir ? this.ior : void 0,
                 )),
-              this.zir === 0 &&
+              0 === this.zir &&
                 Log_1.Log.CheckError() &&
                 Log_1.Log.Error("Perception", 37, "初始化动态感知范围失败"))
             : Log_1.Log.CheckError() &&
@@ -97,12 +97,12 @@ class PerceptionRange {
       (this.Jir = void 0),
       this.U7o.Reset(),
       (this.Zir = void 0),
-      this.zir !== 0 &&
+      0 !== this.zir &&
         (cpp_1.FKuroPerceptionInterface.RemovePerceptionRange(this.zir),
         (this.zir = 0));
   }
   UpdateRange(i) {
-    this.zir !== 0 &&
+    0 !== this.zir &&
       (i <= 0
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -114,4 +114,4 @@ class PerceptionRange {
   }
 }
 exports.PerceptionRange = PerceptionRange;
-// # sourceMappingURL=PerceptionRange.js.map
+//# sourceMappingURL=PerceptionRange.js.map

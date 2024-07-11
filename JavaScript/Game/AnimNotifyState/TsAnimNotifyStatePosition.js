@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyStatePosition extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -10,7 +10,7 @@ class TsAnimNotifyStatePosition extends UE.KuroAnimNotifyState {
       (this.是否持续朝向目标 = !1);
   }
   K2_NotifyBegin(t, e, s) {
-    const r = t.GetOwner();
+    var r = t.GetOwner();
     return (
       r instanceof TsBaseCharacter_1.default &&
       (r.CharacterActorComponent?.Entity?.GetComponent(36)?.SetAddMoveWithMesh(
@@ -23,7 +23,7 @@ class TsAnimNotifyStatePosition extends UE.KuroAnimNotifyState {
     );
   }
   K2_NotifyTick(t, e, s) {
-    let r;
+    var r;
     return (
       !!this.是否持续朝向目标 &&
       (r = t.GetOwner()) instanceof TsBaseCharacter_1.default &&
@@ -40,7 +40,7 @@ class TsAnimNotifyStatePosition extends UE.KuroAnimNotifyState {
     );
   }
   K2_NotifyEnd(t, e) {
-    const s = t.GetOwner();
+    var s = t.GetOwner();
     return (
       s instanceof TsBaseCharacter_1.default &&
       (s.CharacterActorComponent?.Entity?.GetComponent(36)?.StopAddMoveWithMesh(
@@ -54,4 +54,4 @@ class TsAnimNotifyStatePosition extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStatePosition;
-// # sourceMappingURL=TsAnimNotifyStatePosition.js.map
+//# sourceMappingURL=TsAnimNotifyStatePosition.js.map

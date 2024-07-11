@@ -1,23 +1,27 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, o, i) {
-    let s;
-    const r = arguments.length;
-    let n =
-      r < 3 ? e : i === null ? (i = Object.getOwnPropertyDescriptor(e, o)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var s,
+      r = arguments.length,
+      n =
+        r < 3
+          ? e
+          : null === i
+            ? (i = Object.getOwnPropertyDescriptor(e, o))
+            : i;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(t, e, o, i);
     else
-      for (let c = t.length - 1; c >= 0; c--)
-        (s = t[c]) && (n = (r < 3 ? s(n) : r > 3 ? s(e, o, n) : s(e, o)) || n);
-    return r > 3 && n && Object.defineProperty(e, o, n), n;
+      for (var c = t.length - 1; 0 <= c; c--)
+        (s = t[c]) && (n = (r < 3 ? s(n) : 3 < r ? s(e, o, n) : s(e, o)) || n);
+    return 3 < r && n && Object.defineProperty(e, o, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LockComponent = void 0);
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
+const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
 let LockComponent = class LockComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -28,7 +32,7 @@ let LockComponent = class LockComponent extends EntityComponent_1.EntityComponen
   OnStart() {
     (this.Snn = this.Entity.GetComponent(177)),
       (this.zht = this.Entity.GetComponent(0));
-    const t = this.zht.GetEntityEnterComponentState();
+    var t = this.zht.GetEntityEnterComponentState();
     if (void 0 !== t)
       switch (t) {
         case Protocol_1.Aki.Protocol.qqs.Proto_NotUnlock:
@@ -46,7 +50,7 @@ let LockComponent = class LockComponent extends EntityComponent_1.EntityComponen
     return this.Enn || (this.Enn = -421801185), this.Snn.AddTag(this.Enn), !0;
   }
   ChangeLockTag(t) {
-    const e = this.Enn;
+    var e = this.Enn;
     (this.Enn = t), this.Snn.ChangeLocalLevelTag(this.Enn, e);
   }
 };
@@ -55,4 +59,4 @@ let LockComponent = class LockComponent extends EntityComponent_1.EntityComponen
   LockComponent,
 )),
   (exports.LockComponent = LockComponent);
-// # sourceMappingURL=LockComponent.js.map
+//# sourceMappingURL=LockComponent.js.map

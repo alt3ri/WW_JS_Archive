@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiTeam = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const BlackboardController_1 = require("../../World/Controller/BlackboardController");
-const AiScheduleGroup_1 = require("./AiScheduleGroup");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  BlackboardController_1 = require("../../World/Controller/BlackboardController"),
+  AiScheduleGroup_1 = require("./AiScheduleGroup");
 class AiTeam {
   constructor() {
     (this.TeamId = 0),
@@ -17,7 +17,7 @@ class AiTeam {
       (this.AreaCharTypeToPriority = new Array()),
       (this.xse = new Map()),
       (this.xie = (e, t) => {
-        let i;
+        var i;
         t &&
           (i = this.xse.get(t)) &&
           (this.xse.delete(t), this.xse.set(e, i), (i.Target = e));
@@ -30,7 +30,7 @@ class AiTeam {
         this.xie,
       );
     for (const i of this.AiTeamAreas) {
-      const t = new Map();
+      var t = new Map();
       this.AreaCharTypeToPriority.push(t);
       let e = 0;
       for (const r of i.CharTypes) t.set(r, ++e);
@@ -49,18 +49,18 @@ class AiTeam {
   }
   RemoveMember(e) {
     if (this.TeamMemberToGroup.delete(e))
-      for (const [, t] of this.xse) t.Remove(e);
+      for (var [, t] of this.xse) t.Remove(e);
   }
   Tick() {
     this.wse();
-    for (const [, e] of this.xse) e.ScheduleGroup();
+    for (var [, e] of this.xse) e.ScheduleGroup();
   }
   wse() {
-    for (const [, e] of this.xse) e.CheckTargetAndRemove();
-    for (const [t] of this.TeamMemberToGroup) {
-      const i = t.AiHateList.GetCurrentTarget();
+    for (var [, e] of this.xse) e.CheckTargetAndRemove();
+    for (var [t] of this.TeamMemberToGroup) {
+      var i = t.AiHateList.GetCurrentTarget();
       if (i?.Valid) {
-        const r = i?.Entity?.GetComponent(1);
+        var r = i?.Entity?.GetComponent(1);
         if (r)
           if (
             r.CreatureData.GetEntityType() !==
@@ -82,11 +82,11 @@ class AiTeam {
           }
       } else this.TeamMemberToGroup.set(t, void 0);
     }
-    for (const [o, s] of this.xse) s.IsEmpty() && this.xse.delete(o);
+    for (var [o, s] of this.xse) s.IsEmpty() && this.xse.delete(o);
   }
   GetAiTeamAreaMemberData(e) {
     return this.TeamMemberToGroup.get(e)?.GetMemberData(e);
   }
 }
 exports.AiTeam = AiTeam;
-// # sourceMappingURL=AiTeam.js.map
+//# sourceMappingURL=AiTeam.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PausePanel = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const UiComponentsAction_1 = require("../../../../Ui/Base/UiComponentsAction");
-const UiManager_1 = require("../../../../Ui/UiManager");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  UiComponentsAction_1 = require("../../../../Ui/Base/UiComponentsAction"),
+  UiManager_1 = require("../../../../Ui/UiManager");
 class PausePanel extends UiComponentsAction_1.UiComponentsAction {
   constructor() {
     super(...arguments),
@@ -37,4 +37,4 @@ class PausePanel extends UiComponentsAction_1.UiComponentsAction {
   }
 }
 exports.PausePanel = PausePanel;
-// # sourceMappingURL=PausePanel.js.map
+//# sourceMappingURL=PausePanel.js.map

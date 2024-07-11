@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConditionConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ConditionById_1 = require("../../../Core/Define/ConfigQuery/ConditionById");
-const ConditionGroupById_1 = require("../../../Core/Define/ConfigQuery/ConditionGroupById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  ConditionById_1 = require("../../../Core/Define/ConfigQuery/ConditionById"),
+  ConditionGroupById_1 = require("../../../Core/Define/ConfigQuery/ConditionGroupById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class ConditionConfig extends ConfigBase_1.ConfigBase {
   GetConditionGroupConfig(o) {
-    const n = ConditionGroupById_1.configConditionGroupById.GetConfig(o);
+    var n = ConditionGroupById_1.configConditionGroupById.GetConfig(o);
     if (n) return n;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("InstanceDungeon", 17, "获取条件组配置错误", [
@@ -16,7 +16,7 @@ class ConditionConfig extends ConfigBase_1.ConfigBase {
       ]);
   }
   GetConditionConfig(o) {
-    const n = ConditionById_1.configConditionById.GetConfig(o);
+    var n = ConditionById_1.configConditionById.GetConfig(o);
     if (n) return n;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("InstanceDungeon", 17, "获取条件配置错误", [
@@ -26,7 +26,7 @@ class ConditionConfig extends ConfigBase_1.ConfigBase {
   }
   GetConditionConfigByType(o, n) {
     for (const e of this.GetConditionGroupConfig(o).GroupId) {
-      const i = this.GetConditionConfig(e);
+      var i = this.GetConditionConfig(e);
       if (n === i.Type) return i;
     }
   }
@@ -36,4 +36,4 @@ class ConditionConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.ConditionConfig = ConditionConfig;
-// # sourceMappingURL=ConditionConfig.js.map
+//# sourceMappingURL=ConditionConfig.js.map

@@ -16,4 +16,4 @@ class EffectModelGpuParticle extends UE.EffectModelBase {
   }
 }
 exports.default = EffectModelGpuParticle;
-// # sourceMappingURL=EffectModelGpuParticle.js.map
+//# sourceMappingURL=EffectModelGpuParticle.js.map

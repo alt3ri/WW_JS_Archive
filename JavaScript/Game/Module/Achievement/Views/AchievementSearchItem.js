@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AchievementSearchItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const DynScrollView_1 = require("../../Util/ScrollView/DynScrollView");
-const AchievementSearchResultDynItem_1 = require("./AchievementSearchResultDynItem");
-const AchievementSearchResultItem_1 = require("./AchievementSearchResultItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  DynScrollView_1 = require("../../Util/ScrollView/DynScrollView"),
+  AchievementSearchResultDynItem_1 = require("./AchievementSearchResultDynItem"),
+  AchievementSearchResultItem_1 = require("./AchievementSearchResultItem");
 class AchievementSearchItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -88,13 +88,13 @@ class AchievementSearchItem extends UiPanelBase_1.UiPanelBase {
     this.gGe = "";
   }
   vGe() {
-    const e = ModelManager_1.ModelManager.AchievementModel.CurrentSearchText;
+    var e = ModelManager_1.ModelManager.AchievementModel.CurrentSearchText;
     this.gGe !== e && this.Hqe();
   }
   Hqe() {
-    let e;
-    let t;
-    const i = ModelManager_1.ModelManager.AchievementModel;
+    var e,
+      t,
+      i = ModelManager_1.ModelManager.AchievementModel;
     i.AchievementSearchState &&
       ((t = i.CurrentSearchText),
       (e = i.GetSearchResult()),
@@ -108,4 +108,4 @@ class AchievementSearchItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.AchievementSearchItem = AchievementSearchItem;
-// # sourceMappingURL=AchievementSearchItem.js.map
+//# sourceMappingURL=AchievementSearchItem.js.map

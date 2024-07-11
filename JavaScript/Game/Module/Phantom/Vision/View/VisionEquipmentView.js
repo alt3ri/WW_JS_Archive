@@ -1,45 +1,45 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionEquipmentView = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../../Core/Audio/AudioSystem");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../Core/Common/Time");
-const TickSystem_1 = require("../../../../../Core/Tick/TickSystem");
-const Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../../RedDot/RedDotController");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../../../Ui/Common/PopupCaptionItem");
-const LguiEventSystemManager_1 = require("../../../../Ui/LguiEventSystem/LguiEventSystemManager");
-const UiLayer_1 = require("../../../../Ui/UiLayer");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const CommonDropDown_1 = require("../../../Common/DropDown/CommonDropDown");
-const FilterEntrance_1 = require("../../../Common/FilterSort/Filter/View/FilterEntrance");
-const SortEntrance_1 = require("../../../Common/FilterSort/Sort/View/SortEntrance");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const StaticTabComponent_1 = require("../../../Common/TabComponent/StaticTabComponent");
-const ConfirmBoxDefine_1 = require("../../../ConfirmBox/ConfirmBoxDefine");
-const RoleVisionDragHeadItem_1 = require("../../../RoleUi/TabView/VisionSubView/RoleVisionDragHeadItem");
-const VisionCommonDragItem_1 = require("../../../RoleUi/TabView/VisionSubView/VisionCommonDragItem");
-const UiSceneManager_1 = require("../../../UiComponent/UiSceneManager");
-const UiModelUtil_1 = require("../../../UiModel/UiModelUtil");
-const LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView");
-const PhantomBattleController_1 = require("../../PhantomBattle/PhantomBattleController");
-const CostTabItem_1 = require("./CostTabItem");
-const VisionDetailComponent_1 = require("./VisionDetailComponent");
-const VisionEquipmentDragItem_1 = require("./VisionEquipmentDragItem");
-const VisionEquipmentDropDownItem_1 = require("./VisionEquipmentDropDownItem");
-const VisionEquipmentDropDownTitleItem_1 = require("./VisionEquipmentDropDownTitleItem");
-const VisionMediumItemGrid_1 = require("./VisionMediumItemGrid");
-const ANIMATIONTIME = 300;
-const INVALIDINDEX = 999;
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../../../Core/Audio/AudioSystem"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  TickSystem_1 = require("../../../../../Core/Tick/TickSystem"),
+  Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../../RedDot/RedDotController"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../../../Ui/Common/PopupCaptionItem"),
+  LguiEventSystemManager_1 = require("../../../../Ui/LguiEventSystem/LguiEventSystemManager"),
+  UiLayer_1 = require("../../../../Ui/UiLayer"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  CommonDropDown_1 = require("../../../Common/DropDown/CommonDropDown"),
+  FilterEntrance_1 = require("../../../Common/FilterSort/Filter/View/FilterEntrance"),
+  SortEntrance_1 = require("../../../Common/FilterSort/Sort/View/SortEntrance"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  StaticTabComponent_1 = require("../../../Common/TabComponent/StaticTabComponent"),
+  ConfirmBoxDefine_1 = require("../../../ConfirmBox/ConfirmBoxDefine"),
+  RoleVisionDragHeadItem_1 = require("../../../RoleUi/TabView/VisionSubView/RoleVisionDragHeadItem"),
+  VisionCommonDragItem_1 = require("../../../RoleUi/TabView/VisionSubView/VisionCommonDragItem"),
+  UiSceneManager_1 = require("../../../UiComponent/UiSceneManager"),
+  UiModelUtil_1 = require("../../../UiModel/UiModelUtil"),
+  LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView"),
+  PhantomBattleController_1 = require("../../PhantomBattle/PhantomBattleController"),
+  CostTabItem_1 = require("./CostTabItem"),
+  VisionDetailComponent_1 = require("./VisionDetailComponent"),
+  VisionEquipmentDragItem_1 = require("./VisionEquipmentDragItem"),
+  VisionEquipmentDropDownItem_1 = require("./VisionEquipmentDropDownItem"),
+  VisionEquipmentDropDownTitleItem_1 = require("./VisionEquipmentDropDownTitleItem"),
+  VisionMediumItemGrid_1 = require("./VisionMediumItemGrid"),
+  ANIMATIONTIME = 300,
+  INVALIDINDEX = 999;
 class VisionEquipmentView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -94,7 +94,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       (this.s9i = !0),
       (this.a9i = !1),
       (this.KIt = (i) => {
-        i === "ContrastSwitch" && this.GetItem(11).SetUIActive(this.r9i);
+        "ContrastSwitch" === i && this.GetItem(11).SetUIActive(this.r9i);
       }),
       (this.t6e = (i) => {
         (this.e9i = i), this.Ife && this.h9i();
@@ -125,7 +125,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
         );
       }),
       (this._9i = (i) => {
-        i.ToHandleData.ViewName === "VisionEquipmentView" &&
+        "VisionEquipmentView" === i.ToHandleData.ViewName &&
           this.IsShowOrShowing &&
           !this.s9i &&
           ((this.s9i = !0), this.u9i(this.b8i?.GetUniqueId() ?? 0));
@@ -154,14 +154,14 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       (this.C9i = () => {
         this.j6i = !this.j6i;
         var i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-          this.zke,
-        );
-        var i =
-          ModelManager_1.ModelManager.PhantomBattleModel.GetRoleIndexPhantomId(
-            i.GetRoleId(),
-            this.q8i,
-          );
-        i > 0
+            this.zke,
+          ),
+          i =
+            ModelManager_1.ModelManager.PhantomBattleModel.GetRoleIndexPhantomId(
+              i.GetRoleId(),
+              this.q8i,
+            );
+        0 < i
           ? this.j6i
             ? (this.GetItem(11).SetUIActive(!0),
               this.k8i.StopSequenceByKey("ContrastSwitch", !1, !1),
@@ -173,11 +173,11 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
                 (this.j6i = !1)),
               (this.r9i = !1))
           : (this.j6i = !1),
-          this.GetItem(14).SetUIActive(this.j6i && i > 0),
+          this.GetItem(14).SetUIActive(this.j6i && 0 < i),
           this.g9i();
       }),
       (this.sGe = () => {
-        const i = new VisionMediumItemGrid_1.VisionMediumItemGrid();
+        var i = new VisionMediumItemGrid_1.VisionMediumItemGrid();
         return (
           i.SetClickToggleEvent(this.f9i),
           i.SetOnRefreshEvent(this.p9i),
@@ -227,14 +227,14 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
           i || t || this.T9i();
       }),
       (this.I9i = () => {
-        let i, t;
+        var i, t;
         (this.K1t += Time_1.Time.DeltaTime),
           this.j8i && this.Y8i.TickCheckDrag(),
           this.H8i &&
             (this.K1t > this.J8i &&
-              this.z8i === 0 &&
+              0 === this.z8i &&
               (this.L9i(), this.y9i(1), (this.V8i = 0)),
-            this.z8i > 0 && (this.V8i += Time_1.Time.DeltaTime),
+            0 < this.z8i && (this.V8i += Time_1.Time.DeltaTime),
             this.X8i &&
               ((t =
                 LguiEventSystemManager_1.LguiEventSystemManager.GetPointerEventData(
@@ -264,18 +264,18 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
               : this.GetSprite(19).SetFillAmount(this.V8i / this.g_t));
       }),
       (this.D9i = () => {
-        const i =
-          LguiEventSystemManager_1.LguiEventSystemManager.IsPressComponentIsValid(
-            0,
-          );
-        const t =
-          LguiEventSystemManager_1.LguiEventSystemManager.IsNowTriggerPressed(
-            0,
-          );
-        const s = this.Y8i.GetStayingItem();
+        var i =
+            LguiEventSystemManager_1.LguiEventSystemManager.IsPressComponentIsValid(
+              0,
+            ),
+          t =
+            LguiEventSystemManager_1.LguiEventSystemManager.IsNowTriggerPressed(
+              0,
+            ),
+          s = this.Y8i.GetStayingItem();
         i ||
           t ||
-          (s?.length === 0
+          (0 === s?.length
             ? (this.M9i(void 0, void 0),
               AudioSystem_1.AudioSystem.PostEvent("ui_vision_item_drop"))
             : (this.OnDragEndCallBack(this.Y8i, this.Y8i.GetStayingItem()),
@@ -295,7 +295,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
           this.x9i();
       }),
       (this.TryEquip = (i, t, s) => {
-        const e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
+        var e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
           this.zke,
         );
         switch (
@@ -308,7 +308,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
             : 1
         ) {
           case 0:
-            if (t === -1) return;
+            if (-1 === t) return;
             this.w9i(t);
             break;
           case 1:
@@ -321,13 +321,14 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       }),
       (this.OnClickVisionAndRefreshVisionView = (i) => {
         this.GetItem(15).SetRaycastTarget(!1), this.b9i(i), this.q9i(!1, !1);
-        const t = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
+        var t = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
           this.zke,
         );
-        ControllerHolder_1.ControllerHolder.PhantomBattleController.GetEquipByIndex(
-          t.GetRoleId(),
-          i,
-        ) === 0 && this.LoopScrollView.ResetGridController(),
+        0 ===
+          ControllerHolder_1.ControllerHolder.PhantomBattleController.GetEquipByIndex(
+            t.GetRoleId(),
+            i,
+          ) && this.LoopScrollView.ResetGridController(),
           this.G9i(),
           AudioSystem_1.AudioSystem.PostEvent("ui_vision_item_click");
       }),
@@ -336,7 +337,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       }),
       (this.k9i = () => {
         this.LoopScrollView.DeselectCurrentGridProxy(),
-          this.B8i.length > 0
+          0 < this.B8i.length
             ? (this.GetLoopScrollViewComponent(6).RootUIComp.SetUIActive(!0),
               this.LoopScrollView.RefreshAllGridProxies())
             : this.GetLoopScrollViewComponent(6).RootUIComp.SetUIActive(!1);
@@ -346,28 +347,28 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       }),
       (this.V9i = () => {
         this.LoopScrollView.DeselectCurrentGridProxy(),
-          this.B8i.length > 0
+          0 < this.B8i.length
             ? (this.GetLoopScrollViewComponent(6).RootUIComp.SetUIActive(!0),
               this.LoopScrollView.ReloadData(this.B8i))
             : this.GetLoopScrollViewComponent(6).RootUIComp.SetUIActive(!1);
       }),
       (this.N9i = () => {
-        const i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-          this.zke,
-        );
-        const t =
-          ModelManager_1.ModelManager.PhantomBattleModel.GetCurrentViewShowPhantomList(
-            i,
-          );
-        const s = this.w8i.length;
+        var i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
+            this.zke,
+          ),
+          t =
+            ModelManager_1.ModelManager.PhantomBattleModel.GetCurrentViewShowPhantomList(
+              i,
+            ),
+          s = this.w8i.length;
         for (let i = 0; i < s; i++) {
-          const e = t.length > i ? t[i] : void 0;
+          var e = t.length > i ? t[i] : void 0;
           this.w8i[i].UpdateItem(e), this.$8i[i].Refresh(e, !1);
         }
         this.H9i();
       }),
       (this.OnBeginDrag = (i) => {
-        const t = this.$8i.length;
+        var t = this.$8i.length;
         for (let i = 0; i < t; i++) this.$8i[i].StartDragState();
         for (let i = 0; i < t; i++)
           ModelManager_1.ModelManager.PhantomBattleModel.CheckIfCurrentDragIndex(
@@ -379,15 +380,15 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       }),
       (this.OnPointerDownCallBack = (i) => {
         this.GetItem(15).SetRaycastTarget(!0);
-        const t = this.$8i.length;
+        var t = this.$8i.length;
         for (let i = 0; i < t; i++) this.$8i[i].StartClickCheckTimer();
       }),
       (this.j9i = () => {
         this.Uqe += Time_1.Time.DeltaTime;
         let i = this.Uqe / ANIMATIONTIME;
-        i >= 1 && (i = 1),
+        1 <= i && (i = 1),
           this.$8i[this.F8i].TickDoCeaseAnimation(i),
-          i >= 1 && (this.W9i(this.F8i), this.K9i());
+          1 <= i && (this.W9i(this.F8i), this.K9i());
       }),
       (this.OnEquipError = () => {
         this.T9i();
@@ -426,14 +427,14 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
             i,
             t,
           );
-          if (s === -1) this.T9i();
+          if (-1 === s) this.T9i();
           else {
-            i.GetCurrentIndex() === -1 && this.T9i();
-            const e = i.GetCurrentIndex();
-            const h = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-              this.zke,
-            );
-            const r = e !== -1;
+            -1 === i.GetCurrentIndex() && this.T9i();
+            const e = i.GetCurrentIndex(),
+              h = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
+                this.zke,
+              ),
+              r = -1 !== e;
             this.m9i(i.GetCurrentData(), s, () => {
               this.$9i(e, !0),
                 this.$9i(s, !0),
@@ -452,9 +453,9 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       }),
       (this.J9i = (i, t, s) => {
         (this.F8i = INVALIDINDEX),
-          i >= 0 &&
+          0 <= i &&
             (this.$8i[i].SetActive(!0), this.w8i[i].SetAniLightState(!1)),
-          s && i !== -1
+          s && -1 !== i
             ? (UiLayer_1.UiLayer.SetShowMaskLayer("OnEquipVision", !0),
               this.z9i(),
               (this.Uqe = 0),
@@ -482,17 +483,17 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
               this.b9i(t),
               this.q9i(!0, !1, !1),
               this.w8i[t].GetCurrentData() && this.e7i(t),
-              i >= 0
+              0 <= i
                 ? AudioSystem_1.AudioSystem.PostEvent("ui_vision_equip_off")
                 : AudioSystem_1.AudioSystem.PostEvent("ui_vision_equip_on"));
       }),
       (this.J_ = () => {
         this.Uqe += Time_1.Time.DeltaTime;
         let i = this.Uqe / ANIMATIONTIME;
-        i >= 1 && (i = 1),
+        1 <= i && (i = 1),
           this.$8i[this.P8i].TickDoCeaseAnimation(i),
           this.$8i[this.x8i].TickDoCeaseAnimation(i),
-          i >= 1 &&
+          1 <= i &&
             (this.t7i(),
             this.z9i(),
             AudioSystem_1.AudioSystem.PostEvent("ui_vision_equip_on"));
@@ -502,7 +503,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       }),
       (this.i7i = void 0),
       (this.bpt = (i, t, s) => {
-        const e = i;
+        var e = i;
         const h = new Array();
         e.forEach((i) => {
           h.push(
@@ -513,7 +514,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
         }),
           (this.B8i = h),
           this.V9i();
-        i = i?.length > 0;
+        i = 0 < i?.length;
         this.GetLoopScrollViewComponent(6).RootUIComp.SetUIActive(i),
           this.o7i(e, t, s);
       });
@@ -662,7 +663,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       this.a7i(),
       this.h7i(),
       (this.Ife = !0);
-    const i = ModelManager_1.ModelManager.PhantomBattleModel.GetIfSimpleState(1)
+    var i = ModelManager_1.ModelManager.PhantomBattleModel.GetIfSimpleState(1)
       ? 0
       : 1;
     this.GetExtendToggle(21)?.SetToggleState(i),
@@ -721,7 +722,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       this.GetItem(16).SetUIActive(!1),
       await Promise.all([...this.w8i.map(async (i) => i.Init())]),
       this.w8i.forEach((i) => {
-        const t = new VisionCommonDragItem_1.VisionCommonDragItem(
+        var t = new VisionCommonDragItem_1.VisionCommonDragItem(
           i.GetRootItem(),
           i.GetDragComponent(),
           this.GetItem(15),
@@ -748,7 +749,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       this.Y8i.SetDragCheckItem(this.$8i);
   }
   h7i() {
-    const i =
+    var i =
       ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterGroupArray();
     this.o9i.push(0),
       i.forEach((i) => {
@@ -759,35 +760,35 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       this.XVe.InitScroll(this.o9i, this.i6e, this.e9i);
   }
   a7i() {
-    const t = new Array();
+    var t = new Array();
     for (let i = 23; i <= 26; i++) {
-      const s = this.GetItem(i);
+      var s = this.GetItem(i);
       t.push(s);
     }
-    const i = this.GetItem(20);
+    var i = this.GetItem(20);
     (this.t9i = new StaticTabComponent_1.StaticTabComponent(
       this.fqe,
       this.pqe,
     )),
       this.t9i.Init(t);
-    const e = i.GetAttachUIChildren().Num();
+    var e = i.GetAttachUIChildren().Num();
     for (let t = 0; t < e; t++) {
       let i = t;
-      t > 1 && (i += 1), this.i9i.push(i);
+      1 < t && (i += 1), this.i9i.push(i);
     }
     this.t9i.SelectToggleByIndex(0, !0);
   }
   n7i() {
     this.q8i =
       ModelManager_1.ModelManager.PhantomBattleModel.CurrentEquipmentSelectIndex;
-    const i =
-      ModelManager_1.ModelManager.PhantomBattleModel.CurrentSelectUniqueId;
-    const t =
-      ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(i);
-    i > 0 && t ? this.U9i(t) : this.U9i(this.P9i(this.q8i));
+    var i =
+        ModelManager_1.ModelManager.PhantomBattleModel.CurrentSelectUniqueId,
+      t =
+        ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(i);
+    0 < i && t ? this.U9i(t) : this.U9i(this.P9i(this.q8i));
   }
   _7i() {
-    this.n9i > 0 &&
+    0 < this.n9i &&
       (RedDotController_1.RedDotController.UnBindGivenUi(
         "IdentifyTab",
         this.GetItem(28),
@@ -819,20 +820,18 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
     this.m7i(i, t) ? this.TryEquip(i, t, s) : this.T9i();
   }
   m7i(i, t) {
-    const s =
-      ControllerHolder_1.ControllerHolder.PhantomBattleController.GetEquipRole(
-        i.GetUniqueId(),
-      );
-    const e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-      this.zke,
-    );
-    var h = ModelManager_1.ModelManager.PhantomBattleModel;
-    var t = h.GetRoleIndexPhantomId(e.GetRoleId(), t);
-    var t = h.GetPhantomBattleData(t) ? h.GetPhantomBattleData(t).GetCost() : 0;
-    const r = h.GetRoleCurrentPhantomCost(e.GetRoleId());
+    var s =
+        ControllerHolder_1.ControllerHolder.PhantomBattleController.GetEquipRole(
+          i.GetUniqueId(),
+        ),
+      e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.zke),
+      h = ModelManager_1.ModelManager.PhantomBattleModel,
+      t = h.GetRoleIndexPhantomId(e.GetRoleId(), t),
+      t = h.GetPhantomBattleData(t) ? h.GetPhantomBattleData(t).GetCost() : 0,
+      r = h.GetRoleCurrentPhantomCost(e.GetRoleId());
     if (s && s !== e.GetRoleId()) {
-      var h = h.GetRoleCurrentPhantomCost(s) - i.GetCost() + t;
-      const n = r - t + i.GetCost();
+      var h = h.GetRoleCurrentPhantomCost(s) - i.GetCost() + t,
+        n = r - t + i.GetCost();
       if (h > this.d7i() || n > this.d7i()) return this.C7i(), !1;
     } else {
       if (s && s === e.GetRoleId()) return !0;
@@ -841,7 +840,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
     return !0;
   }
   C7i() {
-    let i;
+    var i;
     this.d7i() <
     ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionReachableCostMax()
       ? ((i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(157)).FunctionMap.set(
@@ -876,25 +875,25 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       ModelManager_1.ModelManager.PhantomBattleModel.GetRoleCurrentPhantomCost(
         i.GetRoleId(),
       );
-    const s =
-      ModelManager_1.ModelManager.PhantomBattleModel?.GetRoleIndexPhantomId(
+    var s =
+        ModelManager_1.ModelManager.PhantomBattleModel?.GetRoleIndexPhantomId(
+          i.GetRoleId(),
+          this.q8i,
+        ),
+      i = ModelManager_1.ModelManager.PhantomBattleModel.GetBattleDataById(
         i.GetRoleId(),
-        this.q8i,
-      );
-    var i = ModelManager_1.ModelManager.PhantomBattleModel.GetBattleDataById(
-      i.GetRoleId(),
-    ).GetIncrIdList();
-    let e = this.b8i ? this.b8i.GetUniqueId() : 0;
-    var i = i.includes(e);
+      ).GetIncrIdList(),
+      e = this.b8i ? this.b8i.GetUniqueId() : 0,
+      i = i.includes(e);
     s &&
-      s > 0 &&
+      0 < s &&
       !i &&
       ((e =
         ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomDataBase(s)),
       (t -= e.GetCost())),
       i || (t += this.b8i ? this.b8i.GetCost() : 0);
-    let h = "";
-    let r = "";
+    let h = "",
+      r = "";
     t > this.d7i()
       ? ((h =
           ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionCostColorAlert()),
@@ -925,21 +924,22 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       this.zke,
     );
     var t =
-      ControllerHolder_1.ControllerHolder.PhantomBattleController.GetEquipByIndex(
-        i.GetRoleId(),
-        this.q8i,
-      );
-    var t =
-      ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(t);
+        ControllerHolder_1.ControllerHolder.PhantomBattleController.GetEquipByIndex(
+          i.GetRoleId(),
+          this.q8i,
+        ),
+      t =
+        ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(t);
     if (t) this.N8i.Update(t, this.zke, !0);
     else {
       const i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
         this.zke,
       );
-      ModelManager_1.ModelManager.PhantomBattleModel.GetRoleIndexPhantomId(
-        i.GetRoleId(),
-        this.q8i,
-      ) === 0 &&
+      0 ===
+        ModelManager_1.ModelManager.PhantomBattleModel.GetRoleIndexPhantomId(
+          i.GetRoleId(),
+          this.q8i,
+        ) &&
         this.r9i &&
         (this.k8i.PlaySequencePurely("ContrastSwitch", !1, !0),
         (this.r9i = !1),
@@ -956,23 +956,23 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
   }
   L9i() {
     var i =
-      LguiEventSystemManager_1.LguiEventSystemManager.GetPointerEventDataPosition(
-        0,
-      );
-    var i = Vector2D_1.Vector2D.Create(i.X, i.Y);
-    var t =
-      (i.FromUeVector2D(
-        UiLayer_1.UiLayer.UiRootItem.GetCanvasScaler().ConvertPositionFromViewportToLGUICanvas(
-          i.ToUeVector2D(!0),
+        LguiEventSystemManager_1.LguiEventSystemManager.GetPointerEventDataPosition(
+          0,
         ),
-      ),
-      ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionScrollerOffsetX() *
-        ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionScrollerOffsetXDir());
-    const s =
-      ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionScrollerOffsetY() *
-      ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionScrollerOffsetYDir();
-    var t = i.X + t;
-    var i = i.Y + s;
+      i = Vector2D_1.Vector2D.Create(i.X, i.Y),
+      t =
+        (i.FromUeVector2D(
+          UiLayer_1.UiLayer.UiRootItem.GetCanvasScaler().ConvertPositionFromViewportToLGUICanvas(
+            i.ToUeVector2D(!0),
+          ),
+        ),
+        ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionScrollerOffsetX() *
+          ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionScrollerOffsetXDir()),
+      s =
+        ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionScrollerOffsetY() *
+        ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionScrollerOffsetYDir(),
+      t = i.X + t,
+      i = i.Y + s;
     this.GetItem(18).SetLGUISpaceAbsolutePosition(new UE.Vector(t, i, 0));
   }
   p7i() {
@@ -986,9 +986,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       (this.A8i = TickSystem_1.TickSystem.InvalidId));
   }
   w9i(i) {
-    const t = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-      this.zke,
-    );
+    var t = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.zke);
     ControllerHolder_1.ControllerHolder.PhantomBattleController.SendPhantomPutOnRequest(
       0,
       t.GetRoleId(),
@@ -998,10 +996,10 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
   }
   B9i(i, t, s) {
     var i =
-      ControllerHolder_1.ControllerHolder.PhantomBattleController.GetEquipRole(
-        i.GetUniqueId(),
-      );
-    let e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.zke);
+        ControllerHolder_1.ControllerHolder.PhantomBattleController.GetEquipRole(
+          i.GetUniqueId(),
+        ),
+      e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.zke);
     i && i !== e.GetRoleId()
       ? ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(31)),
         (i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(i)),
@@ -1027,13 +1025,13 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
     this.v7i(t, s), this.M7i(i);
   }
   v7i(i = !0, t = !0) {
-    var s = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.zke);
-    var s =
-      ControllerHolder_1.ControllerHolder.PhantomBattleController.GetEquipByIndex(
-        s.GetRoleId(),
-        this.q8i,
-      );
-    s !== 0
+    var s = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.zke),
+      s =
+        ControllerHolder_1.ControllerHolder.PhantomBattleController.GetEquipByIndex(
+          s.GetRoleId(),
+          this.q8i,
+        );
+    0 !== s
       ? (this.O9i(s, t), (s = this.P9i(this.q8i)), this.U9i(s))
       : i &&
         (this.U9i(this.P9i(this.q8i)),
@@ -1050,24 +1048,24 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       this.T9i();
   }
   S7i() {
-    const t = this.w8i.length;
+    var t = this.w8i.length;
     for (let i = 0; i < t; i++) this.w8i[i].SetToggleState(0, !1, !0);
   }
   c7i() {
-    const t = this.w8i.length;
+    var t = this.w8i.length;
     for (let i = 0; i < t; i++)
       this.w8i[i].SetToggleState(this.q8i === i ? 1 : 0);
   }
   P9i(i) {
-    var t = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.zke);
-    var t =
-      ControllerHolder_1.ControllerHolder.PhantomBattleController.GetEquipByIndex(
-        t.GetRoleId(),
-        i,
-      );
+    var t = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.zke),
+      t =
+        ControllerHolder_1.ControllerHolder.PhantomBattleController.GetEquipByIndex(
+          t.GetRoleId(),
+          i,
+        );
     let s =
       ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(t);
-    return (s = s || (this.B8i.length > 0 ? this.B8i[0] : void 0));
+    return (s = s || (0 < this.B8i.length ? this.B8i[0] : void 0));
   }
   A9i(i, t = 0) {
     i
@@ -1076,8 +1074,8 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
   }
   O9i(i, t = !0) {
     this.LoopScrollView.DeselectCurrentGridProxy();
-    let s = !1;
-    let e = 0;
+    let s = !1,
+      e = 0;
     for (const h of this.B8i) {
       if (h.GetUniqueId() === i) {
         s = !0;
@@ -1086,14 +1084,14 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       e++;
     }
     s || (e = 0),
-      this.B8i.length > 0 &&
+      0 < this.B8i.length &&
         s &&
         (t && this.LoopScrollView.ScrollToGridIndex(e, !1),
         this.LoopScrollView.SelectGridProxy(e));
   }
   OnBeforeShow() {
-    let i;
-    this.O8i > 0 &&
+    var i;
+    0 < this.O8i &&
       !UiSceneManager_1.UiSceneManager.HasVisionSkeletalHandle() &&
       ((i = this.O8i), (this.O8i = 0), this.u9i(i, !1)),
       ModelManager_1.ModelManager.PhantomBattleModel.ClearCurrentDragIndex(),
@@ -1102,8 +1100,9 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       ModelManager_1.ModelManager.PhantomBattleModel.GetVisionLevelUpTag()
         ? (this.h9i(),
           ModelManager_1.ModelManager.PhantomBattleModel.ClearVisionLevelUp())
-        : ModelManager_1.ModelManager.PhantomBattleModel
-              .CurrentSelectFetterGroupId > 0
+        : 0 <
+            ModelManager_1.ModelManager.PhantomBattleModel
+              .CurrentSelectFetterGroupId
           ? ((this.e9i = this.o9i.indexOf(
               ModelManager_1.ModelManager.PhantomBattleModel
                 .CurrentSelectFetterGroupId,
@@ -1123,12 +1122,12 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
         void 0);
   }
   h9i() {
-    var i = this.o9i[this.e9i];
-    var i =
-      ModelManager_1.ModelManager.PhantomBattleModel.GetVisionSortUseDataList(
-        i,
-        this.O4t,
-      );
+    var i = this.o9i[this.e9i],
+      i =
+        ModelManager_1.ModelManager.PhantomBattleModel.GetVisionSortUseDataList(
+          i,
+          this.O4t,
+        );
     this.aft.UpdateData(this.e6i, i, this.zke),
       this.hft.UpdateData(this.e6i, i, this.zke);
   }
@@ -1146,7 +1145,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       UiLayer_1.UiLayer.SetShowMaskLayer("OnEquipVision", !1);
   }
   u9i(i, t = !1) {
-    let s;
+    var s;
     this.s9i &&
       (s =
         ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
@@ -1165,9 +1164,9 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
   }
   E7i(s = !1) {
     if (this.i7i) {
-      const e = this.i7i.Model;
-      let i = void 0;
-      let t = void 0;
+      var e = this.i7i.Model;
+      let i = void 0,
+        t = void 0;
       (t = s
         ? ((i = "VisionChangeEffect"), "VisionChangeController")
         : ((i = "VisionLevelUpEffect"), "VisionStepupController")),
@@ -1176,9 +1175,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
     }
   }
   f7i() {
-    const i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-      this.zke,
-    );
+    var i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.zke);
     let t = "";
     switch (
       this.b8i
@@ -1201,7 +1198,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
     this.G8i.SetUnderLeftButtonText(t);
   }
   H9i() {
-    const t = this.w8i.length;
+    var t = this.w8i.length;
     for (let i = 0; i < t; i++)
       i === this.q8i ? this.w8i[i].SetSelected() : this.w8i[i].SetUnSelected();
   }
@@ -1236,7 +1233,7 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
   async T9i(i = !0) {
     i &&
       this.F8i !== INVALIDINDEX &&
-      this.F8i !== -1 &&
+      -1 !== this.F8i &&
       (this.K9i(),
       UiLayer_1.UiLayer.SetShowMaskLayer(
         "playBackToStartPositionAnimation",
@@ -1274,10 +1271,10 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
         );
   }
   $9i(i, t) {
-    i >= 0 && this.$8i[i].SetMovingState(t);
+    0 <= i && this.$8i[i].SetMovingState(t);
   }
   Y9i(i, t) {
-    i >= 0 && this.w8i[i].SetAnimationState(t);
+    0 <= i && this.w8i[i].SetAnimationState(t);
   }
   async e7i(i) {
     return (
@@ -1343,16 +1340,16 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       this.t9i.Destroy();
   }
   o7i(s, i, e) {
-    if (s?.length > 0) {
+    if (0 < s?.length) {
       let t = 0;
-      if (e !== 1 || i) {
-        const h = s.length;
+      if (1 !== e || i) {
+        var h = s.length;
         for (let i = 0; i < h; i++)
           if (s[i].Id === this.b8i?.GetUniqueId()) {
             t = this.b8i?.GetUniqueId();
             break;
           }
-        t === 0 && (t = s[0].Id);
+        0 === t && (t = s[0].Id);
       } else t = s[0].Id;
       e =
         ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(t);
@@ -1366,17 +1363,17 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
     }
   }
   GetGuideUiItemAndUiItemForShowEx(i) {
-    let t = this.B8i;
-    if (t.length !== 0)
-      if (i.length !== 2)
+    var t = this.B8i;
+    if (0 !== t.length)
+      if (2 !== i.length)
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("Guide", 17, "声骸聚焦引导extraParam配置错误");
       else {
-        if (i[0] === "txt") {
+        if ("txt" === i[0]) {
           var s = this.G8i?.GetTxtItemByIndex(Number(i[1]));
           if (s) return [s, s];
         }
-        if (i[0] === "item") {
+        if ("item" === i[0]) {
           const e = Number(i[1]);
           return e
             ? ((s = t.findIndex((i) => i.GetMonsterId(!0) === e)),
@@ -1395,13 +1392,13 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
       }
   }
   x9i() {
-    let i = this.b8i?.GetMonsterId();
+    var i = this.b8i?.GetMonsterId();
     (i =
       i &&
       ModelManager_1.ModelManager.PhantomBattleModel.GetMonsterSkinListByMonsterId(
         i,
       ))
-      ? ((i = i.length > 1),
+      ? ((i = 1 < i.length),
         this.GetButton(27).RootUIComp.SetUIActive(i),
         (i =
           ModelManager_1.ModelManager.PhantomBattleModel.GetMonsterSkinListHasNew(
@@ -1412,4 +1409,4 @@ class VisionEquipmentView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.VisionEquipmentView = VisionEquipmentView;
-// # sourceMappingURL=VisionEquipmentView.js.map
+//# sourceMappingURL=VisionEquipmentView.js.map

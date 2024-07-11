@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const IComponent_1 = require("../../../../../../UniverseEditor/Interface/IComponent");
-const GlobalData_1 = require("../../../../../GlobalData");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const BasePerformComponent_1 = require("../../../../../NewWorld/Character/Common/Component/BasePerformComponent");
-const AiContollerLibrary_1 = require("../../../../Controller/AiContollerLibrary");
-const TsTaskAbortImmediatelyBase_1 = require("../../TsTaskAbortImmediatelyBase");
-const TOLERANCE = 10;
-const TURN_SPEED = 200;
-const NEARBY_CHAIR_OFFSET = 70;
-const MOVE_TO_CHAIR_SPEED = 70;
-const MOVE_TO_NEARBY_CHAIR_SPEED = 100;
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  IComponent_1 = require("../../../../../../UniverseEditor/Interface/IComponent"),
+  GlobalData_1 = require("../../../../../GlobalData"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  BasePerformComponent_1 = require("../../../../../NewWorld/Character/Common/Component/BasePerformComponent"),
+  AiContollerLibrary_1 = require("../../../../Controller/AiContollerLibrary"),
+  TsTaskAbortImmediatelyBase_1 = require("../../TsTaskAbortImmediatelyBase"),
+  TOLERANCE = 10,
+  TURN_SPEED = 200,
+  NEARBY_CHAIR_OFFSET = 70,
+  MOVE_TO_CHAIR_SPEED = 70,
+  MOVE_TO_NEARBY_CHAIR_SPEED = 100;
 class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -67,7 +67,7 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveExecuteAI(t, i) {
     this.InitTsVariables();
-    let s = t.AiController;
+    var s = t.AiController;
     s
       ? ((this.Entity = s.CharAiDesignComp.Entity),
         (this.Character = this.Entity.GetComponent(3)),
@@ -82,7 +82,7 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
               )?.GetSubEntityInteractLogicController()),
             this.ChairController &&
             this.ChairController.IsSceneInteractionLoadCompleted()
-              ? this.TsMontagePath === ""
+              ? "" === this.TsMontagePath
                 ? this.FinishExecute(!1)
                 : (this.Phase = 1)
               : this.FinishExecute(!0))
@@ -134,11 +134,11 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
     }
   }
   OnAbort() {
-    this.Phase === 2 || this.Phase === 3 || this.Phase === 6
+    2 === this.Phase || 3 === this.Phase || 6 === this.Phase
       ? this.MoveComp?.StopMove(!0)
-      : this.Phase === 4
+      : 4 === this.Phase
         ? this.Character?.ClearInput()
-        : this.Phase === 5 &&
+        : 5 === this.Phase &&
           ((this.HasAborted = !0),
           this.Entity?.GetComponent(37)?.ClearAndStopMontage(
             this.PlayingMontageId,
@@ -154,7 +154,7 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
       (this.IsExecuteMoveAway = !1);
   }
   ExecuteMoveNearby() {
-    let t;
+    var t;
     this.IsExecuteMoveNearby ||
       ((this.IsExecuteMoveNearby = !0),
       (t = this.ChairController.GetInteractPoint()),
@@ -182,7 +182,7 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
       }));
   }
   ExecuteMoveClose() {
-    let t, i;
+    var t, i;
     this.IsExecuteMoveClose ||
       ((this.IsExecuteMoveClose = !0),
       this.ChairController.Possess(this.Entity),
@@ -222,13 +222,13 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
       ));
   }
   ExecutePlayMontage() {
-    let t, i;
+    var t, i;
     this.IsExecutePlayMontage ||
       ((this.IsExecutePlayMontage = !0),
       (this.IsPlayLoop =
-        void 0 !== this.TsLoopDuration && this.TsLoopDuration !== 0),
+        void 0 !== this.TsLoopDuration && 0 !== this.TsLoopDuration),
       (this.LoopMontage =
-        this.TsLoopDuration === -1 || this.TsRepeatTimes === -1),
+        -1 === this.TsLoopDuration || -1 === this.TsRepeatTimes),
       (t = this.Entity.GetComponent(37)),
       (i = new BasePerformComponent_1.PlayMontageConfig(
         this.TsRepeatTimes,
@@ -249,7 +249,7 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
       this.PlayingMontageId < 0 && this.Finish(!1));
   }
   ExecuteMoveAway() {
-    let t;
+    var t;
     this.IsExecuteMoveAway ||
       ((this.IsExecuteMoveAway = !0),
       (t = {
@@ -275,4 +275,4 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskNpcSitOnChair;
-// # sourceMappingURL=TsTaskNpcSitOnChair.js.map
+//# sourceMappingURL=TsTaskNpcSitOnChair.js.map

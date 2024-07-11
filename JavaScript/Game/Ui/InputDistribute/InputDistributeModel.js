@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputDistributeModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const ConfigManager_1 = require("../../../Game/Manager/ConfigManager");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const InputActionHandle_1 = require("./InputActionHandle");
-const InputAxisHandle_1 = require("./InputAxisHandle");
-const InputDistributeDefine_1 = require("./InputDistributeDefine");
-const InputDistributeDelay_1 = require("./InputDistributeDelay");
-const InputDistributeSetupDefine_1 = require("./InputDistributeSetupDefine");
-const InputDistributeTag_1 = require("./InputDistributeTag");
-const InputKeyHandle_1 = require("./InputKeyHandle");
-const InputTouchHandle_1 = require("./InputTouchHandle");
-const EMIT_EVENT_AXIS_DELTA = 0.05;
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  ConfigManager_1 = require("../../../Game/Manager/ConfigManager"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  InputActionHandle_1 = require("./InputActionHandle"),
+  InputAxisHandle_1 = require("./InputAxisHandle"),
+  InputDistributeDefine_1 = require("./InputDistributeDefine"),
+  InputDistributeDelay_1 = require("./InputDistributeDelay"),
+  InputDistributeSetupDefine_1 = require("./InputDistributeSetupDefine"),
+  InputDistributeTag_1 = require("./InputDistributeTag"),
+  InputKeyHandle_1 = require("./InputKeyHandle"),
+  InputTouchHandle_1 = require("./InputTouchHandle"),
+  EMIT_EVENT_AXIS_DELTA = 0.05;
 class InputDistributeModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -60,7 +60,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
   }
   fmr() {
     for (const i of InputDistributeSetupDefine_1.inputDistributeSetups) {
-      const t = new i();
+      var t = new i();
       this.tmr.push(t);
     }
   }
@@ -68,19 +68,19 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     for (const t of this.tmr) if (t.OnRefresh()) return;
   }
   mmr() {
-    for (const [t, i] of InputDistributeDefine_1.actionTagMap) this.pmr(t, i);
+    for (var [t, i] of InputDistributeDefine_1.actionTagMap) this.pmr(t, i);
   }
   dmr() {
-    for (const [t, i] of InputDistributeDefine_1.axisTagMap) this.vmr(t, i);
+    for (var [t, i] of InputDistributeDefine_1.axisTagMap) this.vmr(t, i);
   }
   Cmr() {
-    for (const [t, i] of InputDistributeDefine_1.touchTagMap) this.Mmr(t, i);
+    for (var [t, i] of InputDistributeDefine_1.touchTagMap) this.Mmr(t, i);
   }
   gmr() {
-    for (const [t, i] of InputDistributeDefine_1.keyTagMap) this.Smr(t, i);
+    for (var [t, i] of InputDistributeDefine_1.keyTagMap) this.Smr(t, i);
   }
   InputAction(i, e) {
-    const t = this.Emr(i);
+    var t = this.Emr(i);
     if (!t)
       return (
         Log_1.Log.CheckWarn() &&
@@ -106,7 +106,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     if (this.HasActionLimitSet()) {
       if (!this.IsActionInLimitSet(i)) return !1;
     } else {
-      const n = t.GetInputDistributeTag();
+      var n = t.GetInputDistributeTag();
       if (n && !this.IsTagMatchAnyCurrentInputTag(n)) return !1;
       if (!this.ymr(i, n)) return !1;
     }
@@ -145,17 +145,17 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     t && t.InputCacheAxisValue(i);
   }
   InputAxis(t, i) {
-    const e = this.Tmr(t);
+    var e = this.Tmr(t);
     if (e) {
       if (this.HasActionLimitSet()) {
         if (!this.IsActionInLimitSet(t)) return;
       } else {
-        const n = e.GetInputDistributeTag();
+        var n = e.GetInputDistributeTag();
         if (n && !this.IsTagMatchAnyCurrentInputTag(n)) return;
       }
       e.InputAxis(i),
         this.Lmr(t, i),
-        Math.abs(i) > 0 ? (this._mr = t) : this._mr && (this._mr = void 0);
+        0 < Math.abs(i) ? (this._mr = t) : this._mr && (this._mr = void 0);
     }
   }
   Lmr(t, i) {
@@ -172,8 +172,8 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     return this._mr;
   }
   InputTouch(t, i) {
-    let e;
-    const n = this.Dmr(t);
+    var e,
+      n = this.Dmr(t);
     n
       ? ((e = n.GetInputDistributeTag()) &&
           !this.IsTagMatchAnyCurrentInputTag(e)) ||
@@ -185,7 +185,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
         ]);
   }
   BindAction(t, i) {
-    const e = this.Emr(t);
+    var e = this.Emr(t);
     e
       ? e.BindAction(i)
       : Log_1.Log.CheckWarn() &&
@@ -195,7 +195,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
         ]);
   }
   ExecuteDelayInputAction(t) {
-    const i = this.Emr(t);
+    var i = this.Emr(t);
     i &&
       this.omr.has(t) &&
       this.omr.get(t).IsInputActive(!1) &&
@@ -205,7 +205,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     for (const e of t) this.BindAction(e, i);
   }
   UnBindAction(t, i) {
-    const e = this.Emr(t);
+    var e = this.Emr(t);
     e
       ? e.UnBindAction(i)
       : Log_1.Log.CheckWarn() &&
@@ -227,7 +227,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     return this.nmr.get(t);
   }
   BindAxis(t, i) {
-    const e = this.Tmr(t);
+    var e = this.Tmr(t);
     e
       ? e.BindAxis(i)
       : Log_1.Log.CheckWarn() &&
@@ -244,7 +244,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     return t ? t.GetCacheAxisValue() : 0;
   }
   UnBindAxis(t, i) {
-    const e = this.Tmr(t);
+    var e = this.Tmr(t);
     e
       ? e.UnBindAxis(i)
       : Log_1.Log.CheckWarn() &&
@@ -259,7 +259,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     for (const e of t) this.UnBindAxis(e, i);
   }
   BindTouch(t, i) {
-    const e = this.Dmr(t);
+    var e = this.Dmr(t);
     e
       ? e.BindTouch(i)
       : Log_1.Log.CheckWarn() &&
@@ -272,7 +272,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     for (const e of t) this.BindTouch(e, i);
   }
   UnBindTouch(t, i) {
-    const e = this.Dmr(t);
+    var e = this.Dmr(t);
     e
       ? e.UnBindTouch(i)
       : Log_1.Log.CheckWarn() &&
@@ -308,7 +308,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     return this.rmr.get(t);
   }
   BindKey(t, i) {
-    const e = this.Rmr(t);
+    var e = this.Rmr(t);
     e
       ? e.BindAction(i)
       : Log_1.Log.CheckWarn() &&
@@ -318,7 +318,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
         ]);
   }
   UnBindKey(t, i) {
-    const e = this.Rmr(t);
+    var e = this.Rmr(t);
     e
       ? e.UnBindAction(i)
       : Log_1.Log.CheckWarn() &&
@@ -328,15 +328,15 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
         ]);
   }
   InputKey(t, i) {
-    let e;
-    var t = this.Rmr(t);
+    var e,
+      t = this.Rmr(t);
     !t ||
       ((e = t.GetInputDistributeTag()) &&
         !this.IsTagMatchAnyCurrentInputTag(e)) ||
       t.InputKey(i);
   }
   HasAnyNotAllowFightInputViewIsOpen() {
-    return this.hmr.size > 0;
+    return 0 < this.hmr.size;
   }
   AddNotAllowFightInputViewName(t) {
     this.hmr.add(t);
@@ -352,9 +352,9 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
   }
   cmr() {
     for (const e of InputDistributeDefine_1.initializeInputDistributeTagDefine) {
-      const t = e.Tag;
-      var i = e.ParentTag;
-      var i = this.Imr(i);
+      var t = e.Tag,
+        i = e.ParentTag,
+        i = this.Imr(i);
       this.Umr(t, i);
     }
   }
@@ -377,7 +377,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     return !1;
   }
   IsTagMatchAnyInputDistributeTags(t, i, e = !1) {
-    const n = this.Imr(t);
+    var n = this.Imr(t);
     for (const s of i) if (n.MatchTag(s.TagName, e)) return !0;
     return !1;
   }
@@ -395,7 +395,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
       this.emr.clear();
   }
   HasActionLimitSet() {
-    return this.emr.size > 0;
+    return 0 < this.emr.size;
   }
   IsActionInLimitSet(t) {
     return this.emr.has(t);
@@ -417,7 +417,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     return !!t && (this.Zcr.push(t), !0);
   }
   SetInputDistributeTag(t) {
-    const i = this.Imr(t);
+    var i = this.Imr(t);
     i &&
       ((this.Zcr = [i]),
       Log_1.Log.CheckInfo() &&
@@ -444,13 +444,13 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
       );
   }
   RemoveInputDistributeTag(t, i = !1) {
-    const e = this.Imr(t);
+    var e = this.Imr(t);
     if (e)
       if (i) {
-        const n = [];
+        var n = [];
         for (const r of this.Zcr) r.MatchTag(e.TagName) && n.push(r);
         for (const u of n) {
-          const s = this.Zcr.indexOf(u);
+          var s = this.Zcr.indexOf(u);
           s < 0 || this.Zcr.splice(s, 1);
         }
       } else {
@@ -516,4 +516,4 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
   }
 }
 exports.InputDistributeModel = InputDistributeModel;
-// # sourceMappingURL=InputDistributeModel.js.map
+//# sourceMappingURL=InputDistributeModel.js.map

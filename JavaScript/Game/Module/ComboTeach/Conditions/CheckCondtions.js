@@ -15,12 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.CheckSkillIdSuccessCondition =
     exports.BaseCheckCondition =
       void 0);
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils");
-const Global_1 = require("../../../Global");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const EAttributeId = Protocol_1.Aki.Protocol.KBs;
+const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils"),
+  Global_1 = require("../../../Global"),
+  ModelManager_1 = require("../../../Manager/ModelManager");
+var EAttributeId = Protocol_1.Aki.Protocol.KBs;
 const energyAttrIds = [
   EAttributeId.Proto_Energy,
   EAttributeId.Proto_SpecialEnergy1,
@@ -75,7 +75,7 @@ class CheckEnergyCondition extends BaseCheckCondition {
     super(...arguments), (this.Type = 1);
   }
   Check(t) {
-    let e;
+    var e;
     return (
       !!this.ParamsArray &&
       ((e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
@@ -93,7 +93,7 @@ class CheckIsJumpCondition extends BaseCheckCondition {
     super(...arguments), (this.Type = 1);
   }
   Check(t) {
-    const e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint();
+    var e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint();
     return EntitySystem_1.EntitySystem.Get(e)?.GetComponent(161)?.IsJump ?? !1;
   }
 }
@@ -103,7 +103,7 @@ class CheckBuffAddCondition extends BaseCheckCondition {
     super(...arguments), (this.Type = 1);
   }
   Check(t) {
-    let e;
+    var e;
     return (
       !!this.ParamsArray &&
       ((e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
@@ -119,7 +119,7 @@ class CheckTagAddCondition extends BaseCheckCondition {
     super(...arguments), (this.Type = 1);
   }
   Check(t) {
-    let e, o;
+    var e, o;
     return (
       !!this.ParamsArray &&
       ((e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
@@ -137,7 +137,7 @@ class CheckBuffNotHaveCondition extends BaseCheckCondition {
     super(...arguments), (this.Type = 1);
   }
   Check(t) {
-    let e;
+    var e;
     return (
       !!this.ParamsArray &&
       ((e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
@@ -153,7 +153,7 @@ class CheckTagNotHaveCondition extends BaseCheckCondition {
     super(...arguments), (this.Type = 1);
   }
   Check(t) {
-    let e;
+    var e;
     return (
       !!this.ParamsArray &&
       ((e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
@@ -195,7 +195,7 @@ class CheckSkillIdFailCondition extends BaseCheckCondition {
       !this.OriginString.includes(
         ModelManager_1.ModelManager.ComboTeachingModel.UseSkillId.toString(),
       ) &&
-      ModelManager_1.ModelManager.ComboTeachingModel.UseSkillId !== 0
+      0 !== ModelManager_1.ModelManager.ComboTeachingModel.UseSkillId
     );
   }
 }
@@ -219,7 +219,7 @@ class CheckNotInSkillCondition extends BaseCheckCondition {
     super(...arguments), (this.Type = 1);
   }
   Check(t) {
-    const e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint();
+    var e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint();
     return !EntitySystem_1.EntitySystem.Get(e)
       ?.GetComponent(185)
       ?.HasTag(-1371021686);
@@ -231,12 +231,12 @@ class CheckIsInJumpCondition extends BaseCheckCondition {
     super(...arguments), (this.Type = 1);
   }
   Check(t) {
-    var e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint();
-    var e = EntitySystem_1.EntitySystem.Get(e)?.GetComponent(185);
-    const o = ModelManager_1.ModelManager.ComboTeachingModel.BeforeJumpTime > 0;
-    var e = e?.HasTag(-1898186757);
+    var e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint(),
+      e = EntitySystem_1.EntitySystem.Get(e)?.GetComponent(185),
+      o = 0 < ModelManager_1.ModelManager.ComboTeachingModel.BeforeJumpTime,
+      e = e?.HasTag(-1898186757);
     return !o && (e ?? !1);
   }
 }
 exports.CheckIsInJumpCondition = CheckIsInJumpCondition;
-// # sourceMappingURL=CheckCondtions.js.map
+//# sourceMappingURL=CheckCondtions.js.map

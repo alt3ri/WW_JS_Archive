@@ -16,8 +16,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.COMMONLEVELPLAY_TRACKICONID =
     exports.INVALID_INTERACTOPTION_ID =
       void 0);
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const PublicUtil_1 = require("../../../Common/PublicUtil");
+const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  PublicUtil_1 = require("../../../Common/PublicUtil");
 (exports.INVALID_INTERACTOPTION_ID = -1),
   (exports.COMMONLEVELPLAY_TRACKICONID = 8),
   (exports.CHALLENGELEVELPLAY_TRACKICONID = 9),
@@ -98,7 +98,7 @@ class TreeTrackTextExpressionInfo {
   }
   IsSubTitle(o) {
     return (
-      !(!this.SubTitles || this.SubTitles.length === 0) &&
+      !(!this.SubTitles || 0 === this.SubTitles.length) &&
       void 0 !==
         this.SubTitles.find((t) => {
           t = t.QuestScheduleType;
@@ -135,4 +135,4 @@ function CheckSubTitleSame(t, o) {
 (exports.SilentAreaShowInfo = SilentAreaShowInfo),
   (exports.CheckMainTitleSame = CheckMainTitleSame),
   (exports.CheckSubTitleSame = CheckSubTitleSame);
-// # sourceMappingURL=GeneralLogicTreeDefine.js.map
+//# sourceMappingURL=GeneralLogicTreeDefine.js.map

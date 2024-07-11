@@ -1,61 +1,66 @@
 "use strict";
-let CharacterMoveComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, s) {
-    let h;
-    const r = arguments.length;
-    let a =
-      r < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      a = Reflect.decorate(t, e, i, s);
-    else
-      for (let o = t.length - 1; o >= 0; o--)
-        (h = t[o]) && (a = (r < 3 ? h(a) : r > 3 ? h(e, i, a) : h(e, i)) || a);
-    return r > 3 && a && Object.defineProperty(e, i, a), a;
-  };
+var CharacterMoveComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, s) {
+      var h,
+        r = arguments.length,
+        a =
+          r < 3
+            ? e
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        a = Reflect.decorate(t, e, i, s);
+      else
+        for (var o = t.length - 1; 0 <= o; o--)
+          (h = t[o]) &&
+            (a = (r < 3 ? h(a) : 3 < r ? h(e, i, a) : h(e, i)) || a);
+      return 3 < r && a && Object.defineProperty(e, i, a), a;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterMoveComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../Core/Common/Time");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../../Core/Net/Net");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const DataTableUtil_1 = require("../../../../../Core/Utils/DataTableUtil");
-const Transform_1 = require("../../../../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const TsBaseRoleConfig_1 = require("../../../../Character/TsBaseRoleConfig");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const PreloadConstants_1 = require("../../../../World/Controller/PreloadConstants");
-const CharacterNameDefines_1 = require("../CharacterNameDefines");
-const CharacterAttributeTypes_1 = require("./Abilities/CharacterAttributeTypes");
-const CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes");
-const BaseMoveComponent_1 = require("./BaseMoveComponent");
-const CustomMovementDefine_1 = require("./Move/CustomMovementDefine");
-const EAttributeId = Protocol_1.Aki.Protocol.KBs;
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const FormationAttributeController_1 = require("../../../../Module/Abilities/FormationAttributeController");
-const WhirlpoolPoint_1 = require("./Move/WhirlpoolPoint");
-const MIN_MOVE_SPEED = 20;
-const GLIDING_CONTROL_OFFSET = 0.3;
-const GLIDING_HEIGHT_THREDHOLD = 250;
-const MAX_IN_WATER_SPEED = 800;
-const GLIDE_STRENGTH_THREADHOLD = 10;
-const SQUARE_MAX_INHERIT_SPEED = 1e6;
-const cannotResponseInputTag = [-648310348, -2044964178, 1008164187, 191377386];
-const JUMP_FRAME_COUNT = 3;
-const SLIDE_JUMP_LERP_TIME = 100;
-const SLIDE_JUMP_SPEED = 900;
-const OVER_VELOCITY_PERCENT = 1.01;
-const BASE_MOVE_INHERIT_TIME = 1.5;
-const TRY_GLIDE_TIME = 500;
-const NEAR_ZERO = 1e-6;
-const MAX_WALK_FLOOR_ANGLE = 55;
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  DataTableUtil_1 = require("../../../../../Core/Utils/DataTableUtil"),
+  Transform_1 = require("../../../../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  TsBaseRoleConfig_1 = require("../../../../Character/TsBaseRoleConfig"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  PreloadConstants_1 = require("../../../../World/Controller/PreloadConstants"),
+  CharacterNameDefines_1 = require("../CharacterNameDefines"),
+  CharacterAttributeTypes_1 = require("./Abilities/CharacterAttributeTypes"),
+  CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
+  BaseMoveComponent_1 = require("./BaseMoveComponent"),
+  CustomMovementDefine_1 = require("./Move/CustomMovementDefine");
+var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  FormationAttributeController_1 = require("../../../../Module/Abilities/FormationAttributeController"),
+  WhirlpoolPoint_1 = require("./Move/WhirlpoolPoint"),
+  MIN_MOVE_SPEED = 20,
+  GLIDING_CONTROL_OFFSET = 0.3,
+  GLIDING_HEIGHT_THREDHOLD = 250,
+  MAX_IN_WATER_SPEED = 800,
+  GLIDE_STRENGTH_THREADHOLD = 10,
+  SQUARE_MAX_INHERIT_SPEED = 1e6,
+  cannotResponseInputTag = [-648310348, -2044964178, 1008164187, 191377386],
+  JUMP_FRAME_COUNT = 3,
+  SLIDE_JUMP_LERP_TIME = 100,
+  SLIDE_JUMP_SPEED = 900,
+  OVER_VELOCITY_PERCENT = 1.01,
+  BASE_MOVE_INHERIT_TIME = 1.5,
+  TRY_GLIDE_TIME = 500,
+  NEAR_ZERO = 1e-6,
+  MAX_WALK_FLOOR_ANGLE = 55;
 class ForceFallingSpeedCache {
   constructor() {
     (this.ForceFallingSpeed = Vector_1.Vector.Create()),
@@ -89,7 +94,7 @@ let CharacterMoveComponent =
             this.ActorComp.Actor,
           )),
             (this.GroundedFrame = Time_1.Time.Frame),
-            UE.Actor.GetKuroNetMode() === 1 &&
+            1 === UE.Actor.GetKuroNetMode() &&
               this.ActorComp.IsAutonomousProxy &&
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.EntityOnLandedPush,
@@ -152,7 +157,7 @@ let CharacterMoveComponent =
           }
         }),
         (this.OnStateInherit = (t, e, i) => {
-          let s;
+          var s;
           t?.Valid &&
             (s = t.GetComponent(161))?.Valid &&
             (this.CharacterMovement.ConsumeInputVector(),
@@ -167,7 +172,7 @@ let CharacterMoveComponent =
             (this.CharacterMovement.LastUpdateVelocity =
               s.GetLastUpdateVelocity()),
             this.ActorComp.ResetCachedVelocityTime(),
-            e !== 0 ||
+            0 !== e ||
               i ||
               ((this.IsMoving = s.IsMoving),
               CharacterMoveComponent_1.TempVelocity.DeepCopy(
@@ -188,9 +193,9 @@ let CharacterMoveComponent =
               s.ActorComp.Actor.BasedMovement.MovementBase ||
                 (this.ActorComp.Actor.BasedMovement.MovementBase = void 0),
               (i = t.GetComponent(185)),
-              s.CharacterMovement.MovementMode === 0 || i?.HasTag(-2100129479)
+              0 === s.CharacterMovement.MovementMode || i?.HasTag(-2100129479)
                 ? this.CharacterMovement.SetMovementMode(1, 0)
-                : s.CharacterMovement.MovementMode !== 5 &&
+                : 5 !== s.CharacterMovement.MovementMode &&
                   this.CharacterMovement.SetMovementMode(
                     s.CharacterMovement.MovementMode,
                     s.CharacterMovement.CustomMovementMode,
@@ -234,13 +239,13 @@ let CharacterMoveComponent =
         }),
         (this.SlideTrans = void 0),
         (this.OnSpeedRatioAttributeChanged = (t, e, i) => {
-          const s = this.UnifiedStateComponent?.MoveState;
-          const h = this.Entity.GetComponent(161);
+          var s = this.UnifiedStateComponent?.MoveState,
+            h = this.Entity.GetComponent(161);
           h?.Valid && h.ResetMaxSpeed(s);
         }),
         (this.OnResponseInputTagsChanged = (t, e) => {
           e
-            ? (this.CannotResponseInputCount === 0 && (this.HasMoveInput = !1),
+            ? (0 === this.CannotResponseInputCount && (this.HasMoveInput = !1),
               ++this.CannotResponseInputCount)
             : --this.CannotResponseInputCount;
         });
@@ -276,7 +281,7 @@ let CharacterMoveComponent =
         (this.TagComponent.HasTag(this.ForceFallingSpeedCache.Tag)
           ? !(
               this.AnimComp.HasKuroRootMotion ||
-              this.CharacterMovement.MovementMode !== 3 ||
+              3 !== this.CharacterMovement.MovementMode ||
               ((this.ForceFallingSpeedCache.ForceFallingSpeed.Z =
                 this.CharacterMovement.Velocity.Z),
               this.SetForceSpeed(this.ForceFallingSpeedCache.ForceFallingSpeed),
@@ -310,11 +315,11 @@ let CharacterMoveComponent =
       let e = this.AttributeComponent?.GetCurrentValue(EAttributeId.R4n);
       (!e || e <= 0) && (e = CharacterAttributeTypes_1.PER_TEN_THOUSAND),
         (e /= CharacterAttributeTypes_1.PER_TEN_THOUSAND);
-      const i = this.CharacterMovement.MovementMode;
-      i === 5
+      var i = this.CharacterMovement.MovementMode;
+      5 === i
         ? (this.CharacterMovement.MaxFlySpeed = t * e)
         : (this.CharacterMovement.MaxWalkSpeed =
-            i === 3 ? (this.GHr > 0 ? this.GHr : t) * e : t * e),
+            3 === i ? (0 < this.GHr ? this.GHr : t) * e : t * e),
         this.ActorComp?.IsRoleAndCtrlByMe &&
           Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -359,7 +364,7 @@ let CharacterMoveComponent =
         (this.AccelerationLerpTime = 0),
         (this.AccelerationChangeMoveState =
           CharacterUnifiedStateTypes_1.ECharMoveState.Other);
-      const t = this.Entity.GetComponent(3);
+      var t = this.Entity.GetComponent(3);
       if (!t.Valid) return !1;
       (this.IsHidden = !1),
         (this.ActorComp = t),
@@ -521,7 +526,7 @@ let CharacterMoveComponent =
         CharacterUnifiedStateTypes_1.ECharMoveState.Stand,
         CharacterUnifiedStateTypes_1.ECharMoveState.Run,
       ),
-        this.CharacterMovement.MovementMode === 2 &&
+        2 === this.CharacterMovement.MovementMode &&
           this.CharacterMovement.SetMovementMode(1);
     }
     OnDisable() {
@@ -536,7 +541,7 @@ let CharacterMoveComponent =
         ((this.CharHeightAboveGround = -1),
         (this.DeltaTimeSeconds = i * MathUtils_1.MathUtils.MillisecondToSecond),
         this.MoveController?.UpdateMove(this.DeltaTimeSeconds),
-        this.SpeedLockFrame > 0 && --this.SpeedLockFrame,
+        0 < this.SpeedLockFrame && --this.SpeedLockFrame,
         this.IsJump && --this.JumpFrameCount,
         this.LerpMaxAcceleration(),
         this.UpdateBaseMovement(),
@@ -577,13 +582,13 @@ let CharacterMoveComponent =
                 CharacterMoveComponent_1.TempVelocity.ToUeVector()),
               (this.Speed = this.FallingHorizontalMaxSpeed),
               this.ActorComp.ResetCachedVelocityTime());
-          let s;
-          var h =
-            this.Entity.GetTickInterval() > 1 &&
-            this.AnimComp?.Valid &&
-            this.ActorComp.Owner.WasRecentlyRenderedOnScreen();
-          let t = void 0;
-          let e = (h && (t = this.AnimComp.GetMeshTransform()), !1);
+          var s,
+            h =
+              1 < this.Entity.GetTickInterval() &&
+              this.AnimComp?.Valid &&
+              this.ActorComp.Owner.WasRecentlyRenderedOnScreen();
+          let t = void 0,
+            e = (h && (t = this.AnimComp.GetMeshTransform()), !1);
           this.CanResponseInput()
             ? (this.SetInfoVar(),
               (s = this.ActorComp.ActorRotationProxy.Pitch),
@@ -637,9 +642,9 @@ let CharacterMoveComponent =
     }
     CanJumpPress() {
       if (this.GroundedFrame > Time_1.Time.Frame - 2) return !1;
-      const t = this.Entity.GetComponent(33);
-      const e = this.UnifiedStateComponent?.PositionState;
-      const i = this.UnifiedStateComponent?.MoveState;
+      var t = this.Entity.GetComponent(33),
+        e = this.UnifiedStateComponent?.PositionState,
+        i = this.UnifiedStateComponent?.MoveState;
       switch (e) {
         case CharacterUnifiedStateTypes_1.ECharPositionState.Ground:
         case CharacterUnifiedStateTypes_1.ECharPositionState.Climb:
@@ -662,8 +667,8 @@ let CharacterMoveComponent =
     }
     LimitMaxSpeed() {
       this.VelocityVector.FromUeVector(this.ActorComp.ActorVelocityProxy);
-      const t = this.VelocityVector.Size();
-      const e = this.CurrentMovementSettings?.SprintSpeed;
+      var t = this.VelocityVector.Size(),
+        e = this.CurrentMovementSettings?.SprintSpeed;
       e < t &&
         (this.VelocityVector.MultiplyEqual(e / t),
         this.CharacterMovement.Velocity.Set(
@@ -674,16 +679,16 @@ let CharacterMoveComponent =
         this.ActorComp.ResetCachedVelocityTime());
     }
     OnJump() {
-      const t = this.Entity.GetComponent(160);
+      var t = this.Entity.GetComponent(160);
       t.Valid && t.MainAnimInstance && t.MainAnimInstance.Montage_Stop(0),
         (this.JumpFrameCount = JUMP_FRAME_COUNT),
         this.AnimComp.OnJump();
     }
     JumpPress() {
       if (!this.CheckInHit() && this.CanJumpPress()) {
-        const t = this.UnifiedStateComponent?.PositionState;
-        const e = t === CharacterUnifiedStateTypes_1.ECharPositionState.Ground;
-        let i = t === CharacterUnifiedStateTypes_1.ECharPositionState.Climb;
+        var t = this.UnifiedStateComponent?.PositionState,
+          e = t === CharacterUnifiedStateTypes_1.ECharPositionState.Ground,
+          i = t === CharacterUnifiedStateTypes_1.ECharPositionState.Climb;
         if (e || i)
           this.TagComponent?.RemoveTag(-1371021686),
             (i = this.Entity.GetComponent(33)).Valid &&
@@ -713,7 +718,7 @@ let CharacterMoveComponent =
       );
     }
     JumpPressInAir() {
-      let t;
+      var t;
       return !(
         this.CheckInHit() ||
         ((t = this.UnifiedStateComponent?.MoveState) ===
@@ -768,7 +773,7 @@ let CharacterMoveComponent =
       );
     }
     JumpPressInSki() {
-      let t;
+      var t;
       return (
         !this.CheckInHit() &&
         !!(t = this.Entity.GetComponent(32)) &&
@@ -813,7 +818,7 @@ let CharacterMoveComponent =
         this.UnifiedStateComponent?.PositionState ===
         CharacterUnifiedStateTypes_1.ECharPositionState.Air
       ) {
-        let t = this.UnifiedStateComponent.MoveState;
+        var t = this.UnifiedStateComponent.MoveState;
         if (
           t !== CharacterUnifiedStateTypes_1.ECharMoveState.Glide &&
           t !== CharacterUnifiedStateTypes_1.ECharMoveState.Slide &&
@@ -846,7 +851,7 @@ let CharacterMoveComponent =
       return !1;
     }
     PlayerMovementInput(t) {
-      let e = this.Entity.GetComponent(26);
+      var e = this.Entity.GetComponent(26);
       if (!e?.GetSitDownState()) {
         e = this.Entity.GetComponent(33);
         if (
@@ -928,7 +933,7 @@ let CharacterMoveComponent =
       return this.SetAddMoveWorld(t, -1, void 0, e);
     }
     SetAddMoveSpeedWithMesh(t, e) {
-      let i;
+      var i;
       t
         ? ((i = this.VelocityAdditionMapByMesh.get(t) ?? 0),
           (e = this.ActorComp.ActorRotation.RotateVector(e)),
@@ -946,7 +951,7 @@ let CharacterMoveComponent =
       return this.SetAddMoveWorld(t, e, i, s, void 0, h, r, a);
     }
     SetAddMoveWithMesh(t, e, i, s) {
-      let h;
+      var h;
       t
         ? ((h = this.VelocityAdditionMapByMesh.get(t) ?? 0),
           (e = this.ActorComp.ActorRotation.RotateVector(e)),
@@ -960,7 +965,7 @@ let CharacterMoveComponent =
           );
     }
     SetGravityScale(t, e, i, s, h) {
-      (t === 1 && e === 1 && i === 1) ||
+      (1 === t && 1 === e && 1 === i) ||
         ((this.CurrentGravityScale.ScaleUp = t),
         (this.CurrentGravityScale.ScaleDown = e),
         (this.CurrentGravityScale.ScaleTop = i),
@@ -978,7 +983,7 @@ let CharacterMoveComponent =
       return (
         this.CharacterMovement.CustomMovementMode ===
           CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SWIM &&
-        this.CharacterMovement.Kuro_GetBlockDirectWhenMove().SizeSquared() > 0
+        0 < this.CharacterMovement.Kuro_GetBlockDirectWhenMove().SizeSquared()
       );
     }
     UpdateSkillRotation() {
@@ -992,7 +997,7 @@ let CharacterMoveComponent =
     }
     UpdateFacing() {
       if (this.CanUpdateMovingRotation()) {
-        let t = this.Entity.GetComponent(26);
+        var t = this.Entity.GetComponent(26);
         if (!t?.GetSitDownState())
           if (this.ActorComp.OverrideTurnSpeed)
             this.SmoothCharacterRotation(
@@ -1006,7 +1011,7 @@ let CharacterMoveComponent =
           else if (
             !this.UpdateSkillRotation() &&
             this.IsInputDrivenCharacter &&
-            !(this.AnimComp.BattleIdleEndTime > 0)
+            !(0 < this.AnimComp.BattleIdleEndTime)
           ) {
             t = this.UnifiedStateComponent;
             if (t?.Valid) {
@@ -1036,7 +1041,7 @@ let CharacterMoveComponent =
         this.ChainCenter.FromUeVector(e || this.ActorComp.GetInitLocation());
     }
     UpdateMoveChain() {
-      let t;
+      var t;
       this.ConfigChainLengthSquared < 0 ||
         ((this.CurrentChainLengthSquared = Math.max(
           this.CurrentChainLengthSquared,
@@ -1063,14 +1068,14 @@ let CharacterMoveComponent =
             (this.CurrentChainLengthSquared = t));
     }
     PlayerMotionRequest(t) {
-      const e = Protocol_1.Aki.Protocol.Fns.create();
+      var e = Protocol_1.Aki.Protocol.Fns.create();
       (e.y3n = t), Net_1.Net.Call(16502, e, () => {});
     }
     NHr() {
-      let t;
-      const e = this.qHr.GetAlpha();
+      var t,
+        e = this.qHr.GetAlpha();
       return !(
-        e > 1 ||
+        1 < e ||
         ((t = CharacterMoveComponent_1.VelocityAdditionDestination),
         Vector_1.Vector.Lerp(this.qHr.BeginLocation, this.qHr.ToLocation, e, t),
         this.ActorComp.SetActorLocation(t.ToUeVector(), "移动.被吸引", !1),
@@ -1078,7 +1083,7 @@ let CharacterMoveComponent =
       );
     }
     BeginWhirlpool(t, e, i, s, h = -1, r = 0) {
-      const a = this.CharacterMovement;
+      var a = this.CharacterMovement;
       (a.GravityScale = 0),
         this.Entity.GetComponent(158).SetMoveState(
           CharacterUnifiedStateTypes_1.ECharMoveState.KnockUp,
@@ -1110,4 +1115,4 @@ let CharacterMoveComponent =
       CharacterMoveComponent,
     )),
   (exports.CharacterMoveComponent = CharacterMoveComponent);
-// # sourceMappingURL=CharacterMoveComponent.js.map
+//# sourceMappingURL=CharacterMoveComponent.js.map

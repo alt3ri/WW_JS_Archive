@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const DEFAULT_FADE_DURATION = 200;
+const UE = require("ue"),
+  DEFAULT_FADE_DURATION = 200;
 class EffectModelAudio extends UE.EffectModelBase {
   constructor() {
     super(...arguments),
@@ -14,4 +14,4 @@ class EffectModelAudio extends UE.EffectModelBase {
   }
 }
 exports.default = EffectModelAudio;
-// # sourceMappingURL=EffectModelAudio.js.map
+//# sourceMappingURL=EffectModelAudio.js.map

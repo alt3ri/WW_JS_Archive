@@ -1,41 +1,46 @@
 "use strict";
-let NpcMoveComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, s) {
-    let h;
-    const r = arguments.length;
-    let a =
-      r < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      a = Reflect.decorate(t, e, i, s);
-    else
-      for (let n = t.length - 1; n >= 0; n--)
-        (h = t[n]) && (a = (r < 3 ? h(a) : r > 3 ? h(e, i, a) : h(e, i)) || a);
-    return r > 3 && a && Object.defineProperty(e, i, a), a;
-  };
+var NpcMoveComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, s) {
+      var h,
+        r = arguments.length,
+        a =
+          r < 3
+            ? e
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        a = Reflect.decorate(t, e, i, s);
+      else
+        for (var n = t.length - 1; 0 <= n; n--)
+          (h = t[n]) &&
+            (a = (r < 3 ? h(a) : 3 < r ? h(e, i, a) : h(e, i)) || a);
+      return 3 < r && a && Object.defineProperty(e, i, a), a;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcMoveComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const DataTableUtil_1 = require("../../../../../Core/Utils/DataTableUtil");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const PreloadConstants_1 = require("../../../../World/Controller/PreloadConstants");
-const CharacterNameDefines_1 = require("../CharacterNameDefines");
-const CharacterAttributeTypes_1 = require("./Abilities/CharacterAttributeTypes");
-const CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes");
-const BaseMoveComponent_1 = require("./BaseMoveComponent");
-const MIN_MOVE_SPEED = 20;
-const MAX_IN_WATER_SPEED = 800;
-const BASE_MOVE_INHERIT_TIME = 1.5;
-const IN_TURN_TOLERANCE = 0.1;
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  DataTableUtil_1 = require("../../../../../Core/Utils/DataTableUtil"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  PreloadConstants_1 = require("../../../../World/Controller/PreloadConstants"),
+  CharacterNameDefines_1 = require("../CharacterNameDefines"),
+  CharacterAttributeTypes_1 = require("./Abilities/CharacterAttributeTypes"),
+  CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
+  BaseMoveComponent_1 = require("./BaseMoveComponent"),
+  MIN_MOVE_SPEED = 20,
+  MAX_IN_WATER_SPEED = 800,
+  BASE_MOVE_INHERIT_TIME = 1.5,
+  IN_TURN_TOLERANCE = 0.1;
 let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
   BaseMoveComponent_1.BaseMoveComponent
 ) {
@@ -97,7 +102,7 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
     let e = CharacterAttributeTypes_1.PER_TEN_THOUSAND;
     e <= 0 && (e = CharacterAttributeTypes_1.PER_TEN_THOUSAND);
     t *= e /= CharacterAttributeTypes_1.PER_TEN_THOUSAND;
-    this.CharacterMovement.MovementMode === 5
+    5 === this.CharacterMovement.MovementMode
       ? (this.CharacterMovement.MaxFlySpeed = t)
       : (this.CharacterMovement.MaxWalkSpeed = t);
   }
@@ -122,7 +127,7 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
         ModelManager_1.ModelManager.PreloadModel.CommonAssetElement.PrintDebugInfo(),
       (this.AccelerationChangeMoveState =
         CharacterUnifiedStateTypes_1.ECharMoveState.Other);
-    const t = this.Entity.GetComponent(3);
+    var t = this.Entity.GetComponent(3);
     return (
       !!t.Valid &&
       ((this.IsHidden = !1),
@@ -223,7 +228,7 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
         ((this.CharHeightAboveGround = -1),
         (this.DeltaTimeSeconds = i * MathUtils_1.MathUtils.MillisecondToSecond),
         this.MoveController?.UpdateMove(this.DeltaTimeSeconds),
-        this.SpeedLockFrame > 0 && --this.SpeedLockFrame,
+        0 < this.SpeedLockFrame && --this.SpeedLockFrame,
         this.IsJump && --this.JumpFrameCount,
         this.LerpMaxAcceleration(),
         this.UpdateBaseMovement(),
@@ -237,12 +242,12 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
         this.ActorComp.IsMoveAutonomousProxy)
       ) {
         this.UpdateMovementInput(this.ActorComp.InputDirect);
-        const s =
-          this.Entity.GetTickInterval() > 1 &&
+        var s =
+          1 < this.Entity.GetTickInterval() &&
           this.AnimComp?.Valid &&
           this.ActorComp.Owner.WasRecentlyRenderedOnScreen();
-        let t = void 0;
-        let e = (s && (t = this.AnimComp.GetMeshTransform()), !1);
+        let t = void 0,
+          e = (s && (t = this.AnimComp.GetMeshTransform()), !1);
         this.CanResponseInput()
           ? (this.SetInfoVar(),
             (h = this.ActorComp.ActorRotationProxy.Pitch),
@@ -289,7 +294,7 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
           : (this.HasMoveInput = !1);
   }
   InitCreatureProperty() {
-    const t = this.Entity.GetComponent(0);
+    var t = this.Entity.GetComponent(0);
     (this.CreatureProperty = t.GetEntityPropertyConfig()),
       (this.CharacterMovement.Mass = this.CreatureProperty.重量),
       (this.CharacterMovement.HitPriority = this.CreatureProperty.碰撞优先级),
@@ -297,10 +302,10 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
         this.CreatureProperty.穿透优先级);
   }
   UpdateAddMoveSpeed(t = 0) {
-    if (this.VelocityAdditionMap.size === 0) return !1;
+    if (0 === this.VelocityAdditionMap.size) return !1;
     NpcMoveComponent_1.VelocityAdditionTotal.Reset();
-    for (let [e, i] of this.VelocityAdditionMap)
-      i.Duration >= 0 && i.ElapsedTime >= i.Duration
+    for (var [e, i] of this.VelocityAdditionMap)
+      0 <= i.Duration && i.ElapsedTime >= i.Duration
         ? this.VelocityAdditionMap.delete(e)
         : i.MovementMode &&
             this.CharacterMovement.CustomMovementMode !== i.MovementMode
@@ -310,10 +315,10 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
             i.CurveFloat?.IsValid() &&
               this.VelocityVector.MultiplyEqual(
                 i.CurveFloat.GetFloatValue(
-                  i.Duration > 0 ? i.ElapsedTime / i.Duration : 1,
+                  0 < i.Duration ? i.ElapsedTime / i.Duration : 1,
                 ),
               ),
-            i.Duration > 0 &&
+            0 < i.Duration &&
               i.ElapsedTime > i.Duration &&
               ((e = i.ElapsedTime - i.Duration),
               (i = (this.DeltaTimeSeconds - e) / this.DeltaTimeSeconds),
@@ -322,7 +327,7 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
               this.VelocityVector,
             ));
     return (
-      this.VelocityAdditionMap.size !== 0 &&
+      0 !== this.VelocityAdditionMap.size &&
       (this.ActorComp.IsRoleAndCtrlByMe &&
         Math.abs(NpcMoveComponent_1.VelocityAdditionTotal.X) <
           MathUtils_1.MathUtils.SmallNumber &&
@@ -389,4 +394,4 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
     NpcMoveComponent,
   )),
   (exports.NpcMoveComponent = NpcMoveComponent);
-// # sourceMappingURL=NpcMoveComponent.js.map
+//# sourceMappingURL=NpcMoveComponent.js.map

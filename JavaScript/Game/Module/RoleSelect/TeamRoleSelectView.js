@@ -1,29 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TeamRoleSelectView = exports.TeamRoleSelectViewData = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const UiPopViewData_1 = require("../../Ui/Define/UiPopViewData");
-const UiManager_1 = require("../../Ui/UiManager");
-const FilterSortEntrance_1 = require("../Common/FilterSort/FilterSortEntrance");
-const TeamPlayerSelectionComponent_1 = require("../Common/TeamPlayerSelectionComponent");
-const EditFormationDefine_1 = require("../EditFormation/EditFormationDefine");
-const RoleController_1 = require("../RoleUi/RoleController");
-const RoleDefine_1 = require("../RoleUi/RoleDefine");
-const RoleTagMediumIconItem_1 = require("../RoleUi/RoleTag/RoleTagMediumIconItem");
-const SceneTeamDefine_1 = require("../SceneTeam/SceneTeamDefine");
-const GenericLayout_1 = require("../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const LoopScrollView_1 = require("../Util/ScrollView/LoopScrollView");
-const TeamRoleGrid_1 = require("./TeamRoleGrid");
-const TeamRoleSkillItem_1 = require("./TeamRoleSkillItem");
-const displaySkillTypes = [11, 2, 3, 6];
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  UiPopViewData_1 = require("../../Ui/Define/UiPopViewData"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  FilterSortEntrance_1 = require("../Common/FilterSort/FilterSortEntrance"),
+  TeamPlayerSelectionComponent_1 = require("../Common/TeamPlayerSelectionComponent"),
+  EditFormationDefine_1 = require("../EditFormation/EditFormationDefine"),
+  RoleController_1 = require("../RoleUi/RoleController"),
+  RoleDefine_1 = require("../RoleUi/RoleDefine"),
+  RoleTagMediumIconItem_1 = require("../RoleUi/RoleTag/RoleTagMediumIconItem"),
+  SceneTeamDefine_1 = require("../SceneTeam/SceneTeamDefine"),
+  GenericLayout_1 = require("../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  LoopScrollView_1 = require("../Util/ScrollView/LoopScrollView"),
+  TeamRoleGrid_1 = require("./TeamRoleGrid"),
+  TeamRoleSkillItem_1 = require("./TeamRoleSkillItem"),
+  displaySkillTypes = [11, 2, 3, 6];
 class TeamRoleSelectViewData extends UiPopViewData_1.UiPopViewData {
   constructor(i, t, e, s, h, o) {
     super(),
@@ -80,8 +80,8 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
       (this.zho = void 0),
       (this.x4t = !1),
       (this.xUt = () => {
-        const i = this.CurSelectRole?.GetDataId();
-        const t = this.Pe?.CanConfirmFunc;
+        var i = this.CurSelectRole?.GetDataId(),
+          t = this.Pe?.CanConfirmFunc;
         (t && !t(i)) ||
           (this.Pe?.ConfirmCallBack?.(i),
           UiManager_1.UiManager.CloseView(this.Info.Name));
@@ -91,8 +91,8 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
           UiManager_1.UiManager.CloseView(this.Info.Name);
       }),
       (this.Zho = () => {
-        const i = this.CurSelectRole.GetDataId();
-        const t = i >= RoleDefine_1.ROBOT_DATA_MIN_ID ? [i] : [];
+        var i = this.CurSelectRole.GetDataId(),
+          t = i >= RoleDefine_1.ROBOT_DATA_MIN_ID ? [i] : [];
         RoleController_1.RoleController.OpenRoleMainView(0, i, t),
           EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.OnRoleChangeEnd,
@@ -104,7 +104,7 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
           );
       }),
       (this.$Ge = (i) => {
-        i === "RoleRootView" &&
+        "RoleRootView" === i &&
           (EventSystem_1.EventSystem.Remove(
             EventDefine_1.EEventName.OnRoleChangeEnd,
             this.elo,
@@ -122,11 +122,11 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
       }),
       (this.Qho = (i, t, e) => {
         this.Kho = i;
-        var i = this.Kho.length > 0;
-        let s =
-          (this.GetItem(8).SetUIActive(!i),
-          this.GetButton(3).RootUIComp.SetUIActive(i),
-          !ModelManager_1.ModelManager.TowerModel.CheckInTower() && i);
+        var i = 0 < this.Kho.length,
+          s =
+            (this.GetItem(8).SetUIActive(!i),
+            this.GetButton(3).RootUIComp.SetUIActive(i),
+            !ModelManager_1.ModelManager.TowerModel.CheckInTower() && i);
         if (
           (this.GetButton(9).RootUIComp.SetUIActive(s),
           this.GetLoopScrollViewComponent(1).RootUIComp.SetUIActive(i),
@@ -143,7 +143,7 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
             this.jho.RefreshByData(this.Kho),
             this.CurSelectRole)
           )
-            if (e !== 1 || t) {
+            if (1 !== e || t) {
               let i = !1;
               for (const h of this.Kho)
                 if (h.GetDataId() === this.CurSelectRole?.GetDataId()) {
@@ -163,7 +163,7 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
         }
       }),
       (this.z9e = () => {
-        const i = new TeamRoleGrid_1.TeamRoleGrid();
+        var i = new TeamRoleGrid_1.TeamRoleGrid();
         return (
           (i.IsHighlightIndex = this.IsHighlightIndex),
           i.BindOnExtendToggleStateChanged(this.ToggleFunction),
@@ -173,8 +173,8 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
       }),
       (this.IsHighlightIndex = (i) => i === this.Pe?.Position),
       (this.ToggleFunction = (i) => {
-        let t;
-        i.State === 1 &&
+        var t;
+        1 === i.State &&
           ((t = this.CurSelectRole?.GetDataId()) &&
             ModelManager_1.ModelManager.RoleSelectModel.SelectedRoleSet.delete(
               t,
@@ -192,14 +192,14 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
           this.U4t(t));
       }),
       (this.CanExecuteChangeFunction = (i, t, e) => {
-        return e !== 1 || this.CurSelectRole !== i;
+        return 1 !== e || this.CurSelectRole !== i;
       }),
       (this.nlo = () => {
-        const i = new TeamRoleSkillItem_1.TeamRoleSkillItem();
+        var i = new TeamRoleSkillItem_1.TeamRoleSkillItem();
         return i.BindOnSkillStateChange(this.slo), i;
       }),
       (this.slo = (i, t) => {
-        i === 1 &&
+        1 === i &&
           this.$ho &&
           ((i = this.$ho.indexOf(t)), this.Xho.SelectGridProxy(i), this.tlo(t));
       }),
@@ -208,26 +208,26 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
           (this.olo(), this.rlo(this.CurSelectRole.GetDataId()));
       }),
       (this.elo = () => {
-        const t = ModelManager_1.ModelManager.RoleSelectModel;
+        var t = ModelManager_1.ModelManager.RoleSelectModel;
         let e = !1;
         for (let i = 0; i < this.Kho.length; i++) {
-          let s = this.Kho[i];
-          const h = this.CurSelectRole === s;
-          const o = ModelManager_1.ModelManager.RoleModel?.GetRoleDataById(
-            s.GetDataId(),
-          );
+          var s = this.Kho[i],
+            h = this.CurSelectRole === s,
+            o = ModelManager_1.ModelManager.RoleModel?.GetRoleDataById(
+              s.GetDataId(),
+            );
           o &&
             o !== s &&
             ((e = !0),
             (this.Kho[i] = o),
-            (s = t.GetRoleIndex(s.GetDataId())) > 0 && t.RoleIndexMap.set(s, o),
+            0 < (s = t.GetRoleIndex(s.GetDataId())) && t.RoleIndexMap.set(s, o),
             h) &&
             (this.CurSelectRole = o);
         }
         e && this.ami?.UpdateData(this.Pe.UseWay, this.Kho);
       }),
       (this.d3t = () => {
-        let i;
+        var i;
         this.Pe?.EditBattleRoleSlotDataList &&
           (((i =
             ModelManager_1.ModelManager.EditBattleTeamModel.GetRoleSlotData(
@@ -278,10 +278,10 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
       ]);
   }
   async OnBeforeStartAsync() {
-    const i = [];
+    var i = [];
     for (const t of this.OpenParam.RoleList)
       t.GetDataId() > RoleDefine_1.ROBOT_DATA_MIN_ID && i.push(t.GetDataId());
-    i.length > 0 &&
+    0 < i.length &&
       (await RoleController_1.RoleController.RobotRolePropRequest(i));
   }
   OnStart() {
@@ -291,43 +291,43 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
         this.GetItem(7).GetOwner(),
         this.z9e,
       ));
-    var i = this.GetItem(20);
-    var i =
-      ((this.Jho =
-        new TeamPlayerSelectionComponent_1.TeamPlayerSelectionComponent(i)),
-      this.GetItem(21));
-    var i =
-      ((this.zho =
-        new TeamPlayerSelectionComponent_1.TeamPlayerSelectionComponent(i)),
-      ModelManager_1.ModelManager.GameModeModel.IsMulti);
-    var i =
-      (this.GetItem(23).SetUIActive(i),
-      (this.x4t =
-        ModelManager_1.ModelManager.RoleModel.IsShowMultiSkillDesc && i),
-      this.x4t ? 1 : 0);
-    const t =
-      (this.GetExtendToggle(22).SetToggleState(i),
-      (this.Xho = new GenericLayout_1.GenericLayout(
-        this.GetHorizontalLayout(13),
-        this.nlo,
-      )),
-      (this.Yho = new GenericLayout_1.GenericLayout(
-        this.GetMultiTemplateLayout(16),
-        () => new RoleTagMediumIconItem_1.RoleTagMediumIconItem(),
-      )),
-      (this.Kho = this.Pe?.RoleList),
-      this.Pe?.CurrentRoleId);
-    const e = this.Pe?.FormationRoleList;
-    const s =
-      (ModelManager_1.ModelManager.RoleSelectModel.ClearData(),
-      ModelManager_1.ModelManager.RoleSelectModel.RoleIndexMap);
+    var i = this.GetItem(20),
+      i =
+        ((this.Jho =
+          new TeamPlayerSelectionComponent_1.TeamPlayerSelectionComponent(i)),
+        this.GetItem(21)),
+      i =
+        ((this.zho =
+          new TeamPlayerSelectionComponent_1.TeamPlayerSelectionComponent(i)),
+        ModelManager_1.ModelManager.GameModeModel.IsMulti),
+      i =
+        (this.GetItem(23).SetUIActive(i),
+        (this.x4t =
+          ModelManager_1.ModelManager.RoleModel.IsShowMultiSkillDesc && i),
+        this.x4t ? 1 : 0),
+      t =
+        (this.GetExtendToggle(22).SetToggleState(i),
+        (this.Xho = new GenericLayout_1.GenericLayout(
+          this.GetHorizontalLayout(13),
+          this.nlo,
+        )),
+        (this.Yho = new GenericLayout_1.GenericLayout(
+          this.GetMultiTemplateLayout(16),
+          () => new RoleTagMediumIconItem_1.RoleTagMediumIconItem(),
+        )),
+        (this.Kho = this.Pe?.RoleList),
+        this.Pe?.CurrentRoleId),
+      e = this.Pe?.FormationRoleList,
+      s =
+        (ModelManager_1.ModelManager.RoleSelectModel.ClearData(),
+        ModelManager_1.ModelManager.RoleSelectModel.RoleIndexMap);
     if (e)
       for (
         let i = 1;
         i <= EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM && !(i > e.length);
         i++
       ) {
-        const h = e[i - 1];
+        var h = e[i - 1];
         for (const o of this.Kho)
           if (o.GetDataId() === h) {
             s.set(i, o);
@@ -399,8 +399,8 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
   }
   ilo() {
     this.olo();
-    var i = this.Kho.indexOf(this.CurSelectRole);
-    var i = (this.jho.SelectGridProxy(i), this.CurSelectRole.GetDataId());
+    var i = this.Kho.indexOf(this.CurSelectRole),
+      i = (this.jho.SelectGridProxy(i), this.CurSelectRole.GetDataId());
     ModelManager_1.ModelManager.RoleSelectModel.SelectedRoleSet.add(i),
       this.rlo(i),
       this.F6t(i),
@@ -413,7 +413,7 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
         (this.Jho.IsSet = !1),
         (this.zho.IsSet = !1);
       for (let i = 1; i <= SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; i++) {
-        const e = t[i - 1];
+        var e = t[i - 1];
         !e?.HasRole ||
           e.GetRoleData.IsSelf ||
           (this.Jho.IsSet
@@ -440,12 +440,12 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
       this.GetInteractionGroup(0)?.SetInteractable(i));
   }
   U4t(i) {
-    var t = ModelManager_1.ModelManager.RoleModel.GetRoleName(i);
-    var t =
-      (this.GetText(11).SetText(t),
-      ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i));
+    var t = ModelManager_1.ModelManager.RoleModel.GetRoleName(i),
+      t =
+        (this.GetText(11).SetText(t),
+        ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i));
     if (t) {
-      const e = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillList(
+      var e = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillList(
         t.SkillId,
       );
       if (e) {
@@ -453,7 +453,7 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
         for (const o of displaySkillTypes)
           for (const r of e)
             if (r.SkillType === o) {
-              const s = new TeamRoleSkillItem_1.TeamRoleSkillData();
+              var s = new TeamRoleSkillItem_1.TeamRoleSkillData();
               (s.SkillIcon = r.Icon),
                 (s.SkillType = o),
                 (s.SkillName = r.SkillName),
@@ -471,7 +471,7 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
           this.Xho.RefreshByData(h, () => {
             this.Xho.SelectGridProxy(0), this.slo(1, h[0]);
           }),
-          (t = void 0 !== (i = t.Tag) && i.length > 0),
+          (t = void 0 !== (i = t.Tag) && 0 < i.length),
           this.GetMultiTemplateLayout(16).RootUIComp.SetUIActive(t),
           t && this.Yho?.RefreshByData(i));
       }
@@ -479,30 +479,30 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
   }
   tlo(i) {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(15), i.SkillName);
-    var t = this.GetText(18);
-    var t =
-      (this.x4t
-        ? LguiUtil_1.LguiUtil.SetLocalTextNew(
-            t,
-            i.MultiSkillDesc,
-            ...i.MultiSkillDescNum,
-          )
-        : i.SkillResume === ""
-          ? t.SetUIActive(!1)
-          : LguiUtil_1.LguiUtil.SetLocalTextNew(
+    var t = this.GetText(18),
+      t =
+        (this.x4t
+          ? LguiUtil_1.LguiUtil.SetLocalTextNew(
               t,
-              i.SkillResume,
-              ...i.SkillResumeNum,
-            ),
-      ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTypeNameLocalText(
-        i.SkillType,
-      ));
+              i.MultiSkillDesc,
+              ...i.MultiSkillDescNum,
+            )
+          : "" === i.SkillResume
+            ? t.SetUIActive(!1)
+            : LguiUtil_1.LguiUtil.SetLocalTextNew(
+                t,
+                i.SkillResume,
+                ...i.SkillResumeNum,
+              ),
+        ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTypeNameLocalText(
+          i.SkillType,
+        ));
     t && this.GetText(12).SetText(t);
   }
   olo() {
-    let i;
-    let t;
-    const e = this.GetText(6);
+    var i,
+      t,
+      e = this.GetText(6);
     !ModelManager_1.ModelManager.TowerModel.IsOpenFloorFormation() &&
     ((i = this.CurSelectRole.GetDataId()),
     (t = this.Kho.indexOf(this.CurSelectRole)),
@@ -513,8 +513,8 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
       : e.SetUIActive(!1);
   }
   GetGuideUiItemAndUiItemForShowEx(i) {
-    let t = Number(i[0]);
-    if (t !== 0) {
+    var t = Number(i[0]);
+    if (0 !== t) {
       t = this.hlo(t);
       if (t) return [t, t];
     }
@@ -525,8 +525,8 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
       ]);
   }
   hlo(t) {
-    let e = 0;
-    let s = void 0;
+    let e = 0,
+      s = void 0;
     return (
       this.Kho?.forEach(
         (i) =>
@@ -541,4 +541,4 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.TeamRoleSelectView = TeamRoleSelectView;
-// # sourceMappingURL=TeamRoleSelectView.js.map
+//# sourceMappingURL=TeamRoleSelectView.js.map

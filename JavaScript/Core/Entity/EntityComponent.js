@@ -1,24 +1,28 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, i, n, e) {
-    let s;
-    const o = arguments.length;
-    let r =
-      o < 3 ? i : e === null ? (e = Object.getOwnPropertyDescriptor(i, n)) : e;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var s,
+      o = arguments.length,
+      r =
+        o < 3
+          ? i
+          : null === e
+            ? (e = Object.getOwnPropertyDescriptor(i, n))
+            : e;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(t, i, n, e);
     else
-      for (let h = t.length - 1; h >= 0; h--)
-        (s = t[h]) && (r = (o < 3 ? s(r) : o > 3 ? s(i, n, r) : s(i, n)) || r);
-    return o > 3 && r && Object.defineProperty(i, n, r), r;
+      for (var h = t.length - 1; 0 <= h; h--)
+        (s = t[h]) && (r = (o < 3 ? s(r) : 3 < o ? s(i, n, r) : s(i, n)) || r);
+    return 3 < o && r && Object.defineProperty(i, n, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EntityComponent = void 0);
-const Log_1 = require("../Common/Log");
-const Stats_1 = require("../Common/Stats");
-const PerformanceDecorators_1 = require("../Performance/PerformanceDecorators");
-const Entity_1 = require("./Entity");
+const Log_1 = require("../Common/Log"),
+  Stats_1 = require("../Common/Stats"),
+  PerformanceDecorators_1 = require("../Performance/PerformanceDecorators"),
+  Entity_1 = require("./Entity");
 class EntityComponent {
   constructor() {
     (this.UnResetPropertySet = void 0),
@@ -54,7 +58,7 @@ class EntityComponent {
       (this.kW =
         this.OnChangeTimeDilation !==
         EntityComponent.prototype.OnChangeTimeDilation);
-    const t = this.constructor.name;
+    var t = this.constructor.name;
     let i = void 0;
     EntityComponent.UW.has(t)
       ? (i = EntityComponent.UW.get(t))
@@ -95,7 +99,7 @@ class EntityComponent {
     return this.PW;
   }
   get Active() {
-    return this.DW.size === 0;
+    return 0 === this.DW.size;
   }
   get NeedTick() {
     return this.oW;
@@ -195,7 +199,7 @@ class EntityComponent {
     );
   }
   Clear() {
-    let t;
+    var t;
     return this.OnClear === EntityComponent.prototype.OnClear
       ? (this.AW(), !0)
       : ((t = this.VW(() => this.OnClear(), this.uW, this.OnClear.name)),
@@ -253,8 +257,8 @@ class EntityComponent {
           "Component",
           this.constructor.name,
         ]);
-    const i = this.Active;
-    const n = ++this.vW;
+    var i = this.Active,
+      n = ++this.vW;
     return (
       this.DW.set(n, t),
       this.GW &&
@@ -421,9 +425,9 @@ class EntityComponent {
     return `[object ${this.constructor.name}(Id=${this.Entity?.Id})${this.Valid ? "" : "(D)"}]`;
   }
   DumpDisableInfo() {
-    let t;
-    let i;
-    const n = new Array();
+    var t,
+      i,
+      n = new Array();
     let e = "";
     for ([t, i] of this.DW)
       n.push(
@@ -453,4 +457,4 @@ class EntityComponent {
     null,
   ),
   (exports.EntityComponent = EntityComponent);
-// # sourceMappingURL=EntityComponent.js.map
+//# sourceMappingURL=EntityComponent.js.map

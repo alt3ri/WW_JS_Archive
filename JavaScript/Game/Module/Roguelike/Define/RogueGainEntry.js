@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RogueGainEntry = void 0);
-const AffixEntry_1 = require("./AffixEntry");
-const RoguelikeDefine_1 = require("./RoguelikeDefine");
+const AffixEntry_1 = require("./AffixEntry"),
+  RoguelikeDefine_1 = require("./RoguelikeDefine");
 class RogueGainEntry {
   constructor(i, t = void 0) {
     (this.RoguelikeGainDataType = void 0),
@@ -33,7 +33,7 @@ class RogueGainEntry {
       (this.RestCount = i.Cws),
       (this.IsValid = i.ZMs);
     for (const e of Object.keys(i.aws ?? {})) {
-      const s = i.aws[e] ?? 0;
+      var s = i.aws[e] ?? 0;
       s && this.ElementDict.set(Number(e), s);
     }
     if (i._ws) {
@@ -52,11 +52,11 @@ class RogueGainEntry {
     }
   }
   GetSortElementInfoArrayByCount(i = !1) {
-    let t;
-    let s;
-    const e = new Array();
+    var t,
+      s,
+      e = new Array();
     for ([t, s] of this.ElementDict)
-      (i && t === 9) || e.push(new RoguelikeDefine_1.ElementInfo(t, s));
+      (i && 9 === t) || e.push(new RoguelikeDefine_1.ElementInfo(t, s));
     return e.sort((i, t) => t.Count - i.Count), e;
   }
   IsDiscounted() {
@@ -64,4 +64,4 @@ class RogueGainEntry {
   }
 }
 exports.RogueGainEntry = RogueGainEntry;
-// # sourceMappingURL=RogueGainEntry.js.map
+//# sourceMappingURL=RogueGainEntry.js.map

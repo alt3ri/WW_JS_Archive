@@ -121,4 +121,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   ])),
   (exports.specialIgnoreBullet = ["4000000003", "210000004", "80004012001"]),
   (exports.checkBulletInSpecialList = checkBulletInSpecialList);
-// # sourceMappingURL=CharacterBuffIds.js.map
+//# sourceMappingURL=CharacterBuffIds.js.map

@@ -1,40 +1,40 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GachaMainView = void 0);
-const UE = require("ue");
-const LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const Queue_1 = require("../../../../Core/Container/Queue");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const StringBuilder_1 = require("../../../../Core/Utils/StringBuilder");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const UiManager_1 = require("../../../Ui/UiManager");
-const CommonTextItem_1 = require("../../Common/Button/CommonTextItem");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const CdnServerDebugConfig_1 = require("../../Debug/CdnServerDebugConfig");
-const CommonExchangeData_1 = require("../../ItemExchange/View/CommonExchangeData");
-const RoleController_1 = require("../../RoleUi/RoleController");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew");
-const WeaponTrialData_1 = require("../../Weapon/Data/WeaponTrialData");
-const GachaController_1 = require("../GachaController");
-const GachaDefine_1 = require("../GachaDefine");
-const CommonRoleGachaPoolItem_1 = require("./CommonRoleGachaPoolItem");
-const GachaButton_1 = require("./GachaButton");
-const GachaSmallItemGrid_1 = require("./GachaSmallItemGrid");
-const GachaTagItem_1 = require("./GachaTagItem");
-const UpRoleGachaPoolItem_1 = require("./UpRoleGachaPoolItem");
-const UpWeaponGachaPoolItem_1 = require("./UpWeaponGachaPoolItem");
+const UE = require("ue"),
+  LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Queue_1 = require("../../../../Core/Container/Queue"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  StringBuilder_1 = require("../../../../Core/Utils/StringBuilder"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  CommonTextItem_1 = require("../../Common/Button/CommonTextItem"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  CdnServerDebugConfig_1 = require("../../Debug/CdnServerDebugConfig"),
+  CommonExchangeData_1 = require("../../ItemExchange/View/CommonExchangeData"),
+  RoleController_1 = require("../../RoleUi/RoleController"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
+  WeaponTrialData_1 = require("../../Weapon/Data/WeaponTrialData"),
+  GachaController_1 = require("../GachaController"),
+  GachaDefine_1 = require("../GachaDefine"),
+  CommonRoleGachaPoolItem_1 = require("./CommonRoleGachaPoolItem"),
+  GachaButton_1 = require("./GachaButton"),
+  GachaSmallItemGrid_1 = require("./GachaSmallItemGrid"),
+  GachaTagItem_1 = require("./GachaTagItem"),
+  UpRoleGachaPoolItem_1 = require("./UpRoleGachaPoolItem"),
+  UpWeaponGachaPoolItem_1 = require("./UpWeaponGachaPoolItem");
 class OperationParam {
   constructor(e, i) {
     (this.OperationType = e), (this.Param = i);
@@ -57,14 +57,14 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
       (this.fHt = new Queue_1.Queue()),
       (this.pHt = !1),
       (this.ift = () => {
-        let e = this.vHt;
+        var e = this.vHt;
         if (e) {
-          const i =
-            ModelManager_1.ModelManager.GachaModel.GetGachaPoolUrlPrefix();
-          let t = ModelManager_1.ModelManager.GachaModel.GetServerArea();
-          const a = new StringBuilder_1.StringBuilder();
-          const r = this.MHt.UrlList;
-          if (r && r.length !== 0) {
+          var i =
+              ModelManager_1.ModelManager.GachaModel.GetGachaPoolUrlPrefix(),
+            t = ModelManager_1.ModelManager.GachaModel.GetServerArea(),
+            a = new StringBuilder_1.StringBuilder(),
+            r = this.MHt.UrlList;
+          if (r && 0 !== r.length) {
             for (let e = 0; e < r.length; e++)
               a.Append(r[e]), e < r.length - 1 && a.Append(",");
             (t =
@@ -103,7 +103,7 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
         );
       }),
       (this.yHt = () => {
-        let e, i, t;
+        var e, i, t;
         this.vHt &&
           ((i = this.vHt.GroupId),
           (e =
@@ -134,12 +134,12 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
         UiManager_1.UiManager.CloseView(this.Info.Name);
       }),
       (this.IHt = () => {
-        const e = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewInfo(
+        var e = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewInfo(
           this.SHt,
         );
         if (e) {
-          const i = e.Type;
-          const t = e.PreviewIdList;
+          var i = e.Type,
+            t = e.PreviewIdList;
           switch (i) {
             case 1:
             case 2:
@@ -147,7 +147,7 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
             case 6:
               var a = [];
               for (const _ of t) {
-                const r =
+                var r =
                   ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(
                     _,
                   );
@@ -159,11 +159,11 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
             case 3:
               var s = [];
               for (const l of t) {
-                const o =
-                  ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(
-                    l,
-                  );
-                const h = new WeaponTrialData_1.WeaponTrialData();
+                var o =
+                    ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(
+                      l,
+                    ),
+                  h = new WeaponTrialData_1.WeaponTrialData();
                 h.SetTrialId(o.TrialId), s.push(h);
               }
               var n = { WeaponDataList: s, SelectedIndex: 0 };
@@ -172,13 +172,13 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
         }
       }),
       (this.THt = () => {
-        const e = this.vHt;
+        var e = this.vHt;
         e && GachaController_1.GachaController.OpenGachaSelectionView(e);
       }),
       (this.RefreshLeftTime = () => {
-        let e = this.vHt;
+        var e = this.vHt;
         e &&
-          (e = e.GetPoolEndTimeByPoolInfo(this.MHt)) !== 0 &&
+          0 !== (e = e.GetPoolEndTimeByPoolInfo(this.MHt)) &&
           ((e = e - TimeUtil_1.TimeUtil.GetServerTime()) <= 0
             ? GachaController_1.GachaController.GachaInfoRequest(!1)
             : ((e = TimeUtil_1.TimeUtil.GetRemainTimeDataFormat(e)),
@@ -187,7 +187,7 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
                 "Text_GachaRemainingTime_Text",
                 e.CountDownText,
               ),
-              (e = e.RemainingTime) > 0 &&
+              0 < (e = e.RemainingTime) &&
                 ((e = e),
                 (this.TDe = TimerSystem_1.RealTimeTimerSystem.Delay(
                   this.RefreshLeftTime,
@@ -198,7 +198,7 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
         this.LHt();
       }),
       (this.DHt = () => {
-        let e;
+        var e;
         this.RHt
           ? ((e = new OperationParam(1)), this.fHt.Push(e))
           : (this.UHt(),
@@ -207,11 +207,11 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
             }));
       }),
       (this.PHt = () => {
-        let e;
-        let i;
-        let t;
-        let a;
-        const r = this._Ht.GetGenericLayout().GetSelectedGridIndex();
+        var e,
+          i,
+          t,
+          a,
+          r = this._Ht.GetGenericLayout().GetSelectedGridIndex();
         !this.uHt ||
           r < 0 ||
           r >= this.uHt.length ||
@@ -224,7 +224,7 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
             ((e.PoolInfo = a), i.Refresh(e, !0, r), this.DHt(), this.xHt()));
       }),
       (this.wHt = () => {
-        const e = new GachaTagItem_1.GachaTagItem();
+        var e = new GachaTagItem_1.GachaTagItem();
         return (
           (e.SelectCallback = this.BHt), (e.CanExecuteChange = this.Eft), e
         );
@@ -236,7 +236,7 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
         return new GachaSmallItemGrid_1.GachaSmallItemGrid();
       }),
       (this.BHt = (e) => {
-        let i;
+        var i;
         this.RHt
           ? ((i = new OperationParam(2, e)), this.fHt.Push(i))
           : (this.UHt(),
@@ -245,40 +245,40 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
             }));
       }),
       (this.GHt = async (e) => {
-        const i = this._Ht.GetGenericLayout().GetSelectedGridIndex();
-        var t =
-          (this._Ht.GetGenericLayout().SelectGridProxy(e),
-          ModelManager_1.ModelManager.GachaModel.RecordGachaInfo(this.vHt));
-        var t =
-          (t && this._Ht.GetScrollItemByIndex(e)?.RefreshRedDot(),
-          await this.AHt(),
-          this.vHt);
+        var i = this._Ht.GetGenericLayout().GetSelectedGridIndex(),
+          t =
+            (this._Ht.GetGenericLayout().SelectGridProxy(e),
+            ModelManager_1.ModelManager.GachaModel.RecordGachaInfo(this.vHt)),
+          t =
+            (t && this._Ht.GetScrollItemByIndex(e)?.RefreshRedDot(),
+            await this.AHt(),
+            this.vHt);
         t &&
-          t.UsePoolId === 0 &&
+          0 === t.UsePoolId &&
           GachaController_1.GachaController.OpenGachaSelectionView(t),
-          i >= 0 && this.xHt();
+          0 <= i && this.xHt();
       }),
       (this.Eft = (e) =>
         e !== this._Ht?.GetGenericLayout()?.GetSelectedGridIndex()),
       (this.NHt = () => {
-        const e = this.vHt;
+        var e = this.vHt;
         ControllerHolder_1.ControllerHolder.ItemExchangeController.OpenExchangeViewByItemId(
           e.ItemId,
         );
       }),
       (this.OHt = () => {
-        const e = ConfigManager_1.ConfigManager.GachaConfig.SecondCurrency();
+        var e = ConfigManager_1.ConfigManager.GachaConfig.SecondCurrency();
         const r = new CommonExchangeData_1.CommonExchangeData();
         r.InitByItemId(e),
           (r.ConfirmNoClose = !0),
           (r.ConfirmCallBack = (e, i) => {
-            let t;
-            let a =
-              ModelManager_1.ModelManager.ItemExchangeModel.CalculateConsume(
-                e,
-                0,
-                i,
-              );
+            var t,
+              a =
+                ModelManager_1.ModelManager.ItemExchangeModel.CalculateConsume(
+                  e,
+                  0,
+                  i,
+                );
             a && i
               ? ((t =
                   ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
@@ -348,7 +348,7 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
     return this.FHt.PoolInfo;
   }
   get FHt() {
-    const e = this._Ht.GetGenericLayout().GetSelectedGridIndex();
+    var e = this._Ht.GetGenericLayout().GetSelectedGridIndex();
     if (!(!this.uHt || e < 0 || e >= this.uHt.length)) return this.uHt[e];
   }
   get RHt() {
@@ -358,8 +358,8 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
     this.pHt = !0;
   }
   O0t() {
-    if (((this.pHt = !1), this.fHt.Size !== 0)) {
-      const e = this.fHt.Pop();
+    if (((this.pHt = !1), 0 !== this.fHt.Size)) {
+      var e = this.fHt.Pop();
       if (e)
         switch (e.OperationType) {
           case 0:
@@ -475,7 +475,7 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
       UiLayer_1.UiLayer.SetShowMaskLayer("GachaMainViewRefresh", !1);
   }
   async vIt() {
-    let e;
+    var e;
     this.vHt &&
       (await this.lqe.SetCurrencyItemList([
         ConfigManager_1.ConfigManager.GachaConfig.SecondCurrency(),
@@ -505,10 +505,10 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
     }
   }
   KHt() {
-    let e;
-    const i = [];
-    let t = ModelManager_1.ModelManager.GachaModel.TodayResultCount;
-    t >= 0 &&
+    var e,
+      i = [],
+      t = ModelManager_1.ModelManager.GachaModel.TodayResultCount;
+    0 <= t &&
       ((e = CommonParamById_1.configCommonParamById.GetIntConfig(
         "gacha_daily_total_limit_times",
       )),
@@ -518,7 +518,7 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
         e,
       )),
       i.push(t)),
-      this.vHt.DailyLimitTimes > 0 &&
+      0 < this.vHt.DailyLimitTimes &&
         ((e = this.vHt.DailyLimitTimes),
         (t = this.vHt.TodayTimes),
         (t = new LguiUtil_1.TableTextArgNew(
@@ -527,7 +527,7 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
           e,
         )),
         i.push(t)),
-      this.vHt.TotalLimitTimes > 0 &&
+      0 < this.vHt.TotalLimitTimes &&
         ((e = this.vHt.TotalLimitTimes),
         (t = this.vHt.TotalTimes),
         (t = new LguiUtil_1.TableTextArgNew(
@@ -539,7 +539,7 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
       this.cHt.RefreshByData(i);
   }
   async HHt() {
-    const e = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewType(
+    var e = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewType(
       this.SHt,
     );
     let i = this.lHt.get(e);
@@ -558,10 +558,10 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
       this.gHt?.PlaySwitchSeq();
   }
   WHt() {
-    let e;
-    let i;
-    let t;
-    let a = this.vHt;
+    var e,
+      i,
+      t,
+      a = this.vHt;
     a &&
       (e = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewInfo(
         this.SHt,
@@ -571,21 +571,21 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
         ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewTypeConfig(i)) &&
       (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(9), t.TypeText),
       (t = a.GetPoolEndTimeByPoolInfo(this.MHt)),
-      this.GetItem(11).SetUIActive(t > 0),
-      t > 0
+      this.GetItem(11).SetUIActive(0 < t),
+      0 < t
         ? this.RefreshLeftTime()
         : this.TDe &&
           (TimerSystem_1.RealTimeTimerSystem.Remove(this.TDe),
           (this.TDe = void 0)),
       (t = e.UpList),
       (i = ModelManager_1.ModelManager.GachaModel.IsRolePool(i)),
-      t && t.length > 0
+      t && 0 < t.length
         ? (this.GetItem(15)?.SetUIActive(!0),
           this.mHt?.RefreshByData(t),
           (t = i ? "Text_GachaUpList1_Text" : "Text_GachaUpList2_Text"),
           LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(16), t))
         : this.GetItem(15)?.SetUIActive(!1),
-      (t = a.GetValidPoolList()) && t.length > 1
+      (t = a.GetValidPoolList()) && 1 < t.length
         ? this.GetButton(18)?.RootUIComp.SetUIActive(!0)
         : this.GetButton(18)?.RootUIComp.SetUIActive(!1),
       this.SetTextureByPath(e.UnderBgTexturePath, this.GetTexture(19)),
@@ -597,7 +597,7 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(13), e.SummaryDescribe));
   }
   LHt() {
-    let e;
+    var e;
     this.RHt
       ? ((e = new OperationParam(0)), this.fHt.Push(e))
       : (this.UHt(),
@@ -606,14 +606,14 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
         }));
   }
   async VHt() {
-    let e = 0;
-    let i = 0;
-    let t = this.FHt;
+    let e = 0,
+      i = 0;
+    var t = this.FHt;
     t && (i = t.GachaInfo.Id),
       (this.uHt = ModelManager_1.ModelManager.GachaModel.GetValidGachaList()),
       this.uHt &&
-        this.uHt.length !== 0 &&
-        ((t = this.uHt.findIndex((e) => e.GachaInfo.Id === i)) >= 0 &&
+        0 !== this.uHt.length &&
+        (0 <= (t = this.uHt.findIndex((e) => e.GachaInfo.Id === i)) &&
           t < this.uHt.length &&
           (e = t),
         await this._Ht.RefreshByDataAsync(this.uHt),
@@ -627,13 +627,13 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
     this.lqe?.Destroy();
   }
   SelectGachaTagById(i) {
-    const e = this.uHt.findIndex((e) => e.GachaInfo.Id === i);
-    return e >= 0 && e < this.uHt.length && (this.BHt(e), !0);
+    var e = this.uHt.findIndex((e) => e.GachaInfo.Id === i);
+    return 0 <= e && e < this.uHt.length && (this.BHt(e), !0);
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
-    let i = Number(e[0]);
-    if (i !== 0) {
-      const t = this.SelectGachaTagById(i);
+    var i = Number(e[0]);
+    if (0 !== i) {
+      var t = this.SelectGachaTagById(i);
       if (
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Guide", 17, "抽卡聚焦引导", ["配置Id", i]),
@@ -649,4 +649,4 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.GachaMainView = GachaMainView;
-// # sourceMappingURL=GachaMainView.js.map
+//# sourceMappingURL=GachaMainView.js.map

@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OpenSystemRogueEventSelect = exports.OpenSystemRogueAbilitySelect =
     void 0);
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const RoguelikeController_1 = require("../../../Module/Roguelike/RoguelikeController");
-const OpenSystemBase_1 = require("./OpenSystemBase");
+const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  RoguelikeController_1 = require("../../../Module/Roguelike/RoguelikeController"),
+  OpenSystemBase_1 = require("./OpenSystemBase");
 class OpenSystemRogueAbilitySelect extends OpenSystemBase_1.OpenSystemBase {
   async ExecuteOpenView(e, o) {
     return (
@@ -40,4 +40,4 @@ class OpenSystemRogueEventSelect extends OpenSystemBase_1.OpenSystemBase {
   }
 }
 exports.OpenSystemRogueEventSelect = OpenSystemRogueEventSelect;
-// # sourceMappingURL=OpenSystemRogueAbilitySelect.js.map
+//# sourceMappingURL=OpenSystemRogueAbilitySelect.js.map

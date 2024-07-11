@@ -10,4 +10,4 @@ class SplashUmgBase {
   }
 }
 exports.SplashUmgBase = SplashUmgBase;
-// # sourceMappingURL=SplashUmgBase.js.map
+//# sourceMappingURL=SplashUmgBase.js.map

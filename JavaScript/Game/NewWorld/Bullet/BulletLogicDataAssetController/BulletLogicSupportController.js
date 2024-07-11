@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletLogicSupportController = void 0);
-const UE = require("ue");
-const QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils");
-const TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon");
-const GlobalData_1 = require("../../../GlobalData");
-const ColorUtils_1 = require("../../../Utils/ColorUtils");
-const BulletStaticFunction_1 = require("../BulletStaticMethod/BulletStaticFunction");
-const BulletLogicController_1 = require("./BulletLogicController");
-const PROFILE_KEY = "BulletLogicSupportController_GetHitPointTransform";
-const DRAW_TIME = 5;
+const UE = require("ue"),
+  QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils"),
+  TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ColorUtils_1 = require("../../../Utils/ColorUtils"),
+  BulletStaticFunction_1 = require("../BulletStaticMethod/BulletStaticFunction"),
+  BulletLogicController_1 = require("./BulletLogicController"),
+  PROFILE_KEY = "BulletLogicSupportController_GetHitPointTransform",
+  DRAW_TIME = 5;
 class BulletLogicSupportController extends BulletLogicController_1.BulletLogicController {
   constructor(t, e) {
     super(t, e), (this.uoe = void 0), (this.Y9o = void 0), (this.J9o = void 0);
@@ -40,7 +40,7 @@ class BulletLogicSupportController extends BulletLogicController_1.BulletLogicCo
       );
   }
   BulletLogicAction(t) {
-    const e = t.GetBulletInfo();
+    var e = t.GetBulletInfo();
     e.AttackerCamp !== this.LogicController.Camp ||
       e.HasTag(this.LogicController.Tag) ||
       (e.AddTag(this.LogicController.Tag),
@@ -57,16 +57,16 @@ class BulletLogicSupportController extends BulletLogicController_1.BulletLogicCo
         )));
   }
   z9o(t) {
-    const e = this.Bullet.GetComponent(152);
-    const i = t.GetComponent(152).Owner;
-    var t = UE.KismetMathLibrary.TransformLocation(
-      i.GetTransform(),
-      t.Data.Base.CenterOffset.ToUeVector(),
-    );
-    let o = UE.KismetMathLibrary.TransformLocation(
-      e.ActorTransform,
-      this.Bullet.Data.Base.CenterOffset.ToUeVector(),
-    );
+    var e = this.Bullet.GetComponent(152),
+      i = t.GetComponent(152).Owner,
+      t = UE.KismetMathLibrary.TransformLocation(
+        i.GetTransform(),
+        t.Data.Base.CenterOffset.ToUeVector(),
+      ),
+      o = UE.KismetMathLibrary.TransformLocation(
+        e.ActorTransform,
+        this.Bullet.Data.Base.CenterOffset.ToUeVector(),
+      );
     this.uoe || this.koe(),
       (this.uoe.WorldContextObject = i),
       TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.uoe, t),
@@ -94,4 +94,4 @@ class BulletLogicSupportController extends BulletLogicController_1.BulletLogicCo
   }
 }
 exports.BulletLogicSupportController = BulletLogicSupportController;
-// # sourceMappingURL=BulletLogicSupportController.js.map
+//# sourceMappingURL=BulletLogicSupportController.js.map

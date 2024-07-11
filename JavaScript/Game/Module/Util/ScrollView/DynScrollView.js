@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DynamicScrollView = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const InTurnGridAppearAnimation_1 = require("../Grid/GridAnimation/InTurnGridAppearAnimation");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  InTurnGridAppearAnimation_1 = require("../Grid/GridAnimation/InTurnGridAppearAnimation");
 class DynamicScrollView {
   constructor(t, i, s, e) {
     (this.Yqo = void 0),
@@ -19,7 +19,7 @@ class DynamicScrollView {
       (this.oGo = !1),
       (this.rGo = (i, s) => {
         const e = this.r7[i];
-        let t = this.tGo.get(s);
+        var t = this.tGo.get(s);
         let r = void 0;
         return (
           t
@@ -76,12 +76,12 @@ class DynamicScrollView {
     return this.Jqo.DisplayItemArray.Num() + this.Jqo.IdleItemArray.Num();
   }
   GetDisplayGridStartIndex() {
-    const t = (0, puerts_1.$ref)(0);
+    var t = (0, puerts_1.$ref)(0);
     return this.Jqo.GetItemIndex(0, t), (0, puerts_1.$unref)(t);
   }
   GetDisplayGridEndIndex() {
-    let t;
-    const i = this.Jqo.DisplayItemArray.Num() - 1;
+    var t,
+      i = this.Jqo.DisplayItemArray.Num() - 1;
     return i < 0
       ? 0
       : ((t = (0, puerts_1.$ref)(0)),
@@ -92,8 +92,8 @@ class DynamicScrollView {
     return this.Jqo.GetItem(t)?.GetUIItem();
   }
   GetGridByDisplayIndex(t) {
-    const i = (0, puerts_1.$ref)(0);
-    var t = (this.Jqo.GetItemDisplayIndex(t, i), (0, puerts_1.$unref)(i));
+    var i = (0, puerts_1.$ref)(0),
+      t = (this.Jqo.GetItemDisplayIndex(t, i), (0, puerts_1.$unref)(i));
     return this.Jqo.DisplayItemArray.Get(t)?.GetUIItem();
   }
   GetGridAnimationInterval() {
@@ -110,7 +110,7 @@ class DynamicScrollView {
   }
   RefreshByData(t, i = !1) {
     (this.r7 = t), this.Zqo.clear();
-    const s = this.eGo.GetOwner();
+    var s = this.eGo.GetOwner();
     this.eGo.SetUIActive(!0),
       this.Jqo.RefreshByData(s, t.length, i),
       this.eGo.SetUIActive(!1),
@@ -124,7 +124,7 @@ class DynamicScrollView {
     this.oGo || (this.Jqo.OnLateUpdate.Bind(this.$xi), (this.oGo = !0));
   }
   async nGo(t, i, s) {
-    const e = this.iGo.get(s);
+    var e = this.iGo.get(s);
     e && (await e, this.tGo.get(s)?.Update(t, i));
   }
   sGo(t, i) {
@@ -174,4 +174,4 @@ class DynamicScrollView {
   }
 }
 exports.DynamicScrollView = DynamicScrollView;
-// # sourceMappingURL=DynScrollView.js.map
+//# sourceMappingURL=DynScrollView.js.map

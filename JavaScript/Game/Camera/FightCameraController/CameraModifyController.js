@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraModifyController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CurveUtils_1 = require("../../../Core/Utils/Curve/CurveUtils");
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const Quat_1 = require("../../../Core/Utils/Math/Quat");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const CameraUtility_1 = require("../CameraUtility");
-const FightCameraLogicComponent_1 = require("../FightCameraLogicComponent");
-const CameraControllerBase_1 = require("./CameraControllerBase");
-const MODIFY_SMALL_LENGTH = 1;
-const MODIFY_ZOOM_MODIFIER_LAG_SPEED = 8;
+const Log_1 = require("../../../Core/Common/Log"),
+  CurveUtils_1 = require("../../../Core/Utils/Curve/CurveUtils"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  Quat_1 = require("../../../Core/Utils/Math/Quat"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  CameraUtility_1 = require("../CameraUtility"),
+  FightCameraLogicComponent_1 = require("../FightCameraLogicComponent"),
+  CameraControllerBase_1 = require("./CameraControllerBase"),
+  MODIFY_SMALL_LENGTH = 1,
+  MODIFY_ZOOM_MODIFIER_LAG_SPEED = 8;
 class CameraFadeOutData {
   constructor() {
     (this.ModifyArmLength = !1),
@@ -255,9 +255,9 @@ class CameraModifyController extends CameraControllerBase_1.CameraControllerBase
     return !!this.ModifySettings;
   }
   ApplyCameraModify(t, i, s, h, e, r, a, o, _, M, n, l) {
-    let d, c, v;
+    var d, c, v;
     (!super.IsActivate && !r.IsForcePlayModify) ||
-      (t && t.TagName !== "None" && !this.Camera.ContainsTag(t.TagId)) ||
+      (t && "None" !== t.TagName && !this.Camera.ContainsTag(t.TagId)) ||
       r.Priority < this.Jue ||
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -276,7 +276,7 @@ class CameraModifyController extends CameraControllerBase_1.CameraControllerBase
       this.Que(!d, !1),
       (this.gue = v),
       (this.Jue = r.Priority),
-      t && t.TagName !== "None" && (this.uue = t),
+      t && "None" !== t.TagName && (this.uue = t),
       this.Camera.CameraAdjustController.Lock(this),
       this.Camera.CameraGuideController.Lock(this),
       this.Camera.CopyVirtualCamera(this.Hue, this.Camera.CurrentCamera),
@@ -340,27 +340,27 @@ class CameraModifyController extends CameraControllerBase_1.CameraControllerBase
           (this.Camera.ContainsTag(this.uue.TagId)
             ? this._ue > this.mue && (this._ue = this.mue)
             : this._ue < this.mue + this.cue && this.Que(!0, !0));
-      let t = void 0;
-      let i = 0;
-      let s = 0;
-      let h = 0;
-      let r;
+      let t = void 0,
+        i = 0,
+        s = 0,
+        h = 0;
+      var r;
       this._ue < this.mue
         ? ((t = 1),
           (h = this._ue / this.mue),
           (i =
-            this.mue > 0 ? this.fue.GetCurrentValue(this._ue / this.mue) : 1),
+            0 < this.mue ? this.fue.GetCurrentValue(this._ue / this.mue) : 1),
           (s =
-            this.mue > 0
+            0 < this.mue
               ? this.fue.GetOffsetRate((this._ue - e) / this.mue, e / this.mue)
               : 1))
         : this._ue < this.mue + this.cue
           ? ((t = 2), (i = 1), (s = 1))
           : ((t = 3),
             (r = this._ue - this.mue - this.cue),
-            (i = this.due > 0 ? this.pue.GetCurrentValue(r / this.due) : 1),
+            (i = 0 < this.due ? this.pue.GetCurrentValue(r / this.due) : 1),
             (s =
-              this.due > 0
+              0 < this.due
                 ? this.pue.GetOffsetRate((r - e) / this.due, e / this.due)
                 : 1),
             (this.Jue = 0)),
@@ -467,9 +467,9 @@ class CameraModifyController extends CameraControllerBase_1.CameraControllerBase
       !this.BreakModifyArmLength &&
       (this.ModifySettings.IsModifiedArmLength || this.ModifyArmLength)
     ) {
-      let t = h;
-      let i = 0;
-      const r = this.Camera.GetArmLengthWithSetting(this.Camera.CurrentCamera);
+      let t = h,
+        i = 0;
+      var r = this.Camera.GetArmLengthWithSetting(this.Camera.CurrentCamera);
       switch (
         ((i = this.ModifySettings.IsModifiedArmLength
           ? this.ModifySettings.ArmLength / r
@@ -511,7 +511,7 @@ class CameraModifyController extends CameraControllerBase_1.CameraControllerBase
       !this.BreakModifyCameraOffset &&
       (this.ModifySettings.IsModifiedCameraOffset || this.Eue)
     ) {
-      const s = Vector_1.Vector.Create();
+      var s = Vector_1.Vector.Create();
       switch (
         (this.ModifySettings.IsModifiedCameraOffset
           ? (s.FromUeVector(this.ModifySettings.CameraOffset),
@@ -635,10 +635,10 @@ class CameraModifyController extends CameraControllerBase_1.CameraControllerBase
       ) {
         this.Fue.RotateVector(Vector_1.Vector.ForwardVectorProxy, this.kue);
         let t =
-          Math.acos(this.Oue.DotProduct(this.kue)) *
-          MathUtils_1.MathUtils.RadToDeg;
-        let i = 0;
-        if (t < this.ModifySettings.MaxLookTargetAngle || s === 3) {
+            Math.acos(this.Oue.DotProduct(this.kue)) *
+            MathUtils_1.MathUtils.RadToDeg,
+          i = 0;
+        if (t < this.ModifySettings.MaxLookTargetAngle || 3 === s) {
           if (
             (this.wue.RotateVector(Vector_1.Vector.ForwardVectorProxy, this.Lz),
             (t = Math.acos(this.Lz.X) * MathUtils_1.MathUtils.RadToDeg) <
@@ -659,7 +659,7 @@ class CameraModifyController extends CameraControllerBase_1.CameraControllerBase
     }
   }
   ece() {
-    const [t, i] = this.Camera?.CharacterEntityHandle.Entity.GetComponent(
+    var [t, i] = this.Camera?.CharacterEntityHandle.Entity.GetComponent(
       52,
     )?.GetCameraInput() ?? [0, 0];
     (Math.abs(t) > MathUtils_1.MathUtils.KindaSmallNumber ||
@@ -701,7 +701,7 @@ class CameraModifyController extends CameraControllerBase_1.CameraControllerBase
   sce(i, s, h) {
     if (!this.BreakModifyFov && this.Uue) {
       let t = s;
-      const e = this.ModifySettings.CameraFov;
+      var e = this.ModifySettings.CameraFov;
       switch (i) {
         case 1:
           this.ModifySettings.IsUseFovFloatCurve &&
@@ -727,10 +727,10 @@ class CameraModifyController extends CameraControllerBase_1.CameraControllerBase
   }
   ace(h, e, r) {
     if (this.Aue) {
-      let t = e;
-      let i = void 0;
-      let s = 0;
-      const a = this.ModifySettings.CameraLens;
+      let t = e,
+        i = void 0,
+        s = 0;
+      var a = this.ModifySettings.CameraLens;
       switch (h) {
         case 1:
           this.ModifySettings.IsUseLensFloatCurve &&
@@ -808,7 +808,7 @@ class CameraModifyController extends CameraControllerBase_1.CameraControllerBase
       (this.gue = !1));
   }
   uce(t = !1) {
-    let i;
+    var i;
     this.ResetBreakModifyInfo(),
       (this.ModifyFadeOutData.ModifyArmLength =
         this.ModifySettings.IsModifiedArmLength || this.ModifyArmLength),
@@ -870,7 +870,7 @@ class CameraModifyController extends CameraControllerBase_1.CameraControllerBase
       (this.ModifyFadeOutData.ModifyPlayerLocation = !1);
   }
   zue(t) {
-    let i, s, h, e, r;
+    var i, s, h, e, r;
     this.IsModifyFadeOut &&
       ((i = this.ModifyFadeOutData),
       (s = this.Camera.CurrentCamera),
@@ -1015,17 +1015,17 @@ class CameraModifyController extends CameraControllerBase_1.CameraControllerBase
     return Math.abs(t - i) < e ? [!1, i] : [!0, s];
   }
   VectorInterpTo(t, i, s, h, e) {
-    const r = Vector_1.Vector.Create();
-    var s =
-      (MathUtils_1.MathUtils.VectorInterpTo(t, i, s, h, r),
-      Vector_1.Vector.Create());
+    var r = Vector_1.Vector.Create(),
+      s =
+        (MathUtils_1.MathUtils.VectorInterpTo(t, i, s, h, r),
+        Vector_1.Vector.Create());
     return (
       t.Subtraction(i, s),
       s.GetAbsMax() < e ? (r.DeepCopy(i), [!1, r]) : [!0, r]
     );
   }
   RotationInterpTo(t, i, s, h, e) {
-    const r = Rotator_1.Rotator.Create();
+    var r = Rotator_1.Rotator.Create();
     return (
       MathUtils_1.MathUtils.RotatorInterpTo(t, i, s, h, r),
       t.Equals(i, e) ? (r.DeepCopy(i), [!1, r]) : [!0, r]
@@ -1036,14 +1036,14 @@ class CameraModifyController extends CameraControllerBase_1.CameraControllerBase
     return Math.abs(t - i) < h ? [!1, i] : [!0, s];
   }
   VectorLerp(t, i, s, h) {
-    const e = Vector_1.Vector.Create();
+    var e = Vector_1.Vector.Create();
     return (
       Vector_1.Vector.Lerp(t, i, s, e),
       t.Equals(i, h) ? (e.DeepCopy(i), [!1, e]) : [!0, e]
     );
   }
   RotationLerp(t, i, s, h) {
-    const e = Rotator_1.Rotator.Create();
+    var e = Rotator_1.Rotator.Create();
     return (
       Rotator_1.Rotator.Lerp(t, i, s, e),
       t.Equals(i, h) ? (e.DeepCopy(i), [!1, e]) : [!0, e]
@@ -1051,4 +1051,4 @@ class CameraModifyController extends CameraControllerBase_1.CameraControllerBase
   }
 }
 exports.CameraModifyController = CameraModifyController;
-// # sourceMappingURL=CameraModifyController.js.map
+//# sourceMappingURL=CameraModifyController.js.map

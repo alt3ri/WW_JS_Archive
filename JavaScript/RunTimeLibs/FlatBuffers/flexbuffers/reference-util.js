@@ -95,9 +95,7 @@ function keyIndex(key, dataView, offset, parentWidth, byteWidth, length) {
   while (low <= high) {
     const mid = (high + low) >> 1;
     const dif = diffKeys(input, mid, dataView, indirectOffset, _byteWidth);
-    if (dif === 0) {
-      return mid;
-    }
+    if (dif === 0) return mid;
     if (dif < 0) {
       high = mid - 1;
     } else {

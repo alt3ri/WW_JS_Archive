@@ -8,4 +8,4 @@ class CharacterConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.CharacterConfig = CharacterConfig;
-// # sourceMappingURL=CharacterConfig.js.map
+//# sourceMappingURL=CharacterConfig.js.map

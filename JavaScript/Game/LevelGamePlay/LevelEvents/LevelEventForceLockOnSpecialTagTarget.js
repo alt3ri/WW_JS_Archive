@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventForceLockOnSpecialTagTarget = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterLockOnComponent_1 = require("../../NewWorld/Character/Common/Component/LockOn/CharacterLockOnComponent");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterLockOnComponent_1 = require("../../NewWorld/Character/Common/Component/LockOn/CharacterLockOnComponent"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventForceLockOnSpecialTagTarget extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, o) {
-    let a, n, r;
+    var a, n, r;
     e &&
       ((n = e.get("EntityId")),
       (e = e.get("IsLockOn"))
@@ -44,7 +44,7 @@ class LevelEventForceLockOnSpecialTagTarget extends LevelGeneralBase_1.LevelEven
           ));
   }
   ExecuteNew(e, o) {
-    let a, n, r;
+    var a, n, r;
     e &&
       (e.EntityId ||
         (Log_1.Log.CheckError() &&
@@ -72,4 +72,4 @@ class LevelEventForceLockOnSpecialTagTarget extends LevelGeneralBase_1.LevelEven
 }
 exports.LevelEventForceLockOnSpecialTagTarget =
   LevelEventForceLockOnSpecialTagTarget;
-// # sourceMappingURL=LevelEventForceLockOnSpecialTagTarget.js.map
+//# sourceMappingURL=LevelEventForceLockOnSpecialTagTarget.js.map

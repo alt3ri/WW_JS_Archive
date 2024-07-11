@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputActionKey = void 0);
-const UE = require("ue");
-const InputSettings_1 = require("../InputSettings");
+const UE = require("ue"),
+  InputSettings_1 = require("../InputSettings");
 class InputActionKey {
   constructor() {
     (this.ActionName = ""),
@@ -13,7 +13,7 @@ class InputActionKey {
       (this.KeyName = "");
   }
   static New(t, e, i, s, n, r) {
-    const u = new InputActionKey();
+    var u = new InputActionKey();
     return (
       (u.ActionName = t),
       (u.IsShift = e),
@@ -25,7 +25,7 @@ class InputActionKey {
     );
   }
   static NewByInputActionKeyMapping(t) {
-    const e = new InputActionKey();
+    var e = new InputActionKey();
     return (
       (e.ActionName = t.ActionName.toString()),
       (e.IsShift = t.bShift),
@@ -37,9 +37,9 @@ class InputActionKey {
     );
   }
   ToUeInputActionKeyMapping() {
-    const t = new UE.FName(this.ActionName);
-    var e = new UE.FName(this.KeyName);
-    var e = new UE.Key(e);
+    var t = new UE.FName(this.ActionName),
+      e = new UE.FName(this.KeyName),
+      e = new UE.Key(e);
     return new UE.InputActionKeyMapping(
       t,
       this.IsShift,
@@ -67,4 +67,4 @@ class InputActionKey {
   }
 }
 exports.InputActionKey = InputActionKey;
-// # sourceMappingURL=InputActionKey.js.map
+//# sourceMappingURL=InputActionKey.js.map

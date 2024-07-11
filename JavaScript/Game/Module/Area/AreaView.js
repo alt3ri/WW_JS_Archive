@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AreaView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase");
+const UE = require("ue"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase");
 class AreaView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -52,4 +52,4 @@ class AreaView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.AreaView = AreaView;
-// # sourceMappingURL=AreaView.js.map
+//# sourceMappingURL=AreaView.js.map

@@ -4,20 +4,20 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.PhantomEntryItem =
     exports.PhantomElementItem =
       void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
-const RogueSelectResult_1 = require("../Define/RogueSelectResult");
-const ElementItem_1 = require("./ElementItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
+  RogueSelectResult_1 = require("../Define/RogueSelectResult"),
+  ElementItem_1 = require("./ElementItem");
 class PhantomElementItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments), (this.jso = void 0), (this.uao = void 0);
@@ -56,20 +56,20 @@ class PhantomElementItem extends GridProxyAbstract_1.GridProxyAbstract {
     );
   }
   cao(e = void 0) {
-    const t = ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.ElementDict;
-    const i = this.jso.Count;
-    let s = t.get(this.jso.ElementId) ?? 0;
+    var t = ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.ElementDict,
+      i = this.jso.Count,
+      s = t.get(this.jso.ElementId) ?? 0;
     s += t.get(7) ?? 0;
-    let r = 0;
-    let n = !1;
+    let r = 0,
+      n = !1;
     return (
       e &&
         ((r = (e.get(this.jso.ElementId) ?? 0) + (e.get(7) ?? 0)),
-        this.jso.ElementId === 9 &&
+        9 === this.jso.ElementId &&
           e.forEach((e) => {
             r += e;
           }),
-        r > 0) &&
+        0 < r) &&
         (n = !0),
       [s + r >= i, n, s, i, r]
     );
@@ -107,10 +107,10 @@ class PhantomEntryItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(e, t, i) {
     this.mao = e;
-    let s;
-    var e = this.mao.GetSortElementInfoArrayByCount();
+    var s,
+      e = this.mao.GetSortElementInfoArrayByCount();
     for (const r of e)
-      r.ElementId === 9
+      9 === r.ElementId
         ? (r.Name = RoguelikeDefine_1.ROGUELIKEVIEW_16_TEXT)
         : (s = ConfigManager_1.ConfigManager.CommonConfig.GetElementConfig(
             r.ElementId,
@@ -125,18 +125,18 @@ class PhantomEntryItem extends GridProxyAbstract_1.GridProxyAbstract {
   RefreshPreview(e = void 0) {
     let t = !0;
     for (const r of this.dao.GetLayoutItemList()) r.RefreshPanel(e) || (t = !1);
-    const i = !this.mao.IsUnlock && t;
-    const s =
-      (i
-        ? (this.gao(),
-          (this.Cao = !0),
-          EventSystem_1.EventSystem.Emit(
-            EventDefine_1.EEventName.RogueTermUnlock,
-          ))
-        : this.Cao &&
-          (this.EPe.PlayLevelSequenceByName("Disappear"), (this.Cao = !1)),
-      this.GetItem(2).SetUIActive(i),
-      this.GetText(3));
+    var i = !this.mao.IsUnlock && t,
+      s =
+        (i
+          ? (this.gao(),
+            (this.Cao = !0),
+            EventSystem_1.EventSystem.Emit(
+              EventDefine_1.EEventName.RogueTermUnlock,
+            ))
+          : this.Cao &&
+            (this.EPe.PlayLevelSequenceByName("Disappear"), (this.Cao = !1)),
+        this.GetItem(2).SetUIActive(i),
+        this.GetText(3));
     LguiUtil_1.LguiUtil.SetLocalTextNew(s, this.mao.GetAffixDesc()),
       s.SetChangeColor(i, s?.changeColor);
   }
@@ -188,7 +188,7 @@ class PhantomInfoPanel extends UiPanelBase_1.UiPanelBase {
     return this.pao?.GetItemByIndex(e);
   }
   V9i() {
-    let e = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguePhantomConfig(
+    var e = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguePhantomConfig(
       this.fao.ConfigId,
     );
     e &&
@@ -209,4 +209,4 @@ class PhantomInfoPanel extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.PhantomInfoPanel = PhantomInfoPanel;
-// # sourceMappingURL=PhantomInfoPanel.js.map
+//# sourceMappingURL=PhantomInfoPanel.js.map

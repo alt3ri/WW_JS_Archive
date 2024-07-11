@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraFadeLoading = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const BlackScreenFadeController_1 = require("../BlackScreen/BlackScreenFadeController");
-const INTERLUDE_FADE_IN_TIME = 1;
-const INTERLUDE_FADE_OUT_TIME = 1;
-const INTERLUDE_LIMIT_TIME = 30;
+const UE = require("ue"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  BlackScreenFadeController_1 = require("../BlackScreen/BlackScreenFadeController"),
+  INTERLUDE_FADE_IN_TIME = 1,
+  INTERLUDE_FADE_OUT_TIME = 1,
+  INTERLUDE_LIMIT_TIME = 30;
 class CameraFadeLoading {
   constructor() {
     (this.ifi = !1),
@@ -51,7 +51,7 @@ class CameraFadeLoading {
   ) {
     if (!this.ifi) {
       this.ifi = !0;
-      const _ = Global_1.Global.CharacterCameraManager;
+      var _ = Global_1.Global.CharacterCameraManager;
       if (i)
         switch (i) {
           case IAction_1.EFadeInScreenShowType.White:
@@ -89,15 +89,15 @@ class CameraFadeLoading {
         ?.Promise;
   }
   ColorSearch() {
-    return Global_1.Global.CharacterCameraManager.FadeColor.R >= 0.5 &&
-      Global_1.Global.CharacterCameraManager.FadeColor.G >= 0.5 &&
-      Global_1.Global.CharacterCameraManager.FadeColor.B >= 0.5
+    return 0.5 <= Global_1.Global.CharacterCameraManager.FadeColor.R &&
+      0.5 <= Global_1.Global.CharacterCameraManager.FadeColor.G &&
+      0.5 <= Global_1.Global.CharacterCameraManager.FadeColor.B
       ? IAction_1.EFadeInScreenShowType.White
       : IAction_1.EFadeInScreenShowType.Black;
   }
   SetColor(e) {
     if (!this.IsInFade()) return !1;
-    const a = Global_1.Global.CharacterCameraManager;
+    var a = Global_1.Global.CharacterCameraManager;
     if (e)
       switch (e) {
         case IAction_1.EFadeInScreenShowType.White:
@@ -112,4 +112,4 @@ class CameraFadeLoading {
   }
 }
 exports.CameraFadeLoading = CameraFadeLoading;
-// # sourceMappingURL=CameraFadeLoading.js.map
+//# sourceMappingURL=CameraFadeLoading.js.map

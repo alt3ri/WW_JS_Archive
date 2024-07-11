@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineStateBoneVisible = void 0);
-const UE = require("ue");
-const AiStateMachine_1 = require("../AiStateMachine");
-const AiStateMachineState_1 = require("./AiStateMachineState");
+const UE = require("ue"),
+  AiStateMachine_1 = require("../AiStateMachine"),
+  AiStateMachineState_1 = require("./AiStateMachineState");
 class AiStateMachineStateBoneVisible extends AiStateMachineState_1.AiStateMachineState {
   constructor() {
     super(...arguments), (this.Ene = void 0), (this.yne = !1);
@@ -26,4 +26,4 @@ class AiStateMachineStateBoneVisible extends AiStateMachineState_1.AiStateMachin
   }
 }
 exports.AiStateMachineStateBoneVisible = AiStateMachineStateBoneVisible;
-// # sourceMappingURL=AiStateMachineStateBoneVisible.js.map
+//# sourceMappingURL=AiStateMachineStateBoneVisible.js.map

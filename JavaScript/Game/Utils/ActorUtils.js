@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActorUtils = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../Core/Actor/ActorSystem");
-const Log_1 = require("../../Core/Common/Log");
-const ResourceSystem_1 = require("../../Core/Resource/ResourceSystem");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const ModelManager_1 = require("../Manager/ModelManager");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../Core/Resource/ResourceSystem"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  ModelManager_1 = require("../Manager/ModelManager");
 class ActorUtils {
   static LoadActorByModelConfig(e, r) {
-    let o = e.蓝图?.ToAssetPathName();
-    if (o && o.length && o !== "None") {
+    var o = e.蓝图?.ToAssetPathName();
+    if (o && o.length && "None" !== o) {
       o = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
         e.蓝图.ToAssetPathName(),
         UE.Class,
@@ -39,8 +39,8 @@ class ActorUtils {
         );
   }
   static LoadActorByPath(e, r, o) {
-    if (e && e.length && e !== "None") {
-      const t = ResourceSystem_1.ResourceSystem.GetLoadedAsset(e, UE.Class);
+    if (e && e.length && "None" !== e) {
+      var t = ResourceSystem_1.ResourceSystem.GetLoadedAsset(e, UE.Class);
       if (t?.IsValid()) {
         let e = void 0;
         return (
@@ -66,19 +66,19 @@ class ActorUtils {
         );
   }
   static LoadAndChangeMeshAnim(e, r, o) {
-    var r = r.ToAssetPathName();
-    var r =
-      (r?.length &&
-        r !== "None" &&
-        (r = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
-          r,
-          UE.SkeletalMesh,
-        )) &&
-        e.SkeletalMesh !== r &&
-        e.SetSkeletalMesh(r),
-      o.ToAssetPathName());
+    var r = r.ToAssetPathName(),
+      r =
+        (r?.length &&
+          "None" !== r &&
+          (r = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+            r,
+            UE.SkeletalMesh,
+          )) &&
+          e.SkeletalMesh !== r &&
+          e.SetSkeletalMesh(r),
+        o.ToAssetPathName());
     r?.length &&
-      r !== "None" &&
+      "None" !== r &&
       (o = ResourceSystem_1.ResourceSystem.GetLoadedAsset(r, UE.Class)) &&
       e.AnimClass !== o &&
       e.SetAnimClass(o);
@@ -106,4 +106,4 @@ class ActorUtils {
   }
 }
 exports.ActorUtils = ActorUtils;
-// # sourceMappingURL=ActorUtils.js.map
+//# sourceMappingURL=ActorUtils.js.map

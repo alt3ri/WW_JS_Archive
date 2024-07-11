@@ -10,17 +10,16 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.HotPatchReportData =
     exports.SdkReportData =
       void 0);
-const BaseConfigController_1 = require("../BaseConfig/BaseConfigController");
-const LauncherLog_1 = require("../Util/LauncherLog");
+const BaseConfigController_1 = require("../BaseConfig/BaseConfigController"),
+  LauncherLog_1 = require("../Util/LauncherLog");
 class SdkReportData {
   constructor(e) {
     (this.IfGlobalSdk = !1),
       (this.EventData = void 0),
       (this.EventData = e),
       (this.IfGlobalSdk =
-        BaseConfigController_1.BaseConfigController.GetPublicValue(
-          "SdkArea",
-        ) !== "CN");
+        "CN" !==
+        BaseConfigController_1.BaseConfigController.GetPublicValue("SdkArea"));
   }
   GetEventName() {
     return (
@@ -33,9 +32,9 @@ class SdkReportData {
   GetEventDataJson() {
     if (!this.EventData) return "{}";
     const r = this.EventData.size;
-    if (r === 0) return "{}";
-    let o = "";
-    let s = 0;
+    if (0 === r) return "{}";
+    let o = "",
+      s = 0;
     return (
       this.EventData.forEach((e, t) => {
         (o += `"${t}":"${e}"`), r - 1 !== s && (o += ","), s++;
@@ -45,10 +44,10 @@ class SdkReportData {
   }
   GetReportString() {
     var e = {
-      eventName: this.GetEventName(),
-      eventParams: this.GetEventDataJson(),
-    };
-    var e = JSON.stringify(e);
+        eventName: this.GetEventName(),
+        eventParams: this.GetEventDataJson(),
+      },
+      e = JSON.stringify(e);
     return LauncherLog_1.LauncherLog.Info("上报埋点信息", ["finalJson", e]), e;
   }
 }
@@ -56,11 +55,11 @@ exports.SdkReportData = SdkReportData;
 class HotPatchReportData {
   static CreateData(e, t) {
     if (
-      BaseConfigController_1.BaseConfigController.GetPublicValue("SdkArea") !==
-      "CN"
+      "CN" !==
+      BaseConfigController_1.BaseConfigController.GetPublicValue("SdkArea")
     )
       return (
-        this.VSr.size === 0 &&
+        0 === this.VSr.size &&
           (this.VSr.set(Number(0), SdkLogoReportData),
           this.VSr.set(Number(1), SdkCheckVersionStart),
           this.VSr.set(Number(2), SdkCheckVersionEnd),
@@ -115,4 +114,4 @@ class SdkResourceDownloadFail extends SdkReportData {
   }
 }
 exports.SdkResourceDownloadFail = SdkResourceDownloadFail;
-// # sourceMappingURL=SdkReportData.js.map
+//# sourceMappingURL=SdkReportData.js.map

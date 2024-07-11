@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRewardPopUpView = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const UiViewBase_1 = require("../../../../../Ui/Base/UiViewBase");
-const ButtonItem_1 = require("../../../../Common/Button/ButtonItem");
-const CommonItemSmallItemGrid_1 = require("../../../../Common/ItemGrid/CommonItemSmallItemGrid");
-const GridProxyAbstract_1 = require("../../../../Util/Grid/GridProxyAbstract");
-const GenericLayout_1 = require("../../../../Util/Layout/GenericLayout");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  UiViewBase_1 = require("../../../../../Ui/Base/UiViewBase"),
+  ButtonItem_1 = require("../../../../Common/Button/ButtonItem"),
+  CommonItemSmallItemGrid_1 = require("../../../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  GridProxyAbstract_1 = require("../../../../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../../../../Util/Layout/GenericLayout");
 class ActivityRewardPopUpView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -28,10 +28,10 @@ class ActivityRewardPopUpView extends UiViewBase_1.UiViewBase {
         (this.Data = t), this.Refresh();
       }),
       (this.JFe = (t) => {
-        const i = this.Data.DataPageList[t];
-        const e = this.$Fe;
+        var i = this.Data.DataPageList[t],
+          e = this.$Fe;
         (this.$Fe = t),
-          e >= 0 &&
+          0 <= e &&
             e !== this.$Fe &&
             this.TabLayout.GetLayoutItemByIndex(e)?.SetTabToggleState(!1, !1),
           this.zFe(i.DataList),
@@ -80,15 +80,15 @@ class ActivityRewardPopUpView extends UiViewBase_1.UiViewBase {
     this.t3e();
   }
   t3e() {
-    if (this.Data.DataPageList.length !== 0) {
-      const i = [];
+    if (0 !== this.Data.DataPageList.length) {
+      var i = [];
       let t = !1;
       for (const s of this.Data.DataPageList) {
         t ||
           !s.TabName ||
           StringUtils_1.StringUtils.IsEmpty(s.TabName) ||
           (t = !0);
-        const e = {
+        var e = {
           TabData: s,
           TabFunction: this.JFe,
           TabCanExecuteFunction: this.e3e,
@@ -152,14 +152,14 @@ class ActivityRewardPopUpContent extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetText(0).SetText(t);
   }
   o3e(t, i) {
-    this.jFe?.SetActive(t.length !== 0),
-      t.length !== 0 && this.jFe?.RefreshByData(t);
+    this.jFe?.SetActive(0 !== t.length),
+      0 !== t.length && this.jFe?.RefreshByData(t);
   }
   _Oe(t) {
     switch (
-      (this.i3e.SetActive(t.RewardState === 1),
-      this.GetItem(4)?.SetUIActive(t.RewardState === 2),
-      this.GetText(5)?.SetUIActive(t.RewardState === 0),
+      (this.i3e.SetActive(1 === t.RewardState),
+      this.GetItem(4)?.SetUIActive(2 === t.RewardState),
+      this.GetText(5)?.SetUIActive(0 === t.RewardState),
       t.RewardState)
     ) {
       case 1:
@@ -199,7 +199,7 @@ class TabItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.GetItem(2).SetUIActive(!1);
   }
   s3e(t) {
-    return !this.n3e || this.n3e(t === 1, this.GridIndex);
+    return !this.n3e || this.n3e(1 === t, this.GridIndex);
   }
   Refresh(t, i, e) {
     t.TabData.TabName && !StringUtils_1.StringUtils.IsEmpty(t.TabData.TabName)
@@ -207,7 +207,7 @@ class TabItem extends GridProxyAbstract_1.GridProxyAbstract {
       : this.SetActive(!1);
     let s = !1;
     for (const h of t.TabData.DataList)
-      if (h.RewardState === 1) {
+      if (1 === h.RewardState) {
         s = !0;
         break;
       }
@@ -220,4 +220,4 @@ class TabItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetExtendToggle(0).SetToggleState(t ? 1 : 0), t && i && this.kqe();
   }
 }
-// # sourceMappingURL=ActivityRewardPopUpView.js.map
+//# sourceMappingURL=ActivityRewardPopUpView.js.map

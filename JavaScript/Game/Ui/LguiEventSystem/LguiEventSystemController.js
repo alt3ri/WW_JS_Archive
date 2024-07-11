@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LguiEventSystemController = void 0);
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const InputDistributeController_1 = require("../InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../InputDistribute/InputMappingsDefine");
-const LguiEventSystemManager_1 = require("./LguiEventSystemManager");
+const ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  InputDistributeController_1 = require("../InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../InputDistribute/InputMappingsDefine"),
+  LguiEventSystemManager_1 = require("./LguiEventSystemManager");
 class LguiEventSystemController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return this.Ore(), !0;
@@ -48,4 +48,4 @@ class LguiEventSystemController extends ControllerBase_1.ControllerBase {
   (LguiEventSystemController.cui = (t, e) => {
     LguiEventSystemManager_1.LguiEventSystemManager.InputWheelAxis(t, e);
   });
-// # sourceMappingURL=LguiEventSystemController.js.map
+//# sourceMappingURL=LguiEventSystemController.js.map

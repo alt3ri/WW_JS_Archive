@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HeadStateViewBase = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Stats_1 = require("../../../../../Core/Common/Stats");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const CameraController_1 = require("../../../../Camera/CameraController");
-const Global_1 = require("../../../../Global");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const PlatformController_1 = require("../../../Platform/PlatformController");
-const BattleUiControl_1 = require("../../BattleUiControl");
-const BattleVisibleChildView_1 = require("../BattleChildView/BattleVisibleChildView");
-const HpBufferStateMachine_1 = require("./HpBufferStateMachine");
-const EAttributeId = Protocol_1.Aki.Protocol.KBs;
-const UPDATE_TOLERATION = 0.1;
-const PERCENT_TOLERATION = 0.01;
-const SCALE_TOLERATION = 0.004;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Stats_1 = require("../../../../../Core/Common/Stats"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  CameraController_1 = require("../../../../Camera/CameraController"),
+  Global_1 = require("../../../../Global"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  PlatformController_1 = require("../../../Platform/PlatformController"),
+  BattleUiControl_1 = require("../../BattleUiControl"),
+  BattleVisibleChildView_1 = require("../BattleChildView/BattleVisibleChildView"),
+  HpBufferStateMachine_1 = require("./HpBufferStateMachine");
+var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+const UPDATE_TOLERATION = 0.1,
+  PERCENT_TOLERATION = 0.01,
+  SCALE_TOLERATION = 0.004;
 class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView {
   constructor() {
     super(...arguments),
@@ -87,7 +87,7 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
       (this.OnLevelChanged = (t, i, s) => {});
   }
   async InitializeHeadState(t, i, s, e, h, r, a) {
-    const o = this.GetResourceId();
+    var o = this.GetResourceId();
     StringUtils_1.StringUtils.IsEmpty(o) ||
       ((this.blt = i),
       (this.DetailHeadStateRangeInternal = e),
@@ -110,7 +110,7 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
     this.RootActor && this.ResetBattleHeadState();
   }
   DestroyOverride() {
-    let t;
+    var t;
     return !(
       !this.e1t ||
       !this.RootActor ||
@@ -124,8 +124,8 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
   }
   ActiveBattleHeadState(t) {
     this.HeadStateData = t;
-    var t = this.GetHp();
-    const i = this.GetMaxHp();
+    var t = this.GetHp(),
+      i = this.GetMaxHp();
     (this.CurrentBarPercent = t && i ? t / i : 0),
       this.BindCallback(),
       this.a1t(0),
@@ -161,9 +161,9 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
     this.SetHeadStateScale(t), this._1t(), this.RefreshHeadStateRotation();
   }
   RefreshHeadStateRotation() {
-    var t = CameraController_1.CameraController.CameraRotator;
-    const i = t.Yaw + 90;
-    var t = t.Pitch - 90;
+    var t = CameraController_1.CameraController.CameraRotator,
+      i = t.Yaw + 90,
+      t = t.Pitch - 90;
     (Math.abs(i - this.Glt.Yaw) <= UPDATE_TOLERATION &&
       Math.abs(t - this.Glt.Roll) <= UPDATE_TOLERATION) ||
       ((this.Glt.Yaw = i),
@@ -172,19 +172,19 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
       this.RootItem.SetUIRelativeRotation(this.Glt.ToUeRotator()));
   }
   _1t() {
-    const t = this.HeadStateData.GetWorldLocation();
+    var t = this.HeadStateData.GetWorldLocation();
     this.NeedCorrectionOutside && this.CheckAndCorrectionOutside(t),
       this.Nlt.Equals(t, UPDATE_TOLERATION) ||
         (this.RootItem.SetUIRelativeLocation(t.ToUeVector()),
         this.Nlt.Set(t.X, t.Y, t.Z));
   }
   CheckAndCorrectionOutside(t) {
-    let i;
-    let s;
-    let e;
-    let h;
-    let r = t.ToUeVector();
-    const a = Global_1.Global.CharacterController;
+    var i,
+      s,
+      e,
+      h,
+      r = t.ToUeVector(),
+      a = Global_1.Global.CharacterController;
     UE.GameplayStatics.ProjectWorldToScreen(a, r, this._Xe) &&
       ((i = (r = (0, puerts_1.$unref)(this._Xe)).X),
       (h = r.Y),
@@ -215,8 +215,8 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
       (this.xat = !1);
   }
   LerpBarPercent(t) {
-    let i;
-    this.Blt === -1 ||
+    var i;
+    -1 === this.Blt ||
       ((i = this.Flt.UpdatePercent(t)) < 0
         ? this.StopBarLerpAnimation()
         : this.h1t(i),
@@ -232,9 +232,9 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
   }
   OnLerpBarBufferPercent(t) {}
   PlayBarAnimation(t) {
-    let i;
-    const s = t;
-    const e = this.CurrentBarPercent;
+    var i,
+      s = t,
+      e = this.CurrentBarPercent;
     e <= s ||
       ((i = this.Flt.IsOriginState()),
       this.Flt.GetHit(s, e),
@@ -332,4 +332,4 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
   }
 }
 exports.HeadStateViewBase = HeadStateViewBase;
-// # sourceMappingURL=HeadStateViewBase.js.map
+//# sourceMappingURL=HeadStateViewBase.js.map

@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiCameraSequenceComponent = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const CameraController_1 = require("../../../Camera/CameraController");
-const GlobalData_1 = require("../../../GlobalData");
-const UiLayerType_1 = require("../../../Ui/Define/UiLayerType");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const BlackScreenView_1 = require("../../UiCameraAnimation/View/BlackScreenView");
-const UiCameraComponent_1 = require("./UiCameraComponent");
-const BLACK_TEXTURE_TAG = new UE.FName("BlackTexture");
-const UI_CAMERA = new UE.FName("UiCamera");
-const FIGHT_CAMERA = new UE.FName("FightCamera");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  CameraController_1 = require("../../../Camera/CameraController"),
+  GlobalData_1 = require("../../../GlobalData"),
+  UiLayerType_1 = require("../../../Ui/Define/UiLayerType"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  BlackScreenView_1 = require("../../UiCameraAnimation/View/BlackScreenView"),
+  UiCameraComponent_1 = require("./UiCameraComponent"),
+  BLACK_TEXTURE_TAG = new UE.FName("BlackTexture"),
+  UI_CAMERA = new UE.FName("UiCamera"),
+  FIGHT_CAMERA = new UE.FName("FightCamera");
 class UiCameraSequenceComponent extends UiCameraComponent_1.UiCameraComponent {
   constructor() {
     super(...arguments),
@@ -73,13 +73,13 @@ class UiCameraSequenceComponent extends UiCameraComponent_1.UiCameraComponent {
       );
   }
   Pause() {
-    let e;
+    var e;
     this.Bkt?.IsValid() &&
       (e = this.Bkt.SequencePlayer)?.IsValid() &&
       e.Pause();
   }
   Continue() {
-    let e;
+    var e;
     this.Bkt?.IsValid() &&
       (e = this.Bkt.SequencePlayer)?.IsValid() &&
       e.IsPaused() &&
@@ -93,13 +93,13 @@ class UiCameraSequenceComponent extends UiCameraComponent_1.UiCameraComponent {
     this.DestroyUiCameraSequence(this.GRo);
   }
   XRo(e = !0, i = 0) {
-    let t;
+    var t;
     this.Bkt &&
       ((t = this.Bkt.SequencePlayer),
-      i !== 0 && (t.PlaybackSettings.bRestoreState = i === 2),
+      0 !== i && (t.PlaybackSettings.bRestoreState = 2 === i),
       t.Stop()),
       e && this.DestroyBlackScreenView(),
-      this.FBi !== 0 &&
+      0 !== this.FBi &&
         (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.FBi),
         (this.FBi = 0));
   }
@@ -129,20 +129,20 @@ class UiCameraSequenceComponent extends UiCameraComponent_1.UiCameraComponent {
     e && this.qRo.push(e);
   }
   QRo(e) {
-    var i = (0, puerts_1.$ref)(void 0);
-    var i =
-      (UE.LevelSequencePlayer.CreateLevelSequencePlayer(
-        GlobalData_1.GlobalData.World,
-        e,
-        new UE.MovieSceneSequencePlaybackSettings(),
-        i,
-      ),
-      (0, puerts_1.$unref)(i));
+    var i = (0, puerts_1.$ref)(void 0),
+      i =
+        (UE.LevelSequencePlayer.CreateLevelSequencePlayer(
+          GlobalData_1.GlobalData.World,
+          e,
+          new UE.MovieSceneSequencePlaybackSettings(),
+          i,
+        ),
+        (0, puerts_1.$unref)(i));
     return i.SetSequence(e), i;
   }
   VRo(i) {
     i.ResetBindings();
-    let e = i.GetSequence();
+    var e = i.GetSequence();
     e.HasBindingTag(BLACK_TEXTURE_TAG, !0) &&
       this.YRo().then(
         (e) => {
@@ -161,7 +161,7 @@ class UiCameraSequenceComponent extends UiCameraComponent_1.UiCameraComponent {
         i.AddBindingByTag(FIGHT_CAMERA, e));
   }
   async YRo() {
-    let e;
+    var e;
     return (
       this.bRo ||
         ((e = UiLayer_1.UiLayer.GetLayerRootUiItem(
@@ -180,4 +180,4 @@ class UiCameraSequenceComponent extends UiCameraComponent_1.UiCameraComponent {
   }
 }
 exports.UiCameraSequenceComponent = UiCameraSequenceComponent;
-// # sourceMappingURL=UiCameraSequenceComponent.js.map
+//# sourceMappingURL=UiCameraSequenceComponent.js.map

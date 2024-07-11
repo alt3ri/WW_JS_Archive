@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckCalabashLevel = void 0);
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class LevelConditionCheckCalabashLevel extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, a) {
     return (
@@ -13,4 +13,4 @@ class LevelConditionCheckCalabashLevel extends LevelGeneralBase_1.LevelCondition
   }
 }
 exports.LevelConditionCheckCalabashLevel = LevelConditionCheckCalabashLevel;
-// # sourceMappingURL=LevelConditionCheckCalabashLevel.js.map
+//# sourceMappingURL=LevelConditionCheckCalabashLevel.js.map

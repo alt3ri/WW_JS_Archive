@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayCueMaterial = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../../../../../Core/Resource/ResourceSystem");
-const EventDefine_1 = require("../../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../../Common/Event/EventSystem");
-const GameplayCueMagnitude_1 = require("./GameplayCueMagnitude");
+const UE = require("ue"),
+  Log_1 = require("../../../../../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../../../../../Core/Resource/ResourceSystem"),
+  EventDefine_1 = require("../../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../../Common/Event/EventSystem"),
+  GameplayCueMagnitude_1 = require("./GameplayCueMagnitude");
 class GameplayCueMaterial extends GameplayCueMagnitude_1.GameplayCueMagnitude {
   constructor() {
     super(...arguments),
@@ -120,4 +120,4 @@ class GameplayCueMaterial extends GameplayCueMagnitude_1.GameplayCueMagnitude {
   }
 }
 exports.GameplayCueMaterial = GameplayCueMaterial;
-// # sourceMappingURL=GameplayCueMaterial.js.map
+//# sourceMappingURL=GameplayCueMaterial.js.map

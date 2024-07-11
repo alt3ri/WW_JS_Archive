@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InteractQteView = void 0);
-const UE = require("ue");
-const AudioDefine_1 = require("../../../../Core/Audio/AudioDefine");
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const UiManager_1 = require("../../../Ui/UiManager");
-const CombineKeyItem_1 = require("../../BattleUi/Views/KeyItem/CombineKeyItem");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const PanelQteController_1 = require("../PanelQteController");
-const PanelQteView_1 = require("./PanelQteView");
-const STOP_ANIM_TIME = 500;
+const UE = require("ue"),
+  AudioDefine_1 = require("../../../../Core/Audio/AudioDefine"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  CombineKeyItem_1 = require("../../BattleUi/Views/KeyItem/CombineKeyItem"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  PanelQteController_1 = require("../PanelQteController"),
+  PanelQteView_1 = require("./PanelQteView"),
+  STOP_ANIM_TIME = 500;
 class InteractQteView extends PanelQteView_1.PanelQteView {
   constructor() {
     super(...arguments),
@@ -29,17 +29,17 @@ class InteractQteView extends PanelQteView_1.PanelQteView {
           this.EPe?.PlayLevelSequenceByName("Start"));
       }),
       (this.WPt = (e) => {
-        e !== "Start" ||
+        "Start" !== e ||
           this.IsQteEnd ||
           (this.EPe?.PlayLevelSequenceByName("Loop"),
-          this.NTe > 0 && this.FNi("Loop", 1 / this.NTe),
+          0 < this.NTe && this.FNi("Loop", 1 / this.NTe),
           (e = this.OpenParam),
           ModelManager_1.ModelManager.PanelQteModel.ResetLeftTime(e),
           this.IsMobile || (this.GetItem(1)?.SetUIActive(!0), this.xet?.Show()),
           (this.IsQteStart = !0));
       }),
       (this.BNi = (e, t) => {
-        !this.IsQteEnd && this.IsQteStart && t === 0 && this.bNi();
+        !this.IsQteEnd && this.IsQteStart && 0 === t && this.bNi();
       });
   }
   OnRegisterComponent() {
@@ -56,7 +56,7 @@ class InteractQteView extends PanelQteView_1.PanelQteView {
           ]);
   }
   async OnBeforeStartAsync() {
-    let e;
+    var e;
     this.IsMobile ||
       ((e = this.GetItem(2)) &&
         ((this.xet = new CombineKeyItem_1.CombineKeyItem()),
@@ -98,7 +98,7 @@ class InteractQteView extends PanelQteView_1.PanelQteView {
       (TimerSystem_1.TimerSystem.Remove(this.xNi), (this.xNi = void 0));
   }
   GNi() {
-    let e = this.OpenParam;
+    var e = this.OpenParam;
     ModelManager_1.ModelManager.PanelQteModel.IsInQte
       ? e !==
         (e = ModelManager_1.ModelManager.PanelQteModel.GetContext()).QteHandleId
@@ -133,7 +133,7 @@ class InteractQteView extends PanelQteView_1.PanelQteView {
     !this.IsQteEnd && this.IsQteStart && this.bNi();
   }
   bNi() {
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     ModelManager_1.ModelManager.PanelQteModel.SetQteResult(e, !0),
       PanelQteController_1.PanelQteController.StopQte(e);
   }
@@ -159,4 +159,4 @@ class InteractQteView extends PanelQteView_1.PanelQteView {
   }
 }
 exports.InteractQteView = InteractQteView;
-// # sourceMappingURL=InteractQteView.js.map
+//# sourceMappingURL=InteractQteView.js.map

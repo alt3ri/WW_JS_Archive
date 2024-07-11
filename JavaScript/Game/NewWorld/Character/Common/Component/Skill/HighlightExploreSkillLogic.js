@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HighlightExploreSkillLogic = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../../../Common/TimeUtil");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const RouletteController_1 = require("../../../../../Module/Roulette/RouletteController");
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../../../Common/TimeUtil"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  RouletteController_1 = require("../../../../../Module/Roulette/RouletteController");
 class HighlightExploreSkillLogic {
   constructor() {
     (this.MJo = -2028614394),
@@ -109,4 +109,4 @@ class HighlightExploreSkillLogic {
   }
 }
 exports.HighlightExploreSkillLogic = HighlightExploreSkillLogic;
-// # sourceMappingURL=HighlightExploreSkillLogic.js.map
+//# sourceMappingURL=HighlightExploreSkillLogic.js.map

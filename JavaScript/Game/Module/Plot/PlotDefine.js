@@ -9,4 +9,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PLOT_LIST_NAME = 0),
   (exports.PLOT_NAME = 1),
   (exports.PLOT_STATE = 2);
-// # sourceMappingURL=PlotDefine.js.map
+//# sourceMappingURL=PlotDefine.js.map

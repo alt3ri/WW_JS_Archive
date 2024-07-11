@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ProtocolMonitorConfig = void 0);
-const ProtocolMonitoringByAll_1 = require("../../../Core/Define/ConfigQuery/ProtocolMonitoringByAll");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const ProtocolMonitoringByAll_1 = require("../../../Core/Define/ConfigQuery/ProtocolMonitoringByAll"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class ProtocolMonitorConfig extends ConfigBase_1.ConfigBase {
   GetActionId(o) {
     if (ProtocolMonitorConfig.jio.has(o))
@@ -15,4 +15,4 @@ class ProtocolMonitorConfig extends ConfigBase_1.ConfigBase {
   }
 }
 (exports.ProtocolMonitorConfig = ProtocolMonitorConfig).jio = new Map();
-// # sourceMappingURL=ProtocolMonitorConfig.js.map
+//# sourceMappingURL=ProtocolMonitorConfig.js.map

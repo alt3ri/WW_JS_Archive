@@ -36,43 +36,43 @@ class RogueAffix {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetBuffidAt(t) {
     return this.buffid(t);
   }
   buffid(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i
       ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
       : BigInt(0);
   }
   buffidLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   affixdesc(t) {
-    const i = this.J7.__offset(this.z7, 8);
+    var i = this.J7.__offset(this.z7, 8);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetAffixdescparamAt(t) {
     return this.affixdescparam(t);
   }
   affixdescparam(t, i) {
-    const s = this.J7.__offset(this.z7, 10);
+    var s = this.J7.__offset(this.z7, 10);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   affixdescparamLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   affixdescsimple(t) {
-    const i = this.J7.__offset(this.z7, 12);
+    var i = this.J7.__offset(this.z7, 12);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.RogueAffix = RogueAffix;
-// # sourceMappingURL=RogueAffix.js.map
+//# sourceMappingURL=RogueAffix.js.map

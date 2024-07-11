@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const GlobalData_1 = require("../../../../../GlobalData");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
+const UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../../../GlobalData"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager");
 class TsDecoratorEntityStateCheck extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -32,7 +32,7 @@ class TsDecoratorEntityStateCheck extends UE.BTDecorator_BlueprintBase {
           ]),
         !1
       );
-    if ((this.InitTsVariables(), !this.TsStatusEntityId || this.TsState === ""))
+    if ((this.InitTsVariables(), !this.TsStatusEntityId || "" === this.TsState))
       return !1;
     t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
       this.TsStatusEntityId,
@@ -40,7 +40,7 @@ class TsDecoratorEntityStateCheck extends UE.BTDecorator_BlueprintBase {
     if (!t?.Valid) return !1;
     t = t.Entity.GetComponent(177);
     if (!t) return !1;
-    const r = t.ContainsTagByName(this.TsState);
+    var r = t.ContainsTagByName(this.TsState);
     switch (this.TsCheckType) {
       case 0:
         return r;
@@ -52,4 +52,4 @@ class TsDecoratorEntityStateCheck extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorEntityStateCheck;
-// # sourceMappingURL=TsDecoratorEntityStateCheck.js.map
+//# sourceMappingURL=TsDecoratorEntityStateCheck.js.map

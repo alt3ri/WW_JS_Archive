@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameSplineComponent = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const AiPatrolController_1 = require("../../AI/Controller/AiPatrolController");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const SAMPLE_ANGLE_LIMIT = 15;
-const SAMPLE_STEP_DIST = 50;
+const Log_1 = require("../../../Core/Common/Log"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  AiPatrolController_1 = require("../../AI/Controller/AiPatrolController"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  SAMPLE_ANGLE_LIMIT = 15,
+  SAMPLE_STEP_DIST = 50;
 class GameSplineComponent {
   constructor(t) {
     (this.SplineId = 0),
@@ -47,10 +47,10 @@ class GameSplineComponent {
           ),
         !1
       );
-    var t = this.SplineEntityData.Transform.Pos;
-    var t =
-      (this.Wye.Set(t.X ?? 0, t.Y ?? 0, t.Z ?? 0),
-      this.SplineEntityData.Transform.Rot);
+    var t = this.SplineEntityData.Transform.Pos,
+      t =
+        (this.Wye.Set(t.X ?? 0, t.Y ?? 0, t.Z ?? 0),
+        this.SplineEntityData.Transform.Rot);
     if (
       (this.Kye.Set(t?.Y ?? 0, t?.Z ?? 0, t?.X ?? 0),
       this.Kye.Quaternion().RotateVector(
@@ -84,20 +84,20 @@ class GameSplineComponent {
         this.Option.Type === IComponent_1.ESplineType.LevelAI)
     )
       for (let t = 0; t < this.Option.Points.length; t++) {
-        const i = new AiPatrolController_1.PatrolPoint();
-        const e =
-          ((i.IsMain = !0),
-          (i.Point = Vector_1.Vector.Create(
-            this.GetWorldLocationAtSplinePoint(t),
-          )),
-          this.Option.Points[t]);
-        var s = ((i.MoveState = e.MoveState), (i.MoveSpeed = e.MoveSpeed), e);
-        var s =
-          (s &&
-            ((i.IsIgnorePoint = s.IgnorePoint ?? !1),
-            (i.StayTime = s.StayTime ?? 0),
-            (i.IsHide = s.IsHide ?? !1)),
-          e.Actions);
+        var i = new AiPatrolController_1.PatrolPoint(),
+          e =
+            ((i.IsMain = !0),
+            (i.Point = Vector_1.Vector.Create(
+              this.GetWorldLocationAtSplinePoint(t),
+            )),
+            this.Option.Points[t]),
+          s = ((i.MoveState = e.MoveState), (i.MoveSpeed = e.MoveSpeed), e),
+          s =
+            (s &&
+              ((i.IsIgnorePoint = s.IgnorePoint ?? !1),
+              (i.StayTime = s.StayTime ?? 0),
+              (i.IsHide = s.IsHide ?? !1)),
+            e.Actions);
         s && (i.Actions = s), this.PathPoint.push(i);
       }
     return !0;
@@ -140,20 +140,20 @@ class GameSplineComponent {
         this.Option.Type === IComponent_1.ESplineType.LevelAI)
     )
       for (let t = 0; t < this.Option.Points.length; t++) {
-        const i = new AiPatrolController_1.PatrolPoint();
-        const e =
-          ((i.IsMain = !0),
-          (i.Point = Vector_1.Vector.Create(
-            this.GetWorldLocationAtSplinePoint(t),
-          )),
-          this.Option.Points[t]);
-        var s = ((i.MoveState = e.MoveState), (i.MoveSpeed = e.MoveSpeed), e);
-        var s =
-          (s &&
-            ((i.IsIgnorePoint = s.IgnorePoint ?? !1),
-            (i.StayTime = s.StayTime ?? 0),
-            (i.IsHide = s.IsHide ?? !1)),
-          e.Actions);
+        var i = new AiPatrolController_1.PatrolPoint(),
+          e =
+            ((i.IsMain = !0),
+            (i.Point = Vector_1.Vector.Create(
+              this.GetWorldLocationAtSplinePoint(t),
+            )),
+            this.Option.Points[t]),
+          s = ((i.MoveState = e.MoveState), (i.MoveSpeed = e.MoveSpeed), e),
+          s =
+            (s &&
+              ((i.IsIgnorePoint = s.IgnorePoint ?? !1),
+              (i.StayTime = s.StayTime ?? 0),
+              (i.IsHide = s.IsHide ?? !1)),
+            e.Actions);
         s && (i.Actions = s), this.PathPoint.push(i);
       }
     return !0;
@@ -165,11 +165,11 @@ class GameSplineComponent {
     return this.Hye?.Points.length ?? 0;
   }
   GetWorldLocationAtSplinePoint(t) {
-    let i, e;
+    var i, e;
     return this.Yye.has(t)
       ? this.Yye.get(t)
       : ((i = Vector_1.Vector.Create()),
-        this.Hye && this.Hye.Points.length > 0 && t < this.Hye.Points.length
+        this.Hye && 0 < this.Hye.Points.length && t < this.Hye.Points.length
           ? ((e = this.Hye.Points[t].Position),
             i.AdditionEqual(this.Wye),
             this.jye.DeepCopy(this.Qye),
@@ -228,13 +228,12 @@ class GameSplineComponent {
         !1
       );
     this.Hye = this.SplineComponentData.Option;
-    const s =
-      ModelManager_1.ModelManager.GameSplineModel.LoadAndGetSplineComponent(
-        this.SplineId,
-        t,
-      );
-    var i =
-      ModelManager_1.ModelManager.GameSplineModel.GetSplineActorBySplineId(
+    var s =
+        ModelManager_1.ModelManager.GameSplineModel.LoadAndGetSplineComponent(
+          this.SplineId,
+          t,
+        ),
+      i = ModelManager_1.ModelManager.GameSplineModel.GetSplineActorBySplineId(
         this.SplineId,
       );
     if (
@@ -251,32 +250,34 @@ class GameSplineComponent {
           ),
         !1
       );
-    const o = i;
-    var i = s.GetNumberOfSplinePoints();
-    const n = this.PathPoint;
+    var o = i,
+      i = s.GetNumberOfSplinePoints(),
+      n = this.PathPoint;
     (n.length = 0),
       n.splice(0, n.length),
       (this.MainPointIndexArray = new Array());
     for (let t = 0, e = i; t < e; t++) {
-      var r = s.GetWorldLocationAtSplinePoint(t);
-      const h = new AiPatrolController_1.PatrolPoint();
-      var r =
-        ((h.IsMain = !0), (h.Point = Vector_1.Vector.Create(r)), o.SplineData);
-      var r =
-        ((h.MoveState = r.Points[t].MoveState),
-        (h.MoveSpeed = r.Points[t].MoveSpeed),
-        (h.IsIgnorePoint = r.Points[t].IgnorePoint ?? !1),
-        (h.StayTime = r.Points[t].StayTime ?? 0),
-        (h.IsHide = r.Points[t].IsHide ?? !1),
-        r.Points[t].Actions);
+      var r = s.GetWorldLocationAtSplinePoint(t),
+        h = new AiPatrolController_1.PatrolPoint(),
+        r =
+          ((h.IsMain = !0),
+          (h.Point = Vector_1.Vector.Create(r)),
+          o.SplineData),
+        r =
+          ((h.MoveState = r.Points[t].MoveState),
+          (h.MoveSpeed = r.Points[t].MoveSpeed),
+          (h.IsIgnorePoint = r.Points[t].IgnorePoint ?? !1),
+          (h.StayTime = r.Points[t].StayTime ?? 0),
+          (h.IsHide = r.Points[t].IsHide ?? !1),
+          r.Points[t].Actions);
       r && (h.Actions = r), this.MainPointIndexArray.push(n.length), n.push(h);
       let i = s.GetDirectionAtSplinePoint(t, 1);
       if (t < e - 1) {
-        var r = s.GetDistanceAlongSplineAtSplinePoint(t);
-        const l = s.GetDistanceAlongSplineAtSplinePoint(t + 1);
+        var r = s.GetDistanceAlongSplineAtSplinePoint(t),
+          l = s.GetDistanceAlongSplineAtSplinePoint(t + 1);
         for (let t = r + SAMPLE_STEP_DIST; t < l; t += SAMPLE_STEP_DIST) {
-          var a;
-          let _ = s.GetDirectionAtDistanceAlongSpline(t, 1);
+          var a,
+            _ = s.GetDirectionAtDistanceAlongSpline(t, 1);
           MathUtils_1.MathUtils.GetAngleByVectorDot(i, _) <
             SAMPLE_ANGLE_LIMIT ||
             ((i = _),
@@ -302,7 +303,7 @@ class GameSplineComponent {
     if (t < 0 || t >= this.PathPoint.length) return -1;
     let [i, e] = [0, this.MainPointIndexArray.length - 1];
     for (; i <= e; ) {
-      const s = Math.floor(0.5 * (i + e));
+      var s = Math.floor(0.5 * (i + e));
       this.MainPointIndexArray[s] <= t && (i = s + 1),
         this.MainPointIndexArray[s] > t && (e = s - 1);
     }
@@ -313,4 +314,4 @@ class GameSplineComponent {
   }
 }
 exports.GameSplineComponent = GameSplineComponent;
-// # sourceMappingURL=GameSplineComponent.js.map
+//# sourceMappingURL=GameSplineComponent.js.map

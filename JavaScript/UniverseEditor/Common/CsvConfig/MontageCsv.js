@@ -6,45 +6,45 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.MontageCsv =
     exports.MontageCsvLoader =
       void 0);
-const CsvLoader_1 = require("./CsvLoader");
-const montageCsvFields = [
-  (0, CsvLoader_1.createCsvField)({
-    Name: "Id",
-    CnName: "Id",
-    Type: "Int",
-    Filter: "1",
-    Condition: "notEmpty && unique",
-    RenderType: 18,
-  }),
-  (0, CsvLoader_1.createCsvField)({
-    Name: "ModelId",
-    CnName: "模型Id",
-    RenderType: 31,
-    Type: "Int",
-  }),
-  (0, CsvLoader_1.createCsvField)({
-    Name: "ModelName",
-    CnName: "模型",
-    RenderType: 21,
-    Type: "String",
-  }),
-  (0, CsvLoader_1.createCsvField)({
-    Name: "Emotion",
-    CnName: "表情",
-    RenderType: 21,
-    Type: "String",
-  }),
-  (0, CsvLoader_1.createCsvField)({
-    Name: "ActionMontage",
-    CnName: "动作蒙太奇",
-    RenderType: 27,
-  }),
-  (0, CsvLoader_1.createCsvField)({
-    Name: "ExpressionMontage",
-    CnName: "表情蒙太奇",
-    RenderType: 27,
-  }),
-];
+const CsvLoader_1 = require("./CsvLoader"),
+  montageCsvFields = [
+    (0, CsvLoader_1.createCsvField)({
+      Name: "Id",
+      CnName: "Id",
+      Type: "Int",
+      Filter: "1",
+      Condition: "notEmpty && unique",
+      RenderType: 18,
+    }),
+    (0, CsvLoader_1.createCsvField)({
+      Name: "ModelId",
+      CnName: "模型Id",
+      RenderType: 31,
+      Type: "Int",
+    }),
+    (0, CsvLoader_1.createCsvField)({
+      Name: "ModelName",
+      CnName: "模型",
+      RenderType: 21,
+      Type: "String",
+    }),
+    (0, CsvLoader_1.createCsvField)({
+      Name: "Emotion",
+      CnName: "表情",
+      RenderType: 21,
+      Type: "String",
+    }),
+    (0, CsvLoader_1.createCsvField)({
+      Name: "ActionMontage",
+      CnName: "动作蒙太奇",
+      RenderType: 27,
+    }),
+    (0, CsvLoader_1.createCsvField)({
+      Name: "ExpressionMontage",
+      CnName: "表情蒙太奇",
+      RenderType: 27,
+    }),
+  ];
 class MontageCsvLoader extends CsvLoader_1.CsvLoader {
   constructor() {
     super("MontageCsv", montageCsvFields);
@@ -104,4 +104,4 @@ class AbpMontageCsv extends CsvLoader_1.GlobalCsv {}
 exports.AbpMontageCsv = AbpMontageCsv;
 class AbpOverlayMontageCsv extends CsvLoader_1.GlobalCsv {}
 exports.AbpOverlayMontageCsv = AbpOverlayMontageCsv;
-// # sourceMappingURL=MontageCsv.js.map
+//# sourceMappingURL=MontageCsv.js.map

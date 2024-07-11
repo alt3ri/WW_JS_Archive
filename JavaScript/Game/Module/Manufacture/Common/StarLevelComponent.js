@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.StarLevelComponent = void 0);
-const CookLevelView_1 = require("../../Cook/View/CookLevelView");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
+const CookLevelView_1 = require("../../Cook/View/CookLevelView"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
 class StarLevelComponent {
   constructor(e) {
     (this.Gqt = (e, o, t) => {
-      const r = new CookLevelView_1.StarItem();
+      var r = new CookLevelView_1.StarItem();
       return (
         r.CreateThenShowByActor(o.GetOwner()),
         r.SetState(e),
@@ -16,7 +16,7 @@ class StarLevelComponent {
       (this.$be = new GenericLayoutNew_1.GenericLayoutNew(e, this.Gqt));
   }
   ShowLevel(o, e) {
-    const t = new Array(e);
+    var t = new Array(e);
     for (let e = 0; e < o; e++) t[e] = !0;
     this.$be.RebuildLayoutByDataNew(t);
   }
@@ -25,4 +25,4 @@ class StarLevelComponent {
   }
 }
 exports.StarLevelComponent = StarLevelComponent;
-// # sourceMappingURL=StarLevelComponent.js.map
+//# sourceMappingURL=StarLevelComponent.js.map

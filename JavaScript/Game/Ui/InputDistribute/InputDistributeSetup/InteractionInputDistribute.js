@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InteractionInputDistribute = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const TsInteractionUtils_1 = require("../../../Module/Interaction/TsInteractionUtils");
-const UiLayerType_1 = require("../../Define/UiLayerType");
-const InputManager_1 = require("../../Input/InputManager");
-const UiLayer_1 = require("../../UiLayer");
-const UiManager_1 = require("../../UiManager");
-const InputDistributeDefine_1 = require("../InputDistributeDefine");
-const InputDistributeSetup_1 = require("./InputDistributeSetup");
+const Log_1 = require("../../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  TsInteractionUtils_1 = require("../../../Module/Interaction/TsInteractionUtils"),
+  UiLayerType_1 = require("../../Define/UiLayerType"),
+  InputManager_1 = require("../../Input/InputManager"),
+  UiLayer_1 = require("../../UiLayer"),
+  UiManager_1 = require("../../UiManager"),
+  InputDistributeDefine_1 = require("../InputDistributeDefine"),
+  InputDistributeSetup_1 = require("./InputDistributeSetup");
 class InteractionInputDistribute extends InputDistributeSetup_1.InputDistributeSetup {
   OnRefresh() {
     if (
@@ -82,8 +82,8 @@ class InteractionInputDistribute extends InputDistributeSetup_1.InputDistributeS
         ]);
     else {
       var t =
-        ModelManager_1.ModelManager.InteractionModel.CurrentInteractEntityId;
-      var t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(178);
+          ModelManager_1.ModelManager.InteractionModel.CurrentInteractEntityId,
+        t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(178);
       if (t && !t.GetClientCanInteraction())
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -207,4 +207,4 @@ class InteractionInputDistribute extends InputDistributeSetup_1.InputDistributeS
   }
 }
 exports.InteractionInputDistribute = InteractionInputDistribute;
-// # sourceMappingURL=InteractionInputDistribute.js.map
+//# sourceMappingURL=InteractionInputDistribute.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const CharacterBuffIds_1 = require("../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  CharacterBuffIds_1 = require("../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds");
 class TsAnimNotifyStateNextAtt extends UE.KuroAnimNotifyState {
   K2_NotifyBegin(e, t, r) {
     var e = e.GetOwner();
@@ -14,8 +14,8 @@ class TsAnimNotifyStateNextAtt extends UE.KuroAnimNotifyState {
     );
   }
   K2_NotifyEnd(e, t) {
-    let r;
-    var e = e.GetOwner();
+    var r,
+      e = e.GetOwner();
     return (
       e instanceof TsBaseCharacter_1.default &&
       ((r = e.CharacterActorComponent?.Entity?.GetComponent(33)),
@@ -36,4 +36,4 @@ class TsAnimNotifyStateNextAtt extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateNextAtt;
-// # sourceMappingURL=TsAnimNotifyStateNextAtt.js.map
+//# sourceMappingURL=TsAnimNotifyStateNextAtt.js.map

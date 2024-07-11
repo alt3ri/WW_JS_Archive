@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DailyActivityView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const CommonRewardPopup_1 = require("../../Common/CommonRewardPopup");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const DailyActivityController_1 = require("../DailyActivityController");
-const DailyActivityDefine_1 = require("../DailyActivityDefine");
-const DailyActivityTaskItem_1 = require("../DailyActivityTask/DailyActivityTaskItem");
-const DailyActivityRewardPanel_1 = require("./DailyActivityRewardPanel");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  CommonRewardPopup_1 = require("../../Common/CommonRewardPopup"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  DailyActivityController_1 = require("../DailyActivityController"),
+  DailyActivityDefine_1 = require("../DailyActivityDefine"),
+  DailyActivityTaskItem_1 = require("../DailyActivityTask/DailyActivityTaskItem"),
+  DailyActivityRewardPanel_1 = require("./DailyActivityRewardPanel");
 class DailyActivityView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -29,7 +29,7 @@ class DailyActivityView extends UiTabViewBase_1.UiTabViewBase {
       (this.$Ve = void 0),
       (this.ykt = 0),
       (this.Ikt = () => {
-        const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(122);
+        var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(122);
         ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
           e,
         );
@@ -47,7 +47,7 @@ class DailyActivityView extends UiTabViewBase_1.UiTabViewBase {
         return new DailyActivityTaskItem_1.DailyActivityTaskItem();
       }),
       (this.Pkt = () => {
-        const e = ModelManager_1.ModelManager.DailyActivityModel.RewardData;
+        var e = ModelManager_1.ModelManager.DailyActivityModel.RewardData;
         this.Skt.Refresh(e);
       });
   }
@@ -144,10 +144,10 @@ class DailyActivityView extends UiTabViewBase_1.UiTabViewBase {
     this.Mkt.OnTickRefresh(e), this.wkt();
   }
   wkt(e = !1) {
-    let i;
-    let t;
-    let n = ModelManager_1.ModelManager.DailyActivityModel.DayEndTime;
-    n === 0 && this.Ekt !== ""
+    var i,
+      t,
+      n = ModelManager_1.ModelManager.DailyActivityModel.DayEndTime;
+    0 === n && "" !== this.Ekt
       ? (this.Ekt = "")
       : ((i = TimeUtil_1.TimeUtil.GetServerTime()),
         (i =
@@ -180,7 +180,7 @@ class DailyActivityView extends UiTabViewBase_1.UiTabViewBase {
       this.Mkt.Init();
   }
   Dkt() {
-    const e = ModelManager_1.ModelManager.DailyActivityModel.ActivityValue;
+    var e = ModelManager_1.ModelManager.DailyActivityModel.ActivityValue;
     return (
       this.GetText(2).SetText(e.toString()),
       e > this.ykt &&
@@ -191,17 +191,17 @@ class DailyActivityView extends UiTabViewBase_1.UiTabViewBase {
     );
   }
   Akt() {
-    const e = this.Dkt();
+    var e = this.Dkt();
     this.Mkt.RefreshProgressBarDynamic(e);
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
-    if (e.length >= 2) {
-      const i = String(e[0]);
-      const t = Number(e[1]);
-      if (i === "Task") {
+    if (2 <= e.length) {
+      var i = String(e[0]),
+        t = Number(e[1]);
+      if ("Task" === i) {
         var n = this.vkt.GetGridByDisplayIndex(t);
         if (n) return [n, n];
-      } else if (i === "Gift") {
+      } else if ("Gift" === i) {
         n = this.Mkt.GetRewardItemByIndex(t);
         if (n) return [n, n];
       }
@@ -214,4 +214,4 @@ class DailyActivityView extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.DailyActivityView = DailyActivityView;
-// # sourceMappingURL=DailyActivityView.js.map
+//# sourceMappingURL=DailyActivityView.js.map

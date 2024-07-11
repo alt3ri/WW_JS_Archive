@@ -89,4 +89,4 @@ class ExploreResultModel extends ModelBase_1.ModelBase {
   }
 }
 exports.ExploreResultModel = ExploreResultModel;
-// # sourceMappingURL=ExploreResultModel.js.map
+//# sourceMappingURL=ExploreResultModel.js.map

@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.KeyItemBase = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const InputSettings_1 = require("../../../../InputSettings/InputSettings");
-const InputSettingsManager_1 = require("../../../../InputSettings/InputSettingsManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const InputDistributeController_1 = require("../../../../Ui/InputDistribute/InputDistributeController");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const DISABLE_ALPHA = 0.2;
+const Log_1 = require("../../../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  InputSettings_1 = require("../../../../InputSettings/InputSettings"),
+  InputSettingsManager_1 = require("../../../../InputSettings/InputSettingsManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  InputDistributeController_1 = require("../../../../Ui/InputDistribute/InputDistributeController"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  DISABLE_ALPHA = 0.2;
 class KeyItemBase extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(),
@@ -146,7 +146,7 @@ class KeyItemBase extends UiPanelBase_1.UiPanelBase {
   }
   OnInputAction(t, i) {}
   RefreshKey(t) {
-    const i = t.GetKeyName();
+    var i = t.GetKeyName();
     this.HSe !== i &&
       ((t = t.GetKeyIconPath()),
       Log_1.Log.CheckInfo() &&
@@ -166,7 +166,7 @@ class KeyItemBase extends UiPanelBase_1.UiPanelBase {
     t && this.RefreshKey(t);
   }
   SetKeyText(t) {
-    const i = this.GetKeyText();
+    var i = this.GetKeyText();
     this.GetKeyTexture()?.SetUIActive(!1),
       i &&
         (StringUtils_1.StringUtils.IsEmpty(t)
@@ -174,7 +174,7 @@ class KeyItemBase extends UiPanelBase_1.UiPanelBase {
           : (i.SetText(t), i.SetUIActive(!0)));
   }
   SetLocalText(t, ...i) {
-    const e = this.GetKeyText();
+    var e = this.GetKeyText();
     this.GetKeyTexture()?.SetUIActive(!1),
       e &&
         (StringUtils_1.StringUtils.IsEmpty(t)
@@ -202,4 +202,4 @@ class KeyItemBase extends UiPanelBase_1.UiPanelBase {
   OnSetGray() {}
 }
 exports.KeyItemBase = KeyItemBase;
-// # sourceMappingURL=KeyItemBase.js.map
+//# sourceMappingURL=KeyItemBase.js.map

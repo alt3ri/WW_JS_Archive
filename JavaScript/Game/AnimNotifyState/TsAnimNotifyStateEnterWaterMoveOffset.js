@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyStateEnterWaterMoveOffset extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.EnterWaterVelocityZ = 800);
@@ -11,7 +11,7 @@ class TsAnimNotifyStateEnterWaterMoveOffset extends UE.KuroAnimNotifyState {
   K2_NotifyBegin(e, t, r) {
     e = e.GetOwner();
     if (e instanceof TsBaseCharacter_1.default) {
-      const a = e.CharacterActorComponent?.Entity;
+      var a = e.CharacterActorComponent?.Entity;
       if (a)
         return (
           e.SetAnimRootMotionTranslationScale(
@@ -39,7 +39,7 @@ class TsAnimNotifyStateEnterWaterMoveOffset extends UE.KuroAnimNotifyState {
   K2_NotifyEnd(e, t) {
     e = e.GetOwner();
     if (e instanceof TsBaseCharacter_1.default) {
-      const r = e.CharacterActorComponent?.Entity;
+      var r = e.CharacterActorComponent?.Entity;
       if (r)
         return (
           e.SetAnimRootMotionTranslationScale(1),
@@ -62,4 +62,4 @@ class TsAnimNotifyStateEnterWaterMoveOffset extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateEnterWaterMoveOffset;
-// # sourceMappingURL=TsAnimNotifyStateEnterWaterMoveOffset.js.map
+//# sourceMappingURL=TsAnimNotifyStateEnterWaterMoveOffset.js.map

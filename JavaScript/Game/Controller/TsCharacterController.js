@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TsCharacterController = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const Vector2D_1 = require("../../Core/Utils/Math/Vector2D");
-const CameraController_1 = require("../Camera/CameraController");
-const InputController_1 = require("../Input/InputController");
-const ModelManager_1 = require("../Manager/ModelManager");
-const InputMappingsDefine_1 = require("../Ui/InputDistribute/InputMappingsDefine");
-const UiLayer_1 = require("../Ui/UiLayer");
-const TsBasePlayerController_1 = require("./TsBasePlayerController");
-const LEFT_BARACKET_NAME = new UE.FName("LeftBracket");
-const RIGHT_BARACKET_NAME = new UE.FName("RightBracket");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  Vector2D_1 = require("../../Core/Utils/Math/Vector2D"),
+  CameraController_1 = require("../Camera/CameraController"),
+  InputController_1 = require("../Input/InputController"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  InputMappingsDefine_1 = require("../Ui/InputDistribute/InputMappingsDefine"),
+  UiLayer_1 = require("../Ui/UiLayer"),
+  TsBasePlayerController_1 = require("./TsBasePlayerController"),
+  LEFT_BARACKET_NAME = new UE.FName("LeftBracket"),
+  RIGHT_BARACKET_NAME = new UE.FName("RightBracket");
 class TsCharacterController extends TsBasePlayerController_1.TsBasePlayerController {
   constructor() {
     super(...arguments),
@@ -39,23 +39,23 @@ class TsCharacterController extends TsBasePlayerController_1.TsBasePlayerControl
   }
   BindActionHandle() {
     super.BindActionHandle();
-    const e = (0, puerts_1.$ref)(void 0);
-    const r =
-      (UE.InputSettings.GetInputSettings().GetActionNames(e),
-      (0, puerts_1.$unref)(e));
+    var e = (0, puerts_1.$ref)(void 0),
+      r =
+        (UE.InputSettings.GetInputSettings().GetActionNames(e),
+        (0, puerts_1.$unref)(e));
     for (let e = 0; e < r.Num(); e++) {
-      const t = r.Get(e);
+      var t = r.Get(e);
       this.AddActionHandle(t.toString());
     }
   }
   BindAxisHandle() {
     super.BindAxisHandle();
-    const e = (0, puerts_1.$ref)(void 0);
-    const r =
-      (UE.InputSettings.GetInputSettings().GetAxisNames(e),
-      (0, puerts_1.$unref)(e));
+    var e = (0, puerts_1.$ref)(void 0),
+      r =
+        (UE.InputSettings.GetInputSettings().GetAxisNames(e),
+        (0, puerts_1.$unref)(e));
     for (let e = 0; e < r.Num(); e++) {
-      const t = r.Get(e);
+      var t = r.Get(e);
       this.AddAxisHandle(t.toString());
     }
   }
@@ -112,4 +112,4 @@ class TsCharacterController extends TsBasePlayerController_1.TsBasePlayerControl
 }
 (exports.TsCharacterController = TsCharacterController),
   (exports.default = TsCharacterController);
-// # sourceMappingURL=TsCharacterController.js.map
+//# sourceMappingURL=TsCharacterController.js.map

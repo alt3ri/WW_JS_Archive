@@ -33,29 +33,29 @@ class RogueCharacter {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   roleid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   quality() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   roleicon(t) {
-    const r = this.J7.__offset(this.z7, 10);
+    var r = this.J7.__offset(this.z7, 10);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   rolename(t) {
-    const r = this.J7.__offset(this.z7, 12);
+    var r = this.J7.__offset(this.z7, 12);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   rolebigicon(t) {
-    const r = this.J7.__offset(this.z7, 14);
+    var r = this.J7.__offset(this.z7, 14);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
 }
 exports.RogueCharacter = RogueCharacter;
-// # sourceMappingURL=RogueCharacter.js.map
+//# sourceMappingURL=RogueCharacter.js.map

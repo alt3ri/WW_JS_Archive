@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelMultiEffectSpec = void 0);
-const UE = require("ue");
-const EffectModelHelper_1 = require("../Render/Effect/Data/EffectModelHelper");
-const MultiEffectBuffBall_1 = require("../Render/Effect/Data/MultiEffect/MultiEffectBuffBall");
-const CustomMap_1 = require("../World/Define/CustomMap");
-const EffectSpec_1 = require("./EffectSpec/EffectSpec");
-const EffectSystem_1 = require("./EffectSystem");
+const UE = require("ue"),
+  EffectModelHelper_1 = require("../Render/Effect/Data/EffectModelHelper"),
+  MultiEffectBuffBall_1 = require("../Render/Effect/Data/MultiEffect/MultiEffectBuffBall"),
+  CustomMap_1 = require("../World/Define/CustomMap"),
+  EffectSpec_1 = require("./EffectSpec/EffectSpec"),
+  EffectSystem_1 = require("./EffectSystem");
 class EffectModelMultiEffectSpec extends EffectSpec_1.EffectSpec {
   constructor() {
     super(...arguments),
@@ -15,23 +15,23 @@ class EffectModelMultiEffectSpec extends EffectSpec_1.EffectSpec {
       (this.MultiEffect = void 0);
   }
   OnInit() {
-    var t = this.Handle.GetSureEffectActor();
-    var e = this.Handle.Parent;
-    var e = e ? e.GetEffectSpec()?.GetSceneComponent() : void 0;
-    var t = EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
-      t,
-      UE.SceneComponent.StaticClass(),
-      e,
-      void 0,
-      !1,
-      this.EffectModel,
-    );
+    var t = this.Handle.GetSureEffectActor(),
+      e = this.Handle.Parent,
+      e = e ? e.GetEffectSpec()?.GetSceneComponent() : void 0,
+      t = EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
+        t,
+        UE.SceneComponent.StaticClass(),
+        e,
+        void 0,
+        !1,
+        this.EffectModel,
+      );
     return (this.SceneComponent = t), (this.GroupComponent = t), !0;
   }
   OnStart() {
-    const t = new Map();
+    var t = new Map();
     return (
-      this.EffectModel.Type === 0 &&
+      0 === this.EffectModel.Type &&
         (t.set("BaseNum", this.EffectModel.BaseNum),
         t.set("SpinSpeed", this.EffectModel.SpinSpeed),
         t.set("Radius", this.EffectModel.Radius),
@@ -41,14 +41,14 @@ class EffectModelMultiEffectSpec extends EffectSpec_1.EffectSpec {
     );
   }
   OnTick(t) {
-    const e = this.EffectSpecMap.GetItems();
-    const f = this.MultiEffect.GetDesiredNum(this.LifeTime.PassTime);
-    const s =
-      (this.AdjustNumber(f),
-      this.MultiEffect.Update(t, this.LifeTime.PassTime, e),
-      this.Handle.GetSureEffectActor()?.bHidden ?? !1);
+    var e = this.EffectSpecMap.GetItems(),
+      f = this.MultiEffect.GetDesiredNum(this.LifeTime.PassTime),
+      s =
+        (this.AdjustNumber(f),
+        this.MultiEffect.Update(t, this.LifeTime.PassTime, e),
+        this.Handle.GetSureEffectActor()?.bHidden ?? !1);
     for (const c of e) {
-      const i = EffectSystem_1.EffectSystem.GetSureEffectActor(c);
+      var i = EffectSystem_1.EffectSystem.GetSureEffectActor(c);
       i?.IsValid() && i.bHidden !== s && i.SetActorHiddenInGame(s);
     }
   }
@@ -59,7 +59,7 @@ class EffectModelMultiEffectSpec extends EffectSpec_1.EffectSpec {
     );
   }
   OnStop(t) {
-    const e = new Array();
+    var e = new Array();
     for (const f of this.EffectSpecMap.GetItems())
       EffectSystem_1.EffectSystem.IsValid(f) && e.push(f);
     for (const s of e) EffectSystem_1.EffectSystem.StopEffectById(s, t, !0);
@@ -76,9 +76,9 @@ class EffectModelMultiEffectSpec extends EffectSpec_1.EffectSpec {
     return this.EffectSpecMap.Clear(), !0;
   }
   AdjustNumber(t) {
-    let e;
-    let f;
-    const s = this.EffectSpecMap.Size();
+    var e,
+      f,
+      s = this.EffectSpecMap.Size();
     s < t
       ? ((f = this.Handle.GetSureEffectActor()),
         (e = UE.KismetSystemLibrary.GetPathName(
@@ -115,4 +115,4 @@ class EffectModelMultiEffectSpec extends EffectSpec_1.EffectSpec {
   }
 }
 exports.EffectModelMultiEffectSpec = EffectModelMultiEffectSpec;
-// # sourceMappingURL=EffectModelMultiEffectSpec.js.map
+//# sourceMappingURL=EffectModelMultiEffectSpec.js.map

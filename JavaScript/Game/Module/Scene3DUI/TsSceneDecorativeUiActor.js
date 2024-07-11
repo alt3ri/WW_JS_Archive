@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const ColorUtils_1 = require("../../Utils/ColorUtils");
-const TsSceneUiTag_1 = require("./TsSceneUiTag");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  ColorUtils_1 = require("../../Utils/ColorUtils"),
+  TsSceneUiTag_1 = require("./TsSceneUiTag");
 class TsSceneDecorativeUiActor extends TsSceneUiTag_1.default {
   constructor() {
     super(...arguments),
@@ -49,4 +49,4 @@ class TsSceneDecorativeUiActor extends TsSceneUiTag_1.default {
   }
 }
 exports.default = TsSceneDecorativeUiActor;
-// # sourceMappingURL=TsSceneDecorativeUiActor.js.map
+//# sourceMappingURL=TsSceneDecorativeUiActor.js.map

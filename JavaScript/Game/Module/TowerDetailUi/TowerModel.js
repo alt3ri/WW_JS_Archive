@@ -6,18 +6,18 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.FINISH_COLOR =
     exports.FLOOR_STAR =
       void 0);
-const CommonDefine_1 = require("../../../Core/Define/CommonDefine");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const EditBattleTeamController_1 = require("../EditBattleTeam/EditBattleTeamController");
-const TowerData_1 = require("./TowerData");
+const CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  EditBattleTeamController_1 = require("../EditBattleTeam/EditBattleTeamController"),
+  TowerData_1 = require("./TowerData");
 (exports.FLOOR_STAR = 3),
   (exports.FINISH_COLOR = "#FFD12F"),
   (exports.NORMOL_COLOR = "#ECE5D8"),
@@ -93,12 +93,12 @@ class TowerModel extends ModelBase_1.ModelBase {
       this.ZTo(e.yVn, e.b5n), this.tLo(e.Zxs), this.JTo.set(e.yVn, e.ebs);
   }
   DeleteVariationTowerInfo() {
-    for (const [t, e] of this.QTo)
+    for (var [t, e] of this.QTo)
       e.Difficulties === TowerData_1.VARIATION_RISK_DIFFICULTY &&
         this.QTo.delete(t);
     this.ZTo(TowerData_1.VARIATION_RISK_DIFFICULTY, void 0),
       this.JTo.set(TowerData_1.VARIATION_RISK_DIFFICULTY, 0);
-    for (const [, r] of this.RoleDifficultyFormationMap)
+    for (var [, r] of this.RoleDifficultyFormationMap)
       r.set(TowerData_1.VARIATION_RISK_DIFFICULTY, 0);
   }
   GetFloorStars(t) {
@@ -110,10 +110,10 @@ class TowerModel extends ModelBase_1.ModelBase {
   GetAreaStars(t, e, r = !1) {
     let i = 0;
     if (r)
-      for (const [, o] of this.XTo)
+      for (var [, o] of this.XTo)
         o.Difficulties === t && o.Area === e && (i += o.Star);
     else
-      for (const [, s] of this.QTo)
+      for (var [, s] of this.QTo)
         s.Difficulties === t && s.Area === e && (i += s.Star);
     return i;
   }
@@ -123,7 +123,7 @@ class TowerModel extends ModelBase_1.ModelBase {
   }
   GetDifficultyStars(t) {
     let e = 0;
-    for (const [, r] of this.QTo) r.Difficulties === t && (e += r.Star);
+    for (var [, r] of this.QTo) r.Difficulties === t && (e += r.Star);
     return e;
   }
   GetAreaAllStars(t, e) {
@@ -154,22 +154,22 @@ class TowerModel extends ModelBase_1.ModelBase {
   }
   GetHaveChallengeFloorAndFormation(t) {
     t = this.QTo.get(t);
-    return !(!t || !t.Formation || t.Formation.length === 0);
+    return !(!t || !t.Formation || 0 === t.Formation.length);
   }
   GetFloorData(t) {
     return this.QTo.get(t);
   }
   ZTo(t, e) {
-    const r = this.GetDifficultyReward(t);
+    var r = this.GetDifficultyReward(t);
     if (r) for (const n of r) n.IsReceived = e?.includes(n.Index);
     else {
-      const i =
-        ConfigManager_1.ConfigManager.TowerClimbConfig.GetDifficultyReward(t);
-      const o = i.length;
-      const s = [];
+      var i =
+          ConfigManager_1.ConfigManager.TowerClimbConfig.GetDifficultyReward(t),
+        o = i.length,
+        s = [];
       for (let t = 0; t < o; t++) {
-        var a = i[t];
-        var a = new TowerData_1.TowerReward(a.Item1, a.Item2, t);
+        var a = i[t],
+          a = new TowerData_1.TowerReward(a.Item1, a.Item2, t);
         (a.IsReceived = e?.includes(t)), s.push(a);
       }
       this.YTo.set(t, s);
@@ -197,7 +197,7 @@ class TowerModel extends ModelBase_1.ModelBase {
   }
   iLo(t, e, r) {
     let i = this.RoleDifficultyFormationMap.get(t);
-    let o;
+    var o;
     i
       ? (o = i.get(e))
         ? ((o += r), i.set(e, o))
@@ -206,8 +206,8 @@ class TowerModel extends ModelBase_1.ModelBase {
       this.RoleDifficultyFormationMap.set(t, i);
   }
   ReduceRoleFormationCost(t, e, r) {
-    let i;
-    var t = this.RoleDifficultyFormationMap.get(t);
+    var i,
+      t = this.RoleDifficultyFormationMap.get(t);
     t && (i = t.get(e)) && t.set(e, (i -= r));
   }
   GetDifficultyProgress(t) {
@@ -272,23 +272,23 @@ class TowerModel extends ModelBase_1.ModelBase {
     );
   }
   IsOpenFloorFormation() {
-    return this.CurrentSelectFloor !== -1;
+    return -1 !== this.CurrentSelectFloor;
   }
   GetCurrentFloorName() {
     var t =
-      ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
-        "TowerAreaFloor",
-      );
-    var t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t);
-    const e = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(
-      this.CurrentTowerId,
-    );
-    const r = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.AreaName);
+        ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
+          "TowerAreaFloor",
+        ),
+      t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t),
+      e = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(
+        this.CurrentTowerId,
+      ),
+      r = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.AreaName);
     return t.replace("{0}", r).replace("{1}", "" + e.Floor);
   }
   GetFloorFormation(t) {
-    const e = [];
-    var t = this.QTo.get(t);
+    var e = [],
+      t = this.QTo.get(t);
     if (t && t.Formation) for (const r of t.Formation) e.push(r.l3n);
     return e;
   }
@@ -304,8 +304,9 @@ class TowerModel extends ModelBase_1.ModelBase {
   OpenReviewView() {
     this.NeedOpenReviveView &&
       ((this.NeedOpenReviveView = !1),
-      this.GetDifficultyMaxStars(TowerData_1.VARIATION_RISK_DIFFICULTY, !0) >
-        0 && UiManager_1.UiManager.OpenView("TowerReviewView"),
+      0 <
+        this.GetDifficultyMaxStars(TowerData_1.VARIATION_RISK_DIFFICULTY, !0) &&
+        UiManager_1.UiManager.OpenView("TowerReviewView"),
       (this.DataSeason = this.CurrentSeason));
   }
   SaveHandleData() {
@@ -321,38 +322,38 @@ class TowerModel extends ModelBase_1.ModelBase {
       (this.$To = -1);
   }
   CheckInTower() {
-    return this.CurrentTowerId !== -1;
+    return -1 !== this.CurrentTowerId;
   }
   GetSeasonCountDownData() {
     let t =
       MathUtils_1.MathUtils.LongToNumber(this.TowerEndTime) -
       TimeUtil_1.TimeUtil.GetServerTime();
-    const e =
-      (t = t <= 1 ? 1 : t) >= CommonDefine_1.SECOND_PER_DAY
-        ? 3
-        : t >= CommonDefine_1.SECOND_PER_HOUR
+    var e =
+        (t = t <= 1 ? 1 : t) >= CommonDefine_1.SECOND_PER_DAY
+          ? 3
+          : t >= CommonDefine_1.SECOND_PER_HOUR
+            ? 2
+            : 1,
+      r =
+        t >= CommonDefine_1.SECOND_PER_DAY
           ? 2
-          : 1;
-    const r =
-      t >= CommonDefine_1.SECOND_PER_DAY
-        ? 2
-        : t >= CommonDefine_1.SECOND_PER_HOUR
-          ? 1
-          : 0;
+          : t >= CommonDefine_1.SECOND_PER_HOUR
+            ? 1
+            : 0;
     return TimeUtil_1.TimeUtil.GetCountDownDataFormat2(t, e, r);
   }
   CanGetReward() {
-    const t = this.GetDifficultyReward(this.CurrentSelectDifficulties);
+    var t = this.GetDifficultyReward(this.CurrentSelectDifficulties);
     if (t) {
-      const e = this.GetDifficultyMaxStars(this.CurrentSelectDifficulties);
+      var e = this.GetDifficultyMaxStars(this.CurrentSelectDifficulties);
       for (const r of t) if (e >= r.Target && !r.IsReceived) return !0;
     }
     return !1;
   }
   CanGetRewardByDifficulties(t) {
-    const e = this.GetDifficultyReward(t);
+    var e = this.GetDifficultyReward(t);
     if (e) {
-      const r = this.GetDifficultyMaxStars(t);
+      var r = this.GetDifficultyMaxStars(t);
       for (const i of e) if (r >= i.Target && !i.IsReceived) return !0;
     }
     return !1;
@@ -363,8 +364,8 @@ class TowerModel extends ModelBase_1.ModelBase {
       t <= TowerData_1.VARIATION_RISK_DIFFICULTY;
       t++
     ) {
-      const e = this.GetDifficultyReward(t);
-      const r = this.GetDifficultyMaxStars(t);
+      var e = this.GetDifficultyReward(t),
+        r = this.GetDifficultyMaxStars(t);
       if (e) for (const i of e) if (r >= i.Target && !i.IsReceived) return !0;
     }
     return !1;
@@ -379,7 +380,7 @@ class TowerModel extends ModelBase_1.ModelBase {
     );
   }
   GetIsInOnceTower() {
-    const t = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(
+    var t = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(
       this.CurrentTowerId,
     );
     return (
@@ -395,4 +396,4 @@ class TowerModel extends ModelBase_1.ModelBase {
   }
 }
 exports.TowerModel = TowerModel;
-// # sourceMappingURL=TowerModel.js.map
+//# sourceMappingURL=TowerModel.js.map

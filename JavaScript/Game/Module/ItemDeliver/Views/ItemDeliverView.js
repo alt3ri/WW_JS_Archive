@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemDeliverView = void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const PublicUtil_1 = require("../../../Common/PublicUtil");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem");
-const ItemInteractionPanel_1 = require("../../Common/ItemInteractionPanel/View/ItemInteractionPanel");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const ItemDeliverController_1 = require("../ItemDeliverController");
-const DeliverMediumItemGrid_1 = require("./DeliverMediumItemGrid");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  PublicUtil_1 = require("../../../Common/PublicUtil"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
+  ItemInteractionPanel_1 = require("../../Common/ItemInteractionPanel/View/ItemInteractionPanel"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  ItemDeliverController_1 = require("../ItemDeliverController"),
+  DeliverMediumItemGrid_1 = require("./DeliverMediumItemGrid"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class ItemDeliverView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -26,15 +26,15 @@ class ItemDeliverView extends UiViewBase_1.UiViewBase {
       (this.nNt = () => {
         if (!this.dCi)
           if (this.CCi()) {
-            const t = this.uCi.Context;
+            var t = this.uCi.Context;
             if (t) {
               this.dCi = !0;
-              let e = this.uCi.GetSlotDataList();
-              if (t.Type === 6) {
-                const i = [];
+              var e = this.uCi.GetSlotDataList();
+              if (6 === t.Type) {
+                var i = [];
                 for (const o of e)
                   if (o.HasItem()) {
-                    const r = {
+                    var r = {
                       Z5n: [
                         {
                           Ykn: 0,
@@ -60,7 +60,7 @@ class ItemDeliverView extends UiViewBase_1.UiViewBase {
                   this.gCi,
                 );
               } else
-                t.Type === 1 &&
+                1 === t.Type &&
                   (e = e[0]).HasItem() &&
                   ItemDeliverController_1.ItemDeliverController.ItemUseRequest(
                     t,
@@ -78,7 +78,7 @@ class ItemDeliverView extends UiViewBase_1.UiViewBase {
         (this.dCi = !1), t && this.CloseMe();
       }),
       (this.zAt = (t) => {
-        let e;
+        var e;
         t.IsEnable()
           ? this.fCi(t.ItemConfigId, 1) &&
             (this.pCi(),
@@ -90,7 +90,7 @@ class ItemDeliverView extends UiViewBase_1.UiViewBase {
             );
       }),
       (this.vCi = (t) => {
-        const e = Math.max(t.GetCurrentCount() - 1, 0);
+        var e = Math.max(t.GetCurrentCount() - 1, 0);
         t.SetCurrentCount(e),
           this.mCi.RefreshItemGrid(t),
           this.fCi(t.ItemConfigId, -1),
@@ -104,15 +104,15 @@ class ItemDeliverView extends UiViewBase_1.UiViewBase {
           this.CloseMe();
       }),
       (this.MCi = () => {
-        const t = new DeliverMediumItemGrid_1.DeliverMediumItemGrid();
+        var t = new DeliverMediumItemGrid_1.DeliverMediumItemGrid();
         return t.BindReduceButtonCallback(this.SCi), t;
       }),
       (this.SCi = (t) => {
-        var t = t.Data;
-        const e = t.GetCurrentCount() - 1;
-        const i =
-          (t.SetCurrentCount(Math.max(e, 0)),
-          this.mCi.GetItemData(t.GetCurrentItemConfigId()));
+        var t = t.Data,
+          e = t.GetCurrentCount() - 1,
+          i =
+            (t.SetCurrentCount(Math.max(e, 0)),
+            this.mCi.GetItemData(t.GetCurrentItemConfigId()));
         i &&
           (i.SetCurrentCount(i.GetCurrentCount() - 1),
           this.mCi.RefreshItemGrid(i)),
@@ -157,7 +157,7 @@ class ItemDeliverView extends UiViewBase_1.UiViewBase {
         this.L0t(),
         this.ECi(),
         this.pCi(() => {
-          let t = this.uCi.GetSlotDataList()[0];
+          var t = this.uCi.GetSlotDataList()[0];
           t &&
             (this.yCi(t, t.GetNeedCount()),
             (t = t.GetItemRangeList().length <= 1),
@@ -178,19 +178,19 @@ class ItemDeliverView extends UiViewBase_1.UiViewBase {
       (this.mCi = void 0);
   }
   L0t() {
-    let t = this.uCi.TitleTextId;
+    var t = this.uCi.TitleTextId;
     t &&
       ((t = void 0 === t ? "" : PublicUtil_1.PublicUtil.GetConfigTextByKey(t)),
       this.GetText(6)?.SetText(t));
   }
   ECi() {
-    var t = this.uCi.DescriptionTextId;
-    var t = void 0 === t ? "" : PublicUtil_1.PublicUtil.GetConfigTextByKey(t);
+    var t = this.uCi.DescriptionTextId,
+      t = void 0 === t ? "" : PublicUtil_1.PublicUtil.GetConfigTextByKey(t);
     this.GetText(3)?.SetText(t);
   }
   fCi(e, i) {
-    const r = this.uCi.GetSlotDataList();
-    if (i > 0) {
+    var r = this.uCi.GetSlotDataList();
+    if (0 < i) {
       if (this.uCi?.IsSlotEnough(e))
         return (
           ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -199,18 +199,18 @@ class ItemDeliverView extends UiViewBase_1.UiViewBase {
           !1
         );
       for (const h of r) {
-        var t = h.GetCurrentCount() + i;
-        var t = MathUtils_1.MathUtils.Clamp(t, 0, h.GetNeedCount());
+        var t = h.GetCurrentCount() + i,
+          t = MathUtils_1.MathUtils.Clamp(t, 0, h.GetNeedCount());
         if (!h.IsEnough()) {
           if (t <= 0) return h.ClearItem(), !0;
           if (h.SetItem(e, t)) return !0;
         }
       }
     } else
-      for (let t = r.length - 1; t >= 0; t--) {
-        const o = r[t];
-        var s = o.GetCurrentCount() + i;
-        var s = MathUtils_1.MathUtils.Clamp(s, 0, o.GetNeedCount());
+      for (let t = r.length - 1; 0 <= t; t--) {
+        var o = r[t],
+          s = o.GetCurrentCount() + i,
+          s = MathUtils_1.MathUtils.Clamp(s, 0, o.GetNeedCount());
         if (o.HasItem()) {
           if (s <= 0) return o.ClearItem(), !0;
           if (o.SetItem(e, s)) return !0;
@@ -219,25 +219,25 @@ class ItemDeliverView extends UiViewBase_1.UiViewBase {
     return !1;
   }
   pCi(t) {
-    const e = this.uCi.GetSlotDataList();
+    var e = this.uCi.GetSlotDataList();
     this.cCi?.RefreshByData(e, t);
   }
   yCi(t, e) {
-    const i = [];
-    var t = t.GetItemRangeList();
+    var i = [],
+      t = t.GetItemRangeList();
     if (t.length <= 1) this.mCi.SetActive(!1);
     else {
       for (const o of t) {
-        const r = { ItemConfigId: o, CurrentCount: 0, NeedCount: e };
+        var r = { ItemConfigId: o, CurrentCount: 0, NeedCount: e };
         i.push(r);
       }
       this.mCi.Refresh({ ItemInfoList: i }).then(
         () => {
-          let t;
-          let e;
-          const i = this.mCi.GetItemDataMainTypeMap();
-          const r = this.uCi.GetSlotDataList()[0].GetNeedCount();
-          const o = this.mCi.GetMainTypeIdList()[0];
+          var t,
+            e,
+            i = this.mCi.GetItemDataMainTypeMap(),
+            r = this.uCi.GetSlotDataList()[0].GetNeedCount(),
+            o = this.mCi.GetMainTypeIdList()[0];
           for ([t, e] of i)
             for (const s of e)
               if (s.GetItemCount() >= r && t !== o) {
@@ -252,4 +252,4 @@ class ItemDeliverView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.ItemDeliverView = ItemDeliverView;
-// # sourceMappingURL=ItemDeliverView.js.map
+//# sourceMappingURL=ItemDeliverView.js.map

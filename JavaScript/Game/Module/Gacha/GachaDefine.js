@@ -53,7 +53,7 @@ const UiPopViewData_1 = require("../../Ui/Define/UiPopViewData");
   (exports.GACHA_TYPE = "GachaType"),
   (exports.GACHA_RECORD_LIMIT = "GachaRecordLimit"),
   (exports.GACHA_NO_RECORD = "GachaNoRecord"),
-  (exports.textKeyMap = { 0: "Role", 1: "Weapon" });
+  (exports.textKeyMap = { [0]: "Role", 1: "Weapon" });
 class GachaRecord {
   constructor() {
     (this.u5n = void 0), (this.f5n = 0), (this.RuleGroupId = 0);
@@ -72,4 +72,4 @@ class GachaSelectionViewData extends UiPopViewData_1.UiPopViewData {
   }
 }
 exports.GachaSelectionViewData = GachaSelectionViewData;
-// # sourceMappingURL=GachaDefine.js.map
+//# sourceMappingURL=GachaDefine.js.map

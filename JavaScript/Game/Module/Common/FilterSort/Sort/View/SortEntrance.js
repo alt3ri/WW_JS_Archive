@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SortEntrance = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase");
-const DynamicMaskButton_1 = require("../../../../DynamicMask/DynamicMaskButton");
-const GridProxyAbstract_1 = require("../../../../Util/Grid/GridProxyAbstract");
-const GenericScrollViewNew_1 = require("../../../../Util/ScrollView/GenericScrollViewNew");
-const FilterSortController_1 = require("../../FilterSortController");
-const SortViewData_1 = require("../Model/SortViewData");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase"),
+  DynamicMaskButton_1 = require("../../../../DynamicMask/DynamicMaskButton"),
+  GridProxyAbstract_1 = require("../../../../Util/Grid/GridProxyAbstract"),
+  GenericScrollViewNew_1 = require("../../../../Util/ScrollView/GenericScrollViewNew"),
+  FilterSortController_1 = require("../../FilterSortController"),
+  SortViewData_1 = require("../Model/SortViewData");
 class SortItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -18,7 +18,7 @@ class SortItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.U4e = void 0),
       (this.gRt = void 0),
       (this.cLt = (t) => {
-        t === 1 && this.U4e?.(this.ARt.RuleId, this.he);
+        1 === t && this.U4e?.(this.ARt.RuleId, this.he);
       }),
       (this.T7e = () => !this.gRt || this.gRt(this.ARt.RuleId));
   }
@@ -74,7 +74,7 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
       (this.wRt = !1),
       (this.rTt = void 0),
       (this.BRt = () => {
-        let t;
+        var t;
         this.wRt
           ? (this.GetExtendToggle(0).SetToggleState(0),
             (t = new SortViewData_1.SortViewData(this.Mne, this.cIt)),
@@ -86,13 +86,13 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
         this.qRt(), this.Ift(!1);
       }),
       (this.ARt = (t) => {
-        this.rLt.SetIsAscending(t === 1), this.Ift(!1);
+        this.rLt.SetIsAscending(1 === t), this.Ift(!1);
       }),
       (this.GRt = () => {
         this.GetExtendToggle(0).SetToggleState(0, !0);
       }),
       (this.MRt = () => {
-        const t = new SortItem();
+        var t = new SortItem();
         return (
           t.SetToggleFunction(this.SRt), t.SetCanExecuteChange(this.T7e), t
         );
@@ -140,15 +140,15 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
       (this.Mne = ConfigManager_1.ConfigManager.SortConfig.GetSortId(t));
   }
   NRt() {
-    const t = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne);
-    this.wRt = t.AttributeSortList.length > 0;
+    var t = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne);
+    this.wRt = 0 < t.AttributeSortList.length;
   }
   ORt() {
-    const t = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne);
+    var t = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne);
     this.CRt = t.DataId;
   }
   _Lt() {
-    let t, i;
+    var t, i;
     (this.rLt = ModelManager_1.ModelManager.SortModel.GetSortResultData(
       this.Mne,
     )),
@@ -163,7 +163,7 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
         this.rLt.SetConfigId(this.Mne),
         this.rLt.SetSelectBaseSort([i, t]),
         (i = this.GetExtendToggle(2)),
-        this.rLt.SetIsAscending(i.GetToggleState() === 1),
+        this.rLt.SetIsAscending(1 === i.GetToggleState()),
         ModelManager_1.ModelManager.SortModel.SetSortResultData(
           this.Mne,
           this.rLt,
@@ -174,34 +174,32 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
   }
   LRt() {
     if ((this.bRt(!1), !this.wRt)) {
-      const t = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(
-        this.Mne,
-      );
-      const i = [];
-      const s = this.rLt.GetSelectBaseSort()[0];
+      var t = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne),
+        i = [],
+        s = this.rLt.GetSelectBaseSort()[0];
       for (const e of t.BaseSortList)
         i.push({ RuleId: e, DataType: this.CRt, SelectedRule: s });
       this.xRt.RefreshByData(i);
     }
   }
   kRt() {
-    const t = this.GetExtendToggle(2);
-    const i = this.rLt.GetIsAscending() ? 1 : 0;
+    var t = this.GetExtendToggle(2),
+      i = this.rLt.GetIsAscending() ? 1 : 0;
     t.SetToggleState(i, !1);
   }
   RRt() {
-    const t = this.rLt.GetSelectBaseSort();
+    var t = this.rLt.GetSelectBaseSort();
     this.xRt.GetScrollItemByKey(t[0]).SetToggleStateForce(!1);
   }
   qRt() {
-    const t = this.rLt.ShowAllSortContent();
+    var t = this.rLt.ShowAllSortContent();
     this.GetText(1).SetText(t);
   }
   Ift(t) {
-    let i = ConfigManager_1.ConfigManager.FilterConfig.GetFilterId(this.sLt);
+    var i = ConfigManager_1.ConfigManager.FilterConfig.GetFilterId(this.sLt);
     let s = this.uft;
-    let e;
-    let h = ModelManager_1.ModelManager.FilterModel.GetFilterResultData(i);
+    var e,
+      h = ModelManager_1.ModelManager.FilterModel.GetFilterResultData(i);
     h &&
       ((e = (i = ConfigManager_1.ConfigManager.FilterConfig.GetFilterConfig(i))
         .DataType),
@@ -232,7 +230,7 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
     this.rTt && (this.rTt.ResetItemParent(), this.rTt.SetActive(!1));
   }
   FRt() {
-    this.SetActive(this.Mne > 0);
+    this.SetActive(0 < this.Mne);
   }
   UpdateData(t, i, ...s) {
     this.lLt(t),
@@ -254,4 +252,4 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.SortEntrance = SortEntrance;
-// # sourceMappingURL=SortEntrance.js.map
+//# sourceMappingURL=SortEntrance.js.map

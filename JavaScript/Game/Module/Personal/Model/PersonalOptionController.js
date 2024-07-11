@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PersonalOptionController = void 0);
-const UE = require("ue");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ChatController_1 = require("../../Chat/ChatController");
-const CommonInputViewController_1 = require("../../Common/InputView/Controller/CommonInputViewController");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const FriendController_1 = require("../../Friend/FriendController");
-const ReportController_1 = require("../../Report/ReportController");
-const PersonalDefine_1 = require("./PersonalDefine");
+const UE = require("ue"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ChatController_1 = require("../../Chat/ChatController"),
+  CommonInputViewController_1 = require("../../Common/InputView/Controller/CommonInputViewController"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  FriendController_1 = require("../../Friend/FriendController"),
+  ReportController_1 = require("../../Report/ReportController"),
+  PersonalDefine_1 = require("./PersonalDefine");
 class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
   static InitOptionMap() {
     this.M4i.set(1, this.S4i),
@@ -29,12 +29,12 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
       this.M4i.set(13, this.U4i);
   }
   static GetOptionFunc(e) {
-    return this.M4i.size === 0 && this.InitOptionMap(), this.M4i.get(e);
+    return 0 === this.M4i.size && this.InitOptionMap(), this.M4i.get(e);
   }
   static A4i() {
-    const e = new PersonalDefine_1.PersonalInfoData();
-    let r =
-      ModelManager_1.ModelManager.FriendModel.GetSelectedPlayerOrItemInstance();
+    var e = new PersonalDefine_1.PersonalInfoData(),
+      r =
+        ModelManager_1.ModelManager.FriendModel.GetSelectedPlayerOrItemInstance();
     return (
       r
         ? ((e.RoleShowList = r.RoleShowList),
@@ -73,7 +73,7 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
 }
 ((exports.PersonalOptionController = PersonalOptionController).M4i = new Map()),
   (PersonalOptionController.S4i = () => {
-    const e = (
+    var e = (
       UiManager_1.UiManager.IsViewOpen("OnlineProcessView")
         ? ModelManager_1.ModelManager.OnlineModel
         : ModelManager_1.ModelManager.FriendModel
@@ -83,7 +83,7 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
       : ChatController_1.ChatController.ChatMutePlayerRequest(e.PlayerId, !0);
   }),
   (PersonalOptionController.y4i = () => {
-    const e = (
+    var e = (
       UiManager_1.UiManager.IsViewOpen("OnlineProcessView")
         ? ModelManager_1.ModelManager.OnlineModel
         : ModelManager_1.ModelManager.FriendModel
@@ -91,7 +91,7 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
     ReportController_1.ReportController.OpenReportView(e, 2);
   }),
   (PersonalOptionController.E7e = () => {
-    let e = ModelManager_1.ModelManager.FriendModel;
+    var e = ModelManager_1.ModelManager.FriendModel;
     const r = (
       UiManager_1.UiManager.IsViewOpen("OnlineProcessView")
         ? ModelManager_1.ModelManager.OnlineModel
@@ -113,7 +113,7 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
   }),
   (PersonalOptionController.E4i = () => {
     const e = ModelManager_1.ModelManager.FriendModel.CachePlayerData;
-    const r = new ConfirmBoxDefine_1.ConfirmBoxDataNew(57);
+    var r = new ConfirmBoxDefine_1.ConfirmBoxDataNew(57);
     r.SetTextArgs(e.PlayerName),
       r.FunctionMap.set(2, () => {
         FriendController_1.FriendController.RequestBlockPlayer(e.PlayerId);
@@ -166,4 +166,4 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
   (PersonalOptionController.U4i = () => {
     CommonInputViewController_1.CommonInputViewController.OpenSetPlayerRemarkNameInputView();
   });
-// # sourceMappingURL=PersonalOptionController.js.map
+//# sourceMappingURL=PersonalOptionController.js.map

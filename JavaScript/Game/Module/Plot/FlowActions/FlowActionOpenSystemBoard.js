@@ -8,4 +8,4 @@ class FlowActionOpenSystemBoard extends FlowActionLevelAsyncAction_1.FlowActionL
   }
 }
 exports.FlowActionOpenSystemBoard = FlowActionOpenSystemBoard;
-// # sourceMappingURL=FlowActionOpenSystemBoard.js.map
+//# sourceMappingURL=FlowActionOpenSystemBoard.js.map

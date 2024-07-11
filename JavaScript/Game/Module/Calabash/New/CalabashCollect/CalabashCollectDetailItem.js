@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CalabashCollectDetailItem = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const ConfirmBoxDefine_1 = require("../../../ConfirmBox/ConfirmBoxDefine");
-const VisionFetterSuitItem_1 = require("../../../Phantom/Vision/View/VisionFetterSuitItem");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const CalabashCollectStageItem_1 = require("./CalabashCollectStageItem");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  ConfirmBoxDefine_1 = require("../../../ConfirmBox/ConfirmBoxDefine"),
+  VisionFetterSuitItem_1 = require("../../../Phantom/Vision/View/VisionFetterSuitItem"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  CalabashCollectStageItem_1 = require("./CalabashCollectStageItem");
 class CalabashCollectDetailItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -38,13 +38,13 @@ class CalabashCollectDetailItem extends UiPanelBase_1.UiPanelBase {
         );
       }),
       (this.ift = () => {
-        const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(163);
+        var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(163);
         ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
           e,
         );
       }),
       (this.oft = () => {
-        let e, t;
+        var e, t;
         this.Z0t &&
           (this.eft++,
           this.eft >= this.Z0t.length && (this.eft = 0),
@@ -54,9 +54,9 @@ class CalabashCollectDetailItem extends UiPanelBase_1.UiPanelBase {
               this.Z0t[this.eft],
             ).MonsterId),
           (t =
-            this.eft === 0
+            0 === this.eft
               ? !this.Pe.UnlockData
-              : this.eft > 0 &&
+              : 0 < this.eft &&
                 !ModelManager_1.ModelManager.PhantomBattleModel.GetSkinIsUnlock(
                   this.Z0t[this.eft],
                 )),
@@ -70,7 +70,7 @@ class CalabashCollectDetailItem extends UiPanelBase_1.UiPanelBase {
         );
       }),
       (this.nft = () => {
-        const e = new VisionFetterSuitItem_1.VisionFetterSuitItem();
+        var e = new VisionFetterSuitItem_1.VisionFetterSuitItem();
         return (e.OnItemClick = this.rft), e;
       });
   }
@@ -105,13 +105,13 @@ class CalabashCollectDetailItem extends UiPanelBase_1.UiPanelBase {
       this.GetItem(12),
     )),
       this.z0t.BindSequenceCloseEvent((e) => {
-        e === "Start" &&
+        "Start" === e &&
           (this.GetItem(14)?.SetUIActive(!1),
           this.GetItem(13)?.SetUIActive(!1));
       });
-    const t = [];
+    var t = [];
     for (let e = 3; e <= 6; e++) {
-      const i = new CalabashCollectStageItem_1.CalabashCollectStageItem();
+      var i = new CalabashCollectStageItem_1.CalabashCollectStageItem();
       this.Y0t.push(i),
         t.push(i.CreateThenShowByActorAsync(this.GetItem(e).GetOwner()));
     }
@@ -150,9 +150,9 @@ class CalabashCollectDetailItem extends UiPanelBase_1.UiPanelBase {
       this.RefreshSkinBtn();
   }
   RefreshTitle() {
-    let e;
-    let t;
-    let i = this.Pe;
+    var e,
+      t,
+      i = this.Pe;
     i.UnlockData &&
       ((e =
         ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
@@ -169,7 +169,7 @@ class CalabashCollectDetailItem extends UiPanelBase_1.UiPanelBase {
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), t));
   }
   RefreshTitleBySkinId() {
-    let e, t;
+    var e, t;
     this.Pe.UnlockData &&
       ((e =
         ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
@@ -181,22 +181,22 @@ class CalabashCollectDetailItem extends UiPanelBase_1.UiPanelBase {
       this.GetText(0)?.SetText(e + t));
   }
   RefreshStage() {
-    const i =
+    var i =
       ModelManager_1.ModelManager.CalabashModel.GetCalabashDevelopRewardInfoData(
         this.X0t,
       );
     if (i && i.length === this.Y0t.length) {
-      const e = i.length;
+      var e = i.length;
       let t = -1;
       for (let e = 0; e < this.Y0t.length; e++) {
-        const s = i[e];
+        var s = i[e];
         this.Y0t[e].Refresh(s, !1, e), s.IsUnlock && (t = e);
       }
       this.GetTexture(2)?.SetFillAmount(t / (e - 1));
     }
   }
   RefreshSuit() {
-    const e = [];
+    var e = [];
     for (const t of this.$0t.FetterGroup)
       e.push(
         ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterGroupById(t),
@@ -204,7 +204,7 @@ class CalabashCollectDetailItem extends UiPanelBase_1.UiPanelBase {
     this.J0t?.RefreshByData(e);
   }
   RefreshDesc() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSkillBySkillId(
         this.$0t.SkillId,
       );
@@ -220,18 +220,18 @@ class CalabashCollectDetailItem extends UiPanelBase_1.UiPanelBase {
       this.GetButton(11).RootUIComp.SetUIActive(this.Pe.UnlockData);
   }
   RefreshSkinBtn() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.PhantomBattleModel.GetMonsterSkinListByMonsterId(
         this.Pe.DevelopRewardData.MonsterId,
       );
     e
-      ? (this.GetButton(15).RootUIComp.SetUIActive(e.length > 1),
+      ? (this.GetButton(15).RootUIComp.SetUIActive(1 < e.length),
         (this.Z0t = e),
         (this.eft = 0))
       : this.GetButton(15).RootUIComp.SetUIActive(!1);
   }
   RefreshDetailState() {
-    const e = ModelManager_1.ModelManager.CalabashModel.GetIfSimpleState();
+    var e = ModelManager_1.ModelManager.CalabashModel.GetIfSimpleState();
     this.GetItem(14)?.SetUIActive(!e), this.GetItem(13)?.SetUIActive(!e);
   }
   PlayDetailShowSequence() {
@@ -244,4 +244,4 @@ class CalabashCollectDetailItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.CalabashCollectDetailItem = CalabashCollectDetailItem;
-// # sourceMappingURL=CalabashCollectDetailItem.js.map
+//# sourceMappingURL=CalabashCollectDetailItem.js.map

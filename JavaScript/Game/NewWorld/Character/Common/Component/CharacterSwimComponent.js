@@ -1,65 +1,70 @@
 "use strict";
-let CharacterSwimComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, i, e, s) {
-    let h;
-    const r = arguments.length;
-    let _ =
-      r < 3 ? i : s === null ? (s = Object.getOwnPropertyDescriptor(i, e)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      _ = Reflect.decorate(t, i, e, s);
-    else
-      for (let o = t.length - 1; o >= 0; o--)
-        (h = t[o]) && (_ = (r < 3 ? h(_) : r > 3 ? h(i, e, _) : h(i, e)) || _);
-    return r > 3 && _ && Object.defineProperty(i, e, _), _;
-  };
+var CharacterSwimComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, i, e, s) {
+      var h,
+        r = arguments.length,
+        _ =
+          r < 3
+            ? i
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(i, e))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        _ = Reflect.decorate(t, i, e, s);
+      else
+        for (var o = t.length - 1; 0 <= o; o--)
+          (h = t[o]) &&
+            (_ = (r < 3 ? h(_) : 3 < r ? h(i, e, _) : h(i, e)) || _);
+      return 3 < r && _ && Object.defineProperty(i, e, _), _;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterSwimComponent =
     exports.SWIMMING_DECELERATION =
     exports.SWIMMING_BUOYANCY =
       void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../Core/Common/Time");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const DataTableUtil_1 = require("../../../../../Core/Utils/DataTableUtil");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const TickScoreController_1 = require("../../../../TickScore/TickScoreController");
-const PreloadConstants_1 = require("../../../../World/Controller/PreloadConstants");
-const CharacterNameDefines_1 = require("../CharacterNameDefines");
-const CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes");
-const CustomMovementDefine_1 = require("./Move/CustomMovementDefine");
-const PROFILE_DETECT_WATER_DEPTH = "CharacterSwimComponent_DetectWaterDepth";
-const PROFILE_FLOOR = "CharacterSwimComponent_CheckHasArrivedFloorInSwimming";
-const MAX_LAST_TICK_OFFSET_SQUARE = 1e6;
-const MAX_BYTE = 255;
-const MAX_SPEED_INTO_WATER = 50;
-const ENTER_SWIM_BIGGER_THAN_THIS = 0.75;
-const LEAVE_SWIM_LESS_THAN_THIS = 0.7;
-const CLIMB_CHECK_ENTER_WATER_RATE = 0.8;
-const FIVE_HUNDRED_TO_FIND_SURFACE = 500;
-const TIME_CLEAR_ENTER_WATER = 500;
-const SWIMMING_FRICTION = ((exports.SWIMMING_BUOYANCY = 1.4), 0.01);
-const SWIMMING_FRICTION_MIN_SPEED = 75;
-const SWIMMING_FRICTION_RATION = 1e4;
-const SWIMMING_MAX_DEPTH = 2;
-const SWIMMING_ACCELERATOR = 200;
-const EIGHTY = ((exports.SWIMMING_DECELERATION = 0.06), 80);
-const COS_EIGHTY = 0.173;
-const MIN_DEPTH = -99999;
-const waterAreaDetectExtent = new UE.Vector(500, 500, 2e3);
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  DataTableUtil_1 = require("../../../../../Core/Utils/DataTableUtil"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  TickScoreController_1 = require("../../../../TickScore/TickScoreController"),
+  PreloadConstants_1 = require("../../../../World/Controller/PreloadConstants"),
+  CharacterNameDefines_1 = require("../CharacterNameDefines"),
+  CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
+  CustomMovementDefine_1 = require("./Move/CustomMovementDefine"),
+  PROFILE_DETECT_WATER_DEPTH = "CharacterSwimComponent_DetectWaterDepth",
+  PROFILE_FLOOR = "CharacterSwimComponent_CheckHasArrivedFloorInSwimming",
+  MAX_LAST_TICK_OFFSET_SQUARE = 1e6,
+  MAX_BYTE = 255,
+  MAX_SPEED_INTO_WATER = 50,
+  ENTER_SWIM_BIGGER_THAN_THIS = 0.75,
+  LEAVE_SWIM_LESS_THAN_THIS = 0.7,
+  CLIMB_CHECK_ENTER_WATER_RATE = 0.8,
+  FIVE_HUNDRED_TO_FIND_SURFACE = 500,
+  TIME_CLEAR_ENTER_WATER = 500,
+  SWIMMING_FRICTION = ((exports.SWIMMING_BUOYANCY = 1.4), 0.01),
+  SWIMMING_FRICTION_MIN_SPEED = 75,
+  SWIMMING_FRICTION_RATION = 1e4,
+  SWIMMING_MAX_DEPTH = 2,
+  SWIMMING_ACCELERATOR = 200,
+  EIGHTY = ((exports.SWIMMING_DECELERATION = 0.06), 80),
+  COS_EIGHTY = 0.173,
+  MIN_DEPTH = -99999,
+  waterAreaDetectExtent = new UE.Vector(500, 500, 2e3);
 class CharacterSwimUtils {}
 (CharacterSwimUtils.AfterTransformLocationOffset = new UE.Vector(EIGHTY, 0, 0)),
   (CharacterSwimUtils.DebugColor1 = new UE.LinearColor(
@@ -116,7 +121,7 @@ let CharacterSwimComponent =
           this.UWr();
         }),
         (this.BWr = (t) => {
-          const i =
+          var i =
             ((1 -
               MathUtils_1.MathUtils.Clamp(
                 this.Gce.Speed / SWIMMING_FRICTION_MIN_SPEED,
@@ -130,11 +135,11 @@ let CharacterSwimComponent =
           for (; e > MathUtils_1.PI_DEG; ) e -= MathUtils_1.PI_DEG_DOUBLE;
           for (; e < -MathUtils_1.PI_DEG; ) e += MathUtils_1.PI_DEG_DOUBLE;
           e = Math.abs(e);
-          const s =
-            this.SwimAcceleratorCurve.GetFloatValue(e) * SWIMMING_ACCELERATOR;
-          const h =
-            ((this.RotateSpeed = this.SwimRotationCurve.GetFloatValue(e)),
-            this.bWr === 1 ? 0 : exports.SWIMMING_BUOYANCY);
+          var s =
+              this.SwimAcceleratorCurve.GetFloatValue(e) * SWIMMING_ACCELERATOR,
+            h =
+              ((this.RotateSpeed = this.SwimRotationCurve.GetFloatValue(e)),
+              1 === this.bWr ? 0 : exports.SWIMMING_BUOYANCY);
           this.Gce.CharacterMovement.KuroSwimming(
             t,
             !0,
@@ -247,7 +252,7 @@ let CharacterSwimComponent =
         (this.DWr = !1),
         this.iKr(),
         (this.eKr = 0);
-      const t = this.Entity.GetComponent(0).GetEntityType();
+      var t = this.Entity.GetComponent(0).GetEntityType();
       return (
         (this.IsRole = t === Protocol_1.Aki.Protocol.HBs.Proto_Player),
         (this.bWr = 0),
@@ -320,9 +325,9 @@ let CharacterSwimComponent =
       this.Iso && (this.Iso.Dispose(), (this.Iso = void 0));
     }
     TLn() {
-      let t, i;
+      var t, i;
       return CharacterSwimComponent_1.UseSwimTrigger
-        ? this.InSwimTriggerCount > 0
+        ? 0 < this.InSwimTriggerCount
         : ((t = (0, puerts_1.$ref)(0)),
           (i = (0, puerts_1.$ref)(0)),
           UE.NavigationSystemV1.NavigationGetWaterDeep(
@@ -341,7 +346,7 @@ let CharacterSwimComponent =
           this.Lie.HasTag(464607714) ||
           this.Lie.HasTag(-1523054094) ||
           (this.IsRole
-            ? (this.Gce.CharacterMovement.MovementMode === 6 &&
+            ? (6 === this.Gce.CharacterMovement.MovementMode &&
                 this.Gce.CharacterMovement.CustomMovementMode ===
                   CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SWIM) ||
               this.TLn() ||
@@ -381,7 +386,7 @@ let CharacterSwimComponent =
                 TickScoreController_1.TickScoreController.SwimTickScore.AddScore(
                   this,
                 )
-              : this.Gce.CharacterMovement.MovementMode === 6 &&
+              : 6 === this.Gce.CharacterMovement.MovementMode &&
                 this.Gce.CharacterMovement.CustomMovementMode ===
                   CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SWIM &&
                 this.Gce.CharacterMovement.SetMovementMode(3, 0));
@@ -463,10 +468,10 @@ let CharacterSwimComponent =
     }
     oKr() {
       this.Hte = this.Entity.GetComponent(3);
-      var t = this.Hte.ActorLocationProxy;
-      var t =
-        (Vector_1.Vector.VectorCopy(t, this.GWr),
-        this.Entity.GetComponent(185));
+      var t = this.Hte.ActorLocationProxy,
+        t =
+          (Vector_1.Vector.VectorCopy(t, this.GWr),
+          this.Entity.GetComponent(185));
       if (!t?.Valid) return !1;
       (this.Lie = t),
         (this.W5r = this.Entity.GetComponent(158)),
@@ -530,7 +535,7 @@ let CharacterSwimComponent =
       );
     }
     cKr() {
-      let t;
+      var t;
       return this.Gce.HasSwimmingBlock
         ? ((t = (0, puerts_1.$ref)(void 0)),
           this.Gce.CharacterMovement.K2_FindFloor(this.GWr.ToUeVector(), t),
@@ -539,7 +544,7 @@ let CharacterSwimComponent =
         : 0;
     }
     _Kr() {
-      let t, i, e;
+      var t, i, e;
       this.Lie.HasTag(855966206) &&
         ((t = this.cz),
         this.NWr.Multiply(2 * this.OWr, t),
@@ -553,16 +558,16 @@ let CharacterSwimComponent =
         this.fKr(this.jWr));
     }
     pKr(i) {
-      let e = !1;
-      let s = !1;
+      let e = !1,
+        s = !1;
       this.HWr.Reset(),
         this.jWr.Reset(),
         this.VWr.Reset(),
         (this.HWr.Z = MIN_DEPTH),
         (this.VWr.Z = MIN_DEPTH);
-      const h = i.GetHitCount();
+      var h = i.GetHitCount();
       for (let t = 0; t < h; ++t) {
-        const r = i.Actors.Get(t);
+        var r = i.Actors.Get(t);
         r?.IsValid() &&
           (r.ActorHasTag(CharacterSwimComponent_1.vKr)
             ? ((s = !0),
@@ -599,7 +604,7 @@ let CharacterSwimComponent =
             : 0;
     }
     MKr(t, i, e = this.Hte.ScaledRadius) {
-      const s = ModelManager_1.ModelManager.TraceElementModel.GetActorTrace();
+      var s = ModelManager_1.ModelManager.TraceElementModel.GetActorTrace();
       (s.WorldContextObject = this.Hte.Actor),
         (s.Radius = e),
         TraceElementCommon_1.TraceElementCommon.SetStartLocation(s, t),
@@ -627,8 +632,8 @@ let CharacterSwimComponent =
       );
     }
     dKr() {
-      const t = this.$Wr;
-      const i = this.YWr;
+      var t = this.$Wr,
+        i = this.YWr;
       if (this.Lie.HasTag(855966206) && this.Lie.HasTag(-1714966381))
         t.Set(
           this.GWr.X,
@@ -654,18 +659,18 @@ let CharacterSwimComponent =
       return !1;
     }
     EKr(t, i) {
-      const e = this.pz;
-      var t =
-        (e.FromUeVector(t),
-        (e.Z += i),
-        this.zWr.DeepCopy(e),
-        this.Hte.SetActorLocation(
-          this.zWr.ToUeVector(),
-          "游泳.游泳入水播放位置设置",
-          !0,
-        ),
-        this.Hte.Actor.CharacterMovement.SetMovementMode(3),
-        this.cz);
+      var e = this.pz,
+        t =
+          (e.FromUeVector(t),
+          (e.Z += i),
+          this.zWr.DeepCopy(e),
+          this.Hte.SetActorLocation(
+            this.zWr.ToUeVector(),
+            "游泳.游泳入水播放位置设置",
+            !0,
+          ),
+          this.Hte.Actor.CharacterMovement.SetMovementMode(3),
+          this.cz);
       t.Reset(),
         this.Gce.SetForceSpeed(t),
         this.IsDebug &&
@@ -680,19 +685,19 @@ let CharacterSwimComponent =
           this.yKr(CharacterSwimUtils.DebugColor1));
     }
     DetectEnterWaterFromAir() {
-      if (!(this.Hte.ActorVelocityProxy.Z > 0 || this.Gce.FallingIntoWater)) {
-        let i = this.cz;
-        var e = this.fz;
-        var e =
-          (e.DeepCopy(this.Hte.ActorVelocityProxy),
-          e.Multiply(this.mie, e),
-          e.Addition(this.GWr, i),
-          this.MKr(this.GWr, i));
+      if (!(0 < this.Hte.ActorVelocityProxy.Z || this.Gce.FallingIntoWater)) {
+        var i = this.cz,
+          e = this.fz,
+          e =
+            (e.DeepCopy(this.Hte.ActorVelocityProxy),
+            e.Multiply(this.mie, e),
+            e.Addition(this.GWr, i),
+            this.MKr(this.GWr, i));
         if (!e) {
           let t = this.SKr(this.GWr, i);
-          const s = this.OWr;
+          var s = this.OWr;
           if (!t) {
-            const h = this.fz;
+            var h = this.fz;
             if ((h.FromUeVector(i), (h.Z -= s), (e = this.MKr(i, h)))) return;
             t = this.SKr(i, h);
           }
@@ -719,19 +724,19 @@ let CharacterSwimComponent =
     TKr(t, i) {
       return !(
         t.Z < i.Z ||
-        this.gKr(t, i) === 0 ||
+        0 === this.gKr(t, i) ||
         (this.fKr(this.jWr), !this.IKr(this.jWr))
       );
     }
     LKr() {
       this.Gce.FallingIntoWater || this.DetectEnterWaterFromAir();
-      const t = this.$Wr;
-      const i = this.YWr;
-      var e = this.cz;
-      var e =
-        (e.FromUeVector(this.NWr),
-        e.Multiply(this.OWr, e),
-        this.kWr.Z + this.OWr);
+      var t = this.$Wr,
+        i = this.YWr,
+        e = this.cz,
+        e =
+          (e.FromUeVector(this.NWr),
+          e.Multiply(this.OWr, e),
+          this.kWr.Z + this.OWr);
       return (
         t.FromUeVector(this.GWr),
         (t.Z = e),
@@ -754,13 +759,13 @@ let CharacterSwimComponent =
       );
     }
     DKr() {
-      const t = this.$Wr;
-      const i = this.YWr;
-      var e = this.cz;
-      var e =
-        (e.FromUeVector(this.NWr),
-        e.Multiply(this.OWr, e),
-        this.kWr.Z + this.OWr);
+      var t = this.$Wr,
+        i = this.YWr,
+        e = this.cz,
+        e =
+          (e.FromUeVector(this.NWr),
+          e.Multiply(this.OWr, e),
+          this.kWr.Z + this.OWr);
       return (
         t.FromUeVector(this.GWr),
         (t.Z = e),
@@ -779,9 +784,9 @@ let CharacterSwimComponent =
       );
     }
     AKr() {
-      let t;
+      var t;
       return (
-        this.XWr.GetTsClimbState().攀爬状态 !== 3 &&
+        3 !== this.XWr.GetTsClimbState().攀爬状态 &&
         ((t = this.cz).FromUeVector(this.NWr),
         t.Multiply(this.OWr, t),
         t.Addition(this.kWr, this.$Wr),
@@ -798,15 +803,15 @@ let CharacterSwimComponent =
       );
     }
     UKr() {
-      var t = this.$Wr;
-      let i =
-        (this.NWr.Multiply(FIVE_HUNDRED_TO_FIND_SURFACE, t),
-        t.Addition(this.GWr, t),
-        this.YWr);
-      var t =
-        (this.NWr.Multiply(this.OWr, i),
-        i.Addition(this.GWr, i),
-        this.TKr(t, i));
+      var t = this.$Wr,
+        i =
+          (this.NWr.Multiply(FIVE_HUNDRED_TO_FIND_SURFACE, t),
+          t.Addition(this.GWr, t),
+          this.YWr),
+        t =
+          (this.NWr.Multiply(this.OWr, i),
+          i.Addition(this.GWr, i),
+          this.TKr(t, i));
       if (t) {
         i = this.MKr(i, this.HWr);
         if (i)
@@ -820,7 +825,7 @@ let CharacterSwimComponent =
       return t;
     }
     PKr() {
-      const t = this.UKr();
+      var t = this.UKr();
       return (
         t &&
           (this.tKr(), this.IsDebug) &&
@@ -848,11 +853,11 @@ let CharacterSwimComponent =
         case 3:
           i = this.DKr();
       }
-      return (i = t !== 0 ? i || this.PKr() : i);
+      return (i = 0 !== t ? i || this.PKr() : i);
     }
     uKr(t) {
-      let i;
-      this.Gce.CharacterMovement.MovementMode === 6 &&
+      var i;
+      6 === this.Gce.CharacterMovement.MovementMode &&
         this.Gce.CharacterMovement.CustomMovementMode ===
           CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SWIM &&
         ((i = this.Lie.HasTag(388142570)),
@@ -886,7 +891,7 @@ let CharacterSwimComponent =
               this.yKr(CharacterSwimUtils.DebugColor3)))
           : this.KWr || this.Gce.FallingIntoWater
             ? this.Depth <= LEAVE_SWIM_LESS_THAN_THIS &&
-              (this.FWr === 1
+              (1 === this.FWr
                 ? (this.Gce.CharacterMovement.SetMovementMode(1, 0),
                   this.IsDebug &&
                     (Log_1.Log.CheckInfo() &&
@@ -898,7 +903,7 @@ let CharacterSwimComponent =
                         ["出水深度:", LEAVE_SWIM_LESS_THAN_THIS],
                       ),
                     this.yKr(CharacterSwimUtils.DebugColor3)))
-                : this.FWr === 2 &&
+                : 2 === this.FWr &&
                   this.Hte?.SetActorLocation(
                     this.Hte.LastActorLocation.ToUeVector(),
                     "SwimOff",
@@ -931,7 +936,7 @@ let CharacterSwimComponent =
         : 0;
     }
     UWr() {
-      let t;
+      var t;
       this.W5r?.PositionState ===
         CharacterUnifiedStateTypes_1.ECharPositionState.Water &&
       this.Lie.HasTag(-290630940)
@@ -961,7 +966,7 @@ let CharacterSwimComponent =
       this.bWr = t ? 1 : 0;
     }
     GetAboveFootWaterSurfaceInfo() {
-      let t, i, e, s;
+      var t, i, e, s;
       if (
         this.Hte?.SkeletalMesh &&
         this.TLn() &&
@@ -1032,4 +1037,4 @@ let CharacterSwimComponent =
       CharacterSwimComponent,
     )),
   (exports.CharacterSwimComponent = CharacterSwimComponent);
-// # sourceMappingURL=CharacterSwimComponent.js.map
+//# sourceMappingURL=CharacterSwimComponent.js.map

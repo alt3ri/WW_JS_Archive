@@ -47,4 +47,4 @@ class TowerInformationData {
   }
 }
 exports.TowerInformationData = TowerInformationData;
-// # sourceMappingURL=TowerDetailData.js.map
+//# sourceMappingURL=TowerDetailData.js.map

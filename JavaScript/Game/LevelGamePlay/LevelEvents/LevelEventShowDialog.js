@@ -6,4 +6,4 @@ class LevelEventShowDialog extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, l) {}
 }
 exports.LevelEventShowDialog = LevelEventShowDialog;
-// # sourceMappingURL=LevelEventShowDialog.js.map
+//# sourceMappingURL=LevelEventShowDialog.js.map

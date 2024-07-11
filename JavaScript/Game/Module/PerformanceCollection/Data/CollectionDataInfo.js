@@ -59,4 +59,4 @@ class CollectionDataInfo {
   }
 }
 exports.CollectionDataInfo = CollectionDataInfo;
-// # sourceMappingURL=CollectionDataInfo.js.map
+//# sourceMappingURL=CollectionDataInfo.js.map

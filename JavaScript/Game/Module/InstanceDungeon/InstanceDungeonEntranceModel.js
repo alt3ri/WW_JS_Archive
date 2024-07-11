@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonEntranceModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const AdventureDefine_1 = require("../AdventureGuide/AdventureDefine");
-const InstanceDungeonData_1 = require("./Define/InstanceDungeonData");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  AdventureDefine_1 = require("../AdventureGuide/AdventureDefine"),
+  InstanceDungeonData_1 = require("./Define/InstanceDungeonData");
 class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -87,7 +87,7 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
     return this.Wai;
   }
   GetInstanceData(e) {
-    let t;
+    var t;
     if (e)
       return (
         this.jai.get(e) ||
@@ -97,7 +97,7 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
       );
   }
   SetInstanceData(t) {
-    const n = t.Ekn;
+    var n = t.Ekn;
     if (n) {
       let e = this.jai.get(n);
       e ||
@@ -184,18 +184,18 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
         e,
       )?.InstanceDungeonList;
     if (e) {
-      const t = [];
+      var t = [];
       for (const n of e) this.CheckInstanceCanChallenge(n) && t.push(n);
       return t;
     }
   }
   GetSortedByTitleEntranceInstanceIdList(e) {
-    const t =
+    var t =
       ModelManager_1.ModelManager.InstanceDungeonEntranceModel
         .EntranceInstanceIdList;
     if (t) {
-      let n;
-      const r = new Map();
+      var n,
+        r = new Map();
       for (const a of t)
         (n =
           ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
@@ -206,11 +206,11 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
     }
   }
   CheckInstanceFinished(e) {
-    let t;
-    var e =
-      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-        e,
-      ).EnterControlId;
+    var t,
+      e =
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+          e,
+        ).EnterControlId;
     return (
       !!e &&
       ((t = this.GetInstanceData(e).ChallengedTimes),
@@ -226,7 +226,7 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
     return !e || !(e = this.GetInstanceData(e)) || e.CanChallenge;
   }
   CheckInstanceLevelTooLow(e) {
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
         e,
       )?.DropVisionLimit;
@@ -247,9 +247,11 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
     return !e || !(e = this.GetInstanceData(e)) || e.CanReward;
   }
   CheckInstanceUnlock(e) {
-    let t;
-    const n =
-      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetUnlockCondition(e);
+    var t,
+      n =
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetUnlockCondition(
+          e,
+        );
     if (n)
       switch (n[0]) {
         case 1:
@@ -262,9 +264,8 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
             ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel >= n[1]
           );
         case 3:
-          return ModelManager_1.ModelManager.QuestNewModel.GetQuestState(
-            n[1],
-          ) === 3
+          return 3 ===
+            ModelManager_1.ModelManager.QuestNewModel.GetQuestState(n[1])
             ? !0
             : !!(t = ModelManager_1.ModelManager.QuestNewModel.GetQuest(n[1]))
                 ?.IsProgressing &&
@@ -293,24 +294,24 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
   }
   GetInstanceDungeonReward(e) {
     var t =
-      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetInstanceRewardId(
-        e,
-      );
-    var n =
-      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetInstanceFirstRewardId(
-        e,
-      );
-    const r = n && n > 0;
-    const a = t && t > 0;
-    var e = ModelManager_1.ModelManager.ExchangeRewardModel.IsFinishInstance(e);
-    var n =
-      ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardPreviewRewardList(
-        n,
-      ) ?? [];
-    var t =
-      ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardPreviewRewardList(
-        t,
-      ) ?? [];
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetInstanceRewardId(
+          e,
+        ),
+      n =
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetInstanceFirstRewardId(
+          e,
+        ),
+      r = n && 0 < n,
+      a = t && 0 < t,
+      e = ModelManager_1.ModelManager.ExchangeRewardModel.IsFinishInstance(e),
+      n =
+        ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardPreviewRewardList(
+          n,
+        ) ?? [],
+      t =
+        ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardPreviewRewardList(
+          t,
+        ) ?? [];
     return r && a ? (e ? [t, !1] : [n.concat(t), !1]) : a ? [t, !1] : [n, e];
   }
   IsMowingInstanceDungeon() {
@@ -326,4 +327,4 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
   }
 }
 exports.InstanceDungeonEntranceModel = InstanceDungeonEntranceModel;
-// # sourceMappingURL=InstanceDungeonEntranceModel.js.map
+//# sourceMappingURL=InstanceDungeonEntranceModel.js.map

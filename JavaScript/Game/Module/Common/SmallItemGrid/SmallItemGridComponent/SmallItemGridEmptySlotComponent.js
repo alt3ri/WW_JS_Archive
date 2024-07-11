@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SmallItemGridEmptySlotComponent = void 0);
-const UE = require("ue");
-const SmallItemGridComponent_1 = require("./SmallItemGridComponent");
+const UE = require("ue"),
+  SmallItemGridComponent_1 = require("./SmallItemGridComponent");
 class SmallItemGridEmptySlotComponent extends SmallItemGridComponent_1.SmallItemGridComponent {
   constructor() {
     super(...arguments),
@@ -33,4 +33,4 @@ class SmallItemGridEmptySlotComponent extends SmallItemGridComponent_1.SmallItem
   OnRefresh(t) {}
 }
 exports.SmallItemGridEmptySlotComponent = SmallItemGridEmptySlotComponent;
-// # sourceMappingURL=SmallItemGridEmptySlotComponent.js.map
+//# sourceMappingURL=SmallItemGridEmptySlotComponent.js.map

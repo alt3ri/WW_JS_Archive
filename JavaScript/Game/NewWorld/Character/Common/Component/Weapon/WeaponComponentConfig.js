@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponComponentConfig = void 0);
-const WeaponHideConfigByIdWithZero_1 = require("../../../../../../Core/Define/ConfigQuery/WeaponHideConfigByIdWithZero");
-const WeaponVisibleConfigByIdWithZero_1 = require("../../../../../../Core/Define/ConfigQuery/WeaponVisibleConfigByIdWithZero");
-const ConfigBase_1 = require("../../../../../../Core/Framework/ConfigBase");
-const GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils");
+const WeaponHideConfigByIdWithZero_1 = require("../../../../../../Core/Define/ConfigQuery/WeaponHideConfigByIdWithZero"),
+  WeaponVisibleConfigByIdWithZero_1 = require("../../../../../../Core/Define/ConfigQuery/WeaponVisibleConfigByIdWithZero"),
+  ConfigBase_1 = require("../../../../../../Core/Framework/ConfigBase"),
+  GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils");
 class WeaponComponentConfig extends ConfigBase_1.ConfigBase {
   GetWeaponVisibleConfig(e) {
     var e = e.GetComponent(0);
@@ -26,4 +26,4 @@ class WeaponComponentConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.WeaponComponentConfig = WeaponComponentConfig;
-// # sourceMappingURL=WeaponComponentConfig.js.map
+//# sourceMappingURL=WeaponComponentConfig.js.map

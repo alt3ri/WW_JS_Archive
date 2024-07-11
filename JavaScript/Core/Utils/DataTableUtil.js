@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DataTableUtil = exports.dataTablePaths = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../Common/Log");
-const ResourceSystem_1 = require("../Resource/ResourceSystem");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../Common/Log"),
+  ResourceSystem_1 = require("../Resource/ResourceSystem");
 exports.dataTablePaths = new Map([
   [0, "/Game/Aki/Data/Entity/CDT_ModelConfig.CDT_ModelConfig"],
   [1, "/Game/Aki/Data/Fight/DT_EntityProperty.DT_EntityProperty"],
@@ -52,7 +52,7 @@ exports.dataTablePaths = new Map([
 class DataTableUtil {
   static GetDataTableRow(a, e) {
     if (a && e) {
-      const t = (0, puerts_1.$ref)(void 0);
+      var t = (0, puerts_1.$ref)(void 0);
       if (UE.KuroDataTableFunctionLibrary.GetDataTableRowFromName(a, e, t))
         return (0, puerts_1.$unref)(t);
     }
@@ -60,7 +60,7 @@ class DataTableUtil {
   static GetDataTableRowFromName(a, e) {
     a = DataTableUtil.xJ(a);
     if (a && e) {
-      const t = (0, puerts_1.$ref)(void 0);
+      var t = (0, puerts_1.$ref)(void 0);
       if (UE.KuroDataTableFunctionLibrary.GetDataTableRowFromName(a, e, t))
         return (0, puerts_1.$unref)(t);
       Log_1.Log.CheckWarn() &&
@@ -71,8 +71,8 @@ class DataTableUtil {
     }
   }
   static xJ(a) {
-    let e;
-    let t = DataTableUtil.wJ.get(a);
+    var e,
+      t = DataTableUtil.wJ.get(a);
     return (
       t ||
       ((e = exports.dataTablePaths.get(a))
@@ -98,46 +98,46 @@ class DataTableUtil {
     );
   }
   static GetAllDataTableRow(a) {
-    const e = new Array();
-    const t = (0, puerts_1.$ref)(void 0);
-    const i = DataTableUtil.xJ(a);
-    const r =
-      (UE.DataTableFunctionLibrary.GetDataTableRowNames(i, t),
-      (0, puerts_1.$unref)(t));
+    var e = new Array(),
+      t = (0, puerts_1.$ref)(void 0),
+      i = DataTableUtil.xJ(a),
+      r =
+        (UE.DataTableFunctionLibrary.GetDataTableRowNames(i, t),
+        (0, puerts_1.$unref)(t));
     if (r) {
       for (let a = 0; a < r.Num(); a++) {
-        var o = r.Get(a).toString();
-        var o = DataTableUtil.GetDataTableRow(i, o);
+        var o = r.Get(a).toString(),
+          o = DataTableUtil.GetDataTableRow(i, o);
         e.push(o);
       }
       return e;
     }
   }
   static GetAllDataTableRowFromTable(e) {
-    const t = new Array();
-    const a = (0, puerts_1.$ref)(void 0);
-    const i =
-      (UE.DataTableFunctionLibrary.GetDataTableRowNames(e, a),
-      (0, puerts_1.$unref)(a));
+    var t = new Array(),
+      a = (0, puerts_1.$ref)(void 0),
+      i =
+        (UE.DataTableFunctionLibrary.GetDataTableRowNames(e, a),
+        (0, puerts_1.$unref)(a));
     if (i) {
       for (let a = 0; a < i.Num(); a++) {
-        var r = i.Get(a).toString();
-        var r = DataTableUtil.GetDataTableRow(e, r);
+        var r = i.Get(a).toString(),
+          r = DataTableUtil.GetDataTableRow(e, r);
         t.push(r);
       }
       return t;
     }
   }
   static GetAllDataTableRowFromTableWithRowName(e) {
-    const t = new Array();
-    const a = (0, puerts_1.$ref)(void 0);
-    const i =
-      (UE.DataTableFunctionLibrary.GetDataTableRowNames(e, a),
-      (0, puerts_1.$unref)(a));
+    var t = new Array(),
+      a = (0, puerts_1.$ref)(void 0),
+      i =
+        (UE.DataTableFunctionLibrary.GetDataTableRowNames(e, a),
+        (0, puerts_1.$unref)(a));
     if (i) {
       for (let a = 0; a < i.Num(); a++) {
-        const r = i.Get(a).toString();
-        const o = DataTableUtil.GetDataTableRow(e, r);
+        var r = i.Get(a).toString(),
+          o = DataTableUtil.GetDataTableRow(e, r);
         t.push([r, o]);
       }
       return t;
@@ -148,16 +148,16 @@ class DataTableUtil {
     if (a) return a.AiModelConfig.Get(e)?.Weapon;
   }
   static LoadAllAiWeaponSockets() {
-    const e = new Map();
-    const a = (0, puerts_1.$ref)(void 0);
-    const t = DataTableUtil.xJ(2);
-    const i =
-      (UE.DataTableFunctionLibrary.GetDataTableRowNames(t, a),
-      (0, puerts_1.$unref)(a));
+    var e = new Map(),
+      a = (0, puerts_1.$ref)(void 0),
+      t = DataTableUtil.xJ(2),
+      i =
+        (UE.DataTableFunctionLibrary.GetDataTableRowNames(t, a),
+        (0, puerts_1.$unref)(a));
     if (i) {
       for (let a = 0; a < i.Num(); a++) {
-        const r = i.Get(a).toString();
-        const o = DataTableUtil.GetDataTableRowFromName(2, r);
+        var r = i.Get(a).toString(),
+          o = DataTableUtil.GetDataTableRowFromName(2, r);
         e.set(parseInt(r), o);
       }
       return e;
@@ -165,4 +165,4 @@ class DataTableUtil {
   }
 }
 (exports.DataTableUtil = DataTableUtil).wJ = new Map();
-// # sourceMappingURL=DataTableUtil.js.map
+//# sourceMappingURL=DataTableUtil.js.map

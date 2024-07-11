@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletDataMove = void 0);
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
+const Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector");
 class BulletDataMove {
   constructor(t) {
     (this.G6o = void 0),
@@ -93,9 +93,9 @@ class BulletDataMove {
   get TrackParams() {
     if (!this.Y6o) {
       this.Y6o = new Array();
-      const i = this.Pe.运动轨迹参数数据;
+      var i = this.Pe.运动轨迹参数数据;
       for (let t = 0; t < i.Num(); t++) {
-        const s = i.Get(t);
+        var s = i.Get(t);
         this.Y6o.push(Vector_1.Vector.Create(s));
       }
     }
@@ -104,7 +104,7 @@ class BulletDataMove {
   get TrackCurves() {
     if (void 0 === this.J6o) {
       this.J6o = new Array();
-      const i = this.Pe.运动轨迹参数曲线;
+      var i = this.Pe.运动轨迹参数曲线;
       for (let t = 0; t < i.Num(); t++) this.J6o.push(i.Get(t));
     }
     return this.J6o;
@@ -136,12 +136,12 @@ class BulletDataMove {
   }
   get BeginVelocityLimitMap() {
     if (void 0 === this.r8o) {
-      const i = this.Pe.初速度角度限制;
-      const s = i.Num();
+      var i = this.Pe.初速度角度限制,
+        s = i.Num();
       this.r8o = new Map();
       for (let t = 0; t < s; t++) {
-        const h = i.GetKey(t);
-        const e = i.Get(h);
+        var h = i.GetKey(t),
+          e = i.Get(h);
         this.r8o.set(h, e);
       }
     }
@@ -183,4 +183,4 @@ class BulletDataMove {
   }
 }
 exports.BulletDataMove = BulletDataMove;
-// # sourceMappingURL=BulletDataMove.js.map
+//# sourceMappingURL=BulletDataMove.js.map

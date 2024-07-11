@@ -7,7 +7,7 @@ class InstanceDungeonEntranceFlowBase {
     (this.Lsi = new Array()), (this.Dsi = -1), this.OnCreate();
   }
   get rXt() {
-    return this.Dsi > 0 && this.Dsi >= this.Lsi.length;
+    return 0 < this.Dsi && this.Dsi >= this.Lsi.length;
   }
   Rsi() {
     ++this.Dsi,
@@ -39,4 +39,4 @@ class InstanceDungeonEntranceFlowBase {
   OnCreate() {}
 }
 exports.InstanceDungeonEntranceFlowBase = InstanceDungeonEntranceFlowBase;
-// # sourceMappingURL=InstanceDungeonEntranceFlowBase.js.map
+//# sourceMappingURL=InstanceDungeonEntranceFlowBase.js.map

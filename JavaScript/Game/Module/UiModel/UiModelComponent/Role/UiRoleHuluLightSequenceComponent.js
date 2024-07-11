@@ -1,32 +1,36 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, i, s) {
-    let o;
-    const r = arguments.length;
-    let n =
-      r < 3 ? t : s === null ? (s = Object.getOwnPropertyDescriptor(t, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      r = arguments.length,
+      n =
+        r < 3
+          ? t
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(t, i))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(e, t, i, s);
     else
-      for (let h = e.length - 1; h >= 0; h--)
-        (o = e[h]) && (n = (r < 3 ? o(n) : r > 3 ? o(t, i, n) : o(t, i)) || n);
-    return r > 3 && n && Object.defineProperty(t, i, n), n;
+      for (var h = e.length - 1; 0 <= h; h--)
+        (o = e[h]) && (n = (r < 3 ? o(n) : 3 < r ? o(t, i, n) : o(t, i)) || n);
+    return 3 < r && n && Object.defineProperty(t, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiRoleHuluLightSequenceComponent = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const CharacterNameDefines_1 = require("../../../../NewWorld/Character/Common/CharacterNameDefines");
-const UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine");
-const UiModelComponentBase_1 = require("../UiModelComponentBase");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  CharacterNameDefines_1 = require("../../../../NewWorld/Character/Common/CharacterNameDefines"),
+  UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine"),
+  UiModelComponentBase_1 = require("../UiModelComponentBase");
 let UiRoleHuluLightSequenceComponent = class UiRoleHuluLightSequenceComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
     super(...arguments),
@@ -49,14 +53,14 @@ let UiRoleHuluLightSequenceComponent = class UiRoleHuluLightSequenceComponent ex
     );
   }
   FBr() {
-    const e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+    var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
       "LevelSequence_HuluLight",
     );
     this.hJ = ResourceSystem_1.ResourceSystem.LoadAsync(
       e,
       UE.LevelSequence,
       (e) => {
-        let t;
+        var t;
         ObjectUtils_1.ObjectUtils.IsValid(e) &&
           (((t = new UE.MovieSceneSequencePlaybackSettings()).bRestoreState =
             !0),
@@ -76,7 +80,7 @@ let UiRoleHuluLightSequenceComponent = class UiRoleHuluLightSequenceComponent ex
     );
   }
   PlayLightSequence() {
-    let e, t;
+    var e, t;
     this.EPe
       ? ((this.Bkt.bOverrideInstanceData = !0),
         (e = this.Bkt.DefaultInstanceData),
@@ -115,4 +119,4 @@ let UiRoleHuluLightSequenceComponent = class UiRoleHuluLightSequenceComponent ex
   UiRoleHuluLightSequenceComponent,
 )),
   (exports.UiRoleHuluLightSequenceComponent = UiRoleHuluLightSequenceComponent);
-// # sourceMappingURL=UiRoleHuluLightSequenceComponent.js.map
+//# sourceMappingURL=UiRoleHuluLightSequenceComponent.js.map

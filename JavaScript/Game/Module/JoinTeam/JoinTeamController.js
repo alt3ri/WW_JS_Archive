@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.JoinTeamController = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager");
 class JoinTeamController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {}
   static OnRemoveEvents() {}
@@ -22,4 +22,4 @@ class JoinTeamController extends UiControllerBase_1.UiControllerBase {
   }
 }
 exports.JoinTeamController = JoinTeamController;
-// # sourceMappingURL=JoinTeamController.js.map
+//# sourceMappingURL=JoinTeamController.js.map

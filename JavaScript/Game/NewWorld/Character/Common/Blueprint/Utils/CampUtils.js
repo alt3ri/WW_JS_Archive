@@ -7,4 +7,4 @@ class CampUtils {
   }
 }
 (exports.CampUtils = CampUtils).Camp = new Array();
-// # sourceMappingURL=CampUtils.js.map
+//# sourceMappingURL=CampUtils.js.map

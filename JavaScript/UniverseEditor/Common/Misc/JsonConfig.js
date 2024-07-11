@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.JsonConfig = void 0);
-const File_1 = require("./File");
-const Util_1 = require("./Util");
-const SAVE_DIR = "Saved/Editor/JsonConfig";
+const File_1 = require("./File"),
+  Util_1 = require("./Util"),
+  SAVE_DIR = "Saved/Editor/JsonConfig";
 function fillDefault(t, i) {
   for (const o in i) {
-    const s = t[o];
-    const e = i[o];
+    var s = t[o],
+      e = i[o];
     void 0 === s
       ? (t[o] = e)
-      : typeof e === "object" &&
-        (typeof s !== "object"
+      : "object" == typeof e &&
+        ("object" != typeof s
           ? (t[o] = e)
           : e instanceof Array || fillDefault(s, e));
   }
@@ -32,7 +32,7 @@ class JsonConfig {
     (this.Data[t] = i), this.Save();
   }
   SetField(t, i, s) {
-    const e = this.Data[t];
+    var e = this.Data[t];
     e[i] !== s && ((e[i] = s), this.Set(t, e));
   }
   Reset() {
@@ -46,4 +46,4 @@ class JsonConfig {
   }
 }
 exports.JsonConfig = JsonConfig;
-// # sourceMappingURL=JsonConfig.js.map
+//# sourceMappingURL=JsonConfig.js.map

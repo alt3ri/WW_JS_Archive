@@ -75,85 +75,85 @@ class DeviceRenderFeature {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   deviceid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   qualitytype() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   defaultquality() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   fps() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 30;
   }
   shadowquality() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 2;
   }
   fxquality() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   imagedetail() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 2;
   }
   antialiasing() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   ao() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   volumefog() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   volumelight() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   motionblur() {
-    const t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   streamlevel() {
-    const t = this.J7.__offset(this.z7, 30);
+    var t = this.J7.__offset(this.z7, 30);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   vsync() {
-    const t = this.J7.__offset(this.z7, 32);
+    var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   screenpercentage() {
-    const t = this.J7.__offset(this.z7, 34);
+    var t = this.J7.__offset(this.z7, 34);
     return t ? this.J7.readInt32(this.z7 + t) : 3;
   }
   superresolution() {
-    const t = this.J7.__offset(this.z7, 36);
+    var t = this.J7.__offset(this.z7, 36);
     return t ? this.J7.readInt32(this.z7 + t) : 2;
   }
   npcdensity() {
-    const t = this.J7.__offset(this.z7, 38);
+    var t = this.J7.__offset(this.z7, 38);
     return t ? this.J7.readInt32(this.z7 + t) : 2;
   }
   bloom() {
-    const t = this.J7.__offset(this.z7, 40);
+    var t = this.J7.__offset(this.z7, 40);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   othercommand(t) {
-    const i = this.J7.__offset(this.z7, 42);
+    var i = this.J7.__offset(this.z7, 42);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.DeviceRenderFeature = DeviceRenderFeature;
-// # sourceMappingURL=DeviceRenderFeature.js.map
+//# sourceMappingURL=DeviceRenderFeature.js.map

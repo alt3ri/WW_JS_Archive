@@ -1,26 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configTimePointRewardConfigByActivityId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const TimePointRewardConfig_1 = require("../Config/TimePointRewardConfig");
-const DB = "db_activity.db";
-const FILE = "d.定点奖励领取活动.xlsx";
-const TABLE = "TimePointRewardConfig";
-const COMMAND =
-  "select BinData from `TimePointRewardConfig` where ActivityId = ?";
-const KEY_PREFIX = "TimePointRewardConfigByActivityId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  TimePointRewardConfig_1 = require("../Config/TimePointRewardConfig"),
+  DB = "db_activity.db",
+  FILE = "d.定点奖励领取活动.xlsx",
+  TABLE = "TimePointRewardConfig",
+  COMMAND = "select BinData from `TimePointRewardConfig` where ActivityId = ?",
+  KEY_PREFIX = "TimePointRewardConfigByActivityId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configTimePointRewardConfigByActivityId.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configTimePointRewardConfigByActivityId.GetConfig(";
 exports.configTimePointRewardConfigByActivityId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -41,13 +40,14 @@ exports.configTimePointRewardConfigByActivityId = {
       if (
         (e =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, i, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "ActivityId",
-            i,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "ActivityId",
+              i,
+            ]))
       ) {
-        var e;
-        var n = void 0;
+        var e,
+          n = void 0;
         if (
           (([e, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -74,4 +74,4 @@ exports.configTimePointRewardConfigByActivityId = {
     }
   },
 };
-// # sourceMappingURL=TimePointRewardConfigByActivityId.js.map
+//# sourceMappingURL=TimePointRewardConfigByActivityId.js.map

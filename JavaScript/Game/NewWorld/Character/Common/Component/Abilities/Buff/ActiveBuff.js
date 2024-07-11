@@ -1,31 +1,35 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, i, e, s) {
-    let r;
-    const h = arguments.length;
-    let a =
-      h < 3 ? i : s === null ? (s = Object.getOwnPropertyDescriptor(i, e)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      h = arguments.length,
+      a =
+        h < 3
+          ? i
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(i, e))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       a = Reflect.decorate(t, i, e, s);
     else
-      for (let f = t.length - 1; f >= 0; f--)
-        (r = t[f]) && (a = (h < 3 ? r(a) : h > 3 ? r(i, e, a) : r(i, e)) || a);
-    return h > 3 && a && Object.defineProperty(i, e, a), a;
+      for (var f = t.length - 1; 0 <= f; f--)
+        (r = t[f]) && (a = (h < 3 ? r(a) : 3 < h ? r(i, e, a) : r(i, e)) || a);
+    return 3 < h && a && Object.defineProperty(i, e, a), a;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActiveBuffInternal = void 0);
-const Log_1 = require("../../../../../../../Core/Common/Log");
-const Stats_1 = require("../../../../../../../Core/Common/Stats");
-const Time_1 = require("../../../../../../../Core/Common/Time");
-const CommonDefine_1 = require("../../../../../../../Core/Define/CommonDefine");
-const TimerSystem_1 = require("../../../../../../../Core/Timer/TimerSystem");
-const GameplayTagUtils_1 = require("../../../../../../../Core/Utils/GameplayTagUtils");
-const ModelManager_1 = require("../../../../../../Manager/ModelManager");
-const AbilityUtils_1 = require("../AbilityUtils");
-const CharacterAttributeTypes_1 = require("../CharacterAttributeTypes");
-const ActiveBuffConfigs_1 = require("./ActiveBuffConfigs");
-const MAX_POOL_COUNT = 100;
+const Log_1 = require("../../../../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../../../../Core/Common/Stats"),
+  Time_1 = require("../../../../../../../Core/Common/Time"),
+  CommonDefine_1 = require("../../../../../../../Core/Define/CommonDefine"),
+  TimerSystem_1 = require("../../../../../../../Core/Timer/TimerSystem"),
+  GameplayTagUtils_1 = require("../../../../../../../Core/Utils/GameplayTagUtils"),
+  ModelManager_1 = require("../../../../../../Manager/ModelManager"),
+  AbilityUtils_1 = require("../AbilityUtils"),
+  CharacterAttributeTypes_1 = require("../CharacterAttributeTypes"),
+  ActiveBuffConfigs_1 = require("./ActiveBuffConfigs"),
+  MAX_POOL_COUNT = 100;
 class ActiveBuffInternal {
   constructor(t) {
     (this.TAe = t),
@@ -79,7 +83,7 @@ class ActiveBuffInternal {
       this.SetDuration(n),
       this.SetPeriod(t.Period);
     for (const _ of this.Config.Modifiers) {
-      const u = _.AttributeId;
+      var u = _.AttributeId;
       CharacterAttributeTypes_1.stateAttributeIds.has(u)
         ? this.SetStateModifier(_)
         : this.SetNonStateModifier(_);
@@ -159,7 +163,7 @@ class ActiveBuffInternal {
     return this.aKo;
   }
   IsInstantBuff() {
-    return this.Config.DurationPolicy === 0;
+    return 0 === this.Config.DurationPolicy;
   }
   get Duration() {
     return this.LVo;
@@ -175,7 +179,7 @@ class ActiveBuffInternal {
       this.LVo <= 0 ||
         ((this.lKo = t),
         (this.CB = this.GetCurrentTime()),
-        this._Ko >= 0 &&
+        0 <= this._Ko &&
           ((t =
             (this.lKo / this._Ko) * CommonDefine_1.MILLIONSECOND_PER_SECOND),
           (this.DurationTimer =
@@ -194,18 +198,18 @@ class ActiveBuffInternal {
     return Time_1.Time.WorldTime;
   }
   SetDuration(t = void 0) {
-    let i;
-    let e;
-    let s;
-    let r = this.Config;
+    var i,
+      e,
+      s,
+      r = this.Config;
     let h = ActiveBuffConfigs_1.MIN_BUFF_PERIOD;
     (h =
-      r.DurationPolicy === 1
+      1 === r.DurationPolicy
         ? -1
         : void 0 !== t
           ? t
-          : r.DurationMagnitude.length === 0 ||
-              r.DurationCalculationPolicy.length === 0
+          : 0 === r.DurationMagnitude.length ||
+              0 === r.DurationCalculationPolicy.length
             ? (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "Character",
@@ -220,7 +224,7 @@ class ActiveBuffInternal {
                 this.Level,
                 0,
               )),
-              (i = r.DurationCalculationPolicy)[0] === 1
+              1 === (i = r.DurationCalculationPolicy)[0]
                 ? i.length < 4
                   ? (Log_1.Log.CheckError() &&
                       Log_1.Log.Error(
@@ -241,7 +245,7 @@ class ActiveBuffInternal {
                     )),
                     ([, i, s, e] = i),
                     (s =
-                      s === 1
+                      1 === s
                         ? this.GetInstigatorAttributeSet()
                         : this.GetOwnerAttributeSet())
                       ? ((s = AbilityUtils_1.AbilityUtils.GetAttrValue(
@@ -273,8 +277,8 @@ class ActiveBuffInternal {
       this.MKo(h);
   }
   SetRemainDuration(t) {
-    this.Config.DurationPolicy === 2 &&
-      this.MKo(t > 0 ? t : ActiveBuffConfigs_1.MIN_BUFF_PERIOD);
+    2 === this.Config.DurationPolicy &&
+      this.MKo(0 < t ? t : ActiveBuffConfigs_1.MIN_BUFF_PERIOD);
   }
   GetRemainDuration() {
     if (!this.IsValid()) return 0;
@@ -295,7 +299,7 @@ class ActiveBuffInternal {
   SetPeriod(t = void 0) {
     return (
       (this.PeriodInternal = void 0 !== t ? t : this.Config.Period),
-      this.PeriodInternal > 0 &&
+      0 < this.PeriodInternal &&
         (this.Config.HasBuffPeriodExecution
           ? this.PeriodInternal <
               ActiveBuffConfigs_1.MIN_BUFF_EXECUTION_EFFECT_PERIOD &&
@@ -325,15 +329,15 @@ class ActiveBuffInternal {
     return this.PeriodInternal;
   }
   OnTimeScaleChanged(t, i) {
-    let e;
+    var e;
     i
       ? (t = 0)
       : this.Config.DurationAffectedByBulletTime
         ? this.Config.EffectInfos.some(
             (t) =>
-              t.ExtraEffectId === 4 ||
-              t.ExtraEffectId === 5 ||
-              t.ExtraEffectId === 17,
+              4 === t.ExtraEffectId ||
+              5 === t.ExtraEffectId ||
+              17 === t.ExtraEffectId,
           ) &&
           (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
@@ -348,17 +352,17 @@ class ActiveBuffInternal {
         ((i = this.GetCurrentTime()),
         (e = this._Ko),
         (this._Ko = t),
-        this.LVo > 0 &&
+        0 < this.LVo &&
           ((t = ((i - this.CB) * e) / CommonDefine_1.MILLIONSECOND_PER_SECOND),
           (t = this.lKo - t),
           this.MKo(t)),
-        this.PeriodInternal > 0) &&
+        0 < this.PeriodInternal) &&
         ((t = ((i - this.cKo) * e) / CommonDefine_1.MILLIONSECOND_PER_SECOND),
         (i = this.mKo - t),
         this.ResetPeriodTimer(i));
   }
   DurationCallback() {
-    let t;
+    var t;
     this.IsValid() &&
       (t = this.GetOwnerBuffComponent()) &&
       t.RemoveBuffWhenTimeout(this);
@@ -374,7 +378,7 @@ class ActiveBuffInternal {
       this.PeriodInternal <= 0 ||
         ((this.mKo = t),
         (this.cKo = this.GetCurrentTime()),
-        this._Ko > 0 &&
+        0 < this._Ko &&
           ((t =
             (this.mKo / this._Ko) * CommonDefine_1.MILLIONSECOND_PER_SECOND),
           (this.dKo =
@@ -391,19 +395,19 @@ class ActiveBuffInternal {
   }
   SKo() {
     if (this.IsValid()) {
-      const t = this.PeriodInternal;
-      var i = this.GetRemainPeriod();
-      const e = Math.floor(1 - i / t);
-      var i = ((i % t) + t) % t;
+      var t = this.PeriodInternal,
+        i = this.GetRemainPeriod(),
+        e = Math.floor(1 - i / t),
+        i = ((i % t) + t) % t;
       if (this.IsActive()) {
         this.ResetPeriodTimer(i);
-        const s = this.GetOwnerBuffComponent();
+        var s = this.GetOwnerBuffComponent();
         for (let t = 0; t < e; t++) s?.ApplyPeriodExecution(this);
       } else this.ResetPeriodTimer(i);
     }
   }
   GetRemainPeriod() {
-    const t = (this.GetCurrentTime() - this.cKo) * this._Ko;
+    var t = (this.GetCurrentTime() - this.cKo) * this._Ko;
     if (!(this.PeriodInternal < 0))
       return this.mKo - t / CommonDefine_1.MILLIONSECOND_PER_SECOND;
   }
@@ -436,7 +440,7 @@ class ActiveBuffInternal {
           GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(t) &&
             i.TagContainer.UpdateExactTag(2, t, this.StackCount);
         }),
-        this.PeriodInternal > 0)
+        0 < this.PeriodInternal)
       )
         switch (this.Config.PeriodicInhibitionPolicy) {
           case 1:
@@ -459,13 +463,13 @@ class ActiveBuffInternal {
     return this.StackCountInternal;
   }
   SetStackCount(i) {
-    const t = this.Config;
-    const e = this.StackCountInternal;
-    const s =
-      ((this.StackCountInternal = i),
-      this.GetOwnerBuffComponent()?.GetExactEntity()?.CheckGetComponent(185));
+    var t = this.Config;
+    const e = this.StackCountInternal,
+      s =
+        ((this.StackCountInternal = i),
+        this.GetOwnerBuffComponent()?.GetExactEntity()?.CheckGetComponent(185));
     s
-      ? (t.StackPeriodResetPolicy === 0 && this.SetPeriod(),
+      ? (0 === t.StackPeriodResetPolicy && this.SetPeriod(),
         this.ResetModifiers(),
         t.GrantedTags?.forEach((t) => {
           GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(t) &&
@@ -486,8 +490,8 @@ class ActiveBuffInternal {
   }
   ClearModifiers() {
     this.StateModifiers.length = 0;
-    const t = this.GetOwner()?.GetComponent(155);
-    if (this.fKo.length > 0 && t) {
+    var t = this.GetOwner()?.GetComponent(155);
+    if (0 < this.fKo.length && t) {
       for (const i of this.fKo) t.RemoveModifier(i[0], i[1]);
       this.fKo.length = 0;
     }
@@ -495,7 +499,7 @@ class ActiveBuffInternal {
   ResetModifiers() {
     if ((this.ClearModifiers(), this.gKo))
       for (const i of this.Config.Modifiers) {
-        const t = i.AttributeId;
+        var t = i.AttributeId;
         CharacterAttributeTypes_1.stateAttributeIds.has(t)
           ? this.SetStateModifier(i)
           : this.SetNonStateModifier(i);
@@ -505,29 +509,29 @@ class ActiveBuffInternal {
     switch (t.CalculationPolicy[0]) {
       case 4:
       case 2:
-        var [, i, e, s, r] = t.CalculationPolicy;
-        var e =
-          e === 1
-            ? this.GetInstigatorAttributeSet()
-            : this.GetOwnerAttributeSet();
-        var r =
-          (r &&
-            !e &&
-            Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn(
-              "Battle",
-              20,
-              "buff找不到属性来源，快照将被取值为0",
-              ["buffId", this.Id],
-              ["handle", this.Handle],
-              ["持有者", this.sKo?.GetDebugName()],
-              ["施加者", this.InstigatorId],
-            ),
-          r
-            ? e
-              ? AbilityUtils_1.AbilityUtils.GetAttrValue(e, i, s)
-              : 0
-            : void 0);
+        var [, i, e, s, r] = t.CalculationPolicy,
+          e =
+            1 === e
+              ? this.GetInstigatorAttributeSet()
+              : this.GetOwnerAttributeSet(),
+          r =
+            (r &&
+              !e &&
+              Log_1.Log.CheckWarn() &&
+              Log_1.Log.Warn(
+                "Battle",
+                20,
+                "buff找不到属性来源，快照将被取值为0",
+                ["buffId", this.Id],
+                ["handle", this.Handle],
+                ["持有者", this.sKo?.GetDebugName()],
+                ["施加者", this.InstigatorId],
+              ),
+            r
+              ? e
+                ? AbilityUtils_1.AbilityUtils.GetAttrValue(e, i, s)
+                : 0
+              : void 0);
         this.StateModifiers.push([t, r]);
         break;
       default:
@@ -535,12 +539,12 @@ class ActiveBuffInternal {
     }
   }
   SetNonStateModifier(t) {
-    const i = this.StackCountInternal ?? 1;
-    const e = this.GetOwner().GetComponent(155);
+    var i = this.StackCountInternal ?? 1,
+      e = this.GetOwner().GetComponent(155);
     let s = 0;
-    const r = t.AttributeId;
-    const h = AbilityUtils_1.AbilityUtils.GetLevelValue(t.Value1, this.jqi, 0);
-    const a = AbilityUtils_1.AbilityUtils.GetLevelValue(t.Value2, this.jqi, 0);
+    var r = t.AttributeId,
+      h = AbilityUtils_1.AbilityUtils.GetLevelValue(t.Value1, this.jqi, 0),
+      a = AbilityUtils_1.AbilityUtils.GetLevelValue(t.Value2, this.jqi, 0);
     switch (t.CalculationPolicy[0]) {
       case 0:
       case 1:
@@ -549,12 +553,12 @@ class ActiveBuffInternal {
         break;
       case 2:
       case 4:
-        var [, f, o, n, u, _, l, c] = t.CalculationPolicy;
-        var v =
-          o === 1
-            ? this.GetInstigatorAttributeSet()
-            : this.GetOwnerAttributeSet();
-        var o = o === 1 ? this.InstigatorId : 0;
+        var [, f, o, n, u, _, l, c] = t.CalculationPolicy,
+          v =
+            1 === o
+              ? this.GetInstigatorAttributeSet()
+              : this.GetOwnerAttributeSet(),
+          o = 1 === o ? this.InstigatorId : 0;
         if (!v || void 0 === o)
           return void (
             Log_1.Log.CheckError() &&
@@ -597,21 +601,21 @@ class ActiveBuffInternal {
     this.fKo.push([r, s]);
   }
   static ModifyStateAttribute(e, s, r, t, i, h) {
-    const a = r.AttributeId;
+    var a = r.AttributeId;
     if (CharacterAttributeTypes_1.stateAttributeIds.has(a)) {
-      const f = AbilityUtils_1.AbilityUtils.GetLevelValue(r.Value1, t, 0);
-      const o = AbilityUtils_1.AbilityUtils.GetLevelValue(r.Value2, t, 0);
+      var f = AbilityUtils_1.AbilityUtils.GetLevelValue(r.Value1, t, 0),
+        o = AbilityUtils_1.AbilityUtils.GetLevelValue(r.Value2, t, 0);
       switch (r.CalculationPolicy[0]) {
         case 0:
           return void s.AddBaseValue(a, f);
         case 1:
-          var n = s.GetBaseValue(a);
-          var u = f * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND + 1;
+          var n = s.GetBaseValue(a),
+            u = f * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND + 1;
           return void s.SetBaseValue(a, n * u);
         case 2:
         case 4: {
-          var [, n, u, _, , l, c, v] = r.CalculationPolicy;
-          var u = u === 1 ? e : s;
+          var [, n, u, _, , l, c, v] = r.CalculationPolicy,
+            u = 1 === u ? e : s;
           if (!u)
             return void (
               Log_1.Log.CheckError() &&
@@ -626,7 +630,7 @@ class ActiveBuffInternal {
           let i = f * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND * t + o;
           return (
             v && i > v && (i = v),
-            void (r.CalculationPolicy[0] === 2
+            void (2 === r.CalculationPolicy[0]
               ? s.AddBaseValue(a, i)
               : s.SetBaseValue(a, i))
           );
@@ -636,8 +640,8 @@ class ActiveBuffInternal {
         case 5:
           return void s.AddBaseValue(a, f * i);
         case 6:
-          var [, u] = r.CalculationPolicy;
-          var n = h ?? AbilityUtils_1.AbilityUtils.GetAttrValue(s, u, 0);
+          var [, u] = r.CalculationPolicy,
+            n = h ?? AbilityUtils_1.AbilityUtils.GetAttrValue(s, u, 0);
           s.AddBaseValue(
             a,
             (f * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND * n + o) * i,
@@ -690,4 +694,4 @@ class ActiveBuffInternal {
     null,
   ),
   (exports.ActiveBuffInternal = ActiveBuffInternal);
-// # sourceMappingURL=ActiveBuff.js.map
+//# sourceMappingURL=ActiveBuff.js.map

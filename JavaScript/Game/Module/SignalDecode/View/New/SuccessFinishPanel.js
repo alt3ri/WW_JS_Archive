@@ -1,21 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SuccessFinishPanel = void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const GeneralLogicTreeController_1 = require("../../../GeneralLogicTree/GeneralLogicTreeController");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
+const UE = require("ue"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  GeneralLogicTreeController_1 = require("../../../GeneralLogicTree/GeneralLogicTreeController"),
+  LguiUtil_1 = require("../../../Util/LguiUtil");
 class SuccessFinishPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.LevelSequencePlayer = void 0),
       (this.wvo = () => {
-        const e =
-          ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayId;
+        var e = ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayId;
         GeneralLogicTreeController_1.GeneralLogicTreeController.RequestFinishUiGameplay(
           Protocol_1.Aki.Protocol.dqs.Proto_MorseCode,
           e.toString(),
@@ -37,10 +36,10 @@ class SuccessFinishPanel extends UiPanelBase_1.UiPanelBase {
   }
   Open() {
     let e =
-      ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType === 2
+      2 === ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType
         ? "SignalSendSuccess"
         : "SignalReceiveSuccess";
-    ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType === 3 &&
+    3 === ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
       (e = "SignalMusicSucceedTips"),
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), e),
       this.SetUiActive(!0),
@@ -51,4 +50,4 @@ class SuccessFinishPanel extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.SuccessFinishPanel = SuccessFinishPanel;
-// # sourceMappingURL=SuccessFinishPanel.js.map
+//# sourceMappingURL=SuccessFinishPanel.js.map

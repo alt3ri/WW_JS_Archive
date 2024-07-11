@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConsumeMediumItemGrid = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LoopScrollMediumItemGrid_1 = require("../MediumItemGrid/LoopScrollMediumItemGrid");
+const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LoopScrollMediumItemGrid_1 = require("../MediumItemGrid/LoopScrollMediumItemGrid");
 class ConsumeMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   OnRefresh(e, o, t) {
-    let i = ConfigManager_1.ConfigManager.InventoryConfig;
-    const r = e[0].ItemId;
-    const n = e[0].IncId;
-    const s = e[1];
-    if (r === 0) {
+    var i = ConfigManager_1.ConfigManager.InventoryConfig,
+      r = e[0].ItemId,
+      n = e[0].IncId,
+      s = e[1];
+    if (0 === r) {
       const l = { Type: 1 };
       void this.Apply(l);
     } else {
-      const a =
+      var a =
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(r);
       if (a) {
         i = i.GetItemDataTypeByConfigId(r);
-        if (i === 3) {
+        if (3 === i) {
           var d =
             ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
               n,
@@ -37,7 +37,7 @@ class ConsumeMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumI
             (l.BottomTextParameter = [d.GetPhantomLevel()]),
             (l.VisionFetterGroupId = d.GetFetterGroupId()),
             void this.Apply(l);
-        } else if (i === 2) {
+        } else if (2 === i) {
           d = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(n);
           const l = {
             Type: 4,
@@ -58,7 +58,7 @@ class ConsumeMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumI
             StarLevel: a.QualityId,
             ReduceButtonInfo: { IsVisible: !0, LongPressConfigId: 1 },
           };
-          void 0 !== n && n > 0
+          void 0 !== n && 0 < n
             ? (l.BottomTextId = a.Name)
             : (l.BottomText = s.toString()),
             this.Apply(l);
@@ -68,4 +68,4 @@ class ConsumeMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumI
   }
 }
 exports.ConsumeMediumItemGrid = ConsumeMediumItemGrid;
-// # sourceMappingURL=ConsumeMediumItemGrid.js.map
+//# sourceMappingURL=ConsumeMediumItemGrid.js.map

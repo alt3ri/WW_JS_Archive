@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldLevelInfoView = void 0);
-const UE = require("ue");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const ShopUtils_1 = require("../../Shop/ShopUtils");
+const UE = require("ue"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  ShopUtils_1 = require("../../Shop/ShopUtils");
 class WorldLevelInfoView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -74,25 +74,25 @@ class WorldLevelInfoView extends UiTickViewBase_1.UiTickViewBase {
     );
   }
   tko() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.TextConfig.GetTextById("WorldLevelIntro");
     this.GetText(2).SetText(e);
   }
   sko() {
-    var e = this.hko();
-    var e = Math.max(this.rko - e, 0) > 0;
+    var e = this.hko(),
+      e = 0 < Math.max(this.rko - e, 0);
     ModelManager_1.ModelManager.WorldLevelModel.OriginWorldLevel < this.oko || e
       ? this.GetItem(8).SetUIActive(!1)
       : this.ako();
   }
   ako() {
-    var i = this.hko();
-    var i = Math.max(this.rko - i, 0);
-    if (((this.CanShowInteractCd = i > 0), this.CanShowInteractCd))
+    var i = this.hko(),
+      i = Math.max(this.rko - i, 0);
+    if (((this.CanShowInteractCd = 0 < i), this.CanShowInteractCd))
       this.GetText(6).SetText(ShopUtils_1.ShopUtils.FormatTime(i));
     else {
-      var i = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel;
-      const t = ModelManager_1.ModelManager.WorldLevelModel.OriginWorldLevel;
+      var i = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
+        t = ModelManager_1.ModelManager.WorldLevelModel.OriginWorldLevel;
       let e = "";
       i === t
         ? ((ModelManager_1.ModelManager.WorldLevelModel.WorldLevelChangeTarget =
@@ -119,4 +119,4 @@ class WorldLevelInfoView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.WorldLevelInfoView = WorldLevelInfoView;
-// # sourceMappingURL=WorldLevelInfoView.js.map
+//# sourceMappingURL=WorldLevelInfoView.js.map

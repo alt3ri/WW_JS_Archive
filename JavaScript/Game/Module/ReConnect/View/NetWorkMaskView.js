@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NetWorkMaskView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const Net_1 = require("../../../../Core/Net/Net");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const ReconnectDefine_1 = require("../ReconnectDefine");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ReconnectDefine_1 = require("../ReconnectDefine");
 class NetWorkMaskView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -63,9 +63,11 @@ class NetWorkMaskView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnStart() {
     (this.oUe = 0), (this.Kno = 0);
-    const e = ModelManager_1.ModelManager.ReConnectModel.IsRpcEmpty();
-    const i =
-      CommonParamById_1.configCommonParamById.GetIntConfig("network_mask_time");
+    var e = ModelManager_1.ModelManager.ReConnectModel.IsRpcEmpty(),
+      i =
+        CommonParamById_1.configCommonParamById.GetIntConfig(
+          "network_mask_time",
+        );
     (this.tBt = e ? 100 : i ?? 100), this.GetItem(0).SetUIActive(!1);
   }
   OnBeforeDestroy() {
@@ -84,8 +86,10 @@ class NetWorkMaskView extends UiTickViewBase_1.UiTickViewBase {
       ((this.tBt -= e),
       this.tBt < 0 &&
         (this.GetItem(0).SetUIActive(!0),
-        (e = ModelManager_1.ModelManager.ReConnectModel.GetUnResponsedRpcStr())
-          .length > 0) &&
+        0 <
+          (e =
+            ModelManager_1.ModelManager.ReConnectModel.GetUnResponsedRpcStr())
+            .length) &&
         Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Reconnect", 9, "网络遮罩超时, 打开断线重连界面", [
           "未响应的rpcId",
@@ -94,7 +98,7 @@ class NetWorkMaskView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnTick(e) {
     (this.oUe += e),
-      this.oUe > 1e3 &&
+      1e3 < this.oUe &&
         ((this.oUe -= 1e3), this.GetText(1).IsUIActiveSelf()) &&
         (this.Kno++,
         this.Kno >= ReconnectDefine_1.ellipsis.length && (this.Kno = 0),
@@ -106,7 +110,7 @@ class NetWorkMaskView extends UiTickViewBase_1.UiTickViewBase {
       this.eso(e);
   }
   zno() {
-    const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(30);
+    var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(30);
     e.FunctionMap.set(0, this.$no),
       e.FunctionMap.set(1, this.Xno),
       e.FunctionMap.set(2, this.$no),
@@ -120,4 +124,4 @@ class NetWorkMaskView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.NetWorkMaskView = NetWorkMaskView;
-// # sourceMappingURL=NetWorkMaskView.js.map
+//# sourceMappingURL=NetWorkMaskView.js.map

@@ -33,29 +33,29 @@ class SignalDecodeGamePlay {
     );
   }
   id(t) {
-    const i = this.J7.__offset(this.z7, 4);
+    var i = this.J7.__offset(this.z7, 4);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   name(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   signaldata1() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   signaldata2() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   signaldata3() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   signaldata4() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.SignalDecodeGamePlay = SignalDecodeGamePlay;
-// # sourceMappingURL=SignalDecodeGamePlay.js.map
+//# sourceMappingURL=SignalDecodeGamePlay.js.map

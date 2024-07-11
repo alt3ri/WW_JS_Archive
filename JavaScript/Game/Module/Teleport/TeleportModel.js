@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TeleportModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const GameModePromise_1 = require("../../World/Define/GameModePromise");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  GameModePromise_1 = require("../../World/Define/GameModePromise");
 class TeleportModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -97,4 +97,4 @@ class TeleportModel extends ModelBase_1.ModelBase {
   }
 }
 exports.TeleportModel = TeleportModel;
-// # sourceMappingURL=TeleportModel.js.map
+//# sourceMappingURL=TeleportModel.js.map

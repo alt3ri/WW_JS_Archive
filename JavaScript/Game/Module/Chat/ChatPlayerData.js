@@ -25,4 +25,4 @@ class ChatPlayerData {
   }
 }
 exports.ChatPlayerData = ChatPlayerData;
-// # sourceMappingURL=ChatPlayerData.js.map
+//# sourceMappingURL=ChatPlayerData.js.map

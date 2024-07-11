@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configTemplateConfigAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const TemplateConfig_1 = require("../Config/TemplateConfig");
-const DB = "db_template.db";
-const FILE = "UniverseEditor/Entity/Template.csv";
-const TABLE = "TemplateConfig";
-const COMMAND = "select BinData from `TemplateConfig`";
-const KEY_PREFIX = "TemplateConfigAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  TemplateConfig_1 = require("../Config/TemplateConfig"),
+  DB = "db_template.db",
+  FILE = "UniverseEditor/Entity/Template.csv",
+  TABLE = "TemplateConfig",
+  COMMAND = "select BinData from `TemplateConfig`",
+  KEY_PREFIX = "TemplateConfigAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configTemplateConfigAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configTemplateConfigAll = {
     );
   },
   GetConfigList: (o = !0) => {
-    let e;
+    var e;
     if (
       (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configTemplateConfigAll = {
       }
       const t = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let i = void 0;
+        var i = void 0;
         if (
           (([e, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configTemplateConfigAll = {
     }
   },
 };
-// # sourceMappingURL=TemplateConfigAll.js.map
+//# sourceMappingURL=TemplateConfigAll.js.map

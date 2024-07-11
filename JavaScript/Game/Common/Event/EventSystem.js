@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EventSystem = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Event_1 = require("../../../Core/Event/Event");
-const EventDefine_1 = require("./EventDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  Event_1 = require("../../../Core/Event/Event"),
+  EventDefine_1 = require("./EventDefine");
 class EventSystem {
   static Has(t, e) {
     return EventSystem.Me.Has(t, e);
@@ -62,4 +62,4 @@ class EventSystem {
   EventDefine_1.EEventName,
 )),
   (EventSystem._de = new WeakMap());
-// # sourceMappingURL=EventSystem.js.map
+//# sourceMappingURL=EventSystem.js.map

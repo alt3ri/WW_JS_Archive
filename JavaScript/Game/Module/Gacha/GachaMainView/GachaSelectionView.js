@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GachaSelectionView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const SmallItemGrid_1 = require("../../Common/SmallItemGrid/SmallItemGrid");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew");
-const GachaController_1 = require("../GachaController");
-const GachaDefine_1 = require("../GachaDefine");
-const GachaSelectionItem_1 = require("./GachaSelectionItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  SmallItemGrid_1 = require("../../Common/SmallItemGrid/SmallItemGrid"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
+  GachaController_1 = require("../GachaController"),
+  GachaDefine_1 = require("../GachaDefine"),
+  GachaSelectionItem_1 = require("./GachaSelectionItem");
 class GachaSelectionView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -32,7 +32,7 @@ class GachaSelectionView extends UiViewBase_1.UiViewBase {
         (this.JHt = e), this.rjt();
       }),
       (this.njt = () => {
-        const e = new GachaSelectionItem_1.GachaSelectionItem();
+        var e = new GachaSelectionItem_1.GachaSelectionItem();
         return (e.ToggleCallBack = this.sjt), (e.CanToggleChange = this.Eft), e;
       }),
       (this.sjt = (e) => {
@@ -43,7 +43,7 @@ class GachaSelectionView extends UiViewBase_1.UiViewBase {
       });
   }
   get ijt() {
-    const e = this.zHt.GetGenericLayout().GetSelectedGridIndex();
+    var e = this.zHt.GetGenericLayout().GetSelectedGridIndex();
     return !this.ZHt || e < 0 || e >= this.ZHt.length
       ? 0
       : this.ZHt[e].PoolInfo.Id;
@@ -84,11 +84,11 @@ class GachaSelectionView extends UiViewBase_1.UiViewBase {
   }
   _jt() {
     if (this.JHt) {
-      const i = this.JHt.GetValidPoolList();
+      var i = this.JHt.GetValidPoolList();
       if (i) {
-        const t = new Array(i.length);
+        var t = new Array(i.length);
         for (let e = 0; e < i.length; e++) {
-          const s = new GachaDefine_1.GachaPoolData(this.JHt, i[e]);
+          var s = new GachaDefine_1.GachaPoolData(this.JHt, i[e]);
           t[e] = s;
         }
         return t;
@@ -96,21 +96,21 @@ class GachaSelectionView extends UiViewBase_1.UiViewBase {
     }
   }
   ljt() {
-    const e = this.JHt.GetValidPoolList();
+    var e = this.JHt.GetValidPoolList();
     return !(!e || !this.ZHt) && e.length === this.ZHt.length;
   }
   rjt() {
     if (
       this.zHt &&
       ((this.ZHt = this._jt()), this.ZHt) &&
-      this.ZHt.length !== 0
+      0 !== this.ZHt.length
     ) {
       const t = this.ijt;
       this.zHt.RefreshByData(this.ZHt, () => {
         if (this.ljt()) {
-          const i = t > 0 ? t : this.JHt.UsePoolId;
+          const i = 0 < t ? t : this.JHt.UsePoolId;
           let e = 0;
-          i > 0 &&
+          0 < i &&
             (e = this.ZHt.findIndex((e) => e.PoolInfo.Id === i)) < 0 &&
             (e = 0),
             this.zHt.GetGenericLayout().SelectGridProxy(e),
@@ -120,33 +120,33 @@ class GachaSelectionView extends UiViewBase_1.UiViewBase {
     }
   }
   ajt() {
-    var e = this.zHt.GetGenericLayout().GetSelectedGridIndex();
-    var e = this.ZHt[e].PoolInfo.Id;
-    var i = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewInfo(e);
-    var t = i.ShowIdList[0];
-    var i = i.Type;
-    var s = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewTypeConfig(i);
-    var s =
-      (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), s.OptionalTitle),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), s.OptionalDesc),
-      ModelManager_1.ModelManager.GachaModel.IsRolePool(i));
-    var i =
-      (s
-        ? ((i = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(t)),
-          LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), i.Name),
-          this.ejt.Apply({ Data: void 0, Type: 2, ItemConfigId: t }))
-        : ((s =
-            ConfigManager_1.ConfigManager.InventoryConfig.GetWeaponItemConfig(
-              t,
-            )),
-          LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), s.WeaponName),
-          this.ejt.Apply({ Data: void 0, Type: 4, ItemConfigId: t })),
-      this.JHt.UsePoolId);
-    var s = i === e;
-    var t = s ? "Text_GachaOptionalText1_Text" : "Text_GachaOptionalText2_Text";
+    var e = this.zHt.GetGenericLayout().GetSelectedGridIndex(),
+      e = this.ZHt[e].PoolInfo.Id,
+      i = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewInfo(e),
+      t = i.ShowIdList[0],
+      i = i.Type,
+      s = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewTypeConfig(i),
+      s =
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), s.OptionalTitle),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), s.OptionalDesc),
+        ModelManager_1.ModelManager.GachaModel.IsRolePool(i)),
+      i =
+        (s
+          ? ((i = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(t)),
+            LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), i.Name),
+            this.ejt.Apply({ Data: void 0, Type: 2, ItemConfigId: t }))
+          : ((s =
+              ConfigManager_1.ConfigManager.InventoryConfig.GetWeaponItemConfig(
+                t,
+              )),
+            LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), s.WeaponName),
+            this.ejt.Apply({ Data: void 0, Type: 4, ItemConfigId: t })),
+        this.JHt.UsePoolId),
+      s = i === e,
+      t = s ? "Text_GachaOptionalText1_Text" : "Text_GachaOptionalText2_Text";
     this.GetButton(5)?.SetSelfInteractive(!s),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(6), t);
   }
 }
 exports.GachaSelectionView = GachaSelectionView;
-// # sourceMappingURL=GachaSelectionView.js.map
+//# sourceMappingURL=GachaSelectionView.js.map

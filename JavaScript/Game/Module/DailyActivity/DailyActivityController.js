@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DailyActivityController = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
 class DailyActivityController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return !0;
@@ -35,8 +35,8 @@ class DailyActivityController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static async RequestDailyActivityData() {
-    var e = Protocol_1.Aki.Protocol.zts.create();
-    var e = await Net_1.Net.CallAsync(16864, e);
+    var e = Protocol_1.Aki.Protocol.zts.create(),
+      e = await Net_1.Net.CallAsync(16864, e);
     return (
       !!e &&
       (ModelManager_1.ModelManager.DailyActivityModel.RefreshDailyActivityData(
@@ -47,7 +47,7 @@ class DailyActivityController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static RequestDailyActivityTaskReward(e) {
-    const t = Protocol_1.Aki.Protocol.ris.create();
+    var t = Protocol_1.Aki.Protocol.ris.create();
     (t.XFn = e),
       Net_1.Net.Call(24549, t, (e) => {
         e &&
@@ -59,7 +59,7 @@ class DailyActivityController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static RequestDailyActivityReward(e) {
-    const t = Protocol_1.Aki.Protocol.nis.create();
+    var t = Protocol_1.Aki.Protocol.nis.create();
     (t.j4n = e),
       Net_1.Net.Call(23404, t, (e) => {
         e &&
@@ -74,11 +74,10 @@ class DailyActivityController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static RequestAllAvailableActivityReward() {
-    const e =
-      ModelManager_1.ModelManager.DailyActivityModel.DailyActivityGoalMap;
+    var e = ModelManager_1.ModelManager.DailyActivityModel.DailyActivityGoalMap;
     const r = [];
     e.forEach((e, t) => {
-      e.State === 1 && r.push(t);
+      1 === e.State && r.push(t);
     }),
       DailyActivityController.RequestDailyActivityReward(r);
   }
@@ -101,4 +100,4 @@ class DailyActivityController extends UiControllerBase_1.UiControllerBase {
   (DailyActivityController.AOt = (e) => {
     ModelManager_1.ModelManager.DailyActivityModel.RefreshActivityValue(e.sAs);
   });
-// # sourceMappingURL=DailyActivityController.js.map
+//# sourceMappingURL=DailyActivityController.js.map

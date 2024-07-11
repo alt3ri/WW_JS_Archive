@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const LevelSequencePlayer_1 = require("../Common/LevelSequencePlayer");
+const UE = require("ue"),
+  LevelSequencePlayer_1 = require("../Common/LevelSequencePlayer");
 class TsUiAutoPlayLevelSequenceComponent extends UE.LGUIBehaviour {
   constructor() {
     super(...arguments),
@@ -22,18 +22,18 @@ class TsUiAutoPlayLevelSequenceComponent extends UE.LGUIBehaviour {
     this.LevelSequencePlayer?.Clear(), (this.LevelSequencePlayer = void 0);
   }
   UpdateBP(e) {
-    this.PlayState !== 0 &&
-      (this.PlayState === 1
+    0 !== this.PlayState &&
+      (1 === this.PlayState
         ? (this.TryPlay(), (this.PlayState = 0))
-        : this.PlayState === 2 && (this.TryStop(), (this.PlayState = 0)));
+        : 2 === this.PlayState && (this.TryStop(), (this.PlayState = 0)));
   }
   TryPlay() {
-    const e = this.GetOwner();
+    var e = this.GetOwner();
     if (e) {
-      const t = e.GetUIItem().LevelSequences;
-      const s = ((this.AutoPlayList = new Array()), t.Num());
+      var t = e.GetUIItem().LevelSequences,
+        s = ((this.AutoPlayList = new Array()), t.Num());
       for (let e = 0; e < s; ++e) {
-        const i = t.GetKey(e);
+        var i = t.GetKey(e);
         t.Get(i).PlaySetting.bAutoPlay &&
           (this.LevelSequencePlayer.PlaySequencePurely(i),
           this.AutoPlayList.push(i));
@@ -41,7 +41,7 @@ class TsUiAutoPlayLevelSequenceComponent extends UE.LGUIBehaviour {
     }
   }
   TryStop() {
-    const e = this.GetOwner();
+    var e = this.GetOwner();
     if (e) {
       for (const t of this.AutoPlayList) e.StopSequenceByKey(t);
       this.AutoPlayList = void 0;
@@ -49,4 +49,4 @@ class TsUiAutoPlayLevelSequenceComponent extends UE.LGUIBehaviour {
   }
 }
 exports.default = TsUiAutoPlayLevelSequenceComponent;
-// # sourceMappingURL=TsUiAutoPlayLevelSequenceComponent.js.map
+//# sourceMappingURL=TsUiAutoPlayLevelSequenceComponent.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PcAndGamepadProgressBar = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class ProgressBar extends UiPanelBase_1.UiPanelBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UITexture]];
@@ -36,11 +36,11 @@ class PcAndGamepadProgressBar {
     e ? this.Wgi() : (this.Sxo?.SetActive(!1), this.Exo?.SetActive(!1));
   }
   Wgi() {
-    const e = ModelManager_1.ModelManager.PlatformModel.IsGamepad();
-    const s = !e;
+    var e = ModelManager_1.ModelManager.PlatformModel.IsGamepad(),
+      s = !e;
     this.Sxo?.GetActive() !== s && this.Sxo?.SetActive(s),
       this.Exo?.GetActive() !== e && this.Exo?.SetActive(e);
   }
 }
 exports.PcAndGamepadProgressBar = PcAndGamepadProgressBar;
-// # sourceMappingURL=PcAndGamepadProgressBar.js.map
+//# sourceMappingURL=PcAndGamepadProgressBar.js.map

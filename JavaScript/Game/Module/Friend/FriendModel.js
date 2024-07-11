@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FriendModel = exports.LocalFriendApplication = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LocalStorage_1 = require("../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../Common/LocalStorageDefine");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const FriendController_1 = require("./FriendController");
-const FriendData_1 = require("./FriendData");
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  FriendController_1 = require("./FriendController"),
+  FriendData_1 = require("./FriendData");
 class LocalFriendApplication {
   constructor() {
     (this.Fresh = !1), (this.CreatedTime = -0);
@@ -48,11 +48,11 @@ class FriendModel extends ModelBase_1.ModelBase {
     );
   }
   LoadLocalFriendApplication() {
-    let e;
-    const t =
-      LocalStorage_1.LocalStorage.GetPlayer(
-        LocalStorageDefine_1.ELocalStoragePlayerKey.LocalFriendApplication,
-      ) ?? new Map();
+    var e,
+      t =
+        LocalStorage_1.LocalStorage.GetPlayer(
+          LocalStorageDefine_1.ELocalStoragePlayerKey.LocalFriendApplication,
+        ) ?? new Map();
     for (const i of this.zVt.values())
       t.has(i.ApplyPlayerData.PlayerId) &&
         (e = t.get(i.ApplyPlayerData.PlayerId)).CreatedTime ===
@@ -62,9 +62,9 @@ class FriendModel extends ModelBase_1.ModelBase {
           this.FreshFriendApplicationIds.delete(i.ApplyPlayerData.PlayerId));
   }
   a6t() {
-    const e = new Map();
+    var e = new Map();
     for (const i of this.zVt.keys()) {
-      const t = new LocalFriendApplication();
+      var t = new LocalFriendApplication();
       (t.Fresh = this.zVt.get(i).Fresh),
         (t.CreatedTime = this.zVt.get(i).ApplyCreatedTime),
         e.set(i, t);
@@ -78,7 +78,7 @@ class FriendModel extends ModelBase_1.ModelBase {
     return this.JVt.size;
   }
   GetFriendSortedListIds() {
-    const e = new Array();
+    var e = new Array();
     for (const t of this.JVt.keys()) e.push(t);
     return FriendController_1.FriendController.GetSortedFriendListByRules(
       e,
@@ -86,12 +86,12 @@ class FriendModel extends ModelBase_1.ModelBase {
     );
   }
   GetFriendApplyListIds() {
-    const e = new Array();
+    var e = new Array();
     for (const t of this.zVt.keys()) e.push(t);
     return FriendController_1.FriendController.GetSortedBlackOrApplyList(e);
   }
   GetRecentlyTeamIds() {
-    const e = new Array();
+    var e = new Array();
     for (const t of this.RecentlyTeamList.keys()) e.push(t);
     return (
       e.sort((e, t) => {
@@ -102,10 +102,10 @@ class FriendModel extends ModelBase_1.ModelBase {
     );
   }
   HasNewFriendApplication() {
-    return this.FreshFriendApplicationIds.size > 0;
+    return 0 < this.FreshFriendApplicationIds.size;
   }
   GetFriendSearchResultListIds() {
-    const e = new Array();
+    var e = new Array();
     for (const t of this.ZVt.values()) e.push(t.PlayerId);
     return (
       e.sort((e, t) => {
@@ -116,7 +116,7 @@ class FriendModel extends ModelBase_1.ModelBase {
     );
   }
   GetBlackListIds() {
-    const e = new Array();
+    var e = new Array();
     for (const t of this.e6t.keys()) e.push(t);
     return FriendController_1.FriendController.GetSortedBlackOrApplyList(e);
   }
@@ -190,7 +190,7 @@ class FriendModel extends ModelBase_1.ModelBase {
     this.e6t.delete(e);
   }
   GetSelectedPlayerOrItemInstance(e) {
-    const t = e ?? this.t6t;
+    var t = e ?? this.t6t;
     if (this.ShowingView)
       switch (this.ShowingView) {
         case "FriendView":
@@ -276,9 +276,9 @@ class FriendModel extends ModelBase_1.ModelBase {
     return (
       e <= 1
         ? (t = "FriendOfflineToday")
-        : e > 1 && e <= 30
+        : 1 < e && e <= 30
           ? (t = "FriendOfflineSomeDay")
-          : e > 30 && (t = "FriendOfflineOverMonth"),
+          : 30 < e && (t = "FriendOfflineOverMonth"),
       [t, e]
     );
   }
@@ -286,7 +286,7 @@ class FriendModel extends ModelBase_1.ModelBase {
     if (e) {
       this.RecentlyTeamList.clear();
       for (const i of e) {
-        const t = new FriendData_1.RecentlyTeamData();
+        var t = new FriendData_1.RecentlyTeamData();
         t.InitData(i), this.RecentlyTeamList.set(t.PlayerData.PlayerId, t);
       }
       EventSystem_1.EventSystem.Emit(
@@ -320,4 +320,4 @@ class FriendModel extends ModelBase_1.ModelBase {
   }
 }
 exports.FriendModel = FriendModel;
-// # sourceMappingURL=FriendModel.js.map
+//# sourceMappingURL=FriendModel.js.map

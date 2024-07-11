@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SundryModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const TestModuleBridge_1 = require("../../Bridge/TestModuleBridge");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  TestModuleBridge_1 = require("../../Bridge/TestModuleBridge");
 class SundryModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -25,7 +25,7 @@ class SundryModel extends ModelBase_1.ModelBase {
     return this.XEn;
   }
   IsBlockTpDungeon() {
-    return this.BlockTpDungeonCount > 0;
+    return 0 < this.BlockTpDungeonCount;
   }
   OnInit() {
     return (
@@ -54,4 +54,4 @@ class SundryModel extends ModelBase_1.ModelBase {
   }
 }
 exports.SundryModel = SundryModel;
-// # sourceMappingURL=SundryModel.js.map
+//# sourceMappingURL=SundryModel.js.map

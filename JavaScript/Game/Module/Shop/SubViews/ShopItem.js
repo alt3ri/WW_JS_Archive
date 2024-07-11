@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ShopItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const SECONDS_PER_DAY = 86400;
-const red = new UE.Color(255, 0, 0, 255);
-const soldOutColor = UE.Color.FromHex("FFFFFFFF");
-const coinNotEnoughColor = UE.Color.FromHex("9D2437FF");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  SECONDS_PER_DAY = 86400,
+  red = new UE.Color(255, 0, 0, 255),
+  soldOutColor = UE.Color.FromHex("FFFFFFFF"),
+  coinNotEnoughColor = UE.Color.FromHex("9D2437FF");
 class ShopItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -44,7 +44,7 @@ class ShopItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.j7e]]);
   }
   UpdateItem(t) {
-    let i;
+    var i;
     t &&
       (this.RootItem.SetAsLastHierarchy(),
       (this.ItemInfo = t),
@@ -62,17 +62,17 @@ class ShopItem extends UiPanelBase_1.UiPanelBase {
       t.IsAffordable() || this.GetText(7).SetColor(coinNotEnoughColor),
       this.GetText(7).SetText(t.GetDefaultPrice().toString()),
       this.GetText(8).SetText(`<s>${this.ItemInfo.GetOriginalPrice()}</s>`),
-      this.GetText(8).SetUIActive(this.ItemInfo.GetOriginalPrice() !== -1),
+      this.GetText(8).SetUIActive(-1 !== this.ItemInfo.GetOriginalPrice()),
       this.UpdateLockState(),
       this.UpdateLimitTime());
   }
   UpdateLockState() {
-    const t = this.ItemInfo.IsInteractive();
+    var t = this.ItemInfo.IsInteractive();
     this.GetItem(12).SetUIActive(!t),
       this.GetItem(11).SetAlpha(t ? 1 : 0.5),
       this.GetItem(13).SetUIActive(!this.ItemInfo.IsUnlocked()),
-      this.GetText(9).SetUIActive(this.ItemInfo.BuyLimit !== -1),
-      this.ItemInfo.BuyLimit !== -1 &&
+      this.GetText(9).SetUIActive(-1 !== this.ItemInfo.BuyLimit),
+      -1 !== this.ItemInfo.BuyLimit &&
         (this.GetText(9).SetUIActive(!0),
         LguiUtil_1.LguiUtil.SetLocalText(
           this.GetText(9),
@@ -102,16 +102,16 @@ class ShopItem extends UiPanelBase_1.UiPanelBase {
           ));
   }
   UpdateLimitTime() {
-    let t, i;
-    this.ItemInfo.EndTime !== 0 &&
+    var t, i;
+    0 !== this.ItemInfo.EndTime &&
       ((i = this.ItemInfo.EndTime - TimeUtil_1.TimeUtil.GetServerTimeStamp()),
-      (t = Math.trunc(i / SECONDS_PER_DAY)) > 0
+      0 < (t = Math.trunc(i / SECONDS_PER_DAY))
         ? LguiUtil_1.LguiUtil.SetLocalText(
             this.GetText(10),
             "ShopItemLimitTime1",
             t,
           )
-        : t === 0 &&
+        : 0 === t &&
           ((t = Math.trunc(i / 3600)),
           (i = Math.trunc(i / 60) % 60),
           LguiUtil_1.LguiUtil.SetLocalText(
@@ -127,4 +127,4 @@ class ShopItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ShopItem = ShopItem;
-// # sourceMappingURL=ShopItem.js.map
+//# sourceMappingURL=ShopItem.js.map

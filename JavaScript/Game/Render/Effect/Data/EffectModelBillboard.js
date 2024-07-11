@@ -13,4 +13,4 @@ class EffectModelBillboard extends UE.EffectModelBase {
   }
 }
 exports.default = EffectModelBillboard;
-// # sourceMappingURL=EffectModelBillboard.js.map
+//# sourceMappingURL=EffectModelBillboard.js.map

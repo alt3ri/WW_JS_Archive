@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayCueManipulateInteract = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../../../../Core/Actor/ActorSystem");
-const ResourceSystem_1 = require("../../../../../../../Core/Resource/ResourceSystem");
-const FNameUtil_1 = require("../../../../../../../Core/Utils/FNameUtil");
-const MathUtils_1 = require("../../../../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../../../../GlobalData");
-const GameplayCueBase_1 = require("./GameplayCueBase");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../../../../Core/Actor/ActorSystem"),
+  ResourceSystem_1 = require("../../../../../../../Core/Resource/ResourceSystem"),
+  FNameUtil_1 = require("../../../../../../../Core/Utils/FNameUtil"),
+  MathUtils_1 = require("../../../../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../../../../GlobalData"),
+  GameplayCueBase_1 = require("./GameplayCueBase");
 class GameplayCueManipulateInteract extends GameplayCueBase_1.GameplayCueBase {
   constructor() {
     super(...arguments),
@@ -34,7 +34,7 @@ class GameplayCueManipulateInteract extends GameplayCueBase_1.GameplayCueBase {
         this.l$o[0],
         UE.NiagaraSystem,
         (e) => {
-          const t = this.CXo.AddComponentByClass(
+          var t = this.CXo.AddComponentByClass(
             UE.NiagaraComponent.StaticClass(),
             !1,
             MathUtils_1.MathUtils.DefaultTransform,
@@ -61,4 +61,4 @@ class GameplayCueManipulateInteract extends GameplayCueBase_1.GameplayCueBase {
   }
 }
 exports.GameplayCueManipulateInteract = GameplayCueManipulateInteract;
-// # sourceMappingURL=GameplayCueManipulateInteract.js.map
+//# sourceMappingURL=GameplayCueManipulateInteract.js.map

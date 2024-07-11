@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FullScreenEffectController = void 0);
-const PriorityQueue_1 = require("../../../Core/Container/PriorityQueue");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const FullScreenEffectView_1 = require("./FullScreenEffectView");
+const PriorityQueue_1 = require("../../../Core/Container/PriorityQueue"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  FullScreenEffectView_1 = require("./FullScreenEffectView");
 class FullScreenEffectController extends UiControllerBase_1.UiControllerBase {
   static async BeginEffect(t, e) {
-    let i;
+    var i;
     this.b8t.has(t) ||
       (await (i = new FullScreenEffectView_1.FullScreenEffectView()).Init(t, e),
       this.b8t.add(t),
@@ -24,7 +24,7 @@ class FullScreenEffectController extends UiControllerBase_1.UiControllerBase {
       : this.b8t.has(t) && this.b8t.delete(t);
   }
   static EndCurView() {
-    let t;
+    var t;
     this.q8t &&
       (this.b8t.delete(this.q8t.Path),
       this.q8t.SetEffectVisibility(!1, !0),
@@ -45,7 +45,7 @@ class FullScreenEffectController extends UiControllerBase_1.UiControllerBase {
   }
   static N8t() {
     for (; !this.G8t.Empty; ) {
-      const t = this.G8t.Pop();
+      var t = this.G8t.Pop();
       if (this.b8t.has(t.Path) && (this.b8t.delete(t.Path), t.IsEffectPlay()))
         return t;
       t.Destroy();
@@ -58,4 +58,4 @@ class FullScreenEffectController extends UiControllerBase_1.UiControllerBase {
   (FullScreenEffectController.G8t = new PriorityQueue_1.PriorityQueue(
     FullScreenEffectView_1.FullScreenEffectView.Compare,
   ));
-// # sourceMappingURL=FullScreenEffectController.js.map
+//# sourceMappingURL=FullScreenEffectController.js.map

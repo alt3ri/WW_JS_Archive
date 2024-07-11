@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AnimController = void 0);
-const cpp_1 = require("cpp");
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const GlobalData_1 = require("../../GlobalData");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiCameraAnimationManager_1 = require("../UiCameraAnimation/UiCameraAnimationManager");
+const cpp_1 = require("cpp"),
+  Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  GlobalData_1 = require("../../GlobalData"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiCameraAnimationManager_1 = require("../UiCameraAnimation/UiCameraAnimationManager");
 class AnimController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -43,10 +43,10 @@ class AnimController extends ControllerBase_1.ControllerBase {
     );
   }
   static UpdateAnimInfoMove(t) {
-    let e;
-    let n;
-    let a;
-    let r = EntitySystem_1.EntitySystem.GetComponent(t, 160);
+    var e,
+      n,
+      a,
+      r = EntitySystem_1.EntitySystem.GetComponent(t, 160);
     r?.Valid &&
       ((e = r.MainAnimInstance.LogicParams),
       (r = r.AnimLogicParamsSetter),
@@ -112,10 +112,10 @@ class AnimController extends ControllerBase_1.ControllerBase {
       ((r.IsInSplineMove = a), (e.bIsInSplineMove = a));
   }
   static UpdateAnimInfoMeshAnim(t) {
-    let e;
-    let n;
-    let a;
-    let r = EntitySystem_1.EntitySystem.GetComponent(t, 160);
+    var e,
+      n,
+      a,
+      r = EntitySystem_1.EntitySystem.GetComponent(t, 160);
     r?.Valid &&
       ((e = r.MainAnimInstance.LogicParams),
       (n = r.AnimLogicParamsSetter),
@@ -133,10 +133,10 @@ class AnimController extends ControllerBase_1.ControllerBase {
       ((n.RagQuitState = a), (e.RagQuitStateRef = a));
   }
   static UpdateAnimInfoHit(t) {
-    let e;
-    let n;
-    let a;
-    let r = EntitySystem_1.EntitySystem.GetComponent(t, 160);
+    var e,
+      n,
+      a,
+      r = EntitySystem_1.EntitySystem.GetComponent(t, 160);
     r?.Valid &&
       (t = EntitySystem_1.EntitySystem.GetComponent(t, 51)) &&
       ((e = r.MainAnimInstance.LogicParams),
@@ -159,8 +159,8 @@ class AnimController extends ControllerBase_1.ControllerBase {
     if (n?.Valid) {
       e = EntitySystem_1.EntitySystem.GetComponent(e, 51);
       if (e) {
-        const a = n.MainAnimInstance.LogicParams;
-        var n = n.AnimLogicParamsSetter;
+        var a = n.MainAnimInstance.LogicParams,
+          n = n.AnimLogicParamsSetter;
         let t = e.BeHitDirect;
         n.BeHitDirect.Equals(t) ||
           (n.BeHitDirect.DeepCopy(t), (a.BeHitDirectRef = t.ToUeVector())),
@@ -175,10 +175,10 @@ class AnimController extends ControllerBase_1.ControllerBase {
     }
   }
   static UpdateAnimInfoUnifiedState(t) {
-    let e;
-    let n;
-    let a;
-    let r = EntitySystem_1.EntitySystem.GetComponent(t, 160);
+    var e,
+      n,
+      a,
+      r = EntitySystem_1.EntitySystem.GetComponent(t, 160);
     r?.Valid &&
       (n = EntitySystem_1.EntitySystem.GetComponent(t, 158)) &&
       ((e = r.MainAnimInstance.LogicParams),
@@ -202,16 +202,16 @@ class AnimController extends ControllerBase_1.ControllerBase {
       (t =
         ModelManager_1.ModelManager.PlotModel.IsInInteraction ||
         (ModelManager_1.ModelManager.PlotModel.IsInPlot &&
-          ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel !==
-            "LevelD")),
+          "LevelD" !==
+            ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel)),
       r.IsInPerformingPlot !== t &&
         ((r.IsInPerformingPlot = t), (e.bIsInPerformingPlot = t)),
       (n =
         ModelManager_1.ModelManager.PlotModel.IsInPlot &&
-        (ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel ===
-          "LevelA" ||
-          ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel ===
-            "LevelB")),
+        ("LevelA" ===
+          ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel ||
+          "LevelB" ===
+            ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel)),
       r.IsInSequence !== n && ((r.IsInSequence = n), (e.bIsInSequence = n)),
       (a =
         UiCameraAnimationManager_1.UiCameraAnimationManager.IsDisablePlayer()),
@@ -219,9 +219,9 @@ class AnimController extends ControllerBase_1.ControllerBase {
       ((r.IsInUiCamera = a), (e.bIsInUiCamera = a));
   }
   static UpdateAnimInfoSceneInteract(t) {
-    let e;
-    let n;
-    let a = EntitySystem_1.EntitySystem.GetComponent(t, 160);
+    var e,
+      n,
+      a = EntitySystem_1.EntitySystem.GetComponent(t, 160);
     a?.Valid &&
       (t = EntitySystem_1.EntitySystem.GetComponent(t, 26)) &&
       ((e = a.MainAnimInstance.LogicParams),
@@ -243,4 +243,4 @@ class AnimController extends ControllerBase_1.ControllerBase {
     AnimController.UpdateAnimInfoFk(t),
     AnimController.UpdateAnimInfoSceneInteract(t);
 };
-// # sourceMappingURL=AnimController.js.map
+//# sourceMappingURL=AnimController.js.map

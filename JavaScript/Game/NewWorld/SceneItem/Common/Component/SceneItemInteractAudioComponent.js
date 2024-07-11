@@ -1,32 +1,36 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, o) {
-    let s;
-    const r = arguments.length;
-    let n =
-      r < 3 ? e : o === null ? (o = Object.getOwnPropertyDescriptor(e, i)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var s,
+      r = arguments.length,
+      n =
+        r < 3
+          ? e
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(e, i))
+            : o;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(t, e, i, o);
     else
-      for (let h = t.length - 1; h >= 0; h--)
-        (s = t[h]) && (n = (r < 3 ? s(n) : r > 3 ? s(e, i, n) : s(e, i)) || n);
-    return r > 3 && n && Object.defineProperty(e, i, n), n;
+      for (var h = t.length - 1; 0 <= h; h--)
+        (s = t[h]) && (n = (r < 3 ? s(n) : 3 < r ? s(e, i, n) : s(e, i)) || n);
+    return 3 < r && n && Object.defineProperty(e, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemInteractAudioComponent = void 0);
-const AudioController_1 = require("../../../../../Core/Audio/AudioController");
-const Log_1 = require("../../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const InteractAudioMaterialByCollisionMaterial_1 = require("../../../../../Core/Define/ConfigQuery/InteractAudioMaterialByCollisionMaterial");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent");
-const ActorUtils_1 = require("../../../../Utils/ActorUtils");
-const TsBaseItem_1 = require("../../BaseItem/TsBaseItem");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const RTPC_MAX = 100;
+const AudioController_1 = require("../../../../../Core/Audio/AudioController"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  InteractAudioMaterialByCollisionMaterial_1 = require("../../../../../Core/Define/ConfigQuery/InteractAudioMaterialByCollisionMaterial"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  ActorUtils_1 = require("../../../../Utils/ActorUtils"),
+  TsBaseItem_1 = require("../../BaseItem/TsBaseItem"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  RTPC_MAX = 100;
 let SceneItemInteractAudioComponent = class SceneItemInteractAudioComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -64,13 +68,13 @@ let SceneItemInteractAudioComponent = class SceneItemInteractAudioComponent exte
     );
   }
   BFr() {
-    let t;
-    const e = this.Entity.GetComponent(0);
-    var i = e.GetPbEntityInitData();
-    var i = (0, IComponent_1.getComponent)(
-      i.ComponentsData,
-      "InteractAudioComponent",
-    );
+    var t,
+      e = this.Entity.GetComponent(0),
+      i = e.GetPbEntityInitData(),
+      i = (0, IComponent_1.getComponent)(
+        i.ComponentsData,
+        "InteractAudioComponent",
+      );
     i.CollisionMaterial || i.InteractEventConfig
       ? i.CollisionMaterial &&
         ((i = i.CollisionMaterial),
@@ -99,7 +103,7 @@ let SceneItemInteractAudioComponent = class SceneItemInteractAudioComponent exte
         ]);
   }
   i1n(t) {
-    let e = new Date().getTime();
+    var e = new Date().getTime();
     this.Yln && e - this.Yln < this.$ln
       ? Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
@@ -158,7 +162,7 @@ let SceneItemInteractAudioComponent = class SceneItemInteractAudioComponent exte
               AudioController_1.AudioController.PostEvent(this.Zln, t))));
   }
   GetVelocity() {
-    const t = this.nXt.Owner;
+    var t = this.nXt.Owner;
     return t?.IsValid()
       ? (this.wrr.FromUeVector(t.GetVelocity()), this.wrr)
       : Vector_1.Vector.ZeroVectorProxy;
@@ -172,4 +176,4 @@ let SceneItemInteractAudioComponent = class SceneItemInteractAudioComponent exte
   SceneItemInteractAudioComponent,
 )),
   (exports.SceneItemInteractAudioComponent = SceneItemInteractAudioComponent);
-// # sourceMappingURL=SceneItemInteractAudioComponent.js.map
+//# sourceMappingURL=SceneItemInteractAudioComponent.js.map

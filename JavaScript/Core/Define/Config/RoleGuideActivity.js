@@ -39,37 +39,37 @@ class RoleGuideActivity {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   roleid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   rolequestid() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   roletrialid() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   showquestid() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   showquesttips(t) {
-    const i = this.J7.__offset(this.z7, 14);
+    var i = this.J7.__offset(this.z7, 14);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   showquestgetway(t) {
-    const i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 16);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   roleui(t) {
-    const i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 18);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.RoleGuideActivity = RoleGuideActivity;
-// # sourceMappingURL=RoleGuideActivity.js.map
+//# sourceMappingURL=RoleGuideActivity.js.map

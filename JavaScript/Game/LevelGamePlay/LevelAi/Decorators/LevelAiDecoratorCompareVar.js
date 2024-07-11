@@ -4,13 +4,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const LevelAiDecorator_1 = require("../LevelAiDecorator");
 class LevelAiDecoratorCompareVar extends LevelAiDecorator_1.LevelAiDecorator {
   CheckCondition(e) {
-    const r = this.Params;
+    var r = this.Params;
     return (
       !!r &&
-      (r.Compare !== "Eq" ||
+      ("Eq" !== r.Compare ||
       r.Var1.Type !== r.Var2.Type ||
-      r.Var1.Source !== "Self" ||
-      r.Var2.Source !== "Constant"
+      "Self" !== r.Var1.Source ||
+      "Constant" !== r.Var2.Source
         ? (this.PrintDescription("配置错误"), !1)
         : ((e = this.GetWorldStateProxy(e)), this.CIe(e, r.Var1.Name, r.Var2)))
     );
@@ -27,4 +27,4 @@ class LevelAiDecoratorCompareVar extends LevelAiDecorator_1.LevelAiDecorator {
   }
 }
 exports.LevelAiDecoratorCompareVar = LevelAiDecoratorCompareVar;
-// # sourceMappingURL=LevelAiDecoratorCompareVar.js.map
+//# sourceMappingURL=LevelAiDecoratorCompareVar.js.map

@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const BulletActionBase_1 = require("./BulletActionBase");
 class BulletActionAttachActor extends BulletActionBase_1.BulletActionBase {
   OnExecute() {
-    const t = this.ActionInfo;
+    var t = this.ActionInfo;
     t.IsParentActor
       ? (this.BulletInfo.Actor.K2_AttachToActor(
           t.Actor,
@@ -27,4 +27,4 @@ class BulletActionAttachActor extends BulletActionBase_1.BulletActionBase {
   }
 }
 exports.BulletActionAttachActor = BulletActionAttachActor;
-// # sourceMappingURL=BulletActionAttachActor.js.map
+//# sourceMappingURL=BulletActionAttachActor.js.map

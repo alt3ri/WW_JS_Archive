@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const MathCommon_1 = require("../../../Core/Utils/Math/MathCommon");
-const Quat_1 = require("../../../Core/Utils/Math/Quat");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const PhantomUtil_1 = require("../../Module/Phantom/PhantomUtil");
-const CharacterBuffIds_1 = require("../Character/Common/Component/Abilities/CharacterBuffIds");
-const BulletController_1 = require("./BulletController");
-const BulletUtil_1 = require("./BulletUtil");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  MathCommon_1 = require("../../../Core/Utils/Math/MathCommon"),
+  Quat_1 = require("../../../Core/Utils/Math/Quat"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  PhantomUtil_1 = require("../../Module/Phantom/PhantomUtil"),
+  CharacterBuffIds_1 = require("../Character/Common/Component/Abilities/CharacterBuffIds"),
+  BulletController_1 = require("./BulletController"),
+  BulletUtil_1 = require("./BulletUtil");
 class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static CreateBulletForDebug(t, e) {
     return BulletController_1.BulletController.CreateBulletForDebug(t, e);
   }
   static GetSpecialBulletToSkillId(t, e) {
-    return e !== ""
+    return "" !== e
       ? e
       : (e = CharacterBuffIds_1.specialBulletToSkillIdMap.get(t))
         ? e.toString()
@@ -28,7 +28,7 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static CreateBulletFromGA(t, e, r, l, a, o) {
     l = BulletBlueprintFunctionLibrary.GetSpecialBulletToSkillId(e, l);
-    if (l === "")
+    if ("" === l)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("Bullet", 36, "CreateBulletFromGA的SkillId为空", [
@@ -37,14 +37,14 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
           ]),
         -1
       );
-    let i = t.GetEntityNoBlueprint()?.GetComponent(33);
+    var i = t.GetEntityNoBlueprint()?.GetComponent(33);
     let u = i?.GetSkill(Number(l))?.CombatMessageId;
     if (!u && i?.Entity?.Id) {
-      let n = EntitySystem_1.EntitySystem.GetComponent(
+      var n = EntitySystem_1.EntitySystem.GetComponent(
         i?.Entity?.Id,
         0,
       ).GetSummonerId();
-      if (n > 0) {
+      if (0 < n) {
         const t =
           ModelManager_1.ModelManager.CreatureModel.GetEntity(n)?.Entity;
         n = t?.GetComponent(33);
@@ -79,7 +79,7 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static GetCharacterLaunchedBulletIds(t) {
     t = ModelManager_1.ModelManager.BulletModel.GetBulletSetByAttacker(t);
     if (t) {
-      const e = UE.NewArray(UE.BuiltinInt);
+      var e = UE.NewArray(UE.BuiltinInt);
       for (const r of t) e.Add(r.Id);
       return e;
     }
@@ -107,7 +107,7 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     ModelManager_1.ModelManager.BulletModel.SetEntityIdByCustomKey(t, e, r);
   }
   static GetAllBullet() {
-    const t = UE.NewArray(UE.BuiltinInt);
+    var t = UE.NewArray(UE.BuiltinInt);
     for (const e of ModelManager_1.ModelManager.BulletModel.GetAttackerBulletIterator())
       for (const r of e) t.Add(r.Id);
     return t;
@@ -158,13 +158,13 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static CalSectorPoints(e, t, r, l, a, o, i) {
     t.Normalize(MathCommon_1.MathCommon.SmallNumber),
       r.Normalize(MathCommon_1.MathCommon.SmallNumber);
-    const u = o > 0 ? l / o : l;
+    var u = 0 < o ? l / o : l;
     let n = t.RotateAngleAxis((l / 2) * -1, r).op_Multiply(a);
     t = e.op_Addition(n);
     i.Add(t);
     for (let t = 0; t < o; t++) {
       n = n.RotateAngleAxis(u, r);
-      const c = e.op_Addition(n);
+      var c = e.op_Addition(n);
       i.Add(c);
     }
   }
@@ -174,45 +174,45 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static CalcPipe(t, e, r, l, a, o, i, u, n) {
     e.Normalize(MathCommon_1.MathCommon.SmallNumber),
       r.Normalize(MathCommon_1.MathCommon.SmallNumber);
-    const c = Vector_1.Vector.Create(r);
-    var o = (c.MultiplyEqual(o), Vector_1.Vector.Create(t));
-    var t = Vector_1.Vector.Create();
-    const s = (o.Subtraction(c, t), Vector_1.Vector.Create());
-    var o = (o.Addition(c, s), (0, puerts_1.$unref)(u));
-    const B = (0, puerts_1.$unref)(n);
-    const _ =
-      (BulletBlueprintFunctionLibrary.CalSectorPoints(
-        t.ToUeVector(),
-        e,
-        r,
-        360,
-        a,
-        i,
-        o,
-      ),
-      o.Num());
-    const m =
-      (BulletBlueprintFunctionLibrary.CalSectorPoints(
-        t.ToUeVector(),
-        e,
-        r,
-        360,
-        l,
-        i,
-        o,
-      ),
-      o.Num());
-    const C =
-      (BulletBlueprintFunctionLibrary.CalSectorPoints(
-        s.ToUeVector(),
-        e,
-        r,
-        360,
-        a,
-        i,
-        o,
-      ),
-      o.Num());
+    var c = Vector_1.Vector.Create(r),
+      o = (c.MultiplyEqual(o), Vector_1.Vector.Create(t)),
+      t = Vector_1.Vector.Create(),
+      s = (o.Subtraction(c, t), Vector_1.Vector.Create()),
+      o = (o.Addition(c, s), (0, puerts_1.$unref)(u)),
+      B = (0, puerts_1.$unref)(n),
+      _ =
+        (BulletBlueprintFunctionLibrary.CalSectorPoints(
+          t.ToUeVector(),
+          e,
+          r,
+          360,
+          a,
+          i,
+          o,
+        ),
+        o.Num()),
+      m =
+        (BulletBlueprintFunctionLibrary.CalSectorPoints(
+          t.ToUeVector(),
+          e,
+          r,
+          360,
+          l,
+          i,
+          o,
+        ),
+        o.Num()),
+      C =
+        (BulletBlueprintFunctionLibrary.CalSectorPoints(
+          s.ToUeVector(),
+          e,
+          r,
+          360,
+          a,
+          i,
+          o,
+        ),
+        o.Num());
     BulletBlueprintFunctionLibrary.CalSectorPoints(
       s.ToUeVector(),
       e,
@@ -223,10 +223,10 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       o,
     );
     for (let t = 0; t < _ - 1; t++) {
-      let M = m + t;
-      let b = m + t + 1;
-      let h = C + t;
-      let y = C + t + 1;
+      var M = m + t,
+        b = m + t + 1,
+        h = C + t,
+        y = C + t + 1;
       BulletBlueprintFunctionLibrary.RectangleTriangles(M, h, b, y, B),
         (M = 0 + t + 1),
         (b = 0 + t),
@@ -254,23 +254,23 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static CalcSector(t, e, r, l, a, o, i, u, n) {
     e.Normalize(MathCommon_1.MathCommon.SmallNumber),
       r.Normalize(MathCommon_1.MathCommon.SmallNumber);
-    var u = (0, puerts_1.$unref)(u);
-    const c = (0, puerts_1.$unref)(n);
-    var n =
-      l > MathCommon_1.MathCommon.RoundAngle
-        ? MathCommon_1.MathCommon.RoundAngle
-        : l;
-    var l = t.op_Subtraction(r.op_Multiply(o));
-    var t = t.op_Addition(r.op_Multiply(o));
-    const s =
-      (u.Add(l),
-      BulletBlueprintFunctionLibrary.CalSectorPoints(l, e, r, n, a, i, u),
-      u.Num() - 1);
-    const B = u.Num();
-    var o =
-      (u.Add(t),
-      BulletBlueprintFunctionLibrary.CalSectorPoints(t, e, r, n, a, i, u),
-      u.Num() - 1);
+    var u = (0, puerts_1.$unref)(u),
+      c = (0, puerts_1.$unref)(n),
+      n =
+        l > MathCommon_1.MathCommon.RoundAngle
+          ? MathCommon_1.MathCommon.RoundAngle
+          : l,
+      l = t.op_Subtraction(r.op_Multiply(o)),
+      t = t.op_Addition(r.op_Multiply(o)),
+      s =
+        (u.Add(l),
+        BulletBlueprintFunctionLibrary.CalSectorPoints(l, e, r, n, a, i, u),
+        u.Num() - 1),
+      B = u.Num(),
+      o =
+        (u.Add(t),
+        BulletBlueprintFunctionLibrary.CalSectorPoints(t, e, r, n, a, i, u),
+        u.Num() - 1);
     BulletBlueprintFunctionLibrary.CircleTriangles(0, 1, s, !1, c),
       BulletBlueprintFunctionLibrary.CircleTriangles(B, B + 1, o, !0, c),
       MathUtils_1.MathUtils.IsNearlyEqual(
@@ -280,28 +280,28 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
         (BulletBlueprintFunctionLibrary.RectangleTriangles(1, B + 1, 0, B, c),
         BulletBlueprintFunctionLibrary.RectangleTriangles(0, B, s, o, c));
     for (let t = 1; t < s; t++) {
-      const _ = t;
-      const m = t + 1;
-      const C = B + _;
-      const M = B + m;
+      var _ = t,
+        m = t + 1,
+        C = B + _,
+        M = B + m;
       BulletBlueprintFunctionLibrary.RectangleTriangles(m, M, _, C, c);
     }
   }
   static CalcBulletInitLocation(a, o, i) {
-    const u = o.GetTransform();
-    var o = Quat_1.Quat.Create();
+    var u = o.GetTransform(),
+      o = Quat_1.Quat.Create();
     if (
       (Rotator_1.Rotator.Create(0, 90, 0).Quaternion(o),
       u.SetRotation(o.ToUeQuat()),
-      a.移动设置.运动轨迹类型 === 3)
+      3 === a.移动设置.运动轨迹类型)
     ) {
-      let t = void 0;
-      let e = 0;
-      let r = void 0;
+      let t = void 0,
+        e = 0,
+        r = void 0;
       r =
-        a.移动设置.运动轨迹参数目标 === 0 ||
-        a.移动设置.运动轨迹参数目标 === 6 ||
-        a.移动设置.运动轨迹参数目标 === 1
+        0 === a.移动设置.运动轨迹参数目标 ||
+        6 === a.移动设置.运动轨迹参数目标 ||
+        1 === a.移动设置.运动轨迹参数目标
           ? ((t = u.GetLocation()),
             (e = u.Rotator().Yaw),
             u.GetRotation().GetForwardVector())
@@ -318,8 +318,8 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
         (l = (l = l.op_Multiply(o.X)).op_Addition(t))
       );
     }
-    const t = Vector_1.Vector.Create();
-    const e = Vector_1.Vector.Create();
+    var t = Vector_1.Vector.Create(),
+      e = Vector_1.Vector.Create();
     switch (
       (e.FromUeVector(a.基础设置.出生位置偏移), a.基础设置.出生位置基准)
     ) {
@@ -341,10 +341,10 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return t.ToUeVector();
   }
   static AttachToBone(t, e, r) {
-    const l = r.移动设置.子弹跟随类型;
-    l === 0
+    var l = r.移动设置.子弹跟随类型;
+    0 === l
       ? e.K2_AttachToComponent(t, r.移动设置.骨骼名字, 1, 1, 1, !0)
-      : l === 3 &&
+      : 3 === l &&
         (e.K2_AttachToComponent(t, r.移动设置.骨骼名字, 1, 1, 1, !0),
         e.K2_SetActorRelativeLocation(r.基础设置.出生位置偏移, !1, void 0, !1),
         e.K2_SetActorRelativeRotation(
@@ -355,8 +355,8 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
         ));
   }
   static CalcBulletInitRotator(t, e, r, l, a) {
-    const o = Rotator_1.Rotator.Create();
-    if (t.移动设置.运动轨迹类型 === 3) return e.K2_GetActorRotation();
+    var o = Rotator_1.Rotator.Create();
+    if (3 === t.移动设置.运动轨迹类型) return e.K2_GetActorRotation();
     switch (t.移动设置.出生初速度方向基准) {
       case 0:
         var i = e
@@ -400,8 +400,8 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     );
   }
   static CalcBulletRotator(e, r, l, a, o) {
-    const t = Rotator_1.Rotator.Create();
-    const i = Vector_1.Vector.Create();
+    var t = Rotator_1.Rotator.Create(),
+      i = Vector_1.Vector.Create();
     switch (e.移动设置.运动轨迹类型) {
       case 0:
         t.FromUeRotator(r.K2_GetActorRotation());
@@ -414,9 +414,9 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
         );
         break;
       case 3: {
-        let u = e.移动设置.运动轨迹参数数据.Get(0);
-        let n =
-          (e.移动设置.移动速度 * o * MathCommon_1.MathCommon.RadToDeg) / u.X;
+        var u = e.移动设置.运动轨迹参数数据.Get(0),
+          n =
+            (e.移动设置.移动速度 * o * MathCommon_1.MathCommon.RadToDeg) / u.X;
         i.Set(
           0,
           Math.sin(u.Z * MathCommon_1.MathCommon.DegToRad),
@@ -424,9 +424,9 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
         );
         let t = void 0;
         (u = (t =
-          e.移动设置.运动轨迹参数目标 === 0 ||
-          e.移动设置.运动轨迹参数目标 === 6 ||
-          e.移动设置.运动轨迹参数目标 === 1
+          0 === e.移动设置.运动轨迹参数目标 ||
+          6 === e.移动设置.运动轨迹参数目标 ||
+          1 === e.移动设置.运动轨迹参数目标
             ? l.K2_GetActorLocation()
             : a)
           .op_Subtraction(r.K2_GetActorLocation())
@@ -451,4 +451,4 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
 }
 exports.default = BulletBlueprintFunctionLibrary;
-// # sourceMappingURL=BulletBlueprintFunctionLibrary.js.map
+//# sourceMappingURL=BulletBlueprintFunctionLibrary.js.map

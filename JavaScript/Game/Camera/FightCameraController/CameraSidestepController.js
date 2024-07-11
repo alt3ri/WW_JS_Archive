@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraSidestepController = void 0);
-const MathCommon_1 = require("../../../Core/Utils/Math/MathCommon");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const FightCameraLogicComponent_1 = require("../FightCameraLogicComponent");
-const CameraControllerBase_1 = require("./CameraControllerBase");
+const MathCommon_1 = require("../../../Core/Utils/Math/MathCommon"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  FightCameraLogicComponent_1 = require("../FightCameraLogicComponent"),
+  CameraControllerBase_1 = require("./CameraControllerBase");
 class CameraSidestepController extends CameraControllerBase_1.CameraControllerBase {
   constructor() {
     super(...arguments),
@@ -56,12 +56,12 @@ class CameraSidestepController extends CameraControllerBase_1.CameraControllerBa
       (this.Uce(t), this.Lce <= 0 || (this.Ace(t), this.Pce(t), this.xce(t)));
   }
   Uce(t) {
-    const i = Rotator_1.Rotator.Create(0, this.Camera.PlayerRotator.Yaw, 0);
-    const h = Rotator_1.Rotator.Create(
-      0,
-      this.Camera.CurrentCamera.ArmRotation.Yaw,
-      0,
-    );
+    var i = Rotator_1.Rotator.Create(0, this.Camera.PlayerRotator.Yaw, 0),
+      h = Rotator_1.Rotator.Create(
+        0,
+        this.Camera.CurrentCamera.ArmRotation.Yaw,
+        0,
+      );
     i.Vector(this.Rce),
       h.Vector(this.Dce),
       this.Camera.IsModifiedArmRotation ||
@@ -77,12 +77,12 @@ class CameraSidestepController extends CameraControllerBase_1.CameraControllerBa
           )));
   }
   Ace(t) {
-    var t = this.Dce.SineAngle2D(this.Rce) * t * this.Tce;
-    const i = this.Camera.DesiredCamera.ArmRotation;
+    var t = this.Dce.SineAngle2D(this.Rce) * t * this.Tce,
+      i = this.Camera.DesiredCamera.ArmRotation;
     (i.Yaw = (i.Yaw + t) % 360), (this.Camera.IsModifiedArmRotation = !0);
   }
   Pce(t) {
-    let i, h, s;
+    var i, h, s;
     this.Lce < this.MoveDurationThreshold ||
       ((s = this.Camera.CharacterEntityHandle?.Entity?.GetComponent(160)) &&
         ((s = s.MovementTerrainNormal),
@@ -116,7 +116,7 @@ class CameraSidestepController extends CameraControllerBase_1.CameraControllerBa
         (this.Camera.IsModifiedArmRotation = !0)));
   }
   IsCharacterMoving() {
-    let t;
+    var t;
     return (
       !!this.Camera.Character &&
       void 0 !==
@@ -132,40 +132,40 @@ class CameraSidestepController extends CameraControllerBase_1.CameraControllerBa
       this.Camera.Character?.CharacterActorComponent.Entity.GetComponent(161);
     if (h && h.HasMoveInput) {
       let t = 0;
-      let s;
-      var h = this.Camera.GetArmLengthWithSettingAndZoom(
-        this.Camera.CurrentCamera,
-      );
-      var e = this.Camera.GetArmLengthWithSetting(this.Camera.CurrentCamera);
-      var r = e - this.Camera.CurrentCamera.ArmLength;
-      var r = this.InputRecoverArmLengthMin + r;
-      var e = Math.max(e, this.InputRecoverArmLengthMax);
-      var e =
-        (h < r
-          ? ((r = r - h),
-            (s = MathUtils_1.MathUtils.Lerp(
-              this.InputRecoverArmLengthSpeedMin,
-              this.InputRecoverArmLengthSpeedMax,
-              this.InputRecoverArmLengthCurve.GetCurrentValue(
-                r / this.InputRecoverArmLengthLimit,
-              ),
-            )),
-            (t = Math.min(s * i, r)))
-          : e < h &&
-            ((s = h - e),
-            (r = MathUtils_1.MathUtils.Lerp(
-              this.InputRecoverArmLengthSpeedMin,
-              this.InputRecoverArmLengthSpeedMax,
-              this.InputRecoverArmLengthCurve.GetCurrentValue(
-                s / this.InputRecoverArmLengthLimit,
-              ),
-            )),
-            (t = -Math.min(r * i, s))),
-        h + t);
-      var r = h / this.Camera.DesiredCamera.ZoomModifier;
+      var s,
+        h = this.Camera.GetArmLengthWithSettingAndZoom(
+          this.Camera.CurrentCamera,
+        ),
+        e = this.Camera.GetArmLengthWithSetting(this.Camera.CurrentCamera),
+        r = e - this.Camera.CurrentCamera.ArmLength,
+        r = this.InputRecoverArmLengthMin + r,
+        e = Math.max(e, this.InputRecoverArmLengthMax),
+        e =
+          (h < r
+            ? ((r = r - h),
+              (s = MathUtils_1.MathUtils.Lerp(
+                this.InputRecoverArmLengthSpeedMin,
+                this.InputRecoverArmLengthSpeedMax,
+                this.InputRecoverArmLengthCurve.GetCurrentValue(
+                  r / this.InputRecoverArmLengthLimit,
+                ),
+              )),
+              (t = Math.min(s * i, r)))
+            : e < h &&
+              ((s = h - e),
+              (r = MathUtils_1.MathUtils.Lerp(
+                this.InputRecoverArmLengthSpeedMin,
+                this.InputRecoverArmLengthSpeedMax,
+                this.InputRecoverArmLengthCurve.GetCurrentValue(
+                  s / this.InputRecoverArmLengthLimit,
+                ),
+              )),
+              (t = -Math.min(r * i, s))),
+          h + t),
+        r = h / this.Camera.DesiredCamera.ZoomModifier;
       this.Camera.DesiredCamera.ZoomModifier = e / r;
     }
   }
 }
 exports.CameraSidestepController = CameraSidestepController;
-// # sourceMappingURL=CameraSidestepController.js.map
+//# sourceMappingURL=CameraSidestepController.js.map

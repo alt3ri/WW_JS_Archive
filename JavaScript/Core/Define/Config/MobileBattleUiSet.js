@@ -51,53 +51,53 @@ class MobileBattleUiSet {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   panelindex() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   itemindex() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   name(t) {
-    const e = this.J7.__offset(this.z7, 10);
+    var e = this.J7.__offset(this.z7, 10);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   sourcesize() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   sourcealpha() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   sourceoffsetx() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   sourceoffsety() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   ischeckoverlap() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   canedit() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   isdefaultselected() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   sourcehierarchyindex() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.MobileBattleUiSet = MobileBattleUiSet;
-// # sourceMappingURL=MobileBattleUiSet.js.map
+//# sourceMappingURL=MobileBattleUiSet.js.map

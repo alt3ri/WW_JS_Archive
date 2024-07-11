@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkipInterfaceModel = void 0);
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
+const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase");
 class SkipInterfaceModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -20,4 +20,4 @@ class SkipInterfaceModel extends ModelBase_1.ModelBase {
   }
 }
 exports.SkipInterfaceModel = SkipInterfaceModel;
-// # sourceMappingURL=SkipInterfaceModel.js.map
+//# sourceMappingURL=SkipInterfaceModel.js.map

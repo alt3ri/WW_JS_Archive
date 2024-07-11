@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemDeliverController = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const DeliverData_1 = require("./DeliverData");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  DeliverData_1 = require("./DeliverData");
 class ItemDeliverController extends UiControllerBase_1.UiControllerBase {
   static HandInItemRequest(e, r, t) {
-    let o, a;
-    e.Type !== 6
+    var o, a;
+    6 !== e.Type
       ? t && t(!1)
       : ((o =
           ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTreeOwnerId(
@@ -38,7 +38,7 @@ class ItemDeliverController extends UiControllerBase_1.UiControllerBase {
         }));
   }
   static ItemUseRequest(e, r, t, o) {
-    if (e.Type !== 1) o && o(!1);
+    if (1 !== e.Type) o && o(!1);
     else {
       const a = Protocol_1.Aki.Protocol.ats.create();
       (a.I5n = 1),
@@ -72,26 +72,26 @@ class ItemDeliverController extends UiControllerBase_1.UiControllerBase {
   static async OpenItemDeliverViewByHandInItem(e, r, t, o, a) {
     if (!e || e.length <= 0) return !1;
     if (UiManager_1.UiManager.IsViewOpen("ItemDeliverView")) return !1;
-    const i = ModelManager_1.ModelManager.InventoryModel;
-    const n = new DeliverData_1.DeliverData(r, t, o, a);
+    var i = ModelManager_1.ModelManager.InventoryModel,
+      n = new DeliverData_1.DeliverData(r, t, o, a);
     for (const g of e) {
-      const l = g.HandInType;
-      if (l === "ItemIds") {
-        var s;
-        let _ = g.ItemIds;
-        const v = g.Count;
-        var M = n.AddSlotData(_, v, l);
-        _.length === 1 &&
+      var l = g.HandInType;
+      if ("ItemIds" === l) {
+        var s,
+          _ = g.ItemIds,
+          v = g.Count,
+          M = n.AddSlotData(_, v, l);
+        1 === _.length &&
           ((_ = _[0]),
           (s = i.GetItemCountByConfigId(_)),
           M?.SetItem(_, Math.min(v, s)));
-      } else if (l === "ItemType") {
-        var M = g.ItemIds;
-        const f = [];
-        const m = ConfigManager_1.ConfigManager.ItemConfig;
+      } else if ("ItemType" === l) {
+        var M = g.ItemIds,
+          f = [],
+          m = ConfigManager_1.ConfigManager.ItemConfig;
         for (const D of M)
           for (const I of m.GetConfigListByItemType(D)) {
-            const c = I.Id;
+            var c = I.Id;
             f.push(c);
           }
         n.AddSlotData(f, g.Count, l);
@@ -101,26 +101,26 @@ class ItemDeliverController extends UiControllerBase_1.UiControllerBase {
   }
   static OpenItemDeliverViewByHandInGroup(r, e, t, o, a) {
     if (r && !UiManager_1.UiManager.IsViewOpen("ItemDeliverView")) {
-      const i = ModelManager_1.ModelManager.InventoryModel;
-      const n = new DeliverData_1.DeliverData(e, t, o, a);
-      const l = r.HandInType;
-      const s = r.ItemIds;
-      const _ = r.Count;
+      var i = ModelManager_1.ModelManager.InventoryModel,
+        n = new DeliverData_1.DeliverData(e, t, o, a),
+        l = r.HandInType,
+        s = r.ItemIds,
+        _ = r.Count;
       for (let e = 0; e < r.Slot; e++)
-        if (l === "ItemIds") {
-          var v;
-          var M;
-          const f = n.AddSlotData(s, _, l);
-          s.length === 1 &&
+        if ("ItemIds" === l) {
+          var v,
+            M,
+            f = n.AddSlotData(s, _, l);
+          1 === s.length &&
             ((v = s[0]),
             (M = i.GetItemCountByConfigId(v)),
             f?.SetItem(v, Math.min(_, M)));
-        } else if (l === "ItemType") {
-          const m = [];
-          const c = ConfigManager_1.ConfigManager.ItemConfig;
+        } else if ("ItemType" === l) {
+          var m = [],
+            c = ConfigManager_1.ConfigManager.ItemConfig;
           for (const D of s)
             for (const I of c.GetConfigListByItemType(D)) {
-              const g = I.Id;
+              var g = I.Id;
               m.push(g);
             }
           n.AddSlotData(m, _, l);
@@ -130,4 +130,4 @@ class ItemDeliverController extends UiControllerBase_1.UiControllerBase {
   }
 }
 exports.ItemDeliverController = ItemDeliverController;
-// # sourceMappingURL=ItemDeliverController.js.map
+//# sourceMappingURL=ItemDeliverController.js.map

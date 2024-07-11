@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OpenSystemRoleDescription = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const OpenSystemBase_1 = require("./OpenSystemBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  OpenSystemBase_1 = require("./OpenSystemBase");
 class OpenSystemRoleDescription extends OpenSystemBase_1.OpenSystemBase {
   async ExecuteOpenView(e, r) {
-    let i;
+    var i;
     return e.BoardId
       ? !!(i =
           ConfigManager_1.ConfigManager.JoinTeamConfig.GetRoleDescriptionConfig(
@@ -30,4 +30,4 @@ class OpenSystemRoleDescription extends OpenSystemBase_1.OpenSystemBase {
   }
 }
 exports.OpenSystemRoleDescription = OpenSystemRoleDescription;
-// # sourceMappingURL=OpenSystemRoleDescription.js.map
+//# sourceMappingURL=OpenSystemRoleDescription.js.map

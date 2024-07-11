@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraSpecialGameplayController = void 0);
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const CameraController_1 = require("../CameraController");
-const CameraControllerBase_1 = require("./CameraControllerBase");
-const ISpecialGameplayCamera_1 = require("./SpecialGameplay/ISpecialGameplayCamera");
+const ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  CameraController_1 = require("../CameraController"),
+  CameraControllerBase_1 = require("./CameraControllerBase"),
+  ISpecialGameplayCamera_1 = require("./SpecialGameplay/ISpecialGameplayCamera");
 class CameraSpecialGameplayController extends CameraControllerBase_1.CameraControllerBase {
   constructor() {
     super(...arguments), (this.CameraActor = void 0), (this.wce = void 0);
@@ -57,4 +57,4 @@ class CameraSpecialGameplayController extends CameraControllerBase_1.CameraContr
   }
 }
 exports.CameraSpecialGameplayController = CameraSpecialGameplayController;
-// # sourceMappingURL=CameraSpecialGameplayController.js.map
+//# sourceMappingURL=CameraSpecialGameplayController.js.map

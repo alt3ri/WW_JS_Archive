@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldLevelUpView = void 0);
-const UE = require("ue");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const EffectSystem_1 = require("../../../Effect/EffectSystem");
-const Global_1 = require("../../../Global");
-const GlobalData_1 = require("../../../GlobalData");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const EffectUtil_1 = require("../../../Utils/EffectUtil");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  Global_1 = require("../../../Global"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  EffectUtil_1 = require("../../../Utils/EffectUtil"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class WorldLevelUpView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -49,15 +49,16 @@ class WorldLevelUpView extends UiTickViewBase_1.UiTickViewBase {
     );
   }
   odo() {
-    var e = ModelManager_1.ModelManager.WorldLevelModel.OriginWorldLevel;
-    const t =
-      (this.GetText(0).SetText(e.toString()),
-      ConfigManager_1.ConfigManager.WorldLevelConfig.GetWorldLevelConfig(e - 1)
-        .PlayerLevelMax);
-    var e =
-      ConfigManager_1.ConfigManager.WorldLevelConfig.GetWorldLevelConfig(
-        e,
-      ).PlayerLevelMax;
+    var e = ModelManager_1.ModelManager.WorldLevelModel.OriginWorldLevel,
+      t =
+        (this.GetText(0).SetText(e.toString()),
+        ConfigManager_1.ConfigManager.WorldLevelConfig.GetWorldLevelConfig(
+          e - 1,
+        ).PlayerLevelMax),
+      e =
+        ConfigManager_1.ConfigManager.WorldLevelConfig.GetWorldLevelConfig(
+          e,
+        ).PlayerLevelMax;
     LguiUtil_1.LguiUtil.SetLocalTextNew(
       this.GetText(1),
       "WorldLevelTips",
@@ -78,10 +79,10 @@ class WorldLevelUpView extends UiTickViewBase_1.UiTickViewBase {
     this.lpi();
   }
   _ko() {
-    let e, t, i, r;
+    var e, t, i, r;
     Global_1.Global.BaseCharacter &&
       (e = EffectUtil_1.EffectUtil.GetEffectPath("WorldLevelUpEffect")) &&
-      e.length !== 0 &&
+      0 !== e.length &&
       ((t = (i = Global_1.Global.BaseCharacter).GetTransform()),
       (i = i.CapsuleComponent.CapsuleHalfHeight),
       ((r = t.GetLocation()).Z -= i),
@@ -104,4 +105,4 @@ class WorldLevelUpView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.WorldLevelUpView = WorldLevelUpView;
-// # sourceMappingURL=WorldLevelUpView.js.map
+//# sourceMappingURL=WorldLevelUpView.js.map

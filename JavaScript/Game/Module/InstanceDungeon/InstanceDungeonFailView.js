@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonFailView = void 0);
-const UE = require("ue");
-const CommonDefine_1 = require("../../../Core/Define/CommonDefine");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const TrainingView_1 = require("../TrainingDegree/TrainingView");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const InstanceDungeonEntranceController_1 = require("./InstanceDungeonEntranceController");
+const UE = require("ue"),
+  CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  TrainingView_1 = require("../TrainingDegree/TrainingView"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  InstanceDungeonEntranceController_1 = require("./InstanceDungeonEntranceController");
 class InstanceDungeonFailView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -96,4 +96,4 @@ class InstanceDungeonFailView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.InstanceDungeonFailView = InstanceDungeonFailView;
-// # sourceMappingURL=InstanceDungeonFailView.js.map
+//# sourceMappingURL=InstanceDungeonFailView.js.map

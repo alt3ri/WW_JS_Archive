@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MediumItemGridBuffIconComponent = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const MediumItemGridComponent_1 = require("./MediumItemGridComponent");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  MediumItemGridComponent_1 = require("./MediumItemGridComponent");
 class MediumItemGridBuffIconComponent extends MediumItemGridComponent_1.MediumItemGridComponent {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UISprite]];
@@ -15,7 +15,7 @@ class MediumItemGridBuffIconComponent extends MediumItemGridComponent_1.MediumIt
     if (void 0 === t) this.SetActive(!1);
     else {
       let e = void 0;
-      const r = ModelManager_1.ModelManager.MediumItemGridModel;
+      var r = ModelManager_1.ModelManager.MediumItemGridModel;
       switch (t) {
         case 0:
           break;
@@ -43,4 +43,4 @@ class MediumItemGridBuffIconComponent extends MediumItemGridComponent_1.MediumIt
   }
 }
 exports.MediumItemGridBuffIconComponent = MediumItemGridBuffIconComponent;
-// # sourceMappingURL=MediumItemGridBuffIconComponent.js.map
+//# sourceMappingURL=MediumItemGridBuffIconComponent.js.map

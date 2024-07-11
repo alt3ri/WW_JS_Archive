@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelTrailSpec = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper");
-const EffectMaterialParameter_1 = require("../../Render/Effect/Data/Parameters/EffectMaterialParameter");
-const EffectSpec_1 = require("./EffectSpec");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper"),
+  EffectMaterialParameter_1 = require("../../Render/Effect/Data/Parameters/EffectMaterialParameter"),
+  EffectSpec_1 = require("./EffectSpec");
 class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
   constructor() {
     super(...arguments),
@@ -57,7 +57,7 @@ class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
         (this.AttachBoneNames = new Array()),
           (this.AttachLocations = new Array());
         for (let i = 0; i < this.AttachCount; i++) {
-          const s = this.EffectModel.AttachBoneNames.Get(i);
+          var s = this.EffectModel.AttachBoneNames.Get(i);
           let t = Vector_1.Vector.Create(0, 0, 0);
           if (
             (this.EffectModel.RelativeLocations.Num() > i &&
@@ -94,7 +94,7 @@ class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
           );
         this.AttachLocations = new Array();
         for (let t = 0; t < this.AttachCount; t++) {
-          const i = Vector_1.Vector.Create(
+          var i = Vector_1.Vector.Create(
             this.EffectModel.RelativeLocations.Get(t),
           );
           this.AttachLocations.push(i);
@@ -131,7 +131,7 @@ class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
         (this.LocationsCurve = this.EffectModel.LocationsCurve),
         (this.LocationsFromCurve = new Array());
       for (let t = 0; t < this.AttachCount; t++) {
-        const h = Vector_1.Vector.Create(0, 0, 0);
+        var h = Vector_1.Vector.Create(0, 0, 0);
         this.LocationsFromCurve.push(h);
       }
       (this.cz = Vector_1.Vector.Create(0, 0, 0)),
@@ -152,14 +152,14 @@ class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
       this.IsDead ||
         this.SkeletalMeshComp?.IsValid() ||
         this.Stop("[EffectModelTrailSpec.OnTick]", !1);
-      const s = this.LocationsCurve.Num();
+      var s = this.LocationsCurve.Num();
       for (let t = 0; t < s; t++) {
-        const h = this.LocationsCurve.GetKey(t);
-        var e = this.LocationsCurve.Get(h);
-        var e = UE.KuroCurveLibrary.GetValue_Vector(
-          e,
-          this.LifeTime.TotalPassTime,
-        );
+        var h = this.LocationsCurve.GetKey(t),
+          e = this.LocationsCurve.Get(h),
+          e = UE.KuroCurveLibrary.GetValue_Vector(
+            e,
+            this.LifeTime.TotalPassTime,
+          );
         this.LocationsFromCurve[h].FromUeVector(e);
       }
       if (
@@ -173,7 +173,7 @@ class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
         !this.IsDead)
       ) {
         for (let t = 0; t < this.AttachCount; t++) {
-          const r = this.GetAttachLocation(t);
+          var r = this.GetAttachLocation(t);
           this.BezierMeshComp.SetKeyPoint(t, r.X, r.Y, r.Z);
         }
         var o = UE.KuroCurveLibrary.GetValue_Float(
@@ -182,18 +182,18 @@ class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
         );
         this.BezierMeshComp.AddLayer(o);
       }
-      let t = 0;
-      let i =
-        ((t = this.IsDead
-          ? this.EffectModel.DissipateSpeedAfterDead
-          : UE.KuroCurveLibrary.GetValue_Float(
-              this.EffectModel.DissipateSpeed,
-              this.LifeTime.TotalPassTime,
-            )),
-        this.Handle.GetIgnoreTimeScale() ||
-          (t = t * this.GetTimeScale() * this.GetGlobalTimeScale()),
-        (t += this.DissipateLeft),
-        Math.floor(t));
+      let t = 0,
+        i =
+          ((t = this.IsDead
+            ? this.EffectModel.DissipateSpeedAfterDead
+            : UE.KuroCurveLibrary.GetValue_Float(
+                this.EffectModel.DissipateSpeed,
+                this.LifeTime.TotalPassTime,
+              )),
+          this.Handle.GetIgnoreTimeScale() ||
+            (t = t * this.GetTimeScale() * this.GetGlobalTimeScale()),
+          (t += this.DissipateLeft),
+          Math.floor(t));
       this.DissipateLeft = t - i;
       o = this.BezierMeshComp.GetMeshHeight() - this.MaxMeshLength;
       o > i && ((i = o), (this.DissipateLeft = 0)),
@@ -222,13 +222,13 @@ class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
       !(
         !this.IsDead ||
         (!this.EffectModel.DestroyAtOnce &&
-          this.BezierMeshComp.GetMeshHeight() !== 0)
+          0 !== this.BezierMeshComp.GetMeshHeight())
       )
     );
   }
   GetAttachLocation(t) {
-    let i = void 0;
-    let s = void 0;
+    let i = void 0,
+      s = void 0;
     return (
       this.AttachLocations[t].Addition(this.LocationsFromCurve[t], this.cz),
       (s =
@@ -249,4 +249,4 @@ class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
   }
 }
 exports.EffectModelTrailSpec = EffectModelTrailSpec;
-// # sourceMappingURL=EffectModelTrailSpec.js.map
+//# sourceMappingURL=EffectModelTrailSpec.js.map

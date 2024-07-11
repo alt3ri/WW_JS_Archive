@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckInputAction = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const LevelGeneralDefine_1 = require("../LevelGeneralDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  LevelGeneralDefine_1 = require("../LevelGeneralDefine");
 class LevelConditionCheckInputAction extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, n) {
-    if (e.LimitParams.size === 0)
+    if (0 === e.LimitParams.size)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -19,8 +19,8 @@ class LevelConditionCheckInputAction extends LevelGeneralBase_1.LevelConditionBa
           ),
         !1
       );
-    const i = e.LimitParams.get("Action");
-    const t = Number(e.LimitParams.get("Kind"));
+    var i = e.LimitParams.get("Action"),
+      t = Number(e.LimitParams.get("Kind"));
     if (!i || !t)
       return (
         Log_1.Log.CheckError() &&
@@ -68,4 +68,4 @@ class LevelConditionCheckInputAction extends LevelGeneralBase_1.LevelConditionBa
   }
 }
 exports.LevelConditionCheckInputAction = LevelConditionCheckInputAction;
-// # sourceMappingURL=LevelConditionCheckInputAction.js.map
+//# sourceMappingURL=LevelConditionCheckInputAction.js.map

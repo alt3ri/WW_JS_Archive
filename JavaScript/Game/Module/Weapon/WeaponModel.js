@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ItemDefines_1 = require("../Item/Data/ItemDefines");
-const WeaponDefine_1 = require("./WeaponDefine");
-const WeaponInstance_1 = require("./WeaponInstance");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ItemDefines_1 = require("../Item/Data/ItemDefines"),
+  WeaponDefine_1 = require("./WeaponDefine"),
+  WeaponInstance_1 = require("./WeaponInstance"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
 class WeaponModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -22,21 +22,21 @@ class WeaponModel extends ModelBase_1.ModelBase {
       (this.xOo = (e, t) => t.QualityId - e.QualityId);
   }
   AddWeaponData(e) {
-    var e = this.CreateWeaponInstance(e);
-    const t = e.GetIncId();
-    let n = (this.UOo.set(t, e), e.HasRole());
+    var e = this.CreateWeaponInstance(e),
+      t = e.GetIncId(),
+      n = (this.UOo.set(t, e), e.HasRole());
     n &&
       ((n = e.GetRoleId()), this.AOo.set(n, t), Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info("Role", 44, "武器设置", ["roleId", n], ["incId", t]);
   }
   RemoveWeaponData(e) {
-    let t = this.UOo.get(e);
+    var t = this.UOo.get(e);
     t &&
       (t.HasRole() && ((t = t.GetRoleId()), this.AOo.delete(t)),
       this.UOo.delete(e));
   }
   CreateWeaponInstance(e) {
-    const t = new WeaponInstance_1.WeaponInstance();
+    var t = new WeaponInstance_1.WeaponInstance();
     return t.SetWeaponItem(e), t;
   }
   SetWeaponLevelData(e, t, n) {
@@ -67,7 +67,7 @@ class WeaponModel extends ModelBase_1.ModelBase {
           );
   }
   GetWeaponIdByRoleDataId(e) {
-    let t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e);
+    var t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e);
     return t
       ? t.IsTrialRole()
         ? t.GetWeaponData().GetItemId()
@@ -85,8 +85,8 @@ class WeaponModel extends ModelBase_1.ModelBase {
   }
   WeaponRoleLoadEquip(e) {
     for (const r of e.sort((e, t) => e.DVn - t.DVn)) {
-      const t = r.DVn;
-      const n = r.AVn;
+      var t = r.DVn,
+        n = r.AVn;
       this.ChangeWeaponEquip(n, t);
     }
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.EquipWeapon);
@@ -97,9 +97,9 @@ class WeaponModel extends ModelBase_1.ModelBase {
       this.qNo(e.Vms);
   }
   qNo(e) {
-    const t = [];
+    var t = [];
     for (const r of Object.keys(e)) {
-      const n = [{ IncId: 0, ItemId: Number.parseInt(r) }, e[r]];
+      var n = [{ IncId: 0, ItemId: Number.parseInt(r) }, e[r]];
       t.push(n);
     }
     EventSystem_1.EventSystem.Emit(
@@ -108,13 +108,13 @@ class WeaponModel extends ModelBase_1.ModelBase {
     );
   }
   ChangeWeaponEquip(e, t) {
-    const n = this.UOo.get(e);
-    const r = n.GetRoleId();
-    r > 0 &&
+    var n = this.UOo.get(e),
+      r = n.GetRoleId();
+    0 < r &&
       (this.AOo.set(r, 0), Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info("Role", 44, "武器设置", ["lastRoleId", r], ["incId", 0]),
       n.SetRoleId(t),
-      t > 0 &&
+      0 < t &&
         (this.AOo.set(t, e), Log_1.Log.CheckInfo()) &&
         Log_1.Log.Info("Role", 44, "武器设置", ["roleId", t], ["incId", e]);
   }
@@ -130,39 +130,40 @@ class WeaponModel extends ModelBase_1.ModelBase {
     );
   }
   GetWeaponListFromReplace(e) {
-    const t = [];
+    var t = [];
     for (const n of ModelManager_1.ModelManager.InventoryModel.GetWeaponItemDataList())
       this.GetWeaponDataByIncId(n.GetUniqueId()).GetWeaponConfig()
         .WeaponType === e && t.push(n);
     return t;
   }
   GetResonanceMaterialList(e) {
-    const t = ModelManager_1.ModelManager.InventoryModel;
-    let n = this.GetWeaponDataByIncId(e);
-    const r = n.GetItemId();
-    const o = [];
+    var t = ModelManager_1.ModelManager.InventoryModel,
+      n = this.GetWeaponDataByIncId(e),
+      r = n.GetItemId(),
+      o = [];
     for (const a of t.GetItemDataBaseByMainType(2))
       a.GetConfigId() !== r ||
         a.GetUniqueId() === e ||
         this.GetWeaponDataByIncId(a.GetUniqueId()).HasRole() ||
         o.push(a);
     n = n.GetResonanceConfig().AlternativeConsume;
-    if (n && n.length > 0)
+    if (n && 0 < n.length)
       for (const i of n)
         for (const s of t.GetItemDataBaseByConfigId(i)) o.push(s);
     return o;
   }
   GetCanChangeMaterialList(e) {
-    const t = new Map();
-    const n = ConfigCommon_1.ConfigCommon.ToList(
-      ConfigManager_1.ConfigManager.ItemConfig.GetConfigListByItemType(4),
-    );
+    var t = new Map(),
+      n = ConfigCommon_1.ConfigCommon.ToList(
+        ConfigManager_1.ConfigManager.ItemConfig.GetConfigListByItemType(4),
+      );
     n.sort(this.xOo);
     let r = e;
     for (const i of n) {
-      var o;
-      const a =
-        ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponExpItemConfig(i.Id);
+      var o,
+        a = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponExpItemConfig(
+          i.Id,
+        );
       r >= a.BasicExp &&
         ((o = Math.floor(r / a.BasicExp)), t.set(i.Id, o), (r %= a.BasicExp));
     }
@@ -178,17 +179,17 @@ class WeaponModel extends ModelBase_1.ModelBase {
     return o;
   }
   GetWeaponBreachMaxLevel(e) {
-    const t = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponBreachList(e);
-    const n = t.length;
+    var t = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponBreachList(e),
+      n = t.length;
     let r = 0;
     for (let e = 0; e < n; e++) {
-      const o = t[e];
+      var o = t[e];
       o.Level > r && (r = o.Level);
     }
     return r;
   }
   GetWeaponItemBaseExp(e) {
-    if (e.GetType() === 4) {
+    if (4 === e.GetType()) {
       const t =
         ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponExpItemConfig(
           e.GetConfigId(),
@@ -201,8 +202,8 @@ class WeaponModel extends ModelBase_1.ModelBase {
     return t.BasicExp;
   }
   GetWeaponConfigDescParams(e, t) {
-    let n;
-    const r = [];
+    var n,
+      r = [];
     for (const o of e.DescParams)
       o &&
         ((n = t >= o.ArrayString.length ? o.ArrayString.length : t),
@@ -222,14 +223,14 @@ class WeaponModel extends ModelBase_1.ModelBase {
       e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
         e.GetRoleId(),
       );
-      if (e && e.GetRoleConfig().RoleType !== 1) return !0;
+      if (e && 1 !== e.GetRoleConfig().RoleType) return !0;
     }
     return !1;
   }
   CanItemUseAsExpItem(e) {
-    if (e.GetType() === 2 && e.GetUniqueId() > 0) {
+    if (2 === e.GetType() && 0 < e.GetUniqueId()) {
       e = this.GetWeaponDataByIncId(e.GetUniqueId());
-      if (e.HasRole() || e.GetItemConfig().QualityId >= 5) return !1;
+      if (e.HasRole() || 5 <= e.GetItemConfig().QualityId) return !1;
     }
     return !0;
   }
@@ -252,16 +253,16 @@ class WeaponModel extends ModelBase_1.ModelBase {
     );
   }
   HasWeaponResonance(e) {
-    return e.GetResonanceLevel() > 1;
+    return 1 < e.GetResonanceLevel();
   }
   GetWeaponItemExp(e, t) {
-    return e && e > 0
+    return e && 0 < e
       ? this.GetWeaponDataByIncId(e).GetMaterialExp()
       : ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponExpItemConfig(t)
           .BasicExp;
   }
   GetWeaponItemExpCost(e, t) {
-    return e && e > 0
+    return e && 0 < e
       ? this.GetWeaponDataByIncId(e).GetMaterialCost()
       : ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponExpItemConfig(t)
           .Cost;
@@ -269,14 +270,14 @@ class WeaponModel extends ModelBase_1.ModelBase {
   GetWeaponExpItemListCost(e) {
     let t = 0;
     for (const r of e) {
-      if (r[0].ItemId === 0) break;
-      const n = this.GetWeaponItemExpCost(r[0].IncId, r[0].ItemId);
+      if (0 === r[0].ItemId) break;
+      var n = this.GetWeaponItemExpCost(r[0].IncId, r[0].ItemId);
       t += n * r[1];
     }
     return t;
   }
   GetWeaponExpItemList(e) {
-    const t = [];
+    var t = [];
     for (const n of ModelManager_1.ModelManager.InventoryModel.GetItemDataBaseByMainType(
       2,
     ))
@@ -284,11 +285,11 @@ class WeaponModel extends ModelBase_1.ModelBase {
     return t;
   }
   GetWeaponExpItemListUseToAuto(e) {
-    const t = [];
+    var t = [];
     for (const r of this.GetWeaponExpItemList(e))
       if (!r.GetIsLock()) {
-        if (r.GetType() === 2) {
-          const n = this.GetWeaponDataByIncId(r.GetUniqueId());
+        if (2 === r.GetType()) {
+          var n = this.GetWeaponDataByIncId(r.GetUniqueId());
           if (this.IsWeaponHighResonanceLevel(n)) continue;
           if (this.IsWeaponHighLevel(n)) continue;
         }
@@ -297,7 +298,7 @@ class WeaponModel extends ModelBase_1.ModelBase {
     return this.GetWeaponExpItemListWithSort(t), t;
   }
   GetWeaponExpItemListWithSort(e) {
-    const t = new Set();
+    var t = new Set();
     return (
       t.add(2),
       t.add(10),
@@ -308,14 +309,14 @@ class WeaponModel extends ModelBase_1.ModelBase {
   }
   AutoAddExpItem(e, t, n, r) {
     let o = e;
-    const a = [];
+    var a = [];
     for (const u of n) {
       if (t <= a.length || o <= 0) break;
-      const i = r(u);
-      var s = Math.ceil(o / i);
-      let f = u.Count - u.SelectedCount;
-      var s = u.SelectedCount + Math.min(s, f);
-      s > 0 &&
+      var i = r(u),
+        s = Math.ceil(o / i),
+        f = u.Count - u.SelectedCount,
+        s = u.SelectedCount + Math.min(s, f);
+      0 < s &&
         ((f = {
           IncId: u.IncId,
           ItemId: u.ItemId,
@@ -331,10 +332,10 @@ class WeaponModel extends ModelBase_1.ModelBase {
     let r = e;
     for (const s of t) {
       if (r <= 0) break;
-      const o = n(s);
-      var a = Math.ceil(r / o);
-      const i = s.Count - s.SelectedCount;
-      var a = s.SelectedCount + Math.min(a, i);
+      var o = n(s),
+        a = Math.ceil(r / o),
+        i = s.Count - s.SelectedCount,
+        a = s.SelectedCount + Math.min(a, i);
       (s.SelectedCount = a), (r -= a * o);
     }
   }
@@ -345,10 +346,10 @@ class WeaponModel extends ModelBase_1.ModelBase {
     ];
   }
   GetWeaponBreachState(e) {
-    let t;
-    let n;
-    var e = this.GetWeaponDataByIncId(e);
-    const r = e.GetBreachConfig();
+    var t,
+      n,
+      e = this.GetWeaponDataByIncId(e),
+      r = e.GetBreachConfig();
     if (
       !ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckCondition(
         r.ConditionId.toString(),
@@ -371,4 +372,4 @@ class WeaponModel extends ModelBase_1.ModelBase {
   }
 }
 exports.WeaponModel = WeaponModel;
-// # sourceMappingURL=WeaponModel.js.map
+//# sourceMappingURL=WeaponModel.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SpecialEnergyBarPoint = void 0);
-const UE = require("ue");
-const SpecialEnergyBarBase_1 = require("./SpecialEnergyBarBase");
-const SpecialEnergyBarPointItem_1 = require("./SpecialEnergyBarPointItem");
-const POINT_NUM = 41;
-const POINT_WIDTH = 9;
+const UE = require("ue"),
+  SpecialEnergyBarBase_1 = require("./SpecialEnergyBarBase"),
+  SpecialEnergyBarPointItem_1 = require("./SpecialEnergyBarPointItem"),
+  POINT_NUM = 41,
+  POINT_WIDTH = 9;
 class SpecialEnergyBarPoint extends SpecialEnergyBarBase_1.SpecialEnergyBarBase {
   constructor() {
     super(...arguments), (this.Vct = void 0), (this.IsMorph = !1);
@@ -18,7 +18,7 @@ class SpecialEnergyBarPoint extends SpecialEnergyBarBase_1.SpecialEnergyBarBase 
     ];
   }
   async OnBeforeStartAsync() {
-    const e = [];
+    var e = [];
     e.push(this.InitPointItem(this.GetItem(0))),
       e.push(this.InitKeyItem(this.GetItem(1))),
       await Promise.all(e);
@@ -29,7 +29,7 @@ class SpecialEnergyBarPoint extends SpecialEnergyBarBase_1.SpecialEnergyBarBase 
       await this.Vct.CreateThenShowByActorAsync(e.GetOwner());
   }
   OnStart() {
-    let e;
+    var e;
     this.Config &&
       (this.Config.EffectColor &&
         ((e = new UE.LinearColor(UE.Color.FromHex(this.Config.EffectColor))),
@@ -38,7 +38,7 @@ class SpecialEnergyBarPoint extends SpecialEnergyBarBase_1.SpecialEnergyBarBase 
       this.RefreshBarPercent(!0));
   }
   RefreshBarPercent(e = !1) {
-    const t = this.PercentMachine.GetCurPercent();
+    var t = this.PercentMachine.GetCurPercent();
     this.Vct.UpdatePercent(t),
       this.KeyItem?.RefreshKeyEnable(this.GetKeyEnable(), e);
   }
@@ -53,4 +53,4 @@ class SpecialEnergyBarPoint extends SpecialEnergyBarBase_1.SpecialEnergyBarBase 
   }
 }
 exports.SpecialEnergyBarPoint = SpecialEnergyBarPoint;
-// # sourceMappingURL=SpecialEnergyBarPoint.js.map
+//# sourceMappingURL=SpecialEnergyBarPoint.js.map

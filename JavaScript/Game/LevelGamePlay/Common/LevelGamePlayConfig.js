@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelGamePlayConfig = void 0);
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const GamePlayScanByUid_1 = require("../../../Core/Define/ConfigQuery/GamePlayScanByUid");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  GamePlayScanByUid_1 = require("../../../Core/Define/ConfigQuery/GamePlayScanByUid"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class LevelGamePlayConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments),
@@ -54,7 +54,7 @@ class LevelGamePlayConfig extends ConfigBase_1.ConfigBase {
     return !(this.eIe = void 0);
   }
   GetScanInfoById(e) {
-    let a = this.eIe?.get(e);
+    var a = this.eIe?.get(e);
     return (
       a ||
         ((a = GamePlayScanByUid_1.configGamePlayScanByUid.GetConfig(e)) &&
@@ -64,4 +64,4 @@ class LevelGamePlayConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.LevelGamePlayConfig = LevelGamePlayConfig;
-// # sourceMappingURL=LevelGamePlayConfig.js.map
+//# sourceMappingURL=LevelGamePlayConfig.js.map

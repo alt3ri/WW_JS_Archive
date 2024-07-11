@@ -19,4 +19,4 @@ class EffectModelTrail extends UE.EffectModelBase {
   }
 }
 exports.default = EffectModelTrail;
-// # sourceMappingURL=EffectModelTrail.js.map
+//# sourceMappingURL=EffectModelTrail.js.map

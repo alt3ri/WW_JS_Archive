@@ -6,4 +6,4 @@ class RoleMorphHandleBase {
   EndMorph() {}
 }
 exports.RoleMorphHandleBase = RoleMorphHandleBase;
-// # sourceMappingURL=RoleMorphHandleBase.js.map
+//# sourceMappingURL=RoleMorphHandleBase.js.map

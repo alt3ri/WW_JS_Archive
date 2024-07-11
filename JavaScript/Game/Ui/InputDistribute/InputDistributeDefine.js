@@ -9,8 +9,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.initializeInputDistributeTagDefine =
     exports.inputDistributeTagDefine =
       void 0);
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const InputMappingsDefine_1 = require("./InputMappingsDefine");
+const EventDefine_1 = require("../../Common/Event/EventDefine"),
+  InputMappingsDefine_1 = require("./InputMappingsDefine");
 (exports.inputDistributeTagDefine = {
   FightInputRootTag: "FightInputRoot",
   FightInputRoot: {
@@ -626,4 +626,4 @@ const InputMappingsDefine_1 = require("./InputMappingsDefine");
     EventDefine_1.EEventName.OnSequenceCameraStatus,
   ]),
   (exports.AXIS_TOLERANCE = 0.02);
-// # sourceMappingURL=InputDistributeDefine.js.map
+//# sourceMappingURL=InputDistributeDefine.js.map

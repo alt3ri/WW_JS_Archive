@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../GlobalData");
-const CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const ColorUtils_1 = require("../../../Utils/ColorUtils");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const WorldGlobal_1 = require("../../../World/WorldGlobal");
-const AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary");
-const TsAiController_1 = require("../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
-const NAVIGATION_COMPLETE_DISTANCE = 10;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../GlobalData"),
+  CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  ColorUtils_1 = require("../../../Utils/ColorUtils"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  WorldGlobal_1 = require("../../../World/WorldGlobal"),
+  AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
+  TsAiController_1 = require("../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
+  NAVIGATION_COMPLETE_DISTANCE = 10;
 class TsTaskRandomNavMeshPathMove extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -50,20 +50,19 @@ class TsTaskRandomNavMeshPathMove extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveExecuteAI(t, i) {
     this.InitTsVariables();
-    const e = t.AiController;
+    var e = t.AiController;
     if (e) {
-      const r = e.CharActorComp;
-      const s =
-        BlackboardController_1.BlackboardController.GetVectorValueByEntity(
+      var r = e.CharActorComp,
+        s = BlackboardController_1.BlackboardController.GetVectorValueByEntity(
           e.CharAiDesignComp.Entity.Id,
           this.TsBlackboardLocation,
         );
       if (s) {
         (this.SelectedTargetLocation = WorldGlobal_1.WorldGlobal.ToUeVector(s)),
           this.FindRandomPath(t, r.ActorLocation, this.SelectedTargetLocation),
-          (this.FoundPath = this.NavigationPath.length > 0),
+          (this.FoundPath = 0 < this.NavigationPath.length),
           (this.CurrentNavigationIndex = 1);
-        const o = e.CharAiDesignComp?.Entity.GetComponent(158);
+        var o = e.CharAiDesignComp?.Entity.GetComponent(158);
         if (o?.Valid)
           switch (this.TsMoveState) {
             case 1:
@@ -98,10 +97,10 @@ class TsTaskRandomNavMeshPathMove extends TsTaskAbortImmediatelyBase_1.default {
   }
   FindRandomPath(r, s, t) {
     this.NavigationPath || (this.NavigationPath = new Array());
-    var i = Vector_1.Vector.Create(s);
-    let o = Vector_1.Vector.Create(t);
-    const a = Vector_1.Vector.Create(t);
-    var i = (a.Subtraction(i, a), Vector_1.Vector.Dist(i, o));
+    var i = Vector_1.Vector.Create(s),
+      o = Vector_1.Vector.Create(t),
+      a = Vector_1.Vector.Create(t),
+      i = (a.Subtraction(i, a), Vector_1.Vector.Dist(i, o));
     if (i < this.TsRandomRange || this.TsSampling < 1)
       this.FoundPath =
         AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(
@@ -112,13 +111,13 @@ class TsTaskRandomNavMeshPathMove extends TsTaskAbortImmediatelyBase_1.default {
         );
     else {
       let e = s;
-      const h = i / (this.TsSampling + 1);
+      var h = i / (this.TsSampling + 1);
       for (let i = 0; i < this.TsSampling; i++) {
         let t = Vector_1.Vector.Create();
         a.Multiply((i + 1) * h, t),
           t.Addition(Vector_1.Vector.Create(s), t),
           (t = this.CalculateRandomPosition(t));
-        const l = new Array();
+        var l = new Array();
         AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(
           r,
           e,
@@ -134,17 +133,17 @@ class TsTaskRandomNavMeshPathMove extends TsTaskAbortImmediatelyBase_1.default {
   }
   CalculateRandomPosition(t) {
     var i = MathUtils_1.MathUtils.GetRandomFloatNumber(
-      0,
-      MathUtils_1.PI_DEG_DOUBLE,
-    );
-    const e = Vector_1.Vector.Create(Vector_1.Vector.ForwardVector);
-    var i =
-      (e.RotateAngleAxis(i, Vector_1.Vector.UpVectorProxy, e),
-      MathUtils_1.MathUtils.GetRandomFloatNumber(0, this.TsRandomRange));
+        0,
+        MathUtils_1.PI_DEG_DOUBLE,
+      ),
+      e = Vector_1.Vector.Create(Vector_1.Vector.ForwardVector),
+      i =
+        (e.RotateAngleAxis(i, Vector_1.Vector.UpVectorProxy, e),
+        MathUtils_1.MathUtils.GetRandomFloatNumber(0, this.TsRandomRange));
     return e.Multiply(i, e).Addition(t, e), e;
   }
   ReceiveTickAI(t, i, e) {
-    let r, s;
+    var r, s;
     this.FoundPath && t instanceof TsAiController_1.default
       ? ((t = t.AiController.CharActorComp),
         (r = this.NavigationPath[this.CurrentNavigationIndex]),
@@ -181,4 +180,4 @@ class TsTaskRandomNavMeshPathMove extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskRandomNavMeshPathMove;
-// # sourceMappingURL=TsTaskRandomNavMeshPathMove.js.map
+//# sourceMappingURL=TsTaskRandomNavMeshPathMove.js.map

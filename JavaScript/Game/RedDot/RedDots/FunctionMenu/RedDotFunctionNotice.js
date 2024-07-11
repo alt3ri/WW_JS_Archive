@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RedDotFunctionNotice = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const RedDotBase_1 = require("../../RedDotBase");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  RedDotBase_1 = require("../../RedDotBase"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class RedDotFunctionNotice extends RedDotBase_1.RedDotBase {
   OnGetParentName() {
     return "BattleViewResonanceButton";
@@ -16,4 +16,4 @@ class RedDotFunctionNotice extends RedDotBase_1.RedDotBase {
   }
 }
 exports.RedDotFunctionNotice = RedDotFunctionNotice;
-// # sourceMappingURL=RedDotFunctionNotice.js.map
+//# sourceMappingURL=RedDotFunctionNotice.js.map

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyStateSetHitPriority extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.HitPriority = 0);
@@ -29,4 +29,4 @@ class TsAnimNotifyStateSetHitPriority extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateSetHitPriority;
-// # sourceMappingURL=TsAnimNotifyStateSetHitPriority.js.map
+//# sourceMappingURL=TsAnimNotifyStateSetHitPriority.js.map

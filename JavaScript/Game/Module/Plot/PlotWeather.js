@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotWeather = exports.PlotWeatherActorInfo = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const WeatherController_1 = require("../Weather/WeatherController");
-const PLOT_WEATHER_PRIORITY = 100;
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  WeatherController_1 = require("../Weather/WeatherController"),
+  PLOT_WEATHER_PRIORITY = 100;
 class PlotWeatherActorInfo {
   constructor() {
     (this.WeatherConfig = void 0),
@@ -78,10 +78,10 @@ class PlotWeather {
   }
   Z0e(t, i) {
     if (t && t.IsLoadCompleted && t.CurBlendWeight !== t.TargetBlendWeight) {
-      const s = t.CurBlendWeight;
-      if (t.ChangeSpeed === 0) t.CurBlendWeight = t.TargetBlendWeight;
+      var s = t.CurBlendWeight;
+      if (0 === t.ChangeSpeed) t.CurBlendWeight = t.TargetBlendWeight;
       else {
-        if (!(i > 0)) return;
+        if (!(0 < i)) return;
         t.TargetBlendWeight > t.CurBlendWeight
           ? ((t.CurBlendWeight = t.CurBlendWeight + i * t.ChangeSpeed),
             (t.CurBlendWeight = Math.min(
@@ -95,8 +95,8 @@ class PlotWeather {
             )));
       }
       (t.KuroPostProcessComponent.BlendWeight = t.CurBlendWeight),
-        s === 0 &&
-          t.CurBlendWeight > 0 &&
+        0 === s &&
+          0 < t.CurBlendWeight &&
           ((t.KuroPostProcessComponent.bEnabled = !0),
           Log_1.Log.CheckDebug()) &&
           Log_1.Log.Debug(
@@ -106,8 +106,8 @@ class PlotWeather {
             ["id", t.WeatherConfig.Id],
             ["DA", t.WeatherConfig.DAPath],
           ),
-        s > 0 &&
-          t.CurBlendWeight === 0 &&
+        0 < s &&
+          0 === t.CurBlendWeight &&
           ((t.KuroPostProcessComponent.bEnabled = !1),
           Log_1.Log.CheckDebug()) &&
           Log_1.Log.Debug(
@@ -154,7 +154,7 @@ class PlotWeather {
   Weo(t, i) {
     (this.RHe.WeatherConfig = t),
       (this.RHe.ChangeSpeed =
-        i > 0 ? 1 / (i * TimeUtil_1.TimeUtil.InverseMillisecond) : 0),
+        0 < i ? 1 / (i * TimeUtil_1.TimeUtil.InverseMillisecond) : 0),
       this.UHe && (this.UHe.ChangeSpeed = this.RHe.ChangeSpeed);
   }
   xHe() {
@@ -173,13 +173,13 @@ class PlotWeather {
     t = Global_1.Global.BaseCharacter
       ? Global_1.Global.BaseCharacter.GetTransform()
       : new UE.Transform();
-    const i = ActorSystem_1.ActorSystem.Get(UE.Actor.StaticClass(), t);
-    const s = i.AddComponentByClass(
-      UE.KuroPostProcessComponent.StaticClass(),
-      !1,
-      MathUtils_1.MathUtils.DefaultTransform,
-      !1,
-    );
+    var i = ActorSystem_1.ActorSystem.Get(UE.Actor.StaticClass(), t),
+      s = i.AddComponentByClass(
+        UE.KuroPostProcessComponent.StaticClass(),
+        !1,
+        MathUtils_1.MathUtils.DefaultTransform,
+        !1,
+      );
     GlobalData_1.GlobalData.IsPlayInEditor &&
       i.SetActorLabel("PlotWeatherActor"),
       (s.bUnbound = !0),
@@ -193,7 +193,7 @@ class PlotWeather {
       this.qHe();
   }
   BHe() {
-    const t = this.RHe.KuroPostProcessComponent;
+    var t = this.RHe.KuroPostProcessComponent;
     (this.RHe.TargetBlendWeight = 1),
       (this.RHe.CurBlendWeight = 0),
       (this.RHe.IsLoadCompleted = !1),
@@ -205,17 +205,17 @@ class PlotWeather {
       this.qHe();
   }
   qHe() {
-    const i = this.RHe.WeatherConfig;
-    const s =
-      (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug(
-          "Plot",
-          18,
-          "加载剧情天气",
-          ["id", i.Id],
-          ["DA", i.DAPath],
-        ),
-      this.RHe.KuroPostProcessComponent);
+    const i = this.RHe.WeatherConfig,
+      s =
+        (Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "Plot",
+            18,
+            "加载剧情天气",
+            ["id", i.Id],
+            ["DA", i.DAPath],
+          ),
+        this.RHe.KuroPostProcessComponent);
     ResourceSystem_1.ResourceSystem.LoadAsync(
       i.DAPath,
       UE.KuroWeatherDataAsset,
@@ -238,4 +238,4 @@ class PlotWeather {
   }
 }
 exports.PlotWeather = PlotWeather;
-// # sourceMappingURL=PlotWeather.js.map
+//# sourceMappingURL=PlotWeather.js.map

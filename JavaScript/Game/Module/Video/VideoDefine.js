@@ -8,4 +8,4 @@ class VideoUtils {}
   (VideoUtils.FramePerSecond = 30),
   (VideoUtils.MillisecondPerFrame = 33.33),
   (VideoUtils.FramePerMillisecond = 0.03);
-// # sourceMappingURL=VideoDefine.js.map
+//# sourceMappingURL=VideoDefine.js.map

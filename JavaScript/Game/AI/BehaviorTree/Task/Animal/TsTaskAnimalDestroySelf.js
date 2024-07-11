@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../../Core/Common/Log");
-const TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
 class TsTaskAnimalDestroySelf extends TsTaskAbortImmediatelyBase_1.default {
   ReceiveExecuteAI(e, r) {
-    let o;
-    let s = e.AiController;
+    var o,
+      s = e.AiController;
     s
       ? ((o = (s = s.CharActorComp.Entity).GetComponent(38)) &&
           o.DisableAi("动物销毁"),
@@ -25,4 +25,4 @@ class TsTaskAnimalDestroySelf extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskAnimalDestroySelf;
-// # sourceMappingURL=TsTaskAnimalDestroySelf.js.map
+//# sourceMappingURL=TsTaskAnimalDestroySelf.js.map

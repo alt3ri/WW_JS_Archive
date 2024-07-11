@@ -1,24 +1,28 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, o, t, n) {
-    let i;
-    const r = arguments.length;
-    let a =
-      r < 3 ? o : n === null ? (n = Object.getOwnPropertyDescriptor(o, t)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var i,
+      r = arguments.length,
+      a =
+        r < 3
+          ? o
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(o, t))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       a = Reflect.decorate(e, o, t, n);
     else
-      for (let s = e.length - 1; s >= 0; s--)
-        (i = e[s]) && (a = (r < 3 ? i(a) : r > 3 ? i(o, t, a) : i(o, t)) || a);
-    return r > 3 && a && Object.defineProperty(o, t, a), a;
+      for (var s = e.length - 1; 0 <= s; s--)
+        (i = e[s]) && (a = (r < 3 ? i(a) : 3 < r ? i(o, t, a) : i(o, t)) || a);
+    return 3 < r && a && Object.defineProperty(o, t, a), a;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiRoleLoadComponent = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine");
-const UiModelLoadComponent_1 = require("../Common/UiModelLoadComponent");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine"),
+  UiModelLoadComponent_1 = require("../Common/UiModelLoadComponent");
 let UiRoleLoadComponent = class UiRoleLoadComponent extends UiModelLoadComponent_1.UiModelLoadComponent {
   constructor() {
     super(...arguments), (this.VBr = void 0);
@@ -56,4 +60,4 @@ let UiRoleLoadComponent = class UiRoleLoadComponent extends UiModelLoadComponent
   UiRoleLoadComponent,
 )),
   (exports.UiRoleLoadComponent = UiRoleLoadComponent);
-// # sourceMappingURL=UiRoleLoadComponent.js.map
+//# sourceMappingURL=UiRoleLoadComponent.js.map

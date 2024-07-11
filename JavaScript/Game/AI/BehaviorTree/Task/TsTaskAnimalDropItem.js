@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const GlobalData_1 = require("../../../GlobalData");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const Log_1 = require("../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../GlobalData"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class TsTaskAnimalDropItem extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -18,7 +18,7 @@ class TsTaskAnimalDropItem extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveExecuteAI(e, s) {
     this.InitTsVariables();
-    let t = e.AiController;
+    var t = e.AiController;
     t
       ? (t = t.CharActorComp.Entity).GetComponent(38)
         ? ((this.TsDoOnce && this.HasDone) ||
@@ -38,4 +38,4 @@ class TsTaskAnimalDropItem extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskAnimalDropItem;
-// # sourceMappingURL=TsTaskAnimalDropItem.js.map
+//# sourceMappingURL=TsTaskAnimalDropItem.js.map

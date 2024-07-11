@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExecutionItem = void 0);
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const BattleSkillItem_1 = require("../BattleSkillItem");
+const ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  BattleSkillItem_1 = require("../BattleSkillItem");
 class ExecutionItem extends BattleSkillItem_1.BattleSkillItem {
   constructor() {
     super(...arguments), (this.B7 = void 0);
@@ -12,8 +12,8 @@ class ExecutionItem extends BattleSkillItem_1.BattleSkillItem {
     (this.B7 = e), this.IsShowOrShowing || this.Show();
   }
   RefreshKeyByActionName(e) {
-    const t = ModelManager_1.ModelManager.PlatformModel.OperationType;
-    t !== 2 ||
+    var t = ModelManager_1.ModelManager.PlatformModel.OperationType;
+    2 !== t ||
       (this.KeyActionName === e && this.KeyOperationType === t) ||
       (this.KeyItem &&
         (this.KeyItem.RefreshByActionOrAxis({ ActionOrAxisName: e }),
@@ -33,4 +33,4 @@ class ExecutionItem extends BattleSkillItem_1.BattleSkillItem {
   }
 }
 exports.ExecutionItem = ExecutionItem;
-// # sourceMappingURL=ExecutionItem.js.map
+//# sourceMappingURL=ExecutionItem.js.map

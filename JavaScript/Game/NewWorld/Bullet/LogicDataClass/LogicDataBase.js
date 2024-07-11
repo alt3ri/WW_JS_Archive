@@ -7,4 +7,4 @@ class LogicDataBase extends UE.KuroBpDataAsset {
   }
 }
 exports.default = LogicDataBase;
-// # sourceMappingURL=LogicDataBase.js.map
+//# sourceMappingURL=LogicDataBase.js.map

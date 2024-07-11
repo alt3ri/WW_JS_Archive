@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRunData = exports.ActivityRun = void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ActivityData_1 = require("../../ActivityData");
-const ACTIVITYSELECTCACHEKEY = -256;
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ActivityData_1 = require("../../ActivityData"),
+  ACTIVITYSELECTCACHEKEY = -256;
 class ActivityRun extends ActivityData_1.ActivityBaseData {
   constructor() {
     super(...arguments), (this.y2e = new Map()), (this.I2e = new Array());
@@ -17,7 +17,7 @@ class ActivityRun extends ActivityData_1.ActivityBaseData {
   PhraseEx(i) {
     (this.I2e = new Array()),
       i.d0s.WCs.forEach((t) => {
-        const e =
+        var e =
           ModelManager_1.ModelManager.ActivityRunModel.CreateActivityRunData(
             i.Ekn,
             t._3n,
@@ -50,7 +50,7 @@ class ActivityRun extends ActivityData_1.ActivityBaseData {
     );
   }
   GetExDataRedPointShowState() {
-    const e = this.I2e.length;
+    var e = this.I2e.length;
     for (let t = 0; t < e; t++) if (this.I2e[t].GetRedPoint()) return !0;
     return !1;
   }
@@ -58,7 +58,7 @@ class ActivityRun extends ActivityData_1.ActivityBaseData {
     return !1;
   }
   IfAllFinish() {
-    const e = this.I2e.length;
+    var e = this.I2e.length;
     for (let t = 0; t < e; t++)
       if (!this.I2e[t].GetIfRewardAllFinished()) return !1;
     return !0;
@@ -108,35 +108,35 @@ class ActivityRunData extends ActivityData_1.ActivityExData {
     return t ? t[0] : 0;
   }
   GetScoreIndexPreviewItem(e) {
-    const i = Array.from(this.P2e.keys());
-    const r = i.length;
+    var i = Array.from(this.P2e.keys()),
+      r = i.length;
     let n = 0;
     for (let t = 0; t < r; t++)
       if (i[t] === e) {
-        const s = this.P2e.get(i[t]);
+        var s = this.P2e.get(i[t]);
         n = s[1];
         break;
       }
-    let t;
-    let h;
-    const a = [];
-    if (n > 0)
+    var t,
+      h,
+      a = [];
+    if (0 < n)
       for ([t, h] of ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(
         n,
       ).DropPreview) {
-        const o = [{ IncId: 0, ItemId: t }, h];
+        var o = [{ IncId: 0, ItemId: t }, h];
         a.push(o);
       }
     return a;
   }
   GetScoreIndex(e) {
-    const i = Array.from(this.P2e.keys()).length;
+    var i = Array.from(this.P2e.keys()).length;
     for (let t = 0; t < i; t++) if (e === this.P2e.get(t)?.[0]) return t;
     return 0;
   }
   GetScoreIndexCannotGetReward(t) {
-    let e;
-    const i = Array.from(this.P2e.keys());
+    var e,
+      i = Array.from(this.P2e.keys());
     let r = 0;
     return (
       this.P2e.get(t) && ((e = this.P2e.get(t)), (r = e[0])),
@@ -144,15 +144,15 @@ class ActivityRunData extends ActivityData_1.ActivityExData {
     );
   }
   x2e() {
-    const e = Array.from(this.P2e.keys()).length;
+    var e = Array.from(this.P2e.keys()).length;
     for (let t = 0; t < e; t++)
-      if (this.GetScoreIndexCannotGetReward(t) === 1) return !0;
+      if (1 === this.GetScoreIndexCannotGetReward(t)) return !0;
     return !1;
   }
   GetIfRewardAllFinished() {
-    const e = Array.from(this.P2e.keys()).length;
+    var e = Array.from(this.P2e.keys()).length;
     for (let t = 0; t < e; t++)
-      if (this.GetScoreIndexCannotGetReward(t) !== 2) return !1;
+      if (2 !== this.GetScoreIndexCannotGetReward(t)) return !1;
     return !0;
   }
   GetTitle() {
@@ -186,13 +186,14 @@ class ActivityRunData extends ActivityData_1.ActivityExData {
   }
   GetChallengeNewLocalRedPoint() {
     return (
+      1 ===
       ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
         this.ActivityId,
         1,
         this.T2e,
         0,
         0,
-      ) === 1
+      )
     );
   }
   GetIsShow() {
@@ -217,9 +218,9 @@ class ActivityRunData extends ActivityData_1.ActivityExData {
       this.RefreshActivityRedPoint());
   }
   CheckIfInShowTime() {
-    let t;
+    var t;
     return (
-      (this.BeginOpenTime === 0 && this.EndOpenTime === 0) ||
+      (0 === this.BeginOpenTime && 0 === this.EndOpenTime) ||
       ((t = TimeUtil_1.TimeUtil.GetServerTime()) >= this.BeginOpenTime &&
         t <= this.EndOpenTime)
     );
@@ -228,7 +229,7 @@ class ActivityRunData extends ActivityData_1.ActivityExData {
     (this.D2e = t.J0s),
       (this.Cce = t.Skn),
       this.D2e > this.xte && (this.xte = this.D2e),
-      (this.Cce < this.pne || this.pne === 0) && (this.pne = this.Cce),
+      (this.Cce < this.pne || 0 === this.pne) && (this.pne = this.Cce),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshRunActivityRedDot,
         this.T2e,
@@ -261,4 +262,4 @@ class ActivityRunData extends ActivityData_1.ActivityExData {
   }
 }
 exports.ActivityRunData = ActivityRunData;
-// # sourceMappingURL=ActivityRunData.js.map
+//# sourceMappingURL=ActivityRunData.js.map

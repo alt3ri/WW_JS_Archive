@@ -59,7 +59,7 @@ class VersionInfo {
     return `${this.aSr}.${this.hSr}.` + this.lSr;
   }
   static TryParse(t) {
-    let e, s;
+    var e, s;
     return !t ||
       t.length <= 0 ||
       (t = t.split(".")).length < 3 ||
@@ -77,4 +77,4 @@ class VersionInfo {
   }
 }
 exports.VersionInfo = VersionInfo;
-// # sourceMappingURL=BaseDefine.js.map
+//# sourceMappingURL=BaseDefine.js.map

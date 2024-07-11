@@ -127,30 +127,30 @@ class PhantomItem {
     );
   }
   itemid() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   monsterid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   monstername(t) {
-    const i = this.J7.__offset(this.z7, 8);
+    var i = this.J7.__offset(this.z7, 8);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetElementtypeAt(t) {
     return this.elementtype(t);
   }
   elementtype(t) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   elementtypeLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   elementtypeArray() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -160,47 +160,47 @@ class PhantomItem {
       : null;
   }
   levelupgroupid() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   skillid() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetCalabashbuffsAt(t) {
     return this.calabashbuffs(t);
   }
   calabashbuffs(t) {
-    const i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 16);
     return i
       ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
       : BigInt(0);
   }
   calabashbuffsLength() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   rarity() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   meshid() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetZoomAt(t) {
     return this.zoom(t);
   }
   zoom(t) {
-    const i = this.J7.__offset(this.z7, 22);
+    var i = this.J7.__offset(this.z7, 22);
     return i ? this.J7.readFloat32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   zoomLength() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   zoomArray() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -213,15 +213,15 @@ class PhantomItem {
     return this.location(t);
   }
   location(t) {
-    const i = this.J7.__offset(this.z7, 24);
+    var i = this.J7.__offset(this.z7, 24);
     return i ? this.J7.readFloat32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   locationLength() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   locationArray() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -234,15 +234,15 @@ class PhantomItem {
     return this.rotator(t);
   }
   rotator(t) {
-    const i = this.J7.__offset(this.z7, 26);
+    var i = this.J7.__offset(this.z7, 26);
     return i ? this.J7.readFloat32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   rotatorLength() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   rotatorArray() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -252,54 +252,54 @@ class PhantomItem {
       : null;
   }
   standanim(t) {
-    const i = this.J7.__offset(this.z7, 28);
+    var i = this.J7.__offset(this.z7, 28);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   typedescription(t) {
-    const i = this.J7.__offset(this.z7, 30);
+    var i = this.J7.__offset(this.z7, 30);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   attributesdescription(t) {
-    const i = this.J7.__offset(this.z7, 32);
+    var i = this.J7.__offset(this.z7, 32);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   icon(t) {
-    const i = this.J7.__offset(this.z7, 34);
+    var i = this.J7.__offset(this.z7, 34);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   iconmiddle(t) {
-    const i = this.J7.__offset(this.z7, 36);
+    var i = this.J7.__offset(this.z7, 36);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   iconsmall(t) {
-    const i = this.J7.__offset(this.z7, 38);
+    var i = this.J7.__offset(this.z7, 38);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   mesh(t) {
-    const i = this.J7.__offset(this.z7, 40);
+    var i = this.J7.__offset(this.z7, 40);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   qualityid() {
-    const t = this.J7.__offset(this.z7, 42);
+    var t = this.J7.__offset(this.z7, 42);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   maxcapcity() {
-    const t = this.J7.__offset(this.z7, 44);
+    var t = this.J7.__offset(this.z7, 44);
     return t ? this.J7.readInt32(this.z7 + t) : 999999999;
   }
   GetItemaccessAt(t) {
     return this.itemaccess(t);
   }
   itemaccess(t) {
-    const i = this.J7.__offset(this.z7, 46);
+    var i = this.J7.__offset(this.z7, 46);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   itemaccessLength() {
-    const t = this.J7.__offset(this.z7, 46);
+    var t = this.J7.__offset(this.z7, 46);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   itemaccessArray() {
-    const t = this.J7.__offset(this.z7, 46);
+    var t = this.J7.__offset(this.z7, 46);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -309,50 +309,50 @@ class PhantomItem {
       : null;
   }
   obtainedshow() {
-    const t = this.J7.__offset(this.z7, 48);
+    var t = this.J7.__offset(this.z7, 48);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   obtainedshowdescription(t) {
-    const i = this.J7.__offset(this.z7, 50);
+    var i = this.J7.__offset(this.z7, 50);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   numlimit() {
-    const t = this.J7.__offset(this.z7, 52);
+    var t = this.J7.__offset(this.z7, 52);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   showinbag() {
-    const t = this.J7.__offset(this.z7, 54);
+    var t = this.J7.__offset(this.z7, 54);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   sortindex() {
-    const t = this.J7.__offset(this.z7, 56);
+    var t = this.J7.__offset(this.z7, 56);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   skillicon(t) {
-    const i = this.J7.__offset(this.z7, 58);
+    var i = this.J7.__offset(this.z7, 58);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   destructible() {
-    const t = this.J7.__offset(this.z7, 60);
+    var t = this.J7.__offset(this.z7, 60);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   reddotdisablerule() {
-    const t = this.J7.__offset(this.z7, 62);
+    var t = this.J7.__offset(this.z7, 62);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetFettergroupAt(t) {
     return this.fettergroup(t);
   }
   fettergroup(t) {
-    const i = this.J7.__offset(this.z7, 64);
+    var i = this.J7.__offset(this.z7, 64);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   fettergroupLength() {
-    const t = this.J7.__offset(this.z7, 64);
+    var t = this.J7.__offset(this.z7, 64);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   fettergroupArray() {
-    const t = this.J7.__offset(this.z7, 64);
+    var t = this.J7.__offset(this.z7, 64);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -362,9 +362,9 @@ class PhantomItem {
       : null;
   }
   parentmonsterid() {
-    const t = this.J7.__offset(this.z7, 66);
+    var t = this.J7.__offset(this.z7, 66);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.PhantomItem = PhantomItem;
-// # sourceMappingURL=PhantomItem.js.map
+//# sourceMappingURL=PhantomItem.js.map

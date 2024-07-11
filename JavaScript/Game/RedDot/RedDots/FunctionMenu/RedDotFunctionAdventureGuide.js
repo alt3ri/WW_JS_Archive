@@ -8,4 +8,4 @@ class RedDotFunctionAdventureGuide extends RedDotBase_1.RedDotBase {
   }
 }
 exports.RedDotFunctionAdventureGuide = RedDotFunctionAdventureGuide;
-// # sourceMappingURL=RedDotFunctionAdventureGuide.js.map
+//# sourceMappingURL=RedDotFunctionAdventureGuide.js.map

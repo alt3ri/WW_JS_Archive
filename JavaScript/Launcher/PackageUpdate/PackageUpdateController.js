@@ -1,17 +1,17 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PackageUpdateController = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const BaseConfigController_1 = require("../BaseConfig/BaseConfigController");
-const HotPatchKuroSdk_1 = require("../HotPatchKuroSdk/HotPatchKuroSdk");
-const AppUtil_1 = require("../Update/AppUtil");
-const LauncherLog_1 = require("../Util/LauncherLog");
-const TAPPACKAGEID = "A1425";
-const CNIOS = "A1351";
-const GLOBALIOS = "A1725";
-const GLOBALANDROID = "A1723";
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  BaseConfigController_1 = require("../BaseConfig/BaseConfigController"),
+  HotPatchKuroSdk_1 = require("../HotPatchKuroSdk/HotPatchKuroSdk"),
+  AppUtil_1 = require("../Update/AppUtil"),
+  LauncherLog_1 = require("../Util/LauncherLog"),
+  TAPPACKAGEID = "A1425",
+  CNIOS = "A1351",
+  GLOBALIOS = "A1725",
+  GLOBALANDROID = "A1723";
 class PackageUpdateController {
   static async TryOpenPackageUpdateTipsView(a) {
     try {
@@ -20,14 +20,14 @@ class PackageUpdateController {
         (e = UE.KuroSDKManager.GetPackageId()),
         LauncherLog_1.LauncherLog.Info("整包配置", ["currentPackageId", e]),
         (this.hIn = e);
-      const t =
-        BaseConfigController_1.BaseConfigController.GetPackageConfigOrDefault(
-          "PatchVersion",
-        );
-      const r = UE.GameplayStatics.GetPlatformName();
-      const o = UE.KuroLauncherLibrary.GetAppVersion();
-      const i =
-        BaseConfigController_1.BaseConfigController.GetPublicValue("SdkArea");
+      var t =
+          BaseConfigController_1.BaseConfigController.GetPackageConfigOrDefault(
+            "PatchVersion",
+          ),
+        r = UE.GameplayStatics.GetPlatformName(),
+        o = UE.KuroLauncherLibrary.GetAppVersion(),
+        i =
+          BaseConfigController_1.BaseConfigController.GetPublicValue("SdkArea");
       (this.lIn =
         `packageId=${e}&platform=${r}&appVersion=${o}&patchVersion=${t}&area=` +
         i),
@@ -54,7 +54,7 @@ class PackageUpdateController {
     UE.KuroHttp.Get(e, a, t);
   }
   static CIn(e, a, t, r, o) {
-    r !== 200
+    200 !== r
       ? ((r = e.SubUrl + "?" + a),
         LauncherLog_1.LauncherLog.Info("打开链接", ["updateData!.descUrl", r]),
         UE.KismetSystemLibrary.LaunchURL(r))
@@ -63,35 +63,35 @@ class PackageUpdateController {
         UE.KismetSystemLibrary.LaunchURL(r));
   }
   static async lEr(e) {
-    let a = !1;
-    let t =
-      (HotPatchKuroSdk_1.HotPatchKuroSdk.CanUseSdk() &&
-        this.hIn === TAPPACKAGEID &&
-        (a = !0),
-      !0);
-    let r;
-    let o;
-    const i = () => {
-      const e =
-        BaseConfigController_1.BaseConfigController.GetCdnReturnConfigInfo()
-          .PackageUpdateDescUrl;
-      this.dIn(e, this.lIn, this.cIn);
-    };
-    const s = () => {
-      let e;
-      a
-        ? UE.TapUpdateStaticLibrary.UpdateGame(void 0)
-        : this._On.has(this.hIn)
-          ? ((e = this._On.get(this.hIn)),
-            LauncherLog_1.LauncherLog.Info("打开链接", ["finalUrl", e]),
-            UE.KismetSystemLibrary.LaunchURL(e))
-          : (UE.GameplayStatics.GetPlatformName() !== "Windows" &&
-              ((e =
-                BaseConfigController_1.BaseConfigController.GetCdnReturnConfigInfo()
-                  .PackageUpdateUrl),
-              this.dIn(e, this.lIn, this._In)),
-            UE.GameplayStatics.GetPlatformName() === "Windows" && (t = !1));
-    };
+    let a = !1,
+      t =
+        (HotPatchKuroSdk_1.HotPatchKuroSdk.CanUseSdk() &&
+          this.hIn === TAPPACKAGEID &&
+          (a = !0),
+        !0);
+    var r,
+      o,
+      i = () => {
+        var e =
+          BaseConfigController_1.BaseConfigController.GetCdnReturnConfigInfo()
+            .PackageUpdateDescUrl;
+        this.dIn(e, this.lIn, this.cIn);
+      },
+      s = () => {
+        var e;
+        a
+          ? UE.TapUpdateStaticLibrary.UpdateGame(void 0)
+          : this._On.has(this.hIn)
+            ? ((e = this._On.get(this.hIn)),
+              LauncherLog_1.LauncherLog.Info("打开链接", ["finalUrl", e]),
+              UE.KismetSystemLibrary.LaunchURL(e))
+            : ("Windows" !== UE.GameplayStatics.GetPlatformName() &&
+                ((e =
+                  BaseConfigController_1.BaseConfigController.GetCdnReturnConfigInfo()
+                    .PackageUpdateUrl),
+                this.dIn(e, this.lIn, this._In)),
+              "Windows" === UE.GameplayStatics.GetPlatformName() && (t = !1));
+      };
     for (
       a &&
       !this._Er &&
@@ -157,4 +157,4 @@ class PackageUpdateController {
       t,
     );
   });
-// # sourceMappingURL=PackageUpdateController.js.map
+//# sourceMappingURL=PackageUpdateController.js.map

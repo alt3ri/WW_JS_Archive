@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.inputDistributeSetups = void 0);
-const BlockInputDistribute_1 = require("./InputDistributeSetup/BlockInputDistribute");
-const CreateCharacterInputDistribute_1 = require("./InputDistributeSetup/CreateCharacterInputDistribute");
-const ExploreInputDistribute_1 = require("./InputDistributeSetup/ExploreInputDistribute");
-const FightInputDistribute_1 = require("./InputDistributeSetup/FightInputDistribute");
-const GuideInputDistributeSetup_1 = require("./InputDistributeSetup/GuideInputDistributeSetup");
-const InteractionInputDistribute_1 = require("./InputDistributeSetup/InteractionInputDistribute");
-const LevelEventInputDistribute_1 = require("./InputDistributeSetup/LevelEventInputDistribute");
-const LoginInputDistribute_1 = require("./InputDistributeSetup/LoginInputDistribute");
-const PlotInputDistribute_1 = require("./InputDistributeSetup/PlotInputDistribute");
-const ReconnectInputDistribute_1 = require("./InputDistributeSetup/ReconnectInputDistribute");
-const UiInputDistribute_1 = require("./InputDistributeSetup/UiInputDistribute");
-const UiProhibitFightInputDistribute_1 = require("./InputDistributeSetup/UiProhibitFightInputDistribute");
+const BlockInputDistribute_1 = require("./InputDistributeSetup/BlockInputDistribute"),
+  CreateCharacterInputDistribute_1 = require("./InputDistributeSetup/CreateCharacterInputDistribute"),
+  ExploreInputDistribute_1 = require("./InputDistributeSetup/ExploreInputDistribute"),
+  FightInputDistribute_1 = require("./InputDistributeSetup/FightInputDistribute"),
+  GuideInputDistributeSetup_1 = require("./InputDistributeSetup/GuideInputDistributeSetup"),
+  InteractionInputDistribute_1 = require("./InputDistributeSetup/InteractionInputDistribute"),
+  LevelEventInputDistribute_1 = require("./InputDistributeSetup/LevelEventInputDistribute"),
+  LoginInputDistribute_1 = require("./InputDistributeSetup/LoginInputDistribute"),
+  PlotInputDistribute_1 = require("./InputDistributeSetup/PlotInputDistribute"),
+  ReconnectInputDistribute_1 = require("./InputDistributeSetup/ReconnectInputDistribute"),
+  UiInputDistribute_1 = require("./InputDistributeSetup/UiInputDistribute"),
+  UiProhibitFightInputDistribute_1 = require("./InputDistributeSetup/UiProhibitFightInputDistribute");
 exports.inputDistributeSetups = [
   BlockInputDistribute_1.BlockInputDistribute,
   ReconnectInputDistribute_1.ReconnectInputDistribute,
@@ -27,4 +27,4 @@ exports.inputDistributeSetups = [
   FightInputDistribute_1.FightInputDistribute,
   UiInputDistribute_1.UiInputDistribute,
 ];
-// # sourceMappingURL=InputDistributeSetupDefine.js.map
+//# sourceMappingURL=InputDistributeSetupDefine.js.map

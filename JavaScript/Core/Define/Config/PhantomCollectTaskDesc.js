@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomCollectTaskDesc = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const DicIntString_1 = require("./SubType/DicIntString");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  DicIntString_1 = require("./SubType/DicIntString");
 class PhantomCollectTaskDesc {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -33,22 +33,22 @@ class PhantomCollectTaskDesc {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   title(t) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   desc(t) {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   GetJumptoAt(t, s) {
     return this.jumpto(t);
   }
   jumpto(t, s) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i
       ? (s || new DicIntString_1.DicIntString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
@@ -57,9 +57,9 @@ class PhantomCollectTaskDesc {
       : null;
   }
   jumptoLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.PhantomCollectTaskDesc = PhantomCollectTaskDesc;
-// # sourceMappingURL=PhantomCollectTaskDesc.js.map
+//# sourceMappingURL=PhantomCollectTaskDesc.js.map

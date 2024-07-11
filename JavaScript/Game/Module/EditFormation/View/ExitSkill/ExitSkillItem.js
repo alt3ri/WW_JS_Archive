@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExitSkillItem = exports.ExitSkillItemData = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const EditFormationDefine_1 = require("../../EditFormationDefine");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  EditFormationDefine_1 = require("../../EditFormationDefine");
 class ExitSkillItemData {
   constructor() {
     (this.RoleId = void 0),
@@ -58,8 +58,8 @@ class ExitSkillItem extends UiPanelBase_1.UiPanelBase {
       (this.EPe = void 0);
   }
   Refresh(i, t) {
-    const e = i?.RoleId;
-    const s = i?.PlayerId;
+    var e = i?.RoleId,
+      s = i?.PlayerId;
     e ? this.U4t(e, i.OnlineIndex, s, t) : this.A4t(!1);
     let r = !1;
     !this.R4t || (this.zke === e && this.j8 === s) || (r = !0),
@@ -69,15 +69,17 @@ class ExitSkillItem extends UiPanelBase_1.UiPanelBase {
       r && this.EPe.PlayLevelSequenceByName("Switch");
   }
   U4t(t, e, s, r) {
-    let o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(t);
+    var o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(t);
     if (o) {
       this.A4t(!0);
-      var a = o.FormationRoleCard;
-      var a =
-        (this.SetRoleIcon(a, this.GetTexture(2), t),
-        this.SetRoleIcon(a, this.GetTexture(3), t),
-        this.SetRoleIcon(a, this.GetTexture(4), t),
-        ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillList(o.SkillId));
+      var a = o.FormationRoleCard,
+        a =
+          (this.SetRoleIcon(a, this.GetTexture(2), t),
+          this.SetRoleIcon(a, this.GetTexture(3), t),
+          this.SetRoleIcon(a, this.GetTexture(4), t),
+          ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillList(
+            o.SkillId,
+          ));
       let i = void 0;
       for (const h of a)
         if (h.SkillType === EditFormationDefine_1.EXIT_SKILL_TYPE) {
@@ -125,10 +127,10 @@ class ExitSkillItem extends UiPanelBase_1.UiPanelBase {
       this.GetItem(12).SetUIActive(i),
       this.GetText(8).SetUIActive(i),
       this.GetText(10).SetUIActive(i);
-    const t = this.GetText(15);
+    var t = this.GetText(15);
     t.SetUIActive(!i),
       i || LguiUtil_1.LguiUtil.SetLocalText(t, "EditBattleTeamEmpty");
   }
 }
 exports.ExitSkillItem = ExitSkillItem;
-// # sourceMappingURL=ExitSkillItem.js.map
+//# sourceMappingURL=ExitSkillItem.js.map

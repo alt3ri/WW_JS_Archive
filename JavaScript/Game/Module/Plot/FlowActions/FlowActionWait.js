@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionWait = void 0);
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const FlowActionBase_1 = require("./FlowActionBase");
+const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  FlowActionBase_1 = require("./FlowActionBase");
 class FlowActionWait extends FlowActionBase_1.FlowActionBase {
   constructor() {
     super(...arguments), (this.IRe = void 0);
   }
   OnExecute() {
-    const e = this.ActionInfo.Params;
+    var e = this.ActionInfo.Params;
     this.IRe = TimerSystem_1.TimerSystem.Delay((e) => {
       (this.IRe = void 0), this.FinishExecute(!0);
     }, e.Time * TimeUtil_1.TimeUtil.InverseMillisecond);
@@ -21,4 +21,4 @@ class FlowActionWait extends FlowActionBase_1.FlowActionBase {
   }
 }
 exports.FlowActionWait = FlowActionWait;
-// # sourceMappingURL=FlowActionWait.js.map
+//# sourceMappingURL=FlowActionWait.js.map

@@ -5,28 +5,28 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.RoguelikeSelectRoleGrid =
     exports.RoguelikeSelectRoleView =
       void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const HelpController_1 = require("../../Help/HelpController");
-const InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController");
-const RoleController_1 = require("../../RoleUi/RoleController");
-const RoleDefine_1 = require("../../RoleUi/RoleDefine");
-const RoleSelectionMediumItemGrid_1 = require("../../RoleUi/View/RoleSelectionMediumItemGrid");
-const RoleInstance_1 = require("../../RoleUi/View/ViewData/RoleInstance");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const UiSceneManager_1 = require("../../UiComponent/UiSceneManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const DynScrollView_1 = require("../../Util/ScrollView/DynScrollView");
-const RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
-const RoguelikeController_1 = require("../RoguelikeController");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  HelpController_1 = require("../../Help/HelpController"),
+  InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController"),
+  RoleController_1 = require("../../RoleUi/RoleController"),
+  RoleDefine_1 = require("../../RoleUi/RoleDefine"),
+  RoleSelectionMediumItemGrid_1 = require("../../RoleUi/View/RoleSelectionMediumItemGrid"),
+  RoleInstance_1 = require("../../RoleUi/View/ViewData/RoleInstance"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  UiSceneManager_1 = require("../../UiComponent/UiSceneManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  DynScrollView_1 = require("../../Util/ScrollView/DynScrollView"),
+  RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
+  RoguelikeController_1 = require("../RoguelikeController");
 class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -47,25 +47,25 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
       (this.bLn = (e, i) => {
         this.BLn = e;
         var t =
-          ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
+            ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
+              this.NUe,
+              ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
+            ),
+          o = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
             this.NUe,
-            ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
-          );
-        var o = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-          this.NUe,
-        );
-        var o =
-          ConfigManager_1.ConfigManager.EditBattleTeamConfig.GetFightFormationConfig(
-            o.FightFormationId,
-          );
-        var n = e.GetLevelData().GetLevel();
-        var e = e.GetDataId();
-        const r = !ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(e);
-        var o = o.LimitRole.includes(e);
-        var n = n < t && o && !r;
-        var t =
-          (this.GetItem(9).SetUIActive(n),
-          e > RoleDefine_1.ROBOT_DATA_MIN_ID || (o && !r));
+          ),
+          o =
+            ConfigManager_1.ConfigManager.EditBattleTeamConfig.GetFightFormationConfig(
+              o.FightFormationId,
+            ),
+          n = e.GetLevelData().GetLevel(),
+          e = e.GetDataId(),
+          r = !ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(e),
+          o = o.LimitRole.includes(e),
+          n = n < t && o && !r,
+          t =
+            (this.GetItem(9).SetUIActive(n),
+            e > RoleDefine_1.ROBOT_DATA_MIN_ID || (o && !r));
         this.GetButton(10).RootUIComp.SetUIActive(t);
       }),
       (this.rho = () => {
@@ -73,9 +73,8 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
           this.CloseMe();
       }),
       (this.nho = () => {
-        var e = this.OpenParam;
-        var e =
-          ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e);
+        var e = this.OpenParam,
+          e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e);
         ConfigManager_1.ConfigManager.EditBattleTeamConfig.GetFightFormationConfig(
           e.FightFormationId,
         ).LimitRole.includes(this.BLn.GetRoleId())
@@ -93,7 +92,7 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
       (this.sho = (e) => {
         let i = RoguelikeDefine_1.DEFAULT_ROGUELIKE_ENTRY_RATE;
         for (const n of (this.iho.W8n = e)) {
-          const t =
+          var t =
             ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguelikePopularEntriesById(
               n,
             );
@@ -118,7 +117,7 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
         );
       }),
       (this.hho = () => {
-        this.Q6s === 2
+        2 === this.Q6s
           ? RoleController_1.RoleController.OpenRoleMainView(1, 0, [
               this.BLn.GetDataId(),
             ])
@@ -161,7 +160,7 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
   }
   async OnBeforeStartAsync() {
     this.NUe = this.OpenParam;
-    let e;
+    var e;
     await Promise.all([
       (e =
         await RoguelikeController_1.RoguelikeController.RoguelikePopularEntriesInfoRequest(
@@ -188,20 +187,20 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
     (RoguelikeSelectRoleGrid.CurSelectRoleItem = void 0), this.InitRoleList();
   }
   InitRoleList() {
-    var e = this.OpenParam;
-    var e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e);
+    var e = this.OpenParam,
+      e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e);
     const n =
       ConfigManager_1.ConfigManager.EditBattleTeamConfig.GetFightFormationConfig(
         e.FightFormationId,
       );
     e = this.GetTrailRoleInstanceList(this.wLn);
-    e.length > 0 &&
+    0 < e.length &&
       this.tho.push(new RoguelikeSelectRoleData(0, e, n.LimitRole));
-    const r = n.LimitRole;
-    const t = ModelManager_1.ModelManager.RoleModel.GetRoleList();
+    const r = n.LimitRole,
+      t = ModelManager_1.ModelManager.RoleModel.GetRoleList();
     e = ConfigManager_1.ConfigManager.RoleConfig?.GetRoleList().filter(
       (e) =>
-        e.RoleType === 1 &&
+        1 === e.RoleType &&
         !ModelManager_1.ModelManager.RoleModel.IsMainRole(e.Id),
     );
     const o = [];
@@ -220,10 +219,10 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
         : l.push(new RoleInstance_1.RoleInstance(i.Id));
     });
     e = (e, i) => {
-      let t;
-      let o = r.includes(e.GetRoleId()) && e.GetLevelData().GetLevel() !== 0;
+      var t,
+        o = r.includes(e.GetRoleId()) && 0 !== e.GetLevelData().GetLevel();
       return o !==
-        (r.includes(i.GetRoleId()) && i.GetLevelData().GetLevel() !== 0) ||
+        (r.includes(i.GetRoleId()) && 0 !== i.GetLevelData().GetLevel()) ||
         (o = n.RecommendFormation.includes(e.GetRoleId())) !==
           n.RecommendFormation.includes(i.GetRoleId())
         ? o
@@ -246,9 +245,9 @@ class RoguelikeSelectRoleView extends UiViewBase_1.UiViewBase {
       o.sort(e),
       this.tho.push(new RoguelikeSelectRoleData(1, o, r, n.RecommendFormation)),
       this.tho.push(new RoguelikeSelectRoleData(2, l, r, n.RecommendFormation)),
-      o.length > 0
+      0 < o.length
         ? ((this.BLn = o[0]), (this.Q6s = 1))
-        : l.length > 0
+        : 0 < l.length
           ? ((this.BLn = l[0]), (this.Q6s = 2))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -310,8 +309,8 @@ class RoguelikeSelectRoleGrid extends UiPanelBase_1.UiPanelBase {
       (this.Data = void 0),
       (this.qLn = void 0),
       (this.lho = (e) => {
-        let i;
-        e.State === 0 &&
+        var i;
+        0 === e.State &&
           ((i = e.Data).IsTrialRole()
             ? (ModelManager_1.ModelManager.RoguelikeModel.EditFormationRoleList =
                 [i.GetDataId()])
@@ -353,19 +352,19 @@ class RoguelikeSelectRoleGrid extends UiPanelBase_1.UiPanelBase {
       (this.Data.RoleIdList.forEach((e, i) => {
         let t = this.RoleItemList.get(e.GetRoleId());
         if (!t) {
-          const o = LguiUtil_1.LguiUtil.CopyItem(
+          var o = LguiUtil_1.LguiUtil.CopyItem(
             this.GetItem(2),
             this.GetItem(1),
           );
           t = new RoleSelectionMediumItemGrid_1.RoleSelectionMediumItemGrid();
           const n = e;
           t.CreateThenShowByActorAsync(o.GetOwner()).then(() => {
-            const e = {
+            var e = {
               Type: 2,
               Data: n,
               ItemConfigId: n.GetRoleId(),
               BottomTextId:
-                n.GetLevelData().GetLevel() !== 0
+                0 !== n.GetLevelData().GetLevel()
                   ? "Text_LevelShow_Text"
                   : "Text_Role_Not_Have",
               BottomTextParameter: [n.GetLevelData().GetLevel()],
@@ -373,9 +372,9 @@ class RoguelikeSelectRoleGrid extends UiPanelBase_1.UiPanelBase {
               IsTrialRoleVisible: n.IsTrialRole(),
               IsNewVisible: !1,
               IsDisable:
-                (this.Data.LimitRoleList.length > 0 &&
+                (0 < this.Data.LimitRoleList.length &&
                   !this.Data.LimitRoleList.includes(n.GetRoleId())) ||
-                n.GetLevelData().GetLevel() === 0,
+                0 === n.GetLevelData().GetLevel(),
               IsRecommendVisible: this.Data.RecommendedRoleList.includes(
                 n.GetRoleId(),
               ),
@@ -429,7 +428,7 @@ class RoguelikeSelectRoleBaseGrid extends UiPanelBase_1.UiPanelBase {
   }
   GetItemSize(e) {
     void 0 === this.eqe && (this.eqe = Vector2D_1.Vector2D.Create());
-    const i = this.GetRootItem();
+    var i = this.GetRootItem();
     return this.eqe.Set(i.GetWidth(), i.GetHeight()), this.eqe.ToUeVector2D(!0);
   }
   async Init(e) {
@@ -451,4 +450,4 @@ class RoguelikeSelectRoleData {
   }
 }
 exports.RoguelikeSelectRoleData = RoguelikeSelectRoleData;
-// # sourceMappingURL=RoguelikeSelectRoleView.js.map
+//# sourceMappingURL=RoguelikeSelectRoleView.js.map

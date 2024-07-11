@@ -1,55 +1,60 @@
 "use strict";
-let CharacterGasDebugComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, r, a) {
-    let i;
-    const n = arguments.length;
-    let o =
-      n < 3 ? e : a === null ? (a = Object.getOwnPropertyDescriptor(e, r)) : a;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      o = Reflect.decorate(t, e, r, a);
-    else
-      for (let s = t.length - 1; s >= 0; s--)
-        (i = t[s]) && (o = (n < 3 ? i(o) : n > 3 ? i(e, r, o) : i(e, r)) || o);
-    return n > 3 && o && Object.defineProperty(e, r, o), o;
-  };
+var CharacterGasDebugComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, r, a) {
+      var i,
+        n = arguments.length,
+        o =
+          n < 3
+            ? e
+            : null === a
+              ? (a = Object.getOwnPropertyDescriptor(e, r))
+              : a;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        o = Reflect.decorate(t, e, r, a);
+      else
+        for (var s = t.length - 1; 0 <= s; s--)
+          (i = t[s]) &&
+            (o = (n < 3 ? i(o) : 3 < n ? i(e, r, o) : i(e, r)) || o);
+      return 3 < n && o && Object.defineProperty(e, r, o), o;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterGasDebugComponent = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../../Core/Common/Time");
-const PriorityQueue_1 = require("../../../../../../Core/Container/PriorityQueue");
-const DamageById_1 = require("../../../../../../Core/Define/ConfigQuery/DamageById");
-const FormationPropertyAll_1 = require("../../../../../../Core/Define/ConfigQuery/FormationPropertyAll");
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent");
-const EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const Net_1 = require("../../../../../../Core/Net/Net");
-const GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils");
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const StringBuilder_1 = require("../../../../../../Core/Utils/StringBuilder");
-const StringUtils_1 = require("../../../../../../Core/Utils/StringUtils");
-const TestModuleBridge_1 = require("../../../../../Bridge/TestModuleBridge");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const PublicUtil_1 = require("../../../../../Common/PublicUtil");
-const Global_1 = require("../../../../../Global");
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const FormationAttributeController_1 = require("../../../../../Module/Abilities/FormationAttributeController");
-const CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage");
-const AbilityUtils_1 = require("./AbilityUtils");
-const CharacterAttributeTypes_1 = require("./CharacterAttributeTypes");
-const CharacterBuffController_1 = require("./CharacterBuffController");
-const CharacterStatisticsComponent_1 = require("./CharacterStatisticsComponent");
-const CharacterUnifiedStateTypes_1 = require("./CharacterUnifiedStateTypes");
-let ESkillGenreName;
-let EMovementModeName;
-const EAttributeId = Protocol_1.Aki.Protocol.KBs;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../../Core/Common/Time"),
+  PriorityQueue_1 = require("../../../../../../Core/Container/PriorityQueue"),
+  DamageById_1 = require("../../../../../../Core/Define/ConfigQuery/DamageById"),
+  FormationPropertyAll_1 = require("../../../../../../Core/Define/ConfigQuery/FormationPropertyAll"),
+  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  Net_1 = require("../../../../../../Core/Net/Net"),
+  GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  StringBuilder_1 = require("../../../../../../Core/Utils/StringBuilder"),
+  StringUtils_1 = require("../../../../../../Core/Utils/StringUtils"),
+  TestModuleBridge_1 = require("../../../../../Bridge/TestModuleBridge"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../../../../Common/PublicUtil"),
+  Global_1 = require("../../../../../Global"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  FormationAttributeController_1 = require("../../../../../Module/Abilities/FormationAttributeController"),
+  CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage"),
+  AbilityUtils_1 = require("./AbilityUtils"),
+  CharacterAttributeTypes_1 = require("./CharacterAttributeTypes"),
+  CharacterBuffController_1 = require("./CharacterBuffController"),
+  CharacterStatisticsComponent_1 = require("./CharacterStatisticsComponent"),
+  CharacterUnifiedStateTypes_1 = require("./CharacterUnifiedStateTypes");
+var ESkillGenreName,
+  EMovementModeName,
+  EAttributeId = Protocol_1.Aki.Protocol.KBs;
 const MAX_DEBUG_STRING_NUMS = 50;
 !(function (t) {
   (t[(t["普攻"] = 0)] = "普攻"),
@@ -83,12 +88,12 @@ class RecordMoveSum {
       (this.RecordNum = new Map());
   }
   ToCsv() {
-    const e = new Array();
+    var e = new Array();
     e.push(this.ConfigId.toFixed()),
       e.push(this.Name),
       e.push(this.TargetUniqueId.toFixed());
     for (let t = 0; t < 14; t++) {
-      const r = this.RecordNum.get(t);
+      var r = this.RecordNum.get(t);
       e.push(r ? r.toFixed() : "0");
     }
     return e;
@@ -106,7 +111,7 @@ class RecordDamageSum {
       (this.RecordDamage = new Map());
   }
   ToCsvForRole() {
-    const e = new Array();
+    var e = new Array();
     e.push(this.ConfigId.toFixed()),
       e.push(this.Name),
       e.push(this.DamageSourceConfigId.toFixed()),
@@ -114,13 +119,13 @@ class RecordDamageSum {
       e.push(this.SourceUniqueId.toFixed()),
       e.push(this.TotalDamage.toFixed());
     for (let t = 0; t < 14; t++) {
-      const r = this.RecordDamage.get(t);
+      var r = this.RecordDamage.get(t);
       e.push(r ? r.toFixed() : "0");
     }
     return e;
   }
   ToCsvForMonster() {
-    const e = new Array();
+    var e = new Array();
     e.push(this.ConfigId.toFixed()),
       e.push(this.Name),
       e.push(this.UniqueId.toFixed()),
@@ -128,7 +133,7 @@ class RecordDamageSum {
       e.push(this.SourceName),
       e.push(this.TotalDamage.toFixed());
     for (let t = 0; t < 14; t++) {
-      const r = this.RecordDamage.get(t);
+      var r = this.RecordDamage.get(t);
       e.push(r ? r.toFixed() : "0");
     }
     return e;
@@ -255,21 +260,21 @@ let CharacterGasDebugComponent =
         (this.dGr = new Array()),
         (this.pGr = (t) => {
           if (CharacterGasDebugComponent_1.vGr) {
-            let e = t.Attacker;
+            var e = t.Attacker;
             if (this.MGr(e)) {
-              const r = new Array();
-              let a =
-                (r.push(CharacterGasDebugComponent_1.SecondsSinceStartup()),
-                r.push(CharacterGasDebugComponent_1.SGr(Date.now())),
-                e.GetComponent(0));
-              let i = a.GetEntityType();
+              var r = new Array(),
+                a =
+                  (r.push(CharacterGasDebugComponent_1.SecondsSinceStartup()),
+                  r.push(CharacterGasDebugComponent_1.SGr(Date.now())),
+                  e.GetComponent(0)),
+                i = a.GetEntityType();
               if (i === Protocol_1.Aki.Protocol.HBs.Proto_Player) {
                 r.push("角色"), r.push(a.GetPbDataId().toFixed());
-                var n = a.Valid ? a.GetRoleId() : 0;
-                var n =
-                  ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
-                    n,
-                  )?.GetRoleId() ?? 0;
+                var n = a.Valid ? a.GetRoleId() : 0,
+                  n =
+                    ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
+                      n,
+                    )?.GetRoleId() ?? 0;
                 if (!n) return;
                 (n = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(n)),
                   (n = n
@@ -303,7 +308,7 @@ let CharacterGasDebugComponent =
           }
         }),
         (this.RecordMove = (t, e, r) => {
-          let a, i, n;
+          var a, i, n;
           CharacterGasDebugComponent_1.vGr &&
             t?.Valid &&
             this.MGr(this.Entity) &&
@@ -334,12 +339,12 @@ let CharacterGasDebugComponent =
         (this.LGr = void 0),
         (this.ServerDebugInfoDirty = !1),
         (this.DGr = (t, e) => {
-          var e = this.Entity.GetComponent(33)?.GetSkillInfo(e);
-          const r =
-            (CharacterGasDebugComponent_1.RGr ||
-              (CharacterGasDebugComponent_1.RGr = new Map()),
-            this.Entity.Id);
-          if (e.SkillGenre === 4) {
+          var e = this.Entity.GetComponent(33)?.GetSkillInfo(e),
+            r =
+              (CharacterGasDebugComponent_1.RGr ||
+                (CharacterGasDebugComponent_1.RGr = new Map()),
+              this.Entity.Id);
+          if (4 === e.SkillGenre) {
             let t = CharacterGasDebugComponent_1.RGr.get(r);
             t ||
               ((t = new PriorityQueue_1.PriorityQueue(
@@ -355,7 +360,7 @@ let CharacterGasDebugComponent =
               !1,
             );
             t.Push(a);
-          } else if (e.SkillGenre === 12) {
+          } else if (12 === e.SkillGenre) {
             let t = CharacterGasDebugComponent_1.RGr.get(r);
             t ||
               ((t = new PriorityQueue_1.PriorityQueue(
@@ -375,7 +380,7 @@ let CharacterGasDebugComponent =
         });
     }
     OnStart() {
-      const t = this.Entity.GetComponent(3);
+      var t = this.Entity.GetComponent(3);
       return (
         (this.sGr = t?.Actor.AbilitySystemComponent),
         CharacterGasDebugComponent_1.PGr(),
@@ -407,13 +412,13 @@ let CharacterGasDebugComponent =
           (CharacterGasDebugComponent_1.VEn = Time_1.Time.Frame)),
         this.EnableCollisionDebugDraw)
       ) {
-        const e = this.Entity.GetComponent(3);
+        var e = this.Entity.GetComponent(3);
         if (e) {
-          const r = e.Actor.K2_GetComponentsByClass(
+          var r = e.Actor.K2_GetComponentsByClass(
             UE.CapsuleComponent.StaticClass(),
           );
           for (let t = 0; t < r.Num(); t++) {
-            const a = r.Get(t);
+            var a = r.Get(t);
             UE.KismetSystemLibrary.DrawDebugCapsule(
               e.Actor,
               a.K2_GetComponentLocation(),
@@ -474,7 +479,7 @@ let CharacterGasDebugComponent =
       );
     }
     GetTagContainerDebugString(e) {
-      const r = e.GameplayTags?.Num() ?? 0;
+      var r = e.GameplayTags?.Num() ?? 0;
       if (r <= 0) return "";
       let a = "";
       for (let t = 0; t < r; t++) a += e.GameplayTags.Get(t).TagName + " ";
@@ -491,12 +496,12 @@ let CharacterGasDebugComponent =
     }
     GetShieldDebugString() {
       this.uGr.length = 0;
-      let t = this.Entity.GetComponent(64);
+      var t = this.Entity.GetComponent(64);
       if (t)
         for (var [, e] of t.GetDebugShieldInfo()) {
-          const r = e.ShieldValue;
-          const a = e.Priority;
-          var e = e.TemplateId;
+          var r = e.ShieldValue,
+            a = e.Priority,
+            e = e.TemplateId;
           this.uGr.push(
             `Shield magnitude: ${r} priority: ${a} templateId: ` + e,
           );
@@ -505,13 +510,13 @@ let CharacterGasDebugComponent =
       return "\n\nShields:\n" + this.uGr.join("\n") + t;
     }
     GetAttributeDebugStrings() {
-      const e = this.Entity.GetComponent(156);
+      var e = this.Entity.GetComponent(156);
       if (!e) return "Invalid";
       let r = "";
       for (let t = 1; t < CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX; t++) {
-        const a = e.GetBaseValue(t);
-        const i = e.GetCurrentValue(t);
-        const n = Protocol_1.Aki.Protocol.KBs[t];
+        var a = e.GetBaseValue(t),
+          i = e.GetCurrentValue(t),
+          n = Protocol_1.Aki.Protocol.KBs[t];
         CharacterAttributeTypes_1.stateAttributeIds.has(t) || i === a
           ? (r += `#${t} ${n}	= ${i.toFixed(0)}
 `)
@@ -526,58 +531,57 @@ let CharacterGasDebugComponent =
         "\n队伍属性：\n" +
         CharacterGasDebugComponent_1.GetFormationAttributeDebugStrings());
     }
-
     GetAllAttributeDebugStrings() {
       this.cGr.length = 0;
-      const e = this.Entity.GetComponent(156);
+      var e = this.Entity.GetComponent(156);
       for (let t = 1; t < CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX; t++) {
-        const r = e.GetBaseValue(t);
-        const a = e.GetCurrentValue(t);
-        var i = Protocol_1.Aki.Protocol.KBs[t];
-        var i = `Attribute ID: ${t}   ${i}  
+        var r = e.GetBaseValue(t),
+          a = e.GetCurrentValue(t),
+          i = Protocol_1.Aki.Protocol.KBs[t],
+          i = `Attribute ID: ${t}   ${i}  
     Base: ${r.toFixed()}    Current: ${a.toFixed()} 
 `;
         this.cGr.push(i);
       }
       return this.cGr.join("\n");
     }
-
     static GetFormationAttributeDebugStrings() {
       let t = "";
       for (const n of FormationPropertyAll_1.configFormationPropertyAll.GetConfigList()) {
-        const e = n.Id;
-        const r =
-          FormationAttributeController_1.FormationAttributeController.GetValue(
-            e,
-          );
-        const a =
-          FormationAttributeController_1.FormationAttributeController.GetMax(e);
-        const i =
-          FormationAttributeController_1.FormationAttributeController.GetSpeed(
-            e,
-          );
+        var e = n.Id,
+          r =
+            FormationAttributeController_1.FormationAttributeController.GetValue(
+              e,
+            ),
+          a =
+            FormationAttributeController_1.FormationAttributeController.GetMax(
+              e,
+            ),
+          i =
+            FormationAttributeController_1.FormationAttributeController.GetSpeed(
+              e,
+            );
         t += `#${e} = ${r?.toFixed(0)}/${a?.toFixed(0)} (${i?.toFixed(0)}/s)
 `;
       }
       return t;
     }
-
     GetAllAttributeDebugInfo() {
-      const a = this.Entity.GetComponent(156);
+      var a = this.Entity.GetComponent(156);
       if (!a) return "Invalid";
       let i = "";
       const n = this.LGr?.dfs;
-      const o = new Array(CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX);
+      var o = new Array(CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX);
       if (n) for (const d of n) o[d.Ugs] = d;
       for (let r = 1; r < CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX; r++) {
-        const s = a.GetBaseValue(r);
-        const u = a.GetCurrentValue(r);
-        const h = u.toFixed(0);
+        var s = a.GetBaseValue(r),
+          u = a.GetCurrentValue(r),
+          h = u.toFixed(0);
         let t = (u - s).toFixed(0);
         s <= u && (t = "+" + t), (t = u === s ? "" : `(${t})`);
-        const _ = Protocol_1.Aki.Protocol.KBs[r].replace("Proto_", "");
+        var _ = Protocol_1.Aki.Protocol.KBs[r].replace("Proto_", "");
         const n = o[r];
-        const C = n?.NFn.toFixed(0) ?? "0";
+        var C = n?.NFn.toFixed(0) ?? "0";
         let e = n ? (n.NFn - n.Pgs).toFixed(0) : "0";
         n && n.NFn > n.Pgs && (e = "+" + e),
           (e = n?.NFn === n?.Pgs ? "" : `(${e})`),
@@ -588,25 +592,27 @@ let CharacterGasDebugComponent =
 `);
       }
       i += "\n队伍属性：\n";
-      const t = this.LGr?.qFn;
-      const e = new Array();
+      var t = this.LGr?.qFn,
+        e = new Array();
       if (t) for (const D of t) e[D.OFn] = D;
       for (const p of FormationPropertyAll_1.configFormationPropertyAll.GetConfigList()) {
-        const r = p.Id;
-        const l =
-          FormationAttributeController_1.FormationAttributeController.GetValue(
-            r,
-          );
-        const c =
-          FormationAttributeController_1.FormationAttributeController.GetMax(r);
-        const g =
-          FormationAttributeController_1.FormationAttributeController.GetSpeed(
-            r,
-          );
+        var r = p.Id,
+          l =
+            FormationAttributeController_1.FormationAttributeController.GetValue(
+              r,
+            ),
+          c =
+            FormationAttributeController_1.FormationAttributeController.GetMax(
+              r,
+            ),
+          g =
+            FormationAttributeController_1.FormationAttributeController.GetSpeed(
+              r,
+            );
         const n = e[r];
-        const f = n?.NFn.toFixed(0) ?? "???";
-        const m = n?.kFn.toFixed(0) ?? "???";
-        const b = n?.VFn.toFixed(0) ?? "???";
+        var f = n?.NFn.toFixed(0) ?? "???",
+          m = n?.kFn.toFixed(0) ?? "???",
+          b = n?.VFn.toFixed(0) ?? "???";
         i +=
           `#${r}	 C:${l?.toFixed(0)}/${c?.toFixed(0)} (${g?.toFixed(0)}/s)` +
           ` | S:${f}/${m} (${b}/s)
@@ -614,7 +620,6 @@ let CharacterGasDebugComponent =
       }
       return i;
     }
-
     wGr() {
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
@@ -660,7 +665,7 @@ let CharacterGasDebugComponent =
         );
     }
     GetAllMovementHistory() {
-      return this.dGr.length > 50 && this.dGr.pop(), this.dGr.join("\n");
+      return 50 < this.dGr.length && this.dGr.pop(), this.dGr.join("\n");
     }
     DebugResetBaseValue(t, e) {
       t >= EAttributeId.Proto_Lv &&
@@ -681,7 +686,7 @@ let CharacterGasDebugComponent =
         (this.GGr = t);
     }
     static RequestSwitchServerMode(t) {
-      const e = Protocol_1.Aki.Protocol.vzn.create({
+      var e = Protocol_1.Aki.Protocol.vzn.create({
         u9n: t,
         c9n: Protocol_1.Aki.Protocol.kOs.oTs,
       });
@@ -726,7 +731,7 @@ let CharacterGasDebugComponent =
         );
     }
     static EndRecord() {
-      let t;
+      var t;
       return this.vGr
         ? ((this.vGr = !1),
           this.SetDamageRecord(!1),
@@ -744,8 +749,8 @@ let CharacterGasDebugComponent =
         : "";
     }
     static VGr() {
-      const t = new Array();
-      let e = "";
+      var t = new Array(),
+        e = "";
       let r = "";
       UE.KuroStaticLibrary.SaveStringToFile(
         "X秒,当前时间,对象,对象ID,对象名称,技能ID,技能类型,攻击,暴击,爆伤,生命,防御,伤害加成\n" +
@@ -755,11 +760,11 @@ let CharacterGasDebugComponent =
           "SkillRecord.csv",
         !0,
       );
-      const a = new Array();
-      var i =
-        "X秒,当前时间,对象,对象ID,对象名称,子弹ID,子弹名称,伤害ID,技能ID,技能类型,子弹是否命中\n";
+      var a = new Array(),
+        i =
+          "X秒,当前时间,对象,对象ID,对象名称,子弹ID,子弹名称,伤害ID,技能ID,技能类型,子弹是否命中\n";
       for (const P of this.yGr) {
-        const n = this.EGr.get(P);
+        var n = this.EGr.get(P);
         n.push(
           ModelManager_1.ModelManager.BulletModel.IsBulletHit(P) ? "1" : "0",
         ),
@@ -847,33 +852,33 @@ let CharacterGasDebugComponent =
         (t.length = 0),
         (e += r + "\n"),
         (r = "");
-      const o =
+      var o =
         Time_1.Time.WorldTimeSeconds -
         CharacterGasDebugComponent_1.NGr -
         CharacterGasDebugComponent_1.UGr;
       let s = 0;
       for (; o >= s; ) (r += ",'" + s.toString() + "s'"), (s += 0.5);
       let u = "";
-      var i = (0, puerts_1.$ref)(u);
-      const h =
-        (UE.FileSystemOperation.ReadFile(
-          UE.KismetSystemLibrary.GetProjectDirectory() +
-            "../Config/ResConfig/RoleDspTpl.txt",
-          i,
-        ),
-        (u = (u = (0, puerts_1.$unref)(i)).replace("TPL_XAXIS_VALUES", r)),
-        new StringBuilder_1.StringBuilder());
-      const _ = new Map();
-      const C = new Map();
-      const l = new Map();
-      const c = new Map();
-      const g = new Map();
-      const f = new Map();
-      const m = new Map();
-      const b = new Map();
-      const d = new Map();
+      var i = (0, puerts_1.$ref)(u),
+        h =
+          (UE.FileSystemOperation.ReadFile(
+            UE.KismetSystemLibrary.GetProjectDirectory() +
+              "../Config/ResConfig/RoleDspTpl.txt",
+            i,
+          ),
+          (u = (u = (0, puerts_1.$unref)(i)).replace("TPL_XAXIS_VALUES", r)),
+          new StringBuilder_1.StringBuilder()),
+        _ = new Map(),
+        C = new Map(),
+        l = new Map(),
+        c = new Map(),
+        g = new Map(),
+        f = new Map(),
+        m = new Map(),
+        b = new Map(),
+        d = new Map();
       for (s = 0; o >= s; ) {
-        for (const [D, p] of CharacterGasDebugComponent_1.RGr) {
+        for (var [D, p] of CharacterGasDebugComponent_1.RGr) {
           c.has(D) || c.set(D, new Array()),
             g.has(D) || g.set(D, new Array()),
             f.has(D) || f.set(D, new Array()),
@@ -883,12 +888,12 @@ let CharacterGasDebugComponent =
             _.has(D) || _.set(D, 0),
             C.has(D) || C.set(D, 0),
             l.has(D) || l.set(D, !1);
-          let t = !1;
-          let e = !1;
+          let t = !1,
+            e = !1;
           for (; !p.Empty; ) {
-            const E = p.Top;
+            var E = p.Top;
             if (!(E.TimeStamp <= this.NGr + s)) break;
-            E.DamageValue > 0
+            0 < E.DamageValue
               ? _.set(D, _.get(D) + E.DamageValue)
               : E.InGame
                 ? l.set(D, !0)
@@ -908,35 +913,35 @@ let CharacterGasDebugComponent =
             g.get(D).push(l.get(D) ? "-10" : "'-'"),
             f.get(D).push(t ? "-20" : "'-'"),
             m.get(D).push(e ? "-30" : "'-'");
-          const v = C.get(D);
-          d.get(D).push(v > 0 ? _.get(D) / v : 0),
-            b.get(D).push(s > 0 ? _.get(D) / s : 0),
+          var v = C.get(D);
+          d.get(D).push(0 < v ? _.get(D) / v : 0),
+            b.get(D).push(0 < s ? _.get(D) / s : 0),
             l.get(D) && C.set(D, C.get(D) + 0.5);
         }
         s += 0.5;
       }
-      let A;
-      let y;
-      let I;
-      let G;
-      let q;
-      let M;
-      let N;
-      let O;
-      let S;
-      let L;
-      let F;
-      let U;
-      let k;
-      let Q;
-      let w;
-      let X;
-      let H;
-      const T = [];
-      const R = [];
-      const B = [];
+      var A,
+        y,
+        I,
+        G,
+        q,
+        M,
+        N,
+        O,
+        S,
+        L,
+        F,
+        U,
+        k,
+        Q,
+        w,
+        X,
+        H,
+        T = [],
+        R = [],
+        B = [];
       for ([A, y] of c) {
-        let $ = EntitySystem_1.EntitySystem.Get(A);
+        var $ = EntitySystem_1.EntitySystem.Get(A);
         $?.Valid
           ? (T.push(A),
             ($ = ($ = $.GetComponent(0)).Valid ? $.GetRoleId() : 0),
@@ -1026,8 +1031,8 @@ let CharacterGasDebugComponent =
       );
     }
     static RecordDamage(a, i, n, o) {
-      const s = new Array();
-      var n = (s.push(n), s.push(o), CharacterGasDebugComponent_1.YGr(a));
+      var s = new Array(),
+        n = (s.push(n), s.push(o), CharacterGasDebugComponent_1.YGr(a));
       if (n) {
         s.push(n.Type),
           s.push(n.ConfigId),
@@ -1035,11 +1040,11 @@ let CharacterGasDebugComponent =
           a.GetComponent(83) ? s.push("角色") : s.push("怪物"),
           s.push(MathUtils_1.MathUtils.LongToBigInt(i.STs).toString());
         let t = ConfigManager_1.ConfigManager.BulletConfig.GetBulletData(
-          a,
-          MathUtils_1.MathUtils.LongToBigInt(i.wVn).toString(),
-          !1,
-        );
-        let e = void 0;
+            a,
+            MathUtils_1.MathUtils.LongToBigInt(i.wVn).toString(),
+            !1,
+          ),
+          e = void 0;
         t ||
           ((o =
             ControllerHolder_1.ControllerHolder.WorldController.GetCustomEntityId(
@@ -1058,8 +1063,8 @@ let CharacterGasDebugComponent =
         (r = r || e?.GetComponent(33)?.GetSkillInfo(i.vkn)),
           s.push(r?.SkillName?.toString()),
           s.push(MathUtils_1.MathUtils.LongToBigInt(i.m9n.rkn).toString());
-        var n = a?.CheckGetComponent(0).GetPbDataId().toFixed();
-        const u = (s.push(n), s.length);
+        var n = a?.CheckGetComponent(0).GetPbDataId().toFixed(),
+          u = (s.push(n), s.length);
         for (const h of i.TTs.vTs)
           h.Ugs === EAttributeId.Proto_Atk
             ? (s[u] = h.NFn.toFixed())
@@ -1084,9 +1089,9 @@ let CharacterGasDebugComponent =
     static JGr(t, e, r, a) {
       let i = this.XGr;
       t?.GetComponent(83) || (i = this.$Gr);
-      let n;
-      const o = t.Id.toFixed() + e.Id.toFixed();
-      let s = i.get(o);
+      var n,
+        o = t.Id.toFixed() + e.Id.toFixed(),
+        s = i.get(o);
       s
         ? ((s.TotalDamage += r),
           (n = s.RecordDamage.get(a) ?? 0),
@@ -1106,10 +1111,10 @@ let CharacterGasDebugComponent =
           i.set(o, s));
     }
     static TGr(t, e, r) {
-      const a = t?.GetComponent(3).Actor.GetName() ?? "";
-      var t = t?.CheckGetComponent(0).GetPbDataId() ?? 0;
-      var e = e?.Id ?? 0;
-      let i = this.QGr.get(t + e);
+      var a = t?.GetComponent(3).Actor.GetName() ?? "",
+        t = t?.CheckGetComponent(0).GetPbDataId() ?? 0,
+        e = e?.Id ?? 0,
+        i = this.QGr.get(t + e);
       i
         ? i.RecordNum.set(r, i.RecordNum.get(r) + 1)
         : (((i = new RecordMoveSum()).ConfigId = t),
@@ -1125,10 +1130,10 @@ let CharacterGasDebugComponent =
       if (!this.LGr?.aTs?.zps) return "";
       let t = "";
       for (const s of this.LGr.aTs.zps) {
-        const e = MathUtils_1.MathUtils.LongToBigInt(s.JFn);
-        const r = MathUtils_1.MathUtils.LongToBigInt(s.jVn).toString();
-        var a = CharacterBuffController_1.default.GetBuffDefinition(e);
-        var a = a ? a.Desc : "";
+        var e = MathUtils_1.MathUtils.LongToBigInt(s.JFn),
+          r = MathUtils_1.MathUtils.LongToBigInt(s.jVn).toString(),
+          a = CharacterBuffController_1.default.GetBuffDefinition(e),
+          a = a ? a.Desc : "";
         t += this.zGr(
           e.toString(),
           s.y4n,
@@ -1143,10 +1148,10 @@ let CharacterGasDebugComponent =
       }
       if (!this.LGr?.jEs) return "";
       for (const u of this.LGr.jEs) {
-        const i = MathUtils_1.MathUtils.LongToBigInt(u.Ekn);
-        const n = MathUtils_1.MathUtils.LongToBigInt(u.jVn).toString();
-        var o = CharacterBuffController_1.default.GetBuffDefinition(i);
-        var o = o ? o.Desc : "";
+        var i = MathUtils_1.MathUtils.LongToBigInt(u.Ekn),
+          n = MathUtils_1.MathUtils.LongToBigInt(u.jVn).toString(),
+          o = CharacterBuffController_1.default.GetBuffDefinition(i),
+          o = o ? o.Desc : "";
         t += this.zGr(
           "编 " + i.toString(),
           u.E4n,
@@ -1159,7 +1164,7 @@ let CharacterGasDebugComponent =
           u.Skn ?? 0,
         );
       }
-      if (this.LGr.aTs.Zps.length > 0) {
+      if (0 < this.LGr.aTs.Zps.length) {
         t += "\nCD : \n";
         for (const h of this.LGr.aTs.Zps)
           if (!(h.uSs.length <= 0)) {
@@ -1311,7 +1316,7 @@ let CharacterGasDebugComponent =
       return t;
     }
     ServerDebugInfoRequest() {
-      const t = Protocol_1.Aki.Protocol.Pzn.create();
+      var t = Protocol_1.Aki.Protocol.Pzn.create();
       (t.rkn = MathUtils_1.MathUtils.NumberToLong(
         ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(
           this.Entity.Id,
@@ -1332,12 +1337,12 @@ let CharacterGasDebugComponent =
         CharacterGasDebugComponent_1.KGr.push(t.join(","));
     }
     ZGr(t, e) {
-      const r = new Array();
-      var a =
-        (r.push(CharacterGasDebugComponent_1.SecondsSinceStartup()),
-        r.push(CharacterGasDebugComponent_1.SGr(Date.now())),
-        t.GetInstigator());
-      var a = a ? CharacterGasDebugComponent_1.YGr(a) : void 0;
+      var r = new Array(),
+        a =
+          (r.push(CharacterGasDebugComponent_1.SecondsSinceStartup()),
+          r.push(CharacterGasDebugComponent_1.SGr(Date.now())),
+          t.GetInstigator()),
+        a = a ? CharacterGasDebugComponent_1.YGr(a) : void 0;
       if (a)
         return (
           r.push(a.Type),
@@ -1350,9 +1355,9 @@ let CharacterGasDebugComponent =
         );
     }
     static YGr(t) {
-      let e;
-      var t = t.GetComponent(0);
-      const r = t.GetEntityType();
+      var e,
+        t = t.GetComponent(0),
+        r = t.GetEntityType();
       return r === Protocol_1.Aki.Protocol.HBs.Proto_Player
         ? ((e = t.Valid ? t.GetRoleId() : 0),
           (e =
@@ -1379,7 +1384,7 @@ let CharacterGasDebugComponent =
           : void 0;
     }
     static SetDamageRecord(t) {
-      const e = Protocol_1.Aki.Protocol.Debug.qXn.create();
+      var e = Protocol_1.Aki.Protocol.Debug.qXn.create();
       (e.C9n = t),
         Net_1.Net.Call(8311, e, (t) => {
           t &&
@@ -1393,13 +1398,13 @@ let CharacterGasDebugComponent =
           t && t.RoleTest && t.RoleTest.RecordDamageNotify(e, r);
         },
       );
-      let t;
-      let a;
-      const i = EntitySystem_1.EntitySystem.Get(
-        ModelManager_1.ModelManager.CreatureModel.GetEntityId(
-          MathUtils_1.MathUtils.LongToNumber(r.m9n.rkn),
-        ),
-      );
+      var t,
+        a,
+        i = EntitySystem_1.EntitySystem.Get(
+          ModelManager_1.ModelManager.CreatureModel.GetEntityId(
+            MathUtils_1.MathUtils.LongToNumber(r.m9n.rkn),
+          ),
+        );
       i.GetComponent(24)?.GetStatisticsEnable() &&
         ((t = (
           0.001 *
@@ -1414,7 +1419,7 @@ let CharacterGasDebugComponent =
         this.iNr(i, r));
     }
     static iNr(e, r) {
-      let a = e.GetComponent(0);
+      var a = e.GetComponent(0);
       if (a && a.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Player) {
         this.RGr || (this.RGr = new Map());
         a = e.Id;
@@ -1453,8 +1458,8 @@ let CharacterGasDebugComponent =
       a.Push(t);
     }
     static tNr(a, i, n, o) {
-      const s = new Array();
-      var n = (s.push(n), s.push(o), CharacterGasDebugComponent_1.YGr(a));
+      var s = new Array(),
+        n = (s.push(n), s.push(o), CharacterGasDebugComponent_1.YGr(a));
       if (n) {
         s.push(n.Type),
           s.push(n.ConfigId),
@@ -1466,11 +1471,11 @@ let CharacterGasDebugComponent =
           ),
           s.push(MathUtils_1.MathUtils.LongToBigInt(i.STs).toString());
         let t = ConfigManager_1.ConfigManager.BulletConfig.GetBulletData(
-          a,
-          MathUtils_1.MathUtils.LongToBigInt(i.wVn).toString(),
-          !1,
-        );
-        let e = void 0;
+            a,
+            MathUtils_1.MathUtils.LongToBigInt(i.wVn).toString(),
+            !1,
+          ),
+          e = void 0;
         t ||
           ((o =
             ControllerHolder_1.ControllerHolder.WorldController.GetCustomEntityId(
@@ -1490,36 +1495,36 @@ let CharacterGasDebugComponent =
           s.push(r?.toString() ?? ""),
           s.push(MathUtils_1.MathUtils.LongToBigInt(i.m9n.rkn).toString()),
           s.push(i.ITs ? "1" : "0");
-        var n = s.length;
-        var o =
-          (this.oNr(i.TTs.pTs, s, n),
-          this.oNr(i.m9n.pTs, s, n + 59),
-          DamageById_1.configDamageById.GetConfig(
-            MathUtils_1.MathUtils.LongToBigInt(i.STs),
-          ));
-        var a = i.n9n;
-        const u =
-          ((s[n + 118] = AbilityUtils_1.AbilityUtils.GetLevelValue(
-            o.ToughLv,
-            a,
-            0,
-          ).toString()),
-          (s[n + 119] = AbilityUtils_1.AbilityUtils.GetLevelValue(
-            o.Energy,
-            a,
-            0,
-          ).toString()),
-          (s[n + 120] = o.ElementPowerType.toString()),
-          (s[n + 121] = AbilityUtils_1.AbilityUtils.GetLevelValue(
-            o.ElementPower,
-            a,
-            0,
-          ).toString()),
-          new Array());
-        const h = new Array();
+        var n = s.length,
+          o =
+            (this.oNr(i.TTs.pTs, s, n),
+            this.oNr(i.m9n.pTs, s, n + 59),
+            DamageById_1.configDamageById.GetConfig(
+              MathUtils_1.MathUtils.LongToBigInt(i.STs),
+            )),
+          a = i.n9n,
+          u =
+            ((s[n + 118] = AbilityUtils_1.AbilityUtils.GetLevelValue(
+              o.ToughLv,
+              a,
+              0,
+            ).toString()),
+            (s[n + 119] = AbilityUtils_1.AbilityUtils.GetLevelValue(
+              o.Energy,
+              a,
+              0,
+            ).toString()),
+            (s[n + 120] = o.ElementPowerType.toString()),
+            (s[n + 121] = AbilityUtils_1.AbilityUtils.GetLevelValue(
+              o.ElementPower,
+              a,
+              0,
+            ).toString()),
+            new Array()),
+          h = new Array();
         for (const g of i.m9n.fTs) {
-          const _ = MathUtils_1.MathUtils.LongToBigInt(g);
-          const C = CharacterBuffController_1.default.GetBuffDefinition(_);
+          var _ = MathUtils_1.MathUtils.LongToBigInt(g),
+            C = CharacterBuffController_1.default.GetBuffDefinition(_);
           u.push(C.Desc), h.push(_);
         }
         (s[n + 122] = h.join("|")),
@@ -1527,8 +1532,8 @@ let CharacterGasDebugComponent =
           (u.length = 0),
           (h.length = 0);
         for (const f of i.TTs.fTs) {
-          const l = MathUtils_1.MathUtils.LongToBigInt(f);
-          const c = CharacterBuffController_1.default.GetBuffDefinition(l);
+          var l = MathUtils_1.MathUtils.LongToBigInt(f),
+            c = CharacterBuffController_1.default.GetBuffDefinition(l);
           u.push(c.Desc), h.push(l);
         }
         (s[n + 124] = h.join("|")), (s[n + 125] = u.join("|"));
@@ -1551,8 +1556,8 @@ let CharacterGasDebugComponent =
       );
     }
     static eNr(i, n, o, s) {
-      const u = new Array();
-      var o = (u.push(o), u.push(s), CharacterGasDebugComponent_1.YGr(i));
+      var u = new Array(),
+        o = (u.push(o), u.push(s), CharacterGasDebugComponent_1.YGr(i));
       if (o) {
         u.push(o.Type),
           u.push(o.ConfigId),
@@ -1564,11 +1569,11 @@ let CharacterGasDebugComponent =
           ),
           u.push(MathUtils_1.MathUtils.LongToBigInt(n.STs).toString());
         let t = ConfigManager_1.ConfigManager.BulletConfig.GetBulletData(
-          i,
-          MathUtils_1.MathUtils.LongToBigInt(n.wVn).toString(),
-          !1,
-        );
-        let e = void 0;
+            i,
+            MathUtils_1.MathUtils.LongToBigInt(n.wVn).toString(),
+            !1,
+          ),
+          e = void 0;
         t ||
           ((s =
             ControllerHolder_1.ControllerHolder.WorldController.GetCustomEntityId(
@@ -1588,24 +1593,24 @@ let CharacterGasDebugComponent =
           u.push(r?.toString() ?? ""),
           u.push(n.ITs ? "1" : "0"),
           u.push(MathUtils_1.MathUtils.LongToBigInt(n.m9n.rkn).toString());
-        const h = u.length;
-        var o =
-          (CharacterGasDebugComponent_1.rNr(n.TTs.vTs, u, h, h + 122),
-          DamageById_1.configDamageById.GetConfig(
-            MathUtils_1.MathUtils.LongToBigInt(n.STs),
-          ));
+        var h = u.length,
+          o =
+            (CharacterGasDebugComponent_1.rNr(n.TTs.vTs, u, h, h + 122),
+            DamageById_1.configDamageById.GetConfig(
+              MathUtils_1.MathUtils.LongToBigInt(n.STs),
+            ));
         let a = void 0;
-        o.ElementPowerType === 1
+        1 === o.ElementPowerType
           ? (a = EAttributeId.Proto_ElementPower1)
-          : o.ElementPowerType === 2
+          : 2 === o.ElementPowerType
             ? (a = EAttributeId.Proto_ElementPower2)
-            : o.ElementPowerType === 3
+            : 3 === o.ElementPowerType
               ? (a = EAttributeId.Proto_ElementPower3)
-              : o.ElementPowerType === 4
+              : 4 === o.ElementPowerType
                 ? (a = EAttributeId.Proto_ElementPower4)
-                : o.ElementPowerType === 5
+                : 5 === o.ElementPowerType
                   ? (a = EAttributeId.Proto_ElementPower5)
-                  : o.ElementPowerType === 6 &&
+                  : 6 === o.ElementPowerType &&
                     (a = EAttributeId.Proto_ElementPower6),
           (u[h + 120] = o.ElementPowerType.toString());
         for (const m of n.m9n.vTs)
@@ -1615,44 +1620,44 @@ let CharacterGasDebugComponent =
               ? (u[h + 119] = m.NFn.toFixed())
               : a && m.Ugs === a && (u[h + 121] = m.NFn.toFixed());
         CharacterGasDebugComponent_1.rNr(n.m9n.vTs, u, h + 59, h + 181);
-        var s = n.n9n;
-        const _ =
-          ((u[h + 240] = AbilityUtils_1.AbilityUtils.GetLevelValue(
-            o.HardnessLv,
-            s,
-            0,
-          ).toString()),
-          (u[h + 241] = AbilityUtils_1.AbilityUtils.GetLevelValue(
-            o.Percent0,
-            s,
-            0,
-          ).toString()),
-          (u[h + 242] = AbilityUtils_1.AbilityUtils.GetLevelValue(
-            o.Percent1,
-            s,
-            0,
-          ).toString()),
-          (u[h + 243] = AbilityUtils_1.AbilityUtils.GetLevelValue(
-            o.ToughLv,
-            s,
-            0,
-          ).toString()),
-          (u[h + 244] = AbilityUtils_1.AbilityUtils.GetLevelValue(
-            o.Energy,
-            s,
-            0,
-          ).toString()),
-          (u[h + 245] = o.ElementPowerType.toString()),
-          (u[h + 246] = AbilityUtils_1.AbilityUtils.GetLevelValue(
-            o.ElementPower,
-            s,
-            0,
-          ).toString()),
-          new Array());
-        const C = new Array();
+        var s = n.n9n,
+          _ =
+            ((u[h + 240] = AbilityUtils_1.AbilityUtils.GetLevelValue(
+              o.HardnessLv,
+              s,
+              0,
+            ).toString()),
+            (u[h + 241] = AbilityUtils_1.AbilityUtils.GetLevelValue(
+              o.Percent0,
+              s,
+              0,
+            ).toString()),
+            (u[h + 242] = AbilityUtils_1.AbilityUtils.GetLevelValue(
+              o.Percent1,
+              s,
+              0,
+            ).toString()),
+            (u[h + 243] = AbilityUtils_1.AbilityUtils.GetLevelValue(
+              o.ToughLv,
+              s,
+              0,
+            ).toString()),
+            (u[h + 244] = AbilityUtils_1.AbilityUtils.GetLevelValue(
+              o.Energy,
+              s,
+              0,
+            ).toString()),
+            (u[h + 245] = o.ElementPowerType.toString()),
+            (u[h + 246] = AbilityUtils_1.AbilityUtils.GetLevelValue(
+              o.ElementPower,
+              s,
+              0,
+            ).toString()),
+            new Array()),
+          C = new Array();
         for (const b of n.m9n.fTs) {
-          const l = MathUtils_1.MathUtils.LongToBigInt(b);
-          const c = CharacterBuffController_1.default.GetBuffDefinition(l);
+          var l = MathUtils_1.MathUtils.LongToBigInt(b),
+            c = CharacterBuffController_1.default.GetBuffDefinition(l);
           _.push(c.Desc), C.push(l);
         }
         (u[h + 247] = C.join("|")),
@@ -1660,8 +1665,8 @@ let CharacterGasDebugComponent =
           (_.length = 0),
           (C.length = 0);
         for (const d of n.TTs.fTs) {
-          const g = MathUtils_1.MathUtils.LongToBigInt(d);
-          const f = CharacterBuffController_1.default.GetBuffDefinition(g);
+          var g = MathUtils_1.MathUtils.LongToBigInt(d),
+            f = CharacterBuffController_1.default.GetBuffDefinition(g);
           _.push(f.Desc), C.push(g);
         }
         (u[h + 249] = C.join("|")), (u[h + 250] = _.join("|"));
@@ -1675,7 +1680,7 @@ let CharacterGasDebugComponent =
       for (const n of t)
         for (let t = 0, e = attributeIdArray.length; t < e; t++)
           if (n.Ugs === attributeIdArray[t]) {
-            (r[a + t] = (n.NFn > 0 ? n.NFn : n.Pgs).toString()),
+            (r[a + t] = (0 < n.NFn ? n.NFn : n.Pgs).toString()),
               (r[i + t] = n.Pgs.toString());
             break;
           }
@@ -1684,7 +1689,7 @@ let CharacterGasDebugComponent =
       for (const i of t)
         for (let t = 0, e = attributeIdArray.length; t < e; t++)
           if (i.Ugs === attributeIdArray[t]) {
-            r[a + t] = (i.NFn > 0 ? i.NFn : i.Pgs).toString();
+            r[a + t] = (0 < i.NFn ? i.NFn : i.Pgs).toString();
             break;
           }
     }
@@ -1744,4 +1749,4 @@ let CharacterGasDebugComponent =
       CharacterGasDebugComponent,
     )),
   (exports.CharacterGasDebugComponent = CharacterGasDebugComponent);
-// # sourceMappingURL=CharacterGasDebugComponent.js.map
+//# sourceMappingURL=CharacterGasDebugComponent.js.map

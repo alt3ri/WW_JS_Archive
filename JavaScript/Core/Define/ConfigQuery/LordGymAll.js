@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configLordGymAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const LordGym_1 = require("../Config/LordGym");
-const DB = "db_lordgym.db";
-const FILE = "l.领主道馆.xlsx";
-const TABLE = "LordGym";
-const COMMAND = "select BinData from `LordGym`";
-const KEY_PREFIX = "LordGymAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  LordGym_1 = require("../Config/LordGym"),
+  DB = "db_lordgym.db",
+  FILE = "l.领主道馆.xlsx",
+  TABLE = "LordGym",
+  COMMAND = "select BinData from `LordGym`",
+  KEY_PREFIX = "LordGymAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configLordGymAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configLordGymAll = {
     );
   },
   GetConfigList: (o = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configLordGymAll = {
       }
       const i = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let e = void 0;
+        var e = void 0;
         if (
           (([n, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configLordGymAll = {
     }
   },
 };
-// # sourceMappingURL=LordGymAll.js.map
+//# sourceMappingURL=LordGymAll.js.map

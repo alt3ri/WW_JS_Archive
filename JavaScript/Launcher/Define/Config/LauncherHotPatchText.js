@@ -15,13 +15,13 @@ class LauncherHotPatchText {
     );
   }
   id(t) {
-    const s = this.J7.__offset(this.z7, 4);
+    var s = this.J7.__offset(this.z7, 4);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   text() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.LauncherHotPatchText = LauncherHotPatchText;
-// # sourceMappingURL=LauncherHotPatchText.js.map
+//# sourceMappingURL=LauncherHotPatchText.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AudioUtils = void 0);
-const Log_1 = require("../../Core/Common/Log");
-const ModelManager_1 = require("../Manager/ModelManager");
+const Log_1 = require("../../Core/Common/Log"),
+  ModelManager_1 = require("../Manager/ModelManager");
 class AudioUtils {
   static HandleAudioBoxUpdate(e, o) {
     Log_1.Log.CheckDebug() &&
@@ -23,4 +23,4 @@ class AudioUtils {
   }
 }
 exports.AudioUtils = AudioUtils;
-// # sourceMappingURL=AudioUtils.js.map
+//# sourceMappingURL=AudioUtils.js.map

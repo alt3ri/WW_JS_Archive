@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventCheckBattleState = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventCheckBattleState extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -53,7 +53,7 @@ class LevelEventCheckBattleState extends LevelGeneralBase_1.LevelEventBase {
         this.nDe && this.FinishExecute(!0));
   }
   cDe() {
-    let e;
+    var e;
     return this.sDe?.Valid
       ? ((e = this.lDe.Type),
         this.sDe.Entity.GetComponent(185)?.HasTag(
@@ -73,4 +73,4 @@ class LevelEventCheckBattleState extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventCheckBattleState = LevelEventCheckBattleState;
-// # sourceMappingURL=LevelEventCheckBattleState.js.map
+//# sourceMappingURL=LevelEventCheckBattleState.js.map

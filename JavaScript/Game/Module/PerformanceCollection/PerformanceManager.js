@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PerformanceManager = void 0);
-const cpp_1 = require("cpp");
-const UE = require("ue");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const PerformanceController_1 = require("../../../Core/Performance/PerformanceController");
-const PerformanceModel_1 = require("../../../Core/Performance/PerformanceModel");
-const TickSystem_1 = require("../../../Core/Tick/TickSystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ThinkingAnalyticsReporter_1 = require("../LogReport/ThinkingAnalyticsReporter");
-const GamePlayerInfo_1 = require("./Data/GamePlayerInfo");
-const PerformanceCollectionData_1 = require("./Data/PerformanceCollectionData");
-const PerformanceConfig_1 = require("./PerformanceConfig");
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  PerformanceController_1 = require("../../../Core/Performance/PerformanceController"),
+  PerformanceModel_1 = require("../../../Core/Performance/PerformanceModel"),
+  TickSystem_1 = require("../../../Core/Tick/TickSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ThinkingAnalyticsReporter_1 = require("../LogReport/ThinkingAnalyticsReporter"),
+  GamePlayerInfo_1 = require("./Data/GamePlayerInfo"),
+  PerformanceCollectionData_1 = require("./Data/PerformanceCollectionData"),
+  PerformanceConfig_1 = require("./PerformanceConfig");
 class PerformanceManager {
   static Init() {
     EventSystem_1.EventSystem.Add(
@@ -84,16 +84,16 @@ class PerformanceManager {
       (PerformanceManager.c4i += e),
       !(PerformanceManager.c4i < PerformanceConfig_1.COLLECTION_INTERVAL_TIME))
     ) {
-      let r;
-      var e = PerformanceController_1.PerformanceController.StartMonitor(
-        "PerformanceManager.Tick",
-      );
-      const a =
-        ((PerformanceManager.c4i = 0),
-        PerformanceController_1.PerformanceController.CollectionLLMInfo(),
-        new PerformanceCollectionData_1.PerformanceCollectionData());
-      const n = PerformanceManager.ke();
-      const o = new Array();
+      var r,
+        e = PerformanceController_1.PerformanceController.StartMonitor(
+          "PerformanceManager.Tick",
+        ),
+        a =
+          ((PerformanceManager.c4i = 0),
+          PerformanceController_1.PerformanceController.CollectionLLMInfo(),
+          new PerformanceCollectionData_1.PerformanceCollectionData()),
+        n = PerformanceManager.ke(),
+        o = new Array();
       for (const m of PerformanceModel_1.PerformanceModel.MonitorMap.values())
         m.HaveData() &&
           ((a.Name = m.GetName()),
@@ -104,7 +104,7 @@ class PerformanceManager {
           (a.MaxInfo = m.GetMaxOverInfo()),
           a.MaxInfo && (a.PlayerId = a.MaxInfo.PlayerId),
           o.push(a));
-      const c = { Data: o };
+      var c = { Data: o };
       PerformanceManager.u4i(JSON.stringify(c)),
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -119,7 +119,7 @@ class PerformanceManager {
     }
   }),
   (PerformanceManager.C4i = () => {
-    let e, r;
+    var e, r;
     return (
       PerformanceManager.m4i ||
         (PerformanceManager.m4i = new GamePlayerInfo_1.GamePlayerInfo()),
@@ -148,4 +148,4 @@ class PerformanceManager {
       PerformanceManager.m4i
     );
   });
-// # sourceMappingURL=PerformanceManager.js.map
+//# sourceMappingURL=PerformanceManager.js.map

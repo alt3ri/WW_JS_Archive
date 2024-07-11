@@ -1,5 +1,5 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.monsterSortFunc =
     exports.silentAreasSortFunc =
@@ -16,34 +16,33 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.UNKNOWNTEXT =
     exports.LEVELTEXT =
       void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const MapMarkByMarkId_1 = require("../../../Core/Define/ConfigQuery/MapMarkByMarkId");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const InputManager_1 = require("../../Ui/Input/InputManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const InventoryGiftController_1 = require("../Inventory/InventoryGiftController");
-const MapController_1 = require("../Map/Controller/MapController");
-const MapDefine_1 = require("../Map/MapDefine");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const WorldMapController_1 = require("../WorldMap/WorldMapController");
-const MAX_INT32_NUMBER =
-  ((exports.LEVELTEXT = "LevelText"),
-  (exports.UNKNOWNTEXT = "Unknown"),
-  (exports.LVLUNKNOWNTEXT = "LvlUnknown"),
-  2147483647);
-const MAX_INT64_NUMBER =
-  MathUtils_1.MathUtils.BigIntToLong(0x7fffffffffffffffn);
-const DUNGEON_LOCKED = "DungeonLocked";
+const Log_1 = require("../../../Core/Common/Log"),
+  MapMarkByMarkId_1 = require("../../../Core/Define/ConfigQuery/MapMarkByMarkId"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  InputManager_1 = require("../../Ui/Input/InputManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  InventoryGiftController_1 = require("../Inventory/InventoryGiftController"),
+  MapController_1 = require("../Map/Controller/MapController"),
+  MapDefine_1 = require("../Map/MapDefine"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  WorldMapController_1 = require("../WorldMap/WorldMapController"),
+  MAX_INT32_NUMBER =
+    ((exports.LEVELTEXT = "LevelText"),
+    (exports.UNKNOWNTEXT = "Unknown"),
+    (exports.LVLUNKNOWNTEXT = "LvlUnknown"),
+    2147483647),
+  MAX_INT64_NUMBER = MathUtils_1.MathUtils.BigIntToLong(0x7fffffffffffffffn),
+  DUNGEON_LOCKED = "DungeonLocked";
 (exports.DOING = "Doing"),
   (exports.UNDISCOVERED = "UnDiscovered"),
   (exports.DETECT = "Detect"),
@@ -99,7 +98,7 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static EmitRedDotFirstAwardEvent(e) {
-    const r =
+    var r =
       ModelManager_1.ModelManager.AdventureGuideModel.GetSilentAreaDetectData(
         e,
       );
@@ -143,16 +142,16 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static RequestForAdventureManual() {
-    var e = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
-    var e = Protocol_1.Aki.Protocol.J$n.create({ aFn: e });
+    var e = ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
+      e = Protocol_1.Aki.Protocol.J$n.create({ aFn: e });
     Net_1.Net.Call(11381, e, AdventureGuideController.H4e);
   }
   static j4e(e, r) {
     ModelManager_1.ModelManager.MapModel.RemoveMapMark(e, r);
   }
   static RequestForAdventureManualData(e) {
-    var r = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
-    var r = Protocol_1.Aki.Protocol.V$n.create({ aFn: r });
+    var r = ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
+      r = Protocol_1.Aki.Protocol.V$n.create({ aFn: r });
     Net_1.Net.Call(27679, r, AdventureGuideController.W4e);
   }
   static async RequestForAdventureReward(e) {
@@ -161,8 +160,8 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
     AdventureGuideController.K4e(e);
   }
   static async GetDetectionLabelInfoRequest() {
-    var e = Protocol_1.Aki.Protocol.Rjn.create({});
-    var e = await Net_1.Net.CallAsync(22461, e);
+    var e = Protocol_1.Aki.Protocol.Rjn.create({}),
+      e = await Net_1.Net.CallAsync(22461, e);
     AdventureGuideController.Q4e(e);
   }
   static RequestForDetection(e, r, t) {
@@ -187,14 +186,14 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static $4e() {
-    let e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     if (e) {
       e = e.Entity.GetComponent(3);
       if (e) return e.ActorLocationProxy;
     }
   }
   static StopTrackCurDetectingMonster() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.AdventureGuideModel.GetDetectingMonsterMarkId();
     e && this.j4e(7, e),
       ModelManager_1.ModelManager.AdventureGuideModel.GetIsFromManualDetect() &&
@@ -213,12 +212,12 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("AdventureGuide", 10, "pending列表与探测目标不一致");
     else {
-      let e = MAX_INT32_NUMBER;
-      let r = MAX_INT64_NUMBER;
-      let t = void 0;
-      let a, l;
+      let e = MAX_INT32_NUMBER,
+        r = MAX_INT64_NUMBER,
+        t = void 0;
+      var a, l;
       for (const d of ModelManager_1.ModelManager.AdventureGuideModel.GetMonsterPendingList().values()) {
-        let i = MathUtils_1.MathUtils.LongToBigInt(d.RefreshTime);
+        var i = MathUtils_1.MathUtils.LongToBigInt(d.RefreshTime);
         Number(i) - TimeUtil_1.TimeUtil.GetServerTime() <= 0 &&
           ((i = { X: d.PositionX, Y: d.PositionY, Z: d.PositionZ }),
           (i = Vector_1.Vector.Create(i)),
@@ -268,7 +267,7 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
     }
   }
   static CancelDetectingRequest() {
-    const e = Protocol_1.Aki.Protocol.Mjn.create();
+    var e = Protocol_1.Aki.Protocol.Mjn.create();
     (e.p3n = !0), Net_1.Net.Call(23417, e, () => {});
   }
   static NormalMonsterManualInfoRequest(e) {
@@ -276,7 +275,7 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
     Net_1.Net.Call(22146, e, AdventureGuideController.z4e);
   }
   static StopTrackCurDetectingDungeon() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.AdventureGuideModel.GetDetectingDungeonMarkId();
     this.Z4e(6, e) && this.j4e(6, e),
       ModelManager_1.ModelManager.AdventureGuideModel.GetIsFromManualDetect() &&
@@ -290,13 +289,13 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("AdventureGuide", 10, "探测目标与Pending列表不一致");
     else {
-      let e = MAX_INT32_NUMBER;
-      let r = void 0;
-      let n;
+      let e = MAX_INT32_NUMBER,
+        r = void 0;
+      var n;
       for (const l of ModelManager_1.ModelManager.AdventureGuideModel.GetDungeonPendingList().values()) {
-        var a = { X: l.PositionX, Y: l.PositionY, Z: l.PositionZ };
-        var a = Vector_1.Vector.Create(a);
-        var a = Vector_1.Vector.Dist(o, a);
+        var a = { X: l.PositionX, Y: l.PositionY, Z: l.PositionZ },
+          a = Vector_1.Vector.Create(a),
+          a = Vector_1.Vector.Dist(o, a);
         a < e && ((r = l.Id), (e = a));
       }
       void 0 !== r
@@ -317,16 +316,16 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
     }
   }
   static StopTrackCurDetectingSilentArea() {
-    const e =
-      ModelManager_1.ModelManager.AdventureGuideModel.GetDetectingSilentAreaMarkId();
-    const r =
-      ModelManager_1.ModelManager.AdventureGuideModel.GetDetectingSlientAreaMarkType();
+    var e =
+        ModelManager_1.ModelManager.AdventureGuideModel.GetDetectingSilentAreaMarkId(),
+      r =
+        ModelManager_1.ModelManager.AdventureGuideModel.GetDetectingSlientAreaMarkType();
     this.Z4e(r, e) && this.j4e(r, e),
       ModelManager_1.ModelManager.AdventureGuideModel.GetIsFromManualDetect() &&
         ModelManager_1.ModelManager.AdventureGuideModel.CleanCurTrackingSilentArea();
   }
   static RequestSilentFirstAward(o, n) {
-    const e = Protocol_1.Aki.Protocol.Z$n.create();
+    var e = Protocol_1.Aki.Protocol.Z$n.create();
     (e.Ekn = o),
       Net_1.Net.Call(3127, e, (e) => {
         if (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys)
@@ -335,7 +334,7 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
             5685,
           );
         else {
-          const r = [];
+          var r = [];
           for (const t of ConfigManager_1.ConfigManager.AdventureModuleConfig.GetDropShowInfo(
             n,
           ).entries())
@@ -362,17 +361,17 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("AdventureGuide", 10, "探测目标与Pending列表不一致");
     else {
-      let e = void 0;
-      let r = MAX_INT32_NUMBER;
-      let t = !0;
-      let a;
+      let e = void 0,
+        r = MAX_INT32_NUMBER,
+        t = !0;
+      var a;
       for (const i of ModelManager_1.ModelManager.AdventureGuideModel.GetSilentAreaPendingList().values()) {
         var l = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(
-          i.Id,
-        );
-        var l =
-          ((t = t && (l?.IsClose || !l)),
-          MathUtils_1.MathUtils.LongToBigInt(i.RefreshTime));
+            i.Id,
+          ),
+          l =
+            ((t = t && (l?.IsClose || !l)),
+            MathUtils_1.MathUtils.LongToBigInt(i.RefreshTime));
         Number(l) <= TimeUtil_1.TimeUtil.GetServerTime() &&
           ((l = Vector_1.Vector.Create(i.PositionX, i.PositionY, i.PositionZ)),
           (l = Vector_1.Vector.Dist(n, l)) < r) &&
@@ -399,7 +398,7 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
     Net_1.Net.Call(23683, e, AdventureGuideController.i5e);
   }
   static o5e(e) {
-    const r =
+    var r =
       ModelManager_1.ModelManager.AdventureGuideModel.GetCurDetectingMonsterConfId();
     r !== e[0].C3n
       ? Log_1.Log.CheckError() &&
@@ -408,8 +407,9 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
           e,
           r,
         ),
+        0 ===
         ModelManager_1.ModelManager.AdventureGuideModel.GetMonsterPendingList()
-          .size === 0
+          .size
           ? ((ModelManager_1.ModelManager.AdventureGuideModel.GetMonsterDetectData(
               ModelManager_1.ModelManager.AdventureGuideModel.GetPendingMonsterConfId(),
             ).RefreshTime = MAX_INT32_NUMBER),
@@ -420,7 +420,7 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
             AdventureGuideController.Y4e(r, AdventureGuideController.$4e()));
   }
   static r5e(e) {
-    const r =
+    var r =
       ModelManager_1.ModelManager.AdventureGuideModel.GetCurDetectingDungeonConfId();
     r !== e[0].C3n
       ? Log_1.Log.CheckError() &&
@@ -429,8 +429,9 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
           e,
           r,
         ),
+        0 ===
         ModelManager_1.ModelManager.AdventureGuideModel.GetDungeonPendingList()
-          .size === 0
+          .size
           ? (AdventureGuideController.StopTrackCurDetectingDungeon(),
             AdventureGuideController.CancelDetectingRequest(),
             Log_1.Log.CheckWarn() &&
@@ -440,7 +441,7 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
             AdventureGuideController.e5e(r, AdventureGuideController.$4e()));
   }
   static n5e(e) {
-    const r =
+    var r =
       ModelManager_1.ModelManager.AdventureGuideModel.GetCurDetectingSilentAreaConfId();
     r !== e[0].C3n
       ? Log_1.Log.CheckError() &&
@@ -449,8 +450,9 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
           e,
           r,
         ),
+        0 ===
         ModelManager_1.ModelManager.AdventureGuideModel.GetSilentAreaPendingList()
-          .size === 0
+          .size
           ? (AdventureGuideController.StopTrackCurDetectingSilentArea(),
             AdventureGuideController.CancelDetectingRequest(),
             Log_1.Log.CheckWarn() &&
@@ -528,9 +530,9 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
   }
   static GetDungeonMaxCount(e) {
     var e =
-      ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.GetConfig(e)
-        .InstanceDungeonList[0];
-    var e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e);
+        ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.GetConfig(e)
+          .InstanceDungeonList[0],
+      e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e);
     return e &&
       e.EnterControlId &&
       (e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetCountConfig(
@@ -543,10 +545,10 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
     AdventureGuideController.OpenGuideView(e, r, t);
   }
   static GetMarkAreaText(e) {
-    let r;
-    let t;
-    let o;
-    var e = MapMarkByMarkId_1.configMapMarkByMarkId.GetConfig(e);
+    var r,
+      t,
+      o,
+      e = MapMarkByMarkId_1.configMapMarkByMarkId.GetConfig(e);
     return e.EntityConfigId
       ? ((o = ModelManager_1.ModelManager.WorldMapModel.GetEntityAreaId(
           e.EntityConfigId,
@@ -576,10 +578,11 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
         "");
   }
   static GetShowSilentAreasList(e, r) {
-    ModelManager_1.ModelManager.AdventureGuideModel.DetectionSilentAreasDataList
-      .length === 0 &&
+    0 ===
+      ModelManager_1.ModelManager.AdventureGuideModel
+        .DetectionSilentAreasDataList.length &&
       ModelManager_1.ModelManager.AdventureGuideModel.InitAllDetectSilentAreasList();
-    const t = new Array();
+    var t = new Array();
     return (
       void 0 === e && void 0 === r
         ? ModelManager_1.ModelManager.AdventureGuideModel.GetShowSilentAreasList(
@@ -620,16 +623,15 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
   }
   static CheckCanGetTaskAward() {
     if (!ModelManager_1.ModelManager.FunctionModel.IsOpen(10023001)) return !1;
-    const e = ModelManager_1.ModelManager.AdventureGuideModel.GetNowChapter();
-    var r = ModelManager_1.ModelManager.AdventureGuideModel.GetChapterTasks(e);
+    var e = ModelManager_1.ModelManager.AdventureGuideModel.GetNowChapter(),
+      r = ModelManager_1.ModelManager.AdventureGuideModel.GetChapterTasks(e);
     if (!r) return !1;
     for (const o of r)
       if (o.Status === Protocol_1.Aki.Protocol.bBs.Proto_Finish) return !0;
     var r = ModelManager_1.ModelManager.AdventureGuideModel.GetChapterProgress(
-      ModelManager_1.ModelManager.AdventureGuideModel.GetNowChapter(),
-    );
-    const t =
-      ModelManager_1.ModelManager.AdventureGuideModel.GetReceivedChapter();
+        ModelManager_1.ModelManager.AdventureGuideModel.GetNowChapter(),
+      ),
+      t = ModelManager_1.ModelManager.AdventureGuideModel.GetReceivedChapter();
     return r.Received === r.Total && e !== t;
   }
 }
@@ -797,7 +799,7 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
         29635,
       );
     else {
-      const r = AdventureGuideController.$4e();
+      var r = AdventureGuideController.$4e();
       switch (e.fgs[0]?.Ikn) {
         case Protocol_1.Aki.Protocol.d3n.Proto_NormalMonster:
           ModelManager_1.ModelManager.AdventureGuideModel.UpdatePendingMonsterList(
@@ -834,7 +836,7 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
           e.Kms,
           5732,
         ),
-      e.fgs.length !== 0 &&
+      0 !== e.fgs.length &&
         ModelManager_1.ModelManager.AdventureGuideModel.SetDetectingMonsterRefreshTime(
           e.fgs[0].C3n,
           e.fgs[0].cgs,
@@ -909,12 +911,12 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
             e.Kms,
             8872,
           );
-    const r = e.f3n.Ekn;
-    const t = e.f3n.C3n;
-    var e = e.f3n.Ikn;
-    let o = void 0;
-    let n = 0;
-    let a = 6;
+    var r = e.f3n.Ekn,
+      t = e.f3n.C3n,
+      e = e.f3n.Ikn;
+    let o = void 0,
+      n = 0,
+      a = 6;
     switch (e) {
       case Protocol_1.Aki.Protocol.d3n.Proto_NormalMonster:
         {
@@ -939,11 +941,12 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
             );
           let e = !1;
           var i =
+            7 ===
             (a = AdventureGuideController.Z4e(19, l.Conf.MarkId, !0)
               ? ((e = !0), 19)
               : AdventureGuideController.Z4e(6, l.Conf.MarkId, !0)
                 ? ((e = !0), 6)
-                : 7) === 7;
+                : 7);
           (n = AdventureGuideController.s5e(o, l.Conf.MarkId, e, a, i)),
             ModelManager_1.ModelManager.AdventureGuideModel.SetCurDetectingMonsterMarkId(
               n,
@@ -1019,18 +1022,18 @@ class AdventureGuideController extends UiControllerBase_1.UiControllerBase {
         WorldMapController_1.WorldMapController.OpenView(2, !1, e));
   });
 const silentAreasSortFunc = (e, r) =>
-  e.Conf.DangerType !== r.Conf.DangerType
-    ? r.Conf.DangerType - e.Conf.DangerType
-    : e.Conf.Secondary !== r.Conf.Secondary
-      ? r.Conf.Secondary - e.Conf.Secondary
-      : e.Conf.Id - r.Conf.Id;
-const monsterSortFunc =
-  ((exports.silentAreasSortFunc = silentAreasSortFunc),
-  (e, r) =>
     e.Conf.DangerType !== r.Conf.DangerType
       ? r.Conf.DangerType - e.Conf.DangerType
-      : e.Conf.TypeDescription2 !== r.Conf.TypeDescription2
-        ? r.Conf.TypeDescription2 - e.Conf.TypeDescription2
-        : r.Conf.Id - e.Conf.Id);
+      : e.Conf.Secondary !== r.Conf.Secondary
+        ? r.Conf.Secondary - e.Conf.Secondary
+        : e.Conf.Id - r.Conf.Id,
+  monsterSortFunc =
+    ((exports.silentAreasSortFunc = silentAreasSortFunc),
+    (e, r) =>
+      e.Conf.DangerType !== r.Conf.DangerType
+        ? r.Conf.DangerType - e.Conf.DangerType
+        : e.Conf.TypeDescription2 !== r.Conf.TypeDescription2
+          ? r.Conf.TypeDescription2 - e.Conf.TypeDescription2
+          : r.Conf.Id - e.Conf.Id);
 exports.monsterSortFunc = monsterSortFunc;
-// # sourceMappingURL=AdventureGuideController.js.map
+//# sourceMappingURL=AdventureGuideController.js.map

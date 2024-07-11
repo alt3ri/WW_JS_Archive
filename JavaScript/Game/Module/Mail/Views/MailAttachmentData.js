@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MailAttachmentData = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ScrollViewDataBase_1 = require("../../Util/ScrollView/ScrollViewDataBase");
+const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ScrollViewDataBase_1 = require("../../Util/ScrollView/ScrollViewDataBase");
 class MailAttachmentData extends ScrollViewDataBase_1.ScrollViewDataBase {
   constructor(t, e, a) {
     super(),
@@ -28,4 +28,4 @@ class MailAttachmentData extends ScrollViewDataBase_1.ScrollViewDataBase {
   }
 }
 exports.MailAttachmentData = MailAttachmentData;
-// # sourceMappingURL=MailAttachmentData.js.map
+//# sourceMappingURL=MailAttachmentData.js.map

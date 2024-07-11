@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HandBookPhotoView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const HandBookController_1 = require("./HandBookController");
+const UE = require("ue"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  HandBookController_1 = require("./HandBookController");
 class HandBookPhotoView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.WZt = void 0),
       (this.KZt = 0),
       (this.tNe = () => {
-        this.WZt && this.KZt !== 0 && ((this.KZt = this.KZt - 1), this.bl());
+        this.WZt && 0 !== this.KZt && ((this.KZt = this.KZt - 1), this.bl());
       }),
       (this.iNe = () => {
         this.WZt &&
@@ -52,36 +52,36 @@ class HandBookPhotoView extends UiViewBase_1.UiViewBase {
       this.WZt && ((this.KZt = this.WZt.Index), this.QZt(this.KZt));
   }
   QZt(t) {
-    var i = this.WZt.TextureList.length;
-    var i =
-      (this.GetButton(9).RootUIComp.SetUIActive(!(t === 0)),
-      this.GetButton(10).RootUIComp.SetUIActive(!(t === i - 1)),
-      this.GetText(6));
-    var i =
-      (this.WZt.DateText
-        ? (i.SetUIActive(!0),
-          LguiUtil_1.LguiUtil.SetLocalText(
-            i,
-            "DateOfAcquisition",
-            this.WZt.DateText[t],
-          ))
-        : i.SetUIActive(!1),
-      this.GetText(5));
-    var i =
-      (this.WZt.NameText
-        ? (i.SetUIActive(!0), i.SetText(this.WZt.NameText[t]))
-        : i.SetUIActive(!1),
-      this.GetText(4));
-    var i =
-      (this.WZt.TypeText
-        ? (i.SetUIActive(!0), i.SetText(this.WZt.TypeText[t]))
-        : i.SetUIActive(!1),
-      this.GetText(8));
-    var i =
-      (this.WZt.DescrtptionText
-        ? (i.SetUIActive(!0), i.SetText(this.WZt.DescrtptionText[t]))
-        : i.SetUIActive(!1),
-      this.GetTexture(3));
+    var i = this.WZt.TextureList.length,
+      i =
+        (this.GetButton(9).RootUIComp.SetUIActive(!(0 === t)),
+        this.GetButton(10).RootUIComp.SetUIActive(!(t === i - 1)),
+        this.GetText(6)),
+      i =
+        (this.WZt.DateText
+          ? (i.SetUIActive(!0),
+            LguiUtil_1.LguiUtil.SetLocalText(
+              i,
+              "DateOfAcquisition",
+              this.WZt.DateText[t],
+            ))
+          : i.SetUIActive(!1),
+        this.GetText(5)),
+      i =
+        (this.WZt.NameText
+          ? (i.SetUIActive(!0), i.SetText(this.WZt.NameText[t]))
+          : i.SetUIActive(!1),
+        this.GetText(4)),
+      i =
+        (this.WZt.TypeText
+          ? (i.SetUIActive(!0), i.SetText(this.WZt.TypeText[t]))
+          : i.SetUIActive(!1),
+        this.GetText(8)),
+      i =
+        (this.WZt.DescrtptionText
+          ? (i.SetUIActive(!0), i.SetText(this.WZt.DescrtptionText[t]))
+          : i.SetUIActive(!1),
+        this.GetTexture(3));
     this.WZt.TextureList
       ? (i.SetUIActive(!0), this.IIt(this.WZt.TextureList[t]))
       : i.SetUIActive(!1);
@@ -90,11 +90,11 @@ class HandBookPhotoView extends UiViewBase_1.UiViewBase {
     this.SetTextureByPath(t, this.GetTexture(3));
   }
   bl() {
-    this.WZt.HandBookType === 2
+    2 === this.WZt.HandBookType
       ? this.XZt(this.KZt)
-      : this.WZt.HandBookType === 6
+      : 6 === this.WZt.HandBookType
         ? this.$Zt(this.KZt)
-        : this.WZt.HandBookType === 7 && this.YZt(this.KZt);
+        : 7 === this.WZt.HandBookType && this.YZt(this.KZt);
   }
   $Zt(t) {
     t = this.WZt.TextureList[t];
@@ -104,8 +104,8 @@ class HandBookPhotoView extends UiViewBase_1.UiViewBase {
     this.JZt(t), this.QZt(t);
   }
   JZt(t) {
-    var t = this.WZt.ConfigId[t];
-    const i = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(2, t);
+    var t = this.WZt.ConfigId[t],
+      i = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(2, t);
     i &&
       !i.IsRead &&
       HandBookController_1.HandBookController.SendIllustratedReadRequest(2, t);
@@ -114,8 +114,8 @@ class HandBookPhotoView extends UiViewBase_1.UiViewBase {
     this.zZt(t), this.QZt(t);
   }
   zZt(t) {
-    var t = this.WZt.ConfigId[t];
-    const i = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(7, t);
+    var t = this.WZt.ConfigId[t],
+      i = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(7, t);
     i &&
       !i.IsRead &&
       HandBookController_1.HandBookController.SendIllustratedReadRequest(7, t);
@@ -130,4 +130,4 @@ class HandBookPhotoView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.HandBookPhotoView = HandBookPhotoView;
-// # sourceMappingURL=HandBookPhotoView.js.map
+//# sourceMappingURL=HandBookPhotoView.js.map

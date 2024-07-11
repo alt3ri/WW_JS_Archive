@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ShopView = void 0);
-const UE = require("ue");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase");
-const AsyncTask_1 = require("../../World/Task/AsyncTask");
-const TaskSystem_1 = require("../../World/Task/TaskSystem");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const LoopScrollView_1 = require("../Util/ScrollView/LoopScrollView");
-const ShopController_1 = require("./ShopController");
-const ShopPanelData_1 = require("./ShopPanelData");
-const ShopUtils_1 = require("./ShopUtils");
-const ShopItemInfoDetailPanel_1 = require("./SubViews/ShopItemInfoDetailPanel");
-const ShopMediumItemGrid_1 = require("./SubViews/ShopMediumItemGrid");
+const UE = require("ue"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase"),
+  AsyncTask_1 = require("../../World/Task/AsyncTask"),
+  TaskSystem_1 = require("../../World/Task/TaskSystem"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  LoopScrollView_1 = require("../Util/ScrollView/LoopScrollView"),
+  ShopController_1 = require("./ShopController"),
+  ShopPanelData_1 = require("./ShopPanelData"),
+  ShopUtils_1 = require("./ShopUtils"),
+  ShopItemInfoDetailPanel_1 = require("./SubViews/ShopItemInfoDetailPanel"),
+  ShopMediumItemGrid_1 = require("./SubViews/ShopMediumItemGrid");
 class ShopView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -34,8 +34,8 @@ class ShopView extends UiTickViewBase_1.UiTickViewBase {
           e < 0 || this.ShopItemScrollView.SelectGridProxy(e);
       }),
       (this.Mxe = () => {
-        const e = new ShopPanelData_1.ShopPanelData();
-        const t = ModelManager_1.ModelManager.ShopModel.OpenItemInfo;
+        var e = new ShopPanelData_1.ShopPanelData(),
+          t = ModelManager_1.ModelManager.ShopModel.OpenItemInfo;
         (e.ItemId = t.ItemId),
           (e.ParamData = t.Id),
           (e.CurrencyId = t.GetMoneyId()),
@@ -56,14 +56,14 @@ class ShopView extends UiTickViewBase_1.UiTickViewBase {
           i,
           t,
           () => {
-            const e = new ShopPanelData_1.ShopPanelData();
-            const t =
-              ((ModelManager_1.ModelManager.ShopModel.OpenItemInfo =
-                ModelManager_1.ModelManager.ShopModel.GetShopItemFullInfoByShopIdAndItemId(
-                  this.gvo,
-                  ModelManager_1.ModelManager.ShopModel.OpenItemInfo.Id,
-                )),
-              ModelManager_1.ModelManager.ShopModel.OpenItemInfo);
+            var e = new ShopPanelData_1.ShopPanelData(),
+              t =
+                ((ModelManager_1.ModelManager.ShopModel.OpenItemInfo =
+                  ModelManager_1.ModelManager.ShopModel.GetShopItemFullInfoByShopIdAndItemId(
+                    this.gvo,
+                    ModelManager_1.ModelManager.ShopModel.OpenItemInfo.Id,
+                  )),
+                ModelManager_1.ModelManager.ShopModel.OpenItemInfo);
             (e.ItemId = t.ItemId),
               (e.ParamData = t.Id),
               (e.CurrencyId = t.GetMoneyId()),
@@ -92,8 +92,8 @@ class ShopView extends UiTickViewBase_1.UiTickViewBase {
               this.gvo,
               ModelManager_1.ModelManager.ShopModel.OpenItemInfo.Id,
             ));
-        const e = new ShopPanelData_1.ShopPanelData();
-        const t = ModelManager_1.ModelManager.ShopModel.OpenItemInfo;
+        var e = new ShopPanelData_1.ShopPanelData(),
+          t = ModelManager_1.ModelManager.ShopModel.OpenItemInfo;
         (e.ItemId = t.ItemId),
           (e.ParamData = t.Id),
           (e.CurrencyId = t.GetMoneyId()),
@@ -121,10 +121,10 @@ class ShopView extends UiTickViewBase_1.UiTickViewBase {
     return this.vvo;
   }
   set SecondsToRefresh(e) {
-    e <= 0 && this.vvo > 0 && this.Ivo(), (this.vvo = e);
+    e <= 0 && 0 < this.vvo && this.Ivo(), (this.vvo = e);
   }
   OnBeforeCreate() {
-    const e = "ShopView" + (1e4 + this.OpenParam);
+    var e = "ShopView" + (1e4 + this.OpenParam);
     this.Info.CommonPopBgKey = e;
   }
   OnRegisterComponent() {
@@ -153,7 +153,7 @@ class ShopView extends UiTickViewBase_1.UiTickViewBase {
         this.GetLoopScrollViewComponent(4),
         this.GetItem(6).GetOwner(),
         () => {
-          const e = new ShopMediumItemGrid_1.ShopMediumItemGrid();
+          var e = new ShopMediumItemGrid_1.ShopMediumItemGrid();
           return e.BindOnExtendToggleStateChanged(this.OCt), e;
         },
       )),
@@ -162,13 +162,13 @@ class ShopView extends UiTickViewBase_1.UiTickViewBase {
       this.SetShopName(),
       this.RefreshShopItemList(!0),
       this.Tvo(),
-      this.GetItem(1).SetUIActive(void 0 !== this.$2e && this.$2e > 0),
+      this.GetItem(1).SetUIActive(void 0 !== this.$2e && 0 < this.$2e),
       (ModelManager_1.ModelManager.ShopModel.CurrentInteractCreatureDataLongId =
         ModelManager_1.ModelManager.InteractionModel.InteractCreatureDataLongId);
   }
   Lvo(e) {
     let t = "";
-    const i = EntitySystem_1.EntitySystem.Get(
+    var i = EntitySystem_1.EntitySystem.Get(
       ModelManager_1.ModelManager.ShopModel.InteractTarget,
     );
     i && (t = i.GetComponent(102)?.PawnName ?? ""), this.GetText(2).SetText(t);
@@ -213,8 +213,8 @@ class ShopView extends UiTickViewBase_1.UiTickViewBase {
     this.Tvo();
   }
   Tvo() {
-    let e;
-    void 0 === this.$2e || this.$2e === 0
+    var e;
+    void 0 === this.$2e || 0 === this.$2e
       ? this.GetItem(1).SetUIActive(!1)
       : (e = this.FormatCountdown()) &&
         LguiUtil_1.LguiUtil.SetLocalText(this.GetText(0), "RefreshTime", e);
@@ -228,25 +228,25 @@ class ShopView extends UiTickViewBase_1.UiTickViewBase {
   }
   SetShopName() {}
   UpdateCurrency() {
-    const e = ModelManager_1.ModelManager.ShopModel.GetShopConfig(this.gvo);
+    var e = ModelManager_1.ModelManager.ShopModel.GetShopConfig(this.gvo);
     e && this.Lvo(e);
   }
   RefreshShopItemList(i = !1) {
-    const e = new AsyncTask_1.AsyncTask(
+    var e = new AsyncTask_1.AsyncTask(
       "ShopView.RefreshShopItemList",
       async () => {
         if (this.pvo)
           for (let e = 0; e < this.pvo.length; e++) {
-            var t = this.pvo[e];
-            var t =
-              ModelManager_1.ModelManager.ShopModel.GetShopItemFullInfoByShopIdAndItemId(
-                this.gvo,
-                t.Id,
-              );
+            var t = this.pvo[e],
+              t =
+                ModelManager_1.ModelManager.ShopModel.GetShopItemFullInfoByShopIdAndItemId(
+                  this.gvo,
+                  t.Id,
+                );
             t && (this.pvo[e] = t);
           }
         else {
-          const e = ModelManager_1.ModelManager.ShopModel.GetShopItemList(
+          var e = ModelManager_1.ModelManager.ShopModel.GetShopItemList(
             this.gvo,
           );
           this.pvo = e;
@@ -264,13 +264,13 @@ class ShopView extends UiTickViewBase_1.UiTickViewBase {
     TaskSystem_1.TaskSystem.AddTask(e), TaskSystem_1.TaskSystem.Run();
   }
   FormatCountdown() {
-    const e = Math.trunc(this.$2e - TimeUtil_1.TimeUtil.GetServerTime());
+    var e = Math.trunc(this.$2e - TimeUtil_1.TimeUtil.GetServerTime());
     if (!((this.SecondsToRefresh = e) <= 0))
       return ShopUtils_1.ShopUtils.FormatTime(e);
     ShopController_1.ShopController.SendShopUpdateRequest(this.gvo);
   }
   Ivo() {
-    const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(36);
+    var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(36);
     e.FunctionMap.set(1, () => {
       ShopController_1.ShopController.SendShopUpdateRequest(this.gvo);
     }),
@@ -280,4 +280,4 @@ class ShopView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.ShopView = ShopView;
-// # sourceMappingURL=ShopView.js.map
+//# sourceMappingURL=ShopView.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityDescriptionTypeB = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../../../Util/LguiUtil");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../../../Util/LguiUtil");
 class ActivityDescriptionTypeB extends UiPanelBase_1.UiPanelBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -31,4 +31,4 @@ class ActivityDescriptionTypeB extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ActivityDescriptionTypeB = ActivityDescriptionTypeB;
-// # sourceMappingURL=ActivityDescriptionTypeB.js.map
+//# sourceMappingURL=ActivityDescriptionTypeB.js.map

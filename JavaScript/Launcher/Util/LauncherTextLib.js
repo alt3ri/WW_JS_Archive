@@ -8,8 +8,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.bigIntMb =
     exports.bigIntKb =
       void 0);
-const LauncherConfigLib_1 = require("../Define/LauncherConfigLib");
-const DownloadDefine_1 = require("../Download/DownloadDefine");
+const LauncherConfigLib_1 = require("../Define/LauncherConfigLib"),
+  DownloadDefine_1 = require("../Download/DownloadDefine");
 (exports.bigIntKb = 1024n),
   (exports.bigIntMb = exports.bigIntKb * exports.bigIntKb),
   (exports.bigIntGb = exports.bigIntMb * exports.bigIntKb),
@@ -74,4 +74,4 @@ class LauncherTextLib {
   }
 }
 exports.LauncherTextLib = LauncherTextLib;
-// # sourceMappingURL=LauncherTextLib.js.map
+//# sourceMappingURL=LauncherTextLib.js.map

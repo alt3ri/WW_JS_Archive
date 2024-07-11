@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const PostProcessTriggerStateBase_1 = require("./PostProcessTriggerStateBase");
+const MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  PostProcessTriggerStateBase_1 = require("./PostProcessTriggerStateBase");
 class PostProcessTriggerStateInsideToOutside extends PostProcessTriggerStateBase_1.default {
   constructor() {
     super(...arguments), (this.Timer = -0);
   }
   OnEnter(s) {
     this.Timer = 0;
-    const t = this.GetTargetDefaultValue();
+    var t = this.GetTargetDefaultValue();
     this.Owner.GetPostProcessComponent().BlendWeight = t;
   }
   OnUpdate(s) {
-    let t;
+    var t;
     this.Timer > this.Owner.TransitionTime
       ? this.StateMachine.Switch(1)
       : ((this.Timer += s / 1e3),
@@ -27,4 +27,4 @@ class PostProcessTriggerStateInsideToOutside extends PostProcessTriggerStateBase
   }
 }
 exports.default = PostProcessTriggerStateInsideToOutside;
-// # sourceMappingURL=PostProcessTriggerStateInsideToOutside.js.map
+//# sourceMappingURL=PostProcessTriggerStateInsideToOutside.js.map

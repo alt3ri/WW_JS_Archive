@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SoundBoxMarkItem = void 0);
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const SoundBoxMarkItemView_1 = require("../MarkItemView/SoundBoxMarkItemView");
-const ServerMarkItem_1 = require("./ServerMarkItem");
+const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  SoundBoxMarkItemView_1 = require("../MarkItemView/SoundBoxMarkItemView"),
+  ServerMarkItem_1 = require("./ServerMarkItem");
 class SoundBoxMarkItem extends ServerMarkItem_1.ServerMarkItem {
   constructor(e, t, r, i) {
     super(e, t, r, i), (this.DetectorId = 0), (this.NLi = !1);
@@ -17,7 +17,7 @@ class SoundBoxMarkItem extends ServerMarkItem_1.ServerMarkItem {
   }
   Initialize() {
     super.Initialize();
-    const e = this.ServerMarkInfo;
+    var e = this.ServerMarkInfo;
     this.SetTrackData(e.TrackTarget),
       this.SetConfigId(this.ConfigId),
       this.UpdateTrackState();
@@ -36,13 +36,13 @@ class SoundBoxMarkItem extends ServerMarkItem_1.ServerMarkItem {
     this.NLi = e;
   }
   GetTitleText() {
-    const e = ConfigManager_1.ConfigManager.MapConfig.GetSoundBoxMarkConfig(
+    var e = ConfigManager_1.ConfigManager.MapConfig.GetSoundBoxMarkConfig(
       this.ConfigId,
     );
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.MarkTitle);
   }
   GetDescText() {
-    const e = ConfigManager_1.ConfigManager.MapConfig.GetSoundBoxMarkConfig(
+    var e = ConfigManager_1.ConfigManager.MapConfig.GetSoundBoxMarkConfig(
       this.ConfigId,
     );
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.MarkDesc);
@@ -52,4 +52,4 @@ class SoundBoxMarkItem extends ServerMarkItem_1.ServerMarkItem {
   }
 }
 exports.SoundBoxMarkItem = SoundBoxMarkItem;
-// # sourceMappingURL=SoundBoxMarkItem.js.map
+//# sourceMappingURL=SoundBoxMarkItem.js.map

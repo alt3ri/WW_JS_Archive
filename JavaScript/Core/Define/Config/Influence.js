@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Influence = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const IntPair_1 = require("./SubType/IntPair");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  IntPair_1 = require("./SubType/IntPair");
 class Influence {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -62,54 +62,54 @@ class Influence {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   title(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   introduction(t) {
-    const i = this.J7.__offset(this.z7, 8);
+    var i = this.J7.__offset(this.z7, 8);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   extradesc(t) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   showicon() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   logo(t) {
-    const i = this.J7.__offset(this.z7, 14);
+    var i = this.J7.__offset(this.z7, 14);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   dailytaskshow() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   rawrelation() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   relationcondition() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   lastrelation() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   reputationmax() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.readInt32(this.z7 + t) : 1e4;
   }
   GetReputationitemAt(t, i) {
     return this.reputationitem(t);
   }
   reputationitem(t, i) {
-    const r = this.J7.__offset(this.z7, 26);
+    var r = this.J7.__offset(this.z7, 26);
     return r
       ? (i || new IntPair_1.IntPair()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -118,14 +118,14 @@ class Influence {
       : null;
   }
   reputationitemLength() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetReputationrewardAt(t, i) {
     return this.reputationreward(t);
   }
   reputationreward(t, i) {
-    const r = this.J7.__offset(this.z7, 28);
+    var r = this.J7.__offset(this.z7, 28);
     return r
       ? (i || new IntPair_1.IntPair()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -134,9 +134,9 @@ class Influence {
       : null;
   }
   reputationrewardLength() {
-    const t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.Influence = Influence;
-// # sourceMappingURL=Influence.js.map
+//# sourceMappingURL=Influence.js.map

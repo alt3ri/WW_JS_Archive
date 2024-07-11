@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configFunctionConditionByFunctionId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const FunctionCondition_1 = require("../Config/FunctionCondition");
-const DB = "db_function.db";
-const FILE = "g.功能开启.xlsx";
-const TABLE = "FunctionCondition";
-const COMMAND = "select BinData from `FunctionCondition` where FunctionId=?";
-const KEY_PREFIX = "FunctionConditionByFunctionId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  FunctionCondition_1 = require("../Config/FunctionCondition"),
+  DB = "db_function.db",
+  FILE = "g.功能开启.xlsx",
+  TABLE = "FunctionCondition",
+  COMMAND = "select BinData from `FunctionCondition` where FunctionId=?",
+  KEY_PREFIX = "FunctionConditionByFunctionId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configFunctionConditionByFunctionId.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configFunctionConditionByFunctionId.GetConfig(";
 exports.configFunctionConditionByFunctionId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configFunctionConditionByFunctionId = {
       if (
         (t =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, n, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "FunctionId",
-            n,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "FunctionId",
+              n,
+            ]))
       ) {
-        var t;
-        var i = void 0;
+        var t,
+          i = void 0;
         if (
           (([t, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configFunctionConditionByFunctionId = {
     }
   },
 };
-// # sourceMappingURL=FunctionConditionByFunctionId.js.map
+//# sourceMappingURL=FunctionConditionByFunctionId.js.map

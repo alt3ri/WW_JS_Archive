@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelAiNode = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const LevelAiDefines_1 = require("./LevelAiDefines");
+const Log_1 = require("../../../Core/Common/Log"),
+  LevelAiDefines_1 = require("./LevelAiDefines");
 class LevelAiNode {
   constructor() {
     (this._A = ++LevelAiNode.MIe),
@@ -35,4 +35,4 @@ class LevelAiNode {
   }
 }
 (exports.LevelAiNode = LevelAiNode).MIe = 0;
-// # sourceMappingURL=LevelAiNode.js.map
+//# sourceMappingURL=LevelAiNode.js.map

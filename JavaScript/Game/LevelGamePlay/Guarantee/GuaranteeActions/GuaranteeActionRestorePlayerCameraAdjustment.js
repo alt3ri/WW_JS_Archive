@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuaranteeActionRestorePlayerCameraAdjustment = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const CameraController_1 = require("../../../Camera/CameraController");
-const RenderUtil_1 = require("../../../Render/Utils/RenderUtil");
-const GuaranteeActionBase_1 = require("./GuaranteeActionBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  CameraController_1 = require("../../../Camera/CameraController"),
+  RenderUtil_1 = require("../../../Render/Utils/RenderUtil"),
+  GuaranteeActionBase_1 = require("./GuaranteeActionBase");
 class GuaranteeActionRestorePlayerCameraAdjustment extends GuaranteeActionBase_1.GuaranteeActionBase {
   OnExecute(e) {
     Log_1.Log.CheckInfo() && Log_1.Log.Info("LevelEvent", 40, "保底相机调整"),
@@ -20,4 +20,4 @@ class GuaranteeActionRestorePlayerCameraAdjustment extends GuaranteeActionBase_1
 }
 exports.GuaranteeActionRestorePlayerCameraAdjustment =
   GuaranteeActionRestorePlayerCameraAdjustment;
-// # sourceMappingURL=GuaranteeActionRestorePlayerCameraAdjustment.js.map
+//# sourceMappingURL=GuaranteeActionRestorePlayerCameraAdjustment.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRunConfig = void 0);
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ParkourChallengeById_1 = require("../../../../../Core/Define/ConfigQuery/ParkourChallengeById");
-const ConfigBase_1 = require("../../../../../Core/Framework/ConfigBase");
+const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ParkourChallengeById_1 = require("../../../../../Core/Define/ConfigQuery/ParkourChallengeById"),
+  ConfigBase_1 = require("../../../../../Core/Framework/ConfigBase");
 class ActivityRunConfig extends ConfigBase_1.ConfigBase {
   GetActivityRunChallengeConfig(e) {
     return ParkourChallengeById_1.configParkourChallengeById.GetConfig(e);
@@ -18,8 +18,8 @@ class ActivityRunConfig extends ConfigBase_1.ConfigBase {
     let r = 0;
     return (
       e.RewardList.forEach((e) => {
-        const t = e.Item1;
-        var e = e.Item2;
+        var t = e.Item1,
+          e = e.Item2;
         i.set(r, [t, e]), r++;
       }),
       i
@@ -33,4 +33,4 @@ class ActivityRunConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.ActivityRunConfig = ActivityRunConfig;
-// # sourceMappingURL=ActivityRunConfig.js.map
+//# sourceMappingURL=ActivityRunConfig.js.map

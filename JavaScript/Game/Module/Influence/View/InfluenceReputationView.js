@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InfluenceReputationView = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
-const InfluenceReputationDefine_1 = require("../InfluenceReputationDefine");
-const InfluenceDisplayItem_1 = require("./Item/InfluenceDisplayItem");
-const DEVIATION_VALUE = 10;
-const PROGRESS_DEVIATION_VALUE = 0.05;
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  InfluenceReputationDefine_1 = require("../InfluenceReputationDefine"),
+  InfluenceDisplayItem_1 = require("./Item/InfluenceDisplayItem"),
+  DEVIATION_VALUE = 10,
+  PROGRESS_DEVIATION_VALUE = 0.05;
 class InfluenceReputationView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -40,10 +40,10 @@ class InfluenceReputationView extends UiViewBase_1.UiViewBase {
         UiManager_1.UiManager.OpenView("InfluenceAreaSelectView", this.tni);
       }),
       (this.uni = () => {
-        var t = this.xqe.ContentItem;
-        let e = t.GetWidth();
-        var t = Math.abs(t.GetAnchorOffsetX()) + this.xqe.ScrollWidth;
-        const s = this.hni.length;
+        var t = this.xqe.ContentItem,
+          e = t.GetWidth(),
+          t = Math.abs(t.GetAnchorOffsetX()) + this.xqe.ScrollWidth,
+          s = this.hni.length;
         if (e < t) this.xqe.ScrollToRight(s - 2);
         else {
           e = e / s;
@@ -56,11 +56,11 @@ class InfluenceReputationView extends UiViewBase_1.UiViewBase {
         }
       }),
       (this.cni = () => {
-        var i = this.xqe.ContentItem;
-        var t = i.GetWidth();
-        var i = Math.abs(i.GetAnchorOffsetX());
-        const e = (i < 0 && this.xqe.ScrollToLeft(1), this.hni.length);
-        var t = t / e;
+        var i = this.xqe.ContentItem,
+          t = i.GetWidth(),
+          i = Math.abs(i.GetAnchorOffsetX()),
+          e = (i < 0 && this.xqe.ScrollToLeft(1), this.hni.length),
+          t = t / e;
         let s = 0;
         (s =
           t - (i % t) < DEVIATION_VALUE
@@ -84,7 +84,7 @@ class InfluenceReputationView extends UiViewBase_1.UiViewBase {
         );
       }),
       (this.pqe = (i, t) => {
-        i === 0
+        0 === i
           ? this.oTt === t && ((this.oTt = void 0), this.Cni(), this.dni(!1))
           : ((i = this.oTt),
             (this.oTt = t),
@@ -145,7 +145,7 @@ class InfluenceReputationView extends UiViewBase_1.UiViewBase {
     )),
       this.xqe.BindScrollValueChange(this.gni),
       this.xqe.BindLateUpdate(this.nHe);
-    const i = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerStand();
+    var i = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerStand();
     this.SetTextureByPath(i, this.GetTexture(6)),
       (this.sni = this.GetButton(2).RootUIComp),
       (this.ani = this.GetButton(3).RootUIComp),
@@ -184,7 +184,7 @@ class InfluenceReputationView extends UiViewBase_1.UiViewBase {
       (this.sni = void 0);
   }
   Og() {
-    const i = ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryConfig(
+    var i = ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryConfig(
       this.tni,
     );
     (this.hni = i.Influences.filter(
@@ -213,14 +213,14 @@ class InfluenceReputationView extends UiViewBase_1.UiViewBase {
       this.GetText(9).SetText(this.hni.length.toString());
   }
   yni() {
-    const i =
+    var i =
       ModelManager_1.ModelManager.InfluenceReputationModel.HasRedDotExcludeCurrentCountry(
         this.tni,
       );
     this.GetItem(11).SetUIActive(i);
   }
   Cni() {
-    let i;
+    var i;
     this.oni && void 0 === this.oTt
       ? void 0 !== this.ini &&
         ((i = this.ini < 1 - PROGRESS_DEVIATION_VALUE),
@@ -235,11 +235,11 @@ class InfluenceReputationView extends UiViewBase_1.UiViewBase {
     this.GetButton(10).RootUIComp.SetUIActive(i);
   }
   vni() {
-    const i = this.xqe.GetScrollItemMap().size;
+    var i = this.xqe.GetScrollItemMap().size;
     this.oTt === i - 1
       ? this.xqe.ScrollToLeft(this.oTt - 1)
       : this.xqe.ScrollToLeft(this.oTt);
   }
 }
 exports.InfluenceReputationView = InfluenceReputationView;
-// # sourceMappingURL=InfluenceReputationView.js.map
+//# sourceMappingURL=InfluenceReputationView.js.map

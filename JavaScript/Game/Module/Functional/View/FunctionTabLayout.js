@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FunctionTabLayout = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
 class FunctionTabItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(), this.CreateThenShowByActor(t.GetOwner());
@@ -43,13 +43,13 @@ class FunctionTabLayout extends UiPanelBase_1.UiPanelBase {
     this.B9t.ClearChildren();
   }
   RefreshTab(t) {
-    (this.q9t = t) > 1
+    1 < (this.q9t = t)
       ? (this.SetActive(!0), this.B9t.RebuildLayoutByDataNew(void 0, t))
       : this.SetActive(!1);
   }
   SetToggleSelectByIndex(t) {
     if (!(this.q9t <= 1) && this.b9t !== t) {
-      if (this.b9t !== -1) {
+      if (-1 !== this.b9t) {
         const e = this.B9t.GetLayoutItemByKey(this.b9t);
         e.SetToggleState(!1);
       }
@@ -59,4 +59,4 @@ class FunctionTabLayout extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.FunctionTabLayout = FunctionTabLayout;
-// # sourceMappingURL=FunctionTabLayout.js.map
+//# sourceMappingURL=FunctionTabLayout.js.map

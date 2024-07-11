@@ -1,30 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleConfig = void 0);
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const DamageById_1 = require("../../../Core/Define/ConfigQuery/DamageById");
-const MainRoleConfigAll_1 = require("../../../Core/Define/ConfigQuery/MainRoleConfigAll");
-const MainRoleConfigByGender_1 = require("../../../Core/Define/ConfigQuery/MainRoleConfigByGender");
-const MainRoleConfigById_1 = require("../../../Core/Define/ConfigQuery/MainRoleConfigById");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const RoleAnimAudioByRoleId_1 = require("../../../Core/Define/ConfigQuery/RoleAnimAudioByRoleId");
-const RoleBreachByBreachGroupId_1 = require("../../../Core/Define/ConfigQuery/RoleBreachByBreachGroupId");
-const RoleBreachByBreachGroupIdAndBreachLevel_1 = require("../../../Core/Define/ConfigQuery/RoleBreachByBreachGroupIdAndBreachLevel");
-const RoleExpItemAll_1 = require("../../../Core/Define/ConfigQuery/RoleExpItemAll");
-const RoleExpItemById_1 = require("../../../Core/Define/ConfigQuery/RoleExpItemById");
-const RoleInfoAll_1 = require("../../../Core/Define/ConfigQuery/RoleInfoAll");
-const RoleInfoById_1 = require("../../../Core/Define/ConfigQuery/RoleInfoById");
-const RoleInfoByRoleType_1 = require("../../../Core/Define/ConfigQuery/RoleInfoByRoleType");
-const RoleLevelConsumeByConsumeGroupIdAndLevel_1 = require("../../../Core/Define/ConfigQuery/RoleLevelConsumeByConsumeGroupIdAndLevel");
-const RoleQualityInfoById_1 = require("../../../Core/Define/ConfigQuery/RoleQualityInfoById");
-const RoleTagAll_1 = require("../../../Core/Define/ConfigQuery/RoleTagAll");
-const RoleTagById_1 = require("../../../Core/Define/ConfigQuery/RoleTagById");
-const RoleTrainingDegreeByDifficultyLevel_1 = require("../../../Core/Define/ConfigQuery/RoleTrainingDegreeByDifficultyLevel");
-const TrialRoleInfoByGroupId_1 = require("../../../Core/Define/ConfigQuery/TrialRoleInfoByGroupId");
-const TrialRoleInfoById_1 = require("../../../Core/Define/ConfigQuery/TrialRoleInfoById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const RoleDefine_1 = require("./RoleDefine");
+const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  DamageById_1 = require("../../../Core/Define/ConfigQuery/DamageById"),
+  MainRoleConfigAll_1 = require("../../../Core/Define/ConfigQuery/MainRoleConfigAll"),
+  MainRoleConfigByGender_1 = require("../../../Core/Define/ConfigQuery/MainRoleConfigByGender"),
+  MainRoleConfigById_1 = require("../../../Core/Define/ConfigQuery/MainRoleConfigById"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  RoleAnimAudioByRoleId_1 = require("../../../Core/Define/ConfigQuery/RoleAnimAudioByRoleId"),
+  RoleBreachByBreachGroupId_1 = require("../../../Core/Define/ConfigQuery/RoleBreachByBreachGroupId"),
+  RoleBreachByBreachGroupIdAndBreachLevel_1 = require("../../../Core/Define/ConfigQuery/RoleBreachByBreachGroupIdAndBreachLevel"),
+  RoleExpItemAll_1 = require("../../../Core/Define/ConfigQuery/RoleExpItemAll"),
+  RoleExpItemById_1 = require("../../../Core/Define/ConfigQuery/RoleExpItemById"),
+  RoleInfoAll_1 = require("../../../Core/Define/ConfigQuery/RoleInfoAll"),
+  RoleInfoById_1 = require("../../../Core/Define/ConfigQuery/RoleInfoById"),
+  RoleInfoByRoleType_1 = require("../../../Core/Define/ConfigQuery/RoleInfoByRoleType"),
+  RoleLevelConsumeByConsumeGroupIdAndLevel_1 = require("../../../Core/Define/ConfigQuery/RoleLevelConsumeByConsumeGroupIdAndLevel"),
+  RoleQualityInfoById_1 = require("../../../Core/Define/ConfigQuery/RoleQualityInfoById"),
+  RoleTagAll_1 = require("../../../Core/Define/ConfigQuery/RoleTagAll"),
+  RoleTagById_1 = require("../../../Core/Define/ConfigQuery/RoleTagById"),
+  RoleTrainingDegreeByDifficultyLevel_1 = require("../../../Core/Define/ConfigQuery/RoleTrainingDegreeByDifficultyLevel"),
+  TrialRoleInfoByGroupId_1 = require("../../../Core/Define/ConfigQuery/TrialRoleInfoByGroupId"),
+  TrialRoleInfoById_1 = require("../../../Core/Define/ConfigQuery/TrialRoleInfoById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  RoleDefine_1 = require("./RoleDefine");
 class RoleConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments), (this.kmo = new Map());
@@ -55,10 +55,10 @@ class RoleConfig extends ConfigBase_1.ConfigBase {
   GetRoleTrialGroupId(r) {
     r = TrialRoleInfoByGroupId_1.configTrialRoleInfoByGroupId.GetConfigList(r);
     if (r && !(r.length <= 0)) {
-      let n;
-      const l = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel;
-      let e = void 0;
-      let o = l - r[0].WorldLevel;
+      var n,
+        l = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel;
+      let e = void 0,
+        o = l - r[0].WorldLevel;
       for (const i of r) {
         if (i.WorldLevel === l) return i;
         i.WorldLevel > l || ((n = l - i.WorldLevel) <= o && ((o = n), (e = i)));
@@ -161,7 +161,7 @@ class RoleConfig extends ConfigBase_1.ConfigBase {
     return this.GetRoleTrialGroupId(e);
   }
   GetTrialRoleIdConfigByGroupId(e) {
-    const o = this.GetRoleTrialGroupId(e);
+    var o = this.GetRoleTrialGroupId(e);
     return o ? o.Id : e;
   }
   GetRoleTrainingDegreeConfig(e) {
@@ -200,4 +200,4 @@ class RoleConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.RoleConfig = RoleConfig;
-// # sourceMappingURL=RoleUiConfig.js.map
+//# sourceMappingURL=RoleUiConfig.js.map

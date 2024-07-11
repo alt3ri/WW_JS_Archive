@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ManipulateConfig = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
-const DataTableUtil_1 = require("../../../../Core/Utils/DataTableUtil");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const SECOND_TO_MICROSECOND = 1e3;
+const Log_1 = require("../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  ConfigBase_1 = require("../../../../Core/Framework/ConfigBase"),
+  DataTableUtil_1 = require("../../../../Core/Utils/DataTableUtil"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  SECOND_TO_MICROSECOND = 1e3;
 class ManipulateConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments),
@@ -147,7 +147,7 @@ class ManipulateConfig extends ConfigBase_1.ConfigBase {
     return this.Urr;
   }
   GetPrecastLineValue(t, e) {
-    const a = DataTableUtil_1.DataTableUtil.GetDataTableRowFromName(10, t);
+    var a = DataTableUtil_1.DataTableUtil.GetDataTableRowFromName(10, t);
     if (a) return this.Arr(a.ManipulatePoints, a.Duration, e);
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("World", 32, "加载失败，Manipulate Precast表中没有该项", [
@@ -156,7 +156,7 @@ class ManipulateConfig extends ConfigBase_1.ConfigBase {
       ]);
   }
   GetItemLineValue(t, e) {
-    const a = DataTableUtil_1.DataTableUtil.GetDataTableRowFromName(9, t);
+    var a = DataTableUtil_1.DataTableUtil.GetDataTableRowFromName(9, t);
     if (a) return this.Arr(a.ManipulatePoints, a.Duration, e);
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("World", 32, "加载失败，Manipulate Item表中没有该项", [
@@ -165,19 +165,19 @@ class ManipulateConfig extends ConfigBase_1.ConfigBase {
       ]);
   }
   Arr(t, e, a) {
-    let i = t.Num();
-    var e = (i - 1) / e;
+    var i = t.Num(),
+      e = (i - 1) / e;
     return a <= 0
       ? t.Get(0).Location
-      : a >= 1
+      : 1 <= a
         ? t.Get(i - 1).Location
         : ((i = a * e),
           (a = Math.floor(i)),
           (e = t.Get(a)),
           (t = t.Get(a + 1)),
-          e.PointType !== 2
+          2 !== e.PointType
             ? ((i = i - a),
-              e.PointType === 0
+              0 === e.PointType
                 ? MathUtils_1.MathUtils.LerpVector(e.Location, t.Location, i)
                 : this.Prr(
                     e.Location,
@@ -197,18 +197,18 @@ class ManipulateConfig extends ConfigBase_1.ConfigBase {
     );
   }
   Prr(t, e, a, i, r) {
-    var n = r * r;
-    var s = n * r;
-    var o = 2 * s - 3 * n + 1;
-    var r = s - 2 * n + r;
-    const m = s - n;
-    var s = -2 * s + 3 * n;
-    var n = Vector_1.Vector.Create(t).MultiplyEqual(o);
-    var t = Vector_1.Vector.Create(e).MultiplyEqual(r);
-    var o = Vector_1.Vector.Create(i).MultiplyEqual(m);
-    var e = Vector_1.Vector.Create(a).MultiplyEqual(s);
+    var n = r * r,
+      s = n * r,
+      o = 2 * s - 3 * n + 1,
+      r = s - 2 * n + r,
+      m = s - n,
+      s = -2 * s + 3 * n,
+      n = Vector_1.Vector.Create(t).MultiplyEqual(o),
+      t = Vector_1.Vector.Create(e).MultiplyEqual(r),
+      o = Vector_1.Vector.Create(i).MultiplyEqual(m),
+      e = Vector_1.Vector.Create(a).MultiplyEqual(s);
     return n.AdditionEqual(t).AdditionEqual(o).AdditionEqual(e), n.ToUeVector();
   }
 }
 exports.ManipulateConfig = ManipulateConfig;
-// # sourceMappingURL=ManipulateConfig.js.map
+//# sourceMappingURL=ManipulateConfig.js.map

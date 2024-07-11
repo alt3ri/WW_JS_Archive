@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotController = void 0);
-const ue_1 = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const CameraController_1 = require("../../Camera/CameraController");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterBuffIds_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const InputDistributeDefine_1 = require("../../Ui/InputDistribute/InputDistributeDefine");
-const UiManager_1 = require("../../Ui/UiManager");
-const PlotFormation_1 = require("./PlotFormation");
-const PlotViewManager_1 = require("./PlotView/PlotViewManager");
-const SequenceController_1 = require("./Sequence/SequenceController");
+const ue_1 = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterBuffIds_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  InputDistributeDefine_1 = require("../../Ui/InputDistribute/InputDistributeDefine"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  PlotFormation_1 = require("./PlotFormation"),
+  PlotViewManager_1 = require("./PlotView/PlotViewManager"),
+  SequenceController_1 = require("./Sequence/SequenceController");
 class PlotController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
@@ -139,8 +139,8 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
       (ModelManager_1.ModelManager.PlotModel.PlotResult.FlowIncId =
         e.FlowIncId),
       e.IsBackground ||
-        e.PlotLevel === "LevelD" ||
-        e.PlotLevel === "Prompt" ||
+        "LevelD" === e.PlotLevel ||
+        "Prompt" === e.PlotLevel ||
         this.PlotViewManager.ProtectPlotView(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.PlotNetworkStart,
@@ -168,12 +168,12 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
       CameraController_1.CameraController.ExitDialogMode(),
       InputDistributeController_1.InputDistributeController.RefreshInputTag(),
       this.TogglePlotProtect(!1);
-    const e = ModelManager_1.ModelManager.PlotModel.PlotResult;
+    var e = ModelManager_1.ModelManager.PlotModel.PlotResult;
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.PlotNetworkEnd, e),
       e.Reset(),
       ModelManager_1.ModelManager.PlotModel.ClearContext(),
       ModelManager_1.ModelManager.PlotModel.PlotTextReplacer.Clear(),
-      ModelManager_1.ModelManager.PlotModel.PlotPendingList.length > 0
+      0 < ModelManager_1.ModelManager.PlotModel.PlotPendingList.length
         ? ((ModelManager_1.ModelManager.PlotModel.IsBackInteractionAfterFlow =
             !1),
           this.EndInteraction(!0))
@@ -247,7 +247,7 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static HandleSeqPlayerInput(e, t) {
-    let o, r;
+    var o, r;
     GlobalData_1.GlobalData.GameInstance &&
       ((o = Global_1.Global.BaseCharacter),
       (r = Global_1.Global.CharacterController),
@@ -268,8 +268,8 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
       e ? this.ProtectCurrentRole() : this.L$i();
   }
   static ProtectCurrentRole() {
-    let e;
-    let t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var e,
+      t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     t &&
       !this.D$i.has(t.Id) &&
       (this.D$i.add(t.Id),
@@ -284,14 +284,14 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
   }
   static L$i() {
     for (const t of this.D$i) {
-      const e = EntitySystem_1.EntitySystem.Get(t);
+      var e = EntitySystem_1.EntitySystem.Get(t);
       this.A$i(e, !0);
     }
     this.D$i.clear();
   }
   static A$i(e, t) {
-    const o = e?.GetComponent(157);
-    var e = e?.GetComponent(185);
+    var o = e?.GetComponent(157),
+      e = e?.GetComponent(185);
     t && (e?.RemoveTag(this.R$i), e?.RemoveTag(this.U$i)),
       o?.RemoveBuff(
         CharacterBuffIds_1.buffId.StoryInvincibleCommon,
@@ -302,23 +302,23 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
   static IsEnableInteract() {
     return (
       !ModelManager_1.ModelManager.PlotModel.IsInPlot ||
-      ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel === "LevelD" ||
-      ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel === "Prompt"
+      "LevelD" === ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel ||
+      "Prompt" === ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel
     );
   }
   static NeedInputRefresh() {
     return (
       ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot() ||
-      ModelManager_1.ModelManager.PlotModel.PlotPendingList.length > 0
+      0 < ModelManager_1.ModelManager.PlotModel.PlotPendingList.length
     );
   }
   static TriggerInteraction(t = !0) {
     if (ModelManager_1.ModelManager.PlotModel.IsInPlot)
       return (
-        (ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel ===
-          "LevelD" ||
-          ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel ===
-            "Prompt") &&
+        ("LevelD" ===
+          ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel ||
+          "Prompt" ===
+            ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel) &&
         ((ModelManager_1.ModelManager.PlotModel.IsInInteraction = !0),
         this.SetBackInteractionAfterFlow(),
         ControllerHolder_1.ControllerHolder.FlowController.FinishFlow(
@@ -332,12 +332,12 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
         !0,
       ),
       ModelManager_1.ModelManager.PlotModel.ApplyPlotConfig();
-    const e =
+    var e =
       ModelManager_1.ModelManager.InteractionModel.CurrentInteractEntityId;
     if (e) {
-      const o = ModelManager_1.ModelManager.CreatureModel.GetEntityById(e);
+      var o = ModelManager_1.ModelManager.CreatureModel.GetEntityById(e);
       if (!o) return !1;
-      const r = o.Entity.GetComponent(178);
+      var r = o.Entity.GetComponent(178);
       if (!r) return !1;
       if (!r.IsPawnInteractive()) return !1;
       (ModelManager_1.ModelManager.PlotModel.CurrentInteractEntity = o),
@@ -407,13 +407,13 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
   }
   static GetTalkItemsOfFlow(e) {
     if (e) {
-      let t = ConfigManager_1.ConfigManager.FlowConfig.GetFlowStateActions(
+      var t = ConfigManager_1.ConfigManager.FlowConfig.GetFlowStateActions(
         e.FlowListName,
         e.FlowId,
         e.StateId,
       );
       if (t) {
-        t = t.find((e) => e.Name === "ShowTalk");
+        t = t.find((e) => "ShowTalk" === e.Name);
         if (t) return t.Params.TalkItems;
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -438,13 +438,13 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
   }
   static GetTalkItemsOfCenterText(e) {
     if (e) {
-      let t = ConfigManager_1.ConfigManager.FlowConfig.GetFlowStateActions(
+      var t = ConfigManager_1.ConfigManager.FlowConfig.GetFlowStateActions(
         e.FlowListName,
         e.FlowId,
         e.StateId,
       );
       if (t) {
-        t = t.find((e) => e.Name === "ShowCenterText");
+        t = t.find((e) => "ShowCenterText" === e.Name);
         if (t) return t.Params.TidCenterText;
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -468,15 +468,15 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
     }
   }
   static GetTalkItemsOfCenterTextForTeleport() {
-    const e = ModelManager_1.ModelManager.PlotModel.PlayFlow;
+    var e = ModelManager_1.ModelManager.PlotModel.PlayFlow;
     if (e) {
-      let t = ConfigManager_1.ConfigManager.FlowConfig.GetFlowStateActions(
+      var t = ConfigManager_1.ConfigManager.FlowConfig.GetFlowStateActions(
         e.FlowListName,
         e.FlowId,
         e.StateId,
       );
       if (t) {
-        t = t.find((e) => e.Name === "ShowCenterText");
+        t = t.find((e) => "ShowCenterText" === e.Name);
         if (t) return t.Params.TidCenterText;
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -592,7 +592,7 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
       : PlotController.A$i(e.Entity, !1);
   }),
   (PlotController.dLe = () => {
-    ModelManager_1.ModelManager.SceneTeamModel.CurrentGroupType === 3 &&
+    3 === ModelManager_1.ModelManager.SceneTeamModel.CurrentGroupType &&
       PlotController.ProtectCurrentRole();
   });
-// # sourceMappingURL=PlotController.js.map
+//# sourceMappingURL=PlotController.js.map

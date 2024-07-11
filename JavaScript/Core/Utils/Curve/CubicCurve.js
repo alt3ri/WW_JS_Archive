@@ -17,4 +17,4 @@ class CubicCurve extends CurveBase_1.CurveBase {
   }
 }
 exports.CubicCurve = CubicCurve;
-// # sourceMappingURL=CubicCurve.js.map
+//# sourceMappingURL=CubicCurve.js.map

@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AutoAttachBaseView = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const TickSystem_1 = require("../../../Core/Tick/TickSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const AutoAttachDefine_1 = require("./AutoAttachDefine");
-const ENDMOVEFLOAT = 0.01;
-const MOVEMULFACTOR = 5;
-const VERYBIGDISTANCE = 99999;
-const DISTANCETOMIDDLE = 0.5;
-const DEFALTAUDIO = "ui_common_picker_tick";
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  TickSystem_1 = require("../../../Core/Tick/TickSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  AutoAttachDefine_1 = require("./AutoAttachDefine"),
+  ENDMOVEFLOAT = 0.01,
+  MOVEMULFACTOR = 5,
+  VERYBIGDISTANCE = 99999,
+  DISTANCETOMIDDLE = 0.5,
+  DEFALTAUDIO = "ui_common_picker_tick";
 class AutoAttachBaseView {
   constructor(t) {
     (this.SourceActor = void 0),
@@ -61,18 +61,18 @@ class AutoAttachBaseView {
       (this.r6 = (t) => {
         if (
           (this.eWe &&
-            ((this.tWe += 1), this.tWe >= 1) &&
+            ((this.tWe += 1), 1 <= this.tWe) &&
             ((this.eWe = !1), this.iWe(this.oWe)),
           this.DragState || (!this.InertiaState && !this.VelocityMoveState))
         ) {
           if (
             this.xje &&
             ((this.xje = !1), (this.Kje = 0), !this.CurrentSelectState) &&
-            this.Qje === 1
+            1 === this.Qje
           ) {
-            const i = this.Items.length;
+            var i = this.Items.length;
             for (let t = 0; t < i; t++) {
-              const s = this.Items[t];
+              var s = this.Items[t];
               s.GetCurrentShowItemIndex() !== this.Wje ||
                 s.GetSelectedState() ||
                 (s.Select(), (this.CurrentSelectState = !0));
@@ -96,7 +96,7 @@ class AutoAttachBaseView {
           (this.VelocityMoveState = !1),
           (this.wje = t.GetWorldPointInPlane()),
           (this.Bje = t.GetWorldPointInPlane());
-        const i = this.Items.length;
+        var i = this.Items.length;
         for (let t = 0; t < i; t++) this.Items[t].OnControllerDragStart();
         this.Zje?.();
       }),
@@ -105,9 +105,9 @@ class AutoAttachBaseView {
       (this.oWe = void 0),
       (this.aWe = (t) => {
         (this.tWe = 0), (this.eWe = !0);
-        var t = (this.oWe = t).GetWorldPointInPlane();
-        let i = this.hWe(t) - this.hWe(this.wje);
-        i != 0 &&
+        var t = (this.oWe = t).GetWorldPointInPlane(),
+          i = this.hWe(t) - this.hWe(this.wje);
+        0 != i &&
           (this.SetMoveTypeOffset(1, i),
           (i = this.RecalculateMoveOffset(i)),
           Log_1.Log.CheckDebug() &&
@@ -116,7 +116,7 @@ class AutoAttachBaseView {
           (this.wje = t));
       }),
       (this._We = (i) => {
-        const s = this.Items.length;
+        var s = this.Items.length;
         for (let t = 0; t < s; t++) this.Items[t].OnControllerDragEnd();
         if (
           ((this.DragState = !1),
@@ -133,7 +133,7 @@ class AutoAttachBaseView {
                 this.AttachToIndex(i.GetCurrentShowItemIndex()))
               : ((this.VelocityMoveState = !0),
                 this.SetMoveTypeOffset(0, t),
-                (this.qje = t > 0 ? 1 : -1),
+                (this.qje = 0 < t ? 1 : -1),
                 (this.CurrentVelocityRunningTime = 0));
         } else {
           i = this.FindAutoAttachItem();
@@ -215,13 +215,13 @@ class AutoAttachBaseView {
   uWe() {
     let t = 0;
     t =
-      this.AttachDirection === 0 ? this.ControllerWidth : this.ControllerHeight;
-    var i = this.GetItemSize() + this.Gap;
-    var i = Math.ceil(t / i);
+      0 === this.AttachDirection ? this.ControllerWidth : this.ControllerHeight;
+    var i = this.GetItemSize() + this.Gap,
+      i = Math.ceil(t / i);
     return i % 2 == 0 ? i - 1 : i;
   }
   EnableDragEvent() {
-    let t;
+    var t;
     this.ControllerActor &&
       (t = this.ControllerActor.GetComponentByClass(
         UE.UIDraggableComponent.StaticClass(),
@@ -243,7 +243,7 @@ class AutoAttachBaseView {
       }));
   }
   DisableDragEvent() {
-    let t;
+    var t;
     this.ControllerActor &&
       (t = this.ControllerActor.GetComponentByClass(
         UE.UIDraggableComponent.StaticClass(),
@@ -260,55 +260,56 @@ class AutoAttachBaseView {
   GetItemSize() {
     let t = 0;
     return (t =
-      this.AttachDirection === 0
+      0 === this.AttachDirection
         ? this.SourceItemWidth
         : this.SourceItemHeight);
   }
   GetViewSize() {
     let t = 0;
     return (t =
-      this.AttachDirection === 0
+      0 === this.AttachDirection
         ? this.ControllerWidth
         : this.ControllerHeight);
   }
   rWe(t) {
-    const i = this.GetMoveTypeOffset(0);
-    var s = i / this.Oje;
-    let h =
-      ((this.CurrentVelocityRunningTime = this.CurrentVelocityRunningTime + t),
-      this.CurrentVelocityRunningTime / this.Oje);
-    var s = s * this.GetCurveValue(this.Gje, (h = h > 1 ? 1 : h)) * t;
+    var i = this.GetMoveTypeOffset(0),
+      s = i / this.Oje,
+      h =
+        ((this.CurrentVelocityRunningTime =
+          this.CurrentVelocityRunningTime + t),
+        this.CurrentVelocityRunningTime / this.Oje),
+      s = s * this.GetCurveValue(this.Gje, (h = 1 < h ? 1 : h)) * t;
     let e = this.RecalculateMoveOffset(s);
     Math.abs(e) < ENDMOVEFLOAT && (e = 0);
     s = this.Vje + e;
     Math.abs(s) > Math.abs(i) && (e = i - this.Vje),
       this.lWe(e),
       (this.Vje += e),
-      this.qje > 0
+      0 < this.qje
         ? e <= 0 && this.mWe()
-        : this.qje < 0 && e >= 0 && this.mWe(),
-      h >= 1 &&
+        : this.qje < 0 && 0 <= e && this.mWe(),
+      1 <= h &&
         (Math.abs(this.Vje) < Math.abs(i)
           ? (this.CurrentVelocityRunningTime -= t)
           : this.mWe());
   }
   nWe(t) {
-    const i = this.GetMoveTypeOffset(1);
-    let s = i / this.kje;
-    let h = ((this.Kje = this.Kje + t), this.Kje / this.kje);
-    let e = s * this.GetCurveValue(this.Nje, (h = h > 1 ? 1 : h)) * t;
+    var i = this.GetMoveTypeOffset(1),
+      s = i / this.kje,
+      h = ((this.Kje = this.Kje + t), this.Kje / this.kje);
+    let e = s * this.GetCurveValue(this.Nje, (h = 1 < h ? 1 : h)) * t;
     s = this.Fje + e;
     Math.abs(s) > Math.abs(i) && (e = i - this.Fje),
       this.lWe(e),
       (this.Fje += e),
-      h >= 1 && Math.abs(this.Fje) < Math.abs(i) && (this.Kje -= t);
+      1 <= h && Math.abs(this.Fje) < Math.abs(i) && (this.Kje -= t);
   }
   GetCurveValue(t, i) {
     return t.GetFloatValue(i);
   }
   mWe() {
     (this.VelocityMoveState = !1), (this.InertiaState = !1);
-    const t = this.FindAutoAttachItem();
+    var t = this.FindAutoAttachItem();
     this.ScrollToItem(t);
   }
   ReloadView(t, i) {
@@ -321,7 +322,7 @@ class AutoAttachBaseView {
     return this.DataLength;
   }
   RefreshItems() {
-    const i = this.Items.length;
+    var i = this.Items.length;
     for (let t = 0; t < i; t++) this.Items[t].RefreshItem();
   }
   FindNearestMiddleItem() {
@@ -329,7 +330,7 @@ class AutoAttachBaseView {
     if (s) {
       let i = 0;
       i = Math.abs(this.Items[0].GetCurrentPosition());
-      const h = this.Items.length;
+      var h = this.Items.length;
       for (let t = 0; t < h; t++) {
         var e;
         (e = Math.abs(this.Items[t].GetCurrentPosition())) < i &&
@@ -345,7 +346,7 @@ class AutoAttachBaseView {
   }
   GetShowIndexItem(i) {
     let s = void 0;
-    const h = this.Items.length;
+    var h = this.Items.length;
     for (let t = 0; t < h; t++)
       if (this.Items[t].GetCurrentShowItemIndex() === i) {
         s = this.Items[t];
@@ -357,12 +358,12 @@ class AutoAttachBaseView {
     for (const i of this.Items) if (i.GetCurrentShowItemIndex() === t) return i;
   }
   ForceUnSelectItems() {
-    const i = this.Items.length;
+    var i = this.Items.length;
     for (let t = 0; t < i; t++) this.Items[t].ForceUnSelectItem();
     this.CurrentSelectState = !1;
   }
   ScrollToItem(t, i = !1) {
-    let s;
+    var s;
     this.InertiaState ||
       ((s = t.GetCurrentPosition()),
       this.SetMoveTypeOffset(1, -s),
@@ -379,7 +380,7 @@ class AutoAttachBaseView {
     t && this.AttachToIndex(t.GetCurrentShowItemIndex());
   }
   AttachToIndex(t, i = !1) {
-    let s;
+    var s;
     this.InertiaState ||
       ((s = this.GetShowIndexItem(t))
         ? this.ScrollToItem(s, i)
@@ -398,7 +399,7 @@ class AutoAttachBaseView {
               : ((this.Kje = 0), (this.InertiaState = !0)))));
   }
   dWe() {
-    return this.AttachDirection === 0 ? 1 : -1;
+    return 0 === this.AttachDirection ? 1 : -1;
   }
   GetCurrentSelectIndex() {
     return this.Wje;
@@ -410,28 +411,28 @@ class AutoAttachBaseView {
     this.Bje = t.GetWorldPointInPlane();
   }
   hWe(t) {
-    return this.AttachDirection === 0 ? t.X : t.Z;
+    return 0 === this.AttachDirection ? t.X : t.Z;
   }
   GetMoveTypeOffset(t) {
     return this.jje.get(t);
   }
   SetMoveTypeOffset(t, i) {
-    this.jje.set(t, i), t === 1 && (this.Fje = 0);
+    this.jje.set(t, i), 1 === t && (this.Fje = 0);
   }
   lWe(i, s = !1) {
-    let h = VERYBIGDISTANCE;
-    let e = void 0;
-    const r = this.Items.length;
+    let h = VERYBIGDISTANCE,
+      e = void 0;
+    var r = this.Items.length;
     for (let t = 0; t < r; t++) {
-      const o = this.Items[t];
-      var a =
-        (o.MoveItem(i),
-        ((this.CurrentSelectState || this.Qje !== 0) && !s) ||
-          o.GetCurrentShowItemIndex() !== this.Wje ||
-          o.GetSelectedState() ||
-          (o.Select(), (this.CurrentSelectState = !0)),
-        o.GetCurrentMovePercentage());
-      var a = Math.abs(a - DISTANCETOMIDDLE);
+      var o = this.Items[t],
+        a =
+          (o.MoveItem(i),
+          ((this.CurrentSelectState || 0 !== this.Qje) && !s) ||
+            o.GetCurrentShowItemIndex() !== this.Wje ||
+            o.GetSelectedState() ||
+            (o.Select(), (this.CurrentSelectState = !0)),
+          o.GetCurrentMovePercentage()),
+        a = Math.abs(a - DISTANCETOMIDDLE);
       a < h && ((h = a), (e = o.GetItemIndex()));
     }
     this.Jje !== e &&
@@ -447,4 +448,4 @@ class AutoAttachBaseView {
   }
 }
 exports.AutoAttachBaseView = AutoAttachBaseView;
-// # sourceMappingURL=AutoAttachBaseView.js.map
+//# sourceMappingURL=AutoAttachBaseView.js.map

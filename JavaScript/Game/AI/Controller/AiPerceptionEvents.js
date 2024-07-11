@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiPerceptionEvents = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const CombatDebugController_1 = require("../../Utils/CombatDebugController");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  CombatDebugController_1 = require("../../Utils/CombatDebugController");
 class AiPerceptionEvents {
   constructor(t) {
     (this.Bte = t),
@@ -73,17 +73,17 @@ class AiPerceptionEvents {
         this.gre.clear());
   }
   TickPerception() {
-    this.lre.length !== 0 && this.fre();
+    0 !== this.lre.length && this.fre();
   }
   TickHate() {
-    this._re.length > 0 && this.pre(), this.hre.length > 0 && this.vre();
+    0 < this._re.length && this.pre(), 0 < this.hre.length && this.vre();
   }
   pre() {
     for (const i of this.Xoe) {
-      const t = this.ere.indexOf(i);
-      t !== -1 && this.ere.slice(t, 1);
+      var t = this.ere.indexOf(i);
+      -1 !== t && this.ere.slice(t, 1);
     }
-    if (this.ere.length > 0) {
+    if (0 < this.ere.length) {
       this.Mre("超出距离被伤害没添加仇恨事件广播", this.ere, void 0),
         this.Sre(this.ere, this.are);
       for (const s of this._re)
@@ -92,10 +92,10 @@ class AiPerceptionEvents {
     }
   }
   vre() {
-    const t = this.Xoe.length > 0;
-    const i = this.$oe.length > 0;
+    var t = 0 < this.Xoe.length,
+      i = 0 < this.$oe.length;
     if (t || i) {
-      const s = this.Bte.AiHateList.GetHatredMap().size;
+      var s = this.Bte.AiHateList.GetHatredMap().size;
       if (t)
         if (i) {
           this.Mre("仇恨广播", this.Xoe, this.$oe),
@@ -158,10 +158,10 @@ class AiPerceptionEvents {
     }
   }
   fre() {
-    const t = this.Joe.length > 0;
-    const i = this.zoe.length > 0;
+    var t = 0 < this.Joe.length,
+      i = 0 < this.zoe.length;
     if (t || i) {
-      const s = this.Bte.AiPerception.AllEnemies.size;
+      var s = this.Bte.AiPerception.AllEnemies.size;
       if (t)
         if (i) {
           this.Mre("感知广播", this.Joe, this.zoe),
@@ -197,7 +197,7 @@ class AiPerceptionEvents {
   }
   Sre(t, i) {
     for (const h of t) {
-      let s = EntitySystem_1.EntitySystem.Get(h);
+      var s = EntitySystem_1.EntitySystem.Get(h);
       s && s.Active && s.Valid && (s = s.GetComponent(1)?.Owner) && i.Add(s);
     }
     t.splice(0, t.length);
@@ -207,7 +207,7 @@ class AiPerceptionEvents {
   }
   AddAiHateEvent(t) {
     if (!this.hre.includes(t)) {
-      let i;
+      var i;
       if (this.Bte?.AiHateList)
         for ([i] of this.Bte?.AiHateList.GetHatredMap())
           this.Bte?.AiPerceptionEvents.CollectAiHateEventById(!0, i);
@@ -217,13 +217,13 @@ class AiPerceptionEvents {
   yre(t, i, s, h) {
     if (t && s) {
       t = h.indexOf(i.Id);
-      t !== -1
+      -1 !== t
         ? (h.slice(t, t + 1), s.push(i.Id))
         : s.includes(i.Id) || s.push(i.Id);
     } else {
       if (s) {
         t = s.indexOf(i.Id);
-        if (t !== -1) return s.slice(t, t + 1), void h.push(i.Id);
+        if (-1 !== t) return s.slice(t, t + 1), void h.push(i.Id);
       }
       h.includes(i.Id) || h.push(i.Id);
     }
@@ -231,11 +231,11 @@ class AiPerceptionEvents {
   Ire(t, i, s, h) {
     if (t && s) {
       t = h.indexOf(i);
-      t !== -1 ? (h.slice(t, t + 1), s.push(i)) : s.includes(i) || s.push(i);
+      -1 !== t ? (h.slice(t, t + 1), s.push(i)) : s.includes(i) || s.push(i);
     } else {
       if (s) {
         t = s.indexOf(i);
-        if (t !== -1) return s.slice(t, t + 1), void h.push(i);
+        if (-1 !== t) return s.slice(t, t + 1), void h.push(i);
       }
       h.includes(i) || h.push(i);
     }
@@ -328,7 +328,7 @@ class AiPerceptionEvents {
     this.dre?.IsValid() && this.dre.Callback.Broadcast(t, !0);
   }
   OnSenseSceneItem(t) {
-    let i;
+    var i;
     this.dre &&
       !this.gre.has(t.Entity.Id) &&
       (i = t.Entity.GetComponent(90))?.Valid &&
@@ -346,4 +346,4 @@ class AiPerceptionEvents {
   }
 }
 exports.AiPerceptionEvents = AiPerceptionEvents;
-// # sourceMappingURL=AiPerceptionEvents.js.map
+//# sourceMappingURL=AiPerceptionEvents.js.map

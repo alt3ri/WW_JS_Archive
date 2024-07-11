@@ -10,4 +10,4 @@ class ResourceUpdateViewBase {
   UpdatePatchProgress(e, s, o, t) {}
 }
 exports.ResourceUpdateViewBase = ResourceUpdateViewBase;
-// # sourceMappingURL=ResourceUpdateView.js.map
+//# sourceMappingURL=ResourceUpdateView.js.map

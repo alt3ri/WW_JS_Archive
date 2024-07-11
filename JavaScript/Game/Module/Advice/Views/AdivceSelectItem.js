@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceSelectItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const SPRITEONE =
-  "/Game/Aki/UI/UIResources/UiAdvice/Atlas/SP_AdviceBtnOne.SP_AdviceBtnOne";
-const SPRITETWO =
-  "/Game/Aki/UI/UIResources/UiAdvice/Atlas/SP_AdviceBtnTwo.SP_AdviceBtnTwo";
-const SPRITETHREE =
-  "/Game/Aki/UI/UIResources/UiAdvice/Atlas/SP_AdviceBtnThree.SP_AdviceBtnThree";
-const SPRITEEXPRESSION =
-  "/Game/Aki/UI/UIResources/UiAdvice/Atlas/SP_AdviceBtnbiaoqing.SP_AdviceBtnbiaoqing";
-const SPRITECHANGE =
-  "/Game/Aki/UI/UIResources/UiAdvice/Atlas/SP_AdviceBtnHuan.SP_AdviceBtnHuan";
-const SPRITEADD =
-  "/Game/Aki/UI/UIResources/UiAdvice/Atlas/SP_AdviceBtnJia.SP_AdviceBtnJia";
-const SPRITEDECREASE =
-  "/Game/Aki/UI/UIResources/UiAdvice/Atlas/SP_AdviceBtnJian.SP_AdviceBtnJian";
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  SPRITEONE =
+    "/Game/Aki/UI/UIResources/UiAdvice/Atlas/SP_AdviceBtnOne.SP_AdviceBtnOne",
+  SPRITETWO =
+    "/Game/Aki/UI/UIResources/UiAdvice/Atlas/SP_AdviceBtnTwo.SP_AdviceBtnTwo",
+  SPRITETHREE =
+    "/Game/Aki/UI/UIResources/UiAdvice/Atlas/SP_AdviceBtnThree.SP_AdviceBtnThree",
+  SPRITEEXPRESSION =
+    "/Game/Aki/UI/UIResources/UiAdvice/Atlas/SP_AdviceBtnbiaoqing.SP_AdviceBtnbiaoqing",
+  SPRITECHANGE =
+    "/Game/Aki/UI/UIResources/UiAdvice/Atlas/SP_AdviceBtnHuan.SP_AdviceBtnHuan",
+  SPRITEADD =
+    "/Game/Aki/UI/UIResources/UiAdvice/Atlas/SP_AdviceBtnJia.SP_AdviceBtnJia",
+  SPRITEDECREASE =
+    "/Game/Aki/UI/UIResources/UiAdvice/Atlas/SP_AdviceBtnJian.SP_AdviceBtnJian";
 class AdviceSelectItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -42,11 +42,11 @@ class AdviceSelectItem extends UiPanelBase_1.UiPanelBase {
   }
   RefreshView(e) {
     this.O8e();
-    let i = 0;
-    let s = 0;
+    let i = 0,
+      s = 0;
     e.forEach((e) => {
-      let t;
-      e.GetIndex() !== 4
+      var t;
+      4 !== e.GetIndex()
         ? ((t = this.k8e(i))
             .GetRootItem()
             .SetUIParent(this.GetScrollViewWithScrollbar(0).ContentUIItem),
@@ -97,11 +97,11 @@ class AdviceSelectBtnContentItem extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.Pe = void 0),
       (this.V8e = () => {
-        let e;
-        (this.Pe.GetIndex() !== 0 && this.Pe.GetIndex() !== 2) ||
-          ((e = this.Pe.GetIndex() === 0 ? 0 : 1),
-          (e = ModelManager_1.ModelManager.AdviceModel.CurrentWordMap.get(e)) >
-          0
+        var e;
+        (0 !== this.Pe.GetIndex() && 2 !== this.Pe.GetIndex()) ||
+          ((e = 0 === this.Pe.GetIndex() ? 0 : 1),
+          0 <
+          (e = ModelManager_1.ModelManager.AdviceModel.CurrentWordMap.get(e))
             ? ((e =
                 ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceWordText(
                   e,
@@ -115,10 +115,10 @@ class AdviceSelectBtnContentItem extends UiPanelBase_1.UiPanelBase {
               (this.GetText(1).useChangeColor = !1)));
       }),
       (this.H8e = () => {
-        let e;
-        this.Pe.GetIndex() === 1 &&
-          ((e = ModelManager_1.ModelManager.AdviceModel.CurrentConjunctionId) >
-          0
+        var e;
+        1 === this.Pe.GetIndex() &&
+          (0 <
+          (e = ModelManager_1.ModelManager.AdviceModel.CurrentConjunctionId)
             ? ((e =
                 ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceConjunctionText(
                   e,
@@ -177,9 +177,9 @@ class AdviceSelectBtnContentItem extends UiPanelBase_1.UiPanelBase {
       );
   }
   W8e() {
-    let e = ModelManager_1.ModelManager.AdviceModel.CurrentExpressionId;
-    this.Pe.GetIndex() === 3 &&
-      (e !== 0
+    var e = ModelManager_1.ModelManager.AdviceModel.CurrentExpressionId;
+    3 === this.Pe.GetIndex() &&
+      (0 !== e
         ? ((e =
             ConfigManager_1.ConfigManager.ChatConfig.GetExpressionConfig(e)),
           this.GetText(1).ShowTextNew(e.Name),
@@ -197,48 +197,48 @@ class AdviceSelectBtnContentItem extends UiPanelBase_1.UiPanelBase {
       this.K8e();
   }
   K8e() {
-    let e;
-    this.Pe.GetIndex() === 3
+    var e;
+    3 === this.Pe.GetIndex()
       ? ((e = ModelManager_1.ModelManager.AdviceModel.CurrentExpressionId),
-        this.GetButton(3).RootUIComp.SetUIActive(e !== 0))
+        this.GetButton(3).RootUIComp.SetUIActive(0 !== e))
       : this.GetButton(3).RootUIComp.SetUIActive(!1);
   }
   Y8e() {
-    const e = this.Pe.GetIndex();
-    e !== 0 && e !== 1 && e !== 2 && e !== 5 && e === 3 && this.W8e();
+    var e = this.Pe.GetIndex();
+    0 !== e && 1 !== e && 2 !== e && 5 !== e && 3 === e && this.W8e();
   }
   $8e() {
-    const e = this.Pe.GetIndex();
+    var e = this.Pe.GetIndex();
     let t = "";
-    e === 0 || e === 1 || e === 2
+    0 === e || 1 === e || 2 === e
       ? (t = "AdviceFunc_1")
-      : e === 5
+      : 5 === e
         ? (t = "AdviceFunc_3")
-        : e === 3
+        : 3 === e
           ? (t = "AdviceFunc_2")
-          : e === 6 &&
+          : 6 === e &&
             (t =
-              ModelManager_1.ModelManager.AdviceModel.CurrentLineModel === 0
+              0 === ModelManager_1.ModelManager.AdviceModel.CurrentLineModel
                 ? "AdviceFunc_4"
                 : "AdviceFunc_5"),
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), t);
   }
   J8e() {
-    const e = this.Pe.GetIndex();
+    var e = this.Pe.GetIndex();
     let t = "";
-    e === 0
+    0 === e
       ? (t = SPRITEONE)
-      : e === 1
+      : 1 === e
         ? (t = SPRITETWO)
-        : e === 2
+        : 2 === e
           ? (t = SPRITETHREE)
-          : e === 5
+          : 5 === e
             ? (t = SPRITECHANGE)
-            : e === 3
+            : 3 === e
               ? (t = SPRITEEXPRESSION)
-              : e === 6 &&
+              : 6 === e &&
                 (t =
-                  ModelManager_1.ModelManager.AdviceModel.CurrentLineModel === 0
+                  0 === ModelManager_1.ModelManager.AdviceModel.CurrentLineModel
                     ? SPRITEADD
                     : SPRITEDECREASE),
       this.SetSpriteByPath(t, this.GetSprite(2), !1);
@@ -263,4 +263,4 @@ class AdviceSelectLineContentItem extends UiPanelBase_1.UiPanelBase {
     super(), this.CreateThenShowByActor(e.GetOwner());
   }
 }
-// # sourceMappingURL=AdivceSelectItem.js.map
+//# sourceMappingURL=AdivceSelectItem.js.map

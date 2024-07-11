@@ -60,4 +60,4 @@ class ItemMaterialControllerActorData extends UE.PrimaryDataAsset {
   }
 }
 exports.default = ItemMaterialControllerActorData;
-// # sourceMappingURL=ItemMaterialControllerActorData.js.map
+//# sourceMappingURL=ItemMaterialControllerActorData.js.map

@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EliteMonsterHeadStateView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const BattleUiDefine_1 = require("../../BattleUiDefine");
-const BuffItem_1 = require("../BuffItem");
-const VisibleAnimMachine_1 = require("../State/VisibleAnimMachine");
-const HeadStateViewBase_1 = require("./HeadStateViewBase");
-const RageBufferStateMachine_1 = require("./RageBufferStateMachine");
-const EAttributeId = Protocol_1.Aki.Protocol.KBs;
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const SCALE_TOLERATION = 0.003;
-const FALL_DOWN_DISAPPEAR_PERCENT = 0.8;
-const FALL_DOWN_DISAPPEAR_TAIL_COUNT_FACTOR = 5;
-const TOUGH_ANIM_TIME = 250;
-const fallDownAttributeId = EAttributeId.Proto_ParalysisTime;
-const fallDownMaxAttributeId = EAttributeId.Proto_ParalysisTimeMax;
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  BattleUiDefine_1 = require("../../BattleUiDefine"),
+  BuffItem_1 = require("../BuffItem"),
+  VisibleAnimMachine_1 = require("../State/VisibleAnimMachine"),
+  HeadStateViewBase_1 = require("./HeadStateViewBase"),
+  RageBufferStateMachine_1 = require("./RageBufferStateMachine");
+var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  SCALE_TOLERATION = 0.003,
+  FALL_DOWN_DISAPPEAR_PERCENT = 0.8,
+  FALL_DOWN_DISAPPEAR_TAIL_COUNT_FACTOR = 5,
+  TOUGH_ANIM_TIME = 250,
+  fallDownAttributeId = EAttributeId.Proto_ParalysisTime,
+  fallDownMaxAttributeId = EAttributeId.Proto_ParalysisTimeMax;
 class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
   constructor() {
     super(...arguments),
@@ -65,7 +65,7 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
       }),
       (this.VulnerabilityActivated = (t) => {
         this.drt = t;
-        const i = this.GetSprite(15);
+        var i = this.GetSprite(15);
         i.SetUIActive(t),
           this.drt
             ? (([t] = this.GetHpAndShieldPercent()),
@@ -98,7 +98,7 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
           t ? this.Irt(21) : this.Irt(24);
       }),
       (this.Trt = (t, i, s) => {
-        let e;
+        var e;
         t <= i
           ? this.Lrt()
           : ((e = this.GetSprite(14)).SetUIActive(!0),
@@ -110,7 +110,7 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
         this.Ert(20);
       }),
       (this.Urt = () => {
-        const t = this.GetUiNiagara(18);
+        var t = this.GetUiNiagara(18);
         t.bIsUIActive || t.SetUIActive(!0), t.ActivateSystem(!0);
       }),
       (this.Art = new Map());
@@ -211,18 +211,18 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
     }
   }
   Zrt() {
-    const t = this.GetItem(9);
+    var t = this.GetItem(9);
     return new BuffItem_1.BuffItem(t);
   }
   ent(t, i, s, e = !1) {
-    const h = this.Jot.size;
-    const r = this.HeadStateData.GetBuff(s);
+    var h = this.Jot.size,
+      r = this.HeadStateData.GetBuff(s);
     t.Activate(i, r, e),
       t.GetRootItem().SetHierarchyIndex(h),
       this.Jot.set(s, t);
   }
   Jrt(t, i = !1) {
-    const s = this.tnt(t);
+    var s = this.tnt(t);
     s &&
       (this.Jot.delete(t),
       (i
@@ -231,7 +231,7 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
       ).push(s));
   }
   zrt() {
-    let t;
+    var t;
     if (!(this.Zot.length < 1))
       return (t = this.Zot[0]), this.Zot.splice(0, 1), t;
   }
@@ -249,28 +249,28 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
   Vrt() {
     if ((this.Wrt(), this.HeadStateData))
       for (const i of this.HeadStateData.GetAllCurrentCueRef()) {
-        const t = i.CueConfig;
+        var t = i.CueConfig;
         t.CueType === BattleUiDefine_1.UI_EFFECT_CUE_TYPE &&
           this.Yrt(t, i.ActiveHandleId);
       }
   }
   Dht() {
-    const t = this.IsDetailVisible();
+    var t = this.IsDetailVisible();
     this.GetItem(7).SetUIActive(t);
   }
   Rht() {
-    const t = this.IsLevelTextVisible();
+    var t = this.IsLevelTextVisible();
     this.GetText(4).SetUIActive(t);
   }
   Uht() {
-    const t = this.IsBuffVisible();
+    var t = this.IsBuffVisible();
     this.GetItem(9).SetUIActive(t);
   }
   Pht(i) {
     if (this.IsBuffVisible()) {
       for (const t of this.Jot.values()) t.Tick(i);
-      for (let t = this.zot.length - 1; t >= 0; t--) {
-        const s = this.zot[t];
+      for (let t = this.zot.length - 1; 0 <= t; t--) {
+        var s = this.zot[t];
         s.TickHiding(i) || (this.zot.splice(t, 1), this.Zot.push(s));
       }
     }
@@ -279,13 +279,13 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
     this.Nrt(), this.Ort();
   }
   jht() {
-    const t = this.HeadStateData.ActorComponent;
+    var t = this.HeadStateData.ActorComponent;
     (0, RegisterComponent_1.isComponentInstance)(t, 3) &&
       t.HalfHeight > this.HeadStateData.CommonParam.OutMonsterHalfHeight &&
       (this.NeedCorrectionOutside = !0);
   }
   RefreshHpAndShield(t = !1) {
-    const [i, s] = this.GetHpAndShieldPercent();
+    var [i, s] = this.GetHpAndShieldPercent();
     this.int(i),
       this.ont(s),
       t
@@ -310,14 +310,14 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
       this.drt && this.GetSprite(15).SetFillAmount(t);
   }
   Xrt(t) {
-    var i = this.GetSprite(1);
-    var i = (i.SetFillAmount(t), i.SetUIActive(!0), this.GetSprite(2));
+    var i = this.GetSprite(1),
+      i = (i.SetFillAmount(t), i.SetUIActive(!0), this.GetSprite(2));
     i.SetStretchLeft(this.srt * this.CurrentBarPercent - 2),
       i.SetStretchRight(this.srt * (1 - t) - 2);
   }
   ont(t) {
-    const i = this.GetSprite(3);
-    t > 0 ? (i.SetFillAmount(t), i.SetUIActive(!0)) : i.SetUIActive(!1);
+    var i = this.GetSprite(3);
+    0 < t ? (i.SetFillAmount(t), i.SetUIActive(!0)) : i.SetUIActive(!1);
   }
   OnHardnessAttributeChanged() {
     super.OnHardnessAttributeChanged(), this.krt();
@@ -326,7 +326,7 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
     this.HeadStateData.GetEntityId() === t && this.RefreshHpAndShield(!0);
   }
   Lht() {
-    let t, i, s;
+    var t, i, s;
     this.HeadStateData &&
       ((t = this.GetLevel()),
       (i = this.GetText(4)),
@@ -338,13 +338,13 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
       LguiUtil_1.LguiUtil.SetLocalText(i, "LevelShow", t));
   }
   Ort() {
-    const t = this.lrt || this.urt;
+    var t = this.lrt || this.urt;
     this.hrt !== t &&
       ((this.hrt = t), this.Kot.SetVisible(t, TOUGH_ANIM_TIME), t) &&
       this.GetItem(8).SetAlpha(1);
   }
   krt() {
-    let t, i, s;
+    var t, i, s;
     this.HardnessAttributeId === EAttributeId.Proto_Rage &&
       ((t = this.HeadStateData.GetAttributeCurrentValueById(
         this.MaxHardnessAttributeId,
@@ -379,7 +379,7 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
         this.krt();
   }
   ant() {
-    let t;
+    var t;
     this.lrt ||
     this.HardnessAttributeId !== EAttributeId.Proto_Rage ||
     this.HeadStateData.ContainsTagById(1261361093)
@@ -393,7 +393,7 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
     this.GetSprite(14).SetUIActive(!1);
   }
   Frt() {
-    const t = this.GetUiNiagara(18);
+    var t = this.GetUiNiagara(18);
     t.bIsUIActive && t.SetUIActive(!1);
   }
   Qrt(t) {
@@ -407,14 +407,14 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
   }
   Krt() {
     if (this.lrt) {
-      const i =
+      var i =
         1 -
         this.HeadStateData.GetAttributeCurrentValueById(fallDownAttributeId) /
           this.HeadStateData.GetAttributeCurrentValueById(
             fallDownMaxAttributeId,
           );
-      if (i >= 0 && i <= 1) {
-        const s = this.GetSprite(12);
+      if (0 <= i && i <= 1) {
+        var s = this.GetSprite(12);
         this.Crt || (this.Crt = this.GetItem(11).GetWidth()),
           s.SetStretchRight(this.Crt * i);
         let t = 1;
@@ -427,7 +427,7 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
     }
   }
   Aht() {
-    let t = this.GetHpColor();
+    var t = this.GetHpColor();
     t && ((t = UE.Color.FromHex(t)), this.GetSprite(0).SetColor(t));
   }
   Brt() {
@@ -439,11 +439,11 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
       this.hnt(24);
   }
   hnt(t) {
-    const i = [];
-    const s = this.GetItem(t)
-      .GetOwner()
-      .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass());
-    const e = s.Num();
+    var i = [],
+      s = this.GetItem(t)
+        .GetOwner()
+        .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass()),
+      e = s.Num();
     for (let t = 0; t < e; t++) i.push(s.Get(t));
     this.Art.set(t, i);
   }
@@ -457,4 +457,4 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
   }
 }
 exports.EliteMonsterHeadStateView = EliteMonsterHeadStateView;
-// # sourceMappingURL=EliteMonsterHeadStateView.js.map
+//# sourceMappingURL=EliteMonsterHeadStateView.js.map

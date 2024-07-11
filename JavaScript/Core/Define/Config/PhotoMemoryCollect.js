@@ -57,61 +57,61 @@ class PhotoMemoryCollect {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   topicid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   type() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   rank() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   themebg(t) {
-    const r = this.J7.__offset(this.z7, 12);
+    var r = this.J7.__offset(this.z7, 12);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   bgresourcem(t) {
-    const r = this.J7.__offset(this.z7, 14);
+    var r = this.J7.__offset(this.z7, 14);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   bgresourcef(t) {
-    const r = this.J7.__offset(this.z7, 16);
+    var r = this.J7.__offset(this.z7, 16);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   title(t) {
-    const r = this.J7.__offset(this.z7, 18);
+    var r = this.J7.__offset(this.z7, 18);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   tipsdesc(t) {
-    const r = this.J7.__offset(this.z7, 20);
+    var r = this.J7.__offset(this.z7, 20);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   clueid() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   desc(t) {
-    const r = this.J7.__offset(this.z7, 24);
+    var r = this.J7.__offset(this.z7, 24);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   dropid() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   traceentityid() {
-    const t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   tracemarkid() {
-    const t = this.J7.__offset(this.z7, 30);
+    var t = this.J7.__offset(this.z7, 30);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.PhotoMemoryCollect = PhotoMemoryCollect;
-// # sourceMappingURL=PhotoMemoryCollect.js.map
+//# sourceMappingURL=PhotoMemoryCollect.js.map

@@ -13,4 +13,4 @@ class LogicDataCreateBullet extends LogicDataBase_1.default {
   }
 }
 exports.default = LogicDataCreateBullet;
-// # sourceMappingURL=LogicDataCreateBullet.js.map
+//# sourceMappingURL=LogicDataCreateBullet.js.map

@@ -1,61 +1,61 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LguiUtil = exports.TableTextArgNew = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const Stats_1 = require("../../../Core/Common/Stats");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const Vector2D_1 = require("../../../Core/Utils/Math/Vector2D");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const GlobalData_1 = require("../../GlobalData");
-const InputSettingsManager_1 = require("../../InputSettings/InputSettingsManager");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const PC_KEY_ID = "PcKeyId=";
-const GAMEPAD_KEY_ID = "GamepadKeyId=";
-const ACTION_ID_KEY = "ActionId=";
-const SKILL_ID_KEY = "SkillId=";
-const ROLE_ID_KEY = "RoleId=";
-const EXPLORE_ID_KEY = "ExploreId=";
-const PHANTOM_ID_KEY = "PhantomId=";
-const ICON_ID_KEY = "IconId=";
-const PC_KEY_ID_MATCH = PC_KEY_ID + "[0-9]+";
-const GAMEPAD_KEY_ID_MATCH = GAMEPAD_KEY_ID + "[0-9]+";
-const ACTION_ID_MATCH = ACTION_ID_KEY + "[0-9]+";
-const SKILL_ID_MATCH = SKILL_ID_KEY + "[0-9]+";
-const ROLE_ID_MATCH = ROLE_ID_KEY + "[0-9]+";
-const EXPLORE_ID_MATCH = EXPLORE_ID_KEY + "[0-9]+";
-const PHANTOM_ID_MATCH = PHANTOM_ID_KEY + "[0-9]+";
-const ICON_ID_MATCH = ICON_ID_KEY + "[0-9]+";
-const pcKeyFormatRegex = new RegExp(`{<${PC_KEY_ID_MATCH}>}`, "g");
-const gamepadFormatRegex = new RegExp(`{<${GAMEPAD_KEY_ID_MATCH}>}`, "g");
-const actionFormatRegex = new RegExp(`{<${ACTION_ID_MATCH}>}`, "g");
-const skillFormatRegex = new RegExp(
-  `{<${ACTION_ID_MATCH}><${SKILL_ID_MATCH}>}`,
-  "g",
-);
-const dtSkillFormatRegex = new RegExp(
-  `{<${ACTION_ID_MATCH}><${ROLE_ID_MATCH}><${SKILL_ID_MATCH}>}`,
-  "g",
-);
-const exploreFormatRegex = new RegExp(
-  `{<${ACTION_ID_MATCH}><${EXPLORE_ID_MATCH}>}`,
-  "g",
-);
-const phantomFormatRegex = new RegExp(
-  `{<${ACTION_ID_MATCH}><${PHANTOM_ID_MATCH}>}`,
-  "g",
-);
-const iconFormatRegex = new RegExp(`{<${ICON_ID_MATCH}>}`, "g");
-const pcKeyIdFormatRegex = new RegExp("" + PC_KEY_ID_MATCH, "g");
-const gamepadIdFormatRegex = new RegExp("" + GAMEPAD_KEY_ID_MATCH, "g");
-const actionIdFormatRegex = new RegExp("" + ACTION_ID_MATCH, "g");
-const skillIdFormatRegex = new RegExp("" + SKILL_ID_MATCH, "g");
-const exploreIdFormatRegex = new RegExp("" + EXPLORE_ID_MATCH, "g");
-const phantomIdFormatRegex = new RegExp("" + PHANTOM_ID_MATCH, "g");
-const iconIdFormatRegex = new RegExp("" + ICON_ID_MATCH, "g");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  Vector2D_1 = require("../../../Core/Utils/Math/Vector2D"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  GlobalData_1 = require("../../GlobalData"),
+  InputSettingsManager_1 = require("../../InputSettings/InputSettingsManager"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  PC_KEY_ID = "PcKeyId=",
+  GAMEPAD_KEY_ID = "GamepadKeyId=",
+  ACTION_ID_KEY = "ActionId=",
+  SKILL_ID_KEY = "SkillId=",
+  ROLE_ID_KEY = "RoleId=",
+  EXPLORE_ID_KEY = "ExploreId=",
+  PHANTOM_ID_KEY = "PhantomId=",
+  ICON_ID_KEY = "IconId=",
+  PC_KEY_ID_MATCH = PC_KEY_ID + "[0-9]+",
+  GAMEPAD_KEY_ID_MATCH = GAMEPAD_KEY_ID + "[0-9]+",
+  ACTION_ID_MATCH = ACTION_ID_KEY + "[0-9]+",
+  SKILL_ID_MATCH = SKILL_ID_KEY + "[0-9]+",
+  ROLE_ID_MATCH = ROLE_ID_KEY + "[0-9]+",
+  EXPLORE_ID_MATCH = EXPLORE_ID_KEY + "[0-9]+",
+  PHANTOM_ID_MATCH = PHANTOM_ID_KEY + "[0-9]+",
+  ICON_ID_MATCH = ICON_ID_KEY + "[0-9]+",
+  pcKeyFormatRegex = new RegExp(`{<${PC_KEY_ID_MATCH}>}`, "g"),
+  gamepadFormatRegex = new RegExp(`{<${GAMEPAD_KEY_ID_MATCH}>}`, "g"),
+  actionFormatRegex = new RegExp(`{<${ACTION_ID_MATCH}>}`, "g"),
+  skillFormatRegex = new RegExp(
+    `{<${ACTION_ID_MATCH}><${SKILL_ID_MATCH}>}`,
+    "g",
+  ),
+  dtSkillFormatRegex = new RegExp(
+    `{<${ACTION_ID_MATCH}><${ROLE_ID_MATCH}><${SKILL_ID_MATCH}>}`,
+    "g",
+  ),
+  exploreFormatRegex = new RegExp(
+    `{<${ACTION_ID_MATCH}><${EXPLORE_ID_MATCH}>}`,
+    "g",
+  ),
+  phantomFormatRegex = new RegExp(
+    `{<${ACTION_ID_MATCH}><${PHANTOM_ID_MATCH}>}`,
+    "g",
+  ),
+  iconFormatRegex = new RegExp(`{<${ICON_ID_MATCH}>}`, "g"),
+  pcKeyIdFormatRegex = new RegExp("" + PC_KEY_ID_MATCH, "g"),
+  gamepadIdFormatRegex = new RegExp("" + GAMEPAD_KEY_ID_MATCH, "g"),
+  actionIdFormatRegex = new RegExp("" + ACTION_ID_MATCH, "g"),
+  skillIdFormatRegex = new RegExp("" + SKILL_ID_MATCH, "g"),
+  exploreIdFormatRegex = new RegExp("" + EXPLORE_ID_MATCH, "g"),
+  phantomIdFormatRegex = new RegExp("" + PHANTOM_ID_MATCH, "g"),
+  iconIdFormatRegex = new RegExp("" + ICON_ID_MATCH, "g");
 class TableTextArgNew {
   constructor(e, ...t) {
     (this.TextKey = e), (this.Params = t);
@@ -97,7 +97,7 @@ class LguiUtil {
     t &&
       (t.Clear(),
       r.forEach((e) => {
-        typeof e === "number"
+        "number" == typeof e
           ? Number.isInteger(e)
             ? t.AddIntArgs(e)
             : t.AddFloatArgs(e)
@@ -108,7 +108,7 @@ class LguiUtil {
       t.ShowTextNew(e));
   }
   static ReplaceWildCard(e) {
-    let t;
+    var t;
     e?.IsValid()
       ? e.GetRichText()
         ? ((t = e.GetText()),
@@ -132,95 +132,95 @@ class LguiUtil {
         Log_1.Log.Warn("LguiUtil", 8, "替换富文本时，UiText已经失效");
   }
   static ConvertToPcKeyIconRichText(e) {
-    const t = e.match(pcKeyFormatRegex);
+    var t = e.match(pcKeyFormatRegex);
     if (!t) return e;
     let r = e;
     for (const i of t) {
-      const o = this.Oqo(i, pcKeyIdFormatRegex);
+      var o = this.Oqo(i, pcKeyIdFormatRegex);
       r = this.kqo(r, i, o);
     }
     return r;
   }
   static ConvertToGamepadKeyIconRichText(e) {
-    const t = e.match(gamepadFormatRegex);
+    var t = e.match(gamepadFormatRegex);
     if (!t) return e;
     let r = e;
     for (const i of t) {
-      const o = this.Oqo(i, gamepadIdFormatRegex);
+      var o = this.Oqo(i, gamepadIdFormatRegex);
       r = this.Fqo(e, i, o);
     }
     return r;
   }
   static ConvertToActionIconRichText(e) {
-    const t = e.match(actionFormatRegex);
+    var t = e.match(actionFormatRegex);
     if (!t) return e;
     let r = e;
     for (const a of t) {
-      const o = this.Oqo(a, actionIdFormatRegex);
-      const i = `{<${ACTION_ID_KEY}${o}>}`;
+      var o = this.Oqo(a, actionIdFormatRegex),
+        i = `{<${ACTION_ID_KEY}${o}>}`;
       r = this.Vqo(r, i, o);
     }
     return r;
   }
   static ConvertToDataTableSkillIconRichText(e) {
-    const t = e.match(dtSkillFormatRegex);
+    var t = e.match(dtSkillFormatRegex);
     if (!t) return e;
-    const r = ModelManager_1.ModelManager.PlatformModel.IsMobile();
+    var r = ModelManager_1.ModelManager.PlatformModel.IsMobile();
     let o = e;
     for (const a of t) {
-      const i = this.Oqo(a, actionIdFormatRegex);
+      var i = this.Oqo(a, actionIdFormatRegex);
       r || (o = this.Vqo(o, a, i));
     }
     return o;
   }
   static ConvertToSkillIconRichText(e) {
-    const t = e.match(skillFormatRegex);
+    var t = e.match(skillFormatRegex);
     if (!t) return e;
-    const r = ModelManager_1.ModelManager.PlatformModel.IsMobile();
+    var r = ModelManager_1.ModelManager.PlatformModel.IsMobile();
     let o = e;
     for (const _ of t) {
-      const i = this.Oqo(_, actionIdFormatRegex);
-      const a = this.Oqo(_, skillIdFormatRegex);
+      var i = this.Oqo(_, actionIdFormatRegex),
+        a = this.Oqo(_, skillIdFormatRegex);
       o = r ? this.Hqo(o, _, a) : this.Vqo(o, _, i);
     }
     return o;
   }
   static ConvertToToExploreIconRichText(e) {
-    const t = e.match(exploreFormatRegex);
+    var t = e.match(exploreFormatRegex);
     if (!t) return e;
-    const r = ModelManager_1.ModelManager.PlatformModel.IsMobile();
+    var r = ModelManager_1.ModelManager.PlatformModel.IsMobile();
     let o = e;
     for (const _ of t) {
-      const i = this.Oqo(_, actionIdFormatRegex);
-      const a = this.Oqo(_, exploreIdFormatRegex);
+      var i = this.Oqo(_, actionIdFormatRegex),
+        a = this.Oqo(_, exploreIdFormatRegex);
       o = r ? this.jqo(o, _, a) : this.Vqo(o, _, i);
     }
     return o;
   }
   static ConvertToToPhantomIconRichText(e) {
-    const t = e.match(phantomFormatRegex);
+    var t = e.match(phantomFormatRegex);
     if (!t) return e;
-    const r = ModelManager_1.ModelManager.PlatformModel.IsMobile();
+    var r = ModelManager_1.ModelManager.PlatformModel.IsMobile();
     let o = e;
     for (const _ of t) {
-      const i = this.Oqo(_, actionIdFormatRegex);
-      const a = this.Oqo(_, phantomIdFormatRegex);
+      var i = this.Oqo(_, actionIdFormatRegex),
+        a = this.Oqo(_, phantomIdFormatRegex);
       o = r ? this.Wqo(o, _, a) : this.Vqo(o, _, i);
     }
     return o;
   }
   static ConvertToToPlatformIconRichText(e) {
-    const t = e.match(iconFormatRegex);
+    var t = e.match(iconFormatRegex);
     if (!t) return e;
     let r = e;
     for (const i of t) {
-      const o = this.Oqo(i, iconIdFormatRegex);
+      var o = this.Oqo(i, iconIdFormatRegex);
       r = this.Kqo(r, i, o);
     }
     return r;
   }
   static kqo(e, t, r) {
-    let o =
+    var o =
       ConfigManager_1.ConfigManager.InputSettingsConfig.GetPcKeyConfigById(r);
     if (o) {
       o = o.KeyIconPath;
@@ -233,7 +233,7 @@ class LguiUtil {
         Log_1.Log.Warn("LguiUtil", 8, "找不到对应Pc按键配置", ["pcKeyId", r]);
   }
   static Fqo(e, t, r) {
-    let o =
+    var o =
       ConfigManager_1.ConfigManager.InputSettingsConfig.GetGamepadKeyConfigById(
         r,
       );
@@ -256,8 +256,8 @@ class LguiUtil {
   static Hqo(e, t, r) {
     var o = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(r);
     if (o) {
-      var o = o.Icon;
-      const i = `<texture=${o}>`;
+      var o = o.Icon,
+        i = `<texture=${o}>`;
       if (!StringUtils_1.StringUtils.IsEmpty(o)) return e.replace(t, i);
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("LguiUtil", 8, "技能配置了空的图标路径", ["skillId", r]);
@@ -266,7 +266,7 @@ class LguiUtil {
         Log_1.Log.Warn("LguiUtil", 8, "找不到对应技能", ["skillId", r]);
   }
   static Vqo(e, t, r) {
-    let o =
+    var o =
       InputSettingsManager_1.InputSettingsManager.GetActionBindingByConfigId(r);
     if (o) {
       o =
@@ -288,7 +288,7 @@ class LguiUtil {
         ]);
   }
   static jqo(e, t, r) {
-    let o =
+    var o =
       ModelManager_1.ModelManager.RouletteModel.GetExploreDataBySkillId(r);
     if (o) {
       o = o.BattleViewIcon;
@@ -301,7 +301,7 @@ class LguiUtil {
         Log_1.Log.Warn("LguiUtil", 8, "找不到对应探索幻象", ["phantomId", r]);
   }
   static Wqo(e, t, r) {
-    let o =
+    var o =
       ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomInstanceByItemId(
         r,
       );
@@ -327,7 +327,7 @@ class LguiUtil {
         Log_1.Log.Warn("LguiUtil", 8, "找不到对应战斗幻象", ["phantomId", r]);
   }
   static Kqo(t, r, o) {
-    let i =
+    var i =
       ConfigManager_1.ConfigManager.InputSettingsConfig.GetPlatformIconConfig(
         o,
       );
@@ -353,7 +353,7 @@ class LguiUtil {
     if (e) return (t = e.split("=")[1]), Number(t);
   }
   static GetActorFullPath(e) {
-    const t = (0, puerts_1.$ref)("");
+    var t = (0, puerts_1.$ref)("");
     return (
       UE.LGUIBPLibrary.GetFullPathOfActor(GlobalData_1.GlobalData.World, e, t),
       (0, puerts_1.$unref)(t)
@@ -364,13 +364,13 @@ class LguiUtil {
   }
   static ResetShot() {}
   static ClearAttachChildren(t) {
-    for (let e = t.AttachChildren.Num() - 1; e >= 0; e--)
+    for (let e = t.AttachChildren.Num() - 1; 0 <= e; e--)
       UE.LGUIBPLibrary.DeleteActor(t.AttachChildren.Get(e).GetOwner());
   }
   static LoadAndSetText(o, i, a, _) {
     LguiUtil.ClearAttachChildren(o);
-    const g = new Array(a.length);
-    const n = new Array(a.length);
+    const g = new Array(a.length),
+      n = new Array(a.length);
     let s = 0;
     a.forEach((e, r) => {
       ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.PrefabAsset, (e, t) => {
@@ -378,11 +378,11 @@ class LguiUtil {
           (++s >= a.length || s >= a.length) &&
             (n.forEach((e, t) => {
               var e = UE.LGUIBPLibrary.LoadPrefabWithAsset(
-                GlobalData_1.GlobalData.World,
-                e,
-                o,
-              );
-              const r = e.GetComponentByClass(UE.UIItem.StaticClass());
+                  GlobalData_1.GlobalData.World,
+                  e,
+                  o,
+                ),
+                r = e.GetComponentByClass(UE.UIItem.StaticClass());
               r && (r.SetPivot(Vector2D_1.Vector2D.ZeroVector), (g[t] = e));
             }),
             o.SetText(i),
@@ -409,4 +409,4 @@ class LguiUtil {
   }
 }
 exports.LguiUtil = LguiUtil;
-// # sourceMappingURL=LguiUtil.js.map
+//# sourceMappingURL=LguiUtil.js.map

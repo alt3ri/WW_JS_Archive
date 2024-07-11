@@ -14,10 +14,10 @@ class UiViewPending {
   IsPairWith(t) {
     return (
       this.View.Info.Name === t.View.Info.Name &&
-      this.PendingType === 1 &&
-      (t.PendingType === 2 || t.PendingType === 3)
+      1 === this.PendingType &&
+      (2 === t.PendingType || 3 === t.PendingType)
     );
   }
 }
 exports.UiViewPending = UiViewPending;
-// # sourceMappingURL=UiViewPending.js.map
+//# sourceMappingURL=UiViewPending.js.map

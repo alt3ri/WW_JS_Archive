@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleFavorLockComponent = exports.initLockItem = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RoleFavorDefine_1 = require("./RoleFavorDefine");
-const RoleFavorLockItem_1 = require("./RoleFavorLockItem");
-const initLockItem = (e, t, i) => {
-  return { Key: i, Value: new RoleFavorLockItem_1.RoleFavorLockItem(t, e) };
-};
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RoleFavorDefine_1 = require("./RoleFavorDefine"),
+  RoleFavorLockItem_1 = require("./RoleFavorLockItem"),
+  initLockItem = (e, t, i) => {
+    return { Key: i, Value: new RoleFavorLockItem_1.RoleFavorLockItem(t, e) };
+  };
 exports.initLockItem = initLockItem;
 class RoleFavorLockComponent extends UiPanelBase_1.UiPanelBase {
   constructor(e, t) {
@@ -57,13 +57,13 @@ class RoleFavorLockComponent extends UiPanelBase_1.UiPanelBase {
       this.E_i.RebuildLayoutByDataNew(this.c_o);
   }
   LBt() {
-    const e = this.p_o();
+    var e = this.p_o();
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(2), e);
   }
   C_o() {
-    const e = this.GetItem(4);
-    const t = this.GetItem(3);
-    this.m_o.FavorTabType === 2 && this.m_o.TypeParam === 1
+    var e = this.GetItem(4),
+      t = this.GetItem(3);
+    2 === this.m_o.FavorTabType && 1 === this.m_o.TypeParam
       ? (e.SetUIActive(!0),
         t.SetUIActive(!0),
         LguiUtil_1.LguiUtil.SetLocalText(
@@ -91,28 +91,30 @@ class RoleFavorLockComponent extends UiPanelBase_1.UiPanelBase {
   }
   f_o() {
     let e = [];
-    var t = this.m_o.Config;
-    const i = this.m_o.FavorTabType;
-    const o = t.Id;
-    var t = t.CondGroupId;
-    return (e = i !== 2 && i !== 1 && i !== 3 && i !== 0 ? e : this.v_o(o, t));
+    var t = this.m_o.Config,
+      i = this.m_o.FavorTabType,
+      o = t.Id,
+      t = t.CondGroupId;
+    return (e = 2 !== i && 1 !== i && 3 !== i && 0 !== i ? e : this.v_o(o, t));
   }
   v_o(i, e) {
-    const o = [];
-    const r = this.m_o.RoleId;
-    const a = this.m_o.FavorTabType;
-    var e =
-      ConfigManager_1.ConfigManager.ConditionConfig.GetConditionGroupConfig(e);
+    var o = [],
+      r = this.m_o.RoleId,
+      a = this.m_o.FavorTabType,
+      e =
+        ConfigManager_1.ConfigManager.ConditionConfig.GetConditionGroupConfig(
+          e,
+        );
     if (e) {
-      const s = e.GroupId;
-      const n = s.length;
+      var s = e.GroupId,
+        n = s.length;
       for (let t = 0; t < n; t++) {
-        let l = s[t];
-        const h =
-          ConfigManager_1.ConfigManager.ConditionConfig.GetConditionConfig(l);
+        var l = s[t],
+          h =
+            ConfigManager_1.ConfigManager.ConditionConfig.GetConditionConfig(l);
         let e = !1;
         e =
-          a === 2
+          2 === a
             ? ModelManager_1.ModelManager.MotionModel.IsCondtionFinish(r, i, l)
             : ModelManager_1.ModelManager.RoleFavorConditionModel.IsCondtionFinish(
                 r,
@@ -128,4 +130,4 @@ class RoleFavorLockComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleFavorLockComponent = RoleFavorLockComponent;
-// # sourceMappingURL=RoleFavorLockComponent.js.map
+//# sourceMappingURL=RoleFavorLockComponent.js.map

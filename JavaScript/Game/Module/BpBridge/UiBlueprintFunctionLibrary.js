@@ -1,48 +1,48 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiBlueprintFunctionLibrary = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Json_1 = require("../../../Core/Common/Json");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const IGlobal_1 = require("../../../UniverseEditor/Interface/IGlobal");
-const TsBaseCharacter_1 = require("../../Character/TsBaseCharacter");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const PublicUtil_1 = require("../../Common/PublicUtil");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const GameProcedure_1 = require("../../GameProcedure");
-const GameUtils_1 = require("../../GameUtils");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ControllerManager_1 = require("../../Manager/ControllerManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiLayerType_1 = require("../../Ui/Define/UiLayerType");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const UiLayer_1 = require("../../Ui/UiLayer");
-const UiManager_1 = require("../../Ui/UiManager");
-const UiModel_1 = require("../../Ui/UiModel");
-const UiViewStorage_1 = require("../../Ui/UiViewStorage");
-const AreaController_1 = require("../Area/AreaController");
-const FullScreenEffectController_1 = require("../FullScreenEffect/FullScreenEffectController");
-const LoginDefine_1 = require("../Login/Data/LoginDefine");
-const LoginController_1 = require("../Login/LoginController");
-const LoginModel_1 = require("../Login/LoginModel");
-const MapController_1 = require("../Map/Controller/MapController");
-const MingSuController_1 = require("../MingSu/MingSuController");
-const PhotographController_1 = require("../Photograph/PhotographController");
-const ReconnectDefine_1 = require("../ReConnect/ReconnectDefine");
-const ShopController_1 = require("../Shop/ShopController");
-const UiSceneManager_1 = require("../UiComponent/UiSceneManager");
-const WorldMapController_1 = require("../WorldMap/WorldMapController");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Json_1 = require("../../../Core/Common/Json"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  IGlobal_1 = require("../../../UniverseEditor/Interface/IGlobal"),
+  TsBaseCharacter_1 = require("../../Character/TsBaseCharacter"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../Common/PublicUtil"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  GameProcedure_1 = require("../../GameProcedure"),
+  GameUtils_1 = require("../../GameUtils"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ControllerManager_1 = require("../../Manager/ControllerManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiLayerType_1 = require("../../Ui/Define/UiLayerType"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  UiModel_1 = require("../../Ui/UiModel"),
+  UiViewStorage_1 = require("../../Ui/UiViewStorage"),
+  AreaController_1 = require("../Area/AreaController"),
+  FullScreenEffectController_1 = require("../FullScreenEffect/FullScreenEffectController"),
+  LoginDefine_1 = require("../Login/Data/LoginDefine"),
+  LoginController_1 = require("../Login/LoginController"),
+  LoginModel_1 = require("../Login/LoginModel"),
+  MapController_1 = require("../Map/Controller/MapController"),
+  MingSuController_1 = require("../MingSu/MingSuController"),
+  PhotographController_1 = require("../Photograph/PhotographController"),
+  ReconnectDefine_1 = require("../ReConnect/ReconnectDefine"),
+  ShopController_1 = require("../Shop/ShopController"),
+  UiSceneManager_1 = require("../UiComponent/UiSceneManager"),
+  WorldMapController_1 = require("../WorldMap/WorldMapController");
 class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static IsGameInited() {
     return GameProcedure_1.GameProcedure.Inited;
@@ -80,11 +80,11 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     AreaController_1.AreaController.EndOverlap(e);
   }
   static GetAllFormationRole() {
-    const e = UE.NewArray(TsBaseCharacter_1.default);
+    var e = UE.NewArray(TsBaseCharacter_1.default);
     for (const r of ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities(
       !0,
     )) {
-      const t = r.Entity.GetComponent(3)?.Actor;
+      var t = r.Entity.GetComponent(3)?.Actor;
       t && e.Add(t);
     }
     return e;
@@ -98,7 +98,7 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     );
   }
   static OpenBattleView() {
-    const e = () => {
+    var e = () => {
       UiManager_1.UiManager.OpenView("BattleView");
     };
     UiManager_1.UiManager.IsInited
@@ -106,7 +106,7 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       : UiManager_1.UiManager.Initialize().finally(e);
   }
   static GetCurrentRoleConfigId() {
-    const e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentTeamItem;
+    var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentTeamItem;
     return e ? e.GetConfigId : 0;
   }
   static CheckGuideStatus(e, t, r) {
@@ -125,11 +125,11 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     UiManager_1.UiManager.Initialize();
   }
   static GetPlayerLevel() {
-    const e = ModelManager_1.ModelManager.PlayerInfoModel.GetNumberPropById(0);
+    var e = ModelManager_1.ModelManager.PlayerInfoModel.GetNumberPropById(0);
     return e || 0;
   }
   static GetPlayerId() {
-    const e = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
+    var e = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
     return e || 0;
   }
   static GetAccount() {
@@ -219,8 +219,8 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e).PropertyId;
   }
   static GetRoleDamageData(e) {
-    const t = UE.NewArray(UE.BuiltinInt);
-    var e = ConfigManager_1.ConfigManager.RoleConfig.GetDamageConfig(e);
+    var t = UE.NewArray(UE.BuiltinInt),
+      e = ConfigManager_1.ConfigManager.RoleConfig.GetDamageConfig(e);
     return e && (t.Add(e.Element), t.Add(e.Type)), t;
   }
   static OpenGmView() {
@@ -277,7 +277,7 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     );
   }
   static SetTempLocation(e) {
-    let t, r, i, n;
+    var t, r, i, n;
     GlobalData_1.GlobalData.IsPlayInEditor
       ? ((i = ((r = t = void 0), puerts_1.$ref)(void 0)),
         (n = (0, puerts_1.$ref)(void 0)),
@@ -334,48 +334,50 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
               ),
               ModelManager_1.ModelManager.LoginModel.SetPlayerName("关卡测试");
             var i =
-              UiBlueprintFunctionLibrary.TestLoadSceneData()?.DungeonId ?? 0;
-            var i =
-              (ModelManager_1.ModelManager.LoginModel.SetSingleMapId(
-                i > 0 ? i : r.Id,
-              ),
-              ModelManager_1.ModelManager.LoginModel.SetMultiMapId(9),
-              (ModelManager_1.ModelManager.LoginModel.BornMode =
-                UiBlueprintFunctionLibrary.TestSceneLoadNetMode() ? 0 : 1),
-              new Protocol_1.Aki.Protocol.VBs());
-            var i =
-              ((i.X = UiBlueprintFunctionLibrary.TempLocation.X),
-              (i.Y = UiBlueprintFunctionLibrary.TempLocation.Y),
-              (i.Z = UiBlueprintFunctionLibrary.TempLocation.Z),
-              (ModelManager_1.ModelManager.LoginModel.BornLocation = i),
-              GlobalData_1.GlobalData.IsRunWithEditorStartConfig() ||
-                ((r = Global_1.Global.CharacterController).ClearInputBinding(),
-                r.InitInputHandle(),
-                r.ReceiveSetupInputComponent()),
-              (ModelManager_1.ModelManager.GameModeModel.IsSilentLogin = !0),
-              ModelManager_1.ModelManager.LoginModel.GetSingleMapId());
-            var r =
-              (ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(i)
-                ?.InstType ===
-                Protocol_1.Aki.Protocol.sOs.Proto_NormalInstance &&
-                UiBlueprintFunctionLibrary.TestLoadSceneData()
-                  .IsDisableTeleportDungeon &&
-                ModelManager_1.ModelManager.SundryModel.BlockTpDungeonCount++,
-              () => {
-                ModelManager_1.ModelManager.LoginModel.SetLoginStatus(
-                  LoginDefine_1.ELoginStatus.Init,
+                UiBlueprintFunctionLibrary.TestLoadSceneData()?.DungeonId ?? 0,
+              i =
+                (ModelManager_1.ModelManager.LoginModel.SetSingleMapId(
+                  0 < i ? i : r.Id,
                 ),
-                  LoginController_1.LoginController.GetHttp(!0),
-                  EventSystem_1.EventSystem.Add(
-                    EventDefine_1.EEventName.LoginStatusChange,
-                    UiBlueprintFunctionLibrary.CheckReLogin,
+                ModelManager_1.ModelManager.LoginModel.SetMultiMapId(9),
+                (ModelManager_1.ModelManager.LoginModel.BornMode =
+                  UiBlueprintFunctionLibrary.TestSceneLoadNetMode() ? 0 : 1),
+                new Protocol_1.Aki.Protocol.VBs()),
+              i =
+                ((i.X = UiBlueprintFunctionLibrary.TempLocation.X),
+                (i.Y = UiBlueprintFunctionLibrary.TempLocation.Y),
+                (i.Z = UiBlueprintFunctionLibrary.TempLocation.Z),
+                (ModelManager_1.ModelManager.LoginModel.BornLocation = i),
+                GlobalData_1.GlobalData.IsRunWithEditorStartConfig() ||
+                  ((r =
+                    Global_1.Global.CharacterController).ClearInputBinding(),
+                  r.InitInputHandle(),
+                  r.ReceiveSetupInputComponent()),
+                (ModelManager_1.ModelManager.GameModeModel.IsSilentLogin = !0),
+                ModelManager_1.ModelManager.LoginModel.GetSingleMapId()),
+              r =
+                (ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+                  i,
+                )?.InstType ===
+                  Protocol_1.Aki.Protocol.sOs.Proto_NormalInstance &&
+                  UiBlueprintFunctionLibrary.TestLoadSceneData()
+                    .IsDisableTeleportDungeon &&
+                  ModelManager_1.ModelManager.SundryModel.BlockTpDungeonCount++,
+                () => {
+                  ModelManager_1.ModelManager.LoginModel.SetLoginStatus(
+                    LoginDefine_1.ELoginStatus.Init,
                   ),
-                  (UiBlueprintFunctionLibrary.TimerId =
-                    TimerSystem_1.TimerSystem.Forever(
-                      UiBlueprintFunctionLibrary.CheckWorldDone,
-                      TimeUtil_1.TimeUtil.InverseMillisecond,
-                    ));
-              });
+                    LoginController_1.LoginController.GetHttp(!0),
+                    EventSystem_1.EventSystem.Add(
+                      EventDefine_1.EEventName.LoginStatusChange,
+                      UiBlueprintFunctionLibrary.CheckReLogin,
+                    ),
+                    (UiBlueprintFunctionLibrary.TimerId =
+                      TimerSystem_1.TimerSystem.Forever(
+                        UiBlueprintFunctionLibrary.CheckWorldDone,
+                        TimeUtil_1.TimeUtil.InverseMillisecond,
+                      ));
+                });
             UiManager_1.UiManager.IsInited
               ? r()
               : UiManager_1.UiManager.Initialize().finally(r);
@@ -397,21 +399,21 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return UiBlueprintFunctionLibrary.TestLoadSceneData().IsNetMode;
   }
   static TestSceneSaveNetMode(e) {
-    const t = UiBlueprintFunctionLibrary.TestLoadSceneData();
+    var t = UiBlueprintFunctionLibrary.TestLoadSceneData();
     (t.IsNetMode = e), UiBlueprintFunctionLibrary.TestSaveSceneData(t);
   }
   static TestSceneLoadAccount() {
     return UiBlueprintFunctionLibrary.TestLoadSceneData().Account;
   }
   static TestSceneSaveAccount(e) {
-    const t = UiBlueprintFunctionLibrary.TestLoadSceneData();
+    var t = UiBlueprintFunctionLibrary.TestLoadSceneData();
     (t.Account = e), UiBlueprintFunctionLibrary.TestSaveSceneData(t);
   }
   static TestSceneLoadServerIp() {
     return UiBlueprintFunctionLibrary.TestLoadSceneData().ServerIp;
   }
   static TestSceneSaveServerIp(e) {
-    const t = UiBlueprintFunctionLibrary.TestLoadSceneData();
+    var t = UiBlueprintFunctionLibrary.TestLoadSceneData();
     (t.ServerIp = e), UiBlueprintFunctionLibrary.TestSaveSceneData(t);
   }
   static TestSceneLoadBornMode() {
@@ -420,12 +422,12 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       : 1;
   }
   static TestSceneSaveBornMode1(e) {
-    const t = UiBlueprintFunctionLibrary.TestLoadSceneData();
+    var t = UiBlueprintFunctionLibrary.TestLoadSceneData();
     (t.IsBornAtCamera = e), UiBlueprintFunctionLibrary.TestSaveSceneData(t);
   }
   static TestSceneLoadBornLocation() {
-    const e = UiBlueprintFunctionLibrary.TestLoadSceneData();
-    const t = new UE.Vector();
+    var e = UiBlueprintFunctionLibrary.TestLoadSceneData(),
+      t = new UE.Vector();
     return (
       (t.X = e.Location.X ?? 0),
       (t.Y = e.Location.Y ?? 0),
@@ -437,7 +439,7 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return UiBlueprintFunctionLibrary.TestLoadSceneData().IsMale;
   }
   static TestSceneSaveGender(e) {
-    const t = UiBlueprintFunctionLibrary.TestLoadSceneData();
+    var t = UiBlueprintFunctionLibrary.TestLoadSceneData();
     (t.IsMale = e), UiBlueprintFunctionLibrary.TestSaveSceneData(t);
   }
   static IsUseTempData() {
@@ -450,9 +452,9 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     );
   }
   static TestLoadSceneData() {
-    let e;
-    let t;
-    const r = UiBlueprintFunctionLibrary.GetLocalGameDataPath();
+    var e,
+      t,
+      r = UiBlueprintFunctionLibrary.GetLocalGameDataPath();
     return UE.BlueprintPathsLibrary.FileExists(r)
       ? ((t = ((e = ""), puerts_1.$ref)("")),
         UE.KuroStaticLibrary.LoadFileToString(t, r)
@@ -480,8 +482,8 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
         (t.IsNetMode = !1),
         (t.IsMale = !1),
         (t.UseTemp = !1));
-    let r;
-    var e = Json_1.Json.Stringify(t);
+    var r,
+      e = Json_1.Json.Stringify(t);
     return (
       void 0 === e
         ? Log_1.Log.CheckError() &&
@@ -502,7 +504,7 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static GetTopViewName() {
     let e = "None Normal / Pop View";
-    let t;
+    var t;
     return (
       void 0 !==
         UiModel_1.UiModel.GetTopView(UiLayerType_1.ELayerType.Normal) &&
@@ -578,4 +580,4 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       (UiBlueprintFunctionLibrary.TimerId = void 0));
   }),
   (exports.default = UiBlueprintFunctionLibrary);
-// # sourceMappingURL=UiBlueprintFunctionLibrary.js.map
+//# sourceMappingURL=UiBlueprintFunctionLibrary.js.map

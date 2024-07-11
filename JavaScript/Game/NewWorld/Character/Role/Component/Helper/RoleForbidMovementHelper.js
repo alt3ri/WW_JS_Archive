@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleForbidMovementHelper = void 0);
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const MAX_PRIORITY = 3;
+const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  MAX_PRIORITY = 3;
 class LimitTagHandler {
   constructor(t, i, s, e) {
     (this.TagId = t),
@@ -25,17 +25,17 @@ class RoleForbidMovementHelper {
       (this.CurrentActiveHandlers = new Array()),
       (this.Handlers = new Map()),
       (this.ytr = (t, i) => {
-        const s = this.Handlers.get(t);
+        var s = this.Handlers.get(t);
         if (
           s &&
           ((s.TagExist = i), !s.TagExist || !s.Active) &&
           (s.TagExist || s.Active)
         )
           if (i) {
-            let t = void 0;
-            let i = void 0;
+            let t = void 0,
+              i = void 0;
             for (const h of s.MutuallyTags) {
-              const e = this.Handlers.get(h);
+              var e = this.Handlers.get(h);
               if (e) {
                 if (e.Priority > s.Priority && e.Active) {
                   t = e;
@@ -52,7 +52,7 @@ class RoleForbidMovementHelper {
             this.ActiveHandler(s, !1);
             let t = void 0;
             for (const o of s.MutuallyTags) {
-              const r = this.Handlers.get(o);
+              var r = this.Handlers.get(o);
               if (r && r.Priority <= s.Priority && r.TagExist) {
                 t = r;
                 break;
@@ -64,13 +64,13 @@ class RoleForbidMovementHelper {
   }
   RegisterMutuallyTags(t) {
     for (const s of t) {
-      const i = this.Handlers.get(s);
+      var i = this.Handlers.get(s);
       if (i) for (const e of t) e !== i.TagId && i.MutuallyTags.push(e);
     }
   }
   Awake() {
     for (const i of this.Handlers) {
-      const t = this.TagComp.HasTag(i[0]);
+      var t = this.TagComp.HasTag(i[0]);
       this.ytr(i[0], t);
     }
   }
@@ -83,7 +83,7 @@ class RoleForbidMovementHelper {
           this.CurrentActiveHandlers.splice(i, 1);
   }
   CreateTagHandler(t, i, s) {
-    const e = this.TagComp.HasTag(t);
+    var e = this.TagComp.HasTag(t);
     this.Handlers.set(t, new LimitTagHandler(t, i, e, s)),
       this.pZo.push(this.TagComp.ListenForTagAddOrRemove(t, this.ytr));
   }
@@ -94,4 +94,4 @@ class RoleForbidMovementHelper {
   }
 }
 exports.RoleForbidMovementHelper = RoleForbidMovementHelper;
-// # sourceMappingURL=RoleForbidMovementHelper.js.map
+//# sourceMappingURL=RoleForbidMovementHelper.js.map

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const RecorderBlueprintFunctionLibrary_1 = require("./RecorderBlueprintFunctionLibrary");
+const UE = require("ue"),
+  RecorderBlueprintFunctionLibrary_1 = require("./RecorderBlueprintFunctionLibrary");
 class TsBpFxEffect extends UE.Actor {
   constructor() {
     super(...arguments),
@@ -64,4 +64,4 @@ class TsBpFxEffect extends UE.Actor {
   }
 }
 exports.default = TsBpFxEffect;
-// # sourceMappingURL=TsBpFxEffect.js.map
+//# sourceMappingURL=TsBpFxEffect.js.map

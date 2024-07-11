@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomSkill = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const StringArray_1 = require("./SubType/StringArray");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  StringArray_1 = require("./SubType/StringArray");
 class PhantomSkill {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -74,94 +74,94 @@ class PhantomSkill {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   phantomskillid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetBuffidsAt(t) {
     return this.buffids(t);
   }
   buffids(t) {
-    const i = this.J7.__offset(this.z7, 8);
+    var i = this.J7.__offset(this.z7, 8);
     return i
       ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
       : BigInt(0);
   }
   buffidsLength() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetSettleidsAt(t) {
     return this.settleids(t);
   }
   settleids(t) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i
       ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
       : BigInt(0);
   }
   settleidsLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetBuffeffectsAt(t) {
     return this.buffeffects(t);
   }
   buffeffects(t) {
-    const i = this.J7.__offset(this.z7, 12);
+    var i = this.J7.__offset(this.z7, 12);
     return i
       ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
       : BigInt(0);
   }
   buffeffectsLength() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   chargeefficiency() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   skillgroupid() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   skillcd() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   descriptionex(t) {
-    const i = this.J7.__offset(this.z7, 20);
+    var i = this.J7.__offset(this.z7, 20);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   simplydescription(t) {
-    const i = this.J7.__offset(this.z7, 22);
+    var i = this.J7.__offset(this.z7, 22);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   ifcounterskill() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   GetCurleveldescriptionexAt(t) {
     return this.curleveldescriptionex(t);
   }
   curleveldescriptionex(t, i) {
-    const s = this.J7.__offset(this.z7, 26);
+    var s = this.J7.__offset(this.z7, 26);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   curleveldescriptionexLength() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetLeveldescstrarrayAt(t, i) {
     return this.leveldescstrarray(t);
   }
   leveldescstrarray(t, i) {
-    const s = this.J7.__offset(this.z7, 28);
+    var s = this.J7.__offset(this.z7, 28);
     return s
       ? (i || new StringArray_1.StringArray()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -170,17 +170,17 @@ class PhantomSkill {
       : null;
   }
   leveldescstrarrayLength() {
-    const t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   battleviewicon(t) {
-    const i = this.J7.__offset(this.z7, 30);
+    var i = this.J7.__offset(this.z7, 30);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   specialbattleviewicon(t) {
-    const i = this.J7.__offset(this.z7, 32);
+    var i = this.J7.__offset(this.z7, 32);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.PhantomSkill = PhantomSkill;
-// # sourceMappingURL=PhantomSkill.js.map
+//# sourceMappingURL=PhantomSkill.js.map

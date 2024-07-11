@@ -1,25 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BossStatePanel = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Stats_1 = require("../../../../../Core/Common/Stats");
-const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById");
-const EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const Global_1 = require("../../../../Global");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const BattleUiControl_1 = require("../../BattleUiControl");
-const BattleUiDefine_1 = require("../../BattleUiDefine");
-const BattleChildViewPanel_1 = require("../BattleChildViewPanel/BattleChildViewPanel");
-const CommonBossStateView_1 = require("./CommonBossStateView");
-const MergeMonsterHeadStateView_1 = require("./MergeMonsterHeadStateView");
-const bossStateViewMap = new Map([
-  [1, CommonBossStateView_1.CommonBossStateView],
-]);
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../../Core/Common/Stats"),
+  CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../../Global"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  BattleUiControl_1 = require("../../BattleUiControl"),
+  BattleUiDefine_1 = require("../../BattleUiDefine"),
+  BattleChildViewPanel_1 = require("../BattleChildViewPanel/BattleChildViewPanel"),
+  CommonBossStateView_1 = require("./CommonBossStateView"),
+  MergeMonsterHeadStateView_1 = require("./MergeMonsterHeadStateView"),
+  bossStateViewMap = new Map([[1, CommonBossStateView_1.CommonBossStateView]]);
 class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
@@ -35,7 +33,7 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         t && this.Sot(t);
       }),
       (this.zpe = (t, e) => {
-        let i;
+        var i;
         e?.Valid &&
           (i = e.Entity.GetComponent(3)) &&
           i.IsBoss &&
@@ -50,7 +48,7 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           this.got?.ChangeBuff(e, i, s);
       }),
       (this.Iot = (t) => {
-        let e;
+        var e;
         t.IsVisible
           ? this.fot
             ? (this.fot.Refresh(t), this.fot.IsShowOrShowing || this.fot.Show())
@@ -95,15 +93,15 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     this.Eot(), this.yot(), this.Pot(), (this.got = void 0), super.Reset();
   }
   Lot() {
-    const t = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
+    var t = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
     if (t) for (const e of t) e.IsInit && this.Sot(e);
   }
   async Uot() {
     this.Cot = new Map();
     const s = [];
     BattleUiDefine_1.bossStateViewResourceIdMap.forEach((t, e) => {
-      let i = this.GetItem(0);
-      var t = BattleUiControl_1.BattleUiControl.Pool.GetHeadStateView(t);
+      var i = this.GetItem(0),
+        t = BattleUiControl_1.BattleUiControl.Pool.GetHeadStateView(t);
       t.K2_AttachRootComponentTo(i);
       i = new (bossStateViewMap.get(e))();
       this.Cot.set(e, i), s.push(i.NewByRootActorAsync(t));
@@ -123,7 +121,7 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ));
   }
   Eot(t = !0) {
-    let e;
+    var e;
     this.got &&
       ((e = EntitySystem_1.EntitySystem.Get(this.dot)),
       this.got.Deactivate(e),
@@ -138,8 +136,8 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   }
   OnChangeBoss(t) {
     this.got && (this.Eot(), this.yot()), (this.dot = t);
-    let e;
-    var t = this.wot()?.BossViewConfig?.BossStateViewType ?? 0;
+    var e,
+      t = this.wot()?.BossViewConfig?.BossStateViewType ?? 0;
     bossStateViewMap.get(Number(t)) &&
       ((e = EntitySystem_1.EntitySystem.Get(this.dot))
         ? this.xot(e, t)
@@ -147,8 +145,8 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           Log_1.Log.Warn("Battle", 8, "显示Boss状态条时找不到对应Boss实体"));
   }
   Aot() {
-    const t = this.Bot();
-    t === -1
+    var t = this.Bot();
+    -1 === t
       ? this.IsTargetBossExist() && (this.Eot(!1), this.yot())
       : this.dot !== t && this.OnChangeBoss(t);
   }
@@ -156,14 +154,14 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     this.dot = -1;
   }
   Bot() {
-    const t = Global_1.Global.BaseCharacter;
+    var t = Global_1.Global.BaseCharacter;
     if (!t) return -1;
-    if (this.mot.size === 0) return -1;
-    let e = -1;
-    let i = MathUtils_1.MathUtils.Int32Max;
+    if (0 === this.mot.size) return -1;
+    let e = -1,
+      i = MathUtils_1.MathUtils.Int32Max;
     for (const h of this.mot) {
-      var s;
-      let n = EntitySystem_1.EntitySystem.Get(h);
+      var s,
+        n = EntitySystem_1.EntitySystem.Get(h);
       n &&
         (n = n.GetComponent(3)) &&
         ((n = n.Owner.GetSquaredDistanceTo(t)),
@@ -173,7 +171,7 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
             (n <= this.pot && n < i && ((i = n), (e = h)),
             n > this.pot &&
               n <= this.vot &&
-              this.dot !== -1 &&
+              -1 !== this.dot &&
               n < i &&
               ((i = n), (e = h))));
     }
@@ -188,7 +186,7 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ?.GetMonsterComponent();
   }
   IsTargetBossExist() {
-    return this.dot !== -1;
+    return -1 !== this.dot;
   }
   Sot(e) {
     if (e?.Valid) {
@@ -198,7 +196,7 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         if (i) {
           let t = 0;
           var i = i.BossViewConfig;
-          (t = i ? i.BossStateViewType : t) === 0 ||
+          0 === (t = i ? i.BossStateViewType : t) ||
             this.mot.has(e.Id) ||
             (this.mot.add(e.Id),
             i?.ShowDistance &&
@@ -261,4 +259,4 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   }
 }
 (exports.BossStatePanel = BossStatePanel).aYe = void 0;
-// # sourceMappingURL=BossStatePanel.js.map
+//# sourceMappingURL=BossStatePanel.js.map

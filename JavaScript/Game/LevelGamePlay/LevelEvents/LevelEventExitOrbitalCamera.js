@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventExitOrbitalCamera = void 0);
-const CameraController_1 = require("../../Camera/CameraController");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const CameraController_1 = require("../../Camera/CameraController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventExitOrbitalCamera extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, t) {
     e
@@ -21,4 +21,4 @@ class LevelEventExitOrbitalCamera extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventExitOrbitalCamera = LevelEventExitOrbitalCamera;
-// # sourceMappingURL=LevelEventExitOrbitalCamera.js.map
+//# sourceMappingURL=LevelEventExitOrbitalCamera.js.map

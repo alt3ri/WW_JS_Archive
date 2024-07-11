@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkillButtonUiController = void 0);
-const Stats_1 = require("../../../Core/Common/Stats");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine");
+const Stats_1 = require("../../../Core/Common/Stats"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine");
 class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return !0;
@@ -141,7 +141,7 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static qEo(e, t = 4) {
-    const n = ModelManager_1.ModelManager.PlatformModel.OperationType === 2;
+    var n = 2 === ModelManager_1.ModelManager.PlatformModel.OperationType;
     ModelManager_1.ModelManager.SkillButtonUiModel.RefreshSkillButtonData(
       e,
       n,
@@ -149,8 +149,8 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static GetRoleId(e) {
-    let t;
-    var e = e.GetComponent(0);
+    var t,
+      e = e.GetComponent(0);
     return e
       ? ((e = e.GetRoleId()),
         (t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e))
@@ -181,7 +181,7 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.SkillButtonUiModel.CreateAllSkillButtonEntityData();
   }),
   (SkillButtonUiController.dKe = (e, t, n) => {
-    const i = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var i = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     i && SkillButtonUiController.qEo(i);
   }),
   (SkillButtonUiController.zpe = (e, t) => {
@@ -205,15 +205,15 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.SkillButtonUiModel.OnActionKeyChanged(e);
   }),
   (SkillButtonUiController.UKe = (e) => {
-    e === "MenuView" &&
+    "MenuView" === e &&
       ModelManager_1.ModelManager.SkillButtonUiModel.OnOpenMenuView();
   }),
   (SkillButtonUiController.$Ge = (e) => {
-    e === "MenuView" &&
+    "MenuView" === e &&
       ModelManager_1.ModelManager.SkillButtonUiModel.OnCloseMenuView();
   }),
   (SkillButtonUiController.gze = (e, t) => {
-    t = t === 0;
+    t = 0 === t;
     ModelManager_1.ModelManager.SkillButtonUiModel.GamepadData?.SetIsPressCombineButton(
       t,
     ),
@@ -222,4 +222,4 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
         t,
       );
   });
-// # sourceMappingURL=SkillButtonUiController.js.map
+//# sourceMappingURL=SkillButtonUiController.js.map

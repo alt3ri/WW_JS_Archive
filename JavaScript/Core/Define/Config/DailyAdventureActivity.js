@@ -44,38 +44,38 @@ class DailyAdventureActivity {
     );
   }
   activityid() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   areatitle(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   areadescription(t) {
-    const i = this.J7.__offset(this.z7, 8);
+    var i = this.J7.__offset(this.z7, 8);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   areapic(t) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   areadefaultmarkid() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetTasklistAt(t) {
     return this.tasklist(t);
   }
   tasklist(t) {
-    const i = this.J7.__offset(this.z7, 14);
+    var i = this.J7.__offset(this.z7, 14);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   tasklistLength() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   tasklistArray() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -88,15 +88,15 @@ class DailyAdventureActivity {
     return this.rewardlist(t);
   }
   rewardlist(t) {
-    const i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 16);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   rewardlistLength() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   rewardlistArray() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -106,9 +106,9 @@ class DailyAdventureActivity {
       : null;
   }
   taskrefreshnum() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 2;
   }
 }
 exports.DailyAdventureActivity = DailyAdventureActivity;
-// # sourceMappingURL=DailyAdventureActivity.js.map
+//# sourceMappingURL=DailyAdventureActivity.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiTeamLevelNew = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const FloatRange_1 = require("./SubType/FloatRange");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  FloatRange_1 = require("./SubType/FloatRange");
 class AiTeamLevelNew {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -50,22 +50,22 @@ class AiTeamLevelNew {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   GetPositionidAt(t) {
     return this.positionid(t);
   }
   positionid(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   positionidLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   positionidArray() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -75,7 +75,7 @@ class AiTeamLevelNew {
       : null;
   }
   allocationperiodic(t) {
-    const i = this.J7.__offset(this.z7, 8);
+    var i = this.J7.__offset(this.z7, 8);
     return i
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -84,11 +84,11 @@ class AiTeamLevelNew {
       : null;
   }
   attackernum() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 2;
   }
   attackcountdown(t) {
-    const i = this.J7.__offset(this.z7, 12);
+    var i = this.J7.__offset(this.z7, 12);
     return i
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -97,7 +97,7 @@ class AiTeamLevelNew {
       : null;
   }
   noattackcountdown(t) {
-    const i = this.J7.__offset(this.z7, 14);
+    var i = this.J7.__offset(this.z7, 14);
     return i
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -106,7 +106,7 @@ class AiTeamLevelNew {
       : null;
   }
   beattackcountdown(t) {
-    const i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 16);
     return i
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -118,15 +118,15 @@ class AiTeamLevelNew {
     return this.eliteratio(t);
   }
   eliteratio(t) {
-    const i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 18);
     return i ? this.J7.readFloat32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   eliteratioLength() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   eliteratioArray() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -139,15 +139,15 @@ class AiTeamLevelNew {
     return this.rangeratio(t);
   }
   rangeratio(t) {
-    const i = this.J7.__offset(this.z7, 20);
+    var i = this.J7.__offset(this.z7, 20);
     return i ? this.J7.readFloat32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   rangeratioLength() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   rangeratioArray() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -158,4 +158,4 @@ class AiTeamLevelNew {
   }
 }
 exports.AiTeamLevelNew = AiTeamLevelNew;
-// # sourceMappingURL=AiTeamLevelNew.js.map
+//# sourceMappingURL=AiTeamLevelNew.js.map

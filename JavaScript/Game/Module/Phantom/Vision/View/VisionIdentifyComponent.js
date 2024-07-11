@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelUpIdentifyComponent = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const PhantomDataBase_1 = require("../../PhantomBattle/Data/PhantomDataBase");
-const VisionIdentifyItem_1 = require("./VisionIdentifyItem");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  PhantomDataBase_1 = require("../../PhantomBattle/Data/PhantomDataBase"),
+  VisionIdentifyItem_1 = require("./VisionIdentifyItem");
 class LevelUpIdentifyComponent extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -37,9 +37,9 @@ class LevelUpIdentifyComponent extends UiPanelBase_1.UiPanelBase {
   async PlayUpdateAnimation(e) {
     await this.D7i?.Promise;
     let t = 0;
-    const i = [];
-    const s =
-      ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionIdentifyAnimationTime();
+    const i = [],
+      s =
+        ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionIdentifyAnimationTime();
     e.forEach((e) => {
       e = this.Layout.GetLayoutItemByKey(e).PlaySequenceAndUpdate(t, s);
       i.push(e), (t += s);
@@ -47,10 +47,10 @@ class LevelUpIdentifyComponent extends UiPanelBase_1.UiPanelBase {
       await Promise.all(i);
   }
   Update(e, i) {
-    if (((this.D7i = new CustomPromise_1.CustomPromise()), e.length > 0)) {
+    if (((this.D7i = new CustomPromise_1.CustomPromise()), 0 < e.length)) {
       const s = new Array();
       e.forEach((e) => {
-        const t = new PhantomDataBase_1.VisionSubPropViewData();
+        var t = new PhantomDataBase_1.VisionSubPropViewData();
         (t.Data = e), (t.SourceView = this.L7i), (t.IfPreCache = i), s.push(t);
       }),
         this.Layout.RefreshByData(s, () => {
@@ -60,4 +60,4 @@ class LevelUpIdentifyComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.LevelUpIdentifyComponent = LevelUpIdentifyComponent;
-// # sourceMappingURL=VisionIdentifyComponent.js.map
+//# sourceMappingURL=VisionIdentifyComponent.js.map

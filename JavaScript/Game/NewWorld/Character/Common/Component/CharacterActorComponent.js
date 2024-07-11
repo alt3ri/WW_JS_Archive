@@ -1,19 +1,24 @@
 "use strict";
-let CharacterActorComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, i, e, s) {
-    let r;
-    const o = arguments.length;
-    let h =
-      o < 3 ? i : s === null ? (s = Object.getOwnPropertyDescriptor(i, e)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      h = Reflect.decorate(t, i, e, s);
-    else
-      for (let a = t.length - 1; a >= 0; a--)
-        (r = t[a]) && (h = (o < 3 ? r(h) : o > 3 ? r(i, e, h) : r(i, e)) || h);
-    return o > 3 && h && Object.defineProperty(i, e, h), h;
-  };
+var CharacterActorComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, i, e, s) {
+      var r,
+        o = arguments.length,
+        h =
+          o < 3
+            ? i
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(i, e))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        h = Reflect.decorate(t, i, e, s);
+      else
+        for (var a = t.length - 1; 0 <= a; a--)
+          (r = t[a]) &&
+            (h = (o < 3 ? r(h) : 3 < o ? r(i, e, h) : r(i, e)) || h);
+      return 3 < o && h && Object.defineProperty(i, e, h), h;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterActorComponent =
     exports.LockOnConfig =
@@ -21,61 +26,61 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.AimPart =
     exports.FIX_SPAWN_TRACE_HEIGHT =
       void 0);
-const cpp_1 = require("cpp");
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Stats_1 = require("../../../../../Core/Common/Stats");
-const Time_1 = require("../../../../../Core/Common/Time");
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const GameBudgetInterfaceController_1 = require("../../../../../Core/GameBudgetAllocator/GameBudgetInterfaceController");
-const Net_1 = require("../../../../../Core/Net/Net");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const CollisionUtils_1 = require("../../../../../Core/Utils/CollisionUtils");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const CameraController_1 = require("../../../../Camera/CameraController");
-const TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const Global_1 = require("../../../../Global");
-const GlobalData_1 = require("../../../../GlobalData");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RenderConfig_1 = require("../../../../Render/Config/RenderConfig");
-const CombatDebugController_1 = require("../../../../Utils/CombatDebugController");
-const BlackboardController_1 = require("../../../../World/Controller/BlackboardController");
-const BaseActorComponent_1 = require("../../../Common/Component/BaseActorComponent");
-const FunctionRequestProxy_1 = require("./Actor/FunctionRequestProxy");
-const BaseCharacterComponent_1 = require("./BaseCharacterComponent");
-const INIT_LOCATION_KEY = "InitLocation";
-const MAX_NO_ROTATER_ANGLE = 10;
-const PHYSIC_STREAMING_CHECK_PERIOD = 500;
-const PHYSIC_STREAMING_CHECK_RANGE = 1e3;
-const oldLockOnPartNames =
-  ((exports.FIX_SPAWN_TRACE_HEIGHT = -1e3),
-  [
-    new UE.FName("ViceAimingCase0"),
-    new UE.FName("ViceAimingCase1"),
-    new UE.FName("ViceAimingCase2"),
-    new UE.FName("ViceAimingCase3"),
-    new UE.FName("ViceAimingCase4"),
-    new UE.FName("ViceAimingCase5"),
-    new UE.FName("ViceAimingCase6"),
-    new UE.FName("ViceAimingCase7"),
-    new UE.FName("ViceAimingCase8"),
-    new UE.FName("ViceAimingCase9"),
-  ]);
-const lockOnEnhancedTags = [-336338240, -164894127];
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
+  UE = require("ue"),
+  ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../../Core/Common/Stats"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  GameBudgetInterfaceController_1 = require("../../../../../Core/GameBudgetAllocator/GameBudgetInterfaceController"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  CollisionUtils_1 = require("../../../../../Core/Utils/CollisionUtils"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  CameraController_1 = require("../../../../Camera/CameraController"),
+  TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../../Global"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RenderConfig_1 = require("../../../../Render/Config/RenderConfig"),
+  CombatDebugController_1 = require("../../../../Utils/CombatDebugController"),
+  BlackboardController_1 = require("../../../../World/Controller/BlackboardController"),
+  BaseActorComponent_1 = require("../../../Common/Component/BaseActorComponent"),
+  FunctionRequestProxy_1 = require("./Actor/FunctionRequestProxy"),
+  BaseCharacterComponent_1 = require("./BaseCharacterComponent"),
+  INIT_LOCATION_KEY = "InitLocation",
+  MAX_NO_ROTATER_ANGLE = 10,
+  PHYSIC_STREAMING_CHECK_PERIOD = 500,
+  PHYSIC_STREAMING_CHECK_RANGE = 1e3,
+  oldLockOnPartNames =
+    ((exports.FIX_SPAWN_TRACE_HEIGHT = -1e3),
+    [
+      new UE.FName("ViceAimingCase0"),
+      new UE.FName("ViceAimingCase1"),
+      new UE.FName("ViceAimingCase2"),
+      new UE.FName("ViceAimingCase3"),
+      new UE.FName("ViceAimingCase4"),
+      new UE.FName("ViceAimingCase5"),
+      new UE.FName("ViceAimingCase6"),
+      new UE.FName("ViceAimingCase7"),
+      new UE.FName("ViceAimingCase8"),
+      new UE.FName("ViceAimingCase9"),
+    ]),
+  lockOnEnhancedTags = [-336338240, -164894127];
 class AimPart {
   constructor(t, i) {
     (this.Owner = i),
@@ -210,10 +215,10 @@ let CharacterActorComponent =
         (this.DisableMeshCollisionObjectTypeHandle = void 0),
         (this.MeshHandleForCollisionType = void 0),
         (this.DGn = (t) => {
-          t === 1 && this.LGn
+          1 === t && this.LGn
             ? (this.Entity.UnregisterFromGameBudgetController(),
               this.AGn(this.ActorLocation))
-            : t === 4 &&
+            : 4 === t &&
               this.TGn &&
               (TimerSystem_1.TimerSystem.Remove(this.TGn),
               (this.TGn = void 0),
@@ -312,7 +317,7 @@ let CharacterActorComponent =
         (this.EntityType = this.CreatureData.GetEntityType()),
         (this.SubEntityType = this.CreatureData.GetSubEntityType());
       let t = 0;
-      let i = void 0;
+      var i = void 0;
       if (this.EntityType === Protocol_1.Aki.Protocol.HBs.Proto_Player)
         t = this.CreatureDataInternal.GetRoleConfig().MeshId;
       else {
@@ -363,19 +368,19 @@ let CharacterActorComponent =
             ),
           !1
         );
-      const s = i;
-      const r =
-        (s.SetPrimitiveBlueprintTypeName(
-          new UE.FName(this.CreatureDataInternal.EntityPbModelConfigId),
-        ),
-        this.SetCamp(s),
-        (s.CharacterActorComponent = this),
-        (s.EntityId = this.Entity.Id),
-        this.InitDefaultController(i),
-        (this.ActorInternal = i),
-        this.ActorInternal.OnDestroyed.Add(this.n8e),
-        (this.IsRoleAndCtrlByMe = !1),
-        s.Mesh);
+      var s = i,
+        r =
+          (s.SetPrimitiveBlueprintTypeName(
+            new UE.FName(this.CreatureDataInternal.EntityPbModelConfigId),
+          ),
+          this.SetCamp(s),
+          (s.CharacterActorComponent = this),
+          (s.EntityId = this.Entity.Id),
+          this.InitDefaultController(i),
+          (this.ActorInternal = i),
+          this.ActorInternal.OnDestroyed.Add(this.n8e),
+          (this.IsRoleAndCtrlByMe = !1),
+          s.Mesh);
       switch (this.EntityType) {
         case Protocol_1.Aki.Protocol.HBs.Proto_Player:
           ModelManager_1.ModelManager.CreatureModel.GetPlayerId() ===
@@ -389,7 +394,7 @@ let CharacterActorComponent =
             UE.SkeletalMeshComponent.StaticClass(),
           );
           for (let t = 0; t < o.Num(); t++) {
-            const h = o.Get(t);
+            var h = o.Get(t);
             h.SetEnableOverrideSkeletalMeshScreenSizeCullRatio(!0),
               h.SetSkeletalMeshScreenSizeCullRatio(0.001);
           }
@@ -400,10 +405,10 @@ let CharacterActorComponent =
               this.CreatureDataInternal.GetPlayerId() &&
               (this.IsSummonsAndCtrlByMe = !0),
             !r ||
-            (this.CreatureData.GetBaseInfo()?.Category.MonsterMatchType !== 0 &&
-              this.CreatureData.GetPbDataId() !== 611000008 &&
-              this.CreatureData.GetPbDataId() !== 611000009 &&
-              this.CreatureData.GetPbDataId() !== 611000010)
+            (0 !== this.CreatureData.GetBaseInfo()?.Category.MonsterMatchType &&
+              611000008 !== this.CreatureData.GetPbDataId() &&
+              611000009 !== this.CreatureData.GetPbDataId() &&
+              611000010 !== this.CreatureData.GetPbDataId())
               ? r ||
                 (Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
@@ -454,7 +459,7 @@ let CharacterActorComponent =
         this.SetTickEnable(!1, "[CharacterActorComponent.OnInit] 默认关闭Tick"),
         (s.FightManager = GlobalData_1.GlobalData.BpFightManager),
         s.CharRenderingComponent.Init(s.RenderType),
-        s.RenderType === 3 &&
+        3 === s.RenderType &&
           s.CharRenderingComponent.UpdateNpcDitherComponent(),
         (s.AutoPossessAI = 3),
         this.SetInputRotator(this.ActorRotationProxy);
@@ -532,7 +537,7 @@ let CharacterActorComponent =
           !1);
     }
     SetActorRotationWithPriority(t, i, e, s = !1, r = !1) {
-      const o = new FunctionRequestProxy_1.FunctionRequestWithPriority();
+      var o = new FunctionRequestProxy_1.FunctionRequestWithPriority();
       return (
         (o.ModuleName = i),
         (o.Priority = e),
@@ -607,7 +612,7 @@ let CharacterActorComponent =
     }
     SetActorLocationAndRotation(t, i, e, s = !1, r = void 0) {
       let o = !1;
-      let h;
+      var h;
       return MathUtils_1.MathUtils.IsValidVector(t) &&
         MathUtils_1.MathUtils.IsValidRotator(i)
         ? (this.IsRoleAndCtrlByMe &&
@@ -648,7 +653,7 @@ let CharacterActorComponent =
           !1);
     }
     SetActorTransform(t, i, e = !0, s = void 0) {
-      let r;
+      var r;
       return (
         this.IsRoleAndCtrlByMe &&
           (CharacterActorComponent_1.Lz.FromUeVector(t.GetLocation()),
@@ -727,8 +732,8 @@ let CharacterActorComponent =
         : super.AddActorWorldOffset(t, i, e);
     }
     OnStart() {
-      let t;
-      const i = this.Actor;
+      var t,
+        i = this.Actor;
       return (
         (this.DebugMovementComp = this.Entity.GetComponent(27)),
         i
@@ -796,8 +801,8 @@ let CharacterActorComponent =
             this.CreatureData.GetEntityConfigType(),
           )),
         this.Entity.IsEncloseSpace
-          ? (ModelManager_1.ModelManager.WorldModel?.CurEnvironmentInfo
-              .CaveMode === 3
+          ? (3 ===
+            ModelManager_1.ModelManager.WorldModel?.CurEnvironmentInfo.CaveMode
               ? this.AGn(this.ActorLocation)
               : this.UGn(),
             EventSystem_1.EventSystem.Add(
@@ -881,7 +886,7 @@ let CharacterActorComponent =
       this.OnSetActorActive(!1, t);
     }
     OnChangeTimeDilation(t) {
-      const i = this.Entity.GetComponent(107)?.CurrentTimeScale ?? 1;
+      var i = this.Entity.GetComponent(107)?.CurrentTimeScale ?? 1;
       this.ActorInternal.CustomTimeDilation = t * i;
     }
     bFr() {
@@ -937,11 +942,10 @@ let CharacterActorComponent =
         this.Actor?.IsValid())
       ) {
         var t = this.Actor.GetComponentByClass(
-          UE.NavigationInvokerComponent.StaticClass(),
-        );
-        var t = (t && t.SetActive(i), (0, puerts_1.$ref)(void 0));
-        const e =
-          (this.Actor.GetAttachedActors(t, !0), (0, puerts_1.$unref)(t));
+            UE.NavigationInvokerComponent.StaticClass(),
+          ),
+          t = (t && t.SetActive(i), (0, puerts_1.$ref)(void 0)),
+          e = (this.Actor.GetAttachedActors(t, !0), (0, puerts_1.$unref)(t));
         for (let t = 0; t < e.Num(); ++t) e.Get(t).SetActorHiddenInGame(!i);
         t = this.Actor.DitherEffectController;
         t && (i ? t.SetIsDisable(!1, 1) : t.SetIsDisable(!0)),
@@ -949,7 +953,7 @@ let CharacterActorComponent =
       }
     }
     GFr(t) {
-      const i = CollisionUtils_1.CollisionUtils.GetCollisionResponseContainer();
+      var i = CollisionUtils_1.CollisionUtils.GetCollisionResponseContainer();
       (i.Pawn = i.GameTraceChannel5 = i.GameTraceChannel8 = 1),
         this.Actor.CapsuleComponent.SetCollisionResponseToChannel(
           QueryTypeDefine_1.KuroCollisionChannel.Bullet,
@@ -1108,16 +1112,15 @@ let CharacterActorComponent =
         this.DefaultHalfHeightInternal,
         !0,
       );
-      const t = this.ActorLocationProxy;
-      const i =
-        ModelManager_1.ModelManager.TraceElementModel.CommonStartLocation;
-      const e =
-        (i.Set(
-          t.X,
-          t.Y,
-          t.Z + Math.max(0, this.ScaledHalfHeight - this.ScaledRadius),
-        ),
-        ModelManager_1.ModelManager.TraceElementModel.CommonEndLocation);
+      var t = this.ActorLocationProxy,
+        i = ModelManager_1.ModelManager.TraceElementModel.CommonStartLocation,
+        e =
+          (i.Set(
+            t.X,
+            t.Y,
+            t.Z + Math.max(0, this.ScaledHalfHeight - this.ScaledRadius),
+          ),
+          ModelManager_1.ModelManager.TraceElementModel.CommonEndLocation);
       e.Set(
         t.X,
         t.Y,
@@ -1160,15 +1163,15 @@ let CharacterActorComponent =
         this.SetOverrideTurnSpeed(0);
     }
     wFr() {
-      const t = UE.KismetSystemLibrary.Conv_ClassToSoftClassReference(
+      var t = UE.KismetSystemLibrary.Conv_ClassToSoftClassReference(
         this.Actor.GetClass(),
       );
-      const i = UE.KismetSystemLibrary.Conv_SoftClassReferenceToString(t);
-      const l =
-        ConfigManager_1.ConfigManager.WorldConfig.GetCharacterFightInfo(
-          i,
-        )?.PartHitEffect.ToAssetPathName();
-      let _ = void 0 !== l && l.length > 0 && l !== "None";
+      const i = UE.KismetSystemLibrary.Conv_SoftClassReferenceToString(t),
+        l =
+          ConfigManager_1.ConfigManager.WorldConfig.GetCharacterFightInfo(
+            i,
+          )?.PartHitEffect.ToAssetPathName();
+      let _ = void 0 !== l && 0 < l.length && "None" !== l;
       _
         ? ResourceSystem_1.ResourceSystem.LoadAsync(
             l,
@@ -1181,14 +1184,14 @@ let CharacterActorComponent =
                 ) {
                   let i = this.RFr.PartCollision.Num();
                   for (let t = 0; t < i; t++) {
-                    const e = this.RFr.PartCollision.Get(t);
+                    var e = this.RFr.PartCollision.Get(t);
                     this.LFr.set(e.BoneName, e);
                   }
                   (_ = !1), (i = this.Actor.Mesh.GetNumChildrenComponents());
                   for (let t = 0; t < i; t++) {
-                    const s = this.Actor.Mesh.GetChildComponent(t);
-                    const r = s.GetName();
-                    const o = this.LFr.get(r);
+                    var s = this.Actor.Mesh.GetChildComponent(t),
+                      r = s.GetName(),
+                      o = this.LFr.get(r);
                     this.DFr.set(r, s),
                       o
                         ? ((_ = !0),
@@ -1211,12 +1214,12 @@ let CharacterActorComponent =
                   }
                   (i = this.RFr.AimParts.Num()), this.AimParts.clear();
                   for (let t = 0; t < i; ++t) {
-                    const h = new AimPart(this.RFr.AimParts.Get(t), this);
+                    var h = new AimPart(this.RFr.AimParts.Get(t), this);
                     this.AimParts.set(h.BoneNameString, h);
                   }
                   (i = this.RFr.LockOnParts.Num()), this.LockOnParts.clear();
                   for (let t = 0; t < i; ++t) {
-                    const a = new LockOnPart(this.RFr.LockOnParts.Get(t));
+                    var a = new LockOnPart(this.RFr.LockOnParts.Get(t));
                     this.LockOnParts.set(a.BoneNameString, a);
                   }
                   for (const c of oldLockOnPartNames) {
@@ -1249,7 +1252,7 @@ let CharacterActorComponent =
         : ((this.Actor.CapsuleComponent.CanCharacterStepUpOn = 0), this.GFr(_));
     }
     GetBoneLocation(t) {
-      const i = this.DFr.get(t);
+      var i = this.DFr.get(t);
       return (
         i ||
           (Log_1.Log.CheckError() &&
@@ -1264,7 +1267,7 @@ let CharacterActorComponent =
       );
     }
     qFr() {
-      const t = this.CreatureDataInternal.GetModelConfig();
+      var t = this.CreatureDataInternal.GetModelConfig();
       t &&
         t?.IsHiddenWithCamera &&
         this.Actor.CharRenderingComponent.SetCapsuleDither(1);
@@ -1314,12 +1317,12 @@ let CharacterActorComponent =
       return this.LFr.get(t);
     }
     xFr() {
-      let t;
+      var t;
       this.EntityType !== Protocol_1.Aki.Protocol.HBs.Proto_Monster ||
         !(t =
           this.Entity.GetComponent(0)?.GetBaseInfo()?.Category
             ?.MonsterMatchType) ||
-        (t !== 3 && t !== 2) ||
+        (3 !== t && 2 !== t) ||
         (this.pFr = !0);
     }
     SetPartPassiveCollision(t, i = !0) {
@@ -1330,8 +1333,8 @@ let CharacterActorComponent =
       return !this.AFr.has(t) || this.AFr.get(t);
     }
     SetPartCollisionSwitch(t, i, e, s) {
-      let r;
-      const o = this.DFr.get(t);
+      var r,
+        o = this.DFr.get(t);
       o?.IsValid()
         ? (this.NFr(o),
           ((r =
@@ -1356,26 +1359,26 @@ let CharacterActorComponent =
       return this.LFr.get(t);
     }
     BFr() {
-      let t = this.Entity.GetComponent(0)?.GetEntityType();
+      var t = this.Entity.GetComponent(0)?.GetEntityType();
       if (Protocol_1.Aki.Protocol.HBs.Proto_Monster === t) {
-        const i = this.Entity.GetComponent(185);
+        var i = this.Entity.GetComponent(185);
         if (this.LockOnConfig?.IsOpened)
           for (const s of lockOnEnhancedTags) i?.AddTag(s);
         t = this.Entity.GetComponent(0)?.GetMonsterComponent()?.InitGasTag;
-        if (t && t.length > 0)
+        if (t && 0 < t.length)
           for (const r of t) {
-            const e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(r);
+            var e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(r);
             e && i?.AddTag(e);
           }
       }
     }
     NFr(t) {
       this.EntityType === Protocol_1.Aki.Protocol.HBs.Proto_Player ||
-      this.Entity.GetComponent(0)?.GetEntityCamp() === 0
+      0 === this.Entity.GetComponent(0)?.GetEntityCamp()
         ? t.SetCollisionObjectType(
             QueryTypeDefine_1.KuroCollisionChannel.PawnPlayer,
           )
-        : this.Entity.GetComponent(0)?.GetEntityCamp() === 1
+        : 1 === this.Entity.GetComponent(0)?.GetEntityCamp()
           ? t.SetCollisionObjectType(
               QueryTypeDefine_1.KuroCollisionChannel.PawnMonster,
             )
@@ -1399,9 +1402,9 @@ let CharacterActorComponent =
       );
     }
     get WanderDirectionType() {
-      let t;
+      var t;
       return (
-        this.gIn === 3 &&
+        3 === this.gIn &&
           ((t = this.Entity.GetComponent(161)?.MovementData),
           (this.gIn = t?.WanderDirection ?? 0)),
         this.gIn
@@ -1410,20 +1413,20 @@ let CharacterActorComponent =
     GetWanderDirection(t, i, e) {
       return (
         this.Lz.DeepCopy(t),
-        e === 1 && this.Lz.MultiplyEqual(-1),
-        this.WanderDirectionType !== 2 ||
+        1 === e && this.Lz.MultiplyEqual(-1),
+        2 !== this.WanderDirectionType ||
           ((t = MathUtils_1.MathUtils.WrapAngle(
             MathUtils_1.MathUtils.GetAngleByVector2D(this.Lz) -
               this.ActorRotationProxy.Yaw,
           )),
           Math.abs(Math.abs(t) - 90) < MAX_NO_ROTATER_ANGLE) ||
           (this.Lz.CrossProduct(this.ActorUpProxy, this.Lz),
-          i.Y > 0 && this.Lz.MultiplyEqual(-1)),
+          0 < i.Y && this.Lz.MultiplyEqual(-1)),
         this.Lz
       );
     }
     GetNearestDirection(t, i) {
-      if ((this.Lz.DeepCopy(t), this.WanderDirectionType === 2)) {
+      if ((this.Lz.DeepCopy(t), 2 === this.WanderDirectionType)) {
         t = MathUtils_1.MathUtils.WrapAngle(
           MathUtils_1.MathUtils.GetAngleByVector2D(this.Lz) -
             this.ActorRotationProxy.Yaw,
@@ -1448,7 +1451,7 @@ let CharacterActorComponent =
     }
     InputWanderDirection(t, i) {
       if (t.IsNearlyZero()) this.SetInputDirect(Vector_1.Vector.ZeroVector);
-      else if (this.WanderDirectionType === 0) this.SetInputDirect(t);
+      else if (0 === this.WanderDirectionType) this.SetInputDirect(t);
       else {
         let t = !0;
         if (
@@ -1457,10 +1460,10 @@ let CharacterActorComponent =
         )
           t = this.fIn[0];
         else {
-          if (this.WanderDirectionType === 1) t = i.X > 0;
+          if (1 === this.WanderDirectionType) t = 0 < i.X;
           else {
-            if (this.WanderDirectionType !== 2) return;
-            t = i.Y > 0;
+            if (2 !== this.WanderDirectionType) return;
+            t = 0 < i.Y;
           }
           this.fIn[0] !== t &&
             ((this.fIn[0] = t), (this.fIn[1] = Time_1.Time.Now));
@@ -1500,13 +1503,13 @@ let CharacterActorComponent =
       return (
         t &&
           this.ActorInternal?.IsValid() &&
-          this.Actor.Mesh.GetCollisionEnabled() !== 0 &&
+          0 !== this.Actor.Mesh.GetCollisionEnabled() &&
           this.Actor.Mesh.SetCollisionEnabled(0),
         t
       );
     }
     SetMeshCollisionEnabled(t, i) {
-      return t !== 0
+      return 0 !== t
         ? !this.UFr &&
             ((this.UFr = this.SetOtherMeshCollisionEnabled(t, i)), !0)
         : !(
@@ -1533,13 +1536,13 @@ let CharacterActorComponent =
       return (
         t &&
           this.ActorInternal?.IsValid() &&
-          this.Actor.Mesh.GetCollisionObjectType() !== 2 &&
+          2 !== this.Actor.Mesh.GetCollisionObjectType() &&
           this.Actor.Mesh.SetCollisionObjectType(2),
         t
       );
     }
     SetMeshCollisionObjectType(t, i) {
-      return t !== 2
+      return 2 !== t
         ? !this.MeshHandleForCollisionType &&
             ((this.MeshHandleForCollisionType =
               this.SetOtherMeshCollisionObjectType(t, i)),
@@ -1552,14 +1555,14 @@ let CharacterActorComponent =
     }
     GetSocketTransform(t) {
       if (!FNameUtil_1.FNameUtil.IsNothing(t)) {
-        const i = this.Actor;
+        var i = this.Actor;
         if (i.Mesh.DoesSocketExist(t)) return i.Mesh.GetSocketTransform(t, 0);
       }
       return this.ActorTransform;
     }
     GetSocketLocation(t) {
       if (!FNameUtil_1.FNameUtil.IsNothing(t)) {
-        const i = this.Actor.Mesh;
+        var i = this.Actor.Mesh;
         if (i.DoesSocketExist(t)) return i.GetSocketLocation(t);
       }
       return this.ActorLocation;
@@ -1655,12 +1658,12 @@ let CharacterActorComponent =
         ModelManager_1.ModelManager.GameModeModel.RenderAssetDone
           ? !0
           : t) && ((this.yFr = !0), this.TFr());
-      const i = Protocol_1.Aki.Protocol.f_s.create();
-      var e = this.Entity.GetComponent(0).GetCreatureDataId();
-      var e =
-        (i.sfs.push(MathUtils_1.MathUtils.NumberToLong(e)),
-        Net_1.Net.Call(8784, i, (t) => {}),
-        this.Entity.GetComponent(38));
+      var i = Protocol_1.Aki.Protocol.f_s.create(),
+        e = this.Entity.GetComponent(0).GetCreatureDataId(),
+        e =
+          (i.sfs.push(MathUtils_1.MathUtils.NumberToLong(e)),
+          Net_1.Net.Call(8784, i, (t) => {}),
+          this.Entity.GetComponent(38));
       e &&
         e.SetLoadCompletePlayer(
           ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
@@ -1688,4 +1691,4 @@ let CharacterActorComponent =
       CharacterActorComponent,
     )),
   (exports.CharacterActorComponent = CharacterActorComponent);
-// # sourceMappingURL=CharacterActorComponent.js.map
+//# sourceMappingURL=CharacterActorComponent.js.map

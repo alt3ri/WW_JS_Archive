@@ -31,11 +31,11 @@ class AiFlee {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   fleedistance(t) {
-    const e = this.J7.__offset(this.z7, 6);
+    var e = this.J7.__offset(this.z7, 6);
     return e
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + e),
@@ -44,7 +44,7 @@ class AiFlee {
       : null;
   }
   fleeangle(t) {
-    const e = this.J7.__offset(this.z7, 8);
+    var e = this.J7.__offset(this.z7, 8);
     return e
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + e),
@@ -53,13 +53,13 @@ class AiFlee {
       : null;
   }
   fleeheight() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   timemilliseconds() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readFloat32(this.z7 + t) : 1e3;
   }
 }
 exports.AiFlee = AiFlee;
-// # sourceMappingURL=AiFlee.js.map
+//# sourceMappingURL=AiFlee.js.map

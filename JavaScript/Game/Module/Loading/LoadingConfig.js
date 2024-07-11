@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoadingConfig = void 0);
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const BroadcastImageById_1 = require("../../../Core/Define/ConfigQuery/BroadcastImageById");
-const LoadingLevelAreaAll_1 = require("../../../Core/Define/ConfigQuery/LoadingLevelAreaAll");
-const LoadingTipsTextByLevelAreaId_1 = require("../../../Core/Define/ConfigQuery/LoadingTipsTextByLevelAreaId");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  BroadcastImageById_1 = require("../../../Core/Define/ConfigQuery/BroadcastImageById"),
+  LoadingLevelAreaAll_1 = require("../../../Core/Define/ConfigQuery/LoadingLevelAreaAll"),
+  LoadingTipsTextByLevelAreaId_1 = require("../../../Core/Define/ConfigQuery/LoadingTipsTextByLevelAreaId"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class LoadingConfig extends ConfigBase_1.ConfigBase {
   GetLoadingTipsTextList(e) {
     return LoadingTipsTextByLevelAreaId_1.configLoadingTipsTextByLevelAreaId.GetConfigList(
@@ -27,4 +27,4 @@ class LoadingConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.LoadingConfig = LoadingConfig;
-// # sourceMappingURL=LoadingConfig.js.map
+//# sourceMappingURL=LoadingConfig.js.map

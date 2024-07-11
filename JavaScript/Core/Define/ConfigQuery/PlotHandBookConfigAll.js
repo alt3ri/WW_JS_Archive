@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configPlotHandBookConfigAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const PlotHandBookConfig_1 = require("../Config/PlotHandBookConfig");
-const DB = "db_plothandbook.db";
-const FILE = "UniverseEditor/PlotHandBook/剧情图鉴_Json_PlotHandBook.csv";
-const TABLE = "PlotHandBookConfig";
-const COMMAND = "select BinData from `PlotHandBookConfig`";
-const KEY_PREFIX = "PlotHandBookConfigAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  PlotHandBookConfig_1 = require("../Config/PlotHandBookConfig"),
+  DB = "db_plothandbook.db",
+  FILE = "UniverseEditor/PlotHandBook/剧情图鉴_Json_PlotHandBook.csv",
+  TABLE = "PlotHandBookConfig",
+  COMMAND = "select BinData from `PlotHandBookConfig`",
+  KEY_PREFIX = "PlotHandBookConfigAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configPlotHandBookConfigAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configPlotHandBookConfigAll = {
     );
   },
   GetConfigList: (o = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configPlotHandBookConfigAll = {
       }
       const t = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let e = void 0;
+        var e = void 0;
         if (
           (([n, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configPlotHandBookConfigAll = {
     }
   },
 };
-// # sourceMappingURL=PlotHandBookConfigAll.js.map
+//# sourceMappingURL=PlotHandBookConfigAll.js.map

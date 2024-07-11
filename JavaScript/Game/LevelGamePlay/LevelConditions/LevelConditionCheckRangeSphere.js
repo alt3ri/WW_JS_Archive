@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionRangeSphere = void 0);
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const Global_1 = require("../../Global");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  Global_1 = require("../../Global"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionRangeSphere extends LevelGeneralBase_1.LevelConditionBase {
   CheckNew(e, r) {
-    let o, l;
+    var o, l;
     return (
       !!e &&
       ((e = e),
@@ -24,4 +24,4 @@ class LevelConditionRangeSphere extends LevelGeneralBase_1.LevelConditionBase {
   }
 }
 exports.LevelConditionRangeSphere = LevelConditionRangeSphere;
-// # sourceMappingURL=LevelConditionCheckRangeSphere.js.map
+//# sourceMappingURL=LevelConditionCheckRangeSphere.js.map

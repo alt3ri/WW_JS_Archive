@@ -69,4 +69,4 @@ class GameplayAbilityVisionBase {
   }
 }
 exports.GameplayAbilityVisionBase = GameplayAbilityVisionBase;
-// # sourceMappingURL=GameplayAbilityVisionBase.js.map
+//# sourceMappingURL=GameplayAbilityVisionBase.js.map

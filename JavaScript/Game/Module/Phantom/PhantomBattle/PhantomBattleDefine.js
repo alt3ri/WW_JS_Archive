@@ -9,4 +9,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PROPOFFSET = 1e4),
   (exports.BLACKSTONEIDNUM = 2),
   (exports.MAX_EQUIP_COUNT = 5);
-// # sourceMappingURL=PhantomBattleDefine.js.map
+//# sourceMappingURL=PhantomBattleDefine.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CalabashCollectFilter = void 0);
-const ModelManager_1 = require("../../../../../../Manager/ModelManager");
-const CommonFilter_1 = require("./CommonFilter");
+const ModelManager_1 = require("../../../../../../Manager/ModelManager"),
+  CommonFilter_1 = require("./CommonFilter");
 class CalabashCollectFilter extends CommonFilter_1.CommonFilter {
   constructor() {
     super(...arguments),
@@ -26,4 +26,4 @@ class CalabashCollectFilter extends CommonFilter_1.CommonFilter {
   }
 }
 exports.CalabashCollectFilter = CalabashCollectFilter;
-// # sourceMappingURL=CalabashCollectFilter.js.map
+//# sourceMappingURL=CalabashCollectFilter.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleFavorPowerInfoComponent = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class RoleFavorPowerInfoComponent extends UiPanelBase_1.UiPanelBase {
   constructor(e, t) {
     super(), (this.M_o = t), e && this.CreateThenShowByActor(e.GetOwner());
@@ -19,7 +19,7 @@ class RoleFavorPowerInfoComponent extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    const e = this.GetText(0);
+    var e = this.GetText(0);
     LguiUtil_1.LguiUtil.SetLocalText(e, "FavorPowerFile"),
       this.GetText(3).ShowTextNew(this.M_o.TalentName),
       this.GetText(4).ShowTextNew(this.M_o.TalentDoc),
@@ -30,4 +30,4 @@ class RoleFavorPowerInfoComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleFavorPowerInfoComponent = RoleFavorPowerInfoComponent;
-// # sourceMappingURL=RoleFavorPowerInfoComponent.js.map
+//# sourceMappingURL=RoleFavorPowerInfoComponent.js.map

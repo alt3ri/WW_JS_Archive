@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const ControllerHolder_1 = require("../Manager/ControllerHolder");
-const TsInteractionUtils_1 = require("../Module/Interaction/TsInteractionUtils");
-const LevelGeneralCommons_1 = require("./LevelGeneralCommons");
+const UE = require("ue"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
+  TsInteractionUtils_1 = require("../Module/Interaction/TsInteractionUtils"),
+  LevelGeneralCommons_1 = require("./LevelGeneralCommons");
 class LevelGeneralBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static UpdateEntityTag(e, t, n) {
     LevelGeneralCommons_1.LevelGeneralCommons.UpdateEntityTag(e, t, n);
@@ -27,4 +27,4 @@ class LevelGeneralBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
 }
 exports.default = LevelGeneralBlueprintFunctionLibrary;
-// # sourceMappingURL=LevelGeneralBlueprintFunctionLibrary.js.map
+//# sourceMappingURL=LevelGeneralBlueprintFunctionLibrary.js.map

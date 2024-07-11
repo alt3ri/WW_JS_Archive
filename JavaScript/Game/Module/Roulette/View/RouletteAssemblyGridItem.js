@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RouletteAssemblyGridItem = void 0);
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid");
+const ModelManager_1 = require("../../../Manager/ModelManager"),
+  LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid");
 class RouletteAssemblyGridItem extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   constructor() {
     super(...arguments), (this.Data = void 0);
   }
   OnRefresh(e, t, r) {
-    const s = {
-      Type: 4,
-      QualityType: "MediumItemGridQualitySpritePath",
-      Data: e,
-      IsOmitBottomText: !1,
-    };
-    const i =
-      (e.GridType === 2 ? (s.QualityId = e.QualityId) : (s.QualityId = 1),
-      e.RelativeIndex !== 0);
+    var s = {
+        Type: 4,
+        QualityType: "MediumItemGridQualitySpritePath",
+        Data: e,
+        IsOmitBottomText: !1,
+      },
+      i =
+        (2 === e.GridType ? (s.QualityId = e.QualityId) : (s.QualityId = 1),
+        0 !== e.RelativeIndex);
     switch ((i && (s.SortIndex = e.RelativeIndex), e.GridType)) {
       case 0:
         var o = e;
@@ -30,11 +30,11 @@ class RouletteAssemblyGridItem extends LoopScrollMediumItemGrid_1.LoopScrollMedi
           (s.BottomTextId = e.Name);
         break;
       case 2:
-        var o = e;
-        var o =
-          ((s.ItemConfigId = o.Id),
-          (s.BottomText = o.ItemNum.toString()),
-          ModelManager_1.ModelManager.InventoryModel.GetCommonItemData(e.Id));
+        var o = e,
+          o =
+            ((s.ItemConfigId = o.Id),
+            (s.BottomText = o.ItemNum.toString()),
+            ModelManager_1.ModelManager.InventoryModel.GetCommonItemData(e.Id));
         o && ((o = o.GetConfig()), (s.BuffIconType = o.ItemBuffType));
     }
     this.Apply(s), (this.Data.Index = r), this.SetSelected(t);
@@ -47,4 +47,4 @@ class RouletteAssemblyGridItem extends LoopScrollMediumItemGrid_1.LoopScrollMedi
   }
 }
 exports.RouletteAssemblyGridItem = RouletteAssemblyGridItem;
-// # sourceMappingURL=RouletteAssemblyGridItem.js.map
+//# sourceMappingURL=RouletteAssemblyGridItem.js.map

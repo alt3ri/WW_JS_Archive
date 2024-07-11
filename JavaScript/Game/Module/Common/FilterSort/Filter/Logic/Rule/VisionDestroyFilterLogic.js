@@ -1,13 +1,13 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionDestroyFilterLogic = void 0);
-const ConfigManager_1 = require("../../../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../../../Manager/ModelManager");
-const SUBATTRIBUTEID = 23;
+const ConfigManager_1 = require("../../../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../../../Manager/ModelManager"),
+  SUBATTRIBUTEID = 23;
 class VisionDestroyFilterLogic {
   static ZTt(r, i, o = !1) {
-    const a = r.length;
+    var a = r.length;
     for (let e = 0; e < a; e++)
       if (r[e].PhantomPropId === i) {
         if (o && r[e].IfPercentage) return r[e].Value;
@@ -39,18 +39,18 @@ class VisionDestroyFilterLogic {
     return e ? e.GetFetterGroupId() : 0;
   }),
   (VisionDestroyFilterLogic.GetVisionDestroyAttribute = (e, r) => {
-    let i;
-    let o;
-    let a;
-    var r = Array.from(r.keys());
-    const t =
-      ModelManager_1.ModelManager.PhantomBattleModel?.GetPhantomDataBase(
+    var i,
+      o,
+      a,
+      r = Array.from(r.keys()),
+      t = ModelManager_1.ModelManager.PhantomBattleModel?.GetPhantomDataBase(
         e.GetUniqueId(),
       );
     let n = !1;
     for (const g of r) {
       let e = 0;
       if (
+        0 <
         (e =
           g >= SUBATTRIBUTEID
             ? ((i = t?.GetSubPropArray()),
@@ -72,7 +72,7 @@ class VisionDestroyFilterLogic {
                 ModelManager_1.ModelManager.PhantomBattleModel.GetMainAttributeKey(
                   g,
                 )),
-              _a.ZTt(i, a, o))) > 0
+              _a.ZTt(i, a, o)))
       ) {
         n = !0;
         break;
@@ -80,4 +80,4 @@ class VisionDestroyFilterLogic {
     }
     return n ? r : [0];
   });
-// # sourceMappingURL=VisionDestroyFilterLogic.js.map
+//# sourceMappingURL=VisionDestroyFilterLogic.js.map

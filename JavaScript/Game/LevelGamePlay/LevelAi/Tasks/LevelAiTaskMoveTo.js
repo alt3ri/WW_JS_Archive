@@ -11,7 +11,7 @@ class LevelAiTaskMoveTo extends LevelAiTask_1.LevelAiTask {
       (this.Gce = void 0);
   }
   ExecuteTask() {
-    let e;
+    var e;
     return (
       (this.Gce = this.CreatureDataComponent.Entity.GetComponent(36)),
       this.Gce
@@ -51,4 +51,4 @@ class LevelAiTaskMoveTo extends LevelAiTask_1.LevelAiTask {
   }
 }
 exports.LevelAiTaskMoveTo = LevelAiTaskMoveTo;
-// # sourceMappingURL=LevelAiTaskMoveTo.js.map
+//# sourceMappingURL=LevelAiTaskMoveTo.js.map

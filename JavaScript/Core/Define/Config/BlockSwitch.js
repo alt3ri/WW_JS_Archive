@@ -27,21 +27,21 @@ class BlockSwitch {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   block(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   maptilepath(t) {
-    const i = this.J7.__offset(this.z7, 8);
+    var i = this.J7.__offset(this.z7, 8);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   minimaptilepath(t) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.BlockSwitch = BlockSwitch;
-// # sourceMappingURL=BlockSwitch.js.map
+//# sourceMappingURL=BlockSwitch.js.map

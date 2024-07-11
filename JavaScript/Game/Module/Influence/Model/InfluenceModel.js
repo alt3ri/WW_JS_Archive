@@ -20,4 +20,4 @@ class InfluenceModel extends ModelBase_1.ModelBase {
   }
 }
 exports.InfluenceModel = InfluenceModel;
-// # sourceMappingURL=InfluenceModel.js.map
+//# sourceMappingURL=InfluenceModel.js.map

@@ -15,25 +15,24 @@ const Long = require("./long");
     // so that minification can remove the directives of each module.
 
     function $require(name) {
-      let $module = cache[name];
-      if (!$module) {
+      var $module = cache[name];
+      if (!$module)
         modules[name][0].call(
           ($module = cache[name] = { exports: {} }),
           $require,
           $module,
           $module.exports,
         );
-      }
       return $module.exports;
     }
 
-    const protobuf = $require(entries[0]);
+    var protobuf = $require(entries[0]);
 
     // Expose globally
     protobuf.util.global.protobuf = protobuf;
 
     // Be nice to AMD
-    if (typeof define === "function" && define.amd) {
+    if (typeof define === "function" && define.amd)
       define(["long"], function (Long) {
         if (Long && Long.isLong) {
           protobuf.util.Long = Long;
@@ -41,12 +40,10 @@ const Long = require("./long");
         }
         return protobuf;
       });
-    }
 
     // Be nice to CommonJS
-    if (typeof module === "object" && module && module.exports) {
+    if (typeof module === "object" && module && module.exports)
       module.exports = protobuf;
-    }
   })(
     /* end of prelude */ {
       1: [
@@ -72,25 +69,22 @@ const Long = require("./long");
            * @returns {Promise<*>} Promisified function
            */
           function asPromise(fn, ctx /*, varargs */) {
-            const params = new Array(arguments.length - 1);
-            let offset = 0;
-            let index = 2;
-            let pending = true;
-            while (index < arguments.length) {
+            var params = new Array(arguments.length - 1),
+              offset = 0,
+              index = 2,
+              pending = true;
+            while (index < arguments.length)
               params[offset++] = arguments[index++];
-            }
             return new Promise(function executor(resolve, reject) {
               params[offset] = function callback(err /*, varargs */) {
                 if (pending) {
                   pending = false;
-                  if (err) {
-                    reject(err);
-                  } else {
-                    const params = new Array(arguments.length - 1);
-                    let offset = 0;
-                    while (offset < params.length) {
+                  if (err) reject(err);
+                  else {
+                    var params = new Array(arguments.length - 1),
+                      offset = 0;
+                    while (offset < params.length)
                       params[offset++] = arguments[offset];
-                    }
                     resolve.apply(null, params);
                   }
                 }
@@ -117,7 +111,7 @@ const Long = require("./long");
            * @memberof util
            * @namespace
            */
-          const base64 = exports;
+          var base64 = exports;
 
           /**
            * Calculates the byte length of a base64 encoded string.
@@ -125,25 +119,21 @@ const Long = require("./long");
            * @returns {number} Byte length
            */
           base64.length = function length(string) {
-            let p = string.length;
-            if (!p) {
-              return 0;
-            }
-            let n = 0;
-            while (--p % 4 > 1 && string.charAt(p) === "=") {
-              ++n;
-            }
+            var p = string.length;
+            if (!p) return 0;
+            var n = 0;
+            while (--p % 4 > 1 && string.charAt(p) === "=") ++n;
             return Math.ceil(string.length * 3) / 4 - n;
           };
 
           // Base64 encoding table
-          const b64 = new Array(64);
+          var b64 = new Array(64);
 
           // Base64 decoding table
-          const s64 = new Array(123);
+          var s64 = new Array(123);
 
           // 65..90, 97..122, 48..57, 43, 47
-          for (let i = 0; i < 64; ) {
+          for (var i = 0; i < 64; )
             s64[
               (b64[i] =
                 i < 26
@@ -154,7 +144,6 @@ const Long = require("./long");
                       ? i - 4
                       : (i - 59) | 43)
             ] = i++;
-          }
 
           /**
            * Encodes a buffer to a base64 encoded string.
@@ -164,13 +153,13 @@ const Long = require("./long");
            * @returns {string} Base64 encoded string
            */
           base64.encode = function encode(buffer, start, end) {
-            let parts = null;
-            const chunk = [];
-            let i = 0; // output index
-            let j = 0; // goto index
-            let t; // temporary
+            var parts = null,
+              chunk = [];
+            var i = 0, // output index
+              j = 0, // goto index
+              t; // temporary
             while (start < end) {
-              const b = buffer[start++];
+              var b = buffer[start++];
               switch (j) {
                 case 0:
                   chunk[i++] = b64[b >> 2];
@@ -198,22 +187,19 @@ const Long = require("./long");
             if (j) {
               chunk[i++] = b64[t];
               chunk[i++] = 61;
-              if (j === 1) {
-                chunk[i++] = 61;
-              }
+              if (j === 1) chunk[i++] = 61;
             }
             if (parts) {
-              if (i) {
+              if (i)
                 parts.push(
                   String.fromCharCode.apply(String, chunk.slice(0, i)),
                 );
-              }
               return parts.join("");
             }
             return String.fromCharCode.apply(String, chunk.slice(0, i));
           };
 
-          const invalidEncoding = "invalid encoding";
+          var invalidEncoding = "invalid encoding";
 
           /**
            * Decodes a base64 encoded string to a buffer.
@@ -224,17 +210,13 @@ const Long = require("./long");
            * @throws {Error} If encoding is invalid
            */
           base64.decode = function decode(string, buffer, offset) {
-            const start = offset;
-            let j = 0; // goto index
-            let t; // temporary
-            for (let i = 0; i < string.length; ) {
-              let c = string.charCodeAt(i++);
-              if (c === 61 && j > 1) {
-                break;
-              }
-              if ((c = s64[c]) === undefined) {
-                throw Error(invalidEncoding);
-              }
+            var start = offset;
+            var j = 0, // goto index
+              t; // temporary
+            for (var i = 0; i < string.length; ) {
+              var c = string.charCodeAt(i++);
+              if (c === 61 && j > 1) break;
+              if ((c = s64[c]) === undefined) throw Error(invalidEncoding);
               switch (j) {
                 case 0:
                   t = c;
@@ -256,9 +238,7 @@ const Long = require("./long");
                   break;
               }
             }
-            if (j === 1) {
-              throw Error(invalidEncoding);
-            }
+            if (j === 1) throw Error(invalidEncoding);
             return offset - start;
           };
 
@@ -294,7 +274,7 @@ const Long = require("./long");
               functionParams = undefined;
             }
 
-            const body = [];
+            var body = [];
 
             /**
              * Appends code to the function's body or finishes generation.
@@ -311,16 +291,14 @@ const Long = require("./long");
 
               // finish the function
               if (typeof formatStringOrScope !== "string") {
-                let source = toString();
-                if (codegen.verbose) {
-                  console.log("codegen: " + source);
-                } // eslint-disable-line no-console
+                var source = toString();
+                if (codegen.verbose) console.log("codegen: " + source); // eslint-disable-line no-console
                 source = "return " + source;
                 if (formatStringOrScope) {
-                  const scopeKeys = Object.keys(formatStringOrScope);
-                  const scopeParams = new Array(scopeKeys.length + 1);
-                  const scopeValues = new Array(scopeKeys.length);
-                  let scopeOffset = 0;
+                  var scopeKeys = Object.keys(formatStringOrScope),
+                    scopeParams = new Array(scopeKeys.length + 1),
+                    scopeValues = new Array(scopeKeys.length),
+                    scopeOffset = 0;
                   while (scopeOffset < scopeKeys.length) {
                     scopeParams[scopeOffset] = scopeKeys[scopeOffset];
                     scopeValues[scopeOffset] =
@@ -336,16 +314,15 @@ const Long = require("./long");
               }
 
               // otherwise append to body
-              const formatParams = new Array(arguments.length - 1);
-              let formatOffset = 0;
-              while (formatOffset < formatParams.length) {
+              var formatParams = new Array(arguments.length - 1),
+                formatOffset = 0;
+              while (formatOffset < formatParams.length)
                 formatParams[formatOffset] = arguments[++formatOffset];
-              }
               formatOffset = 0;
               formatStringOrScope = formatStringOrScope.replace(
                 /%([%dfijs])/g,
                 function replace($0, $1) {
-                  const value = formatParams[formatOffset++];
+                  var value = formatParams[formatOffset++];
                   switch ($1) {
                     case "d":
                     case "f":
@@ -360,9 +337,8 @@ const Long = require("./long");
                   return "%";
                 },
               );
-              if (formatOffset !== formatParams.length) {
+              if (formatOffset !== formatParams.length)
                 throw Error("parameter count mismatch");
-              }
               body.push(formatStringOrScope);
               return Codegen;
             }
@@ -430,7 +406,7 @@ const Long = require("./long");
            */
           EventEmitter.prototype.on = function on(evt, fn, ctx) {
             (this._listeners[evt] || (this._listeners[evt] = [])).push({
-              fn,
+              fn: fn,
               ctx: ctx || this,
             });
             return this;
@@ -443,20 +419,14 @@ const Long = require("./long");
            * @returns {util.EventEmitter} `this`
            */
           EventEmitter.prototype.off = function off(evt, fn) {
-            if (evt === undefined) {
-              this._listeners = {};
-            } else {
-              if (fn === undefined) {
-                this._listeners[evt] = [];
-              } else {
-                const listeners = this._listeners[evt];
-                for (let i = 0; i < listeners.length; ) {
-                  if (listeners[i].fn === fn) {
-                    listeners.splice(i, 1);
-                  } else {
-                    ++i;
-                  }
-                }
+            if (evt === undefined) this._listeners = {};
+            else {
+              if (fn === undefined) this._listeners[evt] = [];
+              else {
+                var listeners = this._listeners[evt];
+                for (var i = 0; i < listeners.length; )
+                  if (listeners[i].fn === fn) listeners.splice(i, 1);
+                  else ++i;
               }
             }
             return this;
@@ -469,16 +439,13 @@ const Long = require("./long");
            * @returns {util.EventEmitter} `this`
            */
           EventEmitter.prototype.emit = function emit(evt) {
-            const listeners = this._listeners[evt];
+            var listeners = this._listeners[evt];
             if (listeners) {
-              const args = [];
-              let i = 1;
-              for (; i < arguments.length; ) {
-                args.push(arguments[i++]);
-              }
-              for (i = 0; i < listeners.length; ) {
+              var args = [],
+                i = 1;
+              for (; i < arguments.length; ) args.push(arguments[i++]);
+              for (i = 0; i < listeners.length; )
                 listeners[i].fn.apply(listeners[i++].ctx, args);
-              }
             }
             return this;
           };
@@ -490,10 +457,10 @@ const Long = require("./long");
           "use strict";
           module.exports = fetch;
 
-          const asPromise = require(1);
-          const inquire = require(7);
+          var asPromise = require(1),
+            inquire = require(7);
 
-          const fs = inquire("fs");
+          var fs = inquire("fs");
 
           /**
            * Node-style callback as used by {@link util.fetch}.
@@ -524,16 +491,12 @@ const Long = require("./long");
             if (typeof options === "function") {
               callback = options;
               options = {};
-            } else if (!options) {
-              options = {};
-            }
+            } else if (!options) options = {};
 
-            if (!callback) {
-              return asPromise(fetch, this, filename, options);
-            } // eslint-disable-line no-invalid-this
+            if (!callback) return asPromise(fetch, this, filename, options); // eslint-disable-line no-invalid-this
 
             // if a node-like filesystem is present, try it first but fall back to XHR if nothing is found.
-            if (!options.xhr && fs && fs.readFile) {
+            if (!options.xhr && fs && fs.readFile)
               return fs.readFile(
                 filename,
                 function fetchReadFileCallback(err, contents) {
@@ -547,7 +510,6 @@ const Long = require("./long");
                         );
                 },
               );
-            }
 
             // use the XHR version otherwise.
             return fetch.xhr(filename, options, callback);
@@ -575,29 +537,25 @@ const Long = require("./long");
 
           /**/
           fetch.xhr = function fetch_xhr(filename, options, callback) {
-            const xhr = new XMLHttpRequest();
+            var xhr = new XMLHttpRequest();
             xhr.onreadystatechange /* works everywhere */ =
               function fetchOnReadyStateChange() {
-                if (xhr.readyState !== 4) {
-                  return undefined;
-                }
+                if (xhr.readyState !== 4) return undefined;
 
                 // local cors security errors return status 0 / empty string, too. afaik this cannot be
                 // reliably distinguished from an actually empty file for security reasons. feel free
                 // to send a pull request if you are aware of a solution.
-                if (xhr.status !== 0 && xhr.status !== 200) {
+                if (xhr.status !== 0 && xhr.status !== 200)
                   return callback(Error("status " + xhr.status));
-                }
 
                 // if binary data is expected, make sure that some sort of array is returned, even if
                 // ArrayBuffers are not supported. the binary string fallback, however, is unsafe.
                 if (options.binary) {
-                  let buffer = xhr.response;
+                  var buffer = xhr.response;
                   if (!buffer) {
                     buffer = [];
-                    for (let i = 0; i < xhr.responseText.length; ++i) {
+                    for (var i = 0; i < xhr.responseText.length; ++i)
                       buffer.push(xhr.responseText.charCodeAt(i) & 255);
-                    }
                   }
                   return callback(
                     null,
@@ -611,9 +569,8 @@ const Long = require("./long");
 
             if (options.binary) {
               // ref: https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Sending_and_Receiving_Binary_Data#Receiving_binary_data_in_older_browsers
-              if ("overrideMimeType" in xhr) {
+              if ("overrideMimeType" in xhr)
                 xhr.overrideMimeType("text/plain; charset=x-user-defined");
-              }
               xhr.responseType = "arraybuffer";
             }
 
@@ -714,11 +671,11 @@ const Long = require("./long");
           // Factory function for the purpose of node-based testing in modified global environments
           function factory(exports) {
             // float: typed array
-            if (typeof Float32Array !== "undefined") {
+            if (typeof Float32Array !== "undefined")
               (function () {
-                const f32 = new Float32Array([-0]);
-                const f8b = new Uint8Array(f32.buffer);
-                const le = f8b[3] === 128;
+                var f32 = new Float32Array([-0]),
+                  f8b = new Uint8Array(f32.buffer),
+                  le = f8b[3] === 128;
 
                 function writeFloat_f32_cpy(val, buf, pos) {
                   f32[0] = val;
@@ -772,14 +729,12 @@ const Long = require("./long");
 
                 // float: ieee754
               })();
-            } else {
+            else
               (function () {
                 function writeFloat_ieee754(writeUint, val, buf, pos) {
-                  const sign = val < 0 ? 1 : 0;
-                  if (sign) {
-                    val = -val;
-                  }
-                  if (val === 0) {
+                  var sign = val < 0 ? 1 : 0;
+                  if (sign) val = -val;
+                  if (val === 0)
                     writeUint(
                       1 / val > 0
                         ? /* positive */ 0
@@ -787,12 +742,11 @@ const Long = require("./long");
                       buf,
                       pos,
                     );
-                  } else if (isNaN(val)) {
-                    writeUint(2143289344, buf, pos);
-                  } else if (val > 3.4028234663852886e38) {
+                  else if (isNaN(val)) writeUint(2143289344, buf, pos);
+                  else if (val > 3.4028234663852886e38)
                     // +-Infinity
                     writeUint(((sign << 31) | 2139095040) >>> 0, buf, pos);
-                  } else if (val < 1.1754943508222875e-38) {
+                  else if (val < 1.1754943508222875e-38)
                     // denormal
                     writeUint(
                       ((sign << 31) |
@@ -801,11 +755,11 @@ const Long = require("./long");
                       buf,
                       pos,
                     );
-                  } else {
-                    const exponent = Math.floor(Math.log(val) / Math.LN2);
-                    const mantissa =
-                      Math.round(val * Math.pow(2, -exponent) * 8388608) &
-                      8388607;
+                  else {
+                    var exponent = Math.floor(Math.log(val) / Math.LN2),
+                      mantissa =
+                        Math.round(val * Math.pow(2, -exponent) * 8388608) &
+                        8388607;
                     writeUint(
                       ((sign << 31) | ((exponent + 127) << 23) | mantissa) >>>
                         0,
@@ -825,10 +779,10 @@ const Long = require("./long");
                 );
 
                 function readFloat_ieee754(readUint, buf, pos) {
-                  const uint = readUint(buf, pos);
-                  const sign = (uint >> 31) * 2 + 1;
-                  const exponent = (uint >>> 23) & 255;
-                  const mantissa = uint & 8388607;
+                  var uint = readUint(buf, pos),
+                    sign = (uint >> 31) * 2 + 1,
+                    exponent = (uint >>> 23) & 255,
+                    mantissa = uint & 8388607;
                   return exponent === 255
                     ? mantissa
                       ? NaN
@@ -843,14 +797,13 @@ const Long = require("./long");
                 exports.readFloatLE = readFloat_ieee754.bind(null, readUintLE);
                 exports.readFloatBE = readFloat_ieee754.bind(null, readUintBE);
               })();
-            }
 
             // double: typed array
-            if (typeof Float64Array !== "undefined") {
+            if (typeof Float64Array !== "undefined")
               (function () {
-                const f64 = new Float64Array([-0]);
-                const f8b = new Uint8Array(f64.buffer);
-                const le = f8b[7] === 128;
+                var f64 = new Float64Array([-0]),
+                  f8b = new Uint8Array(f64.buffer),
+                  le = f8b[7] === 128;
 
                 function writeDouble_f64_cpy(val, buf, pos) {
                   f64[0] = val;
@@ -920,7 +873,7 @@ const Long = require("./long");
 
                 // double: ieee754
               })();
-            } else {
+            else
               (function () {
                 function writeDouble_ieee754(
                   writeUint,
@@ -930,10 +883,8 @@ const Long = require("./long");
                   buf,
                   pos,
                 ) {
-                  const sign = val < 0 ? 1 : 0;
-                  if (sign) {
-                    val = -val;
-                  }
+                  var sign = val < 0 ? 1 : 0;
+                  if (sign) val = -val;
                   if (val === 0) {
                     writeUint(0, buf, pos + off0);
                     writeUint(
@@ -955,7 +906,7 @@ const Long = require("./long");
                       pos + off1,
                     );
                   } else {
-                    let mantissa;
+                    var mantissa;
                     if (val < 2.2250738585072014e-308) {
                       // denormal
                       mantissa = val / 5e-324;
@@ -966,10 +917,8 @@ const Long = require("./long");
                         pos + off1,
                       );
                     } else {
-                      let exponent = Math.floor(Math.log(val) / Math.LN2);
-                      if (exponent === 1024) {
-                        exponent = 1023;
-                      }
+                      var exponent = Math.floor(Math.log(val) / Math.LN2);
+                      if (exponent === 1024) exponent = 1023;
                       mantissa = val * Math.pow(2, -exponent);
                       writeUint(
                         (mantissa * 4503599627370496) >>> 0,
@@ -1002,11 +951,11 @@ const Long = require("./long");
                 );
 
                 function readDouble_ieee754(readUint, off0, off1, buf, pos) {
-                  const lo = readUint(buf, pos + off0);
-                  const hi = readUint(buf, pos + off1);
-                  const sign = (hi >> 31) * 2 + 1;
-                  const exponent = (hi >>> 20) & 2047;
-                  const mantissa = 4294967296 * (hi & 1048575) + lo;
+                  var lo = readUint(buf, pos + off0),
+                    hi = readUint(buf, pos + off1);
+                  var sign = (hi >> 31) * 2 + 1,
+                    exponent = (hi >>> 20) & 2047,
+                    mantissa = 4294967296 * (hi & 1048575) + lo;
                   return exponent === 2047
                     ? mantissa
                       ? NaN
@@ -1031,7 +980,6 @@ const Long = require("./long");
                   0,
                 );
               })();
-            }
 
             return exports;
           }
@@ -1087,10 +1035,8 @@ const Long = require("./long");
            */
           function inquire(moduleName) {
             try {
-              const mod = eval("quire".replace(/^/, "re"))(moduleName); // eslint-disable-line no-eval
-              if (mod && (mod.length || Object.keys(mod).length)) {
-                return mod;
-              }
+              var mod = eval("quire".replace(/^/, "re"))(moduleName); // eslint-disable-line no-eval
+              if (mod && (mod.length || Object.keys(mod).length)) return mod;
             } catch (e) {} // eslint-disable-line no-empty
             return null;
           }
@@ -1106,9 +1052,9 @@ const Long = require("./long");
            * @memberof util
            * @namespace
            */
-          const path = exports;
+          var path = exports;
 
-          const isAbsolute =
+          var isAbsolute =
             /**
              * Tests if the specified path is absolute.
              * @param {string} path Path to test
@@ -1118,7 +1064,7 @@ const Long = require("./long");
               return /^(?:\/|\w+:)/.test(path);
             });
 
-          const normalize =
+          var normalize =
             /**
              * Normalizes the specified path.
              * @param {string} path Path to normalize
@@ -1126,26 +1072,17 @@ const Long = require("./long");
              */
             (path.normalize = function normalize(path) {
               path = path.replace(/\\/g, "/").replace(/\/{2,}/g, "/");
-              const parts = path.split("/");
-              const absolute = isAbsolute(path);
-              let prefix = "";
-              if (absolute) {
-                prefix = parts.shift() + "/";
-              }
-              for (let i = 0; i < parts.length; ) {
+              var parts = path.split("/"),
+                absolute = isAbsolute(path),
+                prefix = "";
+              if (absolute) prefix = parts.shift() + "/";
+              for (var i = 0; i < parts.length; ) {
                 if (parts[i] === "..") {
-                  if (i > 0 && parts[i - 1] !== "..") {
-                    parts.splice(--i, 2);
-                  } else if (absolute) {
-                    parts.splice(i, 1);
-                  } else {
-                    ++i;
-                  }
-                } else if (parts[i] === ".") {
-                  parts.splice(i, 1);
-                } else {
-                  ++i;
-                }
+                  if (i > 0 && parts[i - 1] !== "..") parts.splice(--i, 2);
+                  else if (absolute) parts.splice(i, 1);
+                  else ++i;
+                } else if (parts[i] === ".") parts.splice(i, 1);
+                else ++i;
               }
               return prefix + parts.join("/");
             });
@@ -1162,15 +1099,9 @@ const Long = require("./long");
             includePath,
             alreadyNormalized,
           ) {
-            if (!alreadyNormalized) {
-              includePath = normalize(includePath);
-            }
-            if (isAbsolute(includePath)) {
-              return includePath;
-            }
-            if (!alreadyNormalized) {
-              originPath = normalize(originPath);
-            }
+            if (!alreadyNormalized) includePath = normalize(includePath);
+            if (isAbsolute(includePath)) return includePath;
+            if (!alreadyNormalized) originPath = normalize(originPath);
             return (originPath = originPath.replace(/(?:\/|^)[^/]+$/, ""))
               .length
               ? normalize(originPath + "/" + includePath)
@@ -1212,23 +1143,20 @@ const Long = require("./long");
            * @returns {PoolAllocator} Pooled allocator
            */
           function pool(alloc, slice, size) {
-            const SIZE = size || 8192;
-            const MAX = SIZE >>> 1;
-            let slab = null;
-            let offset = SIZE;
+            var SIZE = size || 8192;
+            var MAX = SIZE >>> 1;
+            var slab = null;
+            var offset = SIZE;
             return function pool_alloc(size) {
-              if (size < 1 || size > MAX) {
-                return alloc(size);
-              }
+              if (size < 1 || size > MAX) return alloc(size);
               if (offset + size > SIZE) {
                 slab = alloc(SIZE);
                 offset = 0;
               }
-              const buf = slice.call(slab, offset, (offset += size));
-              if (offset & 7) {
+              var buf = slice.call(slab, offset, (offset += size));
+              if (offset & 7)
                 // align to 32 bit
                 offset = (offset | 7) + 1;
-              }
               return buf;
             };
           }
@@ -1244,7 +1172,7 @@ const Long = require("./long");
            * @memberof util
            * @namespace
            */
-          const utf8 = exports;
+          var utf8 = exports;
 
           /**
            * Calculates the UTF8 byte length of a string.
@@ -1252,23 +1180,19 @@ const Long = require("./long");
            * @returns {number} Byte length
            */
           utf8.length = function utf8_length(string) {
-            let len = 0;
-            let c = 0;
-            for (let i = 0; i < string.length; ++i) {
+            var len = 0,
+              c = 0;
+            for (var i = 0; i < string.length; ++i) {
               c = string.charCodeAt(i);
-              if (c < 128) {
-                len += 1;
-              } else if (c < 2048) {
-                len += 2;
-              } else if (
+              if (c < 128) len += 1;
+              else if (c < 2048) len += 2;
+              else if (
                 (c & 0xfc00) === 0xd800 &&
                 (string.charCodeAt(i + 1) & 0xfc00) === 0xdc00
               ) {
                 ++i;
                 len += 4;
-              } else {
-                len += 3;
-              }
+              } else len += 3;
             }
             return len;
           };
@@ -1281,21 +1205,18 @@ const Long = require("./long");
            * @returns {string} String read
            */
           utf8.read = function utf8_read(buffer, start, end) {
-            const len = end - start;
-            if (len < 1) {
-              return "";
-            }
-            let parts = null;
-            const chunk = [];
-            let i = 0; // char offset
-            let t; // temporary
+            var len = end - start;
+            if (len < 1) return "";
+            var parts = null,
+              chunk = [],
+              i = 0, // char offset
+              t; // temporary
             while (start < end) {
               t = buffer[start++];
-              if (t < 128) {
-                chunk[i++] = t;
-              } else if (t > 191 && t < 224) {
+              if (t < 128) chunk[i++] = t;
+              else if (t > 191 && t < 224)
                 chunk[i++] = ((t & 31) << 6) | (buffer[start++] & 63);
-              } else if (t > 239 && t < 365) {
+              else if (t > 239 && t < 365) {
                 t =
                   (((t & 7) << 18) |
                     ((buffer[start++] & 63) << 12) |
@@ -1304,12 +1225,11 @@ const Long = require("./long");
                   0x10000;
                 chunk[i++] = 0xd800 + (t >> 10);
                 chunk[i++] = 0xdc00 + (t & 1023);
-              } else {
+              } else
                 chunk[i++] =
                   ((t & 15) << 12) |
                   ((buffer[start++] & 63) << 6) |
                   (buffer[start++] & 63);
-              }
               if (i > 8191) {
                 (parts || (parts = [])).push(
                   String.fromCharCode.apply(String, chunk),
@@ -1318,11 +1238,10 @@ const Long = require("./long");
               }
             }
             if (parts) {
-              if (i) {
+              if (i)
                 parts.push(
                   String.fromCharCode.apply(String, chunk.slice(0, i)),
                 );
-              }
               return parts.join("");
             }
             return String.fromCharCode.apply(String, chunk.slice(0, i));
@@ -1336,10 +1255,10 @@ const Long = require("./long");
            * @returns {number} Bytes written
            */
           utf8.write = function utf8_write(string, buffer, offset) {
-            const start = offset;
-            let c1; // character 1
-            let c2; // character 2
-            for (let i = 0; i < string.length; ++i) {
+            var start = offset,
+              c1, // character 1
+              c2; // character 2
+            for (var i = 0; i < string.length; ++i) {
               c1 = string.charCodeAt(i);
               if (c1 < 128) {
                 buffer[offset++] = c1;
@@ -1372,7 +1291,7 @@ const Long = require("./long");
           "use strict";
           module.exports = common;
 
-          const commonRe = /\/|\./;
+          var commonRe = /\/|\./;
 
           /**
            * Provides common type definitions.
@@ -1436,7 +1355,7 @@ const Long = require("./long");
             },
           });
 
-          let timeType;
+          var timeType;
 
           common("duration", {
             /**
@@ -1773,10 +1692,10 @@ const Long = require("./long");
            * Runtime message from/to plain object converters.
            * @namespace
            */
-          const converter = exports;
+          var converter = exports;
 
-          const Enum = require(15);
-          const util = require(37);
+          var Enum = require(15),
+            util = require(37);
 
           /**
            * Generates a partial value fromObject conveter.
@@ -1793,15 +1712,14 @@ const Long = require("./long");
               if (field.resolvedType instanceof Enum) {
                 gen("switch(d%s){", prop);
                 for (
-                  let values = field.resolvedType.values,
+                  var values = field.resolvedType.values,
                     keys = Object.keys(values),
                     i = 0;
                   i < keys.length;
                   ++i
                 ) {
-                  if (field.repeated && values[keys[i]] === field.typeDefault) {
+                  if (field.repeated && values[keys[i]] === field.typeDefault)
                     gen("default:");
-                  }
                   gen("case%j:", keys[i])("case %i:", values[keys[i]])(
                     "m%s=%j",
                     prop,
@@ -1809,14 +1727,13 @@ const Long = require("./long");
                   )("break");
                 }
                 gen("}");
-              } else {
+              } else
                 gen('if(typeof d%s!=="object")', prop)(
                   "throw TypeError(%j)",
                   field.fullName + ": object expected",
                 )("m%s=types[%i].fromObject(d%s)", prop, fieldIndex, prop);
-              }
             } else {
-              let isUnsigned = false;
+              var isUnsigned = false;
               switch (field.type) {
                 case "double":
                 case "float":
@@ -1889,18 +1806,16 @@ const Long = require("./long");
            */
           converter.fromObject = function fromObject(mtype) {
             /* eslint-disable no-unexpected-multiline, block-scoped-var, no-redeclare */
-            const fields = mtype.fieldsArray;
-            const gen = util.codegen(
+            var fields = mtype.fieldsArray;
+            var gen = util.codegen(
               ["d"],
               mtype.name + "$fromObject",
             )("if(d instanceof this.ctor)")("return d");
-            if (!fields.length) {
-              return gen("return new this.ctor");
-            }
+            if (!fields.length) return gen("return new this.ctor");
             gen("var m=new this.ctor");
-            for (let i = 0; i < fields.length; ++i) {
-              const field = fields[i].resolve();
-              const prop = util.safeProp(field.name);
+            for (var i = 0; i < fields.length; ++i) {
+              var field = fields[i].resolve(),
+                prop = util.safeProp(field.name);
 
               // Map fields
               if (field.map) {
@@ -1933,22 +1848,19 @@ const Long = require("./long");
 
                 // Non-repeated fields
               } else {
-                if (!(field.resolvedType instanceof Enum)) {
+                if (!(field.resolvedType instanceof Enum))
                   gen(
                     // no need to test for null/undefined if an enum (uses switch)
                     "if(d%s!=null){",
                     prop,
-                  );
-                } // !== undefined && !== null
+                  ); // !== undefined && !== null
                 genValuePartial_fromObject(
                   gen,
                   field,
                   /* not sorted */ i,
                   prop,
                 );
-                if (!(field.resolvedType instanceof Enum)) {
-                  gen("}");
-                }
+                if (!(field.resolvedType instanceof Enum)) gen("}");
               }
             }
             return gen("return m");
@@ -1967,7 +1879,7 @@ const Long = require("./long");
           function genValuePartial_toObject(gen, field, fieldIndex, prop) {
             /* eslint-disable no-unexpected-multiline, block-scoped-var, no-redeclare */
             if (field.resolvedType) {
-              if (field.resolvedType instanceof Enum) {
+              if (field.resolvedType instanceof Enum)
                 gen(
                   "d%s=o.enums===String?types[%i].values[m%s]:m%s",
                   prop,
@@ -1975,11 +1887,9 @@ const Long = require("./long");
                   prop,
                   prop,
                 );
-              } else {
-                gen("d%s=types[%i].toObject(m%s,o)", prop, fieldIndex, prop);
-              }
+              else gen("d%s=types[%i].toObject(m%s,o)", prop, fieldIndex, prop);
             } else {
-              let isUnsigned = false;
+              var isUnsigned = false;
               switch (field.type) {
                 case "double":
                 case "float":
@@ -2040,61 +1950,53 @@ const Long = require("./long");
            */
           converter.toObject = function toObject(mtype) {
             /* eslint-disable no-unexpected-multiline, block-scoped-var, no-redeclare */
-            const fields = mtype.fieldsArray
-              .slice()
-              .sort(util.compareFieldsById);
-            if (!fields.length) {
-              return util.codegen()("return {}");
-            }
-            const gen = util.codegen(
+            var fields = mtype.fieldsArray.slice().sort(util.compareFieldsById);
+            if (!fields.length) return util.codegen()("return {}");
+            var gen = util.codegen(
               ["m", "o"],
               mtype.name + "$toObject",
             )("if(!o)")("o={}")("var d={}");
 
-            const repeatedFields = [];
-            const mapFields = [];
-            const normalFields = [];
-            let i = 0;
-            for (; i < fields.length; ++i) {
-              if (!fields[i].partOf) {
+            var repeatedFields = [],
+              mapFields = [],
+              normalFields = [],
+              i = 0;
+            for (; i < fields.length; ++i)
+              if (!fields[i].partOf)
                 (fields[i].resolve().repeated
                   ? repeatedFields
                   : fields[i].map
                     ? mapFields
                     : normalFields
                 ).push(fields[i]);
-              }
-            }
 
             if (repeatedFields.length) {
               gen("if(o.arrays||o.defaults){");
-              for (i = 0; i < repeatedFields.length; ++i) {
+              for (i = 0; i < repeatedFields.length; ++i)
                 gen("d%s=[]", util.safeProp(repeatedFields[i].name));
-              }
               gen("}");
             }
 
             if (mapFields.length) {
               gen("if(o.objects||o.defaults){");
-              for (i = 0; i < mapFields.length; ++i) {
+              for (i = 0; i < mapFields.length; ++i)
                 gen("d%s={}", util.safeProp(mapFields[i].name));
-              }
               gen("}");
             }
 
             if (normalFields.length) {
               gen("if(o.defaults){");
               for (i = 0; i < normalFields.length; ++i) {
-                var field = normalFields[i];
-                var prop = util.safeProp(field.name);
-                if (field.resolvedType instanceof Enum) {
+                var field = normalFields[i],
+                  prop = util.safeProp(field.name);
+                if (field.resolvedType instanceof Enum)
                   gen(
                     "d%s=o.enums===String?%j:%j",
                     prop,
                     field.resolvedType.valuesById[field.typeDefault],
                     field.typeDefault,
                   );
-                } else if (field.long) {
+                else if (field.long)
                   gen("if(util.Long){")(
                     "var n=new util.Long(%i,%i,%j)",
                     field.typeDefault.low,
@@ -2109,8 +2011,8 @@ const Long = require("./long");
                     field.typeDefault.toString(),
                     field.typeDefault.toNumber(),
                   );
-                } else if (field.bytes) {
-                  const arrayDefault =
+                else if (field.bytes) {
+                  var arrayDefault =
                     "[" +
                     Array.prototype.slice.call(field.typeDefault).join(",") +
                     "]";
@@ -2123,17 +2025,15 @@ const Long = require("./long");
                     prop,
                     prop,
                   )("}");
-                } else {
-                  gen("d%s=%j", prop, field.typeDefault);
-                } // also messages (=null)
+                } else gen("d%s=%j", prop, field.typeDefault); // also messages (=null)
               }
               gen("}");
             }
-            let hasKs2 = false;
+            var hasKs2 = false;
             for (i = 0; i < fields.length; ++i) {
-              var field = fields[i];
-              const index = mtype._fieldsArray.indexOf(field);
-              var prop = util.safeProp(field.name);
+              var field = fields[i],
+                index = mtype._fieldsArray.indexOf(field),
+                prop = util.safeProp(field.name);
               if (field.map) {
                 if (!hasKs2) {
                   hasKs2 = true;
@@ -2167,13 +2067,12 @@ const Long = require("./long");
               } else {
                 gen("if(m%s!=null&&m.hasOwnProperty(%j)){", prop, field.name); // !== undefined && !== null
                 genValuePartial_toObject(gen, field, /* sorted */ index, prop);
-                if (field.partOf) {
+                if (field.partOf)
                   gen("if(o.oneofs)")(
                     "d%s=%j",
                     util.safeProp(field.partOf.name),
                     field.name,
                   );
-                }
               }
               gen("}");
             }
@@ -2188,9 +2087,9 @@ const Long = require("./long");
           "use strict";
           module.exports = decoder;
 
-          const Enum = require(15);
-          const types = require(36);
-          const util = require(37);
+          var Enum = require(15),
+            types = require(36),
+            util = require(37);
 
           function missing(field) {
             return "missing required '" + field.name + "'";
@@ -2203,7 +2102,7 @@ const Long = require("./long");
            */
           function decoder(mtype) {
             /* eslint-disable no-unexpected-multiline */
-            const gen = util.codegen(
+            var gen = util.codegen(
               ["r", "l"],
               mtype.name + "$decode",
             )("if(!(r instanceof Reader))")("r=Reader.create(r)")(
@@ -2214,17 +2113,15 @@ const Long = require("./long");
                   ? ",k,value"
                   : ""),
             )("while(r.pos<c){")("var t=r.uint32()");
-            if (mtype.group) {
-              gen("if((t&7)===4)")("break");
-            }
+            if (mtype.group) gen("if((t&7)===4)")("break");
             gen("switch(t>>>3){");
 
-            let i = 0;
+            var i = 0;
             for (; i < /* initializes */ mtype.fieldsArray.length; ++i) {
-              const field = mtype._fieldsArray[i].resolve();
-              const type =
-                field.resolvedType instanceof Enum ? "int32" : field.type;
-              const ref = "m" + util.safeProp(field.name);
+              var field = mtype._fieldsArray[i].resolve(),
+                type =
+                  field.resolvedType instanceof Enum ? "int32" : field.type,
+                ref = "m" + util.safeProp(field.name);
               gen("case %i:", field.id);
 
               // Map fields
@@ -2233,17 +2130,13 @@ const Long = require("./long");
                   "var c2 = r.uint32()+r.pos",
                 );
 
-                if (types.defaults[field.keyType] !== undefined) {
+                if (types.defaults[field.keyType] !== undefined)
                   gen("k=%j", types.defaults[field.keyType]);
-                } else {
-                  gen("k=null");
-                }
+                else gen("k=null");
 
-                if (types.defaults[type] !== undefined) {
+                if (types.defaults[type] !== undefined)
                   gen("value=%j", types.defaults[type]);
-                } else {
-                  gen("value=null");
-                }
+                else gen("value=null");
 
                 gen("while(r.pos<c2){")("var tag2=r.uint32()")(
                   "switch(tag2>>>3){",
@@ -2252,32 +2145,28 @@ const Long = require("./long");
                   field.keyType,
                 )("case 2:");
 
-                if (types.basic[type] === undefined) {
+                if (types.basic[type] === undefined)
                   gen("value=types[%i].decode(r,r.uint32())", i);
-                } // can't be groups
-                else {
-                  gen("value=r.%s()", type);
-                }
+                // can't be groups
+                else gen("value=r.%s()", type);
 
                 gen("break")("default:")("r.skipType(tag2&7)")("break")("}")(
                   "}",
                 );
 
-                if (types.long[field.keyType] !== undefined) {
+                if (types.long[field.keyType] !== undefined)
                   gen(
                     '%s[typeof k==="object"?util.longToHash(k):k]=value',
                     ref,
                   );
-                } else {
-                  gen("%s[k]=value", ref);
-                }
+                else gen("%s[k]=value", ref);
 
                 // Repeated fields
               } else if (field.repeated) {
                 gen("if(!(%s&&%s.length))", ref, ref)("%s=[]", ref);
 
                 // Packable (always check for forward and backward compatiblity)
-                if (types.packed[type] !== undefined) {
+                if (types.packed[type] !== undefined)
                   gen("if((t&7)===2){")("var c2=r.uint32()+r.pos")(
                     "while(r.pos<c2)",
                   )(
@@ -2285,10 +2174,9 @@ const Long = require("./long");
                     ref,
                     type,
                   )("}else");
-                }
 
                 // Non-packed
-                if (types.basic[type] === undefined) {
+                if (types.basic[type] === undefined)
                   gen(
                     field.resolvedType.group
                       ? "%s.push(types[%i].decode(r))"
@@ -2296,12 +2184,10 @@ const Long = require("./long");
                     ref,
                     i,
                   );
-                } else {
-                  gen("%s.push(r.%s())", ref, type);
-                }
+                else gen("%s.push(r.%s())", ref, type);
 
                 // Non-repeated
-              } else if (types.basic[type] === undefined) {
+              } else if (types.basic[type] === undefined)
                 gen(
                   field.resolvedType.group
                     ? "%s=types[%i].decode(r)"
@@ -2309,9 +2195,7 @@ const Long = require("./long");
                   ref,
                   i,
                 );
-              } else {
-                gen("%s=r.%s()", ref, type);
-              }
+              else gen("%s=r.%s()", ref, type);
               gen("break");
               // Unknown fields
             }
@@ -2319,13 +2203,12 @@ const Long = require("./long");
 
             // Field presence
             for (i = 0; i < mtype._fieldsArray.length; ++i) {
-              const rfield = mtype._fieldsArray[i];
-              if (rfield.required) {
+              var rfield = mtype._fieldsArray[i];
+              if (rfield.required)
                 gen("if(!m.hasOwnProperty(%j))", rfield.name)(
                   "throw util.ProtocolError(%j,{instance:m})",
                   missing(rfield),
                 );
-              }
             }
 
             return gen("return m");
@@ -2339,9 +2222,9 @@ const Long = require("./long");
           "use strict";
           module.exports = encoder;
 
-          const Enum = require(15);
-          const types = require(36);
-          const util = require(37);
+          var Enum = require(15),
+            types = require(36),
+            util = require(37);
 
           /**
            * Generates a partial message type encoder.
@@ -2376,7 +2259,7 @@ const Long = require("./long");
            */
           function encoder(mtype) {
             /* eslint-disable no-unexpected-multiline, block-scoped-var, no-redeclare */
-            const gen = util.codegen(
+            var gen = util.codegen(
               ["m", "w"],
               mtype.name + "$encode",
             )("if(!w)")("w=Writer.create()");
@@ -2384,16 +2267,16 @@ const Long = require("./long");
             var i, ref;
 
             // "when a message is serialized its known fields should be written sequentially by field number"
-            const fields = /* initializes */ mtype.fieldsArray
+            var fields = /* initializes */ mtype.fieldsArray
               .slice()
               .sort(util.compareFieldsById);
 
             for (var i = 0; i < fields.length; ++i) {
-              const field = fields[i].resolve();
-              const index = mtype._fieldsArray.indexOf(field);
-              const type =
-                field.resolvedType instanceof Enum ? "int32" : field.type;
-              const wireType = types.basic[type];
+              var field = fields[i].resolve(),
+                index = mtype._fieldsArray.indexOf(field),
+                type =
+                  field.resolvedType instanceof Enum ? "int32" : field.type,
+                wireType = types.basic[type];
               ref = "m" + util.safeProp(field.name);
 
               // Map fields
@@ -2412,21 +2295,20 @@ const Long = require("./long");
                   8 | types.mapKey[field.keyType],
                   field.keyType,
                 );
-                if (wireType === undefined) {
+                if (wireType === undefined)
                   gen(
                     "types[%i].encode(%s[ks[i]],w.uint32(18).fork()).ldelim().ldelim()",
                     index,
                     ref,
                   );
-                } // can't be groups
-                else {
+                // can't be groups
+                else
                   gen(
                     ".uint32(%i).%s(%s[ks[i]]).ldelim()",
                     16 | wireType,
                     type,
                     ref,
                   );
-                }
                 gen("}")("}");
 
                 // Repeated fields
@@ -2447,39 +2329,36 @@ const Long = require("./long");
                   // Non-packed
                 } else {
                   gen("for(var i=0;i<%s.length;++i)", ref);
-                  if (wireType === undefined) {
+                  if (wireType === undefined)
                     genTypePartial(gen, field, index, ref + "[i]");
-                  } else {
+                  else
                     gen(
                       "w.uint32(%i).%s(%s[i])",
                       ((field.id << 3) | wireType) >>> 0,
                       type,
                       ref,
                     );
-                  }
                 }
                 gen("}");
 
                 // Non-repeated
               } else {
-                if (field.optional) {
+                if (field.optional)
                   gen(
                     "if(%s!=null&&Object.hasOwnProperty.call(m,%j))",
                     ref,
                     field.name,
-                  );
-                } // !== undefined && !== null
+                  ); // !== undefined && !== null
 
-                if (wireType === undefined) {
+                if (wireType === undefined)
                   genTypePartial(gen, field, index, ref);
-                } else {
+                else
                   gen(
                     "w.uint32(%i).%s(%s)",
                     ((field.id << 3) | wireType) >>> 0,
                     type,
                     ref,
                   );
-                }
               }
             }
 
@@ -2495,13 +2374,13 @@ const Long = require("./long");
           module.exports = Enum;
 
           // extends ReflectionObject
-          const ReflectionObject = require(24);
+          var ReflectionObject = require(24);
           ((Enum.prototype = Object.create(
             ReflectionObject.prototype,
           )).constructor = Enum).className = "Enum";
 
-          const Namespace = require(23);
-          const util = require(37);
+          var Namespace = require(23),
+            util = require(37);
 
           /**
            * Constructs a new enum instance.
@@ -2517,9 +2396,8 @@ const Long = require("./long");
           function Enum(name, values, options, comment, comments) {
             ReflectionObject.call(this, name, options);
 
-            if (values && typeof values !== "object") {
+            if (values && typeof values !== "object")
               throw TypeError("values must be an object");
-            }
 
             /**
              * Enum values by id.
@@ -2555,19 +2433,12 @@ const Long = require("./long");
             // compatible enum. This is used by pbts to write actual enum definitions that work for
             // static and reflection code alike instead of emitting generic object definitions.
 
-            if (values) {
-              for (
-                let keys = Object.keys(values), i = 0;
-                i < keys.length;
-                ++i
-              ) {
-                if (typeof values[keys[i]] === "number") {
+            if (values)
+              for (var keys = Object.keys(values), i = 0; i < keys.length; ++i)
+                if (typeof values[keys[i]] === "number")
                   // use forward entries only
                   this.valuesById[(this.values[keys[i]] = values[keys[i]])] =
                     keys[i];
-                }
-              }
-            }
           }
 
           /**
@@ -2585,7 +2456,7 @@ const Long = require("./long");
            * @throws {TypeError} If arguments are invalid
            */
           Enum.fromJSON = function fromJSON(name, json) {
-            const enm = new Enum(
+            var enm = new Enum(
               name,
               json.values,
               json.options,
@@ -2602,7 +2473,7 @@ const Long = require("./long");
            * @returns {IEnum} Enum descriptor
            */
           Enum.prototype.toJSON = function toJSON(toJSONOptions) {
-            const keepComments = toJSONOptions
+            var keepComments = toJSONOptions
               ? Boolean(toJSONOptions.keepComments)
               : false;
             return util.toObject([
@@ -2631,34 +2502,24 @@ const Long = require("./long");
           Enum.prototype.add = function add(name, id, comment) {
             // utilized by the parser but not by .fromJSON
 
-            if (!util.isString(name)) {
-              throw TypeError("name must be a string");
-            }
+            if (!util.isString(name)) throw TypeError("name must be a string");
 
-            if (!util.isInteger(id)) {
-              throw TypeError("id must be an integer");
-            }
+            if (!util.isInteger(id)) throw TypeError("id must be an integer");
 
-            if (this.values[name] !== undefined) {
+            if (this.values[name] !== undefined)
               throw Error("duplicate name '" + name + "' in " + this);
-            }
 
-            if (this.isReservedId(id)) {
+            if (this.isReservedId(id))
               throw Error("id " + id + " is reserved in " + this);
-            }
 
-            if (this.isReservedName(name)) {
+            if (this.isReservedName(name))
               throw Error("name '" + name + "' is reserved in " + this);
-            }
 
             if (this.valuesById[id] !== undefined) {
-              if (!(this.options && this.options.allow_alias)) {
+              if (!(this.options && this.options.allow_alias))
                 throw Error("duplicate id " + id + " in " + this);
-              }
               this.values[name] = id;
-            } else {
-              this.valuesById[(this.values[name] = id)] = name;
-            }
+            } else this.valuesById[(this.values[name] = id)] = name;
 
             this.comments[name] = comment || null;
             return this;
@@ -2672,14 +2533,11 @@ const Long = require("./long");
            * @throws {Error} If `name` is not a name of this enum
            */
           Enum.prototype.remove = function remove(name) {
-            if (!util.isString(name)) {
-              throw TypeError("name must be a string");
-            }
+            if (!util.isString(name)) throw TypeError("name must be a string");
 
-            const val = this.values[name];
-            if (val == null) {
+            var val = this.values[name];
+            if (val == null)
               throw Error("name '" + name + "' does not exist in " + this);
-            }
 
             delete this.valuesById[val];
             delete this.values[name];
@@ -2714,18 +2572,18 @@ const Long = require("./long");
           module.exports = Field;
 
           // extends ReflectionObject
-          const ReflectionObject = require(24);
+          var ReflectionObject = require(24);
           ((Field.prototype = Object.create(
             ReflectionObject.prototype,
           )).constructor = Field).className = "Field";
 
-          const Enum = require(15);
-          const types = require(36);
-          const util = require(37);
+          var Enum = require(15),
+            types = require(36),
+            util = require(37);
 
-          let Type; // cyclic
+          var Type; // cyclic
 
-          const ruleRe = /^required|optional|repeated$/;
+          var ruleRe = /^required|optional|repeated$/;
 
           /**
            * Constructs a new message field instance. Note that {@link MapField|map fields} have their own class.
@@ -2787,24 +2645,19 @@ const Long = require("./long");
 
             ReflectionObject.call(this, name, options);
 
-            if (!util.isInteger(id) || id < 0) {
+            if (!util.isInteger(id) || id < 0)
               throw TypeError("id must be a non-negative integer");
-            }
 
-            if (!util.isString(type)) {
-              throw TypeError("type must be a string");
-            }
+            if (!util.isString(type)) throw TypeError("type must be a string");
 
             if (
               rule !== undefined &&
               !ruleRe.test((rule = rule.toString().toLowerCase()))
-            ) {
+            )
               throw TypeError("rule must be a string rule");
-            }
 
-            if (extend !== undefined && !util.isString(extend)) {
+            if (extend !== undefined && !util.isString(extend))
               throw TypeError("extend must be a string");
-            }
 
             /**
              * Field rule, if any.
@@ -2933,9 +2786,8 @@ const Long = require("./long");
           Object.defineProperty(Field.prototype, "packed", {
             get: function () {
               // defaults to packed=true if not explicity set to false
-              if (this._packed === null) {
+              if (this._packed === null)
                 this._packed = this.getOption("packed") !== false;
-              }
               return this._packed;
             },
           });
@@ -2948,10 +2800,9 @@ const Long = require("./long");
             value,
             ifNotSet,
           ) {
-            if (name === "packed") {
+            if (name === "packed")
               // clear cached before setting
               this._packed = null;
-            }
             return ReflectionObject.prototype.setOption.call(
               this,
               name,
@@ -2982,7 +2833,7 @@ const Long = require("./long");
            * @returns {IField} Field descriptor
            */
           Field.prototype.toJSON = function toJSON(toJSONOptions) {
-            const keepComments = toJSONOptions
+            var keepComments = toJSONOptions
               ? Boolean(toJSONOptions.keepComments)
               : false;
             return util.toObject([
@@ -3007,35 +2858,30 @@ const Long = require("./long");
            * @throws {Error} If any reference cannot be resolved
            */
           Field.prototype.resolve = function resolve() {
-            if (this.resolved) {
-              return this;
-            }
+            if (this.resolved) return this;
 
             if ((this.typeDefault = types.defaults[this.type]) === undefined) {
               // if not a basic type, resolve it
               this.resolvedType = (
                 this.declaringField ? this.declaringField.parent : this.parent
               ).lookupTypeOrEnum(this.type);
-              if (this.resolvedType instanceof Type) {
-                this.typeDefault = null;
-              } // instanceof Enum
-              else {
+              if (this.resolvedType instanceof Type) this.typeDefault = null;
+              // instanceof Enum
+              else
                 this.typeDefault =
                   this.resolvedType.values[
                     Object.keys(this.resolvedType.values)[0]
-                  ];
-              } // first defined
+                  ]; // first defined
             }
 
             // use explicitly set default value if present
-            if (this.options && this.options.default != null) {
-              this.typeDefault = this.options.default;
+            if (this.options && this.options["default"] != null) {
+              this.typeDefault = this.options["default"];
               if (
                 this.resolvedType instanceof Enum &&
                 typeof this.typeDefault === "string"
-              ) {
+              )
                 this.typeDefault = this.resolvedType.values[this.typeDefault];
-              }
             }
 
             // remove unnecessary options
@@ -3045,12 +2891,9 @@ const Long = require("./long");
                 (this.options.packed !== undefined &&
                   this.resolvedType &&
                   !(this.resolvedType instanceof Enum))
-              ) {
+              )
                 delete this.options.packed;
-              }
-              if (!Object.keys(this.options).length) {
-                this.options = undefined;
-              }
+              if (!Object.keys(this.options).length) this.options = undefined;
             }
 
             // convert to internal data type if necesssary
@@ -3061,40 +2904,32 @@ const Long = require("./long");
               );
 
               /* istanbul ignore else */
-              if (Object.freeze) {
-                Object.freeze(this.typeDefault);
-              } // long instances are meant to be immutable anyway (i.e. use small int cache that even requires it)
+              if (Object.freeze) Object.freeze(this.typeDefault); // long instances are meant to be immutable anyway (i.e. use small int cache that even requires it)
             } else if (this.bytes && typeof this.typeDefault === "string") {
-              let buf;
-              if (util.base64.test(this.typeDefault)) {
+              var buf;
+              if (util.base64.test(this.typeDefault))
                 util.base64.decode(
                   this.typeDefault,
                   (buf = util.newBuffer(util.base64.length(this.typeDefault))),
                   0,
                 );
-              } else {
+              else
                 util.utf8.write(
                   this.typeDefault,
                   (buf = util.newBuffer(util.utf8.length(this.typeDefault))),
                   0,
                 );
-              }
               this.typeDefault = buf;
             }
 
             // take special care of maps and repeated fields
-            if (this.map) {
-              this.defaultValue = util.emptyObject;
-            } else if (this.repeated) {
-              this.defaultValue = util.emptyArray;
-            } else {
-              this.defaultValue = this.typeDefault;
-            }
+            if (this.map) this.defaultValue = util.emptyObject;
+            else if (this.repeated) this.defaultValue = util.emptyArray;
+            else this.defaultValue = this.typeDefault;
 
             // ensure proper value on prototype
-            if (this.parent instanceof Type) {
+            if (this.parent instanceof Type)
               this.parent.ctor.prototype[this.name] = this.defaultValue;
-            }
 
             return ReflectionObject.prototype.resolve.call(this);
           };
@@ -3126,14 +2961,11 @@ const Long = require("./long");
             defaultValue,
           ) {
             // submessage: decorate the submessage and use its name as the type
-            if (typeof fieldType === "function") {
+            if (typeof fieldType === "function")
               fieldType = util.decorateType(fieldType).name;
-            }
-
             // enum reference: create a reflected copy of the enum and keep reuseing it
-            else if (fieldType && typeof fieldType === "object") {
+            else if (fieldType && typeof fieldType === "object")
               fieldType = util.decorateEnum(fieldType).name;
-            }
 
             return function fieldDecorator(prototype, fieldName) {
               util
@@ -3169,7 +3001,7 @@ const Long = require("./long");
       17: [
         function (require, module, exports) {
           "use strict";
-          const protobuf = (module.exports = require(18));
+          var protobuf = (module.exports = require(18));
 
           protobuf.build = "light";
 
@@ -3194,9 +3026,7 @@ const Long = require("./long");
             if (typeof root === "function") {
               callback = root;
               root = new protobuf.Root();
-            } else if (!root) {
-              root = new protobuf.Root();
-            }
+            } else if (!root) root = new protobuf.Root();
             return root.load(filename, callback);
           }
 
@@ -3235,9 +3065,7 @@ const Long = require("./long");
            * @see {@link Root#loadSync}
            */
           function loadSync(filename, root) {
-            if (!root) {
-              root = new protobuf.Root();
-            }
+            if (!root) root = new protobuf.Root();
             return root.loadSync(filename);
           }
 
@@ -3304,7 +3132,7 @@ const Long = require("./long");
       18: [
         function (require, module, exports) {
           "use strict";
-          const protobuf = exports;
+          var protobuf = exports;
 
           /**
            * Build type, one of `"full"`, `"light"` or `"minimal"`.
@@ -3345,7 +3173,7 @@ const Long = require("./long");
       19: [
         function (require, module, exports) {
           "use strict";
-          const protobuf = (module.exports = require(17));
+          var protobuf = (module.exports = require(17));
 
           protobuf.build = "full";
 
@@ -3369,12 +3197,12 @@ const Long = require("./long");
           module.exports = MapField;
 
           // extends Field
-          const Field = require(16);
+          var Field = require(16);
           ((MapField.prototype = Object.create(Field.prototype)).constructor =
             MapField).className = "MapField";
 
-          const types = require(36);
-          const util = require(37);
+          var types = require(36),
+            util = require(37);
 
           /**
            * Constructs a new map field instance.
@@ -3401,9 +3229,8 @@ const Long = require("./long");
             );
 
             /* istanbul ignore if */
-            if (!util.isString(keyType)) {
+            if (!util.isString(keyType))
               throw TypeError("keyType must be a string");
-            }
 
             /**
              * Key type.
@@ -3459,7 +3286,7 @@ const Long = require("./long");
            * @returns {IMapField} Map field descriptor
            */
           MapField.prototype.toJSON = function toJSON(toJSONOptions) {
-            const keepComments = toJSONOptions
+            var keepComments = toJSONOptions
               ? Boolean(toJSONOptions.keepComments)
               : false;
             return util.toObject([
@@ -3482,14 +3309,11 @@ const Long = require("./long");
            * @override
            */
           MapField.prototype.resolve = function resolve() {
-            if (this.resolved) {
-              return this;
-            }
+            if (this.resolved) return this;
 
             // Besides a value type, map fields have a key type that may be "any scalar type except for floating point types and bytes"
-            if (types.mapKey[this.keyType] === undefined) {
+            if (types.mapKey[this.keyType] === undefined)
               throw Error("invalid key type: " + this.keyType);
-            }
 
             return Field.prototype.resolve.call(this);
           };
@@ -3510,14 +3334,11 @@ const Long = require("./long");
             fieldValueType,
           ) {
             // submessage value: decorate the submessage and use its name as the type
-            if (typeof fieldValueType === "function") {
+            if (typeof fieldValueType === "function")
               fieldValueType = util.decorateType(fieldValueType).name;
-            }
-
             // enum reference value: create a reflected copy of the enum and keep reuseing it
-            else if (fieldValueType && typeof fieldValueType === "object") {
+            else if (fieldValueType && typeof fieldValueType === "object")
               fieldValueType = util.decorateEnum(fieldValueType).name;
-            }
 
             return function mapFieldDecorator(prototype, fieldName) {
               util
@@ -3540,7 +3361,7 @@ const Long = require("./long");
           "use strict";
           module.exports = Message;
 
-          const util = require(39);
+          var util = require(39);
 
           /**
            * Constructs a new message instance.
@@ -3551,15 +3372,13 @@ const Long = require("./long");
            */
           function Message(properties) {
             // not used internally
-            if (properties) {
+            if (properties)
               for (
-                let keys = Object.keys(properties), i = 0;
+                var keys = Object.keys(properties), i = 0;
                 i < keys.length;
                 ++i
-              ) {
+              )
                 this[keys[i]] = properties[keys[i]];
-              }
-            }
           }
 
           /**
@@ -3576,7 +3395,7 @@ const Long = require("./long");
            * @readonly
            */
 
-          /* eslint-disable valid-jsdoc */
+          /*eslint-disable valid-jsdoc*/
 
           /**
            * Creates a new message of this type using the specified properties.
@@ -3681,7 +3500,7 @@ const Long = require("./long");
             return this.$type.toObject(this, util.toJSONOptions);
           };
 
-          /* eslint-enable valid-jsdoc */
+          /*eslint-enable valid-jsdoc*/
         },
         { 39: 39 },
       ],
@@ -3691,12 +3510,12 @@ const Long = require("./long");
           module.exports = Method;
 
           // extends ReflectionObject
-          const ReflectionObject = require(24);
+          var ReflectionObject = require(24);
           ((Method.prototype = Object.create(
             ReflectionObject.prototype,
           )).constructor = Method).className = "Method";
 
-          const util = require(37);
+          var util = require(37);
 
           /**
            * Constructs a new service method instance.
@@ -3732,19 +3551,16 @@ const Long = require("./long");
             }
 
             /* istanbul ignore if */
-            if (!(type === undefined || util.isString(type))) {
+            if (!(type === undefined || util.isString(type)))
               throw TypeError("type must be a string");
-            }
 
             /* istanbul ignore if */
-            if (!util.isString(requestType)) {
+            if (!util.isString(requestType))
               throw TypeError("requestType must be a string");
-            }
 
             /* istanbul ignore if */
-            if (!util.isString(responseType)) {
+            if (!util.isString(responseType))
               throw TypeError("responseType must be a string");
-            }
 
             ReflectionObject.call(this, name, options);
 
@@ -3834,7 +3650,7 @@ const Long = require("./long");
            * @returns {IMethod} Method descriptor
            */
           Method.prototype.toJSON = function toJSON(toJSONOptions) {
-            const keepComments = toJSONOptions
+            var keepComments = toJSONOptions
               ? Boolean(toJSONOptions.keepComments)
               : false;
             return util.toObject([
@@ -3861,9 +3677,7 @@ const Long = require("./long");
            */
           Method.prototype.resolve = function resolve() {
             /* istanbul ignore if */
-            if (this.resolved) {
-              return this;
-            }
+            if (this.resolved) return this;
 
             this.resolvedRequestType = this.parent.lookupType(this.requestType);
             this.resolvedResponseType = this.parent.lookupType(
@@ -3881,15 +3695,15 @@ const Long = require("./long");
           module.exports = Namespace;
 
           // extends ReflectionObject
-          const ReflectionObject = require(24);
+          var ReflectionObject = require(24);
           ((Namespace.prototype = Object.create(
             ReflectionObject.prototype,
           )).constructor = Namespace).className = "Namespace";
 
-          const Field = require(16);
-          const util = require(37);
+          var Field = require(16),
+            util = require(37);
 
-          let Type, // cyclic
+          var Type, // cyclic
             Service,
             Enum;
 
@@ -3924,13 +3738,10 @@ const Long = require("./long");
            * @returns {Object.<string,*>|undefined} JSON object or `undefined` when array is empty
            */
           function arrayToJSON(array, toJSONOptions) {
-            if (!(array && array.length)) {
-              return undefined;
-            }
-            const obj = {};
-            for (let i = 0; i < array.length; ++i) {
+            if (!(array && array.length)) return undefined;
+            var obj = {};
+            for (var i = 0; i < array.length; ++i)
               obj[array[i].name] = array[i].toJSON(toJSONOptions);
-            }
             return obj;
           }
 
@@ -3943,17 +3754,14 @@ const Long = require("./long");
            * @returns {boolean} `true` if reserved, otherwise `false`
            */
           Namespace.isReservedId = function isReservedId(reserved, id) {
-            if (reserved) {
-              for (let i = 0; i < reserved.length; ++i) {
+            if (reserved)
+              for (var i = 0; i < reserved.length; ++i)
                 if (
                   typeof reserved[i] !== "string" &&
                   reserved[i][0] <= id &&
                   reserved[i][1] > id
-                ) {
+                )
                   return true;
-                }
-              }
-            }
             return false;
           };
 
@@ -3964,13 +3772,9 @@ const Long = require("./long");
            * @returns {boolean} `true` if reserved, otherwise `false`
            */
           Namespace.isReservedName = function isReservedName(reserved, name) {
-            if (reserved) {
-              for (let i = 0; i < reserved.length; ++i) {
-                if (reserved[i] === name) {
-                  return true;
-                }
-              }
-            }
+            if (reserved)
+              for (var i = 0; i < reserved.length; ++i)
+                if (reserved[i] === name) return true;
             return false;
           };
 
@@ -4062,7 +3866,7 @@ const Long = require("./long");
            * @returns {Namespace} `this`
            */
           Namespace.prototype.addJSON = function addJSON(nestedJson) {
-            const ns = this;
+            var ns = this;
             /* istanbul ignore else */
             if (nestedJson) {
               for (
@@ -4105,9 +3909,8 @@ const Long = require("./long");
            * @throws {Error} If there is no such enum
            */
           Namespace.prototype.getEnum = function getEnum(name) {
-            if (this.nested && this.nested[name] instanceof Enum) {
+            if (this.nested && this.nested[name] instanceof Enum)
               return this.nested[name].values;
-            }
             throw Error("no such enum: " + name);
           };
 
@@ -4127,14 +3930,12 @@ const Long = require("./long");
                 object instanceof Service ||
                 object instanceof Namespace
               )
-            ) {
+            )
               throw TypeError("object must be a valid nested object");
-            }
 
-            if (!this.nested) {
-              this.nested = {};
-            } else {
-              const prev = this.get(object.name);
+            if (!this.nested) this.nested = {};
+            else {
+              var prev = this.get(object.name);
               if (prev) {
                 if (
                   prev instanceof Namespace &&
@@ -4142,20 +3943,15 @@ const Long = require("./long");
                   !(prev instanceof Type || prev instanceof Service)
                 ) {
                   // replace plain namespace but keep existing nested elements and options
-                  const nested = prev.nestedArray;
-                  for (let i = 0; i < nested.length; ++i) {
-                    object.add(nested[i]);
-                  }
+                  var nested = prev.nestedArray;
+                  for (var i = 0; i < nested.length; ++i) object.add(nested[i]);
                   this.remove(prev);
-                  if (!this.nested) {
-                    this.nested = {};
-                  }
+                  if (!this.nested) this.nested = {};
                   object.setOptions(prev.options, true);
-                } else {
+                } else
                   throw Error(
                     "duplicate name '" + object.name + "' in " + this,
                   );
-                }
               }
             }
             this.nested[object.name] = object;
@@ -4171,17 +3967,13 @@ const Long = require("./long");
            * @throws {Error} If `object` is not a member of this namespace
            */
           Namespace.prototype.remove = function remove(object) {
-            if (!(object instanceof ReflectionObject)) {
+            if (!(object instanceof ReflectionObject))
               throw TypeError("object must be a ReflectionObject");
-            }
-            if (object.parent !== this) {
+            if (object.parent !== this)
               throw Error(object + " is not a member of " + this);
-            }
 
             delete this.nested[object.name];
-            if (!Object.keys(this.nested).length) {
-              this.nested = undefined;
-            }
+            if (!Object.keys(this.nested).length) this.nested = undefined;
 
             object.onRemove(this);
             return clearCache(this);
@@ -4194,30 +3986,21 @@ const Long = require("./long");
            * @returns {Namespace} Pointer to the last namespace created or `this` if path is empty
            */
           Namespace.prototype.define = function define(path, json) {
-            if (util.isString(path)) {
-              path = path.split(".");
-            } else if (!Array.isArray(path)) {
-              throw TypeError("illegal path");
-            }
-            if (path && path.length && path[0] === "") {
+            if (util.isString(path)) path = path.split(".");
+            else if (!Array.isArray(path)) throw TypeError("illegal path");
+            if (path && path.length && path[0] === "")
               throw Error("path must be relative");
-            }
 
-            let ptr = this;
+            var ptr = this;
             while (path.length > 0) {
-              const part = path.shift();
+              var part = path.shift();
               if (ptr.nested && ptr.nested[part]) {
                 ptr = ptr.nested[part];
-                if (!(ptr instanceof Namespace)) {
+                if (!(ptr instanceof Namespace))
                   throw Error("path conflicts with non-namespace objects");
-                }
-              } else {
-                ptr.add((ptr = new Namespace(part)));
-              }
+              } else ptr.add((ptr = new Namespace(part)));
             }
-            if (json) {
-              ptr.addJSON(json);
-            }
+            if (json) ptr.addJSON(json);
             return ptr;
           };
 
@@ -4226,15 +4009,11 @@ const Long = require("./long");
            * @returns {Namespace} `this`
            */
           Namespace.prototype.resolveAll = function resolveAll() {
-            const nested = this.nestedArray;
-            let i = 0;
-            while (i < nested.length) {
-              if (nested[i] instanceof Namespace) {
-                nested[i++].resolveAll();
-              } else {
-                nested[i++].resolve();
-              }
-            }
+            var nested = this.nestedArray,
+              i = 0;
+            while (i < nested.length)
+              if (nested[i] instanceof Namespace) nested[i++].resolveAll();
+              else nested[i++].resolve();
             return this.resolve();
           };
 
@@ -4254,57 +4033,41 @@ const Long = require("./long");
             if (typeof filterTypes === "boolean") {
               parentAlreadyChecked = filterTypes;
               filterTypes = undefined;
-            } else if (filterTypes && !Array.isArray(filterTypes)) {
+            } else if (filterTypes && !Array.isArray(filterTypes))
               filterTypes = [filterTypes];
-            }
 
             if (util.isString(path) && path.length) {
-              if (path === ".") {
-                return this.root;
-              }
+              if (path === ".") return this.root;
               path = path.split(".");
-            } else if (!path.length) {
-              return this;
-            }
+            } else if (!path.length) return this;
 
             // Start at root if path is absolute
-            if (path[0] === "") {
+            if (path[0] === "")
               return this.root.lookup(path.slice(1), filterTypes);
-            }
 
             // Test if the first part matches any nested object, and if so, traverse if path contains more
-            let found = this.get(path[0]);
+            var found = this.get(path[0]);
             if (found) {
               if (path.length === 1) {
-                if (
-                  !filterTypes ||
-                  filterTypes.indexOf(found.constructor) > -1
-                ) {
+                if (!filterTypes || filterTypes.indexOf(found.constructor) > -1)
                   return found;
-                }
               } else if (
                 found instanceof Namespace &&
                 (found = found.lookup(path.slice(1), filterTypes, true))
-              ) {
+              )
                 return found;
-              }
 
               // Otherwise try each nested namespace
-            } else {
-              for (let i = 0; i < this.nestedArray.length; ++i) {
+            } else
+              for (var i = 0; i < this.nestedArray.length; ++i)
                 if (
                   this._nestedArray[i] instanceof Namespace &&
                   (found = this._nestedArray[i].lookup(path, filterTypes, true))
-                ) {
+                )
                   return found;
-                }
-              }
-            }
 
             // If there hasn't been a match, try again at the parent
-            if (this.parent === null || parentAlreadyChecked) {
-              return null;
-            }
+            if (this.parent === null || parentAlreadyChecked) return null;
             return this.parent.lookup(path, filterTypes);
           };
 
@@ -4327,10 +4090,8 @@ const Long = require("./long");
            * @throws {Error} If `path` does not point to a type
            */
           Namespace.prototype.lookupType = function lookupType(path) {
-            const found = this.lookup(path, [Type]);
-            if (!found) {
-              throw Error("no such type: " + path);
-            }
+            var found = this.lookup(path, [Type]);
+            if (!found) throw Error("no such type: " + path);
             return found;
           };
 
@@ -4342,10 +4103,8 @@ const Long = require("./long");
            * @throws {Error} If `path` does not point to an enum
            */
           Namespace.prototype.lookupEnum = function lookupEnum(path) {
-            const found = this.lookup(path, [Enum]);
-            if (!found) {
-              throw Error("no such Enum '" + path + "' in " + this);
-            }
+            var found = this.lookup(path, [Enum]);
+            if (!found) throw Error("no such Enum '" + path + "' in " + this);
             return found;
           };
 
@@ -4359,10 +4118,9 @@ const Long = require("./long");
           Namespace.prototype.lookupTypeOrEnum = function lookupTypeOrEnum(
             path,
           ) {
-            const found = this.lookup(path, [Type, Enum]);
-            if (!found) {
+            var found = this.lookup(path, [Type, Enum]);
+            if (!found)
               throw Error("no such Type or Enum '" + path + "' in " + this);
-            }
             return found;
           };
 
@@ -4374,10 +4132,9 @@ const Long = require("./long");
            * @throws {Error} If `path` does not point to a service
            */
           Namespace.prototype.lookupService = function lookupService(path) {
-            const found = this.lookup(path, [Service]);
-            if (!found) {
+            var found = this.lookup(path, [Service]);
+            if (!found)
               throw Error("no such Service '" + path + "' in " + this);
-            }
             return found;
           };
 
@@ -4397,9 +4154,9 @@ const Long = require("./long");
 
           ReflectionObject.className = "ReflectionObject";
 
-          const util = require(37);
+          var util = require(37);
 
-          let Root; // cyclic
+          var Root; // cyclic
 
           /**
            * Constructs a new reflection object instance.
@@ -4410,13 +4167,10 @@ const Long = require("./long");
            * @abstract
            */
           function ReflectionObject(name, options) {
-            if (!util.isString(name)) {
-              throw TypeError("name must be a string");
-            }
+            if (!util.isString(name)) throw TypeError("name must be a string");
 
-            if (options && !util.isObject(options)) {
+            if (options && !util.isObject(options))
               throw TypeError("options must be an object");
-            }
 
             /**
              * Options.
@@ -4470,10 +4224,8 @@ const Long = require("./long");
              */
             root: {
               get: function () {
-                let ptr = this;
-                while (ptr.parent !== null) {
-                  ptr = ptr.parent;
-                }
+                var ptr = this;
+                while (ptr.parent !== null) ptr = ptr.parent;
                 return ptr;
               },
             },
@@ -4486,8 +4238,8 @@ const Long = require("./long");
              */
             fullName: {
               get: function () {
-                const path = [this.name];
-                let ptr = this.parent;
+                var path = [this.name],
+                  ptr = this.parent;
                 while (ptr) {
                   path.unshift(ptr.name);
                   ptr = ptr.parent;
@@ -4513,15 +4265,11 @@ const Long = require("./long");
            * @returns {undefined}
            */
           ReflectionObject.prototype.onAdd = function onAdd(parent) {
-            if (this.parent && this.parent !== parent) {
-              this.parent.remove(this);
-            }
+            if (this.parent && this.parent !== parent) this.parent.remove(this);
             this.parent = parent;
             this.resolved = false;
-            const root = parent.root;
-            if (root instanceof Root) {
-              root._handleAdd(this);
-            }
+            var root = parent.root;
+            if (root instanceof Root) root._handleAdd(this);
           };
 
           /**
@@ -4530,10 +4278,8 @@ const Long = require("./long");
            * @returns {undefined}
            */
           ReflectionObject.prototype.onRemove = function onRemove(parent) {
-            const root = parent.root;
-            if (root instanceof Root) {
-              root._handleRemove(this);
-            }
+            var root = parent.root;
+            if (root instanceof Root) root._handleRemove(this);
             this.parent = null;
             this.resolved = false;
           };
@@ -4543,12 +4289,8 @@ const Long = require("./long");
            * @returns {ReflectionObject} `this`
            */
           ReflectionObject.prototype.resolve = function resolve() {
-            if (this.resolved) {
-              return this;
-            }
-            if (this.root instanceof Root) {
-              this.resolved = true;
-            } // only if part of a root
+            if (this.resolved) return this;
+            if (this.root instanceof Root) this.resolved = true; // only if part of a root
             return this;
           };
 
@@ -4558,9 +4300,7 @@ const Long = require("./long");
            * @returns {*} Option value or `undefined` if not set
            */
           ReflectionObject.prototype.getOption = function getOption(name) {
-            if (this.options) {
-              return this.options[name];
-            }
+            if (this.options) return this.options[name];
             return undefined;
           };
 
@@ -4576,13 +4316,8 @@ const Long = require("./long");
             value,
             ifNotSet,
           ) {
-            if (
-              !ifNotSet ||
-              !this.options ||
-              this.options[name] === undefined
-            ) {
+            if (!ifNotSet || !this.options || this.options[name] === undefined)
               (this.options || (this.options = {}))[name] = value;
-            }
             return this;
           };
 
@@ -4601,16 +4336,16 @@ const Long = require("./long");
             if (!this.parsedOptions) {
               this.parsedOptions = [];
             }
-            const parsedOptions = this.parsedOptions;
+            var parsedOptions = this.parsedOptions;
             if (propName) {
               // If setting a sub property of an option then try to merge it
               // with an existing option
-              let opt = parsedOptions.find(function (opt) {
+              var opt = parsedOptions.find(function (opt) {
                 return Object.prototype.hasOwnProperty.call(opt, name);
               });
               if (opt) {
                 // If we found an existing option - just merge the property value
-                const newValue = opt[name];
+                var newValue = opt[name];
                 util.setProperty(newValue, propName, value);
               } else {
                 // otherwise, create a new option, set it's property and add it to the list
@@ -4620,7 +4355,7 @@ const Long = require("./long");
               }
             } else {
               // Always create a new option when setting the value of the option itself
-              const newOpt = {};
+              var newOpt = {};
               newOpt[name] = value;
               parsedOptions.push(newOpt);
             }
@@ -4637,15 +4372,9 @@ const Long = require("./long");
             options,
             ifNotSet,
           ) {
-            if (options) {
-              for (
-                let keys = Object.keys(options), i = 0;
-                i < keys.length;
-                ++i
-              ) {
+            if (options)
+              for (var keys = Object.keys(options), i = 0; i < keys.length; ++i)
                 this.setOption(keys[i], options[keys[i]], ifNotSet);
-              }
-            }
             return this;
           };
 
@@ -4654,11 +4383,9 @@ const Long = require("./long");
            * @returns {string} Class name[, space, full name]
            */
           ReflectionObject.prototype.toString = function toString() {
-            const className = this.constructor.className;
-            const fullName = this.fullName;
-            if (fullName.length) {
-              return className + " " + fullName;
-            }
+            var className = this.constructor.className,
+              fullName = this.fullName;
+            if (fullName.length) return className + " " + fullName;
             return className;
           };
 
@@ -4675,13 +4402,13 @@ const Long = require("./long");
           module.exports = OneOf;
 
           // extends ReflectionObject
-          const ReflectionObject = require(24);
+          var ReflectionObject = require(24);
           ((OneOf.prototype = Object.create(
             ReflectionObject.prototype,
           )).constructor = OneOf).className = "OneOf";
 
-          const Field = require(16);
-          const util = require(37);
+          var Field = require(16),
+            util = require(37);
 
           /**
            * Constructs a new oneof instance.
@@ -4701,9 +4428,8 @@ const Long = require("./long");
             ReflectionObject.call(this, name, options);
 
             /* istanbul ignore if */
-            if (!(fieldNames === undefined || Array.isArray(fieldNames))) {
+            if (!(fieldNames === undefined || Array.isArray(fieldNames)))
               throw TypeError("fieldNames must be an Array");
-            }
 
             /**
              * Field names that belong to this oneof.
@@ -4749,7 +4475,7 @@ const Long = require("./long");
            * @returns {IOneOf} Oneof descriptor
            */
           OneOf.prototype.toJSON = function toJSON(toJSONOptions) {
-            const keepComments = toJSONOptions
+            var keepComments = toJSONOptions
               ? Boolean(toJSONOptions.keepComments)
               : false;
             return util.toObject([
@@ -4770,13 +4496,10 @@ const Long = require("./long");
            * @ignore
            */
           function addFieldsToParent(oneof) {
-            if (oneof.parent) {
-              for (let i = 0; i < oneof.fieldsArray.length; ++i) {
-                if (!oneof.fieldsArray[i].parent) {
+            if (oneof.parent)
+              for (var i = 0; i < oneof.fieldsArray.length; ++i)
+                if (!oneof.fieldsArray[i].parent)
                   oneof.parent.add(oneof.fieldsArray[i]);
-                }
-              }
-            }
           }
 
           /**
@@ -4786,13 +4509,11 @@ const Long = require("./long");
            */
           OneOf.prototype.add = function add(field) {
             /* istanbul ignore if */
-            if (!(field instanceof Field)) {
+            if (!(field instanceof Field))
               throw TypeError("field must be a Field");
-            }
 
-            if (field.parent && field.parent !== this.parent) {
+            if (field.parent && field.parent !== this.parent)
               field.parent.remove(field);
-            }
             this.oneof.push(field.name);
             this.fieldsArray.push(field);
             field.partOf = this; // field.parent remains null
@@ -4807,25 +4528,21 @@ const Long = require("./long");
            */
           OneOf.prototype.remove = function remove(field) {
             /* istanbul ignore if */
-            if (!(field instanceof Field)) {
+            if (!(field instanceof Field))
               throw TypeError("field must be a Field");
-            }
 
-            let index = this.fieldsArray.indexOf(field);
+            var index = this.fieldsArray.indexOf(field);
 
             /* istanbul ignore if */
-            if (index < 0) {
-              throw Error(field + " is not a member of " + this);
-            }
+            if (index < 0) throw Error(field + " is not a member of " + this);
 
             this.fieldsArray.splice(index, 1);
             index = this.oneof.indexOf(field.name);
 
             /* istanbul ignore else */
-            if (index > -1) {
+            if (index > -1)
               // theoretical
               this.oneof.splice(index, 1);
-            }
 
             field.partOf = null;
             return this;
@@ -4836,10 +4553,10 @@ const Long = require("./long");
            */
           OneOf.prototype.onAdd = function onAdd(parent) {
             ReflectionObject.prototype.onAdd.call(this, parent);
-            const self = this;
+            var self = this;
             // Collect present fields
-            for (let i = 0; i < this.oneof.length; ++i) {
-              const field = parent.get(this.oneof[i]);
+            for (var i = 0; i < this.oneof.length; ++i) {
+              var field = parent.get(this.oneof[i]);
               if (field && !field.partOf) {
                 field.partOf = self;
                 self.fieldsArray.push(field);
@@ -4853,11 +4570,9 @@ const Long = require("./long");
            * @override
            */
           OneOf.prototype.onRemove = function onRemove(parent) {
-            for (var i = 0, field; i < this.fieldsArray.length; ++i) {
-              if ((field = this.fieldsArray[i]).parent) {
+            for (var i = 0, field; i < this.fieldsArray.length; ++i)
+              if ((field = this.fieldsArray[i]).parent)
                 field.parent.remove(field);
-              }
-            }
             ReflectionObject.prototype.onRemove.call(this, parent);
           };
 
@@ -4878,11 +4593,10 @@ const Long = require("./long");
            * @template T extends string
            */
           OneOf.d = function decorateOneOf() {
-            const fieldNames = new Array(arguments.length);
-            let index = 0;
-            while (index < arguments.length) {
+            var fieldNames = new Array(arguments.length),
+              index = 0;
+            while (index < arguments.length)
               fieldNames[index] = arguments[index++];
-            }
             return function oneOfDecorator(prototype, oneofName) {
               util
                 .decorateType(prototype.constructor)
@@ -4904,29 +4618,29 @@ const Long = require("./long");
           parse.filename = null;
           parse.defaults = { keepCase: false };
 
-          const tokenize = require(34);
-          const Root = require(29);
-          const Type = require(35);
-          const Field = require(16);
-          const MapField = require(20);
-          const OneOf = require(25);
-          const Enum = require(15);
-          const Service = require(33);
-          const Method = require(22);
-          const types = require(36);
-          const util = require(37);
+          var tokenize = require(34),
+            Root = require(29),
+            Type = require(35),
+            Field = require(16),
+            MapField = require(20),
+            OneOf = require(25),
+            Enum = require(15),
+            Service = require(33),
+            Method = require(22),
+            types = require(36),
+            util = require(37);
 
-          const base10Re = /^[1-9][0-9]*$/;
-          const base10NegRe = /^-?[1-9][0-9]*$/;
-          const base16Re = /^0[x][0-9a-fA-F]+$/;
-          const base16NegRe = /^-?0[x][0-9a-fA-F]+$/;
-          const base8Re = /^0[0-7]+$/;
-          const base8NegRe = /^-?0[0-7]+$/;
-          const numberRe = /^(?![eE])[0-9]*(?:\.[0-9]*)?(?:[eE][+-]?[0-9]+)?$/;
-          const nameRe = /^[a-zA-Z_][a-zA-Z_0-9]*$/;
-          const typeRefRe =
-            /^(?:\.?[a-zA-Z_][a-zA-Z_0-9]*)(?:\.[a-zA-Z_][a-zA-Z_0-9]*)*$/;
-          const fqTypeRefRe = /^(?:\.[a-zA-Z_][a-zA-Z_0-9]*)+$/;
+          var base10Re = /^[1-9][0-9]*$/,
+            base10NegRe = /^-?[1-9][0-9]*$/,
+            base16Re = /^0[x][0-9a-fA-F]+$/,
+            base16NegRe = /^-?0[x][0-9a-fA-F]+$/,
+            base8Re = /^0[0-7]+$/,
+            base8NegRe = /^-?0[0-7]+$/,
+            numberRe = /^(?![eE])[0-9]*(?:\.[0-9]*)?(?:[eE][+-]?[0-9]+)?$/,
+            nameRe = /^[a-zA-Z_][a-zA-Z_0-9]*$/,
+            typeRefRe =
+              /^(?:\.?[a-zA-Z_][a-zA-Z_0-9]*)(?:\.[a-zA-Z_][a-zA-Z_0-9]*)*$/,
+            fqTypeRefRe = /^(?:\.[a-zA-Z_][a-zA-Z_0-9]*)+$/;
 
           /**
            * Result object returned from {@link parse}.
@@ -4967,29 +4681,26 @@ const Long = require("./long");
               options = root;
               root = new Root();
             }
-            if (!options) {
-              options = parse.defaults;
-            }
+            if (!options) options = parse.defaults;
 
-            const preferTrailingComment =
-              options.preferTrailingComment || false;
-            const tn = tokenize(source, options.alternateCommentMode || false);
-            const next = tn.next;
-            const push = tn.push;
-            const peek = tn.peek;
-            const skip = tn.skip;
-            const cmnt = tn.cmnt;
+            var preferTrailingComment = options.preferTrailingComment || false;
+            var tn = tokenize(source, options.alternateCommentMode || false),
+              next = tn.next,
+              push = tn.push,
+              peek = tn.peek,
+              skip = tn.skip,
+              cmnt = tn.cmnt;
 
-            let head = true;
-            let pkg;
-            let imports;
-            let weakImports;
-            let syntax;
-            let isProto3 = false;
+            var head = true,
+              pkg,
+              imports,
+              weakImports,
+              syntax,
+              isProto3 = false;
 
-            let ptr = root;
+            var ptr = root;
 
-            const applyCase = options.keepCase
+            var applyCase = options.keepCase
               ? function (name) {
                   return name;
                 }
@@ -4997,10 +4708,8 @@ const Long = require("./long");
 
             /* istanbul ignore next */
             function illegal(token, name, insideTryCatch) {
-              const filename = parse.filename;
-              if (!insideTryCatch) {
-                parse.filename = null;
-              }
+              var filename = parse.filename;
+              if (!insideTryCatch) parse.filename = null;
               return Error(
                 "illegal " +
                   (name || "token") +
@@ -5015,13 +4724,12 @@ const Long = require("./long");
             }
 
             function readString() {
-              const values = [];
-              let token;
+              var values = [],
+                token;
               do {
                 /* istanbul ignore if */
-                if ((token = next()) !== '"' && token !== "'") {
+                if ((token = next()) !== '"' && token !== "'")
                   throw illegal(token);
-                }
 
                 values.push(next());
                 skip(token);
@@ -5031,7 +4739,7 @@ const Long = require("./long");
             }
 
             function readValue(acceptTypeRef) {
-              const token = next();
+              var token = next();
               switch (token) {
                 case "'":
                 case '"':
@@ -5048,9 +4756,7 @@ const Long = require("./long");
                 return parseNumber(token, /* insideTryCatch */ true);
               } catch (e) {
                 /* istanbul ignore else */
-                if (acceptTypeRef && typeRefRe.test(token)) {
-                  return token;
-                }
+                if (acceptTypeRef && typeRefRe.test(token)) return token;
 
                 /* istanbul ignore next */
                 throw illegal(token, "value");
@@ -5058,25 +4764,24 @@ const Long = require("./long");
             }
 
             function readRanges(target, acceptStrings) {
-              let token, start;
+              var token, start;
               do {
                 if (
                   acceptStrings &&
                   ((token = peek()) === '"' || token === "'")
-                ) {
+                )
                   target.push(readString());
-                } else {
+                else
                   target.push([
                     (start = parseId(next())),
                     skip("to", true) ? parseId(next()) : start,
                   ]);
-                }
               } while (skip(",", true));
               skip(";");
             }
 
             function parseNumber(token, insideTryCatch) {
-              let sign = 1;
+              var sign = 1;
               if (token.charAt(0) === "-") {
                 sign = -1;
                 token = token.substring(1);
@@ -5094,20 +4799,12 @@ const Long = require("./long");
                 case "0":
                   return 0;
               }
-              if (base10Re.test(token)) {
-                return sign * parseInt(token, 10);
-              }
-              if (base16Re.test(token)) {
-                return sign * parseInt(token, 16);
-              }
-              if (base8Re.test(token)) {
-                return sign * parseInt(token, 8);
-              }
+              if (base10Re.test(token)) return sign * parseInt(token, 10);
+              if (base16Re.test(token)) return sign * parseInt(token, 16);
+              if (base8Re.test(token)) return sign * parseInt(token, 8);
 
               /* istanbul ignore else */
-              if (numberRe.test(token)) {
-                return sign * parseFloat(token);
-              }
+              if (numberRe.test(token)) return sign * parseFloat(token);
 
               /* istanbul ignore next */
               throw illegal(token, "number", insideTryCatch);
@@ -5124,21 +4821,14 @@ const Long = require("./long");
               }
 
               /* istanbul ignore if */
-              if (!acceptNegative && token.charAt(0) === "-") {
+              if (!acceptNegative && token.charAt(0) === "-")
                 throw illegal(token, "id");
-              }
 
-              if (base10NegRe.test(token)) {
-                return parseInt(token, 10);
-              }
-              if (base16NegRe.test(token)) {
-                return parseInt(token, 16);
-              }
+              if (base10NegRe.test(token)) return parseInt(token, 10);
+              if (base16NegRe.test(token)) return parseInt(token, 16);
 
               /* istanbul ignore else */
-              if (base8NegRe.test(token)) {
-                return parseInt(token, 8);
-              }
+              if (base8NegRe.test(token)) return parseInt(token, 8);
 
               /* istanbul ignore next */
               throw illegal(token, "id");
@@ -5146,24 +4836,20 @@ const Long = require("./long");
 
             function parsePackage() {
               /* istanbul ignore if */
-              if (pkg !== undefined) {
-                throw illegal("package");
-              }
+              if (pkg !== undefined) throw illegal("package");
 
               pkg = next();
 
               /* istanbul ignore if */
-              if (!typeRefRe.test(pkg)) {
-                throw illegal(pkg, "name");
-              }
+              if (!typeRefRe.test(pkg)) throw illegal(pkg, "name");
 
               ptr = ptr.define(pkg);
               skip(";");
             }
 
             function parseImport() {
-              let token = peek();
-              let whichImports;
+              var token = peek();
+              var whichImports;
               switch (token) {
                 case "weak":
                   whichImports = weakImports || (weakImports = []);
@@ -5187,9 +4873,8 @@ const Long = require("./long");
               isProto3 = syntax === "proto3";
 
               /* istanbul ignore if */
-              if (!isProto3 && syntax !== "proto2") {
+              if (!isProto3 && syntax !== "proto2")
                 throw illegal(syntax, "syntax");
-              }
 
               skip(";");
             }
@@ -5221,7 +4906,7 @@ const Long = require("./long");
             }
 
             function ifBlock(obj, fnIf, fnElse) {
-              const trailingLine = tn.line;
+              var trailingLine = tn.line;
               if (obj) {
                 if (typeof obj.comment !== "string") {
                   obj.comment = cmnt(); // try block-type comment
@@ -5229,36 +4914,28 @@ const Long = require("./long");
                 obj.filename = parse.filename;
               }
               if (skip("{", true)) {
-                let token;
-                while ((token = next()) !== "}") {
-                  fnIf(token);
-                }
+                var token;
+                while ((token = next()) !== "}") fnIf(token);
                 skip(";", true);
               } else {
-                if (fnElse) {
-                  fnElse();
-                }
+                if (fnElse) fnElse();
                 skip(";");
                 if (
                   obj &&
                   (typeof obj.comment !== "string" || preferTrailingComment)
-                ) {
-                  obj.comment = cmnt(trailingLine) || obj.comment;
-                } // try line-type comment
+                )
+                  obj.comment = cmnt(trailingLine) || obj.comment; // try line-type comment
               }
             }
 
             function parseType(parent, token) {
               /* istanbul ignore if */
-              if (!nameRe.test((token = next()))) {
+              if (!nameRe.test((token = next())))
                 throw illegal(token, "type name");
-              }
 
-              const type = new Type(token);
+              var type = new Type(token);
               ifBlock(type, function parseType_block(token) {
-                if (parseCommon(type, token)) {
-                  return;
-                }
+                if (parseCommon(type, token)) return;
 
                 switch (token) {
                   case "map":
@@ -5285,9 +4962,8 @@ const Long = require("./long");
 
                   default:
                     /* istanbul ignore if */
-                    if (!isProto3 || !typeRefRe.test(token)) {
+                    if (!isProto3 || !typeRefRe.test(token))
                       throw illegal(token);
-                    }
 
                     push(token);
                     parseField(type, "optional");
@@ -5298,34 +4974,24 @@ const Long = require("./long");
             }
 
             function parseField(parent, rule, extend) {
-              const type = next();
+              var type = next();
               if (type === "group") {
                 parseGroup(parent, rule);
                 return;
               }
 
               /* istanbul ignore if */
-              if (!typeRefRe.test(type)) {
-                throw illegal(type, "type");
-              }
+              if (!typeRefRe.test(type)) throw illegal(type, "type");
 
-              let name = next();
+              var name = next();
 
               /* istanbul ignore if */
-              if (!nameRe.test(name)) {
-                throw illegal(name, "name");
-              }
+              if (!nameRe.test(name)) throw illegal(name, "name");
 
               name = applyCase(name);
               skip("=");
 
-              const field = new Field(
-                name,
-                parseId(next()),
-                type,
-                rule,
-                extend,
-              );
+              var field = new Field(name, parseId(next()), type, rule, extend);
               ifBlock(
                 field,
                 function parseField_block(token) {
@@ -5333,9 +4999,7 @@ const Long = require("./long");
                   if (token === "option") {
                     parseOption(field, token);
                     skip(";");
-                  } else {
-                    throw illegal(token);
-                  }
+                  } else throw illegal(token);
                 },
                 function parseField_line() {
                   parseInlineOptions(field);
@@ -5351,28 +5015,23 @@ const Long = require("./long");
                 field.repeated &&
                 (types.packed[type] !== undefined ||
                   types.basic[type] === undefined)
-              ) {
+              )
                 field.setOption("packed", false, /* ifNotSet */ true);
-              }
             }
 
             function parseGroup(parent, rule) {
-              let name = next();
+              var name = next();
 
               /* istanbul ignore if */
-              if (!nameRe.test(name)) {
-                throw illegal(name, "name");
-              }
+              if (!nameRe.test(name)) throw illegal(name, "name");
 
-              const fieldName = util.lcFirst(name);
-              if (name === fieldName) {
-                name = util.ucFirst(name);
-              }
+              var fieldName = util.lcFirst(name);
+              if (name === fieldName) name = util.ucFirst(name);
               skip("=");
-              const id = parseId(next());
-              const type = new Type(name);
+              var id = parseId(next());
+              var type = new Type(name);
               type.group = true;
-              const field = new Field(fieldName, id, name, rule);
+              var field = new Field(fieldName, id, name, rule);
               field.filename = parse.filename;
               ifBlock(type, function parseGroup_block(token) {
                 switch (token) {
@@ -5397,31 +5056,26 @@ const Long = require("./long");
 
             function parseMapField(parent) {
               skip("<");
-              const keyType = next();
+              var keyType = next();
 
               /* istanbul ignore if */
-              if (types.mapKey[keyType] === undefined) {
+              if (types.mapKey[keyType] === undefined)
                 throw illegal(keyType, "type");
-              }
 
               skip(",");
-              const valueType = next();
+              var valueType = next();
 
               /* istanbul ignore if */
-              if (!typeRefRe.test(valueType)) {
-                throw illegal(valueType, "type");
-              }
+              if (!typeRefRe.test(valueType)) throw illegal(valueType, "type");
 
               skip(">");
-              const name = next();
+              var name = next();
 
               /* istanbul ignore if */
-              if (!nameRe.test(name)) {
-                throw illegal(name, "name");
-              }
+              if (!nameRe.test(name)) throw illegal(name, "name");
 
               skip("=");
-              const field = new MapField(
+              var field = new MapField(
                 applyCase(name),
                 parseId(next()),
                 keyType,
@@ -5434,9 +5088,7 @@ const Long = require("./long");
                   if (token === "option") {
                     parseOption(field, token);
                     skip(";");
-                  } else {
-                    throw illegal(token);
-                  }
+                  } else throw illegal(token);
                 },
                 function parseMapField_line() {
                   parseInlineOptions(field);
@@ -5447,11 +5099,9 @@ const Long = require("./long");
 
             function parseOneOf(parent, token) {
               /* istanbul ignore if */
-              if (!nameRe.test((token = next()))) {
-                throw illegal(token, "name");
-              }
+              if (!nameRe.test((token = next()))) throw illegal(token, "name");
 
-              const oneof = new OneOf(applyCase(token));
+              var oneof = new OneOf(applyCase(token));
               ifBlock(oneof, function parseOneOf_block(token) {
                 if (token === "option") {
                   parseOption(oneof, token);
@@ -5466,11 +5116,9 @@ const Long = require("./long");
 
             function parseEnum(parent, token) {
               /* istanbul ignore if */
-              if (!nameRe.test((token = next()))) {
-                throw illegal(token, "name");
-              }
+              if (!nameRe.test((token = next()))) throw illegal(token, "name");
 
-              const enm = new Enum(token);
+              var enm = new Enum(token);
               ifBlock(enm, function parseEnum_block(token) {
                 switch (token) {
                   case "option":
@@ -5491,13 +5139,11 @@ const Long = require("./long");
 
             function parseEnumValue(parent, token) {
               /* istanbul ignore if */
-              if (!nameRe.test(token)) {
-                throw illegal(token, "name");
-              }
+              if (!nameRe.test(token)) throw illegal(token, "name");
 
               skip("=");
-              const value = parseId(next(), true);
-              const dummy = {};
+              var value = parseId(next(), true),
+                dummy = {};
               ifBlock(
                 dummy,
                 function parseEnumValue_block(token) {
@@ -5505,9 +5151,7 @@ const Long = require("./long");
                   if (token === "option") {
                     parseOption(dummy, token); // skip
                     skip(";");
-                  } else {
-                    throw illegal(token);
-                  }
+                  } else throw illegal(token);
                 },
                 function parseEnumValue_line() {
                   parseInlineOptions(dummy); // skip
@@ -5517,16 +5161,15 @@ const Long = require("./long");
             }
 
             function parseOption(parent, token) {
-              const isCustom = skip("(", true);
+              var isCustom = skip("(", true);
 
               /* istanbul ignore if */
-              if (!typeRefRe.test((token = next()))) {
+              if (!typeRefRe.test((token = next())))
                 throw illegal(token, "name");
-              }
 
-              let name = token;
-              let option = name;
-              let propName;
+              var name = token;
+              var option = name;
+              var propName;
 
               if (isCustom) {
                 skip(")");
@@ -5534,65 +5177,59 @@ const Long = require("./long");
                 option = name;
                 token = peek();
                 if (fqTypeRefRe.test(token)) {
-                  propName = token.substr(1); // remove '.' before property name
+                  propName = token.substr(1); //remove '.' before property name
                   name += token;
                   next();
                 }
               }
               skip("=");
-              const optionValue = parseOptionValue(parent, name);
+              var optionValue = parseOptionValue(parent, name);
               setParsedOption(parent, option, optionValue, propName);
             }
 
             function parseOptionValue(parent, name) {
               if (skip("{", true)) {
                 // { a: "foo" b { c: "bar" } }
-                const result = {};
+                var result = {};
                 while (!skip("}", true)) {
                   /* istanbul ignore if */
-                  if (!nameRe.test((token = next()))) {
+                  if (!nameRe.test((token = next())))
                     throw illegal(token, "name");
-                  }
 
                   var value;
-                  const propName = token;
-                  if (peek() === "{") {
+                  var propName = token;
+                  if (peek() === "{")
                     value = parseOptionValue(parent, name + "." + token);
-                  } else {
+                  else {
                     skip(":");
-                    if (peek() === "{") {
+                    if (peek() === "{")
                       value = parseOptionValue(parent, name + "." + token);
-                    } else {
+                    else {
                       value = readValue(true);
                       setOption(parent, name + "." + token, value);
                     }
                   }
-                  const prevValue = result[propName];
-                  if (prevValue) {
-                    value = [].concat(prevValue).concat(value);
-                  }
+                  var prevValue = result[propName];
+                  if (prevValue) value = [].concat(prevValue).concat(value);
                   result[propName] = value;
                   skip(",", true);
                 }
                 return result;
               }
 
-              const simpleValue = readValue(true);
+              var simpleValue = readValue(true);
               setOption(parent, name, simpleValue);
               return simpleValue;
               // Does not enforce a delimiter to be universal
             }
 
             function setOption(parent, name, value) {
-              if (parent.setOption) {
-                parent.setOption(name, value);
-              }
+              if (parent.setOption) parent.setOption(name, value);
             }
 
             function setParsedOption(parent, name, value, propName) {
-              if (parent.setParsedOption) {
+              if (parent.setParsedOption)
                 parent.setParsedOption(name, value, propName);
-              }
             }
 
             function parseInlineOptions(parent) {
@@ -5607,22 +5244,16 @@ const Long = require("./long");
 
             function parseService(parent, token) {
               /* istanbul ignore if */
-              if (!nameRe.test((token = next()))) {
+              if (!nameRe.test((token = next())))
                 throw illegal(token, "service name");
-              }
 
-              const service = new Service(token);
+              var service = new Service(token);
               ifBlock(service, function parseService_block(token) {
-                if (parseCommon(service, token)) {
-                  return;
-                }
+                if (parseCommon(service, token)) return;
 
                 /* istanbul ignore else */
-                if (token === "rpc") {
-                  parseMethod(service, token);
-                } else {
-                  throw illegal(token);
-                }
+                if (token === "rpc") parseMethod(service, token);
+                else throw illegal(token);
               });
               parent.add(service);
             }
@@ -5630,48 +5261,38 @@ const Long = require("./long");
             function parseMethod(parent, token) {
               // Get the comment of the preceding line now (if one exists) in case the
               // method is defined across multiple lines.
-              const commentText = cmnt();
+              var commentText = cmnt();
 
-              const type = token;
+              var type = token;
 
               /* istanbul ignore if */
-              if (!nameRe.test((token = next()))) {
-                throw illegal(token, "name");
-              }
+              if (!nameRe.test((token = next()))) throw illegal(token, "name");
 
-              const name = token;
-              let requestType;
-              let requestStream;
-              let responseType;
-              let responseStream;
+              var name = token,
+                requestType,
+                requestStream,
+                responseType,
+                responseStream;
 
               skip("(");
-              if (skip("stream", true)) {
-                requestStream = true;
-              }
+              if (skip("stream", true)) requestStream = true;
 
               /* istanbul ignore if */
-              if (!typeRefRe.test((token = next()))) {
-                throw illegal(token);
-              }
+              if (!typeRefRe.test((token = next()))) throw illegal(token);
 
               requestType = token;
               skip(")");
               skip("returns");
               skip("(");
-              if (skip("stream", true)) {
-                responseStream = true;
-              }
+              if (skip("stream", true)) responseStream = true;
 
               /* istanbul ignore if */
-              if (!typeRefRe.test((token = next()))) {
-                throw illegal(token);
-              }
+              if (!typeRefRe.test((token = next()))) throw illegal(token);
 
               responseType = token;
               skip(")");
 
-              const method = new Method(
+              var method = new Method(
                 name,
                 type,
                 requestType,
@@ -5685,20 +5306,17 @@ const Long = require("./long");
                 if (token === "option") {
                   parseOption(method, token);
                   skip(";");
-                } else {
-                  throw illegal(token);
-                }
+                } else throw illegal(token);
               });
               parent.add(method);
             }
 
             function parseExtension(parent, token) {
               /* istanbul ignore if */
-              if (!typeRefRe.test((token = next()))) {
+              if (!typeRefRe.test((token = next())))
                 throw illegal(token, "reference");
-              }
 
-              const reference = token;
+              var reference = token;
               ifBlock(null, function parseExtension_block(token) {
                 switch (token) {
                   case "required":
@@ -5709,9 +5327,8 @@ const Long = require("./long");
 
                   default:
                     /* istanbul ignore if */
-                    if (!isProto3 || !typeRefRe.test(token)) {
+                    if (!isProto3 || !typeRefRe.test(token))
                       throw illegal(token);
-                    }
                     push(token);
                     parseField(parent, "optional", reference);
                     break;
@@ -5719,32 +5336,26 @@ const Long = require("./long");
               });
             }
 
-            let token;
+            var token;
             while ((token = next()) !== null) {
               switch (token) {
                 case "package":
                   /* istanbul ignore if */
-                  if (!head) {
-                    throw illegal(token);
-                  }
+                  if (!head) throw illegal(token);
 
                   parsePackage();
                   break;
 
                 case "import":
                   /* istanbul ignore if */
-                  if (!head) {
-                    throw illegal(token);
-                  }
+                  if (!head) throw illegal(token);
 
                   parseImport();
                   break;
 
                 case "syntax":
                   /* istanbul ignore if */
-                  if (!head) {
-                    throw illegal(token);
-                  }
+                  if (!head) throw illegal(token);
 
                   parseSyntax();
                   break;
@@ -5769,10 +5380,10 @@ const Long = require("./long");
             parse.filename = null;
             return {
               package: pkg,
-              imports,
-              weakImports,
-              syntax,
-              root,
+              imports: imports,
+              weakImports: weakImports,
+              syntax: syntax,
+              root: root,
             };
           }
 
@@ -5807,12 +5418,12 @@ const Long = require("./long");
           "use strict";
           module.exports = Reader;
 
-          const util = require(39);
+          var util = require(39);
 
-          let BufferReader; // cyclic
+          var BufferReader; // cyclic
 
-          const LongBits = util.LongBits;
-          const utf8 = util.utf8;
+          var LongBits = util.LongBits,
+            utf8 = util.utf8;
 
           /* istanbul ignore next */
           function indexOutOfRange(reader, writeLength) {
@@ -5852,23 +5463,20 @@ const Long = require("./long");
             this.len = buffer.length;
           }
 
-          const create_array =
+          var create_array =
             typeof Uint8Array !== "undefined"
               ? function create_typed_array(buffer) {
-                  if (buffer instanceof Uint8Array || Array.isArray(buffer)) {
+                  if (buffer instanceof Uint8Array || Array.isArray(buffer))
                     return new Reader(buffer);
-                  }
                   throw Error("illegal buffer");
                 }
               : /* istanbul ignore next */
                 function create_array(buffer) {
-                  if (Array.isArray(buffer)) {
-                    return new Reader(buffer);
-                  }
+                  if (Array.isArray(buffer)) return new Reader(buffer);
                   throw Error("illegal buffer");
                 };
 
-          const create = function create() {
+          var create = function create() {
             return util.Buffer
               ? function create_buffer_setup(buffer) {
                   return (Reader.create = function create_buffer(buffer) {
@@ -5901,7 +5509,7 @@ const Long = require("./long");
            * @returns {number} Value read
            */
           Reader.prototype.uint32 = (function read_uint32_setup() {
-            let value = 4294967295; // optimizer type-hint, tends to deopt otherwise (?!)
+            var value = 4294967295; // optimizer type-hint, tends to deopt otherwise (?!)
             return function read_uint32() {
               value = (this.buf[this.pos] & 127) >>> 0;
               if (this.buf[this.pos++] < 128) return value;
@@ -5936,7 +5544,7 @@ const Long = require("./long");
            * @returns {number} Value read
            */
           Reader.prototype.sint32 = function read_sint32() {
-            const value = this.uint32();
+            var value = this.uint32();
             return ((value >>> 1) ^ -(value & 1)) | 0;
           };
 
@@ -5944,37 +5552,29 @@ const Long = require("./long");
 
           function readLongVarint() {
             // tends to deopt with local vars for octet etc.
-            const bits = new LongBits(0, 0);
-            let i = 0;
+            var bits = new LongBits(0, 0);
+            var i = 0;
             if (this.len - this.pos > 4) {
               // fast route (lo)
               for (; i < 4; ++i) {
                 // 1st..4th
                 bits.lo =
                   (bits.lo | ((this.buf[this.pos] & 127) << (i * 7))) >>> 0;
-                if (this.buf[this.pos++] < 128) {
-                  return bits;
-                }
+                if (this.buf[this.pos++] < 128) return bits;
               }
               // 5th
               bits.lo = (bits.lo | ((this.buf[this.pos] & 127) << 28)) >>> 0;
               bits.hi = (bits.hi | ((this.buf[this.pos] & 127) >> 4)) >>> 0;
-              if (this.buf[this.pos++] < 128) {
-                return bits;
-              }
+              if (this.buf[this.pos++] < 128) return bits;
               i = 0;
             } else {
               for (; i < 3; ++i) {
                 /* istanbul ignore if */
-                if (this.pos >= this.len) {
-                  throw indexOutOfRange(this);
-                }
+                if (this.pos >= this.len) throw indexOutOfRange(this);
                 // 1st..3th
                 bits.lo =
                   (bits.lo | ((this.buf[this.pos] & 127) << (i * 7))) >>> 0;
-                if (this.buf[this.pos++] < 128) {
-                  return bits;
-                }
+                if (this.buf[this.pos++] < 128) return bits;
               }
               // 4th
               bits.lo =
@@ -5987,22 +5587,16 @@ const Long = require("./long");
                 // 6th..10th
                 bits.hi =
                   (bits.hi | ((this.buf[this.pos] & 127) << (i * 7 + 3))) >>> 0;
-                if (this.buf[this.pos++] < 128) {
-                  return bits;
-                }
+                if (this.buf[this.pos++] < 128) return bits;
               }
             } else {
               for (; i < 5; ++i) {
                 /* istanbul ignore if */
-                if (this.pos >= this.len) {
-                  throw indexOutOfRange(this);
-                }
+                if (this.pos >= this.len) throw indexOutOfRange(this);
                 // 6th..10th
                 bits.hi =
                   (bits.hi | ((this.buf[this.pos] & 127) << (i * 7 + 3))) >>> 0;
-                if (this.buf[this.pos++] < 128) {
-                  return bits;
-                }
+                if (this.buf[this.pos++] < 128) return bits;
               }
             }
             /* istanbul ignore next */
@@ -6057,9 +5651,7 @@ const Long = require("./long");
            */
           Reader.prototype.fixed32 = function read_fixed32() {
             /* istanbul ignore if */
-            if (this.pos + 4 > this.len) {
-              throw indexOutOfRange(this, 4);
-            }
+            if (this.pos + 4 > this.len) throw indexOutOfRange(this, 4);
 
             return readFixed32_end(this.buf, (this.pos += 4));
           };
@@ -6070,9 +5662,7 @@ const Long = require("./long");
            */
           Reader.prototype.sfixed32 = function read_sfixed32() {
             /* istanbul ignore if */
-            if (this.pos + 4 > this.len) {
-              throw indexOutOfRange(this, 4);
-            }
+            if (this.pos + 4 > this.len) throw indexOutOfRange(this, 4);
 
             return readFixed32_end(this.buf, (this.pos += 4)) | 0;
           };
@@ -6081,9 +5671,7 @@ const Long = require("./long");
 
           function readFixed64(/* this: Reader */) {
             /* istanbul ignore if */
-            if (this.pos + 8 > this.len) {
-              throw indexOutOfRange(this, 8);
-            }
+            if (this.pos + 8 > this.len) throw indexOutOfRange(this, 8);
 
             return new LongBits(
               readFixed32_end(this.buf, (this.pos += 4)),
@@ -6114,11 +5702,9 @@ const Long = require("./long");
            */
           Reader.prototype.float = function read_float() {
             /* istanbul ignore if */
-            if (this.pos + 4 > this.len) {
-              throw indexOutOfRange(this, 4);
-            }
+            if (this.pos + 4 > this.len) throw indexOutOfRange(this, 4);
 
-            const value = util.float.readFloatLE(this.buf, this.pos);
+            var value = util.float.readFloatLE(this.buf, this.pos);
             this.pos += 4;
             return value;
           };
@@ -6130,11 +5716,9 @@ const Long = require("./long");
            */
           Reader.prototype.double = function read_double() {
             /* istanbul ignore if */
-            if (this.pos + 8 > this.len) {
-              throw indexOutOfRange(this, 4);
-            }
+            if (this.pos + 8 > this.len) throw indexOutOfRange(this, 4);
 
-            const value = util.float.readDoubleLE(this.buf, this.pos);
+            var value = util.float.readDoubleLE(this.buf, this.pos);
             this.pos += 8;
             return value;
           };
@@ -6144,20 +5728,17 @@ const Long = require("./long");
            * @returns {Uint8Array} Value read
            */
           Reader.prototype.bytes = function read_bytes() {
-            const length = this.uint32();
-            const start = this.pos;
-            const end = this.pos + length;
+            var length = this.uint32(),
+              start = this.pos,
+              end = this.pos + length;
 
             /* istanbul ignore if */
-            if (end > this.len) {
-              throw indexOutOfRange(this, length);
-            }
+            if (end > this.len) throw indexOutOfRange(this, length);
 
             this.pos += length;
-            if (Array.isArray(this.buf)) {
+            if (Array.isArray(this.buf))
               // plain array
               return this.buf.slice(start, end);
-            }
             return start === end // fix for IE 10/Win8 and others' subarray returning array of size 1
               ? new this.buf.constructor(0)
               : this._slice.call(this.buf, start, end);
@@ -6168,7 +5749,7 @@ const Long = require("./long");
            * @returns {string} Value read
            */
           Reader.prototype.string = function read_string() {
-            const bytes = this.bytes();
+            var bytes = this.bytes();
             return utf8.read(bytes, 0, bytes.length);
           };
 
@@ -6180,16 +5761,13 @@ const Long = require("./long");
           Reader.prototype.skip = function skip(length) {
             if (typeof length === "number") {
               /* istanbul ignore if */
-              if (this.pos + length > this.len) {
+              if (this.pos + length > this.len)
                 throw indexOutOfRange(this, length);
-              }
               this.pos += length;
             } else {
               do {
                 /* istanbul ignore if */
-                if (this.pos >= this.len) {
-                  throw indexOutOfRange(this);
-                }
+                if (this.pos >= this.len) throw indexOutOfRange(this);
               } while (this.buf[this.pos++] & 128);
             }
             return this;
@@ -6234,7 +5812,7 @@ const Long = require("./long");
             Reader.create = create();
             BufferReader._configure();
 
-            const fn = "toLong";
+            var fn = "toLong";
             util.merge(Reader.prototype, {
               int64: function read_int64() {
                 return readLongVarint.call(this)[fn](false);
@@ -6266,12 +5844,12 @@ const Long = require("./long");
           module.exports = BufferReader;
 
           // extends Reader
-          const Reader = require(27);
+          var Reader = require(27);
           (BufferReader.prototype = Object.create(
             Reader.prototype,
           )).constructor = BufferReader;
 
-          const util = require(39);
+          var util = require(39);
 
           /**
            * Constructs a new buffer reader instance.
@@ -6292,16 +5870,15 @@ const Long = require("./long");
 
           BufferReader._configure = function () {
             /* istanbul ignore else */
-            if (util.Buffer) {
+            if (util.Buffer)
               BufferReader.prototype._slice = util.Buffer.prototype.slice;
-            }
           };
 
           /**
            * @override
            */
           BufferReader.prototype.string = function read_string_buffer() {
-            const len = this.uint32(); // modifies pos
+            var len = this.uint32(); // modifies pos
             return this.buf.utf8Slice
               ? this.buf.utf8Slice(
                   this.pos,
@@ -6331,16 +5908,16 @@ const Long = require("./long");
           module.exports = Root;
 
           // extends Namespace
-          const Namespace = require(23);
+          var Namespace = require(23);
           ((Root.prototype = Object.create(Namespace.prototype)).constructor =
             Root).className = "Root";
 
-          const Field = require(16);
-          const Enum = require(15);
-          const OneOf = require(25);
-          const util = require(37);
+          var Field = require(16),
+            Enum = require(15),
+            OneOf = require(25),
+            util = require(37);
 
-          let Type, // cyclic
+          var Type, // cyclic
             parse, // might be excluded
             common; // "
 
@@ -6374,12 +5951,8 @@ const Long = require("./long");
            * @returns {Root} Root namespace
            */
           Root.fromJSON = function fromJSON(json, root) {
-            if (!root) {
-              root = new Root();
-            }
-            if (json.options) {
-              root.setOptions(json.options);
-            }
+            if (!root) root = new Root();
+            if (json.options) root.setOptions(json.options);
             return root.addJSON(json.nested);
           };
 
@@ -6419,32 +5992,26 @@ const Long = require("./long");
               callback = options;
               options = undefined;
             }
-            const self = this;
-            if (!callback) {
-              return util.asPromise(load, self, filename, options);
-            }
+            var self = this;
+            if (!callback) return util.asPromise(load, self, filename, options);
 
-            const sync = callback === SYNC; // undocumented
+            var sync = callback === SYNC; // undocumented
 
             // Finishes loading by calling the callback (exactly once)
             function finish(err, root) {
               /* istanbul ignore if */
-              if (!callback) {
-                return;
-              }
-              const cb = callback;
+              if (!callback) return;
+              var cb = callback;
               callback = null;
-              if (sync) {
-                throw err;
-              }
+              if (sync) throw err;
               cb(err, root);
             }
 
             // Bundled definition existence checking
             function getBundledFileName(filename) {
-              const idx = filename.lastIndexOf("google/protobuf/");
+              var idx = filename.lastIndexOf("google/protobuf/");
               if (idx > -1) {
-                const altname = filename.substring(idx);
+                var altname = filename.substring(idx);
                 if (altname in common) return altname;
               }
               return null;
@@ -6453,60 +6020,48 @@ const Long = require("./long");
             // Processes a single file
             function process(filename, source) {
               try {
-                if (util.isString(source) && source.charAt(0) === "{") {
+                if (util.isString(source) && source.charAt(0) === "{")
                   source = JSON.parse(source);
-                }
-                if (!util.isString(source)) {
+                if (!util.isString(source))
                   self.setOptions(source.options).addJSON(source.nested);
-                } else {
+                else {
                   parse.filename = filename;
-                  const parsed = parse(source, self, options);
-                  let resolved;
-                  let i = 0;
-                  if (parsed.imports) {
-                    for (; i < parsed.imports.length; ++i) {
+                  var parsed = parse(source, self, options),
+                    resolved,
+                    i = 0;
+                  if (parsed.imports)
+                    for (; i < parsed.imports.length; ++i)
                       if (
                         (resolved =
                           getBundledFileName(parsed.imports[i]) ||
                           self.resolvePath(filename, parsed.imports[i]))
-                      ) {
+                      )
                         fetch(resolved);
-                      }
-                    }
-                  }
-                  if (parsed.weakImports) {
-                    for (i = 0; i < parsed.weakImports.length; ++i) {
+                  if (parsed.weakImports)
+                    for (i = 0; i < parsed.weakImports.length; ++i)
                       if (
                         (resolved =
                           getBundledFileName(parsed.weakImports[i]) ||
                           self.resolvePath(filename, parsed.weakImports[i]))
-                      ) {
+                      )
                         fetch(resolved, true);
-                      }
-                    }
-                  }
                 }
               } catch (err) {
                 finish(err);
               }
-              if (!sync && !queued) {
-                finish(null, self);
-              } // only once anyway
+              if (!sync && !queued) finish(null, self); // only once anyway
             }
 
             // Fetches a single file
             function fetch(filename, weak) {
               // Skip if already loaded / attempted
-              if (self.files.indexOf(filename) > -1) {
-                return;
-              }
+              if (self.files.indexOf(filename) > -1) return;
               self.files.push(filename);
 
               // Shortcut bundled definitions
               if (filename in common) {
-                if (sync) {
-                  process(filename, common[filename]);
-                } else {
+                if (sync) process(filename, common[filename]);
+                else {
                   ++queued;
                   setTimeout(function () {
                     --queued;
@@ -6518,13 +6073,11 @@ const Long = require("./long");
 
               // Otherwise fetch from disk or network
               if (sync) {
-                let source;
+                var source;
                 try {
                   source = util.fs.readFileSync(filename).toString("utf8");
                 } catch (err) {
-                  if (!weak) {
-                    finish(err);
-                  }
+                  if (!weak) finish(err);
                   return;
                 }
                 process(filename, source);
@@ -6533,17 +6086,13 @@ const Long = require("./long");
                 self.fetch(filename, function (err, source) {
                   --queued;
                   /* istanbul ignore if */
-                  if (!callback) {
-                    return;
-                  } // terminated meanwhile
+                  if (!callback) return; // terminated meanwhile
                   if (err) {
                     /* istanbul ignore else */
-                    if (!weak) {
-                      finish(err);
-                    } else if (!queued) {
+                    if (!weak) finish(err);
+                    else if (!queued)
                       // can't be covered reliably
                       finish(null, self);
-                    }
                     return;
                   }
                   process(filename, source);
@@ -6554,21 +6103,13 @@ const Long = require("./long");
 
             // Assembling the root namespace doesn't require working type
             // references anymore, so we can load everything in parallel
-            if (util.isString(filename)) {
-              filename = [filename];
-            }
-            for (var i = 0, resolved; i < filename.length; ++i) {
-              if ((resolved = self.resolvePath("", filename[i]))) {
+            if (util.isString(filename)) filename = [filename];
+            for (var i = 0, resolved; i < filename.length; ++i)
+              if ((resolved = self.resolvePath("", filename[i])))
                 fetch(resolved);
-              }
-            }
 
-            if (sync) {
-              return self;
-            }
-            if (!queued) {
-              finish(null, self);
-            }
+            if (sync) return self;
+            if (!queued) finish(null, self);
             return undefined;
           };
           // function load(filename:string, options:IParseOptions, callback:LoadCallback):undefined
@@ -6602,9 +6143,7 @@ const Long = require("./long");
            * @throws {Error} If synchronous fetching is not supported (i.e. in browsers) or if a file's syntax is invalid
            */
           Root.prototype.loadSync = function loadSync(filename, options) {
-            if (!util.isNode) {
-              throw Error("not supported");
-            }
+            if (!util.isNode) throw Error("not supported");
             return this.load(filename, options, SYNC);
           };
 
@@ -6612,7 +6151,7 @@ const Long = require("./long");
            * @override
            */
           Root.prototype.resolveAll = function resolveAll() {
-            if (this.deferred.length) {
+            if (this.deferred.length)
               throw Error(
                 "unresolvable extensions: " +
                   this.deferred
@@ -6626,12 +6165,11 @@ const Long = require("./long");
                     })
                     .join(", "),
               );
-            }
             return Namespace.prototype.resolveAll.call(this);
           };
 
           // only uppercased (and thus conflict-free) children are exposed, see below
-          const exposeRe = /^[A-Z]/;
+          var exposeRe = /^[A-Z]/;
 
           /**
            * Handles a deferred declaring extension field by creating a sister field to represent it within its extended type.
@@ -6642,9 +6180,9 @@ const Long = require("./long");
            * @ignore
            */
           function tryHandleExtension(root, field) {
-            const extendedType = field.parent.lookup(field.extend);
+            var extendedType = field.parent.lookup(field.extend);
             if (extendedType) {
-              const sisterField = new Field(
+              var sisterField = new Field(
                 field.fullName,
                 field.id,
                 field.type,
@@ -6672,36 +6210,27 @@ const Long = require("./long");
                 /* an extension field (implies not part of a oneof) */ object.extend !==
                   undefined &&
                 /* not already handled */ !object.extensionField
-              ) {
-                if (!tryHandleExtension(this, object)) {
+              )
+                if (!tryHandleExtension(this, object))
                   this.deferred.push(object);
-                }
-              }
             } else if (object instanceof Enum) {
-              if (exposeRe.test(object.name)) {
-                object.parent[object.name] = object.values;
-              } // expose enum values as property of its parent
+              if (exposeRe.test(object.name))
+                object.parent[object.name] = object.values; // expose enum values as property of its parent
             } else if (!(object instanceof OneOf)) {
-              /* everything else is a namespace */ if (object instanceof Type) {
+              /* everything else is a namespace */ if (object instanceof Type)
                 // Try to handle any deferred extensions
-                for (let i = 0; i < this.deferred.length; ) {
-                  if (tryHandleExtension(this, this.deferred[i])) {
+                for (var i = 0; i < this.deferred.length; )
+                  if (tryHandleExtension(this, this.deferred[i]))
                     this.deferred.splice(i, 1);
-                  } else {
-                    ++i;
-                  }
-                }
-              }
+                  else ++i;
               for (
-                let j = 0;
+                var j = 0;
                 j < /* initializes */ object.nestedArray.length;
                 ++j // recurse into the namespace
-              ) {
+              )
                 this._handleAdd(object._nestedArray[j]);
-              }
-              if (exposeRe.test(object.name)) {
-                object.parent[object.name] = object;
-              } // expose namespace as property of its parent
+              if (exposeRe.test(object.name))
+                object.parent[object.name] = object; // expose namespace as property of its parent
             }
 
             // The above also adds uppercased (and thus conflict-free) nested types, services and enums as
@@ -6724,29 +6253,22 @@ const Long = require("./long");
                   object.extensionField = null;
                 } else {
                   // cancel the extension
-                  const index = this.deferred.indexOf(object);
+                  var index = this.deferred.indexOf(object);
                   /* istanbul ignore else */
-                  if (index > -1) {
-                    this.deferred.splice(index, 1);
-                  }
+                  if (index > -1) this.deferred.splice(index, 1);
                 }
               }
             } else if (object instanceof Enum) {
-              if (exposeRe.test(object.name)) {
-                delete object.parent[object.name];
-              } // unexpose enum values
+              if (exposeRe.test(object.name)) delete object.parent[object.name]; // unexpose enum values
             } else if (object instanceof Namespace) {
               for (
-                let i = 0;
+                var i = 0;
                 i < /* initializes */ object.nestedArray.length;
                 ++i // recurse into the namespace
-              ) {
+              )
                 this._handleRemove(object._nestedArray[i]);
-              }
 
-              if (exposeRe.test(object.name)) {
-                delete object.parent[object.name];
-              } // unexpose namespaces
+              if (exposeRe.test(object.name)) delete object.parent[object.name]; // unexpose namespaces
             }
           };
 
@@ -6790,7 +6312,7 @@ const Long = require("./long");
            * Streaming RPC helpers.
            * @namespace
            */
-          const rpc = exports;
+          var rpc = exports;
 
           /**
            * RPC implementation passed to {@link Service#create} performing a service request on network level, i.e. by utilizing http requests or websockets.
@@ -6828,7 +6350,7 @@ const Long = require("./long");
           "use strict";
           module.exports = Service;
 
-          const util = require(39);
+          var util = require(39);
 
           // Extends EventEmitter
           (Service.prototype = Object.create(
@@ -6869,9 +6391,8 @@ const Long = require("./long");
            * @param {boolean} [responseDelimited=false] Whether responses are length-delimited
            */
           function Service(rpcImpl, requestDelimited, responseDelimited) {
-            if (typeof rpcImpl !== "function") {
+            if (typeof rpcImpl !== "function")
               throw TypeError("rpcImpl must be a function");
-            }
 
             util.EventEmitter.call(this);
 
@@ -6912,12 +6433,10 @@ const Long = require("./long");
             request,
             callback,
           ) {
-            if (!request) {
-              throw TypeError("request must be specified");
-            }
+            if (!request) throw TypeError("request must be specified");
 
-            const self = this;
-            if (!callback) {
+            var self = this;
+            if (!callback)
               return util.asPromise(
                 rpcCall,
                 self,
@@ -6926,7 +6445,6 @@ const Long = require("./long");
                 responseCtor,
                 request,
               );
-            }
 
             if (!self.rpcImpl) {
               setTimeout(function () {
@@ -6984,10 +6502,9 @@ const Long = require("./long");
            */
           Service.prototype.end = function end(endedByRPC) {
             if (this.rpcImpl) {
-              if (!endedByRPC) {
+              if (!endedByRPC)
                 // signal end to rpcImpl
                 this.rpcImpl(null, null, null);
-              }
               this.rpcImpl = null;
               this.emit("end").off();
             }
@@ -7002,14 +6519,14 @@ const Long = require("./long");
           module.exports = Service;
 
           // extends Namespace
-          const Namespace = require(23);
+          var Namespace = require(23);
           ((Service.prototype = Object.create(
             Namespace.prototype,
           )).constructor = Service).className = "Service";
 
-          const Method = require(22);
-          const util = require(37);
-          const rpc = require(31);
+          var Method = require(22),
+            util = require(37),
+            rpc = require(31);
 
           /**
            * Constructs a new service instance.
@@ -7052,20 +6569,16 @@ const Long = require("./long");
            * @throws {TypeError} If arguments are invalid
            */
           Service.fromJSON = function fromJSON(name, json) {
-            const service = new Service(name, json.options);
+            var service = new Service(name, json.options);
             /* istanbul ignore else */
-            if (json.methods) {
+            if (json.methods)
               for (
-                let names = Object.keys(json.methods), i = 0;
+                var names = Object.keys(json.methods), i = 0;
                 i < names.length;
                 ++i
-              ) {
+              )
                 service.add(Method.fromJSON(names[i], json.methods[names[i]]));
-              }
-            }
-            if (json.nested) {
-              service.addJSON(json.nested);
-            }
+            if (json.nested) service.addJSON(json.nested);
             service.comment = json.comment;
             return service;
           };
@@ -7076,11 +6589,11 @@ const Long = require("./long");
            * @returns {IService} Service descriptor
            */
           Service.prototype.toJSON = function toJSON(toJSONOptions) {
-            const inherited = Namespace.prototype.toJSON.call(
+            var inherited = Namespace.prototype.toJSON.call(
               this,
               toJSONOptions,
             );
-            const keepComments = toJSONOptions
+            var keepComments = toJSONOptions
               ? Boolean(toJSONOptions.keepComments)
               : false;
             return util.toObject([
@@ -7129,10 +6642,8 @@ const Long = require("./long");
            * @override
            */
           Service.prototype.resolveAll = function resolveAll() {
-            const methods = this.methodsArray;
-            for (let i = 0; i < methods.length; ++i) {
-              methods[i].resolve();
-            }
+            var methods = this.methodsArray;
+            for (var i = 0; i < methods.length; ++i) methods[i].resolve();
             return Namespace.prototype.resolve.call(this);
           };
 
@@ -7141,9 +6652,8 @@ const Long = require("./long");
            */
           Service.prototype.add = function add(object) {
             /* istanbul ignore if */
-            if (this.get(object.name)) {
+            if (this.get(object.name))
               throw Error("duplicate name '" + object.name + "' in " + this);
-            }
 
             if (object instanceof Method) {
               this.methods[object.name] = object;
@@ -7159,9 +6669,8 @@ const Long = require("./long");
           Service.prototype.remove = function remove(object) {
             if (object instanceof Method) {
               /* istanbul ignore if */
-              if (this.methods[object.name] !== object) {
+              if (this.methods[object.name] !== object)
                 throw Error(object + " is not a member of " + this);
-              }
 
               delete this.methods[object.name];
               object.parent = null;
@@ -7182,7 +6691,7 @@ const Long = require("./long");
             requestDelimited,
             responseDelimited,
           ) {
-            const rpcService = new rpc.Service(
+            var rpcService = new rpc.Service(
               rpcImpl,
               requestDelimited,
               responseDelimited,
@@ -7192,7 +6701,7 @@ const Long = require("./long");
               i < /* initializes */ this.methodsArray.length;
               ++i
             ) {
-              const methodName = util
+              var methodName = util
                 .lcFirst((method = this._methodsArray[i]).resolve().name)
                 .replace(/[^$\w_]/g, "");
               rpcService[methodName] = util.codegen(
@@ -7214,17 +6723,17 @@ const Long = require("./long");
           "use strict";
           module.exports = tokenize;
 
-          const delimRe = /[\s{}=;:[\],'"()<>]/g;
-          const stringDoubleRe = /(?:"([^"\\]*(?:\\.[^"\\]*)*)")/g;
-          const stringSingleRe = /(?:'([^'\\]*(?:\\.[^'\\]*)*)')/g;
+          var delimRe = /[\s{}=;:[\],'"()<>]/g,
+            stringDoubleRe = /(?:"([^"\\]*(?:\\.[^"\\]*)*)")/g,
+            stringSingleRe = /(?:'([^'\\]*(?:\\.[^'\\]*)*)')/g;
 
-          const setCommentRe = /^ *[*/]+ */;
-          const setCommentAltRe = /^\s*\*?\/*/;
-          const setCommentSplitRe = /\n/g;
-          const whitespaceRe = /\s/;
-          const unescapeRe = /\\(.?)/g;
+          var setCommentRe = /^ *[*/]+ */,
+            setCommentAltRe = /^\s*\*?\/*/,
+            setCommentSplitRe = /\n/g,
+            whitespaceRe = /\s/,
+            unescapeRe = /\\(.?)/g;
 
-          const unescapeMap = {
+          var unescapeMap = {
             0: "\0",
             r: "\r",
             n: "\n",
@@ -7313,18 +6822,18 @@ const Long = require("./long");
             /* eslint-disable callback-return */
             source = source.toString();
 
-            let offset = 0;
-            const length = source.length;
-            let line = 1;
-            let commentType = null;
-            let commentText = null;
-            let commentLine = 0;
-            let commentLineEmpty = false;
-            let commentIsLeading = false;
+            var offset = 0,
+              length = source.length,
+              line = 1,
+              commentType = null,
+              commentText = null,
+              commentLine = 0,
+              commentLineEmpty = false,
+              commentIsLeading = false;
 
-            const stack = [];
+            var stack = [];
 
-            let stringDelim = null;
+            var stringDelim = null;
 
             /* istanbul ignore next */
             /**
@@ -7343,12 +6852,10 @@ const Long = require("./long");
              * @inner
              */
             function readString() {
-              const re = stringDelim === "'" ? stringSingleRe : stringDoubleRe;
+              var re = stringDelim === "'" ? stringSingleRe : stringDoubleRe;
               re.lastIndex = offset - 1;
-              const match = re.exec(source);
-              if (!match) {
-                throw illegal("string");
-              }
+              var match = re.exec(source);
+              if (!match) throw illegal("string");
               offset = re.lastIndex;
               push(stringDelim);
               stringDelim = null;
@@ -7378,14 +6885,14 @@ const Long = require("./long");
               commentLine = line;
               commentLineEmpty = false;
               commentIsLeading = isLeading;
-              let lookback;
+              var lookback;
               if (alternateCommentMode) {
                 lookback = 2; // alternate comment parsing: "//" or "/*"
               } else {
                 lookback = 3; // "///" or "/**"
               }
-              let commentOffset = start - lookback;
-              let c;
+              var commentOffset = start - lookback,
+                c;
               do {
                 if (
                   --commentOffset < 0 ||
@@ -7395,34 +6902,31 @@ const Long = require("./long");
                   break;
                 }
               } while (c === " " || c === "\t");
-              const lines = source
-                .substring(start, end)
-                .split(setCommentSplitRe);
-              for (let i = 0; i < lines.length; ++i) {
+              var lines = source.substring(start, end).split(setCommentSplitRe);
+              for (var i = 0; i < lines.length; ++i)
                 lines[i] = lines[i]
                   .replace(
                     alternateCommentMode ? setCommentAltRe : setCommentRe,
                     "",
                   )
                   .trim();
-              }
               commentText = lines.join("\n").trim();
             }
 
             function isDoubleSlashCommentLine(startOffset) {
-              const endOffset = findEndOfLine(startOffset);
+              var endOffset = findEndOfLine(startOffset);
 
               // see if remaining line matches comment pattern
-              const lineText = source.substring(startOffset, endOffset);
+              var lineText = source.substring(startOffset, endOffset);
               // look for 1 or 2 slashes since startOffset would already point past
               // the first slash that started the comment.
-              const isComment = /^\s*\/{1,2}/.test(lineText);
+              var isComment = /^\s*\/{1,2}/.test(lineText);
               return isComment;
             }
 
             function findEndOfLine(cursor) {
               // find end of cursor's line
-              let endOffset = cursor;
+              var endOffset = cursor;
               while (endOffset < length && charAt(endOffset) !== "\n") {
                 endOffset++;
               }
@@ -7435,31 +6939,23 @@ const Long = require("./long");
              * @inner
              */
             function next() {
-              if (stack.length > 0) {
-                return stack.shift();
-              }
-              if (stringDelim) {
-                return readString();
-              }
-              let repeat;
-              let prev;
-              let curr;
-              let start;
-              let isDoc;
-              let isLeadingComment = offset === 0;
+              if (stack.length > 0) return stack.shift();
+              if (stringDelim) return readString();
+              var repeat,
+                prev,
+                curr,
+                start,
+                isDoc,
+                isLeadingComment = offset === 0;
               do {
-                if (offset === length) {
-                  return null;
-                }
+                if (offset === length) return null;
                 repeat = false;
                 while (whitespaceRe.test((curr = charAt(offset)))) {
                   if (curr === "\n") {
                     isLeadingComment = true;
                     ++line;
                   }
-                  if (++offset === length) {
-                    return null;
-                  }
+                  if (++offset === length) return null;
                 }
 
                 if (charAt(offset) === "/") {
@@ -7533,18 +7029,13 @@ const Long = require("./long");
 
               // offset !== length if we got here
 
-              let end = offset;
+              var end = offset;
               delimRe.lastIndex = 0;
-              const delim = delimRe.test(charAt(end++));
-              if (!delim) {
-                while (end < length && !delimRe.test(charAt(end))) {
-                  ++end;
-                }
-              }
-              const token = source.substring(offset, (offset = end));
-              if (token === '"' || token === "'") {
-                stringDelim = token;
-              }
+              var delim = delimRe.test(charAt(end++));
+              if (!delim)
+                while (end < length && !delimRe.test(charAt(end))) ++end;
+              var token = source.substring(offset, (offset = end));
+              if (token === '"' || token === "'") stringDelim = token;
               return token;
             }
 
@@ -7565,10 +7056,8 @@ const Long = require("./long");
              */
             function peek() {
               if (!stack.length) {
-                const token = next();
-                if (token === null) {
-                  return null;
-                }
+                var token = next();
+                if (token === null) return null;
                 push(token);
               }
               return stack[0];
@@ -7583,17 +7072,16 @@ const Long = require("./long");
              * @inner
              */
             function skip(expected, optional) {
-              const actual = peek();
-              const equals = actual === expected;
+              var actual = peek(),
+                equals = actual === expected;
               if (equals) {
                 next();
                 return true;
               }
-              if (!optional) {
+              if (!optional)
                 throw illegal(
                   "token '" + actual + "', '" + expected + "' expected",
                 );
-              }
               return false;
             }
 
@@ -7604,7 +7092,7 @@ const Long = require("./long");
              * @inner
              */
             function cmnt(trailingLine) {
-              let ret = null;
+              var ret = null;
               if (trailingLine === undefined) {
                 if (
                   commentLine === line - 1 &&
@@ -7632,11 +7120,11 @@ const Long = require("./long");
 
             return Object.defineProperty(
               {
-                next,
-                peek,
-                push,
-                skip,
-                cmnt,
+                next: next,
+                peek: peek,
+                push: push,
+                skip: skip,
+                cmnt: cmnt,
               },
               "line",
               {
@@ -7656,24 +7144,24 @@ const Long = require("./long");
           module.exports = Type;
 
           // extends Namespace
-          const Namespace = require(23);
+          var Namespace = require(23);
           ((Type.prototype = Object.create(Namespace.prototype)).constructor =
             Type).className = "Type";
 
-          const Enum = require(15);
-          const OneOf = require(25);
-          const Field = require(16);
-          const MapField = require(20);
-          const Service = require(33);
-          const Message = require(21);
-          const Reader = require(27);
-          const Writer = require(42);
-          const util = require(37);
-          const encoder = require(14);
-          const decoder = require(13);
-          const verifier = require(40);
-          const converter = require(12);
-          const wrappers = require(41);
+          var Enum = require(15),
+            OneOf = require(25),
+            Field = require(16),
+            MapField = require(20),
+            Service = require(33),
+            Message = require(21),
+            Reader = require(27),
+            Writer = require(42),
+            util = require(37),
+            encoder = require(14),
+            decoder = require(13),
+            verifier = require(40),
+            converter = require(12),
+            wrappers = require(41);
 
           /**
            * Constructs a new reflected message type instance.
@@ -7710,7 +7198,7 @@ const Long = require("./long");
              */
             this.reserved = undefined; // toJSON
 
-            /* ?
+            /*?
              * Whether this type is a legacy group.
              * @type {boolean|undefined}
              */
@@ -7755,23 +7243,20 @@ const Long = require("./long");
             fieldsById: {
               get: function () {
                 /* istanbul ignore if */
-                if (this._fieldsById) {
-                  return this._fieldsById;
-                }
+                if (this._fieldsById) return this._fieldsById;
 
                 this._fieldsById = {};
                 for (
-                  let names = Object.keys(this.fields), i = 0;
+                  var names = Object.keys(this.fields), i = 0;
                   i < names.length;
                   ++i
                 ) {
-                  const field = this.fields[names[i]];
-                  const id = field.id;
+                  var field = this.fields[names[i]],
+                    id = field.id;
 
                   /* istanbul ignore if */
-                  if (this._fieldsById[id]) {
+                  if (this._fieldsById[id])
                     throw Error("duplicate id " + id + " in " + this);
-                  }
 
                   this._fieldsById[id] = field;
                 }
@@ -7823,7 +7308,7 @@ const Long = require("./long");
               },
               set: function (ctor) {
                 // Ensure proper prototype
-                const prototype = ctor.prototype;
+                var prototype = ctor.prototype;
                 if (!(prototype instanceof Message)) {
                   (ctor.prototype = new Message()).constructor = ctor;
                   util.merge(ctor.prototype, prototype);
@@ -7838,26 +7323,18 @@ const Long = require("./long");
                 this._ctor = ctor;
 
                 // Messages have non-enumerable default values on their prototype
-                let i = 0;
-                for (; i < /* initializes */ this.fieldsArray.length; ++i) {
-                  this._fieldsArray[i].resolve();
-                } // ensures a proper value
+                var i = 0;
+                for (; i < /* initializes */ this.fieldsArray.length; ++i)
+                  this._fieldsArray[i].resolve(); // ensures a proper value
 
                 // Messages have non-enumerable getters and setters for each virtual oneof field
-                const ctorProperties = {};
-                for (
-                  i = 0;
-                  i < /* initializes */ this.oneofsArray.length;
-                  ++i
-                ) {
+                var ctorProperties = {};
+                for (i = 0; i < /* initializes */ this.oneofsArray.length; ++i)
                   ctorProperties[this._oneofsArray[i].resolve().name] = {
                     get: util.oneOfGetter(this._oneofsArray[i].oneof),
                     set: util.oneOfSetter(this._oneofsArray[i].oneof),
                   };
-                }
-                if (i) {
-                  Object.defineProperties(ctor.prototype, ctorProperties);
-                }
+                if (i) Object.defineProperties(ctor.prototype, ctorProperties);
               },
             },
           });
@@ -7869,15 +7346,13 @@ const Long = require("./long");
            */
           Type.generateConstructor = function generateConstructor(mtype) {
             /* eslint-disable no-unexpected-multiline */
-            const gen = util.codegen(["p"], mtype.name);
+            var gen = util.codegen(["p"], mtype.name);
             // explicitly initialize mutable object/array fields so that these aren't just inherited from the prototype
-            for (var i = 0, field; i < mtype.fieldsArray.length; ++i) {
-              if ((field = mtype._fieldsArray[i]).map) {
+            for (var i = 0, field; i < mtype.fieldsArray.length; ++i)
+              if ((field = mtype._fieldsArray[i]).map)
                 gen("this%s={}", util.safeProp(field.name));
-              } else if (field.repeated) {
+              else if (field.repeated)
                 gen("this%s=[]", util.safeProp(field.name));
-              }
-            }
             return gen(
               "if(p)for(var ks=Object.keys(p),i=0;i<ks.length;++i)if(p[ks[i]]!=null)",
             )(
@@ -7913,34 +7388,31 @@ const Long = require("./long");
            * @returns {Type} Created message type
            */
           Type.fromJSON = function fromJSON(name, json) {
-            const type = new Type(name, json.options);
+            var type = new Type(name, json.options);
             type.extensions = json.extensions;
             type.reserved = json.reserved;
-            let names = Object.keys(json.fields);
-            let i = 0;
-            for (; i < names.length; ++i) {
+            var names = Object.keys(json.fields),
+              i = 0;
+            for (; i < names.length; ++i)
               type.add(
                 (typeof json.fields[names[i]].keyType !== "undefined"
                   ? MapField.fromJSON
                   : Field.fromJSON)(names[i], json.fields[names[i]]),
               );
-            }
-            if (json.oneofs) {
+            if (json.oneofs)
               for (
                 names = Object.keys(json.oneofs), i = 0;
                 i < names.length;
                 ++i
-              ) {
+              )
                 type.add(OneOf.fromJSON(names[i], json.oneofs[names[i]]));
-              }
-            }
-            if (json.nested) {
+            if (json.nested)
               for (
                 names = Object.keys(json.nested), i = 0;
                 i < names.length;
                 ++i
               ) {
-                const nested = json.nested[names[i]];
+                var nested = json.nested[names[i]];
                 type.add(
                   // most to least likely
                   (nested.id !== undefined
@@ -7954,19 +7426,12 @@ const Long = require("./long");
                           : Namespace.fromJSON)(names[i], nested),
                 );
               }
-            }
-            if (json.extensions && json.extensions.length) {
+            if (json.extensions && json.extensions.length)
               type.extensions = json.extensions;
-            }
-            if (json.reserved && json.reserved.length) {
+            if (json.reserved && json.reserved.length)
               type.reserved = json.reserved;
-            }
-            if (json.group) {
-              type.group = true;
-            }
-            if (json.comment) {
-              type.comment = json.comment;
-            }
+            if (json.group) type.group = true;
+            if (json.comment) type.comment = json.comment;
             return type;
           };
 
@@ -7976,11 +7441,11 @@ const Long = require("./long");
            * @returns {IType} Message type descriptor
            */
           Type.prototype.toJSON = function toJSON(toJSONOptions) {
-            const inherited = Namespace.prototype.toJSON.call(
+            var inherited = Namespace.prototype.toJSON.call(
               this,
               toJSONOptions,
             );
-            const keepComments = toJSONOptions
+            var keepComments = toJSONOptions
               ? Boolean(toJSONOptions.keepComments)
               : false;
             return util.toObject([
@@ -8014,16 +7479,12 @@ const Long = require("./long");
            * @override
            */
           Type.prototype.resolveAll = function resolveAll() {
-            const fields = this.fieldsArray;
-            let i = 0;
-            while (i < fields.length) {
-              fields[i++].resolve();
-            }
-            const oneofs = this.oneofsArray;
+            var fields = this.fieldsArray,
+              i = 0;
+            while (i < fields.length) fields[i++].resolve();
+            var oneofs = this.oneofsArray;
             i = 0;
-            while (i < oneofs.length) {
-              oneofs[i++].resolve();
-            }
+            while (i < oneofs.length) oneofs[i++].resolve();
             return Namespace.prototype.resolveAll.call(this);
           };
 
@@ -8047,9 +7508,8 @@ const Long = require("./long");
            * @throws {Error} If there is already a nested object with this name or, if a field, when there is already a field with this id
            */
           Type.prototype.add = function add(object) {
-            if (this.get(object.name)) {
+            if (this.get(object.name))
               throw Error("duplicate name '" + object.name + "' in " + this);
-            }
 
             if (object instanceof Field && object.extend === undefined) {
               // NOTE: Extension fields aren't actual fields on the declaring type, but nested objects.
@@ -8061,30 +7521,23 @@ const Long = require("./long");
                 this._fieldsById
                   ? /* istanbul ignore next */ this._fieldsById[object.id]
                   : this.fieldsById[object.id]
-              ) {
+              )
                 throw Error("duplicate id " + object.id + " in " + this);
-              }
-              if (this.isReservedId(object.id)) {
+              if (this.isReservedId(object.id))
                 throw Error("id " + object.id + " is reserved in " + this);
-              }
-              if (this.isReservedName(object.name)) {
+              if (this.isReservedName(object.name))
                 throw Error(
                   "name '" + object.name + "' is reserved in " + this,
                 );
-              }
 
-              if (object.parent) {
-                object.parent.remove(object);
-              }
+              if (object.parent) object.parent.remove(object);
               this.fields[object.name] = object;
               object.message = this;
               object.onAdd(this);
               return clearCache(this);
             }
             if (object instanceof OneOf) {
-              if (!this.oneofs) {
-                this.oneofs = {};
-              }
+              if (!this.oneofs) this.oneofs = {};
               this.oneofs[object.name] = object;
               object.onAdd(this);
               return clearCache(this);
@@ -8104,9 +7557,8 @@ const Long = require("./long");
               // See Type#add for the reason why extension fields are excluded here.
 
               /* istanbul ignore if */
-              if (!this.fields || this.fields[object.name] !== object) {
+              if (!this.fields || this.fields[object.name] !== object)
                 throw Error(object + " is not a member of " + this);
-              }
 
               delete this.fields[object.name];
               object.parent = null;
@@ -8115,9 +7567,8 @@ const Long = require("./long");
             }
             if (object instanceof OneOf) {
               /* istanbul ignore if */
-              if (!this.oneofs || this.oneofs[object.name] !== object) {
+              if (!this.oneofs || this.oneofs[object.name] !== object)
                 throw Error(object + " is not a member of " + this);
-              }
 
               delete this.oneofs[object.name];
               object.parent = null;
@@ -8162,44 +7613,39 @@ const Long = require("./long");
             // Sets up everything at once so that the prototype chain does not have to be re-evaluated
             // multiple times (V8, soft-deopt prototype-check).
 
-            const fullName = this.fullName;
-            const types = [];
-            for (
-              let i = 0;
-              i < /* initializes */ this.fieldsArray.length;
-              ++i
-            ) {
+            var fullName = this.fullName,
+              types = [];
+            for (var i = 0; i < /* initializes */ this.fieldsArray.length; ++i)
               types.push(this._fieldsArray[i].resolve().resolvedType);
-            }
 
             // Replace setup methods with type-specific generated functions
             this.encode = encoder(this)({
-              Writer,
-              types,
-              util,
+              Writer: Writer,
+              types: types,
+              util: util,
             });
             this.decode = decoder(this)({
-              Reader,
-              types,
-              util,
+              Reader: Reader,
+              types: types,
+              util: util,
             });
             this.verify = verifier(this)({
-              types,
-              util,
+              types: types,
+              util: util,
             });
             this.fromObject = converter.fromObject(this)({
-              types,
-              util,
+              types: types,
+              util: util,
             });
             this.toObject = converter.toObject(this)({
-              types,
-              util,
+              types: types,
+              util: util,
             });
 
             // Inject custom wrappers for common types
-            const wrapper = wrappers[fullName];
+            var wrapper = wrappers[fullName];
             if (wrapper) {
-              const originalThis = Object.create(this);
+              var originalThis = Object.create(this);
               // if (wrapper.fromObject) {
               originalThis.fromObject = this.fromObject;
               this.fromObject = wrapper.fromObject.bind(originalThis);
@@ -8259,9 +7705,7 @@ const Long = require("./long");
            * @throws {util.ProtocolError} If required fields are missing
            */
           Type.prototype.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof Reader)) {
-              reader = Reader.create(reader);
-            }
+            if (!(reader instanceof Reader)) reader = Reader.create(reader);
             return this.decode(reader, reader.uint32());
           };
 
@@ -8359,11 +7803,11 @@ const Long = require("./long");
            * Common type constants.
            * @namespace
            */
-          const types = exports;
+          var types = exports;
 
-          const util = require(37);
+          var util = require(37);
 
-          const s = [
+          var s = [
             "double", // 0
             "float", // 1
             "int32", // 2
@@ -8382,8 +7826,8 @@ const Long = require("./long");
           ];
 
           function bake(values, offset) {
-            let i = 0;
-            const o = {};
+            var i = 0,
+              o = {};
             offset |= 0;
             while (i < values.length) o[s[i + offset]] = values[i++];
             return o;
@@ -8538,11 +7982,11 @@ const Long = require("./long");
            * Various utility functions.
            * @namespace
            */
-          const util = (module.exports = require(39));
+          var util = (module.exports = require(39));
 
-          const roots = require(30);
+          var roots = require(30);
 
-          let Type, // cyclic
+          var Type, // cyclic
             Enum;
 
           util.codegen = require(3);
@@ -8562,12 +8006,10 @@ const Long = require("./long");
            */
           util.toArray = function toArray(object) {
             if (object) {
-              const keys = Object.keys(object);
-              const array = new Array(keys.length);
-              let index = 0;
-              while (index < keys.length) {
-                array[index] = object[keys[index++]];
-              }
+              var keys = Object.keys(object),
+                array = new Array(keys.length),
+                index = 0;
+              while (index < keys.length) array[index] = object[keys[index++]];
               return array;
             }
             return [];
@@ -8579,20 +8021,18 @@ const Long = require("./long");
            * @returns {Object.<string,*>} Converted object
            */
           util.toObject = function toObject(array) {
-            const object = {};
-            let index = 0;
+            var object = {},
+              index = 0;
             while (index < array.length) {
-              const key = array[index++];
-              const val = array[index++];
-              if (val !== undefined) {
-                object[key] = val;
-              }
+              var key = array[index++],
+                val = array[index++];
+              if (val !== undefined) object[key] = val;
             }
             return object;
           };
 
-          const safePropBackslashRe = /\\/g;
-          const safePropQuoteRe = /"/g;
+          var safePropBackslashRe = /\\/g,
+            safePropQuoteRe = /"/g;
 
           /**
            * Tests whether the specified name is a reserved word in JS.
@@ -8611,7 +8051,7 @@ const Long = require("./long");
            * @returns {string} Safe accessor
            */
           util.safeProp = function safeProp(prop) {
-            if (!/^[$\w_]+$/.test(prop) || util.isReserved(prop)) {
+            if (!/^[$\w_]+$/.test(prop) || util.isReserved(prop))
               return (
                 '["' +
                 prop
@@ -8619,7 +8059,6 @@ const Long = require("./long");
                   .replace(safePropQuoteRe, '\\"') +
                 '"]'
               );
-            }
             return "." + prop;
           };
 
@@ -8632,7 +8071,7 @@ const Long = require("./long");
             return str.charAt(0).toUpperCase() + str.substring(1);
           };
 
-          const camelCaseRe = /_([a-z])/g;
+          var camelCaseRe = /_([a-z])/g;
 
           /**
            * Converts a string to camel case.
@@ -8678,11 +8117,9 @@ const Long = require("./long");
             }
 
             /* istanbul ignore next */
-            if (!Type) {
-              Type = require(35);
-            }
+            if (!Type) Type = require(35);
 
-            const type = new Type(typeName || ctor.name);
+            var type = new Type(typeName || ctor.name);
             util.decorateRoot.add(type);
             type.ctor = ctor; // sets up .encode, .decode etc.
             Object.defineProperty(ctor, "$type", {
@@ -8696,7 +8133,7 @@ const Long = require("./long");
             return type;
           };
 
-          let decorateEnumIndex = 0;
+          var decorateEnumIndex = 0;
 
           /**
            * Decorator helper for enums (TypeScript).
@@ -8705,16 +8142,12 @@ const Long = require("./long");
            */
           util.decorateEnum = function decorateEnum(object) {
             /* istanbul ignore if */
-            if (object.$type) {
-              return object.$type;
-            }
+            if (object.$type) return object.$type;
 
             /* istanbul ignore next */
-            if (!Enum) {
-              Enum = require(15);
-            }
+            if (!Enum) Enum = require(15);
 
-            const enm = new Enum("Enum" + decorateEnumIndex++, object);
+            var enm = new Enum("Enum" + decorateEnumIndex++, object);
             util.decorateRoot.add(enm);
             Object.defineProperty(object, "$type", {
               value: enm,
@@ -8732,25 +8165,20 @@ const Long = require("./long");
            */
           util.setProperty = function setProperty(dst, path, value) {
             function setProp(dst, path, value) {
-              const part = path.shift();
+              var part = path.shift();
               if (path.length > 0) {
                 dst[part] = setProp(dst[part] || {}, path, value);
               } else {
-                const prevValue = dst[part];
-                if (prevValue) {
-                  value = [].concat(prevValue).concat(value);
-                }
+                var prevValue = dst[part];
+                if (prevValue) value = [].concat(prevValue).concat(value);
                 dst[part] = value;
               }
               return dst;
             }
 
-            if (typeof dst !== "object") {
+            if (typeof dst !== "object")
               throw TypeError("dst must be an object");
-            }
-            if (!path) {
-              throw TypeError("path must be specified");
-            }
+            if (!path) throw TypeError("path must be specified");
 
             path = path.split(".");
             return setProp(dst, path, value);
@@ -8764,7 +8192,9 @@ const Long = require("./long");
            */
           Object.defineProperty(util, "decorateRoot", {
             get: function () {
-              return roots.decorated || (roots.decorated = new (require(29))());
+              return (
+                roots["decorated"] || (roots["decorated"] = new (require(29))())
+              );
             },
           });
         },
@@ -8775,7 +8205,7 @@ const Long = require("./long");
           "use strict";
           module.exports = LongBits;
 
-          const util = require(39);
+          var util = require(39);
 
           /**
            * Constructs new long bits.
@@ -8807,7 +8237,7 @@ const Long = require("./long");
            * @memberof util.LongBits
            * @type {util.LongBits}
            */
-          const zero = (LongBits.zero = new LongBits(0, 0));
+          var zero = (LongBits.zero = new LongBits(0, 0));
 
           zero.toNumber = function () {
             return 0;
@@ -8824,7 +8254,7 @@ const Long = require("./long");
            * @memberof util.LongBits
            * @type {string}
            */
-          const zeroHash = (LongBits.zeroHash = "\0\0\0\0\0\0\0\0");
+          var zeroHash = (LongBits.zeroHash = "\0\0\0\0\0\0\0\0");
 
           /**
            * Constructs new long bits from the specified number.
@@ -8832,23 +8262,17 @@ const Long = require("./long");
            * @returns {util.LongBits} Instance
            */
           LongBits.fromNumber = function fromNumber(value) {
-            if (value === 0) {
-              return zero;
-            }
-            const sign = value < 0;
-            if (sign) {
-              value = -value;
-            }
-            let lo = value >>> 0;
-            let hi = ((value - lo) / 4294967296) >>> 0;
+            if (value === 0) return zero;
+            var sign = value < 0;
+            if (sign) value = -value;
+            var lo = value >>> 0,
+              hi = ((value - lo) / 4294967296) >>> 0;
             if (sign) {
               hi = ~hi >>> 0;
               lo = ~lo >>> 0;
               if (++lo > 4294967295) {
                 lo = 0;
-                if (++hi > 4294967295) {
-                  hi = 0;
-                }
+                if (++hi > 4294967295) hi = 0;
               }
             }
             return new LongBits(lo, hi);
@@ -8860,16 +8284,11 @@ const Long = require("./long");
            * @returns {util.LongBits} Instance
            */
           LongBits.from = function from(value) {
-            if (typeof value === "number") {
-              return LongBits.fromNumber(value);
-            }
+            if (typeof value === "number") return LongBits.fromNumber(value);
             if (util.isString(value)) {
               /* istanbul ignore else */
-              if (util.Long) {
-                value = util.Long.fromString(value);
-              } else {
-                return LongBits.fromNumber(parseInt(value, 10));
-              }
+              if (util.Long) value = util.Long.fromString(value);
+              else return LongBits.fromNumber(parseInt(value, 10));
             }
             return value.low || value.high
               ? new LongBits(value.low >>> 0, value.high >>> 0)
@@ -8883,11 +8302,9 @@ const Long = require("./long");
            */
           LongBits.prototype.toNumber = function toNumber(unsigned) {
             if (!unsigned && this.hi >>> 31) {
-              const lo = (~this.lo + 1) >>> 0;
-              let hi = ~this.hi >>> 0;
-              if (!lo) {
-                hi = (hi + 1) >>> 0;
-              }
+              var lo = (~this.lo + 1) >>> 0,
+                hi = ~this.hi >>> 0;
+              if (!lo) hi = (hi + 1) >>> 0;
               return -(lo + hi * 4294967296);
             }
             return this.lo + this.hi * 4294967296;
@@ -8909,7 +8326,7 @@ const Long = require("./long");
                 };
           };
 
-          const charCodeAt = String.prototype.charCodeAt;
+          var charCodeAt = String.prototype.charCodeAt;
 
           /**
            * Constructs new long bits from the specified 8 characters long hash.
@@ -8917,9 +8334,7 @@ const Long = require("./long");
            * @returns {util.LongBits} Bits
            */
           LongBits.fromHash = function fromHash(hash) {
-            if (hash === zeroHash) {
-              return zero;
-            }
+            if (hash === zeroHash) return zero;
             return new LongBits(
               (charCodeAt.call(hash, 0) |
                 (charCodeAt.call(hash, 1) << 8) |
@@ -8956,7 +8371,7 @@ const Long = require("./long");
            * @returns {util.LongBits} `this`
            */
           LongBits.prototype.zzEncode = function zzEncode() {
-            const mask = this.hi >> 31;
+            var mask = this.hi >> 31;
             this.hi = (((this.hi << 1) | (this.lo >>> 31)) ^ mask) >>> 0;
             this.lo = ((this.lo << 1) ^ mask) >>> 0;
             return this;
@@ -8967,7 +8382,7 @@ const Long = require("./long");
            * @returns {util.LongBits} `this`
            */
           LongBits.prototype.zzDecode = function zzDecode() {
-            const mask = -(this.lo & 1);
+            var mask = -(this.lo & 1);
             this.lo = (((this.lo >>> 1) | (this.hi << 31)) ^ mask) >>> 0;
             this.hi = ((this.hi >>> 1) ^ mask) >>> 0;
             return this;
@@ -8978,9 +8393,9 @@ const Long = require("./long");
            * @returns {number} Length
            */
           LongBits.prototype.length = function length() {
-            const part0 = this.lo;
-            const part1 = ((this.lo >>> 28) | (this.hi << 4)) >>> 0;
-            const part2 = this.hi >>> 24;
+            var part0 = this.lo,
+              part1 = ((this.lo >>> 28) | (this.hi << 4)) >>> 0,
+              part2 = this.hi >>> 24;
             return part2 === 0
               ? part1 === 0
                 ? part0 < 16384
@@ -9007,7 +8422,7 @@ const Long = require("./long");
       39: [
         function (require, module, exports) {
           "use strict";
-          const util = exports;
+          var util = exports;
 
           // used to return a Promise where callback is omitted
           util.asPromise = require(1);
@@ -9126,8 +8541,8 @@ const Long = require("./long");
              * @returns {boolean} `true` if considered to be present, otherwise `false`
              */
             util.isSet = function isSet(obj, prop) {
-              const value = obj[prop];
-              if (value != null && obj.hasOwnProperty(prop)) {
+              var value = obj[prop];
+              if (value != null && obj.hasOwnProperty(prop))
                 // eslint-disable-line eqeqeq, no-prototype-builtins
                 return (
                   typeof value !== "object" ||
@@ -9135,7 +8550,6 @@ const Long = require("./long");
                     ? value.length
                     : Object.keys(value).length) > 0
                 );
-              }
               return false;
             };
 
@@ -9152,7 +8566,7 @@ const Long = require("./long");
            */
           util.Buffer = (function () {
             try {
-              const Buffer = util.inquire("buffer").Buffer;
+              var Buffer = util.inquire("buffer").Buffer;
               // refuse to use non-node buffers if not explicitly assigned (perf reasons):
               return Buffer.prototype.utf8Write
                 ? Buffer
@@ -9250,10 +8664,9 @@ const Long = require("./long");
            * @returns {Long|number} Original value
            */
           util.longFromHash = function longFromHash(hash, unsigned) {
-            const bits = util.LongBits.fromHash(hash);
-            if (util.Long) {
+            var bits = util.LongBits.fromHash(hash);
+            if (util.Long)
               return util.Long.fromBits(bits.lo, bits.hi, unsigned);
-            }
             return bits.toNumber(Boolean(unsigned));
           };
 
@@ -9267,11 +8680,9 @@ const Long = require("./long");
            */
           function merge(dst, src, ifNotSet) {
             // used by converters
-            for (let keys = Object.keys(src), i = 0; i < keys.length; ++i) {
-              if (dst[keys[i]] === undefined || !ifNotSet) {
+            for (var keys = Object.keys(src), i = 0; i < keys.length; ++i)
+              if (dst[keys[i]] === undefined || !ifNotSet)
                 dst[keys[i]] = src[keys[i]];
-              }
-            }
             return dst;
           }
 
@@ -9294,9 +8705,8 @@ const Long = require("./long");
            */
           function newError(name) {
             function CustomError(message, properties) {
-              if (!(this instanceof CustomError)) {
+              if (!(this instanceof CustomError))
                 return new CustomError(message, properties);
-              }
 
               // Error.call(this, message);
               // ^ just returns a new error instance because the ctor can be called as a function
@@ -9308,18 +8718,15 @@ const Long = require("./long");
               });
 
               /* istanbul ignore next */
-              if (Error.captureStackTrace) {
+              if (Error.captureStackTrace)
                 // node
                 Error.captureStackTrace(this, CustomError);
-              } else {
+              else
                 Object.defineProperty(this, "stack", {
                   value: new Error().stack || "",
                 });
-              }
 
-              if (properties) {
-                merge(this, properties);
-              }
+              if (properties) merge(this, properties);
             }
 
             (CustomError.prototype = Object.create(
@@ -9379,10 +8786,9 @@ const Long = require("./long");
            * @returns {OneOfGetter} Unbound getter
            */
           util.oneOfGetter = function getOneOf(fieldNames) {
-            const fieldMap = {};
-            for (let i = 0; i < fieldNames.length; ++i) {
+            var fieldMap = {};
+            for (var i = 0; i < fieldNames.length; ++i)
               fieldMap[fieldNames[i]] = 1;
-            }
 
             /**
              * @returns {string|undefined} Set field name, if any
@@ -9392,14 +8798,12 @@ const Long = require("./long");
             return function () {
               // eslint-disable-line consistent-return
               for (
-                let keys = Object.keys(this), i = keys.length - 1;
+                var keys = Object.keys(this), i = keys.length - 1;
                 i > -1;
                 --i
-              ) {
-                if (fieldMap[keys[i]] === 1 && this[keys[i]] !== undefined) {
+              )
+                if (fieldMap[keys[i]] === 1 && this[keys[i]] !== undefined)
                   return keys[i];
-                }
-              }
             };
           };
 
@@ -9424,11 +8828,8 @@ const Long = require("./long");
              * @ignore
              */
             return function (name) {
-              for (let i = 0; i < fieldNames.length; ++i) {
-                if (fieldNames[i] !== name) {
-                  this[fieldNames[i]] == undefined;
-                }
-              }
+              for (var i = 0; i < fieldNames.length; ++i)
+                if (fieldNames[i] !== name) this[fieldNames[i]] == undefined;
             };
           };
 
@@ -9457,7 +8858,7 @@ const Long = require("./long");
 
           // Sets up buffer utility according to the environment (called in index-minimal)
           util._configure = function () {
-            const Buffer = util.Buffer;
+            var Buffer = util.Buffer;
             /* istanbul ignore if */
             if (!Buffer) {
               util._Buffer_from = util._Buffer_allocUnsafe = null;
@@ -9486,8 +8887,8 @@ const Long = require("./long");
           "use strict";
           module.exports = verifier;
 
-          const Enum = require(15);
-          const util = require(37);
+          var Enum = require(15),
+            util = require(37);
 
           function invalid(field, expected) {
             return (
@@ -9521,12 +8922,11 @@ const Long = require("./long");
                   invalid(field, "enum value"),
                 );
                 for (
-                  let keys = Object.keys(field.resolvedType.values), j = 0;
+                  var keys = Object.keys(field.resolvedType.values), j = 0;
                   j < keys.length;
                   ++j
-                ) {
+                )
                   gen("case %i:", field.resolvedType.values[keys[j]]);
-                }
                 gen("break")("}");
               } else {
                 gen("{")("var e=types[%i].verify(%s);", fieldIndex, ref)(
@@ -9645,30 +9045,27 @@ const Long = require("./long");
           function verifier(mtype) {
             /* eslint-disable no-unexpected-multiline */
 
-            const gen = util.codegen(
+            var gen = util.codegen(
               ["m"],
               mtype.name + "$verify",
             )('if(typeof m!=="object"||m===null)')(
               "return%j",
               "object expected",
             );
-            const oneofs = mtype.oneofsArray;
-            const seenFirstField = {};
-            if (oneofs.length) {
-              gen("var p={}");
-            }
+            var oneofs = mtype.oneofsArray,
+              seenFirstField = {};
+            if (oneofs.length) gen("var p={}");
 
             for (
-              let i = 0;
+              var i = 0;
               i < /* initializes */ mtype.fieldsArray.length;
               ++i
             ) {
-              const field = mtype._fieldsArray[i].resolve();
-              const ref = "m" + util.safeProp(field.name);
+              var field = mtype._fieldsArray[i].resolve(),
+                ref = "m" + util.safeProp(field.name);
 
-              if (field.optional) {
-                gen("if(%s!=null&&m.hasOwnProperty(%j)){", ref, field.name);
-              } // !== undefined && !== null
+              if (field.optional)
+                gen("if(%s!=null&&m.hasOwnProperty(%j)){", ref, field.name); // !== undefined && !== null
 
               // map fields
               if (field.map) {
@@ -9693,21 +9090,18 @@ const Long = require("./long");
                 // required or present fields
               } else {
                 if (field.partOf) {
-                  const oneofProp = util.safeProp(field.partOf.name);
-                  if (seenFirstField[field.partOf.name] === 1) {
+                  var oneofProp = util.safeProp(field.partOf.name);
+                  if (seenFirstField[field.partOf.name] === 1)
                     gen("if(p%s===1)", oneofProp)(
                       "return%j",
                       field.partOf.name + ": multiple values",
                     );
-                  }
                   seenFirstField[field.partOf.name] = 1;
                   gen("p%s=1", oneofProp);
                 }
                 genVerifyValue(gen, field, i, ref);
               }
-              if (field.optional) {
-                gen("}");
-              }
+              if (field.optional) gen("}");
             }
             return gen("return null");
             /* eslint-enable no-unexpected-multiline */
@@ -9724,9 +9118,9 @@ const Long = require("./long");
            * @type {Object.<string,IWrapper>}
            * @const
            */
-          const wrappers = exports;
+          var wrappers = exports;
 
-          const Message = require(21);
+          var Message = require(21);
 
           /**
            * From object converter part of an {@link IWrapper}.
@@ -9760,14 +9154,14 @@ const Long = require("./long");
               // unwrap value type if mapped
               if (object && object["@type"]) {
                 // Only use fully qualified type name after the last '/'
-                const name = object["@type"].substring(
+                var name = object["@type"].substring(
                   object["@type"].lastIndexOf("/") + 1,
                 );
-                const type = this.lookup(name);
+                var type = this.lookup(name);
                 /* istanbul ignore else */
                 if (type) {
                   // type_url does not accept leading "."
-                  let type_url =
+                  var type_url =
                     object["@type"].charAt(0) === "."
                       ? object["@type"].substr(1)
                       : object["@type"];
@@ -9776,7 +9170,7 @@ const Long = require("./long");
                     type_url = "/" + type_url;
                   }
                   return this.create({
-                    type_url,
+                    type_url: type_url,
                     value: type.encode(type.fromObject(object)).finish(),
                   });
                 }
@@ -9787,9 +9181,9 @@ const Long = require("./long");
 
             toObject: function (message, options) {
               // Default prefix
-              const googleApi = "type.googleapis.com/";
-              let prefix = "";
-              let name = "";
+              var googleApi = "type.googleapis.com/";
+              var prefix = "";
+              var name = "";
 
               // decode value if requested and unmapped
               if (
@@ -9807,11 +9201,9 @@ const Long = require("./long");
                   0,
                   message.type_url.lastIndexOf("/") + 1,
                 );
-                const type = this.lookup(name);
+                var type = this.lookup(name);
                 /* istanbul ignore else */
-                if (type) {
-                  message = type.decode(message.value);
-                }
+                if (type) message = type.decode(message.value);
               }
 
               // wrap value if unmapped
@@ -9819,8 +9211,8 @@ const Long = require("./long");
                 !(message instanceof this.ctor) &&
                 message instanceof Message
               ) {
-                const object = message.$type.toObject(message, options);
-                const messageName =
+                var object = message.$type.toObject(message, options);
+                var messageName =
                   message.$type.fullName[0] === "."
                     ? message.$type.fullName.substr(1)
                     : message.$type.fullName;
@@ -9844,13 +9236,13 @@ const Long = require("./long");
           "use strict";
           module.exports = Writer;
 
-          const util = require(39);
+          var util = require(39);
 
-          let BufferWriter; // cyclic
+          var BufferWriter; // cyclic
 
-          const LongBits = util.LongBits;
-          const base64 = util.base64;
-          const utf8 = util.utf8;
+          var LongBits = util.LongBits,
+            base64 = util.base64,
+            utf8 = util.utf8;
 
           /**
            * Constructs a new writer operation instance.
@@ -9961,7 +9353,7 @@ const Long = require("./long");
             // part is just a linked list walk calling operations with already prepared values.
           }
 
-          const create = function create() {
+          var create = function create() {
             return util.Buffer
               ? function create_buffer_setup() {
                   return (Writer.create = function create_buffer() {
@@ -9992,12 +9384,11 @@ const Long = require("./long");
 
           // Use Uint8Array buffer pool in the browser, just like node does with buffers
           /* istanbul ignore else */
-          if (util.Array !== Array) {
+          if (util.Array !== Array)
             Writer.alloc = util.pool(
               Writer.alloc,
               util.Array.prototype.subarray,
             );
-          }
 
           /**
            * Pushes a new operation to the queue.
@@ -10108,7 +9499,7 @@ const Long = require("./long");
            * @throws {TypeError} If `value` is a string and no long library is present.
            */
           Writer.prototype.uint64 = function write_uint64(value) {
-            const bits = LongBits.from(value);
+            var bits = LongBits.from(value);
             return this._push(writeVarint64, bits.length(), bits);
           };
 
@@ -10128,7 +9519,7 @@ const Long = require("./long");
            * @throws {TypeError} If `value` is a string and no long library is present.
            */
           Writer.prototype.sint64 = function write_sint64(value) {
-            const bits = LongBits.from(value).zzEncode();
+            var bits = LongBits.from(value).zzEncode();
             return this._push(writeVarint64, bits.length(), bits);
           };
 
@@ -10172,7 +9563,7 @@ const Long = require("./long");
            * @throws {TypeError} If `value` is a string and no long library is present.
            */
           Writer.prototype.fixed64 = function write_fixed64(value) {
-            const bits = LongBits.from(value);
+            var bits = LongBits.from(value);
             return this._push(writeFixed32, 4, bits.lo)._push(
               writeFixed32,
               4,
@@ -10209,15 +9600,13 @@ const Long = require("./long");
             return this._push(util.float.writeDoubleLE, 8, value);
           };
 
-          const writeBytes = util.Array.prototype.set
+          var writeBytes = util.Array.prototype.set
             ? function writeBytes_set(val, buf, pos) {
                 buf.set(val, pos); // also works for plain array values
               }
             : /* istanbul ignore next */
               function writeBytes_for(val, buf, pos) {
-                for (let i = 0; i < val.length; ++i) {
-                  buf[pos + i] = val[i];
-                }
+                for (var i = 0; i < val.length; ++i) buf[pos + i] = val[i];
               };
 
           /**
@@ -10226,12 +9615,10 @@ const Long = require("./long");
            * @returns {Writer} `this`
            */
           Writer.prototype.bytes = function write_bytes(value) {
-            let len = value.length >>> 0;
-            if (!len) {
-              return this._push(writeByte, 1, 0);
-            }
+            var len = value.length >>> 0;
+            if (!len) return this._push(writeByte, 1, 0);
             if (util.isString(value)) {
-              const buf = Writer.alloc((len = base64.length(value)));
+              var buf = Writer.alloc((len = base64.length(value)));
               base64.decode(value, buf, 0);
               value = buf;
             }
@@ -10244,7 +9631,7 @@ const Long = require("./long");
            * @returns {Writer} `this`
            */
           Writer.prototype.string = function write_string(value) {
-            const len = utf8.length(value);
+            var len = utf8.length(value);
             return len
               ? this.uint32(len)._push(utf8.write, len, value)
               : this._push(writeByte, 1, 0);
@@ -10284,9 +9671,9 @@ const Long = require("./long");
            * @returns {Writer} `this`
            */
           Writer.prototype.ldelim = function ldelim() {
-            const head = this.head;
-            const tail = this.tail;
-            const len = this.len;
+            var head = this.head,
+              tail = this.tail,
+              len = this.len;
             this.reset().uint32(len);
             if (len) {
               this.tail.next = head.next; // skip noop
@@ -10301,9 +9688,9 @@ const Long = require("./long");
            * @returns {Uint8Array} Finished buffer
            */
           Writer.prototype.finish = function finish() {
-            let head = this.head.next; // skip noop
-            const buf = this.constructor.alloc(this.len);
-            let pos = 0;
+            var head = this.head.next, // skip noop
+              buf = this.constructor.alloc(this.len),
+              pos = 0;
             while (head) {
               head.fn(head.val, buf, pos);
               pos += head.len;
@@ -10327,12 +9714,12 @@ const Long = require("./long");
           module.exports = BufferWriter;
 
           // extends Writer
-          const Writer = require(42);
+          var Writer = require(42);
           (BufferWriter.prototype = Object.create(
             Writer.prototype,
           )).constructor = BufferWriter;
 
-          const util = require(39);
+          var util = require(39);
 
           /**
            * Constructs a new buffer writer instance.
@@ -10363,18 +9750,16 @@ const Long = require("./long");
                   }
                 : /* istanbul ignore next */
                   function writeBytesBuffer_copy(val, buf, pos) {
-                    if (val.copy) {
+                    if (val.copy)
                       // Buffer values
                       val.copy(buf, pos, 0, val.length);
-                    } else {
+                    else
                       for (
-                        let i = 0;
+                        var i = 0;
                         i < val.length; // plain array values
 
-                      ) {
+                      )
                         buf[pos++] = val[i++];
-                      }
-                    }
                   };
           };
 
@@ -10382,37 +9767,29 @@ const Long = require("./long");
            * @override
            */
           BufferWriter.prototype.bytes = function write_bytes_buffer(value) {
-            if (util.isString(value)) {
+            if (util.isString(value))
               value = util._Buffer_from(value, "base64");
-            }
-            const len = value.length >>> 0;
+            var len = value.length >>> 0;
             this.uint32(len);
-            if (len) {
-              this._push(BufferWriter.writeBytesBuffer, len, value);
-            }
+            if (len) this._push(BufferWriter.writeBytesBuffer, len, value);
             return this;
           };
 
           function writeStringBuffer(val, buf, pos) {
-            if (val.length < 40) {
+            if (val.length < 40)
               // plain js is faster for short strings (probably due to redundant assertions)
               util.utf8.write(val, buf, pos);
-            } else if (buf.utf8Write) {
-              buf.utf8Write(val, pos);
-            } else {
-              buf.write(val, pos);
-            }
+            else if (buf.utf8Write) buf.utf8Write(val, pos);
+            else buf.write(val, pos);
           }
 
           /**
            * @override
            */
           BufferWriter.prototype.string = function write_string_buffer(value) {
-            const len = util.Buffer.byteLength(value);
+            var len = util.Buffer.byteLength(value);
             this.uint32(len);
-            if (len) {
-              this._push(writeStringBuffer, len, value);
-            }
+            if (len) this._push(writeStringBuffer, len, value);
             return this;
           };
 
@@ -10432,4 +9809,4 @@ const Long = require("./long");
     [19],
   );
 })();
-// # sourceMappingURL=protobuf.js.map
+//# sourceMappingURL=protobuf.js.map

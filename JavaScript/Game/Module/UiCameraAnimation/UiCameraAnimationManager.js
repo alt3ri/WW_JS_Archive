@@ -1,46 +1,50 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (a, e, t, i) {
-    let r;
-    const n = arguments.length;
-    let o =
-      n < 3 ? e : i === null ? (i = Object.getOwnPropertyDescriptor(e, t)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      n = arguments.length,
+      o =
+        n < 3
+          ? e
+          : null === i
+            ? (i = Object.getOwnPropertyDescriptor(e, t))
+            : i;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       o = Reflect.decorate(a, e, t, i);
     else
-      for (let s = a.length - 1; s >= 0; s--)
-        (r = a[s]) && (o = (n < 3 ? r(o) : n > 3 ? r(e, t, o) : r(e, t)) || o);
-    return n > 3 && o && Object.defineProperty(e, t, o), o;
+      for (var s = a.length - 1; 0 <= s; s--)
+        (r = a[s]) && (o = (n < 3 ? r(o) : 3 < n ? r(e, t, o) : r(e, t)) || o);
+    return 3 < n && o && Object.defineProperty(e, t, o), o;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiCameraAnimationManager = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Stack_1 = require("../../../Core/Container/Stack");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const PerformanceDecorators_1 = require("../../../Core/Performance/PerformanceDecorators");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const CameraController_1 = require("../../Camera/CameraController");
-const CameraUtility_1 = require("../../Camera/CameraUtility");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterController_1 = require("../../NewWorld/Character/CharacterController");
-const SkeletalObserverManager_1 = require("../SkeletalObserver/SkeletalObserverManager");
-const UiCameraPostEffectComponent_1 = require("../UiCamera/UiCameraComponent/UiCameraPostEffectComponent");
-const UiCameraSequenceComponent_1 = require("../UiCamera/UiCameraComponent/UiCameraSequenceComponent");
-const UiCameraManager_1 = require("../UiCamera/UiCameraManager");
-const UiCameraSpringStructure_1 = require("../UiCamera/UiCameraStructure/UiCameraSpringStructure");
-const UiSceneManager_1 = require("../UiComponent/UiSceneManager");
-const UiCameraAnimation_1 = require("./UiCameraAnimation");
-const UiCameraAnimationDefine_1 = require("./UiCameraAnimationDefine");
-const UiCameraAnimationHandle_1 = require("./UiCameraAnimationHandle");
-const UiCameraHandleData_1 = require("./UiCameraContext/UiCameraHandleData");
-const UiCameraMappingData_1 = require("./UiCameraContext/UiCameraMappingData");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Stack_1 = require("../../../Core/Container/Stack"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  PerformanceDecorators_1 = require("../../../Core/Performance/PerformanceDecorators"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  CameraUtility_1 = require("../../Camera/CameraUtility"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterController_1 = require("../../NewWorld/Character/CharacterController"),
+  SkeletalObserverManager_1 = require("../SkeletalObserver/SkeletalObserverManager"),
+  UiCameraPostEffectComponent_1 = require("../UiCamera/UiCameraComponent/UiCameraPostEffectComponent"),
+  UiCameraSequenceComponent_1 = require("../UiCamera/UiCameraComponent/UiCameraSequenceComponent"),
+  UiCameraManager_1 = require("../UiCamera/UiCameraManager"),
+  UiCameraSpringStructure_1 = require("../UiCamera/UiCameraStructure/UiCameraSpringStructure"),
+  UiSceneManager_1 = require("../UiComponent/UiSceneManager"),
+  UiCameraAnimation_1 = require("./UiCameraAnimation"),
+  UiCameraAnimationDefine_1 = require("./UiCameraAnimationDefine"),
+  UiCameraAnimationHandle_1 = require("./UiCameraAnimationHandle"),
+  UiCameraHandleData_1 = require("./UiCameraContext/UiCameraHandleData"),
+  UiCameraMappingData_1 = require("./UiCameraContext/UiCameraMappingData");
 class UiCameraAnimationManager {
   static Initialize() {
     (this.LoadingViewCameraAnimationLength =
@@ -62,11 +66,11 @@ class UiCameraAnimationManager {
   }
   static hAo() {
     for (const t of ConfigManager_1.ConfigManager.UiCameraAnimationConfig.GetAllUiCameraMappingConfig()) {
-      const a = new UiCameraMappingData_1.UiCameraMappingData(t, !1);
+      var a = new UiCameraMappingData_1.UiCameraMappingData(t, !1);
       this._Ao.set(t.ViewName, a);
     }
     for (const i of ConfigManager_1.ConfigManager.UiCameraAnimationConfig.GetAllChildUiCameraMappingConfig()) {
-      const e = new UiCameraMappingData_1.UiCameraMappingData(i, !0);
+      var e = new UiCameraMappingData_1.UiCameraMappingData(i, !0);
       this._Ao.set(i.ViewName, e);
     }
   }
@@ -81,23 +85,23 @@ class UiCameraAnimationManager {
   }
   static mAo(a) {
     let e = this.cAo.Peek();
-    for (let t = a.UniqueId; e && e.UniqueId !== t; )
+    for (var t = a.UniqueId; e && e.UniqueId !== t; )
       this.cAo.Pop(), (e = this.cAo.Peek());
     return this.cAo.Pop(), this.GetLastHandleData();
   }
   static dAo(a) {
     let e = this.cAo.Peek();
-    for (let t = a.UniqueId; e && e.UniqueId !== t; )
+    for (var t = a.UniqueId; e && e.UniqueId !== t; )
       this.cAo.Pop(), (e = this.cAo.Peek());
     return this.GetLastHandleData();
   }
   static CAo(a) {
     const e = this.gAo(a);
     if (!e) return !1;
-    const t = ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTabList(
-      e.ViewName,
-    );
-    const i = [];
+    var t = ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTabList(
+        e.ViewName,
+      ),
+      i = [];
     let r = !1;
     for (const e of this.cAo)
       if (e.UniqueId === a) i.push(e), (r = !0);
@@ -119,7 +123,7 @@ class UiCameraAnimationManager {
     return this.cAo.Peek();
   }
   static pAo() {
-    const a = new UiCameraAnimationHandle_1.UiCameraAnimationHandle();
+    var a = new UiCameraAnimationHandle_1.UiCameraAnimationHandle();
     return a.Initialize(), a;
   }
   static vAo(a, e = !0, t = !0) {
@@ -132,7 +136,7 @@ class UiCameraAnimationManager {
     this.IsPlayingAnimation()
       ? this.SAo.WaitCameraAnimationFinished().then(
           (a) => {
-            a.FinishType === 0 && this.vAo(e, t, i);
+            0 === a.FinishType && this.vAo(e, t, i);
           },
           () => {},
         )
@@ -140,7 +144,7 @@ class UiCameraAnimationManager {
   }
   static PushCameraHandleByOpenView(e, t, i = !0) {
     if (UiCameraAnimationManager.CanPushCameraHandle(e)) {
-      const r = UiCameraAnimationManager.GetLastHandleData();
+      var r = UiCameraAnimationManager.GetLastHandleData();
       if (r && r.UniqueId === t)
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -151,7 +155,7 @@ class UiCameraAnimationManager {
             ["viewId", t],
           );
       else {
-        const n = UiCameraHandleData_1.UiCameraHandleData.NewByView(e);
+        var n = UiCameraHandleData_1.UiCameraHandleData.NewByView(e);
         if (t) {
           t = this.gAo(t);
           if (t)
@@ -182,7 +186,7 @@ class UiCameraAnimationManager {
     n = void 0,
     o,
   ) {
-    let s;
+    var s;
     if (!StringUtils_1.StringUtils.IsBlank(a))
       return (
         (o = UiCameraHandleData_1.UiCameraHandleData.NewByHandleName(a, o)),
@@ -215,7 +219,7 @@ class UiCameraAnimationManager {
       );
   }
   static PushCameraHandle(a, e = !0, t = !0, i, r = !1, n = void 0) {
-    const o = UiCameraAnimationManager.GetLastHandleData();
+    var o = UiCameraAnimationManager.GetLastHandleData();
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "CameraAnimation",
@@ -257,7 +261,7 @@ class UiCameraAnimationManager {
           this.CAo(t)));
   }
   static PopCameraHandle(a, e) {
-    let t;
+    var t;
     a
       ? ((t = this.mAo(a)),
         Log_1.Log.CheckInfo() &&
@@ -274,7 +278,7 @@ class UiCameraAnimationManager {
       : this.ClearDisplay();
   }
   static EAo(a) {
-    let e;
+    var e;
     return (
       !!this.CurrentCameraHandle &&
       !(
@@ -286,7 +290,7 @@ class UiCameraAnimationManager {
     );
   }
   static yAo(a, e, t = !0, i = !0, r, n = void 0) {
-    let o;
+    var o;
     return (
       (this.UiCamera = UiCameraManager_1.UiCameraManager.Get()),
       (this.UiCameraPostEffectComponent = this.UiCamera.GetUiCameraComponent(
@@ -364,9 +368,9 @@ class UiCameraAnimationManager {
       ));
   }
   static HFt(a, e = void 0) {
-    const t = a.FromHandleData;
-    const i = a.ToHandleData;
-    a.FinishType === 0
+    var t = a.FromHandleData,
+      i = a.ToHandleData;
+    0 === a.FinishType
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "CameraAnimation",
@@ -397,7 +401,7 @@ class UiCameraAnimationManager {
     return !!a && a.CanPushCameraHandle();
   }
   static ReactivateCameraHandle(a = !1, e = !1) {
-    let t, i;
+    var t, i;
     this.CurrentCameraHandle &&
       !this.CurrentCameraHandle.GetIsPendingRevert() &&
       (t = this.CurrentCameraHandle.GetHandleData()) &&
@@ -461,12 +465,12 @@ class UiCameraAnimationManager {
     );
   }
   static PlayCameraAnimationFromCurrent(a, e) {
-    const t = this.GetLastHandleData();
+    var t = this.GetLastHandleData();
     return this.PushCameraHandleByHandleName(a, !0, !0, e), t;
   }
   static PlayBackCurrent(a = UiCameraAnimationDefine_1.DEFAULT_BLEND_NAME) {
     const e = this.CurrentCameraHandle?.GetHandleData();
-    let t;
+    var t;
     e &&
       (!(t =
         ConfigManager_1.ConfigManager.UiCameraAnimationConfig.GetUiCameraAnimationBlendData(
@@ -482,7 +486,7 @@ class UiCameraAnimationManager {
           this.vAo(e, !1, !1))
         : this.AsyncPlayCameraAnimation(e, e, a).then(
             (a) => {
-              a.FinishType === 0 && this.vAo(e);
+              0 === a.FinishType && this.vAo(e);
             },
             () => {},
           ));
@@ -506,7 +510,7 @@ class UiCameraAnimationManager {
       );
   }
   static IsActivate() {
-    return this.cAo.Size > 0;
+    return 0 < this.cAo.Size;
   }
   static GetHandleDataStack() {
     return this.cAo;
@@ -529,6 +533,7 @@ class UiCameraAnimationManager {
       case 5:
         return UiSceneManager_1.UiSceneManager.GetHandBookCaseActor();
       default:
+        return;
     }
   }
   static GetTargetBodyKey(a) {
@@ -570,8 +575,10 @@ class UiCameraAnimationManager {
           case 3:
             return "MaleXL";
           default:
+            return;
         }
       default:
+        return;
     }
   }
   static GetTargetActorSkeletalMesh(a, e = 0) {
@@ -602,6 +609,7 @@ class UiCameraAnimationManager {
           ? t.GetComponentByClass(UE.SkeletalMeshComponent.StaticClass())
           : void 0;
       default:
+        return;
     }
   }
   static LAo() {
@@ -610,9 +618,9 @@ class UiCameraAnimationManager {
       Global_1.Global.BaseCharacter?.SetDitherEffect(1, 2);
   }
   static DisablePlayerActor() {
-    let a;
-    let e;
-    let t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var a,
+      e,
+      t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     t?.Valid
       ? (t = t.Entity)?.Valid
         ? (Log_1.Log.CheckInfo() &&
@@ -644,7 +652,7 @@ class UiCameraAnimationManager {
         );
   }
   static IsDisablePlayer() {
-    return this.IsActivate() && this.DAo.size > 0;
+    return this.IsActivate() && 0 < this.DAo.size;
   }
   static EnablePlayerActor() {
     Log_1.Log.CheckInfo() &&
@@ -652,8 +660,8 @@ class UiCameraAnimationManager {
         "DisableHandleId",
         this.DAo,
       ]);
-    for (const [a, e] of this.DAo) {
-      let t = EntitySystem_1.EntitySystem.Get(a);
+    for (var [a, e] of this.DAo) {
+      var t = EntitySystem_1.EntitySystem.Get(a);
       if (!t?.Valid)
         return void (
           Log_1.Log.CheckInfo() &&
@@ -680,15 +688,15 @@ class UiCameraAnimationManager {
   static DisableCustomCreatureActor(e) {
     var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     if (t?.Valid) {
-      let i = t.Entity.GetComponent(0);
+      var i = t.Entity.GetComponent(0);
       if (i) {
         i = i.CustomServerEntityIds;
-        if (!(e > i.length || e === 0)) {
-          var t = t.Entity.Id;
-          var r = i[e - 1];
-          var r = ModelManager_1.ModelManager.CreatureModel.GetEntity(r);
+        if (!(e > i.length || 0 === e)) {
+          var t = t.Entity.Id,
+            r = i[e - 1],
+            r = ModelManager_1.ModelManager.CreatureModel.GetEntity(r);
           if (r?.Valid) {
-            const n = r.Entity.GetComponent(1);
+            var n = r.Entity.GetComponent(1);
             if (n) {
               Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
@@ -708,17 +716,17 @@ class UiCameraAnimationManager {
     }
   }
   static EnableCustomCreatureActor() {
-    for (let [a, e] of this.RAo) {
+    for (var [a, e] of this.RAo) {
       a = EntitySystem_1.EntitySystem.Get(a).GetComponent(0);
       if (!a) return;
-      var t;
-      var i;
-      const r = a.CustomServerEntityIds;
+      var t,
+        i,
+        r = a.CustomServerEntityIds;
       for ([t, i] of e) {
-        var n = r[t - 1];
-        var n = ModelManager_1.ModelManager.CreatureModel.GetEntity(n);
+        var n = r[t - 1],
+          n = ModelManager_1.ModelManager.CreatureModel.GetEntity(n);
         if (!n) return;
-        const o = n.Entity.GetComponent(1);
+        var o = n.Entity.GetComponent(1);
         if (!o) return;
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
@@ -734,7 +742,7 @@ class UiCameraAnimationManager {
     this.RAo.clear();
   }
   static ResetFightCameraRotation() {
-    let a;
+    var a;
     !Global_1.Global.BaseCharacter ||
       (a =
         CameraController_1.CameraController.FightCamera
@@ -771,4 +779,4 @@ class UiCameraAnimationManager {
     null,
   ),
   (exports.UiCameraAnimationManager = UiCameraAnimationManager);
-// # sourceMappingURL=UiCameraAnimationManager.js.map
+//# sourceMappingURL=UiCameraAnimationManager.js.map

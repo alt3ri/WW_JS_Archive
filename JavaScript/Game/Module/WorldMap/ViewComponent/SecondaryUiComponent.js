@@ -1,38 +1,38 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SecondaryUiComponent = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const CustomMarkItem_1 = require("../../Map/Marks/MarkItem/CustomMarkItem");
-const DynamicEntityMarkItem_1 = require("../../Map/Marks/MarkItem/DynamicEntityMarkItem");
-const EntityMarkItem_1 = require("../../Map/Marks/MarkItem/EntityMarkItem");
-const FixedSceneGamePlayMarkItem_1 = require("../../Map/Marks/MarkItem/FixedSceneGamePlayMarkItem");
-const MingSuNpcMarkItem_1 = require("../../Map/Marks/MarkItem/MingSuNpcMarkItem");
-const ParkourMarkItem_1 = require("../../Map/Marks/MarkItem/ParkourMarkItem");
-const SceneGameplayMarkItem_1 = require("../../Map/Marks/MarkItem/SceneGameplayMarkItem");
-const SoundBoxMarkItem_1 = require("../../Map/Marks/MarkItem/SoundBoxMarkItem");
-const TaskMarkItem_1 = require("../../Map/Marks/MarkItem/TaskMarkItem");
-const TeleportMarkItem_1 = require("../../Map/Marks/MarkItem/TeleportMarkItem");
-const TemporaryTeleportMarkItem_1 = require("../../Map/Marks/MarkItem/TemporaryTeleportMarkItem");
-const TreasureBoxDetectorMarkItem_1 = require("../../Map/Marks/MarkItem/TreasureBoxDetectorMarkItem");
-const TreasureBoxMarkItem_1 = require("../../Map/Marks/MarkItem/TreasureBoxMarkItem");
-const ParkourEntrancePanel_1 = require("../SubViews/ActivityPanel/ParkourEntrancePanel");
-const BoxPanel_1 = require("../SubViews/BoxPanel/BoxPanel");
-const CustomMarkPanel_1 = require("../SubViews/CustomMarkPanel/CustomMarkPanel");
-const DetectorPanel_1 = require("../SubViews/DectetorPanel/DetectorPanel");
-const GeneralPanel_1 = require("../SubViews/GeneralPanel/GeneralPanel");
-const InstanceDungeonEntrancePanel_1 = require("../SubViews/InstanceDungeonEntrancePanel/InstanceDungeonEntrancePanel");
-const RoguelikeEntrancePanel_1 = require("../SubViews/InstanceDungeonEntrancePanel/RoguelikeEntrancePanel");
-const TowerEntrancePanel_1 = require("../SubViews/InstanceDungeonEntrancePanel/TowerEntrancePanel");
-const LordGymPanel_1 = require("../SubViews/LordGymPanel/LordGymPanel");
-const MarkMenu_1 = require("../SubViews/MarkMenu/MarkMenu");
-const QuestPanel_1 = require("../SubViews/QuestPanel/QuestPanel");
-const SceneGameplayPanel_1 = require("../SubViews/SceneGameplayPanel/SceneGameplayPanel");
-const TeleportPanel_1 = require("../SubViews/TeleportPanel/TeleportPanel");
-const TemporaryTeleportPanel_1 = require("../SubViews/TemporaryTeleportPanel/TemporaryTeleportPanel");
-const WorldMapDefine_1 = require("../WorldMapDefine");
-const WorldMapComponentBase_1 = require("./WorldMapComponentBase");
-const WorldMapSecondaryUi_1 = require("./WorldMapSecondaryUi");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  CustomMarkItem_1 = require("../../Map/Marks/MarkItem/CustomMarkItem"),
+  DynamicEntityMarkItem_1 = require("../../Map/Marks/MarkItem/DynamicEntityMarkItem"),
+  EntityMarkItem_1 = require("../../Map/Marks/MarkItem/EntityMarkItem"),
+  FixedSceneGamePlayMarkItem_1 = require("../../Map/Marks/MarkItem/FixedSceneGamePlayMarkItem"),
+  MingSuNpcMarkItem_1 = require("../../Map/Marks/MarkItem/MingSuNpcMarkItem"),
+  ParkourMarkItem_1 = require("../../Map/Marks/MarkItem/ParkourMarkItem"),
+  SceneGameplayMarkItem_1 = require("../../Map/Marks/MarkItem/SceneGameplayMarkItem"),
+  SoundBoxMarkItem_1 = require("../../Map/Marks/MarkItem/SoundBoxMarkItem"),
+  TaskMarkItem_1 = require("../../Map/Marks/MarkItem/TaskMarkItem"),
+  TeleportMarkItem_1 = require("../../Map/Marks/MarkItem/TeleportMarkItem"),
+  TemporaryTeleportMarkItem_1 = require("../../Map/Marks/MarkItem/TemporaryTeleportMarkItem"),
+  TreasureBoxDetectorMarkItem_1 = require("../../Map/Marks/MarkItem/TreasureBoxDetectorMarkItem"),
+  TreasureBoxMarkItem_1 = require("../../Map/Marks/MarkItem/TreasureBoxMarkItem"),
+  ParkourEntrancePanel_1 = require("../SubViews/ActivityPanel/ParkourEntrancePanel"),
+  BoxPanel_1 = require("../SubViews/BoxPanel/BoxPanel"),
+  CustomMarkPanel_1 = require("../SubViews/CustomMarkPanel/CustomMarkPanel"),
+  DetectorPanel_1 = require("../SubViews/DectetorPanel/DetectorPanel"),
+  GeneralPanel_1 = require("../SubViews/GeneralPanel/GeneralPanel"),
+  InstanceDungeonEntrancePanel_1 = require("../SubViews/InstanceDungeonEntrancePanel/InstanceDungeonEntrancePanel"),
+  RoguelikeEntrancePanel_1 = require("../SubViews/InstanceDungeonEntrancePanel/RoguelikeEntrancePanel"),
+  TowerEntrancePanel_1 = require("../SubViews/InstanceDungeonEntrancePanel/TowerEntrancePanel"),
+  LordGymPanel_1 = require("../SubViews/LordGymPanel/LordGymPanel"),
+  MarkMenu_1 = require("../SubViews/MarkMenu/MarkMenu"),
+  QuestPanel_1 = require("../SubViews/QuestPanel/QuestPanel"),
+  SceneGameplayPanel_1 = require("../SubViews/SceneGameplayPanel/SceneGameplayPanel"),
+  TeleportPanel_1 = require("../SubViews/TeleportPanel/TeleportPanel"),
+  TemporaryTeleportPanel_1 = require("../SubViews/TemporaryTeleportPanel/TemporaryTeleportPanel"),
+  WorldMapDefine_1 = require("../WorldMapDefine"),
+  WorldMapComponentBase_1 = require("./WorldMapComponentBase"),
+  WorldMapSecondaryUi_1 = require("./WorldMapSecondaryUi");
 class SecondaryUiComponent extends WorldMapComponentBase_1.WorldMapComponentBase {
   constructor(e) {
     super(e),
@@ -61,7 +61,7 @@ class SecondaryUiComponent extends WorldMapComponentBase_1.WorldMapComponentBase
   }
   OnDestroy() {
     if ((super.OnDestroy(), this.E2o)) {
-      for (const [, e] of this.E2o) e.Destroy();
+      for (var [, e] of this.E2o) e.Destroy();
       this.E2o.clear(), (this.E2o = void 0);
     }
   }
@@ -188,7 +188,7 @@ class SecondaryUiComponent extends WorldMapComponentBase_1.WorldMapComponentBase
       t.ShowPanel(...n);
   }
   CloseUi(e, r = !0) {
-    for (const [, a] of this.E2o)
+    for (var [, a] of this.E2o)
       if (
         a instanceof WorldMapSecondaryUi_1.WorldMapSecondaryUi &&
         a?.GetRootItem().bIsUIActive
@@ -210,4 +210,4 @@ class SecondaryUiComponent extends WorldMapComponentBase_1.WorldMapComponentBase
   }
 }
 exports.SecondaryUiComponent = SecondaryUiComponent;
-// # sourceMappingURL=SecondaryUiComponent.js.map
+//# sourceMappingURL=SecondaryUiComponent.js.map

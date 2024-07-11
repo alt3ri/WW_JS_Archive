@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DungeonDetection = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const DicIntInt_1 = require("./SubType/DicIntInt");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  DicIntInt_1 = require("./SubType/DicIntInt");
 class DungeonDetection {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -95,34 +95,34 @@ class DungeonDetection {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   dungeonid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   name(t) {
-    const i = this.J7.__offset(this.z7, 8);
+    var i = this.J7.__offset(this.z7, 8);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   guideid() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetLevelplaylistAt(t) {
     return this.levelplaylist(t);
   }
   levelplaylist(t) {
-    const i = this.J7.__offset(this.z7, 12);
+    var i = this.J7.__offset(this.z7, 12);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   levelplaylistLength() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   levelplaylistArray() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -132,62 +132,62 @@ class DungeonDetection {
       : null;
   }
   instancesubtypedescription(t) {
-    const i = this.J7.__offset(this.z7, 14);
+    var i = this.J7.__offset(this.z7, 14);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   typedescription1() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   secondary() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   mattype() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   typedescription2(t) {
-    const i = this.J7.__offset(this.z7, 22);
+    var i = this.J7.__offset(this.z7, 22);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   attributesdescriptionlock(t) {
-    const i = this.J7.__offset(this.z7, 24);
+    var i = this.J7.__offset(this.z7, 24);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   attributesdescriptionunlock(t) {
-    const i = this.J7.__offset(this.z7, 26);
+    var i = this.J7.__offset(this.z7, 26);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   bigicon(t) {
-    const i = this.J7.__offset(this.z7, 28);
+    var i = this.J7.__offset(this.z7, 28);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   icon(t) {
-    const i = this.J7.__offset(this.z7, 30);
+    var i = this.J7.__offset(this.z7, 30);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   lockbigicon(t) {
-    const i = this.J7.__offset(this.z7, 32);
+    var i = this.J7.__offset(this.z7, 32);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   temporaryiconunlock(t) {
-    const i = this.J7.__offset(this.z7, 34);
+    var i = this.J7.__offset(this.z7, 34);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   temporaryiconlock(t) {
-    const i = this.J7.__offset(this.z7, 36);
+    var i = this.J7.__offset(this.z7, 36);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   showreward() {
-    const t = this.J7.__offset(this.z7, 38);
+    var t = this.J7.__offset(this.z7, 38);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetShowrewardmapAt(t, i) {
     return this.showrewardmap(t);
   }
   showrewardmap(t, i) {
-    const s = this.J7.__offset(this.z7, 40);
+    var s = this.J7.__offset(this.z7, 40);
     return s
       ? (i || new DicIntInt_1.DicIntInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -196,30 +196,30 @@ class DungeonDetection {
       : null;
   }
   showrewardmapLength() {
-    const t = this.J7.__offset(this.z7, 40);
+    var t = this.J7.__offset(this.z7, 40);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   begintimestamp() {
-    const t = this.J7.__offset(this.z7, 42);
+    var t = this.J7.__offset(this.z7, 42);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   lockcon() {
-    const t = this.J7.__offset(this.z7, 44);
+    var t = this.J7.__offset(this.z7, 44);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetPhantomidAt(t) {
     return this.phantomid(t);
   }
   phantomid(t) {
-    const i = this.J7.__offset(this.z7, 46);
+    var i = this.J7.__offset(this.z7, 46);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   phantomidLength() {
-    const t = this.J7.__offset(this.z7, 46);
+    var t = this.J7.__offset(this.z7, 46);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   phantomidArray() {
-    const t = this.J7.__offset(this.z7, 46);
+    var t = this.J7.__offset(this.z7, 46);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -229,9 +229,9 @@ class DungeonDetection {
       : null;
   }
   subdungeonid() {
-    const t = this.J7.__offset(this.z7, 48);
+    var t = this.J7.__offset(this.z7, 48);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.DungeonDetection = DungeonDetection;
-// # sourceMappingURL=DungeonDetection.js.map
+//# sourceMappingURL=DungeonDetection.js.map

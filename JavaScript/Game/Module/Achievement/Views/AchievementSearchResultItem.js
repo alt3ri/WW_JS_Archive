@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AchievementSearchResultItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const AchievementDataItem_1 = require("./AchievementDataItem");
-const AchievementSearchDescItem_1 = require("./AchievementSearchDescItem");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  AchievementDataItem_1 = require("./AchievementDataItem"),
+  AchievementSearchDescItem_1 = require("./AchievementSearchDescItem");
 class AchievementSearchResultItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -58,4 +58,4 @@ class AchievementSearchResultItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.AchievementSearchResultItem = AchievementSearchResultItem;
-// # sourceMappingURL=AchievementSearchResultItem.js.map
+//# sourceMappingURL=AchievementSearchResultItem.js.map

@@ -13,7 +13,7 @@ class EntityPhotoBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   OnCreate(e) {
     return (
       !!super.OnCreate(e) &&
-      (e = e.Condition).Type === "TakePhoto" &&
+      "TakePhoto" === (e = e.Condition).Type &&
       ((this.TakeTime = e.TimeCondition),
       (this.TakePlace = e.PosCondition),
       (this.TakeTargetArray = e.PhotoTargets),
@@ -34,4 +34,4 @@ class EntityPhotoBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   }
 }
 exports.EntityPhotoBehaviorNode = EntityPhotoBehaviorNode;
-// # sourceMappingURL=EntityPhotoBehaviorNode.js.map
+//# sourceMappingURL=EntityPhotoBehaviorNode.js.map

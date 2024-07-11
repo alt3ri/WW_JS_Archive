@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AccessPath = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const DicIntString_1 = require("./SubType/DicIntString");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  DicIntString_1 = require("./SubType/DicIntString");
 class AccessPath {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -51,34 +51,34 @@ class AccessPath {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   type() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   skipname() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : -1;
   }
   val1(t) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   val2(t) {
-    const i = this.J7.__offset(this.z7, 12);
+    var i = this.J7.__offset(this.z7, 12);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   val3(t) {
-    const i = this.J7.__offset(this.z7, 14);
+    var i = this.J7.__offset(this.z7, 14);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetFunctionopencheckmapAt(t, i) {
     return this.functionopencheckmap(t);
   }
   functionopencheckmap(t, i) {
-    const s = this.J7.__offset(this.z7, 16);
+    var s = this.J7.__offset(this.z7, 16);
     return s
       ? (i || new DicIntString_1.DicIntString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -87,21 +87,21 @@ class AccessPath {
       : null;
   }
   functionopencheckmapLength() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   sortindex() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   description(t) {
-    const i = this.J7.__offset(this.z7, 20);
+    var i = this.J7.__offset(this.z7, 20);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   pathvalue(t) {
-    const i = this.J7.__offset(this.z7, 22);
+    var i = this.J7.__offset(this.z7, 22);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.AccessPath = AccessPath;
-// # sourceMappingURL=AccessPath.js.map
+//# sourceMappingURL=AccessPath.js.map

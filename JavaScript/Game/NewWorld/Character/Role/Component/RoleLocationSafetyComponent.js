@@ -1,42 +1,46 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, o) {
-    let s;
-    const h = arguments.length;
-    let r =
-      h < 3 ? e : o === null ? (o = Object.getOwnPropertyDescriptor(e, i)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var s,
+      h = arguments.length,
+      r =
+        h < 3
+          ? e
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(e, i))
+            : o;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(t, e, i, o);
     else
-      for (let n = t.length - 1; n >= 0; n--)
-        (s = t[n]) && (r = (h < 3 ? s(r) : h > 3 ? s(e, i, r) : s(e, i)) || r);
-    return h > 3 && r && Object.defineProperty(e, i, r), r;
+      for (var n = t.length - 1; 0 <= n; n--)
+        (s = t[n]) && (r = (h < 3 ? s(r) : 3 < h ? s(e, i, r) : s(e, i)) || r);
+    return 3 < h && r && Object.defineProperty(e, i, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleLocationSafetyComponent = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../Core/Common/Time");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon");
-const TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const TeleportController_1 = require("../../../../Module/Teleport/TeleportController");
-const CharacterUnifiedStateTypes_1 = require("../../Common/Component/Abilities/CharacterUnifiedStateTypes");
-const INTERNAL_TIME = 1e3;
-const PROFILE_KEY = "SafetyTrace";
-const MAX_NOT_SAFETY_COUNT = 3;
-const HIGHT_LIMIT = -2e5;
-const disableTag = [-1446183172];
-const TELEPORT_THREHOLD = 1e3;
-const TELEPORT_THREHOLD_SQUARED = TELEPORT_THREHOLD * TELEPORT_THREHOLD;
+const Log_1 = require("../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon"),
+  TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  TeleportController_1 = require("../../../../Module/Teleport/TeleportController"),
+  CharacterUnifiedStateTypes_1 = require("../../Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  INTERNAL_TIME = 1e3,
+  PROFILE_KEY = "SafetyTrace",
+  MAX_NOT_SAFETY_COUNT = 3,
+  HIGHT_LIMIT = -2e5,
+  disableTag = [-1446183172],
+  TELEPORT_THREHOLD = 1e3,
+  TELEPORT_THREHOLD_SQUARED = TELEPORT_THREHOLD * TELEPORT_THREHOLD;
 let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -57,7 +61,7 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
       (this.WVs = Vector_1.Vector.Create()),
       (this.QVs = Rotator_1.Rotator.Create()),
       (this.W3r = (t, e) => {
-        const i = t.GetComponent(85);
+        var i = t.GetComponent(85);
         i &&
           (MathUtils_1.MathUtils.IsValidVector(i.WVs)
             ? this.WVs.DeepCopy(i.WVs)
@@ -107,13 +111,13 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
       }),
       (this.won = (t, e) => {
         e
-          ? (this.Lon === 0 &&
+          ? (0 === this.Lon &&
               (this.Uxr = this.Disable(
                 "[RoleLocationSafetyComponent.OnDisableTagsChanged] 包含坐下Tag",
               )),
             ++this.Lon)
           : (--this.Lon,
-            this.Lon === 0 &&
+            0 === this.Lon &&
               ((this.Ron = !1),
               this.Enable(
                 this.Uxr,
@@ -141,7 +145,7 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
         this.uht,
       ),
       (this.Lon = 0);
-    const t = this.Entity.GetComponent(185);
+    var t = this.Entity.GetComponent(185);
     if (t)
       for (const e of disableTag)
         t.HasTag(e) && ++this.Lon,
@@ -217,23 +221,23 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
       (this._ae.Z += this.Hte.DefaultHalfHeight - this.Hte.DefaultRadius),
       this.uae.DeepCopy(t),
       (this.uae.Z -= this.Hte.DefaultHalfHeight - this.Hte.DefaultRadius);
-    const e = ModelManager_1.ModelManager.TraceElementModel.GetActorTrace();
-    var t =
-      ((e.WorldContextObject = this.Hte.Actor),
-      (e.Radius = this.Hte.DefaultRadius),
-      TraceElementCommon_1.TraceElementCommon.SetStartLocation(e, this._ae),
-      TraceElementCommon_1.TraceElementCommon.SetEndLocation(e, this.uae),
-      e.ActorsToIgnore.Empty(),
-      TraceElementCommon_1.TraceElementCommon.ShapeTrace(
-        this.Hte.Actor.CapsuleComponent,
-        e,
-        PROFILE_KEY,
-        PROFILE_KEY,
-      ));
+    var e = ModelManager_1.ModelManager.TraceElementModel.GetActorTrace(),
+      t =
+        ((e.WorldContextObject = this.Hte.Actor),
+        (e.Radius = this.Hte.DefaultRadius),
+        TraceElementCommon_1.TraceElementCommon.SetStartLocation(e, this._ae),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(e, this.uae),
+        e.ActorsToIgnore.Empty(),
+        TraceElementCommon_1.TraceElementCommon.ShapeTrace(
+          this.Hte.Actor.CapsuleComponent,
+          e,
+          PROFILE_KEY,
+          PROFILE_KEY,
+        ));
     if (t) {
-      const i = e.HitResult.GetHitCount();
+      var i = e.HitResult.GetHitCount();
       for (let t = 0; t < i; ++t) {
-        const o = e.HitResult.Actors.Get(t);
+        var o = e.HitResult.Actors.Get(t);
         if (!(o instanceof TsBaseCharacter_1.default))
           return [
             e.HitResult.TimeArray.Get(t) >
@@ -259,9 +263,9 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
         ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Id
     ) {
       this.Pon = Time_1.Time.WorldTime + INTERNAL_TIME;
-      let t = !1;
-      let e = void 0;
-      let i;
+      let t = !1,
+        e = void 0;
+      var i;
       this.aYo.PositionState !==
       CharacterUnifiedStateTypes_1.ECharPositionState.Ground
         ? this.Ron &&
@@ -377,4 +381,4 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
   RoleLocationSafetyComponent,
 )),
   (exports.RoleLocationSafetyComponent = RoleLocationSafetyComponent);
-// # sourceMappingURL=RoleLocationSafetyComponent.js.map
+//# sourceMappingURL=RoleLocationSafetyComponent.js.map

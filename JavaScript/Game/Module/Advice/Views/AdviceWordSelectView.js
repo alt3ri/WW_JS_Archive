@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceWordSelectView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
-const AdviceWordSelectItem_1 = require("./AdviceWordSelectItem");
-const WAITUPDATECOUNT = 1;
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  AdviceWordSelectItem_1 = require("./AdviceWordSelectItem"),
+  WAITUPDATECOUNT = 1;
 class AdviceWordSelectView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -29,8 +29,8 @@ class AdviceWordSelectView extends UiViewBase_1.UiViewBase {
         );
       }),
       (this._Fe = () => {
-        let e, i;
-        ModelManager_1.ModelManager.AdviceModel.CurrentChangeWordType === 0
+        var e, i;
+        0 === ModelManager_1.ModelManager.AdviceModel.CurrentChangeWordType
           ? ((e =
               ModelManager_1.ModelManager.AdviceModel.CurrentPreSelectWordId),
             (i =
@@ -52,7 +52,7 @@ class AdviceWordSelectView extends UiViewBase_1.UiViewBase {
         this.CloseMe();
       }),
       (this.nHe = (e) => {
-        let i;
+        var i;
         this.eHe &&
           this.tHe >= WAITUPDATECOUNT &&
           ((this.eHe = !1),
@@ -88,14 +88,14 @@ class AdviceWordSelectView extends UiViewBase_1.UiViewBase {
       this.mGe();
   }
   mGe() {
-    ModelManager_1.ModelManager.AdviceModel.CurrentChangeWordType === 0
+    0 === ModelManager_1.ModelManager.AdviceModel.CurrentChangeWordType
       ? LguiUtil_1.LguiUtil.SetLocalText(this.GetText(4), "AdvicePutSentence")
       : LguiUtil_1.LguiUtil.SetLocalText(this.GetText(4), "AdvicePutWord");
   }
   bqe() {
-    const e = ModelManager_1.ModelManager.AdviceModel.CurrentChangeWordType;
+    var e = ModelManager_1.ModelManager.AdviceModel.CurrentChangeWordType;
     (this.hHe = new Array()),
-      e === 0
+      0 === e
         ? ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceSentenceConfigs().forEach(
             (e) => {
               this.hHe.push(e.Id);
@@ -128,4 +128,4 @@ class AdviceWordSelectView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.AdviceWordSelectView = AdviceWordSelectView;
-// # sourceMappingURL=AdviceWordSelectView.js.map
+//# sourceMappingURL=AdviceWordSelectView.js.map

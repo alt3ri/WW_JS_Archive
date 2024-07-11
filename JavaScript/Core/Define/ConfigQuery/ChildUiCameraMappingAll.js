@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configChildUiCameraMappingAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const ChildUiCameraMapping_1 = require("../Config/ChildUiCameraMapping");
-const DB = "db_uicamera.db";
-const FILE = "u.Ui相机.xlsx";
-const TABLE = "ChildUiCameraMapping";
-const COMMAND = "select BinData from `ChildUiCameraMapping`";
-const KEY_PREFIX = "ChildUiCameraMappingAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  ChildUiCameraMapping_1 = require("../Config/ChildUiCameraMapping"),
+  DB = "db_uicamera.db",
+  FILE = "u.Ui相机.xlsx",
+  TABLE = "ChildUiCameraMapping",
+  COMMAND = "select BinData from `ChildUiCameraMapping`",
+  KEY_PREFIX = "ChildUiCameraMappingAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configChildUiCameraMappingAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configChildUiCameraMappingAll = {
     );
   },
   GetConfigList: (i = !0) => {
-    let o;
+    var o;
     if (
       (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configChildUiCameraMappingAll = {
       }
       const a = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let e = void 0;
+        var e = void 0;
         if (
           (([o, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -67,4 +67,4 @@ exports.configChildUiCameraMappingAll = {
     }
   },
 };
-// # sourceMappingURL=ChildUiCameraMappingAll.js.map
+//# sourceMappingURL=ChildUiCameraMappingAll.js.map

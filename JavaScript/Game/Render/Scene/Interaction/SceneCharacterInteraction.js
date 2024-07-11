@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon");
-const GlobalData_1 = require("../../../GlobalData");
-const ColorUtils_1 = require("../../../Utils/ColorUtils");
-const SceneCharacterWaterEffect_1 = require("./SceneCharacterWaterEffect");
-const PROFILE_KEY = "SceneCharacterInteraction_CheckInWater";
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ColorUtils_1 = require("../../../Utils/ColorUtils"),
+  SceneCharacterWaterEffect_1 = require("./SceneCharacterWaterEffect"),
+  PROFILE_KEY = "SceneCharacterInteraction_CheckInWater";
 class SceneCharacterInteraction {
   constructor() {
     (this.OwnerCharacter = void 0),
@@ -74,7 +74,7 @@ class SceneCharacterInteraction {
         this.TempVector.Division(i, this.ActorSpeed);
       let t = !0;
       (this.UpdateWaterStateCounter -= i),
-        this.UpdateWaterStateCounter > 0
+        0 < this.UpdateWaterStateCounter
           ? (t = !1)
           : (this.UpdateWaterStateCounter = this.UpdateWaterStateInternal),
         this.WaterEffect &&
@@ -144,10 +144,10 @@ class SceneCharacterInteraction {
         (this.TsPreviousActorLocation = Vector_1.Vector.Create(
           this.ActorLocation,
         ))),
-      UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldFeatureLevel(
-        this.OwnerCharacter,
-      ) === 1 &&
-        (this.UpdateWaterStateInternal = this.UpdateWaterStateInternalPc),
+      1 ===
+        UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldFeatureLevel(
+          this.OwnerCharacter,
+        ) && (this.UpdateWaterStateInternal = this.UpdateWaterStateInternalPc),
       (this.UpdateWaterStateInternal *= this.UpdateWaterStateInternalScale);
   }
   Enable() {
@@ -182,16 +182,16 @@ class SceneCharacterInteraction {
     (this.IsInWaterOrOnMaterial = !1), (this.PhysicalMaterial = void 0);
   }
   static koe() {
-    const t = UE.NewObject(UE.TraceSphereElement.StaticClass());
-    var i =
-      ((t.WorldContextObject = GlobalData_1.GlobalData.World),
-      (t.bIsSingle = !1),
-      (t.bIgnoreSelf = !0),
-      (t.Radius = 1),
-      UE.NewArray(UE.BuiltinByte));
-    var i =
-      (i.Add(QueryTypeDefine_1.KuroObjectTypeQuery.WorldStatic),
-      (0, puerts_1.$ref)(i));
+    var t = UE.NewObject(UE.TraceSphereElement.StaticClass()),
+      i =
+        ((t.WorldContextObject = GlobalData_1.GlobalData.World),
+        (t.bIsSingle = !1),
+        (t.bIgnoreSelf = !0),
+        (t.Radius = 1),
+        UE.NewArray(UE.BuiltinByte)),
+      i =
+        (i.Add(QueryTypeDefine_1.KuroObjectTypeQuery.WorldStatic),
+        (0, puerts_1.$ref)(i));
     t.SetObjectTypesQuery(i),
       (t.DrawTime = 10),
       TraceElementCommon_1.TraceElementCommon.SetTraceColor(
@@ -211,25 +211,26 @@ class SceneCharacterInteraction {
   CheckInWater(t) {
     if (this.Config?.启用水面交互) {
       SceneCharacterInteraction.Nnr || SceneCharacterInteraction.koe();
-      var i = this.OwnerCharacter.CapsuleComponent;
-      var e = i.K2_GetComponentLocation();
-      var s = e.op_Addition(new UE.Vector(0, 0, i.CapsuleHalfHeight));
-      var e = e.op_Addition(
-        new UE.Vector(0, 0, -i.CapsuleHalfHeight - this.Config.射线向下延长),
-      );
-      var i = SceneCharacterInteraction.Nnr;
-      var s =
-        (TraceElementCommon_1.TraceElementCommon.SetStartLocation(i, s),
-        TraceElementCommon_1.TraceElementCommon.SetEndLocation(i, e),
-        TraceElementCommon_1.TraceElementCommon.SphereTrace(i, PROFILE_KEY));
-      var e = i.HitResult;
+      var i = this.OwnerCharacter.CapsuleComponent,
+        e = i.K2_GetComponentLocation(),
+        s = e.op_Addition(new UE.Vector(0, 0, i.CapsuleHalfHeight)),
+        e = e.op_Addition(
+          new UE.Vector(0, 0, -i.CapsuleHalfHeight - this.Config.射线向下延长),
+        ),
+        i = SceneCharacterInteraction.Nnr,
+        s =
+          (TraceElementCommon_1.TraceElementCommon.SetStartLocation(i, s),
+          TraceElementCommon_1.TraceElementCommon.SetEndLocation(i, e),
+          TraceElementCommon_1.TraceElementCommon.SphereTrace(i, PROFILE_KEY)),
+        e = i.HitResult;
       if (s && e.bBlockingHit) {
-        const h = i.HitResult;
-        const r = h.GetHitCount();
+        var h = i.HitResult,
+          r = h.GetHitCount();
         for (let i = 0; i < r; ++i) {
           if (
+            2 ===
             h.Components.Get(i).BodyInstance.CollisionResponses
-              .ResponseToChannels.GameTraceChannel2 === 2
+              .ResponseToChannels.GameTraceChannel2
           )
             return (
               (this.WaterHeight = h.LocationZ_Array.Get(i)),
@@ -240,7 +241,7 @@ class SceneCharacterInteraction {
               )),
               void this.SetInWater()
             );
-          const a = h.Components.Get(i);
+          var a = h.Components.Get(i);
           let t = void 0;
           if (
             (t =
@@ -277,4 +278,4 @@ class SceneCharacterInteraction {
   (SceneCharacterInteraction.Nnr = void 0),
   (SceneCharacterInteraction.i1r = !1),
   (exports.default = SceneCharacterInteraction);
-// # sourceMappingURL=SceneCharacterInteraction.js.map
+//# sourceMappingURL=SceneCharacterInteraction.js.map

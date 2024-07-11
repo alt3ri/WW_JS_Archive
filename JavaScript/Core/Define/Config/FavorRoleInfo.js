@@ -60,65 +60,65 @@ class FavorRoleInfo {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   roleid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   birthday(t) {
-    const i = this.J7.__offset(this.z7, 8);
+    var i = this.J7.__offset(this.z7, 8);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   sex(t) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   country(t) {
-    const i = this.J7.__offset(this.z7, 12);
+    var i = this.J7.__offset(this.z7, 12);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   influence(t) {
-    const i = this.J7.__offset(this.z7, 14);
+    var i = this.J7.__offset(this.z7, 14);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   info(t) {
-    const i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 16);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   talentname(t) {
-    const i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 18);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   talentdoc(t) {
-    const i = this.J7.__offset(this.z7, 20);
+    var i = this.J7.__offset(this.z7, 20);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   talentcertification(t) {
-    const i = this.J7.__offset(this.z7, 22);
+    var i = this.J7.__offset(this.z7, 22);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   condgroupid() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   cvnamecn(t) {
-    const i = this.J7.__offset(this.z7, 26);
+    var i = this.J7.__offset(this.z7, 26);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   cvnamejp(t) {
-    const i = this.J7.__offset(this.z7, 28);
+    var i = this.J7.__offset(this.z7, 28);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   cvnameko(t) {
-    const i = this.J7.__offset(this.z7, 30);
+    var i = this.J7.__offset(this.z7, 30);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   cvnameen(t) {
-    const i = this.J7.__offset(this.z7, 32);
+    var i = this.J7.__offset(this.z7, 32);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.FavorRoleInfo = FavorRoleInfo;
-// # sourceMappingURL=FavorRoleInfo.js.map
+//# sourceMappingURL=FavorRoleInfo.js.map

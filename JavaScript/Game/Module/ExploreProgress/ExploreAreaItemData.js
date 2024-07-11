@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExploreAreaItemData = void 0);
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class ExploreAreaItemData {
   constructor() {
     (this.AreaId = 0),
@@ -30,7 +30,7 @@ class ExploreAreaItemData {
       (this.SortIndex = t.SortIndex),
       (this.ExploreProgressId = t.Id),
       (this.UTn = !1),
-      this.DTn !== 0 &&
+      0 !== this.DTn &&
         (this.UTn =
           ModelManager_1.ModelManager.RouletteModel.UnlockExploreSkillDataMap.has(
             this.DTn,
@@ -52,15 +52,15 @@ class ExploreAreaItemData {
     return this.RTn;
   }
   IsPercent() {
-    return this.wTn === 0;
+    return 0 === this.wTn;
   }
   IsCompleted() {
     return (
-      this.V5t >= 100 || (this.kAt > 0 && this.JQt > 0 && this.kAt >= this.JQt)
+      100 <= this.V5t || (0 < this.kAt && 0 < this.JQt && this.kAt >= this.JQt)
     );
   }
   HasPhantomSkill() {
-    return this.DTn !== 0;
+    return 0 !== this.DTn;
   }
   GetUnlockTextId() {
     return this.PTn;
@@ -72,11 +72,11 @@ class ExploreAreaItemData {
     return this.UTn;
   }
   GetPhantomSkillHelpId() {
-    const t = ConfigManager_1.ConfigManager.RouletteConfig.GetExploreConfigById(
+    var t = ConfigManager_1.ConfigManager.RouletteConfig.GetExploreConfigById(
       this.DTn,
     );
     if (t) return t.HelpId;
   }
 }
 exports.ExploreAreaItemData = ExploreAreaItemData;
-// # sourceMappingURL=ExploreAreaItemData.js.map
+//# sourceMappingURL=ExploreAreaItemData.js.map

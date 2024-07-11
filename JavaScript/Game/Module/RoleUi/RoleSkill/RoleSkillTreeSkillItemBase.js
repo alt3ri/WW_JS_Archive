@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleSkillTreeSkillItemBase = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RoleSkillIconItem_1 = require("./RoleSkillIconItem");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RoleSkillIconItem_1 = require("./RoleSkillIconItem");
 class RoleSkillTreeSkillItemBase extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -48,8 +48,8 @@ class RoleSkillTreeSkillItemBase extends UiPanelBase_1.UiPanelBase {
       this.RefreshState();
   }
   RefreshName() {
-    let e;
-    const t = this.GetNameText();
+    var e,
+      t = this.GetNameText();
     t &&
       ((e = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(
         this.GetSkillNodeId(),
@@ -64,13 +64,10 @@ class RoleSkillTreeSkillItemBase extends UiPanelBase_1.UiPanelBase {
       t.SetText(e);
   }
   RefreshLevel() {
-    var e = this.GetRoleId();
-    let t = this.GetSkillNodeId();
-    var e = ModelManager_1.ModelManager.RoleModel.GetRoleSkillTreeNodeLevel(
-      e,
-      t,
-    );
-    const i = this.GetLevelText();
+    var e = this.GetRoleId(),
+      t = this.GetSkillNodeId(),
+      e = ModelManager_1.ModelManager.RoleModel.GetRoleSkillTreeNodeLevel(e, t),
+      i = this.GetLevelText();
     i &&
       ((t =
         ConfigManager_1.ConfigManager.RoleSkillConfig.GetRoleSkillMaxLevelBySkillNodeId(
@@ -85,18 +82,18 @@ class RoleSkillTreeSkillItemBase extends UiPanelBase_1.UiPanelBase {
     this.Smo.SetToggleState(e);
   }
   RefreshState() {
-    let e;
-    const t = this.GetLockItem();
-    const i = this.GetStrongArrowUpItem();
+    var e,
+      t = this.GetLockItem(),
+      i = this.GetStrongArrowUpItem();
     (this.ac = ModelManager_1.ModelManager.RoleModel.GetRoleSkillTreeNodeState(
       this.GetRoleId(),
       this.GetSkillNodeId(),
     )),
-      this.ac === 1
+      1 === this.ac
         ? (t?.SetUIActive(!0), i?.SetUIActive(!1))
-        : this.ac === 3
+        : 3 === this.ac
           ? (t?.SetUIActive(!1), i?.SetUIActive(!1))
-          : this.ac === 2 &&
+          : 2 === this.ac &&
             ((e =
               ModelManager_1.ModelManager.RoleModel.GetRoleSkillTreeNodeConsumeSatisfied(
                 this.GetRoleId(),
@@ -106,7 +103,7 @@ class RoleSkillTreeSkillItemBase extends UiPanelBase_1.UiPanelBase {
             i?.SetUIActive(e));
   }
   OnOtherNodeLevelChange() {
-    this.ac !== 3 && (this.Smo.RefreshState(), this.RefreshState());
+    3 !== this.ac && (this.Smo.RefreshState(), this.RefreshState());
   }
   OnSelfNodeLevelChange() {
     this.Smo.RefreshState(), this.RefreshLevel(), this.RefreshState();
@@ -125,4 +122,4 @@ class RoleSkillTreeSkillItemBase extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleSkillTreeSkillItemBase = RoleSkillTreeSkillItemBase;
-// # sourceMappingURL=RoleSkillTreeSkillItemBase.js.map
+//# sourceMappingURL=RoleSkillTreeSkillItemBase.js.map

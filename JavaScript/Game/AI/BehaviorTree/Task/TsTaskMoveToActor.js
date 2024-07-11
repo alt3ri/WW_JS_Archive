@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const GlobalData_1 = require("../../../GlobalData");
-const CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary");
-const TsAiController_1 = require("../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
-const NAVIGATION_COMPLETE_DISTANCE = 10;
+const Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  GlobalData_1 = require("../../../GlobalData"),
+  CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
+  TsAiController_1 = require("../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
+  NAVIGATION_COMPLETE_DISTANCE = 10;
 class TsTaskMoveToActor extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -48,20 +48,21 @@ class TsTaskMoveToActor extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveExecuteAI(t, i) {
     this.InitTsVariables();
-    const e = t.AiController;
+    var e = t.AiController;
     if (e) {
-      const s = e.CharActorComp;
-      const r =
-        (this.TsWalkOff || s.Entity.GetComponent(36)?.SetWalkOffLedgeRecord(!1),
-        BlackboardController_1.BlackboardController.GetEntityIdByEntity(
-          e.CharAiDesignComp.Entity.Id,
-          this.TsBlackboardKeyActor,
-        ));
-      const h = EntitySystem_1.EntitySystem.Get(r);
+      var s = e.CharActorComp,
+        r =
+          (this.TsWalkOff ||
+            s.Entity.GetComponent(36)?.SetWalkOffLedgeRecord(!1),
+          BlackboardController_1.BlackboardController.GetEntityIdByEntity(
+            e.CharAiDesignComp.Entity.Id,
+            this.TsBlackboardKeyActor,
+          )),
+        h = EntitySystem_1.EntitySystem.Get(r);
       if (r && h?.Valid) {
         this.SelectedTargetLocation =
           AiContollerLibrary_1.AiControllerLibrary.GetLocationFromEntity(h);
-        const o = e.CharAiDesignComp?.Entity.GetComponent(158);
+        var o = e.CharAiDesignComp?.Entity.GetComponent(158);
         if (o?.Valid)
           switch (this.TsMoveState) {
             case 1:
@@ -97,15 +98,15 @@ class TsTaskMoveToActor extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveTickAI(t, i, e) {
     if (t instanceof TsAiController_1.default) {
-      const s = t.AiController;
-      const r = s.CharActorComp;
-      const h = r.ActorLocationProxy;
+      var s = t.AiController,
+        r = s.CharActorComp,
+        h = r.ActorLocationProxy;
       if (Time_1.Time.WorldTime > this.NextCheckTime) {
         var o = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
-          s.CharAiDesignComp.Entity.Id,
-          this.TsBlackboardKeyActor,
-        );
-        var a = EntitySystem_1.EntitySystem.Get(o);
+            s.CharAiDesignComp.Entity.Id,
+            this.TsBlackboardKeyActor,
+          ),
+          a = EntitySystem_1.EntitySystem.Get(o);
         if (!o || !a?.Valid) return void this.Finish(!1);
         o = AiContollerLibrary_1.AiControllerLibrary.GetLocationFromEntity(a);
         (this.NextCheckTime = Time_1.Time.WorldTime + this.TsFixPeriod),
@@ -139,7 +140,7 @@ class TsTaskMoveToActor extends TsTaskAbortImmediatelyBase_1.default {
             (o.X /= t),
             (o.Y /= t),
             r.SetInputDirect(o);
-          const l = s.CharAiDesignComp?.Entity.GetComponent(158);
+          var l = s.CharAiDesignComp?.Entity.GetComponent(158);
           if (l?.Valid)
             switch (this.TsMoveState) {
               case 1:
@@ -182,4 +183,4 @@ class TsTaskMoveToActor extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskMoveToActor;
-// # sourceMappingURL=TsTaskMoveToActor.js.map
+//# sourceMappingURL=TsTaskMoveToActor.js.map

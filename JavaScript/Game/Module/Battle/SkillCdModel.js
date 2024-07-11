@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkillCdModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const PassiveSkillCdData_1 = require("./SkillCd/PassiveSkillCdData");
-const SkillCdData_1 = require("./SkillCd/SkillCdData");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  PassiveSkillCdData_1 = require("./SkillCd/PassiveSkillCdData"),
+  SkillCdData_1 = require("./SkillCd/SkillCdData");
 class SkillCdModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -41,20 +41,20 @@ class SkillCdModel extends ModelBase_1.ModelBase {
     this.oKe.HandlePassiveSkillNotify(e);
   }
   sKe() {
-    const e =
-      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId;
+    var e = ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId;
     if (
-      e !== 0 &&
-      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
-        .ShareAttri === 0
+      0 !== e &&
+      0 ===
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
+          .ShareAttri
     )
       return !1;
     return !0;
   }
   GetGroupSkillCdInfoBySkillId(e, i) {
-    const a = this.GetCurWorldSkillCdData();
+    var a = this.GetCurWorldSkillCdData();
     let t = a.AllShareSkillCdData;
-    let l = t.SkillId2GroupIdMap.get(i);
+    var l = t.SkillId2GroupIdMap.get(i);
     return l ||
       ((t = a.EntitySkillCdMap.get(e)) && (l = t.SkillId2GroupIdMap.get(i)))
       ? t.GroupSkillCdInfoMap.get(l)
@@ -62,4 +62,4 @@ class SkillCdModel extends ModelBase_1.ModelBase {
   }
 }
 exports.SkillCdModel = SkillCdModel;
-// # sourceMappingURL=SkillCdModel.js.map
+//# sourceMappingURL=SkillCdModel.js.map

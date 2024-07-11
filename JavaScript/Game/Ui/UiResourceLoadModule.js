@@ -36,4 +36,4 @@ class UiResourceLoadModule {
   }
 }
 exports.UiResourceLoadModule = UiResourceLoadModule;
-// # sourceMappingURL=UiResourceLoadModule.js.map
+//# sourceMappingURL=UiResourceLoadModule.js.map

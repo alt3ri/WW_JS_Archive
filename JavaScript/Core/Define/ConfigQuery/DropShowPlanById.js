@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configDropShowPlanById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const DropShowPlan_1 = require("../Config/DropShowPlan");
-const DB = "db_drop.db";
-const FILE = "d.掉落.xlsx";
-const TABLE = "DropShowPlan";
-const COMMAND = "select BinData from `DropShowPlan` where Id=?";
-const KEY_PREFIX = "DropShowPlanById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  DropShowPlan_1 = require("../Config/DropShowPlan"),
+  DB = "db_drop.db",
+  FILE = "d.掉落.xlsx",
+  TABLE = "DropShowPlan",
+  COMMAND = "select BinData from `DropShowPlan` where Id=?",
+  KEY_PREFIX = "DropShowPlanById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configDropShowPlanById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configDropShowPlanById.GetConfig(";
 exports.configDropShowPlanById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configDropShowPlanById = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var i;
-        var e = void 0;
+        var i,
+          e = void 0;
         if (
           (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configDropShowPlanById = {
     }
   },
 };
-// # sourceMappingURL=DropShowPlanById.js.map
+//# sourceMappingURL=DropShowPlanById.js.map

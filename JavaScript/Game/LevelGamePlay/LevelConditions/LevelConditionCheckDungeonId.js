@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckDungeonId = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionCheckDungeonId extends LevelGeneralBase_1.LevelConditionBase {
   CheckNew(e, o) {
-    let n, r;
+    var n, r;
     return (
       !!e &&
       ((e = e),
       (n = ModelManager_1.ModelManager.CreatureModel.GetInstanceId()) &&
       e.DungeonId
-        ? ((r = n === e.DungeonId), e.Compare === "Eq" ? r : !r)
+        ? ((r = n === e.DungeonId), "Eq" === e.Compare ? r : !r)
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
@@ -26,4 +26,4 @@ class LevelConditionCheckDungeonId extends LevelGeneralBase_1.LevelConditionBase
   }
 }
 exports.LevelConditionCheckDungeonId = LevelConditionCheckDungeonId;
-// # sourceMappingURL=LevelConditionCheckDungeonId.js.map
+//# sourceMappingURL=LevelConditionCheckDungeonId.js.map

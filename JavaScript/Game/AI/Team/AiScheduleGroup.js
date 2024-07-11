@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiScheduleGroup = exports.AiAreaMemberData = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const BlackboardController_1 = require("../../World/Controller/BlackboardController");
-const BLACKBOARD_KEY_AREA_INDEX = "TeamIndex";
-const BLACKBOARD_KEY_ATTACKER = "TeamAttacker";
-const MAX_OUT_ZONE_ANGLE_PER_ONE_RADIUS = 0.333;
-const MAX_IN_ZONE_ANGLE_PER_ONE_RADIUS = 2;
-const MAX_ELITE_TYPE = 3;
-const MAX_CHAR_TYPE = 6;
-const MIN_RADIUS = 30;
-const MAX_RADIUS = 100;
-const MINUS_HALF_CIRCLE = -180;
+const Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  BlackboardController_1 = require("../../World/Controller/BlackboardController"),
+  BLACKBOARD_KEY_AREA_INDEX = "TeamIndex",
+  BLACKBOARD_KEY_ATTACKER = "TeamAttacker",
+  MAX_OUT_ZONE_ANGLE_PER_ONE_RADIUS = 0.333,
+  MAX_IN_ZONE_ANGLE_PER_ONE_RADIUS = 2,
+  MAX_ELITE_TYPE = 3,
+  MAX_CHAR_TYPE = 6,
+  MIN_RADIUS = 30,
+  MAX_RADIUS = 100,
+  MINUS_HALF_CIRCLE = -180;
 class AiAndScore {
   constructor() {
     (this.Ai = void 0), (this.Score = -0);
@@ -60,7 +60,7 @@ class AiScheduleGroup {
       (this.Cse = !1),
       (this.gse = 0),
       (this.fse = new Array());
-    const r = e.AiTeamAreas.length;
+    var r = e.AiTeamAreas.length;
     for (let e = 0; e < r; ++e) this.fse.push(new Array());
   }
   GetMemberData(e) {
@@ -73,7 +73,7 @@ class AiScheduleGroup {
     );
   }
   Remove(e) {
-    let t;
+    var t;
     return (
       !!this.mse.delete(e) &&
       (e.CharAiDesignComp?.Valid &&
@@ -91,10 +91,10 @@ class AiScheduleGroup {
     );
   }
   IsEmpty() {
-    return this.mse.size === 0;
+    return 0 === this.mse.size;
   }
   CheckTargetAndRemove() {
-    for (const [e] of this.mse) {
+    for (var [e] of this.mse) {
       var t;
       this.cse.TeamMemberToGroup.has(e)
         ? ((t = e.AiHateList.GetCurrentTarget())?.Valid && t === this.Target) ||
@@ -108,15 +108,15 @@ class AiScheduleGroup {
       (this.Cse = !1);
   }
   pse() {
-    var e = this.cse.AiTeamLevel;
-    var [e, t, r] =
-      ((this.gse =
-        Time_1.Time.WorldTime +
-        MathUtils_1.MathUtils.GetRandomRange(
-          e.AllocationPeriodic.Min,
-          e.AllocationPeriodic.Max,
-        )),
-      this.Sse());
+    var e = this.cse.AiTeamLevel,
+      [e, t, r] =
+        ((this.gse =
+          Time_1.Time.WorldTime +
+          MathUtils_1.MathUtils.GetRandomRange(
+            e.AllocationPeriodic.Min,
+            e.AllocationPeriodic.Max,
+          )),
+        this.Sse());
     AiScheduleGroup.Ese.clear(),
       AiScheduleGroup.yse.clear(),
       this.Ise(e, t),
@@ -127,12 +127,12 @@ class AiScheduleGroup {
   Ise(t, r) {
     AiScheduleGroup.Lse.clear();
     let i = 1;
-    for (const [o] of this.mse) {
-      let h = o.CharActorComp.ActorLocationProxy;
+    for (var [o] of this.mse) {
+      var h = o.CharActorComp.ActorLocationProxy;
       let e =
         Math.atan2(h.Y - t.Y, h.X - t.X) * MathUtils_1.MathUtils.RadToDeg - r;
-      for (; e > 180; ) e -= 360;
-      for (; -e > 180; ) e += 360;
+      for (; 180 < e; ) e -= 360;
+      for (; 180 < -e; ) e += 360;
       AiScheduleGroup.Ese.set(o, e);
       h = Vector_1.Vector.DistSquared2D(h, t);
       h > i && (i = h),
@@ -142,22 +142,22 @@ class AiScheduleGroup {
     i += 1;
     let s = 0;
     for (const u of this.cse.AiTeamAreas) {
-      const A = this.cse.AreaCharTypeToPriority[s];
-      const a =
-        s + 1 < this.cse.AiTeamAreas.length
-          ? this.cse.AreaCharTypeToPriority[s + 1]
-          : void 0;
+      var A = this.cse.AreaCharTypeToPriority[s],
+        a =
+          s + 1 < this.cse.AiTeamAreas.length
+            ? this.cse.AreaCharTypeToPriority[s + 1]
+            : void 0;
       AiScheduleGroup.Dse.length = 0;
       for (const d of AiScheduleGroup.Lse) {
-        var l;
-        const _ = A.get(d.AiBase.MonsterType);
+        var l,
+          _ = A.get(d.AiBase.MonsterType);
         void 0 !== _ &&
           (((l = AiAndScore.Get()).Ai = d),
           (l.Score = _ + AiScheduleGroup.yse.get(d) / i),
           AiScheduleGroup.Dse.push(l));
       }
       AiScheduleGroup.Dse.sort(AiAndScore.Compare);
-      const c = this.fse[s];
+      var c = this.fse[s];
       let e = (c.length = 0);
       for (const n of AiScheduleGroup.Dse)
         (e < u.MaxCharacter || !a?.get(n.Ai.AiBase.MonsterType)) &&
@@ -165,7 +165,7 @@ class AiScheduleGroup {
           ++e;
       AiAndScore.ReleaseArray(AiScheduleGroup.Dse), ++s;
     }
-    if (AiScheduleGroup.Lse.size > 0) {
+    if (0 < AiScheduleGroup.Lse.size) {
       for (const S of AiScheduleGroup.Lse) {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -183,7 +183,7 @@ class AiScheduleGroup {
     s = 0;
     for (const f of this.cse.AiTeamAreas) {
       for (const G of this.fse[s]) {
-        const e = this.mse.get(G);
+        var e = this.mse.get(G);
         (e.NextUpdateCenterTime =
           Time_1.Time.WorldTime +
           MathUtils_1.MathUtils.GetRandomRange(
@@ -197,15 +197,15 @@ class AiScheduleGroup {
     }
   }
   Tse(e) {
-    let t = 0;
-    let r = 0;
+    let t = 0,
+      r = 0;
     for (const _ of this.cse.AiTeamAreas) {
-      const i = this.fse[t];
-      if (i.length === 0);
+      var i = this.fse[t];
+      if (0 === i.length);
       else {
         AiScheduleGroup.Dse.length = 0;
         for (const c of i) {
-          const o = AiAndScore.Get();
+          var o = AiAndScore.Get();
           (o.Ai = c),
             (o.Score = AiScheduleGroup.Ese.get(c)),
             AiScheduleGroup.Dse.push(o);
@@ -214,13 +214,13 @@ class AiScheduleGroup {
         for (let e = 0; e < AiScheduleGroup.Dse.length; ++e)
           i[e] = AiScheduleGroup.Dse[e].Ai;
         AiAndScore.ReleaseArray(AiScheduleGroup.Dse);
-        const h = Math.min(i.length, _.MaxCharacter);
-        var s = i.length - h;
-        const A = Math.ceil(s / 2);
-        var s = s - A;
-        const a = 0.5 * (_.AreaDistance.Max - _.AreaDistance.Min);
-        const l = e + _.AreaDistance.Min + a;
-        A > 0 &&
+        var h = Math.min(i.length, _.MaxCharacter),
+          s = i.length - h,
+          A = Math.ceil(s / 2),
+          s = s - A,
+          a = 0.5 * (_.AreaDistance.Max - _.AreaDistance.Min),
+          l = e + _.AreaDistance.Min + a;
+        0 < A &&
           this.Rse(
             t,
             0,
@@ -234,7 +234,7 @@ class AiScheduleGroup {
             a,
           ),
           (r =
-            h > 0
+            0 < h
               ? this.Rse(
                   t,
                   A,
@@ -249,7 +249,7 @@ class AiScheduleGroup {
                   r,
                 )
               : 0),
-          s > 0 &&
+          0 < s &&
             this.Rse(
               t,
               A + h,
@@ -267,17 +267,17 @@ class AiScheduleGroup {
     }
   }
   Rse(t, r, i, e, o, h, s, A, a, l, _ = 0) {
-    const c = this.fse[t];
+    var c = this.fse[t];
     let u = 0;
     for (let e = r; e < i; ++e) {
-      const d = c[e];
+      var d = c[e];
       u += MathUtils_1.MathUtils.Clamp(
         d.CharActorComp.Radius,
         MIN_RADIUS,
         MAX_RADIUS,
       );
     }
-    const n = Math.min(h, (o - e) / u);
+    var n = Math.min(h, (o - e) / u);
     let S = 0;
     switch (s) {
       case 0:
@@ -290,8 +290,8 @@ class AiScheduleGroup {
         S = e;
     }
     for (let e = r; e < i; ++e) {
-      const p = c[e];
-      const f = this.mse.get(p);
+      var p = c[e],
+        f = this.mse.get(p);
       (f.AreaIndex = t),
         (f.InZone = A),
         (f.MaxAngleOffset =
@@ -310,12 +310,12 @@ class AiScheduleGroup {
     return 0;
   }
   vse() {
-    let e = void 0;
-    let t = 0;
-    let r = 0;
+    let e = void 0,
+      t = 0,
+      r = 0;
     for (const o of this.cse.AiTeamAreas) {
       for (const h of this.fse[r]) {
-        const i = this.mse.get(h);
+        var i = this.mse.get(h);
         !i ||
           Time_1.Time.WorldTime <= i.NextUpdateCenterTime ||
           (e || ([e, t] = this.Sse()),
@@ -333,14 +333,14 @@ class AiScheduleGroup {
   }
   Mse() {
     AiScheduleGroup.Dse.length = 0;
-    const e = this.Use();
+    var e = this.Use();
     this.Ase(e), AiAndScore.ReleaseArray(AiScheduleGroup.Dse);
   }
   Use() {
-    const e = this.cse.AiTeamLevel;
+    var e = this.cse.AiTeamLevel;
     AiScheduleGroup.Pse.splice(0, AiScheduleGroup.Pse.length);
     for (const l of this.dse) {
-      const t = this.mse.get(l);
+      var t = this.mse.get(l);
       if (l.CharActorComp.Entity.CheckGetComponent(185).HasTag(-1503953470))
         if (t.NextScheduleTimeBeAttack) {
           if (t.NextScheduleTimeBeAttack < Time_1.Time.WorldTime) {
@@ -368,25 +368,25 @@ class AiScheduleGroup {
               "TeamAttacker",
             ));
     }
-    const r = Math.min(
+    var r = Math.min(
       e.AttackerNum - (this.dse.size - AiScheduleGroup.Pse.length),
       this.mse.size - this.dse.size,
     );
-    if (r > 0) {
-      const [i, o] = this.Sse();
+    if (0 < r) {
+      var [i, o] = this.Sse();
       let e = 0;
       for (const _ of this.fse) {
-        const h = this.cse.AiTeamAttacks[e];
+        var h = this.cse.AiTeamAttacks[e];
         for (const c of _) {
-          let s = this.mse.get(c);
+          var s = this.mse.get(c);
           if (s && s.InZone && !s.IsAttacker) {
-            let A = c.CharActorComp.ActorLocationProxy;
+            var A = c.CharActorComp.ActorLocationProxy;
             let e =
               Math.atan2(A.Y - i.Y, A.X - i.X) *
                 MathUtils_1.MathUtils.RadToDeg -
               o;
-            for (; e > 180; ) e -= 360;
-            for (; -e > 180; ) e += 360;
+            for (; 180 < e; ) e -= 360;
+            for (; 180 < -e; ) e += 360;
             e = Math.abs(e);
             (A = Math.abs(Vector_1.Vector.Dist2D(A, i) - s.DistanceCenter)),
               (A =
@@ -408,7 +408,7 @@ class AiScheduleGroup {
           );
     } else
       for (const d of AiScheduleGroup.Pse) {
-        const a = this.mse.get(d);
+        var a = this.mse.get(d);
         (a.NextScheduleTimeAttack =
           Time_1.Time.WorldTime +
           MathUtils_1.MathUtils.GetRandomRange(
@@ -432,42 +432,42 @@ class AiScheduleGroup {
   }
   Ase(t) {
     AiScheduleGroup.Dse.sort(AiAndScore.Compare);
-    let o = 0;
-    let h = 0;
-    const s = new Array();
+    let o = 0,
+      h = 0;
+    var s = new Array();
     for (let e = 0; e < MAX_CHAR_TYPE; ++e) s.push(0);
     for (const e of AiScheduleGroup.Dse)
       e.Ai.AiBase.MonsterType <= MAX_ELITE_TYPE ? ++o : ++h,
         ++s[e.Ai.AiBase.MonsterType - 1];
-    const A = new Array();
+    var A = new Array();
     for (let e = 0; e < MAX_CHAR_TYPE; ++e) A.push(0);
-    const a = this.cse.AiTeamLevel;
+    var a = this.cse.AiTeamLevel;
     for (let e = 0; e < t; ++e) {
       let e = !1;
-      if (o > 0 && h > 0)
+      if (0 < o && 0 < h)
         e =
           MathUtils_1.MathUtils.GetRandomRange(
             0,
             a.EliteRatio[0] + a.EliteRatio[1],
           ) < a.EliteRatio[0];
-      else if (o > 0) e = !0;
+      else if (0 < o) e = !0;
       else {
-        if (!(h > 0)) break;
+        if (!(0 < h)) break;
         e = !1;
       }
-      let t = 0;
-      let r = ((t = e ? (--o, 0) : (--h, MAX_ELITE_TYPE)), 0);
-      let i = 0;
+      let t = 0,
+        r = ((t = e ? (--o, 0) : (--h, MAX_ELITE_TYPE)), 0),
+        i = 0;
       for (let e = 0; e < MAX_ELITE_TYPE; ++e)
-        s[t + e] > 0 &&
+        0 < s[t + e] &&
           ((r += a.RangeRatio[e]),
           MathUtils_1.MathUtils.GetRandomRange(0, r) < a.RangeRatio[e]) &&
           (i = t + e);
       --s[i], ++A[i];
     }
-    for (let e = AiScheduleGroup.Dse.length - 1; e >= 0; --e) {
-      var r;
-      const i = AiScheduleGroup.Dse[e];
+    for (let e = AiScheduleGroup.Dse.length - 1; 0 <= e; --e) {
+      var r,
+        i = AiScheduleGroup.Dse[e];
       A[i.Ai.AiBase.MonsterType - 1] <= 0 ||
         (--A[i.Ai.AiBase.MonsterType - 1],
         ((r = this.mse.get(i.Ai)).IsAttacker = !0),
@@ -494,12 +494,12 @@ class AiScheduleGroup {
     }
   }
   Sse() {
-    const e = this.Target.Entity.CheckGetComponent(3);
-    var t = this.Target.Entity.CheckGetComponent(52);
-    var t =
-      t?.Valid && t.CharacterController
-        ? t.CharacterController.K2_GetActorRotation().Yaw
-        : 0;
+    var e = this.Target.Entity.CheckGetComponent(3),
+      t = this.Target.Entity.CheckGetComponent(52),
+      t =
+        t?.Valid && t.CharacterController
+          ? t.CharacterController.K2_GetActorRotation().Yaw
+          : 0;
     return [e.ActorLocationProxy, t, e.ScaledRadius];
   }
 }
@@ -508,4 +508,4 @@ class AiScheduleGroup {
   (AiScheduleGroup.yse = new Map()),
   (AiScheduleGroup.Lse = new Set()),
   (AiScheduleGroup.Pse = new Array());
-// # sourceMappingURL=AiScheduleGroup.js.map
+//# sourceMappingURL=AiScheduleGroup.js.map

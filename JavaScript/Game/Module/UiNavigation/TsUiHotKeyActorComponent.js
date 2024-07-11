@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TsUiHotKeyActorComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const GlobalData_1 = require("../../GlobalData");
-const UiNavigationLogic_1 = require("./New/UiNavigationLogic");
-const HotKeyItemFactory_1 = require("./UIItem/HotKeyItemFactory");
-const UiNavigationUtil_1 = require("./UiNavigationUtil");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  GlobalData_1 = require("../../GlobalData"),
+  UiNavigationLogic_1 = require("./New/UiNavigationLogic"),
+  HotKeyItemFactory_1 = require("./UIItem/HotKeyItemFactory"),
+  UiNavigationUtil_1 = require("./UiNavigationUtil");
 class TsUiHotKeyActorComponent extends UE.LGUIBehaviour {
   constructor() {
     super(...arguments),
@@ -75,14 +75,14 @@ class TsUiHotKeyActorComponent extends UE.LGUIBehaviour {
       this.PanelConfig.DeleteKeyItem(this.HotKeyItem);
   }
   RegisterAllHotKeyComponent() {
-    if (!(this.UiHotKeyState < 3) && this.UiHotKeyState !== 4) {
+    if (!(this.UiHotKeyState < 3) && 4 !== this.UiHotKeyState) {
       this.UiHotKeyState = 4;
       for (const t of this.HotKeyItem.GetHotKeyComponentArray())
         t && this.RegisterHotKeyComponent(t);
     }
   }
   UnRegisterAllHotKeyComponent() {
-    if (this.UiHotKeyState === 4) {
+    if (4 === this.UiHotKeyState) {
       this.UiHotKeyState = 5;
       for (const t of this.HotKeyItem.GetHotKeyComponentArray())
         t && this.UnRegisterHotKeyComponent(t);
@@ -101,4 +101,4 @@ class TsUiHotKeyActorComponent extends UE.LGUIBehaviour {
 }
 (exports.TsUiHotKeyActorComponent = TsUiHotKeyActorComponent),
   (exports.default = TsUiHotKeyActorComponent);
-// # sourceMappingURL=TsUiHotKeyActorComponent.js.map
+//# sourceMappingURL=TsUiHotKeyActorComponent.js.map

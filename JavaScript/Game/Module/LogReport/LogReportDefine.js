@@ -43,10 +43,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.PlayerCommonLogData =
     exports.CommonLogData =
       void 0);
-const UE = require("ue");
-const Json_1 = require("../../../Core/Common/Json");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const PROJECT_ID = "Aki";
+const UE = require("ue"),
+  Json_1 = require("../../../Core/Common/Json"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  PROJECT_ID = "Aki";
 class CommonLogData extends Json_1.JsonObjBase {
   constructor() {
     super(),
@@ -748,4 +748,4 @@ class ActivityViewJumpClickLogData extends PlayerCommonLogData {
   }
 }
 exports.ActivityViewJumpClickLogData = ActivityViewJumpClickLogData;
-// # sourceMappingURL=LogReportDefine.js.map
+//# sourceMappingURL=LogReportDefine.js.map

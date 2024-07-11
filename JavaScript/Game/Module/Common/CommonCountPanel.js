@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonItemCountPanel = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("./LevelSequencePlayer");
-const MAX_DIGIT = 4;
-const MAX_NUMBER = "9999";
-const KEYCOUNT = 9;
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("./LevelSequencePlayer"),
+  MAX_DIGIT = 4,
+  MAX_NUMBER = "9999",
+  KEYCOUNT = 9;
 class CommonItemCountPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -15,7 +15,7 @@ class CommonItemCountPanel extends UiPanelBase_1.UiPanelBase {
       (this.cIt = void 0),
       (this.EPe = void 0),
       (this.lut = (t) => {
-        t === "Close" && this.SetActive(!1);
+        "Close" === t && this.SetActive(!1);
       }),
       (this.mIt = () => {
         this.PlayCloseSequence();
@@ -33,7 +33,7 @@ class CommonItemCountPanel extends UiPanelBase_1.UiPanelBase {
   set t6(t) {
     (this._It = t),
       this.GetText(0).SetText(this._It),
-      this.GetInteractionGroup(4).SetInteractable(this._It.length > 0);
+      this.GetInteractionGroup(4).SetInteractable(0 < this._It.length);
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -63,7 +63,7 @@ class CommonItemCountPanel extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     this.uIt = [];
     for (let t = 0; t <= KEYCOUNT; t++) {
-      const e = this.GetButton(5 + t);
+      var e = this.GetButton(5 + t);
       this.uIt.push(e);
     }
     for (let t = 0; t <= KEYCOUNT; t++)
@@ -98,4 +98,4 @@ class CommonItemCountPanel extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.CommonItemCountPanel = CommonItemCountPanel;
-// # sourceMappingURL=CommonCountPanel.js.map
+//# sourceMappingURL=CommonCountPanel.js.map

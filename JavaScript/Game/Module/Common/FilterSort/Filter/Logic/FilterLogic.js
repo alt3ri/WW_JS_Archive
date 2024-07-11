@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FilterLogic = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
-const FilterTypeFunctionLibrary_1 = require("./FilterTypeFunctionLibrary");
-const CalabashCollectFilter_1 = require("./Rule/CalabashCollectFilter");
-const ComposeFilter_1 = require("./Rule/ComposeFilter");
-const CookFilter_1 = require("./Rule/CookFilter");
-const DungeonDetectFilter_1 = require("./Rule/DungeonDetectFilter");
-const InventoryFilter_1 = require("./Rule/InventoryFilter");
-const ItemFilter_1 = require("./Rule/ItemFilter");
-const MonsterDetectFilter_1 = require("./Rule/MonsterDetectFilter");
-const PhantomFetterFilter_1 = require("./Rule/PhantomFetterFilter");
-const PhantomFilter_1 = require("./Rule/PhantomFilter");
-const RoleFilter_1 = require("./Rule/RoleFilter");
-const SilentAreaDetectFilter_1 = require("./Rule/SilentAreaDetectFilter");
-const VisionDestroyFilter_1 = require("./Rule/VisionDestroyFilter");
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  FilterTypeFunctionLibrary_1 = require("./FilterTypeFunctionLibrary"),
+  CalabashCollectFilter_1 = require("./Rule/CalabashCollectFilter"),
+  ComposeFilter_1 = require("./Rule/ComposeFilter"),
+  CookFilter_1 = require("./Rule/CookFilter"),
+  DungeonDetectFilter_1 = require("./Rule/DungeonDetectFilter"),
+  InventoryFilter_1 = require("./Rule/InventoryFilter"),
+  ItemFilter_1 = require("./Rule/ItemFilter"),
+  MonsterDetectFilter_1 = require("./Rule/MonsterDetectFilter"),
+  PhantomFetterFilter_1 = require("./Rule/PhantomFetterFilter"),
+  PhantomFilter_1 = require("./Rule/PhantomFilter"),
+  RoleFilter_1 = require("./Rule/RoleFilter"),
+  SilentAreaDetectFilter_1 = require("./Rule/SilentAreaDetectFilter"),
+  VisionDestroyFilter_1 = require("./Rule/VisionDestroyFilter");
 class FilterLogic {
   constructor() {
     (this.NTt = {
-      1: new RoleFilter_1.RoleFilter(),
+      [1]: new RoleFilter_1.RoleFilter(),
       2: new PhantomFilter_1.PhantomFilter(),
       3: new PhantomFetterFilter_1.PhantomFetterFilter(),
       4: new CalabashCollectFilter_1.CalabashCollectFilter(),
@@ -34,7 +34,7 @@ class FilterLogic {
       13: new VisionDestroyFilter_1.VisionDestroyFilter(),
     }),
       (this.OTt = {
-        1: FilterTypeFunctionLibrary_1.FilterTypeFunctionLibrary
+        [1]: FilterTypeFunctionLibrary_1.FilterTypeFunctionLibrary
           .GetElementFilterData,
         2: FilterTypeFunctionLibrary_1.FilterTypeFunctionLibrary
           .GetWeaponFilterData,
@@ -90,8 +90,8 @@ class FilterLogic {
     return this.NTt[e].DefaultFilterList();
   }
   FTt(e, r) {
-    var t = this.NTt[e];
-    var t = (t.InitFilterMap(), t.GetFilterFunction(r));
+    var t = this.NTt[e],
+      t = (t.InitFilterMap(), t.GetFilterFunction(r));
     if (t) return t;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
@@ -103,11 +103,11 @@ class FilterLogic {
       );
   }
   VTt(e, r, t, i) {
-    const n = this.FTt(r, t);
+    var n = this.FTt(r, t);
     if (!n) return e;
-    const o = [];
+    var o = [];
     for (const F of e) {
-      const l = n(F, i);
+      var l = n(F, i);
       if (l instanceof Array) {
         for (const a of l)
           if (i.has(a)) {
@@ -119,12 +119,12 @@ class FilterLogic {
     return o;
   }
   HTt(e, r, t, i) {
-    const n = this.FTt(r, t);
+    var n = this.FTt(r, t);
     if (!n) return { FindList: [], UnFindList: e };
-    const o = [];
-    const l = [];
+    var o = [],
+      l = [];
     for (const a of e) {
-      const F = n(a, i);
+      var F = n(a, i);
       if (F instanceof Array) {
         let e = !1;
         for (const u of F)
@@ -138,19 +138,19 @@ class FilterLogic {
     return { FindList: o, UnFindList: l };
   }
   GetFilterList(e, t, r, i) {
-    const n = [];
+    var n = [];
     let o = [];
-    let l;
-    let F;
-    const a = this.kTt(t);
-    a.length === 0 && (o = e);
+    var l,
+      F,
+      a = this.kTt(t);
+    0 === a.length && (o = e);
     for (const L of a) for (const p of e) (L(p) ? n : o).push(p);
     if (r) {
       let e = o;
-      let u;
-      let _;
-      let y;
-      const c = [];
+      var u,
+        _,
+        y,
+        c = [];
       let r = !1;
       for ([u, _] of i)
         _.size <= 0 ||
@@ -165,12 +165,12 @@ class FilterLogic {
     return s.concat(n);
   }
   GetFilterItemDataList(e, r) {
-    const t = ConfigManager_1.ConfigManager.FilterConfig.GetFilterRuleConfig(e);
-    var e = t.FilterType;
-    const i = this.OTt[e];
+    var t = ConfigManager_1.ConfigManager.FilterConfig.GetFilterRuleConfig(e),
+      e = t.FilterType,
+      i = this.OTt[e];
     if (i) {
-      const n = ConfigManager_1.ConfigManager.FilterConfig.GetFilterConfig(r);
-      var r = i(t.IdList);
+      var n = ConfigManager_1.ConfigManager.FilterConfig.GetFilterConfig(r),
+        r = i(t.IdList);
       for (const o of r)
         o.SetIsShowIcon(n.IsShowIcon), (o.NeedChangeColor = t.NeedChangeColor);
       return r;
@@ -185,4 +185,4 @@ class FilterLogic {
   }
 }
 exports.FilterLogic = FilterLogic;
-// # sourceMappingURL=FilterLogic.js.map
+//# sourceMappingURL=FilterLogic.js.map

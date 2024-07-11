@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TreasureBoxDetectorMarkItem = void 0);
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const TreasureBoxDetectorMarkItemView_1 = require("../MarkItemView/TreasureBoxDetectorMarkItemView");
-const ServerMarkItem_1 = require("./ServerMarkItem");
+const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  TreasureBoxDetectorMarkItemView_1 = require("../MarkItemView/TreasureBoxDetectorMarkItemView"),
+  ServerMarkItem_1 = require("./ServerMarkItem");
 class TreasureBoxDetectorMarkItem extends ServerMarkItem_1.ServerMarkItem {
   constructor(e, t, r, i) {
     super(e, t, r, i), (this.TeleportId = 0), (this.NLi = !1);
@@ -17,7 +17,7 @@ class TreasureBoxDetectorMarkItem extends ServerMarkItem_1.ServerMarkItem {
   }
   Initialize() {
     super.Initialize();
-    const e = this.ServerMarkInfo;
+    var e = this.ServerMarkInfo;
     this.SetTrackData(e.TrackTarget),
       this.SetConfigId(this.ConfigId),
       this.UpdateTrackState();
@@ -42,14 +42,14 @@ class TreasureBoxDetectorMarkItem extends ServerMarkItem_1.ServerMarkItem {
     this.NLi = e;
   }
   GetTitleText() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.MapConfig.GetTreasureBoxDetectorMarkConfig(
         this.ConfigId,
       );
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.MarkTitle);
   }
   GetDescText() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.MapConfig.GetTreasureBoxDetectorMarkConfig(
         this.ConfigId,
       );
@@ -57,4 +57,4 @@ class TreasureBoxDetectorMarkItem extends ServerMarkItem_1.ServerMarkItem {
   }
 }
 exports.TreasureBoxDetectorMarkItem = TreasureBoxDetectorMarkItem;
-// # sourceMappingURL=TreasureBoxDetectorMarkItem.js.map
+//# sourceMappingURL=TreasureBoxDetectorMarkItem.js.map

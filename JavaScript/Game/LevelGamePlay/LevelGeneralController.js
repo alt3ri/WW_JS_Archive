@@ -1,40 +1,44 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, n, i) {
-    let r;
-    const o = arguments.length;
-    let s =
-      o < 3 ? t : i === null ? (i = Object.getOwnPropertyDescriptor(t, n)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      o = arguments.length,
+      s =
+        o < 3
+          ? t
+          : null === i
+            ? (i = Object.getOwnPropertyDescriptor(t, n))
+            : i;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(e, t, n, i);
     else
-      for (let l = e.length - 1; l >= 0; l--)
-        (r = e[l]) && (s = (o < 3 ? r(s) : o > 3 ? r(t, n, s) : r(t, n)) || s);
-    return o > 3 && s && Object.defineProperty(t, n, s), s;
+      for (var l = e.length - 1; 0 <= l; l--)
+        (r = e[l]) && (s = (o < 3 ? r(s) : 3 < o ? r(t, n, s) : r(t, n)) || s);
+    return 3 < o && s && Object.defineProperty(t, n, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelGeneralController = void 0);
-const Info_1 = require("../../Core/Common/Info");
-const Log_1 = require("../../Core/Common/Log");
-const Stats_1 = require("../../Core/Common/Stats");
-const ConditionById_1 = require("../../Core/Define/ConfigQuery/ConditionById");
-const ConditionGroupById_1 = require("../../Core/Define/ConfigQuery/ConditionGroupById");
-const GeneralActionById_1 = require("../../Core/Define/ConfigQuery/GeneralActionById");
-const GeneralActionGroupById_1 = require("../../Core/Define/ConfigQuery/GeneralActionGroupById");
-const ControllerBase_1 = require("../../Core/Framework/ControllerBase");
-const TimerSystem_1 = require("../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const ModelManager_1 = require("../Manager/ModelManager");
-const ErrorCodeController_1 = require("../Module/ErrorCode/ErrorCodeController");
-const CodeDefineLevelConditionInfo_1 = require("./LevelConditions/CodeDefineLevelConditionInfo");
-const LevelConditionCenter_1 = require("./LevelConditions/LevelConditionCenter");
-const LevelConditionRegistry_1 = require("./LevelConditions/LevelConditionRegistry");
-const LevelEventCenter_1 = require("./LevelEvents/LevelEventCenter");
-const LevelGeneralCommons_1 = require("./LevelGeneralCommons");
-const LevelGeneralNetworks_1 = require("./LevelGeneralNetworks");
+const Info_1 = require("../../Core/Common/Info"),
+  Log_1 = require("../../Core/Common/Log"),
+  Stats_1 = require("../../Core/Common/Stats"),
+  ConditionById_1 = require("../../Core/Define/ConfigQuery/ConditionById"),
+  ConditionGroupById_1 = require("../../Core/Define/ConfigQuery/ConditionGroupById"),
+  GeneralActionById_1 = require("../../Core/Define/ConfigQuery/GeneralActionById"),
+  GeneralActionGroupById_1 = require("../../Core/Define/ConfigQuery/GeneralActionGroupById"),
+  ControllerBase_1 = require("../../Core/Framework/ControllerBase"),
+  TimerSystem_1 = require("../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  ErrorCodeController_1 = require("../Module/ErrorCode/ErrorCodeController"),
+  CodeDefineLevelConditionInfo_1 = require("./LevelConditions/CodeDefineLevelConditionInfo"),
+  LevelConditionCenter_1 = require("./LevelConditions/LevelConditionCenter"),
+  LevelConditionRegistry_1 = require("./LevelConditions/LevelConditionRegistry"),
+  LevelEventCenter_1 = require("./LevelEvents/LevelEventCenter"),
+  LevelGeneralCommons_1 = require("./LevelGeneralCommons"),
+  LevelGeneralNetworks_1 = require("./LevelGeneralNetworks");
 class LevelGeneralController extends ControllerBase_1.ControllerBase {
   static pie() {
     (this.PUe = new Map()),
@@ -92,17 +96,16 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
   }
   static GetBehaviorTreeRunningActions() {
     if (this.PUe.size) {
-      const e = new Array();
+      var e = new Array();
       for (const t of this.PUe.values())
-        for (const n of t) n.Context.Type === 6 && e.push(n);
+        for (const n of t) 6 === n.Context.Type && e.push(n);
       return e;
     }
   }
   static ExecuteActions(e, t, n) {
-    if (e !== 0) {
-      let i;
-      const r =
-        GeneralActionGroupById_1.configGeneralActionGroupById.GetConfig(e);
+    if (0 !== e) {
+      var i,
+        r = GeneralActionGroupById_1.configGeneralActionGroupById.GetConfig(e);
       if (r)
         return (i = --this.NUe), n && this.xUe.set(i, n), this.OUe(i, r, t), !0;
       Log_1.Log.CheckError() &&
@@ -118,10 +121,10 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
       !StringUtils_1.StringUtils.IsEmpty(e) &&
       e !== StringUtils_1.ZERO_STRING
     ) {
-      let i;
-      const r = GeneralActionGroupById_1.configGeneralActionGroupById.GetConfig(
-        Number(e),
-      );
+      var i,
+        r = GeneralActionGroupById_1.configGeneralActionGroupById.GetConfig(
+          Number(e),
+        );
       if (r)
         return (
           (i = --this.NUe), n && this.xUe.set(r.Id, n), this.OUe(i, r, t), !0
@@ -135,31 +138,31 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
     return !1;
   }
   static ExecuteActionsNew(n, i, r) {
-    const e = --this.NUe;
-    var r = (r && this.xUe.set(e, r), n.length);
-    if (r === 1) {
-      const t = n[0];
-      const o = EventTempData.Create();
+    var e = --this.NUe,
+      r = (r && this.xUe.set(e, r), n.length);
+    if (1 === r) {
+      var t = n[0],
+        o = EventTempData.Create();
       (o.EventType = t.Name || t.Params.constructor.name),
         (o.EventParamsNew = t.Params),
         (o.IsAsync = t.Async ?? !1),
-        i.Type === 1 && (o.EventEntityId = i.EntityId),
+        1 === i.Type && (o.EventEntityId = i.EntityId),
         (o.Context = i),
         (o.ActionIndex = 0),
         (o.ActionId = t.ActionId ?? 0),
         (o.ActionGuid = t.ActionGuid ?? ""),
         this.kUe(e, o);
     } else {
-      const s = new Array();
+      var s = new Array();
       this.PUe.set(e, s);
       let t = r;
-      for (let e = r - 1; e > -1; e--) {
-        const l = n[e];
-        const a = EventTempData.Create();
+      for (let e = r - 1; -1 < e; e--) {
+        var l = n[e],
+          a = EventTempData.Create();
         (a.EventType = l.Name || l.Params.constructor.name),
           (a.EventParamsNew = l.Params),
           (a.IsAsync = l.Async ?? !1),
-          i.Type === 1 && (a.EventEntityId = i.EntityId),
+          1 === i.Type && (a.EventEntityId = i.EntityId),
           (a.Context = i),
           (a.ActionIndex = --t),
           (a.ActionId = l.ActionId ?? 0),
@@ -179,7 +182,7 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
         ["StartIndex", s],
         ["EndIndex", l],
       );
-    let a = i.length;
+    var a = i.length;
     if (a <= s || a <= l)
       this.HandleFinishActions(
         e,
@@ -220,12 +223,12 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
       let t = this.PUe.get(a);
       if (t)
         for (let e = s; e <= l; e++) {
-          const v = i[e];
-          const _ = EventTempData.Create();
+          var v = i[e],
+            _ = EventTempData.Create();
           (_.EventType = v.Name || v.Params.constructor.name),
             (_.EventParamsNew = v.Params),
             (_.IsAsync = v.Async ?? !1),
-            r.Type === 1 && (_.EventEntityId = r.EntityId),
+            1 === r.Type && (_.EventEntityId = r.EntityId),
             (_.Context = r),
             (_.ActionIndex = e),
             (_.ActionId = v.ActionId ?? 0),
@@ -235,12 +238,12 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
       else {
         (t = new Array()), this.PUe.set(a, t);
         for (let e = l; e >= s; e--) {
-          const d = i[e];
-          const h = EventTempData.Create();
+          var d = i[e],
+            h = EventTempData.Create();
           (h.EventType = d.Name || d.Params.constructor.name),
             (h.EventParamsNew = d.Params),
             (h.IsAsync = d.Async ?? !1),
-            r.Type === 1 && (h.EventEntityId = r.EntityId),
+            1 === r.Type && (h.EventEntityId = r.EntityId),
             (h.Context = r),
             (h.ActionIndex = e),
             (h.ActionId = d.ActionId ?? 0),
@@ -257,26 +260,26 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
     }
   }
   static OUe(e, n, i) {
-    const r = n.ActionIdGroup.length;
-    if (r === 1) {
-      var t = n.ActionIdGroup[0];
-      var t = this.FUe(t, i);
+    var r = n.ActionIdGroup.length;
+    if (1 === r) {
+      var t = n.ActionIdGroup[0],
+        t = this.FUe(t, i);
       t && ((t.ActionIndex = 0), this.kUe(e, t));
     } else {
-      const o = new Array();
+      var o = new Array();
       this.PUe.set(e, o);
       let t = r;
-      for (let e = r - 1; e > -1; e--) {
-        var s = n.ActionIdGroup[e];
-        var s = this.FUe(s, i);
+      for (let e = r - 1; -1 < e; e--) {
+        var s = n.ActionIdGroup[e],
+          s = this.FUe(s, i);
         s && ((s.ActionIndex = --t), o.push(s));
       }
       this.HandleNextAction(e);
     }
   }
   static FUe(e, t) {
-    let n;
-    var e = GeneralActionById_1.configGeneralActionById.GetConfig(e);
+    var n,
+      e = GeneralActionById_1.configGeneralActionById.GetConfig(e);
     if (
       e &&
       ModelManager_1.ModelManager.LevelGeneralModel.GetActionTypeConfig(
@@ -291,20 +294,20 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
       );
   }
   static HandleNextAction(e) {
-    let t = this.PUe.get(e);
+    var t = this.PUe.get(e);
     this.LevelEventLogOpen &&
       Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("LevelEvent", 7, "执行下一个行为", [
         "行为组剩余个数",
         t?.length,
       ]),
-      t && t.length > 0
+      t && 0 < t.length
         ? ((t = t.pop()), this.kUe(e, t))
         : (this.PUe.delete(e), this.VUe(e));
   }
   static VUe(e, t = "") {
-    let n;
-    let i = this.wUe.get(e);
+    var n,
+      i = this.wUe.get(e);
     if (this.LevelEventLogOpen) {
       let e = "";
       (e = i
@@ -326,28 +329,28 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
     r && (r(1), this.xUe.delete(e));
   }
   static HandleActionsFailure(e, t, n, i) {
-    const r = this.PUe.get(e);
+    var r = this.PUe.get(e);
     if (r)
-      for (; r.length > 0; ) {
-        const o = r.pop();
+      for (; 0 < r.length; ) {
+        var o = r.pop();
         EventTempData.Release(o);
       }
-    let s;
-    let l = this.wUe.get(e);
-    var a =
-      (l &&
-        ((a = `PlayerId：${l[0]} SessionId：${l[1]} StartIndex：` + l[2]),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("LevelEvent", 7, "行为组执行失败，准备删除", [
-            "ContextArray",
-            a,
-          ]),
-        this.wUe.delete(e),
-        (a = l[0]),
-        (s = l[1]),
-        (l = l[2]),
-        this.HandleFinishActions(a, s, l, "行为:" + t + " 执行失败")),
-      this.xUe.get(e));
+    var s,
+      l = this.wUe.get(e),
+      a =
+        (l &&
+          ((a = `PlayerId：${l[0]} SessionId：${l[1]} StartIndex：` + l[2]),
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("LevelEvent", 7, "行为组执行失败，准备删除", [
+              "ContextArray",
+              a,
+            ]),
+          this.wUe.delete(e),
+          (a = l[0]),
+          (s = l[1]),
+          (l = l[2]),
+          this.HandleFinishActions(a, s, l, "行为:" + t + " 执行失败")),
+        this.xUe.get(e));
     a && (a(n ? 3 : 2), this.xUe.delete(e)),
       LevelEventCenter_1.LevelEventCenter.RemoveEventGroup(e),
       Log_1.Log.CheckWarn() &&
@@ -371,13 +374,11 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
       );
   }
   static CheckCondition(n, i, e = !0, ...r) {
-    if (n === "None") return !0;
-    const o = ConditionGroupById_1.configConditionGroupById.GetConfig(
-      Number(n),
-    );
+    if ("None" === n) return !0;
+    var o = ConditionGroupById_1.configConditionGroupById.GetConfig(Number(n));
     if (o) {
-      let e = void 0;
-      let t = !1;
+      let e = void 0,
+        t = !1;
       if (o.Relation) {
         for (const s of o.GroupId)
           if (
@@ -397,16 +398,16 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
     return e;
   }
   static CheckConditionNew(e, t, n) {
-    if (!e || !e.Conditions || e.Conditions.length === 0) return !0;
+    if (!e || !e.Conditions || 0 === e.Conditions.length) return !0;
     let i = !1;
-    if (e.Type === 0) {
+    if (0 === e.Type) {
       for (const r of e.Conditions) if (!(i = this.HUe(r, t, n))) return i;
     } else for (const o of e.Conditions) if ((i = this.HUe(o, t, n))) return i;
     return i;
   }
   static kUe(e, t) {
-    const n = t.EventType;
-    t.SessionId === -1 || LevelEventCenter_1.LevelEventCenter.HasAction(n)
+    var n = t.EventType;
+    -1 === t.SessionId || LevelEventCenter_1.LevelEventCenter.HasAction(n)
       ? this.jUe(e, t)
       : (this.LevelEventLogOpen &&
           Log_1.Log.CheckInfo() &&
@@ -432,8 +433,8 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
         ["SessionId", t.SessionId],
         ["ActionIndex", t.ActionIndex],
       );
-    const n = t.EventType;
-    let i = LevelEventCenter_1.LevelEventCenter.GetEvent(n);
+    var n = t.EventType,
+      i = LevelEventCenter_1.LevelEventCenter.GetEvent(n);
     if (i) {
       (i.GroupId = e),
         (i.IsAsync = t.IsAsync),
@@ -460,7 +461,7 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
     EventTempData.Release(t);
   }
   static HandleCondition(e, t, n, ...i) {
-    const r = LevelConditionCenter_1.LevelConditionCenter.GetCondition(e.Type);
+    var r = LevelConditionCenter_1.LevelConditionCenter.GetCondition(e.Type);
     return r
       ? r.Check(e, t, ...i)
       : (Log_1.Log.CheckWarn() &&
@@ -476,7 +477,6 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
           ),
         !1);
   }
-
   static HUe(e, t, n) {
     let i = void 0;
     return (
@@ -551,11 +551,11 @@ class EventTempData {
       (this.IsAsync = !1);
   }
   static Create() {
-    return this.RUe.length > 0 ? this.RUe.pop() : new EventTempData();
+    return 0 < this.RUe.length ? this.RUe.pop() : new EventTempData();
   }
   static Release(e) {
     e.Reset(), this.RUe.push(e);
   }
 }
 EventTempData.RUe = new Array();
-// # sourceMappingURL=LevelGeneralController.js.map
+//# sourceMappingURL=LevelGeneralController.js.map

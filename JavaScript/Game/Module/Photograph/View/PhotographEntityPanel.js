@@ -4,14 +4,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.EntityInfoItem =
     exports.PhotographEntityPanel =
       void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const PublicUtil_1 = require("../../../Common/PublicUtil");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const PhotographController_1 = require("../PhotographController");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  PublicUtil_1 = require("../../../Common/PublicUtil"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  PhotographController_1 = require("../PhotographController");
 class PhotographEntityPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -20,7 +20,7 @@ class PhotographEntityPanel extends UiPanelBase_1.UiPanelBase {
       (this.IWi = new Map()),
       (this.TWi = new Map()),
       (this.xPt = (t, e, i) => {
-        const s = new EntityInfoItem();
+        var s = new EntityInfoItem();
         return (
           s.SetRootActor(e.GetOwner(), !0),
           s.InitSpr(),
@@ -83,7 +83,7 @@ class PhotographEntityPanel extends UiPanelBase_1.UiPanelBase {
     }
   }
   Move(t, e, i) {
-    const s = t.GetItsItem();
+    var s = t.GetItsItem();
     s.SetUIActive(!0),
       s.SetAnchorOffset(new UE.Vector2D(e.X, e.Y)),
       i
@@ -119,7 +119,7 @@ class EntityInfoItem extends UiPanelBase_1.UiPanelBase {
       (this.ILr = !1);
   }
   Refresh(t) {
-    const e = PublicUtil_1.PublicUtil.GetConfigTextByKey(t.Text);
+    var e = PublicUtil_1.PublicUtil.GetConfigTextByKey(t.Text);
     e && this.GetText(2).SetText(e), this.RefreshFinishState(t.IsFinish);
   }
   RefreshFinishState(t) {
@@ -161,31 +161,31 @@ class EntityIconItem extends UiPanelBase_1.UiPanelBase {
   UpdateNowIcon(t) {
     switch (t) {
       case 2:
-        this.ItsColor === 0
+        0 === this.ItsColor
           ? (this.UiSequencePlayer.StopCurrentSequence(!1, !0),
             this.UiSequencePlayer.PlayLevelSequenceByName("NtoG"),
             (this.ItsColor = 2))
-          : this.ItsColor === 1 &&
+          : 1 === this.ItsColor &&
             (this.UiSequencePlayer.StopCurrentSequence(!1, !0),
             this.UiSequencePlayer.PlayLevelSequenceByName("YtoG"),
             (this.ItsColor = 2));
         break;
       case 1:
-        this.ItsColor === 0
+        0 === this.ItsColor
           ? (this.UiSequencePlayer.StopCurrentSequence(!1, !0),
             this.UiSequencePlayer.PlayLevelSequenceByName("NtoY"),
             (this.ItsColor = 1))
-          : this.ItsColor === 2 &&
+          : 2 === this.ItsColor &&
             (this.UiSequencePlayer.StopCurrentSequence(!1, !0),
             this.UiSequencePlayer.PlayLevelSequenceByName("GtoY"),
             (this.ItsColor = 1));
         break;
       case 0:
-        this.ItsColor === 2
+        2 === this.ItsColor
           ? (this.UiSequencePlayer.StopCurrentSequence(!1, !0),
             this.UiSequencePlayer.PlayLevelSequenceByName("GtoN"),
             (this.ItsColor = 0))
-          : this.ItsColor === 1 &&
+          : 1 === this.ItsColor &&
             (this.UiSequencePlayer.StopCurrentSequence(!1, !0),
             this.UiSequencePlayer.PlayLevelSequenceByName("YtoN"),
             (this.ItsColor = 0));
@@ -193,4 +193,4 @@ class EntityIconItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.EntityIconItem = EntityIconItem;
-// # sourceMappingURL=PhotographEntityPanel.js.map
+//# sourceMappingURL=PhotographEntityPanel.js.map

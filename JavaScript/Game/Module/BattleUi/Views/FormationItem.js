@@ -1,33 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FormationItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const GlobalData_1 = require("../../../GlobalData");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const RoleDefine_1 = require("../../RoleUi/RoleDefine");
-const SceneTeamController_1 = require("../../SceneTeam/SceneTeamController");
-const SceneTeamDefine_1 = require("../../SceneTeam/SceneTeamDefine");
-const BattleUiDefine_1 = require("../BattleUiDefine");
-const BattleUiRoleData_1 = require("../BattleUiRoleData");
-const BattleChildView_1 = require("./BattleChildView/BattleChildView");
-const FormationLevelUpItem_1 = require("./FormationLevelUpItem");
-const FormationOnlineItem_1 = require("./FormationOnlineItem");
-const FormationTrialItem_1 = require("./FormationTrialItem");
-const CombineKeyItem_1 = require("./KeyItem/CombineKeyItem");
-const EAttributeId = Protocol_1.Aki.Protocol.KBs;
-const CharacterBuffIds_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds");
-const REFRESH_COOLDOWN_INTERVAL = 100;
-const CURE_DELAY = 1e3;
-const LOW_HP_PERCENT = 0.2;
-const LEVE_UP_TIME = 5e3;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  RoleDefine_1 = require("../../RoleUi/RoleDefine"),
+  SceneTeamController_1 = require("../../SceneTeam/SceneTeamController"),
+  SceneTeamDefine_1 = require("../../SceneTeam/SceneTeamDefine"),
+  BattleUiDefine_1 = require("../BattleUiDefine"),
+  BattleUiRoleData_1 = require("../BattleUiRoleData"),
+  BattleChildView_1 = require("./BattleChildView/BattleChildView"),
+  FormationLevelUpItem_1 = require("./FormationLevelUpItem"),
+  FormationOnlineItem_1 = require("./FormationOnlineItem"),
+  FormationTrialItem_1 = require("./FormationTrialItem"),
+  CombineKeyItem_1 = require("./KeyItem/CombineKeyItem");
+var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+const CharacterBuffIds_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds"),
+  REFRESH_COOLDOWN_INTERVAL = 100,
+  CURE_DELAY = 1e3,
+  LOW_HP_PERCENT = 0.2,
+  LEVE_UP_TIME = 5e3;
 class FormationItem extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
@@ -55,7 +55,7 @@ class FormationItem extends BattleChildView_1.BattleChildView {
       (this.Sst = !1),
       (this.Est = !1),
       (this.yst = (t) => {
-        ModelManager_1.ModelManager.PlatformModel.OperationType === 2 &&
+        2 === ModelManager_1.ModelManager.PlatformModel.OperationType &&
           ((t = t * TimeUtil_1.TimeUtil.InverseMillisecond), this.Ist(t, t));
       }),
       (this.ZQe = () => {
@@ -70,8 +70,9 @@ class FormationItem extends BattleChildView_1.BattleChildView {
       (this.XQe = (t, e, i) => {
         !this.FormationIns ||
           (ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-            ModelManager_1.ModelManager.OnlineModel.GetAllWorldTeamPlayer()
-              .length > 1) ||
+            1 <
+              ModelManager_1.ModelManager.OnlineModel.GetAllWorldTeamPlayer()
+                .length) ||
           this.Dst();
       }),
       (this.QQe = (t, e, i) => {
@@ -144,7 +145,7 @@ class FormationItem extends BattleChildView_1.BattleChildView {
       this.Ore();
   }
   async InitializeAsync(t) {
-    let e;
+    var e;
     ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
       (this.hnt(18),
       this.hnt(19),
@@ -204,7 +205,7 @@ class FormationItem extends BattleChildView_1.BattleChildView {
         : ((this.FormationIns = void 0), this.SetActive(!1));
   }
   ClearRoleData() {
-    const t = this.RoleData?.EntityHandle?.Entity;
+    var t = this.RoleData?.EntityHandle?.Entity;
     t && this.RemoveEntityEvents(t),
       (this.RoleData = void 0),
       (this.EntityId = void 0);
@@ -288,7 +289,7 @@ class FormationItem extends BattleChildView_1.BattleChildView {
       );
   }
   eXe(t) {
-    let e;
+    var e;
     EventSystem_1.EventSystem.AddWithTarget(
       t,
       EventDefine_1.EEventName.OnChangeRoleCoolDownChanged,
@@ -364,7 +365,7 @@ class FormationItem extends BattleChildView_1.BattleChildView {
       super.Reset();
   }
   OnTick(t) {
-    this.ast > 0 &&
+    0 < this.ast &&
       ((this.hst -= t * Time_1.Time.TimeDilation),
       this.hst <= 0
         ? ((this.hst = 0), (this.ast = 0), this.Kst())
@@ -380,14 +381,14 @@ class FormationItem extends BattleChildView_1.BattleChildView {
   RefreshQteActive(t = 0) {
     this.FormationIns &&
       (ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-      ModelManager_1.ModelManager.OnlineModel.GetAllWorldTeamPlayer().length > 1
+      1 < ModelManager_1.ModelManager.OnlineModel.GetAllWorldTeamPlayer().length
         ? this.Ast()
         : this.Dst());
   }
   Dst(e = !1) {
     if (this.FormationIns) {
       let t = !1;
-      let i;
+      var i;
       this.dst &&
         (i =
           ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData()
@@ -403,16 +404,16 @@ class FormationItem extends BattleChildView_1.BattleChildView {
       this.ResetAllConcertoNiagara();
     else {
       let t = !1;
-      const i =
-        ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData()
-          ?.EntityHandle;
-      const s = this.FormationIns?.EntityHandle;
+      var i =
+          ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData()
+            ?.EntityHandle,
+        s = this.FormationIns?.EntityHandle;
       i && s && (t = i.Entity.GetComponent(86).IsQteReady(s)),
         this.$st(t, e, !0);
     }
   }
   $st(t, e, i) {
-    let s;
+    var s;
     this.Sst !== t &&
       ((this.Sst = t),
       (s = this.GetUiNiagara(5)).SetUIActive(t),
@@ -424,7 +425,7 @@ class FormationItem extends BattleChildView_1.BattleChildView {
       this.Jst();
   }
   Vst() {
-    let t = this.RoleData?.EntityHandle?.Entity?.GetComponent(81);
+    var t = this.RoleData?.EntityHandle?.Entity?.GetComponent(81);
     !t || (t = t.GetChangeRoleCoolDown()) <= 0 || this.Ist(t, t);
   }
   zst(t) {
@@ -434,7 +435,7 @@ class FormationItem extends BattleChildView_1.BattleChildView {
         : (this.Irt(18), this.Ert(19)));
   }
   Bst() {
-    let t, e;
+    var t, e;
     this.FormationIns
       ? ((t = this.FormationIns.GetCreatureDataId()),
         Log_1.Log.CheckInfo() &&
@@ -517,7 +518,7 @@ class FormationItem extends BattleChildView_1.BattleChildView {
   }
   RefreshRoleName() {
     if (this.FormationIns) {
-      const e = this.FormationIns.GetConfigId;
+      var e = this.FormationIns.GetConfigId;
       if (e <= RoleDefine_1.ROBOT_DATA_MIN_ID) this.pst?.SetActive(!1);
       else if (
         ConfigManager_1.ConfigManager.RoleConfig?.GetTrialRoleConfig(e)
@@ -541,9 +542,9 @@ class FormationItem extends BattleChildView_1.BattleChildView {
     }
   }
   SetRoleSelected(e) {
-    if (ModelManager_1.ModelManager.PlatformModel.OperationType === 2) {
+    if (2 === ModelManager_1.ModelManager.PlatformModel.OperationType) {
       let t = !1;
-      ModelManager_1.ModelManager.SceneTeamModel.GetTeamLength() > 1 && (t = e),
+      1 < ModelManager_1.ModelManager.SceneTeamModel.GetTeamLength() && (t = e),
         this.zst(t);
     } else this.zst(e);
     this.Lst();
@@ -569,7 +570,7 @@ class FormationItem extends BattleChildView_1.BattleChildView {
         this.Wst(!0));
   }
   Xst() {
-    let t;
+    var t;
     this.ast <= 0 ||
       ((t = this.hst / this.ast), this.GetTexture(2).SetFillAmount(t));
   }
@@ -582,14 +583,14 @@ class FormationItem extends BattleChildView_1.BattleChildView {
     this.GetItem(1)?.SetUIActive(t);
   }
   Nst() {
-    let t;
+    var t;
     this.RoleConfig &&
       (t = this.RoleConfig.RoleHeadIconBig) &&
-      t.length !== 0 &&
+      0 !== t.length &&
       this.tat(t, this.RoleConfig.Id);
   }
   RefreshSelectedRole() {
-    let t;
+    var t;
     this.FormationIns &&
       this.RoleData?.AttributeComponent &&
       (!this.FormationIns.IsMyRole() ||
@@ -605,12 +606,12 @@ class FormationItem extends BattleChildView_1.BattleChildView {
   ActivateConcertoChangeEffect(t, e) {
     this.GetText(8).SetUIActive(!1);
     this.GetUiNiagara(7).ActivateSystem(!0);
-    const i = this.GetItem(6);
+    var i = this.GetItem(6);
     i.IsUIActiveSelf() || i.SetUIActive(!0),
       (this.Cst = TimerSystem_1.TimerSystem.Delay(this.qst, this.gst));
   }
   Gst() {
-    const t = this.GetItem(6);
+    var t = this.GetItem(6);
     t.IsUIActiveSelf() && t.SetUIActive(!1),
       this.GetUiNiagara(7).DeactivateSystem(),
       this.Cst &&
@@ -622,7 +623,7 @@ class FormationItem extends BattleChildView_1.BattleChildView {
   }
   Yst() {}
   xst() {
-    let t, e;
+    var t, e;
     this.Mst &&
       (!(this.RoleData?.GameplayTagComponent.HasTag(1414093614) ?? !1) ||
       ((t =
@@ -639,11 +640,11 @@ class FormationItem extends BattleChildView_1.BattleChildView {
           ));
   }
   RefreshRoleHealthPercent() {
-    let t;
-    let e;
-    let i;
-    let s;
-    const h = this.GetExtendToggle(0);
+    var t,
+      e,
+      i,
+      s,
+      h = this.GetExtendToggle(0);
     h &&
       ((t =
         this.RoleData?.AttributeComponent?.GetCurrentValue(
@@ -659,7 +660,7 @@ class FormationItem extends BattleChildView_1.BattleChildView {
           this.GetTexture(2)?.SetIsGray(!0),
           this.GetSprite(11).SetUIActive(!1),
           this.iat(0))
-        : (i > 0
+        : (0 < i
             ? ((s = this.GetSprite(11)).SetUIActive(!0), s.SetFillAmount(i / e))
             : this.GetSprite(11).SetUIActive(!1),
           h.SetToggleState(0, !1),
@@ -669,23 +670,23 @@ class FormationItem extends BattleChildView_1.BattleChildView {
           this.RefreshSelectedRole()));
   }
   Lst() {
-    let t;
-    ModelManager_1.ModelManager.PlatformModel.OperationType === 2
+    var t;
+    2 === ModelManager_1.ModelManager.PlatformModel.OperationType
       ? this.RoleData?.IsCurEntity
         ? this.GetSprite(17).SetUIActive(!1)
         : ((t = this.oat()), this.GetSprite(17).SetUIActive(t))
       : ((t = this.oat()), this.GetSprite(17).SetUIActive(t));
   }
   kst() {
-    const t = this.RoleData?.ElementConfig;
+    var t = this.RoleData?.ElementConfig;
     t &&
       this.mst !== t.UltimateSkillColor &&
       ((this.mst = t.UltimateSkillColor),
       this.GetSprite(17).SetColor(this.RoleData.UltimateSkillColor));
   }
   Fst() {
-    let t;
-    ModelManager_1.ModelManager.PlatformModel.OperationType === 2 &&
+    var t;
+    2 === ModelManager_1.ModelManager.PlatformModel.OperationType &&
       (!this.FormationIns ||
       (this.RoleData && this.RoleData.IsCurEntity) ||
       (t =
@@ -703,8 +704,8 @@ class FormationItem extends BattleChildView_1.BattleChildView {
     }
   }
   oat() {
-    let t;
-    const e = this.RoleData?.AttributeComponent;
+    var t,
+      e = this.RoleData?.AttributeComponent;
     return (
       !!e &&
       ((t = e.GetCurrentValue(EAttributeId.Proto_Energy)),
@@ -723,13 +724,13 @@ class FormationItem extends BattleChildView_1.BattleChildView {
   }
   RefreshElementVisible() {
     if (this.RoleData) {
-      const t = this.GetItem(14);
+      var t = this.GetItem(14);
       if (this.dst)
-        if (this.RoleData.RoleConfig?.RoleType === 2)
+        if (2 === this.RoleData.RoleConfig?.RoleType)
           t.SetUIActive(!1), this.ResetAllConcertoNiagara();
         else {
-          const e = ModelManager_1.ModelManager.PlatformModel.OperationType;
-          if (e === 2 && this.RoleData.IsCurEntity) t.SetUIActive(!1);
+          var e = ModelManager_1.ModelManager.PlatformModel.OperationType;
+          if (2 === e && this.RoleData.IsCurEntity) t.SetUIActive(!1);
           else {
             for (const i of BattleUiRoleData_1.BattleUiRoleData
               .HideElementTagList)
@@ -742,26 +743,26 @@ class FormationItem extends BattleChildView_1.BattleChildView {
     }
   }
   Ont(t, e) {
-    var t = t.Icon5;
-    const i = this.GetSprite(16);
-    const s = this.GetTexture(15);
+    var t = t.Icon5,
+      i = this.GetSprite(16),
+      s = this.GetTexture(15);
     this.SetElementIcon(t, s, e),
       s.SetColor(this.RoleData.ElementColor),
       i.SetColor(this.RoleData.ElementColor);
   }
   Gnt(t) {
-    const e = this.GetSprite(16);
-    var t = t / SceneTeamDefine_1.MAX_ELEMENT_ENERGY;
+    var e = this.GetSprite(16),
+      t = t / SceneTeamDefine_1.MAX_ELEMENT_ENERGY;
     e.SetFillAmount(t);
   }
   GetElementValue() {
-    let t;
+    var t;
     return this.RoleData && (t = this.RoleData.GetElementAttributeId())
       ? this.RoleData.AttributeComponent.GetCurrentValue(t)
       : 0;
   }
   RefreshOnlineItem() {
-    let t, e;
+    var t, e;
     ModelManager_1.ModelManager.GameModeModel.IsMulti
       ? (t = this.FormationIns) &&
         (this.vst ||
@@ -786,11 +787,11 @@ class FormationItem extends BattleChildView_1.BattleChildView {
         : (this.vst.SetNetWeak(!1), this.vst.SetNetDisconnect(!1));
   }
   hnt(t) {
-    const e = [];
-    const i = this.GetItem(t)
-      .GetOwner()
-      .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass());
-    const s = i.Num();
+    var e = [],
+      i = this.GetItem(t)
+        .GetOwner()
+        .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass()),
+      s = i.Num();
     for (let t = 0; t < s; t++) e.push(i.Get(t));
     this.Art || (this.Art = new Map()), this.Art.set(t, e);
   }
@@ -804,4 +805,4 @@ class FormationItem extends BattleChildView_1.BattleChildView {
   }
 }
 exports.FormationItem = FormationItem;
-// # sourceMappingURL=FormationItem.js.map
+//# sourceMappingURL=FormationItem.js.map

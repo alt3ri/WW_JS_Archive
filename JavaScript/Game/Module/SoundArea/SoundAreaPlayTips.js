@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SoundAreaPlayTips = void 0);
-const UE = require("ue");
-const SoundAreaPlayInfoById_1 = require("../../../Core/Define/ConfigQuery/SoundAreaPlayInfoById");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LocalStorage_1 = require("../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../Common/LocalStorageDefine");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase");
-const LguiUtil_1 = require("../Util/LguiUtil");
+const UE = require("ue"),
+  SoundAreaPlayInfoById_1 = require("../../../Core/Define/ConfigQuery/SoundAreaPlayInfoById"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase"),
+  LguiUtil_1 = require("../Util/LguiUtil");
 class SoundAreaPlayTips extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -40,9 +40,9 @@ class SoundAreaPlayTips extends UiTickViewBase_1.UiTickViewBase {
     this.SetBuffInfo(this.OpenParam);
   }
   SetBuffInfo(e) {
-    let i;
-    let t;
-    var e = SoundAreaPlayInfoById_1.configSoundAreaPlayInfoById.GetConfig(e);
+    var i,
+      t,
+      e = SoundAreaPlayInfoById_1.configSoundAreaPlayInfoById.GetConfig(e);
     e?.ShowTitle
       ? LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e.BuffTitle)
       : this.GetText(1)?.SetUIActive(!1),
@@ -64,7 +64,7 @@ class SoundAreaPlayTips extends UiTickViewBase_1.UiTickViewBase {
         ));
   }
   OnTick(e) {
-    this.Hvt > 0 &&
+    0 < this.Hvt &&
       TimeUtil_1.TimeUtil.GetServerTimeStamp() > this.Hvt &&
       (this.CloseMe(), (this.Hvt = 0));
   }
@@ -73,4 +73,4 @@ class SoundAreaPlayTips extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.SoundAreaPlayTips = SoundAreaPlayTips;
-// # sourceMappingURL=SoundAreaPlayTips.js.map
+//# sourceMappingURL=SoundAreaPlayTips.js.map

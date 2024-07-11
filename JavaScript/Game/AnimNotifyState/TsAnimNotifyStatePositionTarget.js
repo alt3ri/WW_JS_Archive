@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyStatePositionTarget extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -17,8 +17,8 @@ class TsAnimNotifyStatePositionTarget extends UE.KuroAnimNotifyState {
   }
   K2_NotifyBegin(t, i, s) {
     this.Init();
-    let r;
-    var t = t.GetOwner();
+    var r,
+      t = t.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
       !(
@@ -40,13 +40,13 @@ class TsAnimNotifyStatePositionTarget extends UE.KuroAnimNotifyState {
     this.经过时间 += s;
     t = t.GetOwner();
     if (!(t instanceof TsBaseCharacter_1.default)) return !1;
-    const r = t.CharacterActorComponent.Entity;
+    var r = t.CharacterActorComponent.Entity;
     if (!r?.Valid) return !1;
-    let e = r.GetComponent(33);
+    var e = r.GetComponent(33);
     if (!e?.Valid) return !1;
     e = e?.SkillTarget?.Entity?.GetComponent(1)?.Owner;
     if (!e?.IsValid()) return !1;
-    if (this.最小距离 > 0) {
+    if (0 < this.最小距离) {
       (t = Vector_1.Vector.Create(t.K2_GetActorLocation())),
         (e = Vector_1.Vector.Create(e.K2_GetActorLocation()));
       if (
@@ -80,4 +80,4 @@ class TsAnimNotifyStatePositionTarget extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStatePositionTarget;
-// # sourceMappingURL=TsAnimNotifyStatePositionTarget.js.map
+//# sourceMappingURL=TsAnimNotifyStatePositionTarget.js.map

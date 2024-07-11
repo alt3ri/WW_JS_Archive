@@ -6,7 +6,7 @@ function getComponent(o, e) {
 function getOriginalComponent(o, e) {
   return o[e];
 }
-let EInteractPlayerDiractionType,
+var EInteractPlayerDiractionType,
   EInteractTurnAround,
   EAiWanderType,
   EWorldLevelBonus,
@@ -274,7 +274,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     DestructibleType: "可破坏物",
   }),
   (exports.aoiXyLayerValues = {
-    0: 6e3,
+    [0]: 6e3,
     1: 24e3,
     2: 99e3,
     3: 11e3,
@@ -282,8 +282,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     7: 9e3,
     8: 15e3,
   }),
-  (exports.aoizLayerValues = { 0: -1, 1: 24e3, 2: 6e3, 3: 3e3 }),
-  (exports.rewardTypeCnMap = { 0: "附近掉落", 1: "房主掉落", 2: "采集物掉落" }),
+  (exports.aoizLayerValues = { [0]: -1, 1: 24e3, 2: 6e3, 3: 3e3 }),
+  (exports.rewardTypeCnMap = {
+    [0]: "附近掉落",
+    1: "房主掉落",
+    2: "采集物掉落",
+  }),
   (exports.rewardTypeCommonConfig = [0, 1]),
   (exports.rewardTypeCollectConfig = [0, 1, 2]),
   (function (o) {
@@ -532,4 +536,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     PhysicsItem:
       "/Game/Aki/GamePlay/InteractiveObject/BP_PhysicsItem.BP_PhysicsItem_C",
   });
-// # sourceMappingURL=IComponent.js.map
+//# sourceMappingURL=IComponent.js.map

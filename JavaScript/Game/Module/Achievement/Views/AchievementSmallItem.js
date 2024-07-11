@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AchievementSmallItem = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const AchievementController_1 = require("../AchievementController");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  AchievementController_1 = require("../AchievementController");
 class AchievementSmallItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -16,7 +16,7 @@ class AchievementSmallItem extends GridProxyAbstract_1.GridProxyAbstract {
         e === this.iqe?.GetId() && this.Hqe(this.iqe);
       }),
       (this.nqe = () => {
-        let e;
+        var e;
         this.iqe &&
           ((e =
             ModelManager_1.ModelManager.AchievementModel.GetAchievementGroupData(
@@ -64,16 +64,16 @@ class AchievementSmallItem extends GridProxyAbstract_1.GridProxyAbstract {
     (this.iqe = e), this.Hqe(e);
   }
   Hqe(e) {
-    const t = e.GetFinishState();
-    var e =
-      (this.GetText(0).SetText(e.GetTitle()),
-      this.GetItem(3).SetUIActive(e.RedPoint()),
-      this.GetItem(2).SetUIActive(t === 1),
-      this.GetItem(4).SetUIActive(t === 1),
-      this.GetItem(5).SetUIActive(t === 2),
-      ModelManager_1.ModelManager.AchievementModel.GetAchievementGroupData(
-        this.iqe.GetGroupId(),
-      ));
+    var t = e.GetFinishState(),
+      e =
+        (this.GetText(0).SetText(e.GetTitle()),
+        this.GetItem(3).SetUIActive(e.RedPoint()),
+        this.GetItem(2).SetUIActive(1 === t),
+        this.GetItem(4).SetUIActive(1 === t),
+        this.GetItem(5).SetUIActive(2 === t),
+        ModelManager_1.ModelManager.AchievementModel.GetAchievementGroupData(
+          this.iqe.GetGroupId(),
+        ));
     StringUtils_1.StringUtils.IsEmpty(e.GetSmallIcon()) ||
       this.SetTextureByPath(
         e.GetSmallIcon(),
@@ -91,4 +91,4 @@ class AchievementSmallItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.AchievementSmallItem = AchievementSmallItem;
-// # sourceMappingURL=AchievementSmallItem.js.map
+//# sourceMappingURL=AchievementSmallItem.js.map

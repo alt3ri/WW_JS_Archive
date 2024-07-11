@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CookMediumItemGrid = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid");
-const CookController_1 = require("../CookController");
+const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid"),
+  CookController_1 = require("../CookController");
 class CookMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   constructor() {
     super(...arguments), (this.Gft = void 0);
@@ -25,22 +25,21 @@ class CookMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItem
   }
   OnRefresh(e, o, r) {
     this.SetSelected(o);
-    var o = e.ItemId;
-    const i = {
-      Type: 4,
-      Data: e,
-      IsNewVisible: e.IsNew,
-      IsProhibit: !e.IsUnLock,
-      IsOmitBottomText: !0,
-    };
-    let t = e.MainType;
-    if (t === 1) {
+    var o = e.ItemId,
+      i = {
+        Type: 4,
+        Data: e,
+        IsNewVisible: e.IsNew,
+        IsProhibit: !e.IsUnLock,
+        IsOmitBottomText: !0,
+      },
+      t = e.MainType;
+    if (1 === t) {
       var n =
-        ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
-          o,
-        ).FinalItemId;
-      var s =
-        ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(n);
+          ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
+            o,
+          ).FinalItemId,
+        s = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(n);
       if (!s) return;
       var l =
         CookController_1.CookController.CheckCanProcessed(o) && e.IsUnLock;
@@ -49,7 +48,7 @@ class CookMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItem
         (i.ItemConfigId = n),
         (i.StarLevel = s.QualityId);
     }
-    if (t === 0) {
+    if (0 === t) {
       (l = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(o)),
         (n = l.FoodItemId),
         (s =
@@ -61,10 +60,10 @@ class CookMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItem
         (i.BottomTextId = s.Name),
         (i.ItemConfigId = l.FoodItemId),
         (i.StarLevel = s.QualityId),
-        (i.IsTimeFlagVisible = t.ExistEndTime > 0);
+        (i.IsTimeFlagVisible = 0 < t.ExistEndTime);
     }
     this.Apply(i);
   }
 }
 exports.CookMediumItemGrid = CookMediumItemGrid;
-// # sourceMappingURL=CookMediumItemGrid.js.map
+//# sourceMappingURL=CookMediumItemGrid.js.map

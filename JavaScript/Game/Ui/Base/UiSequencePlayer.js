@@ -38,23 +38,23 @@ class UiSequencePlayer {
   }
   IsInSequence() {
     let t = !1;
-    const i = Array.from(this.a_r.keys());
-    const s = i.length;
+    var i = Array.from(this.a_r.keys()),
+      s = i.length;
     for (let e = 0; e < s; e++)
-      if (this.a_r.get(i[e]) !== 2) {
+      if (2 !== this.a_r.get(i[e])) {
         t = !0;
         break;
       }
     return t;
   }
   IsSequenceInPlaying(e) {
-    return !!this.a_r.has(e) && this.a_r.get(e) === 1;
+    return !!this.a_r.has(e) && 1 === this.a_r.get(e);
   }
   IsSequenceFinish(e) {
-    return !this.a_r.has(e) || this.a_r.get(e) === 2;
+    return !this.a_r.has(e) || 2 === this.a_r.get(e);
   }
   IsStartSequenceFinish(e) {
-    return !this.a_r.has(e) || this.a_r.get(e) > 0;
+    return !this.a_r.has(e) || 0 < this.a_r.get(e);
   }
   GetCurrentSequence() {
     return this.EPe.GetCurrentSequence();
@@ -63,11 +63,11 @@ class UiSequencePlayer {
     this.EPe.PlaySequencePurely(e, t, i);
   }
   StopPrevSequence(e, t = !1) {
-    const i = this.EPe.GetCurrentSequence();
+    var i = this.EPe.GetCurrentSequence();
     this.EPe.StopCurrentSequence(e, t), this.l_r(i);
   }
   StopCurrentSequenceByName(e, t, i = !1) {
-    const s = this.EPe.GetCurrentSequence();
+    var s = this.EPe.GetCurrentSequence();
     s === e && (this.EPe.StopCurrentSequence(t, i), this.l_r(s));
   }
   PlaySequence(e, t = !1) {
@@ -80,7 +80,7 @@ class UiSequencePlayer {
     this.EPe.ReplaySequenceByKey(e);
   }
   u_r() {
-    let e;
+    var e;
     this.IsInSequence() && ((e = Array.from(this.a_r.keys())[0]), this.l_r(e));
   }
   StopSequenceByKey(e, t = !1, i = !1) {
@@ -106,4 +106,4 @@ class UiSequencePlayer {
   }
 }
 exports.UiSequencePlayer = UiSequencePlayer;
-// # sourceMappingURL=UiSequencePlayer.js.map
+//# sourceMappingURL=UiSequencePlayer.js.map

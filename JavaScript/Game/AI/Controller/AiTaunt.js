@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiTaunt = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TAUNT_VALUE = 1e9;
+const Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TAUNT_VALUE = 1e9;
 class AiTaunt {
   constructor(t) {
     (this.Bte = t),
@@ -14,7 +14,7 @@ class AiTaunt {
       (this.Rre = void 0),
       (this.Ure = (t, i, s) => {
         t
-          ? (this.Dre !== -1 && this.Lre.RemoveHateListForTaunt(this.Dre),
+          ? (-1 !== this.Dre && this.Lre.RemoveHateListForTaunt(this.Dre),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "AI",
@@ -37,7 +37,7 @@ class AiTaunt {
             );
       }),
       (this.xre = (t, i) => {
-        this.Dre !== -1 &&
+        -1 !== this.Dre &&
           t !== this.Dre &&
           (this.ClearCurrentTauntAndGe(), Log_1.Log.CheckInfo()) &&
           Log_1.Log.Info(
@@ -52,10 +52,10 @@ class AiTaunt {
     (this.Lre = t), (this.Dre = -1), (this.Rre = void 0), this.BindEvent();
   }
   Tick() {
-    if (this.Dre && this.Dre !== -1) {
+    if (this.Dre && -1 !== this.Dre) {
       let t = !0;
-      let i;
-      const s = EntitySystem_1.EntitySystem.Get(this.Dre);
+      var i,
+        s = EntitySystem_1.EntitySystem.Get(this.Dre);
       (t =
         s?.Active &&
         ((i = s.GetComponent(158))?.Valid && !i.IsInGame && (t = !1),
@@ -109,7 +109,7 @@ class AiTaunt {
       ));
   }
   UnBindEvent() {
-    const t = this.Bte.CharAiDesignComp?.Entity;
+    var t = this.Bte.CharAiDesignComp?.Entity;
     t &&
       (EventSystem_1.EventSystem.HasWithTarget(
         t,
@@ -134,4 +134,4 @@ class AiTaunt {
   }
 }
 exports.AiTaunt = AiTaunt;
-// # sourceMappingURL=AiTaunt.js.map
+//# sourceMappingURL=AiTaunt.js.map

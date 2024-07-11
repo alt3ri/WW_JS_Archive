@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RedDotQuestViewTab = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const RedDotBase_1 = require("../../RedDotBase");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  RedDotBase_1 = require("../../RedDotBase");
 class RedDotQuestViewTab extends RedDotBase_1.RedDotBase {
   OnGetEvents() {
     return [EventDefine_1.EEventName.OnQuestRedDotStateChange];
@@ -13,7 +13,7 @@ class RedDotQuestViewTab extends RedDotBase_1.RedDotBase {
     for (const n of ConfigManager_1.ConfigManager.QuestNewConfig.GetQuesTypesByMainType(
       e,
     )) {
-      const r = ModelManager_1.ModelManager.QuestNewModel.GetQuestsByType(n.Id);
+      var r = ModelManager_1.ModelManager.QuestNewModel.GetQuestsByType(n.Id);
       if (r)
         for (const t of r)
           if (t.CanShowInUiPanel())
@@ -35,4 +35,4 @@ class RedDotQuestViewTab extends RedDotBase_1.RedDotBase {
   }
 }
 exports.RedDotQuestViewTab = RedDotQuestViewTab;
-// # sourceMappingURL=RedDotQuestViewTab.js.map
+//# sourceMappingURL=RedDotQuestViewTab.js.map

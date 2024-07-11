@@ -1,24 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AppLinks = void 0);
-const UE = require("ue");
-const BaseConfigController_1 = require("./BaseConfig/BaseConfigController");
-const HotPatchKuroSdk_1 = require("./HotPatchKuroSdk/HotPatchKuroSdk");
-const HotPatchLogReport_1 = require("./HotPatchLogReport");
-const LauncherLog_1 = require("./Util/LauncherLog");
-const APP_LINKS_HOST = "mc.kurogame.com";
-const APP_LINKS_HOST_GLOBAL = "wutheringwaves.kurogame.com";
+const UE = require("ue"),
+  BaseConfigController_1 = require("./BaseConfig/BaseConfigController"),
+  HotPatchKuroSdk_1 = require("./HotPatchKuroSdk/HotPatchKuroSdk"),
+  HotPatchLogReport_1 = require("./HotPatchLogReport"),
+  LauncherLog_1 = require("./Util/LauncherLog"),
+  APP_LINKS_HOST = "mc.kurogame.com",
+  APP_LINKS_HOST_GLOBAL = "wutheringwaves.kurogame.com";
 class AppLinks {
   static Init() {
-    let e, t;
+    var e, t;
     AppLinks.E_e ||
-      ((e = UE.GameplayStatics.GetPlatformName()) !== "Android" &&
-        e !== "IOS") ||
+      ("Android" !== (e = UE.GameplayStatics.GetPlatformName()) &&
+        "IOS" !== e) ||
       ((t =
-        BaseConfigController_1.BaseConfigController.GetPublicValue(
-          "SdkArea",
-        ) !== "CN"),
-      e === "IOS" && t
+        "CN" !==
+        BaseConfigController_1.BaseConfigController.GetPublicValue("SdkArea")),
+      "IOS" === e && t
         ? UE.KuroLauncherLibrary.IsFirstIntoLauncher() &&
           (LauncherLog_1.LauncherLog.Info("派发IOS缓存的事件"),
           UE.KuroiOSDelegateStaticLibrary.DispatchCacheMessage())
@@ -29,9 +28,9 @@ class AppLinks {
               AppLinks.ReportApplinksActivation(e, t, o);
             },
           ),
-          e === "Android"
+          "Android" === e
             ? UE.KuroSDKManager.CheckApplinksActivation()
-            : e === "IOS" &&
+            : "IOS" === e &&
               UE.KuroLauncherLibrary.IsFirstIntoLauncher() &&
               (LauncherLog_1.LauncherLog.Info("派发IOS缓存的事件"),
               UE.KuroiOSDelegateStaticLibrary.DispatchCacheMessage()),
@@ -46,7 +45,7 @@ class AppLinks {
   static ReportApplinksActivation(e, t, o) {
     (e !== APP_LINKS_HOST && e !== APP_LINKS_HOST_GLOBAL) ||
       (HotPatchLogReport_1.HotPatchLogReport.ReportAppLinksEvent(t, o),
-      t !== "" && this.Jbn.has(t) && this.Jbn.get(t)(t, o)),
+      "" !== t && this.Jbn.has(t) && this.Jbn.get(t)(t, o)),
       LauncherLog_1.LauncherLog.Info(
         `Application Activated By AppLinks: ${e}, ${t}, ` + o,
       );
@@ -67,4 +66,4 @@ class AppLinks {
   }
 }
 ((exports.AppLinks = AppLinks).E_e = !1), (AppLinks.Jbn = new Map());
-// # sourceMappingURL=AppLinks.js.map
+//# sourceMappingURL=AppLinks.js.map

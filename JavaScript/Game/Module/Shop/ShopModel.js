@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ShopModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ShopDefine_1 = require("./ShopDefine");
-const ShopItemFullInfo_1 = require("./SubViews/ShopItemFullInfo");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ShopDefine_1 = require("./ShopDefine"),
+  ShopItemFullInfo_1 = require("./SubViews/ShopItemFullInfo");
 class ShopModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -50,7 +50,7 @@ class ShopModel extends ModelBase_1.ModelBase {
       );
   }
   UpdateItemData(e) {
-    const t = this.GetShopItem(e.CVn, e.Ekn);
+    var t = this.GetShopItem(e.CVn, e.Ekn);
     t && (t.s8n = e.s8n);
   }
   IsOpen(e) {
@@ -59,11 +59,11 @@ class ShopModel extends ModelBase_1.ModelBase {
   }
   GetShopItemList(e) {
     this.GetShopInfo(e);
-    const t = this.GetShopInfo(e);
-    const o = [];
+    var t = this.GetShopInfo(e),
+      o = [];
     if (t) {
-      for (const [, r] of t.GetItemList()) {
-        let n = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+      for (var [, r] of t.GetItemList()) {
+        var n = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
           r.G3n,
           !0,
         );
@@ -95,4 +95,4 @@ class ShopModel extends ModelBase_1.ModelBase {
   }
 }
 exports.ShopModel = ShopModel;
-// # sourceMappingURL=ShopModel.js.map
+//# sourceMappingURL=ShopModel.js.map

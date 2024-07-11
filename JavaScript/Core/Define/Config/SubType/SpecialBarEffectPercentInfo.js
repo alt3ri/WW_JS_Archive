@@ -30,25 +30,25 @@ class SpecialBarEffectPercentInfo {
     );
   }
   minpercent() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   maxpercent() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   minvalue() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   maxvalue() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   floatparametername(t) {
-    const e = this.J7.__offset(this.z7, 12);
+    var e = this.J7.__offset(this.z7, 12);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
 }
 exports.SpecialBarEffectPercentInfo = SpecialBarEffectPercentInfo;
-// # sourceMappingURL=SpecialBarEffectPercentInfo.js.map
+//# sourceMappingURL=SpecialBarEffectPercentInfo.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionFetterSuitItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
 class VisionFetterSuitItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(t) {
     super(),
@@ -33,8 +33,8 @@ class VisionFetterSuitItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Update(t) {
     this.Pe = t;
-    let i = "";
-    let s = "";
+    let i = "",
+      s = "";
     s = t
       ? ((i = t.FetterElementColor), t.FetterElementPath)
       : ((i =
@@ -48,4 +48,4 @@ class VisionFetterSuitItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.VisionFetterSuitItem = VisionFetterSuitItem;
-// # sourceMappingURL=VisionFetterSuitItem.js.map
+//# sourceMappingURL=VisionFetterSuitItem.js.map

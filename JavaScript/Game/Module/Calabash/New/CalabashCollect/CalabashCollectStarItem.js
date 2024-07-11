@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CalabashCollectStarItem = void 0);
-const UE = require("ue");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
+const UE = require("ue"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
 class CalabashCollectStarItem extends GridProxyAbstract_1.GridProxyAbstract {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIItem]];
@@ -12,4 +12,4 @@ class CalabashCollectStarItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.CalabashCollectStarItem = CalabashCollectStarItem;
-// # sourceMappingURL=CalabashCollectStarItem.js.map
+//# sourceMappingURL=CalabashCollectStarItem.js.map

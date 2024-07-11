@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SmallItemGridCoolDownComponent = void 0);
-const UE = require("ue");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const SmallItemGridComponent_1 = require("./SmallItemGridComponent");
+const UE = require("ue"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  SmallItemGridComponent_1 = require("./SmallItemGridComponent");
 class SmallItemGridCoolDownComponent extends SmallItemGridComponent_1.SmallItemGridComponent {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -14,9 +14,9 @@ class SmallItemGridCoolDownComponent extends SmallItemGridComponent_1.SmallItemG
     ];
   }
   OnRefresh(e) {
-    let t;
-    const i = e.CoolDown;
-    var e = e.TotalCdTime;
+    var t,
+      i = e.CoolDown,
+      e = e.TotalCdTime;
     i && e
       ? (this.GetSprite(0).SetFillAmount(i / e),
         this.SetActive(!0),
@@ -44,4 +44,4 @@ class SmallItemGridCoolDownComponent extends SmallItemGridComponent_1.SmallItemG
   }
 }
 exports.SmallItemGridCoolDownComponent = SmallItemGridCoolDownComponent;
-// # sourceMappingURL=SmallItemGridCoolDownComponent.js.map
+//# sourceMappingURL=SmallItemGridCoolDownComponent.js.map

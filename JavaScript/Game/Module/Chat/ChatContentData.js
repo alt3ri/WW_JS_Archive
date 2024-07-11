@@ -24,4 +24,4 @@ class ChatContentData {
   }
 }
 exports.ChatContentData = ChatContentData;
-// # sourceMappingURL=ChatContentData.js.map
+//# sourceMappingURL=ChatContentData.js.map

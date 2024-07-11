@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletLogicReboundController = void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const CameraController_1 = require("../../../Camera/CameraController");
-const Global_1 = require("../../../Global");
-const BulletController_1 = require("../BulletController");
-const BulletStaticFunction_1 = require("../BulletStaticMethod/BulletStaticFunction");
-const BulletLogicController_1 = require("./BulletLogicController");
-const OUTER_RADIUS = 100;
+const UE = require("ue"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  CameraController_1 = require("../../../Camera/CameraController"),
+  Global_1 = require("../../../Global"),
+  BulletController_1 = require("../BulletController"),
+  BulletStaticFunction_1 = require("../BulletStaticMethod/BulletStaticFunction"),
+  BulletLogicController_1 = require("./BulletLogicController"),
+  OUTER_RADIUS = 100;
 class BulletLogicReboundController extends BulletLogicController_1.BulletLogicController {
   constructor(t, e) {
     super(t, e),
@@ -24,7 +24,7 @@ class BulletLogicReboundController extends BulletLogicController_1.BulletLogicCo
       this.LogicController.ReboundBitMask;
   }
   BulletLogicAction(t) {
-    let e = t.BulletDataMain.Logic.ReboundChannel;
+    var e = t.BulletDataMain.Logic.ReboundChannel;
     if (!((this.LogicController.ReboundBitMask & e) <= 0)) {
       this.LogicController.EffectRebound &&
         UE.KismetSystemLibrary.IsValidSoftObjectReference(
@@ -50,7 +50,7 @@ class BulletLogicReboundController extends BulletLogicController_1.BulletLogicCo
             this.LogicController.ScreenShake.ToAssetPathName(),
             UE.Class,
             (t) => {
-              const e =
+              var e =
                 Global_1.Global.CharacterCameraManager.GetCameraLocation();
               CameraController_1.CameraController.PlayWorldCameraShake(
                 t,
@@ -73,24 +73,24 @@ class BulletLogicReboundController extends BulletLogicController_1.BulletLogicCo
             this.LogicController.CameraModified.摄像机配置,
             void 0,
           );
-      let r;
-      const o = this.LogicController.BulletRowName.Num();
-      const l = this._9o.ContextId;
+      var r,
+        o = this.LogicController.BulletRowName.Num(),
+        l = this._9o.ContextId;
       for (let t = 0; t < o; t++) {
-        var i = this.LogicController.BulletRowName.Get(t);
-        var i = BulletController_1.BulletController.CreateBulletCustomTarget(
-          this._9o.AttackerActorComp.Actor,
-          i,
-          this.nXt.ActorTransform,
-          {
-            SyncType: 1,
-            ParentId: this.Bullet.Id,
-            SkillId: this._9o.BulletInitParams.SkillId,
-            Source: Protocol_1.Aki.Protocol.LOs.Proto_ReboundSource,
-            DtType: this._9o.BulletInitParams.DtType,
-          },
-          l,
-        );
+        var i = this.LogicController.BulletRowName.Get(t),
+          i = BulletController_1.BulletController.CreateBulletCustomTarget(
+            this._9o.AttackerActorComp.Actor,
+            i,
+            this.nXt.ActorTransform,
+            {
+              SyncType: 1,
+              ParentId: this.Bullet.Id,
+              SkillId: this._9o.BulletInitParams.SkillId,
+              Source: Protocol_1.Aki.Protocol.LOs.Proto_ReboundSource,
+              DtType: this._9o.BulletInitParams.DtType,
+            },
+            l,
+          );
         i?.Valid &&
           (i = i.GetBulletInfo()).BulletDataMain.Render.HandOverParentEffect &&
           BulletStaticFunction_1.BulletStaticFunction.HandOverEffects(
@@ -102,4 +102,4 @@ class BulletLogicReboundController extends BulletLogicController_1.BulletLogicCo
   }
 }
 exports.BulletLogicReboundController = BulletLogicReboundController;
-// # sourceMappingURL=BulletLogicReboundController.js.map
+//# sourceMappingURL=BulletLogicReboundController.js.map

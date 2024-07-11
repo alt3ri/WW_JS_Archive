@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiSenseGroup = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const FloatRange_1 = require("./SubType/FloatRange");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  FloatRange_1 = require("./SubType/FloatRange");
 class AiSenseGroup {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -31,11 +31,11 @@ class AiSenseGroup {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   losedelay(t) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + s),
@@ -47,15 +47,15 @@ class AiSenseGroup {
     return this.aisenseids(t);
   }
   aisenseids(t) {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   aisenseidsLength() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   aisenseidsArray() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -65,9 +65,9 @@ class AiSenseGroup {
       : null;
   }
   sharedis() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
 }
 exports.AiSenseGroup = AiSenseGroup;
-// # sourceMappingURL=AiSenseGroup.js.map
+//# sourceMappingURL=AiSenseGroup.js.map

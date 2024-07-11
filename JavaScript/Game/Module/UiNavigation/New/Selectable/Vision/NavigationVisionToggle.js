@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NavigationVisionToggle = void 0);
-const UiNavigationNewController_1 = require("../../UiNavigationNewController");
-const NavigationToggle_1 = require("../NavigationToggle");
+const UiNavigationNewController_1 = require("../../UiNavigationNewController"),
+  NavigationToggle_1 = require("../NavigationToggle");
 class NavigationVisionToggle extends NavigationToggle_1.NavigationToggle {
   OnHandlePointerSelect(e) {
-    const i = this.Selectable;
+    var i = this.Selectable;
     return (
-      i.ToggleState === 0 &&
+      0 === i.ToggleState &&
         e &&
-        e.inputType === 1 &&
+        1 === e.inputType &&
         i.bToggleOnSelect &&
         UiNavigationNewController_1.UiNavigationNewController.InteractClickByListener(
           this.Listener,
@@ -24,4 +24,4 @@ class NavigationVisionToggle extends NavigationToggle_1.NavigationToggle {
   }
 }
 exports.NavigationVisionToggle = NavigationVisionToggle;
-// # sourceMappingURL=NavigationVisionToggle.js.map
+//# sourceMappingURL=NavigationVisionToggle.js.map

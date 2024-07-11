@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiTextTranslationUtils = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../Common/Log");
-const ConfigDefine_1 = require("../Define/ConfigDefine");
-const MultiTextLang_1 = require("../Define/ConfigQuery/MultiTextLang");
-const PrefabTextItemByItemId_1 = require("../Define/ConfigQuery/PrefabTextItemByItemId");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../Common/Log"),
+  ConfigDefine_1 = require("../Define/ConfigDefine"),
+  MultiTextLang_1 = require("../Define/ConfigQuery/MultiTextLang"),
+  PrefabTextItemByItemId_1 = require("../Define/ConfigQuery/PrefabTextItemByItemId");
 class UiTextTranslationUtils {
   static Kz(e) {
-    e.overflowType === 1 && (e.bBestFit = !0);
+    1 === e.overflowType && (e.bBestFit = !0);
   }
   static Initialize() {
     UE.UIText.SetTextTranslateDelegate(
@@ -49,7 +49,7 @@ class UiTextTranslationUtils {
   if (t.TranslateId) {
     let e = void 0;
     (e =
-      t.TranslateId !== 0
+      0 !== t.TranslateId
         ? PrefabTextItemByItemId_1.configPrefabTextItemByItemId.GetConfig(
             BigInt(t.TranslateId),
           )
@@ -109,4 +109,4 @@ class UiTextTranslationUtils {
       i
     );
   });
-// # sourceMappingURL=UiTextTranslationUtils.js.map
+//# sourceMappingURL=UiTextTranslationUtils.js.map

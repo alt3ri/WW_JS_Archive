@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ManipulateCursorUnit = void 0);
-const UE = require("ue");
-const Time_1 = require("../../../../Core/Common/Time");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const CombineKeyItem_1 = require("../../BattleUi/Views/KeyItem/CombineKeyItem");
-const HudUnitBase_1 = require("../HudUnitBase");
-const CLOSE_ANIM_TIME = 300;
-const RAD_2_DEG = 180 / Math.PI;
+const UE = require("ue"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  CombineKeyItem_1 = require("../../BattleUi/Views/KeyItem/CombineKeyItem"),
+  HudUnitBase_1 = require("../HudUnitBase"),
+  CLOSE_ANIM_TIME = 300,
+  RAD_2_DEG = 180 / Math.PI;
 class ManipulateCursorUnit extends HudUnitBase_1.HudUnitBase {
   constructor() {
     super(...arguments),
@@ -57,7 +57,7 @@ class ManipulateCursorUnit extends HudUnitBase_1.HudUnitBase {
   }
   OnStart() {}
   async OnBeforeStartAsync() {
-    let i;
+    var i;
     (this.eti = this.GetItem(2)),
       (this.J_t = this.GetItem(3)),
       (this.tti = this.GetSprite(4)),
@@ -73,7 +73,7 @@ class ManipulateCursorUnit extends HudUnitBase_1.HudUnitBase {
           this.SetKeyAction(InputMappingsDefine_1.actionMappings.幻象1)),
       this.Brt(),
       this.Appear(),
-      this.iti > 0 && this.J_t?.SetUIActive(!0);
+      0 < this.iti && this.J_t?.SetUIActive(!0);
   }
   OnBeforeDestroy() {
     this.Jei(),
@@ -100,7 +100,7 @@ class ManipulateCursorUnit extends HudUnitBase_1.HudUnitBase {
   ati(i) {
     this.rti !== i &&
       ((this.rti = i),
-      ModelManager_1.ModelManager.PlatformModel.OperationType === 2
+      2 === ModelManager_1.ModelManager.PlatformModel.OperationType
         ? i
           ? this.SetKeyAction(InputMappingsDefine_1.actionMappings.攻击)
           : this.SetKeyAction(InputMappingsDefine_1.actionMappings.幻象1)
@@ -111,21 +111,21 @@ class ManipulateCursorUnit extends HudUnitBase_1.HudUnitBase {
   }
   RefreshKeyVisible() {
     this.xet &&
-      (ModelManager_1.ModelManager.PlatformModel.OperationType !== 2
+      (2 !== ModelManager_1.ModelManager.PlatformModel.OperationType
         ? this.xet.SetActive(!1)
         : this.xet.SetActive(!0));
   }
   StartProcess(i) {
     this.J_t?.SetUIActive(!0),
       this.hti(0),
-      (this.iti = i > 0 ? 1 / (i * TimeUtil_1.TimeUtil.InverseMillisecond) : 0),
+      (this.iti = 0 < i ? 1 / (i * TimeUtil_1.TimeUtil.InverseMillisecond) : 0),
       (this.oti = Time_1.Time.WorldTime);
   }
   EndProcess(i) {
     this.StopProcessAnim(), (this.iti = 0), i && this.hti(0);
   }
   sti() {
-    let i;
+    var i;
     this.iti <= 0 ||
       ((i = Time_1.Time.WorldTime),
       (i = Math.min((i - this.oti) * this.iti, 1)),
@@ -135,7 +135,7 @@ class ManipulateCursorUnit extends HudUnitBase_1.HudUnitBase {
     this.tti?.SetFillAmount(i);
   }
   PlayActivateEffect() {
-    const i = this.GetUiNiagara(6);
+    var i = this.GetUiNiagara(6);
     i.SetUIActive(!0), i.ActivateSystem(!0);
   }
   Brt() {
@@ -188,4 +188,4 @@ class ManipulateCursorUnit extends HudUnitBase_1.HudUnitBase {
   }
 }
 exports.ManipulateCursorUnit = ManipulateCursorUnit;
-// # sourceMappingURL=ManipulateCursorUnit.js.map
+//# sourceMappingURL=ManipulateCursorUnit.js.map

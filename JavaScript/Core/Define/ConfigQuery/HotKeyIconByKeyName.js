@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configHotKeyIconByKeyName = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const HotKeyIcon_1 = require("../Config/HotKeyIcon");
-const DB = "db_uihotkot.db";
-const FILE = "j.界面快捷键.xlsx";
-const TABLE = "HotKeyIcon";
-const COMMAND = "select BinData from `HotKeyIcon` where KeyName=?";
-const KEY_PREFIX = "HotKeyIconByKeyName";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  HotKeyIcon_1 = require("../Config/HotKeyIcon"),
+  DB = "db_uihotkot.db",
+  FILE = "j.界面快捷键.xlsx",
+  TABLE = "HotKeyIcon",
+  COMMAND = "select BinData from `HotKeyIcon` where KeyName=?",
+  KEY_PREFIX = "HotKeyIconByKeyName",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configHotKeyIconByKeyName.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configHotKeyIconByKeyName.GetConfig(";
 exports.configHotKeyIconByKeyName = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configHotKeyIconByKeyName = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "KeyName",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "KeyName",
+              o,
+            ]))
       ) {
-        var i;
-        var n = void 0;
+        var i,
+          n = void 0;
         if (
           (([i, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configHotKeyIconByKeyName = {
     }
   },
 };
-// # sourceMappingURL=HotKeyIconByKeyName.js.map
+//# sourceMappingURL=HotKeyIconByKeyName.js.map

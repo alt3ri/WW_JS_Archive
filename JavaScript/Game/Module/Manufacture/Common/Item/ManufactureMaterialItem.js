@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ManufactureMaterialItem = void 0);
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const LoopScrollMediumItemGrid_1 = require("../../../Common/MediumItemGrid/LoopScrollMediumItemGrid");
+const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LoopScrollMediumItemGrid_1 = require("../../../Common/MediumItemGrid/LoopScrollMediumItemGrid");
 class ManufactureMaterialItem extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   constructor() {
     super(...arguments), (this.dqt = void 0), (this.Byi = 0);
   }
   OnRefresh(e, t, i) {
-    const r = { Type: 4, Data: (this.dqt = e), BottomText: this.byi() };
+    var r = { Type: 4, Data: (this.dqt = e), BottomText: this.byi() };
     e.m3n && (r.ItemConfigId = e.G3n),
       this.Apply(r),
       this.SetIsPhantomLock(!e.m3n),
@@ -20,9 +20,8 @@ class ManufactureMaterialItem extends LoopScrollMediumItemGrid_1.LoopScrollMediu
   byi() {
     if (!this.dqt) return "";
     if (this.dqt.m3n) {
-      const t = this.dqt.k4n * this.Byi;
-      const i =
-        ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+      var t = this.dqt.k4n * this.Byi,
+        i = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
           this.dqt.G3n,
         );
       let e = "";
@@ -54,4 +53,4 @@ class ManufactureMaterialItem extends LoopScrollMediumItemGrid_1.LoopScrollMediu
   }
 }
 exports.ManufactureMaterialItem = ManufactureMaterialItem;
-// # sourceMappingURL=ManufactureMaterialItem.js.map
+//# sourceMappingURL=ManufactureMaterialItem.js.map

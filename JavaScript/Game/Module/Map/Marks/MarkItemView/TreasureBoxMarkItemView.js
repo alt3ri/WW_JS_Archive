@@ -14,4 +14,4 @@ class TreasureBoxMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
   }
 }
 exports.TreasureBoxMarkItemView = TreasureBoxMarkItemView;
-// # sourceMappingURL=TreasureBoxMarkItemView.js.map
+//# sourceMappingURL=TreasureBoxMarkItemView.js.map

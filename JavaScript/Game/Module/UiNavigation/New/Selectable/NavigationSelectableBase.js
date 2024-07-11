@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NavigationSelectableBase = void 0);
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const UiLayer_1 = require("../../../../Ui/UiLayer");
-const UiNavigationGlobalData_1 = require("../UiNavigationGlobalData");
+const StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  UiLayer_1 = require("../../../../Ui/UiLayer"),
+  UiNavigationGlobalData_1 = require("../UiNavigationGlobalData");
 class NavigationSelectableBase {
   constructor(t, i) {
     (this.IsInteractive = !0),
@@ -82,13 +82,13 @@ class NavigationSelectableBase {
     return this.OnIsIgnoreScrollOrLayoutCheck();
   }
   IsAllowNavigationByGroup() {
-    let t;
+    var t;
     return (
       !StringUtils_1.StringUtils.IsEmpty(this.Listener.GroupName) &&
       !!(t = this.Listener.PanelConfig.GetNavigationGroup(
         this.Listener.GroupName,
       )) &&
-      t.GroupType === 0
+      0 === t.GroupType
     );
   }
   OnGetTipsTextId() {
@@ -119,7 +119,7 @@ class NavigationSelectableBase {
     return !1;
   }
   dwo() {
-    let t, i;
+    var t, i;
     return !(
       !this.Listener.PanelConfig ||
       (!UiNavigationGlobalData_1.UiNavigationGlobalData
@@ -144,4 +144,4 @@ class NavigationSelectableBase {
   }
 }
 exports.NavigationSelectableBase = NavigationSelectableBase;
-// # sourceMappingURL=NavigationSelectableBase.js.map
+//# sourceMappingURL=NavigationSelectableBase.js.map

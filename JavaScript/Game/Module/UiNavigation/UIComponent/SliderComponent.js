@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.SliderIncreaseComponent =
     exports.SliderComponent =
       void 0);
-const UiNavigationNewController_1 = require("../New/UiNavigationNewController");
-const HotKeyComponent_1 = require("./HotKeyComponent");
-const INTERVAL = 0.05;
+const UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
+  HotKeyComponent_1 = require("./HotKeyComponent"),
+  INTERVAL = 0.05;
 class SliderComponent extends HotKeyComponent_1.HotKeyComponent {
   SetValue(e) {
     UiNavigationNewController_1.UiNavigationNewController.SliderComponentSetValue(
@@ -30,8 +30,8 @@ class SliderReduceComponent extends SliderComponent {
     this.SetValue(-INTERVAL);
   }
   OnInputAxis(e, o) {
-    o >= 0 || this.SetValue(o * INTERVAL);
+    0 <= o || this.SetValue(o * INTERVAL);
   }
 }
 exports.SliderReduceComponent = SliderReduceComponent;
-// # sourceMappingURL=SliderComponent.js.map
+//# sourceMappingURL=SliderComponent.js.map

@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelAiDecoratorQuestStepState = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LevelAiDecorator_1 = require("../LevelAiDecorator");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LevelAiDecorator_1 = require("../LevelAiDecorator");
 class LevelAiDecoratorQuestStepState extends LevelAiDecorator_1.LevelAiDecorator {
   constructor() {
     super(...arguments),
       (this.fIe = (e) => {
-        let t = this.Params;
+        var t = this.Params;
         t &&
           e &&
           t.QuestId === e.TreeConfigId &&
@@ -30,12 +30,12 @@ class LevelAiDecoratorQuestStepState extends LevelAiDecorator_1.LevelAiDecorator
     );
   }
   CheckCondition(e) {
-    let t;
-    const r = this.Params;
+    var t,
+      r = this.Params;
     return (
       !!r &&
-      (ModelManager_1.ModelManager.QuestNewModel.GetQuestState(r.QuestId) ===
-        3 ||
+      (3 ===
+        ModelManager_1.ModelManager.QuestNewModel.GetQuestState(r.QuestId) ||
         (!!(t = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
           r.QuestId,
         )) &&
@@ -44,4 +44,4 @@ class LevelAiDecoratorQuestStepState extends LevelAiDecorator_1.LevelAiDecorator
   }
 }
 exports.LevelAiDecoratorQuestStepState = LevelAiDecoratorQuestStepState;
-// # sourceMappingURL=LevelAiDecoratorQuestStepState.js.map
+//# sourceMappingURL=LevelAiDecoratorQuestStepState.js.map

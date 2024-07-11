@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletLogicDestroyOtherBullet = void 0);
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const BulletController_1 = require("../BulletController");
-const BulletLogicController_1 = require("./BulletLogicController");
+const StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  BulletController_1 = require("../BulletController"),
+  BulletLogicController_1 = require("./BulletLogicController");
 class BulletLogicDestroyOtherBullet extends BulletLogicController_1.BulletLogicController {
   constructor(t, l) {
     super(t, l);
@@ -14,8 +14,8 @@ class BulletLogicDestroyOtherBullet extends BulletLogicController_1.BulletLogicC
     );
   }
   BulletLogicAction(t) {
-    const l = t.GetBulletInfo();
-    const e = this.LogicController.BulletId;
+    var l = t.GetBulletInfo(),
+      e = this.LogicController.BulletId;
     (!StringUtils_1.StringUtils.IsEmpty(e) && e !== l.BulletRowName) ||
       BulletController_1.BulletController.DestroyBullet(
         t.Id,
@@ -24,4 +24,4 @@ class BulletLogicDestroyOtherBullet extends BulletLogicController_1.BulletLogicC
   }
 }
 exports.BulletLogicDestroyOtherBullet = BulletLogicDestroyOtherBullet;
-// # sourceMappingURL=BulletLogicDestroyOtherBullet.js.map
+//# sourceMappingURL=BulletLogicDestroyOtherBullet.js.map

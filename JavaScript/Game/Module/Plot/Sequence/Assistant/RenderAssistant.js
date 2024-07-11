@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RenderAssistant = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const GameQualitySettingsManager_1 = require("../../../../GameQualitySettings/GameQualitySettingsManager");
-const GlobalData_1 = require("../../../../GlobalData");
-const RenderDataManager_1 = require("../../../../Render/Data/RenderDataManager");
-const RenderUtil_1 = require("../../../../Render/Utils/RenderUtil");
-const SeqBaseAssistant_1 = require("./SeqBaseAssistant");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  GameQualitySettingsManager_1 = require("../../../../GameQualitySettings/GameQualitySettingsManager"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  RenderDataManager_1 = require("../../../../Render/Data/RenderDataManager"),
+  RenderUtil_1 = require("../../../../Render/Utils/RenderUtil"),
+  SeqBaseAssistant_1 = require("./SeqBaseAssistant");
 class RenderAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   constructor() {
     super(...arguments),
@@ -30,12 +30,12 @@ class RenderAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
           GlobalData_1.GlobalData.World,
           "r.Kuro.AutoExposure 0",
         ),
-      this.Model.GetType() === 0 &&
+      0 === this.Model.GetType() &&
         ((this.Model.PreviousMotionBlur =
           UE.KismetSystemLibrary.GetConsoleVariableFloatValue(
             "r.MotionBlur.Amount",
           )),
-        this.Model.PreviousMotionBlur !== 0) &&
+        0 !== this.Model.PreviousMotionBlur) &&
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
           "r.MotionBlur.Amount 0",
@@ -49,14 +49,14 @@ class RenderAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       (this.gto = !0);
   }
   PreEachPlay() {
-    const t = this.Model.GetCurrentSequence();
+    var t = this.Model.GetCurrentSequence();
     UE.KuroSequenceRuntimeFunctionLibrary.HandleSeqTexStreaming(t, !0),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 39, "关闭纹理流送", ["Seq", t.GetName()]),
       (this.Cto = !0);
   }
   EachStop() {
-    const t = this.Model.GetCurrentSequence();
+    var t = this.Model.GetCurrentSequence();
     UE.KuroSequenceRuntimeFunctionLibrary.HandleSeqTexStreaming(t, !1),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 39, "开启纹理流送", ["Seq", t.GetName()]),
@@ -76,8 +76,8 @@ class RenderAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
           GlobalData_1.GlobalData.World,
           "r.Kuro.AutoExposure 1",
         ),
-      this.Model.GetType() === 0 &&
-        this.Model.PreviousMotionBlur !== 0 &&
+      0 === this.Model.GetType() &&
+        0 !== this.Model.PreviousMotionBlur &&
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
           "r.MotionBlur.Amount " + this.Model.PreviousMotionBlur,
@@ -96,9 +96,9 @@ class RenderAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   }
   CheckSeqStreamingData() {
     let a = !0;
-    const e = this.Model.SequenceData;
+    var e = this.Model.SequenceData;
     for (let t = 0; t < e.剧情资源.Num(); t++) {
-      const i = e.剧情资源.Get(t);
+      var i = e.剧情资源.Get(t);
       UE.KuroSequenceRuntimeFunctionLibrary.HandleSeqTexStreaming(i, !0) ||
         (a = !1);
     }
@@ -116,9 +116,9 @@ class RenderAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   }
   ReleaseSeqStreamingData() {
     if (this.Cto) {
-      const a = this.Model.SequenceData;
+      var a = this.Model.SequenceData;
       for (let t = 0; t < a.剧情资源.Num(); t++) {
-        const e = a.剧情资源.Get(t);
+        var e = a.剧情资源.Get(t);
         UE.KuroSequenceRuntimeFunctionLibrary.HandleSeqTexStreaming(e, !1);
       }
       this.Model.SequenceData.NeedSwitchMainCharacter &&
@@ -145,4 +145,4 @@ class RenderAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   }
 }
 exports.RenderAssistant = RenderAssistant;
-// # sourceMappingURL=RenderAssistant.js.map
+//# sourceMappingURL=RenderAssistant.js.map

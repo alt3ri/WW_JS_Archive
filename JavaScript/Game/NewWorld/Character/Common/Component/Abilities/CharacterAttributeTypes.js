@@ -18,7 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.EAttributeId =
       void 0);
 const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const EAttributeId = Protocol_1.Aki.Protocol.KBs;
+var EAttributeId = Protocol_1.Aki.Protocol.KBs;
 (exports.EAttributeId = EAttributeId),
   (exports.ATTRIBUTE_ID_MAX = Protocol_1.Aki.Protocol.KBs.EAttributeType_MAX),
   (exports.ELEMENT_POWER_MAX = 1e4),
@@ -125,8 +125,8 @@ const EAttributeId = Protocol_1.Aki.Protocol.KBs;
     [EAttributeId.Proto_StatusBuildUp4, EAttributeId.Proto_StatusBuildUp4Max],
     [EAttributeId.Proto_StatusBuildUp5, EAttributeId.Proto_StatusBuildUp5Max],
   ]));
-const ATTACK_SPEED_MAX = 2e4;
-const REDUCE_MAX = 1e4;
+const ATTACK_SPEED_MAX = 2e4,
+  REDUCE_MAX = 1e4;
 (exports.attrsCurrentValueClamp = new Map([
   [EAttributeId.Proto_AutoAttackSpeed, ATTACK_SPEED_MAX],
   [EAttributeId.Proto_CastAttackSpeed, ATTACK_SPEED_MAX],
@@ -151,4 +151,4 @@ const REDUCE_MAX = 1e4;
     [EAttributeId.Proto_Tough, EAttributeId.Proto_ToughMax],
     [EAttributeId.Proto_ParalysisTime, EAttributeId.Proto_ParalysisTimeMax],
   ]));
-// # sourceMappingURL=CharacterAttributeTypes.js.map
+//# sourceMappingURL=CharacterAttributeTypes.js.map

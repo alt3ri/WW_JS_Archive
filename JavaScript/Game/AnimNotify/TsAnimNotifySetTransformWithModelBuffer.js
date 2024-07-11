@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const BlackboardController_1 = require("../World/Controller/BlackboardController");
-const WorldGlobal_1 = require("../World/WorldGlobal");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  BlackboardController_1 = require("../World/Controller/BlackboardController"),
+  WorldGlobal_1 = require("../World/WorldGlobal");
 class TsAnimNotifySetTransformWithModelBuffer extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments),
@@ -12,10 +12,10 @@ class TsAnimNotifySetTransformWithModelBuffer extends UE.KuroAnimNotify {
       (this.TimeLength = 300);
   }
   K2_Notify(r, e) {
-    let o;
-    let t;
-    let l;
-    var r = r.GetOwner();
+    var o,
+      t,
+      l,
+      r = r.GetOwner();
     return (
       r instanceof TsBaseCharacter_1.default &&
       ((t = (o = r.CharacterActorComponent).Entity),
@@ -44,4 +44,4 @@ class TsAnimNotifySetTransformWithModelBuffer extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifySetTransformWithModelBuffer;
-// # sourceMappingURL=TsAnimNotifySetTransformWithModelBuffer.js.map
+//# sourceMappingURL=TsAnimNotifySetTransformWithModelBuffer.js.map

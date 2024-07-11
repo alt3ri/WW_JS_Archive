@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckClientUseSkill = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Global_1 = require("../../Global");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const LevelGeneralDefine_1 = require("../LevelGeneralDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  Global_1 = require("../../Global"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  LevelGeneralDefine_1 = require("../LevelGeneralDefine");
 class LevelConditionCheckClientUseSkill extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, l) {
-    let o, n;
-    return e.LimitParams.size === 0
+    var o, n;
+    return 0 === e.LimitParams.size
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
@@ -31,4 +31,4 @@ class LevelConditionCheckClientUseSkill extends LevelGeneralBase_1.LevelConditio
   }
 }
 exports.LevelConditionCheckClientUseSkill = LevelConditionCheckClientUseSkill;
-// # sourceMappingURL=LevelConditionCheckClientUseSkill.js.map
+//# sourceMappingURL=LevelConditionCheckClientUseSkill.js.map

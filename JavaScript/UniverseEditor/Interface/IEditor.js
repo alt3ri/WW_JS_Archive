@@ -1,5 +1,5 @@
 "use strict";
-let EActorDeleteMode,
+var EActorDeleteMode,
   EMaximumDisplayCountInSelector,
   ERecentSelectRecordMode,
   EEditorLoginAccountType,
@@ -71,4 +71,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   })(
     (ERangeTipShape = exports.ERangeTipShape || (exports.ERangeTipShape = {})),
   );
-// # sourceMappingURL=IEditor.js.map
+//# sourceMappingURL=IEditor.js.map

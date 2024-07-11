@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const CharacterNameDefines_1 = require("../NewWorld/Character/Common/CharacterNameDefines");
-const MINUS_180 = -180;
-const MAX_TURN_TIME = 1e4;
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  CharacterNameDefines_1 = require("../NewWorld/Character/Common/CharacterNameDefines"),
+  MINUS_180 = -180,
+  MAX_TURN_TIME = 1e4;
 class TurningParams {
   constructor(t) {
     (this.NeedTurn = !1),
@@ -15,7 +15,7 @@ class TurningParams {
       (this.StartAngle = 0),
       (this.EndAngle = 0),
       (this.PreFrameAngle = 0);
-    const e = t.Entity.GetComponent(160);
+    var e = t.Entity.GetComponent(160);
     (this.TargetAngle = t.InputRotator.Yaw),
       (this.EndAngle = e.MainAnimInstance.GetMainAnimsCurveValueWithDelta(
         CharacterNameDefines_1.CharacterNameDefines.ROOT_LOOK,
@@ -37,10 +37,10 @@ class TurningParams {
       this.Bse(t);
   }
   Bse(e) {
-    const r = this.EndAngle - this.StartAngle;
+    var r = this.EndAngle - this.StartAngle;
     if (!MathUtils_1.MathUtils.IsNearlyZero(r)) {
       let t = e.InputRotator.Yaw - e.ActorRotationProxy.Yaw - r;
-      for (; t > 180; ) t -= 360;
+      for (; 180 < t; ) t -= 360;
       for (; t < MINUS_180; ) t += 360;
       (t /= r),
         (this.AddRate = t),
@@ -62,7 +62,7 @@ class TsAnimNotifyStateTurnAdd extends UE.KuroAnimNotifyState {
   K2_NotifyBegin(t, e, r) {
     t = t.GetOwner();
     if (!(t instanceof TsBaseCharacter_1.default)) return !1;
-    const i = t.CharacterActorComponent;
+    var i = t.CharacterActorComponent;
     if (!i?.Valid) return !1;
     if (i.GetSequenceBinding()) return !1;
     if (!i.IsAutonomousProxy) return !1;
@@ -72,11 +72,11 @@ class TsAnimNotifyStateTurnAdd extends UE.KuroAnimNotifyState {
     return t && (t.IsTurning = !0), !0;
   }
   K2_NotifyTick(t, e, r) {
-    let i;
-    let n;
-    let a;
-    let s;
-    var t = t.GetOwner();
+    var i,
+      n,
+      a,
+      s,
+      t = t.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
       !!(i = t.CharacterActorComponent)?.Valid &&
@@ -106,7 +106,7 @@ class TsAnimNotifyStateTurnAdd extends UE.KuroAnimNotifyState {
   K2_NotifyEnd(t, e) {
     t = t.GetOwner();
     if (!(t instanceof TsBaseCharacter_1.default)) return !1;
-    const r = t.CharacterActorComponent;
+    var r = t.CharacterActorComponent;
     if (!r?.Valid) return !1;
     if (r.GetSequenceBinding()) return !1;
     if (!r.IsAutonomousProxy) return !1;
@@ -140,4 +140,4 @@ class TsAnimNotifyStateTurnAdd extends UE.KuroAnimNotifyState {
   (TsAnimNotifyStateTurnAdd.CachedMap = void 0),
   (TsAnimNotifyStateTurnAdd.TmpRotator = void 0),
   (exports.default = TsAnimNotifyStateTurnAdd);
-// # sourceMappingURL=TsAnimNotifyStateTurnAdd.js.map
+//# sourceMappingURL=TsAnimNotifyStateTurnAdd.js.map

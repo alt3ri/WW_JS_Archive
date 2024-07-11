@@ -8,9 +8,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.enableTestLog =
     exports.TEST_LOG_TAG =
       void 0);
-const ColorDefine_1 = require("../Misc/ColorDefine");
-const Log_1 = require("../Misc/Log");
-const DEFAULT_TIMEOUT = 3e3;
+const ColorDefine_1 = require("../Misc/ColorDefine"),
+  Log_1 = require("../Misc/Log"),
+  DEFAULT_TIMEOUT = 3e3;
 let isEnableTestLog = !(exports.TEST_LOG_TAG = "[UniverseTestCase]");
 function enableTestLog(t) {
   isEnableTestLog = t;
@@ -54,32 +54,32 @@ class TestContext {
     return (this.Ze += 1), this.Ze;
   }
   PushSuite(t) {
-    if (this.ze.length === 0) throw new Error("suite stack is empty");
+    if (0 === this.ze.length) throw new Error("suite stack is empty");
     this.ze[this.ze.length - 1].Cases.push(t), this.ze.push(t);
   }
   PopSuite() {
-    if (this.ze.length === 0) throw new Error("suite stack is empty");
+    if (0 === this.ze.length) throw new Error("suite stack is empty");
     this.ze.pop(), (this.tt = void 0);
   }
   PickSuite(t) {
-    const e = this.ot(this.RootSuite, t);
+    var e = this.ot(this.RootSuite, t);
     if (e) return e;
     throw new Error(`suite ${t} not found`);
   }
   PickNode(t, e) {
     e = e ?? this.RootSuite;
     if (e.Name === t) return e;
-    if (e.Type !== "case")
+    if ("case" !== e.Type)
       for (const r of e.Cases) {
-        const s = this.PickNode(t, r);
+        var s = this.PickNode(t, r);
         if (s) return s;
       }
   }
   ot(t, e) {
     if (t.Name === e) return t;
     for (const r of t.Cases)
-      if (r.Type === "suite") {
-        const s = this.ot(r, e);
+      if ("suite" === r.Type) {
+        var s = this.ot(r, e);
         if (s) return s;
       }
   }
@@ -96,14 +96,14 @@ class TestResult {
     return this.nt.get(t);
   }
   Gen(t) {
-    const e = { Id: t, Result: !1, RunTime: 0 };
+    var e = { Id: t, Result: !1, RunTime: 0 };
     return this.nt.set(t, e), e;
   }
   ContainsAny(t) {
-    return t.Type === "case"
+    return "case" === t.Type
       ? this.nt.has(t.Id)
       : t.Cases.some((t) =>
-          t.Type === "suite" ? this.ContainsAny(t) : this.nt.has(t.Id),
+          "suite" === t.Type ? this.ContainsAny(t) : this.nt.has(t.Id),
         );
   }
 }
@@ -116,10 +116,10 @@ class TestFilter {
     this.rt.has(t.Id) || this.rt.set(t.Id, t);
   }
   Contains(t) {
-    return t.Type === "case"
+    return "case" === t.Type
       ? this.rt.has(t.Id)
       : t.Cases.some((t) =>
-          t.Type === "suite" ? this.Contains(t) : this.rt.has(t.Id),
+          "suite" === t.Type ? this.Contains(t) : this.rt.has(t.Id),
         );
   }
   GetAllTestNames() {
@@ -132,12 +132,12 @@ class TestFilter {
 exports.TestFilter = TestFilter;
 class TestOp {
   static GetSummary(t, e) {
-    const s = { Total: 0, Passed: 0, Failed: 0, Time: 0 };
+    var s = { Total: 0, Passed: 0, Failed: 0, Time: 0 };
     return TestOp.st(t, s, e), s;
   }
   static st(t, e, s) {
-    let r;
-    t.Type === "case"
+    var r;
+    "case" === t.Type
       ? (r = s.Get(t.Id)) &&
         ((e.Total += 1),
         r.Result ? (e.Passed += 1) : (e.Failed += 1),
@@ -148,8 +148,8 @@ class TestOp {
   }
   static Output(t, e, s = "") {
     if (e.ContainsAny(t)) {
-      let r;
-      if (t.Type === "case")
+      var r;
+      if ("case" === t.Type)
         return (r = e.Get(t.Id))
           ? ((0, Log_1.log)(
               `${s}[${(0, ColorDefine_1.blue)(t.Name)}] ${r.Result ? (0, ColorDefine_1.green)("OK") : (0, ColorDefine_1.red)("FAIL")} ${r.RunTime}ms ` +
@@ -169,8 +169,8 @@ class TestOp {
   }
   static GenTestReport(t, e) {
     if (e.ContainsAny(t)) {
-      let s;
-      if (t.Type === "case")
+      var s;
+      if ("case" === t.Type)
         return (s = e.Get(t.Id))
           ? {
               Name: t.Name,
@@ -191,20 +191,20 @@ class TestOp {
   }
   static async RunSuite(t, e, s) {
     if (e.Contains(t)) {
-      let r;
-      const i = Date.now();
+      var r,
+        i = Date.now();
       await t.BeforeAll?.();
       for (const o of t.Cases)
-        o.Type === "suite"
+        "suite" === o.Type
           ? await TestOp.RunSuite(o, e, s)
           : e.Contains(o) && ((r = s.Gen(o.Id)), await this.RunCase(t, o, r));
       await t.AfterAll?.(), (t.RunTime = Date.now() - i);
     }
   }
   static async lt(e, t, s) {
-    let r = !1;
-    let i = !1;
-    const o = Date.now();
+    let r = !1,
+      i = !1;
+    var o = Date.now();
     try {
       await e.BeforeEach?.(),
         (r = !0),
@@ -225,15 +225,15 @@ class TestOp {
       logTestMsg("开始运行测试用例: " + i.Name),
       new Promise((e) => {
         const t =
-          (TestContext.Current.CurrentTest = i).TimeOut ?? DEFAULT_TIMEOUT;
-        const s = setTimeout(() => {
-          (o.Result = !1),
-            (o.Error = new Error(
-              `Reason: timeout for ${t} ms
+            (TestContext.Current.CurrentTest = i).TimeOut ?? DEFAULT_TIMEOUT,
+          s = setTimeout(() => {
+            (o.Result = !1),
+              (o.Error = new Error(
+                `Reason: timeout for ${t} ms
 File  : ` + i.FileLocation,
-            )),
-            e();
-        }, i.TimeOut ?? DEFAULT_TIMEOUT);
+              )),
+              e();
+          }, i.TimeOut ?? DEFAULT_TIMEOUT);
         this.lt(r, i, o)
           .then(() => {
             logTestMsg("测试用例运行结束: " + i.Name), clearTimeout(s), e();
@@ -244,17 +244,16 @@ File  : ` + i.FileLocation,
       })
     );
   }
-
   static FindNodeById(t, e) {
     if (t.Id === e) return t;
-    if (t.Type === "suite")
+    if ("suite" === t.Type)
       for (const r of t.Cases) {
-        const s = TestOp.FindNodeById(r, e);
+        var s = TestOp.FindNodeById(r, e);
         if (s) return s;
       }
   }
   static AddTestToFilter(t, e) {
-    t.Type === "case"
+    "case" === t.Type
       ? e.Add(t)
       : t.Cases.forEach((t) => {
           TestOp.AddTestToFilter(t, e);
@@ -262,4 +261,4 @@ File  : ` + i.FileLocation,
   }
 }
 exports.TestOp = TestOp;
-// # sourceMappingURL=TestOp.js.map
+//# sourceMappingURL=TestOp.js.map

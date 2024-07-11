@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const AudioSystem_1 = require("../../Core/Audio/AudioSystem");
-const Log_1 = require("../../Core/Common/Log");
+const UE = require("ue"),
+  AudioSystem_1 = require("../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../Core/Common/Log");
 class TsAnimNotifyAudioEvent extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments),
@@ -16,7 +16,7 @@ class TsAnimNotifyAudioEvent extends UE.KuroAnimNotify {
       : "AudioEvent";
   }
   K2_Notify(e, t) {
-    let i;
+    var i;
     return this.AudioEvent
       ? ((i = (0, AudioSystem_1.parseAudioEventPath)(this.AudioEvent)) &&
           this.PostAudioEvent(i, e, t),
@@ -32,7 +32,7 @@ class TsAnimNotifyAudioEvent extends UE.KuroAnimNotify {
         !1);
   }
   PostAudioEvent(e, t, i) {
-    let o = t.GetOwner();
+    var o = t.GetOwner();
     o?.IsValid() &&
       (this.Follow
         ? (o = this.GetAkComponent(o, this.SocketName))?.IsValid() &&
@@ -63,7 +63,7 @@ class TsAnimNotifyAudioEvent extends UE.KuroAnimNotify {
   GetAkComponent(e, t) {
     let i = void 0;
     if (e.IsA(UE.TsBaseCharacter_C.StaticClass())) {
-      const o = e.CharacterActorComponent?.Entity?.GetComponent(42);
+      var o = e.CharacterActorComponent?.Entity?.GetComponent(42);
       if (!o?.Valid) return;
       i = o.GetAkComponent(t);
     } else
@@ -98,4 +98,4 @@ class TsAnimNotifyAudioEvent extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifyAudioEvent;
-// # sourceMappingURL=TsAnimNotifyAudioEvent.js.map
+//# sourceMappingURL=TsAnimNotifyAudioEvent.js.map

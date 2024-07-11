@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
 class TsGameSplineActor extends UE.Actor {
   constructor() {
     super(...arguments), (this.SplineData = void 0);
@@ -19,8 +19,8 @@ class TsGameSplineActor extends UE.Actor {
       : this.SplineData.Points[e].MoveSpeed;
   }
   GetPointRotatorByIndex(e) {
-    var e = this.SplineData.Points[e].Rotation;
-    const t = new UE.Rotator();
+    var e = this.SplineData.Points[e].Rotation,
+      t = new UE.Rotator();
     return (
       void 0 !== e &&
         ((t.Pitch = e.Y ?? 0), (t.Yaw = e.Z ?? 0), (t.Roll = e.X ?? 0)),
@@ -29,4 +29,4 @@ class TsGameSplineActor extends UE.Actor {
   }
 }
 exports.default = TsGameSplineActor;
-// # sourceMappingURL=TsGameSplineActor.js.map
+//# sourceMappingURL=TsGameSplineActor.js.map

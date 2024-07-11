@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OneTextDropDownItem = void 0);
-const UE = require("ue");
-const LguiUtil_1 = require("../../../../Util/LguiUtil");
-const DropDownItemBase_1 = require("../DropDownItemBase");
+const UE = require("ue"),
+  LguiUtil_1 = require("../../../../Util/LguiUtil"),
+  DropDownItemBase_1 = require("../DropDownItemBase");
 class OneTextDropDownItem extends DropDownItemBase_1.DropDownItemBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -23,4 +23,4 @@ class OneTextDropDownItem extends DropDownItemBase_1.DropDownItemBase {
   }
 }
 exports.OneTextDropDownItem = OneTextDropDownItem;
-// # sourceMappingURL=OneTextDropDownItem.js.map
+//# sourceMappingURL=OneTextDropDownItem.js.map

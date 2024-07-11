@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityNoviceJourneyController = void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../../Core/Net/Net");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ActivityControllerBase_1 = require("../../ActivityControllerBase");
-const ActivityNoviceJourneyData_1 = require("./ActivityNoviceJourneyData");
-const ActivitySubViewNoviceJourney_1 = require("./ActivitySubViewNoviceJourney");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ActivityControllerBase_1 = require("../../ActivityControllerBase"),
+  ActivityNoviceJourneyData_1 = require("./ActivityNoviceJourneyData"),
+  ActivitySubViewNoviceJourney_1 = require("./ActivitySubViewNoviceJourney"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
 class ActivityNoviceJourneyController extends ActivityControllerBase_1.ActivityControllerBase {
   constructor() {
     super(...arguments),
       (this.sNe = 0),
       (this.Cke = () => {
-        this.sNe !== 0 &&
+        0 !== this.sNe &&
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.RefreshCommonActivityRedDot,
             this.sNe,
@@ -62,7 +62,7 @@ class ActivityNoviceJourneyController extends ActivityControllerBase_1.ActivityC
     return !1;
   }
   RequestReward(t) {
-    const e = Protocol_1.Aki.Protocol.Tos.create();
+    var e = Protocol_1.Aki.Protocol.Tos.create();
     (e.r3n = t),
       Net_1.Net.Call(3359, e, (e) => {
         e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
@@ -81,4 +81,4 @@ class ActivityNoviceJourneyController extends ActivityControllerBase_1.ActivityC
   }
 }
 exports.ActivityNoviceJourneyController = ActivityNoviceJourneyController;
-// # sourceMappingURL=ActivityNoviceJourneyController.js.map
+//# sourceMappingURL=ActivityNoviceJourneyController.js.map

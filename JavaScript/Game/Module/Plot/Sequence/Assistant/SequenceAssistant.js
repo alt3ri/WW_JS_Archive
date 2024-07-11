@@ -1,29 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SequenceAssistant = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Transform_1 = require("../../../../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const CameraController_1 = require("../../../../Camera/CameraController");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const Global_1 = require("../../../../Global");
-const GlobalData_1 = require("../../../../GlobalData");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const LevelLoadingController_1 = require("../../../LevelLoading/LevelLoadingController");
-const LoginDefine_1 = require("../../../Login/Data/LoginDefine");
-const SequenceController_1 = require("../SequenceController");
-const SequenceDefine_1 = require("../SequenceDefine");
-const SeqBaseAssistant_1 = require("./SeqBaseAssistant");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Transform_1 = require("../../../../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  CameraController_1 = require("../../../../Camera/CameraController"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  Global_1 = require("../../../../Global"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LevelLoadingController_1 = require("../../../LevelLoading/LevelLoadingController"),
+  LoginDefine_1 = require("../../../Login/Data/LoginDefine"),
+  SequenceController_1 = require("../SequenceController"),
+  SequenceDefine_1 = require("../SequenceDefine"),
+  SeqBaseAssistant_1 = require("./SeqBaseAssistant");
 class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   constructor() {
     super(...arguments),
@@ -97,7 +97,7 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
           Log_1.Log.Debug("Plot", 39, "不使用最终位置");
   }
   PreEachPlay() {
-    const e = this.Model.GetCurrentSequence();
+    var e = this.Model.GetCurrentSequence();
     ObjectUtils_1.ObjectUtils.IsValid(e)
       ? ((this.Sto = !0),
         this.Uto(),
@@ -194,7 +194,7 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       this.Bto();
   }
   Uto() {
-    const e = this.Model.GetCurrentSequence();
+    var e = this.Model.GetCurrentSequence();
     switch (ModelManager_1.ModelManager.PlayerInfoModel.GetNumberPropById(9)) {
       case LoginDefine_1.ELoginSex.Boy:
         UE.KuroSequenceRuntimeFunctionLibrary.MuteTrackByTag(
@@ -235,15 +235,15 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
           );
     }
     UE.KuroSequenceRuntimeFunctionLibrary.ResetMovieSceneCompiledData(e);
-    const t = e.MovieScene.MasterTracks;
-    const i = t?.Num() || 0;
+    var t = e.MovieScene.MasterTracks,
+      i = t?.Num() || 0;
     for (let e = 0; e < i; e++) {
-      const r = t.Get(e);
+      var r = t.Get(e);
       if (r instanceof UE.MovieSceneSubTrack) {
-        const s = r.Sections;
-        const o = s?.Num() || 0;
+        var s = r.Sections,
+          o = s?.Num() || 0;
         for (let e = 0; e < o; e++) {
-          const a = s.Get(e);
+          var a = s.Get(e);
           a instanceof UE.MovieSceneSubSection &&
             UE.KuroSequenceRuntimeFunctionLibrary.ResetMovieSceneCompiledData(
               a.SubSequence,
@@ -253,25 +253,25 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
     }
   }
   Ato() {
-    var e = this.Model.GetCurrentSequence();
-    const t = ActorSystem_1.ActorSystem.Spawn(
-      UE.LevelSequenceActor.StaticClass(),
-      new UE.Transform(),
-      void 0,
-    );
-    var i = new UE.MovieSceneSequencePlaybackSettings();
-    var i =
-      ((i.PlayRate = this.Model.PlayRate),
-      (t.PlaybackSettings = i),
-      t.SetSequence(e),
-      (this.Model.CurLevelSeqActor = t),
-      this.Model.CurLevelSeqActor.SequencePlayer);
-    var e =
-      ((this.Model.CurStartFrame = i.GetStartTime().Time.FrameNumber.Value),
-      (this.Model.CurEndFrame = i.GetEndTime().Time.FrameNumber.Value),
-      i.GetFrameRate());
+    var e = this.Model.GetCurrentSequence(),
+      t = ActorSystem_1.ActorSystem.Spawn(
+        UE.LevelSequenceActor.StaticClass(),
+        new UE.Transform(),
+        void 0,
+      ),
+      i = new UE.MovieSceneSequencePlaybackSettings(),
+      i =
+        ((i.PlayRate = this.Model.PlayRate),
+        (t.PlaybackSettings = i),
+        t.SetSequence(e),
+        (this.Model.CurLevelSeqActor = t),
+        this.Model.CurLevelSeqActor.SequencePlayer),
+      e =
+        ((this.Model.CurStartFrame = i.GetStartTime().Time.FrameNumber.Value),
+        (this.Model.CurEndFrame = i.GetEndTime().Time.FrameNumber.Value),
+        i.GetFrameRate());
     (this.Model.CurFrameRate = e.Numerator / e.Denominator),
-      this.Model.CurStartFrame !== 0 &&
+      0 !== this.Model.CurStartFrame &&
         Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Plot", 18, "剧情Seq开始帧不规范，编号不是0");
   }
@@ -296,7 +296,7 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
               ).CineCamera.GetTransform();
             break;
           default:
-            for (const [t, i] of this.Model.BindingEntityMap)
+            for (var [t, i] of this.Model.BindingEntityMap)
               if (t.toString() === this.Model.SequenceData.绑定起始点标签) {
                 e = i.Entity.GetComponent(1).ActorTransform;
                 break;
@@ -312,7 +312,7 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
     }
   }
   Pto() {
-    let e;
+    var e;
     this.Model.RelativeTransform &&
       ((this.Model.CurLevelSeqActor.bOverrideInstanceData = !0),
       ((e = this.Model.CurLevelSeqActor.DefaultInstanceData).TransformOrigin =
@@ -336,43 +336,43 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       (this.Model.CurEndFrame = void 0);
   }
   wto() {
-    const e = this.Model.GetCurrentKeyFramesInfo();
-    const t = e.SubtitleStartFrames;
-    const i = t.Num();
+    var e = this.Model.GetCurrentKeyFramesInfo(),
+      t = e.SubtitleStartFrames,
+      i = t.Num();
     for (let e = 0; e < i; e++)
       this.Model.CurSubtitleStartFrames.push(t.Get(e));
-    const r = e.SubtitleEndFrames;
-    const s = r.Num();
+    var r = e.SubtitleEndFrames,
+      s = r.Num();
     for (let e = 0; e < s; e++) this.Model.CurSubtitleEndFrames.push(r.Get(e));
-    const o = e.ShotStartFrames;
-    const a = o.Num();
+    var o = e.ShotStartFrames,
+      a = o.Num();
     for (let e = 0; e < a; e++) this.Model.CurShotStartFrames.push(o.Get(e));
-    const n = e.ShotEndFrames;
-    const h = n.Num();
+    var n = e.ShotEndFrames,
+      h = n.Num();
     for (let e = 0; e < h; e++) this.Model.CurShotEndFrames.push(n.Get(e));
   }
   Tto() {
     this.Model.IsFadeEnd.length = 0;
-    const i = this.Model.SequenceData;
+    var i = this.Model.SequenceData;
     for (let t = 0; t < i.剧情资源.Num(); t++) {
-      var a = i.剧情资源.Get(t);
-      const n = UE.KuroSequenceRuntimeFunctionLibrary.GetPlaybackEnd(a) - 1;
+      var a = i.剧情资源.Get(t),
+        n = UE.KuroSequenceRuntimeFunctionLibrary.GetPlaybackEnd(a) - 1;
       let e = 0;
       e = this.GetFadeAmountAt(a, n);
       (a = UE.KuroSequenceRuntimeFunctionLibrary.FindMasterTracksByType(
         a,
         UE.MovieSceneCinematicShotTrack.StaticClass(),
       )),
-        (a = a && a.Num() > 0 ? a.Get(0) : void 0);
+        (a = a && 0 < a.Num() ? a.Get(0) : void 0);
       if (ObjectUtils_1.ObjectUtils.IsValid(a)) {
-        const h = UE.KuroSequenceRuntimeFunctionLibrary.GetSections(a);
-        if (h.Num() > 0) {
-          let i = void 0;
-          let r = 0;
-          let s = 0;
-          let o = 0;
-          for (let t = h.Num() - 1; t >= 0; t--) {
-            const l = h.Get(t);
+        var h = UE.KuroSequenceRuntimeFunctionLibrary.GetSections(a);
+        if (0 < h.Num()) {
+          let i = void 0,
+            r = 0,
+            s = 0,
+            o = 0;
+          for (let t = h.Num() - 1; 0 <= t; t--) {
+            var l = h.Get(t);
             let e = UE.KuroSequenceRuntimeFunctionLibrary.GetEndFrame(l);
             (e = e > n ? n : e) > r &&
               ((i = l),
@@ -380,37 +380,37 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
               (s = UE.KuroSequenceRuntimeFunctionLibrary.GetStartFrame(i)),
               (r = e));
           }
-          var _;
-          var a = i?.GetSequence();
+          var _,
+            a = i?.GetSequence();
           ObjectUtils_1.ObjectUtils.IsValid(a) &&
             ((_ = UE.KuroSequenceRuntimeFunctionLibrary.GetPlaybackStart(a)),
             (_ = n - s + o + _),
-            (a = this.GetFadeAmountAt(a, _)) >= 0) &&
+            0 <= (a = this.GetFadeAmountAt(a, _))) &&
             (e = a);
         }
       }
-      this.Model.IsFadeEnd.push(e > 0.9);
+      this.Model.IsFadeEnd.push(0.9 < e);
     }
   }
   GetFadeAmountAt(e, t) {
-    const i = UE.KuroSequenceRuntimeFunctionLibrary.FindMasterTracksByType(
+    var i = UE.KuroSequenceRuntimeFunctionLibrary.FindMasterTracksByType(
       e,
       UE.MovieSceneFadeTrack.StaticClass(),
     );
     if (!i || i.Num() <= 0) return -1;
-    const r = [];
+    var r = [];
     for (let e = 0; e < i.Num(); e++) {
-      const s = UE.KuroSequenceRuntimeFunctionLibrary.GetSections(i.Get(e));
+      var s = UE.KuroSequenceRuntimeFunctionLibrary.GetSections(i.Get(e));
       for (let e = 0; e < s.Num(); e++) r.push(s.Get(e));
     }
-    if (r.length === 0) return -1;
+    if (0 === r.length) return -1;
     let o = 0;
-    const a = new UE.FrameTime(new UE.FrameNumber(t), 0);
+    var a = new UE.FrameTime(new UE.FrameNumber(t), 0);
     for (const h of r) {
-      const n = h;
+      var n = h;
       if (UE.KuroSequenceRuntimeFunctionLibrary.SectionContains(n, a)) {
         o =
-          n.FloatCurve.Times.Num() !== 0 || n.FloatCurve.bHasDefaultValue
+          0 !== n.FloatCurve.Times.Num() || n.FloatCurve.bHasDefaultValue
             ? UE.KuroSequenceRuntimeFunctionLibrary.GetFadeAmountAt(n, a)
             : -1;
         break;
@@ -434,13 +434,13 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   }
   Rto() {
     if (this.Model.SequenceData.GeneratedData) {
-      const t = this.Model.SequenceData.GeneratedData.FinalPos;
-      const i = t.Num();
+      var t = this.Model.SequenceData.GeneratedData.FinalPos,
+        i = t.Num();
       for (let e = 0; e < i; e++) {
-        var r = t.Get(e);
-        const s = Rotator_1.Rotator.Create(r.Rotator());
-        var r = Vector_1.Vector.Create(r.GetLocation());
-        (this.Model.Type !== 0 && this.Model.Type !== 2) || (s.Yaw += 90),
+        var r = t.Get(e),
+          s = Rotator_1.Rotator.Create(r.Rotator()),
+          r = Vector_1.Vector.Create(r.GetLocation());
+        (0 !== this.Model.Type && 2 !== this.Model.Type) || (s.Yaw += 90),
           this.Model.AddFinalPos(
             Transform_1.Transform.Create(
               s.Quaternion(),
@@ -455,8 +455,8 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   }
   JumpToNextSubtitleOrChildSeq() {
     if (this.Model.HasSubtitle()) {
-      const s = this.Model.CurLevelSeqActor.SequencePlayer;
-      const o = s.GetCurrentTime().Time.FrameNumber.Value;
+      const s = this.Model.CurLevelSeqActor.SequencePlayer,
+        o = s.GetCurrentTime().Time.FrameNumber.Value;
       let e = SequenceDefine_1.MAX_FRAME;
       for (const a of this.Model.CurSubtitleStartFrames) {
         if (a === o) return;
@@ -472,8 +472,8 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
           break;
         }
       let i = 0;
-      let r = this.Model.GetType();
-      (i = r === 1 ? e : Math.min(e, t)) === 0 ||
+      var r = this.Model.GetType();
+      0 === (i = 1 === r ? e : Math.min(e, t)) ||
       i === SequenceDefine_1.MAX_FRAME
         ? ((i = this.Model.CurEndFrame),
           this.Model.WillFinish()
@@ -537,7 +537,7 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
     }
   }
   qto(e, t = 0) {
-    this.Model.State === 3 &&
+    3 === this.Model.State &&
       ((e = new UE.FrameNumber(e)),
       (e = new UE.FrameTime(e, 0)),
       (e = new UE.MovieSceneSequencePlaybackParams(e, 0, "", 0, t)),
@@ -546,7 +546,7 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       ));
   }
   bto(e, t) {
-    if (this.Eto && this.Eto.Num() !== 0) {
+    if (this.Eto && 0 !== this.Eto.Num()) {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Plot",
@@ -556,14 +556,14 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
           ["targetFrame", t],
         );
       for (let e = 0; e < this.Eto.Num(); ++e) {
-        const i = this.Eto.Get(e);
+        var i = this.Eto.Get(e);
         i.BeginSwitchPose(i, i, 0.5, !1);
       }
     }
   }
   EndSwitchPose() {
-    if (this.Eto && this.Eto.Num() !== 0) {
-      const e =
+    if (this.Eto && 0 !== this.Eto.Num()) {
+      var e =
         this.Model.CurLevelSeqActor.SequencePlayer.GetCurrentTime()?.Time
           .FrameNumber.Value;
       Log_1.Log.CheckDebug() &&
@@ -572,13 +572,13 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
           e,
         ]);
       for (let e = 0; e < this.Eto.Num(); ++e) {
-        const t = this.Eto.Get(e);
+        var t = this.Eto.Get(e);
         t?.EndSwitchPose(t, !1);
       }
     }
   }
   PauseSequence() {
-    this.Model.State !== 3
+    3 !== this.Model.State
       ? Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Plot", 27, "剧情Sequence未开始播放")
       : (this.Model.CurLevelSeqActor.SequencePlayer.IsPlaying() &&
@@ -586,7 +586,7 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
         (this.Model.IsPaused = !0));
   }
   ResumeSequence() {
-    this.Model.State !== 3
+    3 !== this.Model.State
       ? Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Plot", 27, "剧情Sequence未开始播放")
       : (this.Model.CurLevelSeqActor.SequencePlayer.IsPaused() &&
@@ -594,20 +594,20 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
         (this.Model.IsPaused = !1));
   }
   xto() {
-    const e = this.Model.SequenceData.剧情资源.Get(this.Model.SubSeqIndex);
-    const t = e.MovieScene.MasterTracks;
-    const i = t?.Num() || 0;
-    const r = e.MovieScene.TickResolution;
-    let s = e.MovieScene.DisplayRate;
-    const o = (s.Denominator * r.Numerator) / (s.Numerator * r.Denominator);
+    var e = this.Model.SequenceData.剧情资源.Get(this.Model.SubSeqIndex),
+      t = e.MovieScene.MasterTracks,
+      i = t?.Num() || 0,
+      r = e.MovieScene.TickResolution,
+      s = e.MovieScene.DisplayRate,
+      o = (s.Denominator * r.Numerator) / (s.Numerator * r.Denominator);
     for (let e = 0; e < i; e++) {
-      const a = t.Get(e);
+      var a = t.Get(e);
       if (!a.bIsEvalDisabled)
         if (a instanceof UE.MovieSceneDialogueTrack) {
-          const n = a.Sections;
-          const h = n?.Num() || 0;
+          var n = a.Sections,
+            h = n?.Num() || 0;
           for (let e = 0; e < h; e++) {
-            const l = n.Get(e);
+            var l = n.Get(e);
             l instanceof UE.MovieSceneDialogueSection &&
               (this.Model.CurSubtitleStartFrames.push(
                 l.GetStartFrame().Value.Value / o,
@@ -618,12 +618,12 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
           }
         } else if (a instanceof UE.MovieSceneDialogueStateTrack) {
           if (!a.bIsEvalDisabled) {
-            const _ = a.Sections;
-            const u = _?.Num() || 0;
+            var _ = a.Sections,
+              u = _?.Num() || 0;
             for (let e = 0; e < u; e++) {
-              const c = _.Get(e);
+              var c = _.Get(e);
               c instanceof UE.MovieSceneDialogueStateSection &&
-                c.SectionData.State === 0 &&
+                0 === c.SectionData.State &&
                 (this.Model.CurSubtitleStartFrames.push(
                   c.GetStartFrame().Value.Value / o,
                 ),
@@ -633,10 +633,10 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
             }
           }
         } else if (a instanceof UE.MovieSceneSubTrack) {
-          const f = a.Sections;
-          const U = f?.Num() || 0;
+          var f = a.Sections,
+            U = f?.Num() || 0;
           for (let e = 0; e < U; e++) {
-            const v = f.Get(e);
+            var v = f.Get(e);
             v instanceof UE.MovieSceneSubSection &&
               (this.Model.CurShotStartFrames.push(
                 v.GetStartFrame().Value.Value / o,
@@ -647,7 +647,7 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
           }
         }
     }
-    this.Model.Type === 1 &&
+    1 === this.Model.Type &&
       ((this.Model.CurShotStartFrames.length = 0),
       (this.Model.CurShotEndFrames.length = 0),
       (s = this.Gto(e)),
@@ -665,12 +665,12 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       this.Model.CurShotEndFrames.sort((e, t) => e - t);
   }
   Gto(e) {
-    const i = new Array();
+    var i = new Array();
     if (ObjectUtils_1.ObjectUtils.IsValid(e)) {
       let t = void 0;
       const f = UE.KuroSequenceRuntimeFunctionLibrary.GetMasterTracks(e);
       for (let e = 0; e < f.Num(); e++) {
-        const r = f.Get(e);
+        var r = f.Get(e);
         if (r instanceof UE.MovieSceneSubTrack) {
           t = r;
           break;
@@ -679,14 +679,14 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       if (t) {
         const U = UE.KuroSequenceRuntimeFunctionLibrary.GetSections(t);
         for (let e = 0; e < U.Num(); e++) {
-          const s = U.Get(e);
-          const o = s.GetSequence();
-          const a = s.GetStartFrame().Value.Value;
-          const n = s.GetEndFrame().Value.Value;
-          const h = s.Parameters.StartFrameOffset.Value;
-          const l = UE.KuroSequenceRuntimeFunctionLibrary.GetSpawnables(o);
+          var s = U.Get(e),
+            o = s.GetSequence(),
+            a = s.GetStartFrame().Value.Value,
+            n = s.GetEndFrame().Value.Value,
+            h = s.Parameters.StartFrameOffset.Value,
+            l = UE.KuroSequenceRuntimeFunctionLibrary.GetSpawnables(o);
           for (let e = 0; e < l.Num(); e++) {
-            const _ = l.Get(e);
+            var _ = l.Get(e);
             if (
               UE.KuroSequenceRuntimeFunctionLibrary.GetObjectTemplate(
                 _,
@@ -694,14 +694,14 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
             ) {
               const f = UE.KuroSequenceRuntimeFunctionLibrary.GetTracks(_);
               for (let e = 0; e < f.Num(); e++) {
-                const u = f.Get(e);
+                var u = f.Get(e);
                 if (
                   u.GetClass() === UE.MovieScene3DTransformTrack.StaticClass()
                 ) {
                   const U =
                     UE.KuroSequenceRuntimeFunctionLibrary.GetSections(u);
                   for (let e = 0; e < U.Num(); e++) {
-                    const c =
+                    var c =
                       U.Get(e).GetEndFrame().Value.Value -
                       h +
                       a -
@@ -720,15 +720,15 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
     }
   }
   Dto() {
-    const t = this.Model.SequenceData;
+    var t = this.Model.SequenceData;
     for (let e = 0; e < t.剧情资源.Num(); e++) {
-      var i;
-      var r = t.剧情资源.Get(e);
-      var r = this.Nto(r);
+      var i,
+        r = t.剧情资源.Get(e),
+        r = this.Nto(r);
       r
         ? ((i = Rotator_1.Rotator.Create(r.Rotator())),
           (r = Vector_1.Vector.Create(r.GetLocation())),
-          (t.类型 !== 0 && t.类型 !== 2) || (i.Yaw += 90),
+          (0 !== t.类型 && 2 !== t.类型) || (i.Yaw += 90),
           this.Model.AddFinalPos(
             Transform_1.Transform.Create(
               i.Quaternion(),
@@ -740,28 +740,28 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
     }
   }
   Nto(e) {
-    let o = this.Model.SequenceData.GeneratedData?.BlendOutTag;
-    let a =
-      (FNameUtil_1.FNameUtil.IsNothing(o) && (o = SequenceDefine_1.HERO_TAG),
-      this.Oto(e, o));
-    let n = e;
-    let h = UE.KuroSequenceRuntimeFunctionLibrary.GetPlaybackEnd(e) - 1;
+    let o = this.Model.SequenceData.GeneratedData?.BlendOutTag,
+      a =
+        (FNameUtil_1.FNameUtil.IsNothing(o) && (o = SequenceDefine_1.HERO_TAG),
+        this.Oto(e, o)),
+      n = e,
+      h = UE.KuroSequenceRuntimeFunctionLibrary.GetPlaybackEnd(e) - 1;
     if (!a?.Guid?.IsValid()) {
       const c = UE.KuroSequenceRuntimeFunctionLibrary.FindMasterTracksByType(
         e,
         UE.MovieSceneCinematicShotTrack.StaticClass(),
       );
-      if (c.Num() === 0) return;
+      if (0 === c.Num()) return;
       e = c?.Get(0);
       if (!ObjectUtils_1.ObjectUtils.IsValid(e)) return;
-      const l = UE.KuroSequenceRuntimeFunctionLibrary.GetSections(e);
-      let t = void 0;
-      let i = 0;
-      let r = 0;
-      let s = 0;
-      for (let e = l.Num() - 1; e >= 0; e--) {
-        const _ = l.Get(e);
-        const u = UE.KuroSequenceRuntimeFunctionLibrary.GetEndFrame(_);
+      var l = UE.KuroSequenceRuntimeFunctionLibrary.GetSections(e);
+      let t = void 0,
+        i = 0,
+        r = 0,
+        s = 0;
+      for (let e = l.Num() - 1; 0 <= e; e--) {
+        var _ = l.Get(e),
+          u = UE.KuroSequenceRuntimeFunctionLibrary.GetEndFrame(_);
         u > i &&
           ((t = _),
           (s = t.Parameters.StartFrameOffset.Value),
@@ -783,7 +783,7 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       e,
       UE.MovieScene3DTransformTrack.StaticClass(),
     );
-    if (c.Num() === 1)
+    if (1 === c.Num())
       return (
         (e = c.Get(0)),
         UE.KuroSequenceRuntimeFunctionLibrary.GetFrameTransform(
@@ -793,10 +793,10 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       );
   }
   Oto(t, e) {
-    const i = t.FindBindingsByTag(e);
-    const r = i.Num();
+    var i = t.FindBindingsByTag(e),
+      r = i.Num();
     for (let e = 0; e < r; e++) {
-      const s = i.Get(e);
+      var s = i.Get(e);
       if (
         UE.KuroSequenceRuntimeFunctionLibrary.FindBindingById(
           t,
@@ -808,4 +808,4 @@ class SequenceAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   }
 }
 exports.SequenceAssistant = SequenceAssistant;
-// # sourceMappingURL=SequenceAssistant.js.map
+//# sourceMappingURL=SequenceAssistant.js.map

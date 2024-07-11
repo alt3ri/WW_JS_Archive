@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configItemInfoByItemType = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const ItemInfo_1 = require("../Config/ItemInfo");
-const DB = "db_item.db";
-const FILE = "d.道具.xlsx";
-const TABLE = "ItemInfo";
-const COMMAND = "select BinData from `ItemInfo` where ItemType=?";
-const KEY_PREFIX = "ItemInfoByItemType";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  ItemInfo_1 = require("../Config/ItemInfo"),
+  DB = "db_item.db",
+  FILE = "d.道具.xlsx",
+  TABLE = "ItemInfo",
+  COMMAND = "select BinData from `ItemInfo` where ItemType=?",
+  KEY_PREFIX = "ItemInfoByItemType",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX = "configItemInfoByItemType.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configItemInfoByItemType.GetConfigList(";
 exports.configItemInfoByItemType = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -29,7 +29,7 @@ exports.configItemInfoByItemType = {
     );
   },
   GetConfigList: (o, e = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -44,13 +44,14 @@ exports.configItemInfoByItemType = {
         const f = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "ItemType",
               o,
-            ]) !== 1
+            ])
           )
             break;
-          let t = void 0;
+          var t = void 0;
           if (
             (([n, t] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -78,4 +79,4 @@ exports.configItemInfoByItemType = {
     }
   },
 };
-// # sourceMappingURL=ItemInfoByItemType.js.map
+//# sourceMappingURL=ItemInfoByItemType.js.map

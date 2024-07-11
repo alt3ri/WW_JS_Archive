@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CdKeyInputView = void 0);
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const CommonInputViewBase_1 = require("../Common/InputView/View/CommonInputViewBase");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
-const CdKeyInputController_1 = require("./CdKeyInputController");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
+const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  CommonInputViewBase_1 = require("../Common/InputView/View/CommonInputViewBase"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  CdKeyInputController_1 = require("./CdKeyInputController"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder");
 class CdKeyInputView extends CommonInputViewBase_1.CommonInputViewBase {
   constructor() {
     super(...arguments), (this.zvt = 0), (this.Zvt = 0);
   }
   InitExtraParam() {
-    const e =
+    var e =
       CommonParamById_1.configCommonParamById.GetIntArrayConfig(
         "CdKeyLengthLimit",
       );
@@ -32,7 +32,7 @@ class CdKeyInputView extends CommonInputViewBase_1.CommonInputViewBase {
   ExecuteInputConfirm(e) {
     this.InputData.ConfirmFunc?.(e).then(
       (e) => {
-        let r;
+        var r;
         e === Protocol_1.Aki.Protocol.lkn.Sys
           ? ((r = new ConfirmBoxDefine_1.ConfirmBoxDataNew(148)),
             ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
@@ -53,7 +53,7 @@ class CdKeyInputView extends CommonInputViewBase_1.CommonInputViewBase {
     return !this.eMt() && !this.tMt(r);
   }
   eMt() {
-    const e = CdKeyInputController_1.CdKeyInputController.CheckInCdKeyUseCd();
+    var e = CdKeyInputController_1.CdKeyInputController.CheckInCdKeyUseCd();
     return e && this.RefreshTips(6), e;
   }
   tMt(e) {
@@ -62,4 +62,4 @@ class CdKeyInputView extends CommonInputViewBase_1.CommonInputViewBase {
   }
 }
 exports.CdKeyInputView = CdKeyInputView;
-// # sourceMappingURL=CdKeyInputView.js.map
+//# sourceMappingURL=CdKeyInputView.js.map

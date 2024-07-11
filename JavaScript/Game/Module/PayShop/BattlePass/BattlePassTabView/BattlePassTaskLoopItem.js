@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattlePassTaskLoopItem = exports.BattlePassTaskData = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const CommonItemSmallItemGrid_1 = require("../../../Common/ItemGrid/CommonItemSmallItemGrid");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const BattlePassController_1 = require("../BattlePassController");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  CommonItemSmallItemGrid_1 = require("../../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  BattlePassController_1 = require("../BattlePassController");
 class BattlePassTaskData {
   constructor() {
     (this.RewardItemList = []),
@@ -47,11 +47,11 @@ class BattlePassTaskLoopItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(t, s, e) {
     this.Uki.Refresh(t.RewardItemList[0]),
-      this.GetButton(4).RootUIComp.SetUIActive(t.TaskState === 3),
-      this.GetText(3).SetUIActive(t.TaskState === 1),
-      this.GetSprite(2).SetUIActive(t.TaskState !== 1),
+      this.GetButton(4).RootUIComp.SetUIActive(3 === t.TaskState),
+      this.GetText(3).SetUIActive(1 === t.TaskState),
+      this.GetSprite(2).SetUIActive(1 !== t.TaskState),
       (this.BOe = t.TaskId);
-    const i = ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassTask(
+    var i = ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassTask(
       this.BOe,
     ).TaskName;
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), i),
@@ -61,4 +61,4 @@ class BattlePassTaskLoopItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.BattlePassTaskLoopItem = BattlePassTaskLoopItem;
-// # sourceMappingURL=BattlePassTaskLoopItem.js.map
+//# sourceMappingURL=BattlePassTaskLoopItem.js.map

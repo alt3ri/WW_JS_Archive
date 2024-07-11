@@ -1,36 +1,40 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, s) {
-    let r;
-    const n = arguments.length;
-    let h =
-      n < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      n = arguments.length,
+      h =
+        n < 3
+          ? e
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(e, i))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       h = Reflect.decorate(t, e, i, s);
     else
-      for (let o = t.length - 1; o >= 0; o--)
-        (r = t[o]) && (h = (n < 3 ? r(h) : n > 3 ? r(e, i, h) : r(e, i)) || h);
-    return n > 3 && h && Object.defineProperty(e, i, h), h;
+      for (var o = t.length - 1; 0 <= o; o--)
+        (r = t[o]) && (h = (n < 3 ? r(h) : 3 < n ? r(e, i, h) : r(e, i)) || h);
+    return 3 < n && h && Object.defineProperty(e, i, h), h;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterSkinDamageComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../Core/Common/Time");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const FormationDataController_1 = require("../../../../Module/Abilities/FormationDataController");
-const CharacterNameDefines_1 = require("../CharacterNameDefines");
-const SKIN_DAMAGE_TIME = 20;
-const SKIN_DAMAGE_LEVEL1_COUNT = 7;
-const SKIN_DAMAGE_LEVEL2_COUNT = 14;
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  FormationDataController_1 = require("../../../../Module/Abilities/FormationDataController"),
+  CharacterNameDefines_1 = require("../CharacterNameDefines"),
+  SKIN_DAMAGE_TIME = 20,
+  SKIN_DAMAGE_LEVEL1_COUNT = 7,
+  SKIN_DAMAGE_LEVEL2_COUNT = 14;
 let CharacterSkinDamageComponent = class CharacterSkinDamageComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -53,8 +57,8 @@ let CharacterSkinDamageComponent = class CharacterSkinDamageComponent extends En
           (this.vWr = 0);
       }),
       (this.gne = (t) => {
-        let e;
-        this.oOr !== 0 &&
+        var e;
+        0 !== this.oOr &&
           (this.vWr++,
           (e = Time_1.Time.WorldTimeSeconds - this.oOr) > SKIN_DAMAGE_TIME) &&
           (this.vWr > SKIN_DAMAGE_LEVEL2_COUNT
@@ -81,7 +85,7 @@ let CharacterSkinDamageComponent = class CharacterSkinDamageComponent extends En
       }),
       (this.bkt = (t) => {
         t === this.Entity.Id &&
-          this.pWr !== 0 &&
+          0 !== this.pWr &&
           Time_1.Time.WorldTimeSeconds - this.pWr > SKIN_DAMAGE_TIME &&
           this.EWr(0, "战损恢复（下场）");
       });
@@ -202,4 +206,4 @@ let CharacterSkinDamageComponent = class CharacterSkinDamageComponent extends En
   CharacterSkinDamageComponent,
 )),
   (exports.CharacterSkinDamageComponent = CharacterSkinDamageComponent);
-// # sourceMappingURL=CharacterSkinDamageComponent.js.map
+//# sourceMappingURL=CharacterSkinDamageComponent.js.map

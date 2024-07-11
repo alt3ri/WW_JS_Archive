@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceMutiSentenceSelectView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
-const AdviceSentenceSelectItem_1 = require("./AdviceSentenceSelectItem");
-const AdviceSentenceSelectItemContent_1 = require("./AdviceSentenceSelectItemContent");
-const WAITUPDATECOUNT = 1;
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  AdviceSentenceSelectItem_1 = require("./AdviceSentenceSelectItem"),
+  AdviceSentenceSelectItemContent_1 = require("./AdviceSentenceSelectItemContent"),
+  WAITUPDATECOUNT = 1;
 class AdviceMutiSentenceSelectView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -58,7 +58,7 @@ class AdviceMutiSentenceSelectView extends UiViewBase_1.UiViewBase {
         this.CloseMe();
       }),
       (this.b7e = () => {
-        const e = new Array();
+        var e = new Array();
         e.push(0),
           e.push(1),
           this.D7e.RefreshByData(e),
@@ -69,7 +69,7 @@ class AdviceMutiSentenceSelectView extends UiViewBase_1.UiViewBase {
           this.D7e.BindLateUpdate(this.G7e);
       }),
       (this.G7e = (e) => {
-        let t;
+        var t;
         this.P7e &&
           this.x7e >= WAITUPDATECOUNT &&
           ((this.P7e = !1),
@@ -92,7 +92,7 @@ class AdviceMutiSentenceSelectView extends UiViewBase_1.UiViewBase {
           this.R7e.BindLateUpdate(this.O7e);
       }),
       (this.O7e = (e) => {
-        let t;
+        var t;
         this.U7e &&
           this.A7e >= WAITUPDATECOUNT &&
           ((this.U7e = !1),
@@ -130,8 +130,8 @@ class AdviceMutiSentenceSelectView extends UiViewBase_1.UiViewBase {
         this.GetScrollViewWithScrollbar(2),
         this.B7e,
       ));
-    let e;
-    let t = this.R7e.TempOriginalItem;
+    var e,
+      t = this.R7e.TempOriginalItem;
     t &&
       (e = (t = t.GetOwner()).GetComponentByClass(
         UE.UIButtonComponent.StaticClass(),
@@ -166,7 +166,7 @@ class AdviceMutiSentenceSelectView extends UiViewBase_1.UiViewBase {
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(7), "AdvicePutSentence");
   }
   N7e() {
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceWordTypeConfigs();
     let i = 0;
     for (let e = 0; e < t.length; e++)
@@ -179,12 +179,11 @@ class AdviceMutiSentenceSelectView extends UiViewBase_1.UiViewBase {
     return i / (t.length - 1);
   }
   k7e() {
-    const t =
-      ModelManager_1.ModelManager.AdviceModel.CurrentPreSentenceWordMap.get(
-        ModelManager_1.ModelManager.AdviceModel.CurrentSentenceSelectIndex,
-      );
-    const i =
-      ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceSentenceConfigs();
+    var t =
+        ModelManager_1.ModelManager.AdviceModel.CurrentPreSentenceWordMap.get(
+          ModelManager_1.ModelManager.AdviceModel.CurrentSentenceSelectIndex,
+        ),
+      i = ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceSentenceConfigs();
     let s = 0;
     for (let e = 0; e < i.length; e++)
       if (i[e].Id === t) {
@@ -199,4 +198,4 @@ class AdviceMutiSentenceSelectView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.AdviceMutiSentenceSelectView = AdviceMutiSentenceSelectView;
-// # sourceMappingURL=AdviceMutiSentenceSelectView.js.map
+//# sourceMappingURL=AdviceMutiSentenceSelectView.js.map

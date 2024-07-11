@@ -1,76 +1,81 @@
 "use strict";
-let SceneItemDropItemComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, o) {
-    let s;
-    const _ = arguments.length;
-    let a =
-      _ < 3 ? e : o === null ? (o = Object.getOwnPropertyDescriptor(e, i)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      a = Reflect.decorate(t, e, i, o);
-    else
-      for (let r = t.length - 1; r >= 0; r--)
-        (s = t[r]) && (a = (_ < 3 ? s(a) : _ > 3 ? s(e, i, a) : s(e, i)) || a);
-    return _ > 3 && a && Object.defineProperty(e, i, a), a;
-  };
+var SceneItemDropItemComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, o) {
+      var s,
+        _ = arguments.length,
+        a =
+          _ < 3
+            ? e
+            : null === o
+              ? (o = Object.getOwnPropertyDescriptor(e, i))
+              : o;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        a = Reflect.decorate(t, e, i, o);
+      else
+        for (var r = t.length - 1; 0 <= r; r--)
+          (s = t[r]) &&
+            (a = (_ < 3 ? s(a) : 3 < _ ? s(e, i, a) : s(e, i)) || a);
+      return 3 < _ && a && Object.defineProperty(e, i, a), a;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemDropItemComponent = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../Core/Audio/AudioSystem");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../Core/Define/CommonDefine");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const EffectContext_1 = require("../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../Effect/EffectSystem");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const LevelGameplayActionsDefine_1 = require("../../LevelGamePlay/LevelGameplayActionsDefine");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const RewardController_1 = require("../../Module/Reward/RewardController");
-const ComponentForceTickController_1 = require("../../World/Controller/ComponentForceTickController");
-const LINEARDAMPING = 0;
-const ANGULARDAMPING = 0;
-const CHECK_WATER_OFFSET_Z = 10;
-const COLLISION_PROFILE_NAME = new UE.FName("DropItem");
-const PICKUP_AUDIO_EVENT_NAME = "play_ui_fb_pickup";
-const PHYSICAL_MATERIAL_PATH =
-  "/Game/Aki/Scene/PhysMaterial/PM_DropItem.PM_DropItem";
-const PARABOLIC_EFFECT =
-  "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_Xingxing_001.DA_Fx_Xingxing_001";
-const BORN_EFFECTS = [
-  "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Diaoluo_001.DA_Fx_UI_Sence_Diaoluo_001",
-  "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Diaoluo_002.DA_Fx_UI_Sence_Diaoluo_002",
-  "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Diaoluo_003.DA_Fx_UI_Sence_Diaoluo_003",
-  "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Diaoluo_004.DA_Fx_UI_Sence_Diaoluo_004",
-  "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Diaoluo_005.DA_Fx_UI_Sence_Diaoluo_005",
-];
-const TRAIL_EFFECTS = [
-  "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Trail_001.DA_Fx_UI_Sence_Trail_001",
-  "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Trail_002.DA_Fx_UI_Sence_Trail_002",
-  "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Trail_003.DA_Fx_UI_Sence_Trail_003",
-  "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Trail_004.DA_Fx_UI_Sence_Trail_004",
-  "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Trail_005.DA_Fx_UI_Sence_Trail_005",
-];
-const DESTROY_EFFECTS = [
-  "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Xiaosan_001.DA_Fx_UI_Sence_Xiaosan_001",
-  "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Xiaosan_002.DA_Fx_UI_Sence_Xiaosan_002",
-  "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Xiaosan_003.DA_Fx_UI_Sence_Xiaosan_003",
-  "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Xiaosan_004.DA_Fx_UI_Sence_Xiaosan_004",
-  "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Xiaosan_005.DA_Fx_UI_Sence_Xiaosan_005",
-];
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  EffectContext_1 = require("../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../Effect/EffectSystem"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  LevelGameplayActionsDefine_1 = require("../../LevelGamePlay/LevelGameplayActionsDefine"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  RewardController_1 = require("../../Module/Reward/RewardController"),
+  ComponentForceTickController_1 = require("../../World/Controller/ComponentForceTickController"),
+  LINEARDAMPING = 0,
+  ANGULARDAMPING = 0,
+  CHECK_WATER_OFFSET_Z = 10,
+  COLLISION_PROFILE_NAME = new UE.FName("DropItem"),
+  PICKUP_AUDIO_EVENT_NAME = "play_ui_fb_pickup",
+  PHYSICAL_MATERIAL_PATH =
+    "/Game/Aki/Scene/PhysMaterial/PM_DropItem.PM_DropItem",
+  PARABOLIC_EFFECT =
+    "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_Xingxing_001.DA_Fx_Xingxing_001",
+  BORN_EFFECTS = [
+    "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Diaoluo_001.DA_Fx_UI_Sence_Diaoluo_001",
+    "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Diaoluo_002.DA_Fx_UI_Sence_Diaoluo_002",
+    "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Diaoluo_003.DA_Fx_UI_Sence_Diaoluo_003",
+    "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Diaoluo_004.DA_Fx_UI_Sence_Diaoluo_004",
+    "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Diaoluo_005.DA_Fx_UI_Sence_Diaoluo_005",
+  ],
+  TRAIL_EFFECTS = [
+    "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Trail_001.DA_Fx_UI_Sence_Trail_001",
+    "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Trail_002.DA_Fx_UI_Sence_Trail_002",
+    "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Trail_003.DA_Fx_UI_Sence_Trail_003",
+    "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Trail_004.DA_Fx_UI_Sence_Trail_004",
+    "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Trail_005.DA_Fx_UI_Sence_Trail_005",
+  ],
+  DESTROY_EFFECTS = [
+    "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Xiaosan_001.DA_Fx_UI_Sence_Xiaosan_001",
+    "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Xiaosan_002.DA_Fx_UI_Sence_Xiaosan_002",
+    "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Xiaosan_003.DA_Fx_UI_Sence_Xiaosan_003",
+    "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Xiaosan_004.DA_Fx_UI_Sence_Xiaosan_004",
+    "/Game/Aki/Effect/DataAsset/Niagara/BigWorld/DA_Fx_UI_Sence_Xiaosan_005.DA_Fx_UI_Sence_Xiaosan_005",
+  ];
 class DropItemData {
   constructor() {
     (this.ConfigId = 0),
@@ -113,15 +118,15 @@ let SceneItemDropItemComponent =
             this.TCn(t));
         }),
         (this.LCn = () => {
-          this.Hte.StaticMesh.GetComponentVelocity().Z >= 0 ||
+          0 <= this.Hte.StaticMesh.GetComponentVelocity().Z ||
             ((this.dqt.DropState = 1),
             this.ICn.DeepCopy(this.Hte.ActorLocationProxy),
             this.Hte.StaticMesh.SetNotifyRigidBodyCollision(!1));
         }),
         (this.DCn = () => {
-          const t = this.Hte.StaticMesh.GetComponentVelocity();
-          const e =
-            ConfigManager_1.ConfigManager.RewardConfig.GetFallToGroundSpeed();
+          var t = this.Hte.StaticMesh.GetComponentVelocity(),
+            e =
+              ConfigManager_1.ConfigManager.RewardConfig.GetFallToGroundSpeed();
           (!this.RCn() &&
             (this.ICn.DeepCopy(this.Hte.ActorLocationProxy),
             t.Size() >= Math.pow(e, 2))) ||
@@ -154,17 +159,17 @@ let SceneItemDropItemComponent =
             (this.dqt.DropState = 2));
         }),
         (this.ACn = (t) => {
-          this.dqt.AdsorptionType === 0
+          0 === this.dqt.AdsorptionType
             ? (this.dqt.DropState = 4)
             : ((this.dqt.AdsorptionProtectTime -= t),
-              this.dqt.AdsorptionProtectTime > 0 ||
+              0 < this.dqt.AdsorptionProtectTime ||
                 (this.UCn(), (this.dqt.DropState = 3)));
         }),
         (this.PCn = (t) => {
           this.dqt.AdsorptionTime += t;
-          let e;
-          let i;
-          let o = ConfigManager_1.ConfigManager.RewardConfig.GetMaxAdsorption();
+          var e,
+            i,
+            o = ConfigManager_1.ConfigManager.RewardConfig.GetMaxAdsorption();
           this.dqt.AdsorptionTime > o
             ? this.xCn()
             : (o = Global_1.Global.BaseCharacter) &&
@@ -193,9 +198,9 @@ let SceneItemDropItemComponent =
                   (this.dqt.StartSpeed = this.dqt.StartSpeed + i)));
         }),
         (this.wCn = () => {
-          let t;
-          let e;
-          let i = Global_1.Global.BaseCharacter;
+          var t,
+            e,
+            i = Global_1.Global.BaseCharacter;
           i &&
             ((t = SceneItemDropItemComponent_1.cz),
             (e = MathUtils_1.MathUtils.CommonTempVector).FromUeVector(
@@ -237,7 +242,7 @@ let SceneItemDropItemComponent =
     }
     OnInitData() {
       this.Vpr = this.Entity.GetComponent(0);
-      const t = this.Vpr.ComponentDataMap.get("Yvs");
+      var t = this.Vpr.ComponentDataMap.get("Yvs");
       return (
         !!t &&
         (this.pie(t.Yvs), !!this.dqt) &&
@@ -285,12 +290,12 @@ let SceneItemDropItemComponent =
       );
     }
     pie(t) {
-      let e;
-      const i = t.G3n;
-      const o = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-        i,
-        !0,
-      );
+      var e,
+        i = t.G3n,
+        o = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+          i,
+          !0,
+        );
       o
         ? o.Mesh
           ? ((this.dqt = new DropItemData()),
@@ -326,7 +331,7 @@ let SceneItemDropItemComponent =
         Protocol_1.Aki.Protocol.HBs.Proto_Monster
       )
         return !0;
-      const e = CommonParamById_1.configCommonParamById.GetFloatConfig(
+      var e = CommonParamById_1.configCommonParamById.GetFloatConfig(
         "drop_item_show_time",
       );
       e &&
@@ -369,14 +374,13 @@ let SceneItemDropItemComponent =
     }
     OCn() {
       var t = this.Hte.Owner.GetComponentByClass(
-        UE.SphereComponent.StaticClass(),
-      );
-      const e = this.Hte.ActorLocationProxy;
-      const i =
-        ConfigManager_1.ConfigManager.RewardConfig.GetDropChestOffsetZ();
-      var t = t.GetScaledSphereRadius();
-      const o = ModelManager_1.ModelManager.RewardModel.CheckGroundHit(e, t, i);
-      const s = MathUtils_1.MathUtils.CommonTempVector;
+          UE.SphereComponent.StaticClass(),
+        ),
+        e = this.Hte.ActorLocationProxy,
+        i = ConfigManager_1.ConfigManager.RewardConfig.GetDropChestOffsetZ(),
+        t = t.GetScaledSphereRadius(),
+        o = ModelManager_1.ModelManager.RewardModel.CheckGroundHit(e, t, i),
+        s = MathUtils_1.MathUtils.CommonTempVector;
       s.FromUeVector(e),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -407,7 +411,7 @@ let SceneItemDropItemComponent =
         this.dqt.Config.Mesh,
         UE.Object,
         (t, e) => {
-          const i = this.Hte?.StaticMesh;
+          var i = this.Hte?.StaticMesh;
           i?.IsValid() &&
             t?.IsValid() &&
             (this.OCn(),
@@ -439,7 +443,7 @@ let SceneItemDropItemComponent =
           PHYSICAL_MATERIAL_PATH,
           UE.PhysicalMaterial,
           (t, e) => {
-            const i = this.Hte?.StaticMesh;
+            var i = this.Hte?.StaticMesh;
             i?.IsValid() &&
               t?.IsValid() &&
               t instanceof UE.PhysicalMaterial &&
@@ -452,7 +456,7 @@ let SceneItemDropItemComponent =
         );
     }
     GCn() {
-      const t = this.Hte.StaticMesh.GetRelativeTransform();
+      var t = this.Hte.StaticMesh.GetRelativeTransform();
       (this.MCn = EffectSystem_1.EffectSystem.SpawnUnloopedEffect(
         GlobalData_1.GlobalData.World,
         t,
@@ -472,8 +476,8 @@ let SceneItemDropItemComponent =
           );
     }
     NCn() {
-      let t;
-      let e = this.Entity.GetComponent(178);
+      var t,
+        e = this.Entity.GetComponent(178);
       e &&
         (e = e.GetInteractController()) &&
         (((t =
@@ -493,11 +497,11 @@ let SceneItemDropItemComponent =
         this.SCn.set(4, this.wCn);
     }
     GetRandomForce(t) {
-      let e;
-      let i;
-      let o;
-      var s = this.dqt.ShowPlanId;
-      var s = ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(s);
+      var e,
+        i,
+        o,
+        s = this.dqt.ShowPlanId,
+        s = ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(s);
       return s
         ? (((e = MathUtils_1.MathUtils.CommonTempRotator).Pitch = 0),
           (i = s.Angle[0]),
@@ -515,7 +519,7 @@ let SceneItemDropItemComponent =
         : Vector_1.Vector.UpVectorProxy;
     }
     TCn(t) {
-      let e;
+      var e;
       this.Hte.SetActorLocation(this.Hte.StaticMesh.K2_GetComponentLocation()),
         this.kCn()
           ? this.xCn()
@@ -548,27 +552,27 @@ let SceneItemDropItemComponent =
         );
     }
     CheckDropRotation(t) {
-      this.dqt.RotationProtectTime > 0 &&
+      0 < this.dqt.RotationProtectTime &&
         ((this.dqt.RotationProtectTime -= t),
         this.dqt.RotationProtectTime <= 0) &&
         this.Hte.StaticMesh.SetConstraintMode(0);
     }
     kCn() {
-      let t;
-      let e = Global_1.Global.BaseCharacter;
+      var t,
+        e = Global_1.Global.BaseCharacter;
       return !(
         !e ||
         ((e = e.CharacterActorComponent.ActorLocation),
         (t = ConfigManager_1.ConfigManager.RewardConfig.GetHeightProtect()),
         Math.abs(e.Z - this.Hte.ActorLocationProxy.Z) < t) ||
-        this.Hte.StaticMesh.GetComponentVelocity().Z > 0
+        0 < this.Hte.StaticMesh.GetComponentVelocity().Z
       );
     }
     RCn() {
-      let t = this.Hte.ActorLocationProxy;
-      const e = this.Hte.Owner.GetComponentByClass(
-        UE.SphereComponent.StaticClass(),
-      ).GetScaledSphereRadius();
+      var t = this.Hte.ActorLocationProxy,
+        e = this.Hte.Owner.GetComponentByClass(
+          UE.SphereComponent.StaticClass(),
+        ).GetScaledSphereRadius();
       return (
         !!ModelManager_1.ModelManager.RewardModel.CheckWaterHit(
           this.ICn,
@@ -599,7 +603,7 @@ let SceneItemDropItemComponent =
             !0,
           ),
           (this.MCn = 0));
-      const t = EffectSystem_1.EffectSystem.SpawnEffect(
+      var t = EffectSystem_1.EffectSystem.SpawnEffect(
         GlobalData_1.GlobalData.World,
         this.Hte.ActorTransform,
         DESTROY_EFFECTS[this.dqt.QualityIndex],
@@ -639,4 +643,4 @@ let SceneItemDropItemComponent =
       SceneItemDropItemComponent,
     )),
   (exports.SceneItemDropItemComponent = SceneItemDropItemComponent);
-// # sourceMappingURL=SceneItemDropItemComponent.js.map
+//# sourceMappingURL=SceneItemDropItemComponent.js.map

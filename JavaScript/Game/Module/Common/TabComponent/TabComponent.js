@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TabComponent = void 0);
-const UE = require("ue");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const CommonTabItemBase_1 = require("./TabItem/CommonTabItemBase");
+const UE = require("ue"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  CommonTabItemBase_1 = require("./TabItem/CommonTabItemBase");
 class TabComponent extends UiPanelBase_1.UiPanelBase {
   constructor(e, t, i, s) {
     super(),
@@ -16,7 +16,7 @@ class TabComponent extends UiPanelBase_1.UiPanelBase {
       (this.wBt = void 0),
       (this.gRt = void 0),
       (this.Z3e = () => {
-        const e = this.ProxyCreate(void 0, void 0);
+        var e = this.ProxyCreate(void 0, void 0);
         return (
           e.InitTabItem(),
           e.SetSelectedCallBack(this.cLt),
@@ -36,7 +36,7 @@ class TabComponent extends UiPanelBase_1.UiPanelBase {
     this.ComponentRegisterInfos = [[0, UE.UILayoutBase]];
   }
   OnStart() {
-    const e = this.wBt ? this.wBt.GetOwner() : void 0;
+    var e = this.wBt ? this.wBt.GetOwner() : void 0;
     this.eGe = new GenericLayout_1.GenericLayout(
       this.GetLayoutBase(0),
       this.Z3e,
@@ -47,7 +47,7 @@ class TabComponent extends UiPanelBase_1.UiPanelBase {
     this.wBt = void 0;
   }
   xBt() {
-    let e;
+    var e;
     this.NOe !== CommonDefine_1.INVALID_VALUE &&
       (e = this.eGe.GetLayoutItemByKey(this.NOe)) &&
       e.SetForceSwitch(0);
@@ -66,23 +66,23 @@ class TabComponent extends UiPanelBase_1.UiPanelBase {
       await this.eGe.RefreshByDataAsync(e);
   }
   RefreshTabItemByLength(t, e) {
-    const i = new Array();
+    var i = new Array();
     for (let e = 0; e < t; e++) {
-      const s = new CommonTabItemBase_1.CommonTabItemData();
+      var s = new CommonTabItemBase_1.CommonTabItemData();
       (s.Index = e), i.push(s);
     }
     this.RefreshTabItem(i, e);
   }
   async RefreshTabItemByLengthAsync(t) {
-    const i = new Array();
+    var i = new Array();
     for (let e = 0; e < t; e++) {
-      const s = new CommonTabItemBase_1.CommonTabItemData();
+      var s = new CommonTabItemBase_1.CommonTabItemData();
       (s.Index = e), i.push(s);
     }
     await this.RefreshTabItemAsync(i);
   }
   ResetLastSelectTab() {
-    const e = this.eGe.GetLayoutItemByKey(this.NOe);
+    var e = this.eGe.GetLayoutItemByKey(this.NOe);
     e && e.SetForceSwitch(0);
   }
   SelectToggleByIndex(e, t = !1) {
@@ -108,4 +108,4 @@ class TabComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.TabComponent = TabComponent;
-// # sourceMappingURL=TabComponent.js.map
+//# sourceMappingURL=TabComponent.js.map

@@ -2,15 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleAttributeItem = exports.RoleLevelUpSuccessAttributeView =
     void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const StrengthUpgradeBarItem_1 = require("./StrengthUpgradeBarItem");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  StrengthUpgradeBarItem_1 = require("./StrengthUpgradeBarItem");
 class RoleLevelUpSuccessAttributeView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -19,7 +19,7 @@ class RoleLevelUpSuccessAttributeView extends UiViewBase_1.UiViewBase {
       (this.$7i = void 0),
       (this.j_o = void 0),
       (this.nqe = () => {
-        const t = this.Pe.ClickFunction;
+        var t = this.Pe.ClickFunction;
         t && t(), this.CloseMe();
       });
   }
@@ -57,16 +57,16 @@ class RoleLevelUpSuccessAttributeView extends UiViewBase_1.UiViewBase {
       await this.$7i.CreateByActorAsync(this.GetItem(10).GetOwner());
   }
   OnStart() {
-    var t = this.GetItem(5);
-    var t =
-      ((this.H_o = new LevelShowItem()),
-      this.H_o.CreateThenShowByActor(t.GetOwner()),
-      this.Pe.WiderScrollView ?? !1);
-    var t =
-      (this.GetItem(9).SetUIActive(t),
-      this.GetItem(3).SetUIActive(!t),
-      t ? this.GetItem(9) : this.GetItem(3));
-    const e = this.GetLoopScrollViewComponent(6);
+    var t = this.GetItem(5),
+      t =
+        ((this.H_o = new LevelShowItem()),
+        this.H_o.CreateThenShowByActor(t.GetOwner()),
+        this.Pe.WiderScrollView ?? !1),
+      t =
+        (this.GetItem(9).SetUIActive(t),
+        this.GetItem(3).SetUIActive(!t),
+        t ? this.GetItem(9) : this.GetItem(3)),
+      e = this.GetLoopScrollViewComponent(6);
     e.RootUIComp.SetWidth(t.GetWidth()),
       this.GetItem(8).SetWidth(t.GetWidth()),
       (this.j_o = new LoopScrollView_1.LoopScrollView(e, t.GetOwner(), () => {
@@ -83,7 +83,7 @@ class RoleLevelUpSuccessAttributeView extends UiViewBase_1.UiViewBase {
       (this.j_o = void 0);
   }
   IBt() {
-    let t = this.Pe.AudioId;
+    var t = this.Pe.AudioId;
     t &&
       ((t = ConfigManager_1.ConfigManager.AudioConfig.GetAudioPath(t).Path),
       this.SetAudioEvent(t));
@@ -92,15 +92,15 @@ class RoleLevelUpSuccessAttributeView extends UiViewBase_1.UiViewBase {
     this.ILt(), this.C_o(), this.W_o(), this.K_o(), this.Q_o(), this.X_o();
   }
   C_o() {
-    const t = this.Pe.ClickText ?? "Text_BackToView_Text";
+    var t = this.Pe.ClickText ?? "Text_BackToView_Text";
     this.GetText(1).ShowTextNew(t);
   }
   ILt() {
-    const t = this.Pe.Title ?? "Text_LevelUpSuccessful_Text";
+    var t = this.Pe.Title ?? "Text_LevelUpSuccessful_Text";
     this.GetText(0).ShowTextNew(t);
   }
   W_o() {
-    const t = this.Pe.LevelInfo;
+    var t = this.Pe.LevelInfo;
     void 0 !== t &&
       this.H_o.Refresh(
         t.PreUpgradeLv,
@@ -111,12 +111,12 @@ class RoleLevelUpSuccessAttributeView extends UiViewBase_1.UiViewBase {
       this.GetItem(5).SetUIActive(void 0 !== t);
   }
   K_o() {
-    const t = this.Pe.StrengthUpgradeData;
+    var t = this.Pe.StrengthUpgradeData;
     void 0 !== t && this.$7i.Update(t),
       this.GetItem(10).SetUIActive(void 0 !== t);
   }
   Q_o() {
-    void 0 === this.Pe.AttributeInfo || this.Pe.AttributeInfo.length === 0
+    void 0 === this.Pe.AttributeInfo || 0 === this.Pe.AttributeInfo.length
       ? this.GetLoopScrollViewComponent(6).RootUIComp.SetUIActive(!1)
       : this.j_o.ReloadData(this.Pe.AttributeInfo);
   }
@@ -179,7 +179,7 @@ class RoleAttributeItem extends UiPanelBase_1.UiPanelBase {
     this.C4e(t.Name),
       this.Kbe(t.IconPath),
       this.GetItem(2).SetUIActive(t.ShowArrow ?? !0);
-    const e = [this.GetText(3), this.GetText(1)];
+    var e = [this.GetText(3), this.GetText(1)];
     const i = [t.PreText, t.CurText];
     e.forEach((t, e) => {
       this.Y_o(t, i[e]);
@@ -198,9 +198,9 @@ class RoleAttributeItem extends UiPanelBase_1.UiPanelBase {
     void 0 !== e && t.SetText(e), t.SetUIActive(void 0 !== e);
   }
   J_o(t) {
-    const e = this.GetItem(5);
+    var e = this.GetItem(5);
     e && e.SetUIActive(t);
   }
 }
 exports.RoleAttributeItem = RoleAttributeItem;
-// # sourceMappingURL=RoleLevelUpSuccessAttributeView.js.map
+//# sourceMappingURL=RoleLevelUpSuccessAttributeView.js.map

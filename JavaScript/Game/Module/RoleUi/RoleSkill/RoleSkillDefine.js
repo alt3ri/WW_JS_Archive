@@ -8,4 +8,4 @@ class RoleSkillTreeInfoViewData extends UiPopViewData_1.UiPopViewData {
   }
 }
 exports.RoleSkillTreeInfoViewData = RoleSkillTreeInfoViewData;
-// # sourceMappingURL=RoleSkillDefine.js.map
+//# sourceMappingURL=RoleSkillDefine.js.map

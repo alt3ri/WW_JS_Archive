@@ -1,29 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestTrackAssistant = void 0);
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../Core/Net/Net");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class QuestTrackAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor() {
     super(...arguments),
       (this.Qoo = (e) => {
-        e.Xkn !== 0 &&
+        0 !== e.Xkn &&
           ModelManager_1.ModelManager.QuestNewModel.SetQuestTrackState(
             e.Xkn,
             !0,
           );
       }),
       (this.bMe = (e, r) => {
-        r === 1 &&
+        1 === r &&
           ((r = ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest()),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnLogicTreeTrackUpdate,
@@ -32,10 +32,10 @@ class QuestTrackAssistant extends ControllerAssistantBase_1.ControllerAssistantB
           ));
       }),
       (this.Xoo = (e, r, t) => {
-        const n =
+        var n =
           ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(e);
         if (n && n.BtType === Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest) {
-          const o =
+          var o =
             ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest();
           if (o && o.TreeId === e)
             switch (t) {
@@ -76,11 +76,11 @@ class QuestTrackAssistant extends ControllerAssistantBase_1.ControllerAssistantB
       );
   }
   RefreshCurTrackQuest() {
-    var e = ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest();
-    var e =
-      (e?.SetTrack(!1),
-      e?.SetTrack(!0),
-      ModelManager_1.ModelManager.QuestNewModel.CurShowUpdateTipsQuest);
+    var e = ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest(),
+      e =
+        (e?.SetTrack(!1),
+        e?.SetTrack(!0),
+        ModelManager_1.ModelManager.QuestNewModel.CurShowUpdateTipsQuest);
     e && this.TryChangeTrackedQuest(e);
   }
   RequestTrackQuest(e, r, t, n = 0, o) {
@@ -108,8 +108,8 @@ class QuestTrackAssistant extends ControllerAssistantBase_1.ControllerAssistantB
     });
   }
   TryChangeTrackedQuest(e) {
-    let r = ModelManager_1.ModelManager.QuestNewModel;
-    const t = r.GetCurTrackedQuest();
+    var r = ModelManager_1.ModelManager.QuestNewModel,
+      t = r.GetCurTrackedQuest();
     return (
       !t?.AutoTrack &&
       !!((r = r.GetQuest(e)) && r.IsProgressing && r.AutoTrack) &&
@@ -119,4 +119,4 @@ class QuestTrackAssistant extends ControllerAssistantBase_1.ControllerAssistantB
   }
 }
 exports.QuestTrackAssistant = QuestTrackAssistant;
-// # sourceMappingURL=QuestTrackAssistant.js.map
+//# sourceMappingURL=QuestTrackAssistant.js.map

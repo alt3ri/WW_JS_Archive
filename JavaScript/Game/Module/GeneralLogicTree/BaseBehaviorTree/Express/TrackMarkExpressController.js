@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TrackMarkExpressController = exports.TrackVision = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const CharacterController_1 = require("../../../../NewWorld/Character/CharacterController");
-const MapController_1 = require("../../../Map/Controller/MapController");
-const MapDefine_1 = require("../../../Map/MapDefine");
-const TrackController_1 = require("../../../Track/TrackController");
-const GeneralLogicTreeUtil_1 = require("../../GeneralLogicTreeUtil");
-const INVALID_MARKID = 0;
+const Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  CharacterController_1 = require("../../../../NewWorld/Character/CharacterController"),
+  MapController_1 = require("../../../Map/Controller/MapController"),
+  MapDefine_1 = require("../../../Map/MapDefine"),
+  TrackController_1 = require("../../../Track/TrackController"),
+  GeneralLogicTreeUtil_1 = require("../../GeneralLogicTreeUtil"),
+  INVALID_MARKID = 0;
 class TrackVision {
   constructor() {
     (this.VisionOwnerId = 0),
@@ -33,7 +33,7 @@ class TrackMarkExpressController {
       (this.JKt = new Map());
   }
   Clear() {
-    for (const [, t] of this.JKt) t.Destroy();
+    for (var [, t] of this.JKt) t.Destroy();
     this.JKt.clear();
   }
   NodeTrackMarkStart(t, e, i, s) {
@@ -43,7 +43,7 @@ class TrackMarkExpressController {
     this.GetNodeTrackMarkCreator(t)?.OnNodeEnd(), this.JKt.delete(t);
   }
   FKt(t, e, i) {
-    let s = this.GetNodeTrackMarkCreator(t);
+    var s = this.GetNodeTrackMarkCreator(t);
     return (
       s ||
       ((s = new NodeTrackMark(e, e.TreeIncId, e.TreeConfigId, t)).Init(i),
@@ -58,23 +58,23 @@ class TrackMarkExpressController {
     this.GetNodeTrackMarkCreator(t)?.Destroy(), this.JKt.delete(t);
   }
   EnableTrack(t) {
-    for (const [, e] of this.JKt) e.EnableTrack(t);
+    for (var [, e] of this.JKt) e.EnableTrack(t);
   }
   CreateMapMarks() {
-    for (const [, t] of this.JKt) t.CreateMapMarks();
+    for (var [, t] of this.JKt) t.CreateMapMarks();
   }
   UpdateTrackMarkExpression(t, e, i) {
     switch (i) {
       case Protocol_1.Aki.Protocol.N2s.Lkn:
         var s;
-        e.NodeType !== "ChildQuest" &&
+        "ChildQuest" !== e.NodeType &&
           (s = e.TrackTarget) &&
           e.ContainTag(0) &&
           this.NodeTrackMarkStart(e.NodeId, t, s, t.IsOccupied);
         break;
       case Protocol_1.Aki.Protocol.N2s.Proto_CompletedSuccess:
       case Protocol_1.Aki.Protocol.N2s.Proto_CompletedFailed:
-        (e.NodeType === "ChildQuest" && e.IsFinished) ||
+        ("ChildQuest" === e.NodeType && e.IsFinished) ||
           this.NodeTrackMarkEnd(e.NodeId);
         break;
       case Protocol_1.Aki.Protocol.N2s.Proto_Destroy:
@@ -82,13 +82,13 @@ class TrackMarkExpressController {
     }
   }
   OnBtApplyExpressionOccupation(t) {
-    if (!t) for (const [, e] of this.JKt) e.OnExpressOccupied();
+    if (!t) for (var [, e] of this.JKt) e.OnExpressOccupied();
   }
   OnBtReleaseExpressionOccupation(t) {
-    if (!t) for (const [, e] of this.JKt) e.OnExpressOccupationRelease();
+    if (!t) for (var [, e] of this.JKt) e.OnExpressOccupationRelease();
   }
   OnSuspend(t) {
-    t === 1 && this.OnBtApplyExpressionOccupation(!1);
+    1 === t && this.OnBtApplyExpressionOccupation(!1);
   }
   OnCancelSuspend() {
     this.Yre.IsOccupied || this.OnBtReleaseExpressionOccupation(!1);
@@ -134,7 +134,7 @@ class NodeTrackMark {
               ))));
       }),
       (this.aQt = (t) => {
-        let e;
+        var e;
         this.ZKt?.size &&
           (e = this.ZKt.get(t)) &&
           (this.ZKt.delete(t),
@@ -208,7 +208,7 @@ class NodeTrackMark {
         break;
       case "CaptureVisions":
         for (const r of t.TrackType.VisionDropEntities) {
-          const e = new TrackVision();
+          var e = new TrackVision();
           (e.VisionOwnerId = r), this.zKt.push(e);
         }
     }
@@ -266,7 +266,7 @@ class NodeTrackMark {
     if (this.zKt && i)
       for (let e = 0; e < this.zKt.length; e++) {
         const r = this.zKt[e];
-        const s = i.findIndex((t) => t === r);
+        var s = i.findIndex((t) => t === r);
         let t = this.oQt.get(e);
         s < 0
           ? (this.iQt.delete(e),
@@ -291,9 +291,9 @@ class NodeTrackMark {
     if (!this.iQt.get(t) && this.zKt && !(this.zKt.length <= t)) {
       var e = this.cQt(0, this.zKt[t]);
       if (e) {
-        const i = e[0];
-        var e = e[1];
-        let s = this.oQt.get(t);
+        var i = e[0],
+          e = e[1],
+          s = this.oQt.get(t);
         if (s) {
           var r = ModelManager_1.ModelManager.MapModel.GetMark(
             this.MarkType,
@@ -414,7 +414,7 @@ class NodeTrackMark {
   }
   _Qt() {
     this.CQt(!1);
-    for (const [, t] of this.oQt)
+    for (var [, t] of this.oQt)
       ModelManager_1.ModelManager.MapModel.RemoveMapMark(this.MarkType, t);
     this.oQt.clear(),
       (this.nQt = !1),
@@ -440,33 +440,33 @@ class NodeTrackMark {
           : this._Qt());
   }
   CQt(t) {
-    for (let [i, s] of this.oQt) {
-      const r = ModelManager_1.ModelManager.MapModel.GetMark(this.MarkType, s);
+    for (var [i, s] of this.oQt) {
+      var r = ModelManager_1.ModelManager.MapModel.GetMark(this.MarkType, s);
       if (r)
         if (t) {
           (i = this.zKt[i]), (i = this.cQt(1, i));
           if (i) {
-            let t = void 0;
-            let e = !1;
-            this.eQt.TrackViewModel === "Nearest" && (t = this.B_t);
+            let t = void 0,
+              e = !1;
+            "Nearest" === this.eQt.TrackViewModel && (t = this.B_t);
             var a = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
-              this.B_t,
-            );
-            var a =
-              (a && (e = a.AutoHideTrackMark),
-              {
-                TrackSource: this.TrackSource,
-                Id: s,
-                IconPath:
-                  ConfigManager_1.ConfigManager.MapConfig.GetTaskMarkConfig(
-                    r.MarkConfigId,
-                  ).MarkPic,
-                TrackTarget: this.dQt(i[1]),
-                ShowGroupId: t,
-                AutoHideTrack: e,
-                IsInTrackRange: this.eQt.ContainTag(11),
-                IsSubTrack: this.eQt.IsNeedScaledTrackMark(this.b_t),
-              });
+                this.B_t,
+              ),
+              a =
+                (a && (e = a.AutoHideTrackMark),
+                {
+                  TrackSource: this.TrackSource,
+                  Id: s,
+                  IconPath:
+                    ConfigManager_1.ConfigManager.MapConfig.GetTaskMarkConfig(
+                      r.MarkConfigId,
+                    ).MarkPic,
+                  TrackTarget: this.dQt(i[1]),
+                  ShowGroupId: t,
+                  AutoHideTrack: e,
+                  IsInTrackRange: this.eQt.ContainTag(11),
+                  IsSubTrack: this.eQt.IsNeedScaledTrackMark(this.b_t),
+                });
             TrackController_1.TrackController.StartTrack(a);
           }
         } else TrackController_1.TrackController.EndTrack(this.TrackSource, s);
@@ -483,49 +483,49 @@ class NodeTrackMark {
     }
   }
   cQt(i, s) {
-    const r = ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
-    const a = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(r);
+    var r = ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
+      a = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(r);
     if (a) {
-      const o = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+      var o = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
         this.DungeonId,
       );
       if (o) {
         if (r === this.DungeonId)
           return this.eQt.BtType ===
             Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest &&
-            a.InstSubType !== 13 &&
-            i === 0
+            13 !== a.InstSubType &&
+            0 === i
             ? (h = a.EntranceEntities)?.length
               ? [h[0].DungeonId, h[0].EntranceEntityId]
               : void 0
             : [r, s];
-        var h = a.InstSubType;
-        const n = o.InstSubType;
-        let t = void 0;
-        let e = 0;
+        var h = a.InstSubType,
+          n = o.InstSubType;
+        let t = void 0,
+          e = 0;
         switch (h) {
           case 13:
-            n !== 13 &&
+            13 !== n &&
               (_ = o.EntranceEntities)?.length &&
               ((t = _[0].EntranceEntityId), (e = _[0].DungeonId));
             break;
           case 12:
-            if (i === 0) {
-              if (n !== 13) {
+            if (0 === i) {
+              if (13 !== n) {
                 var _ = o.EntranceEntities;
                 if (!_?.length) break;
                 (t = _[0].EntranceEntityId), (e = _[0].DungeonId);
                 break;
               }
               (t = s), (e = this.DungeonId);
-            } else if (i === 1) {
+            } else if (1 === i) {
               if (!a.ExitEntities?.length) break;
               (t = a.ExitEntities[0]), (e = r);
             }
             break;
           default:
-            if (i !== 1)
-              if (n === 13) (e = this.DungeonId), (t = s);
+            if (1 !== i)
+              if (13 === n) (e = this.DungeonId), (t = s);
               else {
                 _ = o.EntranceEntities;
                 if (!_?.length) break;
@@ -579,8 +579,8 @@ class NodeTrackMark {
             )
           : void 0;
       if (t) {
-        let s;
-        var r = CharacterController_1.CharacterController.GetActorComponent(t);
+        var s,
+          r = CharacterController_1.CharacterController.GetActorComponent(t);
         if (r && ObjectUtils_1.ObjectUtils.IsValid(r.Owner))
           return (
             (e = Vector_1.Vector.Create(r.ActorLocationProxy)),
@@ -598,7 +598,7 @@ class NodeTrackMark {
     return this.DefaultMapMarkId;
   }
   gQt() {
-    let t;
+    var t;
     if (this.zKt && this.zKt.length)
       return (
         (t = this.zKt.find((t, e) => !this.iQt.get(e))), this.cQt(1, t)?.[1]
@@ -613,8 +613,8 @@ class NodeTrackMark {
     );
   }
   OnExpressOccupied() {
-    if (this.oQt.size !== 0)
-      for (const [, t] of this.oQt)
+    if (0 !== this.oQt.size)
+      for (var [, t] of this.oQt)
         TrackController_1.TrackController.SetTrackMarkOccupied(
           this.TrackSource,
           t,
@@ -628,8 +628,8 @@ class NodeTrackMark {
   }
   OnExpressOccupationRelease() {
     if (this.rQt) {
-      if (this.oQt.size !== 0)
-        for (const [, t] of this.oQt)
+      if (0 !== this.oQt.size)
+        for (var [, t] of this.oQt)
           ModelManager_1.ModelManager.TrackModel.IsTracking(
             this.TrackSource,
             t,
@@ -647,4 +647,4 @@ class NodeTrackMark {
     } else this.OnNodeStart(!1);
   }
 }
-// # sourceMappingURL=TrackMarkExpressController.js.map
+//# sourceMappingURL=TrackMarkExpressController.js.map

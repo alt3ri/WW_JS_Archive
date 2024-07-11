@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ControllerManagerBase = void 0);
-const Log_1 = require("../Common/Log");
-const Stats_1 = require("../Common/Stats");
-const TickSystem_1 = require("../Tick/TickSystem");
+const Log_1 = require("../Common/Log"),
+  Stats_1 = require("../Common/Stats"),
+  TickSystem_1 = require("../Tick/TickSystem");
 class ControllerManagerBase {
   constructor() {}
   static Add(o) {
@@ -47,7 +47,7 @@ class ControllerManagerBase {
         (r.GetPerformanceStateObject(), r.Tick(o));
   }
   static AddTickController(o) {
-    let r;
+    var r;
     this.TickControllers.push(o),
       Stats_1.Stat.Enable &&
         ((r = o.prototype.constructor.name), o.SetPerformanceStateObject(r));
@@ -94,9 +94,9 @@ class ControllerManagerBase {
       this.TickControllers.splice(0, this.TickControllers.length);
   }
   static Preload() {
-    const o = new Array();
+    var o = new Array();
     for (const t of this.Controllers) {
-      const r = t[1].Preload();
+      var r = t[1].Preload();
       r && o.push(r);
     }
     return o;
@@ -195,4 +195,4 @@ class ControllerManagerBase {
 ((exports.ControllerManagerBase = ControllerManagerBase).Controllers =
   new Map()),
   (ControllerManagerBase.TickControllers = new Array());
-// # sourceMappingURL=ControllerManagerBase.js.map
+//# sourceMappingURL=ControllerManagerBase.js.map

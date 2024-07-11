@@ -1,34 +1,39 @@
 "use strict";
-let PerformanceComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, s) {
-    let h;
-    const n = arguments.length;
-    let o =
-      n < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      o = Reflect.decorate(t, e, i, s);
-    else
-      for (let r = t.length - 1; r >= 0; r--)
-        (h = t[r]) && (o = (n < 3 ? h(o) : n > 3 ? h(e, i, o) : h(e, i)) || o);
-    return n > 3 && o && Object.defineProperty(e, i, o), o;
-  };
+var PerformanceComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, s) {
+      var h,
+        n = arguments.length,
+        o =
+          n < 3
+            ? e
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        o = Reflect.decorate(t, e, i, s);
+      else
+        for (var r = t.length - 1; 0 <= r; r--)
+          (h = t[r]) &&
+            (o = (n < 3 ? h(o) : 3 < n ? h(e, i, o) : h(e, i)) || o);
+      return 3 < n && o && Object.defineProperty(e, i, o), o;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PerformanceComponent = void 0);
-const UE = require("ue");
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const EffectContext_1 = require("../../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../../Effect/EffectSystem");
-const TsEffectActor_1 = require("../../../Effect/TsEffectActor");
-const GlobalData_1 = require("../../../GlobalData");
-const CharacterNameDefines_1 = require("../../Character/Common/CharacterNameDefines");
+const UE = require("ue"),
+  EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  EffectContext_1 = require("../../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  TsEffectActor_1 = require("../../../Effect/TsEffectActor"),
+  GlobalData_1 = require("../../../GlobalData"),
+  CharacterNameDefines_1 = require("../../Character/Common/CharacterNameDefines");
 let PerformanceComponent =
   (PerformanceComponent_1 = class PerformanceComponent extends (
     EntityComponent_1.EntityComponent
@@ -70,7 +75,7 @@ let PerformanceComponent =
                     this.nXt.RefreshShowActor()));
         }),
         (this.Fnn = (t) => {
-          let e;
+          var e;
           return (
             !this.ynn.has(t) &&
             ((e = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(t)),
@@ -80,7 +85,7 @@ let PerformanceComponent =
           );
         }),
         (this.Vnn = (t) => {
-          let e;
+          var e;
           this.Rnn.has(t) ||
             ((e = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(t)),
             (e = this.TXr.常驻特效列表.Get(e)) &&
@@ -105,7 +110,7 @@ let PerformanceComponent =
             this.$nn();
         }),
         (this.Ynn = (t, e) => {
-          t === 5 &&
+          5 === t &&
             this?.Entity?.Valid &&
             EffectSystem_1.EffectSystem.IsValid(e) &&
             ((this.Dnn = EffectSystem_1.EffectSystem.GetNiagaraComponent(e)),
@@ -233,8 +238,8 @@ let PerformanceComponent =
           );
         this.Inn = e;
       } else {
-        var e = -821437887;
-        var i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(e);
+        var e = -821437887,
+          i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(e);
         if (e === this.Inn || void 0 === this.TXr.场景交互物状态列表.Get(i))
           return void (
             (0, RegisterComponent_1.isComponentInstance)(this.nXt, 182) &&
@@ -246,7 +251,7 @@ let PerformanceComponent =
         let e = void 0;
         if (
           ((e =
-            this.Inn === 1227933697
+            1227933697 === this.Inn
               ? 20
               : ((i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(
                   this.Inn,
@@ -255,7 +260,7 @@ let PerformanceComponent =
           t)
         ) {
           let t = !1;
-          this.Inn === -991879492 && (t = !0),
+          -991879492 === this.Inn && (t = !0),
             this.nXt.LoadSceneInteractionLevel(e, t);
         } else this.nXt.SwitchToState(e, !this.wnn, this.wnn);
       }
@@ -267,7 +272,7 @@ let PerformanceComponent =
     $nn() {
       if (this.Snn)
         for (const e of this.Snn.GetTagIds()) {
-          const t = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(e);
+          var t = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(e);
           (0, RegisterComponent_1.isComponentInstance)(this.nXt, 182) &&
             void 0 !== t &&
             this.nXt.PlayExtraEffect(t);
@@ -288,13 +293,13 @@ let PerformanceComponent =
     }
     knn(t, e) {
       for (const h of e) {
-        const i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(h);
+        var i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(h);
         (0, RegisterComponent_1.isComponentInstance)(this.nXt, 182) &&
           void 0 !== i &&
           this.nXt.StopExtraEffect(i);
       }
       for (const n of t) {
-        const s = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(n);
+        var s = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(n);
         (0, RegisterComponent_1.isComponentInstance)(this.nXt, 182) &&
           void 0 !== s &&
           this.nXt.PlayExtraEffect(s, !1);
@@ -307,8 +312,8 @@ let PerformanceComponent =
           if (t === this.Tnn) return;
           this.Tnn = t;
         } else {
-          var t = -821437887;
-          var e = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(t);
+          var t = -821437887,
+            e = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(t);
           if (t === this.Tnn || void 0 === this.TXr.静态网格体列表.Get(e))
             return;
           this.Tnn = t;
@@ -322,8 +327,8 @@ let PerformanceComponent =
     }
     eve() {
       var t =
-        GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(-1133639932);
-      var t = this.TXr.常驻特效列表.Get(t);
+          GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(-1133639932),
+        t = this.TXr.常驻特效列表.Get(t);
       t &&
         ((this.UZt = this.Hnn(
           t.AssetPathName?.toString(),
@@ -343,7 +348,7 @@ let PerformanceComponent =
         this.jnn(this.UZt, t));
     }
     bnn() {
-      let t;
+      var t;
       return (
         !!this.UZt &&
         (t = this.isn(this.TXr.通用特效常驻参数)) !== this.Lnn &&
@@ -351,17 +356,17 @@ let PerformanceComponent =
       );
     }
     znn() {
-      let t;
+      var t;
       this.UZt &&
         ((t = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(this.Lnn)),
         (t = this.TXr.通用特效常驻参数.Get(t))) &&
         this.osn(t);
     }
     qnn() {
-      var t = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(this.Lnn);
-      var t = this.TXr.通用特效变化参数.Get(t);
+      var t = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(this.Lnn),
+        t = this.TXr.通用特效变化参数.Get(t);
       t
-        ? (t.ManualLifeTime > 0 &&
+        ? (0 < t.ManualLifeTime &&
             (this.Pnn ||
               (this.Pnn = (t) => {
                 this.znn();
@@ -393,8 +398,8 @@ let PerformanceComponent =
       }
       let s = void 0;
       for (const o of t) {
-        var h = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(o);
-        var h = this.TXr.变化特效列表.Get(h);
+        var h = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(o),
+          h = this.TXr.变化特效列表.Get(h);
         h
           ? (s = this.Hnn(
               h.AssetPathName?.toString(),
@@ -417,7 +422,7 @@ let PerformanceComponent =
       if (((this.Wnn = void 0), (this.Knn = t), this.Snn))
         for (const i of this.Snn.GetTagIds())
           if (i !== PerformanceComponent_1.rsn) {
-            const e = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(i);
+            var e = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(i);
             if (void 0 !== this.Knn.Get(e)) {
               this.Wnn = i;
               break;
@@ -458,7 +463,7 @@ let PerformanceComponent =
     }
     SetPerformanceVisible(t) {
       this.jnn(this.UZt, t);
-      for (const [, e] of this.Rnn ?? []) this.jnn(e, t);
+      for (var [, e] of this.Rnn ?? []) this.jnn(e, t);
     }
     jnn(t, e) {
       EffectSystem_1.EffectSystem.IsValid(t) &&
@@ -475,4 +480,4 @@ let PerformanceComponent =
       PerformanceComponent,
     )),
   (exports.PerformanceComponent = PerformanceComponent);
-// # sourceMappingURL=PerformanceComponent.js.map
+//# sourceMappingURL=PerformanceComponent.js.map

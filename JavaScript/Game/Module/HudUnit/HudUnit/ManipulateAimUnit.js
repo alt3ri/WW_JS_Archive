@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ManipulateAimUnit = void 0);
-const UE = require("ue");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const HudUnitBase_1 = require("../HudUnitBase");
-const CLOSE_ANIM_TIME = 200;
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  HudUnitBase_1 = require("../HudUnitBase"),
+  CLOSE_ANIM_TIME = 200;
 class ManipulateAimUnit extends HudUnitBase_1.HudUnitBase {
   constructor() {
     super(...arguments),
@@ -20,7 +20,7 @@ class ManipulateAimUnit extends HudUnitBase_1.HudUnitBase {
       });
   }
   OnRegisterComponent() {
-    this.ResourceId === "UiView_Sight" && (this.Xei = !0),
+    "UiView_Sight" === this.ResourceId && (this.Xei = !0),
       (this.ComponentRegisterInfos = [
         [0, UE.UIItem],
         [1, UE.UIItem],
@@ -125,4 +125,4 @@ class ManipulateAimUnit extends HudUnitBase_1.HudUnitBase {
   }
 }
 exports.ManipulateAimUnit = ManipulateAimUnit;
-// # sourceMappingURL=ManipulateAimUnit.js.map
+//# sourceMappingURL=ManipulateAimUnit.js.map

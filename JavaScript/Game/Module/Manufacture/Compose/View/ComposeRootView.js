@@ -1,33 +1,32 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ComposeRootView = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const LocalStorageDefine_1 = require("../../../../Common/LocalStorageDefine");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../../RedDot/RedDotController");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const FilterEntrance_1 = require("../../../Common/FilterSort/Filter/View/FilterEntrance");
-const SortEntrance_1 = require("../../../Common/FilterSort/Sort/View/SortEntrance");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const UiCameraAnimationManager_1 = require("../../../UiCameraAnimation/UiCameraAnimationManager");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView");
-const CommonManager_1 = require("../../Common/CommonManager");
-const StarLevelComponent_1 = require("../../Common/StarLevelComponent");
-const ComposeController_1 = require("../ComposeController");
-const ComposeMediumItemGrid_1 = require("../Item/ComposeMediumItemGrid");
-const MainTypeItem_1 = require("../Item/MainTypeItem");
-const ComposeIngredientsView_1 = require("./ComposeIngredientsView");
-const TIMERGAP = 1e3;
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  LocalStorageDefine_1 = require("../../../../Common/LocalStorageDefine"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../../RedDot/RedDotController"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  FilterEntrance_1 = require("../../../Common/FilterSort/Filter/View/FilterEntrance"),
+  SortEntrance_1 = require("../../../Common/FilterSort/Sort/View/SortEntrance"),
+  UiCameraAnimationManager_1 = require("../../../UiCameraAnimation/UiCameraAnimationManager"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView"),
+  CommonManager_1 = require("../../Common/CommonManager"),
+  StarLevelComponent_1 = require("../../Common/StarLevelComponent"),
+  ComposeController_1 = require("../ComposeController"),
+  ComposeMediumItemGrid_1 = require("../Item/ComposeMediumItemGrid"),
+  MainTypeItem_1 = require("../Item/MainTypeItem"),
+  ComposeIngredientsView_1 = require("./ComposeIngredientsView"),
+  TIMERGAP = 1e3;
 class ComposeRootView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -45,7 +44,6 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
       (this.SGt = void 0),
       (this.bIi = !1),
       (this.c4s = !1),
-      (this.EPe = void 0),
       (this.m5s = void 0),
       (this.qIi = () => {
         this.yGt(),
@@ -55,8 +53,8 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
           this.GIi(),
           this.Qqt(),
           this.LGt();
-        const e = CommonManager_1.CommonManager.GetComposeMaxLevel();
-        const t = CommonManager_1.CommonManager.GetCurrentRewardLevel();
+        var e = CommonManager_1.CommonManager.GetComposeMaxLevel(),
+          t = CommonManager_1.CommonManager.GetCurrentRewardLevel();
         this.SGt.ShowLevel(t, e), this.Dqt();
       }),
       (this.GOe = void 0),
@@ -77,7 +75,7 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
               );
       }),
       (this.kIi = () => {
-        this.EPe?.PlaySequenceAsync(
+        this.ChildPopView?.PlaySequenceAsync(
           "Close",
           new CustomPromise_1.CustomPromise(),
           !0,
@@ -91,12 +89,8 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
           );
       }),
       (this.jwe = (e) => {
-        e === "OnBlackScreen" &&
-          (this.EPe ||
-            (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(
-              this.ChildPopView?.PopItem.GetRootItem(),
-            )),
-          this.EPe?.PlayLevelSequenceByName("Start", !0),
+        "OnBlackScreen" === e &&
+          (this.ChildPopView?.PlayLevelSequenceByName("Start"),
           this.m5s?.SetResult(),
           this.ChildPopView?.PopItem.SetActive(!0),
           ComposeController_1.ComposeController.PlayCompositeEnterDisplay(
@@ -109,9 +103,9 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
           ComposeController_1.ComposeController.PlayCompositeLoopDisplay();
       }),
       (this.$Ge = (e) => {
-        e === "CompositeRewardView" &&
+        "CompositeRewardView" === e &&
           (this.ChildPopView?.PopItem.SetActive(!0),
-          this.EPe?.PlayLevelSequenceByName("Start"),
+          this.ChildPopView?.PlayLevelSequenceByName("Start"),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.HangPlotViewHud,
             !1,
@@ -120,11 +114,11 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
           ComposeController_1.ComposeController.PlayCompositeFlow(e));
       }),
       (this.z9e = () => {
-        const e = new ComposeMediumItemGrid_1.ComposeMediumItemGrid();
+        var e = new ComposeMediumItemGrid_1.ComposeMediumItemGrid();
         return e.BindOnExtendToggleStateChanged(this.HIi), e;
       }),
       (this.HIi = (e) => {
-        const t = e.Data;
+        var t = e.Data;
         let i = 0;
         switch ((this.BIi.DeselectCurrentGridProxy(), t.MainType)) {
           case 1:
@@ -148,7 +142,7 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
           this.xIi.RefreshTips(t));
       }),
       (this.PGt = () => {
-        const e = new MainTypeItem_1.MainTypeItem();
+        var e = new MainTypeItem_1.MainTypeItem();
         return e.SetMainTypeCallback(this.xGt), e;
       }),
       (this.xGt = (e) => {
@@ -201,7 +195,7 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
         }
       }),
       (this.kGt = (e) => {
-        const t = e.filter((e) => {
+        var t = e.filter((e) => {
           return (
             e.ExistStartTime <= 0 ||
             TimeUtil_1.TimeUtil.IsInTimeSpan(e.ExistStartTime, e.ExistEndTime)
@@ -221,7 +215,7 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
         }
         this.BIi.DeselectCurrentGridProxy(),
           this.HGt(),
-          t.length === 0
+          0 === t.length
             ? (this.GetItem(8).SetUIActive(!0), this.xIi.SetActive(!1))
             : (this.GetItem(8).SetUIActive(!1),
               this.xIi.SetActive(!0),
@@ -367,13 +361,11 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
       RedDotController_1.RedDotController.UnBindRedDot(
         "ComposeReagentProduction",
       ),
-      this.EPe?.Clear(),
-      (this.EPe = void 0),
       (this.m5s = void 0);
   }
   YGt() {
-    let e;
-    const t = this.ChildPopView.PopItem;
+    var e,
+      t = this.ChildPopView.PopItem;
     t &&
       !this.c4s &&
       ((e =
@@ -383,11 +375,11 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
   }
   yGt() {
     ModelManager_1.ModelManager.ComposeModel.CurrentComposeViewType = 0;
-    const t = this.wIi.GetLayoutItemList();
+    var t = this.wIi.GetLayoutItemList();
     let i = !1;
     for (let e = 0; e < t.length; e++) {
-      const s = t[e];
-      this.JGt(s.GetMainType()).length > 0 || e === t.length - 1
+      var s = t[e];
+      0 < this.JGt(s.GetMainType()).length || e === t.length - 1
         ? (s.SetUiActive(!0),
           i ||
             (this.wIi.SelectGridProxy(s.GridIndex),
@@ -454,7 +446,7 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
         (TimerSystem_1.TimerSystem.Remove(this.GOe), (this.GOe = void 0));
   }
   Dqt() {
-    const e = ModelManager_1.ModelManager.ComposeModel.GetRefreshLimitTime();
+    var e = ModelManager_1.ModelManager.ComposeModel.GetRefreshLimitTime();
     e
       ? (this.GetItem(12).SetUIActive(!0),
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(13), "RefreshTime", e))
@@ -466,11 +458,11 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
     );
   }
   GGt() {
-    const e = this.TGt();
+    var e = this.TGt();
     if (e)
       for (const t of e)
         if (
-          t.ExistEndTime > 0 &&
+          0 < t.ExistEndTime &&
           !TimeUtil_1.TimeUtil.IsInTimeSpan(t.ExistStartTime, t.ExistEndTime)
         )
           return !0;
@@ -497,13 +489,13 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
       .GetOwner()
       .GetUIItem()
       .SetUIActive(
-        ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType === 1,
+        1 === ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType,
       ),
       this.QIi();
   }
   QIi() {
-    let e;
-    ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType === 1 &&
+    var e;
+    1 === ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType &&
       ((e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
         "SP_ReagentProductionLevel",
       )),
@@ -539,7 +531,7 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
     );
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
-    let t;
+    var t;
     if (this.BIi?.DataInited)
       return (
         (t = Number(e[0])),
@@ -558,4 +550,4 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.ComposeRootView = ComposeRootView;
-// # sourceMappingURL=ComposeRootView.js.map
+//# sourceMappingURL=ComposeRootView.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const ConfigManager_1 = require("../Manager/ConfigManager");
-const SceneInteractionManager_1 = require("../Render/Scene/Interaction/SceneInteractionManager");
-const LevelGamePlayController_1 = require("./LevelGamePlayController");
+const UE = require("ue"),
+  ConfigManager_1 = require("../Manager/ConfigManager"),
+  SceneInteractionManager_1 = require("../Render/Scene/Interaction/SceneInteractionManager"),
+  LevelGamePlayController_1 = require("./LevelGamePlayController");
 class LevelGamePlayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static ApplyScanEffect(e) {
     return LevelGamePlayController_1.LevelGamePlayController.HandleScanResponse(
@@ -29,4 +29,4 @@ class LevelGamePlayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary 
   }
 }
 exports.default = LevelGamePlayBlueprintFunctionLibrary;
-// # sourceMappingURL=LevelGamePlayBlueprintFunctionLibrary.js.map
+//# sourceMappingURL=LevelGamePlayBlueprintFunctionLibrary.js.map

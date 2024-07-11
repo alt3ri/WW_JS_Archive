@@ -4,4 +4,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase");
 class MarkComponent extends UiPanelBase_1.UiPanelBase {}
 exports.MarkComponent = MarkComponent;
-// # sourceMappingURL=MarkComponent.js.map
+//# sourceMappingURL=MarkComponent.js.map

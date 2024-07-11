@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectLifeTimeController = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const EffectModelHelper_1 = require("./Data/EffectModelHelper");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  EffectModelHelper_1 = require("./Data/EffectModelHelper");
 class EffectLifeTimeController {
   constructor(t, i, s, h, e = () => {}, r = () => !0, o = 0, a = 1) {
     (this.DefaultPassTime = 0),
@@ -20,7 +20,7 @@ class EffectLifeTimeController {
       (this.WillLoop = !1),
       (this.WillEverPlay = !1),
       (this.StateInternal = 1),
-      h === 3 && (this.DefaultPassTime = o),
+      3 === h && (this.DefaultPassTime = o),
       (this.PassTimeInternal = 0),
       (this.TotalPassTimeInternal = 0),
       (this.TypeInternal = h),
@@ -44,7 +44,7 @@ class EffectLifeTimeController {
     return this.StateInternal;
   }
   get IsFinish() {
-    return this.StateInternal === 6;
+    return 6 === this.StateInternal;
   }
   get Type() {
     return this.TypeInternal;
@@ -76,12 +76,12 @@ class EffectLifeTimeController {
   }
   CalcLoopBehavior() {
     (this.WillLoop =
-      this.TypeInternal === 1 ||
-      (this.TypeInternal === 0 && this.LoopTimeInternal > 0)),
+      1 === this.TypeInternal ||
+      (0 === this.TypeInternal && 0 < this.LoopTimeInternal)),
       (this.WillEverPlay =
         this.WillLoop ||
-        (this.TypeInternal === 0 && this.LifeTimeStamp <= 0) ||
-        this.TypeInternal === 3);
+        (0 === this.TypeInternal && this.LifeTimeStamp <= 0) ||
+        3 === this.TypeInternal);
   }
   SetStateBuild() {
     this.StateInternal = 3;
@@ -97,8 +97,8 @@ class EffectLifeTimeController {
   }
   Update(t) {
     (this.TotalPassTimeInternal += t),
-      this.TypeInternal === 3
-        ? this.StateInternal === 5
+      3 === this.TypeInternal
+        ? 5 === this.StateInternal
           ? this.PrepareFinish()
           : ((EffectModelHelper_1.EffectTemp.Number = Math.min(
               t * this.ManualSpeed,
@@ -114,17 +114,17 @@ class EffectLifeTimeController {
   }
   SeekTo(t, i = !1) {
     (this.PassTimeInternal = t),
-      this.StateInternal === 4 &&
+      4 === this.StateInternal &&
         this.PassTimeInternal >= this.LoopTimeStamp &&
         this.WillLoop &&
         this.Fge(),
       i &&
-        (!this.WillEverPlay || this.StateInternal >= 5) &&
+        (!this.WillEverPlay || 5 <= this.StateInternal) &&
         this.PassTimeInternal >= this.LifeTimeStamp &&
         this.PrepareFinish();
   }
   Fge() {
-    let t, i;
+    var t, i;
     this.LoopTimeInternal <= 0.01
       ? (this.PassTimeInternal = this.StartTimeInternal)
       : this.PassTimeInternal >= this.LoopTimeStamp + this.LoopTimeInternal
@@ -136,7 +136,7 @@ class EffectLifeTimeController {
         : (this.PassTimeInternal -= this.LoopTimeInternal);
   }
   Stop(t = !1) {
-    this.StateInternal >= 5 ||
+    5 <= this.StateInternal ||
       ((this.StateInternal = 5),
       t && (this.PassTimeInternal = this.LoopTimeStamp));
   }
@@ -149,4 +149,4 @@ class EffectLifeTimeController {
   }
 }
 exports.EffectLifeTimeController = EffectLifeTimeController;
-// # sourceMappingURL=EffectLifeTimeController.js.map
+//# sourceMappingURL=EffectLifeTimeController.js.map

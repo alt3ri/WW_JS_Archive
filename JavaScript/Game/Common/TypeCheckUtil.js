@@ -14,22 +14,21 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.isArray =
       void 0);
 const checkType = (s) => (e) =>
-  Object.prototype.toString.call(e).slice(8, -1).toLowerCase() ===
-  s.toLowerCase();
-const isNumber = checkType("Number");
-const isArray = ((exports.isNumber = isNumber), checkType("Array"));
-const isBoolean = ((exports.isArray = isArray), checkType("Boolean"));
-const isAsyncFunction =
-  ((exports.isBoolean = isBoolean), checkType("AsyncFunction"));
-const isPromise =
-  ((exports.isAsyncFunction = isAsyncFunction), checkType("Promise"));
-const isObject = ((exports.isPromise = isPromise), checkType("Object"));
-const isUndefined = ((exports.isObject = isObject), checkType("Undefined"));
-const isString = ((exports.isUndefined = isUndefined), checkType("String"));
-const isSymbol = ((exports.isString = isString), checkType("Symbol"));
-const isDate = ((exports.isSymbol = isSymbol), checkType("Date"));
-const isError = ((exports.isDate = isDate), checkType("Error"));
-const isFunction =
-  ((exports.isError = isError), (e) => typeof e === "function");
+    Object.prototype.toString.call(e).slice(8, -1).toLowerCase() ===
+    s.toLowerCase(),
+  isNumber = checkType("Number"),
+  isArray = ((exports.isNumber = isNumber), checkType("Array")),
+  isBoolean = ((exports.isArray = isArray), checkType("Boolean")),
+  isAsyncFunction =
+    ((exports.isBoolean = isBoolean), checkType("AsyncFunction")),
+  isPromise =
+    ((exports.isAsyncFunction = isAsyncFunction), checkType("Promise")),
+  isObject = ((exports.isPromise = isPromise), checkType("Object")),
+  isUndefined = ((exports.isObject = isObject), checkType("Undefined")),
+  isString = ((exports.isUndefined = isUndefined), checkType("String")),
+  isSymbol = ((exports.isString = isString), checkType("Symbol")),
+  isDate = ((exports.isSymbol = isSymbol), checkType("Date")),
+  isError = ((exports.isDate = isDate), checkType("Error")),
+  isFunction = ((exports.isError = isError), (e) => "function" == typeof e);
 exports.isFunction = isFunction;
-// # sourceMappingURL=TypeCheckUtil.js.map
+//# sourceMappingURL=TypeCheckUtil.js.map

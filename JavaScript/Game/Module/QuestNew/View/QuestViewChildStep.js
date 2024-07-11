@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestViewChildStep = void 0);
-const ue_1 = require("ue");
-const TreeStepWithStatus_1 = require("../../GeneralLogicTree/View/TreeStep/TreeStepWithStatus");
+const ue_1 = require("ue"),
+  TreeStepWithStatus_1 = require("../../GeneralLogicTree/View/TreeStep/TreeStepWithStatus");
 class QuestViewChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
   OnRegisterComponent() {
     super.OnRegisterComponent(),
@@ -12,7 +12,7 @@ class QuestViewChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
     super.OnStart();
   }
   UpdateStepInfo() {
-    const e = super.UpdateStepInfo();
+    var e = super.UpdateStepInfo();
     return this.GetSprite(5)?.SetUIActive(!e), e;
   }
   IsShowNodeStatus() {
@@ -20,4 +20,4 @@ class QuestViewChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
   }
 }
 exports.QuestViewChildStep = QuestViewChildStep;
-// # sourceMappingURL=QuestViewChildStep.js.map
+//# sourceMappingURL=QuestViewChildStep.js.map

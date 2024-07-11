@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.getLangInterface = void 0);
-const CommonParamLang_1 = require("./ConfigCommon/CommonParamLang");
-const CustomSequenceLang_1 = require("./ConfigQuery/CustomSequenceLang");
-const FlowTextLang_1 = require("./ConfigQuery/FlowTextLang");
-const HotPatchTextLang_1 = require("./ConfigQuery/HotPatchTextLang");
-const MonsterDisplayLang_1 = require("./ConfigQuery/MonsterDisplayLang");
-const MultiTextLang_1 = require("./ConfigQuery/MultiTextLang");
-const OccupationConfigLang_1 = require("./ConfigQuery/OccupationConfigLang");
-const SpeakerLang_1 = require("./ConfigQuery/SpeakerLang");
-const SubtitleTextLang_1 = require("./ConfigQuery/SubtitleTextLang");
-const TidTextLang_1 = require("./ConfigQuery/TidTextLang");
-const langMap = new Map();
+const CommonParamLang_1 = require("./ConfigCommon/CommonParamLang"),
+  CustomSequenceLang_1 = require("./ConfigQuery/CustomSequenceLang"),
+  FlowTextLang_1 = require("./ConfigQuery/FlowTextLang"),
+  HotPatchTextLang_1 = require("./ConfigQuery/HotPatchTextLang"),
+  MonsterDisplayLang_1 = require("./ConfigQuery/MonsterDisplayLang"),
+  MultiTextLang_1 = require("./ConfigQuery/MultiTextLang"),
+  OccupationConfigLang_1 = require("./ConfigQuery/OccupationConfigLang"),
+  SpeakerLang_1 = require("./ConfigQuery/SpeakerLang"),
+  SubtitleTextLang_1 = require("./ConfigQuery/SubtitleTextLang"),
+  TidTextLang_1 = require("./ConfigQuery/TidTextLang"),
+  langMap = new Map();
 function getLangInterface(e) {
   return langMap.get(e);
 }
@@ -29,4 +29,4 @@ function getLangInterface(e) {
   langMap.set("SubtitleText", SubtitleTextLang_1.configSubtitleTextLang),
   langMap.set("TidText", TidTextLang_1.configTidTextLang),
   langMap.set("CommonParam", CommonParamLang_1.configCommonParamLang);
-// # sourceMappingURL=ConfigDefine.js.map
+//# sourceMappingURL=ConfigDefine.js.map

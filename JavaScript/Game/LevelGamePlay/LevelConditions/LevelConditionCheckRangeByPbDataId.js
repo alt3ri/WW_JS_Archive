@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckRangeByPbDataId = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const Global_1 = require("../../Global");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  Global_1 = require("../../Global"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionCheckRangeByPbDataId extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, t, ...o) {
     return !(
       !o?.length ||
-      (e.LimitParams.size !== 2
+      (2 !== e.LimitParams.size
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
@@ -30,4 +30,4 @@ class LevelConditionCheckRangeByPbDataId extends LevelGeneralBase_1.LevelConditi
   }
 }
 exports.LevelConditionCheckRangeByPbDataId = LevelConditionCheckRangeByPbDataId;
-// # sourceMappingURL=LevelConditionCheckRangeByPbDataId.js.map
+//# sourceMappingURL=LevelConditionCheckRangeByPbDataId.js.map

@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.EPlotHandBookManualState =
       void 0);
 const CsvLoader_1 = require("./CsvLoader");
-let EPlotHandBookManualState, EPlotHandBookModifyState;
+var EPlotHandBookManualState, EPlotHandBookModifyState;
 !(function (e) {
   (e.Delete = "D"), (e.Add = "A"), (e.Empty = "");
 })(
@@ -100,4 +100,4 @@ class PlotHandBookCsvLoader extends CsvLoader_1.CsvLoader {
 exports.PlotHandBookCsvLoader = PlotHandBookCsvLoader;
 class PlotHandBookCsv extends CsvLoader_1.GlobalCsv {}
 exports.PlotHandBookCsv = PlotHandBookCsv;
-// # sourceMappingURL=PlotHandBookCsv.js.map
+//# sourceMappingURL=PlotHandBookCsv.js.map

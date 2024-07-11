@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelGeneralCommons = void 0);
-const Log_1 = require("../../Core/Common/Log");
-const ConditionGroupById_1 = require("../../Core/Define/ConfigQuery/ConditionGroupById");
-const FNameUtil_1 = require("../../Core/Utils/FNameUtil");
-const GameplayTagUtils_1 = require("../../Core/Utils/GameplayTagUtils");
-const IAction_1 = require("../../UniverseEditor/Interface/IAction");
-const IComponent_1 = require("../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../Manager/ControllerHolder");
-const ModelManager_1 = require("../Manager/ModelManager");
-const CharacterController_1 = require("../NewWorld/Character/CharacterController");
+const Log_1 = require("../../Core/Common/Log"),
+  ConditionGroupById_1 = require("../../Core/Define/ConfigQuery/ConditionGroupById"),
+  FNameUtil_1 = require("../../Core/Utils/FNameUtil"),
+  GameplayTagUtils_1 = require("../../Core/Utils/GameplayTagUtils"),
+  IAction_1 = require("../../UniverseEditor/Interface/IAction"),
+  IComponent_1 = require("../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  CharacterController_1 = require("../NewWorld/Character/CharacterController");
 class LevelGeneralCommons {
   static Init() {
     (this.IUe = new Array()), (this.TUe = new Array());
@@ -56,8 +56,8 @@ class LevelGeneralCommons {
           t.push(CharacterController_1.CharacterController.GetActor(r));
   }
   static UpdateEntityTag(e, t, r) {
-    let a;
-    let o = ModelManager_1.ModelManager.CreatureModel.GetEntityById(e);
+    var a,
+      o = ModelManager_1.ModelManager.CreatureModel.GetEntityById(e);
     o
       ? ((o = CharacterController_1.CharacterController.GetActor(o)) ||
           (Log_1.Log.CheckWarn() &&
@@ -71,7 +71,7 @@ class LevelGeneralCommons {
         (a = FNameUtil_1.FNameUtil.GetDynamicFName(t)),
         r
           ? (o.Tags.Add(a), this.AddPublicTag(t, o))
-          : (r = o.Tags.FindIndex(a)) !== -1 &&
+          : -1 !== (r = o.Tags.FindIndex(a)) &&
             (o.Tags.RemoveAt(r), this.RemovePublicTag(t, o)))
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
@@ -114,18 +114,18 @@ class LevelGeneralCommons {
         );
   }
   static LUe(e, t, r) {
-    const a = t?.Entity?.GetComponent(177);
+    var a = t?.Entity?.GetComponent(177);
     if (a) {
-      const o = GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(r);
-      const n = t.Entity.GetComponent(0)?.GetPbEntityInitData();
-      const i = (0, IComponent_1.getComponent)(
-        n.ComponentsData,
-        "EntityStateComponent",
-      );
+      var o = GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(r),
+        n = t.Entity.GetComponent(0)?.GetPbEntityInitData(),
+        i = (0, IComponent_1.getComponent)(
+          n.ComponentsData,
+          "EntityStateComponent",
+        );
       if ((0, IAction_1.isStateTypeContainsState)(i.Type, o)) {
         for (const g of (0, IAction_1.getStatesByType)(i.Type)) {
-          var l = (0, IAction_1.getEntityStateTag)(i.Type, g);
-          var l = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(l);
+          var l = (0, IAction_1.getEntityStateTag)(i.Type, g),
+            l = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(l);
           a.RemoveServerTagByIdLocal(l, "ChangePerformanceTag");
         }
         a.AddServerTagByIdLocal(r, "ChangePerformanceTag"),
@@ -156,4 +156,4 @@ class LevelGeneralCommons {
 }
 ((exports.LevelGeneralCommons = LevelGeneralCommons).IUe = void 0),
   (LevelGeneralCommons.TUe = void 0);
-// # sourceMappingURL=LevelGeneralCommons.js.map
+//# sourceMappingURL=LevelGeneralCommons.js.map

@@ -1,52 +1,56 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, s) {
-    let a;
-    const r = arguments.length;
-    let h =
-      r < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var a,
+      r = arguments.length,
+      h =
+        r < 3
+          ? e
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(e, i))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       h = Reflect.decorate(t, e, i, s);
     else
-      for (let n = t.length - 1; n >= 0; n--)
-        (a = t[n]) && (h = (r < 3 ? a(h) : r > 3 ? a(e, i, h) : a(e, i)) || h);
-    return r > 3 && h && Object.defineProperty(e, i, h), h;
+      for (var n = t.length - 1; 0 <= n; n--)
+        (a = t[n]) && (h = (r < 3 ? a(h) : 3 < r ? a(e, i, h) : a(e, i)) || h);
+    return 3 < r && h && Object.defineProperty(e, i, h), h;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BaseAnimationComponent = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../../GlobalData");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const CharacterAnimOptimizationSetting_1 = require("../../../Setting/CharacterAnimOptimizationSetting");
-const CharacterNameDefines_1 = require("../CharacterNameDefines");
-const SPLIT_LINE = -90;
-const FORCE_DISABLE_ANIM_OPTIMIZATION_TIME = 100;
-const animAssetsSetRef = (0, puerts_1.$ref)(UE.NewSet(UE.AnimationAsset));
-const RUN_F = "Run_F";
-const RUN_POSE_F = "Run_Pose_F";
-const WALK_F = "Walk_F";
-const WALK_POSE_F = "Walk_Pose_F";
-const xAngleLimits = [
-  -31 * MathUtils_1.MathUtils.DegToRad,
-  31 * MathUtils_1.MathUtils.DegToRad,
-];
-const yAngleLimits = [
-  -18 * MathUtils_1.MathUtils.DegToRad,
-  31 * MathUtils_1.MathUtils.DegToRad,
-];
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  CharacterAnimOptimizationSetting_1 = require("../../../Setting/CharacterAnimOptimizationSetting"),
+  CharacterNameDefines_1 = require("../CharacterNameDefines"),
+  SPLIT_LINE = -90,
+  FORCE_DISABLE_ANIM_OPTIMIZATION_TIME = 100,
+  animAssetsSetRef = (0, puerts_1.$ref)(UE.NewSet(UE.AnimationAsset)),
+  RUN_F = "Run_F",
+  RUN_POSE_F = "Run_Pose_F",
+  WALK_F = "Walk_F",
+  WALK_POSE_F = "Walk_Pose_F",
+  xAngleLimits = [
+    -31 * MathUtils_1.MathUtils.DegToRad,
+    31 * MathUtils_1.MathUtils.DegToRad,
+  ],
+  yAngleLimits = [
+    -18 * MathUtils_1.MathUtils.DegToRad,
+    31 * MathUtils_1.MathUtils.DegToRad,
+  ];
 let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -112,7 +116,7 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
       (this.SightTargetItemId = t ? t.Entity.Id : 0);
   }
   GetSightTargetItem() {
-    let t;
+    var t;
     if (this.SightTargetItemId)
       return (
         (t = EntitySystem_1.EntitySystem.GetComponent(
@@ -140,7 +144,7 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
   GetMontageResPathByName(t) {
     return !t || t.includes("/")
       ? t
-      : this.ActorComp.ModelResPath && this.ActorComp.ModelResPath.length > 0
+      : this.ActorComp.ModelResPath && 0 < this.ActorComp.ModelResPath.length
         ? this.ActorComp.ModelResPath + `/${t}.` + t
         : void 0;
   }
@@ -148,19 +152,19 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
     if (
       GlobalData_1.GlobalData.IsPlayInEditor &&
       this.ActorComp?.Valid &&
-      this.Mesh.AnimationMode !== 1 &&
+      1 !== this.Mesh.AnimationMode &&
       this.ActorComp.CreatureData.GetEntityType() ===
         Protocol_1.Aki.Protocol.HBs.Proto_Npc
     ) {
-      const t = this.MainAnimInstance;
+      var t = this.MainAnimInstance;
       if (t?.IsValid()) {
         (0, puerts_1.$unref)(animAssetsSetRef).Empty(),
           UE.KuroStaticLibrary.GetAnimAssetsByAnimInstance(t, animAssetsSetRef);
-        const e = (0, puerts_1.$unref)(animAssetsSetRef);
-        if (e.Num() !== 0)
+        var e = (0, puerts_1.$unref)(animAssetsSetRef);
+        if (0 !== e.Num())
           for (let t = 0; t < e.Num(); ++t) {
-            var i;
-            let s = e.Get(t);
+            var i,
+              s = e.Get(t);
             s.IsA(UE.AnimSequence.StaticClass()) &&
               ((i = (s = s).GetName()).includes(RUN_F) ||
                 i.includes(RUN_POSE_F) ||
@@ -201,32 +205,32 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
       this.eFr();
   }
   ClampSightDirect(t, e) {
-    var i = t.Z / t.Size();
-    var s = MathUtils_1.MathUtils.Clamp(Math.asin(i), this.Z2r[0], this.Z2r[1]);
-    var i = Math.sin(s);
-    var s = Math.cos(s);
-    var a = t.Y;
-    var t = -t.X;
-    const r =
-      Math.abs(a) > MathUtils_1.MathUtils.KindaSmallNumber ||
-      Math.abs(t) > MathUtils_1.MathUtils.KindaSmallNumber
-        ? MathUtils_1.MathUtils.Clamp(
-            Math.atan2(t, a),
-            this.z2r[0],
-            this.z2r[1],
-          )
-        : 0;
-    var a = Math.cos(r) * s;
-    var t = Math.sin(r) * s;
+    var i = t.Z / t.Size(),
+      s = MathUtils_1.MathUtils.Clamp(Math.asin(i), this.Z2r[0], this.Z2r[1]),
+      i = Math.sin(s),
+      s = Math.cos(s),
+      a = t.Y,
+      t = -t.X,
+      r =
+        Math.abs(a) > MathUtils_1.MathUtils.KindaSmallNumber ||
+        Math.abs(t) > MathUtils_1.MathUtils.KindaSmallNumber
+          ? MathUtils_1.MathUtils.Clamp(
+              Math.atan2(t, a),
+              this.z2r[0],
+              this.z2r[1],
+            )
+          : 0,
+      a = Math.cos(r) * s,
+      t = Math.sin(r) * s;
     (e.X = -t), (e.Y = a), (e.Z = i);
   }
   eFr() {
-    const e = this.ActorComp.Actor.K2_GetComponentsByClass(
+    var e = this.ActorComp.Actor.K2_GetComponentsByClass(
       UE.SkeletalMeshComponent.StaticClass(),
     );
     for (let t = 0; t < e.Num(); ++t) {
-      var i;
-      const s = e.Get(t);
+      var i,
+        s = e.Get(t);
       s instanceof UE.SkeletalMeshComponent &&
         ((i = s.GetAnimInstance()) &&
           i instanceof UE.KuroAnimInstance &&
@@ -254,15 +258,15 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
       );
   }
   static LerpDirect2dByMaxAngle(t, e, i, s) {
-    let a = MathUtils_1.MathUtils.GetAngleByVector2D(t);
-    let r =
-      (a < SPLIT_LINE && (a += 360),
-      MathUtils_1.MathUtils.GetAngleByVector2D(e));
+    let a = MathUtils_1.MathUtils.GetAngleByVector2D(t),
+      r =
+        (a < SPLIT_LINE && (a += 360),
+        MathUtils_1.MathUtils.GetAngleByVector2D(e));
     r < SPLIT_LINE && (r += 360);
     (t = Math.asin(t.Z) * MathUtils_1.MathUtils.RadToDeg),
       (e = Math.asin(e.Z) * MathUtils_1.MathUtils.RadToDeg);
-    let h = r - a;
-    let n = e - t;
+    let h = r - a,
+      n = e - t;
     (e = Math.sqrt(h * h + n * n)),
       i < e && ((h *= i / e), (n *= i / e)),
       (i = a + h),
@@ -273,18 +277,18 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
       (s.Y = Math.sin(i * MathUtils_1.MathUtils.DegToRad) * t);
   }
   static LerpVector2dByAlpha(t, e, i, s) {
-    let a = MathUtils_1.MathUtils.GetAngleByVector2D(t);
-    let r =
-      (a < SPLIT_LINE && (a += 360),
-      MathUtils_1.MathUtils.GetAngleByVector2D(e));
+    let a = MathUtils_1.MathUtils.GetAngleByVector2D(t),
+      r =
+        (a < SPLIT_LINE && (a += 360),
+        MathUtils_1.MathUtils.GetAngleByVector2D(e));
     r < SPLIT_LINE && (r += 360);
-    var t = Math.asin(t.Z) * MathUtils_1.MathUtils.RadToDeg;
-    var e = Math.asin(e.Z) * MathUtils_1.MathUtils.RadToDeg;
-    var h = r - a;
-    var e = e - t;
-    var i = ((h *= i), (e *= i), a + h);
-    var h = (t + e) * MathUtils_1.MathUtils.DegToRad;
-    var t = ((s.Z = Math.sin(h)), Math.cos(h));
+    var t = Math.asin(t.Z) * MathUtils_1.MathUtils.RadToDeg,
+      e = Math.asin(e.Z) * MathUtils_1.MathUtils.RadToDeg,
+      h = r - a,
+      e = e - t,
+      i = ((h *= i), (e *= i), a + h),
+      h = (t + e) * MathUtils_1.MathUtils.DegToRad,
+      t = ((s.Z = Math.sin(h)), Math.cos(h));
     (s.X = Math.cos(i * MathUtils_1.MathUtils.DegToRad) * t),
       (s.Y = Math.sin(i * MathUtils_1.MathUtils.DegToRad) * t);
   }
@@ -342,9 +346,9 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
     this.MainAnimInstanceInternal.Montage_Stop(t ?? 0, e);
   }
   ForceStopWithBlendOut(t, e) {
-    var i = this.MainAnimInstanceInternal.Montage_GetPosition(e);
-    var i = e.SequenceLength - i;
-    var t = 1e3 * t;
+    var i = this.MainAnimInstanceInternal.Montage_GetPosition(e),
+      i = e.SequenceLength - i,
+      t = 1e3 * t;
     t < i && this.MainAnimInstanceInternal.Montage_SetPlayRate(e, i / t),
       this.MainAnimInstanceInternal.Montage_SetNextSection(
         CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
@@ -420,14 +424,14 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
       this.RefreshAnimOptimization());
   }
   RefreshAnimOptimization() {
-    const e = this.Entity.GetComponent(158)?.IsInFighting ?? !1;
-    const i = this.ForceDisableAnimOptimizationSet.size > 0;
-    const s = i || e;
-    const a = this.Actor.K2_GetComponentsByClass(
-      UE.SkeletalMeshComponent.StaticClass(),
-    );
+    var e = this.Entity.GetComponent(158)?.IsInFighting ?? !1,
+      i = 0 < this.ForceDisableAnimOptimizationSet.size,
+      s = i || e,
+      a = this.Actor.K2_GetComponentsByClass(
+        UE.SkeletalMeshComponent.StaticClass(),
+      );
     for (let t = 0; t < a.Num(); t++) {
-      const r = a.Get(t);
+      var r = a.Get(t);
       (r.bEnableUpdateRateOptimizations = !s),
         (r.VisibilityBasedAnimTickOption =
           this.RefreshVisibilityBasedAnimTickOption(i, e));
@@ -453,4 +457,4 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
   BaseAnimationComponent,
 )),
   (exports.BaseAnimationComponent = BaseAnimationComponent);
-// # sourceMappingURL=BaseAnimationComponent.js.map
+//# sourceMappingURL=BaseAnimationComponent.js.map

@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HandBookRoleView = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../Ui/Common/PopupCaptionItem");
-const FilterSortEntrance_1 = require("../Common/FilterSort/FilterSortEntrance");
-const RoleRobotData_1 = require("../RoleUi/RoleData/RoleRobotData");
-const RoleDefine_1 = require("../RoleUi/RoleDefine");
-const UiCameraAnimationManager_1 = require("../UiCameraAnimation/UiCameraAnimationManager");
-const UiSceneManager_1 = require("../UiComponent/UiSceneManager");
-const LoopScrollView_1 = require("../Util/ScrollView/LoopScrollView");
-const HandBookRoleMediumItemGird_1 = require("./HandBookRoleMediumItemGird");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../Ui/Common/PopupCaptionItem"),
+  FilterSortEntrance_1 = require("../Common/FilterSort/FilterSortEntrance"),
+  RoleRobotData_1 = require("../RoleUi/RoleData/RoleRobotData"),
+  RoleDefine_1 = require("../RoleUi/RoleDefine"),
+  UiCameraAnimationManager_1 = require("../UiCameraAnimation/UiCameraAnimationManager"),
+  UiSceneManager_1 = require("../UiComponent/UiSceneManager"),
+  LoopScrollView_1 = require("../Util/ScrollView/LoopScrollView"),
+  HandBookRoleMediumItemGird_1 = require("./HandBookRoleMediumItemGird");
 class HandBookRoleView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -29,7 +29,7 @@ class HandBookRoleView extends UiViewBase_1.UiViewBase {
         (this.ggo = e), this.vgo(e);
       }),
       (this.z9e = () => {
-        const e = new HandBookRoleMediumItemGird_1.HandBookRoleMediumItemGird();
+        var e = new HandBookRoleMediumItemGird_1.HandBookRoleMediumItemGird();
         return (
           e.BindOnExtendToggleStateChanged(this.U4e),
           e.BindOnCanExecuteChange(this.OBt),
@@ -37,21 +37,21 @@ class HandBookRoleView extends UiViewBase_1.UiViewBase {
         );
       }),
       (this.U4e = (e) => {
-        const i = e.State;
-        var e = e.Data;
-        i === 1 &&
+        var i = e.State,
+          e = e.Data;
+        1 === i &&
           (this.RoleScrollView.DeselectCurrentGridProxy(), this.Mgo(e));
       }),
       (this.OBt = (e, i, t) => {
         return !(
           (UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingAnimation() &&
             void 0 !== this.s5i &&
-            t === 0) ||
-          (t === 1 && this.s5i === e.GetDataId())
+            0 === t) ||
+          (1 === t && this.s5i === e.GetDataId())
         );
       }),
       (this.Zho = () => {
-        const e = [
+        var e = [
           ConfigManager_1.ConfigManager.RoleConfig?.GetRoleConfig(this.s5i)
             ?.TrialRole,
         ];
@@ -94,13 +94,13 @@ class HandBookRoleView extends UiViewBase_1.UiViewBase {
         this.GetItem(4),
         this.pgo,
       ));
-    const e = [];
+    var e = [];
     for (const t of ConfigManager_1.ConfigManager.RoleConfig?.GetRoleList().filter(
       (e) =>
-        e.RoleType === 1 &&
+        1 === e.RoleType &&
         !ModelManager_1.ModelManager.RoleModel.IsMainRole(e.Id),
     )) {
-      const i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(t.Id);
+      var i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(t.Id);
       e.push(i || new RoleRobotData_1.RoleRobotData(t.TrialRole));
     }
     e.push(
@@ -133,17 +133,17 @@ class HandBookRoleView extends UiViewBase_1.UiViewBase {
       });
   }
   Mgo(e, i = !1) {
-    const t = this.ggo.indexOf(e);
-    t >= 0 &&
+    var t = this.ggo.indexOf(e);
+    0 <= t &&
       (i && this.RoleScrollView.ScrollToGridIndex(t),
       this.RoleScrollView.SelectGridProxy(t),
       this.Sgo(e));
   }
   Sgo(e) {
-    let i;
-    let t;
-    const o = e.GetDataId();
-    const r = this.s5i ?? 0;
+    var i,
+      t,
+      o = e.GetDataId(),
+      r = this.s5i ?? 0;
     this.s5i !== o &&
       ((this.s5i = o),
       this.CNt(e.GetName()),
@@ -169,7 +169,7 @@ class HandBookRoleView extends UiViewBase_1.UiViewBase {
       ControllerHolder_1.ControllerHolder.RoleController.PlayRoleMontage(
         3,
         !1,
-        r > 0,
+        0 < r,
       ));
   }
   CNt(e) {
@@ -181,4 +181,4 @@ class HandBookRoleView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.HandBookRoleView = HandBookRoleView;
-// # sourceMappingURL=HandBookRoleView.js.map
+//# sourceMappingURL=HandBookRoleView.js.map

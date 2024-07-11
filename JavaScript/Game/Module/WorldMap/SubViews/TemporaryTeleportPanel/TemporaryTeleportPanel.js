@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TemporaryTeleportPanel = void 0);
-const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ButtonAndTextItem_1 = require("../../../Common/Button/ButtonAndTextItem");
-const MapController_1 = require("../../../Map/Controller/MapController");
-const WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi");
-const WorldMapDefine_1 = require("../../WorldMapDefine");
+const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ButtonAndTextItem_1 = require("../../../Common/Button/ButtonAndTextItem"),
+  MapController_1 = require("../../../Map/Controller/MapController"),
+  WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
+  WorldMapDefine_1 = require("../../WorldMapDefine");
 class TemporaryTeleportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
@@ -71,23 +71,25 @@ class TemporaryTeleportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       ),
     );
     var e =
-      ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
-        "TeleportFastMove",
-      );
-    var e =
-      (this.UUt.SetText(MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e)),
-      ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel()
-        ? this.g2o.SetActive(
-            ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam(),
-          )
-        : this.g2o.SetActive(!0),
-      ModelManager_1.ModelManager.MapModel?.GetMarkExtraShowState(
-        this.dko.MarkId,
-      ));
+        ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
+          "TeleportFastMove",
+        ),
+      e =
+        (this.UUt.SetText(
+          MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e),
+        ),
+        ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel()
+          ? this.g2o.SetActive(
+              ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam(),
+            )
+          : this.g2o.SetActive(!0),
+        ModelManager_1.ModelManager.MapModel?.GetMarkExtraShowState(
+          this.dko.MarkId,
+        ));
     e.ShowFlag === Protocol_1.Aki.Protocol.BNs.Proto_ShowDisable
       ? this.UUt.RefreshEnable(!1)
       : this.UUt.RefreshEnable(!0);
   }
 }
 exports.TemporaryTeleportPanel = TemporaryTeleportPanel;
-// # sourceMappingURL=TemporaryTeleportPanel.js.map
+//# sourceMappingURL=TemporaryTeleportPanel.js.map

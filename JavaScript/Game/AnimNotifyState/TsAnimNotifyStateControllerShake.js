@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const Global_1 = require("../Global");
-const ModelManager_1 = require("../Manager/ModelManager");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  Global_1 = require("../Global"),
+  ModelManager_1 = require("../Manager/ModelManager");
 class TsAnimNotifyStateControllerShake extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -47,4 +47,4 @@ class TsAnimNotifyStateControllerShake extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateControllerShake;
-// # sourceMappingURL=TsAnimNotifyStateControllerShake.js.map
+//# sourceMappingURL=TsAnimNotifyStateControllerShake.js.map

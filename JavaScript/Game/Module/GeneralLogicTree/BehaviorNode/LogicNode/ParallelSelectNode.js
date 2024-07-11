@@ -8,4 +8,4 @@ class ParallelSelectNode extends LogicNodeBase_1.LogicNodeBase {
   }
 }
 exports.ParallelSelectNode = ParallelSelectNode;
-// # sourceMappingURL=ParallelSelectNode.js.map
+//# sourceMappingURL=ParallelSelectNode.js.map

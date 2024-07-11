@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConsumeItemUtil = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ConsumeItem_1 = require("./ConsumeItem");
+const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ConsumeItem_1 = require("./ConsumeItem");
 class ConsumeItemUtil {
   static GetConsumeItemData(e, a) {
     e = ModelManager_1.ModelManager.InventoryModel.GetItemDataBase(e)[0];
     if (e)
-      return e.GetType() === 2
+      return 2 === e.GetType()
         ? this.WeaponConsumeData(e)
         : this.MaterialConsumeData(e, a);
   }
   static WeaponConsumeData(e) {
-    const a = new ConsumeItem_1.ConsumeItemData();
-    const t = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-      e.GetUniqueId(),
-    );
+    var a = new ConsumeItem_1.ConsumeItemData(),
+      t = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
+        e.GetUniqueId(),
+      );
     return (
       (a.IncId = e.GetUniqueId()),
       (a.ItemId = e.GetConfigId()),
@@ -28,7 +28,7 @@ class ConsumeItemUtil {
     );
   }
   static MaterialConsumeData(e, a) {
-    const t = new ConsumeItem_1.ConsumeItemData();
+    var t = new ConsumeItem_1.ConsumeItemData();
     return (
       (t.IncId = e.GetUniqueId()),
       (t.ItemId = e.GetConfigId()),
@@ -38,4 +38,4 @@ class ConsumeItemUtil {
   }
 }
 exports.ConsumeItemUtil = ConsumeItemUtil;
-// # sourceMappingURL=ConsumeItemUtil.js.map
+//# sourceMappingURL=ConsumeItemUtil.js.map

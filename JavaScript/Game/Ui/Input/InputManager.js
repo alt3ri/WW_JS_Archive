@@ -1,25 +1,25 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputManager = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Global_1 = require("../../../Game/Global");
-const ModelManager_1 = require("../../../Game/Manager/ModelManager");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LevelEventLockInputState_1 = require("../../LevelGamePlay/LevelEventLockInputState");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const UiConfig_1 = require("../Define/UiConfig");
-const UiLayerType_1 = require("../Define/UiLayerType");
-const InputDistributeController_1 = require("../InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../InputDistribute/InputMappingsDefine");
-const LguiEventSystemManager_1 = require("../LguiEventSystem/LguiEventSystemManager");
-const UiManager_1 = require("../UiManager");
-const Input_1 = require("./Input");
-const InputDefine_1 = require("./InputDefine");
-const InputViewRecord_1 = require("./InputViewRecord");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Global_1 = require("../../../Game/Global"),
+  ModelManager_1 = require("../../../Game/Manager/ModelManager"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LevelEventLockInputState_1 = require("../../LevelGamePlay/LevelEventLockInputState"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  UiConfig_1 = require("../Define/UiConfig"),
+  UiLayerType_1 = require("../Define/UiLayerType"),
+  InputDistributeController_1 = require("../InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../InputDistribute/InputMappingsDefine"),
+  LguiEventSystemManager_1 = require("../LguiEventSystem/LguiEventSystemManager"),
+  UiManager_1 = require("../UiManager"),
+  Input_1 = require("./Input"),
+  InputDefine_1 = require("./InputDefine"),
+  InputViewRecord_1 = require("./InputViewRecord");
 class InputManager {
   static Init() {
     EventSystem_1.EventSystem.Add(
@@ -175,7 +175,7 @@ class InputManager {
     InputManager.Scr(e), InputManager.Ecr(e), InputManager.ycr(e);
   }
   static vcr(e) {
-    let n = UiConfig_1.UiConfig.TryGetViewInfo(e);
+    var n = UiConfig_1.UiConfig.TryGetViewInfo(e);
     n &&
       !n.CanOpenViewByShortcutKey &&
       ((n = this.Icr.Add(e)), Log_1.Log.CheckInfo()) &&
@@ -189,7 +189,7 @@ class InputManager {
       );
   }
   static Ecr(e) {
-    let n;
+    var n;
     this.Icr.Has(e) &&
       ((n = this.Icr.Remove(e)), Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info(
@@ -217,8 +217,8 @@ class InputManager {
     }
   }
   static fcr(e) {
-    let n;
-    e === "BattleView"
+    var n;
+    "BattleView" === e
       ? InputManager.Rcr()
       : InputManager.Ucr() &&
         ((n = InputManager.IsShowMouseCursor()), InputManager.Acr(e)) &&
@@ -227,7 +227,7 @@ class InputManager {
         InputManager.SetEventDataPrevPositionToCenter());
   }
   static pcr(e) {
-    const n = UiConfig_1.UiConfig.TryGetViewInfo(e);
+    var n = UiConfig_1.UiConfig.TryGetViewInfo(e);
     n &&
       n.IsShortKeysExitView &&
       n.Type !== UiLayerType_1.ELayerType.Normal &&
@@ -237,11 +237,11 @@ class InputManager {
     this.Pcr.Remove(e);
   }
   static Acr(e) {
-    let n;
-    const t = UiConfig_1.UiConfig.TryGetViewInfo(e);
+    var n,
+      t = UiConfig_1.UiConfig.TryGetViewInfo(e);
     return !(
       !t ||
-      (t.ShowCursorType === 2
+      (2 === t.ShowCursorType
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "InputManager",
@@ -250,7 +250,7 @@ class InputManager {
               ["viewName", e],
             ),
           1)
-        : t.ShowCursorType === 0
+        : 0 === t.ShowCursorType
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "InputManager",
@@ -276,9 +276,9 @@ class InputManager {
     );
   }
   static Scr(e) {
-    const n = UiConfig_1.UiConfig.TryGetViewInfo(e);
+    var n = UiConfig_1.UiConfig.TryGetViewInfo(e);
     n &&
-      (n.ShowCursorType === 2
+      (2 === n.ShowCursorType
         ? Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "InputManager",
@@ -314,14 +314,14 @@ class InputManager {
               ));
   }
   static Dcr() {
-    const e = this.xcr.HasAny();
+    var e = this.xcr.HasAny();
     this.SetAlwaysShowCursor(e);
   }
   static Rcr() {
     InputManager.xcr.Clear(), InputManager.SetAlwaysShowCursor(!1);
   }
   static SetAlwaysShowCursor(e) {
-    let n;
+    var n;
     (this.wcr = e) !== this.Bcr &&
       (n = ModelManager_1.ModelManager.LoadingModel) &&
       !n.IsLoading &&
@@ -337,7 +337,7 @@ class InputManager {
     );
   }
   static Y7t(e) {
-    const n = this.acr.get(e);
+    var n = this.acr.get(e);
     n ? n() : UiManager_1.UiManager.OpenView(e);
   }
   static qcr(e) {
@@ -349,11 +349,11 @@ class InputManager {
     );
   }
   static $Oe(e) {
-    const n = this.hcr.get(e);
+    var n = this.hcr.get(e);
     n ? n() : UiManager_1.UiManager.CloseView(e);
   }
   static SetShowCursor(e, n = !0) {
-    let t, a;
+    var t, a;
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("InputManager", 8, "设置鼠标可见性", ["value", e]),
       this.Ucr() &&
@@ -371,7 +371,7 @@ class InputManager {
         );
   }
   static _4s() {
-    const e = Global_1.Global.CharacterController;
+    var e = Global_1.Global.CharacterController;
     this.a4s ||
       UE.KuroInputFunctionLibrary.HasInputModeReply(this.a4s) ||
       (this.a4s = UE.KuroInputFunctionLibrary.SetGameAndUIInputMode(
@@ -380,14 +380,14 @@ class InputManager {
       ));
   }
   static u4s() {
-    let e;
+    var e;
     this.a4s &&
       ((e = Global_1.Global.CharacterController),
       UE.KuroInputFunctionLibrary.ReplyInputMode(e, this.a4s),
       (this.a4s = void 0));
   }
   static Gcr() {
-    let e, n, t;
+    var e, n, t;
     if (this.Ucr())
       return (
         (e = Global_1.Global.CharacterController),
@@ -398,11 +398,11 @@ class InputManager {
       );
   }
   static MoveCursorToCenter() {
-    const e = this.Gcr();
+    var e = this.Gcr();
     e && Global_1.Global.CharacterController.SetMouseLocation(e.X, e.Y);
   }
   static SetEventDataPrevPositionToCenter() {
-    const e = this.Gcr();
+    var e = this.Gcr();
     e &&
       LguiEventSystemManager_1.LguiEventSystemManager.SetEventDataPrevPosition(
         e.X,
@@ -413,11 +413,11 @@ class InputManager {
     return !!this.Ucr() && Global_1.Global.CharacterController.bShowMouseCursor;
   }
   static Ucr() {
-    const e = Global_1.Global.CharacterController;
+    var e = Global_1.Global.CharacterController;
     return !(!e || !e.IsValid());
   }
   static SetInputRespondToKey(e) {
-    e !== "" && (Input_1.Input.OnlyRespondToKey = e);
+    "" !== e && (Input_1.Input.OnlyRespondToKey = e);
   }
   static ResetInputRespondToKey(e) {
     e === Input_1.Input.OnlyRespondToKey &&
@@ -453,7 +453,7 @@ class InputManager {
       (InputManager.gU = !1));
   }),
   (InputManager._cr = (e, n) => {
-    n === 1 &&
+    1 === n &&
       ModelManager_1.ModelManager.SundryModel.GmBlueprintGmIsOpen &&
       ModelManager_1.ModelManager.SundryModel.CanOpenGmView &&
       (UiManager_1.UiManager.IsViewOpen("GmView")
@@ -468,17 +468,17 @@ class InputManager {
         "按Alt尝试显示鼠标",
         ["是否通过GM总是显示鼠标", InputManager.Lcr],
         ["是否已经打开总是显示鼠标界面", InputManager.wcr],
-        ["是否尝试显示鼠标", n === 0],
+        ["是否尝试显示鼠标", 0 === n],
       ),
       InputManager.Lcr !==
         InputDefine_1.EMouseCursorVisibleType.AlwaysVisible &&
-        ((n = n === 0),
+        ((n = 0 === n),
         InputManager.wcr
           ? n && InputManager.SetShowCursor(!0)
           : (InputManager.MoveCursorToCenter(), InputManager.SetShowCursor(n)));
   }),
   (InputManager.ccr = (e, n) => {
-    n === 0 &&
+    0 === n &&
       (InputManager.Tcr()
         ? InputManager.Ccr(e, n)
           ? (n = InputDefine_1.openViewActionsMap.get(e)) && InputManager.bcr(n)
@@ -494,7 +494,7 @@ class InputManager {
   (InputManager.mcr = (e, n) => {
     e = InputDefine_1.openViewActionsMap.get(e);
     e &&
-      (InputManager.Tcr() && n === 0
+      (InputManager.Tcr() && 0 === n
         ? InputManager.bcr(e)
         : UiManager_1.UiManager.IsViewOpen(e) &&
           UiManager_1.UiManager.CloseView(e));
@@ -517,4 +517,4 @@ class InputManager {
   (InputManager.RefreshStateOnPlatformChanged = () => {
     _a.SetShowCursor(_a.Bcr);
   });
-// # sourceMappingURL=InputManager.js.map
+//# sourceMappingURL=InputManager.js.map

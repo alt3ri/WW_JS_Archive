@@ -1,40 +1,40 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HotKeyItemFactory = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const BackComponent_1 = require("../UIComponent/BackComponent");
-const BagTagNavigationNextComponent_1 = require("../UIComponent/BagTagNavigationNextComponent");
-const BattleViewCameraComponent_1 = require("../UIComponent/BattleViewCameraComponent");
-const ClickBtnComponent_1 = require("../UIComponent/ClickBtnComponent");
-const ClickBtnInsideComponent_1 = require("../UIComponent/ClickBtnInsideComponent");
-const ClickBtnInsideReleaseComponent_1 = require("../UIComponent/ClickBtnInsideReleaseComponent");
-const ClickBtnReleaseComponent_1 = require("../UIComponent/ClickBtnReleaseComponent");
-const DraggableComponent_1 = require("../UIComponent/DraggableComponent");
-const DraggableInsideComponent_1 = require("../UIComponent/DraggableInsideComponent");
-const FollowItemComponent_1 = require("../UIComponent/FollowItemComponent");
-const InteractComponent_1 = require("../UIComponent/InteractComponent");
-const InteractReleaseComponent_1 = require("../UIComponent/InteractReleaseComponent");
-const InteractWheelComponent_1 = require("../UIComponent/InteractWheelComponent");
-const LongPressComponent_1 = require("../UIComponent/LongPressComponent");
-const LongPressInsideComponent_1 = require("../UIComponent/LongPressInsideComponent");
-const LongTimeToTriggerComponent_1 = require("../UIComponent/LongTimeToTriggerComponent");
-const MapInteractComponent_1 = require("../UIComponent/MapInteractComponent");
-const MarkBookComponent_1 = require("../UIComponent/MarkBookComponent");
-const MaskComponent_1 = require("../UIComponent/MaskComponent");
-const NavigationGroupComponent_1 = require("../UIComponent/NavigationGroupComponent");
-const RoleInteractComponent_1 = require("../UIComponent/RoleInteractComponent");
-const RouletteNavigationComponent_1 = require("../UIComponent/RouletteNavigationComponent");
-const ScrollBarComponent_1 = require("../UIComponent/ScrollBarComponent");
-const ScrollBarInsideComponent_1 = require("../UIComponent/ScrollBarInsideComponent");
-const ScrollSwitchComponent_1 = require("../UIComponent/ScrollSwitchComponent");
-const ShowOnlyComponent_1 = require("../UIComponent/ShowOnlyComponent");
-const SliderComponent_1 = require("../UIComponent/SliderComponent");
-const SliderInsideComponent_1 = require("../UIComponent/SliderInsideComponent");
-const TextInputComponent_1 = require("../UIComponent/TextInputComponent");
-const TextInputInsideComponent_1 = require("../UIComponent/TextInputInsideComponent");
-const MultipleHotKeyItem_1 = require("./MultipleHotKeyItem");
-const SingleHotKeyItem_1 = require("./SingleHotKeyItem");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  BackComponent_1 = require("../UIComponent/BackComponent"),
+  BagTagNavigationNextComponent_1 = require("../UIComponent/BagTagNavigationNextComponent"),
+  BattleViewCameraComponent_1 = require("../UIComponent/BattleViewCameraComponent"),
+  ClickBtnComponent_1 = require("../UIComponent/ClickBtnComponent"),
+  ClickBtnInsideComponent_1 = require("../UIComponent/ClickBtnInsideComponent"),
+  ClickBtnInsideReleaseComponent_1 = require("../UIComponent/ClickBtnInsideReleaseComponent"),
+  ClickBtnReleaseComponent_1 = require("../UIComponent/ClickBtnReleaseComponent"),
+  DraggableComponent_1 = require("../UIComponent/DraggableComponent"),
+  DraggableInsideComponent_1 = require("../UIComponent/DraggableInsideComponent"),
+  FollowItemComponent_1 = require("../UIComponent/FollowItemComponent"),
+  InteractComponent_1 = require("../UIComponent/InteractComponent"),
+  InteractReleaseComponent_1 = require("../UIComponent/InteractReleaseComponent"),
+  InteractWheelComponent_1 = require("../UIComponent/InteractWheelComponent"),
+  LongPressComponent_1 = require("../UIComponent/LongPressComponent"),
+  LongPressInsideComponent_1 = require("../UIComponent/LongPressInsideComponent"),
+  LongTimeToTriggerComponent_1 = require("../UIComponent/LongTimeToTriggerComponent"),
+  MapInteractComponent_1 = require("../UIComponent/MapInteractComponent"),
+  MarkBookComponent_1 = require("../UIComponent/MarkBookComponent"),
+  MaskComponent_1 = require("../UIComponent/MaskComponent"),
+  NavigationGroupComponent_1 = require("../UIComponent/NavigationGroupComponent"),
+  RoleInteractComponent_1 = require("../UIComponent/RoleInteractComponent"),
+  RouletteNavigationComponent_1 = require("../UIComponent/RouletteNavigationComponent"),
+  ScrollBarComponent_1 = require("../UIComponent/ScrollBarComponent"),
+  ScrollBarInsideComponent_1 = require("../UIComponent/ScrollBarInsideComponent"),
+  ScrollSwitchComponent_1 = require("../UIComponent/ScrollSwitchComponent"),
+  ShowOnlyComponent_1 = require("../UIComponent/ShowOnlyComponent"),
+  SliderComponent_1 = require("../UIComponent/SliderComponent"),
+  SliderInsideComponent_1 = require("../UIComponent/SliderInsideComponent"),
+  TextInputComponent_1 = require("../UIComponent/TextInputComponent"),
+  TextInputInsideComponent_1 = require("../UIComponent/TextInputInsideComponent"),
+  MultipleHotKeyItem_1 = require("./MultipleHotKeyItem"),
+  SingleHotKeyItem_1 = require("./SingleHotKeyItem");
 class HotKeyItemFactory {
   static async CreateHotKeyItem(e, n, o) {
     switch (n) {
@@ -64,10 +64,10 @@ class HotKeyItemFactory {
     return await n.CreateThenShowByActorAsync(e, o), n;
   }
   static async CreateHotKeyComponent(e, n, o) {
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.UiNavigationConfig.GetHotKeyMapConfig(n);
     if (t) {
-      let r = this.wbo.get(t.Type);
+      var r = this.wbo.get(t.Type);
       if (r)
         return (
           (r = this.Bbo(r, n)).SetHotKeyFunctionType(t.Type),
@@ -164,4 +164,4 @@ class HotKeyItemFactory {
   ["RoleZoom", RoleInteractComponent_1.RoleZoomComponent],
   ["RoleReset", RoleInteractComponent_1.RoleResetComponent],
 ]);
-// # sourceMappingURL=HotKeyItemFactory.js.map
+//# sourceMappingURL=HotKeyItemFactory.js.map

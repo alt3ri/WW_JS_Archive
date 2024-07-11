@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionChooseMainPanelHandle = void 0);
-const UiNavigationGlobalData_1 = require("../UiNavigationGlobalData");
-const SpecialPanelHandleBase_1 = require("./SpecialPanelHandleBase");
+const UiNavigationGlobalData_1 = require("../UiNavigationGlobalData"),
+  SpecialPanelHandleBase_1 = require("./SpecialPanelHandleBase");
 class VisionChooseMainPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHandleBase {
   constructor() {
     super(...arguments), (this.lwo = void 0);
@@ -14,7 +14,7 @@ class VisionChooseMainPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelH
       ? this.DefaultNavigationListener
       : (this.lwo ||
           ((this.lwo = [...this.DefaultNavigationListener]),
-          this.lwo.length >= 2 &&
+          2 <= this.lwo.length &&
             ((i = this.lwo[0]),
             (this.lwo[0] = this.lwo[1]),
             (this.lwo[1] = i))),
@@ -27,4 +27,4 @@ class VisionChooseMainPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelH
   }
 }
 exports.VisionChooseMainPanelHandle = VisionChooseMainPanelHandle;
-// # sourceMappingURL=VisionChooseMainPanelHandle.js.map
+//# sourceMappingURL=VisionChooseMainPanelHandle.js.map

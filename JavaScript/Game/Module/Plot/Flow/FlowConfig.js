@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowConfig = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const FlowById_1 = require("../../../../Core/Define/ConfigQuery/FlowById");
-const FlowStateByStateKey_1 = require("../../../../Core/Define/ConfigQuery/FlowStateByStateKey");
-const ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
-const ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const PublicUtil_1 = require("../../../Common/PublicUtil");
-const GlobalData_1 = require("../../../GlobalData");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  FlowById_1 = require("../../../../Core/Define/ConfigQuery/FlowById"),
+  FlowStateByStateKey_1 = require("../../../../Core/Define/ConfigQuery/FlowStateByStateKey"),
+  ConfigBase_1 = require("../../../../Core/Framework/ConfigBase"),
+  ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  PublicUtil_1 = require("../../../Common/PublicUtil"),
+  GlobalData_1 = require("../../../GlobalData");
 class FlowConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments), (this.JQi = void 0);
@@ -30,7 +30,7 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
     if (
       (l = (l = i ? this.GetFlowStateActions(t, e, i) : l) || this.zQi(t, e, o))
     )
-      return l.find((t) => t.Name === "ShowTalk")?.Params;
+      return l.find((t) => "ShowTalk" === t.Name)?.Params;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Plot",
@@ -88,7 +88,7 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
           );
     }
     const l = this.tXi(t, e, o);
-    if (l && l.States && l.States.length !== 0) {
+    if (l && l.States && 0 !== l.States.length) {
       i = ObjectUtils_1.ObjectUtils.GetRandomArrayItem(l.States);
       if (i) return i.Actions;
       Log_1.Log.CheckError() &&
@@ -129,8 +129,8 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
     this.JQi || (this.JQi = new Map());
     let o = this.JQi.get(t);
     if (!o) {
-      const i = PublicUtil_1.PublicUtil.GetFlowListInfo(t);
-      if (!i || !i.Flows || i.Flows.length === 0)
+      var i = PublicUtil_1.PublicUtil.GetFlowListInfo(t);
+      if (!i || !i.Flows || 0 === i.Flows.length)
         return void (
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -165,18 +165,18 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
   lte() {
     if (GlobalData_1.GlobalData.IsPlayInEditor) {
       Log_1.Log.CheckInfo() && Log_1.Log.Info("Plot", 27, "加载音频资源表");
-      var t = UE.BlueprintPathsLibrary.ProjectContentDir() + "../../..";
-      var t = UE.MyFileHelper.GetAbsolutePath(
-        t + "/Source/Config/Raw/BaseTables/j.剧情语音.xlsx",
-      );
-      const e = UE.KuroConfigEdLibrary.CreateOrLoadExcel(t, !0);
-      const o = (FlowListData.AudioCache.clear(), e.mSheets.Num());
+      var t = UE.BlueprintPathsLibrary.ProjectContentDir() + "../../..",
+        t = UE.MyFileHelper.GetAbsolutePath(
+          t + "/Source/Config/Raw/BaseTables/j.剧情语音.xlsx",
+        ),
+        e = UE.KuroConfigEdLibrary.CreateOrLoadExcel(t, !0),
+        o = (FlowListData.AudioCache.clear(), e.mSheets.Num());
       for (let t = 0; t < o; t++) {
-        const i = e.mSheets.Get(t);
+        var i = e.mSheets.Get(t);
         if (i.GetName().endsWith("|PlotAudio")) {
-          const l = i.RowCount();
+          var l = i.RowCount();
           for (let t = 6; t < l; t++) {
-            const r = i.ReadStr(t, 4);
+            var r = i.ReadStr(t, 4);
             StringUtils_1.StringUtils.IsEmpty(r) ||
               FlowListData.AudioCache.add(r);
           }
@@ -202,10 +202,10 @@ class FlowListData {
   Init(t) {
     this.IdsMap = new Map();
     for (const o of t.Flows) {
-      const e = Object.assign({}, o);
+      var e = Object.assign({}, o);
       e.States.forEach((t) => {
         t.Actions.forEach((t) => {
-          t.Name === "ShowTalk" &&
+          "ShowTalk" === t.Name &&
             t.Params.TalkItems?.forEach((t) => {
               FlowListData.AudioCache.has(t.TidTalk) && (t.PlayVoice = !0);
             });
@@ -220,4 +220,4 @@ class FlowListData {
   UpdateTime() {}
 }
 FlowListData.AudioCache = void 0;
-// # sourceMappingURL=FlowConfig.js.map
+//# sourceMappingURL=FlowConfig.js.map

@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configGachaById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const Gacha_1 = require("../Config/Gacha");
-const DB = "db_gacha.db";
-const FILE = "c.抽卡.xlsx";
-const TABLE = "Gacha";
-const COMMAND = "select BinData from `Gacha` where Id=?";
-const KEY_PREFIX = "GachaById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  Gacha_1 = require("../Config/Gacha"),
+  DB = "db_gacha.db",
+  FILE = "c.抽卡.xlsx",
+  TABLE = "Gacha",
+  COMMAND = "select BinData from `Gacha` where Id=?",
+  KEY_PREFIX = "GachaById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configGachaById.GetConfig(";
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX = "configGachaById.GetConfigList(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configGachaById.GetConfig(",
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configGachaById.GetConfigList(";
 exports.configGachaById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -42,13 +42,14 @@ exports.configGachaById = {
       if (
         (a =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var a;
-        var i = void 0;
+        var a,
+          i = void 0;
         if (
           (([a, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -74,7 +75,7 @@ exports.configGachaById = {
     }
   },
   GetConfigList: (o, n = !0) => {
-    let i;
+    var i;
     if (
       (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -89,13 +90,14 @@ exports.configGachaById = {
         const r = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "Id",
               o,
-            ]) !== 1
+            ])
           )
             break;
-          let e = void 0;
+          var e = void 0;
           if (
             (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -123,4 +125,4 @@ exports.configGachaById = {
     }
   },
 };
-// # sourceMappingURL=GachaById.js.map
+//# sourceMappingURL=GachaById.js.map

@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionSetPlotMode = void 0);
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const Global_1 = require("../../../Global");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LevelLoadingController_1 = require("../../LevelLoading/LevelLoadingController");
-const FlowNetworks_1 = require("../Flow/FlowNetworks");
-const PlotController_1 = require("../PlotController");
-const FlowActionBase_1 = require("./FlowActionBase");
-const GUARANTEED_WAIT_TIME = 3e3;
-const DEFAULT_FADE_DURATION = 0.5;
-const SAFE_DISTANCE_SQAURED = 3e3;
+const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../Global"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LevelLoadingController_1 = require("../../LevelLoading/LevelLoadingController"),
+  FlowNetworks_1 = require("../Flow/FlowNetworks"),
+  PlotController_1 = require("../PlotController"),
+  FlowActionBase_1 = require("./FlowActionBase"),
+  GUARANTEED_WAIT_TIME = 3e3,
+  DEFAULT_FADE_DURATION = 0.5,
+  SAFE_DISTANCE_SQAURED = 3e3;
 class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
   constructor() {
     super(...arguments),
@@ -46,13 +46,13 @@ class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
       (this.uht = () => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Plot", 27, "剧情前保底传送 -结束");
-        const e = this.S4s;
+        var e = this.S4s;
         (this.S4s = void 0), e.SetResult();
       });
   }
   OnExecute() {
     this.zXi = this.Context.HasAdjustCamera;
-    const e = this.ActionInfo.Params;
+    var e = this.ActionInfo.Params;
     ModelManager_1.ModelManager.PlotModel.PlotConfig.SetMode(e),
       ModelManager_1.ModelManager.PlotModel.ApplyPlotConfig(this.zXi),
       (this.i$i = e.FastFadeIn),
@@ -116,7 +116,7 @@ class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
       ));
   }
   async s$i() {
-    ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel === "LevelC" &&
+    "LevelC" === ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel &&
       ModelManager_1.ModelManager.InteractionModel.IsInteractionTurning &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 27, "C级剧情等待交互转身-开始"),
@@ -128,10 +128,10 @@ class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
       await this.ZXi.Promise);
   }
   async E4s() {
-    let e;
-    const t =
-      Global_1.Global.BaseCharacter?.CharacterActorComponent
-        ?.ActorLocationProxy;
+    var e,
+      t =
+        Global_1.Global.BaseCharacter?.CharacterActorComponent
+          ?.ActorLocationProxy;
     this.Context?.Pos
       ? ((e = Vector_1.Vector.Dist(t, this.Context.Pos)),
         Log_1.Log.CheckInfo() &&
@@ -164,7 +164,7 @@ class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
   }
   OnInterruptExecute() {}
   OnBackgroundExecute() {
-    const e = this.ActionInfo.Params;
+    var e = this.ActionInfo.Params;
     ModelManager_1.ModelManager.PlotModel.PlotConfig.SetMode(e),
       ModelManager_1.ModelManager.PlotModel.ApplyPlotConfig(this.zXi),
       (ModelManager_1.ModelManager.PlotModel.IsFadeIn =
@@ -173,4 +173,4 @@ class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
   }
 }
 exports.FlowActionSetPlotMode = FlowActionSetPlotMode;
-// # sourceMappingURL=FlowActionSetPlotMode.js.map
+//# sourceMappingURL=FlowActionSetPlotMode.js.map

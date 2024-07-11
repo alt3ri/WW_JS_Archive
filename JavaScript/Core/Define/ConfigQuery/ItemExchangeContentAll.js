@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configItemExchangeContentAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const ItemExchangeContent_1 = require("../Config/ItemExchangeContent");
-const DB = "db_item_exchange.db";
-const FILE = "d.道具兑换.xlsx";
-const TABLE = "ItemExchangeContent";
-const COMMAND = "select BinData from `ItemExchangeContent`";
-const KEY_PREFIX = "ItemExchangeContentAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  ItemExchangeContent_1 = require("../Config/ItemExchangeContent"),
+  DB = "db_item_exchange.db",
+  FILE = "d.道具兑换.xlsx",
+  TABLE = "ItemExchangeContent",
+  COMMAND = "select BinData from `ItemExchangeContent`",
+  KEY_PREFIX = "ItemExchangeContentAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configItemExchangeContentAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configItemExchangeContentAll = {
     );
   },
   GetConfigList: (n = !0) => {
-    let e;
+    var e;
     if (
       (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configItemExchangeContentAll = {
       }
       const i = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let t = void 0;
+        var t = void 0;
         if (
           (([e, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -67,4 +67,4 @@ exports.configItemExchangeContentAll = {
     }
   },
 };
-// # sourceMappingURL=ItemExchangeContentAll.js.map
+//# sourceMappingURL=ItemExchangeContentAll.js.map

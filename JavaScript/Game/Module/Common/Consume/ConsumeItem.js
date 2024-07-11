@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConsumeItemData = exports.ConsumeItem = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const ConsumeItemUtil_1 = require("./ConsumeItemUtil");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  ConsumeItemUtil_1 = require("./ConsumeItemUtil");
 class ConsumeItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(t = void 0, s = void 0) {
     super(),
@@ -34,21 +34,21 @@ class ConsumeItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   SetIconState() {
     var t = ModelManager_1.ModelManager.InventoryModel.GetItemDataBase(
-      this.Data,
-    )[0];
-    var s = this.GetTexture(4);
-    var s =
-      (this.SetItemIcon(s, t.GetConfigId(), this.BelongView),
-      this.GetSprite(5));
-    var s =
-      (this.SetItemQualityIcon(s, t.GetConfigId(), this.BelongView),
-      this.GetText(6));
-    var t = this.GetItem(7);
-    var s =
-      (this.Data.ResonanceLevel
-        ? (t.SetUIActive(!0), s.SetText(this.Data.ResonanceLevel.toString()))
-        : t.SetUIActive(!1),
-      this.GetSprite(3));
+        this.Data,
+      )[0],
+      s = this.GetTexture(4),
+      s =
+        (this.SetItemIcon(s, t.GetConfigId(), this.BelongView),
+        this.GetSprite(5)),
+      s =
+        (this.SetItemQualityIcon(s, t.GetConfigId(), this.BelongView),
+        this.GetText(6)),
+      t = this.GetItem(7),
+      s =
+        (this.Data.ResonanceLevel
+          ? (t.SetUIActive(!0), s.SetText(this.Data.ResonanceLevel.toString()))
+          : t.SetUIActive(!1),
+        this.GetSprite(3));
     this.Data.ChipPath
       ? (s.SetUIActive(!0), this.SetSpriteByPath(this.Data.ChipPath, s, !1))
       : s.SetUIActive(!1);
@@ -59,8 +59,8 @@ class ConsumeItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.UpdateItem(e);
   }
   UpdateItem(t) {
-    const s = this.GetItem(1);
-    const i = this.GetItem(2);
+    var s = this.GetItem(1),
+      i = this.GetItem(2);
     t
       ? ((this.Data = t),
         this.SetIconState(),
@@ -84,4 +84,4 @@ class ConsumeItemData {
   }
 }
 exports.ConsumeItemData = ConsumeItemData;
-// # sourceMappingURL=ConsumeItem.js.map
+//# sourceMappingURL=ConsumeItem.js.map

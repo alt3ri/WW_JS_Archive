@@ -1,30 +1,35 @@
 "use strict";
-let SceneItemDamageComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (e, t, i, n) {
-    let o;
-    const s = arguments.length;
-    let r =
-      s < 3 ? t : n === null ? (n = Object.getOwnPropertyDescriptor(t, i)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(e, t, i, n);
-    else
-      for (let h = e.length - 1; h >= 0; h--)
-        (o = e[h]) && (r = (s < 3 ? o(r) : s > 3 ? o(t, i, r) : o(t, i)) || r);
-    return s > 3 && r && Object.defineProperty(t, i, r), r;
-  };
+var SceneItemDamageComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (e, t, i, n) {
+      var o,
+        s = arguments.length,
+        r =
+          s < 3
+            ? t
+            : null === n
+              ? (n = Object.getOwnPropertyDescriptor(t, i))
+              : n;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        r = Reflect.decorate(e, t, i, n);
+      else
+        for (var h = e.length - 1; 0 <= h; h--)
+          (o = e[h]) &&
+            (r = (s < 3 ? o(r) : 3 < s ? o(t, i, r) : o(t, i)) || r);
+      return 3 < s && r && Object.defineProperty(t, i, r), r;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemDamageComponent = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const SceneTeamController_1 = require("../../Module/SceneTeam/SceneTeamController");
+const Log_1 = require("../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  SceneTeamController_1 = require("../../Module/SceneTeam/SceneTeamController");
 let SceneItemDamageComponent =
   (SceneItemDamageComponent_1 = class SceneItemDamageComponent extends (
     EntityComponent_1.EntityComponent
@@ -49,17 +54,17 @@ let SceneItemDamageComponent =
         });
     }
     OnInitData(e) {
-      var e = e.GetParam(SceneItemDamageComponent_1)[0];
-      var e =
-        ((this.Lo = e),
-        (this.nXt = this.Entity.GetComponent(1)),
-        (this.fCn = Vector_1.Vector.Create(
-          this.Lo.HitPoint.X || 0,
-          this.Lo.HitPoint.Y || 0,
-          this.Lo.HitPoint.Z || 0,
-        )),
-        this.Entity.GetComponent(0));
-      const t = this.Lo.Durability;
+      var e = e.GetParam(SceneItemDamageComponent_1)[0],
+        e =
+          ((this.Lo = e),
+          (this.nXt = this.Entity.GetComponent(1)),
+          (this.fCn = Vector_1.Vector.Create(
+            this.Lo.HitPoint.X || 0,
+            this.Lo.HitPoint.Y || 0,
+            this.Lo.HitPoint.Z || 0,
+          )),
+          this.Entity.GetComponent(0)),
+        t = this.Lo.Durability;
       return (
         (this.dCn = t || 100),
         (this.CCn = e.GetDurabilityValue()),
@@ -129,7 +134,7 @@ let SceneItemDamageComponent =
       );
     }
     M1n(e) {
-      if (this.Lo.MatchRoleOption && this.Lo.MatchRoleOption.length > 0) {
+      if (this.Lo.MatchRoleOption && 0 < this.Lo.MatchRoleOption.length) {
         if (
           !SceneTeamController_1.SceneTeamController.IsMatchRoleOption(
             this.Lo.MatchRoleOption,
@@ -138,16 +143,16 @@ let SceneItemDamageComponent =
           return;
       } else if (ModelManager_1.ModelManager.SceneTeamModel.IsPhantomTeam)
         return;
-      let t = e.Attacker.GetComponent(3);
+      var t = e.Attacker.GetComponent(3);
       !t?.Valid ||
         (!t.IsRoleAndCtrlByMe && !t.IsSummonsAndCtrlByMe) ||
         this.CCn <= 0 ||
         (e.ReBulletData.Base.DamageId &&
-          this.CCn > 0 &&
+          0 < this.CCn &&
           ((t =
             this.Entity.GetComponent(0).GetBaseInfo()?.Category
               ?.ControlMatchType) &&
-            t === "关卡.Common.被控物.爆裂鸣晶" &&
+            "关卡.Common.被控物.爆裂鸣晶" === t &&
             Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "SceneItem",
@@ -161,9 +166,9 @@ let SceneItemDamageComponent =
           )));
     }
     GetHitPoint() {
-      const e = Vector_1.Vector.Create(this.fCn);
-      const t = Vector_1.Vector.Create();
-      const i = Vector_1.Vector.Create();
+      var e = Vector_1.Vector.Create(this.fCn),
+        t = Vector_1.Vector.Create(),
+        i = Vector_1.Vector.Create();
       return (
         this.nXt.ActorForwardProxy.Multiply(e.X, i),
         t.AdditionEqual(i),
@@ -185,4 +190,4 @@ let SceneItemDamageComponent =
     SceneItemDamageComponent,
   )),
   (exports.SceneItemDamageComponent = SceneItemDamageComponent);
-// # sourceMappingURL=SceneItemDamageComponent.js.map
+//# sourceMappingURL=SceneItemDamageComponent.js.map

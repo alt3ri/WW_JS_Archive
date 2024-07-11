@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SeqBaseAssistant = void 0);
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ControllerAssistantBase_1 = require("../../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase");
+const ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ControllerAssistantBase_1 = require("../../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase");
 class SeqBaseAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor() {
     super(...arguments),
@@ -12,7 +12,7 @@ class SeqBaseAssistant extends ControllerAssistantBase_1.ControllerAssistantBase
       (this.Promise = void 0);
   }
   DoCallback(s) {
-    let e;
+    var e;
     this.Callback && ((e = this.Callback), (this.Callback = void 0), e(s));
   }
   End() {}
@@ -33,4 +33,4 @@ class SeqBaseAssistant extends ControllerAssistantBase_1.ControllerAssistantBase
   OnDestroy() {}
 }
 exports.SeqBaseAssistant = SeqBaseAssistant;
-// # sourceMappingURL=SeqBaseAssistant.js.map
+//# sourceMappingURL=SeqBaseAssistant.js.map

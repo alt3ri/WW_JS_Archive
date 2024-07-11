@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventWaitTime = void 0);
-const CommonDefine_1 = require("../../../Core/Define/CommonDefine");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventWaitTime extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments), (this.oUe = -0), (this.VLn = !1);
@@ -51,4 +51,4 @@ class LevelEventWaitTime extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventWaitTime = LevelEventWaitTime;
-// # sourceMappingURL=LevelEventWaitTime.js.map
+//# sourceMappingURL=LevelEventWaitTime.js.map

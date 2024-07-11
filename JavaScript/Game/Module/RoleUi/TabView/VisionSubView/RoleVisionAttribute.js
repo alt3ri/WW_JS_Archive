@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleVisionAttribute = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
 class RoleVisionAttributeSt {
   constructor() {
     (this.Data = void 0), (this.NeedCheckBg = !1);
@@ -40,7 +40,7 @@ class RoleVisionAttribute extends UiPanelBase_1.UiPanelBase {
   Refresh(e, i = !1) {
     const s = new Array();
     e?.forEach((e) => {
-      const t = new RoleVisionAttributeSt();
+      var t = new RoleVisionAttributeSt();
       (t.Data = e), (t.NeedCheckBg = i), s.push(t);
     }),
       this.AttributeScroller.RefreshByData(s);
@@ -74,7 +74,7 @@ class RoleVisionAttributeItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   Update(e) {
-    let t;
+    var t;
     e.NeedCheckBg && this.GetSprite(5).SetUIActive(this.GridIndex % 2 == 0),
       e.Data.IsUnknown
         ? (this.GetText(0).SetText("???"),
@@ -86,12 +86,12 @@ class RoleVisionAttributeItem extends UiPanelBase_1.UiPanelBase {
             )),
           this.SetTextureByPath(t.Icon, this.GetTexture(4)),
           this.GetText(0).ShowTextNew(t.Name),
-          this.GetItem(2).SetUIActive(e.Data.AttributeType === 2),
-          this.GetText(3).SetUIActive(e.Data.AttributeType === 2),
+          this.GetItem(2).SetUIActive(2 === e.Data.AttributeType),
+          this.GetText(3).SetUIActive(2 === e.Data.AttributeType),
           this.npt(e.Data));
   }
   npt(e) {
-    e.AttributeType === 4 || e.AttributeType === 1 || e.AttributeType === 3
+    4 === e.AttributeType || 1 === e.AttributeType || 3 === e.AttributeType
       ? this.GetText(1).SetText(
           ModelManager_1.ModelManager.AttributeModel.GetFormatAttributeValueString(
             e.Id,
@@ -118,4 +118,4 @@ class RoleVisionAttributeItem extends UiPanelBase_1.UiPanelBase {
     this.GetSprite(5).SetUIActive(e);
   }
 }
-// # sourceMappingURL=RoleVisionAttribute.js.map
+//# sourceMappingURL=RoleVisionAttribute.js.map

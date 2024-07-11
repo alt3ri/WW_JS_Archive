@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MailData = void 0);
-const UE = require("ue");
-const LanguageSystem_1 = require("../../../Core/Common/LanguageSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ScrollViewDataBase_1 = require("../Util/ScrollView/ScrollViewDataBase");
+const UE = require("ue"),
+  LanguageSystem_1 = require("../../../Core/Common/LanguageSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ScrollViewDataBase_1 = require("../Util/ScrollView/ScrollViewDataBase");
 class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
   constructor() {
     super(...arguments),
@@ -40,7 +40,7 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
       (this.PEi = "");
   }
   UpdateValidTimeWhenReadMail() {
-    this.FinishTime !== 0
+    0 !== this.FinishTime
       ? (this.FinishedDeadlineTimeStamp =
           this.FinishValidTime + this.FinishTime)
       : (this.FinishedDeadlineTimeStamp =
@@ -63,10 +63,10 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
         );
   }
   GetWasScanned() {
-    return this.vEi === 1;
+    return 1 === this.vEi;
   }
   SetWasScanned(t) {
-    (this.vEi = t === 1 ? t : 0),
+    (this.vEi = 1 === t ? t : 0),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Mail",
@@ -87,7 +87,7 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
   }
   SetText(t) {
     t = (this.Content = t).split("@&&");
-    (this.MEi = t[0]), t.length > 1 && this.xEi(t[1]);
+    (this.MEi = t[0]), 1 < t.length && this.xEi(t[1]);
   }
   xEi(t) {
     (this.yEi = "FFFFFFFF"),
@@ -97,7 +97,7 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
       (this.REi = !1),
       (this.TEi = ""),
       (this.SEi = "");
-    const e = t.split(",");
+    var e = t.split(",");
     for (let t = 0; t < e.length; t++)
       e[t].includes("iconId=")
         ? (this.EEi = Number(e[t].replace("iconId=", "")))
@@ -113,7 +113,7 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
                   ? (this.AEi = !0)
                   : e[t].includes("isWenjuanxing=")
                     ? (this.REi =
-                        Number(e[t].replace("isWenjuanxing=", "")) === 1)
+                        1 === Number(e[t].replace("isWenjuanxing=", "")))
                     : e[t].includes("wenjuanId=")
                       ? (this.TEi = e[t].replace("wenjuanId=", ""))
                       : e[t].includes("wenjuanTitle=")
@@ -149,22 +149,22 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
     return this.REi;
   }
   GetQuestionUrl() {
-    const t = ModelManager_1.ModelManager.LoginModel;
-    var e =
-      CommonParamById_1.configCommonParamById.GetStringConfig(
-        "mail_question_key",
-      );
-    var e =
-      this.TEi +
-      ModelManager_1.ModelManager.PlayerInfoModel.GetId()?.toString() +
-      ";" +
-      t.GetServerId()?.toString() +
-      e;
-    var e = UE.KuroStaticLibrary.HashStringWithSHA1(e);
-    const i =
-      ConfigManager_1.ConfigManager.LanguageConfig.GetLanguageDefineByLanguageCode(
-        LanguageSystem_1.LanguageSystem.PackageLanguage,
-      ).QuestionnaireId;
+    var t = ModelManager_1.ModelManager.LoginModel,
+      e =
+        CommonParamById_1.configCommonParamById.GetStringConfig(
+          "mail_question_key",
+        ),
+      e =
+        this.TEi +
+        ModelManager_1.ModelManager.PlayerInfoModel.GetId()?.toString() +
+        ";" +
+        t.GetServerId()?.toString() +
+        e,
+      e = UE.KuroStaticLibrary.HashStringWithSHA1(e),
+      i =
+        ConfigManager_1.ConfigManager.LanguageConfig.GetLanguageDefineByLanguageCode(
+          LanguageSystem_1.LanguageSystem.PackageLanguage,
+        ).QuestionnaireId;
     return (
       `${this.DEi}?sojumpparm=${ModelManager_1.ModelManager.PlayerInfoModel.GetId()?.toString()};${t.GetServerId()?.toString()}&parmsign=${e}&langv=` +
       i
@@ -193,4 +193,4 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
   }
 }
 exports.MailData = MailData;
-// # sourceMappingURL=MailInstance.js.map
+//# sourceMappingURL=MailInstance.js.map

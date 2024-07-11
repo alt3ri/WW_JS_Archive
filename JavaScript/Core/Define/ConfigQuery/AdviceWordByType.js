@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configAdviceWordByType = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const AdviceWord_1 = require("../Config/AdviceWord");
-const DB = "db_advice.db";
-const FILE = "s.溯言.xlsx";
-const TABLE = "AdviceWord";
-const COMMAND = "select BinData from `AdviceWord` where Type=?";
-const KEY_PREFIX = "AdviceWordByType";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  AdviceWord_1 = require("../Config/AdviceWord"),
+  DB = "db_advice.db",
+  FILE = "s.溯言.xlsx",
+  TABLE = "AdviceWord",
+  COMMAND = "select BinData from `AdviceWord` where Type=?",
+  KEY_PREFIX = "AdviceWordByType",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX = "configAdviceWordByType.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configAdviceWordByType.GetConfigList(";
 exports.configAdviceWordByType = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -29,7 +29,7 @@ exports.configAdviceWordByType = {
     );
   },
   GetConfigList: (o, e = !0) => {
-    let i;
+    var i;
     if (
       (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -44,13 +44,14 @@ exports.configAdviceWordByType = {
         const d = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "Type",
               o,
-            ]) !== 1
+            ])
           )
             break;
-          let r = void 0;
+          var r = void 0;
           if (
             (([i, r] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -78,4 +79,4 @@ exports.configAdviceWordByType = {
     }
   },
 };
-// # sourceMappingURL=AdviceWordByType.js.map
+//# sourceMappingURL=AdviceWordByType.js.map

@@ -34,19 +34,19 @@ class GamePlayScan {
     );
   }
   uid() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   iconpath(t) {
-    const r = this.J7.__offset(this.z7, 6);
+    var r = this.J7.__offset(this.z7, 6);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   interval() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readFloat32(this.z7 + t) : 8;
   }
   offset(t) {
-    const r = this.J7.__offset(this.z7, 10);
+    var r = this.J7.__offset(this.z7, 10);
     return r
       ? (t || new Vector_1.Vector()).__init(
           this.J7.__indirect(this.z7 + r),
@@ -55,13 +55,13 @@ class GamePlayScan {
       : null;
   }
   resourcepath(t) {
-    const r = this.J7.__offset(this.z7, 12);
+    var r = this.J7.__offset(this.z7, 12);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   color() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.GamePlayScan = GamePlayScan;
-// # sourceMappingURL=GamePlayScan.js.map
+//# sourceMappingURL=GamePlayScan.js.map

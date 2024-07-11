@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LogicNodeBase = void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const PublicUtil_1 = require("../../../../Common/PublicUtil");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const SneakController_1 = require("../../../../World/Controller/SneakController");
-const BehaviorNodeBase_1 = require("../BehaviorNodeBase");
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  PublicUtil_1 = require("../../../../Common/PublicUtil"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  SneakController_1 = require("../../../../World/Controller/SneakController"),
+  BehaviorNodeBase_1 = require("../BehaviorNodeBase");
 class LogicNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
   constructor() {
     super(...arguments),
@@ -27,8 +27,8 @@ class LogicNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
     return (this.Config = t), (this.TrackTarget = t.UIConfig?.TrackTarget), !0;
   }
   OnNodeActive() {
-    let t;
-    let i = this.Config;
+    var t,
+      i = this.Config;
     i.DungeonId && (this.Blackboard.DungeonId = i.DungeonId),
       i.DisableOnline && this.LXt(!0),
       this.CustomUiConfig && this.AddTag(0),
@@ -63,7 +63,7 @@ class LogicNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
         SneakController_1.SneakController.StartSneaking();
   }
   OnNodeDeActive(t) {
-    let i;
+    var i;
     this.RemoveTag(0),
       this.SilentAreaInfoViewConfig &&
         this.Blackboard?.RemoveSilentShowInfo(this.NodeId),
@@ -111,4 +111,4 @@ class LogicNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
   }
 }
 exports.LogicNodeBase = LogicNodeBase;
-// # sourceMappingURL=LogicNodeBase.js.map
+//# sourceMappingURL=LogicNodeBase.js.map

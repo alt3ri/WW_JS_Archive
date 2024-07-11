@@ -1,30 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneTeamModel = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Stats_1 = require("../../../Core/Common/Stats");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const StatDefine_1 = require("../../Common/StatDefine");
-const GlobalData_1 = require("../../GlobalData");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterController_1 = require("../../NewWorld/Character/CharacterController");
-const RoleTeamComponent_1 = require("../../NewWorld/Character/Role/Component/RoleTeamComponent");
-const GameModePromise_1 = require("../../World/Define/GameModePromise");
-const WaitEntityTask_1 = require("../../World/Define/WaitEntityTask");
-const WorldGlobal_1 = require("../../World/WorldGlobal");
-const UiBlueprintFunctionLibrary_1 = require("../BpBridge/UiBlueprintFunctionLibrary");
-const SceneTeamData_1 = require("./SceneTeamData");
-const SceneTeamDefine_1 = require("./SceneTeamDefine");
-const SceneTeamItem_1 = require("./SceneTeamItem");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  StatDefine_1 = require("../../Common/StatDefine"),
+  GlobalData_1 = require("../../GlobalData"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterController_1 = require("../../NewWorld/Character/CharacterController"),
+  RoleTeamComponent_1 = require("../../NewWorld/Character/Role/Component/RoleTeamComponent"),
+  GameModePromise_1 = require("../../World/Define/GameModePromise"),
+  WaitEntityTask_1 = require("../../World/Define/WaitEntityTask"),
+  WorldGlobal_1 = require("../../World/WorldGlobal"),
+  UiBlueprintFunctionLibrary_1 = require("../BpBridge/UiBlueprintFunctionLibrary"),
+  SceneTeamData_1 = require("./SceneTeamData"),
+  SceneTeamDefine_1 = require("./SceneTeamDefine"),
+  SceneTeamItem_1 = require("./SceneTeamItem");
 class SceneTeamModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -74,8 +74,8 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
       (this.tpo = void 0);
   }
   SwitchGroup(e, t, r = !1) {
-    let o;
-    const i = this.zfo.get(e);
+    var o,
+      i = this.zfo.get(e);
     i
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -89,7 +89,7 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
           ((o = this.CurrentGroupType),
           i.SwitchGroup(t),
           e === ModelManager_1.ModelManager.PlayerInfoModel?.GetId() &&
-            ((this.CurrentGroupType = t), (this.IsPhantomTeam = t === 2)),
+            ((this.CurrentGroupType = t), (this.IsPhantomTeam = 2 === t)),
           this.rpo(o, r)))
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("SceneTeam", 49, "切换编队组玩家不存在", [
@@ -132,20 +132,20 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
           Log_1.Log.Info("SceneTeam", 49, "刷新出战编队，中断等待"),
         this.Wfo.Cancel());
     let l = void 0;
-    const e = [];
+    var e = [];
     const _ = ModelManager_1.ModelManager.CreatureModel.GetPlayerId();
     for (const c of ModelManager_1.ModelManager.GameModeModel.IsMulti
       ? ModelManager_1.ModelManager.OnlineModel.GetAllWorldTeamPlayer()
       : [_]) {
-      const t = this.zfo.get(c)?.GetCurrentGroup();
-      const r = t?.GetRoleList();
-      if (r && r.length !== 0) {
-        const o = t.GetGroupType();
-        const i = t.GetCurrentRole();
+      var t = this.zfo.get(c)?.GetCurrentGroup(),
+        r = t?.GetRoleList();
+      if (r && 0 !== r.length) {
+        var o = t.GetGroupType(),
+          i = t.GetCurrentRole();
         for (const f of r) {
-          var a;
-          var h;
-          const m = f.CreatureDataId;
+          var a,
+            h,
+            m = f.CreatureDataId;
           m <= 0 ||
             ((h = f.RoleId),
             (a = f === i),
@@ -171,9 +171,9 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("SceneTeam", 49, "刷新出战编队，等待加载结束");
             for (const i of this.PPr) i.UpdateEntityHandle();
-            var e = this.CurrentGroupType;
-            let t = e && e !== n;
-            let r = this.Ywi?.EntityHandle?.Entity;
+            var e = this.CurrentGroupType,
+              t = e && e !== n,
+              r = this.Ywi?.EntityHandle?.Entity;
             const o = l?.EntityHandle?.Entity;
             r = r && r.Id !== o?.Id;
             if (
@@ -244,15 +244,15 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
         Log_1.Log.Info("SceneTeam", 49, "刷新出战编队，结束");
   }
   npo() {
-    const e = this.CurrentGroupType;
+    var e = this.CurrentGroupType;
     if (e && !SceneTeamDefine_1.innerGroupType.includes(e)) {
-      if (!ModelManager_1.ModelManager.GameModeModel.IsMulti && e === 1) {
-        const t = this.tpo ?? [];
-        const r = [];
+      if (!ModelManager_1.ModelManager.GameModeModel.IsMulti && 1 === e) {
+        var t = this.tpo ?? [],
+          r = [];
         for (const a of this.GetTeamItems()) r.push(a.GetConfigId);
         for (let e = 0; e < SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++) {
-          const o = t[e];
-          const i = r[e];
+          var o = t[e],
+            i = r[e];
           o !== i &&
             (o &&
               EventSystem_1.EventSystem.Emit(
@@ -278,10 +278,10 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
     if (ModelManager_1.ModelManager.GameModeModel.IsMulti) {
       e = e.Entity.GetComponent(0);
       if (e.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Player) {
-        let t;
-        let r;
-        const o = e.GetCreatureDataId();
-        const i = ModelManager_1.ModelManager.CreatureModel;
+        var t,
+          r,
+          o = e.GetCreatureDataId(),
+          i = ModelManager_1.ModelManager.CreatureModel;
         for (const a of this.GetTeamItems())
           o === a.GetCreatureDataId() &&
             ((t = i.GetEntity(o)?.Entity),
@@ -336,39 +336,39 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
     }
   }
   GetTeamItems(e = !1) {
-    const t = [];
+    var t = [];
     for (const r of this.PPr) (e && !r.IsMyRole()) || t.push(r);
     return t;
   }
   GetTeamItemsByPlayer(e) {
-    const t = [];
+    var t = [];
     for (const r of this.PPr) r.GetPlayerId() === e && t.push(r);
     return t;
   }
   GetTeamEntities(e = !1) {
-    let t;
-    const r = [];
+    var t,
+      r = [];
     for (const o of this.PPr)
       (e && !o.IsMyRole()) || ((t = o.EntityHandle) && r.push(t));
     return r;
   }
   GetAllGroupEntities(e) {
-    const t = [];
-    var e = this.zfo.get(e);
+    var t = [],
+      e = this.zfo.get(e);
     if (e) {
-      const r = ModelManager_1.ModelManager.CreatureModel;
+      var r = ModelManager_1.ModelManager.CreatureModel;
       for (const i of e.GetGroupList())
         for (const a of i.GetRoleList()) {
-          const o = r.GetEntity(a.CreatureDataId);
+          var o = r.GetEntity(a.CreatureDataId);
           o?.IsInit && t.push(o);
         }
     }
     return t;
   }
   GetTeamItemsInRange(e, t) {
-    let r;
-    const o = [];
-    const i = t * t;
+    var r,
+      o = [],
+      i = t * t;
     for (const a of this.PPr)
       a.EntityHandle?.Entity &&
         (r = ModelManager_1.ModelManager.CreatureModel.GetScenePlayerData(
@@ -381,7 +381,7 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
   ChangeRole(e, t, r = 0, o = !1, i = !1) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("SceneTeam", 49, "开始切换角色", ["CreatureDataId", e]);
-    const a = this.GetTeamItem(e, { ParamType: 3 });
+    var a = this.GetTeamItem(e, { ParamType: 3 });
     if (a && a.IsMyRole())
       if (!i && a.IsDead())
         Log_1.Log.CheckWarn() &&
@@ -390,10 +390,10 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
             e,
           ]);
       else {
-        let n;
-        var i = this.GetCurrentTeamItem;
-        const s = i?.EntityHandle;
-        const l = a.EntityHandle;
+        var n,
+          i = this.GetCurrentTeamItem,
+          s = i?.EntityHandle,
+          l = a.EntityHandle;
         if (l)
           return (
             Log_1.Log.CheckInfo() &&
@@ -448,7 +448,7 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
     this.zfo.get(e)?.GetCurrentGroup()?.SetCurrentRole(t);
   }
   RefreshLastTransform() {
-    let e = this.GetCurrentEntity;
+    var e = this.GetCurrentEntity;
     e?.Valid
       ? (e = CharacterController_1.CharacterController.GetActor(e))?.IsValid()
         ? ((e = e.GetTransform()),
@@ -475,35 +475,35 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
     this.ipo = e;
   }
   GetSpawnTransform() {
-    let r = this.ipo;
+    var r = this.ipo;
     if (r) return r;
     r = this.GetCurrentEntity;
     if (r?.Valid) return r.Entity.GetComponent(3).Actor.GetTransform();
     r = GlobalData_1.GlobalData.World;
     if (r) {
-      let e = void 0;
-      let t = void 0;
+      let e = void 0,
+        t = void 0;
       var o =
-        UiBlueprintFunctionLibrary_1.UiBlueprintFunctionLibrary.TestSceneLoadBornMode();
-      var o =
-        (o === 0
-          ? ((e =
-              UiBlueprintFunctionLibrary_1.UiBlueprintFunctionLibrary.TempLocation.ToUeVector()),
-            ((t =
-              UiBlueprintFunctionLibrary_1.UiBlueprintFunctionLibrary.TempRotator.ToUeRotator()).Roll =
-              0),
-            (t.Pitch = 0))
-          : o === 1 &&
-            ((o = (0, puerts_1.$ref)(void 0)),
-            UE.GameplayStatics.GetAllActorsOfClass(
-              r,
-              UE.PlayerStart.StaticClass(),
-              o,
-            ),
-            (r = (0, puerts_1.$unref)(o).Get(0).GetTransform()),
-            (e = r.GetLocation()),
-            (t = r.Rotator())),
-        UE.KismetMathLibrary.MakeTransform(e, t, new UE.Vector(1, 1, 1)));
+          UiBlueprintFunctionLibrary_1.UiBlueprintFunctionLibrary.TestSceneLoadBornMode(),
+        o =
+          (0 === o
+            ? ((e =
+                UiBlueprintFunctionLibrary_1.UiBlueprintFunctionLibrary.TempLocation.ToUeVector()),
+              ((t =
+                UiBlueprintFunctionLibrary_1.UiBlueprintFunctionLibrary.TempRotator.ToUeRotator()).Roll =
+                0),
+              (t.Pitch = 0))
+            : 1 === o &&
+              ((o = (0, puerts_1.$ref)(void 0)),
+              UE.GameplayStatics.GetAllActorsOfClass(
+                r,
+                UE.PlayerStart.StaticClass(),
+                o,
+              ),
+              (r = (0, puerts_1.$unref)(o).Get(0).GetTransform()),
+              (e = r.GetLocation()),
+              (t = r.Rotator())),
+          UE.KismetMathLibrary.MakeTransform(e, t, new UE.Vector(1, 1, 1)));
       return o;
     }
   }
@@ -516,24 +516,24 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
     return !1;
   }
   InitializeOfflineSceneTeam(e, t, r) {
-    if (UE.Actor.GetKuroNetMode() !== 1) {
-      const o = [
-        ControllerHolder_1.ControllerHolder.CreatureController.GenUniqueId(),
-        ControllerHolder_1.ControllerHolder.CreatureController.GenUniqueId(),
-        ControllerHolder_1.ControllerHolder.CreatureController.GenUniqueId(),
-      ];
-      const i = 100003;
-      const a = [e > 0 ? e : i, t > 0 ? t : i, r > 0 ? r : i];
-      const n = this.GetSpawnTransform();
+    if (1 !== UE.Actor.GetKuroNetMode()) {
+      var o = [
+          ControllerHolder_1.ControllerHolder.CreatureController.GenUniqueId(),
+          ControllerHolder_1.ControllerHolder.CreatureController.GenUniqueId(),
+          ControllerHolder_1.ControllerHolder.CreatureController.GenUniqueId(),
+        ],
+        i = 100003,
+        a = [0 < e ? e : i, 0 < t ? t : i, 0 < r ? r : i],
+        n = this.GetSpawnTransform();
       if (n) {
         const m = [];
-        const s = a.length;
+        var s = a.length;
         let t = s;
         for (let e = 1; e <= s; ++e) {
-          const l = o[e - 1];
+          var l = o[e - 1];
           const c = ModelManager_1.ModelManager.CreatureModel.GetPlayerId();
-          const _ = a[e - 1];
-          let h = Protocol_1.Aki.Protocol.fqs.create();
+          var _ = a[e - 1],
+            h = Protocol_1.Aki.Protocol.fqs.create();
           (h.Ekn = MathUtils_1.MathUtils.NumberToLong(l)),
             (h.M3n = WorldGlobal_1.WorldGlobal.ToTsVector(n.GetLocation())),
             (h.S3n = WorldGlobal_1.WorldGlobal.ToTsRotator(
@@ -564,7 +564,7 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
                       !1,
                       "InitOfflineTeam",
                     )),
-                  t === 0) &&
+                  0 === t) &&
                   (this.UpdateGroup({
                     PlayerId: c,
                     GroupType: 1,
@@ -586,4 +586,4 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
   }
 }
 exports.SceneTeamModel = SceneTeamModel;
-// # sourceMappingURL=SceneTeamModel.js.map
+//# sourceMappingURL=SceneTeamModel.js.map

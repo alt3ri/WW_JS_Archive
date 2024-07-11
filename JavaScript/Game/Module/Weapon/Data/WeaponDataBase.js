@@ -9,8 +9,8 @@ class WeaponDataBase {
     );
   }
   GetBreachConfig() {
-    let e;
-    const t = this.GetWeaponConfig();
+    var e,
+      t = this.GetWeaponConfig();
     if (t)
       return (
         (e = this.GetBreachLevel()),
@@ -21,15 +21,15 @@ class WeaponDataBase {
       );
   }
   GetBreachConfigList() {
-    const e = this.GetWeaponConfig();
+    var e = this.GetWeaponConfig();
     if (e)
       return ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponBreachList(
         e.BreachId,
       );
   }
   GetResonanceConfig() {
-    let e;
-    const t = this.GetWeaponConfig();
+    var e,
+      t = this.GetWeaponConfig();
     if (t)
       return (
         (e = this.GetResonanceLevel()),
@@ -40,8 +40,8 @@ class WeaponDataBase {
       );
   }
   CanGoBreach() {
-    let e;
-    const t = this.GetLevel();
+    var e,
+      t = this.GetLevel();
     return (
       !(
         this.GetLastBreachConfig().LevelLimit <= t ||
@@ -50,30 +50,30 @@ class WeaponDataBase {
     );
   }
   GetLastBreachConfig() {
-    var e = this.GetWeaponConfig().BreachId;
-    var e = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponBreachList(e);
+    var e = this.GetWeaponConfig().BreachId,
+      e = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponBreachList(e);
     return e[e.length - 1];
   }
   GetBreachConsume() {
-    const e = this.GetWeaponConfig();
-    const t = this.GetBreachLevel();
+    var e = this.GetWeaponConfig(),
+      t = this.GetBreachLevel();
     return ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponBreach(
       e.BreachId,
       t,
     ).Consume;
   }
   GetMaxLevel() {
-    const e = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponLevelLimit(
-      this.GetItemConfig().QualityId,
-    );
-    const t = this.GetLastBreachConfig();
+    var e = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponLevelLimit(
+        this.GetItemConfig().QualityId,
+      ),
+      t = this.GetLastBreachConfig();
     return Math.min(e, t.LevelLimit);
   }
   IsLevelMax() {
     return this.GetMaxLevel() <= this.GetLevel();
   }
   GetMaterialCost() {
-    const e = this.GetItemConfig().QualityId;
+    var e = this.GetItemConfig().QualityId;
     return ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponQualityInfo(e)
       .Cost;
   }
@@ -88,11 +88,11 @@ class WeaponDataBase {
     return t;
   }
   GetLevelLimitMaxExp() {
-    var e = this.GetBreachLevel();
-    var e = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponBreach(
-      this.GetWeaponConfig().BreachId,
-      e,
-    );
+    var e = this.GetBreachLevel(),
+      e = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponBreach(
+        this.GetWeaponConfig().BreachId,
+        e,
+      );
     return this.GetMaxExp(e.LevelLimit - 1);
   }
   GetLevelExp(e) {
@@ -106,8 +106,8 @@ class WeaponDataBase {
         (t = e ? e.Exp : t));
   }
   GetCurrentMaxLevel() {
-    let e;
-    const t = this.GetWeaponConfig();
+    var e,
+      t = this.GetWeaponConfig();
     return t
       ? ((e = this.GetBreachLevel()),
         ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponBreach(
@@ -126,4 +126,4 @@ class WeaponDataBase {
   }
 }
 exports.WeaponDataBase = WeaponDataBase;
-// # sourceMappingURL=WeaponDataBase.js.map
+//# sourceMappingURL=WeaponDataBase.js.map

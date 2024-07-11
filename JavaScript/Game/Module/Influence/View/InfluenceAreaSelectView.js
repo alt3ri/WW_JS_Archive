@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InfluenceAreaSelectView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const InfluenceReputationDefine_1 = require("../InfluenceReputationDefine");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  InfluenceReputationDefine_1 = require("../InfluenceReputationDefine");
 class InfluenceAreaSelectView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -38,13 +38,13 @@ class InfluenceAreaSelectView extends UiViewBase_1.UiViewBase {
       }),
       (this.U4e = (e) => {
         this.zri && this.Zri(this.zri).SetToggleState(0, !1), (this.zri = e);
-        const t = this.GetText(3);
-        const i = this.GetText(4);
-        let s =
-          ModelManager_1.ModelManager.InfluenceReputationModel.IsCountryUnLock(
-            e,
-          );
-        const n = this.GetInteractionGroup(6);
+        var t = this.GetText(3),
+          i = this.GetText(4),
+          s =
+            ModelManager_1.ModelManager.InfluenceReputationModel.IsCountryUnLock(
+              e,
+            ),
+          n = this.GetInteractionGroup(6);
         s
           ? ((s =
               ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryConfig(
@@ -79,7 +79,7 @@ class InfluenceAreaSelectView extends UiViewBase_1.UiViewBase {
       this.GetGridLayout(1),
       this.sGe,
     );
-    const e = ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryList();
+    var e = ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryList();
     this.Yri.RebuildLayoutByDataNew(e),
       (this.Jri = new AreaButtonItem(this.GetItem(2))),
       this.Jri.UpdateItem(InfluenceReputationDefine_1.NO_COUNTRY_ID),
@@ -91,7 +91,7 @@ class InfluenceAreaSelectView extends UiViewBase_1.UiViewBase {
     return e || this.Jri;
   }
   OnAfterShow() {
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     this.Zri(e).SetToggleState(1, !0);
   }
   OnBeforeDestroy() {
@@ -109,7 +109,7 @@ class AreaButtonItem extends UiPanelBase_1.UiPanelBase {
       (this.OBt = void 0),
       (this.z4t = 0),
       (this.x4e = (e) => {
-        e === 1 && this.U4e(this.z4t);
+        1 === e && this.U4e(this.z4t);
       }),
       (this.T7e = () => !this.OBt || this.OBt(this.z4t)),
       this.CreateThenShowByActor(e.GetOwner());
@@ -130,7 +130,7 @@ class AreaButtonItem extends UiPanelBase_1.UiPanelBase {
     this.GetExtendToggle(1).CanExecuteChange.Unbind();
   }
   eni(e) {
-    const t =
+    var t =
       ModelManager_1.ModelManager.InfluenceReputationModel.HasRedDotInCurrentCountry(
         this.z4t,
       );
@@ -138,11 +138,11 @@ class AreaButtonItem extends UiPanelBase_1.UiPanelBase {
   }
   UpdateItem(e) {
     this.z4t = e;
-    const t = ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryConfig(e);
-    var e =
-      ModelManager_1.ModelManager.InfluenceReputationModel.IsCountryUnLock(e);
-    const i = this.GetTexture(0);
-    const s = this.GetItem(2);
+    var t = ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryConfig(e),
+      e =
+        ModelManager_1.ModelManager.InfluenceReputationModel.IsCountryUnLock(e),
+      i = this.GetTexture(0),
+      s = this.GetItem(2);
     i.SetUIActive(e),
       s.SetUIActive(!e),
       e && this.SetTextureByPath(t.Logo, i),
@@ -158,4 +158,4 @@ class AreaButtonItem extends UiPanelBase_1.UiPanelBase {
     this.GetExtendToggle(1).SetToggleStateForce(e, t);
   }
 }
-// # sourceMappingURL=InfluenceAreaSelectView.js.map
+//# sourceMappingURL=InfluenceAreaSelectView.js.map

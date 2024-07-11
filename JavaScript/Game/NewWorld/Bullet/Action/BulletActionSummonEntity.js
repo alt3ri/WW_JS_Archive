@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletActionSummonEntity = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const BulletActionBase_1 = require("./BulletActionBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  BulletActionBase_1 = require("./BulletActionBase");
 class BulletActionSummonEntity extends BulletActionBase_1.BulletActionBase {
   OnExecute() {
-    const e = this.BulletInfo.Attacker;
-    const o = this.BulletInfo.AttackerCreatureDataComp;
+    var e = this.BulletInfo.Attacker,
+      o = this.BulletInfo.AttackerCreatureDataComp;
     let t = 0;
-    const r = o.GetEntityType();
+    var r = o.GetEntityType();
     if (ModelManager_1.ModelManager.GameModeModel.IsMulti) {
       if (
         !(
@@ -22,7 +22,7 @@ class BulletActionSummonEntity extends BulletActionBase_1.BulletActionBase {
       )
         return;
       r === Protocol_1.Aki.Protocol.HBs.Proto_Monster &&
-        (t = o.GetSummonsVersion()) === 0 &&
+        0 === (t = o.GetSummonsVersion()) &&
         (t = o.ComponentDataMap.get("sps")?.sps?.o8n ?? 1);
     }
     (this.BulletInfo.SummonAttackerId = e.Id),
@@ -37,8 +37,8 @@ class BulletActionSummonEntity extends BulletActionBase_1.BulletActionBase {
           this.BulletInfo.BulletDataMain.Summon.EntityId,
           t,
         )),
-      t > 0 && o.SetSummonsVersion(t + 1);
+      0 < t && o.SetSummonsVersion(t + 1);
   }
 }
 exports.BulletActionSummonEntity = BulletActionSummonEntity;
-// # sourceMappingURL=BulletActionSummonEntity.js.map
+//# sourceMappingURL=BulletActionSummonEntity.js.map

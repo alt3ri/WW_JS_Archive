@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkipInterfaceController = void 0);
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const SkipTaskManager_1 = require("./SkipTaskManager");
+const ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  SkipTaskManager_1 = require("./SkipTaskManager");
 class SkipInterfaceController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return this.Ore(), !0;
@@ -28,4 +28,4 @@ class SkipInterfaceController extends ControllerBase_1.ControllerBase {
 (exports.SkipInterfaceController = SkipInterfaceController).Eyo = (e) => {
   SkipTaskManager_1.SkipTaskManager.CheckContainRingView(e);
 };
-// # sourceMappingURL=SkipInterfaceController.js.map
+//# sourceMappingURL=SkipInterfaceController.js.map

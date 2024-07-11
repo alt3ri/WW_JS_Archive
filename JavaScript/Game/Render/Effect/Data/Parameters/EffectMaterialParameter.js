@@ -10,4 +10,4 @@ class EffectMaterialParameters extends EffectParameterBase_1.default {
   }
 }
 exports.default = EffectMaterialParameters;
-// # sourceMappingURL=EffectMaterialParameter.js.map
+//# sourceMappingURL=EffectMaterialParameter.js.map

@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PersonalOptionView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const PlayerHeadItem_1 = require("../../Common/PlayerHeadItem");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const PersonalOptionItem_1 = require("./PersonalOptionItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  PlayerHeadItem_1 = require("../../Common/PlayerHeadItem"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  PersonalOptionItem_1 = require("./PersonalOptionItem");
 class PersonalOptionView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -91,7 +91,7 @@ class PersonalOptionView extends UiViewBase_1.UiViewBase {
       this.RefreshOptions(),
       this.x9e(),
       this.r8t();
-    const e = ModelManager_1.ModelManager.FunctionModel.GetPlayerLevel();
+    var e = ModelManager_1.ModelManager.FunctionModel.GetPlayerLevel();
     e && this.GetText(5).SetText(String(e)),
       this.Kbe(),
       this.GetText(4).SetText(""),
@@ -99,22 +99,22 @@ class PersonalOptionView extends UiViewBase_1.UiViewBase {
   }
   OnAfterShow() {}
   Kbe() {
-    const e = ModelManager_1.ModelManager.PlayerInfoModel.GetHeadIconId();
+    var e = ModelManager_1.ModelManager.PlayerInfoModel.GetHeadIconId();
     this.g6t.RefreshByRoleId(e);
   }
   x9e() {
-    const e = ModelManager_1.ModelManager.FunctionModel.GetPlayerName();
+    var e = ModelManager_1.ModelManager.FunctionModel.GetPlayerName();
     e && this.GetText(2).SetText(e);
   }
   r8t() {
-    const e = ModelManager_1.ModelManager.PersonalModel.GetSignature();
-    const t = this.GetText(11);
-    e && e !== ""
+    var e = ModelManager_1.ModelManager.PersonalModel.GetSignature(),
+      t = this.GetText(11);
+    e && "" !== e
       ? t.SetText(e)
       : LguiUtil_1.LguiUtil.SetLocalText(t, "EmptySign");
   }
   RefreshOptions() {
-    const e = [];
+    var e = [];
     e.push(6),
       ModelManager_1.ModelManager.FunctionModel.IsOpen(10061) && e.push(7),
       e.push(8),
@@ -134,4 +134,4 @@ class PersonalOptionView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.PersonalOptionView = PersonalOptionView;
-// # sourceMappingURL=PersonalOptionView.js.map
+//# sourceMappingURL=PersonalOptionView.js.map

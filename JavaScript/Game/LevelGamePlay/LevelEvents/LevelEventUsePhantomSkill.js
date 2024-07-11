@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventUsePhantomSkill = void 0);
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const BlackboardController_1 = require("../../World/Controller/BlackboardController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  BlackboardController_1 = require("../../World/Controller/BlackboardController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventUsePhantomSkill extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, l) {
     if (e && ModelManager_1.ModelManager.SceneTeamModel.IsPhantomTeam) {
-      const a = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+      var a = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
       if (
         (void 0 !== e.BlackboardPos &&
           BlackboardController_1.BlackboardController.SetVectorValueByEntity(
@@ -37,4 +37,4 @@ class LevelEventUsePhantomSkill extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventUsePhantomSkill = LevelEventUsePhantomSkill;
-// # sourceMappingURL=LevelEventUsePhantomSkill.js.map
+//# sourceMappingURL=LevelEventUsePhantomSkill.js.map

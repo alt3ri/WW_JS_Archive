@@ -1,25 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HotFixSceneManager = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const LauncherLog_1 = require("../../Util/LauncherLog");
-const LauncherResourceLib_1 = require("../../Util/LauncherResourceLib");
-const BLACK_SEQUENCE =
-  "/Game/Aki/HotPatch/Sequence/XuanJue1_Black.XuanJue1_Black";
-const HOTPATCH_START_SEQUENCE =
-  "/Game/Aki/HotPatch/Sequence/XuanJue1_Sky.XuanJue1_Sky";
-const HOTPATCH_BGM =
-  "/Game/Aki/WwiseAudio/Events/play_login_bgm.play_login_bgm";
-const SEQUNCE_CAMERA_NAME = new UE.FName("SequenceCamera");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  LauncherLog_1 = require("../../Util/LauncherLog"),
+  LauncherResourceLib_1 = require("../../Util/LauncherResourceLib"),
+  BLACK_SEQUENCE = "/Game/Aki/HotPatch/Sequence/XuanJue1_Black.XuanJue1_Black",
+  HOTPATCH_START_SEQUENCE =
+    "/Game/Aki/HotPatch/Sequence/XuanJue1_Sky.XuanJue1_Sky",
+  HOTPATCH_BGM = "/Game/Aki/WwiseAudio/Events/play_login_bgm.play_login_bgm",
+  SEQUNCE_CAMERA_NAME = new UE.FName("SequenceCamera");
 class HotFixSceneManager {
   constructor() {
     (this.PSr = void 0), (this.yEr = void 0);
   }
   SetupScene(e) {
     this.PSr = e;
-    var a = UE.KismetMathLibrary.Now();
-    var a = UE.KismetMathLibrary.GetHour(a);
+    var a = UE.KismetMathLibrary.Now(),
+      a = UE.KismetMathLibrary.GetHour(a);
     UE.KuroRenderingRuntimeBPPluginBPLibrary.SetGlobalGITime(this.PSr, a),
       HotFixSceneManager.SpawnCamera(e),
       HotFixSceneManager.SetViewTarget(e),
@@ -45,12 +43,12 @@ class HotFixSceneManager {
       : LauncherLog_1.LauncherLog.Error("PlayerController为空");
   }
   PlayBlackSeq(e) {
-    let a;
-    let t = LauncherResourceLib_1.LauncherResourceLib.Load(
-      BLACK_SEQUENCE,
-      UE.LevelSequence,
-      100,
-    );
+    var a,
+      t = LauncherResourceLib_1.LauncherResourceLib.Load(
+        BLACK_SEQUENCE,
+        UE.LevelSequence,
+        100,
+      );
     t?.IsValid()
       ? ((a = (0, puerts_1.$ref)(void 0)),
         UE.LevelSequencePlayer.CreateLevelSequencePlayer(
@@ -70,12 +68,12 @@ class HotFixSceneManager {
         e?.());
   }
   PlayStartLaunchSeq() {
-    let e;
-    const a = LauncherResourceLib_1.LauncherResourceLib.Load(
-      HOTPATCH_START_SEQUENCE,
-      UE.LevelSequence,
-      100,
-    );
+    var e,
+      a = LauncherResourceLib_1.LauncherResourceLib.Load(
+        HOTPATCH_START_SEQUENCE,
+        UE.LevelSequence,
+        100,
+      );
     a?.IsValid()
       ? ((e = (0, puerts_1.$ref)(void 0)),
         UE.LevelSequencePlayer.CreateLevelSequencePlayer(
@@ -134,4 +132,4 @@ class HotFixSceneManager {
 }
 ((exports.HotFixSceneManager = HotFixSceneManager).TEr = void 0),
   (HotFixSceneManager.Yje = void 0);
-// # sourceMappingURL=HotFixSceneManager.js.map
+//# sourceMappingURL=HotFixSceneManager.js.map

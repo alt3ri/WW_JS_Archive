@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiNavigationUtil = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const GlobalData_1 = require("../../GlobalData");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  GlobalData_1 = require("../../GlobalData");
 class UiNavigationUtil {
   static GetFullPathOfActor(t) {
-    let e;
+    var e;
     return t
       ? ((e = (0, puerts_1.$ref)("")),
         UE.LGUIBPLibrary.GetFullPathOfActor(
@@ -19,4 +19,4 @@ class UiNavigationUtil {
   }
 }
 (exports.UiNavigationUtil = UiNavigationUtil).IncId = 0;
-// # sourceMappingURL=UiNavigationUtil.js.map
+//# sourceMappingURL=UiNavigationUtil.js.map

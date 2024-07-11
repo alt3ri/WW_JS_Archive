@@ -7,4 +7,4 @@ class EventResult {
   }
 }
 exports.EventResult = EventResult;
-// # sourceMappingURL=EventResult.js.map
+//# sourceMappingURL=EventResult.js.map

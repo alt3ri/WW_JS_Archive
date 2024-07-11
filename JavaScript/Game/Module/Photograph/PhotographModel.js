@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhotographModel = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const UiCameraPostEffectComponent_1 = require("../UiCamera/UiCameraComponent/UiCameraPostEffectComponent");
-const UiCameraManager_1 = require("../UiCamera/UiCameraManager");
-const UiCameraPhotographerStructure_1 = require("../UiCamera/UiCameraStructure/UiCameraPhotographerStructure");
-const PhotographDefine_1 = require("./PhotographDefine");
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  UiCameraPostEffectComponent_1 = require("../UiCamera/UiCameraComponent/UiCameraPostEffectComponent"),
+  UiCameraManager_1 = require("../UiCamera/UiCameraManager"),
+  UiCameraPhotographerStructure_1 = require("../UiCamera/UiCameraStructure/UiCameraPhotographerStructure"),
+  PhotographDefine_1 = require("./PhotographDefine");
 class PhotographModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -102,4 +102,4 @@ class PhotographModel extends ModelBase_1.ModelBase {
   }
 }
 exports.PhotographModel = PhotographModel;
-// # sourceMappingURL=PhotographModel.js.map
+//# sourceMappingURL=PhotographModel.js.map

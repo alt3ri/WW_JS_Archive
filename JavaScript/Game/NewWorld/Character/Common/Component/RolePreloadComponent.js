@@ -1,36 +1,40 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, r, o) {
-    let i;
-    const s = arguments.length;
-    let l =
-      s < 3 ? t : o === null ? (o = Object.getOwnPropertyDescriptor(t, r)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var i,
+      s = arguments.length,
+      l =
+        s < 3
+          ? t
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(t, r))
+            : o;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       l = Reflect.decorate(e, t, r, o);
     else
-      for (let n = e.length - 1; n >= 0; n--)
-        (i = e[n]) && (l = (s < 3 ? i(l) : s > 3 ? i(t, r, l) : i(t, r)) || l);
-    return s > 3 && l && Object.defineProperty(t, r, l), l;
+      for (var n = e.length - 1; 0 <= n; n--)
+        (i = e[n]) && (l = (s < 3 ? i(l) : 3 < s ? i(t, r, l) : i(t, r)) || l);
+    return 3 < s && l && Object.defineProperty(t, r, l), l;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RolePreloadComponent = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const AiBaseById_1 = require("../../../../../Core/Define/ConfigQuery/AiBaseById");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const DataTableUtil_1 = require("../../../../../Core/Utils/DataTableUtil");
-const IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const PhantomUtil_1 = require("../../../../Module/Phantom/PhantomUtil");
-const PreloadDefine_1 = require("../../../../Preload/PreloadDefine");
-const CombatDebugController_1 = require("../../../../Utils/CombatDebugController");
-const PreloadControllerNew_1 = require("../../../../World/Controller/PreloadControllerNew");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  AiBaseById_1 = require("../../../../../Core/Define/ConfigQuery/AiBaseById"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  DataTableUtil_1 = require("../../../../../Core/Utils/DataTableUtil"),
+  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  PhantomUtil_1 = require("../../../../Module/Phantom/PhantomUtil"),
+  PreloadDefine_1 = require("../../../../Preload/PreloadDefine"),
+  CombatDebugController_1 = require("../../../../Utils/CombatDebugController"),
+  PreloadControllerNew_1 = require("../../../../World/Controller/PreloadControllerNew");
 let RolePreloadComponent = class RolePreloadComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -53,27 +57,27 @@ let RolePreloadComponent = class RolePreloadComponent extends EntityComponent_1.
               (this.Czr = !0),
               this.fzr(!0),
               this.bBn();
-            var t = (0, puerts_1.$ref)(void 0);
-            const r =
-              (UE.DataTableFunctionLibrary.GetDataTableRowNames(
-                this.rDr.DtSkillInfo,
-                t,
-              ),
-              (0, puerts_1.$unref)(t));
+            var t = (0, puerts_1.$ref)(void 0),
+              r =
+                (UE.DataTableFunctionLibrary.GetDataTableRowNames(
+                  this.rDr.DtSkillInfo,
+                  t,
+                ),
+                (0, puerts_1.$unref)(t));
             for (let e = 0; e < r.Num(); e++) {
-              var o;
-              const i = Number(r.Get(e).toString());
+              var o,
+                i = Number(r.Get(e).toString());
               this.rDr?.LoadedSkills.has(i) ||
                 ((o = this.rDr.GetSkillInfo(i)) &&
-                  o.SkillLoadType === 0 &&
+                  0 === o.SkillLoadType &&
                   this.LoadSkillAsync(i));
             }
             for (const n of ConfigManager_1.ConfigManager.WorldConfig.GetMonsterCommonSkillRowNames()) {
-              var s;
-              const l = Number(n);
+              var s,
+                l = Number(n);
               this.rDr?.LoadedSkills.has(l) ||
                 ((s = this.rDr.GetSkillInfo(l)) &&
-                  s.SkillLoadType === 0 &&
+                  0 === s.SkillLoadType &&
                   this.LoadSkillAsync(l));
             }
             this.qBn();
@@ -98,7 +102,7 @@ let RolePreloadComponent = class RolePreloadComponent extends EntityComponent_1.
     (this.dzr = e), this.GBn(), this.OBn(), this.pzr(), this.vzr(), this.Mzr();
   }
   GBn() {
-    const e = this.dzr?.BlueprintClassPath;
+    var e = this.dzr?.BlueprintClassPath;
     e &&
       (this.BBn =
         ConfigManager_1.ConfigManager.WorldConfig.GetCharacterFightInfo(e));
@@ -109,25 +113,25 @@ let RolePreloadComponent = class RolePreloadComponent extends EntityComponent_1.
       : (this.wBn = 0);
   }
   pzr() {
-    let e;
-    var t = this.dzr;
-    const r = this.BBn?.SkillDataTable.ToAssetPathName();
-    var t =
-      (r?.length &&
-        r !== "None" &&
-        ((e = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
-          r,
-          UE.DataTable,
-        ))?.IsValid() ||
-          CombatDebugController_1.CombatDebugController.CombatWarn(
-            "Skill",
-            this.Entity,
-            "SkillComponent中找不到技能表",
-            ["ActorPath", t.BlueprintClassPath],
-            ["技能表Path", r],
-          ),
-        (this.rDr.DtSkillInfo = e)),
-      this.zht.GetEntityType());
+    var e,
+      t = this.dzr,
+      r = this.BBn?.SkillDataTable.ToAssetPathName(),
+      t =
+        (r?.length &&
+          "None" !== r &&
+          ((e = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+            r,
+            UE.DataTable,
+          ))?.IsValid() ||
+            CombatDebugController_1.CombatDebugController.CombatWarn(
+              "Skill",
+              this.Entity,
+              "SkillComponent中找不到技能表",
+              ["ActorPath", t.BlueprintClassPath],
+              ["技能表Path", r],
+            ),
+          (this.rDr.DtSkillInfo = e)),
+        this.zht.GetEntityType());
     t === Protocol_1.Aki.Protocol.HBs.Proto_Player
       ? this.Szr()
       : t === Protocol_1.Aki.Protocol.HBs.Proto_Vision
@@ -135,18 +139,18 @@ let RolePreloadComponent = class RolePreloadComponent extends EntityComponent_1.
         : t === Protocol_1.Aki.Protocol.HBs.Proto_Monster && this.yzr();
   }
   Szr() {
-    let e = (0, puerts_1.$ref)(void 0);
-    const t =
-      (UE.DataTableFunctionLibrary.GetDataTableRowNames(
-        this.rDr.DtSkillInfo,
-        e,
-      ),
-      (0, puerts_1.$unref)(e));
+    var e = (0, puerts_1.$ref)(void 0),
+      t =
+        (UE.DataTableFunctionLibrary.GetDataTableRowNames(
+          this.rDr.DtSkillInfo,
+          e,
+        ),
+        (0, puerts_1.$unref)(e));
     for (let e = 0; e < t.Num(); e++) {
-      const r = Number(t.Get(e).toString());
-      const o = this.rDr.GetSkillInfo(r);
+      var r = Number(t.Get(e).toString()),
+        o = this.rDr.GetSkillInfo(r);
       o &&
-        o.SkillLoadType === 0 &&
+        0 === o.SkillLoadType &&
         PreloadControllerNew_1.PreloadControllerNew.CollectAssetBySkillId(
           this.dzr,
           r,
@@ -155,16 +159,16 @@ let RolePreloadComponent = class RolePreloadComponent extends EntityComponent_1.
     }
     e = ConfigManager_1.ConfigManager.WorldConfig.GetRoleCommonSkillRowNames();
     let i = void 0;
-    let s = this.mzr.CreatureData.GetVisionComponent();
+    var s = this.mzr.CreatureData.GetVisionComponent();
     s &&
       (s = PhantomUtil_1.PhantomUtil.GetVisionData(s.VisionId)) &&
       (i = s.类型);
     for (const a of e) {
-      const l = Number(a);
-      const n = this.rDr.GetSkillInfo(l);
+      var l = Number(a),
+        n = this.rDr.GetSkillInfo(l);
       n &&
-        ((n.SkillLoadType === 3 && Number(i) === 1) ||
-          (n.SkillLoadType === 2 && Number(i) === 0)) &&
+        ((3 === n.SkillLoadType && 1 === Number(i)) ||
+          (2 === n.SkillLoadType && 0 === Number(i))) &&
         PreloadControllerNew_1.PreloadControllerNew.CollectAssetBySkillId(
           this.dzr,
           l,
@@ -194,18 +198,18 @@ let RolePreloadComponent = class RolePreloadComponent extends EntityComponent_1.
   }
   yzr() {}
   Ezr() {
-    const e = (0, puerts_1.$ref)(void 0);
-    const t =
-      (UE.DataTableFunctionLibrary.GetDataTableRowNames(
-        this.rDr.DtSkillInfo,
-        e,
-      ),
-      (0, puerts_1.$unref)(e));
+    var e = (0, puerts_1.$ref)(void 0),
+      t =
+        (UE.DataTableFunctionLibrary.GetDataTableRowNames(
+          this.rDr.DtSkillInfo,
+          e,
+        ),
+        (0, puerts_1.$unref)(e));
     for (let e = 0; e < t.Num(); e++) {
-      const r = Number(t.Get(e).toString());
-      const o = this.rDr.GetSkillInfo(r);
+      var r = Number(t.Get(e).toString()),
+        o = this.rDr.GetSkillInfo(r);
       o &&
-        o.SkillLoadType === 0 &&
+        0 === o.SkillLoadType &&
         PreloadControllerNew_1.PreloadControllerNew.CollectAssetBySkillId(
           this.dzr,
           r,
@@ -213,10 +217,10 @@ let RolePreloadComponent = class RolePreloadComponent extends EntityComponent_1.
         );
     }
     for (const l of ConfigManager_1.ConfigManager.WorldConfig.GetVisionCommonSkillRowNames()) {
-      const i = Number(l);
-      const s = this.rDr.GetSkillInfo(i);
+      var i = Number(l),
+        s = this.rDr.GetSkillInfo(i);
       s &&
-        s.SkillLoadType === 0 &&
+        0 === s.SkillLoadType &&
         PreloadControllerNew_1.PreloadControllerNew.CollectAssetBySkillId(
           this.dzr,
           i,
@@ -226,25 +230,25 @@ let RolePreloadComponent = class RolePreloadComponent extends EntityComponent_1.
     this.qBn();
   }
   qBn() {
-    if (this.wBn !== 0) {
+    if (0 !== this.wBn) {
       var t = this.BBn?.SkillDataTableMap.Get(this.wBn)?.ToAssetPathName();
       let e = void 0;
       if (
         (e =
-          t && t.length > 0 && t !== "None"
+          t && 0 < t.length && "None" !== t
             ? ResourceSystem_1.ResourceSystem.GetLoadedAsset(t, UE.DataTable)
             : e)
       ) {
         this.rDr.DtSkillInfoExtra = e;
-        var t = (0, puerts_1.$ref)(void 0);
-        const r =
-          (UE.DataTableFunctionLibrary.GetDataTableRowNames(e, t),
-          (0, puerts_1.$unref)(t));
+        var t = (0, puerts_1.$ref)(void 0),
+          r =
+            (UE.DataTableFunctionLibrary.GetDataTableRowNames(e, t),
+            (0, puerts_1.$unref)(t));
         for (let e = 0; e < r.Num(); e++) {
-          const o = Number(r.Get(e).toString());
-          const i = this.rDr.GetSkillInfo(o);
+          var o = Number(r.Get(e).toString()),
+            i = this.rDr.GetSkillInfo(o);
           i &&
-            i.SkillLoadType === 0 &&
+            0 === i.SkillLoadType &&
             PreloadControllerNew_1.PreloadControllerNew.CollectAssetBySkillId(
               this.dzr,
               o,
@@ -255,27 +259,27 @@ let RolePreloadComponent = class RolePreloadComponent extends EntityComponent_1.
     }
   }
   vzr() {
-    const e = this.zht.GetEntityType();
+    var e = this.zht.GetEntityType();
     (e !== Protocol_1.Aki.Protocol.HBs.Proto_Player &&
       e !== Protocol_1.Aki.Protocol.HBs.Proto_Vision) ||
       (this.fzr(), this.bBn());
   }
   fzr(e = !1) {
-    let t = this.BBn?.BulletDataTable?.ToAssetPathName();
+    var t = this.BBn?.BulletDataTable?.ToAssetPathName();
     t?.length &&
-      t !== "None" &&
+      "None" !== t &&
       ((t = ResourceSystem_1.ResourceSystem.GetLoadedAsset(t, UE.DataTable)),
       this.kBn(t, e) && (this.rDr.DtBulletInfo = t),
-      this.wBn !== 0) &&
+      0 !== this.wBn) &&
       (t = this.BBn?.BulletDataTableMap.Get(this.wBn)?.ToAssetPathName()) &&
-      t.length > 0 &&
-      t !== "None" &&
+      0 < t.length &&
+      "None" !== t &&
       ((t = ResourceSystem_1.ResourceSystem.GetLoadedAsset(t, UE.DataTable)),
       this.kBn(t, e)) &&
       (this.rDr.DtBulletInfoExtra = t);
   }
   kBn(e, t = !1) {
-    const r = this.dzr;
+    var r = this.dzr;
     if (!e?.IsValid())
       return (
         Log_1.Log.CheckError() &&
@@ -289,15 +293,14 @@ let RolePreloadComponent = class RolePreloadComponent extends EntityComponent_1.
         !1
       );
     if (!e) return !1;
-    const o =
+    var o =
       DataTableUtil_1.DataTableUtil.GetAllDataTableRowFromTableWithRowName(e);
     if (!o) return !1;
-    const i = o.length;
+    var i = o.length;
     for (let e = 0; e < i; ++e) {
-      var s = o[e];
-      var s = BigInt(s[0]);
-      var s =
-        PreloadControllerNew_1.PreloadControllerNew.CollectAssetByBulletId(
+      var s = o[e],
+        s = BigInt(s[0]),
+        s = PreloadControllerNew_1.PreloadControllerNew.CollectAssetByBulletId(
           r,
           s,
         );
@@ -313,26 +316,26 @@ let RolePreloadComponent = class RolePreloadComponent extends EntityComponent_1.
   }
   bBn() {
     const e = this.BBn?.HitEffectTable.ToAssetPathName();
-    let t;
+    var t;
     if (
       (e &&
-        e.length > 0 &&
-        e !== "None" &&
+        0 < e.length &&
+        "None" !== e &&
         ((t = ResourceSystem_1.ResourceSystem.GetLoadedAsset(e, UE.DataTable)),
         (this.rDr.DtHitEffect = t)),
-      this.wBn !== 0)
+      0 !== this.wBn)
     ) {
       const e = this.BBn?.HitEffectTableMap.Get(this.wBn)?.ToAssetPathName();
       e &&
-        e.length > 0 &&
-        e !== "None" &&
+        0 < e.length &&
+        "None" !== e &&
         ((t = ResourceSystem_1.ResourceSystem.GetLoadedAsset(e, UE.DataTable)),
         (this.rDr.DtHitEffectExtra = t));
     }
   }
   Mzr() {
-    const e = this.dzr;
-    let t = e.CreatureDataComponent.GetPbEntityInitData();
+    var e = this.dzr,
+      t = e.CreatureDataComponent.GetPbEntityInitData();
     let r = 0;
     t = (r =
       t?.ComponentsData &&
@@ -357,4 +360,4 @@ let RolePreloadComponent = class RolePreloadComponent extends EntityComponent_1.
   RolePreloadComponent,
 )),
   (exports.RolePreloadComponent = RolePreloadComponent);
-// # sourceMappingURL=RolePreloadComponent.js.map
+//# sourceMappingURL=RolePreloadComponent.js.map

@@ -1,29 +1,33 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, r) {
-    let n;
-    const s = arguments.length;
-    let o =
-      s < 3 ? e : r === null ? (r = Object.getOwnPropertyDescriptor(e, i)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var n,
+      s = arguments.length,
+      o =
+        s < 3
+          ? e
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(e, i))
+            : r;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       o = Reflect.decorate(t, e, i, r);
     else
-      for (let h = t.length - 1; h >= 0; h--)
-        (n = t[h]) && (o = (s < 3 ? n(o) : s > 3 ? n(e, i, o) : n(e, i)) || o);
-    return s > 3 && o && Object.defineProperty(e, i, o), o;
+      for (var h = t.length - 1; 0 <= h; h--)
+        (n = t[h]) && (o = (s < 3 ? n(o) : 3 < s ? n(e, i, o) : n(e, i)) || o);
+    return 3 < s && o && Object.defineProperty(e, i, o), o;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SmartObjectComponent = void 0);
-const AudioController_1 = require("../../../../../Core/Audio/AudioController");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const Global_1 = require("../../../../Global");
-const CharacterUnifiedStateTypes_1 = require("../../../Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
+const AudioController_1 = require("../../../../../Core/Audio/AudioController"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  Global_1 = require("../../../../Global"),
+  CharacterUnifiedStateTypes_1 = require("../../../Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
 let SmartObjectComponent = class SmartObjectComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -33,16 +37,16 @@ let SmartObjectComponent = class SmartObjectComponent extends EntityComponent_1.
       (this.hun = []),
       (this.lun = !1),
       (this._un = (t, e) => {
-        let i;
-        var e = e.Entity;
-        this.aun.ExcludeEntities?.indexOf(e.GetComponent(0).GetPbDataId()) >=
-          0 ||
+        var i,
+          e = e.Entity;
+        0 <=
+          this.aun.ExcludeEntities?.indexOf(e.GetComponent(0).GetPbDataId()) ||
           (this.uun(e) &&
             ((i = this.hun.indexOf(e)),
-            t ? i < 0 && this.hun.push(e) : i >= 0 && this.hun.splice(i, 1)));
+            t ? i < 0 && this.hun.push(e) : 0 <= i && this.hun.splice(i, 1)));
       }),
       (this.cun = () => {
-        let t, e;
+        var t, e;
         this.lun &&
           void 0 !== (t = this.aun.AlertSound) &&
           ((e = Global_1.Global.BaseCharacter),
@@ -60,7 +64,7 @@ let SmartObjectComponent = class SmartObjectComponent extends EntityComponent_1.
       });
   }
   OnStart() {
-    let t;
+    var t;
     return (
       (this.Hte = this.Entity.GetComponent(1)),
       (this.ktn = this.Entity.GetComponent(74)),
@@ -76,15 +80,16 @@ let SmartObjectComponent = class SmartObjectComponent extends EntityComponent_1.
     );
   }
   dun() {
-    for (const [, t] of this.ktn.GetEntitiesInRangeLocal()) {
+    for (var [, t] of this.ktn.GetEntitiesInRangeLocal()) {
       if (
         this.aun.ExcludeEntities?.length &&
-        this.aun.ExcludeEntities?.length > 0
+        0 < this.aun.ExcludeEntities?.length
       )
         if (
+          0 <=
           this.aun.ExcludeEntities?.indexOf(
             t.Entity.GetComponent(0).GetPbDataId(),
-          ) >= 0
+          )
         )
           continue;
       this.uun(t.Entity) && this.hun.push(t.Entity);
@@ -149,4 +154,4 @@ let SmartObjectComponent = class SmartObjectComponent extends EntityComponent_1.
   SmartObjectComponent,
 )),
   (exports.SmartObjectComponent = SmartObjectComponent);
-// # sourceMappingURL=SmartObjectComponent.js.map
+//# sourceMappingURL=SmartObjectComponent.js.map

@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HudUnitHandleBase = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const Global_1 = require("../../../Global");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const HudEntitySet_1 = require("../HudUnitEntity/HudEntitySet");
-const CENTER_Y = 62.5;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  Global_1 = require("../../../Global"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  HudEntitySet_1 = require("../HudUnitEntity/HudEntitySet"),
+  CENTER_Y = 62.5;
 class HudUnitHandleBase {
   constructor() {
     (this.Iii = new Set()),
@@ -34,14 +34,14 @@ class HudUnitHandleBase {
     (this.gXe = Global_1.Global.CharacterController),
       (this.MXe = Global_1.Global.CharacterCameraManager),
       (this.Tii = UiLayer_1.UiLayer.GetBattleViewUnit(1));
-    const t =
-      CommonParamById_1.configCommonParamById.GetIntConfig(
-        "MonsterCursorWidthToScreenPercent",
-      ) / CommonDefine_1.PERCENTAGE_FACTOR;
-    const i =
-      CommonParamById_1.configCommonParamById.GetIntConfig(
-        "MonsterCursorHeightToScreenPercent",
-      ) / CommonDefine_1.PERCENTAGE_FACTOR;
+    var t =
+        CommonParamById_1.configCommonParamById.GetIntConfig(
+          "MonsterCursorWidthToScreenPercent",
+        ) / CommonDefine_1.PERCENTAGE_FACTOR,
+      i =
+        CommonParamById_1.configCommonParamById.GetIntConfig(
+          "MonsterCursorHeightToScreenPercent",
+        ) / CommonDefine_1.PERCENTAGE_FACTOR;
     (this.Lii = this.Tii.GetWidth() * t),
       (this.Dii = this.Tii.GetHeight() * i),
       this.OnAddEvents(),
@@ -117,20 +117,20 @@ class HudUnitHandleBase {
     );
   }
   PXe(t, i, e, s) {
-    const r = t.X;
-    const o = t.Y;
+    var r = t.X,
+      o = t.Y;
     return s && (r * r) / (i * i) + (o * o) / (e * e) <= 1
       ? t
       : ((s = (i * e) / Math.sqrt(e * e * r * r + i * i * o * o)),
         t.op_Multiply(s));
   }
   ScreenPositionToEllipsePosition(t, i) {
-    const e = this.UXe();
-    const s = this.AXe();
-    var t = t
-      .op_Multiply(s.X / e)
-      .op_Subtraction(s.op_Multiply(0.5))
-      .op_Multiply(this.pXe);
+    var e = this.UXe(),
+      s = this.AXe(),
+      t = t
+        .op_Multiply(s.X / e)
+        .op_Subtraction(s.op_Multiply(0.5))
+        .op_Multiply(this.pXe);
     return this.PXe(t, this.Lii, this.Dii, i).op_Addition(this.bG);
   }
   Uii(t, i) {
@@ -141,12 +141,12 @@ class HudUnitHandleBase {
   }
   GetProjectionToFrontPosition(t, i) {
     this.Due.Set(i.X, i.Y, i.Z);
-    var i = this.Uii(t, this.Due);
-    var e = this.BXe();
-    var e = UE.KismetMathLibrary.ProjectVectorOnToVector(
-      i.ToUeVector(),
-      e,
-    ).op_Multiply(2);
+    var i = this.Uii(t, this.Due),
+      e = this.BXe(),
+      e = UE.KismetMathLibrary.ProjectVectorOnToVector(
+        i.ToUeVector(),
+        e,
+      ).op_Multiply(2);
     return (
       this.SXe.Set(e.X, e.Y, e.Z),
       i.SubtractionEqual(this.SXe),
@@ -162,8 +162,8 @@ class HudUnitHandleBase {
       );
   }
   GetInEllipsePosition(t, i) {
-    let e = UE.GameplayStatics.ProjectWorldToScreen(this.gXe, i, this._Xe);
-    const s = (0, puerts_1.$unref)(this._Xe);
+    var e = UE.GameplayStatics.ProjectWorldToScreen(this.gXe, i, this._Xe),
+      s = (0, puerts_1.$unref)(this._Xe);
     return e
       ? [this.ScreenPositionToEllipsePosition(s, !0), s]
       : ((e = this.GetProjectionToFrontPosition(t, i)),
@@ -176,4 +176,4 @@ class HudUnitHandleBase {
   }
 }
 exports.HudUnitHandleBase = HudUnitHandleBase;
-// # sourceMappingURL=HudUnitHandleBase.js.map
+//# sourceMappingURL=HudUnitHandleBase.js.map

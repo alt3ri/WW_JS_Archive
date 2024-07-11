@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TrackController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterController_1 = require("../../NewWorld/Character/CharacterController");
+const Log_1 = require("../../../Core/Common/Log"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterController_1 = require("../../NewWorld/Character/CharacterController");
 class TrackController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -62,7 +62,7 @@ class TrackController extends ControllerBase_1.ControllerBase {
     );
   }
   static EndTrack(e, r) {
-    const t = ModelManager_1.ModelManager.TrackModel.GetTrackData(e, r);
+    var t = ModelManager_1.ModelManager.TrackModel.GetTrackData(e, r);
     return (
       !!t &&
       (Log_1.Log.CheckInfo() &&
@@ -90,14 +90,14 @@ class TrackController extends ControllerBase_1.ControllerBase {
 }
 ((exports.TrackController = TrackController).vDo = (r) => {
   if (r) {
-    const t = r.GetComponent(144);
+    var t = r.GetComponent(144);
     if (t?.Valid) {
-      var n = r.GetComponent(1).CreatureData.GetPbEntityInitData();
-      var n = (0, IComponent_1.getComponent)(
-        n.ComponentsData,
-        "InteractComponent",
-      );
-      const e = r.GetComponent(177);
+      var n = r.GetComponent(1).CreatureData.GetPbEntityInitData(),
+        n = (0, IComponent_1.getComponent)(
+          n.ComponentsData,
+          "InteractComponent",
+        ),
+        e = r.GetComponent(177);
       if (!e || !e.HasTag(1196894179)) {
         let e = 3;
         n && (e = n.Range / 100),
@@ -119,4 +119,4 @@ class TrackController extends ControllerBase_1.ControllerBase {
   (TrackController.MDo = (e) => {
     TrackController.EndTrack(3, e.Id);
   });
-// # sourceMappingURL=TrackController.js.map
+//# sourceMappingURL=TrackController.js.map

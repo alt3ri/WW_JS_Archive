@@ -15,4 +15,4 @@ class UiWeaponAnsContext extends UiAnsContextBase_1.UiAnsContextBase {
   }
 }
 exports.UiWeaponAnsContext = UiWeaponAnsContext;
-// # sourceMappingURL=UiWeaponAnsContext.js.map
+//# sourceMappingURL=UiWeaponAnsContext.js.map

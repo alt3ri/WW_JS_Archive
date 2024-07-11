@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GachaSelectionItem = void 0);
-const UE = require("ue");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const RoleController_1 = require("../../RoleUi/RoleController");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const SimpleGenericLayout_1 = require("../../Util/Layout/SimpleGenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const WeaponTrialData_1 = require("../../Weapon/Data/WeaponTrialData");
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  RoleController_1 = require("../../RoleUi/RoleController"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  SimpleGenericLayout_1 = require("../../Util/Layout/SimpleGenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  WeaponTrialData_1 = require("../../Weapon/Data/WeaponTrialData");
 class GachaSelectionItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -26,10 +26,9 @@ class GachaSelectionItem extends GridProxyAbstract_1.GridProxyAbstract {
         this.ToggleCallBack?.(this.GridIndex);
       }),
       (this.IHt = () => {
-        let i;
-        var e = this.QHt.ShowIdList[0];
-        var e =
-          ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(e);
+        var i,
+          e = this.QHt.ShowIdList[0],
+          e = ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(e);
         this.XHt
           ? ((i = [e.TrialId]),
             RoleController_1.RoleController.OpenRoleMainView(1, 0, i))
@@ -43,16 +42,16 @@ class GachaSelectionItem extends GridProxyAbstract_1.GridProxyAbstract {
         this.TDe &&
           (TimerSystem_1.RealTimeTimerSystem.Remove(this.TDe),
           (this.TDe = void 0));
-        let i = this.GetText(6);
-        var e = this.Pe.GachaInfo;
-        let t = this.Pe.PoolInfo.Id;
-        var e = e.GetPoolEndTimeByPoolId(t);
-        e === 0 || (t = e - TimeUtil_1.TimeUtil.GetServerTime()) <= 0
+        var i = this.GetText(6),
+          e = this.Pe.GachaInfo,
+          t = this.Pe.PoolInfo.Id,
+          e = e.GetPoolEndTimeByPoolId(t);
+        0 === e || (t = e - TimeUtil_1.TimeUtil.GetServerTime()) <= 0
           ? i.SetUIActive(!1)
           : (i.SetUIActive(!0),
             (e = TimeUtil_1.TimeUtil.GetRemainTimeDataFormat(t)),
             i.SetText(e.CountDownText),
-            (t = e.RemainingTime) > 0 &&
+            0 < (t = e.RemainingTime) &&
               ((i = t),
               (this.TDe = TimerSystem_1.RealTimeTimerSystem.Delay(
                 this.RefreshLeftTime,
@@ -87,16 +86,16 @@ class GachaSelectionItem extends GridProxyAbstract_1.GridProxyAbstract {
       );
   }
   Refresh(i, e, t) {
-    var r = (this.Pe = i).GachaInfo;
-    var i = i.PoolInfo.Id;
-    var r =
-      (this.GetItem(9)?.SetUIActive(r.UsePoolId === i),
-      ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewInfo(i));
-    var i = (this.QHt = r).Type;
-    var i =
-      ((this.XHt = ModelManager_1.ModelManager.GachaModel.IsRolePool(i)),
-      r.ShowIdList[0]);
-    var i = ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(i);
+    var r = (this.Pe = i).GachaInfo,
+      i = i.PoolInfo.Id,
+      r =
+        (this.GetItem(9)?.SetUIActive(r.UsePoolId === i),
+        ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewInfo(i)),
+      i = (this.QHt = r).Type,
+      i =
+        ((this.XHt = ModelManager_1.ModelManager.GachaModel.IsRolePool(i)),
+        r.ShowIdList[0]),
+      i = ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(i);
     this.SetTextureByPath(i.GachaResultViewTexture, this.GetTexture(1)),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(5), r.SummaryTitle),
       this.RefreshLeftTime(),
@@ -112,23 +111,22 @@ class GachaSelectionItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetExtendToggle(0)?.SetToggleState(0);
   }
   $Ht() {
-    var i = this.QHt.ShowIdList[0];
-    var i = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(i);
-    var e =
-      (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), i.Name),
-      this.GetItem(2)?.SetUIActive(!0),
-      ConfigManager_1.ConfigManager.GachaConfig.GetGachaElementTexturePath(
-        i.ElementId,
-      ));
-    var e =
-      (this.SetElementIcon(e, this.GetTexture(3), i.ElementId), i.QualityId);
+    var i = this.QHt.ShowIdList[0],
+      i = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(i),
+      e =
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), i.Name),
+        this.GetItem(2)?.SetUIActive(!0),
+        ConfigManager_1.ConfigManager.GachaConfig.GetGachaElementTexturePath(
+          i.ElementId,
+        )),
+      e =
+        (this.SetElementIcon(e, this.GetTexture(3), i.ElementId), i.QualityId);
     this.$be?.RebuildLayout(e);
   }
   YHt() {
-    var i = this.QHt;
-    var i = (this.GetItem(2)?.SetUIActive(!1), i.ShowIdList[0]);
-    var i =
-      ConfigManager_1.ConfigManager.InventoryConfig.GetWeaponItemConfig(i);
+    var i = this.QHt,
+      i = (this.GetItem(2)?.SetUIActive(!1), i.ShowIdList[0]),
+      i = ConfigManager_1.ConfigManager.InventoryConfig.GetWeaponItemConfig(i);
     i &&
       (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), i.WeaponName),
       (i = i.QualityId),
@@ -140,4 +138,4 @@ class GachaSelectionItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.GachaSelectionItem = GachaSelectionItem;
-// # sourceMappingURL=GachaSelectionItem.js.map
+//# sourceMappingURL=GachaSelectionItem.js.map

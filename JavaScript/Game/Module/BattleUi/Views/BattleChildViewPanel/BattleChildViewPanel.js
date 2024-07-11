@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleChildViewPanel = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
 class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -15,7 +15,7 @@ class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
       (this.IsEnable = !1),
       (this.IsShowOnce = !1),
       (this.j$e = () => {
-        const i = this.Visible;
+        var i = this.Visible;
         (this.Visible = this.ChildViewData.GetChildVisible(this.ChildType)),
           this.Q$e(i);
       });
@@ -41,7 +41,7 @@ class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
   }
   HideBattleChildViewPanel() {
     this.IsEnable = !1;
-    const i = this.Visible;
+    var i = this.Visible;
     this.K$e(0, !1),
       this.SetActive(this.Visible),
       i && this.OnHideBattleChildViewPanel();
@@ -69,7 +69,7 @@ class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
     return this.Visible;
   }
   SetVisible(i, t) {
-    const e = this.Visible;
+    var e = this.Visible;
     this.K$e(i, t), this.Q$e(e);
   }
   Q$e(i) {
@@ -78,7 +78,7 @@ class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
       (this.SetActive(i), i ? this.$$e() : this.OnHideBattleChildViewPanel());
   }
   K$e(i, t) {
-    this.ChildType !== 0 &&
+    0 !== this.ChildType &&
       (this.Visible = this.ChildViewData.SetChildVisible(
         i,
         this.ChildType,
@@ -189,4 +189,4 @@ class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
   GetUiActorForGuide() {}
 }
 exports.BattleChildViewPanel = BattleChildViewPanel;
-// # sourceMappingURL=BattleChildViewPanel.js.map
+//# sourceMappingURL=BattleChildViewPanel.js.map

@@ -12,35 +12,35 @@ exports.ByteBuffer =
   exports.SIZEOF_INT =
   exports.SIZEOF_SHORT =
     void 0;
-const constants_js_1 = require("./constants");
+var constants_js_1 = require("./constants");
 Object.defineProperty(exports, "SIZEOF_SHORT", {
   enumerable: true,
   get: function () {
     return constants_js_1.SIZEOF_SHORT;
   },
 });
-const constants_js_2 = require("./constants");
+var constants_js_2 = require("./constants");
 Object.defineProperty(exports, "SIZEOF_INT", {
   enumerable: true,
   get: function () {
     return constants_js_2.SIZEOF_INT;
   },
 });
-const constants_js_3 = require("./constants");
+var constants_js_3 = require("./constants");
 Object.defineProperty(exports, "FILE_IDENTIFIER_LENGTH", {
   enumerable: true,
   get: function () {
     return constants_js_3.FILE_IDENTIFIER_LENGTH;
   },
 });
-const constants_js_4 = require("./constants");
+var constants_js_4 = require("./constants");
 Object.defineProperty(exports, "SIZE_PREFIX_LENGTH", {
   enumerable: true,
   get: function () {
     return constants_js_4.SIZE_PREFIX_LENGTH;
   },
 });
-const utils_js_1 = require("./utils");
+var utils_js_1 = require("./utils");
 Object.defineProperty(exports, "int32", {
   enumerable: true,
   get: function () {
@@ -65,21 +65,21 @@ Object.defineProperty(exports, "isLittleEndian", {
     return utils_js_1.isLittleEndian;
   },
 });
-const encoding_js_1 = require("./encoding");
+var encoding_js_1 = require("./encoding");
 Object.defineProperty(exports, "Encoding", {
   enumerable: true,
   get: function () {
     return encoding_js_1.Encoding;
   },
 });
-const builder_js_1 = require("./builder");
+var builder_js_1 = require("./builder");
 Object.defineProperty(exports, "Builder", {
   enumerable: true,
   get: function () {
     return builder_js_1.Builder;
   },
 });
-const byte_buffer_js_1 = require("./byte-buffer");
+var byte_buffer_js_1 = require("./byte-buffer");
 Object.defineProperty(exports, "ByteBuffer", {
   enumerable: true,
   get: function () {

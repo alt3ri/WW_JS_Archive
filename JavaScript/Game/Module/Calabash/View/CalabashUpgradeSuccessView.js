@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CalabashUpgradeSuccessView = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class CalabashUpgradeSuccessView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -52,8 +52,8 @@ class CalabashUpgradeSuccessView extends UiViewBase_1.UiViewBase {
     ];
   }
   OnStart() {
-    let i;
-    const s = this.OpenParam;
+    var i,
+      s = this.OpenParam;
     (this.wvt = s.CurLevel > s.PreLevel),
       (this.Bvt = s.AddExp),
       (this.bvt = !1),
@@ -91,8 +91,8 @@ class CalabashUpgradeSuccessView extends UiViewBase_1.UiViewBase {
     return this.wvt && this.qvt >= this.Gvt;
   }
   Wvt() {
-    const i = this.Kvt ? this.qvt - this.Gvt : this.qvt;
-    const s = this.Kvt ? this.Ovt : this.Gvt;
+    var i = this.Kvt ? this.qvt - this.Gvt : this.qvt,
+      s = this.Kvt ? this.Ovt : this.Gvt;
     this.GetText(1).SetText(Math.round(i) + "/" + s),
       this.GetSprite(2).SetFillAmount(i / s),
       this.Fvt &&
@@ -117,4 +117,4 @@ class CalabashUpgradeSuccessView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.CalabashUpgradeSuccessView = CalabashUpgradeSuccessView;
-// # sourceMappingURL=CalabashUpgradeSuccessView.js.map
+//# sourceMappingURL=CalabashUpgradeSuccessView.js.map

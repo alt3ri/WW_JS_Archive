@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const PrewarFormationData_1 = require("./Define/PrewarFormationData");
-const InstanceDungeonInfo_1 = require("./InstanceDungeonInfo");
-const MATCHINGTEAMSIZE = 3;
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  PrewarFormationData_1 = require("./Define/PrewarFormationData"),
+  InstanceDungeonInfo_1 = require("./InstanceDungeonInfo"),
+  MATCHINGTEAMSIZE = 3;
 class InstanceDungeonModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -76,16 +76,16 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
     return MATCHINGTEAMSIZE - this.Gli();
   }
   Gli() {
-    const t = this.Rli.ZEs;
+    var t = this.Rli.ZEs;
     if (!ModelManager_1.ModelManager.GameModeModel.IsMulti) return t.length;
-    const e = ModelManager_1.ModelManager.OnlineModel.GetAllWorldTeamPlayer();
+    var e = ModelManager_1.ModelManager.OnlineModel.GetAllWorldTeamPlayer();
     let r = t.length + e.length;
     for (const a of e) for (const n of t) a === n.aFn && r--;
     return r;
   }
   IsAllPlayerInMatchTeam() {
     if (!ModelManager_1.ModelManager.GameModeModel.IsMulti) return !0;
-    const t = [];
+    var t = [];
     for (const r of this.Rli.ZEs) t.push(r.aFn);
     let e = !0;
     for (const a of ModelManager_1.ModelManager.OnlineModel.GetAllWorldTeamPlayer())
@@ -143,7 +143,7 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
     this.ClearPrewarData();
     for (const e of this.GetMatchTeamInfo().ZEs)
       for (const r of e.j5n) {
-        const t = new PrewarFormationData_1.PrewarFormationData();
+        var t = new PrewarFormationData_1.PrewarFormationData();
         t.SetPlayerId(e.aFn),
           t.SetIsReady(this.GetPrewarPlayerReadyState(e.aFn)),
           t.SetLife(1),
@@ -157,7 +157,7 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
   AddPrewarFormationDataByPlayerInfo(t, e = !0) {
     e && this.Rli.ZEs.push(t);
     for (const a of t.j5n) {
-      const r = new PrewarFormationData_1.PrewarFormationData();
+      var r = new PrewarFormationData_1.PrewarFormationData();
       r.SetPlayerId(t.aFn),
         r.SetIsReady(this.GetPrewarPlayerReadyState(t.aFn)),
         r.SetLife(1),
@@ -169,9 +169,9 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
     this.Nli();
   }
   Nli() {
-    const t = this.GetMatchTeamInfo().Q4n;
-    let e = 1;
-    let r = 1;
+    var t = this.GetMatchTeamInfo().Q4n;
+    let e = 1,
+      r = 1;
     for (const a of this.Ali)
       a.GetPlayerId() === t && (a.SetIndex(e++), a.SetOnlineNumber(r));
     r++;
@@ -200,33 +200,33 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
   }
   RemovePrewarFormationDataByPlayer(e) {
     let r = !1;
-    for (let t = this.Ali.length - 1; t >= 0; --t)
+    for (let t = this.Ali.length - 1; 0 <= t; --t)
       this.Ali[t].GetPlayerId() === e &&
         ((r = !0),
         this.Ali.splice(t, 1),
         this.RemovePrewarPlayerReadyState(e),
         this.RemoveMatchingTeamConfirmState(e));
-    for (let t = this.Rli.ZEs.length - 1; t >= 0; --t) {
-      const a = this.Rli.ZEs[t];
+    for (let t = this.Rli.ZEs.length - 1; 0 <= t; --t) {
+      var a = this.Rli.ZEs[t];
       a && a.aFn === e && ((r = !0), this.Rli.ZEs.splice(t, 1));
     }
     return this.Nli(), r;
   }
   Oli(e) {
-    const r = this.Ali.length;
+    var r = this.Ali.length;
     let a = 0;
     for (let t = 0; t < r; t++) {
-      var n;
-      const o = this.Ali[t];
+      var n,
+        o = this.Ali[t];
       e.aFn === o.GetPlayerId() &&
         ((n = e.j5n[a++]), o.SetConfigId(n.l3n), o.SetLevel(n.XAs));
     }
   }
   Fli(t) {
-    const r = t.aFn;
-    const a = t.j5n;
-    for (let e = this.Ali.length - 1; e >= 0; --e) {
-      const n = this.Ali[e];
+    var r = t.aFn,
+      a = t.j5n;
+    for (let e = this.Ali.length - 1; 0 <= e; --e) {
+      var n = this.Ali[e];
       if (n.GetPlayerId() === r) {
         let t = !1;
         for (const o of a)
@@ -240,7 +240,7 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
     this.Nli();
   }
   kli(e) {
-    for (let t = this.Ali.length - 1; t >= 0; --t)
+    for (let t = this.Ali.length - 1; 0 <= t; --t)
       this.Ali[t].GetPlayerId() === e && this.Ali.splice(t, 1);
   }
   IsInPrewarFormation(t) {
@@ -255,8 +255,7 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
   }
   get FormationAverageRoleLevel() {
     let t = 0;
-    const e =
-      ModelManager_1.ModelManager.EditBattleTeamModel.GetAllRoleSlotData;
+    var e = ModelManager_1.ModelManager.EditBattleTeamModel.GetAllRoleSlotData;
     if (!e) return 0;
     let r = 0;
     for (const a of e) a.GetRoleData && ((t += a.GetRoleData?.Level ?? 0), r++);
@@ -272,13 +271,13 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
         ConfigManager_1.ConfigManager.EditBattleTeamConfig.GetFightFormationConfig(
           e,
         );
-      if (e.AutoRole.length > 0 && e.TrialRole.length > 0) return !1;
+      if (0 < e.AutoRole.length && 0 < e.TrialRole.length) return !1;
     }
-    var e = this.FormationAverageRoleLevel;
-    const [r, a] =
-      ModelManager_1.ModelManager.ActivityModel.CheckActivityLevelBelongToType(
-        t,
-      );
+    var e = this.FormationAverageRoleLevel,
+      [r, a] =
+        ModelManager_1.ModelManager.ActivityModel.CheckActivityLevelBelongToType(
+          t,
+        );
     return r
       ? e <
           ModelManager_1.ModelManager.ActivityModel.GetActivityLevelRecommendLevel(
@@ -322,7 +321,7 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
     );
   }
   ClearInstanceDungeonInfo() {
-    let t;
+    var t;
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("InstanceDungeon", 28, "尝试清除副本行为树"),
       this.Bli
@@ -360,4 +359,4 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
   }
 }
 exports.InstanceDungeonModel = InstanceDungeonModel;
-// # sourceMappingURL=InstanceDungeonModel.js.map
+//# sourceMappingURL=InstanceDungeonModel.js.map

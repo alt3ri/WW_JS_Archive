@@ -14,9 +14,9 @@ class DamageModifier extends ExtraEffectBase_1.BuffEffect {
     return this.Value;
   }
   static ApplyEffects(e, t) {
-    const s = t.Attacker.OwnerBuffComponent;
-    let r = 0;
-    let a = !1;
+    var s = t.Attacker.OwnerBuffComponent;
+    let r = 0,
+      a = !1;
     for (const c of t.Target.OwnerBuffComponent.BuffEffectManager.FilterById(
       12,
     ))
@@ -25,4 +25,4 @@ class DamageModifier extends ExtraEffectBase_1.BuffEffect {
   }
 }
 (exports.DamageModifier = DamageModifier).TempModifiedResult = 0;
-// # sourceMappingURL=ExtraEffectDamageModifier.js.map
+//# sourceMappingURL=ExtraEffectDamageModifier.js.map

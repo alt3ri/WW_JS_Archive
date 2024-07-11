@@ -24,8 +24,8 @@ class TimeLimit {
     this.FY += t;
   }
   IsTimeLimitExceeded() {
-    return this.cY && this.VY > 0 && this.FY >= this.VY;
+    return this.cY && 0 < this.VY && this.FY >= this.VY;
   }
 }
 exports.TimeLimit = TimeLimit;
-// # sourceMappingURL=TimeLimit.js.map
+//# sourceMappingURL=TimeLimit.js.map

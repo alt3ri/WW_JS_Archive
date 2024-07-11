@@ -27,21 +27,21 @@ class NewOccupationConfig {
     );
   }
   id(t) {
-    const i = this.J7.__offset(this.z7, 4);
+    var i = this.J7.__offset(this.z7, 4);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   occupationtype(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   occupationdata(t) {
-    const i = this.J7.__offset(this.z7, 8);
+    var i = this.J7.__offset(this.z7, 8);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   occupationnamestringkey(t) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.NewOccupationConfig = NewOccupationConfig;
-// # sourceMappingURL=NewOccupationConfig.js.map
+//# sourceMappingURL=NewOccupationConfig.js.map

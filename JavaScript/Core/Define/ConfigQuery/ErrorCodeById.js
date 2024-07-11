@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configErrorCodeById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const ErrorCode_1 = require("../Config/ErrorCode");
-const DB = "db_error_code.db";
-const FILE = "c.错误码/ErrorCode*";
-const TABLE = "ErrorCode";
-const COMMAND = "select BinData from `ErrorCode` where Id=?";
-const KEY_PREFIX = "ErrorCodeById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  ErrorCode_1 = require("../Config/ErrorCode"),
+  DB = "db_error_code.db",
+  FILE = "c.错误码/ErrorCode*",
+  TABLE = "ErrorCode",
+  COMMAND = "select BinData from `ErrorCode` where Id=?",
+  KEY_PREFIX = "ErrorCodeById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configErrorCodeById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configErrorCodeById.GetConfig(";
 exports.configErrorCodeById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configErrorCodeById = {
       if (
         (n =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var n;
-        var e = void 0;
+        var n,
+          e = void 0;
         if (
           (([n, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configErrorCodeById = {
     }
   },
 };
-// # sourceMappingURL=ErrorCodeById.js.map
+//# sourceMappingURL=ErrorCodeById.js.map

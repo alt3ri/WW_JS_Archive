@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomUtil = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ESummonType = Protocol_1.Aki.Protocol.Oqs;
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const PHANTOMSKILLIDSTART = 2e5;
-const VISION_MORPH_SKILL_ID = 200001;
-const VISION_MORPH_MULTI_SKILL_ID = 200003;
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager");
+var ESummonType = Protocol_1.Aki.Protocol.Oqs;
+const ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  PHANTOMSKILLIDSTART = 2e5,
+  VISION_MORPH_SKILL_ID = 200001,
+  VISION_MORPH_MULTI_SKILL_ID = 200003;
 class PhantomUtil {
   static GetEntityVisionSkillId(e, t) {
     t = this.GetSkillGroupId(t);
@@ -67,7 +67,7 @@ class PhantomUtil {
     );
   }
   static GetSummonedEntity(e, t, r = 0) {
-    const a = e.GetComponent(0);
+    var a = e.GetComponent(0);
     let n = 0;
     switch (t) {
       case ESummonType.Proto_ESummonTypeConcomitantCustom:
@@ -85,7 +85,7 @@ class PhantomUtil {
   }
   static SetVisionEnable(e, t) {
     var e = e.GetComponent(0).VisionSkillServerEntityId;
-    e > 0 &&
+    0 < e &&
       (e = ModelManager_1.ModelManager.CreatureModel.GetEntity(e)) &&
       ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
         e.Entity,
@@ -96,4 +96,4 @@ class PhantomUtil {
   }
 }
 exports.PhantomUtil = PhantomUtil;
-// # sourceMappingURL=PhantomUtil.js.map
+//# sourceMappingURL=PhantomUtil.js.map

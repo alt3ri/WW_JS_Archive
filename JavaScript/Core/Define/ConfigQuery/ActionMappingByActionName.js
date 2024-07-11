@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configActionMappingByActionName = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const ActionMapping_1 = require("../Config/ActionMapping");
-const DB = "db_input_settings.db";
-const FILE = "s.输入配置.xlsx";
-const TABLE = "ActionMapping";
-const COMMAND = "select BinData from `ActionMapping` where ActionName=?";
-const KEY_PREFIX = "ActionMappingByActionName";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  ActionMapping_1 = require("../Config/ActionMapping"),
+  DB = "db_input_settings.db",
+  FILE = "s.输入配置.xlsx",
+  TABLE = "ActionMapping",
+  COMMAND = "select BinData from `ActionMapping` where ActionName=?",
+  KEY_PREFIX = "ActionMappingByActionName",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configActionMappingByActionName.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configActionMappingByActionName.GetConfig(";
 exports.configActionMappingByActionName = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configActionMappingByActionName = {
       if (
         (e =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "ActionName",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "ActionName",
+              o,
+            ]))
       ) {
-        var e;
-        var i = void 0;
+        var e,
+          i = void 0;
         if (
           (([e, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configActionMappingByActionName = {
     }
   },
 };
-// # sourceMappingURL=ActionMappingByActionName.js.map
+//# sourceMappingURL=ActionMappingByActionName.js.map

@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemUtility = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine");
-const LevelGeneralController_1 = require("../../../LevelGamePlay/LevelGeneralController");
-const LevelGeneralNetworks_1 = require("../../../LevelGamePlay/LevelGeneralNetworks");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const WaitEntityTask_1 = require("../../../World/Define/WaitEntityTask");
-const CharacterController_1 = require("../../Character/CharacterController");
-const TsBaseItem_1 = require("../BaseItem/TsBaseItem");
+const Log_1 = require("../../../../Core/Common/Log"),
+  LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine"),
+  LevelGeneralController_1 = require("../../../LevelGamePlay/LevelGeneralController"),
+  LevelGeneralNetworks_1 = require("../../../LevelGamePlay/LevelGeneralNetworks"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  WaitEntityTask_1 = require("../../../World/Define/WaitEntityTask"),
+  CharacterController_1 = require("../../Character/CharacterController"),
+  TsBaseItem_1 = require("../BaseItem/TsBaseItem");
 class SceneItemUtility {
   static GetBaseItemActor(e) {
     e = CharacterController_1.CharacterController.GetActorByEntity(e);
@@ -28,9 +28,9 @@ class SceneItemUtility {
         ["EndIndex", n.Wms],
       );
     const t = () => {
-      let e;
-      let t;
-      let r = ModelManager_1.ModelManager.CreatureModel.GetEntity(a);
+      var e,
+        t,
+        r = ModelManager_1.ModelManager.CreatureModel.GetEntity(a);
       r &&
         (r = r.Entity.GetComponent(75)) &&
         (e = r.Actions) &&
@@ -82,9 +82,9 @@ class SceneItemUtility {
         ["EndIndex", n.Wms],
       );
     const t = () => {
-      let e;
-      let t;
-      let r = ModelManager_1.ModelManager.CreatureModel.GetEntity(a);
+      var e,
+        t,
+        r = ModelManager_1.ModelManager.CreatureModel.GetEntity(a);
       r &&
         (r = r.Entity.GetComponent(75)) &&
         (e = r.ExitActions) &&
@@ -136,7 +136,7 @@ class SceneItemUtility {
       WaitEntityTask_1.WaitEntityTask.Create(
         n,
         (e) => {
-          let t;
+          var t;
           e &&
             (e = ModelManager_1.ModelManager.CreatureModel.GetEntity(n)) &&
             (t = e.Entity.GetComponent(117)) &&
@@ -174,7 +174,7 @@ class SceneItemUtility {
     WaitEntityTask_1.WaitEntityTask.Create(
       n,
       (e) => {
-        let t;
+        var t;
         e &&
           (e = ModelManager_1.ModelManager.CreatureModel.GetEntity(n)) &&
           (t = e.Entity.GetComponent(134)) &&
@@ -199,7 +199,7 @@ class SceneItemUtility {
     WaitEntityTask_1.WaitEntityTask.Create(
       n,
       (e) => {
-        let t;
+        var t;
         e &&
           (e = ModelManager_1.ModelManager.CreatureModel.GetEntity(n)) &&
           (t = e.Entity.GetComponent(90)) &&
@@ -224,7 +224,7 @@ class SceneItemUtility {
     WaitEntityTask_1.WaitEntityTask.Create(
       n,
       (e) => {
-        let t;
+        var t;
         e &&
           (e = ModelManager_1.ModelManager.CreatureModel.GetEntity(n)) &&
           (t = e.Entity.GetComponent(118)) &&
@@ -248,7 +248,7 @@ class SceneItemUtility {
     WaitEntityTask_1.WaitEntityTask.Create(
       n,
       (e) => {
-        let t;
+        var t;
         e &&
           (e = ModelManager_1.ModelManager.CreatureModel.GetEntity(n)) &&
           (t = e.Entity.GetComponent(117)) &&
@@ -272,7 +272,7 @@ class SceneItemUtility {
     WaitEntityTask_1.WaitEntityTask.Create(
       n,
       (e) => {
-        let t;
+        var t;
         e &&
           (e = ModelManager_1.ModelManager.CreatureModel.GetEntity(n)) &&
           (t = e.Entity.GetComponent(190)) &&
@@ -296,7 +296,7 @@ class SceneItemUtility {
     WaitEntityTask_1.WaitEntityTask.Create(
       n,
       (e) => {
-        let t;
+        var t;
         e &&
           (e = ModelManager_1.ModelManager.CreatureModel.GetEntity(n)) &&
           (t = e.Entity.GetComponent(117)) &&
@@ -320,4 +320,4 @@ class SceneItemUtility {
   }
 }
 exports.SceneItemUtility = SceneItemUtility;
-// # sourceMappingURL=SceneItemUtility.js.map
+//# sourceMappingURL=SceneItemUtility.js.map

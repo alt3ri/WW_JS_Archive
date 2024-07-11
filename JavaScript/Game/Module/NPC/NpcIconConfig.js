@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcIconConfig = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const NpcHeadInfoById_1 = require("../../../Core/Define/ConfigQuery/NpcHeadInfoById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const NpcIconDefine_1 = require("./NpcIconDefine");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  NpcHeadInfoById_1 = require("../../../Core/Define/ConfigQuery/NpcHeadInfoById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  NpcIconDefine_1 = require("./NpcIconDefine");
 class NpcIconConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments),
@@ -104,7 +104,7 @@ class NpcIconConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetNpcHeadInfo(e) {
-    const i = NpcHeadInfoById_1.configNpcHeadInfoById.GetConfig(e);
+    var i = NpcHeadInfoById_1.configNpcHeadInfoById.GetConfig(e);
     return (
       i ||
         (Log_1.Log.CheckError() &&
@@ -131,4 +131,4 @@ class NpcIconConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.NpcIconConfig = NpcIconConfig;
-// # sourceMappingURL=NpcIconConfig.js.map
+//# sourceMappingURL=NpcIconConfig.js.map

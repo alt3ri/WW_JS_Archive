@@ -8,4 +8,4 @@ class MediumItemGridTimeFlagComponent extends MediumItemGridVisibleComponent_1.M
   }
 }
 exports.MediumItemGridTimeFlagComponent = MediumItemGridTimeFlagComponent;
-// # sourceMappingURL=MediumItemGridTimeFlagComponent.js.map
+//# sourceMappingURL=MediumItemGridTimeFlagComponent.js.map

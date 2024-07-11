@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeon = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const DicIntInt_1 = require("./SubType/DicIntInt");
-const DicIntString_1 = require("./SubType/DicIntString");
-const DungeonEntrance_1 = require("./SubType/DungeonEntrance");
-const InstOnlineType_1 = require("./SubType/InstOnlineType");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  DicIntInt_1 = require("./SubType/DicIntInt"),
+  DicIntString_1 = require("./SubType/DicIntString"),
+  DungeonEntrance_1 = require("./SubType/DungeonEntrance"),
+  InstOnlineType_1 = require("./SubType/InstOnlineType");
 class InstanceDungeon {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -242,27 +242,27 @@ class InstanceDungeon {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   mapconfigid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   mapname(t) {
-    const i = this.J7.__offset(this.z7, 8);
+    var i = this.J7.__offset(this.z7, 8);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   insttype() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   instsubtype() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   onlinetype() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t
       ? this.J7.readInt8(this.z7 + t)
       : InstOnlineType_1.InstOnlineType.Single;
@@ -271,15 +271,15 @@ class InstanceDungeon {
     return this.customtypes(t);
   }
   customtypes(t) {
-    const i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 16);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   customtypesLength() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   customtypesArray() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -289,39 +289,39 @@ class InstanceDungeon {
       : null;
   }
   minimapid() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   GetSublevelsAt(t) {
     return this.sublevels(t);
   }
   sublevels(t, i) {
-    const s = this.J7.__offset(this.z7, 20);
+    var s = this.J7.__offset(this.z7, 20);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   sublevelsLength() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   fightformationid() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readInt32(this.z7 + t) : 2;
   }
   GetTrialroleinfoAt(t) {
     return this.trialroleinfo(t);
   }
   trialroleinfo(t) {
-    const i = this.J7.__offset(this.z7, 24);
+    var i = this.J7.__offset(this.z7, 24);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   trialroleinfoLength() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   trialroleinfoArray() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -331,26 +331,26 @@ class InstanceDungeon {
       : null;
   }
   trialroleformation() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   reviveid() {
-    const t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetBornpositionAt(t) {
     return this.bornposition(t);
   }
   bornposition(t) {
-    const i = this.J7.__offset(this.z7, 30);
+    var i = this.J7.__offset(this.z7, 30);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   bornpositionLength() {
-    const t = this.J7.__offset(this.z7, 30);
+    var t = this.J7.__offset(this.z7, 30);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   bornpositionArray() {
-    const t = this.J7.__offset(this.z7, 30);
+    var t = this.J7.__offset(this.z7, 30);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -363,15 +363,15 @@ class InstanceDungeon {
     return this.bornrotation(t);
   }
   bornrotation(t) {
-    const i = this.J7.__offset(this.z7, 32);
+    var i = this.J7.__offset(this.z7, 32);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   bornrotationLength() {
-    const t = this.J7.__offset(this.z7, 32);
+    var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   bornrotationArray() {
-    const t = this.J7.__offset(this.z7, 32);
+    var t = this.J7.__offset(this.z7, 32);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -384,15 +384,15 @@ class InstanceDungeon {
     return this.recoverworldlocation(t);
   }
   recoverworldlocation(t) {
-    const i = this.J7.__offset(this.z7, 34);
+    var i = this.J7.__offset(this.z7, 34);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   recoverworldlocationLength() {
-    const t = this.J7.__offset(this.z7, 34);
+    var t = this.J7.__offset(this.z7, 34);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   recoverworldlocationArray() {
-    const t = this.J7.__offset(this.z7, 34);
+    var t = this.J7.__offset(this.z7, 34);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -405,7 +405,7 @@ class InstanceDungeon {
     return this.entranceentities(t);
   }
   entranceentities(t, i) {
-    const s = this.J7.__offset(this.z7, 36);
+    var s = this.J7.__offset(this.z7, 36);
     return s
       ? (i || new DungeonEntrance_1.DungeonEntrance()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -414,22 +414,22 @@ class InstanceDungeon {
       : null;
   }
   entranceentitiesLength() {
-    const t = this.J7.__offset(this.z7, 36);
+    var t = this.J7.__offset(this.z7, 36);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetExitentitiesAt(t) {
     return this.exitentities(t);
   }
   exitentities(t) {
-    const i = this.J7.__offset(this.z7, 38);
+    var i = this.J7.__offset(this.z7, 38);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   exitentitiesLength() {
-    const t = this.J7.__offset(this.z7, 38);
+    var t = this.J7.__offset(this.z7, 38);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   exitentitiesArray() {
-    const t = this.J7.__offset(this.z7, 38);
+    var t = this.J7.__offset(this.z7, 38);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -439,30 +439,30 @@ class InstanceDungeon {
       : null;
   }
   dungeondesc(t) {
-    const i = this.J7.__offset(this.z7, 40);
+    var i = this.J7.__offset(this.z7, 40);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   title() {
-    const t = this.J7.__offset(this.z7, 42);
+    var t = this.J7.__offset(this.z7, 42);
     return t ? this.J7.readInt32(this.z7 + t) : 999;
   }
   bannerpath(t) {
-    const i = this.J7.__offset(this.z7, 44);
+    var i = this.J7.__offset(this.z7, 44);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetMonsterpreviewAt(t) {
     return this.monsterpreview(t);
   }
   monsterpreview(t) {
-    const i = this.J7.__offset(this.z7, 46);
+    var i = this.J7.__offset(this.z7, 46);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   monsterpreviewLength() {
-    const t = this.J7.__offset(this.z7, 46);
+    var t = this.J7.__offset(this.z7, 46);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   monsterpreviewArray() {
-    const t = this.J7.__offset(this.z7, 46);
+    var t = this.J7.__offset(this.z7, 46);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -472,38 +472,38 @@ class InstanceDungeon {
       : null;
   }
   monstertips(t) {
-    const i = this.J7.__offset(this.z7, 48);
+    var i = this.J7.__offset(this.z7, 48);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   firstrewardid() {
-    const t = this.J7.__offset(this.z7, 50);
+    var t = this.J7.__offset(this.z7, 50);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   rewardid() {
-    const t = this.J7.__offset(this.z7, 52);
+    var t = this.J7.__offset(this.z7, 52);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   repeatrewardid() {
-    const t = this.J7.__offset(this.z7, 54);
+    var t = this.J7.__offset(this.z7, 54);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   entercontrolid() {
-    const t = this.J7.__offset(this.z7, 56);
+    var t = this.J7.__offset(this.z7, 56);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetEnterconditionAt(t) {
     return this.entercondition(t);
   }
   entercondition(t) {
-    const i = this.J7.__offset(this.z7, 58);
+    var i = this.J7.__offset(this.z7, 58);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   enterconditionLength() {
-    const t = this.J7.__offset(this.z7, 58);
+    var t = this.J7.__offset(this.z7, 58);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   enterconditionArray() {
-    const t = this.J7.__offset(this.z7, 58);
+    var t = this.J7.__offset(this.z7, 58);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -513,22 +513,22 @@ class InstanceDungeon {
       : null;
   }
   enterconditiontext(t) {
-    const i = this.J7.__offset(this.z7, 60);
+    var i = this.J7.__offset(this.z7, 60);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   difficultyicon(t) {
-    const i = this.J7.__offset(this.z7, 62);
+    var i = this.J7.__offset(this.z7, 62);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   entitylevel() {
-    const t = this.J7.__offset(this.z7, 64);
+    var t = this.J7.__offset(this.z7, 64);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetRecommendlevelAt(t, i) {
     return this.recommendlevel(t);
   }
   recommendlevel(t, i) {
-    const s = this.J7.__offset(this.z7, 66);
+    var s = this.J7.__offset(this.z7, 66);
     return s
       ? (i || new DicIntInt_1.DicIntInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -537,22 +537,22 @@ class InstanceDungeon {
       : null;
   }
   recommendlevelLength() {
-    const t = this.J7.__offset(this.z7, 66);
+    var t = this.J7.__offset(this.z7, 66);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetRecommendroleAt(t) {
     return this.recommendrole(t);
   }
   recommendrole(t) {
-    const i = this.J7.__offset(this.z7, 68);
+    var i = this.J7.__offset(this.z7, 68);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   recommendroleLength() {
-    const t = this.J7.__offset(this.z7, 68);
+    var t = this.J7.__offset(this.z7, 68);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   recommendroleArray() {
-    const t = this.J7.__offset(this.z7, 68);
+    var t = this.J7.__offset(this.z7, 68);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -565,15 +565,15 @@ class InstanceDungeon {
     return this.recommendelement(t);
   }
   recommendelement(t) {
-    const i = this.J7.__offset(this.z7, 70);
+    var i = this.J7.__offset(this.z7, 70);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   recommendelementLength() {
-    const t = this.J7.__offset(this.z7, 70);
+    var t = this.J7.__offset(this.z7, 70);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   recommendelementArray() {
-    const t = this.J7.__offset(this.z7, 70);
+    var t = this.J7.__offset(this.z7, 70);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -583,43 +583,43 @@ class InstanceDungeon {
       : null;
   }
   shareattri() {
-    const t = this.J7.__offset(this.z7, 72);
+    var t = this.J7.__offset(this.z7, 72);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   GetLimitviewnameAt(t) {
     return this.limitviewname(t);
   }
   limitviewname(t, i) {
-    const s = this.J7.__offset(this.z7, 74);
+    var s = this.J7.__offset(this.z7, 74);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   limitviewnameLength() {
-    const t = this.J7.__offset(this.z7, 74);
+    var t = this.J7.__offset(this.z7, 74);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   canuseitem() {
-    const t = this.J7.__offset(this.z7, 76);
+    var t = this.J7.__offset(this.z7, 76);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   guidetype() {
-    const t = this.J7.__offset(this.z7, 78);
+    var t = this.J7.__offset(this.z7, 78);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   guidevalue() {
-    const t = this.J7.__offset(this.z7, 80);
+    var t = this.J7.__offset(this.z7, 80);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   settlebuttontype() {
-    const t = this.J7.__offset(this.z7, 82);
+    var t = this.J7.__offset(this.z7, 82);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   GetSubtitleAt(t, i) {
     return this.subtitle(t);
   }
   subtitle(t, i) {
-    const s = this.J7.__offset(this.z7, 84);
+    var s = this.J7.__offset(this.z7, 84);
     return s
       ? (i || new DicIntString_1.DicIntString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -628,46 +628,46 @@ class InstanceDungeon {
       : null;
   }
   subtitleLength() {
-    const t = this.J7.__offset(this.z7, 84);
+    var t = this.J7.__offset(this.z7, 84);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   subinstancetitle(t) {
-    const i = this.J7.__offset(this.z7, 86);
+    var i = this.J7.__offset(this.z7, 86);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   autoleavetime() {
-    const t = this.J7.__offset(this.z7, 88);
+    var t = this.J7.__offset(this.z7, 88);
     return t ? this.J7.readInt32(this.z7 + t) : 60;
   }
   limittime() {
-    const t = this.J7.__offset(this.z7, 90);
+    var t = this.J7.__offset(this.z7, 90);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   leavewaittime() {
-    const t = this.J7.__offset(this.z7, 92);
+    var t = this.J7.__offset(this.z7, 92);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   failtips(t) {
-    const i = this.J7.__offset(this.z7, 94);
+    var i = this.J7.__offset(this.z7, 94);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   verifycreaturegen() {
-    const t = this.J7.__offset(this.z7, 96);
+    var t = this.J7.__offset(this.z7, 96);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   GetDifficultylevelAt(t) {
     return this.difficultylevel(t);
   }
   difficultylevel(t) {
-    const i = this.J7.__offset(this.z7, 98);
+    var i = this.J7.__offset(this.z7, 98);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   difficultylevelLength() {
-    const t = this.J7.__offset(this.z7, 98);
+    var t = this.J7.__offset(this.z7, 98);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   difficultylevelArray() {
-    const t = this.J7.__offset(this.z7, 98);
+    var t = this.J7.__offset(this.z7, 98);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -680,28 +680,28 @@ class InstanceDungeon {
     return this.difficultydesc(t);
   }
   difficultydesc(t, i) {
-    const s = this.J7.__offset(this.z7, 100);
+    var s = this.J7.__offset(this.z7, 100);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   difficultydescLength() {
-    const t = this.J7.__offset(this.z7, 100);
+    var t = this.J7.__offset(this.z7, 100);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetDropAt(t) {
     return this.drop(t);
   }
   drop(t) {
-    const i = this.J7.__offset(this.z7, 102);
+    var i = this.J7.__offset(this.z7, 102);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   dropLength() {
-    const t = this.J7.__offset(this.z7, 102);
+    var t = this.J7.__offset(this.z7, 102);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   dropArray() {
-    const t = this.J7.__offset(this.z7, 102);
+    var t = this.J7.__offset(this.z7, 102);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -711,22 +711,22 @@ class InstanceDungeon {
       : null;
   }
   entercount() {
-    const t = this.J7.__offset(this.z7, 104);
+    var t = this.J7.__offset(this.z7, 104);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   enterconditiongroup() {
-    const t = this.J7.__offset(this.z7, 106);
+    var t = this.J7.__offset(this.z7, 106);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   icontagpath(t) {
-    const i = this.J7.__offset(this.z7, 108);
+    var i = this.J7.__offset(this.z7, 108);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetRendersettingsAt(t, i) {
     return this.rendersettings(t);
   }
   rendersettings(t, i) {
-    const s = this.J7.__offset(this.z7, 110);
+    var s = this.J7.__offset(this.z7, 110);
     return s
       ? (i || new DicIntInt_1.DicIntInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -735,13 +735,13 @@ class InstanceDungeon {
       : null;
   }
   rendersettingsLength() {
-    const t = this.J7.__offset(this.z7, 110);
+    var t = this.J7.__offset(this.z7, 110);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   dropvisionlimit() {
-    const t = this.J7.__offset(this.z7, 112);
+    var t = this.J7.__offset(this.z7, 112);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.InstanceDungeon = InstanceDungeon;
-// # sourceMappingURL=InstanceDungeon.js.map
+//# sourceMappingURL=InstanceDungeon.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.StateMachine = void 0);
-const Log_1 = require("../../Common/Log");
-const Stats_1 = require("../../Common/Stats");
+const Log_1 = require("../../Common/Log"),
+  Stats_1 = require("../../Common/Stats");
 class StateMachine {
   constructor(t, i = void 0) {
     (this.kh = new Map()), (this.Owner = t), (this.Pz = i);
@@ -22,7 +22,7 @@ class StateMachine {
     for (const t of this.kh.values()) t.Destroy();
   }
   Switch(t) {
-    let i, e;
+    var i, e;
     return void 0 === this.xz
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error("StateMachine", 12, "状态机没有开始", ["state", t]),
@@ -50,7 +50,7 @@ class StateMachine {
       : ((i = new i(this.Owner, t, this)), this.kh.set(t, i), i.Create(e));
   }
   GetState(t) {
-    const i = this.kh.get(t);
+    var i = this.kh.get(t);
     return (
       i ||
         (Log_1.Log.CheckError() &&
@@ -63,4 +63,4 @@ class StateMachine {
   (StateMachine.wz = void 0),
   (StateMachine.Bz = void 0),
   (StateMachine.bz = void 0);
-// # sourceMappingURL=StateMachine.js.map
+//# sourceMappingURL=StateMachine.js.map

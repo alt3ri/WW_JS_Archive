@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestViewStep = void 0);
-const ue_1 = require("ue");
-const TreeStepBase_1 = require("../../GeneralLogicTree/View/TreeStep/TreeStepBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const QuestViewChildStep_1 = require("./QuestViewChildStep");
+const ue_1 = require("ue"),
+  TreeStepBase_1 = require("../../GeneralLogicTree/View/TreeStep/TreeStepBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  QuestViewChildStep_1 = require("./QuestViewChildStep");
 class QuestViewStep extends TreeStepBase_1.TreeStepBase {
   constructor() {
     super(...arguments),
@@ -28,8 +28,8 @@ class QuestViewStep extends TreeStepBase_1.TreeStepBase {
     super.OnStart(),
       this.GetItem(3)?.SetUIActive(!0),
       this.GetItem(4)?.SetUIActive(!0);
-    const e = this.GetItem(2);
-    const t = new QuestViewChildStep_1.QuestViewChildStep();
+    var e = this.GetItem(2),
+      t = new QuestViewChildStep_1.QuestViewChildStep();
     t.SetRootActor(e.GetOwner(), !0), this.but.push(t);
   }
   Update(e, t) {
@@ -53,13 +53,13 @@ class QuestViewStep extends TreeStepBase_1.TreeStepBase {
         }),
         !1
       );
-    let r = 0;
-    let u = s.GetHierarchyIndex();
+    let r = 0,
+      u = s.GetHierarchyIndex();
     return (
       this.cno.clear(),
       h.SubTitles.forEach((e) => {
         let t = void 0;
-        let i;
+        var i;
         this.but.length > r
           ? (t = this.but[r])
           : ((i = LguiUtil_1.LguiUtil.CopyItem(
@@ -76,8 +76,8 @@ class QuestViewStep extends TreeStepBase_1.TreeStepBase {
           r++;
       }),
       this.but.forEach((e, t) => {
-        const i = t < h.SubTitles.length;
-        var t = this.cno.get(t) ?? !1;
+        var i = t < h.SubTitles.length,
+          t = this.cno.get(t) ?? !1;
         e.SetActive(i && t);
       }),
       !0
@@ -85,4 +85,4 @@ class QuestViewStep extends TreeStepBase_1.TreeStepBase {
   }
 }
 exports.QuestViewStep = QuestViewStep;
-// # sourceMappingURL=QuestViewStep.js.map
+//# sourceMappingURL=QuestViewStep.js.map

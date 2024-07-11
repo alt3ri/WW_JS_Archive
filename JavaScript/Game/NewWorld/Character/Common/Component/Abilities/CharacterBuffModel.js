@@ -21,4 +21,4 @@ class BuffModel extends ModelBase_1.ModelBase {
   }
 }
 exports.BuffModel = BuffModel;
-// # sourceMappingURL=CharacterBuffModel.js.map
+//# sourceMappingURL=CharacterBuffModel.js.map

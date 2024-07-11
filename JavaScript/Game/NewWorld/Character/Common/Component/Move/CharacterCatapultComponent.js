@@ -1,32 +1,37 @@
 "use strict";
-let CharacterCatapultComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, n) {
-    let r;
-    const o = arguments.length;
-    let s =
-      o < 3 ? e : n === null ? (n = Object.getOwnPropertyDescriptor(e, i)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      s = Reflect.decorate(t, e, i, n);
-    else
-      for (let a = t.length - 1; a >= 0; a--)
-        (r = t[a]) && (s = (o < 3 ? r(s) : o > 3 ? r(e, i, s) : r(e, i)) || s);
-    return o > 3 && s && Object.defineProperty(e, i, s), s;
-  };
+var CharacterCatapultComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, n) {
+      var r,
+        o = arguments.length,
+        s =
+          o < 3
+            ? e
+            : null === n
+              ? (n = Object.getOwnPropertyDescriptor(e, i))
+              : n;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        s = Reflect.decorate(t, e, i, n);
+      else
+        for (var a = t.length - 1; 0 <= a; a--)
+          (r = t[a]) &&
+            (s = (o < 3 ? r(s) : 3 < o ? r(e, i, s) : r(e, i)) || s);
+      return 3 < o && s && Object.defineProperty(e, i, s), s;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterCatapultComponent = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const BigJumpUnit_1 = require("./BigJumpUnit");
-const CustomMovementDefine_1 = require("./CustomMovementDefine");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const MODEL_BUFFER_TIME_LENGTH = 200;
-const SUPER_CATAPULT_SKILL_ID = 400107;
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  BigJumpUnit_1 = require("./BigJumpUnit"),
+  CustomMovementDefine_1 = require("./CustomMovementDefine"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  MODEL_BUFFER_TIME_LENGTH = 200,
+  SUPER_CATAPULT_SKILL_ID = 400107;
 let CharacterCatapultComponent =
   (CharacterCatapultComponent_1 = class CharacterCatapultComponent extends (
     EntityComponent_1.EntityComponent
@@ -90,7 +95,7 @@ let CharacterCatapultComponent =
       a = !1,
     ) {
       (this.Z$r = a),
-        (this.LockRotator = o > 0),
+        (this.LockRotator = 0 < o),
         this.z$r.SetAll(t, e, i, n, r, o, s);
     }
     StartCatapult() {
@@ -101,9 +106,9 @@ let CharacterCatapultComponent =
           6,
           CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_LEISURE,
         );
-      let t;
-      let e;
-      const i = this.Entity.GetComponent(160);
+      var t,
+        e,
+        i = this.Entity.GetComponent(160);
       i &&
         i.SetLocationAndRotatorWithModelBuffer(
           this.Hte.ActorLocationProxy.ToUeVector(),
@@ -139,4 +144,4 @@ let CharacterCatapultComponent =
       CharacterCatapultComponent,
     )),
   (exports.CharacterCatapultComponent = CharacterCatapultComponent);
-// # sourceMappingURL=CharacterCatapultComponent.js.map
+//# sourceMappingURL=CharacterCatapultComponent.js.map

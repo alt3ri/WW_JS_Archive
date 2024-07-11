@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharDitherEffect = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const RenderConfig_1 = require("../../../Config/RenderConfig");
-const CharRenderBase_1 = require("../../Manager/CharRenderBase");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  RenderConfig_1 = require("../../../Config/RenderConfig"),
+  CharRenderBase_1 = require("../../Manager/CharRenderBase");
 class CharDitherEffect extends CharRenderBase_1.CharRenderBase {
   constructor() {
     super(...arguments),
@@ -61,11 +61,11 @@ class CharDitherEffect extends CharRenderBase_1.CharRenderBase {
   }
   SetDitherEffect(i, s) {
     if (i !== this.var) {
-      const t = i < 0 || i >= 1 ? !0 : !1;
+      let t = i < 0 || 1 <= i ? !0 : !1;
       if (t) {
         this.Sar.has(s) && this.Sar.set(s, !1);
-        let e = !1;
-        let h = 0;
+        let e = !1,
+          h = 0;
         this.Sar.forEach((t, i) => {
           (e = e || t), t && h < i && (h = i);
         }),
@@ -127,11 +127,11 @@ class CharDitherEffect extends CharRenderBase_1.CharRenderBase {
         ));
   }
   Ear() {
-    return !!this.RenderComponent && this.RenderComponent.GetRenderType() === 3;
+    return !!this.RenderComponent && 3 === this.RenderComponent.GetRenderType();
   }
   GetStatName() {
     return "CharDitherEffect";
   }
 }
 exports.CharDitherEffect = CharDitherEffect;
-// # sourceMappingURL=CharDitherEffect.js.map
+//# sourceMappingURL=CharDitherEffect.js.map

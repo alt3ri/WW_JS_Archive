@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectProfiler = void 0);
-const cpp_1 = require("cpp");
-const Log_1 = require("../../../Core/Common/Log");
-const Stats_1 = require("../../../Core/Common/Stats");
+const cpp_1 = require("cpp"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats");
 class EffectProfiler {
   static SetEnable(t) {
     this.Vge = t;
   }
   static NoticeCreatedFromLru(t, e) {
-    let r;
+    var r;
     this.Vge &&
       ((r = this.Hge.get(t)) ? this.Hge.set(t, r + 1) : this.Hge.set(t, 1),
       (r = this.jge.get(t))
@@ -17,7 +17,7 @@ class EffectProfiler {
         : this.jge.set(t, [new WeakRef(e)]));
   }
   static NoticeUsed(t) {
-    let e, r;
+    var e, r;
     this.Vge &&
       ((e = t.Path),
       (r = this.Wge.get(e)) ? this.Wge.set(e, r + 1) : this.Wge.set(e, 1),
@@ -26,16 +26,16 @@ class EffectProfiler {
   }
   static NoticeAddedToLru(r) {
     if (this.Vge) {
-      const i = r.Path;
-      var o = this.Xge.get(i);
-      var o =
-        (o ? this.Xge.set(i, o + 1) : this.Xge.set(i, 1),
-        this.Kge.delete(r),
-        cpp_1.KuroTime.GetMilliseconds64() - this.Qge.get(r));
+      var i = r.Path,
+        o = this.Xge.get(i),
+        o =
+          (o ? this.Xge.set(i, o + 1) : this.Xge.set(i, 1),
+          this.Kge.delete(r),
+          cpp_1.KuroTime.GetMilliseconds64() - this.Qge.get(r));
       let e = this.$ge.get(i);
       if (
         (e || ((e = []), this.$ge.set(i, e)),
-        e.length > 0 && !i.includes("DA_Fx_Group_WeaponEnd"))
+        0 < e.length && !i.includes("DA_Fx_Group_WeaponEnd"))
       ) {
         let t = 0;
         for (const s of e) t += s;
@@ -50,14 +50,14 @@ class EffectProfiler {
             ["HistoryUsedAverageTiming", t],
           );
       }
-      if (e.length === 10) {
+      if (10 === e.length) {
         for (let t = 0; t < e.length - 1; t++) e[t] = e[t + 1];
         e[e.length - 1] = o;
       } else e.push(o);
     }
   }
   static NoticeRemovedFromLru(t, e) {
-    let r;
+    var r;
     this.Vge &&
       ((r = this.Xge.get(t)),
       this.Xge.set(t, r - 1),
@@ -65,13 +65,13 @@ class EffectProfiler {
   }
   static LogReasonHistoryAndNum(t, e, r) {
     if (this.Vge) {
-      const i = t.Path;
-      const o = this.Yge(i);
-      const s = this.Hge.get(i);
-      const f = this.Wge.get(i);
-      const a = this.Xge.get(i);
-      if (f && f > 1)
-        if (a >= 1) {
+      var i = t.Path,
+        o = this.Yge(i),
+        s = this.Hge.get(i),
+        f = this.Wge.get(i),
+        a = this.Xge.get(i);
+      if (f && 1 < f)
+        if (1 <= a) {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "RenderEffect",
@@ -86,7 +86,7 @@ class EffectProfiler {
               ["ReasonHistory", this.Jge.get(i)?.join(",")],
             );
           for (const c of this.jge.get(i).values()) {
-            let n = c.deref();
+            var n = c.deref();
             n &&
               n !== t &&
               (n = this.Kge.get(n)) &&
@@ -117,7 +117,7 @@ class EffectProfiler {
   static Yge(t) {
     let e = t.replace("/Game/Aki/Effect", "");
     t = e.indexOf(".");
-    return (e = t >= 0 ? e.substring(0, t) : e);
+    return (e = 0 <= t ? e.substring(0, t) : e);
   }
 }
 ((exports.EffectProfiler = EffectProfiler).Vge = !1),
@@ -129,4 +129,4 @@ class EffectProfiler {
   (EffectProfiler.$ge = new Map()),
   (EffectProfiler.jge = new Map()),
   (EffectProfiler.Kge = new WeakMap());
-// # sourceMappingURL=EffectProfiler.js.map
+//# sourceMappingURL=EffectProfiler.js.map

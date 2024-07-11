@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BlackScreenView = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class BlackScreenView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super();
@@ -15,4 +15,4 @@ class BlackScreenView extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.BlackScreenView = BlackScreenView;
-// # sourceMappingURL=BlackScreenView.js.map
+//# sourceMappingURL=BlackScreenView.js.map

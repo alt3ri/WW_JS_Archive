@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomItemData = void 0);
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const AttributeItemData_1 = require("./AttributeItemData");
+const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  AttributeItemData_1 = require("./AttributeItemData");
 class PhantomItemData extends AttributeItemData_1.AttributeItemData {
   GetConfig() {
     return ConfigManager_1.ConfigManager.InventoryConfig.GetPhantomItemConfig(
@@ -30,14 +30,13 @@ class PhantomItemData extends AttributeItemData_1.AttributeItemData {
     return 1;
   }
   OnSetFunctionValue(e) {
-    const t =
-      ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-        this.UniqueId,
-      );
+    var t = ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
+      this.UniqueId,
+    );
     t && t.OnFunctionValueChange(e);
   }
   GetDefaultDownText() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
         "VisionLevel",
       );
@@ -48,4 +47,4 @@ class PhantomItemData extends AttributeItemData_1.AttributeItemData {
   }
 }
 exports.PhantomItemData = PhantomItemData;
-// # sourceMappingURL=PhantomItemData.js.map
+//# sourceMappingURL=PhantomItemData.js.map

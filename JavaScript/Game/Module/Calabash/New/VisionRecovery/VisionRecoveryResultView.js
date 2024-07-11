@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionRecoveryResultView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const ItemController_1 = require("../../../Item/ItemController");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const VisionRecoverySlotItem_1 = require("./VisionRecoverySlotItem");
-const VisionRecoverySlotPanel_1 = require("./VisionRecoverySlotPanel");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  ItemController_1 = require("../../../Item/ItemController"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  VisionRecoverySlotItem_1 = require("./VisionRecoverySlotItem"),
+  VisionRecoverySlotPanel_1 = require("./VisionRecoverySlotPanel");
 class VisionRecoveryResultView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -38,7 +38,7 @@ class VisionRecoveryResultView extends UiViewBase_1.UiViewBase {
       (this.BtnBindInfo = [[5, this.Opt]]);
   }
   async OnBeforeStartAsync() {
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     void 0 === e
       ? Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -79,7 +79,7 @@ class VisionRecoveryResultView extends UiViewBase_1.UiViewBase {
       : this.Gpt.RefreshUi(e[0]);
   }
   async Hpt(e) {
-    const i = this.GetItem(2);
+    var i = this.GetItem(2);
     if (e.length <= 0) i.SetUIActive(!1);
     else {
       const t =
@@ -96,15 +96,15 @@ class VisionRecoveryResultView extends UiViewBase_1.UiViewBase {
           i.SetUIActive(!1);
       else {
         i.SetUIActive(!0);
-        const s = this.GetItem(3);
-        const r = this.GetItem(4);
-        const o = new Array();
+        const s = this.GetItem(3),
+          r = this.GetItem(4),
+          o = new Array();
         t.forEach(() => {
-          const e = new VisionRecoverySlotItem_1.VisionRecoverySlotItem(
-            this.kpt,
-            !1,
-          );
-          const i = LguiUtil_1.LguiUtil.CopyItem(r, s);
+          var e = new VisionRecoverySlotItem_1.VisionRecoverySlotItem(
+              this.kpt,
+              !1,
+            ),
+            i = LguiUtil_1.LguiUtil.CopyItem(r, s);
           o.push(e.CreateThenShowByActorAsync(i.GetOwner())), this.Npt.push(e);
         }),
           await Promise.all(o),
@@ -135,4 +135,4 @@ class VisionRecoveryResultView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.VisionRecoveryResultView = VisionRecoveryResultView;
-// # sourceMappingURL=VisionRecoveryResultView.js.map
+//# sourceMappingURL=VisionRecoveryResultView.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const GlobalData_1 = require("../../../../../GlobalData");
-const AiContollerLibrary_1 = require("../../../../Controller/AiContollerLibrary");
-const TsTaskAbortImmediatelyBase_1 = require("../../TsTaskAbortImmediatelyBase");
-const TOLERANCE = 3;
+const UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  GlobalData_1 = require("../../../../../GlobalData"),
+  AiContollerLibrary_1 = require("../../../../Controller/AiContollerLibrary"),
+  TsTaskAbortImmediatelyBase_1 = require("../../TsTaskAbortImmediatelyBase"),
+  TOLERANCE = 3;
 class TsTaskTurnToPosition extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -30,8 +30,8 @@ class TsTaskTurnToPosition extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveExecuteAI(t, i) {
     this.InitTsVariables();
-    let s;
-    let e = t.AiController;
+    var s,
+      e = t.AiController;
     e
       ? ((s = (e = e.CharAiDesignComp.Entity).GetComponent(0)),
         e?.Valid
@@ -75,4 +75,4 @@ class TsTaskTurnToPosition extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskTurnToPosition;
-// # sourceMappingURL=TsTaskTurnToPosition.js.map
+//# sourceMappingURL=TsTaskTurnToPosition.js.map

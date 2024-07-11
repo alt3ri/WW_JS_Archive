@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayCueRecorderHook = exports.GameplayCueRecorderObject =
     void 0);
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const RecorderBlueprintFunctionLibrary_1 = require("./RecorderBlueprintFunctionLibrary");
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  RecorderBlueprintFunctionLibrary_1 = require("./RecorderBlueprintFunctionLibrary");
 class GameplayCueRecorderObject {
   constructor(e, t, r) {
     (this.Actor = e),
@@ -88,4 +88,4 @@ class GameplayCueRecorderHook extends (exports.GameplayCueRecorderObject =
   }
 }
 exports.GameplayCueRecorderHook = GameplayCueRecorderHook;
-// # sourceMappingURL=GameplayCueRecorder.js.map
+//# sourceMappingURL=GameplayCueRecorder.js.map

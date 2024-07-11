@@ -30,4 +30,4 @@ class Shop {
   }
 }
 exports.Shop = Shop;
-// # sourceMappingURL=ShopDefine.js.map
+//# sourceMappingURL=ShopDefine.js.map

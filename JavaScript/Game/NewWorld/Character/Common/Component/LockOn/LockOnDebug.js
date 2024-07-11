@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LockOnDebug = exports.LockOnDebugData = void 0);
-const UE = require("ue");
-const EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem");
-const FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../../../GlobalData");
-const ARROW_SIZE = 15;
+const UE = require("ue"),
+  EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem"),
+  FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../../../GlobalData"),
+  ARROW_SIZE = 15;
 class LockOnDebugData {
   constructor(t) {
     (this.LAe = t),
@@ -16,7 +16,7 @@ class LockOnDebugData {
       (this.Due = Vector_1.Vector.Create());
   }
   DrawDebug(t) {
-    const e = EntitySystem_1.EntitySystem.Get(this.LAe.EntityHandle.Id);
+    var e = EntitySystem_1.EntitySystem.Get(this.LAe.EntityHandle.Id);
     this.LAe.SocketName
       ? this.Due.DeepCopy(this.eYo(e, this.LAe.SocketName)?.GetLocation())
       : this.Due.DeepCopy(e.GetComponent(1).ActorLocationProxy);
@@ -75,7 +75,7 @@ class LockOnDebug {
     LockOnDebug.rYo.clear();
   }
   static Push(t) {
-    let e;
+    var e;
     LockOnDebug.IsShowDebugLine &&
       ((e = new LockOnDebugData(t)), LockOnDebug.rYo.set(t, e));
   }
@@ -94,10 +94,10 @@ class LockOnDebug {
   }
   static Tick(t) {
     if (LockOnDebug.IsShowDebugLine)
-      for (const [e, a] of LockOnDebug.rYo)
+      for (var [e, a] of LockOnDebug.rYo)
         e.EntityHandle?.Valid ? a.DrawDebug(t) : LockOnDebug.rYo.delete(e);
   }
 }
 ((exports.LockOnDebug = LockOnDebug).IsShowDebugLine = !1),
   (LockOnDebug.rYo = new Map());
-// # sourceMappingURL=LockOnDebug.js.map
+//# sourceMappingURL=LockOnDebug.js.map

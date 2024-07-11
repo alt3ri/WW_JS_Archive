@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionEquipmentDropDownTitleItem = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const TitleItemBase_1 = require("../../../Common/DropDown/Item/TitleItemBase");
-const VisionFetterSuitItem_1 = require("./VisionFetterSuitItem");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  TitleItemBase_1 = require("../../../Common/DropDown/Item/TitleItemBase"),
+  VisionFetterSuitItem_1 = require("./VisionFetterSuitItem");
 class VisionEquipmentDropDownTitleItem extends TitleItemBase_1.TitleItemBase {
   constructor() {
     super(...arguments), (this.PPt = void 0);
@@ -21,10 +21,10 @@ class VisionEquipmentDropDownTitleItem extends TitleItemBase_1.TitleItemBase {
       this.GetItem(1),
     )),
       this.PPt.Init().finally(() => {});
-    const i = e;
+    var i = e;
     let r = "";
     (r =
-      e > 0
+      0 < e
         ? ((e =
             ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterGroupById(
               e,
@@ -46,4 +46,4 @@ class VisionEquipmentDropDownTitleItem extends TitleItemBase_1.TitleItemBase {
   }
 }
 exports.VisionEquipmentDropDownTitleItem = VisionEquipmentDropDownTitleItem;
-// # sourceMappingURL=VisionEquipmentDropDownTitleItem.js.map
+//# sourceMappingURL=VisionEquipmentDropDownTitleItem.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraControllerBase = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CurveUtils_1 = require("../../../Core/Utils/Curve/CurveUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
+const Log_1 = require("../../../Core/Common/Log"),
+  CurveUtils_1 = require("../../../Core/Utils/Curve/CurveUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem");
 class CameraControllerBase {
   constructor(t) {
     (this.BreakModifyArmLength = !1),
@@ -50,11 +50,11 @@ class CameraControllerBase {
   }
   SetDefaultConfigs(e, i) {
     for (let t = 0; t < e.Num(); t++) {
-      const s = e.GetKey(t);
+      var s = e.GetKey(t);
       this.m1e.set(e.GetKey(t), e.Get(s));
     }
     for (let t = 0; t < i.Num(); t++) {
-      const h = i.GetKey(t);
+      var h = i.GetKey(t);
       this.d1e.set(
         i.GetKey(t),
         CurveUtils_1.CurveUtils.CreateCurveByStruct(i.Get(h)),
@@ -63,11 +63,11 @@ class CameraControllerBase {
   }
   SetConfigs(t, e) {
     if (t) {
-      for (let [i, s] of t) {
+      for (var [i, s] of t) {
         i = this.$.get(i);
         this.f1e(i, s);
       }
-      for (const [h, a] of this.$)
+      for (var [h, a] of this.$)
         void 0 === this[a] &&
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -81,11 +81,11 @@ class CameraControllerBase {
           this.f1e(a, 1));
     }
     if (e) {
-      for (let [r, o] of e) {
+      for (var [r, o] of e) {
         r = this.C1e.get(r);
         this.p1e(r, o);
       }
-      for (const [n, v] of this.C1e)
+      for (var [n, v] of this.C1e)
         void 0 === this[v] &&
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -135,15 +135,15 @@ class CameraControllerBase {
   UpdateInternal(t) {}
   UpdateDeactivateInternal(t) {}
   Lock(t) {
-    const e = this.IsActivate;
+    var e = this.IsActivate;
     this.c1e.add(t), !this.IsActivate && e && this.OnDisable();
   }
   Unlock(t) {
-    const e = this.IsActivate;
+    var e = this.IsActivate;
     this.c1e.delete(t), this.IsActivate && !e && this.OnEnable();
   }
   Update(t) {
-    const e = this.IsActivate;
+    var e = this.IsActivate;
     (this.u1e = this.UpdateCustomEnableCondition()),
       this.IsActivate !== e &&
         (this.IsActivate ? this.OnEnable() : this.OnDisable()),
@@ -152,11 +152,11 @@ class CameraControllerBase {
         : this.UpdateDeactivateInternal(t);
   }
   get IsActivate() {
-    return this.u1e && this.c1e.size === 0;
+    return this.u1e && 0 === this.c1e.size;
   }
   GetConfigMapValue(t) {
     return String(this.$.get(t));
   }
 }
 exports.CameraControllerBase = CameraControllerBase;
-// # sourceMappingURL=CameraControllerBase.js.map
+//# sourceMappingURL=CameraControllerBase.js.map

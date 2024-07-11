@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FilterView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../../../Ui/Base/UiViewBase");
-const GenericScrollView_1 = require("../../../../Util/ScrollView/GenericScrollView");
-const FilterGroup_1 = require("./FilterGroup");
+const UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../../../Ui/Base/UiViewBase"),
+  GenericScrollView_1 = require("../../../../Util/ScrollView/GenericScrollView"),
+  FilterGroup_1 = require("./FilterGroup");
 class FilterView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -21,13 +21,13 @@ class FilterView extends UiViewBase_1.UiViewBase {
             e.RefreshSelectAllToggleState();
       }),
       (this.RLt = () => {
-        let e;
-        let i;
-        const r = ModelManager_1.ModelManager.FilterModel.GetFilterResultData(
-          this.ogt.ConfigId,
-        );
+        var e,
+          i,
+          r = ModelManager_1.ModelManager.FilterModel.GetFilterResultData(
+            this.ogt.ConfigId,
+          );
         for ([e, i] of this.Scroll.GetScrollItemMap()) {
-          const t = i.GetTempFilterDataMap();
+          var t = i.GetTempFilterDataMap();
           r.SetSelectRuleData(e, t);
         }
         this.ogt.ConfirmFunction?.(), this.CloseMe();
@@ -55,12 +55,12 @@ class FilterView extends UiViewBase_1.UiViewBase {
   }
   async OnCreateAsync() {
     var e = ConfigManager_1.ConfigManager.FilterConfig.GetFilterConfig(
-      this.ogt.ConfigId,
-    );
-    var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-      e.GridType,
-    );
-    const i = await this.LoadPrefabAsync(e, void 0);
+        this.ogt.ConfigId,
+      ),
+      e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+        e.GridType,
+      ),
+      i = await this.LoadPrefabAsync(e, void 0);
     i?.IsValid()
       ? (this.DLt = i.GetUIItem())
       : Log_1.Log.CheckError() &&
@@ -85,11 +85,11 @@ class FilterView extends UiViewBase_1.UiViewBase {
       this.ULt,
       this.DLt,
     );
-    const e = ConfigManager_1.ConfigManager.FilterConfig.GetFilterConfig(
+    var e = ConfigManager_1.ConfigManager.FilterConfig.GetFilterConfig(
       this.ogt.ConfigId,
     );
     this.Scroll.RefreshByData(e.RuleList);
   }
 }
 exports.FilterView = FilterView;
-// # sourceMappingURL=FilterView.js.map
+//# sourceMappingURL=FilterView.js.map

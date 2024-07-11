@@ -1,30 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleAttributeTabView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const FormationDataController_1 = require("../../Abilities/FormationDataController");
-const AttributeItem_1 = require("../../Common/AttributeItem");
-const ButtonItem_1 = require("../../Common/Button/ButtonItem");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const InstanceDungeonController_1 = require("../../InstanceDungeon/InstanceDungeonController");
-const UiRoleUtils_1 = require("../../UiComponent/UiRoleUtils");
-const UiSceneManager_1 = require("../../UiComponent/UiSceneManager");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const MainRoleController_1 = require("../MainRoleController");
-const RoleController_1 = require("../RoleController");
-const RoleBreakPreviewViewModel_1 = require("../RoleLevel/RoleBreakPreviewViewModel");
-const RoleTagSmallIconItem_1 = require("../RoleTag/RoleTagSmallIconItem");
-const StarItem_1 = require("../View/StarItem");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  FormationDataController_1 = require("../../Abilities/FormationDataController"),
+  AttributeItem_1 = require("../../Common/AttributeItem"),
+  ButtonItem_1 = require("../../Common/Button/ButtonItem"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  InstanceDungeonController_1 = require("../../InstanceDungeon/InstanceDungeonController"),
+  UiRoleUtils_1 = require("../../UiComponent/UiRoleUtils"),
+  UiSceneManager_1 = require("../../UiComponent/UiSceneManager"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  MainRoleController_1 = require("../MainRoleController"),
+  RoleController_1 = require("../RoleController"),
+  RoleBreakPreviewViewModel_1 = require("../RoleLevel/RoleBreakPreviewViewModel"),
+  RoleTagSmallIconItem_1 = require("../RoleTag/RoleTagSmallIconItem"),
+  StarItem_1 = require("../View/StarItem");
 class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -61,7 +61,7 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
             );
       }),
       (this.RoleTagClick = () => {
-        const e = this.RoleInstance.GetRoleConfig();
+        var e = this.RoleInstance.GetRoleConfig();
         UiManager_1.UiManager.OpenView("RoleTagDetailView", e.Tag);
       }),
       (this.TeachClick = () => {
@@ -82,13 +82,11 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
             "RoleGuideNotice05",
           );
         else {
-          var e = this.RoleViewAgent.GetCurSelectRoleId();
-          var e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e);
-          const t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(
-            e.Name,
-          );
+          var e = this.RoleViewAgent.GetCurSelectRoleId(),
+            e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e),
+            t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(e.Name);
           const o = e.RoleGuide;
-          o === 0
+          0 === o
             ? ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                 "RoleGuideNotice02",
                 t,
@@ -98,15 +96,15 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
               ),
               e.FunctionMap.set(2, () => {
                 var e =
-                  ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-                    o,
-                  ).FightFormationId;
-                var e =
-                  ConfigManager_1.ConfigManager.EditBattleTeamConfig.GetFightFormationConfig(
-                    e,
-                  )?.AutoRole;
-                if ((e?.length ?? 0) > 0) {
-                  const t = new Array();
+                    ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+                      o,
+                    ).FightFormationId,
+                  e =
+                    ConfigManager_1.ConfigManager.EditBattleTeamConfig.GetFightFormationConfig(
+                      e,
+                    )?.AutoRole;
+                if (0 < (e?.length ?? 0)) {
+                  var t = new Array();
                   for (const i of e)
                     t.push(
                       ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleIdConfigByGroupId(
@@ -127,7 +125,7 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
         }
       }),
       (this.RoleBreakPreviewClick = () => {
-        const e = new RoleBreakPreviewViewModel_1.RoleBreakPreviewViewModel();
+        var e = new RoleBreakPreviewViewModel_1.RoleBreakPreviewViewModel();
         (e.CachedRoleInstance = this.RoleInstance),
           UiManager_1.UiManager.OpenView("RoleBreakPreviewView", e, this.AAn);
       }),
@@ -216,20 +214,20 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
           )));
   }
   wao() {
-    const t = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
-      "RoleAttributeDisplay6",
-    );
-    const i = this.GetItem(12);
-    const o = this.GetItem(5);
+    var t = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
+        "RoleAttributeDisplay6",
+      ),
+      i = this.GetItem(12),
+      o = this.GetItem(5);
     let r = void 0;
-    const s = t.length;
+    var s = t.length;
     for (let e = 0; e < s; ++e) {
-      r = e === 0 ? o : LguiUtil_1.LguiUtil.CopyItem(o, i);
-      const n = t[e];
-      const a = new AttributeItem_1.AttributeItem();
+      r = 0 === e ? o : LguiUtil_1.LguiUtil.CopyItem(o, i);
+      var n = t[e],
+        a = new AttributeItem_1.AttributeItem();
       a.CreateThenShowByActor(r.GetOwner()),
         a.UpdateParam(n, !1),
-        s > 2 && e % 2 == 0 ? a.SetBgActive(!0) : a.SetBgActive(!1),
+        2 < s && e % 2 == 0 ? a.SetBgActive(!0) : a.SetBgActive(!1),
         this.AttributeItemList.push(a);
     }
   }
@@ -278,7 +276,7 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
       );
   }
   Qmo() {
-    let e, t, i;
+    var e, t, i;
     this.Vmo.BindRedDot(
       "RoleAttributeTabLevelUp",
       this.RoleInstance.GetDataId(),
@@ -307,18 +305,18 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
   }
   zmo() {
     this.SetRoleLevelUpState();
-    const e = this.RoleInstance.GetLevelData();
-    var t =
-      (this.Fmo === 1 || this.Fmo === 0
-        ? this.GetText(2).SetText("")
-        : LguiUtil_1.LguiUtil.SetLocalText(
-            this.GetText(2),
-            "RoleExp",
-            e.GetExp(),
-            e.GetCurrentMaxExp(),
-          ),
-      this.Fmo === 1 || this.Fmo === 0 ? 1 : e.GetExpPercentage());
-    var t = (this.GetSprite(3).SetFillAmount(t), this.GetText(6));
+    var e = this.RoleInstance.GetLevelData(),
+      t =
+        (1 === this.Fmo || 0 === this.Fmo
+          ? this.GetText(2).SetText("")
+          : LguiUtil_1.LguiUtil.SetLocalText(
+              this.GetText(2),
+              "RoleExp",
+              e.GetExp(),
+              e.GetCurrentMaxExp(),
+            ),
+        1 === this.Fmo || 0 === this.Fmo ? 1 : e.GetExpPercentage()),
+      t = (this.GetSprite(3).SetFillAmount(t), this.GetText(6));
     LguiUtil_1.LguiUtil.SetLocalText(
       t,
       "RoleMaxLevel02",
@@ -326,16 +324,16 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
     );
   }
   Zmo() {
-    let e = this.RoleInstance.GetLevelData();
-    const t = e.GetBreachLevel();
+    var e = this.RoleInstance.GetLevelData(),
+      t = e.GetBreachLevel();
     let i =
       ConfigManager_1.ConfigManager.TextConfig.GetTextById("RoleBreakLevel");
     void 0 !== (i = i?.replace("%s", "[" + t + "]")) &&
       this.GetText(4).SetText(i);
-    const o = e.GetMaxBreachLevel();
-    const r = new Array(o);
+    var o = e.GetMaxBreachLevel(),
+      r = new Array(o);
     for (let e = 0; e < o; ++e) {
-      const s = {
+      var s = {
         StarOnActive: e < t,
         StarOffActive: e >= t,
         StarNextActive: !1,
@@ -346,7 +344,7 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
       r[e] = s;
     }
     this.$be.RefreshByData(r);
-    (e = this.Fmo === 0 ? e.GetRoleMaxLevel() : e.GetLevel()),
+    (e = 0 === this.Fmo ? e.GetRoleMaxLevel() : e.GetLevel()),
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(7), "CommonLevel", e),
       (e = this.RoleInstance.GetElementInfo()),
       this.SetElementIcon(
@@ -362,7 +360,7 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
     this.GetText(8).SetText(e);
   }
   edo() {
-    const e = this.RoleInstance.GetRoleConfig().Tag;
+    var e = this.RoleInstance.GetRoleConfig().Tag;
     this.Yho.RefreshByData(e);
   }
   Kmo() {
@@ -376,48 +374,47 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
       this.edo();
   }
   ido() {
-    var e = this.RoleViewAgent.GetCurSelectRoleId();
-    var t = this.RoleViewAgent.GetCurSelectRoleData();
-    var e = MainRoleController_1.MainRoleController.IsMainRole(e);
-    var t = t.IsTrialRole();
-    var i =
-      ConfigManager_1.ConfigManager.RoleConfig.GetRoleElementTransferFunctionId();
-    var i = ModelManager_1.ModelManager.FunctionModel.IsOpen(i);
-    const o =
-      ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance();
+    var e = this.RoleViewAgent.GetCurSelectRoleId(),
+      t = this.RoleViewAgent.GetCurSelectRoleData(),
+      e = MainRoleController_1.MainRoleController.IsMainRole(e),
+      t = t.IsTrialRole(),
+      i =
+        ConfigManager_1.ConfigManager.RoleConfig.GetRoleElementTransferFunctionId(),
+      i = ModelManager_1.ModelManager.FunctionModel.IsOpen(i),
+      o = ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance();
     this.GetButton(16).RootUIComp.SetUIActive(e && i && !o && !t);
   }
   Jmo() {
     this.GetText(11).SetText(this.RoleInstance.GetName());
   }
   tdo() {
-    const e = this.RoleInstance.IsTrialRole();
+    var e = this.RoleInstance.IsTrialRole();
     this.GetItem(13).SetUIActive(e);
   }
   UpdateButtonState() {
-    let t = this.GetButton(20).RootUIComp;
+    var t = this.GetButton(20).RootUIComp;
     if (this.RoleInstance.IsTrialRole())
       this.Vmo.SetActive(!1), this.Hmo.SetActive(!1), t.SetUIActive(!1);
     else {
-      t.SetUIActive(this.Fmo !== 0);
+      t.SetUIActive(0 !== this.Fmo);
       let e = "RoleMaxLevelPreview";
-      this.Vmo.SetActive(this.Fmo !== 0 && this.Fmo !== 3),
-        this.Fmo !== 0 &&
-          (this.Fmo === 1
+      this.Vmo.SetActive(0 !== this.Fmo && 3 !== this.Fmo),
+        0 !== this.Fmo &&
+          (1 === this.Fmo
             ? (e = "RoleReachMaxLevel")
-            : this.Fmo === 3
+            : 3 === this.Fmo
               ? (e = "RoleBreakup")
-              : this.Fmo === 2 && (e = "RoleLevelUp"),
+              : 2 === this.Fmo && (e = "RoleLevelUp"),
           (t = ConfigManager_1.ConfigManager.TextConfig.GetTextById(e)),
           this.Vmo.SetText(t),
-          this.Vmo.SetEnableClick(this.Fmo !== 1)),
-        this.Hmo.SetActive(this.Fmo !== 0 && this.Fmo === 3);
+          this.Vmo.SetEnableClick(1 !== this.Fmo)),
+        this.Hmo.SetActive(0 !== this.Fmo && 3 === this.Fmo);
       t = ConfigManager_1.ConfigManager.TextConfig.GetTextById("RoleBreakup");
       this.Hmo.SetText(t);
     }
   }
   SetRoleLevelUpState() {
-    const e = this.RoleInstance.GetLevelData();
+    var e = this.RoleInstance.GetLevelData();
     e.GetRoleIsMaxLevel()
       ? (this.Fmo = 1)
       : e.GetRoleNeedBreakUp()
@@ -431,13 +428,13 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
     RoleController_1.RoleController.PlayRoleMontage(3, !1, !0, !1);
   }
   UpdateAttribute() {
-    const t = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
+    var t = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
       "RoleAttributeDisplay6",
     );
     for (let e = 0; e < this.AttributeItemList.length; ++e) {
-      const i = this.AttributeItemList[e];
-      var o = t[e];
-      var o = this.RoleInstance.GetShowAttributeValueById(o);
+      var i = this.AttributeItemList[e],
+        o = t[e],
+        o = this.RoleInstance.GetShowAttributeValueById(o);
       i.SetCurrentValue(o), i.SetActive(!0);
     }
   }
@@ -460,4 +457,4 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.RoleAttributeTabView = RoleAttributeTabView;
-// # sourceMappingURL=RoleAttributeTabView.js.map
+//# sourceMappingURL=RoleAttributeTabView.js.map

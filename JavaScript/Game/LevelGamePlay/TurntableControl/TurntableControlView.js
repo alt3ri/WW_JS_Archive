@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TurntableControlView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController");
-const UiComponentUtil_1 = require("../../Module/Util/UiComponentUtil");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const TurntableControlController_1 = require("./TurntableControlController");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController"),
+  UiComponentUtil_1 = require("../../Module/Util/UiComponentUtil"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  TurntableControlController_1 = require("./TurntableControlController");
 class TurntableControlView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -19,7 +19,7 @@ class TurntableControlView extends UiViewBase_1.UiViewBase {
       (this.jxe = void 0),
       (this.Pwn = !1),
       (this.jwe = (t) => {
-        t === "OnOpenTurntableControlViewBlackScreen" &&
+        "OnOpenTurntableControlViewBlackScreen" === t &&
           ((this.Pwn = !0),
           TurntableControlController_1.TurntableControlController.SelectRingByIndex(
             0,
@@ -125,7 +125,7 @@ class TurntableControlView extends UiViewBase_1.UiViewBase {
         this.GetRootItem().SetUIActive(!1));
   }
   OnAddEventListener() {
-    const t =
+    var t =
       TurntableControlController_1.TurntableControlController.GetControllerEntity();
     t &&
       !EventSystem_1.EventSystem.HasWithTarget(
@@ -144,7 +144,7 @@ class TurntableControlView extends UiViewBase_1.UiViewBase {
       );
   }
   OnRemoveEventListener() {
-    const t =
+    var t =
       TurntableControlController_1.TurntableControlController.GetControllerEntity();
     t &&
       EventSystem_1.EventSystem.HasWithTarget(
@@ -194,4 +194,4 @@ class TurntableControlView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.TurntableControlView = TurntableControlView;
-// # sourceMappingURL=TurntableControlView.js.map
+//# sourceMappingURL=TurntableControlView.js.map

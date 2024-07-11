@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExploreAreaDynamicItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class ExploreAreaDynamicItem extends UiPanelBase_1.UiPanelBase {
   async Init(e) {
     await super.CreateByActorAsync(e.GetOwner(), void 0, !0);
@@ -24,4 +24,4 @@ class ExploreAreaDynamicItem extends UiPanelBase_1.UiPanelBase {
   ClearItem() {}
 }
 exports.ExploreAreaDynamicItem = ExploreAreaDynamicItem;
-// # sourceMappingURL=ExploreAreaDynamicItem.js.map
+//# sourceMappingURL=ExploreAreaDynamicItem.js.map

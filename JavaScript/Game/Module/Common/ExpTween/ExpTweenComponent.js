@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExpTweenComponent = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const GlobalData_1 = require("../../../GlobalData");
-const UiLayer_1 = require("../../../Ui/UiLayer");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  GlobalData_1 = require("../../../GlobalData"),
+  UiLayer_1 = require("../../../Ui/UiLayer");
 class ExpTweenComponent {
   constructor(t, i, s, h, e = void 0) {
     (this.TweenFinishFunction = e),
@@ -28,7 +28,7 @@ class ExpTweenComponent {
         this.InCurrent
           ? this.SetAddFillAmount(t)
           : (this.SetNextFillAmount(t),
-            this.AddSprite.GetFillAmount() !== 1 && this.SetAddFillAmount(1));
+            1 !== this.AddSprite.GetFillAmount() && this.SetAddFillAmount(1));
       }),
       (this.AddSprite = i),
       (this.CurrentSprite = t),
@@ -41,8 +41,8 @@ class ExpTweenComponent {
       ));
   }
   PlayTween(t, i, s) {
-    const h = t === 1 ? this.CurrentSprite.GetFillAmount() : 0;
-    const e = t === i ? this.FinalFillAmount : 1;
+    var h = 1 === t ? this.CurrentSprite.GetFillAmount() : 0,
+      e = t === i ? this.FinalFillAmount : 1;
     t === i && this.AddSprite.SetFillAmount(e),
       UiLayer_1.UiLayer.SetShowMaskLayer("ExpTweenComponent", !0),
       (this.ExpTweener = UE.LTweenBPLibrary.FloatTo(
@@ -84,7 +84,7 @@ class ExpTweenComponent {
       i ? this.PreviewTweenPlayAgainState(t) : this.PreviewTweenStopState();
   }
   PreviewTweenStopState() {
-    this.PreviewFinalFillAmount === 1
+    1 === this.PreviewFinalFillAmount
       ? (this.SetCurrentSpriteActive(!1),
         this.SetNextSpriteActive(!0),
         this.SetNextFillAmount(this.PreviewFinalFillAmount))
@@ -141,7 +141,7 @@ class ExpTweenComponent {
   }
   PlayPreviewExpTween(t, i, s, h, e) {
     this.KillPreviewExpTweener(!0), (this.PreviewFinalFillAmount = e);
-    const o = (i !== t ? this.NextSprite : this.AddSprite).GetFillAmount();
+    var o = (i !== t ? this.NextSprite : this.AddSprite).GetFillAmount();
     let r = void 0;
     (r = s < i && i !== h ? 0 : i < s || s === h ? 1 : e),
       (this.InCurrent = i === t),
@@ -169,4 +169,4 @@ class ExpTweenComponent {
   }
 }
 exports.ExpTweenComponent = ExpTweenComponent;
-// # sourceMappingURL=ExpTweenComponent.js.map
+//# sourceMappingURL=ExpTweenComponent.js.map

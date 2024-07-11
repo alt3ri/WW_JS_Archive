@@ -1,46 +1,50 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, i, o) {
-    let s;
-    const a = arguments.length;
-    let n =
-      a < 3 ? t : o === null ? (o = Object.getOwnPropertyDescriptor(t, i)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var s,
+      a = arguments.length,
+      n =
+        a < 3
+          ? t
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(t, i))
+            : o;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(e, t, i, o);
     else
-      for (let r = e.length - 1; r >= 0; r--)
-        (s = e[r]) && (n = (a < 3 ? s(n) : a > 3 ? s(t, i, n) : s(t, i)) || n);
-    return a > 3 && n && Object.defineProperty(t, i, n), n;
+      for (var r = e.length - 1; 0 <= r; r--)
+        (s = e[r]) && (n = (a < 3 ? s(n) : 3 < a ? s(t, i, n) : s(t, i)) || n);
+    return 3 < a && n && Object.defineProperty(t, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleTeamComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../Core/Common/Time");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const CameraController_1 = require("../../../../Camera/CameraController");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const EffectContext_1 = require("../../../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../../../Effect/EffectSystem");
-const Global_1 = require("../../../../Global");
-const GlobalData_1 = require("../../../../GlobalData");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const BattleUiDefine_1 = require("../../../../Module/BattleUi/BattleUiDefine");
-const SceneTeamDefine_1 = require("../../../../Module/SceneTeam/SceneTeamDefine");
-const UiCameraAnimationManager_1 = require("../../../../Module/UiCameraAnimation/UiCameraAnimationManager");
-const EffectUtil_1 = require("../../../../Utils/EffectUtil");
-const CharacterBuffIds_1 = require("../../Common/Component/Abilities/CharacterBuffIds");
-const CharacterUnifiedStateComponent_1 = require("../../Common/Component/Abilities/CharacterUnifiedStateComponent");
-const CharacterUnifiedStateTypes_1 = require("../../Common/Component/Abilities/CharacterUnifiedStateTypes");
-const RoleInheritComponent_1 = require("./RoleInheritComponent");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  CameraController_1 = require("../../../../Camera/CameraController"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  EffectContext_1 = require("../../../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../../../Effect/EffectSystem"),
+  Global_1 = require("../../../../Global"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  BattleUiDefine_1 = require("../../../../Module/BattleUi/BattleUiDefine"),
+  SceneTeamDefine_1 = require("../../../../Module/SceneTeam/SceneTeamDefine"),
+  UiCameraAnimationManager_1 = require("../../../../Module/UiCameraAnimation/UiCameraAnimationManager"),
+  EffectUtil_1 = require("../../../../Utils/EffectUtil"),
+  CharacterBuffIds_1 = require("../../Common/Component/Abilities/CharacterBuffIds"),
+  CharacterUnifiedStateComponent_1 = require("../../Common/Component/Abilities/CharacterUnifiedStateComponent"),
+  CharacterUnifiedStateTypes_1 = require("../../Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  RoleInheritComponent_1 = require("./RoleInheritComponent");
 let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -83,19 +87,19 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
   }
   OnStart() {
     var e = EffectUtil_1.EffectUtil.GetEffectPath(
-      SceneTeamDefine_1.GO_BATTLE_MATERIAL,
-    );
-    var e =
-      (ResourceSystem_1.ResourceSystem.LoadAsync(
-        e,
-        UE.PD_CharacterControllerDataGroup_C,
-        (e) => {
-          e && (this.Frn = e);
-        },
+        SceneTeamDefine_1.GO_BATTLE_MATERIAL,
       ),
-      EffectUtil_1.EffectUtil.GetEffectPath(
-        SceneTeamDefine_1.GO_DOWN_MATERIAL,
-      ));
+      e =
+        (ResourceSystem_1.ResourceSystem.LoadAsync(
+          e,
+          UE.PD_CharacterControllerDataGroup_C,
+          (e) => {
+            e && (this.Frn = e);
+          },
+        ),
+        EffectUtil_1.EffectUtil.GetEffectPath(
+          SceneTeamDefine_1.GO_DOWN_MATERIAL,
+        ));
     return (
       ResourceSystem_1.ResourceSystem.LoadAsync(
         e,
@@ -127,11 +131,11 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
         ["Last", e?.Id],
         ["New", t.Id],
       );
-    const a = e?.Entity?.GetComponent(81);
-    const n = t.Entity.GetComponent(81);
-    var r = a?.cBe;
-    let h = r?.SkillTarget;
-    var r = void 0 !== r && !r.IsMainSkillReadyEnd;
+    var a = e?.Entity?.GetComponent(81),
+      n = t.Entity.GetComponent(81),
+      r = a?.cBe,
+      h = r?.SkillTarget,
+      r = void 0 !== r && !r.IsMainSkillReadyEnd;
     e &&
       s &&
       h &&
@@ -174,8 +178,8 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
       n.zrn(!_ && i);
   }
   Xrn() {
-    const e = Global_1.Global.CharacterController;
-    const t = this.Hte.Actor;
+    var e = Global_1.Global.CharacterController,
+      t = this.Hte.Actor;
     e.Pawn !== t &&
       (t.Mesh.AddTickPrerequisiteActor(e),
       e.Possess(t),
@@ -183,7 +187,7 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
       this.Nce?.Active || this.Nce?.SetActive(!0));
   }
   Jrn(e, t, i = !1) {
-    let o;
+    var o;
     this.Xte.HasTag(-1207177910)
       ? t || !i
         ? (Log_1.Log.CheckInfo() &&
@@ -232,7 +236,7 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
         Log_1.Log.Info("SceneTeam", 49, "人物上场，非后台切换，不更新位置");
   }
   InheritTransform() {
-    let e = ModelManager_1.ModelManager.SceneTeamModel.GetSpawnTransform();
+    var e = ModelManager_1.ModelManager.SceneTeamModel.GetSpawnTransform();
     if (!e)
       return (
         Log_1.Log.CheckError() &&
@@ -268,7 +272,7 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
     this.Hte.FixSwitchLocation(e, !0, !0);
   }
   zrn(e) {
-    let t;
+    var t;
     this.krn.IsInQte
       ? (this.GoBattleSkill = !1)
       : ((o = this.Xte.HasTag(1949807524)),
@@ -279,11 +283,11 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
       this.Qrn();
     for (const s of CharacterUnifiedStateComponent_1.outGameRoleTags)
       this.Xte.RemoveTag(s);
-    let i;
-    var o = ModelManager_1.ModelManager.SceneTeamModel;
-    var e =
-      (this.SetTeamTag(0),
-      !ModelManager_1.ModelManager.PlotModel.InSeamlessFormation);
+    var i,
+      o = ModelManager_1.ModelManager.SceneTeamModel,
+      e =
+        (this.SetTeamTag(0),
+        !ModelManager_1.ModelManager.PlotModel.InSeamlessFormation);
     ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
       this.Entity,
       e,
@@ -306,8 +310,8 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
         this.Hte.Actor.FightCommand(i));
   }
   enn() {
-    let e, t;
-    ModelManager_1.ModelManager.SceneTeamModel.CurrentGroupType === 3
+    var e, t;
+    3 === ModelManager_1.ModelManager.SceneTeamModel.CurrentGroupType
       ? ((t = this.Entity.GetComponent(0).GetRoleId()),
         (e = ModelManager_1.ModelManager.PlotModel.GoBattleMaterial) &&
           ModelManager_1.ModelManager.RoleModel.IsMainRole(t) &&
@@ -334,8 +338,8 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
           ));
   }
   $rn() {
-    const e = this.Xte?.HasTag(1144073280);
-    const t = this.Xte?.HasTag(-2044964178);
+    var e = this.Xte?.HasTag(1144073280),
+      t = this.Xte?.HasTag(-2044964178);
     e || t
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -372,7 +376,7 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
         ));
   }
   tnn() {
-    const e = !this.jrn && !this.Wrn;
+    var e = !this.jrn && !this.Wrn;
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("SceneTeam", 49, "角色下场，尝试隐藏角色", [
         "CanGoDown",
@@ -416,7 +420,7 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
         }, SceneTeamDefine_1.EFFECT_DELAY_QUIT)));
   }
   Yrn(e) {
-    const t = e * BattleUiDefine_1.SECOND_TO_MILLISECOND;
+    var t = e * BattleUiDefine_1.SECOND_TO_MILLISECOND;
     (this.Hrn = t + Time_1.Time.WorldTime),
       EventSystem_1.EventSystem.EmitWithTarget(
         this.Entity,
@@ -425,10 +429,10 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
       );
   }
   IsChangeRoleCoolDown() {
-    return this.GetChangeRoleCoolDown() > 0 || !(this.Hrn = -1);
+    return 0 < this.GetChangeRoleCoolDown() || !(this.Hrn = -1);
   }
   GetChangeRoleCoolDown() {
-    return this.Hrn > 0 ? this.Hrn - Time_1.Time.WorldTime : -1;
+    return 0 < this.Hrn ? this.Hrn - Time_1.Time.WorldTime : -1;
   }
   SetTeamTag(e) {
     if (this.Entity.IsInit)
@@ -474,4 +478,4 @@ let RoleTeamComponent = class RoleTeamComponent extends EntityComponent_1.Entity
   RoleTeamComponent,
 )),
   (exports.RoleTeamComponent = RoleTeamComponent);
-// # sourceMappingURL=RoleTeamComponent.js.map
+//# sourceMappingURL=RoleTeamComponent.js.map

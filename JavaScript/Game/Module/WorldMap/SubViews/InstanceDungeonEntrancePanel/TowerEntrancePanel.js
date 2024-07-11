@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerEntrancePanel = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ButtonItem_1 = require("../../../Common/Button/ButtonItem");
-const InstanceDungeonEntranceConfig_1 = require("../../../InstanceDungeon/InstanceDungeonEntranceConfig");
-const MapController_1 = require("../../../Map/Controller/MapController");
-const TowerController_1 = require("../../../TowerDetailUi/TowerController");
-const WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi");
-const WorldMapController_1 = require("../../WorldMapController");
-const WorldMapDefine_1 = require("../../WorldMapDefine");
-const RewardItemBar_1 = require("../RewardItemBar");
-const TipsListView_1 = require("../TipsListView");
-const REWARD_ID = 3331;
-const TIME_KEY = "time";
-const DIFFICULT_KEY = "difficult";
-const SCORE_KEY = "score";
+const Log_1 = require("../../../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
+  InstanceDungeonEntranceConfig_1 = require("../../../InstanceDungeon/InstanceDungeonEntranceConfig"),
+  MapController_1 = require("../../../Map/Controller/MapController"),
+  TowerController_1 = require("../../../TowerDetailUi/TowerController"),
+  WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
+  WorldMapController_1 = require("../../WorldMapController"),
+  WorldMapDefine_1 = require("../../WorldMapDefine"),
+  RewardItemBar_1 = require("../RewardItemBar"),
+  TipsListView_1 = require("../TipsListView"),
+  REWARD_ID = 3331,
+  TIME_KEY = "time",
+  DIFFICULT_KEY = "difficult",
+  SCORE_KEY = "score";
 class TowerEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
@@ -70,7 +70,7 @@ class TowerEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
   OnShowWorldMapSecondaryUi(e) {
     (e =
-      (this.dko = e).MarkConfig.RelativeId !== 0
+      0 !== (this.dko = e).MarkConfig.RelativeId
         ? e.MarkConfig.RelativeId
         : ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.GetEntranceIdByMarkId(
             e.MarkConfigId,
@@ -104,43 +104,43 @@ class TowerEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       this.GetText(4).ShowTextNew(this.dko.GetLocaleDesc());
   }
   jqe() {
-    let e;
-    let t;
-    const i = [];
+    var e,
+      t,
+      i = [];
     for ([e, t] of ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(
       REWARD_ID,
     )?.DropPreview) {
-      const r = [{ IncId: 0, ItemId: e }, t];
+      var r = [{ IncId: 0, ItemId: e }, t];
       i.push(r);
     }
-    void 0 === i || i.length === 0
+    void 0 === i || 0 === i.length
       ? this.RewardsView.SetActive(!1)
       : (this.RewardsView.SetActive(!0),
         this.RewardsView.RebuildRewardsByData(i));
   }
   kko(e) {
-    const t = this.xko.AddItemByKey(DIFFICULT_KEY);
-    var i = ModelManager_1.ModelManager.TowerModel.GetMaxDifficulty();
-    var i =
-      (t.SetHelpButtonVisible(!1),
-      t.SetLeftText(
-        MultiTextLang_1.configMultiTextLang.GetLocalTextNew("TowerProcess") ??
-          "",
-      ),
-      ConfigManager_1.ConfigManager.TowerClimbConfig.GetNewTowerDifficultTitle(
-        i,
-      ));
+    var t = this.xko.AddItemByKey(DIFFICULT_KEY),
+      i = ModelManager_1.ModelManager.TowerModel.GetMaxDifficulty(),
+      i =
+        (t.SetHelpButtonVisible(!1),
+        t.SetLeftText(
+          MultiTextLang_1.configMultiTextLang.GetLocalTextNew("TowerProcess") ??
+            "",
+        ),
+        ConfigManager_1.ConfigManager.TowerClimbConfig.GetNewTowerDifficultTitle(
+          i,
+        ));
     t.SetRightText(i);
   }
   $2e() {
-    const e = ModelManager_1.ModelManager.TowerModel.GetSeasonCountDownData();
-    const t = this.xko.AddItemByKey(TIME_KEY);
-    const i = StringUtils_1.StringUtils.Format(
-      MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-        "Text_ActiveRemainTime_Text",
-      ) ?? "",
-      "",
-    );
+    var e = ModelManager_1.ModelManager.TowerModel.GetSeasonCountDownData(),
+      t = this.xko.AddItemByKey(TIME_KEY),
+      i = StringUtils_1.StringUtils.Format(
+        MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+          "Text_ActiveRemainTime_Text",
+        ) ?? "",
+        "",
+      );
     t.SetLeftText(i),
       t.SetRightText(e.CountDownText ?? ""),
       t.SetHelpButtonVisible(!1),
@@ -148,7 +148,7 @@ class TowerEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       this.Nko < 2 && TowerController_1.TowerController.RefreshTower();
   }
   Fko(e) {
-    let t, i, r;
+    var t, i, r;
     e >= InstanceDungeonEntranceConfig_1.EInstanceEntranceFlowType.CycleTower &&
       ((e = this.xko.AddItemByKey(SCORE_KEY)),
       (t = (r = ModelManager_1.ModelManager.TowerModel).GetMaxDifficulty()),
@@ -181,4 +181,4 @@ class TowerEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
 }
 exports.TowerEntrancePanel = TowerEntrancePanel;
-// # sourceMappingURL=TowerEntrancePanel.js.map
+//# sourceMappingURL=TowerEntrancePanel.js.map

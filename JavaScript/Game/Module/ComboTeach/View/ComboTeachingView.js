@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ComboTeachingView = void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const Global_1 = require("../../../Global");
-const InputController_1 = require("../../../Input/InputController");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const GuideController_1 = require("../../Guide/GuideController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const ComboTeachingInputHandler_1 = require("../ComboTeachingInputHandler");
-const ComboTeachingNode_1 = require("./ComboTeachingNode");
-const SHOW_TIP_ID = "12900001";
-const BEFORE_JUMP_TIME = 100;
+const UE = require("ue"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../Global"),
+  InputController_1 = require("../../../Input/InputController"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  GuideController_1 = require("../../Guide/GuideController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ComboTeachingInputHandler_1 = require("../ComboTeachingInputHandler"),
+  ComboTeachingNode_1 = require("./ComboTeachingNode"),
+  SHOW_TIP_ID = "12900001",
+  BEFORE_JUMP_TIME = 100;
 class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -53,10 +53,11 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
                   this.PlayMoveLeftTweenAnimation(),
                   t.Refresh(this.Byt))
                 : ((this.Byt = this.Byt + 1),
-                  this.byt.NextRoleGuideID > 0
-                    ? ConfigManager_1.ConfigManager.ComboTeachingConfig.GetComboTeachingConfig(
+                  0 < this.byt.NextRoleGuideID
+                    ? 0 ===
+                      ConfigManager_1.ConfigManager.ComboTeachingConfig.GetComboTeachingConfig(
                         this.byt.NextRoleGuideID,
-                      ).KeyID.length === 0
+                      ).KeyID.length
                       ? TimerSystem_1.TimerSystem.Delay(() => {
                           (ModelManager_1.ModelManager.ComboTeachingModel.IsClose =
                             !0),
@@ -94,14 +95,14 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
                         !1),
                       this.PlayMoveLeftTweenAnimation(() => {
                         i?.SetUIActive(!1);
-                        const e =
-                          ConfigManager_1.ConfigManager.GenericPromptConfig.GetPromptInfoByRawId(
-                            SHOW_TIP_ID,
-                          );
-                        const t =
-                          ConfigManager_1.ConfigManager.GenericPromptConfig.GetPromptMainTextObjByRawId(
-                            SHOW_TIP_ID,
-                          );
+                        var e =
+                            ConfigManager_1.ConfigManager.GenericPromptConfig.GetPromptInfoByRawId(
+                              SHOW_TIP_ID,
+                            ),
+                          t =
+                            ConfigManager_1.ConfigManager.GenericPromptConfig.GetPromptMainTextObjByRawId(
+                              SHOW_TIP_ID,
+                            );
                         ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByItsType(
                           e.TypeId,
                           t,
@@ -186,7 +187,7 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
           (ModelManager_1.ModelManager.ComboTeachingModel.NextAttrSkillId = e));
       }),
       (this.OnHit = (e) => {
-        let t;
+        var t;
         this.Nyt ||
           ((t = e.Attacker.GetComponent(33)),
           (ModelManager_1.ModelManager.ComboTeachingModel.HitSkillId =
@@ -319,21 +320,23 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
       (ModelManager_1.ModelManager.ComboTeachingModel.AddBuffList.length = 0),
         (ModelManager_1.ModelManager.ComboTeachingModel.AddTagList.length = 0);
     else {
-      var e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint();
-      var e = EntitySystem_1.EntitySystem.Get(e);
-      const t = e?.GetComponent(185);
-      const i =
-        (ModelManager_1.ModelManager.ComboTeachingModel.AddTagList.forEach(
-          (e) => {
-            t?.RemoveTag(GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e));
-          },
-        ),
-        (ModelManager_1.ModelManager.ComboTeachingModel.AddTagList.length = 0),
-        e?.GetComponent(157));
+      var e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint(),
+        e = EntitySystem_1.EntitySystem.Get(e);
+      const t = e?.GetComponent(185),
+        i =
+          (ModelManager_1.ModelManager.ComboTeachingModel.AddTagList.forEach(
+            (e) => {
+              t?.RemoveTag(
+                GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e),
+              );
+            },
+          ),
+          (ModelManager_1.ModelManager.ComboTeachingModel.AddTagList.length = 0),
+          e?.GetComponent(157));
       ModelManager_1.ModelManager.ComboTeachingModel.AddBuffList.forEach(
         (e) => {
           i?.GetBuffTotalStackById(BigInt(e)) &&
-            i?.GetBuffTotalStackById(BigInt(e)) > 0 &&
+            0 < i?.GetBuffTotalStackById(BigInt(e)) &&
             i?.RemoveBuff(BigInt(e), -1, "ComboTeachingView.OnBeforeDestroy");
         },
       ),
@@ -349,8 +352,8 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
         ));
     (e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
       (e = EntitySystem_1.EntitySystem.Get(e));
-    const t = e?.GetComponent(185);
-    const i = e?.GetComponent(157);
+    const t = e?.GetComponent(185),
+      i = e?.GetComponent(157);
     ModelManager_1.ModelManager.ComboTeachingModel.AddTagList.forEach((e) => {
       t?.RemoveTag(GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e));
     }),
@@ -366,7 +369,7 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
       ModelManager_1.ModelManager.ComboTeachingModel.AddBuffList.forEach(
         (e) => {
           i?.GetBuffTotalStackById(BigInt(e)) &&
-            i?.GetBuffTotalStackById(BigInt(e)) > 0 &&
+            0 < i?.GetBuffTotalStackById(BigInt(e)) &&
             i?.RemoveBuff(BigInt(e), -1, "ComboTeachingView.RefreshComboList");
         },
       ),
@@ -390,18 +393,15 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
       if (this.Gyt.length > e)
         (this.Gyt[e].CurConfig = this.byt), this.Gyt[e].Refresh(this.Byt);
       else {
-        const n = LguiUtil_1.LguiUtil.CopyItem(
-          this.GetItem(3),
-          this.GetItem(0),
-        );
+        var n = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(3), this.GetItem(0));
         const a = new ComboTeachingNode_1.ComboTeachingNode(e, this.byt);
         a.CreateThenShowByActorAsync(n.GetOwner()).then(() => {
           a.Refresh(this.Byt);
         }),
           this.Gyt.push(a);
       }
-    var e = this.GetItem(3).GetWidth() + 220 * (this.Gyt.length - 1);
-    const s = this.GetItem(0).GetParentAsUIItem().GetWidth();
+    var e = this.GetItem(3).GetWidth() + 220 * (this.Gyt.length - 1),
+      s = this.GetItem(0).GetParentAsUIItem().GetWidth();
     s < e &&
       ((this.kyt = (e - s) / 2), this.GetItem(0).SetAnchorOffsetX(this.kyt)),
       this.GetItem(3).SetUIActive(!1),
@@ -419,11 +419,11 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
       InputController_1.InputController.AddInputHandler(this.xyt);
   }
   PlayMoveLeftTweenAnimation(e) {
-    let t = this.GetItem(0);
-    let i = !1;
-    let n = 0;
+    var t = this.GetItem(0);
+    let i = !1,
+      n = 0;
     for (let e = 0; e < this.byt.KeyID.length; e++)
-      if ((this.byt.KeyID[e].length > 0 && n++, n > 1)) {
+      if ((0 < this.byt.KeyID[e].length && n++, 1 < n)) {
         i = !0;
         break;
       }
@@ -442,8 +442,8 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
         }, 1e3);
   }
   OnTick(e) {
-    let t;
-    ModelManager_1.ModelManager.ComboTeachingModel.UseSkillId !== 0 &&
+    var t;
+    0 !== ModelManager_1.ModelManager.ComboTeachingModel.UseSkillId &&
       (ModelManager_1.ModelManager.ComboTeachingModel.UseSkillTime += e),
       (ModelManager_1.ModelManager.ComboTeachingModel.BeforeJumpTime -= e),
       ModelManager_1.ModelManager.ComboTeachingModel.BeforeJumpTime < 0 &&
@@ -451,11 +451,11 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
       Global_1.Global.BaseCharacter &&
         ((t = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
         (EntitySystem_1.EntitySystem.Get(t)?.GetComponent(161)).IsJump) &&
-        ModelManager_1.ModelManager.ComboTeachingModel.BeforeJumpTime === 0 &&
+        0 === ModelManager_1.ModelManager.ComboTeachingModel.BeforeJumpTime &&
         (ModelManager_1.ModelManager.ComboTeachingModel.BeforeJumpTime =
           BEFORE_JUMP_TIME),
       this.Gyt[this.Byt]?.OnTick(e);
   }
 }
 exports.ComboTeachingView = ComboTeachingView;
-// # sourceMappingURL=ComboTeachingView.js.map
+//# sourceMappingURL=ComboTeachingView.js.map

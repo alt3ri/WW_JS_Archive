@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonRewardView = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const ItemRewardController_1 = require("../ItemRewardController");
-const RewardItemList_1 = require("./RewardItemList");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ItemRewardController_1 = require("../ItemRewardController"),
+  RewardItemList_1 = require("./RewardItemList");
 class CommonRewardView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.jIt = void 0),
       (this.sOe = void 0),
       (this.Vgi = (e) => {
-        const t = e.GetRewardInfo();
-        t.Type === 1 &&
-          t.ViewName === "CommonRewardView" &&
+        var t = e.GetRewardInfo();
+        1 === t.Type &&
+          "CommonRewardView" === t.ViewName &&
           (this.UiViewSequence?.PlaySequencePurely("Start01", !0),
           (this.jIt = e),
           this.b$t()) &&
@@ -71,13 +71,13 @@ class CommonRewardView extends UiViewBase_1.UiViewBase {
       );
   }
   async OnBeforeStartAsync() {
-    const e = this.GetItem(3);
+    var e = this.GetItem(3);
     (this.sOe = new RewardItemList_1.RewardItemList()),
       await this.sOe.CreateThenShowByActorAsync(e.GetOwner(), e);
   }
   OnStart() {
-    var e = this.OpenParam;
-    var e = (this.bl(e), e.GetRewardInfo().AudioId);
+    var e = this.OpenParam,
+      e = (this.bl(e), e.GetRewardInfo().AudioId);
     ItemRewardController_1.ItemRewardController.PlayAudio(e);
   }
   OnAfterPlayStartSequence() {
@@ -90,7 +90,7 @@ class CommonRewardView extends UiViewBase_1.UiViewBase {
     this.UiViewSequence.StopSequenceByKey("Switch");
   }
   OnBeforeDestroy() {
-    const e = this.jIt.GetRewardInfo().OnCloseCallback;
+    var e = this.jIt.GetRewardInfo().OnCloseCallback;
     e && e(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnCloseRewardView,
@@ -104,31 +104,31 @@ class CommonRewardView extends UiViewBase_1.UiViewBase {
       this.b$t() && this.q$t();
   }
   G$t() {
-    var e = this.jIt.GetRewardInfo().Title;
-    var e = !StringUtils_1.StringUtils.IsEmpty(e);
+    var e = this.jIt.GetRewardInfo().Title,
+      e = !StringUtils_1.StringUtils.IsEmpty(e);
     return this.GetItem(2).SetUIActive(e), e;
   }
   mGe() {
-    let e;
-    const t = this.jIt.GetRewardInfo().Title;
+    var e,
+      t = this.jIt.GetRewardInfo().Title;
     StringUtils_1.StringUtils.IsEmpty(t) ||
       ((e = this.GetText(1)), LguiUtil_1.LguiUtil.SetLocalTextNew(e, t));
   }
   N$t() {
-    var e = this.jIt.GetRewardInfo().ContinueText;
-    var e = !StringUtils_1.StringUtils.IsEmpty(e);
+    var e = this.jIt.GetRewardInfo().ContinueText,
+      e = !StringUtils_1.StringUtils.IsEmpty(e);
     return this.GetItem(4).SetUIActive(e), e;
   }
   O$t() {
-    let e;
-    const t = this.jIt.GetRewardInfo().ContinueText;
+    var e,
+      t = this.jIt.GetRewardInfo().ContinueText;
     StringUtils_1.StringUtils.IsEmpty(t) ||
       ((e = this.GetText(4)), LguiUtil_1.LguiUtil.SetLocalTextNew(e, t));
   }
   b$t() {
-    var e = this.jIt.GetRewardInfo().IsItemVisible;
-    const t = this.jIt.GetItemList();
-    var e = e && void 0 !== t && t?.length > 0;
+    var e = this.jIt.GetRewardInfo().IsItemVisible,
+      t = this.jIt.GetItemList(),
+      e = e && void 0 !== t && 0 < t?.length;
     return this.sOe.GetActive() !== e && this.sOe.SetActive(e), e;
   }
   q$t() {
@@ -136,4 +136,4 @@ class CommonRewardView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.CommonRewardView = CommonRewardView;
-// # sourceMappingURL=CommonRewardView.js.map
+//# sourceMappingURL=CommonRewardView.js.map

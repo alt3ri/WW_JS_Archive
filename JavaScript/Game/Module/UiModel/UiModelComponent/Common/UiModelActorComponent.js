@@ -1,31 +1,35 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, i, s) {
-    let o;
-    const n = arguments.length;
-    let r =
-      n < 3 ? t : s === null ? (s = Object.getOwnPropertyDescriptor(t, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      n = arguments.length,
+      r =
+        n < 3
+          ? t
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(t, i))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(e, t, i, s);
     else
-      for (let h = e.length - 1; h >= 0; h--)
-        (o = e[h]) && (r = (n < 3 ? o(r) : n > 3 ? o(t, i, r) : o(t, i)) || r);
-    return n > 3 && r && Object.defineProperty(t, i, r), r;
+      for (var h = e.length - 1; 0 <= h; h--)
+        (o = e[h]) && (r = (n < 3 ? o(r) : 3 < n ? o(t, i, r) : o(t, i)) || r);
+    return 3 < n && r && Object.defineProperty(t, i, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiModelActorComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const CharacterNameDefines_1 = require("../../../../NewWorld/Character/Common/CharacterNameDefines");
-const RoleDefine_1 = require("../../../RoleUi/RoleDefine");
-const UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine");
-const UiModelComponentBase_1 = require("../UiModelComponentBase");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  CharacterNameDefines_1 = require("../../../../NewWorld/Character/Common/CharacterNameDefines"),
+  RoleDefine_1 = require("../../../RoleUi/RoleDefine"),
+  UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine"),
+  UiModelComponentBase_1 = require("../UiModelComponentBase");
 let UiModelActorComponent = class UiModelActorComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
     super(...arguments),
@@ -36,14 +40,14 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
       (this.Qwr = void 0),
       (this.Xwr = void 0),
       (this.$wr = (e) => {
-        let t;
+        var t;
         if (
           (this.MainMeshComponent &&
             (this.Ywr(this.MainMeshComponent, e),
             e ||
               ((t = this.MainMeshComponent.GetAnimInstance()),
               UE.KuroAnimLibrary.EndAnimNotifyStates(t))),
-          this.ChildMeshComponentList && this.ChildMeshComponentList.length > 0)
+          this.ChildMeshComponentList && 0 < this.ChildMeshComponentList.length)
         )
           for (const i of this.ChildMeshComponentList) this.Ywr(i, e);
       }),
@@ -85,7 +89,7 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
       );
   }
   Zwr() {
-    const e = this.Actor.AddComponentByClass(
+    var e = this.Actor.AddComponentByClass(
       UE.SkeletalMeshComponent.StaticClass(),
       !1,
       MathUtils_1.MathUtils.DefaultTransform,
@@ -99,7 +103,7 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
     );
   }
   zwr() {
-    const e = this.Actor.AddComponentByClass(
+    var e = this.Actor.AddComponentByClass(
       UE.CharRenderingComponent_C.StaticClass(),
       !1,
       MathUtils_1.MathUtils.DefaultTransform,
@@ -142,9 +146,9 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
   }
   iBr(e, t) {
     this.CharRenderingComponent.ResetAllRenderingState(), this.oBr();
-    const i = this.MainMeshComponent;
-    var s = i?.GetAnimInstance();
-    var s = (s && UE.KuroAnimLibrary.EndAnimNotifyStates(s), this.Zwr());
+    var i = this.MainMeshComponent,
+      s = i?.GetAnimInstance(),
+      s = (s && UE.KuroAnimLibrary.EndAnimNotifyStates(s), this.Zwr());
     s?.SetSkeletalMesh(e),
       s?.SetAnimClass(t),
       (this.MainMeshComponent = s),
@@ -152,41 +156,41 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
       this.eBr();
   }
   tBr(i, s, e) {
-    if (this.Qwr?.ModelActorType !== 0)
+    if (0 !== this.Qwr?.ModelActorType)
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Character", 44, "actor类型必须为TsUiSceneRoleActor");
     else {
       this.CharRenderingComponent.ResetAllRenderingState(), this.oBr();
-      const o = this.MainMeshComponent;
+      var o = this.MainMeshComponent;
       let t = void 0;
       o &&
         (t = this.GetAnimInstanceFromSkeletalMesh(o)) &&
         UE.KuroAnimLibrary.EndAnimNotifyStates(t);
-      const n = this.Zwr();
-      var i =
-        (n?.SetSkeletalMesh(i),
-        n?.SetAnimClass(s),
-        this.GetAnimInstanceFromSkeletalMesh(n));
+      var n = this.Zwr(),
+        i =
+          (n?.SetSkeletalMesh(i),
+          n?.SetAnimClass(s),
+          this.GetAnimInstanceFromSkeletalMesh(n));
       if (t) {
         let e = !1;
         s = t.StateInternal;
-        (e = s && ((s >= 13 && s <= 15) || s === 7) ? !0 : e) &&
+        (e = s && ((13 <= s && s <= 15) || 7 === s) ? !0 : e) &&
           i &&
           i.SyncAnimInstance(t);
       }
-      if (((this.MainMeshComponent = n), o && this.rBr(o), e && e.length > 0))
+      if (((this.MainMeshComponent = n), o && this.rBr(o), e && 0 < e.length))
         for (const r of e) this.nBr(r);
       this.eBr();
     }
   }
   nBr(e) {
     this.ChildMeshComponentList || (this.ChildMeshComponentList = []);
-    const t = this.Zwr();
-    var e =
-      (t.SetSkeletalMesh(e),
-      t.SetMasterPoseComponent(this.MainMeshComponent),
-      this.ChildMeshComponentList.push(t),
-      this.ChildMeshComponentList.length - 1);
+    var t = this.Zwr(),
+      e =
+        (t.SetSkeletalMesh(e),
+        t.SetMasterPoseComponent(this.MainMeshComponent),
+        this.ChildMeshComponentList.push(t),
+        this.ChildMeshComponentList.length - 1);
     return this.CharRenderingComponent.AddComponent("OtherCase" + e, t), t;
   }
   oBr() {
@@ -197,7 +201,7 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
     e.K2_DestroyComponent(this.Actor);
   }
   SetTransformByTag(e) {
-    const t = UE.KuroCollectActorComponent.GetActorWithTag(
+    var t = UE.KuroCollectActorComponent.GetActorWithTag(
       FNameUtil_1.FNameUtil.GetDynamicFName(e),
       1,
     );
@@ -210,7 +214,7 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
         ]);
   }
   GetAnimInstanceFromSkeletalMesh(e) {
-    let t = e.GetAnimInstance();
+    var t = e.GetAnimInstance();
     if (t) {
       t = t.GetLinkedAnimGraphInstanceByTag(
         CharacterNameDefines_1.CharacterNameDefines.ABP_BASE,
@@ -280,4 +284,4 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
   UiModelActorComponent,
 )),
   (exports.UiModelActorComponent = UiModelActorComponent);
-// # sourceMappingURL=UiModelActorComponent.js.map
+//# sourceMappingURL=UiModelActorComponent.js.map

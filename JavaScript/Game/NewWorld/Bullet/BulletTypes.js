@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.KuroHitResultCache = exports.HitInformation = void 0);
-const UE = require("ue");
-const Stats_1 = require("../../../Core/Common/Stats");
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const CharacterController_1 = require("../Character/CharacterController");
-const BulletDataMain_1 = require("./BulletConf/BulletDataMain");
+const UE = require("ue"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  CharacterController_1 = require("../Character/CharacterController"),
+  BulletDataMain_1 = require("./BulletConf/BulletDataMain");
 class HitInformation {
   constructor(t, r, i, e, s, h, o, a, n, l, u, c, C = -1, _ = -1) {
     (this.HitPosition = Vector_1.Vector.Create()),
@@ -87,13 +87,13 @@ class KuroHitResultCache {
       (this.ImpactPointZ = new Array());
   }
   Append(t) {
-    const r = t.GetHitCount();
-    const i = ((this.HitCount += r), t.Actors);
-    const e = t.BoneNameArray;
-    const s = t.Components;
-    const h = t.ImpactPointX_Array;
-    const o = t.ImpactPointY_Array;
-    const a = t.ImpactPointZ_Array;
+    var r = t.GetHitCount(),
+      i = ((this.HitCount += r), t.Actors),
+      e = t.BoneNameArray,
+      s = t.Components,
+      h = t.ImpactPointX_Array,
+      o = t.ImpactPointY_Array,
+      a = t.ImpactPointZ_Array;
     for (let t = 0; t < r; t++)
       this.Actors.push(i.Get(t)),
         this.BoneNameArray.push(
@@ -106,4 +106,4 @@ class KuroHitResultCache {
   }
 }
 (exports.KuroHitResultCache = KuroHitResultCache).y7o = void 0;
-// # sourceMappingURL=BulletTypes.js.map
+//# sourceMappingURL=BulletTypes.js.map

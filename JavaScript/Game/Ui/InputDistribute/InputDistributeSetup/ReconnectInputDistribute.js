@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ReconnectInputDistribute = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiManager_1 = require("../../UiManager");
-const InputDistributeDefine_1 = require("../InputDistributeDefine");
-const InputDistributeSetup_1 = require("./InputDistributeSetup");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../UiManager"),
+  InputDistributeDefine_1 = require("../InputDistributeDefine"),
+  InputDistributeSetup_1 = require("./InputDistributeSetup");
 class ReconnectInputDistribute extends InputDistributeSetup_1.InputDistributeSetup {
   OnRefresh() {
     return (
@@ -42,9 +42,9 @@ class ReconnectInputDistribute extends InputDistributeSetup_1.InputDistributeSet
   }
   bmr() {
     return (
-      ModelManager_1.ModelManager.ReConnectModel.GetReConnectStatus() === 1
+      1 === ModelManager_1.ModelManager.ReConnectModel.GetReConnectStatus()
     );
   }
 }
 exports.ReconnectInputDistribute = ReconnectInputDistribute;
-// # sourceMappingURL=ReconnectInputDistribute.js.map
+//# sourceMappingURL=ReconnectInputDistribute.js.map

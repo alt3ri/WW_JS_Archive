@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiNavigationGlobalData = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class UiNavigationGlobalData {
   static AddBlockListenerFocusTag(a) {
     Log_1.Log.CheckInfo() &&
@@ -22,7 +22,7 @@ class UiNavigationGlobalData {
   }
   static get IsBlockNavigation() {
     return (
-      this.Dwo.size > 0 ||
+      0 < this.Dwo.size ||
       ControllerHolder_1.ControllerHolder.BlackScreenController.IsBlackScreenActive()
     );
   }
@@ -36,4 +36,4 @@ class UiNavigationGlobalData {
   (UiNavigationGlobalData.IsAllowCrossNavigationGroup = !1),
   (UiNavigationGlobalData.VisionReplaceViewFindDefault = !0),
   (UiNavigationGlobalData.Dwo = new Set());
-// # sourceMappingURL=UiNavigationGlobalData.js.map
+//# sourceMappingURL=UiNavigationGlobalData.js.map

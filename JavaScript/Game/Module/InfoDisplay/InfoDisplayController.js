@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InfoDisplayController = exports.INFO_DISPLAY_ITEM_TYPE = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiManager_1 = require("../../Ui/UiManager");
+const Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiManager_1 = require("../../Ui/UiManager");
 exports.INFO_DISPLAY_ITEM_TYPE = 12;
 class InfoDisplayController extends ControllerBase_1.ControllerBase {
   static OpenInfoDisplay(e, o) {
@@ -23,11 +23,11 @@ class InfoDisplayController extends ControllerBase_1.ControllerBase {
       UiManager_1.UiManager.IsViewOpen("InfoDisplayTypeFourView")
     )
       return !1;
-    let r = CommonParamById_1.configCommonParamById.GetIntConfig(
+    var r = CommonParamById_1.configCommonParamById.GetIntConfig(
       "infodisplay_use_item_cd",
     );
     if (
-      InfoDisplayController.nHt !== 0 &&
+      0 !== InfoDisplayController.nHt &&
       Time_1.Time.Now - InfoDisplayController.nHt <= 1e3 * r
     )
       return (
@@ -42,17 +42,17 @@ class InfoDisplayController extends ControllerBase_1.ControllerBase {
         e,
       );
     return (
-      r === 1
+      1 === r
         ? UiManager_1.UiManager.OpenView("InfoDisplayTypeOneView", void 0, o)
-        : r === 2
+        : 2 === r
           ? UiManager_1.UiManager.OpenView("InfoDisplayTypeTwoView", void 0, o)
-          : r === 3
+          : 3 === r
             ? UiManager_1.UiManager.OpenView(
                 "InfoDisplayTypeThreeView",
                 void 0,
                 o,
               )
-            : r === 4 &&
+            : 4 === r &&
               UiManager_1.UiManager.OpenView(
                 "InfoDisplayTypeFourView",
                 void 0,
@@ -84,7 +84,7 @@ class InfoDisplayController extends ControllerBase_1.ControllerBase {
     );
   }
   static RequestReadDisplayInfo(e) {
-    const o = new Protocol_1.Aki.Protocol.Ues();
+    var o = new Protocol_1.Aki.Protocol.Ues();
     (o.q5n = e),
       Net_1.Net.Call(14219, o, (e) => {
         Log_1.Log.CheckDebug() &&
@@ -100,9 +100,9 @@ class InfoDisplayController extends ControllerBase_1.ControllerBase {
 ((exports.InfoDisplayController = InfoDisplayController).nHt = 0),
   (InfoDisplayController.OnItemUse = (e, o) => {
     var e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(e);
-    e.Parameters.size > 0 &&
+    0 < e.Parameters.size &&
       void 0 !== (e = e.Parameters.get(exports.INFO_DISPLAY_ITEM_TYPE)) &&
-      e !== 0 &&
+      0 !== e &&
       InfoDisplayController.OpenInfoDisplay(e);
   });
-// # sourceMappingURL=InfoDisplayController.js.map
+//# sourceMappingURL=InfoDisplayController.js.map

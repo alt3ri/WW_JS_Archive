@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GachaButton = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const CommonExchangeData_1 = require("../../ItemExchange/View/CommonExchangeData");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GachaController_1 = require("../GachaController");
-const GachaDefine_1 = require("../GachaDefine");
-const CLICKCD = 1e3;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  CommonExchangeData_1 = require("../../ItemExchange/View/CommonExchangeData"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GachaController_1 = require("../GachaController"),
+  GachaDefine_1 = require("../GachaDefine"),
+  CLICKCD = 1e3;
 class GachaButton extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -24,17 +24,17 @@ class GachaButton extends UiPanelBase_1.UiPanelBase {
       (this.rHt = 0),
       (this.nHt = 0),
       (this.sHt = () => {
-        let e = this.oHt.GachaInfo;
+        var e = this.oHt.GachaInfo;
         if (e)
-          if (e.UsePoolId === 0)
+          if (0 === e.UsePoolId)
             ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "GachaNoOption",
             );
           else {
-            if (this.nHt !== 0)
+            if (0 !== this.nHt)
               if (Time_1.Time.Now - this.nHt <= CLICKCD) return;
             this.nHt = Time_1.Time.Now;
-            const r = ModelManager_1.ModelManager.GachaModel.CheckCountIsEnough(
+            var r = ModelManager_1.ModelManager.GachaModel.CheckCountIsEnough(
               e,
               this.Times,
             );
@@ -43,7 +43,7 @@ class GachaButton extends UiPanelBase_1.UiPanelBase {
                 ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
                   e.ItemId,
                 );
-              if (e.Id === 5 && i === 0)
+              if (5 === e.Id && 0 === i)
                 ((o = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
                   195,
                 )).IsEscViewTriggerCallBack = !1),
@@ -129,7 +129,7 @@ class GachaButton extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.sHt]]);
   }
   aHt(o, n, e) {
-    const r = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
+    var r = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
       o.GetSrcItemId(),
     );
     if (e <= r)
@@ -138,10 +138,9 @@ class GachaButton extends UiPanelBase_1.UiPanelBase {
         n,
         !1,
         (e, r) => {
-          const i =
-            ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
-              o.GetDestItemId(),
-            );
+          var i = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
+            o.GetDestItemId(),
+          );
           n <= i &&
             GachaController_1.GachaController.GachaRequest(
               this.oHt.GachaInfo.Id,
@@ -203,7 +202,7 @@ class GachaButton extends UiPanelBase_1.UiPanelBase {
         this.Times.toString(),
       ),
       (r = e.PoolInfo.Id),
-      (e = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewType(r)) === 1
+      1 === (e = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewType(r))
         ? ((r =
             ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewTypeConfig(
               e,
@@ -216,4 +215,4 @@ class GachaButton extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.GachaButton = GachaButton;
-// # sourceMappingURL=GachaButton.js.map
+//# sourceMappingURL=GachaButton.js.map

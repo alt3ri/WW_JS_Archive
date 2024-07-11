@@ -7,15 +7,15 @@ class HandBookCommonItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGr
     super(...arguments), (this.HandBookCommonItemData = void 0);
   }
   OnRefresh(e, t, o) {
-    var s = (this.HandBookCommonItemData = e).IsLock;
-    var s = {
-      Type: 4,
-      Data: e,
-      IsNotFoundVisible: s,
-      IsNewVisible: e.IsNew,
-      IconPath: s ? void 0 : e.Icon,
-      QualityId: s ? 0 : e.QualityId,
-    };
+    var s = (this.HandBookCommonItemData = e).IsLock,
+      s = {
+        Type: 4,
+        Data: e,
+        IsNotFoundVisible: s,
+        IsNewVisible: e.IsNew,
+        IconPath: s ? void 0 : e.Icon,
+        QualityId: s ? 0 : e.QualityId,
+      };
     this.Apply(s);
   }
   GetData() {
@@ -32,4 +32,4 @@ class HandBookCommonItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGr
   }
 }
 exports.HandBookCommonItem = HandBookCommonItem;
-// # sourceMappingURL=HandBookCommonItem.js.map
+//# sourceMappingURL=HandBookCommonItem.js.map

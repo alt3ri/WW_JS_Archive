@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemRewardModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const RewardData_1 = require("./RewardData/RewardData");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  RewardData_1 = require("./RewardData/RewardData");
 class ItemRewardModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments), (this.qgi = void 0), (this.CurrentReasonId = void 0);
@@ -159,7 +159,7 @@ class ItemRewardModel extends ModelBase_1.ModelBase {
         ));
   }
   NewRewardData() {
-    let e;
+    var e;
     return this.qgi || ((e = new RewardData_1.RewardData()), (this.qgi = e));
   }
   ClearCurrentRewardData() {
@@ -170,4 +170,4 @@ class ItemRewardModel extends ModelBase_1.ModelBase {
   }
 }
 exports.ItemRewardModel = ItemRewardModel;
-// # sourceMappingURL=ItemRewardModel.js.map
+//# sourceMappingURL=ItemRewardModel.js.map

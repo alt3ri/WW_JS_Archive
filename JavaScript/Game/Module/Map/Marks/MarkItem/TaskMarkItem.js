@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TaskMarkItem = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const BattleUiDefine_1 = require("../../../BattleUi/BattleUiDefine");
-const LogReportController_1 = require("../../../LogReport/LogReportController");
-const LogReportDefine_1 = require("../../../LogReport/LogReportDefine");
-const TaskMarkItemView_1 = require("../MarkItemView/TaskMarkItemView");
-const ServerMarkItem_1 = require("./ServerMarkItem");
-const ONE_HUNDRED = 100;
+const Log_1 = require("../../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  BattleUiDefine_1 = require("../../../BattleUi/BattleUiDefine"),
+  LogReportController_1 = require("../../../LogReport/LogReportController"),
+  LogReportDefine_1 = require("../../../LogReport/LogReportDefine"),
+  TaskMarkItemView_1 = require("../MarkItemView/TaskMarkItemView"),
+  ServerMarkItem_1 = require("./ServerMarkItem"),
+  ONE_HUNDRED = 100;
 class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
   constructor(t, e, i, r) {
     super(t, e, i, r),
@@ -42,7 +42,7 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
     return this.sDi;
   }
   set CanShowInDistance(t) {
-    this.sDi !== t && (this.sDi = t) && this.MapType === 1 && (this.aDi = !1);
+    this.sDi !== t && (this.sDi = t) && 1 === this.MapType && (this.aDi = !1);
   }
   Initialize() {
     super.Initialize();
@@ -66,18 +66,18 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
         return;
       (this.BtType = this.Tree.BtType),
         (this.TreeConfigId = this.Tree.TreeConfigId);
-      var e = this.Tree.GetNode(this.NodeId);
-      var e =
-        (e.TrackTarget &&
-          e.TrackTarget.ZaxisViewRange &&
-          ((this.RangeMarkShowDisUp =
-            e.TrackTarget.ZaxisViewRange.Up / ONE_HUNDRED),
-          (this.RangeMarkShowDisDown =
-            -e.TrackTarget.ZaxisViewRange.Down / ONE_HUNDRED)),
-        this.Tree.GetRangeMarkSize(this.NodeId));
-      var e =
-        (e && (this.MarkRange = e / ONE_HUNDRED),
-        this.Tree.GetRangeMarkShowDis(this.NodeId));
+      var e = this.Tree.GetNode(this.NodeId),
+        e =
+          (e.TrackTarget &&
+            e.TrackTarget.ZaxisViewRange &&
+            ((this.RangeMarkShowDisUp =
+              e.TrackTarget.ZaxisViewRange.Up / ONE_HUNDRED),
+            (this.RangeMarkShowDisDown =
+              -e.TrackTarget.ZaxisViewRange.Down / ONE_HUNDRED)),
+          this.Tree.GetRangeMarkSize(this.NodeId)),
+        e =
+          (e && (this.MarkRange = e / ONE_HUNDRED),
+          this.Tree.GetRangeMarkShowDis(this.NodeId));
       e
         ? ((this.RangeMarkShowDis = e / ONE_HUNDRED),
           (this.iDi = Math.pow(e, 2)))
@@ -89,30 +89,31 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
       (this.BtType = Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest),
         (this.TreeConfigId = t.TreeId);
     var e = ConfigManager_1.ConfigManager.MapConfig.GetTaskMarkConfig(
-      this.ConfigId,
-    );
-    var t =
-      (e &&
-        ((t =
-          ModelManager_1.ModelManager.QuestNewModel?.GetQuestState(
-            this.TreeConfigId,
-          ) === 2
-            ? e.MarkPic
-            : e.MarkAcceptablePic),
-        this.OnAfterSetConfigId({
-          ShowRange: e.ShowRange,
-          MarkPic: t,
-          ShowPriority: e.ShowPriority,
-          Scale: e.Scale,
-        })),
-      ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity);
+        this.ConfigId,
+      ),
+      t =
+        (e &&
+          ((t =
+            2 ===
+            ModelManager_1.ModelManager.QuestNewModel?.GetQuestState(
+              this.TreeConfigId,
+            )
+              ? e.MarkPic
+              : e.MarkAcceptablePic),
+          this.OnAfterSetConfigId({
+            ShowRange: e.ShowRange,
+            MarkPic: t,
+            ShowPriority: e.ShowPriority,
+            Scale: e.Scale,
+          })),
+        ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity);
     t &&
       (e = t.Entity.GetComponent(3)) &&
       ((t = e.ActorLocationProxy), this.UpdateItemIsInDistance(t)),
       this.UpdateTrackState();
   }
   OnDestroy() {
-    this.MapType === 1 &&
+    1 === this.MapType &&
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnEnterDailyQuestNotifyRange,
         this.TreeConfigId,
@@ -133,16 +134,16 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
       )?.Name;
   }
   GetAreaText() {
-    if (typeof this.TrackTarget === "number") {
+    if ("number" == typeof this.TrackTarget) {
       var t =
         ConfigManager_1.ConfigManager.MapConfig.GetEntityConfigByMapIdAndEntityId(
           this.MapId,
           this.TrackTarget,
         )?.AreaId;
       if (t) {
-        let e;
-        let i = ConfigManager_1.ConfigManager.AreaConfig.GetParentAreaId(t);
-        var t = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(t);
+        var e,
+          i = ConfigManager_1.ConfigManager.AreaConfig.GetParentAreaId(t),
+          t = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(t);
         if (void 0 !== t)
           return (
             (i = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(i)),
@@ -166,11 +167,11 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
       (this.nDi = Vector_1.Vector.DistSquared2D(t, this.WorldPosition));
   }
   _Di(t) {
-    let e, i;
+    var e, i;
     this.BtType === Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest &&
       ((e = this.TreeConfigId),
       (i = ModelManager_1.ModelManager.QuestNewModel.GetQuest(e))) &&
-      i.Type === 4 &&
+      4 === i.Type &&
       (this.lDi(t),
       !this.oDi &&
         this.nDi &&
@@ -194,8 +195,8 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
       ));
   }
   UpdateItemIsInDistance(t) {
-    if (this.NodeId === 0) {
-      const e = this.MapType === 1 ? BattleUiDefine_1.CLAMP_RANGE : this.rDi;
+    if (0 === this.NodeId) {
+      var e = 1 === this.MapType ? BattleUiDefine_1.CLAMP_RANGE : this.rDi;
       if (!e) return;
       this.lDi(t),
         (this.CanShowInDistance = !!this.nDi && this.nDi < e * e * 1e4);
@@ -204,9 +205,9 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
   }
   CheckCanShowView() {
     return this.BtType !== Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest
-      ? this.MapType === 1
+      ? 1 === this.MapType
       : !(
-          (typeof this.TrackTarget === "number" &&
+          ("number" == typeof this.TrackTarget &&
             !ModelManager_1.ModelManager.CreatureModel.CheckEntityVisible(
               this.TrackTarget,
             )) ||
@@ -214,10 +215,10 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
         );
   }
   hDi(t) {
-    let e, i;
-    this.MapType === 1 &&
+    var e, i;
+    1 === this.MapType &&
       this.BtType === Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest &&
-      this.NodeId === 0 &&
+      0 === this.NodeId &&
       this.IsCanShowView &&
       !this.aDi &&
       ((e = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
@@ -243,4 +244,4 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
   }
 }
 exports.TaskMarkItem = TaskMarkItem;
-// # sourceMappingURL=TaskMarkItem.js.map
+//# sourceMappingURL=TaskMarkItem.js.map

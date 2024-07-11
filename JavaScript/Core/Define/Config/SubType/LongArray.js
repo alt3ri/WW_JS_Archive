@@ -24,15 +24,15 @@ class LongArray {
     return this.arraylong(t);
   }
   arraylong(t) {
-    const r = this.J7.__offset(this.z7, 4);
+    var r = this.J7.__offset(this.z7, 4);
     return r
       ? this.J7.readInt64(this.J7.__vector(this.z7 + r) + 8 * t)
       : BigInt(0);
   }
   arraylongLength() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.LongArray = LongArray;
-// # sourceMappingURL=LongArray.js.map
+//# sourceMappingURL=LongArray.js.map

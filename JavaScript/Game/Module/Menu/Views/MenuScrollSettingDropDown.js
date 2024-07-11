@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MenuScrollSettingDropDown = void 0);
-const UE = require("ue");
-const CommonDropDown_1 = require("../../Common/DropDown/CommonDropDown");
-const OneTextDropDownItem_1 = require("../../Common/DropDown/Item/OneText/OneTextDropDownItem");
-const OneTextTitleItem_1 = require("../../Common/DropDown/Item/OneText/OneTextTitleItem");
-const DropDownLogicCreator_1 = require("../DropDownLogic.ts/DropDownLogicCreator");
-const MenuScrollSettingBaseItem_1 = require("./MenuScrollSettingBaseItem");
+const UE = require("ue"),
+  CommonDropDown_1 = require("../../Common/DropDown/CommonDropDown"),
+  OneTextDropDownItem_1 = require("../../Common/DropDown/Item/OneText/OneTextDropDownItem"),
+  OneTextTitleItem_1 = require("../../Common/DropDown/Item/OneText/OneTextTitleItem"),
+  DropDownLogicCreator_1 = require("../DropDownLogic.ts/DropDownLogicCreator"),
+  MenuScrollSettingBaseItem_1 = require("./MenuScrollSettingBaseItem");
 class MenuScrollSettingDropDown extends MenuScrollSettingBaseItem_1.MenuScrollSettingBaseItem {
   constructor() {
     super(...arguments),
@@ -43,19 +43,19 @@ class MenuScrollSettingDropDown extends MenuScrollSettingBaseItem_1.MenuScrollSe
     this.lBi = DropDownLogicCreator_1.DropDownLogicCreator.GetDropDownLogic(
       this.Pe.MenuDataFunctionId,
     );
-    const e = this.lBi.GetDropDownDataList();
-    const t = this.lBi.GetDefaultIndex(this.Pe);
+    var e = this.lBi.GetDropDownDataList(),
+      t = this.lBi.GetDefaultIndex(this.Pe);
     this.hBi.InitScroll(e, this.i6e, t);
   }
   Update(e) {
     (this.Pe = e), this.mGe(), this._Bi();
   }
   async ClearAsync() {
-    const e = [];
+    var e = [];
     for (const t of this.hBi.GetDropDownItemList()) e.push(t.DestroyAsync());
     await Promise.all(e);
   }
   SetInteractionActive(e) {}
 }
 exports.MenuScrollSettingDropDown = MenuScrollSettingDropDown;
-// # sourceMappingURL=MenuScrollSettingDropDown.js.map
+//# sourceMappingURL=MenuScrollSettingDropDown.js.map

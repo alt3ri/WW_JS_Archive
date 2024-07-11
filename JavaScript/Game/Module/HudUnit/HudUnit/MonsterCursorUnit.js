@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MonsterCursorUnit = void 0);
-const UE = require("ue");
-const HudUnitBase_1 = require("../HudUnitBase");
-const RAD_2_DEG = 180 / Math.PI;
-const CURSOR_NUM = 3;
+const UE = require("ue"),
+  HudUnitBase_1 = require("../HudUnitBase"),
+  RAD_2_DEG = 180 / Math.PI,
+  CURSOR_NUM = 3;
 class MonsterCursorUnit extends HudUnitBase_1.HudUnitBase {
   constructor() {
     super(...arguments),
@@ -82,4 +82,4 @@ class MonsterCursorUnit extends HudUnitBase_1.HudUnitBase {
   }
 }
 exports.MonsterCursorUnit = MonsterCursorUnit;
-// # sourceMappingURL=MonsterCursorUnit.js.map
+//# sourceMappingURL=MonsterCursorUnit.js.map

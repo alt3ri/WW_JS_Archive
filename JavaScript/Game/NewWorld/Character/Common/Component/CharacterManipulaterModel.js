@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ManipulaterModel = void 0);
-const ModelBase_1 = require("../../../../../Core/Framework/ModelBase");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
+const ModelBase_1 = require("../../../../../Core/Framework/ModelBase"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem");
 class ManipulaterModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -27,11 +27,11 @@ class ManipulaterModel extends ModelBase_1.ModelBase {
     return this.b$o;
   }
   NeedShowLandTips() {
-    return this.q$o > 0;
+    return 0 < this.q$o;
   }
   AddShowLandTipsCount(e) {
     this.G$o.has(e) ||
-      (this.q$o === 0 &&
+      (0 === this.q$o &&
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnManipulateShowLandTips,
           !0,
@@ -41,8 +41,8 @@ class ManipulaterModel extends ModelBase_1.ModelBase {
   }
   RemoveShowLandTipsCount(e) {
     this.G$o.has(e) &&
-      this.q$o !== 0 &&
-      (this.G$o.delete(e), this.q$o--, this.q$o === 0) &&
+      0 !== this.q$o &&
+      (this.G$o.delete(e), this.q$o--, 0 === this.q$o) &&
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnManipulateShowLandTips,
         !1,
@@ -50,4 +50,4 @@ class ManipulaterModel extends ModelBase_1.ModelBase {
   }
 }
 exports.ManipulaterModel = ManipulaterModel;
-// # sourceMappingURL=CharacterManipulaterModel.js.map
+//# sourceMappingURL=CharacterManipulaterModel.js.map

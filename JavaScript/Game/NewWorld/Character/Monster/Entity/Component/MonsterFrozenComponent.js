@@ -1,25 +1,29 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, o, n) {
-    let r;
-    const s = arguments.length;
-    let i =
-      s < 3 ? t : n === null ? (n = Object.getOwnPropertyDescriptor(t, o)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      s = arguments.length,
+      i =
+        s < 3
+          ? t
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(t, o))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       i = Reflect.decorate(e, t, o, n);
     else
-      for (let C = e.length - 1; C >= 0; C--)
-        (r = e[C]) && (i = (s < 3 ? r(i) : s > 3 ? r(t, o, i) : r(t, o)) || i);
-    return s > 3 && i && Object.defineProperty(t, o, i), i;
+      for (var C = e.length - 1; 0 <= C; C--)
+        (r = e[C]) && (i = (s < 3 ? r(i) : 3 < s ? r(t, o, i) : r(t, o)) || i);
+    return 3 < s && i && Object.defineProperty(t, o, i), i;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MonsterFrozenComponent = void 0);
-const GameplayCueById_1 = require("../../../../../../Core/Define/ConfigQuery/GameplayCueById");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const BaseFrozenComponent_1 = require("../../../Common/Component/Abilities/BaseFrozenComponent");
-const frozenCueId = 1003n;
-const cancelFrozenCueId = 100302n;
+const GameplayCueById_1 = require("../../../../../../Core/Define/ConfigQuery/GameplayCueById"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  BaseFrozenComponent_1 = require("../../../Common/Component/Abilities/BaseFrozenComponent"),
+  frozenCueId = 1003n,
+  cancelFrozenCueId = 100302n;
 let MonsterFrozenComponent = class MonsterFrozenComponent extends BaseFrozenComponent_1.BaseFrozenComponent {
   constructor() {
     super(...arguments),
@@ -31,7 +35,7 @@ let MonsterFrozenComponent = class MonsterFrozenComponent extends BaseFrozenComp
     return this.IsFrozenInternal;
   }
   SetFrozen(e) {
-    let t, o, n;
+    var t, o, n;
     this.IsFrozenInternal !== e &&
       ((this.IsFrozenInternal = e),
       (t = this.Entity.GetComponent(107)),
@@ -69,4 +73,4 @@ let MonsterFrozenComponent = class MonsterFrozenComponent extends BaseFrozenComp
   MonsterFrozenComponent,
 )),
   (exports.MonsterFrozenComponent = MonsterFrozenComponent);
-// # sourceMappingURL=MonsterFrozenComponent.js.map
+//# sourceMappingURL=MonsterFrozenComponent.js.map

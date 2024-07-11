@@ -1,33 +1,38 @@
 "use strict";
-let SceneItemPhysicalAttachComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, s) {
-    let h;
-    const o = arguments.length;
-    let n =
-      o < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      n = Reflect.decorate(t, e, i, s);
-    else
-      for (let r = t.length - 1; r >= 0; r--)
-        (h = t[r]) && (n = (o < 3 ? h(n) : o > 3 ? h(e, i, n) : h(e, i)) || n);
-    return o > 3 && n && Object.defineProperty(e, i, n), n;
-  };
+var SceneItemPhysicalAttachComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, s) {
+      var h,
+        o = arguments.length,
+        n =
+          o < 3
+            ? e
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        n = Reflect.decorate(t, e, i, s);
+      else
+        for (var r = t.length - 1; 0 <= r; r--)
+          (h = t[r]) &&
+            (n = (o < 3 ? h(n) : 3 < o ? h(e, i, n) : h(e, i)) || n);
+      return 3 < o && n && Object.defineProperty(e, i, n), n;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemPhysicalAttachComponent = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const EffectContext_1 = require("../../../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../../../Effect/EffectSystem");
-const GlobalData_1 = require("../../../../GlobalData");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  EffectContext_1 = require("../../../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../../../Effect/EffectSystem"),
+  GlobalData_1 = require("../../../../GlobalData");
 let SceneItemPhysicalAttachComponent =
   (SceneItemPhysicalAttachComponent_1 = class SceneItemPhysicalAttachComponent extends (
     EntityComponent_1.EntityComponent
@@ -96,14 +101,14 @@ let SceneItemPhysicalAttachComponent =
       return this.L1n(), this.dEe(), !0;
     }
     OnTick(t) {
-      let e = UE.NewArray(UE.Vector);
+      var e = UE.NewArray(UE.Vector);
       e.Add(this.p1n.K2_GetActorLocation()),
         e.Add(this.Hte.ActorLocation),
         this.zie?.SetSplinePoints(e, 1, !0),
         !this.f1n?.IsValid() ||
-          this.d1n.GetPhysicsLinearVelocity().Size() > 10 ||
+          10 < this.d1n.GetPhysicsLinearVelocity().Size() ||
           ((e = this.Hte.ActorLocationProxy),
-          Vector_1.Vector.Dist(this.v1n, e) > 10) ||
+          10 < Vector_1.Vector.Dist(this.v1n, e)) ||
           ((this.Hte.PhysicsMode = 0),
           this.f1n.K2_DestroyActor(),
           (this.f1n = void 0));
@@ -133,10 +138,10 @@ let SceneItemPhysicalAttachComponent =
         );
     }
     I1n() {
-      let t;
-      const e = new UE.Transform();
+      var t,
+        e = new UE.Transform();
       e.SetTranslation(this.Hte.ActorLocation),
-        this.Lo.AttachTarget.Type === "RelativePoint" &&
+        "RelativePoint" === this.Lo.AttachTarget.Type &&
           ((t = new UE.Vector(
             this.Lo.AttachTarget.RelativePoint.X ?? 0,
             this.Lo.AttachTarget.RelativePoint.Y ?? 0,
@@ -208,7 +213,7 @@ let SceneItemPhysicalAttachComponent =
         );
     }
     T1n() {
-      let t;
+      var t;
       (this.Krr = ActorSystem_1.ActorSystem.Get(
         UE.BP_BasePathLine_C.StaticClass(),
         MathUtils_1.MathUtils.DefaultTransform,
@@ -254,4 +259,4 @@ let SceneItemPhysicalAttachComponent =
     SceneItemPhysicalAttachComponent,
   )),
   (exports.SceneItemPhysicalAttachComponent = SceneItemPhysicalAttachComponent);
-// # sourceMappingURL=SceneItemPhysicalAttachComponent.js.map
+//# sourceMappingURL=SceneItemPhysicalAttachComponent.js.map

@@ -1,32 +1,37 @@
 "use strict";
-let SceneItemTurntableControllerComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, s) {
-    let n;
-    const h = arguments.length;
-    let r =
-      h < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(t, e, i, s);
-    else
-      for (let o = t.length - 1; o >= 0; o--)
-        (n = t[o]) && (r = (h < 3 ? n(r) : h > 3 ? n(e, i, r) : n(e, i)) || r);
-    return h > 3 && r && Object.defineProperty(e, i, r), r;
-  };
+var SceneItemTurntableControllerComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, s) {
+      var n,
+        h = arguments.length,
+        r =
+          h < 3
+            ? e
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        r = Reflect.decorate(t, e, i, s);
+      else
+        for (var o = t.length - 1; 0 <= o; o--)
+          (n = t[o]) &&
+            (r = (h < 3 ? n(r) : 3 < h ? n(e, i, r) : n(e, i)) || r);
+      return 3 < h && r && Object.defineProperty(e, i, r), r;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemTurntableControllerComponent = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const Net_1 = require("../../../../../Core/Net/Net");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem");
 class RotatingRing {
   constructor() {
     (this.Index = 0),
@@ -63,10 +68,10 @@ let SceneItemTurntableControllerComponent =
               this.j_n();
         }),
         (this.B1n = (t, e) => {
-          if (this.F_n && t === 1298716444) {
+          if (this.F_n && 1298716444 === t) {
             this.SetAllowRotate(!1);
             for (const s of this.k_n) {
-              const i = this.O_n.ItemConfig[s.Index];
+              var i = this.O_n.ItemConfig[s.Index];
               s?.IsAtTarget ||
                 (this.W_n(s, i.TargetAngle),
                 this.UpdateRingAtTarget(s.Index, !1));
@@ -83,11 +88,11 @@ let SceneItemTurntableControllerComponent =
         });
     }
     OnInitData(t) {
-      var t = t.GetParam(SceneItemTurntableControllerComponent_1)[0];
-      const e = this.Entity?.GetComponent(0);
+      var t = t.GetParam(SceneItemTurntableControllerComponent_1)[0],
+        e = this.Entity?.GetComponent(0);
       if (!e) return !1;
       if (t) {
-        const i = t.Config.ItemConfig?.length;
+        var i = t.Config.ItemConfig?.length;
         if (void 0 === i || i <= 0)
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -98,7 +103,7 @@ let SceneItemTurntableControllerComponent =
         else {
           (this.zht = e), (this.O_n = t.Config), (this.k_n = []);
           for (let t = 0; t < i; t++) {
-            const s = new RotatingRing();
+            var s = new RotatingRing();
             (s.Index = t),
               (s.IsAtTarget = !1),
               (s.IsSelected = !1),
@@ -173,7 +178,7 @@ let SceneItemTurntableControllerComponent =
       );
     }
     V_n() {
-      const t = this.Entity?.GetComponent(182);
+      var t = this.Entity?.GetComponent(182);
       if (!t)
         return (
           Log_1.Log.CheckError() &&
@@ -185,8 +190,8 @@ let SceneItemTurntableControllerComponent =
           !1
         );
       for (const s of this.k_n) {
-        const e = "Ring" + s.Index;
-        const i = t.GetActorInSceneInteraction(e);
+        var e = "Ring" + s.Index,
+          i = t.GetActorInSceneInteraction(e);
         if (!i?.IsValid())
           return (
             Log_1.Log.CheckError() &&
@@ -203,9 +208,9 @@ let SceneItemTurntableControllerComponent =
       return !0;
     }
     H_n() {
-      const t = this.Xte?.HasTag(1298716444) ?? !1;
+      var t = this.Xte?.HasTag(1298716444) ?? !1;
       for (const i of this.k_n) {
-        const e = this.O_n.ItemConfig[i.Index];
+        var e = this.O_n.ItemConfig[i.Index];
         t ? this.W_n(i, e.TargetAngle) : this.W_n(i, e.InitAngle);
       }
     }
@@ -276,9 +281,9 @@ let SceneItemTurntableControllerComponent =
         this.GetRotateAllowed() &&
         this.O_n.Type === IComponent_1.EControllerType.FixedAngle &&
         (this.k_n.forEach((t) => {
-          let e;
+          var e;
           t.IsSelected &&
-            ((e = this.O_n.RotationSpeed > 0), this.J_n(t.Index, e));
+            ((e = 0 < this.O_n.RotationSpeed), this.J_n(t.Index, e));
         }),
         EventSystem_1.EventSystem.EmitWithTarget(
           this.Entity,
@@ -292,9 +297,9 @@ let SceneItemTurntableControllerComponent =
         this.GetRotateAllowed() &&
         this.O_n.Type === IComponent_1.EControllerType.FreeAngle &&
         (this.k_n.forEach((t) => {
-          let e;
+          var e;
           t.IsSelected &&
-            ((e = this.O_n.RotationSpeed > 0), this.J_n(t.Index, e));
+            ((e = 0 < this.O_n.RotationSpeed), this.J_n(t.Index, e));
         }),
         EventSystem_1.EventSystem.EmitWithTarget(
           this.Entity,
@@ -346,23 +351,23 @@ let SceneItemTurntableControllerComponent =
         this.IsBusyRotating() ||
         (this.IsAllRingsAtTarget() && !t) ||
         (this.k_n.forEach((t) => {
-          const e = this.O_n.ItemConfig[t.Index];
+          var e = this.O_n.ItemConfig[t.Index];
           this.W_n(t, e.InitAngle);
         }),
         this.UpdateAllRingsAtTarget(!0));
     }
     K_n(e) {
       if (this.F_n) {
-        const i = this.O_n;
+        var i = this.O_n;
         if (i)
           for (const r of this.k_n)
             if (r.IsRotating) {
               let t = r.CurSpeed * e;
-              var s;
-              const n = r.AccumulateAngle + t;
-              const h = i.ItemConfig[r.Index].RotateAngle;
+              var s,
+                n = r.AccumulateAngle + t,
+                h = i.ItemConfig[r.Index].RotateAngle;
               Math.abs(n) >= Math.abs(h)
-                ? ((s = r.CurSpeed > 0),
+                ? ((s = 0 < r.CurSpeed),
                   (t -= n - Math.abs(h) * (s ? 1 : -1)),
                   this.oun(r, t),
                   (r.AccumulateAngle += t),
@@ -401,7 +406,7 @@ let SceneItemTurntableControllerComponent =
             ((s = this.O_n.ItemConfig[n.Index]),
             (s = this.run(this.nun(n), s.TargetAngle)),
             MathUtils_1.MathUtils.IsNearlyZero(s)) ||
-            ((e = s > 0),
+            ((e = 0 < s),
             (i =
               this.O_n.RotationSpeed / CommonDefine_1.MILLIONSECOND_PER_SECOND),
             (s = Math.min(Math.abs(s), Math.abs(i * t)) * (e ? 1 : -1)),
@@ -447,10 +452,10 @@ let SceneItemTurntableControllerComponent =
       return t && this.UpdateAllRingsAtTargetEffect(), e;
     }
     UpdateRingAtTarget(t, e) {
-      let i;
-      let s;
-      let n;
-      var t = this.k_n[t];
+      var i,
+        s,
+        n,
+        t = this.k_n[t];
       return (
         !(!t || !this.F_n || !t?.RingRotator) &&
         ((n = this.nun(t)),
@@ -506,8 +511,8 @@ let SceneItemTurntableControllerComponent =
       }
     }
     UpdateRingAtTargetEffectByIndex(t) {
-      let e;
-      var t = this.k_n[t];
+      var e,
+        t = this.k_n[t];
       t &&
         this.F_n &&
         (t.IsAtTarget
@@ -530,8 +535,8 @@ let SceneItemTurntableControllerComponent =
       }
     }
     UpdateRingSelectedEffectByIndex(t) {
-      let e;
-      var t = this.k_n[t];
+      var e,
+        t = this.k_n[t];
       t &&
         this.F_n &&
         (t.IsSelected
@@ -554,7 +559,7 @@ let SceneItemTurntableControllerComponent =
       return void 0 === this.Rne;
     }
     j_n() {
-      let t;
+      var t;
       this.zht &&
         (((t = Protocol_1.Aki.Protocol.Ccs.create()).rkn =
           MathUtils_1.MathUtils.NumberToLong(this.zht.GetCreatureDataId())),
@@ -593,4 +598,4 @@ let SceneItemTurntableControllerComponent =
     )),
   (exports.SceneItemTurntableControllerComponent =
     SceneItemTurntableControllerComponent);
-// # sourceMappingURL=SceneItemTurntableControllerComponent.js.map
+//# sourceMappingURL=SceneItemTurntableControllerComponent.js.map

@@ -1,18 +1,18 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EditFormationController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const RoleController_1 = require("../RoleUi/RoleController");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  RoleController_1 = require("../RoleUi/RoleController"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
 class EditFormationController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -67,19 +67,19 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
   static GetFormationDataRequest() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Formation", 49, "请求所有编队数据");
-    const o = new Protocol_1.Aki.Protocol.jzn();
+    var o = new Protocol_1.Aki.Protocol.jzn();
     Net_1.Net.Call(13807, o, (o) => {});
   }
   static async EditFormationRequest(o) {
-    let t;
-    let r;
-    const e = new Array();
-    const n = ModelManager_1.ModelManager.EditFormationModel;
+    var t,
+      r,
+      e = new Array(),
+      n = ModelManager_1.ModelManager.EditFormationModel;
     for ([t, r] of n.GetAllEditingFormation()) {
-      const i = t === o;
+      var i = t === o;
       if (!(i && r.length <= 0)) {
         if (t === n.GetCurrentFormationId) {
-          const a = n.GetFormationData(t)?.GetRoleIdList;
+          var a = n.GetFormationData(t)?.GetRoleIdList;
           if (a && a.length === r.length) {
             let t = !0;
             for (let o = 0; o < a.length; o++)
@@ -94,10 +94,10 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
             }
           }
         }
-        let o = r.length > 0 ? r[0] : 0;
+        let o = 0 < r.length ? r[0] : 0;
         if (i) {
-          var l = n.GetCurrentFormationData;
-          const _ = l.GetCurrentRolePosition;
+          var l = n.GetCurrentFormationData,
+            _ = l.GetCurrentRolePosition;
           if (
             ((o = l.GetCurrentRoleConfigId),
             r.includes(o) || (o = _ <= r.length ? r[_ - 1] : r[0]),
@@ -113,7 +113,7 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
         (l.$4n = t), (l.X4n = i), (l.xkn = r), (l.Y4n = o), e.push(l);
       }
     }
-    const g = new Protocol_1.Aki.Protocol.kzn();
+    var g = new Protocol_1.Aki.Protocol.kzn();
     (g.J4n = e),
       ModelManager_1.ModelManager.SceneTeamModel.RefreshLastTransform(),
       Log_1.Log.CheckInfo() &&
@@ -121,26 +121,26 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
       await Net_1.Net.CallAsync(13164, g);
   }
   static async UpdateFormationRequest(o, t, r, e) {
-    const n = new Protocol_1.Aki.Protocol.Iks();
-    var o =
-      ((n.$4n = o),
-      (n.X4n = t),
-      (n.xkn = r),
-      (n.Y4n = e),
-      new Protocol_1.Aki.Protocol.kzn());
-    var t =
-      ((o.J4n = [n]),
-      ModelManager_1.ModelManager.SceneTeamModel.RefreshLastTransform(),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Formation", 49, "更新单机编队", ["formation", n]),
-      await Net_1.Net.CallAsync(13164, o));
+    var n = new Protocol_1.Aki.Protocol.Iks(),
+      o =
+        ((n.$4n = o),
+        (n.X4n = t),
+        (n.xkn = r),
+        (n.Y4n = e),
+        new Protocol_1.Aki.Protocol.kzn()),
+      t =
+        ((o.J4n = [n]),
+        ModelManager_1.ModelManager.SceneTeamModel.RefreshLastTransform(),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Formation", 49, "更新单机编队", ["formation", n]),
+        await Net_1.Net.CallAsync(13164, o));
     return void 0 !== t;
   }
   static async UpdateFightRoleRequest() {
-    const t = ModelManager_1.ModelManager.EditFormationModel;
-    const r = t.GetEditingRoleIdList(-1);
+    var t = ModelManager_1.ModelManager.EditFormationModel,
+      r = t.GetEditingRoleIdList(-1);
     if (!(r.length <= 0)) {
-      let e = t.GetCurrentFormationData.GetCurrentRolePosition;
+      var e = t.GetCurrentFormationData.GetCurrentRolePosition;
       let o = t.GetEditingRoleId(-1, e);
       if (!o || t.IsRoleDead(o))
         for (const n of r)
@@ -164,7 +164,7 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
   ((_a = EditFormationController).i4t = "EditBattleTeamForbitState"),
   (EditFormationController.o4t = void 0),
   (EditFormationController.CanOpenView = (o) => {
-    let t, r, e;
+    var t, r, e;
     return ModelManager_1.ModelManager.FunctionModel.IsOpen(10007)
       ? (t = ModelManager_1.ModelManager.SceneTeamModel).IsPhantomTeam
         ? (Log_1.Log.CheckWarn() &&
@@ -249,7 +249,7 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
                               EditFormationController.i4t,
                             ),
                             !1)
-                          : r.GetBuffTotalStackById(BigInt("90003001")) > 0
+                          : 0 < r.GetBuffTotalStackById(BigInt("90003001"))
                             ? (Log_1.Log.CheckInfo() &&
                                 Log_1.Log.Info(
                                   "Formation",
@@ -262,7 +262,7 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
                               !1)
                             : !(
                                 (e = t.Entity.GetComponent(68)) &&
-                                e.WalkOnWaterStage > 0 &&
+                                0 < e.WalkOnWaterStage &&
                                 (Log_1.Log.CheckInfo() &&
                                   Log_1.Log.Info(
                                     "Formation",
@@ -299,7 +299,7 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
     EditFormationController.GetFormationDataRequest();
   }),
   (EditFormationController.xie = () => {
-    const o =
+    var o =
       ModelManager_1.ModelManager.SceneTeamModel.GetCurrentTeamItem
         ?.GetConfigId;
     o &&
@@ -308,14 +308,14 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
       );
   }),
   (EditFormationController.$Ge = (o) => {
-    o === "EditFormationView" &&
+    "EditFormationView" === o &&
       EditFormationController.o4t &&
       ((o = EditFormationController.o4t.HLs),
       ModelManager_1.ModelManager.EditFormationModel.UpdatePlayerFormations(o),
       (EditFormationController.o4t = void 0));
   }),
   (EditFormationController.t4t = (o) => {
-    const t = o.HLs;
+    var t = o.HLs;
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Formation", 49, "更新背包编队", ["formations", t]),
       ModelManager_1.ModelManager.OnlineModel.RefreshWorldTeamRoleInfo(t),
@@ -332,4 +332,4 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
             t,
           );
   });
-// # sourceMappingURL=EditFormationController.js.map
+//# sourceMappingURL=EditFormationController.js.map

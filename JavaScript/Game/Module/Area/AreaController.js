@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AreaController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const UnopenedAreaController_1 = require("../../LevelGamePlay/UnopenedArea/UnopenedAreaController");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const AreaAtmosphere_1 = require("./AreaAtmosphere");
-const AreaAudio_1 = require("./AreaAudio");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  UnopenedAreaController_1 = require("../../LevelGamePlay/UnopenedArea/UnopenedAreaController"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  AreaAtmosphere_1 = require("./AreaAtmosphere"),
+  AreaAudio_1 = require("./AreaAudio");
 class AreaController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
@@ -86,12 +86,12 @@ class AreaController extends UiControllerBase_1.UiControllerBase {
     }
   }
   static EndOverlap(r) {
-    if (r !== 0 && r !== 1) {
+    if (0 !== r && 1 !== r) {
       const o = ConfigManager_1.ConfigManager.AreaConfig.GetParentAreaId(
         this.gje(),
       );
-      let e;
-      o !== 1 &&
+      var e;
+      1 !== o &&
         o !== this.gje() &&
         ((e = Protocol_1.Aki.Protocol.tWn.create({ Ekn: o })),
         Net_1.Net.Call(19485, e, (e) => {
@@ -139,4 +139,4 @@ class AreaController extends UiControllerBase_1.UiControllerBase {
       ),
       UnopenedAreaController_1.UnopenedAreaController.AreaCheckStatesChange(e);
   });
-// # sourceMappingURL=AreaController.js.map
+//# sourceMappingURL=AreaController.js.map

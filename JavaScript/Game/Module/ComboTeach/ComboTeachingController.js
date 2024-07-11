@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ComboTeachingController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const CheckCondtions_1 = require("./Conditions/CheckCondtions");
+const Log_1 = require("../../../Core/Common/Log"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  CheckCondtions_1 = require("./Conditions/CheckCondtions");
 class ComboTeachingController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -99,4 +99,4 @@ class ComboTeachingController extends UiControllerBase_1.UiControllerBase {
 }),
   (ComboTeachingController.CheckOpenComboTeachingView = () =>
     ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance());
-// # sourceMappingURL=ComboTeachingController.js.map
+//# sourceMappingURL=ComboTeachingController.js.map

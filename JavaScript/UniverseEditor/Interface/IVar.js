@@ -44,4 +44,4 @@ function getVarTypeByIndex(e) {
   return varTypeByIndex[e];
 }
 exports.getVarTypeByIndex = getVarTypeByIndex;
-// # sourceMappingURL=IVar.js.map
+//# sourceMappingURL=IVar.js.map

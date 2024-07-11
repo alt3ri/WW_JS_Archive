@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MapNote = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const DicIntInt_1 = require("./SubType/DicIntInt");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  DicIntInt_1 = require("./SubType/DicIntInt");
 class MapNote {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -55,34 +55,34 @@ class MapNote {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   type() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   icon(t) {
-    const i = this.J7.__offset(this.z7, 8);
+    var i = this.J7.__offset(this.z7, 8);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   desc(t) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   priority() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   rank() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetMarkidmapAt(t, i) {
     return this.markidmap(t);
   }
   markidmap(t, i) {
-    const s = this.J7.__offset(this.z7, 16);
+    var s = this.J7.__offset(this.z7, 16);
     return s
       ? (i || new DicIntInt_1.DicIntInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -91,22 +91,22 @@ class MapNote {
       : null;
   }
   markidmapLength() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetMarkidAt(t) {
     return this.markid(t);
   }
   markid(t) {
-    const i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 18);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   markidLength() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   markidArray() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -116,22 +116,22 @@ class MapNote {
       : null;
   }
   conditionid() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetQuestidlistAt(t) {
     return this.questidlist(t);
   }
   questidlist(t) {
-    const i = this.J7.__offset(this.z7, 22);
+    var i = this.J7.__offset(this.z7, 22);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   questidlistLength() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   questidlistArray() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -142,4 +142,4 @@ class MapNote {
   }
 }
 exports.MapNote = MapNote;
-// # sourceMappingURL=MapNote.js.map
+//# sourceMappingURL=MapNote.js.map

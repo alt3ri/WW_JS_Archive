@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerFloorView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const TowerController_1 = require("../TowerController");
-const TowerData_1 = require("../TowerData");
-const TowerModel_1 = require("../TowerModel");
-const TowerBuffShowItem_1 = require("./TowerBuffShowItem");
-const TowerElementItem_1 = require("./TowerElementItem");
-const TowerFloorItem_1 = require("./TowerFloorItem");
-const TowerMonsterItem_1 = require("./TowerMonsterItem");
-const TowerStarsComplexItem_1 = require("./TowerStarsComplexItem");
-const TowerTitleItem_1 = require("./TowerTitleItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  TowerController_1 = require("../TowerController"),
+  TowerData_1 = require("../TowerData"),
+  TowerModel_1 = require("../TowerModel"),
+  TowerBuffShowItem_1 = require("./TowerBuffShowItem"),
+  TowerElementItem_1 = require("./TowerElementItem"),
+  TowerFloorItem_1 = require("./TowerFloorItem"),
+  TowerMonsterItem_1 = require("./TowerMonsterItem"),
+  TowerStarsComplexItem_1 = require("./TowerStarsComplexItem"),
+  TowerTitleItem_1 = require("./TowerTitleItem");
 class TowerFloorView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -36,7 +36,7 @@ class TowerFloorView extends UiViewBase_1.UiViewBase {
           this.RLo,
           !ModelManager_1.ModelManager.TowerModel.GetFloorIsUnlock(this.RLo),
         );
-        const e =
+        var e =
           ModelManager_1.ModelManager.TowerModel.GetDifficultyAreaAllFloor(
             ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties,
             this.OpenParam,
@@ -45,7 +45,7 @@ class TowerFloorView extends UiViewBase_1.UiViewBase {
           this.NLo.RefreshByData(e);
       }),
       (this.BLo = () => {
-        const e = new TowerFloorItem_1.TowerFloorItem();
+        var e = new TowerFloorItem_1.TowerFloorItem();
         return (
           e.BindOnClickToggle((e, t) => {
             this.Og(e, t);
@@ -107,17 +107,17 @@ class TowerFloorView extends UiViewBase_1.UiViewBase {
   }
   OnStart() {
     this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem);
-    let e = ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties;
-    const t =
-      ((this.NLo = new GenericLayout_1.GenericLayout(
-        this.GetVerticalLayout(1),
-        this.BLo,
-      )),
-      (ModelManager_1.ModelManager.TowerModel.DefaultFloor = -1),
-      ModelManager_1.ModelManager.TowerModel.GetDifficultyAreaAllFloor(
-        e,
-        this.OpenParam,
-      ));
+    var e = ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties,
+      t =
+        ((this.NLo = new GenericLayout_1.GenericLayout(
+          this.GetVerticalLayout(1),
+          this.BLo,
+        )),
+        (ModelManager_1.ModelManager.TowerModel.DefaultFloor = -1),
+        ModelManager_1.ModelManager.TowerModel.GetDifficultyAreaAllFloor(
+          e,
+          this.OpenParam,
+        ));
     if (ModelManager_1.ModelManager.TowerModel.NeedOpenConfirmView)
       ModelManager_1.ModelManager.TowerModel.DefaultFloor =
         ModelManager_1.ModelManager.TowerModel.NeedOpenConfirmViewTowerId;
@@ -131,7 +131,7 @@ class TowerFloorView extends UiViewBase_1.UiViewBase {
           ModelManager_1.ModelManager.TowerModel.DefaultFloor = r;
           break;
         }
-      ModelManager_1.ModelManager.TowerModel.DefaultFloor === -1 &&
+      -1 === ModelManager_1.ModelManager.TowerModel.DefaultFloor &&
         (ModelManager_1.ModelManager.TowerModel.DefaultFloor = t[0]);
     }
     this.NLo.RefreshByData(t),
@@ -148,8 +148,8 @@ class TowerFloorView extends UiViewBase_1.UiViewBase {
         this.s6i,
       )),
       (this.uTt = new TowerTitleItem_1.TowerTitleItem(this.GetItem(0), () => {
-        const e = UiManager_1.UiManager.GetViewByName("TowerNormalView");
-        const t = UiManager_1.UiManager.GetViewByName("TowerVariationView");
+        var e = UiManager_1.UiManager.GetViewByName("TowerNormalView"),
+          t = UiManager_1.UiManager.GetViewByName("TowerVariationView");
         !ModelManager_1.ModelManager.TowerModel.CheckInTower() || e || t
           ? this.CloseMe()
           : TowerController_1.TowerController.BackToTowerView(() => {
@@ -186,21 +186,21 @@ class TowerFloorView extends UiViewBase_1.UiViewBase {
   Og(e, t) {
     (this.RLo = e),
       (ModelManager_1.ModelManager.TowerModel.CurrentSelectFloor = e);
-    const i = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(e);
-    const r =
-      (this.xLo.RefreshByData(i.ShowBuffs),
-      this.Hli.RefreshByData(i.ShowMonsters),
-      i.RecommendElement?.length > 0
-        ? (this.GetItem(12)?.SetUIActive(!0),
-          this.Mhi.RefreshByData(i.RecommendElement))
-        : this.GetItem(12)?.SetUIActive(!1),
-      []);
-    const o = ModelManager_1.ModelManager.TowerModel.GetFloorStarsIndex(e);
+    var i = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(e),
+      r =
+        (this.xLo.RefreshByData(i.ShowBuffs),
+        this.Hli.RefreshByData(i.ShowMonsters),
+        0 < i.RecommendElement?.length
+          ? (this.GetItem(12)?.SetUIActive(!0),
+            this.Mhi.RefreshByData(i.RecommendElement))
+          : this.GetItem(12)?.SetUIActive(!1),
+        []),
+      o = ModelManager_1.ModelManager.TowerModel.GetFloorStarsIndex(e);
     for (let e = 0; e < TowerModel_1.FLOOR_STAR; e++) {
       var s = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTargetConfig(
-        i.TargetConfig[e],
-      );
-      var s = [!(!o || !o.includes(e)), s];
+          i.TargetConfig[e],
+        ),
+        s = [!(!o || !o.includes(e)), s];
       r.push(s);
     }
     this.wLo.RefreshByData(r),
@@ -209,7 +209,7 @@ class TowerFloorView extends UiViewBase_1.UiViewBase {
       this.GetItem(10).SetUIActive(t),
       this.SetTextureByPath(i.BgPath, this.GetTexture(8));
     (e = ModelManager_1.ModelManager.TowerModel.GetFloorData(this.RLo)),
-      e && e.Formation.length !== 0
+      e && 0 !== e.Formation.length
         ? this.GetButton(6).RootUIComp.SetUIActive(!0)
         : this.GetButton(6).RootUIComp.SetUIActive(!1),
       (t = ModelManager_1.ModelManager.TowerModel.GetHaveChallengeFloor(
@@ -224,4 +224,4 @@ class TowerFloorView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.TowerFloorView = TowerFloorView;
-// # sourceMappingURL=TowerFloorView.js.map
+//# sourceMappingURL=TowerFloorView.js.map

@@ -8,4 +8,4 @@ class GiftPackageData extends UiPopViewData_1.UiPopViewData {
   }
 }
 exports.GiftPackageData = GiftPackageData;
-// # sourceMappingURL=GiftPackageData.js.map
+//# sourceMappingURL=GiftPackageData.js.map

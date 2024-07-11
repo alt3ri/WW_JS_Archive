@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FunctionModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
-const FunctionConditionByFunctionId_1 = require("../../../Core/Define/ConfigQuery/FunctionConditionByFunctionId");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ChannelController_1 = require("../Channel/ChannelController");
-const FunctionInstance_1 = require("./View/FunctionInstance");
+const Log_1 = require("../../../Core/Common/Log"),
+  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
+  FunctionConditionByFunctionId_1 = require("../../../Core/Define/ConfigQuery/FunctionConditionByFunctionId"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ChannelController_1 = require("../Channel/ChannelController"),
+  FunctionInstance_1 = require("./View/FunctionInstance");
 class FunctionModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -39,13 +39,13 @@ class FunctionModel extends ModelBase_1.ModelBase {
   }
   SetFunctionOpenInfo(e) {
     for (const t of e.gRs) {
-      var n = new FunctionInstance_1.FunctionInstance(t.Mkn, t.Ekn);
-      var n =
-        (this.I9t.set(
-          t.Ekn,
-          new FunctionInstance_1.FunctionInstance(t.Mkn, t.Ekn),
-        ),
-        n.GetIsOpen());
+      var n = new FunctionInstance_1.FunctionInstance(t.Mkn, t.Ekn),
+        n =
+          (this.I9t.set(
+            t.Ekn,
+            new FunctionInstance_1.FunctionInstance(t.Mkn, t.Ekn),
+          ),
+          n.GetIsOpen());
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnFunctionOpenSet,
         t.Ekn,
@@ -63,8 +63,8 @@ class FunctionModel extends ModelBase_1.ModelBase {
   }
   UpdateFunctionOpenInfo(e) {
     for (const o of e.gRs) {
-      var n;
-      let t = this.I9t.get(o.Ekn);
+      var n,
+        t = this.I9t.get(o.Ekn);
       t
         ? (t.SetFlag(o.Mkn),
           (n =
@@ -80,7 +80,7 @@ class FunctionModel extends ModelBase_1.ModelBase {
               o.Ekn,
             ))),
           t &&
-            n.ShowUIType === 1 &&
+            1 === n.ShowUIType &&
             !ModelManager_1.ModelManager.SundryModel.IsBlockTips &&
             this.T9t.push(n),
           ModelManager_1.ModelManager.SundryModel.IsBlockTips &&
@@ -102,8 +102,8 @@ class FunctionModel extends ModelBase_1.ModelBase {
   }
   RefreshInfoManualState(e) {
     for (const o of e) {
-      var n;
-      const t = this.I9t.get(o);
+      var n,
+        t = this.I9t.get(o);
       t
         ? ((n =
             FunctionConditionByFunctionId_1.configFunctionConditionByFunctionId.GetConfig(
@@ -132,36 +132,36 @@ class FunctionModel extends ModelBase_1.ModelBase {
     }
   }
   PopNewOpenFunctionList() {
-    let e;
+    var e;
     if (this.IsExistNewOpenFunction())
       return (e = this.T9t[0]), this.T9t.splice(0, 1), e;
   }
   IsExistNewOpenFunction() {
-    return this.T9t.length > 0;
+    return 0 < this.T9t.length;
   }
   ClearNewOpenFunctionList() {
     this.T9t = [];
   }
   GetNewOpenFunctionIdList() {
-    const e = [];
+    var e = [];
     for (const n of this.T9t) e.push(n.FunctionId);
     return e;
   }
   UpdatePlayerAttributeNumberInfo(e) {
-    let n = 0;
-    let t = void 0;
+    let n = 0,
+      t = void 0;
     e.has(Protocol_1.Aki.Protocol.U2s.r3n) && (n = this.GetPlayerLevel()),
       e.has(Protocol_1.Aki.Protocol.U2s.k3n) && (t = this.GetPlayerExp()),
       e.forEach((e, n) => {
         this.PlayerAttributeNum.set(n, e);
       });
-    let o;
-    let r;
-    let i;
-    var e = this.GetPlayerExp();
-    const a = this.GetPlayerLevel();
-    const s = ConfigManager_1.ConfigManager.FunctionConfig;
-    n > 0 && n < a && void 0 !== t
+    var o,
+      r,
+      i,
+      e = this.GetPlayerExp(),
+      a = this.GetPlayerLevel(),
+      s = ConfigManager_1.ConfigManager.FunctionConfig;
+    0 < n && n < a && void 0 !== t
       ? !(i = s.GetRangePlayerExpConfig(n, a)) ||
         i.length < 1 ||
         ((o = i[0]),
@@ -214,7 +214,7 @@ class FunctionModel extends ModelBase_1.ModelBase {
     return this.PlayerAttributeNum.get(Protocol_1.Aki.Protocol.U2s.k3n);
   }
   GetPlayerCashCoin() {
-    const e = this.PlayerAttributeString.get(
+    var e = this.PlayerAttributeString.get(
       Protocol_1.Aki.Protocol.U2s.Proto_CashCoin,
     );
     return e || "0";
@@ -230,7 +230,7 @@ class FunctionModel extends ModelBase_1.ModelBase {
     });
   }
   IsOpen(e) {
-    return e === 0 || (!!(e = this.I9t.get(e)) && e.GetIsOpen());
+    return 0 === e || (!!(e = this.I9t.get(e)) && e.GetIsOpen());
   }
   IsShow(e) {
     e = this.I9t.get(e);
@@ -240,14 +240,14 @@ class FunctionModel extends ModelBase_1.ModelBase {
     return this.I9t.get(e);
   }
   GetShowFunctionIdList() {
-    const e = new Array();
-    const n = ConfigCommon_1.ConfigCommon.ToList(
-      ConfigManager_1.ConfigManager.FunctionConfig.GetAllFunctionList(),
-    );
+    var e = new Array(),
+      n = ConfigCommon_1.ConfigCommon.ToList(
+        ConfigManager_1.ConfigManager.FunctionConfig.GetAllFunctionList(),
+      );
     n.sort((e, n) => e.SortIndex - n.SortIndex);
     for (const r of n) {
-      var t;
-      const o = this.I9t.get(r.FunctionId);
+      var t,
+        o = this.I9t.get(r.FunctionId);
       o &&
         ((t = !(t = this.L9t.get(r.FunctionId)) || t()), o.GetIsOpen()) &&
         t &&
@@ -294,4 +294,4 @@ class FunctionModel extends ModelBase_1.ModelBase {
   }
 }
 exports.FunctionModel = FunctionModel;
-// # sourceMappingURL=FunctionModel.js.map
+//# sourceMappingURL=FunctionModel.js.map

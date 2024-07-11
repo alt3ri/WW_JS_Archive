@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Info_1 = require("../../Core/Common/Info");
-const Protocol_1 = require("../../Core/Define/Net/Protocol");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const TimeUtil_1 = require("../Common/TimeUtil");
-const ModelManager_1 = require("../Manager/ModelManager");
-const FormationAttributeController_1 = require("../Module/Abilities/FormationAttributeController");
-const SkillCdController_1 = require("../Module/Battle/SkillCdController");
-const CombatMessage_1 = require("../Module/CombatMessage/CombatMessage");
+const UE = require("ue"),
+  Info_1 = require("../../Core/Common/Info"),
+  Protocol_1 = require("../../Core/Define/Net/Protocol"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../Common/TimeUtil"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  FormationAttributeController_1 = require("../Module/Abilities/FormationAttributeController"),
+  SkillCdController_1 = require("../Module/Battle/SkillCdController"),
+  CombatMessage_1 = require("../Module/CombatMessage/CombatMessage");
 class TsAnimNotifyStateTimeStopRequest extends UE.KuroAnimNotifyState {
   K2_NotifyBegin(e, t, o) {
     e = e?.GetOwner();
@@ -25,8 +25,8 @@ class TsAnimNotifyStateTimeStopRequest extends UE.KuroAnimNotifyState {
       "ANS AbsoluteTimeStop",
     ),
       SkillCdController_1.SkillCdController.Pause(0, !0);
-    let r;
-    var e = e.CharacterActorComponent?.Entity;
+    var r,
+      e = e.CharacterActorComponent?.Entity;
     return (
       e &&
         (((r = Protocol_1.Aki.Protocol.VNn.create()).Mkn = !0),
@@ -41,8 +41,8 @@ class TsAnimNotifyStateTimeStopRequest extends UE.KuroAnimNotifyState {
     );
   }
   K2_NotifyEnd(e, t) {
-    let o;
-    var e = e?.GetOwner();
+    var o,
+      e = e?.GetOwner();
     if (!(e instanceof TsBaseCharacter_1.default)) return !1;
     if (ModelManager_1.ModelManager.GameModeModel?.IsMulti) return !1;
     ModelManager_1.ModelManager.GeneralLogicTreeModel.TimeStop = !1;
@@ -75,4 +75,4 @@ class TsAnimNotifyStateTimeStopRequest extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateTimeStopRequest;
-// # sourceMappingURL=TsAnimNotifyStateTimeStopRequest.js.map
+//# sourceMappingURL=TsAnimNotifyStateTimeStopRequest.js.map

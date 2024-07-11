@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log");
 class TsDecoratorWaitSwitchControl extends UE.BTDecorator_BlueprintBase {
   PerformConditionCheckAI(e, o) {
-    const r = e.AiController;
+    var r = e.AiController;
     return r
       ? r.IsWaitingSwitchControl()
       : (Log_1.Log.CheckError() &&
@@ -16,4 +16,4 @@ class TsDecoratorWaitSwitchControl extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorWaitSwitchControl;
-// # sourceMappingURL=TsDecoratorWaitSwitchControl.js.map
+//# sourceMappingURL=TsDecoratorWaitSwitchControl.js.map

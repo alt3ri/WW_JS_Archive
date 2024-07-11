@@ -8,4 +8,4 @@ class EffectAudioContext extends EffectContext_1.EffectContext {
   }
 }
 exports.EffectAudioContext = EffectAudioContext;
-// # sourceMappingURL=EffectAudioContext.js.map
+//# sourceMappingURL=EffectAudioContext.js.map

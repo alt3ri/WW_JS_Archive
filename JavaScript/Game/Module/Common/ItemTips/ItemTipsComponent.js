@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemTipsComponent = void 0);
-const UE = require("ue");
-const GlobalData_1 = require("../../../GlobalData");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const ItemTipsCharacterComponent_1 = require("./SubComponents/ItemTipsCharacterComponent");
-const ItemTipsMaterialComponent_1 = require("./SubComponents/ItemTipsMaterialComponent");
-const ItemTipsVisionComponent_1 = require("./SubComponents/ItemTipsVisionComponent");
-const ItemTipsWeaponComponent_1 = require("./SubComponents/ItemTipsWeaponComponent");
+const UE = require("ue"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ItemTipsCharacterComponent_1 = require("./SubComponents/ItemTipsCharacterComponent"),
+  ItemTipsMaterialComponent_1 = require("./SubComponents/ItemTipsMaterialComponent"),
+  ItemTipsVisionComponent_1 = require("./SubComponents/ItemTipsVisionComponent"),
+  ItemTipsWeaponComponent_1 = require("./SubComponents/ItemTipsWeaponComponent");
 class ItemTipsComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -17,14 +17,14 @@ class ItemTipsComponent extends UiPanelBase_1.UiPanelBase {
       (this.rPt = void 0),
       (this.nPt = new Map()),
       (this.sPt = {
-        0: ItemTipsMaterialComponent_1.TipsMaterialComponent,
+        [0]: ItemTipsMaterialComponent_1.TipsMaterialComponent,
         1: ItemTipsWeaponComponent_1.TipsWeaponComponent,
         2: ItemTipsVisionComponent_1.TipsVisionComponent,
         3: ItemTipsCharacterComponent_1.ItemTipsCharacterComponent,
       });
   }
   GetComponentByType(e) {
-    let t;
+    var t;
     return (
       this.nPt.has(e) ||
         ((t = new this.sPt[e](this.GetItem(4))), this.nPt.set(e, t)),
@@ -73,21 +73,21 @@ class ItemTipsComponent extends UiPanelBase_1.UiPanelBase {
       this.SetActive(!0);
   }
   aPt(e) {
-    const t = this.GetUiNiagara(3);
-    var i =
-      (t.DeactivateSystem(),
-      ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(e.QualityId));
-    var i = UE.Color.FromHex(i.DropColor);
-    var i =
-      (this.GetText(0).SetColor(i),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), e.Title),
-      ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-        "T_TipsQualityTypeLevel" + e.QualityId,
-      ));
-    var s = ConfigManager_1.ConfigManager.InventoryConfig.GetItemQualityConfig(
-      e.QualityId,
-    ).QualityColor;
-    var s = UE.Color.FromHex(s);
+    var t = this.GetUiNiagara(3),
+      i =
+        (t.DeactivateSystem(),
+        ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(e.QualityId)),
+      i = UE.Color.FromHex(i.DropColor),
+      i =
+        (this.GetText(0).SetColor(i),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), e.Title),
+        ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+          "T_TipsQualityTypeLevel" + e.QualityId,
+        )),
+      s = ConfigManager_1.ConfigManager.InventoryConfig.GetItemQualityConfig(
+        e.QualityId,
+      ).QualityColor,
+      s = UE.Color.FromHex(s);
     t.SetColor(s),
       t.ActivateSystem(!0),
       this.SetTextureByPath(i, this.GetTexture(1)),
@@ -95,7 +95,7 @@ class ItemTipsComponent extends UiPanelBase_1.UiPanelBase {
       this.hPt(e.ConfigId);
   }
   hPt(e) {
-    const t = this.GetText(5);
+    var t = this.GetText(5);
     GlobalData_1.GlobalData.IsPlayInEditor
       ? (LguiUtil_1.LguiUtil.SetLocalText(t, "CommonTipsDebugItemId", e),
         t.SetUIActive(!0))
@@ -103,4 +103,4 @@ class ItemTipsComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ItemTipsComponent = ItemTipsComponent;
-// # sourceMappingURL=ItemTipsComponent.js.map
+//# sourceMappingURL=ItemTipsComponent.js.map

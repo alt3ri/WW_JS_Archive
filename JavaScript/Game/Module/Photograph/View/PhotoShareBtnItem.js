@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhotoShareBtnItem = void 0);
-const UE = require("ue");
-const SharePlatformById_1 = require("../../../../Core/Define/ConfigQuery/SharePlatformById");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
+const UE = require("ue"),
+  SharePlatformById_1 = require("../../../../Core/Define/ConfigQuery/SharePlatformById"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager");
 class PhotoShareBtnItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -16,7 +16,7 @@ class PhotoShareBtnItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.wIt = void 0),
       (this.jyn = 1),
       (this.Fjt = () => {
-        const t = TimeUtil_1.TimeUtil.GetServerTime();
+        var t = TimeUtil_1.TimeUtil.GetServerTime();
         t - this.cVe < this.jyn
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "CannotShare",
@@ -52,7 +52,7 @@ class PhotoShareBtnItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.MWi = t;
   }
   RefreshPanel() {
-    const t = SharePlatformById_1.configSharePlatformById.GetConfig(this.MWi);
+    var t = SharePlatformById_1.configSharePlatformById.GetConfig(this.MWi);
     t &&
       this.SetSpriteByPath(t.Icon, this.GetSprite(0), !1, void 0, (t) => {
         this.SWi?.SetAllTransitionSprite(this.GetSprite(0).GetSprite());
@@ -63,4 +63,4 @@ class PhotoShareBtnItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.PhotoShareBtnItem = PhotoShareBtnItem;
-// # sourceMappingURL=PhotoShareBtnItem.js.map
+//# sourceMappingURL=PhotoShareBtnItem.js.map

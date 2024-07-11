@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configLordGymById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const LordGym_1 = require("../Config/LordGym");
-const DB = "db_lordgym.db";
-const FILE = "l.领主道馆.xlsx";
-const TABLE = "LordGym";
-const COMMAND = "select BinData from `LordGym` where Id=?";
-const KEY_PREFIX = "LordGymById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  LordGym_1 = require("../Config/LordGym"),
+  DB = "db_lordgym.db",
+  FILE = "l.领主道馆.xlsx",
+  TABLE = "LordGym",
+  COMMAND = "select BinData from `LordGym` where Id=?",
+  KEY_PREFIX = "LordGymById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configLordGymById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configLordGymById.GetConfig(";
 exports.configLordGymById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configLordGymById = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var i;
-        var e = void 0;
+        var i,
+          e = void 0;
         if (
           (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configLordGymById = {
     }
   },
 };
-// # sourceMappingURL=LordGymById.js.map
+//# sourceMappingURL=LordGymById.js.map

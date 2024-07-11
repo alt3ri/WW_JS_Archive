@@ -1,60 +1,65 @@
 "use strict";
-let CharacterDamageComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (e, t, a, r) {
-    let i;
-    const o = arguments.length;
-    let s =
-      o < 3 ? t : r === null ? (r = Object.getOwnPropertyDescriptor(t, a)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      s = Reflect.decorate(e, t, a, r);
-    else
-      for (let n = e.length - 1; n >= 0; n--)
-        (i = e[n]) && (s = (o < 3 ? i(s) : o > 3 ? i(t, a, s) : i(t, a)) || s);
-    return o > 3 && s && Object.defineProperty(t, a, s), s;
-  };
+var CharacterDamageComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (e, t, a, r) {
+      var i,
+        o = arguments.length,
+        s =
+          o < 3
+            ? t
+            : null === r
+              ? (r = Object.getOwnPropertyDescriptor(t, a))
+              : r;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        s = Reflect.decorate(e, t, a, r);
+      else
+        for (var n = e.length - 1; 0 <= n; n--)
+          (i = e[n]) &&
+            (s = (o < 3 ? i(s) : 3 < o ? i(t, a, s) : i(t, a)) || s);
+      return 3 < o && s && Object.defineProperty(t, a, s), s;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterDamageComponent =
     exports.BaseAttributeSet =
     exports.DamageCompPayload =
     exports.SnapshotPayload =
       void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Stats_1 = require("../../../../../../Core/Common/Stats");
-const Time_1 = require("../../../../../../Core/Common/Time");
-const CommonDefine_1 = require("../../../../../../Core/Define/CommonDefine");
-const CommonParamById_1 = require("../../../../../../Core/Define/ConfigCommon/CommonParamById");
-const DamageById_1 = require("../../../../../../Core/Define/ConfigQuery/DamageById");
-const DamagePayloadById_1 = require("../../../../../../Core/Define/ConfigQuery/DamagePayloadById");
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent");
-const EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const RandomSystem_1 = require("../../../../../../Core/Random/RandomSystem");
-const TimerSystem_1 = require("../../../../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage");
-const SceneTeamController_1 = require("../../../../../Module/SceneTeam/SceneTeamController");
-const GameplayAbilityVisionControl_1 = require("../Vision/GA/GameplayAbilityVisionControl");
-const AbilityUtils_1 = require("./AbilityUtils");
-const ActiveBuffConfigs_1 = require("./Buff/ActiveBuffConfigs");
-const CharacterAbilityComponent_1 = require("./CharacterAbilityComponent");
-const CharacterAttributeTypes_1 = require("./CharacterAttributeTypes");
-const CharacterBuffIds_1 = require("./CharacterBuffIds");
-const CharacterDamageCalculations_1 = require("./CharacterDamageCalculations");
-const ExtraEffectBaseTypes_1 = require("./ExtraEffect/ExtraEffectBaseTypes");
-const ExtraEffectDamageAccumulation_1 = require("./ExtraEffect/ExtraEffectDamageAccumulation");
-const ExtraEffectDamageAugment_1 = require("./ExtraEffect/ExtraEffectDamageAugment");
-const ExtraEffectDamageImmune_1 = require("./ExtraEffect/ExtraEffectDamageImmune");
-const ExtraEffectDamageModifier_1 = require("./ExtraEffect/ExtraEffectDamageModifier");
-const ExtraEffectDamageShare_1 = require("./ExtraEffect/ExtraEffectDamageShare");
-const ExtraEffectSnapModifier_1 = require("./ExtraEffect/ExtraEffectSnapModifier");
-const damageDataPayloadIdDefault = BigInt(0);
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../../../Core/Common/Stats"),
+  Time_1 = require("../../../../../../Core/Common/Time"),
+  CommonDefine_1 = require("../../../../../../Core/Define/CommonDefine"),
+  CommonParamById_1 = require("../../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  DamageById_1 = require("../../../../../../Core/Define/ConfigQuery/DamageById"),
+  DamagePayloadById_1 = require("../../../../../../Core/Define/ConfigQuery/DamagePayloadById"),
+  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  RandomSystem_1 = require("../../../../../../Core/Random/RandomSystem"),
+  TimerSystem_1 = require("../../../../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage"),
+  SceneTeamController_1 = require("../../../../../Module/SceneTeam/SceneTeamController"),
+  GameplayAbilityVisionControl_1 = require("../Vision/GA/GameplayAbilityVisionControl"),
+  AbilityUtils_1 = require("./AbilityUtils"),
+  ActiveBuffConfigs_1 = require("./Buff/ActiveBuffConfigs"),
+  CharacterAbilityComponent_1 = require("./CharacterAbilityComponent"),
+  CharacterAttributeTypes_1 = require("./CharacterAttributeTypes"),
+  CharacterBuffIds_1 = require("./CharacterBuffIds"),
+  CharacterDamageCalculations_1 = require("./CharacterDamageCalculations"),
+  ExtraEffectBaseTypes_1 = require("./ExtraEffect/ExtraEffectBaseTypes"),
+  ExtraEffectDamageAccumulation_1 = require("./ExtraEffect/ExtraEffectDamageAccumulation"),
+  ExtraEffectDamageAugment_1 = require("./ExtraEffect/ExtraEffectDamageAugment"),
+  ExtraEffectDamageImmune_1 = require("./ExtraEffect/ExtraEffectDamageImmune"),
+  ExtraEffectDamageModifier_1 = require("./ExtraEffect/ExtraEffectDamageModifier"),
+  ExtraEffectDamageShare_1 = require("./ExtraEffect/ExtraEffectDamageShare"),
+  ExtraEffectSnapModifier_1 = require("./ExtraEffect/ExtraEffectSnapModifier"),
+  damageDataPayloadIdDefault = BigInt(0);
 class SnapshotPayload {
   constructor() {
     (this.Target = void 0),
@@ -121,21 +126,21 @@ let CharacterDamageComponent =
     }
     OnTick(e) {
       -this.ActorComponent.ActorVelocityProxy.Z >= this.Iqr
-        ? this.Tqr === 0 && (this.Tqr = Time_1.Time.WorldTimeSeconds)
+        ? 0 === this.Tqr && (this.Tqr = Time_1.Time.WorldTimeSeconds)
         : (this.Tqr = 0);
     }
     ExecuteBulletDamage(e, t, a) {
-      let r;
-      var e = EntitySystem_1.EntitySystem.Get(e);
-      let i = e.GetBulletInfo();
-      const o = DamageById_1.configDamageById.GetConfig(t.DamageDataId);
+      var r,
+        e = EntitySystem_1.EntitySystem.Get(e),
+        i = e.GetBulletInfo(),
+        o = DamageById_1.configDamageById.GetConfig(t.DamageDataId);
       return o
         ? (((r = new ExtraEffectBaseTypes_1.RequirementPayload()).BulletId =
             BigInt(i.BulletRowName)),
           (r.SkillId = Number(i.BulletInitParams.SkillId)),
           (r.BulletTags = i.Tags ?? []),
           (r.PartId = t.PartId),
-          r.PartId >= 0 &&
+          0 <= r.PartId &&
             (r.PartTag = this.Entity.GetComponent(58).GetPartByIndex(
               r.PartId,
             ).PartTag?.TagId),
@@ -160,9 +165,9 @@ let CharacterDamageComponent =
     ExecuteBuffDamage(e, t, a) {
       e.Attacker =
         e.Attacker?.GetComponent(47)?.GetAttributeHolder() ?? e.Attacker;
-      let r;
-      let i;
-      const o = DamageById_1.configDamageById.GetConfig(e.DamageDataId);
+      var r,
+        i,
+        o = DamageById_1.configDamageById.GetConfig(e.DamageDataId);
       o &&
         ((r = new ExtraEffectBaseTypes_1.RequirementPayload()).PartialAssign(t),
         (i = {
@@ -192,8 +197,8 @@ let CharacterDamageComponent =
         ));
     }
     ExecuteBuffShareDamage(e, t, a, r) {
-      let i;
-      const o = DamageById_1.configDamageById.GetConfig(e.DamageDataId);
+      var i,
+        o = DamageById_1.configDamageById.GetConfig(e.DamageDataId);
       o &&
         ((i = new ExtraEffectBaseTypes_1.RequirementPayload()).PartialAssign(t),
         (t = {
@@ -216,20 +221,20 @@ let CharacterDamageComponent =
         this.ProcessDamage(i, t, r));
     }
     ProcessDamage(t, a, e) {
-      if (this.Xte.HasTag(1918148596) && a.DamageData.ImmuneType === 0)
+      if (this.Xte.HasTag(1918148596) && 0 === a.DamageData.ImmuneType)
         return { DamageResult: 0, ToughResult: 0 };
-      let r = a.Attacker;
-      t.SkillId > 0 &&
+      var r = a.Attacker;
+      0 < t.SkillId &&
         ((o = r.rDr.GetSkillInfo(t.SkillId)?.SkillGenre), (t.SkillGenre = o)),
         (t.DamageGenre = a.DamageData.Type),
         (t.CalculateType = a.DamageData.CalculateType);
       const i = this.Bqr(r);
       var o = this.GetLocalDamage(t, a, i);
       let s = void 0;
-      a.PartId >= 0 &&
+      0 <= a.PartId &&
         (s = this.Entity.GetComponent(58)?.GetPartByIndex(a.PartId));
       (r =
-        (t.SkillGenre === 5
+        (5 === t.SkillGenre
           ? this.GetExtraToughRate("ToughRateOnCounter")
           : this.GetExtraToughRate("ToughRate")) /
         CharacterAttributeTypes_1.PER_TEN_THOUSAND),
@@ -256,15 +261,15 @@ let CharacterDamageComponent =
         ?.ProcessRemoteDamage(t);
     }
     ProcessRemoteDamage(e) {
-      let t;
-      let a = e.ZVn ?? {};
-      let r = ModelManager_1.ModelManager.CreatureModel.GetEntity(
-        MathUtils_1.MathUtils.LongToNumber(e.e9n),
-      );
-      let i = DamageById_1.configDamageById.GetConfig(
-        MathUtils_1.MathUtils.LongToBigInt(e.t9n),
-      );
-      const o = r?.Entity?.GetComponent(18);
+      var t,
+        a = e.ZVn ?? {},
+        r = ModelManager_1.ModelManager.CreatureModel.GetEntity(
+          MathUtils_1.MathUtils.LongToNumber(e.e9n),
+        ),
+        i = DamageById_1.configDamageById.GetConfig(
+          MathUtils_1.MathUtils.LongToBigInt(e.t9n),
+        ),
+        o = r?.Entity?.GetComponent(18);
       i && r && o
         ? ((r = {
             ShieldCoverDamage: e.qIs,
@@ -288,9 +293,9 @@ let CharacterDamageComponent =
           (t.DamageGenre = i.Type),
           (t.CalculateType = i.CalculateType),
           (t.IsTargetKilled = r.IsTargetKilled),
-          t.SkillId > 0 &&
+          0 < t.SkillId &&
             (t.SkillGenre = o.rDr.GetSkillInfo(t.SkillId)?.SkillGenre ?? -1),
-          t.PartId >= 0 &&
+          0 <= t.PartId &&
             ((a = this.Entity.GetComponent(58)),
             (t.PartTag = a?.GetPartByIndex(t.PartId).PartTag?.TagId)),
           (t.IsCritical = r.IsCritical),
@@ -309,12 +314,8 @@ let CharacterDamageComponent =
           );
     }
     Bqr(e) {
-      const t = e.Mqr.GetAttributeHolder()
-        .CheckGetComponent(156)
-        .TakeSnapshot();
-      const a = this.Mqr.GetAttributeHolder()
-        .CheckGetComponent(156)
-        .TakeSnapshot();
+      var t = e.Mqr.GetAttributeHolder().CheckGetComponent(156).TakeSnapshot(),
+        a = this.Mqr.GetAttributeHolder().CheckGetComponent(156).TakeSnapshot();
       return {
         Attacker: this.Oqr(e),
         AttackerSnapshot: t,
@@ -333,11 +334,11 @@ let CharacterDamageComponent =
         : e;
     }
     kqr(e, t, a, r, i) {
-      let o;
-      const s = e.DamageData;
-      const n = e.SkillLevel;
-      let h = AbilityUtils_1.AbilityUtils.GetLevelValue(s.RateLv, n, 0);
-      const m = e.ExtraRate;
+      var o,
+        s = e.DamageData,
+        n = e.SkillLevel,
+        h = AbilityUtils_1.AbilityUtils.GetLevelValue(s.RateLv, n, 0),
+        m = e.ExtraRate;
       if (e.IsReaction)
         return (o = DamagePayloadById_1.configDamagePayloadById.GetConfig(
           s.PayloadId,
@@ -384,11 +385,11 @@ let CharacterDamageComponent =
       );
     }
     LKo(e, t) {
-      const a = e.DamageData;
-      const r = e.SkillLevel;
-      const i = e.ExtraRate;
+      var a = e.DamageData,
+        r = e.SkillLevel,
+        i = e.ExtraRate;
       let o = 1;
-      const s = this.Entity.GetComponent(0);
+      var s = this.Entity.GetComponent(0);
       return (
         ModelManager_1.ModelManager.GameModeModel.IsMulti &&
           s.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Monster &&
@@ -414,19 +415,19 @@ let CharacterDamageComponent =
       );
     }
     Fqr(e, t, a) {
-      var r = t.DamageData;
-      const i =
-        a.Attacker.Sqr?.GetWeaponType() ??
-        ExtraEffectBaseTypes_1.DEFAULT_WEAPON_TYPE_NOT_PASS;
-      var r =
-        (e.PartialAssign({
-          SmashType: r.SmashType,
-          ElementType: r.Element,
-          WeaponType: i,
-        }),
-        this.Hqr(e, t, a),
-        ExtraEffectSnapModifier_1.SnapModifier.PreCriticalModify(e, a),
-        this.JudgeCritical(t, a.AttackerSnapshot));
+      var r = t.DamageData,
+        i =
+          a.Attacker.Sqr?.GetWeaponType() ??
+          ExtraEffectBaseTypes_1.DEFAULT_WEAPON_TYPE_NOT_PASS,
+        r =
+          (e.PartialAssign({
+            SmashType: r.SmashType,
+            ElementType: r.Element,
+            WeaponType: i,
+          }),
+          this.Hqr(e, t, a),
+          ExtraEffectSnapModifier_1.SnapModifier.PreCriticalModify(e, a),
+          this.JudgeCritical(t, a.AttackerSnapshot));
       return ExtraEffectSnapModifier_1.SnapModifier.PostCriticalModify(e, a), r;
     }
     JudgeCritical(e, t) {
@@ -453,16 +454,16 @@ let CharacterDamageComponent =
     GetLocalDamage(e, t, a) {
       let r = void 0;
       return (r =
-        t.DamageData.CalculateType === 1
+        1 === t.DamageData.CalculateType
           ? this.GetLocalHeal(e, t, a)
           : this.GetLocalHurt(e, t, a));
     }
     GetLocalHurt(e, t, a) {
-      const r = this.Fqr(e, t, a);
-      let i = ExtraEffectDamageAugment_1.DamageAugment.ApplyEffects(e, a);
-      let o =
-        ExtraEffectSnapModifier_1.DamageAmplifyOnHit.ApplyEffects(e, a) +
-        ExtraEffectSnapModifier_1.DamageAmplifyOnBeHit.ApplyEffects(e, a);
+      var r = this.Fqr(e, t, a),
+        i = ExtraEffectDamageAugment_1.DamageAugment.ApplyEffects(e, a),
+        o =
+          ExtraEffectSnapModifier_1.DamageAmplifyOnHit.ApplyEffects(e, a) +
+          ExtraEffectSnapModifier_1.DamageAmplifyOnBeHit.ApplyEffects(e, a);
       let s = this.kqr(t, a, r, i, o);
       i = ExtraEffectDamageModifier_1.DamageModifier.ApplyEffects(e, a);
       s = i.IsSuccessful ? i.Result : s;
@@ -509,33 +510,33 @@ let CharacterDamageComponent =
       );
     }
     GetServerDamage(a, r, i, e) {
-      const t = a.Attacker;
-      const o = a.DamageData;
-      const s = Protocol_1.Aki.Protocol.W2n.create({
-        t9n: MathUtils_1.MathUtils.BigIntToLong(o.Id),
-        n9n: a.SkillLevel,
-        e9n: MathUtils_1.MathUtils.NumberToLong(
-          t.Entity.GetComponent(0).GetCreatureDataId(),
-        ),
-        q4n: MathUtils_1.MathUtils.NumberToLong(
-          this.Entity.GetComponent(0).GetCreatureDataId(),
-        ),
-        s9n: a.IsAddEnergy,
-        a9n: a.IsCounterAttack,
-        h9n: a.ForceCritical,
-        l9n: a.IsBlocked,
-        o9n: a.PartId,
-        _9n: a.CounterSkillMessageId
-          ? MathUtils_1.MathUtils.BigIntToLong(a.CounterSkillMessageId)
-          : 0,
-        ZVn: {
-          i9n: a.SourceType,
-          wVn: MathUtils_1.MathUtils.BigIntToLong(r.BulletId ?? BigInt(-1)),
-          r9n: r.BulletTags.filter((e) => void 0 !== e),
-          vkn: r.SkillId,
-        },
-        S8n: ModelManager_1.ModelManager.PlayerInfoModel.AdvanceRandomSeed(0),
-      });
+      var t = a.Attacker;
+      const o = a.DamageData,
+        s = Protocol_1.Aki.Protocol.W2n.create({
+          t9n: MathUtils_1.MathUtils.BigIntToLong(o.Id),
+          n9n: a.SkillLevel,
+          e9n: MathUtils_1.MathUtils.NumberToLong(
+            t.Entity.GetComponent(0).GetCreatureDataId(),
+          ),
+          q4n: MathUtils_1.MathUtils.NumberToLong(
+            this.Entity.GetComponent(0).GetCreatureDataId(),
+          ),
+          s9n: a.IsAddEnergy,
+          a9n: a.IsCounterAttack,
+          h9n: a.ForceCritical,
+          l9n: a.IsBlocked,
+          o9n: a.PartId,
+          _9n: a.CounterSkillMessageId
+            ? MathUtils_1.MathUtils.BigIntToLong(a.CounterSkillMessageId)
+            : 0,
+          ZVn: {
+            i9n: a.SourceType,
+            wVn: MathUtils_1.MathUtils.BigIntToLong(r.BulletId ?? BigInt(-1)),
+            r9n: r.BulletTags.filter((e) => void 0 !== e),
+            vkn: r.SkillId,
+          },
+          S8n: ModelManager_1.ModelManager.PlayerInfoModel.AdvanceRandomSeed(0),
+        });
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Battle",
@@ -556,7 +557,7 @@ let CharacterDamageComponent =
           this.Entity,
           s,
           (e) => {
-            let t;
+            var t;
             e &&
               e.GIs !==
                 Protocol_1.Aki.Protocol.FOs.Proto_EDamageImmune_Invincible &&
@@ -586,7 +587,7 @@ let CharacterDamageComponent =
                   ["killed", t.IsTargetKilled],
                   ["errorCode", e.lkn],
                 ),
-              e.lkn === 0) &&
+              0 === e.lkn) &&
               i(t);
           },
           e,
@@ -597,12 +598,12 @@ let CharacterDamageComponent =
       this.jqr(t, r), this.Nqr(e, t.Attacker, a);
     }
     bqr(e, t, a) {
-      const r = t.Attacker.Entity;
-      const i = this.Entity;
-      var o = e.Damage;
-      const s = e.DamageData;
-      var o = [r, i, o, s, a, e, t.HitPosition];
-      s.CalculateType === 1 &&
+      var r = t.Attacker.Entity,
+        i = this.Entity,
+        o = e.Damage,
+        s = e.DamageData,
+        o = [r, i, o, s, a, e, t.HitPosition];
+      1 === s.CalculateType &&
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.FormationPanelUIShowRoleHeal,
           i,
@@ -619,7 +620,7 @@ let CharacterDamageComponent =
         );
     }
     Nqr(e, t, a) {
-      const r = t.elt;
+      var r = t.elt;
       e.SourceType !== Protocol_1.Aki.Protocol.yTs.Proto_FromEffect &&
         (t?.elt.TriggerEvents(0, this.elt, a), this.elt.TriggerEvents(1, r, a)),
         e.IsTargetKilled && t?.elt.TriggerEvents(6, r, a),
@@ -631,39 +632,39 @@ let CharacterDamageComponent =
         );
     }
     jqr(e, t) {
-      const a = e.Attacker?.$te;
+      var a = e.Attacker?.$te;
       if (a && e.IsAddEnergy) {
-        let r;
-        let i;
-        const o = e.SkillLevel;
-        var e = e.DamageData;
+        var r,
+          i,
+          o = e.SkillLevel,
+          e = e.DamageData;
         for ([r, i] of [
           e.SpecialEnergy1,
           e.SpecialEnergy2,
           e.SpecialEnergy3,
           e.SpecialEnergy4,
         ].entries()) {
-          const s = CharacterAttributeTypes_1.specialEnergyIds[r];
-          const n = AbilityUtils_1.AbilityUtils.GetLevelValue(i, o, 0);
+          var s = CharacterAttributeTypes_1.specialEnergyIds[r],
+            n = AbilityUtils_1.AbilityUtils.GetLevelValue(i, o, 0);
           a.AddBaseValue(s, n);
         }
       }
     }
     Gqr(t, e, a = 1) {
-      const r = t.Attacker;
-      var i = e.AttackerSnapshot;
-      var e = e.TargetSnapshot;
-      var t = AbilityUtils_1.AbilityUtils.GetLevelValue(
-        t.DamageData.ToughLv,
-        t.SkillLevel,
-        0,
-      );
-      var i = CharacterDamageCalculations_1.Calculation.ToughCalculation(
-        i,
-        e,
-        t * a,
-      );
-      if (i !== 0) {
+      var r = t.Attacker,
+        i = e.AttackerSnapshot,
+        e = e.TargetSnapshot,
+        t = AbilityUtils_1.AbilityUtils.GetLevelValue(
+          t.DamageData.ToughLv,
+          t.SkillLevel,
+          0,
+        ),
+        i = CharacterDamageCalculations_1.Calculation.ToughCalculation(
+          i,
+          e,
+          t * a,
+        );
+      if (0 !== i) {
         let e = 1;
         t = this.Entity.GetComponent(0);
         ModelManager_1.ModelManager.GameModeModel.IsMulti &&
@@ -682,11 +683,12 @@ let CharacterDamageComponent =
           );
       }
       return (
+        0 <
         this.$te.GetCurrentValue(
           CharacterAttributeTypes_1.EAttributeId.Proto_Tough,
-        ) > 0
-          ? e.CurrentValues.Proto_ToughRecoverDelayTime > 0 &&
-            i !== 0 &&
+        )
+          ? 0 < e.CurrentValues.Proto_ToughRecoverDelayTime &&
+            0 !== i &&
             this.elt.AddBuff(CharacterBuffIds_1.buffId.ToughRecoverDelay, {
               InstigatorId:
                 r.zht?.GetCreatureDataId() ??
@@ -696,7 +698,7 @@ let CharacterDamageComponent =
               Reason: "韧性扣减后触发",
             })
           : !this.Xte.HasTag(-1112841587) &&
-            e.CurrentValues.Proto_WeakTime > 0 &&
+            0 < e.CurrentValues.Proto_WeakTime &&
             (this.Zqr(!0),
             (a = this.$te.GetCurrentValue(
               CharacterAttributeTypes_1.EAttributeId.Proto_WeakTime,
@@ -717,7 +719,7 @@ let CharacterDamageComponent =
       e
         ? this.Xte.AddTag(-1112841587)
         : (this.Xte.RemoveTag(-1112841587), this.Eqr?.EndTask());
-      const t = Protocol_1.Aki.Protocol.FNn.create();
+      var t = Protocol_1.Aki.Protocol.FNn.create();
       (t.rkn = this.Entity.GetComponent(0).GetCreatureDataId()),
         (t.Mkn = e),
         CombatMessage_1.CombatNet.Call(27408, this.Entity, t, (e) => {
@@ -743,11 +745,11 @@ let CharacterDamageComponent =
       this.Eqr && (this.Eqr.EndTask(), (this.Eqr = void 0));
     }
     Pqr(e) {
-      const t = e.Attacker.Sqr?.GetSkillLevelByDamageId(e.DamageData.Id);
-      const a = e.Attacker.Entity.GetComponent(34)?.GetVisionLevelByDamageId(
-        e.DamageData.Id,
-      );
-      t && t > 0 ? (e.SkillLevel = t) : a && a > 0 && (e.SkillLevel = a);
+      var t = e.Attacker.Sqr?.GetSkillLevelByDamageId(e.DamageData.Id),
+        a = e.Attacker.Entity.GetComponent(34)?.GetVisionLevelByDamageId(
+          e.DamageData.Id,
+        );
+      t && 0 < t ? (e.SkillLevel = t) : a && 0 < a && (e.SkillLevel = a);
     }
     AddToughModifier(e, t) {
       this.Lqr.has(e) || this.Lqr.set(e, new Map());
@@ -755,23 +757,23 @@ let CharacterDamageComponent =
       e.set(t, 1 + (e.get(t) ?? 0));
     }
     RemoveToughModifier(e, t) {
-      let a;
-      var e = this.Lqr.get(e);
-      e && ((a = e.get(t)) >= 1 ? e.set(t, a - 1) : e.delete(t));
+      var a,
+        e = this.Lqr.get(e);
+      e && (1 <= (a = e.get(t)) ? e.set(t, a - 1) : e.delete(t));
     }
     GetExtraToughRate(e) {
-      let t;
-      let a;
-      var e = this.Lqr.get(e);
+      var t,
+        a,
+        e = this.Lqr.get(e);
       if (!e) return CharacterAttributeTypes_1.PER_TEN_THOUSAND;
       let r = CharacterAttributeTypes_1.PER_TEN_THOUSAND;
       for ([t, a] of e.entries())
-        a > 0 &&
+        0 < a &&
           (r *= Math.pow(t / CharacterAttributeTypes_1.PER_TEN_THOUSAND, a));
       return r;
     }
     FallInjure() {
-      let e, t, a, r;
+      var e, t, a, r;
       this.Xte.HasTag(1918148596) ||
         !this.mbr.IsInGame ||
         ModelManager_1.ModelManager.DeadReviveModel.SkipFallInjure ||
@@ -802,7 +804,7 @@ let CharacterDamageComponent =
     }
     iGr(e, t, a, r) {
       let i = 0;
-      const o = this.$te.GetCurrentValue(
+      var o = this.$te.GetCurrentValue(
         CharacterAttributeTypes_1.EAttributeId.Tkn,
       );
       return (i = this.zht.IsRealMonster()
@@ -820,7 +822,7 @@ let CharacterDamageComponent =
         : i;
     }
     tGr() {
-      let e, t;
+      var e, t;
       return this.vqr.NeedCalculateFallInjure &&
         ((e = this.vqr.BeHitLocation.Z),
         (t = this.ActorComponent.ActorLocationProxy.Z) < e)
@@ -858,4 +860,4 @@ let CharacterDamageComponent =
       CharacterDamageComponent,
     )),
   (exports.CharacterDamageComponent = CharacterDamageComponent);
-// # sourceMappingURL=CharacterDamageComponent.js.map
+//# sourceMappingURL=CharacterDamageComponent.js.map

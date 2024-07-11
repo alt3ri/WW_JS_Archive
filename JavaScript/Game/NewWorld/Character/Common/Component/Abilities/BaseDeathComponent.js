@@ -1,23 +1,27 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, o, n) {
-    let r;
-    const s = arguments.length;
-    let i =
-      s < 3 ? t : n === null ? (n = Object.getOwnPropertyDescriptor(t, o)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      s = arguments.length,
+      i =
+        s < 3
+          ? t
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(t, o))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       i = Reflect.decorate(e, t, o, n);
     else
-      for (let a = e.length - 1; a >= 0; a--)
-        (r = e[a]) && (i = (s < 3 ? r(i) : s > 3 ? r(t, o, i) : r(t, o)) || i);
-    return s > 3 && i && Object.defineProperty(t, o, i), i;
+      for (var a = e.length - 1; 0 <= a; a--)
+        (r = e[a]) && (i = (s < 3 ? r(i) : 3 < s ? r(t, o, i) : r(t, o)) || i);
+    return 3 < s && i && Object.defineProperty(t, o, i), i;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BaseDeathComponent = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
 let BaseDeathComponent = class BaseDeathComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments), (this.IsDeadInternal = !1);
@@ -49,4 +53,4 @@ let BaseDeathComponent = class BaseDeathComponent extends EntityComponent_1.Enti
   BaseDeathComponent,
 )),
   (exports.BaseDeathComponent = BaseDeathComponent);
-// # sourceMappingURL=BaseDeathComponent.js.map
+//# sourceMappingURL=BaseDeathComponent.js.map

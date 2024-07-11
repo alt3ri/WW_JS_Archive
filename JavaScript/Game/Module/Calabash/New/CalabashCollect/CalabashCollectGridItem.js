@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CalabashCollectGridItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const PhantomBattleFettersViewItem_1 = require("../../../Phantom/PhantomBattle/View/PhantomBattleFettersViewItem");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const CalabashCollectStarItem_1 = require("./CalabashCollectStarItem");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  PhantomBattleFettersViewItem_1 = require("../../../Phantom/PhantomBattle/View/PhantomBattleFettersViewItem"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  CalabashCollectStarItem_1 = require("./CalabashCollectStarItem");
 class CalabashCollectGridItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -50,13 +50,13 @@ class CalabashCollectGridItem extends GridProxyAbstract_1.GridProxyAbstract {
       ));
   }
   Refresh(t, e, i) {
-    let s = (this.Pe = t).DevelopRewardData.MonsterId;
-    const a = [];
+    var s = (this.Pe = t).DevelopRewardData.MonsterId,
+      a = [];
     let r = 0;
     for (const o of ModelManager_1.ModelManager.CalabashModel.GetCalabashDevelopRewardInfoData(
       s,
     )) {
-      const h = o.IsUnlock;
+      var h = o.IsUnlock;
       a.push(h), h && r++;
     }
     t.UnlockData
@@ -75,7 +75,7 @@ class CalabashCollectGridItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.$be?.RefreshByData(a);
     s = e ? 1 : 0;
     this.GetExtendToggle(0)?.SetToggleStateForce(s),
-      s == 1 ? this.OnSelected(!1) : this.RefreshNewItem();
+      1 == s ? this.OnSelected(!1) : this.RefreshNewItem();
   }
   OnSelected(t) {
     this.Pe?.UnlockData &&
@@ -89,11 +89,11 @@ class CalabashCollectGridItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetExtendToggle(0)?.SetToggleState(0);
   }
   RefreshNewItem() {
-    const t = ModelManager_1.ModelManager.CalabashModel.CheckMonsterIdInRecord(
+    var t = ModelManager_1.ModelManager.CalabashModel.CheckMonsterIdInRecord(
       this.Pe.DevelopRewardData.MonsterId,
     );
     this.GetItem(3).SetUIActive(this.Pe.UnlockData && !t);
   }
 }
 exports.CalabashCollectGridItem = CalabashCollectGridItem;
-// # sourceMappingURL=CalabashCollectGridItem.js.map
+//# sourceMappingURL=CalabashCollectGridItem.js.map

@@ -7,4 +7,4 @@ class EffectClusteredStuffDefaultSettings extends UE.PrimaryDataAsset {
   }
 }
 exports.default = EffectClusteredStuffDefaultSettings;
-// # sourceMappingURL=EffectClusteredStuffDefaultSettings.js.map
+//# sourceMappingURL=EffectClusteredStuffDefaultSettings.js.map

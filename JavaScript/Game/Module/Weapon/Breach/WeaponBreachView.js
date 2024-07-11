@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponBreachView = void 0);
-const UE = require("ue");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const LevelGeneralCommons_1 = require("../../../LevelGamePlay/LevelGeneralCommons");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const AttributeItem_1 = require("../../Common/AttributeItem");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const ItemDefines_1 = require("../../Item/Data/ItemDefines");
-const CostItemGridComponent_1 = require("../../RoleUi/RoleBreach/CostItemGridComponent");
-const StarItem_1 = require("../../RoleUi/View/StarItem");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const UiSceneManager_1 = require("../../UiComponent/UiSceneManager");
-const UiModelUtil_1 = require("../../UiModel/UiModelUtil");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const WeaponController_1 = require("../WeaponController");
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  LevelGeneralCommons_1 = require("../../../LevelGamePlay/LevelGeneralCommons"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  AttributeItem_1 = require("../../Common/AttributeItem"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  ItemDefines_1 = require("../../Item/Data/ItemDefines"),
+  CostItemGridComponent_1 = require("../../RoleUi/RoleBreach/CostItemGridComponent"),
+  StarItem_1 = require("../../RoleUi/View/StarItem"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  UiSceneManager_1 = require("../../UiComponent/UiSceneManager"),
+  UiModelUtil_1 = require("../../UiModel/UiModelUtil"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  WeaponController_1 = require("../WeaponController");
 class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -33,11 +33,11 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
       (this.Oki = void 0),
       (this.pco = void 0),
       (this.wNo = () => {
-        this.PNo === 0
+        0 === this.PNo
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "WeaponBreachNoEnoughMaterialText",
             )
-          : this.PNo === 1
+          : 1 === this.PNo
             ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                 "WeaponBreachNoEnoughMoneyText",
               )
@@ -49,18 +49,18 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
               WeaponController_1.WeaponController.SendPbWeaponBreachRequest(
                 this.ANo,
                 (e) => {
-                  var i = this.Nki.Model;
-                  var i =
-                    (UiModelUtil_1.UiModelUtil.PlayEffectAtRootComponent(
-                      i,
-                      "WeaponBreachEffect",
-                    ),
-                    WeaponController_1.WeaponController.PlayWeaponRenderingMaterial(
-                      "WeaponBreachMaterialController",
-                      this.Nki,
-                      this.Oki,
-                    ),
-                    ConfigManager_1.ConfigManager.RoleConfig.GetWeaponBreachDaDelayTime());
+                  var i = this.Nki.Model,
+                    i =
+                      (UiModelUtil_1.UiModelUtil.PlayEffectAtRootComponent(
+                        i,
+                        "WeaponBreachEffect",
+                      ),
+                      WeaponController_1.WeaponController.PlayWeaponRenderingMaterial(
+                        "WeaponBreachMaterialController",
+                        this.Nki,
+                        this.Oki,
+                      ),
+                      ConfigManager_1.ConfigManager.RoleConfig.GetWeaponBreachDaDelayTime());
                   TimerSystem_1.TimerSystem.Delay(() => {
                     this.Nki?.Model?.CheckGetComponent(
                       19,
@@ -74,7 +74,7 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
               ));
       }),
       (this.LevelUpLockTipClick = () => {
-        const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(175);
+        var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(175);
         const i =
           ModelManager_1.ModelManager.QuestNewModel.GetCurWorldLevelBreakQuest();
         i < 0
@@ -125,35 +125,36 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
     (this.ANo = this.ExtraParams), this.qIt(), this.C4e();
   }
   qIt() {
-    const e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-      this.ANo,
-    );
-    const i = e.GetBreachConfig();
-    var t = e.GetWeaponConfig();
-    var r = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponBreach(
-      t.BreachId,
-      e.GetBreachLevel() + 1,
-    );
-    var r = (this.GetText(0).SetText(r.LevelLimit.toString()), t.BreachId);
-    var t = ModelManager_1.ModelManager.WeaponModel.GetWeaponBreachMaxLevel(r);
-    const o =
-      (this.kPt(e.GetBreachLevel(), t),
-      (this.PNo = ModelManager_1.ModelManager.WeaponModel.GetWeaponBreachState(
+    var e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
         this.ANo,
-      )),
-      this.PNo === 3
-        ? ((r =
-            LevelGeneralCommons_1.LevelGeneralCommons.GetConditionGroupHintText(
-              i.ConditionId,
-            )),
-          this.Olo.SetButtonItemActive(!1),
-          this.Olo.SetLockItemActive(!0),
-          this.Olo.SetLockLocalText(r ?? ""))
-        : (this.Olo.SetButtonItemActive(!0), this.Olo.SetLockItemActive(!1)),
-      []);
-    var t = i.Consume;
+      ),
+      i = e.GetBreachConfig(),
+      t = e.GetWeaponConfig(),
+      r = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponBreach(
+        t.BreachId,
+        e.GetBreachLevel() + 1,
+      ),
+      r = (this.GetText(0).SetText(r.LevelLimit.toString()), t.BreachId),
+      t = ModelManager_1.ModelManager.WeaponModel.GetWeaponBreachMaxLevel(r),
+      o =
+        (this.kPt(e.GetBreachLevel(), t),
+        (this.PNo =
+          ModelManager_1.ModelManager.WeaponModel.GetWeaponBreachState(
+            this.ANo,
+          )),
+        3 === this.PNo
+          ? ((r =
+              LevelGeneralCommons_1.LevelGeneralCommons.GetConditionGroupHintText(
+                i.ConditionId,
+              )),
+            this.Olo.SetButtonItemActive(!1),
+            this.Olo.SetLockItemActive(!0),
+            this.Olo.SetLockLocalText(r ?? ""))
+          : (this.Olo.SetButtonItemActive(!0), this.Olo.SetLockItemActive(!1)),
+        []),
+      t = i.Consume;
     if (t)
-      for (let [a, n] of t) {
+      for (var [a, n] of t) {
         a = {
           ItemId: a,
           IncId: 0,
@@ -180,9 +181,9 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
         this.GetHorizontalLayout(2),
         this.sAt,
       ));
-    const r = new Array(t);
+    var r = new Array(t);
     for (let e = 0; e < t; ++e) {
-      const o = {
+      var o = {
         StarOnActive: e < i,
         StarOffActive: e > i,
         StarNextActive: e === i,
@@ -195,27 +196,24 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
     this.StarLayout.RefreshByData(r);
   }
   jlo() {
-    const e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-      this.ANo,
-    );
-    const i = e.GetWeaponConfig();
-    const t =
-      ((this.xNo =
-        ModelManager_1.ModelManager.WeaponModel.GetWeaponAttributeParamList(i)),
-      e.GetBreachLevel());
-    const r = t + 1;
-    const o = e.GetLevel();
-    const a = [];
+    var e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
+        this.ANo,
+      ),
+      i = e.GetWeaponConfig(),
+      t =
+        ((this.xNo =
+          ModelManager_1.ModelManager.WeaponModel.GetWeaponAttributeParamList(
+            i,
+          )),
+        e.GetBreachLevel()),
+      r = t + 1,
+      o = e.GetLevel(),
+      a = [];
     for (const _ of this.xNo) {
-      let n = _.CurveId;
-      const s = _.PropId;
-      const l = s.Value;
-      const h = ModelManager_1.ModelManager.WeaponModel.GetCurveValue(
-        n,
-        l,
-        o,
-        t,
-      );
+      var n = _.CurveId,
+        s = _.PropId,
+        l = s.Value,
+        h = ModelManager_1.ModelManager.WeaponModel.GetCurveValue(n, l, o, t);
       let e = 0;
       t < r &&
         (e = ModelManager_1.ModelManager.WeaponModel.GetCurveValue(n, l, o, r));
@@ -233,13 +231,13 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
   }
   C4e() {
     var e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-      this.ANo,
-    ).GetWeaponConfig();
-    const i = e.WeaponName;
-    var e = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(
-      e.QualityId,
-    );
-    var e = UE.Color.FromHex(e.DropColor);
+        this.ANo,
+      ).GetWeaponConfig(),
+      i = e.WeaponName,
+      e = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(
+        e.QualityId,
+      ),
+      e = UE.Color.FromHex(e.DropColor);
     this.GetText(6).SetColor(e), this.GetText(6).ShowTextNew(i);
   }
   OnBeforeDestroy() {
@@ -247,4 +245,4 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.WeaponBreachView = WeaponBreachView;
-// # sourceMappingURL=WeaponBreachView.js.map
+//# sourceMappingURL=WeaponBreachView.js.map

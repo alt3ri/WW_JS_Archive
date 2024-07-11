@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineStateTag = void 0);
-const CombatDebugController_1 = require("../../../Utils/CombatDebugController");
-const AiStateMachine_1 = require("../AiStateMachine");
-const AiStateMachineState_1 = require("./AiStateMachineState");
+const CombatDebugController_1 = require("../../../Utils/CombatDebugController"),
+  AiStateMachine_1 = require("../AiStateMachine"),
+  AiStateMachineState_1 = require("./AiStateMachineState");
 class AiStateMachineStateTag extends AiStateMachineState_1.AiStateMachineState {
   constructor() {
     super(...arguments),
@@ -22,7 +22,7 @@ class AiStateMachineStateTag extends AiStateMachineState_1.AiStateMachineState {
   }
   OnDeactivate(t) {
     let e = !1;
-    if (t && t.BindStates && t.BindStates?.length > 0)
+    if (t && t.BindStates && 0 < t.BindStates?.length)
       for (const i of t.BindStates)
         i instanceof AiStateMachineStateTag &&
           i.TagId === this.TagId &&
@@ -42,4 +42,4 @@ class AiStateMachineStateTag extends AiStateMachineState_1.AiStateMachineState {
   }
 }
 exports.AiStateMachineStateTag = AiStateMachineStateTag;
-// # sourceMappingURL=AiStateMachineStateTag.js.map
+//# sourceMappingURL=AiStateMachineStateTag.js.map

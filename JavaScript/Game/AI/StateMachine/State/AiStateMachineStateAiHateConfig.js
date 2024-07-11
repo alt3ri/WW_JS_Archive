@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineStateAiHateConfig = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const AiStateMachine_1 = require("../AiStateMachine");
-const AiStateMachineState_1 = require("./AiStateMachineState");
+const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  AiStateMachine_1 = require("../AiStateMachine"),
+  AiStateMachineState_1 = require("./AiStateMachineState");
 class AiStateMachineStateAiHateConfig extends AiStateMachineState_1.AiStateMachineState {
   constructor() {
     super(...arguments), (this.Mne = 0), (this.Sne = void 0);
@@ -38,4 +38,4 @@ class AiStateMachineStateAiHateConfig extends AiStateMachineState_1.AiStateMachi
   }
 }
 exports.AiStateMachineStateAiHateConfig = AiStateMachineStateAiHateConfig;
-// # sourceMappingURL=AiStateMachineStateAiHateConfig.js.map
+//# sourceMappingURL=AiStateMachineStateAiHateConfig.js.map

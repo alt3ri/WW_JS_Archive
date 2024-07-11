@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputModel = void 0);
-const ModelBase_1 = require("../../Core/Framework/ModelBase");
-const Switcher_1 = require("../Utils/Switcher");
+const ModelBase_1 = require("../../Core/Framework/ModelBase"),
+  Switcher_1 = require("../Utils/Switcher");
 class InputModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -41,7 +41,7 @@ class InputModel extends ModelBase_1.ModelBase {
   }
   RemoveInputHandler(e) {
     e = this.WMe.indexOf(e);
-    e !== -1 && this.WMe.splice(e, 1);
+    -1 !== e && this.WMe.splice(e, 1);
   }
   OnClear() {
     return (
@@ -53,4 +53,4 @@ class InputModel extends ModelBase_1.ModelBase {
   }
 }
 exports.InputModel = InputModel;
-// # sourceMappingURL=InputModel.js.map
+//# sourceMappingURL=InputModel.js.map

@@ -1,30 +1,34 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, i, n) {
-    let o;
-    const s = arguments.length;
-    let r =
-      s < 3 ? t : n === null ? (n = Object.getOwnPropertyDescriptor(t, i)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      s = arguments.length,
+      r =
+        s < 3
+          ? t
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(t, i))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(e, t, i, n);
     else
-      for (let a = e.length - 1; a >= 0; a--)
-        (o = e[a]) && (r = (s < 3 ? o(r) : s > 3 ? o(t, i, r) : o(t, i)) || r);
-    return s > 3 && r && Object.defineProperty(t, i, r), r;
+      for (var a = e.length - 1; 0 <= a; a--)
+        (o = e[a]) && (r = (s < 3 ? o(r) : 3 < s ? o(t, i, r) : o(t, i)) || r);
+    return 3 < s && r && Object.defineProperty(t, i, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionRegistry = exports.ConditionPassCallback = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Stats_1 = require("../../../Core/Common/Stats");
-const ConditionById_1 = require("../../../Core/Define/ConfigQuery/ConditionById");
-const ConditionGroupById_1 = require("../../../Core/Define/ConfigQuery/ConditionGroupById");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LevelGeneralDefine_1 = require("../LevelGeneralDefine");
-const LevelConditionCenter_1 = require("./LevelConditionCenter");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
+const Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  ConditionById_1 = require("../../../Core/Define/ConfigQuery/ConditionById"),
+  ConditionGroupById_1 = require("../../../Core/Define/ConfigQuery/ConditionGroupById"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LevelGeneralDefine_1 = require("../LevelGeneralDefine"),
+  LevelConditionCenter_1 = require("./LevelConditionCenter"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder");
 class ConditionPassCallback {
   constructor(e, t) {
     (this.Callback = e), (this.Params = t);
@@ -37,14 +41,14 @@ class LevelConditionRegData {
       (this.nLe = void 0),
       (this.sLe = (...e) => {
         this.nLe || (this.nLe = void 0);
-        const t = this.ConditionReached;
-        var e =
-          ControllerHolder_1.ControllerHolder.LevelGeneralController.HandleCondition(
-            this.ConditionConfig,
-            void 0,
-            this.Owner.ConditionGroupId.toString(),
-            ...e,
-          );
+        var t = this.ConditionReached,
+          e =
+            ControllerHolder_1.ControllerHolder.LevelGeneralController.HandleCondition(
+              this.ConditionConfig,
+              void 0,
+              this.Owner.ConditionGroupId.toString(),
+              ...e,
+            );
         t !== e && (this.ConditionReached = e) && this.Owner.CheckReached();
       }),
       (this.Owner = e),
@@ -72,7 +76,7 @@ class LevelConditionRegData {
         : EventSystem_1.EventSystem.Add(n, this.sLe);
   }
   Destroy() {
-    let e;
+    var e;
     this.ConditionConfig.Type ===
       LevelGeneralDefine_1.ELevelGeneralCondition.PawnInRange &&
       ((e = this.ConditionConfig.LimitParams.get("PawnId")),
@@ -100,10 +104,10 @@ class LevelConditionGroupRegData {
       this.ConditionGroupId,
     );
     if (e) {
-      this.lLe = e.Relation === 1;
+      this.lLe = 1 === e.Relation;
       for (const n of e.GroupId) {
-        var t;
-        const i = ConditionById_1.configConditionById.GetConfig(n);
+        var t,
+          i = ConditionById_1.configConditionById.GetConfig(n);
         i &&
           (t =
             LevelConditionCenter_1.LevelConditionCenter.GetConditionEventNames(
@@ -121,7 +125,7 @@ class LevelConditionGroupRegData {
         );
   }
   IsValid() {
-    return this.aLe.size > 0;
+    return 0 < this.aLe.size;
   }
   InvokeCallbacks() {
     for (const e of this.hLe) e.Callback?.(e.Params);
@@ -140,7 +144,7 @@ class LevelConditionGroupRegData {
   }
   RemoveCallBack(e) {
     if (!this.hLe.delete(e)) return !1;
-    if (this.hLe.size > 0) return !1;
+    if (0 < this.hLe.size) return !1;
     for (const t of this.aLe) t.Destroy(), this.aLe.delete(t);
     return !0;
   }
@@ -166,7 +170,7 @@ class LevelConditionRegistry {
     );
   }
   static UnRegisterConditionGroup(e, t) {
-    const i = this._Le.get(e);
+    var i = this._Le.get(e);
     i && i.RemoveCallBack(t) && !i.IsValid() && this._Le.delete(e);
   }
   static AddPawnInRangeMap(e, t) {
@@ -182,8 +186,8 @@ class LevelConditionRegistry {
     this.cLe.delete(e);
   }
   static RegisterEntityPawnRange(e) {
-    let t;
-    const i = e?.GetComponent(0);
+    var t,
+      i = e?.GetComponent(0);
     i &&
       ((t = i.GetPbDataId()),
       this.cLe.has(t)
@@ -196,4 +200,4 @@ class LevelConditionRegistry {
 ((exports.LevelConditionRegistry = LevelConditionRegistry)._Le = new Map()),
   (LevelConditionRegistry.uLe = new Map()),
   (LevelConditionRegistry.cLe = new Map());
-// # sourceMappingURL=LevelConditionRegistry.js.map
+//# sourceMappingURL=LevelConditionRegistry.js.map

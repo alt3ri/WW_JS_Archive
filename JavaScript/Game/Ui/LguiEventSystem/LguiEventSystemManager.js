@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LguiEventSystemManager = void 0);
-const LguiUtil_1 = require("../../../Game/Module/Util/LguiUtil");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const InputMappingsDefine_1 = require("../InputDistribute/InputMappingsDefine");
+const LguiUtil_1 = require("../../../Game/Module/Util/LguiUtil"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  InputMappingsDefine_1 = require("../InputDistribute/InputMappingsDefine");
 class LguiEventSystemManager {
   static get LguiEventSystem() {
     return LguiEventSystemManager.Fmr?.EventSystem;
   }
   static async Initialize() {
-    let e;
+    var e;
     LguiEventSystemManager.ZCe ||
       ((LguiEventSystemManager.ZCe = !0),
       (e = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
@@ -35,9 +35,9 @@ class LguiEventSystemManager {
       LguiEventSystemManager.Fmr.ResetLguiEventSystemActor();
   }
   static ClickedMouse(e, t) {
-    const n = LguiEventSystemManager.Fmr;
+    var n = LguiEventSystemManager.Fmr;
     if (n?.IsValid()) {
-      const i = t === 0;
+      var i = 0 === t;
       switch (e) {
         case InputMappingsDefine_1.actionMappings.Ui左键点击:
           n.InputTrigger(i, 0);
@@ -48,9 +48,9 @@ class LguiEventSystemManager {
     }
   }
   static InputNavigation(e, t) {
-    const n = LguiEventSystemManager.Fmr;
+    var n = LguiEventSystemManager.Fmr;
     if (n?.IsValid()) {
-      const i = t === 0;
+      var i = 0 === t;
       switch (e) {
         case InputMappingsDefine_1.actionMappings.Ui方向上:
           n.InputNavigation(3, i);
@@ -88,7 +88,7 @@ class LguiEventSystemManager {
     return LguiEventSystemManager.Fmr.GetNowHitComponent();
   }
   static GetNowHitComponentName() {
-    const e = LguiEventSystemManager.GetNowHitComponent();
+    var e = LguiEventSystemManager.GetNowHitComponent();
     if (e) return e.GetDisplayName();
   }
   static GetPointerEventData(e, t = !1) {
@@ -108,4 +108,4 @@ class LguiEventSystemManager {
   }
 }
 (exports.LguiEventSystemManager = LguiEventSystemManager).ZCe = !1;
-// # sourceMappingURL=LguiEventSystemManager.js.map
+//# sourceMappingURL=LguiEventSystemManager.js.map

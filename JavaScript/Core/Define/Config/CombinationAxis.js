@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CombinationAxis = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const DicStringFloat_1 = require("./SubType/DicStringFloat");
-const DicStringString_1 = require("./SubType/DicStringString");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  DicStringFloat_1 = require("./SubType/DicStringFloat"),
+  DicStringString_1 = require("./SubType/DicStringString");
 class CombinationAxis {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -54,22 +54,22 @@ class CombinationAxis {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   axisname(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   axistype() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetPckeymapAt(t, i) {
     return this.pckeymap(t);
   }
   pckeymap(t, i) {
-    const s = this.J7.__offset(this.z7, 10);
+    var s = this.J7.__offset(this.z7, 10);
     return s
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -78,14 +78,14 @@ class CombinationAxis {
       : null;
   }
   pckeymapLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetGamepadkeymapAt(t, i) {
     return this.gamepadkeymap(t);
   }
   gamepadkeymap(t, i) {
-    const s = this.J7.__offset(this.z7, 12);
+    var s = this.J7.__offset(this.z7, 12);
     return s
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -94,14 +94,14 @@ class CombinationAxis {
       : null;
   }
   gamepadkeymapLength() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetSecondarykeyscalemapAt(t, i) {
     return this.secondarykeyscalemap(t);
   }
   secondarykeyscalemap(t, i) {
-    const s = this.J7.__offset(this.z7, 14);
+    var s = this.J7.__offset(this.z7, 14);
     return s
       ? (i || new DicStringFloat_1.DicStringFloat()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -110,17 +110,17 @@ class CombinationAxis {
       : null;
   }
   secondarykeyscalemapLength() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   mobileiconpath(t) {
-    const i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 16);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   displayname(t) {
-    const i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 18);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.CombinationAxis = CombinationAxis;
-// # sourceMappingURL=CombinationAxis.js.map
+//# sourceMappingURL=CombinationAxis.js.map

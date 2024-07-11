@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionOpenQuestChapterView = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const GeneralLogicTreeUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeUtil");
-const FlowActionBase_1 = require("./FlowActionBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  GeneralLogicTreeUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeUtil"),
+  FlowActionBase_1 = require("./FlowActionBase");
 class FlowActionOpenQuestChapterView extends FlowActionBase_1.FlowActionBase {
   constructor() {
     super(...arguments),
@@ -12,9 +12,9 @@ class FlowActionOpenQuestChapterView extends FlowActionBase_1.FlowActionBase {
       });
   }
   OnExecute() {
-    const t = this.ActionInfo.Params;
+    var t = this.ActionInfo.Params;
     if (t) {
-      const o = this.Context.Context;
+      var o = this.Context.Context;
       let e = void 0;
       if (t.QuestId) e = t.QuestId;
       else
@@ -37,4 +37,4 @@ class FlowActionOpenQuestChapterView extends FlowActionBase_1.FlowActionBase {
   }
 }
 exports.FlowActionOpenQuestChapterView = FlowActionOpenQuestChapterView;
-// # sourceMappingURL=FlowActionOpenQuestChapterView.js.map
+//# sourceMappingURL=FlowActionOpenQuestChapterView.js.map

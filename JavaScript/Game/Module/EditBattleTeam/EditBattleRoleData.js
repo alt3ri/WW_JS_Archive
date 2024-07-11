@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EditBattleRoleData = void 0);
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const RoleDefine_1 = require("../RoleUi/RoleDefine");
+const ConfigManager_1 = require("../../Manager/ConfigManager"),
+  RoleDefine_1 = require("../RoleUi/RoleDefine");
 class EditBattleRoleData {
   constructor() {
     (this.ConfigId = 0),
@@ -40,4 +40,4 @@ class EditBattleRoleData {
   }
 }
 exports.EditBattleRoleData = EditBattleRoleData;
-// # sourceMappingURL=EditBattleRoleData.js.map
+//# sourceMappingURL=EditBattleRoleData.js.map

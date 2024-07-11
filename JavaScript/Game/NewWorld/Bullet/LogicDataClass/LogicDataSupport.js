@@ -10,4 +10,4 @@ class LogicDataSupport extends LogicDataBase_1.default {
   }
 }
 exports.default = LogicDataSupport;
-// # sourceMappingURL=LogicDataSupport.js.map
+//# sourceMappingURL=LogicDataSupport.js.map

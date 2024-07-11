@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Trigger = void 0);
-const EntitySystem_1 = require("../../../../../../../Core/Entity/EntitySystem");
-const GameplayTagUtils_1 = require("../../../../../../../Core/Utils/GameplayTagUtils");
-const EventDefine_1 = require("../../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../../Common/Event/EventSystem");
-const FormationAttributeController_1 = require("../../../../../../Module/Abilities/FormationAttributeController");
-const SceneTeamEvent_1 = require("../../../../../../Module/SceneTeam/SceneTeamEvent");
-const CombatDebugController_1 = require("../../../../../../Utils/CombatDebugController");
-const ConditionFormula_1 = require("../../../../../../Utils/Trigger/ConditionFormula");
-const CharacterAttributeTypes_1 = require("../CharacterAttributeTypes");
-const TriggerType_1 = require("./TriggerType");
+const EntitySystem_1 = require("../../../../../../../Core/Entity/EntitySystem"),
+  GameplayTagUtils_1 = require("../../../../../../../Core/Utils/GameplayTagUtils"),
+  EventDefine_1 = require("../../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../../Common/Event/EventSystem"),
+  FormationAttributeController_1 = require("../../../../../../Module/Abilities/FormationAttributeController"),
+  SceneTeamEvent_1 = require("../../../../../../Module/SceneTeam/SceneTeamEvent"),
+  CombatDebugController_1 = require("../../../../../../Utils/CombatDebugController"),
+  ConditionFormula_1 = require("../../../../../../Utils/Trigger/ConditionFormula"),
+  CharacterAttributeTypes_1 = require("../CharacterAttributeTypes"),
+  TriggerType_1 = require("./TriggerType");
 class Trigger {
   constructor(e, t, i, s, n) {
     if (
@@ -104,7 +104,7 @@ class BeHitTrigger extends (exports.Trigger = Trigger) {
     }
   }
   OnActive() {
-    const e = this.GetEventTarget();
+    var e = this.GetEventTarget();
     e &&
       (EventSystem_1.EventSystem.HasWithTarget(
         e,
@@ -128,7 +128,7 @@ class BeHitTrigger extends (exports.Trigger = Trigger) {
         ));
   }
   OnInactive() {
-    const e = this.GetEventTarget();
+    var e = this.GetEventTarget();
     e &&
       (EventSystem_1.EventSystem.HasWithTarget(
         e,
@@ -188,7 +188,7 @@ class HitTrigger extends Trigger {
     }
   }
   OnActive() {
-    const e = this.GetEventTarget();
+    var e = this.GetEventTarget();
     e &&
       (EventSystem_1.EventSystem.HasWithTarget(
         e,
@@ -212,7 +212,7 @@ class HitTrigger extends Trigger {
         ));
   }
   OnInactive() {
-    const e = this.GetEventTarget();
+    var e = this.GetEventTarget();
     e &&
       EventSystem_1.EventSystem.HasWithTarget(
         e,
@@ -267,7 +267,7 @@ class HitTriggerIncludingVision extends Trigger {
     }
   }
   OnActive() {
-    const e = this.GetEventTarget();
+    var e = this.GetEventTarget();
     e &&
       !EventSystem_1.EventSystem.HasWithTarget(
         e,
@@ -281,7 +281,7 @@ class HitTriggerIncludingVision extends Trigger {
       );
   }
   OnInactive() {
-    const e = this.GetEventTarget();
+    var e = this.GetEventTarget();
     e &&
       EventSystem_1.EventSystem.HasWithTarget(
         e,
@@ -313,14 +313,14 @@ class AttributeChangedTrigger extends Trigger {
       (this.AttributeId = Number(e[1] ?? 0));
   }
   OnActive() {
-    this.TargetType === 0 &&
+    0 === this.TargetType &&
       this.OwnerTriggerComp.Entity.GetComponent(156)?.AddListener(
         this.AttributeId,
         this.OnEvent,
       );
   }
   OnInactive() {
-    this.TargetType === 0 &&
+    0 === this.TargetType &&
       this.OwnerTriggerComp?.Entity.GetComponent(156)?.RemoveListener(
         this.AttributeId,
         this.OnEvent,
@@ -360,7 +360,7 @@ class TagTrigger extends Trigger {
       (this.CheckRemove = !1),
       (this.TagId = 0),
       (this.OnEvent = (e, t) => {
-        const i = {};
+        var i = {};
         t !== this.CheckRemove &&
           this.Formula.Evaluate(i) &&
           this?.Callback(this.Formula.Params, i);
@@ -469,13 +469,13 @@ class SkillTrigger extends Trigger {
       (this.CheckEnd = !1),
       (this.OnSelfEvent = (e, t) => {
         if (t === this.SkillId) {
-          const i = EntitySystem_1.EntitySystem.Get(e)
+          var i = EntitySystem_1.EntitySystem.Get(e)
             ?.GetComponent(33)
             ?.GetSkillInfo(t);
           if (i) {
-            const s = [];
+            var s = [];
             for (let e = 0; e < i.SkillTag.Num(); e++) {
-              const n = i?.SkillTag.Get(e)?.TagName;
+              var n = i?.SkillTag.Get(e)?.TagName;
               void 0 !== n && s.push(n);
             }
             e = { SkillType: i?.SkillGenre, SkillTags: s };
@@ -710,4 +710,4 @@ class BeDamageTrigger extends Trigger {
       );
   }
 }
-// # sourceMappingURL=Trigger.js.map
+//# sourceMappingURL=Trigger.js.map

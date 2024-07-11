@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PersonalBirthAttachItem = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const AutoAttachItem_1 = require("../../AutoAttach/AutoAttachItem");
-const MIN_ALPHA = 0.5;
-const MAX_ALPHA = 1;
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  AutoAttachItem_1 = require("../../AutoAttach/AutoAttachItem"),
+  MIN_ALPHA = 0.5,
+  MAX_ALPHA = 1;
 class PersonalBirthAttachItem extends AutoAttachItem_1.AutoAttachItem {
   constructor() {
     super(...arguments),
@@ -23,8 +23,8 @@ class PersonalBirthAttachItem extends AutoAttachItem_1.AutoAttachItem {
     (this.Mnt = t), this.GetText(0).SetText(String(this.Mnt));
   }
   OnMoveItem() {
-    var t = this.GetCurrentMovePercentage();
-    var t = MathUtils_1.MathUtils.Lerp(MAX_ALPHA, MIN_ALPHA, t);
+    var t = this.GetCurrentMovePercentage(),
+      t = MathUtils_1.MathUtils.Lerp(MAX_ALPHA, MIN_ALPHA, t);
     (this.kG.X = 1),
       (this.kG.Y = 1),
       (this.kG.Z = 1),
@@ -40,4 +40,4 @@ class PersonalBirthAttachItem extends AutoAttachItem_1.AutoAttachItem {
   OnUnSelect() {}
 }
 exports.PersonalBirthAttachItem = PersonalBirthAttachItem;
-// # sourceMappingURL=PersonalBirthAttachItem.js.map
+//# sourceMappingURL=PersonalBirthAttachItem.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayCueController = void 0);
-const ControllerBase_1 = require("../../../../../../../../Core/Framework/ControllerBase");
-const GameplayCueBeamCommonItem_1 = require("../CommonItem/GameplayCueBeamCommonItem");
-const GameplayCueHookCommonItem_1 = require("../CommonItem/GameplayCueHookCommonItem");
+const ControllerBase_1 = require("../../../../../../../../Core/Framework/ControllerBase"),
+  GameplayCueBeamCommonItem_1 = require("../CommonItem/GameplayCueBeamCommonItem"),
+  GameplayCueHookCommonItem_1 = require("../CommonItem/GameplayCueHookCommonItem");
 class GameplayCueController extends ControllerBase_1.ControllerBase {
   static SpawnGameplayCueHook(e, o, a, m) {
     return GameplayCueHookCommonItem_1.GameplayCueHookCommonItem.Spawn(
@@ -27,4 +27,4 @@ class GameplayCueController extends ControllerBase_1.ControllerBase {
   }
 }
 exports.GameplayCueController = GameplayCueController;
-// # sourceMappingURL=GameplayCueController.js.map
+//# sourceMappingURL=GameplayCueController.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OpenSystemTrialRoleDescription = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const JoinTeamController_1 = require("../../../Module/JoinTeam/JoinTeamController");
-const OpenSystemBase_1 = require("./OpenSystemBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  JoinTeamController_1 = require("../../../Module/JoinTeam/JoinTeamController"),
+  OpenSystemBase_1 = require("./OpenSystemBase");
 class OpenSystemTrialRoleDescription extends OpenSystemBase_1.OpenSystemBase {
   async ExecuteOpenView(e, o) {
     return e.BoardId
@@ -20,4 +20,4 @@ class OpenSystemTrialRoleDescription extends OpenSystemBase_1.OpenSystemBase {
   }
 }
 exports.OpenSystemTrialRoleDescription = OpenSystemTrialRoleDescription;
-// # sourceMappingURL=OpenSystemTrialRoleDescription.js.map
+//# sourceMappingURL=OpenSystemTrialRoleDescription.js.map

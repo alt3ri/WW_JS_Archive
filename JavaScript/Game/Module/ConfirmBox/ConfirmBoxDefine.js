@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConfirmBoxDataNew = exports.BUTTON_DELAYTIME = void 0);
-const UiLayerType_1 = require("../../Ui/Define/UiLayerType");
-const UiPopViewData_1 = require("../../Ui/Define/UiPopViewData");
+const UiLayerType_1 = require("../../Ui/Define/UiLayerType"),
+  UiPopViewData_1 = require("../../Ui/Define/UiPopViewData");
 exports.BUTTON_DELAYTIME = 1e3;
 class ConfirmBoxDataNew extends UiPopViewData_1.UiPopViewData {
   constructor(t) {
@@ -59,4 +59,4 @@ class ConfirmBoxDataNew extends UiPopViewData_1.UiPopViewData {
   }
 }
 exports.ConfirmBoxDataNew = ConfirmBoxDataNew;
-// # sourceMappingURL=ConfirmBoxDefine.js.map
+//# sourceMappingURL=ConfirmBoxDefine.js.map

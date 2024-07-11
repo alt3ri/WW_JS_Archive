@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelLoadingModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const GlobalData_1 = require("../../GlobalData");
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  GlobalData_1 = require("../../GlobalData");
 class LevelLoadingModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -29,7 +29,7 @@ class LevelLoadingModel extends ModelBase_1.ModelBase {
     );
   }
   SetLoadingState(e) {
-    let o;
+    var o;
     this.Efi !== e &&
       ((o = "LoadingMode[Fade]"),
       (this.Efi = e)
@@ -58,7 +58,7 @@ class LevelLoadingModel extends ModelBase_1.ModelBase {
         ]);
   }
   RemoveLoadingReason(e) {
-    const o = this.GetPerformByReason(e);
+    var o = this.GetPerformByReason(e);
     this.Mfi.delete(e),
       this.RemoveLoadingPerform(o),
       Log_1.Log.CheckInfo() &&
@@ -68,7 +68,7 @@ class LevelLoadingModel extends ModelBase_1.ModelBase {
         ]);
   }
   AddLoadingPerform(e) {
-    let o = this.Sfi.get(e) ?? 0;
+    var o = this.Sfi.get(e) ?? 0;
     this.Sfi.set(e, ++o),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -80,7 +80,7 @@ class LevelLoadingModel extends ModelBase_1.ModelBase {
         );
   }
   RemoveLoadingPerform(e) {
-    let o = this.Sfi.get(e);
+    var o = this.Sfi.get(e);
     o &&
       (this.Sfi.set(e, --o), o <= 0) &&
       (this.Sfi.delete(e), Log_1.Log.CheckInfo()) &&
@@ -103,7 +103,7 @@ class LevelLoadingModel extends ModelBase_1.ModelBase {
         Log_1.Log.Info("Loading", 19, "LevelLoading:ClearLoadingPerforms");
   }
   CheckLoadingPerformsEmpty() {
-    return this.Sfi.size === 0;
+    return 0 === this.Sfi.size;
   }
   CheckCanDoClose(e) {
     return !!this.IsLoading && !this.Sfi.get(e);
@@ -118,4 +118,4 @@ class LevelLoadingModel extends ModelBase_1.ModelBase {
   }
 }
 exports.LevelLoadingModel = LevelLoadingModel;
-// # sourceMappingURL=LevelLoadingModel.js.map
+//# sourceMappingURL=LevelLoadingModel.js.map

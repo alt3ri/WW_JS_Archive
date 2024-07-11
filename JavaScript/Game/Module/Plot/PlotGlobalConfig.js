@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotGlobalConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../Core/Define/CommonDefine");
-const GlobalConfigFromCsvByName_1 = require("../../../Core/Define/ConfigQuery/GlobalConfigFromCsvByName");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const TimeUtil_1 = require("../../Common/TimeUtil");
+const Log_1 = require("../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
+  GlobalConfigFromCsvByName_1 = require("../../../Core/Define/ConfigQuery/GlobalConfigFromCsvByName"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  TimeUtil_1 = require("../../Common/TimeUtil");
 class PlotGlobalConfig {
   constructor() {
     (this.EndWaitTimeLevelC = 0),
@@ -81,7 +81,7 @@ class PlotGlobalConfig {
       (this.SkipPressingTime = this.B$i("Plot.SkipPressingTime")),
       (this.DoubleClickInterval = this.B$i("Plot.DoubleClickInterval")),
       (this.ClickBufferTime = this.B$i("Plot.ClickBufferTime")),
-      (this.DisableFlow = this.B$i("Plot.DisableFlow") >= 1),
+      (this.DisableFlow = 1 <= this.B$i("Plot.DisableFlow")),
       (this.WaitCalmTime =
         this.B$i("Plot.WaitCalmTime") * TimeUtil_1.TimeUtil.InverseMillisecond),
       (this.DragDist = this.B$i("Plot.DragDist")),
@@ -90,18 +90,18 @@ class PlotGlobalConfig {
       (this.gU = !0));
   }
   q$i() {
-    let t = this.b$i("PlotTemplate.LookAtDelay");
+    var t = this.b$i("PlotTemplate.LookAtDelay");
     StringUtils_1.StringUtils.IsEmpty(t) ||
-      ((t = t.split(",")).length === 2 &&
+      (2 === (t = t.split(",")).length &&
         (this.PlotTemplateLookAtDelay = [
           parseFloat(t[0]) * CommonDefine_1.MILLIONSECOND_PER_SECOND,
           parseFloat(t[1]) * CommonDefine_1.MILLIONSECOND_PER_SECOND,
         ]));
   }
   G$i() {
-    let t = this.b$i("PlotTemplate.CameraExitRotation");
+    var t = this.b$i("PlotTemplate.CameraExitRotation");
     StringUtils_1.StringUtils.IsEmpty(t) ||
-      ((t = t.split(",")).length === 3 &&
+      (3 === (t = t.split(",")).length &&
         (this.PlotTemplateCameraExitRotation = Rotator_1.Rotator.Create(
           parseFloat(t[0]),
           parseFloat(t[1]),
@@ -109,7 +109,7 @@ class PlotGlobalConfig {
         )));
   }
   b$i(t) {
-    const i =
+    var i =
       GlobalConfigFromCsvByName_1.configGlobalConfigFromCsvByName.GetConfig(t);
     if (i) return i.Value;
     Log_1.Log.CheckError() &&
@@ -124,4 +124,4 @@ class PlotGlobalConfig {
   }
 }
 exports.PlotGlobalConfig = PlotGlobalConfig;
-// # sourceMappingURL=PlotGlobalConfig.js.map
+//# sourceMappingURL=PlotGlobalConfig.js.map

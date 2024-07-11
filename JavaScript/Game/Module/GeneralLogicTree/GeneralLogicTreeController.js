@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GeneralLogicTreeController = void 0);
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const ControllerWithAssistantBase_1 = require("./ControllerAssistant/ControllerWithAssistantBase");
-const RequestToServerAssistant_1 = require("./ControllerAssistant/RequestToServerAssistant");
-const ServerNotifyAssistant_1 = require("./ControllerAssistant/ServerNotifyAssistant");
-const TreeExpressAssistant_1 = require("./ControllerAssistant/TreeExpressAssistant");
-const assistantMap = { 0: void 0, 1: void 0, 2: void 0 };
+const CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ControllerWithAssistantBase_1 = require("./ControllerAssistant/ControllerWithAssistantBase"),
+  RequestToServerAssistant_1 = require("./ControllerAssistant/RequestToServerAssistant"),
+  ServerNotifyAssistant_1 = require("./ControllerAssistant/ServerNotifyAssistant"),
+  TreeExpressAssistant_1 = require("./ControllerAssistant/TreeExpressAssistant"),
+  assistantMap = { [0]: void 0, 1: void 0, 2: void 0 };
 class GeneralLogicTreeController extends ControllerWithAssistantBase_1.ControllerWithAssistantBase {
   static OnClear() {
     return (GeneralLogicTreeController.u$t = void 0), super.OnClear();
@@ -130,11 +130,11 @@ class GeneralLogicTreeController extends ControllerWithAssistantBase_1.Controlle
 ((exports.GeneralLogicTreeController = GeneralLogicTreeController).u$t =
   void 0),
   (GeneralLogicTreeController.SUe = () => {
-    const e = () => {
+    var e = () => {
       GeneralLogicTreeController.u$t = void 0;
-      const e =
+      var e =
         ModelManager_1.ModelManager.GeneralLogicTreeModel.GetAllBehaviorTrees();
-      if (e && e.size > 0) for (const [, t] of e) t.SetSleep(!1);
+      if (e && 0 < e.size) for (var [, t] of e) t.SetSleep(!1);
       (ModelManager_1.ModelManager.GeneralLogicTreeModel.IsWakeUp = !0),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.GeneralLogicTreeWakeUp,
@@ -149,9 +149,9 @@ class GeneralLogicTreeController extends ControllerWithAssistantBase_1.Controlle
     GeneralLogicTreeController.u$t?.SetResult(!0);
   }),
   (GeneralLogicTreeController.m$t = (e) => {
-    let t;
-    let r;
-    const s = e.Hms;
+    var t,
+      r,
+      s = e.Hms;
     let o = void 0;
     switch (s.Xms) {
       case Protocol_1.Aki.Protocol.Pbs.cCs:
@@ -189,4 +189,4 @@ class GeneralLogicTreeController extends ControllerWithAssistantBase_1.Controlle
   (GeneralLogicTreeController.PKe = (e) => {
     ModelManager_1.ModelManager.GeneralLogicTreeModel.RemoveBehaviorTree(e);
   });
-// # sourceMappingURL=GeneralLogicTreeController.js.map
+//# sourceMappingURL=GeneralLogicTreeController.js.map

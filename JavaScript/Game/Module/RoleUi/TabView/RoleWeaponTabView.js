@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleWeaponTabView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const UiSceneManager_1 = require("../../UiComponent/UiSceneManager");
-const WeaponController_1 = require("../../Weapon/WeaponController");
-const WeaponDetailTipsComponent_1 = require("../../Weapon/WeaponDetailTipsComponent");
-const RoleController_1 = require("../RoleController");
-const Log_1 = require("../../../../Core/Common/Log");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  UiSceneManager_1 = require("../../UiComponent/UiSceneManager"),
+  WeaponController_1 = require("../../Weapon/WeaponController"),
+  WeaponDetailTipsComponent_1 = require("../../Weapon/WeaponDetailTipsComponent"),
+  RoleController_1 = require("../RoleController"),
+  Log_1 = require("../../../../Core/Common/Log");
 class RoleWeaponTabView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -42,7 +42,7 @@ class RoleWeaponTabView extends UiTabViewBase_1.UiTabViewBase {
     this.ComponentRegisterInfos = [[0, UE.UIItem]];
   }
   async OnBeforeStartAsync() {
-    const e = this.GetItem(0);
+    var e = this.GetItem(0);
     (this.Ddo = new WeaponDetailTipsComponent_1.WeaponDetailTipsComponent()),
       await this.Ddo.CreateThenShowByActorAsync(e.GetOwner());
   }
@@ -100,10 +100,10 @@ class RoleWeaponTabView extends UiTabViewBase_1.UiTabViewBase {
     RoleController_1.RoleController.PlayRoleMontage(6, e);
   }
   xdo() {
-    const e = this.plo.GetCurSelectRoleData();
-    const t = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByRoleDataId(
-      e.GetDataId(),
-    );
+    var e = this.plo.GetCurSelectRoleData(),
+      t = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByRoleDataId(
+        e.GetDataId(),
+      );
     void 0 === t
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("Role", 59, "RoleWeaponTabView获取不到武器数据", [
@@ -117,4 +117,4 @@ class RoleWeaponTabView extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.RoleWeaponTabView = RoleWeaponTabView;
-// # sourceMappingURL=RoleWeaponTabView.js.map
+//# sourceMappingURL=RoleWeaponTabView.js.map

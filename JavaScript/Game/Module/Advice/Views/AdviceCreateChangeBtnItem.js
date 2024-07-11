@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceCreateChangeBtnItem = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class AdviceCreateChangeBtnItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -24,9 +24,9 @@ class AdviceCreateChangeBtnItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.X8e]]);
   }
   w9e() {
-    const e = ModelManager_1.ModelManager.AdviceModel;
-    const i =
-      ((e.CurrentChangeWordType = 0), e.CurrentSentenceWordMap.get(this.Xy));
+    var e = ModelManager_1.ModelManager.AdviceModel,
+      i =
+        ((e.CurrentChangeWordType = 0), e.CurrentSentenceWordMap.get(this.Xy));
     (e.CurrentSelectWordId = i), (e.CurrentPreSelectSentenceIndex = this.Xy);
   }
   SetIndex(e) {
@@ -36,9 +36,9 @@ class AdviceCreateChangeBtnItem extends UiPanelBase_1.UiPanelBase {
     this.B9e(e);
   }
   B9e(e) {
-    e === 0
+    0 === e
       ? LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), "ChangeOneLineWord")
-      : this.Xy === 0
+      : 0 === this.Xy
         ? LguiUtil_1.LguiUtil.SetLocalText(
             this.GetText(1),
             "ChangeFirstLineWord",
@@ -50,4 +50,4 @@ class AdviceCreateChangeBtnItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.AdviceCreateChangeBtnItem = AdviceCreateChangeBtnItem;
-// # sourceMappingURL=AdviceCreateChangeBtnItem.js.map
+//# sourceMappingURL=AdviceCreateChangeBtnItem.js.map

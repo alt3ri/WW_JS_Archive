@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SpecialEnergyBarMorphJinXi = void 0);
-const SpecialEnergyBarMorph_1 = require("../SpecialEnergyBarMorph");
-const SpecialEnergyBarPointGraduate_1 = require("../SpecialEnergyBarPointGraduate");
+const SpecialEnergyBarMorph_1 = require("../SpecialEnergyBarMorph"),
+  SpecialEnergyBarPointGraduate_1 = require("../SpecialEnergyBarPointGraduate");
 class SpecialEnergyBarMorphJinXi extends SpecialEnergyBarMorph_1.SpecialEnergyBarMorph {
   OnInitData() {
     super.OnInitData();
@@ -14,7 +14,7 @@ class SpecialEnergyBarMorphJinXi extends SpecialEnergyBarMorph_1.SpecialEnergyBa
   }
   OnStart() {
     super.OnStart();
-    const r = this.Config.SlotNum - 1;
+    var r = this.Config.SlotNum - 1;
     for (let e = 0; e < r; e++)
       this.BarItem.SetGraduateItemOffset(
         e,
@@ -26,4 +26,4 @@ class SpecialEnergyBarMorphJinXi extends SpecialEnergyBarMorph_1.SpecialEnergyBa
   }
 }
 exports.SpecialEnergyBarMorphJinXi = SpecialEnergyBarMorphJinXi;
-// # sourceMappingURL=SpecialEnergyBarJinXi.js.map
+//# sourceMappingURL=SpecialEnergyBarJinXi.js.map

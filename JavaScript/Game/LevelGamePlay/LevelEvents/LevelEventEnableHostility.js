@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventEnableHostility = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventEnableHostility extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments), (this.fLe = void 0), (this.vq = !1);
@@ -12,7 +12,7 @@ class LevelEventEnableHostility extends LevelGeneralBase_1.LevelEventBase {
     if (e) {
       (this.vq = e.IsEnable), (this.fLe = e.EntityIds);
       for (const o of this.fLe) {
-        const s =
+        var s =
           ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(o);
         s?.Valid
           ? this.vq
@@ -33,4 +33,4 @@ class LevelEventEnableHostility extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventEnableHostility = LevelEventEnableHostility;
-// # sourceMappingURL=LevelEventEnableHostility.js.map
+//# sourceMappingURL=LevelEventEnableHostility.js.map

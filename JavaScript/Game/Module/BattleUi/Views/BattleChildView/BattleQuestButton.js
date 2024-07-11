@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleQuestButton = void 0);
-const ue_1 = require("ue");
-const BattleEntranceButton_1 = require("./BattleEntranceButton");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const MissionUpgradeIn = "MissionUpgradeIn";
-const MissionUpgradeOut = "MissionUpgradeOut";
+const ue_1 = require("ue"),
+  BattleEntranceButton_1 = require("./BattleEntranceButton"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  MissionUpgradeIn = "MissionUpgradeIn",
+  MissionUpgradeOut = "MissionUpgradeOut";
 class BattleQuestButton extends BattleEntranceButton_1.BattleEntranceButton {
   constructor() {
     super(...arguments),
@@ -27,8 +27,9 @@ class BattleQuestButton extends BattleEntranceButton_1.BattleEntranceButton {
         switch (e) {
           case MissionUpgradeIn:
             this.SequencePlayer.PlayLevelSequenceByName(MissionUpgradeOut),
-              ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode() !==
-                "Disabled" && this.SequencePlayer.StopCurrentSequence(!0, !0);
+              "Disabled" !==
+                ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode() &&
+                this.SequencePlayer.StopCurrentSequence(!0, !0);
             break;
           case MissionUpgradeOut:
             EventSystem_1.EventSystem.Emit(
@@ -39,15 +40,15 @@ class BattleQuestButton extends BattleEntranceButton_1.BattleEntranceButton {
       }),
       (this.tAn = (e) => {
         this.w_t = e;
-        const t = this.GetText(3);
-        var e =
-          (e.IsNewQuest
-            ? LguiUtil_1.LguiUtil.SetLocalText(t, "QuestUpdateNewQuestTips")
-            : LguiUtil_1.LguiUtil.SetLocalText(t, "QuestUpdateNewGoalTips"),
-          this.SequencePlayer.StopCurrentSequence(!0, !0),
-          this.SequencePlayer.PlayLevelSequenceByName(MissionUpgradeIn),
-          ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode() !==
-            "Disabled");
+        var t = this.GetText(3),
+          e =
+            (e.IsNewQuest
+              ? LguiUtil_1.LguiUtil.SetLocalText(t, "QuestUpdateNewQuestTips")
+              : LguiUtil_1.LguiUtil.SetLocalText(t, "QuestUpdateNewGoalTips"),
+            this.SequencePlayer.StopCurrentSequence(!0, !0),
+            this.SequencePlayer.PlayLevelSequenceByName(MissionUpgradeIn),
+            "Disabled" !==
+              ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode());
         e && this.SequencePlayer.StopCurrentSequence(!0, !0);
       });
   }
@@ -92,4 +93,4 @@ class BattleQuestButton extends BattleEntranceButton_1.BattleEntranceButton {
   }
 }
 exports.BattleQuestButton = BattleQuestButton;
-// # sourceMappingURL=BattleQuestButton.js.map
+//# sourceMappingURL=BattleQuestButton.js.map

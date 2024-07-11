@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configElementReactionMatrixAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const ElementReactionMatrix_1 = require("../Config/ElementReactionMatrix");
-const DB = "db_element_info.db";
-const FILE = "y.元素属性.xlsx";
-const TABLE = "ElementReactionMatrix";
-const COMMAND = "select BinData from `ElementReactionMatrix`";
-const KEY_PREFIX = "ElementReactionMatrixAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  ElementReactionMatrix_1 = require("../Config/ElementReactionMatrix"),
+  DB = "db_element_info.db",
+  FILE = "y.元素属性.xlsx",
+  TABLE = "ElementReactionMatrix",
+  COMMAND = "select BinData from `ElementReactionMatrix`",
+  KEY_PREFIX = "ElementReactionMatrixAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configElementReactionMatrixAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configElementReactionMatrixAll = {
     );
   },
   GetConfigList: (e = !0) => {
-    let o;
+    var o;
     if (
       (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configElementReactionMatrixAll = {
       }
       const t = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let i = void 0;
+        var i = void 0;
         if (
           (([o, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -67,4 +67,4 @@ exports.configElementReactionMatrixAll = {
     }
   },
 };
-// # sourceMappingURL=ElementReactionMatrixAll.js.map
+//# sourceMappingURL=ElementReactionMatrixAll.js.map

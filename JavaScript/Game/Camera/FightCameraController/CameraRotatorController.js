@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraRotatorController = void 0);
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const CameraControllerBase_1 = require("./CameraControllerBase");
+const Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  CameraControllerBase_1 = require("./CameraControllerBase");
 class CameraRotatorController extends CameraControllerBase_1.CameraControllerBase {
   constructor() {
     super(...arguments),
@@ -35,14 +35,14 @@ class CameraRotatorController extends CameraControllerBase_1.CameraControllerBas
     (this.vce = h), this.Sce(t, i, s, r);
   }
   nce(t) {
-    let i, s;
+    var i, s;
     this.dce &&
       (([s, i] =
         this.Camera.CharacterEntityHandle.Entity.GetComponent(
           52,
         ).GetCameraInput()),
-      Math.abs(s) > 0 ||
-        Math.abs(i) > 0 ||
+      0 < Math.abs(s) ||
+        0 < Math.abs(i) ||
         ((s = this.Cce / this.Ql),
         this.vce ? (this.gce = this.vce.GetCurrentValue(s)) : (this.gce = s),
         (this.gce = MathUtils_1.MathUtils.Clamp(this.gce, this.fce, this.pce)),
@@ -57,7 +57,7 @@ class CameraRotatorController extends CameraControllerBase_1.CameraControllerBas
   Mce(t, i, s, r, h, a) {
     (this.dce = !0),
       this.cce.FromUeRotator(this.Camera.CurrentCamera.ArmRotation);
-    const o = Vector_1.Vector.Create();
+    var o = Vector_1.Vector.Create();
     i.Subtraction(t, o),
       o.Rotation(this.mce),
       (this.Ql = r),
@@ -85,4 +85,4 @@ class CameraRotatorController extends CameraControllerBase_1.CameraControllerBas
   }
 }
 exports.CameraRotatorController = CameraRotatorController;
-// # sourceMappingURL=CameraRotatorController.js.map
+//# sourceMappingURL=CameraRotatorController.js.map

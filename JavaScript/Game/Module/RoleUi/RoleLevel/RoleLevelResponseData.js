@@ -15,7 +15,7 @@ class RoleLevelResponseData {
         return (this.q_o = e), (i.gkn = t ? i.gkn + 1 : i.gkn - 1), !0;
     if (!t) return !1;
     this.q_o = e;
-    const s = new RoleDefine_1.ArrayIntInt();
+    var s = new RoleDefine_1.ArrayIntInt();
     return (s.Ckn = e), (s.gkn = 1), this.G_o.Y5n.push(s), !0;
   }
   SetSelectedItemId(e) {
@@ -35,7 +35,7 @@ class RoleLevelResponseData {
     return this.G_o.z8n;
   }
   GetOverFlowMap() {
-    const e = new Map();
+    var e = new Map();
     for (const t of this.G_o.eVn) e.set(t.Ckn, t.gkn);
     return e;
   }
@@ -43,7 +43,7 @@ class RoleLevelResponseData {
     return this.G_o.tVn;
   }
   GetFinalProp() {
-    const e = new Map();
+    var e = new Map();
     for (const t of this.G_o.J8n) e.set(t.Ckn, t.gkn);
     return e;
   }
@@ -68,4 +68,4 @@ class RoleLevelUpViewResponseData {
       (this.Y5n = void 0);
   }
 }
-// # sourceMappingURL=RoleLevelResponseData.js.map
+//# sourceMappingURL=RoleLevelResponseData.js.map

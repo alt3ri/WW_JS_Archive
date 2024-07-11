@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ListSliderControl = exports.SliderItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const LOAD_LIMIT_TIME = 2e3;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  LOAD_LIMIT_TIME = 2e3;
 class SliderItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -138,18 +138,18 @@ class ListSliderControl {
             (this.IsFinish = !0),
             void this.Igi());
       this.IsFinish && (this.IsFinish = !1);
-      let t = h;
-      let i = (t > TimerSystem_1.MIN_TIME && (t = TimerSystem_1.MIN_TIME), 0);
-      let s = 0;
+      let t = h,
+        i = (t > TimerSystem_1.MIN_TIME && (t = TimerSystem_1.MIN_TIME), 0),
+        s = 0;
       for (const e of this.mgi)
         this.Rgi(e, i),
           this.SliderItemTick(e, t, i),
           i++,
-          (this.fgi !== 0 || e.Status < 3) && s++;
+          (0 !== this.fgi || e.Status < 3) && s++;
       if ((this.Ugi(t), this.Agi(), !(s > this.ygi))) {
         if (
           (this.Egi !== s && ((this.Egi = s), this.Pgi()),
-          this.hn === 1 &&
+          1 === this.hn &&
             this.vgi > LOAD_LIMIT_TIME &&
             (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
@@ -163,10 +163,10 @@ class ListSliderControl {
             (this.vgi = 0)),
           !this.rgi())
         )
-          return this.hn === 1
+          return 1 === this.hn
             ? void (this.vgi += t)
             : void (
-                this.hn === 2 &&
+                2 === this.hn &&
                 (Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "ItemHint",
@@ -181,7 +181,7 @@ class ListSliderControl {
               );
         h = this.sgi();
         this.vgi >= h &&
-          this.hn === 2 &&
+          2 === this.hn &&
           (this.Tgi &&
             (this.Tgi.SetActive(!0), this.Tgi.Play(), (this.Tgi = void 0)),
           (this.vgi = 0),
@@ -192,7 +192,7 @@ class ListSliderControl {
             11,
             "[ListSliderControl::Tick]资源使用完成,到None",
           ),
-          this.hn === 0 &&
+          0 === this.hn &&
             (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "ItemHint",
@@ -234,7 +234,7 @@ class ListSliderControl {
     }
   }
   Lgi() {
-    const t = this._gi.IsUIActiveInHierarchy();
+    var t = this._gi.IsUIActiveInHierarchy();
     if (t !== this.Sgi) {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("ItemHint", 9, "滑动状态变化", ["activeStatus", t]),
@@ -243,7 +243,7 @@ class ListSliderControl {
     }
   }
   Dgi() {
-    const t = this.xNt();
+    var t = this.xNt();
     if (
       t !== this.ygi &&
       (Log_1.Log.CheckInfo() &&
@@ -253,7 +253,7 @@ class ListSliderControl {
           "[ListSliderControl::Tick]最大数量发生变化",
         ),
       (this.ygi = t),
-      this.sgi() === 0)
+      0 === this.sgi())
     )
       for (const i of this.mgi) i.AddShowTime = 0;
   }
@@ -268,20 +268,20 @@ class ListSliderControl {
   }
   SliderItemTick(t, i, s) {
     t.Tick(i),
-      t.Status === 2 && (t.AddShowTime += i),
-      (this.fgi !== 0 && s !== 0) ||
-        (t.Status === 4
+      2 === t.Status && (t.AddShowTime += i),
+      (0 !== this.fgi && 0 !== s) ||
+        (4 === t.Status
           ? (t.Status = 5)
-          : t.Status === 2 &&
+          : 2 === t.Status &&
             t.AddShowTime >= this.Cgi &&
-            ((t.Status = 3), t.PlayEnd(), this.fgi === 0) &&
+            ((t.Status = 3), t.PlayEnd(), 0 === this.fgi) &&
             (this.pgi--, this.wgi()));
   }
   async xgi() {
     let t = void 0;
-    let i;
+    var i;
     return (
-      this.dgi.length > 0
+      0 < this.dgi.length
         ? (t = this.dgi.shift())
         : ((i = LguiUtil_1.LguiUtil.CopyItem(this.ugi, this._gi)),
           await (t = new this.lgi()).CreateByActorAsync(i.GetOwner())),
@@ -291,13 +291,13 @@ class ListSliderControl {
   }
   Ugi(t) {
     this.Mgi <= 0 ||
-      ((this.Mgi -= (this.cgi / this.ggi) * t), this.Mgi > 0) ||
+      ((this.Mgi -= (this.cgi / this.ggi) * t), 0 < this.Mgi) ||
       (this.Mgi = 0);
   }
   Agi() {
-    for (let t = this.mgi; !(t.length <= 0); ) {
-      const i = t[0];
-      if (i.Status !== 5) return;
+    for (var t = this.mgi; !(t.length <= 0); ) {
+      var i = t[0];
+      if (5 !== i.Status) return;
       (i.Status = 0),
         t.shift(),
         Log_1.Log.CheckInfo() &&
@@ -309,7 +309,7 @@ class ListSliderControl {
           ),
         i.SetActive(!1),
         this.dgi.push(i),
-        this.fgi === 1 ? this.wgi() : this.fgi === 0 && this.pgi++;
+        1 === this.fgi ? this.wgi() : 0 === this.fgi && this.pgi++;
     }
   }
   wgi() {
@@ -327,4 +327,4 @@ class ListSliderControl {
   }
 }
 exports.ListSliderControl = ListSliderControl;
-// # sourceMappingURL=ListSliderControl.js.map
+//# sourceMappingURL=ListSliderControl.js.map

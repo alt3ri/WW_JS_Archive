@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TipsAttributeItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class TipsAttributeItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(), this.CreateThenShowByActor(e.GetOwner());
@@ -16,7 +16,7 @@ class TipsAttributeItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   UpdateItem(e) {
-    const a =
+    var a =
       ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexName(
         e.Id,
       );
@@ -31,4 +31,4 @@ class TipsAttributeItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.TipsAttributeItem = TipsAttributeItem;
-// # sourceMappingURL=TipsAttributeItem.js.map
+//# sourceMappingURL=TipsAttributeItem.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventOpenHelp = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const HelpController_1 = require("../../Module/Help/HelpController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  HelpController_1 = require("../../Module/Help/HelpController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventOpenHelp extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, l) {
-    let r;
+    var r;
     e &&
       ((r = (e = e.get("HelpGroupId")) ? parseInt(e) : 0) ||
         (Log_1.Log.CheckError() &&
@@ -20,4 +20,4 @@ class LevelEventOpenHelp extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventOpenHelp = LevelEventOpenHelp;
-// # sourceMappingURL=LevelEventOpenHelp.js.map
+//# sourceMappingURL=LevelEventOpenHelp.js.map

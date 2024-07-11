@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneTeamItem = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const SceneTeamDefine_1 = require("./SceneTeamDefine");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  SceneTeamDefine_1 = require("./SceneTeamDefine");
 class SceneTeamItem {
   constructor() {
     (this.Qfo = !1),
@@ -14,7 +14,7 @@ class SceneTeamItem {
       (this.Yfo = !1);
   }
   static Create(e, t, r, i) {
-    const s = new SceneTeamItem();
+    var s = new SceneTeamItem();
     return (
       (s.Vfo = e),
       (s.Qfo = t === ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
@@ -37,7 +37,7 @@ class SceneTeamItem {
     return this.Qfo;
   }
   IsControl() {
-    let e;
+    var e;
     return this.Qfo
       ? !(
           !(e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity) ||
@@ -56,14 +56,14 @@ class SceneTeamItem {
   }
   get EntityHandle() {
     if (!this.$fo || !this.$fo.Valid) {
-      const e = ModelManager_1.ModelManager.CreatureModel.GetEntity(this.Xfo);
+      var e = ModelManager_1.ModelManager.CreatureModel.GetEntity(this.Xfo);
       if (!e || !e.Valid) return;
       this.$fo = e;
     }
     if (this.$fo.IsInit) return this.$fo;
   }
   IsDead() {
-    let e = this.EntityHandle?.Entity;
+    var e = this.EntityHandle?.Entity;
     return !e || !(e = e.GetComponent(15)) || e.IsDead();
   }
   CanGoBattle() {
@@ -76,7 +76,7 @@ class SceneTeamItem {
       : 1;
   }
   CanGoDown(e) {
-    let t;
+    var t;
     return this.EntityHandle
       ? (t = this.EntityHandle.Entity.CheckGetComponent(185)).HasTag(
           -1697149502,
@@ -98,4 +98,4 @@ class SceneTeamItem {
   }
 }
 exports.SceneTeamItem = SceneTeamItem;
-// # sourceMappingURL=SceneTeamItem.js.map
+//# sourceMappingURL=SceneTeamItem.js.map

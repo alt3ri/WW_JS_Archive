@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneObjectWaterEffect = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon");
-const EffectSystem_1 = require("../../../Effect/EffectSystem");
-const GlobalData_1 = require("../../../GlobalData");
-const ColorUtils_1 = require("../../../Utils/ColorUtils");
-const RenderConfig_1 = require("../../Config/RenderConfig");
-const EffectGlobal_1 = require("../../Effect/EffectGlobal");
-const PROFILE_KEY = "SceneObjectWaterEffect_Update";
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
+  EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ColorUtils_1 = require("../../../Utils/ColorUtils"),
+  RenderConfig_1 = require("../../Config/RenderConfig"),
+  EffectGlobal_1 = require("../../Effect/EffectGlobal"),
+  PROFILE_KEY = "SceneObjectWaterEffect_Update";
 class SceneObjectWaterEffect {
   constructor() {
     (this.Config = void 0),
@@ -37,7 +37,7 @@ class SceneObjectWaterEffect {
       (this.IsEnabled = !1);
   }
   koe() {
-    const t = UE.NewObject(UE.TraceSphereElement.StaticClass());
+    var t = UE.NewObject(UE.TraceSphereElement.StaticClass());
     (t.WorldContextObject = GlobalData_1.GlobalData.World),
       (t.bIsSingle = !1),
       (t.bIgnoreSelf = !0),
@@ -100,23 +100,23 @@ class SceneObjectWaterEffect {
     if (this.IsEnabled && this.ActorToAttach?.IsValid()) {
       let e = !1;
       this.GetActorLocation();
-      const i = this.Nnr;
-      let s =
-        (TraceElementCommon_1.TraceElementCommon.SetStartLocation(
-          i,
-          this.LastPosition,
-        ),
-        TraceElementCommon_1.TraceElementCommon.SetEndLocation(
-          i,
-          this.TempVector,
-        ),
-        TraceElementCommon_1.TraceElementCommon.SphereTrace(i, PROFILE_KEY));
+      var i = this.Nnr,
+        s =
+          (TraceElementCommon_1.TraceElementCommon.SetStartLocation(
+            i,
+            this.LastPosition,
+          ),
+          TraceElementCommon_1.TraceElementCommon.SetEndLocation(
+            i,
+            this.TempVector,
+          ),
+          TraceElementCommon_1.TraceElementCommon.SphereTrace(i, PROFILE_KEY));
       const r = i.HitResult;
       if (s && r?.bBlockingHit) {
         const r = i.HitResult;
-        const h = r.GetHitCount();
+        var h = r.GetHitCount();
         for (let t = 0; t < h; t++) {
-          const o = r.Components.Get(t).GetCollisionProfileName();
+          var o = r.Components.Get(t).GetCollisionProfileName();
           if (
             RenderConfig_1.RenderConfig.WaterCollisionProfileName.op_Equality(o)
           ) {
@@ -194,4 +194,4 @@ class SceneObjectWaterEffect {
   }
 }
 exports.SceneObjectWaterEffect = SceneObjectWaterEffect;
-// # sourceMappingURL=SceneObjectWaterEffect.js.map
+//# sourceMappingURL=SceneObjectWaterEffect.js.map

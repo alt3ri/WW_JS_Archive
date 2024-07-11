@@ -1,35 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.uiModelCreateDataPreDefine = exports.uiModelActorDefine = void 0);
-const TsSkeletalObserver_1 = require("../../SkeletalObserver/TsSkeletalObserver");
-const TsUiSceneRoleActor_1 = require("../../UiComponent/TsUiSceneRoleActor");
-const UiModelActorComponent_1 = require("../UiModelComponent/Common/UiModelActorComponent");
-const UiModelAnimationComponent_1 = require("../UiModelComponent/Common/UiModelAnimationComponent");
-const UiModelAnsControllerComponent_1 = require("../UiModelComponent/Common/UiModelAns/UiModelAnsControllerComponent");
-const UiModelDataComponent_1 = require("../UiModelComponent/Common/UiModelDataComponent");
-const UiModelEffectComponent_1 = require("../UiModelComponent/Common/UiModelEffectComponent");
-const UiModelFadeComponent_1 = require("../UiModelComponent/Common/UiModelFadeComponent");
-const UiModelLoadComponent_1 = require("../UiModelComponent/Common/UiModelLoadComponent");
-const UiModelLoadingIconComponent_1 = require("../UiModelComponent/Common/UiModelLoadingIconComponent");
-const UiModelRenderingMaterialComponent_1 = require("../UiModelComponent/Common/UiModelRenderingMaterialComponent");
-const UiModelRotateComponent_1 = require("../UiModelComponent/Common/UiModelRotateComponent");
-const UiModelTagComponent_1 = require("../UiModelComponent/Common/UiModelTagComponent");
-const UiRoleDataComponent_1 = require("../UiModelComponent/Role/UiRoleDataComponent");
-const UiRoleEyeHighLightComponent_1 = require("../UiModelComponent/Role/UiRoleEyeHighLightComponent");
-const UiRoleHuluComponent_1 = require("../UiModelComponent/Role/UiRoleHuluComponent");
-const UiRoleHuluLightSequenceComponent_1 = require("../UiModelComponent/Role/UiRoleHuluLightSequenceComponent");
-const UiRoleLoadComponent_1 = require("../UiModelComponent/Role/UiRoleLoadComponent");
-const UiRoleStateMachineComponent_1 = require("../UiModelComponent/Role/UiRoleStateMachineComponent");
-const UiRoleWeaponComponent_1 = require("../UiModelComponent/Role/UiRoleWeaponComponent");
-const UiWeaponBreachDaComponent_1 = require("../UiModelComponent/Weapon/UiWeaponBreachDaComponent");
-const UiWeaponDataComponent_1 = require("../UiModelComponent/Weapon/UiWeaponDataComponent");
-const UiModelCreateData_1 = require("../UiModelCreateData/UiModelCreateData");
+const TsSkeletalObserver_1 = require("../../SkeletalObserver/TsSkeletalObserver"),
+  TsUiSceneRoleActor_1 = require("../../UiComponent/TsUiSceneRoleActor"),
+  UiModelActorComponent_1 = require("../UiModelComponent/Common/UiModelActorComponent"),
+  UiModelAnimationComponent_1 = require("../UiModelComponent/Common/UiModelAnimationComponent"),
+  UiModelAnsControllerComponent_1 = require("../UiModelComponent/Common/UiModelAns/UiModelAnsControllerComponent"),
+  UiModelDataComponent_1 = require("../UiModelComponent/Common/UiModelDataComponent"),
+  UiModelEffectComponent_1 = require("../UiModelComponent/Common/UiModelEffectComponent"),
+  UiModelFadeComponent_1 = require("../UiModelComponent/Common/UiModelFadeComponent"),
+  UiModelLoadComponent_1 = require("../UiModelComponent/Common/UiModelLoadComponent"),
+  UiModelLoadingIconComponent_1 = require("../UiModelComponent/Common/UiModelLoadingIconComponent"),
+  UiModelRenderingMaterialComponent_1 = require("../UiModelComponent/Common/UiModelRenderingMaterialComponent"),
+  UiModelRotateComponent_1 = require("../UiModelComponent/Common/UiModelRotateComponent"),
+  UiModelTagComponent_1 = require("../UiModelComponent/Common/UiModelTagComponent"),
+  UiRoleDataComponent_1 = require("../UiModelComponent/Role/UiRoleDataComponent"),
+  UiRoleEyeHighLightComponent_1 = require("../UiModelComponent/Role/UiRoleEyeHighLightComponent"),
+  UiRoleHuluComponent_1 = require("../UiModelComponent/Role/UiRoleHuluComponent"),
+  UiRoleHuluLightSequenceComponent_1 = require("../UiModelComponent/Role/UiRoleHuluLightSequenceComponent"),
+  UiRoleLoadComponent_1 = require("../UiModelComponent/Role/UiRoleLoadComponent"),
+  UiRoleStateMachineComponent_1 = require("../UiModelComponent/Role/UiRoleStateMachineComponent"),
+  UiRoleWeaponComponent_1 = require("../UiModelComponent/Role/UiRoleWeaponComponent"),
+  UiWeaponBreachDaComponent_1 = require("../UiModelComponent/Weapon/UiWeaponBreachDaComponent"),
+  UiWeaponDataComponent_1 = require("../UiModelComponent/Weapon/UiWeaponDataComponent"),
+  UiModelCreateData_1 = require("../UiModelCreateData/UiModelCreateData");
 (exports.uiModelActorDefine = {
-  0: TsUiSceneRoleActor_1.default,
+  [0]: TsUiSceneRoleActor_1.default,
   1: TsSkeletalObserver_1.default,
 }),
   (exports.uiModelCreateDataPreDefine = {
-    0: new UiModelCreateData_1.UiModelCreateData(0, 0, 0, [
+    [0]: new UiModelCreateData_1.UiModelCreateData(0, 0, 0, [
       UiModelDataComponent_1.UiModelDataComponent,
       UiModelActorComponent_1.UiModelActorComponent,
       UiModelEffectComponent_1.UiModelEffectComponent,
@@ -111,4 +111,4 @@ const UiModelCreateData_1 = require("../UiModelCreateData/UiModelCreateData");
       UiRoleStateMachineComponent_1.UiRoleStateMachineComponent,
     ]),
   });
-// # sourceMappingURL=UiModelDefine.js.map
+//# sourceMappingURL=UiModelDefine.js.map

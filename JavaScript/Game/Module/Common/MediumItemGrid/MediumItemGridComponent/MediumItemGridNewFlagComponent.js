@@ -8,4 +8,4 @@ class MediumItemGridNewFlagComponent extends MediumItemGridVisibleComponent_1.Me
   }
 }
 exports.MediumItemGridNewFlagComponent = MediumItemGridNewFlagComponent;
-// # sourceMappingURL=MediumItemGridNewFlagComponent.js.map
+//# sourceMappingURL=MediumItemGridNewFlagComponent.js.map

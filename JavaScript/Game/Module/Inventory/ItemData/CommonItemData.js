@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonItemData = void 0);
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ItemDataBase_1 = require("./ItemDataBase");
+const TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ItemDataBase_1 = require("./ItemDataBase");
 class CommonItemData extends ItemDataBase_1.ItemDataBase {
   constructor(e, t, r, i, s) {
     super(e, r, i),
@@ -22,15 +22,15 @@ class CommonItemData extends ItemDataBase_1.ItemDataBase {
     return this.UniqueId;
   }
   GetMainType() {
-    const e = this.GetConfig();
+    var e = this.GetConfig();
     if (e) return e.MainTypeId;
   }
   GetType() {
-    const e = this.GetConfig();
+    var e = this.GetConfig();
     if (e) return e.ItemType;
   }
   GetMaxStackCount() {
-    const e = this.GetConfig();
+    var e = this.GetConfig();
     return e ? e.MaxStackableNum : 0;
   }
   GetQuality() {
@@ -52,14 +52,14 @@ class CommonItemData extends ItemDataBase_1.ItemDataBase {
     return this.GetConfig().RedDotDisableRule;
   }
   HasRedDot() {
-    const e = this.GetConfigId();
+    var e = this.GetConfigId();
     return ModelManager_1.ModelManager.InventoryModel.IsCommonItemHasRedDot(e);
   }
   SetEndTime(e) {
     this.EndTime = e;
   }
   IsLimitTimeItem() {
-    return this.EndTime > 0 && !this.IsOverTime();
+    return 0 < this.EndTime && !this.IsOverTime();
   }
   GetEndTime() {
     return this.EndTime;
@@ -75,4 +75,4 @@ class CommonItemData extends ItemDataBase_1.ItemDataBase {
   }
 }
 exports.CommonItemData = CommonItemData;
-// # sourceMappingURL=CommonItemData.js.map
+//# sourceMappingURL=CommonItemData.js.map

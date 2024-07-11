@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerDetailModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const TowerDetailData_1 = require("./TowerDetailData");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  TowerDetailData_1 = require("./TowerDetailData");
 class TowerDetailModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -14,7 +14,7 @@ class TowerDetailModel extends ModelBase_1.ModelBase {
       (this.WTo = new Map());
   }
   AddSwitchData(e, t) {
-    const s = new TowerDetailData_1.TowerSwitchData();
+    var s = new TowerDetailData_1.TowerSwitchData();
     (s.Index = e),
       (s.Name = t),
       this.IQ.set(s, new Array()),
@@ -52,4 +52,4 @@ class TowerDetailModel extends ModelBase_1.ModelBase {
   }
 }
 exports.TowerDetailModel = TowerDetailModel;
-// # sourceMappingURL=TowerDetailModel.js.map
+//# sourceMappingURL=TowerDetailModel.js.map

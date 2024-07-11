@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MotionModel = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem");
 class MotionModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -55,16 +55,16 @@ class MotionModel extends ModelBase_1.ModelBase {
                   this.pbi(o.l3n, t.Ekn);
         });
       });
-    const o = t.LLs;
+    var o = t.LLs;
     for (const i of Object.keys(o)) {
-      const e = Number(i);
+      var e = Number(i);
       this.UpdateCondition(e, o[e]);
     }
   }
   OnMotionFinishCondition(t) {
-    const o = t.LLs;
+    var o = t.LLs;
     for (const i of Object.keys(o)) {
-      const e = Number(i);
+      var e = Number(i);
       this.UpdateCondition(e, o[e]);
     }
   }
@@ -83,9 +83,9 @@ class MotionModel extends ModelBase_1.ModelBase {
     if (t) {
       t = t.get(0);
       if (t) {
-        const i = t.get(o);
+        var i = t.get(o);
         if (i) {
-          const n = i.length;
+          var n = i.length;
           for (let t = 0; t < n; t++) if (i[t] === e) return !0;
         }
       }
@@ -93,19 +93,19 @@ class MotionModel extends ModelBase_1.ModelBase {
     return !1;
   }
   UpdateCondition(t, o) {
-    const e = this.Cbi.get(t) ?? new Map();
-    const i = o.wLs;
+    var e = this.Cbi.get(t) ?? new Map(),
+      i = o.wLs;
     for (const M of Object.keys(i)) {
-      const n = Number(M);
-      const r = i[n].ULs;
-      const s = e.get(n) ?? new Map();
+      var n = Number(M),
+        r = i[n].ULs,
+        s = e.get(n) ?? new Map();
       for (const _ of Object.keys(r)) {
-        const h = Number(_);
-        const a = r[h].PLs;
-        const v = s.get(h) ?? [];
-        const l = a.length;
+        var h = Number(_),
+          a = r[h].PLs,
+          v = s.get(h) ?? [],
+          l = a.length;
         for (let t = 0; t < l; t++) {
-          const c = a[t];
+          var c = a[t];
           v.push(c);
         }
         s.set(h, v);
@@ -115,27 +115,27 @@ class MotionModel extends ModelBase_1.ModelBase {
     this.Cbi.set(t, e);
   }
   gbi(t, o) {
-    var e = this.cbi.get(t);
-    var e = (e && e.delete(o), this.dbi.get(t));
-    var e = (e && e.delete(o), this.mbi.get(t));
+    var e = this.cbi.get(t),
+      e = (e && e.delete(o), this.dbi.get(t)),
+      e = (e && e.delete(o), this.mbi.get(t));
     e && e.delete(o);
   }
   fbi(t, o) {
-    let e = this.cbi.get(t);
+    var e = this.cbi.get(t);
     e ? e.add(o) : ((e = new Set()).add(o), this.cbi.set(t, e));
   }
   pbi(t, o) {
-    let e = this.mbi.get(t);
+    var e = this.mbi.get(t);
     e ? e.add(o) : ((e = new Set()).add(o), this.mbi.set(t, e));
   }
   vbi(t, o) {
-    let e = this.dbi.get(t);
+    var e = this.dbi.get(t);
     e ? e.add(o) : ((e = new Set()).add(o), this.dbi.set(t, e));
   }
   IfRoleMotionCanUnlock(t) {
     t = this.mbi.get(t);
-    return !!t && t.size > 0;
+    return !!t && 0 < t.size;
   }
 }
 exports.MotionModel = MotionModel;
-// # sourceMappingURL=MotionModel.js.map
+//# sourceMappingURL=MotionModel.js.map

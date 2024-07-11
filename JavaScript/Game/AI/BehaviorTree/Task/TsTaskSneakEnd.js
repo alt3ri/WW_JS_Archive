@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ActorUtils_1 = require("../../../Utils/ActorUtils");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ActorUtils_1 = require("../../../Utils/ActorUtils"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskSneakEnd extends TsTaskAbortImmediatelyBase_1.default {
   ReceiveExecuteAI(e, t) {
     e.AiController
@@ -23,4 +23,4 @@ class TsTaskSneakEnd extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskSneakEnd;
-// # sourceMappingURL=TsTaskSneakEnd.js.map
+//# sourceMappingURL=TsTaskSneakEnd.js.map

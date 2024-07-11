@@ -31,15 +31,14 @@ class NiagaraComponentHandle {
   InitNiagaraComponent(i) {
     if (i) {
       if (this.Upe)
-        for (const [t, s] of this.Upe) i.SetNiagaraVariableFloat(t, s);
-      if (this.Ape)
-        for (const [a, o] of this.Ape) i.SetNiagaraVariableVec3(a, o);
-      if (this.Ppe) for (const [e, h] of this.Ppe) i.SetIntParameter(e, h);
-      if (this.xpe) for (const [r, n] of this.xpe) i.SetFloatParameter(r, n);
-      if (this.wpe) for (const [f, v] of this.wpe) i.SetColorParameter(f, v);
+        for (var [t, s] of this.Upe) i.SetNiagaraVariableFloat(t, s);
+      if (this.Ape) for (var [a, o] of this.Ape) i.SetNiagaraVariableVec3(a, o);
+      if (this.Ppe) for (var [e, h] of this.Ppe) i.SetIntParameter(e, h);
+      if (this.xpe) for (var [r, n] of this.xpe) i.SetFloatParameter(r, n);
+      if (this.wpe) for (var [f, v] of this.wpe) i.SetColorParameter(f, v);
       void 0 !== this.bForceSolo && (i.bForceSolo = this.bForceSolo);
     }
   }
 }
 exports.NiagaraComponentHandle = NiagaraComponentHandle;
-// # sourceMappingURL=NiagaraComponentHandle.js.map
+//# sourceMappingURL=NiagaraComponentHandle.js.map

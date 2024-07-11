@@ -1,14 +1,14 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonGuideController = void 0);
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const GuideController_1 = require("../Guide/GuideController");
-const JoinTeamController_1 = require("../JoinTeam/JoinTeamController");
+const ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  GuideController_1 = require("../Guide/GuideController"),
+  JoinTeamController_1 = require("../JoinTeam/JoinTeamController");
 class InstanceDungeonGuideController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return this.mEe(), !0;
@@ -33,10 +33,10 @@ class InstanceDungeonGuideController extends ControllerBase_1.ControllerBase {
       InstanceDungeonGuideController.ali();
   }
   static ali() {
-    const e =
-      ModelManager_1.ModelManager.InstanceDungeonGuideModel.GetCurrentInstanceDungeonGuideType();
-    const n =
-      ModelManager_1.ModelManager.InstanceDungeonGuideModel.GetCurrentInstanceDungeonGuideValue();
+    var e =
+        ModelManager_1.ModelManager.InstanceDungeonGuideModel.GetCurrentInstanceDungeonGuideType(),
+      n =
+        ModelManager_1.ModelManager.InstanceDungeonGuideModel.GetCurrentInstanceDungeonGuideValue();
     switch (e) {
       case 0:
         break;
@@ -56,8 +56,8 @@ class InstanceDungeonGuideController extends ControllerBase_1.ControllerBase {
   }
   static GetHaveGuide() {
     return (
-      ModelManager_1.ModelManager.InstanceDungeonGuideModel.GetCurrentInstanceDungeonGuideType() !==
-      0
+      0 !==
+      ModelManager_1.ModelManager.InstanceDungeonGuideModel.GetCurrentInstanceDungeonGuideType()
     );
   }
 }
@@ -67,4 +67,4 @@ class InstanceDungeonGuideController extends ControllerBase_1.ControllerBase {
       ModelManager_1.ModelManager.InstanceDungeonGuideModel.GetHaveGuide() &&
         _a.StartReplayGuide();
   });
-// # sourceMappingURL=InstanceDungeonGuideController.js.map
+//# sourceMappingURL=InstanceDungeonGuideController.js.map

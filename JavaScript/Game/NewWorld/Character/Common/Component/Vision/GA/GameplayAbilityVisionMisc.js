@@ -20,11 +20,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.visionSummonBuffId =
     exports.roleSummonBuffId =
       void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../../../../../Core/Define/Net/Protocol");
-const QueryTypeDefine_1 = require("../../../../../../../Core/Define/QueryTypeDefine");
-const GlobalData_1 = require("../../../../../../GlobalData");
-const CharacterBuffIds_1 = require("../../Abilities/CharacterBuffIds");
+const UE = require("ue"),
+  Protocol_1 = require("../../../../../../../Core/Define/Net/Protocol"),
+  QueryTypeDefine_1 = require("../../../../../../../Core/Define/QueryTypeDefine"),
+  GlobalData_1 = require("../../../../../../GlobalData"),
+  CharacterBuffIds_1 = require("../../Abilities/CharacterBuffIds");
 (exports.roleSummonBuffId =
   CharacterBuffIds_1.gameplayAbilityVisionBuffId.RoleSummonBuffId),
   (exports.visionSummonBuffId =
@@ -72,4 +72,4 @@ function getLineTrace() {
   );
 }
 exports.getLineTrace = getLineTrace;
-// # sourceMappingURL=GameplayAbilityVisionMisc.js.map
+//# sourceMappingURL=GameplayAbilityVisionMisc.js.map

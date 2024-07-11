@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChatTeamTipsContent = void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const ChatContentBase_1 = require("./ChatContentBase");
+const UE = require("ue"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ChatContentBase_1 = require("./ChatContentBase");
 class ChatTeamTipsContent extends ChatContentBase_1.ChatContentBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -23,10 +23,10 @@ class ChatTeamTipsContent extends ChatContentBase_1.ChatContentBase {
   bl() {
     switch (this.ChatContentData.NoticeType) {
       case Protocol_1.Aki.Protocol.FGs.Proto_EnterTeam:
-        var e = this.GetItem(1);
-        var t = this.GetItem(3);
-        var i = this.GetText(4);
-        var r = this.ChatContentData.SenderPlayerName;
+        var e = this.GetItem(1),
+          t = this.GetItem(3),
+          i = this.GetText(4),
+          r = this.ChatContentData.SenderPlayerName;
         e.SetUIActive(!1),
           t.SetUIActive(!0),
           LguiUtil_1.LguiUtil.SetLocalText(i, "PlayerEnterTeam", r);
@@ -43,11 +43,11 @@ class ChatTeamTipsContent extends ChatContentBase_1.ChatContentBase {
     this.XMt();
   }
   XMt() {
-    const e = this.GetText(0);
-    let t = this.ChatContentData.TimeStamp;
-    let i = this.ChatContentData.LastTimeStamp;
-    const r = TimeUtil_1.TimeUtil.GetServerTime();
-    t - i < ModelManager_1.ModelManager.ChatModel.ShowTimeDifferent && i !== 0
+    var e = this.GetText(0),
+      t = this.ChatContentData.TimeStamp,
+      i = this.ChatContentData.LastTimeStamp,
+      r = TimeUtil_1.TimeUtil.GetServerTime();
+    t - i < ModelManager_1.ModelManager.ChatModel.ShowTimeDifferent && 0 !== i
       ? e.SetUIActive(!1)
       : ((i = TimeUtil_1.TimeUtil.GetDataFromTimeStamp(t)),
         (t = TimeUtil_1.TimeUtil.GetDataFromTimeStamp(r)),
@@ -79,4 +79,4 @@ class ChatTeamTipsContent extends ChatContentBase_1.ChatContentBase {
   }
 }
 exports.ChatTeamTipsContent = ChatTeamTipsContent;
-// # sourceMappingURL=ChatTeamTipsContent.js.map
+//# sourceMappingURL=ChatTeamTipsContent.js.map

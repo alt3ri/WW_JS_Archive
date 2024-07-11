@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlayerEffectContainer = void 0);
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const ModelManager_1 = require("../Manager/ModelManager");
-const SceneTeamDefine_1 = require("../Module/SceneTeam/SceneTeamDefine");
-const EffectSystem_1 = require("./EffectSystem");
-const PLAYER_EFFECT_LRU_CAPACITY = 200;
+const EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  SceneTeamDefine_1 = require("../Module/SceneTeam/SceneTeamDefine"),
+  EffectSystem_1 = require("./EffectSystem"),
+  PLAYER_EFFECT_LRU_CAPACITY = 200;
 class PlayerEffectContainer {
   constructor() {
     (this.Bpe = new Array(SceneTeamDefine_1.SCENE_TEAM_MAX_NUM)),
@@ -19,26 +19,26 @@ class PlayerEffectContainer {
       (this.kpe = () => {
         for (let e = 0; e < SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++)
           this.Ope[e] = this.Npe[e];
-        let t;
-        const i = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems();
+        var t,
+          i = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems();
         for (let e = 0; e < SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++) {
-          const n = i[e];
-          const r = n?.EntityHandle;
+          var n = i[e],
+            r = n?.EntityHandle;
           n?.IsMyRole() && r ? (this.Npe[e] = r.Id) : (this.Npe[e] = 0);
         }
         for (let e = 0; e < SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++)
           (this.Gpe[e] = -1), (this.xwn[e] = !1);
         for (let e = 0; e < SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++)
           (this.qpe[e] = e),
-            this.Ope[e] > 0 &&
-              (t = this.Fpe(this.Ope[e])) > -1 &&
+            0 < this.Ope[e] &&
+              -1 < (t = this.Fpe(this.Ope[e])) &&
               ((this.Gpe[t] = e), (this.xwn[e] = !0));
         for (let e = 0; e < SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++)
           this.xwn[e] || this.Bpe[e].Clear();
         for (let e = 0; e < SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++) {
-          var s;
-          const a = this.Gpe[e];
-          if (a > -1) {
+          var s,
+            a = this.Gpe[e];
+          if (-1 < a) {
             let t = -1;
             for (let e = 0; e < SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++)
               if (this.qpe[e] === a) {
@@ -46,7 +46,7 @@ class PlayerEffectContainer {
                 break;
               }
             e !== t &&
-              t > -1 &&
+              -1 < t &&
               ((s = this.Bpe[t]),
               (this.Bpe[t] = this.Bpe[e]),
               (this.Bpe[e] = s),
@@ -72,7 +72,7 @@ class PlayerEffectContainer {
     );
   }
   Clear() {
-    for (let e = SceneTeamDefine_1.SCENE_TEAM_MAX_NUM - 1; e > -1; e--)
+    for (let e = SceneTeamDefine_1.SCENE_TEAM_MAX_NUM - 1; -1 < e; e--)
       this.Bpe[e].Clear();
     (this.Bpe.length = 0),
       EventSystem_1.EventSystem.Remove(
@@ -81,11 +81,11 @@ class PlayerEffectContainer {
       );
   }
   ClearPool() {
-    for (let e = SceneTeamDefine_1.SCENE_TEAM_MAX_NUM - 1; e > -1; e--)
+    for (let e = SceneTeamDefine_1.SCENE_TEAM_MAX_NUM - 1; -1 < e; e--)
       this.Bpe[e].Clear();
   }
   CheckGetCondition(e) {
-    return this.Vpe(e) > -1;
+    return -1 < this.Vpe(e);
   }
   GetLruHitRate(e) {
     e = this.Vpe(e);
@@ -107,7 +107,7 @@ class PlayerEffectContainer {
       : e;
   }
   CreateEffectHandleFromPool(e, t) {
-    let i = this.Vpe(t);
+    var i = this.Vpe(t);
     if (!(i < 0))
       return (
         (e = this.Bpe[i].Create(e)),
@@ -117,16 +117,16 @@ class PlayerEffectContainer {
       );
   }
   GetEffectHandleFromPool(e, t) {
-    let i = this.Vpe(t);
+    var i = this.Vpe(t);
     if (!(i < 0))
       return (i = this.Bpe[i].Get(e)) && (i.SourceEntityId = t.EntityId), i;
   }
   PutEffectHandleToPool(e) {
-    var t = e.SourceEntityId;
-    var t = this.Fpe(t);
+    var t = e.SourceEntityId,
+      t = this.Fpe(t);
     if (t < 0) {
-      if (SceneTeamDefine_1.SCENE_TEAM_MAX_NUM > 0) {
-        const i = e.CreateSource - 2;
+      if (0 < SceneTeamDefine_1.SCENE_TEAM_MAX_NUM) {
+        var i = e.CreateSource - 2;
         let t = 0;
         for (let e = 0; e < SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++)
           if (this.bpe[e] === i) {
@@ -143,11 +143,11 @@ class PlayerEffectContainer {
     );
   }
   LruRemoveExternal(e) {
-    var t = e.SourceEntityId;
-    var t = this.Fpe(t);
+    var t = e.SourceEntityId,
+      t = this.Fpe(t);
     if (t < 0) {
-      if (SceneTeamDefine_1.SCENE_TEAM_MAX_NUM > 0) {
-        const i = e.CreateSource - 2;
+      if (0 < SceneTeamDefine_1.SCENE_TEAM_MAX_NUM) {
+        var i = e.CreateSource - 2;
         let t = 0;
         for (let e = 0; e < SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++)
           if (this.bpe[e] === i) {
@@ -162,4 +162,4 @@ class PlayerEffectContainer {
   }
 }
 exports.PlayerEffectContainer = PlayerEffectContainer;
-// # sourceMappingURL=PlayerEffectContainer.js.map
+//# sourceMappingURL=PlayerEffectContainer.js.map

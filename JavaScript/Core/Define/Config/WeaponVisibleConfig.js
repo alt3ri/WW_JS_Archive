@@ -34,22 +34,22 @@ class WeaponVisibleConfig {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetBasetypeAt(t) {
     return this.basetype(t);
   }
   basetype(t) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   basetypeLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   basetypeArray() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -62,28 +62,28 @@ class WeaponVisibleConfig {
     return this.visibletags(t);
   }
   visibletags(t, s) {
-    const i = this.J7.__offset(this.z7, 8);
+    var i = this.J7.__offset(this.z7, 8);
     return i
       ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
       : null;
   }
   visibletagsLength() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetHiddentagsAt(t) {
     return this.hiddentags(t);
   }
   hiddentags(t, s) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i
       ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
       : null;
   }
   hiddentagsLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.WeaponVisibleConfig = WeaponVisibleConfig;
-// # sourceMappingURL=WeaponVisibleConfig.js.map
+//# sourceMappingURL=WeaponVisibleConfig.js.map

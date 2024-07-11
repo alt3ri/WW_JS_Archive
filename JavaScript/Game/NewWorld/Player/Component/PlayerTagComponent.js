@@ -1,24 +1,28 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, o, r) {
-    let n;
-    const a = arguments.length;
-    let s =
-      a < 3 ? t : r === null ? (r = Object.getOwnPropertyDescriptor(t, o)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var n,
+      a = arguments.length,
+      s =
+        a < 3
+          ? t
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(t, o))
+            : r;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(e, t, o, r);
     else
-      for (let i = e.length - 1; i >= 0; i--)
-        (n = e[i]) && (s = (a < 3 ? n(s) : a > 3 ? n(t, o, s) : n(t, o)) || s);
-    return a > 3 && s && Object.defineProperty(t, o, s), s;
+      for (var i = e.length - 1; 0 <= i; i--)
+        (n = e[i]) && (s = (a < 3 ? n(s) : 3 < a ? n(t, o, s) : n(t, o)) || s);
+    return 3 < a && s && Object.defineProperty(t, o, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlayerTagComponent = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const BaseTagComponent_1 = require("../../Common/Component/BaseTagComponent");
+const Log_1 = require("../../../../Core/Common/Log"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  BaseTagComponent_1 = require("../../Common/Component/BaseTagComponent");
 let PlayerTagComponent = class PlayerTagComponent extends BaseTagComponent_1.BaseTagComponent {
   constructor() {
     super(),
@@ -71,4 +75,4 @@ let PlayerTagComponent = class PlayerTagComponent extends BaseTagComponent_1.Bas
   PlayerTagComponent,
 )),
   (exports.PlayerTagComponent = PlayerTagComponent);
-// # sourceMappingURL=PlayerTagComponent.js.map
+//# sourceMappingURL=PlayerTagComponent.js.map

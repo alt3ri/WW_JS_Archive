@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionDetailUnderComponent = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const ButtonItem_1 = require("../../../Common/Button/ButtonItem");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
 class VisionDetailUnderComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -79,20 +79,20 @@ class EquipRoleAttribute extends UiPanelBase_1.UiPanelBase {
         i.GetUniqueId(),
       )
     ) {
-      const o =
-        ControllerHolder_1.ControllerHolder.PhantomBattleController.GetEquipRole(
-          i.GetUniqueId(),
-        );
-      var i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(o);
-      const r =
-        ConfigManager_1.ConfigManager.ComponentConfig.GetRoleConfigParam(
-          "RoleIcon1",
-        );
+      var o =
+          ControllerHolder_1.ControllerHolder.PhantomBattleController.GetEquipRole(
+            i.GetUniqueId(),
+          ),
+        i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(o),
+        r =
+          ConfigManager_1.ConfigManager.ComponentConfig.GetRoleConfigParam(
+            "RoleIcon1",
+          );
       this.SetTextureByPath(i[r], this.GetTexture(0));
       let t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(i.Name);
-      const s = ConfigManager_1.ConfigManager.RoleConfig.GetAllMainRoleConfig();
+      var s = ConfigManager_1.ConfigManager.RoleConfig.GetAllMainRoleConfig();
       let e = !1;
-      const n = s.length;
+      var n = s.length;
       for (let t = 0; t < n; t++)
         if (s[t].Id === o) {
           e = !0;
@@ -103,4 +103,4 @@ class EquipRoleAttribute extends UiPanelBase_1.UiPanelBase {
     }
   }
 }
-// # sourceMappingURL=VisionDetailUnderComponent.js.map
+//# sourceMappingURL=VisionDetailUnderComponent.js.map

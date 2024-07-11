@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UseBuffItemView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const NumberSelectComponent_1 = require("../../Common/NumberSelect/NumberSelectComponent");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const BuffItemControl_1 = require("../BuffItemControl");
-const BuffTargetRoleItem_1 = require("./BuffTargetRoleItem");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  NumberSelectComponent_1 = require("../../Common/NumberSelect/NumberSelectComponent"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  BuffItemControl_1 = require("../BuffItemControl"),
+  BuffTargetRoleItem_1 = require("./BuffTargetRoleItem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class UseBuffItemView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -27,9 +27,8 @@ class UseBuffItemView extends UiTickViewBase_1.UiTickViewBase {
         if (this._0t) {
           var e = this._0t.UseItemConfigId;
           if (
-            ModelManager_1.ModelManager.BuffItemModel.GetBuffItemRemainCdTime(
-              e,
-            ) > 0
+            0 <
+            ModelManager_1.ModelManager.BuffItemModel.GetBuffItemRemainCdTime(e)
           )
             ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "UseBuffCdText",
@@ -50,9 +49,9 @@ class UseBuffItemView extends UiTickViewBase_1.UiTickViewBase {
               return void ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                 "UseBuffToAliveRole",
               );
-            var e = this._0t.CurrentAttribute;
-            let t = this._0t.GetAddAttribute();
-            let i = this._0t.MaxAttribute;
+            var e = this._0t.CurrentAttribute,
+              t = this._0t.GetAddAttribute(),
+              i = this._0t.MaxAttribute;
             i < e + t
               ? ((t = this._0t.RoleName),
                 (i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
@@ -81,7 +80,7 @@ class UseBuffItemView extends UiTickViewBase_1.UiTickViewBase {
         this.d0t();
       }),
       (this.KGe = (e) => {
-        const t =
+        var t =
           ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
             "ItemUseCount",
           );
@@ -117,10 +116,10 @@ class UseBuffItemView extends UiTickViewBase_1.UiTickViewBase {
   }
   E0t(e) {
     this.y0t(), this.I0t();
-    const t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     let i = !1;
     for (const r of this.h0t) {
-      const s = r.GetUseBuffItemRoleData();
+      var s = r.GetUseBuffItemRoleData();
       if (s && s.GetEntityId() === t.Id) {
         this.M0t(r), (i = !0);
         break;
@@ -129,13 +128,13 @@ class UseBuffItemView extends UiTickViewBase_1.UiTickViewBase {
     i || this.M0t(this.h0t[0]);
   }
   T0t() {
-    let e = this._0t.UseItemConfigId;
+    var e = this._0t.UseItemConfigId;
     return ConfigManager_1.ConfigManager.BuffItemConfig.IsResurrectionItem(e) ||
       ((e =
         ConfigManager_1.ConfigManager.BuffItemConfig.GetBuffItemTotalCdTime(
           e,
         )) &&
-        e > 0)
+        0 < e)
       ? 1
       : this._0t.GetUseItemMaxCount();
   }
@@ -151,7 +150,7 @@ class UseBuffItemView extends UiTickViewBase_1.UiTickViewBase {
       this.WGe.Init(this.u0t);
   }
   OnStart() {
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     void 0 !== e && (this.E0t(e), this.rNe());
   }
   OnBeforeDestroy() {
@@ -188,8 +187,8 @@ class UseBuffItemView extends UiTickViewBase_1.UiTickViewBase {
   }
   y0t() {
     for (const i of [this.GetItem(1), this.GetItem(2), this.GetItem(3)]) {
-      const e = i.GetOwner();
-      const t = new BuffTargetRoleItem_1.BuffTargetRoleItem();
+      var e = i.GetOwner(),
+        t = new BuffTargetRoleItem_1.BuffTargetRoleItem();
       t.Initialize(e),
         t.BindOnClickedBuffTargetRoleItem(this.v0t),
         t.BindOnUseItemAnimationFinished(this.S0t),
@@ -197,7 +196,7 @@ class UseBuffItemView extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   M0t(e) {
-    const t = e.GetUseBuffItemRoleData();
+    var t = e.GetUseBuffItemRoleData();
     t
       ? e.IsSelected() ||
         (e.SetSelected(!0),
@@ -214,27 +213,27 @@ class UseBuffItemView extends UiTickViewBase_1.UiTickViewBase {
         );
   }
   p0t() {
-    let e = ModelManager_1.ModelManager.InventoryModel;
-    const t = this._0t.UseItemConfigId;
+    var e = ModelManager_1.ModelManager.InventoryModel,
+      t = this._0t.UseItemConfigId;
     e.GetItemCountByConfigId(t) < 1
       ? this.d0t()
       : ((e = this.T0t()), this.WGe.SetLimitMaxValue(e), this.WGe.Refresh(e));
   }
   I0t() {
-    const t = ModelManager_1.ModelManager.BuffItemModel.GetAllUseBuffItemRole();
+    var t = ModelManager_1.ModelManager.BuffItemModel.GetAllUseBuffItemRole();
     for (const e of this.h0t) e.SetActive(!1);
     let i = 0;
     for (let e = 0; e < this.h0t.length; e++) {
-      var s = e + 1;
-      var s = t.get(s);
-      const r = this.h0t[i];
+      var s = e + 1,
+        s = t.get(s),
+        r = this.h0t[i];
       s
         ? (r.RefreshBuffTargetRoleItem(s), r.SetActive(!0), i++)
         : r.RemoveRole();
     }
   }
   g0t() {
-    let e, t, i;
+    var e, t, i;
     this._0t &&
       this.l0t &&
       ((e = this._0t.CurrentAttribute),
@@ -243,14 +242,14 @@ class UseBuffItemView extends UiTickViewBase_1.UiTickViewBase {
       this.l0t.RefreshPreviewUseItem(e, t, i));
   }
   L0t() {
-    let e, t;
+    var e, t;
     this._0t &&
       ((e = this._0t.RoleName),
       (t = this.GetText(0)),
       LguiUtil_1.LguiUtil.SetLocalText(t, "UseBuffTitle", e));
   }
   m0t() {
-    let e, t, i;
+    var e, t, i;
     this._0t
       ? ((e = this._0t.UseItemConfigId),
         (t = this._0t.UseItemCount),
@@ -260,4 +259,4 @@ class UseBuffItemView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.UseBuffItemView = UseBuffItemView;
-// # sourceMappingURL=UseBuffItemView.js.map
+//# sourceMappingURL=UseBuffItemView.js.map

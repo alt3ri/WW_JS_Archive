@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyChangeAcceleration extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.Time = 1), (this.MoveState = 6);
@@ -21,4 +21,4 @@ class TsAnimNotifyChangeAcceleration extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifyChangeAcceleration;
-// # sourceMappingURL=TsAnimNotifyChangeAcceleration.js.map
+//# sourceMappingURL=TsAnimNotifyChangeAcceleration.js.map

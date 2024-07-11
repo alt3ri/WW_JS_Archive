@@ -22,4 +22,4 @@ class PhantomFilter extends CommonFilter_1.CommonFilter {
   }
 }
 exports.PhantomFilter = PhantomFilter;
-// # sourceMappingURL=PhantomFilter.js.map
+//# sourceMappingURL=PhantomFilter.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionAccountSettingOpen = void 0);
-const ChannelController_1 = require("../../Module/Channel/ChannelController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const ChannelController_1 = require("../../Module/Channel/ChannelController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionAccountSettingOpen extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, n) {
     return (
@@ -13,4 +13,4 @@ class LevelConditionAccountSettingOpen extends LevelGeneralBase_1.LevelCondition
   }
 }
 exports.LevelConditionAccountSettingOpen = LevelConditionAccountSettingOpen;
-// # sourceMappingURL=LevelConditionAccountSettingOpen.js.map
+//# sourceMappingURL=LevelConditionAccountSettingOpen.js.map

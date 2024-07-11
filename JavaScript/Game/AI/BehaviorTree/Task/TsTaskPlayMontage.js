@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const GlobalData_1 = require("../../../GlobalData");
-const BasePerformComponent_1 = require("../../../NewWorld/Character/Common/Component/BasePerformComponent");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BasePerformComponent_1 = require("../../../NewWorld/Character/Common/Component/BasePerformComponent"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskPlayMontage extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -28,18 +28,18 @@ class TsTaskPlayMontage extends TsTaskAbortImmediatelyBase_1.default {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
       (this.TsMontage = this.Montage.ToAssetPathName()),
-      this.TsMontage === "" && (this.TsMontage = this.MontagePath),
+      "" === this.TsMontage && (this.TsMontage = this.MontagePath),
       (this.TsMaskInteract = this.MaskInteract),
       (this.TsLoopDuration = this.LoopDuration),
       (this.TsRepeatTimes = this.RepeatTimes));
   }
   ReceiveExecuteAI(s, t) {
     this.InitTsVariables();
-    let i;
-    let h = s.AiController;
+    var i,
+      h = s.AiController;
     h
       ? ((this.Entity = h.CharActorComp.Entity),
-        this.TsMontage === ""
+        "" === this.TsMontage
           ? (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "BehaviorTree",
@@ -56,9 +56,9 @@ class TsTaskPlayMontage extends TsTaskAbortImmediatelyBase_1.default {
                 !1,
                 "TsTaskPlayMontage ReceiveExecuteAI",
               ),
-            (this.IsPlayLoop = this.TsLoopDuration !== 0),
+            (this.IsPlayLoop = 0 !== this.TsLoopDuration),
             (this.LoopMontage =
-              this.TsLoopDuration === -1 || this.TsRepeatTimes === -1),
+              -1 === this.TsLoopDuration || -1 === this.TsRepeatTimes),
             (h = this.Entity.GetComponent(37)),
             (i = new BasePerformComponent_1.PlayMontageConfig(
               this.RepeatTimes,
@@ -96,4 +96,4 @@ class TsTaskPlayMontage extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskPlayMontage;
-// # sourceMappingURL=TsTaskPlayMontage.js.map
+//# sourceMappingURL=TsTaskPlayMontage.js.map

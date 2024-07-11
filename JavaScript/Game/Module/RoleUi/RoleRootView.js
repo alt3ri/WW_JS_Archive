@@ -1,48 +1,48 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleRootView = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const AudioController_1 = require("../../../Core/Audio/AudioController");
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const Queue_1 = require("../../../Core/Container/Queue");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const EffectContext_1 = require("../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../Effect/EffectSystem");
-const GlobalData_1 = require("../../GlobalData");
-const InputSettings_1 = require("../../InputSettings/InputSettings");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const RedDotController_1 = require("../../RedDot/RedDotController");
-const RenderModuleController_1 = require("../../Render/Manager/RenderModuleController");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine");
-const TouchFingerDefine_1 = require("../../Ui/TouchFinger/TouchFingerDefine");
-const TouchFingerManager_1 = require("../../Ui/TouchFinger/TouchFingerManager");
-const UiLayer_1 = require("../../Ui/UiLayer");
-const UiManager_1 = require("../../Ui/UiManager");
-const EffectUtil_1 = require("../../Utils/EffectUtil");
-const CommonTabComponentData_1 = require("../Common/TabComponent/CommonTabComponentData");
-const CommonTabData_1 = require("../Common/TabComponent/CommonTabData");
-const CommonTabTitleData_1 = require("../Common/TabComponent/CommonTabTitleData");
-const TabComponentWithCaptionItem_1 = require("../Common/TabComponent/TabComponentWithCaptionItem");
-const RoleTabItem_1 = require("../Common/TabComponent/TabItem/RoleTabItem");
-const TabViewComponent_1 = require("../Common/TabComponent/TabViewComponent");
-const GuideConfig_1 = require("../Guide/GuideConfig");
-const UiCameraControlRotationComponent_1 = require("../UiCamera/UiCameraComponent/UiCameraControlRotationComponent");
-const UiCameraManager_1 = require("../UiCamera/UiCameraManager");
-const UiCameraAnimationManager_1 = require("../UiCameraAnimation/UiCameraAnimationManager");
-const UiSceneManager_1 = require("../UiComponent/UiSceneManager");
-const RoleListComponent_1 = require("./Component/RoleListComponent");
-const RoleDefine_1 = require("./RoleDefine");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  AudioController_1 = require("../../../Core/Audio/AudioController"),
+  CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  Queue_1 = require("../../../Core/Container/Queue"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  EffectContext_1 = require("../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../Effect/EffectSystem"),
+  GlobalData_1 = require("../../GlobalData"),
+  InputSettings_1 = require("../../InputSettings/InputSettings"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  RedDotController_1 = require("../../RedDot/RedDotController"),
+  RenderModuleController_1 = require("../../Render/Manager/RenderModuleController"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine"),
+  TouchFingerDefine_1 = require("../../Ui/TouchFinger/TouchFingerDefine"),
+  TouchFingerManager_1 = require("../../Ui/TouchFinger/TouchFingerManager"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  EffectUtil_1 = require("../../Utils/EffectUtil"),
+  CommonTabComponentData_1 = require("../Common/TabComponent/CommonTabComponentData"),
+  CommonTabData_1 = require("../Common/TabComponent/CommonTabData"),
+  CommonTabTitleData_1 = require("../Common/TabComponent/CommonTabTitleData"),
+  TabComponentWithCaptionItem_1 = require("../Common/TabComponent/TabComponentWithCaptionItem"),
+  RoleTabItem_1 = require("../Common/TabComponent/TabItem/RoleTabItem"),
+  TabViewComponent_1 = require("../Common/TabComponent/TabViewComponent"),
+  GuideConfig_1 = require("../Guide/GuideConfig"),
+  UiCameraControlRotationComponent_1 = require("../UiCamera/UiCameraComponent/UiCameraControlRotationComponent"),
+  UiCameraManager_1 = require("../UiCamera/UiCameraManager"),
+  UiCameraAnimationManager_1 = require("../UiCameraAnimation/UiCameraAnimationManager"),
+  UiSceneManager_1 = require("../UiComponent/UiSceneManager"),
+  RoleListComponent_1 = require("./Component/RoleListComponent"),
+  RoleDefine_1 = require("./RoleDefine");
 class OperationParam {
   constructor(e, t) {
     (this.OperationType = e), (this.Param = t);
@@ -73,7 +73,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
       (this.pHt = !1),
       (this.NLn = !0),
       (this.OnRoleSelect = () => {
-        let e;
+        var e;
         this.RHt
           ? ((e = new OperationParam(2)), this.cco.Push(e))
           : (this.UHt(),
@@ -88,7 +88,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
           });
       }),
       (this.CanToggleChange = (e) => {
-        let t;
+        var t;
         return (
           !!ModelManager_1.ModelManager.PlatformModel.IsGamepad() ||
           ((t = CommonParamById_1.configCommonParamById.GetIntConfig(
@@ -103,9 +103,9 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
       }),
       (this.pqe = (e) => {
         this.lco++, (this.cVe = Time_1.Time.Now);
-        const t = this.TabDataList[e];
-        const i = t.ChildViewName;
-        const s = this.TabComponent.GetTabItemByIndex(e);
+        var t = this.TabDataList[e],
+          i = t.ChildViewName,
+          s = this.TabComponent.GetTabItemByIndex(e);
         this.TabViewComponent.ToggleCallBack(t, i, s, this.plo),
           (this._Ve = e),
           (this.hco = i),
@@ -113,25 +113,25 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
           (this.A6i = this.x6i());
       }),
       (this.G6i = (e) => {
-        e !== 0 &&
+        0 !== e &&
           this.A6i &&
           ModelManager_1.ModelManager.PlatformModel.IsGamepad() &&
           this.P6i.AddPitchInput(-e);
       }),
       (this.N6i = (e) => {
-        e !== 0 &&
+        0 !== e &&
           this.A6i &&
           ModelManager_1.ModelManager.PlatformModel.IsGamepad() &&
           this.P6i.AddYawInput(e);
       }),
       (this.wDn = (e, t) => {
-        t !== 0 &&
+        0 !== t &&
           this.A6i &&
           ModelManager_1.ModelManager.PlatformModel.IsGamepad() &&
           this.P6i.AddZoomInput(t);
       }),
       (this.dco = () => {
-        let e;
+        var e;
         this.A6i &&
           (e =
             UiCameraAnimationManager_1.UiCameraAnimationManager.GetLastHandleData()) &&
@@ -143,7 +143,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
           );
       }),
       (this.pbt = (e, t) => {
-        this.A6i && t.TouchType === 2 && this.lCt();
+        this.A6i && 2 === t.TouchType && this.lCt();
       }),
       (this.yqe = (e) => {
         e = this.TabDataList[e];
@@ -169,9 +169,9 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
         this.A6i && (this.w6i = e.GetLocalPointInPlane());
       }),
       (this.b6i = (e) => {
-        let t;
+        var t;
         !this.A6i ||
-        TouchFingerManager_1.TouchFingerManager.GetTouchFingerCount() > 1 ||
+        1 < TouchFingerManager_1.TouchFingerManager.GetTouchFingerCount() ||
         InputSettings_1.InputSettings.IsInputKeyDown("RightMouseButton")
           ? (this.w6i = void 0)
           : ((t = this.w6i),
@@ -179,8 +179,8 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
             t &&
               ((e = this.w6i.X - t.X),
               (t = this.w6i.Y - t.Y),
-              e != 0 && this.P6i.AddYawInput(e),
-              t != 0) &&
+              0 != e && this.P6i.AddYawInput(e),
+              0 != t) &&
               this.P6i.AddPitchInput(t));
       }),
       (this.q6i = (e) => {
@@ -188,21 +188,21 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
       }),
       (this.O6i = (e) => {
         this.A6i &&
-          e.scrollAxisValue !== 0 &&
+          0 !== e.scrollAxisValue &&
           this.P6i.AddZoomInput(-e.scrollAxisValue);
       }),
       (this.gco = () => {
         (this.A6i = !1), this.P6i?.PauseTick();
       }),
       (this.fco = () => {
-        let e;
-        var t = UiCameraManager_1.UiCameraManager.Get();
-        var t =
-          ((this.P6i = t.AddUiCameraComponent(
-            UiCameraControlRotationComponent_1.UiCameraControlRotationComponent,
-            !1,
-          )),
-          ConfigManager_1.ConfigManager.UiRoleCameraConfig.GetDefaultRoleCameraConfig());
+        var e,
+          t = UiCameraManager_1.UiCameraManager.Get(),
+          t =
+            ((this.P6i = t.AddUiCameraComponent(
+              UiCameraControlRotationComponent_1.UiCameraControlRotationComponent,
+              !1,
+            )),
+            ConfigManager_1.ConfigManager.UiRoleCameraConfig.GetDefaultRoleCameraConfig());
         this.P6i.InitDataByConfig(t),
           (this.A6i = this.x6i()),
           this.A6i &&
@@ -233,7 +233,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
         this.UiViewSequence.PlaySequencePurely(e ? "hide" : "show");
       }),
       (this.Sco = () => {
-        let e;
+        var e;
         this._co &&
           ((e = UiSceneManager_1.UiSceneManager.GetUiStartSequenceFrame()),
           (e = new UE.FrameNumber(e)),
@@ -249,8 +249,8 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
     this.pHt = !0;
   }
   O0t() {
-    if (((this.pHt = !1), this.cco.Size !== 0)) {
-      const e = this.cco.Pop();
+    if (((this.pHt = !1), 0 !== this.cco.Size)) {
+      var e = this.cco.Pop();
       if (e)
         switch (e.OperationType) {
           case 0:
@@ -317,7 +317,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
     this.OLn(), this.RefreshRoleList();
   }
   RefreshRoleList() {
-    let e;
+    var e;
     this.RHt
       ? ((e = new OperationParam(0)), this.cco.Push(e))
       : (this.UHt(),
@@ -327,16 +327,16 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
   }
   async RefreshRoleListAsync() {
     UiLayer_1.UiLayer.SetShowMaskLayer("RefreshRoleListAsync", !0);
-    var e = this.plo.GetRoleIdList();
-    var e =
-      (await this.RoleListComponent.UpdateComponent(e).finally(() => {
-        UiLayer_1.UiLayer.SetShowMaskLayer("RefreshRoleListAsync", !1);
-      }),
-      this.plo.GetCurSelectRoleId());
+    var e = this.plo.GetRoleIdList(),
+      e =
+        (await this.RoleListComponent.UpdateComponent(e).finally(() => {
+          UiLayer_1.UiLayer.SetShowMaskLayer("RefreshRoleListAsync", !1);
+        }),
+        this.plo.GetCurSelectRoleId());
     this.RoleListComponent?.SetCurSelection(e);
   }
   RefreshTabList() {
-    let e;
+    var e;
     this.RHt
       ? ((e = new OperationParam(1)), this.cco.Push(e))
       : (this.UHt(),
@@ -346,15 +346,15 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
   }
   async RefreshTabListAsync() {
     UiLayer_1.UiLayer.SetShowMaskLayer("RefreshTabListAsync", !0);
-    const e = this.plo.GetRoleTabDataList();
-    const t = this.TabDataList.toString() !== e.toString();
-    const i = ((this.TabDataList = e), this.TabDataList.length);
-    const s = this.TabComponent.CreateTabItemDataByLength(i);
+    var e = this.plo.GetRoleTabDataList(),
+      t = this.TabDataList.toString() !== e.toString(),
+      i = ((this.TabDataList = e), this.TabDataList.length),
+      s = this.TabComponent.CreateTabItemDataByLength(i);
     if (this.plo.GetRoleSystemUiParams().TabRedDot) {
-      const n = this.plo?.GetCurSelectRoleData();
+      var n = this.plo?.GetCurSelectRoleData();
       for (let e = 0; e < i; e++) {
-        var o = this.TabDataList[e].ChildViewName;
-        var o = this.GetRedDotName(o);
+        var o = this.TabDataList[e].ChildViewName,
+          o = this.GetRedDotName(o);
         o && ((s[e].RedDotName = o), (s[e].RedDotUid = n.GetDataId()));
       }
     }
@@ -383,18 +383,18 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
       });
   }
   async SelectRoleTabOutSide(t) {
-    var e = new CustomPromise_1.CustomPromise();
-    var e =
-      (await Promise.all([
-        this.UiViewSequence.PlaySequenceAsync("RoleListStart", e),
-        this.TabComponent.ShowItemAsync(),
-      ]),
-      (this.plo.RoleViewState = 0),
-      this.TabDataList.findIndex((e) => e.ChildViewName === t));
+    var e = new CustomPromise_1.CustomPromise(),
+      e =
+        (await Promise.all([
+          this.UiViewSequence.PlaySequenceAsync("RoleListStart", e),
+          this.TabComponent.ShowItemAsync(),
+        ]),
+        (this.plo.RoleViewState = 0),
+        this.TabDataList.findIndex((e) => e.ChildViewName === t));
     this.TabComponent.SelectToggleByIndex(e);
   }
   InitTabComponent() {
-    const e = new CommonTabComponentData_1.CommonTabComponentData(
+    var e = new CommonTabComponentData_1.CommonTabComponentData(
       this.dVe,
       this.pqe,
       this.yqe,
@@ -413,16 +413,16 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
   }
   mco(s, e) {
     const n = this.TabDataList[s].LightSequence;
-    let t = this.m5i.get(s);
+    var t = this.m5i.get(s);
     t
       ? (this.R7t && (this.R7t.Stop(), (this._co = !1), (this.R7t = void 0)),
         (t = t.SequencePlayer).Play(),
         (this._co = !0),
         (this.R7t = t))
-      : this.uco.get(s) !== 1 &&
+      : 1 !== this.uco.get(s) &&
         (this.uco.set(s, 1),
         ResourceSystem_1.ResourceSystem.LoadAsync(n, UE.LevelSequence, (e) => {
-          let t, i;
+          var t, i;
           ObjectUtils_1.ObjectUtils.IsValid(e)
             ? ((e = e),
               ((t = new UE.MovieSceneSequencePlaybackSettings()).bRestoreState =
@@ -455,8 +455,8 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
         }));
   }
   lCt() {
-    let e;
-    TouchFingerManager_1.TouchFingerManager.GetTouchFingerCount() > 1 &&
+    var e;
+    1 < TouchFingerManager_1.TouchFingerManager.GetTouchFingerCount() &&
       ((e = TouchFingerManager_1.TouchFingerManager.GetFingerExpandCloseValue(
         TouchFingerDefine_1.EFingerIndex.One,
         TouchFingerDefine_1.EFingerIndex.Two,
@@ -468,7 +468,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Guide", 44, "异步操作执行过程中不能触发引导");
     else {
-      if (e.length === 2 && e[0] === GuideConfig_1.GuideConfig.TabTag) {
+      if (2 === e.length && e[0] === GuideConfig_1.GuideConfig.TabTag) {
         this.TabComponent ||
           ((t = new CommonTabComponentData_1.CommonTabComponentData(
             this.dVe,
@@ -501,7 +501,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
               Log_1.Log.Error("Guide", 44, "Layout加载未完成")
             );
       }
-      if (e.length === 2 && e[0] === GuideConfig_1.GuideConfig.SlotTag) {
+      if (2 === e.length && e[0] === GuideConfig_1.GuideConfig.SlotTag) {
         const s = Number(e[1]);
         t = this.RoleListComponent.GetSelfScrollView()
           .GetScrollItemByIndex(s)
@@ -509,7 +509,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
         return t ? [t, t] : void 0;
       }
       t =
-        e.length !== 2
+        2 !== e.length
           ? e[0]
           : e.find(
               (e) =>
@@ -596,7 +596,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
         EventDefine_1.EEventName.RoleSystemChangeRole,
         this.OnRoleSelect,
       );
-    const e = this.GetDraggable(6);
+    var e = this.GetDraggable(6);
     e.OnPointerBeginDragCallBack.Bind(this.B6i),
       e.OnPointerDragCallBack.Bind(this.b6i),
       e.OnPointerEndDragCallBack.Bind(this.q6i),
@@ -668,7 +668,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
         EventDefine_1.EEventName.OnActivateUiCameraAnimationHandle,
         this.fco,
       );
-    const e = this.GetDraggable(6);
+    var e = this.GetDraggable(6);
     e.OnPointerBeginDragCallBack.Unbind(),
       e.OnPointerDragCallBack.Unbind(),
       e.OnPointerEndDragCallBack.Unbind(),
@@ -715,13 +715,13 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
     this.RefreshRoleSystemModeUiParam();
   }
   RefreshRoleSystemModeUiParam() {
-    const e = this.plo.GetRoleSystemUiParams();
+    var e = this.plo.GetRoleSystemUiParams();
     this.BindRedDot(e.RoleListButtonRedDot),
       this.SetRoleListButtonVisible(e.RoleListButton),
       this.RoleListComponent.SetRoleSystemUiParams(e);
   }
   LoadFloorEffect() {
-    const e = UiSceneManager_1.UiSceneManager.GetActorByTag("RoleFloorCase");
+    var e = UiSceneManager_1.UiSceneManager.GetActorByTag("RoleFloorCase");
     e &&
       (this.Fho = EffectUtil_1.EffectUtil.SpawnUiEffect(
         "RoleSystemFloorEffect",
@@ -731,11 +731,11 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
       ));
   }
   GetRedDotName(e) {
-    return e === "RoleAttributeTabView"
+    return "RoleAttributeTabView" === e
       ? "RoleAttributeTab"
-      : e === "RoleResonanceTabNewView"
+      : "RoleResonanceTabNewView" === e
         ? "RoleResonanceTab"
-        : e === "RolePhantomTabView"
+        : "RolePhantomTabView" === e
           ? "VisionOneKeyEquip"
           : void 0;
   }
@@ -822,4 +822,4 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RoleRootView = RoleRootView;
-// # sourceMappingURL=RoleRootView.js.map
+//# sourceMappingURL=RoleRootView.js.map

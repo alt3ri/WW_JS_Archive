@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ScanTrackedMarksView = void 0);
-const UE = require("ue");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const BattleChildView_1 = require("./BattleChildView/BattleChildView");
-const ScanTrackedMarks_1 = require("./ScanTrackedMarks");
+const UE = require("ue"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  BattleChildView_1 = require("./BattleChildView/BattleChildView"),
+  ScanTrackedMarks_1 = require("./ScanTrackedMarks");
 class ScanTrackedMarksView extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
@@ -16,14 +16,14 @@ class ScanTrackedMarksView extends BattleChildView_1.BattleChildView {
       (this.Ect = new Set()),
       (this.yct = (t, e) => {
         if (e && !(e.ScanInfos.length <= 0)) {
-          const i = EntitySystem_1.EntitySystem.Get(t);
+          var i = EntitySystem_1.EntitySystem.Get(t);
           if (i) {
             this.Ect.add(t);
-            const s = i.GetComponent(1)?.Owner;
-            const r = e.ScanCompositeConfig.ShowDistance;
+            const s = i.GetComponent(1)?.Owner,
+              r = e.ScanCompositeConfig.ShowDistance;
             for (const n of e.ScanInfos) {
               const a = n.Color;
-              if (n.IconPath.length !== 0) {
+              if (0 !== n.IconPath.length) {
                 ResourceSystem_1.ResourceSystem.LoadAsync(
                   n.IconPath,
                   UE.LGUISpriteData_BaseObject,
@@ -53,7 +53,7 @@ class ScanTrackedMarksView extends BattleChildView_1.BattleChildView {
       }),
       (this.Tct = (e) => {
         this.Ect.has(e) && this.Ect.delete(e);
-        const t = this.Sct.get(e);
+        var t = this.Sct.get(e);
         t && (t.ToClose(), this.Sct.delete(e));
       });
   }
@@ -64,7 +64,7 @@ class ScanTrackedMarksView extends BattleChildView_1.BattleChildView {
     super.Reset(), this.Lct(), this.Sct.clear();
   }
   Update() {
-    for (const [, e] of this.Sct) e.Update();
+    for (var [, e] of this.Sct) e.Update();
   }
   Ict(e, t, i, s, r, n, a, o, _) {
     this.Sct.has(e) ||
@@ -106,4 +106,4 @@ class ScanTrackedMarksView extends BattleChildView_1.BattleChildView {
   }
 }
 exports.ScanTrackedMarksView = ScanTrackedMarksView;
-// # sourceMappingURL=ScanTrackedMarksView.js.map
+//# sourceMappingURL=ScanTrackedMarksView.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleDescribeComponent = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const SimpleGenericLayout_1 = require("../../Util/Layout/SimpleGenericLayout");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  SimpleGenericLayout_1 = require("../../Util/Layout/SimpleGenericLayout");
 class RoleDescribeComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -35,10 +35,10 @@ class RoleDescribeComponent extends UiPanelBase_1.UiPanelBase {
   }
   Update(e, i = !1) {
     this.cjt = e;
-    let t;
-    let s;
-    let r;
-    var e = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(this.cjt);
+    var t,
+      s,
+      r,
+      e = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(this.cjt);
     e &&
       (this.GetText(0).ShowTextNew(e.Name),
       (t = ConfigManager_1.ConfigManager.CommonConfig.GetElementConfig(
@@ -56,4 +56,4 @@ class RoleDescribeComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleDescribeComponent = RoleDescribeComponent;
-// # sourceMappingURL=RoleDescribeComponent.js.map
+//# sourceMappingURL=RoleDescribeComponent.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.KeySettingRowTypeItem = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class KeySettingRowTypeItem extends UiPanelBase_1.UiPanelBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -13,8 +13,8 @@ class KeySettingRowTypeItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   Refresh(e) {
-    let i, t, s;
-    e.GetRowType() === 1 &&
+    var i, t, s;
+    1 === e.GetRowType() &&
       ((s = e.KeyTypeIconSpritePath),
       (i = this.GetSprite(0)),
       (t = this.GetText(1)),
@@ -29,4 +29,4 @@ class KeySettingRowTypeItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.KeySettingRowTypeItem = KeySettingRowTypeItem;
-// # sourceMappingURL=KeySettingRowTypeItem.js.map
+//# sourceMappingURL=KeySettingRowTypeItem.js.map

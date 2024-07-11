@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelBuffSetWalkableFloorAngle = void 0);
-const Log_1 = require("../../../../../../../../Core/Common/Log");
-const LevelBuffBase_1 = require("./LevelBuffBase");
+const Log_1 = require("../../../../../../../../Core/Common/Log"),
+  LevelBuffBase_1 = require("./LevelBuffBase");
 class LevelBuffSetWalkableFloorAngle extends LevelBuffBase_1.LevelBuffBase {
   constructor() {
     super(...arguments), (this.lXo = 0);
   }
   OnCreated() {
-    const e = this.Entity.CheckGetComponent(161).CharacterMovement;
-    const l = ((this.lXo = e.WalkableFloorAngle), Number(this.Params[0]));
+    var e = this.Entity.CheckGetComponent(161).CharacterMovement,
+      l = ((this.lXo = e.WalkableFloorAngle), Number(this.Params[0]));
     l
       ? e.SetWalkableFloorAngle(l)
       : Log_1.Log.CheckError() &&
@@ -27,4 +27,4 @@ class LevelBuffSetWalkableFloorAngle extends LevelBuffBase_1.LevelBuffBase {
   }
 }
 exports.LevelBuffSetWalkableFloorAngle = LevelBuffSetWalkableFloorAngle;
-// # sourceMappingURL=LevelBuffSetWalkableFloorAngle.js.map
+//# sourceMappingURL=LevelBuffSetWalkableFloorAngle.js.map

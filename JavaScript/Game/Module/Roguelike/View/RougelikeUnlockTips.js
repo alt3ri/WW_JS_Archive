@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoguelikeUnlockTips = void 0);
-const UE = require("ue");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class RoguelikeUnlockTips extends UiViewBase_1.UiViewBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIText]];
@@ -20,4 +20,4 @@ class RoguelikeUnlockTips extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RoguelikeUnlockTips = RoguelikeUnlockTips;
-// # sourceMappingURL=RougelikeUnlockTips.js.map
+//# sourceMappingURL=RougelikeUnlockTips.js.map

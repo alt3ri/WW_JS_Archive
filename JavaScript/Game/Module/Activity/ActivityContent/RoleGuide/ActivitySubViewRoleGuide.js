@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivitySubViewRoleGuide = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const RoleController_1 = require("../../../RoleUi/RoleController");
-const ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController");
-const ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase");
-const ActivityRoleDescribeComponent_1 = require("../UniversalComponents/ActivityRoleDescribeComponent");
-const ActivitySmallItemGrid_1 = require("../UniversalComponents/ActivitySmallItemGrid");
-const ActivityDescriptionTypeB_1 = require("../UniversalComponents/Content/ActivityDescriptionTypeB");
-const ActivityRewardList_1 = require("../UniversalComponents/Content/ActivityRewardList");
-const ActivityFunctionalTypeA_1 = require("../UniversalComponents/Functional/ActivityFunctionalTypeA");
-const ActivityTitleTypeA_1 = require("../UniversalComponents/Title/ActivityTitleTypeA");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  RoleController_1 = require("../../../RoleUi/RoleController"),
+  ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
+  ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase"),
+  ActivityRoleDescribeComponent_1 = require("../UniversalComponents/ActivityRoleDescribeComponent"),
+  ActivitySmallItemGrid_1 = require("../UniversalComponents/ActivitySmallItemGrid"),
+  ActivityDescriptionTypeB_1 = require("../UniversalComponents/Content/ActivityDescriptionTypeB"),
+  ActivityRewardList_1 = require("../UniversalComponents/Content/ActivityRewardList"),
+  ActivityFunctionalTypeA_1 = require("../UniversalComponents/Functional/ActivityFunctionalTypeA"),
+  ActivityTitleTypeA_1 = require("../UniversalComponents/Title/ActivityTitleTypeA");
 class ActivitySubViewRoleGuide extends ActivitySubViewBase_1.ActivitySubViewBase {
   constructor() {
     super(...arguments),
@@ -28,8 +28,8 @@ class ActivitySubViewRoleGuide extends ActivitySubViewBase_1.ActivitySubViewBase
         return new ActivitySmallItemGrid_1.ActivitySmallItemGrid();
       }),
       (this.Uke = () => {
-        let i = this.ActivityBaseData.ShowQuestId;
-        ModelManager_1.ModelManager.QuestNewModel.GetQuestState(i) === 2
+        var i = this.ActivityBaseData.ShowQuestId;
+        2 === ModelManager_1.ModelManager.QuestNewModel.GetQuestState(i)
           ? UiManager_1.UiManager.OpenView("QuestView", i)
           : ((i = this.ActivityBaseData.RoleGuideConfig.ShowQuestGetWay),
             StringUtils_1.StringUtils.IsEmpty(i) ||
@@ -40,12 +40,12 @@ class ActivitySubViewRoleGuide extends ActivitySubViewBase_1.ActivitySubViewBase
               ));
       }),
       (this.Ake = () => {
-        const i = this.ActivityBaseData.RoleQuestId;
-        ModelManager_1.ModelManager.QuestNewModel.GetQuestState(i) === 2 &&
+        var i = this.ActivityBaseData.RoleQuestId;
+        2 === ModelManager_1.ModelManager.QuestNewModel.GetQuestState(i) &&
           UiManager_1.UiManager.OpenView("QuestView", i);
       }),
       (this.Pke = () => {
-        const i = [this.ActivityBaseData.RoleTrialId];
+        var i = [this.ActivityBaseData.RoleTrialId];
         RoleController_1.RoleController.OpenRoleMainView(1, 0, i);
       });
   }
@@ -70,47 +70,47 @@ class ActivitySubViewRoleGuide extends ActivitySubViewBase_1.ActivitySubViewBase
   }
   OnSetData() {}
   async OnBeforeStartAsync() {
-    var i = this.GetItem(0);
-    var i =
-      ((this.LNe = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
-      await this.LNe.CreateThenShowByActorAsync(i.GetOwner()),
-      this.GetItem(1));
-    var i =
-      ((this.DNe = new ActivityDescriptionTypeB_1.ActivityDescriptionTypeB()),
-      await this.DNe.CreateThenShowByActorAsync(i.GetOwner()),
-      this.GetItem(2));
-    var i =
-      ((this.UNe = new ActivityRewardList_1.ActivityRewardList()),
-      await this.UNe.CreateThenShowByActorAsync(i.GetOwner()),
-      this.GetItem(4));
-    var i =
-      ((this.Dke =
-        new ActivityRoleDescribeComponent_1.ActivityRoleDescribeComponent()),
-      await this.Dke.CreateThenShowByActorAsync(i.GetOwner()),
-      this.GetItem(3));
-    var i =
-      ((this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA()),
-      await this.ANe.CreateThenShowByActorAsync(i.GetOwner()),
-      this.GetItem(9));
-    const t = this.ActivityBaseData.GetRoleResourcePath();
+    var i = this.GetItem(0),
+      i =
+        ((this.LNe = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
+        await this.LNe.CreateThenShowByActorAsync(i.GetOwner()),
+        this.GetItem(1)),
+      i =
+        ((this.DNe = new ActivityDescriptionTypeB_1.ActivityDescriptionTypeB()),
+        await this.DNe.CreateThenShowByActorAsync(i.GetOwner()),
+        this.GetItem(2)),
+      i =
+        ((this.UNe = new ActivityRewardList_1.ActivityRewardList()),
+        await this.UNe.CreateThenShowByActorAsync(i.GetOwner()),
+        this.GetItem(4)),
+      i =
+        ((this.Dke =
+          new ActivityRoleDescribeComponent_1.ActivityRoleDescribeComponent()),
+        await this.Dke.CreateThenShowByActorAsync(i.GetOwner()),
+        this.GetItem(3)),
+      i =
+        ((this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA()),
+        await this.ANe.CreateThenShowByActorAsync(i.GetOwner()),
+        this.GetItem(9)),
+      t = this.ActivityBaseData.GetRoleResourcePath();
     StringUtils_1.StringUtils.IsEmpty(t) || (await this.LoadPrefabAsync(t, i));
   }
   OnStart() {
-    var i = this.ActivityBaseData.LocalConfig;
-    var i =
-      (this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
-      this.DNe.SetContentVisible(!StringUtils_1.StringUtils.IsEmpty(i?.Desc)),
-      i?.Desc && this.DNe.SetContentByTextId(i.Desc),
-      this.DNe.SetTitleVisible(
-        !StringUtils_1.StringUtils.IsEmpty(i?.DescTheme),
-      ),
-      i?.DescTheme && this.DNe.SetTitleByTextId(i.DescTheme),
-      this.UNe.SetTitleByTextId("Activity_RoleGuideActivity_RewardDesc"),
-      this.UNe.InitGridLayout(this.Rke),
-      this.ANe.FunctionButton.BindCallback(this.Ake),
-      MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-        "CollectActivity_Button_ahead",
-      ));
+    var i = this.ActivityBaseData.LocalConfig,
+      i =
+        (this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
+        this.DNe.SetContentVisible(!StringUtils_1.StringUtils.IsEmpty(i?.Desc)),
+        i?.Desc && this.DNe.SetContentByTextId(i.Desc),
+        this.DNe.SetTitleVisible(
+          !StringUtils_1.StringUtils.IsEmpty(i?.DescTheme),
+        ),
+        i?.DescTheme && this.DNe.SetTitleByTextId(i.DescTheme),
+        this.UNe.SetTitleByTextId("Activity_RoleGuideActivity_RewardDesc"),
+        this.UNe.InitGridLayout(this.Rke),
+        this.ANe.FunctionButton.BindCallback(this.Ake),
+        MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+          "CollectActivity_Button_ahead",
+        ));
     this.ANe.FunctionButton.SetText(i),
       this.Dke.Update(this.ActivityBaseData.RoleId),
       this.OnRefreshView();
@@ -122,18 +122,18 @@ class ActivitySubViewRoleGuide extends ActivitySubViewBase_1.ActivitySubViewBase
     this.FNe();
   }
   FNe() {
-    const [i, t] = this.GetTimeVisibleAndRemainTime();
+    var [i, t] = this.GetTimeVisibleAndRemainTime();
     this.LNe.SetTimeTextVisible(i), i && this.LNe.SetTimeTextByText(t);
   }
   xke() {
-    let i;
-    let t = this.ActivityBaseData?.ShowQuestId;
+    var i,
+      t = this.ActivityBaseData?.ShowQuestId;
     t
-      ? ((t = ModelManager_1.ModelManager.QuestNewModel.GetQuestState(t) !== 3),
+      ? ((t = 3 !== ModelManager_1.ModelManager.QuestNewModel.GetQuestState(t)),
         (i = ModelManager_1.ModelManager.QuestNewModel.GetQuestState(
           this.ActivityBaseData.RoleQuestId,
         )),
-        (t = t && !(i === 3)),
+        (t = t && !(3 === i)),
         this.GetItem(6).SetUIActive(t),
         t &&
           ((i = this.ActivityBaseData.RoleGuideConfig.ShowQuestTips),
@@ -144,24 +144,25 @@ class ActivitySubViewRoleGuide extends ActivitySubViewBase_1.ActivitySubViewBase
       : this.GetItem(6).SetUIActive(!1);
   }
   jqe() {
-    const i =
-      ModelManager_1.ModelManager.QuestNewModel.GetQuestState(
-        this.ActivityBaseData.RoleQuestId,
-      ) === 3;
-    const t = [];
+    var i =
+        3 ===
+        ModelManager_1.ModelManager.QuestNewModel.GetQuestState(
+          this.ActivityBaseData.RoleQuestId,
+        ),
+      t = [];
     for (const s of this.ActivityBaseData.GetPreviewReward()) {
-      const e = { Item: s, HasClaimed: i };
+      var e = { Item: s, HasClaimed: i };
       t.push(e);
     }
     this.UNe.RefreshItemLayout(t);
   }
   _Oe() {
-    let i;
-    var t = ModelManager_1.ModelManager.QuestNewModel.GetQuestState(
-      this.ActivityBaseData.RoleQuestId,
-    );
-    const e = this.ActivityBaseData.IsUnLock();
-    var t = t === 3;
+    var i,
+      t = ModelManager_1.ModelManager.QuestNewModel.GetQuestState(
+        this.ActivityBaseData.RoleQuestId,
+      ),
+      e = this.ActivityBaseData.IsUnLock(),
+      t = 3 === t;
     e ||
       ((i = this.GetCurrentLockConditionText()),
       this.ANe.SetLockTextByTextId(i)),
@@ -171,4 +172,4 @@ class ActivitySubViewRoleGuide extends ActivitySubViewBase_1.ActivitySubViewBase
   }
 }
 exports.ActivitySubViewRoleGuide = ActivitySubViewRoleGuide;
-// # sourceMappingURL=ActivitySubViewRoleGuide.js.map
+//# sourceMappingURL=ActivitySubViewRoleGuide.js.map

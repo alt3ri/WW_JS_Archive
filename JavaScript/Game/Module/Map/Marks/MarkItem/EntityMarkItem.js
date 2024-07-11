@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EntityMarkItem = void 0);
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const EntityMarkItemView_1 = require("../MarkItemView/EntityMarkItemView");
-const ConfigMarkItem_1 = require("./ConfigMarkItem");
+const Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  EntityMarkItemView_1 = require("../MarkItemView/EntityMarkItemView"),
+  ConfigMarkItem_1 = require("./ConfigMarkItem");
 class EntityMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
   constructor(e, t, r, i, s, a) {
     super(e, t, r, s, a, 1), (this.TrackTarget = i);
@@ -22,7 +22,7 @@ class EntityMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
   }
   CheckCanShowView() {
     return (
-      (typeof this.TrackTarget !== "number" ||
+      ("number" != typeof this.TrackTarget ||
         !!ModelManager_1.ModelManager.CreatureModel.CheckEntityVisible(
           this.TrackTarget,
         )) &&
@@ -31,4 +31,4 @@ class EntityMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
   }
 }
 exports.EntityMarkItem = EntityMarkItem;
-// # sourceMappingURL=EntityMarkItem.js.map
+//# sourceMappingURL=EntityMarkItem.js.map

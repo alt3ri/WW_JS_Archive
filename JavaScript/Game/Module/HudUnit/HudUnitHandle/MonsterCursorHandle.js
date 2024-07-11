@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MonsterCursorHandle = void 0);
-const Stats_1 = require("../../../../Core/Common/Stats");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const ObjectSystem_1 = require("../../../../Core/Object/ObjectSystem");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const CameraController_1 = require("../../../Camera/CameraController");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const CampUtils_1 = require("../../../NewWorld/Character/Common/Blueprint/Utils/CampUtils");
-const MonsterCursorUnit_1 = require("../HudUnit/MonsterCursorUnit");
-const HudUnitHandleBase_1 = require("./HudUnitHandleBase");
+const Stats_1 = require("../../../../Core/Common/Stats"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  ObjectSystem_1 = require("../../../../Core/Object/ObjectSystem"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  CameraController_1 = require("../../../Camera/CameraController"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  CampUtils_1 = require("../../../NewWorld/Character/Common/Blueprint/Utils/CampUtils"),
+  MonsterCursorUnit_1 = require("../HudUnit/MonsterCursorUnit"),
+  HudUnitHandleBase_1 = require("./HudUnitHandleBase");
 class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   constructor() {
     super(...arguments),
@@ -39,7 +39,7 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
         this.Hoi(s.Entity) && (this.joi(s.Entity), this.Woi());
       }),
       (this.zpe = (t, s) => {
-        let i;
+        var i;
         this.Hoi(s.Entity) &&
           ((i = this.HudEntitySet.GetByEntity(s.Entity)) &&
             (this.Koi(i), this.Qoi(s.Entity)),
@@ -58,7 +58,7 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
         (this.r9e = s) ? this.Woi() : (this.Yoi(), this.Xoi());
       }),
       (this.Joi = () => {
-        let t;
+        var t;
         this.CurrentEntity?.Valid &&
           (this.Goi.clear(),
           (t = this.xXe()),
@@ -68,7 +68,7 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       });
   }
   OnInitialize() {
-    let t;
+    var t;
     (this.Boi = CommonParamById_1.configCommonParamById.GetIntConfig(
       "MonsterCursorMaxCount",
     )),
@@ -126,9 +126,9 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       this.r9e &&
       ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Valid
     ) {
-      let s;
-      let i;
-      const e = this.xXe();
+      var s,
+        i,
+        e = this.xXe();
       for (const r of this.Poi.values())
         r.IsValid() &&
           (i = r.GetHudEntityData()).IsValid() &&
@@ -172,7 +172,7 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       );
   }
   ori() {
-    const t = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
+    var t = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
     if (t)
       for (const s of t) s.IsInit && this.Hoi(s.Entity) && this.joi(s.Entity);
   }
@@ -194,19 +194,19 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     );
   }
   joi(t) {
-    var t = this.HudEntitySet.Add(t);
-    const s =
-      (t.SetComponent(0),
-      t.SetComponent(1),
-      t.SetComponent(185),
-      t.ListenForTagCountChanged(-1371021686, this.$oi),
-      t.GetMonsterMatchType());
+    var t = this.HudEntitySet.Add(t),
+      s =
+        (t.SetComponent(0),
+        t.SetComponent(1),
+        t.SetComponent(185),
+        t.ListenForTagCountChanged(-1371021686, this.$oi),
+        t.GetMonsterMatchType());
     let i = this.woi.get(s);
     i || ((i = new Set()), this.woi.set(s, i)), i.add(t);
   }
   Qoi(t) {
-    let s;
-    const i = this.HudEntitySet.GetByEntity(t);
+    var s,
+      i = this.HudEntitySet.GetByEntity(t);
     i &&
       ((s = i.GetMonsterMatchTypeNumber()),
       this.HudEntitySet.Remove(t),
@@ -249,8 +249,8 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     return !1;
   }
   tri(s) {
-    for (let t = 2; t >= 1; t--) {
-      const i = this.woi.get(t);
+    for (let t = 2; 1 <= t; t--) {
+      var i = this.woi.get(t);
       if (i && !(i.size <= 0))
         for (const e of i)
           if ((this.hri(e, s), this.Goi.size >= this.Boi))
@@ -260,10 +260,10 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   }
   iri(i) {
     let e = 0;
-    const r = this.HudEntitySet.GetAll();
-    const h = this.HudEntitySet.Num();
+    var r = this.HudEntitySet.GetAll(),
+      h = this.HudEntitySet.Num();
     for (let s = 0; s < h; s++) {
-      const o = r[(e = s)].GetDistanceSquaredTo(i);
+      var o = r[(e = s)].GetDistanceSquaredTo(i);
       for (let t = s + 1; t < h; t++)
         r[t].GetDistanceSquaredTo(i) < o && (e = t);
       e !== s && ((t = r[e]), (r[e] = r[s]), (r[s] = t));
@@ -292,11 +292,11 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     );
   }
   lri(t) {
-    let s;
-    let i;
-    const e = [];
+    var s,
+      i,
+      e = [];
     for (const h of this.Poi.values()) {
-      const r = h.GetEntityId();
+      var r = h.GetEntityId();
       t.has(r) ||
         (h.Deactivate(), h.SetActive(!1), e.push(r), this.Uoi.push(h));
     }
@@ -307,13 +307,13 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
           ((i = this.HudEntitySet.GetByEntityId(n)), this.pri(i, s)));
   }
   pri(t, s) {
-    let i;
+    var i;
     s &&
       ((i = t.GetId()), s.GetEntityId() !== i) &&
       (s.Activate(t), this.Poi.set(i, s));
   }
   Koi(t) {
-    let s;
+    var s;
     t?.IsValid() &&
       ((t = t.GetId()), (s = this.gri(t))) &&
       s.IsValid() &&
@@ -334,15 +334,15 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     return this.coi.ActorLocationProxy;
   }
   Hoi(t) {
-    let s;
+    var s;
     return (
       !!ObjectSystem_1.ObjectSystem.IsValid(t) &&
       !!(t = t.GetComponent(0)) &&
-      t.GetBaseInfo()?.Category?.MainType === "Monster" &&
+      "Monster" === t.GetBaseInfo()?.Category?.MainType &&
       ((s = t.GetEntityCamp()),
-      CampUtils_1.CampUtils.GetCampRelationship(s, 0) === 2) &&
+      2 === CampUtils_1.CampUtils.GetCampRelationship(s, 0)) &&
       void 0 !== (s = t.GetMonsterMatchType()) &&
-      s !== 3
+      3 !== s
     );
   }
 }
@@ -352,4 +352,4 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   (MonsterCursorHandle._ri = void 0),
   (MonsterCursorHandle.GetTargetInfo2StatObject = void 0),
   (MonsterCursorHandle._$e = void 0);
-// # sourceMappingURL=MonsterCursorHandle.js.map
+//# sourceMappingURL=MonsterCursorHandle.js.map

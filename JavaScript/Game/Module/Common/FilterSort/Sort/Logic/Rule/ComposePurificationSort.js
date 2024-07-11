@@ -8,14 +8,14 @@ class ComposePurificationSort extends CommonSort_1.CommonSort {
       (this.XLt = (t, o, r) => {
         return t.IsUnlock !== o.IsUnlock
           ? (o.IsUnlock - t.IsUnlock) * (r ? -1 : 1)
-          : t.IsUnlock === 1 &&
+          : 1 === t.IsUnlock &&
               t.IsUnlock === o.IsUnlock &&
               o.IsPurification !== t.IsPurification
             ? o.IsPurification - t.IsPurification
             : 0;
       }),
       (this.VLt = (t, o, r) => {
-        let s;
+        var s;
         return o.IsUnlock !== t.IsUnlock
           ? ((s = o.IsUnlock - t.IsUnlock), r ? s : -s)
           : t.Quality !== o.Quality
@@ -28,4 +28,4 @@ class ComposePurificationSort extends CommonSort_1.CommonSort {
   }
 }
 exports.ComposePurificationSort = ComposePurificationSort;
-// # sourceMappingURL=ComposePurificationSort.js.map
+//# sourceMappingURL=ComposePurificationSort.js.map

@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ShopButton = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const LocalStorage_1 = require("../../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine");
-const RedDotController_1 = require("../../../RedDot/RedDotController");
-const ShopController_1 = require("../../Shop/ShopController");
-const BattleChildView_1 = require("./BattleChildView/BattleChildView");
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  LocalStorage_1 = require("../../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine"),
+  RedDotController_1 = require("../../../RedDot/RedDotController"),
+  ShopController_1 = require("../../Shop/ShopController"),
+  BattleChildView_1 = require("./BattleChildView/BattleChildView");
 class ShopButton extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
       (this.Dct = () => {
-        const e =
+        var e =
           CommonParamById_1.configCommonParamById.GetIntConfig(
             "BattleViewShopId",
           );
@@ -44,4 +44,4 @@ class ShopButton extends BattleChildView_1.BattleChildView {
   }
 }
 exports.ShopButton = ShopButton;
-// # sourceMappingURL=ShopButton.js.map
+//# sourceMappingURL=ShopButton.js.map

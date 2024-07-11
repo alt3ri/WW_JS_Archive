@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayShopItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const PayShopGoods_1 = require("../../PayShopData/PayShopGoods");
-const PayShopItemBase_1 = require("./PayShopItemBase");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  PayShopGoods_1 = require("../../PayShopData/PayShopGoods"),
+  PayShopItemBase_1 = require("./PayShopItemBase");
 class PayShopItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -173,8 +173,8 @@ class PayShopItem extends GridProxyAbstract_1.GridProxyAbstract {
   BFi() {
     let t = !this.Pe.IfCanBuy();
     t && this.TFi && (t = !1);
-    let i = void 0;
-    let s = void 0;
+    var i = void 0,
+      s = void 0;
     this.yFi !== t &&
       ((i = this.GetItem(15)),
       (s = this.GetText(16)),
@@ -184,7 +184,7 @@ class PayShopItem extends GridProxyAbstract_1.GridProxyAbstract {
       s.SetText(this.Pe.GetConditionLimitText());
   }
   _pt() {
-    const t = this.Pe.IsSoldOut();
+    var t = this.Pe.IsSoldOut();
     let i = this.Pe.IsLimitGoods() && t;
     i && this.TFi && (i = !1),
       this.EFi !== i &&
@@ -192,20 +192,20 @@ class PayShopItem extends GridProxyAbstract_1.GridProxyAbstract {
         this.GetText(14)?.SetText(this.Pe.GetDownTipsText());
   }
   xFi() {
-    const t = this.Pe.GetDiscountLabel();
+    var t = this.Pe.GetDiscountLabel();
     let i = !1;
     (i =
-      t > 0 &&
+      0 < t &&
       (!!this.Pe.InLabelShowTime() || (this.Pe.InLabelShowTime(), !1))),
       this.fFi !== i && (this.GetItem(4).SetUIActive(i), (this.fFi = i));
   }
   wFi() {
-    const t = this.fFi || this.CFi;
+    var t = this.fFi || this.CFi;
     this.DFi !== t && ((this.DFi = t), this.GetItem(12).SetUIActive(t));
   }
   AFi() {
-    let t = this.Pe.GetDiscountLabel();
-    t > 0 &&
+    var t = this.Pe.GetDiscountLabel();
+    0 < t &&
       this.Pe.InLabelShowTime() &&
       this.pFi !== t &&
       ((this.pFi = t),
@@ -213,18 +213,18 @@ class PayShopItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.GetText(11).ShowTextNew(t));
   }
   wkt() {
-    let i = this.Pe.GetCountDownData();
+    var i = this.Pe.GetCountDownData();
     let s = !1;
-    if (i[2] === 0)
+    if (0 === i[2])
       this.dFi && (this.GetItem(5).SetUIActive(!1), (this.dFi = !1), (s = !0));
     else {
       let t = i[1];
       i = i[0];
-      if ((t = this.IFi ? void 0 : t) && i !== 2) {
+      if ((t = this.IFi ? void 0 : t) && 2 !== i) {
         this.dFi ||
           (this.GetItem(5).SetUIActive(!0), (this.dFi = !0), (s = !0));
         i = this.GetText(6);
-        if (typeof t === "string") return i.SetText(t), s;
+        if ("string" == typeof t) return i.SetText(t), s;
         LguiUtil_1.LguiUtil.SetLocalText(i, t.TextId, t.TimeValue);
       } else
         this.dFi &&
@@ -233,7 +233,7 @@ class PayShopItem extends GridProxyAbstract_1.GridProxyAbstract {
     return s;
   }
   PFi() {
-    let t = this.Pe.GetResellText();
+    var t = this.Pe.GetResellText();
     let i = !StringUtils_1.StringUtils.IsEmpty(t);
     this.IFi && (i = !1),
       this.MFi !== t &&
@@ -243,8 +243,8 @@ class PayShopItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.vFi !== i && ((this.vFi = i), this.GetText(7).SetUIActive(i));
   }
   UFi() {
-    let t = this.GetItem(1);
-    const i = this.Pe.HasDiscount();
+    var t = this.GetItem(1),
+      i = this.Pe.HasDiscount();
     let s = !1;
     return (
       this.CFi !== i && (t.SetUIActive(i), (this.CFi = i), (s = !0)),
@@ -259,16 +259,16 @@ class PayShopItem extends GridProxyAbstract_1.GridProxyAbstract {
     );
   }
   bFi() {
-    let t, i;
+    var t, i;
     this.LFi
       ? this.GetItem(5).SetUIActive(!1)
       : this.dFi ||
-        ((t = this.Pe.GetCountDownData())[0] === 2
+        (2 === (t = this.Pe.GetCountDownData())[0]
           ? ((t = t[1]),
             this.GetItem(5).SetUIActive(!0),
             this.gFi.SetLeftTimeTextShowState(!1),
             (i = this.GetText(6)),
-            typeof t === "string"
+            "string" == typeof t
               ? i.SetText(t)
               : LguiUtil_1.LguiUtil.SetLocalText(i, t.TextId, t.TimeValue))
           : (this.GetItem(5).SetUIActive(!1),
@@ -297,4 +297,4 @@ class PayShopItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.PayShopItem = PayShopItem;
-// # sourceMappingURL=PayShopItem.js.map
+//# sourceMappingURL=PayShopItem.js.map

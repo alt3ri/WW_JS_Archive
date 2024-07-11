@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const FNameUtil_1 = require("../../Core/Utils/FNameUtil");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const ModelManager_1 = require("../Manager/ModelManager");
-const BulletUtil_1 = require("../NewWorld/Bullet/BulletUtil");
-const CharacterSkillComponent_1 = require("../NewWorld/Character/Common/Component/Skill/CharacterSkillComponent");
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  FNameUtil_1 = require("../../Core/Utils/FNameUtil"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  BulletUtil_1 = require("../NewWorld/Bullet/BulletUtil"),
+  CharacterSkillComponent_1 = require("../NewWorld/Character/Common/Component/Skill/CharacterSkillComponent");
 class TsAnimNotifyReSkillEvent extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments),
@@ -19,13 +19,13 @@ class TsAnimNotifyReSkillEvent extends UE.KuroAnimNotify {
       (this.随机子弹权重数组 = void 0);
   }
   K2_Notify(t, e) {
-    let i = !1;
-    let r = t.GetOwner();
+    let i = !1,
+      r = t.GetOwner();
     if (this.使用召唤者子弹 && r instanceof TsBaseCharacter_1.default) {
       let e = r.CharacterActorComponent?.Entity;
       if (!e?.Valid) return !1;
       var s = e.GetComponent(0).GetSummonerId();
-      if (!(s > 0)) return !1;
+      if (!(0 < s)) return !1;
       (i = !0),
         e.GetComponent(33)?.SetCurSkillAnIndex(this.exportIndex),
         (e = ModelManager_1.ModelManager.CreatureModel.GetEntity(s)?.Entity),
@@ -37,19 +37,21 @@ class TsAnimNotifyReSkillEvent extends UE.KuroAnimNotify {
       s = s.GetComponent(33);
       if (!s?.Valid) return !1;
       s.SetCurSkillAnIndex(this.exportIndex);
-      var l = s.GetCurrentMontageCorrespondingSkillId()?.toString() ?? "0";
-      const o =
-        l === "0"
-          ? s
-              .GetSkillIdWithGroupId(CharacterSkillComponent_1.SKILL_GROUP_MAIN)
-              .toString()
-          : l;
-      const a = new UE.Transform();
+      var l = s.GetCurrentMontageCorrespondingSkillId()?.toString() ?? "0",
+        o =
+          "0" === l
+            ? s
+                .GetSkillIdWithGroupId(
+                  CharacterSkillComponent_1.SKILL_GROUP_MAIN,
+                )
+                .toString()
+            : l,
+        a = new UE.Transform();
       if (this.使用子弹id数组) {
-        const h = this.子弹id数组.Num();
-        var s = this.GetRandomIndex();
-        const n = this.子弹出生位置偏移数组.Num();
-        if (s >= 0 && s < h) {
+        var h = this.子弹id数组.Num(),
+          s = this.GetRandomIndex(),
+          n = this.子弹出生位置偏移数组.Num();
+        if (0 <= s && s < h) {
           let e = void 0;
           s < n && (e = this.子弹出生位置偏移数组.Get(s)),
             BulletUtil_1.BulletUtil.CreateBulletFromAN(
@@ -96,14 +98,14 @@ class TsAnimNotifyReSkillEvent extends UE.KuroAnimNotify {
         : FNameUtil_1.FNameUtil.IsNothing(this.子弹数据名))
     ) {
       l = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(r.GetWorld());
-      if (l === 2 || l === 4) {
-        var s = UE.KismetSystemLibrary.GetOuterObject(this);
-        const u = UE.KismetSystemLibrary.GetPathName(s);
+      if (2 === l || 4 === l) {
+        var s = UE.KismetSystemLibrary.GetOuterObject(this),
+          u = UE.KismetSystemLibrary.GetPathName(s);
         if (this.使用子弹id数组) {
-          const f = this.子弹id数组;
-          const v = f.Num();
-          var l = this.GetRandomIndex();
-          if (l >= 0 && l < v)
+          var f = this.子弹id数组,
+            v = f.Num(),
+            l = this.GetRandomIndex();
+          if (0 <= l && l < v)
             UE.BPL_BulletPreview_C.ShowBulletPreview(
               u,
               new UE.FName(f.Get(l)),
@@ -139,7 +141,7 @@ class TsAnimNotifyReSkillEvent extends UE.KuroAnimNotify {
     return "添加子弹";
   }
   GetRandomIndex() {
-    const r = this.随机子弹权重数组.Num();
+    var r = this.随机子弹权重数组.Num();
     if (!(r <= 0))
       if (r !== this.子弹id数组.Num())
         Log_1.Log.CheckError() &&
@@ -147,12 +149,12 @@ class TsAnimNotifyReSkillEvent extends UE.KuroAnimNotify {
       else {
         let t = 0;
         for (let e = 0; e < r; e++) {
-          const s = this.随机子弹权重数组.Get(e);
-          s > 0 && (t += s);
+          var s = this.随机子弹权重数组.Get(e);
+          0 < s && (t += s);
         }
         let i = Math.random() * t;
         for (let e = 0; e < r; e++) {
-          const l = this.随机子弹权重数组.Get(e);
+          var l = this.随机子弹权重数组.Get(e);
           if (!(l <= 0) && (i -= l) <= 0) return e;
         }
       }
@@ -160,4 +162,4 @@ class TsAnimNotifyReSkillEvent extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifyReSkillEvent;
-// # sourceMappingURL=TsAnimNotifyReSkillEvent.js.map
+//# sourceMappingURL=TsAnimNotifyReSkillEvent.js.map

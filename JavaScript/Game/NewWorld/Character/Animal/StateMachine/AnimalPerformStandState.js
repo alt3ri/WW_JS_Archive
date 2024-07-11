@@ -5,7 +5,7 @@ const AnimalPerformStateBase_1 = require("./AnimalPerformStateBase");
 class AnimalPerformStandState extends AnimalPerformStateBase_1.AnimalPerformStateBase {
   OnEnter(t) {
     this.EcologicalInterface?.IsValid() &&
-      (t === 0 &&
+      (0 === t &&
         this.AnimalEcologicalInterface.StateMachineInitializationComplete(),
       this.EcologicalInterface.NoneStateStart());
   }
@@ -19,4 +19,4 @@ class AnimalPerformStandState extends AnimalPerformStateBase_1.AnimalPerformStat
   }
 }
 exports.AnimalPerformStandState = AnimalPerformStandState;
-// # sourceMappingURL=AnimalPerformStandState.js.map
+//# sourceMappingURL=AnimalPerformStandState.js.map

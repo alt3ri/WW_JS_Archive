@@ -1,29 +1,33 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, i, n) {
-    let s;
-    const o = arguments.length;
-    let r =
-      o < 3 ? t : n === null ? (n = Object.getOwnPropertyDescriptor(t, i)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var s,
+      o = arguments.length,
+      r =
+        o < 3
+          ? t
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(t, i))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(e, t, i, n);
     else
-      for (let h = e.length - 1; h >= 0; h--)
-        (s = e[h]) && (r = (o < 3 ? s(r) : o > 3 ? s(t, i, r) : s(t, i)) || r);
-    return o > 3 && r && Object.defineProperty(t, i, r), r;
+      for (var h = e.length - 1; 0 <= h; h--)
+        (s = e[h]) && (r = (o < 3 ? s(r) : 3 < o ? s(t, i, r) : s(t, i)) || r);
+    return 3 < o && r && Object.defineProperty(t, i, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AnimalDeathSyncComponent = void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const BaseDeathComponent_1 = require("../../Common/Component/Abilities/BaseDeathComponent");
-const CharacterUnifiedStateTypes_1 = require("../../Common/Component/Abilities/CharacterUnifiedStateTypes");
-const DISAPPEAR_REMOVE_DELAY = 1600;
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  BaseDeathComponent_1 = require("../../Common/Component/Abilities/BaseDeathComponent"),
+  CharacterUnifiedStateTypes_1 = require("../../Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  DISAPPEAR_REMOVE_DELAY = 1600;
 let AnimalDeathSyncComponent = class AnimalDeathSyncComponent extends BaseDeathComponent_1.BaseDeathComponent {
   constructor() {
     super(...arguments),
@@ -116,4 +120,4 @@ let AnimalDeathSyncComponent = class AnimalDeathSyncComponent extends BaseDeathC
   AnimalDeathSyncComponent,
 )),
   (exports.AnimalDeathSyncComponent = AnimalDeathSyncComponent);
-// # sourceMappingURL=AnimalDeathSyncComponent.js.map
+//# sourceMappingURL=AnimalDeathSyncComponent.js.map

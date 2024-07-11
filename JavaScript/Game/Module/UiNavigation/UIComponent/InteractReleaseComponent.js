@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InteractReleaseComponent = void 0);
-const UiNavigationNewController_1 = require("../New/UiNavigationNewController");
-const HotKeyComponent_1 = require("./HotKeyComponent");
+const UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
+  HotKeyComponent_1 = require("./HotKeyComponent");
 class InteractReleaseComponent extends HotKeyComponent_1.HotKeyComponent {
   OnPress(e) {
     UiNavigationNewController_1.UiNavigationNewController.Interact(!0);
@@ -29,4 +29,4 @@ class InteractReleaseComponent extends HotKeyComponent_1.HotKeyComponent {
   }
 }
 exports.InteractReleaseComponent = InteractReleaseComponent;
-// # sourceMappingURL=InteractReleaseComponent.js.map
+//# sourceMappingURL=InteractReleaseComponent.js.map

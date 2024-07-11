@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoginServerController = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Json_1 = require("../../../Core/Common/Json");
-const Log_1 = require("../../../Core/Common/Log");
-const Http_1 = require("../../../Core/Http/Http");
-const BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const PublicUtil_1 = require("../../Common/PublicUtil");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const LoginServerModel_1 = require("./LoginServerModel");
-const ICMP_TIME_OUT = 2;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Json_1 = require("../../../Core/Common/Json"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Http_1 = require("../../../Core/Http/Http"),
+  BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../Common/PublicUtil"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  LoginServerModel_1 = require("./LoginServerModel"),
+  ICMP_TIME_OUT = 2;
 class LoginServerController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -52,7 +52,7 @@ class LoginServerController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static PingAllRegion() {
-    let e;
+    var e;
     ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
       ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk() &&
       ((e =
@@ -136,15 +136,15 @@ class LoginServerController extends UiControllerBase_1.UiControllerBase {
   (LoginServerController.LMi = (e, r, o) => {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Login", 28, "获取SetLoginPlayerInfoData", ["data", o]),
-      r === 200 &&
+      200 === r &&
         (r = Json_1.Json.Parse(o)) &&
-        (r.Code !== 0
+        (0 !== r.Code
           ? Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("Login", 28, "SetLoginPlayerInfoData Code失败", [
               "Code id",
               r.Code,
             ])
-          : r.SdkLoginCode !== 0
+          : 0 !== r.SdkLoginCode
             ? Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Login",
@@ -160,4 +160,4 @@ class LoginServerController extends UiControllerBase_1.UiControllerBase {
                 EventDefine_1.EEventName.OnGetLoginPlayerInfo,
               )));
   });
-// # sourceMappingURL=LoginServerController.js.map
+//# sourceMappingURL=LoginServerController.js.map

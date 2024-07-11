@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerVariationView = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../RedDot/RedDotController");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController");
-const TowerController_1 = require("../TowerController");
-const TowerData_1 = require("../TowerData");
-const TowerAreaItem_1 = require("./TowerAreaItem");
-const TowerTitleItem_1 = require("./TowerTitleItem");
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../RedDot/RedDotController"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController"),
+  TowerController_1 = require("../TowerController"),
+  TowerData_1 = require("../TowerData"),
+  TowerAreaItem_1 = require("./TowerAreaItem"),
+  TowerTitleItem_1 = require("./TowerTitleItem");
 class TowerVariationView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -26,9 +26,10 @@ class TowerVariationView extends UiTickViewBase_1.UiTickViewBase {
       (this.uTt = void 0),
       (this.pDo = []),
       (this.ZLo = () => {
-        ModelManager_1.ModelManager.TowerModel?.GetDifficultyRewardProgress(
-          ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties,
-        ) === 1 &&
+        1 ===
+          ModelManager_1.ModelManager.TowerModel?.GetDifficultyRewardProgress(
+            ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties,
+          ) &&
           ControllerHolder_1.ControllerHolder.ScrollingTipsController.ShowTipsById(
             "HaveAllReward",
           ),
@@ -48,12 +49,12 @@ class TowerVariationView extends UiTickViewBase_1.UiTickViewBase {
         );
       }),
       (this.iDo = () => {
-        const e =
+        var e =
           ModelManager_1.ModelManager.TowerModel?.GetDifficultyRewardProgress(
             TowerData_1.VARIATION_RISK_DIFFICULTY,
           );
         this.GetSprite(6)?.SetFillAmount(e),
-          e === 1
+          1 === e
             ? (this.GetItem(10)?.SetUIActive(!0),
               this.GetItem(11)?.SetUIActive(!0))
             : (this.GetItem(10)?.SetUIActive(!1),
@@ -130,17 +131,17 @@ class TowerVariationView extends UiTickViewBase_1.UiTickViewBase {
       this.CloseMe();
   }
   async OnBeforeStartAsync() {
-    const r =
-      ModelManager_1.ModelManager.TowerModel.GetDifficultyAllAreaFirstFloor(
-        TowerData_1.VARIATION_RISK_DIFFICULTY,
-      ).length;
-    const t = [];
+    var r =
+        ModelManager_1.ModelManager.TowerModel.GetDifficultyAllAreaFirstFloor(
+          TowerData_1.VARIATION_RISK_DIFFICULTY,
+        ).length,
+      t = [];
     for (let e = 0; e < r; e++) {
-      const o = new TowerAreaItem_1.TowerAreaItem();
+      var o = new TowerAreaItem_1.TowerAreaItem();
       this.pDo.push(o),
         t.push(
           o.CreateThenShowByResourceIdAsync(
-            e === 1
+            1 === e
               ? "UiItem_DailyTowerLevelRedItem"
               : "UiItem_DailyTowerLevelItem",
           ),
@@ -155,7 +156,7 @@ class TowerVariationView extends UiTickViewBase_1.UiTickViewBase {
       (ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties =
         TowerData_1.VARIATION_RISK_DIFFICULTY),
       (this.uTt = new TowerTitleItem_1.TowerTitleItem(this.GetItem(0), () => {
-        let e;
+        var e;
         ModelManager_1.ModelManager.TowerModel.CheckInTower()
           ? ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
               137,
@@ -168,20 +169,20 @@ class TowerVariationView extends UiTickViewBase_1.UiTickViewBase {
           : this.oDo();
       })),
       this.uTt.RefreshText("InstanceDungeonTitle_31_CommonText");
-    const e = ModelManager_1.ModelManager.TowerModel.GetSeasonCountDownData();
-    const r =
-      (this.GetText(4).SetText(e.CountDownText),
-      EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.RedDotTowerRewardByDifficulties,
-        3,
-      ),
-      (ModelManager_1.ModelManager.TowerModel.CurrentTowerLock = !this.fDo),
-      ModelManager_1.ModelManager.TowerModel.GetDifficultyAllAreaFirstFloor(
-        TowerData_1.VARIATION_RISK_DIFFICULTY,
-      ));
-    const t = this.GetHorizontalLayout(1).RootUIComp;
+    var e = ModelManager_1.ModelManager.TowerModel.GetSeasonCountDownData(),
+      r =
+        (this.GetText(4).SetText(e.CountDownText),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.RedDotTowerRewardByDifficulties,
+          3,
+        ),
+        (ModelManager_1.ModelManager.TowerModel.CurrentTowerLock = !this.fDo),
+        ModelManager_1.ModelManager.TowerModel.GetDifficultyAllAreaFirstFloor(
+          TowerData_1.VARIATION_RISK_DIFFICULTY,
+        )),
+      t = this.GetHorizontalLayout(1).RootUIComp;
     for (let e = 0; e < this.pDo.length; e++) {
-      const o = this.pDo[e];
+      var o = this.pDo[e];
       o.Refresh(r[e]),
         o
           .GetOriginalActor()
@@ -204,10 +205,10 @@ class TowerVariationView extends UiTickViewBase_1.UiTickViewBase {
     this._fe && this.wkt();
   }
   wkt() {
-    let e;
-    let r =
-      ModelManager_1.ModelManager.TowerModel.GetSeasonCountDownData()
-        .CountDownText;
+    var e,
+      r =
+        ModelManager_1.ModelManager.TowerModel.GetSeasonCountDownData()
+          .CountDownText;
     this.Ekt !== r && ((this.Ekt = r), this.GetText(4).SetText(r)),
       MathUtils_1.MathUtils.LongToNumber(
         ModelManager_1.ModelManager.TowerModel.TowerEndTime,
@@ -232,4 +233,4 @@ class TowerVariationView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.TowerVariationView = TowerVariationView;
-// # sourceMappingURL=TowerVariationView.js.map
+//# sourceMappingURL=TowerVariationView.js.map

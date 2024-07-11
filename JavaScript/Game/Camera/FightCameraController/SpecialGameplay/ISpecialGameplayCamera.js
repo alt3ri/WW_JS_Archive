@@ -6,4 +6,4 @@ class SpecialGameplayCamera {}
 (exports.SpecialGameplayCamera = SpecialGameplayCamera).GameplayMap = new Map([
   [0, () => new AiShengGuYangCamera_1.AiShengGuYangCamera()],
 ]);
-// # sourceMappingURL=ISpecialGameplayCamera.js.map
+//# sourceMappingURL=ISpecialGameplayCamera.js.map

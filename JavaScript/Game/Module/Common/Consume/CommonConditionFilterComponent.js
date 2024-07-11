@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonConditionFilterComponent = void 0);
-const UE = require("ue");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const UiNavigationView_1 = require("../../UiNavigation/UiNavigationView");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const LevelSequencePlayer_1 = require("../LevelSequencePlayer");
-const CommonConditionFilterItem_1 = require("./CommonConditionFilterItem");
+const UE = require("ue"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  UiNavigationView_1 = require("../../UiNavigation/UiNavigationView"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  LevelSequencePlayer_1 = require("../LevelSequencePlayer"),
+  CommonConditionFilterItem_1 = require("./CommonConditionFilterItem");
 class CommonConditionFilterComponent extends UiNavigationView_1.UiNavigationView {
   constructor(i, e) {
     super(),
@@ -21,7 +21,7 @@ class CommonConditionFilterComponent extends UiNavigationView_1.UiNavigationView
           this.LevelSequencePlayer.PlayLevelSequenceByName("hide");
       }),
       (this.KIt = (i) => {
-        i === "hide" &&
+        "hide" === i &&
           (this.SetActive(!1),
           UiLayer_1.UiLayer.SetShowMaskLayer(
             "CommonConditionFilterComponent",
@@ -76,4 +76,4 @@ class CommonConditionFilterComponent extends UiNavigationView_1.UiNavigationView
   }
 }
 exports.CommonConditionFilterComponent = CommonConditionFilterComponent;
-// # sourceMappingURL=CommonConditionFilterComponent.js.map
+//# sourceMappingURL=CommonConditionFilterComponent.js.map

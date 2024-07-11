@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivitySwitchToggle = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
 class ActivitySwitchToggle extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -46,4 +46,4 @@ class ActivitySwitchToggle extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ActivitySwitchToggle = ActivitySwitchToggle;
-// # sourceMappingURL=ActivitySwitchToggle.js.map
+//# sourceMappingURL=ActivitySwitchToggle.js.map

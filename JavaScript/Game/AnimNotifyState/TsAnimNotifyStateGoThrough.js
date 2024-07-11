@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyStateGoThrough extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -19,7 +19,7 @@ class TsAnimNotifyStateGoThrough extends UE.KuroAnimNotifyState {
       ((t = t.CharacterMovement) &&
         ((this.OldGoThroughPriority = t.GoThroughPriority),
         (this.OldHitPriority = t.HitPriority),
-        this.FirstGoThroughPriority > 0 &&
+        0 < this.FirstGoThroughPriority &&
           (t.GoThroughPriority = this.FirstGoThroughPriority),
         (t.GoThroughLower = !0)),
       (this.LeftTime = Math.max(0.5 * e, e - 0.1)),
@@ -28,12 +28,12 @@ class TsAnimNotifyStateGoThrough extends UE.KuroAnimNotifyState {
   }
   K2_NotifyTick(t, s, e) {
     return (
-      this.LeftTime > 0 && (this.LeftTime -= e),
+      0 < this.LeftTime && (this.LeftTime -= e),
       this.LeftTime <= 0 &&
         !this.IsEnd &&
         (e = t.GetOwner()) instanceof TsBaseCharacter_1.default &&
         ((e.CharacterMovement.GoThroughLower = !1),
-        this.SecondHitPriority > 0) &&
+        0 < this.SecondHitPriority) &&
         (e.CharacterMovement.HitPriority = this.SecondHitPriority),
       !0
     );
@@ -55,4 +55,4 @@ class TsAnimNotifyStateGoThrough extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateGoThrough;
-// # sourceMappingURL=TsAnimNotifyStateGoThrough.js.map
+//# sourceMappingURL=TsAnimNotifyStateGoThrough.js.map

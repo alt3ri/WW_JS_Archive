@@ -11,4 +11,4 @@ class EffectNiagaraParameters extends EffectParameterBase_1.default {
   }
 }
 exports.default = EffectNiagaraParameters;
-// # sourceMappingURL=EffectNiagaraParameters.js.map
+//# sourceMappingURL=EffectNiagaraParameters.js.map

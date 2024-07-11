@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configAdviceConjunctionAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const AdviceConjunction_1 = require("../Config/AdviceConjunction");
-const DB = "db_advice.db";
-const FILE = "s.溯言.xlsx";
-const TABLE = "AdviceConjunction";
-const COMMAND = "select BinData from `AdviceConjunction`";
-const KEY_PREFIX = "AdviceConjunctionAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  AdviceConjunction_1 = require("../Config/AdviceConjunction"),
+  DB = "db_advice.db",
+  FILE = "s.溯言.xlsx",
+  TABLE = "AdviceConjunction",
+  COMMAND = "select BinData from `AdviceConjunction`",
+  KEY_PREFIX = "AdviceConjunctionAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configAdviceConjunctionAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configAdviceConjunctionAll = {
     );
   },
   GetConfigList: (o = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configAdviceConjunctionAll = {
       }
       const t = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let e = void 0;
+        var e = void 0;
         if (
           (([n, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configAdviceConjunctionAll = {
     }
   },
 };
-// # sourceMappingURL=AdviceConjunctionAll.js.map
+//# sourceMappingURL=AdviceConjunctionAll.js.map

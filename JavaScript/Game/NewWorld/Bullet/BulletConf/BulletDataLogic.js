@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletDataLogic = void 0);
-const UE = require("ue");
-const Info_1 = require("../../../../Core/Common/Info");
-const Log_1 = require("../../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
+const UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils");
 class BulletDataLogic {
   constructor(t) {
     (this.Data = void 0),
@@ -112,9 +112,9 @@ class BulletDataLogic {
   P6o() {
     if (!this.R6o) {
       (this.R6o = !0), (this.D6o = []);
-      let i;
-      const s = this.Data.预设标签.GameplayTags;
-      const e = s.Num();
+      var i,
+        s = this.Data.预设标签.GameplayTags,
+        e = s.Num();
       for (let t = 0; t < e; t++)
         s.IsValidIndex(t) &&
           (i = s.Get(t)).TagName !== StringUtils_1.NONE_STRING &&
@@ -132,4 +132,4 @@ class BulletDataLogic {
   }
 }
 exports.BulletDataLogic = BulletDataLogic;
-// # sourceMappingURL=BulletDataLogic.js.map
+//# sourceMappingURL=BulletDataLogic.js.map

@@ -7,4 +7,4 @@ class AnimNotifyAddTransferEffect extends AnimNotifyAddMaterialControllerData_1.
   }
 }
 exports.default = AnimNotifyAddTransferEffect;
-// # sourceMappingURL=AnimNotifyAddTransferEffect.js.map
+//# sourceMappingURL=AnimNotifyAddTransferEffect.js.map

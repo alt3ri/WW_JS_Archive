@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoginQueueTipsView = void 0);
-const UE = require("ue");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class LoginQueueTipsView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -51,7 +51,7 @@ class LoginQueueTipsView extends UiTickViewBase_1.UiTickViewBase {
     (this.MSi += i), this.ESi();
   }
   ESi() {
-    let i, e;
+    var i, e;
     this.GetText(2).IsUIActiveInHierarchy() &&
       ((i = Math.round(TimeUtil_1.TimeUtil.SetTimeSecond(this.MSi))),
       (e = Math.floor(i / TimeUtil_1.TimeUtil.Minute)),
@@ -64,4 +64,4 @@ class LoginQueueTipsView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.LoginQueueTipsView = LoginQueueTipsView;
-// # sourceMappingURL=LoginQueueTipsView.js.map
+//# sourceMappingURL=LoginQueueTipsView.js.map

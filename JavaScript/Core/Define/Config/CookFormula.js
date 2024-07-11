@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CookFormula = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const OneItemConfig_1 = require("./SubType/OneItemConfig");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  OneItemConfig_1 = require("./SubType/OneItemConfig");
 class CookFormula {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -58,34 +58,34 @@ class CookFormula {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   formulaitemid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   fooditemid() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   typeid() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   unlock() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   name(t) {
-    const i = this.J7.__offset(this.z7, 14);
+    var i = this.J7.__offset(this.z7, 14);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetConsumeitemsAt(t, i) {
     return this.consumeitems(t);
   }
   consumeitems(t, i) {
-    const s = this.J7.__offset(this.z7, 16);
+    var s = this.J7.__offset(this.z7, 16);
     return s
       ? (i || new OneItemConfig_1.OneItemConfig()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -94,38 +94,38 @@ class CookFormula {
       : null;
   }
   consumeitemsLength() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   proficiency() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   maxproficiencycount() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   foodcontent(t) {
-    const i = this.J7.__offset(this.z7, 22);
+    var i = this.J7.__offset(this.z7, 22);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   foodbackground(t) {
-    const i = this.J7.__offset(this.z7, 24);
+    var i = this.J7.__offset(this.z7, 24);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetRolelistAt(t) {
     return this.rolelist(t);
   }
   rolelist(t) {
-    const i = this.J7.__offset(this.z7, 26);
+    var i = this.J7.__offset(this.z7, 26);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   rolelistLength() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   rolelistArray() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -136,4 +136,4 @@ class CookFormula {
   }
 }
 exports.CookFormula = CookFormula;
-// # sourceMappingURL=CookFormula.js.map
+//# sourceMappingURL=CookFormula.js.map

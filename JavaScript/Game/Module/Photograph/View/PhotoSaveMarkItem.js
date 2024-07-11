@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhotoSaveMarkItem = void 0);
-const UE = require("ue");
-const LocalStorage_1 = require("../../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  LocalStorage_1 = require("../../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class PhotoSaveMarkItem extends UiPanelBase_1.UiPanelBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -17,7 +17,7 @@ class PhotoSaveMarkItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.UiResourceConfig.GetLogoPathByLanguage(
         "PhotoLogo",
       );
@@ -36,7 +36,7 @@ class PhotoSaveMarkItem extends UiPanelBase_1.UiPanelBase {
       this.RefreshNameVisible();
   }
   RefreshNameVisible() {
-    const e = LocalStorage_1.LocalStorage.GetGlobal(
+    var e = LocalStorage_1.LocalStorage.GetGlobal(
       LocalStorageDefine_1.ELocalStorageGlobalKey.PhotoAndShareShowPlayerName,
       !0,
     );
@@ -44,4 +44,4 @@ class PhotoSaveMarkItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.PhotoSaveMarkItem = PhotoSaveMarkItem;
-// # sourceMappingURL=PhotoSaveMarkItem.js.map
+//# sourceMappingURL=PhotoSaveMarkItem.js.map

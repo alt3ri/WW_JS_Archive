@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../Core/Utils/ObjectUtils");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const CharacterDitherEffectController_1 = require("../NewWorld/Character/Common/Component/Effect/CharacterDitherEffectController");
-const CustomMovementDefine_1 = require("../NewWorld/Character/Common/Component/Move/CustomMovementDefine");
+const UE = require("ue"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../Core/Utils/ObjectUtils"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  CharacterDitherEffectController_1 = require("../NewWorld/Character/Common/Component/Effect/CharacterDitherEffectController"),
+  CustomMovementDefine_1 = require("../NewWorld/Character/Common/Component/Move/CustomMovementDefine");
 class TsBaseCharacter extends UE.BaseCharacter {
   constructor() {
     super(...arguments),
@@ -218,4 +218,4 @@ class TsBaseCharacter extends UE.BaseCharacter {
   }
 }
 exports.default = TsBaseCharacter;
-// # sourceMappingURL=TsBaseCharacter.js.map
+//# sourceMappingURL=TsBaseCharacter.js.map

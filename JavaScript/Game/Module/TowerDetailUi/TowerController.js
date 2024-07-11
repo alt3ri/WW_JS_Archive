@@ -1,26 +1,26 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerController = void 0);
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
-const InstanceDungeonEntranceController_1 = require("../InstanceDungeon/InstanceDungeonEntranceController");
-const ItemRewardController_1 = require("../ItemReward/ItemRewardController");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const TowerData_1 = require("./TowerData");
-const TowerModel_1 = require("./TowerModel");
-const TOWER_SUCCESS_NO_REWARD = 3008;
-const TOWER_FAIL = 3009;
+const CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  InstanceDungeonEntranceController_1 = require("../InstanceDungeon/InstanceDungeonEntranceController"),
+  ItemRewardController_1 = require("../ItemReward/ItemRewardController"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  TowerData_1 = require("./TowerData"),
+  TowerModel_1 = require("./TowerModel"),
+  TOWER_SUCCESS_NO_REWARD = 3008,
+  TOWER_FAIL = 3009;
 class TowerController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return this.OnAddEvents(), this.OnRegisterNetEvent(), !0;
@@ -61,11 +61,11 @@ class TowerController extends ControllerBase_1.ControllerBase {
       Net_1.Net.UnRegister(26455);
   }
   static async RefreshTower() {
-    var e = Protocol_1.Aki.Protocol.Xus.create({});
-    var e = await Net_1.Net.CallAsync(24147, e);
+    var e = Protocol_1.Aki.Protocol.Xus.create({}),
+      e = await Net_1.Net.CallAsync(24147, e);
     e?.sbs && UiManager_1.UiManager.OpenView("TowerUnlockView", e.sbs),
       e.nbs?.Yxs &&
-        e.nbs.Yxs > 0 &&
+        0 < e.nbs.Yxs &&
         (ModelManager_1.ModelManager.TowerModel.SaveHandleData(),
         (ModelManager_1.ModelManager.TowerModel.NeedOpenReviveView = !0),
         ModelManager_1.ModelManager.TowerModel.DeleteVariationTowerInfo(),
@@ -75,14 +75,14 @@ class TowerController extends ControllerBase_1.ControllerBase {
         ));
   }
   static TowerStartRequest(o, t, e = !0) {
-    const r = new Protocol_1.Aki.Protocol.tcs();
-    const n = [];
+    var r = new Protocol_1.Aki.Protocol.tcs(),
+      n = [];
     for (const i of t) {
       if (e && !ModelManager_1.ModelManager.TowerModel.IsRoleCostEnough(i))
         return void ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
           "EditBattleTeamCant",
         );
-      const a = { l3n: i, MVn: 0 };
+      var a = { l3n: i, MVn: 0 };
       n.push(a);
     }
     (r.SVn = n),
@@ -103,7 +103,7 @@ class TowerController extends ControllerBase_1.ControllerBase {
       });
   }
   static TowerResetRequest(e) {
-    const o = new Protocol_1.Aki.Protocol.rcs();
+    var o = new Protocol_1.Aki.Protocol.rcs();
     (o.EVn = e),
       Net_1.Net.Call(28568, o, (e) => {
         if (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys)
@@ -121,7 +121,7 @@ class TowerController extends ControllerBase_1.ControllerBase {
       });
   }
   static TowerRewardRequest(o, e) {
-    const t = new Protocol_1.Aki.Protocol.Zus();
+    var t = new Protocol_1.Aki.Protocol.Zus();
     (t.yVn = o),
       (t.b5n = e),
       Net_1.Net.Call(4839, t, (e) => {
@@ -151,8 +151,8 @@ class TowerController extends ControllerBase_1.ControllerBase {
       });
   }
   static async TowerFormationRecommendRequest(e) {
-    const o = new Protocol_1.Aki.Protocol.Jus();
-    var e = ((o.EVn = e), await Net_1.Net.CallAsync(19339, o));
+    var o = new Protocol_1.Aki.Protocol.Jus(),
+      e = ((o.EVn = e), await Net_1.Net.CallAsync(19339, o));
     if (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys)
       return e.lkn === Protocol_1.Aki.Protocol.lkn.Proto_ErrTowerSeasonUpdate
         ? void this.OpenSeasonUpdateConfirm()
@@ -160,12 +160,12 @@ class TowerController extends ControllerBase_1.ControllerBase {
             e.lkn,
             7197,
           );
-    e.J4n?.length > 0
+    0 < e.J4n?.length
       ? (ModelManager_1.ModelManager.TowerModel.RecommendFormation = e.J4n)
       : (ModelManager_1.ModelManager.TowerModel.RecommendFormation = void 0);
   }
   static TowerApplyFloorDataRequest(e) {
-    const o = new Protocol_1.Aki.Protocol.ncs();
+    var o = new Protocol_1.Aki.Protocol.ncs();
     (o.IVn = e),
       Net_1.Net.Call(21779, o, (e) => {
         if (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys)
@@ -180,28 +180,28 @@ class TowerController extends ControllerBase_1.ControllerBase {
       });
   }
   static kTo() {
-    const e = Protocol_1.Aki.Protocol.Kus.create({});
+    var e = Protocol_1.Aki.Protocol.Kus.create({});
     Net_1.Net.Call(23561, e, (e) => {
       ModelManager_1.ModelManager.TowerModel.RefreshTowerInfo(e.nbs);
     });
   }
   static OpenTowerSettlementView(e) {
     const o = ModelManager_1.ModelManager.TowerModel;
-    let t;
-    const r = o.CurrentTowerId;
-    const n = o.GetHaveChallengeFloorAndFormation(r);
-    const a = [];
-    const i =
-      (a.push({
-        ButtonTextId: "Text_Leave_Text",
-        DescriptionTextId: void 0,
-        IsTimeDownCloseView: !1,
-        IsClickedCloseView: !0,
-        OnClickedCallback: () => {
-          n && this.FTo(!0, e), this.LeaveTower();
-        },
-      }),
-      ConfigManager_1.ConfigManager.TowerClimbConfig.GetNextFloorInArea(r));
+    var t,
+      r = o.CurrentTowerId;
+    const n = o.GetHaveChallengeFloorAndFormation(r),
+      a = [],
+      i =
+        (a.push({
+          ButtonTextId: "Text_Leave_Text",
+          DescriptionTextId: void 0,
+          IsTimeDownCloseView: !1,
+          IsClickedCloseView: !0,
+          OnClickedCallback: () => {
+            n && this.FTo(!0, e), this.LeaveTower();
+          },
+        }),
+        ConfigManager_1.ConfigManager.TowerClimbConfig.GetNextFloorInArea(r));
     let l = void 0;
     if (
       (e && n
@@ -256,25 +256,24 @@ class TowerController extends ControllerBase_1.ControllerBase {
               (l = {
                 DescriptionTextId: "Text_ChangeFormation_Text",
                 OnToggleClick: (e) => {
-                  o.NeedChangeFormation = e === 1;
+                  o.NeedChangeFormation = 1 === e;
                 },
               })),
       e)
     ) {
       const g = [];
-      const _ =
-        ConfigManager_1.ConfigManager.TowerClimbConfig.GetFloorTarget(r);
-      const s =
-        ModelManager_1.ModelManager.TowerModel.CurrentNotConfirmedFloor
-          .StarIndex;
+      var _ = ConfigManager_1.ConfigManager.TowerClimbConfig.GetFloorTarget(r),
+        s =
+          ModelManager_1.ModelManager.TowerModel.CurrentNotConfirmedFloor
+            .StarIndex;
       for (let e = 0; e < TowerModel_1.FLOOR_STAR; e++) {
         var d = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTargetConfig(
-          _[e],
-        );
-        const M = [];
+            _[e],
+          ),
+          M = [];
         for (const v of d.Params) M.push(v.toString());
-        const c = s.includes(e);
-        var d = { Target: M, DescriptionTextId: d.DesText, IsReached: c };
+        var c = s.includes(e),
+          d = { Target: M, DescriptionTextId: d.DesText, IsReached: c };
         g.push(d);
       }
       TimerSystem_1.TimerSystem.Delay(() => {
@@ -295,7 +294,7 @@ class TowerController extends ControllerBase_1.ControllerBase {
         ModelManager_1.ModelManager.TrainingDegreeModel.GetTrainingDataList();
       if (C) {
         for (const m of C) {
-          const T = { TrainingData: m };
+          var T = { TrainingData: m };
           w.push(T);
         }
         TimerSystem_1.TimerSystem.Delay(() => {
@@ -369,10 +368,10 @@ class TowerController extends ControllerBase_1.ControllerBase {
     );
   }
   static OpenSeasonUpdateConfirm() {
-    const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(99);
-    const o = () => {
-      this.HTo();
-    };
+    var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(99),
+      o = () => {
+        this.HTo();
+      };
     e.FunctionMap.set(1, o),
       e.FunctionMap.set(2, o),
       ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
@@ -385,10 +384,10 @@ class TowerController extends ControllerBase_1.ControllerBase {
 }
 (exports.TowerController = TowerController),
   ((_a = TowerController).gKe = (e, o) => {
-    e === 10055 && o && _a.kTo();
+    10055 === e && o && _a.kTo();
   }),
   (TowerController.b4e = () => {
-    let e;
+    var e;
     _a.kTo(),
       ModelManager_1.ModelManager.TowerModel.NeedOpenConfirmView &&
         ((e = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(
@@ -413,7 +412,7 @@ class TowerController extends ControllerBase_1.ControllerBase {
     ModelManager_1.ModelManager.TowerModel.RefreshTowerInfoByDifficulty(e.zxs);
   }),
   (TowerController.OTo = (e) => {
-    let o;
+    var o;
     e.hbs && !ModelManager_1.ModelManager.TowerModel.GetIsInOnceTower()
       ? _a.OpenSeasonUpdateConfirm()
       : (ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView(),
@@ -423,4 +422,4 @@ class TowerController extends ControllerBase_1.ControllerBase {
             new TowerData_1.TowerFloorInfo(o.EVn, o.UDs, o.SVn, o.rbs))),
         _a.OpenTowerSettlementView(e.Sys));
   });
-// # sourceMappingURL=TowerController.js.map
+//# sourceMappingURL=TowerController.js.map

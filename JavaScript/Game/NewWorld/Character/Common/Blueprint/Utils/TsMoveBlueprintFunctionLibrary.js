@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../../Core/Common/Time");
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const QueryTypeDefine_1 = require("../../../../../../Core/Define/QueryTypeDefine");
-const EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem");
-const Quat_1 = require("../../../../../../Core/Utils/Math/Quat");
-const Rotator_1 = require("../../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../../../Core/Utils/TraceElementCommon");
-const TsBaseCharacter_1 = require("../../../../../Character/TsBaseCharacter");
-const ControllerHolder_1 = require("../../../../../Manager/ControllerHolder");
-const ColorUtils_1 = require("../../../../../Utils/ColorUtils");
-const CharacterSwimComponent_1 = require("../../Component/CharacterSwimComponent");
-const MIN_ROTATOR_ANGLE = 10;
-const MIN_TOLERANCE_ANGLE = 5;
-const tmpVector = Vector_1.Vector.Create();
-const tmpVector2 = Vector_1.Vector.Create();
+const UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../../Core/Common/Time"),
+  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  QueryTypeDefine_1 = require("../../../../../../Core/Define/QueryTypeDefine"),
+  EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem"),
+  Quat_1 = require("../../../../../../Core/Utils/Math/Quat"),
+  Rotator_1 = require("../../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../../../Core/Utils/TraceElementCommon"),
+  TsBaseCharacter_1 = require("../../../../../Character/TsBaseCharacter"),
+  ControllerHolder_1 = require("../../../../../Manager/ControllerHolder"),
+  ColorUtils_1 = require("../../../../../Utils/ColorUtils"),
+  CharacterSwimComponent_1 = require("../../Component/CharacterSwimComponent"),
+  MIN_ROTATOR_ANGLE = 10,
+  MIN_TOLERANCE_ANGLE = 5,
+  tmpVector = Vector_1.Vector.Create(),
+  tmpVector2 = Vector_1.Vector.Create();
 class TsMoveBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static get TmpQuat() {
     return (
@@ -161,7 +161,7 @@ class TsMoveBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return EntitySystem_1.EntitySystem.GetComponent(t, 36)?.HasMoveInput ?? !1;
   }
   static HasMoveInputOrTickIntervalAndModelBuffer(t) {
-    let e;
+    var e;
     return (
       !!EntitySystem_1.EntitySystem.GetComponent(t, 36)?.HasMoveInput ||
       (!(
@@ -175,10 +175,10 @@ class TsMoveBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     );
   }
   static HasRotatorInput(t) {
-    var t = EntitySystem_1.EntitySystem.GetComponent(t, 3);
-    var e = t.ActorRotationProxy.Yaw;
-    var t = t.InputRotator.Yaw;
-    var e = Math.abs(e - t);
+    var t = EntitySystem_1.EntitySystem.GetComponent(t, 3),
+      e = t.ActorRotationProxy.Yaw,
+      t = t.InputRotator.Yaw,
+      e = Math.abs(e - t);
     return !(Math.abs(e - 360) < MIN_TOLERANCE_ANGLE) && e > MIN_ROTATOR_ANGLE;
   }
   static IsMoving(t) {
@@ -213,18 +213,18 @@ class TsMoveBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     EntitySystem_1.EntitySystem.GetComponent(t, 36)?.StopAddMoveWithMesh(e);
   }
   static FixActorLocation(t, e, i) {
-    var t = EntitySystem_1.EntitySystem.GetComponent(t, 3);
-    const n = new UE.HitResult();
+    var t = EntitySystem_1.EntitySystem.GetComponent(t, 3),
+      n = new UE.HitResult();
     if (t?.Valid) {
-      const r = MathUtils_1.MathUtils.CommonTempVector;
-      var e =
-        (r.FromUeVector(e),
-        t.FixActorLocation(
-          i,
-          !0,
-          r,
-          "TsMoveBlueprintFunctionLibrary.FixActorLocation",
-        ));
+      var r = MathUtils_1.MathUtils.CommonTempVector,
+        e =
+          (r.FromUeVector(e),
+          t.FixActorLocation(
+            i,
+            !0,
+            r,
+            "TsMoveBlueprintFunctionLibrary.FixActorLocation",
+          ));
       if (e[0])
         return (
           (n.bBlockingHit = !0),
@@ -352,8 +352,8 @@ class TsMoveBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     );
   }
   static TurnToTarget(t, e, i) {
-    let n;
-    let r = EntitySystem_1.EntitySystem.GetComponent(t, 3);
+    var n,
+      r = EntitySystem_1.EntitySystem.GetComponent(t, 3);
     r &&
       e instanceof TsBaseCharacter_1.default &&
       ((n = EntitySystem_1.EntitySystem.GetComponent(t, 160)) &&
@@ -377,10 +377,10 @@ class TsMoveBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
           tmpVector,
         ),
         Math.abs(tmpVector.X) > Math.abs(tmpVector.Y)
-          ? tmpVector.X > 0
+          ? 0 < tmpVector.X
             ? 0
             : 1
-          : tmpVector.Y > 0
+          : 0 < tmpVector.Y
             ? 3
             : 2);
   }
@@ -456,9 +456,9 @@ class TsMoveBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     t?.Valid && (t.CanMoveFromInput = e);
   }
   static UpdateAnimInfoMove(t, e) {
-    let i;
-    let n;
-    let r = EntitySystem_1.EntitySystem.GetComponent(t, 160);
+    var i,
+      n,
+      r = EntitySystem_1.EntitySystem.GetComponent(t, 160);
     r?.Valid &&
       ((e = e),
       (r = r.AnimLogicParamsSetter),
@@ -521,8 +521,8 @@ class TsMoveBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       ((r.SlideStandMode = n), (e.SlideStandModeRef = n));
   }
   static UpdateAnimInfoMoveMonster(t, e) {
-    let i;
-    let n = EntitySystem_1.EntitySystem.GetComponent(t, 160);
+    var i,
+      n = EntitySystem_1.EntitySystem.GetComponent(t, 160);
     n?.Valid &&
       ((e = e),
       (n = n.AnimLogicParamsSetter),
@@ -538,8 +538,8 @@ class TsMoveBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       ((n.HasMoveInput = t), (e.HasMoveInputRef = t));
   }
   static UpdateAnimInfoMoveRoleNpc(t, e) {
-    let i;
-    let n = EntitySystem_1.EntitySystem.GetComponent(t, 160);
+    var i,
+      n = EntitySystem_1.EntitySystem.GetComponent(t, 160);
     n?.Valid &&
       ((e = e),
       (n = n.AnimLogicParamsSetter),
@@ -568,7 +568,7 @@ class TsMoveBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     t?.Valid && t.TurnOffAutomaticFlightMode();
   }
   static get WaterTrace() {
-    let t;
+    var t;
     return (
       TsMoveBlueprintFunctionLibrary.WaterTraceInternal ||
         (((t = UE.NewObject(UE.TraceLineElement.StaticClass())).bIsSingle = !0),
@@ -587,7 +587,7 @@ class TsMoveBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     );
   }
   static get GroundTrace() {
-    let t;
+    var t;
     return (
       TsMoveBlueprintFunctionLibrary.GroundTraceInternal ||
         (((t = UE.NewObject(UE.TraceLineElement.StaticClass())).bIsSingle = !0),
@@ -608,7 +608,7 @@ class TsMoveBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static SimpleSwim(t, e, i, n) {
     t = EntitySystem_1.EntitySystem.GetComponent(t, 3);
     if (!t?.Valid) return Vector_1.Vector.ZeroVector;
-    let r = TsMoveBlueprintFunctionLibrary.WaterTrace;
+    var r = TsMoveBlueprintFunctionLibrary.WaterTrace;
     (r.WorldContextObject = t.Actor),
       t.ActorUpProxy.Multiply(i, tmpVector),
       tmpVector.AdditionEqual(t.ActorLocationProxy),
@@ -690,4 +690,4 @@ class TsMoveBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   (TsMoveBlueprintFunctionLibrary.WaterTraceInternal = void 0),
   (TsMoveBlueprintFunctionLibrary.GroundTraceInternal = void 0),
   (exports.default = TsMoveBlueprintFunctionLibrary);
-// # sourceMappingURL=TsMoveBlueprintFunctionLibrary.js.map
+//# sourceMappingURL=TsMoveBlueprintFunctionLibrary.js.map

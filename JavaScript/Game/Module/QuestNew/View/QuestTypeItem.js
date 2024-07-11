@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestTypeItem = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const QuestChapterItem_1 = require("./QuestChapterItem");
-const QuestItem_1 = require("./QuestItem");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  QuestChapterItem_1 = require("./QuestChapterItem"),
+  QuestItem_1 = require("./QuestItem");
 class QuestItemData {
   constructor(t, i) {
     (this.QuestId = t), (this.QuestType = i);
@@ -24,7 +24,7 @@ class QuestTypeItem extends UiPanelBase_1.UiPanelBase {
       (this.Gro = void 0),
       (this.Nro = void 0),
       (this.Oro = () => {
-        const t = this.GetItem(1);
+        var t = this.GetItem(1);
         t.SetUIActive(!t.bIsUIActive);
       });
   }
@@ -59,9 +59,9 @@ class QuestTypeItem extends UiPanelBase_1.UiPanelBase {
         this.QuestType,
       ),
     );
-    let i;
-    var t = t.QuestTypeTitleIcon;
-    t?.length !== 0 &&
+    var i,
+      t = t.QuestTypeTitleIcon;
+    0 !== t?.length &&
       ((i = this.GetSprite(3)), this.SetSpriteByPath(t, i, !1)),
       (this.bro = []),
       (this.qro = []),
@@ -73,8 +73,8 @@ class QuestTypeItem extends UiPanelBase_1.UiPanelBase {
   }
   UpdateList() {
     this.kro();
-    const s = this.Gro;
-    const e = this.Nro;
+    const s = this.Gro,
+      e = this.Nro;
     let i = 0;
     for (const o of e) {
       let t = void 0;
@@ -118,7 +118,7 @@ class QuestTypeItem extends UiPanelBase_1.UiPanelBase {
     let t = this.bro.find((t) => t.QuestId === i);
     if (!t)
       for (const e of this.qro) {
-        const s = e.FindByQuestId(i);
+        var s = e.FindByQuestId(i);
         if (s) {
           t = s;
           break;
@@ -143,28 +143,28 @@ class QuestTypeItem extends UiPanelBase_1.UiPanelBase {
     }
   }
   GetDefaultItem() {
-    if (this.bro.length !== 0 || this.qro.length !== 0)
-      return (this.qro.length !== 0 ? this.qro[0].QuestList : this.bro)[0];
+    if (0 !== this.bro.length || 0 !== this.qro.length)
+      return (0 !== this.qro.length ? this.qro[0].QuestList : this.bro)[0];
   }
   IsQuestEmpty() {
-    return this.Gro?.length === 0 && this.qro?.length === 0;
+    return 0 === this.Gro?.length && 0 === this.qro?.length;
   }
   UpdateListTrackState() {
     for (const s of this.bro) {
       s.UpdateTrackIconActive();
-      const t = ModelManager_1.ModelManager.QuestNewModel.GetQuest(s.QuestId);
+      var t = ModelManager_1.ModelManager.QuestNewModel.GetQuest(s.QuestId);
       t && s.UpdateFunctionIcon(t);
     }
     for (const e of this.qro)
       for (const r of e.QuestList) {
         r.UpdateTrackIconActive();
-        const i = ModelManager_1.ModelManager.QuestNewModel.GetQuest(r.QuestId);
+        var i = ModelManager_1.ModelManager.QuestNewModel.GetQuest(r.QuestId);
         i && r.UpdateFunctionIcon(i);
       }
   }
   GetQuestItem(i) {
     for (const s of this.qro) {
-      const t = s.QuestList.find((t) => t.QuestId === i);
+      var t = s.QuestList.find((t) => t.QuestId === i);
       if (t) return t;
     }
     return this.bro.find((t) => t.QuestId === i);
@@ -174,7 +174,7 @@ class QuestTypeItem extends UiPanelBase_1.UiPanelBase {
     for (const i of ConfigManager_1.ConfigManager.QuestNewConfig.GetQuesTypesByMainType(
       this.QuestType,
     )) {
-      const t = ModelManager_1.ModelManager.QuestNewModel.GetQuestsByType(i.Id);
+      var t = ModelManager_1.ModelManager.QuestNewModel.GetQuestsByType(i.Id);
       if (t) {
         t.sort((t, i) => t.Id - i.Id);
         for (const s of t)
@@ -192,4 +192,4 @@ class QuestTypeItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.QuestTypeItem = QuestTypeItem;
-// # sourceMappingURL=QuestTypeItem.js.map
+//# sourceMappingURL=QuestTypeItem.js.map

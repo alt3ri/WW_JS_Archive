@@ -6,10 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.AchievementCategoryData =
     exports.AchievementData =
       void 0);
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const StringBuilder_1 = require("../../../Core/Utils/StringBuilder");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  StringBuilder_1 = require("../../../Core/Utils/StringBuilder"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class AchievementData {
   constructor(t) {
     (this._be = void 0),
@@ -37,7 +37,7 @@ class AchievementData {
     return this.xe;
   }
   RedPoint() {
-    return !(!this.GetShowState() || this.GetFinishState() !== 1);
+    return !(!this.GetShowState() || 1 !== this.GetFinishState());
   }
   GetIconPath() {
     return ConfigManager_1.ConfigManager.AchievementConfig.GetAchievementIcon(
@@ -45,22 +45,23 @@ class AchievementData {
     );
   }
   IfSingleAchievement() {
-    return this.gbe === -1;
+    return -1 === this.gbe;
   }
   GetShowState() {
     if (
-      (this.GetHiddenState() && this.GetFinishState() === 0) ||
+      (this.GetHiddenState() && 0 === this.GetFinishState()) ||
       void 0 === this.Cbe
     )
       return !1;
     if (
-      this.ube !== -1 &&
-      ModelManager_1.ModelManager.AchievementModel.GetAchievementData(
-        this.ube,
-      ).GetFinishState() !== 2
+      -1 !== this.ube &&
+      2 !==
+        ModelManager_1.ModelManager.AchievementModel.GetAchievementData(
+          this.ube,
+        ).GetFinishState()
     )
       return !1;
-    return this.GetFinishState() !== 2 || !(this.gbe > 0);
+    return 2 !== this.GetFinishState() || !(0 < this.gbe);
   }
   GetHiddenState() {
     return ConfigManager_1.ConfigManager.AchievementConfig.GetAchievementHiddenState(
@@ -69,30 +70,30 @@ class AchievementData {
   }
   GetReplaceDesc(t) {
     let e = this.GetDesc();
-    const r = new StringBuilder_1.StringBuilder();
-    var i = CommonParamById_1.configCommonParamById.GetStringConfig(
-      "TutorialSearchColor",
-    );
-    var i =
-      (r.Append("<color="),
-      r.Append(i?.toLowerCase() + ">"),
-      r.Append(t),
-      r.Append("</color>"),
-      "" + t);
+    var r = new StringBuilder_1.StringBuilder(),
+      i = CommonParamById_1.configCommonParamById.GetStringConfig(
+        "TutorialSearchColor",
+      ),
+      i =
+        (r.Append("<color="),
+        r.Append(i?.toLowerCase() + ">"),
+        r.Append(t),
+        r.Append("</color>"),
+        "" + t);
     return (e = e.replace(i, r.ToString()));
   }
   GetReplaceTitle(t) {
     let e = this.GetTitle();
-    const r = new StringBuilder_1.StringBuilder();
-    var i = CommonParamById_1.configCommonParamById.GetStringConfig(
-      "TutorialSearchColor",
-    );
-    var i =
-      (r.Append("<color="),
-      r.Append(i?.toLowerCase() + ">"),
-      r.Append(t),
-      r.Append("</color>"),
-      "" + t);
+    var r = new StringBuilder_1.StringBuilder(),
+      i = CommonParamById_1.configCommonParamById.GetStringConfig(
+        "TutorialSearchColor",
+      ),
+      i =
+        (r.Append("<color="),
+        r.Append(i?.toLowerCase() + ">"),
+        r.Append(t),
+        r.Append("</color>"),
+        "" + t);
     return (e = e.replace(i, r.ToString()));
   }
   GetDesc() {
@@ -127,29 +128,29 @@ class AchievementData {
     return e;
   }
   GetFinishedStar() {
-    let t, e;
+    var t, e;
     return this.GetShowState()
       ? ((t =
           ConfigManager_1.ConfigManager.AchievementConfig.GetAchievementLevel(
             this.xe,
           )),
         this.IfSingleAchievement()
-          ? this.GetFinishState() === 2 || this.GetFinishState() === 1
+          ? 2 === this.GetFinishState() || 1 === this.GetFinishState()
             ? t
             : 0
           : ((e = this.fbe()),
-            this.GetFinishState() === 2 || this.GetFinishState() === 1
+            2 === this.GetFinishState() || 1 === this.GetFinishState()
               ? t + e
-              : this.GetFinishState() === 0
+              : 0 === this.GetFinishState()
                 ? e
-                : (t - 1 >= 0 ? t - 1 : 0) + e))
+                : (0 <= t - 1 ? t - 1 : 0) + e))
       : 0;
   }
   fbe() {
-    let t = 0;
-    let e = this.ube;
-    for (; e !== -1; ) {
-      const r =
+    let t = 0,
+      e = this.ube;
+    for (; -1 !== e; ) {
+      var r =
         ModelManager_1.ModelManager.AchievementModel.GetAchievementData(e);
       (t +=
         ConfigManager_1.ConfigManager.AchievementConfig.GetAchievementLevel(e)),
@@ -158,17 +159,17 @@ class AchievementData {
     return t;
   }
   GetAchievementShowStar() {
-    let t;
+    var t;
     return this.GetShowState()
       ? ((t =
           ConfigManager_1.ConfigManager.AchievementConfig.GetAchievementLevel(
             this.xe,
           )),
         this.IfSingleAchievement() ||
-        this.GetFinishState() === 2 ||
-        this.GetFinishState() === 1
+        2 === this.GetFinishState() ||
+        1 === this.GetFinishState()
           ? t
-          : t - 1 >= 0
+          : 0 <= t - 1
             ? t - 1
             : 0)
       : 0;
@@ -185,14 +186,14 @@ class AchievementData {
     return this.Cbe;
   }
   GetRewards() {
-    if (this.cbe.length === 0) {
+    if (0 === this.cbe.length) {
       this.cbe = new Array();
-      const t =
+      var t =
         ConfigManager_1.ConfigManager.AchievementConfig.GetAchievementReward(
           this.xe,
         );
       if (t)
-        for (let [e, r] of t) {
+        for (var [e, r] of t) {
           e = [{ IncId: 0, ItemId: e }, r];
           this.cbe.push(e);
         }
@@ -200,24 +201,24 @@ class AchievementData {
     return this.cbe;
   }
   GetAllFinishState() {
-    return (this.gbe === 0 || this.gbe === -1) && this.GetFinishState() === 1;
+    return (0 === this.gbe || -1 === this.gbe) && 1 === this.GetFinishState();
   }
   GetNextLink() {
     return this.gbe;
   }
   GetIfLastAchievement() {
-    return !!this.IfSingleAchievement() || this.gbe === 0;
+    return !!this.IfSingleAchievement() || 0 === this.gbe;
   }
   CanShowStarState() {
-    return this.GetFinishState() === 2 || this.GetFinishState() === 1;
+    return 2 === this.GetFinishState() || 1 === this.GetFinishState();
   }
   GetFinishState() {
-    return this.mbe ? 2 : this._be > 0 ? 1 : 0;
+    return this.mbe ? 2 : 0 < this._be ? 1 : 0;
   }
   GetFinishSort() {
-    return this.GetFinishState() === 2
+    return 2 === this.GetFinishState()
       ? 0
-      : this.GetFinishState() === 1
+      : 1 === this.GetFinishState()
         ? 2
         : 1;
   }
@@ -264,8 +265,8 @@ class AchievementCategoryData {
     );
   }
   GetAchievementCategoryProgress() {
-    let t = 0;
-    let e = 0;
+    let t = 0,
+      e = 0;
     for (const i of ModelManager_1.ModelManager.AchievementModel.GetAchievementCategoryGroups(
       this.xe,
     ))
@@ -273,10 +274,10 @@ class AchievementCategoryData {
         i.GetId(),
         !1,
       )) {
-        const r = n.GetFinishState();
-        (n.GetHiddenState() && r === 0) ||
+        var r = n.GetFinishState();
+        (n.GetHiddenState() && 0 === r) ||
           void 0 === n.GetMaxProgress() ||
-          (t++, r !== 0 && e++);
+          (t++, 0 !== r && e++);
       }
     return Math.round((100 * e) / t) + "%";
   }
@@ -338,14 +339,14 @@ class AchievementGroupData {
     );
   }
   GetRewards() {
-    if (this.cbe.length === 0 && !this.pbe) {
+    if (0 === this.cbe.length && !this.pbe) {
       this.cbe = new Array();
-      const t =
+      var t =
         ConfigManager_1.ConfigManager.AchievementConfig.GetAchievementGroupReward(
           this.xe,
         );
       if (t)
-        for (let [e, r] of t) {
+        for (var [e, r] of t) {
           e = [{ IncId: 0, ItemId: e }, r];
           this.cbe.push(e);
         }
@@ -356,10 +357,9 @@ class AchievementGroupData {
   SmallItemRedPoint() {
     if (this.GetShowState()) {
       if (this.RedPoint()) return !0;
-      const e =
-        ModelManager_1.ModelManager.AchievementModel.GetGroupAchievements(
-          this.GetId(),
-        );
+      var e = ModelManager_1.ModelManager.AchievementModel.GetGroupAchievements(
+        this.GetId(),
+      );
       for (let t = 0; t < e.length; t++) if (e[t].RedPoint()) return !0;
     }
     return !1;
@@ -367,24 +367,24 @@ class AchievementGroupData {
   RedPoint() {
     return (
       !!this.GetShowState() &&
-      this.GetRewards().length > 0 &&
-      this.GetFinishState() === 1
+      0 < this.GetRewards().length &&
+      1 === this.GetFinishState()
     );
   }
   GetCurrentProgress() {
-    const t = ModelManager_1.ModelManager.AchievementModel.GetGroupAchievements(
+    var t = ModelManager_1.ModelManager.AchievementModel.GetGroupAchievements(
       this.xe,
     );
     let e = 0;
     return (
       t.forEach((t) => {
-        t.GetFinishState() !== 0 && e++;
+        0 !== t.GetFinishState() && e++;
       }),
       e
     );
   }
   GetMaxProgress() {
-    const t = ModelManager_1.ModelManager.AchievementModel.GetGroupAchievements(
+    var t = ModelManager_1.ModelManager.AchievementModel.GetGroupAchievements(
       this.xe,
     );
     let e = 0;
@@ -396,19 +396,19 @@ class AchievementGroupData {
     );
   }
   GetFinishState() {
-    return this.mbe ? 2 : this._be > 0 ? 1 : 0;
+    return this.mbe ? 2 : 0 < this._be ? 1 : 0;
   }
   GetAchievementGroupProgress() {
-    let t = 0;
-    let e = 0;
+    let t = 0,
+      e = 0;
     for (const i of ModelManager_1.ModelManager.AchievementModel.GetGroupAchievements(
       this.xe,
       !1,
     )) {
-      const r = i.GetFinishState();
-      (i.GetHiddenState() && r === 0) ||
+      var r = i.GetFinishState();
+      (i.GetHiddenState() && 0 === r) ||
         void 0 === i.GetMaxProgress() ||
-        (t++, r !== 0 && e++);
+        (t++, 0 !== r && e++);
     }
     return Math.round((100 * e) / t) + "%";
   }
@@ -428,4 +428,4 @@ class AchievementSearchGroupData {
   }
 }
 exports.AchievementSearchGroupData = AchievementSearchGroupData;
-// # sourceMappingURL=AchievementData.js.map
+//# sourceMappingURL=AchievementData.js.map

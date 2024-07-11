@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayAbilityVisionMorph = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../../../../Core/Common/Log");
-const GameplayCueById_1 = require("../../../../../../../Core/Define/ConfigQuery/GameplayCueById");
-const Protocol_1 = require("../../../../../../../Core/Define/Net/Protocol");
-const RegisterComponent_1 = require("../../../../../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../../../../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../../../../Core/Utils/TraceElementCommon");
-const EventDefine_1 = require("../../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../../../../Manager/ControllerHolder");
-const PhantomUtil_1 = require("../../../../../../Module/Phantom/PhantomUtil");
-const BulletController_1 = require("../../../../../Bullet/BulletController");
-const VisionSkillHandle_1 = require("../../Skill/VisionSkillHandle");
-const GameplayAbilityVisionBase_1 = require("./GameplayAbilityVisionBase");
-const GameplayAbilityVisionMisc_1 = require("./GameplayAbilityVisionMisc");
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../../../../Core/Common/Log"),
+  GameplayCueById_1 = require("../../../../../../../Core/Define/ConfigQuery/GameplayCueById"),
+  Protocol_1 = require("../../../../../../../Core/Define/Net/Protocol"),
+  RegisterComponent_1 = require("../../../../../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../../../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../../../../Core/Utils/TraceElementCommon"),
+  EventDefine_1 = require("../../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../../../../Manager/ControllerHolder"),
+  PhantomUtil_1 = require("../../../../../../Module/Phantom/PhantomUtil"),
+  BulletController_1 = require("../../../../../Bullet/BulletController"),
+  VisionSkillHandle_1 = require("../../Skill/VisionSkillHandle"),
+  GameplayAbilityVisionBase_1 = require("./GameplayAbilityVisionBase"),
+  GameplayAbilityVisionMisc_1 = require("./GameplayAbilityVisionMisc");
 class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbilityVisionBase {
   constructor() {
     super(...arguments),
@@ -60,7 +60,7 @@ class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbi
     this.oZo(), this.Yzo?.Clear();
   }
   OnTick(i) {
-    let t, s;
+    var t, s;
     this.tZo &&
       ((t = this.Vzo.ScaledHalfHeight - this.ActorComponent.ScaledHalfHeight),
       (s = MathUtils_1.MathUtils.CommonTempVector).DeepCopy(
@@ -161,12 +161,12 @@ class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbi
         this.VisionComponent.Entity,
         !0,
       );
-    let i;
-    let t = new UE.Vector(
-      0,
-      0,
-      this.Vzo.ScaledHalfHeight - this.ActorComponent.ScaledHalfHeight,
-    );
+    var i,
+      t = new UE.Vector(
+        0,
+        0,
+        this.Vzo.ScaledHalfHeight - this.ActorComponent.ScaledHalfHeight,
+      );
     this.Vzo.SetActorLocationAndRotation(
       this.ActorComponent.ActorLocation.op_Addition(t),
       this.ActorComponent.ActorRotation,
@@ -204,13 +204,13 @@ class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbi
       ),
       (this.FLn = this.Wpt.技能ID);
     for (let i = 0; i < this.Wpt.条件技能ID.Num(); ++i) {
-      const s = this.Wpt.条件技能ID.GetKey(i);
+      var s = this.Wpt.条件技能ID.GetKey(i);
       if (this.GameplayTagComponent.HasTag(s.TagId)) {
         this.FLn = this.Wpt.条件技能ID.Get(s);
         break;
       }
     }
-    this.FLn > 0 &&
+    0 < this.FLn &&
       this.Yzo.BeginSkill(
         this.FLn,
         this.SkillComponent.SkillTarget?.Entity,
@@ -229,7 +229,7 @@ class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbi
       );
   }
   hZo(i) {
-    let t;
+    var t;
     this.iAr &&
       ((this.iAr = !1),
       this.oZo(),
@@ -243,11 +243,11 @@ class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbi
             "GameplayAbilityVisionMorph.MorphEnd",
           );
         }),
-      this.FLn > 0) &&
+      0 < this.FLn) &&
       this.Yzo.OnMorphEnd(this.FLn);
   }
   nZo(i) {
-    let t, s;
+    var t, s;
     i ||
       (this.BuffComponent.AddBuff(
         GameplayAbilityVisionMisc_1.roleAppearBuffId,
@@ -277,18 +277,18 @@ class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbi
         (TimerSystem_1.TimerSystem.Remove(this.EVs), (this.EVs = void 0));
   }
   aZo() {
-    const i = (0, GameplayAbilityVisionMisc_1.getLineTrace)();
-    var t = this.ActorComponent.ActorLocationProxy;
-    var s = this.ActorComponent.ScaledHalfHeight + 5;
-    var s = Vector_1.Vector.Create(t.X, t.Y, t.Z - s);
-    var t =
-      (TraceElementCommon_1.TraceElementCommon.SetStartLocation(i, t),
-      TraceElementCommon_1.TraceElementCommon.SetEndLocation(i, s),
-      TraceElementCommon_1.TraceElementCommon.LineTrace(
-        i,
-        "GameplayAbilityVisionMorph.FixMovementMode",
-      ));
-    var s = i.HitResult;
+    var i = (0, GameplayAbilityVisionMisc_1.getLineTrace)(),
+      t = this.ActorComponent.ActorLocationProxy,
+      s = this.ActorComponent.ScaledHalfHeight + 5,
+      s = Vector_1.Vector.Create(t.X, t.Y, t.Z - s),
+      t =
+        (TraceElementCommon_1.TraceElementCommon.SetStartLocation(i, t),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(i, s),
+        TraceElementCommon_1.TraceElementCommon.LineTrace(
+          i,
+          "GameplayAbilityVisionMorph.FixMovementMode",
+        )),
+      s = i.HitResult;
     return t && s.bBlockingHit
       ? (this.MoveComponent.CharacterMovement.SetMovementMode(1), !0)
       : (this.MoveComponent.CharacterMovement.SetMovementMode(3), !1);
@@ -334,4 +334,4 @@ class GameplayAbilityVisionMorph extends GameplayAbilityVisionBase_1.GameplayAbi
   }
 }
 exports.GameplayAbilityVisionMorph = GameplayAbilityVisionMorph;
-// # sourceMappingURL=GameplayAbilityVisionMorph.js.map
+//# sourceMappingURL=GameplayAbilityVisionMorph.js.map

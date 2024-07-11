@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TimeOfDayLoadingView = void 0);
-const UE = require("ue");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const UiManager_1 = require("../../../Ui/UiManager");
-const TimeOfDayAnimController_1 = require("../TimeOfDayAnimController");
-const TimeOfDayController_1 = require("../TimeOfDayController");
+const UE = require("ue"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  TimeOfDayAnimController_1 = require("../TimeOfDayAnimController"),
+  TimeOfDayController_1 = require("../TimeOfDayController");
 class TimeOfDayLoadingView extends UiViewBase_1.UiViewBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIItem]];
@@ -20,4 +20,4 @@ class TimeOfDayLoadingView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.TimeOfDayLoadingView = TimeOfDayLoadingView;
-// # sourceMappingURL=TimeOfDayLoadingView.js.map
+//# sourceMappingURL=TimeOfDayLoadingView.js.map

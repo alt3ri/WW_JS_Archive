@@ -1,38 +1,37 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PawnInteractController = exports.InteractEntity = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon");
-const IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const PublicUtil_1 = require("../../../Common/PublicUtil");
-const Global_1 = require("../../../Global");
-const LevelGameplayActionsDefine_1 = require("../../../LevelGamePlay/LevelGameplayActionsDefine");
-const LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine");
-const LevelGeneralContextUtil_1 = require("../../../LevelGamePlay/LevelGeneralContextUtil");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ChildQuestNodeBase_1 = require("../../../Module/GeneralLogicTree/BehaviorNode/ChildQuestNode/ChildQuestNodeBase");
-const GeneralLogicTreeUtil_1 = require("../../../Module/GeneralLogicTree/GeneralLogicTreeUtil");
-const TsInteractionUtils_1 = require("../../../Module/Interaction/TsInteractionUtils");
-const PlotController_1 = require("../../../Module/Plot/PlotController");
-const SceneTeamController_1 = require("../../../Module/SceneTeam/SceneTeamController");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const UiManager_1 = require("../../../Ui/UiManager");
-const WorldFunctionLibrary_1 = require("../../../World/Bridge/WorldFunctionLibrary");
-const DEFAULT_INTERACT_RANGE = 300;
-const PROFILE_DETECT_VISIBLE_BLOCK =
-  "PawnInteractController_DetectVisibleBlock";
-const DETECT_VISIBLE_BLOCK_HEIGHT_OFFSET = 10;
-const EXECUTION_MAX_HEIGHT_DIFF = 50;
+const Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
+  IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../../Common/PublicUtil"),
+  Global_1 = require("../../../Global"),
+  LevelGameplayActionsDefine_1 = require("../../../LevelGamePlay/LevelGameplayActionsDefine"),
+  LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine"),
+  LevelGeneralContextUtil_1 = require("../../../LevelGamePlay/LevelGeneralContextUtil"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ChildQuestNodeBase_1 = require("../../../Module/GeneralLogicTree/BehaviorNode/ChildQuestNode/ChildQuestNodeBase"),
+  GeneralLogicTreeUtil_1 = require("../../../Module/GeneralLogicTree/GeneralLogicTreeUtil"),
+  TsInteractionUtils_1 = require("../../../Module/Interaction/TsInteractionUtils"),
+  PlotController_1 = require("../../../Module/Plot/PlotController"),
+  SceneTeamController_1 = require("../../../Module/SceneTeam/SceneTeamController"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  WorldFunctionLibrary_1 = require("../../../World/Bridge/WorldFunctionLibrary"),
+  DEFAULT_INTERACT_RANGE = 300,
+  PROFILE_DETECT_VISIBLE_BLOCK = "PawnInteractController_DetectVisibleBlock",
+  DETECT_VISIBLE_BLOCK_HEIGHT_OFFSET = 10,
+  EXECUTION_MAX_HEIGHT_DIFF = 50;
 class InteractEntity {
   constructor(t) {
     (this.IsAdvice = !1),
@@ -53,7 +52,7 @@ class InteractEntity {
       (this.DirectOptionNames = new Array());
   }
   get Priority() {
-    let t, i;
+    var t, i;
     return this.Jh
       ? (this.IsAdvice &&
           ((i = this.Hte.ActorLocationProxy),
@@ -131,8 +130,8 @@ class PawnInteractController {
       (this.OnInteractActionEnd = void 0);
   }
   get DefaultShowOption() {
-    const t = this.GetInteractiveOption();
-    return this.HasDynamicOption && t?.DoIntactType === "Direct" && t.TidContent
+    var t = this.GetInteractiveOption();
+    return this.HasDynamicOption && "Direct" === t?.DoIntactType && t.TidContent
       ? PublicUtil_1.PublicUtil.GetConfigTextByKey(t.TidContent)
       : StringUtils_1.StringUtils.IsEmpty(this.Tor)
         ? void 0
@@ -142,14 +141,14 @@ class PawnInteractController {
     return this.Uor;
   }
   qor() {
-    const t = this.Hte.CreatureData;
-    let i = t.GetPbEntityInitData();
+    var t = this.Hte.CreatureData,
+      i = t.GetPbEntityInitData();
     if (i) {
       (this.Mor = new Array()),
         (this.Eor = new Array()),
         (this.yor = new Array()),
         (this.Sor = new Array());
-      const e = (0, IComponent_1.getComponent)(
+      var e = (0, IComponent_1.getComponent)(
         i.ComponentsData,
         "InteractComponent",
       );
@@ -214,13 +213,13 @@ class PawnInteractController {
   Oor(t) {
     if (t?.sMs)
       for (const r of t.sMs) {
-        const i = ModelManager_1.ModelManager.InteractionModel.GetDynamicConfig(
-          r.gFn,
-        );
-        const e =
-          LevelGeneralContextUtil_1.LevelGeneralContextUtil.CreateByServerContext(
-            r.Hms,
-          );
+        var i = ModelManager_1.ModelManager.InteractionModel.GetDynamicConfig(
+            r.gFn,
+          ),
+          e =
+            LevelGeneralContextUtil_1.LevelGeneralContextUtil.CreateByServerContext(
+              r.Hms,
+            );
         this.AddDynamicInteractOption(i, e, r.nMs, !1);
       }
   }
@@ -231,7 +230,7 @@ class PawnInteractController {
   }
   UpdateDirectOptions(t = !0, i = !1) {
     if (this.Mor && this.Hte) {
-      const e = this.Hte.Owner;
+      var e = this.Hte.Owner;
       if (
         e &&
         this.InteractEntity &&
@@ -242,9 +241,9 @@ class PawnInteractController {
       ) {
         for (const r of this.Mor)
           r.Disabled ||
-            r.DoIntactType !== "Direct" ||
-            (i && r.Type.Type !== "Flow") ||
-            (r.CustomOptionType !== 1 &&
+            "Direct" !== r.DoIntactType ||
+            (i && "Flow" !== r.Type.Type) ||
+            (1 !== r.CustomOptionType &&
               this.For(r) &&
               (this.TempDirectOptionInstances.push(r),
               this.InteractEntity.DirectOptionInstanceIds.push(r.InstanceId),
@@ -278,8 +277,8 @@ class PawnInteractController {
     if (t && t.aMs && t.aMs.length)
       if (i)
         for (const n of t.aMs) {
-          var r = i.Options[n].Option;
-          var r = this.Vor(r, 2);
+          var r = i.Options[n].Option,
+            r = this.Vor(r, 2);
           (r.RandomOptionIndex = n), this.Mor.push(r);
         }
       else
@@ -296,10 +295,10 @@ class PawnInteractController {
         : e.InteractDefaultIcon
           ? (this.InteractIcon = e.InteractDefaultIcon)
           : (this.InteractIcon = "Dialog"),
-      e.Options?.length > 0)
+      0 < e.Options?.length)
     )
       for (let t = 0, i = e.Options.length; t < i; t++) {
-        const r = this.Vor(e.Options[t], 0);
+        var r = this.Vor(e.Options[t], 0);
         this.Mor.push(r);
       }
   }
@@ -312,28 +311,28 @@ class PawnInteractController {
   }
   IsInSectorRange() {
     if (!this.SectorRange) return !0;
-    const e = MathCommon_1.MathCommon.WrapAngle(this.SectorRange.Begin);
-    const r = MathCommon_1.MathCommon.WrapAngle(this.SectorRange.End);
-    var n = Global_1.Global.BaseCharacter?.CharacterActorComponent;
+    var e = MathCommon_1.MathCommon.WrapAngle(this.SectorRange.Begin),
+      r = MathCommon_1.MathCommon.WrapAngle(this.SectorRange.End),
+      n = Global_1.Global.BaseCharacter?.CharacterActorComponent;
     if (n) {
       let t = void 0;
-      var s = this.Hte.CreatureData.GetEntityType();
-      var s =
-        ((t =
-          s === Protocol_1.Aki.Protocol.HBs.Proto_SceneItem
-            ? this.Hte.ActorRightProxy
-            : this.Hte.ActorForwardProxy),
-        PawnInteractController.cz);
-      const o = PawnInteractController.fz;
-      var n =
-        (n.ActorLocationProxy.Subtraction(this.GetInteractPoint(), s),
-        (s.Z = 0),
-        s.Normalize(),
-        s.DotProduct(t));
+      var s = this.Hte.CreatureData.GetEntityType(),
+        s =
+          ((t =
+            s === Protocol_1.Aki.Protocol.HBs.Proto_SceneItem
+              ? this.Hte.ActorRightProxy
+              : this.Hte.ActorForwardProxy),
+          PawnInteractController.cz),
+        o = PawnInteractController.fz,
+        n =
+          (n.ActorLocationProxy.Subtraction(this.GetInteractPoint(), s),
+          (s.Z = 0),
+          s.Normalize(),
+          s.DotProduct(t));
       let i = Math.acos(n) * MathUtils_1.MathUtils.RadToDeg;
       if (
         (s.CrossProduct(t, o),
-        o.Z > 0 && (i *= -1),
+        0 < o.Z && (i *= -1),
         (i = MathCommon_1.MathCommon.WrapAngle(i)),
         r < e)
       ) {
@@ -351,19 +350,19 @@ class PawnInteractController {
       this.PlayerInteractiveRange.End === MathUtils_1.PI_DEG
     )
       return !0;
-    const i = PawnInteractController.cz;
-    const e = PawnInteractController.fz;
-    var t =
-      (i.FromUeVector(this.Hte.ActorLocationProxy),
-      i.SubtractionEqual(t.ActorLocationProxy),
-      (i.Z = 0),
-      i.Normalize(),
-      t.ActorForwardProxy);
-    const r = i.DotProduct(t);
+    var i = PawnInteractController.cz,
+      e = PawnInteractController.fz,
+      t =
+        (i.FromUeVector(this.Hte.ActorLocationProxy),
+        i.SubtractionEqual(t.ActorLocationProxy),
+        (i.Z = 0),
+        i.Normalize(),
+        t.ActorForwardProxy),
+      r = i.DotProduct(t);
     let n = Math.acos(r) * MathUtils_1.MathUtils.RadToDeg;
     return (
       i.CrossProduct(t, e),
-      e.Z > 0 && (n *= -1),
+      0 < e.Z && (n *= -1),
       n > this.PlayerInteractiveRange.Begin &&
         n < this.PlayerInteractiveRange.End
     );
@@ -375,18 +374,18 @@ class PawnInteractController {
   }
   GetInteractPoint() {
     this.Bor.DeepCopy(this.Hte.ActorLocationProxy);
-    const t = PawnInteractController.cz;
-    const i = this.LocationOffset;
+    var t = PawnInteractController.cz,
+      i = this.LocationOffset;
     return (
       !i ||
-        (i.X === 0 && i.Y === 0 && i.Z === 0) ||
-        (i.X !== 0 &&
+        (0 === i.X && 0 === i.Y && 0 === i.Z) ||
+        (0 !== i.X &&
           (this.Hte.ActorForwardProxy.Multiply(i.X, t),
           this.Bor.AdditionEqual(t)),
-        i.Y !== 0 &&
+        0 !== i.Y &&
           (this.Hte.ActorRightProxy.Multiply(i.Y, t),
           this.Bor.AdditionEqual(t)),
-        i.Z !== 0 &&
+        0 !== i.Z &&
           (this.Hte.ActorUpProxy.Multiply(i.Z, t), this.Bor.AdditionEqual(t))),
       this.Bor
     );
@@ -397,19 +396,19 @@ class PawnInteractController {
   }
   jor() {
     this.Mor &&
-      this.Mor.length !== 0 &&
+      0 !== this.Mor.length &&
       ((this.Ior = this.Mor[0]), (this.wor = void 0));
   }
   GetInteractiveOption(i = !1) {
     if (this.Por === Time_1.Time.Frame && this.wor) return this.wor;
     if (this.Hte && this.Hte.Owner) {
-      const e = this.Mor;
+      var e = this.Mor;
       if (e) {
         this.wor = void 0;
-        for (let t = e.length - 1; t > -1; t--) {
-          const r = e[t];
+        for (let t = e.length - 1; -1 < t; t--) {
+          var r = e[t];
           if (!r.Disabled)
-            if (!i || r.Type.Type === "Flow")
+            if (!i || "Flow" === r.Type.Type)
               if (this.For(r)) {
                 this.wor = r;
                 break;
@@ -420,16 +419,16 @@ class PawnInteractController {
     }
   }
   Vor(t, i, e, r = 0, n = 0) {
-    const s = t.Range || this.Lor;
+    var s = t.Range || this.Lor;
     let o = this.Uor;
     t.DoIntactType && (o = t.DoIntactType);
-    const h = new LevelGameplayActionsDefine_1.CommonInteractOption();
+    var h = new LevelGameplayActionsDefine_1.CommonInteractOption();
     return h.Init(++this.NUe, t, e, s, o, i, r, n), h;
   }
   AddDynamicInteractOption(t, i, e, r = !0) {
     if (!this.Mor) return -1;
-    let n = 0;
-    let s = 0;
+    let n = 0,
+      s = 0;
     i &&
       (i instanceof LevelGeneralContextDefine_1.QuestContext
         ? ((s = 1), (n = i.QuestId))
@@ -442,7 +441,7 @@ class PawnInteractController {
       void 0 !== e && (t.TidContent = e),
       this.Mor.push(t),
       this.Eor.push(t),
-      s === 1 && (this.yor.push(t), this.Wor()),
+      1 === s && (this.yor.push(t), this.Wor()),
       i &&
         ((e = this.Kor(t.Context)),
         this.ChangeOptionDisabled(t.InstanceId, !e)),
@@ -470,21 +469,21 @@ class PawnInteractController {
   RemoveDynamicInteractOption(i) {
     if (!this.Mor) return !1;
     let e = !1;
-    for (let t = this.Eor.length - 1; t > -1; t--) {
-      const r = this.Eor[t];
+    for (let t = this.Eor.length - 1; -1 < t; t--) {
+      var r = this.Eor[t];
       if (r.Guid === i) {
-        (e = r.ContentType === 1), this.Eor.splice(t, 1);
+        (e = 1 === r.ContentType), this.Eor.splice(t, 1);
         break;
       }
     }
     if (e)
-      for (let t = this.yor.length - 1; t > -1; t--)
+      for (let t = this.yor.length - 1; -1 < t; t--)
         if (this.yor[t].Guid === i) {
           this.yor.splice(t, 1);
           break;
         }
     let n = !1;
-    for (let t = this.Mor.length - 1; t > -1; t--)
+    for (let t = this.Mor.length - 1; -1 < t; t--)
       if (this.Mor[t].Guid === i) {
         (n = !0), this.Mor.splice(t, 1)[0].Dispose();
         break;
@@ -492,13 +491,12 @@ class PawnInteractController {
     return n && this.kor(), n;
   }
   AddClientInteractOption(t, i, e = "Option", r, n, s = 0, o) {
-    var h = new LevelGameplayActionsDefine_1.CommonActionInfo();
-    var t = ((h.Params = t), new Array());
-    var h =
-      (t.push(h), new LevelGameplayActionsDefine_1.CommonInteractActions());
-    var t =
-      ((h.Actions = t),
-      new LevelGameplayActionsDefine_1.CommonInteractOption());
+    var h = new LevelGameplayActionsDefine_1.CommonActionInfo(),
+      t = ((h.Params = t), new Array()),
+      h = (t.push(h), new LevelGameplayActionsDefine_1.CommonInteractActions()),
+      t =
+        ((h.Actions = t),
+        new LevelGameplayActionsDefine_1.CommonInteractOption());
     return (
       (t.Type = h),
       (t.Condition = i),
@@ -517,7 +515,7 @@ class PawnInteractController {
   RemoveClientInteractOption(i) {
     if (!this.Mor) return !1;
     let e = !1;
-    for (let t = this.Mor.length - 1; t > -1; t--)
+    for (let t = this.Mor.length - 1; -1 < t; t--)
       if (this.Mor[t].InstanceId === i) {
         (e = !0), this.Mor.splice(t, 1)[0].Dispose();
         break;
@@ -529,17 +527,17 @@ class PawnInteractController {
       for (const i of this.Mor) {
         var t;
         i.Context &&
-          i.OptionType === 1 &&
+          1 === i.OptionType &&
           ((t = this.Kor(i.Context)),
           this.ChangeOptionDisabled(i.InstanceId, !t));
       }
   }
   ChangeOptionText(i, t) {
-    let e;
+    var e;
     this.Mor && (e = this.Mor.find((t) => t.Guid === i)) && (e.TidContent = t);
   }
   ChangeOptionDisabled(i, t) {
-    let e;
+    var e;
     this.Mor &&
       (e = this.Mor.find((t) => t.InstanceId === i)) &&
       (e.Disabled = t);
@@ -553,30 +551,30 @@ class PawnInteractController {
   get Options() {
     if (this.Sor && this.Mor)
       for (let t = (this.Sor.length = 0), i = this.Mor.length; t < i; t++) {
-        const e = this.Mor[t];
+        var e = this.Mor[t];
         e.Disabled || this.Sor.push(e);
       }
     return this.Sor;
   }
   get ShowOptions() {
-    const e = new Array();
+    var e = new Array();
     for (const t of this.yor)
       StringUtils_1.StringUtils.IsEmpty(t.TidContent) ||
         t.Disabled ||
-        t.DoIntactType !== "Option" ||
+        "Option" !== t.DoIntactType ||
         (this.For(t) && e.push(t));
     for (let t = 0, i = this.Mor.length; t < i; t++) {
-      const r = this.Mor[t];
+      var r = this.Mor[t];
       StringUtils_1.StringUtils.IsEmpty(r.TidContent) ||
         r.Disabled ||
-        r.DoIntactType !== "Option" ||
-        r.ContentType === 1 ||
+        "Option" !== r.DoIntactType ||
+        1 === r.ContentType ||
         (this.For(r) && e.push(r));
     }
     return e.push(void 0), e;
   }
   get HasDynamicOption() {
-    return this.Eor.length > 0;
+    return 0 < this.Eor.length;
   }
   get Owner() {
     return this.Hte?.Owner;
@@ -588,26 +586,26 @@ class PawnInteractController {
     return this.Hte?.CreatureData;
   }
   HasInteractOptions() {
-    return void 0 !== this.Mor?.length && this.Mor?.length > 0;
+    return void 0 !== this.Mor?.length && 0 < this.Mor?.length;
   }
   get InteractRange() {
     return this.Ror;
   }
   get InteractExitRange() {
-    return this.Dor === -1 ? this.Ror : this.Dor;
+    return -1 === this.Dor ? this.Ror : this.Dor;
   }
   GetAutoTriggerOption() {
     if (this.Mor)
       for (let t = 0, i = this.Mor.length; t < i; t++) {
-        const e = this.Mor[t];
-        if (e.DoIntactType === "Auto") if (this.For(e)) return e;
+        var e = this.Mor[t];
+        if ("Auto" === e.DoIntactType) if (this.For(e)) return e;
       }
   }
   InteractOption(t = 0) {
     t >= this.Mor.length ||
       (!(t = this.Mor[t]).Disabled &&
         this.For(t) &&
-        (PlotController_1.PlotController.EndInteraction(t.Type.Type === "Flow"),
+        (PlotController_1.PlotController.EndInteraction("Flow" === t.Type.Type),
         TsInteractionUtils_1.TsInteractionUtils.HandleInteractionOptionNew(
           t,
           this,
@@ -622,10 +620,10 @@ class PawnInteractController {
       )
     )
       return !1;
-    if (t.OptionType === 3 && t.CustomOptionType === 1) {
+    if (3 === t.OptionType && 1 === t.CustomOptionType) {
       t = this.Hte;
       if (t) {
-        let i =
+        var i =
           ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
             3,
           );
@@ -640,10 +638,10 @@ class PawnInteractController {
     return !0;
   }
   Qor() {
-    let t;
-    var i = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
-    let e = i.Entity.GetComponent(3);
-    var i = i.Entity.GetComponent(26)?.ExecutionTrace;
+    var t,
+      i = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity,
+      e = i.Entity.GetComponent(3),
+      i = i.Entity.GetComponent(26)?.ExecutionTrace;
     return i
       ? (TraceElementCommon_1.TraceElementCommon.SetStartLocation(
           i,
@@ -692,11 +690,11 @@ class PawnInteractController {
   }
   HasDynamicOptionType(t) {
     for (const r of this.Eor)
-      if (r.Context.Type === 6) {
-        const i = r.Context.TreeConfigId;
-        const e = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
-          i,
-        )?.GetNode(r.Context.NodeId);
+      if (6 === r.Context.Type) {
+        var i = r.Context.TreeConfigId,
+          e = ModelManager_1.ModelManager.QuestNewModel.GetQuest(i)?.GetNode(
+            r.Context.NodeId,
+          );
         if (e && e instanceof ChildQuestNodeBase_1.ChildQuestNodeBase)
           for (const n of t) if (e.ChildQuestType === n) return !0;
       }
@@ -704,7 +702,7 @@ class PawnInteractController {
   }
   HasDynamicOptionTask() {
     for (const t of this.Eor)
-      if (t.Context.Type === 6) return t.Context.NodeId === 0;
+      if (6 === t.Context.Type) return 0 === t.Context.NodeId;
     return !1;
   }
   CheckInteractCount(t, i) {
@@ -729,7 +727,7 @@ class PawnInteractController {
   }
   GetOptionByIndex(t) {
     if (this.Mor) {
-      const i = t + 1;
+      var i = t + 1;
       for (const e of this.Mor) if (e.InstanceId === i) return e;
     }
   }
@@ -810,7 +808,7 @@ class PawnInteractController {
     return i;
   }
   GetInteractionDebugInfos() {
-    if (this.Mor && this.Mor?.length > 0) {
+    if (this.Mor && 0 < this.Mor?.length) {
       let t = "";
       for (const e of this.Mor) {
         t =
@@ -826,11 +824,11 @@ class PawnInteractController {
             "\t\t") +
           ("Enable: " + !e.Disabled) +
           "\t\t";
-        const i = this.For(e);
+        var i = this.For(e);
         if (((t += "满足开启条件: " + i), !i))
           for (const r of e.Condition.Conditions)
             t = (t += "\n") + "Condition: " + JSON.stringify(r);
-        e.OptionType === 1 &&
+        1 === e.OptionType &&
           (t = (t += "\nContext:\n") + JSON.stringify(e.Context)),
           (t += "\n\n");
       }
@@ -842,4 +840,4 @@ class PawnInteractController {
 ((exports.PawnInteractController = PawnInteractController).cz =
   Vector_1.Vector.Create()),
   (PawnInteractController.fz = Vector_1.Vector.Create());
-// # sourceMappingURL=PawnInteractController.js.map
+//# sourceMappingURL=PawnInteractController.js.map

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GachaTagItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class GachaTagItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -51,7 +51,7 @@ class GachaTagItem extends GridProxyAbstract_1.GridProxyAbstract {
     );
   }
   InitData() {
-    let t, i;
+    var t, i;
     this.Data &&
       ((t = this.Data.PoolInfo.Id),
       (t = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewInfo(t))
@@ -96,4 +96,4 @@ class GachaTagItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.GachaTagItem = GachaTagItem;
-// # sourceMappingURL=GachaTagItem.js.map
+//# sourceMappingURL=GachaTagItem.js.map

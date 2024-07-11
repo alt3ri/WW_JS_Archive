@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ClickBtnInsideReleaseComponent = void 0);
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const UiNavigationNewController_1 = require("../New/UiNavigationNewController");
-const HotKeyComponent_1 = require("./HotKeyComponent");
+const StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
+  HotKeyComponent_1 = require("./HotKeyComponent");
 class ClickBtnInsideReleaseComponent extends HotKeyComponent_1.HotKeyComponent {
   OnRelease(e) {
     UiNavigationNewController_1.UiNavigationNewController.ClickButtonInside(
@@ -11,7 +11,7 @@ class ClickBtnInsideReleaseComponent extends HotKeyComponent_1.HotKeyComponent {
     );
   }
   OnRefreshSelfHotKeyState(e) {
-    const t = this.GetBindButtonTag();
+    var t = this.GetBindButtonTag();
     StringUtils_1.StringUtils.IsEmpty(t) ||
       ((e = e.GetFocusListener())
         ? ((e = e.GetChildListenerByTag(t)),
@@ -20,4 +20,4 @@ class ClickBtnInsideReleaseComponent extends HotKeyComponent_1.HotKeyComponent {
   }
 }
 exports.ClickBtnInsideReleaseComponent = ClickBtnInsideReleaseComponent;
-// # sourceMappingURL=ClickBtnInsideReleaseComponent.js.map
+//# sourceMappingURL=ClickBtnInsideReleaseComponent.js.map

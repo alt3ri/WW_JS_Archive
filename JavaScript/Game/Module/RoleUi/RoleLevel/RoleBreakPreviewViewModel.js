@@ -4,11 +4,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.RoleBreakPreviewContext =
     exports.RoleBreakPreviewViewModel =
       void 0);
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ItemDefines_1 = require("../../Item/Data/ItemDefines");
-const CostMediumItemGrid_1 = require("../RoleBreach/CostMediumItemGrid");
-const RoleBreakPreviewView_1 = require("./RoleBreakPreviewView");
+const ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ItemDefines_1 = require("../../Item/Data/ItemDefines"),
+  CostMediumItemGrid_1 = require("../RoleBreach/CostMediumItemGrid"),
+  RoleBreakPreviewView_1 = require("./RoleBreakPreviewView");
 class RoleBreakPreviewViewModel {
   constructor() {
     (this.eLn = void 0),
@@ -18,14 +18,14 @@ class RoleBreakPreviewViewModel {
       (this.CreateLevelLayoutGrid = () =>
         new RoleBreakPreviewView_1.LevelLayoutGrid(this)),
       (this.xRn = (t) => {
-        const e = t.Data;
+        var e = t.Data;
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
           e.ItemId,
         ),
           t.MediumItemGrid.SetSelected(!0, !0);
       }),
       (this.CreateItemLayoutGrid = () => {
-        const t = new CostMediumItemGrid_1.CostMediumItemGrid();
+        var t = new CostMediumItemGrid_1.CostMediumItemGrid();
         return t.BindOnExtendToggleClicked(this.xRn), t;
       });
   }
@@ -42,7 +42,7 @@ class RoleBreakPreviewViewModel {
     return this.oLn;
   }
   set ChosenLevel(t) {
-    const e = this.CachedRoleInstance.GetLevelData().GetMaxBreachLevel();
+    var e = this.CachedRoleInstance.GetLevelData().GetMaxBreachLevel();
     let s = t;
     s < 1 ? (s = 1) : s > e && (s = e),
       (this.oLn = s),
@@ -62,11 +62,11 @@ class RoleBreakPreviewViewModel {
     this.tLn?.Dispose(), (this.tLn = void 0);
   }
   HandleViewOnStart() {
-    const t = this.CachedRoleInstance.GetLevelData().GetBreachLevel();
+    var t = this.CachedRoleInstance.GetLevelData().GetBreachLevel();
     this.ChosenLevel = t + 1;
   }
   HandleCostContentItemOnStart() {
-    const t = this.CachedRoleInstance.GetLevelData();
+    var t = this.CachedRoleInstance.GetLevelData();
     this.tLn.ChosenLevel = t.GetBreachLevel();
   }
   HandleViewClosePromise(t) {
@@ -84,21 +84,21 @@ class RoleBreakPreviewViewModel {
     this.ChosenLevel = this.ChosenLevel + 1;
   }
   BuildLevelLayoutData(e) {
-    const s = [];
-    const i = this.CachedRoleInstance.GetLevelData();
-    const o = i.GetBreachLevel();
+    var s = [],
+      i = this.CachedRoleInstance.GetLevelData(),
+      o = i.GetBreachLevel();
     for (let t = 0; t < i.GetMaxBreachLevel(); t++) {
-      const h = t + 1;
+      var h = t + 1;
       s.push({ IsChosen: h === e, IsAvailable: t < o, LevelContent: h });
     }
     return s;
   }
   BuildItemLayoutData(t) {
-    let e;
-    let s;
-    const i = this.CachedRoleInstance.GetLevelData();
-    const o = i.GetBreachLevel() >= t;
-    const h = [];
+    var e,
+      s,
+      i = this.CachedRoleInstance.GetLevelData(),
+      o = i.GetBreachLevel() >= t,
+      h = [];
     for ([e, s] of i.GetBreachConfig(t).BreachConsume)
       e !== ItemDefines_1.EItemId.Gold &&
         h.push({
@@ -115,7 +115,7 @@ class RoleBreakPreviewViewModel {
     return h;
   }
   BuildCostContentItemData(t) {
-    let e, s;
+    var e, s;
     let i = 0;
     for ([e, s] of this.CachedRoleInstance.GetLevelData().GetBreachConfig(t)
       .BreachConsume)
@@ -162,16 +162,16 @@ class RoleBreakPreviewContext {
   }
   set ChosenLevel(t) {
     this.oLn = t;
-    var e = this.rLn.CachedRoleInstance.GetLevelData();
-    const s = e.GetBreachLevel();
-    const i = e.GetMaxBreachLevel();
-    var e = e.GetBreachConfig(t).MaxLevel;
+    var e = this.rLn.CachedRoleInstance.GetLevelData(),
+      s = e.GetBreachLevel(),
+      i = e.GetMaxBreachLevel(),
+      e = e.GetBreachConfig(t).MaxLevel;
     t <= s
       ? (this.nLn.RefreshLevelContentItem(!1), this.nLn.RefreshHasBrokenTip(!0))
       : (this.nLn.RefreshLevelContentItem(!0),
         this.nLn.RefreshHasBrokenTip(!1),
         (this.LevelContent = e)),
-      this.nLn.RefreshLeftButton(t !== 1),
+      this.nLn.RefreshLeftButton(1 !== t),
       this.nLn.RefreshRightButton(t !== i),
       (this.LevelLayout = this.rLn.BuildLevelLayoutData(t)),
       (this.ItemLayout = this.rLn.BuildItemLayoutData(t));
@@ -215,4 +215,4 @@ class CostContentItemContext {
   }
 }
 exports.CostContentItemContext = CostContentItemContext;
-// # sourceMappingURL=RoleBreakPreviewViewModel.js.map
+//# sourceMappingURL=RoleBreakPreviewViewModel.js.map

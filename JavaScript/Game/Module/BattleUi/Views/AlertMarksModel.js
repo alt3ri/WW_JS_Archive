@@ -13,4 +13,4 @@ class AlertMarkModel extends ModelBase_1.ModelBase {
   }
 }
 exports.AlertMarkModel = AlertMarkModel;
-// # sourceMappingURL=AlertMarksModel.js.map
+//# sourceMappingURL=AlertMarksModel.js.map

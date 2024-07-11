@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ManufactureView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiLayerType_1 = require("../../../Ui/Define/UiLayerType");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const CommonCountPanel_1 = require("../../Common/CommonCountPanel");
-const UiNavigationView_1 = require("../../UiNavigation/UiNavigationView");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const CommonItemView_1 = require("./CommonItemView");
-const CommonManager_1 = require("./CommonManager");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiLayerType_1 = require("../../../Ui/Define/UiLayerType"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  CommonCountPanel_1 = require("../../Common/CommonCountPanel"),
+  UiNavigationView_1 = require("../../UiNavigation/UiNavigationView"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  CommonItemView_1 = require("./CommonItemView"),
+  CommonManager_1 = require("./CommonManager");
 class ManufactureView extends UiNavigationView_1.UiNavigationView {
   constructor() {
     super(...arguments),
@@ -171,11 +171,11 @@ class ManufactureView extends UiNavigationView_1.UiNavigationView {
       this.bl();
   }
   hke() {
-    const t = CommonManager_1.CommonManager.GetCommonManufactureText(this.gIt);
+    var t = CommonManager_1.CommonManager.GetCommonManufactureText(this.gIt);
     this.GetText(0).SetText(t);
   }
   wNt() {
-    const t = CommonManager_1.CommonManager.GetCommonManufactureId(this.gIt);
+    var t = CommonManager_1.CommonManager.GetCommonManufactureId(this.gIt);
     this.LNt.SetIcon(t), this.LNt.SetQuality(t);
   }
   Oyi() {
@@ -195,11 +195,11 @@ class ManufactureView extends UiNavigationView_1.UiNavigationView {
       t.RefreshNeed(this.t6);
   }
   rFe() {
-    const t = this.GetButton(3)
-      .GetOwner()
-      .GetComponentByClass(UE.UIInteractionGroup.StaticClass());
-    const e = this.GetButton(6).GetOwner();
-    const i = CommonManager_1.CommonManager.CheckCanManufacture(this.gIt);
+    var t = this.GetButton(3)
+        .GetOwner()
+        .GetComponentByClass(UE.UIInteractionGroup.StaticClass()),
+      e = this.GetButton(6).GetOwner(),
+      i = CommonManager_1.CommonManager.CheckCanManufacture(this.gIt);
     t.SetInteractable(i), e.GetUIItem().SetUIActive(!i);
   }
   qNt() {
@@ -229,12 +229,12 @@ class OpenHelpRoleButton extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.jyi]]);
   }
   RefreshIcon() {
-    const t = CommonManager_1.CommonManager.GetCurrentRoleId();
-    const e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(t);
+    var t = CommonManager_1.CommonManager.GetCurrentRoleId(),
+      e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(t);
     this.SetRoleIcon(e.GetRoleConfig().RoleHeadIcon, this.GetTexture(1), t);
   }
   RefreshRedDot(t) {
-    const e = CommonManager_1.CommonManager.GetCurrentRoleId();
+    var e = CommonManager_1.CommonManager.GetCurrentRoleId();
     this.GetItem(2).SetUIActive(
       CommonManager_1.CommonManager.CheckIsBuffEx(e, t),
     );
@@ -251,7 +251,7 @@ class AmountItem extends UiPanelBase_1.UiPanelBase {
       (this.jNt = void 0),
       (this.WNt = void 0),
       (this.KNt = (t) => {
-        const e = this.QNt();
+        var e = this.QNt();
         (this.VNt = e < t ? e : t),
           this.VNt < 1 && (this.VNt = 1),
           this.jNt && this.jNt(this.VNt),
@@ -306,7 +306,7 @@ class AmountItem extends UiPanelBase_1.UiPanelBase {
     this.GetButton(1)
       .GetOwner()
       .GetComponentByClass(UE.UIInteractionGroup.StaticClass())
-      .SetInteractable(this.VNt !== 1),
+      .SetInteractable(1 !== this.VNt),
       this.GetButton(0)
         .GetOwner()
         .GetComponentByClass(UE.UIInteractionGroup.StaticClass())
@@ -320,14 +320,14 @@ class AmountItem extends UiPanelBase_1.UiPanelBase {
   }
   QNt() {
     if (this.HNt) {
-      const t = this.HNt();
-      if (t !== 0) return t;
+      var t = this.HNt();
+      if (0 !== t) return t;
     }
     return 1;
   }
   async $Nt() {
     this.WNt || (await this.YNt()), this.WNt.PlayStartSequence(this.VNt);
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.TextConfig.GetTextById("CookInputCount");
     this.WNt.SetTitleText(t);
   }
@@ -349,4 +349,4 @@ class IconItem extends UiPanelBase_1.UiPanelBase {
     this.SetItemQualityIcon(this.GetSprite(4), t);
   }
 }
-// # sourceMappingURL=ManufactureView.js.map
+//# sourceMappingURL=ManufactureView.js.map

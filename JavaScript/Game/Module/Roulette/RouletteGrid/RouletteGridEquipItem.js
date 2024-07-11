@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RouletteGridEquipItem = void 0);
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const RouletteController_1 = require("../RouletteController");
-const RouletteGridBase_1 = require("./RouletteGridBase");
+const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  RouletteController_1 = require("../RouletteController"),
+  RouletteGridBase_1 = require("./RouletteGridBase");
 class RouletteGridEquipItem extends RouletteGridBase_1.RouletteGridBase {
   Init() {
-    let e, t, o;
+    var e, t, o;
     (this.Data.ShowNum = !1),
       this.IsDataValid()
         ? ((o = this.Data.Id),
@@ -40,14 +40,14 @@ class RouletteGridEquipItem extends RouletteGridBase_1.RouletteGridBase {
             "Roulette_EmptyItem_Sprite",
           )),
           this.LoadSpriteIcon(o)),
-      this.Data.State === 1 && this.IsForbiddenState() && (this.Data.State = 0);
+      1 === this.Data.State && this.IsForbiddenState() && (this.Data.State = 0);
   }
   IsForbiddenState() {
     return !1;
   }
   OnSelect(e) {
     e &&
-      (this.Data.Id === 0
+      (0 === this.Data.Id
         ? RouletteController_1.RouletteController.OpenEmptyTips()
         : this.IsDataValid() &&
           RouletteController_1.RouletteController.EquipItemSetRequest(
@@ -62,4 +62,4 @@ class RouletteGridEquipItem extends RouletteGridBase_1.RouletteGridBase {
   }
 }
 exports.RouletteGridEquipItem = RouletteGridEquipItem;
-// # sourceMappingURL=RouletteGridEquipItem.js.map
+//# sourceMappingURL=RouletteGridEquipItem.js.map

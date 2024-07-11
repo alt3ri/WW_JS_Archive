@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleTowerButton = void 0);
-const UE = require("ue");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const BattleEntranceButton_1 = require("./BattleEntranceButton");
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  BattleEntranceButton_1 = require("./BattleEntranceButton");
 class BattleTowerButton extends BattleEntranceButton_1.BattleEntranceButton {
   constructor() {
     super(...arguments),
@@ -42,4 +42,4 @@ class BattleTowerButton extends BattleEntranceButton_1.BattleEntranceButton {
   }
 }
 exports.BattleTowerButton = BattleTowerButton;
-// # sourceMappingURL=BattleTowerButton.js.map
+//# sourceMappingURL=BattleTowerButton.js.map

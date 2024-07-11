@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlayerPerceptionEvent = void 0);
-const cpp_1 = require("cpp");
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
+const cpp_1 = require("cpp"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector");
 class PlayerPerceptionEvent {
   constructor() {
     (this.w_e = void 0),
@@ -36,7 +36,7 @@ class PlayerPerceptionEvent {
     r = -1,
     v = void 0,
   ) {
-    this.EventToken !== 0
+    0 !== this.EventToken
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("Perception", 37, "重复初始化主角感知事件")
       : s || o
@@ -59,7 +59,7 @@ class PlayerPerceptionEvent {
                   : void 0,
                 this.Sqo ? this.dVs : void 0,
               )),
-            this.EventToken === 0 &&
+            0 === this.EventToken &&
               Log_1.Log.CheckError() &&
               Log_1.Log.Error("Perception", 37, "初始化感知事件失败"))
           : Log_1.Log.CheckError() &&
@@ -76,14 +76,14 @@ class PlayerPerceptionEvent {
       (this.Yir = void 0),
       (this.Sqo = void 0),
       (this.$ir = void 0),
-      this.EventToken !== 0 &&
+      0 !== this.EventToken &&
         (cpp_1.FKuroPerceptionInterface.UnregisterPlayerPerceptionEvent(
           this.EventToken,
         ),
         (this.EventToken = 0));
   }
   UpdateDistance(i, t = -1) {
-    this.EventToken !== 0 &&
+    0 !== this.EventToken &&
       cpp_1.FKuroPerceptionInterface.UpdatePerceptionEventDistance(
         this.EventToken,
         i,
@@ -92,4 +92,4 @@ class PlayerPerceptionEvent {
   }
 }
 exports.PlayerPerceptionEvent = PlayerPerceptionEvent;
-// # sourceMappingURL=PlayerPerceptionEvent.js.map
+//# sourceMappingURL=PlayerPerceptionEvent.js.map

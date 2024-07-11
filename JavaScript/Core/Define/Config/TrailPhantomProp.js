@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TrailPhantomProp = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const ConfigPropValue_1 = require("./SubType/ConfigPropValue");
-const IntArray_1 = require("./SubType/IntArray");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  ConfigPropValue_1 = require("./SubType/ConfigPropValue"),
+  IntArray_1 = require("./SubType/IntArray");
 class TrailPhantomProp {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -59,15 +59,15 @@ class TrailPhantomProp {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   level() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   mainprop(t) {
-    const r = this.J7.__offset(this.z7, 8);
+    var r = this.J7.__offset(this.z7, 8);
     return r
       ? (t || new ConfigPropValue_1.ConfigPropValue()).__init(
           this.J7.__indirect(this.z7 + r),
@@ -76,7 +76,7 @@ class TrailPhantomProp {
       : null;
   }
   breachprop(t) {
-    const r = this.J7.__offset(this.z7, 10);
+    var r = this.J7.__offset(this.z7, 10);
     return r
       ? (t || new ConfigPropValue_1.ConfigPropValue()).__init(
           this.J7.__indirect(this.z7 + r),
@@ -88,7 +88,7 @@ class TrailPhantomProp {
     return this.subprop(t);
   }
   subprop(t, r) {
-    const i = this.J7.__offset(this.z7, 12);
+    var i = this.J7.__offset(this.z7, 12);
     return i
       ? (r || new ConfigPropValue_1.ConfigPropValue()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
@@ -97,22 +97,22 @@ class TrailPhantomProp {
       : null;
   }
   subpropLength() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetMainpropsAt(t) {
     return this.mainprops(t);
   }
   mainprops(t) {
-    const r = this.J7.__offset(this.z7, 14);
+    var r = this.J7.__offset(this.z7, 14);
     return r ? this.J7.readInt32(this.J7.__vector(this.z7 + r) + 4 * t) : 0;
   }
   mainpropsLength() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   mainpropsArray() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -122,14 +122,14 @@ class TrailPhantomProp {
       : null;
   }
   mainpropgrowth() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   GetSubpropsAt(t, r) {
     return this.subprops(t);
   }
   subprops(t, r) {
-    const i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 18);
     return i
       ? (r || new IntArray_1.IntArray()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
@@ -138,22 +138,22 @@ class TrailPhantomProp {
       : null;
   }
   subpropsLength() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetSubproplistAt(t) {
     return this.subproplist(t);
   }
   subproplist(t) {
-    const r = this.J7.__offset(this.z7, 20);
+    var r = this.J7.__offset(this.z7, 20);
     return r ? this.J7.readInt32(this.J7.__vector(this.z7 + r) + 4 * t) : 0;
   }
   subproplistLength() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   subproplistArray() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -163,13 +163,13 @@ class TrailPhantomProp {
       : null;
   }
   fettergroupid() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   skinitemid() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.TrailPhantomProp = TrailPhantomProp;
-// # sourceMappingURL=TrailPhantomProp.js.map
+//# sourceMappingURL=TrailPhantomProp.js.map

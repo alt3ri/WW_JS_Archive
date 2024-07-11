@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SeamlessTravelModel = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase");
 class SeamlessTravelModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -85,9 +85,9 @@ class SeamlessTravelModel extends ModelBase_1.ModelBase {
         !1);
   }
   RemoveSeamlessTravelActor(e) {
-    let s;
+    var s;
     return e?.IsValid()
-      ? ((s = this.Cpo.indexOf(e)) >= 0 && this.Cpo.splice(s, 1),
+      ? (0 <= (s = this.Cpo.indexOf(e)) && this.Cpo.splice(s, 1),
         UE.KuroStaticLibrary.SetActorPermanent(e, !1, !1),
         !0)
       : (Log_1.Log.CheckError() &&
@@ -100,7 +100,7 @@ class SeamlessTravelModel extends ModelBase_1.ModelBase {
   }
   IsSeamlessTravelActor(e) {
     return e?.IsValid()
-      ? this.Cpo.indexOf(e) >= 0
+      ? 0 <= this.Cpo.indexOf(e)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "SeamlessTravel",
@@ -116,4 +116,4 @@ class SeamlessTravelModel extends ModelBase_1.ModelBase {
   }
 }
 exports.SeamlessTravelModel = SeamlessTravelModel;
-// # sourceMappingURL=SeamlessTravelModel.js.map
+//# sourceMappingURL=SeamlessTravelModel.js.map

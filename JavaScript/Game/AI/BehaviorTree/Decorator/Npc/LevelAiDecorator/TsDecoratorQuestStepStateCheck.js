@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const GlobalData_1 = require("../../../../../GlobalData");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
+const UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../../../GlobalData"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager");
 class TsDecoratorQuestStepStateCheck extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -20,13 +20,14 @@ class TsDecoratorQuestStepStateCheck extends UE.BTDecorator_BlueprintBase {
       (this.TsChildQuestId = this.ChildQuestId));
   }
   PerformConditionCheckAI(e, t) {
-    let r;
+    var r;
     return e.AiController
       ? (this.InitTsVariables(),
         !(!this.TsQuestId || !this.TsChildQuestId) &&
-          (ModelManager_1.ModelManager.QuestNewModel.GetQuestState(
-            this.TsQuestId,
-          ) === 3 ||
+          (3 ===
+            ModelManager_1.ModelManager.QuestNewModel.GetQuestState(
+              this.TsQuestId,
+            ) ||
             (!!(r = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
               this.TsQuestId,
             )) &&
@@ -40,4 +41,4 @@ class TsDecoratorQuestStepStateCheck extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorQuestStepStateCheck;
-// # sourceMappingURL=TsDecoratorQuestStepStateCheck.js.map
+//# sourceMappingURL=TsDecoratorQuestStepStateCheck.js.map

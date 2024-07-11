@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleViewAgent = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RoleUiDefine_1 = require("../../RoleUiDefine");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RoleUiDefine_1 = require("../../RoleUiDefine");
 class RoleViewAgent {
   constructor() {
     (this.RoleIdList = []),
@@ -29,8 +29,8 @@ class RoleViewAgent {
     );
   }
   GetDefaultSelectRoleId() {
-    let e;
-    return this.RoleIdList.length > 0
+    var e;
+    return 0 < this.RoleIdList.length
       ? this.RoleIdList[0]
       : void 0 !==
           (e = ModelManager_1.ModelManager.RoleModel.GetBattleTeamFirstRoleId())
@@ -46,7 +46,7 @@ class RoleViewAgent {
     this.CurSelectRoleId = e;
   }
   GetCurSelectRoleData() {
-    const e = this.GetCurSelectRoleId();
+    var e = this.GetCurSelectRoleId();
     return ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e);
   }
   set RoleViewState(e) {
@@ -59,24 +59,24 @@ class RoleViewAgent {
     return this.GetCurSelectRoleData().IsTrialRole() ? 0 : 1;
   }
   GetRoleSystemUiParams() {
-    const e = this.GetRoleSystemMode();
+    var e = this.GetRoleSystemMode();
     return RoleUiDefine_1.roleSystemModeUiParam[e];
   }
   GetCurSelectTabName() {
     return this.CurSelectTabName;
   }
   GetRoleTabDataList() {
-    const e = this.GetRoleSystemMode();
+    var e = this.GetRoleSystemMode();
     return ModelManager_1.ModelManager.RoleModel.GetRoleTabListByUiParam(e);
   }
   GetCurRoleResonanceGroupIndex() {
-    const e = this.GetCurSelectRoleData();
+    var e = this.GetCurSelectRoleData();
     return ModelManager_1.ModelManager.RoleModel.GetRoleResonanceGroupIndex(e);
   }
   GetCurRoleResonanceConfigList() {
-    const e = this.GetCurSelectRoleData();
+    var e = this.GetCurSelectRoleData();
     return ModelManager_1.ModelManager.RoleModel.GetRoleResonanceConfigList(e);
   }
 }
 exports.RoleViewAgent = RoleViewAgent;
-// # sourceMappingURL=RoleViewAgent.js.map
+//# sourceMappingURL=RoleViewAgent.js.map

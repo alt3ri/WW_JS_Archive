@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventShowTargetRange = void 0);
-const SimpleNpcController_1 = require("../../NewWorld/Character/SimpleNpc/Logics/SimpleNpcController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const SimpleNpcController_1 = require("../../NewWorld/Character/SimpleNpc/Logics/SimpleNpcController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventShowTargetRange extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, l) {
     e || this.FinishExecute(!1),
@@ -11,4 +11,4 @@ class LevelEventShowTargetRange extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventShowTargetRange = LevelEventShowTargetRange;
-// # sourceMappingURL=LevelEventShowTargetRange.js.map
+//# sourceMappingURL=LevelEventShowTargetRange.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NewSoundTowerItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class NewSoundTowerItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super();
@@ -19,11 +19,11 @@ class NewSoundTowerItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   Update(e) {
-    var a = this.GetText(0);
-    var a =
-      (LguiUtil_1.LguiUtil.SetLocalTextNew(a, e.Conf.Name), this.GetText(2));
-    const r = this.GetText(3);
-    let i = this.GetTexture(1);
+    var a = this.GetText(0),
+      a =
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(a, e.Conf.Name), this.GetText(2)),
+      r = this.GetText(3),
+      i = this.GetTexture(1);
     e.IsLock
       ? (this.SetTextureByPath(e.Conf.LockBigIcon, i),
         a.SetUIActive(!1),
@@ -43,4 +43,4 @@ class NewSoundTowerItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.NewSoundTowerItem = NewSoundTowerItem;
-// # sourceMappingURL=NewSoundTowerItem.js.map
+//# sourceMappingURL=NewSoundTowerItem.js.map

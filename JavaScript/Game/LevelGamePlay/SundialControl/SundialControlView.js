@@ -1,38 +1,38 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SundialControlView = void 0);
-const UE = require("ue");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController");
-const LguiUtil_1 = require("../../Module/Util/LguiUtil");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const SundialControlController_1 = require("./SundialControlController");
-const TIPS_TEXT = "PrefabTextItem_2335089801_Text";
-const RESET_TEXT = "PrefabTextItem_2335089802_Text";
-const SWITCH_TEXT = "PrefabTextItem_2335089799_Text";
-const ROTATE_TEXT = "PrefabTextItem_2335089800_Text";
-const ringOneTips = [
-  "PrefabTextItem_2335089803_Text",
-  "PrefabTextItem_2335089814_Text",
-  "PrefabTextItem_2335089813_Text",
-  "PrefabTextItem_2335089812_Text",
-  "PrefabTextItem_2335089811_Text",
-  "PrefabTextItem_2335089810_Text",
-  "PrefabTextItem_2335089809_Text",
-  "PrefabTextItem_2335089808_Text",
-  "PrefabTextItem_2335089807_Text",
-  "PrefabTextItem_2335089806_Text",
-  "PrefabTextItem_2335089805_Text",
-  "PrefabTextItem_2335089804_Text",
-];
-const ringTwoTips = [
-  "PrefabTextItem_2335089818_Text",
-  "PrefabTextItem_2335089817_Text",
-  "PrefabTextItem_2335089815_Text",
-  "PrefabTextItem_2335089816_Text",
-];
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController"),
+  LguiUtil_1 = require("../../Module/Util/LguiUtil"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  SundialControlController_1 = require("./SundialControlController"),
+  TIPS_TEXT = "PrefabTextItem_2335089801_Text",
+  RESET_TEXT = "PrefabTextItem_2335089802_Text",
+  SWITCH_TEXT = "PrefabTextItem_2335089799_Text",
+  ROTATE_TEXT = "PrefabTextItem_2335089800_Text",
+  ringOneTips = [
+    "PrefabTextItem_2335089803_Text",
+    "PrefabTextItem_2335089814_Text",
+    "PrefabTextItem_2335089813_Text",
+    "PrefabTextItem_2335089812_Text",
+    "PrefabTextItem_2335089811_Text",
+    "PrefabTextItem_2335089810_Text",
+    "PrefabTextItem_2335089809_Text",
+    "PrefabTextItem_2335089808_Text",
+    "PrefabTextItem_2335089807_Text",
+    "PrefabTextItem_2335089806_Text",
+    "PrefabTextItem_2335089805_Text",
+    "PrefabTextItem_2335089804_Text",
+  ],
+  ringTwoTips = [
+    "PrefabTextItem_2335089818_Text",
+    "PrefabTextItem_2335089817_Text",
+    "PrefabTextItem_2335089815_Text",
+    "PrefabTextItem_2335089816_Text",
+  ];
 class SundialControlView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -58,7 +58,7 @@ class SundialControlView extends UiViewBase_1.UiViewBase {
         this.CloseMe();
       }),
       (this.$xe = (e, t) => {
-        (e = e === 0 ? ringOneTips : ringTwoTips),
+        (e = 0 === e ? ringOneTips : ringTwoTips),
           (t = e[t % e.length]),
           (e = this.GetText(4));
         LguiUtil_1.LguiUtil.SetLocalTextNew(e, t);
@@ -89,13 +89,11 @@ class SundialControlView extends UiViewBase_1.UiViewBase {
       (this.jxe = this.GetButton(3)),
       this.jxe.RootUIComp.SetUIActive(!1),
       this.Fxe.RootUIComp.SetUIActive(!1);
-    var e = this.GetText(4);
-    var e =
-      (LguiUtil_1.LguiUtil.SetLocalTextNew(e, TIPS_TEXT), this.GetText(5));
-    var e =
-      (LguiUtil_1.LguiUtil.SetLocalTextNew(e, RESET_TEXT), this.GetText(6));
-    var e =
-      (LguiUtil_1.LguiUtil.SetLocalTextNew(e, SWITCH_TEXT), this.GetText(7));
+    var e = this.GetText(4),
+      e = (LguiUtil_1.LguiUtil.SetLocalTextNew(e, TIPS_TEXT), this.GetText(5)),
+      e = (LguiUtil_1.LguiUtil.SetLocalTextNew(e, RESET_TEXT), this.GetText(6)),
+      e =
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(e, SWITCH_TEXT), this.GetText(7));
     LguiUtil_1.LguiUtil.SetLocalTextNew(e, ROTATE_TEXT),
       SundialControlController_1.SundialControlController.SetOnFinishCallback(
         () => {
@@ -167,4 +165,4 @@ class SundialControlView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.SundialControlView = SundialControlView;
-// # sourceMappingURL=SundialControlView.js.map
+//# sourceMappingURL=SundialControlView.js.map

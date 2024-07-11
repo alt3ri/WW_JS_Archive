@@ -36,22 +36,22 @@ class Country {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetInfluencesAt(t) {
     return this.influences(t);
   }
   influences(t) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   influencesLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   influencesArray() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -61,21 +61,21 @@ class Country {
       : null;
   }
   title(t) {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   desc(t) {
-    const s = this.J7.__offset(this.z7, 10);
+    var s = this.J7.__offset(this.z7, 10);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   logo(t) {
-    const s = this.J7.__offset(this.z7, 12);
+    var s = this.J7.__offset(this.z7, 12);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   dailytaskshow() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
 }
 exports.Country = Country;
-// # sourceMappingURL=Country.js.map
+//# sourceMappingURL=Country.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ScreenEffectSystem = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../Core/Actor/ActorSystem");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../Core/Actor/ActorSystem"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils");
 class ScreenEffectSystem {
   static GetInstance() {
     return (
@@ -17,4 +17,4 @@ class ScreenEffectSystem {
   }
 }
 exports.ScreenEffectSystem = ScreenEffectSystem;
-// # sourceMappingURL=ScreenEffectSystem.js.map
+//# sourceMappingURL=ScreenEffectSystem.js.map

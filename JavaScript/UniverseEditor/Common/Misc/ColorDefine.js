@@ -26,14 +26,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HIGHTLIGHT_COLOR = "#003000 dark green"),
   (exports.formatColor = formatColor),
   (exports.rgbToHex = rgbToHex);
-const OKBLUE = "[94m";
-const OKCYAN = "[96m";
-const OKGREEN = "[92m";
-const WARNING = "[93m";
-const FAIL = "[91m";
-const ENDC = "[0m";
-const BOLD = "[1m";
-const UNDERLINE = "[4m";
+const OKBLUE = "[94m",
+  OKCYAN = "[96m",
+  OKGREEN = "[92m",
+  WARNING = "[93m",
+  FAIL = "[91m",
+  ENDC = "[0m",
+  BOLD = "[1m",
+  UNDERLINE = "[4m";
 function blue(r) {
   return OKBLUE + r + ENDC;
 }
@@ -62,4 +62,4 @@ function underline(r) {
   (exports.yellow = yellow),
   (exports.bold = bold),
   (exports.underline = underline);
-// # sourceMappingURL=ColorDefine.js.map
+//# sourceMappingURL=ColorDefine.js.map

@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PublicUtil = exports.getConfigPath = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Json_1 = require("../../Core/Common/Json");
-const Log_1 = require("../../Core/Common/Log");
-const MultiTextLang_1 = require("../../Core/Define/ConfigQuery/MultiTextLang");
-const DataTableUtil_1 = require("../../Core/Utils/DataTableUtil");
-const Rotator_1 = require("../../Core/Utils/Math/Rotator");
-const Transform_1 = require("../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const StringBuilder_1 = require("../../Core/Utils/StringBuilder");
-const BaseConfigController_1 = require("../../Launcher/BaseConfig/BaseConfigController");
-const IGlobal_1 = require("../../UniverseEditor/Interface/IGlobal");
-const GlobalData_1 = require("../GlobalData");
-const CdnServerDebugConfig_1 = require("../Module/Debug/CdnServerDebugConfig");
-const MultiTextCsvModule_1 = require("./MultiText/MultiTextCsvModule");
-const MultiTextDefine_1 = require("./MultiText/MultiTextDefine");
-const PACKAGENAME = "com.kurogame.aki.internal";
-const LOGIN_NOTICE = "LoginNotice.json";
-const SCROLLTEXT_NOTICE = "ScrollTextNotice.json";
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Json_1 = require("../../Core/Common/Json"),
+  Log_1 = require("../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../Core/Define/ConfigQuery/MultiTextLang"),
+  DataTableUtil_1 = require("../../Core/Utils/DataTableUtil"),
+  Rotator_1 = require("../../Core/Utils/Math/Rotator"),
+  Transform_1 = require("../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  StringBuilder_1 = require("../../Core/Utils/StringBuilder"),
+  BaseConfigController_1 = require("../../Launcher/BaseConfig/BaseConfigController"),
+  IGlobal_1 = require("../../UniverseEditor/Interface/IGlobal"),
+  GlobalData_1 = require("../GlobalData"),
+  CdnServerDebugConfig_1 = require("../Module/Debug/CdnServerDebugConfig"),
+  MultiTextCsvModule_1 = require("./MultiText/MultiTextCsvModule"),
+  MultiTextDefine_1 = require("./MultiText/MultiTextDefine"),
+  PACKAGENAME = "com.kurogame.aki.internal",
+  LOGIN_NOTICE = "LoginNotice.json",
+  SCROLLTEXT_NOTICE = "ScrollTextNotice.json";
 function getConfigPath(t) {
   return "" + UE.KismetSystemLibrary.GetProjectDirectory() + t;
 }
@@ -27,14 +27,14 @@ exports.getConfigPath = getConfigPath;
 class PublicUtil {
   static IsInIpWhiteList(t) {
     if (void 0 === t) return !0;
-    if (t.length !== 0) {
-      const e = (0, puerts_1.$ref)(UE.NewArray(UE.BuiltinString));
-      const i =
-        (UE.KuroStaticLibrary.GetLocalHostAddresses(e),
-        (0, puerts_1.$unref)(e));
-      const r = new Array();
+    if (0 !== t.length) {
+      var e = (0, puerts_1.$ref)(UE.NewArray(UE.BuiltinString)),
+        i =
+          (UE.KuroStaticLibrary.GetLocalHostAddresses(e),
+          (0, puerts_1.$unref)(e)),
+        r = new Array();
       for (let t = 0; t < i.Num(); t++) {
-        const o = i.Get(t);
+        var o = i.Get(t);
         r.push(o);
       }
       for (const a of t) for (const l of r) if (l === a) return !0;
@@ -43,23 +43,23 @@ class PublicUtil {
   }
   static GetIfGlobalSdk() {
     return (
-      BaseConfigController_1.BaseConfigController.GetPublicValue("SdkArea") !==
-      "CN"
+      "CN" !==
+      BaseConfigController_1.BaseConfigController.GetPublicValue("SdkArea")
     );
   }
   static GetGameId() {
     return PublicUtil.GetIfGlobalSdk() ? "G153" : "G152";
   }
   static GetLoginNoticeUrl2(t, e, i) {
-    const r = PublicUtil.GetNoticeBaseUrl();
+    var r = PublicUtil.GetNoticeBaseUrl();
     if (r) return r + `/gm/loginNotice/${t}/${i}/${e}.json`;
   }
   static GetMarqueeUrl2(t, e) {
-    const i = PublicUtil.GetNoticeBaseUrl();
+    var i = PublicUtil.GetNoticeBaseUrl();
     if (i) return i + `/gm/scrollTextNotice/${t}/${e}/notice.json`;
   }
   static GetLoginNoticeUrl() {
-    const t = PublicUtil.GetNoticeBaseUrl();
+    var t = PublicUtil.GetNoticeBaseUrl();
     if (t)
       return (
         `${t}/${PACKAGENAME}/${UE.KuroLauncherLibrary.GetAppVersion()}/` +
@@ -67,7 +67,7 @@ class PublicUtil {
       );
   }
   static GetMarqueeUrl() {
-    const t = PublicUtil.GetNoticeBaseUrl();
+    var t = PublicUtil.GetNoticeBaseUrl();
     if (t)
       return (
         `${t}/${PACKAGENAME}/${UE.KuroLauncherLibrary.GetAppVersion()}/` +
@@ -75,7 +75,7 @@ class PublicUtil {
       );
   }
   static GetNoticeBaseUrl() {
-    let t = BaseConfigController_1.BaseConfigController.GetNoticeUrl();
+    var t = BaseConfigController_1.BaseConfigController.GetNoticeUrl();
     if (t)
       return CdnServerDebugConfig_1.CdnServerDebugConfig.Singleton.TryGetNoticeServerPrefixAddress(
         t,
@@ -86,7 +86,7 @@ class PublicUtil {
         Log_1.Log.Error("PublicUtil", 9, "找不到cdn", ["Apptype", t]));
   }
   static GetGARUrl(t, e, i, r, o) {
-    const a = BaseConfigController_1.BaseConfigController.GetGARUrl();
+    var a = BaseConfigController_1.BaseConfigController.GetGARUrl();
     if (a)
       return (
         a +
@@ -95,13 +95,14 @@ class PublicUtil {
       );
   }
   static GetLocalHost() {
-    const t = (0, puerts_1.$ref)(UE.NewArray(UE.BuiltinString));
-    const e =
-      (UE.KuroStaticLibrary.GetLocalHostAddresses(t), (0, puerts_1.$unref)(t));
+    var t = (0, puerts_1.$ref)(UE.NewArray(UE.BuiltinString)),
+      e =
+        (UE.KuroStaticLibrary.GetLocalHostAddresses(t),
+        (0, puerts_1.$unref)(t));
     let i = "127.0.0.1";
-    e.Num() > 0 && (i = e.Get(0));
+    0 < e.Num() && (i = e.Get(0));
     for (let t = 0; t < e.Num(); t++) {
-      const r = e.Get(t);
+      var r = e.Get(t);
       r.startsWith("10.0.") && (i = r);
     }
     return i;
@@ -133,14 +134,14 @@ class PublicUtil {
       );
   }
   static RegisterFlowTextLocalConfig(t) {
-    let e, i;
+    var e, i;
     PublicUtil.UseDbConfig() ||
       ((e =
         "" +
         UE.KismetSystemLibrary.GetProjectDirectory() +
         MultiTextDefine_1.MULTI_TEXT_LANG_PLOT_PATH),
       (t = `文本库_${t}.csv`),
-      (i = UE.KuroStaticLibrary.GetFilesRecursive(e, t, !0, !1)).Num() === 0
+      0 === (i = UE.KuroStaticLibrary.GetFilesRecursive(e, t, !0, !1)).Num()
         ? Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "MultiTextCsvModule",
@@ -153,10 +154,10 @@ class PublicUtil {
   }
   static GetFlowListInfo(t) {
     if (!PublicUtil.UseDbConfig()) {
-      let e;
-      var i = getConfigPath(IGlobal_1.globalConfig.FlowListDir);
-      var i = UE.KuroStaticLibrary.GetFilesRecursive(i, t + ".json", !0, !1);
-      if (i.Num() !== 0)
+      var e,
+        i = getConfigPath(IGlobal_1.globalConfig.FlowListDir),
+        i = UE.KuroStaticLibrary.GetFilesRecursive(i, t + ".json", !0, !1);
+      if (0 !== i.Num())
         return (
           (i = i.Get(0)),
           (e = (0, puerts_1.$ref)(void 0)),
@@ -208,11 +209,11 @@ class PublicUtil {
       return void 0 === this.Gde && this.Bde(), this.Gde;
   }
   static Bde() {
-    let t;
-    let e;
-    let i =
-      UE.BlueprintPathsLibrary.ProjectDir() +
-      "../Config/Raw/Tables/k.可视化编辑/__Temp__/EditorStartConfig.json";
+    var t,
+      e,
+      i =
+        UE.BlueprintPathsLibrary.ProjectDir() +
+        "../Config/Raw/Tables/k.可视化编辑/__Temp__/EditorStartConfig.json";
     !UE.BlueprintPathsLibrary.FileExists(i) ||
     ((t = ((e = ""), puerts_1.$ref)("")),
     !UE.KuroStaticLibrary.LoadFileToString(t, i)) ||
@@ -224,11 +225,11 @@ class PublicUtil {
         (this.Gde = i.EditorPort));
   }
   static TestLoadEditorConfigData() {
-    const t =
+    var t =
       UE.BlueprintPathsLibrary.ProjectConfigDir() +
       "../Saved/Editor/JsonConfig/EditorConfig.json";
     if (UE.BlueprintPathsLibrary.FileExists(t)) {
-      let e = (0, puerts_1.$ref)("");
+      var e = (0, puerts_1.$ref)("");
       if (UE.KuroStaticLibrary.LoadFileToString(e, t)) {
         (e = (0, puerts_1.$unref)(e)), (e = Json_1.Json.Parse(e));
         if (void 0 !== e) return e;
@@ -240,8 +241,8 @@ class PublicUtil {
     }
   }
   static TestSaveEditorConfigData(t = void 0) {
-    let e;
-    let i = void 0;
+    var e,
+      i = void 0;
     if (t)
       return (
         (i = t),
@@ -256,29 +257,29 @@ class PublicUtil {
       );
   }
   static MapToObj(t) {
-    let e;
-    let i;
-    const r = {};
+    var e,
+      i,
+      r = {};
     for ([e, i] of t) r[e] = i;
     return r;
   }
   static MapToObjEx(t) {
-    let e;
-    let i;
-    const r = {};
+    var e,
+      i,
+      r = {};
     for ([e, i] of t) r[e] = this.MapToObj(i);
     return r;
   }
   static ObjToMap(t) {
-    const e = new Map();
+    var e = new Map();
     for (const r in t) {
-      const i = Number(r);
+      var i = Number(r);
       isNaN(i) ? e.set(r, t[r]) : e.set(i, t[r]);
     }
     return e;
   }
   static ObjToMapEx(t) {
-    const e = new Map();
+    var e = new Map();
     for (const i in t) e.set(i, this.ObjToMap(t[i]));
     return e;
   }
@@ -292,10 +293,10 @@ class PublicUtil {
     return this.Nde;
   }
   static CreateTransformFromConfig(t, e, i) {
-    const r = Transform_1.Transform.Create();
-    var t = Vector_1.Vector.Create(t?.X ?? 0, t?.Y ?? 0, t?.Z ?? 0);
-    var e = Rotator_1.Rotator.Create(e?.Y ?? 0, e?.Z ?? 0, e?.X ?? 0);
-    var i = Vector_1.Vector.Create(i?.X ?? 0, i?.Y ?? 0, i?.Z ?? 0);
+    var r = Transform_1.Transform.Create(),
+      t = Vector_1.Vector.Create(t?.X ?? 0, t?.Y ?? 0, t?.Z ?? 0),
+      e = Rotator_1.Rotator.Create(e?.Y ?? 0, e?.Z ?? 0, e?.X ?? 0),
+      i = Vector_1.Vector.Create(i?.X ?? 0, i?.Y ?? 0, i?.Z ?? 0);
     return r.SetLocation(t), r.SetRotation(e.Quaternion()), r.SetScale3D(i), r;
   }
 }
@@ -305,4 +306,4 @@ class PublicUtil {
   (PublicUtil.qde = void 0),
   (PublicUtil.xde = new MultiTextCsvModule_1.MultiTextCsvModule()),
   (PublicUtil.Nde = !1);
-// # sourceMappingURL=PublicUtil.js.map
+//# sourceMappingURL=PublicUtil.js.map

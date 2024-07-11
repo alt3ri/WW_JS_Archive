@@ -6,4 +6,4 @@ class EffectCurveParameter {
   }
 }
 exports.default = EffectCurveParameter;
-// # sourceMappingURL=EffectCurveParam.js.map
+//# sourceMappingURL=EffectCurveParam.js.map

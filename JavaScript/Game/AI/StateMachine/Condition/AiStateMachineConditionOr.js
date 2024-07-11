@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineConditionOr = void 0);
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const AiStateMachineCondition_1 = require("./AiStateMachineCondition");
+const ModelManager_1 = require("../../../Manager/ModelManager"),
+  AiStateMachineCondition_1 = require("./AiStateMachineCondition");
 class AiStateMachineConditionOr extends AiStateMachineCondition_1.AiStateMachineCondition {
   constructor() {
     super(...arguments), (this.Conditions = void 0);
   }
   OnInit(i) {
-    const e = i.CondOr.Conditions.length;
-    if (e > 0) {
+    var e = i.CondOr.Conditions.length;
+    if (0 < e) {
       this.Conditions = [];
       for (let t = 0; t < e; t++) {
-        const o = i.CondOr.Conditions[t];
-        var n = this.Transition.ConditionDatas[o];
-        var n =
-          ModelManager_1.ModelManager.AiStateMachineModel.AiStateMachineFactory.CreateCondition(
-            this.Transition,
-            n,
-            o,
-          );
+        var o = i.CondOr.Conditions[t],
+          n = this.Transition.ConditionDatas[o],
+          n =
+            ModelManager_1.ModelManager.AiStateMachineModel.AiStateMachineFactory.CreateCondition(
+              this.Transition,
+              n,
+              o,
+            );
         (this.HasTaskFinishCondition ||= n.HasTaskFinishCondition),
           this.Conditions.push(n);
       }
@@ -42,16 +42,16 @@ class AiStateMachineConditionOr extends AiStateMachineCondition_1.AiStateMachine
   }
   HandleServerDebugInfo(i) {
     this.ResultServer = i[this.Index];
-    const e = this.Conditions.length;
+    var e = this.Conditions.length;
     for (let t = 0; t < e; t++) this.Conditions[t].HandleServerDebugInfo(i);
   }
   ToString(i, e = 0) {
     super.ToString(i, e),
       i.Append(`或
 `);
-    const o = this.Conditions.length;
+    var o = this.Conditions.length;
     for (let t = 0; t < o; t++) this.Conditions[t].ToString(i, e + 1);
   }
 }
 exports.AiStateMachineConditionOr = AiStateMachineConditionOr;
-// # sourceMappingURL=AiStateMachineConditionOr.js.map
+//# sourceMappingURL=AiStateMachineConditionOr.js.map

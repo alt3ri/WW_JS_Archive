@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonItemGrid = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder");
 class CommonItemGrid extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(t = void 0) {
     super(),
@@ -23,7 +23,7 @@ class CommonItemGrid extends GridProxyAbstract_1.GridProxyAbstract {
         t === this.PIt && this.GetExtendToggle(0).SetToggleState(0, !1);
       }),
       (this.x4e = (t) => {
-        this.wIt && t === 1 && this.wIt(this.PIt);
+        this.wIt && 1 === t && this.wIt(this.PIt);
       }),
       t && this.CreateThenShowByActor(t);
   }
@@ -67,8 +67,8 @@ class CommonItemGrid extends GridProxyAbstract_1.GridProxyAbstract {
       this.SetItemQualityIcon(this.GetSprite(4), this.PIt, this.xIt);
   }
   Refresh(t, i, e) {
-    const s = t[0];
-    var t = t[1];
+    var s = t[0],
+      t = t[1];
     this.RefreshItem(s.ItemId, t);
   }
   SetQualityActive(t) {
@@ -90,8 +90,8 @@ class CommonItemGrid extends GridProxyAbstract_1.GridProxyAbstract {
       : this.GetItem(12).SetUIActive(!1);
   }
   SetRoleHead(t) {
-    const i = this.GetTexture(6);
-    const e = this.GetSprite(7);
+    var i = this.GetTexture(6),
+      e = this.GetSprite(7);
     StringUtils_1.StringUtils.IsEmpty(t)
       ? (i.SetUIActive(!1), e.SetUIActive(!1))
       : (i.SetUIActive(!0), e.SetUIActive(!0), this.SetTextureByPath(t, i));
@@ -120,14 +120,14 @@ class CommonItemGrid extends GridProxyAbstract_1.GridProxyAbstract {
     (this.PIt = t), await this.NIt(), this.GIt(i);
   }
   async NIt() {
-    const t = new CustomPromise_1.CustomPromise();
-    const i =
-      (this.GetTexture(3).SetUIActive(!1),
-      this.SetItemIcon(this.GetTexture(3), this.PIt, this.xIt, () => {
-        t.SetResult(void 0), this.GetTexture(3)?.SetUIActive(!0);
-      }),
-      await t.Promise,
-      new CustomPromise_1.CustomPromise());
+    const t = new CustomPromise_1.CustomPromise(),
+      i =
+        (this.GetTexture(3).SetUIActive(!1),
+        this.SetItemIcon(this.GetTexture(3), this.PIt, this.xIt, () => {
+          t.SetResult(void 0), this.GetTexture(3)?.SetUIActive(!0);
+        }),
+        await t.Promise,
+        new CustomPromise_1.CustomPromise());
     this.SetItemQualityIcon(
       this.GetSprite(4),
       this.PIt,
@@ -141,4 +141,4 @@ class CommonItemGrid extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.CommonItemGrid = CommonItemGrid;
-// # sourceMappingURL=CommonItemGrid.js.map
+//# sourceMappingURL=CommonItemGrid.js.map

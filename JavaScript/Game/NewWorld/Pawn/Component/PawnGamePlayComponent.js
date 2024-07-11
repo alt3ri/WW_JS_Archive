@@ -1,22 +1,26 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, n, o) {
-    let r;
-    const s = arguments.length;
-    let a =
-      s < 3 ? t : o === null ? (o = Object.getOwnPropertyDescriptor(t, n)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      s = arguments.length,
+      a =
+        s < 3
+          ? t
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(t, n))
+            : o;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       a = Reflect.decorate(e, t, n, o);
     else
-      for (let i = e.length - 1; i >= 0; i--)
-        (r = e[i]) && (a = (s < 3 ? r(a) : s > 3 ? r(t, n, a) : r(t, n)) || a);
-    return s > 3 && a && Object.defineProperty(t, n, a), a;
+      for (var i = e.length - 1; 0 <= i; i--)
+        (r = e[i]) && (a = (s < 3 ? r(a) : 3 < s ? r(t, n, a) : r(t, n)) || a);
+    return 3 < s && a && Object.defineProperty(t, n, a), a;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PawnGamePlayComponent = void 0);
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
+const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
 let PawnGamePlayComponent = class PawnGamePlayComponent extends EntityComponent_1.EntityComponent {
   ScanResponse() {}
   WeightResponse() {}
@@ -27,4 +31,4 @@ let PawnGamePlayComponent = class PawnGamePlayComponent extends EntityComponent_
   PawnGamePlayComponent,
 )),
   (exports.PawnGamePlayComponent = PawnGamePlayComponent);
-// # sourceMappingURL=PawnGamePlayComponent.js.map
+//# sourceMappingURL=PawnGamePlayComponent.js.map

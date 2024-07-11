@@ -1,41 +1,41 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OccupationCsv = exports.OccupationCsvLoader = void 0);
-const immer_1 = require("immer");
-const CsvLoader_1 = require("./CsvLoader");
-const occupationCsvFields = [
-  (0, CsvLoader_1.createCsvField)({
-    Name: "Id",
-    CnName: "Id",
-    Filter: "1",
-    Condition: "notEmpty && unique",
-  }),
-  (0, CsvLoader_1.createCsvField)({
-    Name: "OccupationType",
-    CnName: "占用类型",
-    Filter: "1",
-    Condition: "notEmpty",
-    RenderType: 25,
-  }),
-  (0, CsvLoader_1.createCsvField)({
-    Name: "NameStringKey",
-    CnName: "标记名文本Key（开发中）",
-    Filter: "1",
-    Localization: "1",
-  }),
-  (0, CsvLoader_1.createCsvField)({
-    Name: "Name",
-    CnName: "标记名",
-    Filter: "1",
-    Localization: "1",
-    Condition: "notEmpty && unique",
-  }),
-  (0, CsvLoader_1.createCsvField)({
-    Name: "OccupationData",
-    CnName: "数据",
-    RenderType: 26,
-  }),
-];
+const immer_1 = require("immer"),
+  CsvLoader_1 = require("./CsvLoader"),
+  occupationCsvFields = [
+    (0, CsvLoader_1.createCsvField)({
+      Name: "Id",
+      CnName: "Id",
+      Filter: "1",
+      Condition: "notEmpty && unique",
+    }),
+    (0, CsvLoader_1.createCsvField)({
+      Name: "OccupationType",
+      CnName: "占用类型",
+      Filter: "1",
+      Condition: "notEmpty",
+      RenderType: 25,
+    }),
+    (0, CsvLoader_1.createCsvField)({
+      Name: "NameStringKey",
+      CnName: "标记名文本Key（开发中）",
+      Filter: "1",
+      Localization: "1",
+    }),
+    (0, CsvLoader_1.createCsvField)({
+      Name: "Name",
+      CnName: "标记名",
+      Filter: "1",
+      Localization: "1",
+      Condition: "notEmpty && unique",
+    }),
+    (0, CsvLoader_1.createCsvField)({
+      Name: "OccupationData",
+      CnName: "数据",
+      RenderType: 26,
+    }),
+  ];
 class OccupationCsvLoader extends CsvLoader_1.CsvLoader {
   constructor() {
     super("OccupationCsv", occupationCsvFields);
@@ -49,9 +49,9 @@ class OccupationCsvLoader extends CsvLoader_1.CsvLoader {
     }
   }
   Save(e, o) {
-    const a = [];
+    var a = [];
     for (const t of e) {
-      const s = (0, immer_1.default)(t, (e) => {
+      var s = (0, immer_1.default)(t, (e) => {
         this.re(e);
       });
       a.push(s);
@@ -68,4 +68,4 @@ class OccupationCsvLoader extends CsvLoader_1.CsvLoader {
 exports.OccupationCsvLoader = OccupationCsvLoader;
 class OccupationCsv extends CsvLoader_1.GlobalCsv {}
 exports.OccupationCsv = OccupationCsv;
-// # sourceMappingURL=OccupationCsv.js.map
+//# sourceMappingURL=OccupationCsv.js.map

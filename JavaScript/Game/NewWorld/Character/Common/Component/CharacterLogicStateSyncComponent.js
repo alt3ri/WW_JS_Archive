@@ -1,28 +1,32 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, o) {
-    let s;
-    const r = arguments.length;
-    let n =
-      r < 3 ? e : o === null ? (o = Object.getOwnPropertyDescriptor(e, i)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var s,
+      r = arguments.length,
+      n =
+        r < 3
+          ? e
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(e, i))
+            : o;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(t, e, i, o);
     else
-      for (let a = t.length - 1; a >= 0; a--)
-        (s = t[a]) && (n = (r < 3 ? s(n) : r > 3 ? s(e, i, n) : s(e, i)) || n);
-    return r > 3 && n && Object.defineProperty(e, i, n), n;
+      for (var a = t.length - 1; 0 <= a; a--)
+        (s = t[a]) && (n = (r < 3 ? s(n) : 3 < r ? s(e, i, n) : s(e, i)) || n);
+    return 3 < r && n && Object.defineProperty(e, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterLogicStateSyncComponent = void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage");
-const CombatMessageController_1 = require("../../../../Module/CombatMessage/CombatMessageController");
-const CombatDebugController_1 = require("../../../../Utils/CombatDebugController");
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
+  CombatMessageController_1 = require("../../../../Module/CombatMessage/CombatMessageController"),
+  CombatDebugController_1 = require("../../../../Utils/CombatDebugController");
 let CharacterLogicStateSyncComponent = class CharacterLogicStateSyncComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -37,8 +41,8 @@ let CharacterLogicStateSyncComponent = class CharacterLogicStateSyncComponent ex
       }),
       (this.$9r = () => {
         if (this.Hte.IsMoveAutonomousProxy) {
-          let t;
-          const i = this.W5r;
+          var t,
+            i = this.W5r;
           if (i) {
             let e = !1;
             (this.K9r[0] = i.PositionState),
@@ -79,7 +83,7 @@ let CharacterLogicStateSyncComponent = class CharacterLogicStateSyncComponent ex
       this,
       this.$9r,
     );
-    const t = this.Entity.GetComponent(0);
+    var t = this.Entity.GetComponent(0);
     (this.W9r = t.ComponentDataMap.get("zvs")?.zvs),
       this.Hte.IsAutonomousProxy
         ? (this.X9r(), (this.Inited = !0))
@@ -105,7 +109,7 @@ let CharacterLogicStateSyncComponent = class CharacterLogicStateSyncComponent ex
     );
   }
   X9r() {
-    const t = Protocol_1.Aki.Protocol.rNn.create();
+    var t = Protocol_1.Aki.Protocol.rNn.create();
     (t.j9n = Protocol_1.Aki.Protocol.zvs.create()),
       (t.j9n.k9n = this.W5r.PositionState),
       (t.j9n.F9n = this.W5r.MoveState),
@@ -171,4 +175,4 @@ __decorate(
     CharacterLogicStateSyncComponent,
   )),
   (exports.CharacterLogicStateSyncComponent = CharacterLogicStateSyncComponent);
-// # sourceMappingURL=CharacterLogicStateSyncComponent.js.map
+//# sourceMappingURL=CharacterLogicStateSyncComponent.js.map

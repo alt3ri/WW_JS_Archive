@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MenuBaseConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const AxisRevertByRevertType_1 = require("../../../Core/Define/ConfigQuery/AxisRevertByRevertType");
-const KeySettingByTypeIdAndInputControllerType_1 = require("../../../Core/Define/ConfigQuery/KeySettingByTypeIdAndInputControllerType");
-const KeyTypeAll_1 = require("../../../Core/Define/ConfigQuery/KeyTypeAll");
-const MainTypeAll_1 = require("../../../Core/Define/ConfigQuery/MainTypeAll");
-const MainTypeById_1 = require("../../../Core/Define/ConfigQuery/MainTypeById");
-const MenuConfigAll_1 = require("../../../Core/Define/ConfigQuery/MenuConfigAll");
-const MenuConfigByFunctionId_1 = require("../../../Core/Define/ConfigQuery/MenuConfigByFunctionId");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  AxisRevertByRevertType_1 = require("../../../Core/Define/ConfigQuery/AxisRevertByRevertType"),
+  KeySettingByTypeIdAndInputControllerType_1 = require("../../../Core/Define/ConfigQuery/KeySettingByTypeIdAndInputControllerType"),
+  KeyTypeAll_1 = require("../../../Core/Define/ConfigQuery/KeyTypeAll"),
+  MainTypeAll_1 = require("../../../Core/Define/ConfigQuery/MainTypeAll"),
+  MainTypeById_1 = require("../../../Core/Define/ConfigQuery/MainTypeById"),
+  MenuConfigAll_1 = require("../../../Core/Define/ConfigQuery/MenuConfigAll"),
+  MenuConfigByFunctionId_1 = require("../../../Core/Define/ConfigQuery/MenuConfigByFunctionId"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class MenuBaseConfig extends ConfigBase_1.ConfigBase {
   GetMenuBaseConfig() {
-    const e = MenuConfigAll_1.configMenuConfigAll.GetConfigList();
-    if (e && e.length > 0) return e;
+    var e = MenuConfigAll_1.configMenuConfigAll.GetConfigList();
+    if (e && 0 < e.length) return e;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("Menu", 8, "没有基础配置文件，请检查配置表是否缺失");
   }
   GetMainConfig() {
-    const e = MainTypeAll_1.configMainTypeAll.GetConfigList();
-    if (e && e.length > 0) {
-      const n = new Map();
+    var e = MainTypeAll_1.configMainTypeAll.GetConfigList();
+    if (e && 0 < e.length) {
+      var n = new Map();
       for (const r of e) n.set(r.Id, r);
       return n;
     }
@@ -53,4 +53,4 @@ class MenuBaseConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.MenuBaseConfig = MenuBaseConfig;
-// # sourceMappingURL=MenuBaseConfig.js.map
+//# sourceMappingURL=MenuBaseConfig.js.map

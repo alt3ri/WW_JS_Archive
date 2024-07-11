@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MediumItemGridElementComponent = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const MediumItemGridComponent_1 = require("./MediumItemGridComponent");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  MediumItemGridComponent_1 = require("./MediumItemGridComponent");
 class MediumItemGridElementComponent extends MediumItemGridComponent_1.MediumItemGridComponent {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UITexture]];
@@ -12,11 +12,11 @@ class MediumItemGridElementComponent extends MediumItemGridComponent_1.MediumIte
     return "UiItem_ItemElement";
   }
   OnRefresh(e) {
-    let t, n, i;
+    var t, n, i;
     void 0 === e ||
     !(t = ConfigManager_1.ConfigManager.CommonConfig.GetElementConfig(e)) ||
-    (n = t.Icon5) === "" ||
-    n.length === 0
+    "" === (n = t.Icon5) ||
+    0 === n.length
       ? this.SetActive(!1)
       : ((i = this.GetTexture(0)),
         this.SetElementIcon(n, i, e),
@@ -25,4 +25,4 @@ class MediumItemGridElementComponent extends MediumItemGridComponent_1.MediumIte
   }
 }
 exports.MediumItemGridElementComponent = MediumItemGridElementComponent;
-// # sourceMappingURL=MediumItemGridElementComponent.js.map
+//# sourceMappingURL=MediumItemGridElementComponent.js.map

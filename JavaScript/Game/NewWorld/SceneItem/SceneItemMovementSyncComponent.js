@@ -1,35 +1,39 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, o) {
-    let s;
-    const h = arguments.length;
-    let r =
-      h < 3 ? e : o === null ? (o = Object.getOwnPropertyDescriptor(e, i)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var s,
+      h = arguments.length,
+      r =
+        h < 3
+          ? e
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(e, i))
+            : o;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(t, e, i, o);
     else
-      for (let n = t.length - 1; n >= 0; n--)
-        (s = t[n]) && (r = (h < 3 ? s(r) : h > 3 ? s(e, i, r) : s(e, i)) || r);
-    return h > 3 && r && Object.defineProperty(e, i, r), r;
+      for (var n = t.length - 1; 0 <= n; n--)
+        (s = t[n]) && (r = (h < 3 ? s(r) : 3 < h ? s(e, i, r) : s(e, i)) || r);
+    return 3 < h && r && Object.defineProperty(e, i, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemMovementSyncComponent = void 0);
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const Net_1 = require("../../../Core/Net/Net");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CombatMessage_1 = require("../../Module/CombatMessage/CombatMessage");
-const CombatDebugController_1 = require("../../Utils/CombatDebugController");
-const ComponentForceTickController_1 = require("../../World/Controller/ComponentForceTickController");
-const CharacterMovementSyncComponent_1 = require("../Character/Common/Component/CharacterMovementSyncComponent");
+const Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  Net_1 = require("../../../Core/Net/Net"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CombatMessage_1 = require("../../Module/CombatMessage/CombatMessage"),
+  CombatDebugController_1 = require("../../Utils/CombatDebugController"),
+  ComponentForceTickController_1 = require("../../World/Controller/ComponentForceTickController"),
+  CharacterMovementSyncComponent_1 = require("../Character/Common/Component/CharacterMovementSyncComponent");
 class ReplaySample {
   constructor(t, e, i) {
     (this.Location = void 0),
@@ -74,7 +78,7 @@ let SceneItemMovementSyncComponent = class SceneItemMovementSyncComponent extend
       (this.DisableTick = !1),
       (this.$9r = () => {
         if (this.fjr && this.Hte.IsMoveAutonomousProxy) {
-          const t =
+          var t =
             !this.Xrr.Equals(this.Hte.ActorLocationProxy) ||
             !this.ijr.Equals(this.Hte.ActorRotationProxy);
           if (ModelManager_1.ModelManager.GameModeModel.IsMulti) {
@@ -101,20 +105,22 @@ let SceneItemMovementSyncComponent = class SceneItemMovementSyncComponent extend
                 this.SendPendingMoveInfos(t);
           } else {
             var e =
-              Time_1.Time.NowSeconds - this.LastSendTime >=
-              CharacterMovementSyncComponent_1.CharacterMovementSyncComponent
-                .SingleModeSendInterval;
-            const i =
-              !this.ejr.Equals(
-                this.Hte.ActorLocationProxy,
+                Time_1.Time.NowSeconds - this.LastSendTime >=
                 CharacterMovementSyncComponent_1.CharacterMovementSyncComponent
-                  .SingleModeSendLocationTolerance,
-              ) ||
-              !this.tjr.Equals(
-                this.Hte.ActorRotationProxy,
-                CharacterMovementSyncComponent_1.CharacterMovementSyncComponent
-                  .SingleModeSendRotationTolerance,
-              );
+                  .SingleModeSendInterval,
+              i =
+                !this.ejr.Equals(
+                  this.Hte.ActorLocationProxy,
+                  CharacterMovementSyncComponent_1
+                    .CharacterMovementSyncComponent
+                    .SingleModeSendLocationTolerance,
+                ) ||
+                !this.tjr.Equals(
+                  this.Hte.ActorRotationProxy,
+                  CharacterMovementSyncComponent_1
+                    .CharacterMovementSyncComponent
+                    .SingleModeSendRotationTolerance,
+                );
             if ((t && e && i) || (!t && this.LastMove)) {
               const o = this.Ivn();
               this.yvn.push(o), this.SendPendingMoveInfos(t);
@@ -131,7 +137,7 @@ let SceneItemMovementSyncComponent = class SceneItemMovementSyncComponent extend
       (this.Dvn = []);
   }
   Ivn() {
-    const t = Protocol_1.Aki.Protocol.hOs.create();
+    var t = Protocol_1.Aki.Protocol.hOs.create();
     return (
       (t.$kn = Protocol_1.Aki.Protocol.VBs.create()),
       (t.D3n = Protocol_1.Aki.Protocol.iws.create()),
@@ -158,9 +164,9 @@ let SceneItemMovementSyncComponent = class SceneItemMovementSyncComponent extend
         break;
       e++;
     }
-    let i;
-    e > 0 && this.yvn.splice(0, e),
-      this.yvn.length > 0 &&
+    var i;
+    0 < e && this.yvn.splice(0, e),
+      0 < this.yvn.length &&
         (((i = Protocol_1.Aki.Protocol.els.create()).m4n = this.yvn),
         (i.r4n = CombatMessage_1.CombatNet.CreateCombatCommon(this.Entity)),
         Net_1.Net.Send(26540, i),
@@ -179,17 +185,17 @@ let SceneItemMovementSyncComponent = class SceneItemMovementSyncComponent extend
     this.$9r();
   }
   ForceSendPendingMoveInfos() {
-    const t =
-      !this.Xrr.Equals(this.Hte.ActorLocationProxy) ||
-      !this.ijr.Equals(this.Hte.ActorRotationProxy);
-    var e = this.Ivn();
-    var e =
-      (this.yvn.push(e),
-      new ReplaySample(
-        e,
-        ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
-        Time_1.Time.NowSeconds,
-      ));
+    var t =
+        !this.Xrr.Equals(this.Hte.ActorLocationProxy) ||
+        !this.ijr.Equals(this.Hte.ActorRotationProxy),
+      e = this.Ivn(),
+      e =
+        (this.yvn.push(e),
+        new ReplaySample(
+          e,
+          ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
+          Time_1.Time.NowSeconds,
+        ));
     (e.Time = Time_1.Time.NowSeconds),
       (this.LastMoveSample = e),
       this.SendPendingMoveInfos(t);
@@ -309,25 +315,25 @@ let SceneItemMovementSyncComponent = class SceneItemMovementSyncComponent extend
   }
   ClearReplaySamples() {
     this.Dvn.length = 0;
-    var t = this.Ivn();
-    var t = new ReplaySample(
-      t,
-      ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
-      Time_1.Time.NowSeconds,
-    );
+    var t = this.Ivn(),
+      t = new ReplaySample(
+        t,
+        ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
+        Time_1.Time.NowSeconds,
+      );
     (t.Time = Time_1.Time.NowSeconds), this.AddReplaySample(t);
   }
   Tvn() {
-    const t = Time_1.Time.NowSeconds;
+    var t = Time_1.Time.NowSeconds;
     let e = 0;
     for (const i of this.Dvn) {
       if (i.Time > t - 1) break;
       e++;
     }
-    e > 0 && this.Dvn.splice(0, e);
+    0 < e && this.Dvn.splice(0, e);
   }
   Lvn() {
-    const e = Time_1.Time.NowSeconds;
+    var e = Time_1.Time.NowSeconds;
     if (this.LastMoveSample && e >= this.LastMoveSample.Time)
       CombatDebugController_1.CombatDebugController.CombatDebugEx(
         "Move",
@@ -341,9 +347,9 @@ let SceneItemMovementSyncComponent = class SceneItemMovementSyncComponent extend
         );
     else
       for (let t = 0; t < this.Dvn.length - 1; t++) {
-        var i;
-        const o = this.Dvn[t];
-        const s = this.Dvn[t + 1];
+        var i,
+          o = this.Dvn[t],
+          s = this.Dvn[t + 1];
         e >= o.Time &&
           e <= s.Time &&
           ((i =
@@ -359,8 +365,8 @@ let SceneItemMovementSyncComponent = class SceneItemMovementSyncComponent extend
       }
   }
   ReceiveMoveInfos(t, e) {
-    if (t.length !== 0) {
-      const i =
+    if (0 !== t.length) {
+      var i =
         ModelManager_1.ModelManager.CombatMessageModel.GetMessageBufferByEntityId(
           this.Entity.Id,
         );
@@ -374,8 +380,8 @@ let SceneItemMovementSyncComponent = class SceneItemMovementSyncComponent extend
             ["missTime", o],
             ["combatCommon", e.h4n],
           ));
-        let o;
-        const s = MathUtils_1.MathUtils.LongToNumber(e.a4n);
+        var o,
+          s = MathUtils_1.MathUtils.LongToNumber(e.a4n);
         for (const r of t) {
           r.h4n <= 0 &&
             Log_1.Log.CheckError() &&
@@ -385,7 +391,7 @@ let SceneItemMovementSyncComponent = class SceneItemMovementSyncComponent extend
               "[SceneItemMovementSyncComponent.ReceiveMoveInfos] TimeStamp不能小于等于0",
               ["TimeStamp", r.h4n],
             );
-          const h = new ReplaySample(r, s, r.h4n + i.TimelineOffset);
+          var h = new ReplaySample(r, s, r.h4n + i.TimelineOffset);
           this.AddReplaySample(h), (this.LastMoveSample = h);
         }
       }
@@ -420,4 +426,4 @@ let SceneItemMovementSyncComponent = class SceneItemMovementSyncComponent extend
   SceneItemMovementSyncComponent,
 )),
   (exports.SceneItemMovementSyncComponent = SceneItemMovementSyncComponent);
-// # sourceMappingURL=SceneItemMovementSyncComponent.js.map
+//# sourceMappingURL=SceneItemMovementSyncComponent.js.map

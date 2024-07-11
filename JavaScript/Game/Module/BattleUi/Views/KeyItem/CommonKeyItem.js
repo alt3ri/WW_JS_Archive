@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonKeyItem = void 0);
-const UE = require("ue");
-const KeyItemBase_1 = require("./KeyItemBase");
+const UE = require("ue"),
+  KeyItemBase_1 = require("./KeyItemBase");
 class CommonKeyItem extends KeyItemBase_1.KeyItemBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UITexture]];
@@ -12,9 +12,9 @@ class CommonKeyItem extends KeyItemBase_1.KeyItemBase {
     return this.GetTexture(0);
   }
   OnSetGray() {
-    const e = this.GetKeyTexture();
+    var e = this.GetKeyTexture();
     e.SetChangeColor(this.IsGray, e.changeColor);
   }
 }
 exports.CommonKeyItem = CommonKeyItem;
-// # sourceMappingURL=CommonKeyItem.js.map
+//# sourceMappingURL=CommonKeyItem.js.map

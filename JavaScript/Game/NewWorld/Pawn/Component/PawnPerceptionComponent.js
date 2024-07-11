@@ -1,30 +1,34 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, n) {
-    let s;
-    const o = arguments.length;
-    let r =
-      o < 3 ? e : n === null ? (n = Object.getOwnPropertyDescriptor(e, i)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var s,
+      o = arguments.length,
+      r =
+        o < 3
+          ? e
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(e, i))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(t, e, i, n);
     else
-      for (let h = t.length - 1; h >= 0; h--)
-        (s = t[h]) && (r = (o < 3 ? s(r) : o > 3 ? s(e, i, r) : s(e, i)) || r);
-    return o > 3 && r && Object.defineProperty(e, i, r), r;
+      for (var h = t.length - 1; 0 <= h; h--)
+        (s = t[h]) && (r = (o < 3 ? s(r) : 3 < o ? s(e, i, r) : s(e, i)) || r);
+    return 3 < o && r && Object.defineProperty(e, i, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PawnPerceptionComponent = void 0);
-const cpp_1 = require("cpp");
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const EnvironmentalPerceptionController_1 = require("../../../World/Enviroment/EnvironmentalPerceptionController");
-const DISTANCE_OFFSET = 100;
-const INTERACT_LOGIC_OFFSET = 100;
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  EnvironmentalPerceptionController_1 = require("../../../World/Enviroment/EnvironmentalPerceptionController"),
+  DISTANCE_OFFSET = 100,
+  INTERACT_LOGIC_OFFSET = 100;
 let PawnPerceptionComponent = class PawnPerceptionComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -93,7 +97,7 @@ let PawnPerceptionComponent = class PawnPerceptionComponent extends EntityCompon
   SetInteractRange(t, e = 0, i = void 0) {
     this.Izr.SetLogicRange(Math.max(t + INTERACT_LOGIC_OFFSET, e)),
       this.Hhn
-        ? this.Hhn.UpdateDistance(t, e === 0 ? t : e)
+        ? this.Hhn.UpdateDistance(t, 0 === e ? t : e)
         : ((this.Hhn =
             EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.CreatePlayerPerceptionEvent()),
           this.Hhn.Init(
@@ -169,8 +173,8 @@ let PawnPerceptionComponent = class PawnPerceptionComponent extends EntityCompon
     return (this.Izr = this.Entity.GetComponent(106)), !0;
   }
   OnStart() {
-    const t = this.Entity.GetComponent(0);
-    const e = ((this.ban = this.Entity.GetComponent(1)), this.ban.Owner);
+    var t = this.Entity.GetComponent(0),
+      e = ((this.ban = this.Entity.GetComponent(1)), this.ban.Owner);
     return UE.KismetSystemLibrary.IsValid(e)
       ? (EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
@@ -193,9 +197,9 @@ let PawnPerceptionComponent = class PawnPerceptionComponent extends EntityCompon
         !1);
   }
   OnActivate() {
-    let t;
-    let e;
-    const i = this.Entity.GetComponent(144);
+    var t,
+      e,
+      i = this.Entity.GetComponent(144);
     return (
       i &&
         ((t = i.ShowRange),
@@ -274,4 +278,4 @@ InteractRangeInfo:
   PawnPerceptionComponent,
 )),
   (exports.PawnPerceptionComponent = PawnPerceptionComponent);
-// # sourceMappingURL=PawnPerceptionComponent.js.map
+//# sourceMappingURL=PawnPerceptionComponent.js.map

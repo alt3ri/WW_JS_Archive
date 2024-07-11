@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TsEntityBase = exports.getTsEntityClass = void 0);
-const UE = require("ue");
-const ue_1 = require("ue");
-const Init_1 = require("../../Interface/Init");
-const TS_ENTITY_PATH =
-  "/Game/Aki/TypeScript/UniverseEditor/Common/TsEntity/TsEntityBase.TsEntityBase_C";
+const UE = require("ue"),
+  ue_1 = require("ue"),
+  Init_1 = require("../../Interface/Init"),
+  TS_ENTITY_PATH =
+    "/Game/Aki/TypeScript/UniverseEditor/Common/TsEntity/TsEntityBase.TsEntityBase_C";
 function getTsEntityClass() {
   return ue_1.Class.Load(TS_ENTITY_PATH);
 }
@@ -24,4 +24,4 @@ class TsEntityBase extends UE.KuroEffectActor {
   }
 }
 (exports.TsEntityBase = TsEntityBase), (exports.default = TsEntityBase);
-// # sourceMappingURL=TsEntityBase.js.map
+//# sourceMappingURL=TsEntityBase.js.map

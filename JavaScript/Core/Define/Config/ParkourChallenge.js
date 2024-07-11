@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ParkourChallenge = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const DicIntInt_1 = require("./SubType/DicIntInt");
-const IntPair_1 = require("./SubType/IntPair");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  DicIntInt_1 = require("./SubType/DicIntInt"),
+  IntPair_1 = require("./SubType/IntPair");
 class ParkourChallenge {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -48,30 +48,30 @@ class ParkourChallenge {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   markid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   backgroundtexture(t) {
-    const i = this.J7.__offset(this.z7, 8);
+    var i = this.J7.__offset(this.z7, 8);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   title(t) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   levelplayid() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetRewardsAt(t, i) {
     return this.rewards(t);
   }
   rewards(t, i) {
-    const r = this.J7.__offset(this.z7, 14);
+    var r = this.J7.__offset(this.z7, 14);
     return r
       ? (i || new DicIntInt_1.DicIntInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -80,14 +80,14 @@ class ParkourChallenge {
       : null;
   }
   rewardsLength() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetRewardlistAt(t, i) {
     return this.rewardlist(t);
   }
   rewardlist(t, i) {
-    const r = this.J7.__offset(this.z7, 16);
+    var r = this.J7.__offset(this.z7, 16);
     return r
       ? (i || new IntPair_1.IntPair()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -96,13 +96,13 @@ class ParkourChallenge {
       : null;
   }
   rewardlistLength() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   locationentityconfigid() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.ParkourChallenge = ParkourChallenge;
-// # sourceMappingURL=ParkourChallenge.js.map
+//# sourceMappingURL=ParkourChallenge.js.map

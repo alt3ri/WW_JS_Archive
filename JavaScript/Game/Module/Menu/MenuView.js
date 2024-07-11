@@ -4,30 +4,30 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.MenuViewData =
     exports.MenuScrollItemData =
       void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Pool_1 = require("../../../Core/Container/Pool");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const CommonTabComponentData_1 = require("../Common/TabComponent/CommonTabComponentData");
-const CommonTabData_1 = require("../Common/TabComponent/CommonTabData");
-const CommonTabTitleData_1 = require("../Common/TabComponent/CommonTabTitleData");
-const TabComponentWithCaptionItem_1 = require("../Common/TabComponent/TabComponentWithCaptionItem");
-const CommonTabItem_1 = require("../Common/TabComponent/TabItem/CommonTabItem");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const DynScrollView_1 = require("../Util/ScrollView/DynScrollView");
-const PcAndGamepadKeySettingPanel_1 = require("./KeySettingsView/PcAndGamepadKeySettingPanel");
-const MenuController_1 = require("./MenuController");
-const MenuScrollSettingContainerDynItem_1 = require("./Views/MenuScrollSettingContainerDynItem");
-const MenuScrollSettingContainerItem_1 = require("./Views/MenuScrollSettingContainerItem");
-const CAPACITY = 20;
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Pool_1 = require("../../../Core/Container/Pool"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  CommonTabComponentData_1 = require("../Common/TabComponent/CommonTabComponentData"),
+  CommonTabData_1 = require("../Common/TabComponent/CommonTabData"),
+  CommonTabTitleData_1 = require("../Common/TabComponent/CommonTabTitleData"),
+  TabComponentWithCaptionItem_1 = require("../Common/TabComponent/TabComponentWithCaptionItem"),
+  CommonTabItem_1 = require("../Common/TabComponent/TabItem/CommonTabItem"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  DynScrollView_1 = require("../Util/ScrollView/DynScrollView"),
+  PcAndGamepadKeySettingPanel_1 = require("./KeySettingsView/PcAndGamepadKeySettingPanel"),
+  MenuController_1 = require("./MenuController"),
+  MenuScrollSettingContainerDynItem_1 = require("./Views/MenuScrollSettingContainerDynItem"),
+  MenuScrollSettingContainerItem_1 = require("./Views/MenuScrollSettingContainerItem"),
+  CAPACITY = 20;
 class MenuScrollItemData {
   constructor() {
     (this.Type = 0), (this.Data = void 0);
@@ -79,12 +79,13 @@ class MenuView extends UiViewBase_1.UiViewBase {
         this.Fxi();
       }),
       (this.Vxi = () => {
-        let e;
+        var e;
         (GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatform() ||
           GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosPlatform()) &&
-          ((e =
-            GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetGameQualityLoadInfo())
-            .Percentage > 80 &&
+          (80 <
+            (e =
+              GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetGameQualityLoadInfo())
+              .Percentage &&
             ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
               "PictureConfigOverload",
             ),
@@ -98,14 +99,14 @@ class MenuView extends UiViewBase_1.UiViewBase {
         return new CommonTabItem_1.CommonTabItem();
       }),
       (this.Kxi = (e) => {
-        var e = this.Bxi[e];
-        const t =
-          ((this.Gxi.MenuViewDataCurMainType = e),
-          ConfigManager_1.ConfigManager.MenuBaseConfig.GetMainTypeConfigById(
-            e,
-          ));
-        const i = this.GetItem(5);
-        const n = this.GetItem(4);
+        var e = this.Bxi[e],
+          t =
+            ((this.Gxi.MenuViewDataCurMainType = e),
+            ConfigManager_1.ConfigManager.MenuBaseConfig.GetMainTypeConfigById(
+              e,
+            )),
+          i = this.GetItem(5),
+          n = this.GetItem(4);
         if (t) {
           let e = t.TabPanelType;
           switch (
@@ -144,7 +145,7 @@ class MenuView extends UiViewBase_1.UiViewBase {
         this.xqe.UnBindLateUpdate();
       }),
       (this.$Ge = () => {
-        let e;
+        var e;
         MenuController_1.MenuController.BeforeViewClose(),
           MenuController_1.MenuController.CheckRestartMap()
             ? (MenuController_1.MenuController.ClearRestartMap(),
@@ -182,7 +183,7 @@ class MenuView extends UiViewBase_1.UiViewBase {
       this.bxi && (this.bxi.length = 0),
       this.xqe && (this.xqe.ClearChildren(), (this.xqe = void 0)),
       this.qxi && (this.qxi = void 0);
-    const e = ModelManager_1.ModelManager.MenuModel;
+    var e = ModelManager_1.ModelManager.MenuModel;
     e.IsEdited &&
       (MenuController_1.MenuController.ReportSettingMenuLogEvent(),
       (e.IsEdited = !1));
@@ -230,7 +231,7 @@ class MenuView extends UiViewBase_1.UiViewBase {
   }
   async Yxi() {
     this.Bxi = MenuController_1.MenuController.GetMainTypeList();
-    const e = new CommonTabComponentData_1.CommonTabComponentData(
+    var e = new CommonTabComponentData_1.CommonTabComponentData(
       this.dVe,
       this.Kxi,
       this.yqe,
@@ -246,7 +247,7 @@ class MenuView extends UiViewBase_1.UiViewBase {
     this.Fxi();
   }
   Xxi() {
-    const e = ModelManager_1.ModelManager.PlatformModel;
+    var e = ModelManager_1.ModelManager.PlatformModel;
     let t = 0;
     e.IsInKeyBoard() ? (t = 1) : e.IsInGamepad() && (t = 2),
       this.Oxi
@@ -264,10 +265,10 @@ class MenuView extends UiViewBase_1.UiViewBase {
           ));
   }
   Fxi() {
-    const e = MenuController_1.MenuController.GetTargetBaseConfigData(
+    var e = MenuController_1.MenuController.GetTargetBaseConfigData(
       this.Gxi.MenuViewDataCurMainType,
     );
-    this.Gxi.MenuViewDataCurMainType === 2 &&
+    2 === this.Gxi.MenuViewDataCurMainType &&
     (GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatform() ||
       GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosPlatform())
       ? (this.GetItem(3)?.SetUIActive(!0), this.Vxi())
@@ -277,34 +278,34 @@ class MenuView extends UiViewBase_1.UiViewBase {
       this.zxi(e);
   }
   jxi(e) {
-    const t = this.GetItem(3)?.GetAttachUIChildren().Get(1);
+    var t = this.GetItem(3)?.GetAttachUIChildren().Get(1);
     LguiUtil_1.LguiUtil.SetLocalTextNew(t, e);
   }
   Hxi(e, t) {
-    const i = this.GetItem(3);
-    var n = i?.GetAttachUIChildren().Get(3);
+    var i = this.GetItem(3),
+      n = i?.GetAttachUIChildren().Get(3);
     if (n) {
-      const a = n.GetAttachUIChildren();
-      var n = i?.GetAttachUIChildren().Get(4);
+      var a = n.GetAttachUIChildren(),
+        n = i?.GetAttachUIChildren().Get(4);
       if (n) {
-        const r = n.Width;
-        const o = [0, 0, 0, 0, 0];
-        if (e >= 100) for (let e = 0; e < a.Num(); e++) o[e] = r;
-        else if (e >= 80) {
+        var r = n.Width,
+          o = [0, 0, 0, 0, 0];
+        if (100 <= e) for (let e = 0; e < a.Num(); e++) o[e] = r;
+        else if (80 <= e) {
           for (let e = 0; e < a.Num() - 1; e++) o[e] = r;
           o[4] = r * ((5 * (e - 80)) / 100);
-        } else if (e >= 60) {
+        } else if (60 <= e) {
           for (let e = 0; e < a.Num() - 2; e++) o[e] = r;
           o[3] = r * ((5 * (e - 60)) / 100);
-        } else if (e >= 40) {
+        } else if (40 <= e) {
           for (let e = 0; e < a.Num() - 3; e++) o[e] = r;
           o[2] = r * ((5 * (e - 40)) / 100);
-        } else if (e >= 20) {
+        } else if (20 <= e) {
           for (let e = 0; e < a.Num() - 4; e++) o[e] = r;
           o[1] = r * ((5 * (e - 20)) / 100);
         } else o[0] = r * ((5 * e) / 100);
         for (let e = 0; e < a.Num(); e++) {
-          const s = a.Get(e);
+          var s = a.Get(e);
           s.SetWidth(o[e]), this.SetSpriteByPath(t, s, !1);
         }
       }
@@ -331,4 +332,4 @@ class MenuView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.MenuView = MenuView;
-// # sourceMappingURL=MenuView.js.map
+//# sourceMappingURL=MenuView.js.map

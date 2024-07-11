@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ParkourBehaviorNode = void 0);
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ParkourController_1 = require("../../../../LevelGamePlay/Parkour/ParkourController");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const GeneralLogicTreeNodeExtraInfo_1 = require("../../GeneralLogicTreeNodeExtraInfo");
-const ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
+const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ParkourController_1 = require("../../../../LevelGamePlay/Parkour/ParkourController"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  GeneralLogicTreeNodeExtraInfo_1 = require("../../GeneralLogicTreeNodeExtraInfo"),
+  ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
 class ParkourBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   constructor() {
     super(...arguments),
@@ -33,7 +33,7 @@ class ParkourBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
       !!super.OnCreate(e) &&
       ((e = e.Condition),
       (this.TrackTextRuleInner = 2),
-      e.Type === "Parkour") &&
+      "Parkour" === e.Type) &&
       ((this.sXt = e.SplineEntityId), (this.aXt = e.MatchRoleOption), !0)
     );
   }
@@ -62,12 +62,12 @@ class ParkourBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
     super.OnDestroy();
   }
   GetCustomTrackText(e) {
-    let r = 0;
-    let t = 0;
+    let r = 0,
+      t = 0;
     if (this.sXt) {
-      const o = ModelManager_1.ModelManager.ParkourModel.GetParkour(this.sXt);
+      var o = ModelManager_1.ModelManager.ParkourModel.GetParkour(this.sXt);
       if (!o?.ParkourInfo) return e;
-      if (e.search("{show_only}") !== -1)
+      if (-1 !== e.search("{show_only}"))
         return (
           (r = o.ParkourInfo.CheckPointsRequire - o.CurCheckPointCount),
           e.replace("{show_only}", " " + r.toString())
@@ -78,8 +78,8 @@ class ParkourBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
           o.ParkourInfo.CheckPointsRequire,
         ));
     }
-    return t === 0 ? e : `${e}(${r}/${t})`;
+    return 0 === t ? e : `${e}(${r}/${t})`;
   }
 }
 exports.ParkourBehaviorNode = ParkourBehaviorNode;
-// # sourceMappingURL=ParkourBehaviorNode.js.map
+//# sourceMappingURL=ParkourBehaviorNode.js.map

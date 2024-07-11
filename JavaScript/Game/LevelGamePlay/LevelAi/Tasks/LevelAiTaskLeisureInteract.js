@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelAiTaskLeisureInteract = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const IAction_1 = require("../../../../UniverseEditor/Interface/IAction");
-const LevelAiTask_1 = require("../LevelAiTask");
-const LevelAiTaskSitDown_1 = require("./LevelAiTaskSitDown");
+const Log_1 = require("../../../../Core/Common/Log"),
+  IAction_1 = require("../../../../UniverseEditor/Interface/IAction"),
+  LevelAiTask_1 = require("../LevelAiTask"),
+  LevelAiTaskSitDown_1 = require("./LevelAiTaskSitDown");
 class LevelAiTaskLeisureInteract extends LevelAiTask_1.LevelAiTask {
   constructor() {
     super(...arguments),
@@ -23,7 +23,7 @@ class LevelAiTaskLeisureInteract extends LevelAiTask_1.LevelAiTask {
   }
   Init() {
     if (!this.gU) {
-      const i = this.Params;
+      var i = this.Params;
       if (i) {
         let e = void 0;
         if (
@@ -55,4 +55,4 @@ class LevelAiTaskLeisureInteract extends LevelAiTask_1.LevelAiTask {
   }
 }
 exports.LevelAiTaskLeisureInteract = LevelAiTaskLeisureInteract;
-// # sourceMappingURL=LevelAiTaskLeisureInteract.js.map
+//# sourceMappingURL=LevelAiTaskLeisureInteract.js.map

@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configActivityById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const Activity_1 = require("../Config/Activity");
-const DB = "db_activity.db";
-const FILE = "h.活动.xlsx";
-const TABLE = "Activity";
-const COMMAND = "select BinData from `Activity` where Id=?";
-const KEY_PREFIX = "ActivityById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  Activity_1 = require("../Config/Activity"),
+  DB = "db_activity.db",
+  FILE = "h.活动.xlsx",
+  TABLE = "Activity",
+  COMMAND = "select BinData from `Activity` where Id=?",
+  KEY_PREFIX = "ActivityById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configActivityById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configActivityById.GetConfig(";
 exports.configActivityById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configActivityById = {
       if (
         (t =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, i, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            i,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              i,
+            ]))
       ) {
-        var t;
-        var n = void 0;
+        var t,
+          n = void 0;
         if (
           (([t, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configActivityById = {
     }
   },
 };
-// # sourceMappingURL=ActivityById.js.map
+//# sourceMappingURL=ActivityById.js.map

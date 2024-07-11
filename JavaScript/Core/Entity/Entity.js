@@ -1,36 +1,40 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, i, e, n) {
-    let s;
-    const r = arguments.length;
-    let o =
-      r < 3 ? i : n === null ? (n = Object.getOwnPropertyDescriptor(i, e)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var s,
+      r = arguments.length,
+      o =
+        r < 3
+          ? i
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(i, e))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       o = Reflect.decorate(t, i, e, n);
     else
-      for (let h = t.length - 1; h >= 0; h--)
-        (s = t[h]) && (o = (r < 3 ? s(o) : r > 3 ? s(i, e, o) : s(i, e)) || o);
-    return r > 3 && o && Object.defineProperty(i, e, o), o;
+      for (var h = t.length - 1; 0 <= h; h--)
+        (s = t[h]) && (o = (r < 3 ? s(o) : 3 < r ? s(i, e, o) : s(i, e)) || o);
+    return 3 < r && o && Object.defineProperty(i, e, o), o;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Entity =
     exports.TickComponentManager =
     exports.DISABLE_REASON_LENGTH_LIMIT =
       void 0);
-const Log_1 = require("../Common/Log");
-const Stats_1 = require("../Common/Stats");
-const CommonDefine_1 = require("../Define/CommonDefine");
-const GameBudgetAllocatorConfig_1 = require("../GameBudgetAllocator/GameBudgetAllocatorConfig");
-const GameBudgetInterfaceController_1 = require("../GameBudgetAllocator/GameBudgetInterfaceController");
-const ObjectBase_1 = require("../Object/ObjectBase");
-const PerformanceDecorators_1 = require("../Performance/PerformanceDecorators");
-const FNameUtil_1 = require("../Utils/FNameUtil");
-const MathUtils_1 = require("../Utils/MathUtils");
-const EntityComponent_1 = require("./EntityComponent");
-const EntityComponentSystem_1 = require("./EntityComponentSystem");
-const EntityHelper_1 = require("./EntityHelper");
-const EntitySystem_1 = require("./EntitySystem");
+const Log_1 = require("../Common/Log"),
+  Stats_1 = require("../Common/Stats"),
+  CommonDefine_1 = require("../Define/CommonDefine"),
+  GameBudgetAllocatorConfig_1 = require("../GameBudgetAllocator/GameBudgetAllocatorConfig"),
+  GameBudgetInterfaceController_1 = require("../GameBudgetAllocator/GameBudgetInterfaceController"),
+  ObjectBase_1 = require("../Object/ObjectBase"),
+  PerformanceDecorators_1 = require("../Performance/PerformanceDecorators"),
+  FNameUtil_1 = require("../Utils/FNameUtil"),
+  MathUtils_1 = require("../Utils/MathUtils"),
+  EntityComponent_1 = require("./EntityComponent"),
+  EntityComponentSystem_1 = require("./EntityComponentSystem"),
+  EntityHelper_1 = require("./EntityHelper"),
+  EntitySystem_1 = require("./EntitySystem");
 exports.DISABLE_REASON_LENGTH_LIMIT = 4;
 class TickComponentInfo {
   constructor(t, i, e) {
@@ -79,8 +83,8 @@ class TickComponentManager {
       this.lW++);
   }
   Sort() {
-    (this.oW = this.nW.length > 0 || this.sW.length > 0),
-      (this.rW = this.aW.length > 0 || this.hW.length > 0),
+    (this.oW = 0 < this.nW.length || 0 < this.sW.length),
+      (this.rW = 0 < this.aW.length || 0 < this.hW.length),
       this.nW.sort(TickComponentManager.S7),
       this.sW.sort(TickComponentManager.S7),
       this.aW.sort(TickComponentManager.S7),
@@ -184,7 +188,7 @@ class Entity extends ObjectBase_1.ObjectBase {
     return this.TW;
   }
   RW() {
-    const t = this.constructor.name;
+    var t = this.constructor.name;
     let i = Entity.UW.get(t);
     return (
       i ||
@@ -194,7 +198,7 @@ class Entity extends ObjectBase_1.ObjectBase {
     );
   }
   get Active() {
-    return this.DW.size === 0;
+    return 0 === this.DW.size;
   }
   get TimeDilation() {
     return this.EW;
@@ -218,7 +222,7 @@ class Entity extends ObjectBase_1.ObjectBase {
     return this.LW[t];
   }
   CheckGetComponent(t) {
-    const i = this.GetComponent(t);
+    var i = this.GetComponent(t);
     return (
       i ||
         (Log_1.Log.CheckError() &&
@@ -245,7 +249,7 @@ class Entity extends ObjectBase_1.ObjectBase {
           ["component", t.name],
         );
     else {
-      const n = t.Id;
+      var n = t.Id;
       if (n < 0)
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -272,8 +276,8 @@ class Entity extends ObjectBase_1.ObjectBase {
                   ["dependence", y],
                 )
               );
-        var s = EntitySystem_1.EntitySystem.Get(this.Id);
-        const r = EntityComponentSystem_1.EntityComponentSystem.Create(t, s, e);
+        var s = EntitySystem_1.EntitySystem.Get(this.Id),
+          r = EntityComponentSystem_1.EntityComponentSystem.Create(t, s, e);
         if (r) {
           if (void 0 === i || r.NeedTick || r.ForceTick) {
             let t = r?.__proto__;
@@ -284,8 +288,8 @@ class Entity extends ObjectBase_1.ObjectBase {
               t.constructor !== EntityComponent_1.EntityComponent;
 
             ) {
-              const o = t.constructor;
-              const h = o.Id;
+              var o = t.constructor,
+                h = o.Id;
               if (h < 0)
                 return void (
                   Log_1.Log.CheckError() &&
@@ -298,7 +302,7 @@ class Entity extends ObjectBase_1.ObjectBase {
                     ["component", o.name],
                   )
                 );
-              const a = this.LW[h];
+              var a = this.LW[h];
               if (a)
                 return void (
                   Log_1.Log.CheckError() &&
@@ -384,7 +388,7 @@ class Entity extends ObjectBase_1.ObjectBase {
       ));
   }
   Create(t) {
-    const i = this.RW();
+    var i = this.RW();
     if (
       (([
         this.m6,
@@ -495,7 +499,7 @@ class Entity extends ObjectBase_1.ObjectBase {
   }
   Clear() {
     let i = !1;
-    for (let t = this.Components.length - 1; t >= 0; --t)
+    for (let t = this.Components.length - 1; 0 <= t; --t)
       EntityComponentSystem_1.EntityComponentSystem.Destroy(
         this,
         this.Components[t],
@@ -594,7 +598,7 @@ class Entity extends ObjectBase_1.ObjectBase {
   End() {
     if (4 & this.pW) {
       let i = !1;
-      for (let t = this.Components.length - 1; t >= 0; --t)
+      for (let t = this.Components.length - 1; 0 <= t; --t)
         this.Components[t].End() || (i = !0);
       if (i) return !1;
       if (this.OnEnd !== Entity.prototype.OnEnd)
@@ -648,7 +652,7 @@ class Entity extends ObjectBase_1.ObjectBase {
         ["Handle", t],
         ["Reason", i],
       );
-    const e = this.DW.get(t)[1];
+    var e = this.DW.get(t)[1];
     if (!e)
       return (
         Log_1.Log.CheckError() &&
@@ -665,7 +669,7 @@ class Entity extends ObjectBase_1.ObjectBase {
       );
     this.DW.delete(t);
     let n = !0;
-    for (let t = e.length - 1; t >= 0; --t)
+    for (let t = e.length - 1; 0 <= t; --t)
       e[t][0].Enable(e[t][1], i) || (n = !1);
     return n;
   }
@@ -687,11 +691,11 @@ class Entity extends ObjectBase_1.ObjectBase {
           "Entity",
           this.constructor.name,
         ]);
-    let e;
-    const t = ++this.vW;
-    const n = new Array();
-    let s = (this.DW.set(t, [i, n]), void 0);
-    for (let t = this.Components.length - 1; t >= 0; --t)
+    var e,
+      t = ++this.vW,
+      n = new Array(),
+      s = (this.DW.set(t, [i, n]), void 0);
+    for (let t = this.Components.length - 1; 0 <= t; --t)
       (e = (s = this.Components[t]).Disable(i)), n.push([s, e]);
     return (
       Log_1.Log.CheckInfo() &&
@@ -779,19 +783,19 @@ class Entity extends ObjectBase_1.ObjectBase {
     return `[object ${this.constructor.name}(Id=${this.Id})${this.Valid ? "" : "(D)"}]`;
   }
   DumpDisableInfo() {
-    let t;
-    let i;
-    const e = new Array();
+    var t,
+      i,
+      e = new Array();
     let n = "";
     for ([t, i] of this.DW)
       e.push(`${n}{Handle:${t},Reason:${i[0]}}`), (n = " ");
     return e.join("");
   }
   DumpComponentsDisableInfo() {
-    const t = new Array();
+    var t = new Array();
     let i = "";
     for (const e of this.Components)
-      e.DumpDisableInfo().length !== 0 &&
+      0 !== e.DumpDisableInfo().length &&
         (t.push(i + "componentInfo"), (i = " "));
     return t.join("");
   }
@@ -811,4 +815,4 @@ class Entity extends ObjectBase_1.ObjectBase {
     null,
   ),
   (exports.Entity = Entity);
-// # sourceMappingURL=Entity.js.map
+//# sourceMappingURL=Entity.js.map

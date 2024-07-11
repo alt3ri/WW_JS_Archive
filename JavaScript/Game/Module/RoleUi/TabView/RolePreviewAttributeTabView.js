@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RolePreviewAttributeTabView = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const RoleController_1 = require("../RoleController");
-const RoleFavorUtil_1 = require("../RoleFavor/RoleFavorUtil");
-const RoleLevelUpSuccessAttributeView_1 = require("../RoleLevel/RoleLevelUpSuccessAttributeView");
-const Log_1 = require("../../../../Core/Common/Log");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  RoleController_1 = require("../RoleController"),
+  RoleFavorUtil_1 = require("../RoleFavor/RoleFavorUtil"),
+  RoleLevelUpSuccessAttributeView_1 = require("../RoleLevel/RoleLevelUpSuccessAttributeView"),
+  Log_1 = require("../../../../Core/Common/Log");
 class RolePreviewAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -23,7 +23,7 @@ class RolePreviewAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
         this.PlayMontageStartWithReLoop(), this.VC(e);
       }),
       (this.ndo = (e, t, i) => {
-        const r = new RoleLevelUpSuccessAttributeView_1.RoleAttributeItem();
+        var r = new RoleLevelUpSuccessAttributeView_1.RoleAttributeItem();
         return (
           r.SetRootActor(t.GetOwner(), !0), r.Refresh(e), { Key: i, Value: r }
         );
@@ -65,7 +65,7 @@ class RolePreviewAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
   }
   OnBeforeShow() {
     this.PlayMontageStart();
-    const e = this.RoleViewAgent.GetCurSelectRoleId();
+    var e = this.RoleViewAgent.GetCurSelectRoleId();
     this.VC(e);
   }
   OnBeforeDestroy() {
@@ -88,16 +88,16 @@ class RolePreviewAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
       this.ldo();
   }
   ado() {
-    var e = this.RoleInstance.GetElementInfo();
-    var e =
-      (this.SetElementIcon(
-        e.Icon,
-        this.GetTexture(1),
-        this.RoleInstance.GetRoleConfig().ElementId,
-      ),
-      ConfigManager_1.ConfigManager.ElementInfoConfig.GetElementInfoLocalName(
-        e.Name,
-      ));
+    var e = this.RoleInstance.GetElementInfo(),
+      e =
+        (this.SetElementIcon(
+          e.Icon,
+          this.GetTexture(1),
+          this.RoleInstance.GetRoleConfig().ElementId,
+        ),
+        ConfigManager_1.ConfigManager.ElementInfoConfig.GetElementInfoLocalName(
+          e.Name,
+        ));
     this.GetText(2).SetText(e);
   }
   sdo() {
@@ -105,36 +105,38 @@ class RolePreviewAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
   }
   hdo() {
     var e =
-      ConfigManager_1.ConfigManager.RoleFavorConfig.GetFavorRoleInfoConfig(
-        this.RoleInstance.GetRoleId(),
-      );
-    var t = this.RoleInstance.GetRoleConfig();
-    const i = [];
-    var t = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponTypeName(
-      t.WeaponType,
-    );
-    var e =
-      (i.push({ Name: "Text_Weapon_Text", CurText: t }),
-      e &&
-        ((t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.Sex)),
-        i.push({ Name: "PrefabTextItem_3159729083_Text", CurText: t }),
-        (t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.Country)),
-        i.push({ Name: "PrefabTextItem_3969856612_Text", CurText: t }),
-        (t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.Influence)),
-        i.push({ Name: "PrefabTextItem_152395022_Text", CurText: t })),
-      RoleFavorUtil_1.RoleFavorUtil.GetCurLanguageCvName(
-        this.RoleInstance.GetRoleId(),
-      ));
-    var t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e);
+        ConfigManager_1.ConfigManager.RoleFavorConfig.GetFavorRoleInfoConfig(
+          this.RoleInstance.GetRoleId(),
+        ),
+      t = this.RoleInstance.GetRoleConfig(),
+      i = [],
+      t = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponTypeName(
+        t.WeaponType,
+      ),
+      e =
+        (i.push({ Name: "Text_Weapon_Text", CurText: t }),
+        e &&
+          ((t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.Sex)),
+          i.push({ Name: "PrefabTextItem_3159729083_Text", CurText: t }),
+          (t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.Country)),
+          i.push({ Name: "PrefabTextItem_3969856612_Text", CurText: t }),
+          (t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+            e.Influence,
+          )),
+          i.push({ Name: "PrefabTextItem_152395022_Text", CurText: t })),
+        RoleFavorUtil_1.RoleFavorUtil.GetCurLanguageCvName(
+          this.RoleInstance.GetRoleId(),
+        )),
+      t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e);
     i.push({ Name: "Text_CharacterVoice_Text", CurText: t });
     let r = !0;
     for (const o of i) (o.ShowArrow = !1), (r = !(o.InnerShowBg = r));
     this.Qft?.RebuildLayoutByDataNew(i);
   }
   ldo() {
-    const e = this.RoleInstance.GetRoleConfig();
+    var e = this.RoleInstance.GetRoleConfig();
     this.GetText(4).ShowTextNew(e.Introduction);
   }
 }
 exports.RolePreviewAttributeTabView = RolePreviewAttributeTabView;
-// # sourceMappingURL=RolePreviewAttributeTabView.js.map
+//# sourceMappingURL=RolePreviewAttributeTabView.js.map

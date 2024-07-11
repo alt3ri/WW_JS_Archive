@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AchievementConfig = void 0);
-const AchievementByGroupId_1 = require("../../../Core/Define/ConfigQuery/AchievementByGroupId");
-const AchievementById_1 = require("../../../Core/Define/ConfigQuery/AchievementById");
-const AchievementCategoryAll_1 = require("../../../Core/Define/ConfigQuery/AchievementCategoryAll");
-const AchievementCategoryById_1 = require("../../../Core/Define/ConfigQuery/AchievementCategoryById");
-const AchievementGroupByCategory_1 = require("../../../Core/Define/ConfigQuery/AchievementGroupByCategory");
-const AchievementGroupById_1 = require("../../../Core/Define/ConfigQuery/AchievementGroupById");
-const AchievementStarLevelByLevel_1 = require("../../../Core/Define/ConfigQuery/AchievementStarLevelByLevel");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
+const AchievementByGroupId_1 = require("../../../Core/Define/ConfigQuery/AchievementByGroupId"),
+  AchievementById_1 = require("../../../Core/Define/ConfigQuery/AchievementById"),
+  AchievementCategoryAll_1 = require("../../../Core/Define/ConfigQuery/AchievementCategoryAll"),
+  AchievementCategoryById_1 = require("../../../Core/Define/ConfigQuery/AchievementCategoryById"),
+  AchievementGroupByCategory_1 = require("../../../Core/Define/ConfigQuery/AchievementGroupByCategory"),
+  AchievementGroupById_1 = require("../../../Core/Define/ConfigQuery/AchievementGroupById"),
+  AchievementStarLevelByLevel_1 = require("../../../Core/Define/ConfigQuery/AchievementStarLevelByLevel"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  ConfigManager_1 = require("../../Manager/ConfigManager");
 class AchievementConfig extends ConfigBase_1.ConfigBase {
   GetAchievementConfig(e) {
     return AchievementById_1.configAchievementById.GetConfig(e);
@@ -61,8 +61,8 @@ class AchievementConfig extends ConfigBase_1.ConfigBase {
     return this.GetAchievementConfig(e).IconPath;
   }
   GetAchievementReward(e) {
-    let t;
-    return (t = this.GetAchievementConfig(e).OverrideDropId) > 0
+    var t;
+    return 0 < (t = this.GetAchievementConfig(e).OverrideDropId)
       ? ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(t)
           ?.DropPreview
       : ((t = this.GetAchievementStarLevelConfig(
@@ -118,4 +118,4 @@ class AchievementConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.AchievementConfig = AchievementConfig;
-// # sourceMappingURL=AchievementConfig.js.map
+//# sourceMappingURL=AchievementConfig.js.map

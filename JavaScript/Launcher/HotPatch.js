@@ -1,35 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HotPatch = void 0);
-const cpp_1 = require("cpp");
-const UE = require("ue");
-const AppLinks_1 = require("./AppLinks");
-const BaseConfigController_1 = require("./BaseConfig/BaseConfigController");
-const UrlPrefixDownload_1 = require("./Download/UrlPrefixDownload");
-const HotPatchKuroSdk_1 = require("./HotPatchKuroSdk/HotPatchKuroSdk");
-const SdkReportData_1 = require("./HotPatchKuroSdk/SdkReportData");
-const HotPatchLogReport_1 = require("./HotPatchLogReport");
-const AndroidHotPatchProcedure_1 = require("./HotPatchProcedure/AndroidHotPatchProcedure");
-const IosHotPatchProcedure_1 = require("./HotPatchProcedure/IosHotPatchProcedure");
-const OthersHotPatchProcedure_1 = require("./HotPatchProcedure/OthersHotPatchProcedure");
-const HotPatchPushSdk_1 = require("./HotPatchPushSdk/HotPatchPushSdk");
-const NetworkDefine_1 = require("./NetworkDefine");
-const PackageUpdateController_1 = require("./PackageUpdate/PackageUpdateController");
-const RemoteConfig_1 = require("./RemoteConfig");
-const ThinkDataLaunchReporter_1 = require("./ThinkDataReport/ThinkDataLaunchReporter");
-const HotFixGameSettingManager_1 = require("./Ui/HotFix/HotFixGameSettingManager");
-const HotFixManager_1 = require("./Ui/HotFix/HotFixManager");
-const HotFixSceneManager_1 = require("./Ui/HotFix/HotFixSceneManager");
-const AppPathMisc_1 = require("./Update/AppPathMisc");
-const AppUtil_1 = require("./Update/AppUtil");
-const AppVersionMisc_1 = require("./Update/AppVersionMisc");
-const LanguageUpdateManager_1 = require("./Update/LanguageUpdateManager");
-const PakKeyUpdate_1 = require("./Update/PakKeyUpdate");
-const ResourceUpdate_1 = require("./Update/ResourceUpdate");
-const LauncherAudio_1 = require("./Util/LauncherAudio");
-const LauncherLog_1 = require("./Util/LauncherLog");
-const ProcedureUtil_1 = require("./Util/ProcedureUtil");
-const LauncherSerialize_1 = require("./Util/LauncherSerialize");
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
+  AppLinks_1 = require("./AppLinks"),
+  BaseConfigController_1 = require("./BaseConfig/BaseConfigController"),
+  UrlPrefixDownload_1 = require("./Download/UrlPrefixDownload"),
+  HotPatchKuroSdk_1 = require("./HotPatchKuroSdk/HotPatchKuroSdk"),
+  SdkReportData_1 = require("./HotPatchKuroSdk/SdkReportData"),
+  HotPatchLogReport_1 = require("./HotPatchLogReport"),
+  AndroidHotPatchProcedure_1 = require("./HotPatchProcedure/AndroidHotPatchProcedure"),
+  IosHotPatchProcedure_1 = require("./HotPatchProcedure/IosHotPatchProcedure"),
+  OthersHotPatchProcedure_1 = require("./HotPatchProcedure/OthersHotPatchProcedure"),
+  HotPatchPushSdk_1 = require("./HotPatchPushSdk/HotPatchPushSdk"),
+  NetworkDefine_1 = require("./NetworkDefine"),
+  PackageUpdateController_1 = require("./PackageUpdate/PackageUpdateController"),
+  RemoteConfig_1 = require("./RemoteConfig"),
+  ThinkDataLaunchReporter_1 = require("./ThinkDataReport/ThinkDataLaunchReporter"),
+  HotFixGameSettingManager_1 = require("./Ui/HotFix/HotFixGameSettingManager"),
+  HotFixManager_1 = require("./Ui/HotFix/HotFixManager"),
+  HotFixSceneManager_1 = require("./Ui/HotFix/HotFixSceneManager"),
+  AppPathMisc_1 = require("./Update/AppPathMisc"),
+  AppUtil_1 = require("./Update/AppUtil"),
+  AppVersionMisc_1 = require("./Update/AppVersionMisc"),
+  LanguageUpdateManager_1 = require("./Update/LanguageUpdateManager"),
+  PakKeyUpdate_1 = require("./Update/PakKeyUpdate"),
+  ResourceUpdate_1 = require("./Update/ResourceUpdate"),
+  LauncherAudio_1 = require("./Util/LauncherAudio"),
+  LauncherLog_1 = require("./Util/LauncherLog"),
+  ProcedureUtil_1 = require("./Util/ProcedureUtil"),
+  LauncherSerialize_1 = require("./Util/LauncherSerialize");
 class HotPatch {
   static Start(e, t) {
     (HotPatch.PSr = e),
@@ -118,34 +118,35 @@ class HotPatch {
         HotPatchLogReport_1.LoginLogEventDefine.Update,
         "update_start",
       );
-    var a = new HotPatchLogReport_1.HotPatchLog();
-    var a =
-      ((a.s_step_id = "start_hot_patch"),
-      HotPatchLogReport_1.HotPatchLogReport.Report(a),
-      new HotPatchLogReport_1.HotPatchLog());
-    const c = { success: !0 };
-    const e =
-      ((a.s_step_id = "end_hot_patch"), new HotPatchLogReport_1.HotPatchLog());
+    var a = new HotPatchLogReport_1.HotPatchLog(),
+      a =
+        ((a.s_step_id = "start_hot_patch"),
+        HotPatchLogReport_1.HotPatchLogReport.Report(a),
+        new HotPatchLogReport_1.HotPatchLog()),
+      c = { success: !0 },
+      e =
+        ((a.s_step_id = "end_hot_patch"),
+        new HotPatchLogReport_1.HotPatchLog());
     if (((e.s_step_id = "need_hot_patch_logic"), o)) {
       (e.s_step_result = "true"),
         HotPatchLogReport_1.HotPatchLogReport.Report(e);
       let t = void 0;
-      var o = UE.KuroLauncherLibrary.GetPlatform();
-      var _ =
-        ((t = new (
-          o === "Android"
-            ? AndroidHotPatchProcedure_1.AndroidHotPatchProcedure
-            : o === "iOS"
-              ? IosHotPatchProcedure_1.IosHotPatchProcedure
-              : OthersHotPatchProcedure_1.OthersHotPatchProcedure
-        )(HotPatch.bSr, r)),
-        HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
-          SdkReportData_1.HotPatchReportData.CreateData(
-            1,
-            new Map([["eventParams", "update_start"]]),
+      var o = UE.KuroLauncherLibrary.GetPlatform(),
+        _ =
+          ((t = new (
+            "Android" === o
+              ? AndroidHotPatchProcedure_1.AndroidHotPatchProcedure
+              : "iOS" === o
+                ? IosHotPatchProcedure_1.IosHotPatchProcedure
+                : OthersHotPatchProcedure_1.OthersHotPatchProcedure
+          )(HotPatch.bSr, r)),
+          HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
+            SdkReportData_1.HotPatchReportData.CreateData(
+              1,
+              new Map([["eventParams", "update_start"]]),
+            ),
           ),
-        ),
-        new HotPatchLogReport_1.HotPatchLog());
+          new HotPatchLogReport_1.HotPatchLog());
       if (
         ((_.s_step_id = "launcher_hp_pre_start"),
         HotPatchLogReport_1.HotPatchLogReport.Report(_),
@@ -182,9 +183,10 @@ class HotPatch {
                 new Map([["eventParams", "check_app_version"]]),
               ),
             );
-          var _ = new HotPatchLogReport_1.HotPatchLog();
-          var p =
-            ((_.s_step_id = "check_app_version"), await t.IsAppVersionChange());
+          var _ = new HotPatchLogReport_1.HotPatchLog(),
+            p =
+              ((_.s_step_id = "check_app_version"),
+              await t.IsAppVersionChange());
           if (p) {
             LauncherLog_1.LauncherLog.Info(
               "需要更新app",
@@ -288,45 +290,45 @@ class HotPatch {
                       new UE.FName("/Game/Aki/Map/Launch/Bootstrap"),
                     );
                 } else {
-                  var p = new HotPatchLogReport_1.HotPatchLog();
-                  var p =
-                    ((p.s_step_id = "launcher_hp_pak_key_update"),
-                    HotPatchLogReport_1.HotPatchLogReport.Report(p),
-                    PakKeyUpdate_1.PakKeyUpdate.Init(this.bSr),
-                    await PakKeyUpdate_1.PakKeyUpdate.CheckPakKey(
-                      void 0,
-                      void 0,
-                    ),
-                    new HotPatchLogReport_1.HotPatchLog());
-                  const i =
-                    ((p.s_step_id = "launcher_hp_update_resource"),
-                    HotPatchLogReport_1.HotPatchLogReport.Report(p),
-                    new Array());
-                  var p = new AppVersionMisc_1.ResourceVersionMisc();
-                  var n =
-                    (p.Init(HotPatch.PSr),
-                    new UrlPrefixDownload_1.UrlPrefixDownload());
-                  var n = new ResourceUpdate_1.ResourceUpdate(
-                    HotPatch.PSr,
-                    n,
-                    p,
-                    this.bSr,
-                  );
-                  var p =
-                    (i.push(n),
-                    LanguageUpdateManager_1.LanguageUpdateManager.Init(
+                  var p = new HotPatchLogReport_1.HotPatchLog(),
+                    p =
+                      ((p.s_step_id = "launcher_hp_pak_key_update"),
+                      HotPatchLogReport_1.HotPatchLogReport.Report(p),
+                      PakKeyUpdate_1.PakKeyUpdate.Init(this.bSr),
+                      await PakKeyUpdate_1.PakKeyUpdate.CheckPakKey(
+                        void 0,
+                        void 0,
+                      ),
+                      new HotPatchLogReport_1.HotPatchLog()),
+                    i =
+                      ((p.s_step_id = "launcher_hp_update_resource"),
+                      HotPatchLogReport_1.HotPatchLogReport.Report(p),
+                      new Array()),
+                    p = new AppVersionMisc_1.ResourceVersionMisc(),
+                    n =
+                      (p.Init(HotPatch.PSr),
+                      new UrlPrefixDownload_1.UrlPrefixDownload()),
+                    n = new ResourceUpdate_1.ResourceUpdate(
                       HotPatch.PSr,
-                    ),
-                    LanguageUpdateManager_1.LanguageUpdateManager.GetAllLanguagesVersionMisc());
-                  for (const H of p) {
-                    var h = new UrlPrefixDownload_1.UrlPrefixDownload();
-                    var h = new ResourceUpdate_1.ResourceUpdate(
-                      HotPatch.PSr,
-                      h,
-                      H,
+                      n,
+                      p,
                       this.bSr,
-                      !H.NeedUpdate(),
-                    );
+                    ),
+                    p =
+                      (i.push(n),
+                      LanguageUpdateManager_1.LanguageUpdateManager.Init(
+                        HotPatch.PSr,
+                      ),
+                      LanguageUpdateManager_1.LanguageUpdateManager.GetAllLanguagesVersionMisc());
+                  for (const H of p) {
+                    var h = new UrlPrefixDownload_1.UrlPrefixDownload(),
+                      h = new ResourceUpdate_1.ResourceUpdate(
+                        HotPatch.PSr,
+                        h,
+                        H,
+                        this.bSr,
+                        !H.NeedUpdate(),
+                      );
                     i.push(h);
                   }
                   if (
@@ -350,7 +352,7 @@ class HotPatch {
                       t.PreComplete();
                     let e = void 0;
                     for (const l of i) {
-                      const u = l.GetRevertInfo();
+                      var u = l.GetRevertInfo();
                       if (u.NeedRevert)
                         if (e) {
                           for (const g of u.Paks) e.Paks.add(g);
@@ -388,19 +390,19 @@ class HotPatch {
                           UE.KuroLauncherLibrary.DeleteFile(k);
                       }
                       _ = UE.KuroLauncherLibrary.NeedRestartApp();
-                      return _ > 0
+                      return 0 < _
                         ? void (
                             (await r.ShowDialog(
                               !1,
                               "HotFixTipsTitle",
-                              _ === 1
+                              1 === _
                                 ? "HotFixRestartToCompleteHotFix"
                                 : "HotFixRestartToRepairFiles",
                               void 0,
                               void 0,
                               "HotFixQuit",
                             )) &&
-                            (o === "iOS" || o === "Windows"
+                            ("iOS" === o || "Windows" === o
                               ? AppUtil_1.AppUtil.QuitGame()
                               : UE.KuroLauncherLibrary.RestartApplication(
                                   '@echo off\nset /a "pid=%~1"\nset "exe_path=%~2"\n:waitloop\ntasklist | findstr /C:" %pid% " >nul\nif errorlevel 1 (\n\tgoto launch\n) else (\n\ttaskkill /pid %pid% /f >nul\n\ttimeout /t 1 /nobreak >nul\n\tgoto waitloop\n)\n:launch\nstart "" "%exe_path%"\nexit 0',
@@ -582,15 +584,15 @@ class HotPatch {
         HotPatch.BSr(!1);
   }
   static NSr(e, t) {
-    let a = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRHIDeviceName();
+    var a = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRHIDeviceName();
     if (t && !a.includes("Adreno")) return e;
     (t = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRHIDriverVersion()),
       (a = t.split("V@"));
-    let o = "";
-    let r = e;
-    e = (o = a.length > 1 ? a[1] : o).match(/\d+/g);
+    let o = "",
+      r = e;
+    e = (o = 1 < a.length ? a[1] : o).match(/\d+/g);
     return (
-      e && e.length > 0 && (r = parseInt(e[0])),
+      e && 0 < e.length && (r = parseInt(e[0])),
       LauncherLog_1.LauncherLog.Info(
         "",
         ["DriverVersion", t],
@@ -600,9 +602,9 @@ class HotPatch {
     );
   }
   static async qSr(e) {
-    let t;
-    UE.KuroLauncherLibrary.GetPlatform() === "Android" &&
-      (t = HotPatch.NSr(-1, !1)) > 0 &&
+    var t;
+    "Android" === UE.KuroLauncherLibrary.GetPlatform() &&
+      0 < (t = HotPatch.NSr(-1, !1)) &&
       t < 378 &&
       (await e.ShowDialog(
         !1,
@@ -622,7 +624,7 @@ class HotPatch {
         t,
       ]);
     else {
-      const a = UE.KuroLauncherLibrary.GetTotalPrecompileShaders();
+      var a = UE.KuroLauncherLibrary.GetTotalPrecompileShaders();
       if (a < t)
         LauncherLog_1.LauncherLog.Error(
           "precompile shaders total < remain.",
@@ -630,10 +632,10 @@ class HotPatch {
           ["total", a],
         );
       else {
-        const o = new HotPatchLogReport_1.HotPatchLog();
-        let r =
-          ((o.s_step_id = "start_show_precompile_shader"),
-          { remain: t, total: a });
+        var o = new HotPatchLogReport_1.HotPatchLog(),
+          r =
+            ((o.s_step_id = "start_show_precompile_shader"),
+            { remain: t, total: a });
         for (
           o.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(r),
             HotPatchLogReport_1.HotPatchLogReport.Report(o),
@@ -647,11 +649,11 @@ class HotPatch {
             UE.KuroLauncherLibrary.SetPrecompileShaderBatchMode(
               NetworkDefine_1.ETsCompileShaderBatchMode.Precompile,
             );
-          t > 0;
+          0 < t;
 
         ) {
-          const c = (a - t) / a;
-          const _ = (100 * c).toFixed(0) + "%";
+          var c = (a - t) / a,
+            _ = (100 * c).toFixed(0) + "%";
           LauncherLog_1.LauncherLog.Debug(
             "precompile shaders progress.",
             ["remain", t],
@@ -673,7 +675,7 @@ class HotPatch {
   }
   static ClearPatch() {
     LauncherLog_1.LauncherLog.Info("开始清理补丁！");
-    let e = new HotPatchLogReport_1.HotPatchLog();
+    var e = new HotPatchLogReport_1.HotPatchLog();
     (e.s_step_id = "clear_patch_resources"),
       HotPatchLogReport_1.HotPatchLogReport.Report(e),
       new AppVersionMisc_1.LauncherVersionMisc().ClearAllPatchVersion(
@@ -706,4 +708,4 @@ class HotPatch {
   (HotPatch.bSr = new AppPathMisc_1.AppPathMisc()),
   (HotPatch.wSr = new HotFixSceneManager_1.HotFixSceneManager()),
   (HotPatch.xOn = new HotFixGameSettingManager_1.HotFixGameSettingManager());
-// # sourceMappingURL=HotPatch.js.map
+//# sourceMappingURL=HotPatch.js.map

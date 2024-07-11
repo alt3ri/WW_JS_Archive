@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkipToDyMarkEntity = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const MapController_1 = require("../../Map/Controller/MapController");
-const MapDefine_1 = require("../../Map/MapDefine");
-const WorldMapController_1 = require("../../WorldMap/WorldMapController");
-const SkipTask_1 = require("./SkipTask");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  MapController_1 = require("../../Map/Controller/MapController"),
+  MapDefine_1 = require("../../Map/MapDefine"),
+  WorldMapController_1 = require("../../WorldMap/WorldMapController"),
+  SkipTask_1 = require("./SkipTask");
 class SkipToDyMarkEntity extends SkipTask_1.SkipTask {
   OnRun(e, r) {
-    var e = Number(e);
-    var r = Number(r);
-    var r =
-      ModelManager_1.ModelManager.CreatureModel.GetEntityData(r)?.Transform
-        ?.Pos;
+    var e = Number(e),
+      r = Number(r),
+      r =
+        ModelManager_1.ModelManager.CreatureModel.GetEntityData(r)?.Transform
+          ?.Pos;
     r
       ? ((r = new MapDefine_1.DynamicMarkCreateInfo(
           Vector_1.Vector.Create(r.X ?? 0, r.Y ?? 0, r.Z ?? 0),
@@ -34,4 +34,4 @@ class SkipToDyMarkEntity extends SkipTask_1.SkipTask {
   }
 }
 exports.SkipToDyMarkEntity = SkipToDyMarkEntity;
-// # sourceMappingURL=SkipToDyMarkEntity.js.map
+//# sourceMappingURL=SkipToDyMarkEntity.js.map

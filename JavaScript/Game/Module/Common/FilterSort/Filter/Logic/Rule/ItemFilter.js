@@ -1,18 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemFilter = void 0);
-const ConfigManager_1 = require("../../../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../../../Manager/ModelManager");
-const CommonFilter_1 = require("./CommonFilter");
+const ConfigManager_1 = require("../../../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../../../Manager/ModelManager"),
+  CommonFilter_1 = require("./CommonFilter");
 class ItemFilter extends CommonFilter_1.CommonFilter {
   constructor() {
     super(...arguments),
       (this.XTt = (e) => {
-        let t = e.GetConfigId();
+        var t = e.GetConfigId();
         if (
+          3 ===
           ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
             t,
-          ) === 3
+          )
         )
           return (
             (t = e.GetUniqueId()),
@@ -34,4 +35,4 @@ class ItemFilter extends CommonFilter_1.CommonFilter {
   }
 }
 exports.ItemFilter = ItemFilter;
-// # sourceMappingURL=ItemFilter.js.map
+//# sourceMappingURL=ItemFilter.js.map

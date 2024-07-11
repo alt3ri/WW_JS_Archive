@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EditMobileBattleViewPanelItem = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const BattleUiSetDefine_1 = require("../BattleUiSetDefine");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  BattleUiSetDefine_1 = require("../BattleUiSetDefine"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -14,17 +14,17 @@ class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
       (this.aCt = void 0),
       (this.sCt = void 0),
       (this.pCt = (t) => {
-        let i, s;
+        var i, s;
         !this.PanelItemData ||
           !this.sCt ||
-          ModelManager_1.ModelManager.BattleUiSetModel.GetTouchFingerDataCount() >=
-            2 ||
+          2 <=
+            ModelManager_1.ModelManager.BattleUiSetModel.GetTouchFingerDataCount() ||
           ((i = t.GetLocalPointInPlane()),
           (t = t.dragComponent.GetOwner().GetActorScale3D()),
           (s = (i.X - this.sCt.X) * t.X),
           (t = (i.Y - this.sCt.Y) * t.Z),
-          s != 0 &&
-            t != 0 &&
+          0 != s &&
+            0 != t &&
             ((this.aCt.X += s),
             (this.aCt.Y += t),
             (this.aCt.Z = 0),
@@ -59,13 +59,13 @@ class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
       (this.OCt = (t) => {
         this.PanelItemData &&
           this.PanelItemData.CanEdit &&
-          t === 1 &&
+          1 === t &&
           ModelManager_1.ModelManager.BattleUiSetModel.SetPanelItemSelected(
             this.PanelItemData,
           );
       }),
       (this.kCt = () => {
-        let t;
+        var t;
         return this.PanelItemData && this.PanelItemData.CanEdit
           ? !(t =
               ModelManager_1.ModelManager.BattleUiSetModel
@@ -78,7 +78,7 @@ class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
       });
   }
   OnStart() {
-    const t = this.OpenParam;
+    var t = this.OpenParam;
     this.aGe(t.PanelItemData, t.PanelItem, t.BattleViewBaseActor);
   }
   aGe(t, i, s) {
@@ -143,19 +143,19 @@ class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
       (this.PanelItemData.EditOffsetY = this.RootItem.GetAnchorOffsetY()));
   }
   HCt(t) {
-    var i = this.RootActor.GetActorScale3D().X;
-    var s = this.RootItem.GetPivot();
-    const h = s.Y;
-    var s = s.X;
-    var e = this.qCt.GetUIItem();
-    var r = e.Width / 2;
-    var e = e.Height / 2;
-    var a = this.RootItem.Width * i;
-    var i = this.RootItem.Height * i;
-    const o = a * s - r;
-    var r = r - a * (1 - s);
-    var a = i * h - e;
-    var s = e - i * (1 - h);
+    var i = this.RootActor.GetActorScale3D().X,
+      s = this.RootItem.GetPivot(),
+      h = s.Y,
+      s = s.X,
+      e = this.qCt.GetUIItem(),
+      r = e.Width / 2,
+      e = e.Height / 2,
+      a = this.RootItem.Width * i,
+      i = this.RootItem.Height * i,
+      o = a * s - r,
+      r = r - a * (1 - s),
+      a = i * h - e,
+      s = e - i * (1 - h);
     return (
       (t.X = MathUtils_1.MathUtils.Clamp(t.X, o, r)),
       (t.Y = MathUtils_1.MathUtils.Clamp(t.Y, a, s)),
@@ -163,7 +163,7 @@ class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
     );
   }
   Refresh() {
-    let t;
+    var t;
     this.PanelItemData &&
       ((t = this.PanelItemData.Size),
       (this.wit.X = t),
@@ -177,7 +177,7 @@ class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
       (this.aCt = this.RootItem.RelativeLocation));
   }
   Reset() {
-    let t;
+    var t;
     this.PanelItemData &&
       ((t = this.PanelItemData.SourceSize),
       (this.wit.X = t),
@@ -201,4 +201,4 @@ class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.EditMobileBattleViewPanelItem = EditMobileBattleViewPanelItem;
-// # sourceMappingURL=EditMobileBattleViewPanelItem.js.map
+//# sourceMappingURL=EditMobileBattleViewPanelItem.js.map

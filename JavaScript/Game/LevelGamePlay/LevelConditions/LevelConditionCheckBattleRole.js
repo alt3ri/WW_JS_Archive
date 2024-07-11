@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckBattleRole = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const SceneTeamDefine_1 = require("../../Module/SceneTeam/SceneTeamDefine");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const LevelGeneralDefine_1 = require("../LevelGeneralDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  SceneTeamDefine_1 = require("../../Module/SceneTeam/SceneTeamDefine"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  LevelGeneralDefine_1 = require("../LevelGeneralDefine");
 class LevelConditionCheckBattleRole extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, n) {
-    let o, l, r, a;
-    return e.LimitParams.size === 0
+    var o, l, r, a;
+    return 0 === e.LimitParams.size
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
@@ -50,4 +50,4 @@ class LevelConditionCheckBattleRole extends LevelGeneralBase_1.LevelConditionBas
   }
 }
 exports.LevelConditionCheckBattleRole = LevelConditionCheckBattleRole;
-// # sourceMappingURL=LevelConditionCheckBattleRole.js.map
+//# sourceMappingURL=LevelConditionCheckBattleRole.js.map

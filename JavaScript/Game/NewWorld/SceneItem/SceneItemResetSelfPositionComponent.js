@@ -1,32 +1,37 @@
 "use strict";
-let SceneItemResetSelfPositionComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (e, t, i, s) {
-    let o;
-    const n = arguments.length;
-    let r =
-      n < 3 ? t : s === null ? (s = Object.getOwnPropertyDescriptor(t, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(e, t, i, s);
-    else
-      for (let h = e.length - 1; h >= 0; h--)
-        (o = e[h]) && (r = (n < 3 ? o(r) : n > 3 ? o(t, i, r) : o(t, i)) || r);
-    return n > 3 && r && Object.defineProperty(t, i, r), r;
-  };
+var SceneItemResetSelfPositionComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (e, t, i, s) {
+      var o,
+        n = arguments.length,
+        r =
+          n < 3
+            ? t
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(t, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        r = Reflect.decorate(e, t, i, s);
+      else
+        for (var h = e.length - 1; 0 <= h; h--)
+          (o = e[h]) &&
+            (r = (n < 3 ? o(r) : 3 < n ? o(t, i, r) : o(t, i)) || r);
+      return 3 < n && r && Object.defineProperty(t, i, r), r;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemResetSelfPositionComponent = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController");
-const TICK_CHECK_INTERVAL = 500;
-const FIX_DELAY = 0.35;
+const Log_1 = require("../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
+  TICK_CHECK_INTERVAL = 500,
+  FIX_DELAY = 0.35;
 let SceneItemResetSelfPositionComponent =
   (SceneItemResetSelfPositionComponent_1 = class SceneItemResetSelfPositionComponent extends (
     EntityComponent_1.EntityComponent
@@ -44,13 +49,13 @@ let SceneItemResetSelfPositionComponent =
         (this.LDe = void 0),
         (this.QMn = (e, t) => {
           this.Hte.IsMoveAutonomousProxy &&
-            ((!this.XMn(e) && e !== "BeDropping") ||
+            ((!this.XMn(e) && "BeDropping" !== e) ||
               this.KMn ||
               (this.$Mn(
                 "[SceneItemResetSelfPositionComponent] 结束被当前主控移动，停止检查距离Tick",
               ),
               this.YMn()),
-            t === "BeDrawing" && this.JMn(),
+            "BeDrawing" === t && this.JMn(),
             this.Lo?.IsDisableResetPosAfterThrow &&
               this.XMn(t) &&
               (this.$Mn(
@@ -58,7 +63,7 @@ let SceneItemResetSelfPositionComponent =
               ),
               (this.KMn = !0)),
             this.Lo?.IsResetPosAfterThrow &&
-              t === "BeDropping" &&
+              "BeDropping" === t &&
               (void 0 !== this.TDe &&
                 (TimerSystem_1.TimerSystem.Remove(this.TDe),
                 (this.TDe = void 0)),
@@ -66,7 +71,7 @@ let SceneItemResetSelfPositionComponent =
                 (this.TDe = void 0), this.zMn("ResetPositionTip2");
               }, FIX_DELAY * TimeUtil_1.TimeUtil.InverseMillisecond))),
             void 0 !== this.Lo?.ResetPosDelayTime) &&
-            t === "BeCastingFree" &&
+            "BeCastingFree" === t &&
             (void 0 !== this.TDe &&
               (TimerSystem_1.TimerSystem.Remove(this.TDe), (this.TDe = void 0)),
             (this.TDe = TimerSystem_1.TimerSystem.Delay(() => {
@@ -138,12 +143,12 @@ let SceneItemResetSelfPositionComponent =
       return !this.LDe?.IsPause() ?? !1;
     }
     YMn() {
-      const e = this.jMn;
+      var e = this.jMn;
       !this.eSn() && e && this.zMn(void 0);
     }
     eSn() {
-      let e;
-      const t = this.Hte.ActorLocationProxy;
+      var e,
+        t = this.Hte.ActorLocationProxy;
       return (
         t !== this.WMn &&
           ((this.WMn = Vector_1.Vector.Create(t)),
@@ -165,9 +170,9 @@ let SceneItemResetSelfPositionComponent =
     }
     XMn(e) {
       return (
-        e === "BeCastingToTarget" ||
-        e === "BeCastingToOutlet" ||
-        e === "BeCastingFree"
+        "BeCastingToTarget" === e ||
+        "BeCastingToOutlet" === e ||
+        "BeCastingFree" === e
       );
     }
   });
@@ -178,4 +183,4 @@ let SceneItemResetSelfPositionComponent =
   )),
   (exports.SceneItemResetSelfPositionComponent =
     SceneItemResetSelfPositionComponent);
-// # sourceMappingURL=SceneItemResetSelfPositionComponent.js.map
+//# sourceMappingURL=SceneItemResetSelfPositionComponent.js.map

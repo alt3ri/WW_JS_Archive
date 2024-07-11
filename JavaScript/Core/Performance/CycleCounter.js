@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CycleCounter = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
+const puerts_1 = require("puerts"),
+  UE = require("ue");
 class CycleCounter {
   static RefreshState() {
     if (
       ((this.uY = !1),
       this.cY !== this.mY && ((this.cY = this.mY), (this.uY = !0), !this.cY))
     ) {
-      const e = this.dY.length;
+      var e = this.dY.length;
       for (let t = 0; t < e; t++) UE.KuroJsStatsLibrary.StopCycleCounter();
       this.dY.splice(0);
     }
@@ -40,16 +40,16 @@ class CycleCounter {
   }
   static IsPassedStackCheck(s) {
     if (!this.CY) return !0;
-    if (this.dY.length > 0) {
+    if (0 < this.dY.length) {
       if (s === this.dY[this.dY.length - 1]) return this.dY.pop(), !0;
       let e = !1;
-      for (let t = this.dY.length - 1; t >= 0; t--)
+      for (let t = this.dY.length - 1; 0 <= t; t--)
         if (this.dY[t] === s) {
           e = !0;
           break;
         }
       if (e) {
-        const i = [];
+        var i = [];
         i.push(this.dY.pop());
         let t = i[0];
         for (; t !== s; )
@@ -79,4 +79,4 @@ class CycleCounter {
   (CycleCounter.gY = !0),
   (CycleCounter.uY = !1),
   (CycleCounter.dY = new Array());
-// # sourceMappingURL=CycleCounter.js.map
+//# sourceMappingURL=CycleCounter.js.map

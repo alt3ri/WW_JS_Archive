@@ -5,14 +5,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.getCallerLocation =
     exports.getErrorLocation =
       void 0);
-const source_map_1 = require("source-map");
-const File_1 = require("./File");
-const sourceMapCache = new Map();
+const source_map_1 = require("source-map"),
+  File_1 = require("./File"),
+  sourceMapCache = new Map();
 function getSourceRoot() {
   return (0, File_1.joinPath)((0, File_1.getProjectPath)(), "Typescript");
 }
 function jsToSource(r, e, o, t) {
-  let n = r + ".map";
+  var n = r + ".map";
   if (!(0, File_1.existFile)(n)) return r + `:${e}:` + o;
   let u = sourceMapCache.get(n);
   u ||
@@ -31,10 +31,10 @@ function getErrorLocation(r, e) {
   if (!r) throw new Error("stack is undefined");
   r = r.split("\n");
   if (r.length <= e + 1) throw new Error("stack is too short");
-  let o;
-  let t;
-  var r = r[e + 1];
-  var e = /[(]*(?<jsFile>\S+):(?<jsLine>\d+):(?<jsColumn>\d+)/.exec(r);
+  var o,
+    t,
+    r = r[e + 1],
+    e = /[(]*(?<jsFile>\S+):(?<jsLine>\d+):(?<jsColumn>\d+)/.exec(r);
   if (e && e.groups)
     return (
       (o = e.groups.jsFile),
@@ -48,16 +48,16 @@ function getCallerLocation(r) {
   return getErrorLocation(new Error(), r + 1);
 }
 function getCurrentStack() {
-  const r = new Error().stack?.split("\n");
+  var r = new Error().stack?.split("\n");
   return r ? r.slice(2).join("\n") : "";
 }
 function jsStackToSourceStack(r, n) {
   return r
     .split("\n")
     .map((r) => {
-      let e;
-      let o;
-      let t = /[(]*(?<jsFile>\S+):(?<jsLine>\d+):(?<jsColumn>\d+)/.exec(r);
+      var e,
+        o,
+        t = /[(]*(?<jsFile>\S+):(?<jsLine>\d+):(?<jsColumn>\d+)/.exec(r);
       return t && t.groups
         ? ((e = t.groups.jsFile),
           (o = t.groups.jsLine),
@@ -71,4 +71,4 @@ function jsStackToSourceStack(r, n) {
   (exports.getCallerLocation = getCallerLocation),
   (exports.getCurrentStack = getCurrentStack),
   (exports.jsStackToSourceStack = jsStackToSourceStack);
-// # sourceMappingURL=SouceMap.js.map
+//# sourceMappingURL=SouceMap.js.map

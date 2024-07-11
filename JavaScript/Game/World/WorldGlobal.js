@@ -5,19 +5,19 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.ONE_SECOND_FOR_MILLISECOND =
     exports.RAY_DISTANCE =
       void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const Protocol_1 = require("../../Core/Define/Net/Protocol");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const Global_1 = require("../Global");
-const GlobalData_1 = require("../GlobalData");
-const ConfigManager_1 = require("../Manager/ConfigManager");
-const ControllerHolder_1 = require("../Manager/ControllerHolder");
-const ModelManager_1 = require("../Manager/ModelManager");
-const SeamlessTravelController_1 = require("../Module/SeamlessTravel/SeamlessTravelController");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  Protocol_1 = require("../../Core/Define/Net/Protocol"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  Global_1 = require("../Global"),
+  GlobalData_1 = require("../GlobalData"),
+  ConfigManager_1 = require("../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  SeamlessTravelController_1 = require("../Module/SeamlessTravel/SeamlessTravelController");
 (exports.RAY_DISTANCE = 200),
   (exports.ONE_SECOND_FOR_MILLISECOND = 1e3),
   (exports.ONE_METER_FOR_CENTIMETER = 100);
@@ -53,7 +53,7 @@ class WorldGlobal {
       GlobalData_1.GlobalData.GameInstance.场景加载通知器.Clear();
   }
   static LoadFromMap(o) {
-    const a =
+    var a =
       ConfigManager_1.ConfigManager.WorldMapConfig.GetAkiMapSourceConfig(o);
     a
       ? this.OpenLevel(a.MapPath)
@@ -90,7 +90,7 @@ class WorldGlobal {
   }
   static ToTsArray(a, e) {
     if (a) {
-      const l = a.Num();
+      var l = a.Num();
       e.length = l;
       for (let o = 0; o < l; ++o) e[o] = a.Get(o);
     } else e.length = 0;
@@ -104,21 +104,21 @@ class WorldGlobal {
     for (; o.length < a; ) o.push(e);
   }
   static ToTsVector(o) {
-    const a = Protocol_1.Aki.Protocol.VBs.create();
+    var a = Protocol_1.Aki.Protocol.VBs.create();
     return (a.X = o.X), (a.Y = o.Y), (a.Z = o.Z), a;
   }
   static ToUeVector(o) {
     return o ? new UE.Vector(o.X, o.Y, o.Z) : Vector_1.Vector.ZeroVector;
   }
   static ToTsRotator(o) {
-    const a = Protocol_1.Aki.Protocol.iws.create();
+    var a = Protocol_1.Aki.Protocol.iws.create();
     return (a.Pitch = o.Pitch), (a.Yaw = o.Yaw), (a.Roll = o.Roll), a;
   }
   static ToUeRotator(o) {
     return o ? new UE.Rotator(o.Pitch, o.Yaw, o.Roll) : new UE.Rotator();
   }
   static ToUeGameplayAttribute(o) {
-    const a = new UE.GameplayAttributeData();
+    var a = new UE.GameplayAttributeData();
     return (
       void 0 !== o &&
         ((a.AttributeType = o.Ugs),
@@ -244,4 +244,4 @@ class WorldGlobal {
           a.toString(),
         );
   });
-// # sourceMappingURL=WorldGlobal.js.map
+//# sourceMappingURL=WorldGlobal.js.map

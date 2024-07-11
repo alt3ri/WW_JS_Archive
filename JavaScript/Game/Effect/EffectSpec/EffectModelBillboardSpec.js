@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelBillboardSpec = void 0);
-const UE = require("ue");
-const EffectSpec_1 = require("./EffectSpec");
+const UE = require("ue"),
+  EffectSpec_1 = require("./EffectSpec");
 class EffectModelBillboardSpec extends EffectSpec_1.EffectSpec {
   constructor() {
     super(...arguments), (this.BillboardComponent = void 0), (this.t0e = !1);
   }
   OnInit() {
-    const t = this.Handle.GetSureEffectActor();
-    const s = new UE.Transform();
+    var t = this.Handle.GetSureEffectActor(),
+      s = new UE.Transform();
     return (
       (this.BillboardComponent = t.AddComponentByClass(
         UE.KuroBillboardComponent.StaticClass(),
@@ -57,4 +57,4 @@ class EffectModelBillboardSpec extends EffectSpec_1.EffectSpec {
   }
 }
 exports.EffectModelBillboardSpec = EffectModelBillboardSpec;
-// # sourceMappingURL=EffectModelBillboardSpec.js.map
+//# sourceMappingURL=EffectModelBillboardSpec.js.map

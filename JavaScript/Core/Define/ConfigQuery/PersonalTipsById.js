@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configPersonalTipsById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const PersonalTips_1 = require("../Config/PersonalTips");
-const DB = "db_personal.db";
-const FILE = "g.个性化弹窗.xlsx";
-const TABLE = "PersonalTips";
-const COMMAND = "select BinData from `PersonalTips` where Id=?";
-const KEY_PREFIX = "PersonalTipsById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  PersonalTips_1 = require("../Config/PersonalTips"),
+  DB = "db_personal.db",
+  FILE = "g.个性化弹窗.xlsx",
+  TABLE = "PersonalTips",
+  COMMAND = "select BinData from `PersonalTips` where Id=?",
+  KEY_PREFIX = "PersonalTipsById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configPersonalTipsById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configPersonalTipsById.GetConfig(";
 exports.configPersonalTipsById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configPersonalTipsById = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var i;
-        var e = void 0;
+        var i,
+          e = void 0;
         if (
           (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configPersonalTipsById = {
     }
   },
 };
-// # sourceMappingURL=PersonalTipsById.js.map
+//# sourceMappingURL=PersonalTipsById.js.map

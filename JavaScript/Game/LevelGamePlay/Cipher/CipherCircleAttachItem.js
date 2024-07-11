@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CipherCircleAttachItem = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const AutoAttachItem_1 = require("../../Module/AutoAttach/AutoAttachItem");
-const WRONG_COLOR = "BB5C58";
-const RIGHT_COLOR = "F6D03F";
-const NORMAL_COLOR = "FFFFFF";
+const UE = require("ue"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  AutoAttachItem_1 = require("../../Module/AutoAttach/AutoAttachItem"),
+  WRONG_COLOR = "BB5C58",
+  RIGHT_COLOR = "F6D03F",
+  NORMAL_COLOR = "FFFFFF";
 class CipherCircleAttachItem extends AutoAttachItem_1.AutoAttachItem {
   constructor() {
     super(...arguments),
@@ -27,11 +27,11 @@ class CipherCircleAttachItem extends AutoAttachItem_1.AutoAttachItem {
   }
   OnSelect() {
     ModelManager_1.ModelManager.CipherModel.SetCurPassword(this.fye, this.pye);
-    const t = this.GetText(0);
+    var t = this.GetText(0);
     t.SetChangeColor(!1, t.changeColor), this.Eye && this.Eye(this.pye);
   }
   OnUnSelect() {
-    const t = this.GetText(0);
+    var t = this.GetText(0);
     t.SetColor(this.Sye), t.SetChangeColor(!0, t.changeColor);
   }
   InitData(t, e) {
@@ -46,4 +46,4 @@ class CipherCircleAttachItem extends AutoAttachItem_1.AutoAttachItem {
   }
 }
 exports.CipherCircleAttachItem = CipherCircleAttachItem;
-// # sourceMappingURL=CipherCircleAttachItem.js.map
+//# sourceMappingURL=CipherCircleAttachItem.js.map

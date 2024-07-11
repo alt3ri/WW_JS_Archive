@@ -20,11 +20,11 @@ class RoleHandBookSelectionComponent {
   UpdateComponent(e) {}
   RefreshRoleItem(e) {}
   UpdateItemByRoleId(e) {
-    const o = this.GetAllRoleItemMap().get(e);
-    var e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e);
+    var o = this.GetAllRoleItemMap().get(e),
+      e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e);
     o.UpdateItem(e);
   }
   OnBeforeDestroy() {}
 }
 exports.RoleHandBookSelectionComponent = RoleHandBookSelectionComponent;
-// # sourceMappingURL=RoleHandBookSelectionComponent.js.map
+//# sourceMappingURL=RoleHandBookSelectionComponent.js.map

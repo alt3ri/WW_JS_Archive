@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const TsUiSceneRoleActor_1 = require("../../../Module/UiComponent/TsUiSceneRoleActor");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  TsUiSceneRoleActor_1 = require("../../../Module/UiComponent/TsUiSceneRoleActor");
 class AnimNotifyAddMaterialControllerData extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments),
@@ -11,11 +11,11 @@ class AnimNotifyAddMaterialControllerData extends UE.KuroAnimNotify {
       (this.RemoveWhenRevive = !1);
   }
   IsAllValid(e, t) {
-    let r;
+    var r;
     return UE.KismetSystemLibrary.IsValid(this.MaterialAssetData)
       ? e && UE.KismetSystemLibrary.IsValid(e)
         ? UE.KismetSystemLibrary.IsValid(e.GetOwner())
-          ? this.MaterialAssetData.DataType !== 0
+          ? 0 !== this.MaterialAssetData.DataType
             ? (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "RenderCharacter",
@@ -67,16 +67,17 @@ class AnimNotifyAddMaterialControllerData extends UE.KuroAnimNotify {
   }
   K2_Notify(e, t) {
     if (this.IsAllValid(e, t)) {
-      let r;
-      var t = e.GetOwner();
+      var r,
+        t = e.GetOwner();
       if (t instanceof UE.TsBaseCharacter_C)
         return (
           t.CharRenderingComponent.CheckInit() ||
             t.CharRenderingComponent.Init(t.RenderType),
           (r =
+            0 <=
             (e = t.CharRenderingComponent.AddMaterialControllerData(
               this.MaterialAssetData,
-            )) >= 0) &&
+            ))) &&
             this.RemoveWhenRevive &&
             EntitySystem_1.EntitySystem.GetComponent(
               t.EntityId,
@@ -86,19 +87,20 @@ class AnimNotifyAddMaterialControllerData extends UE.KuroAnimNotify {
         );
       if (t instanceof TsUiSceneRoleActor_1.default)
         return (
+          0 <=
           t.Model.CheckGetComponent(5).AddRenderingMaterialByData(
             this.MaterialAssetData,
-          ) >= 0
+          )
         );
     }
     return !1;
   }
   GetNotifyName() {
-    const e = this.MaterialAssetData.GetName();
+    var e = this.MaterialAssetData.GetName();
     return e
       ? "材质控制器:" + UE.BlueprintPathsLibrary.GetBaseFilename(e, !0)
       : "材质控制器";
   }
 }
 exports.default = AnimNotifyAddMaterialControllerData;
-// # sourceMappingURL=AnimNotifyAddMaterialControllerData.js.map
+//# sourceMappingURL=AnimNotifyAddMaterialControllerData.js.map

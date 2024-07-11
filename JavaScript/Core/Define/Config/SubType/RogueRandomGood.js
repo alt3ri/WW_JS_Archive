@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RogueRandomGood = void 0);
-const GameUtils_1 = require("../../../../Game/GameUtils");
-const DicStringInt_1 = require("./DicStringInt");
+const GameUtils_1 = require("../../../../Game/GameUtils"),
+  DicStringInt_1 = require("./DicStringInt");
 class RogueRandomGood {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -30,7 +30,7 @@ class RogueRandomGood {
     return this.goodspoolweight(t);
   }
   goodspoolweight(t, i) {
-    const s = this.J7.__offset(this.z7, 4);
+    var s = this.J7.__offset(this.z7, 4);
     return s
       ? (i || new DicStringInt_1.DicStringInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -39,13 +39,13 @@ class RogueRandomGood {
       : null;
   }
   goodspoolweightLength() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   discount() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.RogueRandomGood = RogueRandomGood;
-// # sourceMappingURL=RogueRandomGood.js.map
+//# sourceMappingURL=RogueRandomGood.js.map

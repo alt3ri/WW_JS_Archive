@@ -1,32 +1,32 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotTransitionView = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const AudioController_1 = require("../../../../Core/Audio/AudioController");
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const ExternalSourceSettingById_1 = require("../../../../Core/Define/ConfigQuery/ExternalSourceSettingById");
-const InterjectionByTimberIdAndUniversalToneId_1 = require("../../../../Core/Define/ConfigQuery/InterjectionByTimberIdAndUniversalToneId");
-const PlotAudioById_1 = require("../../../../Core/Define/ConfigQuery/PlotAudioById");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const IAction_1 = require("../../../../UniverseEditor/Interface/IAction");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const ColorUtils_1 = require("../../../Utils/ColorUtils");
-const PlotAudioModel_1 = require("../PlotAudioModel");
-const TYPEWRITERRANGE = 0.01;
-const FADEOUTRANGE = 9999;
-const FADEMAXTIME = 30;
-const PLAY_FLAG = 8;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  AudioController_1 = require("../../../../Core/Audio/AudioController"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ExternalSourceSettingById_1 = require("../../../../Core/Define/ConfigQuery/ExternalSourceSettingById"),
+  InterjectionByTimberIdAndUniversalToneId_1 = require("../../../../Core/Define/ConfigQuery/InterjectionByTimberIdAndUniversalToneId"),
+  PlotAudioById_1 = require("../../../../Core/Define/ConfigQuery/PlotAudioById"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  IAction_1 = require("../../../../UniverseEditor/Interface/IAction"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  ColorUtils_1 = require("../../../Utils/ColorUtils"),
+  PlotAudioModel_1 = require("../PlotAudioModel"),
+  TYPEWRITERRANGE = 0.01,
+  FADEOUTRANGE = 9999,
+  FADEMAXTIME = 30,
+  PLAY_FLAG = 8;
 class PlotTransitionView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -51,9 +51,9 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
       (this.kzi = void 0),
       (this.Fzi = void 0),
       (this.Vzi = () => {
-        let i;
-        this.Bzi !== 4 &&
-          this.Bzi !== 3 &&
+        var i;
+        4 !== this.Bzi &&
+          3 !== this.Bzi &&
           ((i =
             this.zNe ||
             ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
@@ -61,11 +61,11 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
           this.Hzi(i));
       }),
       (this.jzi = () => {
-        if (this.Bzi === 4 || this.Bzi === 3) {
+        if (4 === this.Bzi || 3 === this.Bzi) {
           let i =
             ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
               .EndWaitTimeCenterText;
-          this.W1e > 0 &&
+          0 < this.W1e &&
             ((this.Q$t.GetSelector().lineByLine = !1),
             this.Wzi(!1, this.W1e),
             (i = this.W1e)),
@@ -82,9 +82,9 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
             46,
             "PlotTransitionView:OnUpdatePlotCenterText",
           );
-        let i;
-        let t;
-        const e = ModelManager_1.ModelManager.PlotModel.CenterText;
+        var i,
+          t,
+          e = ModelManager_1.ModelManager.PlotModel.CenterText;
         (this.wzi = e).Text &&
           ((i = ModelManager_1.ModelManager.PlotModel.PlotTextReplacer.Replace(
             e.Text,
@@ -168,15 +168,15 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
       ).SetUIActive(!1);
   }
   async OnPlayingStartSequenceAsync() {
-    this.Info?.Name === "FadeLoadingView" &&
+    "FadeLoadingView" === this.Info?.Name &&
       (await this.PlaySequenceAsync("Start01"));
   }
   async OnPlayingCloseSequenceAsync() {
-    this.Info?.Name === "FadeLoadingView" &&
+    "FadeLoadingView" === this.Info?.Name &&
       (await this.PlaySequenceAsync("Close01"));
   }
   ExecuteCallBack() {
-    let i;
+    var i;
     this.B7 && ((i = this.B7), (this.B7 = void 0), i());
   }
   Hzi(i) {
@@ -211,10 +211,10 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
   }
   Szi() {
     if (this.wzi.UniversalTone) {
-      const i = this.wzi.UniversalTone.TimberId;
-      const t = this.wzi.UniversalTone.UniversalToneId;
+      var i = this.wzi.UniversalTone.TimberId,
+        t = this.wzi.UniversalTone.UniversalToneId;
       if (i && t) {
-        const e =
+        var e =
           InterjectionByTimberIdAndUniversalToneId_1.configInterjectionByTimberIdAndUniversalToneId.GetConfig(
             i,
             t,
@@ -239,9 +239,9 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
     );
   }
   yzi() {
-    let i;
-    let t;
-    let e = this.wzi.TalkAkEvent;
+    var i,
+      t,
+      e = this.wzi.TalkAkEvent;
     e &&
       (i = (0, AudioSystem_1.parseAudioEventPath)(e.AkEvent)) &&
       (e.Type === IAction_1.EPostAkEvent.Global
@@ -274,35 +274,35 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
       (this.Nzi = void 0);
   }
   Wzi(i, t) {
-    const e = this.X$t.GetPlayTween();
+    var e = this.X$t.GetPlayTween();
     (e.from = i ? 1 : 0), (e.to = i ? 0 : 1), (e.duration = t), this.X$t.Play();
   }
   tZi(i) {
-    const t = this.X$t.GetPlayTween()?.GetTweener();
+    var t = this.X$t.GetPlayTween()?.GetTweener();
     t && (i ? (t.Pause(), this.iZi(!0)) : (t.Resume(), this.iZi(!1)));
   }
   oZi(i, t) {
-    const e = this.Uzi.GetPlayTween();
+    var e = this.Uzi.GetPlayTween();
     (e.from = i ? this.GetTexture(1).GetAlpha() : 0),
       (e.to = i ? 0 : 1),
       (e.duration = t),
       this.Uzi.Play();
   }
   Jzi() {
-    const i = StringUtils_1.StringUtils.IsEmpty(this.wzi.AudioId)
+    var i = StringUtils_1.StringUtils.IsEmpty(this.wzi.AudioId)
       ? void 0
       : PlotAudioById_1.configPlotAudioById.GetConfig(this.wzi.AudioId);
     i && this.rZi(i);
   }
   rZi(i) {
-    const t =
-      ExternalSourceSettingById_1.configExternalSourceSettingById.GetConfig(
-        i.ExternalSourceSetting,
-      );
-    var i = PlotAudioModel_1.PlotAudioModel.GetExternalSourcesMediaName([
-      i.IsCheckSex,
-      i.FileName,
-    ]);
+    var t =
+        ExternalSourceSettingById_1.configExternalSourceSettingById.GetConfig(
+          i.ExternalSourceSetting,
+        ),
+      i = PlotAudioModel_1.PlotAudioModel.GetExternalSourcesMediaName([
+        i.IsCheckSex,
+        i.FileName,
+      ]);
     AudioController_1.AudioController.PostEventByExternalSourcesByUi(
       t.AudioEventPath,
       i,
@@ -325,19 +325,19 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
     AudioController_1.AudioController.StopEvent(this.czi);
   }
   Xzi() {
-    const i = this.wzi;
-    const t = this.GetText(0);
-    var e = i.Config?.TextStyle?.TextAlign;
-    var e =
-      (e === IAction_1.ETextAlign.Bottom
-        ? (t.SetAnchorVAlign(3),
-          t.SetPivot(Vector2D_1.Vector2D.Create(0.5, -1).ToUeVector2D()))
-        : e === IAction_1.ETextAlign.Top
-          ? (t.SetAnchorVAlign(1),
-            t.SetPivot(Vector2D_1.Vector2D.Create(0.5, 2).ToUeVector2D()))
-          : (t.SetAnchorVAlign(2),
-            t.SetPivot(Vector2D_1.Vector2D.Create(0.5, 0.5).ToUeVector2D())),
-      i.Config?.TextStyle?.TextHorizontal);
+    var i = this.wzi,
+      t = this.GetText(0),
+      e = i.Config?.TextStyle?.TextAlign,
+      e =
+        (e === IAction_1.ETextAlign.Bottom
+          ? (t.SetAnchorVAlign(3),
+            t.SetPivot(Vector2D_1.Vector2D.Create(0.5, -1).ToUeVector2D()))
+          : e === IAction_1.ETextAlign.Top
+            ? (t.SetAnchorVAlign(1),
+              t.SetPivot(Vector2D_1.Vector2D.Create(0.5, 2).ToUeVector2D()))
+            : (t.SetAnchorVAlign(2),
+              t.SetPivot(Vector2D_1.Vector2D.Create(0.5, 0.5).ToUeVector2D())),
+        i.Config?.TextStyle?.TextHorizontal);
     e === IAction_1.ETextHorizontal.Left
       ? t.SetParagraphHorizontalAlignment(0)
       : e === IAction_1.ETextHorizontal.Right
@@ -347,9 +347,9 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
       t.SetAnchorOffsetY(0);
   }
   $zi() {
-    const t = this.wzi.Config?.TextStyle?.FontSize;
+    var t = this.wzi.Config?.TextStyle?.FontSize;
     if (t) {
-      const e = this.GetText(0);
+      var e = this.GetText(0);
       let i = -1;
       t === IAction_1.EFontSize.Big
         ? (i =
@@ -363,16 +363,16 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
             (i =
               ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
                 .CenterTextFontSizeSmall),
-        i > 0 && e.SetFontSize(i);
+        0 < i && e.SetFontSize(i);
     }
   }
   Yzi(i) {
-    const t = this.wzi;
-    const e = t.Config?.TextStyle?.ShowAnim;
+    var t = this.wzi,
+      e = t.Config?.TextStyle?.ShowAnim;
     if (e) {
       (this.zNe = void 0), this.Q$t.SetSelectorOffset(1);
-      let s = t.Config?.IsMulLine ?? !1;
-      var o = this.Q$t.GetSelector();
+      var s = t.Config?.IsMulLine ?? !1,
+        o = this.Q$t.GetSelector();
       if (
         ((o.lineByLine = s && e.Type === IAction_1.ECenterTextShowAnim.FadeOut),
         (o.flipDirection = !o.lineByLine),
@@ -385,13 +385,13 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
       ) {
         this.Bzi = 3;
         var o =
-          e.TextCountPerSecond > 0
-            ? e.TextCountPerSecond
-            : ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
-                .TextAnimSpeedSeq;
-        var r = (this.Wzi(!0, i / o), this.nZi());
+            0 < e.TextCountPerSecond
+              ? e.TextCountPerSecond
+              : ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
+                  .TextAnimSpeedSeq,
+          r = (this.Wzi(!0, i / o), this.nZi());
         (this.unt = o),
-          r > 1 &&
+          1 < r &&
             ((this.qzi = 1),
             (this.bzi = this.Nzi.Get(this.qzi - 1) / this.unt),
             (this.Gzi = r),
@@ -400,7 +400,7 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
         this.Q$t.SetSelectorOffset(0), (this.Bzi = 4);
         (o = e.FadeInTime), (r = this.nZi());
         this.Wzi(!1, o * r),
-          r > 1 &&
+          1 < r &&
             ((this.qzi = 1),
             (this.bzi = o),
             (this.W1e = e.FadeOutTime),
@@ -410,7 +410,7 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
         this.Bzi = 1;
         (s =
           i /
-          (e.TextCountPerSecond > 0
+          (0 < e.TextCountPerSecond
             ? e.TextCountPerSecond
             : ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
                 .TextAnimSpeedSeq)),
@@ -446,16 +446,16 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
   Zzi() {
     this.tZi(!1),
       (this.qzi = this.qzi + 1),
-      this.Bzi === 3 && (this.bzi = this.Nzi.Get(this.qzi - 1) / this.unt),
+      3 === this.Bzi && (this.bzi = this.Nzi.Get(this.qzi - 1) / this.unt),
       this.sZi();
   }
   nZi() {
     if (!this.Nzi) {
-      const i = this.GetText(0);
-      const t = (0, puerts_1.$ref)(void 0);
+      var i = this.GetText(0),
+        t = (0, puerts_1.$ref)(void 0);
       i.GetTextLineNumArray(t), (this.Nzi = (0, puerts_1.$unref)(t));
       for (let i = 0; i < this.Nzi.Num(); i++) {
-        const e = this.Nzi.Get(i);
+        var e = this.Nzi.Get(i);
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Temp", 36, "LineNumArray", ["element", e]);
       }
@@ -464,7 +464,7 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
   }
   FadeInScreen(i, t) {
     this.GetButton(3).GetRootComponent().SetUIActive(!1);
-    const e = i?.Ease?.Duration
+    var e = i?.Ease?.Duration
       ? MathUtils_1.MathUtils.Clamp(i.Ease.Duration, 0, FADEMAXTIME)
       : 1;
     i?.ScreenType === IAction_1.EFadeInScreenShowType.White &&
@@ -492,4 +492,4 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.PlotTransitionView = PlotTransitionView;
-// # sourceMappingURL=PlotTransitionView.js.map
+//# sourceMappingURL=PlotTransitionView.js.map

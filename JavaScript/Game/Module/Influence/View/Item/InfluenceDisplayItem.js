@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InfluenceDisplayItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../../RedDot/RedDotController");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../../RedDot/RedDotController"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
+  LguiUtil_1 = require("../../../Util/LguiUtil");
 class InfluenceDisplayItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -19,7 +19,7 @@ class InfluenceDisplayItem extends UiPanelBase_1.UiPanelBase {
       (this.U4e = void 0),
       (this.Xy = 0),
       (this.T7e = () => {
-        const t = this.IsUnLock();
+        var t = this.IsUnLock();
         return (
           t ||
             ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
@@ -29,7 +29,7 @@ class InfluenceDisplayItem extends UiPanelBase_1.UiPanelBase {
         );
       }),
       (this.Lni = (t) => {
-        t === 1 ? this.SetActiveToggleState() : this.Dni(),
+        1 === t ? this.SetActiveToggleState() : this.Dni(),
           this.U4e?.(t, this.Xy);
       }),
       this.CreateThenShowByActor(t.GetOwner());
@@ -56,7 +56,7 @@ class InfluenceDisplayItem extends UiPanelBase_1.UiPanelBase {
       this.yGe.SetActive(!1);
   }
   OnBeforeDestroy() {
-    const t = this.GetExtendToggle(2);
+    var t = this.GetExtendToggle(2);
     t.SetToggleState(0),
       t.CanExecuteChange.Unbind(),
       this.Dpt(),
@@ -65,7 +65,7 @@ class InfluenceDisplayItem extends UiPanelBase_1.UiPanelBase {
   }
   UpdateItem(t, i) {
     this.Tni = t;
-    const e =
+    var e =
       ModelManager_1.ModelManager.InfluenceReputationModel.GetInfluenceInstance(
         t,
       );
@@ -92,14 +92,14 @@ class InfluenceDisplayItem extends UiPanelBase_1.UiPanelBase {
     this.yGe.SetActive(!1), this.x6e();
   }
   Rni(t, i) {
-    let e = this.GetText(0);
-    let s = this.GetText(1);
-    const n = this.GetTexture(9);
-    this.GetItem(5).SetUIActive(this.Ini === 1),
-      this.GetItem(3).SetUIActive(this.Ini === 2),
-      this.GetItem(6).SetUIActive(this.Ini === 3),
-      this.GetItem(7).SetUIActive(this.Ini === 0),
-      this.Ini === 0
+    var e = this.GetText(0),
+      s = this.GetText(1),
+      n = this.GetTexture(9);
+    this.GetItem(5).SetUIActive(1 === this.Ini),
+      this.GetItem(3).SetUIActive(2 === this.Ini),
+      this.GetItem(6).SetUIActive(3 === this.Ini),
+      this.GetItem(7).SetUIActive(0 === this.Ini),
+      0 === this.Ini
         ? (e.SetUIActive(!1),
           n.SetUIActive(!1),
           LguiUtil_1.LguiUtil.SetLocalText(s, "InfluenceLockName"))
@@ -114,7 +114,7 @@ class InfluenceDisplayItem extends UiPanelBase_1.UiPanelBase {
             : s.SetUIActive(!1),
           LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e.Title),
           this.yGe.UpdateItem(t, i, this.Ini),
-          this.Ini === 2 &&
+          2 === this.Ini &&
             ((s =
               ModelManager_1.ModelManager.InfluenceReputationModel.GetReputationProgress(
                 t,
@@ -135,7 +135,7 @@ class InfluenceDisplayItem extends UiPanelBase_1.UiPanelBase {
     RedDotController_1.RedDotController.UnBindRedDot("InfluenceReward");
   }
   IsUnLock() {
-    return this.Ini !== 0;
+    return 0 !== this.Ini;
   }
 }
 exports.InfluenceDisplayItem = InfluenceDisplayItem;
@@ -145,7 +145,7 @@ class ContentItem extends UiPanelBase_1.UiPanelBase {
       (this.Tni = 0),
       (this.z4t = 0),
       (this.xUt = () => {
-        const t = { InfluenceId: this.Tni, CountryId: this.z4t };
+        var t = { InfluenceId: this.Tni, CountryId: this.z4t };
         UiManager_1.UiManager.OpenView("ReputationDetailsView", t);
       }),
       this.CreateThenShowByActor(t.GetOwner());
@@ -163,17 +163,17 @@ class ContentItem extends UiPanelBase_1.UiPanelBase {
     (this.Tni = t), (this.z4t = i), this.Uni(), this.Rni(e);
   }
   Rni(t) {
-    const i = this.GetButton(1);
-    const e = this.GetText(3);
-    t === 1
+    var i = this.GetButton(1),
+      e = this.GetText(3);
+    1 === t
       ? (i.RootUIComp.SetUIActive(!1),
         e.SetUIActive(!0),
         LguiUtil_1.LguiUtil.SetLocalText(e, "InfluenceBelongTips"))
-      : t === 3
+      : 3 === t
         ? (i.RootUIComp.SetUIActive(!1),
           e.SetUIActive(!0),
           LguiUtil_1.LguiUtil.SetLocalText(e, "InfluenceHostilityTips"))
-        : t === 2
+        : 2 === t
           ? (i.RootUIComp.SetUIActive(!0), e.SetUIActive(!1))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error("InfluenceReputation", 11, "出现未知关系类型", [
@@ -182,7 +182,7 @@ class ContentItem extends UiPanelBase_1.UiPanelBase {
             ]);
   }
   Uni() {
-    const t = ConfigManager_1.ConfigManager.InfluenceConfig.GetInfluenceConfig(
+    var t = ConfigManager_1.ConfigManager.InfluenceConfig.GetInfluenceConfig(
       this.Tni,
     );
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), t.Introduction);
@@ -196,4 +196,4 @@ class ContentItem extends UiPanelBase_1.UiPanelBase {
     );
   }
 }
-// # sourceMappingURL=InfluenceDisplayItem.js.map
+//# sourceMappingURL=InfluenceDisplayItem.js.map

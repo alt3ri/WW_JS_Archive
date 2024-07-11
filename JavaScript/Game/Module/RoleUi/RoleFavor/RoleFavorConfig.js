@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleFavorConfig = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const FavorGoodsByRoleId_1 = require("../../../../Core/Define/ConfigQuery/FavorGoodsByRoleId");
-const FavorLevelByLevel_1 = require("../../../../Core/Define/ConfigQuery/FavorLevelByLevel");
-const FavorRoleInfoByRoleId_1 = require("../../../../Core/Define/ConfigQuery/FavorRoleInfoByRoleId");
-const FavorStoryByRoleId_1 = require("../../../../Core/Define/ConfigQuery/FavorStoryByRoleId");
-const FavorTabCameraById_1 = require("../../../../Core/Define/ConfigQuery/FavorTabCameraById");
-const FavorWordByRoleIdAndType_1 = require("../../../../Core/Define/ConfigQuery/FavorWordByRoleIdAndType");
-const ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  FavorGoodsByRoleId_1 = require("../../../../Core/Define/ConfigQuery/FavorGoodsByRoleId"),
+  FavorLevelByLevel_1 = require("../../../../Core/Define/ConfigQuery/FavorLevelByLevel"),
+  FavorRoleInfoByRoleId_1 = require("../../../../Core/Define/ConfigQuery/FavorRoleInfoByRoleId"),
+  FavorStoryByRoleId_1 = require("../../../../Core/Define/ConfigQuery/FavorStoryByRoleId"),
+  FavorTabCameraById_1 = require("../../../../Core/Define/ConfigQuery/FavorTabCameraById"),
+  FavorWordByRoleIdAndType_1 = require("../../../../Core/Define/ConfigQuery/FavorWordByRoleIdAndType"),
+  ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
 class RoleFavorConfig extends ConfigBase_1.ConfigBase {
   GetFavorLevelConfig(o) {
     o = FavorLevelByLevel_1.configFavorLevelByLevel.GetConfig(o);
     if (o) return o;
   }
   GetFavorRoleInfoConfig(o) {
-    const e = FavorRoleInfoByRoleId_1.configFavorRoleInfoByRoleId.GetConfig(o);
+    var e = FavorRoleInfoByRoleId_1.configFavorRoleInfoByRoleId.GetConfig(o);
     if (e) return e;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("Role", 44, "角色档案配置表获取配置失败,RoleId = ", [
@@ -24,7 +24,7 @@ class RoleFavorConfig extends ConfigBase_1.ConfigBase {
       ]);
   }
   GetFavorGoodsConfig(o) {
-    const e = FavorGoodsByRoleId_1.configFavorGoodsByRoleId.GetConfigList(o);
+    var e = FavorGoodsByRoleId_1.configFavorGoodsByRoleId.GetConfigList(o);
     if (e) return e;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("Role", 44, "好感度物品配置表获取配置失败,RoleId = ", [
@@ -33,7 +33,7 @@ class RoleFavorConfig extends ConfigBase_1.ConfigBase {
       ]);
   }
   GetFavorStoryConfig(o) {
-    const e = FavorStoryByRoleId_1.configFavorStoryByRoleId.GetConfigList(o);
+    var e = FavorStoryByRoleId_1.configFavorStoryByRoleId.GetConfigList(o);
     if (e) return e;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
@@ -44,7 +44,7 @@ class RoleFavorConfig extends ConfigBase_1.ConfigBase {
       );
   }
   GetFavorWordConfig(o, e) {
-    const r =
+    var r =
       FavorWordByRoleIdAndType_1.configFavorWordByRoleIdAndType.GetConfigList(
         o,
         e,
@@ -58,7 +58,7 @@ class RoleFavorConfig extends ConfigBase_1.ConfigBase {
       );
   }
   GetFavorTabCameraConfig(o) {
-    const e = FavorTabCameraById_1.configFavorTabCameraById.GetConfig(o);
+    var e = FavorTabCameraById_1.configFavorTabCameraById.GetConfig(o);
     if (e) return e;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("Role", 44, "好感度切页镜头配置获取失败,Id = ", [
@@ -68,4 +68,4 @@ class RoleFavorConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.RoleFavorConfig = RoleFavorConfig;
-// # sourceMappingURL=RoleFavorConfig.js.map
+//# sourceMappingURL=RoleFavorConfig.js.map

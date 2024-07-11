@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NavigationRoleSkillTreeExitButton = void 0);
-const UiNavigationViewManager_1 = require("../../../UiNavigationViewManager");
-const NavigationButton_1 = require("../../NavigationButton");
+const UiNavigationViewManager_1 = require("../../../UiNavigationViewManager"),
+  NavigationButton_1 = require("../../NavigationButton");
 class NavigationRoleSkillTreeExitButton extends NavigationButton_1.NavigationButton {
   OnButtonClick() {
-    const i =
+    var i =
       UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle().GetPanelConfigByType(
         "RoleSkill",
       );
@@ -13,4 +13,4 @@ class NavigationRoleSkillTreeExitButton extends NavigationButton_1.NavigationBut
   }
 }
 exports.NavigationRoleSkillTreeExitButton = NavigationRoleSkillTreeExitButton;
-// # sourceMappingURL=NavigationRoleSkillTreeExitButton.js.map
+//# sourceMappingURL=NavigationRoleSkillTreeExitButton.js.map

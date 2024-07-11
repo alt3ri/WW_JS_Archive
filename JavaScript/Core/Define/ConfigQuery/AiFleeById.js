@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configAiFleeById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const AiFlee_1 = require("../Config/AiFlee");
-const DB = "db_ai.db";
-const FILE = "a.AI逃跑.xlsx";
-const TABLE = "AiFlee";
-const COMMAND = "select BinData from `AiFlee` where id=?";
-const KEY_PREFIX = "AiFleeById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  AiFlee_1 = require("../Config/AiFlee"),
+  DB = "db_ai.db",
+  FILE = "a.AI逃跑.xlsx",
+  TABLE = "AiFlee",
+  COMMAND = "select BinData from `AiFlee` where id=?",
+  KEY_PREFIX = "AiFleeById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configAiFleeById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configAiFleeById.GetConfig(";
 exports.configAiFleeById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configAiFleeById = {
       if (
         (n =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var n;
-        var i = void 0;
+        var n,
+          i = void 0;
         if (
           (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configAiFleeById = {
     }
   },
 };
-// # sourceMappingURL=AiFleeById.js.map
+//# sourceMappingURL=AiFleeById.js.map

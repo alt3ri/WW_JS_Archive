@@ -1,25 +1,29 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, n, i) {
-    let o;
-    const s = arguments.length;
-    let r =
-      s < 3 ? t : i === null ? (i = Object.getOwnPropertyDescriptor(t, n)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      s = arguments.length,
+      r =
+        s < 3
+          ? t
+          : null === i
+            ? (i = Object.getOwnPropertyDescriptor(t, n))
+            : i;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(e, t, n, i);
     else
-      for (let h = e.length - 1; h >= 0; h--)
-        (o = e[h]) && (r = (s < 3 ? o(r) : s > 3 ? o(t, n, r) : o(t, n)) || r);
-    return s > 3 && r && Object.defineProperty(t, n, r), r;
+      for (var h = e.length - 1; 0 <= h; h--)
+        (o = e[h]) && (r = (s < 3 ? o(r) : 3 < s ? o(t, n, r) : o(t, n)) || r);
+    return 3 < s && r && Object.defineProperty(t, n, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiModelTagComponent = void 0);
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const UiTagComponent_1 = require("../../../UiComponent/UiTagComponent");
-const UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine");
-const UiModelComponentBase_1 = require("../UiModelComponentBase");
+const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  UiTagComponent_1 = require("../../../UiComponent/UiTagComponent"),
+  UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine"),
+  UiModelComponentBase_1 = require("../UiModelComponentBase");
 let UiModelTagComponent = class UiModelTagComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
     super(...arguments),
@@ -38,7 +42,7 @@ let UiModelTagComponent = class UiModelTagComponent extends UiModelComponentBase
         );
       }),
       (this.wBr = (e, t) => {
-        const n = this.Owner.CheckGetComponent(17);
+        var n = this.Owner.CheckGetComponent(17);
         t ? n?.PlayLightSequence() : n?.StopLightSequence();
       });
   }
@@ -76,4 +80,4 @@ let UiModelTagComponent = class UiModelTagComponent extends UiModelComponentBase
   UiModelTagComponent,
 )),
   (exports.UiModelTagComponent = UiModelTagComponent);
-// # sourceMappingURL=UiModelTagComponent.js.map
+//# sourceMappingURL=UiModelTagComponent.js.map

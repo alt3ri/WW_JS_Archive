@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RogueTalentTreeDesc = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const IntArray_1 = require("./SubType/IntArray");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  IntArray_1 = require("./SubType/IntArray");
 class RogueTalentTreeDesc {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -34,18 +34,18 @@ class RogueTalentTreeDesc {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   basedesc(t) {
-    const e = this.J7.__offset(this.z7, 6);
+    var e = this.J7.__offset(this.z7, 6);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   GetArgsAt(t, e) {
     return this.args(t);
   }
   args(t, e) {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s
       ? (e || new IntArray_1.IntArray()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -54,17 +54,17 @@ class RogueTalentTreeDesc {
       : null;
   }
   argsLength() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   talenticon(t) {
-    const e = this.J7.__offset(this.z7, 10);
+    var e = this.J7.__offset(this.z7, 10);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   talentname(t) {
-    const e = this.J7.__offset(this.z7, 12);
+    var e = this.J7.__offset(this.z7, 12);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
 }
 exports.RogueTalentTreeDesc = RogueTalentTreeDesc;
-// # sourceMappingURL=RogueTalentTreeDesc.js.map
+//# sourceMappingURL=RogueTalentTreeDesc.js.map

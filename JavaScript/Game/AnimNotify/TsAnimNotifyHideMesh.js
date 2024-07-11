@@ -10,13 +10,13 @@ class TsAnimNotifyHideMesh extends UE.KuroAnimNotify {
       (this.Hide = !0);
   }
   K2_Notify(e, t) {
-    const s = e.GetOwner();
+    var s = e.GetOwner();
     if (!s) return !1;
     let i = void 0;
     if (this.ChildMeshName) {
-      const r = s.K2_GetComponentsByClass(UE.MeshComponent.StaticClass());
-      for (let e = r.Num() - 1; e >= 0; --e) {
-        const o = r.Get(e);
+      var r = s.K2_GetComponentsByClass(UE.MeshComponent.StaticClass());
+      for (let e = r.Num() - 1; 0 <= e; --e) {
+        var o = r.Get(e);
         if (o.GetName() === this.ChildMeshName) {
           i = o;
           break;
@@ -30,4 +30,4 @@ class TsAnimNotifyHideMesh extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifyHideMesh;
-// # sourceMappingURL=TsAnimNotifyHideMesh.js.map
+//# sourceMappingURL=TsAnimNotifyHideMesh.js.map

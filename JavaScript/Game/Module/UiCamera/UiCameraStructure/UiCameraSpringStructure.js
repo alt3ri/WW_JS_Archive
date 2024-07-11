@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiCameraSpringStructure = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../Core/Actor/ActorSystem");
-const GlobalData_1 = require("../../../GlobalData");
-const UiCameraStructure_1 = require("./UiCameraStructure");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../Core/Actor/ActorSystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  UiCameraStructure_1 = require("./UiCameraStructure");
 class UiCameraSpringStructure extends UiCameraStructure_1.UiCameraStructure {
   constructor() {
     super(...arguments), (this.tUo = void 0);
   }
   OnSpawnStructureActor() {
-    var t = GlobalData_1.GlobalData.World;
-    const r = new UE.Transform(
-      new UE.Quat(0),
-      new UE.Vector(0),
-      new UE.Vector(1, 1, 1),
-    );
-    var t = UE.GameplayStatics.BeginDeferredActorSpawnFromClass(
-      t,
-      UE.BP_UiCameraAnimation_C.StaticClass(),
-      r,
-    );
+    var t = GlobalData_1.GlobalData.World,
+      r = new UE.Transform(
+        new UE.Quat(0),
+        new UE.Vector(0),
+        new UE.Vector(1, 1, 1),
+      ),
+      t = UE.GameplayStatics.BeginDeferredActorSpawnFromClass(
+        t,
+        UE.BP_UiCameraAnimation_C.StaticClass(),
+        r,
+      );
     return (
       t.SetTickableWhenPaused(!0),
       UE.GameplayStatics.FinishSpawningActor(t, r),
@@ -44,7 +44,7 @@ class UiCameraSpringStructure extends UiCameraStructure_1.UiCameraStructure {
     this.CameraActorDetachFromSpringActor();
   }
   CameraActorAttachToSpringActor() {
-    const t = this.tUo.Camera;
+    var t = this.tUo.Camera;
     this.AttachToComponent(t);
   }
   CameraActorDetachFromSpringActor() {
@@ -55,4 +55,4 @@ class UiCameraSpringStructure extends UiCameraStructure_1.UiCameraStructure {
   }
 }
 exports.UiCameraSpringStructure = UiCameraSpringStructure;
-// # sourceMappingURL=UiCameraSpringStructure.js.map
+//# sourceMappingURL=UiCameraSpringStructure.js.map

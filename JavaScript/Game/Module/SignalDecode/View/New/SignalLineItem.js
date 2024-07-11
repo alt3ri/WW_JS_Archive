@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SignalLineItem = void 0);
-const UE = require("ue");
-const MathCommon_1 = require("../../../../../Core/Utils/Math/MathCommon");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const SignalItemBase_1 = require("./SignalItemBase");
+const UE = require("ue"),
+  MathCommon_1 = require("../../../../../Core/Utils/Math/MathCommon"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  SignalItemBase_1 = require("./SignalItemBase");
 class SignalLineItem extends SignalItemBase_1.SignalItemBase {
   constructor() {
     super(...arguments), (this.AMo = void 0), (this.PMo = void 0);
@@ -29,23 +29,23 @@ class SignalLineItem extends SignalItemBase_1.SignalItemBase {
   InitByGameplayType(e) {
     super.InitByGameplayType(e);
     let t =
-      e === 2 ? "SP_SignalNoteSolidLineGreen" : "SP_SignalNoteSolidLineYellow";
-    e === 3 && (t = "SP_SignalNoteSolidLineOrange");
+      2 === e ? "SP_SignalNoteSolidLineGreen" : "SP_SignalNoteSolidLineYellow";
+    3 === e && (t = "SP_SignalNoteSolidLineOrange");
     e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(t);
     this.SetSpriteByPath(e, this.PMo, !1), this.Reset();
   }
   OnUpdate() {
     super.OnUpdate();
-    let e = -this.DecisionShowSize / 2;
+    var e = -this.DecisionShowSize / 2;
     this.CurrentRelativeX < e
       ? this.PMo.SetFillAmount(0)
       : ((e = this.GetProgress()), this.PMo.SetFillAmount(e));
   }
   GetProgress() {
-    var e = -this.DecisionShowSize / 2;
-    var e = this.CurrentRelativeX - e;
+    var e = -this.DecisionShowSize / 2,
+      e = this.CurrentRelativeX - e;
     return MathCommon_1.MathCommon.Clamp(e / this.RootItem.Width, 0, 1);
   }
 }
 exports.SignalLineItem = SignalLineItem;
-// # sourceMappingURL=SignalLineItem.js.map
+//# sourceMappingURL=SignalLineItem.js.map

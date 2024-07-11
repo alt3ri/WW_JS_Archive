@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleExpItemGridComponent = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const ButtonItem_1 = require("../../Common/Button/ButtonItem");
-const GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew");
-const RoleLevelUpCostMediumItemGrid_1 = require("./RoleLevelUpCostMediumItemGrid");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  ButtonItem_1 = require("../../Common/Button/ButtonItem"),
+  GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
+  RoleLevelUpCostMediumItemGrid_1 = require("./RoleLevelUpCostMediumItemGrid");
 class RoleExpItemGridComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t, e, i, s, h, o, r = void 0) {
     super(),
@@ -25,7 +25,7 @@ class RoleExpItemGridComponent extends UiPanelBase_1.UiPanelBase {
       (this.B_o = 0),
       (this.Nlo = !1),
       (this.sGe = () => {
-        const t =
+        var t =
           new RoleLevelUpCostMediumItemGrid_1.RoleLevelUpCostMediumItemGrid();
         return (
           t.BindLongPress(1, this.OCt),
@@ -60,7 +60,7 @@ class RoleExpItemGridComponent extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     (this.i3e = new ButtonItem_1.ButtonItem(this.GetItem(11))),
       this.i3e.SetFunction(this.Blo);
-    const t = this.GetScrollViewWithScrollbar(5);
+    var t = this.GetScrollViewWithScrollbar(5);
     this.ScrollView = new GenericScrollViewNew_1.GenericScrollViewNew(
       t,
       this.sGe,
@@ -90,7 +90,7 @@ class RoleExpItemGridComponent extends UiPanelBase_1.UiPanelBase {
   }
   UpdateAutoButtonState() {
     for (const t of this.uft)
-      if (t.SelectedCount > 0) return void (this.B_o = 1);
+      if (0 < t.SelectedCount) return void (this.B_o = 1);
     this.B_o = 0;
   }
   GetAutoButtonState() {
@@ -121,4 +121,4 @@ class RoleExpItemGridComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleExpItemGridComponent = RoleExpItemGridComponent;
-// # sourceMappingURL=RoleExpItemGridComponent.js.map
+//# sourceMappingURL=RoleExpItemGridComponent.js.map

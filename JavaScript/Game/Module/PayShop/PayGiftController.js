@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayGiftController = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const KuroSdkReport_1 = require("../../KuroSdk/KuroSdkReport");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const FeatureRestrictionTemplate_1 = require("../Common/FeatureRestrictionTemplate");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
-const PayItemController_1 = require("../PayItem/PayItemController");
-const PayShopDefine_1 = require("./PayShopDefine");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  KuroSdkReport_1 = require("../../KuroSdk/KuroSdkReport"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  FeatureRestrictionTemplate_1 = require("../Common/FeatureRestrictionTemplate"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  PayItemController_1 = require("../PayItem/PayItemController"),
+  PayShopDefine_1 = require("./PayShopDefine");
 class PayGiftController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
     Net_1.Net.Register(5162, PayGiftController.h2i);
@@ -31,10 +31,10 @@ class PayGiftController extends UiControllerBase_1.UiControllerBase {
       ModelManager_1.ModelManager.PayGiftModel.InitDataByServer(e.tUs));
   }
   static async SendPayGiftInfoRequestAsync() {
-    var e = Protocol_1.Aki.Protocol.Kos.create();
-    var e =
-      ((e.o8n = ModelManager_1.ModelManager.PayGiftModel.Version),
-      await Net_1.Net.CallAsync(12156, e));
+    var e = Protocol_1.Aki.Protocol.Kos.create(),
+      e =
+        ((e.o8n = ModelManager_1.ModelManager.PayGiftModel.Version),
+        await Net_1.Net.CallAsync(12156, e));
     if (
       e &&
       (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
@@ -47,8 +47,8 @@ class PayGiftController extends UiControllerBase_1.UiControllerBase {
     ) {
       (ModelManager_1.ModelManager.PayGiftModel.Version = e.o8n),
         ModelManager_1.ModelManager.PayGiftModel.InitDataByServer(e.cRs);
-      var e = ModelManager_1.ModelManager.PayGiftModel.GetDataList();
-      const r = new Array();
+      var e = ModelManager_1.ModelManager.PayGiftModel.GetDataList(),
+        r = new Array();
       for (const o of e) r.push(o.ProductId);
       ControllerHolder_1.ControllerHolder.KuroSdkController.QueryProductByProductId(
         r,
@@ -56,7 +56,7 @@ class PayGiftController extends UiControllerBase_1.UiControllerBase {
     }
   }
   static SendPayGiftInfoRequest() {
-    const e = Protocol_1.Aki.Protocol.Kos.create();
+    var e = Protocol_1.Aki.Protocol.Kos.create();
     (e.o8n = ModelManager_1.ModelManager.PayGiftModel.Version),
       Net_1.Net.Call(12156, e, (e) => {
         if (
@@ -71,8 +71,8 @@ class PayGiftController extends UiControllerBase_1.UiControllerBase {
         ) {
           (ModelManager_1.ModelManager.PayGiftModel.Version = e.o8n),
             ModelManager_1.ModelManager.PayGiftModel.InitDataByServer(e.cRs);
-          var e = ModelManager_1.ModelManager.PayGiftModel.GetDataList();
-          const r = new Array();
+          var e = ModelManager_1.ModelManager.PayGiftModel.GetDataList(),
+            r = new Array();
           for (const o of e) r.push(o.ProductId);
           ControllerHolder_1.ControllerHolder.KuroSdkController.QueryProductByProductId(
             r,
@@ -81,7 +81,7 @@ class PayGiftController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static SendPayGiftRequest(n) {
-    let e;
+    var e;
     if (
       PayItemController_1.PayItemController.CurrentBlockBetaState &&
       ConfigManager_1.ConfigManager.CommonConfig?.GetBetaBlockRecharge()
@@ -99,7 +99,7 @@ class PayGiftController extends UiControllerBase_1.UiControllerBase {
           e,
         ))
       : (PayItemController_1.PayItemController.CurrentBlockIosPayState &&
-          ModelManager_1.ModelManager.PlatformModel.PlatformType === 1 &&
+          1 === ModelManager_1.ModelManager.PlatformModel.PlatformType &&
           ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(134)),
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
             e,
@@ -107,10 +107,9 @@ class PayGiftController extends UiControllerBase_1.UiControllerBase {
         ((e = Protocol_1.Aki.Protocol.Xos.create()).Ekn = n),
         (e.o8n = ModelManager_1.ModelManager.PayGiftModel.Version),
         Net_1.Net.Call(4104, e, (e) => {
-          let r;
-          let o;
-          const t =
-            ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(n);
+          var r,
+            o,
+            t = ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(n);
           e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
             ? ((r = ConfigManager_1.ConfigManager.ItemConfig.GetItemName(
                 t.GetGoodsData().ItemId,
@@ -136,12 +135,7 @@ class PayGiftController extends UiControllerBase_1.UiControllerBase {
 }
 (exports.PayGiftController = PayGiftController).h2i = (e) => {
   ControllerHolder_1.ControllerHolder.KuroSdkController.CancelCurrentWaitPayItemTimer();
-  const r = {
-    PayItemId: e.Ekn,
-    OrderId: e.$Ps,
-    ItemId: e.G3n,
-    ItemCount: e.g5n,
-  };
+  var r = { PayItemId: e.Ekn, OrderId: e.$Ps, ItemId: e.G3n, ItemCount: e.g5n };
   ModelManager_1.ModelManager.PayGiftModel.GetPayGiftDataById(e.jPs.Ekn).Phrase(
     e.jPs,
   ),
@@ -151,4 +145,4 @@ class PayGiftController extends UiControllerBase_1.UiControllerBase {
       r,
     );
 };
-// # sourceMappingURL=PayGiftController.js.map
+//# sourceMappingURL=PayGiftController.js.map

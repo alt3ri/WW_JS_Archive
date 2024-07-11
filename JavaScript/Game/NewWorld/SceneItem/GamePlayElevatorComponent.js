@@ -1,54 +1,59 @@
 "use strict";
-let GamePlayElevatorComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, i, e, s) {
-    let h;
-    const o = arguments.length;
-    let r =
-      o < 3 ? i : s === null ? (s = Object.getOwnPropertyDescriptor(i, e)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(t, i, e, s);
-    else
-      for (let a = t.length - 1; a >= 0; a--)
-        (h = t[a]) && (r = (o < 3 ? h(r) : o > 3 ? h(i, e, r) : h(i, e)) || r);
-    return o > 3 && r && Object.defineProperty(i, e, r), r;
-  };
+var GamePlayElevatorComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, i, e, s) {
+      var h,
+        o = arguments.length,
+        r =
+          o < 3
+            ? i
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(i, e))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        r = Reflect.decorate(t, i, e, s);
+      else
+        for (var a = t.length - 1; 0 <= a; a--)
+          (h = t[a]) &&
+            (r = (o < 3 ? h(r) : 3 < o ? h(i, e, r) : h(i, e)) || r);
+      return 3 < o && r && Object.defineProperty(i, e, r), r;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GamePlayElevatorComponent = void 0);
-const UE = require("ue");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LogReportDefine_1 = require("../../Module/LogReport/LogReportDefine");
-const SceneInteractionManager_1 = require("../../Render/Scene/Interaction/SceneInteractionManager");
-const ActorUtils_1 = require("../../Utils/ActorUtils");
-const TraceUtils_1 = require("../../Utils/TraceUtils");
-const ComponentForceTickController_1 = require("../../World/Controller/ComponentForceTickController");
-const LogController_1 = require("../../World/Controller/LogController");
-const CharacterBuffIds_1 = require("../Character/Common/Component/Abilities/CharacterBuffIds");
-const MIN_SPEED = 1;
-const MTOCM = 100;
-const NORMALIZE = 0.01;
-const FOUR = 4;
-const THOUSAND = 1e3;
-const DELTATIMECHANGEVALUE = 10;
-const NEGATIVEONE = -1;
-const ACCELERATETIMERADIO = 1.5;
+const UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LogReportDefine_1 = require("../../Module/LogReport/LogReportDefine"),
+  SceneInteractionManager_1 = require("../../Render/Scene/Interaction/SceneInteractionManager"),
+  ActorUtils_1 = require("../../Utils/ActorUtils"),
+  TraceUtils_1 = require("../../Utils/TraceUtils"),
+  ComponentForceTickController_1 = require("../../World/Controller/ComponentForceTickController"),
+  LogController_1 = require("../../World/Controller/LogController"),
+  CharacterBuffIds_1 = require("../Character/Common/Component/Abilities/CharacterBuffIds"),
+  MIN_SPEED = 1,
+  MTOCM = 100,
+  NORMALIZE = 0.01,
+  FOUR = 4,
+  THOUSAND = 1e3,
+  DELTATIMECHANGEVALUE = 10,
+  NEGATIVEONE = -1,
+  ACCELERATETIMERADIO = 1.5;
 let GamePlayElevatorComponent =
   (GamePlayElevatorComponent_1 = class GamePlayElevatorComponent extends (
     EntityComponent_1.EntityComponent
@@ -100,19 +105,19 @@ let GamePlayElevatorComponent =
           this.Uun = !1;
         }),
         (this.ecn = (t, i) => {
-          let e;
-          var i = i.Entity;
+          var e,
+            i = i.Entity;
           i.GetComponent(140) &&
             ((i = i.GetComponent(1)),
             (e = this.Kun.indexOf(i.Owner)),
             t
-              ? e === -1 && this.Kun.push(i.Owner)
-              : e !== -1 && this.Kun.splice(e, 1),
-            (e = this.Wun.indexOf(i.Owner)) !== -1) &&
+              ? -1 === e && this.Kun.push(i.Owner)
+              : -1 !== e && this.Kun.splice(e, 1),
+            -1 !== (e = this.Wun.indexOf(i.Owner))) &&
             this.Wun.splice(e, 1);
         }),
         (this.tcn = (t) => {
-          let i, e;
+          var i, e;
           this.IsMove() &&
             ((e = void 0), (i = Global_1.Global.BaseCharacter)) &&
             (e = i.CharacterActorComponent.Entity.GetComponent(157)) &&
@@ -131,19 +136,19 @@ let GamePlayElevatorComponent =
                 ));
         }),
         (this.ocn = (t, i) => {
-          const e = ActorUtils_1.ActorUtils.GetEntityByActor(i);
+          var e = ActorUtils_1.ActorUtils.GetEntityByActor(i);
           e &&
             e.Entity.GetComponent(140) &&
-            this.Wun.indexOf(i) === -1 &&
-            (this.IsMove() && this.Kun.indexOf(i) !== -1 && this.rcn(i),
+            -1 === this.Wun.indexOf(i) &&
+            (this.IsMove() && -1 !== this.Kun.indexOf(i) && this.rcn(i),
             this.Wun.push(i));
         }),
         (this.OnSceneInteractionLoadCompleted = () => {
-          var t = this.Entity.GetComponent(182);
-          var t =
-            SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
-              t.GetSceneInteractionLevelHandleId(),
-            );
+          var t = this.Entity.GetComponent(182),
+            t =
+              SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
+                t.GetSceneInteractionLevelHandleId(),
+              );
           (this.Qun = t?.GetComponentByClass(
             UE.PrimitiveComponent.StaticClass(),
           )),
@@ -175,11 +180,11 @@ let GamePlayElevatorComponent =
         (this.Iun = Vector_1.Vector.Create(0, 0, 0)),
         (this.Wun = []),
         (this.Kun = []);
-      const i = this.Entity.GetComponent(0);
-      const e = i.GetInitLocation();
-      const s = e.X || 0;
-      const h = e.Y || 0;
-      const o = e.Z || 0;
+      var i = this.Entity.GetComponent(0),
+        e = i.GetInitLocation(),
+        s = e.X || 0,
+        h = e.Y || 0,
+        o = e.Z || 0;
       if (((this.bun = []), t.StayPositions))
         for (const r of t.StayPositions)
           this.bun.push(
@@ -265,15 +270,15 @@ let GamePlayElevatorComponent =
       }
     }
     zun() {
-      const t = this.pun;
-      const i = this.Entity.GetComponent(1).ActorLocationProxy;
+      var t = this.pun,
+        i = this.Entity.GetComponent(1).ActorLocationProxy;
       t.Subtraction(i, this.cz),
         this.cz.MultiplyEqual(this.yun),
-        (this.cz.X >= 0 && this.cz.Y >= 0 && this.cz.Z >= 0) || this.hcn();
+        (0 <= this.cz.X && 0 <= this.cz.Y && 0 <= this.cz.Z) || this.hcn();
     }
     hcn() {
-      const t = this.pun;
-      const i = this.Entity.GetComponent(1);
+      var t = this.pun,
+        i = this.Entity.GetComponent(1);
       this.Iun.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
         this.Tun.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
         i.SetActorLocation(t.ToUeVector()),
@@ -290,13 +295,13 @@ let GamePlayElevatorComponent =
     rzo(t) {
       (!this.Pun || Math.abs(t - this.Pun) > DELTATIMECHANGEVALUE) &&
         (this.Pun = t);
-      var t = this.Entity.GetComponent(1);
-      const i = this.Pun * MathUtils_1.MathUtils.MillisecondToSecond;
-      const e =
-        (this.cz.DeepCopy(this.Tun),
-        this.cz.MultiplyEqual(i),
-        this.Iun.Addition(this.cz, this.kRe),
-        this.kRe);
+      var t = this.Entity.GetComponent(1),
+        i = this.Pun * MathUtils_1.MathUtils.MillisecondToSecond,
+        e =
+          (this.cz.DeepCopy(this.Tun),
+          this.cz.MultiplyEqual(i),
+          this.Iun.Addition(this.cz, this.kRe),
+          this.kRe);
       this.Mun.SizeSquared() > e.SizeSquared() || e.DotProduct(this.Iun) < 0
         ? this.Iun.DeepCopy(this.Mun)
         : this.vun.SizeSquared() < e.SizeSquared()
@@ -318,19 +323,19 @@ let GamePlayElevatorComponent =
     }
     ncn() {}
     scn() {
-      let t = this.DCo;
-      const i = this.pun;
-      let e = this.Entity.GetComponent(1).ActorLocationProxy;
-      const s = this.Dun;
+      var t = this.DCo,
+        i = this.pun,
+        e = this.Entity.GetComponent(1).ActorLocationProxy,
+        s = this.Dun;
       const h = Vector_1.Vector.DistSquared(e, t);
       t = MathUtils_1.MathUtils.Bisection((t) => t * t > h, 0, h, 1);
       const o = Vector_1.Vector.DistSquared(e, i);
       e = MathUtils_1.MathUtils.Bisection((t) => t * t > o, 0, o, 1);
-      this.Tun.SizeSquared() !== 0 &&
+      0 !== this.Tun.SizeSquared() &&
         t > (1 / FOUR) * s &&
         e > (1 / FOUR) * s &&
         this.Tun.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
-        this.Tun.SizeSquared() === 0 &&
+        0 === this.Tun.SizeSquared() &&
           e < (1 / FOUR) * s &&
           this.Tun.DeepCopy(this.ucn().MultiplyEqual(NEGATIVEONE));
     }
@@ -343,8 +348,8 @@ let GamePlayElevatorComponent =
       );
     }
     ucn() {
-      var t = this.DCo;
-      var t = (this.pun.Subtraction(t, this.cz), this.cz.Size());
+      var t = this.DCo,
+        t = (this.pun.Subtraction(t, this.cz), this.cz.Size());
       return (
         this.cz.Normalize(NORMALIZE),
         this.cz.MultiplyEqual((this.Lun * MTOCM * this.Lun * MTOCM * 2) / t),
@@ -355,18 +360,18 @@ let GamePlayElevatorComponent =
       return !(!this.Nun && !this.Oun);
     }
     WVo() {
-      let t;
+      var t;
       this.Vun && ((t = this._cn()), this.SetTargetFloor(t));
     }
     SetTargetFloor(t) {
-      let i, e;
+      var i, e;
       t < 1 || t > this.bun.length || this.qun === t
         ? Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("SceneItem", 36, "SetTargetFloor Wrong Floor", [
             "targetFloor",
             t,
           ])
-        : this.Gun !== 0
+        : 0 !== this.Gun
           ? Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("SceneItem", 36, "Elevator Running")
           : ((this.Gun = t),
@@ -388,11 +393,11 @@ let GamePlayElevatorComponent =
     lcn() {
       if (!this.Xun()) {
         let t = void 0;
-        let i = Global_1.Global.BaseCharacter;
+        var i = Global_1.Global.BaseCharacter;
         if (
           (i &&
             ((i = i.CharacterActorComponent.Entity), (t = i.GetComponent(157))),
-          this.Gun === 0)
+          0 === this.Gun)
         ) {
           if (
             (this.mcn() &&
@@ -402,7 +407,7 @@ let GamePlayElevatorComponent =
                 -1,
                 "电梯移除buff",
               ),
-            this.Wun.length > 0)
+            0 < this.Wun.length)
           )
             for (const e of this.Wun)
               TimerSystem_1.TimerSystem.Next(() => {
@@ -429,9 +434,9 @@ let GamePlayElevatorComponent =
               Duration: this.icn() + this.Eun ?? 0,
               Reason: "电梯添加buff",
             }),
-          this.Wun.length > 0)
+          0 < this.Wun.length)
         )
-          for (const s of this.Wun) this.Kun.indexOf(s) !== -1 && this.rcn(s);
+          for (const s of this.Wun) -1 !== this.Kun.indexOf(s) && this.rcn(s);
       }
     }
     Ccn() {
@@ -455,11 +460,11 @@ let GamePlayElevatorComponent =
     }
     Yun() {
       if (!this.ktn) return !1;
-      let t;
-      let i;
-      let e;
-      let s;
-      const h = this.ktn.GetEntitiesInRangeLocal();
+      var t,
+        i,
+        e,
+        s,
+        h = this.ktn.GetEntitiesInRangeLocal();
       if (!h) return !1;
       let o = !1;
       for (const r of h.values())
@@ -469,7 +474,7 @@ let GamePlayElevatorComponent =
           (i = r.Entity.GetComponent(1)?.HasMesh()),
           (e =
             void 0 !== (e = r.Entity.GetComponent(0)?.GetSummonerId()) &&
-            e !== 0),
+            0 !== e),
           (s = this.Entity.GetComponent(1)?.ActorLocationProxy),
           i) &&
           t &&
@@ -483,19 +488,19 @@ let GamePlayElevatorComponent =
       return o;
     }
     fcn(i) {
-      const e = i.GetComponent(1)?.ActorLocationProxy;
-      const t = this.Entity.GetComponent(1).ActorLocationProxy;
+      var e = i.GetComponent(1)?.ActorLocationProxy,
+        t = this.Entity.GetComponent(1).ActorLocationProxy;
       if (e && t)
         if (this.Aun) {
           const l = i.GetComponent(1);
-          let s;
-          var h = l.GetRadius();
-          var h = Vector_1.Vector.Create(
-            t.X + this.Aun.X,
-            t.Y + this.Aun.Y,
-            t.Z + this.Aun.Z + h,
-          );
-          const o = i.GetComponent(3);
+          var s,
+            h = l.GetRadius(),
+            h = Vector_1.Vector.Create(
+              t.X + this.Aun.X,
+              t.Y + this.Aun.Y,
+              t.Z + this.Aun.Z + h,
+            ),
+            o = i.GetComponent(3);
           void (o
             ? ((s = l.DisableCollision(
                 "[GamePlayElevatorComponent.SetEntitySafePos]",
@@ -516,17 +521,18 @@ let GamePlayElevatorComponent =
               0,
             );
             if (r && !a.bStartPenetrating) {
-              var n;
-              var r =
-                ModelManager_1.ModelManager.TraceElementModel.CommonHitLocation;
-              var a =
-                (TraceElementCommon_1.TraceElementCommon.GetImpactPoint(
-                  a,
-                  0,
-                  r,
-                ),
-                l.GetRadius());
-              var a = ((r.Z += a), i.GetComponent(3));
+              var n,
+                r =
+                  ModelManager_1.ModelManager.TraceElementModel
+                    .CommonHitLocation,
+                a =
+                  (TraceElementCommon_1.TraceElementCommon.GetImpactPoint(
+                    a,
+                    0,
+                    r,
+                  ),
+                  l.GetRadius()),
+                a = ((r.Z += a), i.GetComponent(3));
               a
                 ? ((n = l.DisableCollision(
                     "[GamePlayElevatorComponent.SetEntitySafePos]",
@@ -546,15 +552,15 @@ let GamePlayElevatorComponent =
     }
     mcn() {
       if (!this.ktn) return !1;
-      const t = this.ktn.GetEntitiesInRangeLocal();
+      var t = this.ktn.GetEntitiesInRangeLocal();
       if (!t) return !1;
       let i = -1;
-      const e = Global_1.Global.BaseCharacter;
+      var e = Global_1.Global.BaseCharacter;
       return e && (i = e.CharacterActorComponent.Entity.Id), t.has(i);
     }
     icn() {
       this.DCo.Subtraction(this.pun, this.cz);
-      const t = this.cz.Size();
+      var t = this.cz.Size();
       if (this.Sun) {
         const i = t / MTOCM / this.Lun;
         return i > THOUSAND ? THOUSAND : i;
@@ -572,7 +578,7 @@ let GamePlayElevatorComponent =
           t);
     }
     rcn(t) {
-      let i = ActorUtils_1.ActorUtils.GetEntityByActor(t);
+      var i = ActorUtils_1.ActorUtils.GetEntityByActor(t);
       i &&
         (i = i.Entity.GetComponent(140)) &&
         (i.TryDisableTick("[GamePlayElevator.AttachToElevator] 上电梯关闭Tick"),
@@ -639,4 +645,4 @@ let GamePlayElevatorComponent =
     GamePlayElevatorComponent,
   )),
   (exports.GamePlayElevatorComponent = GamePlayElevatorComponent);
-// # sourceMappingURL=GamePlayElevatorComponent.js.map
+//# sourceMappingURL=GamePlayElevatorComponent.js.map

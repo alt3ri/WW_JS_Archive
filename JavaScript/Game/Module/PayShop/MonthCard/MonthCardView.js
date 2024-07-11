@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MonthCardView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const ButtonAndTextItem_1 = require("../../Common/Button/ButtonAndTextItem");
-const UiTabSequence_1 = require("../../DynamicTab/UiTabViewBehavior/UiTabSequence");
-const HelpController_1 = require("../../Help/HelpController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const PayShopDefine_1 = require("../PayShopDefine");
-const MONTH_CARD_HELP_ID = 9;
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  ButtonAndTextItem_1 = require("../../Common/Button/ButtonAndTextItem"),
+  UiTabSequence_1 = require("../../DynamicTab/UiTabViewBehavior/UiTabSequence"),
+  HelpController_1 = require("../../Help/HelpController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  PayShopDefine_1 = require("../PayShopDefine"),
+  MONTH_CARD_HELP_ID = 9;
 class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -28,7 +28,7 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
         HelpController_1.HelpController.OpenHelpById(MONTH_CARD_HELP_ID);
       }),
       (this.o2i = () => {
-        let e;
+        var e;
         this.t2i &&
           ((e = ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(
             PayShopDefine_1.MONTH_CARD_SHOP_ID,
@@ -67,21 +67,21 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
       this.AddChild(this.e2i);
   }
   OnStart() {
-    var e = new Array();
-    var t = PayShopDefine_1.MONTH_CARD_SHOP_ID;
-    var t =
-      ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(
-        t,
-      ).GetGetPayGiftData().ProductId;
-    var t =
-      (e.push(t.toString()),
-      ControllerHolder_1.ControllerHolder.KuroSdkController.QueryProductByProductId(
-        e,
-      ),
-      (this.zki = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(4))),
-      this.zki.BindCallback(this.o2i),
-      ModelManager_1.ModelManager.MonthCardModel.LocalOnceReward);
-    var e = ModelManager_1.ModelManager.MonthCardModel.LocalDailyReward;
+    var e = new Array(),
+      t = PayShopDefine_1.MONTH_CARD_SHOP_ID,
+      t =
+        ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(
+          t,
+        ).GetGetPayGiftData().ProductId,
+      t =
+        (e.push(t.toString()),
+        ControllerHolder_1.ControllerHolder.KuroSdkController.QueryProductByProductId(
+          e,
+        ),
+        (this.zki = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(4))),
+        this.zki.BindCallback(this.o2i),
+        ModelManager_1.ModelManager.MonthCardModel.LocalOnceReward),
+      e = ModelManager_1.ModelManager.MonthCardModel.LocalDailyReward;
     this.Zki.Refresh(t[0].ItemId, t[1]),
       this.e2i.Refresh(e[0].ItemId, e[1]),
       this.r2i(),
@@ -92,7 +92,7 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
         .PlayLevelSequenceByName("Loop");
   }
   i2i() {
-    const e = ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(
+    var e = ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(
       PayShopDefine_1.MONTH_CARD_SHOP_ID,
     );
     this.GetText(3).SetText(e.GetDirectPriceText());
@@ -127,7 +127,7 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
       ModelManager_1.ModelManager.MonthCardModel.RefreshNextShowPayButtonRedDotTime();
   }
   n2i() {
-    const e = ModelManager_1.ModelManager.MonthCardModel.GetRemainDays() >= 0;
+    var e = 0 <= ModelManager_1.ModelManager.MonthCardModel.GetRemainDays();
     this.GetItem(0).SetUIActive(e),
       this.GetText(1).SetUIActive(e),
       e &&
@@ -136,10 +136,9 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
         );
   }
   s2i() {
-    const e =
-      ModelManager_1.ModelManager.MonthCardModel.IsRemainDayInMaxLimit();
-    const t = this.GetItem(8);
-    const i = this.GetItem(7);
+    var e = ModelManager_1.ModelManager.MonthCardModel.IsRemainDayInMaxLimit(),
+      t = this.GetItem(8),
+      i = this.GetItem(7);
     e
       ? ((this.t2i = !0),
         this.zki.RefreshEnable(!0),
@@ -159,7 +158,7 @@ class GetItemPanel extends UiPanelBase_1.UiPanelBase {
     super(...arguments),
       (this.gIt = 0),
       (this.a2i = () => {
-        this.gIt !== 0 &&
+        0 !== this.gIt &&
           ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
             this.gIt,
           );
@@ -186,4 +185,4 @@ class GetItemPanel extends UiPanelBase_1.UiPanelBase {
     LguiUtil_1.LguiUtil.SetLocalTextNew(e, "Text_RoleCount_Text", t.toString());
   }
 }
-// # sourceMappingURL=MonthCardView.js.map
+//# sourceMappingURL=MonthCardView.js.map

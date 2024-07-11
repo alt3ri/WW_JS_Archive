@@ -144,4 +144,4 @@ class ConfigManager extends ConfigManagerBase_1.ConfigManagerBase {}
   (ConfigManager.PlatformConfig = void 0),
   (ConfigManager.CollectItemConfig = void 0),
   (ConfigManager.BossRushConfig = void 0);
-// # sourceMappingURL=ConfigManager.js.map
+//# sourceMappingURL=ConfigManager.js.map

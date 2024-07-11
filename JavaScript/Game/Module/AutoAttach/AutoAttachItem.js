@@ -43,12 +43,12 @@ class AutoAttachItem extends UiPanelBase_1.UiPanelBase {
   }
   vWe() {
     if ((this.MWe(), this.SourceView)) {
-      const i = Math.floor(this.SourceView.GetShowItemNum() / 2);
-      const s = this.SourceView.GetItemSize();
-      const h = this.SourceView.GetGap();
+      var i = Math.floor(this.SourceView.GetShowItemNum() / 2),
+        s = this.SourceView.GetItemSize(),
+        h = this.SourceView.GetGap();
       let t = 0;
       (t =
-        this.SourceView.GetIfCircle() || this.CurrentMoveDirection === 0
+        this.SourceView.GetIfCircle() || 0 === this.CurrentMoveDirection
           ? (this.CWe - i) * (s + h)
           : (i - this.CWe) * (s + h)),
         this.MoveItem(t);
@@ -58,16 +58,16 @@ class AutoAttachItem extends UiPanelBase_1.UiPanelBase {
     this.RootItem.SetAnchorOffsetX(0), this.RootItem.SetAnchorOffsetY(0);
   }
   MoveItem(t) {
-    const i = this.CurrentShowItemIndex;
-    var t = this.SWe(t);
+    var i = this.CurrentShowItemIndex,
+      t = this.SWe(t);
     (this.CurrentShowItemIndex = t[1]),
-      this.CurrentMoveDirection === 0
+      0 === this.CurrentMoveDirection
         ? this.RootItem.SetAnchorOffsetX(t[0])
         : this.RootItem.SetAnchorOffsetY(t[0]),
       this.SourceView.GetIfCircle() ||
         this.fWe ||
         ((t =
-          (this.CurrentShowItemIndex >= 0 &&
+          (0 <= this.CurrentShowItemIndex &&
             this.CurrentShowItemIndex < this.gWe) ||
           this.pWe),
         this.RootItem.SetUIActive(t)),
@@ -75,7 +75,7 @@ class AutoAttachItem extends UiPanelBase_1.UiPanelBase {
       this.OnMoveItem();
   }
   GetCurrentMovePercentage() {
-    const t = this.SourceView.GetViewSize();
+    var t = this.SourceView.GetViewSize();
     return (this.GetCurrentPosition() + t / 2) / t;
   }
   SWe(t) {
@@ -83,11 +83,11 @@ class AutoAttachItem extends UiPanelBase_1.UiPanelBase {
     return this.SourceView.GetIfCircle() ? this.EWe(t) : this.yWe(t);
   }
   EWe(t) {
-    let i = t;
-    let s = this.CurrentShowItemIndex;
-    const h = this.SourceView.GetItemSize();
-    const e = this.SourceView.GetGap();
-    const r = this.SourceView.GetShowItemNum();
+    let i = t,
+      s = this.CurrentShowItemIndex;
+    var h = this.SourceView.GetItemSize(),
+      e = this.SourceView.GetGap(),
+      r = this.SourceView.GetShowItemNum();
     if (this.IWe(i)) {
       if (!this.TWe(i)) {
         for (; !this.TWe(i); ) (i += (h + e) * Math.ceil(r + 1)), (s += r + 1);
@@ -100,20 +100,20 @@ class AutoAttachItem extends UiPanelBase_1.UiPanelBase {
     return [i, s];
   }
   yWe(t) {
-    let i = t;
-    let s = this.CurrentShowItemIndex;
-    const h = this.SourceView.GetItemSize();
-    const e = this.SourceView.GetGap();
-    const r = this.SourceView.GetShowItemNum();
+    let i = t,
+      s = this.CurrentShowItemIndex;
+    var h = this.SourceView.GetItemSize(),
+      e = this.SourceView.GetGap(),
+      r = this.SourceView.GetShowItemNum();
     if (this.IWe(i)) {
       if (!this.TWe(i))
         for (; !this.TWe(i); )
           (i += (h + e) * Math.ceil(r + 1)),
-            this.CurrentMoveDirection === 0 ? (s += r + 1) : (s -= r + 1);
+            0 === this.CurrentMoveDirection ? (s += r + 1) : (s -= r + 1);
     } else
       for (; !this.IWe(i); )
         (i -= (h + e) * Math.ceil(r + 1)),
-          this.CurrentMoveDirection === 0 ? (s -= r + 1) : (s += r + 1);
+          0 === this.CurrentMoveDirection ? (s -= r + 1) : (s += r + 1);
     return [i, s];
   }
   GetCurrentShowItemIndex() {
@@ -140,28 +140,28 @@ class AutoAttachItem extends UiPanelBase_1.UiPanelBase {
     (this.SelectState = !1), this.OnUnSelect();
   }
   GetCurrentPosition() {
-    return this.CurrentMoveDirection === 0
+    return 0 === this.CurrentMoveDirection
       ? this.RootItem.GetAnchorOffsetX()
       : this.RootItem.GetAnchorOffsetY();
   }
   RefreshItem() {
-    const t = this.AllData[this.CurrentShowItemIndex];
+    var t = this.AllData[this.CurrentShowItemIndex];
     this.fWe || void 0 !== t
       ? this.OnRefreshItem(t)
       : this.pWe && this.OnRefreshItem(void 0);
   }
   IWe(t) {
-    const i = this.SourceView.GetItemSize();
-    const s = this.SourceView.GetGap();
-    const h = this.SourceView.GetShowItemNum();
+    var i = this.SourceView.GetItemSize(),
+      s = this.SourceView.GetGap(),
+      h = this.SourceView.GetShowItemNum();
     return !((i + s) * Math.ceil((h + 1) / 2) < t);
   }
   TWe(t) {
-    const i = this.SourceView.GetItemSize();
-    const s = this.SourceView.GetGap();
-    const h = this.SourceView.GetShowItemNum();
+    var i = this.SourceView.GetItemSize(),
+      s = this.SourceView.GetGap(),
+      h = this.SourceView.GetShowItemNum();
     return !(t < -(i + s) * Math.ceil(h / 2));
   }
 }
 exports.AutoAttachItem = AutoAttachItem;
-// # sourceMappingURL=AutoAttachItem.js.map
+//# sourceMappingURL=AutoAttachItem.js.map

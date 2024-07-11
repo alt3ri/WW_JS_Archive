@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleVisionInfoPanelSkill = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const VisionAttributeItemOne_1 = require("../../../Phantom/Vision/View/VisionAttributeItemOne");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  VisionAttributeItemOne_1 = require("../../../Phantom/Vision/View/VisionAttributeItemOne");
 class RoleVisionInfoPanelSkill extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -47,9 +47,9 @@ class RoleVisionInfoPanelSkill extends UiPanelBase_1.UiPanelBase {
   }
   async Update(e) {
     await this.Ewt;
-    let i = 0;
-    let t = void 0;
-    let n;
+    let i = 0,
+      t = void 0;
+    var n;
     e.IsTrialRole()
       ? ((n = e.GetPhantomData().GetDataMap()),
         (t = n.get(0)),
@@ -72,13 +72,13 @@ class RoleVisionInfoPanelSkill extends UiPanelBase_1.UiPanelBase {
         : (this.Jdo.SetActive(!1), this.GetTexture(0).SetUIActive(!1));
   }
   zdo(e) {
-    var i = e?.GetCurrentSkillId();
-    var e = e?.GetIfActivePersonalSkill();
-    var i =
-      ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSkillBySkillId(
-        i,
-      );
-    var e = e ? i.BattleViewIcon : i.SpecialBattleViewIcon;
+    var i = e?.GetCurrentSkillId(),
+      e = e?.GetIfActivePersonalSkill(),
+      i =
+        ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSkillBySkillId(
+          i,
+        ),
+      e = e ? i.BattleViewIcon : i.SpecialBattleViewIcon;
     this.SetTextureByPath(e, this.GetTexture(0), "VisionEquipmentView");
   }
   OnBeforeDestroy() {
@@ -86,4 +86,4 @@ class RoleVisionInfoPanelSkill extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleVisionInfoPanelSkill = RoleVisionInfoPanelSkill;
-// # sourceMappingURL=RoleVisionInfoPanelSkill.js.map
+//# sourceMappingURL=RoleVisionInfoPanelSkill.js.map

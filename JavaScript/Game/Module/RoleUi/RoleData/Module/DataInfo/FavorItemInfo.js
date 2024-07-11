@@ -7,4 +7,4 @@ class FavorItemInfo {
   }
 }
 exports.FavorItemInfo = FavorItemInfo;
-// # sourceMappingURL=FavorItemInfo.js.map
+//# sourceMappingURL=FavorItemInfo.js.map

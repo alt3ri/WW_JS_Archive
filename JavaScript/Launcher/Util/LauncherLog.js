@@ -1,35 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LauncherLog = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const levelTrace = { 0: !0, 1: !1, 2: !1, 3: !1 };
-const levelName = { 0: "E", 1: "W", 2: "I", 3: "D" };
-const logProxy = {
-  0: puerts_1.logger.error,
-  1: puerts_1.logger.warn,
-  2: puerts_1.logger.info,
-  3: puerts_1.logger.log,
-};
-const DEFAULT_SKIP_INDEX = 3;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  levelTrace = { [0]: !0, 1: !1, 2: !1, 3: !1 },
+  levelName = { [0]: "E", 1: "W", 2: "I", 3: "D" },
+  logProxy = {
+    [0]: puerts_1.logger.error,
+    1: puerts_1.logger.warn,
+    2: puerts_1.logger.info,
+    3: puerts_1.logger.log,
+  },
+  DEFAULT_SKIP_INDEX = 3;
 class LauncherLog {
   static SetJsDebugId(r) {
-    r && r.length > 0 && (LauncherLog.U8 = `(${r})`);
+    r && 0 < r.length && (LauncherLog.U8 = `(${r})`);
   }
   static SetLevel(r) {
     LauncherLog.B8 = r;
   }
   static CheckError() {
-    return LauncherLog.B8 >= 0;
+    return 0 <= LauncherLog.B8;
   }
   static CheckWarn() {
-    return LauncherLog.B8 >= 1;
+    return 1 <= LauncherLog.B8;
   }
   static CheckInfo() {
-    return LauncherLog.B8 >= 2;
+    return 2 <= LauncherLog.B8;
   }
   static CheckDebug() {
-    return LauncherLog.B8 >= 3;
+    return 3 <= LauncherLog.B8;
   }
   static Error(r, ...e) {
     LauncherLog.b8(0, r, e, levelTrace[0]);
@@ -51,7 +51,7 @@ class LauncherLog {
       let r =
         `[${LauncherLog.o6}][${levelName[t]}][Launcher][${LauncherLog.ke()}] ` +
         n;
-      if (a.length > 0) {
+      if (0 < a.length) {
         r += " ";
         for (const u of a) r += `[${u[0]}: ${LauncherLog.G8(u[1])}]`;
       }
@@ -62,7 +62,7 @@ class LauncherLog {
     }
   }
   static ke() {
-    const r = new Date();
+    var r = new Date();
     return (
       `${r.getHours()}.${r.getMinutes()}.${r.getSeconds()}:` +
       r.getMilliseconds()
@@ -72,22 +72,22 @@ class LauncherLog {
     try {
       return JSON.stringify(r, (r, e) => {
         if (void 0 === e) return "undefined";
-        if (e === null) return "null";
-        const t = typeof e;
-        if (t == "bigint") return e.toString() + "n";
-        if (t == "function") return e.toString();
-        if (typeof e.ToString === "function") return e.ToString();
+        if (null === e) return "null";
+        var t = typeof e;
+        if ("bigint" == t) return e.toString() + "n";
+        if ("function" == t) return e.toString();
+        if ("function" == typeof e.ToString) return e.ToString();
         if (e instanceof Set) {
           let r = "";
           for (const n of e)
-            r.length === 0 ? (r += "Set(") : (r += ","),
+            0 === r.length ? (r += "Set(") : (r += ","),
               (r += JSON.stringify(n));
           return (r += ")");
         }
         if (e instanceof Map) {
           let r = "";
           for (const a of e)
-            r.length === 0 ? (r += "Map(") : (r += ","),
+            0 === r.length ? (r += "Map(") : (r += ","),
               (r += `[${JSON.stringify(a[0])}, ${JSON.stringify(a[1])}]`);
           return (r += ")");
         }
@@ -102,16 +102,16 @@ class LauncherLog {
   static G8(r) {
     return void 0 === r
       ? "undefined"
-      : r === null
+      : null === r
         ? "null"
-        : typeof r === "string"
+        : "string" == typeof r
           ? r
-          : LauncherLog.k8 && typeof r === "object"
+          : LauncherLog.k8 && "object" == typeof r
             ? LauncherLog.O8(r) ?? ""
             : r.toString();
   }
   static N8(n, a) {
-    const r = Error.prepareStackTrace;
+    var r = Error.prepareStackTrace;
     Error.prepareStackTrace = LauncherLog.F8;
     let o = void 0;
     if (
@@ -123,14 +123,14 @@ class LauncherLog {
       (Error.prepareStackTrace = r),
       o && Array.isArray(o))
     ) {
-      let e = "";
-      let t = "";
+      let e = "",
+        t = "";
       for (let r = a; r < o.length; ++r) {
-        var c;
-        var u;
-        var L;
-        var i;
-        let g = o[r];
+        var c,
+          u,
+          L,
+          i,
+          g = o[r];
         g &&
           ((c =
             ((c = g.getTypeName()) ? c + "." : "") +
@@ -143,7 +143,7 @@ class LauncherLog {
 `),
           puerts_1.convertSourceMap) &&
           i &&
-          i.length !== 0 &&
+          0 !== i.length &&
           ((L = (0, puerts_1.convertSourceMap)(i + ".map", u, g))
             ? ((i = LauncherLog.H8(L.source, "Src", 1)),
               (t += `	${c} (${i}:${L.line}:${L.column})
@@ -154,21 +154,20 @@ class LauncherLog {
 `;
       return (
         (r += e),
-        t.length > 0 && (r = (r += "TS 堆栈:a\n") + t),
+        0 < t.length && (r = (r += "TS 堆栈:a\n") + t),
         (r =
           UE.KuroStaticLibrary.GetBlueprintCallstack &&
           (n = UE.KuroStaticLibrary.GetBlueprintCallstack()) &&
-          n.length > 0
+          0 < n.length
             ? r + "BP 堆栈:\n" + n
             : r)
       );
     }
   }
-
   static H8(r, e, t) {
-    let n;
-    return r && r.length !== 0
-      ? (n = r.indexOf(e)) > 0
+    var n;
+    return r && 0 !== r.length
+      ? 0 < (n = r.indexOf(e))
         ? r.substring(n + e.length + t)
         : r
       : "unknown";
@@ -180,4 +179,4 @@ class LauncherLog {
   (LauncherLog.U8 = ""),
   (LauncherLog.F8 = (r, e) => e),
   (LauncherLog.V8 = { stack: void 0 });
-// # sourceMappingURL=LauncherLog.js.map
+//# sourceMappingURL=LauncherLog.js.map

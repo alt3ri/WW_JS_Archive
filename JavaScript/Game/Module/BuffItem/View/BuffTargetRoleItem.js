@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BuffTargetRoleItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const EAttributeId = Protocol_1.Aki.Protocol.KBs;
-const MediumItemGrid_1 = require("../../Common/MediumItemGrid/MediumItemGrid");
-const ANIMATION_LENGTH = 200;
-const LOW_HP_PERCENT = 0.2;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
+var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+const MediumItemGrid_1 = require("../../Common/MediumItemGrid/MediumItemGrid"),
+  ANIMATION_LENGTH = 200,
+  LOW_HP_PERCENT = 0.2;
 class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -32,7 +32,7 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
         this.Wgt && this.Wgt(this);
       }),
       (this.Zgt = (t, i, e) => {
-        let s;
+        var s;
         i !== e &&
           this.kgt &&
           ((s = this.kgt.Entity.GetComponent(156).GetCurrentValue(
@@ -85,18 +85,18 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
         : (this.o0t(), (this.Hgt += t)));
   }
   RefreshBuffTargetRoleItem(t) {
-    var i = (this.kgt = t).RoleConfigId;
-    const e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i);
-    const s = t.RoleLevel;
-    const h = Math.floor(t.CurrentAttribute);
-    var t = Math.floor(t.MaxAttribute);
-    var i = {
-      Type: 2,
-      ItemConfigId: i,
-      BottomTextId: "Text_LevelShow_Text",
-      BottomTextParameter: [s],
-      ElementId: e.ElementId,
-    };
+    var i = (this.kgt = t).RoleConfigId,
+      e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i),
+      s = t.RoleLevel,
+      h = Math.floor(t.CurrentAttribute),
+      t = Math.floor(t.MaxAttribute),
+      i = {
+        Type: 2,
+        ItemConfigId: i,
+        BottomTextId: "Text_LevelShow_Text",
+        BottomTextParameter: [s],
+        ElementId: e.ElementId,
+      };
     this.Xgt.Apply(i),
       this.SetCurrentValueBarPercent(h / t),
       this.r0t(h, t),
@@ -126,22 +126,22 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
       );
   }
   RefreshPreviewUseItem(t, i, e) {
-    const s = Math.min(t + e, i);
-    const h = Math.min(e, i - t);
+    var s = Math.min(t + e, i),
+      h = Math.min(e, i - t);
     this.SetCurrentValueBarPercent(t / i),
       this.SetPreviewValueBarPercent(s / i),
-      this.SetPreviewValueBarVisible(e > 0),
+      this.SetPreviewValueBarVisible(0 < e),
       this.SetAddValueText(Math.floor(h)),
-      this.n0t(e > 0),
+      this.n0t(0 < e),
       this.SetPreviewValueText(Math.floor(s), Math.floor(i));
   }
   ResetPreviewUseItem() {
-    const t = this.kgt.CurrentAttribute;
-    const i = this.kgt.MaxAttribute;
+    var t = this.kgt.CurrentAttribute,
+      i = this.kgt.MaxAttribute;
     this.SetPreviewValueBarVisible(!1), this.n0t(!1), this.r0t(t, i);
   }
   SetCurrentValueBarPercent(t) {
-    const i = this.GetSprite(4);
+    var i = this.GetSprite(4);
     i.SetChangeColor(t <= LOW_HP_PERCENT, i.changeColor), i.SetFillAmount(t);
   }
   SetPreviewValueBarPercent(t) {
@@ -154,7 +154,7 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
     this.GetSprite(3).SetFillAmount(t);
   }
   s0t(t) {
-    const i = this.GetSprite(3);
+    var i = this.GetSprite(3);
     i.SetChangeColor(t <= LOW_HP_PERCENT, i.changeColor);
   }
   SetAnimationValueBarVisible(t) {
@@ -167,7 +167,7 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
     this.GetText(1).SetUIActive(t);
   }
   r0t(t, i) {
-    const e = this.GetText(2);
+    var e = this.GetText(2);
     t <= 0
       ? e.SetText(`<color=#ff0000ff>${Math.ceil(t)}</color>/` + Math.ceil(i))
       : e.SetText(Math.ceil(t) + "/" + Math.ceil(i));
@@ -187,8 +187,8 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
     return this.Jgt;
   }
   SetNoneRole(t) {
-    const i = this.GetItem(8);
-    const e = this.GetItem(6);
+    var i = this.GetItem(8),
+      e = this.GetItem(6);
     i.SetUIActive(t), e.SetUIActive(!t);
   }
   GetUseBuffItemRoleData() {
@@ -201,7 +201,7 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
     const t = () => {
       this.$gt.SetUIActive(!0), this.$gt.ActivateSystem(!0);
     };
-    let i;
+    var i;
     this.Ygt
       ? t()
       : ((i =
@@ -237,9 +237,9 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
   }
   i0t() {
     (this.jgt = !1), (this.Hgt = -1);
-    const t = this.kgt.CurrentAttribute;
-    const i = this.kgt.MaxAttribute;
-    const e = this.kgt.GetAddAttribute();
+    var t = this.kgt.CurrentAttribute,
+      i = this.kgt.MaxAttribute,
+      e = this.kgt.GetAddAttribute();
     this.s0t(t / i),
       this.RefreshPreviewUseItem(t, i, e),
       this.SetAnimationValueBarVisible(!1),
@@ -249,10 +249,10 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
     this.Qgt = t;
   }
   o0t() {
-    const t = Math.min(this.Hgt / ANIMATION_LENGTH, 1);
+    var t = Math.min(this.Hgt / ANIMATION_LENGTH, 1);
     (this.Fgt = MathUtils_1.MathUtils.Lerp(this.Fgt, this.Vgt, t)),
       this.SetAnimationValueBarPercent(this.Fgt / this.Kgt);
   }
 }
 exports.BuffTargetRoleItem = BuffTargetRoleItem;
-// # sourceMappingURL=BuffTargetRoleItem.js.map
+//# sourceMappingURL=BuffTargetRoleItem.js.map

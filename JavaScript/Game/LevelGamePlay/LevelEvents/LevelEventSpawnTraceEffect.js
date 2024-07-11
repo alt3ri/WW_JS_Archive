@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventSpawnTraceEffect = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const QuestController_1 = require("../../Module/QuestNew/Controller/QuestController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  QuestController_1 = require("../../Module/QuestNew/Controller/QuestController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventSpawnTraceEffect extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments), (this.FRe = 0);
   }
   ExecuteNew(e, o) {
     e
-      ? o.Type !== 6 ||
+      ? 6 !== o.Type ||
         o.BtType !== Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error("Event", 19, "该事件仅用于任务行为树内配置")
@@ -23,4 +23,4 @@ class LevelEventSpawnTraceEffect extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventSpawnTraceEffect = LevelEventSpawnTraceEffect;
-// # sourceMappingURL=LevelEventSpawnTraceEffect.js.map
+//# sourceMappingURL=LevelEventSpawnTraceEffect.js.map

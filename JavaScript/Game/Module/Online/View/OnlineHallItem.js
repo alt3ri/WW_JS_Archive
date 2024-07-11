@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OnlineHallItem = void 0);
-const UE = require("ue");
-const BackgroundCardById_1 = require("../../../../Core/Define/ConfigQuery/BackgroundCardById");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const OnlineController_1 = require("../OnlineController");
-const TICK_INTERVAL_TIME = 100;
+const UE = require("ue"),
+  BackgroundCardById_1 = require("../../../../Core/Define/ConfigQuery/BackgroundCardById"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  OnlineController_1 = require("../OnlineController"),
+  TICK_INTERVAL_TIME = 100;
 class OnlineHallItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(i) {
     super(),
@@ -22,7 +22,7 @@ class OnlineHallItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.RGi = void 0),
       (this.P$t = () => {
         this.LGi
-          ? this.LGi.ApplyTimeLeftTime > 0
+          ? 0 < this.LGi.ApplyTimeLeftTime
             ? this.Q2t.SetText(
                 TimeUtil_1.TimeUtil.GetCoolDown(this.LGi.ApplyTimeLeftTime),
               )
@@ -33,7 +33,7 @@ class OnlineHallItem extends GridProxyAbstract_1.GridProxyAbstract {
             (this.RGi = void 0));
       }),
       (this.AGi = () => {
-        this.DGi === "OnlineWorldHallView"
+        "OnlineWorldHallView" === this.DGi
           ? OnlineController_1.OnlineController.ApplyJoinWorldRequest(
               this.LGi.PlayerId,
               ModelManager_1.ModelManager.OnlineModel.ShowFriend
@@ -105,7 +105,7 @@ class OnlineHallItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(i, e, t) {
     (this.LGi = i),
-      this.LGi.ApplyTimeLeftTime > 0
+      0 < this.LGi.ApplyTimeLeftTime
         ? (this.UGi(!1),
           (this.RGi = TimerSystem_1.TimerSystem.Forever(
             this.P$t,
@@ -113,30 +113,30 @@ class OnlineHallItem extends GridProxyAbstract_1.GridProxyAbstract {
           )))
         : this.UGi(!0);
     var r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
-      i.HeadId,
-    )?.RoleHeadIconBig;
-    var r =
-      (r && this.SetTextureByPath(r, this.GetTexture(3)),
-      ModelManager_1.ModelManager.FriendModel.IsMyFriend(i.PlayerId));
-    var s = this.GetText(0);
-    var r =
-      (r &&
-      void 0 !==
-        (r = ModelManager_1.ModelManager.FriendModel.GetFriendById(
-          i.PlayerId,
-        )?.FriendRemark) &&
-      r !== ""
-        ? LguiUtil_1.LguiUtil.SetLocalText(s, "NameMark", r)
-        : s.SetText(i.Name),
-      this.GetText(2).SetText("Lv." + i.Level),
-      this.GetText(7));
-    const o =
-      (i.Signature && i.Signature !== ""
-        ? r.SetText(i.Signature)
-        : LguiUtil_1.LguiUtil.SetLocalText(r, "DefaultSign"),
-      this.GetItem(21).SetUIActive(!0),
-      this.GetItem(5));
-    const h = this.GetItem(6);
+        i.HeadId,
+      )?.RoleHeadIconBig,
+      r =
+        (r && this.SetTextureByPath(r, this.GetTexture(3)),
+        ModelManager_1.ModelManager.FriendModel.IsMyFriend(i.PlayerId)),
+      s = this.GetText(0),
+      r =
+        (r &&
+        void 0 !==
+          (r = ModelManager_1.ModelManager.FriendModel.GetFriendById(
+            i.PlayerId,
+          )?.FriendRemark) &&
+        "" !== r
+          ? LguiUtil_1.LguiUtil.SetLocalText(s, "NameMark", r)
+          : s.SetText(i.Name),
+        this.GetText(2).SetText("Lv." + i.Level),
+        this.GetText(7)),
+      o =
+        (i.Signature && "" !== i.Signature
+          ? r.SetText(i.Signature)
+          : LguiUtil_1.LguiUtil.SetLocalText(r, "DefaultSign"),
+        this.GetItem(21).SetUIActive(!0),
+        this.GetItem(5)),
+      h = this.GetItem(6);
     switch (i.PlayerCount) {
       case 2:
         o.SetUIActive(!0), h.SetUIActive(!1);
@@ -147,19 +147,19 @@ class OnlineHallItem extends GridProxyAbstract_1.GridProxyAbstract {
       default:
         o.SetUIActive(!1), h.SetUIActive(!1);
     }
-    var s = ModelManager_1.ModelManager.WorldLevelModel.OriginWorldLevel;
-    var r = ModelManager_1.ModelManager.OnlineModel.EnterDiff;
-    const a = this.GetInteractionGroup(8);
-    const l = this.GetText(9);
-    var r =
-      (i.WorldLevel > s + r
-        ? (a.SetInteractable(!1),
-          (s = i.WorldLevel - r),
-          LguiUtil_1.LguiUtil.SetLocalText(l, "ApplyBtnDisable", s))
-        : (LguiUtil_1.LguiUtil.SetLocalText(l, "ApplyBtnEnable"),
-          a.SetInteractable(!0)),
-      i.PlayerCard);
-    r > 0 &&
+    var s = ModelManager_1.ModelManager.WorldLevelModel.OriginWorldLevel,
+      r = ModelManager_1.ModelManager.OnlineModel.EnterDiff,
+      a = this.GetInteractionGroup(8),
+      l = this.GetText(9),
+      r =
+        (i.WorldLevel > s + r
+          ? (a.SetInteractable(!1),
+            (s = i.WorldLevel - r),
+            LguiUtil_1.LguiUtil.SetLocalText(l, "ApplyBtnDisable", s))
+          : (LguiUtil_1.LguiUtil.SetLocalText(l, "ApplyBtnEnable"),
+            a.SetInteractable(!0)),
+        i.PlayerCard);
+    0 < r &&
       ((s = BackgroundCardById_1.configBackgroundCardById.GetConfig(r)),
       this.SetTextureByPath(s.LongCardPath, this.GetTexture(22)));
   }
@@ -170,4 +170,4 @@ class OnlineHallItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.OnlineHallItem = OnlineHallItem;
-// # sourceMappingURL=OnlineHallItem.js.map
+//# sourceMappingURL=OnlineHallItem.js.map

@@ -1,26 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configBattlePassUnlockPopByBattlePassTypeId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const BattlePassUnlockPop_1 = require("../Config/BattlePassUnlockPop");
-const DB = "db_battle_pass.db";
-const FILE = "z.战令.xlsx";
-const TABLE = "BattlePassUnlockPop";
-const COMMAND = "select BinData from `BattlePassUnlockPop` where TpyeID=?";
-const KEY_PREFIX = "BattlePassUnlockPopByBattlePassTypeId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  BattlePassUnlockPop_1 = require("../Config/BattlePassUnlockPop"),
+  DB = "db_battle_pass.db",
+  FILE = "z.战令.xlsx",
+  TABLE = "BattlePassUnlockPop",
+  COMMAND = "select BinData from `BattlePassUnlockPop` where TpyeID=?",
+  KEY_PREFIX = "BattlePassUnlockPopByBattlePassTypeId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX =
-  "configBattlePassUnlockPopByBattlePassTypeId.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configBattlePassUnlockPopByBattlePassTypeId.GetConfig(";
 exports.configBattlePassUnlockPopByBattlePassTypeId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -41,13 +40,14 @@ exports.configBattlePassUnlockPopByBattlePassTypeId = {
       if (
         (t =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "TpyeID",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "TpyeID",
+              o,
+            ]))
       ) {
-        var t;
-        var n = void 0;
+        var t,
+          n = void 0;
         if (
           (([t, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -74,4 +74,4 @@ exports.configBattlePassUnlockPopByBattlePassTypeId = {
     }
   },
 };
-// # sourceMappingURL=BattlePassUnlockPopByBattlePassTypeId.js.map
+//# sourceMappingURL=BattlePassUnlockPopByBattlePassTypeId.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FormationLevelUpItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class FormationLevelUpItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -21,4 +21,4 @@ class FormationLevelUpItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.FormationLevelUpItem = FormationLevelUpItem;
-// # sourceMappingURL=FormationLevelUpItem.js.map
+//# sourceMappingURL=FormationLevelUpItem.js.map

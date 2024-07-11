@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configRogueAffixById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const RogueAffix_1 = require("../Config/RogueAffix");
-const DB = "db_rogue.db";
-const FILE = "r.肉鸽.xlsx";
-const TABLE = "RogueAffix";
-const COMMAND = "select BinData from `RogueAffix` where Id=?";
-const KEY_PREFIX = "RogueAffixById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  RogueAffix_1 = require("../Config/RogueAffix"),
+  DB = "db_rogue.db",
+  FILE = "r.肉鸽.xlsx",
+  TABLE = "RogueAffix",
+  COMMAND = "select BinData from `RogueAffix` where Id=?",
+  KEY_PREFIX = "RogueAffixById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configRogueAffixById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configRogueAffixById.GetConfig(";
 exports.configRogueAffixById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configRogueAffixById = {
       if (
         (n =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var n;
-        var i = void 0;
+        var n,
+          i = void 0;
         if (
           (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configRogueAffixById = {
     }
   },
 };
-// # sourceMappingURL=RogueAffixById.js.map
+//# sourceMappingURL=RogueAffixById.js.map

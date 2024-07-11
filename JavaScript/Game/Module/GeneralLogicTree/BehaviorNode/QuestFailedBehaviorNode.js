@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestFailedBehaviorNode = void 0);
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const Net_1 = require("../../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const Global_1 = require("../../../Global");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const CharacterBuffIds_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds");
-const BehaviorNodeBase_1 = require("./BehaviorNodeBase");
-const TICK_INTERVAL_TIME = 500;
-const STALK_FAILED_DELAY_TIME = 1e3;
+const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  Global_1 = require("../../../Global"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  CharacterBuffIds_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds"),
+  BehaviorNodeBase_1 = require("./BehaviorNodeBase"),
+  TICK_INTERVAL_TIME = 500,
+  STALK_FAILED_DELAY_TIME = 1e3;
 class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
   constructor(e) {
     super(e),
@@ -32,11 +32,11 @@ class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
       (this.xXt = []),
       (this.iut = !1),
       (this.r6 = () => {
-        const e = ModelManager_1.ModelManager.TimeOfDayModel.GameTime.Second;
+        var e = ModelManager_1.ModelManager.TimeOfDayModel.GameTime.Second;
         (e < this.ae || e >= this.Cfe) && this.wXt();
       }),
       (this.Zpe = (e) => {
-        let t;
+        var t;
         this.BXt(!e),
           e !== this.RXt &&
             this.BtType !== Protocol_1.Aki.Protocol.NCs.Proto_BtTypeInvalid &&
@@ -85,14 +85,14 @@ class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
       }),
       (this.bXt = () => {
         var e =
-          ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTreeOwnerId(
-            this.TreeIncId,
-          );
-        var e = Protocol_1.Aki.Protocol.xKn.create({
-          T5n: e,
-          L5n: MathUtils_1.MathUtils.BigIntToLong(this.TreeIncId),
-          Jkn: this.NodeId,
-        });
+            ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTreeOwnerId(
+              this.TreeIncId,
+            ),
+          e = Protocol_1.Aki.Protocol.xKn.create({
+            T5n: e,
+            L5n: MathUtils_1.MathUtils.BigIntToLong(this.TreeIncId),
+            Jkn: this.NodeId,
+          });
         Net_1.Net.Call(18784, e, (e) => {
           e.uvs !== Protocol_1.Aki.Protocol.lkn.Sys &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
@@ -102,7 +102,7 @@ class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
         });
       }),
       (this.wXt = () => {
-        let e;
+        var e;
         this.UXt ||
           ((this.UXt = !0),
           this.BtType !== Protocol_1.Aki.Protocol.NCs.Proto_BtTypeInvalid &&
@@ -131,7 +131,7 @@ class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
   OnCreate(e) {
     return !(
       !e ||
-      e.Type !== "QuestFailed" ||
+      "QuestFailed" !== e.Type ||
       ((this.PXt = e.FailedCondition?.FailedTeleport?.IsConfirm),
       (this.DXt = e.FailedCondition?.TimeRange),
       this.DXt &&
@@ -142,7 +142,7 @@ class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
         ))),
       e.FailedCondition?.SneakPlayCondition && this.GXt(),
       e.FailedCondition?.EntityAlert?.EntityIds &&
-        e.FailedCondition?.EntityAlert?.EntityIds.length > 0 &&
+        0 < e.FailedCondition?.EntityAlert?.EntityIds.length &&
         ((this.xXt = e.FailedCondition.EntityAlert.EntityIds), this.NXt()),
       (this.CanGiveUp = e.FailedCondition?.CanGiveUp),
       (this.GiveUpText = e.FailedCondition?.TidGiveUpText),
@@ -166,7 +166,7 @@ class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
         this.DXt.EndTime.Minutes * TimeUtil_1.TimeUtil.Minute);
   }
   GXt() {
-    let e;
+    var e;
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnBattleStateChanged,
       this.Zpe,
@@ -175,7 +175,7 @@ class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
       (this.AXt = !0),
       Net_1.Net.Register(16339, (e) => {
         e = Number(MathUtils_1.MathUtils.LongToBigInt(e.jCs));
-        (this.RXt = e !== 0),
+        (this.RXt = 0 !== e),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnSneakFoundChange,
             this.RXt,
@@ -229,7 +229,7 @@ class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
       );
   }
   BXt(e) {
-    const t =
+    var t =
       Global_1.Global.BaseCharacter.GetEntityNoBlueprint().GetComponent(157);
     t?.Valid &&
       (e
@@ -245,4 +245,4 @@ class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
   }
 }
 exports.QuestFailedBehaviorNode = QuestFailedBehaviorNode;
-// # sourceMappingURL=QuestFailedBehaviorNode.js.map
+//# sourceMappingURL=QuestFailedBehaviorNode.js.map

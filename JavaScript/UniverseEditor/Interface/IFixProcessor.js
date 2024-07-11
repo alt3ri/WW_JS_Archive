@@ -11,4 +11,4 @@ function newPerformanceSetting(e = {}) {
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.newPerformanceSetting = void 0),
   (exports.newPerformanceSetting = newPerformanceSetting);
-// # sourceMappingURL=IFixProcessor.js.map
+//# sourceMappingURL=IFixProcessor.js.map

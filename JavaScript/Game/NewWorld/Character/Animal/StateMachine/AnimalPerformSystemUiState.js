@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AnimalPerformSystemUiState = void 0);
-const GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const AnimalPerformStateBase_1 = require("./AnimalPerformStateBase");
+const GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  AnimalPerformStateBase_1 = require("./AnimalPerformStateBase");
 class AnimalPerformSystemUiState extends AnimalPerformStateBase_1.AnimalPerformStateBase {
   constructor() {
     super(...arguments),
@@ -66,7 +66,7 @@ class AnimalPerformSystemUiState extends AnimalPerformStateBase_1.AnimalPerformS
             EventDefine_1.EEventName.OpenView,
             this.UKe,
           )),
-      t === 0 &&
+      0 === t &&
         this.AnimalEcologicalInterface.StateMachineInitializationComplete(),
       (t = this.Owner.GetComponent(185)) && this.gWo(t),
       this.EcologicalInterface.SystemUiStart());
@@ -84,10 +84,10 @@ class AnimalPerformSystemUiState extends AnimalPerformStateBase_1.AnimalPerformS
   }
   InitFeedingAnimalConfig(e, i) {
     if (e && i) {
-      const s = e.length;
+      var s = e.length;
       for (let t = 0; t < s; ++t) {
-        const n = e[t];
-        const a = i[t];
+        var n = e[t],
+          a = i[t];
         a && this.cWo.set(n, a);
       }
     }
@@ -101,4 +101,4 @@ class AnimalPerformSystemUiState extends AnimalPerformStateBase_1.AnimalPerformS
   }
 }
 exports.AnimalPerformSystemUiState = AnimalPerformSystemUiState;
-// # sourceMappingURL=AnimalPerformSystemUiState.js.map
+//# sourceMappingURL=AnimalPerformSystemUiState.js.map

@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CalabashLevelUpRewardItemGrid = exports.CalabashRewardItemData =
     void 0);
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const LoopScrollSmallItemGrid_1 = require("../../../Common/SmallItemGrid/LoopScrollSmallItemGrid");
+const ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  LoopScrollSmallItemGrid_1 = require("../../../Common/SmallItemGrid/LoopScrollSmallItemGrid");
 class CalabashRewardItemData {
   constructor() {
     (this.ReceiveState = 0), (this.ItemData = void 0);
@@ -17,24 +17,25 @@ class CalabashLevelUpRewardItemGrid extends LoopScrollSmallItemGrid_1.LoopScroll
   }
   OnRefresh(e, t, r) {
     this.Mne = e.ItemData[0].ItemId;
-    const a = e.ItemData[1];
+    var a = e.ItemData[1];
     this.bft(this.Mne, a, e);
   }
   bft(e, t, r) {
     if (
       ((this.Mne = e),
-      ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
-        this.Mne,
-      ) === 1)
+      1 ===
+        ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
+          this.Mne,
+        ))
     ) {
       e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(this.Mne);
       const a = {
         Data: r,
         Type: 2,
         ItemConfigId: this.Mne,
-        BottomText: (t ?? 0) > 0 ? "" + t : "",
+        BottomText: 0 < (t ?? 0) ? "" + t : "",
         QualityId: e.QualityId,
-        IsReceivedVisible: r?.ReceiveState === 3,
+        IsReceivedVisible: 3 === r?.ReceiveState,
       };
       void this.Apply(a);
     } else {
@@ -42,8 +43,8 @@ class CalabashLevelUpRewardItemGrid extends LoopScrollSmallItemGrid_1.LoopScroll
         Data: r,
         Type: 4,
         ItemConfigId: this.Mne,
-        BottomText: (t ?? 0) > 0 ? "" + t : "",
-        IsReceivedVisible: r?.ReceiveState === 3,
+        BottomText: 0 < (t ?? 0) ? "" + t : "",
+        IsReceivedVisible: 3 === r?.ReceiveState,
       };
       this.Apply(a);
     }
@@ -58,4 +59,4 @@ class CalabashLevelUpRewardItemGrid extends LoopScrollSmallItemGrid_1.LoopScroll
   }
 }
 exports.CalabashLevelUpRewardItemGrid = CalabashLevelUpRewardItemGrid;
-// # sourceMappingURL=CalabashLevelUpRewardItemGrid.js.map
+//# sourceMappingURL=CalabashLevelUpRewardItemGrid.js.map

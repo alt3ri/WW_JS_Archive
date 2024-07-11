@@ -11,4 +11,4 @@ class DynamicEntityMarkItemView extends DynamicConfigMarkItemView_1.DynamicConfi
   }
 }
 exports.DynamicEntityMarkItemView = DynamicEntityMarkItemView;
-// # sourceMappingURL=DynamicEntityMarkItemView.js.map
+//# sourceMappingURL=DynamicEntityMarkItemView.js.map

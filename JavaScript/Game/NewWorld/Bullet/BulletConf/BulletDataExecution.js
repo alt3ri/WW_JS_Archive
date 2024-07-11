@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletDataExecution = void 0);
-const UE = require("ue");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
 class BulletDataExecution {
   constructor(t) {
     (this.Pe = void 0),
@@ -28,17 +28,17 @@ class BulletDataExecution {
   _6o() {
     if (!this.ZVo) {
       this.ZVo = !0;
-      const t = this.Pe.GB组.ToAssetPathName();
-      if (t && t.length > 0 && t !== "None") {
-        const i = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
-          t,
-          UE.KuroBpDataAssetGroup,
-        )?.Data;
-        const e = i?.Num() ?? 0;
-        if (e > 0) {
+      var t = this.Pe.GB组.ToAssetPathName();
+      if (t && 0 < t.length && "None" !== t) {
+        var i = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+            t,
+            UE.KuroBpDataAssetGroup,
+          )?.Data,
+          e = i?.Num() ?? 0;
+        if (0 < e) {
           (this.e6o = new Array()), (this.SupportCamp = new Array());
           for (let t = (this.ReboundBitMask = 0); t < e; t++) {
-            const s = i.Get(t);
+            var s = i.Get(t);
             this.e6o.push(s);
           }
         }
@@ -48,7 +48,7 @@ class BulletDataExecution {
   get GeIdApplyToVictim() {
     if (!this.t6o) {
       this.t6o = new Array();
-      const i = this.Pe.受击对象进入应用的GE的Id;
+      var i = this.Pe.受击对象进入应用的GE的Id;
       for (let t = 0; t < i.Num(); ++t) this.t6o.push(i.Get(t));
     }
     return this.t6o;
@@ -63,7 +63,7 @@ class BulletDataExecution {
   get SendGeIdToVictim() {
     if (!this.o6o) {
       this.o6o = new Array();
-      const i = this.Pe.命中后对受击者应用GE的Id;
+      var i = this.Pe.命中后对受击者应用GE的Id;
       for (let t = 0; t < i.Num(); ++t) this.o6o.push(i.Get(t));
     }
     return this.o6o;
@@ -71,7 +71,7 @@ class BulletDataExecution {
   get SendGeIdToRoleInGame() {
     if (!this.r6o) {
       this.r6o = new Array();
-      const i = this.Pe.命中后对在场上角色应用的GE的Id;
+      var i = this.Pe.命中后对在场上角色应用的GE的Id;
       for (let t = 0; t < i.Num(); ++t) this.r6o.push(i.Get(t));
     }
     return this.r6o;
@@ -86,7 +86,7 @@ class BulletDataExecution {
   get SendGeIdToAttacker() {
     if (!this.s6o) {
       this.s6o = new Array();
-      const i = this.Pe.命中后对攻击者应用GE的Id;
+      var i = this.Pe.命中后对攻击者应用GE的Id;
       for (let t = 0; t < i.Num(); ++t) this.s6o.push(i.Get(t));
     }
     return this.s6o;
@@ -101,7 +101,7 @@ class BulletDataExecution {
   get EnergyRecoverGeIds() {
     if (!this.h6o) {
       this.h6o = new Array();
-      const i = this.Pe.能量恢复类GE数组的Id;
+      var i = this.Pe.能量恢复类GE数组的Id;
       for (let t = 0; t < i.Num(); ++t) this.h6o.push(i.Get(t));
     }
     return this.h6o;
@@ -118,4 +118,4 @@ class BulletDataExecution {
   }
 }
 exports.BulletDataExecution = BulletDataExecution;
-// # sourceMappingURL=BulletDataExecution.js.map
+//# sourceMappingURL=BulletDataExecution.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskWriteEntityId extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -22,7 +22,7 @@ class TsTaskWriteEntityId extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsBlackboardKeyWriteTo = this.BlackboardKeyWriteTo));
   }
   ReceiveTickAI(e, r, t) {
-    const s = e.AiController;
+    var s = e.AiController;
     if (s)
       if ((this.InitTsVariables(), this.TsBlackboardKeyTarget)) {
         let e = 0;
@@ -62,4 +62,4 @@ class TsTaskWriteEntityId extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskWriteEntityId;
-// # sourceMappingURL=TsTaskWriteEntityId.js.map
+//# sourceMappingURL=TsTaskWriteEntityId.js.map

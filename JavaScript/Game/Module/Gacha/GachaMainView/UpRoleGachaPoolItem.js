@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UpRoleGachaPoolItem = void 0);
-const UE = require("ue");
-const GachaPoolItem_1 = require("./GachaPoolItem");
-const RoleDescribeComponent_1 = require("./RoleDescribeComponent");
+const UE = require("ue"),
+  GachaPoolItem_1 = require("./GachaPoolItem"),
+  RoleDescribeComponent_1 = require("./RoleDescribeComponent");
 class UpRoleGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
   constructor() {
     super(...arguments), (this.mjt = void 0);
@@ -22,8 +22,8 @@ class UpRoleGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
   }
   Refresh() {
     if (this.GachaViewInfo) {
-      let e = this.GachaViewInfo.ShowIdList[0];
-      this.mjt.Update(e, this.GachaType !== 6);
+      var e = this.GachaViewInfo.ShowIdList[0];
+      this.mjt.Update(e, 6 !== this.GachaType);
       const t = this.GetTexture(0);
       this.SetTextureByPath(
         this.GachaViewInfo.ContentTexturePath,
@@ -48,4 +48,4 @@ class UpRoleGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
   }
 }
 exports.UpRoleGachaPoolItem = UpRoleGachaPoolItem;
-// # sourceMappingURL=UpRoleGachaPoolItem.js.map
+//# sourceMappingURL=UpRoleGachaPoolItem.js.map

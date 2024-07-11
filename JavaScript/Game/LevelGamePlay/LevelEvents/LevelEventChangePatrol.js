@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventChangePatrol = void 0);
-const TsBaseCharacter_1 = require("../../Character/TsBaseCharacter");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const TsBaseCharacter_1 = require("../../Character/TsBaseCharacter"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventChangePatrol extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, a) {
     a &&
@@ -15,4 +15,4 @@ class LevelEventChangePatrol extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventChangePatrol = LevelEventChangePatrol;
-// # sourceMappingURL=LevelEventChangePatrol.js.map
+//# sourceMappingURL=LevelEventChangePatrol.js.map

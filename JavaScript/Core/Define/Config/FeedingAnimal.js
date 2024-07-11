@@ -30,22 +30,22 @@ class FeedingAnimal {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetItemidsAt(t) {
     return this.itemids(t);
   }
   itemids(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   itemidsLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   itemidsArray() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -58,15 +58,15 @@ class FeedingAnimal {
     return this.gameplaytags(t);
   }
   gameplaytags(t, i) {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   gameplaytagsLength() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.FeedingAnimal = FeedingAnimal;
-// # sourceMappingURL=FeedingAnimal.js.map
+//# sourceMappingURL=FeedingAnimal.js.map

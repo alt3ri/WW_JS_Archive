@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configMainRoleConfigById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const MainRoleConfig_1 = require("../Config/MainRoleConfig");
-const DB = "db_main_role_change.db";
-const FILE = "z.主角切换.xlsx";
-const TABLE = "MainRoleConfig";
-const COMMAND = "select BinData from `MainRoleConfig` where Id = ?";
-const KEY_PREFIX = "MainRoleConfigById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  MainRoleConfig_1 = require("../Config/MainRoleConfig"),
+  DB = "db_main_role_change.db",
+  FILE = "z.主角切换.xlsx",
+  TABLE = "MainRoleConfig",
+  COMMAND = "select BinData from `MainRoleConfig` where Id = ?",
+  KEY_PREFIX = "MainRoleConfigById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configMainRoleConfigById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configMainRoleConfigById.GetConfig(";
 exports.configMainRoleConfigById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configMainRoleConfigById = {
       if (
         (e =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var e;
-        var i = void 0;
+        var e,
+          i = void 0;
         if (
           (([e, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configMainRoleConfigById = {
     }
   },
 };
-// # sourceMappingURL=MainRoleConfigById.js.map
+//# sourceMappingURL=MainRoleConfigById.js.map

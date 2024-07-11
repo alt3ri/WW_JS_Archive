@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkillCommonButton = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const DicStringInt_1 = require("./SubType/DicStringInt");
-const DicStringIntArray_1 = require("./SubType/DicStringIntArray");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  DicStringInt_1 = require("./SubType/DicStringInt"),
+  DicStringIntArray_1 = require("./SubType/DicStringIntArray");
 class SkillCommonButton {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -103,30 +103,30 @@ class SkillCommonButton {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   name(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   buttontype() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   actiontype() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   skillid() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetSkillidtagmapAt(t, i) {
     return this.skillidtagmap(t);
   }
   skillidtagmap(t, i) {
-    const s = this.J7.__offset(this.z7, 14);
+    var s = this.J7.__offset(this.z7, 14);
     return s
       ? (i || new DicStringInt_1.DicStringInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -135,53 +135,53 @@ class SkillCommonButton {
       : null;
   }
   skillidtagmapLength() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetSkillicontagsAt(t) {
     return this.skillicontags(t);
   }
   skillicontags(t, i) {
-    const s = this.J7.__offset(this.z7, 16);
+    var s = this.J7.__offset(this.z7, 16);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   skillicontagsLength() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetEnabletagsAt(t) {
     return this.enabletags(t);
   }
   enabletags(t, i) {
-    const s = this.J7.__offset(this.z7, 18);
+    var s = this.J7.__offset(this.z7, 18);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   enabletagsLength() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetDisabletagsAt(t) {
     return this.disabletags(t);
   }
   disabletags(t, i) {
-    const s = this.J7.__offset(this.z7, 20);
+    var s = this.J7.__offset(this.z7, 20);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   disabletagsLength() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetDisableskillidtagsAt(t, i) {
     return this.disableskillidtags(t);
   }
   disableskillidtags(t, i) {
-    const s = this.J7.__offset(this.z7, 22);
+    var s = this.J7.__offset(this.z7, 22);
     return s
       ? (i || new DicStringIntArray_1.DicStringIntArray()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -190,39 +190,39 @@ class SkillCommonButton {
       : null;
   }
   disableskillidtagsLength() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetHiddentagsAt(t) {
     return this.hiddentags(t);
   }
   hiddentags(t, i) {
-    const s = this.J7.__offset(this.z7, 24);
+    var s = this.J7.__offset(this.z7, 24);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   hiddentagsLength() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   iscdvisible() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   attributeid() {
-    const t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   maxattributeid() {
-    const t = this.J7.__offset(this.z7, 30);
+    var t = this.J7.__offset(this.z7, 30);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetAttributeidtagmapAt(t, i) {
     return this.attributeidtagmap(t);
   }
   attributeidtagmap(t, i) {
-    const s = this.J7.__offset(this.z7, 32);
+    var s = this.J7.__offset(this.z7, 32);
     return s
       ? (i || new DicStringIntArray_1.DicStringIntArray()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -231,30 +231,30 @@ class SkillCommonButton {
       : null;
   }
   attributeidtagmapLength() {
-    const t = this.J7.__offset(this.z7, 32);
+    var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   maxattributebursteffectid() {
-    const t = this.J7.__offset(this.z7, 34);
+    var t = this.J7.__offset(this.z7, 34);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   cdcompletedeffectid() {
-    const t = this.J7.__offset(this.z7, 36);
+    var t = this.J7.__offset(this.z7, 36);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   islongpresscontrolcamera() {
-    const t = this.J7.__offset(this.z7, 38);
+    var t = this.J7.__offset(this.z7, 38);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   longpresstime() {
-    const t = this.J7.__offset(this.z7, 40);
+    var t = this.J7.__offset(this.z7, 40);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetDynamiceffecttagmapAt(t, i) {
     return this.dynamiceffecttagmap(t);
   }
   dynamiceffecttagmap(t, i) {
-    const s = this.J7.__offset(this.z7, 42);
+    var s = this.J7.__offset(this.z7, 42);
     return s
       ? (i || new DicStringInt_1.DicStringInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -263,9 +263,9 @@ class SkillCommonButton {
       : null;
   }
   dynamiceffecttagmapLength() {
-    const t = this.J7.__offset(this.z7, 42);
+    var t = this.J7.__offset(this.z7, 42);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.SkillCommonButton = SkillCommonButton;
-// # sourceMappingURL=SkillCommonButton.js.map
+//# sourceMappingURL=SkillCommonButton.js.map

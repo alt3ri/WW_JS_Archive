@@ -1,35 +1,39 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, o, i) {
-    let r;
-    const s = arguments.length;
-    let n =
-      s < 3 ? e : i === null ? (i = Object.getOwnPropertyDescriptor(e, o)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      s = arguments.length,
+      n =
+        s < 3
+          ? e
+          : null === i
+            ? (i = Object.getOwnPropertyDescriptor(e, o))
+            : i;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(t, e, o, i);
     else
-      for (let a = t.length - 1; a >= 0; a--)
-        (r = t[a]) && (n = (s < 3 ? r(n) : s > 3 ? r(e, o, n) : r(e, o)) || n);
-    return s > 3 && n && Object.defineProperty(e, o, n), n;
+      for (var a = t.length - 1; 0 <= a; a--)
+        (r = t[a]) && (n = (s < 3 ? r(n) : 3 < s ? r(e, o, n) : r(e, o)) || n);
+    return 3 < s && n && Object.defineProperty(e, o, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcPasserbyComponent = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const Net_1 = require("../../../../../Core/Net/Net");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent");
-const GameSplineComponent_1 = require("../../../../LevelGamePlay/Common/GameSplineComponent");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const NPC_PB = "dps";
-const END_DISTANCE = 30;
-const ENTITY_REMOVE_DELAY = 3;
-const DEFUALT_MOVE_SPEED = 100;
+const Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  GameSplineComponent_1 = require("../../../../LevelGamePlay/Common/GameSplineComponent"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  NPC_PB = "dps",
+  END_DISTANCE = 30,
+  ENTITY_REMOVE_DELAY = 3,
+  DEFUALT_MOVE_SPEED = 100;
 let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -53,8 +57,8 @@ let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.
     );
   }
   OnStart() {
-    let t = this.Hte.CreatureData;
-    let e = t.ComponentDataMap.get(NPC_PB)?.dps;
+    var t = this.Hte.CreatureData,
+      e = t.ComponentDataMap.get(NPC_PB)?.dps;
     if (!e)
       return (
         Log_1.Log.CheckError() &&
@@ -77,7 +81,7 @@ let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.
           ]),
         !1
       );
-    const o = (0, IComponent_1.getComponent)(
+    var o = (0, IComponent_1.getComponent)(
       e.ComponentsData,
       "PasserbyNpcSpawnComponent",
     );
@@ -109,7 +113,7 @@ let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.
     );
   }
   HC(t) {
-    const e = new GameSplineComponent_1.GameSplineComponent(t);
+    var e = new GameSplineComponent_1.GameSplineComponent(t);
     if (!e.InitializeWithSubPoints(this.Hte.CreatureData.GetPbDataId()))
       return (
         Log_1.Log.CheckError() &&
@@ -122,7 +126,7 @@ let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.
           ),
         !1
       );
-    const o = e.PathPoint;
+    var o = e.PathPoint;
     if (o.length < 2)
       return (
         Log_1.Log.CheckError() &&
@@ -135,11 +139,11 @@ let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.
           ),
         !1
       );
-    const i = [];
-    const r = e.GetNumberOfSplinePoints();
+    var i = [],
+      r = e.GetNumberOfSplinePoints();
     let s = 0;
     for (const a of o) {
-      const n = {
+      var n = {
         Index: a.IsMain ? s : -1,
         Position: a.Point,
         MoveState: this.tu ?? IComponent_1.EPatrolMoveState.Walk,
@@ -182,7 +186,7 @@ let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.
     this.HC(this._in) && this.JLe && this.Gce.MoveAlongPath(this.JLe);
   }
   OnTick(t) {
-    let e;
+    var e;
     !this.lJo &&
       this.cin &&
       ((e = Vector_1.Vector.Dist(this.din, this.Hte.ActorLocationProxy)) <
@@ -192,7 +196,7 @@ let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.
   }
   Cin() {
     this.cin = !1;
-    const t = Protocol_1.Aki.Protocol.zYn.create();
+    var t = Protocol_1.Aki.Protocol.zYn.create();
     (t.rkn = MathUtils_1.MathUtils.NumberToLong(
       this.Hte.CreatureData.GetCreatureDataId(),
     )),
@@ -211,4 +215,4 @@ let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.
   NpcPasserbyComponent,
 )),
   (exports.NpcPasserbyComponent = NpcPasserbyComponent);
-// # sourceMappingURL=NpcPasserbyComponent.js.map
+//# sourceMappingURL=NpcPasserbyComponent.js.map

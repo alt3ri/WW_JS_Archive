@@ -33,26 +33,26 @@ class CustomMark {
     );
   }
   markid() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   markpic(t) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   GetShowrangeAt(t) {
     return this.showrange(t);
   }
   showrange(t) {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   showrangeLength() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   showrangeArray() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -62,13 +62,13 @@ class CustomMark {
       : null;
   }
   showpriority() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   scale() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readFloat32(this.z7 + t) : 1;
   }
 }
 exports.CustomMark = CustomMark;
-// # sourceMappingURL=CustomMark.js.map
+//# sourceMappingURL=CustomMark.js.map

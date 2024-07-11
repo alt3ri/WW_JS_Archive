@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventPostAkEvent = void 0);
-const AudioSystem_1 = require("../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventPostAkEvent extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, o) {
-    let t, n;
+    var t, n;
     e
       ? (e = e).EventConfig.Type === IAction_1.EPostAkEvent.Global
         ? ((t = (0, AudioSystem_1.parseAudioEventPath)(e.EventConfig.AkEvent)),
@@ -47,4 +47,4 @@ class LevelEventPostAkEvent extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventPostAkEvent = LevelEventPostAkEvent;
-// # sourceMappingURL=LevelEventPostAkEvent.js.map
+//# sourceMappingURL=LevelEventPostAkEvent.js.map

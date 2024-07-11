@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configQualityInfoById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const QualityInfo_1 = require("../Config/QualityInfo");
-const DB = "db_item.db";
-const FILE = "d.道具.xlsx";
-const TABLE = "QualityInfo";
-const COMMAND = "select BinData from `QualityInfo` where Id=?";
-const KEY_PREFIX = "QualityInfoById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  QualityInfo_1 = require("../Config/QualityInfo"),
+  DB = "db_item.db",
+  FILE = "d.道具.xlsx",
+  TABLE = "QualityInfo",
+  COMMAND = "select BinData from `QualityInfo` where Id=?",
+  KEY_PREFIX = "QualityInfoById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configQualityInfoById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configQualityInfoById.GetConfig(";
 exports.configQualityInfoById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configQualityInfoById = {
       if (
         (e =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var e;
-        var i = void 0;
+        var e,
+          i = void 0;
         if (
           (([e, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configQualityInfoById = {
     }
   },
 };
-// # sourceMappingURL=QualityInfoById.js.map
+//# sourceMappingURL=QualityInfoById.js.map

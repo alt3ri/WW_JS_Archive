@@ -1,35 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerRecommendItem = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const MediumItemGrid_1 = require("../../Common/MediumItemGrid/MediumItemGrid");
-const EditBattleTeamController_1 = require("../../EditBattleTeam/EditBattleTeamController");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const PERCENT = 0.01;
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  MediumItemGrid_1 = require("../../Common/MediumItemGrid/MediumItemGrid"),
+  EditBattleTeamController_1 = require("../../EditBattleTeam/EditBattleTeamController"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  PERCENT = 0.01;
 class TowerRecommendItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(),
       (this.Nke = void 0),
       (this.rDo = void 0),
       (this.Hke = (e, t, r) => {
-        const i = new MediumItemGrid_1.MediumItemGrid();
-        var t =
-          (i.Initialize(t.GetOwner()),
-          ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e.l3n));
-        var t = {
-          Type: 2,
-          ItemConfigId: e.l3n,
-          BottomTextId: "Text_LevelShow_Text",
-          BottomTextParameter: [e.r3n],
-          ElementId: t.ElementId,
-          IsDisable: !this.nDo(e),
-        };
+        var i = new MediumItemGrid_1.MediumItemGrid(),
+          t =
+            (i.Initialize(t.GetOwner()),
+            ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e.l3n)),
+          t = {
+            Type: 2,
+            ItemConfigId: e.l3n,
+            BottomTextId: "Text_LevelShow_Text",
+            BottomTextParameter: [e.r3n],
+            ElementId: t.ElementId,
+            IsDisable: !this.nDo(e),
+          };
         return i.Apply(t), { Key: r, Value: i };
       }),
       (this.sDo = () => {
@@ -63,10 +63,10 @@ class TowerRecommendItem extends GridProxyAbstract_1.GridProxyAbstract {
         this.GetHorizontalLayout(4),
         this.Hke,
       ));
-    const i = [];
+    var i = [];
     for (const a of e.SVn) i.push(a);
     i.sort((e, t) => {
-      let r, i;
+      var r, i;
       return e.r3n === t.r3n
         ? (r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
             e.l3n,
@@ -83,7 +83,7 @@ class TowerRecommendItem extends GridProxyAbstract_1.GridProxyAbstract {
   nDo(e) {
     e = e.l3n;
     if (ModelManager_1.ModelManager.RoleModel.IsMainRole(e)) {
-      const t = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerRoleId();
+      var t = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerRoleId();
       if (
         ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e)?.ElementId !==
         ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
@@ -104,4 +104,4 @@ class TowerRecommendItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.TowerRecommendItem = TowerRecommendItem;
-// # sourceMappingURL=TowerRecommendItem.js.map
+//# sourceMappingURL=TowerRecommendItem.js.map

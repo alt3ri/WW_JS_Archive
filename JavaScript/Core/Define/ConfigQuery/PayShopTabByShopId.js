@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configPayShopTabByShopId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const PayShopTab_1 = require("../Config/PayShopTab");
-const DB = "db_payshop.db";
-const FILE = "s.商业化商城.xlsx";
-const TABLE = "PayShopTab";
-const COMMAND = "select BinData from `PayShopTab` where ShopId=?";
-const KEY_PREFIX = "PayShopTabByShopId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  PayShopTab_1 = require("../Config/PayShopTab"),
+  DB = "db_payshop.db",
+  FILE = "s.商业化商城.xlsx",
+  TABLE = "PayShopTab",
+  COMMAND = "select BinData from `PayShopTab` where ShopId=?",
+  KEY_PREFIX = "PayShopTabByShopId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX = "configPayShopTabByShopId.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configPayShopTabByShopId.GetConfigList(";
 exports.configPayShopTabByShopId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -29,7 +29,7 @@ exports.configPayShopTabByShopId = {
     );
   },
   GetConfigList: (o, n = !0) => {
-    let i;
+    var i;
     if (
       (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -44,13 +44,14 @@ exports.configPayShopTabByShopId = {
         const r = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "ShopId",
               o,
-            ]) !== 1
+            ])
           )
             break;
-          let a = void 0;
+          var a = void 0;
           if (
             (([i, a] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -78,4 +79,4 @@ exports.configPayShopTabByShopId = {
     }
   },
 };
-// # sourceMappingURL=PayShopTabByShopId.js.map
+//# sourceMappingURL=PayShopTabByShopId.js.map

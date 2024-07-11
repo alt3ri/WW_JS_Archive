@@ -24,17 +24,17 @@ class BossRushScore {
     );
   }
   id() {
-    const s = this.J7.__offset(this.z7, 4);
+    var s = this.J7.__offset(this.z7, 4);
     return s ? this.J7.readInt32(this.z7 + s) : 0;
   }
   score() {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s ? this.J7.readInt32(this.z7 + s) : 0;
   }
   rewardid() {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s ? this.J7.readInt32(this.z7 + s) : 0;
   }
 }
 exports.BossRushScore = BossRushScore;
-// # sourceMappingURL=BossRushScore.js.map
+//# sourceMappingURL=BossRushScore.js.map

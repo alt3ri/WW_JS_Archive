@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SpecialPanelHandleBase = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const UiNavigationNewController_1 = require("../UiNavigationNewController");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  UiNavigationNewController_1 = require("../UiNavigationNewController");
 class SpecialPanelHandleBase {
   constructor(t) {
     (this.DefaultNavigationListener = []),
@@ -14,7 +14,7 @@ class SpecialPanelHandleBase {
       (this.S9 = t);
   }
   SetNavigationGroupDefaultListener(t) {
-    const e = this.GetNavigationGroup(t.GroupName);
+    var e = this.GetNavigationGroup(t.GroupName);
     e
       ? e.DefaultListener || (e.DefaultListener = t)
       : Log_1.Log.CheckError() &&
@@ -39,7 +39,7 @@ class SpecialPanelHandleBase {
     this._wo.delete(t);
   }
   GetListenerListByTag(t) {
-    const e = [];
+    var e = [];
     for (const i of this._wo) i.TagArray.Contains(t) && e.push(i);
     return e;
   }
@@ -69,9 +69,9 @@ class SpecialPanelHandleBase {
     return this.DefaultNavigationListener;
   }
   OnDefaultNavigationListenerList(i) {
-    const r = [];
+    var r = [];
     for (let t = 0, e = i.Num(); t < e; ++t) {
-      const s = i
+      var s = i
         .Get(t)
         ?.GetComponentByClass(
           UE.TsUiNavigationBehaviorListener_C.StaticClass(),
@@ -96,4 +96,4 @@ class SpecialPanelHandleBase {
   OnClear() {}
 }
 exports.SpecialPanelHandleBase = SpecialPanelHandleBase;
-// # sourceMappingURL=SpecialPanelHandleBase.js.map
+//# sourceMappingURL=SpecialPanelHandleBase.js.map

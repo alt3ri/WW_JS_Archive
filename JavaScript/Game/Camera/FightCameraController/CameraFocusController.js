@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraFocusController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const Vector2D_1 = require("../../../Core/Utils/Math/Vector2D");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CameraControllerBase_1 = require("./CameraControllerBase");
-const ARM_OFFSET_Y_SPEED = 100;
-const DEFAULT_FPS = 60;
-const FIRST_THRESHOLD = 0.5;
-const FIRST_THRESHOLD_SQUARED = FIRST_THRESHOLD * FIRST_THRESHOLD;
+const Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  Vector2D_1 = require("../../../Core/Utils/Math/Vector2D"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CameraControllerBase_1 = require("./CameraControllerBase"),
+  ARM_OFFSET_Y_SPEED = 100,
+  DEFAULT_FPS = 60,
+  FIRST_THRESHOLD = 0.5,
+  FIRST_THRESHOLD_SQUARED = FIRST_THRESHOLD * FIRST_THRESHOLD;
 class CameraFocusController extends CameraControllerBase_1.CameraControllerBase {
   constructor() {
     super(...arguments),
@@ -106,7 +106,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
   }
   OnEnable() {
     (this.RelativeYawHardMin < 0 ||
-      this.RelativeYawHardMin > 180 ||
+      180 < this.RelativeYawHardMin ||
       this.RelativeYawHardMin > this.RelativeYawHardMax) &&
       Log_1.Log.CheckError() &&
       Log_1.Log.Error(
@@ -116,7 +116,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
           this.RelativeYawHardMax,
       ),
       (this.RelativeYawHardMax < 0 ||
-        this.RelativeYawHardMax > 180 ||
+        180 < this.RelativeYawHardMax ||
         this.RelativeYawHardMax < this.RelativeYawHardMin) &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -126,7 +126,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
             this.RelativeYawHardMin,
         ),
       (this.RelativePitchHardMin < 0 ||
-        this.RelativePitchHardMin > 180 ||
+        180 < this.RelativePitchHardMin ||
         this.RelativePitchHardMin > this.RelativePitchHardMax) &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -136,7 +136,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
             this.RelativePitchHardMax,
         ),
       (this.RelativePitchHardMax < 0 ||
-        this.RelativePitchHardMax > 180 ||
+        180 < this.RelativePitchHardMax ||
         this.RelativePitchHardMax < this.RelativePitchHardMin) &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -150,7 +150,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
       (this.AddCameraOffsetY = 0);
   }
   InitFocusData(t, i, s, h) {
-    h !== 0 &&
+    0 !== h &&
       ((this.a_e = t),
       (this.FocusLimitLength = h),
       (this.FocusLimitPitchSpeed = s),
@@ -180,49 +180,51 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
       (!this.Camera.IsModifiedArmRotation || this.__e)
     ) {
       this.__e = !1;
-      let [r, n] =
-        this.Camera.CharacterEntityHandle.Entity.GetComponent(
-          52,
-        ).GetCameraInput();
-      const l = this.Camera.CurrentCamera.ArmRotation;
-      var M = this.Camera.PlayerLocation;
-      var M =
-        (this.Camera.TargetLocation.Subtraction(M, this.s_e),
-        this.Camera.ContainsAnyTag([-1150819426, 1260125908]));
+      var [r, n] =
+          this.Camera.CharacterEntityHandle.Entity.GetComponent(
+            52,
+          ).GetCameraInput(),
+        l = this.Camera.CurrentCamera.ArmRotation,
+        M = this.Camera.PlayerLocation,
+        M =
+          (this.Camera.TargetLocation.Subtraction(M, this.s_e),
+          this.Camera.ContainsAnyTag([-1150819426, 1260125908]));
       void 0 === this.AddCameraOffsetY && (this.AddCameraOffsetY = 0);
-      let t = 0;
-      let i = !1;
-      let s = 0;
-      let h = 0;
-      let a = 0;
-      let e = 0;
+      let t = 0,
+        i = !1,
+        s = 0,
+        h = 0,
+        a = 0,
+        e = 0;
       (this.Sle.Pitch = this.Camera.AdjustPitch(this.s_e)),
         (this.Sle.Yaw =
           Math.atan2(this.s_e.Y, this.s_e.X) * MathUtils_1.MathUtils.RadToDeg);
-      const _ = MathUtils_1.MathUtils.WrapAngle(
-        this.Camera.CameraRotation.Yaw - this.Sle.Yaw,
-      );
-      const S = MathUtils_1.MathUtils.WrapAngle(
-        this.Camera.CameraRotation.Pitch - this.Sle.Pitch,
-      );
-      const R = _ >= 0 ? 1 : -1;
-      const g = S >= 0 ? 1 : -1;
+      var _ = MathUtils_1.MathUtils.WrapAngle(
+          this.Camera.CameraRotation.Yaw - this.Sle.Yaw,
+        ),
+        S = MathUtils_1.MathUtils.WrapAngle(
+          this.Camera.CameraRotation.Pitch - this.Sle.Pitch,
+        ),
+        R = 0 <= _ ? 1 : -1,
+        g = 0 <= S ? 1 : -1;
       if (M) {
         if (this.YawSignAdaptionOn) {
           var M =
-            (r *= ModelManager_1.ModelManager.PlatformModel.IsGamepad()
-              ? this.HardLockInputYawSensitivityGamepad
-              : this.HardLockInputYawSensitivity) >= 0
-              ? 1
-              : -1;
-          var d =
-            (n = -(n *= ModelManager_1.ModelManager.PlatformModel.IsGamepad()
-              ? this.HardLockInputPitchSensitivityGamepad
-              : this.HardLockInputPitchSensitivity)) >= 0
-              ? 1
-              : -1;
+              0 <=
+              (r *= ModelManager_1.ModelManager.PlatformModel.IsGamepad()
+                ? this.HardLockInputYawSensitivityGamepad
+                : this.HardLockInputYawSensitivity)
+                ? 1
+                : -1,
+            d =
+              0 <=
+              (n = -(n *= ModelManager_1.ModelManager.PlatformModel.IsGamepad()
+                ? this.HardLockInputPitchSensitivityGamepad
+                : this.HardLockInputPitchSensitivity))
+                ? 1
+                : -1;
           if (
-            (this.h_e === 0 &&
+            (0 === this.h_e &&
               ((this.h_e = R),
               (this.u_e = Time_1.Time.Now + this.YawSignAdaptionCooldown)),
             Time_1.Time.Now > this.u_e &&
@@ -238,7 +240,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
             const c = _ + r;
             R * c < 0 &&
               (R == M &&
-                this.RelativeYawHardMax !== 180 &&
+                180 !== this.RelativeYawHardMax &&
                 ((r = MathUtils_1.MathUtils.WrapAngle(
                   this.Sle.Yaw + this.h_e * this.RelativeYawHardMax,
                 )),
@@ -249,7 +251,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
                 (s = Math.min(v, r)),
                 (i = !0)),
               R != M) &&
-              this.RelativeYawHardMin !== 0 &&
+              0 !== this.RelativeYawHardMin &&
               ((v = MathUtils_1.MathUtils.WrapAngle(
                 this.Sle.Yaw + this.h_e * this.RelativeYawHardMax,
               )),
@@ -302,21 +304,21 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
           ))
         : (this.AddCameraOffsetY = t);
       var v = MathUtils_1.MathUtils.Lerp(
-        this.RelativeRotationLagRatioMin,
-        this.RelativeRotationLagRatioMax,
-        this.RelativeRotationLagRatioCurve.GetCurrentValue(
-          (this.s_e.Size2D() - this.RelativeRotationLagDistanceRangeMin) /
-            (this.RelativeRotationLagDistanceRangeMax -
-              this.RelativeRotationLagDistanceRangeMin),
+          this.RelativeRotationLagRatioMin,
+          this.RelativeRotationLagRatioMax,
+          this.RelativeRotationLagRatioCurve.GetCurrentValue(
+            (this.s_e.Size2D() - this.RelativeRotationLagDistanceRangeMin) /
+              (this.RelativeRotationLagDistanceRangeMax -
+                this.RelativeRotationLagDistanceRangeMin),
+          ),
         ),
-      );
-      var d = MathUtils_1.MathUtils.Lerp(
-        this.RelativeRotationLagSpeedMin,
-        this.RelativeRotationLagSpeedMax,
-        this.RelativeRotationLagCurve.GetCurrentValue(
-          Math.abs(a) / this.RelativeRotationLagAngleRange,
-        ),
-      );
+        d = MathUtils_1.MathUtils.Lerp(
+          this.RelativeRotationLagSpeedMin,
+          this.RelativeRotationLagSpeedMax,
+          this.RelativeRotationLagCurve.GetCurrentValue(
+            Math.abs(a) / this.RelativeRotationLagAngleRange,
+          ),
+        );
       MathUtils_1.MathUtils.RotatorInterpTo(
         l,
         this.Sle,
@@ -335,13 +337,13 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
     }
   }
   UpdateShowTarget(t) {
-    let i, s, h;
+    var i, s, h;
     !this.Camera.ContainsTag(-1150819426) ||
     (([s, h] =
       this.Camera.CharacterEntityHandle.Entity.GetComponent(
         52,
       ).GetCameraInput()),
-    s === 0 && h === 0)
+    0 === s && 0 === h)
       ? (this.l_e.Reset(), (this.Qyn = !0))
       : ((h = -h),
         (i =
@@ -369,7 +371,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
         ));
   }
   UpdateDeactivateInternal(t) {
-    let i;
+    var i;
     void 0 !== this.AddCameraOffsetY &&
       ((i = Math.abs(0 - this.AddCameraOffsetY)) > ARM_OFFSET_Y_SPEED * t
         ? (this.AddCameraOffsetY = MathUtils_1.MathUtils.Lerp(
@@ -380,7 +382,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
         : (this.AddCameraOffsetY = void 0));
   }
   ShouldSoftUnlock() {
-    let [t, i] =
+    var [t, i] =
       this.Camera.CharacterEntityHandle.Entity.GetComponent(
         52,
       ).GetCameraInput();
@@ -397,4 +399,4 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
   }
 }
 exports.CameraFocusController = CameraFocusController;
-// # sourceMappingURL=CameraFocusController.js.map
+//# sourceMappingURL=CameraFocusController.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController");
 class TsDecoratorNowTimeCompare extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -24,7 +24,7 @@ class TsDecoratorNowTimeCompare extends UE.BTDecorator_BlueprintBase {
       (this.TsCompareValue = this.CompareValue));
   }
   PerformConditionCheckAI(r, e) {
-    let o, t;
+    var o, t;
     return (
       this.InitTsVariables(),
       !!this.TsBlackboardKey &&
@@ -50,4 +50,4 @@ class TsDecoratorNowTimeCompare extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorNowTimeCompare;
-// # sourceMappingURL=TsDecoratorNowTimeCompare.js.map
+//# sourceMappingURL=TsDecoratorNowTimeCompare.js.map

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TimeOfDayModel = exports.TodDayTime = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const TimeOfDayDefine_1 = require("./TimeOfDayDefine");
-const TimeOfDaySecondItem_1 = require("./Views/TimeOfDaySecondItem");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
+const Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  TimeOfDayDefine_1 = require("./TimeOfDayDefine"),
+  TimeOfDaySecondItem_1 = require("./Views/TimeOfDaySecondItem"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
 class TodDayTime {
   constructor() {
     this.UIo = 0;
@@ -55,11 +55,11 @@ class TodDayTime {
     return e < 0 ? 0 : e % TimeOfDayDefine_1.TOD_SECOND_PER_DAY;
   }
   static ConvertToHourMinuteString(e) {
-    const i = Math.floor(e / TimeOfDayDefine_1.TOD_SECOND_PER_HOUR);
-    var e = Math.floor(
-      (e - i * TimeOfDayDefine_1.TOD_SECOND_PER_HOUR) /
-        TimeOfDayDefine_1.TOD_MINUTE_PER_HOUR,
-    );
+    var i = Math.floor(e / TimeOfDayDefine_1.TOD_SECOND_PER_HOUR),
+      e = Math.floor(
+        (e - i * TimeOfDayDefine_1.TOD_SECOND_PER_HOUR) /
+          TimeOfDayDefine_1.TOD_MINUTE_PER_HOUR,
+      );
     return ("0" + i).slice(-2) + ":" + ("0" + e).slice(-2);
   }
   static ConvertToDay(e) {
@@ -82,8 +82,8 @@ class TodDayTime {
   }
   static CheckInMinuteSpan(e, i) {
     if (!(e < 0 || e > TimeOfDayDefine_1.TOD_MINUTE_PER_DAY)) {
-      const t = i[0];
-      var i = i[1];
+      var t = i[0],
+        i = i[1];
       if (t < i) {
         if (t <= e && e < i) return !0;
       } else if (t <= e || e < i) return !0;
@@ -137,7 +137,7 @@ class TimeOfDayModel extends ModelBase_1.ModelBase {
   }
   CheckCanCacheRecord() {
     return (
-      this.xIo === 0 ||
+      0 === this.xIo ||
       !(
         Time_1.Time.Now - this.xIo <
         TimeOfDayDefine_1.TOD_SAVE_CD_MINUTE *
@@ -147,7 +147,7 @@ class TimeOfDayModel extends ModelBase_1.ModelBase {
     );
   }
   IsCurrentTimePassedNormally() {
-    return this.bIo === 0
+    return 0 === this.bIo
       ? this.GameTime.Second >=
           TimeOfDayDefine_1.TOD_SECOND_PER_DAY -
             TimeOfDayDefine_1.TOD_SAVE_CD_SECONDS
@@ -156,21 +156,21 @@ class TimeOfDayModel extends ModelBase_1.ModelBase {
             TimeOfDayDefine_1.TOD_SECOND_PER_DAY -
               TimeOfDayDefine_1.TOD_SAVE_CD_SECONDS +
               this.GameTime.Second || this.bIo <= this.GameTime.Second
-        : this.GameTime.Second - this.bIo > 0 &&
+        : 0 < this.GameTime.Second - this.bIo &&
           this.GameTime.Second - this.bIo <
             TimeOfDayDefine_1.TOD_SAVE_CD_SECONDS;
   }
   GetTimeOfDayShowData() {
-    const i = new Array();
-    const t = ConfigManager_1.ConfigManager.TimeOfDayConfig.GetTimePresets();
+    var i = new Array(),
+      t = ConfigManager_1.ConfigManager.TimeOfDayConfig.GetTimePresets();
     let r = 0;
-    let n;
-    const a = this.GameTime.Second;
-    const s =
-      ConfigManager_1.ConfigManager.TimeOfDayConfig.GetDayTimeChangePresets();
+    var n,
+      a = this.GameTime.Second,
+      s =
+        ConfigManager_1.ConfigManager.TimeOfDayConfig.GetDayTimeChangePresets();
     for (let e = 0; e < s.length; e++)
-      for (const [o] of t)
-        (s[e].ChangeDayNum === 0 && a > o) ||
+      for (var [o] of t)
+        (0 === s[e].ChangeDayNum && a > o) ||
           (((n = new TimeOfDaySecondItem_1.TimeOfDaySecondItemSt()).Id = r),
           (n.ChangeDayIndex = e),
           (n.SetTime = o),
@@ -192,4 +192,4 @@ class TimeOfDayModel extends ModelBase_1.ModelBase {
   }
 }
 exports.TimeOfDayModel = TimeOfDayModel;
-// # sourceMappingURL=TimeOfDayModel.js.map
+//# sourceMappingURL=TimeOfDayModel.js.map

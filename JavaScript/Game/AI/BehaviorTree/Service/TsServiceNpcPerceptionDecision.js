@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const WorldFunctionLibrary_1 = require("../../../World/Bridge/WorldFunctionLibrary");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsAiController_1 = require("../../Controller/TsAiController");
+const UE = require("ue"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  WorldFunctionLibrary_1 = require("../../../World/Bridge/WorldFunctionLibrary"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsAiController_1 = require("../../Controller/TsAiController");
 class TsServiceNpcPerceptionDecision extends UE.BTService_BlueprintBase {
   ReceiveTickAI(e, r, o) {
     if (e instanceof TsAiController_1.default) {
       e = e.AiController;
       const i = e.CharActorComp.Entity;
-      const t = i.Id;
-      let l = e.AiPerception.AllEnemies;
-      let r = 0;
-      let o = 0;
-      if (l && l.size > 0)
+      var t = i.Id,
+        l = e.AiPerception.AllEnemies;
+      let r = 0,
+        o = 0;
+      if (l && 0 < l.size)
         for (const n of l)
           switch (WorldFunctionLibrary_1.default.GetEntityTypeByEntity(n)) {
             case Protocol_1.Aki.Protocol.HBs.Proto_Monster:
@@ -51,4 +51,4 @@ class TsServiceNpcPerceptionDecision extends UE.BTService_BlueprintBase {
   }
 }
 exports.default = TsServiceNpcPerceptionDecision;
-// # sourceMappingURL=TsServiceNpcPerceptionDecision.js.map
+//# sourceMappingURL=TsServiceNpcPerceptionDecision.js.map

@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HudUnitManager = void 0);
 class HudUnitManager {
   static New(t) {
-    const s = new t();
-    var t = (s.Initialize(), t.name);
+    var s = new t(),
+      t = (s.Initialize(), t.name);
     this.Hri.set(t, s);
   }
   static TryNew(t) {
@@ -43,4 +43,4 @@ class HudUnitManager {
   new Array()),
   (HudUnitManager.Hri = new Map()),
   (HudUnitManager.TickCount = 0);
-// # sourceMappingURL=HudUnitManager.js.map
+//# sourceMappingURL=HudUnitManager.js.map

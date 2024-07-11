@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Lru = void 0);
-const Log_1 = require("../Common/Log");
-const USED_THRESHOLD = 3;
+const Log_1 = require("../Common/Log"),
+  USED_THRESHOLD = 3;
 class Node {
   constructor(t, i) {
     (this.Key = t),
@@ -67,18 +67,18 @@ class Lru {
         this.d7();
   }
   get HitRate() {
-    return this.h6 > 0 ? this.h6 / (this.h6 + this.l6) : 0;
+    return 0 < this.h6 ? this.h6 / (this.h6 + this.l6) : 0;
   }
   get UsedAvg() {
-    return this.n6 > 0 ? this.u7 / this.n6 : 0;
+    return 0 < this.n6 ? this.u7 / this.n6 : 0;
   }
   get ThresholdUsedRate() {
-    return this.n6 > 0 ? this.c7 / this.n6 : 0;
+    return 0 < this.n6 ? this.c7 / this.n6 : 0;
   }
   Create(t) {
     if (this.a7) {
-      let i;
-      const s = this.a7(t);
+      var i,
+        s = this.a7(t);
       if (s)
         return (
           this.m7.register(s, t, s), (i = new Node(t, s)), this.ve.set(s, i), s
@@ -91,12 +91,12 @@ class Lru {
   }
   Get(t) {
     if (this.l7 && Lru.IsLruEnabledGlobal) {
-      const i = this._7.get(t);
+      var i = this._7.get(t);
       if (i) {
-        const s = i.values().next().value;
+        var s = i.values().next().value;
         if (s)
           return (
-            i.delete(s) && i.size === 0 && this._7.delete(t),
+            i.delete(s) && 0 === i.size && this._7.delete(t),
             this.C7(s),
             (s.Count += 1),
             (this.h6 = this.h6 * this.a6 + 1),
@@ -127,7 +127,7 @@ class Lru {
       );
     if (!this.l7 || !Lru.IsLruEnabledGlobal)
       return this.m7.unregister(t), this.ve.delete(t), !1;
-    const i = this.ve.get(t);
+    var i = this.ve.get(t);
     if (!i)
       return (
         Log_1.Log.CheckError() &&
@@ -177,7 +177,7 @@ class Lru {
       t.Count >= USED_THRESHOLD && --this.c7;
   }
   d7() {
-    let t, i, s;
+    var t, i, s;
     this.i7 &&
       ((t = this.i7),
       this.C7(t),
@@ -186,11 +186,11 @@ class Lru {
       this.m7.unregister(i),
       (s = this._7.get(t.Key)) &&
         s.delete(t) &&
-        s.size === 0 &&
+        0 === s.size &&
         this._7.delete(t.Key),
       this.ve.delete(i),
       this.h7?.(i));
   }
 }
 (exports.Lru = Lru).IsLruEnabledGlobal = !0;
-// # sourceMappingURL=Lru.js.map
+//# sourceMappingURL=Lru.js.map

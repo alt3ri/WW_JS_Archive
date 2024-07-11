@@ -19,14 +19,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.getComponentsTypeByEntityType =
     exports.entityConfig =
       void 0);
-const IComponent_1 = require("../../Interface/IComponent");
-const IEntity_1 = require("../../Interface/IEntity");
-const IGlobal_1 = require("../../Interface/IGlobal");
-const Init_1 = require("../../Interface/Init");
-const IUtil_1 = require("../../Interface/IUtil");
-const File_1 = require("../Misc/File");
-const Util_1 = require("../Misc/Util");
-const SegmentIdGenerator_1 = require("./SegmentIdGenerator");
+const IComponent_1 = require("../../Interface/IComponent"),
+  IEntity_1 = require("../../Interface/IEntity"),
+  IGlobal_1 = require("../../Interface/IGlobal"),
+  Init_1 = require("../../Interface/Init"),
+  IUtil_1 = require("../../Interface/IUtil"),
+  File_1 = require("../Misc/File"),
+  Util_1 = require("../Misc/Util"),
+  SegmentIdGenerator_1 = require("./SegmentIdGenerator");
 function getComponentsTypeByEntityType(t) {
   return exports.entityConfig.ComponentsByEntity[t] || [];
 }
@@ -46,9 +46,7 @@ function isEntityTypeContainsComponent(t, e) {
   return !!exports.entityComponentMap.get(t)?.has(e);
 }
 function loadEntityTemplateConfig() {
-  const t = (0, File_1.getProjectPath)(
-    IGlobal_1.globalConfig.TemplateConfigPath,
-  );
+  var t = (0, File_1.getProjectPath)(IGlobal_1.globalConfig.TemplateConfigPath);
   return (0, Util_1.readJsonObj)(t);
 }
 function getEntityMainType(t) {
@@ -145,7 +143,7 @@ function decompressEntityData(t, e) {
   (exports.decompressEntityData = decompressEntityData);
 const entityIdByUid = new Map();
 function getIdByEntityUid(t) {
-  let e;
+  var e;
   return entityIdByUid.has(t)
     ? entityIdByUid.get(t)
     : ((e = t.split("_")), (e = parseInt(e[2])), entityIdByUid.set(t, e), e);
@@ -153,7 +151,7 @@ function getIdByEntityUid(t) {
 exports.getIdByEntityUid = getIdByEntityUid;
 const levelIdByUid = new Map();
 function getLevelIdByEntityUid(t) {
-  let e;
+  var e;
   return levelIdByUid.has(t)
     ? levelIdByUid.get(t)
     : ((e = t.split("_")), (e = parseInt(e[1])), levelIdByUid.set(t, e), e);
@@ -163,29 +161,29 @@ function getEntityAoiDistXy(t) {
     (0, IComponent_1.getComponent)(t.ComponentsData, "BaseInfoComponent")
       ?.AoiLayer ?? 0;
   return (
-    e === 4 && (e = 0),
+    4 === e && (e = 0),
     IComponent_1.aoiXyLayerValues[e] / exports.AOI_METRIC_SCALE
   );
 }
 function checkPosInEntityAoi(t, e) {
   var n = (0, IComponent_1.getComponent)(e.ComponentsData, "BaseInfoComponent");
   if (!n) return !1;
-  var o = n.AoiLayer ?? 0;
-  var o = IComponent_1.aoiXyLayerValues[o];
-  var r = n.AoiZRadius ?? 0;
-  let i = IComponent_1.aoizLayerValues[r];
-  let p = i;
+  var o = n.AoiLayer ?? 0,
+    o = IComponent_1.aoiXyLayerValues[o],
+    r = n.AoiZRadius ?? 0;
+  let i = IComponent_1.aoizLayerValues[r],
+    p = i;
   n.CustomAoiZRadius &&
     ((i = n.CustomAoiZRadius.Up ?? 0), (p = n.CustomAoiZRadius.Down ?? 0));
-  var r = e.Transform.Pos.X ?? 0;
-  var n = e.Transform.Pos.Y ?? 0;
-  var e = e.Transform.Pos.Z ?? 0;
-  var s = t.Pos.X ?? 0;
-  const a = t.Pos.Y ?? 0;
-  var t = t.Pos.Z ?? 0;
-  var r = Math.sqrt(Math.pow(r - s, 2) + Math.pow(n - a, 2));
-  var s = Math.abs(e - t);
-  var n = !(i !== -1) || (e <= t && s <= i) || (t < e && s <= p);
+  var r = e.Transform.Pos.X ?? 0,
+    n = e.Transform.Pos.Y ?? 0,
+    e = e.Transform.Pos.Z ?? 0,
+    s = t.Pos.X ?? 0,
+    a = t.Pos.Y ?? 0,
+    t = t.Pos.Z ?? 0,
+    r = Math.sqrt(Math.pow(r - s, 2) + Math.pow(n - a, 2)),
+    s = Math.abs(e - t),
+    n = !(-1 !== i) || (e <= t && s <= i) || (t < e && s <= p);
   return r <= o && n;
 }
 function getEntityAoiDistZ(t) {
@@ -200,7 +198,7 @@ function getEntityAoiDistZ(t) {
             ? t.CustomAoiZRadius.Down / exports.AOI_METRIC_SCALE
             : -1,
         ]
-      : (t = t?.AoiZRadius || 0) !== 0
+      : 0 !== (t = t?.AoiZRadius || 0)
         ? [(t = IComponent_1.aoizLayerValues[t] / exports.AOI_METRIC_SCALE), t]
         : [-1, -1]
     : [-1, -1];
@@ -208,7 +206,7 @@ function getEntityAoiDistZ(t) {
 function checkIsAllComponentsFolded(t, e, n) {
   let o = !1;
   for (const i of e) {
-    let r = t.ComponentsData[i];
+    var r = t.ComponentsData[i];
     if (r && (!n || !r.EdIsLocked)) {
       r = r._folded;
       if (void 0 !== r) {
@@ -239,4 +237,4 @@ function foldAllComponents(t, e, n) {
   (exports.getEntityAoiDistZ = getEntityAoiDistZ),
   (exports.checkIsAllComponentsFolded = checkIsAllComponentsFolded),
   (exports.foldAllComponents = foldAllComponents);
-// # sourceMappingURL=Entity.js.map
+//# sourceMappingURL=Entity.js.map

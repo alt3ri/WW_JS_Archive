@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonPopViewBase = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CommonCurrencyItemListComponent_1 = require("../../Module/Common/CommonCurrencyItemListComponent");
-const UiPanelBase_1 = require("../Base/UiPanelBase");
-const UiManager_1 = require("../UiManager");
+const Log_1 = require("../../../Core/Common/Log"),
+  CommonCurrencyItemListComponent_1 = require("../../Module/Common/CommonCurrencyItemListComponent"),
+  UiPanelBase_1 = require("../Base/UiPanelBase"),
+  UiManager_1 = require("../UiManager");
 class CommonPopViewBase extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -23,13 +23,13 @@ class CommonPopViewBase extends UiPanelBase_1.UiPanelBase {
       });
   }
   AttachItem(t, e) {
-    let i;
-    let s;
-    let o;
-    let n;
-    let r;
-    let a;
-    const h = this.GetAttachParent();
+    var i,
+      s,
+      o,
+      n,
+      r,
+      a,
+      h = this.GetAttachParent();
     h &&
       ((i = t.GetAnchorHAlign()),
       (s = t.GetAnchorVAlign()),
@@ -91,7 +91,7 @@ class CommonPopViewBase extends UiPanelBase_1.UiPanelBase {
     this.Cur = t;
   }
   async SetCurrencyItemList(t) {
-    const e = this.GetCostParent();
+    var e = this.GetCostParent();
     e
       ? (this.dur ||
           (this.dur =
@@ -110,4 +110,4 @@ class CommonPopViewBase extends UiPanelBase_1.UiPanelBase {
   SetTexBgVisible(t) {}
 }
 exports.CommonPopViewBase = CommonPopViewBase;
-// # sourceMappingURL=CommonPopViewBehaviourBase.js.map
+//# sourceMappingURL=CommonPopViewBehaviourBase.js.map

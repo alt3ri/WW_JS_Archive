@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.IntIntMap = void 0);
-const GameUtils_1 = require("../../../../Game/GameUtils");
-const DicIntInt_1 = require("./DicIntInt");
+const GameUtils_1 = require("../../../../Game/GameUtils"),
+  DicIntInt_1 = require("./DicIntInt");
 class IntIntMap {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -27,7 +27,7 @@ class IntIntMap {
     return this.mapintint(t);
   }
   mapintint(t, i) {
-    const n = this.J7.__offset(this.z7, 4);
+    var n = this.J7.__offset(this.z7, 4);
     return n
       ? (i || new DicIntInt_1.DicIntInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + n) + 4 * t),
@@ -36,9 +36,9 @@ class IntIntMap {
       : null;
   }
   mapintintLength() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.IntIntMap = IntIntMap;
-// # sourceMappingURL=IntIntMap.js.map
+//# sourceMappingURL=IntIntMap.js.map

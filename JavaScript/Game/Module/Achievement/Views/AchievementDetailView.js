@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AchievementDetailView = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const CommonSearchComponent_1 = require("../../Common/InputView/CommonSearchComponent");
-const CommonTabComponentData_1 = require("../../Common/TabComponent/CommonTabComponentData");
-const CommonTabData_1 = require("../../Common/TabComponent/CommonTabData");
-const CommonTabTitleData_1 = require("../../Common/TabComponent/CommonTabTitleData");
-const TabComponentWithCaptionItem_1 = require("../../Common/TabComponent/TabComponentWithCaptionItem");
-const CommonTabItem_1 = require("../../Common/TabComponent/TabItem/CommonTabItem");
-const DynScrollView_1 = require("../../Util/ScrollView/DynScrollView");
-const AchievementGroupDataItem_1 = require("./AchievementGroupDataItem");
-const AchievementGroupSmallDynItem_1 = require("./AchievementGroupSmallDynItem");
-const AchievementGroupSmallItem_1 = require("./AchievementGroupSmallItem");
-const AchievementGroupTitleItem_1 = require("./AchievementGroupTitleItem");
-const AchievementSearchItem_1 = require("./AchievementSearchItem");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  CommonSearchComponent_1 = require("../../Common/InputView/CommonSearchComponent"),
+  CommonTabComponentData_1 = require("../../Common/TabComponent/CommonTabComponentData"),
+  CommonTabData_1 = require("../../Common/TabComponent/CommonTabData"),
+  CommonTabTitleData_1 = require("../../Common/TabComponent/CommonTabTitleData"),
+  TabComponentWithCaptionItem_1 = require("../../Common/TabComponent/TabComponentWithCaptionItem"),
+  CommonTabItem_1 = require("../../Common/TabComponent/TabItem/CommonTabItem"),
+  DynScrollView_1 = require("../../Util/ScrollView/DynScrollView"),
+  AchievementGroupDataItem_1 = require("./AchievementGroupDataItem"),
+  AchievementGroupSmallDynItem_1 = require("./AchievementGroupSmallDynItem"),
+  AchievementGroupSmallItem_1 = require("./AchievementGroupSmallItem"),
+  AchievementGroupTitleItem_1 = require("./AchievementGroupTitleItem"),
+  AchievementSearchItem_1 = require("./AchievementSearchItem");
 class AchievementDetailView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -34,20 +34,20 @@ class AchievementDetailView extends UiViewBase_1.UiViewBase {
         return new CommonTabItem_1.CommonTabItem();
       }),
       (this.pqe = (e) => {
-        var e = this.Cqe[e];
-        const t =
-          ((ModelManager_1.ModelManager.AchievementModel.CurrentSelectCategory =
-            e),
-          (ModelManager_1.ModelManager.AchievementModel.AchievementSearchState =
-            !1),
-          ModelManager_1.ModelManager.AchievementModel.GetAchievementCategoryGroups(
-            e.GetId(),
-          ));
+        var e = this.Cqe[e],
+          t =
+            ((ModelManager_1.ModelManager.AchievementModel.CurrentSelectCategory =
+              e),
+            (ModelManager_1.ModelManager.AchievementModel.AchievementSearchState =
+              !1),
+            ModelManager_1.ModelManager.AchievementModel.GetAchievementCategoryGroups(
+              e.GetId(),
+            ));
         if (!(t.length <= 0)) {
           const n =
             ModelManager_1.ModelManager.AchievementModel.CurrentSelectGroup;
-          var i = t.findIndex((e) => e === n);
-          var i = i >= 0 ? t[i] : t[0];
+          var i = t.findIndex((e) => e === n),
+            i = 0 <= i ? t[i] : t[0];
           (ModelManager_1.ModelManager.AchievementModel.CurrentSelectGroup = i),
             this.GetText(10).SetText(e.GetAchievementCategoryProgress()),
             this.vqe(),
@@ -82,7 +82,7 @@ class AchievementDetailView extends UiViewBase_1.UiViewBase {
           );
       }),
       (this.Tqe = () => {
-        const e =
+        var e =
           ModelManager_1.ModelManager.AchievementModel.AchievementSearchState;
         (ModelManager_1.ModelManager.AchievementModel.AchievementSearchState =
           !1),
@@ -138,7 +138,7 @@ class AchievementDetailView extends UiViewBase_1.UiViewBase {
       await this._qe.Init(),
       (this.Cqe =
         ModelManager_1.ModelManager.AchievementModel.GetAchievementCategoryArray());
-    const e = new CommonTabComponentData_1.CommonTabComponentData(
+    var e = new CommonTabComponentData_1.CommonTabComponentData(
       this.fqe,
       this.pqe,
       this.yqe,
@@ -151,15 +151,15 @@ class AchievementDetailView extends UiViewBase_1.UiViewBase {
       await this.Dqe();
   }
   async Dqe() {
-    const t = this.Cqe;
-    const i = this.lqe.CreateTabItemDataByLength(t.length);
+    var t = this.Cqe,
+      i = this.lqe.CreateTabItemDataByLength(t.length);
     for (let e = 0; e < t.length; e++)
       (i[e].RedDotName = "AchievementCategory"),
         (i[e].RedDotUid = t[e].GetId());
     await this.lqe.RefreshTabItemAsync(i, !1);
   }
   OnBeforeShow() {
-    let e = ModelManager_1.ModelManager.AchievementModel.CurrentSelectCategory;
+    var e = ModelManager_1.ModelManager.AchievementModel.CurrentSelectCategory;
     void 0 === e ||
       (e =
         ModelManager_1.ModelManager.AchievementModel.GetAchievementCategoryIndex(
@@ -209,19 +209,17 @@ class AchievementDetailView extends UiViewBase_1.UiViewBase {
     this.dqe?.ResetSearch(!0);
   }
   Sqe() {
-    var e = ModelManager_1.ModelManager.AchievementModel;
-    var e = e.GetAchievementCategoryGroups(e.CurrentSelectCategory.GetId());
+    var e = ModelManager_1.ModelManager.AchievementModel,
+      e = e.GetAchievementCategoryGroups(e.CurrentSelectCategory.GetId());
     this.gqe.RefreshByData(e);
   }
   Eqe() {
-    const e =
-      ModelManager_1.ModelManager.AchievementModel.AchievementSearchState;
-    const t =
-      ModelManager_1.ModelManager.AchievementModel.GetSearchResultIfNull();
+    var e = ModelManager_1.ModelManager.AchievementModel.AchievementSearchState,
+      t = ModelManager_1.ModelManager.AchievementModel.GetSearchResultIfNull();
     this.GetItem(2).SetUIActive(e && !t);
   }
   Mqe() {
-    let e = ModelManager_1.ModelManager.AchievementModel.AchievementSearchState;
+    var e = ModelManager_1.ModelManager.AchievementModel.AchievementSearchState;
     this.cqe.SetActive(!e),
       this.uqe.SetActive(!e),
       this._qe.SetActive(e),
@@ -245,4 +243,4 @@ class AchievementDetailView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.AchievementDetailView = AchievementDetailView;
-// # sourceMappingURL=AchievementDetailView.js.map
+//# sourceMappingURL=AchievementDetailView.js.map

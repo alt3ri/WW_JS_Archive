@@ -7,14 +7,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.MaterialItem =
     exports.CookItemView =
       void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const CookController_1 = require("../CookController");
-const CookDefine_1 = require("../CookDefine");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  CookController_1 = require("../CookController"),
+  CookDefine_1 = require("../CookDefine");
 class CookItemView extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -47,9 +47,9 @@ class CookItemView extends GridProxyAbstract_1.GridProxyAbstract {
       this.IVe(i, !1);
   }
   Pqt() {
-    let t;
-    this.dqt.MainType === 0
-      ? this.dqt.SubType === 0
+    var t;
+    0 === this.dqt.MainType
+      ? 0 === this.dqt.SubType
         ? ((t = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
             this.dqt.ItemId,
           )),
@@ -61,9 +61,9 @@ class CookItemView extends GridProxyAbstract_1.GridProxyAbstract {
         this.SetItemQualityIcon(this.GetSprite(10), t.FinalItemId));
   }
   Kbe() {
-    let t;
-    this.dqt.MainType === 0
-      ? this.dqt.SubType === 0
+    var t;
+    0 === this.dqt.MainType
+      ? 0 === this.dqt.SubType
         ? ((t = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
             this.dqt.ItemId,
           )),
@@ -75,9 +75,9 @@ class CookItemView extends GridProxyAbstract_1.GridProxyAbstract {
         this.SetItemIcon(this.GetTexture(11), t.FinalItemId));
   }
   C4e() {
-    let t;
+    var t;
     this.dqt &&
-      (this.dqt.MainType === 0
+      (0 === this.dqt.MainType
         ? ((t = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
             this.dqt.ItemId,
           )),
@@ -88,20 +88,20 @@ class CookItemView extends GridProxyAbstract_1.GridProxyAbstract {
           LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(12), t.Name)));
   }
   IPt() {
-    let t;
-    this.dqt.MainType === 1
+    var t;
+    1 === this.dqt.MainType
       ? ((t = this.dqt), this.GetItem(7).SetUIActive(!t.IsUnLock))
       : ((t = this.dqt), this.GetItem(7).SetUIActive(!t.IsUnLock));
   }
   wqt() {
-    let t;
-    this.dqt.MainType === 1
+    var t;
+    1 === this.dqt.MainType
       ? ((t = this.dqt),
         (t =
           CookController_1.CookController.CheckCanProcessed(t.ItemId) &&
           t.IsUnLock),
         this.GetItem(8).SetUIActive(!t))
-      : (t = this.dqt).SubType === 6e4
+      : 6e4 === (t = this.dqt).SubType
         ? this.GetItem(8).SetUIActive(!1)
         : ((t = CookController_1.CookController.CheckCanCook(t.ItemId)),
           this.GetItem(8).SetUIActive(!t));
@@ -119,7 +119,7 @@ class CookItemView extends GridProxyAbstract_1.GridProxyAbstract {
     this.IVe(!1);
   }
   IVe(t, i = !0) {
-    const s = this.GetExtendToggle(6);
+    var s = this.GetExtendToggle(6);
     t ? s.SetToggleState(1, i) : s.SetToggleState(0, !1);
   }
 }
@@ -149,7 +149,7 @@ class MaterialItem extends UiPanelBase_1.UiPanelBase {
   Update(t, i) {
     (this.ItemData = t),
       (this.Index = i),
-      this.ItemData.G3n !== 0
+      0 !== this.ItemData.G3n
         ? (this.ItemInfo = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(
             this.ItemData.G3n,
           ))
@@ -161,10 +161,10 @@ class MaterialItem extends UiPanelBase_1.UiPanelBase {
   }
   RefreshNeed(t = 1) {
     let i = this.ItemData.k4n;
-    t !== 1 && (i *= t), this.GetText(2).SetText(i.toString());
+    1 !== t && (i *= t), this.GetText(2).SetText(i.toString());
   }
   RefreshHave() {
-    const t = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+    var t = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
       this.ItemData.G3n,
     );
     let i = void 0;
@@ -282,4 +282,4 @@ class IconItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.IconItem = IconItem;
-// # sourceMappingURL=CookItemView.js.map
+//# sourceMappingURL=CookItemView.js.map

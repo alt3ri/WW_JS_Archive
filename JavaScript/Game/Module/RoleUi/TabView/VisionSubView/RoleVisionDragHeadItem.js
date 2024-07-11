@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleVisionDragHeadItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../../RedDot/RedDotController");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const VisionFetterSuitItem_1 = require("../../../Phantom/Vision/View/VisionFetterSuitItem");
-const RoleVisionCommonItem_1 = require("./RoleVisionCommonItem");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../../RedDot/RedDotController"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  VisionFetterSuitItem_1 = require("../../../Phantom/Vision/View/VisionFetterSuitItem"),
+  RoleVisionCommonItem_1 = require("./RoleVisionCommonItem");
 class RoleVisionDragHeadItem extends RoleVisionCommonItem_1.RoleVisionCommonItem {
   constructor() {
     super(...arguments),
@@ -86,7 +86,7 @@ class RoleVisionDragHeadItem extends RoleVisionCommonItem_1.RoleVisionCommonItem
     this.PPt.GetRootItem().SetUIActive(!0), this.kdo(!1);
   }
   OnUpdateItem(t) {
-    let i;
+    var i;
     t &&
       (this.GetText(5).SetText(t.GetCost().toString()),
       (i = t.GetFetterGroupConfig()),
@@ -131,7 +131,7 @@ class RoleVisionDragHeadItem extends RoleVisionCommonItem_1.RoleVisionCommonItem
     this.Ndo !== t && ((this.Ndo = t), this.EPe.PlaySequencePurely(t));
   }
   x6e(t) {
-    let i;
+    var i;
     ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
       this.RoleId,
     ).IsTrialRole()
@@ -162,7 +162,7 @@ class RoleVisionDragHeadItem extends RoleVisionCommonItem_1.RoleVisionCommonItem
   Dpt() {
     this.qdo &&
       ((this.qdo = !1),
-      this.Gdo === 0
+      0 === this.Gdo
         ? RedDotController_1.RedDotController.UnBindGivenUi(
             "VisionOneKeyEquip",
             this.GetItem(8),
@@ -190,7 +190,7 @@ class RoleVisionDragHeadItem extends RoleVisionCommonItem_1.RoleVisionCommonItem
   }
   OnResetPosition() {
     this.GetDragComponent()?.RootUIComp.SetAsLastHierarchy(),
-      this.Ndo === "HighLight"
+      "HighLight" === this.Ndo
         ? (this.PlaySequence("Normal"), this.EPe.StopCurrentSequence(!1, !0))
         : (this.Ndo = "Normal"),
       (this.AnimationState = !1),
@@ -201,4 +201,4 @@ class RoleVisionDragHeadItem extends RoleVisionCommonItem_1.RoleVisionCommonItem
   }
 }
 exports.RoleVisionDragHeadItem = RoleVisionDragHeadItem;
-// # sourceMappingURL=RoleVisionDragHeadItem.js.map
+//# sourceMappingURL=RoleVisionDragHeadItem.js.map

@@ -1,29 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CalabashCollectTabView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase");
-const UiLayerType_1 = require("../../../../Ui/Define/UiLayerType");
-const UiLayer_1 = require("../../../../Ui/UiLayer");
-const FilterEntrance_1 = require("../../../Common/FilterSort/Filter/View/FilterEntrance");
-const SortEntrance_1 = require("../../../Common/FilterSort/Sort/View/SortEntrance");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const VisionCameraInputItem_1 = require("../../../Phantom/Vision/View/VisionCameraInputItem");
-const RoleModelLoadingItem_1 = require("../../../RoleUi/Component/RoleModelLoadingItem");
-const UiCameraControlRotationComponent_1 = require("../../../UiCamera/UiCameraComponent/UiCameraControlRotationComponent");
-const UiCameraManager_1 = require("../../../UiCamera/UiCameraManager");
-const UiCameraAnimationManager_1 = require("../../../UiCameraAnimation/UiCameraAnimationManager");
-const UiModelResourcesManager_1 = require("../../../UiComponent/UiModelResourcesManager");
-const UiSceneManager_1 = require("../../../UiComponent/UiSceneManager");
-const LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView");
-const CalabashCollectDetailItem_1 = require("./CalabashCollectDetailItem");
-const CalabashCollectGridItem_1 = require("./CalabashCollectGridItem");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase"),
+  UiLayerType_1 = require("../../../../Ui/Define/UiLayerType"),
+  UiLayer_1 = require("../../../../Ui/UiLayer"),
+  FilterEntrance_1 = require("../../../Common/FilterSort/Filter/View/FilterEntrance"),
+  SortEntrance_1 = require("../../../Common/FilterSort/Sort/View/SortEntrance"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  VisionCameraInputItem_1 = require("../../../Phantom/Vision/View/VisionCameraInputItem"),
+  RoleModelLoadingItem_1 = require("../../../RoleUi/Component/RoleModelLoadingItem"),
+  UiCameraControlRotationComponent_1 = require("../../../UiCamera/UiCameraComponent/UiCameraControlRotationComponent"),
+  UiCameraManager_1 = require("../../../UiCamera/UiCameraManager"),
+  UiCameraAnimationManager_1 = require("../../../UiCameraAnimation/UiCameraAnimationManager"),
+  UiModelResourcesManager_1 = require("../../../UiComponent/UiModelResourcesManager"),
+  UiSceneManager_1 = require("../../../UiComponent/UiSceneManager"),
+  LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView"),
+  CalabashCollectDetailItem_1 = require("./CalabashCollectDetailItem"),
+  CalabashCollectGridItem_1 = require("./CalabashCollectGridItem");
 class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -50,7 +50,7 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
         this.Sft();
       }),
       (this.w7 = () => {
-        const e = new CalabashCollectGridItem_1.CalabashCollectGridItem();
+        var e = new CalabashCollectGridItem_1.CalabashCollectGridItem();
         return (e.OnToggleClick = this.I6e), (e.CanToggleChange = this.Eft), e;
       }),
       (this.I6e = (e) => {
@@ -61,13 +61,13 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
         (this.uft = e), this._ft.RefreshByData(this.uft, !1, this.Tft, !0);
       }),
       (this.Tft = () => {
-        let i = 0;
-        let e =
-          (this.Cft > 0
-            ? ((i = this.Cft), (this.Cft = 0))
-            : this.gft > 0 && (i = this.gft),
-          0);
-        i > 0 &&
+        let i = 0,
+          e =
+            (0 < this.Cft
+              ? ((i = this.Cft), (this.Cft = 0))
+              : 0 < this.gft && (i = this.gft),
+            0);
+        0 < i &&
           (e = this.uft.findIndex((e) => e.DevelopRewardData.MonsterId === i)),
           (e = Math.max(0, e)),
           this._ft.SelectGridProxy(e),
@@ -84,7 +84,7 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
             UiCameraManager_1.UiCameraManager.Get().GetUiCameraComponent(
               UiCameraControlRotationComponent_1.UiCameraControlRotationComponent,
             );
-          const e =
+          var e =
             ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
               this.gft,
             );
@@ -124,7 +124,7 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
             UiCameraManager_1.UiCameraManager.Get().GetUiCameraComponent(
               UiCameraControlRotationComponent_1.UiCameraControlRotationComponent,
             );
-          const e =
+          var e =
             ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
               this.gft,
             );
@@ -136,7 +136,7 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
             a.MoveForwardCurvePath,
             UE.CurveFloat,
             (e) => {
-              let i;
+              var i;
               e &&
                 (i = UiSceneManager_1.UiSceneManager.GetHandBookVision()) &&
                 i.IsValid() &&
@@ -209,8 +209,8 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
         this.Ift,
       )),
       (this.hft = new SortEntrance_1.SortEntrance(this.GetItem(3), this.Ift));
-    const e = this.ExtraParams;
-    e > 0 && (this.Cft = e),
+    var e = this.ExtraParams;
+    0 < e && (this.Cft = e),
       this.Aft(),
       (this.lft = new CalabashCollectDetailItem_1.CalabashCollectDetailItem()),
       (this.lft.OnLookOverBtnClick = this.Lft),
@@ -235,8 +235,8 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
     this.Rft(), this.mft.Destroy();
   }
   yft() {
-    var e = this._ft.GetSelectedGridIndex();
-    var e = this.uft[e];
+    var e = this._ft.GetSelectedGridIndex(),
+      e = this.uft[e];
     this.lft.Update(e),
       (this.gft = e.DevelopRewardData.MonsterId),
       this.Rft(),
@@ -254,7 +254,7 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
     else {
       this.mft.SetLoadingActive(!0);
       const i = this.gft;
-      const e =
+      var e =
         ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
           i,
         );
@@ -269,19 +269,19 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
   }
   xft(e, i) {
     UiSceneManager_1.UiSceneManager.CreateHandBookVision(i);
-    var i = UiSceneManager_1.UiSceneManager.GetHandBookVision();
-    const t = (i.SetActorHiddenInGame(!0), UE.NewArray(UE.SkeletalMesh));
-    const a = UE.NewArray(UE.StaticMesh);
-    const s = i.K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass());
-    const r = i.K2_GetComponentsByClass(UE.StaticMeshComponent.StaticClass());
+    var i = UiSceneManager_1.UiSceneManager.GetHandBookVision(),
+      t = (i.SetActorHiddenInGame(!0), UE.NewArray(UE.SkeletalMesh)),
+      a = UE.NewArray(UE.StaticMesh),
+      s = i.K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass()),
+      r = i.K2_GetComponentsByClass(UE.StaticMeshComponent.StaticClass());
     if (s)
       for (let e = 0; e < s.Num(); e++) {
-        const n = s.Get(e);
+        var n = s.Get(e);
         n.SetForcedLOD(1), t.Add(n.SkeletalMesh);
       }
     if (r)
       for (let e = 0; e < r.Num(); e++) {
-        const o = r.Get(e);
+        var o = r.Get(e);
         o.SetForcedLodModel(1), a.Add(o.StaticMesh);
       }
     this.aGn =
@@ -294,10 +294,10 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
       );
   }
   Bft(e) {
-    const i = UiCameraManager_1.UiCameraManager.Get().GetUiCameraComponent(
-      UiCameraControlRotationComponent_1.UiCameraControlRotationComponent,
-    );
-    const t = UiSceneManager_1.UiSceneManager.GetHandBookVision();
+    var i = UiCameraManager_1.UiCameraManager.Get().GetUiCameraComponent(
+        UiCameraControlRotationComponent_1.UiCameraControlRotationComponent,
+      ),
+      t = UiSceneManager_1.UiSceneManager.GetHandBookVision();
     t
       ? t.CameraArmLength <= 0
         ? Log_1.Log.CheckError() &&
@@ -334,10 +334,8 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
         UiSceneManager_1.UiSceneManager.DestroyHandBookVision();
   }
   Aft() {
-    const e =
-      ModelManager_1.ModelManager.CalabashModel.GetCalabashAllSchedule();
-    const i =
-      ModelManager_1.ModelManager.CalabashModel.GetCalabashOwnSchedule();
+    var e = ModelManager_1.ModelManager.CalabashModel.GetCalabashAllSchedule(),
+      i = ModelManager_1.ModelManager.CalabashModel.GetCalabashOwnSchedule();
     this.GetText(5)?.SetText(i + "/" + e);
   }
   Pft() {
@@ -345,4 +343,4 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.CalabashCollectTabView = CalabashCollectTabView;
-// # sourceMappingURL=CalabashCollectTabView.js.map
+//# sourceMappingURL=CalabashCollectTabView.js.map

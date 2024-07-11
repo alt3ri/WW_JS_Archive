@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configHotPatchTextLang = void 0);
-const LanguageSystem_1 = require("../../Common/LanguageSystem");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const DeserializeConfig_1 = require("../../Config/DeserializeConfig");
-const StringUtils_1 = require("../../Utils/StringUtils");
-const CommonDefine_1 = require("../CommonDefine");
-const TEXTNOTFOUNT = "text not found";
-const DB = "lang_hot_patch.db";
-const TABLE = "HotPatchText";
-const COMMAND = "select content from `HotPatchText` where id = ?";
-const logPair = [
-  ["数据库", DB],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
-const langCache = new Map();
-const initStat = void 0;
-const getLocalTextStat = void 0;
-const LOCAL_TEXT_STAT_PREFIX = "configHotPatchTextLang.GetLocalTextNew(";
+const LanguageSystem_1 = require("../../Common/LanguageSystem"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  DeserializeConfig_1 = require("../../Config/DeserializeConfig"),
+  StringUtils_1 = require("../../Utils/StringUtils"),
+  CommonDefine_1 = require("../CommonDefine"),
+  TEXTNOTFOUNT = "text not found",
+  DB = "lang_hot_patch.db",
+  TABLE = "HotPatchText",
+  COMMAND = "select content from `HotPatchText` where id = ?",
+  logPair = [
+    ["数据库", DB],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ],
+  langCache = new Map(),
+  initStat = void 0,
+  getLocalTextStat = void 0,
+  LOCAL_TEXT_STAT_PREFIX = "configHotPatchTextLang.GetLocalTextNew(";
 exports.configHotPatchTextLang = {
   Init: () => {
     ConfigCommon_1.ConfigCommon.GetLangStatementId(TABLE, DB, COMMAND);
@@ -36,7 +36,7 @@ exports.configHotPatchTextLang = {
     var n = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(o);
     let t = i.get(n);
     if (t) return t;
-    const a = ConfigCommon_1.ConfigCommon.GetLangStatementId(
+    var a = ConfigCommon_1.ConfigCommon.GetLangStatementId(
       TABLE,
       DB,
       COMMAND,
@@ -49,16 +49,17 @@ exports.configHotPatchTextLang = {
           "Id",
           e,
         ]) &&
-        ConfigCommon_1.ConfigCommon.Step(
-          a,
-          !0,
-          ...logPair,
-          ["传入语言", o],
-          ["查询语言", n],
-          ["文本Id", e],
-        ) > 0)
+        0 <
+          ConfigCommon_1.ConfigCommon.Step(
+            a,
+            !0,
+            ...logPair,
+            ["传入语言", o],
+            ["查询语言", n],
+            ["文本Id", e],
+          ))
     ) {
-      let g = void 0;
+      var g = void 0;
       if (
         (([r, g] = ConfigCommon_1.ConfigCommon.GetValue(
           a,
@@ -100,4 +101,4 @@ exports.configHotPatchTextLang = {
     ConfigCommon_1.ConfigCommon.Reset(a);
   },
 };
-// # sourceMappingURL=HotPatchTextLang.js.map
+//# sourceMappingURL=HotPatchTextLang.js.map

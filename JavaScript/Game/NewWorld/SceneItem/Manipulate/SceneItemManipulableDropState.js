@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulableDropState = void 0);
-const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const LevelGamePlayController_1 = require("../../../LevelGamePlay/LevelGamePlayController");
-const SceneItemManipulableBaseState_1 = require("./SceneItemManipulableBaseState");
+const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  LevelGamePlayController_1 = require("../../../LevelGamePlay/LevelGamePlayController"),
+  SceneItemManipulableBaseState_1 = require("./SceneItemManipulableBaseState");
 class SceneItemManipulableDropState extends SceneItemManipulableBaseState_1.SceneItemManipulableBaseState {
   constructor(e) {
     super(e), (this.StateType = "BeDropping");
@@ -14,8 +14,8 @@ class SceneItemManipulableDropState extends SceneItemManipulableBaseState_1.Scen
   }
   OnEnter() {
     this.SceneItem.ActorComp.PhysicsMode = 3;
-    const e = this.SceneItem.ActorComp.GetPrimitiveComponent();
-    const t = Vector_1.Vector.Create(e.GetPhysicsLinearVelocity());
+    var e = this.SceneItem.ActorComp.GetPrimitiveComponent(),
+      t = Vector_1.Vector.Create(e.GetPhysicsLinearVelocity());
     (t.X *= 0.1),
       (t.Y *= 0.1),
       e.SetPhysicsLinearVelocity(t.ToUeVector()),
@@ -34,4 +34,4 @@ class SceneItemManipulableDropState extends SceneItemManipulableBaseState_1.Scen
   }
 }
 exports.SceneItemManipulableDropState = SceneItemManipulableDropState;
-// # sourceMappingURL=SceneItemManipulableDropState.js.map
+//# sourceMappingURL=SceneItemManipulableDropState.js.map

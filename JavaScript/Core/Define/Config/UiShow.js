@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiShow = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const BlackScreen_1 = require("./SubType/BlackScreen");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  BlackScreen_1 = require("./SubType/BlackScreen");
 class UiShow {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -103,116 +103,116 @@ class UiShow {
     );
   }
   viewname(t) {
-    const i = this.J7.__offset(this.z7, 4);
+    var i = this.J7.__offset(this.z7, 4);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   type(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   loadasync() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   showcursortype() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetObstructuiAt(t) {
     return this.obstructui(t);
   }
   obstructui(t, i) {
-    const e = this.J7.__offset(this.z7, 12);
+    var e = this.J7.__offset(this.z7, 12);
     return e
       ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, i)
       : null;
   }
   obstructuiLength() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   effectstart(t) {
-    const i = this.J7.__offset(this.z7, 14);
+    var i = this.J7.__offset(this.z7, 14);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   effectbone(t) {
-    const i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 16);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   montagestart(t) {
-    const i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 18);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   audioevent(t) {
-    const i = this.J7.__offset(this.z7, 20);
+    var i = this.J7.__offset(this.z7, 20);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   openaudioevent(t) {
-    const i = this.J7.__offset(this.z7, 22);
+    var i = this.J7.__offset(this.z7, 22);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   closeaudioevent(t) {
-    const i = this.J7.__offset(this.z7, 24);
+    var i = this.J7.__offset(this.z7, 24);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   delaytime() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   effectdelaytime() {
-    const t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   setmaskactive() {
-    const t = this.J7.__offset(this.z7, 30);
+    var t = this.J7.__offset(this.z7, 30);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   timedilation() {
-    const t = this.J7.__offset(this.z7, 32);
+    var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.readFloat32(this.z7 + t) : 1;
   }
   isallowfightinput() {
-    const t = this.J7.__offset(this.z7, 34);
+    var t = this.J7.__offset(this.z7, 34);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   canopenviewbyshortcutkey() {
-    const t = this.J7.__offset(this.z7, 36);
+    var t = this.J7.__offset(this.z7, 36);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   isshortkeysexitview() {
-    const t = this.J7.__offset(this.z7, 38);
+    var t = this.J7.__offset(this.z7, 38);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   scenepointtag(t) {
-    const i = this.J7.__offset(this.z7, 40);
+    var i = this.J7.__offset(this.z7, 40);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   needgc() {
-    const t = this.J7.__offset(this.z7, 42);
+    var t = this.J7.__offset(this.z7, 42);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   isfullscreen() {
-    const t = this.J7.__offset(this.z7, 44);
+    var t = this.J7.__offset(this.z7, 44);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   commonpopbg() {
-    const t = this.J7.__offset(this.z7, 46);
+    var t = this.J7.__offset(this.z7, 46);
     return t ? this.J7.readInt32(this.z7 + t) : -1;
   }
   commonpopbgkey(t) {
-    const i = this.J7.__offset(this.z7, 48);
+    var i = this.J7.__offset(this.z7, 48);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   scenepath(t) {
-    const i = this.J7.__offset(this.z7, 50);
+    var i = this.J7.__offset(this.z7, 50);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   ispermanent() {
-    const t = this.J7.__offset(this.z7, 52);
+    var t = this.J7.__offset(this.z7, 52);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   startblackscreen(t) {
-    const i = this.J7.__offset(this.z7, 54);
+    var i = this.J7.__offset(this.z7, 54);
     return i
       ? (t || new BlackScreen_1.BlackScreen()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -221,7 +221,7 @@ class UiShow {
       : null;
   }
   closeblackscreen(t) {
-    const i = this.J7.__offset(this.z7, 56);
+    var i = this.J7.__offset(this.z7, 56);
     return i
       ? (t || new BlackScreen_1.BlackScreen()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -230,9 +230,9 @@ class UiShow {
       : null;
   }
   skipanim() {
-    const t = this.J7.__offset(this.z7, 58);
+    var t = this.J7.__offset(this.z7, 58);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
 }
 exports.UiShow = UiShow;
-// # sourceMappingURL=UiShow.js.map
+//# sourceMappingURL=UiShow.js.map

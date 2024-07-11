@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UnopenedAreaController = void 0);
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const PublicUtil_1 = require("../../Common/PublicUtil");
-const UnopenedAreaCheck_1 = require("./UnopenedAreaCheck");
-const UnopenedAreaPullback_1 = require("./UnopenedAreaPullback");
+const ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  PublicUtil_1 = require("../../Common/PublicUtil"),
+  UnopenedAreaCheck_1 = require("./UnopenedAreaCheck"),
+  UnopenedAreaPullback_1 = require("./UnopenedAreaPullback");
 class UnopenedAreaController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (this.tBe = !PublicUtil_1.PublicUtil.GetIsSilentLogin()), !0;
@@ -41,4 +41,4 @@ class UnopenedAreaController extends ControllerBase_1.ControllerBase {
   (UnopenedAreaController.iBe =
     new UnopenedAreaPullback_1.UnopenedAreaPullback()),
   (UnopenedAreaController.oBe = new UnopenedAreaCheck_1.UnopenedAreaCheck());
-// # sourceMappingURL=UnopenedAreaController.js.map
+//# sourceMappingURL=UnopenedAreaController.js.map

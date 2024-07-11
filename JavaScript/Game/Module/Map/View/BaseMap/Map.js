@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BaseMap = void 0);
-const UE = require("ue");
-const Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const GeneralLogicTreeUtil_1 = require("../../../GeneralLogicTree/GeneralLogicTreeUtil");
-const MapMarkMgr_1 = require("./Assistant/MapMarkMgr");
-const MapTileMgr_1 = require("./Assistant/MapTileMgr");
+const UE = require("ue"),
+  Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  GeneralLogicTreeUtil_1 = require("../../../GeneralLogicTree/GeneralLogicTreeUtil"),
+  MapMarkMgr_1 = require("./Assistant/MapMarkMgr"),
+  MapTileMgr_1 = require("./Assistant/MapTileMgr");
 class BaseMap extends UiPanelBase_1.UiPanelBase {
   constructor(e, t, i, s = 1, r = 100, h) {
     super(),
@@ -66,23 +66,23 @@ class BaseMap extends UiPanelBase_1.UiPanelBase {
       this.FXt(this.lRi),
       this.uje(),
       this.RootItem.SetUIActive(!1),
-      this.MapType === 2 && this.MUi(),
+      2 === this.MapType && this.MUi(),
       (this.SelfPlayerNode = this.GetItem(0)),
       (this.PlayerOutOfBoundIndicator = this.GetItem(2)),
       (this.PlayerArrow = this.GetItem(1)),
       this.RootItem.SetHierarchyIndex(0);
-    const e = this.GetItem(6);
+    var e = this.GetItem(6);
     e.SetWidth(2 * this.pUi),
       e.SetHeight(2 * this.pUi),
       e.SetUIActive(!1),
       (this.vUi = new LevelSequencePlayer_1.LevelSequencePlayer(e));
   }
   FXt(e) {
-    const t = this.GetItem(3);
-    const i = this.GetItem(4);
-    const s = this.GetTexture(5);
-    const r = this.GetItem(7);
-    const h = this.GetTexture(8);
+    var t = this.GetItem(3),
+      i = this.GetItem(4),
+      s = this.GetTexture(5),
+      r = this.GetItem(7),
+      h = this.GetTexture(8);
     (this.CUi = new MapMarkMgr_1.MapMarkMgr(this.MapType, t, this.I_t, e)),
       this.CUi.Initialize(),
       (this.gUi = new MapTileMgr_1.MapTileMgr(
@@ -100,7 +100,7 @@ class BaseMap extends UiPanelBase_1.UiPanelBase {
     return this.GetItem(3);
   }
   uje() {
-    this.MapType !== 2 &&
+    2 !== this.MapType &&
       (ModelManager_1.ModelManager.GameModeModel.WorldDone
         ? this.MUi()
         : EventSystem_1.EventSystem.Add(
@@ -109,7 +109,7 @@ class BaseMap extends UiPanelBase_1.UiPanelBase {
           ));
   }
   UnBindEvents() {
-    this.MapType !== 2 &&
+    2 !== this.MapType &&
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.WorldDone,
         this.MUi,
@@ -182,7 +182,7 @@ class BaseMap extends UiPanelBase_1.UiPanelBase {
       });
   }
   SetClickRangeVisible(e, t = Vector2D_1.Vector2D.Create(0, 0)) {
-    const i = this.GetItem(6);
+    var i = this.GetItem(6);
     i.SetUIActive(e),
       i.SetWorldScale3D(new UE.Vector(1, 1, 1)),
       e &&
@@ -191,4 +191,4 @@ class BaseMap extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.BaseMap = BaseMap;
-// # sourceMappingURL=Map.js.map
+//# sourceMappingURL=Map.js.map

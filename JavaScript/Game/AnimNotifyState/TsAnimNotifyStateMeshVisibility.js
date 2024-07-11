@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log");
 class TsAnimNotifyStateMeshVisibility extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -11,17 +11,17 @@ class TsAnimNotifyStateMeshVisibility extends UE.KuroAnimNotifyState {
   }
   K2_NotifyBegin(t, e, i) {
     this.EntityMeshMap || (this.EntityMeshMap = new Map());
-    var t = t.GetOwner();
-    const s = t.K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass());
-    let r = !1;
-    let o = void 0;
+    var t = t.GetOwner(),
+      s = t.K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass());
+    let r = !1,
+      o = void 0;
     for (let t = 0; t < s.Num(); t++)
       if (s.Get(t).GetName() === this.HideMeshName) {
         (o = s.Get(t)), (r = !0);
         break;
       }
-    let h = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(t);
-    if (h !== 1 && h !== 3) o && o.SetVisibility(this.Visibility);
+    var h = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(t);
+    if (1 !== h && 3 !== h) o && o.SetVisibility(this.Visibility);
     else {
       (h = t), (t = h.GetEntityId());
       if (
@@ -53,12 +53,10 @@ class TsAnimNotifyStateMeshVisibility extends UE.KuroAnimNotifyState {
     return !0;
   }
   K2_NotifyEnd(t, e) {
-    var t = t.GetOwner();
-    let i = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(t);
-    if (i !== 1 && i !== 3) {
-      const s = t.K2_GetComponentsByClass(
-        UE.SkeletalMeshComponent.StaticClass(),
-      );
+    var t = t.GetOwner(),
+      i = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(t);
+    if (1 !== i && 3 !== i) {
+      var s = t.K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass());
       let e = void 0;
       for (let t = 0; t < s.Num(); t++)
         if (s.Get(t).GetName() === this.HideMeshName) {
@@ -81,4 +79,4 @@ class TsAnimNotifyStateMeshVisibility extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateMeshVisibility;
-// # sourceMappingURL=TsAnimNotifyStateMeshVisibility.js.map
+//# sourceMappingURL=TsAnimNotifyStateMeshVisibility.js.map

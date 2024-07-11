@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const GlobalData_1 = require("../../../GlobalData");
-const CharacterController_1 = require("../../../NewWorld/Character/CharacterController");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../GlobalData"),
+  CharacterController_1 = require("../../../NewWorld/Character/CharacterController");
 class TsDecoratorDistance extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -23,10 +23,10 @@ class TsDecoratorDistance extends UE.BTDecorator_BlueprintBase {
     var t = r.AiController;
     if (t) {
       this.InitTsVariables();
-      var t = t.CharActorComp;
-      const s = t.Entity.CheckGetComponent(47);
-      if (s.RoleId !== 0) {
-        const i =
+      var t = t.CharActorComp,
+        s = t.Entity.CheckGetComponent(47);
+      if (0 !== s.RoleId) {
+        var i =
           CharacterController_1.CharacterController.GetCharacterActorComponentById(
             s.RoleId,
           );
@@ -42,7 +42,7 @@ class TsDecoratorDistance extends UE.BTDecorator_BlueprintBase {
               ),
             !1
           );
-        const a = UE.Vector.DistSquared(i.ActorLocation, t.ActorLocation);
+        var a = UE.Vector.DistSquared(i.ActorLocation, t.ActorLocation);
         switch (this.TsCompareType) {
           case 0:
             if (a === this.TsDistance * this.TsDistance) return !0;
@@ -64,4 +64,4 @@ class TsDecoratorDistance extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorDistance;
-// # sourceMappingURL=TsDecoratorDistance.js.map
+//# sourceMappingURL=TsDecoratorDistance.js.map

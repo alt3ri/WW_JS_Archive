@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiGlobalMaterialParam = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Application_1 = require("../../Core/Application/Application");
-const UiLayer_1 = require("./UiLayer");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Application_1 = require("../../Core/Application/Application"),
+  UiLayer_1 = require("./UiLayer");
 class UiGlobalMaterialParam {
   static Init() {
     UiGlobalMaterialParam.Xmr(),
@@ -23,13 +23,13 @@ class UiGlobalMaterialParam {
     );
   }
   static Xmr() {
-    var a = (0, puerts_1.$ref)(void 0);
-    var a =
-      (UE.BP_CharacterRenderingFunctionLibrary_C.GetLGUIMPC(
-        UiLayer_1.UiLayer.UiRoot,
-        a,
-      ),
-      (0, puerts_1.$unref)(a));
+    var a = (0, puerts_1.$ref)(void 0),
+      a =
+        (UE.BP_CharacterRenderingFunctionLibrary_C.GetLGUIMPC(
+          UiLayer_1.UiLayer.UiRoot,
+          a,
+        ),
+        (0, puerts_1.$unref)(a));
     UE.KismetMaterialLibrary.SetScalarParameterValue(
       UiLayer_1.UiLayer.UiRoot.GetWorld(),
       a,
@@ -52,4 +52,4 @@ class UiGlobalMaterialParam {
   (UiGlobalMaterialParam.$mr = () => {
     UiGlobalMaterialParam.Xmr();
   });
-// # sourceMappingURL=UIGlobalMaterialParam.js.map
+//# sourceMappingURL=UIGlobalMaterialParam.js.map

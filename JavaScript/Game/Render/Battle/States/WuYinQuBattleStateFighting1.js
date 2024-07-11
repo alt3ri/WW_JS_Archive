@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const WuYinQuBattleConfig_1 = require("../WuYinQuBattleConfig");
-const WuYinQuBattleNameDefines_1 = require("../WuYinQuBattleNameDefines");
-const WuYinQuBattleStateBase_1 = require("./WuYinQuBattleStateBase");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  WuYinQuBattleConfig_1 = require("../WuYinQuBattleConfig"),
+  WuYinQuBattleNameDefines_1 = require("../WuYinQuBattleNameDefines"),
+  WuYinQuBattleStateBase_1 = require("./WuYinQuBattleStateBase");
 class WuYinQuBattleStateFighting1 extends WuYinQuBattleStateBase_1.default {
   constructor() {
     super(...arguments), (this.Timer = -0);
@@ -15,8 +15,8 @@ class WuYinQuBattleStateFighting1 extends WuYinQuBattleStateBase_1.default {
   OnEnter(e) {
     Log_1.Log.CheckInfo() && Log_1.Log.Info("RenderBattle", 12, "进入战斗阶段"),
       (this.Owner.当前状态 = "战斗阶段1");
-    let t;
-    let i = this.GetFightingData();
+    var t,
+      i = this.GetFightingData();
     (this.Timer = 0),
       UE.KismetSystemLibrary.IsValid(i)
         ? ((i = this.Owner.WuYinQuFightingData.GlobalMPC),
@@ -51,4 +51,4 @@ class WuYinQuBattleStateFighting1 extends WuYinQuBattleStateBase_1.default {
   }
 }
 exports.default = WuYinQuBattleStateFighting1;
-// # sourceMappingURL=WuYinQuBattleStateFighting1.js.map
+//# sourceMappingURL=WuYinQuBattleStateFighting1.js.map

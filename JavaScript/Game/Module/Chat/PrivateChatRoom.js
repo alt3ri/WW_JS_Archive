@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PrivateChatRoom = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ChatRoom_1 = require("./ChatRoom");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  ChatRoom_1 = require("./ChatRoom");
 class PrivateChatRoom extends ChatRoom_1.ChatRoom {
   constructor(e, t) {
     super(1, t), (this.jMt = e);
@@ -26,9 +26,9 @@ class PrivateChatRoom extends ChatRoom_1.ChatRoom {
     return this.GetFriendData()?.PlayerIsOnline;
   }
   CanChat() {
-    const e = ModelManager_1.ModelManager.FriendModel;
+    var e = ModelManager_1.ModelManager.FriendModel;
     return !e.HasBlockedPlayer(this.jMt) && !!e.HasFriend(this.jMt);
   }
 }
 exports.PrivateChatRoom = PrivateChatRoom;
-// # sourceMappingURL=PrivateChatRoom.js.map
+//# sourceMappingURL=PrivateChatRoom.js.map

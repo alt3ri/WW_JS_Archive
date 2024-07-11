@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configLongPressConfigById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const LongPressConfig_1 = require("../Config/LongPressConfig");
-const DB = "db_longpress_config.db";
-const FILE = "c.长按组件配置.xlsx";
-const TABLE = "LongPressConfig";
-const COMMAND = "select BinData from `LongPressConfig` where Id = ?";
-const KEY_PREFIX = "LongPressConfigById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  LongPressConfig_1 = require("../Config/LongPressConfig"),
+  DB = "db_longpress_config.db",
+  FILE = "c.长按组件配置.xlsx",
+  TABLE = "LongPressConfig",
+  COMMAND = "select BinData from `LongPressConfig` where Id = ?",
+  KEY_PREFIX = "LongPressConfigById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configLongPressConfigById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configLongPressConfigById.GetConfig(";
 exports.configLongPressConfigById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configLongPressConfigById = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var i;
-        var e = void 0;
+        var i,
+          e = void 0;
         if (
           (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configLongPressConfigById = {
     }
   },
 };
-// # sourceMappingURL=LongPressConfigById.js.map
+//# sourceMappingURL=LongPressConfigById.js.map

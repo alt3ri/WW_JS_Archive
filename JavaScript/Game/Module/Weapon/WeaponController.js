@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponController = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Transform_1 = require("../../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const RoleController_1 = require("../RoleUi/RoleController");
-const UiModelUtil_1 = require("../UiModel/UiModelUtil");
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Transform_1 = require("../../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  RoleController_1 = require("../RoleUi/RoleController"),
+  UiModelUtil_1 = require("../UiModel/UiModelUtil");
 class WeaponController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -53,11 +53,11 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
       e && ModelManager_1.ModelManager.WeaponModel.WeaponRoleLoadEquip(e.uAs);
     }),
       Net_1.Net.Register(28145, (e) => {
-        var o = MathUtils_1.MathUtils.LongToNumber(e.rkn);
-        var o =
-          ModelManager_1.ModelManager.CreatureModel.GetEntity(
-            o,
-          ).Entity.GetComponent(69);
+        var o = MathUtils_1.MathUtils.LongToNumber(e.rkn),
+          o =
+            ModelManager_1.ModelManager.CreatureModel.GetEntity(
+              o,
+            ).Entity.GetComponent(69);
         o && o.OnEquipWeaponForRoleNotify(e);
       });
   }
@@ -65,10 +65,10 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
     Net_1.Net.UnRegister(24360), Net_1.Net.UnRegister(28145);
   }
   static SendPbWeaponLevelUpRequest(e, o) {
-    const t = Protocol_1.Aki.Protocol.Tcs.create();
+    var t = Protocol_1.Aki.Protocol.Tcs.create();
     t.Ykn = e;
     for (const n of o) {
-      const r = Protocol_1.Aki.Protocol.Y3s.create();
+      var r = Protocol_1.Aki.Protocol.Y3s.create();
       (r.I5n = n.SelectedCount),
         (r.Ykn = n.IncId),
         (r.G3n = n.ItemId),
@@ -85,10 +85,10 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
     });
   }
   static SendPbWeaponBreachRequest(t, r) {
-    const e = Protocol_1.Aki.Protocol.Rcs.create();
+    var e = Protocol_1.Aki.Protocol.Rcs.create();
     (e.Ykn = t),
       Net_1.Net.Call(28957, e, (e) => {
-        let o;
+        var o;
         e &&
           (e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
             ? ((o = e.TVn),
@@ -105,7 +105,7 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
     if (
       !RoleController_1.RoleController.CheckCharacterInBattleTagAndShowTips()
     ) {
-      const t = Protocol_1.Aki.Protocol.Acs.create();
+      var t = Protocol_1.Aki.Protocol.Acs.create();
       (t.Ykn = o), (t.LVn = e);
       const r =
         ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
@@ -131,7 +131,7 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
     }
   }
   static SendPbEquipTakeOnRequest(e, o, t) {
-    let r;
+    var r;
     RoleController_1.RoleController.CheckCharacterInBattleTagAndShowTips() ||
       !e ||
       e <= 0 ||
@@ -155,42 +155,41 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
     if (r) {
       o = e.GetWeaponConfig();
       const a =
-        ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponModelTransformData(
-          o.TransformId,
-        );
-      const l =
-        (r.CheckGetComponent(18)?.SetWeaponData(e), r.CheckGetComponent(1));
+          ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponModelTransformData(
+            o.TransformId,
+          ),
+        l = (r.CheckGetComponent(18)?.SetWeaponData(e), r.CheckGetComponent(1));
       l?.SetTransformByTag("WeaponCase");
       r.CheckGetComponent(2)?.LoadModelByModelId(o.ModelId, !1, () => {
         UiModelUtil_1.UiModelUtil.SetVisible(r, !0);
         var e = Vector_1.Vector.Create(
-          a.Location.X,
-          a.Location.Y,
-          a.Location.Z,
-        );
-        const o = Rotator_1.Rotator.Create(
-          a.Rotation.Y,
-          a.Rotation.Z,
-          a.Rotation.X,
-        );
-        var t = Vector_1.Vector.Create(a.Size, a.Size, a.Size);
-        var e = Transform_1.Transform.Create(o.Quaternion(), e, t);
-        var t =
-          (l?.MainMeshComponent?.K2_SetRelativeTransform(
-            e.ToUeTransform(),
-            !1,
-            void 0,
-            !1,
+            a.Location.X,
+            a.Location.Y,
+            a.Location.Z,
           ),
-          UiModelUtil_1.UiModelUtil.SetRenderingMaterial(
-            r,
-            "WeaponRootWeaponMaterialController",
+          o = Rotator_1.Rotator.Create(
+            a.Rotation.Y,
+            a.Rotation.Z,
+            a.Rotation.X,
           ),
-          UiModelUtil_1.UiModelUtil.PlayEffectOnRoot(
-            r,
-            "WeaponRootWeaponShowHideEffect",
-          ),
-          r.CheckGetComponent(9));
+          t = Vector_1.Vector.Create(a.Size, a.Size, a.Size),
+          e = Transform_1.Transform.Create(o.Quaternion(), e, t),
+          t =
+            (l?.MainMeshComponent?.K2_SetRelativeTransform(
+              e.ToUeTransform(),
+              !1,
+              void 0,
+              !1,
+            ),
+            UiModelUtil_1.UiModelUtil.SetRenderingMaterial(
+              r,
+              "WeaponRootWeaponMaterialController",
+            ),
+            UiModelUtil_1.UiModelUtil.PlayEffectOnRoot(
+              r,
+              "WeaponRootWeaponShowHideEffect",
+            ),
+            r.CheckGetComponent(9));
         t.SetRotateParam(a.RotateTime),
           t.StartRotate(),
           o.Set(a.AxisRotate.Y, a.AxisRotate.Z, a.AxisRotate.X),
@@ -201,9 +200,9 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
         o = i.CheckGetComponent(18);
         if (a.ShowScabbard) {
           t = e.GetWeaponConfig().Models;
-          if (t.length > 1) {
+          if (1 < t.length) {
             const _ = i.CheckGetComponent(1);
-            const n = i.CheckGetComponent(2);
+            var n = i.CheckGetComponent(2);
             o.SetWeaponData(e);
             n.LoadModelByModelId(t[1], !1, () => {
               _.Actor.K2_AttachToActor(l.Actor, void 0, 2, 1, 1, !1),
@@ -214,7 +213,7 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
                   void 0,
                   !1,
                 );
-              const e = Transform_1.Transform.Create();
+              var e = Transform_1.Transform.Create();
               e.SetLocation(a.ScabbardOffset),
                 _.MainMeshComponent?.K2_SetRelativeTransform(
                   e.ToUeTransform(),
@@ -251,7 +250,7 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
         "RoleFadeInCurve",
       );
     ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.CurveFloat, (e) => {
-      let o;
+      var o;
       e &&
         ((o =
           CommonParamById_1.configCommonParamById.GetIntConfig(
@@ -267,7 +266,7 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
         "RoleFadeOutCurve",
       );
     ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.CurveFloat, (e) => {
-      let o;
+      var o;
       e &&
         ((o = CommonParamById_1.configCommonParamById.GetIntConfig(
           "RoleFadeOutDuration",
@@ -286,4 +285,4 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
     for (const o of e)
       ModelManager_1.ModelManager.WeaponModel.RemoveWeaponData(o);
   });
-// # sourceMappingURL=WeaponController.js.map
+//# sourceMappingURL=WeaponController.js.map

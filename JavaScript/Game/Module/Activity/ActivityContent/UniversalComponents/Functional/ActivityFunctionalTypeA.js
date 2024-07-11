@@ -4,10 +4,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.FunctionalPanelConditionLock =
     exports.ActivityFunctionalTypeA =
       void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase");
-const ButtonAndTextItem_1 = require("../../../../Common/Button/ButtonAndTextItem");
-const LguiUtil_1 = require("../../../../Util/LguiUtil");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase"),
+  ButtonAndTextItem_1 = require("../../../../Common/Button/ButtonAndTextItem"),
+  LguiUtil_1 = require("../../../../Util/LguiUtil");
 class ActivityFunctionalTypeA extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -24,15 +24,15 @@ class ActivityFunctionalTypeA extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    var t = this.GetItem(0);
-    var t =
-      ((this.PanelLock = new FunctionalPanelConditionLock()),
-      await this.PanelLock.CreateByActorAsync(t.GetOwner()),
-      this.GetItem(2));
-    var t =
-      ((this.PanelActivate = new FunctionalPanelConditionActivate()),
-      await this.PanelActivate.CreateByActorAsync(t.GetOwner()),
-      this.GetItem(1));
+    var t = this.GetItem(0),
+      t =
+        ((this.PanelLock = new FunctionalPanelConditionLock()),
+        await this.PanelLock.CreateByActorAsync(t.GetOwner()),
+        this.GetItem(2)),
+      t =
+        ((this.PanelActivate = new FunctionalPanelConditionActivate()),
+        await this.PanelActivate.CreateByActorAsync(t.GetOwner()),
+        this.GetItem(1));
     this.FunctionButton = new ButtonAndTextItem_1.ButtonAndTextItem(t);
   }
   SetLockTextByTextId(t, ...e) {
@@ -121,4 +121,4 @@ class FunctionalPanelConditionActivate extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.FunctionalPanelConditionActivate = FunctionalPanelConditionActivate;
-// # sourceMappingURL=ActivityFunctionalTypeA.js.map
+//# sourceMappingURL=ActivityFunctionalTypeA.js.map

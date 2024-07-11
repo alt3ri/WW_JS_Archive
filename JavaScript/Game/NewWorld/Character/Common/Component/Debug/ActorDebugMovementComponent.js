@@ -1,27 +1,31 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, o, i) {
-    let r;
-    const s = arguments.length;
-    let n =
-      s < 3 ? e : i === null ? (i = Object.getOwnPropertyDescriptor(e, o)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      s = arguments.length,
+      n =
+        s < 3
+          ? e
+          : null === i
+            ? (i = Object.getOwnPropertyDescriptor(e, o))
+            : i;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(t, e, o, i);
     else
-      for (let h = t.length - 1; h >= 0; h--)
-        (r = t[h]) && (n = (s < 3 ? r(n) : s > 3 ? r(e, o, n) : r(e, o)) || n);
-    return s > 3 && n && Object.defineProperty(e, o, n), n;
+      for (var h = t.length - 1; 0 <= h; h--)
+        (r = t[h]) && (n = (s < 3 ? r(n) : 3 < s ? r(e, o, n) : r(e, o)) || n);
+    return 3 < s && n && Object.defineProperty(e, o, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActorDebugMovementComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const WARNING_THRESHOLD_SQUARED = 25e6;
+const UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  WARNING_THRESHOLD_SQUARED = 25e6;
 let ActorDebugMovementComponent = class ActorDebugMovementComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -79,4 +83,4 @@ let ActorDebugMovementComponent = class ActorDebugMovementComponent extends Enti
   ActorDebugMovementComponent,
 )),
   (exports.ActorDebugMovementComponent = ActorDebugMovementComponent);
-// # sourceMappingURL=ActorDebugMovementComponent.js.map
+//# sourceMappingURL=ActorDebugMovementComponent.js.map

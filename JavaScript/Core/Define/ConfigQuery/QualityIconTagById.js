@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configQualityIconTagById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const QualityIconTag_1 = require("../Config/QualityIconTag");
-const DB = "db_component_config.db";
-const FILE = "t.通用组件配置.xlsx";
-const TABLE = "QualityIconTag";
-const COMMAND = "select BinData from `QualityIconTag` where Id=?";
-const KEY_PREFIX = "QualityIconTagById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  QualityIconTag_1 = require("../Config/QualityIconTag"),
+  DB = "db_component_config.db",
+  FILE = "t.通用组件配置.xlsx",
+  TABLE = "QualityIconTag",
+  COMMAND = "select BinData from `QualityIconTag` where Id=?",
+  KEY_PREFIX = "QualityIconTagById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configQualityIconTagById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configQualityIconTagById.GetConfig(";
 exports.configQualityIconTagById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configQualityIconTagById = {
       if (
         (e =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var e;
-        var i = void 0;
+        var e,
+          i = void 0;
         if (
           (([e, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configQualityIconTagById = {
     }
   },
 };
-// # sourceMappingURL=QualityIconTagById.js.map
+//# sourceMappingURL=QualityIconTagById.js.map

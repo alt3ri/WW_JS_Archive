@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CreateEntityData = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const IEntity_1 = require("../../../UniverseEditor/Interface/IEntity");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  IEntity_1 = require("../../../UniverseEditor/Interface/IEntity"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class CreateEntityData {
   constructor() {
     (this.CreatureDataId = 0),
@@ -52,8 +52,8 @@ class CreateEntityData {
     );
   }
   InitPbEntityData() {
-    let t = void 0;
-    let e = void 0;
+    let t = void 0,
+      e = void 0;
     switch (this.ConfigType) {
       case Protocol_1.Aki.Protocol.USs.Proto_Global:
         (t = ModelManager_1.ModelManager.CreatureModel.GetDynamicEntityData(
@@ -138,16 +138,16 @@ class CreateEntityData {
   }
   InitComponentData() {
     this.ComponentDataMap.clear();
-    const t = this.EntityData.Dvs;
+    var t = this.EntityData.Dvs;
     if (t)
       for (const i of t) {
-        const e = i.Mqs;
+        var e = i.Mqs;
         this.ComponentDataMap.set(e, i);
       }
     return !0;
   }
   AddComponent(t) {
-    const e = t.Id;
+    var e = t.Id;
     return e < 0
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Entity", 3, "组件没有在RegisterComponent注册", [
@@ -205,12 +205,9 @@ class CreateEntityData {
       );
   }
   static IsRobot(t) {
-    var t = t.PbEntityInitData;
-    const e = (0, IComponent_1.getComponent)(
-      t.ComponentsData,
-      "InteractComponent",
-    );
-    var t = (0, IComponent_1.getComponent)(t.ComponentsData, "BubbleComponent");
+    var t = t.PbEntityInitData,
+      e = (0, IComponent_1.getComponent)(t.ComponentsData, "InteractComponent"),
+      t = (0, IComponent_1.getComponent)(t.ComponentsData, "BubbleComponent");
     return !(!e || !t);
   }
   static GetMonsterComponent(t) {
@@ -222,8 +219,8 @@ class CreateEntityData {
   }
   static HasScanInfo(t) {
     t = this.GetBaseInfo(t)?.ScanFunction?.ScanId;
-    return !!t && t !== 0;
+    return !!t && 0 !== t;
   }
 }
 exports.CreateEntityData = CreateEntityData;
-// # sourceMappingURL=CreateEntityData.js.map
+//# sourceMappingURL=CreateEntityData.js.map

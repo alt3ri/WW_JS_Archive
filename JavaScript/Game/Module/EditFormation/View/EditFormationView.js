@@ -1,32 +1,32 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EditFormationView = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const BuffItemControl_1 = require("../../BuffItem/BuffItemControl");
-const CommonTabComponentData_1 = require("../../Common/TabComponent/CommonTabComponentData");
-const CommonTabData_1 = require("../../Common/TabComponent/CommonTabData");
-const CommonTabTitleData_1 = require("../../Common/TabComponent/CommonTabTitleData");
-const TabComponentWithTitle_1 = require("../../Common/TabComponent/TabComponentWithTitle");
-const EditFormationTabItem_1 = require("../../Common/TabComponent/TabItem/EditFormationTabItem");
-const QuickRoleSelectView_1 = require("../../RoleSelect/QuickRoleSelectView");
-const TeamRoleSelectView_1 = require("../../RoleSelect/TeamRoleSelectView");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const EditFormationController_1 = require("../EditFormationController");
-const EditFormationDefine_1 = require("../EditFormationDefine");
-const ExitSkillView_1 = require("./ExitSkill/ExitSkillView");
-const FormationRoleView_1 = require("./FormationRoleView");
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  BuffItemControl_1 = require("../../BuffItem/BuffItemControl"),
+  CommonTabComponentData_1 = require("../../Common/TabComponent/CommonTabComponentData"),
+  CommonTabData_1 = require("../../Common/TabComponent/CommonTabData"),
+  CommonTabTitleData_1 = require("../../Common/TabComponent/CommonTabTitleData"),
+  TabComponentWithTitle_1 = require("../../Common/TabComponent/TabComponentWithTitle"),
+  EditFormationTabItem_1 = require("../../Common/TabComponent/TabItem/EditFormationTabItem"),
+  QuickRoleSelectView_1 = require("../../RoleSelect/QuickRoleSelectView"),
+  TeamRoleSelectView_1 = require("../../RoleSelect/TeamRoleSelectView"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  EditFormationController_1 = require("../EditFormationController"),
+  EditFormationDefine_1 = require("../EditFormationDefine"),
+  ExitSkillView_1 = require("./ExitSkill/ExitSkillView"),
+  FormationRoleView_1 = require("./FormationRoleView");
 class EditFormationView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -46,7 +46,7 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
         for (const t of this.l4t) t.GetPlayer() === e && t.RefreshPing(i);
       }),
       (this.p4t = () => {
-        let e;
+        var e;
         this.m4t ||
           (this.v4t() &&
             ((e = () => {
@@ -67,9 +67,9 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
       }),
       (this.q3t = () => {
         if (!UiManager_1.UiManager.IsViewOpen("QuickRoleSelectView")) {
-          var e = ModelManager_1.ModelManager.EditFormationModel;
-          const i = new Array();
-          var e = e.GetEditingRoleIdList(this._4t);
+          var e = ModelManager_1.ModelManager.EditFormationModel,
+            i = new Array(),
+            e = e.GetEditingRoleIdList(this._4t);
           if (e) for (const t of e) i.push(t);
           (e = ModelManager_1.ModelManager.RoleModel.GetRoleList()),
             (e = new QuickRoleSelectView_1.QuickRoleSelectViewData(5, i, e));
@@ -82,7 +82,7 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
         }
       }),
       (this.E4t = (e) => {
-        const i = ModelManager_1.ModelManager.EditFormationModel;
+        var i = ModelManager_1.ModelManager.EditFormationModel;
         if (this._4t !== i.GetCurrentFormationId) return !0;
         if (e.length <= 0)
           return (
@@ -107,19 +107,19 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
       }),
       (this.G3t = (i) => {
         this.O3t(!0);
-        const t = ModelManager_1.ModelManager.EditFormationModel;
+        var t = ModelManager_1.ModelManager.EditFormationModel;
         for (
           let e = 0;
           e < EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM;
           e++
         ) {
-          const o = e <= i.length ? i[e] : 0;
-          const r = e + 1;
+          var o = e <= i.length ? i[e] : 0,
+            r = e + 1;
           t.SetEditingRoleId(this._4t, r, o, !1);
         }
       }),
       (this.I4t = () => {
-        let e, i, t;
+        var e, i, t;
         this.m4t ||
           (this._4t === this.c4t && !this.v4t()) ||
           ((e = () => {
@@ -144,11 +144,11 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
       }),
       (this.k3t = () => {
         if (!UiManager_1.UiManager.IsViewShow("ExitSkillView")) {
-          const e = new ExitSkillView_1.ExitSkillViewData();
+          var e = new ExitSkillView_1.ExitSkillViewData();
           for (const r of this.l4t) {
-            const i = r.GetConfigId();
-            const t = r.GetOnlineIndex();
-            const o = r.GetPlayer();
+            var i = r.GetConfigId(),
+              t = r.GetOnlineIndex(),
+              o = r.GetPlayer();
             e.AddData(i, t, o);
           }
           UiManager_1.UiManager.OpenView("ExitSkillView", e);
@@ -158,14 +158,14 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
         this.O3t(!0);
       }),
       (this.S3t = (e) => {
-        let i, t;
+        var i, t;
         return this.M3t(e)
           ? (BuffItemControl_1.BuffItemControl.TryUseResurrectionItem(e), !1)
           : ((e = (t =
               ModelManager_1.ModelManager
                 .EditFormationModel).IsInEditingFormation(this._4t, e)),
             (i = t.GetCurrentFormationId === this._4t),
-            (t = (t = t.GetEditingRoleIdList(this._4t)) && t.length === 1),
+            (t = (t = t.GetEditingRoleIdList(this._4t)) && 1 === t.length),
             !(
               i &&
               e &&
@@ -178,10 +178,10 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
       }),
       (this.Q3t = (e) => {
         this.O3t(!0);
-        let i;
-        const t = ModelManager_1.ModelManager.EditFormationModel;
-        const o = t.GetEditingRolePosition(this._4t, e);
-        const r = this.u4t;
+        var i,
+          t = ModelManager_1.ModelManager.EditFormationModel,
+          o = t.GetEditingRolePosition(this._4t, e),
+          r = this.u4t;
         t.IsInEditingFormation(this._4t, e)
           ? t.GetEditingRoleId(this._4t, r)
             ? o === r
@@ -217,14 +217,14 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
         )),
       (this.v3t = (e) => this.M3t(e)),
       (this.j3t = (e) => {
-        const i = ModelManager_1.ModelManager.EditFormationModel;
-        var e = i.IsInEditingFormation(this._4t, e);
-        const t = i.GetEditingRoleIdList(this._4t);
+        var i = ModelManager_1.ModelManager.EditFormationModel,
+          e = i.IsInEditingFormation(this._4t, e),
+          t = i.GetEditingRoleIdList(this._4t);
         let o = !0;
         return (o = t && !i.GetEditingRoleId(this._4t, this.u4t) && e ? !1 : o);
       }),
       (this.K3t = (e) => {
-        let i, t;
+        var i, t;
         if (e)
           return this.M3t(e)
             ? "EditBattleTeamRevive"
@@ -250,18 +250,17 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
         return new EditFormationTabItem_1.EditFormationTabItem();
       }),
       (this.yqe = (e) => {
-        var i = EditFormationDefine_1.FORMATION_SPRITES[e];
-        var i =
-          ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(i);
-        var e = e + 1;
-        const t =
-          ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
-            "TeamText",
+        var i = EditFormationDefine_1.FORMATION_SPRITES[e],
+          i = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(i),
+          e = e + 1,
+          t =
+            ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
+              "TeamText",
+            ),
+          i = new CommonTabData_1.CommonTabData(
+            i,
+            new CommonTabTitleData_1.CommonTabTitleData(t, e),
           );
-        var i = new CommonTabData_1.CommonTabData(
-          i,
-          new CommonTabTitleData_1.CommonTabTitleData(t, e),
-        );
         return (
           i.SetSmallIcon(
             ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
@@ -320,8 +319,8 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
       ]);
   }
   async OnBeforeStartAsync() {
-    const i = ModelManager_1.ModelManager.EditFormationModel;
-    let t = i.GetCurrentFormationId;
+    var i = ModelManager_1.ModelManager.EditFormationModel,
+      t = i.GetCurrentFormationId;
     if (void 0 === t)
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Formation", 49, "打开大世界编队界面时，当前编队为空");
@@ -332,7 +331,7 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
         await this.$3t();
       let e = 1;
       for (const r of [this.GetItem(3), this.GetItem(4), this.GetItem(5)]) {
-        const o = new FormationRoleView_1.FormationRoleView(r, e);
+        var o = new FormationRoleView_1.FormationRoleView(r, e);
         o.BindOnSelectRole(this.L4t), this.l4t.push(o), e++;
       }
       this.rFe();
@@ -344,7 +343,7 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
     }
   }
   OnBeforeShow() {
-    let e;
+    var e;
     ModelManager_1.ModelManager.GameModeModel.IsMulti ||
       ((e = this._4t - 1),
       this.cpt.SelectToggleByIndex(e),
@@ -404,25 +403,25 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
       UiManager_1.UiManager.ResetToBattleView();
   }
   D4t() {
-    const e = ModelManager_1.ModelManager.EditFormationModel;
-    var i = ModelManager_1.ModelManager.RoleModel.GetRoleList();
-    var t = e.GetEditingRoleId(this._4t, this.u4t);
-    var t = new TeamRoleSelectView_1.TeamRoleSelectViewData(
-      5,
-      t,
-      i,
-      this.Q3t,
-      this.y4t,
-      this.u4t,
-    );
-    var i =
-      (t.SetGetConfirmButtonEnableFunction(this.j3t),
-      t.SetGetConfirmButtonTextFunction(this.K3t),
-      t.SetHideFinishCallBack(this.g4t),
-      t.SetConfirmCheckFunction(this.S3t),
-      (t.IsNeedRevive = this.v3t),
-      (t.CanJoinTeam = this.p3t),
-      e.GetEditingRoleIdList(this._4t));
+    var e = ModelManager_1.ModelManager.EditFormationModel,
+      i = ModelManager_1.ModelManager.RoleModel.GetRoleList(),
+      t = e.GetEditingRoleId(this._4t, this.u4t),
+      t = new TeamRoleSelectView_1.TeamRoleSelectViewData(
+        5,
+        t,
+        i,
+        this.Q3t,
+        this.y4t,
+        this.u4t,
+      ),
+      i =
+        (t.SetGetConfirmButtonEnableFunction(this.j3t),
+        t.SetGetConfirmButtonTextFunction(this.K3t),
+        t.SetHideFinishCallBack(this.g4t),
+        t.SetConfirmCheckFunction(this.S3t),
+        (t.IsNeedRevive = this.v3t),
+        (t.CanJoinTeam = this.p3t),
+        e.GetEditingRoleIdList(this._4t));
     return (t.FormationRoleList = i), t;
   }
   T4t(e) {
@@ -438,18 +437,18 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
       ]);
   }
   O3t(e) {
-    const i = this.GetButton(8)
+    var i = this.GetButton(8)
       .GetOwner()
       .GetComponentByClass(UE.UIItem.StaticClass());
     i && i.SetUIActive(e);
   }
   async $3t() {
-    const e = this.GetItem(0);
-    const i = new CommonTabComponentData_1.CommonTabComponentData(
-      this.dVe,
-      this.X3t,
-      this.yqe,
-    );
+    var e = this.GetItem(0),
+      i = new CommonTabComponentData_1.CommonTabComponentData(
+        this.dVe,
+        this.X3t,
+        this.yqe,
+      );
     (this.cpt = new TabComponentWithTitle_1.TabComponentWithTitle(e, i)),
       ModelManager_1.ModelManager.GameModeModel.IsMulti ||
         (this.cpt.SetCanChange(
@@ -464,7 +463,7 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
   }
   rFe() {
     if (!ModelManager_1.ModelManager.GameModeModel.IsMulti) {
-      const i =
+      var i =
         this._4t !==
         ModelManager_1.ModelManager.EditFormationModel.GetCurrentFormationId;
       this.GetButton(6).SetSelfInteractive(i);
@@ -474,24 +473,24 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
     }
   }
   f4t(n) {
-    const s = ModelManager_1.ModelManager.EditFormationModel;
-    const e = this.GetButton(1).RootUIComp;
+    var s = ModelManager_1.ModelManager.EditFormationModel,
+      e = this.GetButton(1).RootUIComp;
     if (s.GetEditingRoleIdList(n).length <= 0) {
       for (const i of this.l4t) i.ResetRole();
       e.SetUIActive(!1);
     } else {
       e.SetUIActive(!0);
-      let h;
-      let l;
-      let _;
-      const m =
-        ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance();
+      var h,
+        l,
+        _,
+        m =
+          ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance();
       for (let a = 1; a <= EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM; a++) {
-        let e = 0;
-        let i = 0;
-        let t = "";
-        let o = 0;
-        let r = 0;
+        let e = 0,
+          i = 0,
+          t = "",
+          o = 0,
+          r = 0;
         s.IsMyPosition(a)
           ? ((l = ModelManager_1.ModelManager.RoleModel),
             (e = s.GetEditingRoleId(n, a)),
@@ -535,8 +534,8 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
     }
   }
   e4t(e, i = 0, t = 0, o = "", r = 0, a = 0) {
-    var e = e - 1;
-    const n = this.l4t[e];
+    var e = e - 1,
+      n = this.l4t[e];
     const s = this.GetUiSpriteTransition(this._3t[e]);
     let h = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
       "SP_TeamRoleSkillNone",
@@ -563,9 +562,9 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
     );
   }
   v4t() {
-    const e = ModelManager_1.ModelManager.EditFormationModel;
-    const i = e.GetEditingRoleIdList(this._4t);
-    if (i.length === 0)
+    var e = ModelManager_1.ModelManager.EditFormationModel,
+      i = e.GetEditingRoleIdList(this._4t);
+    if (0 === i.length)
       return (
         ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
           "EditBattleTeamNoRole",
@@ -587,7 +586,7 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
     );
   }
   M3t(e) {
-    let i, t;
+    var i, t;
     return !(
       !ModelManager_1.ModelManager.GameModeModel.IsMulti ||
       ((t = (i =
@@ -603,8 +602,8 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
     );
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
-    let i = Number(e[0]);
-    if (i !== 0) {
+    var i = Number(e[0]);
+    if (0 !== i) {
       i = this.l4t[i - 1]?.GetRootItem();
       if (i) return [i, i];
     }
@@ -616,4 +615,4 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.EditFormationView = EditFormationView;
-// # sourceMappingURL=EditFormationView.js.map
+//# sourceMappingURL=EditFormationView.js.map

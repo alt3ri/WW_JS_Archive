@@ -16,4 +16,4 @@ class ActivityTurntableRewardView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.ActivityTurntableRewardView = ActivityTurntableRewardView;
-// # sourceMappingURL=ActivityTurntableRewardView.js.map
+//# sourceMappingURL=ActivityTurntableRewardView.js.map

@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configPhantomCustomizeItemByItemId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const PhantomCustomizeItem_1 = require("../Config/PhantomCustomizeItem");
-const DB = "db_phantom.db";
-const FILE = "h.幻象.xlsx";
-const TABLE = "PhantomCustomizeItem";
-const COMMAND = "select BinData from `PhantomCustomizeItem` where ItemId=?";
-const KEY_PREFIX = "PhantomCustomizeItemByItemId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  PhantomCustomizeItem_1 = require("../Config/PhantomCustomizeItem"),
+  DB = "db_phantom.db",
+  FILE = "h.幻象.xlsx",
+  TABLE = "PhantomCustomizeItem",
+  COMMAND = "select BinData from `PhantomCustomizeItem` where ItemId=?",
+  KEY_PREFIX = "PhantomCustomizeItemByItemId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configPhantomCustomizeItemByItemId.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configPhantomCustomizeItemByItemId.GetConfig(";
 exports.configPhantomCustomizeItemByItemId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configPhantomCustomizeItemByItemId = {
       if (
         (n =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "ItemId",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "ItemId",
+              o,
+            ]))
       ) {
-        var n;
-        var t = void 0;
+        var n,
+          t = void 0;
         if (
           (([n, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configPhantomCustomizeItemByItemId = {
     }
   },
 };
-// # sourceMappingURL=PhantomCustomizeItemByItemId.js.map
+//# sourceMappingURL=PhantomCustomizeItemByItemId.js.map

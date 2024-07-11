@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../../GlobalData");
-const CharacterController_1 = require("../../../NewWorld/Character/CharacterController");
-const CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary");
-const TsAiController_1 = require("../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
-const NAVIGATION_COMPLETE_DISTANCE = 10;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  CharacterController_1 = require("../../../NewWorld/Character/CharacterController"),
+  CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
+  TsAiController_1 = require("../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
+  NAVIGATION_COMPLETE_DISTANCE = 10;
 class TsTaskFollowTarget extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -81,7 +81,7 @@ class TsTaskFollowTarget extends TsTaskAbortImmediatelyBase_1.default {
     this.InitTsVariables(), this.GetPath(t, i);
   }
   ReceiveTickAI(t, i, e) {
-    let s = t.AiController;
+    var s = t.AiController;
     s
       ? (this.DelayDie(t),
         (s = s.CharActorComp).Entity.CheckGetComponent(185).HasTag(-1371021686)
@@ -113,28 +113,28 @@ class TsTaskFollowTarget extends TsTaskAbortImmediatelyBase_1.default {
       : this.FinishExecute(!1);
   }
   GetPath(t, i) {
-    const e = t.AiController;
+    var e = t.AiController;
     if (e) {
-      const s = e.CharActorComp;
-      var r = s.Entity.CheckGetComponent(47);
-      if (r.RoleId !== 0) {
+      var s = e.CharActorComp,
+        r = s.Entity.CheckGetComponent(47);
+      if (0 !== r.RoleId) {
         this.Source =
           CharacterController_1.CharacterController.GetCharacterActorComponentById(
             r.RoleId,
           );
-        var r = Vector_1.Vector.Create();
-        const h =
-          (this.Source.ActorForwardProxy.RotateAngleAxis(
-            this.TsAngle,
-            Vector_1.Vector.UpVectorProxy,
-            r,
-          ),
-          r.Normalize(MathUtils_1.MathUtils.KindaSmallNumber),
-          r.Multiply(this.TsLength, r),
-          r.Addition(this.Source.ActorLocationProxy, r),
-          this.TsIsShowCube &&
-            this.DrawCube(new UE.Transform(r.ToUeVector()), 5, 156),
-          Vector_1.Vector.DistSquared(r, s.ActorLocationProxy));
+        var r = Vector_1.Vector.Create(),
+          h =
+            (this.Source.ActorForwardProxy.RotateAngleAxis(
+              this.TsAngle,
+              Vector_1.Vector.UpVectorProxy,
+              r,
+            ),
+            r.Normalize(MathUtils_1.MathUtils.KindaSmallNumber),
+            r.Multiply(this.TsLength, r),
+            r.Addition(this.Source.ActorLocationProxy, r),
+            this.TsIsShowCube &&
+              this.DrawCube(new UE.Transform(r.ToUeVector()), 5, 156),
+            Vector_1.Vector.DistSquared(r, s.ActorLocationProxy));
         if (
           (this.TsIsShowCube &&
             this.DrawCube(new UE.Transform(s.ActorLocation), 5, 0),
@@ -164,7 +164,7 @@ class TsTaskFollowTarget extends TsTaskAbortImmediatelyBase_1.default {
               r.ToUeVector(),
               this.NavigationPath,
             )),
-            this.NavigationPath.length > 0 &&
+            0 < this.NavigationPath.length &&
               BlackboardController_1.BlackboardController.SetVectorValueByEntity(
                 e.CharAiDesignComp.Entity.Id,
                 this.TsFollowPointName,
@@ -220,8 +220,8 @@ class TsTaskFollowTarget extends TsTaskAbortImmediatelyBase_1.default {
       );
     var i = t.AiController.CharActorComp;
     if (!i) return !1;
-    let e;
-    var i = i.Entity.CheckGetComponent(47);
+    var e,
+      i = i.Entity.CheckGetComponent(47);
     if (
       ((this.IsHas =
         !!BlackboardController_1.BlackboardController.GetBooleanValueByEntity(
@@ -239,7 +239,7 @@ class TsTaskFollowTarget extends TsTaskAbortImmediatelyBase_1.default {
       return !1;
     let s = !1;
     for (const h of this.TsTags) {
-      const r = this.Source.Entity.CheckGetComponent(185).HasTag(h?.TagId);
+      var r = this.Source.Entity.CheckGetComponent(185).HasTag(h?.TagId);
       ((this.TsIsInTag && r) || (!this.TsIsInTag && !r)) &&
         (this.IsHas ||
           (BlackboardController_1.BlackboardController.SetIntValueByEntity(
@@ -261,7 +261,7 @@ class TsTaskFollowTarget extends TsTaskAbortImmediatelyBase_1.default {
           this.TsBeginTimeName,
         )),
         (e = Time_1.Time.WorldTime - (e || 0)) >= this.TsWaitTime &&
-          (i.RoleId !== 0 &&
+          (0 !== i.RoleId &&
             CharacterController_1.CharacterController.GetCharacterActorComponentById(
               i.RoleId,
             ) &&
@@ -285,7 +285,7 @@ class TsTaskFollowTarget extends TsTaskAbortImmediatelyBase_1.default {
       (this.FoundPath = !1);
   }
   DrawCube(t, i, e) {
-    let s, r, h;
+    var s, r, h;
     t &&
       ((e = new UE.LinearColor(e, e, e, e)),
       (h = t.GetLocation()),
@@ -336,4 +336,4 @@ class TsTaskFollowTarget extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskFollowTarget;
-// # sourceMappingURL=TsTaskFollowTarget.js.map
+//# sourceMappingURL=TsTaskFollowTarget.js.map

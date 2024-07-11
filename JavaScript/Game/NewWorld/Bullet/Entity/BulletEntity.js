@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletEntity = void 0);
-const Entity_1 = require("../../../../Core/Entity/Entity");
-const GameBudgetAllocatorConfigCreator_1 = require("../../../World/Define/GameBudgetAllocatorConfigCreator");
-const BulletActionLogicComponent_1 = require("../../Bullet/Component/BulletActionLogicComponent");
-const BulletActorComponent_1 = require("../Component/BulletActorComponent");
-const BulletInfo_1 = require("../Model/BulletInfo");
+const Entity_1 = require("../../../../Core/Entity/Entity"),
+  GameBudgetAllocatorConfigCreator_1 = require("../../../World/Define/GameBudgetAllocatorConfigCreator"),
+  BulletActionLogicComponent_1 = require("../../Bullet/Component/BulletActionLogicComponent"),
+  BulletActorComponent_1 = require("../Component/BulletActorComponent"),
+  BulletInfo_1 = require("../Model/BulletInfo");
 class BulletEntity extends Entity_1.Entity {
   constructor() {
     super(...arguments),
@@ -45,4 +45,4 @@ class BulletEntity extends Entity_1.Entity {
   }
 }
 exports.BulletEntity = BulletEntity;
-// # sourceMappingURL=BulletEntity.js.map
+//# sourceMappingURL=BulletEntity.js.map

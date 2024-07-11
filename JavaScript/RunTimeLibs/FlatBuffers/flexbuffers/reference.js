@@ -56,7 +56,6 @@ class Reference {
     this.byteWidth = 1 << (packedType & 3);
     this.valueType = packedType >> 2;
   }
-
   isNull() {
     return this.valueType === value_type_js_1.ValueType.NULL;
   }
@@ -105,7 +104,6 @@ class Reference {
     }
     return null;
   }
-
   intValue() {
     if (this.valueType === value_type_js_1.ValueType.INT) {
       return (0, reference_util_js_1.readInt)(
@@ -145,7 +143,6 @@ class Reference {
     }
     return null;
   }
-
   floatValue() {
     if (this.valueType === value_type_js_1.ValueType.FLOAT) {
       return (0, reference_util_js_1.readFloat)(
@@ -167,7 +164,6 @@ class Reference {
     }
     return null;
   }
-
   numericValue() {
     return this.floatValue() || this.intValue();
   }
@@ -187,7 +183,6 @@ class Reference {
     }
     return null;
   }
-
   blobValue() {
     if (this.isBlob()) {
       const begin = (0, reference_util_js_1.indirect)(
@@ -199,7 +194,6 @@ class Reference {
     }
     return null;
   }
-
   get(key) {
     const length = this.length();
     if (
@@ -266,7 +260,6 @@ class Reference {
     }
     throw `Key [${key}] is not applicable on ${this.path} of ${this.valueType}`;
   }
-
   length() {
     let size;
     if (this._length > -1) {
@@ -329,7 +322,6 @@ class Reference {
     }
     return Number(this._length);
   }
-
   toObject() {
     const length = this.length();
     if (this.isVector()) {

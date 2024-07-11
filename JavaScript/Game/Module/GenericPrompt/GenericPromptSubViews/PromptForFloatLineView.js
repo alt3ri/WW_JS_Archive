@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PromptForFloatLineView = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class PromptForFloatLineView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -34,9 +34,9 @@ class PromptForFloatLineView extends UiPanelBase_1.UiPanelBase {
       this.Q$t?.SetSelectorOffset(1);
   }
   OnBeforeShow() {
-    var i = ConfigManager_1.ConfigManager.GenericPromptConfig;
-    let t = this.ParamHub.TypeId;
-    var i = i.GetPromptTypeMainTextColor(t);
+    var i = ConfigManager_1.ConfigManager.GenericPromptConfig,
+      t = this.ParamHub.TypeId,
+      i = i.GetPromptTypeMainTextColor(t);
     i && this.Y$t(i),
       this.Q$t?.SetSelectorOffset(1),
       this.X$t &&
@@ -56,32 +56,32 @@ class PromptForFloatLineView extends UiPanelBase_1.UiPanelBase {
         this.X$t?.Play());
   }
   async OnShowAsyncImplementImplement() {
-    const i = new CustomPromise_1.CustomPromise();
+    var i = new CustomPromise_1.CustomPromise();
     await this.EPe?.PlaySequenceAsync("Start", i);
   }
   async OnBeforeHideAsync() {
     this.Wht = 0;
-    const i = new CustomPromise_1.CustomPromise();
+    var i = new CustomPromise_1.CustomPromise();
     await this.EPe?.PlaySequenceAsync("Close", i);
   }
   OnAfterHide() {
     this.$$t?.(this);
   }
   Y$t(i) {
-    const t = this.GetText(0)
+    var t = this.GetText(0)
       .GetOwner()
       .GetComponentByClass(UE.UIEffectOutline.StaticClass());
     t ? t.SetOutlineColor(i) : this.GetText(0).SetColor(i);
   }
   J$t(i, ...t) {
-    const e = this.GetText(0);
+    var e = this.GetText(0);
     this.ParamHub.PromptId,
       LguiUtil_1.LguiUtil.SetLocalTextNew(e, i.TextKey, ...t);
   }
   z$t() {
-    const i = ConfigManager_1.ConfigManager.GenericPromptConfig;
-    const t = this.ParamHub;
-    const e = t.MainTextParams ?? [];
+    var i = ConfigManager_1.ConfigManager.GenericPromptConfig,
+      t = this.ParamHub,
+      e = t.MainTextParams ?? [];
     let s = t.MainTextObj;
     (s = t.PromptId
       ? s ?? i.GetPromptMainTextObj(t.PromptId)
@@ -119,4 +119,4 @@ class PromptForFloatLineView extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.PromptForFloatLineView = PromptForFloatLineView;
-// # sourceMappingURL=PromptForFloatLineView.js.map
+//# sourceMappingURL=PromptForFloatLineView.js.map

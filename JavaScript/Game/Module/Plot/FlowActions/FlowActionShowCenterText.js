@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionShowCenterText = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const FlowActionBase_1 = require("./FlowActionBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  FlowActionBase_1 = require("./FlowActionBase");
 class FlowActionShowCenterText extends FlowActionBase_1.FlowActionBase {
   constructor() {
     super(...arguments),
@@ -25,7 +25,7 @@ class FlowActionShowCenterText extends FlowActionBase_1.FlowActionBase {
         ["id", this.Context.FormatId],
         ["action", this.ActionInfo.ActionId],
       );
-    const e = this.ActionInfo.Params;
+    var e = this.ActionInfo.Params;
     ModelManager_1.ModelManager.PlotModel.ShowCenterText(e, this.h$i);
   }
   OnInterruptExecute() {
@@ -38,4 +38,4 @@ class FlowActionShowCenterText extends FlowActionBase_1.FlowActionBase {
   }
 }
 exports.FlowActionShowCenterText = FlowActionShowCenterText;
-// # sourceMappingURL=FlowActionShowCenterText.js.map
+//# sourceMappingURL=FlowActionShowCenterText.js.map

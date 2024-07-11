@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GrapplingHookTracked = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const BattleUiControl_1 = require("../../BattleUiControl");
-const RAD_2_DEG = 180 / Math.PI;
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  BattleUiControl_1 = require("../../BattleUiControl"),
+  RAD_2_DEG = 180 / Math.PI;
 class GrapplingHookTracked extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -30,7 +30,7 @@ class GrapplingHookTracked extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[1, this.jat]]);
   }
   Refresh(t, e) {
-    let s;
+    var s;
     this.Hat &&
       ((s = this.GetItem(0)),
       (this.hwe.Pitch = 0),
@@ -48,4 +48,4 @@ class GrapplingHookTracked extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.GrapplingHookTracked = GrapplingHookTracked;
-// # sourceMappingURL=GrapplingHookTracked.js.map
+//# sourceMappingURL=GrapplingHookTracked.js.map

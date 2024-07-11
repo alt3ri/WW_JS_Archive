@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SpecialEnergyBarNumItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
 class SpecialEnergyBarNumItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments), (this.Mnt = -1);
@@ -15,4 +15,4 @@ class SpecialEnergyBarNumItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.SpecialEnergyBarNumItem = SpecialEnergyBarNumItem;
-// # sourceMappingURL=SpecialEnergyBarNumItem.js.map
+//# sourceMappingURL=SpecialEnergyBarNumItem.js.map

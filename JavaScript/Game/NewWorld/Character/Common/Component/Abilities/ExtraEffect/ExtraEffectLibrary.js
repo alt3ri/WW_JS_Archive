@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BuffExtraEffectLibrary = void 0);
-const Log_1 = require("../../../../../../../Core/Common/Log");
-const GameplayTagUtils_1 = require("../../../../../../../Core/Utils/GameplayTagUtils");
-const StringUtils_1 = require("../../../../../../../Core/Utils/StringUtils");
-const AbilityUtils_1 = require("../AbilityUtils");
-const CharacterAttributeIntervalCheck_1 = require("../CharacterAttributeIntervalCheck");
-const CharacterAttributeTypes_1 = require("../CharacterAttributeTypes");
-const ExtraEffectBaseTypes_1 = require("./ExtraEffectBaseTypes");
-const ADD_BULLET_MIN_INTERVAL = 0.5;
+const Log_1 = require("../../../../../../../Core/Common/Log"),
+  GameplayTagUtils_1 = require("../../../../../../../Core/Utils/GameplayTagUtils"),
+  StringUtils_1 = require("../../../../../../../Core/Utils/StringUtils"),
+  AbilityUtils_1 = require("../AbilityUtils"),
+  CharacterAttributeIntervalCheck_1 = require("../CharacterAttributeIntervalCheck"),
+  CharacterAttributeTypes_1 = require("../CharacterAttributeTypes"),
+  ExtraEffectBaseTypes_1 = require("./ExtraEffectBaseTypes"),
+  ADD_BULLET_MIN_INTERVAL = 0.5;
 class BuffExtraEffectLibrary {
   static ResolveRequireAndLimits(e, r, a) {
-    let t;
-    let i;
-    const s = new ExtraEffectBaseTypes_1.RequireAndLimits();
+    var t,
+      i,
+      s = new ExtraEffectBaseTypes_1.RequireAndLimits();
     s.CheckType = r.ExtraEffectRequirementSetting;
     for ([t, i] of r.ExtraEffectRequirement.entries()) {
-      const u = r.ExtraEffectRequirementPara[t].split("#");
+      var u = r.ExtraEffectRequirementPara[t].split("#");
       switch (i) {
         case 3:
           var [T, b, l, y, p] = u;
@@ -28,7 +28,7 @@ class BuffExtraEffectLibrary {
                 Number(b),
                 Number(y),
                 Number(p),
-                Number(l) === 1,
+                1 === Number(l),
               ),
           });
           break;
@@ -142,14 +142,14 @@ class BuffExtraEffectLibrary {
             );
       }
     }
-    const c = s.Limits;
+    var c = s.Limits;
     return (
       (c.ExtraEffectCd = AbilityUtils_1.AbilityUtils.GetLevelValue(
         r.ExtraEffectCd,
         a,
         -1,
       )),
-      r.ExtraEffectId === 3 &&
+      3 === r.ExtraEffectId &&
         (c.ExtraEffectCd = Math.max(c.ExtraEffectCd, ADD_BULLET_MIN_INTERVAL)),
       (c.ExtraEffectRemoveStackNum = r.ExtraEffectRemoveStackNum),
       (c.ExtraEffectProbability = AbilityUtils_1.AbilityUtils.GetLevelValue(
@@ -162,4 +162,4 @@ class BuffExtraEffectLibrary {
   }
 }
 exports.BuffExtraEffectLibrary = BuffExtraEffectLibrary;
-// # sourceMappingURL=ExtraEffectLibrary.js.map
+//# sourceMappingURL=ExtraEffectLibrary.js.map

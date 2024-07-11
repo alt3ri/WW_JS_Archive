@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ReportRowView = void 0);
-const UE = require("ue");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class ReportRowView extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
       (this.ToggleFunction = void 0),
       (this.Id = 0),
       (this.ToggleClick = (t) => {
-        t === 1 ? this.ToggleFunction(this.Id) : this.ToggleFunction(-1);
+        1 === t ? this.ToggleFunction(this.Id) : this.ToggleFunction(-1);
       });
   }
   Refresh(t, i, e) {
@@ -29,7 +29,7 @@ class ReportRowView extends GridProxyAbstract_1.GridProxyAbstract {
   }
   SetData(t) {
     this.Id = t.Id;
-    const i = this.GetText(0);
+    var i = this.GetText(0);
     LguiUtil_1.LguiUtil.SetLocalTextNew(i, t.Reason);
   }
   SetToggleFunction(t) {
@@ -40,4 +40,4 @@ class ReportRowView extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.ReportRowView = ReportRowView;
-// # sourceMappingURL=ReportRowView.js.map
+//# sourceMappingURL=ReportRowView.js.map

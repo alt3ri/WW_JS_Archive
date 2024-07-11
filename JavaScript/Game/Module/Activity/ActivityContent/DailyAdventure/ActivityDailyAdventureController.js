@@ -1,17 +1,17 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityDailyAdventureController = void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../../Core/Net/Net");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ActivityControllerBase_1 = require("../../ActivityControllerBase");
-const ActivityDailyAdventureData_1 = require("./ActivityDailyAdventureData");
-const ActivityDailyAdventureDefine_1 = require("./ActivityDailyAdventureDefine");
-const ActivitySubViewDailyAdventure_1 = require("./ActivitySubViewDailyAdventure");
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ActivityControllerBase_1 = require("../../ActivityControllerBase"),
+  ActivityDailyAdventureData_1 = require("./ActivityDailyAdventureData"),
+  ActivityDailyAdventureDefine_1 = require("./ActivityDailyAdventureDefine"),
+  ActivitySubViewDailyAdventure_1 = require("./ActivitySubViewDailyAdventure");
 class ActivityDailyAdventureController extends ActivityControllerBase_1.ActivityControllerBase {
   OnGetIsOpeningActivityRelativeView() {
     return !1;
@@ -53,11 +53,11 @@ class ActivityDailyAdventureController extends ActivityControllerBase_1.Activity
     );
   }
   static GetDefaultMapMarkId() {
-    const e = this.GetDailyAdventureData();
+    var e = this.GetDailyAdventureData();
     return e ? e.GetDefaultMapMarkId() : 0;
   }
   static RequestTaskReward(t) {
-    const e = new Protocol_1.Aki.Protocol.wXn();
+    var e = new Protocol_1.Aki.Protocol.wXn();
     (e.Ekn = t),
       Net_1.Net.Call(9216, e, (e) => {
         e &&
@@ -75,7 +75,7 @@ class ActivityDailyAdventureController extends ActivityControllerBase_1.Activity
       });
   }
   static RequestPointReward(t) {
-    const e = new Protocol_1.Aki.Protocol.PXn();
+    var e = new Protocol_1.Aki.Protocol.PXn();
     (e.Ekn = t),
       Net_1.Net.Call(13587, e, (e) => {
         e &&
@@ -105,7 +105,7 @@ class ActivityDailyAdventureController extends ActivityControllerBase_1.Activity
       ));
   }),
   (ActivityDailyAdventureController.KNe = (e) => {
-    const t = _a.GetDailyAdventureData();
+    var t = _a.GetDailyAdventureData();
     if (t) {
       for (const r of e.N0s)
         t.SetTaskInfo(
@@ -119,4 +119,4 @@ class ActivityDailyAdventureController extends ActivityControllerBase_1.Activity
       );
     }
   });
-// # sourceMappingURL=ActivityDailyAdventureController.js.map
+//# sourceMappingURL=ActivityDailyAdventureController.js.map

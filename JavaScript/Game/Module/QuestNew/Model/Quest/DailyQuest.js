@@ -11,4 +11,4 @@ class DailyQuest extends Quest_1.Quest {
   }
 }
 exports.DailyQuest = DailyQuest;
-// # sourceMappingURL=DailyQuest.js.map
+//# sourceMappingURL=DailyQuest.js.map

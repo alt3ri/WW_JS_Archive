@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletLogicForceController = void 0);
-const GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const CharacterUnifiedStateTypes_1 = require("../../Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const CustomMovementDefine_1 = require("../../Character/Common/Component/Move/CustomMovementDefine");
-const BulletLogicController_1 = require("./BulletLogicController");
-const WEIGHT_COEFFICIENT = 14;
-const TOLERANCE = 1e-5;
-const FORCE_DAMPING_RATIO = 0.5;
-const MOVE_TIME = 0.1;
-const FORCE_RATIO = 5e3;
-const MIN_WEIGHT = 50;
-const LENGTH_CONVERSION = 100;
+const GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  CharacterUnifiedStateTypes_1 = require("../../Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  CustomMovementDefine_1 = require("../../Character/Common/Component/Move/CustomMovementDefine"),
+  BulletLogicController_1 = require("./BulletLogicController"),
+  WEIGHT_COEFFICIENT = 14,
+  TOLERANCE = 1e-5,
+  FORCE_DAMPING_RATIO = 0.5,
+  MOVE_TIME = 0.1,
+  FORCE_RATIO = 5e3,
+  MIN_WEIGHT = 50,
+  LENGTH_CONVERSION = 100;
 class BulletLogicForceController extends BulletLogicController_1.BulletLogicController {
   constructor(t, i) {
     super(t, i),
@@ -30,7 +30,7 @@ class BulletLogicForceController extends BulletLogicController_1.BulletLogicCont
       (this.NeedTick = !0),
       (this.v9o = this.u9o.ConstantForce),
       (this.S9o = this.u9o.IsLaunching),
-      (this.R9o = this.LogicController.WorkHaveTag.GameplayTags.Num() > 0);
+      (this.R9o = 0 < this.LogicController.WorkHaveTag.GameplayTags.Num());
   }
   OnInit() {
     this.U9o();
@@ -51,11 +51,11 @@ class BulletLogicForceController extends BulletLogicController_1.BulletLogicCont
     this.u9o.ConstantForce && this.A9o();
   }
   A9o() {
-    let t;
-    let i;
-    const e = GameplayTagUtils_1.GameplayTagUtils.ConvertFromUeContainer(
-      this.LogicController.WorkHaveTag,
-    );
+    var t,
+      i,
+      e = GameplayTagUtils_1.GameplayTagUtils.ConvertFromUeContainer(
+        this.LogicController.WorkHaveTag,
+      );
     if (this.v9o) {
       this.S9o ||
         ((t = this.E9o),
@@ -65,14 +65,14 @@ class BulletLogicForceController extends BulletLogicController_1.BulletLogicCont
       for ([i] of this._9o.CollisionInfo.CharacterEntityMap)
         !i || (this.R9o && !i.GetComponent(185).HasAnyTag(e)) || this.P9o(i);
     } else
-      for (const [s] of this._9o.CollisionInfo.CharacterEntityMap)
+      for (var [s] of this._9o.CollisionInfo.CharacterEntityMap)
         !s || (this.R9o && !s.GetComponent(185).HasAnyTag(e)) || this.x9o(s);
   }
   x9o(t) {
-    let i;
-    let e;
-    let s;
-    const h = t.GetComponent(161);
+    var i,
+      e,
+      s,
+      h = t.GetComponent(161);
     !h?.Valid ||
       h.CharacterWeight > this.u9o.LimitWeight ||
       ((s = t.GetComponent(3).ActorLocationProxy),
@@ -101,8 +101,8 @@ class BulletLogicForceController extends BulletLogicController_1.BulletLogicCont
       this.L9o.set(t, s));
   }
   P9o(s) {
-    var h = s.GetComponent(158);
-    const o = s.GetComponent(161);
+    var h = s.GetComponent(158),
+      o = s.GetComponent(161);
     if (h?.Valid && o?.Valid) {
       let i = CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_GLIDE;
       if (this.S9o)
@@ -117,14 +117,14 @@ class BulletLogicForceController extends BulletLogicController_1.BulletLogicCont
         this.y9o.has(s) && o.SetForceSpeed(Vector_1.Vector.ZeroVectorProxy);
       }
       let e = this.L9o.get(s);
-      var h = s.GetComponent(3);
-      var h =
-        this.T9o.ActorLocationProxy.Z +
-        this._9o.Size.Z -
-        h.ActorLocation.Z -
-        h.ScaledHalfHeight;
+      var h = s.GetComponent(3),
+        h =
+          this.T9o.ActorLocationProxy.Z +
+          this._9o.Size.Z -
+          h.ActorLocation.Z -
+          h.ScaledHalfHeight;
       if (this.u9o.HaveTopArea && h < this.u9o.TopAreaHeight)
-        h > 0 &&
+        0 < h &&
           (this.I9o.Set(0, 0, -o.CharacterMovement.Velocity.Z),
           (e = o.SetAddMoveWorld(
             this.I9o.ToUeVector(),
@@ -166,4 +166,4 @@ class BulletLogicForceController extends BulletLogicController_1.BulletLogicCont
 ((exports.BulletLogicForceController = BulletLogicForceController).B9o =
   new Map()),
   (BulletLogicForceController.w9o = new Map());
-// # sourceMappingURL=BulletLogicForceController.js.map
+//# sourceMappingURL=BulletLogicForceController.js.map

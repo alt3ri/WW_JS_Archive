@@ -1,29 +1,33 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, i, s) {
-    let n;
-    const o = arguments.length;
-    let r =
-      o < 3 ? t : s === null ? (s = Object.getOwnPropertyDescriptor(t, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var n,
+      o = arguments.length,
+      r =
+        o < 3
+          ? t
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(t, i))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(e, t, i, s);
     else
-      for (let h = e.length - 1; h >= 0; h--)
-        (n = e[h]) && (r = (o < 3 ? n(r) : o > 3 ? n(t, i, r) : n(t, i)) || r);
-    return o > 3 && r && Object.defineProperty(t, i, r), r;
+      for (var h = e.length - 1; 0 <= h; h--)
+        (n = e[h]) && (r = (o < 3 ? n(r) : 3 < o ? n(t, i, r) : n(t, i)) || r);
+    return 3 < o && r && Object.defineProperty(t, i, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MonsterDeathComponent = void 0);
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const BaseDeathComponent_1 = require("../../../Common/Component/Abilities/BaseDeathComponent");
-const CharacterUnifiedStateTypes_1 = require("../../../Common/Component/Abilities/CharacterUnifiedStateTypes");
-const DIE_IN_AIE_REMOVE_DELAY = 5e3;
+const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  BaseDeathComponent_1 = require("../../../Common/Component/Abilities/BaseDeathComponent"),
+  CharacterUnifiedStateTypes_1 = require("../../../Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  DIE_IN_AIE_REMOVE_DELAY = 5e3;
 let MonsterDeathComponent = class MonsterDeathComponent extends BaseDeathComponent_1.BaseDeathComponent {
   constructor() {
     super(...arguments),
@@ -107,7 +111,7 @@ let MonsterDeathComponent = class MonsterDeathComponent extends BaseDeathCompone
       this.Entity.IsInit &&
       this.Entity.Active
     ) {
-      const e = this.Entity.GetComponent(89)?.PositionState;
+      var e = this.Entity.GetComponent(89)?.PositionState;
       if (e === CharacterUnifiedStateTypes_1.ECharPositionState.Water)
         i.PlayMontageWithCallBack(1, this.OnDeathEnded);
       else {
@@ -153,4 +157,4 @@ let MonsterDeathComponent = class MonsterDeathComponent extends BaseDeathCompone
   MonsterDeathComponent,
 )),
   (exports.MonsterDeathComponent = MonsterDeathComponent);
-// # sourceMappingURL=MonsterDeathComponent.js.map
+//# sourceMappingURL=MonsterDeathComponent.js.map

@@ -12,9 +12,9 @@ class VisibleAnimMachine {
       (this.zmt = void 0),
       (this.Zmt = () => {
         (this.zmt = void 0),
-          this.State === 3
+          3 === this.State
             ? ((this.State = 0), this.VisibleCallback(!1))
-            : this.State === 2 && (this.State = 1);
+            : 2 === this.State && (this.State = 1);
       });
   }
   InitCallback(i, s, t) {
@@ -29,7 +29,7 @@ class VisibleAnimMachine {
     this.Visible !== i &&
       ((this.Visible = i),
       this.StopAnimCallback(!i),
-      s > 0
+      0 < s
         ? (i ? (this.VisibleCallback(!0), (this.State = 2)) : (this.State = 3),
           this.PlayAnimCallback(i),
           this.BCe(),
@@ -37,8 +37,8 @@ class VisibleAnimMachine {
         : ((this.State = i ? 1 : 0), this.VisibleCallback(i)));
   }
   ForcePlayShowAnim(i) {
-    this.State !== 2 &&
-      (this.State === 3 && this.StopAnimCallback(!1),
+    2 !== this.State &&
+      (3 === this.State && this.StopAnimCallback(!1),
       (this.State = 2),
       this.PlayAnimCallback(!0),
       this.BCe(),
@@ -53,4 +53,4 @@ class VisibleAnimMachine {
   }
 }
 exports.VisibleAnimMachine = VisibleAnimMachine;
-// # sourceMappingURL=VisibleAnimMachine.js.map
+//# sourceMappingURL=VisibleAnimMachine.js.map

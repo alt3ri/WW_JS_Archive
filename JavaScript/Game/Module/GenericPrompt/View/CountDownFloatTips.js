@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CountDownFloatTips = void 0);
-const UE = require("ue");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const GenericPromptFloatTipsBase_1 = require("./GenericPromptFloatTipsBase");
-const ONE_HUNDRED = 100;
+const UE = require("ue"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  GenericPromptFloatTipsBase_1 = require("./GenericPromptFloatTipsBase"),
+  ONE_HUNDRED = 100;
 class CountDownFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptFloatTipsBase {
   constructor() {
     super(...arguments),
@@ -32,7 +32,7 @@ class CountDownFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptFloat
                   !1);
             }))
           : (this.GetUiNiagara(2).SetUIActive(e <= 10),
-            this.GetUiNiagara(3).SetUIActive(e > 10),
+            this.GetUiNiagara(3).SetUIActive(10 < e),
             (t = Math.floor(
               (e % TimeUtil_1.TimeUtil.Hour) / TimeUtil_1.TimeUtil.Minute,
             )),
@@ -74,17 +74,17 @@ class CountDownFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptFloat
       this.dYt &&
       this.cYt &&
       (this.uYt <= 10
-        ? this.LevelSequencePlayer.GetCurrentSequence() !== "Loop" &&
+        ? "Loop" !== this.LevelSequencePlayer.GetCurrentSequence() &&
           this.LevelSequencePlayer.PlayLevelSequenceByName("Loop")
-        : (this.LevelSequencePlayer.GetCurrentSequence() === "Loop" &&
+        : ("Loop" === this.LevelSequencePlayer.GetCurrentSequence() &&
             this.LevelSequencePlayer.StopCurrentSequence(),
           this.MainText.SetColor(this.Lut),
           this.ExtraText.SetColor(this.Lut),
           this.MainText.SetUIItemScale(Vector_1.Vector.OneVector),
           this.ExtraText.SetUIItemScale(Vector_1.Vector.OneVector)),
-      this.uYt === 0 && (this.cYt = "00"),
+      0 === this.uYt && (this.cYt = "00"),
       this.SetExtraText(this.mYt, this.dYt, this.cYt));
   }
 }
 exports.CountDownFloatTips = CountDownFloatTips;
-// # sourceMappingURL=CountDownFloatTips.js.map
+//# sourceMappingURL=CountDownFloatTips.js.map

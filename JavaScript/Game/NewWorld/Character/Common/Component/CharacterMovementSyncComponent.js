@@ -1,47 +1,52 @@
 "use strict";
-let CharacterMovementSyncComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, s) {
-    let h;
-    const o = arguments.length;
-    let r =
-      o < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(t, e, i, s);
-    else
-      for (let a = t.length - 1; a >= 0; a--)
-        (h = t[a]) && (r = (o < 3 ? h(r) : o > 3 ? h(e, i, r) : h(e, i)) || r);
-    return o > 3 && r && Object.defineProperty(e, i, r), r;
-  };
+var CharacterMovementSyncComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, s) {
+      var h,
+        o = arguments.length,
+        r =
+          o < 3
+            ? e
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        r = Reflect.decorate(t, e, i, s);
+      else
+        for (var a = t.length - 1; 0 <= a; a--)
+          (h = t[a]) &&
+            (r = (o < 3 ? h(r) : 3 < o ? h(e, i, r) : h(e, i)) || r);
+      return 3 < o && r && Object.defineProperty(e, i, r), r;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterMovementSyncComponent = void 0);
-const Cpp = require("cpp");
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../Core/Common/Time");
-const Deque_1 = require("../../../../../Core/Container/Deque");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const Net_1 = require("../../../../../Core/Net/Net");
-const MathCommon_1 = require("../../../../../Core/Utils/Math/MathCommon");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const CameraController_1 = require("../../../../Camera/CameraController");
-const TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter");
-const GlobalData_1 = require("../../../../GlobalData");
-const InputEnums_1 = require("../../../../Input/InputEnums");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const CombatMessageController_1 = require("../../../../Module/CombatMessage/CombatMessageController");
-const ActorUtils_1 = require("../../../../Utils/ActorUtils");
-const CombatDebugController_1 = require("../../../../Utils/CombatDebugController");
-const CombatDebugDrawController_1 = require("../../../../Utils/CombatDebugDrawController");
-const TsBaseItem_1 = require("../../../SceneItem/BaseItem/TsBaseItem");
-const CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes");
+const Cpp = require("cpp"),
+  puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  Deque_1 = require("../../../../../Core/Container/Deque"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  MathCommon_1 = require("../../../../../Core/Utils/Math/MathCommon"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  CameraController_1 = require("../../../../Camera/CameraController"),
+  TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  InputEnums_1 = require("../../../../Input/InputEnums"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  CombatMessageController_1 = require("../../../../Module/CombatMessage/CombatMessageController"),
+  ActorUtils_1 = require("../../../../Utils/ActorUtils"),
+  CombatDebugController_1 = require("../../../../Utils/CombatDebugController"),
+  CombatDebugDrawController_1 = require("../../../../Utils/CombatDebugDrawController"),
+  TsBaseItem_1 = require("../../../SceneItem/BaseItem/TsBaseItem"),
+  CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes");
 class FastMoveSample {
   constructor() {
     (this.Location = Vector_1.Vector.Create()),
@@ -93,31 +98,31 @@ class ReplaySample {
       (this.Y9n = 1),
       (this.J9n = 0),
       (this.z9n = 0);
-    const s = t.$kn;
-    const h = t.D3n;
-    var o = t.A3n;
-    const r = t.K9n;
-    var o =
-      (this.$kn.Set(s.X, s.Y, s.Z),
-      this.D3n.Set(h.Pitch, h.Yaw, h.Roll),
-      this.A3n.Set(o.X, o.Y, o.Z),
-      r && this.K9n.Set(r.X, r.Y, r.Z),
-      (this.ControllerPitch = t.ControllerPitch),
-      (this.r5n = t.r5n),
-      (this.Q9n = t.xgs),
-      (this.Y9n = t.Y9n),
-      (this.h4n = i),
-      (this.X9n = e),
-      (this.J9n = MathUtils_1.MathUtils.LongToNumber(t.J9n)),
-      (this.z9n = t.Z9n),
-      t.e7n);
+    const s = t.$kn,
+      h = t.D3n;
+    var o = t.A3n,
+      r = t.K9n,
+      o =
+        (this.$kn.Set(s.X, s.Y, s.Z),
+        this.D3n.Set(h.Pitch, h.Yaw, h.Roll),
+        this.A3n.Set(o.X, o.Y, o.Z),
+        r && this.K9n.Set(r.X, r.Y, r.Z),
+        (this.ControllerPitch = t.ControllerPitch),
+        (this.r5n = t.r5n),
+        (this.Q9n = t.xgs),
+        (this.Y9n = t.Y9n),
+        (this.h4n = i),
+        (this.X9n = e),
+        (this.J9n = MathUtils_1.MathUtils.LongToNumber(t.J9n)),
+        (this.z9n = t.Z9n),
+        t.e7n);
     if (o) {
       (this.$9n = new RelativeMove()),
         (this.$9n.BaseMovementEntityId = MathUtils_1.MathUtils.LongToNumber(
           o.t7n,
         ));
-      const h = o.i7n;
-      const s = o.r7n;
+      const h = o.i7n,
+        s = o.r7n;
       (this.$9n.RelativeRotation = Rotator_1.Rotator.Create(
         h.Pitch,
         h.Yaw,
@@ -173,7 +178,7 @@ let CharacterMovementSyncComponent =
         (this._jr = 0),
         (this.ujr = 0),
         (this.cjr = (t) => {
-          let e;
+          var e;
           this.Hte.IsMoveAutonomousProxy ||
             this.Entity.GetComponent(185).HasTag(-648310348) ||
             ((this.ojr = !1),
@@ -199,28 +204,28 @@ let CharacterMovementSyncComponent =
         (this.Cjr = this.djr),
         (this.$9r = (t) => {
           if ((this.gjr(t), this.fjr && this.Hte.IsMoveAutonomousProxy)) {
-            if (!(this.ujr > 0 && this.ujr === this.ljr)) {
+            if (!(0 < this.ujr && this.ujr === this.ljr)) {
               (this.ujr = this.ljr),
                 (this.ControllerPlayerId =
                   ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
                 this.ClearReplaySamples();
-              var t = this.Cjr.MovementMode;
-              var e =
-                this.Entity.TimeDilation * (this.OHr?.CurrentTimeScale ?? 1);
-              const i =
-                this.KHr !== t ||
-                this.aYo?.DirectionState ===
-                  CharacterUnifiedStateTypes_1.ECharDirectionState
-                    .AimDirection ||
-                this.XHr ||
-                !this.Cjr.LinearVelocity.IsZero() ||
-                !this.LastLocation.Equals(this.Cjr.Location) ||
-                !this.ijr.Equals(this.Cjr.Rotation) ||
-                this.QHr !== e;
-              var t =
-                this.KHr !== t ||
-                this.XHr !== this.Gce.HasBaseMovement ||
-                this.QHr !== e;
+              var t = this.Cjr.MovementMode,
+                e =
+                  this.Entity.TimeDilation * (this.OHr?.CurrentTimeScale ?? 1),
+                i =
+                  this.KHr !== t ||
+                  this.aYo?.DirectionState ===
+                    CharacterUnifiedStateTypes_1.ECharDirectionState
+                      .AimDirection ||
+                  this.XHr ||
+                  !this.Cjr.LinearVelocity.IsZero() ||
+                  !this.LastLocation.Equals(this.Cjr.Location) ||
+                  !this.ijr.Equals(this.Cjr.Rotation) ||
+                  this.QHr !== e,
+                t =
+                  this.KHr !== t ||
+                  this.XHr !== this.Gce.HasBaseMovement ||
+                  this.QHr !== e;
               if (
                 ((t ||= !i && this.zHr),
                 (this.QHr = e),
@@ -285,19 +290,19 @@ let CharacterMovementSyncComponent =
                 }
               } else {
                 var e =
-                  Time_1.Time.NowSeconds - this.VVt >=
-                  CharacterMovementSyncComponent_1.SingleModeSendInterval;
-                var t =
-                  !this.ejr.Equals(
-                    this.Cjr.Location,
-                    CharacterMovementSyncComponent_1.SingleModeSendLocationTolerance,
-                  ) ||
-                  !this.tjr.Equals(
-                    this.Cjr.Rotation,
-                    CharacterMovementSyncComponent_1.SingleModeSendRotationTolerance,
-                  );
-                var s = this.cBe?.CurrentSkill?.SkillId ?? 0;
-                var s = this.ajr && s !== this.ajr.vkn;
+                    Time_1.Time.NowSeconds - this.VVt >=
+                    CharacterMovementSyncComponent_1.SingleModeSendInterval,
+                  t =
+                    !this.ejr.Equals(
+                      this.Cjr.Location,
+                      CharacterMovementSyncComponent_1.SingleModeSendLocationTolerance,
+                    ) ||
+                    !this.tjr.Equals(
+                      this.Cjr.Rotation,
+                      CharacterMovementSyncComponent_1.SingleModeSendRotationTolerance,
+                    ),
+                  s = this.cBe?.CurrentSkill?.SkillId ?? 0,
+                  s = this.ajr && s !== this.ajr.vkn;
                 if (!i && this.zHr) {
                   const h = this.GetCurrentMoveSample();
                   this.PendingMoveInfos.push(h),
@@ -380,7 +385,7 @@ let CharacterMovementSyncComponent =
       );
     }
     Mjr(t, e) {
-      let i, s;
+      var i, s;
       this.Nce &&
         (t !== this.jHr
           ? ((i = t & this.HHr),
@@ -395,7 +400,7 @@ let CharacterMovementSyncComponent =
             this.Hte.SetInputRotator(e)));
     }
     Sjr(t) {
-      let e;
+      var e;
       return t === this.HHr
         ? Vector2D_1.Vector2D.ZeroVector
         : ((t = MathUtils_1.MathUtils.RangeClamp(
@@ -428,14 +433,13 @@ let CharacterMovementSyncComponent =
       );
     }
     GetCurrentMoveSample() {
-      const t = Protocol_1.Aki.Protocol.JBs.create();
-      let e =
-        ((t.$kn = { X: 0, Y: 0, Z: 0 }),
-        (t.A3n = { X: 0, Y: 0, Z: 0 }),
-        (t.D3n = { Pitch: 0, Roll: 0, Yaw: 0 }),
-        this.Nce?.QueryInputAxis(InputEnums_1.EInputAxis.MoveForward) ?? 0);
-      const i =
-        this.Nce?.QueryInputAxis(InputEnums_1.EInputAxis.MoveRight) ?? 0;
+      var t = Protocol_1.Aki.Protocol.JBs.create(),
+        e =
+          ((t.$kn = { X: 0, Y: 0, Z: 0 }),
+          (t.A3n = { X: 0, Y: 0, Z: 0 }),
+          (t.D3n = { Pitch: 0, Roll: 0, Yaw: 0 }),
+          this.Nce?.QueryInputAxis(InputEnums_1.EInputAxis.MoveForward) ?? 0),
+        i = this.Nce?.QueryInputAxis(InputEnums_1.EInputAxis.MoveRight) ?? 0;
       return (
         Cpp.FFastMoveReplaySample.UpdateFastMoveSampleInput(
           t,
@@ -449,7 +453,7 @@ let CharacterMovementSyncComponent =
           this.HHr,
           CameraController_1.CameraController.CameraRotator.Yaw,
         ),
-        t.r5n === 0 &&
+        0 === t.r5n &&
           CombatDebugController_1.CombatDebugController.CombatWarn(
             "Move",
             this.Entity,
@@ -458,9 +462,9 @@ let CharacterMovementSyncComponent =
         (t.F9n = this.aYo?.MoveState ?? 0),
         (t.J9n = Time_1.Time.CombatServerTime),
         (t.h4n = Time_1.Time.NowSeconds),
-        this.Entity.GetTickInterval() > 1 &&
-          this._jr > 0 &&
-          this.ljr > 0 &&
+        1 < this.Entity.GetTickInterval() &&
+          0 < this._jr &&
+          0 < this.ljr &&
           (t.o7n = 1e3 * (this.ljr - this._jr)),
         (t.Z9n = Net_1.Net.RttMs),
         (t.Y9n = this.Entity.TimeDilation * (this.OHr?.CurrentTimeScale ?? 1)),
@@ -478,28 +482,29 @@ let CharacterMovementSyncComponent =
     }
     Ejr(s, h = !1) {
       if (s?.IsValid()) {
-        let o = s.RootComponent.AttachParent?.GetOwner();
+        var o = s.RootComponent.AttachParent?.GetOwner();
         if (o?.IsValid()) {
           let t = !1;
           if (!(o instanceof TsBaseCharacter_1.default)) {
             if (!(o instanceof TsBaseItem_1.default)) return;
             t = !0;
           }
-          let e = void 0;
-          let i = new UE.Transform();
+          let e = void 0,
+            i = new UE.Transform();
           if (t) {
-            var r = o;
-            var r = ActorUtils_1.ActorUtils.GetEntityByActor(r);
+            var r = o,
+              r = ActorUtils_1.ActorUtils.GetEntityByActor(r);
             if (!r?.Valid) return;
             (e = r.Entity.GetComponent(0).GetCreatureDataId()),
               (i = r.Entity.GetComponent(182).ActorTransform);
           } else {
             r = o;
             if (
+              0 ===
               (e = r
                 .GetEntityNoBlueprint()
                 ?.GetComponent(0)
-                ?.GetCreatureDataId()) === 0
+                ?.GetCreatureDataId())
             )
               return;
             i = r.Mesh.GetSocketTransform(s.RootComponent.AttachSocketName);
@@ -569,7 +574,7 @@ let CharacterMovementSyncComponent =
           (this.Cjr = this.mjr));
     }
     CollectSampleAndSend(t = !1) {
-      let e = this.GetCurrentMoveSample();
+      var e = this.GetCurrentMoveSample();
       this.PendingMoveInfos.push(e),
         t
           ? ((e = Protocol_1.Aki.Protocol.Xhs.create()).Mys.push(
@@ -593,7 +598,7 @@ let CharacterMovementSyncComponent =
       } else {
         const e = this.GetCurrentMoveSample();
         this.PendingMoveInfos.push(e);
-        const t = Protocol_1.Aki.Protocol.Jhs.create();
+        var t = Protocol_1.Aki.Protocol.Jhs.create();
         t.Mys.push(this.CollectPendingMoveInfos()),
           Net_1.Net.Send(17208, t),
           (this.VVt = Time_1.Time.NowSeconds);
@@ -609,9 +614,9 @@ let CharacterMovementSyncComponent =
           break;
         t++;
       }
-      let e, i;
+      var e, i;
       if (
-        (t > 0 &&
+        (0 < t &&
           (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "MultiplayerCombat",
@@ -622,7 +627,7 @@ let CharacterMovementSyncComponent =
               ["TimeStamp", this.PendingMoveInfos[0].h4n],
             ),
           this.PendingMoveInfos.splice(0, t)),
-        this.PendingMoveInfos.length !== 0)
+        0 !== this.PendingMoveInfos.length)
       )
         return (
           ((e = Protocol_1.Aki.Protocol.aOs.create()).rkn =
@@ -650,14 +655,14 @@ let CharacterMovementSyncComponent =
         );
     }
     ReceiveMoveInfos(t, e, i) {
-      if (t.length === 0)
+      if (0 === t.length)
         CombatDebugController_1.CombatDebugController.CombatWarn(
           "Move",
           this.Entity,
           "收移动包失败，移动包长度为0",
         );
       else {
-        const s =
+        var s =
           ModelManager_1.ModelManager.CombatMessageModel.GetMessageBufferByEntityId(
             this.Entity.Id,
           );
@@ -667,19 +672,19 @@ let CharacterMovementSyncComponent =
             this.Entity,
             "收移动包" + this.MoveInfosToString(t),
           );
-          let h = i + s.TimelineOffset;
-          const o =
-            (Time_1.Time.NowSeconds > h &&
-              ((h = Time_1.Time.NowSeconds - h),
-              CombatDebugController_1.CombatDebugController.CombatWarn(
-                "Move",
-                this.Entity,
-                "移动缓冲不足",
-                ["missTime", h],
-                ["TimeStamp", i],
-              ),
-              this.ReportMoveDataBufferMissTime(1e3 * h)),
-            MathUtils_1.MathUtils.LongToNumber(e));
+          var h = i + s.TimelineOffset,
+            o =
+              (Time_1.Time.NowSeconds > h &&
+                ((h = Time_1.Time.NowSeconds - h),
+                CombatDebugController_1.CombatDebugController.CombatWarn(
+                  "Move",
+                  this.Entity,
+                  "移动缓冲不足",
+                  ["missTime", h],
+                  ["TimeStamp", i],
+                ),
+                this.ReportMoveDataBufferMissTime(1e3 * h)),
+              MathUtils_1.MathUtils.LongToNumber(e));
           this.ZHr !== o &&
             CombatDebugController_1.CombatDebugController.CombatInfo(
               "Move",
@@ -698,8 +703,8 @@ let CharacterMovementSyncComponent =
                 "[CharacterMovementSyncComponent.ReceiveMoveInfos] TimeStamp不能小于等于0",
                 ["TimeStamp", a.h4n ?? void 0],
               );
-            let t = a.o7n > 0 ? 0.001 * a.o7n : 0;
-            t > 0 &&
+            let t = 0 < a.o7n ? 0.001 * a.o7n : 0;
+            0 < t &&
               ((t = MathUtils_1.MathUtils.Clamp(t, 0, this.WHr)),
               CombatDebugController_1.CombatDebugController.CombatInfo(
                 "Move",
@@ -707,7 +712,7 @@ let CharacterMovementSyncComponent =
                 "额外移动缓冲",
                 ["extraOffset", t],
               ));
-            const r = new ReplaySample(a, o, a.h4n + s.TimelineOffset + t);
+            var r = new ReplaySample(a, o, a.h4n + s.TimelineOffset + t);
             this.AddReplaySample(r);
           }
           this.ZHr = o;
@@ -728,7 +733,7 @@ let CharacterMovementSyncComponent =
     }
     AddReplaySample(t) {
       for (
-        t.r5n === 0 &&
+        0 === t.r5n &&
         CombatDebugController_1.CombatDebugController.CombatWarn(
           "Move",
           this.Entity,
@@ -759,14 +764,14 @@ let CharacterMovementSyncComponent =
           ))
       )
         return !1;
-      let a = !1;
-      let n = void 0;
+      let a = !1,
+        n = void 0;
       if (r.Entity.GetComponent(182)) {
         a = !0;
-        var _ = r.Entity.GetComponent(182);
-        var l =
-          ((0, puerts_1.$set)(o, _.IsMoveAutonomousProxy),
-          _.GetInteractionMainActor());
+        var _ = r.Entity.GetComponent(182),
+          l =
+            ((0, puerts_1.$set)(o, _.IsMoveAutonomousProxy),
+            _.GetInteractionMainActor());
         if (!(n = l.BasePlatform)?.IsValid()) return !1;
         this.TmpLocation.DeepCopy(n.K2_GetActorLocation()),
           this.TmpRotation.DeepCopy(n.K2_GetActorRotation()),
@@ -809,10 +814,10 @@ let CharacterMovementSyncComponent =
       return h.DeepCopy(_), !0;
     }
     TickReplaySamples() {
-      const t = Time_1.Time.NowSeconds;
+      var t = Time_1.Time.NowSeconds;
       for (
         this.sjr &&
-        t - this.sjr.h4n > 1 &&
+        1 < t - this.sjr.h4n &&
         (CombatDebugController_1.CombatDebugController.CombatInfo(
           "Move",
           this.Entity,
@@ -823,30 +828,30 @@ let CharacterMovementSyncComponent =
         !this.vjr.Empty;
 
       ) {
-        const e = this.sjr;
-        const i = this.vjr.Front;
+        var e = this.sjr,
+          i = this.vjr.Front;
         if (!(t >= i.h4n)) {
           if (!e) break;
-          const s = MathUtils_1.MathUtils.RangeClamp(t, e.h4n, i.h4n, 0, 1);
-          var h = (0, puerts_1.$ref)(void 0);
-          var h =
-            (this.yjr(e, i, s, this.CacheLocation, this.Fuo, h)
-              ? (this.JHr, (this.JHr = !0))
-              : (Vector_1.Vector.Lerp(e.$kn, i.$kn, s, this.CacheLocation),
-                Rotator_1.Rotator.Lerp(e.D3n, i.D3n, s, this.Fuo),
-                this.JHr,
-                (this.JHr = !1)),
-            Vector_1.Vector.Lerp(e.A3n, i.A3n, s, this.VHr),
-            CombatDebugController_1.CombatDebugController.CombatDebugEx(
-              "Move",
-              this.Entity,
-              `执行移动包 {${this.MoveInfoToString(e)}} {${this.MoveInfoToString(i)}}`,
-            ),
-            MathUtils_1.MathUtils.Lerp(
-              MathCommon_1.MathCommon.WrapAngle(e.ControllerPitch),
-              MathCommon_1.MathCommon.WrapAngle(i.ControllerPitch),
-              s,
-            ));
+          var s = MathUtils_1.MathUtils.RangeClamp(t, e.h4n, i.h4n, 0, 1),
+            h = (0, puerts_1.$ref)(void 0),
+            h =
+              (this.yjr(e, i, s, this.CacheLocation, this.Fuo, h)
+                ? (this.JHr, (this.JHr = !0))
+                : (Vector_1.Vector.Lerp(e.$kn, i.$kn, s, this.CacheLocation),
+                  Rotator_1.Rotator.Lerp(e.D3n, i.D3n, s, this.Fuo),
+                  this.JHr,
+                  (this.JHr = !1)),
+              Vector_1.Vector.Lerp(e.A3n, i.A3n, s, this.VHr),
+              CombatDebugController_1.CombatDebugController.CombatDebugEx(
+                "Move",
+                this.Entity,
+                `执行移动包 {${this.MoveInfoToString(e)}} {${this.MoveInfoToString(i)}}`,
+              ),
+              MathUtils_1.MathUtils.Lerp(
+                MathCommon_1.MathCommon.WrapAngle(e.ControllerPitch),
+                MathCommon_1.MathCommon.WrapAngle(i.ControllerPitch),
+                s,
+              ));
           this.Ijr(
             e.r5n,
             this.CacheLocation,
@@ -933,8 +938,8 @@ let CharacterMovementSyncComponent =
       return `[${t.X.toFixed()},${t.Y.toFixed()},${t.Z.toFixed()}]`;
     }
     MoveInfosToString(t) {
-      const e = t[0];
-      const i = t[t.length - 1];
+      var e = t[0],
+        i = t[t.length - 1];
       return (
         `length:${t.length}, t:${e.h4n.toFixed(3)}-${i.h4n.toFixed(3)}, position:${this.VectorToString(e.$kn)}-${this.VectorToString(i.$kn)}, r:${e.D3n?.Yaw.toFixed()}-${i.D3n?.Yaw.toFixed()}, timeScale:` +
         i.Y9n
@@ -1021,4 +1026,4 @@ let CharacterMovementSyncComponent =
       CharacterMovementSyncComponent,
     )),
   (exports.CharacterMovementSyncComponent = CharacterMovementSyncComponent);
-// # sourceMappingURL=CharacterMovementSyncComponent.js.map
+//# sourceMappingURL=CharacterMovementSyncComponent.js.map

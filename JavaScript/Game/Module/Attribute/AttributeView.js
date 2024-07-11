@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AttributeView = void 0);
-const UE = require("ue");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const CommonAttributeItem_1 = require("../RoleUi/View/CommonAttributeItem");
-const GenericScrollView_1 = require("../Util/ScrollView/GenericScrollView");
+const UE = require("ue"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  CommonAttributeItem_1 = require("../RoleUi/View/CommonAttributeItem"),
+  GenericScrollView_1 = require("../Util/ScrollView/GenericScrollView");
 class AttributeView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -18,7 +18,7 @@ class AttributeView extends UiViewBase_1.UiViewBase {
     this.ComponentRegisterInfos = [[0, UE.UIScrollViewWithScrollbarComponent]];
   }
   OnStart() {
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     (this.Lje = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(0),
       this.Dje,
@@ -30,4 +30,4 @@ class AttributeView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.AttributeView = AttributeView;
-// # sourceMappingURL=AttributeView.js.map
+//# sourceMappingURL=AttributeView.js.map

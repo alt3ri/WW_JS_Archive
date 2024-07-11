@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotNodeItem = exports.HandBookQuestPlotItem = void 0);
-const UE = require("ue");
-const PublicUtil_1 = require("../../Common/PublicUtil");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  PublicUtil_1 = require("../../Common/PublicUtil"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
 class HandBookQuestPlotItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -64,7 +64,7 @@ class PlotNodeItem extends UiPanelBase_1.UiPanelBase {
       (this.b5e = void 0),
       (this.os = ""),
       (this.OnClickExtendToggle = (t) => {
-        t === 1 && this.OAn && this.OAn(this.os, this.b5e);
+        1 === t && this.OAn && this.OAn(this.os, this.b5e);
       });
   }
   OnRegisterComponent() {
@@ -100,4 +100,4 @@ class PlotNodeItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.PlotNodeItem = PlotNodeItem;
-// # sourceMappingURL=HandBookQuestPlotItem.js.map
+//# sourceMappingURL=HandBookQuestPlotItem.js.map

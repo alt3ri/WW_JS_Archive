@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MenuScrollSettingContainerItem = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const GenericPromptController_1 = require("../../GenericPrompt/GenericPromptController");
-const MenuController_1 = require("../MenuController");
-const MenuScrollSettingButtonItem_1 = require("./MenuScrollSettingButtonItem");
-const MenuScrollSettingDropDown_1 = require("./MenuScrollSettingDropDown");
-const MenuScrollSettingKeyMapItem_1 = require("./MenuScrollSettingKeyMapItem");
-const MenuScrollSettingSliderItem_1 = require("./MenuScrollSettingSliderItem");
-const MenuScrollSettingSwitchItem_1 = require("./MenuScrollSettingSwitchItem");
-const MenuScrollSettingTitleItem_1 = require("./MenuScrollSettingTitleItem");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  GenericPromptController_1 = require("../../GenericPrompt/GenericPromptController"),
+  MenuController_1 = require("../MenuController"),
+  MenuScrollSettingButtonItem_1 = require("./MenuScrollSettingButtonItem"),
+  MenuScrollSettingDropDown_1 = require("./MenuScrollSettingDropDown"),
+  MenuScrollSettingKeyMapItem_1 = require("./MenuScrollSettingKeyMapItem"),
+  MenuScrollSettingSliderItem_1 = require("./MenuScrollSettingSliderItem"),
+  MenuScrollSettingSwitchItem_1 = require("./MenuScrollSettingSwitchItem"),
+  MenuScrollSettingTitleItem_1 = require("./MenuScrollSettingTitleItem");
 class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -26,11 +26,11 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
       (this.EPe = void 0),
       (this.UOn = () => {
         if (this.Pe) {
-          const e = this.Pe.ClickedTips;
+          var e = this.Pe.ClickedTips;
           if (e && !StringUtils_1.StringUtils.IsBlank(e)) {
-            let t;
-            let i;
-            const r = ModelManager_1.ModelManager.MenuModel;
+            var t,
+              i,
+              r = ModelManager_1.ModelManager.MenuModel;
             for ([t, i] of this.Pe.ClickedTipsMap)
               if (r.GetTargetConfig(t) === i)
                 return void GenericPromptController_1.GenericPromptController.ShowPromptByCode(
@@ -118,7 +118,7 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
   }
   GetUsingItem(e) {
     let t = void 0;
-    switch ((e.Type === 0 && (t = this.GetItem(1)), e.Data.MenuDataSetType)) {
+    switch ((0 === e.Type && (t = this.GetItem(1)), e.Data.MenuDataSetType)) {
       case 1:
         t = this.GetItem(4);
         break;
@@ -143,15 +143,15 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
       this.Ywi && (await this.Ywi.Init(), this.sBi(this.Ywi, e));
   }
   sBi(e, t) {
-    let i;
+    var i;
     e &&
       ((i = t.Data),
       e.SetActive(!0),
       e.Update(i),
-      t.Type !== 0 ? this.Zwi(i.IsEnable) : this.Zwi(!1));
+      0 !== t.Type ? this.Zwi(i.IsEnable) : this.Zwi(!1));
   }
   nBi(e) {
-    if (e.Type === 0)
+    if (0 === e.Type)
       return this.aBi(
         1,
         MenuScrollSettingTitleItem_1.MenuScrollSettingTitleItem,
@@ -199,11 +199,11 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
       this.GetItem(5).SetUIActive(!1);
   }
   Zwi(e) {
-    const t = this.GetExtendToggle(0);
+    var t = this.GetExtendToggle(0);
     t.SetToggleState(e ? 0 : 2, !1),
       t.SetSelfInteractive(e),
-      this.S9 !== 0 && this.Ywi && this.Ywi.SetInteractionActive(e);
+      0 !== this.S9 && this.Ywi && this.Ywi.SetInteractionActive(e);
   }
 }
 exports.MenuScrollSettingContainerItem = MenuScrollSettingContainerItem;
-// # sourceMappingURL=MenuScrollSettingContainerItem.js.map
+//# sourceMappingURL=MenuScrollSettingContainerItem.js.map

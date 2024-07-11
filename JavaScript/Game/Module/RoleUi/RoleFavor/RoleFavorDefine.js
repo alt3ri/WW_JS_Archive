@@ -42,4 +42,4 @@ class RoleFavorHintData {
   }
 }
 exports.RoleFavorHintData = RoleFavorHintData;
-// # sourceMappingURL=RoleFavorDefine.js.map
+//# sourceMappingURL=RoleFavorDefine.js.map

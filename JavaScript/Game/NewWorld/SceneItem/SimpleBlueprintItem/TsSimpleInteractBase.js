@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SimpleInteractTmpValue = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine");
-const Transform_1 = require("../../../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const WorldModel_1 = require("../../../World/Model/WorldModel");
-const CHECK_DRAW_PERIODIC = 0.45;
-const CHECK_DRAW_THREADHOLD = 25e6;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine"),
+  Transform_1 = require("../../../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  WorldModel_1 = require("../../../World/Model/WorldModel"),
+  CHECK_DRAW_PERIODIC = 0.45,
+  CHECK_DRAW_THREADHOLD = 25e6;
 class SimpleInteractTmpValue {}
 exports.SimpleInteractTmpValue = SimpleInteractTmpValue;
 class TsSimpleInteractBase extends UE.KuroEffectActor {
@@ -79,7 +79,7 @@ class TsSimpleInteractBase extends UE.KuroEffectActor {
     return (this.TmpResult.Success = !1), this.TmpResult;
   }
   CheckDraw(t) {
-    let i;
+    var i;
     return (
       this.CheckDrawTime || (this.CheckDrawTime = 0),
       (this.CheckDrawTime -= t),
@@ -111,4 +111,4 @@ class TsSimpleInteractBase extends UE.KuroEffectActor {
   SetText(t) {}
 }
 exports.default = TsSimpleInteractBase;
-// # sourceMappingURL=TsSimpleInteractBase.js.map
+//# sourceMappingURL=TsSimpleInteractBase.js.map

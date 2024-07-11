@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletLogicSuiGuang = void 0);
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const BulletController_1 = require("../BulletController");
-const BulletEntity_1 = require("../Entity/BulletEntity");
-const BulletHitActorData_1 = require("../Model/BulletHitActorData");
-const BulletLogicController_1 = require("./BulletLogicController");
+const MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  BulletController_1 = require("../BulletController"),
+  BulletEntity_1 = require("../Entity/BulletEntity"),
+  BulletHitActorData_1 = require("../Model/BulletHitActorData"),
+  BulletLogicController_1 = require("./BulletLogicController");
 class BulletLogicSuiGuang extends BulletLogicController_1.BulletLogicController {
   constructor(t, l) {
     super(t, l), (this._9o = this.Bullet.GetBulletInfo()), (this.u9o = t);
@@ -21,7 +21,7 @@ class BulletLogicSuiGuang extends BulletLogicController_1.BulletLogicController 
           this.$9o(this.u9o.NewBulletId, t.Entity.Id));
   }
   $9o(t, l) {
-    const e = this.Bullet.GetComponent(152).ActorTransform;
+    var e = this.Bullet.GetComponent(152).ActorTransform;
     BulletController_1.BulletController.CreateBulletCustomTarget(
       this.Bullet.GetBulletInfo().BulletInitParams.Owner,
       t,
@@ -39,4 +39,4 @@ class BulletLogicSuiGuang extends BulletLogicController_1.BulletLogicController 
   }
 }
 exports.BulletLogicSuiGuang = BulletLogicSuiGuang;
-// # sourceMappingURL=BulletLogicSuiGuang.js.map
+//# sourceMappingURL=BulletLogicSuiGuang.js.map

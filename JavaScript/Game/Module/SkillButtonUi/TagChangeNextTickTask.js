@@ -8,7 +8,7 @@ class TagChangeNextTickTask {
       (this.vyo = void 0),
       (this.Myo = []),
       (this.Syo = () => {
-        if (((this.vyo = void 0), this.Myo.length > 0))
+        if (((this.vyo = void 0), 0 < this.Myo.length))
           for (const t of this.Myo) t(this.pyo);
         (this.Myo.length = 0), this.pyo.clear();
       });
@@ -29,4 +29,4 @@ class TagChangeNextTickTask {
   }
 }
 exports.TagChangeNextTickTask = TagChangeNextTickTask;
-// # sourceMappingURL=TagChangeNextTickTask.js.map
+//# sourceMappingURL=TagChangeNextTickTask.js.map

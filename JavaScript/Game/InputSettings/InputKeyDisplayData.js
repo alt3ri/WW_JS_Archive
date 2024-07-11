@@ -19,9 +19,9 @@ class InputKeyDisplayData {
       (this.IsCombination = !0);
   }
   GetDisplayKeyNameList(t = 0) {
-    if (this.KeyNameMap.size > 0)
-      for (const [s, i] of this.KeyNameMap) return [s, i];
-    if (this.KeyNameList.length > 0) return [this.KeyNameList[t]];
+    if (0 < this.KeyNameMap.size)
+      for (var [s, i] of this.KeyNameMap) return [s, i];
+    if (0 < this.KeyNameList.length) return [this.KeyNameList[t]];
   }
   IsValid() {
     return void 0 !== this.ActionOrAxisName;
@@ -33,4 +33,4 @@ class InputKeyDisplayData {
   }
 }
 exports.InputKeyDisplayData = InputKeyDisplayData;
-// # sourceMappingURL=InputKeyDisplayData.js.map
+//# sourceMappingURL=InputKeyDisplayData.js.map

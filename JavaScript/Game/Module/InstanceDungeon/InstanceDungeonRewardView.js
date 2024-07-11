@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonRewardView = void 0);
-const ue_1 = require("ue");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const GenericScrollViewNew_1 = require("../Util/ScrollView/GenericScrollViewNew");
-const InstanceDungeonRewardItem_1 = require("./InstanceDungeonRewardItem");
+const ue_1 = require("ue"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  GenericScrollViewNew_1 = require("../Util/ScrollView/GenericScrollViewNew"),
+  InstanceDungeonRewardItem_1 = require("./InstanceDungeonRewardItem");
 class InstanceDungeonRewardView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -39,14 +39,14 @@ class InstanceDungeonRewardView extends UiViewBase_1.UiViewBase {
     const e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
       ModelManager_1.ModelManager.InstanceDungeonEntranceModel.SelectInstanceId,
     ).RewardId;
-    const r =
-      ConfigManager_1.ConfigManager.ExchangeRewardConfig?.GetExchangeRewardConfig(
-        e,
-      ).RewardId;
-    const i = [];
-    const n = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel;
-    let t = 0;
-    let a = 0;
+    var r =
+        ConfigManager_1.ConfigManager.ExchangeRewardConfig?.GetExchangeRewardConfig(
+          e,
+        ).RewardId,
+      i = [],
+      n = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel;
+    let t = 0,
+      a = 0;
     for (const [s, e] of r)
       i.push([s, e]), t < s && n >= s && ((t = s), (a = i.length - 1));
     this.Kli.RefreshByData(i, () => {
@@ -58,4 +58,4 @@ class InstanceDungeonRewardView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.InstanceDungeonRewardView = InstanceDungeonRewardView;
-// # sourceMappingURL=InstanceDungeonRewardView.js.map
+//# sourceMappingURL=InstanceDungeonRewardView.js.map

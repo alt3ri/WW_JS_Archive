@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const GlobalData_1 = require("../../../GlobalData");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class TsDecoratorGeneralConditionCheck extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -30,4 +30,4 @@ class TsDecoratorGeneralConditionCheck extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorGeneralConditionCheck;
-// # sourceMappingURL=TsDecoratorGeneralConditionCheck.js.map
+//# sourceMappingURL=TsDecoratorGeneralConditionCheck.js.map

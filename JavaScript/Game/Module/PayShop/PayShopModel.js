@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayShopModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const PayShopGoods_1 = require("./PayShopData/PayShopGoods");
-const PayShopGoodsData_1 = require("./PayShopData/PayShopGoodsData");
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  PayShopGoods_1 = require("./PayShopData/PayShopGoods"),
+  PayShopGoodsData_1 = require("./PayShopData/PayShopGoodsData");
 class PayShopModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -22,7 +22,7 @@ class PayShopModel extends ModelBase_1.ModelBase {
       (this.P2i = !1),
       (this.x2i = new Array()),
       (this.w2i = (e, t) => {
-        let o, r;
+        var o, r;
         return e.IsSoldOut() !== t.IsSoldOut()
           ? e.IsSoldOut()
             ? 1
@@ -52,7 +52,7 @@ class PayShopModel extends ModelBase_1.ModelBase {
     return this.A2i;
   }
   GetTabInfoByPayShopIdId(e) {
-    let t;
+    var t;
     for (const o of this.GetPayShopIdList())
       if (o === e)
         return (
@@ -70,7 +70,7 @@ class PayShopModel extends ModelBase_1.ModelBase {
     );
   }
   SetPayShopInfo(e, t) {
-    const o = this.b2i(e);
+    var o = this.b2i(e);
     this.B2i(e),
       (this.A2i = e.Ekn),
       t
@@ -85,9 +85,9 @@ class PayShopModel extends ModelBase_1.ModelBase {
           );
   }
   SetPayShopGoodsList(e) {
-    let t;
-    let o;
-    const r = new Set();
+    var t,
+      o,
+      r = new Set();
     for (const a of e) {
       let e = this.u2i.get(a.Ekn);
       e
@@ -107,12 +107,12 @@ class PayShopModel extends ModelBase_1.ModelBase {
     );
   }
   B2i(e) {
-    const t = e.Ekn;
-    const o = e._gs;
-    const r = new Set();
+    var t = e.Ekn,
+      o = e._gs,
+      r = new Set();
     for (const a of o)
       r.add(a.Ekn),
-        this.q2i(a, t).GetTabId() > 0 &&
+        0 < this.q2i(a, t).GetTabId() &&
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Pay", 28, "有标签");
     this.D2i.set(t, r),
@@ -131,18 +131,18 @@ class PayShopModel extends ModelBase_1.ModelBase {
     return !0;
   }
   RefreshPayShopGoods(e) {
-    const t = new PayShopGoodsData_1.PayShopGoodsData();
+    var t = new PayShopGoodsData_1.PayShopGoodsData();
     t.Phrase(e), this.u2i.get(e.Ekn).SetGoodsData(t);
   }
   q2i(e, t) {
-    const o = new PayShopGoodsData_1.PayShopGoodsData();
-    var e = (o.Phrase(e), new PayShopGoods_1.PayShopGoods(t));
+    var o = new PayShopGoodsData_1.PayShopGoodsData(),
+      e = (o.Phrase(e), new PayShopGoods_1.PayShopGoods(t));
     return e.SetGoodsData(o), this.u2i.set(o.Id, e), e;
   }
   UnLockPayShopGoods(e) {
-    const t = new Map();
+    var t = new Map();
     for (const r of e) {
-      const o = this.u2i.get(r);
+      var o = this.u2i.get(r);
       o.SetUnLock();
       let e = t.get(o.PayShopId);
       (e = e || new Set()).add(o.GetTabId()), t.set(o.PayShopId, e);
@@ -159,57 +159,56 @@ class PayShopModel extends ModelBase_1.ModelBase {
             .Enable && this.x2i.push(t);
         }),
         this.x2i.sort((e, t) => {
-          const o =
-            ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopConfig(e);
-          const r =
-            ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopConfig(t);
+          var o =
+              ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopConfig(e),
+            r = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopConfig(t);
           return o.Sort !== r.Sort ? o.Sort - r.Sort : e - t;
         }))
       : this.x2i;
   }
   GetPayShopTabIdList(a) {
-    const e = new Set();
+    var e = new Set();
     for (const o of this.D2i.get(a)) {
-      const t = this.u2i.get(o);
+      var t = this.u2i.get(o);
       e.has(t.GetTabId()) || e.add(t.GetTabId());
     }
     return Array.from(e).sort((e, t) => {
-      const o = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopTabConfig(
-        a,
-        e,
-      );
-      const r = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopTabConfig(
-        a,
-        t,
-      );
+      var o = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopTabConfig(
+          a,
+          e,
+        ),
+        r = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopTabConfig(
+          a,
+          t,
+        );
       return o.Sort !== r.Sort ? o.Sort - r.Sort : e - t;
     });
   }
   G2i(e, t = 1) {
-    return e === 3 && t === 1;
+    return 3 === e && 1 === t;
   }
   N2i(e, t = 1) {
-    const o = [];
+    var o = [];
     if (this.G2i(e, t))
       for (const a of ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsList())
         a.GetGetPayGiftData().ShowInShop() && o.push(a);
     for (const n of this.D2i.get(e)) {
-      const r = this.u2i.get(n);
+      var r = this.u2i.get(n);
       o.push(r);
     }
     return o;
   }
   CheckGoodIfShowInTab(e, t) {
-    const o = [];
+    var o = [];
     for (const t of this.D2i.get(e)) {
-      const r = this.u2i.get(t);
+      var r = this.u2i.get(t);
       o.push(r);
     }
     for (const a of o) if (a.GetGoodsId() === t) if (this.kVs(a)) return !0;
     return !1;
   }
   GetPayShopTabData(e, t = 1) {
-    const o = [];
+    var o = [];
     for (const r of this.N2i(e, t))
       r.GetTabId() === t && this.kVs(r) && o.push(r);
     return o.sort(this.w2i);
@@ -220,10 +219,10 @@ class PayShopModel extends ModelBase_1.ModelBase {
       !e.InSellTime() ||
       !e.GetGoodsData().Show ||
       (e.GetGoodsData().HasBuyLimit() &&
-        e.GetGoodsData().GetRemainingCount() === 0 &&
+        0 === e.GetGoodsData().GetRemainingCount() &&
         !e.GetGoodsData().IsWeeklyRefresh()) ||
       (e.GetGoodsData().HasBuyLimit() &&
-        e.GetGoodsData().GetRemainingCount() === 0 &&
+        0 === e.GetGoodsData().GetRemainingCount() &&
         e.GetGoodsData().IsWeeklyRefresh() &&
         e.GetGoodsData().UpdateTime >= e.GetGoodsData().EndTime &&
         !e.IsPermanentSell())
@@ -233,14 +232,14 @@ class PayShopModel extends ModelBase_1.ModelBase {
     return this.u2i.get(e);
   }
   GetPayShopCountDownData(e) {
-    let t;
-    var e = this.R2i.get(e);
+    var t,
+      e = this.R2i.get(e);
     if (!(void 0 === e || e <= 0))
       return (
         (e = Number(e)),
         (t = PayShopGoods_1.PayShopGoods.GetTimeTypeData(e)),
         (e = e - Math.ceil(TimeUtil_1.TimeUtil.GetServerTime())),
-        t[0] === 0
+        0 === t[0]
           ? {
               CountDownText:
                 ConfigManager_1.ConfigManager.TextConfig.GetTextById(
@@ -256,7 +255,7 @@ class PayShopModel extends ModelBase_1.ModelBase {
     return e ? Number(e) : 0;
   }
   UpdatePayShopGoodsCount(e, t) {
-    const o = this.u2i.get(e);
+    var o = this.u2i.get(e);
     o.IsLimitGoods() &&
       (o.AddBoughtCount(t), o.IsSoldOut()) &&
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.GoodsSoldOut, e),
@@ -268,7 +267,7 @@ class PayShopModel extends ModelBase_1.ModelBase {
       );
   }
   GetNeedCheckGoods(e) {
-    const t = [];
+    var t = [];
     for (const o of this.N2i(e))
       o.IsShowInShop() &&
         (o.InUpdateTime() || o.InUnPermanentSellTime()) &&
@@ -282,7 +281,7 @@ class PayShopModel extends ModelBase_1.ModelBase {
     return !1;
   }
   CheckPayShopHasRedDot(e) {
-    if (e === 1)
+    if (1 === e)
       return ModelManager_1.ModelManager.MonthCardModel.GetPayButtonRedDotState();
     for (const t of this.GetPayShopTabIdList(e))
       if (this.CheckPayShopTabHasRedDot(e, t)) return !0;
@@ -299,7 +298,7 @@ class PayShopModel extends ModelBase_1.ModelBase {
   O2i(e) {
     return (
       !(e.IsLocked() || !e.IfCanBuy() || e.IsSoldOut() || e.IsDirect()) &&
-      e.GetPriceData().NowPrice === 0
+      0 === e.GetPriceData().NowPrice
     );
   }
   ClearData() {
@@ -307,4 +306,4 @@ class PayShopModel extends ModelBase_1.ModelBase {
   }
 }
 exports.PayShopModel = PayShopModel;
-// # sourceMappingURL=PayShopModel.js.map
+//# sourceMappingURL=PayShopModel.js.map

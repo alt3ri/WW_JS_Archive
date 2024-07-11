@@ -1,39 +1,39 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotView = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const Info_1 = require("../../../../Core/Common/Info");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const InputController_1 = require("../../../Input/InputController");
-const InputEnums_1 = require("../../../Input/InputEnums");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ScreenEffectSystem_1 = require("../../../Render/Effect/ScreenEffectSystem/ScreenEffectSystem");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const TouchFingerManager_1 = require("../../../Ui/TouchFinger/TouchFingerManager");
-const UiNavigationNewController_1 = require("../../UiNavigation/New/UiNavigationNewController");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const PlotController_1 = require("../PlotController");
-const PlotOptionItem_1 = require("./PlotOptionItem");
-const PlotSkipComponent_1 = require("./PlotSkipComponent");
-const PlotTextLogic_1 = require("./PlotTextLogic");
-const FADE_TIME = 1e3;
-const ROTATE_RATE = 0.1;
-const ZOOM_RATE = 1.2;
-const DEFAULT_PATH =
-  "/Game/Aki/UI/UIResources/Common/Image/T_CommonDefault_UI.T_CommonDefault_UI";
-const CLICK_AUDIO_EVENT = "play_ui_ia_spl_plot_next";
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  Info_1 = require("../../../../Core/Common/Info"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  InputController_1 = require("../../../Input/InputController"),
+  InputEnums_1 = require("../../../Input/InputEnums"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ScreenEffectSystem_1 = require("../../../Render/Effect/ScreenEffectSystem/ScreenEffectSystem"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  TouchFingerManager_1 = require("../../../Ui/TouchFinger/TouchFingerManager"),
+  UiNavigationNewController_1 = require("../../UiNavigation/New/UiNavigationNewController"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  PlotController_1 = require("../PlotController"),
+  PlotOptionItem_1 = require("./PlotOptionItem"),
+  PlotSkipComponent_1 = require("./PlotSkipComponent"),
+  PlotTextLogic_1 = require("./PlotTextLogic"),
+  FADE_TIME = 1e3,
+  ROTATE_RATE = 0.1,
+  ZOOM_RATE = 1.2,
+  DEFAULT_PATH =
+    "/Game/Aki/UI/UIResources/Common/Image/T_CommonDefault_UI.T_CommonDefault_UI",
+  CLICK_AUDIO_EVENT = "play_ui_ia_spl_plot_next";
 class PlotView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -75,7 +75,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
         this.gZi || this.CZi.SetActive(!1);
       }),
       (this.NZi = () => {
-        const t = new PlotOptionItem_1.PlotOptionItem(this);
+        var t = new PlotOptionItem_1.PlotOptionItem(this);
         return t.BindOnHover(this.OZi), t;
       }),
       (this.OZi = (t) => {
@@ -93,8 +93,8 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
         );
       }),
       (this.b6i = (t) => {
-        let i;
-        TouchFingerManager_1.TouchFingerManager.GetTouchFingerCount() > 1
+        var i;
+        1 < TouchFingerManager_1.TouchFingerManager.GetTouchFingerCount()
           ? (this.w6i = void 0)
           : ((i = this.w6i),
             (this.w6i = t.GetLocalPointInPlane()),
@@ -115,9 +115,9 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.kZi = () => {
         this.hZi?.SetFollowItemActive(!1);
-        const i = this.CZi.GetDisplayGridEndIndex();
+        var i = this.CZi.GetDisplayGridEndIndex();
         for (let t = 0; t <= i; t++) {
-          const s = this.CZi.GetLayoutItemByIndex(t);
+          var s = this.CZi.GetLayoutItemByIndex(t);
           if (s?.GetActive())
             return (
               (this.hZi = s),
@@ -135,7 +135,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.VZi = () => {
         this.fZi.EnableSkipButton(!1);
-        const t = ModelManager_1.ModelManager.PlotModel.PlotConfig.CanPause;
+        var t = ModelManager_1.ModelManager.PlotModel.PlotConfig.CanPause;
         this.GetExtendToggle(0).RootUIComp.SetUIActive(t),
           this.GetButton(16).RootUIComp.SetUIActive(t),
           this.GetButton(1).RootUIComp.SetUIActive(!0),
@@ -206,7 +206,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
             );
       }),
       (this.OnBtnAutoClick = () => {
-        const t = !ModelManager_1.ModelManager.PlotModel.PlotConfig.IsAutoPlay;
+        var t = !ModelManager_1.ModelManager.PlotModel.PlotConfig.IsAutoPlay;
         (ModelManager_1.ModelManager.PlotModel.PlotConfig.IsAutoPlay = t),
           (ModelManager_1.ModelManager.PlotModel.PlotConfig.IsAutoPlayCache = t)
             ? (this.vZi.IsTextAnimPlaying ||
@@ -224,7 +224,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.oeo = () => {
         this.SetUiActive(!1), (this.cot = !1);
-        const t = ModelManager_1.ModelManager.PlotModel.PlotConfig;
+        var t = ModelManager_1.ModelManager.PlotModel.PlotConfig;
         (t.IsAutoPlay = !1), (t.IsAutoPlayCache = !1), this.HZi();
       }),
       (this.$Ji = (t) => {
@@ -234,7 +234,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
         !t || this.cot || ((this.cot = !0), this.SetUiActive(!0));
       }),
       (this.reo = (t, i) => {
-        i.TouchType !== 0 ||
+        0 !== i.TouchType ||
           this.cot ||
           ((this.cot = !0), this.SetUiActive(!0));
       }),
@@ -266,8 +266,8 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
           this.wZi
             ? ((this.PZi += t),
               this.qZi
-                ? this.ueo() > 1 && (this.ceo(), this.meo())
-                : this.deo() > 1 && (this.ceo(), this.meo()))
+                ? 1 < this.ueo() && (this.ceo(), this.meo())
+                : 1 < this.deo() && (this.ceo(), this.meo()))
             : ((this.PZi -= t),
               this.qZi
                 ? this.ueo() <= 0 && (this.ceo(), this.meo())
@@ -314,7 +314,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
         this.xZi < 0 && (this.xZi = 0),
           this.xZi > FADE_TIME && (this.xZi = FADE_TIME),
           this.BZi
-            ? ((this.xZi += t), this.geo() > 1 && (this.feo(), this.peo()))
+            ? ((this.xZi += t), 1 < this.geo() && (this.feo(), this.peo()))
             : ((this.xZi -= t), this.geo() < 0 && (this.feo(), this.peo()));
       }),
       (this.peo = () => {
@@ -341,7 +341,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
   get HasOptions() {
     return (
       !(!this.CurrentSubtitle || !this.CurrentSubtitle.Options) &&
-      this.CurrentSubtitle.Options.length !== 0
+      0 !== this.CurrentSubtitle.Options.length
     );
   }
   OnRegisterComponent() {
@@ -381,7 +381,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       ]);
   }
   OnStart() {
-    const t = this.GetScrollView(25);
+    var t = this.GetScrollView(25);
     t?.SetCanScroll(!1),
       t?.SetRayCastTargetForScrollView(!1),
       (this.vZi = new PlotTextLogic_1.PlotTextCommonLogic(
@@ -524,7 +524,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
         this.reo,
       ),
       this.fZi.AddEventListener();
-    const t = this.GetButton(1)
+    var t = this.GetButton(1)
       .RootUIComp.GetOwner()
       .GetComponentByClass(UE.UIDraggableComponent.StaticClass());
     t &&
@@ -579,7 +579,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
         InputMappingsDefine_1.touchIdMappings.Touch1,
         this.reo,
       );
-    const t = this.GetButton(1)
+    var t = this.GetButton(1)
       .RootUIComp.GetOwner()
       .GetComponentByClass(UE.UIDraggableComponent.StaticClass());
     t &&
@@ -596,19 +596,19 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
   }
   SimulateClickOption() {
     if (Info_1.Info.IsBuildDevelopmentOrDebug)
-      for (let t = this.Options.length - 1; t >= 0; --t) {
-        const i = this.Options[t];
+      for (let t = this.Options.length - 1; 0 <= t; --t) {
+        var i = this.Options[t];
         i.CheckToggleGray() || i.OptionClick(!0);
       }
   }
   HZi() {
-    const t = this.GetExtendToggle(0);
+    var t = this.GetExtendToggle(0);
     ModelManager_1.ModelManager.PlotModel.PlotConfig.IsAutoPlay
       ? (t.SetToggleState(0), this.GetItem(14).SetUIActive(!0))
       : (t.SetToggleState(1), this.GetItem(14).SetUIActive(!1));
   }
   XZi(t) {
-    const i = new Array();
+    var i = new Array();
     for (const s of t)
       ModelManager_1.ModelManager.PlotModel.CheckOptionCondition(
         s,
@@ -617,7 +617,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
     return i;
   }
   KZi(i) {
-    if (i.Type === "Option") this.Meo(!1), this.teo();
+    if ("Option" === i.Type) this.Meo(!1), this.teo();
     else if (
       (this.seo(),
       this.Meo(!0),
@@ -661,8 +661,8 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       ? (t =
           ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
             .EndWaitTimeInteraction)
-      : ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel ===
-          "LevelC" &&
+      : "LevelC" ===
+          ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel &&
         (t =
           ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
             .EndWaitTimeLevelC),
@@ -686,14 +686,14 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
           ));
   }
   zZi() {
-    let t;
+    var t;
     this.InteractController &&
       (this.SetOptionsShow(!0),
       (t = this.InteractController.ShowOptions),
       this.CZi.RefreshByData(t, this.kZi));
   }
   JZi() {
-    let t;
+    var t;
     this.uZi++,
       this.uZi < this._Zi.length
         ? ((t = this._Zi[this.uZi]), this.vZi.PlaySubtitle(t), this.KZi(t))
@@ -738,8 +738,8 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
           this.UiViewSequence.PlaySequence("ChoiceClose")));
   }
   AddScreenEffectPlotRoot() {
-    const t = (0, puerts_1.$ref)(void 0);
-    let i = ScreenEffectSystem_1.ScreenEffectSystem.GetInstance();
+    var t = (0, puerts_1.$ref)(void 0),
+      i = ScreenEffectSystem_1.ScreenEffectSystem.GetInstance();
     i?.IsValid() &&
       (i.GetScreenEffectPlotRoot(t),
       (this.dZi = (0, puerts_1.$unref)(t)),
@@ -761,7 +761,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
     this.wPn = !1;
   }
   ueo() {
-    const t = MathUtils_1.MathUtils.GetRangePct(0, FADE_TIME, this.PZi);
+    var t = MathUtils_1.MathUtils.GetRangePct(0, FADE_TIME, this.PZi);
     if (this.bZi && this.wZi) this.yZi.SetAlpha(t);
     else {
       if (!this.wZi && this.EZi.GetAlpha() <= 0) return 0;
@@ -770,7 +770,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
     return t;
   }
   deo() {
-    const t = MathUtils_1.MathUtils.GetRangePct(0, FADE_TIME, this.PZi);
+    var t = MathUtils_1.MathUtils.GetRangePct(0, FADE_TIME, this.PZi);
     return !this.wZi && this.IZi.GetAlpha() <= 0
       ? 0
       : (this.IZi.SetAlpha(t), t);
@@ -832,7 +832,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
     this.PPn = !1;
   }
   geo() {
-    const t = MathUtils_1.MathUtils.GetRangePct(0, FADE_TIME, this.xZi);
+    var t = MathUtils_1.MathUtils.GetRangePct(0, FADE_TIME, this.xZi);
     return this.LZi.SetAlpha(t), t;
   }
   async FadeInBgBlackScreen(t) {
@@ -853,4 +853,4 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.PlotView = PlotView;
-// # sourceMappingURL=PlotView.js.map
+//# sourceMappingURL=PlotView.js.map

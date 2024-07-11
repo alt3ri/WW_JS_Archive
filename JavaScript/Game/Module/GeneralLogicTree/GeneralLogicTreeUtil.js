@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GeneralLogicTreeUtil = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const QuestChapterById_1 = require("../../../Core/Define/ConfigQuery/QuestChapterById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const KuroSdkReport_1 = require("../../KuroSdk/KuroSdkReport");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LguiUtil_1 = require("../Util/LguiUtil");
+const Log_1 = require("../../../Core/Common/Log"),
+  QuestChapterById_1 = require("../../../Core/Define/ConfigQuery/QuestChapterById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  KuroSdkReport_1 = require("../../KuroSdk/KuroSdkReport"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LguiUtil_1 = require("../Util/LguiUtil");
 class GeneralLogicTreeUtil {
   static GetEntityConfigPosition(e) {
     let r = void 0;
@@ -35,7 +35,7 @@ class GeneralLogicTreeUtil {
       : r);
   }
   static GetPlayerLocation() {
-    let e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     if (e) {
       e = e.Entity.GetComponent(3);
       if (e) return e.ActorLocationProxy;
@@ -75,7 +75,7 @@ class GeneralLogicTreeUtil {
     return o;
   }
   static OpenQuestChapterView(e, r, o) {
-    let t;
+    var t;
     e &&
       ((t =
         ModelManager_1.ModelManager.QuestNewModel.GetShowQuestChapterIdFromConfig(
@@ -97,8 +97,8 @@ class GeneralLogicTreeUtil {
   }
   static OpenChapterViewV2(e, r, o = !1, t) {
     let a = 0;
-    let i;
-    const l = [r.toString()];
+    var i,
+      l = [r.toString()];
     switch (e) {
       case 2:
         (a = o ? 16 : 10), t && l.push(t);
@@ -133,4 +133,4 @@ class GeneralLogicTreeUtil {
   }
 }
 exports.GeneralLogicTreeUtil = GeneralLogicTreeUtil;
-// # sourceMappingURL=GeneralLogicTreeUtil.js.map
+//# sourceMappingURL=GeneralLogicTreeUtil.js.map

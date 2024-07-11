@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ScrollSwitchComponent = void 0);
-const UiNavigationNewController_1 = require("../New/UiNavigationNewController");
-const HotKeyComponent_1 = require("./HotKeyComponent");
-const THRESHOLD = 0.6;
+const UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
+  HotKeyComponent_1 = require("./HotKeyComponent"),
+  THRESHOLD = 0.6;
 class ScrollSwitchComponent extends HotKeyComponent_1.HotKeyComponent {
   constructor() {
     super(...arguments), (this.xbo = !1);
@@ -13,7 +13,7 @@ class ScrollSwitchComponent extends HotKeyComponent_1.HotKeyComponent {
   }
   OnInputAxis(e, t) {
     this.xbo
-      ? t === 0 && (this.xbo = !1)
+      ? 0 === t && (this.xbo = !1)
       : Math.abs(t) <= THRESHOLD ||
         (UiNavigationNewController_1.UiNavigationNewController.FindScrollbar(
           t < 0,
@@ -26,4 +26,4 @@ class ScrollSwitchComponent extends HotKeyComponent_1.HotKeyComponent {
   }
 }
 exports.ScrollSwitchComponent = ScrollSwitchComponent;
-// # sourceMappingURL=ScrollSwitchComponent.js.map
+//# sourceMappingURL=ScrollSwitchComponent.js.map

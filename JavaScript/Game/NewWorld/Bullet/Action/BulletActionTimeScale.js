@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletActionTimeScale = void 0);
-const Time_1 = require("../../../../Core/Common/Time");
-const PriorityQueue_1 = require("../../../../Core/Container/PriorityQueue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const PawnTimeScaleComponent_1 = require("../../Pawn/Component/PawnTimeScaleComponent");
-const BulletStaticFunction_1 = require("../BulletStaticMethod/BulletStaticFunction");
-const BulletUtil_1 = require("../BulletUtil");
-const BulletActionBase_1 = require("./BulletActionBase");
+const Time_1 = require("../../../../Core/Common/Time"),
+  PriorityQueue_1 = require("../../../../Core/Container/PriorityQueue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  PawnTimeScaleComponent_1 = require("../../Pawn/Component/PawnTimeScaleComponent"),
+  BulletStaticFunction_1 = require("../BulletStaticMethod/BulletStaticFunction"),
+  BulletUtil_1 = require("../BulletUtil"),
+  BulletActionBase_1 = require("./BulletActionBase");
 class BulletActionTimeScale extends BulletActionBase_1.BulletActionBase {
   constructor() {
     super(...arguments), (this.V5o = -0), (this.H5o = void 0), (this.j5o = -0);
@@ -21,14 +21,14 @@ class BulletActionTimeScale extends BulletActionBase_1.BulletActionBase {
       )),
         (this.BulletInfo.TimeScaleMap = new Map()),
         (this.BulletInfo.TimeScaleId = 1);
-      const t = Time_1.Time.WorldTimeSeconds;
-      const i = ModelManager_1.ModelManager.BulletModel.PersistentTimeScaleMap;
+      var t = Time_1.Time.WorldTimeSeconds,
+        i = ModelManager_1.ModelManager.BulletModel.PersistentTimeScaleMap;
       for (const o of i.values()) {
-        const e = t - o.StartTime;
+        var e = t - o.StartTime;
         if (e >= o.Duration) i.delete(o.TimeScaleId);
         else {
           if (o.CenterLocation) {
-            const s = this.BulletInfo.CollisionInfo.LastFramePosition;
+            var s = this.BulletInfo.CollisionInfo.LastFramePosition;
             if (!s) continue;
             if (
               Math.abs(s.X - o.CenterLocation.X) > o.Radius ||
@@ -52,8 +52,8 @@ class BulletActionTimeScale extends BulletActionBase_1.BulletActionBase {
     }
   }
   OnTick(t) {
-    let i;
-    let e = this.BulletInfo.Entity.TimeDilation;
+    var i,
+      e = this.BulletInfo.Entity.TimeDilation;
     if (this.BulletInfo.BulletDataMain.TimeScale.TimeScaleWithAttacker)
       return (
         (i = this.H5o),
@@ -68,13 +68,13 @@ class BulletActionTimeScale extends BulletActionBase_1.BulletActionBase {
             ))
       );
     for (
-      let s = Time_1.Time.WorldTimeSeconds;
+      var s = Time_1.Time.WorldTimeSeconds;
       !this.BulletInfo.TimeScaleList.Empty &&
       (this.BulletInfo.TimeScaleList.Top.EndTime <= s ||
         this.BulletInfo.TimeScaleList.Top.MarkDelete);
 
     ) {
-      const o = this.BulletInfo.TimeScaleList.Pop();
+      var o = this.BulletInfo.TimeScaleList.Pop();
       this.BulletInfo.TimeScaleMap.delete(o.Id);
     }
     this.BulletInfo.TimeScaleList.Empty
@@ -94,4 +94,4 @@ class BulletActionTimeScale extends BulletActionBase_1.BulletActionBase {
   }
 }
 exports.BulletActionTimeScale = BulletActionTimeScale;
-// # sourceMappingURL=BulletActionTimeScale.js.map
+//# sourceMappingURL=BulletActionTimeScale.js.map

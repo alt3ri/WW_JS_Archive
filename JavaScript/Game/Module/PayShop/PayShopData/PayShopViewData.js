@@ -11,4 +11,4 @@ class PayShopViewData extends UiViewData_1.UiViewData {
   }
 }
 exports.PayShopViewData = PayShopViewData;
-// # sourceMappingURL=PayShopViewData.js.map
+//# sourceMappingURL=PayShopViewData.js.map

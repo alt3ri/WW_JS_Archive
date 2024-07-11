@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TutorialPageItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class TutorialPageItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(), (this.jPt = void 0), (this.jPt = e);
@@ -18,4 +18,4 @@ class TutorialPageItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.TutorialPageItem = TutorialPageItem;
-// # sourceMappingURL=TutorialPageItem.js.map
+//# sourceMappingURL=TutorialPageItem.js.map

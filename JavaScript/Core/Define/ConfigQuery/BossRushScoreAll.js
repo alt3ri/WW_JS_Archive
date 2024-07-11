@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configBossRushScoreAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const BossRushScore_1 = require("../Config/BossRushScore");
-const DB = "db_activity.db";
-const FILE = "b.bossrush活动.xlsx";
-const TABLE = "BossRushScore";
-const COMMAND = "select BinData from `BossRushScore`";
-const KEY_PREFIX = "BossRushScoreAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  BossRushScore_1 = require("../Config/BossRushScore"),
+  DB = "db_activity.db",
+  FILE = "b.bossrush活动.xlsx",
+  TABLE = "BossRushScore",
+  COMMAND = "select BinData from `BossRushScore`",
+  KEY_PREFIX = "BossRushScoreAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configBossRushScoreAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configBossRushScoreAll = {
     );
   },
   GetConfigList: (o = !0) => {
-    let e;
+    var e;
     if (
       (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configBossRushScoreAll = {
       }
       const r = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let i = void 0;
+        var i = void 0;
         if (
           (([e, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configBossRushScoreAll = {
     }
   },
 };
-// # sourceMappingURL=BossRushScoreAll.js.map
+//# sourceMappingURL=BossRushScoreAll.js.map

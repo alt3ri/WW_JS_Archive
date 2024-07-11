@@ -13,11 +13,8 @@ class StackValue {
     this.value = value;
     this.offset = offset;
   }
-
   elementWidth(size, index) {
-    if ((0, value_type_util_js_1.isInline)(this.type)) {
-      return this.width;
-    }
+    if ((0, value_type_util_js_1.isInline)(this.type)) return this.width;
     for (let i = 0; i < 4; i++) {
       const width = 1 << i;
       const offsetLoc =
@@ -32,7 +29,6 @@ class StackValue {
     }
     throw `Element is unknown. Size: ${size} at index: ${index}. This might be a bug. Please create an issue https://github.com/google/flatbuffers/issues/new`;
   }
-
   writeToBuffer(byteWidth) {
     const newOffset = this.builder.computeOffset(byteWidth);
     if (this.type === value_type_js_1.ValueType.FLOAT) {
@@ -56,20 +52,17 @@ class StackValue {
     }
     this.offset = newOffset;
   }
-
   storedWidth(width = bit_width_js_1.BitWidth.WIDTH8) {
     return (0, value_type_util_js_1.isInline)(this.type)
       ? Math.max(width, this.width)
       : this.width;
   }
-
   storedPackedType(width = bit_width_js_1.BitWidth.WIDTH8) {
     return (0, value_type_util_js_1.packedType)(
       this.type,
       this.storedWidth(width),
     );
   }
-
   isOffset() {
     return !(0, value_type_util_js_1.isInline)(this.type);
   }

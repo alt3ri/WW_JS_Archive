@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const FNameUtil_1 = require("../../Core/Utils/FNameUtil");
-const Quat_1 = require("../../Core/Utils/Math/Quat");
-const Rotator_1 = require("../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const Global_1 = require("../Global");
-const ModelManager_1 = require("../Manager/ModelManager");
-const CameraController_1 = require("./CameraController");
-const CameraUtility_1 = require("./CameraUtility");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  FNameUtil_1 = require("../../Core/Utils/FNameUtil"),
+  Quat_1 = require("../../Core/Utils/Math/Quat"),
+  Rotator_1 = require("../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  Global_1 = require("../Global"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  CameraController_1 = require("./CameraController"),
+  CameraUtility_1 = require("./CameraUtility");
 class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static get TmpVector() {
     return (
@@ -188,21 +188,20 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     ModelManager_1.ModelManager.CameraModel.SetAimAssistMode(a);
   }
   static IsRoleOnCameraRight() {
-    const a =
-      Global_1.Global.BaseCharacter.GetEntityNoBlueprint().GetComponent(1);
-    const e =
-      ModelManager_1.ModelManager.CameraModel.FightCamera.LogicComponent;
+    var a =
+        Global_1.Global.BaseCharacter.GetEntityNoBlueprint().GetComponent(1),
+      e = ModelManager_1.ModelManager.CameraModel.FightCamera.LogicComponent;
     return (
       e.CameraRotation.Quaternion(CameraBlueprintFunctionLibrary.TmpQuat),
       CameraBlueprintFunctionLibrary.TmpQuat.RotateVector(
         Vector_1.Vector.RightVectorProxy,
         CameraBlueprintFunctionLibrary.TmpVector,
       ),
-      a.ActorLocationProxy.DotProduct(
-        CameraBlueprintFunctionLibrary.TmpVector,
-      ) -
-        e.CameraLocation.DotProduct(CameraBlueprintFunctionLibrary.TmpVector) >
-        0
+      0 <
+        a.ActorLocationProxy.DotProduct(
+          CameraBlueprintFunctionLibrary.TmpVector,
+        ) -
+          e.CameraLocation.DotProduct(CameraBlueprintFunctionLibrary.TmpVector)
     );
   }
   static SetCameraDebugToolEnabled(a) {
@@ -259,8 +258,8 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static GetDebugDesiredCameraProps() {
     const r =
-      ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent;
-    const t = UE.NewMap(UE.BuiltinString, UE.BuiltinString);
+        ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent,
+      t = UE.NewMap(UE.BuiltinString, UE.BuiltinString);
     return (
       r &&
         r.DebugDesiredCameraProps.forEach((a, e) => {
@@ -270,7 +269,7 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     );
   }
   static GetDebugCameraPropsRaw() {
-    const a =
+    var a =
       ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent;
     const r = new Map();
     return (
@@ -292,21 +291,21 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       [1, "战斗镜头"],
       [3, "锁定目标镜头"],
     ]);
-    const a =
+    var a =
       ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent
         ?.CameraConfigController;
     const i = UE.NewArray(UE.SCameraDebugTool_SubCameraModification);
     return (
       a &&
         a?.DebugSubCameraModifications?.forEach((a, e) => {
-          const t = new UE.SCameraDebugTool_SubCameraModification();
-          const o =
-            ((t.CameraType = r.get(e.Type) ?? "(Unknown Type)"),
-            (t.CameraPriority = e.Priority),
-            (t.CameraTag = e?.Tag?.TagName ?? ""),
-            UE.NewArray(UE.SCameraDebugTool_CameraProperty));
+          const t = new UE.SCameraDebugTool_SubCameraModification(),
+            o =
+              ((t.CameraType = r.get(e.Type) ?? "(Unknown Type)"),
+              (t.CameraPriority = e.Priority),
+              (t.CameraTag = e?.Tag?.TagName ?? ""),
+              UE.NewArray(UE.SCameraDebugTool_CameraProperty));
           a.forEach((a, e) => {
-            const r = new UE.SCameraDebugTool_CameraProperty();
+            var r = new UE.SCameraDebugTool_CameraProperty();
             (r.PropertyName = e ?? "(Invalid Property)"),
               (r.Value = a.Value ?? 0),
               (r.IsEffect = a.IsEffect ?? !1),
@@ -319,14 +318,14 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     );
   }
   static GetControllerModifications() {
-    const a =
+    var a =
       ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent;
     const t = UE.NewArray(UE.SCameraDebugTool_ControllerModification);
     return (
       a &&
         a?.DebugControllerModifications?.forEach((a, r) => {
           a.forEach((a) => {
-            const e = new UE.SCameraDebugTool_ControllerModification();
+            var e = new UE.SCameraDebugTool_ControllerModification();
             (e.ControllerName = r),
               (e.PropertyName = a.PropertyName),
               (e.OldValue = a.OldValue),
@@ -338,22 +337,22 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     );
   }
   static GetCamereModeInfo() {
-    const a = new UE.SCameraDebugTool_CameraModeInfo();
-    const e = ModelManager_1.ModelManager?.CameraModel?.CameraMode;
-    const r =
-      ((a.CurrentCameraMode = e || 0),
-      ModelManager_1.ModelManager?.CameraModel);
-    const t = UE.NewArray(UE.BuiltinBool);
+    var a = new UE.SCameraDebugTool_CameraModeInfo(),
+      e = ModelManager_1.ModelManager?.CameraModel?.CameraMode,
+      r =
+        ((a.CurrentCameraMode = e || 0),
+        ModelManager_1.ModelManager?.CameraModel),
+      t = UE.NewArray(UE.BuiltinBool);
     if (r) for (let a = 0; a < 5; ++a) t.Add(r.IsModeEnabled(a));
     return (a.CameraModeEnabledArray = t), a;
   }
   static PlaySettlementCamera() {
-    const a =
+    var a =
       ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent;
     a && a.PlaySettlementCamera();
   }
   static GetIsCameraTargetInScreen() {
-    const a =
+    var a =
       ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent;
     return (
       !!a?.IsTargetLocationValid &&
@@ -367,20 +366,20 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     );
   }
   static EnterSpecialGameplayCamera(a) {
-    const e =
+    var e =
       ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent;
     if (e) return e.EnterSpecialGameplayCamera(a);
   }
   static ExitSpecialGameplayCamera() {
-    const a =
+    var a =
       ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent;
     a && a.ExitSpecialGameplayCamera();
   }
   static ExitSpecialGameplayCamera2() {
-    const a =
+    var a =
       ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent;
     a && a.ExitSpecialGameplayCamera();
   }
 }
 exports.default = CameraBlueprintFunctionLibrary;
-// # sourceMappingURL=CameraBlueprintFunctionLibrary.js.map
+//# sourceMappingURL=CameraBlueprintFunctionLibrary.js.map

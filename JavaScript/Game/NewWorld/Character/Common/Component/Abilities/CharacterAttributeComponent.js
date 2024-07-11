@@ -1,36 +1,40 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, r, i) {
-    let o;
-    const s = arguments.length;
-    let a =
-      s < 3 ? e : i === null ? (i = Object.getOwnPropertyDescriptor(e, r)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      s = arguments.length,
+      a =
+        s < 3
+          ? e
+          : null === i
+            ? (i = Object.getOwnPropertyDescriptor(e, r))
+            : i;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       a = Reflect.decorate(t, e, r, i);
     else
-      for (let n = t.length - 1; n >= 0; n--)
-        (o = t[n]) && (a = (s < 3 ? o(a) : s > 3 ? o(e, r, a) : o(e, r)) || a);
-    return s > 3 && a && Object.defineProperty(e, r, a), a;
+      for (var n = t.length - 1; 0 <= n; n--)
+        (o = t[n]) && (a = (s < 3 ? o(a) : 3 < s ? o(e, r, a) : o(e, r)) || a);
+    return 3 < s && a && Object.defineProperty(e, r, a), a;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterAttributeComponent = void 0);
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const FormationAttributeController_1 = require("../../../../../Module/Abilities/FormationAttributeController");
-const CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage");
-const BaseAttributeComponent_1 = require("./BaseAttributeComponent");
-const CharacterAttributeTypes_1 = require("./CharacterAttributeTypes");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const energyAttrIds = [
-  CharacterAttributeTypes_1.EAttributeId.Proto_Energy,
-  CharacterAttributeTypes_1.EAttributeId.Proto_SpecialEnergy1,
-  CharacterAttributeTypes_1.EAttributeId.Proto_SpecialEnergy2,
-  CharacterAttributeTypes_1.EAttributeId.Proto_SpecialEnergy3,
-  CharacterAttributeTypes_1.EAttributeId.Proto_SpecialEnergy4,
-];
+const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  FormationAttributeController_1 = require("../../../../../Module/Abilities/FormationAttributeController"),
+  CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage"),
+  BaseAttributeComponent_1 = require("./BaseAttributeComponent"),
+  CharacterAttributeTypes_1 = require("./CharacterAttributeTypes"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  energyAttrIds = [
+    CharacterAttributeTypes_1.EAttributeId.Proto_Energy,
+    CharacterAttributeTypes_1.EAttributeId.Proto_SpecialEnergy1,
+    CharacterAttributeTypes_1.EAttributeId.Proto_SpecialEnergy2,
+    CharacterAttributeTypes_1.EAttributeId.Proto_SpecialEnergy3,
+    CharacterAttributeTypes_1.EAttributeId.Proto_SpecialEnergy4,
+  ];
 let CharacterAttributeComponent = class CharacterAttributeComponent extends BaseAttributeComponent_1.BaseAttributeComponent {
   constructor() {
     super(...arguments),
@@ -71,7 +75,7 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
       });
   }
   OnInitData() {
-    const t = this.Entity.GetComponent(0).ComponentDataMap.get("qvs");
+    var t = this.Entity.GetComponent(0).ComponentDataMap.get("qvs");
     return (
       t && this.InitAttributesFromPbData(t.qvs?.Gps ?? void 0),
       this.AddListener(
@@ -85,8 +89,7 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
     );
   }
   OnActivate() {
-    const t =
-      this.Entity.GetComponent(0)?.ComponentDataMap.get("qvs")?.qvs?.Gps;
+    var t = this.Entity.GetComponent(0)?.ComponentDataMap.get("qvs")?.qvs?.Gps;
     if (t)
       for (const e of t)
         void 0 !== e.Ugs &&
@@ -109,9 +112,9 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
           e.Ugs && this.InitValueFromServer(e.Ugs, e.Pgs, e.NFn);
   }
   static AttributeChangedNotify(t, e) {
-    var r = MathUtils_1.MathUtils.LongToNumber(e.Ekn);
-    var r = ModelManager_1.ModelManager.CreatureModel.GetEntity(r);
-    const i = r?.Entity?.GetComponent(156);
+    var r = MathUtils_1.MathUtils.LongToNumber(e.Ekn),
+      r = ModelManager_1.ModelManager.CreatureModel.GetEntity(r),
+      i = r?.Entity?.GetComponent(156);
     if (r && i) {
       for (const o of e.dfs)
         CharacterAttributeTypes_1.stateAttributeIds.has(o.Ugs) &&
@@ -125,13 +128,13 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
     }
   }
   static RecoverPropChangedNotify(t, e) {
-    const r = MathUtils_1.MathUtils.LongToNumber(e.Ekn);
-    const i =
-      ModelManager_1.ModelManager.CreatureModel.GetEntity(
-        r,
-      )?.Entity?.GetComponent(156);
+    var r = MathUtils_1.MathUtils.LongToNumber(e.Ekn),
+      i =
+        ModelManager_1.ModelManager.CreatureModel.GetEntity(
+          r,
+        )?.Entity?.GetComponent(156);
     if (i) {
-      const o =
+      var o =
         FormationAttributeController_1.FormationAttributeController.GetPredictedServerStopTime() -
         Number(MathUtils_1.MathUtils.LongToBigInt(e.GFn));
       for (const s of e.dfs)
@@ -146,8 +149,8 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
     );
   }
   OnStart() {
-    var t = this.zht?.ComponentDataMap.get("qvs")?.qvs;
-    var t = (t && this.uqr(t.Gps), this.Entity.CheckGetComponent(3));
+    var t = this.zht?.ComponentDataMap.get("qvs")?.qvs,
+      t = (t && this.uqr(t.Gps), this.Entity.CheckGetComponent(3));
     this.aqr = t?.Actor.AbilitySystemComponent;
     for (const e of CharacterAttributeTypes_1.stateAttributeIds.values())
       this.aqr?.InternalApplyModToAttribute(e, 3, this.GetCurrentValue(e));
@@ -156,11 +159,11 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
     return !0;
   }
   uqr(t) {
-    const e = new Map();
+    var e = new Map();
     for (const o of t) {
-      const r = o.Ugs;
-      const i = o.NFn - o.Pgs;
-      i != 0 && e.set(r, i);
+      var r = o.Ugs,
+        i = o.NFn - o.Pgs;
+      0 != i && e.set(r, i);
     }
     this.elt?.UpdateSysGrowBuff(e);
   }
@@ -197,4 +200,4 @@ __decorate(
     CharacterAttributeComponent,
   )),
   (exports.CharacterAttributeComponent = CharacterAttributeComponent);
-// # sourceMappingURL=CharacterAttributeComponent.js.map
+//# sourceMappingURL=CharacterAttributeComponent.js.map

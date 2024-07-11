@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChatRoom = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ChatContentData_1 = require("./ChatContentData");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ChatContentData_1 = require("./ChatContentData");
 class ChatRoom {
   constructor(t, e) {
     (this.ChatRoomType = 0),
@@ -81,7 +81,7 @@ class ChatRoom {
     this.VMt = -1;
   }
   GetLastTimeStamp() {
-    const t = this.ChatContentList.length - 1;
+    var t = this.ChatContentList.length - 1;
     return t < 0 ? 0 : this.ChatContentList[t].TimeStamp;
   }
   AddChatContent(t, e, i, s, r, h, o, n, a, C) {
@@ -106,34 +106,34 @@ class ChatRoom {
   }
   AddHistoryChatContent(t) {
     t.sort((t, e) => {
-      const i = t.UtcTime;
-      const s = e.UtcTime;
+      var i = t.UtcTime,
+        s = e.UtcTime;
       return i && s
-        ? typeof i === "number" && typeof s === "number"
+        ? "number" == typeof i && "number" == typeof s
           ? i - s
           : Number(MathUtils_1.MathUtils.LongToBigInt(i)) -
             Number(MathUtils_1.MathUtils.LongToBigInt(s))
         : t.SenderUid - e.SenderUid;
     }),
       (this.EarliestHistoryContentUniqueId = t[0].MsgId);
-    const i = [];
+    var i = [];
     let s = void 0;
     for (const u of t) {
-      const r = u.SenderUid;
-      const h = u.Content;
-      const o = u.ChatContentType;
-      const n = u.OfflineMsg;
-      const a = u.MsgId;
-      let C = u.UtcTime;
-      let t = 0;
-      let e =
-        ((t =
-          typeof C === "number"
-            ? C
-            : C
-              ? Number(MathUtils_1.MathUtils.LongToBigInt(u.UtcTime))
-              : TimeUtil_1.TimeUtil.GetServerTime()),
-        0);
+      var r = u.SenderUid,
+        h = u.Content,
+        o = u.ChatContentType,
+        n = u.OfflineMsg,
+        a = u.MsgId,
+        C = u.UtcTime;
+      let t = 0,
+        e =
+          ((t =
+            "number" == typeof C
+              ? C
+              : C
+                ? Number(MathUtils_1.MathUtils.LongToBigInt(u.UtcTime))
+                : TimeUtil_1.TimeUtil.GetServerTime()),
+          0);
       s && (e = s.TimeStamp);
       C = new ChatContentData_1.ChatContentData(
         a,
@@ -154,4 +154,4 @@ class ChatRoom {
   }
 }
 exports.ChatRoom = ChatRoom;
-// # sourceMappingURL=ChatRoom.js.map
+//# sourceMappingURL=ChatRoom.js.map

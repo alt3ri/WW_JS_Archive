@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configEffectSpecDataByPath = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const EffectSpecData_1 = require("../Config/EffectSpecData");
-const DB = "db_effectspec.db";
-const FILE = "UniverseEditor/EffectSpec.csv";
-const TABLE = "EffectSpecData";
-const COMMAND = "select BinData from `EffectSpecData` where Path=?";
-const KEY_PREFIX = "EffectSpecDataByPath";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  EffectSpecData_1 = require("../Config/EffectSpecData"),
+  DB = "db_effectspec.db",
+  FILE = "UniverseEditor/EffectSpec.csv",
+  TABLE = "EffectSpecData",
+  COMMAND = "select BinData from `EffectSpecData` where Path=?",
+  KEY_PREFIX = "EffectSpecDataByPath",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configEffectSpecDataByPath.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configEffectSpecDataByPath.GetConfig(";
 exports.configEffectSpecDataByPath = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configEffectSpecDataByPath = {
       if (
         (n =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, e, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Path",
-            e,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Path",
+              e,
+            ]))
       ) {
-        var n;
-        var t = void 0;
+        var n,
+          t = void 0;
         if (
           (([n, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configEffectSpecDataByPath = {
     }
   },
 };
-// # sourceMappingURL=EffectSpecDataByPath.js.map
+//# sourceMappingURL=EffectSpecDataByPath.js.map

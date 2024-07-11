@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CookLevelView = exports.StarItem = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../RedDot/RedDotController");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LoopScrollSmallItemGrid_1 = require("../../Common/SmallItemGrid/LoopScrollSmallItemGrid");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const CookController_1 = require("../CookController");
-const CookDefine_1 = require("../CookDefine");
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../RedDot/RedDotController"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LoopScrollSmallItemGrid_1 = require("../../Common/SmallItemGrid/LoopScrollSmallItemGrid"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  CookController_1 = require("../CookController"),
+  CookDefine_1 = require("../CookDefine");
 class StarItem extends UiPanelBase_1.UiPanelBase {
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [[0, UE.UISprite]]), (this.BtnBindInfo = []);
@@ -32,7 +32,7 @@ class LevelRewardItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid 
       Data: e,
       Type: 4,
       ItemConfigId: e.RewardId,
-      BottomText: e.Count > 0 ? "" + e.Count : "",
+      BottomText: 0 < e.Count ? "" + e.Count : "",
       IsReceivedVisible: e.IsGet,
     };
     this.Apply(e);
@@ -41,7 +41,7 @@ class LevelRewardItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid 
     return !1;
   }
   OnExtendToggleClicked() {
-    const e = this.Data;
+    var e = this.Data;
     ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
       e.RewardId,
     );
@@ -55,7 +55,7 @@ class CookLevelView extends UiViewBase_1.UiViewBase {
       (this.lGe = void 0),
       (this.$be = void 0),
       (this.Gqt = (e, t, i) => {
-        const r = new StarItem();
+        var r = new StarItem();
         return (
           r.CreateThenShowByActor(t.GetOwner()),
           r.SetState(e),
@@ -66,7 +66,7 @@ class CookLevelView extends UiViewBase_1.UiViewBase {
         return new LevelRewardItem();
       }),
       (this.Oqt = () => {
-        this.qqt.length !== 0 && this.Cl();
+        0 !== this.qqt.length && this.Cl();
       }),
       (this.bl = () => {
         this.kqt(),
@@ -175,30 +175,30 @@ class CookLevelView extends UiViewBase_1.UiViewBase {
       this.bl();
   }
   kqt() {
-    const e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+    var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
       CookDefine_1.COOK_TYPE_TEXTURE_KEY,
     );
     this.SetTextureByPath(e, this.GetTexture(9));
   }
   C4e() {
     var e = ModelManager_1.ModelManager.CookModel.GetCookLevelByLevel(
-      ModelManager_1.ModelManager.CookModel.SelectedCookerLevel,
-    );
-    var e = ConfigManager_1.ConfigManager.CookConfig.GetLocalText(e.Name);
+        ModelManager_1.ModelManager.CookModel.SelectedCookerLevel,
+      ),
+      e = ConfigManager_1.ConfigManager.CookConfig.GetLocalText(e.Name);
     this.GetText(0).SetText(e);
   }
   nOe() {
     var e = ModelManager_1.ModelManager.CookModel.GetCookLevelByLevel(
-      ModelManager_1.ModelManager.CookModel.SelectedCookerLevel,
-    );
-    var e = ConfigManager_1.ConfigManager.CookConfig.GetLocalText(
-      e.AttributesDescription,
-    );
+        ModelManager_1.ModelManager.CookModel.SelectedCookerLevel,
+      ),
+      e = ConfigManager_1.ConfigManager.CookConfig.GetLocalText(
+        e.AttributesDescription,
+      );
     this.GetText(1).SetText(e);
   }
   sct() {
-    const e = ModelManager_1.ModelManager.CookModel.GetCookerMaxLevel();
-    const t = new Array(e);
+    var e = ModelManager_1.ModelManager.CookModel.GetCookerMaxLevel(),
+      t = new Array(e);
     for (
       let e = 0;
       e < ModelManager_1.ModelManager.CookModel.SelectedCookerLevel;
@@ -208,7 +208,7 @@ class CookLevelView extends UiViewBase_1.UiViewBase {
     this.$be.RebuildLayoutByDataNew(t);
   }
   Fqt() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.CookModel.GetCookerInfo().TotalProficiencys;
     let t = "";
     (t =
@@ -224,12 +224,11 @@ class CookLevelView extends UiViewBase_1.UiViewBase {
   }
   Vqt() {
     var e =
-      ModelManager_1.ModelManager.CookModel.GetCookerInfo().TotalProficiencys;
-    const t = ModelManager_1.ModelManager.CookModel.GetSumExpByLevel(
-      ModelManager_1.ModelManager.CookModel.SelectedCookerLevel,
-    );
-    var e =
-      (e = MathUtils_1.MathUtils.GetFloatPointFloor(e / t, 3)) > 1 ? 1 : e;
+        ModelManager_1.ModelManager.CookModel.GetCookerInfo().TotalProficiencys,
+      t = ModelManager_1.ModelManager.CookModel.GetSumExpByLevel(
+        ModelManager_1.ModelManager.CookModel.SelectedCookerLevel,
+      ),
+      e = 1 < (e = MathUtils_1.MathUtils.GetFloatPointFloor(e / t, 3)) ? 1 : e;
     this.GetSprite(3).SetFillAmount(e);
   }
   rFe() {
@@ -237,18 +236,19 @@ class CookLevelView extends UiViewBase_1.UiViewBase {
   }
   Hqt() {
     this.qqt.length = 0;
-    let e = ModelManager_1.ModelManager.CookModel.GetDropIdByLevel(
+    var e = ModelManager_1.ModelManager.CookModel.GetDropIdByLevel(
       ModelManager_1.ModelManager.CookModel.SelectedCookerLevel,
     );
-    if (e === -1) this.GetItem(8).SetUIActive(!1);
+    if (-1 === e) this.GetItem(8).SetUIActive(!1);
     else {
       this.GetItem(8).SetUIActive(!0);
       e = ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(e);
       if (e)
         for (const r of e.DropPreview) {
-          const t = ModelManager_1.ModelManager.CookModel.SelectedCookerLevel;
-          const i =
-            ModelManager_1.ModelManager.CookModel.GetCookerInfo().CookingLevel;
+          var t = ModelManager_1.ModelManager.CookModel.SelectedCookerLevel,
+            i =
+              ModelManager_1.ModelManager.CookModel.GetCookerInfo()
+                .CookingLevel;
           this.qqt.push({ RewardId: r[0], Count: r[1], IsGet: t < i });
         }
       this.bqt.RefreshByData(this.qqt);
@@ -259,7 +259,7 @@ class CookLevelView extends UiViewBase_1.UiViewBase {
       .GetOwner()
       .GetComponentByClass(UE.UIItem.StaticClass())
       .SetUIActive(
-        ModelManager_1.ModelManager.CookModel.SelectedCookerLevel !== 1,
+        1 !== ModelManager_1.ModelManager.CookModel.SelectedCookerLevel,
       ),
       this.GetButton(6)
         .GetOwner()
@@ -308,11 +308,10 @@ class ConfirmItem extends UiPanelBase_1.UiPanelBase {
     this.SetActive(e);
   }
   SetEnable() {
-    let e = ModelManager_1.ModelManager.CookModel.GetCookerMaxLevel();
-    const t =
-      ModelManager_1.ModelManager.CookModel.GetCookerInfo().CookingLevel;
-    let i = ModelManager_1.ModelManager.CookModel.SelectedCookerLevel;
-    const r = this.GetButton(0).GetOwner();
+    var e = ModelManager_1.ModelManager.CookModel.GetCookerMaxLevel(),
+      t = ModelManager_1.ModelManager.CookModel.GetCookerInfo().CookingLevel,
+      i = ModelManager_1.ModelManager.CookModel.SelectedCookerLevel,
+      r = this.GetButton(0).GetOwner();
     e <= t || e <= i || i < t
       ? r.GetUIItem().SetUIActive(!1)
       : (r.GetUIItem().SetUIActive(!0),
@@ -332,4 +331,4 @@ class ConfirmItem extends UiPanelBase_1.UiPanelBase {
     this.Xqt = e;
   }
 }
-// # sourceMappingURL=CookLevelView.js.map
+//# sourceMappingURL=CookLevelView.js.map

@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MonthCardModel = void 0);
-const Time_1 = require("../../../../Core/Common/Time");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const ModelBase_1 = require("../../../../Core/Framework/ModelBase");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const LocalStorage_1 = require("../../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const PayShopDefine_1 = require("../PayShopDefine");
+const Time_1 = require("../../../../Core/Common/Time"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  PayShopDefine_1 = require("../PayShopDefine");
 class MonthCardModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -26,7 +26,7 @@ class MonthCardModel extends ModelBase_1.ModelBase {
       (this.RedDotRefreshType = 1);
   }
   OnInit() {
-    const e = ConfigManager_1.ConfigManager.MonthCardConfig.GetConfig(
+    var e = ConfigManager_1.ConfigManager.MonthCardConfig.GetConfig(
       PayShopDefine_1.MONTH_CARD_CONFIG_ID,
     );
     return (
@@ -60,9 +60,9 @@ class MonthCardModel extends ModelBase_1.ModelBase {
     this.$ki = e;
   }
   GetRemainDayText(e) {
-    const t = ModelManager_1.ModelManager.MonthCardModel.GetRemainDays();
+    var t = ModelManager_1.ModelManager.MonthCardModel.GetRemainDays();
     if (t < 0) return "";
-    if (t === 0) {
+    if (0 === t) {
       const o = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
         "MonthCardLeftTimeText_2",
       );
@@ -81,25 +81,25 @@ class MonthCardModel extends ModelBase_1.ModelBase {
       : StringUtils_1.StringUtils.Format(o, t.toString());
   }
   IsRemainDayInMaxLimit() {
-    const e =
+    var e =
       CommonParamById_1.configCommonParamById.GetIntConfig("MonthCardMaxDays");
     return this.GetRemainDays() <= e;
   }
   GetPayButtonRedDotState() {
-    let e;
+    var e;
     return (
       !this.NextShowPayButtonRedDotTime ||
       ((e = Time_1.Time.ServerTimeStamp), this.NextShowPayButtonRedDotTime < e)
     );
   }
   RefreshNextShowPayButtonRedDotTime() {
-    let e;
-    this.RedDotRefreshType === 1
+    var e;
+    1 === this.RedDotRefreshType
       ? ((e = new Date(Time_1.Time.ServerTimeStamp)).setMonth(e.getMonth() + 1),
         e.setDate(1),
         e.setHours(4, 0, 0, 0),
         (this.NextShowPayButtonRedDotTime = e.getTime()))
-      : this.RedDotRefreshType === 2 &&
+      : 2 === this.RedDotRefreshType &&
         ((e = new Date(Time_1.Time.ServerTimeStamp)).setHours(4, 0, 0, 0),
         (e =
           e.getTime() +
@@ -122,4 +122,4 @@ class MonthCardModel extends ModelBase_1.ModelBase {
   }
 }
 exports.MonthCardModel = MonthCardModel;
-// # sourceMappingURL=MonthCardModel.js.map
+//# sourceMappingURL=MonthCardModel.js.map

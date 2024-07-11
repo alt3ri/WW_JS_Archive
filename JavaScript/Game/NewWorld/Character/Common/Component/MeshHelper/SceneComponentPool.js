@@ -16,15 +16,15 @@ class SceneComponentPool {
   GetComponents(t, i = !0, e = !1) {
     t = t > this.MaxPoolSize ? this.MaxPoolSize : t;
     let h = i ? 0 : t;
-    const o = new Array();
+    var o = new Array();
     if (i) {
       let s = t;
       i = this.sYo.length;
       if (i < t) (s = i), (h = t - i);
       else {
-        const r = i - t;
+        var r = i - t;
         for (let t = 0; t < r; ++t) {
-          const n = this.sYo.pop();
+          var n = this.sYo.pop();
           this.BasePoolPush(n);
         }
       }
@@ -32,16 +32,16 @@ class SceneComponentPool {
         this.PoolPushInternal(this.sYo[t], o, !1),
           e && this.CleanComponent(this.sYo[t]);
     }
-    if (h > 0) {
+    if (0 < h) {
       let s = 0;
       i = this.nYo.length;
       h > i && ((s = h - i), (h = i));
       for (let t = 0; t < h; ++t) {
-        const l = this.nYo.pop();
+        var l = this.nYo.pop();
         this.PoolPushInternal(l, o, !1), this.UsedPoolPush(l);
       }
       for (let t = 0; t < s; ++t) {
-        const a = this.CreateComponent();
+        var a = this.CreateComponent();
         this.PoolPushInternal(a, o, !1), this.UsedPoolPush(a);
       }
     }
@@ -59,14 +59,14 @@ class SceneComponentPool {
     return s;
   }
   Init(t, s, i, e, h = !1, o = !1) {
-    if (s && i && t > 0) {
+    if (s && i && 0 < t) {
       (this.ActorInternal = i),
         (this.MaxPoolSize = t),
         (this.AttachComponentInternal = s);
-      var i = e.length;
-      const r = t < i ? t : i;
+      var i = e.length,
+        r = t < i ? t : i;
       for (let t = 0; t < r; ++t) {
-        const n = e[t];
+        var n = e[t];
         if (
           (MeshComponentUtils_1.MeshComponentUtils.RelativeAttachComponentOnSafe(
             n,
@@ -106,4 +106,4 @@ class SceneComponentPool {
   }
 }
 exports.SceneComponentPool = SceneComponentPool;
-// # sourceMappingURL=SceneComponentPool.js.map
+//# sourceMappingURL=SceneComponentPool.js.map

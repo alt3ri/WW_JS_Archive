@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifySendGamePlayEvent extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.事件Tag = void 0);
@@ -20,4 +20,4 @@ class TsAnimNotifySendGamePlayEvent extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifySendGamePlayEvent;
-// # sourceMappingURL=TsAnimNotifySendGamePlayEvent.js.map
+//# sourceMappingURL=TsAnimNotifySendGamePlayEvent.js.map

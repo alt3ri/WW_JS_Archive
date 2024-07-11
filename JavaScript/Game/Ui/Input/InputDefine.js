@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.openViewActionsMap =
       void 0);
 const InputMappingsDefine_1 = require("../InputDistribute/InputMappingsDefine");
-let EMouseCursorVisibleType;
+var EMouseCursorVisibleType;
 (exports.openViewActionsMap = new Map([
   [InputMappingsDefine_1.actionMappings.邮件, "MailBoxView"],
   [InputMappingsDefine_1.actionMappings.地图, "WorldMapView"],
@@ -55,4 +55,4 @@ let EMouseCursorVisibleType;
       exports.EMouseCursorVisibleType ||
       (exports.EMouseCursorVisibleType = {})),
   );
-// # sourceMappingURL=InputDefine.js.map
+//# sourceMappingURL=InputDefine.js.map

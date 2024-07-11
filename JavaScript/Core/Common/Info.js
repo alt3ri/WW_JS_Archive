@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Info = void 0);
-const UE = require("ue");
-const Log_1 = require("./Log");
+const UE = require("ue"),
+  Log_1 = require("./Log");
 class Info {
   static get GameInstance() {
     return this.f8;
@@ -22,9 +22,10 @@ class Info {
       (this.M8 = !this.p8 && !this.v8),
       (this.S8 =
         this.E8 &&
-        UE.KuroRenderingRuntimeBPPluginBPLibrary.GetCVarFloat(
-          "r.Kuro.Movie.EnableCGMovieRendering",
-        ) > 0),
+        0 <
+          UE.KuroRenderingRuntimeBPPluginBPLibrary.GetCVarFloat(
+            "r.Kuro.Movie.EnableCGMovieRendering",
+          )),
       this.y8();
   }
   static InitializeIsInEditor(t) {
@@ -63,13 +64,13 @@ class Info {
       ]);
   }
   static IsPc() {
-    return this.I8 === 3 || this.I8 === 4 || this.I8 === 5;
+    return 3 === this.I8 || 4 === this.I8 || 5 === this.I8;
   }
   static IsMobile() {
-    return this.I8 === 1 || this.I8 === 2;
+    return 1 === this.I8 || 2 === this.I8;
   }
   static IsGamepad() {
-    return this.I8 === 6 || this.I8 === 7;
+    return 6 === this.I8 || 7 === this.I8;
   }
   static get IsPlayInEditor() {
     return this.E8;
@@ -84,7 +85,7 @@ class Info {
     return this.M8;
   }
   static IsGameRunning() {
-    return this.Environment === 1;
+    return 1 === this.Environment;
   }
   static IsInCg() {
     return this.S8;
@@ -99,4 +100,4 @@ class Info {
   (Info.M8 = !1),
   (Info.S8 = !1),
   (Info.I8 = 0);
-// # sourceMappingURL=Info.js.map
+//# sourceMappingURL=Info.js.map

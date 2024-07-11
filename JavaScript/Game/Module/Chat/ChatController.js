@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChatController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const PrivateChatRoom_1 = require("./PrivateChatRoom");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  PrivateChatRoom_1 = require("./PrivateChatRoom");
 class ChatController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -138,7 +138,7 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
           "targetPlayerId",
           t,
         ]));
-    const o = new Protocol_1.Aki.Protocol.VQn();
+    var o = new Protocol_1.Aki.Protocol.VQn();
     (o.U3n = l),
       (o.H3n = e),
       (o.j3n = t),
@@ -148,13 +148,13 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
           o,
         ]);
     Net_1.Net.Call(9288, Protocol_1.Aki.Protocol.VQn.create(o), (e) => {
-      let t;
-      let o;
-      let r;
-      let a;
-      const n = ModelManager_1.ModelManager.ChatModel;
-      let _ = e.j3n;
-      let i = e.lkn;
+      var t,
+        o,
+        r,
+        a,
+        n = ModelManager_1.ModelManager.ChatModel,
+        _ = e.j3n,
+        i = e.lkn;
       i !== Protocol_1.Aki.Protocol.lkn.Sys
         ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             i,
@@ -196,7 +196,7 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
     });
   }
   static ChannelChatRequest(e, t, o) {
-    const r = new Protocol_1.Aki.Protocol.tXn();
+    var r = new Protocol_1.Aki.Protocol.tXn();
     (r.W3n = Protocol_1.Aki.Protocol.OGs.Proto_Team),
       (r.K3n = o),
       (r.U3n = e),
@@ -220,7 +220,7 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
     });
   }
   static PrivateChatHistoryRequest(a) {
-    const e = new Protocol_1.Aki.Protocol.jQn();
+    var e = new Protocol_1.Aki.Protocol.jQn();
     (e.j3n = a),
       (this.IsInRequestHistory = !0),
       Log_1.Log.CheckInfo() &&
@@ -231,7 +231,7 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
           ["request", e],
         );
     Net_1.Net.Call(21736, Protocol_1.Aki.Protocol.jQn.create(e), (e) => {
-      let t, o, r;
+      var t, o, r;
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Chat",
@@ -254,7 +254,7 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
     });
   }
   static ChatMutePlayerRequest(e, t) {
-    const o = new Protocol_1.Aki.Protocol.YQn();
+    var o = new Protocol_1.Aki.Protocol.YQn();
     (o.j3n = e),
       (o.Q3n = t),
       Log_1.Log.CheckInfo() &&
@@ -269,7 +269,7 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
   }
   static ChatReportPush(e) {}
   static PrivateChatOperateRequest(e, t) {
-    const o = new Protocol_1.Aki.Protocol.zQn();
+    var o = new Protocol_1.Aki.Protocol.zQn();
     (o.lFn = e),
       (o.$3n = t),
       Log_1.Log.CheckInfo() &&
@@ -288,7 +288,7 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
       UiManager_1.UiManager.OpenView("ChatView");
   }
   static TryActiveDeleteFriendTips(e) {
-    let t;
+    var t;
     UiManager_1.UiManager.IsViewShow("ChatView") &&
       (t = ModelManager_1.ModelManager.ChatModel.GetJoinedChatRoom()) &&
       t instanceof PrivateChatRoom_1.PrivateChatRoom &&
@@ -310,11 +310,11 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.ChatModel.SelectedPrivateChatFriend(e);
   }),
   (ChatController.UKe = (e) => {
-    e === "ChatView" &&
+    "ChatView" === e &&
       (ModelManager_1.ModelManager.ChatModel.IsOpenedChatView = !0);
   }),
   (ChatController.$Ge = (e) => {
-    e === "ChatView" &&
+    "ChatView" === e &&
       ModelManager_1.ModelManager.ChatModel.SaveChatSaveContent();
   }),
   (ChatController.sJe = () => {
@@ -324,31 +324,31 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
       );
   }),
   (ChatController.hJe = () => {
-    const e = ModelManager_1.ModelManager.ChatModel;
-    const t =
-      (e.SetWorldChatRoom(void 0),
-      e.SetTeamChatRowDataVisible(!1),
-      e.GetWorldChatRoom());
+    var e = ModelManager_1.ModelManager.ChatModel,
+      t =
+        (e.SetWorldChatRoom(void 0),
+        e.SetTeamChatRowDataVisible(!1),
+        e.GetWorldChatRoom());
     t && e.SetChatRoomRedDot(t, !1),
       UiManager_1.UiManager.IsViewShow("ChatView") &&
         UiManager_1.UiManager.CloseView("ChatView");
   }),
   (ChatController.oJe = () => {
-    const e = ModelManager_1.ModelManager.ChatModel;
+    var e = ModelManager_1.ModelManager.ChatModel;
     e.SetTeamChatRoom(e.NewTeamChatRoom());
   }),
   (ChatController.aJe = () => {
-    const e = ModelManager_1.ModelManager.ChatModel;
-    const t =
-      (e.SetTeamChatRoom(void 0),
-      e.SetTeamChatRowDataVisible(!1),
-      e.GetTeamChatRoom());
+    var e = ModelManager_1.ModelManager.ChatModel,
+      t =
+        (e.SetTeamChatRoom(void 0),
+        e.SetTeamChatRowDataVisible(!1),
+        e.GetTeamChatRoom());
     t && e.SetChatRoomRedDot(t, !1),
       UiManager_1.UiManager.IsViewShow("ChatView") &&
         UiManager_1.UiManager.CloseView("ChatView");
   }),
   (ChatController.CMt = (e) => {
-    const t = ModelManager_1.ModelManager.ChatModel;
+    var t = ModelManager_1.ModelManager.ChatModel;
     t.RemovePrivateChatRoom(e), t.RemoveChatSaveContent(e);
   }),
   (ChatController.vMt = (e) => {
@@ -357,16 +357,16 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
         "notify",
         e,
       ]);
-    const t = ModelManager_1.ModelManager.ChatModel;
-    var e = e.oEs;
-    const o = e.Y3n;
-    const r = t.TryGetPrivateChatRoom(o);
-    const a = e.X3n;
-    var n = Number(MathUtils_1.MathUtils.LongToBigInt(e.J3n));
-    var n = Number(n);
-    const _ = e.H3n;
-    const i = e.U3n;
-    let l = ModelManager_1.ModelManager.FriendModel?.GetFriendById(o);
+    var t = ModelManager_1.ModelManager.ChatModel,
+      e = e.oEs,
+      o = e.Y3n,
+      r = t.TryGetPrivateChatRoom(o),
+      a = e.X3n,
+      n = Number(MathUtils_1.MathUtils.LongToBigInt(e.J3n)),
+      n = Number(n),
+      _ = e.H3n,
+      i = e.U3n,
+      l = ModelManager_1.ModelManager.FriendModel?.GetFriendById(o);
     l && t.RefreshChatPlayerData(o, l.PlayerHeadPhoto, l.PlayerName),
       r.GetIsOpen()
         ? ((l = e.z3n),
@@ -400,16 +400,16 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
         "notify",
         e,
       ]);
-    let t;
-    let o;
-    let r;
-    let a;
-    let n;
-    let _;
-    let i;
-    const l = ModelManager_1.ModelManager.ChatModel;
-    let s = void 0;
-    let C = void 0;
+    var t,
+      o,
+      r,
+      a,
+      n,
+      _,
+      i,
+      l = ModelManager_1.ModelManager.ChatModel;
+    let s = void 0,
+      C = void 0;
     (C =
       e.K3n === Protocol_1.Aki.Protocol.kGs.Proto_MatchTeam
         ? ((s = l.GetTeamChatRoom()), "TeamMatch")
@@ -439,19 +439,19 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
         8,
         "PrivateChatHistoryNotify 服务端推送最近的私人聊天历史记录",
       );
-    const t = ModelManager_1.ModelManager.ChatModel;
+    var t = ModelManager_1.ModelManager.ChatModel;
     t.RemoveChatRowDataByChatRoomType(1);
     for (const C of e.hEs) {
-      const o = C.j3n;
-      const r = t.TryGetPrivateChatRoom(o);
-      const a = C.nEs;
+      var o = C.j3n,
+        r = t.TryGetPrivateChatRoom(o),
+        a = C.nEs;
       r.Reset(), t.AddPrivateHistoryChatContent(r, a);
       for (const h of a) {
-        const n = h.Y3n;
-        const _ = h.H3n;
-        const i = h.U3n;
-        const l = h.z3n;
-        const s = Number(MathUtils_1.MathUtils.LongToBigInt(h.J3n));
+        var n = h.Y3n,
+          _ = h.H3n,
+          i = h.U3n,
+          l = h.z3n,
+          s = Number(MathUtils_1.MathUtils.LongToBigInt(h.J3n));
         l && r && t.SetChatRoomRedDot(r, !0),
           t.AddChatRowData(n, _, i, l, 1, s, o, void 0, void 0, !1);
       }
@@ -483,9 +483,9 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
         8,
         "ChannelChatHistoryNotify 服务端推送最近的队伍聊天历史记录",
       );
-    const t = ModelManager_1.ModelManager.ChatModel;
-    let o = void 0;
-    let r = void 0;
+    var t = ModelManager_1.ModelManager.ChatModel;
+    let o = void 0,
+      r = void 0;
     if (
       (t.RemoveChatRowDataByChatRoomType(2, 3),
       (o =
@@ -496,13 +496,13 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
       e = e.gEs;
       t.AddTeamHistoryChatContent(o, e);
       for (const h of e) {
-        const a = h.uEs;
-        const n = h.H3n;
-        const _ = h.U3n;
-        const i = h.mEs;
-        const l = h.dEs;
-        const s = h.cEs;
-        const C = Number(MathUtils_1.MathUtils.LongToBigInt(h.CEs));
+        var a = h.uEs,
+          n = h.H3n,
+          _ = h.U3n,
+          i = h.mEs,
+          l = h.dEs,
+          s = h.cEs,
+          C = Number(MathUtils_1.MathUtils.LongToBigInt(h.CEs));
         t.RefreshChatPlayerData(a, s, l),
           i === Protocol_1.Aki.Protocol.FGs.Proto_None &&
             t.AddChatRowData(a, n, _, !0, r, C, 0, l, s);
@@ -530,7 +530,7 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
         "notify",
         e,
       ]);
-    const t = ModelManager_1.ModelManager.ChatModel;
+    var t = ModelManager_1.ModelManager.ChatModel;
     t.ClearAllMutePlayer();
     for (const o of e.aFn) t.AddMutePlayer(o);
   }),
@@ -541,16 +541,16 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
         e,
       ]);
     e = e.lEs;
-    if (e && e.length !== 0) {
-      const t = ModelManager_1.ModelManager.ChatModel;
+    if (e && 0 !== e.length) {
+      var t = ModelManager_1.ModelManager.ChatModel;
       for (const o of e) t.RemoveMutePlayer(o);
     }
   }),
   (ChatController.IMt = (e) => {
-    var t = MathUtils_1.MathUtils.LongToBigInt(e.lfs);
-    var t = TimeUtil_1.TimeUtil.GetCountDownData(
-      Number(t) - TimeUtil_1.TimeUtil.GetServerTime(),
-    );
+    var t = MathUtils_1.MathUtils.LongToBigInt(e.lfs),
+      t = TimeUtil_1.TimeUtil.GetCountDownData(
+        Number(t) - TimeUtil_1.TimeUtil.GetServerTime(),
+      );
     ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
       "BanChatText" + e._fs,
       t.CountDownText,
@@ -565,7 +565,7 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
       ]);
   }),
   (ChatController.fMt = () => {
-    const e = new Protocol_1.Aki.Protocol.QQn();
+    var e = new Protocol_1.Aki.Protocol.QQn();
     Net_1.Net.Call(26302, e, (e) => {
       e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
@@ -575,8 +575,8 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
     });
   }),
   (ChatController.pMt = (e) => {
-    const t = e.aFn;
-    const o = ModelManager_1.ModelManager.ChatModel.GetChatPlayerData(t);
+    var t = e.aFn,
+      o = ModelManager_1.ModelManager.ChatModel.GetChatPlayerData(t);
     if (o) {
       switch (e.TIs) {
         case Protocol_1.Aki.Protocol.rFs.Proto_Head:
@@ -591,4 +591,4 @@ class ChatController extends UiControllerBase_1.UiControllerBase {
       );
     }
   });
-// # sourceMappingURL=ChatController.js.map
+//# sourceMappingURL=ChatController.js.map

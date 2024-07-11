@@ -1,36 +1,40 @@
 "use strict";
-let SceneItemReboundComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, s) {
-    let o;
-    const h = arguments.length;
-    let r =
-      h < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(t, e, i, s);
-    else
-      for (let n = t.length - 1; n >= 0; n--)
-        (o = t[n]) && (r = (h < 3 ? o(r) : h > 3 ? o(e, i, r) : o(e, i)) || r);
-    return h > 3 && r && Object.defineProperty(e, i, r), r;
-  };
+var SceneItemReboundComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, s) {
+      var o,
+        h = arguments.length,
+        r =
+          h < 3
+            ? e
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        r = Reflect.decorate(t, e, i, s);
+      else
+        for (var n = t.length - 1; 0 <= n; n--)
+          (o = t[n]) &&
+            (r = (h < 3 ? o(r) : 3 < h ? o(e, i, r) : o(e, i)) || r);
+      return 3 < h && r && Object.defineProperty(e, i, r), r;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemReboundComponent = void 0);
-const UE = require("ue");
-const QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const Quat_1 = require("../../../Core/Utils/Math/Quat");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const PROFILE_BULLECT_TRACK =
-  "SceneItemReboundComponent_CalculateBulletTrackHit";
-const REFLECT_START_OFFSET = 30;
-const REFLECT_BULLET_EFFECT_CD = 2e3;
+const UE = require("ue"),
+  QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Quat_1 = require("../../../Core/Utils/Math/Quat"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  PROFILE_BULLECT_TRACK = "SceneItemReboundComponent_CalculateBulletTrackHit",
+  REFLECT_START_OFFSET = 30,
+  REFLECT_BULLET_EFFECT_CD = 2e3;
 let SceneItemReboundComponent =
   (SceneItemReboundComponent_1 = class SceneItemReboundComponent extends (
     EntityComponent_1.EntityComponent
@@ -56,7 +60,7 @@ let SceneItemReboundComponent =
     }
     OnInitData(t) {
       (t = t.GetParam(SceneItemReboundComponent_1)[0]),
-        (this._Mn = t.BulletId > 0),
+        (this._Mn = 0 < t.BulletId),
         this._Mn && (this.uMn = t.BulletId.toString()),
         (this.dMn = Vector_1.Vector.Create()),
         (t = t.Option.ReboundPoint);
@@ -155,7 +159,7 @@ let SceneItemReboundComponent =
             e = t;
             break;
           }
-        e > -1 &&
+        -1 < e &&
           ((i = this.A9r.HitResult.Actors.Get(e)),
           TraceElementCommon_1.TraceElementCommon.GetImpactPoint(
             this.A9r.HitResult,
@@ -206,4 +210,4 @@ let SceneItemReboundComponent =
     SceneItemReboundComponent,
   )),
   (exports.SceneItemReboundComponent = SceneItemReboundComponent);
-// # sourceMappingURL=SceneItemReboundComponent.js.map
+//# sourceMappingURL=SceneItemReboundComponent.js.map

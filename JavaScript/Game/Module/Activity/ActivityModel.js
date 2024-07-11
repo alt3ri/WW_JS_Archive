@@ -1,25 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LogReportController_1 = require("../LogReport/LogReportController");
-const LogReportDefine_1 = require("../LogReport/LogReportDefine");
-const ActivityCache_1 = require("./ActivityCache");
-const ActivityCommonDefine_1 = require("./ActivityCommonDefine");
-const ActivityMowingController_1 = require("./ActivityContent/Mowing/ActivityMowingController");
-const ActivityController_1 = require("./ActivityController");
-const ActivityManager_1 = require("./ActivityManager");
-const ACTIVITY_TIME_REASON =
-  "活动开启关闭时间倒计时 [ActivityId:{0}, IsOpen:{1}]";
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LogReportController_1 = require("../LogReport/LogReportController"),
+  LogReportDefine_1 = require("../LogReport/LogReportDefine"),
+  ActivityCache_1 = require("./ActivityCache"),
+  ActivityCommonDefine_1 = require("./ActivityCommonDefine"),
+  ActivityMowingController_1 = require("./ActivityContent/Mowing/ActivityMowingController"),
+  ActivityController_1 = require("./ActivityController"),
+  ActivityManager_1 = require("./ActivityManager"),
+  ACTIVITY_TIME_REASON = "活动开启关闭时间倒计时 [ActivityId:{0}, IsOpen:{1}]";
 class ActivityModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -79,9 +78,9 @@ class ActivityModel extends ModelBase_1.ModelBase {
     return this.I3e;
   }
   GetCurrentOpenActivityData(i) {
-    const r = this.GetCurrentShowingActivities();
-    const n = r.length;
-    if (n !== 0) {
+    var r = this.GetCurrentShowingActivities(),
+      n = r.length;
+    if (0 !== n) {
       let e = void 0;
       for (let t = 0; t < n; t++)
         if (r[t].Id === i) {
@@ -93,7 +92,7 @@ class ActivityModel extends ModelBase_1.ModelBase {
   }
   RedPointState() {
     if (this.GetIfFunctionOpen()) {
-      const e = this.T3e.length;
+      var e = this.T3e.length;
       for (let t = 0; t < e; t++)
         if (this.K2e.get(this.T3e[t])?.RedPointShowState) return !0;
     }
@@ -136,9 +135,9 @@ class ActivityModel extends ModelBase_1.ModelBase {
   B3e(t) {
     let e = this.K2e.get(t.Ekn);
     if (!e) {
-      var i = TimeUtil_1.TimeUtil.GetServerTime();
-      var r = Number(MathUtils_1.MathUtils.LongToBigInt(t.l0s));
-      var n = Number(MathUtils_1.MathUtils.LongToBigInt(t.a0s));
+      var i = TimeUtil_1.TimeUtil.GetServerTime(),
+        r = Number(MathUtils_1.MathUtils.LongToBigInt(t.l0s)),
+        n = Number(MathUtils_1.MathUtils.LongToBigInt(t.a0s));
       if (i <= r && i <= n)
         return (i = Math.min(n, r)), void this.q3e(i, t.Ekn, !0);
       e = ActivityController_1.ActivityController.CreateActivityData(t);
@@ -151,7 +150,7 @@ class ActivityModel extends ModelBase_1.ModelBase {
     );
   }
   q3e(t, e, i) {
-    let r;
+    var r;
     this.D3e.has(t) ||
       t < TimeUtil_1.TimeUtil.GetServerTime() ||
       ((r = Math.max(
@@ -181,7 +180,7 @@ class ActivityModel extends ModelBase_1.ModelBase {
         "ActivityTimeStampCheck 活动开始结束时间检查",
       ),
       ActivityController_1.ActivityController.RequestActivityData().then();
-    const e = this.R3e.get(t);
+    var e = this.R3e.get(t);
     e && (TimerSystem_1.RealTimeTimerSystem.Remove(e), this.R3e.delete(t)),
       this.D3e.delete(t);
   }
@@ -189,7 +188,7 @@ class ActivityModel extends ModelBase_1.ModelBase {
     return ModelManager_1.ModelManager.FunctionModel.IsOpen(10053);
   }
   GetIfShowActivity() {
-    return !!this.GetIfFunctionOpen() && this.U3e.size > 0;
+    return !!this.GetIfFunctionOpen() && 0 < this.U3e.size;
   }
   GetAllActivityMap() {
     return this.K2e;
@@ -222,7 +221,7 @@ class ActivityModel extends ModelBase_1.ModelBase {
             t.CheckIfInShowTime() &&
             (this.P3e.add(t.Id), this.U3e.set(t.Id, t));
       }),
-      this.A3e.size > 0 &&
+      0 < this.A3e.size &&
         (EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnActivityClose,
           this.A3e,
@@ -230,7 +229,7 @@ class ActivityModel extends ModelBase_1.ModelBase {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnActivityUpdate,
         )),
-      this.P3e.size > 0 &&
+      0 < this.P3e.size &&
         (EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnActivityOpen,
           this.P3e,
@@ -241,7 +240,7 @@ class ActivityModel extends ModelBase_1.ModelBase {
   }
   b3e() {
     for (const e of this.GetCurrentShowingActivities()) {
-      const t = this.GetActivityCacheData(
+      var t = this.GetActivityCacheData(
         e.Id,
         0,
         ActivityCommonDefine_1.ACTIVITYFIRSTUNLOCKFLAG,
@@ -249,7 +248,7 @@ class ActivityModel extends ModelBase_1.ModelBase {
         0,
       );
       e.IsUnLock() &&
-        t === 0 &&
+        0 === t &&
         (ActivityManager_1.ActivityManager.GetActivityController(
           e.Type,
         ).OnActivityFirstUnlock(e),
@@ -271,13 +270,13 @@ class ActivityModel extends ModelBase_1.ModelBase {
     return this.L3e.GetCacheData(t, e, i, r, n);
   }
   SendActivityViewOpenLogData(t) {
-    const e = new LogReportDefine_1.ActivityViewOpenLogData();
+    var e = new LogReportDefine_1.ActivityViewOpenLogData();
     (e.i_open_way = t), LogReportController_1.LogReportController.LogReport(e);
   }
   SendActivityTabViewOpenLogData(t) {
-    const e = new LogReportDefine_1.ActivityTabViewOpenLogData();
-    var i = TimeUtil_1.TimeUtil.GetServerTime();
-    var i = Number(t.EndOpenTime) === 0 ? 0 : Number(t.EndOpenTime) - i;
+    var e = new LogReportDefine_1.ActivityTabViewOpenLogData(),
+      i = TimeUtil_1.TimeUtil.GetServerTime(),
+      i = 0 === Number(t.EndOpenTime) ? 0 : Number(t.EndOpenTime) - i;
     (e.i_activity_id = t.Id),
       (e.i_activity_type = t.Type),
       (e.i_time_left = Math.round(i)),
@@ -285,9 +284,9 @@ class ActivityModel extends ModelBase_1.ModelBase {
       LogReportController_1.LogReportController.LogReport(e);
   }
   SendActivityViewJumpClickLogData(t, e) {
-    const i = new LogReportDefine_1.ActivityViewJumpClickLogData();
-    var r = TimeUtil_1.TimeUtil.GetServerTime();
-    var r = Number(t.EndOpenTime) === 0 ? 0 : Number(t.EndOpenTime) - r;
+    var i = new LogReportDefine_1.ActivityViewJumpClickLogData(),
+      r = TimeUtil_1.TimeUtil.GetServerTime(),
+      r = 0 === Number(t.EndOpenTime) ? 0 : Number(t.EndOpenTime) - r;
     (i.i_activity_id = t.Id),
       (i.i_activity_type = t.Type),
       (i.i_time_left = Math.round(r)),
@@ -295,7 +294,7 @@ class ActivityModel extends ModelBase_1.ModelBase {
       LogReportController_1.LogReportController.LogReport(i);
   }
   w3e() {
-    const t = {
+    var t = {
       CheckIsActivityLevel:
         ActivityMowingController_1.ActivityMowingController
           .CheckIsActivityLevel,
@@ -313,7 +312,7 @@ class ActivityModel extends ModelBase_1.ModelBase {
     return i ? i.GetLevelRecommendLevel(t, e) : 0;
   }
   CheckActivityLevelBelongToType(t) {
-    for (let [e, i] of this.x3e.entries()) {
+    for (var [e, i] of this.x3e.entries()) {
       i = i.CheckIsActivityLevel(t);
       if (i) return [i, e];
     }
@@ -326,4 +325,4 @@ class ActivityModel extends ModelBase_1.ModelBase {
       ? t.Id - e.Id
       : t.BeginOpenTime - e.BeginOpenTime
     : t.Sort - e.Sort;
-// # sourceMappingURL=ActivityModel.js.map
+//# sourceMappingURL=ActivityModel.js.map

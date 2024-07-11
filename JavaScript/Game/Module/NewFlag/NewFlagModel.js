@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NewFlagModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LocalStorage_1 = require("../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../Common/LocalStorageDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine");
 class NewFlagModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -26,8 +26,8 @@ class NewFlagModel extends ModelBase_1.ModelBase {
           LocalStorageDefine_1.ELocalStoragePlayerKey.RoleDataItem,
           LocalStorageDefine_1.ELocalStoragePlayerKey.VisionSkin,
         ]) {
-          var e = LocalStorage_1.LocalStorage.GetPlayer(t);
-          var e = new Set(e || void 0);
+          var e = LocalStorage_1.LocalStorage.GetPlayer(t),
+            e = new Set(e || void 0);
           this.Dqi.set(t, e), this.IVs.set(t, !1);
         }
       }),
@@ -62,7 +62,7 @@ class NewFlagModel extends ModelBase_1.ModelBase {
       );
   }
   SaveNewFlagConfig(e) {
-    const t = this.Dqi.get(e);
+    var t = this.Dqi.get(e);
     if (!t)
       return (
         Log_1.Log.CheckDebug() &&
@@ -81,7 +81,7 @@ class NewFlagModel extends ModelBase_1.ModelBase {
     );
   }
   AddNewFlag(e, t) {
-    const o = this.Dqi.get(e);
+    var o = this.Dqi.get(e);
     return o
       ? (o.add(t), this.IVs.set(e, !0), !0)
       : (Log_1.Log.CheckDebug() &&
@@ -94,7 +94,7 @@ class NewFlagModel extends ModelBase_1.ModelBase {
         !1);
   }
   RemoveNewFlag(e, t) {
-    let o = this.Dqi.get(e);
+    var o = this.Dqi.get(e);
     return o
       ? ((o = o.delete(t)), (t = this.IVs.get(e)), this.IVs.set(e, o || t), o)
       : (Log_1.Log.CheckDebug() &&
@@ -115,4 +115,4 @@ class NewFlagModel extends ModelBase_1.ModelBase {
   }
 }
 exports.NewFlagModel = NewFlagModel;
-// # sourceMappingURL=NewFlagModel.js.map
+//# sourceMappingURL=NewFlagModel.js.map

@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoginDebugPlayerNameView = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const PersonalDefine_1 = require("../../Personal/Model/PersonalDefine");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  PersonalDefine_1 = require("../../Personal/Model/PersonalDefine"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class LoginDebugPlayerNameView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.NMi = void 0),
       (this.OMi = (e) => {
-        this.GetButton(3).SetSelfInteractive(e.length > 0);
+        this.GetButton(3).SetSelfInteractive(0 < e.length);
       }),
       (this.J9e = () => {
         this.CloseMe();
       }),
       (this._Fe = () => {
-        const e = this.GetInputText(0).GetText();
+        var e = this.GetInputText(0).GetText();
         StringUtils_1.StringUtils.GetStringRealCount(e) >
         PersonalDefine_1.MAX_NAME_LENGTH
           ? this.kMi()
@@ -50,7 +50,7 @@ class LoginDebugPlayerNameView extends UiViewBase_1.UiViewBase {
       this.GetButton(3).SetSelfInteractive(!1);
   }
   kMi() {
-    const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(112);
+    var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(112);
     ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
       e,
     );
@@ -60,4 +60,4 @@ class LoginDebugPlayerNameView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.LoginDebugPlayerNameView = LoginDebugPlayerNameView;
-// # sourceMappingURL=LoginDubugPlyerNameView.js.map
+//# sourceMappingURL=LoginDubugPlyerNameView.js.map

@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomBattleFettersObtainView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const GenericScrollView_1 = require("../../../Util/ScrollView/GenericScrollView");
-const PhantomBattleItemView_1 = require("./PhantomBattleItemView");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  GenericScrollView_1 = require("../../../Util/ScrollView/GenericScrollView"),
+  PhantomBattleItemView_1 = require("./PhantomBattleItemView");
 class PhantomBattleFettersObtainView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -34,7 +34,7 @@ class PhantomBattleFettersObtainView extends UiViewBase_1.UiViewBase {
         );
       }),
       (this.mIt = () => {
-        let e;
+        var e;
         (ModelManager_1.ModelManager.PhantomBattleModel.CurrentSelectedFetter =
           this.$Vi),
           this.CloseMe(),
@@ -61,7 +61,7 @@ class PhantomBattleFettersObtainView extends UiViewBase_1.UiViewBase {
       (this.BtnBindInfo = [[1, this.mIt]]);
   }
   OnStart() {
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     (this.YVi = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(0),
       this.JVi,
@@ -76,4 +76,4 @@ class PhantomBattleFettersObtainView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.PhantomBattleFettersObtainView = PhantomBattleFettersObtainView;
-// # sourceMappingURL=PhantomBattleFettersObtainView.js.map
+//# sourceMappingURL=PhantomBattleFettersObtainView.js.map

@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventRestorePlayerCameraAdjustment = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CameraController_1 = require("../../Camera/CameraController");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const ConfigCurveUtils_1 = require("../../Utils/ConfigCurveUtils");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  ConfigCurveUtils_1 = require("../../Utils/ConfigCurveUtils"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventRestorePlayerCameraAdjustment extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, r) {
     e || this.FinishExecute(!1);
-    let t;
-    let a;
-    const n = Global_1.Global.BaseCharacter;
+    var t,
+      a,
+      n = Global_1.Global.BaseCharacter;
     n &&
       e?.ResetFocus &&
       ((t = e.ResetFocus.FadeInTime),
@@ -37,4 +37,4 @@ class LevelEventRestorePlayerCameraAdjustment extends LevelGeneralBase_1.LevelEv
 }
 exports.LevelEventRestorePlayerCameraAdjustment =
   LevelEventRestorePlayerCameraAdjustment;
-// # sourceMappingURL=LevelEventRestorePlayerCameraAdjustment.js.map
+//# sourceMappingURL=LevelEventRestorePlayerCameraAdjustment.js.map

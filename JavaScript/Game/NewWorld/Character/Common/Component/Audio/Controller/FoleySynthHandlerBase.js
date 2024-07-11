@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FoleySynthHandlerBase = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../../../Core/Common/Log");
-const Vector_1 = require("../../../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../../../Core/Utils/MathUtils");
-const CharacterNameDefines_1 = require("../../../CharacterNameDefines");
+const UE = require("ue"),
+  Log_1 = require("../../../../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../../../Core/Utils/MathUtils"),
+  CharacterNameDefines_1 = require("../../../CharacterNameDefines");
 class FoleySynthRecord {
   constructor() {
     (this.Speed = 0), (this.BoneSpeed = 0), (this.Acceleration = 0);
@@ -47,7 +47,7 @@ class FoleySynthHandlerBase {
       )),
       (this.IsActive = !0);
     for (let t = 0; t < this.RecordCount; ++t) {
-      const i = new Array();
+      var i = new Array();
       for (let t = 0; t < this.FoleySynthModelConfigs.length; ++t)
         i.push(new FoleySynthRecord());
       this.FoleySynthRecordsModel.push(i);
@@ -69,7 +69,7 @@ class FoleySynthHandlerBase {
   I$o(t) {
     t *= MathUtils_1.MathUtils.MillisecondToSecond;
     this.IsDebug && (this.DebugTime += t),
-      this.RecordTickCount === 0
+      0 === this.RecordTickCount
         ? (this.T$o(), ++this.RecordTickCount)
         : (this.L$o(t),
           this.RecordTickCount > this.RecordCount + this.RecordErrorFlag &&
@@ -81,34 +81,34 @@ class FoleySynthHandlerBase {
   }
   T$o() {
     for (let t = 0; t < this.FoleySynthModelConfigs.length; ++t) {
-      var i = this.FoleySynthModelConfigs[t];
-      var i = this.ActorComp.Actor.Mesh.GetSocketTransform(i.BoneName, 2);
+      var i = this.FoleySynthModelConfigs[t],
+        i = this.ActorComp.Actor.Mesh.GetSocketTransform(i.BoneName, 2);
       this.PreModelBoneComponentLocations[t].DeepCopy(i.GetTranslation());
     }
   }
   L$o(i) {
     this.RecordIndex = (this.RecordIndex + 1) % this.RecordCount;
-    const s = this.GetPreRecordIndex(1);
+    var s = this.GetPreRecordIndex(1);
     for (let t = 0; t < this.FoleySynthModelConfigs.length; ++t) {
-      const h = this.FoleySynthModelConfigs[t];
-      var e = this.ActorComp.Actor.Mesh.GetSocketLocation(h.BoneName);
-      var e =
-        (this.TempBoneLocation.DeepCopy(e),
-        this.TempBoneLocation.SubtractionEqual(
-          this.ActorComp.ActorLocationProxy,
-        ),
-        this.D$o(
-          this.TempBoneLocation,
-          this.PreModelBoneComponentLocations[t],
-          i,
-        ));
-      const r = e[0];
-      var e = e[1];
-      var o =
-        ((this.FoleySynthRecordsModel[this.RecordIndex][t].Speed = r),
-        (this.FoleySynthRecordsModel[this.RecordIndex][t].BoneSpeed = e),
-        this.FoleySynthRecordsModel[s][t].Speed);
-      var o = (r - o) / i;
+      var h = this.FoleySynthModelConfigs[t],
+        e = this.ActorComp.Actor.Mesh.GetSocketLocation(h.BoneName),
+        e =
+          (this.TempBoneLocation.DeepCopy(e),
+          this.TempBoneLocation.SubtractionEqual(
+            this.ActorComp.ActorLocationProxy,
+          ),
+          this.D$o(
+            this.TempBoneLocation,
+            this.PreModelBoneComponentLocations[t],
+            i,
+          )),
+        r = e[0],
+        e = e[1],
+        o =
+          ((this.FoleySynthRecordsModel[this.RecordIndex][t].Speed = r),
+          (this.FoleySynthRecordsModel[this.RecordIndex][t].BoneSpeed = e),
+          this.FoleySynthRecordsModel[s][t].Speed),
+        o = (r - o) / i;
       (this.FoleySynthRecordsModel[this.RecordIndex][t].Acceleration = o),
         this.PreModelBoneComponentLocations[t].DeepCopy(this.TempBoneLocation),
         this.IsDebug && this.SaveDebugInfo(h.BoneName, r, o, e);
@@ -173,4 +173,4 @@ class FoleySynthHandlerBase {
   }
 }
 exports.FoleySynthHandlerBase = FoleySynthHandlerBase;
-// # sourceMappingURL=FoleySynthHandlerBase.js.map
+//# sourceMappingURL=FoleySynthHandlerBase.js.map

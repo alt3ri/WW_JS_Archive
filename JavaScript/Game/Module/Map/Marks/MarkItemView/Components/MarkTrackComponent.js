@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MarkTrackComponent = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase");
 class MarkTrackComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments), (this.MapType = 2);
@@ -12,12 +12,12 @@ class MarkTrackComponent extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = []);
   }
   OnStart() {
-    const e = this.GetUiNiagara(0);
+    var e = this.GetUiNiagara(0);
     e &&
-      (this.MapType === 2
+      (2 === this.MapType
         ? (e.bAdaptPosAndSizeChanged = !0)
         : (e.bAdaptPosAndSizeChanged = !1));
   }
 }
 exports.MarkTrackComponent = MarkTrackComponent;
-// # sourceMappingURL=MarkTrackComponent.js.map
+//# sourceMappingURL=MarkTrackComponent.js.map

@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LogReportController = void 0);
-const ue_1 = require("ue");
-const Json_1 = require("../../../Core/Common/Json");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const LogReportDefine_1 = require("./LogReportDefine");
-const ThinkingAnalyticsReporter_1 = require("./ThinkingAnalyticsReporter");
+const ue_1 = require("ue"),
+  Json_1 = require("../../../Core/Common/Json"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  LogReportDefine_1 = require("./LogReportDefine"),
+  ThinkingAnalyticsReporter_1 = require("./ThinkingAnalyticsReporter");
 class LogReportController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
@@ -20,7 +20,7 @@ class LogReportController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static LogReport(e) {
-    e.event_id === "" &&
+    "" === e.event_id &&
       Log_1.Log.CheckError() &&
       Log_1.Log.Error("LogReport", 31, "event_id 不能为空", ["logData", e]),
       (e.client_version = LogReportController.Fpi),
@@ -53,4 +53,4 @@ class LogReportController extends UiControllerBase_1.UiControllerBase {
   }
 }
 (exports.LogReportController = LogReportController).Fpi = "";
-// # sourceMappingURL=LogReportController.js.map
+//# sourceMappingURL=LogReportController.js.map

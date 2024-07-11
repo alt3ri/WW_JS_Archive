@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CombatDebugController = void 0);
-const cpp_1 = require("cpp");
-const UE = require("ue");
-const Info_1 = require("../../Core/Common/Info");
-const Log_1 = require("../../Core/Common/Log");
-const Time_1 = require("../../Core/Common/Time");
-const Protocol_1 = require("../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../Core/Entity/EntitySystem");
-const ControllerBase_1 = require("../../Core/Framework/ControllerBase");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../Manager/ModelManager");
-const LogSetting_1 = require("../Module/LogReport/LogSetting");
-const CombatDebugHelper_1 = require("./CombatDebug/CombatDebugHelper");
-const game = {};
-const REFRESH_SERVER_INFO_PERIOD = 300;
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
+  Info_1 = require("../../Core/Common/Info"),
+  Log_1 = require("../../Core/Common/Log"),
+  Time_1 = require("../../Core/Common/Time"),
+  Protocol_1 = require("../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../Core/Entity/EntitySystem"),
+  ControllerBase_1 = require("../../Core/Framework/ControllerBase"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  LogSetting_1 = require("../Module/LogReport/LogSetting"),
+  CombatDebugHelper_1 = require("./CombatDebug/CombatDebugHelper"),
+  game = {},
+  REFRESH_SERVER_INFO_PERIOD = 300;
 class CombatDebugController extends ControllerBase_1.ControllerBase {
   static CombatInfo(t, e, o, ...r) {
     this.A5(0, t, e, o, r);
@@ -37,17 +37,17 @@ class CombatDebugController extends ControllerBase_1.ControllerBase {
       : this.A5(3, t, e, o, [...i, ["error", r]]);
   }
   static A5(t, e, o, r, i, a) {
-    let s = 0;
-    let n = "";
-    let l = "";
-    typeof o === "number"
+    let s = 0,
+      n = "",
+      l = "";
+    "number" == typeof o
       ? (s = o)
       : ((_ = o?.GetComponent(0)) &&
           ((s = _.GetCreatureDataId()),
           (n = Protocol_1.Aki.Protocol.HBs[_.GetEntityType()])),
         (_ = o?.GetComponent(3))?.Actor && (l = _.Actor.GetName()));
-    let _;
-    const g = `[${e}][EntityId:${s}:${n}:${l}] ` + r;
+    var _,
+      g = `[${e}][EntityId:${s}:${n}:${l}] ` + r;
     switch (t) {
       case 0:
         Log_1.Log.CheckInfo() && Log_1.Log.Info("CombatInfo", 15, g, ...i);
@@ -105,15 +105,15 @@ class CombatDebugController extends ControllerBase_1.ControllerBase {
             const TimerSystem = require('../../Core/Timer/TimerSystem')?.TimerSystem;
             const FormationAttributeController = require("../Module/Abilities/FormationAttributeController").FormationAttributeController;
             
-`;
-      const ret =
-        (game,
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Character", 20, "脚本执行...", [
-            "代码",
-            filteredScript,
-          ]),
-        String(eval(preProcess + filteredScript)));
+`,
+        ret =
+          (game,
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("Character", 20, "脚本执行...", [
+              "代码",
+              filteredScript,
+            ]),
+          String(eval(preProcess + filteredScript)));
       return (
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Character", 20, "脚本执行执行完成", ["返回值", ret]),
@@ -140,9 +140,8 @@ class CombatDebugController extends ControllerBase_1.ControllerBase {
           String(error));
     }
   }
-
   static mCr() {
-    let t;
+    var t;
     UE.ThinkingAnalytics.HasInstanceInitialized(9) ||
       ((t = new UE.CreateInstanceParam(
         9,
@@ -172,7 +171,7 @@ class CombatDebugController extends ControllerBase_1.ControllerBase {
       (this.mCr(), cpp_1.FThinkingAnalyticsForPuerts.Track(t, e, 9));
   }
   static RefreshServerDebugInfo() {
-    let t;
+    var t;
     !this.DebugEntityId ||
       !(t = EntitySystem_1.EntitySystem.Get(this.DebugEntityId)?.GetComponent(
         20,
@@ -220,4 +219,4 @@ class CombatDebugController extends ControllerBase_1.ControllerBase {
   (CombatDebugController.CCr = "773a58b321b8462e8431e0b3010bb3d3"),
   (CombatDebugController.dCr = "https://ali-sh-datareceiver.kurogame.xyz"),
   (CombatDebugController.u3t = 0);
-// # sourceMappingURL=CombatDebugController.js.map
+//# sourceMappingURL=CombatDebugController.js.map

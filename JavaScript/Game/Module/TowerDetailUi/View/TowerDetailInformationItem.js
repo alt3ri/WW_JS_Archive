@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerDetailInformationItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const TowerDetailInformationBuffItem_1 = require("./TowerDetailInformationBuffItem");
-const TowerDetailInformationMonsterItem_1 = require("./TowerDetailInformationMonsterItem");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  TowerDetailInformationBuffItem_1 = require("./TowerDetailInformationBuffItem"),
+  TowerDetailInformationMonsterItem_1 = require("./TowerDetailInformationMonsterItem");
 class TowerDetailInformationItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -35,7 +35,7 @@ class TowerDetailInformationItem extends UiPanelBase_1.UiPanelBase {
   }
   Update(e) {
     this.SLo(),
-      e.Type === 0
+      0 === e.Type
         ? (this.GetItem(1).SetUIActive(!0),
           this.MLo.Update(e.TowerDetailBuffData))
         : (this.GetItem(2).SetUIActive(!0),
@@ -50,9 +50,9 @@ class TowerDetailInformationItem extends UiPanelBase_1.UiPanelBase {
     this.GetText(0).SetText(e.Title);
   }
   yLo(e) {
-    const t = e !== 0 && e !== 1 ? !1 : !0;
+    let t = 0 !== e && 1 !== e ? !1 : !0;
     this.GetItem(3).SetUIActive(t);
   }
 }
 exports.TowerDetailInformationItem = TowerDetailInformationItem;
-// # sourceMappingURL=TowerDetailInformationItem.js.map
+//# sourceMappingURL=TowerDetailInformationItem.js.map

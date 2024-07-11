@@ -15,4 +15,4 @@ class EffectModelDecal extends UE.EffectModelBase {
   }
 }
 exports.default = EffectModelDecal;
-// # sourceMappingURL=EffectModelDecal.js.map
+//# sourceMappingURL=EffectModelDecal.js.map

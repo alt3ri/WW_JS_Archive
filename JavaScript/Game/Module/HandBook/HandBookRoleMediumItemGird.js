@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HandBookRoleMediumItemGird = void 0);
-const LoopScrollMediumItemGrid_1 = require("../Common/MediumItemGrid/LoopScrollMediumItemGrid");
-const RoleDataBase_1 = require("../RoleUi/RoleData/RoleDataBase");
-const RoleDefine_1 = require("../RoleUi/RoleDefine");
+const LoopScrollMediumItemGrid_1 = require("../Common/MediumItemGrid/LoopScrollMediumItemGrid"),
+  RoleDataBase_1 = require("../RoleUi/RoleData/RoleDataBase"),
+  RoleDefine_1 = require("../RoleUi/RoleDefine");
 class HandBookRoleMediumItemGird extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   OnRefresh(e, o, t) {
     let i = !1;
@@ -34,4 +34,4 @@ class HandBookRoleMediumItemGird extends LoopScrollMediumItemGrid_1.LoopScrollMe
   }
 }
 exports.HandBookRoleMediumItemGird = HandBookRoleMediumItemGird;
-// # sourceMappingURL=HandBookRoleMediumItemGird.js.map
+//# sourceMappingURL=HandBookRoleMediumItemGird.js.map

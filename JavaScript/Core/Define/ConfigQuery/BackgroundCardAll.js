@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configBackgroundCardAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const BackgroundCard_1 = require("../Config/BackgroundCard");
-const DB = "db_personal_card.db";
-const FILE = "m.名片.xlsx";
-const TABLE = "BackgroundCard";
-const COMMAND = "select BinData from `BackgroundCard`";
-const KEY_PREFIX = "BackgroundCardAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  BackgroundCard_1 = require("../Config/BackgroundCard"),
+  DB = "db_personal_card.db",
+  FILE = "m.名片.xlsx",
+  TABLE = "BackgroundCard",
+  COMMAND = "select BinData from `BackgroundCard`",
+  KEY_PREFIX = "BackgroundCardAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configBackgroundCardAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configBackgroundCardAll = {
     );
   },
   GetConfigList: (o = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configBackgroundCardAll = {
       }
       const i = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let e = void 0;
+        var e = void 0;
         if (
           (([n, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configBackgroundCardAll = {
     }
   },
 };
-// # sourceMappingURL=BackgroundCardAll.js.map
+//# sourceMappingURL=BackgroundCardAll.js.map

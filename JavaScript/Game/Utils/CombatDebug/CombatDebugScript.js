@@ -74,4 +74,4 @@ class CombatScriptHelperBase {
   }
 }
 exports.CombatScriptHelperBase = CombatScriptHelperBase;
-// # sourceMappingURL=CombatDebugScript.js.map
+//# sourceMappingURL=CombatDebugScript.js.map

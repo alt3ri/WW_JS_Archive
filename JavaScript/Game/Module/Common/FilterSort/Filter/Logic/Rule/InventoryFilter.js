@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InventoryFilter = void 0);
-const ConfigManager_1 = require("../../../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../../../Manager/ModelManager");
-const CommonFilter_1 = require("./CommonFilter");
-const VisionDestroyFilterLogic_1 = require("./VisionDestroyFilterLogic");
+const ConfigManager_1 = require("../../../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../../../Manager/ModelManager"),
+  CommonFilter_1 = require("./CommonFilter"),
+  VisionDestroyFilterLogic_1 = require("./VisionDestroyFilterLogic");
 class InventoryFilter extends CommonFilter_1.CommonFilter {
   constructor() {
     super(...arguments),
@@ -12,11 +12,12 @@ class InventoryFilter extends CommonFilter_1.CommonFilter {
         return i.GetQuality();
       }),
       (this.QTt = (i) => {
-        let t = i.GetConfigId();
+        var t = i.GetConfigId();
         if (
+          2 ===
           ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
             t,
-          ) === 2
+          )
         )
           return (
             (t = i.GetUniqueId()),
@@ -27,11 +28,12 @@ class InventoryFilter extends CommonFilter_1.CommonFilter {
           );
       }),
       (this.XTt = (i) => {
-        let t = i.GetConfigId();
+        var t = i.GetConfigId();
         if (
+          3 ===
           ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
             t,
-          ) === 3
+          )
         )
           return (
             (t = i.GetUniqueId()),
@@ -44,8 +46,8 @@ class InventoryFilter extends CommonFilter_1.CommonFilter {
           );
       }),
       (this.$Tt = (i) => {
-        const t = i.GetSelectOn();
-        var i = i.GetItemOperationType() === 1;
+        var t = i.GetSelectOn(),
+          i = 1 === i.GetItemOperationType();
         return t && i;
       });
   }
@@ -85,4 +87,4 @@ class InventoryFilter extends CommonFilter_1.CommonFilter {
   }
 }
 exports.InventoryFilter = InventoryFilter;
-// # sourceMappingURL=InventoryFilter.js.map
+//# sourceMappingURL=InventoryFilter.js.map

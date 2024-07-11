@@ -1,69 +1,74 @@
 "use strict";
-let CharacterSkillComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, i, e, s) {
-    let r;
-    const h = arguments.length;
-    let o =
-      h < 3 ? i : s === null ? (s = Object.getOwnPropertyDescriptor(i, e)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      o = Reflect.decorate(t, i, e, s);
-    else
-      for (let l = t.length - 1; l >= 0; l--)
-        (r = t[l]) && (o = (h < 3 ? r(o) : h > 3 ? r(i, e, o) : r(i, e)) || o);
-    return h > 3 && o && Object.defineProperty(i, e, o), o;
-  };
+var CharacterSkillComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, i, e, s) {
+      var r,
+        h = arguments.length,
+        o =
+          h < 3
+            ? i
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(i, e))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        o = Reflect.decorate(t, i, e, s);
+      else
+        for (var l = t.length - 1; 0 <= l; l--)
+          (r = t[l]) &&
+            (o = (h < 3 ? r(o) : 3 < h ? r(i, e, o) : r(i, e)) || o);
+      return 3 < h && o && Object.defineProperty(i, e, o), o;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterSkillComponent = exports.SKILL_GROUP_MAIN = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Stats_1 = require("../../../../../../Core/Common/Stats");
-const CommonParamById_1 = require("../../../../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const Entity_1 = require("../../../../../../Core/Entity/Entity");
-const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent");
-const EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../../../Core/Timer/TimerSystem");
-const DataTableUtil_1 = require("../../../../../../Core/Utils/DataTableUtil");
-const FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil");
-const Rotator_1 = require("../../../../../../Core/Utils/Math/Rotator");
-const Transform_1 = require("../../../../../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const EffectSystem_1 = require("../../../../../Effect/EffectSystem");
-const Global_1 = require("../../../../../Global");
-const GlobalData_1 = require("../../../../../GlobalData");
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const FormationAttributeController_1 = require("../../../../../Module/Abilities/FormationAttributeController");
-const SkillMessageController_1 = require("../../../../../Module/CombatMessage/SkillMessageController");
-const PhantomUtil_1 = require("../../../../../Module/Phantom/PhantomUtil");
-const SceneTeamController_1 = require("../../../../../Module/SceneTeam/SceneTeamController");
-const PreloadDefine_1 = require("../../../../../Preload/PreloadDefine");
-const ActorUtils_1 = require("../../../../../Utils/ActorUtils");
-const CombatDebugController_1 = require("../../../../../Utils/CombatDebugController");
-const BlackboardController_1 = require("../../../../../World/Controller/BlackboardController");
-const CharacterAbilityComponent_1 = require("../Abilities/CharacterAbilityComponent");
-const CharacterBuffIds_1 = require("../Abilities/CharacterBuffIds");
-const CharacterUnifiedStateTypes_1 = require("../Abilities/CharacterUnifiedStateTypes");
-const CustomMovementDefine_1 = require("../Move/CustomMovementDefine");
-const Skill_1 = require("./Skill");
-const SkillBehaviorAction_1 = require("./SkillBehavior/SkillBehaviorAction");
-const SkillBehaviorCondition_1 = require("./SkillBehavior/SkillBehaviorCondition");
-const EAttributeId = Protocol_1.Aki.Protocol.KBs;
-const ROLLING_GROUNDED_RECOVER_TIME = 600;
-const SKILL_TURN_TIME = 0.15;
-const DEFAULT_CD_TIME = -1;
-const HIT_CASE_SOCKET_NAME = "HitCase";
-const SKILL_GROUP_INDEX = ((exports.SKILL_GROUP_MAIN = 1), 0);
-const interruptTag = -242791826;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../../../Core/Common/Stats"),
+  CommonParamById_1 = require("../../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  Entity_1 = require("../../../../../../Core/Entity/Entity"),
+  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../../../Core/Timer/TimerSystem"),
+  DataTableUtil_1 = require("../../../../../../Core/Utils/DataTableUtil"),
+  FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil"),
+  Rotator_1 = require("../../../../../../Core/Utils/Math/Rotator"),
+  Transform_1 = require("../../../../../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  EffectSystem_1 = require("../../../../../Effect/EffectSystem"),
+  Global_1 = require("../../../../../Global"),
+  GlobalData_1 = require("../../../../../GlobalData"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  FormationAttributeController_1 = require("../../../../../Module/Abilities/FormationAttributeController"),
+  SkillMessageController_1 = require("../../../../../Module/CombatMessage/SkillMessageController"),
+  PhantomUtil_1 = require("../../../../../Module/Phantom/PhantomUtil"),
+  SceneTeamController_1 = require("../../../../../Module/SceneTeam/SceneTeamController"),
+  PreloadDefine_1 = require("../../../../../Preload/PreloadDefine"),
+  ActorUtils_1 = require("../../../../../Utils/ActorUtils"),
+  CombatDebugController_1 = require("../../../../../Utils/CombatDebugController"),
+  BlackboardController_1 = require("../../../../../World/Controller/BlackboardController"),
+  CharacterAbilityComponent_1 = require("../Abilities/CharacterAbilityComponent"),
+  CharacterBuffIds_1 = require("../Abilities/CharacterBuffIds"),
+  CharacterUnifiedStateTypes_1 = require("../Abilities/CharacterUnifiedStateTypes"),
+  CustomMovementDefine_1 = require("../Move/CustomMovementDefine"),
+  Skill_1 = require("./Skill"),
+  SkillBehaviorAction_1 = require("./SkillBehavior/SkillBehaviorAction"),
+  SkillBehaviorCondition_1 = require("./SkillBehavior/SkillBehaviorCondition");
+var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+const ROLLING_GROUNDED_RECOVER_TIME = 600,
+  SKILL_TURN_TIME = 0.15,
+  DEFAULT_CD_TIME = -1,
+  HIT_CASE_SOCKET_NAME = "HitCase",
+  SKILL_GROUP_INDEX = ((exports.SKILL_GROUP_MAIN = 1), 0),
+  interruptTag = -242791826;
 class AnimNotifyStateSkillRotateStyle {
   constructor() {
     (this.IsUseAnsRotateOffset = !1),
@@ -154,7 +159,7 @@ let CharacterSkillComponent =
           this.StopGroup1Skill("受击打断技能");
         }),
         (this.OnSwitchControl = (t) => {
-          for (const [i, e] of this.LoadedSkills)
+          for (var [i, e] of this.LoadedSkills)
             e.Active &&
               (CombatDebugController_1.CombatDebugController.CombatInfo(
                 "Skill",
@@ -167,7 +172,7 @@ let CharacterSkillComponent =
                 : this.EndSkill(i, "CharacterSkillComponent.OnSwitchControl"));
         }),
         (this.GZr = () => {
-          const t = this.Entity.GetComponent(33);
+          var t = this.Entity.GetComponent(33);
           t.Valid &&
             !this.Lie.HasTag(-1371021686) &&
             (CombatDebugController_1.CombatDebugController.CombatInfo(
@@ -184,7 +189,7 @@ let CharacterSkillComponent =
         (this.SkillTarget = void 0),
         (this.SkillTargetSocket = ""),
         (this.kZr = (t) => {
-          const i = this.CurrentSkill;
+          var i = this.CurrentSkill;
           i &&
             i.SkillInfo.SkillTarget.HateOrLockOnChanged &&
             ((this.SkillTarget =
@@ -226,7 +231,7 @@ let CharacterSkillComponent =
     }
     GetSkillInfo(e) {
       if (this.UZr) {
-        if (e !== 0) {
+        if (0 !== e) {
           if (!GlobalData_1.GlobalData.IsPlayInEditor) {
             var s = this.LoadedSkills.get(e);
             if (s) return s.SkillInfo;
@@ -293,7 +298,7 @@ let CharacterSkillComponent =
     }
     GetPriority(t) {
       if (this.CheckIsLoaded()) {
-        const i = this.GetSkillInfo(t);
+        var i = this.GetSkillInfo(t);
         if (i) return i.InterruptLevel;
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -405,7 +410,7 @@ let CharacterSkillComponent =
       );
     }
     ZZr() {
-      let t;
+      var t;
       PreloadDefine_1.PreloadSetting.UseNewPreload
         ? (t = this.SIe.GetEntityType()) ===
           Protocol_1.Aki.Protocol.HBs.Proto_Player
@@ -416,94 +421,93 @@ let CharacterSkillComponent =
         : this.ren();
     }
     ten() {
-      const t = (0, puerts_1.$ref)(void 0);
-      const i =
-        (UE.DataTableFunctionLibrary.GetDataTableRowNames(this.UZr, t),
-        (0, puerts_1.$unref)(t));
+      const t = (0, puerts_1.$ref)(void 0),
+        i =
+          (UE.DataTableFunctionLibrary.GetDataTableRowNames(this.UZr, t),
+          (0, puerts_1.$unref)(t));
       for (let t = 0; t < i.Num(); t++) {
-        const e = Number(i.Get(t).toString());
-        const s = this.GetSkillInfo(e);
+        var e = Number(i.Get(t).toString()),
+          s = this.GetSkillInfo(e);
         s &&
-          (s.SkillLoadType === 0
+          (0 === s.SkillLoadType
             ? this.nen(e, DEFAULT_CD_TIME)
             : this.BZr?.InitSkillCdBySkillInfo(e, s));
       }
       let r = void 0;
-      let h = this.Hte.CreatureData.GetVisionComponent();
+      var h = this.Hte.CreatureData.GetVisionComponent();
       h &&
         (h = PhantomUtil_1.PhantomUtil.GetVisionData(h.VisionId)) &&
         (r = h.类型);
       for (const _ of ConfigManager_1.ConfigManager.WorldConfig.GetRoleCommonSkillRowNames()) {
-        const o = Number(_);
-        const l = this.GetSkillInfo(o);
+        var o = Number(_),
+          l = this.GetSkillInfo(o);
         l &&
-          ((l.SkillLoadType === 3 && Number(r) === 1) ||
-          (l.SkillLoadType === 2 && Number(r) === 0)
+          ((3 === l.SkillLoadType && 1 === Number(r)) ||
+          (2 === l.SkillLoadType && 0 === Number(r))
             ? this.nen(o, DEFAULT_CD_TIME)
             : this.BZr?.InitSkillCdBySkillInfo(o, l));
       }
       if (this.DtSkillInfoExtra) {
-        const t = (0, puerts_1.$ref)(void 0);
-        const i =
-          (UE.DataTableFunctionLibrary.GetDataTableRowNames(
-            this.DtSkillInfoExtra,
-            t,
-          ),
-          (0, puerts_1.$unref)(t));
+        const t = (0, puerts_1.$ref)(void 0),
+          i =
+            (UE.DataTableFunctionLibrary.GetDataTableRowNames(
+              this.DtSkillInfoExtra,
+              t,
+            ),
+            (0, puerts_1.$unref)(t));
         for (let t = 0; t < i.Num(); t++) {
-          const n = Number(i.Get(t).toString());
-          const a = this.GetSkillInfo(n);
+          var n = Number(i.Get(t).toString()),
+            a = this.GetSkillInfo(n);
           a &&
-            (a.SkillLoadType === 0
+            (0 === a.SkillLoadType
               ? this.nen(n, DEFAULT_CD_TIME)
               : this.BZr?.InitSkillCdBySkillInfo(n, a));
         }
       }
     }
     ren() {
-      const t =
-        ControllerHolder_1.ControllerHolder.PreloadController.GetCurCharacterLoadType();
-      var i = UE.KismetSystemLibrary.Conv_ClassToSoftClassReference(
-        this.Hte.Actor.GetClass(),
-      );
-      var i = UE.KismetSystemLibrary.Conv_SoftClassReferenceToString(i);
-      const e =
-        ConfigManager_1.ConfigManager.WorldConfig.GetCharacterFightInfo(i);
+      var t =
+          ControllerHolder_1.ControllerHolder.PreloadController.GetCurCharacterLoadType(),
+        i = UE.KismetSystemLibrary.Conv_ClassToSoftClassReference(
+          this.Hte.Actor.GetClass(),
+        ),
+        i = UE.KismetSystemLibrary.Conv_SoftClassReferenceToString(i),
+        e = ConfigManager_1.ConfigManager.WorldConfig.GetCharacterFightInfo(i);
       e ||
         CombatDebugController_1.CombatDebugController.CombatWarn(
           "Skill",
           this.Entity,
           "SkillComponent中找不到FightInfo信息",
         );
-      const s = e?.SkillDataTable?.ToAssetPathName();
-      const r =
-        (s &&
-          s.length > 0 &&
-          s !== "None" &&
-          ((a = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
-            s,
-            UE.DataTable,
-          )) ||
-            CombatDebugController_1.CombatDebugController.CombatWarn(
-              "Skill",
-              this.Entity,
-              "SkillComponent中找不到技能表",
-              ["ActorPath", i],
-              ["技能表Path", s],
-            ),
-          (this.UZr = a)),
-        (0, puerts_1.$ref)(void 0));
-      const h =
-        (UE.DataTableFunctionLibrary.GetDataTableRowNames(this.UZr, r),
-        (0, puerts_1.$unref)(r));
+      const s = e?.SkillDataTable?.ToAssetPathName(),
+        r =
+          (s &&
+            0 < s.length &&
+            "None" !== s &&
+            ((a = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+              s,
+              UE.DataTable,
+            )) ||
+              CombatDebugController_1.CombatDebugController.CombatWarn(
+                "Skill",
+                this.Entity,
+                "SkillComponent中找不到技能表",
+                ["ActorPath", i],
+                ["技能表Path", s],
+              ),
+            (this.UZr = a)),
+          (0, puerts_1.$ref)(void 0)),
+        h =
+          (UE.DataTableFunctionLibrary.GetDataTableRowNames(this.UZr, r),
+          (0, puerts_1.$unref)(r));
       for (let t = 0; t < h.Num(); t++) {
-        const o = Number(h.Get(t).toString());
-        const l = this.GetSkillInfo(o);
-        l && l.SkillLoadType === 0 && this.nen(o, DEFAULT_CD_TIME);
+        var o = Number(h.Get(t).toString()),
+          l = this.GetSkillInfo(o);
+        l && 0 === l.SkillLoadType && this.nen(o, DEFAULT_CD_TIME);
       }
       let n = void 0;
-      let a;
-      var i = this.Hte.CreatureData.GetVisionComponent();
+      var a,
+        i = this.Hte.CreatureData.GetVisionComponent();
       i &&
         (a = PhantomUtil_1.PhantomUtil.GetVisionData(i.VisionId)) &&
         (n = a.类型);
@@ -522,70 +526,70 @@ let CharacterSkillComponent =
             ConfigManager_1.ConfigManager.WorldConfig.GetMonsterCommonSkillRowNames();
       }
       for (const m of _) {
-        const C = Number(m);
-        const S = this.GetSkillInfo(C);
+        var C = Number(m),
+          S = this.GetSkillInfo(C);
         S &&
-          ((S.SkillLoadType === 3 && Number(n) === 1) ||
-            (S.SkillLoadType === 2 && Number(n) === 0) ||
-            S.SkillLoadType === 0) &&
+          ((3 === S.SkillLoadType && 1 === Number(n)) ||
+            (2 === S.SkillLoadType && 0 === Number(n)) ||
+            0 === S.SkillLoadType) &&
           this.nen(C, DEFAULT_CD_TIME);
       }
-      const u = e?.BulletDataTable.ToAssetPathName();
-      const v =
-        (u &&
-          u.length > 0 &&
-          u !== "None" &&
-          ((i = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
-            u,
-            UE.DataTable,
-          )),
-          (this.DtBulletInfo = i)),
-        e?.HitEffectTable.ToAssetPathName());
+      const u = e?.BulletDataTable.ToAssetPathName(),
+        v =
+          (u &&
+            0 < u.length &&
+            "None" !== u &&
+            ((i = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+              u,
+              UE.DataTable,
+            )),
+            (this.DtBulletInfo = i)),
+          e?.HitEffectTable.ToAssetPathName());
       if (
-        (v && v.length > 0 && v !== "None"
+        (v && 0 < v.length && "None" !== v
           ? ((a = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
               v,
               UE.DataTable,
             )),
             (this.DtHitEffect = a))
           : (this.DtHitEffect = this.Hte.Actor.DtHitEffect),
-        t !== 0)
+        0 !== t)
       ) {
         const s = e?.SkillDataTableMap.Get(t)?.ToAssetPathName();
         s &&
-          s.length > 0 &&
-          s !== "None" &&
+          0 < s.length &&
+          "None" !== s &&
           ((i = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
             s,
             UE.DataTable,
           )),
           (this.DtSkillInfoExtra = i));
-        const r = (0, puerts_1.$ref)(void 0);
-        const h =
-          (UE.DataTableFunctionLibrary.GetDataTableRowNames(
-            this.DtSkillInfoExtra,
-            r,
-          ),
-          (0, puerts_1.$unref)(r));
+        const r = (0, puerts_1.$ref)(void 0),
+          h =
+            (UE.DataTableFunctionLibrary.GetDataTableRowNames(
+              this.DtSkillInfoExtra,
+              r,
+            ),
+            (0, puerts_1.$unref)(r));
         for (let t = 0; t < h.Num(); t++) {
-          const d = Number(h.Get(t).toString());
-          const c = this.GetSkillInfo(d);
-          c && c.SkillLoadType === 0 && this.nen(d, DEFAULT_CD_TIME);
+          var d = Number(h.Get(t).toString()),
+            c = this.GetSkillInfo(d);
+          c && 0 === c.SkillLoadType && this.nen(d, DEFAULT_CD_TIME);
         }
-        const u = e?.BulletDataTableMap.Get(t)?.ToAssetPathName();
-        const v =
-          (u &&
-            u.length > 0 &&
-            u !== "None" &&
-            ((a = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
-              u,
-              UE.DataTable,
-            )),
-            (this.DtBulletInfoExtra = a)),
-          e?.HitEffectTableMap.Get(t)?.ToAssetPathName());
+        const u = e?.BulletDataTableMap.Get(t)?.ToAssetPathName(),
+          v =
+            (u &&
+              0 < u.length &&
+              "None" !== u &&
+              ((a = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+                u,
+                UE.DataTable,
+              )),
+              (this.DtBulletInfoExtra = a)),
+            e?.HitEffectTableMap.Get(t)?.ToAssetPathName());
         v &&
-          v.length > 0 &&
-          v !== "None" &&
+          0 < v.length &&
+          "None" !== v &&
           ((i = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
             v,
             UE.DataTable,
@@ -594,24 +598,24 @@ let CharacterSkillComponent =
       }
     }
     ien() {
-      const t = (0, puerts_1.$ref)(void 0);
-      const i =
-        (UE.DataTableFunctionLibrary.GetDataTableRowNames(this.UZr, t),
-        (0, puerts_1.$unref)(t));
+      var t = (0, puerts_1.$ref)(void 0),
+        i =
+          (UE.DataTableFunctionLibrary.GetDataTableRowNames(this.UZr, t),
+          (0, puerts_1.$unref)(t));
       for (let t = 0; t < i.Num(); t++) {
-        const e = Number(i.Get(t).toString());
-        const s = this.GetSkillInfo(e);
-        s && s.SkillLoadType === 0 && this.nen(e, DEFAULT_CD_TIME);
+        var e = Number(i.Get(t).toString()),
+          s = this.GetSkillInfo(e);
+        s && 0 === s.SkillLoadType && this.nen(e, DEFAULT_CD_TIME);
       }
       for (const o of ConfigManager_1.ConfigManager.WorldConfig.GetVisionCommonSkillRowNames()) {
-        const r = Number(o);
-        const h = this.GetSkillInfo(r);
-        h && h.SkillLoadType === 0 && this.nen(r, DEFAULT_CD_TIME);
+        var r = Number(o),
+          h = this.GetSkillInfo(r);
+        h && 0 === h.SkillLoadType && this.nen(r, DEFAULT_CD_TIME);
       }
     }
     oen() {}
     nen(i, t) {
-      const e = this.GetSkillInfo(i);
+      var e = this.GetSkillInfo(i);
       if (e)
         if (this.LoadedSkills.has(i))
           CombatDebugController_1.CombatDebugController.CombatInfo(
@@ -622,11 +626,11 @@ let CharacterSkillComponent =
           );
         else
           try {
-            const s = new Skill_1.Skill();
-            const r =
-              (s.Initialize(i, e, this),
-              this.BZr && (s.GroupSkillCdInfo = this.BZr.InitSkillCd(s)),
-              this.LoadedSkills.get(i));
+            var s = new Skill_1.Skill(),
+              r =
+                (s.Initialize(i, e, this),
+                this.BZr && (s.GroupSkillCdInfo = this.BZr.InitSkillCd(s)),
+                this.LoadedSkills.get(i));
             r ||
               (this.LoadedSkills.set(i, s),
               this.KZr.set(e.SkillName.toString(), s));
@@ -662,9 +666,9 @@ let CharacterSkillComponent =
       ConfigManager_1.ConfigManager.BulletConfig.PreloadBulletData(this.Entity);
     }
     OnActivate() {
-      let t;
-      let i;
-      const e = this.Entity.GetComponent(0).ComponentDataMap.get("pps")?.pps;
+      var t,
+        i,
+        e = this.Entity.GetComponent(0).ComponentDataMap.get("pps")?.pps;
       if (!this.Hte.IsAutonomousProxy && e?.RMs)
         for (const s of e.RMs)
           s.T4n?.vkn &&
@@ -679,7 +683,7 @@ let CharacterSkillComponent =
             (SkillMessageController_1.SkillMessageController.AddSkillMessageId(
               i,
             ),
-            s.M4n >= 0) &&
+            0 <= s.M4n) &&
             this.SimulatePlayMontage(
               s.T4n.vkn,
               s.M4n,
@@ -690,7 +694,7 @@ let CharacterSkillComponent =
       return !0;
     }
     OnChangeTimeDilation(t) {
-      const i = this.OHr.CurrentTimeScale;
+      var i = this.OHr.CurrentTimeScale;
       for (const e of this.GetAllActivatedSkill()) e.SetTimeDilation(i, t);
     }
     OnEnd() {
@@ -757,7 +761,7 @@ let CharacterSkillComponent =
       return !0;
     }
     AttachEffectToSkill(t, i, e, s) {
-      let r, h;
+      var r, h;
       this.CheckIsLoaded() &&
         (r = this.CurrentSkill) &&
         ((h = this.OHr.CurrentTimeScale),
@@ -768,11 +772,11 @@ let CharacterSkillComponent =
       let i = 1;
       t = t.SkillInfo;
       return (
-        t.SkillGenre === 0
+        0 === t.SkillGenre
           ? (i =
               1e-4 *
               this.eZr.GetCurrentValue(EAttributeId.Proto_AutoAttackSpeed))
-          : t.SkillGenre === 1 &&
+          : 1 === t.SkillGenre &&
             (i =
               1e-4 *
               this.eZr.GetCurrentValue(EAttributeId.Proto_CastAttackSpeed)),
@@ -780,7 +784,7 @@ let CharacterSkillComponent =
       );
     }
     PlaySkillMontage(t, i, e, s, r) {
-      const h = this.CurrentSkill;
+      var h = this.CurrentSkill;
       if (!h)
         return (
           CombatDebugController_1.CombatDebugController.CombatError(
@@ -823,10 +827,10 @@ let CharacterSkillComponent =
     }
     EndOwnerAndFollowSkills() {
       this.StopAllSkills("CharacterSkillComponent.EndOwnerAndFollowSkills");
-      const t = this.Entity.GetComponent(47)?.FollowIds;
+      var t = this.Entity.GetComponent(47)?.FollowIds;
       if (t)
         for (const e of t) {
-          const i = EntitySystem_1.EntitySystem.Get(e)?.GetComponent(33);
+          var i = EntitySystem_1.EntitySystem.Get(e)?.GetComponent(33);
           i &&
             i.StopAllSkills("CharacterSkillComponent.EndOwnerAndFollowSkills");
         }
@@ -836,7 +840,7 @@ let CharacterSkillComponent =
         for (const i of this.GetAllActivatedSkill()) this.aen(i, t);
     }
     StopGroup1Skill(t) {
-      let i;
+      var i;
       this.CheckIsLoaded() && (i = this.CurrentSkill) && this.aen(i, t);
     }
     EndSkill(t, i) {
@@ -845,8 +849,8 @@ let CharacterSkillComponent =
         this.hen(t, i);
     }
     len(t, i) {
-      const e = t.SkillInfo.GroupId;
-      const s = t.SkillInfo.InterruptLevel;
+      var e = t.SkillInfo.GroupId,
+        s = t.SkillInfo.InterruptLevel;
       return this._en(e, s, i, t);
     }
     CheckJumpCanInterrupt() {
@@ -866,8 +870,8 @@ let CharacterSkillComponent =
     _en(t, i, e, s) {
       let r = !0;
       if (t === exports.SKILL_GROUP_MAIN) {
-        let h;
-        const o = this.CurrentSkill;
+        var h,
+          o = this.CurrentSkill;
         o &&
           ((l = (h = o.SkillInfo).InterruptLevel < i),
           (h = h.InterruptLevel === i && this.OZr),
@@ -911,7 +915,7 @@ let CharacterSkillComponent =
         this.BZr?.ResetMultiSkills(t.SkillId),
         this.BZr?.ResetCdDelayTime(t.SkillId);
       i = t.SkillInfo.SkillMode;
-      i === 1
+      1 === i
         ? t.ActiveAbility?.IsValid()
           ? t.ActiveAbility.K2_EndAbility()
           : CombatDebugController_1.CombatDebugController.CombatError(
@@ -921,7 +925,7 @@ let CharacterSkillComponent =
               ["技能ID", t.SkillId],
               ["技能名称", t.SkillName],
             )
-        : i === 0 && t.RequestStopMontage();
+        : 0 === i && t.RequestStopMontage();
     }
     IsSkillGenreForbidden(t) {
       switch (t.SkillGenre) {
@@ -952,8 +956,8 @@ let CharacterSkillComponent =
       return !1;
     }
     uen(t, i) {
-      let e;
-      let s = t.SkillInfo;
+      var e,
+        s = t.SkillInfo;
       return this.Hte.IsAutonomousProxy || s.AutonomouslyBySimulate
         ? this.Lie.HasTag(-1388400236)
           ? "角色处于不可控制状态"
@@ -963,14 +967,14 @@ let CharacterSkillComponent =
               ? "角色处于冰冻状态"
               : this.IsSkillGenreForbidden(s)
                 ? "该类别技能被临时禁止"
-                : s.SkillGenre === 8
+                : 8 === s.SkillGenre
                   ? "不能主动调用被动技能"
                   : t.AbilityClass &&
                       t.AbilityClass.IsChildOf(UE.Ga_Passive_C.StaticClass())
                     ? "策划可能误把被动GA放在普攻0技能组里"
                     : this.IsSkillInCd(t.SkillId)
                       ? "技能处于CD中"
-                      : s.StrengthCost !== 0 &&
+                      : 0 !== s.StrengthCost &&
                           FormationAttributeController_1.FormationAttributeController.GetValue(
                             1,
                           ) <= 1
@@ -991,7 +995,7 @@ let CharacterSkillComponent =
         : "非主控无权限释放技能";
     }
     cen(t) {
-      let i;
+      var i;
       return (
         !this.LoadedSkills.has(t) &&
           PreloadDefine_1.PreloadSetting.UseNewPreload &&
@@ -1028,8 +1032,8 @@ let CharacterSkillComponent =
         ["技能名", e.SkillName],
         ["上下文", i.Context],
       );
-      var s = [];
-      var r = this.uen(e, s);
+      var s = [],
+        r = this.uen(e, s);
       if (r)
         return (
           CombatDebugController_1.CombatDebugController.CombatInfo(
@@ -1047,9 +1051,9 @@ let CharacterSkillComponent =
       s.forEach((t) => {
         this.aen(t, "开始新技能");
       });
-      var r = this.GetSkillInfo(t);
-      var s = this.Hte?.IsAutonomousProxy ?? !1;
-      let h = this.StateMachineComp?.StateMachineGroup?.IsCurrentTaskSkill(t);
+      var r = this.GetSkillInfo(t),
+        s = this.Hte?.IsAutonomousProxy ?? !1,
+        h = this.StateMachineComp?.StateMachineGroup?.IsCurrentTaskSkill(t);
       if (this.FightStateComp && r.GroupId === exports.SKILL_GROUP_MAIN && !h) {
         h = this.FightStateComp.TrySwitchSkillState(e.SkillInfo, !0);
         if (!h)
@@ -1074,7 +1078,7 @@ let CharacterSkillComponent =
           s,
         );
       h = r.SkillMode;
-      if (h === 1) {
+      if (1 === h) {
         if (
           ((this.AZr = e),
           CombatDebugController_1.CombatDebugController.CombatDebug(
@@ -1102,7 +1106,7 @@ let CharacterSkillComponent =
             !1
           );
       } else
-        h === 0 &&
+        0 === h &&
           (this.den(e),
           e.HasMontages
             ? (CombatDebugController_1.CombatDebugController.CombatDebug(
@@ -1176,7 +1180,7 @@ let CharacterSkillComponent =
       );
     }
     SimulatedBeginSkill(t, i, e = !1, s = 0, r = BigInt(0)) {
-      const h = this.cen(t);
+      var h = this.cen(t);
       if (!h)
         return (
           CombatDebugController_1.CombatDebugController.CombatError(
@@ -1212,8 +1216,8 @@ let CharacterSkillComponent =
         !this.Cen(h, e))
       )
         return !1;
-      const o = h.SkillInfo;
-      let l = this.StateMachineComp?.StateMachineGroup?.IsCurrentTaskSkill(t);
+      var o = h.SkillInfo,
+        l = this.StateMachineComp?.StateMachineGroup?.IsCurrentTaskSkill(t);
       if (
         this.FightStateComp &&
         h.SkillInfo.GroupId === exports.SKILL_GROUP_MAIN &&
@@ -1246,7 +1250,7 @@ let CharacterSkillComponent =
       );
     }
     SimulateEndSkill(t) {
-      const i = this.LoadedSkills.get(t);
+      var i = this.LoadedSkills.get(t);
       i
         ? i.Active && i.IsSimulated
           ? (CombatDebugController_1.CombatDebugController.CombatInfo(
@@ -1322,7 +1326,7 @@ let CharacterSkillComponent =
       ),
         (this.AZr.ActiveAbility = t);
       const e = this.AZr.SkillId;
-      let s;
+      var s;
       return (
         t.IsA(UE.GA_Base_C.StaticClass()) &&
           (((s = t).当前技能数据 = this.AZr.SkillInfo),
@@ -1379,25 +1383,25 @@ let CharacterSkillComponent =
             ["技能Id", t.SkillId],
             ["技能名", t.SkillName],
           );
-        let i = this.GetSkillInfo(t.SkillId);
-        var e =
-          (t.BeginSkill(),
-          this.gen(i.GroupId, t),
-          SkillMessageController_1.SkillMessageController.UseSkillRequest(
-            this.Entity,
-            t,
-            this.SkillTarget?.Id ?? 0,
-          ),
-          this.pen(t),
-          this.BZr?.IsMultiSkill(t.SkillInfo) &&
-            this.BZr.StartMultiSkill(t, !1),
-          this.BZr?.StartCd(t.SkillId),
-          Math.abs(i.StrengthCost) > 0 &&
-            FormationAttributeController_1.FormationAttributeController.AddValue(
-              1,
-              i.StrengthCost,
+        var i = this.GetSkillInfo(t.SkillId),
+          e =
+            (t.BeginSkill(),
+            this.gen(i.GroupId, t),
+            SkillMessageController_1.SkillMessageController.UseSkillRequest(
+              this.Entity,
+              t,
+              this.SkillTarget?.Id ?? 0,
             ),
-          this.GetSkillLevelBySkillInfoId(t.SkillId));
+            this.pen(t),
+            this.BZr?.IsMultiSkill(t.SkillInfo) &&
+              this.BZr.StartMultiSkill(t, !1),
+            this.BZr?.StartCd(t.SkillId),
+            0 < Math.abs(i.StrengthCost) &&
+              FormationAttributeController_1.FormationAttributeController.AddValue(
+                1,
+                i.StrengthCost,
+              ),
+            this.GetSkillLevelBySkillInfoId(t.SkillId));
         if (
           (i.GroupId === exports.SKILL_GROUP_MAIN &&
             (this.IsMainSkillReadyEnd = !1),
@@ -1421,15 +1425,15 @@ let CharacterSkillComponent =
           exports.SKILL_GROUP_MAIN === i.GroupId)
         ) {
           this.Gce &&
-            this.Gce.CharacterMovement.MovementMode === 6 &&
+            6 === this.Gce.CharacterMovement.MovementMode &&
             ((e = this.Gce.CharacterMovement.CustomMovementMode) ===
             CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_GLIDE
               ? (i = this.Entity.GetComponent(50)).Valid && i.ExitGlideState()
               : e === CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SOAR &&
                 (i = this.Entity.GetComponent(50)).Valid &&
                 i.ExitSoarState());
-          let s;
-          var e = this.mBe.MoveState;
+          var s,
+            e = this.mBe.MoveState;
           switch (e) {
             case CharacterUnifiedStateTypes_1.ECharMoveState.Sprint:
               this.Lie.HasTag(-1800191060) ||
@@ -1453,7 +1457,7 @@ let CharacterSkillComponent =
       }
     }
     DoSkillEnd(t) {
-      let i;
+      var i;
       this.RZr.has(t.SkillId) ||
         (this.RZr.add(t.SkillId),
         CombatDebugController_1.CombatDebugController.CombatInfo(
@@ -1521,8 +1525,8 @@ let CharacterSkillComponent =
         ));
     }
     EndSkillMontage(t, i) {
-      let e;
-      const s = this.LoadedSkills.get(t);
+      var e,
+        s = this.LoadedSkills.get(t);
       s &&
         (e = ModelManager_1.ModelManager.CombatMessageModel.GetCombatContext(
           s.MontageContextId,
@@ -1539,7 +1543,7 @@ let CharacterSkillComponent =
       t && t.PlayMontage(i, e, s, r);
     }
     RollingGrounded() {
-      const t = this.Entity.GetComponent(33);
+      var t = this.Entity.GetComponent(33);
       t.Valid &&
         ((t.IsMainSkillReadyEnd = !1),
         (this.NZr = TimerSystem_1.TimerSystem.Delay(
@@ -1556,9 +1560,9 @@ let CharacterSkillComponent =
       return !!this.BZr && this.BZr.IsSkillInCd(t);
     }
     GetCurrentMontageCorrespondingSkillId() {
-      let t;
-      let i;
-      const e = this.Szo?.GetCurrentWaitAndPlayedMontageCorrespondingGa();
+      var t,
+        i,
+        e = this.Szo?.GetCurrentWaitAndPlayedMontageCorrespondingGa();
       for ([t, i] of this.LoadedSkills)
         if (i.Active && i.ActiveAbility === e) return t;
       return (
@@ -1582,7 +1586,7 @@ let CharacterSkillComponent =
         );
     }
     xDn() {
-      let t = this.CurrentSkill;
+      var t = this.CurrentSkill;
       t &&
         (t.SkillInfo.SkillTarget.TargetDied
           ? (this.xZr?.Valid &&
@@ -1608,16 +1612,16 @@ let CharacterSkillComponent =
       {
         let t = this.SkillTargetSocket;
         t = t || HIT_CASE_SOCKET_NAME;
-        var i = this.SkillTarget.Entity.GetComponent(3);
-        const e = i.Actor.Mesh;
-        const s = FNameUtil_1.FNameUtil.GetDynamicFName(t);
+        var i = this.SkillTarget.Entity.GetComponent(3),
+          e = i.Actor.Mesh,
+          s = FNameUtil_1.FNameUtil.GetDynamicFName(t);
         return e?.DoesSocketExist(s)
           ? e.GetSocketTransform(s, 0)
           : i.ActorTransform;
       }
     }
     GetTargetDistance() {
-      let t;
+      var t;
       return this.SkillTarget && (t = this.GetTargetTransform())
         ? (this.Lz.FromUeVector(t.GetLocation()),
           Vector_1.Vector.Dist(this.Hte.ActorLocationProxy, this.Lz))
@@ -1672,11 +1676,11 @@ let CharacterSkillComponent =
             ));
     }
     IsHasInputDir() {
-      let t;
+      var t;
       return (
         !!this.CheckIsLoaded() &&
         ((t = this.Hte.InputDirectProxy),
-        Math.abs(t.X) > 0 || Math.abs(t.Y) > 0)
+        0 < Math.abs(t.X) || 0 < Math.abs(t.Y))
       );
     }
     Sen() {
@@ -1741,9 +1745,9 @@ let CharacterSkillComponent =
       if (this.Lie.HasTag(504239013)) return !1;
       if (!this.FZr) return !1;
       if (!this.Hte.IsMoveAutonomousProxy) return !1;
-      const i = Math.abs(this.HZr);
+      var i = Math.abs(this.HZr);
       if (this.WZr) {
-        const e = this.Ien();
+        var e = this.Ien();
         if (!e) return !1;
         MathUtils_1.MathUtils.LookRotationUpFirst(
           e,
@@ -1768,7 +1772,7 @@ let CharacterSkillComponent =
       return !0;
     }
     Ien() {
-      const i = this.Hte.ActorLocationProxy;
+      var i = this.Hte.ActorLocationProxy;
       switch (this.jZr.Type) {
         case 0:
           return this.SkillTarget
@@ -1785,7 +1789,7 @@ let CharacterSkillComponent =
         case 6: {
           let t = void 0;
           return (t =
-            this.jZr.Type === 3
+            3 === this.jZr.Type
               ? BlackboardController_1.BlackboardController.GetEntityIdByEntity(
                   this.Entity.Id,
                   this.jZr.Target,
@@ -1817,10 +1821,11 @@ let CharacterSkillComponent =
             );
           return e ? (this.Dxr.DeepCopy(e), this.Dxr) : void 0;
         default:
+          return;
       }
     }
     Den(t, i) {
-      let e = this.CurrentSkill;
+      var e = this.CurrentSkill;
       let s = void 0;
       (s = e ? this.GetTargetTransform() : s)
         ? this.Dxr.FromUeVector(s.GetLocation())
@@ -1828,7 +1833,7 @@ let CharacterSkillComponent =
         this.Dxr.SubtractionEqual(i),
         this.Dxr.Normalize(),
         this.VZr.IsUseAnsRotateOffset &&
-          this.VZr.AnsRotateOffset.Yaw !== 0 &&
+          0 !== this.VZr.AnsRotateOffset.Yaw &&
           ((this.Dxr.Z = 0),
           this.VZr.AnsRotateOffset.Quaternion().RotateVector(
             this.Dxr,
@@ -1838,18 +1843,18 @@ let CharacterSkillComponent =
         (t = Math.abs(MathUtils_1.MathUtils.GetAngleByVectorDot(this.Dxr, e)));
       return (
         this.VZr.IsPaused
-          ? this.VZr.ResumeRotateThreshold > 0 &&
+          ? 0 < this.VZr.ResumeRotateThreshold &&
             (t < this.VZr.ResumeRotateThreshold
               ? this.Dxr.DeepCopy(e)
               : (this.VZr.IsPaused = !1))
-          : this.VZr.PauseRotateThreshold > 0 &&
+          : 0 < this.VZr.PauseRotateThreshold &&
             t < this.VZr.PauseRotateThreshold &&
             ((this.VZr.IsPaused = !0), this.Dxr.DeepCopy(e)),
         this.Dxr
       );
     }
     GetPointTransform(t) {
-      let i;
+      var i;
       return this.CheckIsLoaded() &&
         (i = this.Hte.Actor.Mesh)?.DoesSocketExist(t)
         ? i.GetSocketTransform(t, 0)
@@ -1904,7 +1909,7 @@ let CharacterSkillComponent =
       }
     }
     IsCanUseSkill(t) {
-      let i;
+      var i;
       return (
         !!this.CheckIsLoaded() &&
         !(
@@ -1927,10 +1932,10 @@ let CharacterSkillComponent =
       return this.DZr.get(t)?.[SKILL_GROUP_INDEX]?.SkillId ?? 0;
     }
     pen(t) {
-      const i = { Entity: this.Entity, SkillComponent: this, Skill: t };
-      const e = this.GetSkillInfo(t.SkillId);
+      var i = { Entity: this.Entity, SkillComponent: this, Skill: t },
+        e = this.GetSkillInfo(t.SkillId);
       for (let t = 0; t < e.SkillBehaviorGroup.Num(); t++) {
-        const s = e.SkillBehaviorGroup.Get(t);
+        var s = e.SkillBehaviorGroup.Get(t);
         if (
           SkillBehaviorCondition_1.SkillBehaviorCondition.Satisfy(
             s.SkillBehaviorConditionGroup,
@@ -1954,7 +1959,7 @@ let CharacterSkillComponent =
     }
     fen(t, i) {
       t = this.DZr.get(t);
-      t && (i = t.indexOf(i)) !== -1 && t.splice(i, 1);
+      t && -1 !== (i = t.indexOf(i)) && t.splice(i, 1);
     }
     *GetAllActivatedSkill() {
       for (const t of this.DZr.values()) for (const i of t.values()) yield i;
@@ -1973,7 +1978,7 @@ let CharacterSkillComponent =
         : this.wxn.set(t, i);
     }
     GiveSkillDebug(t) {
-      let i;
+      var i;
       this.LoadedSkills.has(t) ||
         (PreloadDefine_1.PreloadSetting.UseNewPreload &&
           ((i = this.Entity.GetComponent(194)).LoadSkillAsync(t),
@@ -1990,4 +1995,4 @@ let CharacterSkillComponent =
       CharacterSkillComponent,
     )),
   (exports.CharacterSkillComponent = CharacterSkillComponent);
-// # sourceMappingURL=CharacterSkillComponent.js.map
+//# sourceMappingURL=CharacterSkillComponent.js.map

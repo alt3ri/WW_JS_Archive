@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemView = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class ItemView extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(),
@@ -59,11 +59,11 @@ class ItemView extends GridProxyAbstract_1.GridProxyAbstract {
     this.SetSelected(!1);
   }
   RefreshItemViewByItemData(e) {
-    var e = (this.rmi = e).GetItemViewInfo();
-    const t = e.QualityId;
-    const i = e.IsLock;
-    const s = e.IsNewItem;
-    var e = e.ItemDataType;
+    var e = (this.rmi = e).GetItemViewInfo(),
+      t = e.QualityId,
+      i = e.IsLock,
+      s = e.IsNewItem,
+      e = e.ItemDataType;
     switch (
       (this.Odi(),
       this.kdi(t),
@@ -98,32 +98,32 @@ class ItemView extends GridProxyAbstract_1.GridProxyAbstract {
     }
   }
   Odi() {
-    const e = this.GetTexture(0);
+    var e = this.GetTexture(0);
     this.SetItemIcon(e, this.rmi.GetConfigId());
   }
   kdi(e) {
-    const t = this.GetSprite(2);
+    var t = this.GetSprite(2);
     t && this.SetItemQualityIcon(t, this.rmi.GetConfigId());
   }
   SetSelected(e) {
-    const t = this.GetExtendToggle(5);
+    var t = this.GetExtendToggle(5);
     e ? t.SetToggleState(1, !1) : t.SetToggleState(0, !1);
   }
   Fdi(e) {
-    const t = this.GetSprite(6);
+    var t = this.GetSprite(6);
     t && t.SetUIActive(e);
   }
   SetIsNewItem(e) {
     this.GetSprite(7).SetUIActive(e);
   }
   Vdi(e) {
-    const t = this.GetText(4);
+    var t = this.GetText(4);
     t &&
       (t.SetText(e.toString()), t.SetUIActive(!0), (e = this.GetText(3))) &&
       e.SetUIActive(!1);
   }
   Hdi(e) {
-    const t = this.GetText(3);
+    var t = this.GetText(3);
     t &&
       (LguiUtil_1.LguiUtil.SetLocalText(t, "LevelShow", e),
       t.SetUIActive(!0),
@@ -134,25 +134,25 @@ class ItemView extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetItem(14).SetUIActive(e);
   }
   jdi(e) {
-    const t = this.GetItem(16);
+    var t = this.GetItem(16);
     t.bIsUIActive !== e &&
       (t.SetUIActive(e), e) &&
       this.EPe.PlayLevelSequenceByName("EnterCd");
   }
   RefreshCdTimeDisplay() {
-    const e = this.rmi.GetConfigId();
-    let t = ModelManager_1.ModelManager.BuffItemModel;
-    const i = t.GetBuffItemRemainCdTime(e);
+    var e = this.rmi.GetConfigId(),
+      t = ModelManager_1.ModelManager.BuffItemModel,
+      i = t.GetBuffItemRemainCdTime(e);
     i <= 0
       ? this.jdi(!1)
       : ((t = t.GetBuffItemTotalCdTime(e)), this.Wdi(i, t), this.jdi(!0));
   }
   Wdi(e, t) {
-    var e = Math.ceil(e);
-    const i = this.GetSprite(17);
-    const s = this.GetText(18);
+    var e = Math.ceil(e),
+      i = this.GetSprite(17),
+      s = this.GetText(18);
     i.SetFillAmount(e / t), s.SetText(e.toString());
   }
 }
 exports.ItemView = ItemView;
-// # sourceMappingURL=ItemView.js.map
+//# sourceMappingURL=ItemView.js.map

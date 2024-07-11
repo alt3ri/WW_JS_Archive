@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventClaimDungeonReward = void 0);
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ActivityDoubleRewardController_1 = require("../../Module/Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController");
-const ConfirmBoxDefine_1 = require("../../Module/ConfirmBox/ConfirmBoxDefine");
-const InstanceDungeonController_1 = require("../../Module/InstanceDungeon/InstanceDungeonController");
-const PowerController_1 = require("../../Module/Power/PowerController");
-const ScrollingTipsController_1 = require("../../Module/ScrollingTips/ScrollingTipsController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
+const ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ActivityDoubleRewardController_1 = require("../../Module/Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController"),
+  ConfirmBoxDefine_1 = require("../../Module/ConfirmBox/ConfirmBoxDefine"),
+  InstanceDungeonController_1 = require("../../Module/InstanceDungeon/InstanceDungeonController"),
+  PowerController_1 = require("../../Module/Power/PowerController"),
+  ScrollingTipsController_1 = require("../../Module/ScrollingTips/ScrollingTipsController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder");
 class LevelEventClaimDungeonReward extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, r) {
-    let o;
-    let n = ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId;
-    let l =
-      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetInstancePowerCost(
-        n,
-      );
+    var o,
+      n = ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId,
+      l =
+        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetInstancePowerCost(
+          n,
+        );
     if (l && !(l <= 0))
       if (
         ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceCanReward(
@@ -30,7 +30,7 @@ class LevelEventClaimDungeonReward extends LevelGeneralBase_1.LevelEventBase {
               !0),
             o.SetTextArgs(l.toString()),
             o.FunctionMap.set(2, () => {
-              let e;
+              var e;
               a
                 ? InstanceDungeonController_1.InstanceDungeonController.GetInstExchangeRewardRequest()
                 : ((e = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
@@ -46,7 +46,7 @@ class LevelEventClaimDungeonReward extends LevelGeneralBase_1.LevelEventBase {
                 ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(n)
                   .CustomTypes,
               )) &&
-              l.LeftUpCount > 0 &&
+              0 < l.LeftUpCount &&
               (o.Tip = l.GetFullTip()),
             ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
               o,
@@ -63,4 +63,4 @@ class LevelEventClaimDungeonReward extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventClaimDungeonReward = LevelEventClaimDungeonReward;
-// # sourceMappingURL=LevelEventClaimDungeonReward.js.map
+//# sourceMappingURL=LevelEventClaimDungeonReward.js.map

@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ReputationDetailsView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const InfluenceReputationController_1 = require("../Controller/InfluenceReputationController");
-const InfluenceRewardItem_1 = require("./Item/InfluenceRewardItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  InfluenceReputationController_1 = require("../Controller/InfluenceReputationController"),
+  InfluenceRewardItem_1 = require("./Item/InfluenceRewardItem");
 class ReputationDetailsView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -21,7 +21,7 @@ class ReputationDetailsView extends UiViewBase_1.UiViewBase {
         this.CloseMe();
       }),
       (this.qni = () => {
-        const e = this.Lo.ReputationItem;
+        var e = this.Lo.ReputationItem;
         UiManager_1.UiManager.OpenView("ReputationTips", e);
       }),
       (this.Gni = () => {
@@ -89,14 +89,14 @@ class ReputationDetailsView extends UiViewBase_1.UiViewBase {
     this.bni.Destroy(), (this.bni = void 0);
   }
   RefreshView() {
-    const e =
-      ModelManager_1.ModelManager.InfluenceReputationModel.GetCanReceiveReward(
-        this.Pe.InfluenceId,
-      );
-    const t =
-      ModelManager_1.ModelManager.InfluenceReputationModel.GetReputationProgress(
-        this.Pe.InfluenceId,
-      );
+    var e =
+        ModelManager_1.ModelManager.InfluenceReputationModel.GetCanReceiveReward(
+          this.Pe.InfluenceId,
+        ),
+      t =
+        ModelManager_1.ModelManager.InfluenceReputationModel.GetReputationProgress(
+          this.Pe.InfluenceId,
+        );
     this.RefreshProgress(t.Current, t.Max),
       this.sqe(e.Reward, e.IsAllReceived),
       this.GetButton(2).RootUIComp.SetUIActive(!e.IsAllReceived),
@@ -124,4 +124,4 @@ class ReputationDetailsView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.ReputationDetailsView = ReputationDetailsView;
-// # sourceMappingURL=ReputationDetailsView.js.map
+//# sourceMappingURL=ReputationDetailsView.js.map

@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configPlotHandBookConfigByQuestId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const PlotHandBookConfig_1 = require("../Config/PlotHandBookConfig");
-const DB = "db_plothandbook.db";
-const FILE = "UniverseEditor/PlotHandBook/剧情图鉴_Json_PlotHandBook.csv";
-const TABLE = "PlotHandBookConfig";
-const COMMAND = "select BinData from `PlotHandBookConfig` where QuestId=?";
-const KEY_PREFIX = "PlotHandBookConfigByQuestId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  PlotHandBookConfig_1 = require("../Config/PlotHandBookConfig"),
+  DB = "db_plothandbook.db",
+  FILE = "UniverseEditor/PlotHandBook/剧情图鉴_Json_PlotHandBook.csv",
+  TABLE = "PlotHandBookConfig",
+  COMMAND = "select BinData from `PlotHandBookConfig` where QuestId=?",
+  KEY_PREFIX = "PlotHandBookConfigByQuestId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configPlotHandBookConfigByQuestId.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configPlotHandBookConfigByQuestId.GetConfig(";
 exports.configPlotHandBookConfigByQuestId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configPlotHandBookConfigByQuestId = {
       if (
         (e =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "QuestId",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "QuestId",
+              o,
+            ]))
       ) {
-        var e;
-        var i = void 0;
+        var e,
+          i = void 0;
         if (
           (([e, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configPlotHandBookConfigByQuestId = {
     }
   },
 };
-// # sourceMappingURL=PlotHandBookConfigByQuestId.js.map
+//# sourceMappingURL=PlotHandBookConfigByQuestId.js.map

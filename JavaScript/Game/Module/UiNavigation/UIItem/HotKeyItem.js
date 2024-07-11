@@ -9,4 +9,4 @@ class HotKeyItem extends UiPanelBase_1.UiPanelBase {
   OnClear() {}
 }
 exports.HotKeyItem = HotKeyItem;
-// # sourceMappingURL=HotKeyItem.js.map
+//# sourceMappingURL=HotKeyItem.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log");
 class TsDecoratorIsAutonomous extends UE.BTDecorator_BlueprintBase {
   PerformConditionCheckAI(o, e) {
-    const r = o.AiController;
+    var r = o.AiController;
     return r
       ? r.CharActorComp.IsAutonomousProxy
       : (Log_1.Log.CheckError() &&
@@ -16,4 +16,4 @@ class TsDecoratorIsAutonomous extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorIsAutonomous;
-// # sourceMappingURL=TsDecoratorIsAutonomous.js.map
+//# sourceMappingURL=TsDecoratorIsAutonomous.js.map

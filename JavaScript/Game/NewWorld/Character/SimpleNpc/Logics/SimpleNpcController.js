@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SimpleNpcController = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const ControllerBase_1 = require("../../../../../Core/Framework/ControllerBase");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const Global_1 = require("../../../../Global");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const PC_CHECK_RANGE = 6e3;
-const PC_CHECK_RANGE_SQUARED = PC_CHECK_RANGE * PC_CHECK_RANGE;
-const MOBILE_CHECK_RANGE = 3e3;
-const MOBILE_CHECK_RANGE_SQUARED = MOBILE_CHECK_RANGE * MOBILE_CHECK_RANGE;
-const DITHER_STEP = 0.33;
-const DITHER_MAX = 1;
-const DITHER_MIN = 0;
-const MILLISECOND_TO_SECOND = 0.001;
+const Log_1 = require("../../../../../Core/Common/Log"),
+  ControllerBase_1 = require("../../../../../Core/Framework/ControllerBase"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../../Global"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  PC_CHECK_RANGE = 6e3,
+  PC_CHECK_RANGE_SQUARED = PC_CHECK_RANGE * PC_CHECK_RANGE,
+  MOBILE_CHECK_RANGE = 3e3,
+  MOBILE_CHECK_RANGE_SQUARED = MOBILE_CHECK_RANGE * MOBILE_CHECK_RANGE,
+  DITHER_STEP = 0.33,
+  DITHER_MAX = 1,
+  DITHER_MIN = 0,
+  MILLISECOND_TO_SECOND = 0.001;
 class SimpleNpcController extends ControllerBase_1.ControllerBase {
   static get wtr() {
-    return this.Btr.size > 0;
+    return 0 < this.Btr.size;
   }
   static OnInit() {
     return (
@@ -63,7 +63,7 @@ class SimpleNpcController extends ControllerBase_1.ControllerBase {
   }
   static Add(t) {
     this.Gtr.add(t);
-    const e = Global_1.Global.BaseCharacter;
+    var e = Global_1.Global.BaseCharacter;
     e && this.Ftr(t, e.CharacterActorComponent.ActorLocationProxy, !1),
       this.CheckNpcShowState(t, !0),
       this.Vtr(t);
@@ -89,13 +89,13 @@ class SimpleNpcController extends ControllerBase_1.ControllerBase {
     this.Htr(t), this.jtr(t);
   }
   static GetSimpleNpcListByRange(t) {
-    const e = new Array();
-    const i = Global_1.Global.BaseCharacter;
+    var e = new Array(),
+      i = Global_1.Global.BaseCharacter;
     if (i) {
-      const r = t * t;
-      const o = i.CharacterActorComponent.ActorLocationProxy;
+      var r = t * t,
+        o = i.CharacterActorComponent.ActorLocationProxy;
       for (const a of this.Gtr) {
-        const s = a.SelfLocationProxy;
+        var s = a.SelfLocationProxy;
         r < Vector_1.Vector.DistSquared(o, s) || e.push(a);
       }
     }
@@ -108,15 +108,15 @@ class SimpleNpcController extends ControllerBase_1.ControllerBase {
       this.Qtr();
   }
   static UpdateDistanceLogic() {
-    const t = Global_1.Global.BaseCharacter;
+    var t = Global_1.Global.BaseCharacter;
     if (t) {
       this.gU || (this.Wtr(), (this.gU = !0));
-      const e = t.CharacterActorComponent.ActorLocationProxy;
+      var e = t.CharacterActorComponent.ActorLocationProxy;
       for (const i of this.Gtr) this.Ftr(i, e);
     }
   }
   static Ftr(t, e, i = !0) {
-    let r;
+    var r;
     t.IsNotUnload &&
       ((r = t.SelfLocationProxy),
       (e = Vector_1.Vector.DistSquared(e, r)) > this.Ktr
@@ -125,7 +125,7 @@ class SimpleNpcController extends ControllerBase_1.ControllerBase {
       (t.TempDistanceSquared = e));
   }
   static Xtr(t, e, i = !0) {
-    const r = t.IsInLogicRange;
+    var r = t.IsInLogicRange;
     t.ChangeLogicRangeState(e),
       r !== e &&
         (t.SetTickEnabled(e),
@@ -188,7 +188,7 @@ class SimpleNpcController extends ControllerBase_1.ControllerBase {
       this.ktr.delete(t);
   }
   static CheckNpcShowState(t, e, i = !0) {
-    const r = !this.wtr && this.ztr(t);
+    var r = !this.wtr && this.ztr(t);
     (r && !t.IsLodShow) ||
       (i
         ? e
@@ -201,7 +201,7 @@ class SimpleNpcController extends ControllerBase_1.ControllerBase {
         : this.Jtr(t, r));
   }
   static ztr(t) {
-    const e = ModelManager_1.ModelManager.WeatherModel;
+    var e = ModelManager_1.ModelManager.WeatherModel;
     if (!e) return !0;
     let i = !0;
     switch (e.CurrentWeatherId) {
@@ -254,4 +254,4 @@ class SimpleNpcController extends ControllerBase_1.ControllerBase {
   (SimpleNpcController.qtr = () => {
     SimpleNpcController.Qtr();
   });
-// # sourceMappingURL=SimpleNpcController.js.map
+//# sourceMappingURL=SimpleNpcController.js.map

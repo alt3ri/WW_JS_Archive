@@ -12,4 +12,4 @@ class TsFloatRange {
   }
 }
 exports.TsFloatRange = TsFloatRange;
-// # sourceMappingURL=TsFloatRange.js.map
+//# sourceMappingURL=TsFloatRange.js.map

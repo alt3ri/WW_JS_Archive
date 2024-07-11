@@ -11,10 +11,10 @@ class ComposeStructureSort extends CommonSort_1.CommonSort {
           : 0;
       }),
       (this.XLt = (t, r, o) => {
-        const s = t.IsUnlock;
-        const e = r.IsUnlock;
-        var t = t.IsStructure;
-        var r = r.IsStructure;
+        var s = t.IsUnlock,
+          e = r.IsUnlock,
+          t = t.IsStructure,
+          r = r.IsStructure;
         return s !== e
           ? o
             ? e - s
@@ -26,7 +26,7 @@ class ComposeStructureSort extends CommonSort_1.CommonSort {
             : 0;
       }),
       (this.VLt = (t, r, o) => {
-        let s;
+        var s;
         return r.IsUnlock !== t.IsUnlock
           ? ((s = r.IsUnlock - t.IsUnlock), o ? s : -s)
           : t.Quality !== r.Quality
@@ -41,4 +41,4 @@ class ComposeStructureSort extends CommonSort_1.CommonSort {
   }
 }
 exports.ComposeStructureSort = ComposeStructureSort;
-// # sourceMappingURL=ComposeStructureSort.js.map
+//# sourceMappingURL=ComposeStructureSort.js.map

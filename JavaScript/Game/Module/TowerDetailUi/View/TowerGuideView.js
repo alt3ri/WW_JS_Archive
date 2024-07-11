@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerGuideView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const TowerGuidePanel_1 = require("./TowerGuidePanel");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  TowerGuidePanel_1 = require("./TowerGuidePanel");
 class TowerGuideView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -53,4 +53,4 @@ class TowerGuideView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.TowerGuideView = TowerGuideView;
-// # sourceMappingURL=TowerGuideView.js.map
+//# sourceMappingURL=TowerGuideView.js.map

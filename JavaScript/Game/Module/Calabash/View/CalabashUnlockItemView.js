@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CalabashUnlockItemView = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const GameModeController_1 = require("../../../World/Controller/GameModeController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const CalabashController_1 = require("../CalabashController");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  GameModeController_1 = require("../../../World/Controller/GameModeController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  CalabashController_1 = require("../CalabashController");
 class CalabashUnlockItemView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -69,37 +69,37 @@ class CalabashUnlockItemView extends UiTickViewBase_1.UiTickViewBase {
   }
   Og() {
     var e =
-      ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomItemById(
-        this.Lvt[0],
-      );
-    var e =
-      ((this.Dvt =
-        ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
-          e.MonsterId,
+        ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomItemById(
+          this.Lvt[0],
+        ),
+      e =
+        ((this.Dvt =
+          ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
+            e.MonsterId,
+          )),
+        ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterInfoConfig(
+          this.Dvt.MonsterInfoId,
         )),
-      ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterInfoConfig(
-        this.Dvt.MonsterInfoId,
-      ));
-    var e =
-      ((this.Tvt = ConfigManager_1.ConfigManager.CalabashConfig.MaxTipCd),
-      this.GetText(3).ShowTextNew(e.Name),
-      ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-        this.Lvt[0],
-      ));
+      e =
+        ((this.Tvt = ConfigManager_1.ConfigManager.CalabashConfig.MaxTipCd),
+        this.GetText(3).ShowTextNew(e.Name),
+        ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+          this.Lvt[0],
+        ));
     this.SetTextureByPath(e.IconMiddle, this.GetTexture(1), this.Info?.Name),
       this.Avt(),
       this.Pqe();
   }
   Avt() {
-    var e = this.Lvt[2];
-    var e =
-      ConfigManager_1.ConfigManager.InventoryConfig.GetItemQualityConfig(
-        e,
-      ).UnlockVisionQuality;
+    var e = this.Lvt[2],
+      e =
+        ConfigManager_1.ConfigManager.InventoryConfig.GetItemQualityConfig(
+          e,
+        ).UnlockVisionQuality;
     this.SetTextureByPath(e, this.GetTexture(0));
   }
   Pqe() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomInstanceByItemId(
         this.Lvt[0],
       );
@@ -109,7 +109,7 @@ class CalabashUnlockItemView extends UiTickViewBase_1.UiTickViewBase {
     );
   }
   CloseViewOrShowNextData() {
-    ModelManager_1.ModelManager.CalabashModel.CalabashUnlockTipsList.length > 0
+    0 < ModelManager_1.ModelManager.CalabashModel.CalabashUnlockTipsList.length
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Calabash", 11, "刷新下个声骸数据"),
         this.Refresh())
@@ -121,4 +121,4 @@ class CalabashUnlockItemView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.CalabashUnlockItemView = CalabashUnlockItemView;
-// # sourceMappingURL=CalabashUnlockItemView.js.map
+//# sourceMappingURL=CalabashUnlockItemView.js.map

@@ -1,42 +1,46 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, i, o, e) {
-    let r;
-    const s = arguments.length;
-    let h =
-      s < 3 ? i : e === null ? (e = Object.getOwnPropertyDescriptor(i, o)) : e;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      s = arguments.length,
+      h =
+        s < 3
+          ? i
+          : null === e
+            ? (e = Object.getOwnPropertyDescriptor(i, o))
+            : e;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       h = Reflect.decorate(t, i, o, e);
     else
-      for (let n = t.length - 1; n >= 0; n--)
-        (r = t[n]) && (h = (s < 3 ? r(h) : s > 3 ? r(i, o, h) : r(i, o)) || h);
-    return s > 3 && h && Object.defineProperty(i, o, h), h;
+      for (var n = t.length - 1; 0 <= n; n--)
+        (r = t[n]) && (h = (s < 3 ? r(h) : 3 < s ? r(i, o, h) : r(i, o)) || h);
+    return 3 < s && h && Object.defineProperty(i, o, h), h;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiController = void 0);
-const cpp_1 = require("cpp");
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const PerformanceController_1 = require("../../../Core/Performance/PerformanceController");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CombatMessage_1 = require("../../Module/CombatMessage/CombatMessage");
-const CombatDebugController_1 = require("../../Utils/CombatDebugController");
-const BlackboardController_1 = require("../../World/Controller/BlackboardController");
-const AiModelController_1 = require("../Common/AiModelController");
-const AiAlertClass_1 = require("./AiAlertClass");
-const AiConditionEvents_1 = require("./AiConditionEvents");
-const AiHateList_1 = require("./AiHateList");
-const AiPatrolController_1 = require("./AiPatrolController");
-const AiPerceptionEvents_1 = require("./AiPerceptionEvents");
-const AiTaunt_1 = require("./AiTaunt");
-const NpcDecisionController_1 = require("./Npc/NpcDecisionController");
+const cpp_1 = require("cpp"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  PerformanceController_1 = require("../../../Core/Performance/PerformanceController"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CombatMessage_1 = require("../../Module/CombatMessage/CombatMessage"),
+  CombatDebugController_1 = require("../../Utils/CombatDebugController"),
+  BlackboardController_1 = require("../../World/Controller/BlackboardController"),
+  AiModelController_1 = require("../Common/AiModelController"),
+  AiAlertClass_1 = require("./AiAlertClass"),
+  AiConditionEvents_1 = require("./AiConditionEvents"),
+  AiHateList_1 = require("./AiHateList"),
+  AiPatrolController_1 = require("./AiPatrolController"),
+  AiPerceptionEvents_1 = require("./AiPerceptionEvents"),
+  AiTaunt_1 = require("./AiTaunt"),
+  NpcDecisionController_1 = require("./Npc/NpcDecisionController");
 class AiController {
   constructor() {
     (this.CharAiDesignComp = void 0),
@@ -71,11 +75,11 @@ class AiController {
       (this.AiCombatMessageId = void 0),
       (this.fie = 0),
       (this.OnChangeMode = () => {
-        const t = ModelManager_1.ModelManager.GameModeModel.IsMulti
+        var t = ModelManager_1.ModelManager.GameModeModel.IsMulti
           ? TimeUtil_1.TimeUtil.GetServerTimeStamp() - Time_1.Time.WorldTime
           : Time_1.Time.WorldTime - TimeUtil_1.TimeUtil.GetServerTimeStamp();
         for (const o of this.AiCoolDownList.keys()) {
-          const i = this.AiCoolDownList.get(o);
+          var i = this.AiCoolDownList.get(o);
           i && (i[0] = i[0] + t);
         }
       }),
@@ -85,7 +89,7 @@ class AiController {
     return this.Cie;
   }
   Tick(t) {
-    let i;
+    var i;
     this.UpdateCooldownTrigger(),
       this.cY &&
         (this.fie === Protocol_1.Aki.Protocol.HBs.Proto_Monster &&
@@ -96,7 +100,7 @@ class AiController {
         ModelManager_1.ModelManager.AiModel.AddAiScore(this));
   }
   ScoreUpdate() {
-    let t, i;
+    var t, i;
     this.CharAiDesignComp.Active &&
       ((t = cpp_1.KuroTime.GetMilliseconds64()),
       this.AiPerception &&
@@ -134,7 +138,7 @@ class AiController {
       this.NpcDecision.Init(this));
   }
   pie() {
-    let t, i;
+    var t, i;
     this.CharAiDesignComp?.Valid &&
       ((t = this.CharAiDesignComp.Entity),
       (this.CharActorComp = t.GetComponent(3)),
@@ -258,12 +262,12 @@ class AiController {
   }
   OnSkillEnd() {
     this.CharActorComp.IsAutonomousProxy &&
-      this.die === 1 &&
+      1 === this.die &&
       (this.AiControlSwitchRequest(this.CharActorComp.Entity, this),
       (this.die = 2));
   }
   IsWaitingSwitchControl() {
-    return this.die === 1 || this.die === 2;
+    return 1 === this.die || 2 === this.die;
   }
   ResetSwitchControlState() {
     this.die = 0;
@@ -272,10 +276,10 @@ class AiController {
     return this.AiCoolDownList.get(t)?.[0] ?? 0;
   }
   GetCoolDownRemainTime(t) {
-    var t = this.GetCoolDownTime(t);
-    const i = ModelManager_1.ModelManager.GameModeModel.IsMulti
-      ? TimeUtil_1.TimeUtil.GetServerTimeStamp()
-      : Time_1.Time.WorldTime;
+    var t = this.GetCoolDownTime(t),
+      i = ModelManager_1.ModelManager.GameModeModel.IsMulti
+        ? TimeUtil_1.TimeUtil.GetServerTimeStamp()
+        : Time_1.Time.WorldTime;
     return t < i ? 0 : t - i;
   }
   IsCoolDownTriggered(t) {
@@ -283,21 +287,21 @@ class AiController {
   }
   UpdateCooldownTrigger() {
     if (this.CharActorComp?.IsAutonomousProxy) {
-      let t;
-      let i;
-      let o;
-      const e = ModelManager_1.ModelManager.GameModeModel.IsMulti
-        ? TimeUtil_1.TimeUtil.GetServerTimeStamp()
-        : Time_1.Time.WorldTime;
+      var t,
+        i,
+        o,
+        e = ModelManager_1.ModelManager.GameModeModel.IsMulti
+          ? TimeUtil_1.TimeUtil.GetServerTimeStamp()
+          : Time_1.Time.WorldTime;
       for ([t, [i, o]] of this.AiCoolDownList)
         !o && i < e && this.ActivateCooldownTrigger(t);
     }
   }
   ActivateCooldownTrigger(t) {
-    let i;
-    let o;
-    const e = this.AiCoolDownList.get(t)?.[0];
-    const r = this.AiCoolDownEvents.get(t);
+    var i,
+      o,
+      e = this.AiCoolDownList.get(t)?.[0],
+      r = this.AiCoolDownEvents.get(t);
     this.AiCoolDownList.set(t, [e ?? 0, !0]),
       ModelManager_1.ModelManager.GameModeModel.IsMulti &&
         (((o = (i = Protocol_1.Aki.Protocol.Ai).vNn.create()).nkn = [
@@ -311,13 +315,13 @@ class AiController {
   }
   AddCoolDownTime(t, i) {
     let o = this.GetCoolDownTime(t);
-    const e = ModelManager_1.ModelManager.GameModeModel.IsMulti
+    var e = ModelManager_1.ModelManager.GameModeModel.IsMulti
       ? Time_1.Time.ServerTimeStamp
       : Time_1.Time.WorldTime;
     (!o || e > o) && (o = e), this.SetCoolDownTime(t, o + i, !0, "使用技能");
   }
   SetCoolDownTime(t, i, o, e = "") {
-    let r = this.GetCoolDownTime(t);
+    var r = this.GetCoolDownTime(t);
     r && i < r
       ? CombatDebugController_1.CombatDebugController.CombatInfo(
           "Ai",
@@ -347,7 +351,7 @@ class AiController {
           )));
   }
   InitCooldownTimer(t, i) {
-    const o = ModelManager_1.ModelManager.GameModeModel.IsMulti
+    var o = ModelManager_1.ModelManager.GameModeModel.IsMulti
       ? Time_1.Time.ServerTimeStamp
       : Time_1.Time.WorldTime;
     this.AiCoolDownEvents.has(t)
@@ -363,7 +367,7 @@ class AiController {
         this.SetCoolDownTime(t, o, !0, "初始化AIC延迟节点"));
   }
   static AiInformationNotify(t, i) {
-    const o = t.GetComponent(38)?.AiController;
+    var o = t.GetComponent(38)?.AiController;
     for (const e of i.tfs)
       o.SetCoolDownTime(
         e.skn,
@@ -373,17 +377,17 @@ class AiController {
       );
   }
   static AiInformationS(t, i) {
-    const o = t.GetComponent(38)?.AiController;
+    var o = t.GetComponent(38)?.AiController;
     if (o) {
-      for (const { skn: e, akn: r } of i.hkn) {
-        const s = o.AiCoolDownList.get(e)?.[1] ?? !0;
+      for (var { skn: e, akn: r } of i.hkn) {
+        var s = o.AiCoolDownList.get(e)?.[1] ?? !0;
         o.AiCoolDownList.set(e, [
           Number(MathUtils_1.MathUtils.LongToBigInt(r)),
           s,
         ]);
       }
-      for (const { skn: h, akn: n } of i.nkn) {
-        const l = o.AiCoolDownList.get(h)?.[0] ?? 0;
+      for (var { skn: h, akn: n } of i.nkn) {
+        var l = o.AiCoolDownList.get(h)?.[0] ?? 0;
         o.AiCoolDownList.set(h, [l, n]);
       }
       for (const a of i.ifs)
@@ -391,7 +395,7 @@ class AiController {
     }
   }
   AiControlSwitchRequest(t, i) {
-    const o = Protocol_1.Aki.Protocol.Ai.Jjn.create();
+    var o = Protocol_1.Aki.Protocol.Ai.Jjn.create();
     const e = t.GetComponent(0).GetCreatureDataId();
     (o.rkn = MathUtils_1.MathUtils.NumberToLong(e)),
       Net_1.Net.Call(18260, o, (t) => {
@@ -421,4 +425,4 @@ __decorate(
     null,
   ),
   (exports.AiController = AiController);
-// # sourceMappingURL=AiController.js.map
+//# sourceMappingURL=AiController.js.map

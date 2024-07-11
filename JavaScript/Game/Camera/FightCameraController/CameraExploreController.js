@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraExploreController = void 0);
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const StateBase_1 = require("../../../Core/Utils/StateMachine/StateBase");
-const StateMachine_1 = require("../../../Core/Utils/StateMachine/StateMachine");
-const CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const CameraControllerBase_1 = require("./CameraControllerBase");
+const Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  StateBase_1 = require("../../../Core/Utils/StateMachine/StateBase"),
+  StateMachine_1 = require("../../../Core/Utils/StateMachine/StateMachine"),
+  CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  CameraControllerBase_1 = require("./CameraControllerBase");
 class DefaultState extends StateBase_1.StateBase {
   OnEnter() {
     this.Owner.ResetBreakModifyInfo();
@@ -54,17 +54,18 @@ class AdjustState extends StateBase_1.StateBase {
     this.B1e.DeepCopy(this.CurrentCameraArmOffset),
       (this.U1e = 0),
       this.A1e.FromUeVector(this.Owner.Camera.Character.K2_GetActorLocation());
-    var t = this.Owner.Camera.Character.K2_GetActorRotation();
-    var t =
-      (this.P1e.DeepCopy(this.Owner.LookAtLocation1),
-      this.P1e.SubtractionEqual(this.Owner.LookAtLocation2),
-      (this.w1e =
-        Vector_1.Vector.DotProduct(
-          this.P1e,
-          Vector_1.Vector.Create(t.Vector()),
-        ) > 0),
-      this.P1e.Normalize(MathUtils_1.MathUtils.KindaSmallNumber),
-      Vector_1.Vector.Create());
+    var t = this.Owner.Camera.Character.K2_GetActorRotation(),
+      t =
+        (this.P1e.DeepCopy(this.Owner.LookAtLocation1),
+        this.P1e.SubtractionEqual(this.Owner.LookAtLocation2),
+        (this.w1e =
+          0 <
+          Vector_1.Vector.DotProduct(
+            this.P1e,
+            Vector_1.Vector.Create(t.Vector()),
+          )),
+        this.P1e.Normalize(MathUtils_1.MathUtils.KindaSmallNumber),
+        Vector_1.Vector.Create());
     t.DeepCopy(this.A1e),
       t.SubtractionEqual(this.Owner.LookAtLocation1),
       (this.x1e = Vector_1.Vector.DotProduct(this.P1e, t)),
@@ -78,7 +79,7 @@ class AdjustState extends StateBase_1.StateBase {
     this.OnEnter();
   }
   OnUpdate(t) {
-    let s;
+    var s;
     this.Owner.CheckAdjust()
       ? ((s = Vector_1.Vector.Create(
           this.Owner.Camera.Character.K2_GetActorLocation(),
@@ -89,7 +90,7 @@ class AdjustState extends StateBase_1.StateBase {
       : this.StateMachine.Switch(0);
   }
   O1e(t) {
-    let s;
+    var s;
     t.Equals(this.A1e, MathUtils_1.MathUtils.KindaSmallNumber) ||
       (this.Owner.HasLookAtPoint
         ? ((s = Vector_1.Vector.Create()).DeepCopy(t),
@@ -99,16 +100,16 @@ class AdjustState extends StateBase_1.StateBase {
         : (this.U1e += Vector_1.Vector.Dist(t, this.A1e)));
   }
   G1e() {
-    var t = Vector_1.Vector.Create(this.Owner.Camera.PlayerLocation);
-    var s = this.Owner.Camera.CameraActor.K2_GetActorRotation();
-    var s = Vector_1.Vector.Create(s.Vector());
-    var i = this.w1e ? this.Owner.LookAtLocation1 : this.Owner.LookAtLocation2;
-    const h = Vector_1.Vector.Create();
-    var i = (i.SubtractionEqual(t), h.CosineAngle2D(s));
-    var t = h.SineAngle2D(s);
-    var s =
-      ((this.sle = this.Owner.Camera.CameraActor.K2_GetActorRotation().Yaw),
-      Rotator_1.Rotator.Create());
+    var t = Vector_1.Vector.Create(this.Owner.Camera.PlayerLocation),
+      s = this.Owner.Camera.CameraActor.K2_GetActorRotation(),
+      s = Vector_1.Vector.Create(s.Vector()),
+      i = this.w1e ? this.Owner.LookAtLocation1 : this.Owner.LookAtLocation2,
+      h = Vector_1.Vector.Create(),
+      i = (i.SubtractionEqual(t), h.CosineAngle2D(s)),
+      t = h.SineAngle2D(s),
+      s =
+        ((this.sle = this.Owner.Camera.CameraActor.K2_GetActorRotation().Yaw),
+        Rotator_1.Rotator.Create());
     h.Rotation(s),
       (this.ale = s.Yaw),
       t < 0
@@ -137,9 +138,9 @@ class AdjustState extends StateBase_1.StateBase {
               )
             ? (this.ale -= this.Owner.CheckAdjustYawAngleMax)
             : (this.ale = this.sle),
-      this.sle - this.ale > 180
+      180 < this.sle - this.ale
         ? (this.ale += 360)
-        : this.ale - this.sle > 180 && (this.ale -= 360),
+        : 180 < this.ale - this.sle && (this.ale -= 360),
       (this.ole = this.Owner.Camera.CameraActor.K2_GetActorRotation().Pitch),
       (this.rle = MathUtils_1.MathUtils.RangeClamp(
         h.Z,
@@ -158,11 +159,10 @@ class AdjustState extends StateBase_1.StateBase {
           : (this.b1e = this.L1e);
   }
   k1e() {
-    let t;
-    let s;
-    var i =
-      this.Owner.FadeDistance > 0 ? this.U1e / this.Owner.FadeDistance : 1;
-    var i = MathUtils_1.MathUtils.Clamp(i, 0, 1);
+    var t,
+      s,
+      i = 0 < this.Owner.FadeDistance ? this.U1e / this.Owner.FadeDistance : 1,
+      i = MathUtils_1.MathUtils.Clamp(i, 0, 1);
     this.Owner.HasLookAtPoint &&
       ((t = MathUtils_1.MathUtils.LerpSin(this.sle, this.ale, i)),
       (s = MathUtils_1.MathUtils.LerpSin(this.ole, this.rle, i)),
@@ -246,10 +246,10 @@ class CameraExploreController extends CameraControllerBase_1.CameraControllerBas
   }
   ExitCameraExplore(t) {
     if ((this.V1e.delete(t), this.H1e === t))
-      if (this.V1e.size > 0)
+      if (0 < this.V1e.size)
         for (const o of this.V1e) {
           const t = o[0];
-          const [s, i, h, e, a, r] = o[1];
+          var [s, i, h, e, a, r] = o[1];
           switch (
             ((this.H1e = t),
             (this.HasLookAtPoint = !(!s || !i)),
@@ -286,10 +286,10 @@ class CameraExploreController extends CameraControllerBase_1.CameraControllerBas
   }
   CheckAdjust() {
     if (!this.F1e) return !1;
-    let t = Vector_1.Vector.Create(
-      this.Camera.Character.K2_GetActorRotation().Vector(),
-    );
-    let s = Vector_1.Vector.Create();
+    var t = Vector_1.Vector.Create(
+        this.Camera.Character.K2_GetActorRotation().Vector(),
+      ),
+      s = Vector_1.Vector.Create();
     if (
       (this.Camera.CameraRotation.Vector(s),
       t.DotProduct(s) < this.CheckCameraDirectionCos)
@@ -316,4 +316,4 @@ class CameraExploreController extends CameraControllerBase_1.CameraControllerBas
   }
 }
 exports.CameraExploreController = CameraExploreController;
-// # sourceMappingURL=CameraExploreController.js.map
+//# sourceMappingURL=CameraExploreController.js.map

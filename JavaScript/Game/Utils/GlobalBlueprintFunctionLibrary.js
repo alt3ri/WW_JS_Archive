@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const GlobalData_1 = require("../GlobalData");
+const UE = require("ue"),
+  GlobalData_1 = require("../GlobalData");
 class GlobalBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static GetBpEventManager() {
     return GlobalData_1.GlobalData.BpEventManager;
@@ -11,4 +11,4 @@ class GlobalBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
 }
 exports.default = GlobalBlueprintFunctionLibrary;
-// # sourceMappingURL=GlobalBlueprintFunctionLibrary.js.map
+//# sourceMappingURL=GlobalBlueprintFunctionLibrary.js.map

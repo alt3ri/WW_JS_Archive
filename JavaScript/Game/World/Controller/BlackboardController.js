@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BlackboardController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../GlobalData");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CombatDebugController_1 = require("../../Utils/CombatDebugController");
-const BlackboardMap_1 = require("../Define/BlackboardMap");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../GlobalData"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CombatDebugController_1 = require("../../Utils/CombatDebugController"),
+  BlackboardMap_1 = require("../Define/BlackboardMap");
 class BlackboardController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -37,11 +37,11 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static Egr(t) {
-    const o = Protocol_1.Aki.Protocol.GKn.create();
+    var o = Protocol_1.Aki.Protocol.GKn.create();
     (o.xFn = t), Net_1.Net.Call(10758, o, (t) => {});
   }
   static ygr(t, o) {
-    let r;
+    var r;
     this.Igr() &&
       (((r = Protocol_1.Aki.Protocol.NKn.create()).rkn =
         MathUtils_1.MathUtils.NumberToLong(t)),
@@ -61,13 +61,13 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
           ["v", e[e.gkn]],
         ),
         r.set(e.Ckn, e));
-    r.size > 0 && this.PendingBlackboardParams.set(t, r);
+    0 < r.size && this.PendingBlackboardParams.set(t, r);
   }
   static GetIntValueByWorld(t) {
     return ModelManager_1.ModelManager.BlackboardModel.GetIntValueByWorld(t);
   }
   static SetIntValueByWorld(t, o) {
-    let r;
+    var r;
     ModelManager_1.ModelManager.BlackboardModel.SetIntValueByWorld(t, o),
       this.Igr() &&
         (((r = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
@@ -81,7 +81,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     return ModelManager_1.ModelManager.BlackboardModel.GetIntValuesByWorld(t);
   }
   static SetIntValuesByWorld(t, o) {
-    let r;
+    var r;
     ModelManager_1.ModelManager.BlackboardModel.SetIntValuesByWorld(t, o),
       this.Igr() &&
         (((r = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
@@ -96,7 +96,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     return ModelManager_1.ModelManager.BlackboardModel.GetLongValueByWorld(t);
   }
   static SetLongValueByWorld(t, o) {
-    let r;
+    var r;
     ModelManager_1.ModelManager.BlackboardModel.SetLongValueByWorld(t, o),
       this.Igr() &&
         (((r = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
@@ -114,13 +114,13 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
       (ModelManager_1.ModelManager.BlackboardModel.SetLongValuesByWorld(t, o),
       this.Igr())
     ) {
-      const r = Protocol_1.Aki.Protocol.l2s.create();
+      var r = Protocol_1.Aki.Protocol.l2s.create();
       (r.Ikn = Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_LongArray),
         (r.Ckn = t),
         (r.R7n = Protocol_1.Aki.Protocol.d2s.create()),
         (r.R7n.A7n = new Array(o.length));
       for (let t = 0; t < o.length; t++) {
-        const e = MathUtils_1.MathUtils.BigIntToLong(o[t]);
+        var e = MathUtils_1.MathUtils.BigIntToLong(o[t]);
         r.R7n.A7n[t] = e;
       }
       t = new Array();
@@ -133,7 +133,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetBooleanValueByWorld(t, o) {
-    let r;
+    var r;
     ModelManager_1.ModelManager.BlackboardModel.SetBooleanValueByWorld(t, o),
       this.Igr() &&
         (((r = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
@@ -147,7 +147,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     return ModelManager_1.ModelManager.BlackboardModel.GetFloatValueByWorld(t);
   }
   static SetFloatValueByWorld(t, o) {
-    let r;
+    var r;
     ModelManager_1.ModelManager.BlackboardModel.SetFloatValueByWorld(t, o),
       this.Igr() &&
         (((r = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
@@ -161,7 +161,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     return ModelManager_1.ModelManager.BlackboardModel.GetFloatValuesByWorld(t);
   }
   static SetFloatValuesByWorld(t, o) {
-    let r;
+    var r;
     ModelManager_1.ModelManager.BlackboardModel.SetFloatValuesByWorld(t, o),
       this.Igr() &&
         (((r = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
@@ -176,7 +176,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     return ModelManager_1.ModelManager.BlackboardModel.GetStringValueByWorld(t);
   }
   static SetStringValueByWorld(t, o) {
-    let r;
+    var r;
     ModelManager_1.ModelManager.BlackboardModel.SetStringValueByWorld(t, o),
       this.Igr() &&
         (((r = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
@@ -192,7 +192,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetStringValuesByWorld(t, o) {
-    let r;
+    var r;
     ModelManager_1.ModelManager.BlackboardModel.SetStringValuesByWorld(t, o),
       this.Igr() &&
         (((r = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
@@ -204,7 +204,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
         this.Egr(t));
   }
   static RemoveValueByWorld(t) {
-    let o;
+    var o;
     ModelManager_1.ModelManager.BlackboardModel.RemoveValueByWorld(t),
       this.Igr() &&
         (((o = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
@@ -231,7 +231,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetIntValueByEntity(t, o, r) {
-    const e =
+    var e =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     e &&
       (ModelManager_1.ModelManager.BlackboardModel.SetIntValueByEntity(t, o, r),
@@ -251,7 +251,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetIntValuesByEntity(t, o, r) {
-    const e =
+    var e =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     e &&
       (ModelManager_1.ModelManager.BlackboardModel.SetIntValuesByEntity(
@@ -276,7 +276,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetLongValueByEntity(t, o, r) {
-    const e =
+    var e =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     e &&
       (ModelManager_1.ModelManager.BlackboardModel.SetLongValueByEntity(
@@ -300,7 +300,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetLongValuesByEntity(t, o, r) {
-    const e =
+    var e =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     if (
       e &&
@@ -311,13 +311,13 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
       ),
       this.Igr())
     ) {
-      const a = Protocol_1.Aki.Protocol.l2s.create();
+      var a = Protocol_1.Aki.Protocol.l2s.create();
       (a.Ikn = Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_LongArray),
         (a.Ckn = o),
         (a.R7n = Protocol_1.Aki.Protocol.d2s.create()),
         (a.R7n.A7n = new Array(r.length));
       for (let t = 0; t < r.length; t++) {
-        const l = MathUtils_1.MathUtils.BigIntToLong(r[t]);
+        var l = MathUtils_1.MathUtils.BigIntToLong(r[t]);
         a.R7n.A7n[t] = l;
       }
       (t = e.GetCreatureDataId()), (o = new Array());
@@ -331,7 +331,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetBooleanValueByEntity(t, o, r) {
-    const e =
+    var e =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     e &&
       (ModelManager_1.ModelManager.BlackboardModel.SetBooleanValueByEntity(
@@ -355,7 +355,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetFloatValueByEntity(t, o, r) {
-    const e =
+    var e =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     e &&
       (ModelManager_1.ModelManager.BlackboardModel.SetFloatValueByEntity(
@@ -379,7 +379,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetFloatValuesByEntity(t, o, r) {
-    const e =
+    var e =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     e &&
       (ModelManager_1.ModelManager.BlackboardModel.SetFloatValuesByEntity(
@@ -404,7 +404,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetStringValueByEntity(t, o, r) {
-    const e =
+    var e =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     e &&
       (ModelManager_1.ModelManager.BlackboardModel.SetStringValueByEntity(
@@ -428,7 +428,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetStringValuesByEntity(t, o, r) {
-    const e =
+    var e =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     e &&
       (ModelManager_1.ModelManager.BlackboardModel.SetStringValuesByEntity(
@@ -461,7 +461,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetVectorValueByEntity(t, o, r, e, a) {
-    const l =
+    var l =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     l &&
       (ModelManager_1.ModelManager.BlackboardModel.SetVectorValueByEntity(
@@ -490,7 +490,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetVectorValuesByEntity(t, o, r) {
-    const e =
+    var e =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     e &&
       (ModelManager_1.ModelManager.BlackboardModel.SetVectorValuesByEntity(
@@ -515,7 +515,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetRotatorValueByEntity(t, o, r, e, a) {
-    const l =
+    var l =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     l &&
       (ModelManager_1.ModelManager.BlackboardModel.SetRotatorValueByEntity(
@@ -544,7 +544,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetRotatorValuesByEntity(t, o, r) {
-    const e =
+    var e =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     e &&
       (ModelManager_1.ModelManager.BlackboardModel.SetRotatorValuesByEntity(
@@ -584,17 +584,17 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
   static GetEntityIdsByEntity(t, o) {
     t = ModelManager_1.ModelManager.BlackboardModel.GetEntityIdsByEntity(t, o);
     if (t) {
-      const r = new Array();
+      var r = new Array();
       for (const e of t)
         r.push(ModelManager_1.ModelManager.CreatureModel.GetEntity(e)?.Id ?? 0);
       return r;
     }
   }
   static SetEntityIdsByEntity(t, o, r) {
-    const e =
+    var e =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     if (e) {
-      const a = new Array();
+      var a = new Array();
       for (const i of r)
         a.push(ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(i));
       if (
@@ -605,14 +605,14 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
         ),
         this.Igr())
       ) {
-        const l = Protocol_1.Aki.Protocol.l2s.create();
+        var l = Protocol_1.Aki.Protocol.l2s.create();
         (l.Ikn =
           Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_EntityArray),
           (l.Ckn = o),
           (l.R7n = Protocol_1.Aki.Protocol.d2s.create()),
           (l.R7n.A7n = new Array(r.length));
         for (let t = 0; t < a.length; t++) {
-          const n = MathUtils_1.MathUtils.NumberToLong(a[t]);
+          var n = MathUtils_1.MathUtils.NumberToLong(a[t]);
           l.R7n.A7n[t] = n;
         }
         (t = e.GetCreatureDataId()), (o = new Array());
@@ -621,9 +621,9 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     }
   }
   static RemoveValueByEntity(t, o) {
-    let r;
-    var t =
-      ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
+    var r,
+      t =
+        ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     t &&
       (t.RemoveBlackboard(o) || this.Igr()) &&
       ((t = t.GetCreatureDataId()),
@@ -638,19 +638,19 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     return !!t && t.GetBlackboard().HasValue(o);
   }
   static ClearValuesByEntity(t, o) {
-    let r =
+    var r =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     if (r) {
       r = r.GetBlackboard();
       if (this.Igr()) {
-        const e = new Array();
+        var e = new Array();
         for (const o of r.BlackboardMap.keys()) {
-          const a = Protocol_1.Aki.Protocol.l2s.create();
+          var a = Protocol_1.Aki.Protocol.l2s.create();
           (a.Ikn = Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_None),
             (a.Ckn = o),
             e.push(a);
         }
-        e.length > 0 &&
+        0 < e.length &&
           ((t = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(t)),
           this.ygr(t, e));
       }
@@ -669,8 +669,8 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
   }),
   (BlackboardController.PendingBlackboardParams = new Map()),
   (BlackboardController.Mgr = (t) => {
-    const o = MathUtils_1.MathUtils.LongToNumber(t.rkn);
-    const r = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
+    var o = MathUtils_1.MathUtils.LongToNumber(t.rkn),
+      r = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
     r
       ? r.Entity.GetComponent(0).SetBlackboardsByProtocol(t.xFn)
       : Log_1.Log.CheckError() &&
@@ -681,4 +681,4 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
           ["CreatureDataId", o],
         );
   });
-// # sourceMappingURL=BlackboardController.js.map
+//# sourceMappingURL=BlackboardController.js.map

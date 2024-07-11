@@ -1,46 +1,46 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowAction = exports.FlowActionCenter = void 0);
-const ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase");
-const FlowActionAddPlayBubble_1 = require("../FlowActions/FlowActionAddPlayBubble");
-const FlowActionAwakeEntity_1 = require("../FlowActions/FlowActionAwakeEntity");
-const FlowActionBeginFlowTemplate_1 = require("../FlowActions/FlowActionBeginFlowTemplate");
-const FlowActionCameraLookAt_1 = require("../FlowActions/FlowActionCameraLookAt");
-const FlowActionChangeActorTalker_1 = require("../FlowActions/FlowActionChangeActorTalker");
-const FlowActionChangeEntityPerformanceState_1 = require("../FlowActions/FlowActionChangeEntityPerformanceState");
-const FlowActionChangeEntitySelfState_1 = require("../FlowActions/FlowActionChangeEntitySelfState");
-const FlowActionChangeEntityState_1 = require("../FlowActions/FlowActionChangeEntityState");
-const FlowActionChangeFormation_1 = require("../FlowActions/FlowActionChangeFormation");
-const FlowActionChangeInteractOptionText_1 = require("../FlowActions/FlowActionChangeInteractOptionText");
-const FlowActionChangeState_1 = require("../FlowActions/FlowActionChangeState");
-const FlowActionCloseFlowTemplate_1 = require("../FlowActions/FlowActionCloseFlowTemplate");
-const FlowActionDestroyEntity_1 = require("../FlowActions/FlowActionDestroyEntity");
-const FlowActionFadeInScreen_1 = require("../FlowActions/FlowActionFadeInScreen");
-const FlowActionFadeOutScreen_1 = require("../FlowActions/FlowActionFadeOutScreen");
-const FlowActionFinishState_1 = require("../FlowActions/FlowActionFinishState");
-const FlowActionFinishTalk_1 = require("../FlowActions/FlowActionFinishTalk");
-const FlowActionHideByRangeInFlow_1 = require("../FlowActions/FlowActionHideByRangeInFlow");
-const FlowActionJumpTalk_1 = require("../FlowActions/FlowActionJumpTalk");
-const FlowActionLevelSyncAction_1 = require("../FlowActions/FlowActionLevelSyncAction");
-const FlowActionLockTodTime_1 = require("../FlowActions/FlowActionLockTodTime");
-const FlowActionOpenQuestChapterView_1 = require("../FlowActions/FlowActionOpenQuestChapterView");
-const FlowActionOpenSystemBoard_1 = require("../FlowActions/FlowActionOpenSystemBoard");
-const FlowActionPlayMovie_1 = require("../FlowActions/FlowActionPlayMovie");
-const FlowActionPlaySequenceData_1 = require("../FlowActions/FlowActionPlaySequenceData");
-const FlowActionServerAction_1 = require("../FlowActions/FlowActionServerAction");
-const FlowActionSetCameraAnim_1 = require("../FlowActions/FlowActionSetCameraAnim");
-const FlowActionSetEntityVisible_1 = require("../FlowActions/FlowActionSetEntityVisible");
-const FlowActionSetFlowTemplate_1 = require("../FlowActions/FlowActionSetFlowTemplate");
-const FlowActionSetHeadIconVisible_1 = require("../FlowActions/FlowActionSetHeadIconVisible");
-const FlowActionSetPlayerPos_1 = require("../FlowActions/FlowActionSetPlayerPos");
-const FlowActionSetPlotMode_1 = require("../FlowActions/FlowActionSetPlotMode");
-const FlowActionSetTime_1 = require("../FlowActions/FlowActionSetTime");
-const FlowActionShowCenterText_1 = require("../FlowActions/FlowActionShowCenterText");
-const FlowActionShowTalk_1 = require("../FlowActions/FlowActionShowTalk");
-const FlowActionSwitchSubLevels_1 = require("../FlowActions/FlowActionSwitchSubLevels");
-const FlowActionTakePlotPhoto_1 = require("../FlowActions/FlowActionTakePlotPhoto");
-const FlowActionUnlockEntity_1 = require("../FlowActions/FlowActionUnlockEntity");
-const FlowActionWait_1 = require("../FlowActions/FlowActionWait");
+const ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase"),
+  FlowActionAddPlayBubble_1 = require("../FlowActions/FlowActionAddPlayBubble"),
+  FlowActionAwakeEntity_1 = require("../FlowActions/FlowActionAwakeEntity"),
+  FlowActionBeginFlowTemplate_1 = require("../FlowActions/FlowActionBeginFlowTemplate"),
+  FlowActionCameraLookAt_1 = require("../FlowActions/FlowActionCameraLookAt"),
+  FlowActionChangeActorTalker_1 = require("../FlowActions/FlowActionChangeActorTalker"),
+  FlowActionChangeEntityPerformanceState_1 = require("../FlowActions/FlowActionChangeEntityPerformanceState"),
+  FlowActionChangeEntitySelfState_1 = require("../FlowActions/FlowActionChangeEntitySelfState"),
+  FlowActionChangeEntityState_1 = require("../FlowActions/FlowActionChangeEntityState"),
+  FlowActionChangeFormation_1 = require("../FlowActions/FlowActionChangeFormation"),
+  FlowActionChangeInteractOptionText_1 = require("../FlowActions/FlowActionChangeInteractOptionText"),
+  FlowActionChangeState_1 = require("../FlowActions/FlowActionChangeState"),
+  FlowActionCloseFlowTemplate_1 = require("../FlowActions/FlowActionCloseFlowTemplate"),
+  FlowActionDestroyEntity_1 = require("../FlowActions/FlowActionDestroyEntity"),
+  FlowActionFadeInScreen_1 = require("../FlowActions/FlowActionFadeInScreen"),
+  FlowActionFadeOutScreen_1 = require("../FlowActions/FlowActionFadeOutScreen"),
+  FlowActionFinishState_1 = require("../FlowActions/FlowActionFinishState"),
+  FlowActionFinishTalk_1 = require("../FlowActions/FlowActionFinishTalk"),
+  FlowActionHideByRangeInFlow_1 = require("../FlowActions/FlowActionHideByRangeInFlow"),
+  FlowActionJumpTalk_1 = require("../FlowActions/FlowActionJumpTalk"),
+  FlowActionLevelSyncAction_1 = require("../FlowActions/FlowActionLevelSyncAction"),
+  FlowActionLockTodTime_1 = require("../FlowActions/FlowActionLockTodTime"),
+  FlowActionOpenQuestChapterView_1 = require("../FlowActions/FlowActionOpenQuestChapterView"),
+  FlowActionOpenSystemBoard_1 = require("../FlowActions/FlowActionOpenSystemBoard"),
+  FlowActionPlayMovie_1 = require("../FlowActions/FlowActionPlayMovie"),
+  FlowActionPlaySequenceData_1 = require("../FlowActions/FlowActionPlaySequenceData"),
+  FlowActionServerAction_1 = require("../FlowActions/FlowActionServerAction"),
+  FlowActionSetCameraAnim_1 = require("../FlowActions/FlowActionSetCameraAnim"),
+  FlowActionSetEntityVisible_1 = require("../FlowActions/FlowActionSetEntityVisible"),
+  FlowActionSetFlowTemplate_1 = require("../FlowActions/FlowActionSetFlowTemplate"),
+  FlowActionSetHeadIconVisible_1 = require("../FlowActions/FlowActionSetHeadIconVisible"),
+  FlowActionSetPlayerPos_1 = require("../FlowActions/FlowActionSetPlayerPos"),
+  FlowActionSetPlotMode_1 = require("../FlowActions/FlowActionSetPlotMode"),
+  FlowActionSetTime_1 = require("../FlowActions/FlowActionSetTime"),
+  FlowActionShowCenterText_1 = require("../FlowActions/FlowActionShowCenterText"),
+  FlowActionShowTalk_1 = require("../FlowActions/FlowActionShowTalk"),
+  FlowActionSwitchSubLevels_1 = require("../FlowActions/FlowActionSwitchSubLevels"),
+  FlowActionTakePlotPhoto_1 = require("../FlowActions/FlowActionTakePlotPhoto"),
+  FlowActionUnlockEntity_1 = require("../FlowActions/FlowActionUnlockEntity"),
+  FlowActionWait_1 = require("../FlowActions/FlowActionWait");
 class FlowActionCenter extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor() {
     super(...arguments), (this.yQi = new Map());
@@ -214,7 +214,7 @@ class FlowActionCenter extends ControllerAssistantBase_1.ControllerAssistantBase
       );
   }
   IQi(t, o, e = !1) {
-    let i;
+    var i;
     this.yQi.has(t) ||
       ((i = new FlowAction()).Init(t, o, e), this.yQi.set(t, i));
   }
@@ -239,11 +239,11 @@ class FlowAction {
     this.ActionInstanceList.push(t);
   }
   dZ() {
-    const t = new this.ActionClass();
+    var t = new this.ActionClass();
     return (t.Type = this.Type), t;
   }
   GetAction() {
-    const t = this.TQi();
+    var t = this.TQi();
     return (t.Owner = this), t;
   }
   TQi() {
@@ -258,4 +258,4 @@ class FlowAction {
   }
 }
 exports.FlowAction = FlowAction;
-// # sourceMappingURL=FlowActionCenter.js.map
+//# sourceMappingURL=FlowActionCenter.js.map

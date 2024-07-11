@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DamageUiController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../GlobalData");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiLayer_1 = require("../../Ui/UiLayer");
-const BattleUiDefine_1 = require("../BattleUi/BattleUiDefine");
-const DamageUiManager_1 = require("./DamageUiManager");
+const Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../GlobalData"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
+  BattleUiDefine_1 = require("../BattleUi/BattleUiDefine"),
+  DamageUiManager_1 = require("./DamageUiManager");
 class DamageUiController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return DamageUiManager_1.DamageUiManager.Initialize(), this.AddEvents(), !0;
@@ -136,11 +136,11 @@ class DamageUiController extends ControllerBase_1.ControllerBase {
   DamageUiManager_1.DamageUiManager.PreloadSequence();
 }),
   (DamageUiController.tje = () => {
-    const e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     e && DamageUiController.eXe(e.Entity);
   }),
   (DamageUiController.o7e = () => {
-    const e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     e && DamageUiController.eXe(e.Entity);
   }),
   (DamageUiController.bkt = (e) => {
@@ -199,13 +199,13 @@ class DamageUiController extends ControllerBase_1.ControllerBase {
     DamageUiManager_1.DamageUiManager.OnEditorPlatformChanged();
   }),
   (DamageUiController.j$e = () => {
-    const e = UiLayer_1.UiLayer.GetBattleViewUnit(0);
-    const t =
-      ModelManager_1.ModelManager.BattleUiModel.ChildViewData.GetChildVisible(
-        16,
-      );
+    var e = UiLayer_1.UiLayer.GetBattleViewUnit(0),
+      t =
+        ModelManager_1.ModelManager.BattleUiModel.ChildViewData.GetChildVisible(
+          16,
+        );
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Battle", 18, "设置伤害数字可见性", ["visible", t]),
       e.SetUIActive(t);
   });
-// # sourceMappingURL=DamageUiController.js.map
+//# sourceMappingURL=DamageUiController.js.map

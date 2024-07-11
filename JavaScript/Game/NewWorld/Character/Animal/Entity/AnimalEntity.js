@@ -1,2 +1,2 @@
 "use strict";
-// # sourceMappingURL=AnimalEntity.js.map
+//# sourceMappingURL=AnimalEntity.js.map

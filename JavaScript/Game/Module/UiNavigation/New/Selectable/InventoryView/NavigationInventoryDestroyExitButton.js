@@ -9,4 +9,4 @@ class NavigationInventoryDestroyExitButton extends NavigationButton_1.Navigation
 }
 exports.NavigationInventoryDestroyExitButton =
   NavigationInventoryDestroyExitButton;
-// # sourceMappingURL=NavigationInventoryDestroyExitButton.js.map
+//# sourceMappingURL=NavigationInventoryDestroyExitButton.js.map

@@ -1,52 +1,57 @@
 "use strict";
-let RoleSceneInteractComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, s) {
-    let o;
-    const n = arguments.length;
-    let h =
-      n < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      h = Reflect.decorate(t, e, i, s);
-    else
-      for (let r = t.length - 1; r >= 0; r--)
-        (o = t[r]) && (h = (n < 3 ? o(h) : n > 3 ? o(e, i, h) : o(e, i)) || h);
-    return n > 3 && h && Object.defineProperty(e, i, h), h;
-  };
+var RoleSceneInteractComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, s) {
+      var o,
+        n = arguments.length,
+        h =
+          n < 3
+            ? e
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        h = Reflect.decorate(t, e, i, s);
+      else
+        for (var r = t.length - 1; 0 <= r; r--)
+          (o = t[r]) &&
+            (h = (n < 3 ? o(h) : 3 < n ? o(e, i, h) : o(e, i)) || h);
+      return 3 < n && h && Object.defineProperty(e, i, h), h;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleSceneInteractComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const Net_1 = require("../../../../../Core/Net/Net");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon");
-const CameraController_1 = require("../../../../Camera/CameraController");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const Global_1 = require("../../../../Global");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage");
-const GrapplingHookPointComponent_1 = require("../../Custom/Components/GrapplingHookPointComponent");
-const TRACE_TAG_NAME = "RoleSceneInteract";
-const PROFILE_KEY = "RoleSceneInteractComponent_FindBestTarget";
-const MIN_DIST = 500;
-const MIN_DIST_SQUARED = MIN_DIST * MIN_DIST;
-const MIN_LEFT_RIGHT = 0.4142;
-const MIN_UP_DOWN = 0.38;
-const MIN_LEFT_RIGHT_SCALE = 0.33;
-const MIN_UP_DOWN_SCALE = 0.28;
-const LEFT_RIGHT_SCALE = MIN_UP_DOWN / MIN_LEFT_RIGHT;
-const DEFAULT_MIN_LENGTH = 100;
-const HOOK_VISION_ID = 1001;
-const fixHookSkillIds = new Set([100020, 100021, 100022]);
-const SPHERE_TRACE_RADIUS = 5;
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon"),
+  CameraController_1 = require("../../../../Camera/CameraController"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../../Global"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
+  GrapplingHookPointComponent_1 = require("../../Custom/Components/GrapplingHookPointComponent"),
+  TRACE_TAG_NAME = "RoleSceneInteract",
+  PROFILE_KEY = "RoleSceneInteractComponent_FindBestTarget",
+  MIN_DIST = 500,
+  MIN_DIST_SQUARED = MIN_DIST * MIN_DIST,
+  MIN_LEFT_RIGHT = 0.4142,
+  MIN_UP_DOWN = 0.38,
+  MIN_LEFT_RIGHT_SCALE = 0.33,
+  MIN_UP_DOWN_SCALE = 0.28,
+  LEFT_RIGHT_SCALE = MIN_UP_DOWN / MIN_LEFT_RIGHT,
+  DEFAULT_MIN_LENGTH = 100,
+  HOOK_VISION_ID = 1001,
+  fixHookSkillIds = new Set([100020, 100021, 100022]),
+  SPHERE_TRACE_RADIUS = 5;
 let RoleSceneInteractComponent =
   (RoleSceneInteractComponent_1 = class RoleSceneInteractComponent extends (
     EntityComponent_1.EntityComponent
@@ -207,10 +212,10 @@ let RoleSceneInteractComponent =
             (this.Srn = void 0)));
     }
     Rrn() {
-      const t = ModelManager_1.ModelManager.CameraModel;
-      let e = !1;
-      let i = !1;
-      let s, o;
+      var t = ModelManager_1.ModelManager.CameraModel;
+      let e = !1,
+        i = !1;
+      var s, o;
       this.Nnr.SetDrawDebugTrace(
         RoleSceneInteractComponent_1.TraceDebug ? 1 : 0,
       ),
@@ -273,11 +278,11 @@ let RoleSceneInteractComponent =
     }
     Urn(h) {
       if (h?.CurrentCameraActor) {
-        let e = void 0;
-        let i = void 0;
-        let s = DEFAULT_MIN_LENGTH;
-        let o = void 0;
-        let n = ((this.trn.length = 0), !1);
+        let e = void 0,
+          i = void 0,
+          s = DEFAULT_MIN_LENGTH,
+          o = void 0,
+          n = ((this.trn.length = 0), !1);
         if ((this.Ern.clear(), this.Nnr)) {
           let t = !0;
           for (const l of GrapplingHookPointComponent_1
@@ -290,13 +295,13 @@ let RoleSceneInteractComponent =
                 (void 0 === e && (e = this.Hte?.ActorLocationProxy),
                 !l.Entity.GetComponent(117)?.IsInState(3))
               ) {
-                let r = Vector_1.Vector.DistSquared(l.Location, e);
+                var r = Vector_1.Vector.DistSquared(l.Location, e);
                 if (r > l.RadiusSquared) this.orn.has(l) && this.orn.delete(l);
                 else if ((this.Crn.add(l), r < MIN_DIST_SQUARED))
                   this.prn.delete(l);
                 else {
                   l.CameraGaze &&
-                    l.CameraGaze.LockPriority >= 0 &&
+                    0 <= l.CameraGaze.LockPriority &&
                     !this.drn.has(l) &&
                     !this.orn.has(l) &&
                     this.Ern.add(l),
@@ -314,7 +319,7 @@ let RoleSceneInteractComponent =
                     l.Location.Subtraction(i, this.s_e);
                   r = this.s_e.DotProduct(this.d$e);
                   if (!(r <= 0)) {
-                    let _ = Math.abs(this.s_e.DotProduct(this.Zon) / r);
+                    var _ = Math.abs(this.s_e.DotProduct(this.Zon) / r);
                     if (
                       !(_ > (this.irn ? MIN_LEFT_RIGHT_SCALE : MIN_LEFT_RIGHT))
                     ) {
@@ -378,7 +383,7 @@ let RoleSceneInteractComponent =
                   void 0,
                 ));
           this.drn.clear();
-          const a = this.drn;
+          var a = this.drn;
           (this.drn = this.Crn), (this.Crn = a), (this.Trn = n), (this.Lrn = o);
         } else
           Log_1.Log.CheckWarn() &&
@@ -393,10 +398,10 @@ let RoleSceneInteractComponent =
     }
     xrn() {
       if (this.Nnr) {
-        let t = void 0;
-        let e = 1 / 0;
-        let i = void 0;
-        let s = !0;
+        let t = void 0,
+          e = 1 / 0,
+          i = void 0,
+          s = !0;
         for (const n of this.drn)
           if (
             n.Valid &&
@@ -406,7 +411,7 @@ let RoleSceneInteractComponent =
           ) {
             if (n) {
               void 0 === i && (i = this.Hte.ActorLocationProxy);
-              const o = Vector_1.Vector.DistSquared(n.Location, i);
+              var o = Vector_1.Vector.DistSquared(n.Location, i);
               if (o > n.RadiusSquared) continue;
               if (o > e) continue;
               if ((this.Crn.add(n), o < MIN_DIST_SQUARED)) continue;
@@ -441,10 +446,10 @@ let RoleSceneInteractComponent =
           (t.FightCamera.LogicComponent.CameraGuideController.IsBlending ||
             this.prn.delete(this.frn),
           this.prn.has(this.frn) || (this.frn = void 0)),
-        !(this.frn ?? this.prn.size === 0))
+        !(this.frn ?? 0 === this.prn.size))
       ) {
         let t = -1;
-        const e = void 0 !== this.Die;
+        var e = void 0 !== this.Die;
         for (const o of this.prn)
           o.CameraGaze.GazeInHook && !e
             ? this.prn.delete(o)
@@ -489,7 +494,7 @@ let RoleSceneInteractComponent =
       return this.Die.IsClimb;
     }
     GetCurrentTargetForward() {
-      const t = this.Die.Entity.GetComponent(0);
+      var t = this.Die.Entity.GetComponent(0);
       return t?.Valid
         ? t.GetRotation().RotateVector(Vector_1.Vector.ForwardVector)
         : this.Hte.ActorForward;
@@ -498,8 +503,8 @@ let RoleSceneInteractComponent =
       return this.Mrn;
     }
     GetTargetIsSuiGuangType() {
-      const t = this.Die?.GetHookInteractType();
-      return !!t && t === "SuiGuangHook";
+      var t = this.Die?.GetHookInteractType();
+      return !!t && "SuiGuangHook" === t;
     }
     arn(t, e, i) {
       t
@@ -527,7 +532,7 @@ let RoleSceneInteractComponent =
           );
     }
     lrn() {
-      let t;
+      var t;
       this.Hte.IsAutonomousProxy &&
         (((t = Protocol_1.Aki.Protocol.yNn.create()).rkn =
           MathUtils_1.MathUtils.NumberToLong(
@@ -540,7 +545,7 @@ let RoleSceneInteractComponent =
         CombatMessage_1.CombatNet.Call(14412, this.Entity, t));
     }
     _rn() {
-      let t;
+      var t;
       this.Hte.IsAutonomousProxy &&
         (((t = Protocol_1.Aki.Protocol.u_s.create()).rkn =
           MathUtils_1.MathUtils.NumberToLong(
@@ -566,7 +571,7 @@ let RoleSceneInteractComponent =
         }));
     }
     grn() {
-      let t;
+      var t;
       this.Hte.IsAutonomousProxy && this.Die?.WillBeDestroyedAfterHook
         ? (((t = Protocol_1.Aki.Protocol.jds.create()).rkn =
             MathUtils_1.MathUtils.NumberToLong(
@@ -593,4 +598,4 @@ let RoleSceneInteractComponent =
       RoleSceneInteractComponent,
     )),
   (exports.RoleSceneInteractComponent = RoleSceneInteractComponent);
-// # sourceMappingURL=RoleSceneInteractComponent.js.map
+//# sourceMappingURL=RoleSceneInteractComponent.js.map

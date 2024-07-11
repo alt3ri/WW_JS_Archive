@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AchievementSearchDescItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class AchievementSearchDescItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(), (this.Pe = void 0), (this.wqe = void 0), (this.wqe = e);
@@ -25,7 +25,7 @@ class AchievementSearchDescItem extends UiPanelBase_1.UiPanelBase {
       );
   }
   GetItemSize(e) {
-    const t = this.GetRootItem();
+    var t = this.GetRootItem();
     return e.Set(t.GetWidth(), t.GetHeight()), e.ToUeVector2D(!0);
   }
   GetUsingItem() {
@@ -36,4 +36,4 @@ class AchievementSearchDescItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.AchievementSearchDescItem = AchievementSearchDescItem;
-// # sourceMappingURL=AchievementSearchDescItem.js.map
+//# sourceMappingURL=AchievementSearchDescItem.js.map

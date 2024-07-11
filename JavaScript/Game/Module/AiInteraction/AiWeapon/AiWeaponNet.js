@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiWeaponNet = void 0);
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const Net_1 = require("../../../../Core/Net/Net");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const MAX_SPEED_SIZE = 600;
+const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  MAX_SPEED_SIZE = 600;
 class AiWeaponNet {
   RegisterNet() {
     Net_1.Net.Register(15408, (e) => {
@@ -19,38 +19,38 @@ class AiWeaponNet {
     Net_1.Net.UnRegister(15408);
   }
   uHe(e) {
-    var t = MathUtils_1.MathUtils.LongToNumber(e.rkn);
-    var t = ModelManager_1.ModelManager.CreatureModel.GetEntity(t);
+    var t = MathUtils_1.MathUtils.LongToNumber(e.rkn),
+      t = ModelManager_1.ModelManager.CreatureModel.GetEntity(t);
     t &&
       (t = t.Entity.GetComponent(69)) &&
-      (e.xEs !== 0
+      (0 !== e.xEs
         ? (t.RegisterCharacterDropWeaponEvent(e.xEs),
           t.ChangeWeaponByWeaponByConfigId(e.xEs))
         : t.ClearWeaponForAi());
   }
   SendHoldWeaponPushOnSafe(e, t) {
-    const r = EntitySystem_1.EntitySystem.Get(t);
+    var r = EntitySystem_1.EntitySystem.Get(t);
     return (
       !!r && !!r.GetComponent(128).CanBeUsed() && this.SendHoldWeaponPush(e, t)
     );
   }
   SendHoldWeaponPush(e, t) {
-    const r = new Protocol_1.Aki.Protocol.Yls();
+    var r = new Protocol_1.Aki.Protocol.Yls();
     return (
       (r.rkn = this.cHe(e)), (r.T3n = this.cHe(t)), Net_1.Net.Send(7665, r), !0
     );
   }
   SendDiscardWeaponPush(e) {
-    if (e.AiWeaponConfigId === 0) return !1;
-    let t = ModelManager_1.ModelManager.AiWeaponModel.GetWeaponConfigByConfigId(
+    if (0 === e.AiWeaponConfigId) return !1;
+    var t = ModelManager_1.ModelManager.AiWeaponModel.GetWeaponConfigByConfigId(
       e.AiWeaponConfigId,
       e.Entity,
     );
     if (!t) return !1;
-    const r = new Protocol_1.Aki.Protocol.zls();
-    const o = new Protocol_1.Aki.Protocol.L3n();
-    let a = ((r.rkn = this.cHe(e.Entity.Id)), e.Entity.GetComponent(3));
-    var e = e.Entity.GetComponent(51);
+    var r = new Protocol_1.Aki.Protocol.zls(),
+      o = new Protocol_1.Aki.Protocol.L3n(),
+      a = ((r.rkn = this.cHe(e.Entity.Id)), e.Entity.GetComponent(3)),
+      e = e.Entity.GetComponent(51);
     let i = void 0;
     e.GetHitData()
       ? (i = Vector_1.Vector.Create(e.GetHitData().HitPosition))
@@ -86,11 +86,11 @@ class AiWeaponNet {
     return MathUtils_1.MathUtils.NumberToLong(e);
   }
   CalculateWeight(e) {
-    const t = Math.abs(e);
-    var e = e > 0 ? 1 : -1;
-    const r = MAX_SPEED_SIZE;
+    var t = Math.abs(e),
+      e = 0 < e ? 1 : -1,
+      r = MAX_SPEED_SIZE;
     return (r - MathUtils_1.MathUtils.Clamp(t, 0, r)) * e;
   }
 }
 exports.AiWeaponNet = AiWeaponNet;
-// # sourceMappingURL=AiWeaponNet.js.map
+//# sourceMappingURL=AiWeaponNet.js.map

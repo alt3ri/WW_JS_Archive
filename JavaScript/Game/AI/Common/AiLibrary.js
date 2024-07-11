@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiLibrary = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
+const Log_1 = require("../../../Core/Common/Log"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils");
 class AiLibrary {
   static IsSkillAvailable(t, i, e, o, l, a, r, s, _, g, L = !1) {
-    let A;
-    const c = t.AiSkill.SkillInfos.get(i);
+    var A,
+      c = t.AiSkill.SkillInfos.get(i);
     return (
       !!c &&
       !!(A = t.AiSkill.SkillPreconditionMap.get(c.SkillPreconditionId)) &&
@@ -15,7 +15,7 @@ class AiLibrary {
         (L &&
           Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("AI", 6, "Detect Skill", ["SkillInfoId", i]),
-        l >= 0 && c.SkillType !== l
+        0 <= l && c.SkillType !== l
           ? (L &&
               Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("AI", 6, "FailType", ["Type", l]),
@@ -60,4 +60,4 @@ class AiLibrary {
   }
 }
 exports.AiLibrary = AiLibrary;
-// # sourceMappingURL=AiLibrary.js.map
+//# sourceMappingURL=AiLibrary.js.map

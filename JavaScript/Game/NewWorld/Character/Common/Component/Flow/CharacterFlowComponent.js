@@ -1,33 +1,37 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, o) {
-    let r;
-    const s = arguments.length;
-    let n =
-      s < 3 ? e : o === null ? (o = Object.getOwnPropertyDescriptor(e, i)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      s = arguments.length,
+      n =
+        s < 3
+          ? e
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(e, i))
+            : o;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(t, e, i, o);
     else
-      for (let h = t.length - 1; h >= 0; h--)
-        (r = t[h]) && (n = (s < 3 ? r(n) : s > 3 ? r(e, i, n) : r(e, i)) || n);
-    return s > 3 && n && Object.defineProperty(e, i, n), n;
+      for (var h = t.length - 1; 0 <= h; h--)
+        (r = t[h]) && (n = (s < 3 ? r(n) : 3 < s ? r(e, i, n) : r(e, i)) || n);
+    return 3 < s && n && Object.defineProperty(e, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterFlowComponent =
     exports.DEFAULT_BUBBLE_LEAVE_RANGE =
     exports.DEFAULT_BUBBLE_ENTER_RANGE =
       void 0);
-const Time_1 = require("../../../../../../Core/Common/Time");
-const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const IComponent_1 = require("../../../../../../UniverseEditor/Interface/IComponent");
-const Global_1 = require("../../../../../Global");
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const CharacterFlowLogic_1 = require("./CharacterFlowLogic");
-const DynamicFlowController_1 = require("./DynamicFlowController");
+const Time_1 = require("../../../../../../Core/Common/Time"),
+  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  IComponent_1 = require("../../../../../../UniverseEditor/Interface/IComponent"),
+  Global_1 = require("../../../../../Global"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  CharacterFlowLogic_1 = require("./CharacterFlowLogic"),
+  DynamicFlowController_1 = require("./DynamicFlowController");
 (exports.DEFAULT_BUBBLE_ENTER_RANGE = 500),
   (exports.DEFAULT_BUBBLE_LEAVE_RANGE = 1500);
 let CharacterFlowComponent = class CharacterFlowComponent extends EntityComponent_1.EntityComponent {
@@ -44,7 +48,7 @@ let CharacterFlowComponent = class CharacterFlowComponent extends EntityComponen
   }
   OnStart() {
     this.ActorComp = this.Entity.GetComponent(1);
-    let t = this.ActorComp?.CreatureData.GetPbEntityInitData();
+    var t = this.ActorComp?.CreatureData.GetPbEntityInitData();
     if (t) {
       (this.FlowData = (0, IComponent_1.getComponent)(
         t.ComponentsData,
@@ -54,7 +58,7 @@ let CharacterFlowComponent = class CharacterFlowComponent extends EntityComponen
       t = this.ActorComp.CreatureData.ComponentDataMap.get("mps")?.mps?.oMs;
       if (t)
         for (const i of t) {
-          let e = ConfigManager_1.ConfigManager.BubbleConfig.GetBubbleData(
+          var e = ConfigManager_1.ConfigManager.BubbleConfig.GetBubbleData(
             i.rMs,
           );
           if (e) {
@@ -70,7 +74,7 @@ let CharacterFlowComponent = class CharacterFlowComponent extends EntityComponen
     return !0;
   }
   OnActivate() {
-    let t;
+    var t;
     this.ActorComp &&
       ((t = this.ActorComp.CreatureData.GetPbDataId()),
       (t =
@@ -80,7 +84,7 @@ let CharacterFlowComponent = class CharacterFlowComponent extends EntityComponen
       this.PlayDynamicFlowBegin(t);
   }
   OnClear() {
-    let t;
+    var t;
     return (
       this.IsPlayDynamicFlow &&
         ((t = this.ActorComp.CreatureData.GetPbDataId()),
@@ -89,7 +93,7 @@ let CharacterFlowComponent = class CharacterFlowComponent extends EntityComponen
     );
   }
   ResetBaseInfo() {
-    let t, e;
+    var t, e;
     this.FlowData &&
       ((t = this.FlowData.EnterRange),
       (e = this.FlowData.LeaveRange),
@@ -135,7 +139,7 @@ let CharacterFlowComponent = class CharacterFlowComponent extends EntityComponen
     );
   }
   OnTick(t) {
-    let e;
+    var e;
     this.CheckCondition() &&
       ((e =
         Global_1.Global.BaseCharacter.CharacterActorComponent
@@ -190,4 +194,4 @@ let CharacterFlowComponent = class CharacterFlowComponent extends EntityComponen
   CharacterFlowComponent,
 )),
   (exports.CharacterFlowComponent = CharacterFlowComponent);
-// # sourceMappingURL=CharacterFlowComponent.js.map
+//# sourceMappingURL=CharacterFlowComponent.js.map

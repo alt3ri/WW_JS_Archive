@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configGenericPromptTypesByTypeId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const GenericPromptTypes_1 = require("../Config/GenericPromptTypes");
-const DB = "db_generic_tips.db";
-const FILE = "t.通用提示.xlsx";
-const TABLE = "GenericPromptTypes";
-const COMMAND = "select BinData from `GenericPromptTypes` where TypeId=?";
-const KEY_PREFIX = "GenericPromptTypesByTypeId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  GenericPromptTypes_1 = require("../Config/GenericPromptTypes"),
+  DB = "db_generic_tips.db",
+  FILE = "t.通用提示.xlsx",
+  TABLE = "GenericPromptTypes",
+  COMMAND = "select BinData from `GenericPromptTypes` where TypeId=?",
+  KEY_PREFIX = "GenericPromptTypesByTypeId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configGenericPromptTypesByTypeId.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configGenericPromptTypesByTypeId.GetConfig(";
 exports.configGenericPromptTypesByTypeId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configGenericPromptTypesByTypeId = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "TypeId",
-            e,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "TypeId",
+              e,
+            ]))
       ) {
-        var i;
-        var n = void 0;
+        var i,
+          n = void 0;
         if (
           (([i, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configGenericPromptTypesByTypeId = {
     }
   },
 };
-// # sourceMappingURL=GenericPromptTypesByTypeId.js.map
+//# sourceMappingURL=GenericPromptTypesByTypeId.js.map

@@ -1,28 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceAllViewShowContent = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class AdviceAllViewShowContent extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
       (this.hke = () => {
-        ModelManager_1.ModelManager.AdviceModel.CurrentLineModel === 1
+        1 === ModelManager_1.ModelManager.AdviceModel.CurrentLineModel
           ? (this.GetText(8).SetUIActive(!0),
             this.GetText(8).SetText(
               ModelManager_1.ModelManager.AdviceModel.GetSecondLineText(),
             ))
           : this.GetText(8).SetUIActive(!1);
-        const e = ModelManager_1.ModelManager.AdviceModel.GetFirstLineText();
+        var e = ModelManager_1.ModelManager.AdviceModel.GetFirstLineText();
         this.GetText(4).SetText(e);
       }),
       (this.P9e = () => {
-        let e = ModelManager_1.ModelManager.AdviceModel.CurrentExpressionId;
-        e > 0
+        var e = ModelManager_1.ModelManager.AdviceModel.CurrentExpressionId;
+        0 < e
           ? (this.GetTexture(1).SetUIActive(!0),
             (e =
               ConfigManager_1.ConfigManager.ChatConfig.GetExpressionConfig(e)),
@@ -66,7 +66,7 @@ class AdviceAllViewShowContent extends UiPanelBase_1.UiPanelBase {
       this.hke();
   }
   x9e() {
-    const e = ModelManager_1.ModelManager.FunctionModel.GetPlayerName();
+    var e = ModelManager_1.ModelManager.FunctionModel.GetPlayerName();
     this.GetText(2).SetText(e);
   }
   RefreshView() {
@@ -88,4 +88,4 @@ class AdviceAllViewShowContent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.AdviceAllViewShowContent = AdviceAllViewShowContent;
-// # sourceMappingURL=AdviceAllViewShowContent.js.map
+//# sourceMappingURL=AdviceAllViewShowContent.js.map

@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CookRoleView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const CookRoleItem_1 = require("./CookRoleItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  CookRoleItem_1 = require("./CookRoleItem");
 class CookRoleView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -17,7 +17,7 @@ class CookRoleView extends UiViewBase_1.UiViewBase {
       (this.gIt = 0),
       (this.hGt = 0),
       (this.z9e = () => {
-        const e = new CookRoleItem_1.CookRoleItem();
+        var e = new CookRoleItem_1.CookRoleItem();
         return e.BindOnClickedCallback(this.lGt), e;
       }),
       (this._Gt = () => {
@@ -68,7 +68,7 @@ class CookRoleView extends UiViewBase_1.UiViewBase {
         this.GetText(3),
         "CookSelectRoleButtonText",
       );
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     this.ShowView(e);
   }
   OnBeforeShow() {
@@ -95,4 +95,4 @@ class CookRoleView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.CookRoleView = CookRoleView;
-// # sourceMappingURL=CookRoleView.js.map
+//# sourceMappingURL=CookRoleView.js.map

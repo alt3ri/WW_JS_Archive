@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const Global_1 = require("../../../../Global");
-const GlobalData_1 = require("../../../../GlobalData");
-const LevelGeneralContextDefine_1 = require("../../../../LevelGamePlay/LevelGeneralContextDefine");
-const CharacterUnifiedStateTypes_1 = require("../../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const ColorUtils_1 = require("../../../../Utils/ColorUtils");
-const AiPatrolController_1 = require("../../../Controller/AiPatrolController");
-const TsAiController_1 = require("../../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const PROFILE_KEY = "TsTaskNpcPatrol_GetObstacleLocation";
-const CHECK_RAYCAST_INTERVAL = 0.5;
-const DEBUG_CONFIG_ID = [109002526, 109002530];
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../../Global"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  LevelGeneralContextDefine_1 = require("../../../../LevelGamePlay/LevelGeneralContextDefine"),
+  CharacterUnifiedStateTypes_1 = require("../../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  ColorUtils_1 = require("../../../../Utils/ColorUtils"),
+  AiPatrolController_1 = require("../../../Controller/AiPatrolController"),
+  TsAiController_1 = require("../../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  PROFILE_KEY = "TsTaskNpcPatrol_GetObstacleLocation",
+  CHECK_RAYCAST_INTERVAL = 0.5,
+  DEBUG_CONFIG_ID = [109002526, 109002530];
 class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -80,7 +80,7 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsChangeMoveDistance = this.ChangeMoveDistance));
   }
   ReceiveExecuteAI(t, i) {
-    let s;
+    var s;
     this.InitTsVariables(),
       t instanceof TsAiController_1.default
         ? ((s = t.AiController),
@@ -157,7 +157,7 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
             this.TsMoveState,
           ) &&
           TimerSystem_1.TimerSystem.Next(() => {
-            const t = this.AiComp?.AiController?.AiPatrol;
+            var t = this.AiComp?.AiController?.AiPatrol;
             t && t.ChangeMoveState(this.StateComp, this.TsMoveState);
           }));
   }
@@ -187,8 +187,8 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
       (this.TraceElement.WorldContextObject = this.ActorComp.Owner);
   }
   InitPatrolInfo() {
-    const t = this.ActorComp.ActorLocationProxy;
-    const i = this.ActorComp.CreatureData;
+    var t = this.ActorComp.ActorLocationProxy,
+      i = this.ActorComp.CreatureData;
     this.PatrolLogic.StartPatrol(!1, void 0),
       i.SetPosAbnormal(!1),
       this.PatrolLogic.ResetBaseInfoByMainPoint(
@@ -203,7 +203,7 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
       (this.IsInit = !0);
   }
   MoveToPatrolPoint() {
-    let t = this.PatrolLogic.PatrolPoint;
+    var t = this.PatrolLogic.PatrolPoint;
     t
       ? (this.CacheVector.FromUeVector(t.Point),
         this.CacheVector.SubtractionEqual(this.ActorComp.ActorLocationProxy),
@@ -224,8 +224,8 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
       : this.Finish(!1);
   }
   ExecuteMoveEnd(t) {
-    let i;
-    t === 1
+    var i;
+    1 === t
       ? ((i = this.PatrolLogic.PatrolPoint),
         this.CheckMoveEnd(i)
           ? (this.PatrolLogic.PatrolFinish(), this.Finish(!0))
@@ -239,15 +239,15 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
                   ),
                 this.MoveToPatrolPoint())
               : this.Finish(!0)))
-      : t === 2
+      : 2 === t
         ? this.Finish(!1)
-        : t === 3 && this.PatrolError();
+        : 3 === t && this.PatrolError();
   }
   ReceiveTickAI(t, i, s) {
     this.ForceExit
       ? this.Finish(!1)
       : this.IsPause ||
-        (this.ChangeMoveTimeInternal > 0 &&
+        (0 < this.ChangeMoveTimeInternal &&
           ((this.ChangeMoveTimeInternal -= s),
           this.ChangeMoveTimeInternal < 0) &&
           this.MoveToPatrolPoint(),
@@ -256,7 +256,7 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
           ((this.CurTime = 0), this.ExecuteObstacle()));
   }
   ExecuteObstacle() {
-    let t;
+    var t;
     this.IsDebugEntity &&
       AiPatrolController_1.AiPatrolController.OpenNpcPatrolDebugMode &&
       this.DebugComp &&
@@ -280,7 +280,7 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
         this.CacheCrossVector,
       ),
       this.CacheVector.FromUeVector(this.ActorComp.ActorForwardProxy),
-      this.CacheCrossVector.Z > 0
+      0 < this.CacheCrossVector.Z
         ? this.CacheVector.RotateAngleAxis(
             -this.TsChangeMoveAngle,
             Vector_1.Vector.UpVectorProxy,
@@ -328,11 +328,11 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
         this.TraceElement,
         this.ActorComp.ActorRotationProxy,
       );
-    const t = TraceElementCommon_1.TraceElementCommon.BoxTrace(
-      this.TraceElement,
-      PROFILE_KEY,
-    );
-    const i = this.TraceElement.HitResult;
+    var t = TraceElementCommon_1.TraceElementCommon.BoxTrace(
+        this.TraceElement,
+        PROFILE_KEY,
+      ),
+      i = this.TraceElement.HitResult;
     return !(
       !t ||
       !i.bBlockingHit ||
@@ -359,7 +359,7 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
   CheckMoveEnd(t) {
     let i = !1;
     return (
-      this.ChangeMoveTimeInternal > 0
+      0 < this.ChangeMoveTimeInternal
         ? ((this.ChangeMoveTimeInternal = 0), this.MoveToPatrolPoint())
         : ((i = this.PatrolLogic.CheckPatrolEnd()),
           this.TsMoveOnePath &&
@@ -374,7 +374,7 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
     );
   }
   PatrolError() {
-    let t, i, s;
+    var t, i, s;
     (this.IsPause = !0),
       AiPatrolController_1.AiPatrolController.OpenNpcPatrolDebugMode &&
         ((t = this.ActorComp.ActorLocationProxy),
@@ -474,4 +474,4 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskNpcPatrol;
-// # sourceMappingURL=TsTaskNpcPatrol.js.map
+//# sourceMappingURL=TsTaskNpcPatrol.js.map

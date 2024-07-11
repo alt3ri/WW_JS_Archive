@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GrapplingHookPoint = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const Global_1 = require("../../../../Global");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const InputMappingsDefine_1 = require("../../../../Ui/InputDistribute/InputMappingsDefine");
-const UiLayer_1 = require("../../../../Ui/UiLayer");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const CombineKeyItem_1 = require("../KeyItem/CombineKeyItem");
-const INTERRUPT_DELAY_TIME = 500;
-const START_SEQUENCE_NAME = "Start";
-const CLOST_SEQUENCE_NAME = "Close";
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../../Global"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  InputMappingsDefine_1 = require("../../../../Ui/InputDistribute/InputMappingsDefine"),
+  UiLayer_1 = require("../../../../Ui/UiLayer"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  CombineKeyItem_1 = require("../KeyItem/CombineKeyItem"),
+  INTERRUPT_DELAY_TIME = 500,
+  START_SEQUENCE_NAME = "Start",
+  CLOST_SEQUENCE_NAME = "Close";
 class GrapplingHookPoint extends UiPanelBase_1.UiPanelBase {
   constructor(e, t) {
     super(),
@@ -56,7 +56,7 @@ class GrapplingHookPoint extends UiPanelBase_1.UiPanelBase {
         this.ComponentRegisterInfos.push([4, UE.UIItem]);
   }
   async OnBeforeStartAsync() {
-    let e;
+    var e;
     ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
       ((e = this.GetItem(4)).SetUIActive(!1),
       (this.xet = new CombineKeyItem_1.CombineKeyItem()),
@@ -141,7 +141,7 @@ class GrapplingHookPoint extends UiPanelBase_1.UiPanelBase {
         );
   }
   AfterTick() {
-    let e;
+    var e;
     this.xat && (e = this.Vat(this.Due)) && this.Ad(e);
   }
   Ad(e) {
@@ -161,4 +161,4 @@ class GrapplingHookPoint extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.GrapplingHookPoint = GrapplingHookPoint;
-// # sourceMappingURL=GrapplingHookPoint.js.map
+//# sourceMappingURL=GrapplingHookPoint.js.map

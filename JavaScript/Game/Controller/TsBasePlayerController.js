@@ -2,16 +2,16 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TsBasePlayerController = void 0),
   (Error.stackTraceLimit = 500);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const FNameUtil_1 = require("../../Core/Utils/FNameUtil");
-const Vector2D_1 = require("../../Core/Utils/Math/Vector2D");
-const ObjectUtils_1 = require("../../Core/Utils/ObjectUtils");
-const ModelManager_1 = require("../Manager/ModelManager");
-const LogReportModel_1 = require("../Module/LogReport/LogReportModel");
-const HotKeyViewDefine_1 = require("../Module/UiNavigation/HotKeyViewDefine");
-const PlayerInputHandle_1 = require("./PlayerInputHandle");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  FNameUtil_1 = require("../../Core/Utils/FNameUtil"),
+  Vector2D_1 = require("../../Core/Utils/Math/Vector2D"),
+  ObjectUtils_1 = require("../../Core/Utils/ObjectUtils"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  LogReportModel_1 = require("../Module/LogReport/LogReportModel"),
+  HotKeyViewDefine_1 = require("../Module/UiNavigation/HotKeyViewDefine"),
+  PlayerInputHandle_1 = require("./PlayerInputHandle");
 class TsBasePlayerController extends UE.BasePlayerController {
   constructor() {
     super(...arguments),
@@ -151,7 +151,7 @@ class TsBasePlayerController extends UE.BasePlayerController {
       e.AddActionBinding(t, this.OnInputActionCallback);
   }
   NewActionHandle(t) {
-    let e;
+    var e;
     if (this.ActionHandleClass && this.ActionHandleClass.IsValid())
       return (
         (e = UE.NewObject(this.ActionHandleClass, this)).Initialize(this),
@@ -167,7 +167,7 @@ class TsBasePlayerController extends UE.BasePlayerController {
       );
   }
   RemoveActionHandle(t) {
-    const e = this.GetActionHandle(t);
+    var e = this.GetActionHandle(t);
     e && (e.Reset(), this.ActionHandleMap.Remove(t));
   }
   GetActionHandle(t) {
@@ -175,8 +175,8 @@ class TsBasePlayerController extends UE.BasePlayerController {
   }
   ClearActionHandle() {
     for (let t = 0; t < this.ActionHandleMap.Num(); t++) {
-      var e = this.ActionHandleMap.GetKey(t);
-      var e = this.ActionHandleMap.Get(e);
+      var e = this.ActionHandleMap.GetKey(t),
+        e = this.ActionHandleMap.Get(e);
       if (!e) return;
       e.Reset();
     }
@@ -191,7 +191,7 @@ class TsBasePlayerController extends UE.BasePlayerController {
       e.AddAxisBinding(t, this.OnInputAxisCallback);
   }
   NewAxisHandle(t) {
-    let e;
+    var e;
     if (this.AxisHandleClass && this.AxisHandleClass.IsValid())
       return (
         (e = UE.NewObject(this.AxisHandleClass, this)).Initialize(this),
@@ -207,7 +207,7 @@ class TsBasePlayerController extends UE.BasePlayerController {
       );
   }
   RemoveAxisHandle(t) {
-    const e = this.GetActionHandle(t);
+    var e = this.GetActionHandle(t);
     e && (e.Reset(), this.ActionHandleMap.Remove(t));
   }
   GetAxisHandle(t) {
@@ -215,15 +215,15 @@ class TsBasePlayerController extends UE.BasePlayerController {
   }
   ClearAxisHandle() {
     for (let t = 0; t < this.AxisHandleMap.Num(); t++) {
-      var e = this.AxisHandleMap.GetKey(t);
-      var e = this.AxisHandleMap.Get(e);
+      var e = this.AxisHandleMap.GetKey(t),
+        e = this.AxisHandleMap.Get(e);
       if (!e) return;
       e.Reset();
     }
     this.AxisHandleMap.Empty();
   }
   GetInputPosition(t = 0) {
-    const e = ModelManager_1.ModelManager.PlatformModel;
+    var e = ModelManager_1.ModelManager.PlatformModel;
     return e.IsPc()
       ? this.GetCursorPosition()
       : e.IsMobile()
@@ -231,8 +231,8 @@ class TsBasePlayerController extends UE.BasePlayerController {
         : void 0;
   }
   GetCursorPosition() {
-    const t = (0, puerts_1.$ref)(0);
-    const e = (0, puerts_1.$ref)(0);
+    var t = (0, puerts_1.$ref)(0),
+      e = (0, puerts_1.$ref)(0);
     if (this.GetMousePosition(t, e))
       return (
         (this.CurrentInputPosition.X = (0, puerts_1.$unref)(t)),
@@ -241,8 +241,8 @@ class TsBasePlayerController extends UE.BasePlayerController {
       );
   }
   GetTouchPosition(t) {
-    const e = (0, puerts_1.$ref)(0);
-    const i = (0, puerts_1.$ref)(0);
+    var e = (0, puerts_1.$ref)(0),
+      i = (0, puerts_1.$ref)(0);
     return (
       this.GetInputTouchState(t, e, i, void 0),
       (this.CurrentInputPosition.X = (0, puerts_1.$unref)(e)),
@@ -251,7 +251,7 @@ class TsBasePlayerController extends UE.BasePlayerController {
     );
   }
   IsInTouch(t) {
-    const e = (0, puerts_1.$ref)(!1);
+    var e = (0, puerts_1.$ref)(!1);
     return (
       this.GetInputTouchState(t, void 0, void 0, e), (0, puerts_1.$unref)(e)
     );
@@ -262,4 +262,4 @@ class TsBasePlayerController extends UE.BasePlayerController {
 }
 (exports.TsBasePlayerController = TsBasePlayerController),
   (exports.default = TsBasePlayerController);
-// # sourceMappingURL=TsBasePlayerController.js.map
+//# sourceMappingURL=TsBasePlayerController.js.map

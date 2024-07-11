@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LongShanStageItem = void 0);
-const UE = require("ue");
-const LongShanStageById_1 = require("../../../../../Core/Define/ConfigQuery/LongShanStageById");
-const LevelGeneralCommons_1 = require("../../../../LevelGamePlay/LevelGeneralCommons");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const ActivityLongShanController_1 = require("./ActivityLongShanController");
+const UE = require("ue"),
+  LongShanStageById_1 = require("../../../../../Core/Define/ConfigQuery/LongShanStageById"),
+  LevelGeneralCommons_1 = require("../../../../LevelGamePlay/LevelGeneralCommons"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  ActivityLongShanController_1 = require("./ActivityLongShanController");
 class LongShanStageItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -35,18 +35,18 @@ class LongShanStageItem extends UiPanelBase_1.UiPanelBase {
     this.RefreshState();
   }
   RefreshState() {
-    const e = LongShanStageById_1.configLongShanStageById.GetConfig(this.xOe);
-    const t =
-      ActivityLongShanController_1.ActivityLongShanController.GetActivityData();
-    let i = t.GetStageInfoById(this.xOe);
-    var s =
-      (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), e.Title),
-      void 0 === i);
-    var s =
-      (this.GetItem(5).SetUIActive(s),
-      this.GetItem(8).SetUIActive(!s),
-      t.GetProgress(this.xOe));
-    this.GetItem(4).SetUIActive(s === 100),
+    var e = LongShanStageById_1.configLongShanStageById.GetConfig(this.xOe),
+      t =
+        ActivityLongShanController_1.ActivityLongShanController.GetActivityData(),
+      i = t.GetStageInfoById(this.xOe),
+      s =
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), e.Title),
+        void 0 === i),
+      s =
+        (this.GetItem(5).SetUIActive(s),
+        this.GetItem(8).SetUIActive(!s),
+        t.GetProgress(this.xOe));
+    this.GetItem(4).SetUIActive(100 === s),
       i ||
         ((i =
           LevelGeneralCommons_1.LevelGeneralCommons.GetConditionGroupHintText(
@@ -65,4 +65,4 @@ class LongShanStageItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.LongShanStageItem = LongShanStageItem;
-// # sourceMappingURL=LongShanStageItem.js.map
+//# sourceMappingURL=LongShanStageItem.js.map

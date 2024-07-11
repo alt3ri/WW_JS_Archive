@@ -2,7 +2,7 @@
 function getTipsByNodeType(e) {
   return exports.nodeTips[e];
 }
-let EInformationViewType,
+var EInformationViewType,
   ESpecialGamePlayConfigType,
   EEnableSystemType,
   EGradingSystemVarType,
@@ -15,9 +15,9 @@ let EInformationViewType,
   ETargetBattleAttribute,
   EAttributeToTarget;
 function createQuestTypeCnNameMap() {
-  const e = new Map();
+  var e = new Map();
   for (const o in exports.questTypeCNMapper) {
-    const t = Number(o);
+    var t = Number(o);
     e.set(exports.questTypeCNMapper[t], t);
   }
   return e;
@@ -256,7 +256,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   }),
   (exports.defaultQuestType = 2),
   (exports.questTypeCNMapper = {
-    100: "测试",
+    [100]: "测试",
     1: "主线",
     2: "支线",
     3: "角色",
@@ -272,9 +272,9 @@ function questTypeToCnName(e) {
   return exports.questTypeCNMapper[e];
 }
 function createQuestRegionCnNameMap() {
-  const e = new Map();
+  var e = new Map();
   for (const o in exports.questRegionCNMapper) {
-    const t = Number(o);
+    var t = Number(o);
     e.set(exports.questRegionCNMapper[t], t);
   }
   return e;
@@ -283,7 +283,7 @@ function createQuestRegionCnNameMap() {
   (exports.questTypeToCnName = questTypeToCnName),
   (exports.defaultQuestRegion = 1),
   (exports.questRegionCNMapper = {
-    100: "测试",
+    [100]: "测试",
     1: "云陵谷",
     2: "中曲台地",
     3: "荒石高地",
@@ -332,7 +332,7 @@ function flatNode(e, t) {
   }
 }
 function flatBehaviorTree(e) {
-  const t = new Map();
+  var t = new Map();
   return flatNode(e.Root, t), t;
 }
 function getSkillTypesCn() {
@@ -363,4 +363,4 @@ function getSkillTypeFromCnName(e) {
     "AddBuffToPlayer",
     "RemoveBuffFromPlayer",
   ]);
-// # sourceMappingURL=IQuest.js.map
+//# sourceMappingURL=IQuest.js.map

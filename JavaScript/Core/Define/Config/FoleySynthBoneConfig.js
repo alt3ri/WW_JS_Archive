@@ -75,85 +75,85 @@ class FoleySynthBoneConfig {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   name(t) {
-    const e = this.J7.__offset(this.z7, 6);
+    var e = this.J7.__offset(this.z7, 6);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   bonename(t) {
-    const e = this.J7.__offset(this.z7, 8);
+    var e = this.J7.__offset(this.z7, 8);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   model1ceil() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   model1ceileventpath(t) {
-    const e = this.J7.__offset(this.z7, 12);
+    var e = this.J7.__offset(this.z7, 12);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   model1floor() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   model1flooreventpath(t) {
-    const e = this.J7.__offset(this.z7, 16);
+    var e = this.J7.__offset(this.z7, 16);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   model1ceilinterpolation() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   model1floorinterpolation() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   model1rtpcpath(t) {
-    const e = this.J7.__offset(this.z7, 22);
+    var e = this.J7.__offset(this.z7, 22);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   model2ceil() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   model2ceileventpath(t) {
-    const e = this.J7.__offset(this.z7, 26);
+    var e = this.J7.__offset(this.z7, 26);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   model2floor() {
-    const t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   model2floorpath(t) {
-    const e = this.J7.__offset(this.z7, 30);
+    var e = this.J7.__offset(this.z7, 30);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   model2floorprecent() {
-    const t = this.J7.__offset(this.z7, 32);
+    var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   model2rptcvelocitymax(t) {
-    const e = this.J7.__offset(this.z7, 34);
+    var e = this.J7.__offset(this.z7, 34);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   model2rptcaccelerationmax(t) {
-    const e = this.J7.__offset(this.z7, 36);
+    var e = this.J7.__offset(this.z7, 36);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   model2rptcvelocityduring(t) {
-    const e = this.J7.__offset(this.z7, 38);
+    var e = this.J7.__offset(this.z7, 38);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   model2ceilinterpolation() {
-    const t = this.J7.__offset(this.z7, 40);
+    var t = this.J7.__offset(this.z7, 40);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   model2floorinterpolation() {
-    const t = this.J7.__offset(this.z7, 42);
+    var t = this.J7.__offset(this.z7, 42);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
 }
 exports.FoleySynthBoneConfig = FoleySynthBoneConfig;
-// # sourceMappingURL=FoleySynthBoneConfig.js.map
+//# sourceMappingURL=FoleySynthBoneConfig.js.map

@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExploreDetailView = void 0);
-const UE = require("ue");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem");
-const UiManager_1 = require("../../../Ui/UiManager");
-const SkipTaskManager_1 = require("../../SkipInterface/SkipTaskManager");
-const DynScrollView_1 = require("../../Util/ScrollView/DynScrollView");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
-const ExploreProgressDefine_1 = require("../ExploreProgressDefine");
-const ExploreAreaDynamicItem_1 = require("./ExploreAreaDynamicItem");
-const ExploreAreaParentItem_1 = require("./ExploreAreaParentItem");
-const ExploreAreaViewData_1 = require("./ExploreAreaViewData");
-const ExploreProgressItem_1 = require("./ExploreProgressItem");
+const UE = require("ue"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  SkipTaskManager_1 = require("../../SkipInterface/SkipTaskManager"),
+  DynScrollView_1 = require("../../Util/ScrollView/DynScrollView"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  ExploreProgressDefine_1 = require("../ExploreProgressDefine"),
+  ExploreAreaDynamicItem_1 = require("./ExploreAreaDynamicItem"),
+  ExploreAreaParentItem_1 = require("./ExploreAreaParentItem"),
+  ExploreAreaViewData_1 = require("./ExploreAreaViewData"),
+  ExploreProgressItem_1 = require("./ExploreProgressItem");
 class ExploreDetailView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -51,7 +51,7 @@ class ExploreDetailView extends UiViewBase_1.UiViewBase {
             );
       }),
       (this.uVt = (e, r, i) => {
-        const t = new ExploreAreaParentItem_1.ExploreAreaParentItem();
+        var t = new ExploreAreaParentItem_1.ExploreAreaParentItem();
         return (
           t.BindOnCountrySelected(this.tVt),
           t.BindOnAreaSelected(this.iVt),
@@ -61,7 +61,7 @@ class ExploreDetailView extends UiViewBase_1.UiViewBase {
       }),
       (this.tVt = (e, r, i) => {
         r = r.CountryId;
-        i === 1
+        1 === i
           ? this.cVt(r)
           : (((i =
               ModelManager_1.ModelManager
@@ -120,8 +120,8 @@ class ExploreDetailView extends UiViewBase_1.UiViewBase {
       (ModelManager_1.ModelManager.ExploreProgressModel.SelectedAreaId = e));
   }
   cVt(e) {
-    let r;
-    const i = ModelManager_1.ModelManager.ExploreProgressModel;
+    var r,
+      i = ModelManager_1.ModelManager.ExploreProgressModel;
     e <= 0 &&
       ((i.SelectedCountryId = ExploreProgressDefine_1.DEFAULT_COUNTRY_ID),
       (r = i.GetExploreCountryData(e).GetExploreAreaDataList()[0]),
@@ -133,29 +133,29 @@ class ExploreDetailView extends UiViewBase_1.UiViewBase {
         ));
   }
   mVt() {
-    const e = [];
-    const r = this.gVt(e);
+    var e = [],
+      r = this.gVt(e);
     e[r] ? (this.aVt.RefreshByData(e), (this.hVt = r)) : (this.sVt = void 0);
   }
   gVt(e) {
-    const r = ModelManager_1.ModelManager.ExploreProgressModel;
+    var r = ModelManager_1.ModelManager.ExploreProgressModel;
     let i = 0;
     for (const l of ModelManager_1.ModelManager.ExploreProgressModel.GetExploreCountryDataMap().values())
       if (!(l.GetAreaSize() <= 0)) {
-        const t = l.CountryId;
-        var a = new ExploreAreaViewData_1.ExploreAreaViewData();
+        var t = l.CountryId,
+          a = new ExploreAreaViewData_1.ExploreAreaViewData();
         if (
           (a.RefreshCountry(t, l.GetNameId(), !1),
           e.push(a),
           t === r.SelectedCountryId)
         ) {
-          var o;
-          var s;
-          var a = l.GetExploreAreaDataList();
+          var o,
+            s,
+            a = l.GetExploreAreaDataList();
           a.sort((e, r) => {
-            const i = e.GetSortIndex();
-            const t = r.GetSortIndex();
-            return i !== 0 && t !== 0 && i !== t ? i - t : e.AreaId - r.AreaId;
+            var i = e.GetSortIndex(),
+              t = r.GetSortIndex();
+            return 0 !== i && 0 !== t && i !== t ? i - t : e.AreaId - r.AreaId;
           });
           for (const n of a)
             n.GetAllExploreAreaItemData().length <= 0 ||
@@ -172,11 +172,11 @@ class ExploreDetailView extends UiViewBase_1.UiViewBase {
     return i;
   }
   CVt() {
-    var e = ModelManager_1.ModelManager.ExploreProgressModel;
-    const r = e.SelectedAreaId;
-    var e = e.GetExploreAreaData(r);
+    var e = ModelManager_1.ModelManager.ExploreProgressModel,
+      r = e.SelectedAreaId,
+      e = e.GetExploreAreaData(r);
     e && this.kGe.RefreshByData(e.GetAllExploreAreaItemData());
   }
 }
 exports.ExploreDetailView = ExploreDetailView;
-// # sourceMappingURL=ExploreDetailView.js.map
+//# sourceMappingURL=ExploreDetailView.js.map

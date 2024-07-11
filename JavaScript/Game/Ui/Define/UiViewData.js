@@ -7,4 +7,4 @@ class UiViewData {
   }
 }
 exports.UiViewData = UiViewData;
-// # sourceMappingURL=UiViewData.js.map
+//# sourceMappingURL=UiViewData.js.map

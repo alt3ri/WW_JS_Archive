@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ManipulateCursorHandle = void 0);
-const puerts_1 = require("puerts");
-const Log_1 = require("../../../../Core/Common/Log");
-const Stats_1 = require("../../../../Core/Common/Stats");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const CameraController_1 = require("../../../Camera/CameraController");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const SceneInteractionManager_1 = require("../../../Render/Scene/Interaction/SceneInteractionManager");
-const ManipulateCursorUnit_1 = require("../HudUnit/ManipulateCursorUnit");
-const HudUnitHandleBase_1 = require("./HudUnitHandleBase");
-const COMPLETE_ANIM_TIME = 500;
-const INTERRUPT_ANIM_TIME = 200;
+const puerts_1 = require("puerts"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  CameraController_1 = require("../../../Camera/CameraController"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  SceneInteractionManager_1 = require("../../../Render/Scene/Interaction/SceneInteractionManager"),
+  ManipulateCursorUnit_1 = require("../HudUnit/ManipulateCursorUnit"),
+  HudUnitHandleBase_1 = require("./HudUnitHandleBase"),
+  COMPLETE_ANIM_TIME = 500,
+  INTERRUPT_ANIM_TIME = 200;
 class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   constructor() {
     super(...arguments),
@@ -42,7 +42,7 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
           (this.Coi = t.Entity.GetComponent(185)),
           this.voi();
         for (const s of this.goi) {
-          const e = this.Coi.ListenForTagAddOrRemove(
+          var e = this.Coi.ListenForTagAddOrRemove(
             s,
             this.Moi,
             ManipulateCursorHandle._$e,
@@ -51,7 +51,7 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
         }
       }),
       (this.zii = (t, i) => {
-        (this.poi = !i || i.length === 0),
+        (this.poi = !i || 0 === i.length),
           this.Soi(2),
           this.aoi?.StartProcess(t);
       }),
@@ -101,12 +101,12 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
         (this.moi = this.B8e.Entity.GetComponent(55)),
         (this.doi =
           CameraController_1.CameraController.FightCamera.GetComponent(5));
-      const t = CommonParamById_1.configCommonParamById.GetStringConfig(
+      var t = CommonParamById_1.configCommonParamById.GetStringConfig(
         "ManipulateAimVisibleTags",
       );
       if (t)
         for (const e of t.split(",")) {
-          const i = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e);
+          var i = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e);
           i && this.goi.push(i);
         }
     }
@@ -201,7 +201,7 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     this.bl();
   }
   Ioi() {
-    let t;
+    var t;
     return (
       !!this.aoi &&
       !this.aoi.InAsyncLoading() &&
@@ -211,7 +211,7 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     );
   }
   Toi() {
-    if (this.goi.length !== 0)
+    if (0 !== this.goi.length)
       for (const t of this.goi) if (this.Coi.HasTag(t)) return !0;
     return !1;
   }
@@ -246,8 +246,8 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     if (this.aoi && !this.aoi.InAsyncLoading() && this.aoi.GetActive()) {
       var i = this.Roi();
       if (i) {
-        var e = this.xXe();
-        var [e, i] = this.GetInEllipsePosition(e, i.ToUeVector());
+        var e = this.xXe(),
+          [e, i] = this.GetInEllipsePosition(e, i.ToUeVector());
         let t = !1;
         i &&
           (t = this.doi.GetScreenPositionIsInRange(
@@ -269,21 +269,21 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       this._oi.GetActorBounds(!1, this.uoi, void 0);
       let t = Vector_1.Vector.Create((0, puerts_1.$unref)(this.uoi));
       var i =
-        ModelManager_1.ModelManager.ManipulaterModel.GetTargetPartLocation();
-      var i =
-        (i !== Vector_1.Vector.ZeroVectorProxy && (t = i),
-        this.hoi.GetComponent(132));
-      var i =
-        (void 0 !== i && this.rti && (t = i.GetHitPoint()),
-        this.hoi.GetComponent(145));
-      var i =
-        (void 0 !== i &&
-          this.rti &&
-          (t = i.GetSocketLocation(this.moi.GetHoldingEntity())),
-        this.hoi.GetComponent(124));
-      var i =
-        (void 0 !== i && this.rti && (t = i.GetHitPoint()),
-        this.hoi.GetComponent(134));
+          ModelManager_1.ModelManager.ManipulaterModel.GetTargetPartLocation(),
+        i =
+          (i !== Vector_1.Vector.ZeroVectorProxy && (t = i),
+          this.hoi.GetComponent(132)),
+        i =
+          (void 0 !== i && this.rti && (t = i.GetHitPoint()),
+          this.hoi.GetComponent(145)),
+        i =
+          (void 0 !== i &&
+            this.rti &&
+            (t = i.GetSocketLocation(this.moi.GetHoldingEntity())),
+          this.hoi.GetComponent(124)),
+        i =
+          (void 0 !== i && this.rti && (t = i.GetHitPoint()),
+          this.hoi.GetComponent(134));
       return (t = void 0 !== i ? i.Location : t);
     }
   }
@@ -293,7 +293,7 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       "UiItem_ObjControl",
       !0,
       () => {
-        this.ac === 0
+        0 === this.ac
           ? this.pii()
           : (this.aoi?.SetCloseAnimCallback(() => {
               this.pii();
@@ -308,13 +308,13 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     if (this.ac !== t) {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Battle", 18, "控物UI状态改变", ["", t]);
-      const i = this.ac;
+      var i = this.ac;
       if (((this.ac = t), this.aoi))
         switch (this.ac) {
           case 0:
-            i === 1
+            1 === i
               ? (this.aoi.EndProcess(!0), this.aoi.PlayCloseAnim(0))
-              : i === 2 &&
+              : 2 === i &&
                 (this.aoi.EndProcess(!0),
                 this.aoi.PlayInterruptedAnim(),
                 this.aoi.PlayCloseAnim(INTERRUPT_ANIM_TIME));
@@ -328,7 +328,7 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
             this.aoi.PlayStartAnim(), this.aoi.PlayProcessAnim();
             break;
           case 3:
-            i === 2
+            2 === i
               ? (this.aoi.EndProcess(!1),
                 this.aoi.PlayCompleteAnim(),
                 this.aoi.PlayCloseAnim(COMPLETE_ANIM_TIME))
@@ -338,4 +338,4 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   }
 }
 (exports.ManipulateCursorHandle = ManipulateCursorHandle)._$e = void 0;
-// # sourceMappingURL=ManipulateCursorHandle.js.map
+//# sourceMappingURL=ManipulateCursorHandle.js.map

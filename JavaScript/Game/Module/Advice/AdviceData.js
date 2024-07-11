@@ -7,13 +7,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.LogAdviceData =
     exports.AdviceData =
       void 0);
-const LanguageSystem_1 = require("../../../Core/Common/LanguageSystem");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const StringBuilder_1 = require("../../../Core/Utils/StringBuilder");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
+const LanguageSystem_1 = require("../../../Core/Common/LanguageSystem"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  StringBuilder_1 = require("../../../Core/Utils/StringBuilder"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager");
 class AdviceData {
   constructor() {
     (this.u8e = void 0),
@@ -31,7 +31,7 @@ class AdviceData {
       this.PhraseUpDownData(t.Tgs),
       (this.d8e = new Array()),
       t.E3n.forEach((t) => {
-        const e = new AdviceContentData();
+        var e = new AdviceContentData();
         e.Phrase(t), this.d8e.push(e);
       }),
       this.PhraseContentInfo(this.d8e);
@@ -39,7 +39,7 @@ class AdviceData {
   PhraseData(t) {
     (this.d8e = new Array()),
       t.forEach((t) => {
-        const e = new AdviceContentData();
+        var e = new AdviceContentData();
         e.PhraseData(t), this.d8e.push(e);
       }),
       this.PhraseContentInfo(this.d8e);
@@ -61,7 +61,7 @@ class AdviceData {
             let e = 0;
             t.forEach((t) => {
               s.Append(t),
-                e === 0 &&
+                0 === e &&
                   ((t =
                     ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceWordText(
                       i.GetWord(),
@@ -89,22 +89,21 @@ class AdviceData {
   }
   PhraseShowText(e, i = 0) {
     this.p8e = LanguageSystem_1.LanguageSystem.PackageLanguage;
-    const s = new StringBuilder_1.StringBuilder();
-    const r = e.length;
+    var s = new StringBuilder_1.StringBuilder(),
+      r = e.length;
     for (let t = 0; t < r; t++) {
-      const a = e[t];
-      let n = a.GetType();
+      var a = e[t],
+        n = a.GetType();
       if (n === Protocol_1.Aki.Protocol.FBs.Proto_Sentence) {
-        var o;
-        const h =
-          ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceSentenceText(
+        var o,
+          h = ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceSentenceText(
             a.GetId(),
-          ).split("{}");
-        const c = h.length;
+          ).split("{}"),
+          c = h.length;
         for (let t = 0; t < c; t++)
-          if ((s.Append(h[t]), t === 0)) {
+          if ((s.Append(h[t]), 0 === t)) {
             let t = "";
-            a.GetWord() > 0
+            0 < a.GetWord()
               ? ((o =
                   ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceTemplateText()),
                 (o =
@@ -115,7 +114,7 @@ class AdviceData {
                   o.replace("{0}", t))),
                 s.Append(o))
               : ((t =
-                  i === 0
+                  0 === i
                     ? ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceCreateText(
                         0,
                       )
@@ -126,7 +125,7 @@ class AdviceData {
           }
       } else if (n === Protocol_1.Aki.Protocol.FBs.Proto_Conjunction) {
         let t = "";
-        a.GetId() > 0
+        0 < a.GetId()
           ? ((n =
               ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceTemplateText()),
             (t =
@@ -162,7 +161,7 @@ class AdviceData {
   }
   GetVote() {
     let t = this.m8e;
-    let e;
+    var e;
     return (
       t <= 0
         ? (t = 0)
@@ -218,7 +217,7 @@ class AdviceContentData {
     return this.S9;
   }
   ConvertToPb() {
-    const t = new Protocol_1.Aki.Protocol.NBs();
+    var t = new Protocol_1.Aki.Protocol.NBs();
     return (t.Ekn = this.xe), (t.Ikn = this.S9), (t.I3n = this.v8e), t;
   }
 }
@@ -274,4 +273,4 @@ class AdviceMotionSelectData {
   }
 }
 exports.AdviceMotionSelectData = AdviceMotionSelectData;
-// # sourceMappingURL=AdviceData.js.map
+//# sourceMappingURL=AdviceData.js.map

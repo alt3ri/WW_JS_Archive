@@ -1,33 +1,37 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, i, e, s) {
-    let h;
-    const o = arguments.length;
-    let r =
-      o < 3 ? i : s === null ? (s = Object.getOwnPropertyDescriptor(i, e)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var h,
+      o = arguments.length,
+      r =
+        o < 3
+          ? i
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(i, e))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(t, i, e, s);
     else
-      for (let n = t.length - 1; n >= 0; n--)
-        (h = t[n]) && (r = (o < 3 ? h(r) : o > 3 ? h(i, e, r) : h(i, e)) || r);
-    return o > 3 && r && Object.defineProperty(i, e, r), r;
+      for (var n = t.length - 1; 0 <= n; n--)
+        (h = t[n]) && (r = (o < 3 ? h(r) : 3 < o ? h(i, e, r) : h(i, e)) || r);
+    return 3 < o && r && Object.defineProperty(i, e, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SimpleNpcAnimationComponent = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const Quat_1 = require("../../../../../Core/Utils/Math/Quat");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const PreloadConstants_1 = require("../../../../World/Controller/PreloadConstants");
-const BaseAnimationComponent_1 = require("../../Common/Component/BaseAnimationComponent");
-const TURN_SPEED = 0.36;
-const TURN_RATIO = 0.04;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  Quat_1 = require("../../../../../Core/Utils/Math/Quat"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  PreloadConstants_1 = require("../../../../World/Controller/PreloadConstants"),
+  BaseAnimationComponent_1 = require("../../Common/Component/BaseAnimationComponent"),
+  TURN_SPEED = 0.36,
+  TURN_RATIO = 0.04;
 let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends BaseAnimationComponent_1.BaseAnimationComponent {
   constructor() {
     super(...arguments),
@@ -46,9 +50,9 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
     return [175, 0];
   }
   Z3r() {
-    this.O3r > 0
+    0 < this.O3r
       ? this.O3r--
-      : this.O3r === 0 &&
+      : 0 === this.O3r &&
         (this.ActorComp.EnableActor(this.G3r),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Character", 58, "人物上场隐藏一帧 【隐藏结束】", [
@@ -61,7 +65,7 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
         (this.O3r = -1));
   }
   OnInit() {
-    let t;
+    var t;
     return (
       super.OnInit(),
       (this.SlopeStepPeriodicCurve =
@@ -122,7 +126,7 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
     this.Z3r(), this.i4r(t);
   }
   OnDisable() {
-    this.O3r >= 0 &&
+    0 <= this.O3r &&
       (this.ActorComp.EnableActor(this.G3r), Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info(
         "Character",
@@ -187,7 +191,7 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
           this.SightDirect2.Set(0, 1, 0)));
   }
   h4r(t) {
-    const i = this.GetSightTargetItem();
+    var i = this.GetSightTargetItem();
     !i ||
     ((this.SightTargetPoint ?? i.ActorLocationProxy).Subtraction(
       this.ActorComp.ActorLocationProxy,
@@ -208,9 +212,9 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
       this.ActorComp.ActorQuatProxy.RotateVector(t, t));
   }
   inn(t = !0) {
-    const i = ModelManager_1.ModelManager.PlatformModel.IsMobile();
-    const e = new UE.AnimUpdateRateParameters();
-    const s = this.Mesh.LODInfo.Num();
+    var i = ModelManager_1.ModelManager.PlatformModel.IsMobile(),
+      e = new UE.AnimUpdateRateParameters(),
+      s = this.Mesh.LODInfo.Num();
     if (t)
       (e.bShouldUseDistanceMap = !0),
         e.BaseVisibleDistanceThresholds.Empty(),
@@ -224,12 +228,12 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
       for (let t = 0; t < s; t++) e.LODToFrameSkipMap.Add(t, t < 2 ? 0 : t - 1);
     }
     (e.BaseNonRenderedUpdateRate = 8), (e.MaxEvalRateForInterpolation = 8);
-    const h = (0, puerts_1.$ref)(e);
-    const o = this.Actor.K2_GetComponentsByClass(
-      UE.SkeletalMeshComponent.StaticClass(),
-    );
+    var h = (0, puerts_1.$ref)(e),
+      o = this.Actor.K2_GetComponentsByClass(
+        UE.SkeletalMeshComponent.StaticClass(),
+      );
     for (let t = 0; t < o.Num(); t++) {
-      const r = o.Get(t);
+      var r = o.Get(t);
       (r.bEnableUpdateRateOptimizations = !0),
         r.SetAnimUpdateRateParameters(h),
         (r.VisibilityBasedAnimTickOption =
@@ -243,4 +247,4 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
   SimpleNpcAnimationComponent,
 )),
   (exports.SimpleNpcAnimationComponent = SimpleNpcAnimationComponent);
-// # sourceMappingURL=SimpleNpcAnimationComponent.js.map
+//# sourceMappingURL=SimpleNpcAnimationComponent.js.map

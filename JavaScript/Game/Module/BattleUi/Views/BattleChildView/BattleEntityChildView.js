@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleEntityChildView = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const ObjectSystem_1 = require("../../../../../Core/Object/ObjectSystem");
-const GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils");
-const BattleChildView_1 = require("./BattleChildView");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  ObjectSystem_1 = require("../../../../../Core/Object/ObjectSystem"),
+  GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils"),
+  BattleChildView_1 = require("./BattleChildView");
 class BattleEntityChildView extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
@@ -68,16 +68,16 @@ class BattleEntityChildView extends BattleChildView_1.BattleChildView {
     t && (t.RemoveListener(e, i), this.T$e.delete(e));
   }
   R$e(t) {
-    const e = t.GetComponent(156);
-    if (e) for (const [i, s] of this.T$e) e.RemoveListener(i, s);
+    var e = t.GetComponent(156);
+    if (e) for (var [i, s] of this.T$e) e.RemoveListener(i, s);
   }
   ListenForTagCountChanged(e, i, s) {
     e = e.GetComponent(185);
     if (e) {
       let t = void 0;
-      typeof i === "number"
+      "number" == typeof i
         ? (t = i)
-        : typeof i === "string" &&
+        : "string" == typeof i &&
           (t = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(i));
       i = e.ListenForTagAnyCountChanged(t, s);
       this.L$e.push(i);
@@ -111,4 +111,4 @@ class BattleEntityChildView extends BattleChildView_1.BattleChildView {
   }
 }
 exports.BattleEntityChildView = BattleEntityChildView;
-// # sourceMappingURL=BattleEntityChildView.js.map
+//# sourceMappingURL=BattleEntityChildView.js.map

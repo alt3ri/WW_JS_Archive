@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoginAgeTipView = exports.ELoginShowType = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const UiManager_1 = require("../../../Ui/UiManager");
-let ELoginShowType;
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  UiManager_1 = require("../../../Ui/UiManager");
+var ELoginShowType;
 !(function (e) {
   (e[(e.AgeTip = 0)] = "AgeTip"),
     (e[(e.UserAgreement = 1)] = "UserAgreement"),
@@ -37,7 +37,7 @@ class LoginAgeTipView extends UiViewBase_1.UiViewBase {
     this.ChildPopView?.PopItem.OverrideBackBtnCallBack(() => {
       this.BMi();
     });
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     this.bMi(e), this.qMi(e);
   }
   bMi(e) {
@@ -65,13 +65,13 @@ class LoginAgeTipView extends UiViewBase_1.UiViewBase {
   GMi(e) {
     let i = e;
     for (let e = 0; e < 3; e++) {
-      const a = i.indexOf("\n", 6e3);
-      if (a === -1) {
+      var a = i.indexOf("\n", 6e3);
+      if (-1 === a) {
         i.length < 6e3 &&
           (this.GetText(0 + e).SetUIActive(!0), this.GetText(0 + e).SetText(i));
         break;
       }
-      const r = i.substr(0, a);
+      var r = i.substr(0, a);
       this.GetText(0 + e).SetUIActive(!0),
         this.GetText(0 + e).SetText(r),
         (i = i.substr(a + 1));
@@ -105,4 +105,4 @@ class LoginAgeTipView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.LoginAgeTipView = LoginAgeTipView;
-// # sourceMappingURL=LoginAgeTipView.js.map
+//# sourceMappingURL=LoginAgeTipView.js.map

@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemSelectView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const CommonItemSelectView_1 = require("./CommonItemSelectView");
-const FilterEntrance_1 = require("./FilterSort/Filter/View/FilterEntrance");
-const SortEntrance_1 = require("./FilterSort/Sort/View/SortEntrance");
-const ItemTipsComponent_1 = require("./ItemTips/ItemTipsComponent");
-const ItemTipsUtilTool_1 = require("./ItemTips/ItemTipsUtilTool");
+const UE = require("ue"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  CommonItemSelectView_1 = require("./CommonItemSelectView"),
+  FilterEntrance_1 = require("./FilterSort/Filter/View/FilterEntrance"),
+  SortEntrance_1 = require("./FilterSort/Sort/View/SortEntrance"),
+  ItemTipsComponent_1 = require("./ItemTips/ItemTipsComponent"),
+  ItemTipsUtilTool_1 = require("./ItemTips/ItemTipsUtilTool");
 class ItemSelectView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -29,8 +29,8 @@ class ItemSelectView extends UiViewBase_1.UiViewBase {
           this.GetItem(3).SetUIActive(!0);
       }),
       (this.Bpt = (t) => {
-        const i = this.Upt.GetCurrentSelectedData();
-        const r = i?.length;
+        var i = this.Upt.GetCurrentSelectedData(),
+          r = i?.length;
         for (let e = 0; e < r; e++)
           if (i[e].IncId === t)
             return (
@@ -83,7 +83,7 @@ class ItemSelectView extends UiViewBase_1.UiViewBase {
     );
   }
   OnBeforeShow() {
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     this.Upt.UpdateSelectableComponent(
       e.SelectableComponentType,
       e.ItemDataBaseList,
@@ -95,15 +95,15 @@ class ItemSelectView extends UiViewBase_1.UiViewBase {
       this.UpdateFilterComponent(e.UseWayId, e.ItemDataBaseList);
   }
   UpdateFilterComponent(e, t) {
-    let i = !1;
-    let r = !1;
-    let s;
+    let i = !1,
+      r = !1;
+    var s;
     e &&
       ((s = ConfigManager_1.ConfigManager.SortConfig.GetSortId(e)) &&
-        s > 0 &&
+        0 < s &&
         (i = !0),
       (s = ConfigManager_1.ConfigManager.FilterConfig.GetFilterId(e))) &&
-      s > 0 &&
+      0 < s &&
       (r = !0),
       this.hft.GetRootItem().SetUIActive(i),
       this.aft.GetRootItem().SetUIActive(r),
@@ -116,4 +116,4 @@ class ItemSelectView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.ItemSelectView = ItemSelectView;
-// # sourceMappingURL=ItemSelectView.js.map
+//# sourceMappingURL=ItemSelectView.js.map

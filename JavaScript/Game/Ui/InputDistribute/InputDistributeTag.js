@@ -6,7 +6,7 @@ class InputDistributeTag {
     (this.Gmr = new Set()), (this.Nmr = t);
     let s = (this.Omr = e);
     for (; s; ) {
-      const r = s.TagName;
+      var r = s.TagName;
       this.Gmr.add(r), (s = s.ParentTag);
     }
   }
@@ -21,4 +21,4 @@ class InputDistributeTag {
   }
 }
 exports.InputDistributeTag = InputDistributeTag;
-// # sourceMappingURL=InputDistributeTag.js.map
+//# sourceMappingURL=InputDistributeTag.js.map

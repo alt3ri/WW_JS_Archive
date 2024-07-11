@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayAbilityVisionSummon = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../../../../Core/Audio/AudioSystem");
-const GameplayCueById_1 = require("../../../../../../../Core/Define/ConfigQuery/GameplayCueById");
-const Protocol_1 = require("../../../../../../../Core/Define/Net/Protocol");
-const RegisterComponent_1 = require("../../../../../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../../Common/Event/EventSystem");
-const PhantomUtil_1 = require("../../../../../../Module/Phantom/PhantomUtil");
-const BulletController_1 = require("../../../../../Bullet/BulletController");
-const GameplayAbilityVisionBase_1 = require("./GameplayAbilityVisionBase");
-const GameplayAbilityVisionMisc_1 = require("./GameplayAbilityVisionMisc");
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../../../../../Core/Audio/AudioSystem"),
+  GameplayCueById_1 = require("../../../../../../../Core/Define/ConfigQuery/GameplayCueById"),
+  Protocol_1 = require("../../../../../../../Core/Define/Net/Protocol"),
+  RegisterComponent_1 = require("../../../../../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../../Common/Event/EventSystem"),
+  PhantomUtil_1 = require("../../../../../../Module/Phantom/PhantomUtil"),
+  BulletController_1 = require("../../../../../Bullet/BulletController"),
+  GameplayAbilityVisionBase_1 = require("./GameplayAbilityVisionBase"),
+  GameplayAbilityVisionMisc_1 = require("./GameplayAbilityVisionMisc");
 class GameplayAbilityVisionSummon extends GameplayAbilityVisionBase_1.GameplayAbilityVisionBase {
   constructor() {
     super(...arguments),
@@ -55,10 +55,10 @@ class GameplayAbilityVisionSummon extends GameplayAbilityVisionBase_1.GameplayAb
         Reason: "幻象召唤时触发子弹、镜头和特效",
       });
     let i = void 0;
-    const t = this.Entity.GetComponent(33);
+    var t = this.Entity.GetComponent(33);
     if (t?.Valid)
       for (const e of t.GetAllActivatedSkill())
-        if (e.SkillInfo?.SkillGenre === 9) {
+        if (9 === e.SkillInfo?.SkillGenre) {
           i = e.CombatMessageId;
           break;
         }
@@ -96,7 +96,7 @@ class GameplayAbilityVisionSummon extends GameplayAbilityVisionBase_1.GameplayAb
     return this.Wpt.空中能否释放 && this.GameplayTagComponent.HasTag(40422668);
   }
   rAr(i) {
-    let t = new UE.Vector(0, 0, this.Vzo.ScaledHalfHeight);
+    var t = new UE.Vector(0, 0, this.Vzo.ScaledHalfHeight);
     this.Vzo.SetActorLocationAndRotation(
       i.op_Addition(t),
       this.ActorComponent.ActorRotation,
@@ -122,13 +122,13 @@ class GameplayAbilityVisionSummon extends GameplayAbilityVisionBase_1.GameplayAb
       this.Hzo.SetSkillAcceptInput(!0);
     let e = this.Wpt.技能ID;
     for (let i = 0; i < this.Wpt.条件技能ID.Num(); ++i) {
-      const s = this.Wpt.条件技能ID.GetKey(i);
+      var s = this.Wpt.条件技能ID.GetKey(i);
       if (this.GameplayTagComponent.HasTag(s.TagId)) {
         e = this.Wpt.条件技能ID.Get(s);
         break;
       }
     }
-    e > 0 &&
+    0 < e &&
       this.Hzo.BeginSkill(e, {
         Target: this.SkillComponent.SkillTarget?.Entity,
         SocketName: this.SkillComponent.SkillTargetSocket,
@@ -188,4 +188,4 @@ class GameplayAbilityVisionSummon extends GameplayAbilityVisionBase_1.GameplayAb
   }
 }
 exports.GameplayAbilityVisionSummon = GameplayAbilityVisionSummon;
-// # sourceMappingURL=GameplayAbilityVisionSummon.js.map
+//# sourceMappingURL=GameplayAbilityVisionSummon.js.map

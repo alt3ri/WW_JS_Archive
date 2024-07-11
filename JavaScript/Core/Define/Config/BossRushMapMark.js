@@ -21,13 +21,13 @@ class BossRushMapMark {
     );
   }
   activityid() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   markid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.BossRushMapMark = BossRushMapMark;
-// # sourceMappingURL=BossRushMapMark.js.map
+//# sourceMappingURL=BossRushMapMark.js.map

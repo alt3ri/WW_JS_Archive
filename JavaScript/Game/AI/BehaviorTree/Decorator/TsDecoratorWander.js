@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log");
 class TsDecoratorWander extends UE.BTDecorator_BlueprintBase {
   PerformConditionCheckAI(e, r) {
-    const o = e.AiController;
+    var o = e.AiController;
     return o
       ? !o.AiHateList.GetCurrentTarget()?.Valid &&
           !o.CharActorComp.Entity.CheckGetComponent(185).HasTag(-1371021686)
@@ -17,4 +17,4 @@ class TsDecoratorWander extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorWander;
-// # sourceMappingURL=TsDecoratorWander.js.map
+//# sourceMappingURL=TsDecoratorWander.js.map

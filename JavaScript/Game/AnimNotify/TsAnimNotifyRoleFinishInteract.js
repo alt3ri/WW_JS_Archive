@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyRoleFinishInteract extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.Type = 3);
@@ -9,7 +9,7 @@ class TsAnimNotifyRoleFinishInteract extends UE.KuroAnimNotify {
   K2_Notify(e, t) {
     e = e.GetOwner();
     if (e instanceof TsBaseCharacter_1.default) {
-      const s = e.CharacterActorComponent.Entity.GetComponent(26);
+      var s = e.CharacterActorComponent.Entity.GetComponent(26);
       if (s)
         switch (this.Type) {
           case 2:
@@ -26,4 +26,4 @@ class TsAnimNotifyRoleFinishInteract extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifyRoleFinishInteract;
-// # sourceMappingURL=TsAnimNotifyRoleFinishInteract.js.map
+//# sourceMappingURL=TsAnimNotifyRoleFinishInteract.js.map

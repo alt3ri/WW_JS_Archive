@@ -1,29 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionRecoveryTabView = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const CommonItemSelectView_1 = require("../../../Common/CommonItemSelectView");
-const SortViewData_1 = require("../../../Common/FilterSort/Sort/Model/SortViewData");
-const CommonItemSmallItemGrid_1 = require("../../../Common/ItemGrid/CommonItemSmallItemGrid");
-const SelectableComponent_1 = require("../../../Common/PropItem/SelectablePropItem/SelectableComponent");
-const SelectablePropDataUtil_1 = require("../../../Common/PropItem/SelectablePropItem/SelectablePropDataUtil");
-const ConfirmBoxDefine_1 = require("../../../ConfirmBox/ConfirmBoxDefine");
-const ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const CalabashController_1 = require("../../CalabashController");
-const CalabashDefine_1 = require("../../CalabashDefine");
-const VisionRecoveryChoosePanel_1 = require("./VisionRecoveryChoosePanel");
-const VisionRecoverySlotPanel_1 = require("./VisionRecoverySlotPanel");
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  CommonItemSelectView_1 = require("../../../Common/CommonItemSelectView"),
+  SortViewData_1 = require("../../../Common/FilterSort/Sort/Model/SortViewData"),
+  CommonItemSmallItemGrid_1 = require("../../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  SelectableComponent_1 = require("../../../Common/PropItem/SelectablePropItem/SelectableComponent"),
+  SelectablePropDataUtil_1 = require("../../../Common/PropItem/SelectablePropItem/SelectablePropDataUtil"),
+  ConfirmBoxDefine_1 = require("../../../ConfirmBox/ConfirmBoxDefine"),
+  ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  CalabashController_1 = require("../../CalabashController"),
+  CalabashDefine_1 = require("../../CalabashDefine"),
+  VisionRecoveryChoosePanel_1 = require("./VisionRecoveryChoosePanel"),
+  VisionRecoverySlotPanel_1 = require("./VisionRecoverySlotPanel");
 class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -45,7 +45,7 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
       (this.avt = (e, i) => {
         e
           ? (this.nvt || this.hvt(), this.lvt())
-          : (e = this.evt.findIndex((e) => e.IncId === i.GetUniqueId())) >= 0 &&
+          : 0 <= (e = this.evt.findIndex((e) => e.IncId === i.GetUniqueId())) &&
             (this.evt.splice(e, 1),
             this._vt(this.tvt, this.evt),
             this.Fpt(this.evt));
@@ -63,11 +63,11 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
         )
           this.Cvt();
         else {
-          let e = !1;
-          let i = !1;
-          let t = !1;
+          let e = !1,
+            i = !1,
+            t = !1;
           for (const n of this.evt) {
-            const r =
+            var r =
               ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
                 n.IncId,
               );
@@ -89,8 +89,8 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
               (t = !0);
           }
           let o = void 0;
-          let s;
-          const a = [];
+          var s,
+            a = [];
           switch (
             (e &&
               ((s =
@@ -197,7 +197,7 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
       (this.ovt = new VisionRecoveryChoosePanel_1.VisionRecoveryChoosePanel()),
       this.ovt.BindClickCloseCallBack(this.vvt),
       this.ovt.BindFilterSortRefresh(this.Evt);
-    const e = this.GetItem(1);
+    var e = this.GetItem(1);
     await this.ovt.CreateByResourceIdAsync("UiItem_VisionRecoveryList", e);
   }
   OnStart() {
@@ -216,21 +216,23 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
       this._vt(this.tvt, this.evt);
   }
   yvt() {
-    const e = CommonParamById_1.configCommonParamById.GetIntConfig(
-      "VisionRecoveryPreviewRewardDropId",
-    );
-    const i = new Array();
-    const t =
-      ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(e).DropPreview;
+    var e = CommonParamById_1.configCommonParamById.GetIntConfig(
+        "VisionRecoveryPreviewRewardDropId",
+      ),
+      i = new Array(),
+      t =
+        ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(
+          e,
+        ).DropPreview;
     for (const r of t.keys()) {
-      const o = [{ IncId: 0, ItemId: r }, t.get(r)];
+      var o = [{ IncId: 0, ItemId: r }, t.get(r)];
       i.push(o);
     }
     this.DFe.RefreshByData(i);
   }
   _vt(e, i) {
-    const t = new CommonItemSelectView_1.CommonItemSelectViewOpenViewData();
-    const o = new SelectableComponent_1.SelectableComponentData();
+    var t = new CommonItemSelectView_1.CommonItemSelectViewOpenViewData(),
+      o = new SelectableComponent_1.SelectableComponentData();
     (o.IsSingleSelected = !1),
       (o.MaxSelectedGridNum = CalabashDefine_1.VISION_RECOVERY_SLOT_MAX_NUM),
       (o.OnChangeSelectedFunction = this.pvt),
@@ -252,9 +254,9 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
       void 0 !== e && i.push(e);
     }),
       this.qpt.RefreshUi(i);
-    var e = i.length;
-    const t = this.GetText(2);
-    const o = e > 0 ? "DeleteSelect" : "AutoSelect";
+    var e = i.length,
+      t = this.GetText(2),
+      o = 0 < e ? "DeleteSelect" : "AutoSelect";
     LguiUtil_1.LguiUtil.SetLocalTextNew(
       t,
       "Text_EchoSelect_Text",
@@ -293,9 +295,9 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
   }
   cvt() {
     this.nvt || this.Ivt();
-    const e = [];
+    var e = [];
     for (const t of this.ivt) {
-      const i =
+      var i =
         ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
           t.GetUniqueId(),
         );
@@ -326,14 +328,11 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
   Ivt() {
     this.ivt =
       ModelManager_1.ModelManager.InventoryModel.GetUnEquipPhantomItemDataList();
-    var e = ConfigManager_1.ConfigManager.SortConfig.GetSortId(33);
-    var e = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(e);
-    const i = new SortViewData_1.SortResultData();
-    const t = (i.SetConfigId(e.Id), i.SetIsAscending(!0), e.BaseSortList[0]);
-    const o = ConfigManager_1.ConfigManager.SortConfig.GetSortRuleName(
-      t,
-      e.DataId,
-    );
+    var e = ConfigManager_1.ConfigManager.SortConfig.GetSortId(33),
+      e = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(e),
+      i = new SortViewData_1.SortResultData(),
+      t = (i.SetConfigId(e.Id), i.SetIsAscending(!0), e.BaseSortList[0]),
+      o = ConfigManager_1.ConfigManager.SortConfig.GetSortRuleName(t, e.DataId);
     i.SetSelectBaseSort([t, o]),
       ModelManager_1.ModelManager.SortModel.SortDataList(this.ivt, e.Id, i);
   }
@@ -348,4 +347,4 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.VisionRecoveryTabView = VisionRecoveryTabView;
-// # sourceMappingURL=VisionRecoveryTabView.js.map
+//# sourceMappingURL=VisionRecoveryTabView.js.map

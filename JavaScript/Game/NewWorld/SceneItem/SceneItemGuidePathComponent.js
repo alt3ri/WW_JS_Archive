@@ -1,51 +1,56 @@
 "use strict";
-let SceneItemGuidePathComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, s) {
-    let o;
-    const h = arguments.length;
-    let n =
-      h < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      n = Reflect.decorate(t, e, i, s);
-    else
-      for (let r = t.length - 1; r >= 0; r--)
-        (o = t[r]) && (n = (h < 3 ? o(n) : h > 3 ? o(e, i, n) : o(e, i)) || n);
-    return h > 3 && n && Object.defineProperty(e, i, n), n;
-  };
+var SceneItemGuidePathComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, s) {
+      var o,
+        h = arguments.length,
+        n =
+          h < 3
+            ? e
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        n = Reflect.decorate(t, e, i, s);
+      else
+        for (var r = t.length - 1; 0 <= r; r--)
+          (o = t[r]) &&
+            (n = (h < 3 ? o(n) : 3 < h ? o(e, i, n) : o(e, i)) || n);
+      return 3 < h && n && Object.defineProperty(e, i, n), n;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemGuidePathComponent = exports.SCAN_SKILL_ID = void 0);
-const UE = require("ue");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const Net_1 = require("../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const EffectContext_1 = require("../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../Effect/EffectSystem");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const LevelGamePlayUtils_1 = require("../../LevelGamePlay/LevelGamePlayUtils");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const colorString = FNameUtil_1.FNameUtil.GetDynamicFName("Color");
-const colorRed = new UE.LinearColor(12, 2, 2, 1);
-const colorBlue = new UE.LinearColor(6, 8, 15, 1);
-const colorYellow = new UE.LinearColor(12, 8, 4, 1);
-const finishTag = 1298716444;
-const activatedTag = -3775711;
-const normalTag = -1152559349;
+const UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  EffectContext_1 = require("../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../Effect/EffectSystem"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  LevelGamePlayUtils_1 = require("../../LevelGamePlay/LevelGamePlayUtils"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  colorString = FNameUtil_1.FNameUtil.GetDynamicFName("Color"),
+  colorRed = new UE.LinearColor(12, 2, 2, 1),
+  colorBlue = new UE.LinearColor(6, 8, 15, 1),
+  colorYellow = new UE.LinearColor(12, 8, 4, 1),
+  finishTag = 1298716444,
+  activatedTag = -3775711,
+  normalTag = -1152559349;
 exports.SCAN_SKILL_ID = 210004;
 let SceneItemGuidePathComponent =
   (SceneItemGuidePathComponent_1 = class SceneItemGuidePathComponent extends (
@@ -114,7 +119,7 @@ let SceneItemGuidePathComponent =
         }),
         (this.Gfn = (t, e) => {
           Info_1.Info.EnableForceTick ||
-            (t === 5 &&
+            (5 === t &&
               ((this.Uxr = this.Disable(
                 "[SceneItemGuidePathComponent.OnEffectFinish] 特效加载完成，由C++组件接管tick",
               )),
@@ -145,7 +150,7 @@ let SceneItemGuidePathComponent =
       );
     }
     Nfn(t) {
-      let e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(t.RedState);
+      var e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(t.RedState);
       if (this.xfn.has(e)) return !1;
       this.xfn.set(e, colorRed);
       e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(t.YellowState);
@@ -185,12 +190,12 @@ let SceneItemGuidePathComponent =
       );
     }
     kfn() {
-      var t = this.Entity?.GetComponent(0).GetPbEntityInitData();
-      var t = (0, IComponent_1.getComponent)(
-        t.ComponentsData,
-        "EntityStateComponent",
-      ).StateChangeBehaviors;
-      t?.length > 0 &&
+      var t = this.Entity?.GetComponent(0).GetPbEntityInitData(),
+        t = (0, IComponent_1.getComponent)(
+          t.ComponentsData,
+          "EntityStateComponent",
+        ).StateChangeBehaviors;
+      0 < t?.length &&
         (t = t[0].DelayChangeState) &&
         (this.Tfn = t.Time * TimeUtil_1.TimeUtil.InverseMillisecond);
     }
@@ -244,7 +249,7 @@ let SceneItemGuidePathComponent =
       else {
         let t = this.dce ? 1 : 0;
         this.dce ||
-          this.Tfn === 0 ||
+          0 === this.Tfn ||
           ((this.Ifn -= e),
           (this.Ifn = this.Ifn <= 0 ? 0 : this.Ifn),
           (t = this.Ifn / this.Tfn)),
@@ -252,10 +257,10 @@ let SceneItemGuidePathComponent =
       }
     }
     Ofn() {
-      let t;
-      const e = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(
-        this.Lo.SplineEntityId,
-      );
+      var t,
+        e = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(
+          this.Lo.SplineEntityId,
+        );
       e
         ? (t = (0, IComponent_1.getComponent)(
             e.ComponentsData,
@@ -319,7 +324,7 @@ let SceneItemGuidePathComponent =
           );
     }
     bfn(e = !1, i = void 0) {
-      const t = Protocol_1.Aki.Protocol.M_s.create();
+      var t = Protocol_1.Aki.Protocol.M_s.create();
       (t.rkn = MathUtils_1.MathUtils.NumberToLong(
         this.Hte.CreatureData.GetCreatureDataId(),
       )),
@@ -394,7 +399,7 @@ let SceneItemGuidePathComponent =
         this.Lfn?.SetColorParameter(colorString, i);
     }
     NKt() {
-      const t = this.md.SplineData;
+      var t = this.md.SplineData;
       (this.opi = EffectSystem_1.EffectSystem.SpawnEffect(
         GlobalData_1.GlobalData.World,
         this.Hte.ActorTransform,
@@ -429,4 +434,4 @@ let SceneItemGuidePathComponent =
     SceneItemGuidePathComponent,
   )),
   (exports.SceneItemGuidePathComponent = SceneItemGuidePathComponent);
-// # sourceMappingURL=SceneItemGuidePathComponent.js.map
+//# sourceMappingURL=SceneItemGuidePathComponent.js.map

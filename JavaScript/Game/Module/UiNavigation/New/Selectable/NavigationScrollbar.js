@@ -8,4 +8,4 @@ class NavigationScrollbar extends NavigationSelectableBase_1.NavigationSelectabl
   }
 }
 exports.NavigationScrollbar = NavigationScrollbar;
-// # sourceMappingURL=NavigationScrollbar.js.map
+//# sourceMappingURL=NavigationScrollbar.js.map

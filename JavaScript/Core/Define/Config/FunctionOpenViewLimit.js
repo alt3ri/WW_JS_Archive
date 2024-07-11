@@ -18,9 +18,9 @@ class FunctionOpenViewLimit {
     );
   }
   viewname(t) {
-    const i = this.J7.__offset(this.z7, 4);
+    var i = this.J7.__offset(this.z7, 4);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.FunctionOpenViewLimit = FunctionOpenViewLimit;
-// # sourceMappingURL=FunctionOpenViewLimit.js.map
+//# sourceMappingURL=FunctionOpenViewLimit.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OpenSystemInstanceEntrance = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const InstanceDungeonEntranceConfig_1 = require("../../../Module/InstanceDungeon/InstanceDungeonEntranceConfig");
-const InstanceDungeonEntranceController_1 = require("../../../Module/InstanceDungeon/InstanceDungeonEntranceController");
-const TowerData_1 = require("../../../Module/TowerDetailUi/TowerData");
-const OpenSystemBase_1 = require("./OpenSystemBase");
+const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  InstanceDungeonEntranceConfig_1 = require("../../../Module/InstanceDungeon/InstanceDungeonEntranceConfig"),
+  InstanceDungeonEntranceController_1 = require("../../../Module/InstanceDungeon/InstanceDungeonEntranceController"),
+  TowerData_1 = require("../../../Module/TowerDetailUi/TowerData"),
+  OpenSystemBase_1 = require("./OpenSystemBase");
 class OpenSystemInstanceEntrance extends OpenSystemBase_1.OpenSystemBase {
   async ExecuteOpenView(e, n) {
     if (!e.BoardId) return !1;
@@ -49,4 +49,4 @@ class OpenSystemInstanceEntrance extends OpenSystemBase_1.OpenSystemBase {
   }
 }
 exports.OpenSystemInstanceEntrance = OpenSystemInstanceEntrance;
-// # sourceMappingURL=OpenSystemInstanceEntrance.js.map
+//# sourceMappingURL=OpenSystemInstanceEntrance.js.map

@@ -5,18 +5,18 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.MAX_PENDING_LOG =
     exports.EXIT_WAIT_TIME =
       void 0);
-const cpp_1 = require("cpp");
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const BaseConfigController_1 = require("../BaseConfig/BaseConfigController");
-const BaseConfigModel_1 = require("../BaseConfig/BaseConfigModel");
-const LauncherLog_1 = require("../Util/LauncherLog");
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
+  UE = require("ue"),
+  BaseConfigController_1 = require("../BaseConfig/BaseConfigController"),
+  BaseConfigModel_1 = require("../BaseConfig/BaseConfigModel"),
+  LauncherLog_1 = require("../Util/LauncherLog");
 (exports.EXIT_WAIT_TIME = 1),
   (exports.MAX_PENDING_LOG = 100),
   (exports.SEND_HTTP_TIMEOUT = 1e4);
 class ThinkDataLaunchReporter {
   static InitializeInstance() {
-    const e = BaseConfigModel_1.BaseConfigModel.EntryJson?.TDCfg;
+    var e = BaseConfigModel_1.BaseConfigModel.EntryJson?.TDCfg;
     e
       ? (ThinkDataLaunchReporter.cEr(e?.URL, e?.AppID),
         ThinkDataLaunchReporter.CalibrateInstanceTime())
@@ -56,4 +56,4 @@ class ThinkDataLaunchReporter {
         "数数上报时间校准失败，可以因为以下问题导致：1.CDN数数上报配置错误；2.网络原因连接不上。",
       );
   });
-// # sourceMappingURL=ThinkDataLaunchReporter.js.map
+//# sourceMappingURL=ThinkDataLaunchReporter.js.map

@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonGrid = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../Util/LguiUtil");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../Util/LguiUtil");
 class InstanceDungeonGrid extends UiPanelBase_1.UiPanelBase {
   constructor(e, i) {
     super(),
       (this.NUe = 0),
       (this.sli = (e) => {}),
       (this.kqe = (e) => {
-        e === 1 && this.sli(this.NUe);
+        1 === e && this.sli(this.NUe);
       }),
       (this.NUe = e),
       this.CreateThenShowByActor(i.GetOwner());
@@ -44,8 +44,8 @@ class InstanceDungeonGrid extends UiPanelBase_1.UiPanelBase {
   }
   OnStart() {
     this.GetItem(4).SetUIActive(!1);
-    const e = this.GetText(1);
-    const i = this.GetItem(10);
+    var e = this.GetText(1),
+      i = this.GetItem(10);
     ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceCanChallenge(
       this.NUe,
     )
@@ -82,7 +82,7 @@ class InstanceDungeonGrid extends UiPanelBase_1.UiPanelBase {
           .EntranceEndTime,
       ));
     var e = Number(i) - TimeUtil_1.TimeUtil.GetServerTime();
-    i > 0 && e > 0
+    0 < i && 0 < e
       ? (this.GetItem(7).SetUIActive(!0),
         (e = TimeUtil_1.TimeUtil.CalculateRemainingTime(e)),
         LguiUtil_1.LguiUtil.SetLocalText(
@@ -104,7 +104,7 @@ class InstanceDungeonGrid extends UiPanelBase_1.UiPanelBase {
     this.UpdateView(this.NUe);
   }
   UpdateView(e) {
-    let i;
+    var i;
     e
       ? (this.GetText(0).ShowTextNew(
           ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
@@ -134,4 +134,4 @@ class InstanceDungeonGrid extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.InstanceDungeonGrid = InstanceDungeonGrid;
-// # sourceMappingURL=InstanceDungeonGrid.js.map
+//# sourceMappingURL=InstanceDungeonGrid.js.map

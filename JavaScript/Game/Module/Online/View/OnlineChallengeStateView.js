@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OnlineChallengeStateView = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const OnlineChallengePlayerStateItem_1 = require("./OnlineChallengePlayerStateItem");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  OnlineChallengePlayerStateItem_1 = require("./OnlineChallengePlayerStateItem");
 class OnlineChallengeStateView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -75,43 +75,46 @@ class OnlineChallengeStateView extends UiTickViewBase_1.UiTickViewBase {
   }
   RefreshView() {
     var e = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
-      ModelManager_1.ModelManager.OnlineModel.OwnerId,
-    )?.Name;
-    const i =
-      (ModelManager_1.ModelManager.SceneTeamModel.IsAllDid()
-        ? (LguiUtil_1.LguiUtil.SetLocalText(this.GetText(0), "ChallengeAgain"),
-          LguiUtil_1.LguiUtil.SetLocalText(
-            this.GetText(5),
-            "HasInviteChallengeAgain",
-            e,
-          ))
-        : (LguiUtil_1.LguiUtil.SetLocalText(
-            this.GetText(0),
-            "ContinueChallenge",
+        ModelManager_1.ModelManager.OnlineModel.OwnerId,
+      )?.Name,
+      i =
+        (ModelManager_1.ModelManager.SceneTeamModel.IsAllDid()
+          ? (LguiUtil_1.LguiUtil.SetLocalText(
+              this.GetText(0),
+              "ChallengeAgain",
+            ),
+            LguiUtil_1.LguiUtil.SetLocalText(
+              this.GetText(5),
+              "HasInviteChallengeAgain",
+              e,
+            ))
+          : (LguiUtil_1.LguiUtil.SetLocalText(
+              this.GetText(0),
+              "ContinueChallenge",
+            ),
+            LguiUtil_1.LguiUtil.SetLocalText(
+              this.GetText(5),
+              "HasInviteContinueChallenge",
+              e,
+            )),
+        this.GetText(1).SetText(
+          MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+            ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+              ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
+            ).MapName,
           ),
-          LguiUtil_1.LguiUtil.SetLocalText(
-            this.GetText(5),
-            "HasInviteContinueChallenge",
-            e,
-          )),
-      this.GetText(1).SetText(
-        MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-          ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-            ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
-          ).MapName,
         ),
-      ),
-      this.GetItem(2));
-    const t = this.GetItem(3);
-    const n =
-      (i.SetUIActive(!1),
-      t.SetUIActive(!1),
-      ModelManager_1.ModelManager.PlayerInfoModel.GetId());
-    var e = ModelManager_1.ModelManager.CreatureModel.GetAllScenePlayers();
+        this.GetItem(2)),
+      t = this.GetItem(3),
+      n =
+        (i.SetUIActive(!1),
+        t.SetUIActive(!1),
+        ModelManager_1.ModelManager.PlayerInfoModel.GetId()),
+      e = ModelManager_1.ModelManager.CreatureModel.GetAllScenePlayers();
     if (!(e.length <= 1))
       for (const r of e) {
-        var s;
-        const a = r.GetPlayerId();
+        var s,
+          a = r.GetPlayerId();
         a !== n &&
           (i.bIsUIActive
             ? t.bIsUIActive ||
@@ -133,4 +136,4 @@ class OnlineChallengeStateView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.OnlineChallengeStateView = OnlineChallengeStateView;
-// # sourceMappingURL=OnlineChallengeStateView.js.map
+//# sourceMappingURL=OnlineChallengeStateView.js.map

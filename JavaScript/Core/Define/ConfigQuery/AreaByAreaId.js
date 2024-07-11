@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configAreaByAreaId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const Area_1 = require("../Config/Area");
-const DB = "db_area.db";
-const FILE = "q.区域.xlsx";
-const TABLE = "Area";
-const COMMAND = "select BinData from `Area` where AreaId=?";
-const KEY_PREFIX = "AreaByAreaId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  Area_1 = require("../Config/Area"),
+  DB = "db_area.db",
+  FILE = "q.区域.xlsx",
+  TABLE = "Area",
+  COMMAND = "select BinData from `Area` where AreaId=?",
+  KEY_PREFIX = "AreaByAreaId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX = "configAreaByAreaId.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configAreaByAreaId.GetConfigList(";
 exports.configAreaByAreaId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -29,7 +29,7 @@ exports.configAreaByAreaId = {
     );
   },
   GetConfigList: (o, e = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -44,13 +44,14 @@ exports.configAreaByAreaId = {
         const a = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "AreaId",
               o,
-            ]) !== 1
+            ])
           )
             break;
-          let i = void 0;
+          var i = void 0;
           if (
             (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -78,4 +79,4 @@ exports.configAreaByAreaId = {
     }
   },
 };
-// # sourceMappingURL=AreaByAreaId.js.map
+//# sourceMappingURL=AreaByAreaId.js.map

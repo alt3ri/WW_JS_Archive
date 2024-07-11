@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configSkillBySkillGroupId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const Skill_1 = require("../Config/Skill");
-const DB = "db_skill.db";
-const FILE = "j.技能.xlsx";
-const TABLE = "Skill";
-const COMMAND = "select BinData from `Skill` where SkillGroupId = ?";
-const KEY_PREFIX = "SkillBySkillGroupId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  Skill_1 = require("../Config/Skill"),
+  DB = "db_skill.db",
+  FILE = "j.技能.xlsx",
+  TABLE = "Skill",
+  COMMAND = "select BinData from `Skill` where SkillGroupId = ?",
+  KEY_PREFIX = "SkillBySkillGroupId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX = "configSkillBySkillGroupId.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configSkillBySkillGroupId.GetConfigList(";
 exports.configSkillBySkillGroupId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -29,7 +29,7 @@ exports.configSkillBySkillGroupId = {
     );
   },
   GetConfigList: (o, i = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -44,13 +44,14 @@ exports.configSkillBySkillGroupId = {
         const r = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "SkillGroupId",
               o,
-            ]) !== 1
+            ])
           )
             break;
-          let e = void 0;
+          var e = void 0;
           if (
             (([n, e] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -78,4 +79,4 @@ exports.configSkillBySkillGroupId = {
     }
   },
 };
-// # sourceMappingURL=SkillBySkillGroupId.js.map
+//# sourceMappingURL=SkillBySkillGroupId.js.map

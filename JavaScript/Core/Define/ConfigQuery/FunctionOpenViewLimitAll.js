@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configFunctionOpenViewLimitAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const FunctionOpenViewLimit_1 = require("../Config/FunctionOpenViewLimit");
-const DB = "db_function.db";
-const FILE = "g.功能开启.xlsx";
-const TABLE = "FunctionOpenViewLimit";
-const COMMAND = "select BinData from `FunctionOpenViewLimit`";
-const KEY_PREFIX = "FunctionOpenViewLimitAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  FunctionOpenViewLimit_1 = require("../Config/FunctionOpenViewLimit"),
+  DB = "db_function.db",
+  FILE = "g.功能开启.xlsx",
+  TABLE = "FunctionOpenViewLimit",
+  COMMAND = "select BinData from `FunctionOpenViewLimit`",
+  KEY_PREFIX = "FunctionOpenViewLimitAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configFunctionOpenViewLimitAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configFunctionOpenViewLimitAll = {
     );
   },
   GetConfigList: (i = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configFunctionOpenViewLimitAll = {
       }
       const t = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let e = void 0;
+        var e = void 0;
         if (
           (([n, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -67,4 +67,4 @@ exports.configFunctionOpenViewLimitAll = {
     }
   },
 };
-// # sourceMappingURL=FunctionOpenViewLimitAll.js.map
+//# sourceMappingURL=FunctionOpenViewLimitAll.js.map

@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Quat_1 = require("../../Core/Utils/Math/Quat");
-const Rotator_1 = require("../../Core/Utils/Math/Rotator");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const BlackboardController_1 = require("../World/Controller/BlackboardController");
-const totalDurationMap = new Map();
-const turnModelMap = new Map();
-const runTimeMap = new Map();
-const tmpQuat = Quat_1.Quat.Create();
+const UE = require("ue"),
+  Quat_1 = require("../../Core/Utils/Math/Quat"),
+  Rotator_1 = require("../../Core/Utils/Math/Rotator"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  BlackboardController_1 = require("../World/Controller/BlackboardController"),
+  totalDurationMap = new Map(),
+  turnModelMap = new Map(),
+  runTimeMap = new Map(),
+  tmpQuat = Quat_1.Quat.Create();
 class TsAnimNotifyStateTurnModelBlackboard extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -19,10 +19,10 @@ class TsAnimNotifyStateTurnModelBlackboard extends UE.KuroAnimNotifyState {
       (this.TargetRotator = new Rotator_1.Rotator());
   }
   K2_NotifyBegin(t, r, a) {
-    let e;
-    let o;
-    let i;
-    var t = t.GetOwner();
+    var e,
+      o,
+      i,
+      t = t.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
       !(
@@ -51,15 +51,15 @@ class TsAnimNotifyStateTurnModelBlackboard extends UE.KuroAnimNotifyState {
   K2_NotifyTick(t, r, a) {
     t = t.GetOwner();
     if (!(t instanceof TsBaseCharacter_1.default)) return !1;
-    var t = t.CharacterActorComponent.Entity;
-    const e = t.GetComponent(160);
+    var t = t.CharacterActorComponent.Entity,
+      e = t.GetComponent(160);
     if (!e?.Valid) return !1;
-    var t = t.Id;
-    const o = totalDurationMap.get(t);
+    var t = t.Id,
+      o = totalDurationMap.get(t);
     if (!o) return !1;
-    const i = turnModelMap.get(t);
-    const n = runTimeMap.get(t);
-    const s = n + a;
+    var i = turnModelMap.get(t),
+      n = runTimeMap.get(t),
+      s = n + a;
     let u = 0;
     return (
       (u = this.Curve
@@ -72,10 +72,10 @@ class TsAnimNotifyStateTurnModelBlackboard extends UE.KuroAnimNotifyState {
     );
   }
   K2_NotifyEnd(t, r) {
-    let a;
-    let e;
-    let o;
-    var t = t.GetOwner();
+    var a,
+      e,
+      o,
+      t = t.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
       ((o = t.CharacterActorComponent),
@@ -105,4 +105,4 @@ class TsAnimNotifyStateTurnModelBlackboard extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateTurnModelBlackboard;
-// # sourceMappingURL=TsAnimNotifyStateTurnModelBlackboard.js.map
+//# sourceMappingURL=TsAnimNotifyStateTurnModelBlackboard.js.map

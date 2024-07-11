@@ -1,42 +1,46 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, o, i) {
-    let r;
-    const a = arguments.length;
-    let s =
-      a < 3 ? e : i === null ? (i = Object.getOwnPropertyDescriptor(e, o)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      a = arguments.length,
+      s =
+        a < 3
+          ? e
+          : null === i
+            ? (i = Object.getOwnPropertyDescriptor(e, o))
+            : i;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(t, e, o, i);
     else
-      for (let n = t.length - 1; n >= 0; n--)
-        (r = t[n]) && (s = (a < 3 ? r(s) : a > 3 ? r(e, o, s) : r(e, o)) || s);
-    return a > 3 && s && Object.defineProperty(e, o, s), s;
+      for (var n = t.length - 1; 0 <= n; n--)
+        (r = t[n]) && (s = (a < 3 ? r(s) : 3 < a ? r(e, o, s) : r(e, o)) || s);
+    return 3 < a && s && Object.defineProperty(e, o, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BaseCharacterComponent = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon");
-const IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent");
-const TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter");
-const GlobalData_1 = require("../../../../GlobalData");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RenderConfig_1 = require("../../../../Render/Config/RenderConfig");
-const ActorUtils_1 = require("../../../../Utils/ActorUtils");
-const CombineMeshTool_1 = require("../../../Character/Common/Blueprint/Utils/CombineMeshTool");
-const BaseActorComponent_1 = require("../../../Common/Component/BaseActorComponent");
-const CustomMovementDefine_1 = require("./Move/CustomMovementDefine");
-const PROFILE_KEY = "CharacterActorComponent_FixBornLocation";
-const DITHER_RATE_PER_SECOND = 0.33;
-const FIX_LOCATION_TOLERANCE = 2;
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon"),
+  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RenderConfig_1 = require("../../../../Render/Config/RenderConfig"),
+  ActorUtils_1 = require("../../../../Utils/ActorUtils"),
+  CombineMeshTool_1 = require("../../../Character/Common/Blueprint/Utils/CombineMeshTool"),
+  BaseActorComponent_1 = require("../../../Common/Component/BaseActorComponent"),
+  CustomMovementDefine_1 = require("./Move/CustomMovementDefine"),
+  PROFILE_KEY = "CharacterActorComponent_FixBornLocation",
+  DITHER_RATE_PER_SECOND = 0.33,
+  FIX_LOCATION_TOLERANCE = 2;
 let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorComponent_1.BaseActorComponent {
   constructor() {
     super(...arguments),
@@ -56,7 +60,7 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
   get SimpleMatControlComponent() {
     if (!this.IsInitSimpleMatController) {
       this.IsInitSimpleMatController = !0;
-      const t = this.Actor.AddComponentByClass(
+      var t = this.Actor.AddComponentByClass(
         UE.BP_NPCMaterialController_C.StaticClass(),
         !1,
         MathUtils_1.MathUtils.DefaultTransform,
@@ -93,8 +97,8 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
     );
   }
   ApplySimpleMaterialEffect(e) {
-    e !== "" &&
-      e !== "None" &&
+    "" !== e &&
+      "None" !== e &&
       this.SimpleMatControlComponent?.IsValid() &&
       ResourceSystem_1.ResourceSystem.LoadAsync(
         e,
@@ -121,7 +125,7 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
       this.SimpleMatControlComponent.EndEffect();
   }
   iFr() {
-    let t = this.CreatureData.GetPbEntityInitData();
+    var t = this.CreatureData.GetPbEntityInitData();
     t &&
       (t = (0, IComponent_1.getComponent)(
         t.ComponentsData,
@@ -138,9 +142,8 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
   }
   LoadAndSetHolographicEffect() {
     if (!this.HolographicEffectActor?.IsValid()) {
-      const t =
-        this.CreatureData.GetModelConfig()?.DA.AssetPathName?.toString();
-      if (t?.length && t !== "None")
+      var t = this.CreatureData.GetModelConfig()?.DA.AssetPathName?.toString();
+      if (t?.length && "None" !== t)
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "NPC",
@@ -155,7 +158,7 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
           r,
           UE.PD_CharacterControllerDataGroup_C,
           (t) => {
-            let e, o, i;
+            var e, o, i;
             this.Actor?.IsValid() &&
               (t?.IsValid()
                 ? (o = (e = this.Owner.K2_GetComponentsByClass(
@@ -195,36 +198,36 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
     }
   }
   SetNpcBornEffect() {
-    this.SubEntityType === 2 ? this.tFr() : this.iFr();
+    2 === this.SubEntityType ? this.tFr() : this.iFr();
   }
   SetNpcBornMaterial() {
-    let t;
+    var t;
     this.Owner.IsA(UE.BP_BaseNPC_C.StaticClass()) &&
       (t = this.Owner)?.BornEffect &&
-      (t = t.BornEffect.AssetPathName.toString()) !== "" &&
-      t !== "None" &&
+      "" !== (t = t.BornEffect.AssetPathName.toString()) &&
+      "None" !== t &&
       this.ApplySimpleMaterialEffect(t);
   }
   SetCamp(t) {
-    let e = this.Entity.GetComponent(0);
+    var e = this.Entity.GetComponent(0);
     (e?.GetEntityType() !== Protocol_1.Aki.Protocol.HBs.Proto_Npc &&
       e?.GetEntityType() !== Protocol_1.Aki.Protocol.HBs.Proto_Monster &&
       e?.GetEntityType() !== Protocol_1.Aki.Protocol.HBs.Proto_Vision) ||
-      (((e = e?.GetEntityCamp()) || e === 0) &&
+      (((e = e?.GetEntityCamp()) || 0 === e) &&
         t instanceof TsBaseCharacter_1.default &&
         (t.Camp = e));
   }
   PendingToDestroy() {
     if (
       this.EntityType === Protocol_1.Aki.Protocol.HBs.Proto_Npc &&
-      this.SubEntityType === 2
+      2 === this.SubEntityType
     )
       this.Actor.DitherEffectController?.EnterDisappearEffect(
         DITHER_RATE_PER_SECOND,
         1,
       );
     else {
-      let t = this.Entity.GetComponent(0)?.GetPbEntityInitData();
+      var t = this.Entity.GetComponent(0)?.GetPbEntityInitData();
       if (!t) return !1;
       t = (0, IComponent_1.getComponent)(
         t.ComponentsData,
@@ -261,13 +264,13 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
           ),
         [!1, void 0]
       );
-    var o = o ?? this.ActorLocationProxy;
-    const s = ModelManager_1.ModelManager.TraceElementModel.CommonStartLocation;
-    var a =
-      (a
-        ? s.Set(o.X, o.Y, o.Z + this.ScaledRadius)
-        : s.Set(o.X, o.Y, o.Z + this.ScaledHalfHeight),
-      ModelManager_1.ModelManager.TraceElementModel.CommonEndLocation);
+    var o = o ?? this.ActorLocationProxy,
+      s = ModelManager_1.ModelManager.TraceElementModel.CommonStartLocation,
+      a =
+        (a
+          ? s.Set(o.X, o.Y, o.Z + this.ScaledRadius)
+          : s.Set(o.X, o.Y, o.Z + this.ScaledHalfHeight),
+        ModelManager_1.ModelManager.TraceElementModel.CommonEndLocation);
     a.Set(o.X, o.Y, o.Z + t);
     let n = this.FixBornLocationInternal(o, s, a, !1, e, i);
     return (
@@ -332,7 +335,7 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
           ),
         [!0, t]
       );
-    const o = ModelManager_1.ModelManager.TraceElementModel.GetActorTrace();
+    var o = ModelManager_1.ModelManager.TraceElementModel.GetActorTrace();
     (o.WorldContextObject = this.Actor),
       (o.Radius = this.ScaledRadius),
       TraceElementCommon_1.TraceElementCommon.SetStartLocation(o, r),
@@ -341,12 +344,12 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
     for (const i of ModelManager_1.ModelManager.WorldModel.ActorsToIgnoreSet)
       o.ActorsToIgnore.Add(i);
     var t = TraceElementCommon_1.TraceElementCommon.ShapeTrace(
-      this.Actor.CapsuleComponent,
-      o,
-      PROFILE_KEY,
-      PROFILE_KEY,
-    );
-    const c = o.HitResult;
+        this.Actor.CapsuleComponent,
+        o,
+        PROFILE_KEY,
+        PROFILE_KEY,
+      ),
+      c = o.HitResult;
     if (
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -364,14 +367,14 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
       t && c.bBlockingHit)
     ) {
       if (!s && c.bStartPenetrating) return [!1, void 0];
-      const _ = ModelManager_1.ModelManager.TraceElementModel.CommonHitLocation;
+      var _ = ModelManager_1.ModelManager.TraceElementModel.CommonHitLocation;
       let e = "";
-      const C = c.Actors.Num();
-      let o = -1;
-      let i = "";
+      var C = c.Actors.Num();
+      let o = -1,
+        i = "";
       TraceElementCommon_1.TraceElementCommon.GetHitLocation(c, 0, _);
       for (let t = 0; t < C; ++t) {
-        const l = c.Actors.Get(t);
+        var l = c.Actors.Get(t);
         if (
           l?.IsValid() &&
           ((e += l.GetName() + ", "), !l.IsA(UE.Character.StaticClass()))
@@ -430,14 +433,14 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
     );
   }
   InitActorNew(t) {
-    let e;
-    const o = this.CreatureDataInternal;
-    let i = o.GetTransform();
-    let r = void 0;
-    const a =
-      (this.CreatureDataInternal.SetModelConfig(t),
-      this.oFr(),
-      this.CreatureDataInternal.GetModelConfig());
+    var e,
+      o = this.CreatureDataInternal,
+      i = o.GetTransform(),
+      r = void 0,
+      a =
+        (this.CreatureDataInternal.SetModelConfig(t),
+        this.oFr(),
+        this.CreatureDataInternal.GetModelConfig());
     if (a) {
       if ((r = ActorUtils_1.ActorUtils.LoadActorByModelConfig(a, i))?.IsValid())
         return (
@@ -448,7 +451,7 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
           (this.ClassDefaultObject = UE.KuroStaticLibrary.GetDefaultObject(i)),
           ObjectUtils_1.ObjectUtils.SoftObjectPathIsValid(a.DA)
             ? ((i = a.DA.AssetPathName?.toString())?.length &&
-                i !== "None" &&
+                "None" !== i &&
                 (i = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
                   a.DA.AssetPathName?.toString(),
                   UE.PD_NpcSetupData_C,
@@ -456,7 +459,7 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
                 r instanceof TsBaseCharacter_1.default &&
                 ((e = r.Mesh.GetRelativeTransform()),
                 CombineMeshTool_1.CombineMeshTool.LoadDaConfig(r, e, r.Mesh, i),
-                r.RenderType === 3) &&
+                3 === r.RenderType) &&
                 r.CharRenderingComponent.UpdateNpcDitherComponent(),
               (e = a.动画蓝图.Get()) &&
                 r instanceof TsBaseCharacter_1.default &&
@@ -493,7 +496,7 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
       this.CreatureDataInternal.GetEntityType() ===
       Protocol_1.Aki.Protocol.HBs.Proto_Npc
     ) {
-      let e = this.CreatureDataInternal.GetModelConfig();
+      var e = this.CreatureDataInternal.GetModelConfig();
       if (e) {
         e = UE.KismetSystemLibrary.GetPathName(e.蓝图.Get());
         if (e) {
@@ -523,4 +526,4 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
   BaseCharacterComponent,
 )),
   (exports.BaseCharacterComponent = BaseCharacterComponent);
-// # sourceMappingURL=BaseCharacterComponent.js.map
+//# sourceMappingURL=BaseCharacterComponent.js.map

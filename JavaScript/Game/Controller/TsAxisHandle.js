@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TsAxisHandle = void 0);
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const Stats_1 = require("../../Core/Common/Stats");
-const FNameUtil_1 = require("../../Core/Utils/FNameUtil");
-const StatDefine_1 = require("../Common/StatDefine");
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  Stats_1 = require("../../Core/Common/Stats"),
+  FNameUtil_1 = require("../../Core/Utils/FNameUtil"),
+  StatDefine_1 = require("../Common/StatDefine");
 class TsAxisHandle extends UE.Object {
   constructor() {
     super(...arguments),
@@ -42,4 +42,4 @@ class TsAxisHandle extends UE.Object {
   }
 }
 (exports.TsAxisHandle = TsAxisHandle), (exports.default = TsAxisHandle);
-// # sourceMappingURL=TsAxisHandle.js.map
+//# sourceMappingURL=TsAxisHandle.js.map

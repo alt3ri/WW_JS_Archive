@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TraceElementCommon = void 0);
-const UE = require("ue");
-const FNameUtil_1 = require("./FNameUtil");
-const OPEN_PROFILE_TEST = !0;
-const NO_PROFILE_KEY = "";
+const UE = require("ue"),
+  FNameUtil_1 = require("./FNameUtil"),
+  OPEN_PROFILE_TEST = !0,
+  NO_PROFILE_KEY = "";
 class TraceElementCommon {
   static LineTrace(t, e) {
     return OPEN_PROFILE_TEST
@@ -72,7 +72,7 @@ class TraceElementCommon {
   }
   static IsHitOthers(E, a, r) {
     if (E.bBlockingHit) {
-      const t = E.Actors.Num();
+      var t = E.Actors.Num();
       for (let e = 0; e < t; ++e) {
         let t = E.Actors.Get(e);
         if (t) for (; t; ) t !== a && t !== r && (t = t.GetAttachParentActor());
@@ -83,4 +83,4 @@ class TraceElementCommon {
   }
 }
 exports.TraceElementCommon = TraceElementCommon;
-// # sourceMappingURL=TraceElementCommon.js.map
+//# sourceMappingURL=TraceElementCommon.js.map

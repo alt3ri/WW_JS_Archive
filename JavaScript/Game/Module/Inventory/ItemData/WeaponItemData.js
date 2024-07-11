@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponItemData = void 0);
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const AttributeItemData_1 = require("./AttributeItemData");
+const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  AttributeItemData_1 = require("./AttributeItemData");
 class WeaponItemData extends AttributeItemData_1.AttributeItemData {
   GetConfig() {
     return ConfigManager_1.ConfigManager.InventoryConfig.GetWeaponItemConfig(
@@ -29,7 +29,7 @@ class WeaponItemData extends AttributeItemData_1.AttributeItemData {
     return 1;
   }
   GetDefaultDownText() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
         "LevelShow",
       );
@@ -40,4 +40,4 @@ class WeaponItemData extends AttributeItemData_1.AttributeItemData {
   }
 }
 exports.WeaponItemData = WeaponItemData;
-// # sourceMappingURL=WeaponItemData.js.map
+//# sourceMappingURL=WeaponItemData.js.map

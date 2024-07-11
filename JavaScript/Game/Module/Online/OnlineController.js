@@ -1,27 +1,27 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OnlineController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const OnlineHallData_1 = require("./OnlineHallData");
-const OnlineModel_1 = require("./OnlineModel");
-const LIST_REQUEST_CD = 30;
+const Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  OnlineHallData_1 = require("./OnlineHallData"),
+  OnlineModel_1 = require("./OnlineModel"),
+  LIST_REQUEST_CD = 30;
 class OnlineController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
@@ -110,7 +110,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
       Net_1.Net.UnRegister(25706);
   }
   static RefreshWorldList() {
-    const e = TimeUtil_1.TimeUtil.GetServerTime();
+    var e = TimeUtil_1.TimeUtil.GetServerTime();
     return (
       e - OnlineController.FVt > LIST_REQUEST_CD &&
       (ModelManager_1.ModelManager.OnlineModel.CleanFriendWorldList(),
@@ -130,7 +130,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
       (OnlineController.Bqi += e));
   }
   static LobbyListRequest(l) {
-    const e = new Protocol_1.Aki.Protocol.Qcs();
+    var e = new Protocol_1.Aki.Protocol.Qcs();
     (e.e8n = l),
       Net_1.Net.Call(18887, e, (e) => {
         if (
@@ -147,7 +147,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
           );
         else
           for (const o of e.Y5n) {
-            const n = new OnlineHallData_1.OnlineHallData(o);
+            var n = new OnlineHallData_1.OnlineHallData(o);
             l
               ? ModelManager_1.ModelManager.OnlineModel.PushFriendWorldList(n)
               : ModelManager_1.ModelManager.OnlineModel.PushStrangerWorldList(
@@ -160,7 +160,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static WorldEnterPermissionsRequest(e) {
-    const n = new Protocol_1.Aki.Protocol.Ocs();
+    var n = new Protocol_1.Aki.Protocol.Ocs();
     (n.Ikn = e),
       Net_1.Net.Call(28642, n, (e) => {
         Log_1.Log.CheckDebug() &&
@@ -182,7 +182,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static ApplyJoinWorldRequest(e, n) {
-    const o = new Protocol_1.Aki.Protocol.Ncs();
+    var o = new Protocol_1.Aki.Protocol.Ncs();
     (o.aFn = e),
       (o.t8n = n),
       Net_1.Net.Call(7899, o, (e) => {
@@ -214,7 +214,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static LobbyQueryPlayersRequest(n) {
-    const e = new Protocol_1.Aki.Protocol.Ycs();
+    var e = new Protocol_1.Aki.Protocol.Ycs();
     (e.aFn = n),
       Net_1.Net.Call(8821, e, (e) => {
         Log_1.Log.CheckDebug() &&
@@ -235,7 +235,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
                     e.lkn,
                     27989,
                   )
-            : (e = e.pbs) && e.aFn !== 0
+            : (e = e.pbs) && 0 !== e.aFn
               ? (ModelManager_1.ModelManager.OnlineModel.CleanSearchResultList(),
                 (e = new OnlineHallData_1.OnlineHallData(e)),
                 ModelManager_1.ModelManager.OnlineModel.PushSearchResultList(e),
@@ -249,7 +249,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static AgreeJoinResultRequest(n, e) {
-    const o = new Protocol_1.Aki.Protocol.$cs();
+    var o = new Protocol_1.Aki.Protocol.$cs();
     (o.aFn = n),
       (o.i8n = e),
       Net_1.Net.Call(24130, o, (e) => {
@@ -272,7 +272,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static MatchChangePlayerUiStateRequest(n) {
-    const e = new Protocol_1.Aki.Protocol.ios();
+    var e = new Protocol_1.Aki.Protocol.ios();
     (e.K5n = n),
       Net_1.Net.Call(26132, e, (e) => {
         Log_1.Log.CheckDebug() &&
@@ -293,7 +293,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static CheckPlayerNetHealthy(e) {
-    let n;
+    var n;
     return ModelManager_1.ModelManager.PlayerInfoModel.GetId() === e
       ? ((n = this.GetNetPingState(Net_1.Net.RttMs)), this.IsNetStateGood(n))
       : !!(n =
@@ -308,7 +308,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
   }
   static ApplyRechallengeRequest(e) {
     ModelManager_1.ModelManager.OnlineModel.RefreshInitiateTime();
-    const n = new Protocol_1.Aki.Protocol.Oss();
+    var n = new Protocol_1.Aki.Protocol.Oss();
     (n.V5n = e),
       Net_1.Net.Call(13121, n, (e) => {
         Log_1.Log.CheckDebug() &&
@@ -331,7 +331,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static ReceiveRechallengeRequest() {
-    const e = new Protocol_1.Aki.Protocol.Fss();
+    var e = new Protocol_1.Aki.Protocol.Fss();
     Net_1.Net.Call(28900, e, (e) => {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("MultiPlayerTeam", 5, "协议接收", [
@@ -347,7 +347,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
   }
   static InviteRechallengeRequest() {
     ModelManager_1.ModelManager.OnlineModel.RefreshInitiateTime();
-    const e = new Protocol_1.Aki.Protocol.$ss();
+    var e = new Protocol_1.Aki.Protocol.$ss();
     Net_1.Net.Call(11267, e, (e) => {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("MultiPlayerTeam", 5, "协议接收", [
@@ -365,7 +365,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
     });
   }
   static LeaveWorldTeamRequest(e) {
-    const n = new Protocol_1.Aki.Protocol.ids();
+    var n = new Protocol_1.Aki.Protocol.ids();
     (n.aFn = e),
       Net_1.Net.Call(19381, n, (e) => {
         Log_1.Log.CheckDebug() &&
@@ -382,7 +382,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static KickWorldTeamRequest(e) {
-    const n = new Protocol_1.Aki.Protocol.ods();
+    var n = new Protocol_1.Aki.Protocol.ods();
     (n.aFn = e),
       Net_1.Net.Call(1996, n, (e) => {
         Log_1.Log.CheckDebug() &&
@@ -398,14 +398,14 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static PlayerNetStatePush() {
-    var e = new Protocol_1.Aki.Protocol.lds();
-    var n = Net_1.Net.RttMs;
-    var e =
-      ((e.r8n = n),
-      Net_1.Net.Send(3429, e),
-      ModelManager_1.ModelManager.PlayerInfoModel.GetId());
-    var n = this.GetNetPingState(n);
-    const o = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(e);
+    var e = new Protocol_1.Aki.Protocol.lds(),
+      n = Net_1.Net.RttMs,
+      e =
+        ((e.r8n = n),
+        Net_1.Net.Send(3429, e),
+        ModelManager_1.ModelManager.PlayerInfoModel.GetId()),
+      n = this.GetNetPingState(n),
+      o = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(e);
     o &&
       o.PingState !== n &&
       ((o.PingState = n),
@@ -441,9 +441,9 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
   }
   static ShowTipsWhenOnlineDisabled() {
     if (!ModelManager_1.ModelManager.OnlineModel.IsOnlineDisabled()) return !0;
-    let e;
-    let n;
-    const o = ModelManager_1.ModelManager.OnlineModel.GetOnlineDisabledSource();
+    var e,
+      n,
+      o = ModelManager_1.ModelManager.OnlineModel.GetOnlineDisabledSource();
     if (!o) return !0;
     for ([e, n] of o)
       switch (n) {
@@ -472,7 +472,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
     return !1;
   }
   static qqi() {
-    const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(136);
+    var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(136);
     e.SetCloseFunction(() => {
       ControllerHolder_1.ControllerHolder.KuroSdkController.PostKuroSdkEvent(5);
     }),
@@ -591,26 +591,26 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
         "通知id",
         "9620 " + Protocol_1.Aki.Protocol.Zcs.name,
       ]);
-    const o = ModelManager_1.ModelManager.OnlineModel;
-    const l = (o.ClearWorldTeamPlayerFightInfo(), n.ZEs.length);
+    var o = ModelManager_1.ModelManager.OnlineModel,
+      l = (o.ClearWorldTeamPlayerFightInfo(), n.ZEs.length);
     let r = 0;
     for (let e = 0; e < l; e++) {
-      const t = n.ZEs[e];
-      let a = new OnlineHallData_1.OnlineTeamData(
-        t.Rgs,
-        t.aFn,
-        t.r3n,
-        t.$gs,
-        t.l5n,
-        e + 1,
-        t.pbs,
-        t.Sbs,
-      );
-      const i =
-        (ModelManager_1.ModelManager.OnlineModel.PushCurrentTeamList(a),
-        new Array());
+      var t = n.ZEs[e],
+        a = new OnlineHallData_1.OnlineTeamData(
+          t.Rgs,
+          t.aFn,
+          t.r3n,
+          t.$gs,
+          t.l5n,
+          e + 1,
+          t.pbs,
+          t.Sbs,
+        ),
+        i =
+          (ModelManager_1.ModelManager.OnlineModel.PushCurrentTeamList(a),
+          new Array());
       for (const M of t.Mbs.FLs) {
-        const _ = new OnlineHallData_1.WorldTeamRoleInfo(M.l3n, M.XAs);
+        var _ = new OnlineHallData_1.WorldTeamRoleInfo(M.l3n, M.XAs);
         (_.RoleIndex = r++), i.push(_);
       }
       a = new OnlineHallData_1.WorldTeamPlayerFightInfo(
@@ -642,8 +642,8 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
         "通知id",
         "9621 " + Protocol_1.Aki.Protocol.eds.name,
       ]);
-    const n = e.aFn;
-    const o = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(n);
+    var n = e.aFn,
+      o = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(n);
     if (o.IsSelf) {
       if (!ModelManager_1.ModelManager.GameModeModel.WorldDone)
         return (
@@ -686,23 +686,23 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
         "通知id",
         "9621 " + Protocol_1.Aki.Protocol.tds.name,
       ]);
-    var e = e.pys;
-    const n = new OnlineHallData_1.OnlineTeamData(
-      e.Rgs,
-      e.aFn,
-      e.r3n,
-      e.$gs,
-      e.l5n,
-      ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamSize() + 1,
-      e.pbs,
-      e.Sbs,
-    );
-    const o = new Array();
+    var e = e.pys,
+      n = new OnlineHallData_1.OnlineTeamData(
+        e.Rgs,
+        e.aFn,
+        e.r3n,
+        e.$gs,
+        e.l5n,
+        ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamSize() + 1,
+        e.pbs,
+        e.Sbs,
+      ),
+      o = new Array();
     for (const t of e.Mbs.FLs) {
-      const l = new OnlineHallData_1.WorldTeamRoleInfo(t.l3n, t.XAs);
+      var l = new OnlineHallData_1.WorldTeamRoleInfo(t.l3n, t.XAs);
       o.push(l);
     }
-    const r = new OnlineHallData_1.WorldTeamPlayerFightInfo(
+    var r = new OnlineHallData_1.WorldTeamPlayerFightInfo(
       e.Rgs,
       e.aFn,
       e.Mbs.z4n,
@@ -725,7 +725,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
         "通知id",
         "9619 " + Protocol_1.Aki.Protocol.zcs.name,
       ]);
-    const n = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
+    var n = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
       e.aFn,
     );
     if (n) {
@@ -752,20 +752,19 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
     }
   }),
   (OnlineController.UpdateWorldTeamPlayerFightInfoNotify = (e) => {
-    const n = e.Mbs;
-    const o =
-      ModelManager_1.ModelManager.OnlineModel.GetWorldTeamPlayerFightInfo(
+    var n = e.Mbs,
+      o = ModelManager_1.ModelManager.OnlineModel.GetWorldTeamPlayerFightInfo(
         e.aFn,
       );
     if (o) {
       const i = n.FLs;
-      const l = o.GetIsDiffRoleList(i);
-      const r = ModelManager_1.ModelManager.SceneTeamModel;
-      const t = ModelManager_1.ModelManager.OnlineModel;
+      var l = o.GetIsDiffRoleList(i),
+        r = ModelManager_1.ModelManager.SceneTeamModel,
+        t = ModelManager_1.ModelManager.OnlineModel;
       if (((o.CurRoleId = n.z4n), l)) {
         const i = new Array();
         for (const _ of n.FLs) {
-          const a = new OnlineHallData_1.WorldTeamRoleInfo(_.l3n, _.XAs);
+          var a = new OnlineHallData_1.WorldTeamRoleInfo(_.l3n, _.XAs);
           i.push(a);
         }
         (o.RoleInfos = i), t.WorldTeamPlayerResetIndex();
@@ -780,17 +779,18 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
         ]);
   }),
   (OnlineController.ReceiveRechallengeNotify = (e) => {
-    var e = e.aFn;
-    const n =
-      (ModelManager_1.ModelManager.OnlineModel.SetContinuingChallengeConfirmState(
-        e,
-        0,
-      ),
-      ModelManager_1.ModelManager.PlayerInfoModel.GetId());
+    var e = e.aFn,
+      n =
+        (ModelManager_1.ModelManager.OnlineModel.SetContinuingChallengeConfirmState(
+          e,
+          0,
+        ),
+        ModelManager_1.ModelManager.PlayerInfoModel.GetId());
     e === ModelManager_1.ModelManager.OnlineModel.OwnerId &&
-      ModelManager_1.ModelManager.OnlineModel.GetContinuingChallengeConfirmState(
-        n,
-      ) === 0 &&
+      0 ===
+        ModelManager_1.ModelManager.OnlineModel.GetContinuingChallengeConfirmState(
+          n,
+        ) &&
       UiManager_1.UiManager.OpenView("OnlineChallengeStateView"),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.PlayerChallengeStateChange,
@@ -799,9 +799,10 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
       );
   }),
   (OnlineController.InviteRechallengeNotify = (e) => {
-    (ModelManager_1.ModelManager.OnlineModel.GetContinuingChallengeConfirmState(
-      ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
-    ) === 0 &&
+    (0 ===
+      ModelManager_1.ModelManager.OnlineModel.GetContinuingChallengeConfirmState(
+        ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
+      ) &&
       !ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()) ||
       (ModelManager_1.ModelManager.OnlineModel.SetChallengeApplyPlayerId(e.QUs),
       UiManager_1.UiManager.IsViewOpen("OnlineChallengeStateView")) ||
@@ -816,7 +817,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
       );
   }),
   (OnlineController.PlayerNetStateNotify = (e) => {
-    const n = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
+    var n = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
       e.aFn,
     );
     n &&
@@ -834,9 +835,9 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
     );
   }),
   (OnlineController.PlayerTeleportStateNotify = (e) => {
-    let n;
-    let o;
-    const l = e.aFn;
+    var n,
+      o,
+      l = e.aFn;
     ModelManager_1.ModelManager.OnlineModel.SetPlayerTeleportState(l, e.Ebs),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnRefreshPlayerUiState,
@@ -889,4 +890,4 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
               1)
             : !OnlineController.ShowTipsWhenOnlineDisabled())
         ));
-// # sourceMappingURL=OnlineController.js.map
+//# sourceMappingURL=OnlineController.js.map

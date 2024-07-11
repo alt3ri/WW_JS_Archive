@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventAdjustTodTime = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const TimeOfDayController_1 = require("../../Module/TimeOfDay/TimeOfDayController");
-const TimeOfDayModel_1 = require("../../Module/TimeOfDay/TimeOfDayModel");
-const UiManager_1 = require("../../Ui/UiManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  TimeOfDayController_1 = require("../../Module/TimeOfDay/TimeOfDayController"),
+  TimeOfDayModel_1 = require("../../Module/TimeOfDay/TimeOfDayModel"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventAdjustTodTime extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, r, o) {
     if (e) {
@@ -45,4 +45,4 @@ class LevelEventAdjustTodTime extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventAdjustTodTime = LevelEventAdjustTodTime;
-// # sourceMappingURL=LevelEventAdjustTodTime.js.map
+//# sourceMappingURL=LevelEventAdjustTodTime.js.map

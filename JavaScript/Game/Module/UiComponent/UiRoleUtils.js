@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiRoleUtils = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const EffectUtil_1 = require("../../Utils/EffectUtil");
-const UiModelUtil_1 = require("../UiModel/UiModelUtil");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  EffectUtil_1 = require("../../Utils/EffectUtil"),
+  UiModelUtil_1 = require("../UiModel/UiModelUtil");
 class UiRoleUtils {
   static PlayRoleChangeEffect(e) {
-    let l, o;
+    var l, o;
     e
       ? ((l = (e = e.Model).CheckGetComponent(5)),
         (o = EffectUtil_1.EffectUtil.GetEffectPath(
@@ -50,4 +50,4 @@ class UiRoleUtils {
   }
 }
 exports.UiRoleUtils = UiRoleUtils;
-// # sourceMappingURL=UiRoleUtils.js.map
+//# sourceMappingURL=UiRoleUtils.js.map

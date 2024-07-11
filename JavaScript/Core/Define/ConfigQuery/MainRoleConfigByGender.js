@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configMainRoleConfigByGender = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const MainRoleConfig_1 = require("../Config/MainRoleConfig");
-const DB = "db_main_role_change.db";
-const FILE = "z.主角切换.xlsx";
-const TABLE = "MainRoleConfig";
-const COMMAND = "select BinData from `MainRoleConfig` where Gender = ?";
-const KEY_PREFIX = "MainRoleConfigByGender";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  MainRoleConfig_1 = require("../Config/MainRoleConfig"),
+  DB = "db_main_role_change.db",
+  FILE = "z.主角切换.xlsx",
+  TABLE = "MainRoleConfig",
+  COMMAND = "select BinData from `MainRoleConfig` where Gender = ?",
+  KEY_PREFIX = "MainRoleConfigByGender",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX = "configMainRoleConfigByGender.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configMainRoleConfigByGender.GetConfigList(";
 exports.configMainRoleConfigByGender = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -29,7 +29,7 @@ exports.configMainRoleConfigByGender = {
     );
   },
   GetConfigList: (o, n = !0) => {
-    let e;
+    var e;
     if (
       (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -44,13 +44,14 @@ exports.configMainRoleConfigByGender = {
         const a = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "Gender",
               o,
-            ]) !== 1
+            ])
           )
             break;
-          let r = void 0;
+          var r = void 0;
           if (
             (([e, r] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -78,4 +79,4 @@ exports.configMainRoleConfigByGender = {
     }
   },
 };
-// # sourceMappingURL=MainRoleConfigByGender.js.map
+//# sourceMappingURL=MainRoleConfigByGender.js.map

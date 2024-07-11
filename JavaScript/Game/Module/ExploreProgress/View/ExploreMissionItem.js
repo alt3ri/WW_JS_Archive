@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExploreMissionItem = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const SkipTaskManager_1 = require("../../SkipInterface/SkipTaskManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  SkipTaskManager_1 = require("../../SkipInterface/SkipTaskManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class ExploreMissionItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -33,10 +33,10 @@ class ExploreMissionItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[3, this.bTn]]);
   }
   Refresh(e, i, s) {
-    const t = (this.xTn = e).QuestType === 2;
-    const r = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
-      e.QuestId,
-    )?.CanShowInUiPanel();
+    var t = 2 === (this.xTn = e).QuestType,
+      r = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
+        e.QuestId,
+      )?.CanShowInUiPanel();
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), e.QuestNameId),
       this.GetSprite(1)?.SetUIActive(!t),
       this.GetSprite(0)?.SetUIActive(t),
@@ -44,7 +44,7 @@ class ExploreMissionItem extends UiPanelBase_1.UiPanelBase {
         ? (this.GetItem(4)?.SetUIActive(!0),
           this.GetText(6)?.SetUIActive(!1),
           this.GetSprite(5)?.SetUIActive(!1))
-        : e.QuestStatus === 3
+        : 3 === e.QuestStatus
           ? (this.GetItem(4)?.SetUIActive(!1),
             this.GetText(6)?.SetUIActive(!1),
             this.GetSprite(5)?.SetUIActive(!0))
@@ -60,4 +60,4 @@ class ExploreMissionItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ExploreMissionItem = ExploreMissionItem;
-// # sourceMappingURL=ExploreMissionItem.js.map
+//# sourceMappingURL=ExploreMissionItem.js.map

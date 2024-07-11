@@ -36,33 +36,33 @@ class GmOrderConfig {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   name(t) {
-    const r = this.J7.__offset(this.z7, 6);
+    var r = this.J7.__offset(this.z7, 6);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   nameoverride(t) {
-    const r = this.J7.__offset(this.z7, 8);
+    var r = this.J7.__offset(this.z7, 8);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   code(t) {
-    const r = this.J7.__offset(this.z7, 10);
+    var r = this.J7.__offset(this.z7, 10);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   codeoverride(t) {
-    const r = this.J7.__offset(this.z7, 12);
+    var r = this.J7.__offset(this.z7, 12);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   sort() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   visible() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
 }
 exports.GmOrderConfig = GmOrderConfig;
-// # sourceMappingURL=GmOrderConfig.js.map
+//# sourceMappingURL=GmOrderConfig.js.map

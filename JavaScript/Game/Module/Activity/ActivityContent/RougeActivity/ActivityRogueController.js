@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRogueController = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const RoguelikeController_1 = require("../../../Roguelike/RoguelikeController");
-const WorldMapController_1 = require("../../../WorldMap/WorldMapController");
-const ActivityControllerBase_1 = require("../../ActivityControllerBase");
-const ActivityRogueData_1 = require("./ActivityRogueData");
-const ActivitySubViewRogue_1 = require("./ActivitySubViewRogue");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  RoguelikeController_1 = require("../../../Roguelike/RoguelikeController"),
+  WorldMapController_1 = require("../../../WorldMap/WorldMapController"),
+  ActivityControllerBase_1 = require("../../ActivityControllerBase"),
+  ActivityRogueData_1 = require("./ActivityRogueData"),
+  ActivitySubViewRogue_1 = require("./ActivitySubViewRogue");
 class ActivityRogueController extends ActivityControllerBase_1.ActivityControllerBase {
   OnGetIsOpeningActivityRelativeView() {
     return !1;
   }
   OnOpenView(e) {
-    this.o2e(e.Id) === 2 &&
+    2 === this.o2e(e.Id) &&
       ActivityRogueController.ActivityFunctionExecute(e.Id);
   }
   o2e(e) {
@@ -56,7 +56,7 @@ class ActivityRogueController extends ActivityControllerBase_1.ActivityControlle
     return ActivityRogueController.OpenViewFuncMap.clear(), !0;
   }
   static GetCurrentActivityData() {
-    const e = ModelManager_1.ModelManager.ActivityModel.GetActivityById(
+    var e = ModelManager_1.ModelManager.ActivityModel.GetActivityById(
       ActivityRogueController.ActivityId,
     );
     if (e) return e;
@@ -68,20 +68,20 @@ class ActivityRogueController extends ActivityControllerBase_1.ActivityControlle
     );
   }
   static ActivityFunctionExecute(e) {
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.ActivityRogueConfig?.GetActivityUniversalConfig(
         e,
       );
     if (t) {
-      let r;
-      let i;
-      const o = t.FunctionParams;
+      var r,
+        i,
+        o = t.FunctionParams;
       switch (t.FunctionType) {
         case 0:
           break;
         case 1: {
           let e = void 0;
-          o && o.length >= 1 && (e = Number(o[0])), this.n2e(e);
+          o && 1 <= o.length && (e = Number(o[0])), this.n2e(e);
           break;
         }
         case 2:
@@ -107,7 +107,7 @@ class ActivityRogueController extends ActivityControllerBase_1.ActivityControlle
     UiManager_1.UiManager.OpenView("QuestView", e);
   }
   static s2e(e, t) {
-    const r = ActivityRogueController.OpenViewFuncMap.get(e);
+    var r = ActivityRogueController.OpenViewFuncMap.get(e);
     r ? r(t) : UiManager_1.UiManager.OpenView(e, t);
   }
   static r2e() {
@@ -118,7 +118,7 @@ class ActivityRogueController extends ActivityControllerBase_1.ActivityControlle
 ((exports.ActivityRogueController = ActivityRogueController).ActivityId = 0),
   (ActivityRogueController.OpenViewFuncMap = new Map()),
   (ActivityRogueController.a2e = (e) => {
-    let t = e ? Number(e[0]) : void 0;
+    var t = e ? Number(e[0]) : void 0;
     if (
       void 0 !== t &&
       !ModelManager_1.ModelManager.MapModel.IsConfigMarkIdUnlock(t)
@@ -134,4 +134,4 @@ class ActivityRogueController extends ActivityControllerBase_1.ActivityControlle
       void 0,
     );
   });
-// # sourceMappingURL=ActivityRogueController.js.map
+//# sourceMappingURL=ActivityRogueController.js.map

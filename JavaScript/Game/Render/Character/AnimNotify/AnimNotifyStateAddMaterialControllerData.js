@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const TsUiSceneRoleActor_1 = require("../../../Module/UiComponent/TsUiSceneRoleActor");
-const materialControllerStateHandleMap = new Map();
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TsUiSceneRoleActor_1 = require("../../../Module/UiComponent/TsUiSceneRoleActor"),
+  materialControllerStateHandleMap = new Map();
 class AnimNotifyStateAddMaterialControllerData extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.MaterialAssetData = void 0);
@@ -22,7 +22,7 @@ class AnimNotifyStateAddMaterialControllerData extends UE.KuroAnimNotifyState {
             (o = e.Model.CheckGetComponent(5).AddRenderingMaterialByData(
               this.MaterialAssetData,
             ))),
-      o >= 0)
+      0 <= o)
     ) {
       let e = materialControllerStateHandleMap.get(t);
       return (
@@ -34,14 +34,14 @@ class AnimNotifyStateAddMaterialControllerData extends UE.KuroAnimNotifyState {
     return !1;
   }
   K2_NotifyEnd(e, t) {
-    let r = materialControllerStateHandleMap.get(e);
+    var r = materialControllerStateHandleMap.get(e);
     if (!r) return !0;
-    const o = r.get(this);
+    var o = r.get(this);
     if (!o) return !0;
     if (
       (r.delete(this),
       r.size || materialControllerStateHandleMap.delete(e),
-      o >= 0)
+      0 <= o)
     ) {
       r = e.GetOwner();
       if (r instanceof UE.TsBaseCharacter_C)
@@ -56,7 +56,7 @@ class AnimNotifyStateAddMaterialControllerData extends UE.KuroAnimNotifyState {
     return !1;
   }
   IsAllValid(e, t) {
-    let r;
+    var r;
     return UE.KismetSystemLibrary.IsValid(this.MaterialAssetData)
       ? e && UE.KismetSystemLibrary.IsValid(e)
         ? UE.KismetSystemLibrary.IsValid(e.GetOwner())
@@ -100,11 +100,11 @@ class AnimNotifyStateAddMaterialControllerData extends UE.KuroAnimNotifyState {
         !1);
   }
   GetNotifyName() {
-    const e = this.MaterialAssetData.GetName();
-    return e && e !== ""
+    var e = this.MaterialAssetData.GetName();
+    return e && "" !== e
       ? "材质控制器:" + UE.BlueprintPathsLibrary.GetBaseFilename(e, !0)
       : "材质控制器";
   }
 }
 exports.default = AnimNotifyStateAddMaterialControllerData;
-// # sourceMappingURL=AnimNotifyStateAddMaterialControllerData.js.map
+//# sourceMappingURL=AnimNotifyStateAddMaterialControllerData.js.map

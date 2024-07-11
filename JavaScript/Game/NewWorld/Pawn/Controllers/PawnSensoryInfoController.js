@@ -16,10 +16,10 @@ class SensoryInfoController {
   HandleEntities(t, s, o) {
     for (const h of this.Xor) h[1].ClearCacheList();
     for (const n of t) {
-      const i = n.Id;
-      const r = n.Entity?.GetComponent(1);
+      var i = n.Id,
+        r = n.Entity?.GetComponent(1);
       if (n && n.Entity?.Active && r && i !== o) {
-        const e = Vector_1.Vector.Distance(r.ActorLocationProxy, s);
+        var e = Vector_1.Vector.Distance(r.ActorLocationProxy, s);
         for (const f of this.Xor)
           e > f[1].SensoryRange ||
             !f[1].CheckEntity(n.Entity) ||
@@ -31,7 +31,7 @@ class SensoryInfoController {
   AddSensoryInfo(t) {
     (this.SensoryInfoType |= t.SensoryInfoType),
       (this.MaxSensoryRange = Math.max(this.MaxSensoryRange, t.SensoryRange));
-    const s = ++this._A;
+    var s = ++this._A;
     return this.Xor.set(s, t), s;
   }
   RemoveSensoryInfo(t) {
@@ -56,4 +56,4 @@ class SensoryInfoController {
   }
 }
 exports.SensoryInfoController = SensoryInfoController;
-// # sourceMappingURL=PawnSensoryInfoController.js.map
+//# sourceMappingURL=PawnSensoryInfoController.js.map

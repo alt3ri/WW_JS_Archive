@@ -1,31 +1,35 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, o, i) {
-    let f;
-    const n = arguments.length;
-    let s =
-      n < 3 ? e : i === null ? (i = Object.getOwnPropertyDescriptor(e, o)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var f,
+      n = arguments.length,
+      s =
+        n < 3
+          ? e
+          : null === i
+            ? (i = Object.getOwnPropertyDescriptor(e, o))
+            : i;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(t, e, o, i);
     else
-      for (let r = t.length - 1; r >= 0; r--)
-        (f = t[r]) && (s = (n < 3 ? f(s) : n > 3 ? f(e, o, s) : f(e, o)) || s);
-    return n > 3 && s && Object.defineProperty(e, o, s), s;
+      for (var r = t.length - 1; 0 <= r; r--)
+        (f = t[r]) && (s = (n < 3 ? f(s) : 3 < n ? f(e, o, s) : f(e, o)) || s);
+    return 3 < n && s && Object.defineProperty(e, o, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiModelEffectComponent = void 0);
-const UE = require("ue");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const EffectContext_1 = require("../../../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../../../Effect/EffectSystem");
-const GlobalData_1 = require("../../../../GlobalData");
-const UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine");
-const UiModelComponentBase_1 = require("../UiModelComponentBase");
+const UE = require("ue"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  EffectContext_1 = require("../../../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../../../Effect/EffectSystem"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine"),
+  UiModelComponentBase_1 = require("../UiModelComponentBase");
 let UiModelEffectComponent = class UiModelEffectComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
     super(...arguments),
@@ -86,8 +90,8 @@ let UiModelEffectComponent = class UiModelEffectComponent extends UiModelCompone
       new EffectContext_1.EffectContext(void 0, o),
       1,
       (t) => {
-        let e;
-        var t = EffectSystem_1.EffectSystem.GetEffectActor(t);
+        var e,
+          t = EffectSystem_1.EffectSystem.GetEffectActor(t);
         t &&
           t.IsValid() &&
           (f && !n
@@ -109,7 +113,7 @@ let UiModelEffectComponent = class UiModelEffectComponent extends UiModelCompone
     return EffectSystem_1.EffectSystem.IsValid(t) && this.Clo.push(t), t;
   }
   PlayEffectByAnsContext(t) {
-    let e;
+    var e;
     this.MBr.has(t) ||
       t.PlayOnEnd ||
       ((e = this.PlayEffectByPath(
@@ -125,7 +129,7 @@ let UiModelEffectComponent = class UiModelEffectComponent extends UiModelCompone
       this.MBr.set(t, e));
   }
   StopEffectByAnsContext(t) {
-    let e;
+    var e;
     t.PlayOnEnd
       ? this.PlayEffectByPath(
           t.EffectPath,
@@ -144,7 +148,7 @@ let UiModelEffectComponent = class UiModelEffectComponent extends UiModelCompone
   }
   DestroyAllEffect() {
     this.Clo &&
-      this.Clo.length !== 0 &&
+      0 !== this.Clo.length &&
       (this.Clo.forEach((t) => {
         EffectSystem_1.EffectSystem.IsValid(t) &&
           EffectSystem_1.EffectSystem.StopEffectById(
@@ -170,4 +174,4 @@ let UiModelEffectComponent = class UiModelEffectComponent extends UiModelCompone
   UiModelEffectComponent,
 )),
   (exports.UiModelEffectComponent = UiModelEffectComponent);
-// # sourceMappingURL=UiModelEffectComponent.js.map
+//# sourceMappingURL=UiModelEffectComponent.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlayerMarkItem = void 0);
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const PlayerMarkItemView_1 = require("../MarkItemView/PlayerMarkItemView");
-const MarkItem_1 = require("./MarkItem");
+const Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  PlayerMarkItemView_1 = require("../MarkItemView/PlayerMarkItemView"),
+  MarkItem_1 = require("./MarkItem");
 class PlayerMarkItem extends MarkItem_1.MarkItem {
   constructor(e, t, i, s, r = 1) {
     super(e, i, s, r),
@@ -34,7 +34,7 @@ class PlayerMarkItem extends MarkItem_1.MarkItem {
     return 11;
   }
   Initialize() {
-    const e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+    var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
       this.zLi[this.PlayerIndex - 1],
     );
     (this.IconPath = e),
@@ -87,4 +87,4 @@ class PlayerMarkItem extends MarkItem_1.MarkItem {
   }
 }
 exports.PlayerMarkItem = PlayerMarkItem;
-// # sourceMappingURL=PlayerMarkItem.js.map
+//# sourceMappingURL=PlayerMarkItem.js.map

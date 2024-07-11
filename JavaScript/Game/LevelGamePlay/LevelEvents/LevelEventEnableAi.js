@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventEnableAi = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventEnableAi extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, l) {
-    const n = e;
+    var n = e;
     if (n)
       if (n.EntityIds)
         for (const a of n.EntityIds) {
-          let o =
+          var o =
             ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(a);
           o
             ? (o = o.Entity.GetComponent(36)) && o.Valid
@@ -42,4 +42,4 @@ class LevelEventEnableAi extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventEnableAi = LevelEventEnableAi;
-// # sourceMappingURL=LevelEventEnableAi.js.map
+//# sourceMappingURL=LevelEventEnableAi.js.map

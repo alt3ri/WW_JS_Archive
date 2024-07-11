@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configWeaponBreachByBreachIdAndLevel = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const WeaponBreach_1 = require("../Config/WeaponBreach");
-const DB = "db_weapon.db";
-const FILE = "w.武器基础配置.xlsx";
-const TABLE = "WeaponBreach";
-const COMMAND =
-  "select BinData from `WeaponBreach` where BreachId = ? AND Level = ?";
-const KEY_PREFIX = "WeaponBreachByBreachIdAndLevel";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  WeaponBreach_1 = require("../Config/WeaponBreach"),
+  DB = "db_weapon.db",
+  FILE = "w.武器基础配置.xlsx",
+  TABLE = "WeaponBreach",
+  COMMAND =
+    "select BinData from `WeaponBreach` where BreachId = ? AND Level = ?",
+  KEY_PREFIX = "WeaponBreachByBreachIdAndLevel",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configWeaponBreachByBreachIdAndLevel.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configWeaponBreachByBreachIdAndLevel.GetConfig(";
 exports.configWeaponBreachByBreachIdAndLevel = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -42,16 +42,17 @@ exports.configWeaponBreachByBreachIdAndLevel = {
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(
-            handleId,
-            !0,
-            ...logPair,
-            ["BreachId", e],
-            ["Level", o],
-          ) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(
+              handleId,
+              !0,
+              ...logPair,
+              ["BreachId", e],
+              ["Level", o],
+            ))
       ) {
-        var i;
-        var a = void 0;
+        var i,
+          a = void 0;
         if (
           (([i, a] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -78,4 +79,4 @@ exports.configWeaponBreachByBreachIdAndLevel = {
     }
   },
 };
-// # sourceMappingURL=WeaponBreachByBreachIdAndLevel.js.map
+//# sourceMappingURL=WeaponBreachByBreachIdAndLevel.js.map

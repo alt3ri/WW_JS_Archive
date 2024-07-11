@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FrequencyMonitor = void 0);
-const Info_1 = require("../../Core/Common/Info");
-const Log_1 = require("../../Core/Common/Log");
-const Time_1 = require("../../Core/Common/Time");
-const Queue_1 = require("../../Core/Container/Queue");
-const ModelManager_1 = require("../Manager/ModelManager");
-const CombatDebugController_1 = require("./CombatDebugController");
+const Info_1 = require("../../Core/Common/Info"),
+  Log_1 = require("../../Core/Common/Log"),
+  Time_1 = require("../../Core/Common/Time"),
+  Queue_1 = require("../../Core/Container/Queue"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  CombatDebugController_1 = require("./CombatDebugController");
 class FrequencyMonitor {
   constructor(e, o, r, ...t) {
     (this.Ql = e),
@@ -40,11 +40,11 @@ class FrequencyMonitor {
               "业务逻辑执行频率过高",
               ...e,
             );
-        let o;
-        let r;
-        const t = {};
+        var o,
+          r,
+          t = {};
         for ([o, r] of e) t[o] = r;
-        const i = JSON.stringify(t);
+        var i = JSON.stringify(t);
         CombatDebugController_1.CombatDebugController.DataReport(
           "FREQUENCY_MONITOR",
           i,
@@ -54,4 +54,4 @@ class FrequencyMonitor {
   }
 }
 exports.FrequencyMonitor = FrequencyMonitor;
-// # sourceMappingURL=FrequencyMonitor.js.map
+//# sourceMappingURL=FrequencyMonitor.js.map

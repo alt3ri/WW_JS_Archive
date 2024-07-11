@@ -1,25 +1,30 @@
 "use strict";
-let UeComponentTickManageComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (e, t, n, o) {
-    let i;
-    const r = arguments.length;
-    let s =
-      r < 3 ? t : o === null ? (o = Object.getOwnPropertyDescriptor(t, n)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      s = Reflect.decorate(e, t, n, o);
-    else
-      for (let a = e.length - 1; a >= 0; a--)
-        (i = e[a]) && (s = (r < 3 ? i(s) : r > 3 ? i(t, n, s) : i(t, n)) || s);
-    return r > 3 && s && Object.defineProperty(t, n, s), s;
-  };
+var UeComponentTickManageComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (e, t, n, o) {
+      var i,
+        r = arguments.length,
+        s =
+          r < 3
+            ? t
+            : null === o
+              ? (o = Object.getOwnPropertyDescriptor(t, n))
+              : o;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        s = Reflect.decorate(e, t, n, o);
+      else
+        for (var a = e.length - 1; 0 <= a; a--)
+          (i = e[a]) &&
+            (s = (r < 3 ? i(s) : 3 < r ? i(t, n, s) : i(t, n)) || s);
+      return 3 < r && s && Object.defineProperty(t, n, s), s;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UeComponentTickManageComponent = void 0);
-const UE = require("ue");
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
+const UE = require("ue"),
+  EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
 let UeComponentTickManageComponent =
   (UeComponentTickManageComponent_1 = class UeComponentTickManageComponent extends (
     EntityComponent_1.EntityComponent
@@ -37,10 +42,10 @@ let UeComponentTickManageComponent =
     }
     OnActivate() {
       const t = this.Entity.GetComponent(1);
-      if (this.Nsn.length > 0)
+      if (0 < this.Nsn.length)
         for (const e of this.Nsn) {
-          const n = t.Owner.K2_GetComponentsByClass(e);
-          const o = n.Num();
+          var n = t.Owner.K2_GetComponentsByClass(e),
+            o = n.Num();
           for (let e = 0; e < o; ++e) {
             const t = n.Get(e);
             t instanceof UE.SkeletalMeshComponent ||
@@ -49,10 +54,10 @@ let UeComponentTickManageComponent =
           }
         }
       else {
-        const i = t.Owner.K2_GetComponentsByClass(
-          UE.ActorComponent.StaticClass(),
-        );
-        const r = i.Num();
+        var i = t.Owner.K2_GetComponentsByClass(
+            UE.ActorComponent.StaticClass(),
+          ),
+          r = i.Num();
         for (let e = 0; e < r; ++e) {
           const t = i.Get(e);
           t instanceof UE.SkeletalMeshComponent ||
@@ -62,8 +67,8 @@ let UeComponentTickManageComponent =
       }
     }
     OnTick(e) {
-      const t = this.Entity.GetComponent(2).Actor.CustomTimeDilation;
-      const n = e * MathUtils_1.MathUtils.MillisecondToSecond * t;
+      var t = this.Entity.GetComponent(2).Actor.CustomTimeDilation,
+        n = e * MathUtils_1.MathUtils.MillisecondToSecond * t;
       for (const o of this.QFr) o.KuroTickComponentOutside(n);
     }
   });
@@ -73,4 +78,4 @@ let UeComponentTickManageComponent =
     UeComponentTickManageComponent,
   )),
   (exports.UeComponentTickManageComponent = UeComponentTickManageComponent);
-// # sourceMappingURL=UeComponentTickManageComponent.js.map
+//# sourceMappingURL=UeComponentTickManageComponent.js.map

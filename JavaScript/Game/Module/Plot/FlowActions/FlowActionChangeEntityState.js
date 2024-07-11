@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionChangeEntityState = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils");
-const IAction_1 = require("../../../../UniverseEditor/Interface/IAction");
-const LevelGeneralCommons_1 = require("../../../LevelGamePlay/LevelGeneralCommons");
-const WaitEntityTask_1 = require("../../../World/Define/WaitEntityTask");
-const FlowActionBase_1 = require("./FlowActionBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils"),
+  IAction_1 = require("../../../../UniverseEditor/Interface/IAction"),
+  LevelGeneralCommons_1 = require("../../../LevelGamePlay/LevelGeneralCommons"),
+  WaitEntityTask_1 = require("../../../World/Define/WaitEntityTask"),
+  FlowActionBase_1 = require("./FlowActionBase");
 class FlowActionChangeEntityState extends FlowActionBase_1.FlowActionBase {
   OnExecute() {
     const t = this.ActionInfo.Params;
@@ -43,4 +43,4 @@ class FlowActionChangeEntityState extends FlowActionBase_1.FlowActionBase {
   }
 }
 exports.FlowActionChangeEntityState = FlowActionChangeEntityState;
-// # sourceMappingURL=FlowActionChangeEntityState.js.map
+//# sourceMappingURL=FlowActionChangeEntityState.js.map

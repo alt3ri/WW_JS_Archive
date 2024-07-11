@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharPropertyModifier = exports.PropertyTimeCounter = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const RenderConfig_1 = require("../../../Config/RenderConfig");
-const RenderUtil_1 = require("../../../Utils/RenderUtil");
-const CharRenderBase_1 = require("../../Manager/CharRenderBase");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  RenderConfig_1 = require("../../../Config/RenderConfig"),
+  RenderUtil_1 = require("../../../Utils/RenderUtil"),
+  CharRenderBase_1 = require("../../Manager/CharRenderBase");
 class PropertyTimeCounter {
   constructor() {
     (this.Id = 0),
@@ -50,7 +50,7 @@ class CharPropertyModifier extends CharRenderBase_1.CharRenderBase {
   }
   Start() {
     (this.xar = 0), (this.Par = new Map()), (this.war = []);
-    const t = this.RenderComponent.GetComponent(
+    var t = this.RenderComponent.GetComponent(
       RenderConfig_1.RenderConfig.IdMaterialContainer,
     );
     void 0 === t
@@ -64,9 +64,9 @@ class CharPropertyModifier extends CharRenderBase_1.CharRenderBase {
       : ((this.Aar = t), this.OnInitSuccess());
   }
   UpdateCurveData(t, i) {
-    let e;
+    var e;
     (i.Factor = i.Counter / i.WholeTime),
-      i.DataType === 0
+      0 === i.DataType
         ? ((e = RenderUtil_1.RenderUtil.GetFloat(i.CurveFloatData, i.Factor)),
           this.SetPropertyFloat(
             i.BodyType,
@@ -86,11 +86,11 @@ class CharPropertyModifier extends CharRenderBase_1.CharRenderBase {
       (i.Counter += t);
   }
   Update() {
-    const t = this.GetDeltaTime();
+    var t = this.GetDeltaTime();
     for (const i of this.Par.values()) this.UpdateCurveData(t, i);
     for (const e of this.Par.values())
       e.Counter >= e.WholeTime && this.war.push(e.Id);
-    if (this.war.length > 0) {
+    if (0 < this.war.length) {
       for (const r of this.war) this.Par.delete(r);
       this.war = [];
     }
@@ -157,4 +157,4 @@ class CharPropertyModifier extends CharRenderBase_1.CharRenderBase {
   }
 }
 exports.CharPropertyModifier = CharPropertyModifier;
-// # sourceMappingURL=CharPropertyModifier.js.map
+//# sourceMappingURL=CharPropertyModifier.js.map

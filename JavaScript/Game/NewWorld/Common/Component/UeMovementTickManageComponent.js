@@ -1,27 +1,31 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, s) {
-    let o;
-    const h = arguments.length;
-    let n =
-      h < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      h = arguments.length,
+      n =
+        h < 3
+          ? e
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(e, i))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(t, e, i, s);
     else
-      for (let r = t.length - 1; r >= 0; r--)
-        (o = t[r]) && (n = (h < 3 ? o(n) : h > 3 ? o(e, i, n) : o(e, i)) || n);
-    return h > 3 && n && Object.defineProperty(e, i, n), n;
+      for (var r = t.length - 1; 0 <= r; r--)
+        (o = t[r]) && (n = (h < 3 ? o(n) : 3 < h ? o(e, i, n) : o(e, i)) || n);
+    return 3 < h && n && Object.defineProperty(e, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UeMovementTickManageComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils");
 let UeMovementTickManageComponent = class UeMovementTickManageComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -62,7 +66,7 @@ let UeMovementTickManageComponent = class UeMovementTickManageComponent extends 
         (this.s3o.SetKuroOnlyTickOutside(!0),
         this.s3o.SetComponentTickEnabled(!1),
         (this.oRe = this.Entity.GetComponent(160)),
-        (this.ForbiddenTickPose = this.Entity.GetTickInterval() > 1),
+        (this.ForbiddenTickPose = 1 < this.Entity.GetTickInterval()),
         (this.Hsn = Time_1.Time.Frame),
         !0)
     );
@@ -89,9 +93,9 @@ let UeMovementTickManageComponent = class UeMovementTickManageComponent extends 
       (this.Hsn = Time_1.Time.Frame);
   }
   OnTick(t) {
-    let e, i, s;
+    var e, i, s;
     this.Hte?.IsRoleAndCtrlByMe &&
-      Time_1.Time.Frame - this.Hsn > 1 &&
+      1 < Time_1.Time.Frame - this.Hsn &&
       Log_1.Log.CheckWarn() &&
       Log_1.Log.Warn(
         "Movement",
@@ -107,7 +111,7 @@ let UeMovementTickManageComponent = class UeMovementTickManageComponent extends 
         (e = this.Hte.Owner.CustomTimeDilation),
         this.Osn.CanMove &&
           !this.Osn.IsSpecialMove &&
-          ((i = this.Entity.GetTickInterval() > 1),
+          ((i = 1 < this.Entity.GetTickInterval()),
           (this.ForbiddenTickPose = i || this.Frozen),
           i && this.oRe?.Valid && this.Hte.Owner.WasRecentlyRenderedOnScreen()
             ? ((s = this.oRe.GetMeshTransform()),
@@ -133,4 +137,4 @@ let UeMovementTickManageComponent = class UeMovementTickManageComponent extends 
   UeMovementTickManageComponent,
 )),
   (exports.UeMovementTickManageComponent = UeMovementTickManageComponent);
-// # sourceMappingURL=UeMovementTickManageComponent.js.map
+//# sourceMappingURL=UeMovementTickManageComponent.js.map

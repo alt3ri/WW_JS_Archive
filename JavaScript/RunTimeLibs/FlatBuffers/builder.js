@@ -39,7 +39,6 @@ class Builder {
     this.bb = byte_buffer_js_1.ByteBuffer.allocate(initial_size);
     this.space = initial_size;
   }
-
   clear() {
     this.bb.clear();
     this.space = this.bb.capacity();
@@ -53,7 +52,6 @@ class Builder {
     this.force_defaults = false;
     this.string_maps = null;
   }
-
   /**
    * In order to save space, fields that are set to their default value
    * don't get serialized into the buffer. Forcing defaults provides a
@@ -64,7 +62,6 @@ class Builder {
   forceDefaults(forceDefaults) {
     this.force_defaults = forceDefaults;
   }
-
   /**
    * Get the ByteBuffer representing the FlatBuffer. Only call this after you've
    * called finish(). The actual data starts at the ByteBuffer's current position,
@@ -73,7 +70,6 @@ class Builder {
   dataBuffer() {
     return this.bb;
   }
-
   /**
    * Get the bytes representing the FlatBuffer. Only call this after you've
    * called finish().
@@ -83,7 +79,6 @@ class Builder {
       .bytes()
       .subarray(this.bb.position(), this.bb.position() + this.offset());
   }
-
   /**
    * Prepare to write an element of `size` after `additional_bytes` have been
    * written, e.g. if you write a string, you need to align such the int length
@@ -110,37 +105,29 @@ class Builder {
     }
     this.pad(align_size);
   }
-
   pad(byte_size) {
     for (let i = 0; i < byte_size; i++) {
       this.bb.writeInt8(--this.space, 0);
     }
   }
-
   writeInt8(value) {
     this.bb.writeInt8((this.space -= 1), value);
   }
-
   writeInt16(value) {
     this.bb.writeInt16((this.space -= 2), value);
   }
-
   writeInt32(value) {
     this.bb.writeInt32((this.space -= 4), value);
   }
-
   writeInt64(value) {
     this.bb.writeInt64((this.space -= 8), value);
   }
-
   writeFloat32(value) {
     this.bb.writeFloat32((this.space -= 4), value);
   }
-
   writeFloat64(value) {
     this.bb.writeFloat64((this.space -= 8), value);
   }
-
   /**
    * Add an `int8` to the buffer, properly aligned, and grows the buffer (if necessary).
    * @param value The `int8` to add the buffer.
@@ -149,7 +136,6 @@ class Builder {
     this.prep(1, 0);
     this.writeInt8(value);
   }
-
   /**
    * Add an `int16` to the buffer, properly aligned, and grows the buffer (if necessary).
    * @param value The `int16` to add the buffer.
@@ -158,7 +144,6 @@ class Builder {
     this.prep(2, 0);
     this.writeInt16(value);
   }
-
   /**
    * Add an `int32` to the buffer, properly aligned, and grows the buffer (if necessary).
    * @param value The `int32` to add the buffer.
@@ -167,7 +152,6 @@ class Builder {
     this.prep(4, 0);
     this.writeInt32(value);
   }
-
   /**
    * Add an `int64` to the buffer, properly aligned, and grows the buffer (if necessary).
    * @param value The `int64` to add the buffer.
@@ -176,7 +160,6 @@ class Builder {
     this.prep(8, 0);
     this.writeInt64(value);
   }
-
   /**
    * Add a `float32` to the buffer, properly aligned, and grows the buffer (if necessary).
    * @param value The `float32` to add the buffer.
@@ -185,7 +168,6 @@ class Builder {
     this.prep(4, 0);
     this.writeFloat32(value);
   }
-
   /**
    * Add a `float64` to the buffer, properly aligned, and grows the buffer (if necessary).
    * @param value The `float64` to add the buffer.
@@ -194,56 +176,48 @@ class Builder {
     this.prep(8, 0);
     this.writeFloat64(value);
   }
-
   addFieldInt8(voffset, value, defaultValue) {
     if (this.force_defaults || value != defaultValue) {
       this.addInt8(value);
       this.slot(voffset);
     }
   }
-
   addFieldInt16(voffset, value, defaultValue) {
     if (this.force_defaults || value != defaultValue) {
       this.addInt16(value);
       this.slot(voffset);
     }
   }
-
   addFieldInt32(voffset, value, defaultValue) {
     if (this.force_defaults || value != defaultValue) {
       this.addInt32(value);
       this.slot(voffset);
     }
   }
-
   addFieldInt64(voffset, value, defaultValue) {
     if (this.force_defaults || value !== defaultValue) {
       this.addInt64(value);
       this.slot(voffset);
     }
   }
-
   addFieldFloat32(voffset, value, defaultValue) {
     if (this.force_defaults || value != defaultValue) {
       this.addFloat32(value);
       this.slot(voffset);
     }
   }
-
   addFieldFloat64(voffset, value, defaultValue) {
     if (this.force_defaults || value != defaultValue) {
       this.addFloat64(value);
       this.slot(voffset);
     }
   }
-
   addFieldOffset(voffset, value, defaultValue) {
     if (this.force_defaults || value != defaultValue) {
       this.addOffset(value);
       this.slot(voffset);
     }
   }
-
   /**
    * Structs are stored inline, so nothing additional is being added. `d` is always 0.
    */
@@ -253,7 +227,6 @@ class Builder {
       this.slot(voffset);
     }
   }
-
   /**
    * Structures are always stored inline, they need to be created right
    * where they're used.  You'll get this assertion failure if you
@@ -264,7 +237,6 @@ class Builder {
       throw new TypeError("FlatBuffers: struct must be serialized inline.");
     }
   }
-
   /**
    * Should not be creating any other object, string or vector
    * while an object is being constructed
@@ -276,23 +248,18 @@ class Builder {
       );
     }
   }
-
   /**
    * Set the current vtable at `voffset` to the current location in the buffer.
    */
   slot(voffset) {
-    if (this.vtable !== null) {
-      this.vtable[voffset] = this.offset();
-    }
+    if (this.vtable !== null) this.vtable[voffset] = this.offset();
   }
-
   /**
    * @returns Offset relative to the end of the buffer.
    */
   offset() {
     return this.bb.capacity() - this.space;
   }
-
   /**
    * Doubles the size of the backing ByteBuffer and copies the old data towards
    * the end of the new buffer (since we build the buffer backwards).
@@ -317,7 +284,6 @@ class Builder {
     nbb.bytes().set(bb.bytes(), new_buf_size - old_buf_size);
     return nbb;
   }
-
   /**
    * Adds on offset, relative to where it will be written.
    *
@@ -327,7 +293,6 @@ class Builder {
     this.prep(constants_js_1.SIZEOF_INT, 0); // Ensure alignment is already done.
     this.writeInt32(this.offset() - offset + constants_js_1.SIZEOF_INT);
   }
-
   /**
    * Start encoding a new object in the buffer.  Users will not usually need to
    * call this directly. The FlatBuffers compiler will generate helper methods
@@ -345,7 +310,6 @@ class Builder {
     this.isNested = true;
     this.object_start = this.offset();
   }
-
   /**
    * Finish off writing the object that is under construction.
    *
@@ -409,7 +373,6 @@ class Builder {
     this.isNested = false;
     return vtableloc;
   }
-
   /**
    * Finalize a buffer, poiting to the given `root_table`.
    */
@@ -440,14 +403,12 @@ class Builder {
     }
     this.bb.setPosition(this.space);
   }
-
   /**
    * Finalize a size prefixed buffer, pointing to the given `root_table`.
    */
   finishSizePrefixed(root_table, opt_file_identifier) {
     this.finish(root_table, opt_file_identifier, true);
   }
-
   /**
    * This checks a required field has been set in a given table that has
    * just been constructed.
@@ -463,7 +424,6 @@ class Builder {
       throw new TypeError("FlatBuffers: field " + field + " must be set");
     }
   }
-
   /**
    * Start a new array/vector of objects.  Users usually will not call
    * this directly. The FlatBuffers compiler will create a start/end
@@ -479,7 +439,6 @@ class Builder {
     this.prep(constants_js_1.SIZEOF_INT, elem_size * num_elems);
     this.prep(alignment, elem_size * num_elems); // Just in case alignment > int.
   }
-
   /**
    * Finish off the creation of an array and all its elements. The array must be
    * created with `startVector`.
@@ -491,7 +450,6 @@ class Builder {
     this.writeInt32(this.vector_num_elems);
     return this.offset();
   }
-
   /**
    * Encode the string `s` in the buffer using UTF-8. If the string passed has
    * already been seen, we return the offset of the already written string
@@ -513,7 +471,6 @@ class Builder {
     this.string_maps.set(s, offset);
     return offset;
   }
-
   /**
    * Encode the string `s` in the buffer using UTF-8. If a Uint8Array is passed
    * instead of a string, it is assumed to contain valid UTF-8 encoded data.
@@ -543,7 +500,6 @@ class Builder {
     }
     return this.endVector();
   }
-
   /**
    * A helper function to pack an object
    *
@@ -559,7 +515,6 @@ class Builder {
       return obj.pack(this);
     }
   }
-
   /**
    * A helper function to pack a list of object
    *
@@ -579,7 +534,6 @@ class Builder {
     }
     return ret;
   }
-
   createStructOffsetList(list, startFunc) {
     startFunc(this, list.length);
     this.createObjectOffsetList(list.slice().reverse());

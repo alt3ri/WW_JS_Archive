@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineTaskSkill = void 0);
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const CombatMessage_1 = require("../../../Module/CombatMessage/CombatMessage");
-const CombatDebugController_1 = require("../../../Utils/CombatDebugController");
-const AiStateMachine_1 = require("../AiStateMachine");
-const AiStateMachineTask_1 = require("./AiStateMachineTask");
+const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  CombatMessage_1 = require("../../../Module/CombatMessage/CombatMessage"),
+  CombatDebugController_1 = require("../../../Utils/CombatDebugController"),
+  AiStateMachine_1 = require("../AiStateMachine"),
+  AiStateMachineTask_1 = require("./AiStateMachineTask");
 class AiStateMachineTaskSkill extends AiStateMachineTask_1.AiStateMachineTask {
   constructor() {
     super(...arguments),
@@ -36,7 +36,7 @@ class AiStateMachineTaskSkill extends AiStateMachineTask_1.AiStateMachineTask {
         !0);
   }
   OnEnter(t) {
-    let i;
+    var i;
     this.SkillId
       ? ((this.PreExecution = this.Node.RootNode.WaitSwitchState),
         (this.Done = !1),
@@ -58,7 +58,7 @@ class AiStateMachineTaskSkill extends AiStateMachineTask_1.AiStateMachineTask {
         );
   }
   OnTick(t, i) {
-    let e;
+    var e;
     this.Done ||
       (!this.Node.ActorComponent.IsAutonomousProxy && !this.PreExecution) ||
       (this.Node.ElapseTime < this.Timeout
@@ -87,4 +87,4 @@ class AiStateMachineTaskSkill extends AiStateMachineTask_1.AiStateMachineTask {
   }
 }
 exports.AiStateMachineTaskSkill = AiStateMachineTaskSkill;
-// # sourceMappingURL=AiStateMachineTaskSkill.js.map
+//# sourceMappingURL=AiStateMachineTaskSkill.js.map

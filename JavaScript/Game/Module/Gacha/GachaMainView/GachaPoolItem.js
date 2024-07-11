@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GachaPoolItem = void 0);
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
+const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
 class GachaPoolItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -27,7 +27,7 @@ class GachaPoolItem extends UiPanelBase_1.UiPanelBase {
     );
   }
   PlaySwitchSeq() {
-    this.LevelSequencePlayer.GetCurrentSequence() === "Switch"
+    "Switch" === this.LevelSequencePlayer.GetCurrentSequence()
       ? this.LevelSequencePlayer.ReplaySequenceByKey("Switch")
       : this.LevelSequencePlayer.PlayLevelSequenceByName("Switch");
   }
@@ -48,4 +48,4 @@ class GachaPoolItem extends UiPanelBase_1.UiPanelBase {
   Refresh() {}
 }
 exports.GachaPoolItem = GachaPoolItem;
-// # sourceMappingURL=GachaPoolItem.js.map
+//# sourceMappingURL=GachaPoolItem.js.map

@@ -15,13 +15,13 @@ class DicStringFloat {
     );
   }
   key(t) {
-    const i = this.J7.__offset(this.z7, 4);
+    var i = this.J7.__offset(this.z7, 4);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   value() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
 }
 exports.DicStringFloat = DicStringFloat;
-// # sourceMappingURL=DicStringFloat.js.map
+//# sourceMappingURL=DicStringFloat.js.map

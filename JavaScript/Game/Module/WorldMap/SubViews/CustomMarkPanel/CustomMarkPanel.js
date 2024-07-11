@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CustomMarkPanel = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ButtonAndTextItem_1 = require("../../../Common/Button/ButtonAndTextItem");
-const MapController_1 = require("../../../Map/Controller/MapController");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi");
-const WorldMapDefine_1 = require("../../WorldMapDefine");
-const MarkIconOption_1 = require("./MarkIconOption");
-const CUSTOM_MARK_PANEL_WIDTH = 778;
-const CUSTOM_MARK_PANEL_HEIGHT = 592;
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ButtonAndTextItem_1 = require("../../../Common/Button/ButtonAndTextItem"),
+  MapController_1 = require("../../../Map/Controller/MapController"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
+  WorldMapDefine_1 = require("../../WorldMapDefine"),
+  MarkIconOption_1 = require("./MarkIconOption"),
+  CUSTOM_MARK_PANEL_WIDTH = 778,
+  CUSTOM_MARK_PANEL_HEIGHT = 592;
 class CustomMarkPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
@@ -80,8 +80,8 @@ class CustomMarkPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), "CustomeMarkTip");
   }
   SelectOptionChecked(t) {
-    if (this.vko.length !== 0) {
-      if (this.Sko === 1)
+    if (0 !== this.vko.length) {
+      if (1 === this.Sko)
         for (const e of this.vko)
           if (e.Config.MarkPic === t.IconPath) return void e.SetToggleChecked();
       this.vko[0].SetToggleChecked();
@@ -106,7 +106,7 @@ class CustomMarkPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
   OnCloseWorldMapSecondaryUi() {
     this.dko &&
-      this.Sko === 0 &&
+      0 === this.Sko &&
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RemoveMapMark,
         9,
@@ -122,28 +122,25 @@ class CustomMarkPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
           : "Text_InstanceDungeonEntranceTrack_Text",
       ) ?? ""),
       this.pko.SetText(t),
-      (t = this.Sko === 0);
+      (t = 0 === this.Sko);
     this.pko.RefreshEnable(!t);
   }
   Lko(t, e) {
-    e === 1 &&
+    1 === e &&
       (this.dko.IsNewCustomMarkItem ||
         MapController_1.MapController.RequestMapMarkReplace(this.dko.MarkId, t),
       this.dko.SetConfigId(t),
       this.SetSpriteByPath(this.dko.IconPath, this.GetSprite(0), !1));
   }
   Iko() {
-    const t = ConfigManager_1.ConfigManager.WorldMapConfig.GetCustomMarks();
+    var t = ConfigManager_1.ConfigManager.WorldMapConfig.GetCustomMarks();
     if (t) {
       for (const s of t) {
-        const e = LguiUtil_1.LguiUtil.CopyItem(
-          this.GetItem(6),
-          this.GetItem(4),
-        );
-        const i = new MarkIconOption_1.MarkIconOption();
+        var e = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(6), this.GetItem(4)),
+          i = new MarkIconOption_1.MarkIconOption();
         i.Initialize(e, this.GetItem(4), s),
-          this.Sko === 0 && this.vko.length === 0 && i.SetToggleChecked(),
-          this.Sko === 1 &&
+          0 === this.Sko && 0 === this.vko.length && i.SetToggleChecked(),
+          1 === this.Sko &&
             this.dko.IconPath === s.MarkPic &&
             i.SetToggleChecked(),
           i.SetOnclick(this.Lko.bind(this, s.MarkId)),
@@ -157,4 +154,4 @@ class CustomMarkPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   CUSTOM_MARK_PANEL_WIDTH,
   CUSTOM_MARK_PANEL_HEIGHT,
 );
-// # sourceMappingURL=CustomMarkPanel.js.map
+//# sourceMappingURL=CustomMarkPanel.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonTabTitle = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class CommonTabTitle extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(), this.CreateThenShowByActor(e.GetOwner());
@@ -18,7 +18,7 @@ class CommonTabTitle extends UiPanelBase_1.UiPanelBase {
     this.SetSpriteByPath(e, this.GetSprite(0), !1);
   }
   UpdateTitle(e) {
-    const t = this.GetText(1);
+    var t = this.GetText(1);
     e
       ? (t.SetUIActive(!0),
         LguiUtil_1.LguiUtil.SetLocalTextNew(t, e.TextId, ...e.Args))
@@ -26,4 +26,4 @@ class CommonTabTitle extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.CommonTabTitle = CommonTabTitle;
-// # sourceMappingURL=CommonTabTitle.js.map
+//# sourceMappingURL=CommonTabTitle.js.map

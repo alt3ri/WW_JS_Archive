@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleFavorUtil = void 0);
-const LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
+const LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager");
 class RoleFavorUtil {
   static IsRoleInfo(e) {
-    return e.FavorTabType === 1 && e.TypeParam !== 3;
+    return 1 === e.FavorTabType && 3 !== e.TypeParam;
   }
   static IsRoleBaseInfo(e) {
-    return e.FavorTabType === 1 && e.TypeParam === 1;
+    return 1 === e.FavorTabType && 1 === e.TypeParam;
   }
   static IsRolePowerFile(e) {
-    return e.FavorTabType === 1 && e.TypeParam === 2;
+    return 1 === e.FavorTabType && 2 === e.TypeParam;
   }
   static IsSameContentItemData(e, r) {
     return (
@@ -26,7 +26,7 @@ class RoleFavorUtil {
     );
   }
   static GetCurLanguageCvName(e) {
-    const r =
+    var r =
       ConfigManager_1.ConfigManager.RoleFavorConfig?.GetFavorRoleInfoConfig(e);
     if (void 0 === r) return StringUtils_1.EMPTY_STRING;
     switch (LanguageSystem_1.LanguageSystem.PackageAudio) {
@@ -44,4 +44,4 @@ class RoleFavorUtil {
   }
 }
 exports.RoleFavorUtil = RoleFavorUtil;
-// # sourceMappingURL=RoleFavorUtil.js.map
+//# sourceMappingURL=RoleFavorUtil.js.map

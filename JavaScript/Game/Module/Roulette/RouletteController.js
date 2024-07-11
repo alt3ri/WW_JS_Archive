@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RouletteController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const InputManager_1 = require("../../Ui/Input/InputManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const AdviceController_1 = require("../Advice/AdviceController");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
-const FunctionController_1 = require("../Functional/FunctionController");
-const ItemUseLogic_1 = require("../Inventory/ItemUseLogic");
-const SpecialItemController_1 = require("../Item/SpecialItem/SpecialItemController");
-const MapExploreToolController_1 = require("../MapExploreTool/MapExploreToolController");
-const PhotographController_1 = require("../Photograph/PhotographController");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const RouletteDefine_1 = require("./Data/RouletteDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  InputManager_1 = require("../../Ui/Input/InputManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  AdviceController_1 = require("../Advice/AdviceController"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  FunctionController_1 = require("../Functional/FunctionController"),
+  ItemUseLogic_1 = require("../Inventory/ItemUseLogic"),
+  SpecialItemController_1 = require("../Item/SpecialItem/SpecialItemController"),
+  MapExploreToolController_1 = require("../MapExploreTool/MapExploreToolController"),
+  PhotographController_1 = require("../Photograph/PhotographController"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  RouletteDefine_1 = require("./Data/RouletteDefine");
 class RouletteController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
@@ -125,7 +125,7 @@ class RouletteController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static ExploreSkillSetRequest(e, o) {
-    let t;
+    var t;
     ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId === e ||
     this.Pgo
       ? o?.(!1)
@@ -149,15 +149,18 @@ class RouletteController extends UiControllerBase_1.UiControllerBase {
         }));
   }
   static SetLastSkillId() {
-    const e = ModelManager_1.ModelManager.RouletteModel.GetLastSkillId();
+    var e = ModelManager_1.ModelManager.RouletteModel.GetLastSkillId();
     RouletteController.ExploreSkillSetRequest(e);
   }
   static SaveRouletteDataRequest(e, o, t, r = !1, n) {
-    const l = new Protocol_1.Aki.Protocol.fJn();
-    const a = new Array();
-    const i = new Protocol_1.Aki.Protocol._ks();
-    var e =
-      ((i.oVn = e), (i.nVn = t), a.push(i), new Protocol_1.Aki.Protocol._ks());
+    var l = new Protocol_1.Aki.Protocol.fJn(),
+      a = new Array(),
+      i = new Protocol_1.Aki.Protocol._ks(),
+      e =
+        ((i.oVn = e),
+        (i.nVn = t),
+        a.push(i),
+        new Protocol_1.Aki.Protocol._ks());
     (e.oVn = o),
       a.push(e),
       (l.sVn = a),
@@ -181,7 +184,7 @@ class RouletteController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static FunctionOpenRequest(e) {
-    e !== 0 &&
+    0 !== e &&
       void 0 !== e &&
       (e = ModelManager_1.ModelManager.RouletteModel.GetFuncDataByFuncId(e)) &&
       (Log_1.Log.CheckInfo() &&
@@ -210,7 +213,7 @@ class RouletteController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.Info("Phantom", 38, "刷新探索技能按钮表现");
   }
   static OnUseEquipItem() {
-    const e = ModelManager_1.ModelManager.RouletteModel.CurrentEquipItemId;
+    var e = ModelManager_1.ModelManager.RouletteModel.CurrentEquipItemId;
     if (ModelManager_1.ModelManager.RouletteModel.IsEquipItemSelectOn) {
       if (SpecialItemController_1.SpecialItemController.IsSpecialItem(e))
         return (
@@ -250,7 +253,7 @@ class RouletteController extends UiControllerBase_1.UiControllerBase {
     }
   }
   static OpenEmptyTips() {
-    const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(143);
+    var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(143);
     e.FunctionMap.set(2, () => {
       RouletteController.OpenAssemblyView(
         0,
@@ -285,9 +288,9 @@ class RouletteController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static OpenAssemblyView(e = 0, o, t) {
-    var r = ModelManager_1.ModelManager.RouletteModel.IsExploreRouletteOpen();
-    let n = ModelManager_1.ModelManager.RouletteModel.IsFunctionRouletteOpen();
-    var r = e === 0 ? r : n;
+    var r = ModelManager_1.ModelManager.RouletteModel.IsExploreRouletteOpen(),
+      n = ModelManager_1.ModelManager.RouletteModel.IsFunctionRouletteOpen(),
+      r = 0 === e ? r : n;
     return !(
       UiManager_1.UiManager.IsViewOpen("PhantomExploreSetView") ||
       !r ||
@@ -306,14 +309,14 @@ class RouletteController extends UiControllerBase_1.UiControllerBase {
       RouletteController.RefreshExploreSkillButton();
   }),
   (RouletteController.qmi = (e, o) => {
-    var t = ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId;
-    var t =
-      ModelManager_1.ModelManager.RouletteModel.UnlockExploreSkillDataMap.get(
-        t,
-      );
+    var t = ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId,
+      t =
+        ModelManager_1.ModelManager.RouletteModel.UnlockExploreSkillDataMap.get(
+          t,
+        );
     t &&
       (t = t.Cost) &&
-      t.size > 0 &&
+      0 < t.size &&
       (([t] = t.keys()), t === e) &&
       RouletteController.RefreshExploreSkillButton();
   }),
@@ -322,8 +325,8 @@ class RouletteController extends UiControllerBase_1.UiControllerBase {
   }),
   (RouletteController.Ugo = (e) => {
     e === ModelManager_1.ModelManager.RouletteModel.CurrentEquipItemId &&
-      (ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(e) ===
-      0
+      (0 ===
+      ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(e)
         ? ((ModelManager_1.ModelManager.RouletteModel.CurrentEquipItemId = 0),
           ModelManager_1.ModelManager.RouletteModel.SaveCurrentRouletteData(),
           RouletteController.ExploreSkillSetRequest(3002))
@@ -353,7 +356,7 @@ class RouletteController extends UiControllerBase_1.UiControllerBase {
     }
   }),
   (RouletteController.V4e = (e) => {
-    const o = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var o = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     return (
       !(!o || !o.Entity) &&
       (ModelManager_1.ModelManager.PlatformModel.IsGamepad()
@@ -363,11 +366,11 @@ class RouletteController extends UiControllerBase_1.UiControllerBase {
     );
   }),
   (RouletteController.xgo = (e) => {
-    const o = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var o = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     return (
       !(!o || !o.Entity) &&
       (ModelManager_1.ModelManager.RouletteModel.IsExploreRouletteOpen() ||
         ModelManager_1.ModelManager.RouletteModel.IsFunctionRouletteOpen())
     );
   });
-// # sourceMappingURL=RouletteController.js.map
+//# sourceMappingURL=RouletteController.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController");
 class TsDecoratorBlackboardHasEntity extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -20,7 +20,7 @@ class TsDecoratorBlackboardHasEntity extends UE.BTDecorator_BlueprintBase {
       (this.TsCompareValue = this.CompareValue));
   }
   PerformConditionCheckAI(r, t) {
-    let o = r.AiController;
+    var o = r.AiController;
     if (!o)
       return (
         Log_1.Log.CheckError() &&
@@ -37,10 +37,10 @@ class TsDecoratorBlackboardHasEntity extends UE.BTDecorator_BlueprintBase {
         r.Entity.Id,
         this.TsBlackboardKey,
       );
-      if (o && o > 0) return this.TsCompareValue;
+      if (o && 0 < o) return this.TsCompareValue;
     }
     return !this.TsCompareValue;
   }
 }
 exports.default = TsDecoratorBlackboardHasEntity;
-// # sourceMappingURL=TsDecoratorBlackboardHasEntity.js.map
+//# sourceMappingURL=TsDecoratorBlackboardHasEntity.js.map

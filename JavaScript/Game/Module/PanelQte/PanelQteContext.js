@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PanelQteContext = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const UE = require("ue"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class PanelQteContext {
   constructor() {
     (this.Source = void 0),
@@ -31,7 +31,7 @@ class PanelQteContext {
           UE.BPI_CreatureInterface_C.StaticClass(),
         ))
     ) {
-      const t = this.SourceActor.GetEntityId();
+      var t = this.SourceActor.GetEntityId();
       if (void 0 !== t)
         return (
           (this.SourceEntityHandle =
@@ -42,4 +42,4 @@ class PanelQteContext {
   }
 }
 exports.PanelQteContext = PanelQteContext;
-// # sourceMappingURL=PanelQteContext.js.map
+//# sourceMappingURL=PanelQteContext.js.map

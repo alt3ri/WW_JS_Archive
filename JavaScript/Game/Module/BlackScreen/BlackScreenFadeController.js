@@ -1,19 +1,19 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BlackScreenFadeController = void 0);
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiConfig_1 = require("../../Ui/Define/UiConfig");
-const UiLayerType_1 = require("../../Ui/Define/UiLayerType");
-const UiLayer_1 = require("../../Ui/UiLayer");
-const UiManager_1 = require("../../Ui/UiManager");
-const LevelLoadingController_1 = require("../LevelLoading/LevelLoadingController");
-const BlackScreenFadeView_1 = require("./BlackScreenFadeView");
+const CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiConfig_1 = require("../../Ui/Define/UiConfig"),
+  UiLayerType_1 = require("../../Ui/Define/UiLayerType"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  LevelLoadingController_1 = require("../LevelLoading/LevelLoadingController"),
+  BlackScreenFadeView_1 = require("./BlackScreenFadeView");
 class BlackScreenFadeController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -148,7 +148,7 @@ class BlackScreenFadeController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.Info("BlackScreen", 46, "OnAllDead关闭黑幕");
   }),
   (BlackScreenFadeController.CheckCanOpen = (e) => {
-    const r = UiConfig_1.UiConfig.TryGetViewInfo(e);
+    var r = UiConfig_1.UiConfig.TryGetViewInfo(e);
     return !(
       !r ||
       (r.Type === UiLayerType_1.ELayerType.Normal && _a.JCt.has(e))
@@ -161,4 +161,4 @@ class BlackScreenFadeController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.Info("BlackScreen", 46, "监听玩法结束销毁黑幕"),
       LevelLoadingController_1.LevelLoadingController.CloseAllBlackScreenLoading());
   });
-// # sourceMappingURL=BlackScreenFadeController.js.map
+//# sourceMappingURL=BlackScreenFadeController.js.map

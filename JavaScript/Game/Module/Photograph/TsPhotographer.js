@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TsPhotographer = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const Global_1 = require("../../Global");
-const PlatformController_1 = require("../Platform/PlatformController");
-const PhotographController_1 = require("./PhotographController");
-const PhotographDefine_1 = require("./PhotographDefine");
-const SOURCE_DISTANCE = 300;
-const CONFIG_PATH =
-  "/Game/Aki/Data/Camera/DA_FightCameraConfig.DA_FightCameraConfig";
-const MOBILE_CONFIG_PATH =
-  "/Game/Aki/Data/Camera/DA_FightCameraConfig_Mobile.DA_FightCameraConfig_Mobile";
-const MIN_DITHER = 0.01;
-const HIDE_DISTANCE_OFFSET = 50;
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  Global_1 = require("../../Global"),
+  PlatformController_1 = require("../Platform/PlatformController"),
+  PhotographController_1 = require("./PhotographController"),
+  PhotographDefine_1 = require("./PhotographDefine"),
+  SOURCE_DISTANCE = 300,
+  CONFIG_PATH =
+    "/Game/Aki/Data/Camera/DA_FightCameraConfig.DA_FightCameraConfig",
+  MOBILE_CONFIG_PATH =
+    "/Game/Aki/Data/Camera/DA_FightCameraConfig_Mobile.DA_FightCameraConfig_Mobile",
+  MIN_DITHER = 0.01,
+  HIDE_DISTANCE_OFFSET = 50;
 class TsPhotographer extends UE.Actor {
   constructor() {
     super(...arguments),
@@ -85,16 +85,16 @@ class TsPhotographer extends UE.Actor {
       (this.Character = Global_1.Global.BaseCharacter),
       this.PlayerLocation.FromUeVector(this.Character.K2_GetActorLocation()),
       (this.IsLoadingConfigCompleted = !1);
-    const t = PlatformController_1.PlatformController.IsMobile()
+    var t = PlatformController_1.PlatformController.IsMobile()
       ? MOBILE_CONFIG_PATH
       : CONFIG_PATH;
     ResourceSystem_1.ResourceSystem.LoadAsync(
       t,
       UE.BP_FightCameraConfig_C,
       (t) => {
-        var t = t.基础;
-        const i = ((this.StartHidePitch = t.Get(42)), t.Get(40));
-        const h = t.Get(41);
+        var t = t.基础,
+          i = ((this.StartHidePitch = t.Get(42)), t.Get(40)),
+          h = t.Get(41);
         (this.StartHideDistance = Math.max(i, h) + HIDE_DISTANCE_OFFSET),
           (this.CompleteHideDistance = Math.min(i, h) + HIDE_DISTANCE_OFFSET),
           (this.CompleteHidePitch = t.Get(43)),
@@ -111,7 +111,7 @@ class TsPhotographer extends UE.Actor {
     this.RefreshDitherEffect();
   }
   RefreshDitherEffect() {
-    let t;
+    var t;
     this.IsLoadingConfigCompleted &&
       this.CameraActor &&
       this.CameraArm &&
@@ -172,18 +172,18 @@ class TsPhotographer extends UE.Actor {
       (this.CameraActor = void 0);
   }
   SetCameraTransform(t) {
-    var t = t.GetTranslation();
-    const i = this.CameraActor.K2_GetActorLocation();
+    var t = t.GetTranslation(),
+      i = this.CameraActor.K2_GetActorLocation();
     (this.RelativeVectorCache.X = t.X - i.X),
       (this.RelativeVectorCache.Y = t.Y - i.Y),
       (this.RelativeVectorCache.Z = t.Z - i.Z),
       this.K2_AddActorWorldOffset(this.RelativeVectorCache, !1, void 0, !1);
   }
   AddCameraArmPitchInput(t) {
-    let i, h;
-    t === 0 ||
+    var i, h;
+    0 === t ||
       ((i = this.CameraArm.GetTargetRotation().Pitch),
-      t > 0 && i <= this.SourceMinPitch) ||
+      0 < t && i <= this.SourceMinPitch) ||
       (t < 0 && i >= this.SourceMaxPitch) ||
       ((i = this.CameraArm.GetRightVector()),
       (h = this.CameraArm.GetForwardVector()),
@@ -192,34 +192,34 @@ class TsPhotographer extends UE.Actor {
       this.CapsuleCollision.K2_SetRelativeRotation(t, !1, void 0, !1));
   }
   AddCameraArmYawInput(t) {
-    let i;
-    t !== 0 &&
+    var i;
+    0 !== t &&
       ((i = this.CameraArm.GetForwardVector()),
       (i = UE.KismetMathLibrary.RotateAngleAxis(i, t, this.CameraArmUpVector)),
       (t = UE.KismetMathLibrary.FindLookAtRotation(this.ZeroVector, i)),
       this.CapsuleCollision.K2_SetRelativeRotation(t, !1, void 0, !1));
   }
   AddPhotographerYawInput(t) {
-    const i = this.PlayerSourceLocation;
-    var h = this.K2_GetActorLocation();
-    var h =
-      ((this.CameraToPlayerVectorCache.X = h.X - i.X),
-      (this.CameraToPlayerVectorCache.Y = h.Y - i.Y),
-      (this.CameraToPlayerVectorCache.Z = h.Z - i.Z),
-      (this.SourceRotationCache.Yaw = t),
-      (this.SourceRotationCache.Pitch = 0),
-      (this.SourceRotationCache.Roll = 0),
-      UE.KismetMathLibrary.GreaterGreater_VectorRotator(
-        this.CameraToPlayerVectorCache,
-        this.SourceRotationCache,
-      ));
+    var i = this.PlayerSourceLocation,
+      h = this.K2_GetActorLocation(),
+      h =
+        ((this.CameraToPlayerVectorCache.X = h.X - i.X),
+        (this.CameraToPlayerVectorCache.Y = h.Y - i.Y),
+        (this.CameraToPlayerVectorCache.Z = h.Z - i.Z),
+        (this.SourceRotationCache.Yaw = t),
+        (this.SourceRotationCache.Pitch = 0),
+        (this.SourceRotationCache.Roll = 0),
+        UE.KismetMathLibrary.GreaterGreater_VectorRotator(
+          this.CameraToPlayerVectorCache,
+          this.SourceRotationCache,
+        ));
     (h.X += i.X),
       (h.Y += i.Y),
       (h.Z += i.Z),
       this.K2_SetActorLocation(h, !0, void 0, !1);
   }
   AddSourceYawInput(t) {
-    let i, h;
+    var i, h;
     (this.SourceTotalYaw = MathUtils_1.MathUtils.Clamp(
       this.SourceTotalYaw + t,
       this.SourceMinYaw,
@@ -251,9 +251,9 @@ class TsPhotographer extends UE.Actor {
         this.K2_SetActorRotation(h, !1));
   }
   AddSourcePitchInput(t) {
-    let i;
-    let h = this.K2_GetActorRotation().Pitch;
-    (t > 0 && h <= this.SourceMinPitch) ||
+    var i,
+      h = this.K2_GetActorRotation().Pitch;
+    (0 < t && h <= this.SourceMinPitch) ||
       (t < 0 && h >= this.SourceMaxPitch) ||
       ((h = this.GetActorRightVector()),
       (i = this.GetActorForwardVector()),
@@ -265,7 +265,7 @@ class TsPhotographer extends UE.Actor {
   SetFov(t) {
     let i = 50;
     (i =
-      PhotographController_1.PhotographController.CameraCaptureType === 0
+      0 === PhotographController_1.PhotographController.CameraCaptureType
         ? MathUtils_1.MathUtils.Clamp(
             t,
             PhotographDefine_1.MIN_FOV,
@@ -286,7 +286,7 @@ class TsPhotographer extends UE.Actor {
     return this.CameraActor.CameraComponent.FieldOfView;
   }
   ResetCamera() {
-    const t = Global_1.Global.BaseCharacter.GetTransform();
+    var t = Global_1.Global.BaseCharacter.GetTransform();
     this.CapsuleCollision.K2_SetRelativeRotation(
       this.DefaultRotation,
       !0,
@@ -300,4 +300,4 @@ class TsPhotographer extends UE.Actor {
   }
 }
 (exports.TsPhotographer = TsPhotographer), (exports.default = TsPhotographer);
-// # sourceMappingURL=TsPhotographer.js.map
+//# sourceMappingURL=TsPhotographer.js.map

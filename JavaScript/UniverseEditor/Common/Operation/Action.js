@@ -19,8 +19,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.isTestAction =
     exports.actionConfig =
       void 0);
-const ILevel_1 = require("../../Interface/ILevel");
-const Util_1 = require("../Misc/Util");
+const ILevel_1 = require("../../Interface/ILevel"),
+  Util_1 = require("../Misc/Util");
 function isTestAction(e, t) {
   return (
     !!exports.actionConfig[e].IsTest ||
@@ -878,8 +878,8 @@ function getActions(e, t, n) {
   if (!i) {
     i = [];
     for (const l in exports.actionConfig) {
-      const a = l;
-      const o = exports.actionConfig[a];
+      var a = l,
+        o = exports.actionConfig[a];
       !(o.Context?.includes(t) || (n && o.ContextForTest?.includes(t))) ||
         !o.Env?.includes(e) ||
         (!n && o.IsTest) ||
@@ -891,7 +891,7 @@ function getActions(e, t, n) {
 }
 function eqn(e, t) {
   e -= t;
-  return (e > 0 ? e : -e) < 1e-4;
+  return (0 < e ? e : -e) < 1e-4;
 }
 function toFloat6(e) {
   return Math.round(1e6 * e) / 1e6;
@@ -950,4 +950,4 @@ function parsePlayFlow(e) {
   (exports.posToString = posToString),
   (exports.parseFlowInfo = parseFlowInfo),
   (exports.parsePlayFlow = parsePlayFlow);
-// # sourceMappingURL=Action.js.map
+//# sourceMappingURL=Action.js.map

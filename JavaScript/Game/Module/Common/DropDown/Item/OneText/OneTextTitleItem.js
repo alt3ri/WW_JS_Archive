@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OneTextTitleItem = void 0);
-const UE = require("ue");
-const LguiUtil_1 = require("../../../../Util/LguiUtil");
-const TitleItemBase_1 = require("../TitleItemBase");
+const UE = require("ue"),
+  LguiUtil_1 = require("../../../../Util/LguiUtil"),
+  TitleItemBase_1 = require("../TitleItemBase");
 class OneTextTitleItem extends TitleItemBase_1.TitleItemBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIText]];
@@ -17,4 +17,4 @@ class OneTextTitleItem extends TitleItemBase_1.TitleItemBase {
   }
 }
 exports.OneTextTitleItem = OneTextTitleItem;
-// # sourceMappingURL=OneTextTitleItem.js.map
+//# sourceMappingURL=OneTextTitleItem.js.map

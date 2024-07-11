@@ -1,28 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FriendItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const BackgroundCardById_1 = require("../../../../Core/Define/ConfigQuery/BackgroundCardById");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ChatController_1 = require("../../Chat/ChatController");
-const ButtonAndSpriteItem_1 = require("../../Common/Button/ButtonAndSpriteItem");
-const ButtonAndTextItem_1 = require("../../Common/Button/ButtonAndTextItem");
-const PlayerHeadItem_1 = require("../../Common/PlayerHeadItem");
-const OnlineController_1 = require("../../Online/OnlineController");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const FriendController_1 = require("../FriendController");
-const FriendModel_1 = require("../FriendModel");
-const MAX_BUTTON_COUNT = 2;
-const MAX_BUTTON_INFO_COUNT = 5;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  BackgroundCardById_1 = require("../../../../Core/Define/ConfigQuery/BackgroundCardById"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ChatController_1 = require("../../Chat/ChatController"),
+  ButtonAndSpriteItem_1 = require("../../Common/Button/ButtonAndSpriteItem"),
+  ButtonAndTextItem_1 = require("../../Common/Button/ButtonAndTextItem"),
+  PlayerHeadItem_1 = require("../../Common/PlayerHeadItem"),
+  OnlineController_1 = require("../../Online/OnlineController"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  FriendController_1 = require("../FriendController"),
+  FriendModel_1 = require("../FriendModel"),
+  MAX_BUTTON_COUNT = 2,
+  MAX_BUTTON_INFO_COUNT = 5;
 class FunctionButtonInfo {
   constructor(e, t, i) {
     (this.SpritePath = e), (this.StateFunc = t), (this.CallBack = i);
@@ -48,12 +48,12 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
         ModelManager_1.ModelManager.FriendModel.IsMyFriend(
           this.f6t().PlayerId,
         )),
-      (this.M6t = () => this.BelongView === "FriendBlackListView"),
+      (this.M6t = () => "FriendBlackListView" === this.BelongView),
       (this.S6t = () =>
-        (ModelManager_1.ModelManager.FriendModel.FilterState === 2 &&
-          this.BelongView === "FriendView") ||
+        (2 === ModelManager_1.ModelManager.FriendModel.FilterState &&
+          "FriendView" === this.BelongView) ||
         !(
-          this.BelongView !== "FriendSearchView" ||
+          "FriendSearchView" !== this.BelongView ||
           !ModelManager_1.ModelManager.FriendModel.HasFriendApplication(
             this.f6t().PlayerId,
           )
@@ -65,20 +65,20 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
         !ModelManager_1.ModelManager.FriendModel.HasFriendApplication(
           this.f6t().PlayerId,
         ) &&
-        (this.BelongView === "FriendSearchView" ||
-          (ModelManager_1.ModelManager.FriendModel.FilterState === 3 &&
-            this.BelongView === "FriendView"))),
+        ("FriendSearchView" === this.BelongView ||
+          (3 === ModelManager_1.ModelManager.FriendModel.FilterState &&
+            "FriendView" === this.BelongView))),
       (this.y6t = () =>
-        (ModelManager_1.ModelManager.FriendModel.FilterState === 2 &&
-          this.BelongView === "FriendView") ||
+        (2 === ModelManager_1.ModelManager.FriendModel.FilterState &&
+          "FriendView" === this.BelongView) ||
         !(
-          this.BelongView !== "FriendSearchView" ||
+          "FriendSearchView" !== this.BelongView ||
           !ModelManager_1.ModelManager.FriendModel.HasFriendApplication(
             this.f6t().PlayerId,
           )
         )),
       (this.I6t = () => {
-        let e;
+        var e;
         ModelManager_1.ModelManager.FriendModel.GetSelectedPlayerOrItemInstance(
           this.FriendInstanceId,
         )?.Debug ||
@@ -99,7 +99,7 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
               )));
       }),
       (this.T6t = () => {
-        let e, t;
+        var e, t;
         ModelManager_1.ModelManager.FriendModel.HasFriend(this.FriendInstanceId)
           ? FriendController_1.FriendController.LocalRemoveApplicationFriend(
               this.FriendInstanceId,
@@ -137,11 +137,11 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
           )?.Debug
         ) {
           let e = Protocol_1.Aki.Protocol.wks.Proto_Search;
-          this.BelongView === "FriendView" &&
-            ModelManager_1.ModelManager.FriendModel.FilterState === 3 &&
+          "FriendView" === this.BelongView &&
+            3 === ModelManager_1.ModelManager.FriendModel.FilterState &&
             (e = Protocol_1.Aki.Protocol.wks.Proto_RecentlyTeam);
-          let t;
-          const i = this.f6t();
+          var t,
+            i = this.f6t();
           i &&
             ((t = ModelManager_1.ModelManager.FriendModel.GetFriendListCount()),
             ConfigManager_1.ConfigManager.FriendConfig.GetFriendLimitByViewType(
@@ -158,7 +158,7 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
         }
       }),
       (this.D6t = () => {
-        let e;
+        var e;
         ModelManager_1.ModelManager.FriendModel.GetSelectedPlayerOrItemInstance(
           this.FriendInstanceId,
         )?.Debug ||
@@ -171,7 +171,7 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
               ));
       }),
       (this.cJe = () => {
-        const e = this.f6t();
+        var e = this.f6t();
         e && ChatController_1.ChatController.OpenFriendChat(e.PlayerId);
       }),
       (this.R6t = () => {
@@ -255,14 +255,12 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(e, t, i) {
     this.Xqe(e.Id),
-      e.OperationType === 1
+      1 === e.OperationType
         ? this.P6t()
-        : (e.OperationType !== 2 && e.OperationType !== 3) || this.x6t();
+        : (2 !== e.OperationType && 3 !== e.OperationType) || this.x6t();
   }
   RefreshMute() {
-    const e = ModelManager_1.ModelManager.ChatModel.IsInMute(
-      this.f6t().PlayerId,
-    );
+    var e = ModelManager_1.ModelManager.ChatModel.IsInMute(this.f6t().PlayerId);
     this.GetItem(1).SetUIActive(e);
   }
   Xqe(e) {
@@ -287,16 +285,16 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   N6t() {
     this.GetText(9).SetText(this.f6t().Signature),
-      this.GetItem(13).SetUIActive(this.f6t().Signature.length > 0);
+      this.GetItem(13).SetUIActive(0 < this.f6t().Signature.length);
   }
   O6t() {
-    let e = this.f6t().CurCard;
-    e > 0 &&
+    var e = this.f6t().CurCard;
+    0 < e &&
       ((e = BackgroundCardById_1.configBackgroundCardById.GetConfig(e)),
       this.SetTextureByPath(e.LongCardPath, this.GetTexture(8)));
   }
   G6t() {
-    ModelManager_1.ModelManager.FriendModel.FilterState !== 3
+    3 !== ModelManager_1.ModelManager.FriendModel.FilterState
       ? this.d6t.SetActive(!1)
       : (this.d6t.SetActive(!0), this.d6t.RefreshView(this.f6t()));
   }
@@ -311,16 +309,16 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   x6t() {
     let t = 0;
-    let i, r;
+    var i, r;
     for (let e = 0; e < this.A6t.length && !(t >= MAX_BUTTON_COUNT); e++)
       (i = this.LZe[t]), (r = this.A6t[e]), this.k6t(i, r) && (t += 1);
     for (; t < this.LZe.length; t++) this.LZe[t].GetRootItem().SetUIActive(!1);
   }
   q6t() {
     let e = !1;
-    this.BelongView !== "FriendView" ||
-      (ModelManager_1.ModelManager.FriendModel.FilterState !== 1 &&
-        ModelManager_1.ModelManager.FriendModel.FilterState !== 3) ||
+    "FriendView" !== this.BelongView ||
+      (1 !== ModelManager_1.ModelManager.FriendModel.FilterState &&
+        3 !== ModelManager_1.ModelManager.FriendModel.FilterState) ||
       (e = !0),
       this.m6t.SetActive(e),
       e && this.F6t();
@@ -352,7 +350,7 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
     );
   }
   C4e() {
-    const e = this.GetText(2);
+    var e = this.GetText(2);
     FriendController_1.FriendController.CheckRemarkIsValid(
       this.f6t()?.FriendRemark ?? "",
     )
@@ -361,14 +359,14 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   _Ge() {}
   B6t() {
-    let e;
-    const t = this.f6t().PlayerIsOnline;
-    const i = this.GetText(5);
-    this.BelongView === "FriendBlackListView"
+    var e,
+      t = this.f6t().PlayerIsOnline,
+      i = this.GetText(5);
+    "FriendBlackListView" === this.BelongView
       ? i.SetText("")
       : t
         ? LguiUtil_1.LguiUtil.SetLocalText(i, "FriendOnline")
-        : (e = this.f6t()).PlayerLastOfflineTime === 0
+        : 0 === (e = this.f6t()).PlayerLastOfflineTime
           ? i.SetText("")
           : ((e = FriendModel_1.FriendModel.GetOfflineStrAndGap(
               e.PlayerLastOfflineTime,
@@ -380,11 +378,11 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.V6t();
   }
   V6t() {
-    let e;
-    const t = this.GetSprite(4);
-    let i = !0;
-    let r = void 0;
-    this.BelongView === "FriendBlackListView"
+    var e,
+      t = this.GetSprite(4);
+    let i = !0,
+      r = void 0;
+    "FriendBlackListView" === this.BelongView
       ? (i = !1)
       : (r = this.f6t().PlayerIsOnline
           ? "SP_FriendOnline"
@@ -401,12 +399,12 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
     );
   }
   U6t() {
-    const e = ModelManager_1.ModelManager.FriendModel.FilterState;
-    e === 1
+    var e = ModelManager_1.ModelManager.FriendModel.FilterState;
+    1 === e
       ? ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           "FriendDeleteEach",
         )
-      : e === 2 &&
+      : 2 === e &&
         ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           "FriendRequestOutOfDate",
         );
@@ -432,8 +430,8 @@ class TeamItem extends UiPanelBase_1.UiPanelBase {
   RefreshView(e) {
     this.GetItem(1).SetUIActive(!1),
       this.GetItem(2).SetUIActive(!1),
-      e.TeamMemberCount >= 2 && this.GetItem(1).SetUIActive(!0),
-      e.TeamMemberCount >= 3 && this.GetItem(2).SetUIActive(!0);
+      2 <= e.TeamMemberCount && this.GetItem(1).SetUIActive(!0),
+      3 <= e.TeamMemberCount && this.GetItem(2).SetUIActive(!0);
   }
 }
-// # sourceMappingURL=FriendItem.js.map
+//# sourceMappingURL=FriendItem.js.map

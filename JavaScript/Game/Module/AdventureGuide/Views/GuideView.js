@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdventureGuideView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const CommonTabComponentData_1 = require("../../Common/TabComponent/CommonTabComponentData");
-const CommonTabData_1 = require("../../Common/TabComponent/CommonTabData");
-const CommonTabTitleData_1 = require("../../Common/TabComponent/CommonTabTitleData");
-const TabComponentWithCaptionItem_1 = require("../../Common/TabComponent/TabComponentWithCaptionItem");
-const CommonTabItem_1 = require("../../Common/TabComponent/TabItem/CommonTabItem");
-const TabViewComponent_1 = require("../../Common/TabComponent/TabViewComponent");
-const ItemDefines_1 = require("../../Item/Data/ItemDefines");
-const PowerController_1 = require("../../Power/PowerController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  CommonTabComponentData_1 = require("../../Common/TabComponent/CommonTabComponentData"),
+  CommonTabData_1 = require("../../Common/TabComponent/CommonTabData"),
+  CommonTabTitleData_1 = require("../../Common/TabComponent/CommonTabTitleData"),
+  TabComponentWithCaptionItem_1 = require("../../Common/TabComponent/TabComponentWithCaptionItem"),
+  CommonTabItem_1 = require("../../Common/TabComponent/TabItem/CommonTabItem"),
+  TabViewComponent_1 = require("../../Common/TabComponent/TabViewComponent"),
+  ItemDefines_1 = require("../../Item/Data/ItemDefines"),
+  PowerController_1 = require("../../Power/PowerController"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class AdventureGuideView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -38,17 +38,17 @@ class AdventureGuideView extends UiViewBase_1.UiViewBase {
       }),
       (this.pqe = (e) => {
         this.cVe = Time_1.Time.Now;
-        const t = this.TabDataList[e];
-        const i = t.ChildViewName;
+        var t = this.TabDataList[e],
+          i = t.ChildViewName;
         (ModelManager_1.ModelManager.AdventureGuideModel.CurrentGuideTabName =
           i),
           this.CVe(!1);
         for (const o of this.TabComponent.GetCurrencyItemList())
           o.SetUiActive(
-            i === "NewSoundAreaView" || i === "DisposableChallengeView",
+            "NewSoundAreaView" === i || "DisposableChallengeView" === i,
           );
         this.gVe();
-        const n = this.TabComponent.GetTabItemByIndex(e);
+        var n = this.TabComponent.GetTabItemByIndex(e);
         this.TabViewComponent.ToggleCallBack(t, i, n, this.uVe), (this._Ve = e);
       }),
       (this.yqe = (e) => {
@@ -59,7 +59,7 @@ class AdventureGuideView extends UiViewBase_1.UiViewBase {
         );
       }),
       (this.CanToggleChange = () => {
-        let e;
+        var e;
         return (
           !!ModelManager_1.ModelManager.PlatformModel.IsGamepad() ||
           ((e = CommonParamById_1.configCommonParamById.GetIntConfig(
@@ -93,15 +93,15 @@ class AdventureGuideView extends UiViewBase_1.UiViewBase {
         this.CloseMe();
       }),
       (this.SVe = (e) => {
-        this.GetButton(3).RootUIComp.SetUIActive(e !== 0),
+        this.GetButton(3).RootUIComp.SetUIActive(0 !== e),
           (this.lVe.HelpGroupId = e);
       }),
       (this.gVe = () => {
-        const e = this.TabComponent?.GetCurrencyItemList();
+        var e = this.TabComponent?.GetCurrencyItemList();
         if (e) {
-          const t = ModelManager_1.ModelManager.PowerModel.PowerCount;
-          const i =
-            ConfigManager_1.ConfigManager.PowerConfig.GetPowerNaturalLimit();
+          var t = ModelManager_1.ModelManager.PowerModel.PowerCount,
+            i =
+              ConfigManager_1.ConfigManager.PowerConfig.GetPowerNaturalLimit();
           for (const n of e)
             n.RefreshTemp(ItemDefines_1.EItemId.Power, t + "/" + i);
         }
@@ -158,10 +158,10 @@ class AdventureGuideView extends UiViewBase_1.UiViewBase {
     (this.lVe = this.GetButton(3)),
       await this.InitTabComponent(),
       (this.uVe = this.OpenParam);
-    let e;
-    let t;
-    let i;
-    let n = this.uVe[0];
+    var e,
+      t,
+      i,
+      n = this.uVe[0];
     n
       ? (this._Ve = this.pVe(n))
       : ((n =
@@ -197,13 +197,13 @@ class AdventureGuideView extends UiViewBase_1.UiViewBase {
     this.TabComponent.SelectToggleByIndex(this._Ve, !0);
   }
   pVe(t) {
-    const i = this.TabDataList.length;
+    var i = this.TabDataList.length;
     for (let e = 0; e < i; e++)
       if (this.TabDataList[e].ChildViewName === t) return e;
     return 0;
   }
   async InitTabComponent() {
-    const e = new CommonTabComponentData_1.CommonTabComponentData(
+    var e = new CommonTabComponentData_1.CommonTabComponentData(
       this.dVe,
       this.pqe,
       this.yqe,
@@ -224,13 +224,13 @@ class AdventureGuideView extends UiViewBase_1.UiViewBase {
   async RebuildTabItem() {
     this.TabDataList =
       ModelManager_1.ModelManager.AdventureGuideModel.GetAdventureGuideTabList();
-    const t = this.TabDataList.length;
-    const i = this.TabComponent.CreateTabItemDataByLength(t);
+    var t = this.TabDataList.length,
+      i = this.TabComponent.CreateTabItemDataByLength(t);
     for (let e = 0; e < t; e++) {
-      const n = this.TabDataList[e].ChildViewName;
-      n === "AdventureTargetView"
+      var n = this.TabDataList[e].ChildViewName;
+      "AdventureTargetView" === n
         ? (i[e].RedDotName = "AdventureManual")
-        : n === "DailyActivityTabView" &&
+        : "DailyActivityTabView" === n &&
           (i[e].RedDotName = "AdventureDailyActivityTab");
     }
     await this.TabComponent.RefreshTabItemAsync(i);
@@ -250,7 +250,7 @@ class AdventureGuideView extends UiViewBase_1.UiViewBase {
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
     const t = Number(e[0]);
-    const i = this.TabComponent.GetTabItemByIndex(
+    var i = this.TabComponent.GetTabItemByIndex(
       this.TabDataList.findIndex((e) => e.Id === t),
     ).GetRootItem();
     if (i) return [i, i];
@@ -262,4 +262,4 @@ class AdventureGuideView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.AdventureGuideView = AdventureGuideView;
-// # sourceMappingURL=GuideView.js.map
+//# sourceMappingURL=GuideView.js.map

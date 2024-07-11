@@ -1,33 +1,38 @@
 "use strict";
-let CharacterAbilityComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, r) {
-    let o;
-    const n = arguments.length;
-    let a =
-      n < 3 ? e : r === null ? (r = Object.getOwnPropertyDescriptor(e, i)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      a = Reflect.decorate(t, e, i, r);
-    else
-      for (let s = t.length - 1; s >= 0; s--)
-        (o = t[s]) && (a = (n < 3 ? o(a) : n > 3 ? o(e, i, a) : o(e, i)) || a);
-    return n > 3 && a && Object.defineProperty(e, i, a), a;
-  };
+var CharacterAbilityComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, r) {
+      var o,
+        n = arguments.length,
+        a =
+          n < 3
+            ? e
+            : null === r
+              ? (r = Object.getOwnPropertyDescriptor(e, i))
+              : r;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        a = Reflect.decorate(t, e, i, r);
+      else
+        for (var s = t.length - 1; 0 <= s; s--)
+          (o = t[s]) &&
+            (a = (n < 3 ? o(a) : 3 < n ? o(e, i, a) : o(e, i)) || a);
+      return 3 < n && a && Object.defineProperty(e, i, a), a;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterAbilityComponent =
     exports.EBuffApplyType =
     exports.DEFAULT_SOURCE_SKILL_LEVEL_NOT_FOUND =
     exports.DEFAULT_SOURCE_SKILL_LEVEL =
       void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent");
-const GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils");
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const CharacterNameDefines_1 = require("../../CharacterNameDefines");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
+const UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  CharacterNameDefines_1 = require("../../CharacterNameDefines"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
 (exports.DEFAULT_SOURCE_SKILL_LEVEL = 1),
   (exports.DEFAULT_SOURCE_SKILL_LEVEL_NOT_FOUND = -1),
   (exports.EBuffApplyType = Protocol_1.Aki.Protocol.CGs);
@@ -59,7 +64,7 @@ let CharacterAbilityComponent =
           !1
         );
       this.tqr.SetComponentTickEnabled(!1);
-      const t = CharacterNameDefines_1.CharacterNameDefines.ABP_BASE;
+      var t = CharacterNameDefines_1.CharacterNameDefines.ABP_BASE;
       return (
         this.nXt.Actor.Mesh.GetLinkedAnimGraphInstanceByTag(t) && this.oqr(t),
         this.InitClass(),
@@ -127,4 +132,4 @@ let CharacterAbilityComponent =
       CharacterAbilityComponent,
     )),
   (exports.CharacterAbilityComponent = CharacterAbilityComponent);
-// # sourceMappingURL=CharacterAbilityComponent.js.map
+//# sourceMappingURL=CharacterAbilityComponent.js.map

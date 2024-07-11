@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HelpGuideView = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const TutorialPageItem_1 = require("../../Tutorial/SubView/TutorialPageItem");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const HelpGuidePage_1 = require("./HelpGuidePage");
-const TWEEN_TIME = 0.3;
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  TutorialPageItem_1 = require("../../Tutorial/SubView/TutorialPageItem"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  HelpGuidePage_1 = require("./HelpGuidePage"),
+  TWEEN_TIME = 0.3;
 class HelpGuideView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -23,9 +23,9 @@ class HelpGuideView extends UiViewBase_1.UiViewBase {
         this.CloseMe();
       }),
       (this.nPe = () => {
-        let i, t, s;
+        var i, t, s;
         !this.rPe &&
-          this.ePe > 0 &&
+          0 < this.ePe &&
           ((t = (i = this.iPe.GetRootItem()).RelativeLocation),
           (s = this.GetItem(12)).SetUIRelativeLocation(
             new UE.Vector(-s.Width, s.RelativeLocation.Y, s.RelativeLocation.Z),
@@ -47,7 +47,7 @@ class HelpGuideView extends UiViewBase_1.UiViewBase {
           }));
       }),
       (this.aPe = () => {
-        let i, t, s;
+        var i, t, s;
         !this.rPe &&
           this.ePe < this.ZAe.length - 1 &&
           ((t = (i = this.iPe.GetRootItem()).RelativeLocation),
@@ -71,7 +71,7 @@ class HelpGuideView extends UiViewBase_1.UiViewBase {
           }));
       }),
       (this.hPe = (i, t, s) => {
-        let e = void 0;
+        var e = void 0;
         return (
           (e = new TutorialPageItem_1.TutorialPageItem(t)).Init(),
           e.UpdateShow(!1),
@@ -114,8 +114,8 @@ class HelpGuideView extends UiViewBase_1.UiViewBase {
         ConfigManager_1.ConfigManager.HelpConfig.GetHelpContentInfoByGroupId(
           this.HelpGroupId,
         ));
-    let i;
-    const t = this.ZAe.length > 1;
+    var i,
+      t = 1 < this.ZAe.length;
     (this.iPe = new HelpGuidePage_1.HelpGuidePage()),
       await this.iPe.CreateByActorAsync(this.GetItem(3).GetOwner()),
       this.AddChild(this.iPe),
@@ -144,10 +144,10 @@ class HelpGuideView extends UiViewBase_1.UiViewBase {
       this.GetItem(9).SetUIActive(!1);
   }
   Og(i) {
-    this.ZAe.length > 1 &&
+    1 < this.ZAe.length &&
       (this.tPe.GetLayoutItemByIndex(this.ePe).UpdateShow(!1),
       this.tPe.GetLayoutItemByIndex(i).UpdateShow(!0),
-      this.GetButton(7).SetSelfInteractive(i > 0),
+      this.GetButton(7).SetSelfInteractive(0 < i),
       this.GetButton(8).SetSelfInteractive(i < this.ZAe.length - 1),
       this.oPe) &&
       ((t = this.ZAe[this.ePe]), this.oPe.RefreshPage(t)),
@@ -158,4 +158,4 @@ class HelpGuideView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.HelpGuideView = HelpGuideView;
-// # sourceMappingURL=HelpGuideView.js.map
+//# sourceMappingURL=HelpGuideView.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const Global_1 = require("../../../Global");
-const GlobalData_1 = require("../../../GlobalData");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  Global_1 = require("../../../Global"),
+  GlobalData_1 = require("../../../GlobalData"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskDestroySelf extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -20,7 +20,7 @@ class TsTaskDestroySelf extends TsTaskAbortImmediatelyBase_1.default {
   ReceiveExecuteAI(e, s) {
     this.InitTsVariables();
     const r = e.AiController;
-    let o, t;
+    var o, t;
     r
       ? ((o = r.CharActorComp),
         (t = r.CharActorComp.Entity.GetComponent(38)),
@@ -29,8 +29,8 @@ class TsTaskDestroySelf extends TsTaskAbortImmediatelyBase_1.default {
             o.CreatureData.GetEntityType() ===
               Protocol_1.Aki.Protocol.HBs.Proto_Player &&
               TimerSystem_1.TimerSystem.Next((e) => {
-                let s = r.CharActorComp;
-                const o = r.CharActorComp.Entity;
+                var s = r.CharActorComp,
+                  o = r.CharActorComp.Entity;
                 o.GetComponent(38) &&
                   (Global_1.Global.CharacterController.Possess(s.Actor),
                   (s = o.GetComponent(161)) && s.StopMove(!1),
@@ -52,4 +52,4 @@ class TsTaskDestroySelf extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskDestroySelf;
-// # sourceMappingURL=TsTaskDestroySelf.js.map
+//# sourceMappingURL=TsTaskDestroySelf.js.map

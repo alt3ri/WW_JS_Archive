@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonVictoryView = void 0);
-const ue_1 = require("ue");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const CommonResultButtonData_1 = require("../Common/ResultView/CommonResultButtonData");
-const CommonResultView_1 = require("../Common/ResultView/CommonResultView");
-const ItemDefines_1 = require("../Item/Data/ItemDefines");
-const OnlineController_1 = require("../Online/OnlineController");
-const OnlineModel_1 = require("../Online/OnlineModel");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const InstanceDungeonEntranceController_1 = require("./InstanceDungeonEntranceController");
+const ue_1 = require("ue"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  CommonResultButtonData_1 = require("../Common/ResultView/CommonResultButtonData"),
+  CommonResultView_1 = require("../Common/ResultView/CommonResultView"),
+  ItemDefines_1 = require("../Item/Data/ItemDefines"),
+  OnlineController_1 = require("../Online/OnlineController"),
+  OnlineModel_1 = require("../Online/OnlineModel"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  InstanceDungeonEntranceController_1 = require("./InstanceDungeonEntranceController");
 class InstanceDungeonVictoryView extends CommonResultView_1.CommonResultView {
   constructor() {
     super(...arguments),
@@ -31,13 +31,12 @@ class InstanceDungeonVictoryView extends CommonResultView_1.CommonResultView {
         );
       }),
       (this.nli = () => {
-        let e, n;
+        var e, n;
         ModelManager_1.ModelManager.GameModeModel.IsMulti
           ? ModelManager_1.ModelManager.OnlineModel.AllowInitiate
             ? ((e = ModelManager_1.ModelManager.CreatureModel.IsMyWorld()),
-              (n =
-                ModelManager_1.ModelManager.OnlineModel.NextInitiateLeftTime) >
-              0
+              0 <
+              (n = ModelManager_1.ModelManager.OnlineModel.NextInitiateLeftTime)
                 ? e
                   ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                       "NextInviteTime",
@@ -47,9 +46,10 @@ class InstanceDungeonVictoryView extends CommonResultView_1.CommonResultView {
                       "NextSuggestTime",
                       TimeUtil_1.TimeUtil.GetCoolDown(n),
                     )
-                : ModelManager_1.ModelManager.OnlineModel.GetContinuingChallengeConfirmState(
-                      ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
-                    ) !== 2 && e
+                : 2 !==
+                      ModelManager_1.ModelManager.OnlineModel.GetContinuingChallengeConfirmState(
+                        ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
+                      ) && e
                   ? OnlineController_1.OnlineController.InviteRechallengeRequest()
                   : OnlineController_1.OnlineController.ApplyRechallengeRequest(
                       Protocol_1.Aki.Protocol.h3s.Proto_Settle,
@@ -86,15 +86,15 @@ class InstanceDungeonVictoryView extends CommonResultView_1.CommonResultView {
       ModelManager_1.ModelManager.GameModeModel.IsMulti && this.Jli();
   }
   zli() {
-    const e = new Array();
+    var e = new Array();
     return e.push(this.Zli()), e.push(this.e1i()), e;
   }
   Zli() {
-    const e = new CommonResultButtonData_1.CommonResultButtonData();
+    var e = new CommonResultButtonData_1.CommonResultButtonData();
     return (
       e.SetRefreshCallBack((e) => {
         e.SetBtnText("ButtonTextExit");
-        const n = this.Khi.AutoLeaveTime;
+        var n = this.Khi.AutoLeaveTime;
         e.SetFloatTextWithTimer(n, !0, "InstanceDungeonLeftTimeToAutoLeave");
       }),
       e.SetClickCallBack(this.q2e),
@@ -102,7 +102,7 @@ class InstanceDungeonVictoryView extends CommonResultView_1.CommonResultView {
     );
   }
   e1i() {
-    const e = new CommonResultButtonData_1.CommonResultButtonData();
+    var e = new CommonResultButtonData_1.CommonResultButtonData();
     return (
       e.SetRefreshCallBack((e) => {
         e.SetBtnText("ButtonTextRetry"),
@@ -117,11 +117,11 @@ class InstanceDungeonVictoryView extends CommonResultView_1.CommonResultView {
     );
   }
   t1i(e) {
-    let n;
-    const t =
-      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetInstancePowerCost(
-        this.NUe,
-      );
+    var n,
+      t =
+        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetInstancePowerCost(
+          this.NUe,
+        );
     !t ||
       t <= 0 ||
       ((n = ModelManager_1.ModelManager.PowerModel.PowerCount),
@@ -158,23 +158,23 @@ class InstanceDungeonVictoryView extends CommonResultView_1.CommonResultView {
       this.RewardLayout.RebuildLayoutByDataNew(this.sOe);
   }
   SetupButtonFormat() {
-    const e = this.zli();
+    var e = this.zli();
     this.RefreshButtonList(e);
   }
   Jli() {
-    const e = ModelManager_1.ModelManager.CreatureModel.GetAllScenePlayers();
+    var e = ModelManager_1.ModelManager.CreatureModel.GetAllScenePlayers();
     if (e.length <= 1) this.GetItem(5).SetUIActive(!1);
     else {
       this.GetItem(5).SetUIActive(!0);
-      const n = this.GetSprite(6);
-      const t = this.GetSprite(7);
-      const r =
-        (n.SetUIActive(!1),
-        t.SetUIActive(!1),
-        ModelManager_1.ModelManager.PlayerInfoModel.GetId());
+      var n = this.GetSprite(6),
+        t = this.GetSprite(7),
+        r =
+          (n.SetUIActive(!1),
+          t.SetUIActive(!1),
+          ModelManager_1.ModelManager.PlayerInfoModel.GetId());
       for (const a of e) {
-        var i;
-        const o = a.GetPlayerId();
+        var i,
+          o = a.GetPlayerId();
         o !== r &&
           ((i =
             ModelManager_1.ModelManager.OnlineModel.GetContinuingChallengeConfirmState(
@@ -197,4 +197,4 @@ class InstanceDungeonVictoryView extends CommonResultView_1.CommonResultView {
 ((exports.InstanceDungeonVictoryView = InstanceDungeonVictoryView).o1i =
   new ue_1.Color(246, 93, 88, 255)),
   (InstanceDungeonVictoryView.i1i = new ue_1.Color(255, 255, 255, 255));
-// # sourceMappingURL=InstanceDungeonVictoryView.js.map
+//# sourceMappingURL=InstanceDungeonVictoryView.js.map

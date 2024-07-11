@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionIntensifyView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiSequencePlayer_1 = require("../../../../Ui/Base/UiSequencePlayer");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const CommonTabComponentData_1 = require("../../../Common/TabComponent/CommonTabComponentData");
-const CommonTabData_1 = require("../../../Common/TabComponent/CommonTabData");
-const CommonTabTitleData_1 = require("../../../Common/TabComponent/CommonTabTitleData");
-const TabComponentWithCaptionItem_1 = require("../../../Common/TabComponent/TabComponentWithCaptionItem");
-const VisionTabItem_1 = require("../../../Common/TabComponent/TabItem/VisionTabItem");
-const TabViewComponent_1 = require("../../../Common/TabComponent/TabViewComponent");
-const HelpController_1 = require("../../../Help/HelpController");
-const ItemDefines_1 = require("../../../Item/Data/ItemDefines");
-const UiSceneManager_1 = require("../../../UiComponent/UiSceneManager");
-const CANNOTLEVELSUBQUALITY = 2;
-const VISION_INTENSIFY_HELPID = 32;
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiSequencePlayer_1 = require("../../../../Ui/Base/UiSequencePlayer"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  CommonTabComponentData_1 = require("../../../Common/TabComponent/CommonTabComponentData"),
+  CommonTabData_1 = require("../../../Common/TabComponent/CommonTabData"),
+  CommonTabTitleData_1 = require("../../../Common/TabComponent/CommonTabTitleData"),
+  TabComponentWithCaptionItem_1 = require("../../../Common/TabComponent/TabComponentWithCaptionItem"),
+  VisionTabItem_1 = require("../../../Common/TabComponent/TabItem/VisionTabItem"),
+  TabViewComponent_1 = require("../../../Common/TabComponent/TabViewComponent"),
+  HelpController_1 = require("../../../Help/HelpController"),
+  ItemDefines_1 = require("../../../Item/Data/ItemDefines"),
+  UiSceneManager_1 = require("../../../UiComponent/UiSceneManager"),
+  CANNOTLEVELSUBQUALITY = 2,
+  VISION_INTENSIFY_HELPID = 32;
 class VisionIntensifyView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -37,7 +37,7 @@ class VisionIntensifyView extends UiViewBase_1.UiViewBase {
         this.TabComponent.SelectToggleByIndex(1);
       }),
       (this.mHi = () => {
-        let e, t;
+        var e, t;
         ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
           this.lHi,
         ).GetQuality() > CANNOTLEVELSUBQUALITY &&
@@ -46,7 +46,7 @@ class VisionIntensifyView extends UiViewBase_1.UiViewBase {
       }),
       (this.CanToggleChange = (e) => {
         return (
-          e !== 1 ||
+          1 !== e ||
           ((e = this.dHi()) ||
             ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
               "VisionIdentifyLock",
@@ -63,10 +63,10 @@ class VisionIntensifyView extends UiViewBase_1.UiViewBase {
         );
       }),
       (this.pqe = (e) => {
-        const t = this.upt[e];
-        const i = t.ChildViewName;
-        var e = this.TabComponent.GetTabItemByIndex(e);
-        const n = this.TabViewComponent.GetCurrentTabView();
+        var t = this.upt[e],
+          i = t.ChildViewName,
+          e = this.TabComponent.GetTabItemByIndex(e),
+          n = this.TabViewComponent.GetCurrentTabView();
         n && n.HideUiTabView(!1),
           this.TabViewComponent.ToggleCallBack(t, i, e, this.lHi),
           this.TabComponent.SetHelpButtonCallBack(this.CHi);
@@ -94,21 +94,21 @@ class VisionIntensifyView extends UiViewBase_1.UiViewBase {
   }
   OnStart() {
     var e = new CommonTabComponentData_1.CommonTabComponentData(
-      this.dVe,
-      this.pqe,
-      this.yqe,
-    );
-    var e =
-      ((this.TabComponent =
-        new TabComponentWithCaptionItem_1.TabComponentWithCaptionItem(
-          this.GetItem(0),
-          e,
-          this.CloseClick,
+        this.dVe,
+        this.pqe,
+        this.yqe,
+      ),
+      e =
+        ((this.TabComponent =
+          new TabComponentWithCaptionItem_1.TabComponentWithCaptionItem(
+            this.GetItem(0),
+            e,
+            this.CloseClick,
+          )),
+        (this.TabViewComponent = new TabViewComponent_1.TabViewComponent(
+          this.GetItem(1),
         )),
-      (this.TabViewComponent = new TabViewComponent_1.TabViewComponent(
-        this.GetItem(1),
-      )),
-      new Array());
+        new Array());
     e.push(ItemDefines_1.EItemId.Gold),
       this.TabComponent.SetCurrencyItemList(e),
       this.TabComponent.SetHelpButtonShowState(!0),
@@ -145,10 +145,10 @@ class VisionIntensifyView extends UiViewBase_1.UiViewBase {
   }
   dHi() {
     var e = ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-      this.lHi,
-    );
-    const t = e.GetSubPropUnlockLevel(0);
-    var e = e.GetPhantomLevel() >= t;
+        this.lHi,
+      ),
+      t = e.GetSubPropUnlockLevel(0),
+      e = e.GetPhantomLevel() >= t;
     return (
       e &&
         EventSystem_1.EventSystem.Emit(
@@ -158,14 +158,14 @@ class VisionIntensifyView extends UiViewBase_1.UiViewBase {
     );
   }
   OnBeforePlayCloseSequence() {
-    const e = this.TabViewComponent.GetCurrentTabView();
+    var e = this.TabViewComponent.GetCurrentTabView();
     e &&
       new UiSequencePlayer_1.UiSequencePlayer(e.GetRootItem()).PlaySequence(
         "Close",
       );
   }
   OnHandleLoadScene() {
-    const e =
+    var e =
       ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
         this.lHi,
       );
@@ -178,23 +178,23 @@ class VisionIntensifyView extends UiViewBase_1.UiViewBase {
       ));
   }
   OnBeforeShow() {
-    const e = ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTabList(
-      this.Info.Name,
-    );
-    const t =
-      (e.forEach((e) => {
-        this.upt.push(e);
-      }),
-      ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-        this.lHi,
-      ));
-    const i = ModelManager_1.ModelManager.FunctionModel.IsOpen(10001004);
+    var e = ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTabList(
+        this.Info.Name,
+      ),
+      t =
+        (e.forEach((e) => {
+          this.upt.push(e);
+        }),
+        ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
+          this.lHi,
+        )),
+      i = ModelManager_1.ModelManager.FunctionModel.IsOpen(10001004);
     let n = 0;
     n = t.GetQuality() <= CANNOTLEVELSUBQUALITY || !i ? 1 : e.length;
     this.TabComponent.RefreshTabItemByLength(n, () => {
-      let e, t, i;
+      var e, t, i;
       for ([e, t] of this.TabComponent.GetTabItemMap())
-        e === 1 &&
+        1 === e &&
           ((i = this.dHi()),
           t.SetToggleStateForce(i ? 0 : 2, !1),
           t.SetCanClickWhenDisable(!0),
@@ -209,20 +209,20 @@ class VisionIntensifyView extends UiViewBase_1.UiViewBase {
     });
   }
   x6e() {
-    let e = this.upt.findIndex((e) => e.ChildViewName === "VisionIdentifyView");
-    e > 0 &&
+    var e = this.upt.findIndex((e) => "VisionIdentifyView" === e.ChildViewName);
+    0 < e &&
       (e = this.TabComponent.GetTabItemByIndex(e)) &&
       e.BindRedDot("IdentifyTab", this.lHi);
   }
   Dpt() {
-    let e = this.upt.findIndex((e) => e.ChildViewName === "VisionIdentifyView");
-    e > 0 && (e = this.TabComponent.GetTabItemByIndex(e)) && e.UnBindRedDot();
+    var e = this.upt.findIndex((e) => "VisionIdentifyView" === e.ChildViewName);
+    0 < e && (e = this.TabComponent.GetTabItemByIndex(e)) && e.UnBindRedDot();
   }
   OnBeforeHide() {
     this.Dpt();
   }
   OnAfterHide() {
-    const e = this.TabViewComponent.GetCurrentTabView();
+    var e = this.TabViewComponent.GetCurrentTabView();
     e && e.HideUiTabView(!1);
   }
   OnBeforeCreate() {
@@ -241,7 +241,7 @@ class VisionIntensifyView extends UiViewBase_1.UiViewBase {
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
     const t = Number(e[0]);
-    const i = this.TabComponent.GetTabItemByIndex(
+    var i = this.TabComponent.GetTabItemByIndex(
       this.upt.findIndex((e) => e.Id === t),
     ).GetRootItem();
     if (i) return [i, i];
@@ -253,4 +253,4 @@ class VisionIntensifyView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.VisionIntensifyView = VisionIntensifyView;
-// # sourceMappingURL=VisionIntensifyView.js.map
+//# sourceMappingURL=VisionIntensifyView.js.map

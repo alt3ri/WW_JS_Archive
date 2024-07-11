@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DynamicConfigMarkItemView = void 0);
-const Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D");
-const MarkItemView_1 = require("./MarkItemView");
+const Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D"),
+  MarkItemView_1 = require("./MarkItemView");
 class DynamicConfigMarkItemView extends MarkItemView_1.MarkItemView {
   constructor(e) {
     super(e);
@@ -17,9 +17,9 @@ class DynamicConfigMarkItemView extends MarkItemView_1.MarkItemView {
       );
   }
   OnIconPathChanged(e) {
-    const t = this.GetSprite(1);
+    var t = this.GetSprite(1);
     this.GetSprite(1).SetUIActive(!0), this.LoadIcon(t, e);
   }
 }
 exports.DynamicConfigMarkItemView = DynamicConfigMarkItemView;
-// # sourceMappingURL=DynamicConfigMarkItemView.js.map
+//# sourceMappingURL=DynamicConfigMarkItemView.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonSelectResultView = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const UiActorPool_1 = require("../../../Ui/UiActorPool");
-const RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
-const CommonSelectItem_1 = require("./CommonSelectItem");
-const PhantomSelectItem_1 = require("./PhantomSelectItem");
-const RogueSelectResultBaseView_1 = require("./RogueSelectResultBaseView");
+const Log_1 = require("../../../../Core/Common/Log"),
+  UiActorPool_1 = require("../../../Ui/UiActorPool"),
+  RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
+  CommonSelectItem_1 = require("./CommonSelectItem"),
+  PhantomSelectItem_1 = require("./PhantomSelectItem"),
+  RogueSelectResultBaseView_1 = require("./RogueSelectResultBaseView");
 class CommonSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResultBaseView {
   constructor() {
     super(...arguments),
@@ -32,26 +32,26 @@ class CommonSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResu
         this.Zso());
   }
   async OnBeforeStartAsync() {
-    var e = this.GetHorizontalLayout(3).GetRootComponent();
-    var e =
-      ((this.zso = new PhantomSelectItem_1.PhantomSelectItem()),
-      await this.zso.CreateThenShowByResourceIdAsync(
-        RoguelikeDefine_1.PHANTOM_SELECT_ITEM,
-        e,
-      ),
-      (this.Yso = new CommonSelectItem_1.CommonSelectItem()),
-      await this.Yso.CreateThenShowByResourceIdAsync(
-        RoguelikeDefine_1.COMMON_SELECT_ITEM,
-        e,
-      ),
-      (this.R9s = new CommonSelectItem_1.CommonSelectItem()),
-      await this.R9s.CreateThenShowByResourceIdAsync(
-        RoguelikeDefine_1.COMMON_SELECT_ITEM,
-        e,
-      ),
-      (this.Xso = this.OpenParam),
-      this.Xso.IsShowCommon && this.eao(),
-      this.Xso.GetNewUnlockAffixEntry().size > 0 && !this.Xso.IsShowCommon);
+    var e = this.GetHorizontalLayout(3).GetRootComponent(),
+      e =
+        ((this.zso = new PhantomSelectItem_1.PhantomSelectItem()),
+        await this.zso.CreateThenShowByResourceIdAsync(
+          RoguelikeDefine_1.PHANTOM_SELECT_ITEM,
+          e,
+        ),
+        (this.Yso = new CommonSelectItem_1.CommonSelectItem()),
+        await this.Yso.CreateThenShowByResourceIdAsync(
+          RoguelikeDefine_1.COMMON_SELECT_ITEM,
+          e,
+        ),
+        (this.R9s = new CommonSelectItem_1.CommonSelectItem()),
+        await this.R9s.CreateThenShowByResourceIdAsync(
+          RoguelikeDefine_1.COMMON_SELECT_ITEM,
+          e,
+        ),
+        (this.Xso = this.OpenParam),
+        this.Xso.IsShowCommon && this.eao(),
+        0 < this.Xso.GetNewUnlockAffixEntry().size && !this.Xso.IsShowCommon);
     e && this.Zso(),
       this.Yso.SetActive(this.Xso.IsShowCommon),
       this.R9s.SetActive(
@@ -102,22 +102,22 @@ class CommonSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResu
     let e = void 0;
     this.Xso.IsShowCommon
       ? (e = RoguelikeDefine_1.ROGUELIKEVIEW_20_TEXT)
-      : this.Xso.GetNewUnlockAffixEntry().size > 0 &&
+      : 0 < this.Xso.GetNewUnlockAffixEntry().size &&
         (e = RoguelikeDefine_1.ROGUELIKEVIEW_21_TEXT),
       this.GetText(4).ShowTextNew(e);
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
-    if (e.length !== 1)
+    if (1 !== e.length)
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Guide", 54, "聚焦引导extraParam项配置有误", [
           "configParams",
           e,
         ]);
-    else if (e[0] === "Sub") {
+    else if ("Sub" === e[0]) {
       e = this.zso?.GetSubItem();
       if (e) return [e, e];
     }
   }
 }
 exports.CommonSelectResultView = CommonSelectResultView;
-// # sourceMappingURL=CommonSelectResultView.js.map
+//# sourceMappingURL=CommonSelectResultView.js.map

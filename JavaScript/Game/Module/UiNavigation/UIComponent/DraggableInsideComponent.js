@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DraggableNextInsideComponent = exports.DraggablePrevInsideComponent =
     void 0);
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const UiNavigationNewController_1 = require("../New/UiNavigationNewController");
-const DraggableComponent_1 = require("./DraggableComponent");
+const StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
+  DraggableComponent_1 = require("./DraggableComponent");
 class DraggableInsideComponent extends DraggableComponent_1.DraggableComponent {
   OnRefreshSelfHotKeyState(e) {
-    const t = this.GetBindButtonTag();
+    var t = this.GetBindButtonTag();
     StringUtils_1.StringUtils.IsEmpty(t) ||
       ((e = e.GetFocusListener())
         ? ((e =
@@ -37,4 +37,4 @@ class DraggableNextInsideComponent extends DraggableInsideComponent {
   }
 }
 exports.DraggableNextInsideComponent = DraggableNextInsideComponent;
-// # sourceMappingURL=DraggableInsideComponent.js.map
+//# sourceMappingURL=DraggableInsideComponent.js.map

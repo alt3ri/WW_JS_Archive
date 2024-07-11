@@ -1,31 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MarkAssistant = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../Core/Net/Net");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase");
-const WorldMapController_1 = require("../../WorldMap/WorldMapController");
-const MapDefine_1 = require("../MapDefine");
-const MapUtil_1 = require("../MapUtil");
-const MarkItemDataUtil_1 = require("../Marks/MarkItemDataUtil");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase"),
+  WorldMapController_1 = require("../../WorldMap/WorldMapController"),
+  MapDefine_1 = require("../MapDefine"),
+  MapUtil_1 = require("../MapUtil"),
+  MarkItemDataUtil_1 = require("../Marks/MarkItemDataUtil");
 class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor() {
     super(...arguments),
       (this.FTi = 0),
       (this.Jpe = (e, o, t) => {
-        const r = o.Entity.GetComponent(0);
-        let a = r.GetPbEntityInitData();
+        var r = o.Entity.GetComponent(0),
+          a = r.GetPbEntityInitData();
         r.GetEntityConfigType() ===
           Protocol_1.Aki.Protocol.USs.Proto_Character ||
           MapUtil_1.MapUtil.IsTemporaryTeleportEntity(a) ||
@@ -48,23 +48,23 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
         ModelManager_1.ModelManager.MapModel.ResetDynamicMarkData();
         for (const t of e.kAs) {
           var o =
-            t.O6n === 0
-              ? Vector2D_1.Vector2D.Create(t.N6n, t.k6n)
-              : Vector_1.Vector.Create(t.N6n, t.k6n, t.O6n);
-          var o = new MapDefine_1.DynamicMarkCreateInfo(
-            o,
-            t.R5n,
-            MarkItemDataUtil_1.MarkItemDataUtil.TransformMarkTypeToClient(
-              t.F6n,
-            ),
-            t.G6n,
-            void 0,
-            !1,
-            void 0,
-            t.jkn,
-          );
+              0 === t.O6n
+                ? Vector2D_1.Vector2D.Create(t.N6n, t.k6n)
+                : Vector_1.Vector.Create(t.N6n, t.k6n, t.O6n),
+            o = new MapDefine_1.DynamicMarkCreateInfo(
+              o,
+              t.R5n,
+              MarkItemDataUtil_1.MarkItemDataUtil.TransformMarkTypeToClient(
+                t.F6n,
+              ),
+              t.G6n,
+              void 0,
+              !1,
+              void 0,
+              t.jkn,
+            );
           ModelManager_1.ModelManager.MapModel.CreateServerSaveMark(o),
-            this.FTi === 0 &&
+            0 === this.FTi &&
               t.F6n === Protocol_1.Aki.Protocol.qNs.ENUMS.Proto_SoundBox &&
               (this.FTi = o.MarkId ?? 0);
         }
@@ -88,15 +88,15 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
             o.a5n.F6n !==
               Protocol_1.Aki.Protocol.qNs.ENUMS.Proto_CalmingWindBell)
         ) {
-          const e = o.a5n;
-          const t = this.KTi(e);
+          var e = o.a5n,
+            t = this.KTi(e);
           if (
             (ModelManager_1.ModelManager.MapModel.CreateServerSaveMark(t),
             o.a5n.F6n ===
               Protocol_1.Aki.Protocol.qNs.ENUMS.Proto_TreasureBoxPoint && o.WAs)
           )
             for (const a of o.WAs.OAs) {
-              const r = this.KTi(a);
+              var r = this.KTi(a);
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Map",
@@ -120,7 +120,7 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
                 e.G6n,
                 (e) => {
                   e &&
-                    o.WAs.OAs.length === 0 &&
+                    0 === o.WAs.OAs.length &&
                     ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                       "ExploreBoxUnfindable",
                     );
@@ -157,7 +157,7 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
       }),
       (this.JTi = (e) => {
         for (const t of e.Nxs)
-          if (t.G6n === 0) {
+          if (0 === t.G6n) {
             if (
               ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel() &&
               !ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()
@@ -168,7 +168,7 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
               MathUtils_1.MathUtils.LongToNumber(t.V6n),
             );
           } else {
-            const o = new MapDefine_1.DynamicMarkCreateInfo(
+            var o = new MapDefine_1.DynamicMarkCreateInfo(
               Vector_1.Vector.Create(t.M3n),
               ConfigManager_1.ConfigManager.MapConfig.GetDefaultDetectorMarkConfigId(),
               15,
@@ -181,9 +181,7 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
           }
       }),
       (this.zTi = (e) => {
-        const o = ModelManager_1.ModelManager.MapModel.GetDynamicMark(
-          e.Fxs.G6n,
-        );
+        var o = ModelManager_1.ModelManager.MapModel.GetDynamicMark(e.Fxs.G6n);
         void 0 !== o &&
           ((e = MathUtils_1.MathUtils.LongToNumber(e.Fxs.V6n)),
           (o.TeleportId = e));
@@ -216,7 +214,7 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
             );
       }),
       (this.rLi = (e, o) => {
-        (void 0 === o || void 0 === o.pLs) && this.FTi > 0
+        (void 0 === o || void 0 === o.pLs) && 0 < this.FTi
           ? this.QTi(16, this.FTi, void 0, !1)
           : this.UseExploreToolCall(
               Vector_1.Vector.Create(e.Pos),
@@ -227,7 +225,7 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
       });
   }
   nLi(e, o, t) {
-    const r = Protocol_1.Aki.Protocol.H6n.create();
+    var r = Protocol_1.Aki.Protocol.H6n.create();
     return (
       (r.N6n = e.X),
       (r.k6n = e.Y),
@@ -241,15 +239,15 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
     );
   }
   sLi(e, o, t) {
-    const r = Protocol_1.Aki.Protocol.Qis.create();
-    var e = this.nLi(e, o, t);
+    var r = Protocol_1.Aki.Protocol.Qis.create(),
+      e = this.nLi(e, o, t);
     return (r.H6n = e), r;
   }
   KTi(e) {
     let o = void 0;
     return (
       (o =
-        e.O6n === 0
+        0 === e.O6n
           ? Vector2D_1.Vector2D.Create(e.N6n, e.k6n)
           : Vector_1.Vector.Create(e.N6n, e.k6n, e.O6n)),
       new MapDefine_1.DynamicMarkCreateInfo(
@@ -323,7 +321,7 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
   UseExploreToolCall(e, o, t, r) {
     switch (t) {
       case 1011:
-        r.pLs.length !== 0 &&
+        0 !== r.pLs.length &&
           this.aLi(Vector_1.Vector.Create(r.pLs[0].M3n), r.pLs[0].R5n);
         break;
       case 1012:
@@ -331,13 +329,13 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
     }
   }
   async RequestUseDetectionSkill(e, o, t) {
-    const r = Protocol_1.Aki.Protocol.SJn.create();
-    var e =
-      ((r.$6n = !0),
-      (r.M3n = e),
-      (r.S3n = o),
-      (r.vkn = t),
-      await Net_1.Net.CallAsync(22248, r));
+    var r = Protocol_1.Aki.Protocol.SJn.create(),
+      e =
+        ((r.$6n = !0),
+        (r.M3n = e),
+        (r.S3n = o),
+        (r.vkn = t),
+        await Net_1.Net.CallAsync(22248, r));
     if (e) {
       if (e.Kms === Protocol_1.Aki.Protocol.lkn.Sys) return e;
       ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
@@ -347,7 +345,7 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
     }
   }
   hLi(e, o, t) {
-    const r = this.sLi(
+    var r = this.sLi(
       e,
       Protocol_1.Aki.Protocol.qNs.ENUMS.Proto_TreasureBoxPoint,
       ConfigManager_1.ConfigManager.MapConfig.GetDefaultDetectorMarkConfigId(),
@@ -356,7 +354,7 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
       (r.X6n.Q6n = o),
       (r.X6n.Y6n = []);
     for (const _ of t) {
-      const a = this.nLi(
+      var a = this.nLi(
         Vector_1.Vector.Create(_.M3n),
         Protocol_1.Aki.Protocol.qNs.ENUMS.Y6n,
         ConfigManager_1.ConfigManager.MapConfig.GetDefaultDetectorMarkConfigId(),
@@ -372,14 +370,15 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
     });
   }
   aLi(e, o) {
-    let t = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(o);
-    let r = Protocol_1.Aki.Protocol.qNs.ENUMS.Proto_SoundBox;
-    let a =
-      ConfigManager_1.ConfigManager.MapConfig.GetDefaultDetectorMarkConfigId();
+    var t = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(o);
+    let r = Protocol_1.Aki.Protocol.qNs.ENUMS.Proto_SoundBox,
+      a =
+        ConfigManager_1.ConfigManager.MapConfig.GetDefaultDetectorMarkConfigId();
     t &&
       (t = t.ComponentsData) &&
-      (0, IComponent_1.getComponent)(t, "BaseInfoComponent")?.Category
-        .ExploratoryDegree === 16 &&
+      16 ===
+        (0, IComponent_1.getComponent)(t, "BaseInfoComponent")?.Category
+          .ExploratoryDegree &&
       ((r = Protocol_1.Aki.Protocol.qNs.ENUMS.Proto_CalmingWindBell),
       (a = MapDefine_1.CALMING_WIND_BELL_MARKID));
     t = this.sLi(e, r, a);
@@ -405,8 +404,8 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
       WorldMapController_1.WorldMapController.OpenView(2, !1, o, t));
   }
   async RequestTrackInfo() {
-    var e = Protocol_1.Aki.Protocol.Zis.create();
-    var e = await Net_1.Net.CallAsync(28003, e);
+    var e = Protocol_1.Aki.Protocol.Zis.create(),
+      e = await Net_1.Net.CallAsync(28003, e);
     if (e)
       if (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys)
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
@@ -416,15 +415,15 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
       else
         for (const r of e.HAs) {
           var o =
-            ConfigManager_1.ConfigManager.MapConfig.SearchGetMarkConfig(r);
-          const t = this.lLi(r);
-          var o = {
-            TrackSource: 1,
-            MarkType: o?.ObjectType,
-            Id: r,
-            IconPath: t.Icon,
-            TrackTarget: t.TrackTarget,
-          };
+              ConfigManager_1.ConfigManager.MapConfig.SearchGetMarkConfig(r),
+            t = this.lLi(r),
+            o = {
+              TrackSource: 1,
+              MarkType: o?.ObjectType,
+              Id: r,
+              IconPath: t.Icon,
+              TrackTarget: t.TrackTarget,
+            };
           ModelManager_1.ModelManager.TrackModel.AddTrackData(o),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.TrackMark,
@@ -433,7 +432,7 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
         }
   }
   lLi(o) {
-    let t = ConfigManager_1.ConfigManager.MapConfig.GetConfigMark(o);
+    var t = ConfigManager_1.ConfigManager.MapConfig.GetConfigMark(o);
     if (t)
       return {
         Icon: MarkItemDataUtil_1.MarkItemDataUtil.GetMarkIcon(o) ?? "",
@@ -464,7 +463,7 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
     });
   }
   RequestCreateCustomMark(e, o) {
-    let t;
+    var t;
     e
       ? ModelManager_1.ModelManager.MapModel.GetMarkCountByType(9) >=
           ModelManager_1.ModelManager.WorldMapModel.CustomMarkSize ||
@@ -511,14 +510,14 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
     });
   }
   RequestRemoveDynamicMapMark(e) {
-    const o = ModelManager_1.ModelManager.MapModel.GetDynamicMark(e);
+    var o = ModelManager_1.ModelManager.MapModel.GetDynamicMark(e);
     void 0 === o
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("Map", 50, "找不到对应mark id:", ["markId", e])
       : this.RequestRemoveMapMark(o.MarkType, o.MarkId);
   }
   RequestTrackMapMark(o, t) {
-    let e;
+    var e;
     t < 0
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Map", 50, "markId小于0, 请求追踪信息未发给后端"),
@@ -539,7 +538,7 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
         }));
   }
   RequestCancelTrackMapMark(o, t) {
-    let e;
+    var e;
     t < 0
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Map", 50, "markId小于0, 请求取消追踪信息未发给后端"),
@@ -560,8 +559,8 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
         }));
   }
   RequestTeleportToTargetByTemporaryTeleport(e, o) {
-    const t = Protocol_1.Aki.Protocol.Pus.create();
-    const r = Protocol_1.Aki.Protocol.iws.create();
+    var t = Protocol_1.Aki.Protocol.Pus.create(),
+      r = Protocol_1.Aki.Protocol.iws.create();
     (r.Pitch = o.Pitch),
       (r.Roll = o.Roll),
       (r.Yaw = o.Yaw),
@@ -587,4 +586,4 @@ class MarkAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
   }
 }
 exports.MarkAssistant = MarkAssistant;
-// # sourceMappingURL=MarkAssistant.js.map
+//# sourceMappingURL=MarkAssistant.js.map

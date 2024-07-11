@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiBehaviorLevelSequence = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const UiSequencePlayer_1 = require("./UiSequencePlayer");
+const Log_1 = require("../../../Core/Common/Log"),
+  UiSequencePlayer_1 = require("./UiSequencePlayer");
 class UiBehaviorLevelSequence {
   constructor(e) {
     (this.aur = void 0),
@@ -13,11 +13,11 @@ class UiBehaviorLevelSequence {
       (this.cur = ""),
       (this.OKt = void 0),
       (this.ZPt = (e) => {
-        const t = this.uur?.get(e);
+        var t = this.uur?.get(e);
         if (t) for (const i of t) i?.(e);
       }),
       (this.mur = (e) => {
-        const t = this._ur?.get(e);
+        var t = this._ur?.get(e);
         if (t) for (const i of t) i?.(e);
       }),
       (this.OKt = e);
@@ -117,4 +117,4 @@ class UiBehaviorLevelSequence {
   }
 }
 exports.UiBehaviorLevelSequence = UiBehaviorLevelSequence;
-// # sourceMappingURL=UiViewSequence.js.map
+//# sourceMappingURL=UiViewSequence.js.map

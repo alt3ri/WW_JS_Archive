@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonHeadState = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const BattleUiDefine_1 = require("../../BattleUiDefine");
-const BuffItem_1 = require("../BuffItem");
-const HeadStateViewBase_1 = require("./HeadStateViewBase");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  BattleUiDefine_1 = require("../../BattleUiDefine"),
+  BuffItem_1 = require("../BuffItem"),
+  HeadStateViewBase_1 = require("./HeadStateViewBase");
 class CommonHeadState extends HeadStateViewBase_1.HeadStateViewBase {
   constructor() {
     super(...arguments),
@@ -72,18 +72,18 @@ class CommonHeadState extends HeadStateViewBase_1.HeadStateViewBase {
     }
   }
   Zrt() {
-    const t = this.GetItem(5);
+    var t = this.GetItem(5);
     return new BuffItem_1.BuffItem(t);
   }
   ent(t, e, i, s = !1) {
-    const h = this.Jot.size;
-    const r = this.HeadStateData.GetBuff(i);
+    var h = this.Jot.size,
+      r = this.HeadStateData.GetBuff(i);
     t.Activate(e, r, s),
       t.GetRootItem().SetHierarchyIndex(h),
       this.Jot.set(i, t);
   }
   Jrt(t, e = !1) {
-    const i = this.tnt(t);
+    var i = this.tnt(t);
     i &&
       (this.Jot.delete(t),
       (e
@@ -92,7 +92,7 @@ class CommonHeadState extends HeadStateViewBase_1.HeadStateViewBase {
       ).push(i));
   }
   zrt() {
-    let t;
+    var t;
     if (!(this.Zot.length < 1))
       return (t = this.Zot[0]), this.Zot.splice(0, 1), t;
   }
@@ -110,38 +110,38 @@ class CommonHeadState extends HeadStateViewBase_1.HeadStateViewBase {
   Vrt() {
     if ((this.Wrt(), this.HeadStateData))
       for (const e of this.HeadStateData.GetAllCurrentCueRef()) {
-        const t = e.CueConfig;
+        var t = e.CueConfig;
         t.CueType === BattleUiDefine_1.UI_EFFECT_CUE_TYPE &&
           this.Yrt(t, e.ActiveHandleId);
       }
   }
   Aht() {
-    let t = this.GetHpColor();
+    var t = this.GetHpColor();
     t && ((t = UE.Color.FromHex(t)), this.GetSprite(0).SetColor(t));
   }
   Dht() {
-    const t = this.IsDetailVisible();
+    var t = this.IsDetailVisible();
     this.GetItem(4).SetUIActive(t);
   }
   Rht() {
-    const t = this.IsLevelTextVisible();
+    var t = this.IsLevelTextVisible();
     this.GetText(3).SetUIActive(t);
   }
   Uht() {
-    const t = this.IsBuffVisible();
+    var t = this.IsBuffVisible();
     this.GetItem(5).SetUIActive(t);
   }
   Pht(e) {
     if (this.IsBuffVisible()) {
       for (const t of this.Jot.values()) t.Tick(e);
-      for (let t = this.zot.length - 1; t >= 0; t--) {
-        const i = this.zot[t];
+      for (let t = this.zot.length - 1; 0 <= t; t--) {
+        var i = this.zot[t];
         i.TickHiding(e) || (this.zot.splice(t, 1), this.Zot.push(i));
       }
     }
   }
   RefreshHpAndShield(t = !1) {
-    const [e, i] = this.GetHpAndShieldPercent();
+    var [e, i] = this.GetHpAndShieldPercent();
     this.int(e),
       this.ont(i),
       t ? this.PlayBarAnimation(e) : this.StopBarLerpAnimation();
@@ -159,23 +159,23 @@ class CommonHeadState extends HeadStateViewBase_1.HeadStateViewBase {
     this.GetSprite(0).SetFillAmount(t);
   }
   Xrt(t) {
-    var e = this.GetSprite(1);
-    var e =
-      (e.SetFillAmount(t),
-      e.IsUIActiveSelf() || e.SetUIActive(!0),
-      this.GetSprite(2));
+    var e = this.GetSprite(1),
+      e =
+        (e.SetFillAmount(t),
+        e.IsUIActiveSelf() || e.SetUIActive(!0),
+        this.GetSprite(2));
     e.SetStretchLeft(this.srt * this.CurrentBarPercent - 2),
       e.SetStretchRight(this.srt * (1 - t) - 2);
   }
   ont(t) {
-    const e = this.GetSprite(6);
-    t > 0 ? (e.SetFillAmount(t), e.SetUIActive(!0)) : e.SetUIActive(!1);
+    var e = this.GetSprite(6);
+    0 < t ? (e.SetFillAmount(t), e.SetUIActive(!0)) : e.SetUIActive(!1);
   }
   OnHealthChanged(t) {
     this.HeadStateData.GetEntityId() === t && this.RefreshHpAndShield(!0);
   }
   Lht() {
-    let t, e, i;
+    var t, e, i;
     this.HeadStateData &&
       ((t = this.GetLevel()),
       (e = this.GetText(3)),
@@ -188,4 +188,4 @@ class CommonHeadState extends HeadStateViewBase_1.HeadStateViewBase {
   }
 }
 exports.CommonHeadState = CommonHeadState;
-// # sourceMappingURL=CommonHeadState.js.map
+//# sourceMappingURL=CommonHeadState.js.map

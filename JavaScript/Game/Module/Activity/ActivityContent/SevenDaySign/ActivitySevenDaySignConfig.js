@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivitySevenDaySignConfig = void 0);
-const ActivitySignById_1 = require("../../../../../Core/Define/ConfigQuery/ActivitySignById");
-const ConfigBase_1 = require("../../../../../Core/Framework/ConfigBase");
+const ActivitySignById_1 = require("../../../../../Core/Define/ConfigQuery/ActivitySignById"),
+  ConfigBase_1 = require("../../../../../Core/Framework/ConfigBase");
 class ActivitySevenDaySignConfig extends ConfigBase_1.ConfigBase {
   GetActivitySignById(i) {
     return ActivitySignById_1.configActivitySignById.GetConfig(i);
@@ -14,4 +14,4 @@ class ActivitySevenDaySignConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.ActivitySevenDaySignConfig = ActivitySevenDaySignConfig;
-// # sourceMappingURL=ActivitySevenDaySignConfig.js.map
+//# sourceMappingURL=ActivitySevenDaySignConfig.js.map

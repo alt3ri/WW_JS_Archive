@@ -1,42 +1,42 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ScanTrackedMarks = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon");
-const TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter");
-const EffectSystem_1 = require("../../../Effect/EffectSystem");
-const Global_1 = require("../../../Global");
-const GlobalData_1 = require("../../../GlobalData");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const GeneralLogicTreeUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeUtil");
-const MapDefine_1 = require("../../Map/MapDefine");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const PROFILE_KEY = "ScanTrackedMarks_CreateTrackEffect";
-const CENTER_Y = 62.5;
-const center = new UE.Vector2D(0, CENTER_Y);
-const OFFSET_Z = 1e3;
-const MIN_SHOW_DISTANCE = 3;
-const MARK_CASE_NAME = new UE.FName("MarkCase");
-const spriteColors = [
-  "FF5252FF",
-  "FF5A5FCC",
-  "FFB137FF",
-  "FFC954FF",
-  "BC6AFEFF",
-  "C67FFFFF",
-  "85A3FFFF",
-  "8AA7FFFF",
-  "90B99AFF",
-  "AAD3B3FF",
-  "A5A5A5FF",
-  "D1D1D1FF",
-];
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
+  TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter"),
+  EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  Global_1 = require("../../../Global"),
+  GlobalData_1 = require("../../../GlobalData"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  GeneralLogicTreeUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeUtil"),
+  MapDefine_1 = require("../../Map/MapDefine"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  PROFILE_KEY = "ScanTrackedMarks_CreateTrackEffect",
+  CENTER_Y = 62.5,
+  center = new UE.Vector2D(0, CENTER_Y),
+  OFFSET_Z = 1e3,
+  MIN_SHOW_DISTANCE = 3,
+  MARK_CASE_NAME = new UE.FName("MarkCase"),
+  spriteColors = [
+    "FF5252FF",
+    "FF5A5FCC",
+    "FFB137FF",
+    "FFC954FF",
+    "BC6AFEFF",
+    "C67FFFFF",
+    "85A3FFFF",
+    "8AA7FFFF",
+    "90B99AFF",
+    "AAD3B3FF",
+    "A5A5A5FF",
+    "D1D1D1FF",
+  ];
 class ScanTrackedMarks extends UiPanelBase_1.UiPanelBase {
   constructor(e, t, i, s, r, a, h, _, o) {
     super(),
@@ -59,9 +59,9 @@ class ScanTrackedMarks extends UiPanelBase_1.UiPanelBase {
       (this.Wse = Vector_1.Vector.Create()),
       (this.EPe = void 0),
       (this.Mxe = (e) => {
-        e === "Start"
+        "Start" === e
           ? this.EPe.PlaySequencePurely("Loop")
-          : e === "Close" && this.Destroy();
+          : "Close" === e && this.Destroy();
       }),
       GlobalData_1.GlobalData.World &&
         (ScanTrackedMarks.uoe || ScanTrackedMarks.gct(),
@@ -77,12 +77,12 @@ class ScanTrackedMarks extends UiPanelBase_1.UiPanelBase {
   }
   get fct() {
     if (this.lXe?.IsValid()) {
-      const e = Vector_1.Vector.Create();
-      const i = Vector_1.Vector.Create();
+      var e = Vector_1.Vector.Create(),
+        i = Vector_1.Vector.Create();
       if (this.lXe instanceof TsBaseCharacter_1.default) {
         let t = !1;
-        const s = this.lXe.Mesh.GetAllSocketNames();
-        const r = s.Num();
+        var s = this.lXe.Mesh.GetAllSocketNames(),
+          r = s.Num();
         for (let e = 0; e < r; e++)
           if (s.Get(e) === MARK_CASE_NAME) {
             t = !0;
@@ -97,15 +97,15 @@ class ScanTrackedMarks extends UiPanelBase_1.UiPanelBase {
     return this.hXe;
   }
   static gct() {
-    const e = UE.NewObject(UE.TraceLineElement.StaticClass());
+    var e = UE.NewObject(UE.TraceLineElement.StaticClass());
     (e.WorldContextObject = GlobalData_1.GlobalData.World),
       (e.bIsSingle = !0),
       e.SetTraceTypeQuery(QueryTypeDefine_1.KuroTraceTypeQuery.Water);
   }
   pct(e) {
-    const t = this.GetSprite(0);
-    const i = this.GetSprite(1);
-    const s = this.GetSprite(2);
+    var t = this.GetSprite(0),
+      i = this.GetSprite(1),
+      s = this.GetSprite(2);
     t.SetColor(UE.Color.FromHex(spriteColors[2 * this.B8])),
       i.SetColor(UE.Color.FromHex(spriteColors[2 * this.B8 + 1])),
       s.SetSprite(e);
@@ -120,10 +120,10 @@ class ScanTrackedMarks extends UiPanelBase_1.UiPanelBase {
   }
   OnStart() {
     this.GetText(3)?.SetUIActive(this.cct), this.pct(this.Cct);
-    const e = UiLayer_1.UiLayer.UiRootItem;
+    var e = UiLayer_1.UiLayer.UiRootItem;
     (this.mct = e?.GetWidth()),
       (this.dct = e?.GetHeight()),
-      this.Hnt && this.Hnt.length > 0 && (this.uct = this.vct(this.Hnt)),
+      this.Hnt && 0 < this.Hnt.length && (this.uct = this.vct(this.Hnt)),
       (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
       this.EPe.BindSequenceCloseEvent(this.Mxe),
       this.EPe.PlayLevelSequenceByName("Start"),
@@ -132,19 +132,19 @@ class ScanTrackedMarks extends UiPanelBase_1.UiPanelBase {
   }
   Update() {
     if (GlobalData_1.GlobalData.World && this.RootItem && this.lXe?.IsValid()) {
-      var t = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
-      var t =
-        UE.KismetMathLibrary.Vector_Distance(t.ToUeVector(), this.fct) *
-        MapDefine_1.FLOAT_0_01;
+      var t = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation(),
+        t =
+          UE.KismetMathLibrary.Vector_Distance(t.ToUeVector(), this.fct) *
+          MapDefine_1.FLOAT_0_01;
       if (t <= this._ct) this.RootItem.SetUIActive(!1), this.Mct(!0);
       else {
-        var i = Global_1.Global.CharacterController;
-        let s = UE.GameplayStatics.ProjectWorldToScreen(i, this.fct, this._Xe);
+        var i = Global_1.Global.CharacterController,
+          s = UE.GameplayStatics.ProjectWorldToScreen(i, this.fct, this._Xe);
         if (s) {
           let e = (0, puerts_1.$unref)(this._Xe);
           i.GetViewportSize(this.g$e, this.f$e);
-          var i = (0, puerts_1.$unref)(this.g$e);
-          let r = UiLayer_1.UiLayer.UiRootItem;
+          var i = (0, puerts_1.$unref)(this.g$e),
+            r = UiLayer_1.UiLayer.UiRootItem;
           r &&
             ((this.v$e.X = r.GetWidth()),
             (this.v$e.Y = r.GetHeight()),
@@ -175,29 +175,29 @@ class ScanTrackedMarks extends UiPanelBase_1.UiPanelBase {
     }
   }
   PXe(e, t) {
-    const i = e.X;
-    const s = e.Y;
-    const r = this.mct + 10;
-    const a = this.dct + 10;
+    var i = e.X,
+      s = e.Y,
+      r = this.mct + 10,
+      a = this.dct + 10;
     return i < -r || r < i || s < -a || a < s ? [e, !1] : [e, !0];
   }
   vct(e) {
-    var t = ScanTrackedMarks.uoe;
-    var i =
-      (TraceElementCommon_1.TraceElementCommon.SetStartLocation(t, this.hXe),
-      t.SetEndLocation(this.hXe.X, this.hXe.Y, this.hXe.Z + OFFSET_Z),
-      this.Wse.FromUeVector(this.hXe),
-      TraceElementCommon_1.TraceElementCommon.LineTrace(t, PROFILE_KEY));
-    var t = t.HitResult;
-    var i =
-      (i && t.bBlockingHit && (this.Wse.Z = t.LocationZ_Array.Get(0)),
-      (this.Wse.Z -= 5),
-      EffectSystem_1.EffectSystem.SpawnEffect(
-        GlobalData_1.GlobalData.World,
-        new UE.Transform(),
-        e,
-        "[ScanTrackedMarks.CreateTrackEffect]",
-      ));
+    var t = ScanTrackedMarks.uoe,
+      i =
+        (TraceElementCommon_1.TraceElementCommon.SetStartLocation(t, this.hXe),
+        t.SetEndLocation(this.hXe.X, this.hXe.Y, this.hXe.Z + OFFSET_Z),
+        this.Wse.FromUeVector(this.hXe),
+        TraceElementCommon_1.TraceElementCommon.LineTrace(t, PROFILE_KEY)),
+      t = t.HitResult,
+      i =
+        (i && t.bBlockingHit && (this.Wse.Z = t.LocationZ_Array.Get(0)),
+        (this.Wse.Z -= 5),
+        EffectSystem_1.EffectSystem.SpawnEffect(
+          GlobalData_1.GlobalData.World,
+          new UE.Transform(),
+          e,
+          "[ScanTrackedMarks.CreateTrackEffect]",
+        ));
     return (
       EffectSystem_1.EffectSystem.IsValid(i) &&
         (t = EffectSystem_1.EffectSystem.GetEffectActor(i))?.IsValid() &&
@@ -234,4 +234,4 @@ class ScanTrackedMarks extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ScanTrackedMarks = ScanTrackedMarks;
-// # sourceMappingURL=ScanTrackedMarks.js.map
+//# sourceMappingURL=ScanTrackedMarks.js.map

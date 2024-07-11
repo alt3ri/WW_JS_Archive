@@ -1,30 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const Lru_1 = require("../../../Core/Container/Lru");
-const PriorityQueue_1 = require("../../../Core/Container/PriorityQueue");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const ObjectSystem_1 = require("../../../Core/Object/ObjectSystem");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const EntityHandle_1 = require("./EntityHandle");
-const WorldEntity_1 = require("./WorldEntity");
-const ENTITY_LRU_CAPACITY = 300;
-const aEntityLocation = Vector_1.Vector.Create();
-const bEntityLocation = Vector_1.Vector.Create();
+const Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  Lru_1 = require("../../../Core/Container/Lru"),
+  PriorityQueue_1 = require("../../../Core/Container/PriorityQueue"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  ObjectSystem_1 = require("../../../Core/Object/ObjectSystem"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  EntityHandle_1 = require("./EntityHandle"),
+  WorldEntity_1 = require("./WorldEntity"),
+  ENTITY_LRU_CAPACITY = 300,
+  aEntityLocation = Vector_1.Vector.Create(),
+  bEntityLocation = Vector_1.Vector.Create();
 class CharacterModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.nK = new Array()),
       (this.AwakeQueue = new PriorityQueue_1.PriorityQueue((t, e) => {
-        let r = e[0].Priority;
-        let i = t[0].Priority;
+        var r = e[0].Priority,
+          i = t[0].Priority;
         return r !== i
           ? r - i
           : ((r = t[0].Valid ? t[0].Entity.GetComponent(0) : void 0),
@@ -95,9 +95,9 @@ class CharacterModel extends ModelBase_1.ModelBase {
   }
   AddEntityToAwakeQueue(t, e) {
     let r = !1;
-    const i = t.Entity.GetComponent(0);
-    const n = i.GetCreatureDataId();
-    const o = [
+    const i = t.Entity.GetComponent(0),
+      n = i.GetCreatureDataId();
+    var o = [
       t,
       () =>
         this.EWo(t, n)
@@ -131,7 +131,7 @@ class CharacterModel extends ModelBase_1.ModelBase {
     this.AwakeQueue.Push(o), this.MWo.set(t, o);
   }
   EWo(t, e) {
-    let r, i, n;
+    var r, i, n;
     return (
       !!t.Valid &&
       (n = (i = (r = t.Entity).GetComponent(0)).GetCreatureDataId()) === e &&
@@ -154,7 +154,7 @@ class CharacterModel extends ModelBase_1.ModelBase {
     );
   }
   yWo(t, e) {
-    let r, i;
+    var r, i;
     return !(
       !t.Valid ||
       (i = (r = t.Entity.GetComponent(0)).GetCreatureDataId()) !== e ||
@@ -184,7 +184,7 @@ class CharacterModel extends ModelBase_1.ModelBase {
       t.SetTimeDilation(Time_1.Time.TimeDilation));
   }
   PopAwakeHandler() {
-    let t;
+    var t;
     if (!this.AwakeQueue.Empty)
       return (t = this.AwakeQueue.Pop()), this.MWo.delete(t[0]), t;
   }
@@ -201,7 +201,7 @@ class CharacterModel extends ModelBase_1.ModelBase {
         !1
       );
     this.nK[t.Index] = void 0;
-    const e = t.Entity;
+    var e = t.Entity;
     return (
       (t.Entity = void 0),
       this.EntityPool.RemoveExternal(e),
@@ -220,7 +220,7 @@ class CharacterModel extends ModelBase_1.ModelBase {
           ),
         !1
       );
-    const e = t.Entity;
+    var e = t.Entity;
     if (!t.IsInit) return this.Destroy(t);
     this.nK[t.Index] = void 0;
     const r = t.Entity;
@@ -240,7 +240,7 @@ class CharacterModel extends ModelBase_1.ModelBase {
     this.AwakeQueue.Clear(), this.MWo.clear();
   }
   GetHandle(t) {
-    let e;
+    var e;
     if (t)
       return (
         (e = t >>> ObjectSystem_1.ObjectSystem.VersionDigit),
@@ -248,11 +248,11 @@ class CharacterModel extends ModelBase_1.ModelBase {
       );
   }
   GetHandleByEntity(t) {
-    let e;
+    var e;
     return t && (e = this.nK[t.Index])?.Id === t.Id ? e : void 0;
   }
   IsValid(t) {
-    const e = t >>> ObjectSystem_1.ObjectSystem.VersionDigit;
+    var e = t >>> ObjectSystem_1.ObjectSystem.VersionDigit;
     return this.nK[e]?.Id === t;
   }
   SortItem(t) {
@@ -261,4 +261,4 @@ class CharacterModel extends ModelBase_1.ModelBase {
   }
 }
 exports.CharacterModel = CharacterModel;
-// # sourceMappingURL=CharacterModel.js.map
+//# sourceMappingURL=CharacterModel.js.map

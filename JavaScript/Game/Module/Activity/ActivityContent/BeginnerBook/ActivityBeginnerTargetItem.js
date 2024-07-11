@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityBeginnerTargetItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const SmallItemGrid_1 = require("../../../Common/SmallItemGrid/SmallItemGrid");
-const RoleController_1 = require("../../../RoleUi/RoleController");
-const ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const WeaponTrialData_1 = require("../../../Weapon/Data/WeaponTrialData");
-const WorldMapController_1 = require("../../../WorldMap/WorldMapController");
-const ActivityController_1 = require("../../ActivityController");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  SmallItemGrid_1 = require("../../../Common/SmallItemGrid/SmallItemGrid"),
+  RoleController_1 = require("../../../RoleUi/RoleController"),
+  ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  WeaponTrialData_1 = require("../../../Weapon/Data/WeaponTrialData"),
+  WorldMapController_1 = require("../../../WorldMap/WorldMapController"),
+  ActivityController_1 = require("../../ActivityController");
 class ActivityBeginnerTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -23,7 +23,7 @@ class ActivityBeginnerTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.DataId = -1),
       (this._Ne = void 0),
       (this.uNe = () => {
-        let e;
+        var e;
         if (this.hNe)
           switch (this.aNe[0] - 1) {
             case 0:
@@ -50,7 +50,7 @@ class ActivityBeginnerTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
                   );
               break;
             case 2:
-              this.aNe[1] === "RoleRootView"
+              "RoleRootView" === this.aNe[1]
                 ? RoleController_1.RoleController.OpenRoleMainView(0)
                 : UiManager_1.UiManager.OpenView(this.aNe[1]);
               break;
@@ -126,7 +126,7 @@ class ActivityBeginnerTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.lNe = e.ConditionId),
       !(e.JumpTo.size <= 0))
     )
-      for (const [t, a] of e.JumpTo) (this.aNe[0] = t), (this.aNe[1] = a);
+      for (var [t, a] of e.JumpTo) (this.aNe[0] = t), (this.aNe[1] = a);
   }
   cNe(r) {
     switch (r.SourceType) {
@@ -141,10 +141,10 @@ class ActivityBeginnerTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
         };
         this._Ne?.Apply(e),
           this._Ne?.BindOnExtendToggleClicked(() => {
-            var e = new WeaponTrialData_1.WeaponTrialData();
-            var e =
-              (e.SetTrialId(r.SourceId),
-              { WeaponDataList: [e], SelectedIndex: 0 });
+            var e = new WeaponTrialData_1.WeaponTrialData(),
+              e =
+                (e.SetTrialId(r.SourceId),
+                { WeaponDataList: [e], SelectedIndex: 0 });
             UiManager_1.UiManager.OpenView("WeaponPreviewView", e);
           });
         break;
@@ -161,7 +161,7 @@ class ActivityBeginnerTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
         e = { Data: void 0, Type: 2, ItemConfigId: r.SourceId };
         this._Ne?.Apply(e),
           this._Ne?.BindOnExtendToggleClicked(() => {
-            const e = [r.SourceId];
+            var e = [r.SourceId];
             RoleController_1.RoleController.OpenRoleMainView(1, 0, e);
           });
         break;
@@ -186,4 +186,4 @@ class ActivityBeginnerTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.ActivityBeginnerTargetItem = ActivityBeginnerTargetItem;
-// # sourceMappingURL=ActivityBeginnerTargetItem.js.map
+//# sourceMappingURL=ActivityBeginnerTargetItem.js.map

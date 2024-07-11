@@ -17,4 +17,4 @@ class MonsterDetectFilter extends CommonFilter_1.CommonFilter {
   }
 }
 exports.MonsterDetectFilter = MonsterDetectFilter;
-// # sourceMappingURL=MonsterDetectFilter.js.map
+//# sourceMappingURL=MonsterDetectFilter.js.map

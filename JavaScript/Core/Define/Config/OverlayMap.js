@@ -38,30 +38,30 @@ class OverlayMap {
     );
   }
   overlaymapid() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   mapid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   mapaddress(t) {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   GetMapposAt(t) {
     return this.mappos(t);
   }
   mappos(t) {
-    const s = this.J7.__offset(this.z7, 10);
+    var s = this.J7.__offset(this.z7, 10);
     return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   mapposLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   mapposArray() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -71,22 +71,22 @@ class OverlayMap {
       : null;
   }
   rotation() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetWidthheightAt(t) {
     return this.widthheight(t);
   }
   widthheight(t) {
-    const s = this.J7.__offset(this.z7, 14);
+    var s = this.J7.__offset(this.z7, 14);
     return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   widthheightLength() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   widthheightArray() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -97,4 +97,4 @@ class OverlayMap {
   }
 }
 exports.OverlayMap = OverlayMap;
-// # sourceMappingURL=OverlayMap.js.map
+//# sourceMappingURL=OverlayMap.js.map

@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponRootView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const CommonTabComponentData_1 = require("../Common/TabComponent/CommonTabComponentData");
-const CommonTabData_1 = require("../Common/TabComponent/CommonTabData");
-const CommonTabTitleData_1 = require("../Common/TabComponent/CommonTabTitleData");
-const TabComponentWithCaptionItem_1 = require("../Common/TabComponent/TabComponentWithCaptionItem");
-const WeaponTabItem_1 = require("../Common/TabComponent/TabItem/WeaponTabItem");
-const TabViewComponent_1 = require("../Common/TabComponent/TabViewComponent");
-const ItemDefines_1 = require("../Item/Data/ItemDefines");
-const UiCameraAnimationManager_1 = require("../UiCameraAnimation/UiCameraAnimationManager");
-const UiSceneManager_1 = require("../UiComponent/UiSceneManager");
-const WeaponController_1 = require("./WeaponController");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  CommonTabComponentData_1 = require("../Common/TabComponent/CommonTabComponentData"),
+  CommonTabData_1 = require("../Common/TabComponent/CommonTabData"),
+  CommonTabTitleData_1 = require("../Common/TabComponent/CommonTabTitleData"),
+  TabComponentWithCaptionItem_1 = require("../Common/TabComponent/TabComponentWithCaptionItem"),
+  WeaponTabItem_1 = require("../Common/TabComponent/TabItem/WeaponTabItem"),
+  TabViewComponent_1 = require("../Common/TabComponent/TabViewComponent"),
+  ItemDefines_1 = require("../Item/Data/ItemDefines"),
+  UiCameraAnimationManager_1 = require("../UiCameraAnimation/UiCameraAnimationManager"),
+  UiSceneManager_1 = require("../UiComponent/UiSceneManager"),
+  WeaponController_1 = require("./WeaponController");
 class WeaponRootView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -29,9 +29,9 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
       (this.Oki = void 0),
       (this.dVe = (e) => new WeaponTabItem_1.WeaponTabItem()),
       (this.pqe = (e) => {
-        const t = this.TabDataList[e];
-        const n = t.ChildViewName;
-        var e = this.TabComponent.GetTabItemByIndex(e);
+        var t = this.TabDataList[e],
+          n = t.ChildViewName,
+          e = this.TabComponent.GetTabItemByIndex(e);
         this.TabViewComponent.ToggleCallBack(t, n, e, this.ANo);
       }),
       (this.yqe = (e) => {
@@ -45,7 +45,7 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
         this.UpdateDynamicTabComponent();
       }),
       (this._9i = (e) => {
-        e.ViewName === "WeaponRootView" &&
+        "WeaponRootView" === e.ViewName &&
           this.Nki &&
           this.Oki &&
           WeaponController_1.WeaponController.OnSelectedWeaponChange(
@@ -67,7 +67,7 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
     ];
   }
   OnBeforeCreate() {
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     e
       ? ((this.ANo = e.WeaponIncId),
         (this.Nki = UiSceneManager_1.UiSceneManager.InitWeaponObserver()),
@@ -77,7 +77,7 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
         Log_1.Log.Error("Weapon", 44, "进入武器培养界面未传参");
   }
   async OnBeforeStartAsync() {
-    const e = new CommonTabComponentData_1.CommonTabComponentData(
+    var e = new CommonTabComponentData_1.CommonTabComponentData(
       this.dVe,
       this.pqe,
       this.yqe,
@@ -157,7 +157,7 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
         (this.Oki = void 0));
   }
   OnBeforeDestroy() {
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     e &&
       e.IsFromRoleRootView &&
       UiSceneManager_1.UiSceneManager.HasRoleSystemRoleActor() &&
@@ -175,27 +175,27 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
     this.TabDataList = this.GetWeaponTabList();
     const t = this.TabComponent.GetSelectedIndex();
     this.TabComponent.RefreshTabItemByLength(this.TabDataList.length, () => {
-      const e = t > 0 ? t : 0;
+      var e = 0 < t ? t : 0;
       this.TabComponent.SelectToggleByIndex(e);
     });
   }
   GetWeaponTabList() {
-    const e = [];
-    const t =
-      ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTabList(
-        "WeaponRootView",
-      );
-    const n = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-      this.ANo,
-    ).CanGoBreach();
+    var e = [],
+      t =
+        ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTabList(
+          "WeaponRootView",
+        ),
+      n = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
+        this.ANo,
+      ).CanGoBreach();
     for (const i of t)
-      (i.ChildViewName === "WeaponBreachView" && !n) ||
-        (i.ChildViewName === "WeaponLevelUpView" && n) ||
+      ("WeaponBreachView" === i.ChildViewName && !n) ||
+        ("WeaponLevelUpView" === i.ChildViewName && n) ||
         e.push(i);
     return e;
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
-    if (e.length === 1) {
+    if (1 === e.length) {
       if (!this.TabComponent) return;
       if (!this.TabComponent.GetTabComponent().GetLayout())
         return void (
@@ -216,4 +216,4 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.WeaponRootView = WeaponRootView;
-// # sourceMappingURL=WeaponRootView.js.map
+//# sourceMappingURL=WeaponRootView.js.map

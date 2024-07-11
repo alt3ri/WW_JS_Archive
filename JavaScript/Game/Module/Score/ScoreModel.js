@@ -26,4 +26,4 @@ class ScoreModel extends ModelBase_1.ModelBase {
   }
 }
 exports.ScoreModel = ScoreModel;
-// # sourceMappingURL=ScoreModel.js.map
+//# sourceMappingURL=ScoreModel.js.map

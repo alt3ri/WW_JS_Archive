@@ -30,25 +30,25 @@ class RoleTrainingDegree {
     );
   }
   difficultylevel() {
-    const e = this.J7.__offset(this.z7, 4);
+    var e = this.J7.__offset(this.z7, 4);
     return e ? this.J7.readInt32(this.z7 + e) : 0;
   }
   rolelevel() {
-    const e = this.J7.__offset(this.z7, 6);
+    var e = this.J7.__offset(this.z7, 6);
     return e ? this.J7.readInt32(this.z7 + e) : 0;
   }
   weaponlevel() {
-    const e = this.J7.__offset(this.z7, 8);
+    var e = this.J7.__offset(this.z7, 8);
     return e ? this.J7.readInt32(this.z7 + e) : 0;
   }
   equiplevel() {
-    const e = this.J7.__offset(this.z7, 10);
+    var e = this.J7.__offset(this.z7, 10);
     return e ? this.J7.readInt32(this.z7 + e) : 0;
   }
   skilllevel() {
-    const e = this.J7.__offset(this.z7, 12);
+    var e = this.J7.__offset(this.z7, 12);
     return e ? this.J7.readInt32(this.z7 + e) : 0;
   }
 }
 exports.RoleTrainingDegree = RoleTrainingDegree;
-// # sourceMappingURL=RoleTrainingDegree.js.map
+//# sourceMappingURL=RoleTrainingDegree.js.map

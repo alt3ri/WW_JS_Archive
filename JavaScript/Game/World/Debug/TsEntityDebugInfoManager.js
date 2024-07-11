@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TsEntityDebugInfoManager = void 0);
-const UE = require("ue");
-const EntityDebugUtils_1 = require("../../NewWorld/Character/Common/Blueprint/Utils/EntityDebugUtils");
+const UE = require("ue"),
+  EntityDebugUtils_1 = require("../../NewWorld/Character/Common/Blueprint/Utils/EntityDebugUtils");
 class TsEntityDebugInfoManager extends UE.Object {
   static GetInstance() {
     return (
@@ -40,4 +40,4 @@ class TsEntityDebugInfoManager extends UE.Object {
 }
 (exports.TsEntityDebugInfoManager = TsEntityDebugInfoManager),
   (exports.default = TsEntityDebugInfoManager);
-// # sourceMappingURL=TsEntityDebugInfoManager.js.map
+//# sourceMappingURL=TsEntityDebugInfoManager.js.map

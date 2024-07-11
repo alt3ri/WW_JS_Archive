@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldMapSecondaryUi = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const PopupTypeRightItem_1 = require("../../../Ui/Common/PopupTypeRightItem");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  PopupTypeRightItem_1 = require("../../../Ui/Common/PopupTypeRightItem"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
 class WorldMapSecondaryUi extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -15,7 +15,7 @@ class WorldMapSecondaryUi extends UiPanelBase_1.UiPanelBase {
       (this._Fo = void 0),
       (this.uFo = void 0),
       (this.WFt = (e) => {
-        e === "Close" && this.mIt();
+        "Close" === e && this.mIt();
       }),
       (this.Close = (e, t = !0) => {
         (this.uFo = e),
@@ -23,7 +23,7 @@ class WorldMapSecondaryUi extends UiPanelBase_1.UiPanelBase {
       });
   }
   get EPe() {
-    let e;
+    var e;
     return (
       this._Fo ||
         ((e = this.UiBgItem?.GetRootItem() ?? this.GetRootItem()),
@@ -43,7 +43,7 @@ class WorldMapSecondaryUi extends UiPanelBase_1.UiPanelBase {
       (this._Fo = void 0);
   }
   async OnBeforeStartAsync() {
-    let e;
+    var e;
     this.UiBgItem &&
       (await this.UiBgItem.CreateByResourceIdAsync(
         "UiView_PopupR",
@@ -89,4 +89,4 @@ class WorldMapSecondaryUi extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.WorldMapSecondaryUi = WorldMapSecondaryUi;
-// # sourceMappingURL=WorldMapSecondaryUi.js.map
+//# sourceMappingURL=WorldMapSecondaryUi.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ObjectSystem = void 0);
-const Log_1 = require("../Common/Log");
-const Stats_1 = require("../Common/Stats");
+const Log_1 = require("../Common/Log"),
+  Stats_1 = require("../Common/Stats");
 class ObjectSystem {
   constructor() {}
   static Initialize() {
@@ -11,7 +11,7 @@ class ObjectSystem {
     );
   }
   static IsValid(t) {
-    let e;
+    var e;
     return (
       !!t &&
       void 0 !== t.Index &&
@@ -22,9 +22,9 @@ class ObjectSystem {
   }
   static Create(t) {
     Stats_1.Stat.Enable && !this.sY.get(t) && this.sY.set(t, void 0);
-    let e = void 0;
-    let s = 0;
-    let i = 0;
+    let e = void 0,
+      s = 0,
+      i = 0;
     if (this.Objects.length < this.aY)
       (s = this.Objects.length),
         (e = new t(0, s)),
@@ -32,7 +32,7 @@ class ObjectSystem {
         this.rY.push(1),
         (i = 1);
     else {
-      if (!(this.nY.length > 0))
+      if (!(0 < this.nY.length))
         return void (
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -52,12 +52,12 @@ class ObjectSystem {
     return (e.Id = t), e;
   }
   static CreateExternal(t) {
-    let e = 0;
-    let s = 0;
+    let e = 0,
+      s = 0;
     if (this.Objects.length < this.aY)
       (e = this.Objects.length), this.Objects.push(t), this.rY.push(1), (s = 1);
     else {
-      if (!(this.nY.length > 0))
+      if (!(0 < this.nY.length))
         return void (
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -72,7 +72,7 @@ class ObjectSystem {
         (this.Objects[e] = t),
         (s = ++this.rY[e]) > this.hY && ((s = 1), (this.rY[e] = s));
     }
-    const i = (e << this.VersionDigit) | s;
+    var i = (e << this.VersionDigit) | s;
     return (t.Id = i), (t.Index = e), !0;
   }
   static Destroy(t) {
@@ -95,4 +95,4 @@ class ObjectSystem {
   (ObjectSystem.Objects = new Array()),
   (ObjectSystem.rY = new Array()),
   (ObjectSystem.nY = new Array());
-// # sourceMappingURL=ObjectSystem.js.map
+//# sourceMappingURL=ObjectSystem.js.map

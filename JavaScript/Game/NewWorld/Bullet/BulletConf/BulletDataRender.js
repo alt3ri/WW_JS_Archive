@@ -37,9 +37,9 @@ class BulletDataRender {
   get EffectOnHit() {
     if (void 0 === this.c8o) {
       this.c8o = new Map();
-      const i = this.Pe.命中特效DA;
+      var i = this.Pe.命中特效DA;
       for (let t = 0; t < i.Num(); t++) {
-        const s = i.GetKey(t);
+        var s = i.GetKey(t);
         this.c8o.set(s, i.Get(s).ToAssetPathName());
       }
     }
@@ -51,11 +51,11 @@ class BulletDataRender {
   get EffectOnHitConf() {
     if (void 0 === this.m8o) {
       this.m8o = new Map();
-      const i = this.Pe.命中特效配置;
-      const s = i.Num();
+      var i = this.Pe.命中特效配置,
+        s = i.Num();
       for (let t = 0; t < s; t++) {
-        const e = i.Get(t);
-        const h = new BulletHitEffectConf_1.BulletHitEffectConf(e);
+        var e = i.Get(t),
+          h = new BulletHitEffectConf_1.BulletHitEffectConf(e);
         this.m8o.set(e.类型, h);
       }
     }
@@ -70,9 +70,9 @@ class BulletDataRender {
   get EffectBulletParams() {
     if (void 0 === this.C8o) {
       this.C8o = new Map();
-      const i = this.Pe.子弹特效DA参数;
+      var i = this.Pe.子弹特效DA参数;
       for (let t = 0; t < i.Num(); t++) {
-        const s = i.GetKey(t);
+        var s = i.GetKey(t);
         this.C8o.set(s, i.Get(s));
       }
     }
@@ -95,9 +95,9 @@ class BulletDataRender {
   get SpecialEffect() {
     if (void 0 === this.v8o) {
       this.v8o = new Map();
-      const i = this.Pe.特殊特效DA;
+      var i = this.Pe.特殊特效DA;
       for (let t = 0; t < i.Num(); t++) {
-        const s = i.GetKey(t);
+        var s = i.GetKey(t);
         this.v8o.set(s, i.Get(s).ToAssetPathName());
       }
     }
@@ -134,4 +134,4 @@ class BulletDataRender {
   }
 }
 exports.BulletDataRender = BulletDataRender;
-// # sourceMappingURL=BulletDataRender.js.map
+//# sourceMappingURL=BulletDataRender.js.map

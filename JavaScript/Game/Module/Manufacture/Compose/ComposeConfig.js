@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ComposeConfig = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ConditionGroupById_1 = require("../../../../Core/Define/ConfigQuery/ConditionGroupById");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const SynthesisFormulaByFormulaItemId_1 = require("../../../../Core/Define/ConfigQuery/SynthesisFormulaByFormulaItemId");
-const SynthesisFormulaByFormulaType_1 = require("../../../../Core/Define/ConfigQuery/SynthesisFormulaByFormulaType");
-const SynthesisFormulaById_1 = require("../../../../Core/Define/ConfigQuery/SynthesisFormulaById");
-const SynthesisLevelAll_1 = require("../../../../Core/Define/ConfigQuery/SynthesisLevelAll");
-const ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ConditionGroupById_1 = require("../../../../Core/Define/ConfigQuery/ConditionGroupById"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  SynthesisFormulaByFormulaItemId_1 = require("../../../../Core/Define/ConfigQuery/SynthesisFormulaByFormulaItemId"),
+  SynthesisFormulaByFormulaType_1 = require("../../../../Core/Define/ConfigQuery/SynthesisFormulaByFormulaType"),
+  SynthesisFormulaById_1 = require("../../../../Core/Define/ConfigQuery/SynthesisFormulaById"),
+  SynthesisLevelAll_1 = require("../../../../Core/Define/ConfigQuery/SynthesisLevelAll"),
+  ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
 class ComposeConfig extends ConfigBase_1.ConfigBase {
   GetLocalText(e) {
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e) ?? "";
   }
   GetSynthesisFormulaByFormulaItemId(e) {
-    const o =
+    var o =
       SynthesisFormulaByFormulaItemId_1.configSynthesisFormulaByFormulaItemId.GetConfig(
         e,
       );
@@ -31,7 +31,7 @@ class ComposeConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetSynthesisFormulaById(e) {
-    const o = SynthesisFormulaById_1.configSynthesisFormulaById.GetConfig(e);
+    var o = SynthesisFormulaById_1.configSynthesisFormulaById.GetConfig(e);
     return (
       o ||
         (Log_1.Log.CheckError() &&
@@ -45,7 +45,7 @@ class ComposeConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetComposeListByType(e) {
-    const o =
+    var o =
       SynthesisFormulaByFormulaType_1.configSynthesisFormulaByFormulaType.GetConfigList(
         e,
       );
@@ -62,7 +62,7 @@ class ComposeConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetComposeLevel() {
-    const e = SynthesisLevelAll_1.configSynthesisLevelAll.GetConfigList();
+    var e = SynthesisLevelAll_1.configSynthesisLevelAll.GetConfigList();
     return (
       e ||
         (Log_1.Log.CheckError() &&
@@ -75,4 +75,4 @@ class ComposeConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.ComposeConfig = ComposeConfig;
-// # sourceMappingURL=ComposeConfig.js.map
+//# sourceMappingURL=ComposeConfig.js.map

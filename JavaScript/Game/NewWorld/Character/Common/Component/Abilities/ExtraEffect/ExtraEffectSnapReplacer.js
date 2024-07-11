@@ -18,4 +18,4 @@ class SnapReplacer extends ExtraEffectBase_1.BuffEffect {
   }
 }
 exports.SnapReplacer = SnapReplacer;
-// # sourceMappingURL=ExtraEffectSnapReplacer.js.map
+//# sourceMappingURL=ExtraEffectSnapReplacer.js.map

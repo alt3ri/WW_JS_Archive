@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LandscapeMarkView = void 0);
-const UE = require("ue");
-const MarkEffectByMarkId_1 = require("../../../../../Core/Define/ConfigQuery/MarkEffectByMarkId");
-const MarkItemView_1 = require("./MarkItemView");
+const UE = require("ue"),
+  MarkEffectByMarkId_1 = require("../../../../../Core/Define/ConfigQuery/MarkEffectByMarkId"),
+  MarkItemView_1 = require("./MarkItemView");
 class LandscapeMarkView extends MarkItemView_1.MarkItemView {
   constructor(e) {
     super(e), (this.gDi = void 0);
@@ -15,7 +15,7 @@ class LandscapeMarkView extends MarkItemView_1.MarkItemView {
     return !1;
   }
   async fDi() {
-    let e = MarkEffectByMarkId_1.configMarkEffectByMarkId.GetConfig(
+    var e = MarkEffectByMarkId_1.configMarkEffectByMarkId.GetConfig(
       this.Holder.MarkId,
     );
     e &&
@@ -29,4 +29,4 @@ class LandscapeMarkView extends MarkItemView_1.MarkItemView {
   }
 }
 exports.LandscapeMarkView = LandscapeMarkView;
-// # sourceMappingURL=MapLandscapeView.js.map
+//# sourceMappingURL=MapLandscapeView.js.map

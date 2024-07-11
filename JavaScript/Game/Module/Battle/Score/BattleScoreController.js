@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleScoreController = void 0);
-const ControllerBase_1 = require("../../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../../Core/Net/Net");
-const ModelManager_1 = require("../../../Manager/ModelManager");
+const ControllerBase_1 = require("../../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  ModelManager_1 = require("../../../Manager/ModelManager");
 class BattleScoreController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return Net_1.Net.Register(20872, this.tyn), !0;
@@ -15,4 +15,4 @@ class BattleScoreController extends ControllerBase_1.ControllerBase {
 (exports.BattleScoreController = BattleScoreController).tyn = (e) => {
   ModelManager_1.ModelManager.BattleScoreModel?.HandleBattleScoreNotify(e);
 };
-// # sourceMappingURL=BattleScoreController.js.map
+//# sourceMappingURL=BattleScoreController.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConfigMarkItem = void 0);
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ConfigMarkItemView_1 = require("../MarkItemView/ConfigMarkItemView");
-const MarkItem_1 = require("./MarkItem");
+const Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ConfigMarkItemView_1 = require("../MarkItemView/ConfigMarkItemView"),
+  MarkItem_1 = require("./MarkItem");
 class ConfigMarkItem extends MarkItem_1.MarkItem {
   constructor(t, i, e, r, s, h = 1) {
     super(e, r, s, h),
@@ -21,8 +21,8 @@ class ConfigMarkItem extends MarkItem_1.MarkItem {
   }
   get IsFogUnlock() {
     return (
-      this.MarkConfig.FogShow === 1 ||
-      this.MarkConfig.FogHide === 0 ||
+      1 === this.MarkConfig.FogShow ||
+      0 === this.MarkConfig.FogHide ||
       ModelManager_1.ModelManager.MapModel.CheckAreasUnlocked(
         this.MarkConfig.FogHide,
       )
@@ -54,14 +54,14 @@ class ConfigMarkItem extends MarkItem_1.MarkItem {
       (this.IconPath = this.MarkConfig.LockMarkPic);
   }
   IsRelativeFunctionOpen() {
-    let t;
+    var t;
     return (
       this.MarkConfig.RelativeSubType <= 0 ||
       !(
         (t =
           ConfigManager_1.ConfigManager.MapConfig?.GetMapMarkFuncTypeConfigById(
             this.MarkConfig.RelativeSubType,
-          )) && t.FunctionId > 0
+          )) && 0 < t.FunctionId
       ) ||
       ModelManager_1.ModelManager.FunctionModel.IsOpen(t.FunctionId)
     );
@@ -78,8 +78,8 @@ class ConfigMarkItem extends MarkItem_1.MarkItem {
     );
   }
   GetAreaText() {
-    let t, i, e, r;
-    if (typeof this.TrackTarget === "number")
+    var t, i, e, r;
+    if ("number" == typeof this.TrackTarget)
       return (
         (r =
           ConfigManager_1.ConfigManager.MapConfig.GetEntityConfigByMapIdAndEntityId(
@@ -98,7 +98,7 @@ class ConfigMarkItem extends MarkItem_1.MarkItem {
               r.CountryId,
             )
           : ""),
-        i?.Father === 0 ? r + "-" + t : r + `-${e}-` + t
+        0 === i?.Father ? r + "-" + t : r + `-${e}-` + t
       );
   }
   GLi(t) {
@@ -108,10 +108,10 @@ class ConfigMarkItem extends MarkItem_1.MarkItem {
     return this.ConditionShouldShow;
   }
   InitShowCondition() {
-    const t = this.MarkConfig.ShowCondition;
+    var t = this.MarkConfig.ShowCondition;
     t < 0
       ? (this.IsServerSaveShowState = !0)
-      : t === 0
+      : 0 === t
         ? (this.ConditionShouldShow = !0)
         : ((this.IsServerSaveShowState = !1),
           (this.ConditionShouldShow =
@@ -120,12 +120,12 @@ class ConfigMarkItem extends MarkItem_1.MarkItem {
             )));
   }
   CheckCanShowView() {
-    let t;
-    let i = this.MapType;
+    var t,
+      i = this.MapType;
     return (
       !(
-        (this.MarkConfig.MapShow === 1 && i !== 1) ||
-        (this.MarkConfig.MapShow === 2 && i === 1) ||
+        (1 === this.MarkConfig.MapShow && 1 !== i) ||
+        (2 === this.MarkConfig.MapShow && 1 === i) ||
         (this.InitShowCondition(), !this.ConditionShouldShow) ||
         (this.IsServerSaveShowState &&
           !ModelManager_1.ModelManager.MapModel.GetMarkExtraShowState(
@@ -135,7 +135,7 @@ class ConfigMarkItem extends MarkItem_1.MarkItem {
       ) &&
       ((t = this.GetCurrentMapShowScale()),
       (t = this.GLi(t)),
-      i !== 2 ||
+      2 !== i ||
         (this.IsCanShowViewIntermediately !==
           (i = t || this.IsIgnoreScaleShow) &&
           (this.NeedPlayShowOrHideSeq = i ? "ShowView" : "HideView"),
@@ -146,8 +146,8 @@ class ConfigMarkItem extends MarkItem_1.MarkItem {
     return this.MarkConfig.ShowRange[0] + this.MarkConfig.ShowRange[1] / 2;
   }
   IsLordGym() {
-    return this.MarkConfig.RelativeSubType === 3;
+    return 3 === this.MarkConfig.RelativeSubType;
   }
 }
 exports.ConfigMarkItem = ConfigMarkItem;
-// # sourceMappingURL=ConfigMarkItem.js.map
+//# sourceMappingURL=ConfigMarkItem.js.map

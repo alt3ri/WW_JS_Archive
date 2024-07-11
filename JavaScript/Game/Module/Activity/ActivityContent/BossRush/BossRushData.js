@@ -4,18 +4,18 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.BossRushLevelRewardData =
     exports.BossRushLevelDetailInfo =
       void 0);
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ActivityData_1 = require("../../ActivityData");
-const BossRushController_1 = require("./BossRushController");
-const BossRushModel_1 = require("./BossRushModel");
-const UNLOCKLOCALKEY = 100;
+const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ActivityData_1 = require("../../ActivityData"),
+  BossRushController_1 = require("./BossRushController"),
+  BossRushModel_1 = require("./BossRushModel"),
+  UNLOCKLOCALKEY = 100;
 class BossRushLevelDetailInfo {
   constructor() {
     (this.LOe = 0),
@@ -38,7 +38,7 @@ class BossRushLevelDetailInfo {
       (this.WUr = []),
       (this.mRn = []);
     for (const h of e.Z0s) {
-      const i = new BossRushModel_1.BossRushBuffInfo();
+      var i = new BossRushModel_1.BossRushBuffInfo();
       (i.BuffId = h.JFn),
         (i.Slot = h.zFn),
         (i.ChangeAble =
@@ -48,17 +48,17 @@ class BossRushLevelDetailInfo {
         this.jUr.push(i);
     }
     for (const u of this.GetConfig().OptionalBuff) {
-      const r = new BossRushModel_1.BossRushBuffInfo();
+      var r = new BossRushModel_1.BossRushBuffInfo();
       (r.BuffId = u), (r.Slot = -1), (r.ChangeAble = !0), this.mRn.push(r);
     }
     for (const l of s) {
-      const o = new BossRushModel_1.BossRushBuffInfo();
+      var o = new BossRushModel_1.BossRushBuffInfo();
       (o.BuffId = l), (o.Slot = -1), (o.ChangeAble = !0), this.WUr.push(o);
     }
     this.KUr = [];
     let n = 0;
     for (const c of e.z0s) {
-      const a = new BossRushModel_1.BossRushRoleInfo();
+      var a = new BossRushModel_1.BossRushRoleInfo();
       (a.RoleId = c), (a.Slot = n), n++, this.KUr.push(a);
     }
   }
@@ -81,9 +81,9 @@ class BossRushLevelDetailInfo {
     return this.GetConfig().StageTexture;
   }
   GetMonsterName() {
-    var t = this.GetConfig().BossInfo;
-    var t =
-      ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterInfoConfig(t);
+    var t = this.GetConfig().BossInfo,
+      t =
+        ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterInfoConfig(t);
     return t ? t.Name : "";
   }
   GetRecommendElementIdArray() {
@@ -96,7 +96,7 @@ class BossRushLevelDetailInfo {
     return this.AAe;
   }
   GetUnlockTimeText() {
-    let t, e, s;
+    var t, e, s;
     return TimeUtil_1.TimeUtil.GetServerTime() < this.HUr
       ? ((t = TimeUtil_1.TimeUtil.CalculateRemainingTime(
           this.GetUnLockTime() - TimeUtil_1.TimeUtil.GetServerTime(),
@@ -139,12 +139,12 @@ class BossRushLevelDetailInfo {
     ).LimitCount.length;
   }
   GetInstanceDungeonConfig() {
-    const t = this.GetConfig().InstId;
+    var t = this.GetConfig().InstId;
     return ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(t);
   }
   ConvertToTeamInfo() {
-    const t = new BossRushModel_1.BossRushTeamInfo();
-    const e = (t.SetCurrentSelectLevel(this), []);
+    var t = new BossRushModel_1.BossRushTeamInfo(),
+      e = (t.SetCurrentSelectLevel(this), []);
     for (const s of this.KUr) e.push(s.RoleId);
     return (
       t.SetCurrentTeamMembers(e),
@@ -174,13 +174,13 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
       (this.zUr = []),
       (this.Y6i = void 0),
       (this.ZUr = (t, e) => {
-        const s = this.UAr(t);
-        const i = this.UAr(e);
+        var s = this.UAr(t),
+          i = this.UAr(e);
         return s === i ? t.Id - e.Id : i - s;
       }),
       (this.ENe = (t, e) => {
-        const s = this.UAr(e);
-        const i = this.UAr(t);
+        var s = this.UAr(e),
+          i = this.UAr(t);
         return s === i ? t.Id - e.Id : s - i;
       });
   }
@@ -197,7 +197,7 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
   PhraseRewardInfo(t) {
     this.XUr = [];
     for (const s of t) {
-      const e = this.PAr(s);
+      var e = this.PAr(s);
       this.XUr.push(e);
     }
     this.Y6i && (this.Y6i.T0s.X0s = t);
@@ -205,7 +205,7 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
   PhraseLevelInfo(t, e) {
     (this.JUr = []), (this.QUr = []);
     for (const i of e) {
-      const s = new BossRushLevelDetailInfo();
+      var s = new BossRushLevelDetailInfo();
       s.Phrase(this.Id, i, t), this.JUr.push(s);
       const e = this.xAr(s, i);
       this.QUr.push(e);
@@ -226,8 +226,8 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
     return this.YUr;
   }
   wAr() {
-    for (const t of this.XUr) if (t.RewardState === 1) return !0;
-    for (const e of this.QUr) if (e.RewardState === 1) return !0;
+    for (const t of this.XUr) if (1 === t.RewardState) return !0;
+    for (const e of this.QUr) if (1 === e.RewardState) return !0;
     return !1;
   }
   GetUnlockedBuffIndices() {
@@ -235,22 +235,22 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
   }
   CheckIfNewBossRushOpen() {
     var t = ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
-      this.Id,
-      0,
-      this.Id,
-      0,
-      0,
-    );
-    const e = this.BAr();
-    var t =
-      ((this.$Ur = t < e),
-      ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
         this.Id,
         0,
         this.Id,
-        UNLOCKLOCALKEY,
         0,
-      ));
+        0,
+      ),
+      e = this.BAr(),
+      t =
+        ((this.$Ur = t < e),
+        ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
+          this.Id,
+          0,
+          this.Id,
+          UNLOCKLOCALKEY,
+          0,
+        ));
     (this.YUr = t < e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
@@ -265,7 +265,7 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
   }
   CacheNewUnlock() {
     this.YUr = !1;
-    const t = this.BAr();
+    var t = this.BAr();
     ModelManager_1.ModelManager.ActivityModel.SaveActivityData(
       this.Id,
       this.Id,
@@ -276,7 +276,7 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
       this.CheckIfNewBossRushOpen();
   }
   CacheCurrentOpenBossNum() {
-    const t = this.BAr();
+    var t = this.BAr();
     ModelManager_1.ModelManager.ActivityModel.SaveActivityData(
       this.Id,
       this.Id,
@@ -293,7 +293,7 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
     return this.wAr();
   }
   GetRewardViewData() {
-    const t = StringUtils_1.StringUtils.Format(
+    var t = StringUtils_1.StringUtils.Format(
       MultiTextLang_1.configMultiTextLang.GetLocalTextNew("BossRushFullPoint"),
       this.GetFullScore().toString(),
     );
@@ -339,16 +339,16 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
     return t;
   }
   PAr(t) {
-    const e =
-      ConfigManager_1.ConfigManager.BossRushConfig.GetBossRushScoreConfigById(
-        t.t3n,
+    var e =
+        ConfigManager_1.ConfigManager.BossRushConfig.GetBossRushScoreConfigById(
+          t.t3n,
+        ),
+      s = StringUtils_1.StringUtils.Format(
+        MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+          "BossRushFullScoreTips",
+        ),
+        e.Score.toString(),
       );
-    const s = StringUtils_1.StringUtils.Format(
-      MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-        "BossRushFullScoreTips",
-      ),
-      e.Score.toString(),
-    );
     return {
       Id: t.t3n,
       NameText: s,
@@ -381,9 +381,9 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
     return e;
   }
   ake(t) {
-    let e;
-    let s;
-    const i = [];
+    var e,
+      s,
+      i = [];
     for ([
       e,
       s,
@@ -418,4 +418,4 @@ class BossRushData extends ActivityData_1.ActivityBaseData {
   }
 }
 exports.BossRushData = BossRushData;
-// # sourceMappingURL=BossRushData.js.map
+//# sourceMappingURL=BossRushData.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponConf = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const ConfigPropValue_1 = require("./SubType/ConfigPropValue");
-const StringArray_1 = require("./SubType/StringArray");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  ConfigPropValue_1 = require("./SubType/ConfigPropValue"),
+  StringArray_1 = require("./SubType/StringArray");
 class WeaponConf {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -129,42 +129,42 @@ class WeaponConf {
     );
   }
   itemid() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   weaponname(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   qualityid() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   weapontype() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   modelid() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   transformid() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetModelsAt(t) {
     return this.models(t);
   }
   models(t) {
-    const i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 16);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   modelsLength() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   modelsArray() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -174,11 +174,11 @@ class WeaponConf {
       : null;
   }
   resonlevellimit() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   firstpropid(t) {
-    const i = this.J7.__offset(this.z7, 20);
+    var i = this.J7.__offset(this.z7, 20);
     return i
       ? (t || new ConfigPropValue_1.ConfigPropValue()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -187,11 +187,11 @@ class WeaponConf {
       : null;
   }
   firstcurve() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   secondpropid(t) {
-    const i = this.J7.__offset(this.z7, 24);
+    var i = this.J7.__offset(this.z7, 24);
     return i
       ? (t || new ConfigPropValue_1.ConfigPropValue()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -200,30 +200,30 @@ class WeaponConf {
       : null;
   }
   secondcurve() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   resonid() {
-    const t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   levelid() {
-    const t = this.J7.__offset(this.z7, 30);
+    var t = this.J7.__offset(this.z7, 30);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   breachid() {
-    const t = this.J7.__offset(this.z7, 32);
+    var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   desc(t) {
-    const i = this.J7.__offset(this.z7, 34);
+    var i = this.J7.__offset(this.z7, 34);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetDescparamsAt(t, i) {
     return this.descparams(t);
   }
   descparams(t, i) {
-    const s = this.J7.__offset(this.z7, 36);
+    var s = this.J7.__offset(this.z7, 36);
     return s
       ? (i || new StringArray_1.StringArray()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -232,54 +232,54 @@ class WeaponConf {
       : null;
   }
   descparamsLength() {
-    const t = this.J7.__offset(this.z7, 36);
+    var t = this.J7.__offset(this.z7, 36);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   typedescription(t) {
-    const i = this.J7.__offset(this.z7, 38);
+    var i = this.J7.__offset(this.z7, 38);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   attributesdescription(t) {
-    const i = this.J7.__offset(this.z7, 40);
+    var i = this.J7.__offset(this.z7, 40);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   bgdescription(t) {
-    const i = this.J7.__offset(this.z7, 42);
+    var i = this.J7.__offset(this.z7, 42);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   icon(t) {
-    const i = this.J7.__offset(this.z7, 44);
+    var i = this.J7.__offset(this.z7, 44);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   iconmiddle(t) {
-    const i = this.J7.__offset(this.z7, 46);
+    var i = this.J7.__offset(this.z7, 46);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   iconsmall(t) {
-    const i = this.J7.__offset(this.z7, 48);
+    var i = this.J7.__offset(this.z7, 48);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   mesh(t) {
-    const i = this.J7.__offset(this.z7, 50);
+    var i = this.J7.__offset(this.z7, 50);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   maxcapcity() {
-    const t = this.J7.__offset(this.z7, 52);
+    var t = this.J7.__offset(this.z7, 52);
     return t ? this.J7.readInt32(this.z7 + t) : 999999999;
   }
   GetItemaccessAt(t) {
     return this.itemaccess(t);
   }
   itemaccess(t) {
-    const i = this.J7.__offset(this.z7, 54);
+    var i = this.J7.__offset(this.z7, 54);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   itemaccessLength() {
-    const t = this.J7.__offset(this.z7, 54);
+    var t = this.J7.__offset(this.z7, 54);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   itemaccessArray() {
-    const t = this.J7.__offset(this.z7, 54);
+    var t = this.J7.__offset(this.z7, 54);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -289,41 +289,41 @@ class WeaponConf {
       : null;
   }
   obtainedshow() {
-    const t = this.J7.__offset(this.z7, 56);
+    var t = this.J7.__offset(this.z7, 56);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   obtainedshowdescription(t) {
-    const i = this.J7.__offset(this.z7, 58);
+    var i = this.J7.__offset(this.z7, 58);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   numlimit() {
-    const t = this.J7.__offset(this.z7, 60);
+    var t = this.J7.__offset(this.z7, 60);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   showinbag() {
-    const t = this.J7.__offset(this.z7, 62);
+    var t = this.J7.__offset(this.z7, 62);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   sortindex() {
-    const t = this.J7.__offset(this.z7, 64);
+    var t = this.J7.__offset(this.z7, 64);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   resonanceicon(t) {
-    const i = this.J7.__offset(this.z7, 66);
+    var i = this.J7.__offset(this.z7, 66);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   hiddentime() {
-    const t = this.J7.__offset(this.z7, 68);
+    var t = this.J7.__offset(this.z7, 68);
     return t ? this.J7.readFloat32(this.z7 + t) : 10;
   }
   destructible() {
-    const t = this.J7.__offset(this.z7, 70);
+    var t = this.J7.__offset(this.z7, 70);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   reddotdisablerule() {
-    const t = this.J7.__offset(this.z7, 72);
+    var t = this.J7.__offset(this.z7, 72);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.WeaponConf = WeaponConf;
-// # sourceMappingURL=WeaponConf.js.map
+//# sourceMappingURL=WeaponConf.js.map

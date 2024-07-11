@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NavigationRoleSkillTreeToggle = void 0);
-const StringUtils_1 = require("../../../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../../Common/Event/EventSystem");
-const NavigationToggle_1 = require("../../NavigationToggle");
+const StringUtils_1 = require("../../../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../../Common/Event/EventSystem"),
+  NavigationToggle_1 = require("../../NavigationToggle");
 class NavigationRoleSkillTreeToggle extends NavigationToggle_1.NavigationToggle {
   constructor() {
     super(...arguments),
       (this.ywo = !1),
       (this.Iwo = () => {
-        const e = this.Selectable;
-        e.GetToggleState() === 1 && (this.ywo = !0), (e.bToggleOnSelect = !1);
+        var e = this.Selectable;
+        1 === e.GetToggleState() && (this.ywo = !0), (e.bToggleOnSelect = !1);
       });
   }
   OnInit() {
@@ -29,7 +29,7 @@ class NavigationRoleSkillTreeToggle extends NavigationToggle_1.NavigationToggle 
       );
   }
   OnToggleClick() {
-    const e = this.PanelHandle;
+    var e = this.PanelHandle;
     StringUtils_1.StringUtils.IsBlank(e.GroupName) &&
       e.SetToggleSelectByGroupName(this.Listener.GroupName);
   }
@@ -38,4 +38,4 @@ class NavigationRoleSkillTreeToggle extends NavigationToggle_1.NavigationToggle 
   }
 }
 exports.NavigationRoleSkillTreeToggle = NavigationRoleSkillTreeToggle;
-// # sourceMappingURL=NavigationRoleSkillTreeToggle.js.map
+//# sourceMappingURL=NavigationRoleSkillTreeToggle.js.map

@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponListComponent = void 0);
-const GenericScrollViewNew_1 = require("../Util/ScrollView/GenericScrollViewNew");
-const WeaponItemSmallItemGrid_1 = require("./WeaponItemSmallItemGrid");
+const GenericScrollViewNew_1 = require("../Util/ScrollView/GenericScrollViewNew"),
+  WeaponItemSmallItemGrid_1 = require("./WeaponItemSmallItemGrid");
 class WeaponListComponent {
   constructor() {
     (this.TOi = void 0),
       (this.xqe = void 0),
       (this.DOo = void 0),
       (this.InitWeaponItem = () => {
-        const t = new WeaponItemSmallItemGrid_1.WeaponItemSmallItemGrid();
+        var t = new WeaponItemSmallItemGrid_1.WeaponItemSmallItemGrid();
         return (
           t.BindOnExtendToggleStateChanged(this.I6e),
           t.BindOnCanExecuteChange(this.d4e),
@@ -18,7 +18,7 @@ class WeaponListComponent {
       }),
       (this.d4e = (t, e, i) => this.GetCurSelectedData() !== t),
       (this.I6e = (t) => {
-        t.State === 1 &&
+        1 === t.State &&
           (t = t.MediumItemGrid) instanceof
             WeaponItemSmallItemGrid_1.WeaponItemSmallItemGrid &&
           this.ROo(t.GridIndex);
@@ -40,11 +40,11 @@ class WeaponListComponent {
   }
   async UpdateDataList(t) {
     (this.TOi = t),
-      this.xqe.SetActive(t.length > 1),
+      this.xqe.SetActive(1 < t.length),
       await this.xqe.RefreshByDataAsync(this.TOi);
   }
   SetCurSelect(t) {
-    let e;
+    var e;
     !this.TOi ||
       t < 0 ||
       t >= this.TOi.length ||
@@ -53,7 +53,7 @@ class WeaponListComponent {
         (e?.SetSelected(!0), this.ROo(t)));
   }
   GetCurSelectedData() {
-    const t = this.xqe.GetGenericLayout().GetSelectedGridIndex();
+    var t = this.xqe.GetGenericLayout().GetSelectedGridIndex();
     if (!(!this.TOi || t < 0 || t >= this.TOi.length)) return this.TOi[t];
   }
   CancelSelect() {
@@ -61,4 +61,4 @@ class WeaponListComponent {
   }
 }
 exports.WeaponListComponent = WeaponListComponent;
-// # sourceMappingURL=WeaponListComponent.js.map
+//# sourceMappingURL=WeaponListComponent.js.map

@@ -11,4 +11,4 @@ class ActivitySevenDaySignModel extends ModelBase_1.ModelBase {
   }
 }
 exports.ActivitySevenDaySignModel = ActivitySevenDaySignModel;
-// # sourceMappingURL=ActivitySevenDaySignModel.js.map
+//# sourceMappingURL=ActivitySevenDaySignModel.js.map

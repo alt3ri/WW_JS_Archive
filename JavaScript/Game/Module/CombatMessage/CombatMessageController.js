@@ -1,49 +1,54 @@
 "use strict";
-let _a;
-const __decorate =
-  (this && this.__decorate) ||
-  function (e, o, t, r) {
-    let a;
-    const s = arguments.length;
-    let l =
-      s < 3 ? o : r === null ? (r = Object.getOwnPropertyDescriptor(o, t)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      l = Reflect.decorate(e, o, t, r);
-    else
-      for (let i = e.length - 1; i >= 0; i--)
-        (a = e[i]) && (l = (s < 3 ? a(l) : s > 3 ? a(o, t, l) : a(o, t)) || l);
-    return s > 3 && l && Object.defineProperty(o, t, l), l;
-  };
+var _a,
+  __decorate =
+    (this && this.__decorate) ||
+    function (e, o, t, r) {
+      var a,
+        s = arguments.length,
+        l =
+          s < 3
+            ? o
+            : null === r
+              ? (r = Object.getOwnPropertyDescriptor(o, t))
+              : r;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        l = Reflect.decorate(e, o, t, r);
+      else
+        for (var i = e.length - 1; 0 <= i; i--)
+          (a = e[i]) &&
+            (l = (s < 3 ? a(l) : 3 < s ? a(o, t, l) : a(o, t)) || l);
+      return 3 < s && l && Object.defineProperty(o, t, l), l;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CombatMessageController = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Stats_1 = require("../../../Core/Common/Stats");
-const Time_1 = require("../../../Core/Common/Time");
-const NetDefine_1 = require("../../../Core/Define/Net/NetDefine");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const StatDefine_1 = require("../../Common/StatDefine");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterController_1 = require("../../NewWorld/Character/CharacterController");
-const CombatDebugController_1 = require("../../Utils/CombatDebugController");
-const BlackboardController_1 = require("../../World/Controller/BlackboardController");
-const WorldGlobal_1 = require("../../World/WorldGlobal");
-const CombatMessage_1 = require("./CombatMessage");
-const notifyMessageCacheSet = new Set([
-  NetDefine_1.ECombatNotifyDataMessage.HOn,
-  NetDefine_1.ECombatNotifyDataMessage.VOn,
-  NetDefine_1.ECombatNotifyDataMessage.jOn,
-  NetDefine_1.ECombatNotifyDataMessage.YOn,
-  NetDefine_1.ECombatNotifyDataMessage.$On,
-  NetDefine_1.ECombatNotifyDataMessage.XOn,
-]);
-const MAX_AI_INFO_COUNT = 100;
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  Time_1 = require("../../../Core/Common/Time"),
+  NetDefine_1 = require("../../../Core/Define/Net/NetDefine"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  StatDefine_1 = require("../../Common/StatDefine"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterController_1 = require("../../NewWorld/Character/CharacterController"),
+  CombatDebugController_1 = require("../../Utils/CombatDebugController"),
+  BlackboardController_1 = require("../../World/Controller/BlackboardController"),
+  WorldGlobal_1 = require("../../World/WorldGlobal"),
+  CombatMessage_1 = require("./CombatMessage"),
+  notifyMessageCacheSet = new Set([
+    NetDefine_1.ECombatNotifyDataMessage.HOn,
+    NetDefine_1.ECombatNotifyDataMessage.VOn,
+    NetDefine_1.ECombatNotifyDataMessage.jOn,
+    NetDefine_1.ECombatNotifyDataMessage.YOn,
+    NetDefine_1.ECombatNotifyDataMessage.$On,
+    NetDefine_1.ECombatNotifyDataMessage.XOn,
+  ]),
+  MAX_AI_INFO_COUNT = 100;
 class CombatMessageController extends ControllerBase_1.ControllerBase {
   static get Model() {
     return ModelManager_1.ModelManager.CombatMessageModel;
@@ -86,8 +91,8 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
   }
   static JEt(e, o) {
     const t = MathUtils_1.MathUtils.LongToNumber(e.rkn);
-    let r = ModelManager_1.ModelManager.CreatureModel.GetEntity(t);
-    const a = NetDefine_1.ECombatNotifyDataMessage[o.$Gs];
+    var r = ModelManager_1.ModelManager.CreatureModel.GetEntity(t),
+      a = NetDefine_1.ECombatNotifyDataMessage[o.$Gs];
     if (!r || r.IsInit || notifyMessageCacheSet.has(a)) {
       CombatDebugController_1.CombatDebugController.CombatInfoMessage(
         "Notify",
@@ -97,8 +102,8 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
       r = r?.Entity;
       if (CombatMessage_1.CombatNet.SyncNotifyMap.has(a)) {
         const t = MathUtils_1.MathUtils.LongToNumber(e.a4n);
-        let s;
-        const l = CombatMessageController.Model?.GetMessageBuffer(t);
+        var s,
+          l = CombatMessageController.Model?.GetMessageBuffer(t);
         l && ModelManager_1.ModelManager.GameModeModel.IsMulti
           ? ((s = CombatMessage_1.CombatNet.PreNotifyMap.get(a)) &&
               !s(r, o[o.$Gs], e)) ||
@@ -125,11 +130,11 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
       );
   }
   static zEt(e, o) {
-    const t = CombatMessage_1.CombatNet.RequestMap;
-    const r = o.i4n;
+    var t = CombatMessage_1.CombatNet.RequestMap,
+      r = o.i4n;
     if (t.has(r)) {
-      const a = t.get(r);
-      const s = o[o.$Gs];
+      var a = t.get(r),
+        s = o[o.$Gs];
       if ((t.delete(r), s))
         try {
           a?.(s);
@@ -173,9 +178,9 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
   static Register(a, s) {
     return (
       Net_1.Net.Register(a, (e) => {
-        let o;
-        let t;
-        const r = e;
+        var o,
+          t,
+          r = e;
         r
           ? r.CombatCommon
             ? ((o = MathUtils_1.MathUtils.LongToNumber(r.CombatCommon.rkn)),
@@ -243,7 +248,7 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
     );
   }
   static Process(e, o, t, r) {
-    const a = CombatMessage_1.CombatNet.SyncNotifyMap.get(e);
+    var a = CombatMessage_1.CombatNet.SyncNotifyMap.get(e);
     a ? a(o, t, r) : this.sX.get(e)?.(o, t);
   }
   static RegisterPreTick(e, o) {
@@ -295,9 +300,9 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
       Net_1.Net.IsServerConnected() &&
       ModelManager_1.ModelManager.GameModeModel.MapDone
     ) {
-      let o;
-      let t;
-      const r = e * MathUtils_1.MathUtils.MillisecondToSecond;
+      var o,
+        t,
+        r = e * MathUtils_1.MathUtils.MillisecondToSecond;
       for (const a of this.Model.CombatMessageBufferMap.values()) a.OnTick(r);
       for ([o, t] of this.Y7)
         try {
@@ -329,7 +334,7 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
       Net_1.Net.IsServerConnected() &&
       ModelManager_1.ModelManager.GameModeModel.MapDone
     ) {
-      for (const [o, t] of this.ZEt)
+      for (var [o, t] of this.ZEt)
         try {
           o.Entity?.Valid &&
             ((o.Entity.Active || this.tyt.has(o.Entity)) &&
@@ -358,29 +363,30 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
         }
       if (
         Time_1.Time.NowSeconds > this.iyt + this.oyt ||
-        BlackboardController_1.BlackboardController.PendingBlackboardParams
-          .size > 0
+        0 <
+          BlackboardController_1.BlackboardController.PendingBlackboardParams
+            .size
       ) {
         let e = !1;
         for (const m of ModelManager_1.ModelManager.CreatureModel.GetAllEntities() ??
           [])
           if (m.IsInit) {
             e || ((r = m.Entity.GetComponent(158)), (e = r?.IsInFightState()));
-            var r = Protocol_1.Aki.Protocol.Ai.mNn.create();
-            var a = m.Entity.GetComponent(1);
+            var r = Protocol_1.Aki.Protocol.Ai.mNn.create(),
+              a = m.Entity.GetComponent(1);
             if (
               a &&
               a.CreatureData.GetEntityType() ===
                 Protocol_1.Aki.Protocol.HBs.Proto_Monster
             ) {
-              var s;
-              var l;
-              const i = Protocol_1.Aki.Protocol.Ai.h2s.create();
-              var a = a.CreatureData.GetCreatureDataId();
+              var s,
+                l,
+                i = Protocol_1.Aki.Protocol.Ai.h2s.create(),
+                a = a.CreatureData.GetCreatureDataId();
               for ([s, l] of m.Entity.GetComponent(
                 38,
               ).AiController.AiHateList.GetHatredMap()) {
-                const C = Protocol_1.Aki.Protocol.Ai.n2s.create();
+                var C = Protocol_1.Aki.Protocol.Ai.n2s.create();
                 (C.rkn = MathUtils_1.MathUtils.NumberToLong(
                   ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(
                     s,
@@ -389,7 +395,7 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
                   (C._4n = l.HatredValue),
                   i.efs.push(C);
               }
-              const n =
+              var n =
                 BlackboardController_1.BlackboardController.PendingBlackboardParams.get(
                   a,
                 );
@@ -434,17 +440,17 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
           !ModelManager_1.ModelManager.GameModeModel.IsMulti) &&
         ModelManager_1.ModelManager.CombatMessageModel.NeedPushMove
       ) {
-        const _ = Protocol_1.Aki.Protocol.Xhs.create();
+        var _ = Protocol_1.Aki.Protocol.Xhs.create();
         for (const b of ModelManager_1.ModelManager.CombatMessageModel
           .MoveSyncSet) {
-          const g = b.CollectPendingMoveInfos();
+          var g = b.CollectPendingMoveInfos();
           g && _.Mys.push(g);
         }
-        _.Mys.length > 0 && Net_1.Net.Send(29494, _),
+        0 < _.Mys.length && Net_1.Net.Send(29494, _),
           (ModelManager_1.ModelManager.CombatMessageModel.NeedPushMove = !1);
       }
-      const M = this.Model.MessagePack;
-      if (M.Kkn.length > 0) {
+      var M = this.Model.MessagePack;
+      if (0 < M.Kkn.length) {
         for (const c of M.Kkn)
           c.Qkn &&
             CombatDebugController_1.CombatDebugController.CombatContextInfoMessage(
@@ -461,9 +467,9 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
     }
   }
   static nyt(e) {
-    const o = MathUtils_1.MathUtils.LongToNumber(e.rkn);
-    const t = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
-    const r = MathUtils_1.MathUtils.LongToNumber(e.a4n);
+    var o = MathUtils_1.MathUtils.LongToNumber(e.rkn),
+      t = ModelManager_1.ModelManager.CreatureModel.GetEntity(o),
+      r = MathUtils_1.MathUtils.LongToNumber(e.a4n);
     if (
       (CombatMessageController.IsDebugMessageLog &&
         Log_1.Log.CheckDebug() &&
@@ -484,10 +490,10 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
             ["Originator", r],
           );
       else {
-        const a = e.m4n[0].h4n;
+        var a = e.m4n[0].h4n;
         if (t.Entity.Active) {
-          let s;
-          var l = CombatMessageController.Model.GetMessageBuffer(r);
+          var s,
+            l = CombatMessageController.Model.GetMessageBuffer(r);
           l &&
             ((s = t.Entity.GetComponent(0)),
             CombatMessageController.Model.SetEntityMap(t.Id, r),
@@ -550,8 +556,8 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
       ));
   }
   static _yt(e) {
-    const o = MathUtils_1.MathUtils.LongToNumber(e.rkn);
-    let t = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
+    var o = MathUtils_1.MathUtils.LongToNumber(e.rkn),
+      t = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
     t
       ? (t = t.Entity.GetComponent(38))
         ? t.OnSyncAiInformation(e)
@@ -567,10 +573,10 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
         );
   }
   static EntityLoadCompleteNotify(e, o) {
-    const t = o.aFn;
+    var t = o.aFn;
     for (const a of o.sfs) {
-      var r = MathUtils_1.MathUtils.LongToNumber(a);
-      var r = ModelManager_1.ModelManager.CreatureModel.GetEntity(r);
+      var r = MathUtils_1.MathUtils.LongToNumber(a),
+        r = ModelManager_1.ModelManager.CreatureModel.GetEntity(r);
       r && r.Entity.GetComponent(38)?.SetLoadCompletePlayer(t);
     }
   }
@@ -580,7 +586,7 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
     o && o.Entity.GetComponent(57).ClearReplaySamples();
   }
   static MaterialNotify(e, o) {
-    if (o.f4n.g4n.length <= 0 || o.f4n.g4n === "None")
+    if (o.f4n.g4n.length <= 0 || "None" === o.f4n.g4n)
       CombatDebugController_1.CombatDebugController.CombatWarn(
         "Material",
         e,
@@ -643,9 +649,9 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
   (CombatMessageController.YEt = new Map()),
   (CombatMessageController.QEt = (e) => {
     for (const r of e.Kkn) {
-      var o;
-      var t = r.$Gs;
-      var t = r[t];
+      var o,
+        t = r.$Gs,
+        t = r[t];
       r.SEs
         ? ((o = r.SEs), _a.$Et(o.$Gs), _a.JEt(t.r4n, o))
         : r.EEs && ((o = r.EEs), _a.$Et(o.$Gs), _a.zEt(t.r4n, o));
@@ -659,11 +665,11 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
   (CombatMessageController.ZEt = new Map()),
   (CombatMessageController.tyt = new Set()),
   (CombatMessageController.VEt = (e) => {
-    let o;
-    let t;
-    let r;
-    const a = MathUtils_1.MathUtils.LongToNumber(e.rkn);
-    const s = ModelManager_1.ModelManager.CreatureModel.GetEntity(a);
+    var o,
+      t,
+      r,
+      a = MathUtils_1.MathUtils.LongToNumber(e.rkn),
+      s = ModelManager_1.ModelManager.CreatureModel.GetEntity(a);
     s
       ? s.IsInit &&
         ((o = WorldGlobal_1.WorldGlobal.ToUeVector(e.rIs)),
@@ -709,8 +715,8 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
     for (const o of e.Mys) _a.nyt(o);
   }),
   (CombatMessageController.WEt = (e) => {
-    var o = MathUtils_1.MathUtils.LongToNumber(e.r4n.rkn);
-    var o = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
+    var o = MathUtils_1.MathUtils.LongToNumber(e.r4n.rkn),
+      o = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
     if (o)
       if (e.m4n.length <= 0)
         Log_1.Log.CheckError() &&
@@ -723,8 +729,8 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
             ["TimeStamp", e.r4n.h4n],
           );
       else if (o.Entity.Active) {
-        let t = MathUtils_1.MathUtils.LongToNumber(e.r4n.a4n);
-        var r = CombatMessageController.Model.GetMessageBuffer(t);
+        var t = MathUtils_1.MathUtils.LongToNumber(e.r4n.a4n),
+          r = CombatMessageController.Model.GetMessageBuffer(t);
         r &&
           ((a = o.Entity.GetComponent(0)),
           CombatMessageController.Model.SetEntityMap(o.Id, t),
@@ -737,8 +743,8 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
           t.ReceiveMoveInfos(e.m4n, e.r4n);
       } else {
         if (!o.IsInit) return;
-        var r = o.Entity.GetComponent(57);
-        var a = e.m4n[e.m4n.length - 1];
+        var r = o.Entity.GetComponent(57),
+          a = e.m4n[e.m4n.length - 1];
         CombatMessageController.syt(a.$kn, CombatMessageController.ayt),
           CombatMessageController.hyt(a.D3n, CombatMessageController.lyt);
         const s = o.Entity.GetComponent(3);
@@ -756,8 +762,8 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
   }),
   (CombatMessageController.PreAiControlSwitchNotify = (e) => {
     for (const r of e.sfs) {
-      const o = MathUtils_1.MathUtils.LongToNumber(r);
-      let t = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
+      var o = MathUtils_1.MathUtils.LongToNumber(r),
+        t = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
       t
         ? (t = t.Entity.GetComponent(38)) && t.AiController.PreSwitchControl()
         : CombatDebugController_1.CombatDebugController.CombatWarn(
@@ -801,4 +807,4 @@ class CombatMessageController extends ControllerBase_1.ControllerBase {
     null,
   ),
   (exports.CombatMessageController = CombatMessageController);
-// # sourceMappingURL=CombatMessageController.js.map
+//# sourceMappingURL=CombatMessageController.js.map

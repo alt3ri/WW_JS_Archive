@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelPlayInfo = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const PublicUtil_1 = require("../../Common/PublicUtil");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const GeneralLogicTreeUtil_1 = require("../GeneralLogicTree/GeneralLogicTreeUtil");
-const LogicTreeContainer_1 = require("../GeneralLogicTree/LogicTreeContainer");
-const QuestDefine_1 = require("../QuestNew/QuestDefine");
-const LevelPlayDefine_1 = require("./LevelPlayDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../Common/PublicUtil"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  GeneralLogicTreeUtil_1 = require("../GeneralLogicTree/GeneralLogicTreeUtil"),
+  LogicTreeContainer_1 = require("../GeneralLogicTree/LogicTreeContainer"),
+  QuestDefine_1 = require("../QuestNew/QuestDefine"),
+  LevelPlayDefine_1 = require("./LevelPlayDefine");
 class LevelPlayInfo extends LogicTreeContainer_1.LogicTreeContainer {
   constructor(t) {
     super(),
@@ -51,10 +51,10 @@ class LevelPlayInfo extends LogicTreeContainer_1.LogicTreeContainer {
     return this.ac;
   }
   get IsClose() {
-    return this.ac === 0;
+    return 0 === this.ac;
   }
   get IsFinish() {
-    return this.ac === 3;
+    return 3 === this.ac;
   }
   get CanExecOpenAction() {
     return this.ac < 3;
@@ -62,18 +62,18 @@ class LevelPlayInfo extends LogicTreeContainer_1.LogicTreeContainer {
   get CanTrack() {
     if (
       this.LevelPlayEntityId !== QuestDefine_1.INVALID_ENTITYDATAID &&
-      this.ac === 2 &&
+      2 === this.ac &&
       this.Ufi &&
       this.BehaviorTree
     ) {
       if (this.BehaviorTree.IsChallengeUi()) return !0;
-      const t = this.BehaviorTree.GetActiveChildQuestNodesId();
+      var t = this.BehaviorTree.GetActiveChildQuestNodesId();
       if (t)
         for (const r of t) {
-          const e = this.BehaviorTree.GetNode(r);
-          const i = e
-            ? PublicUtil_1.PublicUtil.GetConfigTextByKey(e.TrackTextConfig)
-            : void 0;
+          var e = this.BehaviorTree.GetNode(r),
+            i = e
+              ? PublicUtil_1.PublicUtil.GetConfigTextByKey(e.TrackTextConfig)
+              : void 0;
           if (i && !StringUtils_1.StringUtils.IsBlank(i) && !e.ContainTag(2))
             return !0;
         }
@@ -143,14 +143,14 @@ class LevelPlayInfo extends LogicTreeContainer_1.LogicTreeContainer {
   get IsInteractValid() {
     return (
       !ModelManager_1.ModelManager.GameModeModel.IsMulti ||
-      this.OnlineType !== "Local"
+      "Local" !== this.OnlineType
     );
   }
   get LevelPlayType() {
     return this.Bfi;
   }
   InitConfig() {
-    const t = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayConfig(
+    var t = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayConfig(
       this.uli,
     );
     if (t) {
@@ -204,10 +204,9 @@ class LevelPlayInfo extends LogicTreeContainer_1.LogicTreeContainer {
     this.Dfi = t;
   }
   UpdateDistanceSquared(t) {
-    const e =
-      GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetEntityConfigPosition(
-        this.LevelPlayEntityId,
-      );
+    var e = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetEntityConfigPosition(
+      this.LevelPlayEntityId,
+    );
     e
       ? (this.CacheDistanceSquared = this.bfi(e, t))
       : Log_1.Log.CheckWarn() &&
@@ -236,4 +235,4 @@ class LevelPlayInfo extends LogicTreeContainer_1.LogicTreeContainer {
   }
 }
 exports.LevelPlayInfo = LevelPlayInfo;
-// # sourceMappingURL=LevelPlay.js.map
+//# sourceMappingURL=LevelPlay.js.map

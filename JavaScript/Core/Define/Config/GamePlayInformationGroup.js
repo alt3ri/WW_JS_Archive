@@ -27,22 +27,22 @@ class GamePlayInformationGroup {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetInfogroupAt(t) {
     return this.infogroup(t);
   }
   infogroup(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   infogroupLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   infogroupArray() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -52,9 +52,9 @@ class GamePlayInformationGroup {
       : null;
   }
   iconstring(t) {
-    const i = this.J7.__offset(this.z7, 8);
+    var i = this.J7.__offset(this.z7, 8);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.GamePlayInformationGroup = GamePlayInformationGroup;
-// # sourceMappingURL=GamePlayInformationGroup.js.map
+//# sourceMappingURL=GamePlayInformationGroup.js.map

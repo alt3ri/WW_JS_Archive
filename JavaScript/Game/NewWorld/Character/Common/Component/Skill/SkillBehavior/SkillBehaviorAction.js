@@ -1,32 +1,32 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkillBehaviorAction = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const GameplayCueById_1 = require("../../../../../../../Core/Define/ConfigQuery/GameplayCueById");
-const Protocol_1 = require("../../../../../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../../../../../Core/Entity/EntitySystem");
-const Vector_1 = require("../../../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../../../Core/Utils/MathUtils");
-const CameraController_1 = require("../../../../../../Camera/CameraController");
-const CameraUtility_1 = require("../../../../../../Camera/CameraUtility");
-const TsBaseCharacter_1 = require("../../../../../../Character/TsBaseCharacter");
-const Global_1 = require("../../../../../../Global");
-const GlobalData_1 = require("../../../../../../GlobalData");
-const ModelManager_1 = require("../../../../../../Manager/ModelManager");
-const PhantomUtil_1 = require("../../../../../../Module/Phantom/PhantomUtil");
-const CombatDebugController_1 = require("../../../../../../Utils/CombatDebugController");
-const BlackboardController_1 = require("../../../../../../World/Controller/BlackboardController");
-const WorldGlobal_1 = require("../../../../../../World/WorldGlobal");
-const BulletController_1 = require("../../../../../Bullet/BulletController");
-const BulletUtil_1 = require("../../../../../Bullet/BulletUtil");
-const SkillBehaviorMisc_1 = require("./SkillBehaviorMisc");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  GameplayCueById_1 = require("../../../../../../../Core/Define/ConfigQuery/GameplayCueById"),
+  Protocol_1 = require("../../../../../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../../../../../Core/Entity/EntitySystem"),
+  Vector_1 = require("../../../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../../../Core/Utils/MathUtils"),
+  CameraController_1 = require("../../../../../../Camera/CameraController"),
+  CameraUtility_1 = require("../../../../../../Camera/CameraUtility"),
+  TsBaseCharacter_1 = require("../../../../../../Character/TsBaseCharacter"),
+  Global_1 = require("../../../../../../Global"),
+  GlobalData_1 = require("../../../../../../GlobalData"),
+  ModelManager_1 = require("../../../../../../Manager/ModelManager"),
+  PhantomUtil_1 = require("../../../../../../Module/Phantom/PhantomUtil"),
+  CombatDebugController_1 = require("../../../../../../Utils/CombatDebugController"),
+  BlackboardController_1 = require("../../../../../../World/Controller/BlackboardController"),
+  WorldGlobal_1 = require("../../../../../../World/WorldGlobal"),
+  BulletController_1 = require("../../../../../Bullet/BulletController"),
+  BulletUtil_1 = require("../../../../../Bullet/BulletUtil"),
+  SkillBehaviorMisc_1 = require("./SkillBehaviorMisc");
 class SkillBehaviorAction {
   static Begin(a, r) {
     if (r.Entity.GetComponent(3).IsAutonomousProxy)
       try {
         for (let e = 0; e < a.Num(); e++) {
-          const i = a.Get(e);
+          var i = a.Get(e);
           switch (
             (CombatDebugController_1.CombatDebugController.CombatDebug(
               "Skill",
@@ -152,9 +152,9 @@ class SkillBehaviorAction {
       SkillBehaviorMisc_1.paramMap.delete(r);
   }
   static rzo(a, r) {
-    const i = r.Entity.GetComponent(3);
-    let l = i.ActorLocation;
-    let e = i.ActorForward;
+    var i = r.Entity.GetComponent(3);
+    let l = i.ActorLocation,
+      e = i.ActorForward;
     switch (a.LocationType) {
       case 0:
         break;
@@ -224,9 +224,9 @@ class SkillBehaviorAction {
           Global_1.Global.CharacterCameraManager.GetCameraLocation(),
         )).Set(e.X, e.Y, 0);
     }
-    let o;
-    const s = Vector_1.Vector.Create(l);
-    var c = new UE.Transform(e.Rotation(), l, Vector_1.Vector.OneVector);
+    var o,
+      s = Vector_1.Vector.Create(l),
+      c = new UE.Transform(e.Rotation(), l, Vector_1.Vector.OneVector);
     if (((l = c.TransformPositionNoScale(a.LocationOffset)), a.Restrict)) {
       let e = i.ActorLocation;
       switch (a.RestrictType) {
@@ -254,13 +254,13 @@ class SkillBehaviorAction {
           break;
         case 1: {
           let e = !1;
-          const k = Vector_1.Vector.Create();
-          const v = Vector_1.Vector.Create();
+          var k = Vector_1.Vector.Create(),
+            v = Vector_1.Vector.Create();
           n.Subtraction(s, k);
           for (const h of SkillBehaviorMisc_1.angles) {
             k.RotateAngleAxis(h, Vector_1.Vector.UpVectorProxy, v),
               s.Addition(v, n);
-            const b = (0, SkillBehaviorMisc_1.forwardTrace)(
+            var b = (0, SkillBehaviorMisc_1.forwardTrace)(
               i,
               s,
               n,
@@ -289,7 +289,7 @@ class SkillBehaviorAction {
     }
     if (
       ((l = n.ToUeVector()),
-      a.Navigation > 0 &&
+      0 < a.Navigation &&
         !UE.NavigationSystemV1.K2_ProjectPointToNavigation(
           GlobalData_1.GlobalData.World,
           l,
@@ -320,8 +320,8 @@ class SkillBehaviorAction {
       i.SetActorLocation(l, SkillBehaviorMisc_1.CONTEXT + ".Final", !1);
   }
   static bd(e, a) {
-    let r = void 0;
-    let i = void 0;
+    let r = void 0,
+      i = void 0;
     switch (e.RotationType) {
       case 0:
         i = a.SkillComponent.SkillTarget;
@@ -356,8 +356,8 @@ class SkillBehaviorAction {
         );
     }
     i && i.Entity !== a.Entity && (r = i.Entity.GetComponent(1).ActorLocation);
-    let t;
-    const o = a.Entity.GetComponent(3);
+    var t,
+      o = a.Entity.GetComponent(3);
     let s = void 0;
     ((s = r
       ? (((t = r.op_Subtraction(o.ActorLocation)).Z = 0), t.Rotation())
@@ -371,11 +371,11 @@ class SkillBehaviorAction {
       o.SetActorRotation(s, "SkillBehaviorAction.SetDirection");
   }
   static nzo(a, r) {
-    const i = r.Entity.GetComponent(19);
+    var i = r.Entity.GetComponent(19);
     for (let e = 0; e < a.Cues.Num(); e++) {
-      const l = a.Cues.Get(e);
-      var t = GameplayCueById_1.configGameplayCueById.GetConfig(l.CueId);
-      var t = i.CreateGameplayCue(t, { Sync: !0 });
+      var l = a.Cues.Get(e),
+        t = GameplayCueById_1.configGameplayCueById.GetConfig(l.CueId),
+        t = i.CreateGameplayCue(t, { Sync: !0 });
       l.Stop &&
         (0, SkillBehaviorMisc_1.getEndSkillBehaviorParamList)(r.Skill).push({
           Entity: r.Entity,
@@ -386,8 +386,8 @@ class SkillBehaviorAction {
   }
   static szo(a, r) {
     for (let e = 0; e < a.Bullets.Num(); e++) {
-      var i;
-      const l = a.Bullets.Get(e);
+      var i,
+        l = a.Bullets.Get(e);
       for (let e = 0; e < l.bulletCount; e++) {
         let e = -1;
         r.Skill.MontageContextId
@@ -463,7 +463,7 @@ class SkillBehaviorAction {
       });
   }
   static _zo(e, a) {
-    const r = a.Entity.GetComponent(3).Actor.CapsuleComponent;
+    var r = a.Entity.GetComponent(3).Actor.CapsuleComponent;
     e.CollisionRestore &&
       (0, SkillBehaviorMisc_1.getEndSkillBehaviorParamList)(a.Skill).push({
         Entity: a.Entity,
@@ -474,7 +474,7 @@ class SkillBehaviorAction {
       r.SetCollisionResponseToChannel(e.CollisionChannel, e.CollisionResponse);
   }
   static uzo(e, a) {
-    let r = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
+    var r = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
       a.Entity,
       Protocol_1.Aki.Protocol.Oqs.Proto_ESummonTypeConcomitantCustom,
       e.FollowIndex,
@@ -502,7 +502,7 @@ class SkillBehaviorAction {
       case 1:
         r = a.SkillComponent.SkillTarget?.Entity?.GetComponent(157);
     }
-    let i, l;
+    var i, l;
     r &&
       (e.Add
         ? ((i = {
@@ -522,7 +522,7 @@ class SkillBehaviorAction {
   static czo(e, a) {
     a = EntitySystem_1.EntitySystem.GetComponent(a.Entity.Id, 185);
     a?.Valid &&
-      e.Tag.TagName !== "None" &&
+      "None" !== e.Tag.TagName &&
       (e.Add ? a.AddTag(e.Tag.TagId) : a.RemoveTag(e.Tag.TagId));
   }
   static mzo(e, a) {
@@ -531,4 +531,4 @@ class SkillBehaviorAction {
   }
 }
 exports.SkillBehaviorAction = SkillBehaviorAction;
-// # sourceMappingURL=SkillBehaviorAction.js.map
+//# sourceMappingURL=SkillBehaviorAction.js.map

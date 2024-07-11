@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChipHandBookChildItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
 class ChipHandBookChildItem extends UiPanelBase_1.UiPanelBase {
   constructor(i = void 0) {
     super(),
@@ -12,7 +12,7 @@ class ChipHandBookChildItem extends UiPanelBase_1.UiPanelBase {
       (this.Nzt = void 0),
       (this.RHt = !1),
       (this.Ozt = (i) => {
-        this.Gzt && i === 1 && this.Gzt(this.Nzt);
+        this.Gzt && 1 === i && this.Gzt(this.Nzt);
       }),
       i && this.CreateThenShowByActor(i.GetOwner());
   }
@@ -33,20 +33,22 @@ class ChipHandBookChildItem extends UiPanelBase_1.UiPanelBase {
   Refresh(i, t, e) {
     this.Nzt = i;
     var i = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
-      6,
-      this.Nzt.Id,
-    );
-    var s =
-      ((this.RHt = void 0 === i),
-      this.GetItem(2).SetUIActive(this.RHt),
-      this.GetText(4).SetUIActive(!this.RHt),
-      ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayTitle(
+        6,
         this.Nzt.Id,
-      ));
-    var s =
-      (this.GetText(4).SetText(s), this.GetText(6).SetText(s), this.GetItem(7));
-    const h = this.GetItem(8);
-    var i = void 0 !== i && !i.IsRead;
+      ),
+      s =
+        ((this.RHt = void 0 === i),
+        this.GetItem(2).SetUIActive(this.RHt),
+        this.GetText(4).SetUIActive(!this.RHt),
+        ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayTitle(
+          this.Nzt.Id,
+        )),
+      s =
+        (this.GetText(4).SetText(s),
+        this.GetText(6).SetText(s),
+        this.GetItem(7)),
+      h = this.GetItem(8),
+      i = void 0 !== i && !i.IsRead;
     h.SetUIActive(this.RHt), this.RHt ? s.SetUIActive(!1) : s.SetUIActive(i);
   }
   SetNewState(i) {
@@ -59,7 +61,7 @@ class ChipHandBookChildItem extends UiPanelBase_1.UiPanelBase {
     this.Gzt = i;
   }
   SetToggleStateForce(i, t = 0) {
-    this.GetExtendToggle(0).SetToggleState(i), i === 1 && this.Gzt?.(this.Nzt);
+    this.GetExtendToggle(0).SetToggleState(i), 1 === i && this.Gzt?.(this.Nzt);
   }
   OnBeforeDestroy() {
     (this.Gzt = void 0), (this.Nzt = void 0), (this.RHt = !1);
@@ -69,4 +71,4 @@ class ChipHandBookChildItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ChipHandBookChildItem = ChipHandBookChildItem;
-// # sourceMappingURL=ChipHandBookChildItem.js.map
+//# sourceMappingURL=ChipHandBookChildItem.js.map

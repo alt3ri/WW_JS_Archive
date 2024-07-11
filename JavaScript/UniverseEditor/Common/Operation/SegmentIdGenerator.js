@@ -20,20 +20,20 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.getIdCountPerSegment =
     exports.loadIdSegmentConfig =
       void 0);
-const Init_1 = require("../../Interface/Init");
-const BranchDefine_1 = require("../BranchDefine");
-const Config_1 = require("../Config");
-const EventSystem_1 = require("../Misc/EventSystem");
-const File_1 = require("../Misc/File");
-const Log_1 = require("../Misc/Log");
-const Util_1 = require("../Misc/Util");
+const Init_1 = require("../../Interface/Init"),
+  BranchDefine_1 = require("../BranchDefine"),
+  Config_1 = require("../Config"),
+  EventSystem_1 = require("../Misc/EventSystem"),
+  File_1 = require("../Misc/File"),
+  Log_1 = require("../Misc/Log"),
+  Util_1 = require("../Misc/Util");
 function getIdSegmentConfigPath() {
   return (0, Init_1.isUe5)()
     ? "Content/Editor/Config/IdSegmentConfig.json"
     : "Content/Aki/UniverseEditor/Config/IdSegmentConfig.json";
 }
 function loadIdSegmentConfig() {
-  const e = (0, File_1.getProjectPath)(getIdSegmentConfigPath());
+  var e = (0, File_1.getProjectPath)(getIdSegmentConfigPath());
   return (0, Util_1.readJsonObj)(e, []);
 }
 exports.loadIdSegmentConfig = loadIdSegmentConfig;
@@ -52,9 +52,9 @@ function checkSegmentConfig(e) {
 exports.getIdCountPerSegment = getIdCountPerSegment;
 let segmentMap = new Map();
 function getSegmentMap() {
-  let e;
+  var e;
   return (
-    segmentMap.size === 0 &&
+    0 === segmentMap.size &&
       (checkSegmentConfig((e = loadIdSegmentConfig())),
       (segmentMap = (0, Util_1.arrayToMap)(e, "SegmentId"))),
     segmentMap
@@ -81,7 +81,7 @@ function getCreatorBySegmentId(e) {
 let segmentIdByCreator = new Map();
 function getSegmentIdByCreator(e) {
   return (
-    segmentIdByCreator.size === 0 &&
+    0 === segmentIdByCreator.size &&
       ((segmentIdByCreator = new Map()),
       getSegmentMap().forEach((e) => {
         segmentIdByCreator.set(e.Name, e.SegmentId);
@@ -96,8 +96,8 @@ function getCreatorById(e) {
   (exports.getCreatorById = getCreatorById);
 let localSegmentRow = void 0;
 function getLocalSegmentRow() {
-  var e = getSegmentMap();
-  var e = Array.from(e.values());
+  var e = getSegmentMap(),
+    e = Array.from(e.values());
   if (
     !(localSegmentRow =
       !localSegmentRow && Config_1.Config.Instance.VirtualMacAddress
@@ -118,13 +118,13 @@ function getLocalSegmentRow() {
   return localSegmentRow;
 }
 function getAccountSegmentRows() {
-  let e;
-  const t = [];
+  var e,
+    t = [];
   for ([, e] of getSegmentMap()) e.Account && t.push(e);
   return t;
 }
 function getAccountSegmentNames() {
-  const e = getSegmentMap();
+  var e = getSegmentMap();
   const t = [];
   return (
     e.forEach((e) => {
@@ -179,9 +179,9 @@ class SegmentIdGenerator {
         (this.MinId = this.Se * ID_COUNT_PER_SEGMENT + e[0]),
           (this.MaxId = this.Se * ID_COUNT_PER_SEGMENT + e[1]);
       }
-      this.MinId === 0 && (this.MinId = 1);
-      var e = SegmentIdGenerator.ne(this.Name);
-      const t = (0, Util_1.readJsonObj)(e);
+      0 === this.MinId && (this.MinId = 1);
+      var e = SegmentIdGenerator.ne(this.Name),
+        t = (0, Util_1.readJsonObj)(e);
       if (t) {
         if (t.Name !== this.Name)
           throw new Error(`Generator file name [${t.Name}] !== [${this.Name}]`);
@@ -217,7 +217,7 @@ class SegmentIdGenerator {
     return void 0 !== this.Se;
   }
   Ee() {
-    const e = { Name: this.Name, Id: this.xe };
+    var e = { Name: this.Name, Id: this.xe };
     (0, Util_1.writeJson)(e, SegmentIdGenerator.ne(this.Name));
   }
   ToString() {
@@ -237,7 +237,7 @@ class SegmentIdGenerator {
     this.SetId(e), this.Ee();
   }
   Re() {
-    const e = this.xe;
+    var e = this.xe;
     if ((this.xe++, this.xe >= this.MaxId))
       throw new Error(
         `[${this.Name}]Id生成失败: 机器[${Config_1.Config.Instance.MacAddress}]的配置id耗尽`,
@@ -245,7 +245,7 @@ class SegmentIdGenerator {
     return e;
   }
   GenOne() {
-    const e = this.Re();
+    var e = this.Re();
     return this.Ee(), e;
   }
 }
@@ -290,10 +290,10 @@ class CustomSegmentIdGenerator extends SegmentIdGenerator {
     return e < 0 ? (e = this.MinId) : (e += 1), e;
   }
   ReScan() {
-    const e = this.we();
+    var e = this.we();
     this.SaveWithId(e),
       (0, Log_1.log)(`Id Generator [${this.Name}] scan id to [${e}]`);
   }
 }
 exports.CustomSegmentIdGenerator = CustomSegmentIdGenerator;
-// # sourceMappingURL=SegmentIdGenerator.js.map
+//# sourceMappingURL=SegmentIdGenerator.js.map

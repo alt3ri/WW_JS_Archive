@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceMotionActor = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ModelUtil_1 = require("../../../Core/Utils/ModelUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const REVERTIME = 3e3;
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ModelUtil_1 = require("../../../Core/Utils/ModelUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  REVERTIME = 3e3;
 class AdviceMotionActor {
   constructor() {
     (this.z6e = void 0),
@@ -47,14 +47,10 @@ class AdviceMotionActor {
       });
   }
   s8e(t, s) {
-    var t = EntitySystem_1.EntitySystem.Get(t);
-    let i = t.GetComponent(182);
-    var t = t
-      .GetComponent(0)
-      .GetAdviceInfo()
-      .GetAdviceData()
-      .GetAdviceMotionId();
-    t !== 0 &&
+    var t = EntitySystem_1.EntitySystem.Get(t),
+      i = t.GetComponent(182),
+      t = t.GetComponent(0).GetAdviceInfo().GetAdviceData().GetAdviceMotionId();
+    0 !== t &&
       (this.ActorInternal ||
         ((this.ActorInternal = ActorSystem_1.ActorSystem.Get(
           UE.Actor.StaticClass(),
@@ -107,7 +103,7 @@ class AdviceMotionActor {
       .GetAdviceInfo()
       .GetAdviceData()
       .GetAdviceMotionId();
-    if (t !== 0) {
+    if (0 !== t) {
       this.o8e();
       const s = this.SkeletalMeshInternal;
       var t = ConfigManager_1.ConfigManager.MotionConfig.GetMotionAnimation(t);
@@ -141,11 +137,11 @@ class AdviceMotionActor {
     const t = this.SkeletalMeshInternal;
     t &&
       this.Td &&
-      this.Y6e > 0 &&
+      0 < this.Y6e &&
       TimerSystem_1.TimerSystem.Delay(() => {
         t &&
           this.Td &&
-          this.Y6e > 0 &&
+          0 < this.Y6e &&
           (t.SetHiddenInGame(!1),
           (this.z6e = TimerSystem_1.TimerSystem.Delay(this.i8e, REVERTIME)));
       }, TimerSystem_1.MIN_TIME);
@@ -157,10 +153,10 @@ class AdviceMotionActor {
   }
   o8e() {
     this.$6e &&
-      this.Y6e > 0 &&
+      0 < this.Y6e &&
       (this.$6e.RemoveMaterialControllerDataWithEnding(this.Y6e),
       (this.Y6e = 0));
   }
 }
 exports.AdviceMotionActor = AdviceMotionActor;
-// # sourceMappingURL=AdviceMotionActor.js.map
+//# sourceMappingURL=AdviceMotionActor.js.map

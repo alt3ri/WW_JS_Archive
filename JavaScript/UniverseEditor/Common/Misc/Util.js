@@ -101,13 +101,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.getCurrentClientRoot =
     exports.getCurrentP4Stream =
       void 0);
-const IEditor_1 = require("../../Interface/IEditor");
-const Init_1 = require("../../Interface/Init");
-const IUtil_1 = require("../../Interface/IUtil");
-const Platform_1 = require("../Platform/Platform");
-const Async_1 = require("./Async");
-const File_1 = require("./File");
-const Log_1 = require("./Log");
+const IEditor_1 = require("../../Interface/IEditor"),
+  Init_1 = require("../../Interface/Init"),
+  IUtil_1 = require("../../Interface/IUtil"),
+  Platform_1 = require("../Platform/Platform"),
+  Async_1 = require("./Async"),
+  File_1 = require("./File"),
+  Log_1 = require("./Log");
 function getEnumValues(e) {
   return Object.keys(e)
     .filter((t) => Number.isNaN(Number(t)))
@@ -134,10 +134,10 @@ function arrayToRecord(t) {
 }
 function calHash(e) {
   let r = 0;
-  const n = e.length;
-  if (n !== 0) {
+  var n = e.length;
+  if (0 !== n) {
     for (let t = 0; t < n; t++) {
-      const o = e.charCodeAt(t);
+      var o = e.charCodeAt(t);
       (r = (r << 5) - r + o), (r |= 0);
     }
     r < 0 && (r = -r);
@@ -153,7 +153,7 @@ function stringify(t, r, e = !0) {
   return JSON.stringify(
     t,
     (t, e) => {
-      if (!r || typeof t !== "string" || !t.startsWith("_")) return e;
+      if (!r || "string" != typeof t || !t.startsWith("_")) return e;
     },
     e ? 2 : void 0,
   );
@@ -164,7 +164,7 @@ function parse(t, e) {
       return (
         r instanceof Array &&
           r.forEach((t, e) => {
-            t === null && (r[e] = void 0);
+            null === t && (r[e] = void 0);
           }),
         r
       );
@@ -184,7 +184,7 @@ function parseIntSafe(t, e) {
   return Number.isNaN(t) ? 0 : t;
 }
 function parseBool(t) {
-  return !!t && (t === "1" || t === "true" || t === "True" || t === "TRUE");
+  return !!t && ("1" === t || "true" === t || "True" === t || "TRUE" === t);
 }
 function parseCsvIntArray(t) {
   return t
@@ -203,9 +203,9 @@ function stringifyEditor(t) {
     t,
     (t, e) => {
       if (
-        !(typeof t === "string" && t.length > 0) ||
+        !("string" == typeof t && 0 < t.length) ||
         t.startsWith("_") ||
-        typeof e === "object"
+        "object" == typeof e
       )
         return e;
     },
@@ -236,22 +236,22 @@ function writeDataJson(t, e) {
   writeJson(t, e, !0);
 }
 function getClassNameFromBpPath(t) {
-  const e = t.lastIndexOf(".");
+  var e = t.lastIndexOf(".");
   return e < 0
     ? ((0, Log_1.error)("Blueprint path is invalid: " + t), t)
     : t.slice(e + 1);
 }
 function createMultiData(e, t, r) {
   if (void 0 === e) return (0, IUtil_1.clearIgnoreField)(t, r);
-  if (t == null) return null;
-  if (typeof t !== "object" || typeof e !== "object")
+  if (null == t) return null;
+  if ("object" != typeof t || "object" != typeof e)
     return t !== e ? null : (0, IUtil_1.clearIgnoreField)(t, r);
   if (e instanceof Array) {
-    const n = t;
+    var n = t;
     if (!n || e.length !== n.length) return null;
     const a = [];
     for (let t = 0; t < e.length; t++) {
-      const o = createMultiData(e[t], n[t], r);
+      var o = createMultiData(e[t], n[t], r);
       a.push(o);
     }
     return a;
@@ -263,48 +263,48 @@ function createMultiData(e, t, r) {
     r?.(p) ||
       ((i = t[p]),
       (s = e[p]),
-      i === null || s === null
+      null === i || null === s
         ? (a[p] = null)
         : void 0 === i
           ? (a[p] = void 0 === s ? void 0 : null)
-          : (u = typeof i) === typeof s && u == "object"
+          : (u = typeof i) == typeof s && "object" == u
             ? ((u = createMultiData(i, s, r)), (a[p] = u))
             : (a[p] = i !== s ? null : i));
   }
   return a;
 }
 function applyMultiData(r, t, n) {
-  if (t === null) return r;
-  if (typeof t !== "object" || typeof r !== "object") return t;
+  if (null === t) return r;
+  if ("object" != typeof t || "object" != typeof r) return t;
   if (r instanceof Array) {
-    const e = t;
-    if (e !== null) {
-      if (e.length === 0 || e.length < r.length) return e;
-      e.length > 0 &&
+    var e = t;
+    if (null !== e) {
+      if (0 === e.length || e.length < r.length) return e;
+      0 < e.length &&
         e.forEach((t, e) => {
-          r[e] = typeof t !== "object" ? t : applyMultiData(r[e], t, n);
+          r[e] = "object" != typeof t ? t : applyMultiData(r[e], t, n);
         });
     }
     return r;
   }
-  let o;
-  let a;
-  let i;
-  let s;
-  const u = {};
+  var o,
+    a,
+    i,
+    s,
+    u = {};
   for (const c in t)
     n?.(c) ||
-      t === null ||
+      null === t ||
       ((o = t[c]),
       void 0 === r[c] &&
-        o !== null &&
+        null !== o &&
         (u[c] = (0, IUtil_1.removeNullField)(o)));
   for (const p in r)
     n?.(p) ||
       ((a = t[p]),
       (i = r[p]),
-      a !== null
-        ? (s = typeof a) === typeof i && s == "object"
+      null !== a
+        ? (s = typeof a) == typeof i && "object" == s
           ? ((s = applyMultiData(i, a, n)), (u[p] = s))
           : (u[p] = a)
         : (u[p] = i));
@@ -321,11 +321,11 @@ function strcmpi(t, e) {
       : 0;
 }
 function forEachField(t, e, r) {
-  if (typeof t === "object") {
-    const n = t;
+  if ("object" == typeof t) {
+    var n = t;
     for (const a in n) {
-      const o = n[a];
-      typeof o === "object" ? forEachField(o, e, r) : e(a, o) && r(n, a, o);
+      var o = n[a];
+      "object" == typeof o ? forEachField(o, e, r) : e(a, o) && r(n, a, o);
     }
   }
 }
@@ -333,15 +333,15 @@ function getMacAddress() {
   return (0, Platform_1.getPlatform)().GetMacAddress();
 }
 function genGuid() {
-  let r = new Date().getTime();
-  let n = 0;
+  let r = new Date().getTime(),
+    n = 0;
   return "xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx".replace(/[xy]/g, function (t) {
     let e = 16 * Math.random();
     return (
-      r > 0
+      0 < r
         ? ((e = (r + e) % 16 | 0), (r = Math.floor(r / 16)))
         : ((e = (n + e) % 16 | 0), (n = Math.floor(n / 16))),
-      (t === "x" ? e : (3 & e) | 8).toString(16)
+      ("x" === t ? e : (3 & e) | 8).toString(16)
     );
   });
 }
@@ -361,7 +361,7 @@ function execAsUser(t, e) {
   );
 }
 function isRunAsAdmin() {
-  const [t] = exec("net session");
+  var [t] = exec("net session");
   return t;
 }
 function getProcessImagePathsByName(t) {
@@ -375,20 +375,20 @@ function isProcessRunningInPath(t) {
 }
 function isProcessRunning(t) {
   t = getProcessImagePathsByName(t);
-  return [t.length > 0, t];
+  return [0 < t.length, t];
 }
 function killProcess(t) {
   exec(`wmic process where "name='${t}'" delete`);
 }
 function getNameWithoutIndex(t) {
-  var e = t.match(/[^0-9]/g);
-  var e = t.lastIndexOf(e ? e[e.length - 1] : "");
+  var e = t.match(/[^0-9]/g),
+    e = t.lastIndexOf(e ? e[e.length - 1] : "");
   return "" + t.substring(0, e + 1);
 }
 function getNextName(t, e = "-") {
   if (!t) return `user${e}1`;
-  let r = -1;
-  let n = "";
+  let r = -1,
+    n = "";
   if (
     ((n = e
       ? ((r = t.lastIndexOf(e)), t.substring(r + 1))
@@ -400,7 +400,7 @@ function getNextName(t, e = "-") {
     return "" + t + e + "1";
   var o = Number.parseInt(n);
   if (isNaN(o)) return "" + t + e + "1";
-  const a = n.length;
+  var a = n.length;
   for (n = (o + 1).toString(); n.length < a; ) n = "0" + n;
   return "" + t.substring(0, r) + e + n;
 }
@@ -411,7 +411,7 @@ function getUniqueName(e, t, r = "-") {
   return n;
 }
 function getPreName(t, e = "-") {
-  let r, n;
+  var r, n;
   return t
     ? (r = t.lastIndexOf(e)) < 0 ||
       ((n = Number.parseInt(t.substring(r + 1))), isNaN(n))
@@ -420,24 +420,24 @@ function getPreName(t, e = "-") {
     : `user${e}1`;
 }
 function getNextPathName(t) {
-  const e = t.lastIndexOf(".");
-  const r = t.substring(e, t.length);
+  var e = t.lastIndexOf("."),
+    r = t.substring(e, t.length);
   return getNextName(t.substring(0, e)) + r;
 }
 function checkMonsterValid(t) {
   if (t.length < 2) return [{ X: 0, Y: 0, Z: 0 }, -1];
-  const e = t[0].X ?? 0;
-  const r = t[0].Y ?? 0;
-  const n = t[1].X ?? 0;
-  const o = t[1].Y ?? 0;
-  let a = n < e ? n : e;
-  let i = n < e ? e : n;
-  let s = o < r ? o : r;
-  let u = o < r ? r : o;
-  let c = 2;
+  var e = t[0].X ?? 0,
+    r = t[0].Y ?? 0,
+    n = t[1].X ?? 0,
+    o = t[1].Y ?? 0;
+  let a = n < e ? n : e,
+    i = n < e ? e : n,
+    s = o < r ? o : r,
+    u = o < r ? r : o,
+    c = 2;
   for (c = 2; c < t.length; c++) {
-    const p = t[c].X ?? 0;
-    const f = t[c].Y ?? 0;
+    var p = t[c].X ?? 0,
+      f = t[c].Y ?? 0;
     (a = p < a ? p : a),
       (i = p > i ? p : i),
       (s = f < s ? f : s),
@@ -452,7 +452,7 @@ function upperStringFirstLetter(t) {
   return t.charAt(0).toUpperCase() + t.slice(1);
 }
 function getClientDatas() {
-  const [t, e] = (0, Platform_1.getPlatform)().Exec(
+  var [t, e] = (0, Platform_1.getPlatform)().Exec(
     "p4 -ztag -Mj clients -t --me",
   );
   if (t)
@@ -462,7 +462,7 @@ function getClientDatas() {
       .map((t) => parse(t.trim().replace('"client"', '"Client"')));
 }
 function checkP4Connection() {
-  const [t, e] = (0, Platform_1.getPlatform)().Exec("p4 info");
+  var [t, e] = (0, Platform_1.getPlatform)().Exec("p4 info");
   return t && !e.includes("Perforce client error");
 }
 (exports.getEnumValues = getEnumValues),
@@ -519,7 +519,7 @@ let currentP4ClientData = void 0;
 function getP4ClientData() {
   if (currentP4ClientData) return currentP4ClientData;
   if (checkP4Connection()) {
-    const t = getClientDatas();
+    var t = getClientDatas();
     if (t) {
       const e = upperStringFirstLetter((0, File_1.getProjectPath)(""));
       return (currentP4ClientData = t.find((t) =>
@@ -536,11 +536,11 @@ function getP4ClientData() {
 function getStreamFromSpecFile(t) {
   if (t) {
     var e = (0, File_1.getProjectPath)(
-      "Content/Aki/JavaScript_Raw/UniverseEditor/Interface/IGlobal.js",
-    ).replace(/\\/g, "/");
-    var [t, e] = (0, Platform_1.getPlatform)().Exec(
-      `p4 -ztag -c ${t} filelog -m 1 ` + e,
-    );
+        "Content/Aki/JavaScript_Raw/UniverseEditor/Interface/IGlobal.js",
+      ).replace(/\\/g, "/"),
+      [t, e] = (0, Platform_1.getPlatform)().Exec(
+        `p4 -ztag -c ${t} filelog -m 1 ` + e,
+      );
     if (t) {
       t = e.split("\n").find((t) => t.includes("depotFile"));
       if (t)
@@ -551,7 +551,7 @@ function getStreamFromSpecFile(t) {
   }
 }
 function getStreamFromEnv() {
-  const t =
+  var t =
     process.env.Stream ??
     process.env.STREAM ??
     process.env.AKI_Stream ??
@@ -560,7 +560,7 @@ function getStreamFromEnv() {
 }
 let currentStream = void 0;
 function getCurrentP4Stream() {
-  let t;
+  var t;
   return (
     currentStream ||
       ((currentStream = getStreamFromEnv()) ||
@@ -577,7 +577,7 @@ function getCurrentClientName() {
   return getP4ClientData()?.Client;
 }
 function getCurrentP4Branch() {
-  const t = getCurrentP4Stream();
+  var t = getCurrentP4Stream();
   return t ? t.substring("//aki/".length) : void 0;
 }
 function getWorkspaceBranch() {
@@ -595,14 +595,14 @@ function getCurrentP4Owner() {
 let akiBasePath = void 0;
 function getAkiBaseLocalPath() {
   if (akiBasePath) return akiBasePath;
-  let e = getClientDatas();
+  var e = getClientDatas();
   if (e) {
-    e = e.filter((t) => t.Stream === "//AkiBase/mainline");
+    e = e.filter((t) => "//AkiBase/mainline" === t.Stream);
     if (e.length <= 0) (0, Log_1.error)("找不到AkiBase目录, 请先创建WorkSpace");
     else {
       let t = void 0;
       for (const n of e) {
-        const r = n.Root;
+        var r = n.Root;
         if ((0, File_1.existDir)(r)) {
           t = n;
           break;
@@ -617,7 +617,7 @@ exports.getAkiBaseLocalPath = getAkiBaseLocalPath;
 let devBranchPath = void 0;
 function getDevBranchLocalPath() {
   if (devBranchPath) return devBranchPath;
-  let e = getClientDatas();
+  var e = getClientDatas();
   if (e) {
     e = e.filter((t) => t.Stream?.startsWith("//aki/development"));
     if (e.length <= 0)
@@ -625,7 +625,7 @@ function getDevBranchLocalPath() {
     else {
       let t = void 0;
       for (const n of e) {
-        const r = n.Root;
+        var r = n.Root;
         if ((0, File_1.existDir)(r)) {
           t = n;
           break;
@@ -640,7 +640,7 @@ exports.getDevBranchLocalPath = getDevBranchLocalPath;
 let devBranchClientName = void 0;
 function getDevBranchClientName() {
   if (devBranchClientName) return devBranchClientName;
-  let e = getClientDatas();
+  var e = getClientDatas();
   if (e) {
     e = e.filter((t) => t.Stream?.startsWith("//aki/development"));
     if (e.length <= 0)
@@ -648,7 +648,7 @@ function getDevBranchClientName() {
     else {
       let t = void 0;
       for (const n of e) {
-        const r = n.Root;
+        var r = n.Root;
         if ((0, File_1.existDir)(r)) {
           t = n;
           break;
@@ -663,13 +663,13 @@ function getAkiBaseProjectPath(t) {
   return getAkiBaseLocalPath() + "/Source/Client/" + t;
 }
 function loadEditorSaviorSyncConfig() {
-  const t = new Map();
-  const e = (0, File_1.getUserDirPath)(".editor_savior/sync_config.json");
+  var t = new Map(),
+    e = (0, File_1.getUserDirPath)(".editor_savior/sync_config.json");
   if ((0, File_1.existFile)(e)) {
-    const r = readJsonObj(e);
+    var r = readJsonObj(e);
     if (r)
       for (const o in r) {
-        const n = r[o];
+        var n = r[o];
         n.forEach((t) => {
           t.Type = "EditorSavior";
         }),
@@ -679,14 +679,14 @@ function loadEditorSaviorSyncConfig() {
   return t;
 }
 function getCurrentClientEditorSaviorSyncData() {
-  let t = getCurrentP4Stream();
+  var t = getCurrentP4Stream();
   if (t) {
     t = loadEditorSaviorSyncConfig().get(t);
     if (t) return t.find((t) => t.ClientName === getCurrentClientName());
   }
 }
 function loadUgsSyncConfig() {
-  let t = (0, File_1.getProjectPath)("../../.ugs/state.json");
+  var t = (0, File_1.getProjectPath)("../../.ugs/state.json");
   if ((0, File_1.existFile)(t)) {
     t = readJsonObj(t);
     if (t)
@@ -694,9 +694,9 @@ function loadUgsSyncConfig() {
   }
 }
 function getCurrentSyncData() {
-  let t;
-  const e = getCurrentClientEditorSaviorSyncData();
-  const r = loadUgsSyncConfig();
+  var t,
+    e = getCurrentClientEditorSaviorSyncData(),
+    r = loadUgsSyncConfig();
   return e && r
     ? ((t = isNaN(e.Timestamp) ? -1 : e.Timestamp),
       (isNaN(r.Timestamp) ? -1 : r.Timestamp) < t ? e : r)
@@ -712,7 +712,7 @@ function getCurrentSyncData() {
 let currentSafeVersion = void 0;
 function getLocalSafeVersion() {
   if (void 0 === currentSafeVersion) {
-    const t = getCurrentSyncData();
+    var t = getCurrentSyncData();
     if (!t)
       return (
         (0, Log_1.warn)(
@@ -734,13 +734,13 @@ function getPlatformType() {
   return (0, Platform_1.getPlatform)().GetPlatformType();
 }
 function isUePlatform() {
-  return getPlatformType() === 0;
+  return 0 === getPlatformType();
 }
 function isNodeJsPlatform() {
-  return getPlatformType() === 1;
+  return 1 === getPlatformType();
 }
 function isRuntimePlatform() {
-  return getPlatformType() === 2;
+  return 2 === getPlatformType();
 }
 function isVectorEqual(t, e, r = 0, n = 1e-4) {
   return (
@@ -750,9 +750,9 @@ function isVectorEqual(t, e, r = 0, n = 1e-4) {
   );
 }
 function getVectorDistance(t, e) {
-  const r = (t.X ?? 0) - (e.X ?? 0);
-  const n = (t.Y ?? 0) - (e.Y ?? 0);
-  var t = (t.Z ?? 0) - (e.Z ?? 0);
+  var r = (t.X ?? 0) - (e.X ?? 0),
+    n = (t.Y ?? 0) - (e.Y ?? 0),
+    t = (t.Z ?? 0) - (e.Z ?? 0);
   return Math.sqrt(r * r + n * n + t * t);
 }
 function isVector2Equal(t, e, r = 0, n = 1e-4) {
@@ -776,8 +776,8 @@ function subVector(t, e) {
   };
 }
 function isTransformEqual(t, e, r = 1e-4, n = 1e-4, o = 1e-4) {
-  const a = { X: 0, Y: 0, Z: 0 };
-  const i = { X: 1, Y: 1, Z: 1 };
+  var a = { X: 0, Y: 0, Z: 0 },
+    i = { X: 1, Y: 1, Z: 1 };
   return (
     isVectorEqual(t.Pos || a, e.Pos || a, 0, r) &&
     isVectorEqual(t.Rot ?? a, e.Rot ?? a, 0, n) &&
@@ -801,7 +801,7 @@ function isPortInUse(t) {
   (exports.isPortInUse = isPortInUse);
 let localIp = void 0;
 function getLocalIp() {
-  let t, e;
+  var t, e;
   return (
     localIp ||
       (([e, t] = (0, Platform_1.getPlatform)().Exec("ipconfig")),
@@ -815,12 +815,12 @@ function getCommandLine() {
   return (0, Platform_1.getPlatform)().GetCommandLine();
 }
 function getEditorCommandArgs() {
-  const r = getCommandLine();
-  if ((r.shift(), r.length === 0)) return {};
-  const n = {};
-  const o = Object.keys(IEditor_1.defaultEditorArgConfig);
+  var r = getCommandLine();
+  if ((r.shift(), 0 === r.length)) return {};
+  var n = {},
+    o = Object.keys(IEditor_1.defaultEditorArgConfig);
   for (let e = 0; e < r.length; e++) {
-    let a = r[e];
+    var a = r[e];
     if (a.startsWith("-")) {
       a = a.slice(1);
       let t = "";
@@ -834,10 +834,10 @@ function getEditorCommandArgs() {
 function isValidVarName(t) {
   return (
     !(
-      t.length > 16 ||
+      16 < t.length ||
       !t[0] ||
-      (t[0] >= "0" && t[0] <= "9") ||
-      t === "q_count"
+      ("0" <= t[0] && t[0] <= "9") ||
+      "q_count" === t
     ) && /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/.test(t)
   );
 }
@@ -845,13 +845,13 @@ function isInPie() {
   return (0, Platform_1.getPlatform)().IsInPie();
 }
 function formatDateTime(t) {
-  var t = new Date(t);
-  const e = t.getFullYear();
-  const r = t.getMonth() + 1 > 9 ? t.getMonth() + 1 : "0" + (t.getMonth() + 1);
-  const n = t.getDate() > 9 ? t.getDate() : "0" + t.getDate();
-  const o = t.getHours() > 9 ? t.getHours() : "0" + t.getHours();
-  const a = t.getMinutes() > 9 ? t.getMinutes() : "0" + t.getMinutes();
-  const i = t.getSeconds() > 9 ? t.getSeconds() : "0" + t.getSeconds();
+  var t = new Date(t),
+    e = t.getFullYear(),
+    r = 9 < t.getMonth() + 1 ? t.getMonth() + 1 : "0" + (t.getMonth() + 1),
+    n = 9 < t.getDate() ? t.getDate() : "0" + t.getDate(),
+    o = 9 < t.getHours() ? t.getHours() : "0" + t.getHours(),
+    a = 9 < t.getMinutes() ? t.getMinutes() : "0" + t.getMinutes(),
+    i = 9 < t.getSeconds() ? t.getSeconds() : "0" + t.getSeconds();
   return (
     e +
     `-${r}-${n}-${"星期" + "日一二三四五六".charAt(t.getDay())} ${o}:${a}:` +
@@ -859,13 +859,13 @@ function formatDateTime(t) {
   );
 }
 function stringIsNullOrEmpty(t) {
-  return typeof t !== "string" || void 0 === t || t.length === 0;
+  return "string" != typeof t || void 0 === t || 0 === t.length;
 }
 function getNetWorkAddress() {
-  let [t, e] = exec(
-    "wmic path Win32_NetworkAdapter where \"PNPDeviceID like '%PCI%' AND AdapterTypeID='0'\" get name, MacAddress",
+  var [t, e] = exec(
+    `wmic path Win32_NetworkAdapter where "PNPDeviceID like '%PCI%' AND AdapterTypeID='0'" get name, MacAddress`,
   );
-  if (t && e) {
+  if (t && e)
     return (
       (t = e
         .split(
@@ -881,14 +881,13 @@ function getNetWorkAddress() {
       t[4] +
       t[5]
     );
-  }
 }
 function deepCopyData(t) {
   return JSON.parse(JSON.stringify(t));
 }
 function toDepotPath(t) {
-  const e = getCurrentP4Stream();
-  let r = getCurrentClientRoot();
+  var e = getCurrentP4Stream(),
+    r = getCurrentClientRoot();
   if (e && r)
     return (
       (t = (0, File_1.getAbsolutePath)(t)),
@@ -897,32 +896,32 @@ function toDepotPath(t) {
     );
 }
 async function doJsonHttpGet(t, e) {
-  const r = await (0, Platform_1.getPlatform)().DoJsonHttpReq("GET", t, e);
-  if (r.Status !== 200)
+  var r = await (0, Platform_1.getPlatform)().DoJsonHttpReq("GET", t, e);
+  if (200 !== r.Status)
     throw new Error(
       `doJsonHttpGet ${t} ${e} failed, status: ${r.Status}, data: ` + r.Data,
     );
   return r.Data;
 }
 async function doJsonHttpPost(t, e) {
-  const r = await (0, Platform_1.getPlatform)().DoJsonHttpReq("POST", t, e);
-  if (r.Status !== 201 && r.Status !== 200)
+  var r = await (0, Platform_1.getPlatform)().DoJsonHttpReq("POST", t, e);
+  if (201 !== r.Status && 200 !== r.Status)
     throw new Error(
       `doJsonHttpPost ${t} ${e} failed, status: ${r.Status}, data: ` + r.Data,
     );
   return r.Data;
 }
 async function doJsonHttpDelete(t, e) {
-  const r = await (0, Platform_1.getPlatform)().DoJsonHttpReq("DELETE", t, e);
-  if (r.Status !== 204)
+  var r = await (0, Platform_1.getPlatform)().DoJsonHttpReq("DELETE", t, e);
+  if (204 !== r.Status)
     throw new Error(
       `doJsonHttpDelete ${t} ${e} failed, status: ${r.Status}, data: ` + r.Data,
     );
   return r.Data;
 }
 function compareTextOrder(t, e) {
-  let r = t.replace(/_[^_]*$/, "");
-  let n = e.replace(/_[^_]*$/, "");
+  var r = t.replace(/_[^_]*$/, ""),
+    n = e.replace(/_[^_]*$/, "");
   return r !== n
     ? r < n
       ? -1
@@ -938,8 +937,8 @@ function compareTextOrder(t, e) {
           : 1;
 }
 function getBranchReqShortPath(t) {
-  const e = (0, File_1.getAbsolutePath)(t).replace(/\\/g, "/");
-  const r = e.indexOf("Source/");
+  var e = (0, File_1.getAbsolutePath)(t).replace(/\\/g, "/"),
+    r = e.indexOf("Source/");
   if (r < 0)
     (0, Log_1.error)(
       `文件: ${t} 不在分支 Source/ 目录下管理, 请确认是否为分支内文件 `,
@@ -967,14 +966,14 @@ function getBranchOriginsDataSync(t) {
   }
 }
 function isCurrentBranchAsset(t) {
-  let e;
-  var t = getBranchOriginsDataSync(t);
+  var e,
+    t = getBranchOriginsDataSync(t);
   return !!t && ((e = "//aki/" + getWorkspaceBranch()), t.Origins.includes(e));
 }
 function getFileDepotInfo(t) {
-  let e;
-  let r;
-  var t = getBranchReqShortPath(t);
+  var e,
+    r,
+    t = getBranchReqShortPath(t);
   return t
     ? (([r, e] = exec(
         (t = `curl -X POST http://tools.aki.kuro.com:1025/multibranch/aki/file/exist -H "Content-Type:application/json" -d "{\\"filePath\\":\\"${t}}\\""`),
@@ -999,11 +998,11 @@ async function getFileDepotInfoAsync(t) {
     if (
       (e = await (async () => {
         try {
-          let t;
-          var e = await doJsonHttpPost(
-            "http://tools.aki.kuro.com:1025/multibranch/aki/file/exist",
-            r,
-          );
+          var t,
+            e = await doJsonHttpPost(
+              "http://tools.aki.kuro.com:1025/multibranch/aki/file/exist",
+              r,
+            );
           return e
             ? { Success: !0, Result: e.data }
             : ((t = `获取仓库信息失败: ${e} (${stringify(r)})`),
@@ -1021,25 +1020,25 @@ async function getFileDepotInfoAsync(t) {
 async function getBatchFileBranchDataAsync(e) {
   const r = getCurrentP4Stream();
   if (!r) return { Success: !1, Error: "获取当前分支失败" };
-  const t = [];
-  const n = new Map();
-  const o = new Map();
+  var t = [],
+    n = new Map(),
+    o = new Map();
   for (const l of e) {
-    var a;
-    const i = getBranchReqShortPath(l);
+    var a,
+      i = getBranchReqShortPath(l);
     i &&
       (a = await getFileDepotInfoAsync(i)).Success &&
-      a.Result.findIndex((t) => t.endsWith(r)) !== -1 &&
+      -1 !== a.Result.findIndex((t) => t.endsWith(r)) &&
       (o.set(i, a.Result), t.push(i), n.set(i, l));
   }
-  const s = new Map();
-  var e = { filePaths: t };
+  var s = new Map(),
+    e = { filePaths: t };
   try {
-    let u;
-    const c = await doJsonHttpPost(
-      "http://tools.aki.kuro.com:1025/multibranch/aki/file_origins/batch",
-      e,
-    );
+    var u,
+      c = await doJsonHttpPost(
+        "http://tools.aki.kuro.com:1025/multibranch/aki/file_origins/batch",
+        e,
+      );
     if (!c)
       return (
         (u = `获取分支信息失败: ${c} (${stringify(e)})`),
@@ -1047,10 +1046,10 @@ async function getBatchFileBranchDataAsync(e) {
         { Success: !1, Error: u }
       );
     for (const [x, g] of Object.entries(c.data)) {
-      const p = n.get(x);
+      var p = n.get(x);
       if (g.useDefault) {
-        const f = o.get(x) ?? [];
-        if (!(f.length > 0)) {
+        var f = o.get(x) ?? [];
+        if (!(0 < f.length)) {
           s.set(p, { IsManageByBranch: !1, Origins: [r] });
           continue;
         }
@@ -1068,19 +1067,19 @@ async function getBatchFileBranchDataAsync(e) {
   }
 }
 async function getFileSourceBranchAsync(t) {
-  const e = await getBatchFileBranchDataAsync([t]);
+  var e = await getBatchFileBranchDataAsync([t]);
   return e.Success
     ? { Success: !0, Result: e.Result.get(t) }
     : { Success: !1, Error: e.Error };
 }
 async function isCurrentBranchAssetAsync(t) {
-  let e = getBranchReqShortPath(t);
+  var e = getBranchReqShortPath(t);
   if (!e) return !1;
-  const r = getCurrentP4Stream();
+  var r = getCurrentP4Stream();
   if (!r) return !1;
   e = { filePath: e };
   try {
-    const n = await doJsonHttpPost(
+    var n = await doJsonHttpPost(
       "http://tools.aki.kuro.com:1025/multibranch/aki/file_origins",
       e,
     );
@@ -1118,4 +1117,4 @@ async function execAsync(t) {
   (exports.getFileSourceBranchAsync = getFileSourceBranchAsync),
   (exports.isCurrentBranchAssetAsync = isCurrentBranchAssetAsync),
   (exports.execAsync = execAsync);
-// # sourceMappingURL=Util.js.map
+//# sourceMappingURL=Util.js.map

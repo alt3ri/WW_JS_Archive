@@ -4,14 +4,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const DEFAULT_SIZE = 16;
 class StringBuilder {
   constructor(...t) {
-    (this.kz = new Array(DEFAULT_SIZE)), t.length > 0 && this.Append(...t);
+    (this.kz = new Array(DEFAULT_SIZE)), 0 < t.length && this.Append(...t);
   }
   get Store() {
     return this.kz;
   }
   Append(...t) {
     for (const r of t)
-      typeof r === "string"
+      "string" == typeof r
         ? this.kz.push(r)
         : r instanceof Array
           ? this.kz.push(...r)
@@ -30,4 +30,4 @@ class StringBuilder {
   }
 }
 exports.StringBuilder = StringBuilder;
-// # sourceMappingURL=StringBuilder.js.map
+//# sourceMappingURL=StringBuilder.js.map

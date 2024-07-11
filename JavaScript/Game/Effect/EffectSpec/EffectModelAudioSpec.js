@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelAudioSpec = void 0);
-const AudioSystem_1 = require("../../../Core/Audio/AudioSystem");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const EffectAudioContext_1 = require("../EffectContext/EffectAudioContext");
-const EffectSpec_1 = require("./EffectSpec");
+const AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  EffectAudioContext_1 = require("../EffectContext/EffectAudioContext"),
+  EffectSpec_1 = require("./EffectSpec");
 class EffectModelAudioSpec extends EffectSpec_1.EffectSpec {
   constructor() {
     super(...arguments),
@@ -19,7 +19,7 @@ class EffectModelAudioSpec extends EffectSpec_1.EffectSpec {
       this.ege &&
         ((this.zge = AudioSystem_1.AudioSystem.GetAkComponent(this.ege, {
           OnCreated: (t) => {
-            const e = this.Handle?.GetContext();
+            var e = this.Handle?.GetContext();
             e instanceof EffectAudioContext_1.EffectAudioContext &&
               AudioSystem_1.AudioSystem.SetSwitch(
                 "char_p1orp3",
@@ -29,13 +29,13 @@ class EffectModelAudioSpec extends EffectSpec_1.EffectSpec {
           },
         })),
         this.EffectModel?.LocationOffsets) &&
-        this.EffectModel.LocationOffsets.Num() > 0 &&
+        0 < this.EffectModel.LocationOffsets.Num() &&
         this.zge?.SetLocationOffsets(this.EffectModel.LocationOffsets),
       !0
     );
   }
   OnPlay() {
-    const t = this.EffectModel?.AudioEvent;
+    var t = this.EffectModel?.AudioEvent;
     t?.IsValid()
       ? this.e0e(t)
       : Log_1.Log.CheckError() &&
@@ -51,7 +51,7 @@ class EffectModelAudioSpec extends EffectSpec_1.EffectSpec {
     return this.zge?.K2_DestroyComponent(this.ege), !0;
   }
   OnStop() {
-    let t;
+    var t;
     this.EffectModel?.IsValid() &&
       (this.Zge &&
         !this.EffectModel.KeepAlive &&
@@ -90,4 +90,4 @@ class EffectModelAudioSpec extends EffectSpec_1.EffectSpec {
   }
 }
 exports.EffectModelAudioSpec = EffectModelAudioSpec;
-// # sourceMappingURL=EffectModelAudioSpec.js.map
+//# sourceMappingURL=EffectModelAudioSpec.js.map

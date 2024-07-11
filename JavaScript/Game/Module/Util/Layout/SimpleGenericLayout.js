@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SimpleGenericLayout = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const LguiUtil_1 = require("../LguiUtil");
+const Log_1 = require("../../../../Core/Common/Log"),
+  LguiUtil_1 = require("../LguiUtil");
 class SimpleGenericLayout {
   constructor(t) {
     (this.Layout = void 0),
@@ -20,9 +20,9 @@ class SimpleGenericLayout {
       (Log_1.Log.CheckError() &&
         Log_1.Log.Error("UiCommon", 44, "Layout下不存在有效的子节点")),
       (this.Nqo = t);
-    const i = this.Layout.RootUIComp;
+    var i = this.Layout.RootUIComp;
     for (let t = this.g4e.length; t < this.Nqo; t++) {
-      const s = LguiUtil_1.LguiUtil.CopyItem(this.Gqo, i);
+      var s = LguiUtil_1.LguiUtil.CopyItem(this.Gqo, i);
       this.g4e.push(s);
     }
     for (let t = 0; t < this.Nqo; t++) this.g4e[t].SetUIActive(!0);
@@ -37,4 +37,4 @@ class SimpleGenericLayout {
   }
 }
 exports.SimpleGenericLayout = SimpleGenericLayout;
-// # sourceMappingURL=SimpleGenericLayout.js.map
+//# sourceMappingURL=SimpleGenericLayout.js.map

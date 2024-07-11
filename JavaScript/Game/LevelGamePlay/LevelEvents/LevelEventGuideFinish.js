@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventGuideFinish = void 0);
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventGuideFinish extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, n) {
     e &&
@@ -15,4 +15,4 @@ class LevelEventGuideFinish extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventGuideFinish = LevelEventGuideFinish;
-// # sourceMappingURL=LevelEventGuideFinish.js.map
+//# sourceMappingURL=LevelEventGuideFinish.js.map

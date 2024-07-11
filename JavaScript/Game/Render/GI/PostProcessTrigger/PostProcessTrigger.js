@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const StateMachine_1 = require("../../../../Core/Utils/StateMachine/StateMachine");
-const RoleTriggerController_1 = require("../../../NewWorld/Character/Role/RoleTriggerController");
-const PostProcessTriggerStateInside_1 = require("./PostProcessTriggerStateInside");
-const PostProcessTriggerStateInsideToOutside_1 = require("./PostProcessTriggerStateInsideToOutside");
-const PostProcessTriggerStateOutside_1 = require("./PostProcessTriggerStateOutside");
-const PostProcessTriggerStateOutsideToInside_1 = require("./PostProcessTriggerStateOutsideToInside");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  StateMachine_1 = require("../../../../Core/Utils/StateMachine/StateMachine"),
+  RoleTriggerController_1 = require("../../../NewWorld/Character/Role/RoleTriggerController"),
+  PostProcessTriggerStateInside_1 = require("./PostProcessTriggerStateInside"),
+  PostProcessTriggerStateInsideToOutside_1 = require("./PostProcessTriggerStateInsideToOutside"),
+  PostProcessTriggerStateOutside_1 = require("./PostProcessTriggerStateOutside"),
+  PostProcessTriggerStateOutsideToInside_1 = require("./PostProcessTriggerStateOutsideToInside");
 class PostProcessTrigger {
   constructor() {
     (this.Alr = void 0),
@@ -49,8 +49,8 @@ class PostProcessTrigger {
       (this.xlr.bUnbound = !0),
       this.Alr.OnComponentBeginOverlapNoGcAlloc.Add(this.qlr),
       this.Plr.OnComponentEndOverlap.Add(this.Nlr);
-    var o = (0, puerts_1.$ref)(void 0);
-    const h = (this.Alr.GetOverlappingActors(o), (0, puerts_1.$unref)(o));
+    var o = (0, puerts_1.$ref)(void 0),
+      h = (this.Alr.GetOverlappingActors(o), (0, puerts_1.$unref)(o));
     if (h)
       for (let t = 0; t < h.Num(); t++) this.Glr(h.Get(t)) && (this.wlr = 0);
   }
@@ -71,9 +71,9 @@ class PostProcessTrigger {
   }
   Tick(t) {
     this.Lle.CurrentState !== this.wlr &&
-      (this.Lle.CurrentState === 0
+      (0 === this.Lle.CurrentState
         ? this.Lle.Switch(2)
-        : this.Lle.CurrentState === 1 && this.Lle.Switch(3)),
+        : 1 === this.Lle.CurrentState && this.Lle.Switch(3)),
       this.Lle.Update(t);
   }
   Dispose() {
@@ -82,4 +82,4 @@ class PostProcessTrigger {
   }
 }
 exports.default = PostProcessTrigger;
-// # sourceMappingURL=PostProcessTrigger.js.map
+//# sourceMappingURL=PostProcessTrigger.js.map

@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TimeOfDayView = void 0);
-const ue_1 = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../Core/Define/CommonDefine");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../GlobalData");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase");
-const UiLayer_1 = require("../../Ui/UiLayer");
-const UiCameraAnimationManager_1 = require("../UiCameraAnimation/UiCameraAnimationManager");
-const TimeOfDayController_1 = require("./TimeOfDayController");
-const TimeOfDayDefine_1 = require("./TimeOfDayDefine");
-const TimeOfDayModel_1 = require("./TimeOfDayModel");
-const TodTimeAdjustingAnimation_1 = require("./TodTimeAdjustingAnimation");
+const ue_1 = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../GlobalData"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
+  UiCameraAnimationManager_1 = require("../UiCameraAnimation/UiCameraAnimationManager"),
+  TimeOfDayController_1 = require("./TimeOfDayController"),
+  TimeOfDayDefine_1 = require("./TimeOfDayDefine"),
+  TimeOfDayModel_1 = require("./TimeOfDayModel"),
+  TodTimeAdjustingAnimation_1 = require("./TodTimeAdjustingAnimation");
 class UiItemSwitcher {
   constructor(i, t) {
     (this.NIo = t), (this.OIo = i);
@@ -56,7 +56,7 @@ class TodTimeAdjustingClock {
     return TimeOfDayModel_1.TodDayTime.ConvertToOneDaySecond(this.StartSecond);
   }
   get IsAdjusting() {
-    return this.StartSecond >= 0;
+    return 0 <= this.StartSecond;
   }
   get IsTomorrow() {
     return this.ToSecond >= TimeOfDayDefine_1.TOD_SECOND_PER_DAY;
@@ -156,7 +156,7 @@ class TimeOfDayView extends UiTickViewBase_1.UiTickViewBase {
       (this.NFt = void 0),
       (this.YIo = () => {
         if (!this.QIo.IsAdjusting) {
-          const i =
+          var i =
             ModelManager_1.ModelManager.TimeOfDayModel.GameTime
               .HourMinuteString;
           this.GetText(0).SetText(i), this.GetText(4).SetText(i);
@@ -187,7 +187,7 @@ class TimeOfDayView extends UiTickViewBase_1.UiTickViewBase {
           this.GetTexture(3).SetFillDirectionFlip(!1));
       }),
       (this.ZIo = (i) => {
-        let t, e;
+        var t, e;
         this.FIo.IsZero() || this.kIo.IsZero()
           ? (this.FIo.DeepCopy(i.pointerPosition),
             this.kIo.DeepCopy(i.pointerPosition))
@@ -229,21 +229,21 @@ class TimeOfDayView extends UiTickViewBase_1.UiTickViewBase {
               "OnClickBtnConfirm:" +
                 ModelManager_1.ModelManager.CameraModel.CurrentCameraActor.GetName(),
             );
-        const i = CommonParamById_1.configCommonParamById.GetIntConfig(
-          "TimeCameraSettingName",
-        );
-        var t = CommonParamById_1.configCommonParamById.GetIntConfig(
-          "TimeCameraBlendDataName",
-        );
-        var t =
-          ((this.NFt =
-            UiCameraAnimationManager_1.UiCameraAnimationManager.PlayCameraAnimationFromCurrent(
+        var i = CommonParamById_1.configCommonParamById.GetIntConfig(
+            "TimeCameraSettingName",
+          ),
+          t = CommonParamById_1.configCommonParamById.GetIntConfig(
+            "TimeCameraBlendDataName",
+          ),
+          t =
+            ((this.NFt =
+              UiCameraAnimationManager_1.UiCameraAnimationManager.PlayCameraAnimationFromCurrent(
+                i.toString(),
+                t.toString(),
+              )),
+            ConfigManager_1.ConfigManager.UiCameraAnimationConfig.GetUiCameraAnimationConfig(
               i.toString(),
-              t.toString(),
-            )),
-          ConfigManager_1.ConfigManager.UiCameraAnimationConfig.GetUiCameraAnimationConfig(
-            i.toString(),
-          ));
+            ));
         this.sTo(),
           (this.$Io = TimerSystem_1.TimerSystem.Delay(() => {
             this.aTo(), this.XIo.Play(this.QIo.StartSecond, this.QIo.ToSecond);
@@ -263,8 +263,8 @@ class TimeOfDayView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.hTo = (i) => {
         this.QIo.AdjustStartSecond(i);
-        let t;
-        const e = this.QIo.StartSecondOneDay;
+        var t,
+          e = this.QIo.StartSecondOneDay;
         this.QIo.IsAdjustingMoreThanOneDay
           ? (this.GetTexture(2).SetFillAmount(1),
             (t = this.QIo.IsAdjustingToMaxLimit ? 1 : this.QIo.DeltaDayOneDay),
@@ -286,7 +286,7 @@ class TimeOfDayView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.lTo = () => {
         UiLayer_1.UiLayer.SetShowNormalMaskLayer(!1);
-        const i = CommonParamById_1.configCommonParamById.GetIntConfig(
+        var i = CommonParamById_1.configCommonParamById.GetIntConfig(
           "TimeCameraBlendDataName",
         );
         UiCameraAnimationManager_1.UiCameraAnimationManager.PlayCameraAnimationFromCurrent(
@@ -337,7 +337,7 @@ class TimeOfDayView extends UiTickViewBase_1.UiTickViewBase {
       this.WIo.set(1, new UiItemSwitcher(this.GetItem(8), this.GetItem(9))),
       this.WIo.set(2, new UiItemSwitcher(this.GetItem(10), this.GetItem(11))),
       this.WIo.set(3, new UiItemSwitcher(this.GetItem(12), this.GetItem(13)));
-    const i = ue_1.LGUIBPLibrary.GetUIItemPositionInViewPort(
+    var i = ue_1.LGUIBPLibrary.GetUIItemPositionInViewPort(
       GlobalData_1.GlobalData.World,
       this.GetItem(17),
     );
@@ -359,7 +359,7 @@ class TimeOfDayView extends UiTickViewBase_1.UiTickViewBase {
     this.XIo?.Tick(i);
   }
   OnAddEventListener() {
-    const i = this.GetDraggable(14);
+    var i = this.GetDraggable(14);
     i.OnPointerBeginDragCallBack.Bind((i) => {
       this.zIo(i);
     }),
@@ -378,7 +378,7 @@ class TimeOfDayView extends UiTickViewBase_1.UiTickViewBase {
       );
   }
   OnRemoveEventListener() {
-    const i = this.GetDraggable(14);
+    var i = this.GetDraggable(14);
     i.OnPointerBeginDragCallBack.Unbind(),
       i.OnPointerDragCallBack.Unbind(),
       i.OnPointerEndDragCallBack.Unbind(),
@@ -404,7 +404,7 @@ class TimeOfDayView extends UiTickViewBase_1.UiTickViewBase {
       this.GetText(5).ShowTextNew(this.QIo.DayTextId);
   }
   oTo() {
-    let i;
+    var i;
     this.QIo.IsAdjustingMoreThanOneDay
       ? (this.GetTexture(2).SetFillAmount(1),
         (i = this.QIo.IsAdjustingToMaxLimit ? 1 : this.QIo.DeltaDayOneDay),
@@ -454,9 +454,9 @@ class TimeOfDayView extends UiTickViewBase_1.UiTickViewBase {
       i.Subtraction(this.KIo, this.gme),
       t.Subtraction(this.KIo, this.fz),
       Vector_1.Vector.CrossProduct(this.gme, this.fz, this.VIo),
-      this.VIo.Z > 0
+      0 < this.VIo.Z
     );
   }
 }
 exports.TimeOfDayView = TimeOfDayView;
-// # sourceMappingURL=TimeOfDayView.js.map
+//# sourceMappingURL=TimeOfDayView.js.map

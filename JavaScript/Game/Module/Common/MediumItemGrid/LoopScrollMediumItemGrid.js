@@ -20,4 +20,4 @@ class LoopScrollMediumItemGrid extends MediumItemGrid_1.MediumItemGrid {
   }
 }
 exports.LoopScrollMediumItemGrid = LoopScrollMediumItemGrid;
-// # sourceMappingURL=LoopScrollMediumItemGrid.js.map
+//# sourceMappingURL=LoopScrollMediumItemGrid.js.map

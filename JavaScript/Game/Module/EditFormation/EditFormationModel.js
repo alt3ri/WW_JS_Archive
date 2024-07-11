@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EditFormationModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const EditFormationData_1 = require("./EditFormationData");
-const EditFormationDefine_1 = require("./EditFormationDefine");
-const HEALTH_ID = 3;
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  EditFormationData_1 = require("./EditFormationData"),
+  EditFormationDefine_1 = require("./EditFormationDefine"),
+  HEALTH_ID = 3;
 class EditingRoleData {
   constructor(t) {
     (this.Position = 0), (this.RoleId = 0), (this.Position = t);
@@ -22,42 +22,42 @@ class EditFormationModel extends ModelBase_1.ModelBase {
   UpdatePlayerFormations(t) {
     this.s4t.clear();
     let o = 0;
-    const r = new Map();
+    var r = new Map();
     for (const u of t) {
-      const e = u.aFn;
-      const i = e === ModelManager_1.ModelManager.PlayerInfoModel.GetId();
+      var e = u.aFn,
+        i = e === ModelManager_1.ModelManager.PlayerInfoModel.GetId();
       for (const h of u.J4n) {
-        const a = h.$4n;
-        if (i || !(a > 0)) {
+        var a = h.$4n;
+        if (i || !(0 < a)) {
           i && h.X4n && (o = a);
           let t = r.get(a);
           t || ((t = new Array()), r.set(a, t));
           for (const g of h.FLs) {
-            const n = i && g.l3n === h.Y4n;
+            var n = i && g.l3n === h.Y4n;
             t.push([g, e, n]);
           }
         }
       }
     }
     for (const c of r) {
-      const s = c[0];
-      const f = new EditFormationData_1.EditFormationData(s);
+      var s = c[0],
+        f = new EditFormationData_1.EditFormationData(s);
       this.s4t.set(s, f);
       for (const m of c[1]) {
-        const d = m[0];
-        const l = m[1];
-        const M = m[2];
+        var d = m[0],
+          l = m[1],
+          M = m[2];
         f.AddRoleData(d.l3n, d.r3n, l, M);
       }
       s === o && (this.a4t = f);
     }
   }
   ChangeEditedMainRole() {
-    const t = ModelManager_1.ModelManager.RoleModel;
+    var t = ModelManager_1.ModelManager.RoleModel;
     for (const e of this.h4t.values())
       for (const i of e) {
-        var o;
-        const r = i.RoleId;
+        var o,
+          r = i.RoleId;
         t.IsMainRole(r) &&
           (o = t.GetNewMainRoleId(r)) &&
           r !== o &&
@@ -67,13 +67,13 @@ class EditFormationModel extends ModelBase_1.ModelBase {
   InitEditingFormationMap() {
     this.h4t.clear();
     for (const o of this.s4t.values()) {
-      const t = o.FormationId;
+      var t = o.FormationId;
       for (const r of o.GetRoleDataMap().values())
         this.SetEditingRoleId(t, r.Position, r.ConfigId);
     }
   }
   IsRoleDead(t) {
-    let o = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(t, {
+    var o = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(t, {
       ParamType: 0,
       OnlyMyRole: !0,
     });
@@ -91,10 +91,10 @@ class EditFormationModel extends ModelBase_1.ModelBase {
       for (let t = 1; t <= EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM; t++)
         i.push(new EditingRoleData(t));
     }
-    const a = [];
+    var a = [];
     for (const s of i) {
       s.Position === o && (s.RoleId = r);
-      const n = s.RoleId;
+      var n = s.RoleId;
       n && a.push(n);
     }
     if (!ModelManager_1.ModelManager.GameModeModel.IsMulti && e)
@@ -115,23 +115,23 @@ class EditFormationModel extends ModelBase_1.ModelBase {
     return -1;
   }
   GetEditingRoleIdList(t) {
-    const o = new Array();
-    var t = this.h4t.get(t);
+    var o = new Array(),
+      t = this.h4t.get(t);
     if (t)
       for (const e of t) {
-        const r = e.RoleId;
+        var r = e.RoleId;
         r && o.push(r);
       }
     return o;
   }
   GetAllEditingFormation() {
-    let t;
-    let o;
-    const r = new Map();
+    var t,
+      o,
+      r = new Map();
     for ([t, o] of this.h4t) {
-      const e = [];
+      var e = [];
       for (const a of o) {
-        const i = a.RoleId;
+        var i = a.RoleId;
         i && e.push(i);
       }
       r.set(t, e);
@@ -139,7 +139,7 @@ class EditFormationModel extends ModelBase_1.ModelBase {
     return r;
   }
   IsInEditingFormation(t, o) {
-    return this.GetEditingRolePosition(t, o) > 0;
+    return 0 < this.GetEditingRolePosition(t, o);
   }
   GetFormationData(t) {
     return this.s4t.get(t);
@@ -163,7 +163,7 @@ class EditFormationModel extends ModelBase_1.ModelBase {
       (this.a4t = t));
   }
   IsMyPosition(t) {
-    let o;
+    var o;
     return (
       !ModelManager_1.ModelManager.GameModeModel.IsMulti ||
       ((o = ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()),
@@ -174,4 +174,4 @@ class EditFormationModel extends ModelBase_1.ModelBase {
   }
 }
 exports.EditFormationModel = EditFormationModel;
-// # sourceMappingURL=EditFormationModel.js.map
+//# sourceMappingURL=EditFormationModel.js.map

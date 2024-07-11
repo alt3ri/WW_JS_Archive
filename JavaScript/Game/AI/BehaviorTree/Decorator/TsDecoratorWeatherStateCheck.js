@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager");
 class TsDecoratorWeatherStateCheck extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -32,7 +32,7 @@ class TsDecoratorWeatherStateCheck extends UE.BTDecorator_BlueprintBase {
     this.InitTsVariables();
     e = ModelManager_1.ModelManager.WeatherModel;
     if (!e) return !1;
-    const r = e.CurrentWeatherId;
+    var r = e.CurrentWeatherId;
     switch (this.TsCheckType) {
       case 0:
         return r === this.TsWeatherStateId;
@@ -52,4 +52,4 @@ class TsDecoratorWeatherStateCheck extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorWeatherStateCheck;
-// # sourceMappingURL=TsDecoratorWeatherStateCheck.js.map
+//# sourceMappingURL=TsDecoratorWeatherStateCheck.js.map

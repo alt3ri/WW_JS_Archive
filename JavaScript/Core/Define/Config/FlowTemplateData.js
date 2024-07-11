@@ -39,37 +39,37 @@ class FlowTemplateData {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   name(t) {
-    const r = this.J7.__offset(this.z7, 6);
+    var r = this.J7.__offset(this.z7, 6);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   amount() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   enable() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   template(t) {
-    const r = this.J7.__offset(this.z7, 12);
+    var r = this.J7.__offset(this.z7, 12);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   cameratype(t) {
-    const r = this.J7.__offset(this.z7, 14);
+    var r = this.J7.__offset(this.z7, 14);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   actordataarray(t) {
-    const r = this.J7.__offset(this.z7, 16);
+    var r = this.J7.__offset(this.z7, 16);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   cameradata(t) {
-    const r = this.J7.__offset(this.z7, 18);
+    var r = this.J7.__offset(this.z7, 18);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
 }
 exports.FlowTemplateData = FlowTemplateData;
-// # sourceMappingURL=FlowTemplateData.js.map
+//# sourceMappingURL=FlowTemplateData.js.map

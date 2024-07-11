@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ElementInfoConfig = void 0);
-const ElementInfoById_1 = require("../../../../Core/Define/ConfigQuery/ElementInfoById");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
+const ElementInfoById_1 = require("../../../../Core/Define/ConfigQuery/ElementInfoById"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
 class ElementInfoConfig extends ConfigBase_1.ConfigBase {
   GetConfigList(e) {
-    const n = new Array();
+    var n = new Array();
     for (const o of e) {
-      const t = ElementInfoById_1.configElementInfoById.GetConfig(o);
+      var t = ElementInfoById_1.configElementInfoById.GetConfig(o);
       n.push(t);
     }
     return n.sort((e, n) => e.Id - n.Id), n;
@@ -26,4 +26,4 @@ class ElementInfoConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.ElementInfoConfig = ElementInfoConfig;
-// # sourceMappingURL=ElementInfoConfig.js.map
+//# sourceMappingURL=ElementInfoConfig.js.map

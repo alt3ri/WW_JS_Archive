@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon");
-const TsSimpleInteractBase_1 = require("./TsSimpleInteractBase");
-const redColor = new UE.LinearColor(1, 0, 0, 1);
-const blueColor = new UE.LinearColor(0, 0, 1, 1);
-const DRAW_TIME = 0.05;
-const DEFAULT_THICKNESS = 4;
-const DEFAULT_ARROW_SIZE = 20;
-const DRAW_LENGTH = 100;
-const forwardOffset = new UE.Vector(DRAW_LENGTH, 0, 0);
-const upOffset = new UE.Vector(0, 0, DRAW_LENGTH);
-const textColor = new UE.Color(255, 128, 128, 255);
-const TEXT_SIZE = 80;
-const PROFILE_KEY = "TsSimpleInteractPoint_GetBestTransform";
+const UE = require("ue"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
+  TsSimpleInteractBase_1 = require("./TsSimpleInteractBase"),
+  redColor = new UE.LinearColor(1, 0, 0, 1),
+  blueColor = new UE.LinearColor(0, 0, 1, 1),
+  DRAW_TIME = 0.05,
+  DEFAULT_THICKNESS = 4,
+  DEFAULT_ARROW_SIZE = 20,
+  DRAW_LENGTH = 100,
+  forwardOffset = new UE.Vector(DRAW_LENGTH, 0, 0),
+  upOffset = new UE.Vector(0, 0, DRAW_LENGTH),
+  textColor = new UE.Color(255, 128, 128, 255),
+  TEXT_SIZE = 80,
+  PROFILE_KEY = "TsSimpleInteractPoint_GetBestTransform";
 class TsSimpleInteractPoint extends TsSimpleInteractBase_1.default {
   constructor() {
     super(...arguments),
@@ -33,8 +33,8 @@ class TsSimpleInteractPoint extends TsSimpleInteractBase_1.default {
     return !0;
   }
   OnDraw() {
-    const t = this.K2_GetActorLocation();
-    const s = this.GetTransform();
+    var t = this.K2_GetActorLocation(),
+      s = this.GetTransform();
     this.OnWall
       ? UE.KismetSystemLibrary.DrawDebugArrow(
           this,
@@ -146,4 +146,4 @@ class TsSimpleInteractPoint extends TsSimpleInteractBase_1.default {
   }
 }
 exports.default = TsSimpleInteractPoint;
-// # sourceMappingURL=TsSimpleInteractPoint.js.map
+//# sourceMappingURL=TsSimpleInteractPoint.js.map

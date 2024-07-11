@@ -6,36 +6,36 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.RECORDER_MAX_SPEED =
     exports.RECORD_INTERVAL =
       void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const Stats_1 = require("../../Core/Common/Stats");
-const Time_1 = require("../../Core/Common/Time");
-const Protocol_1 = require("../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../Core/Entity/EntitySystem");
-const FNameUtil_1 = require("../../Core/Utils/FNameUtil");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const CameraController_1 = require("../Camera/CameraController");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const EffectSystem_1 = require("../Effect/EffectSystem");
-const Global_1 = require("../Global");
-const ModelManager_1 = require("../Manager/ModelManager");
-const SceneInteractionManager_1 = require("../Render/Scene/Interaction/SceneInteractionManager");
-const GameplayCueRecorder_1 = require("./GameplayCueRecorder");
-const characterTypes =
-  ((exports.RECORD_INTERVAL = 0.016667),
-  (exports.RECORDER_MAX_SPEED = 3e3),
-  (exports.RECORDER_MAX_EFFECT_SPEED = 1e5),
-  (exports.EFFECT_CREATE_ADVANCE = 0.1),
-  new Set([
-    Protocol_1.Aki.Protocol.HBs.Proto_Animal,
-    Protocol_1.Aki.Protocol.HBs.Proto_Monster,
-    Protocol_1.Aki.Protocol.HBs.Proto_Npc,
-    Protocol_1.Aki.Protocol.HBs.Proto_Player,
-    Protocol_1.Aki.Protocol.HBs.Proto_Vision,
-  ]));
-const sceneItemTypes = new Set([Protocol_1.Aki.Protocol.HBs.Proto_SceneItem]);
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  Stats_1 = require("../../Core/Common/Stats"),
+  Time_1 = require("../../Core/Common/Time"),
+  Protocol_1 = require("../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../Core/Entity/EntitySystem"),
+  FNameUtil_1 = require("../../Core/Utils/FNameUtil"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  CameraController_1 = require("../Camera/CameraController"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  EffectSystem_1 = require("../Effect/EffectSystem"),
+  Global_1 = require("../Global"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  SceneInteractionManager_1 = require("../Render/Scene/Interaction/SceneInteractionManager"),
+  GameplayCueRecorder_1 = require("./GameplayCueRecorder"),
+  characterTypes =
+    ((exports.RECORD_INTERVAL = 0.016667),
+    (exports.RECORDER_MAX_SPEED = 3e3),
+    (exports.RECORDER_MAX_EFFECT_SPEED = 1e5),
+    (exports.EFFECT_CREATE_ADVANCE = 0.1),
+    new Set([
+      Protocol_1.Aki.Protocol.HBs.Proto_Animal,
+      Protocol_1.Aki.Protocol.HBs.Proto_Monster,
+      Protocol_1.Aki.Protocol.HBs.Proto_Npc,
+      Protocol_1.Aki.Protocol.HBs.Proto_Player,
+      Protocol_1.Aki.Protocol.HBs.Proto_Vision,
+    ])),
+  sceneItemTypes = new Set([Protocol_1.Aki.Protocol.HBs.Proto_SceneItem]);
 class MaterialControllerParam {
   constructor(r, e, t) {
     (this.Data = r), (this.UserData = e), (this.StartTime = t);
@@ -94,8 +94,8 @@ class CharacterRecorderObject {
         );
       }),
       (this.Ssr = (r) => {
-        let e;
-        const t = this.vsr.get(r);
+        var e,
+          t = this.vsr.get(r);
         t &&
           (RecorderBlueprintFunctionLibrary.RecordingTimeNoBlueprint() <
             t.StartTime &&
@@ -155,7 +155,7 @@ class CharacterRecorderObject {
     this.Recorder.TickRecorder(r);
   }
   StopRecorder() {
-    let r;
+    var r;
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Test",
@@ -208,7 +208,7 @@ class SceneItemRecorderObject {
           ["EntityId", r.Entity.Id],
           ["Time", i],
         );
-    const e = r.Owner;
+    var e = r.Owner;
     const n = UE.NewObject(UE.KuroMeshRecorder.StaticClass());
     this.Isr.push(n),
       n.SetRecordActor(
@@ -217,14 +217,14 @@ class SceneItemRecorderObject {
         exports.RECORDER_MAX_EFFECT_SPEED,
       ),
       n.StartRecorder(t, i);
-    const o =
+    var o =
       SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionAllActorsInLevel(
         r.GetSceneInteractionLevelHandleId(),
       );
     if (o) {
-      const c = new Set();
+      var c = new Set();
       for (let r = 0, e = o.Num(); r < e; r++) {
-        const u = o.Get(r);
+        var u = o.Get(r);
         if (c.has(u))
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("Test", 6, "Recorder Repetitive SceneItemActor", [
@@ -331,10 +331,10 @@ class EffectRecorderObject {
   }
   TickRecorder(r) {
     let e = !1;
-    const t = EffectSystem_1.EffectSystem.GetLastPlayTime(this.gXo);
-    const i = EffectSystem_1.EffectSystem.GetLastStopTime(this.gXo);
-    t > 0 && t !== this.Tsr && ((this.Tsr = t), (e = !0), (this.Playing = !0)),
-      i > 0 &&
+    var t = EffectSystem_1.EffectSystem.GetLastPlayTime(this.gXo),
+      i = EffectSystem_1.EffectSystem.GetLastStopTime(this.gXo);
+    0 < t && t !== this.Tsr && ((this.Tsr = t), (e = !0), (this.Playing = !0)),
+      0 < i &&
         i !== this.Lsr &&
         ((this.Lsr = i), (e = !0), (this.Playing = !1)),
       e &&
@@ -407,7 +407,7 @@ class BpFxEffectRecorderObject {
 exports.BpFxEffectRecorderObject = BpFxEffectRecorderObject;
 class RecorderBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static FindCenterLocation() {
-    const r = RecorderBlueprintFunctionLibrary.CenterLocation;
+    var r = RecorderBlueprintFunctionLibrary.CenterLocation;
     return (
       r.DeepCopy(
         RecorderBlueprintFunctionLibrary.CenterActor
@@ -546,12 +546,12 @@ class RecorderBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       (RecorderBlueprintFunctionLibrary.CenterActor ||
         Global_1.Global.BaseCharacter)
     ) {
-      let e;
-      let t;
-      let i;
-      let n;
-      let o;
-      const c = Time_1.Time.DeltaTimeSeconds;
+      var e,
+        t,
+        i,
+        n,
+        o,
+        c = Time_1.Time.DeltaTimeSeconds;
       (RecorderBlueprintFunctionLibrary.RecordingTimeInternal += c),
         RecorderBlueprintFunctionLibrary.StopRecordersWhenUpdate(),
         RecorderBlueprintFunctionLibrary.FightCameraRecorder?.TickRecorder(c),
@@ -577,19 +577,19 @@ class RecorderBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       RecorderBlueprintFunctionLibrary.FightCameraRecorder?.StopRecorder(),
         RecorderBlueprintFunctionLibrary.SequenceCameraRecorder?.StopRecorder(),
         RecorderBlueprintFunctionLibrary.WidgetCameraRecorder?.StopRecorder();
-      for (const [, r] of RecorderBlueprintFunctionLibrary.CharacterRecorders)
+      for (var [, r] of RecorderBlueprintFunctionLibrary.CharacterRecorders)
         r.StopRecorder();
       RecorderBlueprintFunctionLibrary.CharacterRecorders.clear();
-      for (const [, e] of RecorderBlueprintFunctionLibrary.SceneItemRecorders)
+      for (var [, e] of RecorderBlueprintFunctionLibrary.SceneItemRecorders)
         e.StopRecorder();
       RecorderBlueprintFunctionLibrary.SceneItemRecorders.clear();
-      for (const [, t] of RecorderBlueprintFunctionLibrary.EffectRecorders)
+      for (var [, t] of RecorderBlueprintFunctionLibrary.EffectRecorders)
         t.StopRecorder();
       RecorderBlueprintFunctionLibrary.EffectRecorders.clear();
-      for (const [, i] of RecorderBlueprintFunctionLibrary.BpFxEffectRecorders)
+      for (var [, i] of RecorderBlueprintFunctionLibrary.BpFxEffectRecorders)
         i.StopRecorder(RecorderBlueprintFunctionLibrary.RecordingTimeInternal);
       RecorderBlueprintFunctionLibrary.BpFxEffectRecorders.clear();
-      for (const [, n] of RecorderBlueprintFunctionLibrary.GameplayCueRecorders)
+      for (var [, n] of RecorderBlueprintFunctionLibrary.GameplayCueRecorders)
         n.StopRecorder(RecorderBlueprintFunctionLibrary.RecordingTimeInternal);
       RecorderBlueprintFunctionLibrary.GameplayCueRecorders.clear(),
         (RecorderBlueprintFunctionLibrary.Recording = !1),
@@ -612,16 +612,16 @@ class RecorderBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static GetPlayingLevelSequence(r) {
     if (!RecorderBlueprintFunctionLibrary.LevelSequencePlayer?.IsValid()) {
-      const e = (0, puerts_1.$ref)(void 0);
-      const t =
-        (UE.GameplayStatics.GetAllActorsOfClass(
-          r,
-          UE.LevelSequenceActor.StaticClass(),
-          e,
-        ),
-        (0, puerts_1.$unref)(e));
-      for (let r = t.Num() - 1; r >= 0; --r) {
-        const i = t.Get(r);
+      var e = (0, puerts_1.$ref)(void 0),
+        t =
+          (UE.GameplayStatics.GetAllActorsOfClass(
+            r,
+            UE.LevelSequenceActor.StaticClass(),
+            e,
+          ),
+          (0, puerts_1.$unref)(e));
+      for (let r = t.Num() - 1; 0 <= r; --r) {
+        var i = t.Get(r);
         if (i.IsValid()) {
           RecorderBlueprintFunctionLibrary.LevelSequencePlayer =
             i.SequencePlayer;
@@ -638,7 +638,7 @@ class RecorderBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return RecorderBlueprintFunctionLibrary.RecordingTimeInternal || 0;
   }
   static CreateNewDataAsset(r, e) {
-    const t = (0, puerts_1.$ref)(void 0);
+    var t = (0, puerts_1.$ref)(void 0);
     return (
       UE.KuroAnimEdLibrary.CreateNewDataAsset(
         RecorderBlueprintFunctionLibrary.OutPath + r,
@@ -660,30 +660,30 @@ class RecorderBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static StopRecordersWhenUpdate() {
     let r = !1;
-    for (const [e, t] of RecorderBlueprintFunctionLibrary.CharacterRecorders)
+    for (var [e, t] of RecorderBlueprintFunctionLibrary.CharacterRecorders)
       EntitySystem_1.EntitySystem.Get(e) ||
         (t.StopRecorder(),
         RecorderBlueprintFunctionLibrary.CharacterRecorders.delete(e),
         (r = !0));
-    for (const [i, n] of RecorderBlueprintFunctionLibrary.SceneItemRecorders)
+    for (var [i, n] of RecorderBlueprintFunctionLibrary.SceneItemRecorders)
       EntitySystem_1.EntitySystem.Get(i) ||
         (n.StopRecorder(),
         RecorderBlueprintFunctionLibrary.SceneItemRecorders.delete(i),
         (r = !0));
-    for (const [o, c] of RecorderBlueprintFunctionLibrary.EffectRecorders)
+    for (var [o, c] of RecorderBlueprintFunctionLibrary.EffectRecorders)
       EffectSystem_1.EffectSystem.IsValid(o) ||
         (c.StopRecorder(),
         RecorderBlueprintFunctionLibrary.EffectRecorders.delete(o));
     return r;
   }
   static StartRecordersWhenUpdate() {
-    const r = this.FindCenterLocation();
+    var r = this.FindCenterLocation();
     let e = RecorderBlueprintFunctionLibrary.StartEntityRecorders(r);
     e = !!RecorderBlueprintFunctionLibrary.StartEffectRecorders(r) || e;
   }
   static StartEntityRecorders(r) {
     let e = !1;
-    let t, i, n, o;
+    var t, i, n, o;
     if (RecorderBlueprintFunctionLibrary.EnableCharacterRecord)
       for (const c of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
         c.Valid &&
@@ -729,8 +729,8 @@ class RecorderBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static StartEffectRecorders(r) {
     if (RecorderBlueprintFunctionLibrary.EnableEffectRecord) {
-      let e;
-      const t = RecorderBlueprintFunctionLibrary.EffectLocation;
+      var e,
+        t = RecorderBlueprintFunctionLibrary.EffectLocation;
       for (const i of EffectSystem_1.EffectSystem.Effects)
         i &&
           i.IsRoot() &&
@@ -756,7 +756,7 @@ class RecorderBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return !1;
   }
   static StartRecordTsBpFxEffect(r) {
-    let e, t, i;
+    var e, t, i;
     if (RecorderBlueprintFunctionLibrary.EnableEffectRecord)
       return (
         (e = RecorderBlueprintFunctionLibrary.BpFxEffectRecorders.get(r)) ||
@@ -787,13 +787,13 @@ class RecorderBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       );
   }
   static StopRecordTsBpFxEffect(r) {
-    const e = RecorderBlueprintFunctionLibrary.BpFxEffectRecorders.get(r);
+    var e = RecorderBlueprintFunctionLibrary.BpFxEffectRecorders.get(r);
     e &&
       (e.StopRecorder(RecorderBlueprintFunctionLibrary.RecordingTimeInternal),
       RecorderBlueprintFunctionLibrary.BpFxEffectRecorders.delete(r));
   }
   static StartRecordGameplayCueHook(r, e) {
-    let t, i, n;
+    var t, i, n;
     if (RecorderBlueprintFunctionLibrary.EnableEffectRecord)
       return (
         (t = RecorderBlueprintFunctionLibrary.GameplayCueRecorders.get(e)) ||
@@ -825,7 +825,7 @@ class RecorderBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       );
   }
   static StopRecordGameplayCueHook(r) {
-    const e = RecorderBlueprintFunctionLibrary.GameplayCueRecorders.get(r);
+    var e = RecorderBlueprintFunctionLibrary.GameplayCueRecorders.get(r);
     e &&
       (e.StopRecorder(RecorderBlueprintFunctionLibrary.RecordingTimeInternal),
       RecorderBlueprintFunctionLibrary.GameplayCueRecorders.delete(r));
@@ -880,7 +880,7 @@ class RecorderBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   (RecorderBlueprintFunctionLibrary.Stat3 = void 0),
   (RecorderBlueprintFunctionLibrary.RecorderPlayerInitialized = !1),
   (RecorderBlueprintFunctionLibrary.OnCreateEntity = (r, e) => {
-    let t, i;
+    var t, i;
     RecorderBlueprintFunctionLibrary.CharacterRecorders.has(e.Id) ||
       ((i = e.Entity.GetComponent(3))?.Valid &&
         ((t = RecorderBlueprintFunctionLibrary.FindCenterLocation()),
@@ -909,4 +909,4 @@ class RecorderBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       );
   }),
   (exports.default = RecorderBlueprintFunctionLibrary);
-// # sourceMappingURL=RecorderBlueprintFunctionLibrary.js.map
+//# sourceMappingURL=RecorderBlueprintFunctionLibrary.js.map

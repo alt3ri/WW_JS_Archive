@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayShopRecommendTabItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const CommonTabItemBase_1 = require("../Common/TabComponent/TabItem/CommonTabItemBase");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  CommonTabItemBase_1 = require("../Common/TabComponent/TabItem/CommonTabItemBase");
 class PayShopRecommendTabItem extends CommonTabItemBase_1.CommonTabItemBase {
   constructor(e) {
     super(),
       (this.ToggleEvent = (e) => {
-        e === 1 && this.SelectedCallBack(this.GridIndex);
+        1 === e && this.SelectedCallBack(this.GridIndex);
       }),
       this.CreateThenShowByActor(e.GetOwner());
   }
@@ -35,4 +35,4 @@ class PayShopRecommendTabItem extends CommonTabItemBase_1.CommonTabItemBase {
   }
 }
 exports.PayShopRecommendTabItem = PayShopRecommendTabItem;
-// # sourceMappingURL=PayShopRecommendTabItem.js.map
+//# sourceMappingURL=PayShopRecommendTabItem.js.map

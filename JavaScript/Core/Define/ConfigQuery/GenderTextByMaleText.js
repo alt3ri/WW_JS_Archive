@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configGenderTextByMaleText = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const GenderText_1 = require("../Config/GenderText");
-const DB = "db_gender_text.db";
-const FILE = "k.可视化编辑/c.Csv/x.性别通配符表/*.csv*";
-const TABLE = "GenderText";
-const COMMAND = "select BinData from `GenderText` where MaleText=?";
-const KEY_PREFIX = "GenderTextByMaleText";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  GenderText_1 = require("../Config/GenderText"),
+  DB = "db_gender_text.db",
+  FILE = "k.可视化编辑/c.Csv/x.性别通配符表/*.csv*",
+  TABLE = "GenderText",
+  COMMAND = "select BinData from `GenderText` where MaleText=?",
+  KEY_PREFIX = "GenderTextByMaleText",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configGenderTextByMaleText.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configGenderTextByMaleText.GetConfig(";
 exports.configGenderTextByMaleText = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configGenderTextByMaleText = {
       if (
         (t =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, e, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "MaleText",
-            e,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "MaleText",
+              e,
+            ]))
       ) {
-        var t;
-        var n = void 0;
+        var t,
+          n = void 0;
         if (
           (([t, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configGenderTextByMaleText = {
     }
   },
 };
-// # sourceMappingURL=GenderTextByMaleText.js.map
+//# sourceMappingURL=GenderTextByMaleText.js.map

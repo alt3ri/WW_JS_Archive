@@ -1,37 +1,42 @@
 "use strict";
-let PostProcessBridgeComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, i, s, e) {
-    let o;
-    const h = arguments.length;
-    let r =
-      h < 3 ? i : e === null ? (e = Object.getOwnPropertyDescriptor(i, s)) : e;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(t, i, s, e);
-    else
-      for (let n = t.length - 1; n >= 0; n--)
-        (o = t[n]) && (r = (h < 3 ? o(r) : h > 3 ? o(i, s, r) : o(i, s)) || r);
-    return h > 3 && r && Object.defineProperty(i, s, r), r;
-  };
+var PostProcessBridgeComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, i, s, e) {
+      var o,
+        h = arguments.length,
+        r =
+          h < 3
+            ? i
+            : null === e
+              ? (e = Object.getOwnPropertyDescriptor(i, s))
+              : e;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        r = Reflect.decorate(t, i, s, e);
+      else
+        for (var n = t.length - 1; 0 <= n; n--)
+          (o = t[n]) &&
+            (r = (h < 3 ? o(r) : 3 < h ? o(i, s, r) : o(i, s)) || r);
+      return 3 < h && r && Object.defineProperty(i, s, r), r;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PostProcessBridgeComponent = void 0);
-const UE = require("ue");
-const Info_1 = require("../../../../Core/Common/Info");
-const Log_1 = require("../../../../Core/Common/Log");
-const SkyboxById_1 = require("../../../../Core/Define/ConfigQuery/SkyboxById");
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const GlobalData_1 = require("../../../GlobalData");
-const ComponentForceTickController_1 = require("../../../World/Controller/ComponentForceTickController");
-const RoleTriggerController_1 = require("../../Character/Role/RoleTriggerController");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const DEFAULT_PRIORITY = 10;
-const TICK_TIME = 1e3;
+const UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  SkyboxById_1 = require("../../../../Core/Define/ConfigQuery/SkyboxById"),
+  EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ComponentForceTickController_1 = require("../../../World/Controller/ComponentForceTickController"),
+  RoleTriggerController_1 = require("../../Character/Role/RoleTriggerController"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  DEFAULT_PRIORITY = 10,
+  TICK_TIME = 1e3;
 let PostProcessBridgeComponent =
   (PostProcessBridgeComponent_1 = class PostProcessBridgeComponent extends (
     EntityComponent_1.EntityComponent
@@ -61,7 +66,7 @@ let PostProcessBridgeComponent =
         }),
         (this.cjr = (t) => {
           this.gU &&
-            (this.msn > 0 && this.vsn(t), this.fsn !== this.gsn) &&
+            (0 < this.msn && this.vsn(t), this.fsn !== this.gsn) &&
             (this.gsn > this.fsn
               ? ((this.fsn = this.fsn + t * this.Csn),
                 (this.fsn = Math.min(this.fsn, this.gsn)))
@@ -72,14 +77,14 @@ let PostProcessBridgeComponent =
         });
     }
     OnInitData(t) {
-      let i;
-      var t = t.GetParam(PostProcessBridgeComponent_1)[0];
+      var i,
+        t = t.GetParam(PostProcessBridgeComponent_1)[0];
       return (
         t.SkyboxSetting
           ? (i = SkyboxById_1.configSkyboxById.GetConfig(t.SkyboxSetting)) &&
             ((this.nsn = i.StaticSkybox), (this.ssn = i.DynamicSkybox))
           : ((this.nsn = t.WeatherDataAsset), (this.ssn = t.PPTODDataAsset)),
-        void 0 !== t.FadeTime && t.FadeTime > 0
+        void 0 !== t.FadeTime && 0 < t.FadeTime
           ? (this.Csn =
               1 / (t.FadeTime * TimeUtil_1.TimeUtil.InverseMillisecond))
           : (this.Csn = 0),
@@ -94,8 +99,8 @@ let PostProcessBridgeComponent =
       );
     }
     OnStart() {
-      let t;
-      const i = this.Entity.GetComponent(1).Owner;
+      var t,
+        i = this.Entity.GetComponent(1).Owner;
       if (i?.IsValid()) {
         if (
           ((this.OC = i),
@@ -206,7 +211,7 @@ let PostProcessBridgeComponent =
     SetTargetBlendWeight(t, i = !1) {
       this.gU &&
         ((this.gsn = t),
-        (!i && this.Csn !== 0) ||
+        (!i && 0 !== this.Csn) ||
           ((this.fsn = t), (this._sn.BlendWeight = this.fsn), this.Msn()));
     }
     EnableComponent() {
@@ -258,7 +263,7 @@ let PostProcessBridgeComponent =
             this.dsn ? t || this.OnTriggerExit() : t && this.OnTriggerEnter()));
     }
     Msn() {
-      this._sn.bEnabled = this.fsn > 0;
+      this._sn.bEnabled = 0 < this.fsn;
     }
     OnEnd() {
       return (
@@ -280,4 +285,4 @@ let PostProcessBridgeComponent =
     PostProcessBridgeComponent,
   )),
   (exports.PostProcessBridgeComponent = PostProcessBridgeComponent);
-// # sourceMappingURL=PostProcessBridgeComponent.js.map
+//# sourceMappingURL=PostProcessBridgeComponent.js.map

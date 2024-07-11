@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const Global_1 = require("../../../Global");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  Global_1 = require("../../../Global"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskDoTurn extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -65,14 +65,14 @@ class TsTaskDoTurn extends TsTaskAbortImmediatelyBase_1.default {
           s.ActorLocationProxy,
           this.EndForward,
         );
-    } else if (this.TsTargetConfigId > 0) {
-      const e = ModelManager_1.ModelManager.CreatureModel.GetAllScenePlayers();
+    } else if (0 < this.TsTargetConfigId) {
+      var e = ModelManager_1.ModelManager.CreatureModel.GetAllScenePlayers();
       for (let t = 0, i = e.length; t < i; t++) {
-        const r = e[t];
+        var r = e[t];
         for (const o of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItemsByPlayer(
           r.GetPlayerId(),
         )) {
-          let h = o.EntityHandle;
+          var h = o.EntityHandle;
           h &&
             (h = h.Entity.GetComponent(0)) &&
             h.GetVisible() &&
@@ -81,7 +81,7 @@ class TsTaskDoTurn extends TsTaskAbortImmediatelyBase_1.default {
         }
       }
     } else
-      this.TsTargetEntityKey !== ""
+      "" !== this.TsTargetEntityKey
         ? ((t = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
             s.Entity.Id,
             this.TsTargetEntityKey,
@@ -92,7 +92,7 @@ class TsTaskDoTurn extends TsTaskAbortImmediatelyBase_1.default {
               s.ActorLocationProxy,
               this.EndForward,
             ))
-        : this.TsTargetDirectKey !== ""
+        : "" !== this.TsTargetDirectKey
           ? (t =
               BlackboardController_1.BlackboardController.GetVectorValueByEntity(
                 s.Entity.Id,
@@ -110,8 +110,8 @@ class TsTaskDoTurn extends TsTaskAbortImmediatelyBase_1.default {
       this.EndForward.Normalize(MathUtils_1.MathUtils.SmallNumber);
   }
   ReceiveTickAI(t, i, s) {
-    let e;
-    const r = t.AiController;
+    var e,
+      r = t.AiController;
     r
       ? ((e = r.CharActorComp.ActorForward),
         (MathUtils_1.MathUtils.GetAngleByVectorDot(e, this.EndForward) <=
@@ -135,4 +135,4 @@ class TsTaskDoTurn extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskDoTurn;
-// # sourceMappingURL=TsTaskDoTurn.js.map
+//# sourceMappingURL=TsTaskDoTurn.js.map

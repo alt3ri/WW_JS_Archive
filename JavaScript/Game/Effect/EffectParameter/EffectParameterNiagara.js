@@ -11,4 +11,4 @@ class EffectParameterNiagara {
   }
 }
 exports.EffectParameterNiagara = EffectParameterNiagara;
-// # sourceMappingURL=EffectParameterNiagara.js.map
+//# sourceMappingURL=EffectParameterNiagara.js.map

@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configSkillDescriptionBySkillLevelGroupId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const SkillDescription_1 = require("../Config/SkillDescription");
-const DB = "db_skill.db";
-const FILE = "j.技能.xlsx";
-const TABLE = "SkillDescription";
-const COMMAND =
-  "select BinData from `SkillDescription` where SkillLevelGroupId = ?";
-const KEY_PREFIX = "SkillDescriptionBySkillLevelGroupId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  SkillDescription_1 = require("../Config/SkillDescription"),
+  DB = "db_skill.db",
+  FILE = "j.技能.xlsx",
+  TABLE = "SkillDescription",
+  COMMAND =
+    "select BinData from `SkillDescription` where SkillLevelGroupId = ?",
+  KEY_PREFIX = "SkillDescriptionBySkillLevelGroupId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX =
-  "configSkillDescriptionBySkillLevelGroupId.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX =
+    "configSkillDescriptionBySkillLevelGroupId.GetConfigList(";
 exports.configSkillDescriptionBySkillLevelGroupId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -31,7 +31,7 @@ exports.configSkillDescriptionBySkillLevelGroupId = {
     );
   },
   GetConfigList: (i, o = !0) => {
-    let e;
+    var e;
     if (
       (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -46,13 +46,14 @@ exports.configSkillDescriptionBySkillLevelGroupId = {
         const r = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "SkillLevelGroupId",
               i,
-            ]) !== 1
+            ])
           )
             break;
-          let l = void 0;
+          var l = void 0;
           if (
             (([e, l] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -80,4 +81,4 @@ exports.configSkillDescriptionBySkillLevelGroupId = {
     }
   },
 };
-// # sourceMappingURL=SkillDescriptionBySkillLevelGroupId.js.map
+//# sourceMappingURL=SkillDescriptionBySkillLevelGroupId.js.map

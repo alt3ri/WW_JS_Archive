@@ -9,11 +9,11 @@ class CommonCurrencyItemListComponent {
   async SetCurrencyItemList(e) {
     this.LIt || (this.LIt = new Array());
     let r = void 0;
-    const o = [];
+    var o = [];
     for (let t = this.LIt.length; t < e.length; t++) {
       const r = new CommonCurrencyItem_1.CommonCurrencyItem();
       this.LIt.push(r);
-      const s = r.CreateThenShowByResourceIdAsync(
+      var s = r.CreateThenShowByResourceIdAsync(
         "UIItem_CommonCurrencyItem",
         this.DIt,
       );
@@ -32,4 +32,4 @@ class CommonCurrencyItemListComponent {
   }
 }
 exports.CommonCurrencyItemListComponent = CommonCurrencyItemListComponent;
-// # sourceMappingURL=CommonCurrencyItemListComponent.js.map
+//# sourceMappingURL=CommonCurrencyItemListComponent.js.map

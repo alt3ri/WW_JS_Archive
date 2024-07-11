@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityPhantomCollectController = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../../Core/Net/Net");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ErrorCodeController_1 = require("../../../ErrorCode/ErrorCodeController");
-const ActivityControllerBase_1 = require("../../ActivityControllerBase");
-const ActivityPhantomCollectData_1 = require("./ActivityPhantomCollectData");
-const ActivitySubViewPhantomCollect_1 = require("./ActivitySubViewPhantomCollect");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ErrorCodeController_1 = require("../../../ErrorCode/ErrorCodeController"),
+  ActivityControllerBase_1 = require("../../ActivityControllerBase"),
+  ActivityPhantomCollectData_1 = require("./ActivityPhantomCollectData"),
+  ActivitySubViewPhantomCollect_1 = require("./ActivitySubViewPhantomCollect");
 class ActivityPhantomCollectController extends ActivityControllerBase_1.ActivityControllerBase {
   constructor() {
     super(...arguments),
       (this.OnPhantomCollectUpdateNotify = (t) => {
         ActivityPhantomCollectController.ActivityId = t.YFn;
-        const e = ActivityPhantomCollectController.GetCurrentActivityDataById();
+        var e = ActivityPhantomCollectController.GetCurrentActivityDataById();
         t.b0s
           ? (e.UpadatePhantomCollectReward(t.b0s),
             EventSystem_1.EventSystem.Emit(
@@ -57,17 +57,17 @@ class ActivityPhantomCollectController extends ActivityControllerBase_1.Activity
     return !1;
   }
   static GetCurrentActivityDataById() {
-    const t = ModelManager_1.ModelManager.ActivityModel.GetActivityById(
+    var t = ModelManager_1.ModelManager.ActivityModel.GetActivityById(
       ActivityPhantomCollectController.ActivityId,
     );
     if (t) return t;
   }
   static async PhantomCollectRewardReceiveRequest(t) {
-    var e = new Protocol_1.Aki.Protocol.k$n();
-    var e =
-      ((e.Ikn = t),
-      (e.YFn = ActivityPhantomCollectController.ActivityId),
-      await Net_1.Net.CallAsync(13175, e));
+    var e = new Protocol_1.Aki.Protocol.k$n(),
+      e =
+        ((e.Ikn = t),
+        (e.YFn = ActivityPhantomCollectController.ActivityId),
+        await Net_1.Net.CallAsync(13175, e));
     if (e)
       if (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys)
         ErrorCodeController_1.ErrorCodeController.OpenErrorCodeTipView(
@@ -93,4 +93,4 @@ class ActivityPhantomCollectController extends ActivityControllerBase_1.Activity
 }
 (exports.ActivityPhantomCollectController =
   ActivityPhantomCollectController).ActivityId = 0;
-// # sourceMappingURL=ActivityPhantomCollectController.js.map
+//# sourceMappingURL=ActivityPhantomCollectController.js.map

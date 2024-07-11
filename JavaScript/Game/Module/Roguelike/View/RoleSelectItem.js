@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleSelectItem = exports.RoleAttrItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class RoleAttrItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments), (this.AffixEntry = void 0);
@@ -18,19 +18,19 @@ class RoleAttrItem extends GridProxyAbstract_1.GridProxyAbstract {
     (this.AffixEntry = t), this.RefreshPanel();
   }
   SetSecondColor() {
-    const t = this.GetText(0);
+    var t = this.GetText(0);
     t.SetChangeColor(!0, t.changeColor);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIText]];
   }
   RefreshPanel() {
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterBuffConfig(
         this.AffixEntry.Id,
       );
     t &&
-      (ModelManager_1.ModelManager.RoguelikeModel?.GetDescModel() === 0
+      (0 === ModelManager_1.ModelManager.RoguelikeModel?.GetDescModel()
         ? this.GetText(0).ShowTextNew(t.AffixDescSimple)
         : LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(0),
@@ -92,10 +92,9 @@ class RoleSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.Vke(), this.Lao(), this.kIt();
   }
   Vke() {
-    let t;
-    let e;
-    const i =
-      ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterConfig(
+    var t,
+      e,
+      i = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterConfig(
         this.fao.ConfigId,
       );
     i &&
@@ -128,11 +127,11 @@ class RoleSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
           const h = this.GetScrollViewWithScrollbar(13);
           let s = 0;
           h.OnLateUpdate.Bind((t) => {
-            if (++s === 2) {
+            if (2 === ++s) {
               let t = 0;
-              const e = o.GetRootItem().GetHeight();
-              const i = h.GetViewport().GetUIItem().GetHeight();
-              const r = h.ContentUIItem.GetHeight();
+              var e = o.GetRootItem().GetHeight(),
+                i = h.GetViewport().GetUIItem().GetHeight(),
+                r = h.ContentUIItem.GetHeight();
               (t = i < e ? r - i * Math.trunc(e / i) - (e % i) - 10 : r - i),
                 (t = Math.max(t, 0)),
                 h.ContentUIItem.SetAnchorOffsetY(t),
@@ -148,4 +147,4 @@ class RoleSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.RoleSelectItem = RoleSelectItem;
-// # sourceMappingURL=RoleSelectItem.js.map
+//# sourceMappingURL=RoleSelectItem.js.map

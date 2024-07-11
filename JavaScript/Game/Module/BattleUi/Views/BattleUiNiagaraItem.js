@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleUiNiagaraItem = void 0);
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const DEFAULT_DURATION = 1e3;
+const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  DEFAULT_DURATION = 1e3;
 class BattleUiNiagaraItem {
   constructor(t) {
     (this.IRe = void 0),
@@ -33,4 +33,4 @@ class BattleUiNiagaraItem {
   }
 }
 exports.BattleUiNiagaraItem = BattleUiNiagaraItem;
-// # sourceMappingURL=BattleUiNiagaraItem.js.map
+//# sourceMappingURL=BattleUiNiagaraItem.js.map

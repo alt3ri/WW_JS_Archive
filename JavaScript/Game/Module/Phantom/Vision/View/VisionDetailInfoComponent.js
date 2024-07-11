@@ -2,18 +2,18 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionDetailInfoComponent = exports.VisionDetailInfoComponentData =
     void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const RoleVisionAttribute_1 = require("../../../RoleUi/TabView/VisionSubView/RoleVisionAttribute");
-const RoleVisionIdentifyAttribute_1 = require("../../../RoleUi/TabView/VisionSubView/RoleVisionIdentifyAttribute");
-const VisionDetailDescComponent_1 = require("./VisionDetailDescComponent");
-const VisionFetterSuitItem_1 = require("./VisionFetterSuitItem");
-const VisionNameText_1 = require("./VisionNameText");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  RoleVisionAttribute_1 = require("../../../RoleUi/TabView/VisionSubView/RoleVisionAttribute"),
+  RoleVisionIdentifyAttribute_1 = require("../../../RoleUi/TabView/VisionSubView/RoleVisionIdentifyAttribute"),
+  VisionDetailDescComponent_1 = require("./VisionDetailDescComponent"),
+  VisionFetterSuitItem_1 = require("./VisionFetterSuitItem"),
+  VisionNameText_1 = require("./VisionNameText");
 class VisionDetailInfoComponentData {
   constructor() {
     (this.DataBase = void 0), (this.DescData = void 0);
@@ -92,8 +92,8 @@ class VisionDetailInfoComponent extends UiPanelBase_1.UiPanelBase {
     this.c8i.Refresh(this.Y6i.GetMainPropData());
   }
   f8i() {
-    const i = this.Y6i.GetSubPropData();
-    i.length > 0
+    var i = this.Y6i.GetSubPropData();
+    0 < i.length
       ? (this.m8i.Refresh(i, this.Y6i?.DataBase), this.m8i.SetActive(!0))
       : this.m8i.SetActive(!1);
   }
@@ -158,10 +158,9 @@ class VisionDetailTop extends UiPanelBase_1.UiPanelBase {
       ),
       this.GetText(2).SetUIActive(!0);
     var t = ModelManager_1.ModelManager.InventoryModel.GetPhantomItemData(
-      i.GetUniqueId(),
-    );
-    var t =
-      (this.IPt(t.GetUniqueId(), t.GetIsLock()), i.GetFetterGroupConfig());
+        i.GetUniqueId(),
+      ),
+      t = (this.IPt(t.GetUniqueId(), t.GetIsLock()), i.GetFetterGroupConfig());
     this.PPt.Update(t);
   }
   OnBeforeDestroy() {
@@ -171,4 +170,4 @@ class VisionDetailTop extends UiPanelBase_1.UiPanelBase {
     );
   }
 }
-// # sourceMappingURL=VisionDetailInfoComponent.js.map
+//# sourceMappingURL=VisionDetailInfoComponent.js.map

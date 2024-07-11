@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const GlobalData_1 = require("../../../../GlobalData");
-const BlackboardController_1 = require("../../../../World/Controller/BlackboardController");
-const TsAiController_1 = require("../../../Controller/TsAiController");
+const UE = require("ue"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  BlackboardController_1 = require("../../../../World/Controller/BlackboardController"),
+  TsAiController_1 = require("../../../Controller/TsAiController");
 class TsDecoratorPlayerAttackCheck extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -18,7 +18,7 @@ class TsDecoratorPlayerAttackCheck extends UE.BTDecorator_BlueprintBase {
       (this.TsBlackboardKey = this.BlackboardKey));
   }
   PerformConditionCheckAI(r, t) {
-    let e;
+    var e;
     return (
       this.InitTsVariables(),
       r instanceof TsAiController_1.default &&
@@ -27,12 +27,13 @@ class TsDecoratorPlayerAttackCheck extends UE.BTDecorator_BlueprintBase {
             ((this.IsCollected = !0), (e.CheckPlayerAttack = !0))),
         !!(e = r.AiController.CharActorComp)) &&
         ((r = e.Entity.Id),
-        BlackboardController_1.BlackboardController.GetIntValueByEntity(
-          r,
-          this.TsBlackboardKey,
-        ) === 1)
+        1 ===
+          BlackboardController_1.BlackboardController.GetIntValueByEntity(
+            r,
+            this.TsBlackboardKey,
+          ))
     );
   }
 }
 exports.default = TsDecoratorPlayerAttackCheck;
-// # sourceMappingURL=TsDecoratorPlayerAttackCheck.js.map
+//# sourceMappingURL=TsDecoratorPlayerAttackCheck.js.map

@@ -1,23 +1,23 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LogUpload = void 0);
-const cpp_1 = require("cpp");
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const Net_1 = require("../../../Core/Net/Net");
-const BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController");
-const NetworkDefine_1 = require("../../../Launcher/NetworkDefine");
-const LocalStorage_1 = require("../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../Common/LocalStorageDefine");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Net_1 = require("../../../Core/Net/Net"),
+  BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController"),
+  NetworkDefine_1 = require("../../../Launcher/NetworkDefine"),
+  LocalStorage_1 = require("../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class LogUpload {
   static Init() {
     UE.KuroTencentCOSLibrary.EnableAuthorization(!1);
-    const e =
+    var e =
       BaseConfigController_1.BaseConfigController.GetCdnReturnConfigInfo()
         ?.LogReport;
     e
@@ -49,19 +49,19 @@ class LogUpload {
   static Zpi() {
     this.evi();
     let e = "";
-    this.ae !== "" && (e = this.ae + "-");
-    var o = new Date();
-    var o =
-      `${o.getFullYear()}.${o.getMonth() + 1}.${o.getDate()}-${o.getHours()}.${o.getMinutes()}.` +
-      o.getSeconds();
-    return this.tvi === "" ? e + o + ".zip" : `${this.tvi}-${e}${o}.zip`;
+    "" !== this.ae && (e = this.ae + "-");
+    var o = new Date(),
+      o =
+        `${o.getFullYear()}.${o.getMonth() + 1}.${o.getDate()}-${o.getHours()}.${o.getMinutes()}.` +
+        o.getSeconds();
+    return "" === this.tvi ? e + o + ".zip" : `${this.tvi}-${e}${o}.zip`;
   }
   static SendLog(e) {
     UE.KuroTencentCOSLibrary.SendLogToTencentCOS(e);
   }
   static evi() {
     let e = "";
-    let o;
+    var o;
     Net_1.Net.IsServerConnected()
       ? (e = ModelManager_1.ModelManager.PlayerInfoModel.GetId().toString())
       : void 0 !==
@@ -85,14 +85,14 @@ class LogUpload {
   (LogUpload.ovi = "Logs/Sendedlogs.json"),
   (LogUpload.rvi = void 0),
   (LogUpload.Jpi = (e, o) => {
-    (e !== 5 && e !== 4) || UE.KuroTencentCOSLibrary.SetIsAutoSend(!1);
+    (5 !== e && 4 !== e) || UE.KuroTencentCOSLibrary.SetIsAutoSend(!1);
   }),
   (LogUpload.PostSended = (o) => {
     _a.rvi || (_a.rvi = { Paths: [] });
-    const r = cpp_1.KuroLoggingLibrary.GetLogFilename();
-    const a = o.Num();
+    var r = cpp_1.KuroLoggingLibrary.GetLogFilename(),
+      a = o.Num();
     for (let e = 0; e < a; e++) {
-      const t = o.Get(e);
+      var t = o.Get(e);
       t.endsWith(r) || _a.rvi.Paths.includes(t) || _a.rvi.Paths.push(t);
     }
     UE.KuroStaticLibrary.SaveStringToFile(
@@ -101,26 +101,26 @@ class LogUpload {
     );
   }),
   (LogUpload.PreSendFiles = (o) => {
-    const r = UE.NewArray(UE.BuiltinString);
+    var r = UE.NewArray(UE.BuiltinString);
     let a = [];
-    const t = o.Num();
+    var t = o.Num();
     for (let e = 0; e < t; e++) {
-      const _ = o.Get(e);
+      var _ = o.Get(e);
       if (!_a.zpi(_)) {
-        var i = _.split("/");
-        var i = i[i.length - 1];
-        const l = i.split(".");
+        var i = _.split("/"),
+          i = i[i.length - 1],
+          l = i.split(".");
         let e = void 0;
-        l.length > 1 && (e = l[l.length - 1]),
+        1 < l.length && (e = l[l.length - 1]),
           !i.startsWith("Client") ||
             i.startsWith("Client_") ||
-            (!e && e !== "log") ||
+            (!e && "log" !== e) ||
             (i.startsWith("Client-") ? a.push(_) : r.Add(_));
       }
     }
-    let e;
-    let n;
-    let s = UE.BlueprintPathsLibrary.ProjectSavedDir() + _a.ovi;
+    var e,
+      n,
+      s = UE.BlueprintPathsLibrary.ProjectSavedDir() + _a.ovi;
     UE.KuroStaticLibrary.FileExists(
       UE.BlueprintPathsLibrary.ProjectSavedDir() + _a.ovi,
     ) &&
@@ -130,13 +130,13 @@ class LogUpload {
       (_a.rvi = JSON.parse(e)),
       (_a.rvi.Paths = _a.rvi.Paths.filter((e) => a.includes(e)))),
       a.length > _a.ivi && (a.sort(), a.splice(0, a.length - _a.ivi)),
-      (a = _a.rvi ? a.filter((e) => !_a.rvi.Paths.includes(e)) : a).length >
-        0 &&
+      0 <
+        (a = _a.rvi ? a.filter((e) => !_a.rvi.Paths.includes(e)) : a).length &&
         (s = /\d{4}.\d{1,2}.\d{1,2}-\d{1,2}.\d{1,2}.\d{1,2}/.exec(a[0])) &&
-        s?.length > 0 &&
+        0 < s?.length &&
         (_a.ae = s[0]);
     for (const g of a) r.Add(g);
     UE.KuroTencentCOSLibrary.SetFilesToSend(r),
       UE.KuroTencentCOSLibrary.SetSendLogZipName(_a.Zpi());
   });
-// # sourceMappingURL=LogUpload.js.map
+//# sourceMappingURL=LogUpload.js.map

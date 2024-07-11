@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletActionTest = exports.BulletActionBase = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Stats_1 = require("../../../../Core/Common/Stats");
-const BulletConstant_1 = require("../BulletConstant");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
+  BulletConstant_1 = require("../BulletConstant");
 class BulletActionBase {
   constructor(t) {
     (this.IsInPool = !1),
@@ -43,4 +43,4 @@ class BulletActionTest extends (exports.BulletActionBase = BulletActionBase) {
   }
 }
 exports.BulletActionTest = BulletActionTest;
-// # sourceMappingURL=BulletActionBase.js.map
+//# sourceMappingURL=BulletActionBase.js.map

@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponPreviewView = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem");
-const UiManager_1 = require("../../../Ui/UiManager");
-const UiSceneManager_1 = require("../../UiComponent/UiSceneManager");
-const WeaponController_1 = require("../WeaponController");
-const WeaponDetailTipsComponent_1 = require("../WeaponDetailTipsComponent");
-const WeaponListComponent_1 = require("../WeaponListComponent");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  UiSceneManager_1 = require("../../UiComponent/UiSceneManager"),
+  WeaponController_1 = require("../WeaponController"),
+  WeaponDetailTipsComponent_1 = require("../WeaponDetailTipsComponent"),
+  WeaponListComponent_1 = require("../WeaponListComponent");
 class WeaponPreviewView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -20,7 +20,7 @@ class WeaponPreviewView extends UiViewBase_1.UiViewBase {
         UiManager_1.UiManager.CloseView("WeaponPreviewView");
       }),
       (this.kki = () => {
-        const e = this.Gki.GetCurSelectedData();
+        var e = this.Gki.GetCurSelectedData();
         this.qki.UpdateComponent(e),
           WeaponController_1.WeaponController.OnSelectedWeaponChange(
             e,
@@ -47,12 +47,12 @@ class WeaponPreviewView extends UiViewBase_1.UiViewBase {
       this.Gki.SetWeaponChangeCallBack(this.kki),
       (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(1))),
       this.lqe.SetCloseCallBack(this.wvo);
-    const e = this.OpenParam.WeaponDataList;
-    e && e.length !== 0 && (await this.Gki.UpdateDataList(e));
+    var e = this.OpenParam.WeaponDataList;
+    e && 0 !== e.length && (await this.Gki.UpdateDataList(e));
   }
   OnBeforeShow() {
     ModelManager_1.ModelManager.WeaponModel.SetCurSelectViewName(2);
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     this.Gki?.SetCurSelect(e.SelectedIndex);
   }
   OnAfterHide() {
@@ -60,7 +60,7 @@ class WeaponPreviewView extends UiViewBase_1.UiViewBase {
       ModelManager_1.ModelManager.WeaponModel.SetCurSelectViewName(0);
   }
   OnBeforeCreate() {
-    const e = this.OpenParam?.WeaponObservers;
+    var e = this.OpenParam?.WeaponObservers;
     e
       ? ((this.Nki = e.WeaponObserver), (this.Oki = e.WeaponScabbardObserver))
       : ((this.Nki = UiSceneManager_1.UiSceneManager.InitWeaponObserver()),
@@ -76,4 +76,4 @@ class WeaponPreviewView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.WeaponPreviewView = WeaponPreviewView;
-// # sourceMappingURL=WeaponPreviewView.js.map
+//# sourceMappingURL=WeaponPreviewView.js.map

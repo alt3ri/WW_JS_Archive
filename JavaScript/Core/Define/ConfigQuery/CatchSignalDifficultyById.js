@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configCatchSignalDifficultyById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const CatchSignalDifficulty_1 = require("../Config/CatchSignalDifficulty");
-const DB = "db_catchsignaldifficulty.db";
-const FILE = "k.可视化编辑/c.Csv/m.捕获信号玩法难度/*.csv*";
-const TABLE = "CatchSignalDifficulty";
-const COMMAND = "select BinData from `CatchSignalDifficulty` where Id=?";
-const KEY_PREFIX = "CatchSignalDifficultyById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  CatchSignalDifficulty_1 = require("../Config/CatchSignalDifficulty"),
+  DB = "db_catchsignaldifficulty.db",
+  FILE = "k.可视化编辑/c.Csv/m.捕获信号玩法难度/*.csv*",
+  TABLE = "CatchSignalDifficulty",
+  COMMAND = "select BinData from `CatchSignalDifficulty` where Id=?",
+  KEY_PREFIX = "CatchSignalDifficultyById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configCatchSignalDifficultyById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configCatchSignalDifficultyById.GetConfig(";
 exports.configCatchSignalDifficultyById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configCatchSignalDifficultyById = {
       if (
         (t =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, i, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            i,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              i,
+            ]))
       ) {
-        var t;
-        var n = void 0;
+        var t,
+          n = void 0;
         if (
           (([t, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configCatchSignalDifficultyById = {
     }
   },
 };
-// # sourceMappingURL=CatchSignalDifficultyById.js.map
+//# sourceMappingURL=CatchSignalDifficultyById.js.map

@@ -1,41 +1,46 @@
 "use strict";
-let CreatureDataComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, s) {
-    let o;
-    const r = arguments.length;
-    let n =
-      r < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      n = Reflect.decorate(t, e, i, s);
-    else
-      for (let h = t.length - 1; h >= 0; h--)
-        (o = t[h]) && (n = (r < 3 ? o(n) : r > 3 ? o(e, i, n) : o(e, i)) || n);
-    return r > 3 && n && Object.defineProperty(e, i, n), n;
-  };
+var CreatureDataComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, s) {
+      var o,
+        r = arguments.length,
+        n =
+          r < 3
+            ? e
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        n = Reflect.decorate(t, e, i, s);
+      else
+        for (var h = t.length - 1; 0 <= h; h--)
+          (o = t[h]) &&
+            (n = (r < 3 ? o(n) : 3 < r ? o(e, i, n) : o(e, i)) || n);
+      return 3 < r && n && Object.defineProperty(e, i, n), n;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CreatureDataComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const Net_1 = require("../../../../../Core/Net/Net");
-const DataTableUtil_1 = require("../../../../../Core/Utils/DataTableUtil");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const AdviceData_1 = require("../../../../Module/Advice/AdviceData");
-const BlackboardMap_1 = require("../../../../World/Define/BlackboardMap");
-const CreateEntityData_1 = require("../../CreateEntityData");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  DataTableUtil_1 = require("../../../../../Core/Utils/DataTableUtil"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  AdviceData_1 = require("../../../../Module/Advice/AdviceData"),
+  BlackboardMap_1 = require("../../../../World/Define/BlackboardMap"),
+  CreateEntityData_1 = require("../../CreateEntityData");
 let CreatureDataComponent =
   (CreatureDataComponent_1 = class CreatureDataComponent extends (
     EntityComponent_1.EntityComponent
@@ -129,9 +134,9 @@ let CreatureDataComponent =
       );
     }
     OnInitData(t) {
-      let e;
-      let i = t;
-      let s = i.ComponentsKey;
+      var e,
+        i = t,
+        s = i.ComponentsKey;
       return i instanceof CreateEntityData_1.CreateEntityData
         ? ((i = i.EntityData),
           (this.E0 = this.Entity.Id),
@@ -261,7 +266,7 @@ let CreatureDataComponent =
     GetEntityCamp() {
       if (void 0 !== this.UXr) return this.UXr;
       if (this.GetPbEntityInitData()) {
-        const t = this.GetBaseInfo()?.Camp;
+        var t = this.GetBaseInfo()?.Camp;
         if (void 0 !== t) return t;
       }
       return (
@@ -394,7 +399,7 @@ let CreatureDataComponent =
       this.MXr = t;
     }
     GetLocation() {
-      let t, e, i;
+      var t, e, i;
       return this.MXr?.$kn
         ? ((t = (i = this.MXr.$kn).X || 0),
           (e = i.Y || 0),
@@ -412,7 +417,7 @@ let CreatureDataComponent =
       this.WXr = Vector_1.Vector.Create(t.X, t.Y, t.Z);
     }
     GetRotation() {
-      let t, e, i;
+      var t, e, i;
       return this.MXr?.D3n
         ? ((t = (i = this.MXr.D3n).Pitch || 0),
           (e = i.Yaw || 0),
@@ -428,8 +433,8 @@ let CreatureDataComponent =
         (this.MXr.D3n.Yaw = t.Yaw);
     }
     GetTransform() {
-      const t = this.GetLocation();
-      const e = this.GetRotation();
+      var t = this.GetLocation(),
+        e = this.GetRotation();
       return UE.KismetMathLibrary.MakeTransform(
         t,
         e,
@@ -508,14 +513,14 @@ let CreatureDataComponent =
       for (const e of t) this.EntityCommonTags.add(e);
     }
     UpdateEntityCommonTags(t) {
-      if (t.length !== 0)
+      if (0 !== t.length)
         for (const e of t)
           this.EntityCommonTags.has(e.Ukn)
             ? e.y9n || this.EntityCommonTags.delete(e.Ukn)
             : e.y9n && this.EntityCommonTags.add(e.Ukn);
     }
     SetModelConfig(t) {
-      let e;
+      var e;
       this.IXr !== t &&
         ((this.IXr = t),
         (e = DataTableUtil_1.DataTableUtil.GetDataTableRowFromName(
@@ -531,7 +536,7 @@ let CreatureDataComponent =
     }
     GetModelId() {
       let t = 0;
-      let e;
+      var e;
       return (
         this.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Player
           ? ((e = this.GetRoleConfig()), (t = e ? e.MeshId : 0))
@@ -663,7 +668,7 @@ let CreatureDataComponent =
     }
     GetMonsterMatchType() {
       if (this.BXr) {
-        const t = this.GetBaseInfo();
+        var t = this.GetBaseInfo();
         if (t) return t.Category.MonsterMatchType;
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -675,7 +680,7 @@ let CreatureDataComponent =
       }
     }
     SetPbDataByProtocol(t) {
-      const e = t;
+      var e = t;
       if (
         ((this.wDe = e.R5n),
         (this.vH = e.ivs),
@@ -734,7 +739,7 @@ let CreatureDataComponent =
         (this.qne = t.Lvs),
         (this.RXr = t.Uvs),
         (this.AXr = t.Pvs),
-        typeof t.Bvs === "number" && (this.UXr = t.Bvs),
+        "number" == typeof t.Bvs && (this.UXr = t.Bvs),
         this.ZXr(e.Dvs),
         !0
       );
@@ -742,7 +747,7 @@ let CreatureDataComponent =
     ZXr(t) {
       this.ComponentDataMap.clear();
       for (const s of t) {
-        const e = s.Mqs;
+        var e = s.Mqs;
         switch ((this.ComponentDataMap.set(e, s), e)) {
           case "qvs":
             this.SetHardnessModeId(s.qvs.l7n);
@@ -823,7 +828,7 @@ let CreatureDataComponent =
       return this.BXr;
     }
     GetPbModelConfig() {
-      if (this.qXr && this.qXr.length !== 0)
+      if (this.qXr && 0 !== this.qXr.length)
         return (
           this.vZo ||
             (this.vZo =
@@ -895,7 +900,7 @@ let CreatureDataComponent =
     }
     GetEntityOnlineInteractType() {
       if (this.GetPbEntityInitData()) {
-        const t = this.GetBaseInfo()?.OnlineInteractType;
+        var t = this.GetBaseInfo()?.OnlineInteractType;
         if (void 0 !== t) return t;
       }
       return 1;
@@ -921,15 +926,15 @@ let CreatureDataComponent =
     }
     RequestPosAbnormal() {
       this.wXr = !0;
-      const t = Protocol_1.Aki.Protocol.OYn.create();
+      var t = Protocol_1.Aki.Protocol.OYn.create();
       (t.rkn = MathUtils_1.MathUtils.NumberToLong(this.Xfo)),
         (t.u7n = !0),
         Net_1.Net.Call(5545, t, () => {});
     }
     IsRealMonster() {
-      const t = this.fie === Protocol_1.Aki.Protocol.HBs.Proto_Monster;
-      const e = void 0 === this.GetMonsterComponent();
-      const i = this.GetMonsterComponent()?.FightConfigId === 0;
+      var t = this.fie === Protocol_1.Aki.Protocol.HBs.Proto_Monster,
+        e = void 0 === this.GetMonsterComponent(),
+        i = 0 === this.GetMonsterComponent()?.FightConfigId;
       return t && !e && !i;
     }
     GetAwakedEntities() {
@@ -938,7 +943,7 @@ let CreatureDataComponent =
           ((this.PXr = []),
           this.BXr &&
             this.BXr.Children &&
-            this.BXr.Children.length > 0 &&
+            0 < this.BXr.Children.length &&
             this.BXr.Children.forEach((t) => {
               this.e$r(t) && this.PXr.push(this.t$r(t));
             })),
@@ -946,7 +951,7 @@ let CreatureDataComponent =
       );
     }
     t$r(t) {
-      let e;
+      var e;
       return CreatureDataComponent_1.i$r.has(t)
         ? CreatureDataComponent_1.i$r.get(t)
         : ((e = t.split("_")),
@@ -955,10 +960,10 @@ let CreatureDataComponent =
           e);
     }
     e$r(t) {
-      return t.split("_")[0] === "e";
+      return "e" === t.split("_")[0];
     }
     AddDependenceEntity(t, e) {
-      if ((this.xXr || (this.xXr = new Array()), e === 0)) {
+      if ((this.xXr || (this.xXr = new Array()), 0 === e)) {
         if (t === this.Xfo)
           return void (
             Log_1.Log.CheckError() &&
@@ -970,7 +975,7 @@ let CreatureDataComponent =
               ["CreatureDataId", t],
             )
           );
-      } else if (e === 2 && t === this.Entity.Id)
+      } else if (2 === e && t === this.Entity.Id)
         return void (
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -988,7 +993,7 @@ let CreatureDataComponent =
     }
     sKt(t) {
       for (const i of Object.keys(t)) {
-        const e = t[i];
+        var e = t[i];
         this.KTn.set(i, e);
       }
     }
@@ -1012,4 +1017,4 @@ let CreatureDataComponent =
       CreatureDataComponent,
     )),
   (exports.CreatureDataComponent = CreatureDataComponent);
-// # sourceMappingURL=CreatureDataComponent.js.map
+//# sourceMappingURL=CreatureDataComponent.js.map

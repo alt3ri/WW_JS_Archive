@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MotionController = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class MotionController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return this.OnAddEvents(), this.OnRegisterNetEvent(), !0;
@@ -29,7 +29,7 @@ class MotionController extends ControllerBase_1.ControllerBase {
   }
 }
 ((exports.MotionController = MotionController).RequestUnlockMotion = (e, o) => {
-  const t = new Protocol_1.Aki.Protocol.jJn();
+  var t = new Protocol_1.Aki.Protocol.jJn();
   (t.l3n = e),
     (t.Z6n = o),
     Net_1.Net.Call(25015, t, (e) => {
@@ -53,4 +53,4 @@ class MotionController extends ControllerBase_1.ControllerBase {
   (MotionController.ubi = (e) => {
     ModelManager_1.ModelManager.MotionModel.OnMotionFinishCondition(e);
   });
-// # sourceMappingURL=MotionController.js.map
+//# sourceMappingURL=MotionController.js.map

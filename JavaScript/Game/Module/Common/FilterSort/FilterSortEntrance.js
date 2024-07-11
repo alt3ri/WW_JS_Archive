@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FilterSortEntrance = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const FilterEntrance_1 = require("./Filter/View/FilterEntrance");
-const SortEntrance_1 = require("./Sort/View/SortEntrance");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  FilterEntrance_1 = require("./Filter/View/FilterEntrance"),
+  SortEntrance_1 = require("./Sort/View/SortEntrance");
 class FilterSortEntrance extends UiPanelBase_1.UiPanelBase {
   constructor(e, r) {
     super(),
@@ -35,12 +35,12 @@ class FilterSortEntrance extends UiPanelBase_1.UiPanelBase {
     this.aft.UpdateData(e, r), this.hft.UpdateData(e, r);
   }
   ClearData(e) {
-    var r = ConfigManager_1.ConfigManager.FilterConfig.GetFilterId(e);
-    var r =
-      (r && ModelManager_1.ModelManager.FilterModel.ClearData(r),
-      ConfigManager_1.ConfigManager.SortConfig.GetSortId(e));
+    var r = ConfigManager_1.ConfigManager.FilterConfig.GetFilterId(e),
+      r =
+        (r && ModelManager_1.ModelManager.FilterModel.ClearData(r),
+        ConfigManager_1.ConfigManager.SortConfig.GetSortId(e));
     r && ModelManager_1.ModelManager.SortModel.DeleteSortResultData(r);
   }
 }
 exports.FilterSortEntrance = FilterSortEntrance;
-// # sourceMappingURL=FilterSortEntrance.js.map
+//# sourceMappingURL=FilterSortEntrance.js.map

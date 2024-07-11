@@ -1,144 +1,144 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventCenter = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const GlobalData_1 = require("../../GlobalData");
-const LevelEventChangePhantomFormation_1 = require("../LevelEventChangePhantomFormation");
-const LevelEventRestorePhantomFormation_1 = require("../LevelEventRestorePhantomFormation");
-const LevelGameplayActionsDefine_1 = require("../LevelGameplayActionsDefine");
-const LevelGeneralDefine_1 = require("../LevelGeneralDefine");
-const LevelEventAddBuffToCreature_1 = require("./LevelEventAddBuffToCreature");
-const LevelEventAddBuffToEntity_1 = require("./LevelEventAddBuffToEntity");
-const LevelEventAddBuffToTriggeredEntity_1 = require("./LevelEventAddBuffToTriggeredEntity");
-const LevelEventAddCreatureTag_1 = require("./LevelEventAddCreatureTag");
-const LevelEventAddInputTag_1 = require("./LevelEventAddInputTag");
-const LevelEventAddTag_1 = require("./LevelEventAddTag");
-const LevelEventAddTrialCharacter_1 = require("./LevelEventAddTrialCharacter");
-const LevelEventAdjustPlayerCamera_1 = require("./LevelEventAdjustPlayerCamera");
-const LevelEventAdjustTodTime_1 = require("./LevelEventAdjustTodTime");
-const LevelEventAudioEvent_1 = require("./LevelEventAudioEvent");
-const LevelEventCameraLookAtPosition_1 = require("./LevelEventCameraLookAtPosition");
-const LevelEventCameraShake_1 = require("./LevelEventCameraShake");
-const LevelEventCaptureRequest_1 = require("./LevelEventCaptureRequest");
-const LevelEventChangeAI_1 = require("./LevelEventChangeAI");
-const LevelEventChangeEntityPerformanceState_1 = require("./LevelEventChangeEntityPerformanceState");
-const LevelEventChangeFightIntensity_1 = require("./LevelEventChangeFightIntensity");
-const LevelEventChangePatrol_1 = require("./LevelEventChangePatrol");
-const LevelEventChangeToVision_1 = require("./LevelEventChangeToVision");
-const LevelEventCharacterMove_1 = require("./LevelEventCharacterMove");
-const LevelEventCheckBattleState_1 = require("./LevelEventCheckBattleState");
-const LevelEventCheckFlyState_1 = require("./LevelEventCheckFlyState");
-const LevelEventClaimDungeonReward_1 = require("./LevelEventClaimDungeonReward");
-const LevelEventClaimLevelPlayReward_1 = require("./LevelEventClaimLevelPlayReward");
-const LevelEventCollect_1 = require("./LevelEventCollect");
-const LevelEventCompleteGuide_1 = require("./LevelEventCompleteGuide");
-const LevelEventControlTodTime_1 = require("./LevelEventControlTodTime");
-const LevelEventDeliverQuestBehavior_1 = require("./LevelEventDeliverQuestBehavior");
-const LevelEventEnableAi_1 = require("./LevelEventEnableAi");
-const LevelEventEnableHostility_1 = require("./LevelEventEnableHostility");
-const LevelEventEnableMapView_1 = require("./LevelEventEnableMapView");
-const LevelEventEnableSplineMoveModel_1 = require("./LevelEventEnableSplineMoveModel");
-const LevelEventEnterOrbitalCamera_1 = require("./LevelEventEnterOrbitalCamera");
-const LevelEventEnterSequenceCamera_1 = require("./LevelEventEnterSequenceCamera");
-const LevelEventEntityLookAt_1 = require("./LevelEventEntityLookAt");
-const LevelEventExecution_1 = require("./LevelEventExecution");
-const LevelEventExitCameraLookAtPosition_1 = require("./LevelEventExitCameraLookAtPosition");
-const LevelEventExitDungeon_1 = require("./LevelEventExitDungeon");
-const LevelEventExitOrbitalCamera_1 = require("./LevelEventExitOrbitalCamera");
-const LevelEventFadeInScreen_1 = require("./LevelEventFadeInScreen");
-const LevelEventFadeOutScreen_1 = require("./LevelEventFadeOutScreen");
-const LevelEventFocusOnInformationBoard_1 = require("./LevelEventFocusOnInformationBoard");
-const LevelEventForceLockOnSpecialTagTarget_1 = require("./LevelEventForceLockOnSpecialTagTarget");
-const LevelEventGuideFinish_1 = require("./LevelEventGuideFinish");
-const LevelEventGuideTrigger_1 = require("./LevelEventGuideTrigger");
-const LevelEventHideTargetRange_1 = require("./LevelEventHideTargetRange");
-const LevelEventHighlightExploreUi_1 = require("./LevelEventHighlightExploreUi");
-const LevelEventInteractFan_1 = require("./LevelEventInteractFan");
-const LevelEventInterludeActions_1 = require("./LevelEventInterludeActions");
-const LevelEventLeisureInteract_1 = require("./LevelEventLeisureInteract");
-const LevelEventLog_1 = require("./LevelEventLog");
-const LevelEventModifyActorMaterial_1 = require("./LevelEventModifyActorMaterial");
-const LevelEventMoveJigsawItem_1 = require("./LevelEventMoveJigsawItem");
-const LevelEventMoveWithSpline_1 = require("./LevelEventMoveWithSpline");
-const LevelEventOpenChapterUi_1 = require("./LevelEventOpenChapterUi");
-const LevelEventOpenDragonPool_1 = require("./LevelEventOpenDragonPool");
-const LevelEventOpenHelp_1 = require("./LevelEventOpenHelp");
-const LevelEventOpenInfoDisplayView_1 = require("./LevelEventOpenInfoDisplayView");
-const LevelEventOpenInstance_1 = require("./LevelEventOpenInstance");
-const LevelEventOpenInstanceEntrance_1 = require("./LevelEventOpenInstanceEntrance");
-const LevelEventOpenShop_1 = require("./LevelEventOpenShop");
-const LevelEventOpenSimpleGameplay_1 = require("./LevelEventOpenSimpleGameplay");
-const LevelEventOpenSystem_1 = require("./LevelEventOpenSystem");
-const LevelEventOpenUI_1 = require("./LevelEventOpenUI");
-const LevelEventPickupDropItem_1 = require("./LevelEventPickupDropItem");
-const LevelEventPlayBubble_1 = require("./LevelEventPlayBubble");
-const LevelEventPlayDynamicSettlement_1 = require("./LevelEventPlayDynamicSettlement");
-const LevelEventPlayerLoockAt_1 = require("./LevelEventPlayerLoockAt");
-const LevelEventPlayLevelSequence_1 = require("./LevelEventPlayLevelSequence");
-const LevelEventPlayMontage_1 = require("./LevelEventPlayMontage");
-const LevelEventPlayMovie_1 = require("./LevelEventPlayMovie");
-const LevelEventPlayRegisteredMontage_1 = require("./LevelEventPlayRegisteredMontage");
-const LevelEventPlayWuYinAreaSequence_1 = require("./LevelEventPlayWuYinAreaSequence");
-const LevelEventPlotInterludeAction_1 = require("./LevelEventPlotInterludeAction");
-const LevelEventPostAkEvent_1 = require("./LevelEventPostAkEvent");
-const LevelEventPrompt_1 = require("./LevelEventPrompt");
-const LevelEventRefreshInputTag_1 = require("./LevelEventRefreshInputTag");
-const LevelEventRemoveBuffFromCreature_1 = require("./LevelEventRemoveBuffFromCreature");
-const LevelEventRemoveCreatureTag_1 = require("./LevelEventRemoveCreatureTag");
-const LevelEventRemoveTag_1 = require("./LevelEventRemoveTag");
-const LevelEventRestoreFromVision_1 = require("./LevelEventRestoreFromVision");
-const LevelEventRestorePlayerCameraAdjustment_1 = require("./LevelEventRestorePlayerCameraAdjustment");
-const LevelEventRunAction_1 = require("./LevelEventRunAction");
-const LevelEventSceneItemMove_1 = require("./LevelEventSceneItemMove");
-const LevelEventSendAiEvent_1 = require("./LevelEventSendAiEvent");
-const LevelEventSendGameplayEventToPlayer_1 = require("./LevelEventSendGameplayEventToPlayer");
-const LevelEventSetActorVisible_1 = require("./LevelEventSetActorVisible");
-const LevelEventSetBattleState_1 = require("./LevelEventSetBattleState");
-const LevelEventSetBlackBoardValue_1 = require("./LevelEventSetBlackBoardValue");
-const LevelEventSetExploreState_1 = require("./LevelEventSetExploreState");
-const LevelEventSetInteractionLockState_1 = require("./LevelEventSetInteractionLockState");
-const LevelEventSetNpcPosition_1 = require("./LevelEventSetNpcPosition");
-const LevelEventSetOffset_1 = require("./LevelEventSetOffset");
-const LevelEventSetPlayerCameraLockState_1 = require("./LevelEventSetPlayerCameraLockState");
-const LevelEventSetPlayerMoveControl_1 = require("./LevelEventSetPlayerMoveControl");
-const LevelEventSetPlayerOperation_1 = require("./LevelEventSetPlayerOperation");
-const LevelEventSetPos_1 = require("./LevelEventSetPos");
-const LevelEventSetRegionConfig_1 = require("./LevelEventSetRegionConfig");
-const LevelEventSetRotation_1 = require("./LevelEventSetRotation");
-const LevelEventSetTargetPos_1 = require("./LevelEventSetTargetPos");
-const LevelEventSetTimeSlowDown_1 = require("./LevelEventSetTimeSlowDown");
-const LevelEventSettlementDungeon_1 = require("./LevelEventSettlementDungeon");
-const LevelEventSetupSeqCamera_1 = require("./LevelEventSetupSeqCamera");
-const LevelEventSetWuYinQuState_1 = require("./LevelEventSetWuYinQuState");
-const LevelEventShowDialog_1 = require("./LevelEventShowDialog");
-const LevelEventShowPlotPhoto_1 = require("./LevelEventShowPlotPhoto");
-const LevelEventShowTargetRange_1 = require("./LevelEventShowTargetRange");
-const LevelEventSpawnEffect_1 = require("./LevelEventSpawnEffect");
-const LevelEventSpawnTraceEffect_1 = require("./LevelEventSpawnTraceEffect");
-const LevelEventSportsState_1 = require("./LevelEventSportsState");
-const LevelEventsToggleScanSplineEffect_1 = require("./LevelEventsToggleScanSplineEffect");
-const LevelEventStopSceneItemMove_1 = require("./LevelEventStopSceneItemMove");
-const LevelEventSubmitQuestBehavior_1 = require("./LevelEventSubmitQuestBehavior");
-const LevelEventSwitchSubLevels_1 = require("./LevelEventSwitchSubLevels");
-const LevelEventTeleportDungeon_1 = require("./LevelEventTeleportDungeon");
-const LevelEventTeleportToResetPoint_1 = require("./LevelEventTeleportToResetPoint");
-const LevelEventTimeTrackControl_1 = require("./LevelEventTimeTrackControl");
-const LevelEventToggleAirWall_1 = require("./LevelEventToggleAirWall");
-const LevelEventToggleMapMarkState_1 = require("./LevelEventToggleMapMarkState");
-const LevelEventTreasurBoxIdleFlow_1 = require("./LevelEventTreasurBoxIdleFlow");
-const LevelEventTriggerCameraShake_1 = require("./LevelEventTriggerCameraShake");
-const LevelEventTriggerExit_1 = require("./LevelEventTriggerExit");
-const LevelEventUnlockDungeonEntry_1 = require("./LevelEventUnlockDungeonEntry");
-const LevelEventUnlockInstanceEntrance_1 = require("./LevelEventUnlockInstanceEntrance");
-const LevelEventUnlockSystemItem_1 = require("./LevelEventUnlockSystemItem");
-const LevelEventUpdateInstanceEntranceUnlockStatus_1 = require("./LevelEventUpdateInstanceEntranceUnlockStatus");
-const LevelEventUsePhantomSkill_1 = require("./LevelEventUsePhantomSkill");
-const LevelEventWaitFlyControl_1 = require("./LevelEventWaitFlyControl");
-const LevelEventWaitTime_1 = require("./LevelEventWaitTime");
-const DEFAULT = 1;
-const LEVEL_1 = 4;
-const LEVEL_2 = 8;
-const LEVEL_MAX = 1024;
+const Log_1 = require("../../../Core/Common/Log"),
+  GlobalData_1 = require("../../GlobalData"),
+  LevelEventChangePhantomFormation_1 = require("../LevelEventChangePhantomFormation"),
+  LevelEventRestorePhantomFormation_1 = require("../LevelEventRestorePhantomFormation"),
+  LevelGameplayActionsDefine_1 = require("../LevelGameplayActionsDefine"),
+  LevelGeneralDefine_1 = require("../LevelGeneralDefine"),
+  LevelEventAddBuffToCreature_1 = require("./LevelEventAddBuffToCreature"),
+  LevelEventAddBuffToEntity_1 = require("./LevelEventAddBuffToEntity"),
+  LevelEventAddBuffToTriggeredEntity_1 = require("./LevelEventAddBuffToTriggeredEntity"),
+  LevelEventAddCreatureTag_1 = require("./LevelEventAddCreatureTag"),
+  LevelEventAddInputTag_1 = require("./LevelEventAddInputTag"),
+  LevelEventAddTag_1 = require("./LevelEventAddTag"),
+  LevelEventAddTrialCharacter_1 = require("./LevelEventAddTrialCharacter"),
+  LevelEventAdjustPlayerCamera_1 = require("./LevelEventAdjustPlayerCamera"),
+  LevelEventAdjustTodTime_1 = require("./LevelEventAdjustTodTime"),
+  LevelEventAudioEvent_1 = require("./LevelEventAudioEvent"),
+  LevelEventCameraLookAtPosition_1 = require("./LevelEventCameraLookAtPosition"),
+  LevelEventCameraShake_1 = require("./LevelEventCameraShake"),
+  LevelEventCaptureRequest_1 = require("./LevelEventCaptureRequest"),
+  LevelEventChangeAI_1 = require("./LevelEventChangeAI"),
+  LevelEventChangeEntityPerformanceState_1 = require("./LevelEventChangeEntityPerformanceState"),
+  LevelEventChangeFightIntensity_1 = require("./LevelEventChangeFightIntensity"),
+  LevelEventChangePatrol_1 = require("./LevelEventChangePatrol"),
+  LevelEventChangeToVision_1 = require("./LevelEventChangeToVision"),
+  LevelEventCharacterMove_1 = require("./LevelEventCharacterMove"),
+  LevelEventCheckBattleState_1 = require("./LevelEventCheckBattleState"),
+  LevelEventCheckFlyState_1 = require("./LevelEventCheckFlyState"),
+  LevelEventClaimDungeonReward_1 = require("./LevelEventClaimDungeonReward"),
+  LevelEventClaimLevelPlayReward_1 = require("./LevelEventClaimLevelPlayReward"),
+  LevelEventCollect_1 = require("./LevelEventCollect"),
+  LevelEventCompleteGuide_1 = require("./LevelEventCompleteGuide"),
+  LevelEventControlTodTime_1 = require("./LevelEventControlTodTime"),
+  LevelEventDeliverQuestBehavior_1 = require("./LevelEventDeliverQuestBehavior"),
+  LevelEventEnableAi_1 = require("./LevelEventEnableAi"),
+  LevelEventEnableHostility_1 = require("./LevelEventEnableHostility"),
+  LevelEventEnableMapView_1 = require("./LevelEventEnableMapView"),
+  LevelEventEnableSplineMoveModel_1 = require("./LevelEventEnableSplineMoveModel"),
+  LevelEventEnterOrbitalCamera_1 = require("./LevelEventEnterOrbitalCamera"),
+  LevelEventEnterSequenceCamera_1 = require("./LevelEventEnterSequenceCamera"),
+  LevelEventEntityLookAt_1 = require("./LevelEventEntityLookAt"),
+  LevelEventExecution_1 = require("./LevelEventExecution"),
+  LevelEventExitCameraLookAtPosition_1 = require("./LevelEventExitCameraLookAtPosition"),
+  LevelEventExitDungeon_1 = require("./LevelEventExitDungeon"),
+  LevelEventExitOrbitalCamera_1 = require("./LevelEventExitOrbitalCamera"),
+  LevelEventFadeInScreen_1 = require("./LevelEventFadeInScreen"),
+  LevelEventFadeOutScreen_1 = require("./LevelEventFadeOutScreen"),
+  LevelEventFocusOnInformationBoard_1 = require("./LevelEventFocusOnInformationBoard"),
+  LevelEventForceLockOnSpecialTagTarget_1 = require("./LevelEventForceLockOnSpecialTagTarget"),
+  LevelEventGuideFinish_1 = require("./LevelEventGuideFinish"),
+  LevelEventGuideTrigger_1 = require("./LevelEventGuideTrigger"),
+  LevelEventHideTargetRange_1 = require("./LevelEventHideTargetRange"),
+  LevelEventHighlightExploreUi_1 = require("./LevelEventHighlightExploreUi"),
+  LevelEventInteractFan_1 = require("./LevelEventInteractFan"),
+  LevelEventInterludeActions_1 = require("./LevelEventInterludeActions"),
+  LevelEventLeisureInteract_1 = require("./LevelEventLeisureInteract"),
+  LevelEventLog_1 = require("./LevelEventLog"),
+  LevelEventModifyActorMaterial_1 = require("./LevelEventModifyActorMaterial"),
+  LevelEventMoveJigsawItem_1 = require("./LevelEventMoveJigsawItem"),
+  LevelEventMoveWithSpline_1 = require("./LevelEventMoveWithSpline"),
+  LevelEventOpenChapterUi_1 = require("./LevelEventOpenChapterUi"),
+  LevelEventOpenDragonPool_1 = require("./LevelEventOpenDragonPool"),
+  LevelEventOpenHelp_1 = require("./LevelEventOpenHelp"),
+  LevelEventOpenInfoDisplayView_1 = require("./LevelEventOpenInfoDisplayView"),
+  LevelEventOpenInstance_1 = require("./LevelEventOpenInstance"),
+  LevelEventOpenInstanceEntrance_1 = require("./LevelEventOpenInstanceEntrance"),
+  LevelEventOpenShop_1 = require("./LevelEventOpenShop"),
+  LevelEventOpenSimpleGameplay_1 = require("./LevelEventOpenSimpleGameplay"),
+  LevelEventOpenSystem_1 = require("./LevelEventOpenSystem"),
+  LevelEventOpenUI_1 = require("./LevelEventOpenUI"),
+  LevelEventPickupDropItem_1 = require("./LevelEventPickupDropItem"),
+  LevelEventPlayBubble_1 = require("./LevelEventPlayBubble"),
+  LevelEventPlayDynamicSettlement_1 = require("./LevelEventPlayDynamicSettlement"),
+  LevelEventPlayerLoockAt_1 = require("./LevelEventPlayerLoockAt"),
+  LevelEventPlayLevelSequence_1 = require("./LevelEventPlayLevelSequence"),
+  LevelEventPlayMontage_1 = require("./LevelEventPlayMontage"),
+  LevelEventPlayMovie_1 = require("./LevelEventPlayMovie"),
+  LevelEventPlayRegisteredMontage_1 = require("./LevelEventPlayRegisteredMontage"),
+  LevelEventPlayWuYinAreaSequence_1 = require("./LevelEventPlayWuYinAreaSequence"),
+  LevelEventPlotInterludeAction_1 = require("./LevelEventPlotInterludeAction"),
+  LevelEventPostAkEvent_1 = require("./LevelEventPostAkEvent"),
+  LevelEventPrompt_1 = require("./LevelEventPrompt"),
+  LevelEventRefreshInputTag_1 = require("./LevelEventRefreshInputTag"),
+  LevelEventRemoveBuffFromCreature_1 = require("./LevelEventRemoveBuffFromCreature"),
+  LevelEventRemoveCreatureTag_1 = require("./LevelEventRemoveCreatureTag"),
+  LevelEventRemoveTag_1 = require("./LevelEventRemoveTag"),
+  LevelEventRestoreFromVision_1 = require("./LevelEventRestoreFromVision"),
+  LevelEventRestorePlayerCameraAdjustment_1 = require("./LevelEventRestorePlayerCameraAdjustment"),
+  LevelEventRunAction_1 = require("./LevelEventRunAction"),
+  LevelEventSceneItemMove_1 = require("./LevelEventSceneItemMove"),
+  LevelEventSendAiEvent_1 = require("./LevelEventSendAiEvent"),
+  LevelEventSendGameplayEventToPlayer_1 = require("./LevelEventSendGameplayEventToPlayer"),
+  LevelEventSetActorVisible_1 = require("./LevelEventSetActorVisible"),
+  LevelEventSetBattleState_1 = require("./LevelEventSetBattleState"),
+  LevelEventSetBlackBoardValue_1 = require("./LevelEventSetBlackBoardValue"),
+  LevelEventSetExploreState_1 = require("./LevelEventSetExploreState"),
+  LevelEventSetInteractionLockState_1 = require("./LevelEventSetInteractionLockState"),
+  LevelEventSetNpcPosition_1 = require("./LevelEventSetNpcPosition"),
+  LevelEventSetOffset_1 = require("./LevelEventSetOffset"),
+  LevelEventSetPlayerCameraLockState_1 = require("./LevelEventSetPlayerCameraLockState"),
+  LevelEventSetPlayerMoveControl_1 = require("./LevelEventSetPlayerMoveControl"),
+  LevelEventSetPlayerOperation_1 = require("./LevelEventSetPlayerOperation"),
+  LevelEventSetPos_1 = require("./LevelEventSetPos"),
+  LevelEventSetRegionConfig_1 = require("./LevelEventSetRegionConfig"),
+  LevelEventSetRotation_1 = require("./LevelEventSetRotation"),
+  LevelEventSetTargetPos_1 = require("./LevelEventSetTargetPos"),
+  LevelEventSetTimeSlowDown_1 = require("./LevelEventSetTimeSlowDown"),
+  LevelEventSettlementDungeon_1 = require("./LevelEventSettlementDungeon"),
+  LevelEventSetupSeqCamera_1 = require("./LevelEventSetupSeqCamera"),
+  LevelEventSetWuYinQuState_1 = require("./LevelEventSetWuYinQuState"),
+  LevelEventShowDialog_1 = require("./LevelEventShowDialog"),
+  LevelEventShowPlotPhoto_1 = require("./LevelEventShowPlotPhoto"),
+  LevelEventShowTargetRange_1 = require("./LevelEventShowTargetRange"),
+  LevelEventSpawnEffect_1 = require("./LevelEventSpawnEffect"),
+  LevelEventSpawnTraceEffect_1 = require("./LevelEventSpawnTraceEffect"),
+  LevelEventSportsState_1 = require("./LevelEventSportsState"),
+  LevelEventsToggleScanSplineEffect_1 = require("./LevelEventsToggleScanSplineEffect"),
+  LevelEventStopSceneItemMove_1 = require("./LevelEventStopSceneItemMove"),
+  LevelEventSubmitQuestBehavior_1 = require("./LevelEventSubmitQuestBehavior"),
+  LevelEventSwitchSubLevels_1 = require("./LevelEventSwitchSubLevels"),
+  LevelEventTeleportDungeon_1 = require("./LevelEventTeleportDungeon"),
+  LevelEventTeleportToResetPoint_1 = require("./LevelEventTeleportToResetPoint"),
+  LevelEventTimeTrackControl_1 = require("./LevelEventTimeTrackControl"),
+  LevelEventToggleAirWall_1 = require("./LevelEventToggleAirWall"),
+  LevelEventToggleMapMarkState_1 = require("./LevelEventToggleMapMarkState"),
+  LevelEventTreasurBoxIdleFlow_1 = require("./LevelEventTreasurBoxIdleFlow"),
+  LevelEventTriggerCameraShake_1 = require("./LevelEventTriggerCameraShake"),
+  LevelEventTriggerExit_1 = require("./LevelEventTriggerExit"),
+  LevelEventUnlockDungeonEntry_1 = require("./LevelEventUnlockDungeonEntry"),
+  LevelEventUnlockInstanceEntrance_1 = require("./LevelEventUnlockInstanceEntrance"),
+  LevelEventUnlockSystemItem_1 = require("./LevelEventUnlockSystemItem"),
+  LevelEventUpdateInstanceEntranceUnlockStatus_1 = require("./LevelEventUpdateInstanceEntranceUnlockStatus"),
+  LevelEventUsePhantomSkill_1 = require("./LevelEventUsePhantomSkill"),
+  LevelEventWaitFlyControl_1 = require("./LevelEventWaitFlyControl"),
+  LevelEventWaitTime_1 = require("./LevelEventWaitTime"),
+  DEFAULT = 1,
+  LEVEL_1 = 4,
+  LEVEL_2 = 8,
+  LEVEL_MAX = 1024;
 class LevelEventCenter {
   static AU() {
     (this.FLe = new Map()),
@@ -150,8 +150,8 @@ class LevelEventCenter {
   }
   static RegistEvents() {
     this.AU();
-    const e = LevelGeneralDefine_1.ELevelGeneralEvent;
-    const t = LevelEventCenter.QLe;
+    var e = LevelGeneralDefine_1.ELevelGeneralEvent,
+      t = LevelEventCenter.QLe;
     t(
       e.ChangeFightIntensity,
       LevelEventChangeFightIntensity_1.LevelEventChangeFightIntensity,
@@ -618,15 +618,15 @@ class LevelEventCenter {
       );
   }
   static GetEvent(t) {
-    const n = this.HLe.get(t);
+    var n = this.HLe.get(t);
     if (n) {
-      if (n.length > 0)
+      if (0 < n.length)
         return this.jLe.has(t) ? ((e = n.pop()).Reset(), e) : n[0];
       if (this.WLe.has(t)) {
-        var e;
-        const v = this.WLe.get(t);
+        var e,
+          v = this.WLe.get(t);
         for (let e = 0; e < LEVEL_1; e++) {
-          const l = new v(e);
+          var l = new v(e);
           (l.Type = t), n.push(l);
         }
         return (
@@ -653,14 +653,14 @@ class LevelEventCenter {
     }
   }
   static XLe(e) {
-    let t;
+    var t;
     this.jLe.has(e.Type) &&
       (t = this.HLe.get(e.Type)) &&
       !t.includes(e) &&
       t.push(e);
   }
   static AddToTickList(e, t) {
-    const n = t.GroupId;
+    var n = t.GroupId;
     if (e) {
       let e = this.FLe.get(n);
       e || ((e = new Array()), this.FLe.set(n, e)), e.includes(t) || e.push(t);
@@ -672,20 +672,20 @@ class LevelEventCenter {
   }
   static Tick(t) {
     if (void 0 !== this.VLe && void 0 !== this.FLe) {
-      for (; this.VLe.length > 0; ) {
-        var e;
-        const n = this.VLe.pop();
-        const v = this.FLe.get(n.GroupId);
+      for (; 0 < this.VLe.length; ) {
+        var e,
+          n = this.VLe.pop(),
+          v = this.FLe.get(n.GroupId);
         v &&
-          ((e = v.indexOf(n)) !== -1 && v.splice(e, 1), v.length === 0) &&
+          (-1 !== (e = v.indexOf(n)) && v.splice(e, 1), 0 === v.length) &&
           this.FLe.delete(n.GroupId),
           n.Reset(),
           this.XLe(n);
       }
       for (const E of this.FLe.values()) {
-        const l = E.length;
+        var l = E.length;
         for (let e = 0; e < l; e++) {
-          const r = E[e];
+          var r = E[e];
           r.Tick(t) && r.Finish();
         }
       }
@@ -709,20 +709,20 @@ class LevelEventCenter {
     if (e) {
       t = new Array();
       for (let e = 0; e < l; e++) {
-        const r = new v(e);
+        var r = new v(e);
         (r.Type = n), t.push(r);
       }
     } else {
       t = new Array(l);
       for (let e = 0; e < l; e++) {
-        const E = new v(e);
+        var E = new v(e);
         (E.Type = n), (t[e] = E);
       }
     }
     LevelEventCenter.HLe.set(n, t),
-      l > 1 &&
+      1 < l &&
         (LevelEventCenter.jLe.add(n), LevelEventCenter.KLe.set(n, l), e) &&
         LevelEventCenter.WLe.set(n, v);
   }
 };
-// # sourceMappingURL=LevelEventCenter.js.map
+//# sourceMappingURL=LevelEventCenter.js.map

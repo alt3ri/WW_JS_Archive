@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TipsVisionComponent = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const VisionFetterSuitItem_1 = require("../../../Phantom/Vision/View/VisionFetterSuitItem");
-const GenericLayoutNew_1 = require("../../../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const ItemTipsAttribute_1 = require("./ItemTipsAttribute");
-const ItemTipsBaseSubComponent_1 = require("./ItemTipsBaseSubComponent");
-const ItemTipsGetWay_1 = require("./ItemTipsGetWay");
-const ItemTipsLockButton_1 = require("./ItemTipsLockButton");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  VisionFetterSuitItem_1 = require("../../../Phantom/Vision/View/VisionFetterSuitItem"),
+  GenericLayoutNew_1 = require("../../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  ItemTipsAttribute_1 = require("./ItemTipsAttribute"),
+  ItemTipsBaseSubComponent_1 = require("./ItemTipsBaseSubComponent"),
+  ItemTipsGetWay_1 = require("./ItemTipsGetWay"),
+  ItemTipsLockButton_1 = require("./ItemTipsLockButton");
 class TipsVisionComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubComponent {
   constructor(t) {
     super(t),
@@ -64,18 +64,18 @@ class TipsVisionComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubComponen
       await this.PPt.Init();
   }
   OnStart() {
-    var t = this.GetItem(2);
-    var t =
-      ((this.UPt = new ItemTipsLockButton_1.TipsLockButton(t)),
-      (this.APt = new GenericLayoutNew_1.GenericLayoutNew(
-        this.GetVerticalLayout(3),
-        this.tpt,
-      )),
-      (this.eGe = new GenericLayoutNew_1.GenericLayoutNew(
-        this.GetVerticalLayout(12),
-        this.xPt,
-      )),
-      this.GetItem(5));
+    var t = this.GetItem(2),
+      t =
+        ((this.UPt = new ItemTipsLockButton_1.TipsLockButton(t)),
+        (this.APt = new GenericLayoutNew_1.GenericLayoutNew(
+          this.GetVerticalLayout(3),
+          this.tpt,
+        )),
+        (this.eGe = new GenericLayoutNew_1.GenericLayoutNew(
+          this.GetVerticalLayout(12),
+          this.xPt,
+        )),
+        this.GetItem(5));
     this.LPt = new ItemTipsGetWay_1.TipsGetWayPanel(t);
   }
   OnBeforeDestroy() {
@@ -84,13 +84,13 @@ class TipsVisionComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubComponen
       ModelManager_1.ModelManager.ItemTipsModel.SetCurrentItemTipsData(void 0));
   }
   Refresh(t) {
-    const i = () => {
-      const t = this.Pe;
+    var i = () => {
+      var t = this.Pe;
       this.GetText(0).SetText(t.Cost.toString()),
         this.GetText(1).SetUIActive(void 0 !== t.UpgradeLevel),
         this.GetText(1).SetText(t.UpgradeLevel),
         t.IncId && this.UPt.Refresh(t.IncId, t.CanClickLockButton),
-        this.UPt?.SetUiActive(t.IncId > 0),
+        this.UPt?.SetUiActive(0 < t.IncId),
         this.APt.RebuildLayoutByDataNew(t.AttributeData),
         t.VisionDetailInfoComponentData.DataBase &&
           this.PPt.Update(
@@ -112,7 +112,7 @@ class TipsVisionComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubComponen
     this.eGe.RebuildLayoutByDataNew(t.DescData);
   }
   DPt(t) {
-    this.GetItem(5).SetUIActive(void 0 !== t && t.length > 0),
+    this.GetItem(5).SetUIActive(void 0 !== t && 0 < t.length),
       t && this.LPt.Refresh(t);
   }
   RPt(t) {
@@ -132,7 +132,7 @@ class TipsVisionComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubComponen
         ));
   }
   SetLockButtonShow(t) {
-    const i = () => {
+    var i = () => {
       this.GetItem(2).SetUIActive(t);
     };
     this.InAsyncLoading() ? this.OperationMap.set("SetLockButtonShow", i) : i();
@@ -188,11 +188,10 @@ class VisionDetailDescItem extends UiPanelBase_1.UiPanelBase {
     this.GetText(0).SetText(t.Title);
   }
   L4e(t) {
-    let i;
-    let e;
-    const s =
-      ModelManager_1.ModelManager.PhantomBattleModel.GetIfSimpleState(1);
-    t.FetterId > 0
+    var i,
+      e,
+      s = ModelManager_1.ModelManager.PhantomBattleModel.GetIfSimpleState(1);
+    0 < t.FetterId
       ? ((i =
           ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomFetterById(
             t.FetterId,
@@ -237,7 +236,7 @@ class VisionDetailDescItem extends UiPanelBase_1.UiPanelBase {
         this.GetText(3).SetUIActive(!0));
   }
   OPt(t) {
-    t.FetterId > 0
+    0 < t.FetterId
       ? (this.GetItem(9).SetUIActive(!0),
         (t =
           ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterGroupById(
@@ -254,11 +253,11 @@ class VisionDetailDescItem extends UiPanelBase_1.UiPanelBase {
     this.GetText(6).SetText(t.EmptyText);
   }
   NPt(t) {
-    const i = !StringUtils_1.StringUtils.IsEmpty(t.EmptyContentText);
+    var i = !StringUtils_1.StringUtils.IsEmpty(t.EmptyContentText);
     this.GetItem(7).SetUIActive(i), this.GetText(8).SetText(t.EmptyContentText);
   }
   qPt(t) {
     this.GetItem(5).SetUIActive(t.TitleItemShowState);
   }
 }
-// # sourceMappingURL=ItemTipsVisionComponent.js.map
+//# sourceMappingURL=ItemTipsVisionComponent.js.map

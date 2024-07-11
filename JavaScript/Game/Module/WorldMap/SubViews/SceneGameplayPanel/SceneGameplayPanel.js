@@ -1,34 +1,34 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneGameplayPanel = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const DropPackageById_1 = require("../../../../../Core/Define/ConfigQuery/DropPackageById");
-const ExchangeRewardById_1 = require("../../../../../Core/Define/ConfigQuery/ExchangeRewardById");
-const MapMarkByMarkId_1 = require("../../../../../Core/Define/ConfigQuery/MapMarkByMarkId");
-const MapMarkPhantomGroupByMarkId_1 = require("../../../../../Core/Define/ConfigQuery/MapMarkPhantomGroupByMarkId");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const ActivityDoubleRewardController_1 = require("../../../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController");
-const ButtonItem_1 = require("../../../Common/Button/ButtonItem");
-const HelpController_1 = require("../../../Help/HelpController");
-const ItemDefines_1 = require("../../../Item/Data/ItemDefines");
-const LevelPlay_1 = require("../../../LevelPlay/LevelPlay");
-const MapController_1 = require("../../../Map/Controller/MapController");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi");
-const WorldMapDefine_1 = require("../../WorldMapDefine");
-const TipsListView_1 = require("../TipsListView");
-const SceneGameplayTipGrid_1 = require("./SceneGameplayTipGrid");
-const POWER_DISCOUNT_HELP_ID = 26;
-const POWER_COST_KEY = "power";
-const REBORN_TIME_KEY = "reborn";
-const REWARD_SHARE_COUNT = "reward";
-const TARGET_ITEM_SHOW_TYPE = 41;
+const Log_1 = require("../../../../../Core/Common/Log"),
+  DropPackageById_1 = require("../../../../../Core/Define/ConfigQuery/DropPackageById"),
+  ExchangeRewardById_1 = require("../../../../../Core/Define/ConfigQuery/ExchangeRewardById"),
+  MapMarkByMarkId_1 = require("../../../../../Core/Define/ConfigQuery/MapMarkByMarkId"),
+  MapMarkPhantomGroupByMarkId_1 = require("../../../../../Core/Define/ConfigQuery/MapMarkPhantomGroupByMarkId"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  ActivityDoubleRewardController_1 = require("../../../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController"),
+  ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
+  HelpController_1 = require("../../../Help/HelpController"),
+  ItemDefines_1 = require("../../../Item/Data/ItemDefines"),
+  LevelPlay_1 = require("../../../LevelPlay/LevelPlay"),
+  MapController_1 = require("../../../Map/Controller/MapController"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
+  WorldMapDefine_1 = require("../../WorldMapDefine"),
+  TipsListView_1 = require("../TipsListView"),
+  SceneGameplayTipGrid_1 = require("./SceneGameplayTipGrid"),
+  POWER_DISCOUNT_HELP_ID = 26,
+  POWER_COST_KEY = "power",
+  REBORN_TIME_KEY = "reborn",
+  REWARD_SHARE_COUNT = "reward",
+  TARGET_ITEM_SHOW_TYPE = 41;
 class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
@@ -47,7 +47,7 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
         HelpController_1.HelpController.OpenHelpById(POWER_DISCOUNT_HELP_ID);
       }),
       (this.gko = () => {
-        const e = this.dko.IsTracked;
+        var e = this.dko.IsTracked;
         MapController_1.MapController.RequestTrackMapMark(
           this.dko.MarkType,
           this.dko.MarkId,
@@ -56,7 +56,7 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
           this.Close();
       }),
       (this.UOe = () => {
-        let e = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
+        var e = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
           this.Nct.Id,
         );
         e.IsOccupied &&
@@ -68,7 +68,7 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       }),
       (this.l2o = () => {
         ModelManager_1.ModelManager.CalabashModel.OnlyShowBattleFettersTab = !0;
-        const e =
+        var e =
           MapMarkPhantomGroupByMarkId_1.configMapMarkPhantomGroupByMarkId.GetConfig(
             this.dko.MarkId,
           );
@@ -126,8 +126,8 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
           this.Nct.InitConfig()),
         (this.IRe = void 0),
         (this.h2o =
-          this.dko?.MarkConfig?.RelativeSubType === 1 ||
-          this.dko?.MarkConfig?.RelativeSubType === 2),
+          1 === this.dko?.MarkConfig?.RelativeSubType ||
+          2 === this.dko?.MarkConfig?.RelativeSubType),
         this.h7e(),
         this.l1i(),
         this.u2o())
@@ -154,10 +154,10 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
             this.Nct.FirstRewardId,
           )
         : void 0);
-    let e;
-    let i;
-    const t = this.dko.MarkConfigId;
-    const r = MapMarkByMarkId_1.configMapMarkByMarkId.GetConfig(t);
+    var e,
+      i,
+      t = this.dko.MarkConfigId,
+      r = MapMarkByMarkId_1.configMapMarkByMarkId.GetConfig(t);
     r
       ? ((e = (i = this.dko.IsRelativeFunctionOpen())
           ? r.MarkTitle
@@ -171,7 +171,7 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
         this.GetItem(8).SetUIActive(!1),
         (i = this.dko.GetAreaText()) && this.GetText(3).SetText(i),
         this.GetButton(18).RootUIComp?.SetUIActive(
-          this.dko.MarkConfig.RelativeSubType === 1,
+          1 === this.dko.MarkConfig.RelativeSubType,
         ),
         this.InitRewards(),
         this.Xko())
@@ -180,9 +180,10 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
   c2o() {
     let e = 0;
-    (e = this.jko?.Cost.has(ItemDefines_1.EItemId.Power)
-      ? this.jko.Cost.get(ItemDefines_1.EItemId.Power)
-      : e) > 0 &&
+    0 <
+      (e = this.jko?.Cost.has(ItemDefines_1.EItemId.Power)
+        ? this.jko.Cost.get(ItemDefines_1.EItemId.Power)
+        : e) &&
       ((r = this.xko.AddItemByKey(POWER_COST_KEY)).SetIconByItemId(
         ItemDefines_1.EItemId.Power,
       ),
@@ -201,13 +202,15 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       ),
       this.a2o?.SetHelpButtonVisible(!1),
       this.a2o?.SetActive(!1);
-    let i;
-    let t;
-    var r = this.jko.SharedId;
-    r > 0 &&
-      (i = ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetShareMaxCount(
-        this.jko.SharedId,
-      )) > 0 &&
+    var i,
+      t,
+      r = this.jko.SharedId;
+    0 < r &&
+      0 <
+        (i =
+          ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetShareMaxCount(
+            this.jko.SharedId,
+          )) &&
       ((r =
         ModelManager_1.ModelManager.ExchangeRewardModel.GetExchangeRewardShareCount(
           r,
@@ -227,7 +230,7 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       t.SetHelpButtonVisible(!1));
   }
   Xko() {
-    let e = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
+    var e = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
       this.Nct.Id,
     );
     this.$Ut.SetActive(!e.IsOccupied),
@@ -246,11 +249,11 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
           e.Name,
         )),
         this.GetText(13).SetText(e)),
-      this.GetItem(17).SetUIActive(this.dko.MarkConfig.RelativeSubType === 1);
+      this.GetItem(17).SetUIActive(1 === this.dko.MarkConfig.RelativeSubType);
   }
   InitRewards() {
     let e = !1;
-    this.dko.MarkConfig.RelativeSubType === 1 &&
+    1 === this.dko.MarkConfig.RelativeSubType &&
       ((i =
         ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetDungeonUpActivity(
           [3],
@@ -269,11 +272,11 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
         (this.Vko = new SceneGameplayTipGrid_1.SceneGameplayTipGrid()),
         this.Vko.Initialize(LguiUtil_1.LguiUtil.DuplicateActor(i, t)),
         (this.Vko.OnClickPreviewCall = this._2o));
-    var i = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel;
-    var t =
-      (this.Hko?.SetBtnPreviewVisible(!1),
-      this.Vko.SetBtnPreviewVisible(this.h2o),
-      this.Nct.IsFirstPass);
+    var i = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
+      t =
+        (this.Hko?.SetBtnPreviewVisible(!1),
+        this.Vko.SetBtnPreviewVisible(this.h2o),
+        this.Nct.IsFirstPass);
     t
       ? this.$ko(this.Hko, void 0, 0, "")
       : this.$ko(this.Hko, this.Wko, i, "FirstReward"),
@@ -281,27 +284,27 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
   $ko(e, r, a, i, s = !1) {
     if (r) {
-      const o = r.PreviewReward;
+      var o = r.PreviewReward;
       let t = void 0;
       if (o.has(a)) t = o.get(a).MapIntInt;
       else
-        for (let e = a - 1; e >= 0; e--)
+        for (let e = a - 1; 0 <= e; e--)
           if (o.has(e)) {
             t = o.get(e).MapIntInt;
             break;
           }
       if (!t) {
-        const n = r.RewardId;
+        var n = r.RewardId;
         let i = 0;
         if (n.has(a)) i = n.get(a);
         else
-          for (let e = a - 1; e >= 0; e--)
+          for (let e = a - 1; 0 <= e; e--)
             if (n.has(e)) {
               i = n.get(e);
               break;
             }
         i &&
-          i > 0 &&
+          0 < i &&
           ((d = DropPackageById_1.configDropPackageById.GetConfig(i))
             ? (t = d.DropPreview)
             : Log_1.Log.CheckError() &&
@@ -312,16 +315,16 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
                 ["兑换奖励ID", r.Id],
               ));
       }
-      if (this.dko.MarkConfig.RelativeSubType === 1) {
-        let h;
-        let _;
-        let l;
-        var d = ModelManager_1.ModelManager.CalabashModel.GetCalabashLevel();
-        const M =
-          ConfigManager_1.ConfigManager.CalabashConfig?.GetCalabashConfigByLevel(
-            d,
-          );
-        const g = [];
+      if (1 === this.dko.MarkConfig.RelativeSubType) {
+        var h,
+          _,
+          l,
+          d = ModelManager_1.ModelManager.CalabashModel.GetCalabashLevel(),
+          M =
+            ConfigManager_1.ConfigManager.CalabashConfig?.GetCalabashConfigByLevel(
+              d,
+            ),
+          g = [];
         for ([h] of t)
           this.m2o(h) &&
             ((_ =
@@ -355,7 +358,7 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
         e,
       );
-    return e === 7 || e === 0;
+    return 7 === e || 0 === e;
   }
   l1i() {
     let e = "";
@@ -365,8 +368,8 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       this.$Ut.SetLocalText(e);
   }
   u2o() {
-    const i = TimeUtil_1.TimeUtil.GetServerTime();
-    let t = this.Nct.RefreshTime;
+    var i = TimeUtil_1.TimeUtil.GetServerTime(),
+      t = this.Nct.RefreshTime;
     if (t < i) this.cG();
     else {
       t = t - i;
@@ -402,4 +405,4 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
 }
 exports.SceneGameplayPanel = SceneGameplayPanel;
-// # sourceMappingURL=SceneGameplayPanel.js.map
+//# sourceMappingURL=SceneGameplayPanel.js.map

@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InteractionHint = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const GlobalConfigFromCsvByName_1 = require("../../../../Core/Define/ConfigQuery/GlobalConfigFromCsvByName");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const PublicUtil_1 = require("../../../Common/PublicUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const InputMultiKeyItem_1 = require("../../Common/InputKey/InputMultiKeyItem");
-const ToggleActionItem_1 = require("../../Common/Toggle/ToggleActionItem");
-const InteractionDefine_1 = require("../InteractionDefine");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  GlobalConfigFromCsvByName_1 = require("../../../../Core/Define/ConfigQuery/GlobalConfigFromCsvByName"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../../Common/PublicUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  InputMultiKeyItem_1 = require("../../Common/InputKey/InputMultiKeyItem"),
+  ToggleActionItem_1 = require("../../Common/Toggle/ToggleActionItem"),
+  InteractionDefine_1 = require("../InteractionDefine");
 class InteractionHint extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -72,10 +72,10 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
       this.Z1i.OnSelfLanguageChange.Bind(() => {
         this.C4e();
       });
-    const t = this.GetItem(2);
-    const e =
-      ((this.o_i = new InputMultiKeyItem_1.InputMultiKeyItem()),
-      this.GetItem(3));
+    var t = this.GetItem(2),
+      e =
+        ((this.o_i = new InputMultiKeyItem_1.InputMultiKeyItem()),
+        this.GetItem(3));
     (this.r_i = new InputMultiKeyItem_1.InputMultiKeyItem(
       !0,
       !0,
@@ -124,7 +124,7 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
           ));
     let s = InteractionDefine_1.qualityColorList[0];
     this.$0t &&
-      (t = this.$0t.QualityId) > 0 &&
+      0 < (t = this.$0t.QualityId) &&
       (s = InteractionDefine_1.qualityColorList[t - 1]),
       (this.n_i = s),
       this.C4e(),
@@ -145,7 +145,7 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
     return this.GridIndex;
   }
   RefreshChangeInteractionAction() {
-    let t;
+    var t;
     ModelManager_1.ModelManager.PlatformModel.IsGamepad()
       ? ((t = {
           ActionOrAxisName: InputMappingsDefine_1.actionMappings.切换交互,
@@ -157,20 +157,20 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
         this.o_i.RefreshByActionOrAxis(t));
   }
   RefreshInteractKeyItem() {
-    var t = ModelManager_1.ModelManager.InteractionModel;
-    var t =
-      (this.r_i.Reset(),
-      {
-        ActionOrAxisName: InputMappingsDefine_1.actionMappings.通用交互,
-        IsLongPressDisable: !this.a_i,
-        LongPressTime: t.AutoLongPressTime,
-        DelayPressTime: t.ShowLongPressTime,
-        IsShowLongPressWhenPress: !0,
-        IsShowLongPressWhenRelease: !1,
-        IsTextArrowVisible: !1,
-        IsShowTextArrowWhenPress: !1,
-        IsShowTextArrowWhenRelease: !1,
-      });
+    var t = ModelManager_1.ModelManager.InteractionModel,
+      t =
+        (this.r_i.Reset(),
+        {
+          ActionOrAxisName: InputMappingsDefine_1.actionMappings.通用交互,
+          IsLongPressDisable: !this.a_i,
+          LongPressTime: t.AutoLongPressTime,
+          DelayPressTime: t.ShowLongPressTime,
+          IsShowLongPressWhenPress: !0,
+          IsShowLongPressWhenRelease: !1,
+          IsTextArrowVisible: !1,
+          IsShowTextArrowWhenPress: !1,
+          IsShowTextArrowWhenRelease: !1,
+        });
     this.r_i?.RefreshByActionOrAxis(t);
   }
   SetLongPressTime(t) {
@@ -180,7 +180,7 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
     return this.z1i?.IsDropItem() ?? !1;
   }
   C4e() {
-    let t, e;
+    var t, e;
     this.Z1i &&
       ((t = this.f_i()),
       (e = this.p_i()),
@@ -221,8 +221,8 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
         );
     }
     if (this.z1i) {
-      var t = this.z1i.DropItemCount;
-      const e = this.z1i.PawnName;
+      var t = this.z1i.DropItemCount,
+        e = this.z1i.PawnName;
       if (
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
@@ -234,7 +234,7 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
           ),
         !StringUtils_1.StringUtils.IsEmpty(e))
       )
-        return this.g_i() && t > 1 ? e + "x" + t : e;
+        return this.g_i() && 1 < t ? e + "x" + t : e;
     }
     return "";
   }
@@ -247,25 +247,28 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
       t = e?.IconMiddle;
     } else if ((0, RegisterComponent_1.isComponentInstance)(this.J1i, 178)) {
       e = this.J1i.GetInteractController().InteractIcon;
-      if (e === "Collect") {
+      if ("Collect" === e) {
         var i =
-          this.J1i.GetInteractController().CreatureData.GetPbEntityInitData();
-        let s = (0, IComponent_1.getComponent)(
-          i.ComponentsData,
-          "CollectComponent",
-        );
-        var i =
-          ((t = this.v_i("Dialog")),
-          (0, IComponent_1.getComponent)(i.ComponentsData, "RewardComponent"));
+            this.J1i.GetInteractController().CreatureData.GetPbEntityInitData(),
+          s = (0, IComponent_1.getComponent)(
+            i.ComponentsData,
+            "CollectComponent",
+          ),
+          i =
+            ((t = this.v_i("Dialog")),
+            (0, IComponent_1.getComponent)(
+              i.ComponentsData,
+              "RewardComponent",
+            ));
         if (s) {
           (s = i.RewardId),
             (i =
               ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(
                 s,
               ).DropPreview);
-          if (i.size > 0)
+          if (0 < i.size)
             for (const r of i.keys()) {
-              const n = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(
+              var n = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(
                 Number(r),
               );
               t = n.IconMiddle;
@@ -274,10 +277,10 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
         }
       } else
         t =
-          e === "BigTeleporter" ||
-          e === "SmallTeleporter" ||
-          e === "TreasureBox" ||
-          e === "UnknownCollect"
+          "BigTeleporter" === e ||
+          "SmallTeleporter" === e ||
+          "TreasureBox" === e ||
+          "UnknownCollect" === e
             ? this.M_i(e)
             : this.v_i(e);
     } else
@@ -308,14 +311,14 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
     return void 0 === t ? "" : t.Value;
   }
   m_i() {
-    const t = this.$1i.GetToggleItem();
+    var t = this.$1i.GetToggleItem();
     t.CanExecuteChange.Bind(this.h_i),
       t.OnStateChange.Add(this.l_i),
       t.OnHover.Add(this.__i),
       t.OnUnHover.Add(this.u_i);
   }
   C_i() {
-    let t;
+    var t;
     this.$1i &&
       ((t = this.$1i.GetToggleItem()).OnStateChange.Clear(),
       t.CanExecuteChange.Unbind(),
@@ -329,7 +332,7 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
       (this.$En = TimerSystem_1.TimerSystem.Next(() => {
         this.zEn();
       }));
-    const e = this.$1i.GetToggleItem();
+    var e = this.$1i.GetToggleItem();
     t ? e.SetToggleState(1, !1) : e.SetToggleState(0, !1);
   }
   YEn() {
@@ -341,7 +344,7 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
   JEn() {
     this.o_i?.SetActive(
       this.a_i &&
-        ModelManager_1.ModelManager.InteractionModel.GetInteractItemCount() > 1,
+        1 < ModelManager_1.ModelManager.InteractionModel.GetInteractItemCount(),
     );
   }
   zEn() {
@@ -371,4 +374,4 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.InteractionHint = InteractionHint;
-// # sourceMappingURL=InteractionHint.js.map
+//# sourceMappingURL=InteractionHint.js.map

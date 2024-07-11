@@ -1,5 +1,5 @@
 "use strict";
-let InstOnlineType;
+var InstOnlineType;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstOnlineType = void 0),
   (function (e) {
@@ -9,4 +9,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   })(
     (InstOnlineType = exports.InstOnlineType || (exports.InstOnlineType = {})),
   );
-// # sourceMappingURL=InstOnlineType.js.map
+//# sourceMappingURL=InstOnlineType.js.map

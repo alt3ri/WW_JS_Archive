@@ -4,14 +4,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.ParkourConfig =
     exports.ParkourPointInfo =
       void 0);
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralContextDefine_1 = require("../LevelGeneralContextDefine");
+const ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralContextDefine_1 = require("../LevelGeneralContextDefine");
 class ParkourPointInfo {
   constructor(r) {
     (this.Point = void 0),
@@ -90,9 +90,9 @@ class ParkourConfig {
   ClearParkourActorList() {
     if (this.DAe?.length) {
       for (const o of this.DAe)
-        if (o?.length > 0)
+        if (0 < o?.length)
           for (const t of o) {
-            const r = t.Point;
+            var r = t.Point;
             !t.IsRecycled &&
               r?.IsValid() &&
               (r.ReceiveEndPlay(0), ActorSystem_1.ActorSystem.Put(r));
@@ -113,7 +113,7 @@ class ParkourModel extends ModelBase_1.ModelBase {
     return this.xAe.clear(), !0;
   }
   AddParkour(r, o, t) {
-    let e, i, n, s;
+    var e, i, n, s;
     return this.xAe.get(r)
       ? (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -175,7 +175,7 @@ class ParkourModel extends ModelBase_1.ModelBase {
           !1);
   }
   RemoveParkour(r) {
-    const o = this.xAe.get(r);
+    var o = this.xAe.get(r);
     o &&
       (o.ClearParkourActorList(),
       o.ParkourContext?.Release(),
@@ -186,4 +186,4 @@ class ParkourModel extends ModelBase_1.ModelBase {
   }
 }
 exports.ParkourModel = ParkourModel;
-// # sourceMappingURL=ParkourModel.js.map
+//# sourceMappingURL=ParkourModel.js.map

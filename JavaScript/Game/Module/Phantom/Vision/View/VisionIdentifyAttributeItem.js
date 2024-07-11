@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionIdentifyAttributeItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
 class VisionIdentifyAttributeItem extends GridProxyAbstract_1.GridProxyAbstract {
   Refresh(e, t, r) {
     this.Update(e);
@@ -19,7 +19,7 @@ class VisionIdentifyAttributeItem extends GridProxyAbstract_1.GridProxyAbstract 
     ];
   }
   Update(e) {
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
         e.Id,
       );
@@ -39,9 +39,9 @@ class VisionIdentifyAttributeItem extends GridProxyAbstract_1.GridProxyAbstract 
           e.IsRatio,
         ),
       ),
-      this.GetItem(2).SetUIActive(e.AddValue - e.BaseValue > 0),
-      this.GetText(3).SetUIActive(e.AddValue - e.BaseValue > 0);
+      this.GetItem(2).SetUIActive(0 < e.AddValue - e.BaseValue),
+      this.GetText(3).SetUIActive(0 < e.AddValue - e.BaseValue);
   }
 }
 exports.VisionIdentifyAttributeItem = VisionIdentifyAttributeItem;
-// # sourceMappingURL=VisionIdentifyAttributeItem.js.map
+//# sourceMappingURL=VisionIdentifyAttributeItem.js.map

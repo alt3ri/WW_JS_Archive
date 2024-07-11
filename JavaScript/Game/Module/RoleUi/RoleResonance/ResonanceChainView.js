@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ResonanceChainView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const RenderModuleController_1 = require("../../../Render/Manager/RenderModuleController");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const UiSceneManager_1 = require("../../UiComponent/UiSceneManager");
-const RoleController_1 = require("../RoleController");
-const RoleDefine_1 = require("../RoleDefine");
-const ResonanceChainInfoItem_1 = require("./ResonanceChainInfoItem");
-const ResonanceChainItem_1 = require("./ResonanceChainItem");
-const RESONANCE_FIRST_ITEM_ANGLE = -60;
-const RESONANCE_PER_ITEM_ANGLE = 30;
-const RESONANCE_ITEM_COUNT = 6;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  RenderModuleController_1 = require("../../../Render/Manager/RenderModuleController"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  UiSceneManager_1 = require("../../UiComponent/UiSceneManager"),
+  RoleController_1 = require("../RoleController"),
+  RoleDefine_1 = require("../RoleDefine"),
+  ResonanceChainInfoItem_1 = require("./ResonanceChainInfoItem"),
+  ResonanceChainItem_1 = require("./ResonanceChainItem"),
+  RESONANCE_FIRST_ITEM_ANGLE = -60,
+  RESONANCE_PER_ITEM_ANGLE = 30,
+  RESONANCE_ITEM_COUNT = 6;
 class ResonanceChainView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -29,8 +29,8 @@ class ResonanceChainView extends UiTabViewBase_1.UiTabViewBase {
       (this.Gft = void 0),
       (this.Kuo = -1),
       (this.ZPt = (e) => {
-        let t;
-        (e !== "CamLef" && e !== "CamRig") ||
+        var t;
+        ("CamLef" !== e && "CamRig" !== e) ||
           ((t = UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor()),
           this.Gft.SetActorTag(e, RoleDefine_1.UI_SCENE_ROLE_TAG, t),
           this.Gft.SetRelativeTransform(
@@ -40,9 +40,9 @@ class ResonanceChainView extends UiTabViewBase_1.UiTabViewBase {
       }),
       (this.Quo = () => {
         this.Xuo();
-        let e;
-        let t;
-        const i = this.plo.GetCurRoleResonanceGroupIndex() - 1;
+        var e,
+          t,
+          i = this.plo.GetCurRoleResonanceGroupIndex() - 1;
         const s = this.juo[i];
         s &&
           (s.PlayActivateSequence(() => {
@@ -71,15 +71,15 @@ class ResonanceChainView extends UiTabViewBase_1.UiTabViewBase {
           this.Zuo();
       }),
       (this.eco = (e) => {
-        let t = this.Kuo;
+        var t = this.Kuo;
         let i = void 0;
-        t >= 0 && (i = this.tco(t));
+        0 <= t && (i = this.tco(t));
         t = e;
         let s = void 0;
-        t >= 0 && ((this.Kuo = t), (s = this.tco(t))),
+        0 <= t && ((this.Kuo = t), (s = this.tco(t))),
           i?.RefreshToggleState(!1),
           s?.RefreshToggleState(!0),
-          this.plo.RoleViewState === 0 && this.ico(),
+          0 === this.plo.RoleViewState && this.ico(),
           this.Xuo();
       });
   }
@@ -179,7 +179,7 @@ class ResonanceChainView extends UiTabViewBase_1.UiTabViewBase {
     RoleController_1.RoleController.PlayRoleMontage(7);
   }
   rco() {
-    this.Kuo >= 0 &&
+    0 <= this.Kuo &&
       !this.xWt &&
       (this.xWt = new ResonanceChainInfoItem_1.ResonanceChainInfoItem(
         this.RootItem,
@@ -224,22 +224,22 @@ class ResonanceChainView extends UiTabViewBase_1.UiTabViewBase {
       ConfigManager_1.ConfigManager.RoleResonanceConfig.GetRoleResonanceById(e);
     if (e) {
       e = e.GroupIndex - 1;
-      if (e >= 0 && e < RESONANCE_ITEM_COUNT) return this.juo[e];
+      if (0 <= e && e < RESONANCE_ITEM_COUNT) return this.juo[e];
     }
   }
   bl() {
     const n = this.plo.GetCurRoleResonanceGroupIndex();
-    const e = this.plo.GetCurRoleResonanceConfigList();
+    var e = this.plo.GetCurRoleResonanceConfigList();
     const h = this.plo.GetCurSelectRoleId();
     this.juo.forEach((e) => {
       e?.SetActive(!1);
     }),
       e &&
-        e.length > 0 &&
+        0 < e.length &&
         e.forEach((e) => {
           let t = void 0;
-          const i = e.GroupIndex;
-          const s = i - 1;
+          var i = e.GroupIndex,
+            s = i - 1;
           s < RESONANCE_ITEM_COUNT &&
             ((t = i <= n ? this.$uo(s) : this.sco(s)).SetActive(!0),
             t.Update(h, e.Id),
@@ -247,16 +247,16 @@ class ResonanceChainView extends UiTabViewBase_1.UiTabViewBase {
         });
   }
   Zuo() {
-    const e = this.Kuo;
+    var e = this.Kuo;
     let t = void 0;
-    e >= 0 && (t = this.tco(e)), (this.Kuo = -1), t?.RefreshToggleState(!1, !0);
+    0 <= e && (t = this.tco(e)), (this.Kuo = -1), t?.RefreshToggleState(!1, !0);
   }
   Xuo() {
     this.xWt ||
       (this.xWt = new ResonanceChainInfoItem_1.ResonanceChainInfoItem(
         this.RootItem,
       ));
-    const e = this.plo.GetCurSelectRoleData();
+    var e = this.plo.GetCurSelectRoleData();
     this.xWt.Update(e.GetDataId(), this.Kuo, e.IsTrialRole());
   }
   OnBeforeDestroy() {
@@ -274,14 +274,14 @@ class ResonanceChainView extends UiTabViewBase_1.UiTabViewBase {
       this.oco();
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
-    if (e.length === 0)
+    if (0 === e.length)
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Guide", 17, "共鸣链聚焦引导extraParam字段配置错误", [
           "configParams",
           e,
         ]);
     else {
-      const t = this.aco(e[0]);
+      var t = this.aco(e[0]);
       if (t) return [t, t];
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
@@ -294,14 +294,14 @@ class ResonanceChainView extends UiTabViewBase_1.UiTabViewBase {
   }
   aco(e) {
     let t = void 0;
-    let i = Number(e);
+    var i = Number(e);
     return (
       i
         ? (t = this.sco(--i)?.GetUiItemForGuide())
-        : e === "btn" && (t = this.xWt?.GetUiItemForGuide()),
+        : "btn" === e && (t = this.xWt?.GetUiItemForGuide()),
       t
     );
   }
 }
 exports.ResonanceChainView = ResonanceChainView;
-// # sourceMappingURL=ResonanceChainView.js.map
+//# sourceMappingURL=ResonanceChainView.js.map

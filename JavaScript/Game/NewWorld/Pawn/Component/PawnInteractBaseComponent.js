@@ -1,22 +1,26 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, n, o) {
-    let r;
-    const a = arguments.length;
-    let c =
-      a < 3 ? t : o === null ? (o = Object.getOwnPropertyDescriptor(t, n)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      a = arguments.length,
+      c =
+        a < 3
+          ? t
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(t, n))
+            : o;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       c = Reflect.decorate(e, t, n, o);
     else
-      for (let s = e.length - 1; s >= 0; s--)
-        (r = e[s]) && (c = (a < 3 ? r(c) : a > 3 ? r(t, n, c) : r(t, n)) || c);
-    return a > 3 && c && Object.defineProperty(t, n, c), c;
+      for (var s = e.length - 1; 0 <= s; s--)
+        (r = e[s]) && (c = (a < 3 ? r(c) : 3 < a ? r(t, n, c) : r(t, n)) || c);
+    return 3 < a && c && Object.defineProperty(t, n, c), c;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PawnInteractBaseComponent = void 0);
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
+const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
 let PawnInteractBaseComponent = class PawnInteractBaseComponent extends EntityComponent_1.EntityComponent {
   InteractPawn(e = 0) {}
   CloseInteract(e = 0) {}
@@ -31,4 +35,4 @@ let PawnInteractBaseComponent = class PawnInteractBaseComponent extends EntityCo
   PawnInteractBaseComponent,
 )),
   (exports.PawnInteractBaseComponent = PawnInteractBaseComponent);
-// # sourceMappingURL=PawnInteractBaseComponent.js.map
+//# sourceMappingURL=PawnInteractBaseComponent.js.map

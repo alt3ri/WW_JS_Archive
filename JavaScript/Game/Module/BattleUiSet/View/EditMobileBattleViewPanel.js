@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EditMobileBattleViewPanel = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const EditMobileBattleViewPanelItem_1 = require("./EditMobileBattleViewPanelItem");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  EditMobileBattleViewPanelItem_1 = require("./EditMobileBattleViewPanelItem");
 class EditMobileBattleViewPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments), (this.wCt = new Map()), (this.BCt = void 0);
   }
   async OnBeforeStartAsync() {
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     await this.bCt(e.PanelData, e.BattleViewBaseActor);
   }
   OnBeforeDestroy() {
@@ -24,8 +24,8 @@ class EditMobileBattleViewPanel extends UiPanelBase_1.UiPanelBase {
       (this.BCt = this.RootActor.GetComponentByClass(
         UE.LGUIComponentsRegistry.StaticClass(),
       ));
-    const i = [];
-    const a = e?.GetPanelItemDataMap();
+    var i = [],
+      a = e?.GetPanelItemDataMap();
     if (e?.IsOnlyPanelEdit)
       (t = {
         PanelItemData: a.get(-1),
@@ -40,11 +40,11 @@ class EditMobileBattleViewPanel extends UiPanelBase_1.UiPanelBase {
         i.push(t),
         this.wCt.set(-1, e);
     else {
-      const s = this.BCt.Components;
+      var s = this.BCt.Components;
       for (let e = 0; e < s.Num(); e++) {
-        var r;
-        var l;
-        let n = s.Get(e);
+        var r,
+          l,
+          n = s.Get(e);
         n &&
           n.GetUIItem().IsUIActiveSelf() &&
           n.GetComponentByClass(UE.LGUIComponentsRegistry.StaticClass()) &&
@@ -75,17 +75,17 @@ class EditMobileBattleViewPanel extends UiPanelBase_1.UiPanelBase {
   }
   RefreshHierarchyIndex(e) {
     for (const a of this.wCt.values()) {
-      var t;
-      const i = a.PanelItemData;
+      var t,
+        i = a.PanelItemData;
       i &&
         ((t = a.GetRootItem()),
         (i.EditorHierarchyIndex = t.GetHierarchyIndex()));
     }
   }
   IsAnyItemOverlap(t) {
-    const i = this.BCt.Components;
+    var i = this.BCt.Components;
     for (let e = 0; e < i.Num(); e++) {
-      let a = this.GetPanelItem(e);
+      var a = this.GetPanelItem(e);
       if (a) {
         a = a.PanelItemData;
         if (!a || a.IsCheckOverlap) {
@@ -107,4 +107,4 @@ class EditMobileBattleViewPanel extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.EditMobileBattleViewPanel = EditMobileBattleViewPanel;
-// # sourceMappingURL=EditMobileBattleViewPanel.js.map
+//# sourceMappingURL=EditMobileBattleViewPanel.js.map

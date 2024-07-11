@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem");
 class TsAnimNotifyStateDuration extends UE.KuroAnimNotifyState {
   K2_NotifyBegin(e, t, n) {
     var e = e.GetOwner();
@@ -36,4 +36,4 @@ class TsAnimNotifyStateDuration extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateDuration;
-// # sourceMappingURL=TsAnimNotifyStateDuration.js.map
+//# sourceMappingURL=TsAnimNotifyStateDuration.js.map

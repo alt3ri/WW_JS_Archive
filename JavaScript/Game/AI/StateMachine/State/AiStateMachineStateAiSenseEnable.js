@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineStateAiSenseEnable = void 0);
-const AiStateMachine_1 = require("../AiStateMachine");
-const AiStateMachineState_1 = require("./AiStateMachineState");
+const AiStateMachine_1 = require("../AiStateMachine"),
+  AiStateMachineState_1 = require("./AiStateMachineState");
 class AiStateMachineStateAiSenseEnable extends AiStateMachineState_1.AiStateMachineState {
   constructor() {
     super(...arguments), (this.ConfigId = 0);
@@ -21,4 +21,4 @@ class AiStateMachineStateAiSenseEnable extends AiStateMachineState_1.AiStateMach
   }
 }
 exports.AiStateMachineStateAiSenseEnable = AiStateMachineStateAiSenseEnable;
-// # sourceMappingURL=AiStateMachineStateAiSenseEnable.js.map
+//# sourceMappingURL=AiStateMachineStateAiSenseEnable.js.map

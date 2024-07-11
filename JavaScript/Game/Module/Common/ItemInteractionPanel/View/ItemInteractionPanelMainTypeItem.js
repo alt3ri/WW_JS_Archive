@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemInteractionPanelMainTypeItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
 class ItemInteractionPanelMainTypeItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -23,7 +23,7 @@ class ItemInteractionPanelMainTypeItem extends UiPanelBase_1.UiPanelBase {
   }
   OnStart() {
     this.MainTypeId = this.OpenParam;
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.InventoryConfig?.GetItemMainTypeConfig(
         this.MainTypeId,
       );
@@ -46,4 +46,4 @@ class ItemInteractionPanelMainTypeItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ItemInteractionPanelMainTypeItem = ItemInteractionPanelMainTypeItem;
-// # sourceMappingURL=ItemInteractionPanelMainTypeItem.js.map
+//# sourceMappingURL=ItemInteractionPanelMainTypeItem.js.map

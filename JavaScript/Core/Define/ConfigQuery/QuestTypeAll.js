@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configQuestTypeAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const QuestType_1 = require("../Config/QuestType");
-const DB = "db_questtype.db";
-const FILE = "r.任务类型.xlsx";
-const TABLE = "QuestType";
-const COMMAND = "select BinData from `QuestType`";
-const KEY_PREFIX = "QuestTypeAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  QuestType_1 = require("../Config/QuestType"),
+  DB = "db_questtype.db",
+  FILE = "r.任务类型.xlsx",
+  TABLE = "QuestType",
+  COMMAND = "select BinData from `QuestType`",
+  KEY_PREFIX = "QuestTypeAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configQuestTypeAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configQuestTypeAll = {
     );
   },
   GetConfigList: (e = !0) => {
-    let o;
+    var o;
     if (
       (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configQuestTypeAll = {
       }
       const t = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let i = void 0;
+        var i = void 0;
         if (
           (([o, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configQuestTypeAll = {
     }
   },
 };
-// # sourceMappingURL=QuestTypeAll.js.map
+//# sourceMappingURL=QuestTypeAll.js.map

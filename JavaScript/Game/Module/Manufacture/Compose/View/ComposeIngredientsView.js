@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ComposeIngredientsView = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const CommonManager_1 = require("../../Common/CommonManager");
-const ComposeController_1 = require("../ComposeController");
-const ComposeIngerdientsVerticalView_1 = require("./ComposeIngerdientsVerticalView");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  CommonManager_1 = require("../../Common/CommonManager"),
+  ComposeController_1 = require("../ComposeController"),
+  ComposeIngerdientsVerticalView_1 = require("./ComposeIngerdientsVerticalView");
 class ComposeIngredientsView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -37,7 +37,7 @@ class ComposeIngredientsView extends UiPanelBase_1.UiPanelBase {
         );
       }),
       (this.IIi = () => {
-        this.yIi.MainType === 1
+        1 === this.yIi.MainType
           ? this.JNt.RefreshProficiencyAndHelpRole(this.yIi)
           : this.JNt.RefreshHelpRole();
       }),
@@ -115,12 +115,14 @@ class ComposeIngredientsView extends UiPanelBase_1.UiPanelBase {
   RefreshTips(e) {
     this.yIi = e;
     var e = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-      e.ItemId,
-    );
-    var t = ConfigManager_1.ConfigManager.ItemConfig.GetItemName(e.ItemId);
-    var t =
-      (this.GetText(0).SetText(t),
-      ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(e.ItemId));
+        e.ItemId,
+      ),
+      t = ConfigManager_1.ConfigManager.ItemConfig.GetItemName(e.ItemId),
+      t =
+        (this.GetText(0).SetText(t),
+        ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
+          e.ItemId,
+        ));
     switch (
       (LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), "Have", t),
       this.ZNt(),
@@ -137,11 +139,11 @@ class ComposeIngredientsView extends UiPanelBase_1.UiPanelBase {
     }
   }
   ZNt() {
-    var e = ModelManager_1.ModelManager.ComposeModel;
-    const t = e.CheckComposeMaterialEnough(this.yIi.ItemId);
-    const i = e.CheckUnlock(this.yIi);
-    const s = e.CheckCoinEnough(this.yIi.ItemId);
-    var e = e.CheckLimitCount(this.yIi);
+    var e = ModelManager_1.ModelManager.ComposeModel,
+      t = e.CheckComposeMaterialEnough(this.yIi.ItemId),
+      i = e.CheckUnlock(this.yIi),
+      s = e.CheckCoinEnough(this.yIi.ItemId),
+      e = e.CheckLimitCount(this.yIi);
     this.GetText(7).SetText(this.tOt(i, t, s, e)),
       this.GetItem(6).SetUIActive(!(i && t && e)),
       this.GetButton(3).RootUIComp.SetUIActive(i && t && e);
@@ -195,4 +197,4 @@ class ComposeIngredientsView extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ComposeIngredientsView = ComposeIngredientsView;
-// # sourceMappingURL=ComposeIngredientsView.js.map
+//# sourceMappingURL=ComposeIngredientsView.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventOpenInfoDisplayView = void 0);
-const InfoDisplayController_1 = require("../../Module/InfoDisplay/InfoDisplayController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const InfoDisplayController_1 = require("../../Module/InfoDisplay/InfoDisplayController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventOpenInfoDisplayView extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, l) {
     e &&
@@ -13,4 +13,4 @@ class LevelEventOpenInfoDisplayView extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventOpenInfoDisplayView = LevelEventOpenInfoDisplayView;
-// # sourceMappingURL=LevelEventOpenInfoDisplayView.js.map
+//# sourceMappingURL=LevelEventOpenInfoDisplayView.js.map

@@ -35,11 +35,11 @@ class FilterResultData {
     this.oLt.clear();
   }
   ShowAllFilterContent() {
-    const t = new StringBuilder_1.StringBuilder();
+    var t = new StringBuilder_1.StringBuilder();
     for (const e of this.oLt.values())
       for (const r of e.values()) t.Append(r), t.Append(",");
     return t.RemoveLast(1), t.ToString();
   }
 }
 exports.FilterResultData = FilterResultData;
-// # sourceMappingURL=FilterViewData.js.map
+//# sourceMappingURL=FilterViewData.js.map

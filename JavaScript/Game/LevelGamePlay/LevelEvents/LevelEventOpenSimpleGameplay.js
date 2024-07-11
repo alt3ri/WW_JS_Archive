@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventOpenSimpleGameplay = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const TsInteractionUtils_1 = require("../../Module/Interaction/TsInteractionUtils");
-const SignalDecodeController_1 = require("../../Module/SignalDecode/SignalDecodeController");
-const UiManager_1 = require("../../Ui/UiManager");
-const CipherController_1 = require("../Cipher/CipherController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const LevelGeneralNetworks_1 = require("../LevelGeneralNetworks");
-const SignalDeviceController_1 = require("../SignalDeviceControl/SignalDeviceController");
+const Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  TsInteractionUtils_1 = require("../../Module/Interaction/TsInteractionUtils"),
+  SignalDecodeController_1 = require("../../Module/SignalDecode/SignalDecodeController"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  CipherController_1 = require("../Cipher/CipherController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  LevelGeneralNetworks_1 = require("../LevelGeneralNetworks"),
+  SignalDeviceController_1 = require("../SignalDeviceControl/SignalDeviceController");
 class LevelEventOpenSimpleGameplay extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -24,9 +24,9 @@ class LevelEventOpenSimpleGameplay extends LevelGeneralBase_1.LevelEventBase {
       });
   }
   ExecuteNew(e, i) {
-    const r = e;
+    var r = e;
     if (r) {
-      const t = i;
+      var t = i;
       if (t)
         switch (r.GameplayConfig.Type) {
           case "Cipher":
@@ -79,4 +79,4 @@ class LevelEventOpenSimpleGameplay extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventOpenSimpleGameplay = LevelEventOpenSimpleGameplay;
-// # sourceMappingURL=LevelEventOpenSimpleGameplay.js.map
+//# sourceMappingURL=LevelEventOpenSimpleGameplay.js.map

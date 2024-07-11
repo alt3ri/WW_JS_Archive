@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeatherActor = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const TickSystem_1 = require("../../../Core/Tick/TickSystem");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  TickSystem_1 = require("../../../Core/Tick/TickSystem"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ConfigManager_1 = require("../../Manager/ConfigManager");
 class WeatherActor {
   constructor() {
     (this.bOo = void 0),
@@ -26,10 +26,10 @@ class WeatherActor {
       (this.LVs = 0),
       (this.J_ = () => {
         this.Uqe += Time_1.Time.DeltaTime;
-        const t = this.Uqe / (1e3 * this.VOo);
-        const i = MathUtils_1.MathUtils.Lerp(this.NOo, this.kOo, t);
-        const s = MathUtils_1.MathUtils.Lerp(this.OOo, this.FOo, t);
-        this.jOo(i), this.WOo(s), t >= 1 && this.jm();
+        var t = this.Uqe / (1e3 * this.VOo),
+          i = MathUtils_1.MathUtils.Lerp(this.NOo, this.kOo, t),
+          s = MathUtils_1.MathUtils.Lerp(this.OOo, this.FOo, t);
+        this.jOo(i), this.WOo(s), 1 <= t && this.jm();
       }),
       (this.jOo = (t) => {
         this.qOo?.IsValid() && (this.qOo.BlendWeight = t);
@@ -62,12 +62,12 @@ class WeatherActor {
       (this.Mke = t));
   }
   DVs() {
-    this.LVs !== 0 &&
+    0 !== this.LVs &&
       (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.LVs),
       (this.LVs = 0));
   }
   ChangeWeather(t, i) {
-    let s;
+    var s;
     this.jm(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -100,7 +100,7 @@ class WeatherActor {
                 ((this.LVs = 0), (this.GOo.WeatherDataAsset = t));
             },
           )),
-          i === 0
+          0 === i
             ? (this.jOo(0), this.WOo(1))
             : ((this.NOo = this.qOo.BlendWeight),
               (this.kOo = 0),
@@ -125,4 +125,4 @@ class WeatherActor {
   }
 }
 exports.WeatherActor = WeatherActor;
-// # sourceMappingURL=WeatherActor.js.map
+//# sourceMappingURL=WeatherActor.js.map

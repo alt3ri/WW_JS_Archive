@@ -32,32 +32,32 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.getFileExt =
     exports.getFileName =
       void 0);
-const Init_1 = require("../../Interface/Init");
-const Platform_1 = require("../Platform/Platform");
+const Init_1 = require("../../Interface/Init"),
+  Platform_1 = require("../Platform/Platform");
 function getFileName(t) {
   return t.replace(/^.*[\\\/]/, "");
 }
 function getFileExt(t) {
-  const e = t.lastIndexOf(".");
-  return e > 0 ? t.substring(e + 1) : void 0;
+  var e = t.lastIndexOf(".");
+  return 0 < e ? t.substring(e + 1) : void 0;
 }
 function coverFullPathToName(t) {
   return t.split(/:|\.|\\|\//g).join("_");
 }
 function getDirName(t) {
   let e = t.lastIndexOf("/");
-  return e === -1
+  return -1 === e
     ? ""
     : (e === t.length - 1 && (e = t.slice(0, -1).lastIndexOf("/")),
       t.slice(e + 1).replace("/", ""));
 }
 function getDir(t) {
   let e = t.lastIndexOf("/");
-  return (e = e === -1 ? t.lastIndexOf("\\") : e) === -1 ? "" : t.slice(0, e);
+  return -1 === (e = -1 === e ? t.lastIndexOf("\\") : e) ? "" : t.slice(0, e);
 }
 function removeExtension(t) {
-  const e = t.lastIndexOf(".");
-  return e === -1 ? t : t.slice(0, e);
+  var e = t.lastIndexOf(".");
+  return -1 === e ? t : t.slice(0, e);
 }
 function getFileNameWithOutExt(t) {
   return removeExtension(getFileName(t));
@@ -124,7 +124,7 @@ function checkNeedUpdateByModifyTime(t, e) {
   );
 }
 function readJsRootNameFromIni() {
-  const t = readFile(getProjectPath("Config/DefaultPuertsJsEnv.ini"));
+  var t = readFile(getProjectPath("Config/DefaultPuertsJsEnv.ini"));
   return t
     ? t.includes("Aki/JavaScript_Raw")
       ? "JavaScript_Raw"
@@ -165,7 +165,7 @@ function getJsRootNameInIni() {
 function getJsRoot() {
   return (0, Init_1.isUe5)()
     ? getProjectPath("Content/JavaScript/UniverseEditor")
-    : (0, Platform_1.getPlatform)().GetPlatformType() === 2
+    : 2 === (0, Platform_1.getPlatform)().GetPlatformType()
       ? getProjectPath("Content/Aki/JavaScript/UniverseEditor")
       : getProjectPath(`Content/Aki/${getJsRootNameInIni()}/UniverseEditor`);
 }
@@ -186,4 +186,4 @@ function copyFile(t, e) {
   (exports.checkFileIsInUse = checkFileIsInUse),
   (exports.copyDir = copyDir),
   (exports.copyFile = copyFile);
-// # sourceMappingURL=File.js.map
+//# sourceMappingURL=File.js.map

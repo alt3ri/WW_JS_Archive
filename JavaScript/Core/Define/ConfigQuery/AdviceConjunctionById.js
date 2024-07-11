@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configAdviceConjunctionById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const AdviceConjunction_1 = require("../Config/AdviceConjunction");
-const DB = "db_advice.db";
-const FILE = "s.溯言.xlsx";
-const TABLE = "AdviceConjunction";
-const COMMAND = "select BinData from `AdviceConjunction` where Id=?";
-const KEY_PREFIX = "AdviceConjunctionById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  AdviceConjunction_1 = require("../Config/AdviceConjunction"),
+  DB = "db_advice.db",
+  FILE = "s.溯言.xlsx",
+  TABLE = "AdviceConjunction",
+  COMMAND = "select BinData from `AdviceConjunction` where Id=?",
+  KEY_PREFIX = "AdviceConjunctionById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configAdviceConjunctionById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configAdviceConjunctionById.GetConfig(";
 exports.configAdviceConjunctionById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configAdviceConjunctionById = {
       if (
         (e =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var e;
-        var i = void 0;
+        var e,
+          i = void 0;
         if (
           (([e, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configAdviceConjunctionById = {
     }
   },
 };
-// # sourceMappingURL=AdviceConjunctionById.js.map
+//# sourceMappingURL=AdviceConjunctionById.js.map

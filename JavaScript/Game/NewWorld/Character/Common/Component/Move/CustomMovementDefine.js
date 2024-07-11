@@ -19,4 +19,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CUSTOM_MOVEMENTMODE_LEISURE = 6),
   (exports.CUSTOM_MOVEMENTMODE_SOAR = 7),
   (exports.CUSTOM_MOVEMENTMODE_SKI = 8);
-// # sourceMappingURL=CustomMovementDefine.js.map
+//# sourceMappingURL=CustomMovementDefine.js.map

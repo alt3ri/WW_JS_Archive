@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TaskMarkItemView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const GeneralLogicTreeUtil_1 = require("../../../GeneralLogicTree/GeneralLogicTreeUtil");
-const MapDefine_1 = require("../../MapDefine");
-const MarkRangeImageComponent_1 = require("./Components/MarkRangeImageComponent");
-const ServerMarkItemView_1 = require("./ServerMarkItemView");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  GeneralLogicTreeUtil_1 = require("../../../GeneralLogicTree/GeneralLogicTreeUtil"),
+  MapDefine_1 = require("../../MapDefine"),
+  MarkRangeImageComponent_1 = require("./Components/MarkRangeImageComponent"),
+  ServerMarkItemView_1 = require("./ServerMarkItemView");
 class TaskMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
   constructor() {
     super(...arguments),
@@ -26,8 +26,8 @@ class TaskMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
       this.OnIconPathChanged(this.Holder.IconPath);
   }
   VDi() {
-    const e = this.Holder.MarkRange;
-    (this.NDi = e > 0),
+    var e = this.Holder.MarkRange;
+    (this.NDi = 0 < e),
       e &&
         ((this.kDi = new UE.Vector2D(
           this.Holder.UiPosition.X,
@@ -40,7 +40,7 @@ class TaskMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
         (this.ige = !0));
   }
   async GetRangeComponentAsync() {
-    let e;
+    var e;
     return (
       this.RangeComponentInternal ||
         ((this.RangeComponentInternal =
@@ -77,15 +77,15 @@ class TaskMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
   HDi(s, e = 0) {
     if (this.NDi)
       if (this.Holder.IsCanShowView) {
-        let r;
-        const h = this.Holder;
-        const n = h.RangeMarkShowDis;
-        const a = n + 2;
-        let e = 0;
-        let t = !1;
-        let i = !0;
+        var r,
+          h = this.Holder,
+          n = h.RangeMarkShowDis,
+          a = n + 2;
+        let e = 0,
+          t = !1,
+          i = !0;
         (t =
-          h.RangeMarkShowDisUp !== 0 || h.RangeMarkShowDisDown !== 0
+          0 !== h.RangeMarkShowDisUp || 0 !== h.RangeMarkShowDisDown
             ? ((r =
                 (s.Z - this.Holder.WorldPosition.Z) * MapDefine_1.FLOAT_0_01),
               (e =
@@ -103,7 +103,7 @@ class TaskMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
       } else this.jDi(!1);
   }
   jDi(e) {
-    let t;
+    var t;
     this.NDi &&
       this.ODi !== e &&
       ((this.ODi = e),
@@ -115,7 +115,7 @@ class TaskMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
             );
         }),
         (this.FDi = e),
-        this.Holder.MapType === 1 &&
+        1 === this.Holder.MapType &&
           ((t = this.Holder),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.TaskRangeTrackStateChange,
@@ -134,4 +134,4 @@ class TaskMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
   }
 }
 exports.TaskMarkItemView = TaskMarkItemView;
-// # sourceMappingURL=TaskMarkItemView.js.map
+//# sourceMappingURL=TaskMarkItemView.js.map

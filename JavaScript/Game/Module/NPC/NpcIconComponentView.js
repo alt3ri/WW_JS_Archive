@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcIconComponentView = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EffectSystem_1 = require("../../Effect/EffectSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const UiLayer_1 = require("../../Ui/UiLayer");
-const LevelSequencePlayer_1 = require("../Common/LevelSequencePlayer");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EffectSystem_1 = require("../../Effect/EffectSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
+  LevelSequencePlayer_1 = require("../Common/LevelSequencePlayer");
 class NpcIconComponentView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -78,7 +78,7 @@ class NpcIconComponentView extends UiPanelBase_1.UiPanelBase {
       this.CDi.BindSequenceCloseEvent(this.cqi);
   }
   SetNpcName(t) {
-    const i = this.GetText(0);
+    var i = this.GetText(0);
     StringUtils_1.StringUtils.IsEmpty(t)
       ? i.SetUIActive(!1)
       : (i.SetUIActive(!0), i.SetText(t));
@@ -132,7 +132,7 @@ class NpcIconComponentView extends UiPanelBase_1.UiPanelBase {
       ((this.Qbi = t), this.iqi.SetUIActive(t), t) &&
       this.$bi &&
       !this.hqi &&
-      this.lqi === 0 &&
+      0 === this.lqi &&
       (this.fqi(), (this.hqi = !1));
   }
   SetQuestTrackCellState(t) {
@@ -162,8 +162,8 @@ class NpcIconComponentView extends UiPanelBase_1.UiPanelBase {
     this.Cqi(t);
   }
   SetNpcSecondName() {
-    let t;
-    const i = this.GetText(1);
+    var t,
+      i = this.GetText(1);
     this.Zbi &&
     (t = ConfigManager_1.ConfigManager.NpcIconConfig.GetNpcHeadInfo(this.Zbi))
       .SecondName
@@ -171,7 +171,7 @@ class NpcIconComponentView extends UiPanelBase_1.UiPanelBase {
       : i.SetUIActive(!1);
   }
   dqi() {
-    let t;
+    var t;
     this.Zbi &&
     (t = ConfigManager_1.ConfigManager.NpcIconConfig.GetNpcHeadInfo(this.Zbi))
       .FunctionPath
@@ -218,4 +218,4 @@ class NpcIconComponentView extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.NpcIconComponentView = NpcIconComponentView;
-// # sourceMappingURL=NpcIconComponentView.js.map
+//# sourceMappingURL=NpcIconComponentView.js.map

@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletCollisionUtil = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Stats_1 = require("../../../../Core/Common/Stats");
-const Queue_1 = require("../../../../Core/Container/Queue");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const Transform_1 = require("../../../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils");
-const EffectSystem_1 = require("../../../Effect/EffectSystem");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ColorUtils_1 = require("../../../Utils/ColorUtils");
-const CharacterHitComponent_1 = require("../../Character/Common/Component/CharacterHitComponent");
-const BulletConstant_1 = require("../BulletConstant");
-const BulletUtil_1 = require("../BulletUtil");
-const BulletPool_1 = require("../Model/BulletPool");
-const BulletStaticFunction_1 = require("./BulletStaticFunction");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
+  Queue_1 = require("../../../../Core/Container/Queue"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  Transform_1 = require("../../../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils"),
+  EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ColorUtils_1 = require("../../../Utils/ColorUtils"),
+  CharacterHitComponent_1 = require("../../Character/Common/Component/CharacterHitComponent"),
+  BulletConstant_1 = require("../BulletConstant"),
+  BulletUtil_1 = require("../BulletUtil"),
+  BulletPool_1 = require("../Model/BulletPool"),
+  BulletStaticFunction_1 = require("./BulletStaticFunction");
 class BulletCollisionUtil {
   static UpdateCollisionExtend(t, l, e, o, i) {
     switch (t) {
@@ -29,9 +29,9 @@ class BulletCollisionUtil {
         l.SetSphereRadius(e.X, !0);
         break;
       case 2:
-        var a = this.GetSectorExtent(e, o);
-        var r = l;
-        var s = BulletPool_1.BulletPool.CreateVector();
+        var a = this.GetSectorExtent(e, o),
+          r = l,
+          s = BulletPool_1.BulletPool.CreateVector();
         i.Quaternion().RotateVector(BulletCollisionUtil.o7o, s),
           r.K2_SetRelativeLocation(s.ToUeVector(), !1, void 0, !0),
           BulletPool_1.BulletPool.RecycleVector(s),
@@ -58,8 +58,8 @@ class BulletCollisionUtil {
   }
   static GetSectorExtent(t, l) {
     BulletCollisionUtil.o7o.FromUeVector(l);
-    let e;
-    var l = Vector_1.Vector.Create();
+    var e,
+      l = Vector_1.Vector.Create();
     return (
       t.Y < 180
         ? ((BulletCollisionUtil.o7o.X += 0.5 * t.X),
@@ -75,7 +75,7 @@ class BulletCollisionUtil {
     );
   }
   static ShowBulletDeBugDraw(t) {
-    let l, e, o, i, a, r, s;
+    var l, e, o, i, a, r, s;
     UE.KismetSystemLibrary.DrawDebugSphere(
       GlobalData_1.GlobalData.GameInstance,
       t.ActorComponent.ActorLocation,
@@ -86,7 +86,7 @@ class BulletCollisionUtil {
       t.Size.IsZero() ||
         ((l = t.BulletDataMain.Base.Shape),
         (e = t.CollisionInfo.CollisionComponent),
-        l === 3
+        3 === l
           ? ((i = e.BoundsScale),
             BulletStaticFunction_1.BulletStaticFunction.DebugDrawRing(
               t.Size.Z * i,
@@ -118,7 +118,7 @@ class BulletCollisionUtil {
                 !1,
               ),
               BulletPool_1.BulletPool.RecycleVector(r)))
-          : l === 2
+          : 2 === l
             ? ((i = e.BoundsScale),
               (s = BulletPool_1.BulletPool.CreateRotator()).FromUeRotator(
                 t.CollisionRotator,
@@ -152,7 +152,7 @@ class BulletCollisionUtil {
                 ),
                 BulletPool_1.BulletPool.RecycleVector(a)),
               BulletPool_1.BulletPool.RecycleRotator(s))
-            : l === 0
+            : 0 === l
               ? ((i = e.BoundsScale),
                 (o = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
                   e.BoxExtent,
@@ -193,7 +193,7 @@ class BulletCollisionUtil {
                   BulletPool_1.BulletPool.RecycleVector(r),
                   BulletPool_1.BulletPool.RecycleVector(s)),
                 BulletPool_1.BulletPool.RecycleVector(o))
-              : l === 1 &&
+              : 1 === l &&
                 ((i = e.GetScaledSphereRadius()),
                 (a = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
                   e.K2_GetComponentLocation(),
@@ -230,26 +230,26 @@ class BulletCollisionUtil {
     var e = l.EntityHandle;
     if (e?.Valid) {
       const a = e.Entity;
-      if (l.Type === 1) {
-        var o;
-        var e = t.CollisionInfo;
-        var i = e.CharacterEntityMap.get(a);
+      if (1 === l.Type) {
+        var o,
+          e = t.CollisionInfo,
+          i = e.CharacterEntityMap.get(a);
         void 0 === i ||
           ((o = a.GetComponent(3)) &&
-            (this.r7o(t, a, o.IsRoleAndCtrlByMe), i > 0) &&
+            (this.r7o(t, a, o.IsRoleAndCtrlByMe), 0 < i) &&
             a.GetComponent(107)?.RemoveTimeScale(i),
           e.CharacterEntityMap.delete(a),
           t.BulletDataMain.Base.Interval <= 0 &&
             e.ObjectsHitCurrent.delete(a.Id),
           e.CharacterEntityMap.size) ||
           (e.HaveCharacterInBullet = !1);
-      } else if (l.Type === 2) {
+      } else if (2 === l.Type) {
         const a = ModelManager_1.ModelManager.BulletModel.GetBulletEntityById(
           l.BulletEntityId,
         );
         a &&
           void 0 !== (i = (o = t.CollisionInfo).BulletEntityMap.get(a)) &&
-          (i > 0 && BulletUtil_1.BulletUtil.RemoveTimeScale(t, i),
+          (0 < i && BulletUtil_1.BulletUtil.RemoveTimeScale(t, i),
           o.BulletEntityMap.delete(a));
       }
     }
@@ -257,7 +257,7 @@ class BulletCollisionUtil {
   static r7o(t, l, e) {
     (e = l.GetComponent(0)?.IsRole() && !e), (t = t.BulletDataMain);
     if (!e && t.Execution.GeIdApplyToVictim) {
-      const o = l.GetComponent(157);
+      var o = l.GetComponent(157);
       if (o)
         for (const i of t.Execution.GeIdApplyToVictim)
           o.RemoveBuff(
@@ -268,10 +268,10 @@ class BulletCollisionUtil {
     }
   }
   static n7o(t, l, e, o, i, a) {
-    const r = new Array();
-    var l = l.EffectOnHit.get(e ? 7 : 4);
+    var r = new Array(),
+      l = l.EffectOnHit.get(e ? 7 : 4);
     return (
-      l && l.length > 0 && l !== "None" && r.push(l),
+      l && 0 < l.length && "None" !== l && r.push(l),
       i &&
         t.IsPartHit &&
         (e = t.GetPartHitConf(o)) &&
@@ -287,20 +287,20 @@ class BulletCollisionUtil {
     );
   }
   static PlayHitEffect(l, o, i, a, r, s) {
-    var _ = l.BulletDataMain;
-    const u = _.Render;
-    var _ = _.Base.DamageId > 0;
-    var o = o.Entity.GetComponent(185).HasTag(-1728163740)
-      ? void 0
-      : BulletCollisionUtil.n7o(
-          o,
-          u,
-          a,
-          i,
-          _,
-          l.BulletDataMain.Base.EnablePartHitAudio,
-        );
-    if (o && o.length > 0) {
+    var _ = l.BulletDataMain,
+      u = _.Render,
+      _ = 0 < _.Base.DamageId,
+      o = o.Entity.GetComponent(185).HasTag(-1728163740)
+        ? void 0
+        : BulletCollisionUtil.n7o(
+            o,
+            u,
+            a,
+            i,
+            _,
+            l.BulletDataMain.Base.EnablePartHitAudio,
+          );
+    if (o && 0 < o.length) {
       a = u.EffectOnHitConf.get(0);
       let t = void 0;
       (t = a
@@ -311,22 +311,22 @@ class BulletCollisionUtil {
           a.Scale)
         : Vector_1.Vector.OneVectorProxy),
         BulletCollisionUtil.s7o.Set(r, s.Quaternion(), t);
-      const n = l.Attacker?.GetComponent(51)?.HitEffectMap;
-      var i = l.Attacker?.GetComponent(42);
+      var n = l.Attacker?.GetComponent(51)?.HitEffectMap,
+        i = l.Attacker?.GetComponent(42);
       let e = !1;
       (0, RegisterComponent_1.isComponentInstance)(i, 170) &&
-        (e = i.Priority.State === "p1");
-      const c = BulletStaticFunction_1.HitStaticFunction.CreateEffectContext(
+        (e = "p1" === i.Priority.State);
+      var c = BulletStaticFunction_1.HitStaticFunction.CreateEffectContext(
         l.Attacker,
         e,
       );
       const C = u.AudioOnHit;
-      const U = (t, l) => {
+      var U = (t, l) => {
         BulletStaticFunction_1.HitStaticFunction.PlayHitAudio(t, l, C, e);
       };
       for (const h of o) {
         let t = 0;
-        const B = n.get(h);
+        var B = n.get(h);
         B &&
         B.Size >= CharacterHitComponent_1.MAX_HIT_EFFECT_COUNT &&
         ((t = B.Pop()), EffectSystem_1.EffectSystem.IsValid(t))
@@ -353,13 +353,13 @@ class BulletCollisionUtil {
     }
   }
   static PlaySceneItemHitEffect(t, l, e, o) {
-    const i = t?.GetComponent(51)?.HitEffectMap;
+    var i = t?.GetComponent(51)?.HitEffectMap;
     let a = 0;
-    const r = i.get(l);
-    let s = t?.GetComponent(42);
+    var r = i.get(l),
+      s = t?.GetComponent(42);
     let _ = !1;
     (0, RegisterComponent_1.isComponentInstance)(s, 170) &&
-      (_ = s.Priority.State === "p1"),
+      (_ = "p1" === s.Priority.State),
       r &&
       r.Size >= CharacterHitComponent_1.MAX_HIT_EFFECT_COUNT &&
       ((a = r.Pop()), EffectSystem_1.EffectSystem.IsValid(a))
@@ -386,14 +386,14 @@ class BulletCollisionUtil {
           i.get(l).Push(a));
   }
   static CalcPartDistance(t, l) {
-    const e = BulletPool_1.BulletPool.CreateVector();
-    var t =
-      (e.FromUeVector(t.K2_GetComponentLocation()),
-      BulletPool_1.BulletPool.CreateVector());
-    var l =
-      (e.Subtraction(l.CenterLocation, t),
-      t.Normalize(),
-      Vector_1.Vector.DistSquared(e, l.GetActorLocation()));
+    var e = BulletPool_1.BulletPool.CreateVector(),
+      t =
+        (e.FromUeVector(t.K2_GetComponentLocation()),
+        BulletPool_1.BulletPool.CreateVector()),
+      l =
+        (e.Subtraction(l.CenterLocation, t),
+        t.Normalize(),
+        Vector_1.Vector.DistSquared(e, l.GetActorLocation()));
     return (
       BulletPool_1.BulletPool.RecycleVector(e),
       BulletPool_1.BulletPool.RecycleVector(t),
@@ -401,7 +401,7 @@ class BulletCollisionUtil {
     );
   }
   static GetImpactPointCharacter(t, l, e) {
-    let o, i, a, r;
+    var o, i, a, r;
     t instanceof UE.CapsuleComponent
       ? ((o = l.GetActorLocation()),
         e.FromUeVector(t.GetUpVector()),
@@ -464,18 +464,18 @@ class BulletCollisionUtil {
   }
   static GetHitPointBoxComp(t, l, e, o) {
     this.c7o.FromUeTransform(t.K2_GetComponentToWorld());
-    var o = o ?? l.GetActorLocation();
-    var i =
-      (this.c7o.InverseTransformPosition(o, this.m7o),
-      this.d7o.FromUeVector(this.m7o),
-      this.d7o.MultiplyEqual(-1),
-      t.BoxExtent);
-    var a = i.X;
-    const r = i.Y;
-    var i = i.Z;
-    var a = this.C7o(this.m7o, this.d7o, [-a, -r, -i], [a, r, i], this.g7o);
+    var o = o ?? l.GetActorLocation(),
+      i =
+        (this.c7o.InverseTransformPosition(o, this.m7o),
+        this.d7o.FromUeVector(this.m7o),
+        this.d7o.MultiplyEqual(-1),
+        t.BoxExtent),
+      a = i.X,
+      r = i.Y,
+      i = i.Z,
+      a = this.C7o(this.m7o, this.d7o, [-a, -r, -i], [a, r, i], this.g7o);
     this.c7o.TransformPosition(this.g7o, e),
-      a !== 1 &&
+      1 !== a &&
         Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Bullet",
@@ -517,15 +517,15 @@ class BulletCollisionUtil {
         ));
   }
   static C7o(o, i, a, r, t) {
-    let s = 0;
-    let _ = Number.MAX_VALUE;
+    let s = 0,
+      _ = Number.MAX_VALUE;
     for (let e = 0; e < 3; e++)
       if (Math.abs(i.Tuple[e]) < Number.EPSILON) {
         if (o.Tuple[e] < a[e] || o.Tuple[e] > r[e]) return 0;
       } else {
-        let u = 1 / i.Tuple[e];
-        let t = (a[e] - o.Tuple[e]) * u;
-        let l = (r[e] - o.Tuple[e]) * u;
+        var u = 1 / i.Tuple[e];
+        let t = (a[e] - o.Tuple[e]) * u,
+          l = (r[e] - o.Tuple[e]) * u;
         if (
           (t > l && ((u = t), (t = l), (l = u)),
           t > s && (s = t),
@@ -537,11 +537,11 @@ class BulletCollisionUtil {
     return i.Multiply(s, t), t.AdditionEqual(o), 1;
   }
   static GetImpactPointSceneItem(t, l, e) {
-    let o;
-    const i = BulletPool_1.BulletPool.CreateVector();
-    const a =
-      (i.FromUeVector(t.K2_GetComponentLocation()),
-      BulletPool_1.BulletPool.CreateVector());
+    var o,
+      i = BulletPool_1.BulletPool.CreateVector(),
+      a =
+        (i.FromUeVector(t.K2_GetComponentLocation()),
+        BulletPool_1.BulletPool.CreateVector());
     const r = t.Bounds.SphereRadius;
     if (
       (Math.abs(l.MoveInfo.BulletSpeed) < MathUtils_1.MathUtils.SmallNumber
@@ -609,4 +609,4 @@ class BulletCollisionUtil {
   (BulletCollisionUtil.d7o = Vector_1.Vector.Create()),
   (BulletCollisionUtil.g7o = Vector_1.Vector.Create()),
   (BulletCollisionUtil.u7o = void 0);
-// # sourceMappingURL=BulletCollisionUtil.js.map
+//# sourceMappingURL=BulletCollisionUtil.js.map

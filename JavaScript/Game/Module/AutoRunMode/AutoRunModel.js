@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AutoRunModel = exports.TeleportInfo = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class TeleportInfo {
   constructor(e, t) {
     (this.Location = e), (this.Rotator = t);
@@ -68,13 +68,13 @@ class AutoRunModel extends ModelBase_1.ModelBase {
         ));
   }
   IsInLogicTreeGmMode() {
-    return this.NWe !== "Disabled" && this.GWe === "Running";
+    return "Disabled" !== this.NWe && "Running" === this.GWe;
   }
   IsInAfterRunningState() {
-    return this.NWe !== "Disabled" && this.GWe === "AfterRunning";
+    return "Disabled" !== this.NWe && "AfterRunning" === this.GWe;
   }
   IsInServerControlGmMode() {
-    return this.NWe === "ServerControlledSkip";
+    return "ServerControlledSkip" === this.NWe;
   }
   GetAutoRunMode() {
     return this.NWe;
@@ -149,4 +149,4 @@ class AutoRunModel extends ModelBase_1.ModelBase {
   }
 }
 exports.AutoRunModel = AutoRunModel;
-// # sourceMappingURL=AutoRunModel.js.map
+//# sourceMappingURL=AutoRunModel.js.map

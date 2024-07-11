@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PowerCurve3 = void 0);
-const Log_1 = require("../../Common/Log");
-const CurveBase_1 = require("./CurveBase");
+const Log_1 = require("../../Common/Log"),
+  CurveBase_1 = require("./CurveBase");
 class PowerCurve3 extends CurveBase_1.CurveBase {
   constructor(...e) {
     super(),
@@ -20,4 +20,4 @@ class PowerCurve3 extends CurveBase_1.CurveBase {
   }
 }
 exports.PowerCurve3 = PowerCurve3;
-// # sourceMappingURL=PowerCurve3.js.map
+//# sourceMappingURL=PowerCurve3.js.map

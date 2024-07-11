@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventCharacterMove = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const TeleportController_1 = require("../../Module/Teleport/TeleportController");
-const CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const LevelGeneralContextDefine_1 = require("../LevelGeneralContextDefine");
-const MAX_EXCUTE_TIME_SEC = 10;
+const Log_1 = require("../../../Core/Common/Log"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  TeleportController_1 = require("../../Module/Teleport/TeleportController"),
+  CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  LevelGeneralContextDefine_1 = require("../LevelGeneralContextDefine"),
+  MAX_EXCUTE_TIME_SEC = 10;
 class LevelEventCharacterMove extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -29,14 +29,14 @@ class LevelEventCharacterMove extends LevelGeneralBase_1.LevelEventBase {
   }
   ExecuteNew(e, t, r) {
     if (e) {
-      const i = e;
-      var e =
-        ((this.zLe = Vector_1.Vector.Create(
-          i.Pos.X ?? 0,
-          i.Pos.Y ?? 0,
-          i.Pos.Z ?? 0,
-        )),
-        { Index: 0, Position: this.zLe });
+      var i = e,
+        e =
+          ((this.zLe = Vector_1.Vector.Create(
+            i.Pos.X ?? 0,
+            i.Pos.Y ?? 0,
+            i.Pos.Z ?? 0,
+          )),
+          { Index: 0, Position: this.zLe });
       switch (
         ((this.JLe = {
           Points: [e],
@@ -104,14 +104,14 @@ class LevelEventCharacterMove extends LevelGeneralBase_1.LevelEventBase {
           ),
         !1
       );
-    const e = this.$Le.Entity.GetComponent(161);
+    var e = this.$Le.Entity.GetComponent(161);
     if (
       (e.IsMovingToLocation() && e.MoveToLocationEnd(1),
       LevelEventCharacterMove.rDe(!1),
       this.IsAsync)
     ) {
-      const t = this.$Le;
-      const r = this.zLe;
+      const t = this.$Le,
+        r = this.zLe;
       this.JLe.Callback = (e) => {
         LevelEventCharacterMove.eDe(e, t, !0, r);
       };
@@ -129,7 +129,7 @@ class LevelEventCharacterMove extends LevelGeneralBase_1.LevelEventBase {
           ),
         !1
       );
-    const e = this.$Le.Entity.GetComponent(161);
+    var e = this.$Le.Entity.GetComponent(161);
     if (!this.$Le.Entity.GetComponent(0)?.IsCharacter() || !e)
       return (
         Log_1.Log.CheckError() &&
@@ -146,8 +146,8 @@ class LevelEventCharacterMove extends LevelGeneralBase_1.LevelEventBase {
     )
       return this.tDe();
     if ((e.IsMovingToLocation() && e.MoveToLocationEnd(1), this.IsAsync)) {
-      const t = this.$Le;
-      const r = this.zLe;
+      const t = this.$Le,
+        r = this.zLe;
       this.JLe.Callback = (e) => {
         LevelEventCharacterMove.eDe(e, t, !1, r);
       };
@@ -170,12 +170,12 @@ class LevelEventCharacterMove extends LevelGeneralBase_1.LevelEventBase {
         !1);
   }
   static rDe(e) {
-    let t;
-    let r;
-    let i;
-    let o;
-    let n;
-    let a = Global_1.Global.BaseCharacter?.GetEntityNoBlueprint();
+    var t,
+      r,
+      i,
+      o,
+      n,
+      a = Global_1.Global.BaseCharacter?.GetEntityNoBlueprint();
     a?.Valid &&
       ((t = a.GetComponent(158)),
       (r = a.GetComponent(33)),
@@ -220,7 +220,7 @@ class LevelEventCharacterMove extends LevelGeneralBase_1.LevelEventBase {
   i,
   o,
 ) => {
-  e !== 1
+  1 !== e
     ? ((e = t?.Entity?.GetComponent(3)),
       r
         ? TeleportController_1.TeleportController.TeleportToPositionNoLoading(
@@ -233,4 +233,4 @@ class LevelEventCharacterMove extends LevelGeneralBase_1.LevelEventBase {
         : (e?.TeleportAndFindStandLocation(i), o?.()))
     : (r && LevelEventCharacterMove.rDe(!0), o?.());
 };
-// # sourceMappingURL=LevelEventCharacterMove.js.map
+//# sourceMappingURL=LevelEventCharacterMove.js.map

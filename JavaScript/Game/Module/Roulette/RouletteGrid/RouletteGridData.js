@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.rouletteGridGenerator = exports.RouletteData = void 0);
-const RouletteGridEquipItem_1 = require("./RouletteGridEquipItem");
-const RouletteGridExplore_1 = require("./RouletteGridExplore");
-const RouletteGridFunction_1 = require("./RouletteGridFunction");
+const RouletteGridEquipItem_1 = require("./RouletteGridEquipItem"),
+  RouletteGridExplore_1 = require("./RouletteGridExplore"),
+  RouletteGridFunction_1 = require("./RouletteGridFunction");
 class RouletteData {
   constructor() {
     (this.Id = 0),
@@ -19,8 +19,8 @@ class RouletteData {
 }
 (exports.RouletteData = RouletteData),
   (exports.rouletteGridGenerator = {
-    0: RouletteGridExplore_1.RouletteGridExplore,
+    [0]: RouletteGridExplore_1.RouletteGridExplore,
     1: RouletteGridFunction_1.RouletteGridFunction,
     2: RouletteGridEquipItem_1.RouletteGridEquipItem,
   });
-// # sourceMappingURL=RouletteGridData.js.map
+//# sourceMappingURL=RouletteGridData.js.map

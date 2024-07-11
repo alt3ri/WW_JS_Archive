@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HandBookQuestItem = void 0);
-const UE = require("ue");
-const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract");
-const GenericLayout_1 = require("../Util/Layout/GenericLayout");
-const HandBookDefine_1 = require("./HandBookDefine");
-const HandBookQuestChildItem_1 = require("./HandBookQuestChildItem");
+const UE = require("ue"),
+  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../Util/Layout/GenericLayout"),
+  HandBookDefine_1 = require("./HandBookDefine"),
+  HandBookQuestChildItem_1 = require("./HandBookQuestChildItem");
 class HandBookQuestItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -32,26 +32,26 @@ class HandBookQuestItem extends GridProxyAbstract_1.GridProxyAbstract {
     );
   }
   Refresh(e, t, i) {
-    const o = e;
-    var e = o.Id;
-    var e =
-      ConfigManager_1.ConfigManager.HandBookConfig.GetPlotHandBookConfigByType(
-        e,
-      );
-    const r =
-      ((this.GAn = ConfigCommon_1.ConfigCommon.ToList(e)),
-      this.GAn.sort((e, t) => e.Id - t.Id),
-      this.GetText(0).ShowTextNew(o.TypeDescription),
-      (this.gZt = []),
-      this.GAn.length);
+    var o = e,
+      e = o.Id,
+      e =
+        ConfigManager_1.ConfigManager.HandBookConfig.GetPlotHandBookConfigByType(
+          e,
+        ),
+      r =
+        ((this.GAn = ConfigCommon_1.ConfigCommon.ToList(e)),
+        this.GAn.sort((e, t) => e.Id - t.Id),
+        this.GetText(0).ShowTextNew(o.TypeDescription),
+        (this.gZt = []),
+        this.GAn.length);
     for (let e = 0; e < r; e++) {
-      const s = this.GAn[e];
-      const n = new HandBookDefine_1.HandBookCommonItemData();
-      let a = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
-        o.Type,
-        s.Id,
-      );
-      const h = void 0 === a;
+      var s = this.GAn[e],
+        n = new HandBookDefine_1.HandBookCommonItemData(),
+        a = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
+          o.Type,
+          s.Id,
+        ),
+        h = void 0 === a;
       h ||
         ((a = void 0 !== a && !a.IsRead),
         (n.ConfigId = s.Id),
@@ -60,7 +60,7 @@ class HandBookQuestItem extends GridProxyAbstract_1.GridProxyAbstract {
         (n.IsNew = a),
         this.gZt.push(n));
     }
-    this.Vzt?.SetActive(this.gZt.length > 0), this.Vzt?.RefreshByData(this.gZt);
+    this.Vzt?.SetActive(0 < this.gZt.length), this.Vzt?.RefreshByData(this.gZt);
   }
   GetChildItemList() {
     return this.Vzt.GetLayoutItemList();
@@ -72,4 +72,4 @@ class HandBookQuestItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.HandBookQuestItem = HandBookQuestItem;
-// # sourceMappingURL=HandBookQuestItem.js.map
+//# sourceMappingURL=HandBookQuestItem.js.map

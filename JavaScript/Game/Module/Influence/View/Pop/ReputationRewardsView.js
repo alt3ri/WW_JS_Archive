@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ReputationRewardsView = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const GenericScrollView_1 = require("../../../Util/ScrollView/GenericScrollView");
-const InfluenceRewardItem_1 = require("../Item/InfluenceRewardItem");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  GenericScrollView_1 = require("../../../Util/ScrollView/GenericScrollView"),
+  InfluenceRewardItem_1 = require("../Item/InfluenceRewardItem");
 class ReputationRewardsView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.xqe = void 0),
       (this.wni = void 0),
       (this.sGe = (e, i, r) => {
-        var i = new InfluenceRewardItem_1.InfluenceRewardItem(i);
-        const t = this.wni.RewardIndex >= r;
+        var i = new InfluenceRewardItem_1.InfluenceRewardItem(i),
+          t = this.wni.RewardIndex >= r;
         return i.UpdateItem(e, t), { Key: r, Value: i };
       });
   }
@@ -21,7 +21,7 @@ class ReputationRewardsView extends UiViewBase_1.UiViewBase {
     this.ComponentRegisterInfos = [[0, UE.UIScrollViewWithScrollbarComponent]];
   }
   OnBeforeCreate() {
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     this.wni =
       ModelManager_1.ModelManager.InfluenceReputationModel.GetInfluenceInstance(
         e,
@@ -41,4 +41,4 @@ class ReputationRewardsView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.ReputationRewardsView = ReputationRewardsView;
-// # sourceMappingURL=ReputationRewardsView.js.map
+//# sourceMappingURL=ReputationRewardsView.js.map

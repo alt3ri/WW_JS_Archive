@@ -8,4 +8,4 @@ class LinearCurve extends CurveBase_1.CurveBase {
   }
 }
 exports.LinearCurve = LinearCurve;
-// # sourceMappingURL=LinearCurve.js.map
+//# sourceMappingURL=LinearCurve.js.map

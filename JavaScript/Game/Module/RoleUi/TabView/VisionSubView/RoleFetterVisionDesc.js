@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleFetterVisionDesc = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../../Util/ScrollView/GenericScrollView");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../../Util/ScrollView/GenericScrollView");
 class RoleFetterVisionDesc extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(), (this.wdo = void 0), this.CreateThenShowByActor(e.GetOwner());
@@ -16,7 +16,7 @@ class RoleFetterVisionDesc extends UiPanelBase_1.UiPanelBase {
     ];
   }
   Refresh(e) {
-    this.wdo.SetActive(e.length > 0), this.wdo.Update(e);
+    this.wdo.SetActive(0 < e.length), this.wdo.Update(e);
   }
   OnBeforeDestroy() {
     this.wdo.Destroy();
@@ -71,4 +71,4 @@ class RoleVisionFetterDescScrollerItem extends UiPanelBase_1.UiPanelBase {
       );
   }
 }
-// # sourceMappingURL=RoleFetterVisionDesc.js.map
+//# sourceMappingURL=RoleFetterVisionDesc.js.map

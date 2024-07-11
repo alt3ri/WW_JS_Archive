@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InfluenceRewardItem = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const CommonItemSimpleGridExFinish_1 = require("../../../Common/ItemGrid/CommonItemSimpleGridExFinish");
-const GenericLayoutNew_1 = require("../../../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  CommonItemSimpleGridExFinish_1 = require("../../../Common/ItemGrid/CommonItemSimpleGridExFinish"),
+  GenericLayoutNew_1 = require("../../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../../Util/LguiUtil");
 class InfluenceRewardItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -47,13 +47,13 @@ class InfluenceRewardItem extends UiPanelBase_1.UiPanelBase {
     this.eGe.RebuildLayoutByDataNew(i);
   }
   Ani(e) {
-    const i = this.GetText(0);
+    var i = this.GetText(0);
     LguiUtil_1.LguiUtil.SetLocalText(i, "ReputationReceive", e);
   }
   SetAllReceivedTitle() {
-    const e = this.GetText(0);
+    var e = this.GetText(0);
     LguiUtil_1.LguiUtil.SetLocalText(e, "ReputationAllReceived");
   }
 }
 exports.InfluenceRewardItem = InfluenceRewardItem;
-// # sourceMappingURL=InfluenceRewardItem.js.map
+//# sourceMappingURL=InfluenceRewardItem.js.map

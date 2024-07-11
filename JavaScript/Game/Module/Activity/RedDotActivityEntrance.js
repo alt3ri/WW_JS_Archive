@@ -8,4 +8,4 @@ class RedDotActivityEntrance extends RedDotBase_1.RedDotBase {
   }
 }
 exports.RedDotActivityEntrance = RedDotActivityEntrance;
-// # sourceMappingURL=RedDotActivityEntrance.js.map
+//# sourceMappingURL=RedDotActivityEntrance.js.map

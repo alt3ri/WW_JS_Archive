@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CombineMeshTool = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const ObjectUtils_1 = require("../../../../../../Core/Utils/ObjectUtils");
+const UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  ObjectUtils_1 = require("../../../../../../Core/Utils/ObjectUtils");
 class CombineMeshTool {
   static LoadDaConfig(t, e, i, s) {
     t &&
@@ -12,7 +12,7 @@ class CombineMeshTool {
       (this.BWo(i, s),
       this.bWo(t, e, i, s.Skel_Hair, s),
       this.qWo(t, e, i, s.Skel_Face, s),
-      s.NpcSetupType === 1
+      1 === s.NpcSetupType
         ? (this.GWo(t, e, i, s.Skel_BodyUp, s),
           this.NWo(t, e, i, s.Skel_BodyDown, s))
         : this.OWo(t, e, i, s.Skel_Body, s),
@@ -37,7 +37,7 @@ class CombineMeshTool {
       ObjectUtils_1.ObjectUtils.IsValid(o) &&
       ObjectUtils_1.ObjectUtils.IsValid(e)
     ) {
-      const r = e.AddComponentByClass(
+      var r = e.AddComponentByClass(
         UE.SkeletalMeshComponent.StaticClass(),
         !0,
         i,
@@ -97,9 +97,9 @@ class CombineMeshTool {
       this.jWo(t, o.SkinDyeColor, e, i));
   }
   static jWo(i, s, o, h) {
-    const a = i.GetMaterials();
+    var a = i.GetMaterials();
     for (let t = 0, e = a.Num(); t < e; t++) {
-      const r = i.CreateDynamicMaterialInstance(t, a.Get(t));
+      var r = i.CreateDynamicMaterialInstance(t, a.Get(t));
       r &&
         (r.SetVectorParameterValue(this.$Wo, s),
         o && r.SetVectorParameterValue(this.YWo, o),
@@ -108,12 +108,12 @@ class CombineMeshTool {
     }
   }
   static kWo(i, s, o, h, a) {
-    if (h && o && o.Num() !== 0)
+    if (h && o && 0 !== o.Num())
       if (s.DoesSocketExist(h))
         for (let t = 0, e = o.Num(); t < e; t++) {
-          var r = o.Get(t);
-          const n = r.Transform;
-          var r = r.Mesh;
+          var r = o.Get(t),
+            n = r.Transform,
+            r = r.Mesh;
           this.FWo(a, i, n, s, r, h, !0);
         }
       else
@@ -138,4 +138,4 @@ class CombineMeshTool {
   (CombineMeshTool.XWo = new UE.FName("Body")),
   (CombineMeshTool.KWo = new UE.FName("BodyUp")),
   (CombineMeshTool.QWo = new UE.FName("BodyDown"));
-// # sourceMappingURL=CombineMeshTool.js.map
+//# sourceMappingURL=CombineMeshTool.js.map

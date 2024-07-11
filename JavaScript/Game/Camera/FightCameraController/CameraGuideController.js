@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraGuideController = void 0);
-const UE = require("ue");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../GlobalData");
-const CameraControllerBase_1 = require("./CameraControllerBase");
-const IS_DEBUG = !1;
-const DEFAULT_VALUE = -1;
+const UE = require("ue"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../GlobalData"),
+  CameraControllerBase_1 = require("./CameraControllerBase"),
+  IS_DEBUG = !1,
+  DEFAULT_VALUE = -1;
 class CameraGuideController extends CameraControllerBase_1.CameraControllerBase {
   constructor() {
     super(...arguments),
@@ -52,7 +52,7 @@ class CameraGuideController extends CameraControllerBase_1.CameraControllerBase 
       (this.E_e = !1);
   }
   get IsBlending() {
-    return this.f_e !== 0;
+    return 0 !== this.f_e;
   }
   Name() {
     return "GuideController";
@@ -124,9 +124,9 @@ class CameraGuideController extends CameraControllerBase_1.CameraControllerBase 
               )
             ? (this.ale -= this.CheckAdjustYawAngleMax)
             : (this.ale = this.sle),
-      this.sle - this.ale > 180
+      180 < this.sle - this.ale
         ? (this.ale += 360)
-        : this.ale - this.sle > 180 && (this.ale -= 360),
+        : 180 < this.ale - this.sle && (this.ale -= 360),
       (s = Rotator_1.Rotator.Create()),
       h.Rotation(s),
       (this.ole = this.Camera.CameraActor.K2_GetActorRotation().Pitch),
@@ -178,8 +178,8 @@ class CameraGuideController extends CameraControllerBase_1.CameraControllerBase 
           (this.M_e = DEFAULT_VALUE)));
   }
   T_e(t) {
-    const i = MathUtils_1.MathUtils.LerpSin(this.sle, this.ale, t);
-    let s = MathUtils_1.MathUtils.LerpSin(this.ole, this.rle, t);
+    var i = MathUtils_1.MathUtils.LerpSin(this.sle, this.ale, t),
+      s = MathUtils_1.MathUtils.LerpSin(this.ole, this.rle, t);
     (this.Camera.DesiredCamera.ArmRotation = Rotator_1.Rotator.Create(s, i, 0)),
       (this.Camera.IsModifiedArmRotation = !0),
       this.M_e &&
@@ -188,7 +188,7 @@ class CameraGuideController extends CameraControllerBase_1.CameraControllerBase 
         (this.Camera.DesiredCamera.Fov = s));
   }
   L_e(t) {
-    let i, s;
+    var i, s;
     (this.CurrentCameraArmLengthAddition = MathUtils_1.MathUtils.LerpSin(
       this.d_e,
       this.C_e,
@@ -223,7 +223,7 @@ class CameraGuideController extends CameraControllerBase_1.CameraControllerBase 
           0,
           5,
         ),
-        this.f_e !== 0) &&
+        0 !== this.f_e) &&
         UE.KismetSystemLibrary.DrawDebugLine(
           GlobalData_1.GlobalData.World,
           this.v_e.ToUeVector(),
@@ -234,7 +234,7 @@ class CameraGuideController extends CameraControllerBase_1.CameraControllerBase 
         );
   }
   D_e(t) {
-    t >= 1 &&
+    1 <= t &&
       ((this.CurrentCameraArmLengthAddition = this.d_e),
       this.B1e.DeepCopy(this.CurrentCameraArmOffset)),
       (this.CurrentCameraArmLengthAddition = MathUtils_1.MathUtils.LerpSin(
@@ -261,16 +261,16 @@ class CameraGuideController extends CameraControllerBase_1.CameraControllerBase 
       this.f_e)
     ) {
       case 1:
-        var i = this.j1e > 0 ? this.H6 / this.j1e : 1;
-        var i = MathUtils_1.MathUtils.Clamp(i, 0, 1);
+        var i = 0 < this.j1e ? this.H6 / this.j1e : 1,
+          i = MathUtils_1.MathUtils.Clamp(i, 0, 1);
         this.T_e(i), this.L_e(i), this.H6 > this.j1e && this.R_e();
         break;
       case 2:
-        this.c_e >= 0 && this.H6 > this.j1e + this.c_e && this.y_e();
+        0 <= this.c_e && this.H6 > this.j1e + this.c_e && this.y_e();
         break;
       case 3:
         this.p_e += t;
-        (i = this.W1e > 0 ? this.p_e / this.W1e : 1),
+        (i = 0 < this.W1e ? this.p_e / this.W1e : 1),
           (i = MathUtils_1.MathUtils.Clamp(i, 0, 1));
         this.D_e(i), this.p_e > this.W1e && (this.f_e = 0);
     }
@@ -279,9 +279,9 @@ class CameraGuideController extends CameraControllerBase_1.CameraControllerBase 
     this.y_e();
   }
   UpdateDeactivateInternal(t) {
-    this.f_e === 3 &&
+    3 === this.f_e &&
       ((this.p_e += t),
-      (t = this.W1e > 0 ? this.p_e / this.W1e : 1),
+      (t = 0 < this.W1e ? this.p_e / this.W1e : 1),
       (t = MathUtils_1.MathUtils.Clamp(t, 0, 1)),
       this.D_e(t),
       this.p_e > this.W1e) &&
@@ -304,7 +304,7 @@ class CameraGuideController extends CameraControllerBase_1.CameraControllerBase 
     this.f_e = 2;
   }
   y_e() {
-    (this.f_e !== 1 && this.f_e !== 2) ||
+    (1 !== this.f_e && 2 !== this.f_e) ||
       ((this.f_e = 3),
       (this.p_e = 0),
       (this.d_e = this.CurrentCameraArmLengthAddition),
@@ -319,4 +319,4 @@ class CameraGuideController extends CameraControllerBase_1.CameraControllerBase 
   }
 }
 exports.CameraGuideController = CameraGuideController;
-// # sourceMappingURL=CameraGuideController.js.map
+//# sourceMappingURL=CameraGuideController.js.map

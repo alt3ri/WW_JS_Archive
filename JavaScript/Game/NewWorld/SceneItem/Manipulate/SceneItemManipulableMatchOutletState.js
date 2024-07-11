@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulableMatchOutletState = void 0);
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const SceneItemDynamicAttachTargetComponent_1 = require("../Common/Component/SceneItemDynamicAttachTargetComponent");
-const SceneItemManipulableBaseState_1 = require("./SceneItemManipulableBaseState");
+const Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  SceneItemDynamicAttachTargetComponent_1 = require("../Common/Component/SceneItemDynamicAttachTargetComponent"),
+  SceneItemManipulableBaseState_1 = require("./SceneItemManipulableBaseState");
 class SceneItemManipulableMatchOutletState extends SceneItemManipulableBaseState_1.SceneItemManipulableBaseState {
   constructor(t) {
     super(t), (this.StateType = "MatchingOutlet");
@@ -23,11 +23,11 @@ class SceneItemManipulableMatchOutletState extends SceneItemManipulableBaseState
       this.Dnr();
   }
   Lnr() {
-    let t;
-    let e;
-    let a;
-    const i = this.SceneItem.Entity.GetComponent(110);
-    const s = this.SceneItem.ActivatedOutlet;
+    var t,
+      e,
+      a,
+      i = this.SceneItem.Entity.GetComponent(110),
+      s = this.SceneItem.ActivatedOutlet;
     i &&
       s?.GetIsNeedAttach() &&
       ((t = s.GetSocketLocationOffset(this.SceneItem.Entity)),
@@ -48,10 +48,10 @@ class SceneItemManipulableMatchOutletState extends SceneItemManipulableBaseState
       ));
   }
   Dnr() {
-    const t = this.SceneItem.Entity.GetComponent(110);
+    var t = this.SceneItem.Entity.GetComponent(110);
     t && t.UnRegTarget("[MatchOutletState] TryDetachFromOutlet");
   }
 }
 exports.SceneItemManipulableMatchOutletState =
   SceneItemManipulableMatchOutletState;
-// # sourceMappingURL=SceneItemManipulableMatchOutletState.js.map
+//# sourceMappingURL=SceneItemManipulableMatchOutletState.js.map

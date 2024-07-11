@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CipherModel = void 0);
-const UE = require("ue");
-const CipherGameplayById_1 = require("../../../Core/Define/ConfigQuery/CipherGameplayById");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const LEN = 4;
-const INVLID = -1;
+const UE = require("ue"),
+  CipherGameplayById_1 = require("../../../Core/Define/ConfigQuery/CipherGameplayById"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  LEN = 4,
+  INVLID = -1;
 class CipherModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -22,9 +22,9 @@ class CipherModel extends ModelBase_1.ModelBase {
         (this.xye.length = 0),
         (this.wye.length = 0),
         this.Bye.clear();
-      const t = this.GetCipherConfig(e).Password.toString().padStart(LEN, "0");
+      var t = this.GetCipherConfig(e).Password.toString().padStart(LEN, "0");
       for (let e = 0; e < LEN; e++) {
-        const i = UE.KismetStringLibrary.Conv_StringToInt(t[e]);
+        var i = UE.KismetStringLibrary.Conv_StringToInt(t[e]);
         this.xye.push(i), this.wye.push(INVLID), this.Bye.set(i, !1);
       }
     }
@@ -48,4 +48,4 @@ class CipherModel extends ModelBase_1.ModelBase {
   }
 }
 exports.CipherModel = CipherModel;
-// # sourceMappingURL=CipherModel.js.map
+//# sourceMappingURL=CipherModel.js.map

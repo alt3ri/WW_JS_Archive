@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CircleExhibitionView = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const AutoAttachExhibitionView_1 = require("./AutoAttachExhibitionView");
+const Log_1 = require("../../../Core/Common/Log"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  AutoAttachExhibitionView_1 = require("./AutoAttachExhibitionView");
 class CircleExhibitionView extends AutoAttachExhibitionView_1.AutoAttachExhibitionView {
   CreateItems(i, t, e, s, h) {
     (this.CurrentDirection = h || 0), super.CreateItems(i, t, e, s, h);
@@ -34,22 +34,22 @@ class CircleExhibitionView extends AutoAttachExhibitionView_1.AutoAttachExhibiti
     }
   }
   AttachItem(i) {
-    var t = void 0;
-    var o = void 0;
-    var t = this.FindNearestMiddleItem();
-    var o = this.GetItems();
+    var t = void 0,
+      o = void 0,
+      t = this.FindNearestMiddleItem(),
+      o = this.GetItems();
     if (void 0 !== o && void 0 !== t) {
-      let e = t;
-      let s = 0;
-      let h =
-        ((s =
-          this.Direction === 0 ? t.GetItemPositionX() : t.GetItemPositionY()),
-        99999);
-      if (i > 0)
+      let e = t,
+        s = 0,
+        h =
+          ((s =
+            0 === this.Direction ? t.GetItemPositionX() : t.GetItemPositionY()),
+          99999);
+      if (0 < i)
         for (let t = 0; t < o.length; t++) {
           let i = 0;
           (i =
-            this.Direction === 0
+            0 === this.Direction
               ? o[t].GetItemPositionX()
               : o[t].GetItemPositionY()) > s &&
             i - s < h &&
@@ -59,7 +59,7 @@ class CircleExhibitionView extends AutoAttachExhibitionView_1.AutoAttachExhibiti
         for (let t = 0; t < o.length; t++) {
           let i = 0;
           (i =
-            this.Direction === 0
+            0 === this.Direction
               ? o[t].GetItemPositionX()
               : o[t].GetItemPositionY()) < s &&
             s - i < h &&
@@ -70,4 +70,4 @@ class CircleExhibitionView extends AutoAttachExhibitionView_1.AutoAttachExhibiti
   }
 }
 exports.CircleExhibitionView = CircleExhibitionView;
-// # sourceMappingURL=CircleExhibitionView.js.map
+//# sourceMappingURL=CircleExhibitionView.js.map

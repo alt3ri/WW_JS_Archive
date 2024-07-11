@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OnlineMatchSuccessView = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class OnlineMatchSuccessView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -22,11 +22,11 @@ class OnlineMatchSuccessView extends UiTickViewBase_1.UiTickViewBase {
       (this.pGi = void 0),
       (this.eNi = !0),
       (this.G$e = () => {
-        const e =
+        var e =
           ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState();
-        e === 3
+        3 === e
           ? this.tNi()
-          : (e === 1 &&
+          : (1 === e &&
               ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                 "MatchingOtherCancel",
               ),
@@ -70,7 +70,7 @@ class OnlineMatchSuccessView extends UiTickViewBase_1.UiTickViewBase {
     this.GetButton(8).GetRootComponent().SetUIActive(!0),
       (this.Q2t = this.GetText(5)),
       (this.pGi = this.GetSprite(6));
-    const e = CommonParamById_1.configCommonParamById.GetIntConfig(
+    var e = CommonParamById_1.configCommonParamById.GetIntConfig(
       "match_confirm_time_out_seconds",
     );
     (this.EGi = e),
@@ -100,18 +100,19 @@ class OnlineMatchSuccessView extends UiTickViewBase_1.UiTickViewBase {
           this.pGi.SetFillAmount(this.EGi / this.yGi)));
   }
   Og() {
-    var e = this.GetItem(3);
-    var i = this.GetItem(4);
-    var e = (e.SetUIActive(!0), i.SetUIActive(!1), this.GetText(1));
-    var i =
-      (LguiUtil_1.LguiUtil.SetLocalText(e, "MatchingSuccess"), this.GetText(7));
-    var e =
-      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingId();
-    var e =
-      MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
-          .MapName,
-      ) ?? "";
+    var e = this.GetItem(3),
+      i = this.GetItem(4),
+      e = (e.SetUIActive(!0), i.SetUIActive(!1), this.GetText(1)),
+      i =
+        (LguiUtil_1.LguiUtil.SetLocalText(e, "MatchingSuccess"),
+        this.GetText(7)),
+      e =
+        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingId(),
+      e =
+        MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+          ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
+            .MapName,
+        ) ?? "";
     i.SetText(e),
       this.Q2t.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.EGi)),
       this.pGi.SetFillAmount(this.EGi / this.yGi);
@@ -119,7 +120,7 @@ class OnlineMatchSuccessView extends UiTickViewBase_1.UiTickViewBase {
   tNi() {
     this.GetButton(8).GetRootComponent().SetUIActive(!1),
       this.GetButton(2).GetRootComponent().SetUIActive(!1);
-    const e = this.GetText(1);
+    var e = this.GetText(1);
     LguiUtil_1.LguiUtil.SetLocalText(e, "MatchingTeleport"),
       this.GetText(7).SetUIActive(!1),
       this.Q2t.SetUIActive(!1),
@@ -127,4 +128,4 @@ class OnlineMatchSuccessView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.OnlineMatchSuccessView = OnlineMatchSuccessView;
-// # sourceMappingURL=OnlineMatchSuccessView.js.map
+//# sourceMappingURL=OnlineMatchSuccessView.js.map

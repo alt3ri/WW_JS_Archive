@@ -1,31 +1,36 @@
 "use strict";
-let SceneItemTreasureBoxComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (e, t, n, r) {
-    let o;
-    const i = arguments.length;
-    let s =
-      i < 3 ? t : r === null ? (r = Object.getOwnPropertyDescriptor(t, n)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      s = Reflect.decorate(e, t, n, r);
-    else
-      for (let a = e.length - 1; a >= 0; a--)
-        (o = e[a]) && (s = (i < 3 ? o(s) : i > 3 ? o(t, n, s) : o(t, n)) || s);
-    return i > 3 && s && Object.defineProperty(t, n, s), s;
-  };
+var SceneItemTreasureBoxComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (e, t, n, r) {
+      var o,
+        i = arguments.length,
+        s =
+          i < 3
+            ? t
+            : null === r
+              ? (r = Object.getOwnPropertyDescriptor(t, n))
+              : r;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        s = Reflect.decorate(e, t, n, r);
+      else
+        for (var a = e.length - 1; 0 <= a; a--)
+          (o = e[a]) &&
+            (s = (i < 3 ? o(s) : 3 < i ? o(t, n, s) : o(t, n)) || s);
+      return 3 < i && s && Object.defineProperty(t, n, s), s;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemTreasureBoxComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const SceneInteractionManager_1 = require("../../Render/Scene/Interaction/SceneInteractionManager");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  SceneInteractionManager_1 = require("../../Render/Scene/Interaction/SceneInteractionManager");
 let SceneItemTreasureBoxComponent =
   (SceneItemTreasureBoxComponent_1 = class SceneItemTreasureBoxComponent extends (
     EntityComponent_1.EntityComponent
@@ -51,8 +56,8 @@ let SceneItemTreasureBoxComponent =
       return (this.Pcn = e?.TypeId), !0;
     }
     OnStart() {
-      const e = this.Entity.GetComponent(0);
-      const t = e?.GetBaseInfo();
+      var e = this.Entity.GetComponent(0),
+        t = e?.GetBaseInfo();
       return t
         ? ((this.man = t.OnlineInteractType ?? 2), !0)
         : (Log_1.Log.CheckError() &&
@@ -72,7 +77,7 @@ let SceneItemTreasureBoxComponent =
           EventDefine_1.EEventName.OnSceneItemStateChange,
           this.B1n,
         ),
-        this.Pcn === 2 &&
+        2 === this.Pcn &&
           (EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneItemLockPropChange,
@@ -95,7 +100,7 @@ let SceneItemTreasureBoxComponent =
           EventDefine_1.EEventName.OnSceneItemStateChange,
           this.B1n,
         ),
-        this.Pcn === 2 &&
+        2 === this.Pcn &&
           (EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneItemLockPropChange,
@@ -110,10 +115,10 @@ let SceneItemTreasureBoxComponent =
       );
     }
     wcn() {
-      const e = this.Entity.CheckGetComponent(117);
-      const t = this.Entity.CheckGetComponent(177);
-      let n = void 0;
-      let r = void 0;
+      var e = this.Entity.CheckGetComponent(117),
+        t = this.Entity.CheckGetComponent(177);
+      let n = void 0,
+        r = void 0;
       switch (e.State) {
         case 1:
           n = this.Entity.CheckGetComponent(115).IsLocked
@@ -142,23 +147,23 @@ let SceneItemTreasureBoxComponent =
         );
     }
     CloseAllCollisions() {
-      const e = this.Entity.GetComponent(182);
-      const n =
-        (SceneItemTreasureBoxComponent_1.Gcn(e.Owner),
-        SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionAllActorsInLevel(
-          e.GetSceneInteractionLevelHandleId(),
-        ));
+      var e = this.Entity.GetComponent(182),
+        n =
+          (SceneItemTreasureBoxComponent_1.Gcn(e.Owner),
+          SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionAllActorsInLevel(
+            e.GetSceneInteractionLevelHandleId(),
+          ));
       if (n)
         for (let e = 0, t = n.Num(); e < t; e++) {
-          const r = n.Get(e);
+          var r = n.Get(e);
           SceneItemTreasureBoxComponent_1.Gcn(r);
         }
     }
     static Gcn(e) {
-      const n = e.K2_GetComponentsByClass(UE.PrimitiveComponent.StaticClass());
+      var n = e.K2_GetComponentsByClass(UE.PrimitiveComponent.StaticClass());
       if (n)
         for (let e = 0, t = n.Num(); e < t; e++) {
-          const r = n.Get(e);
+          var r = n.Get(e);
           (r.CanCharacterStepUpOn = 0),
             r.SetCollisionResponseToAllChannels(0),
             r.SetCollisionResponseToChannel(
@@ -182,4 +187,4 @@ let SceneItemTreasureBoxComponent =
     SceneItemTreasureBoxComponent,
   )),
   (exports.SceneItemTreasureBoxComponent = SceneItemTreasureBoxComponent);
-// # sourceMappingURL=GamePlayTreasureBoxComponent.js.map
+//# sourceMappingURL=GamePlayTreasureBoxComponent.js.map

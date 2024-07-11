@@ -1,27 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configSubtitleTextByRowNameAndDatatableName = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const SubtitleText_1 = require("../Config/SubtitleText");
-const DB = "db_subtitle_text.db";
-const FILE = "k.可视化编辑/j.剧情/字幕*";
-const TABLE = "SubtitleText";
-const COMMAND =
-  "select BinData from `SubtitleText` where RowName = ? AND DatatableName = ?";
-const KEY_PREFIX = "SubtitleTextByRowNameAndDatatableName";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  SubtitleText_1 = require("../Config/SubtitleText"),
+  DB = "db_subtitle_text.db",
+  FILE = "k.可视化编辑/j.剧情/字幕*",
+  TABLE = "SubtitleText",
+  COMMAND =
+    "select BinData from `SubtitleText` where RowName = ? AND DatatableName = ?",
+  KEY_PREFIX = "SubtitleTextByRowNameAndDatatableName",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX =
-  "configSubtitleTextByRowNameAndDatatableName.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configSubtitleTextByRowNameAndDatatableName.GetConfig(";
 exports.configSubtitleTextByRowNameAndDatatableName = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -43,16 +42,17 @@ exports.configSubtitleTextByRowNameAndDatatableName = {
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindString(handleId, 2, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(
-            handleId,
-            !0,
-            ...logPair,
-            ["RowName", e],
-            ["DatatableName", o],
-          ) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(
+              handleId,
+              !0,
+              ...logPair,
+              ["RowName", e],
+              ["DatatableName", o],
+            ))
       ) {
-        var i;
-        var n = void 0;
+        var i,
+          n = void 0;
         if (
           (([i, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -79,4 +79,4 @@ exports.configSubtitleTextByRowNameAndDatatableName = {
     }
   },
 };
-// # sourceMappingURL=SubtitleTextByRowNameAndDatatableName.js.map
+//# sourceMappingURL=SubtitleTextByRowNameAndDatatableName.js.map

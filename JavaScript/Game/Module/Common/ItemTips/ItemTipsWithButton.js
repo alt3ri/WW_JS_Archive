@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemTipsWithButtonComponent = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const ButtonItem_1 = require("../Button/ButtonItem");
-const ItemTipsComponent_1 = require("./ItemTipsComponent");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  ButtonItem_1 = require("../Button/ButtonItem"),
+  ItemTipsComponent_1 = require("./ItemTipsComponent");
 class ItemTipsWithButtonComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -69,4 +69,4 @@ class ItemTipsWithButtonComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ItemTipsWithButtonComponent = ItemTipsWithButtonComponent;
-// # sourceMappingURL=ItemTipsWithButton.js.map
+//# sourceMappingURL=ItemTipsWithButton.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InfoDisplayTypeThreeView = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const InfoDisplayController_1 = require("../InfoDisplayController");
-const InfoDisplayAudioPlayer_1 = require("./InfoDisplayAudioPlayer");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  InfoDisplayController_1 = require("../InfoDisplayController"),
+  InfoDisplayAudioPlayer_1 = require("./InfoDisplayAudioPlayer");
 class InfoDisplayTypeThreeView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -30,11 +30,11 @@ class InfoDisplayTypeThreeView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnStart() {
     this.nsi = new InfoDisplayAudioPlayer_1.InfoDisplayAudioPlayer();
-    var e = this.GetItem(5);
-    var e =
-      (this.nsi.Initialize(e.GetOwner()),
-      this.nsi.SetShowTextComponent(this.GetText(3)),
-      ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId());
+    var e = this.GetItem(5),
+      e =
+        (this.nsi.Initialize(e.GetOwner()),
+        this.nsi.SetShowTextComponent(this.GetText(3)),
+        ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId());
     this.OPt(e),
       this.nsi.Refresh(
         ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayAudio(
@@ -46,22 +46,21 @@ class InfoDisplayTypeThreeView extends UiTickViewBase_1.UiTickViewBase {
     this.$8e(e), this.usi(e), this.msi(e);
   }
   msi(e) {
-    ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayAudio(
-      e,
-    ) !== ""
+    "" !==
+    ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayAudio(e)
       ? (this.GetItem(5).SetUIActive(!0), this.GetItem(7).SetUIActive(!0))
       : (this.GetItem(5).SetUIActive(!1), this.GetItem(7).SetUIActive(!1));
   }
   $8e(e) {
     var i =
-      ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayTitle(
-        e,
-      );
-    var i =
-      (this.GetText(0).SetText(i),
-      ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayDesc(
-        e,
-      ));
+        ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayTitle(
+          e,
+        ),
+      i =
+        (this.GetText(0).SetText(i),
+        ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayDesc(
+          e,
+        ));
     this.GetText(2).SetText(i);
   }
   usi(e) {
@@ -69,12 +68,11 @@ class InfoDisplayTypeThreeView extends UiTickViewBase_1.UiTickViewBase {
       ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayBgStamp(
         e,
       );
-    e !== "" && this.SetTextureByPath(e, this.GetTexture(1));
+    "" !== e && this.SetTextureByPath(e, this.GetTexture(1));
   }
   OnBeforeDestroy() {
     this.nsi.Destroy();
-    const e =
-      ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId();
+    var e = ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId();
     InfoDisplayController_1.InfoDisplayController.RequestReadDisplayInfo(e);
   }
   OnTick(e) {
@@ -82,4 +80,4 @@ class InfoDisplayTypeThreeView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.InfoDisplayTypeThreeView = InfoDisplayTypeThreeView;
-// # sourceMappingURL=InfoDisplayTypeThreeView.js.map
+//# sourceMappingURL=InfoDisplayTypeThreeView.js.map

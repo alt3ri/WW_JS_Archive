@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputKeyItem = void 0);
-const UE = require("ue");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const InputSettings_1 = require("../../../InputSettings/InputSettings");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const PcAndGamepadProgressBar_1 = require("../../UiNavigation/KeyComponent/PcAndGamepadProgressBar");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const InputKeyDefine_1 = require("./InputKeyDefine");
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  InputSettings_1 = require("../../../InputSettings/InputSettings"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  PcAndGamepadProgressBar_1 = require("../../UiNavigation/KeyComponent/PcAndGamepadProgressBar"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  InputKeyDefine_1 = require("./InputKeyDefine");
 class InputKeyItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -35,7 +35,7 @@ class InputKeyItem extends UiPanelBase_1.UiPanelBase {
           (this.HSe &&
             ((i = i.KeyName.toString()), this.HSe === i) &&
             (t
-              ? this.WRt && this.WRt > 0
+              ? this.WRt && 0 < this.WRt
                 ? (this.zRt = TimerSystem_1.TimerSystem.Delay(() => {
                     this.tUt();
                   }, this.WRt))
@@ -43,7 +43,7 @@ class InputKeyItem extends UiPanelBase_1.UiPanelBase {
               : this.iUt()));
       }),
       (this.oUt = () => {
-        let t;
+        var t;
         !this.g_t ||
           this.g_t <= 0 ||
           ((t = this.JRt / this.g_t),
@@ -113,9 +113,9 @@ class InputKeyItem extends UiPanelBase_1.UiPanelBase {
       (this.QRt = !0 === t.IsShowLongPressWhenRelease),
       (this.XRt = !0 === t.IsShowTextArrowWhenPress),
       (this.$Rt = !0 === t.IsShowTextArrowWhenRelease);
-    const i = !0 === t.IsLongPressProcessVisible;
-    const e = !0 === t.IsTextArrowVisible;
-    var t = t.DescriptionId;
+    var i = !0 === t.IsLongPressProcessVisible,
+      e = !0 === t.IsTextArrowVisible,
+      t = t.DescriptionId;
     this.SetKeyTexture(this.HSe),
       this.SetTextArrowVisible(e),
       this.SetDescription(t),
@@ -150,7 +150,7 @@ class InputKeyItem extends UiPanelBase_1.UiPanelBase {
     this.GetTexture(5)?.SetUIActive(t);
   }
   SetDescription(t) {
-    const i = this.GetText(4);
+    var i = this.GetText(4);
     t
       ? (LguiUtil_1.LguiUtil.SetLocalTextNew(i, t), i?.SetUIActive(!0))
       : i?.SetUIActive(!1);
@@ -178,4 +178,4 @@ class InputKeyItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.InputKeyItem = InputKeyItem;
-// # sourceMappingURL=InputKeyItem.js.map
+//# sourceMappingURL=InputKeyItem.js.map

@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhotographSetupView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const PhotographController_1 = require("../PhotographController");
-const PhotographExpressionItem_1 = require("./PhotographExpressionItem");
-const PhotographOptionSetup_1 = require("./PhotographOptionSetup");
-const PhotographValueSetup_1 = require("./PhotographValueSetup");
-const ConfigCommon_1 = require("../../../../Core/Config/ConfigCommon");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  PhotographController_1 = require("../PhotographController"),
+  PhotographExpressionItem_1 = require("./PhotographExpressionItem"),
+  PhotographOptionSetup_1 = require("./PhotographOptionSetup"),
+  PhotographValueSetup_1 = require("./PhotographValueSetup"),
+  ConfigCommon_1 = require("../../../../Core/Config/ConfigCommon");
 class PhotographSetupView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -36,7 +36,7 @@ class PhotographSetupView extends UiViewBase_1.UiViewBase {
         this.jWi(2);
       }),
       (this.QWi = () => {
-        const t = this.OWi.get(0);
+        var t = this.OWi.get(0);
         t &&
           (this.FWi?.SetSelected(!1), (this.FWi = t), this.FWi.SetSelected(!0));
       }),
@@ -104,9 +104,9 @@ class PhotographSetupView extends UiViewBase_1.UiViewBase {
     );
   }
   oKi() {
-    const t = this.GetExtendToggle(0);
-    const i = this.GetExtendToggle(1);
-    const e = this.GetExtendToggle(2);
+    var t = this.GetExtendToggle(0),
+      i = this.GetExtendToggle(1),
+      e = this.GetExtendToggle(2);
     i?.RootUIComp.SetUIActive(!1),
       e?.RootUIComp.SetUIActive(!1),
       this.HWi.set(1, t),
@@ -125,34 +125,34 @@ class PhotographSetupView extends UiViewBase_1.UiViewBase {
   }
   uKi(t) {
     (this.PhotoSetupMode = t),
-      this.cKi(t === 1),
-      this.mKi(t === 0),
-      this.dKi(t === 2);
+      this.cKi(1 === t),
+      this.mKi(0 === t),
+      this.dKi(2 === t);
   }
   async rKi() {
     var t =
-      ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
-        0,
-      ).GetRoleId();
-    var t = ConfigCommon_1.ConfigCommon.ToList(
-      ConfigManager_1.ConfigManager.PhotographConfig.GetPhotoMontageConfigListByRoleId(
-        t,
-      ),
-    );
+        ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
+          0,
+        ).GetRoleId(),
+      t = ConfigCommon_1.ConfigCommon.ToList(
+        ConfigManager_1.ConfigManager.PhotographConfig.GetPhotoMontageConfigListByRoleId(
+          t,
+        ),
+      );
     if (t) {
       t.sort((t, i) => t.Sort - i.Sort);
-      const i = this.GetItem(4);
+      var i = this.GetItem(4);
       i.SetUIActive(!0);
-      for await (const e of t) e.MotionType === 1 && (await this.CKi(e.Id));
+      for await (const e of t) 1 === e.MotionType && (await this.CKi(e.Id));
       i.SetUIActive(!1),
-        this.NWi.size !== 0 && this.HWi.get(0)?.RootUIComp.SetUIActive(!0);
+        0 !== this.NWi.size && this.HWi.get(0)?.RootUIComp.SetUIActive(!0);
     }
   }
   async CKi(t) {
-    var i = this.GetItem(3);
-    var e = this.GetItem(4);
-    var e = LguiUtil_1.LguiUtil.DuplicateActor(e.GetOwner(), i);
-    var i = new PhotographExpressionItem_1.PhotographExpressionItem();
+    var i = this.GetItem(3),
+      e = this.GetItem(4),
+      e = LguiUtil_1.LguiUtil.DuplicateActor(e.GetOwner(), i),
+      i = new PhotographExpressionItem_1.PhotographExpressionItem();
     await i.CreateByActorAsync(e),
       i.Refresh(t),
       i.BindOnSelected(this.XWi),
@@ -167,8 +167,8 @@ class PhotographSetupView extends UiViewBase_1.UiViewBase {
   }
   $Wi(t) {
     this.kWi && this.kWi.SetSelected(!1);
-    const i = t.GetPhotoMontageId();
-    const e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var i = t.GetPhotoMontageId(),
+      e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     PhotographController_1.PhotographController.PlayPhotoMontage(e, i),
       (this.kWi = t),
       this.kWi.SetSelected(!0);
@@ -179,8 +179,8 @@ class PhotographSetupView extends UiViewBase_1.UiViewBase {
       (this.kWi = void 0));
   }
   iKi() {
-    var t = ModelManager_1.ModelManager.PhotographModel.MontageId;
-    var t = this.OWi.get(t);
+    var t = ModelManager_1.ModelManager.PhotographModel.MontageId,
+      t = this.OWi.get(t);
     this.FWi !== t &&
       (this.FWi && this.FWi.SetSelected(!1),
       (this.FWi = t),
@@ -188,27 +188,27 @@ class PhotographSetupView extends UiViewBase_1.UiViewBase {
   }
   async sKi() {
     var t =
-      ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
-        0,
-      ).GetRoleId();
-    var t =
-      (await this.gKi(),
-      ConfigCommon_1.ConfigCommon.ToList(
-        ConfigManager_1.ConfigManager.PhotographConfig.GetPhotoMontageConfigListByRoleId(
-          t,
-        ),
-      ));
+        ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
+          0,
+        ).GetRoleId(),
+      t =
+        (await this.gKi(),
+        ConfigCommon_1.ConfigCommon.ToList(
+          ConfigManager_1.ConfigManager.PhotographConfig.GetPhotoMontageConfigListByRoleId(
+            t,
+          ),
+        ));
     if (t) {
       t.sort((t, i) => t.Sort - i.Sort);
-      const i = this.GetItem(4);
+      var i = this.GetItem(4);
       i.SetUIActive(!0);
-      for await (const e of t) e.MotionType === 0 && (await this.fKi(e.Id));
+      for await (const e of t) 0 === e.MotionType && (await this.fKi(e.Id));
       i.SetUIActive(!1),
-        this.OWi.size !== 0 && this.HWi.get(2)?.RootUIComp.SetUIActive(!0);
+        0 !== this.OWi.size && this.HWi.get(2)?.RootUIComp.SetUIActive(!0);
     }
   }
   async gKi() {
-    const t = new PhotographExpressionItem_1.PhotographExpressionItem();
+    var t = new PhotographExpressionItem_1.PhotographExpressionItem();
     await t.CreateByActorAsync(this.GetItem(8).GetOwner()),
       t.Refresh(0),
       t.BindOnSelected(this.JWi),
@@ -217,10 +217,10 @@ class PhotographSetupView extends UiViewBase_1.UiViewBase {
       this.OWi.set(0, t);
   }
   async fKi(t) {
-    var i = this.GetItem(3);
-    var e = this.GetItem(4);
-    var e = LguiUtil_1.LguiUtil.DuplicateActor(e.GetOwner(), i);
-    var i = new PhotographExpressionItem_1.PhotographExpressionItem();
+    var i = this.GetItem(3),
+      e = this.GetItem(4),
+      e = LguiUtil_1.LguiUtil.DuplicateActor(e.GetOwner(), i),
+      i = new PhotographExpressionItem_1.PhotographExpressionItem();
     await i.CreateByActorAsync(e),
       i.Refresh(t),
       i.BindOnSelected(this.JWi),
@@ -236,9 +236,9 @@ class PhotographSetupView extends UiViewBase_1.UiViewBase {
   }
   zWi(t) {
     this.FWi && this.FWi.SetSelected(!1);
-    let i;
-    const e = t.GetPhotoMontageId();
-    e === 0
+    var i,
+      e = t.GetPhotoMontageId();
+    0 === e
       ? PhotographController_1.PhotographController.ResetPhotoMontage()
       : ((i = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity),
         PhotographController_1.PhotographController.PlayPhotoMontage(i, e)),
@@ -251,21 +251,21 @@ class PhotographSetupView extends UiViewBase_1.UiViewBase {
       (this.FWi = void 0));
   }
   async nKi() {
-    const t =
-      ConfigManager_1.ConfigManager.PhotographConfig.GetAllPhotoSetupConfig();
-    const i = this.GetItem(5);
-    const e = this.GetItem(6);
+    var t =
+        ConfigManager_1.ConfigManager.PhotographConfig.GetAllPhotoSetupConfig(),
+      i = this.GetItem(5),
+      e = this.GetItem(6);
     i.SetUIActive(!0), e.SetUIActive(!0);
     for await (const s of t) await this.pKi(s.ValueType, s.Type);
     i.SetUIActive(!1), e.SetUIActive(!1);
   }
   async pKi(t, i) {
-    const e = this.GetItem(3);
+    var e = this.GetItem(3);
     let s = void 0;
     switch (i) {
       case 0:
-        var o = this.GetItem(5);
-        var o = LguiUtil_1.LguiUtil.DuplicateActor(o.GetOwner(), e);
+        var o = this.GetItem(5),
+          o = LguiUtil_1.LguiUtil.DuplicateActor(o.GetOwner(), e);
         await (s =
           new PhotographOptionSetup_1.PhotographOptionSetup()).CreateThenShowByActorAsync(
           o,
@@ -297,14 +297,13 @@ class PhotographSetupView extends UiViewBase_1.UiViewBase {
   }
   tKi() {
     for (const h of this.VWi.values()) h.SetEnable(!0);
-    let t;
-    let i;
-    const e =
-      ModelManager_1.ModelManager.PhotographModel.GetAllPhotographOption();
-    const s = ConfigManager_1.ConfigManager.PhotographConfig;
+    var t,
+      i,
+      e = ModelManager_1.ModelManager.PhotographModel.GetAllPhotographOption(),
+      s = ConfigManager_1.ConfigManager.PhotographConfig;
     for ([t, i] of e) {
-      let o = s.GetPhotoSetupConfig(t);
-      if (o.Type === 0) {
+      var o = s.GetPhotoSetupConfig(t);
+      if (0 === o.Type) {
         o = o.SubOptions.get(i);
         if (o) for (const a of o.ArrayInt) this.vKi(a).SetEnable(!1);
       }
@@ -312,4 +311,4 @@ class PhotographSetupView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.PhotographSetupView = PhotographSetupView;
-// # sourceMappingURL=PhotographSetupView.js.map
+//# sourceMappingURL=PhotographSetupView.js.map

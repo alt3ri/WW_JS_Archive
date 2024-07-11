@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoguelikeRoomFloatTips = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericPromptFloatTipsBase_1 = require("./GenericPromptFloatTipsBase");
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericPromptFloatTipsBase_1 = require("./GenericPromptFloatTipsBase");
 class RoguelikeRoomFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptFloatTipsBase {
   OnRegisterComponent() {
     super.OnRegisterComponent(),
       this.ComponentRegisterInfos.push([2, UE.UISprite]);
   }
   SetMainText() {
-    const o =
+    var o =
       ModelManager_1.ModelManager.RoguelikeModel.CurRoomType ===
       Protocol_1.Aki.Protocol.f3s.Proto_Normal;
     this.MainText.SetUIActive(o),
@@ -65,4 +65,4 @@ class RoguelikeRoomFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptF
   }
 }
 exports.RoguelikeRoomFloatTips = RoguelikeRoomFloatTips;
-// # sourceMappingURL=RogulikeRoomFloatTips.js.map
+//# sourceMappingURL=RogulikeRoomFloatTips.js.map

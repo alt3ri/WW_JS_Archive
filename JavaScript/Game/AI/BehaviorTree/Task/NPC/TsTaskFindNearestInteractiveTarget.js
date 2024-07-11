@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const GlobalData_1 = require("../../../../GlobalData");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const BlackboardController_1 = require("../../../../World/Controller/BlackboardController");
-const TsAiController_1 = require("../../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase");
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  BlackboardController_1 = require("../../../../World/Controller/BlackboardController"),
+  TsAiController_1 = require("../../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase");
 class TsTaskFindNearestInteractiveTarget extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -25,7 +25,7 @@ class TsTaskFindNearestInteractiveTarget extends TsTaskAbortImmediatelyBase_1.de
       (this.TsSaveTargetBlackboardKey = this.SaveTargetBlackboardKey));
   }
   ReceiveExecuteAI(e, t) {
-    let r;
+    var r;
     this.InitTsVariables(),
       e instanceof TsAiController_1.default &&
       (this.TmpHandles || (this.TmpHandles = []),
@@ -48,11 +48,11 @@ class TsTaskFindNearestInteractiveTarget extends TsTaskAbortImmediatelyBase_1.de
       3,
       this.TmpHandles,
     );
-    let r = Number.MAX_VALUE;
-    let s = void 0;
+    let r = Number.MAX_VALUE,
+      s = void 0;
     for (const i of this.TmpHandles)
       if (i.Entity?.Active && i.Entity !== t.Entity) {
-        let o = i.Entity.GetComponent(1);
+        var o = i.Entity.GetComponent(1);
         let e = !1;
         switch (o.CreatureData.GetEntityType()) {
           case Protocol_1.Aki.Protocol.HBs.Proto_Npc:
@@ -74,4 +74,4 @@ class TsTaskFindNearestInteractiveTarget extends TsTaskAbortImmediatelyBase_1.de
   }
 }
 exports.default = TsTaskFindNearestInteractiveTarget;
-// # sourceMappingURL=TsTaskFindNearestInteractiveTarget.js.map
+//# sourceMappingURL=TsTaskFindNearestInteractiveTarget.js.map

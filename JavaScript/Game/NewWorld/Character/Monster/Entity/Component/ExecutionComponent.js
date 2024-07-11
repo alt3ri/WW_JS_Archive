@@ -1,34 +1,38 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, o, n) {
-    let r;
-    const i = arguments.length;
-    let a =
-      i < 3 ? t : n === null ? (n = Object.getOwnPropertyDescriptor(t, o)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      i = arguments.length,
+      a =
+        i < 3
+          ? t
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(t, o))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       a = Reflect.decorate(e, t, o, n);
     else
-      for (let l = e.length - 1; l >= 0; l--)
-        (r = e[l]) && (a = (i < 3 ? r(a) : i > 3 ? r(t, o, a) : r(t, o)) || a);
-    return i > 3 && a && Object.defineProperty(t, o, a), a;
+      for (var l = e.length - 1; 0 <= l; l--)
+        (r = e[l]) && (a = (i < 3 ? r(a) : 3 < i ? r(t, o, a) : r(t, o)) || a);
+    return 3 < i && a && Object.defineProperty(t, o, a), a;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExecutionComponent = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const ExecutionConfById_1 = require("../../../../../../Core/Define/ConfigQuery/ExecutionConfById");
-const MonsterBattleConfById_1 = require("../../../../../../Core/Define/ConfigQuery/MonsterBattleConfById");
-const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils");
-const CodeDefineLevelConditionInfo_1 = require("../../../../../LevelGamePlay/LevelConditions/CodeDefineLevelConditionInfo");
-const LevelGameplayActionsDefine_1 = require("../../../../../LevelGamePlay/LevelGameplayActionsDefine");
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const SceneTeamController_1 = require("../../../../../Module/SceneTeam/SceneTeamController");
-const ScrollingTipsController_1 = require("../../../../../Module/ScrollingTips/ScrollingTipsController");
-const CharacterBuffIds_1 = require("../../../Common/Component/Abilities/CharacterBuffIds");
-const MAX_CHARACTERID = 9999;
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  ExecutionConfById_1 = require("../../../../../../Core/Define/ConfigQuery/ExecutionConfById"),
+  MonsterBattleConfById_1 = require("../../../../../../Core/Define/ConfigQuery/MonsterBattleConfById"),
+  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils"),
+  CodeDefineLevelConditionInfo_1 = require("../../../../../LevelGamePlay/LevelConditions/CodeDefineLevelConditionInfo"),
+  LevelGameplayActionsDefine_1 = require("../../../../../LevelGamePlay/LevelGameplayActionsDefine"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  SceneTeamController_1 = require("../../../../../Module/SceneTeam/SceneTeamController"),
+  ScrollingTipsController_1 = require("../../../../../Module/ScrollingTips/ScrollingTipsController"),
+  CharacterBuffIds_1 = require("../../../Common/Component/Abilities/CharacterBuffIds"),
+  MAX_CHARACTERID = 9999;
 let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -37,7 +41,7 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
       (this.SJi = void 0),
       (this.Ktn = void 0),
       (this.Qtn = (e, t) => {
-        const o = this.Entity.GetComponent(178);
+        var o = this.Entity.GetComponent(178);
         o
           ? ((this.SJi = o.GetInteractController()),
             this.SJi
@@ -63,9 +67,9 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
     return !0;
   }
   OnActivate() {
-    const e = this.Entity.GetComponent(185);
-    const t = this.Entity.GetComponent(0);
-    const o = t.GetMonsterComponent().FightConfigId;
+    var e = this.Entity.GetComponent(185),
+      t = this.Entity.GetComponent(0),
+      o = t.GetMonsterComponent().FightConfigId;
     (this.Ktn =
       MonsterBattleConfById_1.configMonsterBattleConfById.GetConfig(o)),
       (this.jtn = e.ListenForTagAddOrRemove(-121513115, this.Qtn)),
@@ -81,16 +85,16 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
         );
   }
   Ytn() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
         0,
       )?.GetPbDataId();
     for (const r of this.Ktn.ExecutionId) {
-      const t = ExecutionConfById_1.configExecutionConfById.GetConfig(r);
+      var t = ExecutionConfById_1.configExecutionConfById.GetConfig(r);
       if (t) {
         if (t.ExecutionRoleId === e || this.Jtn(e, t.ExecutionRoleId)) return t;
         for (const i of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems()) {
-          let o = i.GetConfigId;
+          var o = i.GetConfigId;
           if (o > MAX_CHARACTERID) {
             o = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(o);
             if (o && o.ParentId === t.ExecutionRoleId) return t;
@@ -100,11 +104,11 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
           ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerRoleId() ===
           t.ExecutionRoleId
         ) {
-          const n = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(
+          var n = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(
             t.ExecutionRoleId,
             { ParamType: 0 },
           )?.GetCreatureDataId();
-          if (n && n > 0) return t;
+          if (n && 0 < n) return t;
         }
       } else
         Log_1.Log.CheckError() &&
@@ -120,15 +124,15 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
       ]);
   }
   $tn() {
-    let e;
-    let t;
-    const o = new LevelGameplayActionsDefine_1.ActionExecution();
-    const n = this.Ytn();
-    const r = new CodeDefineLevelConditionInfo_1.LevelConditionGroup();
+    var e,
+      t,
+      o = new LevelGameplayActionsDefine_1.ActionExecution(),
+      n = this.Ytn(),
+      r = new CodeDefineLevelConditionInfo_1.LevelConditionGroup();
     r.Type = 0;
     for (const i of n.LimitExecutionTags)
       i &&
-        i.length !== 0 &&
+        0 !== i.length &&
         (e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(i)) &&
         (((t =
           new CodeDefineLevelConditionInfo_1.LevelConditionCheckCharacterTagInfo()).TagId =
@@ -145,9 +149,9 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
     );
   }
   Xtn() {
-    const e = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems();
+    var e = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems();
     for (const n of this.Ktn.ExecutionId) {
-      const t = ExecutionConfById_1.configExecutionConfById.GetConfig(n);
+      var t = ExecutionConfById_1.configExecutionConfById.GetConfig(n);
       if (t) {
         if (
           ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(
@@ -157,7 +161,7 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
         )
           return !0;
         for (const r of e) {
-          let o = r.GetConfigId;
+          var o = r.GetConfigId;
           if (o > MAX_CHARACTERID) {
             o = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(o);
             if (o && o.ParentId === t.ExecutionRoleId) return !0;
@@ -177,10 +181,10 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
   }
   StartExecution() {
     let t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
-    const e = t.Entity.GetComponent(0)?.GetPbDataId();
+    var e = t.Entity.GetComponent(0)?.GetPbDataId();
     let o = !1;
     for (const l of this.Ktn.ExecutionId) {
-      const n = ExecutionConfById_1.configExecutionConfById.GetConfig(l);
+      var n = ExecutionConfById_1.configExecutionConfById.GetConfig(l);
       if (n) {
         if (n.ExecutionRoleId === e || this.Jtn(e, n.ExecutionRoleId)) {
           if (
@@ -192,7 +196,7 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
           this.Ztn(t.Entity, n), (o = !0);
           break;
         }
-        const r = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(
+        var r = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(
           n.ExecutionRoleId,
           { ParamType: 0 },
         )?.GetCreatureDataId();
@@ -214,9 +218,9 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
           break;
         }
         for (const s of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems()) {
-          const i = s.GetConfigId;
+          var i = s.GetConfigId;
           if (i > MAX_CHARACTERID) {
-            let a =
+            var a =
               ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(i);
             if (a && a.ParentId === n.ExecutionRoleId) {
               a = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(i, {
@@ -270,7 +274,7 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
     );
   }
   ztn(e) {
-    const t = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(e, {
+    var t = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(e, {
       ParamType: 3,
     });
     return t?.IsMyRole()
@@ -330,4 +334,4 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
   ExecutionComponent,
 )),
   (exports.ExecutionComponent = ExecutionComponent);
-// # sourceMappingURL=ExecutionComponent.js.map
+//# sourceMappingURL=ExecutionComponent.js.map

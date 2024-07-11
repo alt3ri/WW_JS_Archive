@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.ESecondaryPanel =
       void 0);
 const UE = require("ue");
-let ESecondaryPanel;
+var ESecondaryPanel;
 !(function (e) {
   (e[(e.CustomMarkPanel = 0)] = "CustomMarkPanel"),
     (e[(e.TeleportPanel = 1)] = "TeleportPanel"),
@@ -76,18 +76,18 @@ class MarkPriority2HierarchyIndexHelper {
   }
   pFo(e, r = 0) {
     let t = 0;
-    return (t = e === 11 ? 3e3 : r);
+    return (t = 11 === e ? 3e3 : r);
   }
   AddMarkItem(e, r) {
-    const t = this.pFo(e, r);
-    const a = this.fFo.length;
+    var t = this.pFo(e, r),
+      a = this.fFo.length;
     let o = 0;
-    if (a === 0) this.fFo.push(new PriorityHierarchyIndexNode(t));
+    if (0 === a) this.fFo.push(new PriorityHierarchyIndexNode(t));
     else {
       let r = -1;
       for (let e = 0; e < a; ++e) {
-        const n = this.fFo[e];
-        const i = n.Priority;
+        var n = this.fFo[e],
+          i = n.Priority;
         if (!(i < t)) {
           if (i === t) {
             (o += n.MaxHierarchyIndex), ++n.MaxHierarchyIndex;
@@ -101,7 +101,7 @@ class MarkPriority2HierarchyIndexHelper {
           break;
         }
       }
-      r >= 0 && this.fFo.splice(r, 0, new PriorityHierarchyIndexNode(t));
+      0 <= r && this.fFo.splice(r, 0, new PriorityHierarchyIndexNode(t));
     }
     return o;
   }
@@ -109,11 +109,11 @@ class MarkPriority2HierarchyIndexHelper {
     const t = this.pFo(e, r);
     this.fFo
       .filter((e) => e.Priority === t)
-      .every((e) => (e.MaxHierarchyIndex > 0 && --e.MaxHierarchyIndex, !0));
+      .every((e) => (0 < e.MaxHierarchyIndex && --e.MaxHierarchyIndex, !0));
   }
   ClearData() {
     this.fFo.length = 0;
   }
 }
 exports.MarkPriority2HierarchyIndexHelper = MarkPriority2HierarchyIndexHelper;
-// # sourceMappingURL=WorldMapDefine.js.map
+//# sourceMappingURL=WorldMapDefine.js.map

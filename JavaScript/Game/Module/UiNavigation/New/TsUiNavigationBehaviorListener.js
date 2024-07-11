@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TsUiNavigationBehaviorListener = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const GlobalData_1 = require("../../../GlobalData");
-const NavigationSelectableCreator_1 = require("./Selectable/NavigationSelectableCreator");
-const UiNavigationCursorModule_1 = require("./UiNavigationCursorModule");
-const UiNavigationGlobalData_1 = require("./UiNavigationGlobalData");
-const UiNavigationLogic_1 = require("./UiNavigationLogic");
-const UiNavigationModeModule_1 = require("./UiNavigationModeModule");
-const UiNavigationViewManager_1 = require("./UiNavigationViewManager");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  GlobalData_1 = require("../../../GlobalData"),
+  NavigationSelectableCreator_1 = require("./Selectable/NavigationSelectableCreator"),
+  UiNavigationCursorModule_1 = require("./UiNavigationCursorModule"),
+  UiNavigationGlobalData_1 = require("./UiNavigationGlobalData"),
+  UiNavigationLogic_1 = require("./UiNavigationLogic"),
+  UiNavigationModeModule_1 = require("./UiNavigationModeModule"),
+  UiNavigationViewManager_1 = require("./UiNavigationViewManager");
 class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
   constructor() {
     super(...arguments),
@@ -70,7 +70,7 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
     return (
       (!this.ScrollView ||
         !(this.ScrollView instanceof UE.UILoopScrollViewComponent) ||
-        this.ScrollView.NavigationIndex === -1 ||
+        -1 === this.ScrollView.NavigationIndex ||
         this.ScrollView.NavigationIndex !== this.LoopScrollViewGridIndex) &&
       this.InNavigation
     );
@@ -151,7 +151,7 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
     this.InitScrollView(), this.InitLayout();
   }
   InitAnimController() {
-    let i;
+    var i;
     this.IsInitAnimController ||
       ((this.IsInitAnimController = !0),
       this.ScrollView &&
@@ -209,14 +209,14 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
     );
   }
   NotifyParentListener(i) {
-    const t = UiNavigationLogic_1.UiNavigationLogic.FindUpNavigationListener(
+    var t = UiNavigationLogic_1.UiNavigationLogic.FindUpNavigationListener(
       this.GetOwner(),
     );
     t && t.RegisterChildListener(i);
   }
   RegisterChildListener(s) {
     for (let i = 0, t = s.TagArray.Num(); i < t; ++i) {
-      const e = s.TagArray.Get(i);
+      var e = s.TagArray.Get(i);
       this.ChildTagMap.set(e, s);
     }
     this.NotifyParentListener(s);
@@ -225,13 +225,13 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
     this.InsideGroupActor || (this.InsideGroupActor = this.GetOwner());
   }
   BindLoopScrollView() {
-    let i;
+    var i;
     this.HasLoopScrollView() &&
       ((i = this.GetSelectableComponent()),
       this.ScrollView.BindParentUIItem(i));
   }
   UnBindLoopScrollView() {
-    let i;
+    var i;
     this.HasLoopScrollView() &&
       this.ScrollView.IsValid() &&
       ((i = this.GetSelectableComponent()),
@@ -313,15 +313,15 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
     return this.InitAnimController(), this.AnimController?.IsPlaying() ?? !1;
   }
   IsInLoopScrollDisplay() {
-    let i;
+    var i;
     return (
       !this.HasLoopScrollView() ||
-      (i = this.ScrollView).NavigationIndex === -1 ||
+      -1 === (i = this.ScrollView).NavigationIndex ||
       i.NavigationIndex === this.LoopScrollViewGridIndex
     );
   }
   IsInDynScrollDisplay(i) {
-    let t, s, e;
+    var t, s, e;
     return (
       !this.HasDynamicScrollView() ||
       ((t = this.ScrollView),
@@ -329,8 +329,8 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
       (e = (0, puerts_1.$ref)(3)),
       t.GetOutOfBottomBoundsType(i.GetUIItem(), s, e),
       t.Vertical
-        ? (0, puerts_1.$unref)(s) === 0
-        : (0, puerts_1.$unref)(e) === 0)
+        ? 0 === (0, puerts_1.$unref)(s)
+        : 0 === (0, puerts_1.$unref)(e))
     );
   }
   IsInScrollOrLayoutCanFocus() {
@@ -365,7 +365,7 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
       this.UpdateLoopNavigationIndex(this.LoopScrollViewGridIndex);
   }
   UpdateNavigationState() {
-    const i = this.GetBehaviorComponent();
+    var i = this.GetBehaviorComponent();
     i?.IsValid() &&
       i instanceof UE.UISelectableComponent &&
       (i.SetSelectionState(i.GetSelectionState()), i.ApplySelectionState(!0));
@@ -388,8 +388,8 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
   }
   IsSelectedToggle() {
     return (
-      this.NavigationComponent.GetType() === "Toggle" &&
-      this.GetSelectableComponent().ToggleState === 1
+      "Toggle" === this.NavigationComponent.GetType() &&
+      1 === this.GetSelectableComponent().ToggleState
     );
   }
   NotifyTextChangeByComponent(i) {
@@ -403,15 +403,15 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
     return this.TextChangeComponent;
   }
   FindNavigation(i) {
-    let t;
-    return i === 0
+    var t;
+    return 0 === i
       ? this.GetSceneComponent()
-      : i === 6
+      : 6 === i
         ? (t = this.ModeModule.FindActorByDirection(1)) &&
           t !== this.GetSceneComponent()
           ? t
           : this.ModeModule.FindActorByDirection(3)
-        : i === 5
+        : 5 === i
           ? (t = this.ModeModule.FindActorByDirection(2)) &&
             t !== this.GetSceneComponent()
             ? t
@@ -427,4 +427,4 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
 }
 (exports.TsUiNavigationBehaviorListener = TsUiNavigationBehaviorListener),
   (exports.default = TsUiNavigationBehaviorListener);
-// # sourceMappingURL=TsUiNavigationBehaviorListener.js.map
+//# sourceMappingURL=TsUiNavigationBehaviorListener.js.map

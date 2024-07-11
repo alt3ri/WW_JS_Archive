@@ -2,16 +2,16 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionAttributeItemTwo = exports.VisionAttributeVariantTwoData =
     void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const GenericLayoutNew_1 = require("../../../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../../Util/ScrollView/GenericScrollView");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  GenericLayoutNew_1 = require("../../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../../Util/ScrollView/GenericScrollView");
 class VisionAttributeVariantTwoData {
   constructor() {
     (this.FetterId = 0), (this.State = 0);
@@ -82,7 +82,7 @@ class AttributeItem extends UiPanelBase_1.UiPanelBase {
       this.GetItem(4).SetUIActive(!1),
       this.GetItem(5).SetUIActive(!1),
       this.GetItem(6).SetUIActive(!1);
-    let t =
+    var t =
       ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomFetterById(
         e.FetterId,
       );
@@ -94,9 +94,9 @@ class AttributeItem extends UiPanelBase_1.UiPanelBase {
         ...t.EffectDescriptionParam,
       );
     let i = "AEAEABFF";
-    (e.State === 1
+    (1 === e.State
       ? ((i = "D05656FF"), this.GetItem(6))
-      : e.State === 2
+      : 2 === e.State
         ? ((i = "87C583FF"), this.GetItem(5))
         : ((t = ModelManager_1.ModelManager.RoleModel.GetCurSelectMainRoleId()),
           ControllerHolder_1.ControllerHolder.PhantomBattleController.CheckFetterActivate(
@@ -166,4 +166,4 @@ class AttributePhantomItem extends UiPanelBase_1.UiPanelBase {
           (this.GetSprite(2).useChangeColor = !0));
   }
 }
-// # sourceMappingURL=VisionAttributeItemTwo.js.map
+//# sourceMappingURL=VisionAttributeItemTwo.js.map

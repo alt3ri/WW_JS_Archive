@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineStateCue = void 0);
-const GameplayCueById_1 = require("../../../../Core/Define/ConfigQuery/GameplayCueById");
-const AiStateMachine_1 = require("../AiStateMachine");
-const AiStateMachineState_1 = require("./AiStateMachineState");
+const GameplayCueById_1 = require("../../../../Core/Define/ConfigQuery/GameplayCueById"),
+  AiStateMachine_1 = require("../AiStateMachine"),
+  AiStateMachineState_1 = require("./AiStateMachineState");
 class AiStateMachineStateCue extends AiStateMachineState_1.AiStateMachineState {
   constructor() {
     super(...arguments),
@@ -28,7 +28,7 @@ class AiStateMachineStateCue extends AiStateMachineState_1.AiStateMachineState {
         (this.Rne =
           this.Node.ActorComponent.DisableActor("状态机加载特效或材质"));
     for (const i of this.Vre) {
-      let t = GameplayCueById_1.configGameplayCueById.GetConfig(i);
+      var t = GameplayCueById_1.configGameplayCueById.GetConfig(i);
       if (!t) return;
       t = this.Node.GameplayCueComponent.CreateGameplayCue(t, {
         BeginCallback: () => {
@@ -54,7 +54,7 @@ class AiStateMachineStateCue extends AiStateMachineState_1.AiStateMachineState {
       (this.Dne = !1));
   }
   OnClear() {
-    if (this.Tne && this.Tne.length > 0) {
+    if (this.Tne && 0 < this.Tne.length) {
       for (const t of this.Tne) t.Destroy();
       this.Tne.length = 0;
     }
@@ -64,4 +64,4 @@ class AiStateMachineStateCue extends AiStateMachineState_1.AiStateMachineState {
   }
 }
 exports.AiStateMachineStateCue = AiStateMachineStateCue;
-// # sourceMappingURL=AiStateMachineStateCue.js.map
+//# sourceMappingURL=AiStateMachineStateCue.js.map

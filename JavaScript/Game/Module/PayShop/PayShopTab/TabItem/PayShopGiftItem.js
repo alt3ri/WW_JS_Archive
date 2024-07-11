@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayShopGiftItem = void 0);
-const UE = require("ue");
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../../../GlobalData");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const LguiResourceManager_1 = require("../../../../Ui/LguiResourceManager");
-const HelpController_1 = require("../../../Help/HelpController");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const SOLDOUT_ALPHA = 0.6;
+const UE = require("ue"),
+  CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  LguiResourceManager_1 = require("../../../../Ui/LguiResourceManager"),
+  HelpController_1 = require("../../../Help/HelpController"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  SOLDOUT_ALPHA = 0.6;
 class PayShopGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(i, t = void 0) {
     super(),
@@ -32,7 +32,7 @@ class PayShopGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
         HelpController_1.HelpController.OpenHelpById(this.O3e);
       }),
       (this.i2i = (i) => {
-        const t = this.Data.GetGoodsData();
+        var t = this.Data.GetGoodsData();
         t.IsDirect() || (t.Price.Id === i && this.SetPrice());
       }),
       (this.cFi = () => {
@@ -111,7 +111,7 @@ class PayShopGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
       LguiResourceManager_1.LguiResourceManager.CancelLoadPrefab(this.$Bt);
   }
   RefreshState() {
-    const i = this.Data.GetItemData();
+    var i = this.Data.GetItemData();
     this.SetQuality(i.Quality),
       this.SetIcon(),
       this.SetTips(),
@@ -124,17 +124,17 @@ class PayShopGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
   SetQuality(i) {
     i = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(i);
     let t = i.PayShopTexture;
-    this.mFi === 1 && (t = i.NewPayShopTexture),
+    1 === this.mFi && (t = i.NewPayShopTexture),
       this.SetTextureByPath(t, this.GetTexture(2));
   }
   SetIcon() {
-    const i = this.GetTexture(1);
+    var i = this.GetTexture(1);
     this.SetItemIcon(i, this.Data.GetItemData().ItemId, this.xIt);
   }
   SetTips() {
     this.RootItem.SetAlpha(1);
-    let i;
-    const t = this.GetText(4);
+    var i,
+      t = this.GetText(4);
     this.Data.IsLocked()
       ? ((i = this.Data.GetConditionTextId()),
         LguiUtil_1.LguiUtil.SetLocalTextNew(t, i),
@@ -150,10 +150,10 @@ class PayShopGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
         : t.SetUIActive(!1);
   }
   SetPrice() {
-    let i;
-    const t = this.GetText(7);
-    const e = this.GetTexture(5);
-    const s = this.GetText(6);
+    var i,
+      t = this.GetText(7),
+      e = this.GetTexture(5),
+      s = this.GetText(6);
     this.Data.IsDirect()
       ? (t.SetUIActive(!1),
         e.SetUIActive(!1),
@@ -170,10 +170,10 @@ class PayShopGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   SetDiscountTime() {
     this.RemoveDiscountTimer();
-    let i;
-    const t = this.GetItem(8);
-    let e = this.GetText(10);
-    let s = this.GetItem(9);
+    var i,
+      t = this.GetItem(8),
+      e = this.GetText(10),
+      s = this.GetItem(9);
     this.Data.HasDiscount()
       ? (t.SetUIActive(!0),
         (i = this.Data.IsPermanentDiscount()),
@@ -190,16 +190,16 @@ class PayShopGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   SetSellTime() {
     this.RemoveSellTimer();
-    let i;
-    let t;
-    const e = this.GetItem(12);
+    var i,
+      t,
+      e = this.GetItem(12);
     this.Data.IsPermanentSell()
       ? e.SetUIActive(!1)
       : this.Data.InSellTime() &&
         ((i = this.Data.GetEndTimeRemainData()),
         (t = this.GetText(11)),
         e.SetUIActive(!0),
-        typeof i === "string"
+        "string" == typeof i
           ? t.SetText(i)
           : (LguiUtil_1.LguiUtil.SetLocalText(t, i.TextId, i.TimeValue),
             (this.SellTimerId = TimerSystem_1.RealTimeTimerSystem.Delay(() => {
@@ -207,10 +207,10 @@ class PayShopGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
             }, i.RemainingTime * CommonDefine_1.MILLIONSECOND_PER_SECOND))));
   }
   SetName(i) {
-    let t;
-    const e = this.GetText(3);
-    const s = this.Data.GetGoodsData();
-    s.ItemCount > 1
+    var t,
+      e = this.GetText(3),
+      s = this.Data.GetGoodsData();
+    1 < s.ItemCount
       ? ((t = new LguiUtil_1.TableTextArgNew(i)),
         LguiUtil_1.LguiUtil.SetLocalText(e, "GoodsName", t, s.ItemCount))
       : e.ShowTextNew(i);
@@ -250,4 +250,4 @@ class PayShopGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.PayShopGiftItem = PayShopGiftItem;
-// # sourceMappingURL=PayShopGiftItem.js.map
+//# sourceMappingURL=PayShopGiftItem.js.map

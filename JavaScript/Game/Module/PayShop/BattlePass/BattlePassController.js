@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattlePassController = void 0);
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase");
-const InputManager_1 = require("../../../Ui/Input/InputManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const FeatureRestrictionTemplate_1 = require("../../Common/FeatureRestrictionTemplate");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const ItemRewardController_1 = require("../../ItemReward/ItemRewardController");
-const RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData");
+const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase"),
+  InputManager_1 = require("../../../Ui/Input/InputManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  FeatureRestrictionTemplate_1 = require("../../Common/FeatureRestrictionTemplate"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  ItemRewardController_1 = require("../../ItemReward/ItemRewardController"),
+  RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData");
 class BattlePassController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
@@ -36,7 +36,7 @@ class BattlePassController extends UiControllerBase_1.UiControllerBase {
     return this.uOi(), !0;
   }
   static RequestBattlePassDataForTask() {
-    const e = Protocol_1.Aki.Protocol.xWn.create();
+    var e = Protocol_1.Aki.Protocol.xWn.create();
     Net_1.Net.Call(5160, e, (e) => {
       e &&
         (e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
@@ -62,8 +62,8 @@ class BattlePassController extends UiControllerBase_1.UiControllerBase {
   }
   static async mOi() {
     ModelManager_1.ModelManager.BattlePassModel.IsRequiringViewData = !0;
-    var e = Protocol_1.Aki.Protocol.xWn.create();
-    var e = await Net_1.Net.CallAsync(5160, e);
+    var e = Protocol_1.Aki.Protocol.xWn.create(),
+      e = await Net_1.Net.CallAsync(5160, e);
     if (e)
       if (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys)
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
@@ -76,8 +76,8 @@ class BattlePassController extends UiControllerBase_1.UiControllerBase {
         ),
         ModelManager_1.ModelManager.BattlePassModel.GetInTimeRange())
       ) {
-        var t = Protocol_1.Aki.Protocol.$Wn.create();
-        var t = await Net_1.Net.CallAsync(6375, t);
+        var t = Protocol_1.Aki.Protocol.$Wn.create(),
+          t = await Net_1.Net.CallAsync(6375, t);
         if (t)
           if (t.lkn !== Protocol_1.Aki.Protocol.lkn.Sys)
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
@@ -110,12 +110,12 @@ class BattlePassController extends UiControllerBase_1.UiControllerBase {
         );
   }
   static SetBattlePassEnter() {
-    const e = Protocol_1.Aki.Protocol.QWn.create();
+    var e = Protocol_1.Aki.Protocol.QWn.create();
     Net_1.Net.Send(29467, e),
       (ModelManager_1.ModelManager.BattlePassModel.HadEnter = !0);
   }
   static RequestTakeBattlePassReward(t, a, r, o) {
-    const e = Protocol_1.Aki.Protocol.qWn.create();
+    var e = Protocol_1.Aki.Protocol.qWn.create();
     (e.Ikn = t),
       (e.r3n = a),
       (e.G3n = r),
@@ -135,7 +135,7 @@ class BattlePassController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static RequestTakeAllRewardResponse() {
-    const e = Protocol_1.Aki.Protocol.NWn.create();
+    var e = Protocol_1.Aki.Protocol.NWn.create();
     Net_1.Net.Call(1368, e, (e) => {
       e &&
         (e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
@@ -149,7 +149,7 @@ class BattlePassController extends UiControllerBase_1.UiControllerBase {
     });
   }
   static RequestBattlePassTask() {
-    const e = Protocol_1.Aki.Protocol.$Wn.create();
+    var e = Protocol_1.Aki.Protocol.$Wn.create();
     Net_1.Net.Call(6375, e, (e) => {
       if (e)
         if (e.lkn === Protocol_1.Aki.Protocol.lkn.Sys) {
@@ -158,7 +158,7 @@ class BattlePassController extends UiControllerBase_1.UiControllerBase {
             ModelManager_1.ModelManager.BattlePassModel.AddTaskDataFromProtocol(
               a,
             );
-          const t =
+          var t =
             ModelManager_1.ModelManager.BattlePassModel.GetWeekEndTime() !==
             e.bfs;
           ModelManager_1.ModelManager.BattlePassModel.SetWeekEndTime(e.bfs),
@@ -178,7 +178,7 @@ class BattlePassController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.BattlePassModel.TryRequestTaskList(e);
   }
   static RequestBattlePassTaskTake(e) {
-    const t = Protocol_1.Aki.Protocol.WWn.create();
+    var t = Protocol_1.Aki.Protocol.WWn.create();
     (t.j4n = e),
       Net_1.Net.Call(21235, t, (e) => {
         e &&
@@ -193,7 +193,7 @@ class BattlePassController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static RequestBuyBattlePassLevel(e) {
-    const t = Protocol_1.Aki.Protocol.XWn.create();
+    var t = Protocol_1.Aki.Protocol.XWn.create();
     (t.r3n = e), Net_1.Net.Call(13606, t, () => {});
   }
   static OnRegisterNetEvent() {
@@ -219,7 +219,7 @@ class BattlePassController extends UiControllerBase_1.UiControllerBase {
       }, 500));
   }
   static ShowTimePassConfirm() {
-    const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(145);
+    var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(145);
     e.SetCloseFunction(() => {
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.ResetToBattleView,
@@ -276,12 +276,12 @@ class BattlePassController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static PopHighUnlockReward() {
-    let e;
-    let t;
-    const a = CommonParamById_1.configCommonParamById.GetIntConfig(
-      "PrimaryBattlePassGiftPack",
-    );
-    const r = [];
+    var e,
+      t,
+      a = CommonParamById_1.configCommonParamById.GetIntConfig(
+        "PrimaryBattlePassGiftPack",
+      ),
+      r = [];
     for ([
       e,
       t,
@@ -297,7 +297,7 @@ class BattlePassController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static PayPrimaryBattlePass() {
-    let e, t;
+    var e, t;
     FeatureRestrictionTemplate_1.FeatureRestrictionTemplate.TemplateForPioneerClient.Check()
       ? ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(165)),
         ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
@@ -318,7 +318,7 @@ class BattlePassController extends UiControllerBase_1.UiControllerBase {
             ));
   }
   static PayHighBattlePass() {
-    let e, t;
+    var e, t;
     FeatureRestrictionTemplate_1.FeatureRestrictionTemplate.TemplateForPioneerClient.Check()
       ? ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(165)),
         ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
@@ -352,7 +352,7 @@ class BattlePassController extends UiControllerBase_1.UiControllerBase {
               ));
   }
   static vOi(e) {
-    let t;
+    var t;
     return (
       !!ModelManager_1.ModelManager.BattlePassModel.InBattlePassInWarningTime() &&
       ((t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(147)).FunctionMap.set(
@@ -396,13 +396,13 @@ class BattlePassController extends UiControllerBase_1.UiControllerBase {
   }),
   (BattlePassController.gOi = (t) => {
     if (ModelManager_1.ModelManager.BattlePassModel.GetInTimeRange()) {
-      const a = ModelManager_1.ModelManager.BattlePassModel.PayType;
+      var a = ModelManager_1.ModelManager.BattlePassModel.PayType;
       ModelManager_1.ModelManager.BattlePassModel.PayType = t.Dfs;
       let e = t.Dfs === Protocol_1.Aki.Protocol.B2s.Proto_Paid ? 1 : 3;
       a === Protocol_1.Aki.Protocol.B2s.Proto_NoPaid &&
         a !== t.Dfs &&
         (ModelManager_1.ModelManager.BattlePassModel.UpdateRewardDataFormFreeToPay(),
-        (e = e === 3 ? 2 : e)),
+        (e = 3 === e ? 2 : e)),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.ReceiveBattlePassDataEvent,
         ),
@@ -411,7 +411,7 @@ class BattlePassController extends UiControllerBase_1.UiControllerBase {
   }),
   (BattlePassController.fOi = void 0),
   (BattlePassController.pOi = (e, t) => {
-    e === 10040 && t && BattlePassController.RequestBattlePassDataForTask();
+    10040 === e && t && BattlePassController.RequestBattlePassDataForTask();
   }),
   (BattlePassController.TYt = () => {
     ModelManager_1.ModelManager.FunctionModel.IsOpen(10040) &&
@@ -422,4 +422,4 @@ class BattlePassController extends UiControllerBase_1.UiControllerBase {
       ModelManager_1.ModelManager.BattlePassModel.GetInTimeRange() &&
       BattlePassController.RequestBattlePassTask();
   });
-// # sourceMappingURL=BattlePassController.js.map
+//# sourceMappingURL=BattlePassController.js.map

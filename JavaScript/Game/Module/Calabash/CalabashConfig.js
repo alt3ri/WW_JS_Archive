@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CalabashConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const CalabashDevelopConditionById_1 = require("../../../Core/Define/ConfigQuery/CalabashDevelopConditionById");
-const CalabashDevelopRewardAll_1 = require("../../../Core/Define/ConfigQuery/CalabashDevelopRewardAll");
-const CalabashDevelopRewardByMonsterId_1 = require("../../../Core/Define/ConfigQuery/CalabashDevelopRewardByMonsterId");
-const CalabashLevelAll_1 = require("../../../Core/Define/ConfigQuery/CalabashLevelAll");
-const CalabashLevelByLevel_1 = require("../../../Core/Define/ConfigQuery/CalabashLevelByLevel");
-const ConditionGroupById_1 = require("../../../Core/Define/ConfigQuery/ConditionGroupById");
-const MonsterInfoById_1 = require("../../../Core/Define/ConfigQuery/MonsterInfoById");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  CalabashDevelopConditionById_1 = require("../../../Core/Define/ConfigQuery/CalabashDevelopConditionById"),
+  CalabashDevelopRewardAll_1 = require("../../../Core/Define/ConfigQuery/CalabashDevelopRewardAll"),
+  CalabashDevelopRewardByMonsterId_1 = require("../../../Core/Define/ConfigQuery/CalabashDevelopRewardByMonsterId"),
+  CalabashLevelAll_1 = require("../../../Core/Define/ConfigQuery/CalabashLevelAll"),
+  CalabashLevelByLevel_1 = require("../../../Core/Define/ConfigQuery/CalabashLevelByLevel"),
+  ConditionGroupById_1 = require("../../../Core/Define/ConfigQuery/ConditionGroupById"),
+  MonsterInfoById_1 = require("../../../Core/Define/ConfigQuery/MonsterInfoById"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class CalabashConfig extends ConfigBase_1.ConfigBase {
   GetCalabashConfigByLevel(e) {
-    const a = CalabashLevelByLevel_1.configCalabashLevelByLevel.GetConfig(e);
+    var a = CalabashLevelByLevel_1.configCalabashLevelByLevel.GetConfig(e);
     if (a) return a;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("Calabash", 11, "获取鸣域终端配置失败，请检查配置表", [
@@ -32,7 +32,7 @@ class CalabashConfig extends ConfigBase_1.ConfigBase {
     return CalabashDevelopRewardAll_1.configCalabashDevelopRewardAll.GetConfigList();
   }
   GetCalabashDevelopRewardByMonsterId(e) {
-    const a =
+    var a =
       CalabashDevelopRewardByMonsterId_1.configCalabashDevelopRewardByMonsterId.GetConfig(
         e,
       );
@@ -54,7 +54,7 @@ class CalabashConfig extends ConfigBase_1.ConfigBase {
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.Name) ?? "";
   }
   GetCalabashConditionById(e) {
-    const a =
+    var a =
       CalabashDevelopConditionById_1.configCalabashDevelopConditionById.GetConfig(
         e,
       );
@@ -74,13 +74,14 @@ class CalabashConfig extends ConfigBase_1.ConfigBase {
     return this.GetCalabashConditionRewardExp(this.GetCalabashConditionById(e));
   }
   GetCalabashConditionRewardExp(e) {
-    let a;
-    var e = e?.RewardExp;
+    var a,
+      e = e?.RewardExp;
     return !e ||
-      (a =
-        CommonParamById_1.configCommonParamById.GetIntConfig(
-          "CalabashExpItemId",
-        ) ?? 0) === 0
+      0 ===
+        (a =
+          CommonParamById_1.configCommonParamById.GetIntConfig(
+            "CalabashExpItemId",
+          ) ?? 0)
       ? 0
       : e.get(a) ?? 0;
   }
@@ -109,4 +110,4 @@ class CalabashConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.CalabashConfig = CalabashConfig;
-// # sourceMappingURL=CalabashConfig.js.map
+//# sourceMappingURL=CalabashConfig.js.map

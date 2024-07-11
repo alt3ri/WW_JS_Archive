@@ -55,4 +55,4 @@ class KuroCollisionChannel {}
   (KuroCollisionChannel.VoiceBlock = 27),
   (KuroCollisionChannel.HitItem = 28),
   (KuroCollisionChannel.BulletSpecial = 29);
-// # sourceMappingURL=QueryTypeDefine.js.map
+//# sourceMappingURL=QueryTypeDefine.js.map

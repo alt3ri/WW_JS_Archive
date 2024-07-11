@@ -1,25 +1,29 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, r, o) {
-    let n;
-    const i = arguments.length;
-    let s =
-      i < 3 ? e : o === null ? (o = Object.getOwnPropertyDescriptor(e, r)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var n,
+      i = arguments.length,
+      s =
+        i < 3
+          ? e
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(e, r))
+            : o;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(t, e, r, o);
     else
-      for (let c = t.length - 1; c >= 0; c--)
-        (n = t[c]) && (s = (i < 3 ? n(s) : i > 3 ? n(e, r, s) : n(e, r)) || s);
-    return i > 3 && s && Object.defineProperty(e, r, s), s;
+      for (var c = t.length - 1; 0 <= c; c--)
+        (n = t[c]) && (s = (i < 3 ? n(s) : 3 < i ? n(e, r, s) : n(e, r)) || s);
+    return 3 < i && s && Object.defineProperty(e, r, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterThrowComponent = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
 let CharacterThrowComponent = class CharacterThrowComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments), (this.wKr = void 0);
@@ -48,4 +52,4 @@ let CharacterThrowComponent = class CharacterThrowComponent extends EntityCompon
   CharacterThrowComponent,
 )),
   (exports.CharacterThrowComponent = CharacterThrowComponent);
-// # sourceMappingURL=CharacterThrowComponent.js.map
+//# sourceMappingURL=CharacterThrowComponent.js.map

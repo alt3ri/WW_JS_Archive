@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TsParkourCheckPoint = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EffectContext_1 = require("../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../Effect/EffectSystem");
-const Global_1 = require("../../Global");
-const RoleTriggerController_1 = require("../../NewWorld/Character/Role/RoleTriggerController");
-const ParkourController_1 = require("./ParkourController");
-const PARKOUR_CHECK_POINT_PRESET = new UE.FName("ParkourCheckPoint");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EffectContext_1 = require("../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../Effect/EffectSystem"),
+  Global_1 = require("../../Global"),
+  RoleTriggerController_1 = require("../../NewWorld/Character/Role/RoleTriggerController"),
+  ParkourController_1 = require("./ParkourController"),
+  PARKOUR_CHECK_POINT_PRESET = new UE.FName("ParkourCheckPoint");
 class TsParkourCheckPoint extends UE.Actor {
   constructor() {
     super(...arguments),
@@ -138,4 +138,4 @@ class TsParkourCheckPoint extends UE.Actor {
 }
 (exports.TsParkourCheckPoint = TsParkourCheckPoint),
   (exports.default = TsParkourCheckPoint);
-// # sourceMappingURL=TsParkourCheckPoint.js.map
+//# sourceMappingURL=TsParkourCheckPoint.js.map

@@ -7,4 +7,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VISIONRAREGOLD = 3),
   (exports.VISIONRAREPURPLE = 2),
   (exports.VISIONRAREBLUE = 1);
-// # sourceMappingURL=VisionDefine.js.map
+//# sourceMappingURL=VisionDefine.js.map

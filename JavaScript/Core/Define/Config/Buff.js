@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Buff = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const IntArray_1 = require("./SubType/IntArray");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  IntArray_1 = require("./SubType/IntArray");
 class Buff {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -273,30 +273,30 @@ class Buff {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt64(this.z7 + t) : BigInt("0");
   }
   gedesc(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   durationpolicy() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetDurationcalculationpolicyAt(t) {
     return this.durationcalculationpolicy(t);
   }
   durationcalculationpolicy(t) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   durationcalculationpolicyLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   durationcalculationpolicyArray() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -309,15 +309,15 @@ class Buff {
     return this.durationmagnitude(t);
   }
   durationmagnitude(t) {
-    const i = this.J7.__offset(this.z7, 12);
+    var i = this.J7.__offset(this.z7, 12);
     return i ? this.J7.readFloat32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   durationmagnitudeLength() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   durationmagnitudeArray() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -330,15 +330,15 @@ class Buff {
     return this.durationmagnitude2(t);
   }
   durationmagnitude2(t) {
-    const i = this.J7.__offset(this.z7, 14);
+    var i = this.J7.__offset(this.z7, 14);
     return i ? this.J7.readFloat32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   durationmagnitude2Length() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   durationmagnitude2Array() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -348,46 +348,46 @@ class Buff {
       : null;
   }
   bdurationaffectedbybullettime() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   formationpolicy() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   probability() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 1e4;
   }
   period() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   bexecuteperiodiceffectonapplication() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   periodicinhibitionpolicy() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   gameattributeid() {
-    const t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetCalculationpolicyAt(t) {
     return this.calculationpolicy(t);
   }
   calculationpolicy(t) {
-    const i = this.J7.__offset(this.z7, 30);
+    var i = this.J7.__offset(this.z7, 30);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   calculationpolicyLength() {
-    const t = this.J7.__offset(this.z7, 30);
+    var t = this.J7.__offset(this.z7, 30);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   calculationpolicyArray() {
-    const t = this.J7.__offset(this.z7, 30);
+    var t = this.J7.__offset(this.z7, 30);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -400,15 +400,15 @@ class Buff {
     return this.modifiermagnitude(t);
   }
   modifiermagnitude(t) {
-    const i = this.J7.__offset(this.z7, 32);
+    var i = this.J7.__offset(this.z7, 32);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   modifiermagnitudeLength() {
-    const t = this.J7.__offset(this.z7, 32);
+    var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   modifiermagnitudeArray() {
-    const t = this.J7.__offset(this.z7, 32);
+    var t = this.J7.__offset(this.z7, 32);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -421,15 +421,15 @@ class Buff {
     return this.modifiermagnitude2(t);
   }
   modifiermagnitude2(t) {
-    const i = this.J7.__offset(this.z7, 34);
+    var i = this.J7.__offset(this.z7, 34);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   modifiermagnitude2Length() {
-    const t = this.J7.__offset(this.z7, 34);
+    var t = this.J7.__offset(this.z7, 34);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   modifiermagnitude2Array() {
-    const t = this.J7.__offset(this.z7, 34);
+    var t = this.J7.__offset(this.z7, 34);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -439,300 +439,300 @@ class Buff {
       : null;
   }
   stackingtype() {
-    const t = this.J7.__offset(this.z7, 36);
+    var t = this.J7.__offset(this.z7, 36);
     return t ? this.J7.readInt32(this.z7 + t) : 2;
   }
   defaultstackcount() {
-    const t = this.J7.__offset(this.z7, 38);
+    var t = this.J7.__offset(this.z7, 38);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   stackappendcount() {
-    const t = this.J7.__offset(this.z7, 40);
+    var t = this.J7.__offset(this.z7, 40);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   stacklimitcount() {
-    const t = this.J7.__offset(this.z7, 42);
+    var t = this.J7.__offset(this.z7, 42);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   stackdurationrefreshpolicy() {
-    const t = this.J7.__offset(this.z7, 44);
+    var t = this.J7.__offset(this.z7, 44);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   stackperiodresetpolicy() {
-    const t = this.J7.__offset(this.z7, 46);
+    var t = this.J7.__offset(this.z7, 46);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   stackexpirationremovenumber() {
-    const t = this.J7.__offset(this.z7, 48);
+    var t = this.J7.__offset(this.z7, 48);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   bdenyoverflowapplication() {
-    const t = this.J7.__offset(this.z7, 50);
+    var t = this.J7.__offset(this.z7, 50);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   bclearstackonoverflow() {
-    const t = this.J7.__offset(this.z7, 52);
+    var t = this.J7.__offset(this.z7, 52);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   brequiremodifiersuccesstotriggercues() {
-    const t = this.J7.__offset(this.z7, 54);
+    var t = this.J7.__offset(this.z7, 54);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   bsuppressstackingcues() {
-    const t = this.J7.__offset(this.z7, 56);
+    var t = this.J7.__offset(this.z7, 56);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   GetGameplaycueidsAt(t) {
     return this.gameplaycueids(t);
   }
   gameplaycueids(t) {
-    const i = this.J7.__offset(this.z7, 58);
+    var i = this.J7.__offset(this.z7, 58);
     return i
       ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
       : BigInt(0);
   }
   gameplaycueidsLength() {
-    const t = this.J7.__offset(this.z7, 58);
+    var t = this.J7.__offset(this.z7, 58);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetGrantedtagsAt(t) {
     return this.grantedtags(t);
   }
   grantedtags(t, i) {
-    const r = this.J7.__offset(this.z7, 60);
+    var r = this.J7.__offset(this.z7, 60);
     return r
       ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
       : null;
   }
   grantedtagsLength() {
-    const t = this.J7.__offset(this.z7, 60);
+    var t = this.J7.__offset(this.z7, 60);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetApplicationsourcetagrequirementsAt(t) {
     return this.applicationsourcetagrequirements(t);
   }
   applicationsourcetagrequirements(t, i) {
-    const r = this.J7.__offset(this.z7, 62);
+    var r = this.J7.__offset(this.z7, 62);
     return r
       ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
       : null;
   }
   applicationsourcetagrequirementsLength() {
-    const t = this.J7.__offset(this.z7, 62);
+    var t = this.J7.__offset(this.z7, 62);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetApplicationsourcetagignoresAt(t) {
     return this.applicationsourcetagignores(t);
   }
   applicationsourcetagignores(t, i) {
-    const r = this.J7.__offset(this.z7, 64);
+    var r = this.J7.__offset(this.z7, 64);
     return r
       ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
       : null;
   }
   applicationsourcetagignoresLength() {
-    const t = this.J7.__offset(this.z7, 64);
+    var t = this.J7.__offset(this.z7, 64);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetApplicationtagrequirementsAt(t) {
     return this.applicationtagrequirements(t);
   }
   applicationtagrequirements(t, i) {
-    const r = this.J7.__offset(this.z7, 66);
+    var r = this.J7.__offset(this.z7, 66);
     return r
       ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
       : null;
   }
   applicationtagrequirementsLength() {
-    const t = this.J7.__offset(this.z7, 66);
+    var t = this.J7.__offset(this.z7, 66);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetApplicationtagignoresAt(t) {
     return this.applicationtagignores(t);
   }
   applicationtagignores(t, i) {
-    const r = this.J7.__offset(this.z7, 68);
+    var r = this.J7.__offset(this.z7, 68);
     return r
       ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
       : null;
   }
   applicationtagignoresLength() {
-    const t = this.J7.__offset(this.z7, 68);
+    var t = this.J7.__offset(this.z7, 68);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetOngoingtagrequirementsAt(t) {
     return this.ongoingtagrequirements(t);
   }
   ongoingtagrequirements(t, i) {
-    const r = this.J7.__offset(this.z7, 70);
+    var r = this.J7.__offset(this.z7, 70);
     return r
       ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
       : null;
   }
   ongoingtagrequirementsLength() {
-    const t = this.J7.__offset(this.z7, 70);
+    var t = this.J7.__offset(this.z7, 70);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetOngoingtagignoresAt(t) {
     return this.ongoingtagignores(t);
   }
   ongoingtagignores(t, i) {
-    const r = this.J7.__offset(this.z7, 72);
+    var r = this.J7.__offset(this.z7, 72);
     return r
       ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
       : null;
   }
   ongoingtagignoresLength() {
-    const t = this.J7.__offset(this.z7, 72);
+    var t = this.J7.__offset(this.z7, 72);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetRemovaltagrequirementsAt(t) {
     return this.removaltagrequirements(t);
   }
   removaltagrequirements(t, i) {
-    const r = this.J7.__offset(this.z7, 74);
+    var r = this.J7.__offset(this.z7, 74);
     return r
       ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
       : null;
   }
   removaltagrequirementsLength() {
-    const t = this.J7.__offset(this.z7, 74);
+    var t = this.J7.__offset(this.z7, 74);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetRemovaltagignoresAt(t) {
     return this.removaltagignores(t);
   }
   removaltagignores(t, i) {
-    const r = this.J7.__offset(this.z7, 76);
+    var r = this.J7.__offset(this.z7, 76);
     return r
       ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
       : null;
   }
   removaltagignoresLength() {
-    const t = this.J7.__offset(this.z7, 76);
+    var t = this.J7.__offset(this.z7, 76);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetRemovebuffwithtagsAt(t) {
     return this.removebuffwithtags(t);
   }
   removebuffwithtags(t, i) {
-    const r = this.J7.__offset(this.z7, 78);
+    var r = this.J7.__offset(this.z7, 78);
     return r
       ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
       : null;
   }
   removebuffwithtagsLength() {
-    const t = this.J7.__offset(this.z7, 78);
+    var t = this.J7.__offset(this.z7, 78);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetGrantedapplicationimmunitytagsAt(t) {
     return this.grantedapplicationimmunitytags(t);
   }
   grantedapplicationimmunitytags(t, i) {
-    const r = this.J7.__offset(this.z7, 80);
+    var r = this.J7.__offset(this.z7, 80);
     return r
       ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
       : null;
   }
   grantedapplicationimmunitytagsLength() {
-    const t = this.J7.__offset(this.z7, 80);
+    var t = this.J7.__offset(this.z7, 80);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetGrantedapplicationimmunitytagignoresAt(t) {
     return this.grantedapplicationimmunitytagignores(t);
   }
   grantedapplicationimmunitytagignores(t, i) {
-    const r = this.J7.__offset(this.z7, 82);
+    var r = this.J7.__offset(this.z7, 82);
     return r
       ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
       : null;
   }
   grantedapplicationimmunitytagignoresLength() {
-    const t = this.J7.__offset(this.z7, 82);
+    var t = this.J7.__offset(this.z7, 82);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetPrematureexpirationeffectsAt(t) {
     return this.prematureexpirationeffects(t);
   }
   prematureexpirationeffects(t) {
-    const i = this.J7.__offset(this.z7, 84);
+    var i = this.J7.__offset(this.z7, 84);
     return i
       ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
       : BigInt(0);
   }
   prematureexpirationeffectsLength() {
-    const t = this.J7.__offset(this.z7, 84);
+    var t = this.J7.__offset(this.z7, 84);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetRoutineexpirationeffectsAt(t) {
     return this.routineexpirationeffects(t);
   }
   routineexpirationeffects(t) {
-    const i = this.J7.__offset(this.z7, 86);
+    var i = this.J7.__offset(this.z7, 86);
     return i
       ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
       : BigInt(0);
   }
   routineexpirationeffectsLength() {
-    const t = this.J7.__offset(this.z7, 86);
+    var t = this.J7.__offset(this.z7, 86);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetOverfloweffectsAt(t) {
     return this.overfloweffects(t);
   }
   overfloweffects(t) {
-    const i = this.J7.__offset(this.z7, 88);
+    var i = this.J7.__offset(this.z7, 88);
     return i
       ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
       : BigInt(0);
   }
   overfloweffectsLength() {
-    const t = this.J7.__offset(this.z7, 88);
+    var t = this.J7.__offset(this.z7, 88);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetRelatedextraeffectbuffidAt(t) {
     return this.relatedextraeffectbuffid(t);
   }
   relatedextraeffectbuffid(t) {
-    const i = this.J7.__offset(this.z7, 90);
+    var i = this.J7.__offset(this.z7, 90);
     return i
       ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
       : BigInt(0);
   }
   relatedextraeffectbuffidLength() {
-    const t = this.J7.__offset(this.z7, 90);
+    var t = this.J7.__offset(this.z7, 90);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   extraeffectid() {
-    const t = this.J7.__offset(this.z7, 92);
+    var t = this.J7.__offset(this.z7, 92);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetExtraeffectparametersAt(t) {
     return this.extraeffectparameters(t);
   }
   extraeffectparameters(t, i) {
-    const r = this.J7.__offset(this.z7, 94);
+    var r = this.J7.__offset(this.z7, 94);
     return r
       ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
       : null;
   }
   extraeffectparametersLength() {
-    const t = this.J7.__offset(this.z7, 94);
+    var t = this.J7.__offset(this.z7, 94);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetExtraeffectparametersgrow1At(t) {
     return this.extraeffectparametersgrow1(t);
   }
   extraeffectparametersgrow1(t) {
-    const i = this.J7.__offset(this.z7, 96);
+    var i = this.J7.__offset(this.z7, 96);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   extraeffectparametersgrow1Length() {
-    const t = this.J7.__offset(this.z7, 96);
+    var t = this.J7.__offset(this.z7, 96);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   extraeffectparametersgrow1Array() {
-    const t = this.J7.__offset(this.z7, 96);
+    var t = this.J7.__offset(this.z7, 96);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -745,15 +745,15 @@ class Buff {
     return this.extraeffectparametersgrow2(t);
   }
   extraeffectparametersgrow2(t) {
-    const i = this.J7.__offset(this.z7, 98);
+    var i = this.J7.__offset(this.z7, 98);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   extraeffectparametersgrow2Length() {
-    const t = this.J7.__offset(this.z7, 98);
+    var t = this.J7.__offset(this.z7, 98);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   extraeffectparametersgrow2Array() {
-    const t = this.J7.__offset(this.z7, 98);
+    var t = this.J7.__offset(this.z7, 98);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -766,15 +766,15 @@ class Buff {
     return this.extraeffectrequirements(t);
   }
   extraeffectrequirements(t) {
-    const i = this.J7.__offset(this.z7, 100);
+    var i = this.J7.__offset(this.z7, 100);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   extraeffectrequirementsLength() {
-    const t = this.J7.__offset(this.z7, 100);
+    var t = this.J7.__offset(this.z7, 100);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   extraeffectrequirementsArray() {
-    const t = this.J7.__offset(this.z7, 100);
+    var t = this.J7.__offset(this.z7, 100);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -787,32 +787,32 @@ class Buff {
     return this.extraeffectreqpara(t);
   }
   extraeffectreqpara(t, i) {
-    const r = this.J7.__offset(this.z7, 102);
+    var r = this.J7.__offset(this.z7, 102);
     return r
       ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
       : null;
   }
   extraeffectreqparaLength() {
-    const t = this.J7.__offset(this.z7, 102);
+    var t = this.J7.__offset(this.z7, 102);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   extraeffectreqsetting() {
-    const t = this.J7.__offset(this.z7, 104);
+    var t = this.J7.__offset(this.z7, 104);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetExtraeffectcdAt(t) {
     return this.extraeffectcd(t);
   }
   extraeffectcd(t) {
-    const i = this.J7.__offset(this.z7, 106);
+    var i = this.J7.__offset(this.z7, 106);
     return i ? this.J7.readFloat32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   extraeffectcdLength() {
-    const t = this.J7.__offset(this.z7, 106);
+    var t = this.J7.__offset(this.z7, 106);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   extraeffectcdArray() {
-    const t = this.J7.__offset(this.z7, 106);
+    var t = this.J7.__offset(this.z7, 106);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -822,22 +822,22 @@ class Buff {
       : null;
   }
   extraeffectremovestacknum() {
-    const t = this.J7.__offset(this.z7, 108);
+    var t = this.J7.__offset(this.z7, 108);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetExtraeffectprobabilityAt(t) {
     return this.extraeffectprobability(t);
   }
   extraeffectprobability(t) {
-    const i = this.J7.__offset(this.z7, 110);
+    var i = this.J7.__offset(this.z7, 110);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   extraeffectprobabilityLength() {
-    const t = this.J7.__offset(this.z7, 110);
+    var t = this.J7.__offset(this.z7, 110);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   extraeffectprobabilityArray() {
-    const t = this.J7.__offset(this.z7, 110);
+    var t = this.J7.__offset(this.z7, 110);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -850,7 +850,7 @@ class Buff {
     return this.taglogic(t);
   }
   taglogic(t, i) {
-    const r = this.J7.__offset(this.z7, 112);
+    var r = this.J7.__offset(this.z7, 112);
     return r
       ? (i || new IntArray_1.IntArray()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -859,9 +859,9 @@ class Buff {
       : null;
   }
   taglogicLength() {
-    const t = this.J7.__offset(this.z7, 112);
+    var t = this.J7.__offset(this.z7, 112);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.Buff = Buff;
-// # sourceMappingURL=Buff.js.map
+//# sourceMappingURL=Buff.js.map

@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoguelikeSkillOverView = exports.RoguelikeSkillDesc = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class RoguelikeSkillDesc extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments), (this.Data = void 0), (this.Index = 0);
@@ -25,7 +25,7 @@ class RoguelikeSkillDesc extends UiPanelBase_1.UiPanelBase {
     this.Refresh();
   }
   Refresh() {
-    let e, i;
+    var e, i;
     this.Data &&
       ((e =
         ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueTalentTreeDescConfig(
@@ -75,8 +75,8 @@ class RoguelikeSkillOverView extends UiViewBase_1.UiViewBase {
     let s = 0;
     ModelManager_1.ModelManager.RoguelikeModel.RoguelikeSkillDataMap.forEach(
       (e, i) => {
-        let t;
-        e >= 1 &&
+        var t;
+        1 <= e &&
           ((e = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(3))),
           (t = new RoguelikeSkillDesc()),
           (s += 1),
@@ -96,8 +96,8 @@ class RoguelikeSkillOverView extends UiViewBase_1.UiViewBase {
         ModelManager_1.ModelManager.RoguelikeModel.RoguelikeSkillDataMap.size,
       ),
       this.GetItem(2).SetUIActive(!1),
-      this.GetItem(4).SetUIActive(s === 0);
+      this.GetItem(4).SetUIActive(0 === s);
   }
 }
 exports.RoguelikeSkillOverView = RoguelikeSkillOverView;
-// # sourceMappingURL=RoguelikeSkillOverView.js.map
+//# sourceMappingURL=RoguelikeSkillOverView.js.map

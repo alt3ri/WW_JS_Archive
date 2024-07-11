@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ReConnectModel = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const NetworkDefine_1 = require("../../../Launcher/NetworkDefine");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  NetworkDefine_1 = require("../../../Launcher/NetworkDefine");
 class ReConnectModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -47,8 +47,8 @@ class ReConnectModel extends ModelBase_1.ModelBase {
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "reconnect_show_mask_timeout_ms",
         ) ?? 1e3),
-      UE.KismetSystemLibrary.GetCommandLine().search("-InfinityReconnect") ===
-      -1
+      -1 ===
+      UE.KismetSystemLibrary.GetCommandLine().search("-InfinityReconnect")
         ? (this.Uno = !1)
         : ((this.Uno = !0),
           Log_1.Log.CheckInfo() &&
@@ -168,4 +168,4 @@ class ReConnectModel extends ModelBase_1.ModelBase {
   }
 }
 (exports.ReConnectModel = ReConnectModel).Wno = 0;
-// # sourceMappingURL=ReConnectModel.js.map
+//# sourceMappingURL=ReConnectModel.js.map

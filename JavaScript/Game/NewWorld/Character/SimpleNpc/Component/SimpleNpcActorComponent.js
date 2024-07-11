@@ -1,39 +1,43 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, r, o) {
-    let i;
-    const a = arguments.length;
-    let n =
-      a < 3 ? e : o === null ? (o = Object.getOwnPropertyDescriptor(e, r)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var i,
+      a = arguments.length,
+      n =
+        a < 3
+          ? e
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(e, r))
+            : o;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(t, e, r, o);
     else
-      for (let s = t.length - 1; s >= 0; s--)
-        (i = t[s]) && (n = (a < 3 ? i(n) : a > 3 ? i(e, r, n) : i(e, r)) || n);
-    return a > 3 && n && Object.defineProperty(e, r, n), n;
+      for (var s = t.length - 1; 0 <= s; s--)
+        (i = t[s]) && (n = (a < 3 ? i(n) : 3 < a ? i(e, r, n) : i(e, r)) || n);
+    return 3 < a && n && Object.defineProperty(e, r, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SimpleNpcActorComponent = void 0);
-const cpp_1 = require("cpp");
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const GameBudgetInterfaceController_1 = require("../../../../../Core/GameBudgetAllocator/GameBudgetInterfaceController");
-const Net_1 = require("../../../../../Core/Net/Net");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const CameraController_1 = require("../../../../Camera/CameraController");
-const TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../../../GlobalData");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const RenderConfig_1 = require("../../../../Render/Config/RenderConfig");
-const BlackboardController_1 = require("../../../../World/Controller/BlackboardController");
-const BaseCharacterComponent_1 = require("../../Common/Component/BaseCharacterComponent");
-const INIT_LOCATION_KEY = "InitLocation";
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  GameBudgetInterfaceController_1 = require("../../../../../Core/GameBudgetAllocator/GameBudgetInterfaceController"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  CameraController_1 = require("../../../../Camera/CameraController"),
+  TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  RenderConfig_1 = require("../../../../Render/Config/RenderConfig"),
+  BlackboardController_1 = require("../../../../World/Controller/BlackboardController"),
+  BaseCharacterComponent_1 = require("../../Common/Component/BaseCharacterComponent"),
+  INIT_LOCATION_KEY = "InitLocation";
 let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacterComponent_1.BaseCharacterComponent {
   constructor() {
     super(...arguments),
@@ -60,10 +64,10 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
     super.OnInit(),
       (this.EntityType = this.CreatureData.GetEntityType()),
       (this.SubEntityType = this.CreatureData.GetSubEntityType());
-    let t;
-    let e;
-    let r = void 0;
-    let o = this.CreatureData.GetPbModelConfig();
+    var t,
+      e,
+      r = void 0,
+      o = this.CreatureData.GetPbModelConfig();
     return o
       ? ((o = o.ModelId),
         (r = this.InitActorNew(o)) && UE.KismetSystemLibrary.IsValid(r)
@@ -148,8 +152,8 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
         !1);
   }
   OnStart() {
-    let t;
-    const e = this.Actor;
+    var t,
+      e = this.Actor;
     return (
       (this.DebugMovementComp = this.Entity.GetComponent(27)),
       e
@@ -202,8 +206,8 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
         0,
         0,
       );
-    const t = Protocol_1.Aki.Protocol.f_s.create();
-    const e = this.Entity.GetComponent(0).GetCreatureDataId();
+    var t = Protocol_1.Aki.Protocol.f_s.create(),
+      e = this.Entity.GetComponent(0).GetCreatureDataId();
     t.sfs.push(MathUtils_1.MathUtils.NumberToLong(e)),
       Net_1.Net.Call(8784, t, (t) => {}),
       this.SetNpcBornMaterial(),
@@ -242,23 +246,23 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
     this.OnSetActorActive(!1, t);
   }
   OnChangeTimeDilation(t) {
-    const e = this.Entity.GetComponent(107)?.CurrentTimeScale ?? 1;
+    var e = this.Entity.GetComponent(107)?.CurrentTimeScale ?? 1;
     this.ActorInternal.CustomTimeDilation = t * e;
   }
   OnSetActorActive(e, t) {
     if ((super.OnSetActorActive(e, t), this.Actor?.IsValid())) {
       var t = this.Actor.GetComponentByClass(
-        UE.NavigationInvokerComponent.StaticClass(),
-      );
-      var t = (t && t.SetActive(e), (0, puerts_1.$ref)(void 0));
-      const r = (this.Actor.GetAttachedActors(t, !0), (0, puerts_1.$unref)(t));
+          UE.NavigationInvokerComponent.StaticClass(),
+        ),
+        t = (t && t.SetActive(e), (0, puerts_1.$ref)(void 0)),
+        r = (this.Actor.GetAttachedActors(t, !0), (0, puerts_1.$unref)(t));
       for (let t = 0; t < r.Num(); ++t) r.Get(t).SetActorHiddenInGame(!e);
       t = this.Actor.DitherEffectController;
       t && (e ? t.SetIsDisable(!1, 1) : t.SetIsDisable(!0));
     }
   }
   qFr() {
-    const t = this.CreatureDataInternal.GetModelConfig();
+    var t = this.CreatureDataInternal.GetModelConfig();
     t &&
       t?.IsHiddenWithCamera &&
       this.Actor.CharRenderingComponent.SetCapsuleDither(1);
@@ -278,4 +282,4 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
   SimpleNpcActorComponent,
 )),
   (exports.SimpleNpcActorComponent = SimpleNpcActorComponent);
-// # sourceMappingURL=SimpleNpcActorComponent.js.map
+//# sourceMappingURL=SimpleNpcActorComponent.js.map

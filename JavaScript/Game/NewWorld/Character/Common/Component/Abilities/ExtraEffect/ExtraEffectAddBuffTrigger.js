@@ -13,10 +13,10 @@ class AddBuffTrigger extends ExtraEffectPassiveEffects_1.PassiveEffects {
       (this.BuffIds = t[2].split("#").map((t) => BigInt(t)));
   }
   OnExecute() {
-    const t = this.GetEffectTarget();
-    const s = this.InstigatorBuffComponent;
+    var t = this.GetEffectTarget(),
+      s = this.InstigatorBuffComponent;
     if (t && s) {
-      const e = this.OwnerBuffComponent.GetBuffByHandle(this.ActiveHandleId);
+      var e = this.OwnerBuffComponent.GetBuffByHandle(this.ActiveHandleId);
       if (e?.IsValid())
         for (const f of this.BuffIds)
           t.AddIterativeBuff(
@@ -30,4 +30,4 @@ class AddBuffTrigger extends ExtraEffectPassiveEffects_1.PassiveEffects {
   }
 }
 exports.AddBuffTrigger = AddBuffTrigger;
-// # sourceMappingURL=ExtraEffectAddBuffTrigger.js.map
+//# sourceMappingURL=ExtraEffectAddBuffTrigger.js.map

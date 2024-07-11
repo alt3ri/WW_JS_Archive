@@ -22,7 +22,7 @@ class CalabashInstance {
   }
   SetConfigInfo(e) {
     for (const s of Object.keys(e.XSs)) {
-      const t = Number.parseInt(s);
+      var t = Number.parseInt(s);
       this.q0t.set(t, e.XSs[s]);
     }
   }
@@ -72,4 +72,4 @@ class CalabashInstance {
   }
 }
 exports.CalabashInstance = CalabashInstance;
-// # sourceMappingURL=CalabashInstance.js.map
+//# sourceMappingURL=CalabashInstance.js.map

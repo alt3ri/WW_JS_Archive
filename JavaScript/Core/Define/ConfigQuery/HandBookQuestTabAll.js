@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configHandBookQuestTabAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const HandBookQuestTab_1 = require("../Config/HandBookQuestTab");
-const DB = "db_handbook.db";
-const FILE = "t.图鉴系统.xlsx";
-const TABLE = "HandBookQuestTab";
-const COMMAND = "select BinData from `HandBookQuestTab`";
-const KEY_PREFIX = "HandBookQuestTabAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  HandBookQuestTab_1 = require("../Config/HandBookQuestTab"),
+  DB = "db_handbook.db",
+  FILE = "t.图鉴系统.xlsx",
+  TABLE = "HandBookQuestTab",
+  COMMAND = "select BinData from `HandBookQuestTab`",
+  KEY_PREFIX = "HandBookQuestTabAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configHandBookQuestTabAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configHandBookQuestTabAll = {
     );
   },
   GetConfigList: (o = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configHandBookQuestTabAll = {
       }
       const t = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let i = void 0;
+        var i = void 0;
         if (
           (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configHandBookQuestTabAll = {
     }
   },
 };
-// # sourceMappingURL=HandBookQuestTabAll.js.map
+//# sourceMappingURL=HandBookQuestTabAll.js.map

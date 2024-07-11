@@ -1,18 +1,18 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiNavigationLogic = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const LguiEventSystemManager_1 = require("../../../Ui/LguiEventSystem/LguiEventSystemManager");
-const TsUiNavigationBehaviorListener_1 = require("./TsUiNavigationBehaviorListener");
-const UiNavigationGlobalData_1 = require("./UiNavigationGlobalData");
-const UiNavigationViewManager_1 = require("./UiNavigationViewManager");
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  LguiEventSystemManager_1 = require("../../../Ui/LguiEventSystem/LguiEventSystemManager"),
+  TsUiNavigationBehaviorListener_1 = require("./TsUiNavigationBehaviorListener"),
+  UiNavigationGlobalData_1 = require("./UiNavigationGlobalData"),
+  UiNavigationViewManager_1 = require("./UiNavigationViewManager");
 class UiNavigationLogic {
   static InitNavigationDelegate(i) {
     i.TryFindNavigationDelegate.Bind(
@@ -23,11 +23,11 @@ class UiNavigationLogic {
     i.TryFindNavigationDelegate.Unbind();
   }
   static Rwo(i, e) {
-    let a;
+    var a;
     i?.HasDynamicScrollView() &&
       ((a = i.GetNavigationGroup()),
       (a = i.ScrollView.Horizontal ? a.HorizontalWrapMode : a.VerticalWrapMode),
-      (e = e !== 2 && e !== 4),
+      (e = 2 !== e && 4 !== e),
       i.ScrollView.NavigateScrollToUIItem(i?.GetRootComponent(), e, a));
   }
   static Uwo(i) {
@@ -41,13 +41,13 @@ class UiNavigationLogic {
       e.GetNavigationComponent().CheckFindNavigationBefore()
     ) {
       let i = void 0;
-      var t = e.GetNavigationGroup();
-      var t =
-        ((i =
-          t?.GroupType === 0
-            ? UiNavigationLogic.Pwo(e, a, t.AllowNavigationInSelfDynamic)
-            : e.FindNavigation(a)),
-        UiNavigationLogic.xwo(i));
+      var t = e.GetNavigationGroup(),
+        t =
+          ((i =
+            0 === t?.GroupType
+              ? UiNavigationLogic.Pwo(e, a, t.AllowNavigationInSelfDynamic)
+              : e.FindNavigation(a)),
+          UiNavigationLogic.xwo(i));
       if (e.GetNavigationComponent().CheckFindNavigationAfter(t)) return t;
     }
   }
@@ -72,8 +72,8 @@ class UiNavigationLogic {
       );
   }
   static FindUiNavigationPanelConfig(i) {
-    let e = i.GetAttachParentActor();
-    let a = void 0;
+    let e = i.GetAttachParentActor(),
+      a = void 0;
     for (
       ;
       void 0 !== e &&
@@ -86,8 +86,8 @@ class UiNavigationLogic {
     return a;
   }
   static FindUpNavigationListener(i) {
-    let e = i.GetAttachParentActor();
-    let a = void 0;
+    let e = i.GetAttachParentActor(),
+      a = void 0;
     for (; void 0 !== e; ) {
       if (e.GetComponentByClass(UE.TsUiNavigationPanelConfig_C.StaticClass()))
         break;
@@ -102,8 +102,8 @@ class UiNavigationLogic {
     return a;
   }
   static BindHotKeyComponentAction(i, e) {
-    let a;
-    let t = ModelManager_1.ModelManager.UiNavigationModel;
+    var a,
+      t = ModelManager_1.ModelManager.UiNavigationModel;
     t &&
       (a = i.GetActionName()) &&
       ((t = t.GetOrAddActionHotKeyComponentSet(a)),
@@ -123,8 +123,8 @@ class UiNavigationLogic {
             )));
   }
   static BindHotKeyComponentAxis(i, e) {
-    let a;
-    let t = ModelManager_1.ModelManager.UiNavigationModel;
+    var a,
+      t = ModelManager_1.ModelManager.UiNavigationModel;
     t &&
       (a = i.GetAxisName()) &&
       ((t = t.GetOrAddAxisHotKeyComponentsSet(a)),
@@ -159,7 +159,7 @@ class UiNavigationLogic {
     return !1;
   }
   static UpdateNavigationListener(i) {
-    let e = ModelManager_1.ModelManager.UiNavigationModel;
+    var e = ModelManager_1.ModelManager.UiNavigationModel;
     e &&
       ((LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystem.navigationComponent =
         i?.RootUIComp),
@@ -169,7 +169,7 @@ class UiNavigationLogic {
       e.NotifyFocusListener();
   }
   static MemoryGroupConfigLastSelect(i) {
-    let e;
+    var e;
     i &&
       ((e = i.GetNavigationGroup())
         ? e.SelectableMemory && (e.LastSelectListener = i)
@@ -181,11 +181,10 @@ class UiNavigationLogic {
           ));
   }
   static HandleInputControllerTypeChange() {
-    let i;
-    let e;
-    const a = ModelManager_1.ModelManager.PlatformModel.IsInGamepad();
-    let t =
-      LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystemActor;
+    var i,
+      e,
+      a = ModelManager_1.ModelManager.PlatformModel.IsInGamepad(),
+      t = LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystemActor;
     t && (i = t.GetPointerEventData(0))
       ? ((e =
           !(e =
@@ -200,7 +199,7 @@ class UiNavigationLogic {
                 EventDefine_1.EEventName.ResetNavigationListener,
               ))
           : e
-            ? ((t = i.inputType === 0),
+            ? ((t = 0 === i.inputType),
               ModelManager_1.ModelManager.UiNavigationModel.SetIsUseMouse(t))
             : (ModelManager_1.ModelManager.UiNavigationModel.SetIsUseMouse(!0),
               EventSystem_1.EventSystem.Emit(
@@ -209,30 +208,30 @@ class UiNavigationLogic {
       : ModelManager_1.ModelManager.UiNavigationModel.SetIsUseMouse(!a);
   }
   static ForceChangeInputType() {
-    let i;
+    var i;
     ModelManager_1.ModelManager.PlatformModel.IsInKeyBoard() &&
       (i =
         UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle()) &&
       !i.GetCurrentPanel().IsAllowNavigate() &&
       (i =
         LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystemActor) &&
-      i.GetPointerEventData(0).inputType === 1 &&
+      1 === i.GetPointerEventData(0).inputType &&
       i.SetIsForceChange(!0);
   }
   static ExecuteInputNavigation(i, e) {
-    const a =
+    var a =
       UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle();
     a &&
       a.GetFocusListener() &&
       LguiEventSystemManager_1.LguiEventSystemManager.InputNavigation(i, e);
   }
   static ExecuteInterfaceMethod(i, e, ...a) {
-    e in i && typeof i[e] === "function" && i[e](...a);
+    e in i && "function" == typeof i[e] && i[e](...a);
   }
 }
 (exports.UiNavigationLogic = UiNavigationLogic),
   ((_a = UiNavigationLogic).TryFindNavigationDelegate = (i, e) => {
-    return i !== 0 || e
+    return 0 !== i || e
       ? UiNavigationGlobalData_1.UiNavigationGlobalData.IsBlockNavigation
         ? void 0
         : ((e = e
@@ -248,15 +247,15 @@ class UiNavigationLogic {
           .navigationComponent;
   }),
   (UiNavigationLogic.bMe = (i, e) => {
-    const a = ModelManager_1.ModelManager.UiNavigationModel;
+    var a = ModelManager_1.ModelManager.UiNavigationModel;
     if (a)
       for (const t of a.GetActionHotKeyComponentSet(i))
-        t.IsHotKeyActive() && (e === 0 ? t.Press() : t.Release());
+        t.IsHotKeyActive() && (0 === e ? t.Press() : t.Release());
   }),
   (UiNavigationLogic.wwo = (i, e) => {
-    const a = ModelManager_1.ModelManager.UiNavigationModel;
+    var a = ModelManager_1.ModelManager.UiNavigationModel;
     if (a)
       for (const t of a.GetAxisHotKeyComponentSet(i))
         t.IsAllowTickContinue() && t.InputAxis(i, e);
   });
-// # sourceMappingURL=UiNavigationLogic.js.map
+//# sourceMappingURL=UiNavigationLogic.js.map

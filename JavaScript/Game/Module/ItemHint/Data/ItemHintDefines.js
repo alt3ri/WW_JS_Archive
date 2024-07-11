@@ -7,4 +7,4 @@ class ItemRewardInfo {
   }
 }
 exports.ItemRewardInfo = ItemRewardInfo;
-// # sourceMappingURL=ItemHintDefines.js.map
+//# sourceMappingURL=ItemHintDefines.js.map

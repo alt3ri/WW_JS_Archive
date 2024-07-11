@@ -1,28 +1,33 @@
 "use strict";
-let PawnTimeScaleComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, s) {
-    let r;
-    const h = arguments.length;
-    let n =
-      h < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      n = Reflect.decorate(t, e, i, s);
-    else
-      for (let o = t.length - 1; o >= 0; o--)
-        (r = t[o]) && (n = (h < 3 ? r(n) : h > 3 ? r(e, i, n) : r(e, i)) || n);
-    return h > 3 && n && Object.defineProperty(e, i, n), n;
-  };
+var PawnTimeScaleComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, s) {
+      var r,
+        h = arguments.length,
+        n =
+          h < 3
+            ? e
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        n = Reflect.decorate(t, e, i, s);
+      else
+        for (var o = t.length - 1; 0 <= o; o--)
+          (r = t[o]) &&
+            (n = (h < 3 ? r(n) : 3 < h ? r(e, i, n) : r(e, i)) || n);
+      return 3 < h && n && Object.defineProperty(e, i, n), n;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PawnTimeScaleComponent = exports.TimeScale = void 0);
-const puerts_1 = require("puerts");
-const Time_1 = require("../../../../Core/Common/Time");
-const PriorityQueue_1 = require("../../../../Core/Container/PriorityQueue");
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const LIMIT_SCALE = 0;
+const puerts_1 = require("puerts"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  PriorityQueue_1 = require("../../../../Core/Container/PriorityQueue"),
+  EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  LIMIT_SCALE = 0;
 class TimeScale {
   constructor(t, e, i, s, r, h, n, o) {
     (this.StartTime = t),
@@ -40,8 +45,8 @@ class TimeScale {
       (this.hor = void 0);
   }
   lor() {
-    const t = (0, puerts_1.$ref)(0);
-    const e = (0, puerts_1.$ref)(0);
+    var t = (0, puerts_1.$ref)(0),
+      e = (0, puerts_1.$ref)(0);
     this.TimeCurveFloat.GetTimeRange(t, e),
       (this.nor = (0, puerts_1.$unref)(t)),
       (this.sor = (0, puerts_1.$unref)(e));
@@ -53,8 +58,8 @@ class TimeScale {
     return void 0 === this.sor && this.lor(), this.sor ?? 1 / 0;
   }
   _or() {
-    const t = (0, puerts_1.$ref)(0);
-    const e = (0, puerts_1.$ref)(0);
+    var t = (0, puerts_1.$ref)(0),
+      e = (0, puerts_1.$ref)(0);
     this.TimeCurveFloat.GetValueRange(t, e),
       (this.aor = (0, puerts_1.$unref)(t)),
       (this.hor = (0, puerts_1.$unref)(e));
@@ -66,7 +71,7 @@ class TimeScale {
     return void 0 === this.hor && this._or(), this.hor ?? 1 / 0;
   }
   CalculateTimeScale() {
-    let t, e, i;
+    var t, e, i;
     return this.TimeCurveFloat
       ? ((i = this.CurveTimeRangeMin),
         (t = this.CurveTimeRangeMax),
@@ -115,7 +120,7 @@ let PawnTimeScaleComponent =
     OnStart() {
       (this.ActorComp = this.Entity.GetComponent(1)),
         (this.C1n = this.Entity.GetComponent(51));
-      const t = this.ActorComp.CreatureData.GetEntityPropertyConfig();
+      var t = this.ActorComp.CreatureData.GetEntityPropertyConfig();
       return (this.aln = t.子弹受击顿帧时长比例 / 100), !0;
     }
     IsTimescaleValid(t, e) {
@@ -123,9 +128,9 @@ let PawnTimeScaleComponent =
     }
     OnTick(t) {}
     SetTimeScale(t, e, i, s, r) {
-      let h, n;
+      var h, n;
       return (
-        r === 2 && (s *= this.aln),
+        2 === r && (s *= this.aln),
         s <= 0
           ? -1
           : ((h = (n = Time_1.Time.WorldTimeSeconds) + s),
@@ -166,7 +171,7 @@ let PawnTimeScaleComponent =
         this.PauseLocks.set(t, e);
     }
     RemovePauseLock(t) {
-      const e = this.PauseLocks.get(t);
+      var e = this.PauseLocks.get(t);
       void 0 !== e && this.RemoveTimeScale(e), this.PauseLocks.delete(t);
     }
     ImmunePauseLock() {
@@ -176,7 +181,7 @@ let PawnTimeScaleComponent =
     }
     ResumePauseLock() {
       this.PauseLocks.forEach((t, e) => {
-        const i = this.SetTimeScale(1 / 0, 0, void 0, 1 / 0, 8);
+        var i = this.SetTimeScale(1 / 0, 0, void 0, 1 / 0, 8);
         this.PauseLocks.set(e, i);
       });
     }
@@ -187,4 +192,4 @@ let PawnTimeScaleComponent =
     PawnTimeScaleComponent,
   )),
   (exports.PawnTimeScaleComponent = PawnTimeScaleComponent);
-// # sourceMappingURL=PawnTimeScaleComponent.js.map
+//# sourceMappingURL=PawnTimeScaleComponent.js.map

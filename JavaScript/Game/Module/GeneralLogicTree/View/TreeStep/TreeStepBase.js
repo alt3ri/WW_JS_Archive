@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TreeStepBase = void 0);
-const ue_1 = require("ue");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiComponentsAction_1 = require("../../../../Ui/Base/UiComponentsAction");
-const QuestUtil_1 = require("../../../QuestNew/QuestUtil");
-const GeneralLogicTreeController_1 = require("../../GeneralLogicTreeController");
+const ue_1 = require("ue"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiComponentsAction_1 = require("../../../../Ui/Base/UiComponentsAction"),
+  QuestUtil_1 = require("../../../QuestNew/QuestUtil"),
+  GeneralLogicTreeController_1 = require("../../GeneralLogicTreeController");
 class TreeStepBase extends UiComponentsAction_1.UiComponentsAction {
   constructor() {
     super(...arguments),
@@ -15,7 +15,7 @@ class TreeStepBase extends UiComponentsAction_1.UiComponentsAction {
       (this.TreeIncId = BigInt(0)),
       (this.Config = void 0),
       (this.bct = () => {
-        const t =
+        var t =
           GeneralLogicTreeController_1.GeneralLogicTreeController.GetTitleText(
             this.TreeIncId,
             this.Config,
@@ -44,11 +44,11 @@ class TreeStepBase extends UiComponentsAction_1.UiComponentsAction {
         if (!t) return this.DistanceTextComp.SetUIActive(!1), !1;
         if (t.IsInTrackRange()) this.DistanceTextComp.SetUIActive(!1);
         else {
-          const e =
-            GeneralLogicTreeController_1.GeneralLogicTreeController.GetTitleTrackNodeId(
-              this.Config,
-            );
-          var t = t.GetNodeTrackPosition(e);
+          var e =
+              GeneralLogicTreeController_1.GeneralLogicTreeController.GetTitleTrackNodeId(
+                this.Config,
+              ),
+            t = t.GetNodeTrackPosition(e);
           if (!t) return this.DistanceTextComp.SetUIActive(!1), !1;
           if (
             !QuestUtil_1.QuestUtil.SetTrackDistanceText(
@@ -92,10 +92,10 @@ class TreeStepBase extends UiComponentsAction_1.UiComponentsAction {
     );
   }
   UpdateStepInfo() {
-    const t = this.bct();
+    var t = this.bct();
     return this.UpdateDistanceText(), t;
   }
   OnStepDescribeUpdate(t) {}
 }
 exports.TreeStepBase = TreeStepBase;
-// # sourceMappingURL=TreeStepBase.js.map
+//# sourceMappingURL=TreeStepBase.js.map

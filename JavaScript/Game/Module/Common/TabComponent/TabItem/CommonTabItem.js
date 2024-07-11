@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonTabItem = void 0);
-const UE = require("ue");
-const RedDotController_1 = require("../../../../RedDot/RedDotController");
-const CommonTabItemBase_1 = require("./CommonTabItemBase");
+const UE = require("ue"),
+  RedDotController_1 = require("../../../../RedDot/RedDotController"),
+  CommonTabItemBase_1 = require("./CommonTabItemBase");
 class CommonTabItem extends CommonTabItemBase_1.CommonTabItemBase {
   constructor() {
     super(...arguments),
       (this.GBt = void 0),
       (this.QFe = void 0),
       (this.x4e = (t) => {
-        t === 1 && this.SelectedCallBack(this.GridIndex);
+        1 === t && this.SelectedCallBack(this.GridIndex);
       }),
       (this.RefreshTransition = () => {
-        const t = this.GetUiExtendToggleSpriteTransition(3);
+        var t = this.GetUiExtendToggleSpriteTransition(3);
         t && t.SetAllStateSprite(this.GetSprite(0).GetSprite());
       }),
       (this.SetOnUndeterminedClick = (t) => {
@@ -91,4 +91,4 @@ class CommonTabItem extends CommonTabItemBase_1.CommonTabItemBase {
   }
 }
 exports.CommonTabItem = CommonTabItem;
-// # sourceMappingURL=CommonTabItem.js.map
+//# sourceMappingURL=CommonTabItem.js.map

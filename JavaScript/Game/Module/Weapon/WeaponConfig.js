@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const MappingBySheetNameAndFieldName_1 = require("../../../Core/Define/ConfigQuery/MappingBySheetNameAndFieldName");
-const MappingBySheetNameFieldNameAndValue_1 = require("../../../Core/Define/ConfigQuery/MappingBySheetNameFieldNameAndValue");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const QualityInfoById_1 = require("../../../Core/Define/ConfigQuery/QualityInfoById");
-const TrialWeaponInfoById_1 = require("../../../Core/Define/ConfigQuery/TrialWeaponInfoById");
-const WeaponBreachByBreachId_1 = require("../../../Core/Define/ConfigQuery/WeaponBreachByBreachId");
-const WeaponBreachByBreachIdAndLevel_1 = require("../../../Core/Define/ConfigQuery/WeaponBreachByBreachIdAndLevel");
-const WeaponConfByItemId_1 = require("../../../Core/Define/ConfigQuery/WeaponConfByItemId");
-const WeaponExpItemById_1 = require("../../../Core/Define/ConfigQuery/WeaponExpItemById");
-const WeaponLevelByLevelId_1 = require("../../../Core/Define/ConfigQuery/WeaponLevelByLevelId");
-const WeaponLevelByLevelIdAndLevel_1 = require("../../../Core/Define/ConfigQuery/WeaponLevelByLevelIdAndLevel");
-const WeaponModelTransformById_1 = require("../../../Core/Define/ConfigQuery/WeaponModelTransformById");
-const WeaponPropertyGrowthByCurveIdLevelAndBreachLevel_1 = require("../../../Core/Define/ConfigQuery/WeaponPropertyGrowthByCurveIdLevelAndBreachLevel");
-const WeaponQualityInfoById_1 = require("../../../Core/Define/ConfigQuery/WeaponQualityInfoById");
-const WeaponResonByResonIdAndLevel_1 = require("../../../Core/Define/ConfigQuery/WeaponResonByResonIdAndLevel");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  MappingBySheetNameAndFieldName_1 = require("../../../Core/Define/ConfigQuery/MappingBySheetNameAndFieldName"),
+  MappingBySheetNameFieldNameAndValue_1 = require("../../../Core/Define/ConfigQuery/MappingBySheetNameFieldNameAndValue"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  QualityInfoById_1 = require("../../../Core/Define/ConfigQuery/QualityInfoById"),
+  TrialWeaponInfoById_1 = require("../../../Core/Define/ConfigQuery/TrialWeaponInfoById"),
+  WeaponBreachByBreachId_1 = require("../../../Core/Define/ConfigQuery/WeaponBreachByBreachId"),
+  WeaponBreachByBreachIdAndLevel_1 = require("../../../Core/Define/ConfigQuery/WeaponBreachByBreachIdAndLevel"),
+  WeaponConfByItemId_1 = require("../../../Core/Define/ConfigQuery/WeaponConfByItemId"),
+  WeaponExpItemById_1 = require("../../../Core/Define/ConfigQuery/WeaponExpItemById"),
+  WeaponLevelByLevelId_1 = require("../../../Core/Define/ConfigQuery/WeaponLevelByLevelId"),
+  WeaponLevelByLevelIdAndLevel_1 = require("../../../Core/Define/ConfigQuery/WeaponLevelByLevelIdAndLevel"),
+  WeaponModelTransformById_1 = require("../../../Core/Define/ConfigQuery/WeaponModelTransformById"),
+  WeaponPropertyGrowthByCurveIdLevelAndBreachLevel_1 = require("../../../Core/Define/ConfigQuery/WeaponPropertyGrowthByCurveIdLevelAndBreachLevel"),
+  WeaponQualityInfoById_1 = require("../../../Core/Define/ConfigQuery/WeaponQualityInfoById"),
+  WeaponResonByResonIdAndLevel_1 = require("../../../Core/Define/ConfigQuery/WeaponResonByResonIdAndLevel"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class WeaponConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments),
@@ -34,7 +34,7 @@ class WeaponConfig extends ConfigBase_1.ConfigBase {
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e);
   }
   GetWeaponPropertyGrowthConfig(e, n, o) {
-    const r =
+    var r =
       WeaponPropertyGrowthByCurveIdLevelAndBreachLevel_1.configWeaponPropertyGrowthByCurveIdLevelAndBreachLevel.GetConfig(
         e,
         n,
@@ -55,7 +55,7 @@ class WeaponConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetWeaponResonanceConfig(e, n) {
-    const o =
+    var o =
       WeaponResonByResonIdAndLevel_1.configWeaponResonByResonIdAndLevel.GetConfig(
         e,
         n,
@@ -171,4 +171,4 @@ class WeaponConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.WeaponConfig = WeaponConfig;
-// # sourceMappingURL=WeaponConfig.js.map
+//# sourceMappingURL=WeaponConfig.js.map

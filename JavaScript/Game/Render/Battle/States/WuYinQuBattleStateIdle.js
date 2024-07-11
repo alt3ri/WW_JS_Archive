@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const WuYinQuBattleStateBase_1 = require("./WuYinQuBattleStateBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  WuYinQuBattleStateBase_1 = require("./WuYinQuBattleStateBase");
 class WuYinQuBattleStateIdle extends WuYinQuBattleStateBase_1.default {
   OnStart() {
     this.OnEnter(0);
@@ -14,4 +14,4 @@ class WuYinQuBattleStateIdle extends WuYinQuBattleStateBase_1.default {
   OnExit(t) {}
 }
 exports.default = WuYinQuBattleStateIdle;
-// # sourceMappingURL=WuYinQuBattleStateIdle.js.map
+//# sourceMappingURL=WuYinQuBattleStateIdle.js.map

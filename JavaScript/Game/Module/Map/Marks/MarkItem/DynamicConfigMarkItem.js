@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DynamicConfigMarkItem = void 0);
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const DynamicConfigMarkItemView_1 = require("../MarkItemView/DynamicConfigMarkItemView");
-const MarkItem_1 = require("./MarkItem");
+const Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  DynamicConfigMarkItemView_1 = require("../MarkItemView/DynamicConfigMarkItemView"),
+  MarkItem_1 = require("./MarkItem");
 class DynamicConfigMarkItem extends MarkItem_1.MarkItem {
   constructor(t, e, i, r, s, n = 1) {
     super(i, r, s, n),
@@ -20,8 +20,8 @@ class DynamicConfigMarkItem extends MarkItem_1.MarkItem {
   }
   get IsFogUnlock() {
     return (
-      this.MarkConfig.FogShow === 1 ||
-      this.MarkConfig.FogHide === 0 ||
+      1 === this.MarkConfig.FogShow ||
+      0 === this.MarkConfig.FogHide ||
       (ModelManager_1.ModelManager.MapModel.CheckAreasUnlocked(
         this.MarkConfig.FogHide,
       ) ??
@@ -63,8 +63,8 @@ class DynamicConfigMarkItem extends MarkItem_1.MarkItem {
     );
   }
   GetAreaText() {
-    let t, e, i;
-    if (typeof this.TrackTarget === "number")
+    var t, e, i;
+    if ("number" == typeof this.TrackTarget)
       return (
         (t = ModelManager_1.ModelManager.WorldMapModel.GetEntityAreaId(
           this.TrackTarget,
@@ -92,18 +92,18 @@ class DynamicConfigMarkItem extends MarkItem_1.MarkItem {
     this.ConditionShouldShow = !0;
   }
   CheckCanShowView() {
-    let t;
-    let e = this.MapType;
+    var t,
+      e = this.MapType;
     return (
       !(
-        (this.MarkConfig.MapShow === 1 && e !== 1) ||
-        (this.MarkConfig.MapShow === 2 && e === 1) ||
+        (1 === this.MarkConfig.MapShow && 1 !== e) ||
+        (2 === this.MarkConfig.MapShow && 1 === e) ||
         !this.ConditionShouldShow ||
         !this.IsFogUnlock
       ) &&
       ((t = this.GetCurrentMapShowScale()),
       (t = this.GLi(t)),
-      e !== 2 ||
+      2 !== e ||
         (this.IsCanShowViewIntermediately !==
           (e = t || this.IsIgnoreScaleShow) &&
           (this.NeedPlayShowOrHideSeq = e ? "ShowView" : "HideView"),
@@ -115,4 +115,4 @@ class DynamicConfigMarkItem extends MarkItem_1.MarkItem {
   }
 }
 exports.DynamicConfigMarkItem = DynamicConfigMarkItem;
-// # sourceMappingURL=DynamicConfigMarkItem.js.map
+//# sourceMappingURL=DynamicConfigMarkItem.js.map

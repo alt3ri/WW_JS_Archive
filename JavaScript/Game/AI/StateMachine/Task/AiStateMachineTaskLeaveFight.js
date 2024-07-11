@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineTaskLeaveFight = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const EffectContext_1 = require("../../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../../Effect/EffectSystem");
-const GlobalData_1 = require("../../../GlobalData");
-const CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const CombatDebugController_1 = require("../../../Utils/CombatDebugController");
-const AiStateMachine_1 = require("../AiStateMachine");
-const AiStateMachineTask_1 = require("./AiStateMachineTask");
-const BLINK_TIME = 1e3;
-const BLINK_TYPE = 3;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  EffectContext_1 = require("../../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  CombatDebugController_1 = require("../../../Utils/CombatDebugController"),
+  AiStateMachine_1 = require("../AiStateMachine"),
+  AiStateMachineTask_1 = require("./AiStateMachineTask"),
+  BLINK_TIME = 1e3,
+  BLINK_TYPE = 3;
 class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTask {
   constructor() {
     super(...arguments),
@@ -46,14 +46,14 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
   }
   OnEnter() {
     (this.Xne = !0), (this.Nne = !1);
-    const t = this.Node.AiComponent.TsAiController;
-    const e = this.Node.AiController;
+    var t = this.Node.AiComponent.TsAiController,
+      e = this.Node.AiController;
     if (e) {
       this.Node.SkillComponent.StopAllSkills(
         "AiStateMachineTaskLeaveFight.OnEnter",
       ),
         this.Node.AnimationComponent.MainAnimInstance.Montage_Stop(0);
-      const i = e.AiWanderInfos?.AiWander;
+      var i = e.AiWanderInfos?.AiWander;
       i
         ? ((this.Hne = i.ResetMoveState),
           (this.jne = i.ShowEffectDaPath),
@@ -76,34 +76,34 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
       ) {
         if (this.Node?.ActorComponent?.IsAutonomousProxy) {
           var s = {
-            Points: [
-              {
-                Index: 0,
-                Position: Vector_1.Vector.Create(this.qne),
-                MoveState: this.Hne,
-                MoveSpeed: 400,
+              Points: [
+                {
+                  Index: 0,
+                  Position: Vector_1.Vector.Create(this.qne),
+                  MoveState: this.Hne,
+                  MoveSpeed: 400,
+                },
+              ],
+              Navigation: !0,
+              IsFly: !1,
+              DebugMode: !1,
+              Loop: !1,
+              ReturnTimeoutFailed: this.MaxStopTime / 1e3,
+              Callback: (t) => {
+                1 === t
+                  ? this.$ne(!0)
+                  : (this.Yne(r),
+                    CombatDebugController_1.CombatDebugController.CombatWarn(
+                      "StateMachineNew",
+                      this.Node.Entity,
+                      "脱战复位未找到路，瞬移移动回初始点",
+                    ));
               },
-            ],
-            Navigation: !0,
-            IsFly: !1,
-            DebugMode: !1,
-            Loop: !1,
-            ReturnTimeoutFailed: this.MaxStopTime / 1e3,
-            Callback: (t) => {
-              t === 1
-                ? this.$ne(!0)
-                : (this.Yne(r),
-                  CombatDebugController_1.CombatDebugController.CombatWarn(
-                    "StateMachineNew",
-                    this.Node.Entity,
-                    "脱战复位未找到路，瞬移移动回初始点",
-                  ));
+              ReturnFalseWhenNavigationFailed: !0,
             },
-            ReturnFalseWhenNavigationFailed: !0,
-          };
-          const h =
-            (this.Node.MoveComponent.MoveAlongPath(s),
-            r.Entity.CheckGetComponent(89));
+            h =
+              (this.Node.MoveComponent.MoveAlongPath(s),
+              r.Entity.CheckGetComponent(89));
           if (h.Valid)
             switch (this.Hne) {
               case 1:
@@ -131,7 +131,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
     this.Node.AiController ? this.Gne && this.zne(t) : this.$ne(!1);
   }
   $ne(t) {
-    let e;
+    var e;
     this.Xne &&
       ((e = this.Node.Entity),
       (this.Node.TaskFinish = !0),
@@ -142,7 +142,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
       (this.Xne = !1));
   }
   OnExit() {
-    const t = this.Node.AiController;
+    var t = this.Node.AiController;
     t.CharActorComp.SetInputDirect(Vector_1.Vector.ZeroVector),
       this.Jne(t, !0),
       this.Gne &&
@@ -155,12 +155,12 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
           ["Actor:", this.Node.ActorComponent.Actor.GetName()],
         ),
       this.Vne &&
-        this.Vne >= 0 &&
+        0 <= this.Vne &&
         this.Node.ActorComponent.Actor.CharRenderingComponent.RemoveMaterialControllerData(
           this.Vne,
         ),
       this.Fne &&
-        this.Fne >= 0 &&
+        0 <= this.Fne &&
         this.Node.ActorComponent.Actor.CharRenderingComponent.RemoveMaterialControllerData(
           this.Fne,
         ),
@@ -171,12 +171,12 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
       (this.Fne = void 0);
   }
   Yne(e) {
-    let t;
+    var t;
     (this.Gne = !0),
       (this.kne = 0),
       (this.Fne = void 0),
       (this.Vne = void 0),
-      this.Wne !== "" &&
+      "" !== this.Wne &&
         ((t = EffectSystem_1.EffectSystem.SpawnEffect(
           GlobalData_1.GlobalData.World,
           MathUtils_1.MathUtils.DefaultTransform,
@@ -191,7 +191,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
               "Type",
               e.Actor.GetName(),
             ])),
-      this.Qne !== ""
+      "" !== this.Qne
         ? ResourceSystem_1.ResourceSystem.LoadAsync(
             this.Qne,
             UE.PD_CharacterControllerData_C,
@@ -228,7 +228,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
   }
   Zne() {
     const e = this.Node.ActorComponent;
-    let t;
+    var t;
     this.Node.ActorComponent.SetMoveControlled(
       !0,
       this.BlinkTime * MathUtils_1.MathUtils.MillisecondToSecond,
@@ -249,7 +249,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
           ["Actor:", e.Actor.GetName()],
         ),
       this.tse(e),
-      this.jne !== "" &&
+      "" !== this.jne &&
         ((t = EffectSystem_1.EffectSystem.SpawnEffect(
           GlobalData_1.GlobalData.World,
           MathUtils_1.MathUtils.DefaultTransform,
@@ -264,10 +264,10 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
               "Type",
               e.Actor.GetName(),
             ])),
-      this.Vne >= 0 &&
+      0 <= this.Vne &&
         (e.Actor.CharRenderingComponent.RemoveMaterialControllerData(this.Vne),
         (this.Vne = void 0)),
-      this.Kne !== ""
+      "" !== this.Kne
         ? ResourceSystem_1.ResourceSystem.LoadAsync(
             this.Kne,
             UE.PD_CharacterControllerData_C,
@@ -292,7 +292,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
       e.SetInputDirect(Vector_1.Vector.ZeroVector);
   }
   ese() {
-    const t = this.Node.ActorComponent;
+    var t = this.Node.ActorComponent;
     return (
       !!this.Gne &&
       ((this.Gne = !1),
@@ -304,7 +304,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
             "AiWander[BlinkMoveEnd]怪物闪烁此刻Actor碰撞不应该为False,查看[BlinkMoveTick]是否置为True",
             ["Actor:", t.Actor.GetName()],
           )),
-      this.Fne >= 0 &&
+      0 <= this.Fne &&
         (t.Actor.CharRenderingComponent.RemoveMaterialControllerData(this.Fne),
         (this.Fne = void 0)),
       this.$ne(!0),
@@ -312,7 +312,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
     );
   }
   tse(t) {
-    const e = this.Node.Entity.GetComponent(0).GetRotation();
+    var e = this.Node.Entity.GetComponent(0).GetRotation();
     t.SetActorRotation(e, "脱战节点.重置为基础方法", !1);
   }
   ToString(t, e = 0) {
@@ -320,4 +320,4 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
   }
 }
 exports.AiStateMachineTaskLeaveFight = AiStateMachineTaskLeaveFight;
-// # sourceMappingURL=AiStateMachineTaskLeaveFight.js.map
+//# sourceMappingURL=AiStateMachineTaskLeaveFight.js.map

@@ -17,4 +17,4 @@ class AttributeValueData {
   }
 }
 exports.AttributeValueData = AttributeValueData;
-// # sourceMappingURL=AttributeDefine.js.map
+//# sourceMappingURL=AttributeDefine.js.map

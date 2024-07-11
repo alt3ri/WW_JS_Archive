@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const GlobalData_1 = require("../GlobalData");
-const BulletController_1 = require("../NewWorld/Bullet/BulletController");
-const BulletUtil_1 = require("../NewWorld/Bullet/BulletUtil");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  GlobalData_1 = require("../GlobalData"),
+  BulletController_1 = require("../NewWorld/Bullet/BulletController"),
+  BulletUtil_1 = require("../NewWorld/Bullet/BulletUtil");
 class TsAnimNotifyStateBulletDuration extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -20,16 +20,16 @@ class TsAnimNotifyStateBulletDuration extends UE.KuroAnimNotifyState {
   }
   K2_NotifyBegin(e, t, i) {
     this.Initialize();
-    const r = e.GetOwner();
+    var r = e.GetOwner();
     if (r instanceof TsBaseCharacter_1.default) {
       var s = r.CharacterActorComponent?.Entity;
       if (s?.Valid) {
-        var s = s.GetComponent(33);
-        const o =
-          (s?.SetCurSkillAnIndex(this.exportIndex),
-          s?.GetCurrentMontageCorrespondingSkillId()?.toString());
-        const a = this.BulletIds.Num();
-        const l = this.LocationOffsets.Num();
+        var s = s.GetComponent(33),
+          o =
+            (s?.SetCurSkillAnIndex(this.exportIndex),
+            s?.GetCurrentMontageCorrespondingSkillId()?.toString()),
+          a = this.BulletIds.Num(),
+          l = this.LocationOffsets.Num();
         for (let e = 0; e < a; e++) {
           let t = void 0;
           l > e && (t = this.LocationOffsets.Get(e)),
@@ -55,16 +55,16 @@ class TsAnimNotifyStateBulletDuration extends UE.KuroAnimNotifyState {
             ["location", r.K2_GetActorLocation()],
           );
     }
-    const h = this.BulletIds;
-    const u = h.Num();
+    var h = this.BulletIds,
+      u = h.Num();
     if (!(u <= 0)) {
       s = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(r.GetWorld());
-      if (s === 2 || s === 4) {
-        var s = UE.KismetSystemLibrary.GetOuterObject(this);
-        const n = UE.KismetSystemLibrary.GetPathName(s);
-        const _ =
-          ((this.ArrayPreviewActor = new Array(u)),
-          (0, puerts_1.$ref)(this.PreviewActor));
+      if (2 === s || 4 === s) {
+        var s = UE.KismetSystemLibrary.GetOuterObject(this),
+          n = UE.KismetSystemLibrary.GetPathName(s),
+          _ =
+            ((this.ArrayPreviewActor = new Array(u)),
+            (0, puerts_1.$ref)(this.PreviewActor));
         for (let t = 0; t < u; t++)
           UE.BPL_BulletPreview_C.ShowBulletPreview(
             n,
@@ -115,4 +115,4 @@ class TsAnimNotifyStateBulletDuration extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateBulletDuration;
-// # sourceMappingURL=TsAnimNotifyStateBulletDuration.js.map
+//# sourceMappingURL=TsAnimNotifyStateBulletDuration.js.map

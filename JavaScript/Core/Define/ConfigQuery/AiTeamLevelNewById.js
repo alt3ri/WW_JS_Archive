@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configAiTeamLevelNewById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const AiTeamLevelNew_1 = require("../Config/AiTeamLevelNew");
-const DB = "db_ai.db";
-const FILE = "a.AI集群总表.xlsx";
-const TABLE = "AiTeamLevelNew";
-const COMMAND = "select BinData from `AiTeamLevelNew` where Id=?";
-const KEY_PREFIX = "AiTeamLevelNewById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  AiTeamLevelNew_1 = require("../Config/AiTeamLevelNew"),
+  DB = "db_ai.db",
+  FILE = "a.AI集群总表.xlsx",
+  TABLE = "AiTeamLevelNew",
+  COMMAND = "select BinData from `AiTeamLevelNew` where Id=?",
+  KEY_PREFIX = "AiTeamLevelNewById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configAiTeamLevelNewById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configAiTeamLevelNewById.GetConfig(";
 exports.configAiTeamLevelNewById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configAiTeamLevelNewById = {
       if (
         (n =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            e,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              e,
+            ]))
       ) {
-        var n;
-        var i = void 0;
+        var n,
+          i = void 0;
         if (
           (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configAiTeamLevelNewById = {
     }
   },
 };
-// # sourceMappingURL=AiTeamLevelNewById.js.map
+//# sourceMappingURL=AiTeamLevelNewById.js.map

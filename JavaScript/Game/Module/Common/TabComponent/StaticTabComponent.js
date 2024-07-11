@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.StaticTabComponent = void 0);
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class StaticTabComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t, i) {
     super(),
@@ -32,20 +32,20 @@ class StaticTabComponent extends UiPanelBase_1.UiPanelBase {
   }
   RegistTabItem(i) {
     this.eGe = new Array();
-    const e = i.length;
+    var e = i.length;
     for (let t = 0; t < e; t++) {
-      var s = i[t];
-      var s = this.Z3e(s, t);
+      var s = i[t],
+        s = this.Z3e(s, t);
       this.eGe.push(s);
     }
     this.NOe = 0;
   }
   OnStart() {
-    const i = this.GetItem(0).GetAttachUIChildren();
-    const e = ((this.eGe = new Array()), i.Num());
+    var i = this.GetItem(0).GetAttachUIChildren(),
+      e = ((this.eGe = new Array()), i.Num());
     for (let t = 0; t < e; t++) {
-      var s = i.Get(t);
-      var s = this.Z3e(s, t);
+      var s = i.Get(t),
+        s = this.Z3e(s, t);
       this.eGe.push(s);
     }
     this.NOe = 0;
@@ -58,7 +58,7 @@ class StaticTabComponent extends UiPanelBase_1.UiPanelBase {
       (this.eGe = []));
   }
   xBt() {
-    let t;
+    var t;
     this.NOe !== CommonDefine_1.INVALID_VALUE &&
       (t = this.eGe[this.NOe]) &&
       t.Value.SetForceSwitch(0);
@@ -81,4 +81,4 @@ class StaticTabComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.StaticTabComponent = StaticTabComponent;
-// # sourceMappingURL=StaticTabComponent.js.map
+//# sourceMappingURL=StaticTabComponent.js.map

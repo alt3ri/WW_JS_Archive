@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TutorialDynItem = void 0);
-const UE = require("ue");
-const Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class TutorialDynItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments), (this.eqe = void 0);
@@ -32,4 +32,4 @@ class TutorialDynItem extends UiPanelBase_1.UiPanelBase {
   ClearItem() {}
 }
 exports.TutorialDynItem = TutorialDynItem;
-// # sourceMappingURL=TutorialDynItem.js.map
+//# sourceMappingURL=TutorialDynItem.js.map

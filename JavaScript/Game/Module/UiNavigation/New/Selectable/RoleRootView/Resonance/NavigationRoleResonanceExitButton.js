@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NavigationRoleResonanceExitButton = void 0);
-const UiNavigationViewManager_1 = require("../../../UiNavigationViewManager");
-const NavigationButton_1 = require("../../NavigationButton");
+const UiNavigationViewManager_1 = require("../../../UiNavigationViewManager"),
+  NavigationButton_1 = require("../../NavigationButton");
 class NavigationRoleResonanceExitButton extends NavigationButton_1.NavigationButton {
   OnButtonClick() {
-    let i =
+    var i =
       UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle().GetPanelConfigByType(
         "RoleResonance",
       );
@@ -15,4 +15,4 @@ class NavigationRoleResonanceExitButton extends NavigationButton_1.NavigationBut
   }
 }
 exports.NavigationRoleResonanceExitButton = NavigationRoleResonanceExitButton;
-// # sourceMappingURL=NavigationRoleResonanceExitButton.js.map
+//# sourceMappingURL=NavigationRoleResonanceExitButton.js.map

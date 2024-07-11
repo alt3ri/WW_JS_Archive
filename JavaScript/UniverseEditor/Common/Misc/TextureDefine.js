@@ -1,5 +1,5 @@
 "use strict";
-let ETexture;
+var ETexture;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.getTexturePath = exports.ETexture = void 0),
   (function (e) {
@@ -70,4 +70,4 @@ function getTexturePath(e) {
   return texturePathMap[e];
 }
 exports.getTexturePath = getTexturePath;
-// # sourceMappingURL=TextureDefine.js.map
+//# sourceMappingURL=TextureDefine.js.map

@@ -42,30 +42,30 @@ class BoxType {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   mark(t) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   startstate() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetIdlestateAt(t) {
     return this.idlestate(t);
   }
   idlestate(t) {
-    const s = this.J7.__offset(this.z7, 10);
+    var s = this.J7.__offset(this.z7, 10);
     return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   idlestateLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   idlestateArray() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -78,15 +78,15 @@ class BoxType {
     return this.idlestartstate(t);
   }
   idlestartstate(t) {
-    const s = this.J7.__offset(this.z7, 12);
+    var s = this.J7.__offset(this.z7, 12);
     return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   idlestartstateLength() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   idlestartstateArray() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -96,13 +96,13 @@ class BoxType {
       : null;
   }
   deathstate() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   opentime() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
 }
 exports.BoxType = BoxType;
-// # sourceMappingURL=BoxType.js.map
+//# sourceMappingURL=BoxType.js.map

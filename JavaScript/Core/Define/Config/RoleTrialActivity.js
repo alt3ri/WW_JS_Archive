@@ -24,22 +24,22 @@ class RoleTrialActivity {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetRoleidlistAt(t) {
     return this.roleidlist(t);
   }
   roleidlist(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   roleidlistLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   roleidlistArray() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -50,4 +50,4 @@ class RoleTrialActivity {
   }
 }
 exports.RoleTrialActivity = RoleTrialActivity;
-// # sourceMappingURL=RoleTrialActivity.js.map
+//# sourceMappingURL=RoleTrialActivity.js.map

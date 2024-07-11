@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldMapModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const MapDefine_1 = require("../Map/MapDefine");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  MapDefine_1 = require("../Map/MapDefine");
 class WorldMapModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -57,7 +57,7 @@ class WorldMapModel extends ModelBase_1.ModelBase {
     this.MapScale =
       (ConfigManager_1.ConfigManager.WorldMapConfig.GetAkiMapConfig(1)
         ?.BigMapDefaultScale ?? 0) / 100;
-    const e = ConfigManager_1.ConfigManager.WorldMapConfig.GetAkiMapConfig(1);
+    var e = ConfigManager_1.ConfigManager.WorldMapConfig.GetAkiMapConfig(1);
     e &&
       ((this.MapScaleMax = e.BigMapMaxScale / e.BigMapDefaultScale),
       (this.MapScaleMin = e.BigMapMinScale / e.BigMapDefaultScale));
@@ -85,7 +85,7 @@ class WorldMapModel extends ModelBase_1.ModelBase {
   }
   UpdateAreaExploreInfo(e) {
     if (e) {
-      const r = new Array();
+      var r = new Array();
       for (const t of e.e5n)
         r.push({ ExploreProgressId: t._Ls, ExplorePercent: t.lLs });
       this.SFo = { AreaId: e.wFn, ExploreProgress: r, ExplorePercent: e.lLs };
@@ -96,4 +96,4 @@ class WorldMapModel extends ModelBase_1.ModelBase {
   }
 }
 exports.WorldMapModel = WorldMapModel;
-// # sourceMappingURL=WorldMapModel.js.map
+//# sourceMappingURL=WorldMapModel.js.map

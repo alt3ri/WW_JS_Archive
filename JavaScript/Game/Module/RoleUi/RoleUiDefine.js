@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.roleSystemModeUiParam = void 0),
   (exports.roleSystemModeUiParam = {
-    0: {
+    [0]: {
       RoleListButton: !0,
       RoleListButtonRedDot: !0,
       RoleList: !0,
@@ -39,4 +39,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       TeachBtn: !1,
     },
   });
-// # sourceMappingURL=RoleUiDefine.js.map
+//# sourceMappingURL=RoleUiDefine.js.map

@@ -11,4 +11,4 @@ class ObjectBase {
   }
 }
 exports.ObjectBase = ObjectBase;
-// # sourceMappingURL=ObjectBase.js.map
+//# sourceMappingURL=ObjectBase.js.map

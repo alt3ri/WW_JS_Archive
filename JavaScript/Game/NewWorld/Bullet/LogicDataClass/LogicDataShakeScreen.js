@@ -15,4 +15,4 @@ class LogicDataShakeScreen extends LogicDataBase_1.default {
   }
 }
 exports.default = LogicDataShakeScreen;
-// # sourceMappingURL=LogicDataShakeScreen.js.map
+//# sourceMappingURL=LogicDataShakeScreen.js.map

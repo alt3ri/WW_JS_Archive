@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoopScrollView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Queue_1 = require("../../../../Core/Container/Queue");
-const InTurnGridAppearAnimation_1 = require("../Grid/GridAnimation/InTurnGridAppearAnimation");
-const ScrollViewDelegate_1 = require("./ScrollViewDelegate");
-const IS_DEBUG = !1;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Queue_1 = require("../../../../Core/Container/Queue"),
+  InTurnGridAppearAnimation_1 = require("../Grid/GridAnimation/InTurnGridAppearAnimation"),
+  ScrollViewDelegate_1 = require("./ScrollViewDelegate"),
+  IS_DEBUG = !1;
 class OperationParam {
   constructor(t = void 0, i = !1, s = void 0, e = !1) {
     (this.Data = t),
@@ -36,15 +36,15 @@ class LoopScrollView {
         this.gGo.push(t);
       }),
       (this.yGo = (e, r) => {
-        if (!(this.gGo.length > 0 || (this.IZt === e && this.Ndi === r))) {
-          let h;
-          let o;
-          let a;
-          let n;
-          const d = this.IZt;
-          const l = this.Ndi;
-          const G = this.Dqo;
-          const p = r - e + 1;
+        if (!(0 < this.gGo.length || (this.IZt === e && this.Ndi === r))) {
+          var h,
+            o,
+            a,
+            n,
+            d = this.IZt,
+            l = this.Ndi,
+            G = this.Dqo,
+            p = r - e + 1;
           for (let t = d; t <= l; ++t)
             t < 0 ||
               t >= this.fGo ||
@@ -53,14 +53,14 @@ class LoopScrollView {
               t >= e && t <= r && t <= l && h == o) ||
               this.dqo.ClearGridProxy(t, this.IGo(t));
           (this.IZt = e), (this.Ndi = r);
-          let i = -1;
-          let s = -1;
+          let i = -1,
+            s = -1;
           for (let t = e; t <= r; ++t)
             t < 0 ||
               t >= this.fGo ||
               ((a = t % G),
               (n = t % p),
-              d >= 0 && t >= d && t <= l && a == n) ||
+              0 <= d && t >= d && t <= l && a == n) ||
               (this.TGo(t), IS_DEBUG && (i < 0 && (i = t), (s = t)));
           IS_DEBUG &&
             Log_1.Log.CheckInfo() &&
@@ -115,7 +115,7 @@ class LoopScrollView {
     this.vGo = t;
   }
   get CN() {
-    return this.Ndi === -1 && this.IZt === -1;
+    return -1 === this.Ndi && -1 === this.IZt;
   }
   get DataInited() {
     return this.MGo;
@@ -127,7 +127,7 @@ class LoopScrollView {
     this.pHt = !0;
   }
   O0t() {
-    let t;
+    var t;
     (this.pHt = !1),
       this.gjt.Empty ||
         ((t = this.gjt.Pop()),
@@ -167,7 +167,7 @@ class LoopScrollView {
     if (t) return t.GetUIItem();
   }
   GetGridByDisplayIndex(t) {
-    const i = this.CGo.GridArray.Get(t);
+    var i = this.CGo.GridArray.Get(t);
     if (i) return i.GetUIItem();
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("ScrollViewGrid", 25, "Grid is NULL!", [
@@ -176,8 +176,8 @@ class LoopScrollView {
       ]);
   }
   UnsafeGetGridProxy(t, i = !1) {
-    const s = this.IGo(t, !0);
-    if (s !== -1) {
+    var s = this.IGo(t, !0);
+    if (-1 !== s) {
       if (!this.Cqo || this.Cqo.IsGridControlValid())
         return this.dqo.GetGridProxy(s);
       i &&
@@ -218,7 +218,7 @@ class LoopScrollView {
       for (let t = this.IZt; t <= this.Ndi; ++t) this.RefreshGridProxy(t);
   }
   RefreshGridProxy(t) {
-    let i;
+    var i;
     t >= this.IZt &&
       t <= this.Ndi &&
       ((i = this.IGo(t)), this.dqo.RefreshGridProxy(t, i));
@@ -250,7 +250,7 @@ class LoopScrollView {
     this.CGo.OnLateUpdate.Unbind();
   }
   yqo(t, i) {
-    let s;
+    var s;
     this.CGo
       ? (s = this.Mqo)
         ? ((this.IZt = -1),
@@ -273,7 +273,7 @@ class LoopScrollView {
         );
   }
   RefreshByData(t, i = !1, s, e = !1) {
-    let r;
+    var r;
     this.RHt
       ? ((r = new OperationParam(t, i, s)), this.gjt.Push(r))
       : (this.UHt(),
@@ -290,7 +290,7 @@ class LoopScrollView {
       s && this.Cqo && this.Cqo.PlayGridAnim(this.Dqo, !0);
   }
   async LGo(t, i) {
-    let s;
+    var s;
     this.CGo
       ? (s = this.Mqo)
         ? ((this.IZt = -1),
@@ -299,7 +299,7 @@ class LoopScrollView {
           (this.gGo.length = 0),
           this.CGo.RefreshByData(s, t, i),
           await Promise.all(this.gGo),
-          this.gGo.length > 0 &&
+          0 < this.gGo.length &&
             ((this.gGo.length = 0), this.CGo.RefreshByData(s, t, i)),
           (this.MGo = !0))
         : Log_1.Log.CheckError() &&
@@ -317,13 +317,13 @@ class LoopScrollView {
   }
   IsGridDisplaying(t) {
     t = this.IGo(t, !1);
-    return t >= 0 && t < this.Dqo;
+    return 0 <= t && t < this.Dqo;
   }
   ScrollToGridIndex(t, i = !0) {
     this.CGo.ScrollToGridIndex(t), i && this.ResetGridController();
   }
   TGo(t) {
-    const i = this.IGo(t);
+    var i = this.IGo(t);
     this.dqo.OnGridsUpdate(t, i, this.IZt, this.Ndi);
   }
   IGo(t, i = !1) {
@@ -360,8 +360,8 @@ class LoopScrollView {
   }
   GetGridAndScrollToByJudge(s, e) {
     if (this.DataInited) {
-      let t = 0;
-      let i = !1;
+      let t = 0,
+        i = !1;
       for (const r of this.dqo.GetDatas()) {
         if (e(s, r)) {
           i = !0;
@@ -388,4 +388,4 @@ class LoopScrollView {
   }
 }
 exports.LoopScrollView = LoopScrollView;
-// # sourceMappingURL=LoopScrollView.js.map
+//# sourceMappingURL=LoopScrollView.js.map

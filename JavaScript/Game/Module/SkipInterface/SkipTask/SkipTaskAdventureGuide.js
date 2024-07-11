@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkipTaskAdventureGuide = void 0);
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const SkipTask_1 = require("./SkipTask");
+const ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  SkipTask_1 = require("./SkipTask");
 class SkipTaskAdventureGuide extends SkipTask_1.SkipTask {
   OnRun(e, r) {
-    const a = r;
+    var a = r;
     UiManager_1.UiManager.IsViewShow("AdventureGuideView") &&
     ModelManager_1.ModelManager.AdventureGuideModel.CurrentGuideTabName === a
       ? (ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -15,7 +15,7 @@ class SkipTaskAdventureGuide extends SkipTask_1.SkipTask {
         ),
         this.Finish())
       : ((e = Number(e)),
-        r !== "NewSoundAreaView" ||
+        "NewSoundAreaView" !== r ||
         ModelManager_1.ModelManager.AdventureGuideModel.CheckTargetDungeonTypeCanShow(
           e,
         )
@@ -34,4 +34,4 @@ class SkipTaskAdventureGuide extends SkipTask_1.SkipTask {
   }
 }
 exports.SkipTaskAdventureGuide = SkipTaskAdventureGuide;
-// # sourceMappingURL=SkipTaskAdventureGuide.js.map
+//# sourceMappingURL=SkipTaskAdventureGuide.js.map

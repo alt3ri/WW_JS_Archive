@@ -1,27 +1,31 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, i, n) {
-    let o;
-    const r = arguments.length;
-    let s =
-      r < 3 ? t : n === null ? (n = Object.getOwnPropertyDescriptor(t, i)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      r = arguments.length,
+      s =
+        r < 3
+          ? t
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(t, i))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(e, t, i, n);
     else
-      for (let m = e.length - 1; m >= 0; m--)
-        (o = e[m]) && (s = (r < 3 ? o(s) : r > 3 ? o(t, i, s) : o(t, i)) || s);
-    return r > 3 && s && Object.defineProperty(t, i, s), s;
+      for (var m = e.length - 1; 0 <= m; m--)
+        (o = e[m]) && (s = (r < 3 ? o(s) : 3 < r ? o(t, i, s) : o(t, i)) || s);
+    return 3 < r && s && Object.defineProperty(t, i, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemAdviceComponent = void 0);
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const REVERTIME = 3e3;
+const EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  REVERTIME = 3e3;
 let SceneItemAdviceComponent = class SceneItemAdviceComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -40,13 +44,13 @@ let SceneItemAdviceComponent = class SceneItemAdviceComponent extends EntityComp
       });
   }
   OnActivate() {
-    let t = this.Entity.GetComponent(178);
+    var t = this.Entity.GetComponent(178);
     if (t && t.GetInteractController()) {
       t = this.Entity.GetComponent(0);
       if (t) {
         t = t.GetAdviceInfo();
         if (t) {
-          const i = this.Entity.GetComponent(102);
+          var i = this.Entity.GetComponent(102);
           if (i) {
             this.Xte = this.Entity.GetComponent(177);
             let e =
@@ -84,4 +88,4 @@ let SceneItemAdviceComponent = class SceneItemAdviceComponent extends EntityComp
   SceneItemAdviceComponent,
 )),
   (exports.SceneItemAdviceComponent = SceneItemAdviceComponent);
-// # sourceMappingURL=SceneItemAdviceComponent.js.map
+//# sourceMappingURL=SceneItemAdviceComponent.js.map

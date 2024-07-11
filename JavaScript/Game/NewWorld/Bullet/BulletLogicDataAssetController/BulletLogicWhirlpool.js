@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletLogicWhirlpool = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const WhirlpoolPoint_1 = require("../../Character/Common/Component/Move/WhirlpoolPoint");
-const BulletConstant_1 = require("../BulletConstant");
-const BulletLogicController_1 = require("./BulletLogicController");
+const Log_1 = require("../../../../Core/Common/Log"),
+  WhirlpoolPoint_1 = require("../../Character/Common/Component/Move/WhirlpoolPoint"),
+  BulletConstant_1 = require("../BulletConstant"),
+  BulletLogicController_1 = require("./BulletLogicController");
 class BulletLogicWhirlpool extends BulletLogicController_1.BulletLogicController {
   constructor(t, o) {
     super(t, o),
@@ -21,12 +21,12 @@ class BulletLogicWhirlpool extends BulletLogicController_1.BulletLogicController
   }
   OnInit() {}
   Update(t) {
-    let o;
+    var o;
     for ([o] of this._9o.CollisionInfo.CharacterEntityMap) this.t7o.add(o);
     for (const i of this.t7o) this.i7o(i);
   }
   i7o(t) {
-    const o = t?.GetComponent(161);
+    var o = t?.GetComponent(161);
     !o?.Valid ||
       this.Z9o < o.CharacterWeight ||
       (o.GetWhirlpoolId() !== this.xe
@@ -53,7 +53,7 @@ class BulletLogicWhirlpool extends BulletLogicController_1.BulletLogicController
   }
   OnBulletDestroy() {
     for (const o of this.t7o) {
-      const t = o?.GetComponent(161);
+      var t = o?.GetComponent(161);
       t?.Valid &&
         t.GetWhirlpoolEnable() &&
         t.GetWhirlpoolId() === this.xe &&
@@ -72,4 +72,4 @@ class BulletLogicWhirlpool extends BulletLogicController_1.BulletLogicController
   }
 }
 exports.BulletLogicWhirlpool = BulletLogicWhirlpool;
-// # sourceMappingURL=BulletLogicWhirlpool.js.map
+//# sourceMappingURL=BulletLogicWhirlpool.js.map

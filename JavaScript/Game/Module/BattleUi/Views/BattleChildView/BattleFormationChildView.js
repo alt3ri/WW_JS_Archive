@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleFormationChildView = void 0);
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const BattleEntityChildView_1 = require("./BattleEntityChildView");
+const ModelManager_1 = require("../../../../Manager/ModelManager"),
+  BattleEntityChildView_1 = require("./BattleEntityChildView");
 class BattleFormationChildView extends BattleEntityChildView_1.BattleEntityChildView {
   constructor() {
     super(...arguments), (this.FormationInstance = void 0);
   }
   OnActivate() {
-    const t = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(
+    var t = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(
       this.GetEntityId(),
       { ParamType: 1 },
     );
@@ -25,4 +25,4 @@ class BattleFormationChildView extends BattleEntityChildView_1.BattleEntityChild
   }
 }
 exports.BattleFormationChildView = BattleFormationChildView;
-// # sourceMappingURL=BattleFormationChildView.js.map
+//# sourceMappingURL=BattleFormationChildView.js.map

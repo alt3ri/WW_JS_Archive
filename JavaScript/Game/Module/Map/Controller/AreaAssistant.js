@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AreaAssistant = void 0);
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../Core/Net/Net");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase");
+const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase");
 class AreaAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor() {
     super(...arguments),
@@ -37,8 +37,8 @@ class AreaAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
       Net_1.Net.UnRegister(11602);
   }
   async RequestUnlockedAreaInfo() {
-    var e = Protocol_1.Aki.Protocol.jis.create();
-    var e = await Net_1.Net.CallAsync(8960, e);
+    var e = Protocol_1.Aki.Protocol.jis.create(),
+      e = await Net_1.Net.CallAsync(8960, e);
     e &&
       (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
         ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
@@ -49,4 +49,4 @@ class AreaAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
   }
 }
 exports.AreaAssistant = AreaAssistant;
-// # sourceMappingURL=AreaAssistant.js.map
+//# sourceMappingURL=AreaAssistant.js.map

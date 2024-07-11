@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonSelectItem = exports.CommonElementItem = void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class CommonElementItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments), (this.Vyt = 0);
@@ -25,10 +25,8 @@ class CommonElementItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.Vyt = t;
   }
   RefreshPanel() {
-    let t;
-    const e = ConfigManager_1.ConfigManager.CommonConfig.GetElementConfig(
-      this.Vyt,
-    );
+    var t,
+      e = ConfigManager_1.ConfigManager.CommonConfig.GetElementConfig(this.Vyt);
     e &&
       ((t = UE.Color.FromHex(e.ElementColor)),
       this.GetSprite(0).SetColor(t),
@@ -47,7 +45,7 @@ class CommonSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
         return new CommonElementItem();
       }),
       (this.Kso = (t) => {
-        this.ClickCallBack?.(t === 1 ? this : void 0);
+        this.ClickCallBack?.(1 === t ? this : void 0);
       });
   }
   SetClickCallBack(t) {
@@ -67,7 +65,7 @@ class CommonSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
       ((this.RogueGainEntry = t), this.Fq());
   }
   Fq() {
-    let t = this.RogueGainEntry.GetSortElementInfoArrayByCount();
+    var t = this.RogueGainEntry.GetSortElementInfoArrayByCount();
     t.length <= 0 ||
       ((this.jso = t[0]),
       (t = new Array(this.jso.Count).fill(this.jso.ElementId)),
@@ -94,20 +92,20 @@ class CommonSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.BtnBindInfo = [[5, this.Kso]]);
   }
   IsSelect() {
-    return this.GetExtendToggle(5).GetToggleState() === 1;
+    return 1 === this.GetExtendToggle(5).GetToggleState();
   }
   RefreshPanel() {
     this.RogueGainEntry && (this.eOt(), this.Qso());
   }
   eOt() {
     this.GetItem(6).SetUIActive(this.RogueGainEntry.IsNew);
-    let t;
-    const e = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueBuffConfig(
-      this.RogueGainEntry.ConfigId,
-    );
+    var t,
+      e = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueBuffConfig(
+        this.RogueGainEntry.ConfigId,
+      );
     e &&
       (this.GetText(2).ShowTextNew(e.BuffName),
-      ModelManager_1.ModelManager.RoguelikeModel?.GetDescModel() === 0
+      0 === ModelManager_1.ModelManager.RoguelikeModel?.GetDescModel()
         ? this.GetText(4).ShowTextNew(e.BuffDescSimple)
         : LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(4),
@@ -120,13 +118,13 @@ class CommonSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
           e.Quality,
         )) && this.SetTextureByPath(t.TokenBg, this.GetTexture(0)),
       this.GetSprite(7).SetColor(UE.Color.FromHex(t.TokenColor)),
-      this.GetItem(9).SetUIActive(e.Quality === 5),
-      this.GetItem(8).SetUIActive(e.Quality === 6));
+      this.GetItem(9).SetUIActive(5 === e.Quality),
+      this.GetItem(8).SetUIActive(6 === e.Quality));
   }
   Qso() {
-    const t = new Array(this.jso.Count).fill(this.jso.ElementId);
+    var t = new Array(this.jso.Count).fill(this.jso.ElementId);
     this.E_i?.RefreshByDataAsync(t);
   }
 }
 exports.CommonSelectItem = CommonSelectItem;
-// # sourceMappingURL=CommonSelectItem.js.map
+//# sourceMappingURL=CommonSelectItem.js.map

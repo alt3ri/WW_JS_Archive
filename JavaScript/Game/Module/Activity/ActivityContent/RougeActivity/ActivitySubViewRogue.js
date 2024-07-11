@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivitySubViewRogue = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase");
-const ActivityDescriptionTypeA_1 = require("../UniversalComponents/Content/ActivityDescriptionTypeA");
-const ActivityRewardList_1 = require("../UniversalComponents/Content/ActivityRewardList");
-const ActivityFunctionalTypeA_1 = require("../UniversalComponents/Functional/ActivityFunctionalTypeA");
-const ActivityTitleTypeA_1 = require("../UniversalComponents/Title/ActivityTitleTypeA");
-const ActivityRogueController_1 = require("./ActivityRogueController");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase"),
+  ActivityDescriptionTypeA_1 = require("../UniversalComponents/Content/ActivityDescriptionTypeA"),
+  ActivityRewardList_1 = require("../UniversalComponents/Content/ActivityRewardList"),
+  ActivityFunctionalTypeA_1 = require("../UniversalComponents/Functional/ActivityFunctionalTypeA"),
+  ActivityTitleTypeA_1 = require("../UniversalComponents/Title/ActivityTitleTypeA"),
+  ActivityRogueController_1 = require("./ActivityRogueController");
 class ActivitySubViewRogue extends ActivitySubViewBase_1.ActivitySubViewBase {
   constructor() {
     super(...arguments),
@@ -21,9 +21,9 @@ class ActivitySubViewRogue extends ActivitySubViewBase_1.ActivitySubViewBase {
       (this.UNe = void 0),
       (this.ANe = void 0),
       (this.u2e = () => {
-        let i = this.ActivityBaseData.GetPreGuideQuestFinishState();
-        const t = this.ActivityBaseData.GetRogueActivityState();
-        i || t !== 0
+        var i = this.ActivityBaseData.GetPreGuideQuestFinishState(),
+          t = this.ActivityBaseData.GetRogueActivityState();
+        i || 0 !== t
           ? ActivityRogueController_1.ActivityRogueController.ActivityFunctionExecute(
               this.ActivityBaseData.Id,
             )
@@ -46,26 +46,26 @@ class ActivitySubViewRogue extends ActivitySubViewBase_1.ActivitySubViewBase {
   }
   OnSetData() {}
   async OnBeforeStartAsync() {
-    var i = this.GetItem(0);
-    var i =
-      ((this.LNe = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
-      await this.LNe.CreateThenShowByActorAsync(i.GetOwner()),
-      this.GetItem(1));
-    var i =
-      ((this.DNe = new ActivityDescriptionTypeA_1.ActivityDescriptionTypeA()),
-      await this.DNe.CreateThenShowByActorAsync(i.GetOwner()),
-      this.GetItem(2));
-    var i =
-      ((this.UNe = new ActivityRewardList_1.ActivityRewardList()),
-      await this.UNe.CreateThenShowByActorAsync(i.GetOwner()),
-      this.GetItem(3));
+    var i = this.GetItem(0),
+      i =
+        ((this.LNe = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
+        await this.LNe.CreateThenShowByActorAsync(i.GetOwner()),
+        this.GetItem(1)),
+      i =
+        ((this.DNe = new ActivityDescriptionTypeA_1.ActivityDescriptionTypeA()),
+        await this.DNe.CreateThenShowByActorAsync(i.GetOwner()),
+        this.GetItem(2)),
+      i =
+        ((this.UNe = new ActivityRewardList_1.ActivityRewardList()),
+        await this.UNe.CreateThenShowByActorAsync(i.GetOwner()),
+        this.GetItem(3));
     (this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA()),
       await this.ANe.CreateThenShowByActorAsync(i.GetOwner());
   }
   OnStart() {
-    let i;
-    let t = this.ActivityBaseData.LocalConfig;
-    let e = this.ActivityBaseData.GetExtraConfig();
+    var i,
+      t = this.ActivityBaseData.LocalConfig,
+      e = this.ActivityBaseData.GetExtraConfig();
     t &&
       e &&
       ((e = t.DescTheme),
@@ -97,25 +97,25 @@ class ActivitySubViewRogue extends ActivitySubViewBase_1.ActivitySubViewBase {
     this.ANe?.SetFunctionRedDotVisible(this.ActivityBaseData.RedPointShowState);
   }
   FNe() {
-    let i;
-    this.ActivityBaseData.GetRogueActivityState() === 0
+    var i;
+    0 === this.ActivityBaseData.GetRogueActivityState()
       ? (([, i] = this.GetTimeVisibleAndRemainTime()),
         this.LNe.SetTimeTextByText(i))
       : this.LNe.SetTimeTextByTextId("Rogue_Function_End_Tip");
   }
   Xke() {
-    let i;
-    let t = this.ActivityBaseData.GetExtraConfig();
+    var i,
+      t = this.ActivityBaseData.GetExtraConfig();
     t &&
       ((i = this.ActivityBaseData.IsUnLock()),
-      (t = t.FunctionType === 0),
+      (t = 0 === t.FunctionType),
       i
         ? t
           ? (this.ANe.FunctionButton?.SetUiActive(!1),
             this.ANe.SetPanelConditionVisible(!1))
           : ((i = this.ActivityBaseData.GetRogueActivityState()),
-            this.ANe.FunctionButton?.SetUiActive(i !== 2),
-            this.ANe.SetPanelConditionVisible(i === 2),
+            this.ANe.FunctionButton?.SetUiActive(2 !== i),
+            this.ANe.SetPanelConditionVisible(2 === i),
             this.ANe.SetLockTextByTextId("Rogue_Function_End_Tip"))
         : (this.ANe.FunctionButton?.SetUiActive(!1),
           (t = this.GetCurrentLockConditionText()),
@@ -124,4 +124,4 @@ class ActivitySubViewRogue extends ActivitySubViewBase_1.ActivitySubViewBase {
   }
 }
 exports.ActivitySubViewRogue = ActivitySubViewRogue;
-// # sourceMappingURL=ActivitySubViewRogue.js.map
+//# sourceMappingURL=ActivitySubViewRogue.js.map

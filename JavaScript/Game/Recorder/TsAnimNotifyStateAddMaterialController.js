@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const CharRenderingComponent_1 = require("../Render/Character/Manager/CharRenderingComponent");
+const UE = require("ue"),
+  CharRenderingComponent_1 = require("../Render/Character/Manager/CharRenderingComponent");
 class TsAnimNotifyStateAddMaterialController extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -10,7 +10,7 @@ class TsAnimNotifyStateAddMaterialController extends UE.KuroAnimNotifyState {
       (this.Handles = void 0);
   }
   K2_NotifyBegin(e, t, r) {
-    let n = e
+    var n = e
       .GetOwner()
       .GetComponentByClass(UE.CharRenderingComponent_C.StaticClass());
     if (!(n instanceof CharRenderingComponent_1.default)) return !1;
@@ -22,10 +22,10 @@ class TsAnimNotifyStateAddMaterialController extends UE.KuroAnimNotifyState {
     return this.Handles.set(e, n), !0;
   }
   K2_NotifyEnd(e, t) {
-    let r;
-    const n = e
-      .GetOwner()
-      .GetComponentByClass(UE.CharRenderingComponent_C.StaticClass());
+    var r,
+      n = e
+        .GetOwner()
+        .GetComponentByClass(UE.CharRenderingComponent_C.StaticClass());
     return (
       n instanceof CharRenderingComponent_1.default &&
       !!this.Handles &&
@@ -35,4 +35,4 @@ class TsAnimNotifyStateAddMaterialController extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateAddMaterialController;
-// # sourceMappingURL=TsAnimNotifyStateAddMaterialController.js.map
+//# sourceMappingURL=TsAnimNotifyStateAddMaterialController.js.map

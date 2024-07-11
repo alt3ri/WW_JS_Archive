@@ -1,36 +1,40 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, n) {
-    let o;
-    const r = arguments.length;
-    let s =
-      r < 3 ? e : n === null ? (n = Object.getOwnPropertyDescriptor(e, i)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      r = arguments.length,
+      s =
+        r < 3
+          ? e
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(e, i))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(t, e, i, n);
     else
-      for (let h = t.length - 1; h >= 0; h--)
-        (o = t[h]) && (s = (r < 3 ? o(s) : r > 3 ? o(e, i, s) : o(e, i)) || s);
-    return r > 3 && s && Object.defineProperty(e, i, s), s;
+      for (var h = t.length - 1; 0 <= h; h--)
+        (o = t[h]) && (s = (r < 3 ? o(s) : 3 < r ? o(e, i, s) : o(e, i)) || s);
+    return 3 < r && s && Object.defineProperty(e, i, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PawnHeadInfoComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const GeneralLogicTreeUtil_1 = require("../../../../Module/GeneralLogicTree/GeneralLogicTreeUtil");
-const NpcIconComponent_1 = require("../../../../Module/NPC/NpcIconComponent");
-const UiModel_1 = require("../../../../Ui/UiModel");
-const CharacterActorComponent_1 = require("./CharacterActorComponent");
-const CHECK_QUEST_ICON_INTERVAL = 1e3;
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  GeneralLogicTreeUtil_1 = require("../../../../Module/GeneralLogicTree/GeneralLogicTreeUtil"),
+  NpcIconComponent_1 = require("../../../../Module/NPC/NpcIconComponent"),
+  UiModel_1 = require("../../../../Ui/UiModel"),
+  CharacterActorComponent_1 = require("./CharacterActorComponent"),
+  CHECK_QUEST_ICON_INTERVAL = 1e3;
 let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -62,10 +66,10 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
       }),
       (this.OnEntityWasRecentlyRenderedOnScreenChange = (t) => {
         if (this.hzr() === Protocol_1.Aki.Protocol.HBs.Proto_SceneItem) {
-          const e = this.Hte;
+          var e = this.Hte;
           if (
             !e ||
-            e.PrefabRadius === 0 ||
+            0 === e.PrefabRadius ||
             e.CurLevelPrefabShowActor?.IsA(UE.TsEffectActor_C.StaticClass())
           )
             return void this.hir?.OnNpcWasRecentlyRenderedOnScreenChange(!0);
@@ -81,19 +85,19 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
       (this.uzr = () => {
         if (this.hir)
           if (this.ezr) {
-            let e = this.ezr.GetInteractController();
+            var e = this.ezr.GetInteractController();
             if (e) {
               e = e.Options.find(
                 (t) =>
                   !!t.Context &&
-                  (t.Context.Type === 2 || t.Context.Type === 6) &&
+                  (2 === t.Context.Type || 6 === t.Context.Type) &&
                   ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckConditionNew(
                     t.Condition,
                     this.Hte.Owner,
                   ),
               );
               if (e) {
-                const i = e.Context;
+                var i = e.Context;
                 let t = void 0;
                 switch (i.Type) {
                   case 2:
@@ -103,18 +107,18 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
                     n && !n.HideAcceptQuestMark && (t = n.QuestMarkId);
                     break;
                   case 6:
-                    var o;
-                    var n =
-                      ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
-                        i.TreeIncId,
-                      );
+                    var o,
+                      n =
+                        ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
+                          i.TreeIncId,
+                        );
                     n &&
                       n.BtType ===
                         Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest &&
                       (o = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
                         i.TreeConfigId,
                       )) &&
-                      o.Type === 4 &&
+                      4 === o.Type &&
                       (o = n.GetNode(i.NodeId)) &&
                       o.ContainTag(0) &&
                       (t = n.GetTrackIconId());
@@ -147,7 +151,7 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
     );
   }
   pie() {
-    let t = this.Hte.CreatureData;
+    var t = this.Hte.CreatureData;
     t && ((t = t.GetBaseInfo()), (this.ozr = t?.IsShowNameOnHead ?? !1));
   }
   T6s() {
@@ -200,7 +204,7 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
       this.hir.AddNpcIconAsync(this.zJr?.GetMessageId()).then(() => {
         this.czr();
       });
-    const t = this.Entity.GetComponent(0).GetPbDataId();
+    var t = this.Entity.GetComponent(0).GetPbDataId();
     this.hir.SetEntityPbDataId(t);
   }
   czr() {
@@ -213,7 +217,7 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
     this.hir?.SetCharacterIconLocation();
   }
   lzr() {
-    const t = this.zJr?.PawnName;
+    var t = this.zJr?.PawnName;
     this.hir?.SetCharacterName(t);
   }
   SetCharacterSecondName() {
@@ -258,9 +262,9 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
     );
   }
   GetAttachToLocation(t) {
-    let e;
-    let i;
-    const n = this.Hte;
+    var e,
+      i,
+      n = this.Hte;
     n
       ? ((e = this.Hte.SkeletalMesh.K2_GetComponentToWorld().GetLocation()),
         (i = n.ActorLocationProxy),
@@ -299,10 +303,10 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
     );
   }
   IsInHeadItemShowRange(t, e, i) {
-    var n = this.Entity.GetComponent(0)?.GetPbDataId();
-    var n = ModelManager_1.ModelManager.TrackModel.IsTargetTracking(n);
-    if (n && n.TrackSource !== 1) {
-      const o = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
+    var n = this.Entity.GetComponent(0)?.GetPbDataId(),
+      n = ModelManager_1.ModelManager.TrackModel.IsTargetTracking(n);
+    if (n && 1 !== n.TrackSource) {
+      var o = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
       if (o)
         return (
           this.tzr.DeepCopy(this.GetSelfLocation()),
@@ -321,4 +325,4 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
   PawnHeadInfoComponent,
 )),
   (exports.PawnHeadInfoComponent = PawnHeadInfoComponent);
-// # sourceMappingURL=PawnHeadInfoComponent.js.map
+//# sourceMappingURL=PawnHeadInfoComponent.js.map

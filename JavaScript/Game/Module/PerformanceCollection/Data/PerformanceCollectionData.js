@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PerformanceCollectionData = void 0);
-const UE = require("ue");
-const ThinkDataLaunchReporter_1 = require("../../../../Launcher/ThinkDataReport/ThinkDataLaunchReporter");
-const GlobalData_1 = require("../../../GlobalData");
+const UE = require("ue"),
+  ThinkDataLaunchReporter_1 = require("../../../../Launcher/ThinkDataReport/ThinkDataLaunchReporter"),
+  GlobalData_1 = require("../../../GlobalData");
 class PerformanceCollectionData {
   constructor() {
     (this.Name = ""),
@@ -23,4 +23,4 @@ class PerformanceCollectionData {
   }
 }
 exports.PerformanceCollectionData = PerformanceCollectionData;
-// # sourceMappingURL=PerformanceCollectionData.js.map
+//# sourceMappingURL=PerformanceCollectionData.js.map

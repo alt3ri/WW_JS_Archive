@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SpecialEnergyBarContainer = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const BattleChildView_1 = require("../BattleChildView/BattleChildView");
-const RoleSpecialEnergyBar_1 = require("./RoleSpecialEnergyBar");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  BattleChildView_1 = require("../BattleChildView/BattleChildView"),
+  RoleSpecialEnergyBar_1 = require("./RoleSpecialEnergyBar");
 class SpecialEnergyBarContainer extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
@@ -38,7 +38,7 @@ class SpecialEnergyBarContainer extends BattleChildView_1.BattleChildView {
     for (const t of this._mt.values()) t.Tick(e);
   }
   OnChangeRole(e) {
-    let t;
+    var t;
     (this.E0 = e?.EntityHandle?.Id ?? 0),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Battle", 18, "开始切换特殊能量条", [
@@ -54,7 +54,7 @@ class SpecialEnergyBarContainer extends BattleChildView_1.BattleChildView {
       this.cmt();
   }
   OnRemoveEntity(e) {
-    const t = this._mt.get(e);
+    var t = this._mt.get(e);
     t &&
       (t.Destroy(), this._mt.delete(e), this.lmt === t) &&
       (this.lmt = void 0);
@@ -75,25 +75,25 @@ class SpecialEnergyBarContainer extends BattleChildView_1.BattleChildView {
     for (const t of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems(
       !0,
     )) {
-      let e = t.EntityHandle?.Id;
+      var e = t.EntityHandle?.Id;
       e &&
         (e = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(e)) &&
         this.mmt(e);
     }
   }
   async mmt(t) {
-    const i = t.EntityHandle?.Id;
+    var i = t.EntityHandle?.Id;
     if (i && !this._mt.has(i)) {
-      const s = new RoleSpecialEnergyBar_1.RoleSpecialEnergyBar();
+      var s = new RoleSpecialEnergyBar_1.RoleSpecialEnergyBar();
       this._mt.set(i, s);
       let e = this.RootItem;
       t.IsPhantom() && (e = this.hmt), await s.InitAsync(e, t);
     }
   }
   cmt() {
-    for (const [e, t] of this._mt)
+    for (var [e, t] of this._mt)
       e === this.E0 ? (t.SetVisible(!0), (this.lmt = t)) : t.SetVisible(!1);
   }
 }
 exports.SpecialEnergyBarContainer = SpecialEnergyBarContainer;
-// # sourceMappingURL=SpecialEnergyBarContainer.js.map
+//# sourceMappingURL=SpecialEnergyBarContainer.js.map

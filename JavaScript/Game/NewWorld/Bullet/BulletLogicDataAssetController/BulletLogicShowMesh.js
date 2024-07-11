@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletLogicShowMesh = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EffectModelHelper_1 = require("../../../Render/Effect/Data/EffectModelHelper");
-const BulletLogicController_1 = require("./BulletLogicController");
-const MIN_LOD = 99;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EffectModelHelper_1 = require("../../../Render/Effect/Data/EffectModelHelper"),
+  BulletLogicController_1 = require("./BulletLogicController"),
+  MIN_LOD = 99;
 class BulletLogicShowMesh extends BulletLogicController_1.BulletLogicController {
   constructor(t, e) {
     super(t, e),
@@ -40,7 +40,7 @@ class BulletLogicShowMesh extends BulletLogicController_1.BulletLogicController 
   }
   H9o() {
     if (this._9o.Target) {
-      let t = this._9o.Target.GetComponent(3).Actor.Mesh;
+      var t = this._9o.Target.GetComponent(3).Actor.Mesh;
       if (((this.F9o = this.Q9o(t)), this.F9o))
         return (
           (t = (0, puerts_1.$ref)(new UE.HitResult())),
@@ -64,7 +64,7 @@ class BulletLogicShowMesh extends BulletLogicController_1.BulletLogicController 
     return !1;
   }
   Q9o(t) {
-    let e = void 0;
+    var e = void 0;
     return (
       (e = EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
         this._9o.Actor,
@@ -90,9 +90,9 @@ class BulletLogicShowMesh extends BulletLogicController_1.BulletLogicController 
           Log_1.Log.Error("Battle", 4, "BulletLogicShowMesh中渲染组件添加失败");
   }
   W9o() {
-    let t = this.Bullet.GetBulletInfo().Target;
+    var t = this.Bullet.GetBulletInfo().Target;
     if (t) {
-      let e = t.GetComponent(69);
+      var e = t.GetComponent(69);
       if (e) {
         (e = e.GetWeaponMesh()),
           (t = t.GetComponent(0).GetRoleConfig().WeaponScale);
@@ -100,7 +100,7 @@ class BulletLogicShowMesh extends BulletLogicController_1.BulletLogicController 
         let i = 0;
         const o = [1, 2, 3, 4, 5];
         e.CharacterWeapons.forEach((t) => {
-          let e;
+          var e;
           t.WeaponHidden ||
             ((e = void 0),
             (e = EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
@@ -123,7 +123,7 @@ class BulletLogicShowMesh extends BulletLogicController_1.BulletLogicController 
   }
   K9o() {
     const e = this.u9o.MaterialEffect.AssetPathName?.toString();
-    e !== "" &&
+    "" !== e &&
       ResourceSystem_1.ResourceSystem.LoadAsync(
         e,
         UE.PD_CharacterControllerData_C,
@@ -141,11 +141,11 @@ class BulletLogicShowMesh extends BulletLogicController_1.BulletLogicController 
       );
   }
   X9o(t, e, i) {
-    const s = new UE.Transform();
+    var s = new UE.Transform();
     s.SetScale3D(i),
       t.K2_AttachToComponent(this.F9o, e, 0, 0, 0, !0),
       t.K2_SetRelativeTransform(s, !1, void 0, !0);
   }
 }
 exports.BulletLogicShowMesh = BulletLogicShowMesh;
-// # sourceMappingURL=BulletLogicShowMesh.js.map
+//# sourceMappingURL=BulletLogicShowMesh.js.map

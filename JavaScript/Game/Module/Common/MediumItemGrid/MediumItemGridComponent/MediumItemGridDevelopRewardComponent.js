@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MediumItemGridDevelopRewardComponent = exports.DevelopRewardItem =
     void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const GenericLayoutNew_1 = require("../../../Util/Layout/GenericLayoutNew");
-const MediumItemGridComponent_1 = require("./MediumItemGridComponent");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  GenericLayoutNew_1 = require("../../../Util/Layout/GenericLayoutNew"),
+  MediumItemGridComponent_1 = require("./MediumItemGridComponent");
 class DevelopRewardItem extends UiPanelBase_1.UiPanelBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -67,4 +67,4 @@ class MediumItemGridDevelopRewardComponent extends MediumItemGridComponent_1.Med
 }
 exports.MediumItemGridDevelopRewardComponent =
   MediumItemGridDevelopRewardComponent;
-// # sourceMappingURL=MediumItemGridDevelopRewardComponent.js.map
+//# sourceMappingURL=MediumItemGridDevelopRewardComponent.js.map

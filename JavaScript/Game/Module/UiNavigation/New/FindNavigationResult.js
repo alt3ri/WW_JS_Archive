@@ -6,14 +6,14 @@ class FindNavigationResult {
     (this.Result = 0), (this.Listener = void 0);
   }
   IsFindNavigation() {
-    return this.Result === 1;
+    return 1 === this.Result;
   }
   IsInLoopingProcess() {
-    return this.Result === 4;
+    return 4 === this.Result;
   }
   IsNotFindNavigation() {
-    return this.Result === 2;
+    return 2 === this.Result;
   }
 }
 exports.FindNavigationResult = FindNavigationResult;
-// # sourceMappingURL=FindNavigationResult.js.map
+//# sourceMappingURL=FindNavigationResult.js.map

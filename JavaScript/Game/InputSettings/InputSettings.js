@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputSettings = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const FNameUtil_1 = require("../../Core/Utils/FNameUtil");
-const ConfigManager_1 = require("../Manager/ConfigManager");
-const ModelManager_1 = require("../Manager/ModelManager");
-const InputActionKey_1 = require("./Key/InputActionKey");
-const InputAxisKey_1 = require("./Key/InputAxisKey");
-const InputCombinationActionKey_1 = require("./Key/InputCombinationActionKey");
-const InputCombinationAxisKey_1 = require("./Key/InputCombinationAxisKey");
-const InputKey_1 = require("./Key/InputKey");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  FNameUtil_1 = require("../../Core/Utils/FNameUtil"),
+  ConfigManager_1 = require("../Manager/ConfigManager"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  InputActionKey_1 = require("./Key/InputActionKey"),
+  InputAxisKey_1 = require("./Key/InputAxisKey"),
+  InputCombinationActionKey_1 = require("./Key/InputCombinationActionKey"),
+  InputCombinationAxisKey_1 = require("./Key/InputCombinationAxisKey"),
+  InputKey_1 = require("./Key/InputKey");
 class InputSettings {
   static Initialize() {
     Log_1.Log.CheckInfo() &&
@@ -32,18 +32,18 @@ class InputSettings {
     this.q9s(), this.G9s(), this.O9s();
   }
   static q9s() {
-    const e = this.GetActionNames();
+    var e = this.GetActionNames();
     for (let t = 0; t < e.Num(); t++) {
-      const n = e.Get(t);
-      const s =
-        ((this.MSe = (0, puerts_1.$ref)(void 0)),
-        this.CSe.GetActionMappingByName(n, this.MSe),
-        (0, puerts_1.$unref)(this.MSe));
+      var n = e.Get(t),
+        s =
+          ((this.MSe = (0, puerts_1.$ref)(void 0)),
+          this.CSe.GetActionMappingByName(n, this.MSe),
+          (0, puerts_1.$unref)(this.MSe));
       let i = this.ESe.get(n.toString());
       i || ((i = new Map()), this.ESe.set(n.toString(), i));
       for (let t = 0; t < s.Num(); t++) {
-        let a = s.Get(t);
-        const o = a.Key.KeyName.toString();
+        var a = s.Get(t),
+          o = a.Key.KeyName.toString();
         this.TSe(o),
           i.get(o)?.IsEqual(a) ||
             ((a =
@@ -54,17 +54,17 @@ class InputSettings {
     }
   }
   static G9s() {
-    const e = this.GetAxisNames();
+    var e = this.GetAxisNames();
     for (let t = 0; t < e.Num(); t++) {
-      const n = e.Get(t);
-      const s =
-        (this.CSe.GetAxisMappingByName(n, this.SSe),
-        (0, puerts_1.$unref)(this.SSe));
+      var n = e.Get(t),
+        s =
+          (this.CSe.GetAxisMappingByName(n, this.SSe),
+          (0, puerts_1.$unref)(this.SSe));
       let i = this.ySe.get(n.toString());
       i || ((i = new Map()), this.ySe.set(n.toString(), i));
       for (let t = 0; t < s.Num(); t++) {
-        let a = s.Get(t);
-        const o = a.Key.KeyName.toString();
+        var a = s.Get(t),
+          o = a.Key.KeyName.toString();
         this.TSe(o),
           i.get(o)?.IsEqual(a) ||
             ((a = InputAxisKey_1.InputAxisKey.NewByInputAxisKeyMapping(a)),
@@ -85,7 +85,7 @@ class InputSettings {
       );
     t = this.LSe.get(t);
     if (t) {
-      const s = t.get(e);
+      var s = t.get(e);
       if (s) {
         let i = -1;
         for (let t = 0; t < s.length; t++)
@@ -93,7 +93,7 @@ class InputSettings {
             i = t;
             break;
           }
-        i >= 0 && s?.splice(i, 1), s.length <= 0 && t.delete(e);
+        0 <= i && s?.splice(i, 1), s.length <= 0 && t.delete(e);
       }
     }
   }
@@ -119,26 +119,26 @@ class InputSettings {
   static O9s() {
     this.RSe.clear();
     for (const p of ConfigManager_1.ConfigManager.InputSettingsConfig.GetAllCombinationAxisConfig()) {
-      var t;
-      var i;
-      var e;
-      var n;
-      const s = p.AxisName;
-      const a = p.SecondaryKeyScaleMap;
+      var t,
+        i,
+        e,
+        n,
+        s = p.AxisName,
+        a = p.SecondaryKeyScaleMap;
       for ([t, i] of p.PcKeyMap) {
-        const o = a.get(t);
+        var o = a.get(t);
         this.DSe(s, i, t, o);
       }
       for ([e, n] of p.GamepadKeyMap) {
-        const r = a.get(e);
+        var r = a.get(e);
         this.DSe(s, n, e, r);
       }
     }
   }
   static DSe(t, i, e, n) {
     this.TSe(i), this.TSe(e);
-    let s = this.RSe.get(t);
-    let a = (s || ((s = new Map()), this.RSe.set(t, s)), s.get(i));
+    let s = this.RSe.get(t),
+      a = (s || ((s = new Map()), this.RSe.set(t, s)), s.get(i));
     a || ((a = []), s.set(i, a));
     t = InputCombinationAxisKey_1.InputCombinationAxisKey.New(t, i, e, n);
     a.push(t);
@@ -150,7 +150,7 @@ class InputSettings {
     this.USe.has(t) || this.ASe(t);
   }
   static ASe(t) {
-    const i = new InputKey_1.InputKey(t);
+    var i = new InputKey_1.InputKey(t);
     this.USe.set(t, i);
   }
   static ISe() {
@@ -170,21 +170,21 @@ class InputSettings {
     return !!t && t.IsInputKeyDown();
   }
   static IsKeyboardKey(t) {
-    let i = this.GetKey(t);
+    var i = this.GetKey(t);
     return i
       ? i.IsKeyboardKey
       : ((i = new UE.Key(new UE.FName(t))),
         UE.KismetInputLibrary.Key_IsKeyboardKey(i));
   }
   static IsGamepadKey(t) {
-    let i = this.GetKey(t);
+    var i = this.GetKey(t);
     return i
       ? i.IsGamepadKey
       : ((i = new UE.Key(new UE.FName(t))),
         UE.KismetInputLibrary.Key_IsGamepadKey(i));
   }
   static IsMouseButton(t) {
-    let i = this.GetKey(t);
+    var i = this.GetKey(t);
     return i
       ? i.IsMouseButton
       : ((i = new UE.Key(new UE.FName(t))),
@@ -192,20 +192,20 @@ class InputSettings {
   }
   static IsValidKey(t) {
     return (
-      t !== "Keyboard_Invalid" &&
-      t !== "Gamepad_Invalid" &&
-      t !== "GenericUSBController_ButtonInvalid"
+      "Keyboard_Invalid" !== t &&
+      "Gamepad_Invalid" !== t &&
+      "GenericUSBController_ButtonInvalid" !== t
     );
   }
   static GetKeyIconPath(t) {
-    const i = this.GetKey(t);
+    var i = this.GetKey(t);
     if (i) {
-      let e;
-      const n = ConfigManager_1.ConfigManager.InputSettingsConfig;
+      var e,
+        n = ConfigManager_1.ConfigManager.InputSettingsConfig;
       if (i.IsKeyboardKey || i.IsMouseButton)
         return (e = n?.GetPcKeyConfig(t)) ? e.KeyIconPath : void 0;
       if (i.IsGamepadKey) {
-        const s = n?.GetGamepadKeyConfig(t);
+        var s = n?.GetGamepadKeyConfig(t);
         if (!s) return;
         switch (ModelManager_1.ModelManager.PlatformModel.PlatformType) {
           case 6:
@@ -268,9 +268,9 @@ class InputSettings {
   static RemoveActionMappingByCondition(t, i) {
     if (i)
       if (this.CSe?.IsValid()) {
-        const e = this.GetInputActionKeyMap(t);
+        var e = this.GetInputActionKeyMap(t);
         if (e) {
-          const n = [];
+          var n = [];
           for (const s of e.values()) i(s.KeyName) && n.push(s);
           for (const a of n) this.wSe(a, e);
         }
@@ -287,7 +287,7 @@ class InputSettings {
         Log_1.Log.Error("InputSettings", 8, "请使用RemoveActionMapping");
   }
   static RemoveActionMapping(t, i) {
-    let e, n;
+    var e, n;
     this.CSe?.IsValid()
       ? (e = this.GetInputActionKeyMap(t)) &&
         ((n = e.get(i))
@@ -317,7 +317,7 @@ class InputSettings {
         );
   }
   static wSe(t, i) {
-    const e = t.KeyName;
+    var e = t.KeyName;
     this.CSe.RemoveActionMapping(t.ToUeInputActionKeyMapping()), i.delete(e);
   }
   static ClearActionMapping(t) {
@@ -369,13 +369,13 @@ class InputSettings {
           ["actionName", t],
           ["keys", i],
         );
-      let e;
-      let n;
-      const s = this.GetInputAxisKeyMap(t);
+      var e,
+        n,
+        s = this.GetInputAxisKeyMap(t);
       if (s) {
-        const a = [];
+        var a = [];
         for (const p of s.values()) {
-          const o = p.KeyName;
+          var o = p.KeyName;
           (i.has(o) && p.Scale === i.get(o)) || a.push(p);
         }
         for (const g of a)
@@ -390,7 +390,7 @@ class InputSettings {
             this.BSe(g, s);
       }
       for ([e, n] of i) {
-        const r = this.GetInputAxisKey(t, e);
+        var r = this.GetInputAxisKey(t, e);
         (r && r.Scale === i.get(e)) ||
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -441,9 +441,9 @@ class InputSettings {
   static RemoveAxisMappingByCondition(t, i) {
     if (i)
       if (this.CSe?.IsValid()) {
-        const e = this.GetInputAxisKeyMap(t);
+        var e = this.GetInputAxisKeyMap(t);
         if (e) {
-          const n = [];
+          var n = [];
           for (const s of e.values()) i(s.KeyName) && n.push(s);
           for (const a of n) this.BSe(a, e);
         }
@@ -460,7 +460,7 @@ class InputSettings {
         Log_1.Log.Error("InputSettings", 8, "请使用RemoveActionMapping");
   }
   static RemoveAxisMapping(t, i) {
-    let e, n;
+    var e, n;
     this.CSe?.IsValid()
       ? (e = this.GetInputAxisKeyMap(t)) &&
         ((n = e.get(i))
@@ -490,11 +490,11 @@ class InputSettings {
         );
   }
   static BSe(t, i) {
-    const e = t.KeyName;
+    var e = t.KeyName;
     this.CSe.RemoveAxisMapping(t.ToUeInputAxisKeyMapping()), i.delete(e);
   }
   static ClearAxisMapping(t) {
-    const i = this.GetInputAxisKeyMap(t);
+    var i = this.GetInputAxisKeyMap(t);
     if (i) {
       for (const e of i.values())
         this.CSe.RemoveAxisMapping(e.ToUeInputAxisKeyMapping());
@@ -558,4 +558,4 @@ class InputSettings {
   (InputSettings.vSe = (0, puerts_1.$ref)(void 0)),
   (InputSettings.MSe = (0, puerts_1.$ref)(void 0)),
   (InputSettings.SSe = (0, puerts_1.$ref)(void 0));
-// # sourceMappingURL=InputSettings.js.map
+//# sourceMappingURL=InputSettings.js.map

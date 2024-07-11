@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SilentAreaInfoPanel = void 0);
-const UE = require("ue");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const BattleChildView_1 = require("../BattleChildView/BattleChildView");
-const SilentAreaInfoItem_1 = require("./SilentAreaInfoItem");
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  BattleChildView_1 = require("../BattleChildView/BattleChildView"),
+  SilentAreaInfoItem_1 = require("./SilentAreaInfoItem");
 class SilentAreaInfoPanel extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
@@ -25,8 +25,8 @@ class SilentAreaInfoPanel extends BattleChildView_1.BattleChildView {
     super.Initialize(e);
   }
   async InitializeAsync() {
-    const e = this.GetItem(1);
-    const t = new SilentAreaInfoItem_1.SilentAreaInfoItem();
+    var e = this.GetItem(1),
+      t = new SilentAreaInfoItem_1.SilentAreaInfoItem();
     await t.CreateByActorAsync(e.GetOwner()), this.e4.push(t);
   }
   OnRegisterComponent() {
@@ -40,7 +40,7 @@ class SilentAreaInfoPanel extends BattleChildView_1.BattleChildView {
       this.RootItem?.SetAnchorOffsetY(0),
       (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
       this.EPe.BindSequenceCloseEvent((e) => {
-        e === "Close" && this.SetActive(!1);
+        "Close" === e && this.SetActive(!1);
       });
   }
   CreateAndShow(e, t, i) {
@@ -60,8 +60,8 @@ class SilentAreaInfoPanel extends BattleChildView_1.BattleChildView {
     if (this.xct) {
       const h = this.xct.ShowInfo.InformationConfig;
       for (let t = 0; t < h.length; t++) {
-        var i;
-        const s = h[t];
+        var i,
+          s = h[t];
         let e = void 0;
         t < this.e4.length
           ? (e = this.e4[t]).UpdateItem(s)
@@ -85,4 +85,4 @@ class SilentAreaInfoPanel extends BattleChildView_1.BattleChildView {
   }
 }
 exports.SilentAreaInfoPanel = SilentAreaInfoPanel;
-// # sourceMappingURL=SilentAreaInfoPanel.js.map
+//# sourceMappingURL=SilentAreaInfoPanel.js.map

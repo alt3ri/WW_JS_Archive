@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const TsUiSceneRoleActor_1 = require("../Module/UiComponent/TsUiSceneRoleActor");
-const UiCalabashAnsContext_1 = require("../Module/UiModel/UiModelComponent/Common/UiModelAns/UiAnimNotifyStateContext/UiCalabashAnsContext");
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  TsUiSceneRoleActor_1 = require("../Module/UiComponent/TsUiSceneRoleActor"),
+  UiCalabashAnsContext_1 = require("../Module/UiModel/UiModelComponent/Common/UiModelAns/UiAnimNotifyStateContext/UiCalabashAnsContext");
 class TsAnimNotifyStateShowUiCalabash extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -12,7 +12,7 @@ class TsAnimNotifyStateShowUiCalabash extends UE.KuroAnimNotifyState {
       (this.UiCalabashAnsContext = void 0);
   }
   K2_NotifyBegin(e, t, o) {
-    let i;
+    var i;
     return (
       this.Socket
         ? (i = e.GetOwner()) instanceof TsUiSceneRoleActor_1.default &&
@@ -38,7 +38,7 @@ class TsAnimNotifyStateShowUiCalabash extends UE.KuroAnimNotifyState {
   }
   K2_NotifyEnd(e, t) {
     if (this.Socket) {
-      const o = e.GetOwner();
+      var o = e.GetOwner();
       if (o instanceof TsUiSceneRoleActor_1.default) {
         if (!this.UiCalabashAnsContext)
           return (
@@ -71,4 +71,4 @@ class TsAnimNotifyStateShowUiCalabash extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateShowUiCalabash;
-// # sourceMappingURL=TsAnimNotifyStateShowUiCalabash.js.map
+//# sourceMappingURL=TsAnimNotifyStateShowUiCalabash.js.map

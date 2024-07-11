@@ -49,23 +49,23 @@ class GachaEffectConfig {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   times() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   quality() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   finalshowsequencepath(t) {
-    const s = this.J7.__offset(this.z7, 10);
+    var s = this.J7.__offset(this.z7, 10);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   defaultcolor(t) {
-    const s = this.J7.__offset(this.z7, 12);
+    var s = this.J7.__offset(this.z7, 12);
     return s
       ? (t || new Color_1.Color()).__init(
           this.J7.__indirect(this.z7 + s),
@@ -74,7 +74,7 @@ class GachaEffectConfig {
       : null;
   }
   finalcolor(t) {
-    const s = this.J7.__offset(this.z7, 14);
+    var s = this.J7.__offset(this.z7, 14);
     return s
       ? (t || new Color_1.Color()).__init(
           this.J7.__indirect(this.z7 + s),
@@ -83,25 +83,25 @@ class GachaEffectConfig {
       : null;
   }
   defaultprocess() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   changecolorprocess() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   completechangecolorprocess() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   playsequenceprocess() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   slidecurveassetpath(t) {
-    const s = this.J7.__offset(this.z7, 24);
+    var s = this.J7.__offset(this.z7, 24);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
 }
 exports.GachaEffectConfig = GachaEffectConfig;
-// # sourceMappingURL=GachaEffectConfig.js.map
+//# sourceMappingURL=GachaEffectConfig.js.map

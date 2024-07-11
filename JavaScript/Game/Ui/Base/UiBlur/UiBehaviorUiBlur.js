@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiBehaviourUiBlur = void 0);
-const UiLayerType_1 = require("../../Define/UiLayerType");
-const UiBlurLogic_1 = require("./UiBlurLogic");
+const UiLayerType_1 = require("../../Define/UiLayerType"),
+  UiBlurLogic_1 = require("./UiBlurLogic");
 class UiBehaviourUiBlur {
   constructor() {
     (this.w1r = void 0), (this.CurrentView = void 0), (this.uFs = !1);
   }
   OnAfterUiStart() {
-    (this.w1r & UiLayerType_1.UIBLUR_TYPE) != 0 &&
+    0 != (this.w1r & UiLayerType_1.UIBLUR_TYPE) &&
       ((this.uFs = !0),
       UiBlurLogic_1.UiBlurLogic.SetNormalUiRenderAfterBlur(this.CurrentView));
   }
@@ -32,4 +32,4 @@ class UiBehaviourUiBlur {
   }
 }
 exports.UiBehaviourUiBlur = UiBehaviourUiBlur;
-// # sourceMappingURL=UiBehaviorUiBlur.js.map
+//# sourceMappingURL=UiBehaviorUiBlur.js.map

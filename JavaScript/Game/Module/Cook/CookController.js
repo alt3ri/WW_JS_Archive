@@ -1,28 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CookController = void 0);
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const Net_1 = require("../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiTimeDilation_1 = require("../../Ui/Base/UiTimeDilation");
-const UiManager_1 = require("../../Ui/UiManager");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
-const ItemRewardController_1 = require("../ItemReward/ItemRewardController");
-const RewardItemData_1 = require("../ItemReward/RewardData/RewardItemData");
-const CookDefine_1 = require("./CookDefine");
+const CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiTimeDilation_1 = require("../../Ui/Base/UiTimeDilation"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  ItemRewardController_1 = require("../ItemReward/ItemRewardController"),
+  RewardItemData_1 = require("../ItemReward/RewardData/RewardItemData"),
+  CookDefine_1 = require("./CookDefine");
 class CookController extends UiControllerBase_1.UiControllerBase {
   static get CookCoinId() {
     return (
@@ -86,7 +86,7 @@ class CookController extends UiControllerBase_1.UiControllerBase {
     Net_1.Net.UnRegister(20008), Net_1.Net.UnRegister(2822);
   }
   static CheckCanShowExpItem() {
-    return ModelManager_1.ModelManager.CookModel.GetCookerInfo().AddExp !== 0;
+    return 0 !== ModelManager_1.ModelManager.CookModel.GetCookerInfo().AddExp;
   }
   static qbt(e) {
     ModelManager_1.ModelManager.CookModel.CreateCookerInfo(e.ZTs),
@@ -100,7 +100,7 @@ class CookController extends UiControllerBase_1.UiControllerBase {
   static SendCookingDataRequest() {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Cook", 50, "10260_客户端请求烹饪系统相关数据");
-    const e = new Protocol_1.Aki.Protocol.TXn();
+    var e = new Protocol_1.Aki.Protocol.TXn();
     Net_1.Net.Call(6079, e, (e) => {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Cook", 50, "10260_返回请求烹饪系统相关数据"),
@@ -127,8 +127,8 @@ class CookController extends UiControllerBase_1.UiControllerBase {
         50,
         "10260_客户端请求烹饪系统相关数据(异步刷新用)",
       );
-    var e = new Protocol_1.Aki.Protocol.TXn();
-    var e = await Net_1.Net.CallAsync(6079, e);
+    var e = new Protocol_1.Aki.Protocol.TXn(),
+      e = await Net_1.Net.CallAsync(6079, e);
     return e.Kms === Protocol_1.Aki.Protocol.lkn.Sys
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
@@ -150,10 +150,10 @@ class CookController extends UiControllerBase_1.UiControllerBase {
         !1);
   }
   static SendCookFormulaRequest(t) {
-    const e = new Protocol_1.Aki.Protocol.CXn();
+    var e = new Protocol_1.Aki.Protocol.CXn();
     (e.G4n = t),
       Net_1.Net.Call(11955, Protocol_1.Aki.Protocol.CXn.create(e), (e) => {
-        let o;
+        var o;
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Cook", 50, "10252_食物配方解锁请求返回"),
           e.Kms === Protocol_1.Aki.Protocol.lkn.Sys
@@ -177,14 +177,14 @@ class CookController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static SendCookFoodRequest(e, o, t) {
-    const r = new Protocol_1.Aki.Protocol.fXn();
+    var r = new Protocol_1.Aki.Protocol.fXn();
     (r.Ekn = e),
       (r.l3n = o),
       (r.O4n = t),
       (r.N4n =
         ModelManager_1.ModelManager.CookModel.CurrentInteractCreatureDataLongId),
       Net_1.Net.Call(22732, Protocol_1.Aki.Protocol.fXn.create(r), (e) => {
-        let o;
+        var o;
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Cook", 50, "10254_食物烹饪请求返回"),
           e.Kms === Protocol_1.Aki.Protocol.lkn.Sys
@@ -192,7 +192,7 @@ class CookController extends UiControllerBase_1.UiControllerBase {
                 e.Ekn,
               )) && (o.LastRoleId = e.l3n),
               (o = e.QTs),
-              e.YTs.length !== 0 && o.push(...e.YTs),
+              0 !== e.YTs.length && o.push(...e.YTs),
               ModelManager_1.ModelManager.CookModel.UpdateCookItemList(o),
               CookController.Gbt(e),
               CookController.PlayCookSuccessDisplay(() => {
@@ -214,14 +214,14 @@ class CookController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static Gbt(e) {
-    const o = ModelManager_1.ModelManager.CookModel;
-    var t = o.GetCookerInfo();
-    const r = t.CookingLevel;
-    const n = o.GetCookerMaxLevel();
-    var a = o.GetCookLevelByLevel(n);
-    var t = t.TotalProficiencys;
-    var a = a.Completeness;
-    const i = o.LastExp;
+    var o = ModelManager_1.ModelManager.CookModel,
+      t = o.GetCookerInfo(),
+      r = t.CookingLevel,
+      n = o.GetCookerMaxLevel(),
+      a = o.GetCookLevelByLevel(n),
+      t = t.TotalProficiencys,
+      a = a.Completeness,
+      i = o.LastExp;
     let _ = void 0;
     i !== t &&
       (i < a || (r < n && t < a)) &&
@@ -232,30 +232,30 @@ class CookController extends UiControllerBase_1.UiControllerBase {
       }),
       (_ = [a])),
       (o.LastExp = t);
-    const l = [];
+    var l = [];
     for (const g of e.QTs) {
-      const C = new RewardItemData_1.RewardItemData(g.G3n, g.k4n);
+      var C = new RewardItemData_1.RewardItemData(g.G3n, g.k4n);
       l.push(C);
     }
     for (const M of e.YTs) {
-      const s = new RewardItemData_1.RewardItemData(M.G3n, M.k4n);
+      var s = new RewardItemData_1.RewardItemData(M.G3n, M.k4n);
       l.push(s);
     }
     ItemRewardController_1.ItemRewardController.SetItemList(l),
       ItemRewardController_1.ItemRewardController.SetProgressQueue(_);
   }
   static Nbt(e) {
-    const o = new Array();
+    var o = new Array();
     for (const t of e) t.m3n && o.push(t);
     return o;
   }
   static SendFoodProcessRequest(e, o, t) {
-    const r = new Protocol_1.Aki.Protocol.pXn();
+    var r = new Protocol_1.Aki.Protocol.pXn();
     (r.Ekn = e),
       (r.F4n = CookController.Nbt(o)),
       (r.O4n = t),
       Net_1.Net.Call(11711, Protocol_1.Aki.Protocol.pXn.create(r), (e) => {
-        let o, t;
+        var o, t;
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Cook", 50, "10256_食物加工返回"),
           e.Kms === Protocol_1.Aki.Protocol.lkn.Sys
@@ -264,7 +264,7 @@ class CookController extends UiControllerBase_1.UiControllerBase {
               )),
               (t = e.jTs),
               o &&
-                ((o.IsUnLock = t), e.zTs.length !== 0) &&
+                ((o.IsUnLock = t), 0 !== e.zTs.length) &&
                 (o.UnlockList = e.zTs),
               ModelManager_1.ModelManager.CookModel.UpdateCookItemList(e.JTs),
               t
@@ -293,7 +293,7 @@ class CookController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static SendCertificateLevelRewardRequest() {
-    const e = new Protocol_1.Aki.Protocol.SXn();
+    var e = new Protocol_1.Aki.Protocol.SXn();
     Net_1.Net.Call(19617, Protocol_1.Aki.Protocol.SXn.create(e), (e) => {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Cook", 50, "10258_领取厨师等级奖励返回"),
@@ -308,7 +308,7 @@ class CookController extends UiControllerBase_1.UiControllerBase {
     });
   }
   static SendFixToolRequest(o, e) {
-    const t = new Protocol_1.Aki.Protocol.dXn();
+    var t = new Protocol_1.Aki.Protocol.dXn();
     (t.V4n = o),
       (t.rkn = e),
       Net_1.Net.Call(9116, Protocol_1.Aki.Protocol.dXn.create(t), (e) => {
@@ -327,7 +327,7 @@ class CookController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static SendInteractiveUpdateRequest(e) {
-    const o = new Protocol_1.Aki.Protocol.RXn();
+    var o = new Protocol_1.Aki.Protocol.RXn();
     (o.H4n = e),
       Net_1.Net.Call(20676, Protocol_1.Aki.Protocol.RXn.create(o), (e) => {
         Log_1.Log.CheckDebug() &&
@@ -360,10 +360,9 @@ class CookController extends UiControllerBase_1.UiControllerBase {
     for (const t of ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
       e,
     ).ConsumeItemsId) {
-      const o =
-        ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-          t.ItemId,
-        );
+      var o = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+        t.ItemId,
+      );
       if (t.Count > o) return !1;
     }
     return !0;
@@ -382,7 +381,7 @@ class CookController extends UiControllerBase_1.UiControllerBase {
   }
   static Obt(e, o) {
     for (const r of o) {
-      const t = e * r.Count;
+      var t = e * r.Count;
       if (
         ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
           r.ItemId,
@@ -408,10 +407,10 @@ class CookController extends UiControllerBase_1.UiControllerBase {
     let o =
       CommonParamById_1.configCommonParamById.GetIntConfig("max_cooking_count");
     for (const n of e) {
-      const t = n.Count;
-      let r = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-        n.ItemId,
-      );
+      var t = n.Count,
+        r = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+          n.ItemId,
+        );
       if (r < t) return 0;
       r = MathUtils_1.MathUtils.GetFloatPointFloor(r / t, 0);
       o = o < r ? o : r;
@@ -424,7 +423,7 @@ class CookController extends UiControllerBase_1.UiControllerBase {
     ).RoleList.includes(e);
   }
   static CheckIsBuffEx(e, o) {
-    const t = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(o);
+    var t = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(o);
     if (!t.RoleList.includes(e))
       for (const r of ModelManager_1.ModelManager.RoleModel.GetRoleIdList())
         if (t.RoleList.includes(r)) return !0;
@@ -436,7 +435,7 @@ class CookController extends UiControllerBase_1.UiControllerBase {
     for (const t of ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillList(
       e.SkillId,
     ))
-      t.LeftSkillEffect !== 0 &&
+      0 !== t.LeftSkillEffect &&
         (o = StringUtils_1.StringUtils.Format(
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.SkillDescribe),
           ...t.SkillDetailNum,
@@ -447,8 +446,9 @@ class CookController extends UiControllerBase_1.UiControllerBase {
     for (const o of ConfigManager_1.ConfigManager.CookConfig.GetCookFixToolById(
       CookController.GetCurrentFixId(),
     ).Items) {
-      const e =
-        ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(o[0]);
+      var e = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+        o[0],
+      );
       if (o[1] > e) return !1;
     }
     return !0;
@@ -462,10 +462,9 @@ class CookController extends UiControllerBase_1.UiControllerBase {
   static CheckTmpListHasLock() {
     for (const o of ModelManager_1.ModelManager.CookModel.GetTmpMachiningItemList()) {
       if (!o.m3n) return !0;
-      const e =
-        ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-          o.G3n,
-        );
+      var e = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+        o.G3n,
+      );
       if (o.k4n > e) return !0;
     }
     return !1;
@@ -476,12 +475,12 @@ class CookController extends UiControllerBase_1.UiControllerBase {
     ).UnlockList.includes(o);
   }
   static CheckCanGetCookerLevel() {
-    const e = ModelManager_1.ModelManager.CookModel.GetCookerInfo();
+    var e = ModelManager_1.ModelManager.CookModel.GetCookerInfo();
     if (
       e.CookingLevel !==
       ModelManager_1.ModelManager.CookModel.GetCookerMaxLevel()
     ) {
-      const o = ModelManager_1.ModelManager.CookModel.GetSumExpByLevel(
+      var o = ModelManager_1.ModelManager.CookModel.GetSumExpByLevel(
         e.CookingLevel,
       );
       if (e.TotalProficiencys >= o) return !0;
@@ -489,35 +488,34 @@ class CookController extends UiControllerBase_1.UiControllerBase {
     return !1;
   }
   static async ShowFixCookView() {
-    const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(107);
-    var o =
-      ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
-        "UnlockTitle",
-      );
-    var o = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(o);
-    var o =
-      (e.SetTitle(o),
-      ConfigManager_1.ConfigManager.CookConfig.GetCookFixToolById(
-        CookController.GetCurrentFixId(),
-      ));
-    const t = ConfigManager_1.ConfigManager.CookConfig.GetLocalText(
-      o.Description,
-    );
-    let r = 0;
-    let n = "";
+    var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(107),
+      o =
+        ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
+          "UnlockTitle",
+        ),
+      o = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(o),
+      o =
+        (e.SetTitle(o),
+        ConfigManager_1.ConfigManager.CookConfig.GetCookFixToolById(
+          CookController.GetCurrentFixId(),
+        )),
+      t = ConfigManager_1.ConfigManager.CookConfig.GetLocalText(o.Description);
+    let r = 0,
+      n = "";
     for (const C of o.Items) {
       r = C[1];
-      const a = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(C[0]);
+      var a = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(C[0]);
       n = ConfigManager_1.ConfigManager.CookConfig.GetLocalText(a.Name);
     }
     e.SetTextArgs(r.toString(), n, t);
-    var o = CookController.CheckCanFix();
-    const i = (e.InteractionMap.set(2, o), new Map());
+    var o = CookController.CheckCanFix(),
+      i = (e.InteractionMap.set(2, o), new Map());
     for (const s of ConfigManager_1.ConfigManager.CookConfig.GetCookFixToolById(
       CookController.GetCurrentFixId(),
     ).Items) {
-      const _ =
-        ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(s[0]);
+      var _ = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+        s[0],
+      );
       i.set(s[0], _);
     }
     (e.ItemIdMap = i),
@@ -540,8 +538,8 @@ class CookController extends UiControllerBase_1.UiControllerBase {
   }
   static PlayCookSuccessDisplay(e) {
     this.ClearCookDisplay();
-    let o;
-    const t = this.Fbt();
+    var o,
+      t = this.Fbt();
     t
       ? ((o = UiManager_1.UiManager.GetViewByName("CookRootView")) &&
           UiTimeDilation_1.UiTimeDilation.SetGameTimeDilation({
@@ -560,7 +558,7 @@ class CookController extends UiControllerBase_1.UiControllerBase {
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnPlayCookSuccessDisplayFinished,
           );
-          const e = UiManager_1.UiManager.GetViewByName("CookRootView");
+          var e = UiManager_1.UiManager.GetViewByName("CookRootView");
           e &&
             UiTimeDilation_1.UiTimeDilation.SetGameTimeDilation({
               ViewId: e.GetViewId(),
@@ -579,8 +577,8 @@ class CookController extends UiControllerBase_1.UiControllerBase {
   }
   static PlayCookFailDisplay(e) {
     this.ClearCookDisplay();
-    let o;
-    const t = this.Fbt();
+    var o,
+      t = this.Fbt();
     t &&
       ((o = UiManager_1.UiManager.GetViewByName("CookRootView")) &&
         UiTimeDilation_1.UiTimeDilation.SetGameTimeDilation({
@@ -599,7 +597,7 @@ class CookController extends UiControllerBase_1.UiControllerBase {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnPlayCookFailDisplayFinished,
         );
-        const e = UiManager_1.UiManager.GetViewByName("CookRootView");
+        var e = UiManager_1.UiManager.GetViewByName("CookRootView");
         e &&
           UiTimeDilation_1.UiTimeDilation.SetGameTimeDilation({
             ViewId: e.GetViewId(),
@@ -615,7 +613,7 @@ class CookController extends UiControllerBase_1.UiControllerBase {
     this.IsPlayingFailDisplay && (this.jbt && this.jbt(), (this.jbt = void 0));
   }
   static ClearCookDisplay() {
-    const e = this.Fbt();
+    var e = this.Fbt();
     e && (e.RemoveTag(2014138653), e.RemoveTag(-269686894)),
       this.Hbt &&
         TimerSystem_1.TimerSystem.Has(this.Hbt) &&
@@ -626,7 +624,7 @@ class CookController extends UiControllerBase_1.UiControllerBase {
       (this.jbt = void 0);
   }
   static Fbt() {
-    let e =
+    var e =
       ModelManager_1.ModelManager.InteractionModel.CurrentInteractEntityId;
     if (e) {
       e = EntitySystem_1.EntitySystem.Get(e);
@@ -660,4 +658,4 @@ class CookController extends UiControllerBase_1.UiControllerBase {
   (CookController.bbt = () => {
     ModelManager_1.ModelManager.CookModel.CreateMachiningDataList();
   });
-// # sourceMappingURL=CookController.js.map
+//# sourceMappingURL=CookController.js.map

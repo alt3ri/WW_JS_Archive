@@ -19,4 +19,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.REFRESH_PLAYER_INFO_TIME_DOWN = 1e4),
   (exports.CHAT_PANEL_DELAY = 500),
   (exports.READ_HISTORY_COUNT = 10);
-// # sourceMappingURL=ChatDefine.js.map
+//# sourceMappingURL=ChatDefine.js.map

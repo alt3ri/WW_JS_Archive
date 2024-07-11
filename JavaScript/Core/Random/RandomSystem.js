@@ -15,7 +15,7 @@ class RandomSystem {
     return (e = (e = (e ^= e << 13) ^ (e >> 17)) ^ (e << 5));
   }
   static GetNextRandomSeed(e, t) {
-    const a = RandomSystem.aVs(e);
+    var a = RandomSystem.aVs(e);
     return (
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
@@ -30,7 +30,7 @@ class RandomSystem {
     );
   }
   static IterateRandomSeed(e, t) {
-    const a = RandomSystem.aVs(e);
+    var a = RandomSystem.aVs(e);
     return (
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
@@ -48,4 +48,4 @@ class RandomSystem {
 (RandomSystem.RAND_MAX = 2147483647),
   (RandomSystem.RAND_PERCENT = 1e4),
   (exports.default = RandomSystem);
-// # sourceMappingURL=RandomSystem.js.map
+//# sourceMappingURL=RandomSystem.js.map

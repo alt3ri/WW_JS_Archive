@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configItemMainTypeById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const ItemMainType_1 = require("../Config/ItemMainType");
-const DB = "db_bag.db";
-const FILE = "b.背包.xlsx";
-const TABLE = "ItemMainType";
-const COMMAND = "select BinData from `ItemMainType` where Id=?";
-const KEY_PREFIX = "ItemMainTypeById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  ItemMainType_1 = require("../Config/ItemMainType"),
+  DB = "db_bag.db",
+  FILE = "b.背包.xlsx",
+  TABLE = "ItemMainType",
+  COMMAND = "select BinData from `ItemMainType` where Id=?",
+  KEY_PREFIX = "ItemMainTypeById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configItemMainTypeById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configItemMainTypeById.GetConfig(";
 exports.configItemMainTypeById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configItemMainTypeById = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var i;
-        var n = void 0;
+        var i,
+          n = void 0;
         if (
           (([i, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configItemMainTypeById = {
     }
   },
 };
-// # sourceMappingURL=ItemMainTypeById.js.map
+//# sourceMappingURL=ItemMainTypeById.js.map

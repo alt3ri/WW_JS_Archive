@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TutorialDataItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class TutorialDataItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.PDo = void 0),
       (this.xDo = void 0),
       (this.I6e = (t) => {
-        t === 1 && ((t = this.GetExtendToggle(2)), this.xDo(this.PDo, t));
+        1 === t && ((t = this.GetExtendToggle(2)), this.xDo(this.PDo, t));
       });
   }
   async Init(t) {
@@ -42,15 +42,15 @@ class TutorialDataItem extends UiPanelBase_1.UiPanelBase {
   qPt() {
     this.GetItem(0).SetUIActive(!0),
       this.GetExtendToggle(2).RootUIComp.SetUIActive(!1);
-    const t = this.GetText(1);
+    var t = this.GetText(1);
     this.PDo.Text
       ? t.SetText(this.PDo.Text)
       : LguiUtil_1.LguiUtil.SetLocalTextNew(t, this.PDo.TextId);
   }
   wDo() {
     this.GetItem(0).SetUIActive(!1);
-    const t = this.GetExtendToggle(2);
-    const i = (t.RootUIComp.SetUIActive(!0), this.GetText(4));
+    var t = this.GetExtendToggle(2),
+      i = (t.RootUIComp.SetUIActive(!0), this.GetText(4));
     this.PDo.Text
       ? i.SetText(this.PDo.Text)
       : LguiUtil_1.LguiUtil.SetLocalTextNew(i, this.PDo.TextId),
@@ -70,4 +70,4 @@ class TutorialDataItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.TutorialDataItem = TutorialDataItem;
-// # sourceMappingURL=TutorialDataItem.js.map
+//# sourceMappingURL=TutorialDataItem.js.map

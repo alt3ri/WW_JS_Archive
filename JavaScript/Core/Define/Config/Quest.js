@@ -51,53 +51,53 @@ class Quest {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   questkey(t) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   questname(t) {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   questtype() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   isrepeat() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   isautotrack() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   questtext(t) {
-    const s = this.J7.__offset(this.z7, 16);
+    var s = this.J7.__offset(this.z7, 16);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   isonline() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   rewardshow() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   areaid() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   duration() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   paneltexturepath(t) {
-    const s = this.J7.__offset(this.z7, 26);
+    var s = this.J7.__offset(this.z7, 26);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
 }
 exports.Quest = Quest;
-// # sourceMappingURL=Quest.js.map
+//# sourceMappingURL=Quest.js.map

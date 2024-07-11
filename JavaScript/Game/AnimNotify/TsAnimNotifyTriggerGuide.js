@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const ControllerHolder_1 = require("../Manager/ControllerHolder");
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder");
 class TsAnimNotifyTriggerGuide extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.EventGroupId = 0);
@@ -27,4 +27,4 @@ class TsAnimNotifyTriggerGuide extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifyTriggerGuide;
-// # sourceMappingURL=TsAnimNotifyTriggerGuide.js.map
+//# sourceMappingURL=TsAnimNotifyTriggerGuide.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayCueCameraEffect = void 0);
-const UE = require("ue");
-const ResourceSystem_1 = require("../../../../../../../Core/Resource/ResourceSystem");
-const ScreenEffectSystem_1 = require("../../../../../../Render/Effect/ScreenEffectSystem/ScreenEffectSystem");
-const GameplayCueBase_1 = require("./GameplayCueBase");
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../../../../../../Core/Resource/ResourceSystem"),
+  ScreenEffectSystem_1 = require("../../../../../../Render/Effect/ScreenEffectSystem/ScreenEffectSystem"),
+  GameplayCueBase_1 = require("./GameplayCueBase");
 class GameplayCueCameraEffect extends GameplayCueBase_1.GameplayCueBase {
   constructor() {
     super(...arguments), (this.Vnt = void 0);
@@ -39,4 +39,4 @@ class GameplayCueCameraEffect extends GameplayCueBase_1.GameplayCueBase {
   }
 }
 exports.GameplayCueCameraEffect = GameplayCueCameraEffect;
-// # sourceMappingURL=GameplayCueCameraEffect.js.map
+//# sourceMappingURL=GameplayCueCameraEffect.js.map

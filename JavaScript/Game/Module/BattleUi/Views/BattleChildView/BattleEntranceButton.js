@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleEntranceButton = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../../RedDot/RedDotController");
-const BattleVisibleChildView_1 = require("./BattleVisibleChildView");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../../RedDot/RedDotController"),
+  BattleVisibleChildView_1 = require("./BattleVisibleChildView");
 class BattleEntranceButton extends BattleVisibleChildView_1.BattleVisibleChildView {
   constructor() {
     super(...arguments),
@@ -26,7 +26,7 @@ class BattleEntranceButton extends BattleVisibleChildView_1.BattleVisibleChildVi
       (this.BtnBindInfo = [[0, this.B$e]]);
   }
   Initialize(t) {
-    let e;
+    var e;
     super.Initialize(),
       t &&
         ((this.HideInGamepad = t.HideInGamepad),
@@ -70,4 +70,4 @@ class BattleEntranceButton extends BattleVisibleChildView_1.BattleVisibleChildVi
   }
 }
 exports.BattleEntranceButton = BattleEntranceButton;
-// # sourceMappingURL=BattleEntranceButton.js.map
+//# sourceMappingURL=BattleEntranceButton.js.map

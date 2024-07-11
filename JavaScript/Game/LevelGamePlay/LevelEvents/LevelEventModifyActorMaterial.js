@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventModifyActorMaterial = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventModifyActorMaterial extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, t) {
     e
@@ -26,4 +26,4 @@ class LevelEventModifyActorMaterial extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventModifyActorMaterial = LevelEventModifyActorMaterial;
-// # sourceMappingURL=LevelEventModifyActorMaterial.js.map
+//# sourceMappingURL=LevelEventModifyActorMaterial.js.map

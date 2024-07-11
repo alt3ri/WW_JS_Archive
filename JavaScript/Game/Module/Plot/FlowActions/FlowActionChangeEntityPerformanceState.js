@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionChangeEntityPerformanceState = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils");
-const IAction_1 = require("../../../../UniverseEditor/Interface/IAction");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const FlowActionBase_1 = require("./FlowActionBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils"),
+  IAction_1 = require("../../../../UniverseEditor/Interface/IAction"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  FlowActionBase_1 = require("./FlowActionBase");
 class FlowActionChangeEntityPerformanceState extends FlowActionBase_1.FlowActionBase {
   OnExecute() {
-    let a;
-    let o;
-    const i = this.ActionInfo.Params;
+    var a,
+      o,
+      i = this.ActionInfo.Params;
     if (i) {
-      let e = void 0;
-      let t = void 0;
+      let e = void 0,
+        t = void 0;
       switch (i.Type) {
         case IAction_1.EChangeEntityPrefabPerformanceType.Target:
           (e = i.EntityId),
@@ -71,4 +71,4 @@ class FlowActionChangeEntityPerformanceState extends FlowActionBase_1.FlowAction
 }
 exports.FlowActionChangeEntityPerformanceState =
   FlowActionChangeEntityPerformanceState;
-// # sourceMappingURL=FlowActionChangeEntityPerformanceState.js.map
+//# sourceMappingURL=FlowActionChangeEntityPerformanceState.js.map

@@ -9,4 +9,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SENSITIVITYTIPS_DISPLAY_MILISECOND = 3e3),
   (exports.FRIEND_BUTTON_MASK_MILLISECONDS = 1e3),
   (exports.FRIEND_ALL_UPDATE_INTERVAL_MINUTES = 5);
-// # sourceMappingURL=FriendDefine.js.map
+//# sourceMappingURL=FriendDefine.js.map

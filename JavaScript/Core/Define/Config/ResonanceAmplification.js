@@ -28,26 +28,26 @@ class ResonanceAmplification {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   attr() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 7;
   }
   GetLifeseatboostfactorAt(t) {
     return this.lifeseatboostfactor(t);
   }
   lifeseatboostfactor(t) {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s ? this.J7.readFloat32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   lifeseatboostfactorLength() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   lifeseatboostfactorArray() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -58,4 +58,4 @@ class ResonanceAmplification {
   }
 }
 exports.ResonanceAmplification = ResonanceAmplification;
-// # sourceMappingURL=ResonanceAmplification.js.map
+//# sourceMappingURL=ResonanceAmplification.js.map

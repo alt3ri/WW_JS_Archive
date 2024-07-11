@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BlackboardModel = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const BlackboardMap_1 = require("../Define/BlackboardMap");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  BlackboardMap_1 = require("../Define/BlackboardMap");
 class BlackboardModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -17,7 +17,7 @@ class BlackboardModel extends ModelBase_1.ModelBase {
   }
   GetCreatureDataComponent(t) {
     if (!this.cvr.has(t)) {
-      let o = EntitySystem_1.EntitySystem.Get(t);
+      var o = EntitySystem_1.EntitySystem.Get(t);
       if (!o?.Valid) return;
       o = o.GetComponent(0);
       if (!o?.Valid) return;
@@ -617,4 +617,4 @@ class BlackboardModel extends ModelBase_1.ModelBase {
   }
 }
 exports.BlackboardModel = BlackboardModel;
-// # sourceMappingURL=BlackboardModel.js.map
+//# sourceMappingURL=BlackboardModel.js.map

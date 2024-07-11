@@ -28,4 +28,4 @@ class LogicTreeTimerBase {
   }
 }
 exports.LogicTreeTimerBase = LogicTreeTimerBase;
-// # sourceMappingURL=LogicTreeTimerBase.js.map
+//# sourceMappingURL=LogicTreeTimerBase.js.map

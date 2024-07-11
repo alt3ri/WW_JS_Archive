@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckJigsawInfo = void 0);
-const ICondition_1 = require("../../../UniverseEditor/Interface/ICondition");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const ICondition_1 = require("../../../UniverseEditor/Interface/ICondition"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionCheckJigsawInfo extends LevelGeneralBase_1.LevelConditionBase {
   CheckNew(e) {
     if (!e) return !1;
-    const r = e;
+    var r = e;
     let a = !1;
     switch (r.JigsawCondition.Type) {
       case ICondition_1.ECheckJigsawInfoType.CheckJigsawItemPlaceIndex:
@@ -16,15 +16,15 @@ class LevelConditionCheckJigsawInfo extends LevelGeneralBase_1.LevelConditionBas
       case ICondition_1.ECheckJigsawInfoType.CheckJigsawItemMove:
         a = this.o9s(r.JigsawCondition);
     }
-    return r.JigsawCondition.Compare === "Eq" ? a : !a;
+    return "Eq" === r.JigsawCondition.Compare ? a : !a;
   }
   r9s(e) {
-    let r;
-    var a = e.FoundationEntityId;
-    var a =
-      ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
-        a,
-      )?.Entity?.GetComponent(121);
+    var r,
+      a = e.FoundationEntityId,
+      a =
+        ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
+          a,
+        )?.Entity?.GetComponent(121);
     return (
       !!a &&
       ((r = e.ItemEntityId),
@@ -40,8 +40,8 @@ class LevelConditionCheckJigsawInfo extends LevelGeneralBase_1.LevelConditionBas
     );
   }
   o9s(e) {
-    var e = e.ItemEntityId;
-    var e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(e);
+    var e = e.ItemEntityId,
+      e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(e);
     return (
       !!e?.Entity?.GetComponent(139) &&
       !!(e = e?.Entity?.GetComponent(113)) &&
@@ -50,4 +50,4 @@ class LevelConditionCheckJigsawInfo extends LevelGeneralBase_1.LevelConditionBas
   }
 }
 exports.LevelConditionCheckJigsawInfo = LevelConditionCheckJigsawInfo;
-// # sourceMappingURL=LevelConditionsCheckJigsawInfo.js.map
+//# sourceMappingURL=LevelConditionsCheckJigsawInfo.js.map

@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MapModel = void 0);
-const Json_1 = require("../../../Core/Common/Json");
-const Log_1 = require("../../../Core/Common/Log");
-const TeleporterById_1 = require("../../../Core/Define/ConfigQuery/TeleporterById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const UnopenedAreaController_1 = require("../../LevelGamePlay/UnopenedArea/UnopenedAreaController");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const MapDefine_1 = require("./MapDefine");
+const Json_1 = require("../../../Core/Common/Json"),
+  Log_1 = require("../../../Core/Common/Log"),
+  TeleporterById_1 = require("../../../Core/Define/ConfigQuery/TeleporterById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  UnopenedAreaController_1 = require("../../LevelGamePlay/UnopenedArea/UnopenedAreaController"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  MapDefine_1 = require("./MapDefine");
 class MapModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -119,14 +119,14 @@ class MapModel extends ModelBase_1.ModelBase {
   }
   wLi(e) {
     return !(
-      e.MarkType === 12 ||
-      e.MarkType === 15 ||
-      e.MarkType === 17 ||
-      e.MarkType === 9
+      12 === e.MarkType ||
+      15 === e.MarkType ||
+      17 === e.MarkType ||
+      9 === e.MarkType
     );
   }
   ResetDynamicMarkData() {
-    const e = this.SLi.get(12);
+    var e = this.SLi.get(12);
     this.SLi?.clear(),
       this.TLi?.clear(),
       e &&
@@ -137,8 +137,8 @@ class MapModel extends ModelBase_1.ModelBase {
   }
   xLi(r) {
     if (this.SLi) {
-      let e = this.SLi.get(r.MarkType);
-      let t = (e || ((e = new Map()), this.SLi.set(r.MarkType, e)), void 0);
+      let e = this.SLi.get(r.MarkType),
+        t = (e || ((e = new Map()), this.SLi.set(r.MarkType, e)), void 0);
       e.forEach((e) => {
         this.wLi(r) &&
           e.TrackTarget instanceof Vector_1.Vector &&
@@ -170,7 +170,7 @@ class MapModel extends ModelBase_1.ModelBase {
   }
   IsMarkIdExist(e, t) {
     if (this.SLi && e && t) {
-      const r = this.SLi.get(e);
+      var r = this.SLi.get(e);
       if (r) return r.has(t);
       for (const i of ConfigManager_1.ConfigManager.MapConfig.GetConfigMarks(
         MapDefine_1.BIG_WORLD_MAP_ID,
@@ -180,7 +180,7 @@ class MapModel extends ModelBase_1.ModelBase {
     return !1;
   }
   IsConfigMarkIdUnlock(e) {
-    let t = ConfigManager_1.ConfigManager.MapConfig.GetConfigMark(e);
+    var t = ConfigManager_1.ConfigManager.MapConfig.GetConfigMark(e);
     return (
       !!t &&
       !!ModelManager_1.ModelManager.MapModel.IsMarkIdExist(t.ObjectType, e) &&
@@ -190,18 +190,18 @@ class MapModel extends ModelBase_1.ModelBase {
   }
   BLi(e) {
     return (
-      e.FogShow === 1 || e.FogHide === 0 || this.CheckAreasUnlocked(e.FogHide)
+      1 === e.FogShow || 0 === e.FogHide || this.CheckAreasUnlocked(e.FogHide)
     );
   }
   bLi(e) {
-    const t = e.ShowCondition;
-    var e = e.MarkId;
+    var t = e.ShowCondition,
+      e = e.MarkId;
     return t < 0
       ? this.GetMarkExtraShowState(e).IsShow
-      : t === 0 || this.IsMarkUnlockedByServer(e);
+      : 0 === t || this.IsMarkUnlockedByServer(e);
   }
   RemoveMapMark(e, t) {
-    let r;
+    var r;
     this.SLi &&
       void 0 !== e &&
       void 0 !== t &&
@@ -217,30 +217,30 @@ class MapModel extends ModelBase_1.ModelBase {
     if (this.SLi && void 0 !== e && void 0 !== t) {
       t = this.SLi.get(e);
       if (t) {
-        let r;
-        let i;
-        const o = [];
+        var r,
+          i,
+          o = [];
         for ([r, i] of t) i.MarkType === e && o.push(r);
         for (const n of o) this.RemoveMapMark(e, n);
       }
     }
   }
   RemoveDynamicMapMark(e) {
-    const t = this.TLi?.get(e);
+    var t = this.TLi?.get(e);
     t
       ? this.RemoveMapMark(t?.MarkType, t?.MarkId)
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("Map", 50, "找不到mark id:", ["markId", e]);
   }
   UpdateCustomMarkInfo(e, t) {
-    let r;
+    var r;
     this.SLi &&
       ((r = this.SLi.get(9))
         ? (r.get(e).TrackTarget = t)
         : Log_1.Log.CheckError() && Log_1.Log.Error("Map", 50, "找不到markId"));
   }
   ReplaceCustomMarkIcon(e, t) {
-    let r;
+    var r;
     this.SLi &&
       (r = this.SLi.get(9)) &&
       (r = r.get(e)) &&
@@ -257,9 +257,9 @@ class MapModel extends ModelBase_1.ModelBase {
   }
   UnlockTeleports(e, t = !1) {
     if ((t && this.LLi.clear(), !(e.length <= 0))) {
-      const r = new Array();
+      var r = new Array();
       for (const o of e) {
-        const i = TeleporterById_1.configTeleporterById.GetConfig(o);
+        var i = TeleporterById_1.configTeleporterById.GetConfig(o);
         i && r.push(i);
       }
       for (const n of r)
@@ -277,7 +277,7 @@ class MapModel extends ModelBase_1.ModelBase {
   }
   UnlockTeleport(e) {
     this.LLi.set(e, !0);
-    const t = ConfigManager_1.ConfigManager.MapConfig.GetTeleportConfigById(e);
+    var t = ConfigManager_1.ConfigManager.MapConfig.GetTeleportConfigById(e);
     t &&
       t.TeleportEntityConfigId &&
       ControllerHolder_1.ControllerHolder.CreatureController.ChangeLockTagByTeleportPbDataId(
@@ -325,7 +325,7 @@ class MapModel extends ModelBase_1.ModelBase {
   CheckUnlockMapBlockIds(e) {
     let t = 0;
     for (const i of this.UnlockMapBlockIds ?? []) {
-      const r =
+      var r =
         ConfigManager_1.ConfigManager.MapConfig.GetUnlockMapTileConfigById(i);
       if (r?.Block === e) {
         t = r.Id;
@@ -353,7 +353,7 @@ class MapModel extends ModelBase_1.ModelBase {
     return this.ALi;
   }
   IsInMapPolygon(e) {
-    let t;
+    var t;
     return (
       ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.MapConfigId !==
         MapDefine_1.BIG_WORLD_MAP_ID ||
@@ -399,11 +399,11 @@ class MapModel extends ModelBase_1.ModelBase {
   GetCurMapBorderId() {
     let t = MapDefine_1.DEFAULT_MAP_BORDER_ID;
     for (const i of ConfigManager_1.ConfigManager.MapConfig.GetMapBorderConfigList()) {
-      const r = i.ConditionId;
+      var r = i.ConditionId;
       let e = !1;
       if (
         !(e =
-          r === 0 ||
+          0 === r ||
           ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckCondition(
             r.toString(),
             void 0,
@@ -425,14 +425,14 @@ class MapModel extends ModelBase_1.ModelBase {
     return (r = e && e.has(t) ? e.get(t) ?? !1 : r);
   }
   AddOccupationInfo(e) {
-    let t = ConfigManager_1.ConfigManager.QuestNewConfig.GetNewOccupationConfig(
+    var t = ConfigManager_1.ConfigManager.QuestNewConfig.GetNewOccupationConfig(
       e.cvs,
     );
     if (
       t &&
       t.OccupationData &&
       !StringUtils_1.StringUtils.IsEmpty(t.OccupationData) &&
-      t.OccupationData !== "Empty"
+      "Empty" !== t.OccupationData
     ) {
       t = Json_1.Json.Parse(t.OccupationData);
       if (t) {
@@ -445,7 +445,7 @@ class MapModel extends ModelBase_1.ModelBase {
   }
   RemoveOccupationInfo(e) {
     if (this.ILi.has(e)) {
-      const t = this.ILi.get(e);
+      var t = this.ILi.get(e);
       this.ILi.delete(e);
       for (const r of t) this.yLi.delete(r);
     }
@@ -462,4 +462,4 @@ class MapModel extends ModelBase_1.ModelBase {
   }
 }
 exports.MapModel = MapModel;
-// # sourceMappingURL=MapModel.js.map
+//# sourceMappingURL=MapModel.js.map

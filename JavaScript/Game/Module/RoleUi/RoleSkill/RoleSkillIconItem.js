@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleSkillIconItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class RoleSkillIconItem extends UiPanelBase_1.UiPanelBase {
   constructor(t, i = !1) {
     super(),
@@ -51,36 +51,36 @@ class RoleSkillIconItem extends UiPanelBase_1.UiPanelBase {
     this.RefreshSkillIcon(), this.RefreshState();
   }
   RefreshState() {
-    const t = ModelManager_1.ModelManager.RoleModel.GetRoleSkillTreeNodeLevel(
+    var t = ModelManager_1.ModelManager.RoleModel.GetRoleSkillTreeNodeLevel(
       this.zke,
       this.Ico,
     );
-    this.GetItem(2)?.SetUIActive(t > 0);
+    this.GetItem(2)?.SetUIActive(0 < t);
     let i = this.yco ? this.GetTexture(1) : this.GetSprite(1);
-    i?.SetChangeColor(t > 0, i.changeColor),
+    i?.SetChangeColor(0 < t, i.changeColor),
       (i = this.yco ? this.GetTexture(5) : this.GetSprite(5))?.SetChangeColor(
-        t > 0,
+        0 < t,
         i.changeColor,
       ),
       (i = this.yco ? this.GetTexture(6) : this.GetSprite(6))?.SetChangeColor(
-        t > 0,
+        0 < t,
         i.changeColor,
       );
-    const s = ModelManager_1.ModelManager.RoleModel.GetRoleSkillTreeNodeState(
+    var s = ModelManager_1.ModelManager.RoleModel.GetRoleSkillTreeNodeState(
       this.zke,
       this.Ico,
     );
-    this.GetItem(4)?.SetUIActive(s === 1),
-      this.GetItem(3)?.SetUIActive(s !== 1 && t === 0);
+    this.GetItem(4)?.SetUIActive(1 === s),
+      this.GetItem(3)?.SetUIActive(1 !== s && 0 === t);
   }
   RefreshSkillIcon() {
-    const t = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(
-      this.Ico,
-    );
-    const i = t.SkillId;
+    var t = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(
+        this.Ico,
+      ),
+      i = t.SkillId;
     let s = void 0;
     (s =
-      i && i > 0
+      i && 0 < i
         ? ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(i)
             ?.Icon
         : t.PropertyNodeIcon) && this.Tco(s);
@@ -128,4 +128,4 @@ class RoleSkillIconItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleSkillIconItem = RoleSkillIconItem;
-// # sourceMappingURL=RoleSkillIconItem.js.map
+//# sourceMappingURL=RoleSkillIconItem.js.map

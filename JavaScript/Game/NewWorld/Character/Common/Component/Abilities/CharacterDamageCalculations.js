@@ -1,45 +1,45 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Calculation = exports.ENERGY_SHARE_RATE = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../../../Core/Define/ConfigCommon/CommonParamById");
-const AbnormalDamageConfigByLevel_1 = require("../../../../../../Core/Define/ConfigQuery/AbnormalDamageConfigByLevel");
-const RandomSystem_1 = require("../../../../../../Core/Random/RandomSystem");
-const AbilityUtils_1 = require("./AbilityUtils");
-const CharacterAttributeTypes_1 = require("./CharacterAttributeTypes");
-const DAMAGE_CONSTANT1 = 2;
-const DAMAGE_CONSTANT2 = 800;
-const DAMAGE_CONSTANT3 = 8;
-const DAMAGE_CONSTANT4 = 2;
-const DAMAGE_CONSTANT5 = 0.8;
-const DAMAGE_CONSTANT6 = 5;
-const DAMAGE_CONSTANT_K = 4e4;
-const DAMAGE_CONSTANT_A = 1;
-const DAMAGE_CONSTANT_B = 0.8;
-const DAMAGE_CONSTANT_MU = 40;
-const DAMAGE_CONSTANT_SIGMA = 0.5;
-const DAMAGE_CONSTANT_WEIGHT = 0.1;
-const ELEMENT_CONTER_RATE = 1;
-const REACTION_LIMIT_CONSTANT = 3e3;
-const REACTION_EXTRACT_CONSTANT = 8;
-const REACTION_LOWER_BOUND_CONSTANT = 1830;
-const DAMAGE_FALLING_10000 = 1e4;
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  AbnormalDamageConfigByLevel_1 = require("../../../../../../Core/Define/ConfigQuery/AbnormalDamageConfigByLevel"),
+  RandomSystem_1 = require("../../../../../../Core/Random/RandomSystem"),
+  AbilityUtils_1 = require("./AbilityUtils"),
+  CharacterAttributeTypes_1 = require("./CharacterAttributeTypes"),
+  DAMAGE_CONSTANT1 = 2,
+  DAMAGE_CONSTANT2 = 800,
+  DAMAGE_CONSTANT3 = 8,
+  DAMAGE_CONSTANT4 = 2,
+  DAMAGE_CONSTANT5 = 0.8,
+  DAMAGE_CONSTANT6 = 5,
+  DAMAGE_CONSTANT_K = 4e4,
+  DAMAGE_CONSTANT_A = 1,
+  DAMAGE_CONSTANT_B = 0.8,
+  DAMAGE_CONSTANT_MU = 40,
+  DAMAGE_CONSTANT_SIGMA = 0.5,
+  DAMAGE_CONSTANT_WEIGHT = 0.1,
+  ELEMENT_CONTER_RATE = 1,
+  REACTION_LIMIT_CONSTANT = 3e3,
+  REACTION_EXTRACT_CONSTANT = 8,
+  REACTION_LOWER_BOUND_CONSTANT = 1830,
+  DAMAGE_FALLING_10000 = 1e4;
 function getAttrFromSnapshots(t, e, r) {
   return r < CharacterAttributeTypes_1.EAttributeId.Proto_Lv ||
     r >= CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX
     ? 0
-    : (e !== 0 ? t.TargetSnapshot : t.AttackerSnapshot).GetCurrentValue(r);
+    : (0 !== e ? t.TargetSnapshot : t.AttackerSnapshot).GetCurrentValue(r);
 }
 exports.ENERGY_SHARE_RATE = 3e3;
 const formulas = {
   1: function (t, e, r, a, A, s, i, _, u, c, T, C, n, h, b, l, y, o, p) {
-    const N = getAttrFromSnapshots.bind(this, t);
-    var n = N(n, C) * (h * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND) + b;
-    var C =
-      N(o, y) * (l * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND) +
-      p +
-      N(T, c) * n;
-    return e === 1
+    var N = getAttrFromSnapshots.bind(this, t),
+      n = N(n, C) * (h * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND) + b,
+      C =
+        N(o, y) * (l * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND) +
+        p +
+        N(T, c) * n;
+    return 1 === e
       ? ((h =
           t.TargetSnapshot.CurrentValues.Proto_HealedChange *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND),
@@ -65,7 +65,7 @@ const formulas = {
       getAttrFromSnapshots.bind(this, t)(T, c) *
         (C * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND) +
       n;
-    return e === 1
+    return 1 === e
       ? -Math.min(t.TargetSnapshot.CurrentValues.Proto_Life - T, 0)
       : Math.max(t.TargetSnapshot.CurrentValues.Proto_Life - T, 0);
   },
@@ -115,10 +115,10 @@ const formulas = {
     return Math.max(0, Math.min(T, c));
   },
   1001: function (t, e, r, a, A, s, i, _, u, c, T, C, n, h, b) {
-    var r = r.Element;
-    const l = t.AttackerSnapshot;
-    var t = t.TargetSnapshot;
-    const y = l.CurrentValues.Proto_Lv;
+    var r = r.Element,
+      l = t.AttackerSnapshot,
+      t = t.TargetSnapshot,
+      y = l.CurrentValues.Proto_Lv;
     let o = 0;
     switch (r) {
       case 1:
@@ -157,10 +157,10 @@ const formulas = {
             y,
           )?.Abnormal1006 ?? 0;
     }
-    var c = c * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
-    const p = Math.min(Calculation.GetElementDamageReduce(t, r), 1);
-    let N = Calculation.GetElementResistant(t, r);
-    var r = Calculation.GetElementIgnoreResistance(l, r);
+    var c = c * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
+      p = Math.min(Calculation.GetElementDamageReduce(t, r), 1),
+      N = Calculation.GetElementResistant(t, r),
+      r = Calculation.GetElementIgnoreResistance(l, r);
     let E = 0;
     E =
       N - r <= 0
@@ -191,13 +191,13 @@ const formulas = {
 };
 class Calculation {
   static CalculateHurt(t, e, r, a, A, s, i, _, u = 0) {
-    const c = t.AttackerSnapshot;
-    let T = t.TargetSnapshot;
-    var A = A * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
-    let C = this.GetElementDamageBonus(c, e);
-    const n = Math.min(this.GetElementDamageReduce(T, e), 1);
-    let h = this.GetElementResistant(T, e);
-    let b = this.GetElementIgnoreResistance(c, e);
+    var c = t.AttackerSnapshot,
+      T = t.TargetSnapshot,
+      A = A * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
+      C = this.GetElementDamageBonus(c, e),
+      n = Math.min(this.GetElementDamageReduce(T, e), 1),
+      h = this.GetElementResistant(T, e),
+      b = this.GetElementIgnoreResistance(c, e);
     let l = 0;
     l =
       h - b <= 0
@@ -453,14 +453,14 @@ class Calculation {
     return 0;
   }
   static LKo(t, e, r, a) {
-    var r = getAttrFromSnapshots(t, 0, r);
-    var a = a * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
-    const A =
-      t.TargetSnapshot.CurrentValues.Proto_HealedChange *
-      CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
-    var t =
-      t.AttackerSnapshot.CurrentValues.Proto_HealChange *
-      CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
+    var r = getAttrFromSnapshots(t, 0, r),
+      a = a * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
+      A =
+        t.TargetSnapshot.CurrentValues.Proto_HealedChange *
+        CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
+      t =
+        t.AttackerSnapshot.CurrentValues.Proto_HealChange *
+        CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
     return Math.max(0, (a * r + e) * (A + t + 1));
   }
   static ToughCalculation(t, e, r) {
@@ -475,17 +475,17 @@ class Calculation {
     );
   }
   static LandingDamageCalculationRole(t, e, r, a) {
-    const A = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
-      "landing_damage_args_role",
-    );
-    var s = t / A[0] - 1;
-    var s = s > 0 ? s : 0;
-    var i = A[2] / DAMAGE_FALLING_10000;
-    var _ = A[3] / DAMAGE_FALLING_10000;
-    var i = Math.pow(r, i) * _;
-    var _ = s + i;
-    const u = Math.floor(_ * a);
-    return u > 0
+    var A = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
+        "landing_damage_args_role",
+      ),
+      s = t / A[0] - 1,
+      s = 0 < s ? s : 0,
+      i = A[2] / DAMAGE_FALLING_10000,
+      _ = A[3] / DAMAGE_FALLING_10000,
+      i = Math.pow(r, i) * _,
+      _ = s + i,
+      u = Math.floor(_ * a);
+    return 0 < u
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Battle",
@@ -505,10 +505,10 @@ class Calculation {
       : 0;
   }
   static LandingDamageCalculationMonster(t, e) {
-    let r;
-    const a = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
-      "landing_damage_args_monster",
-    );
+    var r,
+      a = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
+        "landing_damage_args_monster",
+      );
     return t < a[0]
       ? 0
       : ((r = Math.floor(
@@ -559,36 +559,36 @@ class Calculation {
     }
     _ *= CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
     var a =
-      t.CurrentValues.Proto_CritDamage *
-      CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
-    var i = i ? a : 1;
-    var a = A.A * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
-    const u = A.B * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
-    const c = A.C * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
-    const T = A.D * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
-    const C = A.E * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
-    const n = A.F * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
-    var A = A.G * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
-    const h = t.CurrentValues.Proto_Lv;
-    const b = t.CurrentValues.Proto_Atk;
-    var e = e.CurrentValues.Proto_Lv;
-    const l =
-      DAMAGE_CONSTANT_WEIGHT /
-      (1 / DAMAGE_CONSTANT_K +
-        DAMAGE_CONSTANT_A *
-          Math.pow(
-            DAMAGE_CONSTANT_B,
-            (h + DAMAGE_CONSTANT_MU) * DAMAGE_CONSTANT_SIGMA,
-          ));
-    var r =
-      r *
-      CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND *
-      (1 + s * a + u * h + C) *
-      i *
-      (1 + b * c) *
-      (1 + _ * T) *
-      (1 / (1 + e / (n + h * A))) *
-      l;
+        t.CurrentValues.Proto_CritDamage *
+        CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
+      i = i ? a : 1,
+      a = A.A * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
+      u = A.B * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
+      c = A.C * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
+      T = A.D * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
+      C = A.E * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
+      n = A.F * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
+      A = A.G * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
+      h = t.CurrentValues.Proto_Lv,
+      b = t.CurrentValues.Proto_Atk,
+      e = e.CurrentValues.Proto_Lv,
+      l =
+        DAMAGE_CONSTANT_WEIGHT /
+        (1 / DAMAGE_CONSTANT_K +
+          DAMAGE_CONSTANT_A *
+            Math.pow(
+              DAMAGE_CONSTANT_B,
+              (h + DAMAGE_CONSTANT_MU) * DAMAGE_CONSTANT_SIGMA,
+            )),
+      r =
+        r *
+        CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND *
+        (1 + s * a + u * h + C) *
+        i *
+        (1 + b * c) *
+        (1 + _ * T) *
+        (1 / (1 + e / (n + h * A))) *
+        l;
     return Math.ceil(r);
   }
   static CalculateElementMatchUpRate(t, e) {
@@ -596,25 +596,25 @@ class Calculation {
       case 0:
         return 1;
       case 1:
-        return e === 4 ? ELEMENT_CONTER_RATE : 1;
+        return 4 === e ? ELEMENT_CONTER_RATE : 1;
       case 2:
-        return e === 1 ? ELEMENT_CONTER_RATE : 1;
+        return 1 === e ? ELEMENT_CONTER_RATE : 1;
       case 3:
-        return e === 2 ? ELEMENT_CONTER_RATE : 1;
+        return 2 === e ? ELEMENT_CONTER_RATE : 1;
       case 4:
-        return e === 3 ? ELEMENT_CONTER_RATE : 1;
+        return 3 === e ? ELEMENT_CONTER_RATE : 1;
       case 5:
-        return e === 6 ? ELEMENT_CONTER_RATE : 1;
+        return 6 === e ? ELEMENT_CONTER_RATE : 1;
       case 6:
-        return e === 5 ? ELEMENT_CONTER_RATE : 1;
+        return 5 === e ? ELEMENT_CONTER_RATE : 1;
       default:
         return 1;
     }
     return 1;
   }
   static CalculateFormula(t, e, r, a, A, s, i, _, u) {
-    let c = r.FormulaType;
-    const T = r.CalculateType;
+    var c = r.FormulaType,
+      T = r.CalculateType;
     let C = 0;
     if (c) {
       if (!(c in formulas))
@@ -653,7 +653,7 @@ class Calculation {
       (c = r.RelatedProperty),
         (u = AbilityUtils_1.AbilityUtils.GetLevelValue(r.RateLv, a, 0));
       C =
-        T === 0
+        0 === T
           ? this.CalculateHurt(e, r.Element, r.Type, c, u, A, i, _)
           : ((A = AbilityUtils_1.AbilityUtils.GetLevelValue(
               r.CureBaseValue,
@@ -677,8 +677,8 @@ class Calculation {
       (A =
         ((_ - e) * (i % CharacterAttributeTypes_1.PER_TEN_THOUSAND) + e) *
         CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND);
-    return (C = Math.ceil(C * s * A)), (C = T === 1 ? -C : C);
+    return (C = Math.ceil(C * s * A)), (C = 1 === T ? -C : C);
   }
 }
 exports.Calculation = Calculation;
-// # sourceMappingURL=CharacterDamageCalculations.js.map
+//# sourceMappingURL=CharacterDamageCalculations.js.map

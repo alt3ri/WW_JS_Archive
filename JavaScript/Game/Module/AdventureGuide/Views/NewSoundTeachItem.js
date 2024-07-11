@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NewSoundTeachItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class NewSoundTeachItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super();
@@ -15,11 +15,12 @@ class NewSoundTeachItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   Update(e) {
-    var t = this.GetText(0);
-    var t =
-      (LguiUtil_1.LguiUtil.SetLocalTextNew(t, e.Conf.Name), this.GetTexture(1));
+    var t = this.GetText(0),
+      t =
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(t, e.Conf.Name),
+        this.GetTexture(1));
     this.SetTextureByPath(e.Conf.BigIcon, t);
   }
 }
 exports.NewSoundTeachItem = NewSoundTeachItem;
-// # sourceMappingURL=NewSoundTeachItem.js.map
+//# sourceMappingURL=NewSoundTeachItem.js.map

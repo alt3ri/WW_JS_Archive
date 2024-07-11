@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityBeginnerBookConfig = void 0);
-const WorldNewJourneyAll_1 = require("../../../../../Core/Define/ConfigQuery/WorldNewJourneyAll");
-const WorldNewJourneyById_1 = require("../../../../../Core/Define/ConfigQuery/WorldNewJourneyById");
-const ConfigBase_1 = require("../../../../../Core/Framework/ConfigBase");
+const WorldNewJourneyAll_1 = require("../../../../../Core/Define/ConfigQuery/WorldNewJourneyAll"),
+  WorldNewJourneyById_1 = require("../../../../../Core/Define/ConfigQuery/WorldNewJourneyById"),
+  ConfigBase_1 = require("../../../../../Core/Framework/ConfigBase");
 class ActivityBeginnerBookConfig extends ConfigBase_1.ConfigBase {
   GetActivityBeginnerConfig(e) {
     return WorldNewJourneyById_1.configWorldNewJourneyById.GetConfig(e);
@@ -13,4 +13,4 @@ class ActivityBeginnerBookConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.ActivityBeginnerBookConfig = ActivityBeginnerBookConfig;
-// # sourceMappingURL=ActivityBeginnerBookConfig.js.map
+//# sourceMappingURL=ActivityBeginnerBookConfig.js.map

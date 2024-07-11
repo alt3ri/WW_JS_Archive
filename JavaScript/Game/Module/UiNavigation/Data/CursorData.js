@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Cursor = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const UiLayerType_1 = require("../../../Ui/Define/UiLayerType");
-const LguiResourceManager_1 = require("../../../Ui/LguiResourceManager");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const SPEED = 0.05;
-const ALLOW_MOVE_TICK_LIMIT = 1e3;
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  UiLayerType_1 = require("../../../Ui/Define/UiLayerType"),
+  LguiResourceManager_1 = require("../../../Ui/LguiResourceManager"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  SPEED = 0.05,
+  ALLOW_MOVE_TICK_LIMIT = 1e3;
 class Cursor {
   constructor() {
     (this.GPo = void 0),
@@ -49,7 +49,7 @@ class Cursor {
           )));
   }
   RefreshUseItem() {
-    let i;
+    var i;
     (this.OPo && this.OPo.IsValid()) ||
       (this.JPo(),
       this.GPo?.IsValid() &&
@@ -75,7 +75,7 @@ class Cursor {
             Log_1.Log.Error("UiNavigation", 11, "光标原始节点出现问题")));
   }
   ZPo() {
-    const i = this.kPo.K2_GetComponentLocation();
+    var i = this.kPo.K2_GetComponentLocation();
     Cursor.exo.Set(i.X + Cursor.txo, 0, i.Z + Cursor.ixo),
       Cursor.oxo.DeepCopy(Cursor.exo),
       Cursor.kRe.DeepCopy(Cursor.exo),
@@ -105,12 +105,12 @@ class Cursor {
     (this.jPo = !0), (this.QPo = 0);
   }
   rxo() {
-    let i;
-    let t;
-    let s;
-    let r;
-    const e = this.kPo.GetWidth();
-    const h = this.kPo.GetHeight();
+    var i,
+      t,
+      s,
+      r,
+      e = this.kPo.GetWidth(),
+      h = this.kPo.GetHeight();
     (Cursor.iqn === e && Cursor.rqn === h) ||
       ((i = this.kPo.GetPivot()),
       (r = this.FPo.GetCursorOffset()),
@@ -123,7 +123,7 @@ class Cursor {
       (Cursor.rqn = h));
   }
   SetIsUseMouse(i) {
-    let t;
+    var t;
     this.KPo !== i &&
       ((this.KPo = i),
       (t = !!this.kPo && this.kPo.bIsUIActive),
@@ -150,8 +150,8 @@ class Cursor {
     );
   }
   axo() {
-    const i = this.kPo.K2_GetComponentLocation();
-    const t = this.kPo.K2_GetComponentScale();
+    var i = this.kPo.K2_GetComponentLocation(),
+      t = this.kPo.K2_GetComponentScale();
     Cursor.exo.Set(i.X + Cursor.txo * t.X, 0, i.Z + Cursor.ixo * t.Z),
       Vector_1.Vector.Lerp(Cursor.kRe, Cursor.exo, this.HPo, Cursor.oxo),
       (this.HPo += SPEED),
@@ -205,7 +205,7 @@ class Cursor {
         ]);
   }
   uxo() {
-    this.YPo === 0
+    0 === this.YPo
       ? this.cxo(!0)
       : (this.cxo(!1),
         (this.XPo = TimerSystem_1.TimerSystem.Delay(() => {
@@ -228,4 +228,4 @@ class Cursor {
   (Cursor.oxo = Vector_1.Vector.Create()),
   (Cursor.iqn = 0),
   (Cursor.rqn = 0);
-// # sourceMappingURL=CursorData.js.map
+//# sourceMappingURL=CursorData.js.map

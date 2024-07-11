@@ -9,7 +9,7 @@ class CustomMap {
     return this.gpr.size;
   }
   Set(t, s) {
-    let i = this.gpr.get(t);
+    var i = this.gpr.get(t);
     void 0 !== i
       ? (this.K7[i] = s)
       : ((i = this.gpr.size),
@@ -29,15 +29,15 @@ class CustomMap {
     return void 0 !== this.gpr.get(t);
   }
   Remove(t) {
-    let s;
-    let i;
-    let h;
-    const e = this.gpr.get(t);
+    var s,
+      i,
+      h,
+      e = this.gpr.get(t);
     return (
       void 0 !== e &&
       ((t = this.gpr.delete(t)),
       (s = this.fpr.delete(e)),
-      this.K7.length > 1
+      1 < this.K7.length
         ? ((i = this.K7.length - 1),
           (h = this.fpr.get(i)) &&
             (this.fpr.delete(i), this.gpr.set(h, e), this.fpr.set(e, h)),
@@ -63,4 +63,4 @@ class CustomMap {
   }
 }
 exports.CustomMap = CustomMap;
-// # sourceMappingURL=CustomMap.js.map
+//# sourceMappingURL=CustomMap.js.map

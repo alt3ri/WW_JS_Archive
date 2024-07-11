@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configRoleTrialActivityById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const RoleTrialActivity_1 = require("../Config/RoleTrialActivity");
-const DB = "db_activity.db";
-const FILE = "j.角色试用活动.xlsx";
-const TABLE = "RoleTrialActivity";
-const COMMAND = "select BinData from `RoleTrialActivity` where Id=?";
-const KEY_PREFIX = "RoleTrialActivityById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  RoleTrialActivity_1 = require("../Config/RoleTrialActivity"),
+  DB = "db_activity.db",
+  FILE = "j.角色试用活动.xlsx",
+  TABLE = "RoleTrialActivity",
+  COMMAND = "select BinData from `RoleTrialActivity` where Id=?",
+  KEY_PREFIX = "RoleTrialActivityById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configRoleTrialActivityById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configRoleTrialActivityById.GetConfig(";
 exports.configRoleTrialActivityById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configRoleTrialActivityById = {
       if (
         (n =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, i, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            i,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              i,
+            ]))
       ) {
-        var n;
-        var e = void 0;
+        var n,
+          e = void 0;
         if (
           (([n, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configRoleTrialActivityById = {
     }
   },
 };
-// # sourceMappingURL=RoleTrialActivityById.js.map
+//# sourceMappingURL=RoleTrialActivityById.js.map

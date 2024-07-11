@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiWeaponModel = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ModelBase_1 = require("../../../../Core/Framework/ModelBase");
-const DataTableUtil_1 = require("../../../../Core/Utils/DataTableUtil");
-const IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent");
-const AiWeaponNet_1 = require("./AiWeaponNet");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
+  DataTableUtil_1 = require("../../../../Core/Utils/DataTableUtil"),
+  IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
+  AiWeaponNet_1 = require("./AiWeaponNet");
 class AiWeaponModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments), (this.lHe = void 0), (this._He = new Map());
   }
   OnInit() {
-    let e, t;
+    var e, t;
     (this.lHe = new AiWeaponNet_1.AiWeaponNet()), this.lHe.RegisterNet();
     for ([e, t] of DataTableUtil_1.DataTableUtil.LoadAllAiWeaponSockets())
       if (e && t) {
-        const o = t.AiModelConfig;
-        const r = new Set();
+        var o = t.AiModelConfig,
+          r = new Set();
         for (let e = 0; e < o.Num(); ++e) {
-          const i = o.GetKey(e);
+          var i = o.GetKey(e);
           r.add(i);
         }
         this._He.set(e, r);
@@ -41,8 +41,8 @@ class AiWeaponModel extends ModelBase_1.ModelBase {
     );
   }
   GetWeaponConfigByConfigId(e, t) {
-    var t = t.GetComponent(0).GetPbModelConfig();
-    const o = this.GetStaticWeaponModelConfigs(e, t.ModelId);
+    var t = t.GetComponent(0).GetPbModelConfig(),
+      o = this.GetStaticWeaponModelConfigs(e, t.ModelId);
     return (
       o ||
         (Log_1.Log.CheckWarn() &&
@@ -70,4 +70,4 @@ class AiWeaponModel extends ModelBase_1.ModelBase {
   }
 }
 exports.AiWeaponModel = AiWeaponModel;
-// # sourceMappingURL=AiWeaponModel.js.map
+//# sourceMappingURL=AiWeaponModel.js.map

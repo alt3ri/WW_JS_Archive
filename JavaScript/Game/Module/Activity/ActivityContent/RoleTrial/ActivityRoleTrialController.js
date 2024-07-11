@@ -1,30 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRoleTrialController = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../../Core/Net/Net");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const InstanceDungeonController_1 = require("../../../InstanceDungeon/InstanceDungeonController");
-const InstanceDungeonEntranceController_1 = require("../../../InstanceDungeon/InstanceDungeonEntranceController");
-const ItemRewardController_1 = require("../../../ItemReward/ItemRewardController");
-const ItemRewardDefine_1 = require("../../../ItemReward/ItemRewardDefine");
-const ActivityController_1 = require("../../ActivityController");
-const ActivityControllerBase_1 = require("../../ActivityControllerBase");
-const ActivityRoleTrialData_1 = require("./ActivityRoleTrialData");
-const ActivitySubViewRoleTrial_1 = require("./ActivitySubViewRoleTrial");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  InstanceDungeonController_1 = require("../../../InstanceDungeon/InstanceDungeonController"),
+  InstanceDungeonEntranceController_1 = require("../../../InstanceDungeon/InstanceDungeonEntranceController"),
+  ItemRewardController_1 = require("../../../ItemReward/ItemRewardController"),
+  ItemRewardDefine_1 = require("../../../ItemReward/ItemRewardDefine"),
+  ActivityController_1 = require("../../ActivityController"),
+  ActivityControllerBase_1 = require("../../ActivityControllerBase"),
+  ActivityRoleTrialData_1 = require("./ActivityRoleTrialData"),
+  ActivitySubViewRoleTrial_1 = require("./ActivitySubViewRoleTrial");
 class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityControllerBase {
   constructor() {
     super(...arguments),
       (this.wke = (e) => {
-        const t = ActivityRoleTrialController.Bke();
+        var t = ActivityRoleTrialController.Bke();
         t && t.IsRolePreviewOn() && (t.CurrentRoleId = e);
       }),
       (this.nye = () => {
-        const e = ActivityRoleTrialController.Bke();
+        var e = ActivityRoleTrialController.Bke();
         e &&
           e.IsRoleInstanceOn() &&
           !ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() &&
@@ -84,7 +84,7 @@ class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityContr
       );
   }
   static Bke() {
-    const e = ModelManager_1.ModelManager.ActivityModel.GetActivityById(
+    var e = ModelManager_1.ModelManager.ActivityModel.GetActivityById(
       ActivityRoleTrialController.CurrentActivityId,
     );
     if (e) return e;
@@ -106,7 +106,7 @@ class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityContr
     return !1;
   }
   static RequestRoleInstanceReward(t) {
-    const e = new Protocol_1.Aki.Protocol.whs();
+    var e = new Protocol_1.Aki.Protocol.whs();
     (e.l3n = t),
       Net_1.Net.Call(9833, e, (e) => {
         e &&
@@ -139,4 +139,4 @@ class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityContr
 }
 (exports.ActivityRoleTrialController =
   ActivityRoleTrialController).CurrentActivityId = 0;
-// # sourceMappingURL=ActivityRoleTrialController.js.map
+//# sourceMappingURL=ActivityRoleTrialController.js.map

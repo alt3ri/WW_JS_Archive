@@ -1,28 +1,32 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, n, i) {
-    let o;
-    const s = arguments.length;
-    let r =
-      s < 3 ? e : i === null ? (i = Object.getOwnPropertyDescriptor(e, n)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      s = arguments.length,
+      r =
+        s < 3
+          ? e
+          : null === i
+            ? (i = Object.getOwnPropertyDescriptor(e, n))
+            : i;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(t, e, n, i);
     else
-      for (let h = t.length - 1; h >= 0; h--)
-        (o = t[h]) && (r = (s < 3 ? o(r) : s > 3 ? o(e, n, r) : o(e, n)) || r);
-    return s > 3 && r && Object.defineProperty(e, n, r), r;
+      for (var h = t.length - 1; 0 <= h; h--)
+        (o = t[h]) && (r = (s < 3 ? o(r) : 3 < s ? o(e, n, r) : o(e, n)) || r);
+    return 3 < s && r && Object.defineProperty(e, n, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PawnSensoryInfoComponent = void 0);
-const cpp_1 = require("cpp");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const EnvironmentalPerceptionController_1 = require("../../../World/Enviroment/EnvironmentalPerceptionController");
-const PERCEPTION_SEARCH_RANGE = 2e3;
+const cpp_1 = require("cpp"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  EnvironmentalPerceptionController_1 = require("../../../World/Enviroment/EnvironmentalPerceptionController"),
+  PERCEPTION_SEARCH_RANGE = 2e3;
 let PawnSensoryInfoComponent = class PawnSensoryInfoComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -84,8 +88,8 @@ let PawnSensoryInfoComponent = class PawnSensoryInfoComponent extends EntityComp
       });
   }
   OnActivate() {
-    const t = this.Entity.GetComponent(0);
-    const e = this.Entity?.GameBudgetManagedToken;
+    var t = this.Entity.GetComponent(0),
+      e = this.Entity?.GameBudgetManagedToken;
     return (
       t.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Player
         ? this.nln()
@@ -104,7 +108,7 @@ let PawnSensoryInfoComponent = class PawnSensoryInfoComponent extends EntityComp
             this.vVs,
           )),
       !this.oln &&
-        this.zhn > 0 &&
+        0 < this.zhn &&
         ((this.oln =
           EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.CreatePlayerPerceptionEvent()),
         this.oln.Init(this.zhn, e, this.rln, this.sln, this.MVs)),
@@ -112,7 +116,7 @@ let PawnSensoryInfoComponent = class PawnSensoryInfoComponent extends EntityComp
     );
   }
   SetLogicRange(t) {
-    let e;
+    var e;
     t > this.zhn &&
       ((this.zhn = t),
       this.oln
@@ -171,4 +175,4 @@ LogicRangeInfo:
   PawnSensoryInfoComponent,
 )),
   (exports.PawnSensoryInfoComponent = PawnSensoryInfoComponent);
-// # sourceMappingURL=PawnSensoryInfoComponent.js.map
+//# sourceMappingURL=PawnSensoryInfoComponent.js.map

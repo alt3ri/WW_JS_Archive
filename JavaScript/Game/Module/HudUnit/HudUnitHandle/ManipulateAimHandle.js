@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ManipulateAimHandle = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ManipulateAimUnit_1 = require("../HudUnit/ManipulateAimUnit");
-const HudUnitHandleBase_1 = require("./HudUnitHandleBase");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ManipulateAimUnit_1 = require("../HudUnit/ManipulateAimUnit"),
+  HudUnitHandleBase_1 = require("./HudUnitHandleBase");
 class ManipulateAimHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   constructor() {
     super(...arguments),
@@ -107,7 +107,7 @@ class ManipulateAimHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   }
   eoi() {
     this.Mii &&
-      this.Mii.length !== 0 &&
+      0 !== this.Mii.length &&
       ((this.Kii = this.NewHudUnitWithReturn(
         ManipulateAimUnit_1.ManipulateAimUnit,
         this.Mii,
@@ -139,7 +139,7 @@ class ManipulateAimHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       ));
   }
   toi() {
-    let t;
+    var t;
     this.Kii &&
       !this.Kii.InAsyncLoading() &&
       ((t = this.soi()) && (t = this.ProjectWorldToScreen(t))
@@ -158,4 +158,4 @@ class ManipulateAimHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   }
 }
 exports.ManipulateAimHandle = ManipulateAimHandle;
-// # sourceMappingURL=ManipulateAimHandle.js.map
+//# sourceMappingURL=ManipulateAimHandle.js.map

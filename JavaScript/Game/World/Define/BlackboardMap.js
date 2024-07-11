@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BlackboardMap = exports.BlackboardParam = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils");
 class BlackboardParam {
   constructor(t) {
     (this.jSe = ""),
@@ -20,9 +20,9 @@ class BlackboardParam {
   }
   static CreateByProtocol(t) {
     if (void 0 !== t) {
-      const r = t;
-      const e = new BlackboardParam(r.Ikn);
-      var t = (e.SetKey(r.Ckn), Protocol_1.Aki.Protocol.u2s);
+      var r = t,
+        e = new BlackboardParam(r.Ikn),
+        t = (e.SetKey(r.Ckn), Protocol_1.Aki.Protocol.u2s);
       switch (r.Ikn) {
         case t.Proto_BlackboardParamType_Int:
           return e.SetIntValue(r.Z3n), e;
@@ -31,8 +31,8 @@ class BlackboardParam {
         case t.Proto_BlackboardParamType_Long:
           return e.SetLongValue(MathUtils_1.MathUtils.LongToBigInt(r.U7n)), e;
         case t.Proto_BlackboardParamType_LongArray:
-          var s = r.R7n.A7n;
-          var a = new Array();
+          var s = r.R7n.A7n,
+            a = new Array();
           for (const i of s) a.push(MathUtils_1.MathUtils.LongToBigInt(i));
           return e.SetLongValues(a), e;
         case t.Proto_BlackboardParamType_Boolean:
@@ -56,11 +56,12 @@ class BlackboardParam {
         case t.Proto_BlackboardParamType_Entity:
           return e.SetLongValue(MathUtils_1.MathUtils.LongToBigInt(r.U7n)), e;
         case t.Proto_BlackboardParamType_EntityArray:
-          var s = r.R7n.A7n;
-          var o = new Array();
+          var s = r.R7n.A7n,
+            o = new Array();
           for (const l of s) o.push(MathUtils_1.MathUtils.LongToBigInt(l));
           return e.SetLongValues(o), e;
         default:
+          return;
       }
     }
   }
@@ -158,14 +159,14 @@ class BlackboardParam {
     this.hpr = t;
   }
   ToString() {
-    const t = Protocol_1.Aki.Protocol.u2s;
+    var t = Protocol_1.Aki.Protocol.u2s;
     switch (this.S9) {
       case t.Proto_BlackboardParamType_Int:
         return this.epr.toString();
       case t.Proto_BlackboardParamType_IntArray: {
         let r = "[";
         if (void 0 !== this.lpr) {
-          const e = this.lpr.length;
+          var e = this.lpr.length;
           for (let t = 0; t < e; t++)
             (r += this.lpr[t]), t !== e - 1 && (r += ", ");
         }
@@ -176,7 +177,7 @@ class BlackboardParam {
       case t.Proto_BlackboardParamType_LongArray: {
         let r = "[";
         if (void 0 !== this._pr) {
-          const s = this._pr.length;
+          var s = this._pr.length;
           for (let t = 0; t < s; t++)
             (r += this._pr[t]), t !== s - 1 && (r += ", ");
         }
@@ -189,7 +190,7 @@ class BlackboardParam {
       case t.Proto_BlackboardParamType_StringArray: {
         let r = "[";
         if (void 0 !== this.cpr) {
-          const a = this.cpr.length;
+          var a = this.cpr.length;
           for (let t = 0; t < a; t++)
             (r += this.cpr[t]), t !== a - 1 && (r += ", ");
         }
@@ -200,7 +201,7 @@ class BlackboardParam {
       case t.Proto_BlackboardParamType_FloatArray: {
         let r = "[";
         if (void 0 !== this.upr) {
-          const o = this.upr.length;
+          var o = this.upr.length;
           for (let t = 0; t < o; t++)
             (r += this.upr[t]), t !== o - 1 && (r += ", ");
         }
@@ -217,9 +218,9 @@ class BlackboardParam {
       case t.Proto_BlackboardParamType_VectorArray: {
         let r = "[";
         if (void 0 !== this.spr) {
-          const i = this.spr.length;
+          var i = this.spr.length;
           for (let t = 0; t < i; t++) {
-            const l = this.spr[t];
+            var l = this.spr[t];
             (r += `X:${l.X} Y:${l.Y} Z:` + l.Z), t !== i - 1 && (r += ", ");
           }
         }
@@ -238,9 +239,9 @@ class BlackboardParam {
       case t.Proto_BlackboardParamType_RotatorArray: {
         let r = "[";
         if (void 0 !== this.hpr) {
-          const u = this.hpr.length;
+          var u = this.hpr.length;
           for (let t = 0; t < u; t++) {
-            const n = this.hpr[t];
+            var n = this.hpr[t];
             (r += `Pitch:${n.Pitch} Roll:${n.Roll} Yaw:` + n.Yaw),
               t !== u - 1 && (r += ", ");
           }
@@ -276,13 +277,12 @@ class BlackboardMap {
   ToString() {
     let t = "";
     for (const e of this.BlackboardMap.keys()) {
-      const r = this.BlackboardMap.get(e);
+      var r = this.BlackboardMap.get(e);
       t += `key:${e}  type:${BlackboardMap.mpr(r.GetType())}  value:${r?.ToString()}
 `;
     }
     return t;
   }
-
   static CheckValueType(t, r, e) {
     return (
       r.GetType() === e ||
@@ -333,8 +333,9 @@ class BlackboardMap {
       case Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_EntityArray:
         return "array<entity>";
       default:
+        return;
     }
   }
 }
 exports.BlackboardMap = BlackboardMap;
-// # sourceMappingURL=BlackboardMap.js.map
+//# sourceMappingURL=BlackboardMap.js.map

@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuaranteeActionCenter = void 0);
-const GuaranteeActionBlackScreenFadeOut_1 = require("./GuaranteeActions/GuaranteeActionBlackScreenFadeOut");
-const GuaranteeActionEnablePlayerMoveControl_1 = require("./GuaranteeActions/GuaranteeActionEnablePlayerMoveControl");
-const GuaranteeActionExitOrbitalCamera_1 = require("./GuaranteeActions/GuaranteeActionExitOrbitalCamera");
-const GuaranteeActionRestorePlayerCameraAdjustment_1 = require("./GuaranteeActions/GuaranteeActionRestorePlayerCameraAdjustment");
-const GuaranteeActionUnLimitPlayerOperation_1 = require("./GuaranteeActions/GuaranteeActionUnLimitPlayerOperation");
+const GuaranteeActionBlackScreenFadeOut_1 = require("./GuaranteeActions/GuaranteeActionBlackScreenFadeOut"),
+  GuaranteeActionEnablePlayerMoveControl_1 = require("./GuaranteeActions/GuaranteeActionEnablePlayerMoveControl"),
+  GuaranteeActionExitOrbitalCamera_1 = require("./GuaranteeActions/GuaranteeActionExitOrbitalCamera"),
+  GuaranteeActionRestorePlayerCameraAdjustment_1 = require("./GuaranteeActions/GuaranteeActionRestorePlayerCameraAdjustment"),
+  GuaranteeActionUnLimitPlayerOperation_1 = require("./GuaranteeActions/GuaranteeActionUnLimitPlayerOperation");
 class GuaranteeActionCenter {
   static RegGuaranteeActions() {
-    const e = GuaranteeActionCenter.tIe;
+    var e = GuaranteeActionCenter.tIe;
     e(
       "RestorePlayerCameraAdjustment",
       GuaranteeActionRestorePlayerCameraAdjustment_1.GuaranteeActionRestorePlayerCameraAdjustment,
@@ -44,4 +44,4 @@ class GuaranteeActionCenter {
     GuaranteeActionCenter.iIe.has(e) || GuaranteeActionCenter.iIe.set(e, t),
       GuaranteeActionCenter.oIe.has(e) || GuaranteeActionCenter.oIe.set(e, a);
   });
-// # sourceMappingURL=GuaranteeActionCenter.js.map
+//# sourceMappingURL=GuaranteeActionCenter.js.map

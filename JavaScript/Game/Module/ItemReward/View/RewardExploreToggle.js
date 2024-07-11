@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RewardExploreToggle = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class RewardExploreToggle extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments), (this.A0i = void 0);
@@ -27,10 +27,10 @@ class RewardExploreToggle extends UiPanelBase_1.UiPanelBase {
         this.LBt(e.DescriptionTextId);
   }
   LBt(e) {
-    let t;
+    var t;
     StringUtils_1.StringUtils.IsEmpty(e) ||
       ((t = this.GetText(0)), LguiUtil_1.LguiUtil.SetLocalTextNew(t, e));
   }
 }
 exports.RewardExploreToggle = RewardExploreToggle;
-// # sourceMappingURL=RewardExploreToggle.js.map
+//# sourceMappingURL=RewardExploreToggle.js.map

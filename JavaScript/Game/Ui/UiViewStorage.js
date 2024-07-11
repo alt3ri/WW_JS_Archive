@@ -13,7 +13,7 @@ class UiViewStorage {
   }
   static RegisterUiTsInfo(e) {
     for (const r of e) {
-      const o = r[0];
+      var o = r[0];
       try {
         UiViewStorage.uCr.set(o, {
           Ctor: r[1],
@@ -45,4 +45,4 @@ class UiViewStorage {
   }
 }
 (exports.UiViewStorage = UiViewStorage).uCr = new Map();
-// # sourceMappingURL=UiViewStorage.js.map
+//# sourceMappingURL=UiViewStorage.js.map

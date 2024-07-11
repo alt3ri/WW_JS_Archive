@@ -21,11 +21,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.getAllPlannedBranchData =
     exports.getAllBranchDefineData =
       void 0);
-const File_1 = require("./Misc/File");
-const Util_1 = require("./Misc/Util");
+const File_1 = require("./Misc/File"),
+  Util_1 = require("./Misc/Util");
 let branchDefineData = void 0;
 function getAllBranchDefineData() {
-  let e;
+  var e;
   return (
     branchDefineData ||
       ((e = (0, File_1.getProjectPath)(
@@ -38,7 +38,7 @@ function getAllBranchDefineData() {
 exports.getAllBranchDefineData = getAllBranchDefineData;
 let plannedBranchData = void 0;
 function getAllPlannedBranchData() {
-  let e;
+  var e;
   return (
     plannedBranchData ||
       ((e = (0, File_1.getProjectPath)(
@@ -64,14 +64,14 @@ function isPlannedBranch(e) {
   return getAllPlannedBranches().includes(e);
 }
 function isInDevelopmentBranch() {
-  return (0, Util_1.getWorkspaceBranch)() === "development";
+  return "development" === (0, Util_1.getWorkspaceBranch)();
 }
 function getAllBranches(e = !0) {
-  let r;
-  const n = Array.from(getAllStreamBranches());
+  var r,
+    n = Array.from(getAllStreamBranches());
   return e
     ? ((e = getAllPlannedBranches()),
-      (r = n.findIndex((e) => e === "development")),
+      (r = n.findIndex((e) => "development" === e)),
       n.splice(r, 1),
       [...n, ...e])
     : n;
@@ -80,7 +80,7 @@ function getBranchSegment(e) {
   return getBranchDefineData(e)?.IdSegment;
 }
 function getLowerBranches(e, r = !0) {
-  const n = [];
+  var n = [];
   for (const t of getAllBranches(r)) {
     if (e === t) break;
     n.push(t);
@@ -88,25 +88,25 @@ function getLowerBranches(e, r = !0) {
   return n;
 }
 function isWorkspacePreBranch(r) {
-  const e = getAllBranches(!1);
-  const n = (0, Util_1.getWorkspaceBranch)();
-  const t = e.findIndex((e) => e === r);
-  return t !== -1 && e[t + 1] === n;
+  var e = getAllBranches(!1),
+    n = (0, Util_1.getWorkspaceBranch)(),
+    t = e.findIndex((e) => e === r);
+  return -1 !== t && e[t + 1] === n;
 }
 function isReachBranch(e, r) {
-  const n = (0, Util_1.getWorkspaceBranch)();
+  var n = (0, Util_1.getWorkspaceBranch)();
   return !!n && (n === e || getLowerBranches(n).includes(e));
 }
 function isBranchInRange(r, n, e) {
-  const t = getAllBranches(!0);
+  var t = getAllBranches(!0);
   if (!t.includes(r) || !t.includes(n))
     throw new Error(`分支区间非法, 有不存在的分支：[${r}, ${n}]`);
-  const a = e ?? (0, Util_1.getWorkspaceBranch)();
-  let c = -1;
-  let o = -1;
-  let l = -1;
+  var a = e ?? (0, Util_1.getWorkspaceBranch)();
+  let c = -1,
+    o = -1,
+    l = -1;
   for (let e = 0; e < t.length; e++) {
-    const s = t[e];
+    var s = t[e];
     s === r && (c = e), s === n && (o = e), s === a && (l = e);
   }
   return l >= c && l <= o;
@@ -118,14 +118,14 @@ function getBranchOrder(r) {
   return getAllStreamBranches().findIndex((e) => e === r);
 }
 function getNearestSourceBranch(e, r) {
-  const n = getBranchOrder(r);
+  var n = getBranchOrder(r);
   let t = -1;
   for (const o of e) {
-    const a = getBranchOrder(o);
-    const c = n - a;
+    var a = getBranchOrder(o),
+      c = n - a;
     c < 0 || (c < n - t && (t = a));
   }
-  return t === -1 ? r : getAllStreamBranches()[t];
+  return -1 === t ? r : getAllStreamBranches()[t];
 }
 function getBranchShortName(r) {
   return getAllBranchDefineData().find((e) => e.Branch === r).ShortName;
@@ -155,4 +155,4 @@ function toBranchStream(e) {
   (exports.getBranchShortName = getBranchShortName),
   (exports.getBranchNameFromStream = getBranchNameFromStream),
   (exports.toBranchStream = toBranchStream);
-// # sourceMappingURL=BranchDefine.js.map
+//# sourceMappingURL=BranchDefine.js.map

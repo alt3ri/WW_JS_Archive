@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletActionInitRender = void 0);
-const UE = require("ue");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const CameraController_1 = require("../../../Camera/CameraController");
-const Global_1 = require("../../../Global");
-const SceneInteractionManager_1 = require("../../../Render/Scene/Interaction/SceneInteractionManager");
-const SceneObjectWaterEffect_1 = require("../../../Render/Scene/Interaction/SceneObjectWaterEffect");
-const CharacterHitComponent_1 = require("../../Character/Common/Component/CharacterHitComponent");
-const BulletUtil_1 = require("../BulletUtil");
-const BulletModel_1 = require("../Model/BulletModel");
-const BulletActionBase_1 = require("./BulletActionBase");
-const PATH_DEFAULT_INTERACT =
-  "/Game/Aki/Data/Fight/DA_DefaultBulletConfig.DA_DefaultBulletConfig";
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  CameraController_1 = require("../../../Camera/CameraController"),
+  Global_1 = require("../../../Global"),
+  SceneInteractionManager_1 = require("../../../Render/Scene/Interaction/SceneInteractionManager"),
+  SceneObjectWaterEffect_1 = require("../../../Render/Scene/Interaction/SceneObjectWaterEffect"),
+  CharacterHitComponent_1 = require("../../Character/Common/Component/CharacterHitComponent"),
+  BulletUtil_1 = require("../BulletUtil"),
+  BulletModel_1 = require("../Model/BulletModel"),
+  BulletActionBase_1 = require("./BulletActionBase"),
+  PATH_DEFAULT_INTERACT =
+    "/Game/Aki/Data/Fight/DA_DefaultBulletConfig.DA_DefaultBulletConfig";
 class BulletActionInitRender extends BulletActionBase_1.BulletActionBase {
   constructor() {
     super(...arguments), (this.P5o = void 0);
@@ -24,10 +24,10 @@ class BulletActionInitRender extends BulletActionBase_1.BulletActionBase {
           PATH_DEFAULT_INTERACT,
           UE.DefaultBulletSceneInteraction_C,
         ));
-    let e = this.BulletInfo.BulletDataMain;
+    var e = this.BulletInfo.BulletDataMain;
     if (e.Logic.InteractWithWater) {
       let t = e.Interact.WaterInteract;
-      if (t !== "")
+      if ("" !== t)
         ResourceSystem_1.ResourceSystem.LoadAsync(
           t,
           UE.BulletSceneInteraction_C,
@@ -36,17 +36,17 @@ class BulletActionInitRender extends BulletActionBase_1.BulletActionBase {
           },
         );
       else {
-        const r =
-          BulletModel_1.BulletModel.DefaultBulletSceneInteraction
-            ?.ConditionConfig;
-        const i = r?.Num();
-        const l = this.GetSize();
+        var r =
+            BulletModel_1.BulletModel.DefaultBulletSceneInteraction
+              ?.ConditionConfig,
+          i = r?.Num(),
+          l = this.GetSize();
         for (let e = 0; e < i; e++) {
-          const n = r.Get(e);
+          var n = r.Get(e);
           if (!(l >= n.RangeMin)) break;
           t = n.Config.ToAssetPathName();
         }
-        t !== "" &&
+        "" !== t &&
           ResourceSystem_1.ResourceSystem.LoadAsync(
             t,
             UE.BulletSceneInteraction_C,
@@ -60,9 +60,9 @@ class BulletActionInitRender extends BulletActionBase_1.BulletActionBase {
     this.BulletInfo.Attacker?.Valid &&
       this.BulletInfo.IsAutonomousProxy &&
       BulletUtil_1.BulletUtil.IsPlayerOrSummons(this.BulletInfo) &&
-      e.length > 0 &&
+      0 < e.length &&
       ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.Class, (e) => {
-        const t = Global_1.Global.CharacterCameraManager.GetCameraLocation();
+        var t = Global_1.Global.CharacterCameraManager.GetCameraLocation();
         CameraController_1.CameraController.PlayWorldCameraShake(
           e,
           t,
@@ -74,7 +74,7 @@ class BulletActionInitRender extends BulletActionBase_1.BulletActionBase {
       });
   }
   GetSize() {
-    return this.BulletInfo.BulletDataMain.Base.Shape !== 0
+    return 0 !== this.BulletInfo.BulletDataMain.Base.Shape
       ? this.BulletInfo.Size.X
       : Math.max(this.BulletInfo.Size.X, this.BulletInfo.Size.Y);
   }
@@ -97,4 +97,4 @@ class BulletActionInitRender extends BulletActionBase_1.BulletActionBase {
   }
 }
 exports.BulletActionInitRender = BulletActionInitRender;
-// # sourceMappingURL=BulletActionInitRender.js.map
+//# sourceMappingURL=BulletActionInitRender.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiViewConfig = void 0);
-const UiFloatConfigByViewNameIfNull_1 = require("../../../../Core/Define/ConfigQuery/UiFloatConfigByViewNameIfNull");
-const UiNormalConfigByViewNameIfNull_1 = require("../../../../Core/Define/ConfigQuery/UiNormalConfigByViewNameIfNull");
-const UiShowByViewName_1 = require("../../../../Core/Define/ConfigQuery/UiShowByViewName");
-const ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
+const UiFloatConfigByViewNameIfNull_1 = require("../../../../Core/Define/ConfigQuery/UiFloatConfigByViewNameIfNull"),
+  UiNormalConfigByViewNameIfNull_1 = require("../../../../Core/Define/ConfigQuery/UiNormalConfigByViewNameIfNull"),
+  UiShowByViewName_1 = require("../../../../Core/Define/ConfigQuery/UiShowByViewName"),
+  ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
 class UiViewConfig extends ConfigBase_1.ConfigBase {
   GetUiShowConfig(e) {
     return UiShowByViewName_1.configUiShowByViewName.GetConfig(e);
@@ -25,4 +25,4 @@ class UiViewConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.UiViewConfig = UiViewConfig;
-// # sourceMappingURL=UiViewConfig.js.map
+//# sourceMappingURL=UiViewConfig.js.map

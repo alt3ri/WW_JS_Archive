@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TouchFingerManager = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const TouchFingerData_1 = require("./TouchFingerData");
-const TouchFingerDefine_1 = require("./TouchFingerDefine");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  TouchFingerData_1 = require("./TouchFingerData"),
+  TouchFingerDefine_1 = require("./TouchFingerDefine");
 class TouchFingerManager {
   static Initialize() {
     for (
@@ -15,7 +15,7 @@ class TouchFingerManager {
       TouchFingerManager.Qmr(e);
   }
   static Qmr(e) {
-    const r = new TouchFingerData_1.TouchFingerData(e);
+    var r = new TouchFingerData_1.TouchFingerData(e);
     TouchFingerManager.tCt.set(e, r);
   }
   static GetTouchFingerData(e) {
@@ -65,11 +65,11 @@ class TouchFingerManager {
     return TouchFingerManager.CurrentTouchFingerCount;
   }
   static GetFingerExpandCloseValue(e, r) {
-    let n;
-    let i;
-    let a;
-    var e = TouchFingerManager.GetTouchFingerData(e);
-    var r = TouchFingerManager.GetTouchFingerData(r);
+    var n,
+      i,
+      a,
+      e = TouchFingerManager.GetTouchFingerData(e),
+      r = TouchFingerManager.GetTouchFingerData(r);
     return e &&
       r &&
       r.IsInTouch() &&
@@ -85,24 +85,24 @@ class TouchFingerManager {
       : 0;
   }
   static GetFingerExpandCloseType(e, r) {
-    let n = void 0;
-    let i = 0;
-    var e = TouchFingerManager.GetTouchFingerData(e);
-    var r = TouchFingerManager.GetTouchFingerData(r);
-    const a =
-      ((e && r) || (n = TouchFingerDefine_1.EFingerExpandCloseType.None),
-      (r.IsInTouch() && r.IsInTouch()) ||
-        (n = TouchFingerDefine_1.EFingerExpandCloseType.None),
-      e.GetLastTouchPosition());
-    const o = r.GetLastTouchPosition();
-    var e =
-      ((a && o) || (n = TouchFingerDefine_1.EFingerExpandCloseType.None),
-      e.GetTouchPosition());
-    var r = r.GetTouchPosition();
-    var e =
-      ((e && r) || (n = TouchFingerDefine_1.EFingerExpandCloseType.None),
-      UE.KismetMathLibrary.Vector_DistanceSquared(e, r));
-    var r = UE.KismetMathLibrary.Vector_DistanceSquared(a, o);
+    let n = void 0,
+      i = 0;
+    var e = TouchFingerManager.GetTouchFingerData(e),
+      r = TouchFingerManager.GetTouchFingerData(r),
+      a =
+        ((e && r) || (n = TouchFingerDefine_1.EFingerExpandCloseType.None),
+        (r.IsInTouch() && r.IsInTouch()) ||
+          (n = TouchFingerDefine_1.EFingerExpandCloseType.None),
+        e.GetLastTouchPosition()),
+      o = r.GetLastTouchPosition(),
+      e =
+        ((a && o) || (n = TouchFingerDefine_1.EFingerExpandCloseType.None),
+        e.GetTouchPosition()),
+      r = r.GetTouchPosition(),
+      e =
+        ((e && r) || (n = TouchFingerDefine_1.EFingerExpandCloseType.None),
+        UE.KismetMathLibrary.Vector_DistanceSquared(e, r)),
+      r = UE.KismetMathLibrary.Vector_DistanceSquared(a, o);
     return (
       (i = (e - r) / r),
       e < r && (n = TouchFingerDefine_1.EFingerExpandCloseType.Close),
@@ -113,8 +113,8 @@ class TouchFingerManager {
     );
   }
   static GetFingerDirection(e) {
-    let r;
-    var e = TouchFingerManager.GetTouchFingerData(e);
+    var r,
+      e = TouchFingerManager.GetTouchFingerData(e);
     if (e && e.IsInTouch())
       return (r = e.GetLastTouchPosition())
         ? { X: (e = e.GetTouchPosition()).X - r.X, Y: e.Y - r.Y }
@@ -123,4 +123,4 @@ class TouchFingerManager {
 }
 ((exports.TouchFingerManager = TouchFingerManager).tCt = new Map()),
   (TouchFingerManager.CurrentTouchFingerCount = 0);
-// # sourceMappingURL=TouchFingerManager.js.map
+//# sourceMappingURL=TouchFingerManager.js.map

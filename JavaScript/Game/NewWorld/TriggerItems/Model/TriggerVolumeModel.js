@@ -26,4 +26,4 @@ class TriggerVolumeModel extends ModelBase_1.ModelBase {
   }
 }
 exports.TriggerVolumeModel = TriggerVolumeModel;
-// # sourceMappingURL=TriggerVolumeModel.js.map
+//# sourceMappingURL=TriggerVolumeModel.js.map

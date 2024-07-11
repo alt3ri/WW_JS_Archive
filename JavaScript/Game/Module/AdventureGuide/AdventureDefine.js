@@ -1,5 +1,5 @@
 "use strict";
-let EDangerType, EDungeonType, EDungeonSubType;
+var EDangerType, EDungeonType, EDungeonSubType;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WORLD_LEVEL_MAX =
     exports.WORLD_LEVEL_MIN =
@@ -87,6 +87,7 @@ class SoundAreaDetectionRecord {
       case 1:
         return this.SilentAreaDetectionRecord?.Conf;
       default:
+        return;
     }
   }
   get IsLock() {
@@ -114,7 +115,7 @@ class QuestRewardViewParam {
 }
 (exports.QuestRewardViewParam = QuestRewardViewParam),
   (exports.matTypeDes = {
-    0: "AdventureMatType_All",
+    [0]: "AdventureMatType_All",
     1: "AdventureMatType_Weapon",
     2: "AdventureMatType_Character",
     3: "AdventureMatType_Experience",
@@ -122,4 +123,4 @@ class QuestRewardViewParam {
   (exports.EDEFAULTCATEGORY = 16),
   (exports.WORLD_LEVEL_MIN = 1),
   (exports.WORLD_LEVEL_MAX = 8);
-// # sourceMappingURL=AdventureDefine.js.map
+//# sourceMappingURL=AdventureDefine.js.map

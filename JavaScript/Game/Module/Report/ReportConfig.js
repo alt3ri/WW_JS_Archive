@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ReportConfig = void 0);
-const BanInfoById_1 = require("../../../Core/Define/ConfigQuery/BanInfoById");
-const ReportPlayerInfoAll_1 = require("../../../Core/Define/ConfigQuery/ReportPlayerInfoAll");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const BanInfoByTypeAndReason_1 = require("../../../Core/Define/ConfigQuery/BanInfoByTypeAndReason");
+const BanInfoById_1 = require("../../../Core/Define/ConfigQuery/BanInfoById"),
+  ReportPlayerInfoAll_1 = require("../../../Core/Define/ConfigQuery/ReportPlayerInfoAll"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  BanInfoByTypeAndReason_1 = require("../../../Core/Define/ConfigQuery/BanInfoByTypeAndReason");
 class ReportConfig extends ConfigBase_1.ConfigBase {
   GetReportConfigList() {
     return ReportPlayerInfoAll_1.configReportPlayerInfoAll.GetConfigList();
@@ -20,4 +20,4 @@ class ReportConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.ReportConfig = ReportConfig;
-// # sourceMappingURL=ReportConfig.js.map
+//# sourceMappingURL=ReportConfig.js.map

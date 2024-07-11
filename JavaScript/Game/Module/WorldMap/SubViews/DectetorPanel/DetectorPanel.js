@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DetectorPanel = void 0);
-const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ButtonItem_1 = require("../../../Common/Button/ButtonItem");
-const MapController_1 = require("../../../Map/Controller/MapController");
-const WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi");
-const WorldMapDefine_1 = require("../../WorldMapDefine");
+const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
+  MapController_1 = require("../../../Map/Controller/MapController"),
+  WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
+  WorldMapDefine_1 = require("../../WorldMapDefine");
 class DetectorPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
@@ -65,4 +65,4 @@ class DetectorPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
 }
 exports.DetectorPanel = DetectorPanel;
-// # sourceMappingURL=DetectorPanel.js.map
+//# sourceMappingURL=DetectorPanel.js.map

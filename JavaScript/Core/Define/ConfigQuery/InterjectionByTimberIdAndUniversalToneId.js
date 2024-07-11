@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configInterjectionByTimberIdAndUniversalToneId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const Interjection_1 = require("../Config/Interjection");
-const DB = "db_audio_interjection.db";
-const FILE = "k.可视化编辑/c.Csv/y.音频/y.音色语音事件映射/*.csv*";
-const TABLE = "Interjection";
-const COMMAND =
-  "select BinData from `Interjection` where TimberId = ? AND UniversalToneId = ?";
-const KEY_PREFIX = "InterjectionByTimberIdAndUniversalToneId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  Interjection_1 = require("../Config/Interjection"),
+  DB = "db_audio_interjection.db",
+  FILE = "k.可视化编辑/c.Csv/y.音频/y.音色语音事件映射/*.csv*",
+  TABLE = "Interjection",
+  COMMAND =
+    "select BinData from `Interjection` where TimberId = ? AND UniversalToneId = ?",
+  KEY_PREFIX = "InterjectionByTimberIdAndUniversalToneId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX =
-  "configInterjectionByTimberIdAndUniversalToneId.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX =
+    "configInterjectionByTimberIdAndUniversalToneId.GetConfig(";
 exports.configInterjectionByTimberIdAndUniversalToneId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -43,16 +43,17 @@ exports.configInterjectionByTimberIdAndUniversalToneId = {
         (r =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, n, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(
-            handleId,
-            !0,
-            ...logPair,
-            ["TimberId", n],
-            ["UniversalToneId", o],
-          ) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(
+              handleId,
+              !0,
+              ...logPair,
+              ["TimberId", n],
+              ["UniversalToneId", o],
+            ))
       ) {
-        var r;
-        var i = void 0;
+        var r,
+          i = void 0;
         if (
           (([r, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -79,4 +80,4 @@ exports.configInterjectionByTimberIdAndUniversalToneId = {
     }
   },
 };
-// # sourceMappingURL=InterjectionByTimberIdAndUniversalToneId.js.map
+//# sourceMappingURL=InterjectionByTimberIdAndUniversalToneId.js.map

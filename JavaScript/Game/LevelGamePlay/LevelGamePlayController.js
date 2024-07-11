@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelGamePlayController = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const Time_1 = require("../../Core/Common/Time");
-const Protocol_1 = require("../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../Core/Entity/EntitySystem");
-const ControllerBase_1 = require("../../Core/Framework/ControllerBase");
-const Net_1 = require("../../Core/Net/Net");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const Global_1 = require("../Global");
-const ConfigManager_1 = require("../Manager/ConfigManager");
-const ControllerHolder_1 = require("../Manager/ControllerHolder");
-const ModelManager_1 = require("../Manager/ModelManager");
-const CombatMessage_1 = require("../Module/CombatMessage/CombatMessage");
-const EntityHandle_1 = require("../NewWorld/Character/EntityHandle");
-const SceneInteractionManager_1 = require("../Render/Scene/Interaction/SceneInteractionManager");
-const SHOW_FAKE_ERROR_CODE_TIPS_INTERVAL = 1e3;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  Time_1 = require("../../Core/Common/Time"),
+  Protocol_1 = require("../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../Core/Entity/EntitySystem"),
+  ControllerBase_1 = require("../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../Core/Net/Net"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  Global_1 = require("../Global"),
+  ConfigManager_1 = require("../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  CombatMessage_1 = require("../Module/CombatMessage/CombatMessage"),
+  EntityHandle_1 = require("../NewWorld/Character/EntityHandle"),
+  SceneInteractionManager_1 = require("../Render/Scene/Interaction/SceneInteractionManager"),
+  SHOW_FAKE_ERROR_CODE_TIPS_INTERVAL = 1e3;
 class LevelGamePlayController extends ControllerBase_1.ControllerBase {
   static HandleScanResponse(e) {
     return !(
@@ -60,7 +60,7 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
     }
   }
   static ShowFakeErrorCodeTips() {
-    let e;
+    var e;
     Time_1.Time.Now - this.lUe < SHOW_FAKE_ERROR_CODE_TIPS_INTERVAL ||
       ((this.lUe = Time_1.Time.Now),
       (e =
@@ -113,7 +113,7 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
     );
   }
   static ThrowDamageChangeRequest(e, t) {
-    const r = Protocol_1.Aki.Protocol.L_s.create();
+    var r = Protocol_1.Aki.Protocol.L_s.create();
     (r.rkn = MathUtils_1.MathUtils.NumberToLong(
       ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e),
     )),
@@ -134,7 +134,7 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
       });
   }
   static ManipulatableBeCastOrDrop2Server(e, t) {
-    const r = Protocol_1.Aki.Protocol.A1s.create();
+    var r = Protocol_1.Aki.Protocol.A1s.create();
     (r.rkn = MathUtils_1.MathUtils.NumberToLong(
       ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e),
     )),
@@ -155,12 +155,12 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
   static async GetRewardTreasureBoxRequest(e) {
     if (this.fUe?.get(e)) return !1;
     this.fUe.set(e, !0);
-    var t = Protocol_1.Aki.Protocol.P_s.create();
-    var t =
-      ((t.rkn = MathUtils_1.MathUtils.NumberToLong(
-        ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e),
-      )),
-      await Net_1.Net.CallAsync(23912, t));
+    var t = Protocol_1.Aki.Protocol.P_s.create(),
+      t =
+        ((t.rkn = MathUtils_1.MathUtils.NumberToLong(
+          ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e),
+        )),
+        await Net_1.Net.CallAsync(23912, t));
     return (
       this.fUe.delete(e),
       !!t &&
@@ -177,7 +177,7 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
     );
   }
   static ElevatorStateChangeRequest(e, t, r, a) {
-    const o = Protocol_1.Aki.Protocol.jXn.create();
+    var o = Protocol_1.Aki.Protocol.jXn.create();
     (o.rkn = MathUtils_1.MathUtils.NumberToLong(
       ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e),
     )),
@@ -200,13 +200,13 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
   static OnManipulatableItemExitAreaInternal(t, r, a = 0, o = !1) {
     if (t) {
       let e = void 0;
-      let l;
-      let n;
-      let i;
-      let _ = (e =
-        t instanceof EntityHandle_1.EntityHandle ? t.Entity : t).GetComponent(
-        182,
-      );
+      var l,
+        n,
+        i,
+        _ = (e =
+          t instanceof EntityHandle_1.EntityHandle ? t.Entity : t).GetComponent(
+          182,
+        );
       _.IsMoveAutonomousProxy &&
         ((n = new UE.Transform()),
         (i = (0, puerts_1.$ref)(void 0)),
@@ -243,43 +243,43 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
         );
   }
   static EntityFollowTrackRequest(e, t) {
-    const r = Protocol_1.Aki.Protocol.O1s.create();
+    var r = Protocol_1.Aki.Protocol.O1s.create();
     (r.rkn = MathUtils_1.MathUtils.NumberToLong(e)),
       Net_1.Net.Call(10581, r, t);
   }
   static EntityBuffProducerRequest(e, t) {
-    const r = Protocol_1.Aki.Protocol.lYn.create();
+    var r = Protocol_1.Aki.Protocol.lYn.create();
     (r.Hkn = MathUtils_1.MathUtils.NumberToLong(e)),
       Net_1.Net.Call(10490, r, t);
   }
   static ShootTargetHitGearStateChangeRequest(e, t) {
-    const r = Protocol_1.Aki.Protocol.I_s.create();
+    var r = Protocol_1.Aki.Protocol.I_s.create();
     (r.rkn = MathUtils_1.MathUtils.NumberToLong(
       ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e),
     )),
       Net_1.Net.Call(24031, r, t);
   }
   static OnEnableNearbyTrackingNotify(e) {
-    const t = ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
+    var t = ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
     if (t === e.Rkn)
       for (const a of e.jkn) {
-        let r =
+        var r =
           ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(a);
         r && (r = r.Entity.GetComponent(144)) && (r.EnableTracking = !1);
       }
   }
   static EntityAdsorbRequest(e, t) {
-    const r = Protocol_1.Aki.Protocol.NYn.create();
+    var r = Protocol_1.Aki.Protocol.NYn.create();
     (r.rkn = e), Net_1.Net.Call(5811, r, t);
   }
   static RequestChairSit(e, t, r) {
-    const a = Protocol_1.Aki.Protocol.t_s.create();
-    var e =
-      ((a.rkn = MathUtils_1.MathUtils.NumberToLong(e)),
-      (a.Wkn = t),
-      Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity.GetComponent(
-        0,
-      ).GetCreatureDataId());
+    var a = Protocol_1.Aki.Protocol.t_s.create(),
+      e =
+        ((a.rkn = MathUtils_1.MathUtils.NumberToLong(e)),
+        (a.Wkn = t),
+        Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity.GetComponent(
+          0,
+        ).GetCreatureDataId());
     e && (a.Kkn = CombatMessage_1.CombatNet.CreateCombatCommon(e)),
       (a.Qkn = r),
       Net_1.Net.Call(2325, a, (e) => {
@@ -301,11 +301,11 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
         ["CreatureDataId", e.rkn],
         ["耐久度", e.pxs],
       );
-    let t;
-    let r;
-    const a = ModelManager_1.ModelManager.CreatureModel.GetEntity(
-      MathUtils_1.MathUtils.LongToNumber(e.rkn),
-    );
+    var t,
+      r,
+      a = ModelManager_1.ModelManager.CreatureModel.GetEntity(
+        MathUtils_1.MathUtils.LongToNumber(e.rkn),
+      );
     a?.Valid &&
       ((t = a.Entity.GetComponent(0)),
       (e = e.pxs),
@@ -319,15 +319,15 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
       ));
   }),
   (LevelGamePlayController._Ue = (e) => {
-    var t = MathUtils_1.MathUtils.LongToNumber(e.Ekn);
-    var t = ModelManager_1.ModelManager.CreatureModel.GetEntity(t);
+    var t = MathUtils_1.MathUtils.LongToNumber(e.Ekn),
+      t = ModelManager_1.ModelManager.CreatureModel.GetEntity(t);
     t &&
       (t.Entity.GetComponent(0).UpdateEntityCommonTags(e.Ggs),
       t.Entity.GetComponent(177).SyncTagsFromServer(e.Ggs));
   }),
   (LevelGamePlayController.dUe = (e) => {
-    var t = MathUtils_1.MathUtils.LongToNumber(e.rkn);
-    var t = ModelManager_1.ModelManager.CreatureModel.GetEntity(t);
+    var t = MathUtils_1.MathUtils.LongToNumber(e.rkn),
+      t = ModelManager_1.ModelManager.CreatureModel.GetEntity(t);
     t
       ? (t = t.Entity.GetComponent(123)) && t.SetTargetFloor(e.$kn)
       : Log_1.Log.CheckWarn() &&
@@ -346,4 +346,4 @@ class LevelGamePlayController extends ControllerBase_1.ControllerBase {
   (LevelGamePlayController.gUe = (e) => {
     ModelManager_1.ModelManager.VisionCaptureModel?.RemoveVisionCapture(e);
   });
-// # sourceMappingURL=LevelGamePlayController.js.map
+//# sourceMappingURL=LevelGamePlayController.js.map

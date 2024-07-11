@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceWordItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class AdviceWordItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -41,30 +41,30 @@ class AdviceWordItem extends UiPanelBase_1.UiPanelBase {
       EventDefine_1.EEventName.OnClickAdviceSortWord,
       this.$7e,
     );
-    const e = this.GetExtendToggle(0);
+    var e = this.GetExtendToggle(0);
     e.CanExecuteChange.Unbind(), e.CanExecuteChange.Bind(this.T7e);
   }
   UpdateItem(e) {
     (this.X7e = e), this.Og(), this.Q7e(), this.W9e();
   }
   Og() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.AdviceModel.CurrentSelectSortWordId ===
       this.X7e;
     this.GetItem(2).SetUIActive(e);
   }
   Q7e() {
-    const e = ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceWordText(
+    var e = ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceWordText(
       this.X7e,
     );
     this.GetText(1).SetText(e);
   }
   W9e() {
-    const e = this.GetExtendToggle(0).ToggleState;
-    const t =
-      this.X7e === ModelManager_1.ModelManager.AdviceModel.PreSelectSortWordId
-        ? 1
-        : 0;
+    var e = this.GetExtendToggle(0).ToggleState,
+      t =
+        this.X7e === ModelManager_1.ModelManager.AdviceModel.PreSelectSortWordId
+          ? 1
+          : 0;
     e !== t && this.GetExtendToggle(0).SetToggleStateForce(t, !1);
   }
   OnBeforeDestroy() {
@@ -75,4 +75,4 @@ class AdviceWordItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.AdviceWordItem = AdviceWordItem;
-// # sourceMappingURL=AdviceWordItem.js.map
+//# sourceMappingURL=AdviceWordItem.js.map

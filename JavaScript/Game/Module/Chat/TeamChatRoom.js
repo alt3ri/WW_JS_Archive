@@ -11,4 +11,4 @@ class TeamChatRoom extends TeamChatRoomBase_1.TeamChatRoomBase {
   }
 }
 exports.TeamChatRoom = TeamChatRoom;
-// # sourceMappingURL=TeamChatRoom.js.map
+//# sourceMappingURL=TeamChatRoom.js.map

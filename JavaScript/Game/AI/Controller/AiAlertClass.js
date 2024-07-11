@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiAlertClass = exports.MAX_ALERT = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterBuffIds_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds");
-const ALERT_THRESHOLD = ((exports.MAX_ALERT = 100), 1);
-const SHOW_UI_FRAMES = 5;
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterBuffIds_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds"),
+  ALERT_THRESHOLD = ((exports.MAX_ALERT = 100), 1),
+  SHOW_UI_FRAMES = 5;
 class AiAlertClass {
   constructor(t) {
     (this.Bte = t),
@@ -45,27 +45,27 @@ class AiAlertClass {
   }
   set AiAlertConfig(t) {
     (this.bte = t) &&
-      (t.ForwardAngle >= 180
+      (180 <= t.ForwardAngle
         ? (this.Gte = 1)
         : (this.Gte = Math.cos(
             t.ForwardAngle * MathUtils_1.MathUtils.DegToRad,
           )),
-      t.DecreaseByDist > 0
+      0 < t.DecreaseByDist
         ? (this.Nte = MathUtils_1.MathUtils.Square(
             t.BaseIncrease / t.DecreaseByDist,
           ))
         : (this.Nte = 0) < t.MaxDist &&
-          t.AlertnessType === 3 &&
+          3 === t.AlertnessType &&
           (this.Nte = MathUtils_1.MathUtils.Square(t.MaxDist)),
-      (t.AlertnessType !== 2 && t.AlertnessType !== 3) ||
+      (2 !== t.AlertnessType && 3 !== t.AlertnessType) ||
         (ModelManager_1.ModelManager.AlertMarkModel.AlertMarkInit
-          ? t.AlertnessType === 2
+          ? 2 === t.AlertnessType
             ? EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.AddStalkAlertMark,
                 this.Hte.Entity?.Id,
                 this.Hte.Owner,
               )
-            : t.AlertnessType === 3 &&
+            : 3 === t.AlertnessType &&
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.AddEavesdropMark,
                 this.Hte.Entity?.Id,
@@ -91,7 +91,7 @@ class AiAlertClass {
         EventDefine_1.EEventName.RemoveAlterMark,
         this.Bte.CharActorComp.Entity.Id,
       );
-    const t = this.Hte.Entity;
+    var t = this.Hte.Entity;
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.RemoveStalkAlertMark,
       t?.Id,
@@ -120,7 +120,7 @@ class AiAlertClass {
                 MathUtils_1.MathUtils.MillisecondToSecond,
           );
           for (const n of this.Bte.AiPerception.Enemies) {
-            const e = EntitySystem_1.EntitySystem.GetComponent(n, 157);
+            var e = EntitySystem_1.EntitySystem.GetComponent(n, 157);
             e?.Valid &&
               e.RemoveBuff(
                 CharacterBuffIds_1.buffId.StealthIgnoreHateBuff,
@@ -130,12 +130,12 @@ class AiAlertClass {
           }
         }
       } else {
-        const s = this.Bte.CharActorComp.ActorLocationProxy;
-        const i = this.Bte.CharActorComp.ActorForwardProxy;
+        var s = this.Bte.CharActorComp.ActorLocationProxy,
+          i = this.Bte.CharActorComp.ActorForwardProxy;
         let e = 0;
         this.Bte.AiPerception.Enemies.size || (this.Vte = !1);
         for (const _ of this.Bte.AiPerception.Enemies) {
-          let h = EntitySystem_1.EntitySystem.Get(_);
+          var h = EntitySystem_1.EntitySystem.Get(_);
           if (
             h.GetComponent(0).GetEntityType() !==
             Protocol_1.Aki.Protocol.HBs.Proto_Player
@@ -144,7 +144,7 @@ class AiAlertClass {
           else {
             h.GetComponent(1).ActorLocationProxy.Subtraction(s, this.Lz);
             h = this.Lz.SizeSquared();
-            if (this.Nte > 0 && h > this.Nte) this.Vte = !1;
+            if (0 < this.Nte && h > this.Nte) this.Vte = !1;
             else {
               this.Vte = !0;
               h = Math.sqrt(h);
@@ -164,7 +164,7 @@ class AiAlertClass {
           ) {
             this.qte = exports.MAX_ALERT;
             for (const a of this.Bte.AiPerception.Enemies) {
-              const r = EntitySystem_1.EntitySystem.GetComponent(a, 157);
+              var r = EntitySystem_1.EntitySystem.GetComponent(a, 157);
               r?.Valid &&
                 r.RemoveBuff(
                   CharacterBuffIds_1.buffId.StealthIgnoreHateBuff,
@@ -200,7 +200,7 @@ class AiAlertClass {
   }
   Wte() {
     this.qte > ALERT_THRESHOLD && !this.kte
-      ? this.Ote-- > 0 ||
+      ? 0 < this.Ote-- ||
         ((this.Ote = SHOW_UI_FRAMES),
         (this.kte = !0),
         EventSystem_1.EventSystem.Emit(
@@ -219,7 +219,7 @@ class AiAlertClass {
         (this.Ote = SHOW_UI_FRAMES));
   }
   Kte() {
-    const t = this.Hte.Entity;
+    var t = this.Hte.Entity;
     this.kte
       ? this.qte < ALERT_THRESHOLD
         ? ((this.kte = !1),
@@ -254,4 +254,4 @@ class AiAlertClass {
   }
 }
 exports.AiAlertClass = AiAlertClass;
-// # sourceMappingURL=AiAlertClass.js.map
+//# sourceMappingURL=AiAlertClass.js.map

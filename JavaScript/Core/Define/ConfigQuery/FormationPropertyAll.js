@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configFormationPropertyAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const FormationProperty_1 = require("../Config/FormationProperty");
-const DB = "db_formationproperty.db";
-const FILE = "d.队伍属性表.xlsx";
-const TABLE = "FormationProperty";
-const COMMAND = "select BinData from `FormationProperty`";
-const KEY_PREFIX = "FormationPropertyAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  FormationProperty_1 = require("../Config/FormationProperty"),
+  DB = "db_formationproperty.db",
+  FILE = "d.队伍属性表.xlsx",
+  TABLE = "FormationProperty",
+  COMMAND = "select BinData from `FormationProperty`",
+  KEY_PREFIX = "FormationPropertyAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configFormationPropertyAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configFormationPropertyAll = {
     );
   },
   GetConfigList: (o = !0) => {
-    let r;
+    var r;
     if (
       (r = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configFormationPropertyAll = {
       }
       const i = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let e = void 0;
+        var e = void 0;
         if (
           (([r, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configFormationPropertyAll = {
     }
   },
 };
-// # sourceMappingURL=FormationPropertyAll.js.map
+//# sourceMappingURL=FormationPropertyAll.js.map

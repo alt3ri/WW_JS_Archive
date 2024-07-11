@@ -6,15 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.akiExcelToKeyValuePairConfigs =
     exports.EAkiExcelType =
       void 0);
-const File_1 = require("../Misc/File");
-const Util_1 = require("../Misc/Util");
-let EAkiExcelType;
+const File_1 = require("../Misc/File"),
+  Util_1 = require("../Misc/Util");
+var EAkiExcelType;
 function getAkiExcelPairConfig(e) {
   return exports.akiExcelToKeyValuePairConfigs[e];
 }
 function getAkiExcelExportJsonFileName(e) {
-  var e = getAkiExcelPairConfig(e);
-  const t = e.SheetName.split("|");
+  var e = getAkiExcelPairConfig(e),
+    t = e.SheetName.split("|");
   if (t.length < 1)
     throw new Error(
       `配置表${e.ExcelRelativePath}的Sheet名${e.SheetName}不合法`,
@@ -23,7 +23,7 @@ function getAkiExcelExportJsonFileName(e) {
 }
 function getAkiExcelPath(e) {
   e = exports.akiExcelToKeyValuePairConfigs[e];
-  return e.SheetWorkspace === "AkiBase"
+  return "AkiBase" === e.SheetWorkspace
     ? (0, File_1.getAbsolutePath)(
         `${(0, Util_1.getAkiBaseLocalPath)()}/Source/Config/Raw/BaseTables/${e.ExcelRelativePath}.xlsx`,
       )
@@ -240,4 +240,4 @@ function getAkiExcelPath(e) {
   (exports.getAkiExcelPairConfig = getAkiExcelPairConfig),
   (exports.getAkiExcelExportJsonFileName = getAkiExcelExportJsonFileName),
   (exports.getAkiExcelPath = getAkiExcelPath);
-// # sourceMappingURL=AkiExcelDefine.js.map
+//# sourceMappingURL=AkiExcelDefine.js.map

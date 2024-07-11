@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ProxyLruMap = void 0);
-const Log_1 = require("../Common/Log");
-const ProxyLru_1 = require("./ProxyLru");
+const Log_1 = require("../Common/Log"),
+  ProxyLru_1 = require("./ProxyLru");
 class ProxyLruMap {
   constructor(t = void 0) {
     (this._7 = new Map()), (this.B7 = void 0), (this.B7 = t);
@@ -14,7 +14,7 @@ class ProxyLruMap {
       : this._7.set(t, new ProxyLru_1.ProxyLru(e, r, i));
   }
   Remove(t) {
-    const e = this.b7(t);
+    var e = this.b7(t);
     e && (this._7.delete(t), e.Clear(), this.B7?.(t));
   }
   Create(t, e) {
@@ -62,11 +62,11 @@ class ProxyLruMap {
     return this._7.keys();
   }
   b7(t) {
-    const e = this._7.get(t);
+    var e = this._7.get(t);
     if (e) return e;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("Core", 1, "池中不存在该种类", ["category", t]);
   }
 }
 exports.ProxyLruMap = ProxyLruMap;
-// # sourceMappingURL=ProxyLruMap.js.map
+//# sourceMappingURL=ProxyLruMap.js.map

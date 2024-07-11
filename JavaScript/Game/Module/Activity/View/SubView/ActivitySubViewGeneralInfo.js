@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivitySubViewGeneralInfo = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const ActivityDescriptionTypeA_1 = require("../../ActivityContent/UniversalComponents/Content/ActivityDescriptionTypeA");
-const ActivityRewardList_1 = require("../../ActivityContent/UniversalComponents/Content/ActivityRewardList");
-const ActivityFunctionalTypeA_1 = require("../../ActivityContent/UniversalComponents/Functional/ActivityFunctionalTypeA");
-const ActivityTitleTypeA_1 = require("../../ActivityContent/UniversalComponents/Title/ActivityTitleTypeA");
-const ActivitySubViewBase_1 = require("./ActivitySubViewBase");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ActivityDescriptionTypeA_1 = require("../../ActivityContent/UniversalComponents/Content/ActivityDescriptionTypeA"),
+  ActivityRewardList_1 = require("../../ActivityContent/UniversalComponents/Content/ActivityRewardList"),
+  ActivityFunctionalTypeA_1 = require("../../ActivityContent/UniversalComponents/Functional/ActivityFunctionalTypeA"),
+  ActivityTitleTypeA_1 = require("../../ActivityContent/UniversalComponents/Title/ActivityTitleTypeA"),
+  ActivitySubViewBase_1 = require("./ActivitySubViewBase");
 class ActivitySubViewGeneralInfo extends ActivitySubViewBase_1.ActivitySubViewBase {
   constructor() {
     super(...arguments),
@@ -31,16 +31,16 @@ class ActivitySubViewGeneralInfo extends ActivitySubViewBase_1.ActivitySubViewBa
   }
   OnSetData() {}
   async OnBeforeStartAsync() {
-    const t = this.GetItem(0);
-    const i =
-      ((this.LNe = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
-      this.GetItem(1));
-    const e =
-      ((this.DNe = new ActivityDescriptionTypeA_1.ActivityDescriptionTypeA()),
-      this.GetItem(2));
-    const s =
-      ((this.UNe = new ActivityRewardList_1.ActivityRewardList()),
-      this.GetItem(3));
+    var t = this.GetItem(0),
+      i =
+        ((this.LNe = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
+        this.GetItem(1)),
+      e =
+        ((this.DNe = new ActivityDescriptionTypeA_1.ActivityDescriptionTypeA()),
+        this.GetItem(2)),
+      s =
+        ((this.UNe = new ActivityRewardList_1.ActivityRewardList()),
+        this.GetItem(3));
     (this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA()),
       await Promise.all([
         this.LNe.CreateThenShowByActorAsync(t.GetOwner()),
@@ -50,9 +50,9 @@ class ActivitySubViewGeneralInfo extends ActivitySubViewBase_1.ActivitySubViewBa
       ]);
   }
   OnStart() {
-    let t;
-    let i;
-    let e = this.ActivityBaseData.LocalConfig;
+    var t,
+      i,
+      e = this.ActivityBaseData.LocalConfig;
     e &&
       (this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
       (t = e.DescTheme),
@@ -76,7 +76,7 @@ class ActivitySubViewGeneralInfo extends ActivitySubViewBase_1.ActivitySubViewBa
     this.FNe();
   }
   RefreshFunction() {
-    let t = this.ActivityBaseData.IsUnLock();
+    var t = this.ActivityBaseData.IsUnLock();
     this.ANe?.FunctionButton?.SetUiActive(t),
       this.ANe?.SetPanelConditionVisible(!t),
       t ||
@@ -84,7 +84,7 @@ class ActivitySubViewGeneralInfo extends ActivitySubViewBase_1.ActivitySubViewBa
         this.ANe?.SetLockTextByTextId(t));
   }
   FNe() {
-    const [t, i] = this.GetTimeVisibleAndRemainTime();
+    var [t, i] = this.GetTimeVisibleAndRemainTime();
     this.LNe.SetTimeTextVisible(t), t && this.LNe.SetTimeTextByText(i);
   }
   SetBtnText(t, ...i) {
@@ -98,4 +98,4 @@ class ActivitySubViewGeneralInfo extends ActivitySubViewBase_1.ActivitySubViewBa
   }
 }
 exports.ActivitySubViewGeneralInfo = ActivitySubViewGeneralInfo;
-// # sourceMappingURL=ActivitySubViewGeneralInfo.js.map
+//# sourceMappingURL=ActivitySubViewGeneralInfo.js.map

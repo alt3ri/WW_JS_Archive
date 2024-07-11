@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleFavorContentItem = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class RoleFavorContentItem extends UiPanelBase_1.UiPanelBase {
   constructor(t, i) {
     super(),
@@ -20,7 +20,7 @@ class RoleFavorContentItem extends UiPanelBase_1.UiPanelBase {
       (this.OnMontageCompleted = void 0),
       (this.ToggleClick = (t) => {
         this.U4e &&
-          (this.VCt.RootUIComp.SetUIActive((t = t === 1)),
+          (this.VCt.RootUIComp.SetUIActive((t = 1 === t)),
           this.U4e(t, this.ContentItemData, this));
       }),
       (this.ButtonClick = () => {
@@ -36,12 +36,12 @@ class RoleFavorContentItem extends UiPanelBase_1.UiPanelBase {
       }),
       (this.BNe = () => {
         let t = 0;
-        let i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-          this.ContentItemData.RoleId,
-        );
-        const s = i.GetFavorData();
+        var i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
+            this.ContentItemData.RoleId,
+          ),
+          s = i.GetFavorData();
         (t =
-          this.ContentItemData.FavorTabType === 2
+          2 === this.ContentItemData.FavorTabType
             ? ((i = ModelManager_1.ModelManager.MotionModel.GetRoleMotionState(
                 i.GetRoleId(),
                 this.ContentItemData.Config.Id,
@@ -51,7 +51,7 @@ class RoleFavorContentItem extends UiPanelBase_1.UiPanelBase {
                 this.ContentItemData.Config.Id,
                 this.ContentItemData.FavorTabType,
               )),
-          this.GetItem(5).SetUIActive(t === 1);
+          this.GetItem(5).SetUIActive(1 === t);
       }),
       (this.ContentItemData = t),
       this.CreateThenShowByActor(i.GetOwner());
@@ -112,37 +112,37 @@ class RoleFavorContentItem extends UiPanelBase_1.UiPanelBase {
   }
   P1o() {
     this.x1o();
-    const t = this.GetText(3);
-    var i = this.ContentItemData.Config;
-    var i = this.y1o(i);
+    var t = this.GetText(3),
+      i = this.ContentItemData.Config,
+      i = this.y1o(i);
     t.SetText(i), this.BNe();
   }
   L1o() {
-    this.ContentItemData.TypeParam === 1
+    1 === this.ContentItemData.TypeParam
       ? this.U1o()
-      : this.ContentItemData.TypeParam === 2
+      : 2 === this.ContentItemData.TypeParam
         ? this.A1o()
         : this.P1o();
   }
   T1o() {
     this.x1o();
-    const t = this.GetText(3);
-    var i = this.ContentItemData.Config;
-    var i = this.y1o(i);
-    this.E1o === 2 && this.I1o(1), this.w1o(), t.SetText(i), this.BNe();
+    var t = this.GetText(3),
+      i = this.ContentItemData.Config,
+      i = this.y1o(i);
+    2 === this.E1o && this.I1o(1), this.w1o(), t.SetText(i), this.BNe();
   }
   D1o() {
     this.x1o();
-    var t = this.ContentItemData.Config;
-    const i = this.GetText(3);
-    var t = this.y1o(t);
-    this.E1o === 2 && this.I1o(1), this.B1o(), i.SetText(t), this.BNe();
+    var t = this.ContentItemData.Config,
+      i = this.GetText(3),
+      t = this.y1o(t);
+    2 === this.E1o && this.I1o(1), this.B1o(), i.SetText(t), this.BNe();
   }
   R1o() {
     this.x1o();
-    const t = this.GetText(3);
-    let i = this.ContentItemData.Config;
-    this.E1o === 2
+    var t = this.GetText(3),
+      i = this.ContentItemData.Config;
+    2 === this.E1o
       ? ((i = this.y1o(i)), t.SetText(i))
       : LguiUtil_1.LguiUtil.SetLocalText(t, "Unknown"),
       this.BNe();
@@ -173,10 +173,10 @@ class RoleFavorContentItem extends UiPanelBase_1.UiPanelBase {
       this.OnMontageCompleted && (this.OnMontageCompleted = void 0);
   }
   x1o() {
-    let t;
-    const i = this.ContentItemData.FavorTabType;
-    const s = this.ContentItemData.Config.Id;
-    i === 2
+    var t,
+      i = this.ContentItemData.FavorTabType,
+      s = this.ContentItemData.Config.Id;
+    2 === i
       ? ((t = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
           this.ContentItemData.RoleId,
         )),
@@ -185,13 +185,13 @@ class RoleFavorContentItem extends UiPanelBase_1.UiPanelBase {
           s,
         )),
         (this.E1o = Number(t)),
-        this.SetLockItemActive(this.E1o !== 2))
+        this.SetLockItemActive(2 !== this.E1o))
       : ((t = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
           this.ContentItemData.RoleId,
         )
           .GetFavorData()
           .GetFavorItemState(s, i)),
-        this.SetLockItemActive(t === 0),
+        this.SetLockItemActive(0 === t),
         (this.E1o = t));
   }
   SetLockItemActive(t) {
@@ -200,14 +200,14 @@ class RoleFavorContentItem extends UiPanelBase_1.UiPanelBase {
       this.GetItem(2).SetUIActive(!1);
   }
   I1o(t) {
-    let i;
+    var i;
     !this.ContentItemData ||
-      ((i = this.ContentItemData.FavorTabType) !== 2 && i !== 0) ||
-      (this.E1o !== 0 &&
+      (2 !== (i = this.ContentItemData.FavorTabType) && 0 !== i) ||
+      (0 !== this.E1o &&
         ((this.S1o = t),
         this.GetItem(0).SetUIActive(!1),
-        this.GetItem(1).SetUIActive(t === 0),
-        this.GetItem(2).SetUIActive(t === 1)));
+        this.GetItem(1).SetUIActive(0 === t),
+        this.GetItem(2).SetUIActive(1 === t)));
   }
   GetCurVoiceState() {
     return this.S1o;
@@ -223,4 +223,4 @@ class RoleFavorContentItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleFavorContentItem = RoleFavorContentItem;
-// # sourceMappingURL=RoleFavorContentItem.js.map
+//# sourceMappingURL=RoleFavorContentItem.js.map

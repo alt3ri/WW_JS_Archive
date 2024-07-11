@@ -2,32 +2,32 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameQualitySettingsManager = exports.LevelRenderSettingsManager =
     void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const Stats_1 = require("../../Core/Common/Stats");
-const DeviceRenderFeatureByDeviceId_1 = require("../../Core/Define/ConfigQuery/DeviceRenderFeatureByDeviceId");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const LocalStorage_1 = require("../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../Common/LocalStorageDefine");
-const GlobalData_1 = require("../GlobalData");
-const ModelManager_1 = require("../Manager/ModelManager");
-const GameQualityData_1 = require("./GameQualityData");
-const GameQualityInfo_1 = require("./GameQualityInfo");
-const GameQualityRenderParameters_1 = require("./GameQualityRenderParameters");
-const HD_SCREEN_WIDTH = 2e3;
-const HD_SCREEN_HEIGHT = 1100;
-const SEETING_LOAD_FLUID = "Text_SettingLoadFluid_text";
-const SEETING_LOAD_LAGGY = "Text_SettingLoadLaggy_text";
-const SEETING_LOAD_OVER = "Text_SettingLoadOver_text";
-const SEETING_LOAD_FLUID_COLOR =
-  "/Game/Aki/UI/UIResources/UiSet/Atlas/SP_BarGreen.SP_BarGreen";
-const SEETING_LOAD_LAGGY_COLOR =
-  "/Game/Aki/UI/UIResources/UiSet/Atlas/SP_BarOrange.SP_BarOrange";
-const SEETING_LOAD_OVER_COLOR =
-  "/Game/Aki/UI/UIResources/UiSet/Atlas/SP_BarRed.SP_BarRed";
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  Stats_1 = require("../../Core/Common/Stats"),
+  DeviceRenderFeatureByDeviceId_1 = require("../../Core/Define/ConfigQuery/DeviceRenderFeatureByDeviceId"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../Common/LocalStorageDefine"),
+  GlobalData_1 = require("../GlobalData"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  GameQualityData_1 = require("./GameQualityData"),
+  GameQualityInfo_1 = require("./GameQualityInfo"),
+  GameQualityRenderParameters_1 = require("./GameQualityRenderParameters"),
+  HD_SCREEN_WIDTH = 2e3,
+  HD_SCREEN_HEIGHT = 1100,
+  SEETING_LOAD_FLUID = "Text_SettingLoadFluid_text",
+  SEETING_LOAD_LAGGY = "Text_SettingLoadLaggy_text",
+  SEETING_LOAD_OVER = "Text_SettingLoadOver_text",
+  SEETING_LOAD_FLUID_COLOR =
+    "/Game/Aki/UI/UIResources/UiSet/Atlas/SP_BarGreen.SP_BarGreen",
+  SEETING_LOAD_LAGGY_COLOR =
+    "/Game/Aki/UI/UIResources/UiSet/Atlas/SP_BarOrange.SP_BarOrange",
+  SEETING_LOAD_OVER_COLOR =
+    "/Game/Aki/UI/UIResources/UiSet/Atlas/SP_BarRed.SP_BarRed";
 class LevelRenderSettingsManager {
   static Get() {
     return (
@@ -44,11 +44,11 @@ class LevelRenderSettingsManager {
       ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.RenderSettings
     )
       for (const e of ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.RenderSettings.keys()) {
-        const t =
-          ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.RenderSettings.get(
-            e,
-          );
-        const i = LevelRenderSettingsManager.Ove.get(e);
+        var t =
+            ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.RenderSettings.get(
+              e,
+            ),
+          i = LevelRenderSettingsManager.Ove.get(e);
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
           i + " " + t,
@@ -69,8 +69,8 @@ class LevelRenderSettingsManager {
       ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.RenderSettings
     )
       for (const e of ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.RenderSettings.keys()) {
-        const t = LevelRenderSettingsManager.kve.get(e);
-        const i = LevelRenderSettingsManager.Ove.get(e);
+        var t = LevelRenderSettingsManager.kve.get(e),
+          i = LevelRenderSettingsManager.Ove.get(e);
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
           i + " " + t,
@@ -113,7 +113,7 @@ class GameQualitySettingsManager {
       (this.sMe = [1500, 1500, 2500, 3500]),
       (this.aMe = [0, 1, 1, 1]),
       (this.hMe = () => {
-        let t;
+        var t;
         this.$ve ||
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Render", 41, "初始化-应用设置参数"),
@@ -124,7 +124,7 @@ class GameQualitySettingsManager {
                 "deviceType",
                 t,
               ]),
-            t === 11
+            11 === t
               ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
                   GlobalData_1.GlobalData.World,
                   "sg.ViewDistanceQuality 0",
@@ -153,7 +153,7 @@ class GameQualitySettingsManager {
                   GlobalData_1.GlobalData.World,
                   "r.LandscapeReverseLODScaleFactor 2",
                 ))
-              : t === 12
+              : 12 === t
                 ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
                     GlobalData_1.GlobalData.World,
                     "sg.ViewDistanceQuality 1",
@@ -182,7 +182,7 @@ class GameQualitySettingsManager {
                     GlobalData_1.GlobalData.World,
                     "r.LandscapeReverseLODScaleFactor 1",
                   ))
-                : t === 13
+                : 13 === t
                   ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
                       GlobalData_1.GlobalData.World,
                       "sg.ViewDistanceQuality 2",
@@ -215,7 +215,7 @@ class GameQualitySettingsManager {
                       GlobalData_1.GlobalData.World,
                       "r.LandscapeReverseLODScaleFactor 0",
                     ))
-                  : t === 14 &&
+                  : 14 === t &&
                     (UE.KismetSystemLibrary.ExecuteConsoleCommand(
                       GlobalData_1.GlobalData.World,
                       "sg.ViewDistanceQuality 3",
@@ -287,17 +287,17 @@ class GameQualitySettingsManager {
       (this.cMe = () => {
         GameQualitySettingsManager.IsFoldingScreen() &&
           GameQualitySettingsManager.IsAndroidPlatform() &&
-          (GameQualitySettingsManager.mMe == 22 &&
+          (22 == GameQualitySettingsManager.mMe &&
             UE.KismetSystemLibrary.ExecuteConsoleCommand(
               GlobalData_1.GlobalData.World,
               "r.MobileContentScaleFactor 2",
             ),
-          GameQualitySettingsManager.mMe == 23 &&
+          23 == GameQualitySettingsManager.mMe &&
             UE.KismetSystemLibrary.ExecuteConsoleCommand(
               GlobalData_1.GlobalData.World,
               "r.MobileContentScaleFactor 2.5",
             ),
-          GameQualitySettingsManager.mMe == 24) &&
+          24 == GameQualitySettingsManager.mMe) &&
           UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
             "r.MobileContentScaleFactor 3",
@@ -325,18 +325,18 @@ class GameQualitySettingsManager {
       );
   }
   GetFrameIndexByList(t) {
-    const i = UE.GameplayStatics.GetPlatformName();
+    var i = UE.GameplayStatics.GetPlatformName();
     return (
-      i === "IOS" ? this.Zve : i === "Android" ? this.eMe : this.zve
+      "IOS" === i ? this.Zve : "Android" === i ? this.eMe : this.zve
     ).indexOf(t);
   }
   GetFrameByList(t) {
-    const i = UE.GameplayStatics.GetPlatformName();
-    if (i === "IOS") {
+    var i = UE.GameplayStatics.GetPlatformName();
+    if ("IOS" === i) {
       const e = MathUtils_1.MathUtils.Clamp(t, 0, this.Zve.length - 1);
       return this.Zve[e];
     }
-    if (i === "Android") {
+    if ("Android" === i) {
       const e = MathUtils_1.MathUtils.Clamp(t, 0, this.eMe.length - 1);
       return this.eMe[e];
     }
@@ -344,24 +344,24 @@ class GameQualitySettingsManager {
     return this.zve[e];
   }
   GetMaxRoleShadowNum() {
-    const t = this.Qve.GetGameQualitySettingLevel();
+    var t = this.Qve.GetGameQualitySettingLevel();
     return (GameQualitySettingsManager.IsPcPlatform() ? this.tMe : this.iMe)[t];
   }
   GetMaxRoleShadowDistance() {
-    const t = this.Qve.GetGameQualitySettingLevel();
+    var t = this.Qve.GetGameQualitySettingLevel();
     return (GameQualitySettingsManager.IsPcPlatform() ? this.oMe : this.rMe)[t];
   }
   GetMaxDecalShadowDistance() {
-    const t = this.Qve.GetGameQualitySettingLevel();
+    var t = this.Qve.GetGameQualitySettingLevel();
     return (GameQualitySettingsManager.IsPcPlatform() ? this.nMe : this.sMe)[t];
   }
   IsMainPlayerUseRealRoleShadow() {
-    const t = this.Qve.GetGameQualitySettingLevel();
+    var t = this.Qve.GetGameQualitySettingLevel();
     return this.aMe[t];
   }
   GetDefaultScreenResolution() {
     if (!this.jve) {
-      const i = this.GetResolutionList();
+      var i = this.GetResolutionList();
       if (i.length) {
         let t = i[0];
         if (
@@ -387,7 +387,7 @@ class GameQualitySettingsManager {
     return this.jve;
   }
   GetResolutionByList(t) {
-    const i = this.GetResolutionList();
+    var i = this.GetResolutionList();
     return i[MathUtils_1.MathUtils.Clamp(t, 0, i.length - 1)];
   }
   GetResolutionList() {
@@ -396,9 +396,9 @@ class GameQualitySettingsManager {
         ((this.Vve = (0, puerts_1.$ref)(UE.NewArray(UE.IntPoint))),
         UE.KismetSystemLibrary.GetSupportedFullscreenResolutions(this.Vve))
       ) {
-        const i = (0, puerts_1.$unref)(this.Vve);
-        for (let t = i.Num() - 1; t >= 0; --t) {
-          const e = i.Get(t);
+        var i = (0, puerts_1.$unref)(this.Vve);
+        for (let t = i.Num() - 1; 0 <= t; --t) {
+          var e = i.Get(t);
           e && this.Hve.push(e);
         }
       }
@@ -422,46 +422,46 @@ class GameQualitySettingsManager {
   }
   static IsPcPlatform() {
     return (
-      this.mMe === 11 || this.mMe === 12 || this.mMe === 13 || this.mMe === 14
+      11 === this.mMe || 12 === this.mMe || 13 === this.mMe || 14 === this.mMe
     );
   }
   static IsIosPlatform() {
     return (
-      this.mMe === 31 || this.mMe === 32 || this.mMe === 33 || this.mMe === 34
+      31 === this.mMe || 32 === this.mMe || 33 === this.mMe || 34 === this.mMe
     );
   }
   static IsIosAndAndroidHighDevice() {
     return (
-      this.mMe === 23 || this.mMe === 24 || this.mMe === 33 || this.mMe === 34
+      23 === this.mMe || 24 === this.mMe || 33 === this.mMe || 34 === this.mMe
     );
   }
   static IsAndroidPlatform() {
     return (
-      this.mMe === 21 || this.mMe === 22 || this.mMe === 23 || this.mMe === 24
+      21 === this.mMe || 22 === this.mMe || 23 === this.mMe || 24 === this.mMe
     );
   }
   static IsAndroidPlatformNotLow() {
-    return this.mMe === 22 || this.mMe === 23 || this.mMe === 24;
+    return 22 === this.mMe || 23 === this.mMe || 24 === this.mMe;
   }
   static IsAndroidPlatformScreenBetter() {
-    return this.mMe === 23 || this.mMe === 24;
+    return 23 === this.mMe || 24 === this.mMe;
   }
   static IsAndroidPlatformScreenBad() {
-    return this.mMe === 21 || this.mMe === 22;
+    return 21 === this.mMe || 22 === this.mMe;
   }
   static IsAndroidPlatformLow() {
-    return this.mMe === 21;
+    return 21 === this.mMe;
   }
   static IsXBoxPlatform() {
-    return this.mMe === 35;
+    return 35 === this.mMe;
   }
   static IsPSPlatform() {
-    return this.mMe === 36;
+    return 36 === this.mMe;
   }
   static IsUltraGpuDevice() {
     return this.VendorName
       ? !(
-          GameQualitySettingsManager.VendorName !== "NVIDIA" ||
+          "NVIDIA" !== GameQualitySettingsManager.VendorName ||
           !GameQualitySettingsManager.DeviceName.includes("RTX")
         )
       : (Log_1.Log.CheckError() &&
@@ -471,7 +471,7 @@ class GameQualitySettingsManager {
   static IsDlssGpuDevice() {
     return this.VendorName
       ? !(
-          GameQualitySettingsManager.VendorName !== "NVIDIA" ||
+          "NVIDIA" !== GameQualitySettingsManager.VendorName ||
           !GameQualitySettingsManager.DeviceName.includes("RTX")
         )
       : (Log_1.Log.CheckError() &&
@@ -500,11 +500,11 @@ class GameQualitySettingsManager {
         !1);
   }
   static IsFoldingScreen() {
-    const t =
+    var t =
       UE.KuroRenderingRuntimeBPPluginBPLibrary.GetAndroidRawResolution().X /
       UE.KuroRenderingRuntimeBPPluginBPLibrary.GetAndroidRawResolution().Y;
     return (
-      (t < 1.8 || t > 2.6) &&
+      (t < 1.8 || 2.6 < t) &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Render", 60, "折叠屏适配", ["ScreenRatio", t]),
       !0)
@@ -514,7 +514,7 @@ class GameQualitySettingsManager {
     return this.Me;
   }
   static Initialize() {
-    let t;
+    var t;
     this.Me ||
       ((t = UE.GameplayStatics.GetPlatformName()),
       (this.DevicePhysicalGbRam =
@@ -530,22 +530,23 @@ class GameQualitySettingsManager {
       (this.RHIName = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRHIName()),
       (this.HardwareLevel =
         UE.KuroRenderingRuntimeBPPluginBPLibrary.GetDeviceHardwareLevel()),
-      t === "IOS"
+      "IOS" === t
         ? ((this.mMe = 32),
           this.DeviceScore < 150
             ? (this.mMe = 31)
-            : this.DeviceScore > 250 && this.DeviceScore < 360
+            : 250 < this.DeviceScore && this.DeviceScore < 360
               ? (this.mMe = 33)
-              : this.DeviceScore >= 360 && (this.mMe = 34),
+              : 360 <= this.DeviceScore && (this.mMe = 34),
           this.DevicePhysicalGbRam < 4 && (this.mMe = 31))
-        : t === "Android" ||
-            UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldFeatureLevel(
-              GlobalData_1.GlobalData.World,
-            ) === 0
-          ? (this.BaseProfileName === "Android_Low"
+        : "Android" === t ||
+            0 ===
+              UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldFeatureLevel(
+                GlobalData_1.GlobalData.World,
+              )
+          ? ("Android_Low" === this.BaseProfileName
               ? (this.mMe = 21)
-              : this.BaseProfileName !== "Android_Mid" &&
-                  this.BaseProfileName === "Android_High"
+              : "Android_Mid" !== this.BaseProfileName &&
+                  "Android_High" === this.BaseProfileName
                 ? (this.mMe = 23)
                 : (this.mMe = 22),
             GameQualitySettingsManager.IsHuaweiNewPhone() ||
@@ -558,25 +559,25 @@ class GameQualitySettingsManager {
                   GlobalData_1.GlobalData.World,
                   "r.HZBOcclusion 2",
                 ))
-          : t === "XboxOne"
+          : "XboxOne" === t
             ? (this.mMe = 35)
-            : t === "PS4"
+            : "PS4" === t
               ? (this.mMe = 36)
-              : t === "Mac"
-                ? this.BaseProfileName === "Mac_Low"
+              : "Mac" === t
+                ? "Mac_Low" === this.BaseProfileName
                   ? (this.mMe = 11)
-                  : this.BaseProfileName === "Mac_Mid"
+                  : "Mac_Mid" === this.BaseProfileName
                     ? (this.mMe = 12)
-                    : this.BaseProfileName !== "Mac_High" &&
-                        this.BaseProfileName === "Mac_VeryHigh"
+                    : "Mac_High" !== this.BaseProfileName &&
+                        "Mac_VeryHigh" === this.BaseProfileName
                       ? (this.mMe = 14)
                       : (this.mMe = 13)
-                : this.BaseProfileName === "Windows_Low"
+                : "Windows_Low" === this.BaseProfileName
                   ? (this.mMe = 11)
-                  : this.BaseProfileName === "Windows_Mid"
+                  : "Windows_Mid" === this.BaseProfileName
                     ? (this.mMe = 12)
-                    : this.BaseProfileName !== "Windows_High" &&
-                        this.BaseProfileName === "Windows_VeryHigh"
+                    : "Windows_High" !== this.BaseProfileName &&
+                        "Windows_VeryHigh" === this.BaseProfileName
                       ? (this.mMe = 14)
                       : (this.mMe = 13),
       Log_1.Log.CheckInfo() &&
@@ -610,8 +611,8 @@ class GameQualitySettingsManager {
     );
   }
   CMe(t) {
-    const i = GameQualitySettingsManager.IsPcPlatform();
-    const e = new GameQualityInfo_1.GameQualityInfo();
+    var i = GameQualitySettingsManager.IsPcPlatform(),
+      e = new GameQualityInfo_1.GameQualityInfo();
     e.Initialize(
       t.QualityType,
       t.FPS,
@@ -667,12 +668,12 @@ class GameQualitySettingsManager {
       0,
     ),
       this.Wve.set(t.QualityType, e),
-      t.DefaultQuality === 1 && (this.Kve = t.QualityType);
+      1 === t.DefaultQuality && (this.Kve = t.QualityType);
   }
   InitQualityInfoBySavedQualityData() {
-    var t = this.jve;
-    const i = t.X;
-    var t = t.Y;
+    var t = this.jve,
+      i = t.X,
+      t = t.Y;
     (this.Qve = new GameQualityInfo_1.GameQualityInfo()),
       this.Qve.Initialize(
         this.Xve.KeyQualityLevel,
@@ -810,8 +811,8 @@ class GameQualitySettingsManager {
       this.lMe();
   }
   GetGameQualityLoadInfo() {
-    const t = this.Qve.GetQualitySettingScore();
-    let i = (100 * t) / GameQualitySettingsManager.DeviceScore;
+    var t = this.Qve.GetQualitySettingScore(),
+      i = (100 * t) / GameQualitySettingsManager.DeviceScore;
     return (
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -822,13 +823,13 @@ class GameQualitySettingsManager {
           ["DeviceScore", GameQualitySettingsManager.DeviceScore],
           ["LoadPercentage", i],
         ),
-      (i = MathUtils_1.MathUtils.Clamp(i, 0, 100)) > 80
+      80 < (i = MathUtils_1.MathUtils.Clamp(i, 0, 100))
         ? {
             Desc: SEETING_LOAD_OVER,
             Percentage: i,
             BarColor: SEETING_LOAD_OVER_COLOR,
           }
-        : i > 60
+        : 60 < i
           ? {
               Desc: SEETING_LOAD_LAGGY,
               Percentage: i,
@@ -842,10 +843,11 @@ class GameQualitySettingsManager {
     );
   }
   lMe(t) {
-    let i, e, a;
+    var i, e, a;
+    0 <
     UE.KuroRenderingRuntimeBPPluginBPLibrary.GetCVarFloat(
       "r.Kuro.Movie.EnableCGMovieRendering",
-    ) > 0
+    )
       ? Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Render", 12, "当前在movie 渲染模式下不应用配置")
       : ((i = GameQualitySettingsManager.IsPcPlatform())
@@ -915,14 +917,14 @@ class GameQualitySettingsManager {
         LocalStorageDefine_1.ELocalStorageGlobalKey.GameQualitySetting,
       )),
       (this.Wve = new Map());
-    const t = GameQualitySettingsManager.mMe;
+    var t = GameQualitySettingsManager.mMe;
     for (const i of DeviceRenderFeatureByDeviceId_1.configDeviceRenderFeatureByDeviceId.GetConfigList(
       t,
     ))
       this.CMe(i);
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Render", 12, "", ["初始化画质配置: ", t.toString()]),
-      void 0 === this.Xve || this.Xve.KeyQualityLevel > 3
+      void 0 === this.Xve || 3 < this.Xve.KeyQualityLevel
         ? ((this.Xve = new GameQualityData_1.GameQualityData()),
           (this.Qve = this.GetQualityInfoByType(this.Kve)),
           this.SaveCurrentQualityInfoToQualityData())
@@ -944,7 +946,7 @@ class GameQualitySettingsManager {
       );
   }
   fMe() {
-    const t = UE.GameUserSettings.GetGameUserSettings();
+    var t = UE.GameUserSettings.GetGameUserSettings();
     (this.Jve =
       new GameQualityRenderParameters_1.GameQualityRenderParameters()),
       (this.Jve.VelocityScreenSizeCull =
@@ -976,4 +978,4 @@ class GameQualitySettingsManager {
   (GameQualitySettingsManager.InCacheSceneColorMode = 0),
   (GameQualitySettingsManager.IsInDLSSSuperFrameRateMode = !1),
   (GameQualitySettingsManager.mMe = 14);
-// # sourceMappingURL=GameQualitySettingsManager.js.map
+//# sourceMappingURL=GameQualitySettingsManager.js.map

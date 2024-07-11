@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MingSuTiHeadState = void 0);
-const UE = require("ue");
-const HeadStateViewBase_1 = require("./HeadStateViewBase");
+const UE = require("ue"),
+  HeadStateViewBase_1 = require("./HeadStateViewBase");
 class MingSuTiHeadState extends HeadStateViewBase_1.HeadStateViewBase {
   constructor() {
     super(...arguments), (this.g1t = void 0), (this.f1t = 0);
@@ -69,28 +69,28 @@ class MingSuTiHeadState extends HeadStateViewBase_1.HeadStateViewBase {
     return this.g1t[t];
   }
   Cnt() {
-    const [i, e] = this.GetHpAndMaxHp();
+    var [i, e] = this.GetHpAndMaxHp();
     if (this.f1t !== i) {
       this.f1t = i;
       for (let t = 0; t < Math.floor(e); t++) {
-        const s = this.v1t(t);
+        var s = this.v1t(t);
         s && t < i !== s.bIsUIActive && s.SetUIActive(t < i);
       }
     }
   }
   p1t() {
     for (let t = this.GetMaxHp(); t < this.g1t.length; t++) {
-      const i = this.v1t(t);
+      var i = this.v1t(t);
       i && i.GetParentAsUIItem().SetUIActive(!1);
     }
   }
   Aht() {
-    const t = this.GetHpColor();
+    var t = this.GetHpColor();
     if (t) {
-      const i = UE.Color.FromHex(t);
+      var i = UE.Color.FromHex(t);
       for (const e of this.g1t) e.SetColor(i);
     }
   }
 }
 exports.MingSuTiHeadState = MingSuTiHeadState;
-// # sourceMappingURL=MingSuTiHeadState.js.map
+//# sourceMappingURL=MingSuTiHeadState.js.map

@@ -5,48 +5,48 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.SignalBreakCsv =
     exports.SignalBreakCsvLoader =
       void 0);
-const CsvLoader_1 = require("./CsvLoader");
-const signalBreakCsvFields = [
-  (0, CsvLoader_1.createCsvField)({
-    Name: "Id",
-    CnName: "Id",
-    Type: "Int",
-    Filter: "1",
-    Condition: "notEmpty && unique",
-    RenderType: 18,
-  }),
-  (0, CsvLoader_1.createCsvField)({
-    Name: "Name",
-    CnName: "描述",
-    Filter: "1",
-  }),
-  (0, CsvLoader_1.createCsvField)({
-    Name: "SpeedRate",
-    CnName: "速度系数",
-    Type: "Float",
-    RenderType: 10,
-    Default: "1.0",
-  }),
-  (0, CsvLoader_1.createCsvField)({
-    Name: "SignalFragment",
-    CnName: "信号片段",
-    Type: "String",
-    RenderType: 21,
-  }),
-  (0, CsvLoader_1.createCsvField)({
-    Name: "MissingParts",
-    CnName: "缺失部分",
-    Type: "String",
-    RenderType: 21,
-  }),
-  (0, CsvLoader_1.createCsvField)({
-    Name: "Offset",
-    CnName: "偏移",
-    Type: "Int",
-    RenderType: 18,
-    Default: "0",
-  }),
-];
+const CsvLoader_1 = require("./CsvLoader"),
+  signalBreakCsvFields = [
+    (0, CsvLoader_1.createCsvField)({
+      Name: "Id",
+      CnName: "Id",
+      Type: "Int",
+      Filter: "1",
+      Condition: "notEmpty && unique",
+      RenderType: 18,
+    }),
+    (0, CsvLoader_1.createCsvField)({
+      Name: "Name",
+      CnName: "描述",
+      Filter: "1",
+    }),
+    (0, CsvLoader_1.createCsvField)({
+      Name: "SpeedRate",
+      CnName: "速度系数",
+      Type: "Float",
+      RenderType: 10,
+      Default: "1.0",
+    }),
+    (0, CsvLoader_1.createCsvField)({
+      Name: "SignalFragment",
+      CnName: "信号片段",
+      Type: "String",
+      RenderType: 21,
+    }),
+    (0, CsvLoader_1.createCsvField)({
+      Name: "MissingParts",
+      CnName: "缺失部分",
+      Type: "String",
+      RenderType: 21,
+    }),
+    (0, CsvLoader_1.createCsvField)({
+      Name: "Offset",
+      CnName: "偏移",
+      Type: "Int",
+      RenderType: 18,
+      Default: "0",
+    }),
+  ];
 class SignalBreakCsvLoader extends CsvLoader_1.CsvLoader {
   constructor() {
     super("SignalBreakCsv", signalBreakCsvFields);
@@ -104,4 +104,4 @@ class SignalBreakConfigCsvLoader extends CsvLoader_1.CsvLoader {
 exports.SignalBreakConfigCsvLoader = SignalBreakConfigCsvLoader;
 class SignalBreakConfigCsv extends CsvLoader_1.GlobalCsv {}
 exports.SignalBreakConfigCsv = SignalBreakConfigCsv;
-// # sourceMappingURL=SignalBreakCsv.js.map
+//# sourceMappingURL=SignalBreakCsv.js.map

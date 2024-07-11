@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiAudioModel = void 0);
-const AudioController_1 = require("../../Core/Audio/AudioController");
-const AudioDefine_1 = require("../../Core/Audio/AudioDefine");
-const Log_1 = require("../../Core/Common/Log");
+const AudioController_1 = require("../../Core/Audio/AudioController"),
+  AudioDefine_1 = require("../../Core/Audio/AudioDefine"),
+  Log_1 = require("../../Core/Common/Log");
 class UiAudioModel {
   static AddAudioStateData(o) {
     this.hdr.add(o);
@@ -44,23 +44,23 @@ class UiAudioModel {
         ]);
   }
   static CalculateRTPCValueAndApply() {
-    const o = this.ldr();
-    const e =
-      (AudioController_1.AudioController.SetRTPCValue(
-        o,
-        AudioDefine_1.RTPC_COVER_LEVEL,
-        void 0,
-        500,
-      ),
-      this._dr());
-    const i =
-      (AudioController_1.AudioController.SetRTPCValue(
-        e,
-        AudioDefine_1.RTPC_COVER_ALPHA,
-        void 0,
-        500,
-      ),
-      o - this.udr);
+    var o = this.ldr(),
+      e =
+        (AudioController_1.AudioController.SetRTPCValue(
+          o,
+          AudioDefine_1.RTPC_COVER_LEVEL,
+          void 0,
+          500,
+        ),
+        this._dr()),
+      i =
+        (AudioController_1.AudioController.SetRTPCValue(
+          e,
+          AudioDefine_1.RTPC_COVER_ALPHA,
+          void 0,
+          500,
+        ),
+        o - this.udr);
     (this.udr = o),
       AudioController_1.AudioController.SetRTPCValue(
         i,
@@ -78,4 +78,4 @@ class UiAudioModel {
   }
 }
 ((exports.UiAudioModel = UiAudioModel).hdr = new Set()), (UiAudioModel.udr = 0);
-// # sourceMappingURL=UiAudioModel.js.map
+//# sourceMappingURL=UiAudioModel.js.map

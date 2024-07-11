@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputAxisMapping = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const InputAxisBinding_1 = require("../Binding/InputAxisBinding");
+const Log_1 = require("../../../Core/Common/Log"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  InputAxisBinding_1 = require("../Binding/InputAxisBinding");
 class InputAxisMapping {
   constructor() {
     (this.XSe = new Map()), (this.$Se = new Map());
   }
   Initialize() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.InputSettingsConfig.GetAllAxisMappingConfig();
     if (e) for (const i of e) this.NewAxisBinding(i);
   }
@@ -20,15 +20,15 @@ class InputAxisMapping {
     this.XSe.clear(), this.$Se.clear();
   }
   NewAxisBinding(e) {
-    const i = e.AxisName;
-    const t = new InputAxisBinding_1.InputAxisBinding();
-    var e = (t.Initialize(e), this.XSe.set(i, t), t.GetAxisMappingType());
+    var i = e.AxisName,
+      t = new InputAxisBinding_1.InputAxisBinding(),
+      e = (t.Initialize(e), this.XSe.set(i, t), t.GetAxisMappingType());
     let n = this.$Se.get(e);
     n || ((n = new Set()), this.$Se.set(e, n)), n.add(t);
   }
   RemoveAxisBinding(e) {
-    let i;
-    const t = this.XSe.get(e);
+    var i,
+      t = this.XSe.get(e);
     t &&
       ((i = t.GetAxisMappingType()),
       this.$Se.get(i)?.delete(t),
@@ -45,7 +45,7 @@ class InputAxisMapping {
     return this.$Se.get(e);
   }
   SetKeys(e, i) {
-    const t = this.XSe.get(e);
+    var t = this.XSe.get(e);
     t
       ? (t.SetKeys(i),
         EventSystem_1.EventSystem.Emit(
@@ -60,7 +60,7 @@ class InputAxisMapping {
         ]);
   }
   RefreshKeys(e, i) {
-    const t = this.XSe.get(e);
+    var t = this.XSe.get(e);
     t
       ? (t.RefreshKeys(i),
         EventSystem_1.EventSystem.Emit(
@@ -75,7 +75,7 @@ class InputAxisMapping {
         ]);
   }
   AddKeys(e, i) {
-    const t = this.XSe.get(e);
+    var t = this.XSe.get(e);
     t
       ? (t.AddKeys(i),
         EventSystem_1.EventSystem.Emit(
@@ -90,7 +90,7 @@ class InputAxisMapping {
         ]);
   }
   RemoveKeys(e, i) {
-    const t = this.XSe.get(e);
+    var t = this.XSe.get(e);
     t
       ? (t.RemoveKeys(i),
         EventSystem_1.EventSystem.Emit(
@@ -105,7 +105,7 @@ class InputAxisMapping {
         ]);
   }
   RemoveKeysByCondition(e, i) {
-    const t = this.XSe.get(e);
+    var t = this.XSe.get(e);
     t
       ? (t.RemoveKeysByCondition(i),
         EventSystem_1.EventSystem.Emit(
@@ -123,4 +123,4 @@ class InputAxisMapping {
   }
 }
 exports.InputAxisMapping = InputAxisMapping;
-// # sourceMappingURL=InputAxisMapping.js.map
+//# sourceMappingURL=InputAxisMapping.js.map

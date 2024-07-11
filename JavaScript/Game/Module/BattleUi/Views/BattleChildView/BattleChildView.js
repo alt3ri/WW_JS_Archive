@@ -32,4 +32,4 @@ class BattleChildView extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.BattleChildView = BattleChildView;
-// # sourceMappingURL=BattleChildView.js.map
+//# sourceMappingURL=BattleChildView.js.map

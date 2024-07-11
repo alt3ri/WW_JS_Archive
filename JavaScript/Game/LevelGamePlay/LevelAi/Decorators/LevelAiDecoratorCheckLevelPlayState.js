@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelAiDecoratorCheckLevelPlayState = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LevelAiDecorator_1 = require("../LevelAiDecorator");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LevelAiDecorator_1 = require("../LevelAiDecorator");
 class LevelAiDecoratorCheckLevelPlayState extends LevelAiDecorator_1.LevelAiDecorator {
   constructor() {
     super(...arguments),
       (this.mIe = (e) => {
-        let t = this.Params;
+        var t = this.Params;
         t &&
           t.LevelId === e &&
           ((t = this.CheckCondition(1)), this.NotifyEventBasedCondition(t));
@@ -28,7 +28,7 @@ class LevelAiDecoratorCheckLevelPlayState extends LevelAiDecorator_1.LevelAiDeco
     );
   }
   CheckCondition(e) {
-    const t = this.Params;
+    var t = this.Params;
     return (
       !!t &&
       ModelManager_1.ModelManager.LevelPlayModel.CheckLevelPlayState(
@@ -41,4 +41,4 @@ class LevelAiDecoratorCheckLevelPlayState extends LevelAiDecorator_1.LevelAiDeco
 }
 exports.LevelAiDecoratorCheckLevelPlayState =
   LevelAiDecoratorCheckLevelPlayState;
-// # sourceMappingURL=LevelAiDecoratorCheckLevelPlayState.js.map
+//# sourceMappingURL=LevelAiDecoratorCheckLevelPlayState.js.map

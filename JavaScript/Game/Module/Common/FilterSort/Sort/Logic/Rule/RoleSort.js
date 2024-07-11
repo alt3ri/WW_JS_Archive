@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleSort = void 0);
-const ModelManager_1 = require("../../../../../../Manager/ModelManager");
-const RoleDefine_1 = require("../../../../../RoleUi/RoleDefine");
-const CommonSort_1 = require("./CommonSort");
+const ModelManager_1 = require("../../../../../../Manager/ModelManager"),
+  RoleDefine_1 = require("../../../../../RoleUi/RoleDefine"),
+  CommonSort_1 = require("./CommonSort");
 class RoleSort extends CommonSort_1.CommonSort {
   constructor() {
     super(...arguments),
@@ -20,13 +20,13 @@ class RoleSort extends CommonSort_1.CommonSort {
         if (t !== i) return (i - t) * (e ? -1 : 1);
       }),
       (this.jDt = (t, i, e) => {
-        const r = t;
-        const s = i;
-        let h = -1;
-        let o = -1;
-        const n = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems();
+        var r = t,
+          s = i;
+        let h = -1,
+          o = -1;
+        var n = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems();
         for (let t = 0; t < n.length; t++) {
-          const a = n[t];
+          var a = n[t];
           r.GetDataId() === a.GetConfigId && (h = t),
             s.GetDataId() === a.GetConfigId && (o = t);
         }
@@ -56,10 +56,10 @@ class RoleSort extends CommonSort_1.CommonSort {
       }),
       (this.XDt = (t, i, e) => {}),
       (this.$Dt = (t, i, e) => {
-        var t = t.GetFavorData();
-        var i = i.GetFavorData();
-        let r = t.GetFavorLevel();
-        let s = i.GetFavorLevel();
+        var t = t.GetFavorData(),
+          i = i.GetFavorData(),
+          r = t.GetFavorLevel(),
+          s = i.GetFavorLevel();
         if (t && i)
           return r !== s
             ? (s - r) * (e ? -1 : 1)
@@ -93,11 +93,11 @@ class RoleSort extends CommonSort_1.CommonSort {
         if (t !== i) return (i - t) * (e ? -1 : 1);
       }),
       (this.eRt = (t, i, e) => {
-        var r = ModelManager_1.ModelManager.RoleSelectModel;
-        var t = t.GetDataId();
-        var i = i.GetDataId();
-        var t = r.GetRoleIndex(t);
-        var r = r.GetRoleIndex(i);
+        var r = ModelManager_1.ModelManager.RoleSelectModel,
+          t = t.GetDataId(),
+          i = i.GetDataId(),
+          t = r.GetRoleIndex(t),
+          r = r.GetRoleIndex(i);
         return t <= 0 || r <= 0
           ? (r ? 1 : 0) - (t ? 1 : 0)
           : t !== r
@@ -109,7 +109,7 @@ class RoleSort extends CommonSort_1.CommonSort {
         if (t !== i) return ((i ? 1 : 0) - (t ? 1 : 0)) * (e ? -1 : 1);
       }),
       (this.iRt = (t, i, e) => {
-        const r =
+        var r =
           ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties;
         return (
           (ModelManager_1.ModelManager.TowerModel.GetRoleRemainCost(
@@ -144,4 +144,4 @@ class RoleSort extends CommonSort_1.CommonSort {
   }
 }
 exports.RoleSort = RoleSort;
-// # sourceMappingURL=RoleSort.js.map
+//# sourceMappingURL=RoleSort.js.map

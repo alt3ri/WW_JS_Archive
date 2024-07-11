@@ -12,7 +12,7 @@ class InputIdentification {
     return this.Fqi;
   }
   GetInputAction() {
-    let t;
+    var t;
     return (
       this.Kcr ||
       ((t = this.Fqi)
@@ -21,7 +21,7 @@ class InputIdentification {
     );
   }
   GetInputAxis() {
-    let t;
+    var t;
     return (
       this.Qcr ||
       ((t = this.Fqi)
@@ -87,4 +87,4 @@ class InputDistributeHandle {
   }
 }
 exports.InputDistributeHandle = InputDistributeHandle;
-// # sourceMappingURL=InputDistributeHandle.js.map
+//# sourceMappingURL=InputDistributeHandle.js.map

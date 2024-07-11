@@ -7,7 +7,7 @@ class ConfigUtil {
     o.size > ConfigUtil.Xbo && o.clear();
   }
   static GetConfigTemplate(o, t, e, i = 0) {
-    const s = o.get(e);
+    var s = o.get(e);
     return (
       s ||
       (ConfigUtil.Qbo(o),
@@ -27,4 +27,4 @@ class ConfigUtil {
   }
 }
 (exports.ConfigUtil = ConfigUtil).Xbo = 50;
-// # sourceMappingURL=ConfigUtil.js.map
+//# sourceMappingURL=ConfigUtil.js.map

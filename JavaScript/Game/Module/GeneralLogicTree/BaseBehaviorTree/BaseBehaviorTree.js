@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BaseBehaviorTree = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Queue_1 = require("../../../../Core/Container/Queue");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const PublicUtil_1 = require("../../../Common/PublicUtil");
-const LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GeneralLogicTreeDefine_1 = require("../Define/GeneralLogicTreeDefine");
-const NodeTypeDefine_1 = require("../Define/NodeTypeDefine");
-const GeneralLogicTreeController_1 = require("../GeneralLogicTreeController");
-const BehaviorTreeSuspendComponent_1 = require("./BehaviorTreeSuspendComponent");
-const BehaviorTreeTimerComponent_1 = require("./BehaviorTreeTimerComponent");
-const BlackBoard_1 = require("./BlackBoard");
-const BehaviorTreeExpressionComponent_1 = require("./Express/BehaviorTreeExpressionComponent");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Queue_1 = require("../../../../Core/Container/Queue"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../../Common/PublicUtil"),
+  LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GeneralLogicTreeDefine_1 = require("../Define/GeneralLogicTreeDefine"),
+  NodeTypeDefine_1 = require("../Define/NodeTypeDefine"),
+  GeneralLogicTreeController_1 = require("../GeneralLogicTreeController"),
+  BehaviorTreeSuspendComponent_1 = require("./BehaviorTreeSuspendComponent"),
+  BehaviorTreeTimerComponent_1 = require("./BehaviorTreeTimerComponent"),
+  BlackBoard_1 = require("./BlackBoard"),
+  BehaviorTreeExpressionComponent_1 = require("./Express/BehaviorTreeExpressionComponent"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class BaseBehaviorTree {
   constructor(e, t, i, s, r) {
     (this.InnerId = BigInt(0)),
@@ -76,8 +76,8 @@ class BaseBehaviorTree {
     if (this.BlackBoard.IsSleeping)
       this.oKt({ ProcessType: 0, Reason: e, NodeInfo: t });
     else if (t) {
-      const i = this.BlackBoard.GetNodeConfig(t.NodeId);
-      const s = (0, NodeTypeDefine_1.newNodeObj)(i);
+      var i = this.BlackBoard.GetNodeConfig(t.NodeId),
+        s = (0, NodeTypeDefine_1.newNodeObj)(i);
       if (s)
         return (
           this.BlackBoard.AddNode(t.NodeId, s),
@@ -115,8 +115,8 @@ class BaseBehaviorTree {
   rKt(e) {
     if (e)
       for (const s of Object.keys(e)) {
-        const t = e[s];
-        const i = ((t.NodeId = Number(s)), this.GetNode(t.NodeId));
+        var t = e[s],
+          i = ((t.NodeId = Number(s)), this.GetNode(t.NodeId));
         i
           ? Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("GeneralLogicTree", 19, "创建节点时：节点已存在", [
@@ -131,7 +131,7 @@ class BaseBehaviorTree {
   }
   sKt(e) {
     for (const i of Object.keys(e)) {
-      const t = e[i];
+      var t = e[i];
       this.BlackBoard.UpdateTreeVar(i, t);
     }
   }
@@ -178,7 +178,7 @@ class BaseBehaviorTree {
   SetSleep(e) {
     if (
       ((this.BlackBoard.IsSleeping = e),
-      !this.BlackBoard.IsSleeping && this.JWt.Size !== 0)
+      !this.BlackBoard.IsSleeping && 0 !== this.JWt.Size)
     ) {
       let e = this.JWt.Pop();
       for (; void 0 !== e; ) {
@@ -217,12 +217,12 @@ class BaseBehaviorTree {
           case 8:
             this.UpdateTreeVars(e.Notify);
         }
-        e = this.JWt.Size > 0 ? this.JWt.Pop() : void 0;
+        e = 0 < this.JWt.Size ? this.JWt.Pop() : void 0;
       }
     }
   }
   UpdateNodeState(e, t, i) {
-    let s;
+    var s;
     this.BlackBoard.IsSleeping
       ? this.oKt({ ProcessType: 1, Reason: e, NodeId: t, NodeStatus: i })
       : (s = this.GetNode(t))
@@ -241,7 +241,7 @@ class BaseBehaviorTree {
     this.BlackBoard.IsSleeping
       ? this.oKt({ ProcessType: 3, NodeId: e, NodeStatus: t, Reason: i })
       : (e = this.GetNode(e)) &&
-        e.NodeType === "ChildQuest" &&
+        "ChildQuest" === e.NodeType &&
         e.UpdateChildQuestStatus(t, i);
   }
   GetNode(e) {
@@ -258,23 +258,23 @@ class BaseBehaviorTree {
     var e = this.GetProcessingFailedNode();
     if (!e) return !1;
     if (!e.CanGiveUp) return !1;
-    let t;
-    var e = this.GetNodesByGroupId(1);
+    var t,
+      e = this.GetNodesByGroupId(1);
     if (!e) return !1;
     let i = !0;
     for ([, t] of e)
-      if (t.NodeType === "ChildQuest" && !t.CanGiveUp) {
+      if ("ChildQuest" === t.NodeType && !t.CanGiveUp) {
         i = !1;
         break;
       }
     return i;
   }
   GetProcessingFailedNode() {
-    const t = this.GetNodesByGroupId(1);
+    var t = this.GetNodesByGroupId(1);
     if (t) {
       let e = void 0;
-      for (const [, i] of t)
-        if (i.NodeType === "QuestFailed" && i.CanGiveUp) {
+      for (var [, i] of t)
+        if ("QuestFailed" === i.NodeType && i.CanGiveUp) {
           e = i;
           break;
         }
@@ -288,11 +288,11 @@ class BaseBehaviorTree {
     return this.BlackBoard.GetActiveChildQuestNodesId();
   }
   GetCurrentCorrelativeEntities() {
-    const e = this.GetNodesByGroupId(1);
+    var e = this.GetNodesByGroupId(1);
     if (e) {
       this.YWt.splice(0, this.YWt.length);
-      for (let [, t] of e)
-        if (t.NodeType === "ChildQuest") {
+      for (var [, t] of e)
+        if ("ChildQuest" === t.NodeType) {
           t = t.GetCorrelativeEntities();
           if (t) for (const i of t) this.YWt.push(i);
         }
@@ -304,10 +304,10 @@ class BaseBehaviorTree {
   }
   PrepareRollback(e) {
     this.SetRollbackWaiting(!0), this.BlackBoard.AddTag(6);
-    let t;
-    let i;
-    const s = this.BlackBoard.PreparingRollbackNodes;
-    let r = (s.splice(0, s.length), this.BlackBoard.GetAllNodes());
+    var t,
+      i,
+      s = this.BlackBoard.PreparingRollbackNodes,
+      r = (s.splice(0, s.length), this.BlackBoard.GetAllNodes());
     for ([t, i] of r)
       i.ContainTag(6) &&
         (s.push(t), Log_1.Log.CheckInfo()) &&
@@ -317,7 +317,7 @@ class BaseBehaviorTree {
           "GeneralLogicTree:节点暂时不能回退",
           ["nodeId", t],
         );
-    s.length === 0 &&
+    0 === s.length &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "GeneralLogicTree",
@@ -397,7 +397,7 @@ class BaseBehaviorTree {
       void 0 !==
         (t =
           void 0 === t ? this.GetCurrentActiveChildQuestNode()?.NodeId : t) &&
-      this.GetRangeMarkSize(e) !== 0
+      0 !== this.GetRangeMarkSize(e)
     );
   }
   GetRangeMarkSize(e) {
@@ -413,7 +413,7 @@ class BaseBehaviorTree {
     return this.BlackBoard.ContainTag(7) ? 2 : this.CheckCanGiveUp() ? 1 : 0;
   }
   GetGiveUpText() {
-    const e = this.GetProcessingFailedNode();
+    var e = this.GetProcessingFailedNode();
     return e && e.GiveUpText
       ? PublicUtil_1.PublicUtil.GetConfigTextByKey(e.GiveUpText)
       : "";
@@ -433,33 +433,33 @@ class BaseBehaviorTree {
         EndIndex: n,
       });
     else {
-      const h = this.BlackBoard.GetNodeConfig(i);
+      var h = this.BlackBoard.GetNodeConfig(i);
       if (h) {
         let e = void 0;
         switch (t) {
           case Protocol_1.Aki.Protocol.Pbs.mCs:
-            h.Type === "QuestSucceed" && (e = h.FinishActions);
+            "QuestSucceed" === h.Type && (e = h.FinishActions);
             break;
           case Protocol_1.Aki.Protocol.Pbs.SCs:
-            h.Type === "Action" && (e = h.Actions);
+            "Action" === h.Type && (e = h.Actions);
             break;
           case Protocol_1.Aki.Protocol.Pbs.gCs:
-            (h.Type !== "ConditionSelector" &&
-              h.Type !== "ParallelSelect" &&
-              h.Type !== "Select" &&
-              h.Type !== "Sequence") ||
+            ("ConditionSelector" !== h.Type &&
+              "ParallelSelect" !== h.Type &&
+              "Select" !== h.Type &&
+              "Sequence" !== h.Type) ||
               (e = h.SaveConfig?.EnterActions);
             break;
           case Protocol_1.Aki.Protocol.Pbs.CCs:
-            h.Type === "QuestFailed" && (e = h.FinishActions);
+            "QuestFailed" === h.Type && (e = h.FinishActions);
             break;
           case Protocol_1.Aki.Protocol.Pbs.cCs:
-            h.Type === "ChildQuest" && (e = h.EnterActions);
+            "ChildQuest" === h.Type && (e = h.EnterActions);
             break;
           case Protocol_1.Aki.Protocol.Pbs.dCs:
-            h.Type === "ChildQuest" && (e = h.FinishActions);
+            "ChildQuest" === h.Type && (e = h.FinishActions);
         }
-        if (e && e.length !== 0) {
+        if (e && 0 !== e.length) {
           const a = this.GetNode(i);
           a?.AddTag(6),
             ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsByServerNotify(
@@ -565,10 +565,10 @@ class DynamicFlowInfo {
   }
   ClearDynamicFlowNpcList() {
     for (const t of this.hKt) {
-      let e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(t);
+      var e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(t);
       e && (e = e.Entity.GetComponent(167)) && e.PlayDynamicFlowEnd();
     }
     this.hKt.splice(0, this.hKt.length);
   }
 }
-// # sourceMappingURL=BaseBehaviorTree.js.map
+//# sourceMappingURL=BaseBehaviorTree.js.map

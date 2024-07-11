@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleLevelUpCostItem = void 0);
-const UE = require("ue");
-const LongPressButtonItem_1 = require("../../Common/Button/LongPressButtonItem");
-const ItemGridVariantSelect_1 = require("../../Common/ItemGrid/ItemGridVariantSelect");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
+const UE = require("ue"),
+  LongPressButtonItem_1 = require("../../Common/Button/LongPressButtonItem"),
+  ItemGridVariantSelect_1 = require("../../Common/ItemGrid/ItemGridVariantSelect"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
 class RoleLevelUpCostItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(t = void 0, e, s, i, r, h = void 0) {
     super(),
@@ -56,10 +56,10 @@ class RoleLevelUpCostItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.Jwt.RefreshByItemId(t.ItemId), this.RefreshCountBySelectedData(t);
   }
   RefreshCountBySelectedData(t) {
-    const e = t.SelectedCount;
-    var t = t.Count;
+    var e = t.SelectedCount,
+      t = t.Count;
     this.Jwt.RefreshTextDown(!0, e + "/" + t),
-      this.Jwt.GetReduceButton().RootUIComp.SetUIActive(e > 0);
+      this.Jwt.GetReduceButton().RootUIComp.SetUIActive(0 < e);
   }
   OnBeforeDestroy() {
     this.k_o.Clear(), this.F_o.Clear();
@@ -71,4 +71,4 @@ class RoleLevelUpCostItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.RoleLevelUpCostItem = RoleLevelUpCostItem;
-// # sourceMappingURL=RoleLevelUpCostItem.js.map
+//# sourceMappingURL=RoleLevelUpCostItem.js.map

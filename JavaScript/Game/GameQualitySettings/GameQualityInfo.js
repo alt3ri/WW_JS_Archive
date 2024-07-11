@@ -1,101 +1,101 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameQualityInfo = void 0);
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const GlobalData_1 = require("../GlobalData");
-const InputSettingsManager_1 = require("../InputSettings/InputSettingsManager");
-const ConfigManager_1 = require("../Manager/ConfigManager");
-const ControllerHolder_1 = require("../Manager/ControllerHolder");
-const ModelManager_1 = require("../Manager/ModelManager");
-const RoleGaitStatic_1 = require("../NewWorld/Character/Role/Component/Define/RoleGaitStatic");
-const RenderConfig_1 = require("../Render/Config/RenderConfig");
-const RenderDataManager_1 = require("../Render/Data/RenderDataManager");
-const GameQualitySettingsManager_1 = require("./GameQualitySettingsManager");
-const PERFORMENCELIMIT_SEQ_TAIL = "_Seq";
-const performanceLimitConfigs = new Map([
-  ["RoleRootView", { FrameLimit: !0, CacheWorldFrame: !1 }],
-  ["RoleLevelUpView", { FrameLimit: !0, CacheWorldFrame: !1 }],
-  ["HandBookEntranceView", { FrameLimit: !0, CacheWorldFrame: !1 }],
-  ["AchievementMainView", { FrameLimit: !0, CacheWorldFrame: !1 }],
-  ["CommonActivityView", { FrameLimit: !0, CacheWorldFrame: !1 }],
-  ["VideoView", { FrameLimit: !0, CacheWorldFrame: !0 }],
-  [
-    "GachaScanView" + PERFORMENCELIMIT_SEQ_TAIL,
-    { FrameLimit: !0, CacheWorldFrame: !1 },
-  ],
-  [
-    "DrawMainView" + PERFORMENCELIMIT_SEQ_TAIL,
-    { FrameLimit: !0, CacheWorldFrame: !1 },
-  ],
-  [
-    "GachaResultView" + PERFORMENCELIMIT_SEQ_TAIL,
-    { FrameLimit: !0, CacheWorldFrame: !1 },
-  ],
-  [
-    "WorldMapView" + PERFORMENCELIMIT_SEQ_TAIL,
-    { FrameLimit: !0, CacheWorldFrame: !0 },
-  ],
-  [
-    "CalabashRootView" + PERFORMENCELIMIT_SEQ_TAIL,
-    { FrameLimit: !0, CacheWorldFrame: !1 },
-  ],
-  [
-    "BattlePassMainView" + PERFORMENCELIMIT_SEQ_TAIL,
-    { FrameLimit: !0, CacheWorldFrame: !1 },
-  ],
-  [
-    "GachaMainView" + PERFORMENCELIMIT_SEQ_TAIL,
-    { FrameLimit: !0, CacheWorldFrame: !0 },
-  ],
-  [
-    "PayShopRootView" + PERFORMENCELIMIT_SEQ_TAIL,
-    { FrameLimit: !0, CacheWorldFrame: !0 },
-  ],
-  [
-    "AdventureGuideView" + PERFORMENCELIMIT_SEQ_TAIL,
-    { FrameLimit: !0, CacheWorldFrame: !0 },
-  ],
-  [
-    "TutorialView" + PERFORMENCELIMIT_SEQ_TAIL,
-    { FrameLimit: !0, CacheWorldFrame: !0 },
-  ],
-  [
-    "QuestView" + PERFORMENCELIMIT_SEQ_TAIL,
-    { FrameLimit: !0, CacheWorldFrame: !0 },
-  ],
-  [
-    "FriendView" + PERFORMENCELIMIT_SEQ_TAIL,
-    { FrameLimit: !0, CacheWorldFrame: !0 },
-  ],
-  [
-    "TimeOfDaySecondView" + PERFORMENCELIMIT_SEQ_TAIL,
-    { FrameLimit: !0, CacheWorldFrame: !0 },
-  ],
-  [
-    "EditFormationView" + PERFORMENCELIMIT_SEQ_TAIL,
-    { FrameLimit: !0, CacheWorldFrame: !0 },
-  ],
-  [
-    "InventoryView" + PERFORMENCELIMIT_SEQ_TAIL,
-    { FrameLimit: !0, CacheWorldFrame: !0 },
-  ],
-  [
-    "MailBoxView" + PERFORMENCELIMIT_SEQ_TAIL,
-    { FrameLimit: !0, CacheWorldFrame: !0 },
-  ],
-  [
-    "MenuView" + PERFORMENCELIMIT_SEQ_TAIL,
-    { FrameLimit: !0, CacheWorldFrame: !0 },
-  ],
-  [
-    "FunctionView" + PERFORMENCELIMIT_SEQ_TAIL,
-    { FrameLimit: !0, CacheWorldFrame: !0 },
-  ],
-]);
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  GlobalData_1 = require("../GlobalData"),
+  InputSettingsManager_1 = require("../InputSettings/InputSettingsManager"),
+  ConfigManager_1 = require("../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  RoleGaitStatic_1 = require("../NewWorld/Character/Role/Component/Define/RoleGaitStatic"),
+  RenderConfig_1 = require("../Render/Config/RenderConfig"),
+  RenderDataManager_1 = require("../Render/Data/RenderDataManager"),
+  GameQualitySettingsManager_1 = require("./GameQualitySettingsManager"),
+  PERFORMENCELIMIT_SEQ_TAIL = "_Seq",
+  performanceLimitConfigs = new Map([
+    ["RoleRootView", { FrameLimit: !0, CacheWorldFrame: !1 }],
+    ["RoleLevelUpView", { FrameLimit: !0, CacheWorldFrame: !1 }],
+    ["HandBookEntranceView", { FrameLimit: !0, CacheWorldFrame: !1 }],
+    ["AchievementMainView", { FrameLimit: !0, CacheWorldFrame: !1 }],
+    ["CommonActivityView", { FrameLimit: !0, CacheWorldFrame: !1 }],
+    ["VideoView", { FrameLimit: !0, CacheWorldFrame: !0 }],
+    [
+      "GachaScanView" + PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !0, CacheWorldFrame: !1 },
+    ],
+    [
+      "DrawMainView" + PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !0, CacheWorldFrame: !1 },
+    ],
+    [
+      "GachaResultView" + PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !0, CacheWorldFrame: !1 },
+    ],
+    [
+      "WorldMapView" + PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !0, CacheWorldFrame: !0 },
+    ],
+    [
+      "CalabashRootView" + PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !0, CacheWorldFrame: !1 },
+    ],
+    [
+      "BattlePassMainView" + PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !0, CacheWorldFrame: !1 },
+    ],
+    [
+      "GachaMainView" + PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !0, CacheWorldFrame: !0 },
+    ],
+    [
+      "PayShopRootView" + PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !0, CacheWorldFrame: !0 },
+    ],
+    [
+      "AdventureGuideView" + PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !0, CacheWorldFrame: !0 },
+    ],
+    [
+      "TutorialView" + PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !0, CacheWorldFrame: !0 },
+    ],
+    [
+      "QuestView" + PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !0, CacheWorldFrame: !0 },
+    ],
+    [
+      "FriendView" + PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !0, CacheWorldFrame: !0 },
+    ],
+    [
+      "TimeOfDaySecondView" + PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !0, CacheWorldFrame: !0 },
+    ],
+    [
+      "EditFormationView" + PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !0, CacheWorldFrame: !0 },
+    ],
+    [
+      "InventoryView" + PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !0, CacheWorldFrame: !0 },
+    ],
+    [
+      "MailBoxView" + PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !0, CacheWorldFrame: !0 },
+    ],
+    [
+      "MenuView" + PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !0, CacheWorldFrame: !0 },
+    ],
+    [
+      "FunctionView" + PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !0, CacheWorldFrame: !0 },
+    ],
+  ]);
 class GameQualityInfo {
   constructor() {
     (this.PcScreenResolution = void 0),
@@ -264,7 +264,7 @@ class GameQualityInfo {
       this.CancelAllPerformanceLimit();
   }
   Copy() {
-    const e = new GameQualityInfo();
+    var e = new GameQualityInfo();
     return (
       e.Initialize(
         this.Sve,
@@ -327,7 +327,7 @@ class GameQualityInfo {
     return this.Sve;
   }
   GetQualitySettingScore() {
-    let e =
+    var e =
       GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform();
     let t = 0;
     t = e
@@ -411,9 +411,9 @@ class GameQualityInfo {
       (this.Ive = 1 / this.Eve);
   }
   ApplyFrameRate() {
-    const e = UE.GameUserSettings.GetGameUserSettings();
+    var e = UE.GameUserSettings.GetGameUserSettings();
     let t = this.Eve;
-    this.yve > 0 && (t = this.yve),
+    0 < this.yve && (t = this.yve),
       e.SetFrameRateLimit(t),
       e.ApplySettings(!0),
       EventSystem_1.EventSystem.Emit(
@@ -427,9 +427,9 @@ class GameQualityInfo {
   }
   SetSequenceFrameRateLimit() {
     GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosPlatform()
-      ? this.Eve > 45 && (this.SetFrameRateTemploary(30), this.ApplyFrameRate())
+      ? 45 < this.Eve && (this.SetFrameRateTemploary(30), this.ApplyFrameRate())
       : GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatform() &&
-        this.Eve > 40 &&
+        40 < this.Eve &&
         (this.SetFrameRateTemploary(30), this.ApplyFrameRate()),
       (GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosPlatform() ||
         GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatform()) &&
@@ -443,11 +443,11 @@ class GameQualityInfo {
         this.TryRestoreCsmUpdateFrequency("Plot");
   }
   TryReduceCsmUpdateFrequency(e) {
-    const t = this.Tve.size;
-    this.Tve.add(e), t === 0 && this.Tve.size === 1 && this.Gve();
+    var t = this.Tve.size;
+    this.Tve.add(e), 0 === t && 1 === this.Tve.size && this.Gve();
   }
   TryRestoreCsmUpdateFrequency(e) {
-    this.Tve.delete(e) && this.Tve.size === 0 && this.Nve();
+    this.Tve.delete(e) && 0 === this.Tve.size && this.Nve();
   }
   Gve() {
     UE.KismetSystemLibrary.ExecuteConsoleCommand(
@@ -469,14 +469,14 @@ class GameQualityInfo {
     (this.yve = 0), (this.Ive = 1 / this.Eve);
   }
   RefreshPerformanceLimit(e) {
-    let a = 0;
-    let i = 0;
+    let a = 0,
+      i = 0;
     this.PerformanceLimitRunning.forEach((e, t) => {
       e.FrameLimit && a++, e.CacheWorldFrame && i++;
     }),
-      a > 0 ? this.SetFrameRateTemploary(30) : this.CancelFrameRateTemploary(),
+      0 < a ? this.SetFrameRateTemploary(30) : this.CancelFrameRateTemploary(),
       this.ApplyFrameRate(),
-      i === 1
+      1 === i
         ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
             "r.Mobile.StartCacheSceneColorOptimise",
@@ -486,7 +486,7 @@ class GameQualityInfo {
             "r.Mobile.EnableCacheSceneColorOptimise 1",
           ),
           (GameQualitySettingsManager_1.GameQualitySettingsManager.InCacheSceneColorMode = 1))
-        : i === 0 &&
+        : 0 === i &&
           (UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
             "r.Mobile.EnableCacheSceneColorOptimise 0",
@@ -507,7 +507,7 @@ class GameQualityInfo {
         );
   }
   ApplyPerformanceLimit(e) {
-    let t;
+    var t;
     performanceLimitConfigs.has(e) &&
       !GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform() &&
       (t = performanceLimitConfigs.get(e)) &&
@@ -550,30 +550,30 @@ class GameQualityInfo {
   ApplyFrameTimeParams() {}
   IsSupportDLSS3() {
     return !(
-      GameQualitySettingsManager_1.GameQualitySettingsManager.RHIName !==
-        "D3D12" ||
+      "D3D12" !==
+        GameQualitySettingsManager_1.GameQualitySettingsManager.RHIName ||
       !GameQualitySettingsManager_1.GameQualitySettingsManager.DeviceName.includes(
         "RTX 4",
       )
     );
   }
   ApplyPcVsync() {
-    const e = UE.GameUserSettings.GetGameUserSettings();
-    e.SetVSyncEnabled(this.PcVsync === 1), e.ApplySettings(!0);
+    var e = UE.GameUserSettings.GetGameUserSettings();
+    e.SetVSyncEnabled(1 === this.PcVsync), e.ApplySettings(!0);
   }
   ApplyScreenResolution() {
-    const e = UE.GameUserSettings.GetGameUserSettings();
+    var e = UE.GameUserSettings.GetGameUserSettings();
     e.SetScreenResolution(this.PcScreenResolution), e.ApplySettings(!0);
   }
   ApplyFullscreenMode() {
-    const e = UE.GameUserSettings.GetGameUserSettings();
+    var e = UE.GameUserSettings.GetGameUserSettings();
     e.SetFullscreenMode(this.PcFullScreenMode), e.ApplySettings(!0);
   }
   ApplyBrightness() {
     let e = 2.2;
     this.Brightness < 0 &&
       (e = MathUtils_1.MathUtils.Lerp(1.5, 2.2, this.Brightness + 1)),
-      this.Brightness > 0 &&
+      0 < this.Brightness &&
         (e = MathUtils_1.MathUtils.Lerp(2.2, 3.5, this.Brightness)),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
@@ -595,7 +595,7 @@ class GameQualityInfo {
       ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
           "sg.ShadowQuality " +
-            (this.ShadowQuality === 0 ? 1 : this.ShadowQuality),
+            (0 === this.ShadowQuality ? 1 : this.ShadowQuality),
         )
       : UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
@@ -603,19 +603,19 @@ class GameQualityInfo {
         );
   }
   ApplyNiagaraQuality() {
-    let e;
-    const t = UE.GameUserSettings.GetGameUserSettings();
+    var e,
+      t = UE.GameUserSettings.GetGameUserSettings();
     GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform()
       ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
           "fx.Niagara.QualityLevel " + Math.max(this.NiagaraQuality + 1, 2),
         )
       : ((e =
-          this.Sve === 3 &&
+          3 === this.Sve &&
           GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosAndAndroidHighDevice()),
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
-          "r.DisableDistortion " + (this.NiagaraQuality !== 0 && e ? 0 : 1),
+          "r.DisableDistortion " + (0 !== this.NiagaraQuality && e ? 0 : 1),
         ),
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
@@ -624,17 +624,17 @@ class GameQualityInfo {
       t.ApplySettings(!0);
   }
   ApplyImageDetail() {
-    let e;
+    var e;
     GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform()
       ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
           "r.Kuro.ToonOutlineDrawDistancePc " +
-            (this.ImageDetail > 1 ? 4e3 : 2e3),
+            (1 < this.ImageDetail ? 4e3 : 2e3),
         ),
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
           "r.Kuro.Foliage.GrassCullDistanceMax " +
-            (this.ImageDetail > 1 ? 15e3 : 6e3),
+            (1 < this.ImageDetail ? 15e3 : 6e3),
         ),
         this.ImageDetail <= 0
           ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
@@ -657,9 +657,9 @@ class GameQualityInfo {
           GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatformScreenBetter()),
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
-          "r.Mobile.SceneObjMobileSSR " + (this.ImageDetail > 1 && e ? 1 : 0),
+          "r.Mobile.SceneObjMobileSSR " + (1 < this.ImageDetail && e ? 1 : 0),
         ),
-        (e = this.Sve === 3 && e),
+        (e = 3 === this.Sve && e),
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
           "r.Mobile.TreeRimLight " + (e ? 1 : 0),
@@ -685,11 +685,11 @@ class GameQualityInfo {
     GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform(),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
-        "r.DefaultFeature.AntiAliasing " + (this.AntiAliasing === 0 ? 0 : 2),
+        "r.DefaultFeature.AntiAliasing " + (0 === this.AntiAliasing ? 0 : 2),
       );
   }
   ApplySceneAo() {
-    let e;
+    var e;
     GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform()
       ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
@@ -715,7 +715,7 @@ class GameQualityInfo {
       );
   }
   ApplyVolumeLight() {
-    let e;
+    var e;
     GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform()
       ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
@@ -778,19 +778,20 @@ class GameQualityInfo {
     if (
       !GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform()
     ) {
-      GameQualitySettingsManager_1.GameQualitySettingsManager
-        .InCacheSceneColorMode === 1 &&
+      1 ===
+        GameQualitySettingsManager_1.GameQualitySettingsManager
+          .InCacheSceneColorMode &&
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
           "r.Mobile.StartCacheSceneColorOptimise",
         );
       let e = this.GetMobileResolutionByDeviceType();
-      const t = UE.KismetSystemLibrary.GetConsoleVariableFloatValue(
-        "r.MobileContentScaleFactor",
-      );
-      const a = UE.KismetSystemLibrary.GetConsoleVariableFloatValue(
-        "r.SecondaryScreenPercentage.GameViewport",
-      );
+      var t = UE.KismetSystemLibrary.GetConsoleVariableFloatValue(
+          "r.MobileContentScaleFactor",
+        ),
+        a = UE.KismetSystemLibrary.GetConsoleVariableFloatValue(
+          "r.SecondaryScreenPercentage.GameViewport",
+        );
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Game", 17, "分辨率参数获取", [
           "r.MobileContentScaleFactor",
@@ -819,7 +820,7 @@ class GameQualityInfo {
   }
   IsNvidiaDLSSPluginLoaded() {
     return (
-      UE.KismetSystemLibrary.GetConsoleVariableIntValue("r.NGX.Enable") === 1
+      1 === UE.KismetSystemLibrary.GetConsoleVariableIntValue("r.NGX.Enable")
     );
   }
   ApplyNvidiaSuperSamplingEnable() {
@@ -828,7 +829,7 @@ class GameQualityInfo {
       GameQualitySettingsManager_1.GameQualitySettingsManager.IsDlssGpuDevice() &&
         this.IsNvidiaDLSSPluginLoaded() &&
         this.IsNvidiaStreamlinePluginLoaded() &&
-        (this.NvidiaSuperSamplingEnable === 1
+        (1 === this.NvidiaSuperSamplingEnable
           ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
               GlobalData_1.GlobalData.World,
               "r.NGX.DLSS.Enable 1",
@@ -891,7 +892,7 @@ class GameQualityInfo {
             GlobalData_1.GlobalData.World,
             "r.TemporalAASamples 4",
           ),
-          this.FsrEnable === 1
+          1 === this.FsrEnable
             ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
                 GlobalData_1.GlobalData.World,
                 "r.FidelityFX.FSR.PrimaryUpscale 1",
@@ -924,7 +925,7 @@ class GameQualityInfo {
                 GlobalData_1.GlobalData.World,
                 "r.TemporalAACurrentFrameWeight 0.25",
               )))
-        : this.FsrEnable === 1
+        : 1 === this.FsrEnable
           ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
               GlobalData_1.GlobalData.World,
               "r.FidelityFX.FSR.PrimaryUpscale 1",
@@ -1174,21 +1175,21 @@ class GameQualityInfo {
   }
   ApplyResetFocusEnable() {
     ModelManager_1.ModelManager.CameraModel.IsEnableResetFocus =
-      this.IsResetFocusEnable === 1;
+      1 === this.IsResetFocusEnable;
   }
   SetIsSidestepCameraEnable(e) {
     this.IsSidestepCameraEnable = e;
   }
   ApplyIsSidestepCameraEnable() {
     ModelManager_1.ModelManager.CameraModel.IsEnableSidestepCamera =
-      this.IsSidestepCameraEnable === 1;
+      1 === this.IsSidestepCameraEnable;
   }
   SetIsSoftLockCameraEnable(e) {
     this.IsSoftLockCameraEnable = e;
   }
   ApplyIsSoftLockCameraEnable() {
     ModelManager_1.ModelManager.CameraModel.IsEnableSoftLockCamera =
-      this.IsSoftLockCameraEnable === 1;
+      1 === this.IsSoftLockCameraEnable;
   }
   SetJoystickShakeStrength(e) {
     this.JoystickShakeStrength = e;
@@ -1215,7 +1216,7 @@ class GameQualityInfo {
   }
   ApplyJoystickMode() {
     ModelManager_1.ModelManager.BattleUiModel.SetIsDynamicJoystick(
-      this.JoystickMode === 1,
+      1 === this.JoystickMode,
     );
   }
   SetAutoSwitchSkillButtonMode(e) {
@@ -1223,7 +1224,7 @@ class GameQualityInfo {
   }
   ApplyAutoSwitchSkillButtonMode() {
     ModelManager_1.ModelManager.BattleUiModel.SetIsAutoSwitchSkillButtonMode(
-      this.IsAutoSwitchSkillButtonMode === 0,
+      0 === this.IsAutoSwitchSkillButtonMode,
     );
   }
   SetAimAssistEnable(e) {
@@ -1231,47 +1232,47 @@ class GameQualityInfo {
   }
   ApplyAimAssistEnable() {
     ModelManager_1.ModelManager.CameraModel?.SetAimAssistEnable(
-      this.AimAssistEnable === 1,
+      1 === this.AimAssistEnable,
     );
   }
   SetHorizontalViewRevert(e) {
     this.HorizontalViewRevert = e;
   }
   ApplyHorizontalViewRevert() {
-    let e;
-    const t =
-      ConfigManager_1.ConfigManager.MenuBaseConfig?.GetAxisRevertConfigListByRevertType(
-        0,
-      );
-    t && ((e = this.HorizontalViewRevert === 1), this.b9s(e, t));
+    var e,
+      t =
+        ConfigManager_1.ConfigManager.MenuBaseConfig?.GetAxisRevertConfigListByRevertType(
+          0,
+        );
+    t && ((e = 1 === this.HorizontalViewRevert), this.b9s(e, t));
   }
   SetVerticalViewRevert(e) {
     this.VerticalViewRevert = e;
   }
   ApplyVerticalViewRevert() {
-    let e;
-    const t =
-      ConfigManager_1.ConfigManager.MenuBaseConfig?.GetAxisRevertConfigListByRevertType(
-        1,
-      );
-    t && ((e = this.VerticalViewRevert === 1), this.b9s(e, t));
+    var e,
+      t =
+        ConfigManager_1.ConfigManager.MenuBaseConfig?.GetAxisRevertConfigListByRevertType(
+          1,
+        );
+    t && ((e = 1 === this.VerticalViewRevert), this.b9s(e, t));
   }
   b9s(t, e) {
     for (const h of e) {
-      var a = h.AxisName;
-      var a = InputSettingsManager_1.InputSettingsManager.GetAxisBinding(a);
+      var a = h.AxisName,
+        a = InputSettingsManager_1.InputSettingsManager.GetAxisBinding(a);
       if (a) {
-        const i = new Map();
-        const r = h.RevertInfo;
-        const l = a.GetInputAxisKeyMap();
+        var i = new Map(),
+          r = h.RevertInfo,
+          l = a.GetInputAxisKeyMap();
         if (l) {
-          for (const [s, n] of r) {
-            let o = l.get(s);
+          for (var [s, n] of r) {
+            var o = l.get(s);
             if (o) {
               let e = 0;
               o = o.Scale;
-              n === 0 && (e = t ? (o > 0 ? -o : o) : o > 0 ? o : -o),
-                n === 1 && (e = t ? (o > 0 ? o : -o) : o > 0 ? -o : o),
+              0 === n && (e = t ? (0 < o ? -o : o) : 0 < o ? o : -o),
+                1 === n && (e = t ? (0 < o ? o : -o) : 0 < o ? -o : o),
                 i.set(s, e);
             }
           }
@@ -1293,4 +1294,4 @@ class GameQualityInfo {
   (GameQualityInfo.Bve = [0, 2]),
   (GameQualityInfo.bve = [0, 6]),
   (GameQualityInfo.qve = [0, 10]);
-// # sourceMappingURL=GameQualityInfo.js.map
+//# sourceMappingURL=GameQualityInfo.js.map

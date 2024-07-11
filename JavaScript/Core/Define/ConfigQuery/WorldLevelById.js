@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configWorldLevelById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const WorldLevel_1 = require("../Config/WorldLevel");
-const DB = "db_worldlevel.db";
-const FILE = "s.世界等级.xlsx";
-const TABLE = "WorldLevel";
-const COMMAND = "select BinData from `WorldLevel` where Id = ?";
-const KEY_PREFIX = "WorldLevelById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  WorldLevel_1 = require("../Config/WorldLevel"),
+  DB = "db_worldlevel.db",
+  FILE = "s.世界等级.xlsx",
+  TABLE = "WorldLevel",
+  COMMAND = "select BinData from `WorldLevel` where Id = ?",
+  KEY_PREFIX = "WorldLevelById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configWorldLevelById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configWorldLevelById.GetConfig(";
 exports.configWorldLevelById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configWorldLevelById = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var i;
-        var n = void 0;
+        var i,
+          n = void 0;
         if (
           (([i, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configWorldLevelById = {
     }
   },
 };
-// # sourceMappingURL=WorldLevelById.js.map
+//# sourceMappingURL=WorldLevelById.js.map

@@ -1,32 +1,32 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleElementView = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const EffectContext_1 = require("../../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../../Effect/EffectSystem");
-const Global_1 = require("../../../Global");
-const GlobalData_1 = require("../../../GlobalData");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const CharacterNameDefines_1 = require("../../../NewWorld/Character/Common/CharacterNameDefines");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const EffectUtil_1 = require("../../../Utils/EffectUtil");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const LoadAsyncPromise_1 = require("../../UiComponent/LoadAsyncPromise");
-const UiSceneManager_1 = require("../../UiComponent/UiSceneManager");
-const GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew");
-const MainRoleController_1 = require("../MainRoleController");
-const RoleController_1 = require("../RoleController");
-const RoleElementItem_1 = require("./RoleElementItem");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  EffectContext_1 = require("../../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  Global_1 = require("../../../Global"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  CharacterNameDefines_1 = require("../../../NewWorld/Character/Common/CharacterNameDefines"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  EffectUtil_1 = require("../../../Utils/EffectUtil"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  LoadAsyncPromise_1 = require("../../UiComponent/LoadAsyncPromise"),
+  UiSceneManager_1 = require("../../UiComponent/UiSceneManager"),
+  GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
+  MainRoleController_1 = require("../MainRoleController"),
+  RoleController_1 = require("../RoleController"),
+  RoleElementItem_1 = require("./RoleElementItem");
 class RoleElementView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -39,7 +39,7 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
       (this.Elo = !1),
       (this.C5i = void 0),
       (this.sGe = () => {
-        const e = new RoleElementItem_1.RoleElementItem();
+        var e = new RoleElementItem_1.RoleElementItem();
         return (
           e.SetRoleViewAgent(this.plo),
           (e.OnToggleCallback = this.OnToggleClick),
@@ -58,7 +58,7 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
         this.CloseMe();
       }),
       (this.OnClickSwitch = () => {
-        let e;
+        var e;
         Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity.GetComponent(
           185,
         )?.HasTag(1996802261)
@@ -95,7 +95,7 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
           );
       }),
       (this.Ilo = () => {
-        let e;
+        var e;
         this.Elo ||
           ((e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
             this.s5i,
@@ -133,12 +133,12 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
           RoleController_1.RoleController.PlayRoleMontage(20));
   }
   async RefreshAsync() {
-    let e = ModelManager_1.ModelManager.WorldLevelModel.Sex;
-    const t = ConfigManager_1.ConfigManager.RoleConfig.GetMainRoleByGender(e);
-    const i = t.length;
-    const r = [];
+    var e = ModelManager_1.ModelManager.WorldLevelModel.Sex,
+      t = ConfigManager_1.ConfigManager.RoleConfig.GetMainRoleByGender(e),
+      i = t.length,
+      r = [];
     for (let e = 0; e < i; e++) {
-      const s = t[e];
+      var s = t[e];
       MainRoleController_1.MainRoleController.IsCanChangeRole(s.Id) &&
         r.push(s);
     }
@@ -160,13 +160,13 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
     );
   }
   ylo(e) {
-    const t = this.uft[e];
+    var t = this.uft[e];
     (this.s5i = t.Id),
       this.kGe.GetGenericLayout().SelectGridProxy(e),
       this._pt();
   }
   _pt() {
-    const e = this.plo.GetCurSelectRoleId() === this.s5i;
+    var e = this.plo.GetCurSelectRoleId() === this.s5i;
     this.GetButton(2)?.SetSelfInteractive(!e);
   }
   OnBeforeHide() {
@@ -183,18 +183,18 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
     );
   }
   Tlo(e) {
-    var e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e);
-    const t =
-      (RoleController_1.RoleController.PlayRoleMontage(21),
-      ConfigManager_1.ConfigManager.RoleConfig.GetRoleElementSwitchDelayTime());
+    var e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e),
+      t =
+        (RoleController_1.RoleController.PlayRoleMontage(21),
+        ConfigManager_1.ConfigManager.RoleConfig.GetRoleElementSwitchDelayTime());
     this.ShowElementSuccessEffectById(e.ElementId),
       TimerSystem_1.TimerSystem.Delay(() => {
         this.Dlo();
       }, t);
   }
   async Ulo(e, i, r, t, s, o) {
-    let n = !1;
-    let a = void 0;
+    let n = !1,
+      a = void 0;
     const l = new CustomPromise_1.CustomPromise();
     o &&
       ((o = new LoadAsyncPromise_1.LoadAsyncPromise(o, UE.Texture)),
@@ -211,7 +211,7 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
         1,
         void 0,
         (e, t) => {
-          e !== 0 &&
+          0 !== e &&
             (s &&
               ((e = UE.LinearColor.FromSRGBColor(UE.Color.FromHex(s))),
               this.Alo(t, e, n, a)),
@@ -231,18 +231,18 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
   }
   Alo(e, t, i, r) {
     var e = EffectSystem_1.EffectSystem.GetSureEffectActor(
-      e,
-    ).GetComponentByClass(UE.NiagaraComponent.StaticClass());
-    const s = e.Asset;
+        e,
+      ).GetComponentByClass(UE.NiagaraComponent.StaticClass()),
+      s = e.Asset;
     e.SetAsset(void 0),
       e.SetAsset(s),
       e.SetNiagaraVariableLinearColor("Color", t),
       i && e.SetKuroNiagaraEmitterCustomTexture("Icon", "Mask", r);
   }
   ShowElementSuccessEffectById(e) {
-    let t;
-    let i;
-    var e = ConfigManager_1.ConfigManager.ElementInfoConfig.GetElementInfo(e);
+    var t,
+      i,
+      e = ConfigManager_1.ConfigManager.ElementInfoConfig.GetElementInfo(e);
     e &&
       (i = (t = this.C5i).Model?.CheckGetComponent(1)?.MainMeshComponent) &&
       (this.Ulo(
@@ -272,13 +272,13 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
           this.Alo(this.Mlo, s, !0, e);
         });
       } else {
-        var t = this.C5i;
-        const i = new UE.Transform(
-          new UE.Rotator(0, 0, 0),
-          new UE.Vector(0, 0, 0),
-          new UE.Vector(1, 1, 1),
-        );
-        var t = t.Model?.CheckGetComponent(1);
+        var t = this.C5i,
+          i = new UE.Transform(
+            new UE.Rotator(0, 0, 0),
+            new UE.Vector(0, 0, 0),
+            new UE.Vector(1, 1, 1),
+          ),
+          t = t.Model?.CheckGetComponent(1);
         this.Ulo(
           "AttributePreviewHandEffect",
           t?.MainMeshComponent,
@@ -292,7 +292,7 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
         }, this.Rlo);
       }
       try {
-        const r = UiSceneManager_1.UiSceneManager.GetActorByTag(
+        var r = UiSceneManager_1.UiSceneManager.GetActorByTag(
           CommonParamById_1.configCommonParamById.GetStringConfig(
             "RoleElementPreviewEffectCase",
           ),
@@ -336,4 +336,4 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RoleElementView = RoleElementView;
-// # sourceMappingURL=RoleElementView.js.map
+//# sourceMappingURL=RoleElementView.js.map

@@ -1,31 +1,36 @@
 "use strict";
-let SceneItemTimeStopMachineComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (e, t, i, n) {
-    let o;
-    const s = arguments.length;
-    let r =
-      s < 3 ? t : n === null ? (n = Object.getOwnPropertyDescriptor(t, i)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(e, t, i, n);
-    else
-      for (let h = e.length - 1; h >= 0; h--)
-        (o = e[h]) && (r = (s < 3 ? o(r) : s > 3 ? o(t, i, r) : o(t, i)) || r);
-    return s > 3 && r && Object.defineProperty(t, i, r), r;
-  };
+var SceneItemTimeStopMachineComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (e, t, i, n) {
+      var o,
+        s = arguments.length,
+        r =
+          s < 3
+            ? t
+            : null === n
+              ? (n = Object.getOwnPropertyDescriptor(t, i))
+              : n;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        r = Reflect.decorate(e, t, i, n);
+      else
+        for (var h = e.length - 1; 0 <= h; h--)
+          (o = e[h]) &&
+            (r = (s < 3 ? o(r) : 3 < s ? o(t, i, r) : o(t, i)) || r);
+      return 3 < s && r && Object.defineProperty(t, i, r), r;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemTimeStopMachineComponent = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const TOLERANCE_TIME = 3;
-const timeStopBuffId = BigInt("600000009");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  TOLERANCE_TIME = 3,
+  timeStopBuffId = BigInt("600000009");
 class TimeStopData {
   constructor(e, t, i) {
     (this.TimeScaleComponent = void 0),
@@ -61,9 +66,9 @@ let SceneItemTimeStopMachineComponent =
           this.fSn.has(t) && (this.SSn(t), this.fSn.delete(t));
         }),
         (this.ESn = (e, t, i) => {
-          const n = t.Entity.GetComponent(0).GetPbDataId();
+          var n = t.Entity.GetComponent(0).GetPbDataId();
           this.pSn.has(n) &&
-            (this.pSn.delete(n), this.ySn(t), this.pSn.size === 0) &&
+            (this.pSn.delete(n), this.ySn(t), 0 === this.pSn.size) &&
             EventSystem_1.EventSystem.Remove(
               EventDefine_1.EEventName.AddEntity,
               this.ESn,
@@ -123,18 +128,18 @@ let SceneItemTimeStopMachineComponent =
           );
     }
     MSn() {
-      const e = this.Lo?.Target.EntityIds;
+      var e = this.Lo?.Target.EntityIds;
       if (e)
         for (const i of e) {
-          const t =
+          var t =
             ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(i);
           t?.Valid ? this.ySn(t) : (this.pSn.add(i), this.ISn());
         }
     }
     ySn(e) {
-      let t;
-      let i;
-      const n = e.Entity?.GetComponent(107);
+      var t,
+        i,
+        n = e.Entity?.GetComponent(107);
       n &&
         ((t = n.SetTimeScale(
           1,
@@ -161,7 +166,7 @@ let SceneItemTimeStopMachineComponent =
         ));
     }
     vSn() {
-      for (const [e] of this.fSn) this.SSn(e);
+      for (var [e] of this.fSn) this.SSn(e);
       this.fSn.clear(),
         EventSystem_1.EventSystem.Has(
           EventDefine_1.EEventName.AddEntity,
@@ -174,7 +179,7 @@ let SceneItemTimeStopMachineComponent =
           this.pSn.clear());
     }
     SSn(e) {
-      const t = this.fSn.get(e);
+      var t = this.fSn.get(e);
       t &&
         (t.TimeScaleComponent.RemoveTimeScale(t.TimeScaleId),
         t.IsSceneItem
@@ -203,4 +208,4 @@ let SceneItemTimeStopMachineComponent =
   )),
   (exports.SceneItemTimeStopMachineComponent =
     SceneItemTimeStopMachineComponent);
-// # sourceMappingURL=SceneItemTimeStopMachineComponent.js.map
+//# sourceMappingURL=SceneItemTimeStopMachineComponent.js.map

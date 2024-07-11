@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MingSuController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const ItemRewardController_1 = require("../ItemReward/ItemRewardController");
-const MingSuDefine_1 = require("./MingSuDefine");
-const MingSuModel_1 = require("./MingSuModel");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ItemRewardController_1 = require("../ItemReward/ItemRewardController"),
+  MingSuDefine_1 = require("./MingSuDefine"),
+  MingSuModel_1 = require("./MingSuModel");
 class MingSuController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
@@ -43,11 +43,11 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static OpenView(e, o) {
-    let n;
-    const r =
-      ConfigManager_1.ConfigManager.CollectItemConfig.GetDragonPoolConfigById(
-        e,
-      );
+    var n,
+      r =
+        ConfigManager_1.ConfigManager.CollectItemConfig.GetDragonPoolConfigById(
+          e,
+        );
     return (
       !!r &&
       ((n = ModelManager_1.ModelManager.MingSuModel).SetCurrentDragonPoolId(e),
@@ -66,10 +66,10 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
   }
   static SendOpenDragonPoolRequest(e, r) {
     Log_1.Log.CheckInfo() && Log_1.Log.Info("MingSuTi", 8, "打开龙池!!!");
-    const o = new Protocol_1.Aki.Protocol._os();
+    var o = new Protocol_1.Aki.Protocol._os();
     (o.z6n = e),
       Net_1.Net.Call(22706, Protocol_1.Aki.Protocol._os.create(o), (e) => {
-        let o, n;
+        var o, n;
         e &&
           (e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
             ? ((o = e.z6n),
@@ -88,12 +88,12 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
   static SendHandInMingSuRequest(t) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("MingSuTi", 8, "HandInMingSuRequest", ["dragonPoolId", t]);
-    const e = new Protocol_1.Aki.Protocol.sos();
+    var e = new Protocol_1.Aki.Protocol.sos();
     (e.z6n = t),
       (e.N4n =
         ModelManager_1.ModelManager.MingSuModel.CurrentInteractCreatureDataLongId),
       Net_1.Net.Call(25090, Protocol_1.Aki.Protocol.sos.create(e), (e) => {
-        let o, n, r;
+        var o, n, r;
         e &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -225,4 +225,4 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
         );
     }
   });
-// # sourceMappingURL=MingSuController.js.map
+//# sourceMappingURL=MingSuController.js.map

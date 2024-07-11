@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventInterludeActions = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const LevelGeneralContextDefine_1 = require("../LevelGeneralContextDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  LevelGeneralContextDefine_1 = require("../LevelGeneralContextDefine");
 class LevelEventInterludeActions extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -33,7 +33,7 @@ class LevelEventInterludeActions extends LevelGeneralBase_1.LevelEventBase {
     Log_1.Log.CheckDebug() && Log_1.Log.Debug("LevelEvent", 18, "幕间行为淡入");
   }
   PDe() {
-    this.pDe?.InterludeActionList && this.pDe?.InterludeActionList.length > 0
+    this.pDe?.InterludeActionList && 0 < this.pDe?.InterludeActionList.length
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("LevelEvent", 18, "幕间行为开始执行"),
         ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsNew(
@@ -51,4 +51,4 @@ class LevelEventInterludeActions extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventInterludeActions = LevelEventInterludeActions;
-// # sourceMappingURL=LevelEventInterludeActions.js.map
+//# sourceMappingURL=LevelEventInterludeActions.js.map

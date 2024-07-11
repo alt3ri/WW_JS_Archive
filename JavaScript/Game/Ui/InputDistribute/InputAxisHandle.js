@@ -23,4 +23,4 @@ class InputAxisHandle extends InputDistributeHandle_1.InputDistributeHandle {
   }
 }
 exports.InputAxisHandle = InputAxisHandle;
-// # sourceMappingURL=InputAxisHandle.js.map
+//# sourceMappingURL=InputAxisHandle.js.map

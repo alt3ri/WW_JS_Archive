@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyResetCollisionSize extends UE.KuroAnimNotify {
   K2_Notify(e, s) {
     e = e.GetOwner();
@@ -15,4 +15,4 @@ class TsAnimNotifyResetCollisionSize extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifyResetCollisionSize;
-// # sourceMappingURL=TsAnimNotifyResetCollisionSize.js.map
+//# sourceMappingURL=TsAnimNotifyResetCollisionSize.js.map

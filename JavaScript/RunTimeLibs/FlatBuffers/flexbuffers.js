@@ -8,7 +8,7 @@ exports.encode =
 /* eslint-disable @typescript-eslint/no-namespace */
 const builder_js_1 = require("./flexbuffers/builder");
 const reference_js_1 = require("./flexbuffers/reference");
-const reference_js_2 = require("./flexbuffers/reference");
+var reference_js_2 = require("./flexbuffers/reference");
 Object.defineProperty(exports, "toReference", {
   enumerable: true,
   get: function () {

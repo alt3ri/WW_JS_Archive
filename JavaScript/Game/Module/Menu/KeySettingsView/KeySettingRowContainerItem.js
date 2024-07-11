@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.KeySettingRowContainerItem = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const KeySettingRowKeyItem_1 = require("./KeySettingRowKeyItem");
-const KeySettingRowTypeItem_1 = require("./KeySettingRowTypeItem");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  KeySettingRowKeyItem_1 = require("./KeySettingRowKeyItem"),
+  KeySettingRowTypeItem_1 = require("./KeySettingRowTypeItem");
 class KeySettingRowContainerItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -37,7 +37,7 @@ class KeySettingRowContainerItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    const t = this.GetExtendToggle(0);
+    var t = this.GetExtendToggle(0);
     t?.OnStateChange.Add(this.UAi),
       t?.OnHover.Add(this.__i),
       t?.OnUnHover.Add(this.u_i),
@@ -48,7 +48,7 @@ class KeySettingRowContainerItem extends UiPanelBase_1.UiPanelBase {
       (this.DAi = void 0),
       (this.RAi = void 0),
       (this.EAi = void 0);
-    const t = this.GetExtendToggle(0);
+    var t = this.GetExtendToggle(0);
     t?.OnStateChange.Remove(this.UAi),
       t?.OnHover.Remove(this.__i),
       t?.OnUnHover.Remove(this.u_i);
@@ -73,8 +73,7 @@ class KeySettingRowContainerItem extends UiPanelBase_1.UiPanelBase {
     this.KeySettingRowData = void 0;
   }
   Update(t, i) {
-    const e =
-      ModelManager_1.ModelManager.MenuModel.KeySettingInputControllerType;
+    var e = ModelManager_1.ModelManager.MenuModel.KeySettingInputControllerType;
     switch ((this.KeySettingRowData = t).GetRowType()) {
       case 2:
         this.GetExtendToggle(0)?.SetSelfInteractive(!0),
@@ -91,7 +90,7 @@ class KeySettingRowContainerItem extends UiPanelBase_1.UiPanelBase {
     this.SetSelected(!1), this.fRt(t.IsExpandDetail);
   }
   async PAi() {
-    const t = this.GetItem(2)?.GetOwner();
+    var t = this.GetItem(2)?.GetOwner();
     t &&
       ((this.DAi = new KeySettingRowKeyItem_1.KeySettingRowKeyItem()),
       this.DAi.BindOnWaitInput(this.LAi),
@@ -101,7 +100,7 @@ class KeySettingRowContainerItem extends UiPanelBase_1.UiPanelBase {
     this.EAi = t;
   }
   async AAi() {
-    const t = this.GetItem(1)?.GetOwner();
+    var t = this.GetItem(1)?.GetOwner();
     t &&
       ((this.RAi = new KeySettingRowTypeItem_1.KeySettingRowTypeItem()),
       await this.RAi.CreateThenShowByActorAsync(t));
@@ -113,6 +112,7 @@ class KeySettingRowContainerItem extends UiPanelBase_1.UiPanelBase {
       case 2:
         return this.GetItem(2).GetOwner();
       default:
+        return;
     }
   }
   SetSelected(t) {
@@ -126,4 +126,4 @@ class KeySettingRowContainerItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.KeySettingRowContainerItem = KeySettingRowContainerItem;
-// # sourceMappingURL=KeySettingRowContainerItem.js.map
+//# sourceMappingURL=KeySettingRowContainerItem.js.map

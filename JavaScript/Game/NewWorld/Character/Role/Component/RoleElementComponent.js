@@ -1,31 +1,36 @@
 "use strict";
-let RoleElementComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, n, i) {
-    let s;
-    const o = arguments.length;
-    let r =
-      o < 3 ? e : i === null ? (i = Object.getOwnPropertyDescriptor(e, n)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(t, e, n, i);
-    else
-      for (let h = t.length - 1; h >= 0; h--)
-        (s = t[h]) && (r = (o < 3 ? s(r) : o > 3 ? s(e, n, r) : s(e, n)) || r);
-    return o > 3 && r && Object.defineProperty(e, n, r), r;
-  };
+var RoleElementComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, n, i) {
+      var s,
+        o = arguments.length,
+        r =
+          o < 3
+            ? e
+            : null === i
+              ? (i = Object.getOwnPropertyDescriptor(e, n))
+              : i;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        r = Reflect.decorate(t, e, n, i);
+      else
+        for (var h = t.length - 1; 0 <= h; h--)
+          (s = t[h]) &&
+            (r = (o < 3 ? s(r) : 3 < o ? s(e, n, r) : s(e, n)) || r);
+      return 3 < o && r && Object.defineProperty(e, n, r), r;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleElementComponent = void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const FormationDataController_1 = require("../../../../Module/Abilities/FormationDataController");
-const PhantomUtil_1 = require("../../../../Module/Phantom/PhantomUtil");
-const CharacterAttributeTypes_1 = require("../../Common/Component/Abilities/CharacterAttributeTypes");
-const CharacterBuffIds_1 = require("../../Common/Component/Abilities/CharacterBuffIds");
-const EAttributeId = Protocol_1.Aki.Protocol.KBs;
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  FormationDataController_1 = require("../../../../Module/Abilities/FormationDataController"),
+  PhantomUtil_1 = require("../../../../Module/Phantom/PhantomUtil"),
+  CharacterAttributeTypes_1 = require("../../Common/Component/Abilities/CharacterAttributeTypes"),
+  CharacterBuffIds_1 = require("../../Common/Component/Abilities/CharacterBuffIds");
+var EAttributeId = Protocol_1.Aki.Protocol.KBs;
 const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
 let RoleElementComponent =
   (RoleElementComponent_1 = class RoleElementComponent extends (
@@ -40,7 +45,7 @@ let RoleElementComponent =
         (this.ron = !1),
         (this.non = !1),
         (this.WQe = (t, e, n) => {
-          const i = this.RoleElementType;
+          var i = this.RoleElementType;
           e < Number.EPSILON ? (this.son = !1) : this.aon(e),
             EventSystem_1.EventSystem.EmitWithTarget(
               this.Entity,
@@ -111,7 +116,7 @@ let RoleElementComponent =
           this.Entity,
           Protocol_1.Aki.Protocol.Oqs.Proto_ESummonTypeConcomitantCustom,
         ));
-      const t = this.oon?.Entity;
+      var t = this.oon?.Entity;
       return (
         t &&
           !EventSystem_1.EventSystem.HasWithTarget(
@@ -202,8 +207,8 @@ let RoleElementComponent =
       return this.$te.GetCurrentValue(EAttributeId.Proto_ElementPropertyType);
     }
     get RoleElementEnergy() {
-      const t = this.uon;
-      return t > 0 ? this.$te.GetCurrentValue(t) : 0;
+      var t = this.uon;
+      return 0 < t ? this.$te.GetCurrentValue(t) : 0;
     }
     get uon() {
       return (
@@ -227,13 +232,13 @@ let RoleElementComponent =
         }));
     }
     ActivateFusion(t) {
-      var t = t.CheckGetComponent(79);
-      const e = { ElementType: this.RoleElementType, ElementType2: t };
+      var t = t.CheckGetComponent(79),
+        e = { ElementType: this.RoleElementType, ElementType2: t };
       this.elt.TriggerEvents(10, t.elt, e),
         t.elt.TriggerEvents(13, this.elt, e);
     }
     ClearElementEnergy(t) {
-      ModelManager_1.ModelManager.SceneTeamModel.GetTeamPlayerSize() > 2
+      2 < ModelManager_1.ModelManager.SceneTeamModel.GetTeamPlayerSize()
         ? this.elt.AddBuff(CharacterBuffIds_1.buffId.ConsumeQte, {
             InstigatorId: t.GetComponent(0).GetCreatureDataId(),
             Reason: "RoleQteComponent消耗QTE次数",
@@ -258,4 +263,4 @@ let RoleElementComponent =
       RoleElementComponent,
     )),
   (exports.RoleElementComponent = RoleElementComponent);
-// # sourceMappingURL=RoleElementComponent.js.map
+//# sourceMappingURL=RoleElementComponent.js.map

@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoginServerView = void 0);
-const UE = require("ue");
-const BaseConfigController_1 = require("../../../../Launcher/BaseConfig/BaseConfigController");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const DynScrollView_1 = require("../../Util/ScrollView/DynScrollView");
-const LoginServerDynItem_1 = require("./LoginServerDynItem");
-const LoginServerItem_1 = require("./LoginServerItem");
+const UE = require("ue"),
+  BaseConfigController_1 = require("../../../../Launcher/BaseConfig/BaseConfigController"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  DynScrollView_1 = require("../../Util/ScrollView/DynScrollView"),
+  LoginServerDynItem_1 = require("./LoginServerDynItem"),
+  LoginServerItem_1 = require("./LoginServerItem");
 class LoginServerView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -22,7 +22,7 @@ class LoginServerView extends UiViewBase_1.UiViewBase {
         this.CloseMe();
       }),
       (this.RSi = () => {
-        const e =
+        var e =
           ModelManager_1.ModelManager.LoginServerModel.CurrentUiSelectSeverData;
         (ModelManager_1.ModelManager.LoginServerModel.CurrentSelectServerData =
           e),
@@ -60,7 +60,7 @@ class LoginServerView extends UiViewBase_1.UiViewBase {
   OnStart() {
     ModelManager_1.ModelManager.LoginServerModel.CurrentUiSelectSeverData =
       ModelManager_1.ModelManager.LoginServerModel.CurrentSelectServerData;
-    const e = BaseConfigController_1.BaseConfigController.GetLoginServers();
+    var e = BaseConfigController_1.BaseConfigController.GetLoginServers();
     this.xqe.RefreshByData(e), this.USi(e);
   }
   OnAddEventListener() {}
@@ -71,7 +71,7 @@ class LoginServerView extends UiViewBase_1.UiViewBase {
   }
   ASi(r) {
     let t = 0;
-    const i = r.length;
+    var i = r.length;
     for (let e = 0; e < i; e++)
       if (
         ModelManager_1.ModelManager.LoginServerModel
@@ -87,4 +87,4 @@ class LoginServerView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.LoginServerView = LoginServerView;
-// # sourceMappingURL=LoginServerView.js.map
+//# sourceMappingURL=LoginServerView.js.map

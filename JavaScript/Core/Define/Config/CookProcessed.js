@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CookProcessed = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const DicIntInt_1 = require("./SubType/DicIntInt");
-const OneItemConfig_1 = require("./SubType/OneItemConfig");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  DicIntInt_1 = require("./SubType/DicIntInt"),
+  OneItemConfig_1 = require("./SubType/OneItemConfig");
 class CookProcessed {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -49,26 +49,26 @@ class CookProcessed {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   finalitemid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   unlock() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   name(t) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetConsumeitemsidAt(t, i) {
     return this.consumeitemsid(t);
   }
   consumeitemsid(t, i) {
-    const s = this.J7.__offset(this.z7, 12);
+    var s = this.J7.__offset(this.z7, 12);
     return s
       ? (i || new OneItemConfig_1.OneItemConfig()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -77,14 +77,14 @@ class CookProcessed {
       : null;
   }
   consumeitemsidLength() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetLeastitemidAt(t, i) {
     return this.leastitemid(t);
   }
   leastitemid(t, i) {
-    const s = this.J7.__offset(this.z7, 14);
+    var s = this.J7.__offset(this.z7, 14);
     return s
       ? (i || new DicIntInt_1.DicIntInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -93,22 +93,22 @@ class CookProcessed {
       : null;
   }
   leastitemidLength() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetInterationidAt(t) {
     return this.interationid(t);
   }
   interationid(t) {
-    const i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 16);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   interationidLength() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   interationidArray() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -119,4 +119,4 @@ class CookProcessed {
   }
 }
 exports.CookProcessed = CookProcessed;
-// # sourceMappingURL=CookProcessed.js.map
+//# sourceMappingURL=CookProcessed.js.map

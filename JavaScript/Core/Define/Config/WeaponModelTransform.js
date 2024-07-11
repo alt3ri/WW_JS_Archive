@@ -40,11 +40,11 @@ class WeaponModelTransform {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   location(t) {
-    const r = this.J7.__offset(this.z7, 6);
+    var r = this.J7.__offset(this.z7, 6);
     return r
       ? (t || new Vector_1.Vector()).__init(
           this.J7.__indirect(this.z7 + r),
@@ -53,7 +53,7 @@ class WeaponModelTransform {
       : null;
   }
   rotation(t) {
-    const r = this.J7.__offset(this.z7, 8);
+    var r = this.J7.__offset(this.z7, 8);
     return r
       ? (t || new Vector_1.Vector()).__init(
           this.J7.__indirect(this.z7 + r),
@@ -62,15 +62,15 @@ class WeaponModelTransform {
       : null;
   }
   size() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readFloat32(this.z7 + t) : 1;
   }
   rotatetime() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   scabbardoffset(t) {
-    const r = this.J7.__offset(this.z7, 14);
+    var r = this.J7.__offset(this.z7, 14);
     return r
       ? (t || new Vector_1.Vector()).__init(
           this.J7.__indirect(this.z7 + r),
@@ -79,11 +79,11 @@ class WeaponModelTransform {
       : null;
   }
   showscabbard() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   axisrotate(t) {
-    const r = this.J7.__offset(this.z7, 18);
+    var r = this.J7.__offset(this.z7, 18);
     return r
       ? (t || new Vector_1.Vector()).__init(
           this.J7.__indirect(this.z7 + r),
@@ -93,4 +93,4 @@ class WeaponModelTransform {
   }
 }
 exports.WeaponModelTransform = WeaponModelTransform;
-// # sourceMappingURL=WeaponModelTransform.js.map
+//# sourceMappingURL=WeaponModelTransform.js.map

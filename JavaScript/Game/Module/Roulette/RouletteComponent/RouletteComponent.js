@@ -4,12 +4,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.exploreRouletteMap =
     exports.functionRouletteMap =
       void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RouletteDefine_1 = require("../Data/RouletteDefine");
-const RouletteGridData_1 = require("../RouletteGrid/RouletteGridData");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RouletteDefine_1 = require("../Data/RouletteDefine"),
+  RouletteGridData_1 = require("../RouletteGrid/RouletteGridData");
 (exports.functionRouletteMap = [
   [[1], 11, 1],
   [[2], 4, 1],
@@ -79,27 +79,27 @@ class RouletteComponentBase extends UiPanelBase_1.UiPanelBase {
   }
   Igo() {
     this.ygo();
-    const t = this.GetRouletteInfoMap();
+    var t = this.GetRouletteInfoMap();
     let e = 0;
-    const i = new Map([
+    var i = new Map([
       [0, 0],
       [1, 0],
       [2, 0],
     ]);
     for (const a of t) {
       for (const u of a[0]) this.AreaIndexToGridIndex.set(u, e);
-      var s = a[1];
-      const r = a[2];
-      const h = i.get(r);
-      var o = ModelManager_1.ModelManager.RouletteModel.CreateGridData(h, r);
-      var s =
-        ((o.GridIndex = e),
-        (o.DataIndex = h),
-        (o.GridType = r),
-        this.GetItem(s));
-      const n = new RouletteGridData_1.rouletteGridGenerator[r]();
-      var s = (n.SetRootActor(s.GetOwner(), !0), this.GridDataDecorator(o));
-      var o = (n.RefreshGrid(s), this.IsCurrentEquippedId(s));
+      var s = a[1],
+        r = a[2],
+        h = i.get(r),
+        o = ModelManager_1.ModelManager.RouletteModel.CreateGridData(h, r),
+        s =
+          ((o.GridIndex = e),
+          (o.DataIndex = h),
+          (o.GridType = r),
+          this.GetItem(s)),
+        n = new RouletteGridData_1.rouletteGridGenerator[r](),
+        s = (n.SetRootActor(s.GetOwner(), !0), this.GridDataDecorator(o)),
+        o = (n.RefreshGrid(s), this.IsCurrentEquippedId(s));
       o && (this.CurrentEquipGridIndex = s.GridIndex),
         n.SetGridEquipped(o),
         this.InitGridEvent(n),
@@ -141,7 +141,7 @@ class RouletteComponentBase extends UiPanelBase_1.UiPanelBase {
     this.GetCurrentGrid()?.SelectOnGrid(!0);
   }
   GetCurrentGrid() {
-    if (this.CurrentGridIndex !== -1)
+    if (-1 !== this.CurrentGridIndex)
       return this.RouletteGridList[this.CurrentGridIndex];
   }
   SetAllGridToggleSelfInteractive(t) {
@@ -157,11 +157,11 @@ class RouletteComponentBase extends UiPanelBase_1.UiPanelBase {
     this.RefreshCurrentShowName(), this.RefreshTips();
   }
   Refresh(t, e) {
-    let i, s, r;
+    var i, s, r;
     void 0 !== t &&
       this.AreaIndex !== t &&
-      ((i = this.AreaIndex === 0),
-      (s = t === 0),
+      ((i = 0 === this.AreaIndex),
+      (s = 0 === t),
       (r =
         (this.AreaIndexToGridIndex.get(this.AreaIndex) ?? -1) !==
         (this.AreaIndexToGridIndex.get(t) ?? -1)),
@@ -184,7 +184,7 @@ class RouletteComponentBase extends UiPanelBase_1.UiPanelBase {
     this.Ego.SetUIActive(t);
   }
   RefreshCurrentShowName() {
-    const t =
+    var t =
       this.GetCurrentGrid()?.Data?.Name ?? RouletteDefine_1.ROULETTE_TEXT_EMPTY;
     this.RefreshName(t);
   }
@@ -196,7 +196,7 @@ class RouletteComponentBase extends UiPanelBase_1.UiPanelBase {
   }
   RefreshTips() {}
   RefreshTipsByText(t, e = !1) {
-    let i;
+    var i;
     void 0 !== t &&
       ((i = this.GetText(1)).ShowTextNew(t), e) &&
       LguiUtil_1.LguiUtil.ReplaceWildCard(i);
@@ -219,4 +219,4 @@ class RouletteComponentBase extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RouletteComponentBase = RouletteComponentBase;
-// # sourceMappingURL=RouletteComponent.js.map
+//# sourceMappingURL=RouletteComponent.js.map

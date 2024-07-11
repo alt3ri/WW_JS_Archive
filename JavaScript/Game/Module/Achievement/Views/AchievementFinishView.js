@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AchievementFinishView = void 0);
-const UE = require("ue");
-const Time_1 = require("../../../../Core/Common/Time");
-const TickSystem_1 = require("../../../../Core/Tick/TickSystem");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const CLOSE_TIMER_DOWN = 4e3;
+const UE = require("ue"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  TickSystem_1 = require("../../../../Core/Tick/TickSystem"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  CLOSE_TIMER_DOWN = 4e3;
 class AchievementFinishView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -26,7 +26,7 @@ class AchievementFinishView extends UiViewBase_1.UiViewBase {
     ];
   }
   OnBeforeShow() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.AchievementModel.CurrentFinishAchievementArray.shift();
     (this.iqe =
       ModelManager_1.ModelManager.AchievementModel.GetAchievementData(e)),
@@ -41,9 +41,9 @@ class AchievementFinishView extends UiViewBase_1.UiViewBase {
       ).Id);
   }
   Aqe() {
-    var e = this.iqe.GetGroupId();
-    var e =
-      ModelManager_1.ModelManager.AchievementModel.GetAchievementGroupData(e);
+    var e = this.iqe.GetGroupId(),
+      e =
+        ModelManager_1.ModelManager.AchievementModel.GetAchievementGroupData(e);
     StringUtils_1.StringUtils.IsEmpty(e.GetTexture()) ||
       this.SetTextureByPath(e.GetTexture(), this.GetTexture(0));
   }
@@ -61,4 +61,4 @@ class AchievementFinishView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.AchievementFinishView = AchievementFinishView;
-// # sourceMappingURL=AchievementFinishView.js.map
+//# sourceMappingURL=AchievementFinishView.js.map

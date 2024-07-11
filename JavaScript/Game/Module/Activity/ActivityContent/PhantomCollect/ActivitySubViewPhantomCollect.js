@@ -4,25 +4,25 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.ActivitySubViewPhantomCollectMonsterItem =
     exports.ActivitySubViewPhantomCollect =
       void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const CalabashController_1 = require("../../../Calabash/CalabashController");
-const CommonItemSmallItemGrid_1 = require("../../../Common/ItemGrid/CommonItemSmallItemGrid");
-const ItemController_1 = require("../../../Item/ItemController");
-const ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase");
-const ActivityTitleTypeA_1 = require("../UniversalComponents/Title/ActivityTitleTypeA");
-const ActivityPhantomCollectController_1 = require("./ActivityPhantomCollectController");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  CalabashController_1 = require("../../../Calabash/CalabashController"),
+  CommonItemSmallItemGrid_1 = require("../../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  ItemController_1 = require("../../../Item/ItemController"),
+  ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase"),
+  ActivityTitleTypeA_1 = require("../UniversalComponents/Title/ActivityTitleTypeA"),
+  ActivityPhantomCollectController_1 = require("./ActivityPhantomCollectController");
 class ActivitySubViewPhantomCollect extends ActivitySubViewBase_1.ActivitySubViewBase {
   constructor() {
     super(...arguments),
@@ -64,14 +64,14 @@ class ActivitySubViewPhantomCollect extends ActivitySubViewBase_1.ActivitySubVie
       this.GetVerticalLayout(6),
       this.Tke,
     );
-    const t = this.GetItem(0);
-    const e =
-      ((this.TitleComponent = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
-      await this.TitleComponent.CreateThenShowByActorAsync(t.GetOwner()),
-      []);
+    var t = this.GetItem(0),
+      e =
+        ((this.TitleComponent = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
+        await this.TitleComponent.CreateThenShowByActorAsync(t.GetOwner()),
+        []);
     for (let t = 0; t < 5; t++) {
-      const i = this.GetItem(1 + t);
-      const o = new ActivitySubViewPhantomCollectMonsterItem();
+      var i = this.GetItem(1 + t),
+        o = new ActivitySubViewPhantomCollectMonsterItem();
       e.push(o.CreateThenShowByActorAsync(i.GetOwner())),
         this.MonsterItemList.push(o);
     }
@@ -86,17 +86,17 @@ class ActivitySubViewPhantomCollect extends ActivitySubViewBase_1.ActivitySubVie
     this.RefreshTimerText(), this.RefreshTaskLayout(), this.RefreshMonster();
   }
   RefreshTimerText() {
-    const [t, e] = this.GetTimeVisibleAndRemainTime();
+    var [t, e] = this.GetTimeVisibleAndRemainTime();
     this.TitleComponent.SetTimeTextVisible(t),
       t && this.TitleComponent.SetTimeTextByText(e);
   }
   RefreshTaskLayout() {
-    const t =
+    var t =
       ActivityPhantomCollectController_1.ActivityPhantomCollectController.GetCurrentActivityDataById();
     this.TaskGenericLayout.RefreshByDataAsync(t.PhantomCollectRewardList ?? []);
   }
   RefreshMonster() {
-    const e = this.ActivityDataBase.GetCollectPhantomList();
+    var e = this.ActivityDataBase.GetCollectPhantomList();
     for (let t = 0; t < 5; t++) this.MonsterItemList[t].Refresh(e[t]);
   }
 }
@@ -106,7 +106,7 @@ class ActivitySubViewPhantomCollectMonsterItem extends UiPanelBase_1.UiPanelBase
     super(...arguments),
       (this.MonsterId = 0),
       (this.Lke = () => {
-        this.MonsterId !== 0 &&
+        0 !== this.MonsterId &&
           CalabashController_1.CalabashController.JumpToCalabashCollectTabView(
             this.MonsterId,
           );
@@ -122,13 +122,12 @@ class ActivitySubViewPhantomCollectMonsterItem extends UiPanelBase_1.UiPanelBase
   }
   Refresh(t) {
     this.MonsterId = t;
-    const e =
-      ConfigManager_1.ConfigManager.ActivityPhantomCollectConfig?.GetPhantomCollectConfig(
-        ActivityPhantomCollectController_1.ActivityPhantomCollectController
-          .ActivityId,
-      ).PhantomActivityImage.get(t);
-    const i =
-      ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomIsUnlock(t);
+    var e =
+        ConfigManager_1.ConfigManager.ActivityPhantomCollectConfig?.GetPhantomCollectConfig(
+          ActivityPhantomCollectController_1.ActivityPhantomCollectController
+            .ActivityId,
+        ).PhantomActivityImage.get(t),
+      i = ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomIsUnlock(t);
     e && i && this.SetTextureByPath(e, this.GetTexture(1)),
       this.GetItem(2).SetUIActive(
         i &&
@@ -148,22 +147,22 @@ class ActivitySubViewPhantomCollectTaskItem extends GridProxyAbstract_1.GridProx
         if (
           this.Data?.Ikn === Protocol_1.Aki.Protocol.MBs.Proto_PhantomSideQuest
         ) {
-          const e =
+          var e =
             ConfigManager_1.ConfigManager.ActivityPhantomCollectConfig?.GetPhantomCollectConfig(
               ActivityPhantomCollectController_1
                 .ActivityPhantomCollectController.ActivityId,
             );
           for (let t = 0; t < e.phantomsidequestLength(); t++) {
-            const i = ModelManager_1.ModelManager.QuestNewModel?.GetQuestState(
+            var i = ModelManager_1.ModelManager.QuestNewModel?.GetQuestState(
               e.PhantomSideQuest[t],
             );
-            if (i === 2 || i === 1)
+            if (2 === i || 1 === i)
               return void UiManager_1.UiManager.OpenView(
                 "QuestView",
                 e.PhantomSideQuest[t],
               );
-            if (i === 0)
-              return void (t === 0
+            if (0 === i)
+              return void (0 === t
                 ? UiManager_1.UiManager.OpenView(
                     "QuestView",
                     e.PhantomSideQuest[t],
@@ -222,7 +221,7 @@ class ActivitySubViewPhantomCollectTaskItem extends GridProxyAbstract_1.GridProx
   }
   Refresh(e, t, i) {
     this.Data = e;
-    const o =
+    var o =
       ConfigManager_1.ConfigManager.ActivityPhantomCollectConfig?.GetPhantomCollectConfig(
         ActivityPhantomCollectController_1.ActivityPhantomCollectController
           .ActivityId,
@@ -242,7 +241,7 @@ class ActivitySubViewPhantomCollectTaskItem extends GridProxyAbstract_1.GridProx
           ? (t = o.DataDockReward)
           : e.Ikn === Protocol_1.Aki.Protocol.MBs.Proto_PhantomSideQuest &&
             (t = o.PhantomSideQuestReward),
-        t !== 0 &&
+        0 !== t &&
           ((s =
             ConfigManager_1.ConfigManager.RewardConfig?.GetDropPackagePreview(
               t,
@@ -278,11 +277,11 @@ class ActivitySubViewPhantomCollectTaskItem extends GridProxyAbstract_1.GridProx
               this.GetButton(0)?.SetSelfInteractive(!0),
               this.GetItem(6).SetUIActive(!1));
       var r =
-        ConfigManager_1.ConfigManager.ActivityPhantomCollectConfig.GetPhantomCollectTaskDesc(
-          e.Ikn,
-        );
-      var s =
-        ActivityPhantomCollectController_1.ActivityPhantomCollectController.GetCurrentActivityDataById();
+          ConfigManager_1.ConfigManager.ActivityPhantomCollectConfig.GetPhantomCollectTaskDesc(
+            e.Ikn,
+          ),
+        s =
+          ActivityPhantomCollectController_1.ActivityPhantomCollectController.GetCurrentActivityDataById();
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(2),
         r.Title,
@@ -307,4 +306,4 @@ class ActivitySubViewPhantomCollectTaskItem extends GridProxyAbstract_1.GridProx
 }
 exports.ActivitySubViewPhantomCollectTaskItem =
   ActivitySubViewPhantomCollectTaskItem;
-// # sourceMappingURL=ActivitySubViewPhantomCollect.js.map
+//# sourceMappingURL=ActivitySubViewPhantomCollect.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TimeOfDayAnimController = void 0);
-const UiLayer_1 = require("../../Ui/UiLayer");
-const UiManager_1 = require("../../Ui/UiManager");
-const TimeOfDayController_1 = require("./TimeOfDayController");
-const TimeOfDayModel_1 = require("./TimeOfDayModel");
+const UiLayer_1 = require("../../Ui/UiLayer"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  TimeOfDayController_1 = require("./TimeOfDayController"),
+  TimeOfDayModel_1 = require("./TimeOfDayModel");
 class TimeOfDayAnimController {
   static PlayTimeAnimation(e, i, r) {
     (TimeOfDayAnimController.CallBack = r),
@@ -19,4 +19,4 @@ class TimeOfDayAnimController {
 ((exports.TimeOfDayAnimController = TimeOfDayAnimController).TickId = 0),
   (TimeOfDayAnimController.PrePromise = void 0),
   (TimeOfDayAnimController.CallBack = () => {});
-// # sourceMappingURL=TimeOfDayAnimController.js.map
+//# sourceMappingURL=TimeOfDayAnimController.js.map

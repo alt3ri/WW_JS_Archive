@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionSlotItem = exports.VisionSlotData = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
 class VisionSlotData {
   constructor() {
     this.SlotState = 0;
@@ -26,14 +26,14 @@ class VisionSlotItem extends UiPanelBase_1.UiPanelBase {
       this.GetItem(1).SetUIActive(!1),
       this.GetItem(2).SetUIActive(!1),
       this.GetItem(3).SetUIActive(!1),
-      s.SlotState === 0
+      0 === s.SlotState
         ? this.GetItem(0).SetUIActive(!0)
-        : s.SlotState === 2
+        : 2 === s.SlotState
           ? this.GetItem(1).SetUIActive(!0)
-          : s.SlotState === 1
+          : 1 === s.SlotState
             ? this.GetItem(2).SetUIActive(!0)
-            : s.SlotState === 3 && this.GetItem(3).SetUIActive(!0);
+            : 3 === s.SlotState && this.GetItem(3).SetUIActive(!0);
   }
 }
 exports.VisionSlotItem = VisionSlotItem;
-// # sourceMappingURL=VisionSlotItem.js.map
+//# sourceMappingURL=VisionSlotItem.js.map

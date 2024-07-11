@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcPerformSequence = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../../../Core/Timer/TimerSystem");
-const CameraController_1 = require("../../../../../Camera/CameraController");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const sequenceCameraTag = new UE.FName("SequenceCamera");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../../../Core/Timer/TimerSystem"),
+  CameraController_1 = require("../../../../../Camera/CameraController"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  sequenceCameraTag = new UE.FName("SequenceCamera");
 class NpcPerformSequence {
   constructor() {
     (this.Ver = ""),
@@ -91,7 +91,7 @@ class NpcPerformSequence {
         )));
   }
   Play(e) {
-    let t;
+    var t;
     this.IsValid()
       ? (this.IsPlaying() &&
           (Log_1.Log.CheckInfo() &&
@@ -173,4 +173,4 @@ class NpcPerformSequence {
   }
 }
 exports.NpcPerformSequence = NpcPerformSequence;
-// # sourceMappingURL=NpcPerformSequence.js.map
+//# sourceMappingURL=NpcPerformSequence.js.map

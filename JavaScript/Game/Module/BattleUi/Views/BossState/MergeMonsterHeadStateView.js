@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MergeMonsterHeadStateView = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const PublicUtil_1 = require("../../../../Common/PublicUtil");
-const GlobalData_1 = require("../../../../GlobalData");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const BattleChildView_1 = require("../BattleChildView/BattleChildView");
-const HpBufferStateMachine_1 = require("../HeadState/HpBufferStateMachine");
-const VisibleAnimMachine_1 = require("../State/VisibleAnimMachine");
-const rgbSplitProgress = new UE.FName("RGBSplit_Progress");
-const SHOW_VIEW_ANIM_TIME = 667;
-const CLOSE_VIEW_ANIM_TIME = 167;
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  PublicUtil_1 = require("../../../../Common/PublicUtil"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  BattleChildView_1 = require("../BattleChildView/BattleChildView"),
+  HpBufferStateMachine_1 = require("../HeadState/HpBufferStateMachine"),
+  VisibleAnimMachine_1 = require("../State/VisibleAnimMachine"),
+  rgbSplitProgress = new UE.FName("RGBSplit_Progress"),
+  SHOW_VIEW_ANIM_TIME = 667,
+  CLOSE_VIEW_ANIM_TIME = 167;
 class MergeMonsterHeadStateView extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
@@ -91,7 +91,7 @@ class MergeMonsterHeadStateView extends BattleChildView_1.BattleChildView {
       this.Wot.InitCallback(this.Prt, this.xrt, this.wrt),
       this.Wot.InitVisible(!1),
       this.cnt();
-    const i = UE.Color.FromHex("ED601BFF");
+    var i = UE.Color.FromHex("ED601BFF");
     this.GetText(1).SetColor(i);
   }
   cnt() {
@@ -132,18 +132,18 @@ class MergeMonsterHeadStateView extends BattleChildView_1.BattleChildView {
     this.dnt();
   }
   Tick(i) {
-    let t;
+    var t;
     this.IsShowOrShowing &&
       (this.frt &&
         ((t = this.ert.UpdatePercent(i)) < 0
           ? this.Hrt()
           : t <= 1 && this.Xrt(t)),
       this.rrt > this.nrt && (this.$rt(0), (this.rrt = -1)),
-      this.rrt >= 0) &&
+      0 <= this.rrt) &&
       (this.rrt += i);
   }
   Cnt(i = !1) {
-    let t;
+    var t;
     this.Info.TotalHpMax <= 0 ||
       ((t = this.Info.TotalHp / this.Info.TotalHpMax),
       this.int(t),
@@ -151,7 +151,7 @@ class MergeMonsterHeadStateView extends BattleChildView_1.BattleChildView {
       (this.Xot = t));
   }
   rnt(i) {
-    let t;
+    var t;
     i < this.Xot &&
       ((t = this.ert.IsOriginState()),
       this.ert.GetHit(i, this.Xot),
@@ -177,23 +177,23 @@ class MergeMonsterHeadStateView extends BattleChildView_1.BattleChildView {
     this.GetSprite(7).SetFillAmount(i);
   }
   Xrt(i) {
-    var t = this.srt * this.Xot;
-    var i = this.srt * i;
-    var t = i - t;
-    var i = i - (this.srt + t) / 2;
-    const e = this.GetItem(8);
+    var t = this.srt * this.Xot,
+      i = this.srt * i,
+      t = i - t,
+      i = i - (this.srt + t) / 2,
+      e = this.GetItem(8);
     e.SetAnchorOffsetX(i),
       e.SetWidth(t),
       e.SetUIActive(!0),
       this.GetSprite(9).SetAnchorOffsetX(-i);
   }
   vrt() {
-    const i = this.GetText(0);
+    var i = this.GetText(0);
     i && i.SetUIActive(!1);
   }
   dnt() {
-    const i = this.Info.MonsterGroupName;
-    const t = this.GetText(1);
+    var i = this.Info.MonsterGroupName,
+      t = this.GetText(1);
     i
       ? t.SetText(PublicUtil_1.PublicUtil.GetConfigTextByKey(i))
       : t.SetText("");
@@ -202,11 +202,11 @@ class MergeMonsterHeadStateView extends BattleChildView_1.BattleChildView {
     this.hnt(25), this.hnt(26);
   }
   hnt(i) {
-    const t = [];
-    const e = this.GetItem(i)
-      .GetOwner()
-      .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass());
-    const s = e.Num();
+    var t = [],
+      e = this.GetItem(i)
+        .GetOwner()
+        .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass()),
+      s = e.Num();
     for (let i = 0; i < s; i++) t.push(e.Get(i));
     this.Art.set(i, t);
   }
@@ -222,4 +222,4 @@ class MergeMonsterHeadStateView extends BattleChildView_1.BattleChildView {
   }
 }
 exports.MergeMonsterHeadStateView = MergeMonsterHeadStateView;
-// # sourceMappingURL=MergeMonsterHeadStateView.js.map
+//# sourceMappingURL=MergeMonsterHeadStateView.js.map

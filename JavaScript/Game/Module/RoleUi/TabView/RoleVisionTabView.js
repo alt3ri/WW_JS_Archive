@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleVisionTabView = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../Core/Common/Log");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const UiSceneManager_1 = require("../../UiComponent/UiSceneManager");
-const RoleController_1 = require("../RoleController");
-const RoleVisionDragHeadItem_1 = require("./VisionSubView/RoleVisionDragHeadItem");
-const RoleVisionInfoPanel_1 = require("./VisionSubView/RoleVisionInfoPanel");
-const VisionCommonDragItem_1 = require("./VisionSubView/VisionCommonDragItem");
-const INVALIDINDEX = 999;
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  UiSceneManager_1 = require("../../UiComponent/UiSceneManager"),
+  RoleController_1 = require("../RoleController"),
+  RoleVisionDragHeadItem_1 = require("./VisionSubView/RoleVisionDragHeadItem"),
+  RoleVisionInfoPanel_1 = require("./VisionSubView/RoleVisionInfoPanel"),
+  VisionCommonDragItem_1 = require("./VisionSubView/VisionCommonDragItem"),
+  INVALIDINDEX = 999;
 class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -56,14 +56,14 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
           );
       }),
       (this.RefreshPhantom = () => {
-        const t = this.plo?.GetCurSelectRoleData();
-        const e =
-          ModelManager_1.ModelManager.PhantomBattleModel.GetCurrentViewShowPhantomList(
-            t,
-          );
-        const s = this.w8i.length;
+        var t = this.plo?.GetCurSelectRoleData(),
+          e =
+            ModelManager_1.ModelManager.PhantomBattleModel.GetCurrentViewShowPhantomList(
+              t,
+            ),
+          s = this.w8i.length;
         for (let i = 0; i < s; i++) {
-          const h = e.length > i ? e[i] : void 0;
+          var h = e.length > i ? e[i] : void 0;
           this.w8i[i].UpdateItem(h), this.$8i[i].Refresh(h, t.IsTrialRole());
         }
         this.Tqt();
@@ -75,7 +75,7 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
         this.Mdo() && this.T9i();
       }),
       (this.OnClickVision = (i) => {
-        let t;
+        var t;
         this.Mdo() &&
           (this.T9i(),
           (t = this.plo.GetCurSelectRoleData()).IsTrialRole()
@@ -105,19 +105,19 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
       (this.OnPointerDownCallBack = (i) => {
         if (this.Mdo()) {
           this.GetItem(7).SetRaycastTarget(!0);
-          const t = this.$8i.length;
+          var t = this.$8i.length;
           for (let i = 0; i < t; i++) this.$8i[i].StartClickCheckTimer();
           this.F8i = INVALIDINDEX;
         }
       }),
       (this.OnBeginDrag = (i) => {
         this.F8i = i;
-        const t = this.plo.GetCurSelectRoleData().IsTrialRole();
+        var t = this.plo.GetCurSelectRoleData().IsTrialRole();
         if (!t) {
           this.$8i.forEach((i) => {
             i.StartDragState();
           });
-          const e = this.$8i.length;
+          var e = this.$8i.length;
           for (let i = 0; i < e; i++)
             ModelManager_1.ModelManager.PhantomBattleModel.CheckIfCurrentDragIndex(
               this.$8i[i].GetCurrentIndex(),
@@ -127,8 +127,8 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
         }
       }),
       (this.OnDragEndCallBack = (i, t) => {
-        let e, s;
-        t.length >= 1
+        var e, s;
+        1 <= t.length
           ? ((e = i.GetCurrentIndex()),
             (i = VisionCommonDragItem_1.VisionCommonDragItem.GetOverlapIndex(
               i,
@@ -267,7 +267,7 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
   }
   async Edo() {
     for (let i = 0; i <= 4; i++) {
-      const t = this.plo.GetCurSelectRoleId();
+      var t = this.plo.GetCurSelectRoleId();
       this.w8i.push(
         new RoleVisionDragHeadItem_1.RoleVisionDragHeadItem(
           this.GetItem(i),
@@ -279,7 +279,7 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
     }
     await Promise.all([...this.w8i.map(async (i) => i.Init())]),
       this.w8i.forEach((i) => {
-        const t = new VisionCommonDragItem_1.VisionCommonDragItem(
+        var t = new VisionCommonDragItem_1.VisionCommonDragItem(
           i.GetRootItem(),
           i.GetDragComponent(),
           this.GetItem(7),
@@ -320,7 +320,7 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
       this.c7i(),
       (this.F8i = INVALIDINDEX),
       this.T9i();
-    const i = this.plo.GetCurSelectRoleId();
+    var i = this.plo.GetCurSelectRoleId();
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.RefreshVisionEquipRedPoint,
       i,
@@ -328,8 +328,8 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
   }
   Og() {
     this.RefreshPhantom();
-    const i = this.plo.GetCurSelectRoleData();
-    const t = i.IsTrialRole();
+    var i = this.plo.GetCurSelectRoleData(),
+      t = i.IsTrialRole();
     ControllerHolder_1.ControllerHolder.PhantomBattleController.ChangeRoleEvent(
       i.GetDataId(),
     ),
@@ -338,9 +338,9 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
       this.Tqt();
   }
   Tqt() {
-    let i = this.plo.GetCurSelectRoleData();
-    let t = 0;
-    let e = 0;
+    var i = this.plo.GetCurSelectRoleData();
+    let t = 0,
+      e = 0;
     (e = i?.IsTrialRole()
       ? ((t =
           ModelManager_1.ModelManager.PhantomBattleModel.GetRoleCurrentPhantomCost(
@@ -369,18 +369,18 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
       UiLayer_1.UiLayer.SetShowMaskLayer("OnEquipVision", !1);
   }
   ydo() {
-    const t = this.w8i.length;
+    var t = this.w8i.length;
     for (let i = 0; i < t; i++) this.w8i[i].SetToggleState(2);
   }
   c7i() {
-    const t = this.w8i.length;
+    var t = this.w8i.length;
     for (let i = 0; i < t; i++) this.w8i[i].SetToggleState(0);
   }
   $9i(i, t) {
-    i >= 0 && this.$8i[i].SetMovingState(t);
+    0 <= i && this.$8i[i].SetMovingState(t);
   }
   Y9i(i, t) {
-    i >= 0 && this.w8i[i].SetAnimationState(t);
+    0 <= i && this.w8i[i].SetAnimationState(t);
   }
   OnTickUiTabViewBase(i) {
     this.Ido(i), this.Tdo(i);
@@ -389,19 +389,19 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
     if (this.udo) {
       this.Uqe += t;
       let i = this.Uqe / this.ddo;
-      i >= 1 && (i = 1),
+      1 <= i && (i = 1),
         this.$8i[this.P8i].TickDoCeaseAnimation(i),
         this.$8i[this.x8i].TickDoCeaseAnimation(i),
-        i >= 1 && (this.t7i(), (this.udo = !1));
+        1 <= i && (this.t7i(), (this.udo = !1));
     }
   }
   Ido(t) {
     if (this.cdo) {
       this.Uqe += t;
       let i = this.Uqe / this.ddo;
-      i >= 1 && (i = 1),
+      1 <= i && (i = 1),
         this.$8i[this.F8i].TickDoCeaseAnimation(i),
-        i >= 1 && (this.W9i(this.F8i), (this.cdo = !1));
+        1 <= i && (this.W9i(this.F8i), (this.cdo = !1));
     }
   }
   Mdo() {
@@ -447,7 +447,7 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
       await this.$8i[i].GetCeaseAnimationPromise()?.Promise;
   }
   async T9i(i = !0) {
-    const t = this.plo.GetCurSelectRoleData().IsTrialRole();
+    var t = this.plo.GetCurSelectRoleData().IsTrialRole();
     i &&
       !t &&
       this.F8i !== INVALIDINDEX &&
@@ -477,14 +477,14 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
       (this.x8i = -1);
   }
   Ldo(i) {
-    if (this.Mdo() && i >= 0) {
+    if (this.Mdo() && 0 <= i) {
       i = this.w8i[i]?.GetDragComponent()?.RootUIComp;
       if (i) return [i, i];
     }
   }
   GetGuideUiItemAndUiItemForShowEx(i) {
-    if (i.length === 1) {
-      if (i[0] === "Equipped")
+    if (1 === i.length) {
+      if ("Equipped" === i[0])
         return (
           (t = this.plo.GetCurSelectRoleData()),
           (t =
@@ -493,7 +493,7 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
             ).findIndex((i) => i)),
           this.Ldo(t)
         );
-      if (i[0] === "First") return this.Ldo(0);
+      if ("First" === i[0]) return this.Ldo(0);
       var t = this.Cdo?.GetTxtItemByIndex(Number(i[0]));
       if (t) return [t, t];
     }
@@ -503,4 +503,4 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.RoleVisionTabView = RoleVisionTabView;
-// # sourceMappingURL=RoleVisionTabView.js.map
+//# sourceMappingURL=RoleVisionTabView.js.map

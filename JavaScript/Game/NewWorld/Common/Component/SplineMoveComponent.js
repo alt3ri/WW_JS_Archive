@@ -1,42 +1,47 @@
 "use strict";
-let SplineMoveComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, i, s, h) {
-    let e;
-    const o = arguments.length;
-    let r =
-      o < 3 ? i : h === null ? (h = Object.getOwnPropertyDescriptor(i, s)) : h;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(t, i, s, h);
-    else
-      for (let n = t.length - 1; n >= 0; n--)
-        (e = t[n]) && (r = (o < 3 ? e(r) : o > 3 ? e(i, s, r) : e(i, s)) || r);
-    return o > 3 && r && Object.defineProperty(i, s, r), r;
-  };
+var SplineMoveComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, i, s, h) {
+      var e,
+        o = arguments.length,
+        r =
+          o < 3
+            ? i
+            : null === h
+              ? (h = Object.getOwnPropertyDescriptor(i, s))
+              : h;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        r = Reflect.decorate(t, i, s, h);
+      else
+        for (var n = t.length - 1; 0 <= n; n--)
+          (e = t[n]) &&
+            (r = (o < 3 ? e(r) : 3 < o ? e(i, s, r) : e(i, s)) || r);
+      return 3 < o && r && Object.defineProperty(i, s, r), r;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SplineMoveComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const CurveUtils_1 = require("../../../../Core/Utils/Curve/CurveUtils");
-const PowerCurve3_1 = require("../../../../Core/Utils/Curve/PowerCurve3");
-const Quat_1 = require("../../../../Core/Utils/Math/Quat");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const CharacterNameDefines_1 = require("../../Character/Common/CharacterNameDefines");
-const CharacterAttributeTypes_1 = require("../../Character/Common/Component/Abilities/CharacterAttributeTypes");
-const CharacterUnifiedStateTypes_1 = require("../../Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const MAX_INPUT_COS = 0.707;
-const FORWARD_BACKWARD_THRESHOLD = 0.5;
-const FORECAST_DIST = 500;
-const MAX_OFFSET_INCREASE = 1e5;
-const DAMPING = 0.96;
-const STANDARD_FPS = 60;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  CurveUtils_1 = require("../../../../Core/Utils/Curve/CurveUtils"),
+  PowerCurve3_1 = require("../../../../Core/Utils/Curve/PowerCurve3"),
+  Quat_1 = require("../../../../Core/Utils/Math/Quat"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  CharacterNameDefines_1 = require("../../Character/Common/CharacterNameDefines"),
+  CharacterAttributeTypes_1 = require("../../Character/Common/Component/Abilities/CharacterAttributeTypes"),
+  CharacterUnifiedStateTypes_1 = require("../../Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  MAX_INPUT_COS = 0.707,
+  FORWARD_BACKWARD_THRESHOLD = 0.5,
+  FORECAST_DIST = 500,
+  MAX_OFFSET_INCREASE = 1e5,
+  DAMPING = 0.96,
+  STANDARD_FPS = 60;
 class SplineMoveParams {
   constructor(t, i, s) {
     (this.Id = t),
@@ -53,9 +58,9 @@ class SplineMoveParams {
       (this.Type = i.Pattern.Type),
       (this.MaxOffsetDist = i.Pattern.MaxOffsetDistance ?? 0),
       (this.OnlyForward = i.Pattern.IsOneWay ?? !1),
-      i.Pattern.Type === "RacingTrack"
+      "RacingTrack" === i.Pattern.Type
         ? (this.InputLimitAngle = i.Pattern.DirectionAngleLimit)
-        : i.Pattern.Type === "SlideTrack" &&
+        : "SlideTrack" === i.Pattern.Type &&
           ((this.InputLimitAngle = i.Pattern.DirectionAngleLimit),
           (this.EdgeLimitCurve = new PowerCurve3_1.PowerCurve3(
             i.Pattern.EdgeLimitCurveFactor,
@@ -63,7 +68,7 @@ class SplineMoveParams {
       (this.CurrentMaxOffset = this.MaxOffsetDist + MAX_OFFSET_INCREASE),
       (this.CurrentMaxOffsetSquared =
         this.CurrentMaxOffset * this.CurrentMaxOffset),
-      this.Type === "RacingTrack" &&
+      "RacingTrack" === this.Type &&
         ((this.InputLimitCos = Math.cos(
           this.InputLimitAngle * MathUtils_1.MathUtils.DegToRad,
         )),
@@ -133,7 +138,7 @@ let SplineMoveComponent =
       );
     }
     OnEnd() {
-      for (const [t] of this.ysn)
+      for (var [t] of this.ysn)
         ModelManager_1.ModelManager.GameSplineModel.ReleaseSpline(
           t,
           this.Entity.Id,
@@ -142,7 +147,7 @@ let SplineMoveComponent =
       return this.ysn.clear(), !(this.Isn.length = 0);
     }
     OnTick(t) {
-      let i, s;
+      var i, s;
       this.Tsn
         ? ((i = (s = this.Tsn.Spline).FindInputKeyClosestToWorldLocation(
             this.Hte.ActorLocationProxy.ToUeVector(),
@@ -167,7 +172,7 @@ let SplineMoveComponent =
           )));
     }
     bsn(s) {
-      if (this.Ssn && this.Tsn.Type === "RacingTrack") {
+      if (this.Ssn && "RacingTrack" === this.Tsn.Type) {
         var h = this.Ssn.InputDirectProxy;
         (this.Lz.X = -this.SplineDirection.Y),
           (this.Lz.Y = this.SplineDirection.X),
@@ -176,10 +181,10 @@ let SplineMoveComponent =
         t < -this.Tsn.InputLimitSin
           ? (t = -this.Tsn.InputLimitSin)
           : t > this.Tsn.InputLimitSin && (t = this.Tsn.InputLimitSin);
-        var h = this.Gce.CharacterMovement.MaxWalkSpeed * t;
-        var e = this.Gce.CharacterMovement.MaxAcceleration;
-        const o = h - this.LastRightSpeed;
-        var e = e * s;
+        var h = this.Gce.CharacterMovement.MaxWalkSpeed * t,
+          e = this.Gce.CharacterMovement.MaxAcceleration,
+          o = h - this.LastRightSpeed,
+          e = e * s;
         let i = 0;
         Math.abs(o) > e
           ? ((i =
@@ -197,51 +202,53 @@ let SplineMoveComponent =
       this.Due.DeepCopy(this.Hte.ActorLocationProxy),
         this.bsn(i),
         this.Hte.ActorLocationProxy.Subtraction(this.Xrr, this.Lz);
-      let s;
-      var h = this.Lz.DotProduct(this.SplineDirection) > 0;
-      var h =
-        (this.Tsn.OnlyForward && !h
-          ? (this.Xrr.Subtraction(this.Due, this.Aae),
-            (h = this.SplineDirection.DotProduct(this.Aae)),
-            this.SplineDirection.Multiply(h, this.Lz),
-            this.Due.AdditionEqual(this.Lz))
-          : ((h = this.Tsn.Spline),
-            this.Psn.FromUeVector(h.GetDirectionAtSplineInputKey(this.Lsn, 1)),
-            (this.Psn.Z = 0),
-            this.Psn.Normalize() &&
-              (this.Gce &&
-                (this.Lz.FromUeVector(this.Gce.CharacterMovement.Velocity),
-                Quat_1.Quat.FindBetween(
-                  this.Psn,
-                  this.SplineDirection,
-                  this.az,
-                ),
-                this.az.RotateVector(this.Lz, this.Lz),
-                (this.Gce.CharacterMovement.Velocity = this.Lz.ToUeVector())),
-              this.Tsn.Type === "RacingTrack") &&
-              (this.Usn.FromUeVector(
-                h.GetLocationAtSplineInputKey(this.Lsn, 1),
+      var s,
+        h = 0 < this.Lz.DotProduct(this.SplineDirection),
+        h =
+          (this.Tsn.OnlyForward && !h
+            ? (this.Xrr.Subtraction(this.Due, this.Aae),
+              (h = this.SplineDirection.DotProduct(this.Aae)),
+              this.SplineDirection.Multiply(h, this.Lz),
+              this.Due.AdditionEqual(this.Lz))
+            : ((h = this.Tsn.Spline),
+              this.Psn.FromUeVector(
+                h.GetDirectionAtSplineInputKey(this.Lsn, 1),
               ),
-              this.Due.Subtraction(this.Usn, this.Aae),
-              (this.Aae.Z = 0),
-              this.Psn.Multiply(this.Aae.DotProduct(this.Psn), this.Lz),
-              this.Aae.SubtractionEqual(this.Lz),
-              this.az.RotateVector(this.Aae, this.Lz),
-              (h = this.Due.Z),
-              this.Wye.Addition(this.Lz, this.Due),
-              (this.Due.Z = h)),
-            (this.Lsn = t)),
-        this.Wye.Subtraction(this.Due, this.Aae),
-        (this.Aae.Z = 0),
-        this.SplineDirection.Multiply(
-          this.Aae.DotProduct(this.SplineDirection),
-          this.Lz,
-        ),
-        this.Aae.SubtractionEqual(this.Lz),
-        this.Aae.SizeSquared());
-      var t = this.Tsn.CurrentMaxOffset;
+              (this.Psn.Z = 0),
+              this.Psn.Normalize() &&
+                (this.Gce &&
+                  (this.Lz.FromUeVector(this.Gce.CharacterMovement.Velocity),
+                  Quat_1.Quat.FindBetween(
+                    this.Psn,
+                    this.SplineDirection,
+                    this.az,
+                  ),
+                  this.az.RotateVector(this.Lz, this.Lz),
+                  (this.Gce.CharacterMovement.Velocity = this.Lz.ToUeVector())),
+                "RacingTrack" === this.Tsn.Type) &&
+                (this.Usn.FromUeVector(
+                  h.GetLocationAtSplineInputKey(this.Lsn, 1),
+                ),
+                this.Due.Subtraction(this.Usn, this.Aae),
+                (this.Aae.Z = 0),
+                this.Psn.Multiply(this.Aae.DotProduct(this.Psn), this.Lz),
+                this.Aae.SubtractionEqual(this.Lz),
+                this.az.RotateVector(this.Aae, this.Lz),
+                (h = this.Due.Z),
+                this.Wye.Addition(this.Lz, this.Due),
+                (this.Due.Z = h)),
+              (this.Lsn = t)),
+          this.Wye.Subtraction(this.Due, this.Aae),
+          (this.Aae.Z = 0),
+          this.SplineDirection.Multiply(
+            this.Aae.DotProduct(this.SplineDirection),
+            this.Lz,
+          ),
+          this.Aae.SubtractionEqual(this.Lz),
+          this.Aae.SizeSquared()),
+        t = this.Tsn.CurrentMaxOffset;
       this.Tsn.CurrentMaxOffsetSquared < h
-        ? t > 0
+        ? 0 < t
           ? ((s = Math.sqrt(h)),
             this.Aae.Multiply((s - t) / s, this.Lz),
             this.Due.AdditionEqual(this.Lz))
@@ -262,7 +269,7 @@ let SplineMoveComponent =
             : this.Hte.SetActorLocation(this.Due.ToUeVector(), "样条移动", !1));
     }
     Bsn() {
-      let t;
+      var t;
       this.Ssn &&
         ((t = this.Ssn.InputDirectProxy),
         this.aYo?.PositionState ===
@@ -281,8 +288,8 @@ let SplineMoveComponent =
         this.Ssn.SetInputDirect(this.Lz));
     }
     qsn(i) {
-      const s = this.Tsn;
-      if (s.Type === "RacingTrack")
+      var s = this.Tsn;
+      if ("RacingTrack" === s.Type)
         this.Ssn.SetInputRotatorByNumber(
           0,
           this.SplineDirection.HeadingAngle() * MathUtils_1.MathUtils.RadToDeg,
@@ -298,7 +305,7 @@ let SplineMoveComponent =
             : ((this.Dsn = !1),
               this.SplineDirection.UnaryNegation(this.Lz),
               this.Ssn.SetInputDirect(this.Lz));
-      else if (s.Type === "PathLine") {
+      else if ("PathLine" === s.Type) {
         var h = i.DotProduct(this.SplineDirection);
         let t = 0;
         if (s.OnlyForward) {
@@ -323,16 +330,16 @@ let SplineMoveComponent =
       } else this.Gsn(i);
     }
     Gsn(t) {
-      let i = this.Tsn;
-      let s =
-        (this.Asn.Inverse(this.az),
-        this.Hte.ActorLocationProxy.Subtraction(this.Wye, this.Lz),
-        this.az.RotateVector(this.Lz, this.Lz),
-        i.EdgeLimitCurve.GetCurrentValue(
-          Math.abs(this.Lz.Y) / i.MaxOffsetDist,
-        ));
-      let h = -i.InputLimitAngle;
-      let e = i.InputLimitAngle;
+      var i = this.Tsn,
+        s =
+          (this.Asn.Inverse(this.az),
+          this.Hte.ActorLocationProxy.Subtraction(this.Wye, this.Lz),
+          this.az.RotateVector(this.Lz, this.Lz),
+          i.EdgeLimitCurve.GetCurrentValue(
+            Math.abs(this.Lz.Y) / i.MaxOffsetDist,
+          ));
+      let h = -i.InputLimitAngle,
+        e = i.InputLimitAngle;
       this.Lz.Y < 0 ? (h *= 1 - s) : (e *= 1 - s),
         (this.MinTurnAngle = h),
         (this.MaxTurnAngle = e),
@@ -366,7 +373,7 @@ let SplineMoveComponent =
         );
     }
     StartSplineMove(t, i) {
-      let s;
+      var s;
       (this.Isn.length && this.Isn[this.Isn.length - 1] === t) ||
         ((s =
           ModelManager_1.ModelManager.GameSplineModel.LoadAndGetSplineComponent(
@@ -377,11 +384,11 @@ let SplineMoveComponent =
         this.StartSplineMoveInternal(t, i, s));
     }
     StartSplineMoveInternal(t, i, s) {
-      let h;
+      var h;
       this.Uxr &&
         (this.Enable(this.Uxr, "SplineMoveComponent.StartSplineMoveInternal"),
         (this.Uxr = void 0),
-        i.Pattern.Type !== "SlideTrack") &&
+        "SlideTrack" !== i.Pattern.Type) &&
         (this.Gce?.SetTurnRate(SplineMoveComponent_1.SplineMoveConfig.TurnRate),
         this.Gce?.SetAirControl(
           SplineMoveComponent_1.SplineMoveConfig.AirControl,
@@ -473,4 +480,4 @@ let SplineMoveComponent =
       SplineMoveComponent,
     )),
   (exports.SplineMoveComponent = SplineMoveComponent);
-// # sourceMappingURL=SplineMoveComponent.js.map
+//# sourceMappingURL=SplineMoveComponent.js.map

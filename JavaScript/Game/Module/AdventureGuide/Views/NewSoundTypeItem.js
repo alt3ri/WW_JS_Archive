@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NewSoundTypeItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ActivityDoubleRewardController_1 = require("../../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const AdventureDefine_1 = require("../AdventureDefine");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ActivityDoubleRewardController_1 = require("../../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  AdventureDefine_1 = require("../AdventureDefine");
 class NewSoundTypeItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -16,7 +16,7 @@ class NewSoundTypeItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.R4e = void 0),
       (this.d4e = () => !this.A4e || this.A4e(this.E6e)),
       (this.I6e = (t) => {
-        t === 1 && this.y6e(this.E6e, this.R4e);
+        1 === t && this.y6e(this.E6e, this.R4e);
       });
   }
   OnRegisterComponent() {
@@ -41,12 +41,12 @@ class NewSoundTypeItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(t, e, i) {
     this.E6e = t;
-    const r =
-      ConfigManager_1.ConfigManager.AdventureModuleConfig.GetSecondaryGuideDataConf(
-        this.E6e,
-      );
-    var s = this.GetText(1);
-    var s = (LguiUtil_1.LguiUtil.SetLocalTextNew(s, r.Text), this.GetText(2));
+    var r =
+        ConfigManager_1.ConfigManager.AdventureModuleConfig.GetSecondaryGuideDataConf(
+          this.E6e,
+        ),
+      s = this.GetText(1),
+      s = (LguiUtil_1.LguiUtil.SetLocalTextNew(s, r.Text), this.GetText(2));
     LguiUtil_1.LguiUtil.SetLocalTextNew(s, r.SubText),
       this.SetSpriteByPath(r.Icon, this.GetSprite(0), !1),
       this.R4e.SetToggleState(0, !1),
@@ -72,4 +72,4 @@ class NewSoundTypeItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.NewSoundTypeItem = NewSoundTypeItem;
-// # sourceMappingURL=NewSoundTypeItem.js.map
+//# sourceMappingURL=NewSoundTypeItem.js.map

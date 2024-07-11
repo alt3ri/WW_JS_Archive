@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GamepadSkillButtonPanel = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const InputController_1 = require("../../../../Input/InputController");
-const InputEnums_1 = require("../../../../Input/InputEnums");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const InputDistributeController_1 = require("../../../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../../../Ui/InputDistribute/InputMappingsDefine");
-const BattleSkillCombineItem_1 = require("../BattleSkillCombineItem");
-const BattleSkillGamepadItem_1 = require("../BattleSkillGamepadItem");
-const BattleChildViewPanel_1 = require("./BattleChildViewPanel");
-const MAIN_KEY_NUM = 4;
+const UE = require("ue"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  InputController_1 = require("../../../../Input/InputController"),
+  InputEnums_1 = require("../../../../Input/InputEnums"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  InputDistributeController_1 = require("../../../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../../../Ui/InputDistribute/InputMappingsDefine"),
+  BattleSkillCombineItem_1 = require("../BattleSkillCombineItem"),
+  BattleSkillGamepadItem_1 = require("../BattleSkillGamepadItem"),
+  BattleChildViewPanel_1 = require("./BattleChildViewPanel"),
+  MAIN_KEY_NUM = 4;
 class GamepadSkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
@@ -41,15 +41,15 @@ class GamepadSkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPane
           : (this.zJe.RefreshButtonData(), this.eze());
       }),
       (this.aze = (t) => {
-        const e = this.nze(t);
+        var e = this.nze(t);
         e ? e.GetSkillButtonData() && e.RefreshDynamicEffect() : this.hze(t);
       }),
       (this.lze = (t) => {
-        let e;
-        const i =
-          ModelManager_1.ModelManager.SkillButtonUiModel.GetSkillButtonDataByButton(
-            t,
-          );
+        var e,
+          i =
+            ModelManager_1.ModelManager.SkillButtonUiModel.GetSkillButtonDataByButton(
+              t,
+            );
         i && ((e = this.nze(t)) ? e.Refresh(i) : this._ze(t));
       }),
       (this.uze = (t) => {
@@ -61,14 +61,14 @@ class GamepadSkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPane
         t && (t.RefreshSkillIcon(), t.RefreshSkillName());
       }),
       (this.mze = (t) => {
-        const e = this.nze(t);
+        var e = this.nze(t);
         e ? e.RefreshSkillCoolDown() : this._ze(t);
       }),
       (this.dze = (t) => {
         for (const e of this.JJe) e.PauseGame(t);
       }),
       (this.Cze = (t) => {
-        t === 101 &&
+        101 === t &&
           (this.zJe.RefreshButtonData(),
           this.zJe.RefreshAimButtonVisible(),
           this.eze());
@@ -87,9 +87,9 @@ class GamepadSkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPane
         this.eze(), this.fze(), this.pze(t), this.vze();
       }),
       (this.bMe = (i, t) => {
-        if (t === 0 && i !== InputMappingsDefine_1.actionMappings.攻击) {
-          let t = void 0;
-          let e = !1;
+        if (0 === t && i !== InputMappingsDefine_1.actionMappings.攻击) {
+          let t = void 0,
+            e = !1;
           if (i === InputMappingsDefine_1.actionMappings.手柄主攻击) t = 4;
           else if (i === InputMappingsDefine_1.actionMappings.手柄副攻击) {
             if (!this.zJe.IsAim()) return;
@@ -113,10 +113,10 @@ class GamepadSkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPane
           );
       }),
       (this.yze = (t) => {
-        t === "InteractionHintView" && this.Ize();
+        "InteractionHintView" === t && this.Ize();
       }),
       (this.$Ge = (t) => {
-        t === "InteractionHintView" && this.Ize();
+        "InteractionHintView" === t && this.Ize();
       });
   }
   OnRegisterComponent() {
@@ -337,12 +337,12 @@ class GamepadSkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPane
     this.Dze(), this.Rze(), this.vze(), this.hze(7);
   }
   Dze() {
-    const e = ModelManager_1.ModelManager.SkillButtonUiModel;
-    const i = this.zJe.CurButtonTypeList;
+    var e = ModelManager_1.ModelManager.SkillButtonUiModel,
+      i = this.zJe.CurButtonTypeList;
     for (let t = 0; t < MAIN_KEY_NUM; t++) {
-      var s;
-      const n = i[t];
-      const h = this.JJe[t];
+      var s,
+        n = i[t],
+        h = this.JJe[t];
       n
         ? (s = e.GetSkillButtonDataByButton(n))
           ? s.GetSkillId() && s.IsVisible()
@@ -355,12 +355,12 @@ class GamepadSkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPane
     }
   }
   Rze() {
-    const e = ModelManager_1.ModelManager.SkillButtonUiModel;
-    const i = this.zJe.CurButtonTypeList;
+    var e = ModelManager_1.ModelManager.SkillButtonUiModel,
+      i = this.zJe.CurButtonTypeList;
     for (let t = MAIN_KEY_NUM; t < this.JJe.length; t++) {
-      var s;
-      const n = i[t];
-      const h = this.JJe[t];
+      var s,
+        n = i[t],
+        h = this.JJe[t];
       n
         ? (s = e.GetSkillButtonDataByButton(n))
           ? s.GetSkillId()
@@ -372,13 +372,13 @@ class GamepadSkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPane
     }
   }
   vze() {
-    const e = ModelManager_1.ModelManager.SkillButtonUiModel;
-    const i = this.zJe.CurButtonTypeList;
-    const s = this.zJe.MainSkillCombineButtonTypeList;
+    var e = ModelManager_1.ModelManager.SkillButtonUiModel,
+      i = this.zJe.CurButtonTypeList,
+      s = this.zJe.MainSkillCombineButtonTypeList;
     for (let t = 0; t < MAIN_KEY_NUM; t++) {
-      let n = i[t];
-      const h = s[t];
-      const _ = this.JJe[t];
+      var n = i[t],
+        h = s[t],
+        _ = this.JJe[t];
       h && n !== h
         ? (n = e.GetSkillButtonDataByButton(h))
           ? _.RefreshSecondCd(n)
@@ -390,17 +390,17 @@ class GamepadSkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPane
     for (const t of this.JJe) t.Deactivate();
   }
   async NewAllBattleSkillItems() {
-    var t = void 0;
-    var t = [
-      this.GetItem(0).GetOwner(),
-      this.GetItem(1).GetOwner(),
-      this.GetItem(2).GetOwner(),
-      this.GetItem(3).GetOwner(),
-      this.GetItem(4).GetOwner(),
-      this.GetItem(5).GetOwner(),
-      this.GetItem(6).GetOwner(),
-      this.GetItem(7).GetOwner(),
-    ];
+    var t = void 0,
+      t = [
+        this.GetItem(0).GetOwner(),
+        this.GetItem(1).GetOwner(),
+        this.GetItem(2).GetOwner(),
+        this.GetItem(3).GetOwner(),
+        this.GetItem(4).GetOwner(),
+        this.GetItem(5).GetOwner(),
+        this.GetItem(6).GetOwner(),
+        this.GetItem(7).GetOwner(),
+      ];
     await Promise.all(
       t.map(async (t, e) => {
         t = await this.Uze(t, e);
@@ -409,7 +409,7 @@ class GamepadSkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPane
     );
   }
   async Tze() {
-    const t = this.GetItem(8)?.GetOwner();
+    var t = this.GetItem(8)?.GetOwner();
     t &&
       ((this.YJe = new BattleSkillCombineItem_1.BattleSkillCombineItem()),
       await this.YJe.CreateByActorAsync(t));
@@ -433,9 +433,9 @@ class GamepadSkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPane
     if (!(t < 0)) return this.Aze(t);
   }
   _ze(t) {
-    let e;
+    var e;
     this.zJe.GetIsPressCombineButton() ||
-      ((e = this.zJe.MainSkillCombineButtonTypeList.indexOf(t)) >= 0 &&
+      (0 <= (e = this.zJe.MainSkillCombineButtonTypeList.indexOf(t)) &&
         ((e = this.Aze(e)),
         (t =
           ModelManager_1.ModelManager.SkillButtonUiModel.GetSkillButtonDataByButton(
@@ -444,9 +444,9 @@ class GamepadSkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPane
         e?.RefreshSecondCd(t)));
   }
   hze(t) {
-    t === 7 &&
-      (!(this.zJe.MainSkillButtonTypeList.indexOf(t) > 0) &&
-      this.zJe.MainSkillCombineButtonTypeList.indexOf(t) >= 0
+    7 === t &&
+      (!(0 < this.zJe.MainSkillButtonTypeList.indexOf(t)) &&
+      0 <= this.zJe.MainSkillCombineButtonTypeList.indexOf(t)
         ? ((t =
             ModelManager_1.ModelManager.SkillButtonUiModel.GetSkillButtonDataByButton(
               t,
@@ -475,9 +475,9 @@ class GamepadSkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPane
   }
   Ize() {
     this.zJe.RefreshInteractBehaviorData();
-    const t = this.nze(104);
+    var t = this.nze(104);
     t && (t.IsMainButton || t.RefreshVisible(), t.RefreshEnable());
   }
 }
 exports.GamepadSkillButtonPanel = GamepadSkillButtonPanel;
-// # sourceMappingURL=GamepadSkillButtonPanel.js.map
+//# sourceMappingURL=GamepadSkillButtonPanel.js.map

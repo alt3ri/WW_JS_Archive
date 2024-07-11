@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CdnServerDebugConfig = void 0);
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const TestModuleBridge_1 = require("../../Bridge/TestModuleBridge");
-const PublicUtil_1 = require("../../Common/PublicUtil");
+const StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  TestModuleBridge_1 = require("../../Bridge/TestModuleBridge"),
+  PublicUtil_1 = require("../../Common/PublicUtil");
 class CdnServerDebugConfig {
   constructor() {
     (this.aFt = !1),
@@ -56,4 +56,4 @@ class CdnServerDebugConfig {
 }
 (exports.CdnServerDebugConfig = CdnServerDebugConfig).Singleton =
   new CdnServerDebugConfig();
-// # sourceMappingURL=CdnServerDebugConfig.js.map
+//# sourceMappingURL=CdnServerDebugConfig.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UpWeaponGachaPoolItem = void 0);
-const UE = require("ue");
-const Queue_1 = require("../../../../Core/Container/Queue");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GachaPoolItem_1 = require("./GachaPoolItem");
-const WeaponDescribeComponent_1 = require("./WeaponDescribeComponent");
+const UE = require("ue"),
+  Queue_1 = require("../../../../Core/Container/Queue"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GachaPoolItem_1 = require("./GachaPoolItem"),
+  WeaponDescribeComponent_1 = require("./WeaponDescribeComponent");
 class UpWeaponGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
   constructor() {
     super(...arguments),
@@ -22,8 +22,8 @@ class UpWeaponGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
     this.pHt = !0;
   }
   O0t() {
-    let t;
-    (this.pHt = !1), this.gjt.Size !== 0 && (t = this.gjt.Pop()) && this.fjt(t);
+    var t;
+    (this.pHt = !1), 0 !== this.gjt.Size && (t = this.gjt.Pop()) && this.fjt(t);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -37,7 +37,7 @@ class UpWeaponGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
       await this.mjt.CreateThenShowByActorAsync(this.GetItem(1).GetOwner());
   }
   Refresh() {
-    let t;
+    var t;
     this.GachaViewInfo && ((t = this.GachaViewInfo.ShowIdList[0]), this.fjt(t));
   }
   fjt(t) {
@@ -49,7 +49,7 @@ class UpWeaponGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
         }));
   }
   async pjt(t) {
-    let e, i;
+    var e, i;
     this.IsDestroyOrDestroying ||
       (this.mjt.Update(t),
       (t = UE.Color.FromHex(this.GachaViewInfo.ThemeColor)),
@@ -68,4 +68,4 @@ class UpWeaponGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
   }
 }
 exports.UpWeaponGachaPoolItem = UpWeaponGachaPoolItem;
-// # sourceMappingURL=UpWeaponGachaPoolItem.js.map
+//# sourceMappingURL=UpWeaponGachaPoolItem.js.map

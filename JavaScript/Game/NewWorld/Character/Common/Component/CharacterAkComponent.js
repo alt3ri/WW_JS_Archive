@@ -1,71 +1,75 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, o, e, i) {
-    let r;
-    const n = arguments.length;
-    let s =
-      n < 3 ? o : i === null ? (i = Object.getOwnPropertyDescriptor(o, e)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      n = arguments.length,
+      s =
+        n < 3
+          ? o
+          : null === i
+            ? (i = Object.getOwnPropertyDescriptor(o, e))
+            : i;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(t, o, e, i);
     else
-      for (let _ = t.length - 1; _ >= 0; _--)
-        (r = t[_]) && (s = (n < 3 ? r(s) : n > 3 ? r(o, e, s) : r(o, e)) || s);
-    return n > 3 && s && Object.defineProperty(o, e, s), s;
+      for (var _ = t.length - 1; 0 <= _; _--)
+        (r = t[_]) && (s = (n < 3 ? r(s) : 3 < n ? r(o, e, s) : r(o, e)) || s);
+    return 3 < n && s && Object.defineProperty(o, e, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterAkComponent = void 0);
-const UE = require("ue");
-const AudioController_1 = require("../../../../../Core/Audio/AudioController");
-const AudioSystem_1 = require("../../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../Core/Common/Time");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const Global_1 = require("../../../../Global");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ColorUtils_1 = require("../../../../Utils/ColorUtils");
-const CharacterNameDefines_1 = require("../CharacterNameDefines");
-const AkComponentDynamicConditionProxy_1 = require("./Audio/AkComponentDynamicConditionProxy");
-const FoleySynthController_1 = require("./Audio/Controller/FoleySynthController");
-const DEBUG_RADIUS = 15;
-const DEBUG_SEG = 12;
-const ROLE_MOVE_GROUP = "role_move";
-const ENVIRONMENT_AUDIO_UPDATE_INTERVAL = 500;
-const ENVIRONMENT_AUDIO_UPDATE_DIST_SQUARED = 4;
-const AUDIO_ENTITY_TYPE_VOLUME_CONTROL = new Map([
-  [
-    Protocol_1.Aki.Protocol.HBs.Proto_Animal,
-    "entity_type_volume_control_animal",
-  ],
-  [
-    Protocol_1.Aki.Protocol.HBs.Proto_Custom,
-    "entity_type_volume_control_custom_other",
-  ],
-  [
-    Protocol_1.Aki.Protocol.HBs.Proto_Monster,
-    "entity_type_volume_control_monster",
-  ],
-  [Protocol_1.Aki.Protocol.HBs.Proto_Npc, "entity_type_volume_control_npc"],
-  [
-    Protocol_1.Aki.Protocol.HBs.Proto_Player,
-    "entity_type_volume_control_player_role",
-  ],
-  [
-    Protocol_1.Aki.Protocol.HBs.Proto_SceneItem,
-    "entity_type_volume_control_scene_item",
-  ],
-  [
-    Protocol_1.Aki.Protocol.HBs.Proto_Vision,
-    "entity_type_volume_control_vision",
-  ],
-]);
+const UE = require("ue"),
+  AudioController_1 = require("../../../../../Core/Audio/AudioController"),
+  AudioSystem_1 = require("../../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  Global_1 = require("../../../../Global"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ColorUtils_1 = require("../../../../Utils/ColorUtils"),
+  CharacterNameDefines_1 = require("../CharacterNameDefines"),
+  AkComponentDynamicConditionProxy_1 = require("./Audio/AkComponentDynamicConditionProxy"),
+  FoleySynthController_1 = require("./Audio/Controller/FoleySynthController"),
+  DEBUG_RADIUS = 15,
+  DEBUG_SEG = 12,
+  ROLE_MOVE_GROUP = "role_move",
+  ENVIRONMENT_AUDIO_UPDATE_INTERVAL = 500,
+  ENVIRONMENT_AUDIO_UPDATE_DIST_SQUARED = 4,
+  AUDIO_ENTITY_TYPE_VOLUME_CONTROL = new Map([
+    [
+      Protocol_1.Aki.Protocol.HBs.Proto_Animal,
+      "entity_type_volume_control_animal",
+    ],
+    [
+      Protocol_1.Aki.Protocol.HBs.Proto_Custom,
+      "entity_type_volume_control_custom_other",
+    ],
+    [
+      Protocol_1.Aki.Protocol.HBs.Proto_Monster,
+      "entity_type_volume_control_monster",
+    ],
+    [Protocol_1.Aki.Protocol.HBs.Proto_Npc, "entity_type_volume_control_npc"],
+    [
+      Protocol_1.Aki.Protocol.HBs.Proto_Player,
+      "entity_type_volume_control_player_role",
+    ],
+    [
+      Protocol_1.Aki.Protocol.HBs.Proto_SceneItem,
+      "entity_type_volume_control_scene_item",
+    ],
+    [
+      Protocol_1.Aki.Protocol.HBs.Proto_Vision,
+      "entity_type_volume_control_vision",
+    ],
+  ]);
 class AkComponentStatic {
   static Load() {
     return (
@@ -137,7 +141,7 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
         this.c3r.Tick(t);
   }
   OnActivate() {
-    let t;
+    var t;
     (this.IsRole =
       this.Vpr?.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Player),
       (this.IsP1 = !1),
@@ -172,19 +176,19 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
           ));
   }
   C3r() {
-    if (AkComponentStatic.AkMoveState === "normal") {
-      for (const [t, o] of AkComponentStatic.AkMoveStateMap)
+    if ("normal" === AkComponentStatic.AkMoveState) {
+      for (var [t, o] of AkComponentStatic.AkMoveStateMap)
         if (this.Lie?.HasTag(o))
           return (
             (AkComponentStatic.AkMoveState = t),
             void AudioSystem_1.AudioSystem.SetState(ROLE_MOVE_GROUP, t)
           );
     } else {
-      const e = AkComponentStatic.AkMoveStateMap.get(
+      var e = AkComponentStatic.AkMoveStateMap.get(
         AkComponentStatic.AkMoveState,
       );
       if (!this.Lie?.HasTag(e)) {
-        for (const [i, r] of AkComponentStatic.AkMoveStateMap)
+        for (var [i, r] of AkComponentStatic.AkMoveStateMap)
           if (this.Lie?.HasTag(r))
             return (
               (AkComponentStatic.AkMoveState = i),
@@ -196,8 +200,8 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
     }
   }
   p3r() {
-    const e = this.Vpr?.GetEntityType();
-    const i = this.Hte?.Actor;
+    const e = this.Vpr?.GetEntityType(),
+      i = this.Hte?.Actor;
     if (!e || !i) {
       if (e)
         return void (
@@ -234,10 +238,10 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
     );
   }
   PostAudioEvent(t) {
-    const o = this.Entity.GetComponent(0).GetRoleId();
-    let e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(o)
-      .GetAudioData()
-      .GetAudioPathByName(t);
+    var o = this.Entity.GetComponent(0).GetRoleId(),
+      e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(o)
+        .GetAudioData()
+        .GetAudioPathByName(t);
     e
       ? (this.Xzt.EventPath && !e.CanInterrupt) ||
         ((e = e.AudioPath),
@@ -267,8 +271,8 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
   }
   SetSwitchByData(t, o) {
     for (const i of o) {
-      const e = i.split(".");
-      e.length === 2
+      var e = i.split(".");
+      2 === e.length
         ? t.SetSwitch(void 0, e[0], e[1])
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -282,8 +286,8 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
   }
   SetSwitchByUeData(o, e) {
     for (let t = 0; t < e.Num(); ++t) {
-      const i = e.Get(t).split(".");
-      i.length === 2
+      var i = e.Get(t).split(".");
+      2 === i.length
         ? o.SetSwitch(void 0, i[0], i[1])
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -322,9 +326,9 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
     return this.u3r;
   }
   QBt() {
-    const o = this.Hte.Actor;
-    const t = o.GetName();
-    const e = o.K2_GetComponentsByClass(UE.AkComponent.StaticClass());
+    var o = this.Hte.Actor,
+      t = o.GetName(),
+      e = o.K2_GetComponentsByClass(UE.AkComponent.StaticClass());
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Audio",
@@ -337,8 +341,8 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
           t,
         ]);
     for (let t = 0; t < e.Num(); ++t) {
-      var i;
-      const r = e.Get(t);
+      var i,
+        r = e.Get(t);
       r instanceof UE.AkComponent &&
         ((i = r.K2_GetComponentLocation()),
         UE.KismetSystemLibrary.DrawDebugSphere(
@@ -405,13 +409,13 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
     this.c3r && this.c3r.SetDebug(t, o);
   }
   static SetGlobalCharacterFoleySynthFileDebug(t, o) {
-    let e;
+    var e;
     Global_1.Global.BaseCharacter &&
       (e =
         Global_1.Global.BaseCharacter.CharacterActorComponent.Entity.GetComponent(
           40,
         )) &&
-      (o?.length > 0 ? e.SetFoleySynthFileDebug(t, o) : e.SetDebug(t));
+      (0 < o?.length ? e.SetFoleySynthFileDebug(t, o) : e.SetDebug(t));
   }
 };
 (CharacterAkComponent = __decorate(
@@ -419,4 +423,4 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
   CharacterAkComponent,
 )),
   (exports.CharacterAkComponent = CharacterAkComponent);
-// # sourceMappingURL=CharacterAkComponent.js.map
+//# sourceMappingURL=CharacterAkComponent.js.map

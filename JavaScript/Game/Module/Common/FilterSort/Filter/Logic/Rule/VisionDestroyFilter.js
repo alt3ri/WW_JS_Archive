@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionDestroyFilter = void 0);
-const ModelManager_1 = require("../../../../../../Manager/ModelManager");
-const CommonFilter_1 = require("./CommonFilter");
-const VisionDestroyFilterLogic_1 = require("./VisionDestroyFilterLogic");
+const ModelManager_1 = require("../../../../../../Manager/ModelManager"),
+  CommonFilter_1 = require("./CommonFilter"),
+  VisionDestroyFilterLogic_1 = require("./VisionDestroyFilterLogic");
 class VisionDestroyFilter extends CommonFilter_1.CommonFilter {
   constructor() {
     super(...arguments),
@@ -44,4 +44,4 @@ class VisionDestroyFilter extends CommonFilter_1.CommonFilter {
   }
 }
 exports.VisionDestroyFilter = VisionDestroyFilter;
-// # sourceMappingURL=VisionDestroyFilter.js.map
+//# sourceMappingURL=VisionDestroyFilter.js.map

@@ -12,4 +12,4 @@ class FollowItemComponent extends HotKeyComponent_1.HotKeyComponent {
   OnInputAxis(o, t) {}
 }
 exports.FollowItemComponent = FollowItemComponent;
-// # sourceMappingURL=FollowItemComponent.js.map
+//# sourceMappingURL=FollowItemComponent.js.map

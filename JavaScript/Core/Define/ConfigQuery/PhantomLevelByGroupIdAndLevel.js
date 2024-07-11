@@ -1,26 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configPhantomLevelByGroupIdAndLevel = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const PhantomLevel_1 = require("../Config/PhantomLevel");
-const DB = "db_phantom.db";
-const FILE = "h.幻象.xlsx";
-const TABLE = "PhantomLevel";
-const COMMAND =
-  "select BinData from `PhantomLevel` where GroupId=? AND Level=?";
-const KEY_PREFIX = "PhantomLevelByGroupIdAndLevel";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  PhantomLevel_1 = require("../Config/PhantomLevel"),
+  DB = "db_phantom.db",
+  FILE = "h.幻象.xlsx",
+  TABLE = "PhantomLevel",
+  COMMAND = "select BinData from `PhantomLevel` where GroupId=? AND Level=?",
+  KEY_PREFIX = "PhantomLevelByGroupIdAndLevel",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configPhantomLevelByGroupIdAndLevel.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configPhantomLevelByGroupIdAndLevel.GetConfig(";
 exports.configPhantomLevelByGroupIdAndLevel = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -42,16 +41,17 @@ exports.configPhantomLevelByGroupIdAndLevel = {
         (t =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, e, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(
-            handleId,
-            !0,
-            ...logPair,
-            ["GroupId", o],
-            ["Level", e],
-          ) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(
+              handleId,
+              !0,
+              ...logPair,
+              ["GroupId", o],
+              ["Level", e],
+            ))
       ) {
-        var t;
-        var i = void 0;
+        var t,
+          i = void 0;
         if (
           (([t, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -78,4 +78,4 @@ exports.configPhantomLevelByGroupIdAndLevel = {
     }
   },
 };
-// # sourceMappingURL=PhantomLevelByGroupIdAndLevel.js.map
+//# sourceMappingURL=PhantomLevelByGroupIdAndLevel.js.map

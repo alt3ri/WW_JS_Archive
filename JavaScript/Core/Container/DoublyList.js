@@ -20,8 +20,8 @@ class DoublyLinkedList {
       (this.s7 = 1);
   }
   static From(t) {
-    const i = t.length;
-    const s = new DoublyLinkedList(t.shift());
+    var i = t["length"],
+      s = new DoublyLinkedList(t.shift());
     return (
       (s.s7 = i),
       t.reduce((t, i) => {
@@ -34,17 +34,17 @@ class DoublyLinkedList {
     return this.s7 - 1;
   }
   Find(t) {
-    let i = 0;
-    let s = this.t7;
+    let i = 0,
+      s = this.t7;
     if (s) {
       for (i = 0; i < this.s7 && !t.call(this, s); i++) s = s.Next;
       return i !== this.s7 ? s : void 0;
     }
   }
   Insert(t, i) {
-    let s;
-    var t = new DoublyLinkedNode(t);
-    const e = this.Find((t) => t === i);
+    var s,
+      t = new DoublyLinkedNode(t),
+      e = this.Find((t) => t === i);
     return (
       e &&
         ((s = e.Next),
@@ -55,7 +55,7 @@ class DoublyLinkedList {
     );
   }
   Remove(i) {
-    const t = this.Find((t) => t === i);
+    var t = this.Find((t) => t === i);
     t &&
       (this.t7 === t && (this.t7 = t.Next),
       t.Pre && (t.Pre.Next = t.Next),
@@ -69,9 +69,9 @@ class DoublyLinkedList {
       this.s7--);
   }
   AddTail(t) {
-    var t = new DoublyLinkedNode(t);
-    const i = this.t7?.Pre;
-    const s = i?.Next;
+    var t = new DoublyLinkedNode(t),
+      i = this.t7?.Pre,
+      s = i?.Next;
     return (
       i && (i.Next = t), (t.Pre = i), (t.Next = s) && (s.Pre = t), this.s7++, t
     );
@@ -85,4 +85,4 @@ class DoublyLinkedList {
   }
 }
 exports.default = DoublyLinkedList;
-// # sourceMappingURL=DoublyList.js.map
+//# sourceMappingURL=DoublyList.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelUpModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiManager_1 = require("../../Ui/UiManager");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiManager_1 = require("../../Ui/UiManager");
 class LevelUpModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments), (this.CanBreakTipsShowFlag = !0), (this.yGn = void 0);
@@ -12,10 +12,10 @@ class LevelUpModel extends ModelBase_1.ModelBase {
     this.ipi({ AddExp: !0, PreLevel: e, PreExp: t, CurLevel: e, CurExp: r });
   }
   SetLevelUp(e, r, t, i, s, a, h, l) {
-    this.ipi({ AddExp: l > 0, PreLevel: e, PreExp: i, CurLevel: r, CurExp: t });
+    this.ipi({ AddExp: 0 < l, PreLevel: e, PreExp: i, CurLevel: r, CurExp: t });
   }
   SetShowLevelOnly(e) {
-    const r = ModelManager_1.ModelManager.FunctionModel.GetPlayerExp() ?? 0;
+    var r = ModelManager_1.ModelManager.FunctionModel.GetPlayerExp() ?? 0;
     this.ipi({ AddExp: !1, PreLevel: e, PreExp: r, CurLevel: e, CurExp: r });
   }
   IGn(e) {
@@ -41,4 +41,4 @@ class LevelUpModel extends ModelBase_1.ModelBase {
   }
 }
 exports.LevelUpModel = LevelUpModel;
-// # sourceMappingURL=LevelUpModel.js.map
+//# sourceMappingURL=LevelUpModel.js.map

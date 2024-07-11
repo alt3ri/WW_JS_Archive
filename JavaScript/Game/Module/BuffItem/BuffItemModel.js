@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BuffItemModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const BuffItemData_1 = require("./BuffItemData");
-const UseBuffItemRoleData_1 = require("./UseBuffItemRoleData");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  BuffItemData_1 = require("./BuffItemData"),
+  UseBuffItemRoleData_1 = require("./UseBuffItemRoleData");
 class BuffItemModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -79,7 +79,7 @@ class BuffItemModel extends ModelBase_1.ModelBase {
     return e ? e.GetBuffItemTotalCdTime() : 0;
   }
   SetBuffItemCdTimeStamp(e, t, s) {
-    const i = this.GetBuffItemData(e);
+    var i = this.GetBuffItemData(e);
     i
       ? (i.SetEndCdTimeStamp(t), i.SetTotalCdTime(s))
       : this.NewBuffItemData(e, t, s);
@@ -102,4 +102,4 @@ class BuffItemModel extends ModelBase_1.ModelBase {
   }
 }
 exports.BuffItemModel = BuffItemModel;
-// # sourceMappingURL=BuffItemModel.js.map
+//# sourceMappingURL=BuffItemModel.js.map

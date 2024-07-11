@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventAddTag = void 0);
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventAddTag extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, a) {
-    let l;
+    var l;
     a &&
       e &&
       ((e = e.get("Tag")), (l = FNameUtil_1.FNameUtil.GetDynamicFName(e)), e) &&
@@ -15,4 +15,4 @@ class LevelEventAddTag extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventAddTag = LevelEventAddTag;
-// # sourceMappingURL=LevelEventAddTag.js.map
+//# sourceMappingURL=LevelEventAddTag.js.map

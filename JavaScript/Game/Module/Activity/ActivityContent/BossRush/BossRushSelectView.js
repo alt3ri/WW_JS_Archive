@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BossRushSelectView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../../RedDot/RedDotController");
-const UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
-const LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../../RedDot/RedDotController"),
+  UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView");
 class BossRushSelectView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -39,7 +39,7 @@ class BossRushSelectView extends UiTabViewBase_1.UiTabViewBase {
       (this.BtnBindInfo = [[0, this.cDo]]);
   }
   OnStart() {
-    const e = ModelManager_1.ModelManager.ActivityModel.GetActivityById(
+    var e = ModelManager_1.ModelManager.ActivityModel.GetActivityById(
       ModelManager_1.ModelManager.BossRushModel.CurrentSelectActivityId,
     );
     (this.CPr = e),
@@ -51,7 +51,7 @@ class BossRushSelectView extends UiTabViewBase_1.UiTabViewBase {
       (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
   x6e() {
-    const e = this.GetItem(4);
+    var e = this.GetItem(4);
     RedDotController_1.RedDotController.BindRedDot(
       "BossRushReward",
       e,
@@ -60,7 +60,7 @@ class BossRushSelectView extends UiTabViewBase_1.UiTabViewBase {
     );
   }
   Dpt() {
-    const e = this.GetItem(4);
+    var e = this.GetItem(4);
     RedDotController_1.RedDotController.UnBindGivenUi("BossRushReward", e);
   }
   Mni() {
@@ -83,7 +83,7 @@ class BossRushSelectView extends UiTabViewBase_1.UiTabViewBase {
     this.GetText(1).SetText(this.CPr.GetFullScore().toString());
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
-    if (e.length === 1 && !isNaN(Number(e[0])))
+    if (1 === e.length && !isNaN(Number(e[0])))
       return (
         (e = Number(e[0])),
         (e = this.v5t.UnsafeGetGridProxy(e).GetButtonItem()) ? [e, e] : void 0
@@ -96,7 +96,7 @@ class BossRushMainViewScrollItem extends GridProxyAbstract_1.GridProxyAbstract {
     super(...arguments),
       (this.Y6i = void 0),
       (this.nqe = () => {
-        let e;
+        var e;
         this.Y6i?.GetUnLockState()
           ? ((e =
               ModelManager_1.ModelManager.BossRushModel.GetBossRushTeamInfoByActivityId(
@@ -134,7 +134,7 @@ class BossRushMainViewScrollItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   fPr(e) {
     this.SetTextureByPath(e.GetMonsterTexturePath(), this.GetTexture(0));
-    const i = this.GetTexture(6);
+    var i = this.GetTexture(6);
     i.SetUIActive(!e.GetUnLockState()),
       this.SetTextureByPath(e.GetMonsterTexturePath(), i);
   }
@@ -152,4 +152,4 @@ class BossRushMainViewScrollItem extends GridProxyAbstract_1.GridProxyAbstract {
     return this.GetButton(5)?.RootUIComp;
   }
 }
-// # sourceMappingURL=BossRushSelectView.js.map
+//# sourceMappingURL=BossRushSelectView.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TopPanel = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RoguelikeController_1 = require("../RoguelikeController");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RoguelikeController_1 = require("../RoguelikeController");
 class TopPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -16,7 +16,7 @@ class TopPanel extends UiPanelBase_1.UiPanelBase {
         this.CloseCallback?.();
       }),
       (this.Gho = (e) => {
-        ModelManager_1.ModelManager.RoguelikeModel.UpdateDescModel(e === 1);
+        ModelManager_1.ModelManager.RoguelikeModel.UpdateDescModel(1 === e);
       }),
       (this.Nho = () => {
         RoguelikeController_1.RoguelikeController.OpenRogueInfoView();
@@ -47,8 +47,8 @@ class TopPanel extends UiPanelBase_1.UiPanelBase {
     this.RefreshTabBtn();
   }
   RefreshTabBtn() {
-    const e =
-      ModelManager_1.ModelManager.RoguelikeModel.GetDescModel() === 0 ? 1 : 0;
+    var e =
+      0 === ModelManager_1.ModelManager.RoguelikeModel.GetDescModel() ? 1 : 0;
     this.GetExtendToggle(2)?.SetToggleState(e, !0);
   }
   OnBeforeDestroy() {
@@ -69,9 +69,9 @@ class TopPanel extends UiPanelBase_1.UiPanelBase {
     this.GetText(5).SetText("");
   }
   GetCostItemByIndex(e) {
-    const t = this.nVt?.GetCurrencyItemList();
+    var t = this.nVt?.GetCurrencyItemList();
     if (t && t.length > e) return t[e].GetRootItem();
   }
 }
 exports.TopPanel = TopPanel;
-// # sourceMappingURL=TopPanel.js.map
+//# sourceMappingURL=TopPanel.js.map

@@ -16,4 +16,4 @@ class StaticSceneModel extends ModelBase_1.ModelBase {
   }
 }
 exports.StaticSceneModel = StaticSceneModel;
-// # sourceMappingURL=StaticSceneModel.js.map
+//# sourceMappingURL=StaticSceneModel.js.map

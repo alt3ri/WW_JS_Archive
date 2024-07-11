@@ -1,25 +1,29 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, o, i) {
-    let s;
-    const n = arguments.length;
-    let h =
-      n < 3 ? e : i === null ? (i = Object.getOwnPropertyDescriptor(e, o)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var s,
+      n = arguments.length,
+      h =
+        n < 3
+          ? e
+          : null === i
+            ? (i = Object.getOwnPropertyDescriptor(e, o))
+            : i;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       h = Reflect.decorate(t, e, o, i);
     else
-      for (let r = t.length - 1; r >= 0; r--)
-        (s = t[r]) && (h = (n < 3 ? s(h) : n > 3 ? s(e, o, h) : s(e, o)) || h);
-    return n > 3 && h && Object.defineProperty(e, o, h), h;
+      for (var r = t.length - 1; 0 <= r; r--)
+        (s = t[r]) && (h = (n < 3 ? s(h) : 3 < n ? s(e, o, h) : s(e, o)) || h);
+    return 3 < n && h && Object.defineProperty(e, o, h), h;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiModelRotateComponent = void 0);
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const MathCommon_1 = require("../../../../../Core/Utils/Math/MathCommon");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine");
-const UiModelComponentBase_1 = require("../UiModelComponentBase");
+const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  MathCommon_1 = require("../../../../../Core/Utils/Math/MathCommon"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine"),
+  UiModelComponentBase_1 = require("../UiModelComponentBase");
 let UiModelRotateComponent = class UiModelRotateComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
     super(...arguments),
@@ -35,7 +39,7 @@ let UiModelRotateComponent = class UiModelRotateComponent extends UiModelCompone
       (this.hwe = Rotator_1.Rotator.Create());
   }
   SetRotateParam(t, e = 1, o = !0) {
-    (this.ABr = t !== 0 ? MathCommon_1.MathCommon.RoundAngle / t : 0),
+    (this.ABr = 0 !== t ? MathCommon_1.MathCommon.RoundAngle / t : 0),
       (this.UBr = e),
       (this.PBr = o);
   }
@@ -46,16 +50,16 @@ let UiModelRotateComponent = class UiModelRotateComponent extends UiModelCompone
     (this.Rxe = !1), (this.NeedTick = !1);
   }
   OnTick(t) {
-    let e;
+    var e;
     !this.Rxe ||
       this.ABr <= 0 ||
       ((e = this.PBr ? 1 : -1),
       (t = this.ABr * t * CommonDefine_1.MILLIONSECOND_PER_SECOND * e),
-      this.UBr === 0
+      0 === this.UBr
         ? (this.hwe.Pitch = t)
-        : this.UBr === 1
+        : 1 === this.UBr
           ? (this.hwe.Yaw = t)
-          : this.UBr === 2 && (this.hwe.Roll = t),
+          : 2 === this.UBr && (this.hwe.Roll = t),
       this.nXt.Actor.K2_AddActorLocalRotation(
         this.hwe.ToUeRotator(),
         !1,
@@ -69,4 +73,4 @@ let UiModelRotateComponent = class UiModelRotateComponent extends UiModelCompone
   UiModelRotateComponent,
 )),
   (exports.UiModelRotateComponent = UiModelRotateComponent);
-// # sourceMappingURL=UiModelRotateComponent.js.map
+//# sourceMappingURL=UiModelRotateComponent.js.map

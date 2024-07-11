@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiBattleWanderGroup = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const FloatRange_1 = require("./SubType/FloatRange");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  FloatRange_1 = require("./SubType/FloatRange");
 class AiBattleWanderGroup {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -61,22 +61,22 @@ class AiBattleWanderGroup {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetDistancerangeAt(t) {
     return this.distancerange(t);
   }
   distancerange(t) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s ? this.J7.readFloat32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   distancerangeLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   distancerangeArray() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -89,15 +89,15 @@ class AiBattleWanderGroup {
     return this.nearactionrates(t);
   }
   nearactionrates(t) {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s ? this.J7.readFloat32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   nearactionratesLength() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   nearactionratesArray() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -110,15 +110,15 @@ class AiBattleWanderGroup {
     return this.middleactionrates(t);
   }
   middleactionrates(t) {
-    const s = this.J7.__offset(this.z7, 10);
+    var s = this.J7.__offset(this.z7, 10);
     return s ? this.J7.readFloat32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   middleactionratesLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   middleactionratesArray() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -131,15 +131,15 @@ class AiBattleWanderGroup {
     return this.faractionrates(t);
   }
   faractionrates(t) {
-    const s = this.J7.__offset(this.z7, 12);
+    var s = this.J7.__offset(this.z7, 12);
     return s ? this.J7.readFloat32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   faractionratesLength() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   faractionratesArray() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -152,15 +152,15 @@ class AiBattleWanderGroup {
     return this.turnspeeds(t);
   }
   turnspeeds(t) {
-    const s = this.J7.__offset(this.z7, 14);
+    var s = this.J7.__offset(this.z7, 14);
     return s ? this.J7.readFloat32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   turnspeedsLength() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   turnspeedsArray() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -170,11 +170,11 @@ class AiBattleWanderGroup {
       : null;
   }
   runturnspeed() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readFloat32(this.z7 + t) : 360;
   }
   wandertime(t) {
-    const s = this.J7.__offset(this.z7, 18);
+    var s = this.J7.__offset(this.z7, 18);
     return s
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + s),
@@ -183,7 +183,7 @@ class AiBattleWanderGroup {
       : null;
   }
   sumwandertime(t) {
-    const s = this.J7.__offset(this.z7, 20);
+    var s = this.J7.__offset(this.z7, 20);
     return s
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + s),
@@ -192,9 +192,9 @@ class AiBattleWanderGroup {
       : null;
   }
   onlyforward() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
 }
 exports.AiBattleWanderGroup = AiBattleWanderGroup;
-// # sourceMappingURL=AiBattleWanderGroup.js.map
+//# sourceMappingURL=AiBattleWanderGroup.js.map

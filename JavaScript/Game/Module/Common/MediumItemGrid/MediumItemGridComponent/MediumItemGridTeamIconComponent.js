@@ -11,4 +11,4 @@ class MediumItemGridTeamIconComponent extends MediumItemGridComponent_1.MediumIt
   }
 }
 exports.MediumItemGridTeamIconComponent = MediumItemGridTeamIconComponent;
-// # sourceMappingURL=MediumItemGridTeamIconComponent.js.map
+//# sourceMappingURL=MediumItemGridTeamIconComponent.js.map

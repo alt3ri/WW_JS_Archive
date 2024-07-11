@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponSort = void 0);
-const ModelManager_1 = require("../../../../../../Manager/ModelManager");
-const CommonSort_1 = require("./CommonSort");
+const ModelManager_1 = require("../../../../../../Manager/ModelManager"),
+  CommonSort_1 = require("./CommonSort");
 class WeaponSort extends CommonSort_1.CommonSort {
   constructor() {
     super(...arguments),
       (this.ZLt = (t, e, r) => {
         var t = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-          t.GetUniqueId(),
-        );
-        var e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-          e.GetUniqueId(),
-        );
-        let i = t ? t.GetLevel() : 0;
-        let s = e ? e.GetLevel() : 0;
+            t.GetUniqueId(),
+          ),
+          e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
+            e.GetUniqueId(),
+          ),
+          i = t ? t.GetLevel() : 0,
+          s = e ? e.GetLevel() : 0;
         return i !== s
           ? (s - i) * (r ? -1 : 1)
           : (s = t ? t.GetResonanceLevel() : 0) !==
@@ -64,7 +64,7 @@ class WeaponSort extends CommonSort_1.CommonSort {
         return (e.GetConfigId() - t.GetConfigId()) * (r ? -1 : 1);
       }),
       (this.oDt = (t, e, r) => {
-        (t = t.GetType() === 4), (e = e.GetType() === 4);
+        (t = 4 === t.GetType()), (e = 4 === e.GetType());
         if (t != e) return (e ? 1 : 0) - (t ? 1 : 0);
       }),
       (this.aRt = (t, e, r) => {
@@ -72,7 +72,7 @@ class WeaponSort extends CommonSort_1.CommonSort {
         return void 0 !== t && void 0 !== e && t !== e ? t - e : void 0;
       }),
       (this.lRt = (t, e, r) => {
-        (t = t.GetType() === 2), (e = e.GetType() === 2);
+        (t = 2 === t.GetType()), (e = 2 === e.GetType());
         if (t != e) return (e ? 1 : 0) - (t ? 1 : 0);
       });
   }
@@ -90,11 +90,11 @@ class WeaponSort extends CommonSort_1.CommonSort {
       this.SortMap.set(11, this.lRt);
   }
   hRt(t) {
-    let e;
+    var e;
     if (t)
-      return (e = t.GetType()) === 4
+      return 4 === (e = t.GetType())
         ? 2
-        : e === 2
+        : 2 === e
           ? ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
               t.GetUniqueId(),
             )?.HasWeaponCultivated()
@@ -104,4 +104,4 @@ class WeaponSort extends CommonSort_1.CommonSort {
   }
 }
 exports.WeaponSort = WeaponSort;
-// # sourceMappingURL=WeaponSort.js.map
+//# sourceMappingURL=WeaponSort.js.map

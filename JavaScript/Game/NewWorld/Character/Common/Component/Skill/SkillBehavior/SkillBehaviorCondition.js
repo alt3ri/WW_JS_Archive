@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkillBehaviorCondition = void 0);
-const GameplayTagUtils_1 = require("../../../../../../../Core/Utils/GameplayTagUtils");
-const Vector_1 = require("../../../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../../../Core/Utils/MathUtils");
-const SkillBehaviorMisc_1 = require("./SkillBehaviorMisc");
+const GameplayTagUtils_1 = require("../../../../../../../Core/Utils/GameplayTagUtils"),
+  Vector_1 = require("../../../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../../../Core/Utils/MathUtils"),
+  SkillBehaviorMisc_1 = require("./SkillBehaviorMisc");
 class SkillBehaviorCondition {
   static Satisfy(i, e) {
     for (let t = 0; t < i.Num(); t++) {
-      const r = i.Get(t);
+      var r = i.Get(t);
       switch (r.ConditionType) {
         case 0:
           if (this.dzo(r, e)) break;
@@ -40,7 +40,7 @@ class SkillBehaviorCondition {
   }
   static Czo(t, i) {
     let e = !1;
-    let r;
+    var r;
     return (
       i.SkillComponent.SkillTarget &&
         ((r = i.Entity.GetComponent(1).ActorLocationProxy),
@@ -63,7 +63,7 @@ class SkillBehaviorCondition {
   }
   static gzo(t, i) {
     let e = !1;
-    let r, a, s;
+    var r, a, s;
     return (
       i.SkillComponent.SkillTarget &&
         ((a = (r = i.Entity.GetComponent(1)).ActorLocationProxy),
@@ -102,16 +102,16 @@ class SkillBehaviorCondition {
     return t.Reverse ? !i : i;
   }
   static pzo(t, i) {
-    var i = i.Entity.GetComponent(156);
-    var e = i.GetCurrentValue(t.AttributeId1);
-    var i = t.AttributeId2 > 0 ? i.GetCurrentValue(t.AttributeId2) : 0;
-    var e = (0, SkillBehaviorMisc_1.compare)(
-      t.ComparisonLogic,
-      e,
-      t.Value + i * t.AttributeRate,
-      t.RangeL,
-      t.RangeR,
-    );
+    var i = i.Entity.GetComponent(156),
+      e = i.GetCurrentValue(t.AttributeId1),
+      i = 0 < t.AttributeId2 ? i.GetCurrentValue(t.AttributeId2) : 0,
+      e = (0, SkillBehaviorMisc_1.compare)(
+        t.ComparisonLogic,
+        e,
+        t.Value + i * t.AttributeRate,
+        t.RangeL,
+        t.RangeR,
+      );
     return t.Reverse ? !e : e;
   }
   static vzo(t, i) {
@@ -127,4 +127,4 @@ class SkillBehaviorCondition {
   }
 }
 exports.SkillBehaviorCondition = SkillBehaviorCondition;
-// # sourceMappingURL=SkillBehaviorCondition.js.map
+//# sourceMappingURL=SkillBehaviorCondition.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RenderConfig = exports.INVALID_SECTION_INDEX = void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
+const UE = require("ue"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol");
 exports.INVALID_SECTION_INDEX = 99999;
 class RenderConfig {
   static GetBodyTypeByName(e) {
@@ -402,4 +402,4 @@ class RenderConfig {
   (RenderConfig.E_Action_TransparentColorQuanXiFengSuo = new UE.FName(
     "E_Action_TransparentColorQuanXiFengSuo",
   ));
-// # sourceMappingURL=RenderConfig.js.map
+//# sourceMappingURL=RenderConfig.js.map

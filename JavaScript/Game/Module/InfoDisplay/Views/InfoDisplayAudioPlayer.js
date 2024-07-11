@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InfoDisplayAudioPlayer = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const AudioController_1 = require("../../../../Core/Audio/AudioController");
-const AudioDefine_1 = require("../../../../Core/Audio/AudioDefine");
-const AudioModel_1 = require("../../../../Core/Audio/AudioModel");
-const Log_1 = require("../../../../Core/Common/Log");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const InfoDisplayModel_1 = require("../Data/InfoDisplayModel");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  AudioController_1 = require("../../../../Core/Audio/AudioController"),
+  AudioDefine_1 = require("../../../../Core/Audio/AudioDefine"),
+  AudioModel_1 = require("../../../../Core/Audio/AudioModel"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  InfoDisplayModel_1 = require("../Data/InfoDisplayModel");
 class InfoDisplayAudioPlayer extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -24,7 +24,7 @@ class InfoDisplayAudioPlayer extends UiPanelBase_1.UiPanelBase {
       (this.tKe = !1),
       (this.Qni = void 0),
       (this.Xni = () => {
-        let i, t;
+        var i, t;
         this.Td
           ? this.tKe
             ? this.$ni()
@@ -42,19 +42,19 @@ class InfoDisplayAudioPlayer extends UiPanelBase_1.UiPanelBase {
       (this.esi = 0),
       (this.tsi = (i) => {
         (this.esi += i),
-          this.esi >= 1e3 &&
+          1e3 <= this.esi &&
             (this.Uqe++,
             this.Uqe >= this.jni && (this.Uqe = this.jni),
             (this.esi = 0)),
           this.Y6 &&
             this.Y6.OutputArray &&
-            this.Y6.OutputArray.Num() > 0 &&
+            0 < this.Y6.OutputArray.Num() &&
             void 0 !== this.Qni &&
             this.Qni(this.Y6.OutputArray, i),
           this.XMt();
       }),
       (this.Jni = (i, t) => {
-        i === 0 &&
+        0 === i &&
           this.Td &&
           (Log_1.Log.CheckDebug() && Log_1.Log.Debug("InfoDisplay", 28, "End"),
           AudioController_1.AudioController.StopAudio(this.RootActor),
@@ -77,13 +77,13 @@ class InfoDisplayAudioPlayer extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.Xni]]);
   }
   Zni() {
-    this.Kni !== "" && this.Xni();
-    const i = this.GetExtendToggle(0);
+    "" !== this.Kni && this.Xni();
+    var i = this.GetExtendToggle(0);
     this.tKe ? i.SetToggleState(0) : i.SetToggleState(1);
   }
   Yni() {
     this.tKe = !0;
-    const i = AudioController_1.AudioController.GetAudioEvent(this.Kni, !1);
+    var i = AudioController_1.AudioController.GetAudioEvent(this.Kni, !1);
     AudioController_1.AudioController.ExecuteActionOnEvent(
       i,
       1,
@@ -92,7 +92,7 @@ class InfoDisplayAudioPlayer extends UiPanelBase_1.UiPanelBase {
   }
   $ni() {
     this.tKe = !1;
-    const i = AudioController_1.AudioController.GetAudioEvent(this.Kni, !1);
+    var i = AudioController_1.AudioController.GetAudioEvent(this.Kni, !1);
     AudioController_1.AudioController.ExecuteActionOnEvent(
       i,
       2,
@@ -116,7 +116,7 @@ class InfoDisplayAudioPlayer extends UiPanelBase_1.UiPanelBase {
       this.Yzt,
     ),
       (this.Y6 = AudioModel_1.AudioModel.GetSpectrumActor());
-    const t = this.RootActor.GetComponentByClass(UE.AkComponent.StaticClass());
+    var t = this.RootActor.GetComponentByClass(UE.AkComponent.StaticClass());
     (this.Y6.Ak = t),
       this.Y6.AkCall(
         this.Y6.Ak,
@@ -134,7 +134,7 @@ class InfoDisplayAudioPlayer extends UiPanelBase_1.UiPanelBase {
     this.Td && !this.tKe && this.tsi(i);
   }
   XMt() {
-    const i = InfoDisplayModel_1.InfoDisplayModel.ConvertToHourMinuteString(
+    var i = InfoDisplayModel_1.InfoDisplayModel.ConvertToHourMinuteString(
       this.Uqe,
     );
     this.Hni.SetText(i + "/" + this.Wni);
@@ -159,4 +159,4 @@ class InfoDisplayAudioPlayer extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.InfoDisplayAudioPlayer = InfoDisplayAudioPlayer;
-// # sourceMappingURL=InfoDisplayAudioPlayer.js.map
+//# sourceMappingURL=InfoDisplayAudioPlayer.js.map

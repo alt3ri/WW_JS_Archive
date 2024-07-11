@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GachaShareTenPanel = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const GachaShareResultItem_1 = require("./GachaShareResultItem");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  GachaShareResultItem_1 = require("./GachaShareResultItem");
 class GachaShareTenPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -17,7 +17,7 @@ class GachaShareTenPanel extends UiPanelBase_1.UiPanelBase {
       this.GetGridLayout(0),
       this.Hjt,
     );
-    let e = this.OpenParam;
+    var e = this.OpenParam;
     const n = (e) => {
       switch (e) {
         case 1:
@@ -30,14 +30,14 @@ class GachaShareTenPanel extends UiPanelBase_1.UiPanelBase {
     };
     e = [...e];
     e.sort((e, a) => {
-      const r =
-        ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-          e.u5n.G3n,
-        )?.QualityId ?? 0;
-      const t =
-        ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-          a.u5n.G3n,
-        )?.QualityId ?? 0;
+      var r =
+          ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+            e.u5n.G3n,
+          )?.QualityId ?? 0,
+        t =
+          ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+            a.u5n.G3n,
+          )?.QualityId ?? 0;
       return r === t
         ? ((e = n(
             ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(e.u5n.G3n),
@@ -60,4 +60,4 @@ class GachaShareTenPanel extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.GachaShareTenPanel = GachaShareTenPanel;
-// # sourceMappingURL=GachaShareTenPanel.js.map
+//# sourceMappingURL=GachaShareTenPanel.js.map

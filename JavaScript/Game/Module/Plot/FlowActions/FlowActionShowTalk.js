@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionShowTalk = void 0);
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const FormationDataController_1 = require("../../Abilities/FormationDataController");
-const FlowActionBase_1 = require("./FlowActionBase");
+const ModelManager_1 = require("../../../Manager/ModelManager"),
+  FormationDataController_1 = require("../../Abilities/FormationDataController"),
+  FlowActionBase_1 = require("./FlowActionBase");
 class FlowActionShowTalk extends FlowActionBase_1.FlowActionBase {
   OnExecute() {
     switch (
@@ -35,13 +35,13 @@ class FlowActionShowTalk extends FlowActionBase_1.FlowActionBase {
     }
   }
   _$i() {
-    const e = this.ActionInfo.Params;
-    const t = this.Context;
-    const s = this.Runner;
+    var e = this.ActionInfo.Params,
+      t = this.Context,
+      s = this.Runner;
     this.FinishExecute(!0, !1), s.FlowShowTalk.Start(e, t);
   }
   l$i() {
-    let e, t, s;
+    var e, t, s;
     this.Context.IsBackground
       ? this._$i()
       : (e = this.ActionInfo.Params)?.SequenceDataAsset
@@ -57,4 +57,4 @@ class FlowActionShowTalk extends FlowActionBase_1.FlowActionBase {
   }
 }
 exports.FlowActionShowTalk = FlowActionShowTalk;
-// # sourceMappingURL=FlowActionShowTalk.js.map
+//# sourceMappingURL=FlowActionShowTalk.js.map

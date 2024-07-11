@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharMaterialSlot = void 0);
-const UE = require("ue");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const RenderConfig_1 = require("../../../Config/RenderConfig");
-const STAR_SCAR_SLOT_NAME = "MI_Star";
-const ORIGINAL_INDEX = 0;
-const CACHE_INDEX = 1;
-const TARGET_INDEX = 2;
+const UE = require("ue"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  RenderConfig_1 = require("../../../Config/RenderConfig"),
+  STAR_SCAR_SLOT_NAME = "MI_Star",
+  ORIGINAL_INDEX = 0,
+  CACHE_INDEX = 1,
+  TARGET_INDEX = 2;
 class ColorTempContainer {
   constructor() {
     (this.ColorR = -0),
@@ -56,21 +56,21 @@ class CharMaterialSlot {
       (this.MaterialDirty = !0);
   }
   SetSkeletalMeshMaterial(t) {
-    let i;
+    var i;
     this.MaterialDirty &&
       ((this.MaterialDirty = !1),
-      (i = this.ReplaceMaterialArray.length) > 0
+      0 < (i = this.ReplaceMaterialArray.length)
         ? t.SetMaterial(this.MaterialIndex, this.ReplaceMaterialArray[i - 1])
         : t.SetMaterial(this.MaterialIndex, this.DynamicMaterial));
   }
   UpdateMaterialParam() {
     if (this.IsDynamicMaterialValid()) {
-      const t = this.DynamicMaterial;
+      var t = this.DynamicMaterial;
       if (this.Uhr) {
         this.Uhr = !1;
         for (const E of this.FloatParamMap.keys()) {
-          var i;
-          const s = this.FloatParamMap.get(E);
+          var i,
+            s = this.FloatParamMap.get(E);
           s[CACHE_INDEX] !== s[TARGET_INDEX] &&
             ((s[CACHE_INDEX] = s[TARGET_INDEX]),
             (i = FNameUtil_1.FNameUtil.GetDynamicFName(E)),
@@ -80,8 +80,8 @@ class CharMaterialSlot {
       if (this.Ahr) {
         this.Ahr = !1;
         for (const o of this.VectorParamMap.keys()) {
-          var h;
-          let e = this.VectorParamMap.get(o);
+          var h,
+            e = this.VectorParamMap.get(o);
           e[CACHE_INDEX] !== e[TARGET_INDEX] &&
             ((e[CACHE_INDEX] = e[TARGET_INDEX]),
             (e = new UE.LinearColor(
@@ -97,8 +97,8 @@ class CharMaterialSlot {
       if (this.Phr) {
         this.Phr = !1;
         for (const _ of this.TextureParamMap.keys()) {
-          let r = this.TextureParamMap.get(_);
-          const a = r[TARGET_INDEX];
+          var r = this.TextureParamMap.get(_),
+            a = r[TARGET_INDEX];
           void 0 !== a &&
             r[CACHE_INDEX] !== a &&
             ((r[CACHE_INDEX] = a),
@@ -112,14 +112,14 @@ class CharMaterialSlot {
     this.ReplaceMaterialArray.push(t), (this.MaterialDirty = !0);
   }
   RevertReplaceMaterial(i) {
-    const s = new Array();
+    var s = new Array();
     for (let t = 0; t < this.ReplaceMaterialArray.length; t++)
       this.ReplaceMaterialArray[t] !== i &&
         s.push(this.ReplaceMaterialArray[t]);
     (this.ReplaceMaterialArray = s), (this.MaterialDirty = !0);
   }
   SetFloat(t, i) {
-    let s;
+    var s;
     this.IsDynamicMaterialValid() &&
       ((s = t.toString()),
       (this.Uhr = !0),
@@ -138,7 +138,7 @@ class CharMaterialSlot {
       ((t = this.FloatParamMap.get(t))[TARGET_INDEX] = t[ORIGINAL_INDEX]));
   }
   SetColor(t, i) {
-    let s, h;
+    var s, h;
     this.IsDynamicMaterialValid() &&
       ((s = t.toString()),
       (this.Ahr = !0),
@@ -162,7 +162,7 @@ class CharMaterialSlot {
       ((t = this.VectorParamMap.get(t))[TARGET_INDEX] = t[ORIGINAL_INDEX]));
   }
   SetTexture(t, i) {
-    let s;
+    var s;
     this.IsDynamicMaterialValid() &&
       ((s = t.toString()),
       (this.Phr = !0),
@@ -197,4 +197,4 @@ class CharMaterialSlot {
   }
 }
 exports.CharMaterialSlot = CharMaterialSlot;
-// # sourceMappingURL=CharMaterialInfo.js.map
+//# sourceMappingURL=CharMaterialInfo.js.map

@@ -14,10 +14,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.FIGHTING_AOI_ROLE_MAX_COUNT =
     exports.FIGHTING_AOI_WEAPON_MAX_COUNT =
       void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const GlobalData_1 = require("../../GlobalData");
+const UE = require("ue"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  GlobalData_1 = require("../../GlobalData");
 (exports.FIGHTING_AOI_WEAPON_MAX_COUNT = 4),
   (exports.FIGHTING_AOI_ROLE_MAX_COUNT = 4),
   (exports.FIGHTING_AOI_SUMMON_MAX_COUNT = 4),
@@ -112,4 +112,4 @@ class WorldDebugModel extends ModelBase_1.ModelBase {
   }
 }
 exports.WorldDebugModel = WorldDebugModel;
-// # sourceMappingURL=WorldDebugModel.js.map
+//# sourceMappingURL=WorldDebugModel.js.map

@@ -47,4 +47,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ENTITY_TIMESCALE_PAUSE_THRESHOLD = 0.0625),
   (exports.SPEEDUP = 15),
   (exports.RESETSPEED = 0);
-// # sourceMappingURL=AudioDefine.js.map
+//# sourceMappingURL=AudioDefine.js.map

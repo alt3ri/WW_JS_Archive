@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.StrengthUnit = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Stats_1 = require("../../../../Core/Common/Stats");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const Global_1 = require("../../../Global");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const HudUnitBase_1 = require("../HudUnitBase");
-const PRELOAD_SINGLE_STRENGTH_ITEM_COUNT = 5;
-const PRELOAD_SINGLE_TEMPORARY_STRENGTH_ITEM_COUNT = 1;
-const MAX_DELTA_TIME = 200;
-const MIN_DELTA_OFFSET = 0.5;
-const TEMPORARY_STRENGTH_LERP_TIME = 300;
-const CLOSE_ANIM_TIME = 250;
-const FULL_ANIM_TIME = 300;
-const TEMP_CLOSE_ANIM_TIME = 330;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  Global_1 = require("../../../Global"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  HudUnitBase_1 = require("../HudUnitBase"),
+  PRELOAD_SINGLE_STRENGTH_ITEM_COUNT = 5,
+  PRELOAD_SINGLE_TEMPORARY_STRENGTH_ITEM_COUNT = 1,
+  MAX_DELTA_TIME = 200,
+  MIN_DELTA_OFFSET = 0.5,
+  TEMPORARY_STRENGTH_LERP_TIME = 300,
+  CLOSE_ANIM_TIME = 250,
+  FULL_ANIM_TIME = 300,
+  TEMP_CLOSE_ANIM_TIME = 330;
 class StrengthUnit extends HudUnitBase_1.HudUnitBase {
   constructor() {
     super(...arguments),
@@ -78,9 +78,9 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
   }
   OnStart() {
     for (let t = 0; t < PRELOAD_SINGLE_STRENGTH_ITEM_COUNT; t++)
-      this.bti(t === 0);
+      this.bti(0 === t);
     for (let t = 0; t < PRELOAD_SINGLE_TEMPORARY_STRENGTH_ITEM_COUNT; t++)
-      this.qti(t === 0);
+      this.qti(0 === t);
     (this.gXe = Global_1.Global.CharacterController),
       (this.pti = UiLayer_1.UiLayer.UiRootItem),
       (this.Sti = CommonParamById_1.configCommonParamById.GetIntConfig(
@@ -110,7 +110,7 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
       super.OnBeforeDestroy();
   }
   SetNormal(t) {
-    let i, s;
+    var i, s;
     this.mti !== t &&
       ((this.mti = t),
       (i = this.GetItem(0)),
@@ -122,8 +122,8 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
   SetBuff(t) {
     if (this.BuffType !== t) {
       this.BuffType = t;
-      const i = this.GetItem(4);
-      const s = this.GetItem(5);
+      var i = this.GetItem(4),
+        s = this.GetItem(5);
       switch (t) {
         case 0:
           i.IsUIActiveSelf() && i.SetUIActive(!1),
@@ -140,11 +140,11 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
     }
   }
   SetEnable(t) {
-    const i = this.GetItem(6);
+    var i = this.GetItem(6);
     i.IsUIActiveSelf() === t && i.SetUIActive(!t);
   }
   SetNone(t) {
-    const i = this.GetItem(2);
+    var i = this.GetItem(2);
     i.IsUIActiveSelf() !== t && i.SetUIActive(t);
   }
   SetStrengthPercent(t, i) {
@@ -156,7 +156,7 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
   }
   RefreshSingleStrengthItemRotation(t) {
     let s = Math.floor(t / this.Sti);
-    const h = 360 / (s = s > this.Eti ? this.Eti : s);
+    var h = 360 / (s = s > this.Eti ? this.Eti : s);
     let e = 0;
     for (let i = 0; i < s; i++) {
       let t = this.Fti(i);
@@ -170,14 +170,14 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
     let i = Math.floor(t / this.Sti);
     i > this.Eti && (i = this.Eti);
     for (let t = 0; t < this.dti.length; t++) {
-      const s = this.dti[t];
-      const h = t < i;
+      var s = this.dti[t],
+        h = t < i;
       s.IsUIActiveSelf() !== h && s.SetUIActive(h);
     }
   }
   bti(t = !1) {
-    const i = this.GetItem(11);
-    const s = this.GetItem(10);
+    var i = this.GetItem(11),
+      s = this.GetItem(10);
     let h = void 0;
     return (
       (h = t
@@ -199,11 +199,11 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
       : this.Xte.HasTag(-951946659) && this.SetBuff(2);
   }
   RefreshEnableState() {
-    const t = this.Xte.HasTag(64400505);
+    var t = this.Xte.HasTag(64400505);
     this.SetEnable(!t);
   }
   SetTemporaryVisible(t) {
-    const i = this.GetItem(3);
+    var i = this.GetItem(3);
     i.IsUIActiveSelf() !== t && i.SetUIActive(t);
   }
   PlayTemporaryAnim(t) {
@@ -220,7 +220,7 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
   }
   RefreshSingleTemporaryStrengthItemRotation(t) {
     let s = Math.floor(t / this.yti);
-    const h = 360 / (s = s > this.Eti ? this.Eti : s);
+    var h = 360 / (s = s > this.Eti ? this.Eti : s);
     let e = 0;
     for (let i = 0; i < s; i++) {
       let t = this.Vti(i);
@@ -234,14 +234,14 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
     let i = Math.floor(t / this.yti);
     i > this.Eti && (i = this.Eti);
     for (let t = 0; t < this.Cti.length; t++) {
-      const s = this.Cti[t];
-      const h = t < i;
+      var s = this.Cti[t],
+        h = t < i;
       s.IsUIActiveSelf() !== h && s.SetUIActive(h);
     }
   }
   qti(t = !1) {
-    const i = this.GetItem(13);
-    const s = this.GetItem(12);
+    var i = this.GetItem(13),
+      s = this.GetItem(12);
     let h = void 0;
     return (
       (h = t
@@ -255,7 +255,7 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
     );
   }
   Hti(t) {
-    let i;
+    var i;
     this.GetActive() &&
       this.Tti !== this.Lti &&
       ((i = this.GetSprite(9)),
@@ -285,7 +285,7 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
     this.RefreshTargetPosition(t), this.Hti(t);
   }
   RefreshTargetPosition(t) {
-    let i, s;
+    var i, s;
     this.GetActive() &&
       this.ActorComponent &&
       this.ActorComponent.Actor?.IsValid() &&
@@ -309,8 +309,8 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
         this.SetAnchorOffset(this.Rti, this.Uti)));
   }
   jti(t, i, s, h) {
-    let e = i - s;
-    let r = !1;
+    let e = i - s,
+      r = !1;
     if ((e < 0 && ((e = -e), (r = !0)), e < 1)) return 0;
     let _ = 0;
     return (
@@ -410,4 +410,4 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
 ((exports.StrengthUnit = StrengthUnit).Xti = void 0),
   (StrengthUnit.Wti = void 0),
   (StrengthUnit.$ti = void 0);
-// # sourceMappingURL=StrengthUnit.js.map
+//# sourceMappingURL=StrengthUnit.js.map

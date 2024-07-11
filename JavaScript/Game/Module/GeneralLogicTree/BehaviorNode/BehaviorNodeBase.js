@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BehaviorNodeBase = void 0);
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine");
-const BehaviorTreeTagComponent_1 = require("../BaseBehaviorTree/BehaviorTreeTagComponent");
+const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine"),
+  BehaviorTreeTagComponent_1 = require("../BaseBehaviorTree/BehaviorTreeTagComponent");
 class BehaviorNodeBase extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
   constructor(e) {
     super(),
@@ -76,7 +76,7 @@ class BehaviorNodeBase extends BehaviorTreeTagComponent_1.BehaviorTreeTagContain
       (this.Blackboard = void 0);
   }
   UpdateStatus(e, t) {
-    const s = this.InnerStatus;
+    var s = this.InnerStatus;
     if (((this.InnerStatus = t), s !== this.InnerStatus)) {
       switch (this.InnerStatus) {
         case Protocol_1.Aki.Protocol.N2s.Lkn:
@@ -140,4 +140,4 @@ class BehaviorNodeBase extends BehaviorTreeTagComponent_1.BehaviorTreeTagContain
   }
 }
 exports.BehaviorNodeBase = BehaviorNodeBase;
-// # sourceMappingURL=BehaviorNodeBase.js.map
+//# sourceMappingURL=BehaviorNodeBase.js.map

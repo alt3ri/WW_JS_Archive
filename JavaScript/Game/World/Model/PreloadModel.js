@@ -6,12 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.AssetElement =
     exports.preloadAssetTypeForName =
       void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const PreCreateEffect_1 = require("../../Effect/PreCreateEffect");
-const GlobalData_1 = require("../../GlobalData");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  PreCreateEffect_1 = require("../../Effect/PreCreateEffect"),
+  GlobalData_1 = require("../../GlobalData"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 exports.preloadAssetTypeForName = new Map([
   [0, "Animation"],
   [5, "AnimationBlueprint"],
@@ -37,7 +37,7 @@ class AssetElement {
   }
   CheckPath(t) {
     return (
-      !(!t || t.length === 0) ||
+      !(!t || 0 === t.length) ||
       (Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "World",
@@ -82,9 +82,9 @@ class AssetElement {
       this.AnimationBlueprintClassAssetSet.add(t);
   }
   NeedLoadCount() {
-    const t = this.OtherAssetSet.size;
-    const e = this.AnimationAssetSet.size;
-    const s = this.AudioAssetSet.size;
+    var t = this.OtherAssetSet.size,
+      e = this.AnimationAssetSet.size,
+      s = this.AudioAssetSet.size;
     return (
       t +
       e +
@@ -122,24 +122,23 @@ class CommonAssetElement extends (exports.AssetElement = AssetElement) {
       );
   }
   PrintDebugInfo() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.CommonAssets;
     let s = `
 预加载的公共资源列表如下(数量:${e.Num()}):
 `;
-    let t;
-    let i;
-    const h = new Map();
+    var t,
+      i,
+      h = new Map();
     for ([t, i] of this.AssetForIndexMap) h.set(i, t);
     for (let t = 0; t < e.Num(); ++t) {
-      const r = e.Get(t);
-      const a = h.get(t);
+      var r = e.Get(t),
+        a = h.get(t);
       s += `    索引:${t}, Path:${a}, IsValid:${r?.IsValid()}, Name:${r?.IsValid() ? r.GetName() : void 0}
 `;
     }
     Log_1.Log.CheckDebug() && Log_1.Log.Debug("Preload", 3, s);
   }
-
   Clear() {
     ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.ClearCommonAsset(),
       super.Clear();
@@ -213,7 +212,7 @@ class EntityAssetElement extends AssetElement {
     this.AMr = t;
   }
   AddObject(t, e) {
-    let s;
+    var s;
     this.$fo?.Valid &&
       ((s =
         ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.EntityAssetMap.Get(
@@ -245,20 +244,20 @@ class EntityAssetElement extends AssetElement {
     return this.DMr;
   }
   PrintDebugInfo() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.EntityAssetMap.Get(
         this.Entity.Id,
       ).Assets;
     let s = `
 预加载的实体资源列表如下:(CreatureDataId:${this.CreatureDataComponent.GetCreatureDataId()}, 数量:${e.Num()}):
 `;
-    let t;
-    let i;
-    const h = new Map();
+    var t,
+      i,
+      h = new Map();
     for ([t, i] of this.AssetForIndexMap) h.set(i, t);
     for (let t = 0; t < e.Num(); ++t) {
-      const r = e.Get(t);
-      const a = h.get(t);
+      var r = e.Get(t),
+        a = h.get(t);
       s += `    索引:${t}, Path:${a}, IsValid:${r?.IsValid()}, Name:${r?.IsValid() ? r.GetName() : void 0}
 `;
     }
@@ -315,7 +314,7 @@ class PreloadModel extends ModelBase_1.ModelBase {
     return this.PMr;
   }
   AddPreloadResource(t) {
-    let e;
+    var e;
     this.PreloadAssetMap.has(t)
       ? ((e = this.PreloadAssetMap.get(t)), this.PreloadAssetMap.set(t, e + 1))
       : this.PreloadAssetMap.set(t, 1);
@@ -324,8 +323,8 @@ class PreloadModel extends ModelBase_1.ModelBase {
     if (!this.PreloadAssetMap.has(t)) return !1;
     let e = this.PreloadAssetMap.get(t);
     return (
-      e > 0 && (e--, this.PreloadAssetMap.set(t, e)),
-      e === 0 && this.PreloadAssetMap.delete(t),
+      0 < e && (e--, this.PreloadAssetMap.set(t, e)),
+      0 === e && this.PreloadAssetMap.delete(t),
       !0
     );
   }
@@ -365,4 +364,4 @@ class PreloadModel extends ModelBase_1.ModelBase {
   }
 }
 exports.PreloadModel = PreloadModel;
-// # sourceMappingURL=PreloadModel.js.map
+//# sourceMappingURL=PreloadModel.js.map

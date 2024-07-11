@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputController = void 0);
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const Stats_1 = require("../../Core/Common/Stats");
-const Time_1 = require("../../Core/Common/Time");
-const ControllerBase_1 = require("../../Core/Framework/ControllerBase");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const Global_1 = require("../Global");
-const ModelManager_1 = require("../Manager/ModelManager");
-const InputManager_1 = require("../Ui/Input/InputManager");
-const InputDistributeController_1 = require("../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../Ui/InputDistribute/InputMappingsDefine");
-const InputEnums_1 = require("./InputEnums");
-const KEY_RELEASED_TIME = -1;
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  Stats_1 = require("../../Core/Common/Stats"),
+  Time_1 = require("../../Core/Common/Time"),
+  ControllerBase_1 = require("../../Core/Framework/ControllerBase"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  Global_1 = require("../Global"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  InputManager_1 = require("../Ui/Input/InputManager"),
+  InputDistributeController_1 = require("../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../Ui/InputDistribute/InputMappingsDefine"),
+  InputEnums_1 = require("./InputEnums"),
+  KEY_RELEASED_TIME = -1;
 class InputController extends ControllerBase_1.ControllerBase {
   static get Model() {
     return ModelManager_1.ModelManager.InputModel;
@@ -128,13 +128,13 @@ class InputController extends ControllerBase_1.ControllerBase {
       InputEnums_1.EInputAction.锁定目标 !== t ||
       ModelManager_1.ModelManager.FunctionModel.IsOpen(10031)
     ) {
-      const e = this.Model.GetPressTimes();
+      var e = this.Model.GetPressTimes();
       switch (n) {
         case 1:
           var i = Time_1.Time.WorldTimeSeconds;
           e.set(t, i);
           for (const u of this.Model.GetHandlers()) {
-            const r = u.GetInputFilter();
+            var r = u.GetInputFilter();
             if (r.BlockAction(t)) break;
             r.ListenToAction(t) && u.HandlePressEvent(t, i);
           }
@@ -142,10 +142,10 @@ class InputController extends ControllerBase_1.ControllerBase {
         case 2:
           var o = e.get(t);
           if (o !== KEY_RELEASED_TIME) {
-            const p = this.qMe(o, Time_1.Time.WorldTimeSeconds);
+            var p = this.qMe(o, Time_1.Time.WorldTimeSeconds);
             e.set(t, KEY_RELEASED_TIME);
             for (const a of this.Model.GetHandlers()) {
-              const s = a.GetInputFilter();
+              var s = a.GetInputFilter();
               if (s.BlockAction(t)) break;
               s.ListenToAction(t) && a.HandleReleaseEvent(t, p);
             }
@@ -157,8 +157,8 @@ class InputController extends ControllerBase_1.ControllerBase {
     (this.GMe = t), (this.NMe = n), (this.OMe = e), (this.kMe = i);
   }
   static InputAxis(t, n) {
-    const e = this.Model.GetAxisValues();
-    if (n !== 0 || !e.has(t)) {
+    var e = this.Model.GetAxisValues();
+    if (0 !== n || !e.has(t)) {
       if (
         (ModelManager_1.ModelManager.InputModel.IsOpenInputAxisLog &&
           Log_1.Log.CheckInfo() &&
@@ -171,11 +171,11 @@ class InputController extends ControllerBase_1.ControllerBase {
           ),
         t === InputEnums_1.EInputAxis.MoveForward)
       ) {
-        if (!this.GMe && n > 0) return;
+        if (!this.GMe && 0 < n) return;
         if (!this.NMe && n < 0) return;
       }
       if (t === InputEnums_1.EInputAxis.MoveRight) {
-        if (!this.kMe && n > 0) return;
+        if (!this.kMe && 0 < n) return;
         if (!this.OMe && n < 0) return;
       }
       e.set(t, n),
@@ -195,12 +195,12 @@ class InputController extends ControllerBase_1.ControllerBase {
   }
   static PostProcessInput(t, n) {
     if (this.Model) {
-      let e;
-      let i;
-      const r = this.Model.GetHandlers();
+      var e,
+        i,
+        r = this.Model.GetHandlers();
       for ([e, i] of this.Model.GetAxisValues())
         for (const I of r) {
-          const o = I.GetInputFilter();
+          var o = I.GetInputFilter();
           if (o.BlockAxis(e)) break;
           o.ListenToAxis(e) &&
             (ModelManager_1.ModelManager.InputModel.IsOpenInputAxisLog &&
@@ -214,14 +214,14 @@ class InputController extends ControllerBase_1.ControllerBase {
               ),
             I.HandleInputAxis(e, i));
         }
-      let p;
-      let s;
-      const u = Time_1.Time.WorldTimeSeconds;
+      var p,
+        s,
+        u = Time_1.Time.WorldTimeSeconds;
       for ([p, s] of this.Model.GetPressTimes()) {
-        const a = this.qMe(s, u);
+        var a = this.qMe(s, u);
         if (a !== KEY_RELEASED_TIME)
           for (const l of r) {
-            const _ = l.GetInputFilter();
+            var _ = l.GetInputFilter();
             if (_.BlockAction(p)) break;
             _.ListenToAction(p) && l.HandleHoldEvent(p, a);
           }
@@ -270,11 +270,11 @@ class InputController extends ControllerBase_1.ControllerBase {
   (InputController.OMe = !0),
   (InputController.kMe = !0),
   (InputController.wMe = (t, n, e) => {
-    var e = e.GetInputAxis();
-    const i =
-      (InputController.InputAxis(e, n), Global_1.Global.CharacterController);
+    var e = e.GetInputAxis(),
+      i =
+        (InputController.InputAxis(e, n), Global_1.Global.CharacterController);
     i &&
-      n > 0 &&
+      0 < n &&
       e !== InputEnums_1.EInputAxis.Zoom &&
       ModelManager_1.ModelManager.PlatformModel.IsPc() &&
       !i.bShowMouseCursor &&
@@ -285,28 +285,28 @@ class InputController extends ControllerBase_1.ControllerBase {
     InputController.InputAxis(e, n);
   }),
   (InputController.bMe = (t, n, e) => {
-    (n = n === 0 ? 1 : 2), (e = e.GetInputAction());
+    (n = 0 === n ? 1 : 2), (e = e.GetInputAction());
     InputController.InputAction(e, n);
   }),
   (InputController.AMe = () => {
-    for (const [t] of InputController.Model.GetPressTimes())
+    for (var [t] of InputController.Model.GetPressTimes())
       InputController.InputAction(t, 2);
   }),
   (InputController.PMe = (t) => {
     t &&
       Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Input", 7, "强制释放所有按键", ["Reason", t]);
-    for (const [n] of InputController.Model.GetPressTimes())
+    for (var [n] of InputController.Model.GetPressTimes())
       InputController.InputAction(n, 2);
   }),
   (InputController.xMe = (t) => {
-    let n;
-    const e = ModelManager_1.ModelManager.InputDistributeModel;
+    var n,
+      e = ModelManager_1.ModelManager.InputDistributeModel;
     for ([n] of InputController.Model.GetPressTimes()) {
-      const i = e.GetActionInputDistributeTagName(InputEnums_1.EInputAction[n]);
+      var i = e.GetActionInputDistributeTagName(InputEnums_1.EInputAction[n]);
       !i ||
         e.IsTagMatchAnyCurrentInputTag(i) ||
         InputController.InputAction(n, 2);
     }
   });
-// # sourceMappingURL=InputController.js.map
+//# sourceMappingURL=InputController.js.map

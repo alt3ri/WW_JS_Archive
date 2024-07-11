@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityProgressComponents = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../../../Util/LguiUtil");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../../../Util/LguiUtil");
 class ActivityProgressComponents extends UiPanelBase_1.UiPanelBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -33,4 +33,4 @@ class ActivityProgressComponents extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ActivityProgressComponents = ActivityProgressComponents;
-// # sourceMappingURL=ActivityProgressComponent.js.map
+//# sourceMappingURL=ActivityProgressComponent.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoadingShowData = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
+const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager");
 class LoadingShowData {
   constructor() {
     (this._pi = []),
@@ -18,14 +18,14 @@ class LoadingShowData {
       (this.cpi = this.mpi.reduce((e, t) => e + t.Weight, 0));
   }
   gpi(e) {
-    const t = new Set();
+    var t = new Set();
     for (const a of e) t.add(a.ImageId);
-    var e = Array.from(t.values());
-    const r = Math.random();
+    var e = Array.from(t.values()),
+      r = Math.random();
     return e[Math.round(r * (e.length - 1))];
   }
   Cpi() {
-    const e = [];
+    var e = [];
     for (const t of this.fpi())
       e.push(
         ...ConfigManager_1.ConfigManager.LoadingConfig.GetLoadingTipsTextList(
@@ -37,7 +37,7 @@ class LoadingShowData {
   }
   fpi() {
     const i = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerLevel();
-    const e = ConfigManager_1.ConfigManager.LoadingConfig.GetLevelArea();
+    var e = ConfigManager_1.ConfigManager.LoadingConfig.GetLevelArea();
     const o = ModelManager_1.ModelManager.GameModeModel.MapId;
     let n = ModelManager_1.ModelManager.AreaModel.GetCurrentAreaId();
     ModelManager_1.ModelManager.LoadingModel.TargetTeleportId &&
@@ -49,49 +49,50 @@ class LoadingShowData {
         (t = ModelManager_1.ModelManager.CreatureModel?.GetEntityData(t)) &&
       (n = t.AreaId);
     var t = e.filter((e) => {
-      let t, r, a;
-      return (
-        e.Id !== 1 &&
-        ((t = i >= e.LevelRange[0] && i <= e.LevelRange[1]),
-        (r = e.AreaId.includes(n)),
-        (a = e.MapId.includes(o)),
-        (e =
-          e.ConditionGroup === 0 ||
-          ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckCondition(
-            e.ConditionGroup.toString(),
-            void 0,
-          )),
-        t) &&
-        (r || a) &&
-        e
-      );
-    });
-    const r = t.filter((e) => e.IsLimitShow);
-    var t = t.filter((e) => !e.IsLimitShow);
-    if (
-      r.length > 0 &&
-      r.filter((e) => {
-        e = ModelManager_1.ModelManager.ActivityModel?.GetActivityById(
-          e.ActivityId,
+        var t, r, a;
+        return (
+          1 !== e.Id &&
+          ((t = i >= e.LevelRange[0] && i <= e.LevelRange[1]),
+          (r = e.AreaId.includes(n)),
+          (a = e.MapId.includes(o)),
+          (e =
+            0 === e.ConditionGroup ||
+            ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckCondition(
+              e.ConditionGroup.toString(),
+              void 0,
+            )),
+          t) &&
+          (r || a) &&
+          e
         );
-        return void 0 !== e && e.CheckIfInOpenTime();
-      }).length > 0
+      }),
+      r = t.filter((e) => e.IsLimitShow),
+      t = t.filter((e) => !e.IsLimitShow);
+    if (
+      0 < r.length &&
+      0 <
+        r.filter((e) => {
+          e = ModelManager_1.ModelManager.ActivityModel?.GetActivityById(
+            e.ActivityId,
+          );
+          return void 0 !== e && e.CheckIfInOpenTime();
+        }).length
     )
       return r.map((e) => e.Id);
-    return t.length === 0 ? [e[0].Id] : t.map((e) => e.Id);
+    return 0 === t.length ? [e[0].Id] : t.map((e) => e.Id);
   }
   ppi() {
     let t = this.cpi * Math.random();
     for (let e = 0; e < this.mpi.length; ++e) {
-      const r = this.mpi[e];
+      var r = this.mpi[e];
       if (!(t > r.Weight)) return e;
       t -= r.Weight;
     }
     return 0;
   }
   GetNextTip() {
-    if (this._pi.length !== 0) {
-      if (this._pi.length === 1) return this._pi[0];
+    if (0 !== this._pi.length) {
+      if (1 === this._pi.length) return this._pi[0];
       let e = -1;
       for (; (e = this.ppi()) === this.oTt; );
       return (this.oTt = e), this._pi[this.oTt];
@@ -102,4 +103,4 @@ class LoadingShowData {
   }
 }
 exports.LoadingShowData = LoadingShowData;
-// # sourceMappingURL=LoadingShowData.js.map
+//# sourceMappingURL=LoadingShowData.js.map

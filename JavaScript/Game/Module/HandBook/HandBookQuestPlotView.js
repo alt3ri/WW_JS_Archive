@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HandBookQuestPlotView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const PlotAudioById_1 = require("../../../Core/Define/ConfigQuery/PlotAudioById");
-const SpeakerById_1 = require("../../../Core/Define/ConfigQuery/SpeakerById");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const PublicUtil_1 = require("../../Common/PublicUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../Ui/Common/PopupCaptionItem");
-const UiNavigationNewController_1 = require("../UiNavigation/New/UiNavigationNewController");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const DynScrollView_1 = require("../Util/ScrollView/DynScrollView");
-const HandBookDefine_1 = require("./HandBookDefine");
-const HandBookQuestPlotItem_1 = require("./HandBookQuestPlotItem");
-const HandBookQuestPlotList_1 = require("./HandBookQuestPlotList");
-const HandBootPlotDynamicItem_1 = require("./HandBootPlotDynamicItem");
-const HandBootQuestDynamicItem_1 = require("./HandBootQuestDynamicItem");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  PlotAudioById_1 = require("../../../Core/Define/ConfigQuery/PlotAudioById"),
+  SpeakerById_1 = require("../../../Core/Define/ConfigQuery/SpeakerById"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../Common/PublicUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../Ui/Common/PopupCaptionItem"),
+  UiNavigationNewController_1 = require("../UiNavigation/New/UiNavigationNewController"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  DynScrollView_1 = require("../Util/ScrollView/DynScrollView"),
+  HandBookDefine_1 = require("./HandBookDefine"),
+  HandBookQuestPlotItem_1 = require("./HandBookQuestPlotItem"),
+  HandBookQuestPlotList_1 = require("./HandBookQuestPlotList"),
+  HandBootPlotDynamicItem_1 = require("./HandBootPlotDynamicItem"),
+  HandBootQuestDynamicItem_1 = require("./HandBootQuestDynamicItem");
 class HandBookQuestPlotView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -43,13 +43,13 @@ class HandBookQuestPlotView extends UiViewBase_1.UiViewBase {
       (this.sUn = new Map()),
       (this.uPn = []),
       (this.aUn = (i, t, e) => {
-        const s = new HandBookQuestPlotItem_1.HandBookQuestPlotItem();
+        var s = new HandBookQuestPlotItem_1.HandBookQuestPlotItem();
         return (
           s.BindClickCallback(this.cPn), s.BindIsSelectFunction(this.mPn), s
         );
       }),
       (this.lUn = (i, t, e) => {
-        const s = new HandBookQuestPlotList_1.HandBookQuestPlotList();
+        var s = new HandBookQuestPlotList_1.HandBookQuestPlotList();
         return (
           s.BindClickOptionToggleBack(this.Zu), s.BindOnRefreshNode(this.dPn), s
         );
@@ -62,7 +62,7 @@ class HandBookQuestPlotView extends UiViewBase_1.UiViewBase {
         if (!this.hPn) {
           this.hPn = !0;
           let t = 0;
-          const s = this.tUn.length;
+          var s = this.tUn.length;
           for (let i = 0; i < s; i++) this.tUn[i].NodeText === e && (t = i);
           this.PlotListScrollView?.ScrollToItemIndex(t).finally(() => {
             (this.hPn = !1), this.dPn(e);
@@ -82,7 +82,7 @@ class HandBookQuestPlotView extends UiViewBase_1.UiViewBase {
       }),
       (this.D4s = []),
       (this.nHe = () => {
-        if (this.D4s.length > 0) {
+        if (0 < this.D4s.length) {
           for (const i of this.PlotListScrollView?.GetScrollItemItems())
             if (
               i.OptionData?.TalkOption &&
@@ -124,7 +124,7 @@ class HandBookQuestPlotView extends UiViewBase_1.UiViewBase {
               : s.SetToggleState(0);
           if (!i) {
             let i = 0;
-            for (const [e] of this.sUn) {
+            for (var [e] of this.sUn) {
               if (e === t) break;
               i++;
             }
@@ -179,7 +179,7 @@ class HandBookQuestPlotView extends UiViewBase_1.UiViewBase {
       (this.nVt = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
       this.nVt.SetCloseCallBack(this.i2e),
       this.nVt.SetHelpBtnActive(!1);
-    const i = this.OpenParam;
+    var i = this.OpenParam;
     (this.aPn = i.ConfigIdList), (this.q8i = i.Index), this.Og();
   }
   OnBeforeDestroy() {
@@ -197,11 +197,11 @@ class HandBookQuestPlotView extends UiViewBase_1.UiViewBase {
           this.q8i,
         ]);
     else {
-      this.GetButton(5)?.RootUIComp.SetUIActive(this.q8i > 0),
+      this.GetButton(5)?.RootUIComp.SetUIActive(0 < this.q8i),
         this.GetButton(6)?.RootUIComp.SetUIActive(this.q8i + 1 < i);
-      var i = this.aPn[this.q8i];
-      const t =
-        ConfigManager_1.ConfigManager.HandBookConfig.GetPlotHandBookConfig(i);
+      var i = this.aPn[this.q8i],
+        t =
+          ConfigManager_1.ConfigManager.HandBookConfig.GetPlotHandBookConfig(i);
       if (t) {
         if (
           !ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(t.Type, i)
@@ -218,12 +218,12 @@ class HandBookQuestPlotView extends UiViewBase_1.UiViewBase {
           );
         }
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), t.Descrtption);
-        const s = ModelManager_1.ModelManager.QuestNewModel?.GetQuestConfig(
-          t.QuestId,
-        );
-        var e = s?.TidName
-          ? PublicUtil_1.PublicUtil.GetConfigTextByKey(s.TidName)
-          : "";
+        var s = ModelManager_1.ModelManager.QuestNewModel?.GetQuestConfig(
+            t.QuestId,
+          ),
+          e = s?.TidName
+            ? PublicUtil_1.PublicUtil.GetConfigTextByKey(s.TidName)
+            : "";
         this.nVt.SetTitle(e);
         const l =
           ConfigManager_1.ConfigManager.HandBookConfig?.GetPlotTypeConfig(
@@ -241,10 +241,10 @@ class HandBookQuestPlotView extends UiViewBase_1.UiViewBase {
           let t = "";
           for (const f of i) {
             const _ = f.IsHideUi ? "" : f.TidTip;
-            if (_ === "") {
-              if (t === "") {
-                const o = s?.TidName ?? "";
-                let n = this.sUn.get(o);
+            if ("" === _) {
+              if ("" === t) {
+                var o = s?.TidName ?? "",
+                  n = this.sUn.get(o);
                 if (!n) {
                   (n = []).push(f), (t = o), this.sUn.set(o, n);
                   continue;
@@ -252,8 +252,8 @@ class HandBookQuestPlotView extends UiViewBase_1.UiViewBase {
               }
               this.sUn.get(t).push(f);
             } else if (
-              t !== "" &&
-              _ !== "" &&
+              "" !== t &&
+              "" !== _ &&
               PublicUtil_1.PublicUtil.GetConfigTextByKey(t) ===
                 PublicUtil_1.PublicUtil.GetConfigTextByKey(_)
             )
@@ -263,10 +263,10 @@ class HandBookQuestPlotView extends UiViewBase_1.UiViewBase {
               i ? i.push(f) : ((i = []).push(f), (t = _), this.sUn.set(_, i));
             }
           }
-          let h;
-          const r = [];
+          var h,
+            r = [];
           for ([h] of this.sUn) {
-            const a = new HandBookDefine_1.HandBookQuestDynamicData();
+            var a = new HandBookDefine_1.HandBookQuestDynamicData();
             (a.TidText = h), r.push(a), this.uPn.push(h);
           }
           this.NodeScrollView.RefreshByData(r);
@@ -285,13 +285,13 @@ class HandBookQuestPlotView extends UiViewBase_1.UiViewBase {
   }
   _Un() {
     let i = 0;
-    for (const [t, e] of this.sUn) {
-      var s;
-      const o = new HandBookDefine_1.HandBookPlotDynamicData();
+    for (var [t, e] of this.sUn) {
+      var s,
+        o = new HandBookDefine_1.HandBookPlotDynamicData();
       (o.NodeText = t), (o.BelongToNode = t), this.tUn.push(o);
       for (const n of e)
         n.Flow.FlowListName &&
-          n.Flow.FlowListName !== "" &&
+          "" !== n.Flow.FlowListName &&
           (s = ConfigManager_1.ConfigManager.FlowConfig.GetFlowStateActions(
             n.Flow.FlowListName,
             n.Flow.FlowId,
@@ -303,25 +303,26 @@ class HandBookQuestPlotView extends UiViewBase_1.UiViewBase {
   uUn(i, t, e) {
     this.nUn = 0;
     for (const n of i)
-      if (n.Name === "PlayMovie")
+      if ("PlayMovie" === n.Name)
         Log_1.Log.CheckDebug() && Log_1.Log.Debug("HandBook", 5, "播片剧情");
-      else if (n.Name === "ShowTalk")
+      else if ("ShowTalk" === n.Name)
         for (const h of n.Params.TalkItems)
           if (!(this.nUn && h.Id < this.nUn)) {
             if (
-              ((this.nUn = 0), (h.WhoId ?? h.TidTalk) && h.Type !== "Option")
+              ((this.nUn = 0), (h.WhoId ?? h.TidTalk) && "Option" !== h.Type)
             ) {
-              var s = new HandBookDefine_1.HandBookPlotDynamicData();
-              var o =
-                ((s.BelongToNode = e),
-                h.WhoId
-                  ? SpeakerById_1.configSpeakerById.GetConfig(h.WhoId)
-                  : void 0);
+              var s = new HandBookDefine_1.HandBookPlotDynamicData(),
+                o =
+                  ((s.BelongToNode = e),
+                  h.WhoId
+                    ? SpeakerById_1.configSpeakerById.GetConfig(h.WhoId)
+                    : void 0);
               let i = "";
-              (i = o
-                ? PublicUtil_1.PublicUtil.GetConfigTextByTable(0, o.Id) ?? ""
-                : i) !== " " &&
-                i !== "" &&
+              " " !==
+                (i = o
+                  ? PublicUtil_1.PublicUtil.GetConfigTextByTable(0, o.Id) ?? ""
+                  : i) &&
+                "" !== i &&
                 (i += this._Pn),
                 (s.TalkOwnerName = i),
                 h.PlayVoice &&
@@ -336,7 +337,7 @@ class HandBookQuestPlotView extends UiViewBase_1.UiViewBase {
                 this.tUn.push(s);
             }
             h.Options &&
-              h.Options.length > 0 &&
+              0 < h.Options.length &&
               ((o = this.iUn.get(t)?.get(h.Id) ?? 0),
               (s = h.Options[o]),
               this.cUn(s.Actions, h.Id),
@@ -347,16 +348,16 @@ class HandBookQuestPlotView extends UiViewBase_1.UiViewBase {
   cUn(i, t) {
     if (i)
       for (const s of i) {
-        if (s.Name === "FinishTalk" || s.Name === "FinishState") return;
+        if ("FinishTalk" === s.Name || "FinishState" === s.Name) return;
         var e;
-        s.Name !== "JumpTalk" || (e = s.Params.TalkId) <= t || (this.nUn = e);
+        "JumpTalk" !== s.Name || (e = s.Params.TalkId) <= t || (this.nUn = e);
       }
   }
   mFs(t, e, s, o, n) {
     const h = new HandBookDefine_1.HandBookPlotDynamicData();
     (h.BelongToNode = s), (h.OptionTalker = !0), this.tUn.push(h);
     for (let i = 0; i < t.length; i++) {
-      const r = t[i];
+      var r = t[i];
       const h = new HandBookDefine_1.HandBookPlotDynamicData();
       (h.BelongToNode = s),
         (h.OptionIndex = i),
@@ -369,4 +370,4 @@ class HandBookQuestPlotView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.HandBookQuestPlotView = HandBookQuestPlotView;
-// # sourceMappingURL=HandBookQuestPlotView.js.map
+//# sourceMappingURL=HandBookQuestPlotView.js.map

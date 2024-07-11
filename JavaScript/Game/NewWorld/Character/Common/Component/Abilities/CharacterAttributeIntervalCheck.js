@@ -27,7 +27,7 @@ class AttributeIntervalCheck {
       : t <= this.UpperBound && t > this.LowerBound;
   }
   CheckActiveness(t) {
-    let s;
+    var s;
     return (
       !!t &&
       ((s = t.GetCurrentValue(this.ListenAttributeId)),
@@ -41,4 +41,4 @@ class AttributeIntervalCheck {
   }
 }
 exports.AttributeIntervalCheck = AttributeIntervalCheck;
-// # sourceMappingURL=CharacterAttributeIntervalCheck.js.map
+//# sourceMappingURL=CharacterAttributeIntervalCheck.js.map

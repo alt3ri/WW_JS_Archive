@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TabComponentWithCaptionItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem");
-const LevelSequencePlayer_1 = require("../LevelSequencePlayer");
-const TabComponent_1 = require("./TabComponent");
-const CommonTabItemBase_1 = require("./TabItem/CommonTabItemBase");
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
+  LevelSequencePlayer_1 = require("../LevelSequencePlayer"),
+  TabComponent_1 = require("./TabComponent"),
+  CommonTabItemBase_1 = require("./TabItem/CommonTabItemBase"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
 class TabComponentWithCaptionItem extends UiPanelBase_1.UiPanelBase {
   constructor(t, e, i) {
     super(),
@@ -20,7 +20,7 @@ class TabComponentWithCaptionItem extends UiPanelBase_1.UiPanelBase {
         return this.bBt.ProxyCreate(t, e);
       }),
       (this.pqe = (t) => {
-        const e = this.bBt.GetCommonData(t);
+        var e = this.bBt.GetCommonData(t);
         e &&
           this.NeedCaptionSwitchWithToggle &&
           (this.lqe.SetTitleByTitleData(e.GetTitleData()),
@@ -73,9 +73,9 @@ class TabComponentWithCaptionItem extends UiPanelBase_1.UiPanelBase {
     await this.RefreshTabItemAsync(t);
   }
   CreateTabItemDataByLength(e) {
-    const i = new Array();
+    var i = new Array();
     for (let t = 0; t < e; t++) {
-      const s = new CommonTabItemBase_1.CommonTabItemData();
+      var s = new CommonTabItemBase_1.CommonTabItemData();
       (s.Index = t), (s.Data = this.bBt.GetCommonData(t)), i.push(s);
     }
     return i;
@@ -87,7 +87,7 @@ class TabComponentWithCaptionItem extends UiPanelBase_1.UiPanelBase {
     this.Gft.PlayLevelSequenceByName("Start", !0);
   }
   async ShowItemAsync() {
-    const t = new CustomPromise_1.CustomPromise();
+    var t = new CustomPromise_1.CustomPromise();
     await this.Gft.PlaySequenceAsync("Start", t, !0);
   }
   HideItem() {
@@ -157,4 +157,4 @@ class TabComponentWithCaptionItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.TabComponentWithCaptionItem = TabComponentWithCaptionItem;
-// # sourceMappingURL=TabComponentWithCaptionItem.js.map
+//# sourceMappingURL=TabComponentWithCaptionItem.js.map

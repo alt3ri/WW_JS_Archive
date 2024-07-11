@@ -13,7 +13,7 @@ class ActorPoolGuard {
         UE.KuroActorManager.ResetDelegates(e),
         e.K2_DetachFromActor(),
         e.SetActorHiddenInGame(!0);
-      const o = e.K2_GetComponentsByClass(UE.ActorComponent.StaticClass());
+      var o = e.K2_GetComponentsByClass(UE.ActorComponent.StaticClass());
       for (let e = 0; e < o.Num(); e++)
         UE.KuroActorManager.UnregisterComponent(o.Get(e));
       e.SetActorTickEnabled(!1), e.SetActorEnableCollision(!1);
@@ -27,7 +27,7 @@ class ActorPoolGuard {
     );
   }
   static ClearSequenceActor(e) {
-    let r;
+    var r;
     (e.PlaybackSettings = new UE.MovieSceneSequencePlaybackSettings()),
       e.ResetBindings(),
       e.SequencePlayer.OnFinished.Clear(),
@@ -44,4 +44,4 @@ class ActorPoolGuard {
   }
 }
 exports.ActorPoolGuard = ActorPoolGuard;
-// # sourceMappingURL=ActorPoolGuard.js.map
+//# sourceMappingURL=ActorPoolGuard.js.map

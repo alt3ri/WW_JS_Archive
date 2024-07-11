@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TrackTextExpressController = void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const PublicUtil_1 = require("../../../../Common/PublicUtil");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const LogicNodeBase_1 = require("../../BehaviorNode/LogicNode/LogicNodeBase");
-const GeneralLogicTreeDefine_1 = require("../../Define/GeneralLogicTreeDefine");
-const GeneralLogicTreeController_1 = require("../../GeneralLogicTreeController");
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../../../Common/PublicUtil"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LogicNodeBase_1 = require("../../BehaviorNode/LogicNode/LogicNodeBase"),
+  GeneralLogicTreeDefine_1 = require("../../Define/GeneralLogicTreeDefine"),
+  GeneralLogicTreeController_1 = require("../../GeneralLogicTreeController");
 class TrackTextExpressController {
   constructor(e) {
     (this.Yre = void 0),
@@ -35,7 +35,7 @@ class TrackTextExpressController {
   EnableTrack(e, t = 0) {
     if (e) this.StartTextExpress();
     else {
-      const e = t === 1 ? 2 : 0;
+      let e = 1 === t ? 2 : 0;
       this.EndTextExpress(e);
     }
   }
@@ -43,7 +43,7 @@ class TrackTextExpressController {
     this.vQt.set(e, !0), this.Yre.IsOccupied || this.EQt(e);
   }
   EQt(e) {
-    let t;
+    var t;
     this.SQt ||
       ((t = this.Yre.CreateShowBridge()),
       EventSystem_1.EventSystem.Emit(
@@ -54,8 +54,8 @@ class TrackTextExpressController {
       (this.SQt = !0));
   }
   EndTextExpress(e = 0) {
-    e === 2 ? this.vQt.clear() : this.vQt.delete(e),
-      this.vQt.size === 0 && this.yQt(e);
+    2 === e ? this.vQt.clear() : this.vQt.delete(e),
+      0 === this.vQt.size && this.yQt(e);
   }
   yQt(e) {
     this.SQt &&
@@ -91,7 +91,7 @@ class TrackTextExpressController {
     else this.Yre.ContainTag(10) || this.TQt();
   }
   IQt(i, e) {
-    const t = this.MQt.findIndex((e, t) => e.SourceOfAdd === i);
+    var t = this.MQt.findIndex((e, t) => e.SourceOfAdd === i);
     if (e)
       t < 0
         ? this.MQt.push(new GeneralLogicTreeDefine_1.BtCustomUiConfig(i, e))
@@ -102,7 +102,7 @@ class TrackTextExpressController {
     }
     this.Yre.RemoveTag(10);
     let s = void 0;
-    this.MQt.length !== 0
+    0 !== this.MQt.length
       ? (this.Yre.AddTag(10),
         (e = this.MQt[0].CustomUiConfig),
         this.pQt.CopyConfig(e),
@@ -119,7 +119,7 @@ class TrackTextExpressController {
       );
   }
   TQt() {
-    let e, t, i;
+    var e, t, i;
     this.fQt.Clear();
     let s = 0;
     for ([e, t] of this.Yre.GetNodesByGroupId(1))
@@ -135,13 +135,13 @@ class TrackTextExpressController {
         this.fQt.SetMainTitle(i),
         this.fQt.AddSubTitle(i),
         s++);
-    s === 1 ? this.fQt.ClearSubTitle() : this.fQt.SetMainTitle(void 0);
+    1 === s ? this.fQt.ClearSubTitle() : this.fQt.SetMainTitle(void 0);
   }
   OnBtApplyExpressionOccupation(e) {
     e || this.yQt(3);
   }
   OnBtReleaseExpressionOccupation(e) {
-    e || (this.vQt.size !== 0 && this.EQt(3));
+    e || (0 !== this.vQt.size && this.EQt(3));
   }
   OnSuspend(e, t) {
     switch (t) {
@@ -157,7 +157,7 @@ class TrackTextExpressController {
     e &&
       e.ContainTag(0) &&
       e instanceof LogicNodeBase_1.LogicNodeBase &&
-      (this.fQt.Clear(), t === 1) &&
+      (this.fQt.Clear(), 1 === t) &&
       e.SuspendTrackText &&
       !StringUtils_1.StringUtils.IsEmpty(
         PublicUtil_1.PublicUtil.GetConfigTextByKey(e.SuspendTrackText),
@@ -169,7 +169,7 @@ class TrackTextExpressController {
       this.fQt.ClearSubTitle());
   }
   OnCancelSuspend() {
-    this.DQt(), this.vQt.size !== 0 && this.EQt(3);
+    this.DQt(), 0 !== this.vQt.size && this.EQt(3);
   }
   DQt() {
     this.Yre.ContainTag(10) &&
@@ -181,4 +181,4 @@ class TrackTextExpressController {
   }
 }
 exports.TrackTextExpressController = TrackTextExpressController;
-// # sourceMappingURL=TrackTextExpressController.js.map
+//# sourceMappingURL=TrackTextExpressController.js.map

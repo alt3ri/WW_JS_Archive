@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectSpec = void 0);
-const UE = require("ue");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const Stats_1 = require("../../../Core/Common/Stats");
-const EffectEnvironment_1 = require("../../../Core/Effect/EffectEnvironment");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const EEffectFlag_1 = require("../EEffectFlag");
-const EffectLifeTime_1 = require("../EffectLifeTime");
-const SMALLER_ONE = 0.99;
-const LARGER_ONE = 1.01;
-const MAX_WAIT_TIME_SCALE_ZERO_TIME = 1e4;
-const MAX_WAIT_TIME_SCALE_VALUE = 0.01;
+const UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  EffectEnvironment_1 = require("../../../Core/Effect/EffectEnvironment"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  EEffectFlag_1 = require("../EEffectFlag"),
+  EffectLifeTime_1 = require("../EffectLifeTime"),
+  SMALLER_ONE = 0.99,
+  LARGER_ONE = 1.01,
+  MAX_WAIT_TIME_SCALE_ZERO_TIME = 1e4,
+  MAX_WAIT_TIME_SCALE_VALUE = 0.01;
 class EffectSpec {
   constructor() {
     (this.Handle = void 0),
@@ -96,12 +96,12 @@ class EffectSpec {
     return this.StoppingTimeInternal ? 0 : this.bge;
   }
   GetGlobalTimeScale() {
-    return this.ufe === 1
+    return 1 === this.ufe
       ? 1
       : EffectEnvironment_1.EffectEnvironment.GlobalTimeScale;
   }
   SetTimeScale(t, i = !1) {
-    let s;
+    var s;
     (this.bge === t && !i) ||
       (this.GetIgnoreTimeScale() ||
         ((i = t * this.GetGlobalTimeScale()),
@@ -140,7 +140,7 @@ class EffectSpec {
     this.StoppingTimeInternal = t;
   }
   RDn() {
-    let t;
+    var t;
     this.SetStoppingTime(!0),
       this.GetIgnoreTimeScale() ||
         (this.Handle?.IsRoot() &&
@@ -198,10 +198,10 @@ class EffectSpec {
   vfe() {
     (this.BodyEffectOpacity = 1), (this.BodyEffectVisible = !0);
     let t = void 0;
-    const i = this.Handle?.GetEffectActor()?.GetAttachParentActor();
-    const s = this.Handle.GetContext();
-    let e = s;
-    (this.EffectModel.LoopTime > 0 || this.EffectModel.NeedDisableWithActor) &&
+    var i = this.Handle?.GetEffectActor()?.GetAttachParentActor(),
+      s = this.Handle.GetContext(),
+      e = s;
+    (0 < this.EffectModel.LoopTime || this.EffectModel.NeedDisableWithActor) &&
       (e &&
         ((e = e.SkeletalMeshComp?.GetOwner()),
         (t = e?.GetComponentByClass(
@@ -290,7 +290,7 @@ class EffectSpec {
           this.RDn();
       }
       let t = i;
-      let s, e;
+      var s, e;
       !this.GetIgnoreTimeScale() &&
         ((s = this.GetGlobalTimeScale()),
         (e = this.GetTimeScale()),
@@ -348,7 +348,7 @@ class EffectSpec {
     );
   }
   Clear() {
-    let t;
+    var t;
     return 64 & this.ige
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -464,15 +464,15 @@ class EffectSpec {
   SeekTo(t, i = !0, s = !1, e = 0) {
     (t !== this.LifeTime.GetPassTime && this.LifeTime.SeekTo(t, s, !1, i)) ||
       (this._fe &&
-        ((s = e !== 0 ? e : t - this.LifeTime.GetPassTime),
-        this.OnTick(s > 0 ? s : 0)));
+        ((s = 0 !== e ? e : t - this.LifeTime.GetPassTime),
+        this.OnTick(0 < s ? s : 0)));
   }
   SeekDelta(t, i = !0, s = !1, e = 0) {
     t = this.LifeTime.PassTime + t;
-    this.SeekTo(t, i, s), this._fe && e !== 0 && this.OnTick(e);
+    this.SeekTo(t, i, s), this._fe && 0 !== e && this.OnTick(e);
   }
   ChaseFrame(t, i = !0, s = !1) {
-    const e = this.LifeTime.PassTime + t;
+    var e = this.LifeTime.PassTime + t;
     this.LifeTime.SeekTo(e, s, !1, i) || this.OnTick(0), this.OnChaseFrame(t);
   }
   OnChaseFrame(t) {}
@@ -493,4 +493,4 @@ class EffectSpec {
   }
 }
 exports.EffectSpec = EffectSpec;
-// # sourceMappingURL=EffectSpec.js.map
+//# sourceMappingURL=EffectSpec.js.map

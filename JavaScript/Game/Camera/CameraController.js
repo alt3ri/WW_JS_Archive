@@ -1,38 +1,42 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, a, r) {
-    let i;
-    const s = arguments.length;
-    let o =
-      s < 3 ? t : r === null ? (r = Object.getOwnPropertyDescriptor(t, a)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var i,
+      s = arguments.length,
+      o =
+        s < 3
+          ? t
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(t, a))
+            : r;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       o = Reflect.decorate(e, t, a, r);
     else
-      for (let n = e.length - 1; n >= 0; n--)
-        (i = e[n]) && (o = (s < 3 ? i(o) : s > 3 ? i(t, a, o) : i(t, a)) || o);
-    return s > 3 && o && Object.defineProperty(t, a, o), o;
+      for (var n = e.length - 1; 0 <= n; n--)
+        (i = e[n]) && (o = (s < 3 ? i(o) : 3 < s ? i(t, a, o) : i(t, a)) || o);
+    return 3 < s && o && Object.defineProperty(t, a, o), o;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraController = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const ActorSystem_1 = require("../../Core/Actor/ActorSystem");
-const Log_1 = require("../../Core/Common/Log");
-const Time_1 = require("../../Core/Common/Time");
-const ControllerBase_1 = require("../../Core/Framework/ControllerBase");
-const PerformanceDecorators_1 = require("../../Core/Performance/PerformanceDecorators");
-const TimerSystem_1 = require("../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const Global_1 = require("../Global");
-const GlobalData_1 = require("../GlobalData");
-const ModelManager_1 = require("../Manager/ModelManager");
-const CameraParams_1 = require("./CameraParams");
-const CameraUtility_1 = require("./CameraUtility");
-const author = 15;
-const SECOND_TO_MILLISECOND = 1e3;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../Core/Common/Log"),
+  Time_1 = require("../../Core/Common/Time"),
+  ControllerBase_1 = require("../../Core/Framework/ControllerBase"),
+  PerformanceDecorators_1 = require("../../Core/Performance/PerformanceDecorators"),
+  TimerSystem_1 = require("../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  Global_1 = require("../Global"),
+  GlobalData_1 = require("../GlobalData"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  CameraParams_1 = require("./CameraParams"),
+  CameraUtility_1 = require("./CameraUtility"),
+  author = 15,
+  SECOND_TO_MILLISECOND = 1e3;
 class CameraController extends ControllerBase_1.ControllerBase {
   static get Model() {
     return ModelManager_1.ModelManager.CameraModel;
@@ -66,7 +70,7 @@ class CameraController extends ControllerBase_1.ControllerBase {
       this.SequenceCamera.PlayerComponent.SetPawn(e);
   }
   static SetViewTarget(e, t, a = 0, r = 0, i = 0, s, o) {
-    let n;
+    var n;
     e?.IsValid()
       ? (n = this.GetPlayerController()) &&
         ((n.bShouldPerformFullTickWhenPaused = !0),
@@ -111,7 +115,7 @@ class CameraController extends ControllerBase_1.ControllerBase {
       );
   }
   static OnTick(e) {
-    let t, a;
+    var t, a;
     this.Model.CurrentCameraActor?.IsValid() &&
       (this.Model.CameraLocation.FromUeVector(
         this.Model.CurrentCameraActor.K2_GetActorLocation(),
@@ -124,7 +128,7 @@ class CameraController extends ControllerBase_1.ControllerBase {
       (a =
         !(t = Global_1.Global.BaseCharacter?.CharacterActorComponent)?.Actor ||
         t.Actor.bHidden),
-      this.Model.CameraMode === 1 && a
+      1 === this.Model.CameraMode && a
         ? this.GetPlayerController()?.SetAudioListenerOverride(
             void 0,
             this.Model.CameraLocation.ToUeVector(),
@@ -137,8 +141,8 @@ class CameraController extends ControllerBase_1.ControllerBase {
           ),
       this.UpdateCameraDitherRadius());
   }
-  static EnterCameraMode(e, t = 0, a = 0, r = 0, i = () => {}, s = !1) {
-    return e === 0
+  static EnterCameraMode(e, t = 0, a = 0, r = 0, i = () => {}) {
+    return 0 === e
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Camera",
@@ -156,12 +160,11 @@ class CameraController extends ControllerBase_1.ControllerBase {
                 ["CurrentMode", this.Model.CameraMode],
                 ["NewMode", e],
               ),
-            s && i && i(),
             !1)
           : this.uhe(e, t, a, r, i));
   }
   static ExitCameraMode(e, t = 0, a = 0, r = 0, i = () => {}) {
-    return e === 0
+    return 0 === e
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Camera",
@@ -173,12 +176,12 @@ class CameraController extends ControllerBase_1.ControllerBase {
         this.uhe(this.Model.GetNextMode(), t, a, r, i));
   }
   static uhe(e, t = 0, a = 0, r = 0, i = () => {}) {
-    const s = this.Model;
+    var s = this.Model;
     if (s.CameraMode === e) return !1;
     s.SetCameraMode(e);
     let o = void 0;
     switch (
-      ((e !== 1 && e !== 3) ||
+      ((1 !== e && 3 !== e) ||
         Global_1.Global.CharacterCameraManager.StopAllCameraShakes(),
       e)
     ) {
@@ -211,7 +214,7 @@ class CameraController extends ControllerBase_1.ControllerBase {
     }
     return (
       this.SetViewTarget(o, "SwitchMode", t, a, r, !0, !0),
-      t > 0
+      0 < t
         ? TimerSystem_1.TimerSystem.Delay(() => {
             i && i();
           }, t * SECOND_TO_MILLISECOND)
@@ -220,7 +223,7 @@ class CameraController extends ControllerBase_1.ControllerBase {
     );
   }
   static RefreshSequenceCamera() {
-    this.Model.CameraMode === 1 &&
+    1 === this.Model.CameraMode &&
       this.SetViewTarget(
         this.SequenceCamera.DisplayComponent.CineCamera,
         "RefreshMode",
@@ -239,7 +242,7 @@ class CameraController extends ControllerBase_1.ControllerBase {
     this.FightCamera.LogicComponent.ExitCameraExplore(e);
   }
   static SpawnCameraActor() {
-    const e = this.SpawnActor(UE.CameraActor.StaticClass());
+    var e = this.SpawnActor(UE.CameraActor.StaticClass());
     return (e.CameraComponent.bConstrainAspectRatio = !1), e;
   }
   static SetInputEnable(e, t) {
@@ -261,7 +264,7 @@ class CameraController extends ControllerBase_1.ControllerBase {
     return Global_1.Global.CharacterController;
   }
   static GetCameraConfigs(e = void 0) {
-    const t = (0, puerts_1.$ref)(UE.NewArray(UE.SCamera_Setting));
+    var t = (0, puerts_1.$ref)(UE.NewArray(UE.SCamera_Setting));
     return (
       UE.BPL_CameraUtility_C.DtGetCameraConfigs(
         t,
@@ -272,7 +275,7 @@ class CameraController extends ControllerBase_1.ControllerBase {
     );
   }
   static GetCameraConfigList(e = void 0) {
-    const t = (0, puerts_1.$ref)(UE.NewArray(UE.SCameraConfig));
+    var t = (0, puerts_1.$ref)(UE.NewArray(UE.SCameraConfig));
     return (
       UE.BPL_CameraUtility_C.DtGetCameraConfigList(
         t,
@@ -293,7 +296,7 @@ class CameraController extends ControllerBase_1.ControllerBase {
   }
   static PlayWorldCameraShake(e, t, a, r, i, s) {
     this.IsSettlementCamera() ||
-      (CameraController.Model.ShakeModify > 0 &&
+      (0 < CameraController.Model.ShakeModify &&
         UE.GameplayStatics.PlayWorldCameraShakeWithModifier(
           GlobalData_1.GlobalData.World,
           e,
@@ -336,23 +339,23 @@ class CameraController extends ControllerBase_1.ControllerBase {
     );
   }
   static ReturnLockOnCameraMode(t = 0, a = 0, r = 0, i = () => {}) {
-    if (this.Model.CameraMode !== 0) {
+    if (0 !== this.Model.CameraMode) {
       let e = this.Model.CameraMode;
-      for (; e !== 0; )
+      for (; 0 !== e; )
         this.Model.DisableMode(e), (e = this.Model.GetNextMode());
       this.uhe(e, t, a, r, i);
     }
   }
   static IsSequenceCameraInCinematic() {
-    const e = CameraController.SequenceCamera?.GetComponent(10);
+    var e = CameraController.SequenceCamera?.GetComponent(10);
     return !!e?.Valid && e.GetIsInCinematic();
   }
   static UpdateCameraDitherRadius() {
     if (!(Time_1.Time.Now < this.Model.NextFindStartHideDistanceTime)) {
       this.Model.NextFindStartHideDistanceTime =
         Time_1.Time.Now + CameraParams_1.FIND_DITHER_START_HIDE_DISTANCE_PERIOD;
-      let e;
-      const t = [];
+      var e,
+        t = [];
       ModelManager_1.ModelManager.CreatureModel.GetEntitiesInRange(
         CameraParams_1.DITHER_START_HIDE_DISTANCE_THRESHOLD,
         2,
@@ -388,4 +391,4 @@ __decorate(
   null,
 ),
   (exports.CameraController = CameraController);
-// # sourceMappingURL=CameraController.js.map
+//# sourceMappingURL=CameraController.js.map

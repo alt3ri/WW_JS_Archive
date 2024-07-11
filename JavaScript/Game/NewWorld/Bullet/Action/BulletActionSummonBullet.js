@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletActionSummonBullet = void 0);
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const BulletController_1 = require("../BulletController");
-const BulletUtil_1 = require("../BulletUtil");
-const BulletPool_1 = require("../Model/BulletPool");
-const BulletActionBase_1 = require("./BulletActionBase");
+const TimeUtil_1 = require("../../../Common/TimeUtil"),
+  BulletController_1 = require("../BulletController"),
+  BulletUtil_1 = require("../BulletUtil"),
+  BulletPool_1 = require("../Model/BulletPool"),
+  BulletActionBase_1 = require("./BulletActionBase");
 class BulletActionSummonBullet extends BulletActionBase_1.BulletActionBase {
   constructor() {
     super(...arguments), (this.ChildInfo = void 0), (this.U4o = void 0);
   }
   OnExecute() {
-    let t;
+    var t;
     (this.ChildInfo = this.BulletInfo.ChildInfo),
       this.ChildInfo &&
         ((this.U4o = this.BulletInfo.BulletDataMain.Children),
@@ -21,16 +21,16 @@ class BulletActionSummonBullet extends BulletActionBase_1.BulletActionBase {
     super.Clear(), (this.ChildInfo = void 0), (this.U4o = void 0);
   }
   F5o(e) {
-    const l = this.U4o;
-    const i = l.length;
+    var l = this.U4o,
+      i = l.length;
     let s = void 0;
     for (let t = 0; t < i; ++t)
       if (l[t].Condition === e.ChildrenType) {
-        const r = l[t];
+        var r = l[t];
         if (
-          (!(r.Num > 0) ||
+          (!(0 < r.Num) ||
             this.ChildInfo.HaveSummonedBulletNumber[t] < r.Num) &&
-          Number(r.RowName) !== 0
+          0 !== Number(r.RowName)
         ) {
           !s &&
             e.ParentImpactPoint &&
@@ -49,21 +49,21 @@ class BulletActionSummonBullet extends BulletActionBase_1.BulletActionBase {
             ),
             BulletPool_1.BulletPool.RecycleVector(u),
             BulletPool_1.BulletPool.RecycleVector(o));
-          var o;
-          var u;
-          var h = BulletController_1.BulletController.CreateBulletCustomTarget(
-            this.BulletInfo.AttackerActorComp.Actor,
-            r.RowName.toString(),
-            s ?? this.BulletInfo.ActorComponent.ActorTransform,
-            {
-              SkillId: this.BulletInfo.BulletInitParams.SkillId,
-              ParentVictimId: e.Victim?.Id,
-              ParentTargetId: this.BulletInfo.Target?.Id,
-              ParentId: this.BulletInfo.Entity.Id,
-              DtType: this.BulletInfo.BulletInitParams.DtType,
-            },
-            this.BulletInfo.ContextId,
-          );
+          var o,
+            u,
+            h = BulletController_1.BulletController.CreateBulletCustomTarget(
+              this.BulletInfo.AttackerActorComp.Actor,
+              r.RowName.toString(),
+              s ?? this.BulletInfo.ActorComponent.ActorTransform,
+              {
+                SkillId: this.BulletInfo.BulletInitParams.SkillId,
+                ParentVictimId: e.Victim?.Id,
+                ParentTargetId: this.BulletInfo.Target?.Id,
+                ParentId: this.BulletInfo.Entity.Id,
+                DtType: this.BulletInfo.BulletInitParams.DtType,
+              },
+              this.BulletInfo.ContextId,
+            );
           if (h)
             BulletUtil_1.BulletUtil.ProcessHandOverEffectToSon(
               this.BulletInfo,
@@ -75,14 +75,14 @@ class BulletActionSummonBullet extends BulletActionBase_1.BulletActionBase {
       }
   }
   k5o(e) {
-    const l = this.U4o.length;
+    var l = this.U4o.length;
     for (let t = 0; t < l; ++t) {
-      const i = this.U4o[t];
-      const s = t;
+      var i = this.U4o[t],
+        s = t;
       if (
-        i.Condition === 5 &&
+        5 === i.Condition &&
         !(
-          (i.Num > 0 &&
+          (0 < i.Num &&
             !(this.ChildInfo.HaveSummonedBulletNumber[s] < i.Num)) ||
           this.BulletInfo.LiveTime <
             this.ChildInfo.HaveSummonedBulletNumber[s] *
@@ -90,7 +90,7 @@ class BulletActionSummonBullet extends BulletActionBase_1.BulletActionBase {
               TimeUtil_1.TimeUtil.InverseMillisecond
         )
       ) {
-        const r = BulletController_1.BulletController.CreateBulletCustomTarget(
+        var r = BulletController_1.BulletController.CreateBulletCustomTarget(
           this.BulletInfo.AttackerActorComp.Actor,
           i.RowName.toString(),
           this.BulletInfo.ActorComponent.ActorTransform,
@@ -115,4 +115,4 @@ class BulletActionSummonBullet extends BulletActionBase_1.BulletActionBase {
   }
 }
 exports.BulletActionSummonBullet = BulletActionSummonBullet;
-// # sourceMappingURL=BulletActionSummonBullet.js.map
+//# sourceMappingURL=BulletActionSummonBullet.js.map

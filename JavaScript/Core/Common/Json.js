@@ -1,9 +1,9 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Json = exports.JsonObjBase = void 0);
-const Log_1 = require("./Log");
-const uniqueSymbol = Symbol("");
+const Log_1 = require("./Log"),
+  uniqueSymbol = Symbol("");
 class JsonObjBase {
   constructor() {
     this[_a] = 0;
@@ -17,7 +17,7 @@ class Json {
       return JSON.stringify(
         r,
         (r, o) => {
-          if (o && typeof o === "object") {
+          if (o && "object" == typeof o) {
             if (t.has(o)) return "循环引用";
             t.add(o);
           }
@@ -42,7 +42,7 @@ class Json {
       return JSON.stringify(
         r,
         (r, o) => {
-          if (o && typeof o === "object") {
+          if (o && "object" == typeof o) {
             if (t.has(o)) return "循环引用";
             t.add(o);
           }
@@ -91,4 +91,4 @@ class Json {
   }
 }
 exports.Json = Json;
-// # sourceMappingURL=Json.js.map
+//# sourceMappingURL=Json.js.map

@@ -1,19 +1,19 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LordGymController = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const ErrorCodeController_1 = require("../ErrorCode/ErrorCodeController");
-const ItemRewardController_1 = require("../ItemReward/ItemRewardController");
-const ItemRewardDefine_1 = require("../ItemReward/ItemRewardDefine");
-const RewardItemData_1 = require("../ItemReward/RewardData/RewardItemData");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ErrorCodeController_1 = require("../ErrorCode/ErrorCodeController"),
+  ItemRewardController_1 = require("../ItemReward/ItemRewardController"),
+  ItemRewardDefine_1 = require("../ItemReward/ItemRewardDefine"),
+  RewardItemData_1 = require("../ItemReward/RewardData/RewardItemData");
 class LordGymController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return this.OnRegisterNetEvent(), this.OnAddEvents(), !0;
@@ -37,24 +37,24 @@ class LordGymController extends ControllerBase_1.ControllerBase {
     );
   }
   static async LordGymInfoRequest() {
-    var e = Protocol_1.Aki.Protocol.Lis.create({});
-    var e = await Net_1.Net.CallAsync(9653, e);
+    var e = Protocol_1.Aki.Protocol.Lis.create({}),
+      e = await Net_1.Net.CallAsync(9653, e);
     if (
-      (e.pAs?.length > 0 &&
+      (0 < e.pAs?.length &&
         ((ModelManager_1.ModelManager.LordGymModel.UnLockLordGym = e.pAs),
         ModelManager_1.ModelManager.LordGymModel.UnLockLordGym.sort(
           (e, r) => e - r,
         )),
       e.MAs?.length &&
         (ModelManager_1.ModelManager.LordGymModel.ReadLoadGymIds = e.MAs),
-      e.SAs?.length > 0)
+      0 < e.SAs?.length)
     )
       for (const r of e.SAs)
         ModelManager_1.ModelManager.LordGymModel.LordGymRecord.set(r.b6n, r);
   }
   static async LordGymBeginRequest(e) {
-    const r = Protocol_1.Aki.Protocol.Ais.create();
-    var e = ((r.b6n = e), await Net_1.Net.CallAsync(29694, r));
+    var r = Protocol_1.Aki.Protocol.Ais.create(),
+      e = ((r.b6n = e), await Net_1.Net.CallAsync(29694, r));
     return !(
       !e ||
       (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
@@ -78,7 +78,7 @@ class LordGymController extends ControllerBase_1.ControllerBase {
   }
   static async ReadLordGym(e) {
     ModelManager_1.ModelManager.LordGymModel.ReadLordGym(e);
-    const r = Protocol_1.Aki.Protocol.Uis.create();
+    var r = Protocol_1.Aki.Protocol.Uis.create();
     (r.b6n = e), await Net_1.Net.CallAsync(29379, r);
   }
 }
@@ -97,26 +97,26 @@ class LordGymController extends ControllerBase_1.ControllerBase {
       ),
       r.QRs)
     ) {
-      const e = [];
+      var e = [];
       for (const n of r.LAs) {
-        const t = new RewardItemData_1.RewardItemData(
+        var t = new RewardItemData_1.RewardItemData(
           n.G3n,
           n.I5n,
-          n.yAs !== 0 ? n.yAs : void 0,
+          0 !== n.yAs ? n.yAs : void 0,
         );
         e.push(t);
       }
-      const o = {
-        ButtonTextId: "ConfirmBox_45_ButtonText_1",
-        DescriptionTextId: void 0,
-        IsTimeDownCloseView: !1,
-        IsClickedCloseView: !0,
-      };
-      const a = {
-        TitleTextId: "LordGym_TimeTitle",
-        Record: TimeUtil_1.TimeUtil.GetTimeString(r.TAs.EAs),
-        IsNewRecord: r.IAs,
-      };
+      var o = {
+          ButtonTextId: "ConfirmBox_45_ButtonText_1",
+          DescriptionTextId: void 0,
+          IsTimeDownCloseView: !1,
+          IsClickedCloseView: !0,
+        },
+        a = {
+          TitleTextId: "LordGym_TimeTitle",
+          Record: TimeUtil_1.TimeUtil.GetTimeString(r.TAs.EAs),
+          IsNewRecord: r.IAs,
+        };
       ItemRewardController_1.ItemRewardController.OpenExploreRewardView(
         ItemRewardDefine_1.LORD_GYM_RESULT,
         r.QRs,
@@ -127,7 +127,7 @@ class LordGymController extends ControllerBase_1.ControllerBase {
         void 0,
         void 0,
         () => {
-          const e = ModelManager_1.ModelManager.LordGymModel.GetNextGymId(
+          var e = ModelManager_1.ModelManager.LordGymModel.GetNextGymId(
             r.TAs.b6n,
           );
           e &&
@@ -138,4 +138,4 @@ class LordGymController extends ControllerBase_1.ControllerBase {
       );
     }
   });
-// # sourceMappingURL=LordGymController.js.map
+//# sourceMappingURL=LordGymController.js.map

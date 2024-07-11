@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const InstanceDungeonById_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonById");
-const InstanceDungeonTitleById_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonTitleById");
-const InstanceEnterControlById_1 = require("../../../Core/Define/ConfigQuery/InstanceEnterControlById");
-const InstanceTrialRoleConfigById_1 = require("../../../Core/Define/ConfigQuery/InstanceTrialRoleConfigById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  InstanceDungeonById_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonById"),
+  InstanceDungeonTitleById_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonTitleById"),
+  InstanceEnterControlById_1 = require("../../../Core/Define/ConfigQuery/InstanceEnterControlById"),
+  InstanceTrialRoleConfigById_1 = require("../../../Core/Define/ConfigQuery/InstanceTrialRoleConfigById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class InstanceDungeonConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments), (this.tai = new Map());
@@ -24,27 +24,27 @@ class InstanceDungeonConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetConfig(e) {
-    const n = InstanceDungeonById_1.configInstanceDungeonById.GetConfig(e);
+    var n = InstanceDungeonById_1.configInstanceDungeonById.GetConfig(e);
     if (n) return n;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("InstanceDungeon", 17, "获取副本配置错误", ["id", e]);
   }
   GetCountConfig(e) {
-    const n =
+    var n =
       InstanceEnterControlById_1.configInstanceEnterControlById.GetConfig(e);
     if (n) return n;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("InstanceDungeon", 17, "获取副本配置错误", ["id", e]);
   }
   GetTitleConfig(e) {
-    const n =
+    var n =
       InstanceDungeonTitleById_1.configInstanceDungeonTitleById.GetConfig(e);
     if (n) return n;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("InstanceDungeon", 17, "获取副本标题配置错误", ["id", e]);
   }
   GetTrialRoleConfig(e) {
-    const n =
+    var n =
       InstanceTrialRoleConfigById_1.configInstanceTrialRoleConfigById.GetConfig(
         e,
       );
@@ -89,7 +89,7 @@ class InstanceDungeonConfig extends ConfigBase_1.ConfigBase {
     return this.GetConfig(e)?.FirstRewardId;
   }
   IsMiniMapShow(e) {
-    return (this.GetConfig(e)?.MiniMapId ?? 0) !== 0;
+    return 0 !== (this.GetConfig(e)?.MiniMapId ?? 0);
   }
   GetGuide(e) {
     e = this.GetConfig(e);
@@ -97,4 +97,4 @@ class InstanceDungeonConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.InstanceDungeonConfig = InstanceDungeonConfig;
-// # sourceMappingURL=InstanceDungeonConfig.js.map
+//# sourceMappingURL=InstanceDungeonConfig.js.map

@@ -10,7 +10,7 @@ class GetItemBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   OnCreate(e) {
     return (
       !!super.OnCreate(e) &&
-      e.Condition.Type === "GetItem" &&
+      "GetItem" === e.Condition.Type &&
       ((this.KQt = e.Condition.Items.length), (this.TrackTextRuleInner = 1), !0)
     );
   }
@@ -25,4 +25,4 @@ class GetItemBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   }
 }
 exports.GetItemBehaviorNode = GetItemBehaviorNode;
-// # sourceMappingURL=GetItemBehaviorNode.js.map
+//# sourceMappingURL=GetItemBehaviorNode.js.map

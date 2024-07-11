@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelGamePlayModel = void 0);
-const Queue_1 = require("../../Core/Container/Queue");
-const ModelBase_1 = require("../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../Manager/ControllerHolder");
-const UiLayer_1 = require("../Ui/UiLayer");
-const LevelGamePlayUtils_1 = require("./LevelGamePlayUtils");
+const Queue_1 = require("../../Core/Container/Queue"),
+  ModelBase_1 = require("../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
+  UiLayer_1 = require("../Ui/UiLayer"),
+  LevelGamePlayUtils_1 = require("./LevelGamePlayUtils");
 class LevelGamePlayModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -64,7 +64,7 @@ class LevelGamePlayModel extends ModelBase_1.ModelBase {
   UpdateLoadNotify() {
     if (this.vUe && this.pUe)
       for (; !this.MUe.Empty; ) {
-        const e = this.MUe.Pop();
+        var e = this.MUe.Pop();
         e && e();
       }
   }
@@ -104,4 +104,4 @@ class LevelGamePlayModel extends ModelBase_1.ModelBase {
   }
 }
 exports.LevelGamePlayModel = LevelGamePlayModel;
-// # sourceMappingURL=LevelGamePlayModel.js.map
+//# sourceMappingURL=LevelGamePlayModel.js.map

@@ -45,60 +45,60 @@ class BossRushBuff {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetBuffidAt(t) {
     return this.buffid(t);
   }
   buffid(t) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s
       ? this.J7.readInt64(this.J7.__vector(this.z7 + s) + 8 * t)
       : BigInt(0);
   }
   buffidLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetPassiveskillAt(t) {
     return this.passiveskill(t);
   }
   passiveskill(t) {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s
       ? this.J7.readInt64(this.J7.__vector(this.z7 + s) + 8 * t)
       : BigInt(0);
   }
   passiveskillLength() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   texture(t) {
-    const s = this.J7.__offset(this.z7, 10);
+    var s = this.J7.__offset(this.z7, 10);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   name(t) {
-    const s = this.J7.__offset(this.z7, 12);
+    var s = this.J7.__offset(this.z7, 12);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   description(t) {
-    const s = this.J7.__offset(this.z7, 14);
+    var s = this.J7.__offset(this.z7, 14);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   GetDescriptionparamAt(t) {
     return this.descriptionparam(t);
   }
   descriptionparam(t, s) {
-    const i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 16);
     return i
       ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
       : null;
   }
   descriptionparamLength() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.BossRushBuff = BossRushBuff;
-// # sourceMappingURL=BossRushBuff.js.map
+//# sourceMappingURL=BossRushBuff.js.map

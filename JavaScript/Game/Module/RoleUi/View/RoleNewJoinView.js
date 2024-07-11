@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleNewJoinView = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../Core/Actor/ActorSystem");
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil");
-const CameraController_1 = require("../../../Camera/CameraController");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const RenderModuleController_1 = require("../../../Render/Manager/RenderModuleController");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const BlackScreenController_1 = require("../../BlackScreen/BlackScreenController");
-const GachaDefine_1 = require("../../Gacha/GachaDefine");
-const GachaScanView_1 = require("../../Gacha/GachaResultView/GachaScanView");
-const UiCameraAnimationManager_1 = require("../../UiCameraAnimation/UiCameraAnimationManager");
-const UiModelResourcesManager_1 = require("../../UiComponent/UiModelResourcesManager");
-const SimpleGenericLayout_1 = require("../../Util/Layout/SimpleGenericLayout");
-const RoleController_1 = require("../RoleController");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../Core/Actor/ActorSystem"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  CameraController_1 = require("../../../Camera/CameraController"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  RenderModuleController_1 = require("../../../Render/Manager/RenderModuleController"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  BlackScreenController_1 = require("../../BlackScreen/BlackScreenController"),
+  GachaDefine_1 = require("../../Gacha/GachaDefine"),
+  GachaScanView_1 = require("../../Gacha/GachaResultView/GachaScanView"),
+  UiCameraAnimationManager_1 = require("../../UiCameraAnimation/UiCameraAnimationManager"),
+  UiModelResourcesManager_1 = require("../../UiComponent/UiModelResourcesManager"),
+  SimpleGenericLayout_1 = require("../../Util/Layout/SimpleGenericLayout"),
+  RoleController_1 = require("../RoleController");
 class RoleNewJoinView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -46,13 +46,13 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
             this.eWt.NiagaraComponent.ReinitializeSystem();
             break;
           case "Flash2":
-            this.lWt === 5
+            5 === this.lWt
               ? (this.tWt.SetActorHiddenInGame(!1),
                 this.tWt?.NiagaraComponent.ReinitializeSystem())
-              : this.lWt === 4
+              : 4 === this.lWt
                 ? (this.iWt.SetActorHiddenInGame(!1),
                   this.iWt?.NiagaraComponent.ReinitializeSystem())
-                : this.lWt === 3 &&
+                : 3 === this.lWt &&
                   (this.oWt.SetActorHiddenInGame(!1),
                   this.oWt?.NiagaraComponent.ReinitializeSystem());
         }
@@ -114,37 +114,36 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
     await this.lGn();
   }
   async lGn() {
-    var e = this.zke;
-    var e = ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(e);
-    var e =
-      ConfigManager_1.ConfigManager.GachaConfig.GetGachaSequenceConfigById(
+    var e = this.zke,
+      e = ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(e),
+      e = ConfigManager_1.ConfigManager.GachaConfig.GetGachaSequenceConfigById(
         e.ShowSequence,
-      );
-    var e = ModelManager_1.ModelManager.GachaModel.GetLoadedSequence(
-      e.SequencePath,
-    );
-    const i =
-      ((this.Bkt = ActorSystem_1.ActorSystem.Get(
-        UE.LevelSequenceActor.StaticClass(),
-        new UE.Transform(),
-        void 0,
-        !1,
-      )),
-      this.Bkt.SetSequence(e),
-      UE.NewArray(UE.SkeletalMesh));
+      ),
+      e = ModelManager_1.ModelManager.GachaModel.GetLoadedSequence(
+        e.SequencePath,
+      ),
+      i =
+        ((this.Bkt = ActorSystem_1.ActorSystem.Get(
+          UE.LevelSequenceActor.StaticClass(),
+          new UE.Transform(),
+          void 0,
+          !1,
+        )),
+        this.Bkt.SetSequence(e),
+        UE.NewArray(UE.SkeletalMesh));
     const t = new CustomPromise_1.CustomPromise();
-    const s = this.Bkt.GetBindingByTagInTemplate(
+    var s = this.Bkt.GetBindingByTagInTemplate(
       GachaScanView_1.SCENE_ROLE_TAG,
       !0,
     );
     for (let e = 0; e < s.Num(); e++) {
-      const r = s.Get(e);
+      var r = s.Get(e);
       if (r) {
-        const a = r.K2_GetComponentsByClass(
+        var a = r.K2_GetComponentsByClass(
           UE.SkeletalMeshComponent.StaticClass(),
         );
         for (let e = 0; e < a.Num(); e++) {
-          const o = a.Get(e);
+          var o = a.Get(e);
           i.Add(o.SkeletalMesh);
         }
       }
@@ -235,22 +234,22 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
       this.tWt.K2_AttachToActor(this.exe, void 0, 2, 2, 2, !1),
       this.iWt.K2_AttachToActor(this.exe, void 0, 2, 2, 2, !1),
       this.oWt.K2_AttachToActor(this.exe, void 0, 2, 2, 2, !1);
-    const e = new UE.Vector(200, 0, 0);
-    var i = new UE.Vector(60, 0, 0);
-    const t = new UE.Rotator(0, 90, 0);
-    var i =
-      (this.eWt.K2_SetActorRelativeLocation(i, !1, void 0, !1),
-      this.tWt.K2_SetActorRelativeLocation(e, !1, void 0, !1),
-      this.iWt.K2_SetActorRelativeLocation(e, !1, void 0, !1),
-      this.oWt.K2_SetActorRelativeLocation(e, !1, void 0, !1),
-      this.eWt.K2_SetActorRelativeRotation(t, !1, void 0, !1),
-      this.tWt.K2_SetActorRelativeRotation(t, !1, void 0, !1),
-      this.iWt.K2_SetActorRelativeRotation(t, !1, void 0, !1),
-      this.oWt.K2_SetActorRelativeRotation(t, !1, void 0, !1),
-      UE.KuroCollectActorComponent.GetActorWithTag(
-        FNameUtil_1.FNameUtil.GetDynamicFName("GachaBP"),
-        0,
-      ));
+    var e = new UE.Vector(200, 0, 0),
+      i = new UE.Vector(60, 0, 0),
+      t = new UE.Rotator(0, 90, 0),
+      i =
+        (this.eWt.K2_SetActorRelativeLocation(i, !1, void 0, !1),
+        this.tWt.K2_SetActorRelativeLocation(e, !1, void 0, !1),
+        this.iWt.K2_SetActorRelativeLocation(e, !1, void 0, !1),
+        this.oWt.K2_SetActorRelativeLocation(e, !1, void 0, !1),
+        this.eWt.K2_SetActorRelativeRotation(t, !1, void 0, !1),
+        this.tWt.K2_SetActorRelativeRotation(t, !1, void 0, !1),
+        this.iWt.K2_SetActorRelativeRotation(t, !1, void 0, !1),
+        this.oWt.K2_SetActorRelativeRotation(t, !1, void 0, !1),
+        UE.KuroCollectActorComponent.GetActorWithTag(
+          FNameUtil_1.FNameUtil.GetDynamicFName("GachaBP"),
+          0,
+        ));
     i.TSInitParameters(this.lWt),
       i.Timeline_0?.Stop(),
       (i.IsSkip = !0),
@@ -272,12 +271,12 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
       this.UiViewSequence.PlaySequence("Show", !0);
   }
   Og() {
-    let e;
-    var i = this.zke;
-    var i = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(i);
-    let t = ConfigManager_1.ConfigManager.CommonConfig.GetElementConfig(
-      i.ElementId,
-    );
+    var e,
+      i = this.zke,
+      i = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(i),
+      t = ConfigManager_1.ConfigManager.CommonConfig.GetElementConfig(
+        i.ElementId,
+      );
     t &&
       (this.GetTexture(3).SetColor(UE.Color.FromHex(t.ElementColor)),
       (e = this.GetTexture(2)),
@@ -293,22 +292,22 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
       );
   }
   RefreshModel() {
-    let e;
-    var i = this.zke;
-    var i = ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(i);
-    let t =
-      (CameraController_1.CameraController.SetViewTarget(
-        this.exe,
-        "RoleNewJoinView.RefreshModel",
-      ),
-      new UE.MovieSceneSequencePlaybackSettings());
+    var e,
+      i = this.zke,
+      i = ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(i),
+      t =
+        (CameraController_1.CameraController.SetViewTarget(
+          this.exe,
+          "RoleNewJoinView.RefreshModel",
+        ),
+        new UE.MovieSceneSequencePlaybackSettings());
     (t.bRestoreState = !0),
       (t.bPauseAtEnd = !0),
       (this.Bkt.PlaybackSettings = t),
       this.Bkt.AddBindingByTag(GachaScanView_1.SCENE_CAMERA_TAG, this.exe),
       (this.EPe = this.Bkt.SequencePlayer),
       RenderModuleController_1.RenderModuleController.DebugNewUiSceneWorkflow
-        ? i.BindPoint?.length > 0
+        ? 0 < i.BindPoint?.length
           ? ((this.Bkt.bOverrideInstanceData = !0),
             (this.Bkt.DefaultInstanceData.TransformOriginActor =
               UE.KuroCollectActorComponent.GetActorWithTag(
@@ -322,7 +321,7 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
               1,
             )),
             (t.TransformOrigin = e.GetTransform()))
-        : i.BindPoint?.length > 0 &&
+        : 0 < i.BindPoint?.length &&
           ((this.Bkt.bOverrideInstanceData = !0),
           (this.Bkt.DefaultInstanceData.TransformOriginActor =
             UE.KuroCollectActorComponent.GetActorWithTag(
@@ -341,26 +340,24 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
       this.RWt();
   }
   RWt() {
-    const e = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(
-      this.zke,
-    );
-    e.Id === 1302
+    var e = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(this.zke);
+    1302 === e.Id
       ? this.hWt?.Yinlin()
-      : e.Id === 1404
+      : 1404 === e.Id
         ? this.hWt?.Jiyan()
-        : e.Id === 1203
+        : 1203 === e.Id
           ? this.hWt?.Anke()
-          : e.Id === 1503
+          : 1503 === e.Id
             ? this.hWt?.Jueyuan()
-            : e.Id === 1301
+            : 1301 === e.Id
               ? this.hWt?.Kakaluo()
-              : e.Id === 1603
+              : 1603 === e.Id
                 ? this.hWt?.Chun()
-                : e.Id === 1104
+                : 1104 === e.Id
                   ? this.hWt?.Awu()
-                  : e.QualityId === 5
+                  : 5 === e.QualityId
                     ? this.hWt?.CharacterGolden()
-                    : e.QualityId === 4 && this.hWt?.CharacterPurple();
+                    : 4 === e.QualityId && this.hWt?.CharacterPurple();
   }
   yWt() {
     this.tWt.SetActorHiddenInGame(!0),
@@ -393,7 +390,7 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
       "Start",
       "RoleNewJoinView",
     );
-    const e = [this.zke];
+    var e = [this.zke];
     RoleController_1.RoleController.CloseAndOpenRoleMainView(
       this.Info.Name,
       0,
@@ -411,4 +408,4 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RoleNewJoinView = RoleNewJoinView;
-// # sourceMappingURL=RoleNewJoinView.js.map
+//# sourceMappingURL=RoleNewJoinView.js.map

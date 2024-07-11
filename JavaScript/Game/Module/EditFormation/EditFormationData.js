@@ -22,8 +22,8 @@ class EditFormationData {
       (this.FormationId = t);
   }
   AddRoleData(t, i, s, e = !1) {
-    const o = this.n4t.length + 1;
-    var t = (this.n4t.push(t), new EditFormationRoleData(o, t, i, s));
+    var o = this.n4t.length + 1,
+      t = (this.n4t.push(t), new EditFormationRoleData(o, t, i, s));
     this.sQe.set(o, t), e && (this.r4t = o);
   }
   GetRoleDataByPosition(t) {
@@ -40,7 +40,7 @@ class EditFormationData {
     return this.sQe;
   }
   get GetCurrentRoleConfigId() {
-    const t = this.r4t - 1;
+    var t = this.r4t - 1;
     return this.n4t[t];
   }
   get GetCurrentRolePosition() {
@@ -48,4 +48,4 @@ class EditFormationData {
   }
 }
 exports.EditFormationData = EditFormationData;
-// # sourceMappingURL=EditFormationData.js.map
+//# sourceMappingURL=EditFormationData.js.map

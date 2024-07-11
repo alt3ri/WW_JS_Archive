@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TrimLru = void 0);
-const Log_1 = require("../Common/Log");
-const USED_THRESHOLD = 3;
+const Log_1 = require("../Common/Log"),
+  USED_THRESHOLD = 3;
 class Node {
   constructor(t, i, s) {
     (this.Key = t),
@@ -60,13 +60,13 @@ class TrimLru {
         this.d7();
   }
   get HitRate() {
-    return this.h6 > 0 ? this.h6 / (this.h6 + this.l6) : 0;
+    return 0 < this.h6 ? this.h6 / (this.h6 + this.l6) : 0;
   }
   get UsedAvg() {
-    return this.n6 > 0 ? this.u7 / this.n6 : 0;
+    return 0 < this.n6 ? this.u7 / this.n6 : 0;
   }
   get ThresholdUsedRate() {
-    return this.n6 > 0 ? this.c7 / this.n6 : 0;
+    return 0 < this.n6 ? this.c7 / this.n6 : 0;
   }
   Get(t) {
     if (this.l7) {
@@ -134,10 +134,10 @@ class TrimLru {
       t.Count >= USED_THRESHOLD && (this.c7 -= t.Count * t.Size);
   }
   d7() {
-    let t;
+    var t;
     this.i7 &&
       ((t = this.i7), this.C7(t), (t.Count = 0), this._7.delete(t.Key));
   }
 }
 exports.TrimLru = TrimLru;
-// # sourceMappingURL=TrimLru.js.map
+//# sourceMappingURL=TrimLru.js.map

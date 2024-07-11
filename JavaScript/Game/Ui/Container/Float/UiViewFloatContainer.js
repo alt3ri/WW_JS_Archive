@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiViewFloatContainer = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../../Game/Manager/ConfigManager");
-const UiModel_1 = require("../../UiModel");
-const UiViewContainer_1 = require("../UiViewContainer");
-const FloatQueue_1 = require("./FloatQueue");
+const Log_1 = require("../../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../../Game/Manager/ConfigManager"),
+  UiModel_1 = require("../../UiModel"),
+  UiViewContainer_1 = require("../UiViewContainer"),
+  FloatQueue_1 = require("./FloatQueue");
 class UiViewFloatContainer extends UiViewContainer_1.UiViewContainer {
   constructor(i, e, t) {
     super(),
@@ -18,16 +18,16 @@ class UiViewFloatContainer extends UiViewContainer_1.UiViewContainer {
       (this.Lur = t);
   }
   async OpenViewAsync(i) {
-    const e = ConfigManager_1.ConfigManager.UiViewConfig.GetUiFloatConfig(
+    var e = ConfigManager_1.ConfigManager.UiViewConfig.GetUiFloatConfig(
       i.Info.Name,
     );
     this.Dur(e, i) || (await this.OpenViewImplementAsync(i));
   }
   async CloseViewAsync(i) {
-    const e = i.Info.Name;
-    const t = ConfigManager_1.ConfigManager.UiViewConfig.GetUiFloatConfig(e);
-    const o = StringUtils_1.StringUtils.IsEmpty(t.Area) ? e : t.Area;
-    const r = i.GetViewId();
+    var e = i.Info.Name,
+      t = ConfigManager_1.ConfigManager.UiViewConfig.GetUiFloatConfig(e),
+      o = StringUtils_1.StringUtils.IsEmpty(t.Area) ? e : t.Area,
+      r = i.GetViewId();
     (await this.Rur(o, t.OnlyShowInMain, e, r)) ||
       this.Uur(o, e, r) ||
       (this.Iur.get(o)?.Delete(e, r)
@@ -50,7 +50,7 @@ class UiViewFloatContainer extends UiViewContainer_1.UiViewContainer {
           ));
   }
   async Rur(i, e, t, o) {
-    const r = this.Tur.get(i);
+    var r = this.Tur.get(i);
     return (
       !!r &&
       !!this.Aur(r, t, o) &&
@@ -80,7 +80,7 @@ class UiViewFloatContainer extends UiViewContainer_1.UiViewContainer {
     );
   }
   Uur(i, e, t) {
-    const o = this.Lur.get(i);
+    var o = this.Lur.get(i);
     return (
       !!o &&
       !!this.Aur(o, e, t) &&
@@ -134,7 +134,7 @@ class UiViewFloatContainer extends UiViewContainer_1.UiViewContainer {
     return !(!i.IsWaitNormal || !UiModel_1.UiModel.InNormalQueue);
   }
   xur(i) {
-    const e = this.Bur(i);
+    var e = this.Bur(i);
     e &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -147,9 +147,9 @@ class UiViewFloatContainer extends UiViewContainer_1.UiViewContainer {
       this.OpenViewImplementAsync(e));
   }
   Bur(i) {
-    const e = this.Iur.get(i);
+    var e = this.Iur.get(i);
     if (e) {
-      const t = e.Pop(UiModel_1.UiModel.IsInMainView);
+      var t = e.Pop(UiModel_1.UiModel.IsInMainView);
       if (t)
         return (
           e.Size <= 0 && this.Iur.delete(i),
@@ -160,7 +160,7 @@ class UiViewFloatContainer extends UiViewContainer_1.UiViewContainer {
     this.Tur.delete(i);
   }
   Dur(e, t) {
-    const o = StringUtils_1.StringUtils.IsEmpty(e.Area) ? t.Info.Name : e.Area;
+    var o = StringUtils_1.StringUtils.IsEmpty(e.Area) ? t.Info.Name : e.Area;
     if (this.Tur.has(o) || this.Pur(e.OnlyShowInMain) || this.wur(e)) {
       let i = this.Iur.get(o);
       return (
@@ -192,11 +192,11 @@ class UiViewFloatContainer extends UiViewContainer_1.UiViewContainer {
   }
   ClearContainer() {
     for (const a of this.Iur.values()) a.Clear();
-    let i;
-    let e;
-    let t;
-    let o;
-    const r = [];
+    var i,
+      e,
+      t,
+      o,
+      r = [];
     for ([i, e] of this.Tur)
       (e.IsExistInLeaveLevel = !0),
         e.Info.IsPermanent ||
@@ -225,8 +225,8 @@ class UiViewFloatContainer extends UiViewContainer_1.UiViewContainer {
   }
   bur() {
     for (const t of Array.from(this.Lur.keys())) {
-      const i = this.Lur.get(t);
-      const e = (this.Lur.delete(t), this.Tur.get(t));
+      var i = this.Lur.get(t),
+        e = (this.Lur.delete(t), this.Tur.get(t));
       this.Tur.set(t, i), this.Nur(i, !0), e && this.$Oe(t, e);
     }
   }
@@ -235,10 +235,10 @@ class UiViewFloatContainer extends UiViewContainer_1.UiViewContainer {
   }
   Gur() {
     for (const t of Array.from(this.Tur.keys())) {
-      const i = this.Tur.get(t);
-      const e = ConfigManager_1.ConfigManager.UiViewConfig.GetUiFloatConfig(
-        i.Info.Name,
-      );
+      var i = this.Tur.get(t),
+        e = ConfigManager_1.ConfigManager.UiViewConfig.GetUiFloatConfig(
+          i.Info.Name,
+        );
       this.Pur(e.OnlyShowInMain) &&
         (this.Lur.set(t, i), this.Tur.delete(t), this.xur(t), this.Nur(i, !1));
     }
@@ -307,4 +307,4 @@ class UiViewFloatContainer extends UiViewContainer_1.UiViewContainer {
   }
 }
 exports.UiViewFloatContainer = UiViewFloatContainer;
-// # sourceMappingURL=UiViewFloatContainer.js.map
+//# sourceMappingURL=UiViewFloatContainer.js.map

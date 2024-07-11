@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SortModel = void 0);
-const ModelBase_1 = require("../../../../../../Core/Framework/ModelBase");
-const SortLogic_1 = require("../Logic/SortLogic");
+const ModelBase_1 = require("../../../../../../Core/Framework/ModelBase"),
+  SortLogic_1 = require("../Logic/SortLogic");
 class SortModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -26,4 +26,4 @@ class SortModel extends ModelBase_1.ModelBase {
   }
 }
 exports.SortModel = SortModel;
-// # sourceMappingURL=SortModel.js.map
+//# sourceMappingURL=SortModel.js.map

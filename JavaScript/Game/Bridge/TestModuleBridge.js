@@ -5,7 +5,7 @@ const Log_1 = require("../../Core/Common/Log");
 class TestModuleBridge {
   static async TryGetTestModuleExports() {
     try {
-      const e = await Promise.resolve().then(() =>
+      var e = await Promise.resolve().then(() =>
         require("../../Test/TestModuleExports"),
       );
       if (e) return e.TestModuleExports;
@@ -22,4 +22,4 @@ class TestModuleBridge {
   }
 }
 exports.TestModuleBridge = TestModuleBridge;
-// # sourceMappingURL=TestModuleBridge.js.map
+//# sourceMappingURL=TestModuleBridge.js.map

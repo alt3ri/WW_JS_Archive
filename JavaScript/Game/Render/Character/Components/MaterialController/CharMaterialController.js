@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharMaterialController = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Stats_1 = require("../../../../../Core/Common/Stats");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const RenderConfig_1 = require("../../../Config/RenderConfig");
-const CharRenderBase_1 = require("../../Manager/CharRenderBase");
-const CharRuntimeMaterialControllerInfo_1 = require("./CharRuntimeMaterialControllerInfo");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../../Core/Common/Stats"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  RenderConfig_1 = require("../../../Config/RenderConfig"),
+  CharRenderBase_1 = require("../../Manager/CharRenderBase"),
+  CharRuntimeMaterialControllerInfo_1 = require("./CharRuntimeMaterialControllerInfo");
 class CharMaterialController extends CharRenderBase_1.CharRenderBase {
   constructor() {
     super(...arguments),
@@ -42,7 +42,7 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
       (this.DebugInfo = new UE.PD_MaterialDebug_C()),
       (this.AllMaterialControlRuntimeDataMap = new Map()),
       (this.ihr = this.GetRenderingComponent().GetOwner().GetName());
-    const t = this.RenderComponent.GetComponent(
+    var t = this.RenderComponent.GetComponent(
       RenderConfig_1.RenderConfig.IdMaterialContainer,
     );
     void 0 === t
@@ -62,9 +62,9 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
     return this.AllMaterialControlRuntimeDataMap.get(t);
   }
   Update() {
-    const t = this.GetDeltaTime();
+    var t = this.GetDeltaTime();
     for (const r of this.AllMaterialControlRuntimeDataMap.values()) {
-      const e = this.GetRenderingComponent().GetTimeDilation();
+      var e = this.GetRenderingComponent().GetTimeDilation();
       r.UpdateState(t, e),
         r.UpdateEffect(this.MaterialContainer),
         r.IsDead && this.war.push(r.Id);
@@ -77,7 +77,7 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
           o[1].DataCache.DataName,
         );
     }
-    if (this.war.length > 0) {
+    if (0 < this.war.length) {
       for (const i of this.war)
         this.AllMaterialControlRuntimeDataMap.get(i).Destroy(),
           this.AllMaterialControlRuntimeDataMap.delete(i),
@@ -118,7 +118,7 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
           );
   }
   RemoveAllMaterialControllerData() {
-    this.AllMaterialControlRuntimeDataMap.size > 0 &&
+    0 < this.AllMaterialControlRuntimeDataMap.size &&
       Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("RenderCharacter", 41, "移除全部材质控制器", [
         "Actor",
@@ -129,8 +129,8 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
     this.AllMaterialControlRuntimeDataMap.clear();
   }
   RemoveMaterialControllerData(t) {
-    let e;
-    const r = this.AllMaterialControlRuntimeDataMap.get(t);
+    var e,
+      r = this.AllMaterialControlRuntimeDataMap.get(t);
     return (
       !!r &&
       ((e = this.GetRenderingComponent().GetOwner().GetName()),
@@ -151,8 +151,8 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
     );
   }
   RemoveMaterialControllerDataWithEnding(t) {
-    let e;
-    const r = this.AllMaterialControlRuntimeDataMap.get(t);
+    var e,
+      r = this.AllMaterialControlRuntimeDataMap.get(t);
     return (
       !!r &&
       ((e = this.GetRenderingComponent().GetOwner().GetName()),
@@ -190,9 +190,9 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
         ["添加的材质控制器名称", t.GetName()],
       ),
       this.xhr++;
-    const r = this.xhr;
-    const o =
-      new CharRuntimeMaterialControllerInfo_1.CharMaterialControlRuntimeData();
+    var r = this.xhr,
+      o =
+        new CharRuntimeMaterialControllerInfo_1.CharMaterialControlRuntimeData();
     return (
       o.Init(r, t, e),
       o.SetSpecifiedMaterialIndex(this.MaterialContainer),
@@ -202,8 +202,8 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
     );
   }
   AddMaterialControllerDataDestroyCallback(t, e) {
-    let r;
-    var t = this.AllMaterialControlRuntimeDataMap.get(t);
+    var r,
+      t = this.AllMaterialControlRuntimeDataMap.get(t);
     return (
       !!t &&
       ((r = this.GetRenderingComponent().GetOwner().GetName()),
@@ -219,8 +219,8 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
     );
   }
   RemoveMaterialControllerDataDestroyCallback(t, e) {
-    let r;
-    var t = this.AllMaterialControlRuntimeDataMap.get(t);
+    var r,
+      t = this.AllMaterialControlRuntimeDataMap.get(t);
     return (
       !!t &&
       ((r = this.GetRenderingComponent().GetOwner().GetName()),
@@ -243,4 +243,4 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
   }
 }
 exports.CharMaterialController = CharMaterialController;
-// # sourceMappingURL=CharMaterialController.js.map
+//# sourceMappingURL=CharMaterialController.js.map

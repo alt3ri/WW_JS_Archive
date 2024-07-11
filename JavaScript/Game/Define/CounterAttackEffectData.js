@@ -7,4 +7,4 @@ class CounterAttackEffectData extends UE.KuroBpDataAsset {
   }
 }
 exports.default = CounterAttackEffectData;
-// # sourceMappingURL=CounterAttackEffectData.js.map
+//# sourceMappingURL=CounterAttackEffectData.js.map

@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InfluenceSearchView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../../RedDot/RedDotController");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const GenericLayoutNew_1 = require("../../../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../../Util/ScrollView/GenericScrollView");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../../RedDot/RedDotController"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  GenericLayoutNew_1 = require("../../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../../Util/ScrollView/GenericScrollView");
 class InfluenceSearchView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -30,7 +30,7 @@ class InfluenceSearchView extends UiViewBase_1.UiViewBase {
           const s = new InfluenceSearchGrid(t);
           return s.UpdateGrid(e[0], e[1]), { Key: i, Value: s };
         }
-        if (e[1].length > 0) {
+        if (0 < e[1].length) {
           const s = new InfluenceSearchGrid(t);
           return s.UpdateGrid(e[0], e[1]), { Key: i, Value: s };
         }
@@ -79,12 +79,12 @@ class InfluenceSearchView extends UiViewBase_1.UiViewBase {
                 : e - t,
         )
       : e.push(this.CurrentCountryId);
-    const t =
-      ModelManager_1.ModelManager.InfluenceReputationModel.FilterUnLockInfluenceList(
-        e,
-        this.vUt,
-      );
-    const i = t.HasResult;
+    var t =
+        ModelManager_1.ModelManager.InfluenceReputationModel.FilterUnLockInfluenceList(
+          e,
+          this.vUt,
+        ),
+      i = t.HasResult;
     this.GetItem(3).SetUIActive(!i),
       this.xqe.SetActive(i),
       i && this.xqe.RefreshByData(t.InfluenceList);
@@ -122,11 +122,11 @@ class InfluenceSearchGrid extends UiPanelBase_1.UiPanelBase {
   }
   UpdateGrid(e, t) {
     this.z4t = e;
-    var e = ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryConfig(e);
-    var e =
-      (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), e.Title),
-      this.GetItem(1));
-    const i = t.length > 0;
+    var e = ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryConfig(e),
+      e =
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), e.Title),
+        this.GetItem(1)),
+      i = 0 < t.length;
     e.SetUIActive(!i), this.eGe.RebuildLayoutByDataNew(t);
   }
   OnBeforeDestroy() {
@@ -167,16 +167,16 @@ class InfluenceSearchItem extends UiPanelBase_1.UiPanelBase {
   UpdateItem(e, t) {
     (this.Tni = e), (this.z4t = t);
     var t =
-      ModelManager_1.ModelManager.InfluenceReputationModel.GetInfluenceInstance(
-        e,
-      );
-    var e = ConfigManager_1.ConfigManager.InfluenceConfig.GetInfluenceConfig(
-      t.Id,
-    );
-    const i =
-      (this.SetTextureByPath(e.Logo, this.GetTexture(0)),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e.Title),
-      this.GetText(2));
+        ModelManager_1.ModelManager.InfluenceReputationModel.GetInfluenceInstance(
+          e,
+        ),
+      e = ConfigManager_1.ConfigManager.InfluenceConfig.GetInfluenceConfig(
+        t.Id,
+      ),
+      i =
+        (this.SetTextureByPath(e.Logo, this.GetTexture(0)),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e.Title),
+        this.GetText(2));
     e.ExtraDesc
       ? (i.SetUIActive(!0), LguiUtil_1.LguiUtil.SetLocalTextNew(i, e.ExtraDesc))
       : i.SetUIActive(!1),
@@ -184,9 +184,9 @@ class InfluenceSearchItem extends UiPanelBase_1.UiPanelBase {
       this.x6e(t.Id);
   }
   Rni(e) {
-    this.GetItem(3).SetUIActive(e === 2),
-      this.GetItem(4).SetUIActive(e === 3),
-      this.GetItem(5).SetUIActive(e === 1);
+    this.GetItem(3).SetUIActive(2 === e),
+      this.GetItem(4).SetUIActive(3 === e),
+      this.GetItem(5).SetUIActive(1 === e);
   }
   x6e(e) {
     RedDotController_1.RedDotController.BindRedDot(
@@ -197,4 +197,4 @@ class InfluenceSearchItem extends UiPanelBase_1.UiPanelBase {
     );
   }
 }
-// # sourceMappingURL=InfluenceSearchView.js.map
+//# sourceMappingURL=InfluenceSearchView.js.map

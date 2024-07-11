@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventSetInteractionLockState = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventSetInteractionLockState extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, o) {
     e
@@ -39,4 +39,4 @@ class LevelEventSetInteractionLockState extends LevelGeneralBase_1.LevelEventBas
   }
 }
 exports.LevelEventSetInteractionLockState = LevelEventSetInteractionLockState;
-// # sourceMappingURL=LevelEventSetInteractionLockState.js.map
+//# sourceMappingURL=LevelEventSetInteractionLockState.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CookMaterialItem = void 0);
-const UE = require("ue");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class CookMaterialItemContent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -63,10 +63,10 @@ class CookMaterialItemContent extends UiPanelBase_1.UiPanelBase {
     this.RefreshHave(t);
   }
   RefreshHave(t = 1) {
-    var t = this.Aqt.k4n * t;
-    const i = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-      this.Aqt.G3n,
-    );
+    var t = this.Aqt.k4n * t,
+      i = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+        this.Aqt.G3n,
+      );
     let e = void 0;
     (e = this.Aqt.m3n
       ? i < this.Aqt.k4n
@@ -87,7 +87,7 @@ class CookMaterialItemContent extends UiPanelBase_1.UiPanelBase {
       this.GetText(2).SetText(e);
   }
   Kbe() {
-    let t;
+    var t;
     this.Aqt.m3n
       ? (this.GetTexture(1).SetUIActive(!0),
         (t = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(this.Aqt.G3n)),
@@ -139,4 +139,4 @@ class CookMaterialItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.CookMaterialItem = CookMaterialItem;
-// # sourceMappingURL=CookMaterialItem.js.map
+//# sourceMappingURL=CookMaterialItem.js.map

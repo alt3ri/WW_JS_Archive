@@ -11,4 +11,4 @@ class LordGymChallengeRecord {
 }
 (exports.LordGymChallengeRecord = LordGymChallengeRecord),
   (exports.NONE_FILTER_TYPE = 0);
-// # sourceMappingURL=LordGymDefine.js.map
+//# sourceMappingURL=LordGymDefine.js.map

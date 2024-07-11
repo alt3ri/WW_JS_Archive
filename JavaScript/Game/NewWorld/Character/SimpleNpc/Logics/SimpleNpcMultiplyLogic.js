@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SimpleNpcMultiplyLogic = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const MapUtils_1 = require("../../../../../Core/Utils/MapUtils");
-const ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const SimpleNpcFlowConditionChecker_1 = require("./SimpleNpcFlowConditionChecker");
-const DEFAULT_WAIT_TIME = 3;
-const DEFAULT_LOOP_TIME = 10;
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  MapUtils_1 = require("../../../../../Core/Utils/MapUtils"),
+  ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  SimpleNpcFlowConditionChecker_1 = require("./SimpleNpcFlowConditionChecker"),
+  DEFAULT_WAIT_TIME = 3,
+  DEFAULT_LOOP_TIME = 10;
 class SimpleNpcMultiplyLogic {
   constructor(t) {
     (this.air = void 0),
@@ -32,12 +32,12 @@ class SimpleNpcMultiplyLogic {
   }
   Pir() {
     let e = void (this.Eir.length = 0);
-    let t;
-    const s = this.air.FlowList;
+    var t,
+      s = this.air.FlowList;
     for (let t = 0, i = s.Num(); t < i; t++) {
-      const r = s.Get(t);
+      var r = s.Get(t);
       if (this.Sir[t])
-        if (r.CheckType === 9) {
+        if (9 === r.CheckType) {
           if (
             SimpleNpcFlowConditionChecker_1.SimpleNpcFlowConditionChecker.CheckFirstEnter(
               this.NUe,
@@ -67,43 +67,43 @@ class SimpleNpcMultiplyLogic {
       );
   }
   FilterFlowWorldState(i) {
-    const e = this.air.FlowList.Num();
+    var e = this.air.FlowList.Num();
     for (this.Sir || (this.Sir = new Array()); this.Sir.length < e; )
       this.Sir.push(!0);
-    const s = new Map();
+    var s = new Map();
     for (let t = 0; t < e; t++) {
-      let r = this.air.FlowList.Get(t);
-      r.WorldState.WorldStateMap.Num() === 1 &&
+      var r = this.air.FlowList.Get(t);
+      1 === r.WorldState.WorldStateMap.Num() &&
         void 0 !== (r = r.WorldState.WorldStateMap.GetKey(0)) &&
         (s.get(r) || s.set(r, new Array()), s.get(r).push(t));
     }
-    const h = new Array();
+    var h = new Array();
     for (let t = 0; t < e; t++) h.push(this.wir(t, i));
-    const o = new Map();
+    var o = new Map();
     for (const _ of s) {
-      const t = _[0];
-      const l = (o.set(t, -1), o.get(t));
-      for (const c of _[1]) h[c] >= 0 && (l < 0 || l > h[c]) && o.set(t, h[c]);
+      var t = _[0],
+        l = (o.set(t, -1), o.get(t));
+      for (const c of _[1]) 0 <= h[c] && (l < 0 || l > h[c]) && o.set(t, h[c]);
     }
     for (let t = 0; t < e; t++) {
-      var a;
-      let n = this.air.FlowList.Get(t);
-      n.WorldState.WorldStateMap.Num() === 0
+      var a,
+        n = this.air.FlowList.Get(t);
+      0 === n.WorldState.WorldStateMap.Num()
         ? (this.Sir[t] = !0)
-        : n.WorldState.WorldStateMap.Num() === 1
+        : 1 === n.WorldState.WorldStateMap.Num()
           ? ((n = n.WorldState.WorldStateMap.GetKey(0)),
             (n = o.get(n)),
             (a = h[t]),
-            (this.Sir[t] = void 0 !== n && n >= 0 && a === n))
-          : (this.Sir[t] = h[t] === 0);
+            (this.Sir[t] = void 0 !== n && 0 <= n && a === n))
+          : (this.Sir[t] = 0 === h[t]);
     }
   }
   wir(t, s) {
-    const i = this.air.FlowList.Get(t);
-    if (i.WorldState.WorldStateMap.Num() === 0) return 0;
-    if (i.WorldState.WorldStateMap.Num() === 1) {
+    var i = this.air.FlowList.Get(t);
+    if (0 === i.WorldState.WorldStateMap.Num()) return 0;
+    if (1 === i.WorldState.WorldStateMap.Num()) {
       const t = i.WorldState.WorldStateMap.GetKey(0);
-      let e = this.GetWorldStateEnum(t);
+      var e = this.GetWorldStateEnum(t);
       return void 0 === e
         ? -1
         : void 0 === (e = s.get(e))
@@ -135,8 +135,8 @@ class SimpleNpcMultiplyLogic {
     this.Tir = i;
     var e = this.Iir;
     if (e.length > i) {
-      var e = e[i];
-      const s = this.air.NpcList;
+      var e = e[i],
+        s = this.air.NpcList;
       if (s.Num() < 2) {
         let t = !1;
         var r = this.air.GetOwner();
@@ -145,12 +145,13 @@ class SimpleNpcMultiplyLogic {
           : this.Bir(i + 1);
       } else {
         let t = -1;
+        -1 ===
         (t =
-          this.yir.Pawn === 0
+          0 === this.yir.Pawn
             ? SimpleNpcFlowConditionChecker_1.SimpleNpcFlowConditionChecker.GetFlowActorIndex(
                 e.WhoId,
               )
-            : this.yir.Pawn - 1) === -1
+            : this.yir.Pawn - 1)
           ? (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Level",
@@ -179,8 +180,8 @@ class SimpleNpcMultiplyLogic {
   }
   qir(t, i) {
     let e = !1;
-    let s;
-    const r = this.Nir(i.TidTalk);
+    var s,
+      r = this.Nir(i.TidTalk);
     return (
       r && ((e = !0), (s = this.Gir(i, 0.05)), t.ShowDialog(r, s)),
       (e = i.Montage && t.TryPlayMontage(i.Montage.ActionMontage.Path) ? !0 : e)
@@ -192,7 +193,7 @@ class SimpleNpcMultiplyLogic {
   }
   Gir(t, i = 0) {
     let e = t.WaitTime;
-    return (e && e !== 0) || (e = DEFAULT_WAIT_TIME), (e += i);
+    return (e && 0 !== e) || (e = DEFAULT_WAIT_TIME), (e += i);
   }
   bir() {
     this.Rir = !0;
@@ -200,20 +201,20 @@ class SimpleNpcMultiplyLogic {
     this.yir && (t = this.yir.LoopTime), (this.Lir = t);
   }
   Tick(t) {
-    this.Lir > 0 &&
+    0 < this.Lir &&
       ((this.Lir -= t), this.Lir <= 0) &&
       (this.Rir ? this.IsPause || this.Pir() : this.Bir(this.Tir + 1));
   }
   StopFlow() {
     (this.Rir = !0), (this.Lir = 0);
-    const e = this.air?.NpcList;
-    if (e && e?.Num() > 2)
+    var e = this.air?.NpcList;
+    if (e && 2 < e?.Num())
       for (let t = 0, i = e.Num(); t < i; t++) {
-        const s = e.Get(t);
+        var s = e.Get(t);
         s.HideDialog(), s.StopMontage();
       }
     else {
-      const t = this.air.GetOwner();
+      var t = this.air.GetOwner();
       t instanceof UE.TsSimpleNpc_C && (t.HideDialog(), t.StopMontage());
     }
   }
@@ -228,8 +229,9 @@ class SimpleNpcMultiplyLogic {
       case 1:
         return "NpcWorldState";
       default:
+        return;
     }
   }
 }
 (exports.SimpleNpcMultiplyLogic = SimpleNpcMultiplyLogic).Me = 0;
-// # sourceMappingURL=SimpleNpcMultiplyLogic.js.map
+//# sourceMappingURL=SimpleNpcMultiplyLogic.js.map

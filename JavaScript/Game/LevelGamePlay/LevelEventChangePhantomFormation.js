@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventChangePhantomFormation = void 0);
-const Log_1 = require("../../Core/Common/Log");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const ModelManager_1 = require("../Manager/ModelManager");
-const LevelGeneralBase_1 = require("./LevelGeneralBase");
+const Log_1 = require("../../Core/Common/Log"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("./LevelGeneralBase");
 class LevelEventChangePhantomFormation extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
       (this.dLe = () => {
-        const e = ModelManager_1.ModelManager.SceneTeamModel.IsPhantomTeam;
+        var e = ModelManager_1.ModelManager.SceneTeamModel.IsPhantomTeam;
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "LevelEvent",
@@ -52,4 +52,4 @@ class LevelEventChangePhantomFormation extends LevelGeneralBase_1.LevelEventBase
   }
 }
 exports.LevelEventChangePhantomFormation = LevelEventChangePhantomFormation;
-// # sourceMappingURL=LevelEventChangePhantomFormation.js.map
+//# sourceMappingURL=LevelEventChangePhantomFormation.js.map

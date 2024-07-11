@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectActorHandle = void 0);
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const Time_1 = require("../../Core/Common/Time");
-const Quat_1 = require("../../Core/Utils/Math/Quat");
-const Transform_1 = require("../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const NiagaraComponentHandle_1 = require("./NiagaraComponentHandle");
-const REFRESH_ACTOR_LOCATION_INTERVAL = 60;
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  Time_1 = require("../../Core/Common/Time"),
+  Quat_1 = require("../../Core/Utils/Math/Quat"),
+  Transform_1 = require("../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  NiagaraComponentHandle_1 = require("./NiagaraComponentHandle"),
+  REFRESH_ACTOR_LOCATION_INTERVAL = 60;
 class EffectActorAction {
   DoAction(t, i) {}
 }
@@ -56,27 +56,27 @@ class EffectActor_K2_AttachToComponent extends EffectActorAction {
     (this.RelativeTransform = i.GetRelativeTransform(
       this.Parent.GetSocketTransform(this.SocketName),
     )),
-      this.LocationRule === 0
+      0 === this.LocationRule
         ? t?.RelativeTransform
           ? this.RelativeTransform.SetLocation(
               t.RelativeTransform.GetLocation(),
             )
           : this.RelativeTransform.SetLocation(i.GetLocation())
-        : this.LocationRule === 2 &&
+        : 2 === this.LocationRule &&
           this.RelativeTransform.SetLocation(Vector_1.Vector.ZeroVector),
-      this.RotationRule === 0
+      0 === this.RotationRule
         ? t?.RelativeTransform
           ? this.RelativeTransform.SetRotation(
               t.RelativeTransform.GetRotation(),
             )
           : this.RelativeTransform.SetRotation(i.GetRotation())
-        : this.RotationRule === 2 &&
+        : 2 === this.RotationRule &&
           this.RelativeTransform.SetRotation(Quat_1.Quat.Identity),
-      this.ScaleRule === 0
+      0 === this.ScaleRule
         ? t?.RelativeTransform
           ? this.RelativeTransform.SetScale3D(t.RelativeTransform.GetScale3D())
           : this.RelativeTransform.SetScale3D(i.GetScale3D())
-        : this.ScaleRule === 2 &&
+        : 2 === this.ScaleRule &&
           this.RelativeTransform.SetScale3D(Vector_1.Vector.OneVector);
   }
 }
@@ -128,7 +128,7 @@ class EffectActorHandle {
       );
   }
   Init(t, i) {
-    let s;
+    var s;
     t
       ? ((s = Transform_1.Transform.Create()).FromUeTransform(t),
         (this.Transform = s.ToUeTransform()))
@@ -151,7 +151,7 @@ class EffectActorHandle {
   }
   SetBeAttached(t, i, s) {
     this.HCe || (this.HCe = new Array());
-    const h = new EffectActorBeAttachedAction();
+    var h = new EffectActorBeAttachedAction();
     h.Init(t, i, s), this.HCe.push(h);
   }
   IsValid() {
@@ -161,7 +161,7 @@ class EffectActorHandle {
     this.HiddenInGame = t;
   }
   K2_AttachToActor(t, i, s, h, o, e) {
-    let r, c, n;
+    var r, c, n;
     t
       ? (r = UE.KuroEffectLibrary.GetActorDefaultAttachComponent(t))?.IsValid()
         ? ((c = new EffectActor_K2_AttachToActor()),
@@ -189,7 +189,7 @@ class EffectActorHandle {
         );
   }
   K2_AttachToComponent(t, i, s, h, o, e) {
-    let r, c;
+    var r, c;
     t?.IsValid
       ? ((r = new EffectActor_K2_AttachToComponent()),
         (c = this.VCe),
@@ -265,7 +265,7 @@ class EffectActorHandle {
     return !!t && ((this.Transform = t), this.YCe(), !0);
   }
   JCe() {
-    let t;
+    var t;
     (this.QCe = !0),
       this.$Ce &&
         (this.$Ce.UpdateChildTransform(!0),
@@ -278,13 +278,13 @@ class EffectActorHandle {
   K2_SetActorRelativeLocation(t, i, s, h) {
     t &&
       this.$Ce &&
-      this.$Ce.LocationRule !== 2 &&
+      2 !== this.$Ce.LocationRule &&
       (this.$Ce.RelativeTransform.SetLocation(t), this.JCe());
   }
   K2_SetActorRelativeRotation(t, i, s, h) {
     t &&
       this.$Ce &&
-      this.$Ce.RotationRule !== 2 &&
+      2 !== this.$Ce.RotationRule &&
       (this.$Ce.RelativeTransform.SetRotation(t.Quaternion()), this.JCe());
   }
   K2_SetActorRelativeTransform(t, i, s, h) {
@@ -301,7 +301,7 @@ class EffectActorHandle {
   InitEffectActor(t, i) {
     if ((this.$Ce && this.$Ce.DoAction(t, i), this.HCe))
       for (const o of this.HCe) o.DoAction(t, i);
-    let s;
+    var s;
     if (
       (this.JCe(),
       t.K2_SetActorTransform(this.Transform, !1, void 0, !1),
@@ -311,10 +311,10 @@ class EffectActorHandle {
         this.jCe.InitNiagaraComponent(s)),
       this.WCe)
     ) {
-      const h = t.K2_GetComponentsByClass(UE.NiagaraComponent.StaticClass());
+      var h = t.K2_GetComponentsByClass(UE.NiagaraComponent.StaticClass());
       for (let t = 0; t < h.Num(); t++) this.WCe.InitNiagaraComponent(h.Get(t));
     }
   }
 }
 exports.EffectActorHandle = EffectActorHandle;
-// # sourceMappingURL=EffectActorHandle.js.map
+//# sourceMappingURL=EffectActorHandle.js.map

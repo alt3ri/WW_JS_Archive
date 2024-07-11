@@ -10,8 +10,8 @@ async function delayMs(t) {
   });
 }
 function createCancellableDelay(t, n) {
-  let o = void 0;
-  let s = !1;
+  let o = void 0,
+    s = !1;
   return {
     Promise: new Promise((e) => {
       o = setTimeout(() => {
@@ -25,9 +25,9 @@ function createCancellableDelay(t, n) {
   };
 }
 function createSignal() {
-  let t = void 0;
-  let n = !1;
-  let o = void 0;
+  let t = void 0,
+    n = !1,
+    o = void 0;
   return {
     Promise: new Promise((e) => {
       t = e;
@@ -40,13 +40,13 @@ function createSignal() {
   };
 }
 function isAsyncFunction(e) {
-  return typeof e === "function" && e.constructor.name === "AsyncFunction";
+  return "function" == typeof e && "AsyncFunction" === e.constructor.name;
 }
 async function asyncRetryUntil(e, t = 10, n = 2e3) {
   let o = 0;
   do {
     if ((++o, await e())) return;
-  } while ((n > 0 && (await delayMs(n)), o < t));
+  } while ((0 < n && (await delayMs(n)), o < t));
 }
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.asyncRetryUntil =
@@ -64,4 +64,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.createSignal = createSignal),
   (exports.isAsyncFunction = isAsyncFunction),
   (exports.asyncRetryUntil = asyncRetryUntil);
-// # sourceMappingURL=Async.js.map
+//# sourceMappingURL=Async.js.map

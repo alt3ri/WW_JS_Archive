@@ -1,36 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleUiPool = void 0);
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const UiLayerType_1 = require("../../Ui/Define/UiLayerType");
-const UiLayer_1 = require("../../Ui/UiLayer");
-const UiPrefabLoadModule_1 = require("../../Ui/UiPrefabLoadModule");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const headStateConfigList = [
-  { ResourceId: "UiItem_LittleMonsterState_Prefab", PreloadCount: 6 },
-  { ResourceId: "UiItem_MingsutiState_Prefab", PreloadCount: 1 },
-  { ResourceId: "UiItem_GuardianState_Prefab", PreloadCount: 1 },
-  { ResourceId: "UiItem_EliteMonsterState_Prefab", PreloadCount: 4 },
-  { ResourceId: "UiItem_DestructionState_Prefab", PreloadCount: 1 },
-];
-const bossHeadStateConfig = {
-  ResourceId: "UiItem_BossState_Prefab",
-  PreloadCount: 0,
-};
-const damageViewConfig = {
-  ResourceId: "UiItem_DamageView_Prefab",
-  PreloadCount: 21,
-};
-const buffItemConfig = {
-  ResourceId: "UiItem_BuffItem_Prefab",
-  PreloadCount: 5,
-};
-const environmentItemConfig = {
-  ResourceId: "UiItem_BuffEnvironmentItem_Prefab",
-  PreloadCount: 5,
-};
+const ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  UiLayerType_1 = require("../../Ui/Define/UiLayerType"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
+  UiPrefabLoadModule_1 = require("../../Ui/UiPrefabLoadModule"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  headStateConfigList = [
+    { ResourceId: "UiItem_LittleMonsterState_Prefab", PreloadCount: 6 },
+    { ResourceId: "UiItem_MingsutiState_Prefab", PreloadCount: 1 },
+    { ResourceId: "UiItem_GuardianState_Prefab", PreloadCount: 1 },
+    { ResourceId: "UiItem_EliteMonsterState_Prefab", PreloadCount: 4 },
+    { ResourceId: "UiItem_DestructionState_Prefab", PreloadCount: 1 },
+  ],
+  bossHeadStateConfig = {
+    ResourceId: "UiItem_BossState_Prefab",
+    PreloadCount: 0,
+  },
+  damageViewConfig = {
+    ResourceId: "UiItem_DamageView_Prefab",
+    PreloadCount: 21,
+  },
+  buffItemConfig = { ResourceId: "UiItem_BuffItem_Prefab", PreloadCount: 5 },
+  environmentItemConfig = {
+    ResourceId: "UiItem_BuffEnvironmentItem_Prefab",
+    PreloadCount: 5,
+  };
 class BattleUiPoolElement {
   constructor() {
     (this.ActorList = void 0), (this.ExistMulti = !0), (this.Actor = void 0);
@@ -59,7 +56,7 @@ class BattleUiPool {
     return !0;
   }
   kQe() {
-    let t = UiLayer_1.UiLayer.WorldSpaceUiRootItem;
+    var t = UiLayer_1.UiLayer.WorldSpaceUiRootItem;
     if (!t?.IsValid())
       return (
         Log_1.Log.CheckError() &&
@@ -84,7 +81,7 @@ class BattleUiPool {
         !1);
   }
   async FQe() {
-    const t = [];
+    var t = [];
     for (const e of headStateConfigList) t.push(this.VQe(e, this.qQe));
     return (
       t.push(this.VQe(bossHeadStateConfig, this.GQe)),
@@ -97,9 +94,9 @@ class BattleUiPool {
   }
   async VQe(e, i) {
     var t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-      e.ResourceId,
-    );
-    const r = await this.bQe.LoadPrefabAsync(t, i);
+        e.ResourceId,
+      ),
+      r = await this.bQe.LoadPrefabAsync(t, i);
     if (!r?.IsValid())
       return (
         Log_1.Log.CheckError() &&
@@ -110,21 +107,21 @@ class BattleUiPool {
         !1
       );
     r.RootComponent.SetUIActive(!1);
-    var t = new BattleUiPoolElement();
-    const o = ((t.ExistMulti = e.PreloadCount > 0), new Array());
+    var t = new BattleUiPoolElement(),
+      o = ((t.ExistMulti = 0 < e.PreloadCount), new Array());
     o.push(r);
     for (let t = 0; t < e.PreloadCount; t++) {
-      const a = LguiUtil_1.LguiUtil.DuplicateActor(r, i);
+      var a = LguiUtil_1.LguiUtil.DuplicateActor(r, i);
       o.push(a);
     }
     return (t.ActorList = o), (t.Actor = r), this.wQe.set(e.ResourceId, t), !0;
   }
   GetActor(t, e, i) {
-    let r;
-    const o = this.wQe.get(t);
+    var r,
+      o = this.wQe.get(t);
     if (o && !(o.ActorList.length <= 0))
       return o.ExistMulti
-        ? o.ActorList.length > 1
+        ? 1 < o.ActorList.length
           ? ((r = o.ActorList.pop()), i && r.K2_AttachRootComponentTo(e), r)
           : LguiUtil_1.LguiUtil.DuplicateActor(o.ActorList[0], e)
         : ((r = o.ActorList[0]), i && r.K2_AttachRootComponentTo(e), r);
@@ -135,7 +132,7 @@ class BattleUiPool {
       ]);
   }
   RecycleActor(t, e, i = !1) {
-    const r = this.wQe.get(t);
+    var r = this.wQe.get(t);
     return r
       ? (e.RootComponent.SetUIActive(!1),
         i && e.K2_AttachRootComponentTo(this.GQe),
@@ -179,8 +176,8 @@ class BattleUiPool {
       : (ActorSystem_1.ActorSystem.Put(t), !0);
   }
   async LoadActor(t, e) {
-    let i;
-    let r = void 0;
+    var i,
+      r = void 0;
     let o = this.wQe.get(t);
     return o
       ? this.HQe(o, e)
@@ -200,8 +197,8 @@ class BattleUiPool {
           );
   }
   HQe(t, e) {
-    let i;
-    return t.ActorList.length > 1
+    var i;
+    return 1 < t.ActorList.length
       ? ((i = t.ActorList.pop()).K2_AttachRootComponentTo(e), i)
       : LguiUtil_1.LguiUtil.DuplicateActor(t.Actor, e);
   }
@@ -252,4 +249,4 @@ class BattleUiPool {
   }
 }
 exports.BattleUiPool = BattleUiPool;
-// # sourceMappingURL=BattleUiPool.js.map
+//# sourceMappingURL=BattleUiPool.js.map

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BossStateViewBase = void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const BattleUiControl_1 = require("../../BattleUiControl");
-const BattleEntityChildView_1 = require("../BattleChildView/BattleEntityChildView");
-const EAttributeId = Protocol_1.Aki.Protocol.KBs;
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  BattleUiControl_1 = require("../../BattleUiControl"),
+  BattleEntityChildView_1 = require("../BattleChildView/BattleEntityChildView");
+var EAttributeId = Protocol_1.Aki.Protocol.KBs;
 const PERCENT_RATE = 100;
 class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
   constructor() {
@@ -175,7 +175,7 @@ class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
   OnBossHardnessChanged(t) {}
   OnBossLanguageChange() {}
   RefreshHiddenTagState() {
-    const t = this.GetEntity()?.GetComponent(185);
+    var t = this.GetEntity()?.GetComponent(185);
     (this.HasHiddenTag = t?.HasTag(-13489149)),
       (this.HasFallDownTag = t?.HasTag(1922078392)),
       (this.HasFightTag = t?.HasTag(1996802261) ?? !1);
@@ -189,22 +189,22 @@ class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
   }
   GetBossStateViewState() {
     if (this.IsValid()) {
-      const t = this.GetEntity().GetComponent(0);
+      var t = this.GetEntity().GetComponent(0);
       if (t)
         return t.GetMonsterComponent()?.BossViewConfig?.BossStateViewType ?? 0;
     }
   }
   GetHardnessStrength(t) {
-    const i = t * PERCENT_RATE;
+    var i = t * PERCENT_RATE;
     for (const e of this.Got) if (e[0] <= i) return e[1];
     return 0;
   }
   GetHpAndShieldPercent() {
     if (!this.IsValid()) return [0, 0];
-    const t = this.GetCurrentAttributeValueById(EAttributeId.Proto_Life);
-    const i = this.GetCurrentAttributeValueById(EAttributeId.Tkn);
-    const e = this.GetBossShield();
-    const s = e <= i ? e / i : 1;
+    var t = this.GetCurrentAttributeValueById(EAttributeId.Proto_Life),
+      i = this.GetCurrentAttributeValueById(EAttributeId.Tkn),
+      e = this.GetBossShield();
+    let s = e <= i ? e / i : 1;
     return [t / i, s];
   }
   GetAttributeComponent() {
@@ -220,19 +220,19 @@ class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
   }
   GetMonsterConfig() {
     if (this.IsValid()) {
-      const t = this.GetEntity().GetComponent(0);
+      var t = this.GetEntity().GetComponent(0);
       if (t) return t.GetMonsterComponent()?.BossViewConfig;
     }
   }
   GetBaseInfo() {
     if (this.IsValid()) {
-      const t = this.GetEntity().GetComponent(0);
+      var t = this.GetEntity().GetComponent(0);
       if (t) return t.GetBaseInfo();
     }
   }
   GetAttributeInfo() {
     if (this.IsValid()) {
-      const t = this.GetEntity().GetComponent(0);
+      var t = this.GetEntity().GetComponent(0);
       if (t) return t.GetAttributeComponent();
     }
   }
@@ -247,4 +247,4 @@ class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
   }
 }
 exports.BossStateViewBase = BossStateViewBase;
-// # sourceMappingURL=BossStateViewBase.js.map
+//# sourceMappingURL=BossStateViewBase.js.map

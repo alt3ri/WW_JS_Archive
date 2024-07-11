@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController");
 class TsDecoratorTagCheck extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -25,15 +25,15 @@ class TsDecoratorTagCheck extends UE.BTDecorator_BlueprintBase {
         (this.TsBlackBoardKeyTarget = this.BlackboardKeyTarget),
         (this.TsCheckTags = new Array()),
         (this.TsCheckTagValues = new Array());
-      for (let t = this.Checks.Num() - 1; t >= 0; --t) {
-        const r = this.Checks.GetKey(t);
-        const e = this.Checks.Get(r);
+      for (let t = this.Checks.Num() - 1; 0 <= t; --t) {
+        var r = this.Checks.GetKey(t),
+          e = this.Checks.Get(r);
         this.TsCheckTags.push(r?.TagId), this.TsCheckTagValues.push(e);
       }
     }
   }
   PerformConditionCheckAI(t, r) {
-    const e = t.AiController;
+    var e = t.AiController;
     if (!e)
       return (
         Log_1.Log.CheckError() &&
@@ -65,22 +65,22 @@ class TsDecoratorTagCheck extends UE.BTDecorator_BlueprintBase {
       if (!t) return !1;
       if (!(i = EntitySystem_1.EntitySystem.Get(t))?.Valid) return !1;
     }
-    const o = i.GetComponent(185);
-    if (this.TsLogic === 1) {
-      for (let t = this.TsCheckTags.length - 1; t >= 0; --t) {
-        const s = this.TsCheckTags[t];
-        const h = this.TsCheckTagValues[t];
+    var o = i.GetComponent(185);
+    if (1 === this.TsLogic) {
+      for (let t = this.TsCheckTags.length - 1; 0 <= t; --t) {
+        var s = this.TsCheckTags[t],
+          h = this.TsCheckTagValues[t];
         if (o?.HasTag(s) === h) return !0;
       }
       return !1;
     }
-    for (let t = this.TsCheckTags.length - 1; t >= 0; --t) {
-      const a = this.TsCheckTags[t];
-      const l = this.TsCheckTagValues[t];
+    for (let t = this.TsCheckTags.length - 1; 0 <= t; --t) {
+      var a = this.TsCheckTags[t],
+        l = this.TsCheckTagValues[t];
       if (o?.HasTag(a) !== l) return !1;
     }
     return !0;
   }
 }
 exports.default = TsDecoratorTagCheck;
-// # sourceMappingURL=TsDecoratorTagCheck.js.map
+//# sourceMappingURL=TsDecoratorTagCheck.js.map

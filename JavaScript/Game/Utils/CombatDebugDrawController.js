@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CombatDebugDrawController = void 0);
-const UE = require("ue");
-const EntitySystem_1 = require("../../Core/Entity/EntitySystem");
-const ControllerBase_1 = require("../../Core/Framework/ControllerBase");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const GlobalData_1 = require("../GlobalData");
-const ModelManager_1 = require("../Manager/ModelManager");
-const CombatDebugController_1 = require("./CombatDebugController");
+const UE = require("ue"),
+  EntitySystem_1 = require("../../Core/Entity/EntitySystem"),
+  ControllerBase_1 = require("../../Core/Framework/ControllerBase"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  GlobalData_1 = require("../GlobalData"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  CombatDebugController_1 = require("./CombatDebugController");
 class CombatDebugDrawController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -63,12 +63,12 @@ class CombatDebugDrawController extends ControllerBase_1.ControllerBase {
     }
   }
   static fCr(r) {
-    var r = EntitySystem_1.EntitySystem.Get(r);
-    let o = r?.GetComponent(3);
-    const e = o?.Actor;
-    let a = e?.CapsuleComponent;
+    var r = EntitySystem_1.EntitySystem.Get(r),
+      o = r?.GetComponent(3),
+      e = o?.Actor,
+      a = e?.CapsuleComponent;
     if (e?.IsValid() && a?.IsValid()) {
-      let l = e.K2_GetActorLocation();
+      var l = e.K2_GetActorLocation();
       if (
         (CombatDebugDrawController.IsDrawEntityBoxEnabled &&
           UE.KismetSystemLibrary.DrawDebugCapsule(
@@ -95,11 +95,10 @@ class CombatDebugDrawController extends ControllerBase_1.ControllerBase {
                 `
 时间缩放: ` + l.CurrentTimeScale.toFixed(2)),
             r.GetComponent(65)));
-        for (const i of o?.StateMachineGroup?.StateMachines ?? []) {
+        for (const i of o?.StateMachineGroup?.StateMachines ?? [])
           t +=
             `
 状态机${i.Name}: ` + i.GetCurrentStateString();
-        }
         l = r.GetComponent(33);
         l &&
           (t =
@@ -136,4 +135,4 @@ class CombatDebugDrawController extends ControllerBase_1.ControllerBase {
   (CombatDebugDrawController.vCr = Vector_1.Vector.Create()),
   (CombatDebugDrawController.MCr = Vector_1.Vector.Create()),
   (CombatDebugDrawController.pCr = new Map());
-// # sourceMappingURL=CombatDebugDrawController.js.map
+//# sourceMappingURL=CombatDebugDrawController.js.map

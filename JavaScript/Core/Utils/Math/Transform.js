@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Transform = void 0);
-const UE = require("ue");
-const Quat_1 = require("./Quat");
-const Rotator_1 = require("./Rotator");
-const Vector_1 = require("./Vector");
+const UE = require("ue"),
+  Quat_1 = require("./Quat"),
+  Rotator_1 = require("./Rotator"),
+  Vector_1 = require("./Vector");
 class Transform {
   constructor() {
     (this.rz = void 0),
@@ -13,15 +13,15 @@ class Transform {
       (this.sz = void 0);
   }
   static Create(...t) {
-    let s;
-    const r = new Transform();
+    var s,
+      r = new Transform();
     return (
-      t.length === 1
+      1 === t.length
         ? ((s = t[0]),
           (r.mC = Quat_1.Quat.Create(s.GetRotation())),
           (r.rz = Vector_1.Vector.Create(s.GetTranslation())),
           (r.nz = Vector_1.Vector.Create(s.GetScale3D())))
-        : t.length === 0
+        : 0 === t.length
           ? ((r.mC = Quat_1.Quat.Create()),
             (r.rz = Vector_1.Vector.Create()),
             (r.nz = Vector_1.Vector.Create()))
@@ -91,8 +91,8 @@ class Transform {
       Transform.az.RotateVector(s, s);
   }
   TransformRotation(t, s) {
-    const r = this.mC;
-    var t = t.Quaternion();
+    var r = this.mC,
+      t = t.Quaternion();
     s instanceof Rotator_1.Rotator
       ? (r.Multiply(t, Transform.az), s.FromUeRotator(Transform.az.Rotator()))
       : s instanceof Quat_1.Quat && r.Multiply(t, s);
@@ -112,4 +112,4 @@ class Transform {
   }
 }
 (exports.Transform = Transform).az = Quat_1.Quat.Create();
-// # sourceMappingURL=Transform.js.map
+//# sourceMappingURL=Transform.js.map

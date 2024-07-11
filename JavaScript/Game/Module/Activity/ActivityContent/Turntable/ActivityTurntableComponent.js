@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityTurntableGrid = exports.ActivityTurntableComponent = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const TURNTABLE_GRID_SIZE = 8;
-const ROTATE_DEFAULT_ANGLE = -90;
-const ROTATE_GRID_ANGLE = -45;
-const ROTATE_LOOP_ANIMATION_TIME = 500;
-const TURNTABLE_ROTATE_PARAM = "TurntableRotate";
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  TURNTABLE_GRID_SIZE = 8,
+  ROTATE_DEFAULT_ANGLE = -90,
+  ROTATE_GRID_ANGLE = -45,
+  ROTATE_LOOP_ANIMATION_TIME = 500,
+  TURNTABLE_ROTATE_PARAM = "TurntableRotate";
 class ActivityTurntableComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -56,7 +56,7 @@ class ActivityTurntableComponent extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    const t = [];
+    var t = [];
     for (const e of [(this.sOe.length = 0), 1, 2, 3, 4, 5, 6, 7])
       t.push(this.rOe(this.GetItem(e).GetOwner()));
     await Promise.all(t),
@@ -69,7 +69,7 @@ class ActivityTurntableComponent extends UiPanelBase_1.UiPanelBase {
         ) ?? ROTATE_LOOP_ANIMATION_TIME);
   }
   async rOe(t) {
-    const e = new ActivityTurntableGrid();
+    var e = new ActivityTurntableGrid();
     await e.CreateThenShowByActorAsync(t), this.sOe.push(e);
   }
   OnBeforeShow() {
@@ -95,9 +95,9 @@ class ActivityTurntableComponent extends UiPanelBase_1.UiPanelBase {
           e.length,
         ]);
     else {
-      const i = [];
+      var i = [];
       for (let t = 0; t < e.length; t++) {
-        const s = this.sOe[t].Refresh(e[t]);
+        var s = this.sOe[t].Refresh(e[t]);
         i.push(s);
       }
       await Promise.all(i);
@@ -127,9 +127,9 @@ class ActivityTurntableComponent extends UiPanelBase_1.UiPanelBase {
     t();
   }
   TRn(e) {
-    let i = -1;
-    let s = !1;
-    let r = !1;
+    let i = -1,
+      s = !1,
+      r = !1;
     for (let t = 0; t < this.sOe.length; t++)
       if (this.sOe[t].RewardId === e) {
         (i = t), (s = this.sOe[t].IsSpecial), (r = this.sOe[t].IsGoldenQuality);
@@ -140,7 +140,7 @@ class ActivityTurntableComponent extends UiPanelBase_1.UiPanelBase {
       : [ROTATE_DEFAULT_ANGLE + ROTATE_GRID_ANGLE * i, s, r];
   }
   SRn(e) {
-    e !== 0 &&
+    0 !== e &&
       (this.DRn(-e),
       (this.ddo = 0),
       (this.fRn = TimerSystem_1.TimerSystem.Forever((t) => {
@@ -195,18 +195,18 @@ class ActivityTurntableGrid extends UiPanelBase_1.UiPanelBase {
     (this.RewardId = t.Id), (this.IsSpecial = t.IsSpecial);
     let e = 0;
     const i = new CustomPromise_1.CustomPromise();
-    const s = () => {
-      ++e === REFRESH_LOADING_COUNT && i.SetResult();
-    };
-    var r =
-      ((this.gIt = t.RewardItem[0].ItemId),
-      this.SetItemIcon(this.GetTexture(0), this.gIt, void 0, s),
-      ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-        t.RewardItem[0].ItemId,
-      ));
-    var r = r?.QualityId ?? 0;
-    var r = ((this.IsGoldenQuality = r === 5), "SP_TurntableQuality" + r);
-    var r = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(r);
+    var s = () => {
+        ++e === REFRESH_LOADING_COUNT && i.SetResult();
+      },
+      r =
+        ((this.gIt = t.RewardItem[0].ItemId),
+        this.SetItemIcon(this.GetTexture(0), this.gIt, void 0, s),
+        ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+          t.RewardItem[0].ItemId,
+        )),
+      r = r?.QualityId ?? 0,
+      r = ((this.IsGoldenQuality = 5 === r), "SP_TurntableQuality" + r),
+      r = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(r);
     this.SetSpriteByPath(r, this.GetSprite(1), !1, void 0, s),
       this.GetText(2).SetText(t.RewardItem[1].toString()),
       this.SetRewardClaimed(t.IsClaimed),
@@ -223,4 +223,4 @@ class ActivityTurntableGrid extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ActivityTurntableGrid = ActivityTurntableGrid;
-// # sourceMappingURL=ActivityTurntableComponent.js.map
+//# sourceMappingURL=ActivityTurntableComponent.js.map

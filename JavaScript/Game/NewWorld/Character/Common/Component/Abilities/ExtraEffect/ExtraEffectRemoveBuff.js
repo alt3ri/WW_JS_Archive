@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RemoveBuff = void 0);
-const EventDefine_1 = require("../../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../../Common/Event/EventSystem");
-const ExtraEffectBase_1 = require("./ExtraEffectBase");
+const EventDefine_1 = require("../../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../../Common/Event/EventSystem"),
+  ExtraEffectBase_1 = require("./ExtraEffectBase");
 class RemoveBuff extends ExtraEffectBase_1.BuffEffect {
   constructor() {
     super(...arguments),
@@ -68,4 +68,4 @@ class RemoveBuff extends ExtraEffectBase_1.BuffEffect {
   OnExecute() {}
 }
 exports.RemoveBuff = RemoveBuff;
-// # sourceMappingURL=ExtraEffectRemoveBuff.js.map
+//# sourceMappingURL=ExtraEffectRemoveBuff.js.map

@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configWeaponPropertyGrowthByCurveIdLevelAndBreachLevel = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const WeaponPropertyGrowth_1 = require("../Config/WeaponPropertyGrowth");
-const DB = "db_property.db";
-const FILE = "s.属性.xlsx";
-const TABLE = "WeaponPropertyGrowth";
-const COMMAND =
-  "select BinData from `WeaponPropertyGrowth` where CurveId = ? AND Level = ? AND BreachLevel = ?";
-const KEY_PREFIX = "WeaponPropertyGrowthByCurveIdLevelAndBreachLevel";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  WeaponPropertyGrowth_1 = require("../Config/WeaponPropertyGrowth"),
+  DB = "db_property.db",
+  FILE = "s.属性.xlsx",
+  TABLE = "WeaponPropertyGrowth",
+  COMMAND =
+    "select BinData from `WeaponPropertyGrowth` where CurveId = ? AND Level = ? AND BreachLevel = ?",
+  KEY_PREFIX = "WeaponPropertyGrowthByCurveIdLevelAndBreachLevel",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX =
-  "configWeaponPropertyGrowthByCurveIdLevelAndBreachLevel.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX =
+    "configWeaponPropertyGrowthByCurveIdLevelAndBreachLevel.GetConfig(";
 exports.configWeaponPropertyGrowthByCurveIdLevelAndBreachLevel = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -44,17 +44,18 @@ exports.configWeaponPropertyGrowthByCurveIdLevelAndBreachLevel = {
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, o, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 3, r, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(
-            handleId,
-            !0,
-            ...logPair,
-            ["CurveId", e],
-            ["Level", o],
-            ["BreachLevel", r],
-          ) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(
+              handleId,
+              !0,
+              ...logPair,
+              ["CurveId", e],
+              ["Level", o],
+              ["BreachLevel", r],
+            ))
       ) {
-        var t;
-        var i = void 0;
+        var t,
+          i = void 0;
         if (
           (([t, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -83,4 +84,4 @@ exports.configWeaponPropertyGrowthByCurveIdLevelAndBreachLevel = {
     }
   },
 };
-// # sourceMappingURL=WeaponPropertyGrowthByCurveIdLevelAndBreachLevel.js.map
+//# sourceMappingURL=WeaponPropertyGrowthByCurveIdLevelAndBreachLevel.js.map

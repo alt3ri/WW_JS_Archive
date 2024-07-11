@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RogueShopTabView = void 0);
-const UE = require("ue");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const TabComponent_1 = require("../../Common/TabComponent/TabComponent");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const PayShopItem_1 = require("./TabItem/PayShopItem");
-const PayShopSwitchItem_1 = require("./TabItem/PayShopSwitchItem");
-const TIMEGAP = 1e3;
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  TabComponent_1 = require("../../Common/TabComponent/TabComponent"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  PayShopItem_1 = require("./TabItem/PayShopItem"),
+  PayShopSwitchItem_1 = require("./TabItem/PayShopSwitchItem"),
+  TIMEGAP = 1e3;
 class RogueShopTabView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -38,7 +38,7 @@ class RogueShopTabView extends UiTabViewBase_1.UiTabViewBase {
         return new PayShopSwitchItem_1.PayShopSwitchItem();
       }),
       (this.pqe = (e) => {
-        const t = ModelManager_1.ModelManager.PayShopModel.GetPayShopTabIdList(
+        var t = ModelManager_1.ModelManager.PayShopModel.GetPayShopTabIdList(
           this._Fi,
         );
         (this.CurrentSelectTabId = t[e]),
@@ -86,7 +86,7 @@ class RogueShopTabView extends UiTabViewBase_1.UiTabViewBase {
       this.pqe,
       this.GetItem(3),
     );
-    const e = this.GetScrollItem();
+    var e = this.GetScrollItem();
     (this.LoopScrollView = new LoopScrollView_1.LoopScrollView(
       this.GetLoopScrollViewComponent(1),
       e.GetOwner(),
@@ -112,7 +112,7 @@ class RogueShopTabView extends UiTabViewBase_1.UiTabViewBase {
         !1,
       ),
       this.GetLoopScrollViewComponent(1).RootUIComp.SetUIActive(
-        this.PayShopGoodsList.length > 0,
+        0 < this.PayShopGoodsList.length,
       ),
       this.GetItem(8).SetUIActive(this.PayShopGoodsList.length <= 0);
   }
@@ -121,7 +121,7 @@ class RogueShopTabView extends UiTabViewBase_1.UiTabViewBase {
     let e = 0;
     if (this.ExtraParams) {
       const i = this.ExtraParams;
-      const t = ModelManager_1.ModelManager.PayShopModel.GetPayShopTabIdList(
+      var t = ModelManager_1.ModelManager.PayShopModel.GetPayShopTabIdList(
         this._Fi,
       );
       (e = t.findIndex((e) => e === i)),
@@ -151,17 +151,17 @@ class RogueShopTabView extends UiTabViewBase_1.UiTabViewBase {
     const s = ModelManager_1.ModelManager.PayShopModel.GetPayShopTabIdList(
       this._Fi,
     );
-    const e = s.length;
+    var e = s.length;
     this.TabGroup.ResetLastSelectTab();
     this.TabGroup.RefreshTabItemByLength(e, () => {
-      let e, t;
+      var e, t;
       for ([e, t] of this.TabGroup.GetTabItemMap())
         t.UpdateView(this._Fi, s[e]), t.BindRedDot("PayShopTab", s[e]);
       this.TabGroup.SelectToggleByIndex(i, !0);
     });
   }
   RefreshView(e) {
-    typeof e !== "number" && this.RefreshLoopScroll(this.CurrentSelectTabId);
+    "number" != typeof e && this.RefreshLoopScroll(this.CurrentSelectTabId);
   }
   OnBeforeHide() {
     this.p7e();
@@ -171,4 +171,4 @@ class RogueShopTabView extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.RogueShopTabView = RogueShopTabView;
-// # sourceMappingURL=RogueShopTabView.js.map
+//# sourceMappingURL=RogueShopTabView.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestLockPreview = void 0);
-const UE = require("ue");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const LockReasonItem_1 = require("./LockReasonItem");
+const UE = require("ue"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  LockReasonItem_1 = require("./LockReasonItem");
 class QuestLockPreview extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments), (this.xro = void 0), (this.wro = void 0);
@@ -23,13 +23,13 @@ class QuestLockPreview extends UiViewBase_1.UiViewBase {
     super.OnStart(), this.Bro();
   }
   Bro() {
-    if (this.xro && this.xro.length !== 0) {
+    if (this.xro && 0 !== this.xro.length) {
       this.wro = [];
-      const e = this.GetItem(2);
-      const i = this.GetItem(1);
+      var e = this.GetItem(2),
+        i = this.GetItem(1);
       for (const o of this.xro) {
-        const t = LguiUtil_1.LguiUtil.CopyItem(e, i);
-        const s = new LockReasonItem_1.LockReasonItem(o);
+        var t = LguiUtil_1.LguiUtil.CopyItem(e, i),
+          s = new LockReasonItem_1.LockReasonItem(o);
         s.CreateThenShowByActorAsync(t.GetOwner()), this.wro.push(s);
       }
       e.SetUIActive(!1);
@@ -37,4 +37,4 @@ class QuestLockPreview extends UiViewBase_1.UiViewBase {
   }
 }
 exports.QuestLockPreview = QuestLockPreview;
-// # sourceMappingURL=QuestLockPreview.js.map
+//# sourceMappingURL=QuestLockPreview.js.map

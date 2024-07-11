@@ -15,13 +15,13 @@ class DicStringBool {
     );
   }
   key(t) {
-    const i = this.J7.__offset(this.z7, 4);
+    var i = this.J7.__offset(this.z7, 4);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   value() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
 }
 exports.DicStringBool = DicStringBool;
-// # sourceMappingURL=DicStringBool.js.map
+//# sourceMappingURL=DicStringBool.js.map

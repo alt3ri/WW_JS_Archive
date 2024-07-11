@@ -21,13 +21,13 @@ class PlotHandBookConfig {
     );
   }
   questid() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   data(t) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
 }
 exports.PlotHandBookConfig = PlotHandBookConfig;
-// # sourceMappingURL=PlotHandBookConfig.js.map
+//# sourceMappingURL=PlotHandBookConfig.js.map

@@ -1,31 +1,31 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemUseLogic = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const GiftType_1 = require("../../../Core/Define/Config/SubType/GiftType");
-const ItemInfoById_1 = require("../../../Core/Define/ConfigQuery/ItemInfoById");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const UiPlayItemById_1 = require("../../../Core/Define/ConfigQuery/UiPlayItemById");
-const CipherController_1 = require("../../LevelGamePlay/Cipher/CipherController");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterAttributeTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterAttributeTypes");
-const UiManager_1 = require("../../Ui/UiManager");
-const AcquireData_1 = require("../Acquire/AcquireData");
-const BuffItemControl_1 = require("../BuffItem/BuffItemControl");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
-const ItemDefines_1 = require("../Item/Data/ItemDefines");
-const PowerController_1 = require("../Power/PowerController");
-const PowerDefines_1 = require("../Power/PowerDefines");
-const RoleDefine_1 = require("../RoleUi/RoleDefine");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const InventoryGiftController_1 = require("./InventoryGiftController");
-const InventoryGiftData_1 = require("./InventoryGiftData");
+const Log_1 = require("../../../Core/Common/Log"),
+  GiftType_1 = require("../../../Core/Define/Config/SubType/GiftType"),
+  ItemInfoById_1 = require("../../../Core/Define/ConfigQuery/ItemInfoById"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  UiPlayItemById_1 = require("../../../Core/Define/ConfigQuery/UiPlayItemById"),
+  CipherController_1 = require("../../LevelGamePlay/Cipher/CipherController"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterAttributeTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterAttributeTypes"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  AcquireData_1 = require("../Acquire/AcquireData"),
+  BuffItemControl_1 = require("../BuffItem/BuffItemControl"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  ItemDefines_1 = require("../Item/Data/ItemDefines"),
+  PowerController_1 = require("../Power/PowerController"),
+  PowerDefines_1 = require("../Power/PowerDefines"),
+  RoleDefine_1 = require("../RoleUi/RoleDefine"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  InventoryGiftController_1 = require("./InventoryGiftController"),
+  InventoryGiftData_1 = require("./InventoryGiftData");
 class ItemUseLogic {
   static Ici(e, r = 1, o = 0) {
-    let n = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(o, {
+    var n = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(o, {
       ParamType: 0,
     });
     if (!n) return !1;
@@ -36,7 +36,7 @@ class ItemUseLogic {
     else {
       n = n?.EntityHandle?.Entity?.GetComponent(156);
       if (!n) return !1;
-      const t = Math.ceil(
+      var t = Math.ceil(
         n.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.Proto_Life),
       );
       Math.ceil(
@@ -51,10 +51,10 @@ class ItemUseLogic {
 }
 (exports.ItemUseLogic = ItemUseLogic),
   ((_a = ItemUseLogic).TryUseParameterItem = (e, r = 1) => {
-    const o = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(e);
+    var o = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(e);
     return (
       !!o &&
-      (o.Parameters.size === 0
+      (0 === o.Parameters.size
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error("Inventory", 38, "使用道具失败,使用参数为空", [
               "ItemId",
@@ -70,7 +70,7 @@ class ItemUseLogic {
   }),
   (ItemUseLogic.TryUseUiPlayItem = (e, r = 0) => {
     if (!ItemInfoById_1.configItemInfoById.GetConfig(e).UiPlayItem) return !1;
-    const o = UiPlayItemById_1.configUiPlayItemById.GetConfig(e);
+    var o = UiPlayItemById_1.configUiPlayItemById.GetConfig(e);
     if (!o) return !1;
     switch (o.Type) {
       case "Cipher":
@@ -82,7 +82,7 @@ class ItemUseLogic {
     return !0;
   }),
   (ItemUseLogic.TryUseBattlePassItem = (e, r = 0) => {
-    let o;
+    var o;
     return (
       (e === ModelManager_1.ModelManager.BattlePassModel.PrimaryItemId ||
         e === ModelManager_1.ModelManager.BattlePassModel.AdvanceItemId) &&
@@ -107,10 +107,9 @@ class ItemUseLogic {
       if (
         ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
       ) {
-        var t = ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
-        var t =
-          ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(t);
-        if (t && t.CanUseItem === 0)
+        var t = ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
+          t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(t);
+        if (t && 0 === t.CanUseItem)
           return (
             ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
               MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
@@ -120,9 +119,8 @@ class ItemUseLogic {
             !0
           );
       }
-      return ModelManager_1.ModelManager.BuffItemModel.GetBuffItemRemainCdTime(
-        e,
-      ) > 0
+      return 0 <
+        ModelManager_1.ModelManager.BuffItemModel.GetBuffItemRemainCdTime(e)
         ? (ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
             "UseBuffCdText",
           ),
@@ -148,9 +146,9 @@ class ItemUseLogic {
     e === PowerDefines_1.PowerConst.SingCube &&
     (PowerController_1.PowerController.RequestPowerViewData(), !0)),
   (ItemUseLogic.TryUseMonthCardItem = (e, r = 0) => {
-    let o;
-    let n;
-    let t = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e);
+    var o,
+      n,
+      t = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e);
     let i = t.Parameters.get(
       ItemDefines_1.EItemFunctionType.ManualOpenMonthCard,
     );
@@ -177,14 +175,14 @@ class ItemUseLogic {
   (ItemUseLogic.TryUseGiftItem = (e, r = 0) => {
     const o = ModelManager_1.ModelManager.InventoryModel.GetCommonItemData(e);
     if (!o) return !1;
-    if (o.GetType() !== 11) return !1;
-    let n = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e);
-    let t = n.Parameters.get(ItemDefines_1.EItemFunctionType.ManualOpenGift);
-    let i = !1;
+    if (11 !== o.GetType()) return !1;
+    var n = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e);
+    let t = n.Parameters.get(ItemDefines_1.EItemFunctionType.ManualOpenGift),
+      i = !1;
     t ||
       ((t = n.Parameters.get(ItemDefines_1.EItemFunctionType.AutoOpenGift)),
       (i = !0));
-    const l =
+    var l =
       ConfigManager_1.ConfigManager.GiftPackageConfig.GetGiftPackageConfig(t);
     if (!i)
       if (
@@ -193,12 +191,14 @@ class ItemUseLogic {
         l.Type === GiftType_1.GiftType.RandomPhantom ||
         l.Type === GiftType_1.GiftType.CaptureMonster
       ) {
-        const a =
-          ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(e);
-        const _ = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(n.Name);
-        const f = [];
+        var a =
+            ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+              e,
+            ),
+          _ = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(n.Name),
+          f = [];
         const o = [{ IncId: 0, ItemId: n.Id }, a];
-        if ((f.push(o), a > 1)) {
+        if ((f.push(o), 1 < a)) {
           const s = new AcquireData_1.AcquireData();
           s.SetAcquireViewType(0),
             s.SetAmount(1),
@@ -219,11 +219,11 @@ class ItemUseLogic {
             void 0,
           );
       } else {
-        let g;
-        let C;
-        const u = [];
+        var g,
+          C,
+          u = [];
         for ([g, C] of l.Content) {
-          const I = [{ IncId: 0, ItemId: g }, C];
+          var I = [{ IncId: 0, ItemId: g }, C];
           u.push(I);
         }
         n = new InventoryGiftData_1.InventoryGiftData(e, u, l);
@@ -232,7 +232,7 @@ class ItemUseLogic {
     return !0;
   }),
   (ItemUseLogic.Tci = (e, r) => {
-    r > 0
+    0 < r
       ? InventoryGiftController_1.InventoryGiftController.SendItemGiftUseRequest(
           e,
           r,
@@ -242,4 +242,4 @@ class ItemUseLogic {
           "NotEnoughItem",
         );
   });
-// # sourceMappingURL=ItemUseLogic.js.map
+//# sourceMappingURL=ItemUseLogic.js.map

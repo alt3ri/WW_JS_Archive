@@ -1,28 +1,28 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomBattleController = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const Net_1 = require("../../../../Core/Net/Net");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const AdventureDefine_1 = require("../../AdventureGuide/AdventureDefine");
-const HandBookController_1 = require("../../HandBook/HandBookController");
-const ItemRewardController_1 = require("../../ItemReward/ItemRewardController");
-const RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData");
-const RoleController_1 = require("../../RoleUi/RoleController");
-const PhantomUtil_1 = require("../PhantomUtil");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  AdventureDefine_1 = require("../../AdventureGuide/AdventureDefine"),
+  HandBookController_1 = require("../../HandBook/HandBookController"),
+  ItemRewardController_1 = require("../../ItemReward/ItemRewardController"),
+  RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData"),
+  RoleController_1 = require("../../RoleUi/RoleController"),
+  PhantomUtil_1 = require("../PhantomUtil");
 class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -90,15 +90,15 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
       Net_1.Net.UnRegister(22263);
   }
   static SendPhantomLevelUpRequest(n, e) {
-    const t = new Protocol_1.Aki.Protocol.cns();
+    var t = new Protocol_1.Aki.Protocol.cns();
     (t.Ykn = n), (t.m8n = e);
     const r =
       ModelManager_1.ModelManager.PhantomBattleModel.CreatePhantomLevelCacheData(
         n,
       );
     Net_1.Net.Call(16951, Protocol_1.Aki.Protocol.cns.create(t), (e) => {
-      let t;
-      const o = ModelManager_1.ModelManager.PhantomBattleModel;
+      var t,
+        o = ModelManager_1.ModelManager.PhantomBattleModel;
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Phantom", 28, "9903_返回请求幻象升级!!!!"),
         e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
@@ -137,14 +137,14 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
     });
   }
   static TryShowReceiveItem() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.PhantomBattleModel.GetTempSaveItemList();
-    if (e.length > 0) {
-      const t = [];
+    if (0 < e.length) {
+      var t = [];
       for (const r of e) {
-        const o = r[0];
-        var n = r[1];
-        var n = new RewardItemData_1.RewardItemData(o.ItemId, n, o.IncId);
+        var o = r[0],
+          n = r[1],
+          n = new RewardItemData_1.RewardItemData(o.ItemId, n, o.IncId);
         t.push(n);
       }
       ItemRewardController_1.ItemRewardController.OpenCommonRewardView(1008, t),
@@ -164,27 +164,27 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
           EventDefine_1.EEventName.PhantomEquipError,
         );
     else {
-      let o =
-        ModelManager_1.ModelManager.SceneTeamModel.GetCurrentTeamItem
-          .GetConfigId;
-      let l =
-        ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomEquipOnRoleId(
-          e,
-        );
-      let _ =
-        ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsMain(e);
-      var i =
-        ModelManager_1.ModelManager.PhantomBattleModel.GetRoleIndexPhantomId(
-          t,
-          n,
-        );
-      let s =
-        ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomEquipOnRoleId(
-          i,
-        );
-      var i =
-        ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsMain(i);
-      if ((o === l && l > 0 && _) || (o === s && s > 0 && i)) {
+      var o =
+          ModelManager_1.ModelManager.SceneTeamModel.GetCurrentTeamItem
+            .GetConfigId,
+        l =
+          ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomEquipOnRoleId(
+            e,
+          ),
+        _ =
+          ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsMain(e),
+        i =
+          ModelManager_1.ModelManager.PhantomBattleModel.GetRoleIndexPhantomId(
+            t,
+            n,
+          ),
+        s =
+          ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomEquipOnRoleId(
+            i,
+          ),
+        i =
+          ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsMain(i);
+      if ((o === l && 0 < l && _) || (o === s && 0 < s && i)) {
         let e = !1;
         (l = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Id),
           (_ = EntitySystem_1.EntitySystem.Get(l)),
@@ -219,7 +219,7 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
                 Log_1.Log.Debug("Phantom", 28, "9908_返回角色幻象装备信息!!!!"),
               e.lkn === Protocol_1.Aki.Protocol.lkn.Sys)
             ) {
-              const t = e.nUs;
+              var t = e.nUs;
               if (t) {
                 for (const o of t)
                   ModelManager_1.ModelManager.PhantomBattleModel.UpdateRoleEquipmentData(
@@ -254,7 +254,7 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
   static SendPhantomRecommendRequest(e, t = void 0) {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Phantom", 28, "10012_请求推荐角色幻象");
-    const o = new Protocol_1.Aki.Protocol.Sns();
+    var o = new Protocol_1.Aki.Protocol.Sns();
     (o.l3n = e),
       Net_1.Net.Call(5401, Protocol_1.Aki.Protocol.Sns.create(o), (e) => {
         Log_1.Log.CheckDebug() &&
@@ -287,12 +287,14 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
     else {
       let e = !1;
       var n = EntitySystem_1.EntitySystem.Get(
-        ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Id,
-      );
-      var n = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
-        n,
-        Number(Protocol_1.Aki.Protocol.Oqs.Proto_ESummonTypeConcomitantVision),
-      );
+          ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Id,
+        ),
+        n = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
+          n,
+          Number(
+            Protocol_1.Aki.Protocol.Oqs.Proto_ESummonTypeConcomitantVision,
+          ),
+        );
       (e = n && n.Entity.Active ? !0 : e)
         ? ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
             "VisionSkilling",
@@ -310,7 +312,7 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
                 ),
               e.lkn === Protocol_1.Aki.Protocol.lkn.Sys)
             ) {
-              const t = e.nUs;
+              var t = e.nUs;
               if (t) {
                 for (const o of t)
                   ModelManager_1.ModelManager.PhantomBattleModel.UpdateRoleEquipmentData(
@@ -340,7 +342,7 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
     }
   }
   static async RequestPhantomIdentify(e, t) {
-    let o;
+    var o;
     RoleController_1.RoleController.CheckCharacterInBattleTagAndShowTips()
       ? EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.PhantomEquipError,
@@ -384,12 +386,14 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
         );
     else {
       let e = !1;
-      var r = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Id;
-      var r = EntitySystem_1.EntitySystem.Get(r);
-      var r = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
-        r,
-        Number(Protocol_1.Aki.Protocol.Oqs.Proto_ESummonTypeConcomitantVision),
-      );
+      var r = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Id,
+        r = EntitySystem_1.EntitySystem.Get(r),
+        r = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
+          r,
+          Number(
+            Protocol_1.Aki.Protocol.Oqs.Proto_ESummonTypeConcomitantVision,
+          ),
+        );
       (e = r && r.Entity.Active ? !0 : e)
         ? ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
             "VisionSkilling",
@@ -431,7 +435,7 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
         "DungeonDetection",
       );
     else {
-      let o =
+      var o =
         ModelManager_1.ModelManager.AdventureGuideModel.GetAllDetectMonsters().get(
           t,
         );
@@ -513,15 +517,15 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static SetMeshShow(o, n, e, t = !0) {
-    const r = e.Model;
-    const a = r.CheckGetComponent(1);
-    const l = r.CheckGetComponent(10);
-    const _ =
-      (l.StopAnimation(),
-      t && this.SetMeshTransform(e),
-      ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomInstanceByItemId(
-        o,
-      ));
+    var r = e.Model;
+    const a = r.CheckGetComponent(1),
+      l = r.CheckGetComponent(10),
+      _ =
+        (l.StopAnimation(),
+        t && this.SetMeshTransform(e),
+        ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomInstanceByItemId(
+          o,
+        ));
     if (
       ConfigManager_1.ConfigManager.SkeletalObserverConfig.GetMeshConfig(
         _.PhantomItem.MeshId,
@@ -533,7 +537,7 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
       ResourceSystem_1.ResourceSystem.LoadAsync(t, UE.AnimationAsset, (t) => {
         t &&
           i.LoadModelByModelId(_.PhantomItem.MeshId, !0, () => {
-            let e = t;
+            var e = t;
             l.PlayAnimation(e, !0),
               (e =
                 ModelManager_1.ModelManager.PhantomBattleModel.GetMeshTransform(
@@ -635,18 +639,18 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.PhantomBattleModel.SetMaxCost(e.dDs);
   }),
   (PhantomBattleController.eVi = (e) => {
-    e.lUs.length > 0
+    0 < e.lUs.length
       ? (ModelManager_1.ModelManager.PhantomBattleModel.CacheNewQualityData(e),
         TimerSystem_1.TimerSystem.Delay(() => {
           _a.tVi();
         }, ConfigManager_1.ConfigManager.CalabashConfig.DelayTime))
       : (e._Us.forEach((e) => {
-          const t =
-            ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomItemById(
-              e,
-            ).QualityId;
-          const o =
-            ModelManager_1.ModelManager.CalabashModel.GetCalabashOwnSchedule();
+          var t =
+              ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomItemById(
+                e,
+              ).QualityId,
+            o =
+              ModelManager_1.ModelManager.CalabashModel.GetCalabashOwnSchedule();
           ModelManager_1.ModelManager.CalabashModel.CalabashUnlockTipsList.push(
             [e, o, t],
           );
@@ -696,9 +700,11 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
       );
   }),
   (PhantomBattleController.JDe = () => {
-    ModelManager_1.ModelManager.PhantomBattleModel.QualityUnlockTipsList
-      .length > 0 && _a.tVi(),
-      ModelManager_1.ModelManager.CalabashModel.CalabashUnlockTipsList.length >
-        0 && _a.iVi();
+    0 <
+      ModelManager_1.ModelManager.PhantomBattleModel.QualityUnlockTipsList
+        .length && _a.tVi(),
+      0 <
+        ModelManager_1.ModelManager.CalabashModel.CalabashUnlockTipsList
+          .length && _a.iVi();
   });
-// # sourceMappingURL=PhantomBattleController.js.map
+//# sourceMappingURL=PhantomBattleController.js.map

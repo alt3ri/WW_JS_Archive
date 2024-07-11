@@ -11,22 +11,21 @@ class InputCombinationActionMapping {
     this.YSe.clear(), this.JSe.clear(), this.zSe.clear();
   }
   NewCombinationActionBinding(i, n) {
-    const t =
-      new InputCombinationActionBinding_1.InputCombinationActionBinding();
+    var t = new InputCombinationActionBinding_1.InputCombinationActionBinding();
     return t.Initialize(i, n), this.YSe.set(i, t), t;
   }
   AddKey(i, n, t) {
     i.AddKey(n, t);
-    let e = this.JSe.get(n);
-    let o = (e || ((e = new Map()), this.JSe.set(n, e)), e.get(t));
+    let e = this.JSe.get(n),
+      o = (e || ((e = new Map()), this.JSe.set(n, e)), e.get(t));
     o || ((o = new Map()), e.set(t, o)),
       o.set(i.GetActionName(), i),
       this.zSe.add(n);
   }
   RemoveKey(i, n, t) {
     i.RemoveKey(n);
-    const e = i.GetActionName();
-    const o = this.JSe.get(n);
+    var e = i.GetActionName(),
+      o = this.JSe.get(n);
     if (o) {
       var s = o.get(t);
       if (!s) return;
@@ -49,4 +48,4 @@ class InputCombinationActionMapping {
   }
 }
 exports.InputCombinationActionMapping = InputCombinationActionMapping;
-// # sourceMappingURL=InputCombinationActionMapping.js.map
+//# sourceMappingURL=InputCombinationActionMapping.js.map

@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OnlineHallView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController");
-const InstanceDungeonMatchingCountDown_1 = require("../../InstanceDungeon/InstanceDungeonMatchingCountDown");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const OnlineController_1 = require("../OnlineController");
-const OnlineHallItem_1 = require("./OnlineHallItem");
-const OnlineTeamItem_1 = require("./OnlineTeamItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController"),
+  InstanceDungeonMatchingCountDown_1 = require("../../InstanceDungeon/InstanceDungeonMatchingCountDown"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  OnlineController_1 = require("../OnlineController"),
+  OnlineHallItem_1 = require("./OnlineHallItem"),
+  OnlineTeamItem_1 = require("./OnlineTeamItem");
 class OnlineHallView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -23,14 +23,14 @@ class OnlineHallView extends UiTickViewBase_1.UiTickViewBase {
       (this.GGi = () => new OnlineHallItem_1.OnlineHallItem(this.Info.Name)),
       (this.NGi = () => new OnlineTeamItem_1.OnlineTeamItem()),
       (this.OGi = (e) => {
-        e === 1 &&
+        1 === e &&
           (ModelManager_1.ModelManager.OnlineModel.SetHallShowFriend(!0),
           this.kGi(
             ModelManager_1.ModelManager.OnlineModel.ShowCanJoin
               ? ModelManager_1.ModelManager.OnlineModel.GetCanJoinFormFriend()
               : ModelManager_1.ModelManager.OnlineModel.FriendWorld,
           )),
-          e === 0 &&
+          0 === e &&
             (ModelManager_1.ModelManager.OnlineModel.SetHallShowFriend(!1),
             this.kGi(
               ModelManager_1.ModelManager.OnlineModel.ShowCanJoin
@@ -39,14 +39,14 @@ class OnlineHallView extends UiTickViewBase_1.UiTickViewBase {
             ));
       }),
       (this.FGi = (e) => {
-        e === 1 &&
+        1 === e &&
           (ModelManager_1.ModelManager.OnlineModel.SetHallShowCanJoin(!0),
           this.kGi(
             ModelManager_1.ModelManager.OnlineModel.ShowFriend
               ? ModelManager_1.ModelManager.OnlineModel.GetCanJoinFormFriend()
               : ModelManager_1.ModelManager.OnlineModel.GetCanJoinFormStranger(),
           )),
-          e === 0 &&
+          0 === e &&
             (ModelManager_1.ModelManager.OnlineModel.SetHallShowCanJoin(!1),
             this.kGi(
               ModelManager_1.ModelManager.OnlineModel.ShowFriend
@@ -70,10 +70,10 @@ class OnlineHallView extends UiTickViewBase_1.UiTickViewBase {
         );
       }),
       (this.jGi = () => {
-        const e = this.GetText(8);
-        const t =
-          "PermissionsSetting_" +
-          ModelManager_1.ModelManager.OnlineModel.CurrentPermissionsSetting;
+        var e = this.GetText(8),
+          t =
+            "PermissionsSetting_" +
+            ModelManager_1.ModelManager.OnlineModel.CurrentPermissionsSetting;
         LguiUtil_1.LguiUtil.SetLocalText(e, t);
       }),
       (this.WGi = () => {
@@ -84,11 +84,12 @@ class OnlineHallView extends UiTickViewBase_1.UiTickViewBase {
           this.XGi();
       }),
       (this.G$e = () => {
-        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() ===
-        0
+        0 ===
+        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState()
           ? this.ohi?.PlayAnimation("Close")
-          : ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() ===
-              2 && this.ohi?.PlayAnimation("Finish");
+          : 2 ===
+              ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() &&
+            this.ohi?.PlayAnimation("Finish");
       }),
       (this.N$e = () => {
         this.ohi?.PlayAnimation("Start"),
@@ -139,15 +140,16 @@ class OnlineHallView extends UiTickViewBase_1.UiTickViewBase {
   OnAfterShow() {
     this.ohi.BindOnStopTimer(
       () =>
-        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() !==
-        1,
+        1 !==
+        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState(),
     ),
       this.ohi.BindOnClickBtnCancelMatching(() => {
         this.ohi?.PlayAnimation("Close"),
           InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.CancelMatchRequest();
       }),
-      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() ===
-        1 && (this.ohi?.PlayAnimation("Start"), this.ohi.StartTimer());
+      1 ===
+        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() &&
+        (this.ohi?.PlayAnimation("Start"), this.ohi.StartTimer());
   }
   OnBeforeDestroy() {
     this.GetExtendToggle(2).OnStateChange.Remove(this.OGi),
@@ -203,7 +205,7 @@ class OnlineHallView extends UiTickViewBase_1.UiTickViewBase {
       );
   }
   XGi() {
-    let e, t, i;
+    var e, t, i;
     ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel()
       ? ((e = this.GetItem(9)),
         (t = this.GetItem(10)),
@@ -219,8 +221,8 @@ class OnlineHallView extends UiTickViewBase_1.UiTickViewBase {
         this.GetExtendToggle(3).OnStateChange.Add(this.FGi));
   }
   $Gi() {
-    let e;
-    const t = this.GetLoopScrollViewComponent(5);
+    var e,
+      t = this.GetLoopScrollViewComponent(5);
     ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel()
       ? ((e = this.GetItem(6).GetOwner()),
         (this.qGi = new LoopScrollView_1.LoopScrollView(t, e, this.NGi)))
@@ -228,8 +230,8 @@ class OnlineHallView extends UiTickViewBase_1.UiTickViewBase {
         (this.bGi = new LoopScrollView_1.LoopScrollView(t, e, this.GGi)));
   }
   kGi(e) {
-    const t = this.GetItem(7);
-    const i = this.GetLoopScrollViewComponent(5).RootUIComp;
+    var t = this.GetItem(7),
+      i = this.GetLoopScrollViewComponent(5).RootUIComp;
     !e || e.length <= 0
       ? (t.SetUIActive(!0), i.SetUIActive(!1))
       : (i.SetUIActive(!0),
@@ -237,11 +239,11 @@ class OnlineHallView extends UiTickViewBase_1.UiTickViewBase {
         this.bGi && this.bGi.ReloadData(e));
   }
   QGi(e) {
-    const t = this.GetItem(7);
+    var t = this.GetItem(7);
     e.length <= 0
       ? (t.SetUIActive(!0), this.qGi.ReloadData(e))
       : (t.SetUIActive(!1), this.qGi && this.qGi.ReloadData(e));
   }
 }
 exports.OnlineHallView = OnlineHallView;
-// # sourceMappingURL=OnlineHallView.js.map
+//# sourceMappingURL=OnlineHallView.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const ItemMaterialManager_1 = require("./ItemMaterialManager");
+const UE = require("ue"),
+  CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  ItemMaterialManager_1 = require("./ItemMaterialManager");
 class ItemMaterialDebugActor extends UE.KuroEffectActor {
   constructor() {
     super(...arguments),
@@ -47,7 +47,7 @@ class ItemMaterialDebugActor extends UE.KuroEffectActor {
     );
   }
   SimpleMaterialControllerUpdate() {
-    let t, e;
+    var t, e;
     this.Actor &&
       this.SimpleScalarNameTest &&
       this.SimpleScalarValueTest &&
@@ -65,4 +65,4 @@ class ItemMaterialDebugActor extends UE.KuroEffectActor {
   }
 }
 exports.default = ItemMaterialDebugActor;
-// # sourceMappingURL=ItemMaterialDebugActor.js.map
+//# sourceMappingURL=ItemMaterialDebugActor.js.map

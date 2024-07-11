@@ -4,18 +4,18 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.ActivityExData =
     exports.ActivityBaseData =
       void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const StringBuilder_1 = require("../../../Core/Utils/StringBuilder");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const PublicUtil_1 = require("../../Common/PublicUtil");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ACTIVITYFORCECLOSETIME = -1;
+const Log_1 = require("../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  StringBuilder_1 = require("../../../Core/Utils/StringBuilder"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../Common/PublicUtil"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ACTIVITYFORCECLOSETIME = -1;
 class ActivityBaseData {
   constructor() {
     (this.T2e = 0),
@@ -81,16 +81,18 @@ class ActivityBaseData {
   CheckIfInTimeInterval(t, e) {
     return (
       (t !== ACTIVITYFORCECLOSETIME || e !== ACTIVITYFORCECLOSETIME) &&
-      ((t === 0 && e === 0) ||
+      ((0 === t && 0 === e) ||
         (t <= (t = TimeUtil_1.TimeUtil.GetServerTime()) && t <= e))
     );
   }
   GetPreviewReward(t = this.LocalConfig.PreviewDrop) {
-    const e =
-      ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(t)?.DropPreview;
-    const i = [];
+    var e =
+        ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(
+          t,
+        )?.DropPreview,
+      i = [];
     if (e)
-      for (let [r, s] of e) {
+      for (var [r, s] of e) {
         r = [{ IncId: 0, ItemId: r }, s];
         i.push(r);
       }
@@ -111,8 +113,8 @@ class ActivityBaseData {
     return !!this.C3e;
   }
   GetPreGuideQuestFinishState() {
-    const e = this.p3e;
-    const i = e.length;
+    var e = this.p3e,
+      i = e.length;
     for (let t = 0; t < i; t++)
       if (
         ModelManager_1.ModelManager.QuestNewModel.GetQuestState(e[t]) <
@@ -122,8 +124,8 @@ class ActivityBaseData {
     return !!this.C3e;
   }
   GetUnFinishPreGuideQuestId() {
-    const e = this.p3e;
-    const i = e.length;
+    var e = this.p3e,
+      i = e.length;
     for (let t = 0; t < i; t++)
       if (
         ModelManager_1.ModelManager.QuestNewModel.GetQuestState(e[t]) <
@@ -133,16 +135,16 @@ class ActivityBaseData {
     return 0;
   }
   GetPreShowGuideQuestName() {
-    const e = new StringBuilder_1.StringBuilder();
-    const i = new Array();
-    const r = this.p3e;
+    var e = new StringBuilder_1.StringBuilder(),
+      i = new Array(),
+      r = this.p3e;
     let s = r.length;
     for (let t = 0; t < s; t++)
       ModelManager_1.ModelManager.QuestNewModel.CheckQuestFinished(r[0]) ||
         i.push(r[t]);
     s = i.length;
     for (let t = 0; t < s; t++) {
-      const n = PublicUtil_1.PublicUtil.GetConfigTextByKey(
+      var n = PublicUtil_1.PublicUtil.GetConfigTextByKey(
         ModelManager_1.ModelManager.QuestNewModel.GetQuestConfig(i[t]).TidName,
       );
       e.Append(n), t !== s - 1 && e.Append(",");
@@ -193,7 +195,7 @@ class ActivityBaseData {
         this.T2e,
         this.p3e,
       );
-    const e = new StringBuilder_1.StringBuilder();
+    var e = new StringBuilder_1.StringBuilder();
     e.Append(t.Ekn),
       e.Append("_"),
       e.Append(this.U2e),
@@ -243,4 +245,4 @@ class ActivityCacheData {
   }
 }
 exports.ActivityCacheData = ActivityCacheData;
-// # sourceMappingURL=ActivityData.js.map
+//# sourceMappingURL=ActivityData.js.map

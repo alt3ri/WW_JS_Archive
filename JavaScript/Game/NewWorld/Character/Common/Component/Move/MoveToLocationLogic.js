@@ -4,27 +4,27 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.MoveToLocation =
     exports.MoveToLocationController =
       void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../../../Core/Define/CommonDefine");
-const QueryTypeDefine_1 = require("../../../../../../Core/Define/QueryTypeDefine");
-const MathCommon_1 = require("../../../../../../Core/Utils/Math/MathCommon");
-const Quat_1 = require("../../../../../../Core/Utils/Math/Quat");
-const Rotator_1 = require("../../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const TraceElementCommon_1 = require("../../../../../../Core/Utils/TraceElementCommon");
-const AiContollerLibrary_1 = require("../../../../../AI/Controller/AiContollerLibrary");
-const GlobalData_1 = require("../../../../../GlobalData");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const ColorUtils_1 = require("../../../../../Utils/ColorUtils");
-const CharacterUnifiedStateTypes_1 = require("../Abilities/CharacterUnifiedStateTypes");
-const CharacterActorComponent_1 = require("../CharacterActorComponent");
-const FIX_LOCATION_TOLERANCE = 2;
-const PROFILE_KEY = "PatrolMoveLogic_ResetActorLocation";
-const END_DISTANCE = 30;
-const DEFAULT_TURN_SPEED = 360;
-const RESET_LOCATION_TOLERANCE = 10;
-const PER_TICK_MIN_MOVE_SPEED = 30;
+const UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../../../Core/Define/CommonDefine"),
+  QueryTypeDefine_1 = require("../../../../../../Core/Define/QueryTypeDefine"),
+  MathCommon_1 = require("../../../../../../Core/Utils/Math/MathCommon"),
+  Quat_1 = require("../../../../../../Core/Utils/Math/Quat"),
+  Rotator_1 = require("../../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  TraceElementCommon_1 = require("../../../../../../Core/Utils/TraceElementCommon"),
+  AiContollerLibrary_1 = require("../../../../../AI/Controller/AiContollerLibrary"),
+  GlobalData_1 = require("../../../../../GlobalData"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  ColorUtils_1 = require("../../../../../Utils/ColorUtils"),
+  CharacterUnifiedStateTypes_1 = require("../Abilities/CharacterUnifiedStateTypes"),
+  CharacterActorComponent_1 = require("../CharacterActorComponent"),
+  FIX_LOCATION_TOLERANCE = 2,
+  PROFILE_KEY = "PatrolMoveLogic_ResetActorLocation",
+  END_DISTANCE = 30,
+  DEFAULT_TURN_SPEED = 360,
+  RESET_LOCATION_TOLERANCE = 10,
+  PER_TICK_MIN_MOVE_SPEED = 30;
 class MoveToLocationController {
   constructor(t, i) {
     (this.QPn = void 0),
@@ -77,7 +77,7 @@ class MoveToLocationController {
         : void 0;
   }
   MoveToLocation(t, i = !0) {
-    let s, o;
+    var s, o;
     return (
       !!this.$Pn &&
       ((s = this.Hte.ActorLocationProxy),
@@ -93,14 +93,14 @@ class MoveToLocationController {
   }
   NavigateMoveToLocation(i, t, s = !0) {
     if (!this.$Pn) return !1;
-    this.Hte?.WanderDirectionType === 2 &&
+    2 === this.Hte?.WanderDirectionType &&
       (i.MoveState = CharacterUnifiedStateTypes_1.ECharMoveState.Walk),
       (this.QPn = []);
-    const o = [];
-    const h = this.Hte.ActorLocationProxy;
-    const e = i.Distance ?? MoveToPointConfig.DefaultDistance;
+    var o = [],
+      h = this.Hte.ActorLocationProxy,
+      e = i.Distance ?? MoveToPointConfig.DefaultDistance;
     if (Vector_1.Vector.Dist2D(h, i.Position) < e) return !0;
-    let r = AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(
+    var r = AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(
       this.Hte.Owner.GetWorld(),
       h.ToUeVector(),
       i.Position.ToUeVector(),
@@ -108,7 +108,7 @@ class MoveToLocationController {
       !0,
       !0,
     );
-    if ((!r || o.length === 0) && t)
+    if ((!r || 0 === o.length) && t)
       return (
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
@@ -120,13 +120,13 @@ class MoveToLocationController {
           ),
         !1
       );
-    if ((s && this.YPn(), o.length > 0)) {
+    if ((s && this.YPn(), 0 < o.length)) {
       Vector_1.Vector.Dist2D(o[0], h) > e &&
         this.QPn.push(MoveToPointConfig.GetTempMovePointConfig(o[0], i));
       for (let t = 1; t < o.length; t++)
         this.QPn.push(MoveToPointConfig.GetTempMovePointConfig(o[t], i));
     }
-    this.QPn.length > 0
+    0 < this.QPn.length
       ? ((r = this.QPn.length - 1),
         this.QPn[r].CallbackList || (this.QPn[r].CallbackList = []),
         this.QPn[r].CallbackList.push((t) => {
@@ -134,7 +134,7 @@ class MoveToLocationController {
         }))
       : this.QPn.push(i);
     for (let t = 0; t < this.QPn.length - 1; t++) {
-      const a = t + 1;
+      var a = t + 1;
       this.QPn[t].NextMovePointConfig = this.QPn[a];
     }
     return this.$Pn.SetMoveToLocation(this.QPn[0]);
@@ -218,7 +218,7 @@ class MoveToLocation {
         GlobalData_1.GlobalData.IsPlayInEditor &&
         this.DYo(),
       (this.mie += t),
-      this.mie > 1 && ((this.mie = 0), this.LYo()),
+      1 < this.mie && ((this.mie = 0), this.LYo()),
       this.UpdateMoveToDirection()
         ? (!this.rwn() ||
             (this.ZPn.ResetCondition && !this.ZPn.ResetCondition()) ||
@@ -232,8 +232,8 @@ class MoveToLocation {
     this.StopMove();
   }
   xYo(t) {
-    const i = this.nDi;
-    if (Math.abs(this.pYo - i) / t > PER_TICK_MIN_MOVE_SPEED || this.pYo === 0)
+    var i = this.nDi;
+    if (Math.abs(this.pYo - i) / t > PER_TICK_MIN_MOVE_SPEED || 0 === this.pYo)
       this.fYo = this.ZPn.ReturnTimeoutFailed;
     else if (((this.fYo -= t), this.fYo <= 0))
       return (
@@ -251,7 +251,7 @@ class MoveToLocation {
     this.pYo = i;
   }
   UpdateMoveToDirection() {
-    let t;
+    var t;
     return (
       this.oJo(),
       !!this.rJo() ||
@@ -306,7 +306,7 @@ class MoveToLocation {
       (this.ZPn = void 0));
   }
   MoveEnd(t) {
-    const i = this.ZPn?.NextMovePointConfig ?? void 0;
+    var i = this.ZPn?.NextMovePointConfig ?? void 0;
     this.ZPn?.RunCallbackList(t),
       this.ht(),
       i
@@ -336,7 +336,7 @@ class MoveToLocation {
       (this.jye.Z = 0),
       this.RTe.DeepCopy(this.XYo),
       (this.RTe.Z = 0);
-    const t = this.RTe.DotProduct(this.jye);
+    var t = this.RTe.DotProduct(this.jye);
     return (
       t < 0 &&
         (this.nwn(), Log_1.Log.CheckDebug()) &&
@@ -353,8 +353,8 @@ class MoveToLocation {
     );
   }
   LYo() {
-    let t;
-    let i = this.Jh.GetComponent(36);
+    var t,
+      i = this.Jh.GetComponent(36);
     i &&
       ((t = this.ZPn.MoveSpeed),
       this.ZPn.IsFly
@@ -382,7 +382,7 @@ class MoveToLocation {
         );
   }
   own(t, i) {
-    let s;
+    var s;
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "AI",
@@ -449,7 +449,7 @@ class MoveToLocation {
     );
   }
   tJo() {
-    const t = UE.NewObject(UE.TraceSphereElement.StaticClass());
+    var t = UE.NewObject(UE.TraceSphereElement.StaticClass());
     (t.bIsSingle = !1),
       (t.bIgnoreSelf = !0),
       t.SetTraceTypeQuery(QueryTypeDefine_1.KuroTraceTypeQuery.IkGround),
@@ -465,12 +465,12 @@ class MoveToLocation {
   }
   hJo(t, h) {
     this.jye.DeepCopy(t), (this.jye.Z += this.Hte.HalfHeight);
-    var i = this.jye;
-    var t =
-      (this.RTe.DeepCopy(t),
-      (this.RTe.Z += CharacterActorComponent_1.FIX_SPAWN_TRACE_HEIGHT),
-      this.RTe);
-    const s = this.eJo;
+    var i = this.jye,
+      t =
+        (this.RTe.DeepCopy(t),
+        (this.RTe.Z += CharacterActorComponent_1.FIX_SPAWN_TRACE_HEIGHT),
+        this.RTe),
+      s = this.eJo;
     (s.WorldContextObject = this.Hte.Actor),
       (s.Radius = this.Hte.ScaledRadius),
       TraceElementCommon_1.TraceElementCommon.SetStartLocation(s, i),
@@ -479,21 +479,21 @@ class MoveToLocation {
     for (const o of ModelManager_1.ModelManager.WorldModel.ActorsToIgnoreSet)
       s.ActorsToIgnore.Add(o);
     var i = TraceElementCommon_1.TraceElementCommon.ShapeTrace(
-      this.Hte.Actor.CapsuleComponent,
-      s,
-      PROFILE_KEY,
-      PROFILE_KEY,
-    );
-    const e = s.HitResult;
+        this.Hte.Actor.CapsuleComponent,
+        s,
+        PROFILE_KEY,
+        PROFILE_KEY,
+      ),
+      e = s.HitResult;
     if (i && e.bBlockingHit) {
-      const r = ModelManager_1.ModelManager.TraceElementModel.CommonHitLocation;
+      var r = ModelManager_1.ModelManager.TraceElementModel.CommonHitLocation;
       let i = "";
-      const a = e.Actors.Num();
-      let s = -1;
-      let o = "";
+      var a = e.Actors.Num();
+      let s = -1,
+        o = "";
       TraceElementCommon_1.TraceElementCommon.GetHitLocation(e, 0, r);
       for (let t = 0; t < a; ++t) {
-        const n = e.Actors.Get(t);
+        var n = e.Actors.Get(t);
         if (
           n?.IsValid() &&
           ((i += n.GetName() + ", "), !n.IsA(UE.Character.StaticClass()))
@@ -539,9 +539,9 @@ class MoveToLocation {
     if (this.ZPn && GlobalData_1.GlobalData.IsPlayInEditor) {
       this.twn ||
         (this.twn = new UE.LinearColor(
-          Math.random() > 0.5 ? 0 : 1,
-          Math.random() > 0.5 ? 0 : 1,
-          Math.random() > 0.5 ? 0 : 1,
+          0.5 < Math.random() ? 0 : 1,
+          0.5 < Math.random() ? 0 : 1,
+          0.5 < Math.random() ? 0 : 1,
           0,
         ));
       let t = this.ZPn;
@@ -556,7 +556,7 @@ class MoveToLocation {
         t;
 
       ) {
-        const i = t.Position;
+        var i = t.Position;
         UE.KismetSystemLibrary.DrawDebugSphere(
           GlobalData_1.GlobalData.World,
           i.ToUeVector(),
@@ -597,7 +597,7 @@ class MoveToPointConfig {
       (this.FaceToPosition = t.FaceToPosition ?? void 0),
       (this.CallbackList = []),
       t.CallbackList &&
-        t.CallbackList.length > 0 &&
+        0 < t.CallbackList.length &&
         this.CallbackList.push(...t.CallbackList),
       t.ResetCondition && (this.ResetCondition = t.ResetCondition);
   }
@@ -624,7 +624,7 @@ class MoveToPointConfig {
         : (this.NextMovePointConfig = t.NextMovePointConfig);
   }
   RunCallbackList(t) {
-    if (this.CallbackList && this.CallbackList.length !== 0)
+    if (this.CallbackList && 0 !== this.CallbackList.length)
       for (const i of this.CallbackList) i && i(t);
   }
   Clear() {
@@ -652,4 +652,4 @@ class MoveToPointConfig {
 ((exports.MoveToPointConfig = MoveToPointConfig).DefaultDistance =
   END_DISTANCE),
   (MoveToPointConfig.DefaultTurnSpeed = DEFAULT_TURN_SPEED);
-// # sourceMappingURL=MoveToLocationLogic.js.map
+//# sourceMappingURL=MoveToLocationLogic.js.map

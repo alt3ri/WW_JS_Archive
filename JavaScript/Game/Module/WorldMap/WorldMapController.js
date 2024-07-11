@@ -1,22 +1,22 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldMapController = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const Vector2D_1 = require("../../../Core/Utils/Math/Vector2D");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const InputManager_1 = require("../../Ui/Input/InputManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const TeleportController_1 = require("../Teleport/TeleportController");
-const WorldMapDefine_1 = require("./WorldMapDefine");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Vector2D_1 = require("../../../Core/Utils/Math/Vector2D"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  InputManager_1 = require("../../Ui/Input/InputManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  TeleportController_1 = require("../Teleport/TeleportController"),
+  WorldMapDefine_1 = require("./WorldMapDefine");
 class WorldMapController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
@@ -60,7 +60,7 @@ class WorldMapController extends UiControllerBase_1.UiControllerBase {
         );
   }
   static MapOpenPush(e) {
-    const r = new Protocol_1.Aki.Protocol.drs();
+    var r = new Protocol_1.Aki.Protocol.drs();
     (r.BVn = e), Net_1.Net.Send(23528, r);
   }
   static LockView(e) {
@@ -78,9 +78,9 @@ class WorldMapController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static FocalMarkItem(e, r) {
-    const o = ModelManager_1.ModelManager.WorldMapModel;
-    let t = o.CurrentFocalMarkType;
-    const n = o.CurrentFocalMarkId;
+    var o = ModelManager_1.ModelManager.WorldMapModel,
+      t = o.CurrentFocalMarkType,
+      n = o.CurrentFocalMarkId;
     (t === e && n === r) ||
       (UiManager_1.UiManager.IsViewShow("ItemTipsView") &&
         UiManager_1.UiManager.CloseView("ItemTipsView")),
@@ -96,7 +96,7 @@ class WorldMapController extends UiControllerBase_1.UiControllerBase {
           WorldMapController.OpenView(1, !1, t));
   }
   static ClearFocalMarkItem() {
-    const e = ModelManager_1.ModelManager.WorldMapModel;
+    var e = ModelManager_1.ModelManager.WorldMapModel;
     (e.CurrentFocalMarkType = void 0), (e.CurrentFocalMarkId = void 0);
   }
   static CloseWorldMap() {
@@ -142,12 +142,12 @@ class WorldMapController extends UiControllerBase_1.UiControllerBase {
     WorldMapController.OpenView(0, !0);
   }),
   (WorldMapController.mFo = (e, r) => {
-    e === "FunctionOpenView" &&
+    "FunctionOpenView" === e &&
       (_a.gFo =
         ModelManager_1.ModelManager.FunctionModel?.GetNewOpenFunctionIdList());
   }),
   (WorldMapController.dFo = (r, e) => {
-    if (r === "FunctionOpenView") {
+    if ("FunctionOpenView" === r) {
       let e = void 0;
       for (const o of _a.gFo)
         if (
@@ -194,4 +194,4 @@ class WorldMapController extends UiControllerBase_1.UiControllerBase {
         ),
         !1);
   });
-// # sourceMappingURL=WorldMapController.js.map
+//# sourceMappingURL=WorldMapController.js.map

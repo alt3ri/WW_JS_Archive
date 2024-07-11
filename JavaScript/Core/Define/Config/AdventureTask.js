@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdventureTask = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const DicIntString_1 = require("./SubType/DicIntString");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  DicIntString_1 = require("./SubType/DicIntString");
 class AdventureTask {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -47,30 +47,30 @@ class AdventureTask {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   chapterid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   tasktext(t) {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   GetRecordidAt(t) {
     return this.recordid(t);
   }
   recordid(t) {
-    const s = this.J7.__offset(this.z7, 10);
+    var s = this.J7.__offset(this.z7, 10);
     return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   recordidLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   recordidArray() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -80,22 +80,22 @@ class AdventureTask {
       : null;
   }
   needprogress() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   dropids() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   pathid() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetJumptoAt(t, s) {
     return this.jumpto(t);
   }
   jumpto(t, s) {
-    const i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 18);
     return i
       ? (s || new DicIntString_1.DicIntString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
@@ -104,9 +104,9 @@ class AdventureTask {
       : null;
   }
   jumptoLength() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.AdventureTask = AdventureTask;
-// # sourceMappingURL=AdventureTask.js.map
+//# sourceMappingURL=AdventureTask.js.map

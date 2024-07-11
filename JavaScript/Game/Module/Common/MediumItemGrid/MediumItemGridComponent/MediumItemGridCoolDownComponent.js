@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MediumItemGridCoolDownComponent = void 0);
-const UE = require("ue");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const MediumItemGridComponent_1 = require("./MediumItemGridComponent");
+const UE = require("ue"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  MediumItemGridComponent_1 = require("./MediumItemGridComponent");
 class MediumItemGridCoolDownComponent extends MediumItemGridComponent_1.MediumItemGridComponent {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -14,9 +14,9 @@ class MediumItemGridCoolDownComponent extends MediumItemGridComponent_1.MediumIt
     ];
   }
   OnRefresh(e) {
-    let i;
-    const t = e.CoolDown;
-    var e = e.TotalCdTime;
+    var i,
+      t = e.CoolDown,
+      e = e.TotalCdTime;
     t && e
       ? (this.GetSprite(0).SetFillAmount(t / e),
         this.SetActive(!0),
@@ -44,4 +44,4 @@ class MediumItemGridCoolDownComponent extends MediumItemGridComponent_1.MediumIt
   }
 }
 exports.MediumItemGridCoolDownComponent = MediumItemGridCoolDownComponent;
-// # sourceMappingURL=MediumItemGridCoolDownComponent.js.map
+//# sourceMappingURL=MediumItemGridCoolDownComponent.js.map

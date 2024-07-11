@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelAiTaskLog = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const LevelAiTask_1 = require("../LevelAiTask");
+const Log_1 = require("../../../../Core/Common/Log"),
+  LevelAiTask_1 = require("../LevelAiTask");
 class LevelAiTaskLog extends LevelAiTask_1.LevelAiTask {
   ExecuteTask() {
-    const e = this.Params;
+    var e = this.Params;
     if (e)
       switch (e.Level) {
         case "Warn":
@@ -21,4 +21,4 @@ class LevelAiTaskLog extends LevelAiTask_1.LevelAiTask {
   }
 }
 exports.LevelAiTaskLog = LevelAiTaskLog;
-// # sourceMappingURL=LevelAiTaskLog.js.map
+//# sourceMappingURL=LevelAiTaskLog.js.map

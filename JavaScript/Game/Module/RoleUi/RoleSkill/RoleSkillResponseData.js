@@ -19,4 +19,4 @@ class RoleSkillResponseData {
   }
 }
 exports.RoleSkillResponseData = RoleSkillResponseData;
-// # sourceMappingURL=RoleSkillResponseData.js.map
+//# sourceMappingURL=RoleSkillResponseData.js.map

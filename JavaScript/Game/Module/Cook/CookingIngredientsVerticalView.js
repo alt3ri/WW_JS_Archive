@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CookingIngredientsVerticalView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const ItemInfoById_1 = require("../../../Core/Define/ConfigQuery/ItemInfoById");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const MediumItemGrid_1 = require("../Common/MediumItemGrid/MediumItemGrid");
-const NumberSelectComponent_1 = require("../Common/NumberSelect/NumberSelectComponent");
-const ManufactureMaterialItem_1 = require("../Manufacture/Common/Item/ManufactureMaterialItem");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const GenericLayoutNew_1 = require("../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const GenericScrollViewNew_1 = require("../Util/ScrollView/GenericScrollViewNew");
-const CookController_1 = require("./CookController");
-const CookItemView_1 = require("./View/CookItemView");
-const CookProficiencyView_1 = require("./View/CookProficiencyView");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ItemInfoById_1 = require("../../../Core/Define/ConfigQuery/ItemInfoById"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  MediumItemGrid_1 = require("../Common/MediumItemGrid/MediumItemGrid"),
+  NumberSelectComponent_1 = require("../Common/NumberSelect/NumberSelectComponent"),
+  ManufactureMaterialItem_1 = require("../Manufacture/Common/Item/ManufactureMaterialItem"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  GenericLayoutNew_1 = require("../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  GenericScrollViewNew_1 = require("../Util/ScrollView/GenericScrollViewNew"),
+  CookController_1 = require("./CookController"),
+  CookItemView_1 = require("./View/CookItemView"),
+  CookProficiencyView_1 = require("./View/CookProficiencyView");
 class MaterialSelectionCacheData {
   static SetMaterialSelectIndex(e) {
     MaterialSelectionCacheData.lqt = e;
@@ -86,11 +86,11 @@ class SvInfo extends UiPanelBase_1.UiPanelBase {
   dde() {}
   Cde() {}
   SetTypeName(e = void 0) {
-    const t = this.GetText(0);
+    var t = this.GetText(0);
     e ? (t.SetUIActive(!0), t.SetText(e)) : t.SetUIActive(!1);
   }
   RefreshCooking(e, t) {
-    let i;
+    var i;
     this.gqt(e) &&
       (this.dqt &&
         this.dqt.ItemId !== e.ItemId &&
@@ -123,21 +123,20 @@ class SvInfo extends UiPanelBase_1.UiPanelBase {
   RefreshMachining(e) {
     if (this.gqt(e)) {
       (this.dqt = e), this.cqt.SetActive(!0);
-      const t = ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
-        e.ItemId,
-      );
-      var i = ItemInfoById_1.configItemInfoById.GetConfig(t.FinalItemId);
-      var i = ConfigManager_1.ConfigManager.CookConfig.GetLocalText(
-        i.BgDescription,
-      );
-      const r =
-        (this.GetText(3).SetUIActive(!1),
-        this.GetText(5).SetText(i),
-        new Array());
+      var t = ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
+          e.ItemId,
+        ),
+        i = ItemInfoById_1.configItemInfoById.GetConfig(t.FinalItemId),
+        i = ConfigManager_1.ConfigManager.CookConfig.GetLocalText(
+          i.BgDescription,
+        ),
+        r =
+          (this.GetText(3).SetUIActive(!1),
+          this.GetText(5).SetText(i),
+          new Array());
       for (const a of t.InterationId) {
-        var s;
-        const o =
-          ConfigManager_1.ConfigManager.CookConfig.GetCookProcessMsgById(a);
+        var s,
+          o = ConfigManager_1.ConfigManager.CookConfig.GetCookProcessMsgById(a);
         e.InteractiveList.includes(a)
           ? ((s = ConfigManager_1.ConfigManager.CookConfig.GetLocalText(
               o.Introduce,
@@ -167,7 +166,7 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
       (this.Sqt = void 0),
       (this.OnChangeMaterialSelectionDelegate = void 0),
       (this.Eqt = () => {
-        const e = new ManufactureMaterialItem_1.ManufactureMaterialItem();
+        var e = new ManufactureMaterialItem_1.ManufactureMaterialItem();
         return (
           e.BindOnCanExecuteChange(() => !1),
           e.BindOnExtendToggleClicked((e) => {
@@ -198,7 +197,7 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
             this.t6,
           ),
           this.ItemData &&
-            this.ItemData.MainType === 0 &&
+            0 === this.ItemData.MainType &&
             this.RefreshProficiency(this.ItemData, this.t6);
       });
   }
@@ -252,10 +251,10 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
       this.GetItem(22).SetUIActive(!1),
       this.GetText(23).ShowTextNew("NeedMaterialTitleText"),
       this.GetText(17).ShowTextNew("PrefabTextItem_MaterialChoose_Text");
-    var e = this.GetItem(8);
-    var e =
-      ((this.WGe = new NumberSelectComponent_1.NumberSelectComponent(e)),
-      { MaxNumber: 0, ValueChangeFunction: this.yqt });
+    var e = this.GetItem(8),
+      e =
+        ((this.WGe = new NumberSelectComponent_1.NumberSelectComponent(e)),
+        { MaxNumber: 0, ValueChangeFunction: this.yqt });
     this.WGe.Init(e),
       this.WGe.SetUiActive(!0),
       this.WGe.SetNumberSelectTipsVisible(!1),
@@ -294,11 +293,11 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
   }
   Iqt() {
     this.Tqt(this.vqt, this.Mqt * this.t6);
-    const e = this.pqt?.GetScrollItemList();
+    var e = this.pqt?.GetScrollItemList();
     if (e) for (const t of e) t.SetTimes(this.t6);
   }
   Lqt(e, t) {
-    const i = ConfigManager_1.ConfigManager.TextConfig.GetTextById(e);
+    var i = ConfigManager_1.ConfigManager.TextConfig.GetTextById(e);
     switch (t) {
       case 0:
         this.fqt.SetTypeName(), this.mqt.SetTypeContent(i);
@@ -323,10 +322,10 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
     if (void 0 === t || t.LimitTotalCount <= 0)
       this.GetItem(3).SetUIActive(!1), this.WGe.ResetLimitMaxValue();
     else {
-      const i = t.LimitTotalCount - t.CookCount;
+      var i = t.LimitTotalCount - t.CookCount;
       this.WGe.SetLimitMaxValue(Math.max(1, i));
       let e = i.toString();
-      i === 0 &&
+      0 === i &&
         (e = StringUtils_1.StringUtils.Format(
           "<color=#c25757>{0}</color>",
           i.toString(),
@@ -341,7 +340,7 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
     }
   }
   Tqt(e, t) {
-    let i;
+    var i;
     this.GetText(12).GetParentAsUIItem().SetUIActive(e),
       e &&
         ((e = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
@@ -362,15 +361,15 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
   }
   RefreshProficiency(e, t) {
     var i = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
-      e.ItemId,
-    );
-    const r = i.Proficiency;
-    var i = i.MaxProficiencyCount;
+        e.ItemId,
+      ),
+      r = i.Proficiency,
+      i = i.MaxProficiencyCount;
     this.mqt.SetExpNum(e.CookCount, r, i, t), this.EIi(e);
   }
   Uqt(e) {
-    let t = !1;
-    let i = 0;
+    let t = !1,
+      i = 0;
     e = e.filter(
       (e) =>
         e.G3n !== CookController_1.CookController.CookCoinId ||
@@ -379,10 +378,10 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
     return [t, i, e];
   }
   OnSecondTimerRefresh() {
-    this.ItemData && this.ItemData.MainType === 0 && this.Dqt(this.ItemData);
+    this.ItemData && 0 === this.ItemData.MainType && this.Dqt(this.ItemData);
   }
   RefreshCooking(e) {
-    let t;
+    var t;
     e &&
       ((this.ItemData = e),
       (this.t6 = 1),
@@ -470,4 +469,4 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.CookingIngredientsVerticalView = CookingIngredientsVerticalView;
-// # sourceMappingURL=CookingIngredientsVerticalView.js.map
+//# sourceMappingURL=CookingIngredientsVerticalView.js.map

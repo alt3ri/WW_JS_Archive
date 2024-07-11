@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DrawMainViewNew = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const SHOW_TIPS_DELAY = 2e3;
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  SHOW_TIPS_DELAY = 2e3;
 class DrawMainViewNew extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -25,15 +25,15 @@ class DrawMainViewNew extends UiTickViewBase_1.UiTickViewBase {
       (this.GachaBP = void 0),
       (this.InitGachaBp = (e, i) => {
         let t = 0;
-        e === 1
-          ? i === 3
+        1 === e
+          ? 3 === i
             ? (t = 0)
-            : i === 4
+            : 4 === i
               ? (t = 1)
-              : i === 5 && (t = 2)
-          : i === 4
+              : 5 === i && (t = 2)
+          : 4 === i
             ? (t = 3)
-            : i === 5 && (t = 4),
+            : 5 === i && (t = 4),
           (this.MaxQuality = i),
           (this.GachaBP = UE.KuroCollectActorComponent.GetActorWithTag(
             FNameUtil_1.FNameUtil.GetDynamicFName("GachaBP"),
@@ -46,19 +46,19 @@ class DrawMainViewNew extends UiTickViewBase_1.UiTickViewBase {
       (this.InitAudioState = (e, i) => {
         AudioSystem_1.AudioSystem.SetState(
           "ui_gacha_times",
-          e === 1 ? "one" : "ten",
+          1 === e ? "one" : "ten",
         ),
-          i === 3
+          3 === i
             ? AudioSystem_1.AudioSystem.SetState(
                 "ui_gacha_quality_max",
                 "normal",
               )
-            : i === 4
+            : 4 === i
               ? AudioSystem_1.AudioSystem.SetState(
                   "ui_gacha_quality_max",
                   "purple",
                 )
-              : i === 5 &&
+              : 5 === i &&
                 AudioSystem_1.AudioSystem.SetState(
                   "ui_gacha_quality_max",
                   "golden",
@@ -72,7 +72,7 @@ class DrawMainViewNew extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.OnEndGacha = () => {
         if (((this.IsShowTips = !0), this.GachaBP.IsSkip))
-          if (this.MaxQuality === 5 || this.HasNewItems) {
+          if (5 === this.MaxQuality || this.HasNewItems) {
             let e = this.OpenParam;
             e
               ? (e.IsOnlyShowGold = !0)
@@ -118,26 +118,26 @@ class DrawMainViewNew extends UiTickViewBase_1.UiTickViewBase {
       (this.BtnBindInfo = [[1, this.OnClickSkip]]);
   }
   async OnBeforeStartAsync() {
-    const e = [];
+    var e = [];
     for (const i of ModelManager_1.ModelManager.GachaModel.CurGachaResult)
       e.push(i.u5n.G3n);
     await ModelManager_1.ModelManager.GachaModel.PreloadGachaSequence(e);
   }
   OnBeforeShow() {
-    const e = ModelManager_1.ModelManager.GachaModel.CurGachaResult.length;
-    const i = ModelManager_1.ModelManager.GachaModel.CurGachaResult.reduce(
-      (e, i) => {
-        var t = i.u5n.G3n;
-        var t =
-          ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t)
-            ?.QualityId ?? 0;
-        return (
-          (this.HasNewItems = this.HasNewItems || (t >= 4 && i.IsNew)),
-          Math.max(e, t)
-        );
-      },
-      0,
-    );
+    var e = ModelManager_1.ModelManager.GachaModel.CurGachaResult.length,
+      i = ModelManager_1.ModelManager.GachaModel.CurGachaResult.reduce(
+        (e, i) => {
+          var t = i.u5n.G3n,
+            t =
+              ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t)
+                ?.QualityId ?? 0;
+          return (
+            (this.HasNewItems = this.HasNewItems || (4 <= t && i.IsNew)),
+            Math.max(e, t)
+          );
+        },
+        0,
+      );
     this.InitGachaBp(e, i), this.InitAudioState(e, i);
   }
   OnStart() {
@@ -183,4 +183,4 @@ class DrawMainViewNew extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.DrawMainViewNew = DrawMainViewNew;
-// # sourceMappingURL=DrawMainViewNew.js.map
+//# sourceMappingURL=DrawMainViewNew.js.map

@@ -6,12 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.MAX_TIME =
     exports.MIN_TIME =
       void 0);
-const Log_1 = require("../Common/Log");
-const Stats_1 = require("../Common/Stats");
-const Time_1 = require("../Common/Time");
-const PriorityQueue_1 = require("../Container/PriorityQueue");
-const MAX_LOOP = ((exports.MIN_TIME = 20), (exports.MAX_TIME = 9e4), 10);
-const FOREVER = 0;
+const Log_1 = require("../Common/Log"),
+  Stats_1 = require("../Common/Stats"),
+  Time_1 = require("../Common/Time"),
+  PriorityQueue_1 = require("../Container/PriorityQueue"),
+  MAX_LOOP = ((exports.MIN_TIME = 20), (exports.MAX_TIME = 9e4), 10),
+  FOREVER = 0;
 class TimerHandle {
   constructor() {
     (this.Id = 0), (this.Id = ++TimerHandle.o6);
@@ -53,8 +53,8 @@ class Timer {
       (this.Next = this.Now + e / r);
   }
   Do() {
-    const t = this.Next;
-    const i = t - this.Now;
+    var t = this.Next,
+      i = t - this.Now;
     this.MJ;
     (this.Now = t),
       (this.Next = t + this.Interval / this.Dilation),
@@ -87,7 +87,7 @@ class Timer {
   }
   Copy() {
     this.Handle = void 0;
-    const t = new Timer(
+    var t = new Timer(
       this.Id,
       this.IO,
       this.Interval,
@@ -127,10 +127,10 @@ class TimerSystemInstance {
       }));
   }
   Tick(t) {
-    for (let i = this.Now + t, e = ((this.Now = i), this.Queue); !e.Empty; ) {
-      const s = e.Top;
+    for (var i = this.Now + t, e = ((this.Now = i), this.Queue); !e.Empty; ) {
+      var s = e.Top;
       if (!s || s.Next > i) break;
-      e.Pop(), s.State === 0 && (s.Do() ? e.Push(s) : this.gK(s));
+      e.Pop(), 0 === s.State && (s.Do() ? e.Push(s) : this.gK(s));
     }
   }
   Has(t) {
@@ -160,14 +160,14 @@ class TimerSystemInstance {
   }
   IsPause(t) {
     t = this.TJ(t);
-    return t && t.State === 1;
+    return t && 1 === t.State;
   }
   Pause(t) {
-    let i;
-    const e = this.TJ(t);
+    var i,
+      e = this.TJ(t);
     return (
       !!e &&
-      (e.State !== 0
+      (0 !== e.State
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Timer",
@@ -188,10 +188,10 @@ class TimerSystemInstance {
     );
   }
   Resume(t) {
-    const i = this.TJ(t);
+    var i = this.TJ(t);
     return (
       !!i &&
-      (i.State !== 1
+      (1 !== i.State
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Timer",
@@ -206,10 +206,10 @@ class TimerSystemInstance {
   }
   ChangeInterval(t, i) {
     if (!TimerSystemInstance.j6(i)) return !1;
-    const e = this.TJ(t);
+    var e = this.TJ(t);
     if (!e) return !1;
     if (
-      (e.State === 2 &&
+      (2 === e.State &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Timer",
@@ -220,12 +220,12 @@ class TimerSystemInstance {
         ),
       e.Interval !== i)
     ) {
-      const s = this.Now;
-      if (e.State === 1) {
+      var s = this.Now;
+      if (1 === e.State) {
         const o = e.Next + i - e.Interval;
         (e.Next = o < 0 ? 0 : o), (e.Interval = i);
       } else {
-        const r = e.Copy();
+        var r = e.Copy();
         e.State = 2;
         const o = r.Next + i - r.Interval;
         (r.Next = o < s ? s : o),
@@ -239,11 +239,11 @@ class TimerSystemInstance {
     return !0;
   }
   ChangeDilation(t, i) {
-    let e, s, r;
+    var e, s, r;
     return (
       !!TimerSystemInstance.IJ(i) &&
       !!(e = this.TJ(t)) &&
-      (e.State === 2 &&
+      (2 === e.State &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Timer",
@@ -254,7 +254,7 @@ class TimerSystemInstance {
         ),
       e.Dilation !== i &&
         ((s = this.Now),
-        e.State === 1
+        1 === e.State
           ? ((e.Next = (e.Next * e.Dilation) / i), (e.Dilation = i))
           : ((r = e.Copy()),
             (e.State = 2),
@@ -287,7 +287,7 @@ class TimerSystemInstance {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Timer", 1, "计时器句柄非法", ["id", t]);
     else {
-      const i = this.Timers.get(t);
+      var i = this.Timers.get(t);
       if (i) return i;
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Timer", 1, "计时器句柄不存在", ["id", t]);
@@ -299,9 +299,9 @@ class TimerSystemInstance {
       o ||
         (t = this.StatWeakMap.get(i)) ||
         ((t = void 0), this.StatWeakMap.set(i, t));
-      const h = this.Now;
-      const a = new TimerHandle();
-      var s = new Timer(a.Id, i, e, s, r, a, o ?? t, n);
+      var h = this.Now,
+        a = new TimerHandle(),
+        s = new Timer(a.Id, i, e, s, r, a, o ?? t, n);
       return (
         (s.Now = h),
         (s.Next = h + e / r),
@@ -446,12 +446,12 @@ class RealTimeTimerSystem extends TimerSystemImplement {
     return this.InstanceInternal;
   }
   static Tick() {
-    const t = Time_1.Time.ServerTimeStamp;
-    const i = t - this.e8s;
+    var t = Time_1.Time.ServerTimeStamp,
+      i = t - this.e8s;
     (this.e8s = t), this.TickImplement(i);
   }
 }
 ((exports.RealTimeTimerSystem = RealTimeTimerSystem).InstanceInternal =
   new TimerSystemInstance()),
   (RealTimeTimerSystem.e8s = 0);
-// # sourceMappingURL=TimerSystem.js.map
+//# sourceMappingURL=TimerSystem.js.map

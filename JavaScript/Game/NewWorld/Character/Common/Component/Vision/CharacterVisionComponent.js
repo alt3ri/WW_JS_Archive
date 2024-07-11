@@ -1,37 +1,41 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, i, e, n) {
-    let o;
-    const r = arguments.length;
-    let s =
-      r < 3 ? i : n === null ? (n = Object.getOwnPropertyDescriptor(i, e)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      r = arguments.length,
+      s =
+        r < 3
+          ? i
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(i, e))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(t, i, e, n);
     else
-      for (let a = t.length - 1; a >= 0; a--)
-        (o = t[a]) && (s = (r < 3 ? o(s) : r > 3 ? o(i, e, s) : o(i, e)) || s);
-    return r > 3 && s && Object.defineProperty(i, e, s), s;
+      for (var a = t.length - 1; 0 <= a; a--)
+        (o = t[a]) && (s = (r < 3 ? o(s) : 3 < r ? o(i, e, s) : o(i, e)) || s);
+    return 3 < r && s && Object.defineProperty(i, e, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterVisionComponent = void 0);
-const UE = require("ue");
-const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const PhantomUtil_1 = require("../../../../../Module/Phantom/PhantomUtil");
-const CharacterAbilityComponent_1 = require("../Abilities/CharacterAbilityComponent");
-const GameplayAbilityVisionControl_1 = require("./GA/GameplayAbilityVisionControl");
-const GameplayAbilityVisionExplore_1 = require("./GA/GameplayAbilityVisionExplore");
-const GameplayAbilityVisionMorph_1 = require("./GA/GameplayAbilityVisionMorph");
-const GameplayAbilityVisionSummon_1 = require("./GA/GameplayAbilityVisionSummon");
-const visionTypes = {
-  0: GameplayAbilityVisionSummon_1.GameplayAbilityVisionSummon,
-  1: GameplayAbilityVisionMorph_1.GameplayAbilityVisionMorph,
-  2: GameplayAbilityVisionExplore_1.GameplayAbilityVisionExplore,
-  3: GameplayAbilityVisionControl_1.GameplayAbilityVisionControl,
-};
+const UE = require("ue"),
+  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  PhantomUtil_1 = require("../../../../../Module/Phantom/PhantomUtil"),
+  CharacterAbilityComponent_1 = require("../Abilities/CharacterAbilityComponent"),
+  GameplayAbilityVisionControl_1 = require("./GA/GameplayAbilityVisionControl"),
+  GameplayAbilityVisionExplore_1 = require("./GA/GameplayAbilityVisionExplore"),
+  GameplayAbilityVisionMorph_1 = require("./GA/GameplayAbilityVisionMorph"),
+  GameplayAbilityVisionSummon_1 = require("./GA/GameplayAbilityVisionSummon"),
+  visionTypes = {
+    [0]: GameplayAbilityVisionSummon_1.GameplayAbilityVisionSummon,
+    1: GameplayAbilityVisionMorph_1.GameplayAbilityVisionMorph,
+    2: GameplayAbilityVisionExplore_1.GameplayAbilityVisionExplore,
+    3: GameplayAbilityVisionControl_1.GameplayAbilityVisionControl,
+  };
 let CharacterVisionComponent = class CharacterVisionComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -46,7 +50,7 @@ let CharacterVisionComponent = class CharacterVisionComponent extends EntityComp
       });
   }
   OnStart() {
-    let t = this.Entity.GetComponent(0);
+    var t = this.Entity.GetComponent(0);
     (this.Pen = t.VisionSkillServerEntityId),
       this.xen
         ? (this.wen(this.xen), (this.xen = void 0))
@@ -77,7 +81,7 @@ let CharacterVisionComponent = class CharacterVisionComponent extends EntityComp
     for (const i of this.Aen.values()) i.Tick(t);
   }
   SetVisionSkillInformationList(t, i) {
-    const e = this.Pen;
+    var e = this.Pen;
     if (((this.Pen = i), this.rQt)) {
       if ((this.wen(t), this.Pen !== e))
         for (const n of this.Aen.values()) n.OnVisionChanged();
@@ -85,9 +89,9 @@ let CharacterVisionComponent = class CharacterVisionComponent extends EntityComp
   }
   wen(t) {
     if ((this.Ren.clear(), (this.Uen = 0), t)) {
-      const i = this.Entity.GetComponent(186);
+      var i = this.Entity.GetComponent(186);
       for (const n of t) {
-        const e = PhantomUtil_1.PhantomUtil.GetVisionData(n.vkn);
+        var e = PhantomUtil_1.PhantomUtil.GetVisionData(n.vkn);
         e &&
           (this.Ren.set(e.类型, n), [0, 1].includes(e.类型)) &&
           (i.ModifyCdInfo(
@@ -99,25 +103,25 @@ let CharacterVisionComponent = class CharacterVisionComponent extends EntityComp
     }
   }
   GetVisionIdList() {
-    const t = UE.NewArray(UE.BuiltinInt);
+    var t = UE.NewArray(UE.BuiltinInt);
     for (const i of this.Ren.values()) t.Add(i.vkn);
     return t;
   }
   GetVisionLevelList() {
-    const t = UE.NewArray(UE.BuiltinInt);
+    var t = UE.NewArray(UE.BuiltinInt);
     for (const i of this.Ren.values()) t.Add(i.rSs);
     return t;
   }
   GetVisionLevelByBuffId(t) {
     for (const i of this.Ren.values())
-      if (i.rSs > 0)
+      if (0 < i.rSs)
         if (PhantomUtil_1.PhantomUtil.GetSkillBuffIds(i.vkn).includes(t))
           return i.rSs;
     return CharacterAbilityComponent_1.DEFAULT_SOURCE_SKILL_LEVEL_NOT_FOUND;
   }
   GetVisionLevelByDamageId(t) {
     for (const i of this.Ren.values())
-      if (i.rSs > 0)
+      if (0 < i.rSs)
         if (PhantomUtil_1.PhantomUtil.GetSkillSettleIds(i.vkn).includes(t))
           return i.rSs;
     return CharacterAbilityComponent_1.DEFAULT_SOURCE_SKILL_LEVEL_NOT_FOUND;
@@ -139,23 +143,23 @@ let CharacterVisionComponent = class CharacterVisionComponent extends EntityComp
     return this.Ren.get(t);
   }
   ExitMultiSkillStateOfMorphVision() {
-    const t = this.Aen.get(1);
+    var t = this.Aen.get(1);
     t && t.ExitMultiSkillState();
   }
   OnGoDown() {
-    const t = this.Aen.get(1);
+    var t = this.Aen.get(1);
     t && t.OnGoDown();
   }
   SetKeepMultiSkillState(t, i) {
-    const e = this.Aen.get(1);
+    var e = this.Aen.get(1);
     e && e.SetKeepMultiSkillState(t, i);
   }
   SetEnableAttackInputActionOfMorphVision(t) {
-    const i = this.Aen.get(1);
+    var i = this.Aen.get(1);
     i && i.SetEnableAttackInputAction(t);
   }
   CanSummonerStartNextMultiSkill() {
-    const t = this.Aen.get(1);
+    var t = this.Aen.get(1);
     return !!t && t.CanSummonerStartNextMultiSkill();
   }
 };
@@ -164,4 +168,4 @@ let CharacterVisionComponent = class CharacterVisionComponent extends EntityComp
   CharacterVisionComponent,
 )),
   (exports.CharacterVisionComponent = CharacterVisionComponent);
-// # sourceMappingURL=CharacterVisionComponent.js.map
+//# sourceMappingURL=CharacterVisionComponent.js.map

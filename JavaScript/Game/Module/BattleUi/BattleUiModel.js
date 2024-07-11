@@ -1,34 +1,34 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleUiModel = void 0);
-const puerts_1 = require("puerts");
-const Stats_1 = require("../../../Core/Common/Stats");
-const CommonDefine_1 = require("../../../Core/Define/CommonDefine");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector2D_1 = require("../../../Core/Utils/Math/Vector2D");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const UiLayer_1 = require("../../Ui/UiLayer");
-const UiManager_1 = require("../../Ui/UiManager");
-const BattleUiAudioData_1 = require("./BattleUiAudioData");
-const BattleUiChildViewData_1 = require("./BattleUiChildViewData");
-const BattleUiEnvironmentKeyData_1 = require("./BattleUiEnvironmentKeyData");
-const BattleUiExploreModeData_1 = require("./BattleUiExploreModeData");
-const BattleUiFloatTipsData_1 = require("./BattleUiFloatTipsData");
-const BattleUiFormationData_1 = require("./BattleUiFormationData");
-const BattleUiFormationPanelData_1 = require("./BattleUiFormationPanelData");
-const BattleUiMergeHeadStateData_1 = require("./BattleUiMergeHeadStateData");
-const BattleUiRoleData_1 = require("./BattleUiRoleData");
-const BattleUiSpecialEnergyBarData_1 = require("./BattleUiSpecialEnergyBarData");
-const FullScreenEffectHandle_1 = require("./FullScreenEffectHandle");
-const LevelUpCacheData_1 = require("./LevelUpCacheData");
-const HeadStateCommonParam_1 = require("./Views/HeadState/HeadStateCommonParam");
+const puerts_1 = require("puerts"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector2D_1 = require("../../../Core/Utils/Math/Vector2D"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  BattleUiAudioData_1 = require("./BattleUiAudioData"),
+  BattleUiChildViewData_1 = require("./BattleUiChildViewData"),
+  BattleUiEnvironmentKeyData_1 = require("./BattleUiEnvironmentKeyData"),
+  BattleUiExploreModeData_1 = require("./BattleUiExploreModeData"),
+  BattleUiFloatTipsData_1 = require("./BattleUiFloatTipsData"),
+  BattleUiFormationData_1 = require("./BattleUiFormationData"),
+  BattleUiFormationPanelData_1 = require("./BattleUiFormationPanelData"),
+  BattleUiMergeHeadStateData_1 = require("./BattleUiMergeHeadStateData"),
+  BattleUiRoleData_1 = require("./BattleUiRoleData"),
+  BattleUiSpecialEnergyBarData_1 = require("./BattleUiSpecialEnergyBarData"),
+  FullScreenEffectHandle_1 = require("./FullScreenEffectHandle"),
+  LevelUpCacheData_1 = require("./LevelUpCacheData"),
+  HeadStateCommonParam_1 = require("./Views/HeadState/HeadStateCommonParam");
 class BattleUiModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -288,9 +288,9 @@ class BattleUiModel extends ModelBase_1.ModelBase {
   TryBroadcastCacheRoleLevelUpData() {
     if (UiManager_1.UiManager.IsViewShow("BattleView")) {
       for (const a of this.hQe) {
-        const t = a.ConfigId;
-        const e = a.Exp;
-        const i = a.Level;
+        var t = a.ConfigId,
+          e = a.Exp,
+          i = a.Level;
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnFormationPlayLevelUp,
           t,
@@ -372,9 +372,9 @@ class BattleUiModel extends ModelBase_1.ModelBase {
   }
   UpdateViewPortSize() {
     Global_1.Global.CharacterController.GetViewportSize(this.CQe, this.gQe);
-    const t = (0, puerts_1.$unref)(this.CQe);
-    var e = (0, puerts_1.$unref)(this.gQe);
-    var e = (this.ViewportSize.Set(t, e), UiLayer_1.UiLayer.UiRootItem);
+    var t = (0, puerts_1.$unref)(this.CQe),
+      e = (0, puerts_1.$unref)(this.gQe),
+      e = (this.ViewportSize.Set(t, e), UiLayer_1.UiLayer.UiRootItem);
     e &&
       ((this.ScreenPositionScale = e.GetWidth() / t),
       this.ScreenPositionOffset.Set(0.5 * -e.GetWidth(), 0.5 * -e.GetHeight()));
@@ -414,7 +414,7 @@ class BattleUiModel extends ModelBase_1.ModelBase {
     this.MergeHeadStateData.OnAddEntity(t);
   }
   OnRemoveEntity(t) {
-    const e = this.sQe.get(t.Id);
+    var e = this.sQe.get(t.Id);
     e &&
       (this.sQe.delete(t.Id),
       e.Clear(),
@@ -426,7 +426,7 @@ class BattleUiModel extends ModelBase_1.ModelBase {
       this.MergeHeadStateData.OnRemoveEntity(t);
   }
   PQe() {
-    const t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     for (const e of ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities())
       e === t ? (this.aQe = this.UQe(e, !0)) : this.UQe(e, !1);
   }
@@ -458,7 +458,7 @@ class BattleUiModel extends ModelBase_1.ModelBase {
       (this.IQe = void 0));
   }
   LQe() {
-    const t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
+    var t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
     t?.RoleBattleViewInfo
       ? (this.ChildViewData.SetChildVisible(
           3,
@@ -498,7 +498,7 @@ class BattleUiModel extends ModelBase_1.ModelBase {
         this.ChildViewData.SetChildVisible(
           3,
           10,
-          t.RoleBattleViewInfo.JoystickType !== 1,
+          1 !== t.RoleBattleViewInfo.JoystickType,
         ))
       : (this.ChildViewData.SetChildVisible(3, 4, !0),
         this.ChildViewData.SetChildVisible(3, 3, !0),
@@ -534,4 +534,4 @@ class BattleUiModel extends ModelBase_1.ModelBase {
   }
 }
 (exports.BattleUiModel = BattleUiModel).xQe = void 0;
-// # sourceMappingURL=BattleUiModel.js.map
+//# sourceMappingURL=BattleUiModel.js.map

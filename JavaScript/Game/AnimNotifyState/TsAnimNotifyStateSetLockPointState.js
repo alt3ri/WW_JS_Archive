@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const Global_1 = require("../Global");
-const ModelManager_1 = require("../Manager/ModelManager");
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  Global_1 = require("../Global"),
+  ModelManager_1 = require("../Manager/ModelManager");
 class TsAnimNotifyStateSetLockPointState extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -15,8 +15,8 @@ class TsAnimNotifyStateSetLockPointState extends UE.KuroAnimNotifyState {
       (this.OldHardLockValid = !1);
   }
   K2_NotifyBegin(t, e, a) {
-    let i;
-    var t = t.GetOwner();
+    var i,
+      t = t.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
       (t.CharacterActorComponent.LockOnParts.has(this.BoneName)
@@ -43,8 +43,8 @@ class TsAnimNotifyStateSetLockPointState extends UE.KuroAnimNotifyState {
     );
   }
   K2_NotifyEnd(t, e) {
-    let a;
-    var t = t.GetOwner();
+    var a,
+      t = t.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
       (t.CharacterActorComponent.LockOnParts.has(this.BoneName)
@@ -67,4 +67,4 @@ class TsAnimNotifyStateSetLockPointState extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateSetLockPointState;
-// # sourceMappingURL=TsAnimNotifyStateSetLockPointState.js.map
+//# sourceMappingURL=TsAnimNotifyStateSetLockPointState.js.map

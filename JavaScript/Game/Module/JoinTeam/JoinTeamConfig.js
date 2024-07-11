@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.JoinTeamConfig = void 0);
-const RoleDescriptionById_1 = require("../../../Core/Define/ConfigQuery/RoleDescriptionById");
-const RoleInfoById_1 = require("../../../Core/Define/ConfigQuery/RoleInfoById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const RoleDescriptionById_1 = require("../../../Core/Define/ConfigQuery/RoleDescriptionById"),
+  RoleInfoById_1 = require("../../../Core/Define/ConfigQuery/RoleInfoById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class JoinTeamConfig extends ConfigBase_1.ConfigBase {
   GetRoleDescriptionConfig(e) {
     return RoleDescriptionById_1.configRoleDescriptionById.GetConfig(e);
@@ -33,4 +33,4 @@ class JoinTeamConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.JoinTeamConfig = JoinTeamConfig;
-// # sourceMappingURL=JoinTeamConfig.js.map
+//# sourceMappingURL=JoinTeamConfig.js.map

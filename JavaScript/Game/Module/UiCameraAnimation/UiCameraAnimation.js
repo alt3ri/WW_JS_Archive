@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiCameraAnimation = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const UiCameraAnimationManager_1 = require("./UiCameraAnimationManager");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  UiCameraAnimationManager_1 = require("./UiCameraAnimationManager");
 class UiCameraAnimation {
   constructor() {
     (this.oUo = void 0),
@@ -143,7 +143,7 @@ class UiCameraAnimation {
       (this.dUo = m);
   }
   StopUiCameraAnimation() {
-    let i;
+    var i;
     this.fUo &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -165,7 +165,7 @@ class UiCameraAnimation {
       this.ResetUiCameraBlendAnimation());
   }
   IUo() {
-    let i;
+    var i;
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "CameraAnimation",
@@ -204,7 +204,7 @@ class UiCameraAnimation {
       this.mUo.clear();
   }
   LUo(i, t, s) {
-    let e;
+    var e;
     UE.KismetSystemLibrary.IsValidSoftObjectReference(i) &&
       (this.MUo(!0, 1),
       (e =
@@ -242,15 +242,15 @@ class UiCameraAnimation {
     return this.nUo < this.dUo;
   }
   RUo(i) {
-    const t = this.fUo.GetTargetLocation();
-    t && this.GUo(t, i !== 0);
+    var t = this.fUo.GetTargetLocation();
+    t && this.GUo(t, 0 !== i);
   }
   UUo() {
-    const i = this.fUo.GetTargetRotation();
+    var i = this.fUo.GetTargetRotation();
     i && this.NUo(i);
   }
   GUo(i, t) {
-    const s = this.OUo(1);
+    var s = this.OUo(1);
     void 0 !== s &&
       ((i = UE.KismetMathLibrary.VLerp(this.I1e, i, s)),
       t
@@ -258,49 +258,49 @@ class UiCameraAnimation {
         : this.oUo.SetUiCameraAnimationLocation(i));
   }
   NUo(i) {
-    const t = this.OUo(2);
+    var t = this.OUo(2);
     t &&
       ((i = UE.KismetMathLibrary.RLerp(this.sUo, i, t, !0)),
       this.oUo.SetUiCameraAnimationRotation(i));
   }
   AUo(i) {
-    const t = this.OUo(3);
+    var t = this.OUo(3);
     t &&
       ((i = MathUtils_1.MathUtils.Lerp(this.qae, i, t)),
       this.oUo.SetSpringArmLength(i));
   }
   PUo(i) {
-    const t = this.OUo(4);
+    var t = this.OUo(4);
     t &&
       ((i = UE.KismetMathLibrary.VLerp(this.aUo, i, t)),
       this.oUo.SetSpringArmRelativeLocation(i));
   }
   xUo(i) {
-    const t = this.OUo(5);
+    var t = this.OUo(5);
     t &&
       ((i = UE.KismetMathLibrary.RLerp(this.hUo, i, t, !0)),
       this.oUo.SetSprintArmRelativeRotation(i));
   }
   wUo(i) {
-    const t = this.OUo(6);
+    var t = this.OUo(6);
     t &&
       ((i = MathUtils_1.MathUtils.Lerp(this.lUo, i, t)),
       this.oUo.SetCameraFieldOfView(i));
   }
   BUo(i) {
-    const t = this.OUo(7);
+    var t = this.OUo(7);
     t &&
       ((i = MathUtils_1.MathUtils.Lerp(this._Uo, i, t)),
       this.oUo.SetCameraFocalDistance(i));
   }
   bUo(i) {
-    const t = this.OUo(9);
+    var t = this.OUo(9);
     t &&
       ((i = MathUtils_1.MathUtils.Lerp(this.uUo, i, t)),
       this.oUo.SetCameraAperture(i));
   }
   qUo(i) {
-    const t = this.OUo(8);
+    var t = this.OUo(8);
     t &&
       ((i = MathUtils_1.MathUtils.Lerp(this.cUo, i, t)),
       this.oUo.SetCameraPostProcessBlendWeight(i));
@@ -309,7 +309,7 @@ class UiCameraAnimation {
     return this.GetCurveFloatValue(i, this.nUo);
   }
   TUo() {
-    let i;
+    var i;
     if (
       (this.pUo?.IsValid() ||
         ((i = this.rUo?.CommonCurve),
@@ -321,11 +321,11 @@ class UiCameraAnimation {
             }))),
       this.mUo.size <= 0)
     ) {
-      const t = this.rUo?.CurveMap;
-      const s = t.GetMaxIndex();
+      var t = this.rUo?.CurveMap,
+        s = t.GetMaxIndex();
       for (let i = 0; i < s; i++) {
         const a = t.GetKey(i).valueOf();
-        let e = t.Get(a);
+        var e = t.Get(a);
         UE.KismetSystemLibrary.IsValidSoftObjectReference(e) &&
           ((e = e.ToAssetPathName()),
           StringUtils_1.StringUtils.IsEmpty(e) ||
@@ -351,4 +351,4 @@ class UiCameraAnimation {
   }
 }
 exports.UiCameraAnimation = UiCameraAnimation;
-// # sourceMappingURL=UiCameraAnimation.js.map
+//# sourceMappingURL=UiCameraAnimation.js.map

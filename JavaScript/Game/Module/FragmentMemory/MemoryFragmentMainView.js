@@ -1,30 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MemoryFragmentMainView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../GlobalData");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const RedDotController_1 = require("../../RedDot/RedDotController");
-const UiBlurLogic_1 = require("../../Ui/Base/UiBlur/UiBlurLogic");
-const UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase");
-const PopupCaptionItem_1 = require("../../Ui/Common/PopupCaptionItem");
-const UiManager_1 = require("../../Ui/UiManager");
-const LevelSequencePlayer_1 = require("../Common/LevelSequencePlayer");
-const LoopScrollSmallItemGrid_1 = require("../Common/SmallItemGrid/LoopScrollSmallItemGrid");
-const MapDefine_1 = require("../Map/MapDefine");
-const PhotographController_1 = require("../Photograph/PhotographController");
-const GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract");
-const GenericLayout_1 = require("../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const LoopScrollView_1 = require("../Util/ScrollView/LoopScrollView");
-const WorldMapController_1 = require("../WorldMap/WorldMapController");
-const FragmentMemoryController_1 = require("./FragmentMemoryController");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../GlobalData"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  RedDotController_1 = require("../../RedDot/RedDotController"),
+  UiBlurLogic_1 = require("../../Ui/Base/UiBlur/UiBlurLogic"),
+  UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase"),
+  PopupCaptionItem_1 = require("../../Ui/Common/PopupCaptionItem"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  LevelSequencePlayer_1 = require("../Common/LevelSequencePlayer"),
+  LoopScrollSmallItemGrid_1 = require("../Common/SmallItemGrid/LoopScrollSmallItemGrid"),
+  MapDefine_1 = require("../Map/MapDefine"),
+  PhotographController_1 = require("../Photograph/PhotographController"),
+  GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  LoopScrollView_1 = require("../Util/ScrollView/LoopScrollView"),
+  WorldMapController_1 = require("../WorldMap/WorldMapController"),
+  FragmentMemoryController_1 = require("./FragmentMemoryController");
 class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -38,22 +38,22 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
       (this.EPe = void 0),
       (this.mGn = 0),
       (this.zwn = () => {
-        const e = this.xqe.GetDisplayGridStartIndex();
-        const i = this.ixn.GetCollectDataList();
+        var e = this.xqe.GetDisplayGridStartIndex(),
+          i = this.ixn.GetCollectDataList();
         let r = 0;
         for (let t = 0; t < e; t++) i[t].GetIfCanGetReward() && (r = t);
         this.xqe?.ScrollToGridIndex(r);
-        const t = r !== this.q8i;
+        var t = r !== this.q8i;
         (this.q8i = r), this.Og(), t && this.hFe();
       }),
       (this.dGn = () => {
         ModelManager_1.ModelManager.FragmentMemoryModel.TryRemoveCurrentTrackEntity(),
           (this.mGn = 0);
-        var t = this.hxn().GetTraceEntityId();
-        let e = this.hxn().GetTraceMarkId();
-        var t =
-          ModelManager_1.ModelManager.CreatureModel.GetEntityData(t)?.Transform
-            ?.Pos;
+        var t = this.hxn().GetTraceEntityId(),
+          e = this.hxn().GetTraceMarkId(),
+          t =
+            ModelManager_1.ModelManager.CreatureModel.GetEntityData(t)
+              ?.Transform?.Pos;
         t
           ? ((t = new MapDefine_1.DynamicMarkCreateInfo(
               Vector_1.Vector.Create(t.X ?? 0, t.Y ?? 0, t.Z ?? 0),
@@ -63,7 +63,7 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
               void 0,
               !0,
             )),
-            this.mGn === 0 &&
+            0 === this.mGn &&
               (this.mGn =
                 ModelManager_1.ModelManager.MapModel.CreateMapMark(t)),
             (e = { MarkId: this.mGn, MarkType: 7 }),
@@ -76,10 +76,10 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
             Log_1.Log.Info("FragmentMemory", 28, "没有找到实体");
       }),
       (this.Zwn = () => {
-        let e = this.xqe.GetDisplayGridEndIndex();
-        const i = this.ixn.GetCollectDataList();
+        var e = this.xqe.GetDisplayGridEndIndex(),
+          i = this.ixn.GetCollectDataList();
         let r = e;
-        const s = i.length;
+        var s = i.length;
         for (let t = e; t <= s - 1; t++)
           if (i[t].GetIfCanGetReward()) {
             r = t;
@@ -107,7 +107,7 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
           this.Og();
       }),
       (this.axn = () => {
-        const t = this.hxn();
+        var t = this.hxn();
         FragmentMemoryController_1.FragmentMemoryController.RequestMemoryReward(
           [t.GetId()],
         );
@@ -133,7 +133,7 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.cxn = () => this.q8i),
       (this.mxn = (t) => {
-        const e = t !== this.q8i;
+        var e = t !== this.q8i;
         (this.q8i = t), this.Og(!0), e && this.hFe();
       });
   }
@@ -185,9 +185,9 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
       this.GetButton(15)?.RootUIComp.SetUIActive(!1),
       this.GetButton(16)?.RootUIComp.SetUIActive(!1),
       (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
-    const e = this.OpenParam;
-    if (((this.ixn = e.FragmentMemoryTopicData), e.CurrentSelectId > 0)) {
-      const i = this.ixn.GetCollectDataList();
+    var e = this.OpenParam;
+    if (((this.ixn = e.FragmentMemoryTopicData), 0 < e.CurrentSelectId)) {
+      var i = this.ixn.GetCollectDataList();
       for (let t = 0; t < i.length; t++)
         if (i[t].GetId() === e.CurrentSelectId) {
           this.q8i = t;
@@ -231,7 +231,7 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
       this.Og(),
       this.Nqe(),
       this.Ebn(),
-      this.q8i > 0 && this.xqe?.ScrollToGridIndex(this.q8i);
+      0 < this.q8i && this.xqe?.ScrollToGridIndex(this.q8i);
   }
   Ebn() {
     StringUtils_1.StringUtils.IsEmpty(
@@ -279,10 +279,10 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
     );
   }
   Mni(t = !1) {
-    const e = this.ixn.GetCollectDataList();
+    var e = this.ixn.GetCollectDataList();
     const i = [];
     for (const s of e) {
-      const r = new TabItemData();
+      var r = new TabItemData();
       (r.FragmentCollectData = s),
         (r.TabCallBack = this.mxn),
         (r.GetCurrentSelectTabIndex = this.cxn),
@@ -296,29 +296,29 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
     });
   }
   GFe() {
-    const t = this.hxn();
-    const e = [];
+    var t = this.hxn(),
+      e = [];
     for (const r of t.GetPreviewReward()) {
-      const i = new GridItemData();
+      var i = new GridItemData();
       (i.Data = r), (i.GetRewardState = t.GetIfGetReward()), e.push(i);
     }
     this.DFe?.RefreshByData(e);
   }
   hFe() {
-    this.EPe?.GetCurrentSequence() === "Switch"
+    "Switch" === this.EPe?.GetCurrentSequence()
       ? this.EPe?.ReplaySequenceByKey("Switch")
       : this.EPe?.PlayLevelSequenceByName("Switch");
   }
   mGe() {
-    let t;
-    const e = this.hxn();
+    var t,
+      e = this.hxn();
     void 0 !== e &&
       ((t = this.GetText(5)),
       LguiUtil_1.LguiUtil.SetLocalTextNew(t, e.GetTitle()));
   }
   Pqe() {
-    let t;
-    const e = this.hxn();
+    var t,
+      e = this.hxn();
     void 0 !== e &&
       ((t = this.GetText(7))?.SetUIActive(!0),
       e.GetIfUnlock()
@@ -326,46 +326,46 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
         : LguiUtil_1.LguiUtil.SetLocalTextNew(t, e.GetTipsDesc()));
   }
   Aqe() {
-    let t;
-    const e = this.hxn();
+    var t,
+      e = this.hxn();
     void 0 !== e &&
       ((t = this.GetTexture(1)),
       this.SetTextureByPath(e.GetBgResource(), t, "MemoryFragmentMainView"),
       t?.SetChangeColor(!e.GetIfUnlock(), t.changeColor));
   }
   dxn() {
-    const t = this.hxn();
+    var t = this.hxn();
     void 0 !== t &&
       this.GetButton(9)?.RootUIComp.SetUIActive(
         !t.GetIfGetReward() && t.GetIfUnlock(),
       );
   }
   k5e() {
-    const t = this.hxn();
+    var t = this.hxn();
     void 0 !== t && this.GetItem(10)?.SetUIActive(t.GetIfGetReward());
   }
   Cxn() {
-    const e = this.hxn();
+    var e = this.hxn();
     if (void 0 !== e) {
-      const i = !e.GetIfGetReward() && !e.GetIfUnlock();
+      var i = !e.GetIfGetReward() && !e.GetIfUnlock();
       let t = !1;
-      i && e.GetTraceEntityId() > 0 && (t = !0),
+      i && 0 < e.GetTraceEntityId() && (t = !0),
         this.GetItem(11)?.SetUIActive(i && !t),
         this.GetButton(17)?.RootUIComp.SetUIActive(i && t);
     }
   }
   kIt() {
-    const t = this.hxn();
+    var t = this.hxn();
     void 0 !== t && this.GetItem(12)?.SetUIActive(!t.GetIfUnlock());
   }
   CWi() {
-    const t = this.hxn();
+    var t = this.hxn();
     void 0 !== t && this.GetButton(13)?.RootUIComp.SetUIActive(t.GetIfUnlock());
   }
   OnTick(t) {
-    const e = this.xqe.GetDisplayGridStartIndex();
-    const i = this.xqe.GetDisplayGridEndIndex();
-    const r = this.ixn.GetCollectDataList();
+    var e = this.xqe.GetDisplayGridStartIndex(),
+      i = this.xqe.GetDisplayGridEndIndex(),
+      r = this.ixn.GetCollectDataList();
     let s = !1;
     for (let t = 0; t < e; t++)
       if (r[t].GetIfCanGetReward()) {
@@ -375,7 +375,7 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
     this.rxn !== s &&
       (this.GetButton(15)?.RootUIComp.SetUIActive(s), (this.rxn = s));
     let h = !1;
-    const o = r.length;
+    var o = r.length;
     for (let t = i; t <= o - 1; t++)
       if (r[t].GetIfCanGetReward() && t !== i) {
         h = !0;
@@ -385,14 +385,14 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
       (this.GetButton(16)?.RootUIComp.SetUIActive(h), (this.oxn = h));
   }
   HFi() {
-    const t = this.hxn();
+    var t = this.hxn();
     void 0 !== t &&
       this.GetButton(14)?.RootUIComp.SetUIActive(
-        !t.GetIfUnlock() && t.GetClueId() > 0,
+        !t.GetIfUnlock() && 0 < t.GetClueId(),
       );
   }
   gxn() {
-    const t = this.hxn();
+    var t = this.hxn();
     void 0 === t
       ? this.GetText(6).SetText("")
       : LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -449,8 +449,8 @@ class TabItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(t, e, i) {
     this.Pe = t;
-    const r = this.GridIndex === t.GetCurrentSelectTabIndex();
-    const s = r ? 1 : 0;
+    var r = this.GridIndex === t.GetCurrentSelectTabIndex(),
+      s = r ? 1 : 0;
     this.GetExtendToggle(0)?.SetToggleState(s),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(7),
@@ -469,8 +469,8 @@ class TabItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.$Gn = r);
   }
   YGn(t) {
-    let e;
-    var t = t === 1 ? "Select" : "Unselect";
+    var e,
+      t = 1 === t ? "Select" : "Unselect";
     this.Pe?.NeedSwitchAnimation
       ? (e = this.XGn()).GetCurrentSequence() === t
         ? e?.ReplaySequenceByKey(t)
@@ -480,18 +480,18 @@ class TabItem extends GridProxyAbstract_1.GridProxyAbstract {
         e.StopSequenceByKey(t, !1, !0));
   }
   vPn() {
-    let t;
+    var t;
     this.Pe.FragmentCollectData.GetIfUnlock()
       ? ((t = (this.GridIndex + 1).toString().padStart(2, "0")),
         this.GetText(1)?.SetText(t))
       : this.GetText(1)?.SetText("");
   }
   pxn() {
-    const t = this.Pe.FragmentCollectData.GetIfUnlock();
+    var t = this.Pe.FragmentCollectData.GetIfUnlock();
     this.GetItem(5)?.SetUIActive(t);
   }
   h8i() {
-    const t = !this.Pe.FragmentCollectData.GetIfUnlock();
+    var t = !this.Pe.FragmentCollectData.GetIfUnlock();
     this.GetItem(6)?.SetUIActive(t);
   }
   BNe() {
@@ -529,7 +529,7 @@ class GridItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid {
     );
   }
   Refresh(t) {
-    let e, i;
+    var e, i;
     t?.Data &&
       ((i = t.Data[0]),
       (e = t.Data[1]),
@@ -539,10 +539,10 @@ class GridItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid {
         Data: t,
         Type: 4,
         ItemConfigId: this.Mne,
-        BottomText: e > 0 ? "" + e : "",
+        BottomText: 0 < e ? "" + e : "",
         IsReceivedVisible: i,
       }),
       this.Apply(t));
   }
 }
-// # sourceMappingURL=MemoryFragmentMainView.js.map
+//# sourceMappingURL=MemoryFragmentMainView.js.map

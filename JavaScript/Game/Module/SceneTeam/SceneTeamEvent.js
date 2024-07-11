@@ -4,4 +4,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 class SceneTeam {}
 ((exports.SceneTeam = SceneTeam).All = new Object()),
   (SceneTeam.Local = new Object());
-// # sourceMappingURL=SceneTeamEvent.js.map
+//# sourceMappingURL=SceneTeamEvent.js.map

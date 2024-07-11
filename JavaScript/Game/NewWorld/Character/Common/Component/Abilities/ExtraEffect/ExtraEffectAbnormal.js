@@ -7,9 +7,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.AbnormalIce =
     exports.AbnormalThunder =
       void 0);
-const ActiveBuffConfigs_1 = require("../Buff/ActiveBuffConfigs");
-const CharacterAttributeTypes_1 = require("../CharacterAttributeTypes");
-const ExtraEffectBase_1 = require("./ExtraEffectBase");
+const ActiveBuffConfigs_1 = require("../Buff/ActiveBuffConfigs"),
+  CharacterAttributeTypes_1 = require("../CharacterAttributeTypes"),
+  ExtraEffectBase_1 = require("./ExtraEffectBase");
 class AbnormalThunder extends ExtraEffectBase_1.BuffEffect {
   constructor() {
     super(...arguments),
@@ -21,11 +21,11 @@ class AbnormalThunder extends ExtraEffectBase_1.BuffEffect {
   InitParameters(e) {
     if (((this.jKo.length = 0), e.ExtraEffectParameters)) {
       for (const s of e.ExtraEffectParameters[0]?.split("|") ?? []) {
-        const t = s.trim().split("#");
+        var t = s.trim().split("#");
         this.jKo.push(t.map((e) => Number(e.trim())));
       }
       for (const i of e.ExtraEffectParameters[1]?.split("|") ?? []) {
-        const r = i.trim().split("#");
+        var r = i.trim().split("#");
         this.WKo.set(Number(r[0].trim()), BigInt(r[1].trim()));
       }
     }
@@ -46,7 +46,7 @@ class AbnormalThunder extends ExtraEffectBase_1.BuffEffect {
     this.RefreshModifier(e), this.RefreshCue(e);
   }
   ClearModifier() {
-    const e = this.ExactOwnerEntity?.GetComponent(155);
+    var e = this.ExactOwnerEntity?.GetComponent(155);
     this.VKo &&
       (e?.RemoveModifier(
         CharacterAttributeTypes_1.EAttributeId.Proto_Atk,
@@ -55,16 +55,16 @@ class AbnormalThunder extends ExtraEffectBase_1.BuffEffect {
       (this.VKo = 0));
   }
   ClearCue() {
-    const e = this.ExactOwnerEntity?.GetComponent(187);
+    var e = this.ExactOwnerEntity?.GetComponent(187);
     this.HKo && (e?.RemoveBuffByHandle(this.HKo), (this.HKo = 0));
   }
   RefreshModifier(r) {
     this.ClearModifier();
-    const e = this.ExactOwnerEntity?.GetComponent(155);
+    var e = this.ExactOwnerEntity?.GetComponent(155);
     if (e) {
       let t = 0;
-      for (let e = this.jKo.length - 1; e >= 0; e--) {
-        const [s, i] = this.jKo[e];
+      for (let e = this.jKo.length - 1; 0 <= e; e--) {
+        var [s, i] = this.jKo[e];
         if (s <= r) {
           t = i;
           break;
@@ -86,10 +86,10 @@ class AbnormalThunder extends ExtraEffectBase_1.BuffEffect {
   }
   RefreshCue(t) {
     this.ClearCue();
-    const r = this.ExactOwnerEntity?.GetComponent(187);
+    var r = this.ExactOwnerEntity?.GetComponent(187);
     if (r) {
       let e = void 0;
-      for (const [s, i] of this.WKo)
+      for (var [s, i] of this.WKo)
         if (t >= s) {
           e = i;
           break;
@@ -107,7 +107,7 @@ class AbnormalIce extends ExtraEffectBase_1.BuffEffect {
   InitParameters(e) {
     if (((this.KKo.length = 0), e.ExtraEffectParameters))
       for (const r of e.ExtraEffectParameters[0]?.split("|") ?? []) {
-        const t = r.trim().split("#");
+        var t = r.trim().split("#");
         this.KKo.push(t.map((e) => Number(e.trim())));
       }
   }
@@ -125,18 +125,18 @@ class AbnormalIce extends ExtraEffectBase_1.BuffEffect {
     this.RefreshModifier(e);
   }
   ClearModifier() {
-    const e = this.ExactOwnerEntity?.GetComponent(155);
+    var e = this.ExactOwnerEntity?.GetComponent(155);
     this.VKo &&
       (e?.RemoveModifier(CharacterAttributeTypes_1.EAttributeId.R4n, this.VKo),
       (this.VKo = 0));
   }
   RefreshModifier(r) {
     this.ClearModifier();
-    const e = this.ExactOwnerEntity?.GetComponent(155);
+    var e = this.ExactOwnerEntity?.GetComponent(155);
     if (e) {
       let t = 0;
-      for (let e = this.KKo.length - 1; e >= 0; e--) {
-        const [s, i] = this.KKo[e];
+      for (let e = this.KKo.length - 1; 0 <= e; e--) {
+        var [s, i] = this.KKo[e];
         if (s <= r) {
           t = i;
           break;
@@ -175,4 +175,4 @@ class AbnormalDark extends ExtraEffectBase_1.BuffEffect {
   OnPeriodCallback() {}
 }
 exports.AbnormalDark = AbnormalDark;
-// # sourceMappingURL=ExtraEffectAbnormal.js.map
+//# sourceMappingURL=ExtraEffectAbnormal.js.map

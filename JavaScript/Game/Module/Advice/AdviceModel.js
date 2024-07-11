@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Stack_1 = require("../../../Core/Container/Stack");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const MenuController_1 = require("../Menu/MenuController");
-const AdviceController_1 = require("./AdviceController");
-const AdviceCreateActor_1 = require("./AdviceCreateActor");
-const AdviceData_1 = require("./AdviceData");
-const AdviceMotionActor_1 = require("./AdviceMotionActor");
+const Log_1 = require("../../../Core/Common/Log"),
+  Stack_1 = require("../../../Core/Container/Stack"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  MenuController_1 = require("../Menu/MenuController"),
+  AdviceController_1 = require("./AdviceController"),
+  AdviceCreateActor_1 = require("./AdviceCreateActor"),
+  AdviceData_1 = require("./AdviceData"),
+  AdviceMotionActor_1 = require("./AdviceMotionActor");
 class AdviceModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -92,7 +92,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
       }),
       this.I8e.clear(),
       e.Dgs.forEach((e) => {
-        const t = new AdviceData_1.AdviceData();
+        var t = new AdviceData_1.AdviceData();
         t.Phrase(e), this.I8e.set(t.GetAdviceBigId(), t);
       }),
       (this.L8e = !0),
@@ -101,7 +101,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
       );
   }
   PhraseAdviceCreateData(e) {
-    const t = new AdviceData_1.AdviceData();
+    var t = new AdviceData_1.AdviceData();
     t.Phrase(e.Lgs),
       this.I8e.set(t.GetAdviceBigId(), t),
       (this.L8e = !0),
@@ -131,8 +131,8 @@ class AdviceModel extends ModelBase_1.ModelBase {
     e && e.PhraseUpDownData(t.Tgs);
   }
   OnModifyAdvice(e, t) {
-    var i = MathUtils_1.MathUtils.LongToBigInt(e);
-    var i = this.I8e.get(i);
+    var i = MathUtils_1.MathUtils.LongToBigInt(e),
+      i = this.I8e.get(i);
     i && i.PhraseData(t),
       (this.L8e = !0),
       EventSystem_1.EventSystem.Emit(
@@ -158,17 +158,17 @@ class AdviceModel extends ModelBase_1.ModelBase {
     return Array.from(this.y8e);
   }
   GetIfCanCreateAdvice(e) {
-    let t;
-    let i;
-    const r = this.CurrentSentenceWordMap;
-    const n = this.CurrentConjunctionId;
-    const o = this.CurrentWordMap;
+    var t,
+      i,
+      r = this.CurrentSentenceWordMap,
+      n = this.CurrentConjunctionId,
+      o = this.CurrentWordMap;
     for ([t, i] of r.entries())
-      if ((e !== 0 || t !== 1) && i > 0) {
-        const a = o.get(t);
+      if ((0 !== e || 1 !== t) && 0 < i) {
+        var a = o.get(t);
         if (!a || a <= 0) return !1;
       }
-    return !(e === 1 && (!n || n <= 0));
+    return !(1 === e && (!n || n <= 0));
   }
   SetCurrentEntityId(e) {
     (this.D8e = e), (this.R8e = void 0);
@@ -199,11 +199,11 @@ class AdviceModel extends ModelBase_1.ModelBase {
       (this.CurrentSelectMotionId = 0),
       (this.PreSelectMotionId =
         ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceMotionDefaultConfigId());
-    const e =
-      ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceSentenceConfigs();
-    const t = Number(
-      MathUtils_1.MathUtils.GetRandomRange(0, e.length - 1).toFixed(),
-    );
+    var e =
+        ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceSentenceConfigs(),
+      t = Number(
+        MathUtils_1.MathUtils.GetRandomRange(0, e.length - 1).toFixed(),
+      );
     this.CurrentSentenceWordMap.set(0, e[t].Id),
       this.RandomSecondSentenceWord();
   }
@@ -220,7 +220,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
     return this.U8e;
   }
   GetCreateAdvicePreConditionState() {
-    let e;
+    var e;
     return this.w8e()
       ? ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
         ? (Log_1.Log.CheckDebug() &&
@@ -260,7 +260,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
         : !this.CheckIfMaxAdvice();
   }
   CheckIfMaxAdvice() {
-    const e =
+    var e =
       CommonParamById_1.configCommonParamById.GetIntConfig(
         "AdviceCreateLimit",
       ) ?? 0;
@@ -272,7 +272,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
     );
   }
   GetCreatePreConditionFailText() {
-    let e;
+    var e;
     return ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
       ? "CannotPutAdviceInInstanceDungeon"
       : this.w8e()
@@ -291,7 +291,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
         : "FunctionDisable";
   }
   GetCreateConditionFailText() {
-    let e;
+    var e;
     return AdviceController_1.AdviceController.CheckBehindAdviceActor()
       ? "AdviceTooClose"
       : AdviceController_1.AdviceController.CheckInInValidArea()
@@ -318,13 +318,13 @@ class AdviceModel extends ModelBase_1.ModelBase {
   }
   GetMotionSelectData() {
     const t = new Array();
-    const e = ModelManager_1.ModelManager.AdviceModel.PreSelectRoleId;
-    var i =
-      ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceMotionDefaultConfigId();
-    var i = new AdviceData_1.AdviceMotionSelectData(i);
+    var e = ModelManager_1.ModelManager.AdviceModel.PreSelectRoleId,
+      i =
+        ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceMotionDefaultConfigId(),
+      i = new AdviceData_1.AdviceMotionSelectData(i);
     return (
       t.push(i),
-      e > 0 &&
+      0 < e &&
         ConfigManager_1.ConfigManager.MotionConfig.GetMotionConfigsByRoleId(
           e,
         ).forEach((e) => {
@@ -335,8 +335,8 @@ class AdviceModel extends ModelBase_1.ModelBase {
     );
   }
   GetAdviceSelectData(e) {
-    const t = new Array();
-    if (e === 0) {
+    var t = new Array();
+    if (0 === e) {
       const i = new AdviceData_1.AdviceSelectItemData(0);
       t.push(i);
     } else {
@@ -360,13 +360,13 @@ class AdviceModel extends ModelBase_1.ModelBase {
     );
   }
   RandomSecondSentenceWord() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceSentenceConfigs();
     let t = Number(
       MathUtils_1.MathUtils.GetRandomRange(0, e.length - 1).toFixed(),
     );
     for (
-      let i =
+      var i =
         ModelManager_1.ModelManager.AdviceModel.CurrentSentenceWordMap.get(0);
       t === i;
 
@@ -381,20 +381,20 @@ class AdviceModel extends ModelBase_1.ModelBase {
       );
   }
   GetFirstLineText() {
-    const e = new Array();
-    var t = new AdviceData_1.AdviceContentData();
-    var t =
-      (t.SetData(
-        this.CurrentSentenceWordMap.get(0),
-        this.CurrentWordMap.get(0),
-        Protocol_1.Aki.Protocol.FBs.Proto_Sentence,
-      ),
-      e.push(t),
-      new AdviceData_1.AdviceData());
+    var e = new Array(),
+      t = new AdviceData_1.AdviceContentData(),
+      t =
+        (t.SetData(
+          this.CurrentSentenceWordMap.get(0),
+          this.CurrentWordMap.get(0),
+          Protocol_1.Aki.Protocol.FBs.Proto_Sentence,
+        ),
+        e.push(t),
+        new AdviceData_1.AdviceData());
     return t.PhraseShowText(e, 0), t.GetAdviceShowText();
   }
   GetSecondLineText() {
-    const e = new Array();
+    var e = new Array();
     let t = new AdviceData_1.AdviceContentData();
     t.SetData(
       this.CurrentConjunctionId,
@@ -408,12 +408,12 @@ class AdviceModel extends ModelBase_1.ModelBase {
         Protocol_1.Aki.Protocol.FBs.Proto_Sentence,
       ),
       e.push(t);
-    const i = new AdviceData_1.AdviceData();
+    var i = new AdviceData_1.AdviceData();
     return i.PhraseShowText(e, 1), i.GetAdviceShowText();
   }
   GetCurrentShowText() {
-    const t = new Array();
-    if (this.CurrentLineModel === 0) {
+    var t = new Array();
+    if (0 === this.CurrentLineModel) {
       const e = new AdviceData_1.AdviceContentData();
       e.SetData(
         this.CurrentSentenceWordMap.get(0),
@@ -446,20 +446,20 @@ class AdviceModel extends ModelBase_1.ModelBase {
     return e.PhraseShowText(t), e.GetAdviceShowText();
   }
   GetCreateAdviceContent() {
-    let e;
-    let t;
-    let i;
-    let r;
-    const n = new Array();
-    const o = ModelManager_1.ModelManager.AdviceModel;
-    let a = o.CurrentSentenceWordMap;
-    const s = o.CurrentConjunctionId;
-    const d = o.CurrentWordMap;
+    var e,
+      t,
+      i,
+      r,
+      n = new Array(),
+      o = ModelManager_1.ModelManager.AdviceModel,
+      a = o.CurrentSentenceWordMap,
+      s = o.CurrentConjunctionId,
+      d = o.CurrentWordMap;
     let c = 0;
     for ([e, t] of a.entries())
       t <= 0 ||
-        (this.CurrentLineModel === 0 && e === 1) ||
-        ((r = d.get(e)) > 0 &&
+        (0 === this.CurrentLineModel && 1 === e) ||
+        (0 < (r = d.get(e)) &&
           (c++,
           (i = new AdviceData_1.AdviceContentData()).SetData(
             t,
@@ -467,9 +467,9 @@ class AdviceModel extends ModelBase_1.ModelBase {
             Protocol_1.Aki.Protocol.FBs.Proto_Sentence,
           ),
           n.push(i)),
-        c === 1 &&
-          this.CurrentLineModel !== 0 &&
-          s > 0 &&
+        1 === c &&
+          0 !== this.CurrentLineModel &&
+          0 < s &&
           ((r = new AdviceData_1.AdviceContentData()).SetData(
             s,
             0,
@@ -477,14 +477,14 @@ class AdviceModel extends ModelBase_1.ModelBase {
           ),
           n.push(r)));
     return (
-      o.CurrentExpressionId > 0 &&
+      0 < o.CurrentExpressionId &&
         ((a = new AdviceData_1.AdviceContentData()).SetData(
           o.CurrentExpressionId,
           0,
           Protocol_1.Aki.Protocol.FBs.Proto_Expression,
         ),
         n.push(a)),
-      o.CurrentSelectMotionId > 0 &&
+      0 < o.CurrentSelectMotionId &&
         ((a = new AdviceData_1.AdviceContentData()).SetData(
           o.CurrentSelectMotionId,
           0,
@@ -496,4 +496,4 @@ class AdviceModel extends ModelBase_1.ModelBase {
   }
 }
 exports.AdviceModel = AdviceModel;
-// # sourceMappingURL=AdviceModel.js.map
+//# sourceMappingURL=AdviceModel.js.map

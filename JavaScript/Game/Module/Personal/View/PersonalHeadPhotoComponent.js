@@ -1,28 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PersonalHeadPhotoComponent = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew");
-const PersonalController_1 = require("../Controller/PersonalController");
-const PersonalRoleSmallItemGrid_1 = require("./PersonalRoleSmallItemGrid");
-const ConfigCommon_1 = require("../../../../Core/Config/ConfigCommon");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
+  PersonalController_1 = require("../Controller/PersonalController"),
+  PersonalRoleSmallItemGrid_1 = require("./PersonalRoleSmallItemGrid"),
+  ConfigCommon_1 = require("../../../../Core/Config/ConfigCommon");
 class PersonalHeadPhotoComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.xqe = void 0),
       (this.RoleIdList = []),
       (this.n5i = (e, i) => {
-        const r = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-          e.Id,
-        );
-        const o = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-          i.Id,
-        );
+        var r = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(e.Id),
+          o = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(i.Id);
         return (void 0 !== r && void 0 !== o) || (void 0 === r && void 0 === o)
           ? e.Id - i.Id
           : void 0 === o
@@ -37,7 +33,7 @@ class PersonalHeadPhotoComponent extends UiPanelBase_1.UiPanelBase {
           UiManager_1.UiManager.CloseView("PersonalOptionView");
       }),
       (this.J4i = () => {
-        const e = new PersonalRoleSmallItemGrid_1.PersonalRoleSmallItemGrid();
+        var e = new PersonalRoleSmallItemGrid_1.PersonalRoleSmallItemGrid();
         return e.BindToggleClickCallBack(this.a5i), e;
       }),
       (this.a5i = (e) => {
@@ -45,7 +41,7 @@ class PersonalHeadPhotoComponent extends UiPanelBase_1.UiPanelBase {
       });
   }
   get s5i() {
-    const e = this.xqe.GetGenericLayout().GetSelectedGridIndex();
+    var e = this.xqe.GetGenericLayout().GetSelectedGridIndex();
     return e < 0 || e >= this.RoleIdList.length ? 0 : this.RoleIdList[e];
   }
   OnRegisterComponent() {
@@ -65,29 +61,29 @@ class PersonalHeadPhotoComponent extends UiPanelBase_1.UiPanelBase {
         this.GetScrollViewWithScrollbar(0),
         this.J4i,
       )),
-      this.RoleIdList.length > 0)
+      0 < this.RoleIdList.length)
     ) {
       await this.xqe.RefreshByDataAsync(this.RoleIdList);
       const t = ModelManager_1.ModelManager.PersonalModel.GetHeadPhotoId();
-      const e = this.RoleIdList.findIndex((e) => e === t);
+      var e = this.RoleIdList.findIndex((e) => e === t);
       this.xqe.ScrollTo(this.xqe.GetItemByIndex(e)), this.h5i(t);
     }
-    const i = this.RoleIdList.length;
+    var i = this.RoleIdList.length;
     let r = 0;
     for (let e = 0; e < i; e++) {
-      const o = this.RoleIdList[e];
+      var o = this.RoleIdList[e];
       ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(o) && r++,
         LguiUtil_1.LguiUtil.SetLocalText(this.GetText(3), "Collected", r);
     }
   }
   InitRoleList() {
-    const i = ConfigCommon_1.ConfigCommon.ToList(
-      ConfigManager_1.ConfigManager.RoleConfig.GetRoleListByType(1),
-    );
-    const r = (i.sort(this.n5i), i.length);
+    var i = ConfigCommon_1.ConfigCommon.ToList(
+        ConfigManager_1.ConfigManager.RoleConfig.GetRoleListByType(1),
+      ),
+      r = (i.sort(this.n5i), i.length);
     this.RoleIdList = [];
     for (let e = 0; e < r; e++) {
-      const o = i[e];
+      var o = i[e];
       o.IsTrial ||
         (ModelManager_1.ModelManager.RoleModel.IsMainRole(o.Id) &&
           ModelManager_1.ModelManager.RoleModel.GetCurSelectMainRoleId() !==
@@ -96,19 +92,19 @@ class PersonalHeadPhotoComponent extends UiPanelBase_1.UiPanelBase {
     }
   }
   h5i(i) {
-    var e = this.RoleIdList.findIndex((e) => e === i);
-    var e =
-      (this.xqe?.GetGenericLayout()?.SelectGridProxy(e),
-      ModelManager_1.ModelManager.PersonalModel.GetHeadPhotoId());
-    const r =
-      void 0 !== ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(i);
+    var e = this.RoleIdList.findIndex((e) => e === i),
+      e =
+        (this.xqe?.GetGenericLayout()?.SelectGridProxy(e),
+        ModelManager_1.ModelManager.PersonalModel.GetHeadPhotoId()),
+      r =
+        void 0 !== ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(i);
     this.GetInteractionGroup(4).SetInteractable(r && e !== i),
       this.RefreshHeadPhotoInfo(i);
   }
   RefreshHeadPhotoInfo(e) {
-    const i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e);
+    var i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e);
     this.SetRoleIcon(i.RoleHeadIconLarge, this.GetTexture(1), e);
   }
 }
 exports.PersonalHeadPhotoComponent = PersonalHeadPhotoComponent;
-// # sourceMappingURL=PersonalHeadPhotoComponent.js.map
+//# sourceMappingURL=PersonalHeadPhotoComponent.js.map

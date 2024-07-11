@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemGridComponent = void 0);
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../Core/Common/Log");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class ItemGridComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -75,4 +75,4 @@ class ItemGridComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ItemGridComponent = ItemGridComponent;
-// # sourceMappingURL=ItemGridComponent.js.map
+//# sourceMappingURL=ItemGridComponent.js.map

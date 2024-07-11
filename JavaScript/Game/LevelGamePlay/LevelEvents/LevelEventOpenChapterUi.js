@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventOpenChapterUi = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const GeneralLogicTreeUtil_1 = require("../../Module/GeneralLogicTree/GeneralLogicTreeUtil");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  GeneralLogicTreeUtil_1 = require("../../Module/GeneralLogicTree/GeneralLogicTreeUtil"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventOpenChapterUi extends LevelGeneralBase_1.LevelEventBase {
   ExecuteInGm(e, r) {
     this.FinishExecute(!0);
@@ -28,4 +28,4 @@ class LevelEventOpenChapterUi extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventOpenChapterUi = LevelEventOpenChapterUi;
-// # sourceMappingURL=LevelEventOpenChapterUi.js.map
+//# sourceMappingURL=LevelEventOpenChapterUi.js.map

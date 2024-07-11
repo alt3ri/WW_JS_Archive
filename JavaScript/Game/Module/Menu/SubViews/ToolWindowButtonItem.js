@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ToolWindowButtonItem = void 0);
-const UE = require("ue");
-const ButtonAndTextItem_1 = require("../../Common/Button/ButtonAndTextItem");
+const UE = require("ue"),
+  ButtonAndTextItem_1 = require("../../Common/Button/ButtonAndTextItem");
 class ToolWindowButtonItem extends ButtonAndTextItem_1.ButtonAndTextItem {
   OnRegisterComponent() {
     super.OnRegisterComponent(),
@@ -19,4 +19,4 @@ class ToolWindowButtonItem extends ButtonAndTextItem_1.ButtonAndTextItem {
   }
 }
 exports.ToolWindowButtonItem = ToolWindowButtonItem;
-// # sourceMappingURL=ToolWindowButtonItem.js.map
+//# sourceMappingURL=ToolWindowButtonItem.js.map

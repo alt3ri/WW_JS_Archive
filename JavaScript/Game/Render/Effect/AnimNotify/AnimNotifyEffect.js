@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Info_1 = require("../../../../Core/Common/Info");
-const Log_1 = require("../../../../Core/Common/Log");
-const Stats_1 = require("../../../../Core/Common/Stats");
-const QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine");
-const Quat_1 = require("../../../../Core/Utils/Math/Quat");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon");
-const TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter");
-const SkeletalMeshEffectContext_1 = require("../../../Effect/EffectContext/SkeletalMeshEffectContext");
-const EffectSystem_1 = require("../../../Effect/EffectSystem");
-const GlobalData_1 = require("../../../GlobalData");
-const ColorUtils_1 = require("../../../Utils/ColorUtils");
-const RenderConfig_1 = require("../../Config/RenderConfig");
-const DISTANCE_EFFECT_ON_FLOOR = 1;
-const DISTANCE_FOOT_TO_EFFECT = 10;
-const DETECT_DEPTH = 100;
-const PROFILE_KEY = "AnimNotifyEffect";
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
+  QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine"),
+  Quat_1 = require("../../../../Core/Utils/Math/Quat"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
+  TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter"),
+  SkeletalMeshEffectContext_1 = require("../../../Effect/EffectContext/SkeletalMeshEffectContext"),
+  EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ColorUtils_1 = require("../../../Utils/ColorUtils"),
+  RenderConfig_1 = require("../../Config/RenderConfig"),
+  DISTANCE_EFFECT_ON_FLOOR = 1,
+  DISTANCE_FOOT_TO_EFFECT = 10,
+  DETECT_DEPTH = 100,
+  PROFILE_KEY = "AnimNotifyEffect";
 class AnimNotifyEffect extends UE.KuroEffectMakerAN {
   constructor() {
     super(...arguments),
@@ -44,8 +44,8 @@ class AnimNotifyEffect extends UE.KuroEffectMakerAN {
   }
   K2_Notify(t, i) {
     this.LastSkeletalMesh = t;
-    const e = this.LastSkeletalMesh.GetOwner();
-    const f = this.EffectDataAssetRef.ToAssetPathName();
+    var e = this.LastSkeletalMesh.GetOwner(),
+      f = this.EffectDataAssetRef.ToAssetPathName();
     if (!f?.length)
       return (
         Log_1.Log.CheckError() &&
@@ -77,15 +77,15 @@ class AnimNotifyEffect extends UE.KuroEffectMakerAN {
         !1
       );
     EffectSystem_1.EffectSystem.InitializeWithPreview(!1);
-    let o = 3;
-    let n =
-      (e instanceof TsBaseCharacter_1.default &&
-        e.CharacterActorComponent?.Entity?.GetComponent(33) &&
-        (o = 0),
-      (GlobalData_1.GlobalData.IsUiSceneOpen ||
-        e.Tags.Contains(RenderConfig_1.RenderConfig.UIName)) &&
-        (o = 1),
-      void 0);
+    let o = 3,
+      n =
+        (e instanceof TsBaseCharacter_1.default &&
+          e.CharacterActorComponent?.Entity?.GetComponent(33) &&
+          (o = 0),
+        (GlobalData_1.GlobalData.IsUiSceneOpen ||
+          e.Tags.Contains(RenderConfig_1.RenderConfig.UIName)) &&
+          (o = 1),
+        void 0);
     ((n =
       e instanceof TsBaseCharacter_1.default &&
       e.CharacterActorComponent?.Entity
@@ -119,20 +119,20 @@ class AnimNotifyEffect extends UE.KuroEffectMakerAN {
     );
   }
   GameplayTagsCheck(t) {
-    const i = t.CharacterActorComponent?.Entity?.GetComponent(185);
+    var i = t.CharacterActorComponent?.Entity?.GetComponent(185);
     if (i) {
-      const e = this.PlayNeedTags.Num();
+      var e = this.PlayNeedTags.Num();
       if (this.NeedAnyTag) {
         for (let t = 0; t < e; t++) {
-          const f = this.PlayNeedTags.GetKey(t);
-          const o = this.PlayNeedTags.Get(f);
+          var f = this.PlayNeedTags.GetKey(t),
+            o = this.PlayNeedTags.Get(f);
           if (i.HasTag(f.TagId) === o) return !0;
         }
         return !1;
       }
       for (let t = 0; t < e; t++) {
-        const n = this.PlayNeedTags.GetKey(t);
-        const s = this.PlayNeedTags.Get(n);
+        var n = this.PlayNeedTags.GetKey(t),
+          s = this.PlayNeedTags.Get(n);
         if (i.HasTag(n.TagId) !== s) return !1;
       }
     }
@@ -143,17 +143,17 @@ class AnimNotifyEffect extends UE.KuroEffectMakerAN {
       i = i.CharacterActorComponent?.Entity?.GetComponent(33);
       if (i) {
         let t = 0;
-        (!this.DetachWhenSkillEnd && this.WhenSkillEnd === 0) ||
-          (this.DetachWhenSkillEnd && this.WhenSkillEnd === 0
+        (!this.DetachWhenSkillEnd && 0 === this.WhenSkillEnd) ||
+          (this.DetachWhenSkillEnd && 0 === this.WhenSkillEnd
             ? (t = 2)
-            : this.DetachWhenSkillEnd || this.WhenSkillEnd !== 0
-              ? this.DetachWhenSkillEnd && this.WhenSkillEnd === 1
+            : this.DetachWhenSkillEnd || 0 !== this.WhenSkillEnd
+              ? this.DetachWhenSkillEnd && 1 === this.WhenSkillEnd
                 ? (t = 3)
-                : this.DetachWhenSkillEnd && this.WhenSkillEnd === 2
+                : this.DetachWhenSkillEnd && 2 === this.WhenSkillEnd
                   ? (t = 4)
-                  : this.DetachWhenSkillEnd || this.WhenSkillEnd !== 1
+                  : this.DetachWhenSkillEnd || 1 !== this.WhenSkillEnd
                     ? this.DetachWhenSkillEnd ||
-                      this.WhenSkillEnd !== 2 ||
+                      2 !== this.WhenSkillEnd ||
                       (t = 6)
                     : (t = 5)
               : (t = 1)),
@@ -178,34 +178,34 @@ class AnimNotifyEffect extends UE.KuroEffectMakerAN {
       const o = ((this.UseClipboardTransform = !1), puerts_1.$ref)("");
       UE.KuroRenderingRuntimeBPPluginBPLibrary.ClipboardPaste_EditorOnly(o);
       var i = (t) => {
-        const i = (0, puerts_1.$unref)(o);
-        const e = i.indexOf(t, -1);
-        if (e >= 0) {
-          const f = i.indexOf(")", e);
-          if (f >= 0) return i.substring(e + t.length, f);
-        }
-        return "";
-      };
-      var t = i("Translation=(");
-      var e = (0, puerts_1.$ref)(this.Location);
-      const f = (0, puerts_1.$ref)(!1);
-      var t =
-        (UE.KismetStringLibrary.Conv_StringToVector(t, e, f),
-        (0, puerts_1.$unref)(f) && (this.Location = (0, puerts_1.$unref)(e)),
-        i("Rotation=("));
-      var e = (0, puerts_1.$ref)(this.Rotation);
-      var t =
-        (UE.KismetStringLibrary.Conv_StringToRotator(t, e, f),
-        (0, puerts_1.$unref)(f) && (this.Rotation = (0, puerts_1.$unref)(e)),
-        i("Scale3D=("));
-      var e = (0, puerts_1.$ref)(this.Scale);
+          var i = (0, puerts_1.$unref)(o),
+            e = i.indexOf(t, -1);
+          if (0 <= e) {
+            var f = i.indexOf(")", e);
+            if (0 <= f) return i.substring(e + t.length, f);
+          }
+          return "";
+        },
+        t = i("Translation=("),
+        e = (0, puerts_1.$ref)(this.Location),
+        f = (0, puerts_1.$ref)(!1),
+        t =
+          (UE.KismetStringLibrary.Conv_StringToVector(t, e, f),
+          (0, puerts_1.$unref)(f) && (this.Location = (0, puerts_1.$unref)(e)),
+          i("Rotation=(")),
+        e = (0, puerts_1.$ref)(this.Rotation),
+        t =
+          (UE.KismetStringLibrary.Conv_StringToRotator(t, e, f),
+          (0, puerts_1.$unref)(f) && (this.Rotation = (0, puerts_1.$unref)(e)),
+          i("Scale3D=(")),
+        e = (0, puerts_1.$ref)(this.Scale);
       UE.KismetStringLibrary.Conv_StringToVector(t, e, f),
         (0, puerts_1.$unref)(f) && (this.Scale = (0, puerts_1.$unref)(e));
     }
     return !0;
   }
   GetNotifyName() {
-    const t = this.EffectDataAssetRef.ToAssetPathName();
+    var t = this.EffectDataAssetRef.ToAssetPathName();
     return t ? UE.BlueprintPathsLibrary.GetBaseFilename(t, !0) : "特效数据通知";
   }
   SetupTransform(t, i) {
@@ -290,16 +290,16 @@ class AnimNotifyEffect extends UE.KuroEffectMakerAN {
         break;
       case 2:
         AnimNotifyEffect.TmpVector || AnimNotifyEffect.InitTraceInfo();
-        var f = this.LastSkeletalMesh.GetSocketTransform(this.SocketName, 0);
-        var e = f.TransformPosition(this.TraceFrom);
-        var f = f.TransformPosition(this.TraceTo);
-        var o = AnimNotifyEffect.LineTrace;
-        var e =
-          ((o.WorldContextObject = i),
-          TraceElementCommon_1.TraceElementCommon.SetStartLocation(o, e),
-          TraceElementCommon_1.TraceElementCommon.SetEndLocation(o, f),
-          o.SetDrawDebugTrace(this.DebugTrace ? 2 : 0),
-          TraceElementCommon_1.TraceElementCommon.LineTrace(o, PROFILE_KEY));
+        var f = this.LastSkeletalMesh.GetSocketTransform(this.SocketName, 0),
+          e = f.TransformPosition(this.TraceFrom),
+          f = f.TransformPosition(this.TraceTo),
+          o = AnimNotifyEffect.LineTrace,
+          e =
+            ((o.WorldContextObject = i),
+            TraceElementCommon_1.TraceElementCommon.SetStartLocation(o, e),
+            TraceElementCommon_1.TraceElementCommon.SetEndLocation(o, f),
+            o.SetDrawDebugTrace(this.DebugTrace ? 2 : 0),
+            TraceElementCommon_1.TraceElementCommon.LineTrace(o, PROFILE_KEY));
         e &&
           (TraceElementCommon_1.TraceElementCommon.GetImpactPoint(
             o.HitResult,
@@ -340,7 +340,7 @@ class AnimNotifyEffect extends UE.KuroEffectMakerAN {
       (this.SocketLocation = Vector_1.Vector.Create()),
       (this.SocketNameLeftFoot = new UE.FName("Bip001LFoot")),
       (this.SocketNameRightFoot = new UE.FName("Bip001RFoot"));
-    const t = UE.NewObject(UE.TraceLineElement.StaticClass());
+    var t = UE.NewObject(UE.TraceLineElement.StaticClass());
     (t.bIsSingle = !0),
       (t.bIgnoreSelf = !0),
       (t.bTraceComplex = !0),
@@ -358,32 +358,34 @@ class AnimNotifyEffect extends UE.KuroEffectMakerAN {
   }
   TraceDetectClimbStep(t, i) {
     AnimNotifyEffect.TmpVector || AnimNotifyEffect.InitTraceInfo();
-    const e = AnimNotifyEffect.LineTrace;
-    var f = t.Mesh;
-    var f =
-      ((e.WorldContextObject = t),
-      AnimNotifyEffect.SocketLocation.FromUeVector(
-        f.GetSocketLocation(
-          this.RightOrLeftFoot
-            ? AnimNotifyEffect.SocketNameRightFoot
-            : AnimNotifyEffect.SocketNameLeftFoot,
+    var e = AnimNotifyEffect.LineTrace,
+      f = t.Mesh,
+      f =
+        ((e.WorldContextObject = t),
+        AnimNotifyEffect.SocketLocation.FromUeVector(
+          f.GetSocketLocation(
+            this.RightOrLeftFoot
+              ? AnimNotifyEffect.SocketNameRightFoot
+              : AnimNotifyEffect.SocketNameLeftFoot,
+          ),
         ),
-      ),
-      TraceElementCommon_1.TraceElementCommon.SetStartLocation(
-        e,
-        AnimNotifyEffect.SocketLocation,
-      ),
-      t.CharacterActorComponent.ActorForwardProxy.Multiply(
-        DETECT_DEPTH,
-        AnimNotifyEffect.TmpVector,
-      ),
-      AnimNotifyEffect.TmpVector.AdditionEqual(AnimNotifyEffect.SocketLocation),
-      TraceElementCommon_1.TraceElementCommon.SetEndLocation(
-        e,
-        AnimNotifyEffect.TmpVector,
-      ),
-      e.SetDrawDebugTrace(this.DebugTrace ? 2 : 0),
-      TraceElementCommon_1.TraceElementCommon.LineTrace(e, PROFILE_KEY));
+        TraceElementCommon_1.TraceElementCommon.SetStartLocation(
+          e,
+          AnimNotifyEffect.SocketLocation,
+        ),
+        t.CharacterActorComponent.ActorForwardProxy.Multiply(
+          DETECT_DEPTH,
+          AnimNotifyEffect.TmpVector,
+        ),
+        AnimNotifyEffect.TmpVector.AdditionEqual(
+          AnimNotifyEffect.SocketLocation,
+        ),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(
+          e,
+          AnimNotifyEffect.TmpVector,
+        ),
+        e.SetDrawDebugTrace(this.DebugTrace ? 2 : 0),
+        TraceElementCommon_1.TraceElementCommon.LineTrace(e, PROFILE_KEY));
     return f
       ? (TraceElementCommon_1.TraceElementCommon.GetHitLocation(
           e.HitResult,
@@ -440,4 +442,4 @@ class AnimNotifyEffect extends UE.KuroEffectMakerAN {
   (AnimNotifyEffect.NameNone = new UE.FName("None")),
   (AnimNotifyEffect.TagFlagNoNiagara = new UE.FName("NoNiagara")),
   (exports.default = AnimNotifyEffect);
-// # sourceMappingURL=AnimNotifyEffect.js.map
+//# sourceMappingURL=AnimNotifyEffect.js.map

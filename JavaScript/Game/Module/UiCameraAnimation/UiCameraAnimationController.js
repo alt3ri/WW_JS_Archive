@@ -1,15 +1,15 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiCameraAnimationController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const CameraController_1 = require("../../Camera/CameraController");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiCameraAnimationManager_1 = require("./UiCameraAnimationManager");
+const Log_1 = require("../../../Core/Common/Log"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiCameraAnimationManager_1 = require("./UiCameraAnimationManager");
 class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -133,7 +133,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
   (UiCameraAnimationController.XUo = void 0),
   (UiCameraAnimationController.$Uo = void 0),
   (UiCameraAnimationController.PushCameraHandle = (e, a, i = !0) => {
-    if (e === "BattleView") {
+    if ("BattleView" === e) {
       if (UiCameraAnimationManager_1.UiCameraAnimationManager.IsActivate()) {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -153,7 +153,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
         UiCameraAnimationManager_1.UiCameraAnimationManager.ClearDisplay();
       }
     } else {
-      let n =
+      var n =
         UiCameraAnimationManager_1.UiCameraAnimationManager.GetCameraMappingData(
           e,
         );
@@ -167,7 +167,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
             ["viewName", e],
             ["delayTime", n],
           ),
-        n > 0
+        0 < n
           ? UiCameraAnimationController.KUo(n, e, a)
           : (UiCameraAnimationController.WUo(),
             UiCameraAnimationManager_1.UiCameraAnimationManager.PushCameraHandleByOpenView(
@@ -178,7 +178,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
     }
   }),
   (UiCameraAnimationController.kUo = (e) => {
-    let a =
+    var a =
       UiCameraAnimationManager_1.UiCameraAnimationManager.GetCameraMappingData(
         e,
       );
@@ -192,7 +192,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
           ["tabViewName", e],
           ["delayTime", a],
         ),
-      a > 0
+      0 < a
         ? UiCameraAnimationController.KUo(a, e)
         : (UiCameraAnimationController.WUo(),
           UiCameraAnimationManager_1.UiCameraAnimationManager.PushCameraHandleByOpenView(
@@ -211,7 +211,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
       );
   }),
   (UiCameraAnimationController.FUo = (e) => {
-    const a =
+    var a =
       UiCameraAnimationManager_1.UiCameraAnimationManager.GetCurrentCameraHandle();
     a &&
       a.GetHandleData() &&
@@ -253,13 +253,13 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
       CameraController_1.CameraController.ExitCameraMode(2);
   }),
   (UiCameraAnimationController.zpe = (e, a) => {
-    const i = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var i = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     i &&
       a.Id === i.Id &&
       UiCameraAnimationManager_1.UiCameraAnimationManager.DeactivateCurrentCameraHandle();
   }),
   (UiCameraAnimationController.GUe = (e, a, i) => {
-    const n = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var n = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     n &&
       a.Id === n.Id &&
       (Log_1.Log.CheckInfo() &&
@@ -288,4 +288,4 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
       ),
       UiCameraAnimationManager_1.UiCameraAnimationManager.ReactivateCameraHandle();
   });
-// # sourceMappingURL=UiCameraAnimationController.js.map
+//# sourceMappingURL=UiCameraAnimationController.js.map

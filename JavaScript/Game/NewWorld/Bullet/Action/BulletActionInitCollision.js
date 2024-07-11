@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletActionInitCollision = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ColorUtils_1 = require("../../../Utils/ColorUtils");
-const BulletConstant_1 = require("../BulletConstant");
-const BulletCollisionUtil_1 = require("../BulletStaticMethod/BulletCollisionUtil");
-const BulletActionBase_1 = require("./BulletActionBase");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ColorUtils_1 = require("../../../Utils/ColorUtils"),
+  BulletConstant_1 = require("../BulletConstant"),
+  BulletCollisionUtil_1 = require("../BulletStaticMethod/BulletCollisionUtil"),
+  BulletActionBase_1 = require("./BulletActionBase");
 class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
   constructor() {
     super(...arguments), (this.CollisionInfo = void 0);
@@ -20,12 +20,12 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
   }
   OnExecute() {
     this.CollisionInfo = this.BulletInfo.CollisionInfo;
-    const t = this.BulletInfo.BulletDataMain;
-    const i =
-      ((this.CollisionInfo.StageInterval = 1),
-      (this.CollisionInfo.AllowedEnergy = !0),
-      t.Base.CollisionActiveDelay * TimeUtil_1.TimeUtil.InverseMillisecond);
-    (this.CollisionInfo.ActiveDelayMs = i > 0 ? i : 0),
+    var t = this.BulletInfo.BulletDataMain,
+      i =
+        ((this.CollisionInfo.StageInterval = 1),
+        (this.CollisionInfo.AllowedEnergy = !0),
+        t.Base.CollisionActiveDelay * TimeUtil_1.TimeUtil.InverseMillisecond);
+    (this.CollisionInfo.ActiveDelayMs = 0 < i ? i : 0),
       (this.CollisionInfo.IsPassDelay = this.CollisionInfo.ActiveDelayMs <= 0),
       (this.CollisionInfo.IntervalMs =
         t.Base.Interval * TimeUtil_1.TimeUtil.InverseMillisecond),
@@ -44,7 +44,7 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
           this.BulletInfo.BulletRowName,
         ]),
       this.H4o(t.Base.Shape),
-      this.BulletInfo.CloseCollision || t.Base.Shape === 4
+      this.BulletInfo.CloseCollision || 4 === t.Base.Shape
         ? (this.BulletInfo.IsCollisionRelativeLocationZero = !0)
         : (this.j4o(),
           this.BulletInfo.IsCollisionRelativeRotationModify &&
@@ -54,7 +54,7 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
               void 0,
               !0,
             ),
-          (this.CollisionInfo.HasObstaclesCollision = t.Obstacle.Radius > 0),
+          (this.CollisionInfo.HasObstaclesCollision = 0 < t.Obstacle.Radius),
           this.W4o()),
       this.CollisionInfo.LastFramePosition.FromUeVector(
         this.BulletInfo.CollisionLocation,
@@ -93,17 +93,17 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
     }
   }
   K4o() {
-    const t = this.BulletInfo.BulletDataMain;
-    const i = this.BulletInfo.Actor;
-    const s = i.GetComponentByClass(UE.BoxComponent.StaticClass());
-    const l =
-      s ??
-      i.AddComponentByClass(
-        UE.BoxComponent.StaticClass(),
-        !1,
-        MathUtils_1.MathUtils.DefaultTransform,
-        !0,
-      );
+    var t = this.BulletInfo.BulletDataMain,
+      i = this.BulletInfo.Actor,
+      s = i.GetComponentByClass(UE.BoxComponent.StaticClass()),
+      l =
+        s ??
+        i.AddComponentByClass(
+          UE.BoxComponent.StaticClass(),
+          !1,
+          MathUtils_1.MathUtils.DefaultTransform,
+          !0,
+        );
     this.BulletInfo.CloseCollision =
       t.Base.Size.X <= 0 || t.Base.Size.Y <= 0 || t.Base.Size.Z <= 0;
     (this.CollisionInfo.CollisionComponent = l),
@@ -121,17 +121,17 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
         i.FinishAddComponent(l, !1, MathUtils_1.MathUtils.DefaultTransform));
   }
   Q4o() {
-    const t = this.BulletInfo.BulletDataMain;
-    const i = this.BulletInfo.Actor;
-    const s = i.GetComponentByClass(UE.SphereComponent.StaticClass());
-    const l =
-      s ??
-      i.AddComponentByClass(
-        UE.SphereComponent.StaticClass(),
-        !1,
-        MathUtils_1.MathUtils.DefaultTransform,
-        !0,
-      );
+    var t = this.BulletInfo.BulletDataMain,
+      i = this.BulletInfo.Actor,
+      s = i.GetComponentByClass(UE.SphereComponent.StaticClass()),
+      l =
+        s ??
+        i.AddComponentByClass(
+          UE.SphereComponent.StaticClass(),
+          !1,
+          MathUtils_1.MathUtils.DefaultTransform,
+          !0,
+        );
     this.BulletInfo.CloseCollision = t.Base.Size.X <= 0;
     (this.CollisionInfo.CollisionComponent = l).SetCollisionProfileName(
       t.Logic.ProfileName,
@@ -144,20 +144,20 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
         i.FinishAddComponent(l, !1, MathUtils_1.MathUtils.DefaultTransform));
   }
   X4o() {
-    const t = this.BulletInfo.BulletDataMain;
-    const i = this.BulletInfo.Actor;
-    const s =
-      ((this.BulletInfo.CloseCollision =
-        t.Base.Size.X <= 0 || t.Base.Size.Z <= 0),
-      i.GetComponentByClass(UE.BoxComponent.StaticClass()));
-    const l =
-      s ??
-      i.AddComponentByClass(
-        UE.BoxComponent.StaticClass(),
-        !1,
-        MathUtils_1.MathUtils.DefaultTransform,
-        !0,
-      );
+    var t = this.BulletInfo.BulletDataMain,
+      i = this.BulletInfo.Actor,
+      s =
+        ((this.BulletInfo.CloseCollision =
+          t.Base.Size.X <= 0 || t.Base.Size.Z <= 0),
+        i.GetComponentByClass(UE.BoxComponent.StaticClass())),
+      l =
+        s ??
+        i.AddComponentByClass(
+          UE.BoxComponent.StaticClass(),
+          !1,
+          MathUtils_1.MathUtils.DefaultTransform,
+          !0,
+        );
     (this.CollisionInfo.CollisionComponent = l),
       ModelManager_1.ModelManager.BulletModel.ShowBulletCollision(
         this.BulletInfo.Attacker.Id,
@@ -173,20 +173,20 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
         i.FinishAddComponent(l, !1, MathUtils_1.MathUtils.DefaultTransform));
   }
   $4o() {
-    const t = this.BulletInfo.BulletDataMain;
-    const i = this.BulletInfo.Actor;
-    const s =
-      ((this.BulletInfo.CloseCollision =
-        t.Base.Size.X <= 0 || t.Base.Size.Z <= 0),
-      i.GetComponentByClass(UE.BoxComponent.StaticClass()));
-    const l =
-      s ??
-      i.AddComponentByClass(
-        UE.BoxComponent.StaticClass(),
-        !1,
-        MathUtils_1.MathUtils.DefaultTransform,
-        !0,
-      );
+    var t = this.BulletInfo.BulletDataMain,
+      i = this.BulletInfo.Actor,
+      s =
+        ((this.BulletInfo.CloseCollision =
+          t.Base.Size.X <= 0 || t.Base.Size.Z <= 0),
+        i.GetComponentByClass(UE.BoxComponent.StaticClass())),
+      l =
+        s ??
+        i.AddComponentByClass(
+          UE.BoxComponent.StaticClass(),
+          !1,
+          MathUtils_1.MathUtils.DefaultTransform,
+          !0,
+        );
     (this.CollisionInfo.CollisionComponent = l),
       ModelManager_1.ModelManager.BulletModel.ShowBulletCollision(
         this.BulletInfo.Attacker.Id,
@@ -202,34 +202,34 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
         i.FinishAddComponent(l, !1, MathUtils_1.MathUtils.DefaultTransform));
   }
   Y4o() {
-    const t = this.BulletInfo.BulletDataMain;
-    const i = this.BulletInfo.RayInfo;
+    var t = this.BulletInfo.BulletDataMain,
+      i = this.BulletInfo.RayInfo;
     (i.Speed = this.BulletInfo.Size.X / TimeUtil_1.TimeUtil.InverseMillisecond),
-      (i.BlockByCharacter = t.Base.SpecialParams.get(1) !== "f");
+      (i.BlockByCharacter = "f" !== t.Base.SpecialParams.get(1));
   }
   z4o() {
     this.BulletInfo.CloseCollision = !1;
   }
   J4o(t) {
-    const i = this.BulletInfo.Actor;
-    const s =
-      GlobalData_1.GlobalData.IsPlayInEditor &&
-      BulletConstant_1.BulletConstant.CollisionCompVisibleInEditor;
-    const l = i.GetComponentByClass(UE.KuroRegionDetectComponent.StaticClass());
-    const e =
-      l ??
-      i.AddComponentByClass(
-        UE.KuroRegionDetectComponent.StaticClass(),
-        !1,
-        MathUtils_1.MathUtils.DefaultTransform,
-        s,
-      );
-    const h =
-      ((this.CollisionInfo.RegionDetectComponent = e),
-      i.GetComponentByClass(t));
-    var t =
-      h ??
-      i.AddComponentByClass(t, !1, MathUtils_1.MathUtils.DefaultTransform, s);
+    var i = this.BulletInfo.Actor,
+      s =
+        GlobalData_1.GlobalData.IsPlayInEditor &&
+        BulletConstant_1.BulletConstant.CollisionCompVisibleInEditor,
+      l = i.GetComponentByClass(UE.KuroRegionDetectComponent.StaticClass()),
+      e =
+        l ??
+        i.AddComponentByClass(
+          UE.KuroRegionDetectComponent.StaticClass(),
+          !1,
+          MathUtils_1.MathUtils.DefaultTransform,
+          s,
+        ),
+      h =
+        ((this.CollisionInfo.RegionDetectComponent = e),
+        i.GetComponentByClass(t)),
+      t =
+        h ??
+        i.AddComponentByClass(t, !1, MathUtils_1.MathUtils.DefaultTransform, s);
     (this.CollisionInfo.RegionComponent = t),
       e.RegionMap.Set(BulletConstant_1.BulletConstant.RegionKey, t),
       (this.BulletInfo.CloseCollision = !1),
@@ -242,12 +242,12 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
           i.FinishAddComponent(t, !1, MathUtils_1.MathUtils.DefaultTransform)));
   }
   j4o() {
-    const t = this.BulletInfo.BulletDataMain;
-    const i = this.CollisionInfo.CollisionComponent;
-    const s = this.CollisionInfo.RegionComponent;
-    const l = this.CollisionInfo.CenterLocalLocation;
-    let e = (l.FromUeVector(t.Base.CenterOffset), t.Base.Shape);
-    e === 7
+    var t = this.BulletInfo.BulletDataMain,
+      i = this.CollisionInfo.CollisionComponent,
+      s = this.CollisionInfo.RegionComponent,
+      l = this.CollisionInfo.CenterLocalLocation,
+      e = (l.FromUeVector(t.Base.CenterOffset), t.Base.Shape);
+    7 === e
       ? (l.IsZero() ||
           (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
@@ -258,13 +258,13 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
           l.Reset()),
         (this.BulletInfo.IsCollisionRelativeLocationZero = !0))
       : ((e = this.BulletInfo.Size),
-        t.Base.Shape !== 2
+        2 !== t.Base.Shape
           ? l.IsZero()
             ? (this.BulletInfo.IsCollisionRelativeLocationZero = !0)
             : i
               ? i.K2_SetRelativeLocation(l.ToUeVector(), !1, void 0, !0)
               : s && s.K2_SetRelativeLocation(l.ToUeVector(), !1, void 0, !0)
-          : e.Y >= 360
+          : 360 <= e.Y
             ? (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "Bullet",
@@ -297,10 +297,10 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
   }
   W4o() {
     this.BulletInfo.Actor.SetActorHiddenInGame(!1);
-    const i = this.CollisionInfo?.CollisionComponent;
+    var i = this.CollisionInfo?.CollisionComponent;
     if (i) {
-      const s = this.CollisionInfo.NeedHitObstacles;
-      const l = this.BulletInfo.BulletDataMain.Base.IsOversizeForTrace;
+      var s = this.CollisionInfo.NeedHitObstacles,
+        l = this.BulletInfo.BulletDataMain.Base.IsOversizeForTrace;
       let t = !1;
       (t =
         !this.CollisionInfo.HasObstaclesCollision && s
@@ -318,4 +318,4 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
   }
 }
 exports.BulletActionInitCollision = BulletActionInitCollision;
-// # sourceMappingURL=BulletActionInitCollision.js.map
+//# sourceMappingURL=BulletActionInitCollision.js.map

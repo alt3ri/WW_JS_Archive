@@ -4,22 +4,22 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.onlineDisabledSourceTipsId =
     exports.onlineContinuingChallengeIcon =
       void 0);
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const OnlineHallData_1 = require("./OnlineHallData");
+const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  OnlineHallData_1 = require("./OnlineHallData");
 (exports.onlineContinuingChallengeIcon = {
-  0: "ContinuingChallengeAccept",
+  [0]: "ContinuingChallengeAccept",
   1: "ContinuingChallengeRefuse",
   2: "ContinuingChallengePending",
 }),
   (exports.onlineDisabledSourceTipsId = {
-    0: "OnlineDisabledByNonOnlineQuest",
+    [0]: "OnlineDisabledByNonOnlineQuest",
     1: "OnlineDisabledByNonOnlinePlay",
     2: "OnlineDisabledByTrialRole",
   });
@@ -185,7 +185,7 @@ class OnlineModel extends ModelBase_1.ModelBase {
     this.Zqi.push(e);
   }
   PushCurrentApplyList(e) {
-    this.oGi.set(e.PlayerId, e), this.rGi === -1 && (this.rGi = e.PlayerId);
+    this.oGi.set(e.PlayerId, e), -1 === this.rGi && (this.rGi = e.PlayerId);
   }
   PushCurrentTeamList(e) {
     this.hGi.set(e.PlayerId, e);
@@ -203,7 +203,7 @@ class OnlineModel extends ModelBase_1.ModelBase {
   }
   ResetTeamDataPlayer(e) {
     for (const i of this.hGi) {
-      const t = i[1];
+      var t = i[1];
       t.PlayerNumber > e && t.PlayerNumber--;
     }
   }
@@ -214,10 +214,10 @@ class OnlineModel extends ModelBase_1.ModelBase {
     return this.hGi.get(e);
   }
   GetCurrentApplyList() {
-    let e;
-    let t;
-    const i = new Array();
-    for ([e, t] of this.oGi) e > 0 && i.push(t);
+    var e,
+      t,
+      i = new Array();
+    for ([e, t] of this.oGi) 0 < e && i.push(t);
     return i.sort((e, t) => e.ApplyTimeLeftTime - t.ApplyTimeLeftTime);
   }
   GetCurrentApplySize() {
@@ -227,7 +227,7 @@ class OnlineModel extends ModelBase_1.ModelBase {
     return this.hGi.size;
   }
   GetIsTeamModel() {
-    return this.aGi !== -1;
+    return -1 !== this.aGi;
   }
   GetIsMyTeam() {
     return (
@@ -236,17 +236,17 @@ class OnlineModel extends ModelBase_1.ModelBase {
     );
   }
   GetExistOnlineTeam() {
-    return ModelManager_1.ModelManager.OnlineModel.OwnerId !== -1;
+    return -1 !== ModelManager_1.ModelManager.OnlineModel.OwnerId;
   }
   GetCanJoinFormStranger() {
-    const e = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel;
-    const t = new Array();
+    var e = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
+      t = new Array();
     for (const i of this.Zqi) i.WorldLevel <= e + this.EnterDiff && t.push(i);
     return t;
   }
   GetCanJoinFormFriend() {
-    const e = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel;
-    const t = new Array();
+    var e = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
+      t = new Array();
     for (const i of this.eGi)
       this.CanJoinOtherWorld(e, i.WorldLevel) && t.push(i);
     return t;
@@ -255,7 +255,7 @@ class OnlineModel extends ModelBase_1.ModelBase {
     return e + this.EnterDiff >= t;
   }
   GetTeamList() {
-    const e = new Array();
+    var e = new Array();
     for (const t of this.hGi) e.push(t[1]);
     return e.sort((e, t) => e.PlayerNumber - t.PlayerNumber);
   }
@@ -266,7 +266,7 @@ class OnlineModel extends ModelBase_1.ModelBase {
       );
   }
   IsOnlineDisabled() {
-    return !!this.cGi && this.cGi.size > 0;
+    return !!this.cGi && 0 < this.cGi.size;
   }
   GetOnlineDisabledSource() {
     return this.cGi;
@@ -290,17 +290,17 @@ class OnlineModel extends ModelBase_1.ModelBase {
       if (t.PlayerId === e) return t;
   }
   GetAllWorldTeamPlayer() {
-    const e = new Array();
+    var e = new Array();
     for (const t of this.WorldTeamPlayerFightInfo) e.push(t.PlayerId);
     return e;
   }
   RefreshWorldTeamRoleInfo(e) {
     for (const r of e) {
-      const t = this.GetWorldTeamPlayerFightInfo(r.aFn);
+      var t = this.GetWorldTeamPlayerFightInfo(r.aFn);
       if (t)
         for (const n of r.J4n)
-          if (n.$4n === -1) {
-            const i = new Array();
+          if (-1 === n.$4n) {
+            var i = new Array();
             for (const s of n.FLs)
               i.push(new OnlineHallData_1.WorldTeamRoleInfo(s.l3n, s.r3n));
             t.RoleInfos = i;
@@ -316,7 +316,7 @@ class OnlineModel extends ModelBase_1.ModelBase {
   ResetContinuingChallengeConfirmState() {
     this.mGi.clear();
     for (const t of ModelManager_1.ModelManager.CreatureModel.GetAllScenePlayers()) {
-      const e = t.GetPlayerId();
+      var e = t.GetPlayerId();
       this.mGi.set(e, 2);
     }
   }
@@ -362,4 +362,4 @@ class OnlineModel extends ModelBase_1.ModelBase {
   }
 }
 exports.OnlineModel = OnlineModel;
-// # sourceMappingURL=OnlineModel.js.map
+//# sourceMappingURL=OnlineModel.js.map

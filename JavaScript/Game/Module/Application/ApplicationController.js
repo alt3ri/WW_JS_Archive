@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ApplicationController = void 0);
-const Application_1 = require("../../../Core/Application/Application");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
+const Application_1 = require("../../../Core/Application/Application"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
 class ApplicationController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -33,4 +33,4 @@ class ApplicationController extends ControllerBase_1.ControllerBase {
 }
 ((exports.ApplicationController = ApplicationController).LHe = () => {}),
   (ApplicationController.DHe = () => {});
-// # sourceMappingURL=ApplicationController.js.map
+//# sourceMappingURL=ApplicationController.js.map

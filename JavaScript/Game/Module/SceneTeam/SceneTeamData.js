@@ -4,10 +4,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.SceneTeamPlayer =
     exports.SceneTeamRole =
       void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const WaitEntityTask_1 = require("../../World/Define/WaitEntityTask");
+const Log_1 = require("../../../Core/Common/Log"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  WaitEntityTask_1 = require("../../World/Define/WaitEntityTask");
 class SceneTeamRole {
   constructor() {
     (this.CreatureDataId = 0), (this.RoleId = 0);
@@ -19,7 +19,7 @@ class SceneTeamPlayer {
     (this.j8 = 0), (this.Wyn = void 0), (this.Ffo = new Map());
   }
   static Create(t) {
-    const e = new SceneTeamPlayer();
+    var e = new SceneTeamPlayer();
     return (e.j8 = t), e;
   }
   Clear() {
@@ -28,8 +28,8 @@ class SceneTeamPlayer {
     this.Ffo.clear();
   }
   ResetServerGroupData() {
-    const t = [];
-    for (const e of this.Ffo.keys()) e >= 0 && t.push(e);
+    var t = [];
+    for (const e of this.Ffo.keys()) 0 <= e && t.push(e);
     for (const r of t) this.Ffo.get(r)?.Clear(), this.Ffo.delete(r);
   }
   GetCurrentGroupType() {
@@ -39,7 +39,7 @@ class SceneTeamPlayer {
     if (this.Wyn) return this.Ffo.get(this.Wyn);
   }
   GetGroupList() {
-    const t = [];
+    var t = [];
     for (const e of this.Ffo.values()) t.push(e);
     return t;
   }
@@ -63,7 +63,7 @@ class SceneTeamGroup {
       (this.Wfo = void 0);
   }
   static Create(t, e) {
-    const r = new SceneTeamGroup();
+    var r = new SceneTeamGroup();
     return (r.j8 = t), (r.Vfo = e), r;
   }
   Clear() {
@@ -77,7 +77,7 @@ class SceneTeamGroup {
     return this.Vfo;
   }
   GetRoleList() {
-    const t = [];
+    var t = [];
     for (const e of this.Kho) t.push(e);
     return t;
   }
@@ -96,22 +96,24 @@ class SceneTeamGroup {
       !(t.length <= 0))
     ) {
       this.IsRetain = i;
-      const r = [];
+      var r = [];
       const a = new Map();
       for (const s of t) {
-        const o = s.CreatureDataId;
+        var o = s.CreatureDataId;
         this.Kho.push(s),
           s.RoleId === e && (this.Hfo = s),
-          o > 0 && (r.push(o), a.set(o, s));
+          0 < o && (r.push(o), a.set(o, s));
       }
       r.length <= 0 ||
         (this.Wfo = WaitEntityTask_1.WaitEntityTask.Create(
           r,
           () => {
-            for (const [t, e] of a) {
-              var r;
-              const o =
-                ModelManager_1.ModelManager.CreatureModel.GetEntity(t)?.Entity;
+            for (var [t, e] of a) {
+              var r,
+                o =
+                  ModelManager_1.ModelManager.CreatureModel.GetEntity(
+                    t,
+                  )?.Entity;
               o
                 ? ((r = this.Kfo(e, o, i)),
                   ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
@@ -128,7 +130,7 @@ class SceneTeamGroup {
                     ["CreatureDataId", t],
                   );
             }
-            let s;
+            var s;
             i &&
               (s = this.Hfo?.CreatureDataId) &&
               ModelManager_1.ModelManager.CreatureModel.GetEntity(s)
@@ -159,4 +161,4 @@ class SceneTeamGroup {
   }
 }
 exports.SceneTeamGroup = SceneTeamGroup;
-// # sourceMappingURL=SceneTeamData.js.map
+//# sourceMappingURL=SceneTeamData.js.map

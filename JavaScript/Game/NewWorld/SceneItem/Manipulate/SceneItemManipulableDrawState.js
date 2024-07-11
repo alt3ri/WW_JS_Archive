@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulableDrawState = void 0);
-const UE = require("ue");
-const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const Global_1 = require("../../../Global");
-const SceneItemManipulableBaseState_1 = require("./SceneItemManipulableBaseState");
+const UE = require("ue"),
+  FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../Global"),
+  SceneItemManipulableBaseState_1 = require("./SceneItemManipulableBaseState");
 class SceneItemManipulableDrawState extends SceneItemManipulableBaseState_1.SceneItemManipulableBaseState {
   constructor(t, e, i) {
     super(t),
@@ -77,8 +77,8 @@ class SceneItemManipulableDrawState extends SceneItemManipulableBaseState_1.Scen
   }
   snr() {
     var t = this.SceneItem.ManipulateBaseConfig;
-    let e = 1;
-    let i = 1;
+    let e = 1,
+      i = 1;
     this.Timer < t.对齐时间 &&
       ((e = MathUtils_1.MathUtils.Clamp(this.Timer / t.对齐时间, 0, 1)),
       (e = UE.KismetMathLibrary.Ease(0, 1, e, 5))),
@@ -89,14 +89,13 @@ class SceneItemManipulableDrawState extends SceneItemManipulableBaseState_1.Scen
           1,
         )),
         (i = UE.KismetMathLibrary.Ease(0, 1, i, 7)));
-    const s = new UE.Vector(this.onr.X, this.onr.Y, this.onr.Z);
-    var t = ((s.Z += t.牵引高度 * e), this.rnr);
-    var h = this.SceneItem.UsingAssistantHoldOffset
-      ? this.SceneItem.ConfigAssistantHoldOffset
-      : this.SceneItem.ConfigHoldOffset;
-    var a =
-      Global_1.Global.BaseCharacter.CharacterActorComponent.ActorTransform;
-    var h = a.TransformPositionNoScale(h);
+    var s = new UE.Vector(this.onr.X, this.onr.Y, this.onr.Z),
+      t = ((s.Z += t.牵引高度 * e), this.rnr),
+      h = this.SceneItem.UsingAssistantHoldOffset
+        ? this.SceneItem.ConfigAssistantHoldOffset
+        : this.SceneItem.ConfigHoldOffset,
+      a = Global_1.Global.BaseCharacter.CharacterActorComponent.ActorTransform,
+      h = a.TransformPositionNoScale(h);
     let n = UE.KismetMathLibrary.ComposeRotators(
       this.SceneItem.ConfigHoldRotator,
       a.Rotator(),
@@ -105,8 +104,8 @@ class SceneItemManipulableDrawState extends SceneItemManipulableBaseState_1.Scen
     a?.Valid &&
       ((a = new UE.Rotator(0, -a.Rotation, 0)),
       (n = UE.KismetMathLibrary.ComposeRotators(a, n)));
-    let r = h;
-    let l = n;
+    let r = h,
+      l = n;
     return (
       i < 1 &&
         ((r = UE.KismetMathLibrary.VLerp(s, h, i)),
@@ -116,4 +115,4 @@ class SceneItemManipulableDrawState extends SceneItemManipulableBaseState_1.Scen
   }
 }
 exports.SceneItemManipulableDrawState = SceneItemManipulableDrawState;
-// # sourceMappingURL=SceneItemManipulableDrawState.js.map
+//# sourceMappingURL=SceneItemManipulableDrawState.js.map

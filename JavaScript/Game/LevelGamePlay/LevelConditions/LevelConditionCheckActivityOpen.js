@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckActivityOpen = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionCheckActivityOpen extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, r) {
     return (
@@ -15,4 +15,4 @@ class LevelConditionCheckActivityOpen extends LevelGeneralBase_1.LevelConditionB
   }
 }
 exports.LevelConditionCheckActivityOpen = LevelConditionCheckActivityOpen;
-// # sourceMappingURL=LevelConditionCheckActivityOpen.js.map
+//# sourceMappingURL=LevelConditionCheckActivityOpen.js.map

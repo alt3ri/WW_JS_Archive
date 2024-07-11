@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Condition = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const DicStringString_1 = require("./SubType/DicStringString");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  DicStringString_1 = require("./SubType/DicStringString");
 class Condition {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -46,22 +46,22 @@ class Condition {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   type(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   neednum() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   GetLimitparamsAt(t, i) {
     return this.limitparams(t);
   }
   limitparams(t, i) {
-    const s = this.J7.__offset(this.z7, 10);
+    var s = this.J7.__offset(this.z7, 10);
     return s
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -70,14 +70,14 @@ class Condition {
       : null;
   }
   limitparamsLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetLimitparamsopeAt(t, i) {
     return this.limitparamsope(t);
   }
   limitparamsope(t, i) {
-    const s = this.J7.__offset(this.z7, 12);
+    var s = this.J7.__offset(this.z7, 12);
     return s
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -86,17 +86,17 @@ class Condition {
       : null;
   }
   limitparamsopeLength() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   isclient() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   description(t) {
-    const i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 16);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.Condition = Condition;
-// # sourceMappingURL=Condition.js.map
+//# sourceMappingURL=Condition.js.map

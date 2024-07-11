@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configMobileBattleUiSetAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const MobileBattleUiSet_1 = require("../Config/MobileBattleUiSet");
-const DB = "db_mobile_battle_ui_set.db";
-const FILE = "y.移动端主界面键位配置.xlsx";
-const TABLE = "MobileBattleUiSet";
-const COMMAND = "select BinData from `MobileBattleUiSet`";
-const KEY_PREFIX = "MobileBattleUiSetAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  MobileBattleUiSet_1 = require("../Config/MobileBattleUiSet"),
+  DB = "db_mobile_battle_ui_set.db",
+  FILE = "y.移动端主界面键位配置.xlsx",
+  TABLE = "MobileBattleUiSet",
+  COMMAND = "select BinData from `MobileBattleUiSet`",
+  KEY_PREFIX = "MobileBattleUiSetAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configMobileBattleUiSetAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configMobileBattleUiSetAll = {
     );
   },
   GetConfigList: (e = !0) => {
-    let o;
+    var o;
     if (
       (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configMobileBattleUiSetAll = {
       }
       const n = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let t = void 0;
+        var t = void 0;
         if (
           (([o, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configMobileBattleUiSetAll = {
     }
   },
 };
-// # sourceMappingURL=MobileBattleUiSetAll.js.map
+//# sourceMappingURL=MobileBattleUiSetAll.js.map

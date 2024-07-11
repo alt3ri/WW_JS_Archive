@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InteractionHintView = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const Stats_1 = require("../../../../Core/Common/Stats");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const UiLayerType_1 = require("../../../Ui/Define/UiLayerType");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const TouchFingerManager_1 = require("../../../Ui/TouchFinger/TouchFingerManager");
-const GuideConfig_1 = require("../../Guide/GuideConfig");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const InteractionDefine_1 = require("../InteractionDefine");
-const InteractionGuide_1 = require("./InteractionGuide");
-const InteractionHint_1 = require("./InteractionHint");
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  UiLayerType_1 = require("../../../Ui/Define/UiLayerType"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  TouchFingerManager_1 = require("../../../Ui/TouchFinger/TouchFingerManager"),
+  GuideConfig_1 = require("../../Guide/GuideConfig"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  InteractionDefine_1 = require("../InteractionDefine"),
+  InteractionGuide_1 = require("./InteractionGuide"),
+  InteractionHint_1 = require("./InteractionHint");
 class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -60,18 +60,18 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
         this.CloseMe();
       }),
       (this.X_i = (t) => {
-        this.U_i >= 0 && this.OZt(this.U_i),
+        0 <= this.U_i && this.OZt(this.U_i),
           this.H_i && this.j_i && ((this.j_i = !1), this.$_i());
-        var i = this.E_i.GetDisplayGridNum();
-        const e = this.y_i > this.I_i ? this.I_i : this.y_i;
-        var i = ((this.y_i = i), this.y_i > this.I_i ? this.I_i : this.y_i);
+        var i = this.E_i.GetDisplayGridNum(),
+          e = this.y_i > this.I_i ? this.I_i : this.y_i,
+          i = ((this.y_i = i), this.y_i > this.I_i ? this.I_i : this.y_i);
         e !== i &&
           ((this.L_i = this.T_i + this.D_i * ((i - 1) / 2)),
           (this.R_i = 0),
           (this.W_i = !0));
       }),
       (this.Y_i = () => {
-        const t = new InteractionHint_1.InteractionHint();
+        var t = new InteractionHint_1.InteractionHint();
         return (
           t.BindOnHover(this.J_i),
           t.BindOnUnHover(this.z_i),
@@ -151,37 +151,37 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
                 }));
       }),
       (this.bMe = (t, i) => {
-        i === 0
+        0 === i
           ? this._ui()
-          : i === 1 && (this.H_i ? this.$_i() : (this.j_i = !0));
+          : 1 === i && (this.H_i ? this.$_i() : (this.j_i = !0));
       }),
       (this.Ltt = () => {
         this.oui();
       }),
       (this.uui = (t, i) => {
-        i === 0 && this.cui(void 0, -1);
+        0 === i && this.cui(void 0, -1);
       }),
       (this.cui = (t, i) => {
-        i === 0 ||
+        0 === i ||
           this.IsHoverHint ||
-          (this.E_i.GetDisplayGridNum() !== 1 && this.SelectHint(i > 0));
+          (1 !== this.E_i.GetDisplayGridNum() && this.SelectHint(0 < i));
       }),
       (this.mui = (t, i) => {
-        i === 0 && this.SelectHint(!0);
+        0 === i && this.SelectHint(!0);
       }),
       (this.dui = (t, i) => {
-        i === 0 && this.SelectHint(!1);
+        0 === i && this.SelectHint(!1);
       }),
       (this.pbt = (t, i) => {
         (i = i.TouchType),
           (t = Number(t)),
           (t = TouchFingerManager_1.TouchFingerManager.GetTouchFingerData(t));
         t &&
-          (i === 0
+          (0 === i
             ? (this.F_i = t.IsTouchComponentContainTag(
                 InteractionDefine_1.autoPickUpTag,
               ))
-            : i === 1 &&
+            : 1 === i &&
               (this.F_i &&
                 t.IsTouchComponentContainTag(
                   InteractionDefine_1.autoPickUpTag,
@@ -329,7 +329,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       );
   }
   Ioi() {
-    const t =
+    var t =
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.GetChildVisible(
         19,
       );
@@ -353,16 +353,16 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       (this.S_i = this.xqe.ScrollSensitivity),
       (this.V_i = this.A_i.GetAnchorOffsetY()),
       (this.T_i = this.A_i.GetAnchorOffsetY());
-    var t = this.GetItem(1);
-    var t =
-      ((this.E_i = new GenericLayout_1.GenericLayout(
-        this.GetVerticalLayout(0),
-        this.Y_i,
-        t?.GetOwner(),
-      )),
-      (this.D_i = t.GetHeight()),
-      (this.I_i = this.A_i.GetHeight() / this.D_i),
-      ModelManager_1.ModelManager.InteractionModel);
+    var t = this.GetItem(1),
+      t =
+        ((this.E_i = new GenericLayout_1.GenericLayout(
+          this.GetVerticalLayout(0),
+          this.Y_i,
+          t?.GetOwner(),
+        )),
+        (this.D_i = t.GetHeight()),
+        (this.I_i = this.A_i.GetHeight() / this.D_i),
+        ModelManager_1.ModelManager.InteractionModel);
     (this.g_t = t.AutoLongPressTime + t.ShowLongPressTime),
       this.xqe.OnLateUpdate.Bind(this.X_i);
   }
@@ -372,7 +372,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       (this.k_i = this.P_i.length),
       (this.N_i = 0),
       (this.O_i = 0);
-    const t = ModelManager_1.ModelManager.InteractionModel;
+    var t = ModelManager_1.ModelManager.InteractionModel;
     ModelManager_1.ModelManager.PlatformModel.IsMobile()
       ? t.SaveTriggerMobileGuide(!0)
       : t.SaveTriggerDesktopGuide(!0),
@@ -385,7 +385,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
   }
   nui() {
     this.O_i++;
-    const t = this.P_i[this.N_i];
+    var t = this.P_i[this.N_i];
     (!t?.Valid ||
       (ModelManager_1.ModelManager.InteractionModel.CanAutoPickUp(t) ||
         (this.N_i++, this.nui()),
@@ -406,7 +406,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       (this.w_i = !1);
   }
   InteractPawn(t) {
-    let i = this.P_i[t];
+    var i = this.P_i[t];
     return (
       !!i?.Valid &&
       !!(i = i.GetComponent(103))?.IsPawnInteractive() &&
@@ -490,7 +490,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       (TimerSystem_1.TimerSystem.Remove(this.B_i), (this.B_i = void 0));
   }
   $_i() {
-    let t;
+    var t;
     this.Z_i(),
       this.G_i ||
         ModelManager_1.ModelManager.InteractionModel.InInteractCd() ||
@@ -503,7 +503,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
   }
   SelectHint(t) {
     let i = -1;
-    const e = this.P_i.length - 1;
+    var e = this.P_i.length - 1;
     (i = t
       ? (i = this.oTt - 1) < 0
         ? e
@@ -530,7 +530,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   vui(t) {
-    let i;
+    var i;
     this.iui() &&
     ((i = ModelManager_1.ModelManager.InteractionModel),
     (t = this.P_i[t]),
@@ -539,9 +539,9 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       : this.H_i?.SetLongPressTime(0);
   }
   lui() {
-    const t = ModelManager_1.ModelManager.InteractionModel;
+    var t = ModelManager_1.ModelManager.InteractionModel;
     if (t.IsInShowAutoInteractionGuideCountLimit()) {
-      const i = ModelManager_1.ModelManager.PlatformModel.IsMobile();
+      var i = ModelManager_1.ModelManager.PlatformModel.IsMobile();
       if (i) {
         if (t.IsTriggerMobileGuide) return;
       } else if (t.IsTriggerDesktopGuide) return;
@@ -566,7 +566,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   async Mui() {
-    const t = this.GetItem(5);
+    var t = this.GetItem(5);
     return (
       (this.q_i = new InteractionGuide_1.InteractionGuide()),
       await this.q_i.CreateThenShowByResourceIdAsync(
@@ -584,11 +584,11 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
         : this.q_i.Refresh("DesktopAutoPickUpText"));
   }
   iui() {
-    return this.x_i > 0;
+    return 0 < this.x_i;
   }
   GetGuideUiItemAndUiItemForShowEx(t) {
-    let i;
-    if (t.length === 2 && t[0] === GuideConfig_1.GuideConfig.TabTag)
+    var i;
+    if (2 === t.length && t[0] === GuideConfig_1.GuideConfig.TabTag)
       return (i = this.E_i.GetLayoutItemList()).length <= 0
         ? void 0
         : [(i = i[0].GetButtonForGuide()), i];
@@ -603,4 +603,4 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 (exports.InteractionHintView = InteractionHintView).fui = void 0;
-// # sourceMappingURL=InteractionHintView.js.map
+//# sourceMappingURL=InteractionHintView.js.map

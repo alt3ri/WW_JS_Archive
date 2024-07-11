@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const ModelManager_1 = require("../Manager/ModelManager");
-const CampUtils_1 = require("../NewWorld/Character/Common/Blueprint/Utils/CampUtils");
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  CampUtils_1 = require("../NewWorld/Character/Common/Blueprint/Utils/CampUtils");
 class TsAnimNotifyStateCleanBurstCamera extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -17,9 +17,9 @@ class TsAnimNotifyStateCleanBurstCamera extends UE.KuroAnimNotifyState {
       (this.TsNoHitEffect = !1);
   }
   K2_NotifyBegin(t, e, s) {
-    let r;
-    let i;
-    const a = t.GetOwner();
+    var r,
+      i,
+      a = t.GetOwner();
     if (!(a instanceof TsBaseCharacter_1.default)) return !1;
     if (!a.CharacterActorComponent.IsAutonomousProxy) return !1;
     (this.TsHideMesh = this.隐藏敌对目标Mesh),
@@ -30,7 +30,7 @@ class TsAnimNotifyStateCleanBurstCamera extends UE.KuroAnimNotifyState {
         o.Entity.Active &&
         (i = (r = o.Entity.GetComponent(3))?.Actor) &&
         i !== a &&
-        CampUtils_1.CampUtils.GetCampRelationship(i.Camp, a.Camp) !== 1 &&
+        1 !== CampUtils_1.CampUtils.GetCampRelationship(i.Camp, a.Camp) &&
         (this.TsHiddenMap || (this.TsHiddenMap = new Map()),
         this.TsHideEffect &&
           (this.HideEffect(o, !0), this.TsHiddenMap.set(o, -1)),
@@ -61,7 +61,7 @@ class TsAnimNotifyStateCleanBurstCamera extends UE.KuroAnimNotifyState {
     return !0;
   }
   K2_NotifyEnd(t, e) {
-    let s;
+    var s;
     if (
       (this.TsNoHitEffect &&
         (t = t.GetOwner()) instanceof TsBaseCharacter_1.default &&
@@ -77,7 +77,7 @@ class TsAnimNotifyStateCleanBurstCamera extends UE.KuroAnimNotifyState {
             )),
       this.TsHiddenMap)
     ) {
-      for (const [r, i] of this.TsHiddenMap)
+      for (var [r, i] of this.TsHiddenMap)
         r.Valid &&
           (this.TsHideMesh && r.Entity.GetComponent(3).EnableActor(i),
           this.TsHideEffect) &&
@@ -95,4 +95,4 @@ class TsAnimNotifyStateCleanBurstCamera extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateCleanBurstCamera;
-// # sourceMappingURL=TsAnimNotifyStateCleanBurstCamera.js.map
+//# sourceMappingURL=TsAnimNotifyStateCleanBurstCamera.js.map

@@ -10,7 +10,7 @@ class CheckLevelPlayBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase
   OnCreate(e) {
     return (
       !!super.OnCreate(e) &&
-      e.Condition.Type === "CheckLevelPlay" &&
+      "CheckLevelPlay" === e.Condition.Type &&
       ((this.xQt = 0), (this.TrackTextRuleInner = 1), !0)
     );
   }
@@ -22,4 +22,4 @@ class CheckLevelPlayBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase
   }
 }
 exports.CheckLevelPlayBehaviorNode = CheckLevelPlayBehaviorNode;
-// # sourceMappingURL=CheckLevelPlayBehaviorNode.js.map
+//# sourceMappingURL=CheckLevelPlayBehaviorNode.js.map

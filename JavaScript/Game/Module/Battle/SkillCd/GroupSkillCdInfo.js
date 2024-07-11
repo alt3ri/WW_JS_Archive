@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GroupSkillCdInfo = exports.SkillCdInfo = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Queue_1 = require("../../../../Core/Container/Queue");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const DEFAULT_PROPORTTION_VALUE = 1e4;
+const Log_1 = require("../../../../Core/Common/Log"),
+  Queue_1 = require("../../../../Core/Container/Queue"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  DEFAULT_PROPORTTION_VALUE = 1e4;
 class SkillCdInfo {
   constructor() {
     (this.SkillId = 0),
@@ -35,21 +35,21 @@ class GroupSkillCdInfo {
       (this.CurDelaySkillCd = 0);
   }
   IsInCd() {
-    return this.CurRemainingCd > 0;
+    return 0 < this.CurRemainingCd;
   }
   HasRemainingCount() {
-    return this.RemainingCount > 0;
+    return 0 < this.RemainingCount;
   }
   IsInDelay() {
-    return this.CurRemainingDelayCd > 0;
+    return 0 < this.CurRemainingDelayCd;
   }
   StartCd(t, i, s = -1) {
-    const e = this.SkillCdInfoMap.get(t);
+    var e = this.SkillCdInfoMap.get(t);
     if (!e) return !1;
     if (this.RemainingCount <= 0) return !1;
     let h = s;
     return (
-      h === -1 &&
+      -1 === h &&
         ((s =
           i.GetCurrentValue(Protocol_1.Aki.Protocol.KBs.Proto_CdReduse) /
           DEFAULT_PROPORTTION_VALUE),
@@ -63,7 +63,7 @@ class GroupSkillCdInfo {
               ["skillId", t],
             ),
           !1)
-        : ((i = e.CdDelay) > 0
+        : (0 < (i = e.CdDelay)
             ? ((this.CurRemainingDelayCd = i),
               (this.CurDelaySkillId = t),
               (this.CurDelaySkillCd = h),
@@ -84,20 +84,20 @@ class GroupSkillCdInfo {
     );
   }
   Tick(t) {
-    var t = t * TimeUtil_1.TimeUtil.Millisecond;
-    const i = this.RemainingCount;
-    let s = this.WWe(t);
+    var t = t * TimeUtil_1.TimeUtil.Millisecond,
+      i = this.RemainingCount,
+      s = this.WWe(t);
     let e = i !== this.RemainingCount;
     (t = this.KWe(t)),
       (e = e || i !== this.RemainingCount),
       (s = Math.min(s, t));
-    s > 0 && (this.WWe(s), (e = e || i !== this.RemainingCount)),
+    0 < s && (this.WWe(s), (e = e || i !== this.RemainingCount)),
       e && this.jWe();
   }
   WWe(t) {
     if (!this.IsInCd()) return t;
     let i = t;
-    for (; i > 0; ) {
+    for (; 0 < i; ) {
       if (i < this.CurRemainingCd) return (this.CurRemainingCd -= i), 0;
       if (
         ((i -= this.CurRemainingCd),
@@ -129,8 +129,8 @@ class GroupSkillCdInfo {
             "技能CD延迟计时结束时，可用次数为0，不能进入CD",
           );
       else {
-        const i = this.CurDelaySkillId;
-        const s = this.CurDelaySkillCd;
+        var i = this.CurDelaySkillId,
+          s = this.CurDelaySkillCd;
         if (!this.IsInCd())
           return (
             (this.CurMaxCd = s),
@@ -175,7 +175,7 @@ class GroupSkillCdInfo {
               this.SkillIdQueue.Clear(),
               Log_1.Log.CheckError() &&
                 Log_1.Log.Error("Battle", 18, "技能CD结束，可用次数已达上限"))
-            : (this.CdQueue.Size > 0 &&
+            : (0 < this.CdQueue.Size &&
                 ((this.CurRemainingCd = this.CdQueue.Pop()),
                 (this.CurSkillId = this.SkillIdQueue.Pop())),
               this.jWe()))
@@ -201,4 +201,4 @@ class GroupSkillCdInfo {
   CheckConfigValid() {}
 }
 exports.GroupSkillCdInfo = GroupSkillCdInfo;
-// # sourceMappingURL=GroupSkillCdInfo.js.map
+//# sourceMappingURL=GroupSkillCdInfo.js.map

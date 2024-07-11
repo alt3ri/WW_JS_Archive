@@ -1,33 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotPortraitItem = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const AudioController_1 = require("../../../../Core/Audio/AudioController");
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../Core/Common/Log");
-const MonsterDisplayById_1 = require("../../../../Core/Define/ConfigQuery/MonsterDisplayById");
-const SpeakerById_1 = require("../../../../Core/Define/ConfigQuery/SpeakerById");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const PublicUtil_1 = require("../../../Common/PublicUtil");
-const Global_1 = require("../../../Global");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const PlotController_1 = require("../PlotController");
-const VELOCITY_FOLLOW = 0.01;
-const ARM_LENGTH_MIN = 100;
-const ARM_LENGTH_MAX = 350;
-const HORI_DEC_RATIO = 4;
-const HORI_INC_RATIO = 0.3;
-const SCALE_RATIO = 0.002;
-const VO_RTPC_VALUE_MIN = -48;
-const VO_RTPC_VALUE_MAX = 0;
-const AUDIO_GROUP_NAME = "phone_call";
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  AudioController_1 = require("../../../../Core/Audio/AudioController"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  MonsterDisplayById_1 = require("../../../../Core/Define/ConfigQuery/MonsterDisplayById"),
+  SpeakerById_1 = require("../../../../Core/Define/ConfigQuery/SpeakerById"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  PublicUtil_1 = require("../../../Common/PublicUtil"),
+  Global_1 = require("../../../Global"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  PlotController_1 = require("../PlotController"),
+  VELOCITY_FOLLOW = 0.01,
+  ARM_LENGTH_MIN = 100,
+  ARM_LENGTH_MAX = 350,
+  HORI_DEC_RATIO = 4,
+  HORI_INC_RATIO = 0.3,
+  SCALE_RATIO = 0.002,
+  VO_RTPC_VALUE_MIN = -48,
+  VO_RTPC_VALUE_MAX = 0,
+  AUDIO_GROUP_NAME = "phone_call";
 class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -98,9 +98,9 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
   async SwitchAsync(t) {}
   async OnCreateAsync() {
     const i = new CustomPromise_1.CustomPromise();
-    if (this.wJi.Type === 0) {
-      const s = this.wJi;
-      const r = SpeakerById_1.configSpeakerById.GetConfig(s.WhoId);
+    if (0 === this.wJi.Type) {
+      const s = this.wJi,
+        r = SpeakerById_1.configSpeakerById.GetConfig(s.WhoId);
       StringUtils_1.StringUtils.IsEmpty(r?.HeadIconAsset)
         ? Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Plot", 27, "对话人不存在或头像未配置", [
@@ -126,11 +126,11 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
             },
           ),
           await i.Promise);
-    } else if (this.wJi.Type === 5) {
-      const h = this.wJi;
-      const o = MonsterDisplayById_1.configMonsterDisplayById.GetConfig(
-        h.MonsterDisplayId,
-      );
+    } else if (5 === this.wJi.Type) {
+      const h = this.wJi,
+        o = MonsterDisplayById_1.configMonsterDisplayById.GetConfig(
+          h.MonsterDisplayId,
+        );
       StringUtils_1.StringUtils.IsEmpty(o?.MonsterPileIconAsset)
         ? ((this.FJi = PublicUtil_1.PublicUtil.GetConfigIdByTable(3, o.Id)),
           (this.he = PublicUtil_1.PublicUtil.GetConfigIdByTable(2, o.Id)),
@@ -158,8 +158,8 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
             [h.MonsterDisplayId],
           ]);
     } else {
-      let t, e;
-      this.wJi.Type === 1 &&
+      var t, e;
+      1 === this.wJi.Type &&
         ((t = this.wJi),
         (e = SpeakerById_1.configSpeakerById.GetConfig(t.WhoId))
           ? (this.he = PublicUtil_1.PublicUtil.GetConfigIdByTable(0, e.Id))
@@ -194,21 +194,21 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
   }
   async OnShowAsyncImplementImplement() {
     this.OJi = !0;
-    const t = new CustomPromise_1.CustomPromise();
-    const i =
-      (this.kJi.PlayingIds.length !== 0 &&
-        AudioController_1.AudioController.StopEvent(this.kJi, !0),
-      AudioController_1.AudioController.SetSwitch(
-        AUDIO_GROUP_NAME,
-        this.VJi.get(this.wJi.Type),
-        this.RootActor,
-      ),
-      AudioController_1.AudioController.PostEventByUi(
-        ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
-          .CallShowAudioEvent,
-        this.kJi,
-      ),
-      this.HJi.get(this.wJi.Type));
+    var t = new CustomPromise_1.CustomPromise(),
+      i =
+        (0 !== this.kJi.PlayingIds.length &&
+          AudioController_1.AudioController.StopEvent(this.kJi, !0),
+        AudioController_1.AudioController.SetSwitch(
+          AUDIO_GROUP_NAME,
+          this.VJi.get(this.wJi.Type),
+          this.RootActor,
+        ),
+        AudioController_1.AudioController.PostEventByUi(
+          ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
+            .CallShowAudioEvent,
+          this.kJi,
+        ),
+        this.HJi.get(this.wJi.Type));
     i && (await this.EPe.PlaySequenceAsync(i, t));
   }
   async OnHideAsyncImplementImplement() {
@@ -216,7 +216,7 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
       ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig.CallHideAudioEvent,
       this.kJi,
     );
-    const t = new CustomPromise_1.CustomPromise();
+    var t = new CustomPromise_1.CustomPromise();
     await this.EPe.PlaySequenceAsync("Close", t), (this.OJi = !1);
   }
   OnAfterHide() {
@@ -237,8 +237,8 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
       this.GetItem(4).SetUIActive(!0),
       this.GetItem(2).SetUIActive(!0),
       this.GetText(0).ShowTextNew(this.he ?? StringUtils_1.EMPTY_STRING);
-    const t = this.GetTexture(1);
-    const i = this.GetUiNiagara(8);
+    var t = this.GetTexture(1),
+      i = this.GetUiNiagara(8);
     t.SetTexture(this.wk),
       i.SetNiagaraEmitterCustomTexture("head_portrait_01", "Mask", this.wk),
       i.SetNiagaraEmitterCustomTexture("head_portrait_02", "Mask", this.wk),
@@ -264,7 +264,7 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
   }
   ezi() {
     this.GetItem(9).SetUIActive(!0), this.GetTexture(11).SetTexture(this.wk);
-    const t = this.GetUiNiagara(12);
+    var t = this.GetUiNiagara(12);
     t.SetNiagaraEmitterCustomTexture("Frame001", "BaseTexture", this.wk),
       t.SetNiagaraEmitterCustomTexture(
         "Frame001",
@@ -285,21 +285,21 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
       this.GetItem(10).SetUIActive(!1);
   }
   WJi() {
-    const t = Global_1.Global.BaseCharacter.K2_GetActorLocation();
-    var i = (0, puerts_1.$ref)(void 0);
-    var i =
-      (UE.GameplayStatics.ProjectWorldToScreen(
-        Global_1.Global.CharacterController,
-        t,
-        i,
-        !0,
-      ),
-      (0, puerts_1.$unref)(i));
-    var e = UiLayer_1.UiLayer.UiRootItem.GetCanvasScaler();
-    var e =
-      ((this.BJi = e.ConvertPositionFromViewportToLGUICanvas(i)),
-      (this.BJi.Y = UiLayer_1.UiLayer.UiRootItem.Height / 2),
-      ModelManager_1.ModelManager.CameraModel.CameraLocation);
+    var t = Global_1.Global.BaseCharacter.K2_GetActorLocation(),
+      i = (0, puerts_1.$ref)(void 0),
+      i =
+        (UE.GameplayStatics.ProjectWorldToScreen(
+          Global_1.Global.CharacterController,
+          t,
+          i,
+          !0,
+        ),
+        (0, puerts_1.$unref)(i)),
+      e = UiLayer_1.UiLayer.UiRootItem.GetCanvasScaler(),
+      e =
+        ((this.BJi = e.ConvertPositionFromViewportToLGUICanvas(i)),
+        (this.BJi.Y = UiLayer_1.UiLayer.UiRootItem.Height / 2),
+        ModelManager_1.ModelManager.CameraModel.CameraLocation);
     e &&
       ((i =
         Math.pow(e.X - t.X, 2) +
@@ -317,10 +317,10 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
           this.bJi ? this.bJi.Set(e, e, e) : (this.bJi = new UE.Vector(e))));
   }
   KJi(t) {
-    var i = this.RootItem.GetAnchorOffset();
-    var t = MathUtils_1.MathUtils.Clamp(t * VELOCITY_FOLLOW, 0, 1);
-    const e = MathUtils_1.MathUtils.Lerp(i.X, this.BJi.X, t);
-    var i = MathUtils_1.MathUtils.Lerp(i.Y, this.BJi.Y, t);
+    var i = this.RootItem.GetAnchorOffset(),
+      t = MathUtils_1.MathUtils.Clamp(t * VELOCITY_FOLLOW, 0, 1),
+      e = MathUtils_1.MathUtils.Lerp(i.X, this.BJi.X, t),
+      i = MathUtils_1.MathUtils.Lerp(i.Y, this.BJi.Y, t);
     this.RootItem.SetAnchorOffsetX(e), this.RootItem.SetAnchorOffsetY(i);
   }
   QJi() {
@@ -334,4 +334,4 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.PlotPortraitItem = PlotPortraitItem;
-// # sourceMappingURL=PlotPortraitItem.js.map
+//# sourceMappingURL=PlotPortraitItem.js.map

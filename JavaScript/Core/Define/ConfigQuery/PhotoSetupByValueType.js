@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configPhotoSetupByValueType = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const PhotoSetup_1 = require("../Config/PhotoSetup");
-const DB = "db_photograph.db";
-const FILE = "p.拍照.xlsx";
-const TABLE = "PhotoSetup";
-const COMMAND = "select BinData from `PhotoSetup` where ValueType=?";
-const KEY_PREFIX = "PhotoSetupByValueType";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  PhotoSetup_1 = require("../Config/PhotoSetup"),
+  DB = "db_photograph.db",
+  FILE = "p.拍照.xlsx",
+  TABLE = "PhotoSetup",
+  COMMAND = "select BinData from `PhotoSetup` where ValueType=?",
+  KEY_PREFIX = "PhotoSetupByValueType",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configPhotoSetupByValueType.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configPhotoSetupByValueType.GetConfig(";
 exports.configPhotoSetupByValueType = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configPhotoSetupByValueType = {
       if (
         (t =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "ValueType",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "ValueType",
+              o,
+            ]))
       ) {
-        var t;
-        var n = void 0;
+        var t,
+          n = void 0;
         if (
           (([t, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configPhotoSetupByValueType = {
     }
   },
 };
-// # sourceMappingURL=PhotoSetupByValueType.js.map
+//# sourceMappingURL=PhotoSetupByValueType.js.map

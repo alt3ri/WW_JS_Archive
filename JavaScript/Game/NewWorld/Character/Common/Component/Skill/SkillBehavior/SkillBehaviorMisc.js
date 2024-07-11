@@ -11,18 +11,18 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.angles =
     exports.queryExtent =
       void 0);
-const UE = require("ue");
-const QueryTypeDefine_1 = require("../../../../../../../Core/Define/QueryTypeDefine");
-const Vector_1 = require("../../../../../../../Core/Utils/Math/Vector");
-const TraceElementCommon_1 = require("../../../../../../../Core/Utils/TraceElementCommon");
-const ColorUtils_1 = require("../../../../../../Utils/ColorUtils");
-const CharacterActorComponent_1 = require("../../CharacterActorComponent");
+const UE = require("ue"),
+  QueryTypeDefine_1 = require("../../../../../../../Core/Define/QueryTypeDefine"),
+  Vector_1 = require("../../../../../../../Core/Utils/Math/Vector"),
+  TraceElementCommon_1 = require("../../../../../../../Core/Utils/TraceElementCommon"),
+  ColorUtils_1 = require("../../../../../../Utils/ColorUtils"),
+  CharacterActorComponent_1 = require("../../CharacterActorComponent");
 (exports.queryExtent = new UE.Vector(1, 1, 500)),
   (exports.angles = [0, 270, 90, 180]),
   (exports.paramMap = new Map()),
   (exports.CONTEXT = "SkillBehaviorAction.SetLocation");
-let forwardLineTrace = void 0;
-let downLineTrace = void 0;
+let forwardLineTrace = void 0,
+  downLineTrace = void 0;
 const tempVector = Vector_1.Vector.Create();
 function getEndSkillBehaviorParamList(e) {
   return (
@@ -48,7 +48,7 @@ function setupLineTrace(r, e, o, t) {
 function getLineTrace(e, r, o) {
   let t = void 0;
   return (
-    o === 0
+    0 === o
       ? (downLineTrace ||
           setupLineTrace(
             (downLineTrace = UE.NewObject(UE.TraceLineElement.StaticClass())),
@@ -57,7 +57,7 @@ function getLineTrace(e, r, o) {
             QueryTypeDefine_1.KuroTraceTypeQuery.IkGround,
           ),
         (t = downLineTrace))
-      : o === 1 &&
+      : 1 === o &&
         (forwardLineTrace ||
           setupLineTrace(
             (forwardLineTrace = UE.NewObject(
@@ -79,37 +79,37 @@ function getLineTrace(e, r, o) {
   );
 }
 function backward(e, r, o, t) {
-  const n = tempVector;
+  var n = tempVector;
   o.Subtraction(r, n), n.Normalize(), n.Multiply(e, n), t.Subtraction(n, t);
 }
 function forwardTrace(e, r, o, t) {
-  var t = getLineTrace(e.Actor, t, 1);
-  const n =
-    (TraceElementCommon_1.TraceElementCommon.SetStartLocation(t, r),
-    TraceElementCommon_1.TraceElementCommon.SetEndLocation(t, o),
-    TraceElementCommon_1.TraceElementCommon.LineTrace(
-      t,
-      exports.CONTEXT + ".ForwardTrace",
-    ));
-  var t = t.HitResult;
+  var t = getLineTrace(e.Actor, t, 1),
+    n =
+      (TraceElementCommon_1.TraceElementCommon.SetStartLocation(t, r),
+      TraceElementCommon_1.TraceElementCommon.SetEndLocation(t, o),
+      TraceElementCommon_1.TraceElementCommon.LineTrace(
+        t,
+        exports.CONTEXT + ".ForwardTrace",
+      )),
+    t = t.HitResult;
   return n && t.bBlockingHit
     ? (TraceElementCommon_1.TraceElementCommon.GetHitLocation(t, 0, o),
       r.Equals(o) ? void 0 : (backward(e.ScaledRadius, r, o, o), [!0, o]))
     : [!1, o];
 }
 function downTrace(e, r, o) {
-  const t = tempVector;
-  var o =
-    (t.Set(r.X, r.Y, r.Z + CharacterActorComponent_1.FIX_SPAWN_TRACE_HEIGHT),
-    getLineTrace(e.Actor, o, 0));
-  var r =
-    (TraceElementCommon_1.TraceElementCommon.SetStartLocation(o, r),
-    TraceElementCommon_1.TraceElementCommon.SetEndLocation(o, t),
-    TraceElementCommon_1.TraceElementCommon.LineTrace(
-      o,
-      exports.CONTEXT + ".DownTrace",
-    ));
-  var o = o.HitResult;
+  var t = tempVector,
+    o =
+      (t.Set(r.X, r.Y, r.Z + CharacterActorComponent_1.FIX_SPAWN_TRACE_HEIGHT),
+      getLineTrace(e.Actor, o, 0)),
+    r =
+      (TraceElementCommon_1.TraceElementCommon.SetStartLocation(o, r),
+      TraceElementCommon_1.TraceElementCommon.SetEndLocation(o, t),
+      TraceElementCommon_1.TraceElementCommon.LineTrace(
+        o,
+        exports.CONTEXT + ".DownTrace",
+      )),
+    o = o.HitResult;
   return r && o.bBlockingHit
     ? (TraceElementCommon_1.TraceElementCommon.GetHitLocation(o, 0, t),
       (t.Z += e.ScaledHalfHeight),
@@ -147,4 +147,4 @@ function compare(e, r, o, t, n) {
   (exports.downTrace = downTrace),
   (exports.getValidLocation = getValidLocation),
   (exports.compare = compare);
-// # sourceMappingURL=SkillBehaviorMisc.js.map
+//# sourceMappingURL=SkillBehaviorMisc.js.map

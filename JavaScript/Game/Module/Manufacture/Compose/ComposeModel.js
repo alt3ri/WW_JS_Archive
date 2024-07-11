@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ComposeModel = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const ModelBase_1 = require("../../../../Core/Framework/ModelBase");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ComposeController_1 = require("./ComposeController");
+const Log_1 = require("../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ComposeController_1 = require("./ComposeController");
 class ComposeModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -45,15 +45,15 @@ class ComposeModel extends ModelBase_1.ModelBase {
       MathUtils_1.MathUtils.LongToNumber(t) * TimeUtil_1.TimeUtil.Millisecond;
   }
   GetRefreshLimitTime() {
-    let t;
-    if (this.Wbt !== 0)
+    var t;
+    if (0 !== this.Wbt)
       return (
         (t = TimeUtil_1.TimeUtil.GetServerTime()),
         TimeUtil_1.TimeUtil.GetRemainTimeDataFormat(this.Wbt - t).CountDownText
       );
   }
   GetRefreshLimitTimeValue() {
-    let t;
+    var t;
     return this.Wbt <= 0
       ? 1
       : ((t = TimeUtil_1.TimeUtil.GetServerTime()),
@@ -134,15 +134,15 @@ class ComposeModel extends ModelBase_1.ModelBase {
   }
   UpdateComposeByServerConfig(t) {
     for (const r of t) {
-      const e =
-        MathUtils_1.MathUtils.LongToNumber(r.$Ts) *
-        TimeUtil_1.TimeUtil.Millisecond;
-      const i =
-        MathUtils_1.MathUtils.LongToNumber(r.HTs) *
-        TimeUtil_1.TimeUtil.Millisecond;
-      const o = this.aIi.findIndex((t) => t.ItemId === r.Ekn);
-      o !== -1 &&
-        ((e == 0 && i == 0) || TimeUtil_1.TimeUtil.IsInTimeSpan(e, i)
+      var e =
+          MathUtils_1.MathUtils.LongToNumber(r.$Ts) *
+          TimeUtil_1.TimeUtil.Millisecond,
+        i =
+          MathUtils_1.MathUtils.LongToNumber(r.HTs) *
+          TimeUtil_1.TimeUtil.Millisecond,
+        o = this.aIi.findIndex((t) => t.ItemId === r.Ekn);
+      -1 !== o &&
+        ((0 == e && 0 == i) || TimeUtil_1.TimeUtil.IsInTimeSpan(e, i)
           ? ((this.aIi[o].ExistStartTime = e), (this.aIi[o].ExistEndTime = i))
           : this.aIi.splice(o, 1));
     }
@@ -155,37 +155,40 @@ class ComposeModel extends ModelBase_1.ModelBase {
       Log_1.Log.Debug("Compose", 50, "初始化药剂制造相关数据列表"),
       this.aIi || (this.aIi = new Array()),
       (this.aIi.length = 0);
-    let e;
-    const i =
-      ConfigManager_1.ConfigManager.ComposeConfig.GetComposeListByType(1) ?? [];
-    const o = new Map();
+    var e,
+      i =
+        ConfigManager_1.ConfigManager.ComposeConfig.GetComposeListByType(1) ??
+        [],
+      o = new Map();
     for (const a of i) {
-      var r = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(a.ItemId);
-      var r = {
-        MainType: 1,
-        SubType: 0,
-        UniqueId: 0,
-        ItemId: a.Id,
-        ComposeCount: 0,
-        IsNew: ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
-          LocalStorageDefine_1.ELocalStoragePlayerKey.ComposeLevelKey,
-          a.Id,
-        ),
-        LastRoleId: 0,
-        IsCompose: 0,
-        Quality: r.QualityId,
-        EffectType: a.TypeId,
-        ExistStartTime: 0,
-        ExistEndTime: 0,
-        MadeCountInLimitTime: 0,
-        TotalMakeCountInLimitTime: a.LimitCount,
-        IsUnlock: 0,
-      };
+      var r = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(a.ItemId),
+        r = {
+          MainType: 1,
+          SubType: 0,
+          UniqueId: 0,
+          ItemId: a.Id,
+          ComposeCount: 0,
+          IsNew: ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
+            LocalStorageDefine_1.ELocalStoragePlayerKey.ComposeLevelKey,
+            a.Id,
+          ),
+          LastRoleId: 0,
+          IsCompose: 0,
+          Quality: r.QualityId,
+          EffectType: a.TypeId,
+          ExistStartTime: 0,
+          ExistEndTime: 0,
+          MadeCountInLimitTime: 0,
+          TotalMakeCountInLimitTime: a.LimitCount,
+          IsUnlock: 0,
+        };
       this.aIi.push(r), o.set(a.Id, r);
     }
     for (const s of t)
-      ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(s.Ekn)
-        .FormulaType === 1 &&
+      1 ===
+        ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
+          s.Ekn,
+        ).FormulaType &&
         o.has(s.Ekn) &&
         (((e = o.get(s.Ekn)).ItemId = s.Ekn),
         (e.ComposeCount = s.I5n ?? 0),
@@ -208,16 +211,15 @@ class ComposeModel extends ModelBase_1.ModelBase {
   UpdateReagentProductionDataList(t) {
     let e = !1;
     for (const a of t) {
-      var i;
-      let o =
-        ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
+      var i,
+        o = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
           a.Ekn,
         );
-      if (o.FormulaType === 1) {
+      if (1 === o.FormulaType) {
         let t = !1;
         for (const s of this.aIi)
           if (a.Ekn === s.ItemId) {
-            const r = s.IsUnlock === 1;
+            var r = 1 === s.IsUnlock;
             (s.ComposeCount = a.I5n ?? 0),
               (s.MadeCountInLimitTime = a.Gxs ?? 0),
               (s.IsCompose = this.CheckCanReagentProduction(a.Ekn) ? 1 : 0),
@@ -268,14 +270,14 @@ class ComposeModel extends ModelBase_1.ModelBase {
       );
   }
   UnlockReagentProductionData(t) {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(t);
-    if (e.FormulaType === 1) {
+    if (1 === e.FormulaType) {
       let t = 0;
       for (
         ;
         t < this.aIi.length &&
-        (this.aIi[t].SubType !== 35 || this.aIi[t].ItemId !== e.FormulaItemId);
+        (35 !== this.aIi[t].SubType || this.aIi[t].ItemId !== e.FormulaItemId);
         t++
       );
       this.aIi.splice(t, 1);
@@ -324,16 +326,15 @@ class ComposeModel extends ModelBase_1.ModelBase {
     );
   }
   CheckUnlock(t) {
-    return t.IsUnlock > 0;
+    return 0 < t.IsUnlock;
   }
   CheckComposeMaterialEnough(t) {
     for (const i of ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
       t,
     ).ConsumeItems) {
-      const e =
-        ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-          i.ItemId,
-        );
+      var e = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+        i.ItemId,
+      );
       if (i.Count > e) return !1;
     }
     return !0;
@@ -343,10 +344,11 @@ class ComposeModel extends ModelBase_1.ModelBase {
       Log_1.Log.Debug("Compose", 50, "初始化构造数据相关数据列表"),
       this.hIi || (this.hIi = new Array()),
       (this.hIi.length = 0);
-    let e;
-    const i =
-      ConfigManager_1.ConfigManager.ComposeConfig.GetComposeListByType(2) ?? [];
-    const o = new Map();
+    var e,
+      i =
+        ConfigManager_1.ConfigManager.ComposeConfig.GetComposeListByType(2) ??
+        [],
+      o = new Map();
     for (const a of i)
       a.FormulaItemId <= 0 ||
         ((e = ConfigManager_1.ConfigManager.ItemConfig?.GetConfig(a.ItemId)),
@@ -368,11 +370,11 @@ class ComposeModel extends ModelBase_1.ModelBase {
         o.set(e.ItemId, e),
         this.hIi.push(e));
     for (const s of t) {
-      let r =
+      var r =
         ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
           s.Ekn,
         );
-      if (r.FormulaType === 2) {
+      if (2 === r.FormulaType) {
         r = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(r.ItemId);
         let t = void 0;
         o.has(s.Ekn)
@@ -421,13 +423,13 @@ class ComposeModel extends ModelBase_1.ModelBase {
   }
   UpdateStructureDataList(t) {
     for (const o of t) {
-      let i =
+      var i =
         ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
           o.Ekn,
         );
-      if (i.FormulaType === 2) {
-        let t = !1;
-        let e = !1;
+      if (2 === i.FormulaType) {
+        let t = !1,
+          e = !1;
         for (const r of this.hIi)
           if (o.Ekn === r.ItemId) {
             (r.StructureCount = o.I5n ?? 0),
@@ -473,14 +475,14 @@ class ComposeModel extends ModelBase_1.ModelBase {
     }
   }
   UnlockStructureData(t) {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(t);
-    if (e.FormulaType === 2) {
+    if (2 === e.FormulaType) {
       let t = 0;
       for (
         ;
         t < this.hIi.length &&
-        (this.hIi[t].SubType !== 37 || this.hIi[t].ItemId !== e.FormulaItemId);
+        (37 !== this.hIi[t].SubType || this.hIi[t].ItemId !== e.FormulaItemId);
         t++
       );
       this.hIi.splice(t, 1);
@@ -488,9 +490,9 @@ class ComposeModel extends ModelBase_1.ModelBase {
   }
   HideStructureDataList(t) {
     for (const i of t) {
-      const e =
+      var e =
         ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(i);
-      if (e.FormulaType === 2) {
+      if (2 === e.FormulaType) {
         let t = 0;
         for (; t < this.hIi.length && this.hIi[t].ItemId !== i; t++);
         this.hIi.splice(t, 1);
@@ -516,23 +518,23 @@ class ComposeModel extends ModelBase_1.ModelBase {
     for (const e of ConfigManager_1.ConfigManager.ComposeConfig.GetComposeListByType(
       3,
     )) {
-      var t = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e.ItemId);
-      var t = {
-        MainType: 3,
-        ItemId: e.Id,
-        IsUnlock: 0,
-        IsNew: ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
-          LocalStorageDefine_1.ELocalStoragePlayerKey.ComposeLevelKey,
-          e.Id,
-        ),
-        IsPurification: 0,
-        Quality: t.QualityId,
-        LastRoleId: 0,
-        ExistStartTime: 0,
-        ExistEndTime: 0,
-        MadeCountInLimitTime: 0,
-        TotalMakeCountInLimitTime: 0,
-      };
+      var t = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e.ItemId),
+        t = {
+          MainType: 3,
+          ItemId: e.Id,
+          IsUnlock: 0,
+          IsNew: ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
+            LocalStorageDefine_1.ELocalStoragePlayerKey.ComposeLevelKey,
+            e.Id,
+          ),
+          IsPurification: 0,
+          Quality: t.QualityId,
+          LastRoleId: 0,
+          ExistStartTime: 0,
+          ExistEndTime: 0,
+          MadeCountInLimitTime: 0,
+          TotalMakeCountInLimitTime: 0,
+        };
       this.lIi.push(t),
         (t.IsPurification = this.CheckCanPurification(t.ItemId) ? 1 : 0);
     }
@@ -540,11 +542,11 @@ class ComposeModel extends ModelBase_1.ModelBase {
   }
   UpdatePurificationDataList(t, e) {
     for (const o of t) {
-      const i =
+      var i =
         ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
           o.Ekn,
         );
-      if (i.FormulaType === 3)
+      if (3 === i.FormulaType)
         for (const r of this.lIi)
           if (o.Ekn === r.ItemId) {
             (r.IsUnlock = 1),
@@ -558,7 +560,7 @@ class ComposeModel extends ModelBase_1.ModelBase {
               (r.MadeCountInLimitTime = o.Gxs),
               (r.TotalMakeCountInLimitTime = o.FTs),
               e &&
-                o.NTs === 0 &&
+                0 === o.NTs &&
                 ((r.IsNew = e),
                 ModelManager_1.ModelManager.NewFlagModel.AddNewFlag(
                   LocalStorageDefine_1.ELocalStoragePlayerKey.ComposeLevelKey,
@@ -615,7 +617,7 @@ class ComposeModel extends ModelBase_1.ModelBase {
     return this.cIi.size;
   }
   GetSumExpByLevel(t) {
-    const e = this.GetComposeMaxLevel();
+    var e = this.GetComposeMaxLevel();
     let i = t + 1;
     return i > e && (i = e), this.GetComposeLevelByLevel(i).Completeness;
   }
@@ -626,7 +628,7 @@ class ComposeModel extends ModelBase_1.ModelBase {
       : this.GetComposeLevelByLevel(t).DropIds;
   }
   GetComposeMaterialList(t) {
-    const e = new Array();
+    var e = new Array();
     for (const i of ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
       t,
     ).ConsumeItems)
@@ -681,4 +683,4 @@ class ComposeModel extends ModelBase_1.ModelBase {
   }
 }
 exports.ComposeModel = ComposeModel;
-// # sourceMappingURL=ComposeModel.js.map
+//# sourceMappingURL=ComposeModel.js.map

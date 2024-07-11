@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionSelfGameplayTagCheck = void 0);
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const TsBaseCharacter_1 = require("../../Character/TsBaseCharacter");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  TsBaseCharacter_1 = require("../../Character/TsBaseCharacter"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionSelfGameplayTagCheck extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, a) {
     return (
@@ -18,4 +18,4 @@ class LevelConditionSelfGameplayTagCheck extends LevelGeneralBase_1.LevelConditi
   }
 }
 exports.LevelConditionSelfGameplayTagCheck = LevelConditionSelfGameplayTagCheck;
-// # sourceMappingURL=LevelConditionSelfGameplayTagCheck.js.map
+//# sourceMappingURL=LevelConditionSelfGameplayTagCheck.js.map

@@ -1,5 +1,5 @@
 "use strict";
-let EEntityVarMatchType,
+var EEntityVarMatchType,
   EFlowListAction,
   EShowTalkCameraMotionType,
   EInteractUniqueness,
@@ -618,8 +618,8 @@ const statesMap = new Map();
 function initStatesMap() {
   statesMap.clear();
   for (const o of Object.entries(exports.entityStateConfig)) {
-    const e = new Map();
-    const t = (statesMap.set(o[0], e), Object.entries(o[1]));
+    var e = new Map(),
+      t = (statesMap.set(o[0], e), Object.entries(o[1]));
     for (const i of t) e.set(i[0], i[1]);
   }
 }
@@ -643,7 +643,7 @@ function isStateTypeContainsState(e, t) {
   return !!t && getStatesByType(e)?.includes(t);
 }
 function getEntityStateTag(e, t) {
-  const o = exports.entityStateConfig[e];
+  var o = exports.entityStateConfig[e];
   if (o) return o[t];
   throw new Error(`getEntityStateTag: ${e} is not exist`);
 }
@@ -669,11 +669,11 @@ function getEntityStateTag(e, t) {
   ));
 const myEntityPrefabPerformanceMap = new Map();
 function getEntityPrefabPerformanceMap() {
-  const e = myEntityPrefabPerformanceMap;
-  if (e.size === 0)
+  var e = myEntityPrefabPerformanceMap;
+  if (0 === e.size)
     for (const i of Object.entries(exports.entityPrefabPerformanceConfig)) {
-      const t = new Map();
-      const o = (e.set(i[0], t), Object.entries(i[1]));
+      var t = new Map(),
+        o = (e.set(i[0], t), Object.entries(i[1]));
       for (const r of o) t.set(r[0], r[1]);
     }
   return e;
@@ -684,16 +684,16 @@ function getPerformanceListByType(e) {
 }
 function getEntityPrefabPerformanceKeyByTag(e, t) {
   e = getEntityPrefabPerformanceMap().get(e);
-  if (e) for (const [o, i] of e) if (i === t) return o;
+  if (e) for (var [o, i] of e) if (i === t) return o;
 }
 function getEntityPrefabPerformanceTag(e, t) {
-  const o = exports.entityPrefabPerformanceConfig[e];
+  var o = exports.entityPrefabPerformanceConfig[e];
   if (o) return o[t];
   throw new Error(`getEntityPrefabPerformanceTag: ${e} is not exist`);
 }
 function isPerformanceTypeContainTag(e, t) {
-  const o = getPerformanceListByType(e);
-  var e = getEntityPrefabPerformanceKeyByTag(e, t);
+  var o = getPerformanceListByType(e),
+    e = getEntityPrefabPerformanceKeyByTag(e, t);
   return !!e && o?.includes(e);
 }
 (exports.getPerformanceListByType = getPerformanceListByType),
@@ -1066,4 +1066,4 @@ function isPerformanceTypeContainTag(e, t) {
   ((ESetJigsawFoundationType =
     exports.ESetJigsawFoundationType ||
     (exports.ESetJigsawFoundationType = {})).SetPieceState = "SetPieceState");
-// # sourceMappingURL=IAction.js.map
+//# sourceMappingURL=IAction.js.map

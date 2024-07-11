@@ -1,81 +1,86 @@
 "use strict";
-let SceneItemManipulatableComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, s) {
-    let h;
-    const a = arguments.length;
-    let o =
-      a < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      o = Reflect.decorate(t, e, i, s);
-    else
-      for (let n = t.length - 1; n >= 0; n--)
-        (h = t[n]) && (o = (a < 3 ? h(o) : a > 3 ? h(e, i, o) : h(e, i)) || o);
-    return a > 3 && o && Object.defineProperty(e, i, o), o;
-  };
+var SceneItemManipulatableComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, s) {
+      var h,
+        a = arguments.length,
+        o =
+          a < 3
+            ? e
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        o = Reflect.decorate(t, e, i, s);
+      else
+        for (var n = t.length - 1; 0 <= n; n--)
+          (h = t[n]) &&
+            (o = (a < 3 ? h(o) : 3 < a ? h(e, i, o) : h(e, i)) || o);
+      return 3 < a && o && Object.defineProperty(e, i, o), o;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulatableComponent = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const Net_1 = require("../../../Core/Net/Net");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Transform_1 = require("../../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const EffectContext_1 = require("../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../Effect/EffectSystem");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController");
-const LevelGeneralContextDefine_1 = require("../../LevelGamePlay/LevelGeneralContextDefine");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const SceneInteractionManager_1 = require("../../Render/Scene/Interaction/SceneInteractionManager");
-const ComponentForceTickController_1 = require("../../World/Controller/ComponentForceTickController");
-const BulletController_1 = require("../Bullet/BulletController");
-const CharacterNameDefines_1 = require("../Character/Common/CharacterNameDefines");
-const SceneItemDynamicAttachTargetComponent_1 = require("./Common/Component/SceneItemDynamicAttachTargetComponent");
-const SceneItemJigsawBaseComponent_1 = require("./Jigsaw/SceneItemJigsawBaseComponent");
-const SceneItemManipulableBoomerangCastState_1 = require("./Manipulate/SceneItemManipulableBoomerangCastState");
-const SceneItemManipulableCastFreeState_1 = require("./Manipulate/SceneItemManipulableCastFreeState");
-const SceneItemManipulableCastProjectileState_1 = require("./Manipulate/SceneItemManipulableCastProjectileState");
-const SceneItemManipulableCastToOutletState_1 = require("./Manipulate/SceneItemManipulableCastToOutletState");
-const SceneItemManipulableCastToTargetState_1 = require("./Manipulate/SceneItemManipulableCastToTargetState");
-const SceneItemManipulableChantState_1 = require("./Manipulate/SceneItemManipulableChantState");
-const SceneItemManipulableDrawState_1 = require("./Manipulate/SceneItemManipulableDrawState");
-const SceneItemManipulableDropState_1 = require("./Manipulate/SceneItemManipulableDropState");
-const SceneItemManipulableHoldState_1 = require("./Manipulate/SceneItemManipulableHoldState");
-const SceneItemManipulableMatchJigsawBaseState_1 = require("./Manipulate/SceneItemManipulableMatchJigsawBaseState");
-const SceneItemManipulableMatchOutletState_1 = require("./Manipulate/SceneItemManipulableMatchOutletState");
-const SceneItemManipulablePrecastState_1 = require("./Manipulate/SceneItemManipulablePrecastState");
-const SceneItemManipulableResetState_1 = require("./Manipulate/SceneItemManipulableResetState");
-const SceneItemManipulableTrackTargetCastToFreeState_1 = require("./Manipulate/SceneItemManipulableTrackTargetCastToFreeState");
-const SceneItemManipulableTrackTargetCastToTargetState_1 = require("./Manipulate/SceneItemManipulableTrackTargetCastToTargetState");
-const SceneItemHitUtils_1 = require("./Util/SceneItemHitUtils");
-const ON_GROUND_OFFSET = 0.2;
-const BINDING_TAG = new UE.FName("Obj");
-const CONTROL_OBJECT_TAG = new UE.FName("ControlObj");
-const INVALID_ID = 0;
-const MAX_CREATE_BULLET_NUM = 1;
-const MIN_VELOCITY = 0.3;
-const ZERO_VELOCITY_FRAME_NUM = 10;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  Net_1 = require("../../../Core/Net/Net"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Transform_1 = require("../../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  EffectContext_1 = require("../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../Effect/EffectSystem"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
+  LevelGeneralContextDefine_1 = require("../../LevelGamePlay/LevelGeneralContextDefine"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  SceneInteractionManager_1 = require("../../Render/Scene/Interaction/SceneInteractionManager"),
+  ComponentForceTickController_1 = require("../../World/Controller/ComponentForceTickController"),
+  BulletController_1 = require("../Bullet/BulletController"),
+  CharacterNameDefines_1 = require("../Character/Common/CharacterNameDefines"),
+  SceneItemDynamicAttachTargetComponent_1 = require("./Common/Component/SceneItemDynamicAttachTargetComponent"),
+  SceneItemJigsawBaseComponent_1 = require("./Jigsaw/SceneItemJigsawBaseComponent"),
+  SceneItemManipulableBoomerangCastState_1 = require("./Manipulate/SceneItemManipulableBoomerangCastState"),
+  SceneItemManipulableCastFreeState_1 = require("./Manipulate/SceneItemManipulableCastFreeState"),
+  SceneItemManipulableCastProjectileState_1 = require("./Manipulate/SceneItemManipulableCastProjectileState"),
+  SceneItemManipulableCastToOutletState_1 = require("./Manipulate/SceneItemManipulableCastToOutletState"),
+  SceneItemManipulableCastToTargetState_1 = require("./Manipulate/SceneItemManipulableCastToTargetState"),
+  SceneItemManipulableChantState_1 = require("./Manipulate/SceneItemManipulableChantState"),
+  SceneItemManipulableDrawState_1 = require("./Manipulate/SceneItemManipulableDrawState"),
+  SceneItemManipulableDropState_1 = require("./Manipulate/SceneItemManipulableDropState"),
+  SceneItemManipulableHoldState_1 = require("./Manipulate/SceneItemManipulableHoldState"),
+  SceneItemManipulableMatchJigsawBaseState_1 = require("./Manipulate/SceneItemManipulableMatchJigsawBaseState"),
+  SceneItemManipulableMatchOutletState_1 = require("./Manipulate/SceneItemManipulableMatchOutletState"),
+  SceneItemManipulablePrecastState_1 = require("./Manipulate/SceneItemManipulablePrecastState"),
+  SceneItemManipulableResetState_1 = require("./Manipulate/SceneItemManipulableResetState"),
+  SceneItemManipulableTrackTargetCastToFreeState_1 = require("./Manipulate/SceneItemManipulableTrackTargetCastToFreeState"),
+  SceneItemManipulableTrackTargetCastToTargetState_1 = require("./Manipulate/SceneItemManipulableTrackTargetCastToTargetState"),
+  SceneItemHitUtils_1 = require("./Util/SceneItemHitUtils"),
+  ON_GROUND_OFFSET = 0.2,
+  BINDING_TAG = new UE.FName("Obj"),
+  CONTROL_OBJECT_TAG = new UE.FName("ControlObj"),
+  INVALID_ID = 0,
+  MAX_CREATE_BULLET_NUM = 1,
+  MIN_VELOCITY = 0.3,
+  ZERO_VELOCITY_FRAME_NUM = 10;
 let SceneItemManipulatableComponent =
   (SceneItemManipulatableComponent_1 = class SceneItemManipulatableComponent extends (
     EntityComponent_1.EntityComponent
@@ -177,7 +182,7 @@ let SceneItemManipulatableComponent =
             );
         }),
         (this.Kpn = (t, e, i) => {
-          const s = e.Entity.GetComponent(0);
+          var s = e.Entity.GetComponent(0);
           this.zht?.RelationId === s.GetPbDataId() &&
             (this.Qpn(e, this.zht.PbRelationMatchCfgIndex),
             this.Xpn(e),
@@ -187,8 +192,7 @@ let SceneItemManipulatableComponent =
             ));
         }),
         (this.$pn = () => {
-          const t =
-            Global_1.Global.BaseCharacter.CharacterActorComponent.Entity;
+          var t = Global_1.Global.BaseCharacter.CharacterActorComponent.Entity;
           this.szo(t, this.Bpn),
             EventSystem_1.EventSystem.RemoveWithTarget(
               this,
@@ -220,7 +224,7 @@ let SceneItemManipulatableComponent =
               !this.Epn ||
               this.Ipn ||
               (this.ManipulateBaseConfig?.被控制CD &&
-              this.ManipulateBaseConfig?.被控制CD > 0
+              0 < this.ManipulateBaseConfig?.被控制CD
                 ? ((this.Ipn = !0),
                   (this.Tpn = TimerSystem_1.TimerSystem.Delay(() => {
                     (this.Ipn = !1),
@@ -263,7 +267,7 @@ let SceneItemManipulatableComponent =
                 });
         }),
         (this.rvn = (t, e) => {
-          t !== 0
+          0 !== t
             ? ((t =
                 ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
                   t,
@@ -315,7 +319,7 @@ let SceneItemManipulatableComponent =
       );
     }
     get CanBeChant() {
-      return this.State === "Reset" || this.State === "MatchingOutlet";
+      return "Reset" === this.State || "MatchingOutlet" === this.State;
     }
     get PutIndex() {
       return this.jpn;
@@ -336,17 +340,17 @@ let SceneItemManipulatableComponent =
       );
     }
     OnInitData(t) {
-      var t = t.GetParam(SceneItemManipulatableComponent_1)[0];
-      var t =
-        ((this.Config = t),
-        void 0 !== this.Config.PlayerStateRestritionId &&
-          ((t = {
-            Type: "CheckPlayerStateRestriction",
-            RestrictionId: this.Config.PlayerStateRestritionId,
-          }),
-          (this.YO = { Type: 0, Conditions: [t] })),
-        (this.zht = this.Entity.GetComponent(0)),
-        this.zht.GetBaseInfo());
+      var t = t.GetParam(SceneItemManipulatableComponent_1)[0],
+        t =
+          ((this.Config = t),
+          void 0 !== this.Config.PlayerStateRestritionId &&
+            ((t = {
+              Type: "CheckPlayerStateRestriction",
+              RestrictionId: this.Config.PlayerStateRestritionId,
+            }),
+            (this.YO = { Type: 0, Conditions: [t] })),
+          (this.zht = this.Entity.GetComponent(0)),
+          this.zht.GetBaseInfo());
       (this._pn = t?.OnlineInteractType),
         (this.ConfigMatchType = t?.Category?.ControlMatchType),
         (this.CurrentState = this.ResetState),
@@ -394,8 +398,8 @@ let SceneItemManipulatableComponent =
       );
     }
     Xpn(t) {
-      let e = t.Entity.GetComponent(0);
-      let i = this.zht.GetPbDataId();
+      var e = t.Entity.GetComponent(0),
+        i = this.zht.GetPbDataId();
       e.OccupiedGridInfo.has(i) &&
         ((e = e.OccupiedGridInfo.get(i)),
         ((i = this.Entity.GetComponent(122)).PutDownIndex =
@@ -421,7 +425,7 @@ let SceneItemManipulatableComponent =
         ));
     }
     OnStart() {
-      let t;
+      var t;
       return (
         (this.ActorComp = this.Entity.GetComponent(182)),
         this.ActorComp.Owner.Tags.Add(CONTROL_OBJECT_TAG),
@@ -504,70 +508,70 @@ let SceneItemManipulatableComponent =
             ),
               (this.IsHoldingUsePhysics =
                 this.ManipulateBaseConfig.控物保持使用物理);
-            var t = this.ActorComp.GetPrimitiveComponent();
-            var e = this.ManipulateBaseConfig.物体质量;
-            var e =
-              (e >= 0 &&
-                t.SetMassOverrideInKg(FNameUtil_1.FNameUtil.NONE, e, !0),
-              t.SetLinearDamping(this.ManipulateBaseConfig.物体线性阻尼),
-              t.SetAngularDamping(this.ManipulateBaseConfig.物体角速度阻尼),
-              this.Config.ThrowCfg.MotionConfig);
-            var t =
-              (e.Type === IComponent_1.EThrowMotion.Projectile &&
-                (e.MatchSpeedCurve?.SpeedCurve &&
-                  ResourceSystem_1.ResourceSystem.LoadAsync(
-                    e.MatchSpeedCurve.SpeedCurve,
-                    UE.CurveFloat,
-                    (t) => {
-                      this.CastCurve = t;
-                    },
-                  ),
-                StringUtils_1.StringUtils.IsEmpty(e.CameraShake) ||
-                  ResourceSystem_1.ResourceSystem.LoadAsync(
-                    e.CameraShake + "_C",
-                    UE.Class,
-                    (t) => {
-                      this.Mpn = t;
-                    },
+            var t = this.ActorComp.GetPrimitiveComponent(),
+              e = this.ManipulateBaseConfig.物体质量,
+              e =
+                (0 <= e &&
+                  t.SetMassOverrideInKg(FNameUtil_1.FNameUtil.NONE, e, !0),
+                t.SetLinearDamping(this.ManipulateBaseConfig.物体线性阻尼),
+                t.SetAngularDamping(this.ManipulateBaseConfig.物体角速度阻尼),
+                this.Config.ThrowCfg.MotionConfig),
+              t =
+                (e.Type === IComponent_1.EThrowMotion.Projectile &&
+                  (e.MatchSpeedCurve?.SpeedCurve &&
+                    ResourceSystem_1.ResourceSystem.LoadAsync(
+                      e.MatchSpeedCurve.SpeedCurve,
+                      UE.CurveFloat,
+                      (t) => {
+                        this.CastCurve = t;
+                      },
+                    ),
+                  StringUtils_1.StringUtils.IsEmpty(e.CameraShake) ||
+                    ResourceSystem_1.ResourceSystem.LoadAsync(
+                      e.CameraShake + "_C",
+                      UE.Class,
+                      (t) => {
+                        this.Mpn = t;
+                      },
+                    )),
+                (this.fpn = this.ManipulateBaseConfig.读条震屏),
+                (this.vpn = this.ManipulateBaseConfig.吸取飞行震屏),
+                (this.ppn = this.ManipulateBaseConfig.控物保持震屏),
+                (this.ConfigHoldOffset = this.ManipulateBaseConfig.一级偏移),
+                (this.ConfigAssistantHoldOffset =
+                  this.ManipulateBaseConfig.二级偏移),
+                this.ManipulateBaseConfig.旋转),
+              e =
+                ((this.ConfigHoldRotator = new UE.Rotator(t.Y, t.Z, t.X)),
+                (this.wpn = void 0),
+                (this.ResetState =
+                  new SceneItemManipulableResetState_1.SceneItemManipulableResetState(
+                    this,
                   )),
-              (this.fpn = this.ManipulateBaseConfig.读条震屏),
-              (this.vpn = this.ManipulateBaseConfig.吸取飞行震屏),
-              (this.ppn = this.ManipulateBaseConfig.控物保持震屏),
-              (this.ConfigHoldOffset = this.ManipulateBaseConfig.一级偏移),
-              (this.ConfigAssistantHoldOffset =
-                this.ManipulateBaseConfig.二级偏移),
-              this.ManipulateBaseConfig.旋转);
-            var e =
-              ((this.ConfigHoldRotator = new UE.Rotator(t.Y, t.Z, t.X)),
-              (this.wpn = void 0),
-              (this.ResetState =
-                new SceneItemManipulableResetState_1.SceneItemManipulableResetState(
-                  this,
-                )),
-              (this.ChantState =
-                new SceneItemManipulableChantState_1.SceneItemManipulableChantState(
-                  this,
-                  this.fpn,
-                  this.ManipulateBaseConfig.读条镜头,
-                )),
-              (this.DrawState =
-                new SceneItemManipulableDrawState_1.SceneItemManipulableDrawState(
-                  this,
-                  this.vpn,
-                  this.ManipulateBaseConfig.吸取飞行镜头,
-                )),
-              (this.HoldState =
-                new SceneItemManipulableHoldState_1.SceneItemManipulableHoldState(
-                  this,
-                  this.ppn,
-                  this.ManipulateBaseConfig.控物保持镜头,
-                  this.ManipulateBaseConfig.控物保持标签,
-                )),
-              (this.PrecastState =
-                new SceneItemManipulablePrecastState_1.SceneItemManipulablePrecastState(
-                  this,
-                )),
-              this.Config.ThrowCfg.MotionConfig.Type);
+                (this.ChantState =
+                  new SceneItemManipulableChantState_1.SceneItemManipulableChantState(
+                    this,
+                    this.fpn,
+                    this.ManipulateBaseConfig.读条镜头,
+                  )),
+                (this.DrawState =
+                  new SceneItemManipulableDrawState_1.SceneItemManipulableDrawState(
+                    this,
+                    this.vpn,
+                    this.ManipulateBaseConfig.吸取飞行镜头,
+                  )),
+                (this.HoldState =
+                  new SceneItemManipulableHoldState_1.SceneItemManipulableHoldState(
+                    this,
+                    this.ppn,
+                    this.ManipulateBaseConfig.控物保持镜头,
+                    this.ManipulateBaseConfig.控物保持标签,
+                  )),
+                (this.PrecastState =
+                  new SceneItemManipulablePrecastState_1.SceneItemManipulablePrecastState(
+                    this,
+                  )),
+                this.Config.ThrowCfg.MotionConfig.Type);
             switch (e) {
               case IComponent_1.EThrowMotion.Projectile:
                 (this.CastToTargetState =
@@ -662,7 +666,7 @@ let SceneItemManipulatableComponent =
                     break;
                   case IComponent_1.EBulletCreateCondition.OnMatching:
                     this.CastToOutletState.SetFinishCallback(() => {
-                      const t =
+                      var t =
                         Global_1.Global.BaseCharacter.CharacterActorComponent
                           .Entity;
                       this.szo(t, String(s.BulletId)), this.qpn && this.Ypn();
@@ -686,7 +690,7 @@ let SceneItemManipulatableComponent =
                   case IComponent_1.EBulletCreateCondition.OnThrowTriggerTime:
                     this.CastFreeState.SetEnterCallback(() => {
                       this.R_n = TimerSystem_1.TimerSystem.Delay(() => {
-                        const t =
+                        var t =
                           Global_1.Global.BaseCharacter.CharacterActorComponent
                             .Entity;
                         this.szo(t, String(s.BulletId)), this.qpn && this.Ypn();
@@ -694,7 +698,7 @@ let SceneItemManipulatableComponent =
                     }),
                       this.CastProjectileState.SetEnterCallback(() => {
                         this.R_n = TimerSystem_1.TimerSystem.Delay(() => {
-                          const t =
+                          var t =
                             Global_1.Global.BaseCharacter
                               .CharacterActorComponent.Entity;
                           this.szo(t, String(s.BulletId)),
@@ -707,7 +711,7 @@ let SceneItemManipulatableComponent =
       );
     }
     avn() {
-      let t = this.Entity.GetComponent(122);
+      var t = this.Entity.GetComponent(122);
       this.ypn ||
         void 0 === this.MatchOutletState ||
         (t?.Valid && void 0 === this.PutIndex) ||
@@ -724,8 +728,8 @@ let SceneItemManipulatableComponent =
         (this.ypn = !0));
     }
     cvn() {
-      let t;
-      const e = this.Entity.GetComponent(110);
+      var t,
+        e = this.Entity.GetComponent(110);
       this.FinishCheckInitAttach ||
         (e && this.CurrentState === this.ResetState
           ? (((t =
@@ -861,7 +865,7 @@ let SceneItemManipulatableComponent =
     szo(t, e) {
       !this.Entity?.Valid ||
         this.bpn >= this.Fpn ||
-        (this.bpn > 0 && this.Hpn < this.Vpn) ||
+        (0 < this.bpn && this.Hpn < this.Vpn) ||
         ((this.Hpn = 0),
         this.bpn++,
         BulletController_1.BulletController.CreateBulletCustomTarget(
@@ -873,7 +877,7 @@ let SceneItemManipulatableComponent =
         ));
     }
     mvn(t) {
-      this.State === "MatchingOutlet" &&
+      "MatchingOutlet" === this.State &&
         ((this.TargetActorComponent = void 0),
         (this.TargetOutletComponent = void 0),
         (this.ActivatedOutlet = t.GetComponent(145)),
@@ -882,21 +886,21 @@ let SceneItemManipulatableComponent =
     }
     dvn(i, s) {
       this.Ppn.ForceSendPendingMoveInfos();
-      var t = i.GetComponent(0).GetCreatureDataId();
-      var e = this.zht.GetCreatureDataId();
-      const h = Protocol_1.Aki.Protocol.M1s.create();
-      var t =
-        ((h.rkn = MathUtils_1.MathUtils.NumberToLong(t)),
-        (h.E7n = MathUtils_1.MathUtils.NumberToLong(e)),
-        (h.y7n = s ? 1 : 0),
-        Protocol_1.Aki.Protocol.VBs.create());
-      var e = this.ActorComp.ActorLocationProxy;
-      var e =
-        ((t.X = e.X),
-        (t.Y = e.Y),
-        (t.Z = e.Z),
-        Protocol_1.Aki.Protocol.iws.create());
-      const a = this.ActorComp.ActorRotationProxy;
+      var t = i.GetComponent(0).GetCreatureDataId(),
+        e = this.zht.GetCreatureDataId(),
+        h = Protocol_1.Aki.Protocol.M1s.create(),
+        t =
+          ((h.rkn = MathUtils_1.MathUtils.NumberToLong(t)),
+          (h.E7n = MathUtils_1.MathUtils.NumberToLong(e)),
+          (h.y7n = s ? 1 : 0),
+          Protocol_1.Aki.Protocol.VBs.create()),
+        e = this.ActorComp.ActorLocationProxy,
+        e =
+          ((t.X = e.X),
+          (t.Y = e.Y),
+          (t.Z = e.Z),
+          Protocol_1.Aki.Protocol.iws.create()),
+        a = this.ActorComp.ActorRotationProxy;
       (e.Pitch = a.Pitch),
         (e.Roll = a.Roll),
         (e.Yaw = a.Yaw),
@@ -910,7 +914,7 @@ let SceneItemManipulatableComponent =
               "[Manipulate] Match outlet net response!",
               ["active", t.y7n],
             );
-          const e = i.GetComponent(145);
+          var e = i.GetComponent(145);
           s && e.OnPutDownItem(this.Entity),
             t.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
               ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
@@ -919,21 +923,21 @@ let SceneItemManipulatableComponent =
                 )
               : s &&
                 (this.ManipulateBaseConfig?.被控制CD &&
-                  this.ManipulateBaseConfig?.被控制CD > 0 &&
+                  0 < this.ManipulateBaseConfig?.被控制CD &&
                   ((this.Ipn = !0),
                   (this.Tpn = TimerSystem_1.TimerSystem.Delay(() => {
                     (this.Ipn = !1), (this.Tpn = void 0);
                   }, this.ManipulateBaseConfig.被控制CD * TimeUtil_1.TimeUtil.InverseMillisecond))),
-                t.y7n === 1
+                1 === t.y7n
                   ? ((this.CurrentState = this.MatchOutletState), this.mvn(i))
                   : (this.CurrentState = this.DropState));
         });
     }
     TryPlayMismatchSequence(t) {
-      let e;
-      let i;
-      var t = t.GetComponent(145);
-      const s = t.GetMismatchSequence(this.Entity);
+      var e,
+        i,
+        t = t.GetComponent(145),
+        s = t.GetMismatchSequence(this.Entity);
       void 0 !== s &&
         t?.Valid &&
         ((this.PlayingMatchSequence = !0),
@@ -972,46 +976,46 @@ let SceneItemManipulatableComponent =
       ),
         (this.CurrentState = this.ResetState),
         this.ActorComp?.Owner?.OnActorHit.Clear();
-      const i = new UE.Transform();
-      var s =
-        (i.SetLocation(this.ActorComp.ActorLocation),
-        EffectSystem_1.EffectSystem.SpawnEffect(
-          GlobalData_1.GlobalData.World,
-          i,
-          ConfigManager_1.ConfigManager.ManipulateConfig
-            .ItemDisappearEffectPath,
-          "[SceneItemManipulatableComponent.ResetItemLocationAndRotation]",
-          new EffectContext_1.EffectContext(this.Entity.Id),
-        ),
-        this.zht.GetPbEntityInitData());
-      var h = s.Transform.Pos;
-      var s = s.Transform.Rot;
-      var h = Vector_1.Vector.Create(h?.X ?? 0, h?.Y ?? 0, h?.Z ?? 0);
-      var s = Rotator_1.Rotator.Create(s?.Y ?? 0, s?.Z ?? 0, s?.X ?? 0);
-      var h =
-        (this.ActorComp.SetActorLocationAndRotation(
-          h.ToUeVector(),
-          s.ToUeRotator(),
-        ),
-        (0, puerts_1.$ref)(void 0));
-      var s = (0, puerts_1.$ref)(void 0);
-      var s =
-        (SceneInteractionManager_1.SceneInteractionManager.Get()
-          .GetMainCollisionActor(
-            this.ActorComp.GetSceneInteractionLevelHandleId(),
-          )
-          .GetActorBounds(!1, h, s),
-        i.SetLocation((0, puerts_1.$unref)(h)),
-        EffectSystem_1.EffectSystem.SpawnEffect(
-          GlobalData_1.GlobalData.World,
-          i,
-          ConfigManager_1.ConfigManager.ManipulateConfig.PushEffectPath,
-          "[SceneItemManipulatableComponent.ResetItemLocationAndRotation]",
-          new EffectContext_1.EffectContext(this.Entity.Id),
-        ),
-        this.DropState?.SetEnterCallback(void 0),
-        (this.ActorComp.PhysicsMode = 0),
-        this.ActorComp.GetPrimitiveComponent());
+      var i = new UE.Transform(),
+        s =
+          (i.SetLocation(this.ActorComp.ActorLocation),
+          EffectSystem_1.EffectSystem.SpawnEffect(
+            GlobalData_1.GlobalData.World,
+            i,
+            ConfigManager_1.ConfigManager.ManipulateConfig
+              .ItemDisappearEffectPath,
+            "[SceneItemManipulatableComponent.ResetItemLocationAndRotation]",
+            new EffectContext_1.EffectContext(this.Entity.Id),
+          ),
+          this.zht.GetPbEntityInitData()),
+        h = s.Transform.Pos,
+        s = s.Transform.Rot,
+        h = Vector_1.Vector.Create(h?.X ?? 0, h?.Y ?? 0, h?.Z ?? 0),
+        s = Rotator_1.Rotator.Create(s?.Y ?? 0, s?.Z ?? 0, s?.X ?? 0),
+        h =
+          (this.ActorComp.SetActorLocationAndRotation(
+            h.ToUeVector(),
+            s.ToUeRotator(),
+          ),
+          (0, puerts_1.$ref)(void 0)),
+        s = (0, puerts_1.$ref)(void 0),
+        s =
+          (SceneInteractionManager_1.SceneInteractionManager.Get()
+            .GetMainCollisionActor(
+              this.ActorComp.GetSceneInteractionLevelHandleId(),
+            )
+            .GetActorBounds(!1, h, s),
+          i.SetLocation((0, puerts_1.$unref)(h)),
+          EffectSystem_1.EffectSystem.SpawnEffect(
+            GlobalData_1.GlobalData.World,
+            i,
+            ConfigManager_1.ConfigManager.ManipulateConfig.PushEffectPath,
+            "[SceneItemManipulatableComponent.ResetItemLocationAndRotation]",
+            new EffectContext_1.EffectContext(this.Entity.Id),
+          ),
+          this.DropState?.SetEnterCallback(void 0),
+          (this.ActorComp.PhysicsMode = 0),
+          this.ActorComp.GetPrimitiveComponent());
       s.SetPhysicsLinearVelocity(new UE.Vector(0, 0, 0)),
         s.SetPhysicsAngularVelocityInDegrees(new UE.Vector(0, 0, 0)),
         this.R_n &&
@@ -1066,8 +1070,8 @@ let SceneItemManipulatableComponent =
           ).GetMatchSequence(this.Entity)),
           StringUtils_1.StringUtils.IsEmpty(t) || (this.MatchSequence = t));
       var t =
-        ModelManager_1.ModelManager.ManipulaterModel.GetTargetPartLocation();
-      const e = this.TargetActorComponent?.Entity.GetComponent(132);
+          ModelManager_1.ModelManager.ManipulaterModel.GetTargetPartLocation(),
+        e = this.TargetActorComponent?.Entity.GetComponent(132);
       let i = Vector_1.Vector.Create();
       (i = this.TargetOutletComponent?.Valid
         ? this.TargetActorComponent.Entity.GetComponent(121)?.Valid
@@ -1081,8 +1085,8 @@ let SceneItemManipulatableComponent =
         (this.CastTargetLocation = i);
     }
     CalcCastTargetPointWithEntity(t) {
-      const e = t.GetComponent(1);
-      var t = t.GetComponent(145);
+      var e = t.GetComponent(1),
+        t = t.GetComponent(145);
       return t
         ? t.GetSocketLocation(this.Entity)
         : Vector_1.Vector.Create(e.ActorLocationProxy);
@@ -1105,7 +1109,7 @@ let SceneItemManipulatableComponent =
             "SceneItemManipulatableComponent.TryEnableTick",
           ),
           t) &&
-          this.ActorComp.PhysicsMode !== 3 &&
+          3 !== this.ActorComp.PhysicsMode &&
           ((this.ActorComp.PhysicsMode = 3),
           this.ActorComp.GetPrimitiveComponent().SetPhysicsLinearVelocity(
             Vector_1.Vector.OneVector.op_Multiply(0.1),
@@ -1118,7 +1122,7 @@ let SceneItemManipulatableComponent =
     }
     TryDisableTick(t) {
       void 0 === this.Uxr &&
-        ((this.Uxr = this.Disable(t)), this.ActorComp.PhysicsMode !== 0) &&
+        ((this.Uxr = this.Disable(t)), 0 !== this.ActorComp.PhysicsMode) &&
         (this.ActorComp.PhysicsMode = 0);
     }
     Zpn(t) {
@@ -1133,7 +1137,7 @@ let SceneItemManipulatableComponent =
       }
     }
     evn() {
-      let t;
+      var t;
       this.ForceMoving ||
         ((t = this.ActorComp.GetPrimitiveComponent())
           .GetPhysicsLinearVelocity()
@@ -1149,14 +1153,14 @@ let SceneItemManipulatableComponent =
             ) &&
           this.ActorComp.ActorLocationProxy.Equals(this.Xrr) &&
           this.ActorComp.ActorRotationProxy.Equals(this.ijr) &&
-          ((this.State !== "BeCastingFree" && this.State !== "BeDropping") ||
+          (("BeCastingFree" !== this.State && "BeDropping" !== this.State) ||
             (this.CurrentState = this.ResetState),
           (this.Rpn = !0)));
     }
     tvn() {
-      let t, e, i;
+      var t, e, i;
       this.PlayingMatchSequence ||
-        ((this.ActorComp.PhysicsMode === 0 ||
+        ((0 === this.ActorComp.PhysicsMode ||
           (([t, i] = this.ActorComp.CheckGoundWithBox()), void 0 === i) ||
           (t &&
             i.bBlockingHit &&
@@ -1164,13 +1168,13 @@ let SceneItemManipulatableComponent =
             (e = this.ActorComp.Origin),
             TraceElementCommon_1.TraceElementCommon.GetHitLocation(i, 0, t),
             (i = e.Z - t.Z - this.ActorComp.Extent.Z) < ON_GROUND_OFFSET) &&
-            i > 0)) &&
+            0 < i)) &&
           (this.Apn = !0));
     }
     ivn(t) {
-      let e, i, s;
+      var e, i, s;
       this.PlayingMatchSequence ||
-        (this.ActorComp.PhysicsMode === 3 &&
+        (3 === this.ActorComp.PhysicsMode &&
           ((e = Vector_1.Vector.Create(this.Xrr)),
           this.ActorComp.ActorLocationProxy.Subtraction(e, e),
           (e = e.Size()),
@@ -1186,15 +1190,15 @@ let SceneItemManipulatableComponent =
             Log_1.Log.CheckError() &&
             Log_1.Log.Error("SceneItem", 32, "[Manipulate] 速度", ["size", e]),
           e < this.ManipulateBaseConfig.可再被控速度最小值 && (this.Epn = !0),
-          e < MIN_VELOCITY && s == 0
+          e < MIN_VELOCITY && 0 == s
             ? (this.kpn++,
               this.kpn > ZERO_VELOCITY_FRAME_NUM &&
                 (this.ActorComp.PhysicsMode = 0))
             : (this.kpn = 0)),
-        this.ActorComp.PhysicsMode === 0 && (this.Upn = !0));
+        0 === this.ActorComp.PhysicsMode && (this.Upn = !0));
     }
     ovn() {
-      let t, e;
+      var t, e;
       this.Spn === INVALID_ID
         ? (this.IsCanBeHeld = !0)
         : ((t = this.zht?.GetCreatureDataId()),
@@ -1230,7 +1234,7 @@ let SceneItemManipulatableComponent =
           }));
     }
     oBn() {
-      let t, e;
+      var t, e;
       this.rBn === INVALID_ID ||
       this.rBn !== ModelManager_1.ModelManager.CreatureModel.GetPlayerId()
         ? (this.IsCanBeHeld = !0)
@@ -1275,7 +1279,7 @@ let SceneItemManipulatableComponent =
       return this.wpn;
     }
     set CurrentState(t) {
-      let e;
+      var e;
       this.wpn !== t &&
         ((e = this.State),
         this.wpn?.Exit(),
@@ -1307,7 +1311,7 @@ let SceneItemManipulatableComponent =
         (this.xpn.bOverrideInstanceData = !0));
     }
     PlayMatchSequence(e, i) {
-      let t, s;
+      var t, s;
       StringUtils_1.StringUtils.IsEmpty(this.MatchSequence) ||
         (void 0 === this.xpn && this.Cvn(),
         (t = this.xpn.DefaultInstanceData),
@@ -1345,8 +1349,8 @@ let SceneItemManipulatableComponent =
         this.xpn.RemoveBindingByTag(BINDING_TAG, this.ActorComp.Owner));
     }
     Ypn() {
-      const t = this.zht?.GetCreatureDataId();
-      const e = Protocol_1.Aki.Protocol.r_s.create();
+      var t = this.zht?.GetCreatureDataId(),
+        e = Protocol_1.Aki.Protocol.r_s.create();
       (e.rkn = MathUtils_1.MathUtils.NumberToLong(t)),
         Net_1.Net.Call(10407, e, (t) => {
           switch (t.lkn) {
@@ -1366,7 +1370,7 @@ let SceneItemManipulatableComponent =
         });
     }
     OnCastItem() {
-      let t;
+      var t;
       this.Npn &&
         ((t = this.Config.DestroyCfg.Conditions.filter(
           (t) => t.Type === IComponent_1.ETeleControlDestroyCondition.Throw,
@@ -1386,7 +1390,7 @@ let SceneItemManipulatableComponent =
       this.Snn.HasTag(t) && this.Snn.RemoveTag(t);
     }
     ForceStopDropping() {
-      if (this.State === "BeDropping" && this.NeedRemoveControllerId) {
+      if ("BeDropping" === this.State && this.NeedRemoveControllerId) {
         const e = this.ActorComp.GetPrimitiveComponent();
         if (
           (e.SetPhysicsLinearVelocity(Vector_1.Vector.ZeroVector),
@@ -1398,11 +1402,11 @@ let SceneItemManipulatableComponent =
           const e = this.ActorComp.GetPrimitiveComponent();
           e.SetCollisionProfileName(this.ManipulateBaseConfig.待机状态碰撞预设);
         }
-        const t = this.ActorComp.Owner?.GetComponentByClass(
+        var t = this.ActorComp.Owner?.GetComponentByClass(
           UE.ActorComponent.StaticClass(),
         );
         t?.IsValid() && (t.bEnableAutoPhysicsSplit = !0),
-          this.ActorComp.PhysicsMode !== 0 && (this.ActorComp.PhysicsMode = 0),
+          0 !== this.ActorComp.PhysicsMode && (this.ActorComp.PhysicsMode = 0),
           (this.IsCanBeHeld = !1),
           (this.Lpn = !0);
       } else
@@ -1417,30 +1421,30 @@ let SceneItemManipulatableComponent =
           );
     }
     TryAddSpecLockTag() {
-      let t;
+      var t;
       this.Entity.GetComponent(122) &&
         ((t = void 0 !== this.ActivatedOutlet ? 2142861976 : -628734864),
         this.Snn.HasTag(t) || this.Snn.AddTag(t));
     }
     TryRemoveSpecLockTag() {
-      let t;
+      var t;
       this.Entity.GetComponent(122) &&
         (this.Snn.HasTag((t = 2142861976)) && this.Snn.RemoveTag(t),
         this.Snn.HasTag((t = -628734864))) &&
         this.Snn.RemoveTag(t);
     }
     TryReqAttachToFloor() {
-      const t = this.Entity.GetComponent(110);
+      var t = this.Entity.GetComponent(110);
       if (
         t &&
         this.ActorComp?.Owner?.IsValid() &&
         this.ActorComp.GetIsSceneInteractionLoadCompleted() &&
         !t.IsRegTarget()
       ) {
-        let e;
-        let i;
-        let s;
-        let h = this.pvn(0, -5);
+        var e,
+          i,
+          s,
+          h = this.pvn(0, -5);
         if (h)
           return (
             ([s, i] = this.vvn(h)),
@@ -1479,32 +1483,32 @@ let SceneItemManipulatableComponent =
             this.ActorComp.GetSceneInteractionLevelHandleId(),
           );
         if (s?.IsValid) {
-          const h = s.K2_GetActorRotation();
-          var a = (0, puerts_1.$ref)(void 0);
-          const o = (0, puerts_1.$ref)(void 0);
-          var s =
-            (s.GetActorBounds(!1, a, void 0),
-            s.K2_SetActorRotation(new UE.Rotator(0, 0, 0), !1),
-            s.GetActorBounds(!1, void 0, o),
-            s.K2_SetActorRotation(h, !1),
-            MathUtils_1.MathUtils.CommonTempVector);
-          var a =
-            (s.FromUeVector((0, puerts_1.$unref)(a)),
-            ModelManager_1.ModelManager.TraceElementModel.CommonStartLocation);
-          const n =
-            ModelManager_1.ModelManager.TraceElementModel.CommonEndLocation;
-          const r =
-            (a.Set(s.X, s.Y, s.Z + e),
-            n.Set(s.X, s.Y, s.Z + i),
-            ModelManager_1.ModelManager.TraceElementModel.ClearBoxTrace(),
-            ModelManager_1.ModelManager.TraceElementModel.GetBoxTrace());
-          const l =
-            ((r.WorldContextObject = this.ActorComp.Owner),
-            (r.bIsSingle = !0),
-            r.ActorsToIgnore.Empty(),
-            SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionAllActorsInLevel(
-              this.ActorComp.GetSceneInteractionLevelHandleId(),
-            ));
+          var h = s.K2_GetActorRotation(),
+            a = (0, puerts_1.$ref)(void 0),
+            o = (0, puerts_1.$ref)(void 0),
+            s =
+              (s.GetActorBounds(!1, a, void 0),
+              s.K2_SetActorRotation(new UE.Rotator(0, 0, 0), !1),
+              s.GetActorBounds(!1, void 0, o),
+              s.K2_SetActorRotation(h, !1),
+              MathUtils_1.MathUtils.CommonTempVector),
+            a =
+              (s.FromUeVector((0, puerts_1.$unref)(a)),
+              ModelManager_1.ModelManager.TraceElementModel
+                .CommonStartLocation),
+            n = ModelManager_1.ModelManager.TraceElementModel.CommonEndLocation,
+            r =
+              (a.Set(s.X, s.Y, s.Z + e),
+              n.Set(s.X, s.Y, s.Z + i),
+              ModelManager_1.ModelManager.TraceElementModel.ClearBoxTrace(),
+              ModelManager_1.ModelManager.TraceElementModel.GetBoxTrace()),
+            l =
+              ((r.WorldContextObject = this.ActorComp.Owner),
+              (r.bIsSingle = !0),
+              r.ActorsToIgnore.Empty(),
+              SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionAllActorsInLevel(
+                this.ActorComp.GetSceneInteractionLevelHandleId(),
+              ));
           for (let t = 0; t < l.Num(); t++) r.ActorsToIgnore.Add(l.Get(t));
           r.bIgnoreSelf = !0;
           (e = MathUtils_1.MathUtils.CommonTempVector),
@@ -1525,7 +1529,7 @@ let SceneItemManipulatableComponent =
           return (
             s &&
               i?.bBlockingHit &&
-              i.Actors.Num() > 0 &&
+              0 < i.Actors.Num() &&
               (t = i.Actors.Get(0).RootComponent?.GetOwner()),
             r.ClearCacheData(),
             ModelManager_1.ModelManager.TraceElementModel.ClearBoxTrace(),
@@ -1536,9 +1540,9 @@ let SceneItemManipulatableComponent =
     }
     vvn(t) {
       if (t.IsValid()) {
-        let e = UE.KismetSystemLibrary.GetPathName(t);
-        let i = e.indexOf(".");
-        if (i >= 0 && i + 1 < e.length) {
+        var e = UE.KismetSystemLibrary.GetPathName(t),
+          i = e.indexOf(".");
+        if (0 <= i && i + 1 < e.length) {
           e = e.substring(i + 1);
           if (
             UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
@@ -1555,19 +1559,19 @@ let SceneItemManipulatableComponent =
       return [void 0, void 0];
     }
     Mvn(e) {
-      const t =
-        ModelManager_1.ModelManager.CreatureModel.GetEntityByChildActor(e);
-      const i = t?.Entity?.GetComponent(182);
+      var t =
+          ModelManager_1.ModelManager.CreatureModel.GetEntityByChildActor(e),
+        i = t?.Entity?.GetComponent(182);
       if (!i?.Owner?.IsValid()) return [void 0, void 0];
-      const s =
+      var s =
         SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionAllKeyRefActors(
           i.GetSceneInteractionLevelHandleId(),
         );
       let h = void 0;
-      const a = s?.Num();
+      var a = s?.Num();
       if (a)
         for (let t = 0; t < a; t++) {
-          const o = s.GetKey(t);
+          var o = s.GetKey(t);
           if (s.Get(o) === e) {
             h = o;
             break;
@@ -1582,4 +1586,4 @@ let SceneItemManipulatableComponent =
     SceneItemManipulatableComponent,
   )),
   (exports.SceneItemManipulatableComponent = SceneItemManipulatableComponent);
-// # sourceMappingURL=SceneItemManipulatableComponent.js.map
+//# sourceMappingURL=SceneItemManipulatableComponent.js.map

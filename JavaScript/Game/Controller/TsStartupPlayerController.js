@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TsStartupPlayerController = void 0);
-const InputMappingsDefine_1 = require("../Ui/InputDistribute/InputMappingsDefine");
-const TsBasePlayerController_1 = require("./TsBasePlayerController");
+const InputMappingsDefine_1 = require("../Ui/InputDistribute/InputMappingsDefine"),
+  TsBasePlayerController_1 = require("./TsBasePlayerController");
 class TsStartupPlayerController extends TsBasePlayerController_1.TsBasePlayerController {
   BindActionHandle() {
     super.BindActionHandle(),
@@ -61,4 +61,4 @@ class TsStartupPlayerController extends TsBasePlayerController_1.TsBasePlayerCon
 }
 (exports.TsStartupPlayerController = TsStartupPlayerController),
   (exports.default = TsStartupPlayerController);
-// # sourceMappingURL=TsStartupPlayerController.js.map
+//# sourceMappingURL=TsStartupPlayerController.js.map

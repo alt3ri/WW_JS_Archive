@@ -4,11 +4,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.bulletHitPriorityList =
     exports.BulletConditionResult =
       void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const BulletPool_1 = require("./BulletPool");
-const BulletTraceElementPool_1 = require("./BulletTraceElementPool");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  BulletPool_1 = require("./BulletPool"),
+  BulletTraceElementPool_1 = require("./BulletTraceElementPool");
 class BulletConditionResult {
   constructor() {
     (this.HasConstResult = !1),
@@ -99,7 +99,7 @@ class BulletCollisionInfo {
     }
   }
   UpdateLastHitActorData() {
-    let t;
+    var t;
     this.IsInProcessHit
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("Bullet", 18, "处理子弹碰撞期间不允许修改碰撞数组")
@@ -127,7 +127,7 @@ class BulletCollisionInfo {
       BulletPool_1.BulletPool.RecycleBulletHitActorData(i);
     for (const s of this.LastArrayHitActorData)
       BulletPool_1.BulletPool.RecycleBulletHitActorData(s);
-    for (const [, t] of this.MapBulletConditionResult)
+    for (var [, t] of this.MapBulletConditionResult)
       BulletPool_1.BulletPool.RecycleBulletConditionResult(t);
     this.MapBulletConditionResult.clear(),
       this.MapHitActorData.clear(),
@@ -180,4 +180,4 @@ class BulletCollisionInfo {
   }
 }
 exports.BulletCollisionInfo = BulletCollisionInfo;
-// # sourceMappingURL=BulletCollisionInfo.js.map
+//# sourceMappingURL=BulletCollisionInfo.js.map

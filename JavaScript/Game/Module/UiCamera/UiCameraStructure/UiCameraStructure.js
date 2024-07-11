@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiCameraStructure = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
+const Log_1 = require("../../../../Core/Common/Log"),
+  FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils");
 class UiCameraStructure {
   constructor() {
     (this.iUo = void 0),
@@ -137,4 +137,4 @@ class UiCameraStructure {
   }
 }
 exports.UiCameraStructure = UiCameraStructure;
-// # sourceMappingURL=UiCameraStructure.js.map
+//# sourceMappingURL=UiCameraStructure.js.map

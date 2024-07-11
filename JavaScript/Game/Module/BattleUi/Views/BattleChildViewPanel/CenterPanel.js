@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CenterPanel = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Stats_1 = require("../../../../../Core/Common/Stats");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiLayer_1 = require("../../../../Ui/UiLayer");
-const AlterMarksView_1 = require("../AlterMarksView");
-const ExecutionPanel_1 = require("../Execution/ExecutionPanel");
-const GrapplingHookPoint_1 = require("../GrapplingHookPoint/GrapplingHookPoint");
-const Joystick_1 = require("../Joystick");
-const ScanTrackedMarksView_1 = require("../ScanTrackedMarksView");
-const TrackedMarksView_1 = require("../TrackedMarksView");
-const BattleChildViewPanel_1 = require("./BattleChildViewPanel");
-const MoveSkillPanel_1 = require("./MoveSkillPanel");
-const GRAPPING_HOOK_SKILL_ID = 100020;
-const HOOK_PHANTOM_ID = 1001;
-const forbidMoveTagId = 1616400338;
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../../Core/Common/Stats"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiLayer_1 = require("../../../../Ui/UiLayer"),
+  AlterMarksView_1 = require("../AlterMarksView"),
+  ExecutionPanel_1 = require("../Execution/ExecutionPanel"),
+  GrapplingHookPoint_1 = require("../GrapplingHookPoint/GrapplingHookPoint"),
+  Joystick_1 = require("../Joystick"),
+  ScanTrackedMarksView_1 = require("../ScanTrackedMarksView"),
+  TrackedMarksView_1 = require("../TrackedMarksView"),
+  BattleChildViewPanel_1 = require("./BattleChildViewPanel"),
+  MoveSkillPanel_1 = require("./MoveSkillPanel"),
+  GRAPPING_HOOK_SKILL_ID = 100020,
+  HOOK_PHANTOM_ID = 1001,
+  forbidMoveTagId = 1616400338;
 class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
@@ -35,8 +35,7 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.B8e = void 0),
       (this.pYe = void 0),
       (this.vYe = (t, i) => {
-        const e =
-          ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId;
+        var e = ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId;
         e &&
           e === HOOK_PHANTOM_ID &&
           (Log_1.Log.CheckInfo() &&
@@ -53,7 +52,7 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
               : this.SYe()));
       }),
       (this.EYe = (t, i, e) => {
-        const s = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+        var s = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
         s.Valid &&
           t === s.Id &&
           i === GRAPPING_HOOK_SKILL_ID &&
@@ -68,7 +67,7 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           this.SYe();
       }),
       (this.TYe = (t, i) => {
-        const e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+        var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
         e.Valid &&
           t === e.Id &&
           i === GRAPPING_HOOK_SKILL_ID &&
@@ -95,7 +94,7 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         this.IYe() || this.SYe();
       }),
       (this.RYe = () => {
-        const t = this.ChildViewData.GetChildVisible(17);
+        var t = this.ChildViewData.GetChildVisible(17);
         this.GetItem(0).SetUIActive(t), this._Ye?.OnBattleHudVisibleChanged(t);
       }),
       (this.UYe = (t) => {
@@ -127,21 +126,21 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           this.GetItem(2).SetUIActive(t);
       }),
       (this.o7e = () => {
-        const t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
+        var t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
         (this.B8e = t.EntityHandle),
           (this.pYe = this.B8e.Entity.GetComponent(87)),
           this.xYe();
       });
   }
   OnRegisterComponent() {
-    const t = this.GetOperationType();
-    t === 2
+    var t = this.GetOperationType();
+    2 === t
       ? (this.ComponentRegisterInfos = [
           [0, UE.UIItem],
           [1, UE.UIItem],
           [2, UE.UIItem],
         ])
-      : t === 1 &&
+      : 1 === t &&
         (this.ComponentRegisterInfos = [
           [0, UE.UIItem],
           [1, UE.UIItem],
@@ -265,12 +264,12 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   }
   MYe(t) {
     this.CYe && (this.CYe.Destroy(), (this.CYe = void 0));
-    const i = UiLayer_1.UiLayer.GetBattleViewUnit(1);
+    var i = UiLayer_1.UiLayer.GetBattleViewUnit(1);
     (this.CYe = new GrapplingHookPoint_1.GrapplingHookPoint(t, i)),
       this.CYe.BindOnInterruptCompleted(this.LYe);
   }
   IYe() {
-    let t;
+    var t;
     return !(
       !this.pYe?.Valid ||
       !this.HYe() ||
@@ -282,7 +281,7 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     return this.fYe?.GetExecutionItem();
   }
   jYe(t) {
-    let i = ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId;
+    var i = ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId;
     return !(
       !i ||
       i !== HOOK_PHANTOM_ID ||
@@ -298,7 +297,7 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.CYe.Destroy(), (this.CYe = void 0));
   }
   HYe() {
-    const t = ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId;
+    var t = ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId;
     return !(!t || t !== HOOK_PHANTOM_ID);
   }
   VYe() {
@@ -307,29 +306,29 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.HYe() && this.jYe(this.pYe) ? this.CYe?.AfterTick() : this.SYe());
   }
   async wYe() {
-    const t = this.GetItem(0);
+    var t = this.GetItem(0);
     this.hYe = await this.NewStaticChildViewAsync(
       t.GetOwner(),
       TrackedMarksView_1.TrackedMarksView,
     );
   }
   async BYe() {
-    const t = this.GetItem(0);
+    var t = this.GetItem(0);
     this.lYe = await this.NewStaticChildViewAsync(
       t.GetOwner(),
       ScanTrackedMarksView_1.ScanTrackedMarksView,
     );
   }
   async bYe() {
-    const t = this.GetItem(1);
+    var t = this.GetItem(1);
     this._Ye = await this.NewStaticChildViewAsync(
       t.GetOwner(),
       AlterMarksView_1.AlterMarksView,
     );
   }
   async qYe() {
-    let t;
-    this.GetOperationType() === 1 &&
+    var t;
+    1 === this.GetOperationType() &&
       ((t = this.GetItem(3)),
       (this.mYe = await this.NewStaticChildViewAsync(
         t.GetOwner(),
@@ -344,14 +343,14 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         this.mYe.SetForbidMove(i);
       }),
       this.mYe.SetForbidMove(this.ContainsTag(this.B8e, forbidMoveTagId)));
-    const t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
+    var t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
     let i = 0;
     t?.RoleBattleViewInfo && (i = t.RoleBattleViewInfo.JoystickType),
       this.cYe !== i &&
         ((this.cYe = i),
-        this.mYe?.SetVisible(3, i === 0),
+        this.mYe?.SetVisible(3, 0 === i),
         this.dYe && this.dYe.Destroy(),
-        i === 1) &&
+        1 === i) &&
         ((this.dYe = new MoveSkillPanel_1.MoveSkillPanel()),
         this.dYe.CreateDynamic(this.GetRootItem()));
   }
@@ -361,4 +360,4 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   (CenterPanel.GYe = void 0),
   (CenterPanel.FYe = void 0),
   (CenterPanel.NYe = void 0);
-// # sourceMappingURL=CenterPanel.js.map
+//# sourceMappingURL=CenterPanel.js.map

@@ -1,5 +1,5 @@
 "use strict";
-let GiftType;
+var GiftType;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GiftType = void 0),
   (function (e) {
@@ -9,4 +9,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e[(e.RandomPhantom = 3)] = "RandomPhantom"),
       (e[(e.CaptureMonster = 4)] = "CaptureMonster");
   })((GiftType = exports.GiftType || (exports.GiftType = {})));
-// # sourceMappingURL=GiftType.js.map
+//# sourceMappingURL=GiftType.js.map

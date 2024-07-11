@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventSetWuYinQuState = void 0);
-const RenderModuleController_1 = require("../../Render/Manager/RenderModuleController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const RenderModuleController_1 = require("../../Render/Manager/RenderModuleController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventSetWuYinQuState extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, r) {
     e &&
@@ -13,4 +13,4 @@ class LevelEventSetWuYinQuState extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventSetWuYinQuState = LevelEventSetWuYinQuState;
-// # sourceMappingURL=LevelEventSetWuYinQuState.js.map
+//# sourceMappingURL=LevelEventSetWuYinQuState.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputSystemComponent = void 0);
-const SetUtility_1 = require("../../Core/Container/SetUtility");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const InputFilter_1 = require("./InputFilter");
-const InputFilterManager_1 = require("./InputFilterManager");
+const SetUtility_1 = require("../../Core/Container/SetUtility"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  InputFilter_1 = require("./InputFilter"),
+  InputFilterManager_1 = require("./InputFilterManager");
 class InputSystemComponent {
   constructor() {
     (this.XMe = void 0),
@@ -55,16 +55,16 @@ class InputSystemComponent {
       );
   }
   SetInputActionList(e, t) {
-    const n = new Set();
-    var e =
-      (e && n.add(e),
-      InputFilterManager_1.InputFilterManager.CharacterSystemViewActions.get(
-        t,
-      ));
+    var n = new Set(),
+      e =
+        (e && n.add(e),
+        InputFilterManager_1.InputFilterManager.CharacterSystemViewActions.get(
+          t,
+        ));
     e && SetUtility_1.SetUtility.AddToSet(n, e), this.$Me.set(t, n);
   }
   SetCurrentSystemAction() {
-    const e = new Set();
+    var e = new Set();
     for (const t of this.$Me.values()) SetUtility_1.SetUtility.AddToSet(e, t);
     this.XMe = new InputFilter_1.InputFilter(
       e,
@@ -88,7 +88,7 @@ class InputSystemComponent {
     return this.XMe;
   }
   HandlePressEvent(e, t) {
-    const n =
+    var n =
       InputFilterManager_1.InputFilterManager.CharacterSystemActions.get(e);
     n
       ? EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.HotKeyInput, n)
@@ -110,4 +110,4 @@ class InputSystemComponent {
   PostProcessInput(e, t) {}
 }
 exports.InputSystemComponent = InputSystemComponent;
-// # sourceMappingURL=InputSystemComponent.js.map
+//# sourceMappingURL=InputSystemComponent.js.map

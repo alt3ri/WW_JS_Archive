@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraClimbController = void 0);
-const UE = require("ue");
-const Time_1 = require("../../../Core/Common/Time");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const StateBase_1 = require("../../../Core/Utils/StateMachine/StateBase");
-const StateMachine_1 = require("../../../Core/Utils/StateMachine/StateMachine");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const GlobalData_1 = require("../../GlobalData");
-const CameraControllerBase_1 = require("./CameraControllerBase");
-const IS_DEBUG = !1;
+const UE = require("ue"),
+  Time_1 = require("../../../Core/Common/Time"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  StateBase_1 = require("../../../Core/Utils/StateMachine/StateBase"),
+  StateMachine_1 = require("../../../Core/Utils/StateMachine/StateMachine"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  GlobalData_1 = require("../../GlobalData"),
+  CameraControllerBase_1 = require("./CameraControllerBase"),
+  IS_DEBUG = !1;
 class DefaultState extends StateBase_1.StateBase {
   constructor() {
     super(...arguments), (this.gle = 0);
@@ -45,7 +45,7 @@ class CenterState extends StateBase_1.StateBase {
       (this.gle = 0);
   }
   OnUpdate(t) {
-    let i;
+    var i;
     this.Owner.Camera.IsModifiedArmRotation
       ? this.StateMachine.Switch(0)
       : ((i =
@@ -97,7 +97,7 @@ class AdjustState extends StateBase_1.StateBase {
     this.vle = !1;
   }
   OnUpdate(t) {
-    let i, s, h, e;
+    var i, s, h, e;
     this.Owner.Camera.IsModifiedArmRotation
       ? this.StateMachine.Switch(0)
       : this.Owner.IsMoving
@@ -142,7 +142,7 @@ class AdjustState extends StateBase_1.StateBase {
                   this.Owner.DefaultArmLength)
               : (this.Owner.Camera.DesiredCamera.ArmLength =
                   this.Owner.Camera.CurrentCamera.ArmLength +
-                  (e = h > 0 ? e : -e)),
+                  (e = 0 < h ? e : -e)),
             (this.Owner.Camera.IsModifiedArmLength = !0)))
         : this.StateMachine.Switch(4);
   }
@@ -155,7 +155,7 @@ class FadeOutState extends StateBase_1.StateBase {
     this.gle = 0;
   }
   OnUpdate(t) {
-    let i;
+    var i;
     this.Owner.Camera.IsModifiedArmRotation
       ? this.StateMachine.Switch(0)
       : this.Owner.IsMoving
@@ -224,9 +224,9 @@ class CameraClimbController extends CameraControllerBase_1.CameraControllerBase 
       (this.OnCharClimbStartExit = (t, i) => {
         this.Camera.CharacterEntityHandle.Id === t &&
           this.Tle(i) &&
-          (this.Lle.CurrentState === 3
+          (3 === this.Lle.CurrentState
             ? this.Lle.Switch(5)
-            : this.Lle.CurrentState === 1 && this.Lle.Switch(0));
+            : 1 === this.Lle.CurrentState && this.Lle.Switch(0));
       }),
       (this.Lle = new StateMachine_1.StateMachine(this)),
       this.Lle.AddState(0, DefaultState),
@@ -263,7 +263,7 @@ class CameraClimbController extends CameraControllerBase_1.CameraControllerBase 
       this.SetConfigMap(20, "StartInputDelay");
   }
   OnEnable() {
-    const t =
+    var t =
       this.Camera.CharacterEntityHandle.Entity.GetComponent(
         31,
       ).GetExitClimbType();
@@ -299,7 +299,7 @@ class CameraClimbController extends CameraControllerBase_1.CameraControllerBase 
     return this.Camera.ContainsTag(504239013);
   }
   UpdateInternal(t) {
-    let i =
+    var i =
       this.Camera.CharacterEntityHandle.Entity.GetComponent(52).GetMoveVector();
     (this.Lz.X = i.X),
       (this.Lz.Y = i.Y),
@@ -334,7 +334,7 @@ class CameraClimbController extends CameraControllerBase_1.CameraControllerBase 
       this.Lle.Update(t);
   }
   Dle(t) {
-    const i = t.X || t.Y;
+    var i = t.X || t.Y;
     if (this.IsMoving)
       if (i) {
         if (
@@ -376,67 +376,68 @@ class CameraClimbController extends CameraControllerBase_1.CameraControllerBase 
     return !0;
   }
   UpdateInterp(t, i, s) {
-    var h = this.Camera.Character.CharacterActorComponent.ActorForwardProxy;
-    var e =
-      (this.Lz.DeepCopy(h),
-      this.Tz.DeepCopy(s),
-      Math.abs(
-        Math.acos(this.Lz.DotProduct(this.Tz)) * MathUtils_1.MathUtils.RadToDeg,
-      ));
-    var s =
-      (e > this.DesiredAngle
-        ? (this.Lz.CrossProduct(this.Tz, this.Tz),
-          this.Tz.CrossProduct(this.Lz, this.Tz),
-          (e = this.DesiredAngle * MathUtils_1.MathUtils.DegToRad),
-          this.Lz.MultiplyEqual(Math.cos(e)),
-          this.Tz.MultiplyEqual(Math.sin(e)),
-          this.Lz.AdditionEqual(this.Tz))
-        : this.Lz.DeepCopy(s),
-      IS_DEBUG &&
-        ((e = Vector_1.Vector.Create()),
-        this.Camera.Character.CharacterActorComponent.ActorForwardProxy.CrossProduct(
-          s,
-          e,
-        ),
-        (a = Vector_1.Vector.Create()),
-        s.RotateAngleAxis(-this.DesiredAngle, e, a),
-        (s = Vector_1.Vector.Create(this.Camera.PlayerLocation)).AdditionEqual(
-          e.Multiply(100, Vector_1.Vector.Create()),
-        ),
-        UE.KismetSystemLibrary.DrawDebugLine(
-          GlobalData_1.GlobalData.World,
-          this.Camera.PlayerLocation.ToUeVector(),
-          s.ToUeVector(),
-          new UE.LinearColor(1, 0, 0, 1),
-          0,
-          5,
-        ),
-        (e = Vector_1.Vector.Create(this.Camera.PlayerLocation)).AdditionEqual(
-          a.Multiply(100, Vector_1.Vector.Create()),
-        ),
-        UE.KismetSystemLibrary.DrawDebugLine(
-          GlobalData_1.GlobalData.World,
-          this.Camera.PlayerLocation.ToUeVector(),
-          e.ToUeVector(),
-          new UE.LinearColor(0, 1, 0, 1),
-          0,
-          5,
+    var h = this.Camera.Character.CharacterActorComponent.ActorForwardProxy,
+      e =
+        (this.Lz.DeepCopy(h),
+        this.Tz.DeepCopy(s),
+        Math.abs(
+          Math.acos(this.Lz.DotProduct(this.Tz)) *
+            MathUtils_1.MathUtils.RadToDeg,
         )),
-      this.Camera.CurrentCamera.ArmRotation.Vector(this.Tz),
-      this.Tz.X * h.Y - this.Tz.Y * h.X);
-    var a = this.Tz.X * this.Lz.Y - this.Tz.Y * this.Lz.X;
-    var e = this.Lz.X * h.Y - this.Lz.Y * h.X;
-    var h = s * a < 0 && s * e < 0;
-    var a =
-      (MathUtils_1.MathUtils.LerpDirect2dByMaxAngle(
-        this.Tz,
-        this.Lz,
-        this.Lz.Z < 0 ? this.PitchDownRate : this.PitchUpRate,
-        t * i * this.ElapseTimeScale,
-        h,
-        this.Lz,
-      ),
-      this.Camera.DesiredCamera.ArmRotation);
+      s =
+        (e > this.DesiredAngle
+          ? (this.Lz.CrossProduct(this.Tz, this.Tz),
+            this.Tz.CrossProduct(this.Lz, this.Tz),
+            (e = this.DesiredAngle * MathUtils_1.MathUtils.DegToRad),
+            this.Lz.MultiplyEqual(Math.cos(e)),
+            this.Tz.MultiplyEqual(Math.sin(e)),
+            this.Lz.AdditionEqual(this.Tz))
+          : this.Lz.DeepCopy(s),
+        IS_DEBUG &&
+          ((e = Vector_1.Vector.Create()),
+          this.Camera.Character.CharacterActorComponent.ActorForwardProxy.CrossProduct(
+            s,
+            e,
+          ),
+          (a = Vector_1.Vector.Create()),
+          s.RotateAngleAxis(-this.DesiredAngle, e, a),
+          (s = Vector_1.Vector.Create(
+            this.Camera.PlayerLocation,
+          )).AdditionEqual(e.Multiply(100, Vector_1.Vector.Create())),
+          UE.KismetSystemLibrary.DrawDebugLine(
+            GlobalData_1.GlobalData.World,
+            this.Camera.PlayerLocation.ToUeVector(),
+            s.ToUeVector(),
+            new UE.LinearColor(1, 0, 0, 1),
+            0,
+            5,
+          ),
+          (e = Vector_1.Vector.Create(
+            this.Camera.PlayerLocation,
+          )).AdditionEqual(a.Multiply(100, Vector_1.Vector.Create())),
+          UE.KismetSystemLibrary.DrawDebugLine(
+            GlobalData_1.GlobalData.World,
+            this.Camera.PlayerLocation.ToUeVector(),
+            e.ToUeVector(),
+            new UE.LinearColor(0, 1, 0, 1),
+            0,
+            5,
+          )),
+        this.Camera.CurrentCamera.ArmRotation.Vector(this.Tz),
+        this.Tz.X * h.Y - this.Tz.Y * h.X),
+      a = this.Tz.X * this.Lz.Y - this.Tz.Y * this.Lz.X,
+      e = this.Lz.X * h.Y - this.Lz.Y * h.X,
+      h = s * a < 0 && s * e < 0,
+      a =
+        (MathUtils_1.MathUtils.LerpDirect2dByMaxAngle(
+          this.Tz,
+          this.Lz,
+          this.Lz.Z < 0 ? this.PitchDownRate : this.PitchUpRate,
+          t * i * this.ElapseTimeScale,
+          h,
+          this.Lz,
+        ),
+        this.Camera.DesiredCamera.ArmRotation);
     MathUtils_1.MathUtils.LookRotationForwardFirst(
       this.Lz,
       Vector_1.Vector.UpVectorProxy,
@@ -445,8 +446,8 @@ class CameraClimbController extends CameraControllerBase_1.CameraControllerBase 
       (this.Camera.IsModifiedArmRotation = !0);
   }
   Tle(t) {
-    return t === 2 || t === 7 || t === 8 || t === 9;
+    return 2 === t || 7 === t || 8 === t || 9 === t;
   }
 }
 exports.CameraClimbController = CameraClimbController;
-// # sourceMappingURL=CameraClimbController.js.map
+//# sourceMappingURL=CameraClimbController.js.map

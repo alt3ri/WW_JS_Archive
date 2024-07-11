@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configFilterRuleById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const FilterRule_1 = require("../Config/FilterRule");
-const DB = "db_filter_sort.db";
-const FILE = "s.筛选排序总表.xlsx";
-const TABLE = "FilterRule";
-const COMMAND = "select BinData from `FilterRule` where Id=?";
-const KEY_PREFIX = "FilterRuleById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  FilterRule_1 = require("../Config/FilterRule"),
+  DB = "db_filter_sort.db",
+  FILE = "s.筛选排序总表.xlsx",
+  TABLE = "FilterRule",
+  COMMAND = "select BinData from `FilterRule` where Id=?",
+  KEY_PREFIX = "FilterRuleById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configFilterRuleById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configFilterRuleById.GetConfig(";
 exports.configFilterRuleById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configFilterRuleById = {
       if (
         (n =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var n;
-        var i = void 0;
+        var n,
+          i = void 0;
         if (
           (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configFilterRuleById = {
     }
   },
 };
-// # sourceMappingURL=FilterRuleById.js.map
+//# sourceMappingURL=FilterRuleById.js.map

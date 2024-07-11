@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyStateSetPartCollision extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -24,8 +24,8 @@ class TsAnimNotifyStateSetPartCollision extends UE.KuroAnimNotifyState {
     );
   }
   K2_NotifyEnd(t, e) {
-    let s;
-    var t = t.GetOwner();
+    var s,
+      t = t.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
       ((s = t.CharacterActorComponent.GetPartConf(this.CompName)),
@@ -43,4 +43,4 @@ class TsAnimNotifyStateSetPartCollision extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateSetPartCollision;
-// # sourceMappingURL=TsAnimNotifyStateSetPartCollision.js.map
+//# sourceMappingURL=TsAnimNotifyStateSetPartCollision.js.map

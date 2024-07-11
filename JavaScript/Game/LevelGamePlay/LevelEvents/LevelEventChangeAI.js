@@ -6,4 +6,4 @@ class LevelEventChangeAI extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, s) {}
 }
 exports.LevelEventChangeAI = LevelEventChangeAI;
-// # sourceMappingURL=LevelEventChangeAI.js.map
+//# sourceMappingURL=LevelEventChangeAI.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionRecoverySlotPanel = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const CalabashDefine_1 = require("../../CalabashDefine");
-const VisionRecoverySlotItem_1 = require("./VisionRecoverySlotItem");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  CalabashDefine_1 = require("../../CalabashDefine"),
+  VisionRecoverySlotItem_1 = require("./VisionRecoverySlotItem");
 class VisionRecoverySlotPanel extends UiPanelBase_1.UiPanelBase {
   constructor(e, i = !0) {
     super(),
@@ -25,7 +25,7 @@ class VisionRecoverySlotPanel extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    const e = new Array();
+    var e = new Array();
     e.push(this.Zpt(0)),
       e.push(this.Zpt(1)),
       e.push(this.Zpt(2)),
@@ -34,11 +34,11 @@ class VisionRecoverySlotPanel extends UiPanelBase_1.UiPanelBase {
       await Promise.all(e);
   }
   async Zpt(e) {
-    const i = this.GetItem(e);
-    const s = new VisionRecoverySlotItem_1.VisionRecoverySlotItem(
-      this.zpt,
-      this.Qpt,
-    );
+    var i = this.GetItem(e),
+      s = new VisionRecoverySlotItem_1.VisionRecoverySlotItem(
+        this.zpt,
+        this.Qpt,
+      );
     await s.CreateThenShowByActorAsync(i.GetOwner()), (this.Jpt[e] = s);
   }
   RefreshUi(s) {
@@ -49,4 +49,4 @@ class VisionRecoverySlotPanel extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.VisionRecoverySlotPanel = VisionRecoverySlotPanel;
-// # sourceMappingURL=VisionRecoverySlotPanel.js.map
+//# sourceMappingURL=VisionRecoverySlotPanel.js.map

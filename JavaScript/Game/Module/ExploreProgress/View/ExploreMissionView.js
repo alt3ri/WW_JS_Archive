@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExploreMissionView = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const ExploreAreaMissionData_1 = require("../ExploreAreaMissionData");
-const ExploreMissionItem_1 = require("./ExploreMissionItem");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  ExploreAreaMissionData_1 = require("../ExploreAreaMissionData"),
+  ExploreMissionItem_1 = require("./ExploreMissionItem");
 class ExploreMissionView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -27,19 +27,19 @@ class ExploreMissionView extends UiViewBase_1.UiViewBase {
   }
   OnStart() {
     this.c8e = this.OpenParam;
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.ExploreProgressConfig.GetAreaMissionConfigByAreaId(
         this.c8e,
       );
     if (e) {
       for (const r of e) {
-        const s = new ExploreAreaMissionData_1.ExploreAreaMissionData(r);
+        var s = new ExploreAreaMissionData_1.ExploreAreaMissionData(r);
         this.BTn.push(s);
       }
       this.BTn.sort((i, e) => {
-        const s = i.QuestType;
+        var s = i.QuestType;
         return s !== e.QuestType
-          ? s === 2
+          ? 2 === s
             ? 1
             : -1
           : i.SortIndex - e.SortIndex;
@@ -51,7 +51,7 @@ class ExploreMissionView extends UiViewBase_1.UiViewBase {
         )),
         this.qTn.RefreshByData(this.BTn);
       let i = 0;
-      for (const t of this.BTn) t.QuestStatus === 3 && i++;
+      for (const t of this.BTn) 3 === t.QuestStatus && i++;
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(2),
         "ExploreMissionProgress",
@@ -65,4 +65,4 @@ class ExploreMissionView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.ExploreMissionView = ExploreMissionView;
-// # sourceMappingURL=ExploreMissionView.js.map
+//# sourceMappingURL=ExploreMissionView.js.map

@@ -8,4 +8,4 @@ class GamePingModel extends ModelBase_1.ModelBase {
   }
 }
 exports.GamePingModel = GamePingModel;
-// # sourceMappingURL=GamePingModel.js.map
+//# sourceMappingURL=GamePingModel.js.map

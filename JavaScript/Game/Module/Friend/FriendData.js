@@ -5,11 +5,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.FriendApplyData =
     exports.FriendBlackListData =
       void 0);
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const PersonalDefine_1 = require("../Personal/Model/PersonalDefine");
+const MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  PersonalDefine_1 = require("../Personal/Model/PersonalDefine");
 class FriendBlackListData {
   constructor() {
     this.jVt = void 0;
@@ -57,7 +57,7 @@ class RecentlyTeamData {
       (this.TeamTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.uRs)));
   }
   GetOfflineDay() {
-    const t = this.TeamTime;
+    var t = this.TeamTime;
     return TimeUtil_1.TimeUtil.CalculateDayTimeStampGapBetweenNow(t, !1);
   }
 }
@@ -105,14 +105,14 @@ class FriendData {
       (this.TeamMemberCount = e.Qgs),
       (this.Signature = e.l5n),
       (this.CurCard = e.zgs),
-      this.CurCard === 0 &&
+      0 === this.CurCard &&
         (this.CurCard =
           ConfigManager_1.ConfigManager.FriendConfig.GetDefaultBackgroundCardId()),
       (this.RoleShowList = []);
-    let t;
-    const i = e.Ygs.length;
+    var t,
+      i = e.Ygs.length;
     for (let t = 0; t < i; t++) {
-      const s = e.Ygs[t];
+      var s = e.Ygs[t];
       this.RoleShowList.push(new PersonalDefine_1.RoleShowEntry(s.l3n, s.r3n));
     }
     (this.CardShowList = e.Jgs),
@@ -160,7 +160,7 @@ class FriendData {
     this.$Vt = t;
   }
   GetOfflineDay() {
-    const t = this.PlayerLastOfflineTime;
+    var t = this.PlayerLastOfflineTime;
     return TimeUtil_1.TimeUtil.CalculateDayTimeStampGapBetweenNow(t, !1);
   }
   get FriendRemark() {
@@ -171,4 +171,4 @@ class FriendData {
   }
 }
 exports.FriendData = FriendData;
-// # sourceMappingURL=FriendData.js.map
+//# sourceMappingURL=FriendData.js.map

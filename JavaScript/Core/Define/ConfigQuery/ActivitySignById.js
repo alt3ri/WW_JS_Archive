@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configActivitySignById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const ActivitySign_1 = require("../Config/ActivitySign");
-const DB = "db_activity.db";
-const FILE = "q.七天签到.xlsx";
-const TABLE = "ActivitySign";
-const COMMAND = "select BinData from `ActivitySign` where Id=?";
-const KEY_PREFIX = "ActivitySignById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  ActivitySign_1 = require("../Config/ActivitySign"),
+  DB = "db_activity.db",
+  FILE = "q.七天签到.xlsx",
+  TABLE = "ActivitySign",
+  COMMAND = "select BinData from `ActivitySign` where Id=?",
+  KEY_PREFIX = "ActivitySignById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configActivitySignById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configActivitySignById.GetConfig(";
 exports.configActivitySignById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configActivitySignById = {
       if (
         (t =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, i, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            i,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              i,
+            ]))
       ) {
-        var t;
-        var n = void 0;
+        var t,
+          n = void 0;
         if (
           (([t, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configActivitySignById = {
     }
   },
 };
-// # sourceMappingURL=ActivitySignById.js.map
+//# sourceMappingURL=ActivitySignById.js.map

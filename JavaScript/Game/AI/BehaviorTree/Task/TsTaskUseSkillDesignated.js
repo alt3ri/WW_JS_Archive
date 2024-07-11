@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskUseSkillDesignated extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -21,11 +21,11 @@ class TsTaskUseSkillDesignated extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsSkillInfoId = this.SkillInfoId));
   }
   ReceiveTickAI(e, s, t) {
-    const i = e.AiController;
+    var i = e.AiController;
     if (i)
       if (i.AiSkill) {
         this.InitTsVariables();
-        const a = i.AiSkill.SkillInfos.get(this.TsSkillInfoId);
+        var a = i.AiSkill.SkillInfos.get(this.TsSkillInfoId);
         if (a) {
           let e = i.AiHateList.GetCurrentTarget();
           this.TsBlackboardKeyTarget &&
@@ -72,4 +72,4 @@ class TsTaskUseSkillDesignated extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskUseSkillDesignated;
-// # sourceMappingURL=TsTaskUseSkillDesignated.js.map
+//# sourceMappingURL=TsTaskUseSkillDesignated.js.map

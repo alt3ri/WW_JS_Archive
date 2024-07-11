@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChatRowItem = void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const BattleChildView_1 = require("./BattleChildView/BattleChildView");
+const UE = require("ue"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  BattleChildView_1 = require("./BattleChildView/BattleChildView");
 class ChatRowItem extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments), (this.xnt = void 0);
@@ -22,17 +22,17 @@ class ChatRowItem extends BattleChildView_1.BattleChildView {
   }
   Initialize(t) {
     super.Initialize(), (this.xnt = t);
-    const i = this.GetText(4);
-    const e = this.GetSprite(1);
-    const r = this.GetSprite(2);
-    let a = this.GetText(3);
-    let o = ModelManager_1.ModelManager.FriendModel;
-    const l = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
-    const _ = t.SenderPlayerId;
-    let T = t.TargetPlayerId;
-    const u = t.Content;
+    var i = this.GetText(4),
+      e = this.GetSprite(1),
+      r = this.GetSprite(2),
+      a = this.GetText(3),
+      o = ModelManager_1.ModelManager.FriendModel,
+      l = ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
+      _ = t.SenderPlayerId,
+      T = t.TargetPlayerId,
+      u = t.Content;
     let g = void 0;
-    if (t.ContentChatRoomType === 1) {
+    if (1 === t.ContentChatRoomType) {
       if (!T) return;
       o = o.GetFriendById(T);
       if (!o) return;
@@ -52,7 +52,7 @@ class ChatRowItem extends BattleChildView_1.BattleChildView {
     }
     if (
       (t.ContentType === Protocol_1.Aki.Protocol.U3n.nMs &&
-        (t.ContentChatRoomType === 1
+        (1 === t.ContentChatRoomType
           ? l === _
             ? LguiUtil_1.LguiUtil.SetLocalTextNew(
                 i,
@@ -84,7 +84,7 @@ class ChatRowItem extends BattleChildView_1.BattleChildView {
         if (!a) return;
         e = `<texture=${a},0.3/>`;
       }
-      t.ContentChatRoomType === 1
+      1 === t.ContentChatRoomType
         ? l === _
           ? LguiUtil_1.LguiUtil.SetLocalTextNew(
               i,
@@ -116,4 +116,4 @@ class ChatRowItem extends BattleChildView_1.BattleChildView {
   }
 }
 exports.ChatRowItem = ChatRowItem;
-// # sourceMappingURL=ChatRowItem.js.map
+//# sourceMappingURL=ChatRowItem.js.map

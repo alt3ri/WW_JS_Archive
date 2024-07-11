@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configSoundAreaPlayInfoAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const SoundAreaPlayInfo_1 = require("../Config/SoundAreaPlayInfo");
-const DB = "db_soundareaplayinfo.db";
-const FILE = "w.无音区玩法信息.xlsx";
-const TABLE = "SoundAreaPlayInfo";
-const COMMAND = "select BinData from `SoundAreaPlayInfo`";
-const KEY_PREFIX = "SoundAreaPlayInfoAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  SoundAreaPlayInfo_1 = require("../Config/SoundAreaPlayInfo"),
+  DB = "db_soundareaplayinfo.db",
+  FILE = "w.无音区玩法信息.xlsx",
+  TABLE = "SoundAreaPlayInfo",
+  COMMAND = "select BinData from `SoundAreaPlayInfo`",
+  KEY_PREFIX = "SoundAreaPlayInfoAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configSoundAreaPlayInfoAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configSoundAreaPlayInfoAll = {
     );
   },
   GetConfigList: (o = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configSoundAreaPlayInfoAll = {
       }
       const r = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let i = void 0;
+        var i = void 0;
         if (
           (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configSoundAreaPlayInfoAll = {
     }
   },
 };
-// # sourceMappingURL=SoundAreaPlayInfoAll.js.map
+//# sourceMappingURL=SoundAreaPlayInfoAll.js.map

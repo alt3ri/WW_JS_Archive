@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionAwakeEntity = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const WaitEntityTask_1 = require("../../../World/Define/WaitEntityTask");
-const FlowActionUtils_1 = require("../Flow/FlowActionUtils");
-const FlowActionServerAction_1 = require("./FlowActionServerAction");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  WaitEntityTask_1 = require("../../../World/Define/WaitEntityTask"),
+  FlowActionUtils_1 = require("../Flow/FlowActionUtils"),
+  FlowActionServerAction_1 = require("./FlowActionServerAction");
 class FlowActionAwakeEntity extends FlowActionServerAction_1.FlowActionServerAction {
   constructor() {
     super(...arguments),
       (this.Task = void 0),
       (this.QXi = (t) => {
         this.Task = void 0;
-        const o = this.ActionInfo.Params;
-        const e =
-          (t ||
-            ControllerHolder_1.ControllerHolder.FlowController.LogError(
-              "加载实体失败",
-            ),
-          new Array());
+        var o = this.ActionInfo.Params,
+          e =
+            (t ||
+              ControllerHolder_1.ControllerHolder.FlowController.LogError(
+                "加载实体失败",
+              ),
+            new Array());
         for (const r of o.EntityIds) {
-          const i =
+          var i =
             ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(r);
           i
             ? ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
@@ -31,7 +31,7 @@ class FlowActionAwakeEntity extends FlowActionServerAction_1.FlowActionServerAct
               )
             : e.push(r);
         }
-        e.length > 0 &&
+        0 < e.length &&
           ControllerHolder_1.ControllerHolder.FlowController.LogError(
             "实体未下发，联系服务端检查配置",
             ["ids", e],
@@ -41,7 +41,7 @@ class FlowActionAwakeEntity extends FlowActionServerAction_1.FlowActionServerAct
   }
   OnExecute() {
     if (this.ActionInfo.Params) {
-      const o = this.ActionInfo.Params;
+      var o = this.ActionInfo.Params;
       if (o.EntityIds?.length) {
         let t = !1;
         for (const e of o.EntityIds)
@@ -76,4 +76,4 @@ class FlowActionAwakeEntity extends FlowActionServerAction_1.FlowActionServerAct
   }
 }
 exports.FlowActionAwakeEntity = FlowActionAwakeEntity;
-// # sourceMappingURL=FlowActionAwakeEntity.js.map
+//# sourceMappingURL=FlowActionAwakeEntity.js.map

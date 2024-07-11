@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MainRoleController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const EditBattleTeamController_1 = require("../EditBattleTeam/EditBattleTeamController");
-const EditFormationController_1 = require("../EditFormation/EditFormationController");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  EditBattleTeamController_1 = require("../EditBattleTeam/EditBattleTeamController"),
+  EditFormationController_1 = require("../EditFormation/EditFormationController"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
 class MainRoleController extends UiControllerBase_1.UiControllerBase {
   static OnAddOpenViewCheckFunction() {
     UiManager_1.UiManager.AddOpenViewCheckFunction(
@@ -30,8 +30,8 @@ class MainRoleController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static IsCanChangeRole(r) {
-    const o = ModelManager_1.ModelManager.RoleModel.GetCanChangeRoleIdList();
-    const t = o.length;
+    var o = ModelManager_1.ModelManager.RoleModel.GetCanChangeRoleIdList(),
+      t = o.length;
     for (let e = 0; e < t; e++) if (o[e] === r) return !0;
     return !1;
   }
@@ -39,7 +39,7 @@ class MainRoleController extends UiControllerBase_1.UiControllerBase {
     return !!ModelManager_1.ModelManager.RoleModel.IsMainRole(e);
   }
   static SendRoleSexChangeRequest(e) {
-    const r = Protocol_1.Aki.Protocol.Ths.create();
+    var r = Protocol_1.Aki.Protocol.Ths.create();
     (r.x6n = e),
       Net_1.Net.Call(16423, r, (e) => {
         e &&
@@ -56,7 +56,7 @@ class MainRoleController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static SendRoleElementChangeRequest(e) {
-    const r = Protocol_1.Aki.Protocol.Rhs.create();
+    var r = Protocol_1.Aki.Protocol.Rhs.create();
     (r.K8n = e),
       Net_1.Net.Call(27889, r, (e) => {
         e &&
@@ -77,8 +77,8 @@ class MainRoleController extends UiControllerBase_1.UiControllerBase {
   }
   static OnRegisterNetEvent() {
     Net_1.Net.Register(29747, (e) => {
-      const r = e.QDs;
-      var e = e.j5n;
+      var r = e.QDs,
+        e = e.j5n;
       ModelManager_1.ModelManager.PhantomBattleModel.DeleteBattleData(r),
         ModelManager_1.ModelManager.RoleModel.RoleChange(r, e),
         Log_1.Log.CheckDebug() &&
@@ -102,12 +102,11 @@ class MainRoleController extends UiControllerBase_1.UiControllerBase {
   }
 }
 (exports.MainRoleController = MainRoleController).V4e = (e) => {
-  const r =
-    Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity.GetComponent(
-      185,
-    )?.HasTag(1996802261);
-  const o =
-    ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance();
+  var r =
+      Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity.GetComponent(
+        185,
+      )?.HasTag(1996802261),
+    o = ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance();
   return r
     ? (ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
         ConfigManager_1.ConfigManager.TextConfig.GetTextById(
@@ -123,4 +122,4 @@ class MainRoleController extends UiControllerBase_1.UiControllerBase {
         ),
         !1);
 };
-// # sourceMappingURL=MainRoleController.js.map
+//# sourceMappingURL=MainRoleController.js.map

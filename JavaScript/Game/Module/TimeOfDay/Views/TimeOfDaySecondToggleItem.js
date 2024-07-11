@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TimeOfDaySecondToggleItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class TimeOfDaySecondToggleItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -40,4 +40,4 @@ class TimeOfDaySecondToggleItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.TimeOfDaySecondToggleItem = TimeOfDaySecondToggleItem;
-// # sourceMappingURL=TimeOfDaySecondToggleItem.js.map
+//# sourceMappingURL=TimeOfDaySecondToggleItem.js.map

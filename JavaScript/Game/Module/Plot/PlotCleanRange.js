@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotCleanRange = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const SimpleNpcController_1 = require("../../NewWorld/Character/SimpleNpc/Logics/SimpleNpcController");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  SimpleNpcController_1 = require("../../NewWorld/Character/SimpleNpc/Logics/SimpleNpcController");
 class Range {
   constructor(e, t, o) {
     (this.Center = e), (this.RadiusSquare = t), (this.IgnoreList = o);
@@ -23,7 +23,7 @@ class PlotCleanRange {
       (this.g6s = []),
       (this.Lz = Vector_1.Vector.Create()),
       (this.Jpe = (e, t) => {
-        let o;
+        var o;
         this.OGn(t) &&
           (void 0 !==
             (o = t.Entity?.Disable(
@@ -51,10 +51,9 @@ class PlotCleanRange {
       t.add(e);
     }),
       this.qGn || (this.qGn = !e.IsCleanPasserByNpc);
-    let o;
-    const n = Vector_1.Vector.Create();
-    const l =
-      (n.FromConfigVector(e.Center), new Range(n, e.Radius * e.Radius, t));
+    var o,
+      n = Vector_1.Vector.Create(),
+      l = (n.FromConfigVector(e.Center), new Range(n, e.Radius * e.Radius, t));
     this.g6s.push(l), this.NGn(e.IsCleanSimpleNpc);
     for (const i of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
       this.OGn(i, l) &&
@@ -91,7 +90,7 @@ class PlotCleanRange {
           EventDefine_1.EEventName.CreateEntity,
           this.Jpe,
         );
-      for (const [e, t] of this.wGn)
+      for (var [e, t] of this.wGn)
         e.Valid &&
           e.Entity &&
           (e.Entity.Enable(t, "PlotCleanRange.Close"),
@@ -137,7 +136,7 @@ class PlotCleanRange {
           ),
         !1
       );
-    const o = e.Entity.GetComponent(0);
+    var o = e.Entity.GetComponent(0);
     if (!o)
       return (
         Log_1.Log.CheckDebug() &&
@@ -162,8 +161,8 @@ class PlotCleanRange {
           ),
         !1
       );
-    let n = o.GetBaseInfo();
-    if (n && n.Category.HideInFlowType === 100)
+    var n = o.GetBaseInfo();
+    if (n && 100 === n.Category.HideInFlowType)
       return (
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
@@ -175,7 +174,7 @@ class PlotCleanRange {
           ),
         !1
       );
-    if (o.GetSubEntityType() === 2)
+    if (2 === o.GetSubEntityType())
       return (
         !this.qGn ||
         (Log_1.Log.CheckDebug() &&
@@ -258,4 +257,4 @@ class PlotCleanRange {
   OnTick(e) {}
 }
 exports.PlotCleanRange = PlotCleanRange;
-// # sourceMappingURL=PlotCleanRange.js.map
+//# sourceMappingURL=PlotCleanRange.js.map

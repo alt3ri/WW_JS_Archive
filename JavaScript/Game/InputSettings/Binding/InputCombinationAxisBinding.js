@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputCombinationAxisBinding = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const InputSettings_1 = require("../InputSettings");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  InputSettings_1 = require("../InputSettings");
 class InputCombinationAxisBinding {
   constructor() {
     (this.Mne = 0),
@@ -20,8 +20,8 @@ class InputCombinationAxisBinding {
       (this.Lo = t),
       (this.aSe = this.Lo.AxisType),
       (this.mSe = this.Lo.SecondaryKeyScaleMap);
-    for (const [i, s] of t.PcKeyMap) this.uSe.set(i, s);
-    for (const [e, r] of t.GamepadKeyMap) this.uSe.set(e, r);
+    for (var [i, s] of t.PcKeyMap) this.uSe.set(i, s);
+    for (var [e, r] of t.GamepadKeyMap) this.uSe.set(e, r);
     this.dSe();
   }
   Clear() {
@@ -34,8 +34,8 @@ class InputCombinationAxisBinding {
   }
   dSe() {
     this.hSe.clear(), this.lSe.clear();
-    for (const [t, i] of this.uSe) {
-      const s = InputSettings_1.InputSettings.GetKey(i);
+    for (var [t, i] of this.uSe) {
+      var s = InputSettings_1.InputSettings.GetKey(i);
       s &&
         ((s.IsKeyboardKey || s.IsMouseButton) && this.hSe.set(t, i),
         s.IsGamepadKey) &&
@@ -49,10 +49,10 @@ class InputCombinationAxisBinding {
     return InputSettings_1.InputSettings.GetCombinationAxisKeyMap(this.sSe);
   }
   HasKeyboardCombinationAxis() {
-    return !!this.hSe && this.hSe.size > 0;
+    return !!this.hSe && 0 < this.hSe.size;
   }
   HasGamepadCombinationAxis() {
-    return !!this.lSe && this.lSe.size > 0;
+    return !!this.lSe && 0 < this.lSe.size;
   }
   GetAxisMappingType() {
     return this.aSe;
@@ -64,16 +64,16 @@ class InputCombinationAxisBinding {
     return this.Mne;
   }
   GetPcKeyNameMap(t) {
-    for (const [i, s] of this.hSe) t.set(i, s);
+    for (var [i, s] of this.hSe) t.set(i, s);
   }
   GetGamepadKeyNameMap(t) {
-    for (const [i, s] of this.lSe) t.set(i, s);
+    for (var [i, s] of this.lSe) t.set(i, s);
   }
   GetKeyMap(t) {
-    for (const [i, s] of this.uSe) t.set(i, s);
+    for (var [i, s] of this.uSe) t.set(i, s);
   }
   GetCurrentPlatformKeyNameMap(t) {
-    const i = ModelManager_1.ModelManager.PlatformModel;
+    var i = ModelManager_1.ModelManager.PlatformModel;
     i.IsPc()
       ? this.GetPcKeyNameMap(t)
       : i.IsGamepad() && this.GetGamepadKeyNameMap(t);
@@ -83,4 +83,4 @@ class InputCombinationAxisBinding {
   }
 }
 exports.InputCombinationAxisBinding = InputCombinationAxisBinding;
-// # sourceMappingURL=InputCombinationAxisBinding.js.map
+//# sourceMappingURL=InputCombinationAxisBinding.js.map

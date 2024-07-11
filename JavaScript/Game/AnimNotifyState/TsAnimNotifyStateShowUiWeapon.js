@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const TsUiSceneRoleActor_1 = require("../Module/UiComponent/TsUiSceneRoleActor");
-const UiWeaponAnsContext_1 = require("../Module/UiModel/UiModelComponent/Common/UiModelAns/UiAnimNotifyStateContext/UiWeaponAnsContext");
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  TsUiSceneRoleActor_1 = require("../Module/UiComponent/TsUiSceneRoleActor"),
+  UiWeaponAnsContext_1 = require("../Module/UiModel/UiModelComponent/Common/UiModelAns/UiAnimNotifyStateContext/UiWeaponAnsContext");
 class TsAnimNotifyStateShowUiWeapon extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -17,7 +17,7 @@ class TsAnimNotifyStateShowUiWeapon extends UE.KuroAnimNotifyState {
     e = e.GetOwner();
     return (
       e instanceof TsUiSceneRoleActor_1.default &&
-        (this.WeaponIndex >= 0
+        (0 <= this.WeaponIndex
           ? ((this.UiWeaponAnsContext =
               new UiWeaponAnsContext_1.UiWeaponAnsContext(
                 this.WeaponIndex,
@@ -40,7 +40,7 @@ class TsAnimNotifyStateShowUiWeapon extends UE.KuroAnimNotifyState {
   K2_NotifyEnd(e, t) {
     e = e.GetOwner();
     if (e instanceof TsUiSceneRoleActor_1.default)
-      if (this.WeaponIndex >= 0) {
+      if (0 <= this.WeaponIndex) {
         if (!this.UiWeaponAnsContext)
           return (
             Log_1.Log.CheckError() &&
@@ -68,4 +68,4 @@ class TsAnimNotifyStateShowUiWeapon extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateShowUiWeapon;
-// # sourceMappingURL=TsAnimNotifyStateShowUiWeapon.js.map
+//# sourceMappingURL=TsAnimNotifyStateShowUiWeapon.js.map

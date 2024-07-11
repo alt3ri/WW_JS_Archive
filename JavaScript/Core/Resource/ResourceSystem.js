@@ -9,16 +9,16 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.CHECK_RENDERASSETS_INTERVAL =
     exports.CHECK_STREAMING_INTERVAL =
       void 0);
-const cpp_1 = require("cpp");
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Info_1 = require("../Common/Info");
-const Log_1 = require("../Common/Log");
-const Stats_1 = require("../Common/Stats");
-const PriorityQueue_1 = require("../Container/PriorityQueue");
-const ClassDefine_1 = require("../Define/ClassDefine");
-const GameBudgetInterfaceController_1 = require("../GameBudgetAllocator/GameBudgetInterfaceController");
-const TimeLimit_1 = require("../Performance/TimeLimit");
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Info_1 = require("../Common/Info"),
+  Log_1 = require("../Common/Log"),
+  Stats_1 = require("../Common/Stats"),
+  PriorityQueue_1 = require("../Container/PriorityQueue"),
+  ClassDefine_1 = require("../Define/ClassDefine"),
+  GameBudgetInterfaceController_1 = require("../GameBudgetAllocator/GameBudgetInterfaceController"),
+  TimeLimit_1 = require("../Performance/TimeLimit");
 (exports.CHECK_STREAMING_INTERVAL = 100),
   (exports.CHECK_RENDERASSETS_INTERVAL = 100),
   (exports.STREAMING_SOURCE_RADIUS = 7e3),
@@ -54,7 +54,7 @@ class ResourceSystem {
         !ResourceSystem.zY.Empty && !ResourceSystem.YY.IsTimeLimitExceeded();
 
       ) {
-        const s = ResourceSystem.zY.Pop();
+        var s = ResourceSystem.zY.Pop();
         ResourceSystem.ZY.delete(s.Id)
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
@@ -77,13 +77,13 @@ class ResourceSystem {
     }
   }
   static eJ(s, t) {
-    s.size === 0 && t?.();
+    0 === s.size && t?.();
     const o = Date.now();
     for (const r of s)
       ResourceSystem.tJ(r, () => {
-        let e;
+        var e;
         s.delete(r),
-          s.size === 0 &&
+          0 === s.size &&
             ((e = Date.now()),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
@@ -97,20 +97,20 @@ class ResourceSystem {
       });
   }
   static PreloadSimpleTypes(e = void 0) {
-    const s = new Set();
+    var s = new Set();
     for (const t in ClassDefine_1.typeDefined)
       ResourceSystem.XY.has(t) ||
-        (ClassDefine_1.typeDefined[t][0] !== 0 && s.add(t));
+        (0 !== ClassDefine_1.typeDefined[t][0] && s.add(t));
     ResourceSystem.eJ(s, e);
   }
   static PreloadOtherTypes(e = void 0) {
-    const s = new Set();
+    var s = new Set();
     for (const t in ClassDefine_1.typeDefined)
       ResourceSystem.XY.has(t) || s.add(t);
     ResourceSystem.eJ(s, e);
   }
   static iJ(e) {
-    const s = ClassDefine_1.typeDefined[e];
+    var s = ClassDefine_1.typeDefined[e];
     return (
       s ||
         (Log_1.Log.CheckError() &&
@@ -119,9 +119,9 @@ class ResourceSystem {
     );
   }
   static oJ(e, s) {
-    const t = s[1];
+    var t = s[1];
     if (t) {
-      if (t.length !== 0) return t;
+      if (0 !== t.length) return t;
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Resource",
@@ -142,11 +142,11 @@ class ResourceSystem {
   }
   static jY(s) {
     if (!ResourceSystem.XY.has(s)) {
-      const t = ResourceSystem.iJ(s);
+      var t = ResourceSystem.iJ(s);
       if (t) {
-        const o = ResourceSystem.oJ(s, t);
+        var o = ResourceSystem.oJ(s, t);
         if (o) {
-          const r = t[0];
+          var r = t[0];
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Resource",
@@ -197,12 +197,12 @@ class ResourceSystem {
   }
   static tJ(t, o) {
     if (!ResourceSystem.XY.has(t)) {
-      const e = ResourceSystem.iJ(t);
+      var e = ResourceSystem.iJ(t);
       if (e) {
-        const s = ResourceSystem.oJ(t, e);
+        var s = ResourceSystem.oJ(t, e);
         if (s) {
           const c = e[0];
-          const r = (e, s) => {
+          var r = (e, s) => {
             e
               ? ResourceSystem.XY.set(t, e)
               : Log_1.Log.CheckError() &&
@@ -245,7 +245,7 @@ class ResourceSystem {
   static KY(e) {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Resource", 31, "OnLoadComplete", ["id", e]);
-    const s = ResourceSystem.QY.get(e);
+    var s = ResourceSystem.QY.get(e);
     s &&
       (ResourceSystem.QY.delete(e),
       ResourceSystem.zY.Push(s),
@@ -253,7 +253,7 @@ class ResourceSystem {
   }
   static rJ(e) {
     return e
-      ? e.length === 0
+      ? 0 === e.length
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error("Resource", 1, "路径长度为零", ["path", e]),
           !1)
@@ -270,7 +270,7 @@ class ResourceSystem {
   static nJ(e, s) {
     if (ResourceSystem.rJ(e))
       if (s) {
-        const t = s.StaticClass();
+        var t = s.StaticClass();
         if (t) {
           if (t.IsValid()) return t;
           Log_1.Log.CheckError() &&
@@ -295,7 +295,7 @@ class ResourceSystem {
           Log_1.Log.Error("Resource", 1, "传入类型为空", ["path", e]);
   }
   static Ed(e, s, t) {
-    const o = ResourceSystem.WY.GetAsset(s);
+    var o = ResourceSystem.WY.GetAsset(s);
     if ((ResourceSystem.WY.Release(s), ResourceSystem.sJ(o, e, t))) return o;
   }
   static sJ(e, s, t) {
@@ -322,10 +322,10 @@ class ResourceSystem {
   static Load(e, s, t = 105) {
     s = ResourceSystem.nJ(e, s);
     if (s) {
-      const o = ++ResourceSystem.hJ;
-      var t = ResourceSystem.WY.LoadAsyncWithId(e, o, t);
-      if (t !== -1) {
-        if (t === 0)
+      var o = ++ResourceSystem.hJ,
+        t = ResourceSystem.WY.LoadAsyncWithId(e, o, t);
+      if (-1 !== t) {
+        if (0 === t)
           if (!ResourceSystem.WY.WaitComplete(o, 0))
             return void (
               Log_1.Log.CheckError() &&
@@ -343,15 +343,11 @@ class ResourceSystem {
   static SyncLoad(e, s) {
     s = ResourceSystem.nJ(e, s);
     if (s) {
-      const t = ++ResourceSystem.hJ;
-      const o = ResourceSystem.WY.LoadAsyncWithId(
-        e,
-        t,
-        exports.SYNC_LOAD_PRIORITY,
-      );
-      if (o !== -1)
+      var t = ++ResourceSystem.hJ,
+        o = ResourceSystem.WY.LoadAsyncWithId(e, t, exports.SYNC_LOAD_PRIORITY);
+      if (-1 !== o)
         return (
-          o === 0 &&
+          0 === o &&
             (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("Resource", 29, "强制同步加载", ["path", e]),
             ResourceSystem.WY.SyncLoad(t)),
@@ -364,7 +360,7 @@ class ResourceSystem {
   static GetLoadedAsset(e, s) {
     s = ResourceSystem.nJ(e, s);
     if (s) {
-      const t = ResourceSystem.WY.GetLoadedAsset(e);
+      var t = ResourceSystem.WY.GetLoadedAsset(e);
       if (ResourceSystem.sJ(t, e, s)) return t;
     }
   }
@@ -375,7 +371,7 @@ class ResourceSystem {
           Log_1.Log.Error("Resource", 1, "资源加载回调方法为空", ["path", e]),
         ResourceSystem.InvalidId
       );
-    if (o < 100 || o >= 105)
+    if (o < 100 || 105 <= o)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -388,8 +384,8 @@ class ResourceSystem {
         ResourceSystem.InvalidId
       );
     let r = ++ResourceSystem.hJ;
-    const c = void 0;
-    const a = ResourceSystem.nJ(e, s);
+    const c = void 0,
+      a = ResourceSystem.nJ(e, s);
     if (!a)
       return (
         ResourceSystem.zY.Push(
@@ -442,7 +438,7 @@ class ResourceSystem {
     return r;
   }
   static TryCallback(e, s, t, o) {
-    const r = cpp_1.KuroTime.GetMicroseconds64();
+    var r = cpp_1.KuroTime.GetMicroseconds64();
     try {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Resource", 31, "执行资源加载回调", ["path", t]),
@@ -483,12 +479,12 @@ class ResourceSystem {
     return ResourceSystem.$Y;
   }
   static SetLoadModeInLoading(e, s) {
-    let t;
-    s && s.length !== 0
+    var t;
+    s && 0 !== s.length
       ? ResourceSystem.uJ.has(s)
         ? ((t = ResourceSystem.uJ.get(s)), ResourceSystem.uJ.set(s, ++t))
         : (ResourceSystem.uJ.set(s, 1),
-          ResourceSystem.uJ.size > 1 ||
+          1 < ResourceSystem.uJ.size ||
             (Info_1.Info.IsPlayInEditor
               ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
                   e,
@@ -522,10 +518,10 @@ class ResourceSystem {
         Log_1.Log.Error("GameMode", 3, "SetLoadModeInLoading reason 为空");
   }
   static SetLoadModeInGame(e, s) {
-    const t = ResourceSystem.uJ.get(s);
+    var t = ResourceSystem.uJ.get(s);
     t
-      ? (t > 1 ? ResourceSystem.uJ.set(s, t - 1) : ResourceSystem.uJ.delete(s),
-        ResourceSystem.uJ.size > 0 ||
+      ? (1 < t ? ResourceSystem.uJ.set(s, t - 1) : ResourceSystem.uJ.delete(s),
+        0 < ResourceSystem.uJ.size ||
           (Info_1.Info.IsPlayInEditor
             ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
                 e,
@@ -581,4 +577,4 @@ class ResourceSystem {
   (ResourceSystem.InvalidId = -1),
   (ResourceSystem.uJ = new Map()),
   ResourceSystem.Initialize();
-// # sourceMappingURL=ResourceSystem.js.map
+//# sourceMappingURL=ResourceSystem.js.map

@@ -15,7 +15,7 @@ class SelectablePropData {
       (this.ChipPath = "");
   }
   GetIsLock() {
-    let t;
+    var t;
     return (
       !(
         this.IncId < 0 ||
@@ -27,4 +27,4 @@ class SelectablePropData {
   }
 }
 exports.SelectablePropData = SelectablePropData;
-// # sourceMappingURL=SelectablePropItemDefine.js.map
+//# sourceMappingURL=SelectablePropItemDefine.js.map

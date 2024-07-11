@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayCueFollow = void 0);
-const Rotator_1 = require("../../../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../../../Core/Utils/MathUtils");
-const EffectSystem_1 = require("../../../../../../Effect/EffectSystem");
-const GameplayCueEffect_1 = require("./GameplayCueEffect");
-const MAGIC_NUMBER = 0.1;
+const Rotator_1 = require("../../../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../../../Core/Utils/MathUtils"),
+  EffectSystem_1 = require("../../../../../../Effect/EffectSystem"),
+  GameplayCueEffect_1 = require("./GameplayCueEffect"),
+  MAGIC_NUMBER = 0.1;
 class GameplayCueFollow extends GameplayCueEffect_1.GameplayCueEffect {
   constructor() {
     super(...arguments),
@@ -49,7 +49,7 @@ class GameplayCueFollow extends GameplayCueEffect_1.GameplayCueEffect {
         Math.abs(this.CueConfig.FaultTolerance.Z),
       )),
       (this.NXo = this.CueConfig.FarthestDistance);
-    const t = Vector_1.Vector.Create(
+    var t = Vector_1.Vector.Create(
       this.CueConfig.LockRotation.X,
       this.CueConfig.LockRotation.Y,
       this.CueConfig.LockRotation.Z,
@@ -64,9 +64,7 @@ class GameplayCueFollow extends GameplayCueEffect_1.GameplayCueEffect {
   }
   kXo(t) {
     if (EffectSystem_1.EffectSystem.IsValid(this.EffectViewHandle)) {
-      const i = EffectSystem_1.EffectSystem.GetEffectActor(
-        this.EffectViewHandle,
-      );
+      var i = EffectSystem_1.EffectSystem.GetEffectActor(this.EffectViewHandle);
       if (
         (this.I1e.FromUeVector(i.K2_GetActorLocation()),
         this.sUo.FromUeRotator(i.K2_GetActorRotation()),
@@ -89,7 +87,7 @@ class GameplayCueFollow extends GameplayCueEffect_1.GameplayCueEffect {
             (this.xXo = this.TargetTransform.GetRotation().Rotator())),
         t)
       ) {
-        const s = Vector_1.Vector.Distance(this.I1e, this.Due);
+        var s = Vector_1.Vector.Distance(this.I1e, this.Due);
         if (s < MAGIC_NUMBER) return void (this.zje = !1);
         this.FXo(this.I1e, this.Due),
           this.VXo(this.I1e, this.Due, this.sUo, this.xXo, s),
@@ -126,7 +124,7 @@ class GameplayCueFollow extends GameplayCueEffect_1.GameplayCueEffect {
     }
   }
   FXo(t, i) {
-    let s, h;
+    var s, h;
     !this.zje &&
       ((i.X = MathUtils_1.MathUtils.Clamp(
         t.X,
@@ -159,4 +157,4 @@ class GameplayCueFollow extends GameplayCueEffect_1.GameplayCueEffect {
   }
 }
 exports.GameplayCueFollow = GameplayCueFollow;
-// # sourceMappingURL=GameplayCueFollow.js.map
+//# sourceMappingURL=GameplayCueFollow.js.map

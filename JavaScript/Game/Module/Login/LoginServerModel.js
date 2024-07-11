@@ -7,17 +7,17 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.LoginPlayerInfo =
     exports.DEFAULTPING =
       void 0);
-const UE = require("ue");
-const Json_1 = require("../../../Core/Common/Json");
-const Log_1 = require("../../../Core/Common/Log");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController");
-const LocalStorage_1 = require("../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../Common/LocalStorageDefine");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const DEFAULTSERVERREGION = "America";
-const CNSERVERNAME = "Default";
+const UE = require("ue"),
+  Json_1 = require("../../../Core/Common/Json"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController"),
+  LocalStorage_1 = require("../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  DEFAULTSERVERREGION = "America",
+  CNSERVERNAME = "Default";
 exports.DEFAULTPING = 9999;
 class LoginPlayerInfo extends Json_1.JsonObjBase {
   constructor() {
@@ -69,7 +69,7 @@ class LoginServerModel extends ModelBase_1.ModelBase {
     let e =
       BaseConfigController_1.BaseConfigController.GetPublicValue("SdkArea");
     return (
-      e !== "CN" && this.CurrentSelectServerData
+      "CN" !== e && this.CurrentSelectServerData
         ? ((e = this.CurrentSelectServerData.Region),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("Pay", 28, "海外支付区域", ["area", e]))
@@ -78,21 +78,21 @@ class LoginServerModel extends ModelBase_1.ModelBase {
     );
   }
   GetCurrentLoginServerId() {
-    let e;
+    var e;
     return ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
       ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk()
       ? this.CurrentSelectServerData
         ? this.CurrentSelectServerData.id
         : ""
       : (e = BaseConfigController_1.BaseConfigController.GetLoginServers()) &&
-          e.length > 0
+          0 < e.length
         ? e[0].id
         : (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Login", 28, "当前没有服务器，请检查CDN配置"),
           "");
   }
   IsFirstLogin(e) {
-    const r = LocalStorage_1.LocalStorage.GetGlobal(
+    var r = LocalStorage_1.LocalStorage.GetGlobal(
       LocalStorageDefine_1.ELocalStorageGlobalKey.SdkLastTimeLoginData,
     );
     return (
@@ -108,7 +108,7 @@ class LoginServerModel extends ModelBase_1.ModelBase {
     );
   }
   LastTimeLoginData(e) {
-    const r = LocalStorage_1.LocalStorage.GetGlobal(
+    var r = LocalStorage_1.LocalStorage.GetGlobal(
       LocalStorageDefine_1.ELocalStorageGlobalKey.SdkLastTimeLoginData,
     );
     if (r?.has(e))
@@ -126,7 +126,7 @@ class LoginServerModel extends ModelBase_1.ModelBase {
       );
   }
   SaveFirstLogin(e, r) {
-    let o = LocalStorage_1.LocalStorage.GetGlobal(
+    var o = LocalStorage_1.LocalStorage.GetGlobal(
       LocalStorageDefine_1.ELocalStorageGlobalKey.SdkLastTimeLoginData,
     );
     const t = new Map();
@@ -145,8 +145,8 @@ class LoginServerModel extends ModelBase_1.ModelBase {
     this.RMi.set(e, r);
   }
   RefreshIpPing(r, o) {
-    const t = Array.from(this.RMi.keys());
-    const i = t.length;
+    var t = Array.from(this.RMi.keys()),
+      i = t.length;
     for (let e = 0; e < i; e++)
       t[e].PingUrl === r &&
         (Log_1.Log.CheckDebug() &&
@@ -160,8 +160,8 @@ class LoginServerModel extends ModelBase_1.ModelBase {
     this.DMi.set(e, r);
   }
   FindIpServerData(r) {
-    const o = Array.from(this.RMi.keys());
-    const t = o.length;
+    var o = Array.from(this.RMi.keys()),
+      t = o.length;
     for (let e = 0; e < t; e++)
       if (o[e].ip === r.Ip && o[e].Region === r.Region) return o[e];
   }
@@ -172,18 +172,18 @@ class LoginServerModel extends ModelBase_1.ModelBase {
       (this.OnBeginSuggestServerData = this.CurrentSelectServerData),
       this.OnBeginSuggestServerData ||
         ((e = BaseConfigController_1.BaseConfigController.GetLoginServers()) &&
-          e.length > 0 &&
+          0 < e.length &&
           ((this.OnBeginSuggestServerData = e[0]),
           (this.CurrentSelectServerData = e[0]))),
       r?.(this.CurrentSelectServerData);
   }
   UMi(e) {
-    const r = Array.from(this.RMi.keys());
-    const o = r.length;
-    const t =
-      (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Login", 28, "GetSuggestServerData"),
-      this.GetPlayerLoginInfo(e));
+    var r = Array.from(this.RMi.keys()),
+      o = r.length,
+      t =
+        (Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug("Login", 28, "GetSuggestServerData"),
+        this.GetPlayerLoginInfo(e));
     if (!t)
       return (e = this.LastTimeLoginData(e))
         ? (Log_1.Log.CheckDebug() &&
@@ -196,15 +196,15 @@ class LoginServerModel extends ModelBase_1.ModelBase {
             Log_1.Log.Debug("Login", 28, "没有拿到服务器推荐返回低Ping"),
           this.AMi(DEFAULTSERVERREGION));
     let i = "";
-    if (t.UserInfos.length > 0) {
-      const n = t.UserInfos[0].LastOnlineTime;
-      const a = ((i = t.UserInfos[0].Region), t.UserInfos.length);
+    if (0 < t.UserInfos.length) {
+      var n = t.UserInfos[0].LastOnlineTime,
+        a = ((i = t.UserInfos[0].Region), t.UserInfos.length);
       for (let e = 0; e < a; e++)
         t.UserInfos[e].LastOnlineTime > n && (i = t.UserInfos[e].Region);
     }
-    if (i !== "") {
-      let s;
-      var e = this.PMi(i);
+    if ("" !== i) {
+      var s,
+        e = this.PMi(i);
       if (e)
         return (
           (s = new RegionAndIpSt()).Phrase(e.Region, e.ip),
@@ -216,7 +216,7 @@ class LoginServerModel extends ModelBase_1.ModelBase {
           s
         );
     }
-    const g = t.RecommendRegion;
+    var g = t.RecommendRegion;
     for (let e = 0; e < o; e++)
       if (r[e].Region === g) {
         if (this.xMi())
@@ -227,7 +227,7 @@ class LoginServerModel extends ModelBase_1.ModelBase {
             L
           );
         var L = this.RMi.get(r[e]);
-        if (L && L > 100)
+        if (L && 100 < L)
           return (
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
@@ -238,31 +238,31 @@ class LoginServerModel extends ModelBase_1.ModelBase {
             this.AMi(DEFAULTSERVERREGION)
           );
         Log_1.Log.CheckDebug() && Log_1.Log.Debug("Login", 28, "返回推荐");
-        const l = new RegionAndIpSt();
+        var l = new RegionAndIpSt();
         return l.Phrase(r[e].Region, r[e].ip), l;
       }
     return this.AMi(DEFAULTSERVERREGION);
   }
   PMi(r) {
-    const o = Array.from(this.RMi.keys());
-    const t = o.length;
+    var o = Array.from(this.RMi.keys()),
+      t = o.length;
     for (let e = 0; e < t; e++) if (o[e].Region === r) return o[e];
   }
   xMi() {
-    const r = Array.from(this.RMi.keys());
-    const o = r.length;
+    var r = Array.from(this.RMi.keys()),
+      o = r.length;
     for (let e = 0; e < o; e++) {
-      const t = this.RMi.get(r[e]);
+      var t = this.RMi.get(r[e]);
       if (t && t < 100) return !1;
     }
     return !0;
   }
   AMi(r) {
-    const o = Array.from(this.RMi.keys());
-    const t = o.length;
-    let i = exports.DEFAULTPING;
-    let n = "";
-    const a = new RegionAndIpSt();
+    var o = Array.from(this.RMi.keys()),
+      t = o.length;
+    let i = exports.DEFAULTPING,
+      n = "";
+    var a = new RegionAndIpSt();
     for (let e = 0; e < t; e++)
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Login", 28, "区域ping", [
@@ -284,9 +284,9 @@ class LoginServerModel extends ModelBase_1.ModelBase {
     );
   }
   GetLoginLevel(e, r) {
-    const o = this.GetPlayerLoginInfo(e);
+    var o = this.GetPlayerLoginInfo(e);
     if (o) {
-      const t = o.UserInfos?.length ?? 0;
+      var t = o.UserInfos?.length ?? 0;
       for (let e = 0; e < t; e++)
         if (o.UserInfos[e]?.Region === r) return o.UserInfos[e].Level;
       return 0;
@@ -298,23 +298,23 @@ class LoginServerModel extends ModelBase_1.ModelBase {
     );
   }
   wMi(e, r) {
-    const o = LocalStorage_1.LocalStorage.GetGlobal(
+    var o = LocalStorage_1.LocalStorage.GetGlobal(
       LocalStorageDefine_1.ELocalStorageGlobalKey.SdkLevelData,
     );
     if (o?.has(e)) {
-      const t = o.get(e);
-      const i = t.length;
+      var t = o.get(e),
+        i = t.length;
       for (let e = 0; e < i; e++) if (t[e].Region === r) return t[e].Level;
     }
     return 0;
   }
   GetCurrentArea() {
-    const e = UE.KuroStaticLibrary.GetCultureRegion().split("-");
-    const r = e.length;
-    return r > 1 ? e[r - 1] : "US";
+    var e = UE.KuroStaticLibrary.GetCultureRegion().split("-"),
+      r = e.length;
+    return 1 < r ? e[r - 1] : "US";
   }
   SaveLocalRegionLevel(e, r, o) {
-    let t = LocalStorage_1.LocalStorage.GetGlobal(
+    var t = LocalStorage_1.LocalStorage.GetGlobal(
       LocalStorageDefine_1.ELocalStorageGlobalKey.SdkLevelData,
     );
     const i = new Map();
@@ -322,7 +322,7 @@ class LoginServerModel extends ModelBase_1.ModelBase {
       i.set(r, e);
     });
     let n = i.get(e);
-    const a = (n = n || new Array()).length;
+    var a = (n = n || new Array()).length;
     let s = !1;
     for (let e = 0; e < a; e++)
       if (n[e].Region === r) {
@@ -341,4 +341,4 @@ class LoginServerModel extends ModelBase_1.ModelBase {
   }
 }
 exports.LoginServerModel = LoginServerModel;
-// # sourceMappingURL=LoginServerModel.js.map
+//# sourceMappingURL=LoginServerModel.js.map

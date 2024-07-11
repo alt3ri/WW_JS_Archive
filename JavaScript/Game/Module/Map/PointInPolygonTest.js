@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PointInPolygonTest = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector2D_1 = require("../../../Core/Utils/Math/Vector2D");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector2D_1 = require("../../../Core/Utils/Math/Vector2D"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils");
 class PointInPolygonTest {
   constructor() {
     (this.$Di =
@@ -17,7 +17,7 @@ class PointInPolygonTest {
       (this.zDi = Vector2D_1.Vector2D.Create());
   }
   InitSpline() {
-    const t = this.$Di;
+    var t = this.$Di;
     this.IsSplineInit ||
       ResourceSystem_1.ResourceSystem.LoadAsync(t, UE.Class, (t) => {
         this.zwe(t), (this.IsSplineInit = !0), this.Zwe(this.JDi, 30, this.YDi);
@@ -38,18 +38,18 @@ class PointInPolygonTest {
         void 0,
         !1,
       ));
-    const r = e.Spline;
-    var i = r.GetNumberOfSplinePoints();
+    var r = e.Spline,
+      i = r.GetNumberOfSplinePoints();
     this.JDi.slice(0, i);
     for (let t = 0, e = i; t < e; t++) {
-      const s = r.GetWorldLocationAtSplinePoint(t);
+      var s = r.GetWorldLocationAtSplinePoint(t);
       this.JDi.push(new Vector2D_1.Vector2D(s.X, s.Y));
     }
     t.K2_DestroyActor();
   }
   eBe(t, e, r, i, s) {
-    let o = r;
-    let h = i;
+    let o = r,
+      h = i;
     i < r && ((o = i), (h = r)),
       s.Bins[t].MinX > o && (s.Bins[t].MinX = o),
       s.Bins[t].MaxX < h && (s.Bins[t].MaxX = h),
@@ -59,21 +59,21 @@ class PointInPolygonTest {
   BinTest(t) {
     if (!this.IsSplineInit) return !0;
     this.zDi.Set(t.X, t.Y);
-    const e = this.zDi;
-    var t = this.YDi;
-    const r = this.JDi;
+    var e = this.zDi,
+      t = this.YDi,
+      r = this.JDi;
     if (e.Y < t.MinY || e.Y >= t.MaxY || e.X < t.MinX || e.X >= t.MaxX)
       return !1;
-    const i = Math.floor((e.Y - t.MinY) * t.InvDeltaY);
-    var t = t.Bins[i];
+    var i = Math.floor((e.Y - t.MinY) * t.InvDeltaY),
+      t = t.Bins[i];
     if (e.X < t.MinX || e.X > t.MaxX) return !1;
-    let s;
-    let o;
-    let h;
-    const a = t.EdgeSet;
-    const l = t.Count;
-    let n = 0;
-    let c = !1;
+    var s,
+      o,
+      h,
+      a = t.EdgeSet,
+      l = t.Count;
+    let n = 0,
+      c = !1;
     for (let t = 0; t < l; t++, n++) {
       if (e.X < a[n].MinX) {
         do {
@@ -94,13 +94,13 @@ class PointInPolygonTest {
     return c;
   }
   Zwe(e, t, o) {
-    const r = new Array(t);
+    var r = new Array(t);
     (o.BinNum = t),
       (o.Bins = new Array(t)),
       (o.MinX = o.MaxX = e[0].X),
       (o.MinY = o.MaxY = e[0].Y);
     for (let t = 1; t < e.length; t++) {
-      const i = e[t];
+      var i = e[t];
       o.MinX > i.X ? (o.MinX = i.X) : o.MaxX < i.X && (o.MaxX = i.X),
         o.MinY > i.Y ? (o.MinY = i.Y) : o.MaxY < i.Y && (o.MaxY = i.Y);
     }
@@ -108,15 +108,15 @@ class PointInPolygonTest {
       (o.MaxY += MathUtils_1.MathUtils.SmallNumber * (o.MaxY - o.MinY)),
       (o.DeltaY = (o.MaxY - o.MinY) / t),
       (o.InvDeltaY = 1 / o.DeltaY);
-    let h = e[e.length - 1];
-    let a = void 0;
-    let l = void 0;
-    let n = void 0;
+    let h = e[e.length - 1],
+      a = void 0,
+      l = void 0,
+      n = void 0;
     for (let t = 0; t < e.length; t++) {
       if (((a = e[t]), h.Y !== a.Y)) {
         n = h.Y < a.Y ? ((l = a), h) : ((l = h), a);
-        const s = Math.floor((n.Y - o.MinY) * o.InvDeltaY);
-        const c = (l.Y - o.MinY) * o.InvDeltaY;
+        var s = Math.floor((n.Y - o.MinY) * o.InvDeltaY),
+          c = (l.Y - o.MinY) * o.InvDeltaY;
         let e = Math.floor(c);
         c - e == 0 && (e -= 1);
         for (let t = s; t <= e; t++) r[t] = (r[t] ?? 0) + 1;
@@ -125,7 +125,7 @@ class PointInPolygonTest {
     }
     for (let e = 0; e < t; e++) {
       o.Bins[e] = new Bin();
-      const _ = new Array(r[e]);
+      var _ = new Array(r[e]);
       for (let t = 0; t < r[e]; t++) _[t] = new Edge();
       (o.Bins[e].EdgeSet = _),
         (o.Bins[e].MinX = o.MaxX),
@@ -136,19 +136,19 @@ class PointInPolygonTest {
     let u = e.length - 1;
     for (let t = 0; t < e.length; t++) {
       if (((a = e[t]), h.Y !== a.Y)) {
-        const v =
-          ((n = h.Y < a.Y ? ((l = a), h) : ((l = h), a)).Y - o.MinY) *
-          o.InvDeltaY;
-        const d = Math.floor(v);
-        let f = (l.Y - o.MinY) * o.InvDeltaY;
-        let e = Math.floor(f);
-        let r = (f - e == 0 && (e -= 1), n.X);
-        const M = (o.DeltaY * (l.X - n.X)) / (l.Y - n.Y);
-        let i = r;
-        let s = !1;
+        var v =
+            ((n = h.Y < a.Y ? ((l = a), h) : ((l = h), a)).Y - o.MinY) *
+            o.InvDeltaY,
+          d = Math.floor(v),
+          f = (l.Y - o.MinY) * o.InvDeltaY;
+        let e = Math.floor(f),
+          r = (f - e == 0 && (e -= 1), n.X);
+        var M = (o.DeltaY * (l.X - n.X)) / (l.Y - n.Y);
+        let i = r,
+          s = !1;
         for (let t = d; t < e; t++, r = i) {
           i = n.X + (t + 1 - v) * M;
-          const y = o.Bins[t].Count;
+          var y = o.Bins[t].Count;
           o.Bins[t].Count++,
             (o.Bins[t].EdgeSet[y].Id = u),
             (o.Bins[t].EdgeSet[y].FullCross = s),
@@ -192,4 +192,4 @@ class BinSet {
       (this.MinY = 0);
   }
 }
-// # sourceMappingURL=PointInPolygonTest.js.map
+//# sourceMappingURL=PointInPolygonTest.js.map

@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceAllView = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const Global_1 = require("../../../Global");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const TeamRoleSelectView_1 = require("../../RoleSelect/TeamRoleSelectView");
-const RoleController_1 = require("../../RoleUi/RoleController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const AdviceController_1 = require("../AdviceController");
-const AdivceSelectItem_1 = require("./AdivceSelectItem");
-const AdviceAllViewShowContent_1 = require("./AdviceAllViewShowContent");
-const AdviceSelectMotionItem_1 = require("./AdviceSelectMotionItem");
-const CHECKTIMEER = 1e3;
-const ANIMATIONGAP = 5e3;
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../Global"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  TeamRoleSelectView_1 = require("../../RoleSelect/TeamRoleSelectView"),
+  RoleController_1 = require("../../RoleUi/RoleController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  AdviceController_1 = require("../AdviceController"),
+  AdivceSelectItem_1 = require("./AdivceSelectItem"),
+  AdviceAllViewShowContent_1 = require("./AdviceAllViewShowContent"),
+  AdviceSelectMotionItem_1 = require("./AdviceSelectMotionItem"),
+  CHECKTIMEER = 1e3,
+  ANIMATIONGAP = 5e3;
 class AdviceAllView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -42,7 +42,7 @@ class AdviceAllView extends UiViewBase_1.UiViewBase {
         AdviceController_1.AdviceController.OpenAdviceView();
       }),
       (this.a9e = () => {
-        let e, t, i;
+        var e, t, i;
         ModelManager_1.ModelManager.AdviceModel.GetIfCanCreateAdvice(
           ModelManager_1.ModelManager.AdviceModel.CurrentLineModel,
         )
@@ -77,31 +77,31 @@ class AdviceAllView extends UiViewBase_1.UiViewBase {
         this.l9e(e);
       }),
       (this._9e = () => {
-        var e = ModelManager_1.ModelManager.AdviceModel.PreSelectRoleId;
-        var e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(e);
-        const t = ModelManager_1.ModelManager.RoleModel.GetRoleList();
-        var e = new TeamRoleSelectView_1.TeamRoleSelectViewData(
-          1,
-          e.GetRoleId(),
-          t,
-          this.h9e,
-          void 0,
-        );
+        var e = ModelManager_1.ModelManager.AdviceModel.PreSelectRoleId,
+          e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(e),
+          t = ModelManager_1.ModelManager.RoleModel.GetRoleList(),
+          e = new TeamRoleSelectView_1.TeamRoleSelectViewData(
+            1,
+            e.GetRoleId(),
+            t,
+            this.h9e,
+            void 0,
+          );
         RoleController_1.RoleController.OpenTeamRoleSelectView(e);
       }),
       (this.u9e = () => {
-        const e = ModelManager_1.ModelManager.AdviceModel.PreSelectAdviceItemId;
-        e === 0
+        var e = ModelManager_1.ModelManager.AdviceModel.PreSelectAdviceItemId;
+        0 === e
           ? this.c9e(0)
-          : e === 1
+          : 1 === e
             ? this.m9e()
-            : e === 2
+            : 2 === e
               ? this.c9e(1)
-              : e === 3
+              : 3 === e
                 ? this.d9e()
-                : e === 5
+                : 5 === e
                   ? this.C9e()
-                  : e === 6 && this.g9e(),
+                  : 6 === e && this.g9e(),
           this.f9e();
       }),
       (this.d9e = () => {
@@ -137,20 +137,20 @@ class AdviceAllView extends UiViewBase_1.UiViewBase {
           );
       }),
       (this.S9e = () => {
-        this.Z8e === 0 ? (this.Z8e = 1) : (this.Z8e = 0),
-          this.Z8e === 0 ? this.x8e.HideAnimation() : this.p9e(),
+        0 === this.Z8e ? (this.Z8e = 1) : (this.Z8e = 0),
+          0 === this.Z8e ? this.x8e.HideAnimation() : this.p9e(),
           this.Og();
       }),
       (this.f9e = () => {
-        var e = ModelManager_1.ModelManager.AdviceModel.GetAdviceArray();
-        var t =
-          CommonParamById_1.configCommonParamById.GetIntConfig(
-            "AdviceCreateLimit",
-          ) ?? 0;
-        var e = e.length >= t;
-        var t = ModelManager_1.ModelManager.AdviceModel.GetIfCanCreateAdvice(
-          ModelManager_1.ModelManager.AdviceModel.CurrentLineModel,
-        );
+        var e = ModelManager_1.ModelManager.AdviceModel.GetAdviceArray(),
+          t =
+            CommonParamById_1.configCommonParamById.GetIntConfig(
+              "AdviceCreateLimit",
+            ) ?? 0,
+          e = e.length >= t,
+          t = ModelManager_1.ModelManager.AdviceModel.GetIfCanCreateAdvice(
+            ModelManager_1.ModelManager.AdviceModel.CurrentLineModel,
+          );
         e || !t
           ? this.GetButton(4).SetSelfInteractive(!1)
           : this.GetButton(4).SetSelfInteractive(!0),
@@ -255,8 +255,8 @@ class AdviceAllView extends UiViewBase_1.UiViewBase {
       );
   }
   y9e() {
-    let e;
-    const t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var e,
+      t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     t.Valid &&
       ((e = t.Entity.GetComponent(185)),
       (this.r9e = e.HasTag(1996802261)),
@@ -280,7 +280,7 @@ class AdviceAllView extends UiViewBase_1.UiViewBase {
     AdviceController_1.AdviceController.OpenAdviceConjunctionSelectView();
   }
   g9e() {
-    ModelManager_1.ModelManager.AdviceModel.CurrentLineModel === 0
+    0 === ModelManager_1.ModelManager.AdviceModel.CurrentLineModel
       ? (ModelManager_1.ModelManager.AdviceModel.CurrentLineModel = 1)
       : ((ModelManager_1.ModelManager.AdviceModel.CurrentLineModel = 0),
         ModelManager_1.ModelManager.AdviceModel.OnChangeSentence(1),
@@ -299,7 +299,7 @@ class AdviceAllView extends UiViewBase_1.UiViewBase {
   }
   E9e() {
     (this.Uqe += CHECKTIMEER),
-      this.Uqe >= ANIMATIONGAP && this.Z8e !== 0 && this.p9e();
+      this.Uqe >= ANIMATIONGAP && 0 !== this.Z8e && this.p9e();
   }
   L9e() {
     this.D9e(),
@@ -311,7 +311,7 @@ class AdviceAllView extends UiViewBase_1.UiViewBase {
         ModelManager_1.ModelManager.AdviceModel.GetAdviceCreateActor());
   }
   D9e() {
-    this.z8e > 0 &&
+    0 < this.z8e &&
       (ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.Enable(
         this.z8e,
         "AdviceAllView.TryEnableEntity",
@@ -322,13 +322,13 @@ class AdviceAllView extends UiViewBase_1.UiViewBase {
     this.R9e(), this.U9e(), this.M9e(), this.f9e(), this.i9e.RefreshView();
   }
   U9e() {
-    this.Z8e === 1
+    1 === this.Z8e
       ? LguiUtil_1.LguiUtil.SetLocalText(this.GetText(3), "Motion")
       : LguiUtil_1.LguiUtil.SetLocalText(this.GetText(3), "TextAndExpression");
   }
   R9e() {
     let e = !1;
-    let t;
+    var t;
     ModelManager_1.ModelManager.AdviceModel.GetCreateConditionState() ||
       ((t = ModelManager_1.ModelManager.AdviceModel.CheckIfMaxAdvice()),
       (e =
@@ -346,7 +346,7 @@ class AdviceAllView extends UiViewBase_1.UiViewBase {
         this.GetItem(9).SetUIActive(!0),
         this.GetButton(4).RootUIComp.SetUIActive(!0),
         this.i9e.SetActive(!0),
-        this.Z8e === 1
+        1 === this.Z8e
           ? (this.e9e.SetActive(!1),
             this.t9e.SetActive(!0),
             this.GetItem(13).SetUIActive(!0),
@@ -369,11 +369,11 @@ class AdviceAllView extends UiViewBase_1.UiViewBase {
     );
   }
   M9e() {
-    const e = ModelManager_1.ModelManager.AdviceModel.GetAdviceArray();
-    const t =
-      CommonParamById_1.configCommonParamById.GetIntConfig(
-        "AdviceCreateLimit",
-      ) ?? 0;
+    var e = ModelManager_1.ModelManager.AdviceModel.GetAdviceArray(),
+      t =
+        CommonParamById_1.configCommonParamById.GetIntConfig(
+          "AdviceCreateLimit",
+        ) ?? 0;
     this.GetItem(10).SetUIActive(e.length >= t);
   }
   OnBeforeDestroy() {
@@ -383,4 +383,4 @@ class AdviceAllView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.AdviceAllView = AdviceAllView;
-// # sourceMappingURL=AdviceAllView.js.map
+//# sourceMappingURL=AdviceAllView.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelCodeConditionCheckGroup = void 0);
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const LevelGeneralController_1 = require("../LevelGeneralController");
+const LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  LevelGeneralController_1 = require("../LevelGeneralController");
 class LevelCodeConditionCheckGroup extends LevelGeneralBase_1.LevelConditionBase {
   CheckNew(e, r, l) {
     return (
@@ -17,4 +17,4 @@ class LevelCodeConditionCheckGroup extends LevelGeneralBase_1.LevelConditionBase
   }
 }
 exports.LevelCodeConditionCheckGroup = LevelCodeConditionCheckGroup;
-// # sourceMappingURL=LevelCodeConditionCheckGroup.js.map
+//# sourceMappingURL=LevelCodeConditionCheckGroup.js.map

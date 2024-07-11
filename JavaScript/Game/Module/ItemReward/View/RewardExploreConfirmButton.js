@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RewardExploreConfirmButton = void 0);
-const UE = require("ue");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class RewardExploreConfirmButton extends UiPanelBase_1.UiPanelBase {
   constructor(i, t) {
     super(),
@@ -21,12 +21,12 @@ class RewardExploreConfirmButton extends UiPanelBase_1.UiPanelBase {
             this.g0i.OnTimeDownOnCallback && this.g0i.OnTimeDownOnCallback(),
             this.g0i.IsTimeDownCloseView) &&
             UiManager_1.UiManager.CloseView("ExploreRewardView");
-        const i = this.g0i.DescriptionTextId;
-        const t = this.GetText(2);
+        var i = this.g0i.DescriptionTextId,
+          t = this.GetText(2);
         LguiUtil_1.LguiUtil.SetLocalTextNew(t, i, this.f0i);
       }),
       (this.m2e = () => {
-        const i = this.g0i.OnClickedCallback;
+        var i = this.g0i.OnClickedCallback;
         i && i(this.S0i),
           this.g0i.IsClickedCloseView &&
             UiManager_1.UiManager.CloseView("ExploreRewardView");
@@ -52,18 +52,18 @@ class RewardExploreConfirmButton extends UiPanelBase_1.UiPanelBase {
     this.y0i(i), i && this.I0i();
   }
   E0i(i) {
-    const t = this.GetText(0);
+    var t = this.GetText(0);
     LguiUtil_1.LguiUtil.SetLocalTextNew(t, i);
   }
   y0i(i) {
     this.GetItem(1).SetUIActive(i);
   }
   I0i() {
-    const i = this.g0i.DescriptionTextId;
-    const t = this.g0i.DescriptionArgs;
-    const e = this.g0i.TimeDown;
-    const s = this.GetText(2);
-    e && e > 0
+    var i = this.g0i.DescriptionTextId,
+      t = this.g0i.DescriptionArgs,
+      e = this.g0i.TimeDown,
+      s = this.GetText(2);
+    e && 0 < e
       ? (LguiUtil_1.LguiUtil.SetLocalTextNew(
           s,
           i,
@@ -83,4 +83,4 @@ class RewardExploreConfirmButton extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RewardExploreConfirmButton = RewardExploreConfirmButton;
-// # sourceMappingURL=RewardExploreConfirmButton.js.map
+//# sourceMappingURL=RewardExploreConfirmButton.js.map

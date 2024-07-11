@@ -12,7 +12,7 @@ class CheckEntityStateNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   OnCreate(e) {
     if (!super.OnCreate(e)) return !1;
     e = e.Condition;
-    if (e.Type !== "CheckEntityState") return !1;
+    if ("CheckEntityState" !== e.Type) return !1;
     if (e.Conditions) {
       this.PQt = [];
       for (const t of e.Conditions) this.PQt.push(t.EntityId);
@@ -30,4 +30,4 @@ class CheckEntityStateNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   }
 }
 exports.CheckEntityStateNode = CheckEntityStateNode;
-// # sourceMappingURL=CheckEntityStateNode.js.map
+//# sourceMappingURL=CheckEntityStateNode.js.map

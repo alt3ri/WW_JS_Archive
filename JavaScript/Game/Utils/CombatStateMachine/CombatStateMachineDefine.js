@@ -1,5 +1,5 @@
 "use strict";
-let Fsm;
+var Fsm;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Fsm = void 0),
   (function (s) {
@@ -378,4 +378,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       }
     };
   })((Fsm = exports.Fsm || (exports.Fsm = {})));
-// # sourceMappingURL=CombatStateMachineDefine.js.map
+//# sourceMappingURL=CombatStateMachineDefine.js.map

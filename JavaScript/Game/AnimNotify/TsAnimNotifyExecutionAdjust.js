@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Protocol_1 = require("../../Core/Define/Net/Protocol");
-const QueryTypeDefine_1 = require("../../Core/Define/QueryTypeDefine");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const TraceElementCommon_1 = require("../../Core/Utils/TraceElementCommon");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const GlobalData_1 = require("../GlobalData");
-const PROFILE_KEY = "FightCameraLogicComponent_CheckCollision_ExecutionAdjust";
-const AIRWALL_PORFILENAME = "InvisibleWall";
+const UE = require("ue"),
+  Protocol_1 = require("../../Core/Define/Net/Protocol"),
+  QueryTypeDefine_1 = require("../../Core/Define/QueryTypeDefine"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  TraceElementCommon_1 = require("../../Core/Utils/TraceElementCommon"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  GlobalData_1 = require("../GlobalData"),
+  PROFILE_KEY = "FightCameraLogicComponent_CheckCollision_ExecutionAdjust",
+  AIRWALL_PORFILENAME = "InvisibleWall";
 class TsAnimNotifyExecutionAdjust extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.DetectionRadius = 100), (this.CaughtId = "");
@@ -16,22 +16,22 @@ class TsAnimNotifyExecutionAdjust extends UE.KuroAnimNotify {
   K2_Notify(e, t) {
     e = e.GetOwner();
     if (e instanceof TsBaseCharacter_1.default) {
-      let o = e.CharacterActorComponent.Entity.GetComponent(43);
+      var o = e.CharacterActorComponent.Entity.GetComponent(43);
       if (o) {
         o = o.PendingCaughtList.get(this.CaughtId);
         if (o) {
           TsAnimNotifyExecutionAdjust.InitTrace();
-          let i;
-          let r = e.CharacterActorComponent?.ActorLocationProxy;
-          const s = TsAnimNotifyExecutionAdjust.SphereTrace;
-          let n =
-            (TraceElementCommon_1.TraceElementCommon.SetStartLocation(s, r),
-            TraceElementCommon_1.TraceElementCommon.SetEndLocation(s, r),
-            (s.Radius = this.DetectionRadius),
-            TraceElementCommon_1.TraceElementCommon.SphereTrace(
-              s,
-              PROFILE_KEY,
-            ));
+          var i,
+            r = e.CharacterActorComponent?.ActorLocationProxy,
+            s = TsAnimNotifyExecutionAdjust.SphereTrace,
+            n =
+              (TraceElementCommon_1.TraceElementCommon.SetStartLocation(s, r),
+              TraceElementCommon_1.TraceElementCommon.SetEndLocation(s, r),
+              (s.Radius = this.DetectionRadius),
+              TraceElementCommon_1.TraceElementCommon.SphereTrace(
+                s,
+                PROFILE_KEY,
+              ));
           if (n) {
             let t = !1;
             for (let e = 0; e < s.HitResult.GetHitCount(); e++)
@@ -91,4 +91,4 @@ class TsAnimNotifyExecutionAdjust extends UE.KuroAnimNotify {
 }
 (TsAnimNotifyExecutionAdjust.SphereTrace = void 0),
   (exports.default = TsAnimNotifyExecutionAdjust);
-// # sourceMappingURL=TsAnimNotifyExecutionAdjust.js.map
+//# sourceMappingURL=TsAnimNotifyExecutionAdjust.js.map

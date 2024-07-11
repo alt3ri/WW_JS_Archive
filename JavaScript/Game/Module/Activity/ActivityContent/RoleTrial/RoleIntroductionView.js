@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleIntroductionView = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringBuilder_1 = require("../../../../../Core/Utils/StringBuilder");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const BigElementItem_1 = require("../../../Common/BigElementItem");
-const RoleSkillInputItem_1 = require("../../../RoleUi/RoleSkill/RoleSkillInputItem");
-const SimpleGenericLayout_1 = require("../../../Util/Layout/SimpleGenericLayout");
-const GenericScrollView_1 = require("../../../Util/ScrollView/GenericScrollView");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringBuilder_1 = require("../../../../../Core/Utils/StringBuilder"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  BigElementItem_1 = require("../../../Common/BigElementItem"),
+  RoleSkillInputItem_1 = require("../../../RoleUi/RoleSkill/RoleSkillInputItem"),
+  SimpleGenericLayout_1 = require("../../../Util/Layout/SimpleGenericLayout"),
+  GenericScrollView_1 = require("../../../Util/ScrollView/GenericScrollView");
 class RoleIntroductionView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -43,7 +43,7 @@ class RoleIntroductionView extends UiViewBase_1.UiViewBase {
   }
   async OnBeforeStartAsync() {
     this.e2e = new BigElementItem_1.BigElementItem();
-    const i = this.GetItem(4);
+    var i = this.GetItem(4);
     await this.e2e.CreateByActorAsync(i.GetOwner());
   }
   OnStart() {
@@ -58,29 +58,29 @@ class RoleIntroductionView extends UiViewBase_1.UiViewBase {
       this.Refresh();
   }
   Refresh() {
-    let i =
-      ConfigManager_1.ConfigManager.RoleSkillConfig.GetRoleSkillInputConfigById(
-        this.zke,
-      );
-    var e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(this.zke);
+    var i =
+        ConfigManager_1.ConfigManager.RoleSkillConfig.GetRoleSkillInputConfigById(
+          this.zke,
+        ),
+      e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(this.zke);
     if (i && e) {
-      const r = this.GetTexture(1);
-      const s =
-        (r.SetUIActive(!1),
-        this.SetRoleIcon(e.FormationRoleCard, r, this.zke, void 0, () => {
-          r.SetUIActive(!0);
-        }),
-        this.GetText(3).ShowTextNew(e.Name),
-        this.e2e.Refresh(e.ElementId),
-        this.e2e.SetUiActive(!0),
-        this.$be.RebuildLayout(e.QualityId),
-        this.GetTexture(5));
+      const r = this.GetTexture(1),
+        s =
+          (r.SetUIActive(!1),
+          this.SetRoleIcon(e.FormationRoleCard, r, this.zke, void 0, () => {
+            r.SetUIActive(!0);
+          }),
+          this.GetText(3).ShowTextNew(e.Name),
+          this.e2e.Refresh(e.ElementId),
+          this.e2e.SetUiActive(!0),
+          this.$be.RebuildLayout(e.QualityId),
+          this.GetTexture(5));
       s.SetUIActive(!1),
         this.SetTextureByPath(i.Icon, s, void 0, () => {
           s.SetUIActive(!0);
         });
-      var e = i.DescList;
-      const t = new StringBuilder_1.StringBuilder();
+      var e = i.DescList,
+        t = new StringBuilder_1.StringBuilder();
       for (const n of e)
         t.Append(MultiTextLang_1.configMultiTextLang.GetLocalTextNew(n)),
           t.Append("\n");
@@ -103,4 +103,4 @@ class RoleIntroductionView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RoleIntroductionView = RoleIntroductionView;
-// # sourceMappingURL=RoleIntroductionView.js.map
+//# sourceMappingURL=RoleIntroductionView.js.map

@@ -4,14 +4,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.ActivityTurntableToggleGroupItem =
     exports.ActivityTurntableQuestItem =
       void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const ActivitySmallItemGrid_1 = require("../UniversalComponents/ActivitySmallItemGrid");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  ActivitySmallItemGrid_1 = require("../UniversalComponents/ActivitySmallItemGrid");
 class ActivityTurntableQuestItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -35,7 +35,7 @@ class ActivityTurntableQuestItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[3, this.KIn]]);
   }
   async OnBeforeStartAsync() {
-    const t = new ActivitySmallItemGrid_1.ActivitySmallItemGrid();
+    var t = new ActivitySmallItemGrid_1.ActivitySmallItemGrid();
     await t.CreateThenShowByActorAsync(this.GetItem(2).GetOwner()),
       (this.gOe = t);
   }
@@ -81,13 +81,13 @@ class ActivityTurntableToggleGroupItem extends GridProxyAbstract_1.GridProxyAbst
     ];
   }
   async OnBeforeStartAsync() {
-    var t = this.GetItem(0);
-    var t =
-      ((this.QIn = new ActivityTurntableToggleItem()),
-      await this.QIn.CreateThenShowByActorAsync(t.GetOwner()),
-      (this.QIn.ToggleCallBack = this.ToggleCallBack),
-      (this.QIn.CanToggleExecuteChange = this.CanToggleExecuteChange),
-      this.GetItem(1));
+    var t = this.GetItem(0),
+      t =
+        ((this.QIn = new ActivityTurntableToggleItem()),
+        await this.QIn.CreateThenShowByActorAsync(t.GetOwner()),
+        (this.QIn.ToggleCallBack = this.ToggleCallBack),
+        (this.QIn.CanToggleExecuteChange = this.CanToggleExecuteChange),
+        this.GetItem(1));
     (this.XIn = new ActivityTurntableToggleItem()),
       await this.XIn.CreateThenShowByActorAsync(t.GetOwner()),
       (this.XIn.ToggleCallBack = this.ToggleCallBack),
@@ -97,9 +97,9 @@ class ActivityTurntableToggleGroupItem extends GridProxyAbstract_1.GridProxyAbst
     this.SetToggleDisable(!1);
   }
   SetToggleDisable(t) {
-    const i = this.GetToggleState();
+    var i = this.GetToggleState();
     (this.eji = t ? this.XIn : this.QIn),
-      void 0 !== i && this.eji.SetToggleState(i === 1),
+      void 0 !== i && this.eji.SetToggleState(1 === i),
       this.GetItem(0)?.SetUIActive(!t),
       this.GetItem(1)?.SetUIActive(t);
   }
@@ -126,7 +126,7 @@ class ActivityTurntableToggleItem extends UiPanelBase_1.UiPanelBase {
         this.CanToggleExecuteChange(this.RoundId)),
       (this.Yke = () => {
         this.ToggleCallBack &&
-          this.ToggleCallBack(this.RoundId, this.Toggle.GetToggleState() === 1);
+          this.ToggleCallBack(this.RoundId, 1 === this.Toggle.GetToggleState());
       });
   }
   OnRegisterComponent() {
@@ -147,13 +147,13 @@ class ActivityTurntableToggleItem extends UiPanelBase_1.UiPanelBase {
     (this.RoundId = t), this.$In();
   }
   $In() {
-    var t = this.RoundId + 1;
-    var i = "SP_TurntableSelect_Index0" + t;
-    var i = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(i);
-    var i =
-      (this.SetSpriteByPath(i, this.GetSprite(2), !1),
-      "SP_TurntableNormal_Index0" + t);
-    var t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(i);
+    var t = this.RoundId + 1,
+      i = "SP_TurntableSelect_Index0" + t,
+      i = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(i),
+      i =
+        (this.SetSpriteByPath(i, this.GetSprite(2), !1),
+        "SP_TurntableNormal_Index0" + t),
+      t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(i);
     this.SetSpriteByPath(t, this.GetSprite(1), !1);
   }
   GetToggleState() {
@@ -164,4 +164,4 @@ class ActivityTurntableToggleItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ActivityTurntableToggleItem = ActivityTurntableToggleItem;
-// # sourceMappingURL=ActivityTurntableItem.js.map
+//# sourceMappingURL=ActivityTurntableItem.js.map

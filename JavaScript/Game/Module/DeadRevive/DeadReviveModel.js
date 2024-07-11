@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DeadReviveModel = void 0);
-const ReviveById_1 = require("../../../Core/Define/ConfigQuery/ReviveById");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
+const ReviveById_1 = require("../../../Core/Define/ConfigQuery/ReviveById"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase");
 class DeadReviveModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -67,4 +67,4 @@ class DeadReviveModel extends ModelBase_1.ModelBase {
   }
 }
 exports.DeadReviveModel = DeadReviveModel;
-// # sourceMappingURL=DeadReviveModel.js.map
+//# sourceMappingURL=DeadReviveModel.js.map

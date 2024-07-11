@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayShopRootView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../Core/Define/CommonDefine");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const RedDotController_1 = require("../../RedDot/RedDotController");
-const UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase");
-const CommonTabComponentData_1 = require("../Common/TabComponent/CommonTabComponentData");
-const CommonTabData_1 = require("../Common/TabComponent/CommonTabData");
-const CommonTabTitleData_1 = require("../Common/TabComponent/CommonTabTitleData");
-const TabComponentWithCaptionItem_1 = require("../Common/TabComponent/TabComponentWithCaptionItem");
-const PayShopTabItem_1 = require("../Common/TabComponent/TabItem/PayShopTabItem");
-const TabViewComponent_1 = require("../Common/TabComponent/TabViewComponent");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const PayShopGoods_1 = require("./PayShopData/PayShopGoods");
-const PayShopDefine_1 = require("./PayShopDefine");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  RedDotController_1 = require("../../RedDot/RedDotController"),
+  UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase"),
+  CommonTabComponentData_1 = require("../Common/TabComponent/CommonTabComponentData"),
+  CommonTabData_1 = require("../Common/TabComponent/CommonTabData"),
+  CommonTabTitleData_1 = require("../Common/TabComponent/CommonTabTitleData"),
+  TabComponentWithCaptionItem_1 = require("../Common/TabComponent/TabComponentWithCaptionItem"),
+  PayShopTabItem_1 = require("../Common/TabComponent/TabItem/PayShopTabItem"),
+  TabViewComponent_1 = require("../Common/TabComponent/TabViewComponent"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  PayShopGoods_1 = require("./PayShopData/PayShopGoods"),
+  PayShopDefine_1 = require("./PayShopDefine");
 class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -50,9 +50,9 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
         return new PayShopTabItem_1.PayShopTabItem();
       }),
       (this.pqe = (e) => {
-        var e = this.TabShopList[e];
-        var t = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopConfig(e);
-        var t = PayShopDefine_1.payShopTabView[t.ShopTabViewType];
+        var e = this.TabShopList[e],
+          t = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopConfig(e),
+          t = PayShopDefine_1.payShopTabView[t.ShopTabViewType];
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Shop", 11, "PayShop:Root 点击切换界面", [
             "ViewName",
@@ -87,19 +87,19 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
           this.TabViewComponent.GetCurrentTabView().RefreshView?.(i);
       }),
       (this.Q2i = (e) => {
-        var t = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopConfig(e);
-        var t = PayShopDefine_1.payShopTabView[t.ShopTabViewType];
-        var i =
-          (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Shop", 11, "PayShop:Root 切换界面", [
-              "ViewName",
-              t,
-            ]),
-          this.TabComponent?.SetTitleIconVisible(!0),
-          (this.PayShopId = e),
-          this.RefreshCurrency(e),
-          this.TabShopList.indexOf(e));
-        var i = this.TabComponent.GetTabItemByIndex(i);
+        var t = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopConfig(e),
+          t = PayShopDefine_1.payShopTabView[t.ShopTabViewType],
+          i =
+            (Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info("Shop", 11, "PayShop:Root 切换界面", [
+                "ViewName",
+                t,
+              ]),
+            this.TabComponent?.SetTitleIconVisible(!0),
+            (this.PayShopId = e),
+            this.RefreshCurrency(e),
+            this.TabShopList.indexOf(e)),
+          i = this.TabComponent.GetTabItemByIndex(i);
         this.TabViewComponent.ToggleCallBack(
           e,
           t,
@@ -125,7 +125,7 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
           Log_1.Log.Info("Shop", 11, "PayShop:Root 商品数据不同步,打开弹窗");
       }),
       (this.Y2i = (e) => {
-        const t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(131);
+        var t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(131);
         t.FunctionMap.set(1, () => {
           this.TabViewComponent.GetCurrentTabView().RefreshView?.(e),
             this.UpdateGoodsList();
@@ -135,7 +135,7 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
           );
       }),
       (this.xGn = () => {
-        const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(131);
+        var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(131);
         e.FunctionMap.set(1, () => {
           this.CloseMe();
         }),
@@ -171,7 +171,7 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
       (this.BtnBindInfo = [[6, this.F2i]]);
   }
   OnStart() {
-    const e = new CommonTabComponentData_1.CommonTabComponentData(
+    var e = new CommonTabComponentData_1.CommonTabComponentData(
       this.fqe,
       this.pqe,
       this.yqe,
@@ -280,9 +280,9 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
       : (this.SelectDefaultPayShop(), this.RefreshCountDownText());
   }
   V2i(e) {
-    const t = this.GetItem(5);
+    var t = this.GetItem(5);
     ControllerHolder_1.ControllerHolder.KuroSdkController.NeedShowCustomerService()
-      ? t.SetUIActive(e === 100)
+      ? t.SetUIActive(100 === e)
       : t.SetUIActive(!1);
   }
   z2i() {
@@ -308,20 +308,20 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
     e = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopConfig(e);
     await this.TabComponent.SetCurrencyItemList(e.Money),
       this.TabComponent.GetCurrencyItemList().forEach((e) => {
-        this.PayShopId === 100
+        100 === this.PayShopId
           ? e.SetButtonActive(!1)
           : e.SetPayShopButtonActive(),
           e.SetToPayShopFunction();
       });
   }
   SelectDefaultPayShop() {
-    let e;
-    this.PayShopViewData && this.PayShopViewData?.ShowShopIdList?.length !== 0
+    var e;
+    this.PayShopViewData && 0 !== this.PayShopViewData?.ShowShopIdList?.length
       ? (this.TabShopList = this.PayShopViewData.ShowShopIdList)
       : ((this.TabShopList = []),
         ModelManager_1.ModelManager.PayShopModel.GetPayShopIdList().forEach(
           (e) => {
-            const t =
+            var t =
               ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopConfig(e);
             PayShopDefine_1.hideInPayShopViewTabType.includes(
               t.ShopTabViewType,
@@ -342,11 +342,11 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
     const h = e.length;
     this.TabComponent.RefreshTabItemByLength(h, () => {
       for (let e = 0; e < h; e++) {
-        const t = this.TabComponent.GetTabItemByIndex(e);
-        const i = this.TabShopList[e];
-        const o = t.GetNameTextComponent();
-        const s =
-          ModelManager_1.ModelManager.PayShopModel.GetTabInfoByPayShopIdId(i);
+        var t = this.TabComponent.GetTabItemByIndex(e),
+          i = this.TabShopList[e],
+          o = t.GetNameTextComponent(),
+          s =
+            ModelManager_1.ModelManager.PayShopModel.GetTabInfoByPayShopIdId(i);
         t.BindRedDot("PayShopInstance", i),
           LguiUtil_1.LguiUtil.SetLocalTextNew(o, s.TabName);
       }
@@ -358,7 +358,7 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
   $2i() {
     this.TabViewComponent.GetCurrentTabView().RefreshView?.(),
       this.UpdateGoodsList();
-    const e = ModelManager_1.ModelManager.PayShopModel.GetPayShopCountDownData(
+    var e = ModelManager_1.ModelManager.PayShopModel.GetPayShopCountDownData(
       this.PayShopId,
     );
     e &&
@@ -369,7 +369,7 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
   }
   UpdateTime(e) {
     void 0 !== this.UpdateInterval &&
-      (this.UpdateInterval > 0
+      (0 < this.UpdateInterval
         ? (this.UpdateInterval -= e)
         : (this.RefreshCountDownText(),
           (e = ModelManager_1.ModelManager.PayShopModel.GetPayShopCountDownData(
@@ -379,7 +379,7 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
               e.RemainingTime * CommonDefine_1.MILLIONSECOND_PER_SECOND)));
   }
   RefreshCountDownText() {
-    let e = ModelManager_1.ModelManager.PayShopModel.GetPayShopCountDownData(
+    var e = ModelManager_1.ModelManager.PayShopModel.GetPayShopCountDownData(
       this.PayShopId,
     );
     void 0 === e
@@ -423,7 +423,7 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
     if (this.AllowTick)
       if (!this.GoodsList || this.GoodsList.length <= 0) this.AllowTick = !1;
       else {
-        const e = [];
+        var e = [];
         for (const t of this.GoodsList)
           t.NeedUpdate() && e.push(t.GetGoodsId());
         e.length <= 0 ||
@@ -440,4 +440,4 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.PayShopRootView = PayShopRootView;
-// # sourceMappingURL=PayShopRootView.js.map
+//# sourceMappingURL=PayShopRootView.js.map

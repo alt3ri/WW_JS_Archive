@@ -36,4 +36,4 @@ class TsAnimNotifyStateSetMovementMode extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateSetMovementMode;
-// # sourceMappingURL=TsAnimNotifyStateSetMovementMode.js.map
+//# sourceMappingURL=TsAnimNotifyStateSetMovementMode.js.map

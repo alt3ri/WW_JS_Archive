@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NewSoundNormalItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const AdventureDefine_1 = require("../AdventureDefine");
-const NewSoundNormaPhantomItem_1 = require("./NewSoundNormaPhantomItem");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  AdventureDefine_1 = require("../AdventureDefine"),
+  NewSoundNormaPhantomItem_1 = require("./NewSoundNormaPhantomItem");
 class NewSoundNormalItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(),
@@ -29,10 +29,11 @@ class NewSoundNormalItem extends UiPanelBase_1.UiPanelBase {
     );
   }
   Update(e) {
-    var t = this.GetText(0);
-    var t =
-      (LguiUtil_1.LguiUtil.SetLocalTextNew(t, e.Conf.Name), this.GetTexture(1));
-    const i = this.GetText(2);
+    var t = this.GetText(0),
+      t =
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(t, e.Conf.Name),
+        this.GetTexture(1)),
+      i = this.GetText(2);
     e.IsLock
       ? (this.SetTextureByPath(e.Conf.LockBigIcon, t),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -47,10 +48,10 @@ class NewSoundNormalItem extends UiPanelBase_1.UiPanelBase {
         ),
         e.Conf.Secondary === AdventureDefine_1.EDungeonType.NoSoundArea &&
         e.Conf.PhantomId &&
-        e.Conf.PhantomId.length !== 0
+        0 !== e.Conf.PhantomId.length
           ? (this.M6e?.SetActive(!0), this.M6e?.RefreshByData(e.Conf.PhantomId))
           : this.M6e?.SetActive(!1));
   }
 }
 exports.NewSoundNormalItem = NewSoundNormalItem;
-// # sourceMappingURL=NewSoundNormalItem.js.map
+//# sourceMappingURL=NewSoundNormalItem.js.map

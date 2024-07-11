@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckPlayerStateRestriction = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const PlayerStateRestrictionById_1 = require("../../../Core/Define/ConfigQuery/PlayerStateRestrictionById");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  PlayerStateRestrictionById_1 = require("../../../Core/Define/ConfigQuery/PlayerStateRestrictionById"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionCheckPlayerStateRestriction extends LevelGeneralBase_1.LevelConditionBase {
   CheckNew(e, r) {
     if (!e) return !1;
-    let t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     if (!t)
       return (
         Log_1.Log.CheckWarn() &&
@@ -20,7 +20,7 @@ class LevelConditionCheckPlayerStateRestriction extends LevelGeneralBase_1.Level
           ),
         !1
       );
-    const a = t.Entity.GetComponent(185);
+    var a = t.Entity.GetComponent(185);
     if (!a)
       return (
         Log_1.Log.CheckWarn() &&
@@ -47,4 +47,4 @@ class LevelConditionCheckPlayerStateRestriction extends LevelGeneralBase_1.Level
 }
 exports.LevelConditionCheckPlayerStateRestriction =
   LevelConditionCheckPlayerStateRestriction;
-// # sourceMappingURL=LevelConditionCheckPlayerStateRestriction.js.map
+//# sourceMappingURL=LevelConditionCheckPlayerStateRestriction.js.map

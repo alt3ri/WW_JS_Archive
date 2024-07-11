@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SpecialEnergyBarPointGraduate = void 0);
-const UE = require("ue");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const SpecialEnergyBarBase_1 = require("./SpecialEnergyBarBase");
-const SpecialEnergyBarPointItem_1 = require("./SpecialEnergyBarPointItem");
-const SpecialEnergyBarSlotItem_1 = require("./SpecialEnergyBarSlotItem");
-const POINT_NUM = 41;
-const POINT_WIDTH = 9;
-const TOTAL_WIDTH = 369;
+const UE = require("ue"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  SpecialEnergyBarBase_1 = require("./SpecialEnergyBarBase"),
+  SpecialEnergyBarPointItem_1 = require("./SpecialEnergyBarPointItem"),
+  SpecialEnergyBarSlotItem_1 = require("./SpecialEnergyBarSlotItem"),
+  POINT_NUM = 41,
+  POINT_WIDTH = 9,
+  TOTAL_WIDTH = 369;
 class SpecialEnergyBarPointGraduate extends SpecialEnergyBarBase_1.SpecialEnergyBarBase {
   constructor() {
     super(...arguments),
@@ -34,7 +34,7 @@ class SpecialEnergyBarPointGraduate extends SpecialEnergyBarBase_1.SpecialEnergy
     ];
   }
   async OnBeforeStartAsync() {
-    const t = [];
+    var t = [];
     t.push(this.InitSlotItem(this.GetItem(0))),
       t.push(this.InitPointItem(this.GetItem(1))),
       t.push(this.InitNumItem(this.GetItem(3))),
@@ -64,8 +64,8 @@ class SpecialEnergyBarPointGraduate extends SpecialEnergyBarBase_1.SpecialEnergy
   OnStart() {
     if (this.Config) {
       if (this.Config.EffectColor) {
-        var i = UE.Color.FromHex(this.Config.EffectColor);
-        const e = new UE.LinearColor(i);
+        var i = UE.Color.FromHex(this.Config.EffectColor),
+          e = new UE.LinearColor(i);
         let t = i;
         this.Config.PointColor &&
           (t = UE.Color.FromHex(this.Config.PointColor)),
@@ -74,18 +74,18 @@ class SpecialEnergyBarPointGraduate extends SpecialEnergyBarBase_1.SpecialEnergy
           this.SlotItem?.SetPointColor(t),
           this.SlotItem?.SetFullEffectColor(e);
       }
-      var i = this.GetItem(2);
-      const s = (this.GraduateItemList.push(i), this.Config.SlotNum - 1);
-      if (s > 1) {
-        const h = i.GetOwner();
-        const r = i.GetParentAsUIItem();
+      var i = this.GetItem(2),
+        s = (this.GraduateItemList.push(i), this.Config.SlotNum - 1);
+      if (1 < s) {
+        var h = i.GetOwner(),
+          r = i.GetParentAsUIItem();
         for (let t = 1; t < s; t++) {
-          const a = LguiUtil_1.LguiUtil.DuplicateActor(h, r);
+          var a = LguiUtil_1.LguiUtil.DuplicateActor(h, r);
           this.GraduateItemList.push(
             a.GetComponentByClass(UE.UIItem.StaticClass()),
           );
         }
-      } else i.SetUIActive(s > 0);
+      } else i.SetUIActive(0 < s);
       for (let t = 0; t < s; t++)
         this.SetGraduateItemOffset(t, this.Config.ExtraFloatParams[t]);
       this.GetItem(4).SetUIActive(!this.IsMorph), this.RefreshBarPercent(!0);
@@ -96,8 +96,8 @@ class SpecialEnergyBarPointGraduate extends SpecialEnergyBarBase_1.SpecialEnergy
     t && t.SetAnchorOffsetX(TOTAL_WIDTH * (i - 0.5));
   }
   RefreshBarPercent(t = !1) {
-    const i = this.PercentMachine.GetCurPercent();
-    const e = this.GetKeyEnable();
+    var i = this.PercentMachine.GetCurPercent(),
+      e = this.GetKeyEnable();
     let s = !1;
     this.IsKeyEnable !== e && ((this.IsKeyEnable = e), (s = !0)),
       this.SlotItem?.UpdatePercentWithVisible(i, !e, s, t, this.LastPercent),
@@ -119,4 +119,4 @@ class SpecialEnergyBarPointGraduate extends SpecialEnergyBarBase_1.SpecialEnergy
   }
 }
 exports.SpecialEnergyBarPointGraduate = SpecialEnergyBarPointGraduate;
-// # sourceMappingURL=SpecialEnergyBarPointGraduate.js.map
+//# sourceMappingURL=SpecialEnergyBarPointGraduate.js.map

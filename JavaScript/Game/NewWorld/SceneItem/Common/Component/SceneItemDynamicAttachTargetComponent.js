@@ -1,37 +1,41 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, s) {
-    let h;
-    const r = arguments.length;
-    let a =
-      r < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var h,
+      r = arguments.length,
+      a =
+        r < 3
+          ? e
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(e, i))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       a = Reflect.decorate(t, e, i, s);
     else
-      for (let o = t.length - 1; o >= 0; o--)
-        (h = t[o]) && (a = (r < 3 ? h(a) : r > 3 ? h(e, i, a) : h(e, i)) || a);
-    return r > 3 && a && Object.defineProperty(e, i, a), a;
+      for (var o = t.length - 1; 0 <= o; o--)
+        (h = t[o]) && (a = (r < 3 ? h(a) : 3 < r ? h(e, i, a) : h(e, i)) || a);
+    return 3 < r && a && Object.defineProperty(e, i, a), a;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemDynamicAttachTargetComponent = exports.AttachParam =
     void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const Net_1 = require("../../../../../Core/Net/Net");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../../../GlobalData");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const SceneItemActorComponent_1 = require("../../SceneItemActorComponent");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  SceneItemActorComponent_1 = require("../../SceneItemActorComponent");
 class AttachParam {
   constructor() {
     (this.PosAttachType = 0),
@@ -139,7 +143,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
           this.Rln());
       }),
       (this.xln = (t) => {
-        const e = FNameUtil_1.FNameUtil.GetDynamicFName(this.Iln);
+        var e = FNameUtil_1.FNameUtil.GetDynamicFName(this.Iln);
         t && e && t.op_Equality(e) && ((t = this.Lln.GetActor(e)), this.wln(t));
       }),
       (this.Bln = (t) => {
@@ -165,11 +169,11 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
     );
   }
   OnActivate() {
-    (this.Fln = !0), this.Vln !== 0 && this.qln();
+    (this.Fln = !0), 0 !== this.Vln && this.qln();
   }
   OnEnd() {
     return (
-      this.Vln !== 0 && this.Gln(),
+      0 !== this.Vln && this.Gln(),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.AddEntity,
         this.Dln,
@@ -230,7 +234,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
         );
   }
   Wln(t) {
-    const e = t.Entity?.GetComponent(182);
+    var e = t.Entity?.GetComponent(182);
     if (e)
       if (this.yln && !e?.GetIsSceneInteractionLoadCompleted())
         EventSystem_1.EventSystem.HasWithTarget(
@@ -300,7 +304,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
           this.Pln,
         );
-    const e = t?.Entity?.GetComponent(182);
+    var e = t?.Entity?.GetComponent(182);
     let i = void 0;
     (i =
       this.yln && e?.GetIsSceneInteractionLoadCompleted()
@@ -309,7 +313,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       this.bln(i);
   }
   Nln() {
-    let t;
+    var t;
     this.Iln &&
       (this.Lln?.IsValid() ||
         ((this.Lln = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
@@ -324,7 +328,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       this.wln(t);
   }
   Oln() {
-    let t;
+    var t;
     this.Iln &&
       (this.Lln?.IsValid() && this.Lln.OnAddToSubsystem.Remove(this.xln),
       (t = this.Lln?.GetActor(FNameUtil_1.FNameUtil.GetDynamicFName(this.Iln))),
@@ -354,32 +358,32 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
           ["目标PathName", UE.KismetSystemLibrary.GetPathName(s)],
           ["AttachParam", this.Hln],
         );
-      const e = Vector_1.Vector.Create(Vector_1.Vector.ZeroVectorProxy);
-      const h = Rotator_1.Rotator.Create(Rotator_1.Rotator.ZeroRotatorProxy);
+      var e = Vector_1.Vector.Create(Vector_1.Vector.ZeroVectorProxy),
+        h = Rotator_1.Rotator.Create(Rotator_1.Rotator.ZeroRotatorProxy);
       if (
-        (this.Hln.PosAttachType === 0 &&
+        (0 === this.Hln.PosAttachType &&
           e.FromUeVector(this.Hte.Owner.RootComponent.RelativeLocation),
-        this.Hln.RotAttachType === 0 &&
+        0 === this.Hln.RotAttachType &&
           h.FromUeRotator(this.Hte.Owner.RootComponent.RelativeRotation),
-        (this.Hln.PosAttachType !== 1 && this.Hln.RotAttachType !== 1) ||
+        (1 !== this.Hln.PosAttachType && 1 !== this.Hln.RotAttachType) ||
           ((r = this.Hte.Owner.GetTransform().GetRelativeTransform(
             s.GetTransform(),
           )),
-          this.Hln.PosAttachType === 1 && e.FromUeVector(r.GetLocation()),
-          this.Hln.RotAttachType === 1 && h.FromUeRotator(r.Rotator())),
-        this.Hln.PosAttachType === 3 || this.Hln.RotAttachType === 3)
+          1 === this.Hln.PosAttachType && e.FromUeVector(r.GetLocation()),
+          1 === this.Hln.RotAttachType && h.FromUeRotator(r.Rotator())),
+        3 === this.Hln.PosAttachType || 3 === this.Hln.RotAttachType)
       ) {
-        var r = this.SIe.GetPbEntityInitData()?.Transform;
-        var r = r ? this.kln(r) : this.SIe.GetTransform();
+        var r = this.SIe.GetPbEntityInitData()?.Transform,
+          r = r ? this.kln(r) : this.SIe.GetTransform();
         let i = void 0;
-        if (this.Vln === 2) {
+        if (2 === this.Vln) {
           var a = (0, puerts_1.$ref)(void 0);
           this.Lln.GetActorOriginalTransform(
             FNameUtil_1.FNameUtil.GetDynamicFName(this.Iln),
             a,
           ),
             (i = (0, puerts_1.$unref)(a));
-        } else if (this.Vln === 1) {
+        } else if (1 === this.Vln) {
           let t = void 0;
           this.Eln
             ? (t =
@@ -390,11 +394,11 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
               (t = ModelManager_1.ModelManager.CreatureModel.GetEntity(
                 this.jln,
               ));
-          var a = t.Entity;
-          var o = a?.GetComponent(1);
-          var a = a?.GetComponent(0);
-          var n = a?.GetPbEntityInitData()?.Transform;
-          var n = n ? this.kln(n) : a.GetTransform();
+          var a = t.Entity,
+            o = a?.GetComponent(1),
+            a = a?.GetComponent(0),
+            n = a?.GetPbEntityInitData()?.Transform,
+            n = n ? this.kln(n) : a.GetTransform();
           let e =
             this.yln?.length &&
             o instanceof SceneItemActorComponent_1.SceneItemActorComponent
@@ -414,8 +418,8 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
             ),
           (i = r));
         a = r.GetRelativeTransform(i);
-        this.Hln.PosAttachType === 3 && e.FromUeVector(a.GetLocation()),
-          this.Hln.RotAttachType === 3 && h.FromUeRotator(a.Rotator());
+        3 === this.Hln.PosAttachType && e.FromUeVector(a.GetLocation()),
+          3 === this.Hln.RotAttachType && h.FromUeRotator(a.Rotator());
       }
       MathUtils_1.MathUtils.CommonTempVector.FromConfigVector(
         this.Hln.PosAttachOffset,
@@ -502,7 +506,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       t?.OnDestroyed.Remove(this.Bln));
   }
   kln(t) {
-    const e = new UE.Transform();
+    var e = new UE.Transform();
     return (
       e.SetLocation(new UE.Vector(t.Pos.X ?? 0, t.Pos.Y ?? 0, t.Pos.Z ?? 0)),
       e.SetRotation(
@@ -517,10 +521,10 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
     );
   }
   IsRegTarget() {
-    return this.Vln !== 0;
+    return 0 !== this.Vln;
   }
   RegEntityTarget(t, e, i, s) {
-    return this.Vln !== 0 || this.Entity.IsEnd || !t
+    return 0 !== this.Vln || this.Entity.IsEnd || !t
       ? (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "SceneItem",
@@ -554,7 +558,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
         !0);
   }
   RegEntityTargetByCreatureDataId(t, e, i, s) {
-    return this.Vln !== 0 || this.Entity.IsEnd || !t
+    return 0 !== this.Vln || this.Entity.IsEnd || !t
       ? (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "SceneItem",
@@ -588,7 +592,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
         !0);
   }
   RegRefActorTarget(t, e, i) {
-    return this.Vln === 0 && !this.Entity.IsEnd && t && t.length
+    return 0 === this.Vln && !this.Entity.IsEnd && t && t.length
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "SceneItem",
@@ -620,7 +624,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
         !1);
   }
   UnRegTarget(t) {
-    return this.Vln === 0 || this.Entity.IsEnd
+    return 0 === this.Vln || this.Entity.IsEnd
       ? (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "SceneItem",
@@ -659,7 +663,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
         !(this.Iln = void 0));
   }
   RequestAttachRefActor(t, e, i) {
-    let s;
+    var s;
     this.Hte?.Owner?.IsValid() &&
       (((s = Protocol_1.Aki.Protocol.Cds.create()).rkn =
         this.Hte.CreatureData.GetCreatureDataId()),
@@ -677,7 +681,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       Net_1.Net.Call(5903, s, () => {}));
   }
   RequestAttachEntity(t, e, i, s) {
-    let h;
+    var h;
     this.Hte?.Owner?.IsValid() &&
       (((h = Protocol_1.Aki.Protocol.Cds.create()).rkn =
         this.Hte.CreatureData.GetCreatureDataId()),
@@ -697,7 +701,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       Net_1.Net.Call(5903, h, () => {}));
   }
   RequestDetach() {
-    const t = Protocol_1.Aki.Protocol.Cds.create();
+    var t = Protocol_1.Aki.Protocol.Cds.create();
     (t.rkn = this.Hte.CreatureData.GetCreatureDataId()),
       (t.EFn = Protocol_1.Aki.Protocol._Gs.Proto_AttachTargetNone),
       Net_1.Net.Call(5903, t, () => {});
@@ -709,4 +713,4 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
 )),
   (exports.SceneItemDynamicAttachTargetComponent =
     SceneItemDynamicAttachTargetComponent);
-// # sourceMappingURL=SceneItemDynamicAttachTargetComponent.js.map
+//# sourceMappingURL=SceneItemDynamicAttachTargetComponent.js.map

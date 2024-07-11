@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CookRoleItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const SmallItemGrid_1 = require("../../Common/SmallItemGrid/SmallItemGrid");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const CookController_1 = require("../CookController");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  SmallItemGrid_1 = require("../../Common/SmallItemGrid/SmallItemGrid"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  CookController_1 = require("../CookController");
 class CookRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -51,7 +51,7 @@ class CookRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.Xgt.Destroy(), (this.Xgt = void 0);
   }
   nGt() {
-    let t;
+    var t;
     CookController_1.CookController.CheckIsBuff(
       this.dqt.RoleId,
       this.dqt.ItemId,
@@ -77,9 +77,9 @@ class CookRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.IVe(!1);
   }
   IVe(t, e = !0) {
-    const i = this.GetExtendToggle(0);
+    var i = this.GetExtendToggle(0);
     t ? i.SetToggleState(1, e) : i.SetToggleState(0, !1);
   }
 }
 exports.CookRoleItem = CookRoleItem;
-// # sourceMappingURL=CookRoleItem.js.map
+//# sourceMappingURL=CookRoleItem.js.map

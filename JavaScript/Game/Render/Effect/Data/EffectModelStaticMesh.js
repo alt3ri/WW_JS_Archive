@@ -22,4 +22,4 @@ class EffectModelStaticMesh extends UE.EffectModelBase {
   }
 }
 exports.default = EffectModelStaticMesh;
-// # sourceMappingURL=EffectModelStaticMesh.js.map
+//# sourceMappingURL=EffectModelStaticMesh.js.map

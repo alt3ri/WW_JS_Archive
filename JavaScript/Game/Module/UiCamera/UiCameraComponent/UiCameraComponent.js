@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiCameraComponent = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const TickSystem_1 = require("../../../../Core/Tick/TickSystem");
+const Log_1 = require("../../../../Core/Common/Log"),
+  TickSystem_1 = require("../../../../Core/Tick/TickSystem");
 class UiCameraComponent {
   constructor() {
     (this.OwnerUiCamera = void 0),
@@ -106,4 +106,4 @@ class UiCameraComponent {
   }
 }
 exports.UiCameraComponent = UiCameraComponent;
-// # sourceMappingURL=UiCameraComponent.js.map
+//# sourceMappingURL=UiCameraComponent.js.map

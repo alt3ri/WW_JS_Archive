@@ -1,33 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NumberUtil = void 0);
-const MultiTextLang_1 = require("../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigManager_1 = require("../Manager/ConfigManager");
+const MultiTextLang_1 = require("../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigManager_1 = require("../Manager/ConfigManager");
 class NumberUtil {
   static GetNumberLocalText(e) {
     let t = "";
-    e === 1
+    1 === e
       ? (t = "One")
-      : e === 2
+      : 2 === e
         ? (t = "Two")
-        : e === 3
+        : 3 === e
           ? (t = "Three")
-          : e === 4
+          : 4 === e
             ? (t = "Four")
-            : e === 5
+            : 5 === e
               ? (t = "Five")
-              : e === 6
+              : 6 === e
                 ? (t = "Six")
-                : e === 7
+                : 7 === e
                   ? (t = "Seven")
-                  : e === 8
+                  : 8 === e
                     ? (t = "Eight")
-                    : e === 9
+                    : 9 === e
                       ? (t = "Nine")
-                      : e === 10 && (t = "Ten");
+                      : 10 === e && (t = "Ten");
     e = ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(t);
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e) ?? "";
   }
 }
 exports.NumberUtil = NumberUtil;
-// # sourceMappingURL=NumberUtil.js.map
+//# sourceMappingURL=NumberUtil.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TickIntervalSchedulerBase = exports.ScoreNode = void 0);
-const Stats_1 = require("../../../Core/Common/Stats");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
+const Stats_1 = require("../../../Core/Common/Stats"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils");
 class ScoreNode {
   constructor() {
     (this.Item = void 0), (this.Score = 0);
@@ -40,4 +40,4 @@ class TickIntervalSchedulerBase {
   ScheduleTickInterval() {}
 }
 exports.TickIntervalSchedulerBase = TickIntervalSchedulerBase;
-// # sourceMappingURL=TickIntervalSchedulerBase.js.map
+//# sourceMappingURL=TickIntervalSchedulerBase.js.map

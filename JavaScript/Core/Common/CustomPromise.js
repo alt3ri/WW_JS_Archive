@@ -16,11 +16,11 @@ class CustomPromise {
     (this.C8 = 1), this.d8(s);
   }
   IsFulfilled() {
-    return this.C8 === 1;
+    return 1 === this.C8;
   }
   IsPending() {
-    return this.C8 === 0;
+    return 0 === this.C8;
   }
 }
 exports.CustomPromise = CustomPromise;
-// # sourceMappingURL=CustomPromise.js.map
+//# sourceMappingURL=CustomPromise.js.map

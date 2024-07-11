@@ -1,22 +1,22 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AndroidBackController = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const GlobalData_1 = require("../../GlobalData");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiLayerType_1 = require("../../Ui/Define/UiLayerType");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine");
-const LguiEventSystemManager_1 = require("../../Ui/LguiEventSystem/LguiEventSystemManager");
-const UiLayer_1 = require("../../Ui/UiLayer");
-const UiManager_1 = require("../../Ui/UiManager");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  GlobalData_1 = require("../../GlobalData"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiLayerType_1 = require("../../Ui/Define/UiLayerType"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine"),
+  LguiEventSystemManager_1 = require("../../Ui/LguiEventSystem/LguiEventSystemManager"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder");
 class AndroidBackController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
@@ -61,7 +61,7 @@ class AndroidBackController extends UiControllerBase_1.UiControllerBase {
           Log_1.Log.Info("AndroidBack", 11, "不在主界面");
   }
   static CHe(e) {
-    const r =
+    var r =
       LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystemActor;
     r && r.SimulateClickButton(0, e.RootUIComp, e.ClickPivot);
   }
@@ -69,7 +69,7 @@ class AndroidBackController extends UiControllerBase_1.UiControllerBase {
     return UE.UIAndroidBackComponent.ClearAndroidBackComponent(), !0;
   }
   static GmTestAndroidBack() {
-    let e, r;
+    var e, r;
     this.gHe
       ? this.fHe()
       : ((e = ResourceSystem_1.ResourceSystem.Load(
@@ -115,8 +115,8 @@ class AndroidBackController extends UiControllerBase_1.UiControllerBase {
 (exports.AndroidBackController = AndroidBackController),
   ((_a = AndroidBackController).IsLogOpen = !1),
   (AndroidBackController.mHe = (e, r) => {
-    let i;
-    r !== 0 &&
+    var i;
+    0 !== r &&
       (AndroidBackController.IsLogOpen &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("AndroidBack", 11, "安卓返回键触发"),
@@ -138,4 +138,4 @@ class AndroidBackController extends UiControllerBase_1.UiControllerBase {
           _a.CHe(r)));
   }),
   (AndroidBackController.gHe = void 0);
-// # sourceMappingURL=AndroidBackController.js.map
+//# sourceMappingURL=AndroidBackController.js.map

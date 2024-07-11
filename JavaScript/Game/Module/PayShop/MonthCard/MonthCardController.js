@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MonthCardController = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../Core/Net/Net");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ItemDefines_1 = require("../../Item/Data/ItemDefines");
-const ItemRewardController_1 = require("../../ItemReward/ItemRewardController");
-const RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ItemDefines_1 = require("../../Item/Data/ItemDefines"),
+  ItemRewardController_1 = require("../../ItemReward/ItemRewardController"),
+  RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData");
 class MonthCardController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return !0;
@@ -25,8 +25,8 @@ class MonthCardController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static async RequestMonthCardData() {
-    var e = Protocol_1.Aki.Protocol.mos.create();
-    var e = await Net_1.Net.CallAsync(1796, e);
+    var e = Protocol_1.Aki.Protocol.mos.create(),
+      e = await Net_1.Net.CallAsync(1796, e);
     e &&
       (e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
         ? this.Hki(e.rPs)
@@ -86,45 +86,46 @@ class MonthCardController extends UiControllerBase_1.UiControllerBase {
   MonthCardController.Kki();
 }),
   (MonthCardController.Qki = (e) => {
-    const r = e.I5n;
-    var t = e.G3n;
-    var e = e.rPs;
-    var t =
-      (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "Shop",
-          38,
-          "MonthCard:【月卡每日奖励】信息推送 - MonthCardDailyRewardNotify",
-          ["Count", r],
-          ["itemId", t],
-          ["remainDays", e],
-        ),
-      [{ IncId: 0, ItemId: t }, r]);
+    var r = e.I5n,
+      t = e.G3n,
+      e = e.rPs,
+      t =
+        (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Shop",
+            38,
+            "MonthCard:【月卡每日奖励】信息推送 - MonthCardDailyRewardNotify",
+            ["Count", r],
+            ["itemId", t],
+            ["remainDays", e],
+          ),
+        [{ IncId: 0, ItemId: t }, r]);
     (ModelManager_1.ModelManager.MonthCardModel.ServerDailyReward = t),
       (ModelManager_1.ModelManager.MonthCardModel.CanShowDailyRewardView = !0),
       MonthCardController.Hki(e),
       MonthCardController.Kki();
   }),
   (MonthCardController.Xki = (e) => {
-    let r = e.rPs;
-    var e =
-      (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "Shop",
-          38,
-          "MonthCard:【月卡购买通知】-MonthCardBuyNotify-信息推送",
-          ["remainDays", r],
-        ),
-      [{ IncId: 0, ItemId: e.G3n }, e.I5n]);
+    var r = e.rPs,
+      e =
+        (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Shop",
+            38,
+            "MonthCard:【月卡购买通知】-MonthCardBuyNotify-信息推送",
+            ["remainDays", r],
+          ),
+        [{ IncId: 0, ItemId: e.G3n }, e.I5n]);
     (ModelManager_1.ModelManager.MonthCardModel.ServerOnceReward = e),
       ModelManager_1.ModelManager.MonthCardModel.GetRemainDays() < 0 &&
         (ModelManager_1.ModelManager.MonthCardModel.CanShowDailyRewardView =
           !0),
       MonthCardController.Hki(r),
       ModelManager_1.ModelManager.GameModeModel.WorldDoneAndLoadingClosed &&
-        ((r = (e =
+        (0 !==
+        (r = (e =
           ModelManager_1.ModelManager.MonthCardModel.ServerOnceReward)[0]
-          .ItemId) !== 0
+          .ItemId)
           ? ((r = new RewardItemData_1.RewardItemData(r, e[1])),
             (e = new Array()).push(r),
             (r =
@@ -150,4 +151,4 @@ class MonthCardController extends UiControllerBase_1.UiControllerBase {
         "UseMonthCard",
       );
   });
-// # sourceMappingURL=MonthCardController.js.map
+//# sourceMappingURL=MonthCardController.js.map

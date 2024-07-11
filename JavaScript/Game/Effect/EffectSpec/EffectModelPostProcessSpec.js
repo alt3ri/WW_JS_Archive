@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelPostProcessSpec = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Stats_1 = require("../../../Core/Common/Stats");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const MathCommon_1 = require("../../../Core/Utils/Math/MathCommon");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper");
-const EffectSpec_1 = require("./EffectSpec");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  MathCommon_1 = require("../../../Core/Utils/Math/MathCommon"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper"),
+  EffectSpec_1 = require("./EffectSpec");
 class EffectModelPostProcessSpec extends EffectSpec_1.EffectSpec {
   constructor() {
     super(...arguments),
@@ -45,17 +45,17 @@ class EffectModelPostProcessSpec extends EffectSpec_1.EffectSpec {
         EffectModelPostProcessSpec.E0e ||
           ((EffectModelPostProcessSpec.E0e = void 0),
           (EffectModelPostProcessSpec.z0e = void 0)));
-    const t = this.Handle.GetSureEffectActor();
-    var s = this.Handle.Parent;
-    var s = s ? s.GetEffectSpec()?.GetSceneComponent() : void 0;
-    var s = EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
-      t,
-      UE.KuroPostProcessComponent.StaticClass(),
-      s,
-      void 0,
-      !1,
-      this.EffectModel,
-    );
+    var t = this.Handle.GetSureEffectActor(),
+      s = this.Handle.Parent,
+      s = s ? s.GetEffectSpec()?.GetSceneComponent() : void 0,
+      s = EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
+        t,
+        UE.KuroPostProcessComponent.StaticClass(),
+        s,
+        void 0,
+        !1,
+        this.EffectModel,
+      );
     return (
       (this.PostProcessComponent = s),
       (this.SceneComponent = s),
@@ -147,7 +147,7 @@ class EffectModelPostProcessSpec extends EffectSpec_1.EffectSpec {
     );
   }
   static efe(t) {
-    let s;
+    var s;
     return (
       !t ||
       !(t = ModelManager_1.ModelManager.CharacterModel.GetHandle(t))?.Valid ||
@@ -174,7 +174,7 @@ class EffectModelPostProcessSpec extends EffectSpec_1.EffectSpec {
     );
   }
   OnPlay() {
-    let t;
+    var t;
     this.PostProcessComponent?.IsValid() &&
       ((t = this.Handle?.GetContext()),
       EffectModelPostProcessSpec.efe(t?.EntityId)) &&
@@ -189,7 +189,7 @@ class EffectModelPostProcessSpec extends EffectSpec_1.EffectSpec {
           )),
       this.r0e(!0),
       this.Z0e(),
-      this.GetEffectType() === 0) &&
+      0 === this.GetEffectType()) &&
       this.WEn(t?.EntityId) &&
       (EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnEnterOrExitUltraSkill,
@@ -210,7 +210,7 @@ class EffectModelPostProcessSpec extends EffectSpec_1.EffectSpec {
             )
           : this.EffectModel.VolumeHardnessCurve.Constant
         : this.EffectModel.VolumeHardness;
-      const e = Math.max(t, 1e-4);
+      var e = Math.max(t, 1e-4);
       let s = e;
       if (this.EffectModel.EnableVolume) {
         let t = void 0;
@@ -234,9 +234,9 @@ class EffectModelPostProcessSpec extends EffectSpec_1.EffectSpec {
               0,
               0,
             );
-        var h = this.PostProcessComponent.K2_GetComponentLocation();
-        var o = UE.KismetMathLibrary.Subtract_VectorVector(t, h);
-        var i = o.Size();
+        var h = this.PostProcessComponent.K2_GetComponentLocation(),
+          o = UE.KismetMathLibrary.Subtract_VectorVector(t, h),
+          i = o.Size();
         s =
           UE.KismetMathLibrary.Vector_GetAbsMax(o) >=
             this.EffectModel.VolumeRadius || i >= this.EffectModel.VolumeRadius
@@ -250,13 +250,13 @@ class EffectModelPostProcessSpec extends EffectSpec_1.EffectSpec {
               Math.min(h / e, 1));
       }
       (this.PostProcessComponent.BlendWeight = s),
-        (this.PostProcessComponent.bEnabled = s > 0 && !this.HEn);
+        (this.PostProcessComponent.bEnabled = 0 < s && !this.HEn);
     }
   }
   UpdateRadialBlur(t, s) {
-    let i;
-    let e = Global_1.Global.CharacterController;
-    let h = Global_1.Global.BaseCharacter;
+    var i,
+      e = Global_1.Global.CharacterController,
+      h = Global_1.Global.BaseCharacter;
     let o = this.EffectModel.ScreenPosition;
     this.EffectModel.UseWorldPosition &&
       (e &&
@@ -296,4 +296,4 @@ class EffectModelPostProcessSpec extends EffectSpec_1.EffectSpec {
 ((exports.EffectModelPostProcessSpec = EffectModelPostProcessSpec).E0e =
   void 0),
   (EffectModelPostProcessSpec.z0e = void 0);
-// # sourceMappingURL=EffectModelPostProcessSpec.js.map
+//# sourceMappingURL=EffectModelPostProcessSpec.js.map

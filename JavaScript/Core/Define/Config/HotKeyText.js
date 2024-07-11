@@ -21,13 +21,13 @@ class HotKeyText {
     );
   }
   textid(t) {
-    const e = this.J7.__offset(this.z7, 4);
+    var e = this.J7.__offset(this.z7, 4);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   name(t) {
-    const e = this.J7.__offset(this.z7, 6);
+    var e = this.J7.__offset(this.z7, 6);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
 }
 exports.HotKeyText = HotKeyText;
-// # sourceMappingURL=HotKeyText.js.map
+//# sourceMappingURL=HotKeyText.js.map

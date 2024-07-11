@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletTraceElementPool = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Info_1 = require("../../../../Core/Common/Info");
-const TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ColorUtils_1 = require("../../../Utils/ColorUtils");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
+  TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ColorUtils_1 = require("../../../Utils/ColorUtils");
 class BulletTraceElementPool {
   static GetTraceBoxElement(e, t, r) {
     return this.UHo(UE.TraceBoxElement.StaticClass(), this.AHo, e, t, r);
@@ -19,13 +19,13 @@ class BulletTraceElementPool {
     return this.UHo(UE.TraceSphereElement.StaticClass(), this.xHo, e, t, r);
   }
   static UHo(e, t, r, l, a) {
-    if (t.length > 0) {
+    if (0 < t.length) {
       const n = t.pop();
-      var t = UE.NewArray(UE.BuiltinByte);
-      var t = (0, puerts_1.$ref)(t);
+      var t = UE.NewArray(UE.BuiltinByte),
+        t = (0, puerts_1.$ref)(t);
       n.SetObjectTypesQuery(t);
       for (let e = 0, t = r.Num(); e < t; e++) {
-        const o = r.Get(e);
+        var o = r.Get(e);
         a?.has(o) || n.AddObjectTypeQuery(o);
       }
       return (
@@ -71,10 +71,10 @@ class BulletTraceElementPool {
     e && (e.ClearCacheData(), this.xHo.push(e));
   }
   static wHo(e, r, l, t = !1) {
-    const a = UE.NewObject(e);
+    var a = UE.NewObject(e);
     a.WorldContextObject = GlobalData_1.GlobalData.World;
     for (let e = 0, t = r.Num(); e < t; e++) {
-      const o = r.Get(e);
+      var o = r.Get(e);
       l?.has(o) || a.AddObjectTypeQuery(o);
     }
     return (a.bTraceComplex = !1), (a.bIgnoreSelf = !0), (a.bIsSingle = t), a;
@@ -97,4 +97,4 @@ class BulletTraceElementPool {
 ((exports.BulletTraceElementPool = BulletTraceElementPool).AHo = new Array()),
   (BulletTraceElementPool.PHo = new Array()),
   (BulletTraceElementPool.xHo = new Array());
-// # sourceMappingURL=BulletTraceElementPool.js.map
+//# sourceMappingURL=BulletTraceElementPool.js.map

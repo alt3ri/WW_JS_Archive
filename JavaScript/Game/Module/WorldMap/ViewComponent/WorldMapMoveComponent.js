@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldMapMoveComponent = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon");
-const Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const MarkItem_1 = require("../../Map/Marks/MarkItem/MarkItem");
-const WorldMapComponentBase_1 = require("./WorldMapComponentBase");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
+  Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  MarkItem_1 = require("../../Map/Marks/MarkItem/MarkItem"),
+  WorldMapComponentBase_1 = require("./WorldMapComponentBase");
 class WorldMapMoveComponent extends WorldMapComponentBase_1.WorldMapComponentBase {
   constructor(t, e) {
     super(t),
@@ -29,12 +29,12 @@ class WorldMapMoveComponent extends WorldMapComponentBase_1.WorldMapComponentBas
         this.SetMapPosition(t, !1, 2);
       }),
       (this.eFo = (t) => {
-        const e = Vector2D_1.Vector2D.Create();
-        var t =
-          (t.Multiply(this.G2o.TweenTime, e),
-          Vector2D_1.Vector2D.Create(
-            this.Map.GetRootItem().GetAnchorOffset(),
-          ).AdditionEqual(e));
+        var e = Vector2D_1.Vector2D.Create(),
+          t =
+            (t.Multiply(this.G2o.TweenTime, e),
+            Vector2D_1.Vector2D.Create(
+              this.Map.GetRootItem().GetAnchorOffset(),
+            ).AdditionEqual(e));
         this.SetMapPosition(
           t,
           !0,
@@ -68,7 +68,7 @@ class WorldMapMoveComponent extends WorldMapComponentBase_1.WorldMapComponentBas
       (this.X2o = (0, puerts_1.toManualReleaseDelegate)(this.Z2o));
   }
   get SafeAreaSize() {
-    const t = this.$2o;
+    var t = this.$2o;
     return (
       (t.MinX =
         -(
@@ -92,7 +92,7 @@ class WorldMapMoveComponent extends WorldMapComponentBase_1.WorldMapComponentBas
     );
   }
   get DangerousAreaSize() {
-    const t = this.z2o;
+    var t = this.z2o;
     return (
       (t.MinX =
         -(
@@ -189,7 +189,7 @@ class WorldMapMoveComponent extends WorldMapComponentBase_1.WorldMapComponentBas
       (this.G2o = void 0);
   }
   PushMap(t, e = !0, i = 2) {
-    let s, h, n, o, r;
+    var s, h, n, o, r;
     this.G2o
       ? ((s = t.UiPosition.X),
         (t = t.UiPosition.Y),
@@ -253,13 +253,13 @@ class WorldMapMoveComponent extends WorldMapComponentBase_1.WorldMapComponentBas
           Log_1.Log.Error("Map", 19, "请于根节点挂KuroWorldMapUIParams组件");
   }
   FocusPlayer(t, e = !1, i = 0) {
-    const s = Vector2D_1.Vector2D.Create();
+    var s = Vector2D_1.Vector2D.Create();
     t.Multiply(this.MapScale, s).UnaryNegation(s),
       this.SetMapPosition(s, e, i, this.G2o.TweenTypeEase, this.G2o.TweenTime);
   }
   hFo(t, e, i = !1) {
-    let s = t.X;
-    let h = t.Y;
+    let s = t.X,
+      h = t.Y;
     switch (e) {
       case 0:
         break;
@@ -289,7 +289,7 @@ class WorldMapMoveComponent extends WorldMapComponentBase_1.WorldMapComponentBas
     }
     let n = t;
     return (
-      i || e === 0
+      i || 0 === e
         ? ((n.X = s), (n.Y = h))
         : (n = Vector2D_1.Vector2D.Create(s, h)),
       n
@@ -299,13 +299,13 @@ class WorldMapMoveComponent extends WorldMapComponentBase_1.WorldMapComponentBas
     this.Q2o && (this.Q2o.Kill(), (this.Q2o = void 0));
   }
   iFo(t) {
-    const e = Vector2D_1.Vector2D.Create(
+    var e = Vector2D_1.Vector2D.Create(
       this.Map.GetRootItem().GetAnchorOffset(),
     );
     this.SetMapPosition(e.AdditionEqual(t), !1, 2);
   }
   TickMoveDirty() {
-    let t;
+    var t;
     (this.oFo || this.rFo) &&
       ((t = Vector2D_1.Vector2D.Create(
         this.Map.GetRootItem().GetAnchorOffset(),
@@ -316,4 +316,4 @@ class WorldMapMoveComponent extends WorldMapComponentBase_1.WorldMapComponentBas
   }
 }
 exports.WorldMapMoveComponent = WorldMapMoveComponent;
-// # sourceMappingURL=WorldMapMoveComponent.js.map
+//# sourceMappingURL=WorldMapMoveComponent.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const ToughCalcRatioById_1 = require("../../Core/Define/ConfigQuery/ToughCalcRatioById");
-const Protocol_1 = require("../../Core/Define/Net/Protocol");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const CombatMessage_1 = require("../Module/CombatMessage/CombatMessage");
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  ToughCalcRatioById_1 = require("../../Core/Define/ConfigQuery/ToughCalcRatioById"),
+  Protocol_1 = require("../../Core/Define/Net/Protocol"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  CombatMessage_1 = require("../Module/CombatMessage/CombatMessage");
 class TsAnimNotifyStateModifyTough extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.ToughModifierId = "");
@@ -30,9 +30,9 @@ class TsAnimNotifyStateModifyTough extends UE.KuroAnimNotifyState {
           !0
         );
       }
-      var e = e.CharacterActorComponent?.Entity;
-      const a = e?.CheckGetComponent(18);
-      const i = ToughCalcRatioById_1.configToughCalcRatioById.GetConfig(t);
+      var e = e.CharacterActorComponent?.Entity,
+        a = e?.CheckGetComponent(18),
+        i = ToughCalcRatioById_1.configToughCalcRatioById.GetConfig(t);
       void 0 === i
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -66,8 +66,8 @@ class TsAnimNotifyStateModifyTough extends UE.KuroAnimNotifyState {
       } catch (e) {
         return !0;
       }
-      var t = t.CharacterActorComponent?.Entity?.CheckGetComponent(18);
-      const o = ToughCalcRatioById_1.configToughCalcRatioById.GetConfig(e);
+      var t = t.CharacterActorComponent?.Entity?.CheckGetComponent(18),
+        o = ToughCalcRatioById_1.configToughCalcRatioById.GetConfig(e);
       void 0 === o
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error("Character", 20, "韧性系数计算表对应id非法", [
@@ -85,4 +85,4 @@ class TsAnimNotifyStateModifyTough extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateModifyTough;
-// # sourceMappingURL=TsAnimNotifyStateModifyTough.js.map
+//# sourceMappingURL=TsAnimNotifyStateModifyTough.js.map

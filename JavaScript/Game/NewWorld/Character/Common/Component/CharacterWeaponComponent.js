@@ -1,49 +1,53 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, i, e, s) {
-    let h;
-    const o = arguments.length;
-    let r =
-      o < 3 ? i : s === null ? (s = Object.getOwnPropertyDescriptor(i, e)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var h,
+      o = arguments.length,
+      r =
+        o < 3
+          ? i
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(i, e))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(t, i, e, s);
     else
-      for (let a = t.length - 1; a >= 0; a--)
-        (h = t[a]) && (r = (o < 3 ? h(r) : o > 3 ? h(i, e, r) : h(i, e)) || r);
-    return o > 3 && r && Object.defineProperty(i, e, r), r;
+      for (var a = t.length - 1; 0 <= a; a--)
+        (h = t[a]) && (r = (o < 3 ? h(r) : 3 < o ? h(i, e, r) : h(i, e)) || r);
+    return 3 < o && r && Object.defineProperty(i, e, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterWeaponComponent = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const ModelUtil_1 = require("../../../../../Core/Utils/ModelUtil");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const EffectContext_1 = require("../../../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../../../Effect/EffectSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const WeaponController_1 = require("../../../../Module/Weapon/WeaponController");
-const CharacterNameDefines_1 = require("../CharacterNameDefines");
-const CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes");
-const CharacterWeaponMesh_1 = require("./Weapon/CharacterWeaponMesh");
-const KEEP_WEAPON_OUT_THREADHOLD = 0.1;
-const WEAPON_IN_DELAY = 100;
-const HIDE_WEAPON_AFTER_WEAPON_IN_DELAY = 1e3;
-const BASE_GLIDING_ID = 20010001;
-const glideRelativeRotator = new UE.Rotator(0, 90, -90);
-const HULU_BASE_ID = 2e7;
-const HULU_PARTY_ID = 1e5;
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  ModelUtil_1 = require("../../../../../Core/Utils/ModelUtil"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  EffectContext_1 = require("../../../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../../../Effect/EffectSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  WeaponController_1 = require("../../../../Module/Weapon/WeaponController"),
+  CharacterNameDefines_1 = require("../CharacterNameDefines"),
+  CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
+  CharacterWeaponMesh_1 = require("./Weapon/CharacterWeaponMesh"),
+  KEEP_WEAPON_OUT_THREADHOLD = 0.1,
+  WEAPON_IN_DELAY = 100,
+  HIDE_WEAPON_AFTER_WEAPON_IN_DELAY = 1e3,
+  BASE_GLIDING_ID = 20010001,
+  glideRelativeRotator = new UE.Rotator(0, 90, -90),
+  HULU_BASE_ID = 2e7,
+  HULU_PARTY_ID = 1e5;
 class HideWeaponOrder {
   constructor(t, i, e, s = !0, h = 0) {
     (this.Index = 0),
@@ -79,7 +83,7 @@ class WeaponEquipInfo {
       );
     if (this.WeaponId !== t.Dps) {
       this.WeaponId = t.Dps;
-      const i =
+      var i =
         ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponConfigByItemId(
           this.WeaponId,
         );
@@ -147,12 +151,12 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
         this.SetWeaponVisibleByTag(i, t, !1);
       }),
       (this.W3r = (t, i, e) => {
-        let s;
+        var s;
         (t?.Valid
           ? ((s = t.GetComponent(69)),
             this.OQr(),
             this.CheckAndHangWeapons(!1),
-            i === 0 || e
+            0 === i || e
               ? (this.kQr(0),
                 this.SyncParagliding(s),
                 (i = t.GetComponent(185)).HasTag(this.yQr) &&
@@ -199,7 +203,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
       }),
       (this.HQr = (t, i) => {
         this.ParaglidingIsHover = i;
-        const e = this.Paragliding.GetAnimInstance();
+        var e = this.Paragliding.GetAnimInstance();
         e && e.SetHover(i);
       }),
       (this.z3r = (t, i) => {
@@ -278,13 +282,13 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
   set BPr(t) {
     this.cQr !== t &&
       ((this.cQr = t), this.Lie) &&
-      (t === 0
+      (0 === t
         ? this.Lie.HasTag(-2075724632) || this.Lie.AddTag(-2075724632)
         : this.Lie.HasTag(-2075724632) && this.Lie.RemoveTag(-2075724632));
   }
   SetParaglidingIsAscent(t) {
     this.ParaglidingIsAscent = t;
-    const i = this.Paragliding.GetAnimInstance();
+    var i = this.Paragliding.GetAnimInstance();
     i && i.SetDash(t);
   }
   OnInitData() {
@@ -307,7 +311,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
         Protocol_1.Aki.Protocol.HBs.Proto_Player),
       (this.pQr =
         this.XHt ||
-        this.Hte.CreatureData.GetBaseInfo()?.Category.MonsterMatchType === 4),
+        4 === this.Hte.CreatureData.GetBaseInfo()?.Category.MonsterMatchType),
       (this.EQr = 0),
       (this.AiItemMarkId = 0),
       !this.Hte)
@@ -363,7 +367,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
               ["BP", this.Hte.Actor.GetName()],
             );
     }
-    if ((this.vQr.length = 0) === this.BPr && this.QQr.size > 0)
+    if ((this.vQr.length = 0) === this.BPr && 0 < this.QQr.size)
       for (const h of this.mQr.CharacterWeapons) this.tXr(h, !0, !0);
     this.iXr(t), this.oXr(), this.rXr();
   }
@@ -405,7 +409,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
           }),
           (this.DQr = []))
         : (this.ClearWeaponForAi(), (this.AiWeaponConfigId = 0));
-    const t = this.Paragliding?.GetAnimInstance();
+    var t = this.Paragliding?.GetAnimInstance();
     return (
       t?.DebugDestructText &&
         (Log_1.Log.CheckDebug() &&
@@ -422,13 +426,13 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
   }
   JQr() {
     this.mQr = new CharacterWeaponMesh_1.CharacterWeaponMesh();
-    let t;
-    const i = this.Hte.Actor.K2_GetComponentsByClass(
-      UE.MeshComponent.StaticClass(),
-    );
-    const e = new Array();
+    var t,
+      i = this.Hte.Actor.K2_GetComponentsByClass(
+        UE.MeshComponent.StaticClass(),
+      ),
+      e = new Array();
     for (let t = 0; t < i.Num(); ++t) {
-      const s = i.Get(t);
+      var s = i.Get(t);
       s instanceof UE.SkeletalMeshComponent &&
         s.GetName().startsWith("WeaponCase") &&
         (e.push(s), (s.bAbsoluteScale = !1));
@@ -439,7 +443,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
         this.BQr.SetScale3D(this.wQr.ToUeVector()))
       : this.wQr.Set(1, 1, 1),
       this.mQr.Init(e, this.Hte.Actor.Mesh, this.Hte.Actor, !1),
-      this.mQr.CharacterWeapons.length > 0 &&
+      0 < this.mQr.CharacterWeapons.length &&
         (this.XHt
           ? (this.nXr(), this.EquipWeaponForRole(), this.sXr())
           : this.pQr &&
@@ -451,9 +455,9 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
       this.XHt || this.aXr();
   }
   nXr() {
-    const t = this.Entity.GetComponent(0).GetModelConfig();
-    const i = t.NormalSockets;
-    const e = t.BattleSockets;
+    var t = this.Entity.GetComponent(0).GetModelConfig(),
+      i = t.NormalSockets,
+      e = t.BattleSockets;
     i.Num() !== e.Num() &&
       Log_1.Log.CheckError() &&
       Log_1.Log.Error(
@@ -488,7 +492,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
   }
   aXr() {
     this.hXr();
-    let t = this.Hte.CreatureData?.ComponentDataMap.get("Kvs");
+    var t = this.Hte.CreatureData?.ComponentDataMap.get("Kvs");
     t &&
       ((t = t.Kvs?.Dps)
         ? (this.RegisterCharacterDropWeaponEvent(t),
@@ -496,7 +500,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
         : ((this.BPr = -1), this.WeaponIn(!1)));
   }
   ZQr() {
-    let t;
+    var t;
     this.XHt &&
       ((t = this.Hte.Actor.AddComponentByClass(
         UE.SkeletalMeshComponent.StaticClass(),
@@ -546,7 +550,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
       });
   }
   OpenParagliding(t) {
-    let i;
+    var i;
     (this.ParaglidingIsOpen = t),
       this.Paragliding &&
         ((i = this.Paragliding.GetAnimInstance())
@@ -592,7 +596,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
             (t) => {
               this.Paragliding.SetAnimClass(t),
                 this.ParaglidingIsOpen && this.OpenParagliding(!0);
-              const i = this.Paragliding.GetAnimInstance();
+              var i = this.Paragliding.GetAnimInstance();
               i
                 ? ((i.DebugDestructText =
                     `Owner: ${this.Hte?.Owner?.GetName()}, Self: ${this.Paragliding?.GetName()} entityId: ${this.Entity.Id} pbDataId: ` +
@@ -620,7 +624,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
       UE.KuroAnimLibrary.EndAnimNotifyStates(t);
   }
   zQr() {
-    let t;
+    var t;
     this.XHt &&
       ((this.HuluHideEffect = 0),
       (this.xQr = void 0),
@@ -675,8 +679,8 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
   }
   kQr(e) {
     if (e !== this.RQr) {
-      let t = void 0;
-      let i = FNameUtil_1.FNameUtil.EMPTY;
+      let t = void 0,
+        i = FNameUtil_1.FNameUtil.EMPTY;
       switch (e) {
         case 0:
           (i = CharacterNameDefines_1.CharacterNameDefines.HULU_SOCKET_NAME),
@@ -698,14 +702,14 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
     (e && this.Hulu.bHiddenInGame === t) ||
       (!i || t
         ? (this.xQr &&
-            this.xQr >= 0 &&
+            0 <= this.xQr &&
             (this.Hte.Actor.CharRenderingComponent.RemoveMaterialControllerData(
               this.xQr,
             ),
             (this.xQr = void 0)),
           this.Hulu.SetHiddenInGame(t))
         : (this.xQr &&
-            this.xQr >= 0 &&
+            0 <= this.xQr &&
             (this.Hte.Actor.CharRenderingComponent.RemoveMaterialControllerData(
               this.xQr,
             ),
@@ -715,7 +719,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
             "/Game/Aki/Effect/MaterialController/Common/DA_Fx_HuluStart.DA_Fx_HuluStart",
             UE.PD_CharacterControllerData_C,
             (t) => {
-              this.RQr !== 1 &&
+              1 !== this.RQr &&
                 ((this.xQr =
                   this.Hte.Actor.CharRenderingComponent.AddMaterialControllerData(
                     t,
@@ -734,11 +738,10 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
       this.UnRegisterCharacterDropWeaponEvent();
   }
   ChangeWeaponByWeaponByConfigId(t) {
-    const i =
-      ModelManager_1.ModelManager.AiWeaponModel.GetWeaponConfigByConfigId(
-        t,
-        this.Entity,
-      );
+    var i = ModelManager_1.ModelManager.AiWeaponModel.GetWeaponConfigByConfigId(
+      t,
+      this.Entity,
+    );
     i
       ? this.ChangeWeaponByWeaponSocketItem(i)
       : Log_1.Log.CheckError() &&
@@ -761,10 +764,10 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
     this.Hte.Actor.CharRenderingComponent.Init(this.Hte.Actor.RenderType);
     let i = 0;
     for (const s of t) {
-      const e = this.MQr.Meshes.Get(i);
-      const h = s.Mesh;
-      const o = this.MQr.WeaponEffectPath.AssetPathName?.toString();
-      const r = e.AnimInstanceSoftPtr.ToAssetPathName();
+      var e = this.MQr.Meshes.Get(i);
+      const h = s.Mesh,
+        o = this.MQr.WeaponEffectPath.AssetPathName?.toString(),
+        r = e.AnimInstanceSoftPtr.ToAssetPathName();
       h instanceof UE.SkeletalMeshComponent &&
         ResourceSystem_1.ResourceSystem.LoadAsync(
           e.MeshSoftPtr.ToAssetPathName(),
@@ -772,7 +775,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
           (t) => {
             h.SetSkeletalMesh(t),
               r &&
-                r !== "" &&
+                "" !== r &&
                 ResourceSystem_1.ResourceSystem.LoadAsync(r, UE.Class, (t) => {
                   h.SetAnimClass(t);
                 }),
@@ -805,7 +808,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
         ]);
   }
   EquipWeaponForRole() {
-    const t = this.Entity.GetComponent(0).ComponentDataMap.get("ips")?.ips;
+    var t = this.Entity.GetComponent(0).ComponentDataMap.get("ips")?.ips;
     return !!t && this.EquipWeaponForRoleByWeaponComponent(t);
   }
   EquipWeaponForRoleByWeaponComponent(t) {
@@ -825,9 +828,9 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
       );
     t = this.WeaponEquipInfo.WeaponConfig;
     if (!t) return !1;
-    const i = t.Models;
+    var i = t.Models;
     if (
-      ((this.qQr = t.HiddenTime > 0),
+      ((this.qQr = 0 < t.HiddenTime),
       (this.bQr = t.HiddenTime),
       i.length !== this.mQr.CharacterWeapons.length)
     )
@@ -849,24 +852,24 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
     for (const o of i) {
       const r = this.mQr.CharacterWeapons[e].Mesh;
       if (r instanceof UE.SkeletalMeshComponent) {
-        const h = 1 + e;
-        const a = ModelUtil_1.ModelUtil.GetModelConfig(o);
+        const h = 1 + e,
+          a = ModelUtil_1.ModelUtil.GetModelConfig(o);
         a &&
           (ResourceSystem_1.ResourceSystem.LoadAsync(
             a.网格体.ToAssetPathName(),
             UE.SkeletalMesh,
             (t) => {
               if (t) {
-                const i = r.GetNumMaterials();
+                var i = r.GetNumMaterials();
                 for (let t = 0; t < i; ++t) r.SetMaterial(t, void 0);
-                const e = t.Materials;
-                const s = e.Num();
+                var e = t.Materials,
+                  s = e.Num();
                 r.SetSkeletalMesh(t);
                 for (let t = 0; t < s; ++t)
                   r.SetMaterial(t, e.Get(t).MaterialInterface);
                 (t = a.动画蓝图.ToAssetPathName()),
                   (t =
-                    (t && t !== ""
+                    (t && "" !== t
                       ? ResourceSystem_1.ResourceSystem.LoadAsync(
                           t,
                           UE.Class,
@@ -888,7 +891,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
                     ),
                     a.DA.AssetPathName?.toString()));
                 t &&
-                  t !== "" &&
+                  "" !== t &&
                   ResourceSystem_1.ResourceSystem.LoadAsync(
                     t,
                     UE.PD_WeaponLevelMaterialDatas_C,
@@ -913,7 +916,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
     this.EquipWeaponForRoleByWeaponComponent(t.ips);
   }
   CheckAndHangWeapons(t) {
-    this.BPr === 0
+    0 === this.BPr
       ? this.Lie.HasTag(-1348147833) && this.WeaponOut()
       : (this.oRe?.Valid && !(this.oRe.BattleIdleEndTime <= 0)) ||
         this.Lie.HasTag(-1348147833) ||
@@ -929,7 +932,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
   }
   HideWeaponsWhenHideBones(i, e) {
     if (this.Hte) {
-      const s = CharacterNameDefines_1.CharacterNameDefines.ROOT;
+      var s = CharacterNameDefines_1.CharacterNameDefines.ROOT;
       for (const h of this.mQr.CharacterWeapons) {
         let t = h.Mesh.GetAttachSocketName();
         if (!FNameUtil_1.FNameUtil.IsEmpty(t)) {
@@ -943,7 +946,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
   iXr(t) {
     if (!(this.CQr >= this.dQr) && this.Hte) {
       this.CQr += t;
-      const i = Math.min(this.CQr / this.dQr, 1);
+      var i = Math.min(this.CQr / this.dQr, 1);
       for (const e of this.mQr.CharacterWeapons)
         UE.KismetMathLibrary.TLerp(
           e.LerpStartTransform,
@@ -979,7 +982,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
           (this.CQr = 0) < i || !t)
         )
           for (const e of this.mQr.CharacterWeapons)
-            this.X9o(e, e.NormalSocket, this.BQr, i > 0), this.tXr(e, !1);
+            this.X9o(e, e.NormalSocket, this.BQr, 0 < i), this.tXr(e, !1);
         else {
           for (const s of this.mQr.CharacterWeapons)
             s.WeaponHidden || this.tXr(s, !0);
@@ -990,16 +993,16 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
                 this.Hte.Actor.CharRenderingComponent.AddMaterialControllerData(
                   this.Hte.Actor.WeaponInEffect,
                 )),
-                this.X9o(t, t.NormalSocket, this.BQr, i > 0),
+                this.X9o(t, t.NormalSocket, this.BQr, 0 < i),
                 this.tXr(t, !1);
           }, WEAPON_IN_DELAY);
         }
       else
         for (const h of this.mQr.CharacterWeapons)
-          this.X9o(h, h.NormalSocket, this.BQr, i > 0), this.tXr(h, !0);
+          this.X9o(h, h.NormalSocket, this.BQr, 0 < i), this.tXr(h, !0);
   }
   WeaponIn(t, i = 0) {
-    this.BPr !== 0 && this.WeaponInInternal(t, i);
+    0 !== this.BPr && this.WeaponInInternal(t, i);
   }
   OldWeaponHidden() {
     if (this.Hte) {
@@ -1014,9 +1017,9 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
         (TimerSystem_1.TimerSystem.Remove(this.gQr), (this.gQr = void 0)),
         this.fQr &&
           (TimerSystem_1.TimerSystem.Remove(this.fQr), (this.fQr = void 0)),
-        (this.dQr = t) > 0 && (this.CQr = 0);
+        0 < (this.dQr = t) && (this.CQr = 0);
       for (const i of this.mQr.CharacterWeapons)
-        this.X9o(i, i.BattleSocket, this.BQr, t > 0),
+        this.X9o(i, i.BattleSocket, this.BQr, 0 < t),
           this.tXr(i, !1),
           i.BattleEffectId &&
             (this.Hte.Actor.CharRenderingComponent.RemoveMaterialControllerData(
@@ -1026,10 +1029,10 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
     }
   }
   WeaponOut(t = 0) {
-    this.BPr !== 1 && this.WeaponOutInternal(t);
+    1 !== this.BPr && this.WeaponOutInternal(t);
   }
   X9o(t, i, e, s) {
-    const h = this.Hte.Actor.Mesh.GetSocketTransform(i, 0);
+    var h = this.Hte.Actor.Mesh.GetSocketTransform(i, 0);
     e.SetScale3D(this.wQr.ToUeVector()),
       s &&
         ((t.LerpStartTransform = UE.KismetMathLibrary.ComposeTransforms(
@@ -1072,11 +1075,11 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
                 ),
               !1
             );
-          (this.dQr = s) > 0 && (this.CQr = 0);
+          0 < (this.dQr = s) && (this.CQr = 0);
           {
             let t = 0;
             for (const h of this.mQr.CharacterWeapons)
-              this.X9o(h, i.Get(t), e.Get(t), s > 0),
+              this.X9o(h, i.Get(t), e.Get(t), 0 < s),
                 this.tXr(h, !1),
                 h.BattleEffectId &&
                   (this.Hte.Actor.CharRenderingComponent.RemoveMaterialControllerData(
@@ -1101,7 +1104,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
   }
   tXr(t, i, e = !0, s = !0, h = 0) {
     s =
-      (this.BPr === 0 && this.QQr.size > 0) ||
+      (0 === this.BPr && 0 < this.QQr.size) ||
       t.VisibleHelper.RequestAndUpdateHiddenInGame(i, s, h);
     if (s === t.WeaponHidden) return !1;
     i && s && t.ReleaseHideEffect(),
@@ -1139,7 +1142,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
   }
   UnRegisterCharacterDropWeaponEvent() {
     this.AiWeaponConfigId &&
-      this.AiWeaponConfigId !== 0 &&
+      0 !== this.AiWeaponConfigId &&
       ((this.CacheAiSocketItem =
         ModelManager_1.ModelManager.AiWeaponModel.GetWeaponConfigByConfigId(
           this.AiWeaponConfigId,
@@ -1162,7 +1165,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
     ModelManager_1.ModelManager.AiWeaponModel.Net.SendDiscardWeaponPush(this);
   }
   YQr() {
-    this.AiWeaponConfigId !== 0 &&
+    0 !== this.AiWeaponConfigId &&
       ModelManager_1.ModelManager.AiWeaponModel.Net.SendDiscardWeaponPush(this);
   }
   uXr(t) {
@@ -1180,7 +1183,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
     this.Lie.Active && this.Lie.RemoveTag(t?.TagId);
   }
   get HasWeapon() {
-    return this.BPr === 1;
+    return 1 === this.BPr;
   }
   ResetWeaponTag() {
     (this.CacheAiSocketItem =
@@ -1194,7 +1197,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
     return this.WeaponEquipInfo ? this.WeaponEquipInfo.WeaponBreachLevel : -1;
   }
   InitWeaponVisibleData() {
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.WeaponComponentConfig.GetWeaponVisibleConfig(
         this.Entity,
       );
@@ -1211,10 +1214,8 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
         i++;
   }
   d8s() {
-    const t = this.Hte.CreatureData;
-    let i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
-      t.GetRoleId(),
-    );
+    var t = this.Hte.CreatureData,
+      i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(t.GetRoleId());
     let e = 0;
     e = i?.IsTrialRole() ? i.GetRoleId() : t.GetPbDataId();
     i =
@@ -1226,7 +1227,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
       });
   }
   InitDebugWeaponVisibleDataById(t) {
-    const i =
+    var i =
       ConfigManager_1.ConfigManager.WeaponComponentConfig.GetWeaponVisibleConfigById(
         t,
       );
@@ -1258,13 +1259,12 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
     t += `[武器组件]{ weaponId: ${this.WeaponEquipInfo.WeaponId}, 'WeaponBreachLevel:' ${this.WeaponEquipInfo.WeaponBreachLevel}, models:${this.WeaponEquipInfo.WeaponConfig.Models}  }
 `;
     for (const e of this.mQr.CharacterWeapons) {
-      const i = e.Mesh;
+      var i = e.Mesh;
       t += `[武器组件]{ weaponMesh: ${i.SkeletalMesh.GetName()}, AnimInstance: ${i.GetAnimInstance().GetName()},         BattleSocket: ${e.BattleSocket},NormalSocket: ${e.NormalSocket} }
 `;
     }
     return t;
   }
-
   GetWeaponMesh() {
     return this.mQr;
   }
@@ -1293,4 +1293,4 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
   CharacterWeaponComponent,
 )),
   (exports.CharacterWeaponComponent = CharacterWeaponComponent);
-// # sourceMappingURL=CharacterWeaponComponent.js.map
+//# sourceMappingURL=CharacterWeaponComponent.js.map

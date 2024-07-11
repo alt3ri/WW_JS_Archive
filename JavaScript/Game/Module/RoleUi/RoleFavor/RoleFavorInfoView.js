@@ -1,42 +1,42 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleFavorInfoView = exports.initClassifyItem = void 0);
-const UE = require("ue");
-const AudioController_1 = require("../../../../Core/Audio/AudioController");
-const Log_1 = require("../../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const CharacterNameDefines_1 = require("../../../NewWorld/Character/Common/CharacterNameDefines");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const MenuController_1 = require("../../Menu/MenuController");
-const MotionController_1 = require("../../Motion/MotionController");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const UiSceneManager_1 = require("../../UiComponent/UiSceneManager");
-const UiModelUtil_1 = require("../../UiModel/UiModelUtil");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RoleController_1 = require("../RoleController");
-const RoleFavorBaseInfoComponent_1 = require("./RoleFavorBaseInfoComponent");
-const RoleFavorClassifyItem_1 = require("./RoleFavorClassifyItem");
-const RoleFavorDefine_1 = require("./RoleFavorDefine");
-const RoleFavorDescComponent_1 = require("./RoleFavorDescComponent");
-const RoleFavorLockComponent_1 = require("./RoleFavorLockComponent");
-const RoleFavorPowerInfoComponent_1 = require("./RoleFavorPowerInfoComponent");
-const RoleFavorPreciousItemComponent_1 = require("./RoleFavorPreciousItemComponent");
-const RoleFavorUtil_1 = require("./RoleFavorUtil");
-const initClassifyItem = (e, i, t) => {
-  return {
-    Key: t,
-    Value: new RoleFavorClassifyItem_1.RoleFavorClassifyItem(e, i),
+const UE = require("ue"),
+  AudioController_1 = require("../../../../Core/Audio/AudioController"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  CharacterNameDefines_1 = require("../../../NewWorld/Character/Common/CharacterNameDefines"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  MenuController_1 = require("../../Menu/MenuController"),
+  MotionController_1 = require("../../Motion/MotionController"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  UiSceneManager_1 = require("../../UiComponent/UiSceneManager"),
+  UiModelUtil_1 = require("../../UiModel/UiModelUtil"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RoleController_1 = require("../RoleController"),
+  RoleFavorBaseInfoComponent_1 = require("./RoleFavorBaseInfoComponent"),
+  RoleFavorClassifyItem_1 = require("./RoleFavorClassifyItem"),
+  RoleFavorDefine_1 = require("./RoleFavorDefine"),
+  RoleFavorDescComponent_1 = require("./RoleFavorDescComponent"),
+  RoleFavorLockComponent_1 = require("./RoleFavorLockComponent"),
+  RoleFavorPowerInfoComponent_1 = require("./RoleFavorPowerInfoComponent"),
+  RoleFavorPreciousItemComponent_1 = require("./RoleFavorPreciousItemComponent"),
+  RoleFavorUtil_1 = require("./RoleFavorUtil"),
+  initClassifyItem = (e, i, t) => {
+    return {
+      Key: t,
+      Value: new RoleFavorClassifyItem_1.RoleFavorClassifyItem(e, i),
+    };
   };
-};
 exports.initClassifyItem = initClassifyItem;
 class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
   constructor() {
@@ -63,9 +63,9 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
           this.GetItem(9).SetUIActive(!1);
       }),
       (this.o_o = () => {
-        const i = this.W1o.length;
+        var i = this.W1o.length;
         for (let e = 0; e < i; e++) {
-          const t = this.W1o[e];
+          var t = this.W1o[e];
           RoleFavorUtil_1.RoleFavorUtil.IsSameContentItemData(
             this.K1o,
             t.ContentItemData,
@@ -93,7 +93,7 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
       }),
       (this.ILt = () => {
         let e = void 0;
-        const i = this.GetText(3);
+        var i = this.GetText(3);
         switch (this.K1o.FavorTabType) {
           case 2:
             e = "FavorAction";
@@ -125,19 +125,21 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
         }
       }),
       (this.s_o = () => {
-        const e = [];
-        const i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-          this.K1o.RoleId,
-        ).GetRoleId();
-        let t = ConfigManager_1.ConfigManager.MotionConfig.GetRoleMotionByType(
-          i,
-          1,
-        );
-        const o =
-          ConfigManager_1.ConfigManager.MotionConfig.GetRoleMotionByType(i, 2);
+        var e = [],
+          i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
+            this.K1o.RoleId,
+          ).GetRoleId(),
+          t = ConfigManager_1.ConfigManager.MotionConfig.GetRoleMotionByType(
+            i,
+            1,
+          ),
+          o = ConfigManager_1.ConfigManager.MotionConfig.GetRoleMotionByType(
+            i,
+            2,
+          );
         return (
           t &&
-            t.length > 0 &&
+            0 < t.length &&
             ((t = new RoleFavorDefine_1.ClassifyItemData(
               "FavorIdleAction",
               2,
@@ -146,7 +148,7 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
             )),
             e.push(t)),
           o &&
-            o.length > 0 &&
+            0 < o.length &&
             ((t = new RoleFavorDefine_1.ClassifyItemData(
               "FavorFightAction",
               2,
@@ -158,55 +160,43 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
         );
       }),
       (this.a_o = () => {
-        const e = [];
-        var i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-          this.K1o.RoleId,
-        ).GetRoleId();
-        const t = new RoleFavorDefine_1.ClassifyItemData(
-          "FavorRoleInfo",
-          1,
-          i,
-          1,
-        );
-        var i = new RoleFavorDefine_1.ClassifyItemData(
-          "FavorRoleStory",
-          1,
-          i,
-          3,
-        );
+        var e = [],
+          i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
+            this.K1o.RoleId,
+          ).GetRoleId(),
+          t = new RoleFavorDefine_1.ClassifyItemData("FavorRoleInfo", 1, i, 1),
+          i = new RoleFavorDefine_1.ClassifyItemData("FavorRoleStory", 1, i, 3);
         return e.push(t, i), e;
       }),
       (this.h_o = () => {
-        const e = [];
-        var i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-          this.K1o.RoleId,
-        ).GetRoleId();
-        var i = new RoleFavorDefine_1.ClassifyItemData(
-          "FavorPreciousItem",
-          3,
-          i,
-          void 0,
-        );
+        var e = [],
+          i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
+            this.K1o.RoleId,
+          ).GetRoleId(),
+          i = new RoleFavorDefine_1.ClassifyItemData(
+            "FavorPreciousItem",
+            3,
+            i,
+            void 0,
+          );
         return e.push(i), e;
       }),
       (this.l_o = () => {
-        const e = [];
-        const i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-          this.K1o.RoleId,
-        ).GetRoleId();
-        let t =
-          ConfigManager_1.ConfigManager.RoleFavorConfig.GetFavorWordConfig(
+        var e = [],
+          i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
+            this.K1o.RoleId,
+          ).GetRoleId(),
+          t = ConfigManager_1.ConfigManager.RoleFavorConfig.GetFavorWordConfig(
             i,
             1,
-          );
-        const o =
-          ConfigManager_1.ConfigManager.RoleFavorConfig.GetFavorWordConfig(
+          ),
+          o = ConfigManager_1.ConfigManager.RoleFavorConfig.GetFavorWordConfig(
             i,
             2,
           );
         return (
           t &&
-            t.length > 0 &&
+            0 < t.length &&
             ((t = new RoleFavorDefine_1.ClassifyItemData(
               "FavorNatureVoice",
               0,
@@ -215,7 +205,7 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
             )),
             e.push(t)),
           o &&
-            o.length > 0 &&
+            0 < o.length &&
             ((t = new RoleFavorDefine_1.ClassifyItemData(
               "FavorFightVoice",
               0,
@@ -242,23 +232,23 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
           this.OnToggleClick(t, this.K1o));
       }),
       (this.Qyt = (e, i) => {
-        let t = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-          this.K1o.RoleId,
-        );
-        const o = t.GetFavorData();
+        var t = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
+            this.K1o.RoleId,
+          ),
+          o = t.GetFavorData();
         let r = 0;
         (r =
-          e.FavorTabType === 2
+          2 === e.FavorTabType
             ? ((t = ModelManager_1.ModelManager.MotionModel.GetRoleMotionState(
                 t.GetRoleId(),
                 e.Config.Id,
               )),
               Number(t))
             : o.GetFavorItemState(e.Config.Id, e.FavorTabType)),
-          (!RoleFavorUtil_1.RoleFavorUtil.IsRoleInfo(e) && r !== 2) ||
-            (e.FavorTabType === 0
+          (!RoleFavorUtil_1.RoleFavorUtil.IsRoleInfo(e) && 2 !== r) ||
+            (0 === e.FavorTabType
               ? this.PlayVoice(i)
-              : e.FavorTabType === 2 && this.__o(i));
+              : 2 === e.FavorTabType && this.__o(i));
       }),
       (this.u_o = (e, i) => {
         if (e === this.K1o.RoleId) {
@@ -298,14 +288,14 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
   }
   OnBeforeShow() {
     this.K1o &&
-      this.K1o.FavorTabType === 3 &&
+      3 === this.K1o.FavorTabType &&
       UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor()?.SetActorHiddenInGame(
         !0,
       );
   }
   OnAfterHide() {
     this.K1o &&
-      this.K1o.FavorTabType === 3 &&
+      3 === this.K1o.FavorTabType &&
       UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor()?.SetActorHiddenInGame(
         !1,
       );
@@ -325,8 +315,8 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
       AudioController_1.AudioController.StopEvent(this.t_o);
   }
   OnToggleClick(e, i) {
-    const t = this.GetItemState(i);
-    if (RoleFavorUtil_1.RoleFavorUtil.IsRoleInfo(i) || t === 2)
+    var t = this.GetItemState(i);
+    if (RoleFavorUtil_1.RoleFavorUtil.IsRoleInfo(i) || 2 === t)
       switch (i.FavorTabType) {
         case 2:
           this.ShowActionItem(), this.__o(e);
@@ -343,49 +333,49 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
     else this.HandleLockItemData();
   }
   HandleLockItemData() {
-    const e = this.K1o.Config.Id;
-    const i = this.K1o.FavorTabType;
+    var e = this.K1o.Config.Id,
+      i = this.K1o.FavorTabType;
     let t = void 0;
-    const o = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-      this.K1o.RoleId,
-    );
-    const r = o.GetFavorData();
-    if (i === 1) t = Protocol_1.Aki.Protocol.dks.Proto_Story;
+    var o = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
+        this.K1o.RoleId,
+      ),
+      r = o.GetFavorData();
+    if (1 === i) t = Protocol_1.Aki.Protocol.dks.Proto_Story;
     else {
-      if (i === 2)
+      if (2 === i)
         return (
           this.X1o && this.ClearRoleMontage(this.X1o),
           (s = ModelManager_1.ModelManager.MotionModel.GetRoleMotionState(
             o.GetRoleId(),
             e,
           )),
-          void ((s = Number(s)) === 1
+          void (1 === (s = Number(s))
             ? MotionController_1.MotionController.RequestUnlockMotion(
                 o.GetRoleId(),
                 e,
               )
-            : s === 0 && this.ShowLockItem())
+            : 0 === s && this.ShowLockItem())
         );
-      i === 3
+      3 === i
         ? (t = Protocol_1.Aki.Protocol.dks.Proto_Goods)
-        : i === 0 &&
+        : 0 === i &&
           ((t = Protocol_1.Aki.Protocol.dks.I3n), this.X1o) &&
           this.ClearAudio(this.X1o);
     }
     var s = r.GetFavorItemState(this.K1o.Config.Id, i);
-    s === 1
+    1 === s
       ? RoleController_1.RoleController.SendRoleFavorUnLockRequest(
           t,
           o.GetRoleId(),
           e,
         )
-      : s === 0 && this.ShowLockItem();
+      : 0 === s && this.ShowLockItem();
   }
   ClearAudio(e) {
     AudioController_1.AudioController.StopEvent(this.t_o), e.EndPlay();
   }
   ClearRoleMontage(e) {
-    let i = UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor();
+    var i = UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor();
     i &&
       ((i = i.Model),
       UiModelUtil_1.UiModelUtil.SetVisible(i, !0),
@@ -400,21 +390,21 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
   }
   ShowDefaultItem() {
     var e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-      this.K1o.RoleId,
-    ).GetRoleId();
-    const i =
-      ConfigManager_1.ConfigManager.RoleFavorConfig.GetFavorRoleInfoConfig(e);
-    var e = new RoleFavorDefine_1.ContentItemData(1, e, i, 1);
+        this.K1o.RoleId,
+      ).GetRoleId(),
+      i =
+        ConfigManager_1.ConfigManager.RoleFavorConfig.GetFavorRoleInfoConfig(e),
+      e = new RoleFavorDefine_1.ContentItemData(1, e, i, 1);
     this.ShowItemByData(e);
   }
   GetItemState(e) {
-    let i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-      this.K1o.RoleId,
-    );
-    const t = i.GetFavorData();
+    var i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
+        this.K1o.RoleId,
+      ),
+      t = i.GetFavorData();
     let o = 0;
     return (o =
-      e.FavorTabType === 2
+      2 === e.FavorTabType
         ? ((i = ModelManager_1.ModelManager.MotionModel.GetRoleMotionState(
             i.GetRoleId(),
             e.Config.Id,
@@ -424,8 +414,8 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
   }
   ShowItemByData(e) {
     this.i_o();
-    const i = this.GetItemState(e);
-    if (RoleFavorUtil_1.RoleFavorUtil.IsRoleInfo(e) || i === 2)
+    var i = this.GetItemState(e);
+    if (RoleFavorUtil_1.RoleFavorUtil.IsRoleInfo(e) || 2 === i)
       switch (e.FavorTabType) {
         case 2:
           this.ShowActionItem();
@@ -442,10 +432,10 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
     else this.HandleLockItemData();
   }
   ShowActionItem() {
-    const e = this.GetItem(6);
-    let i =
-      (e.SetUIActive(!0), this.GetText(11)?.SetUIActive(!1), this.K1o.Config);
-    const t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(i.Title);
+    var e = this.GetItem(6),
+      i =
+        (e.SetUIActive(!0), this.GetText(11)?.SetUIActive(!1), this.K1o.Config),
+      t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(i.Title);
     let o = StringUtils_1.EMPTY_STRING;
     i.Content !== StringUtils_1.EMPTY_STRING &&
       (o = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(i.Content));
@@ -454,15 +444,15 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
   }
   ShowExperienceItem() {
     this.GetText(11)?.SetUIActive(!1);
-    const e = this.K1o.TypeParam;
-    e === 1
+    var e = this.K1o.TypeParam;
+    1 === e
       ? this.ShowBaseInfoItem()
-      : e === 2
+      : 2 === e
         ? this.ShowRolePowerFileItem()
-        : e === 3 && this.ShowRoleExperienceItem();
+        : 3 === e && this.ShowRoleExperienceItem();
   }
   ShowBaseInfoItem() {
-    const e = this.GetItem(7);
+    var e = this.GetItem(7);
     e.SetUIActive(!0),
       (this.J1o = new RoleFavorBaseInfoComponent_1.RoleFavorBaseInfoComponent(
         e,
@@ -470,7 +460,7 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
       ));
   }
   ShowRolePowerFileItem() {
-    const e = this.GetItem(8);
+    var e = this.GetItem(8);
     e.SetUIActive(!0),
       (this.z1o = new RoleFavorPowerInfoComponent_1.RoleFavorPowerInfoComponent(
         e,
@@ -478,21 +468,21 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
       ));
   }
   ShowRoleExperienceItem() {
-    const e = this.GetItem(6);
-    var i = (e.SetUIActive(!0), this.K1o.Config);
-    var t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(i.Title);
-    var i = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(i.Content);
-    var t = new RoleFavorDefine_1.RoleFavorDescComponentData(t, i);
+    var e = this.GetItem(6),
+      i = (e.SetUIActive(!0), this.K1o.Config),
+      t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(i.Title),
+      i = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(i.Content),
+      t = new RoleFavorDefine_1.RoleFavorDescComponentData(t, i);
     this.Y1o = new RoleFavorDescComponent_1.RoleFavorDescComponent(e, t);
   }
   ShowPreciousItem() {
     this.GetText(11)?.SetUIActive(!1);
-    const e = this.GetItem(9);
-    const i = (e.SetUIActive(!0), this.GetItem(6));
-    const t = (i.SetUIActive(!0), this.K1o.Config);
-    var o = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.Title);
-    const r = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.Content);
-    var o = new RoleFavorDefine_1.RoleFavorDescComponentData(o, r);
+    var e = this.GetItem(9),
+      i = (e.SetUIActive(!0), this.GetItem(6)),
+      t = (i.SetUIActive(!0), this.K1o.Config),
+      o = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.Title),
+      r = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.Content),
+      o = new RoleFavorDefine_1.RoleFavorDescComponentData(o, r);
     (this.Y1o = new RoleFavorDescComponent_1.RoleFavorDescComponent(i, o)),
       (this.Z1o =
         new RoleFavorPreciousItemComponent_1.RoleFavorPreciousItemComponent(
@@ -502,25 +492,23 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
         ));
   }
   ShowVoiceItem() {
-    const e = this.GetItem(6);
-    var i = (e.SetUIActive(!0), this.K1o.Config);
-    const t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(i.Title);
-    var i = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(i.Content);
-    const o = RoleFavorUtil_1.RoleFavorUtil.GetCurLanguageCvName(
-      this.K1o.RoleId,
-    );
-    var r = this.GetText(11);
-    var r =
-      (o === StringUtils_1.EMPTY_STRING
-        ? r?.SetUIActive(!1)
-        : (r?.SetUIActive(!0), LguiUtil_1.LguiUtil.SetLocalTextNew(r, o)),
-      new RoleFavorDefine_1.RoleFavorDescComponentData(t, i));
+    var e = this.GetItem(6),
+      i = (e.SetUIActive(!0), this.K1o.Config),
+      t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(i.Title),
+      i = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(i.Content),
+      o = RoleFavorUtil_1.RoleFavorUtil.GetCurLanguageCvName(this.K1o.RoleId),
+      r = this.GetText(11),
+      r =
+        (o === StringUtils_1.EMPTY_STRING
+          ? r?.SetUIActive(!1)
+          : (r?.SetUIActive(!0), LguiUtil_1.LguiUtil.SetLocalTextNew(r, o)),
+        new RoleFavorDefine_1.RoleFavorDescComponentData(t, i));
     this.Y1o = new RoleFavorDescComponent_1.RoleFavorDescComponent(e, r);
   }
   ShowLockItem() {
     this.i_o();
-    let e;
-    let i = this.GetItem(5);
+    var e,
+      i = this.GetItem(5);
     i.SetUIActive(!0),
       this.e_o
         ? this.e_o.Refresh(this.K1o)
@@ -528,7 +516,7 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
             i,
             this.K1o,
           )),
-      this.K1o.FavorTabType === 3 &&
+      3 === this.K1o.FavorTabType &&
         ((i = this.K1o.Config),
         (e = this.GetItem(9)).SetUIActive(!0),
         this.Z1o
@@ -541,18 +529,18 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
               )));
   }
   PlayVoice(i) {
-    if (i.GetCurVoiceState() === 0)
+    if (0 === i.GetCurVoiceState())
       this.ClearAudio(i),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Role", 44, "关闭当前选项正在播放的语音");
     else {
       this.X1o &&
-        this.X1o.GetCurVoiceState() === 0 &&
+        0 === this.X1o.GetCurVoiceState() &&
         (this.ClearAudio(this.X1o), Log_1.Log.CheckDebug()) &&
         Log_1.Log.Debug("Role", 44, "关闭上个选项播放的语音");
-      let e = MenuController_1.MenuController.GetTargetConfig(1);
-      const t = MenuController_1.MenuController.GetTargetConfig(2);
-      if (e === 0 || t === 0)
+      var e = MenuController_1.MenuController.GetTargetConfig(1),
+        t = MenuController_1.MenuController.GetTargetConfig(2);
+      if (0 === e || 0 === t)
         ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
           "FavorVolume",
         );
@@ -565,7 +553,7 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
               "this.VoicePath",
               this.$1o,
             ]),
-          this.$1o === "")
+          "" === this.$1o)
         )
           Log_1.Log.CheckError() &&
             Log_1.Log.Error("Role", 44, "配置的语音路径为空", [
@@ -573,9 +561,9 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
               this.$1o,
             ]);
         else {
-          const o = this.$1o;
-          const r = this.t_o;
-          const s = this.$zt;
+          const o = this.$1o,
+            r = this.t_o,
+            s = this.$zt;
           AudioController_1.AudioController.LoadAndAddCallback(
             this.$1o,
             function e() {
@@ -594,17 +582,17 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
     }
   }
   __o(t) {
-    const e = this.K1o.Config;
-    t.GetCurVoiceState() === 0
+    var e = this.K1o.Config;
+    0 === t.GetCurVoiceState()
       ? this.ClearRoleMontage(t)
       : (this.X1o &&
-          this.X1o.GetCurVoiceState() === 0 &&
+          0 === this.X1o.GetCurVoiceState() &&
           this.ClearRoleMontage(this.X1o),
         ResourceSystem_1.ResourceSystem.LoadAsync(
           e.AniMontage,
           UE.AnimMontage,
           (e) => {
-            let i;
+            var i;
             e?.IsValid() &&
               (i = UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor()) &&
               ((i = i.Model),
@@ -634,4 +622,4 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RoleFavorInfoView = RoleFavorInfoView;
-// # sourceMappingURL=RoleFavorInfoView.js.map
+//# sourceMappingURL=RoleFavorInfoView.js.map

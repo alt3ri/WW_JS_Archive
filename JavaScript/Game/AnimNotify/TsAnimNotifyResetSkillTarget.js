@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyResetSkillTarget extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.技能目标配置 = void 0);
@@ -19,4 +19,4 @@ class TsAnimNotifyResetSkillTarget extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifyResetSkillTarget;
-// # sourceMappingURL=TsAnimNotifyResetSkillTarget.js.map
+//# sourceMappingURL=TsAnimNotifyResetSkillTarget.js.map

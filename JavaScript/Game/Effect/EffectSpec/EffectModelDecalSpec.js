@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelDecalSpec = void 0);
-const UE = require("ue");
-const EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper");
-const EffectMaterialParameter_1 = require("../../Render/Effect/Data/Parameters/EffectMaterialParameter");
-const EffectSpec_1 = require("./EffectSpec");
+const UE = require("ue"),
+  EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper"),
+  EffectMaterialParameter_1 = require("../../Render/Effect/Data/Parameters/EffectMaterialParameter"),
+  EffectSpec_1 = require("./EffectSpec");
 class EffectModelDecalSpec extends EffectSpec_1.EffectSpec {
   constructor() {
     super(...arguments),
@@ -21,8 +21,8 @@ class EffectModelDecalSpec extends EffectSpec_1.EffectSpec {
     this.i0e = this.EffectModel.DecalMaterialRef;
     let t = this.i0e;
     if (!t) return !1;
-    (this.EffectModel.MaterialFloatParameters.Num() > 0 ||
-      this.EffectModel.MaterialColorParameters.Num() > 0) &&
+    (0 < this.EffectModel.MaterialFloatParameters.Num() ||
+      0 < this.EffectModel.MaterialColorParameters.Num()) &&
       (t = UE.KismetMaterialLibrary.CreateDynamicMaterialInstance(
         this.Handle.GetSureEffectActor(),
         t,
@@ -34,12 +34,10 @@ class EffectModelDecalSpec extends EffectSpec_1.EffectSpec {
         this.CachedLocationCurve.bUseCurve ||
         this.CachedRotationCurve.bUseCurve ||
         this.CachedScaleCurve.bUseCurve);
-    const i = this.Handle.GetSureEffectActor();
-    const s = new UE.Transform();
-    var e = this.Handle.Parent;
-    var e = e
-      ? e.GetEffectSpec()?.GetSceneComponent()
-      : i.K2_GetRootComponent();
+    var i = this.Handle.GetSureEffectActor(),
+      s = new UE.Transform(),
+      e = this.Handle.Parent,
+      e = e ? e.GetEffectSpec()?.GetSceneComponent() : i.K2_GetRootComponent();
     (this.DecalComponent =
       EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
         i,
@@ -53,7 +51,7 @@ class EffectModelDecalSpec extends EffectSpec_1.EffectSpec {
       (this.t0e = this.DecalComponent.IsComponentTickEnabled()),
       this.DecalComponent.SetComponentTickEnabled(!1),
       (this.DecalComponent.DecalMaterial = t),
-      this.DecalComponent.SetIsUIScenePrimitive(this.GetEffectType() === 1);
+      this.DecalComponent.SetIsUIScenePrimitive(1 === this.GetEffectType());
     return (
       (this.DecalComponent.DecalSize = new UE.Vector(100, 100, 100)),
       (this.DecalComponent.ZFadingFactor = this.EffectModel.ZfadingFactor),
@@ -73,7 +71,7 @@ class EffectModelDecalSpec extends EffectSpec_1.EffectSpec {
   }
   OnEffectTypeChange() {
     this.DecalComponent?.IsValid() &&
-      this.DecalComponent.SetIsUIScenePrimitive(this.GetEffectType() === 1);
+      this.DecalComponent.SetIsUIScenePrimitive(1 === this.GetEffectType());
   }
   r0e(t) {
     (this.o0e || t) &&
@@ -85,7 +83,7 @@ class EffectModelDecalSpec extends EffectSpec_1.EffectSpec {
         this.CachedScaleCurve,
         this.LifeTime.PassTime,
       );
-    const i = this.DecalComponent.DecalMaterial;
+    var i = this.DecalComponent.DecalMaterial;
     i instanceof UE.MaterialInstanceDynamic &&
       this.ModelParameters.Apply(i, this.LifeTime.PassTime, t);
   }
@@ -111,4 +109,4 @@ class EffectModelDecalSpec extends EffectSpec_1.EffectSpec {
   }
 }
 exports.EffectModelDecalSpec = EffectModelDecalSpec;
-// # sourceMappingURL=EffectModelDecalSpec.js.map
+//# sourceMappingURL=EffectModelDecalSpec.js.map

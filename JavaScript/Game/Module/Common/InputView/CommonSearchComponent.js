@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonSearchComponent = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class CommonSearchComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t, i, s) {
     super(),
@@ -16,7 +16,7 @@ class CommonSearchComponent extends UiPanelBase_1.UiPanelBase {
         t && this.vUt.ActivateInputText();
       }),
       (this.yUt = () => {
-        const t = this.vUt.GetText();
+        var t = this.vUt.GetText();
         this.SearchFunction?.(t), this.IUt(!1), (this.TUt = !0);
       }),
       (this.LUt = () => {
@@ -67,4 +67,4 @@ class CommonSearchComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.CommonSearchComponent = CommonSearchComponent;
-// # sourceMappingURL=CommonSearchComponent.js.map
+//# sourceMappingURL=CommonSearchComponent.js.map

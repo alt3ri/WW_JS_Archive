@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VoiceLanguageToggle = exports.VoiceLanguageDownloadView = void 0);
-const LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const NetworkDefine_1 = require("../../../../Launcher/NetworkDefine");
-const ResourceUpdateView_1 = require("../../../../Launcher/Ui/HotFix/ResourceUpdateView");
-const AppUtil_1 = require("../../../../Launcher/Update/AppUtil");
-const LanguageUpdateManager_1 = require("../../../../Launcher/Update/LanguageUpdateManager");
-const LauncherTextLib_1 = require("../../../../Launcher/Util/LauncherTextLib");
-const GlobalData_1 = require("../../../GlobalData");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const MenuTool_1 = require("../MenuTool");
-const LanguageSettingViewBase_1 = require("./LanguageSettingViewBase");
+const LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  NetworkDefine_1 = require("../../../../Launcher/NetworkDefine"),
+  ResourceUpdateView_1 = require("../../../../Launcher/Ui/HotFix/ResourceUpdateView"),
+  AppUtil_1 = require("../../../../Launcher/Update/AppUtil"),
+  LanguageUpdateManager_1 = require("../../../../Launcher/Update/LanguageUpdateManager"),
+  LauncherTextLib_1 = require("../../../../Launcher/Util/LauncherTextLib"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  MenuTool_1 = require("../MenuTool"),
+  LanguageSettingViewBase_1 = require("./LanguageSettingViewBase");
 class VoiceLanguageDownloadView extends LanguageSettingViewBase_1.LanguageSettingViewBase {
   constructor() {
     super(...arguments),
@@ -107,15 +107,15 @@ class VoiceLanguageDownloadView extends LanguageSettingViewBase_1.LanguageSettin
     this.wwi = !0;
   }
   CreateToggle(e, t, i) {
-    const a = new VoiceLanguageToggle();
+    var a = new VoiceLanguageToggle();
     return a.Initialize(e, t, i), a;
   }
   OnRefreshView(e) {
-    const t = this.MenuDataIns.MenuDataOptionsNameList[e.GetIndex()];
+    var t = this.MenuDataIns.MenuDataOptionsNameList[e.GetIndex()];
     e.SetMainText(t), e.SetDownloadStatusCallback(this.Bwi);
   }
   InitScrollViewData() {
-    const e =
+    var e =
       LanguageUpdateManager_1.LanguageUpdateManager.GetAllLanguageTypeForAudio();
     this.ScrollView.RefreshByData(e.sort((e, t) => e - t));
   }
@@ -125,11 +125,11 @@ class VoiceLanguageDownloadView extends LanguageSettingViewBase_1.LanguageSettin
   Nwi(e) {
     e.Updater.IsDownloading
       ? this.ConfirmButton.SetLocalText("PauseDownload")
-      : e.Updater.Status !== 2 &&
+      : 2 !== e.Updater.Status &&
         this.ConfirmButton.SetLocalText("DownloadLanguage"),
-      e.Updater.Status === 2 &&
+      2 === e.Updater.Status &&
         this.ConfirmButton.SetLocalText("DeleteLanguage"),
-      e.Updater.Status === 2 &&
+      2 === e.Updater.Status &&
       e.Updater.LanguageCode === LanguageSystem_1.LanguageSystem.PackageAudio
         ? this.ConfirmButton.SetFunction(this.qwi)
         : this.ConfirmButton.SetFunction(this.Gwi);
@@ -153,7 +153,7 @@ class LanguageDownloadTips extends ResourceUpdateView_1.ResourceUpdateViewBase {
   UpdatePatchProgress(e, t, i, a) {
     this.Owi
       ? t === i &&
-        (this.Owi.CalculateDownloadStatus(), this.Owi.Status === 2) &&
+        (this.Owi.CalculateDownloadStatus(), 2 === this.Owi.Status) &&
         ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
           "LanguageDownloadFinished",
           this.kwi,
@@ -175,8 +175,8 @@ class VoiceLanguageToggle extends LanguageSettingViewBase_1.LanguageToggleBase {
   }
   async ShowNotEnoughSpaceConfirmation(a) {
     return new Promise((e) => {
-      const t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(81);
-      const i = LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(a);
+      var t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(81),
+        i = LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(a);
       t.SetTextArgs(i),
         t.FunctionMap.set(2, () => {
           e(!0);
@@ -205,19 +205,19 @@ class VoiceLanguageToggle extends LanguageSettingViewBase_1.LanguageToggleBase {
     this.Fwi = e;
   }
   RefreshUi() {
-    let i;
-    let a;
-    const s = this.GetText(2);
+    var i,
+      a,
+      s = this.GetText(2);
     if (this.Updater) {
       if ((s.SetUIActive(!0), !this.Updater.IsDownloading)) {
-        let e = StringUtils_1.EMPTY_STRING;
-        let t = LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(
-          this.Updater.TotalDiskSize,
-        );
+        let e = StringUtils_1.EMPTY_STRING,
+          t = LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(
+            this.Updater.TotalDiskSize,
+          );
         this.Updater.LanguageCode ===
         LanguageSystem_1.LanguageSystem.PackageAudio
           ? (e = ConfigManager_1.ConfigManager.TextConfig.GetTextById("InUse"))
-          : this.Updater.Status === 1
+          : 1 === this.Updater.Status
             ? ((e =
                 ConfigManager_1.ConfigManager.TextConfig.GetTextById(
                   "Pausing",
@@ -229,7 +229,7 @@ class VoiceLanguageToggle extends LanguageSettingViewBase_1.LanguageToggleBase {
               this.ProgressBuilder.Clear(),
               this.ProgressBuilder.Append(i, StringUtils_1.SLASH_STRING, a),
               (t = this.ProgressBuilder.ToString()))
-            : this.Updater.Status === 0 &&
+            : 0 === this.Updater.Status &&
               ((e =
                 ConfigManager_1.ConfigManager.TextConfig.GetTextById(
                   "NotDownloaded",
@@ -302,4 +302,4 @@ class VoiceLanguageToggle extends LanguageSettingViewBase_1.LanguageToggleBase {
   }
 }
 exports.VoiceLanguageToggle = VoiceLanguageToggle;
-// # sourceMappingURL=VoiceLanguageDownloadView.js.map
+//# sourceMappingURL=VoiceLanguageDownloadView.js.map

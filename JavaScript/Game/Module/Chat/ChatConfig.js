@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChatConfig = void 0);
-const ChatById_1 = require("../../../Core/Define/ConfigQuery/ChatById");
-const ChatExpressionAll_1 = require("../../../Core/Define/ConfigQuery/ChatExpressionAll");
-const ChatExpressionByGroupId_1 = require("../../../Core/Define/ConfigQuery/ChatExpressionByGroupId");
-const ChatExpressionById_1 = require("../../../Core/Define/ConfigQuery/ChatExpressionById");
-const ChatExpressionGroupAll_1 = require("../../../Core/Define/ConfigQuery/ChatExpressionGroupAll");
-const ChatExpressionGroupById_1 = require("../../../Core/Define/ConfigQuery/ChatExpressionGroupById");
-const QuickChatAll_1 = require("../../../Core/Define/ConfigQuery/QuickChatAll");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const ChatById_1 = require("../../../Core/Define/ConfigQuery/ChatById"),
+  ChatExpressionAll_1 = require("../../../Core/Define/ConfigQuery/ChatExpressionAll"),
+  ChatExpressionByGroupId_1 = require("../../../Core/Define/ConfigQuery/ChatExpressionByGroupId"),
+  ChatExpressionById_1 = require("../../../Core/Define/ConfigQuery/ChatExpressionById"),
+  ChatExpressionGroupAll_1 = require("../../../Core/Define/ConfigQuery/ChatExpressionGroupAll"),
+  ChatExpressionGroupById_1 = require("../../../Core/Define/ConfigQuery/ChatExpressionGroupById"),
+  QuickChatAll_1 = require("../../../Core/Define/ConfigQuery/QuickChatAll"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class ChatConfig extends ConfigBase_1.ConfigBase {
   GetChatConfig(e) {
     return ChatById_1.configChatById.GetConfig(e);
@@ -35,4 +35,4 @@ class ChatConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.ChatConfig = ChatConfig;
-// # sourceMappingURL=ChatConfig.js.map
+//# sourceMappingURL=ChatConfig.js.map

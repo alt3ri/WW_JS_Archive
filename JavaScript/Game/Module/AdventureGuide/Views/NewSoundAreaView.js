@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NewSoundAreaView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ActivityDoubleRewardController_1 = require("../../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController");
-const CommonDropDown_1 = require("../../Common/DropDown/CommonDropDown");
-const OneTextDropDownItem_1 = require("../../Common/DropDown/Item/OneText/OneTextDropDownItem");
-const OneTextTitleItem_1 = require("../../Common/DropDown/Item/OneText/OneTextTitleItem");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const RoguelikeDefine_1 = require("../../Roguelike/Define/RoguelikeDefine");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const AdventureDefine_1 = require("../AdventureDefine");
-const AdventureGuideController_1 = require("../AdventureGuideController");
-const NewSoundDetectItem_1 = require("./NewSoundDetectItem");
-const NewSoundTypeItem_1 = require("./NewSoundTypeItem");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ActivityDoubleRewardController_1 = require("../../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController"),
+  CommonDropDown_1 = require("../../Common/DropDown/CommonDropDown"),
+  OneTextDropDownItem_1 = require("../../Common/DropDown/Item/OneText/OneTextDropDownItem"),
+  OneTextTitleItem_1 = require("../../Common/DropDown/Item/OneText/OneTextTitleItem"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  RoguelikeDefine_1 = require("../../Roguelike/Define/RoguelikeDefine"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  AdventureDefine_1 = require("../AdventureDefine"),
+  AdventureGuideController_1 = require("../AdventureGuideController"),
+  NewSoundDetectItem_1 = require("./NewSoundDetectItem"),
+  NewSoundTypeItem_1 = require("./NewSoundTypeItem");
 class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -51,7 +51,7 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
         this.e6e(i);
       }),
       (this.i6e = (e) => {
-        const i =
+        var i =
           e === ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel
             ? "Text_WorldCurrentLevelTag_Text"
             : "Text_WorldLevelTag_Text";
@@ -106,49 +106,49 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
   }
   OnStart() {
     const i = (e, i) => {
-      this.QVe = e;
-      const t =
-        ConfigManager_1.ConfigManager.AdventureModuleConfig.GetSecondaryGuideDataConf(
-          e,
-        );
-      var i =
-        (this.GetItem(21)?.SetUIActive(t?.ShowDropDown ?? !1),
-        this.UVe?.SetToggleState(0, !1),
-        (this.UVe = i),
-        this.KVe.indexOf(e));
-      var e =
-        (i >= 0 && this.jVe.SelectGridProxy(i, !1),
-        EventSystem_1.EventSystem.Emit(
-          EventDefine_1.EEventName.AdventureHelpBtn,
-          t.HelpGroupId,
-        ),
-        (this.O3e = t.HelpGroupId),
-        this.RefreshDungeonType(),
-        this.r6e(),
-        this.e6e(this.V5s),
-        this.YVe?.GetCurrentSequence()
-          ? this.YVe?.ReplaySequenceByKey("Switch")
-          : this.YVe?.PlayLevelSequenceByName("Switch"),
-        ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetAdventureUpActivity(
-          this.QVe,
-        ));
-      e
-        ? (this.GetItem(18).SetUIActive(!0),
-          (i = e.GetNumTxtAndParam()),
-          LguiUtil_1.LguiUtil.SetLocalTextNew(
-            this.GetText(19),
-            i[0],
-            i[1],
-            i[2],
-          ))
-        : this.GetItem(18).SetUIActive(!1);
-    };
-    const t = (e) => this.QVe !== e;
+        this.QVe = e;
+        var t =
+            ConfigManager_1.ConfigManager.AdventureModuleConfig.GetSecondaryGuideDataConf(
+              e,
+            ),
+          i =
+            (this.GetItem(21)?.SetUIActive(t?.ShowDropDown ?? !1),
+            this.UVe?.SetToggleState(0, !1),
+            (this.UVe = i),
+            this.KVe.indexOf(e)),
+          e =
+            (0 <= i && this.jVe.SelectGridProxy(i, !1),
+            EventSystem_1.EventSystem.Emit(
+              EventDefine_1.EEventName.AdventureHelpBtn,
+              t.HelpGroupId,
+            ),
+            (this.O3e = t.HelpGroupId),
+            this.RefreshDungeonType(),
+            this.r6e(),
+            this.e6e(this.V5s),
+            this.YVe?.GetCurrentSequence()
+              ? this.YVe?.ReplaySequenceByKey("Switch")
+              : this.YVe?.PlayLevelSequenceByName("Switch"),
+            ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetAdventureUpActivity(
+              this.QVe,
+            ));
+        e
+          ? (this.GetItem(18).SetUIActive(!0),
+            (i = e.GetNumTxtAndParam()),
+            LguiUtil_1.LguiUtil.SetLocalTextNew(
+              this.GetText(19),
+              i[0],
+              i[1],
+              i[2],
+            ))
+          : this.GetItem(18).SetUIActive(!1);
+      },
+      t = (e) => this.QVe !== e;
     (this.jVe = new LoopScrollView_1.LoopScrollView(
       this.GetLoopScrollViewComponent(1),
       this.GetItem(4).GetOwner(),
       () => {
-        const e = new NewSoundTypeItem_1.NewSoundTypeItem();
+        var e = new NewSoundTypeItem_1.NewSoundTypeItem();
         return e.BindOnToggleFunc(i), e.BindCanToggleExecuteChange(t), e;
       },
     )),
@@ -157,7 +157,7 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
         this.GetItem(2).GetOwner(),
         () => new NewSoundDetectItem_1.NewSoundDetectItem(),
       ));
-    const r = [];
+    var r = [];
     for (
       let e = AdventureDefine_1.WORLD_LEVEL_MIN;
       e <= AdventureDefine_1.WORLD_LEVEL_MAX;
@@ -169,14 +169,14 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
       this.XVe.SetOnSelectCall(this.t6e),
       this.XVe.SetShowType(0),
       this.XVe.InitScroll(r, this.i6e, this.JVe);
-    const e =
+    var e =
       ModelManager_1.ModelManager.AdventureGuideModel.GetAllCanShowDungeonTypeList();
     (this.KVe = e),
       (this.$Ve = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
       (this.YVe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
   r6e() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.AdventureGuideModel.GetCanShowDungeonRecordsByType(
         this.QVe,
       );
@@ -197,13 +197,13 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
       this.WVe.RefreshByData(e));
   }
   OnBeforeShow() {
-    var e = this.ExtraParams;
-    var e =
-      e[0] === "NewSoundAreaView" || e[0] === "DisposableChallengeView"
-        ? e[1]
-        : void 0;
+    var e = this.ExtraParams,
+      e =
+        "NewSoundAreaView" === e[0] || "DisposableChallengeView" === e[0]
+          ? e[1]
+          : void 0;
     let i = 0;
-    void 0 !== e && (e = this.KVe.indexOf(Number(e))) >= 0 && (i = e),
+    void 0 !== e && 0 <= (e = this.KVe.indexOf(Number(e))) && (i = e),
       this.jVe.RefreshByData(this.KVe, void 0, () => {
         this.jVe.SelectGridProxy(i, !0),
           this.jVe.UnsafeGetGridProxy(i)?.SetSelectToggle();
@@ -250,12 +250,12 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
   }
   n6e() {
     this.GetItem(5).SetUIActive(!0);
-    const e =
-      ModelManager_1.ModelManager.InventoryModel?.GetItemCountByConfigId(
-        RoguelikeDefine_1.OUTSIDE_CURRENCY_ID,
-      ) ?? 0;
-    const i =
-      ModelManager_1.ModelManager.RoguelikeModel?.GetParamConfigBySeasonId();
+    var e =
+        ModelManager_1.ModelManager.InventoryModel?.GetItemCountByConfigId(
+          RoguelikeDefine_1.OUTSIDE_CURRENCY_ID,
+        ) ?? 0,
+      i =
+        ModelManager_1.ModelManager.RoguelikeModel?.GetParamConfigBySeasonId();
     LguiUtil_1.LguiUtil.SetLocalTextNew(
       this.GetText(6),
       "Roguelike_ActivityMain_Score",
@@ -265,11 +265,11 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
   }
   a6e() {
     this.GetItem(11).SetUIActive(!0), this.GetItem(12).SetUIActive(!0);
-    var e = ModelManager_1.ModelManager.TowerModel.GetMaxDifficulty();
-    var e =
-      ConfigManager_1.ConfigManager.TowerClimbConfig.GetNewTowerDifficultTitle(
-        e,
-      );
+    var e = ModelManager_1.ModelManager.TowerModel.GetMaxDifficulty(),
+      e =
+        ConfigManager_1.ConfigManager.TowerClimbConfig.GetNewTowerDifficultTitle(
+          e,
+        );
     this.GetText(13)?.SetText(e);
   }
   h6e() {
@@ -282,17 +282,17 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
     this.GetItem(11).SetUIActive(!0), this.GetItem(16).SetUIActive(!0);
   }
   s6e() {
-    const i = this.GetItem(8);
-    const t = (i?.SetUIActive(!0), this.GetText(10));
-    const r = this.GetText(9);
+    var i = this.GetItem(8),
+      t = (i?.SetUIActive(!0), this.GetText(10)),
+      r = this.GetText(9);
     if (this.QVe === AdventureDefine_1.EDungeonType.Weekly) {
       r.SetUIActive(!1);
-      let n =
+      var n =
         ModelManager_1.ModelManager.AdventureGuideModel.GetCanShowDungeonRecordsByType(
           this.QVe,
         );
       let e = 0;
-      if (n[0].Type === 1) {
+      if (1 === n[0].Type) {
         var s = n[0].Conf.MarkId;
         if (!s) return void i.SetUIActive(!1);
         e = ConfigManager_1.ConfigManager.MapConfig.GetConfigMark(s)?.Reward;
@@ -337,7 +337,7 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
       UiManager_1.UiManager.CloseView("PowerView");
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
-    if (e.length !== 1 || isNaN(Number(e[0])))
+    if (1 !== e.length || isNaN(Number(e[0])))
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Guide", 54, "聚焦引导extraParam项配置有误", [
           "configParams",
@@ -345,10 +345,10 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
         ]);
     else {
       e = Number(e[0]);
-      if (e === 0)
+      if (0 === e)
         return (i = this.WVe.GetGridByDisplayIndex(0)) ? [i, i] : void 0;
       var i = this.KVe.indexOf(e);
-      if (i >= 0) {
+      if (0 <= i) {
         e = this.jVe?.UnsafeGetGridProxy(i);
         if (e) {
           i = e.GetButtonItem();
@@ -359,4 +359,4 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.NewSoundAreaView = NewSoundAreaView;
-// # sourceMappingURL=NewSoundAreaView.js.map
+//# sourceMappingURL=NewSoundAreaView.js.map

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SwimConfig = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const SwimBuffById_1 = require("../../../../../../Core/Define/ConfigQuery/SwimBuffById");
-const SwimById_1 = require("../../../../../../Core/Define/ConfigQuery/SwimById");
-const ConfigBase_1 = require("../../../../../../Core/Framework/ConfigBase");
-const NORMAL_SWIM_CONFIG_ID = 0;
-const NO_INPUT_CONFIG_ID = 1;
-const FAST_SWIM_CONFIG_ID = 3;
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  SwimBuffById_1 = require("../../../../../../Core/Define/ConfigQuery/SwimBuffById"),
+  SwimById_1 = require("../../../../../../Core/Define/ConfigQuery/SwimById"),
+  ConfigBase_1 = require("../../../../../../Core/Framework/ConfigBase"),
+  NORMAL_SWIM_CONFIG_ID = 0,
+  NO_INPUT_CONFIG_ID = 1,
+  FAST_SWIM_CONFIG_ID = 3;
 class SwimConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments),
@@ -35,7 +35,7 @@ class SwimConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetSwimConfigByRoleBodyId(i) {
-    let e = this.xzo.get(i);
+    var e = this.xzo.get(i);
     return (
       e ||
       ((e = SwimById_1.configSwimById.GetConfig(i)) ||
@@ -52,7 +52,7 @@ class SwimConfig extends ConfigBase_1.ConfigBase {
     return i ? (e ? this.Bzo : this.wzo) : this.bzo;
   }
   InitSwimBuffConfig() {
-    let i = SwimBuffById_1.configSwimBuffById.GetConfig(NORMAL_SWIM_CONFIG_ID);
+    var i = SwimBuffById_1.configSwimBuffById.GetConfig(NORMAL_SWIM_CONFIG_ID);
     i
       ? ((this.wzo = BigInt(i.BuffId)),
         (i = SwimBuffById_1.configSwimBuffById.GetConfig(NO_INPUT_CONFIG_ID))
@@ -77,4 +77,4 @@ class SwimConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.SwimConfig = SwimConfig;
-// # sourceMappingURL=SwimConfig.js.map
+//# sourceMappingURL=SwimConfig.js.map

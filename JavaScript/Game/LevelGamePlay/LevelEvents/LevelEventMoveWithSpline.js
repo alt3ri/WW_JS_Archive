@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventMoveWithSpline = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine");
-const Net_1 = require("../../../Core/Net/Net");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../GlobalData");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const SceneItemMoveComponent_1 = require("../../NewWorld/SceneItem/Common/Component/SceneItemMoveComponent");
-const LevelGameplayActionsDefine_1 = require("../LevelGameplayActionsDefine");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const LevelGeneralContextDefine_1 = require("../LevelGeneralContextDefine");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine"),
+  Net_1 = require("../../../Core/Net/Net"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../GlobalData"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  SceneItemMoveComponent_1 = require("../../NewWorld/SceneItem/Common/Component/SceneItemMoveComponent"),
+  LevelGameplayActionsDefine_1 = require("../LevelGameplayActionsDefine"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  LevelGeneralContextDefine_1 = require("../LevelGeneralContextDefine");
 class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -32,7 +32,7 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
       (this.xDe = void 0),
       (this.wDe = 0),
       (this.BDe = () => {
-        const e = this.sDe.Entity.GetComponent(113);
+        var e = this.sDe.Entity.GetComponent(113);
         e?.Valid &&
           this.xDe &&
           (e.RemoveStopMoveCallback(this.BDe),
@@ -40,7 +40,7 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
           e.AddStopMoveCallback(this.qDe));
       }),
       (this.qDe = () => {
-        const e = this.sDe.Entity.GetComponent(113);
+        var e = this.sDe.Entity.GetComponent(113);
         e.RemoveStopMoveCallback(this.qDe), e.StopPatrol();
       }),
       (this.zpe = (e, t) => {
@@ -54,7 +54,7 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
           this.FinishExecute(!0);
       }),
       (this.GDe = (e) => {
-        let t, i;
+        var t, i;
         this.sDe?.Valid &&
           ((i =
             this.sDe.Entity.GetComponent(
@@ -76,7 +76,7 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
               (i = this.sDe.Entity.GetComponent(52))?.ClearMoveVectorCache(),
               i?.SetActive(!0)),
             (this.sDe.Entity.GetComponent(36).IsSpecialMove = !1),
-            this.FinishExecute(e === 1)));
+            this.FinishExecute(1 === e)));
       }),
       (this.bDe = () => {
         this.IsAsync ||
@@ -113,7 +113,7 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
     } else this.FinishExecute(!1);
   }
   ExecuteWhenEntitiesReady() {
-    let e, t, i, s, o;
+    var e, t, i, s, o;
     this.YLe
       ? (this.sDe = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity)
       : (this.sDe =
@@ -217,17 +217,17 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
           this.FinishExecute(!1));
   }
   NDe(t, e) {
-    const i = new Array();
-    let s = t.GetNumberOfSplinePoints();
-    const o = LevelGeneralContextDefine_1.EntityContext.Create(this.sDe.Id);
+    var i = new Array(),
+      s = t.GetNumberOfSplinePoints(),
+      o = LevelGeneralContextDefine_1.EntityContext.Create(this.sDe.Id);
     const n = this.gLe.StartPointIndex
-      ? MathUtils_1.MathUtils.Clamp(this.gLe.StartPointIndex, 0, s - 1)
-      : 0;
-    const r = this.gLe.EndPointIndex
-      ? MathUtils_1.MathUtils.Clamp(this.gLe.EndPointIndex, 0, s - 1)
-      : s - 1;
-    let h;
-    const l = [];
+        ? MathUtils_1.MathUtils.Clamp(this.gLe.StartPointIndex, 0, s - 1)
+        : 0,
+      r = this.gLe.EndPointIndex
+        ? MathUtils_1.MathUtils.Clamp(this.gLe.EndPointIndex, 0, s - 1)
+        : s - 1;
+    var h,
+      l = [];
     for (let e = n; e <= r; ++e)
       l.push(Vector_1.Vector.Create(t.GetWorldLocationAtSplinePoint(e)));
     this.gLe.IsForceToFirstPoint &&
@@ -249,7 +249,7 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
         s.SetActive(!1),
         (h = this.sDe.Entity.GetComponent(33))) &&
         h.EndOwnerAndFollowSkills(),
-      i.length > 0
+      0 < i.length
         ? ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsNew(
             i,
             o,
@@ -270,37 +270,37 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
       : this.FDe(e, t, i, s);
   }
   FDe(t, i, s, o) {
-    const n = i && i?.Points.length;
-    const r = [];
+    var n = i && i?.Points.length,
+      r = [];
     for (let e = s; e <= o; ++e)
       r.push(Vector_1.Vector.Create(t.GetWorldLocationAtSplinePoint(e)));
-    const h = [];
+    var h = [];
     for (let e = s; e <= o; ++e) {
-      var l;
-      var a = e - s;
-      var a = { Index: a, Position: r[a] };
+      var l,
+        a = e - s,
+        a = { Index: a, Position: r[a] };
       n &&
         ((l = i.Points[e])?.MoveSpeed && (a.MoveSpeed = l.MoveSpeed),
         l?.MoveState) &&
         (a.MoveState = l.MoveState),
         h.push(a);
     }
-    const e = {
-      Points: h,
-      Navigation: i?.IsNavigation ?? !1,
-      IsFly: this.gLe.IsFollowStrictly ?? i?.IsFloating ?? !1,
-      DebugMode: !0,
-      Loop: !1,
-      UseNearestPoint: !0,
-      Callback: this.GDe,
-      ReturnFalseWhenNavigationFailed: !1,
-    };
-    const v =
-      (i?.CycleOption &&
-        i.CycleOption.Type === IComponent_1.EPatrolCycleMode.Loop &&
-        ((e.Loop = !0), (e.CircleMove = i.CycleOption.IsCircle)),
-      i?.TurnSpeed && (e.TurnSpeed = i.TurnSpeed),
-      this.sDe.Entity.GetComponent(36));
+    var e = {
+        Points: h,
+        Navigation: i?.IsNavigation ?? !1,
+        IsFly: this.gLe.IsFollowStrictly ?? i?.IsFloating ?? !1,
+        DebugMode: !0,
+        Loop: !1,
+        UseNearestPoint: !0,
+        Callback: this.GDe,
+        ReturnFalseWhenNavigationFailed: !1,
+      },
+      v =
+        (i?.CycleOption &&
+          i.CycleOption.Type === IComponent_1.EPatrolCycleMode.Loop &&
+          ((e.Loop = !0), (e.CircleMove = i.CycleOption.IsCircle)),
+        i?.TurnSpeed && (e.TurnSpeed = i.TurnSpeed),
+        this.sDe.Entity.GetComponent(36));
     v.IsMovingToLocation() && v.MoveToLocationEnd(1),
       this.sDe.Entity.GetComponent(
         3,
@@ -311,16 +311,16 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
       v.MoveAlongPath(e);
   }
   kDe(e, t) {
-    const i = this.sDe.Entity.GetComponent(113);
+    var i = this.sDe.Entity.GetComponent(113);
     if (i?.Valid) {
-      const s = UE.NewArray(UE.BuiltinFloat);
+      var s = UE.NewArray(UE.BuiltinFloat);
       for (const n of t.Points) s.Add(n.MoveSpeed);
       this.xDe = { Spline: e, Speeds: s };
-      var e = Vector_1.Vector.Create(e.GetWorldLocationAtSplinePoint(0));
-      var o = Vector_1.Vector.Create(
-        this.sDe.Entity.GetComponent(1).ActorLocationProxy,
-      );
-      var o = Vector_1.Vector.Dist(e, o);
+      var e = Vector_1.Vector.Create(e.GetWorldLocationAtSplinePoint(0)),
+        o = Vector_1.Vector.Create(
+          this.sDe.Entity.GetComponent(1).ActorLocationProxy,
+        ),
+        o = Vector_1.Vector.Dist(e, o);
       i.AddMoveTarget(
         new SceneItemMoveComponent_1.MoveTarget(e, o / t.Points[0].MoveSpeed),
       ),
@@ -355,9 +355,8 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
         EventDefine_1.EEventName.RemoveEntity,
         this.zpe,
       );
-    let e;
-    const t =
-      ModelManager_1.ModelManager.CreatureModel.GetCreatureDataIdByPbDataId(
+    var e,
+      t = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataIdByPbDataId(
         this.E0,
       );
     !this.YLe &&
@@ -375,4 +374,4 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventMoveWithSpline = LevelEventMoveWithSpline;
-// # sourceMappingURL=LevelEventMoveWithSpline.js.map
+//# sourceMappingURL=LevelEventMoveWithSpline.js.map

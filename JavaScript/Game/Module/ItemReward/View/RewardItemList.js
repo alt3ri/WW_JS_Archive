@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RewardItemList = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew");
-const RewardSmallItemGrid_1 = require("./RewardSmallItemGrid");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
+  RewardSmallItemGrid_1 = require("./RewardSmallItemGrid"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class RewardItemList extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -17,10 +17,10 @@ class RewardItemList extends UiPanelBase_1.UiPanelBase {
       }),
       (this.w$t = (e) => {
         this.N2t?.SetSelected(!1, !0), (this.N2t = e.MediumItemGrid);
-        var e = e.Data;
-        const r = e.ConfigId;
-        var e = e.UniqueId;
-        void 0 !== e && e > 0
+        var e = e.Data,
+          r = e.ConfigId,
+          e = e.UniqueId;
+        void 0 !== e && 0 < e
           ? ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemUid(
               e,
               r,
@@ -51,8 +51,8 @@ class RewardItemList extends UiPanelBase_1.UiPanelBase {
   }
   Refresh(e) {
     e.sort((e, r) => {
-      let i = e.GetTypeSortIndex();
-      let t = r.GetTypeSortIndex();
+      var i = e.GetTypeSortIndex(),
+        t = r.GetTypeSortIndex();
       return i !== t
         ? t - i
         : (t = e.GetQualityId()) !== (i = r.GetQualityId())
@@ -62,7 +62,7 @@ class RewardItemList extends UiPanelBase_1.UiPanelBase {
       this.kGe.RefreshByData(e);
   }
   P0i() {
-    const e = new RewardSmallItemGrid_1.RewardSmallItemGrid();
+    var e = new RewardSmallItemGrid_1.RewardSmallItemGrid();
     return (
       e.BindOnCanExecuteChange(() => !1),
       e.BindOnExtendToggleClicked(this.w$t),
@@ -71,4 +71,4 @@ class RewardItemList extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RewardItemList = RewardItemList;
-// # sourceMappingURL=RewardItemList.js.map
+//# sourceMappingURL=RewardItemList.js.map

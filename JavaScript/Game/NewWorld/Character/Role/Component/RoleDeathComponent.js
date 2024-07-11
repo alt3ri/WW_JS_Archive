@@ -1,35 +1,39 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, s) {
-    let o;
-    const r = arguments.length;
-    let n =
-      r < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      r = arguments.length,
+      n =
+        r < 3
+          ? e
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(e, i))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(t, e, i, s);
     else
-      for (let h = t.length - 1; h >= 0; h--)
-        (o = t[h]) && (n = (r < 3 ? o(n) : r > 3 ? o(e, i, n) : o(e, i)) || n);
-    return r > 3 && n && Object.defineProperty(e, i, n), n;
+      for (var h = t.length - 1; 0 <= h; h--)
+        (o = t[h]) && (n = (r < 3 ? o(n) : 3 < r ? o(e, i, n) : o(e, i)) || n);
+    return 3 < r && n && Object.defineProperty(e, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleDeathComponent = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const FormationDataController_1 = require("../../../../Module/Abilities/FormationDataController");
-const CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage");
-const SceneTeamController_1 = require("../../../../Module/SceneTeam/SceneTeamController");
-const TeleportController_1 = require("../../../../Module/Teleport/TeleportController");
-const BaseDeathComponent_1 = require("../../Common/Component/Abilities/BaseDeathComponent");
-const CharacterAttributeTypes_1 = require("../../Common/Component/Abilities/CharacterAttributeTypes");
-const CharacterBuffIds_1 = require("../../Common/Component/Abilities/CharacterBuffIds");
-const CharacterUnifiedStateTypes_1 = require("../../Common/Component/Abilities/CharacterUnifiedStateTypes");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  FormationDataController_1 = require("../../../../Module/Abilities/FormationDataController"),
+  CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
+  SceneTeamController_1 = require("../../../../Module/SceneTeam/SceneTeamController"),
+  TeleportController_1 = require("../../../../Module/Teleport/TeleportController"),
+  BaseDeathComponent_1 = require("../../Common/Component/Abilities/BaseDeathComponent"),
+  CharacterAttributeTypes_1 = require("../../Common/Component/Abilities/CharacterAttributeTypes"),
+  CharacterBuffIds_1 = require("../../Common/Component/Abilities/CharacterBuffIds"),
+  CharacterUnifiedStateTypes_1 = require("../../Common/Component/Abilities/CharacterUnifiedStateTypes");
 let RoleDeathComponent = class RoleDeathComponent extends BaseDeathComponent_1.BaseDeathComponent {
   constructor() {
     super(...arguments),
@@ -43,9 +47,8 @@ let RoleDeathComponent = class RoleDeathComponent extends BaseDeathComponent_1.B
       (this.ton = !1),
       (this.Bhr = []),
       (this.OnDeathEnded = () => {
-        let t;
-        const e =
-          ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities(!0);
+        var t,
+          e = ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities(!0);
         if (this.elt && this.elt.HasBuffAuthority()) {
           this.elt.TriggerEvents(14, this.elt, {});
           for (const i of e.values())
@@ -87,7 +90,7 @@ let RoleDeathComponent = class RoleDeathComponent extends BaseDeathComponent_1.B
                   "CharacterAttributeComponent.DrowningPunishment",
                 ).finally(this.ion)),
           this.mbr.ResetCharState();
-        const t = this.Entity.CheckGetComponent(172);
+        var t = this.Entity.CheckGetComponent(172);
         t.IsDead() && t.OnDeathEnded();
       });
   }
@@ -215,7 +218,7 @@ let RoleDeathComponent = class RoleDeathComponent extends BaseDeathComponent_1.B
     this.Bhr.push(t);
   }
   RemoveMaterials() {
-    const t = this.nXt?.Actor.CharRenderingComponent;
+    var t = this.nXt?.Actor.CharRenderingComponent;
     if (t) for (const e of this.Bhr) t.RemoveMaterialControllerData(e);
   }
   static DrownNotify(t, e) {
@@ -225,7 +228,7 @@ let RoleDeathComponent = class RoleDeathComponent extends BaseDeathComponent_1.B
       t.elt.RemoveBuffByEffectType(36, "溺水移除冰冻buff");
   }
   Drowning() {
-    let t, e;
+    var t, e;
     this.IsDrowning() ||
       (this.Entity.CheckGetComponent(185).AddTag(191377386),
       (t = (e = this.Entity.CheckGetComponent(156)).GetCurrentValue(
@@ -244,7 +247,7 @@ let RoleDeathComponent = class RoleDeathComponent extends BaseDeathComponent_1.B
       EventSystem_1.EventSystem.EmitWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CharOnRoleDrownInjure,
-        t > 0 && e <= 0,
+        0 < t && e <= 0,
       )),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.CharOnRoleDrown,
@@ -270,4 +273,4 @@ __decorate(
     RoleDeathComponent,
   )),
   (exports.RoleDeathComponent = RoleDeathComponent);
-// # sourceMappingURL=RoleDeathComponent.js.map
+//# sourceMappingURL=RoleDeathComponent.js.map

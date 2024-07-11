@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SilentAreaRewardPreviewPopView = void 0);
-const UE = require("ue");
-const ExchangeRewardById_1 = require("../../../../../Core/Define/ConfigQuery/ExchangeRewardById");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const GenericScrollViewNew_1 = require("../../../Util/ScrollView/GenericScrollViewNew");
-const RewardPreviewListItem_1 = require("./RewardPreviewListItem");
+const UE = require("ue"),
+  ExchangeRewardById_1 = require("../../../../../Core/Define/ConfigQuery/ExchangeRewardById"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  GenericScrollViewNew_1 = require("../../../Util/ScrollView/GenericScrollViewNew"),
+  RewardPreviewListItem_1 = require("./RewardPreviewListItem");
 class SilentAreaRewardPreviewPopView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -39,18 +39,18 @@ class SilentAreaRewardPreviewPopView extends UiViewBase_1.UiViewBase {
     this.Wri();
   }
   Wri() {
-    const e = [];
+    var e = [];
     for (const w of ExchangeRewardById_1.configExchangeRewardById.GetConfig(
       this.e2o,
     ).RewardId)
       e.push(w);
     e.sort((e, i) => e[0] - i[0]);
-    let i;
-    let r;
-    const t = [];
-    const s = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel;
-    let a = 0;
-    let o = 0;
+    var i,
+      r,
+      t = [],
+      s = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel;
+    let a = 0,
+      o = 0;
     for ([i, r] of e)
       t.push([i, r]), a < i && s >= i && ((a = i), (o = t.length - 1));
     this.u6e?.RefreshByDataAsync(e).finally(() => {
@@ -61,4 +61,4 @@ class SilentAreaRewardPreviewPopView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.SilentAreaRewardPreviewPopView = SilentAreaRewardPreviewPopView;
-// # sourceMappingURL=SilentAreaRewardPreviewPopView.js.map
+//# sourceMappingURL=SilentAreaRewardPreviewPopView.js.map

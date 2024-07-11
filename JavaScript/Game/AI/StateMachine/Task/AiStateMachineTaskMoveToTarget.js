@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineTaskMoveToTarget = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary");
-const TsAiController_1 = require("../../Controller/TsAiController");
-const AiStateMachineTask_1 = require("./AiStateMachineTask");
-const NAVIGATION_COMPLETE_DISTANCE = 10;
+const Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
+  TsAiController_1 = require("../../Controller/TsAiController"),
+  AiStateMachineTask_1 = require("./AiStateMachineTask"),
+  NAVIGATION_COMPLETE_DISTANCE = 10;
 class AiStateMachineTaskMoveToTarget extends AiStateMachineTask_1.AiStateMachineTask {
   constructor() {
     super(...arguments),
@@ -37,24 +37,23 @@ class AiStateMachineTaskMoveToTarget extends AiStateMachineTask_1.AiStateMachine
     );
   }
   OnEnter(t) {
-    const i = this.Node.AiComponent.TsAiController;
-    const e = i.AiController;
+    var i = this.Node.AiComponent.TsAiController,
+      e = i.AiController;
     if (e) {
-      const r = e.CharActorComp;
+      var r = e.CharActorComp;
       if (
         (this.WalkOff || r.Entity.GetComponent(36)?.SetWalkOffLedgeRecord(!1),
         (this._se = this.Node.Owner.GetBlackboard(2) ?? 0),
         this._se)
       ) {
-        const s =
-          ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(
-            this._se,
-          );
+        var s = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(
+          this._se,
+        );
         if (s) {
           (this.sse.X = s.Transform.Pos.X),
             (this.sse.Y = s.Transform.Pos.Y),
             (this.sse.Z = s.Transform.Pos.Z);
-          const h = e.CharAiDesignComp?.Entity.GetComponent(158);
+          var h = e.CharAiDesignComp?.Entity.GetComponent(158);
           if (h?.Valid)
             switch (this.MoveState) {
               case 1:
@@ -87,10 +86,10 @@ class AiStateMachineTaskMoveToTarget extends AiStateMachineTask_1.AiStateMachine
         this.$ne();
   }
   OnTick() {
-    let t;
-    let i;
-    let e;
-    let r = this.Node.AiComponent.TsAiController;
+    var t,
+      i,
+      e,
+      r = this.Node.AiComponent.TsAiController;
     !(
       r instanceof TsAiController_1.default &&
       ((e = (r = r.AiController.CharActorComp).ActorLocationProxy), this.ase) &&
@@ -131,7 +130,7 @@ class AiStateMachineTaskMoveToTarget extends AiStateMachineTask_1.AiStateMachine
     this.Xne && ((this.Node.TaskFinish = !0), (this.Xne = !1));
   }
   OnExit() {
-    const t = this.Node.AiComponent.TsAiController;
+    var t = this.Node.AiComponent.TsAiController;
     t &&
       (AiContollerLibrary_1.AiControllerLibrary.ClearInput(t),
       this.WalkOff ||
@@ -141,4 +140,4 @@ class AiStateMachineTaskMoveToTarget extends AiStateMachineTask_1.AiStateMachine
   }
 }
 exports.AiStateMachineTaskMoveToTarget = AiStateMachineTaskMoveToTarget;
-// # sourceMappingURL=AiStateMachineTaskMoveToTarget.js.map
+//# sourceMappingURL=AiStateMachineTaskMoveToTarget.js.map

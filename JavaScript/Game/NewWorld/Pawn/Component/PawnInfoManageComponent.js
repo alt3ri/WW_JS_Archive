@@ -1,29 +1,33 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, n) {
-    let r;
-    const o = arguments.length;
-    let s =
-      o < 3 ? e : n === null ? (n = Object.getOwnPropertyDescriptor(e, i)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      o = arguments.length,
+      s =
+        o < 3
+          ? e
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(e, i))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(t, e, i, n);
     else
-      for (let a = t.length - 1; a >= 0; a--)
-        (r = t[a]) && (s = (o < 3 ? r(s) : o > 3 ? r(e, i, s) : r(e, i)) || s);
-    return o > 3 && s && Object.defineProperty(e, i, s), s;
+      for (var a = t.length - 1; 0 <= a; a--)
+        (r = t[a]) && (s = (o < 3 ? r(s) : 3 < o ? r(e, i, s) : r(e, i)) || s);
+    return 3 < o && s && Object.defineProperty(e, i, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PawnInfoManageComponent = void 0);
-const LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent");
-const PublicUtil_1 = require("../../../Common/PublicUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const SOCKET_NAME = "MarkCase";
+const LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
+  PublicUtil_1 = require("../../../Common/PublicUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  SOCKET_NAME = "MarkCase";
 let PawnInfoManageComponent = class PawnInfoManageComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -59,7 +63,7 @@ let PawnInfoManageComponent = class PawnInfoManageComponent extends EntityCompon
     (this.d6s = t), this.sdo();
   }
   sdo() {
-    let t;
+    var t;
     (this.bor = LanguageSystem_1.LanguageSystem.PackageLanguage),
       this.d6s
         ? (this.he = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
@@ -84,11 +88,11 @@ let PawnInfoManageComponent = class PawnInfoManageComponent extends EntityCompon
     return this.Entity.Id;
   }
   get HasQuestOption() {
-    let t = this.Entity.GetComponent(178);
+    var t = this.Entity.GetComponent(178);
     return !!t && !!(t = t.GetInteractController()) && t.HasDynamicOption;
   }
   Pan() {
-    let t;
+    var t;
     return (
       (this.Aan = this.Vpr.GetPbEntityInitData()),
       this.Aan
@@ -119,17 +123,17 @@ let PawnInfoManageComponent = class PawnInfoManageComponent extends EntityCompon
     return void 0 !== this.Ran;
   }
   GetMessageId() {
-    const t = this.Vpr.GetBaseInfo();
+    var t = this.Vpr.GetBaseInfo();
     return t?.HeadInfo ? t.HeadInfo : 0;
   }
   GetHeadStateSocketName() {
-    const t =
+    var t =
       this.Entity.GetComponent(0)?.GetBaseInfo()?.HeadStateViewConfig
         ?.HeadStateSocketName;
     return t || SOCKET_NAME;
   }
   GetHeadStateOffset() {
-    let t = this.Vpr.GetBaseInfo()?.HeadStateViewConfig?.ZOffset;
+    var t = this.Vpr.GetBaseInfo()?.HeadStateViewConfig?.ZOffset;
     return (
       t ||
       ((t = this.Entity.GetComponent(0)?.GetModelConfig()) ? t.名字Z偏移 : 0)
@@ -141,4 +145,4 @@ let PawnInfoManageComponent = class PawnInfoManageComponent extends EntityCompon
   PawnInfoManageComponent,
 )),
   (exports.PawnInfoManageComponent = PawnInfoManageComponent);
-// # sourceMappingURL=PawnInfoManageComponent.js.map
+//# sourceMappingURL=PawnInfoManageComponent.js.map

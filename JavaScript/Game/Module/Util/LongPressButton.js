@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LongPressButton = void 0);
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const SECOND_0_1 = 100;
+const TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  SECOND_0_1 = 100;
 class LongPressButton {
   constructor(s, t, e = SECOND_0_1) {
     (this.IRe = void 0),
@@ -27,4 +27,4 @@ class LongPressButton {
   }
 }
 exports.LongPressButton = LongPressButton;
-// # sourceMappingURL=LongPressButton.js.map
+//# sourceMappingURL=LongPressButton.js.map

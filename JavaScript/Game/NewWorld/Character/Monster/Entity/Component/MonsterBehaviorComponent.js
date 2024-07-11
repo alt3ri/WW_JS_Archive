@@ -1,31 +1,35 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, o, i) {
-    let s;
-    const r = arguments.length;
-    let n =
-      r < 3 ? e : i === null ? (i = Object.getOwnPropertyDescriptor(e, o)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var s,
+      r = arguments.length,
+      n =
+        r < 3
+          ? e
+          : null === i
+            ? (i = Object.getOwnPropertyDescriptor(e, o))
+            : i;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(t, e, o, i);
     else
-      for (let a = t.length - 1; a >= 0; a--)
-        (s = t[a]) && (n = (r < 3 ? s(n) : r > 3 ? s(e, o, n) : s(e, o)) || n);
-    return r > 3 && n && Object.defineProperty(e, o, n), n;
+      for (var a = t.length - 1; 0 <= a; a--)
+        (s = t[a]) && (n = (r < 3 ? s(n) : 3 < r ? s(e, o, n) : s(e, o)) || n);
+    return 3 < r && n && Object.defineProperty(e, o, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MonsterBehaviorComponent = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage");
-const CombatDebugController_1 = require("../../../../../Utils/CombatDebugController");
-const CharacterUnifiedStateTypes_1 = require("../../../Common/Component/Abilities/CharacterUnifiedStateTypes");
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage"),
+  CombatDebugController_1 = require("../../../../../Utils/CombatDebugController"),
+  CharacterUnifiedStateTypes_1 = require("../../../Common/Component/Abilities/CharacterUnifiedStateTypes");
 let MonsterBehaviorComponent = class MonsterBehaviorComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -35,7 +39,7 @@ let MonsterBehaviorComponent = class MonsterBehaviorComponent extends EntityComp
       (this.Llt = void 0),
       (this.EVr = void 0),
       (this.gGr = (t, e) => {
-        let o;
+        var o;
         e !== CharacterUnifiedStateTypes_1.ECharPositionState.Water ||
           this.Xte.HasTag(-1714966381) ||
           ((e = this.Hte.ActorLocationProxy),
@@ -112,14 +116,14 @@ let MonsterBehaviorComponent = class MonsterBehaviorComponent extends EntityComp
       this.nin(!1),
       ModelManager_1.ModelManager.GameModeModel.IsMulti ||
         this.EVr.SetEnableMovementSync(!1);
-    var t = this.Hte?.CreatureData.GetPbDataId();
-    var t =
-      (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Character", 51, "怪物退出战斗，关闭位置同步", [
-          "PbDataId",
-          t,
-        ]),
-      this.Entity.GetComponent(65));
+    var t = this.Hte?.CreatureData.GetPbDataId(),
+      t =
+        (Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug("Character", 51, "怪物退出战斗，关闭位置同步", [
+            "PbDataId",
+            t,
+          ]),
+        this.Entity.GetComponent(65));
     t?.StateMachineGroup?.Inited || this.ain();
   }
   ain() {
@@ -157,4 +161,4 @@ __decorate(
     MonsterBehaviorComponent,
   )),
   (exports.MonsterBehaviorComponent = MonsterBehaviorComponent);
-// # sourceMappingURL=MonsterBehaviorComponent.js.map
+//# sourceMappingURL=MonsterBehaviorComponent.js.map

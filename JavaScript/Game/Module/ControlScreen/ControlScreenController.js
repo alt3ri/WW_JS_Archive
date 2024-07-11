@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ControlScreenController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const InputController_1 = require("../../Input/InputController");
-const InputEnums_1 = require("../../Input/InputEnums");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine");
-const TouchFingerManager_1 = require("../../Ui/TouchFinger/TouchFingerManager");
-const BattleUiControl_1 = require("../BattleUi/BattleUiControl");
-const ControlScreenDefine_1 = require("./ControlScreenDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  InputController_1 = require("../../Input/InputController"),
+  InputEnums_1 = require("../../Input/InputEnums"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine"),
+  TouchFingerManager_1 = require("../../Ui/TouchFinger/TouchFingerManager"),
+  BattleUiControl_1 = require("../BattleUi/BattleUiControl"),
+  ControlScreenDefine_1 = require("./ControlScreenDefine");
 class ControlScreenController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return !0;
@@ -87,10 +87,10 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static hCt(e, n) {
-    let t;
-    let r;
-    let o;
-    const i = TouchFingerManager_1.TouchFingerManager.GetTouchFingerData(n);
+    var t,
+      r,
+      o,
+      i = TouchFingerManager_1.TouchFingerManager.GetTouchFingerData(n);
     i &&
       ((t = ModelManager_1.ModelManager.ControlScreenModel),
       e
@@ -134,22 +134,22 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
         : t.RemoveTouchEmptyFingerData(i));
   }
   static lCt(e) {
-    const n = ModelManager_1.ModelManager.ControlScreenModel;
+    var n = ModelManager_1.ModelManager.ControlScreenModel;
     switch (n.GetTouchEmptyFingerDataCount()) {
       case 1:
         this.RefreshCameraRotation(e);
         break;
       case 2:
-        var t = n.GetTouchEmptyFingerDataByCount(2);
-        var r = t[0];
-        var t = t[1];
-        var r = r.GetFingerIndex();
-        var t = t.GetFingerIndex();
+        var t = n.GetTouchEmptyFingerDataByCount(2),
+          r = t[0],
+          t = t[1],
+          r = r.GetFingerIndex(),
+          t = t.GetFingerIndex();
         this.RefreshCameraSpringLength(r, t);
     }
   }
   static RefreshCameraRotation(e) {
-    let n;
+    var n;
     return ControlScreenController.vbt()
       ? (n = TouchFingerManager_1.TouchFingerManager.GetTouchFingerData(e))
         ? n.IsInTouch()
@@ -194,11 +194,11 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static ExecuteCameraRotation(e) {
-    var e = TouchFingerManager_1.TouchFingerManager.GetFingerDirection(e);
-    const n =
-      ModelManager_1.ModelManager.ControlScreenModel.GetRotationScreenRate();
-    const t = e.X * n;
-    var e = e.Y * n;
+    var e = TouchFingerManager_1.TouchFingerManager.GetFingerDirection(e),
+      n =
+        ModelManager_1.ModelManager.ControlScreenModel.GetRotationScreenRate(),
+      t = e.X * n,
+      e = e.Y * n;
     InputController_1.InputController.InputAxis(
       InputEnums_1.EInputAxis.Turn,
       t,
@@ -209,25 +209,25 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static ExecuteCameraZoom(e, n) {
-    const t = ModelManager_1.ModelManager.ControlScreenModel;
-    var e = TouchFingerManager_1.TouchFingerManager.GetFingerExpandCloseValue(
-      e,
-      n,
-    );
-    var n = MathUtils_1.MathUtils.RangeClamp(
-      e,
-      t.MinTouchMoveDifference,
-      t.MaxTouchMoveDifference,
-      t.MinTouchMoveValue,
-      t.MaxTouchMoveValue,
-    );
+    var t = ModelManager_1.ModelManager.ControlScreenModel,
+      e = TouchFingerManager_1.TouchFingerManager.GetFingerExpandCloseValue(
+        e,
+        n,
+      ),
+      n = MathUtils_1.MathUtils.RangeClamp(
+        e,
+        t.MinTouchMoveDifference,
+        t.MaxTouchMoveDifference,
+        t.MinTouchMoveValue,
+        t.MaxTouchMoveValue,
+      );
     InputController_1.InputController.InputAxis(
       InputEnums_1.EInputAxis.Zoom,
       n,
     );
   }
   static Sbt(e) {
-    const n = e.Id;
+    var n = e.Id;
     this.Ebt !== n &&
       ((this.Ebt = n), e) &&
       !EventSystem_1.EventSystem.HasWithTarget(
@@ -261,8 +261,8 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
   }
 }
 ((exports.ControlScreenController = ControlScreenController).pbt = (e, n) => {
-  var n = n.TouchType;
-  const t = Number(e);
+  var n = n.TouchType,
+    t = Number(e);
   switch (n) {
     case 0:
       ControlScreenController.hCt(!0, t);
@@ -275,13 +275,13 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
   }
 }),
   (ControlScreenController.OnFormationLoadCompleted = () => {
-    const e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     e &&
       (ModelManager_1.ModelManager.ControlScreenModel.RefreshRotationScreenRate(),
       ControlScreenController.Sbt(e.Entity));
   }),
   (ControlScreenController.OnChangeRole = () => {
-    const e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     e &&
       (ModelManager_1.ModelManager.ControlScreenModel.RefreshRotationScreenRate(),
       ControlScreenController.Sbt(e.Entity));
@@ -291,7 +291,7 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
     e && ControlScreenController.ybt(e);
   }),
   (ControlScreenController.OnRemoveEntity = (e, n) => {
-    const t = n.Entity.GetComponent(0);
+    var t = n.Entity.GetComponent(0);
     t?.Valid &&
       t.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Player &&
       ModelManager_1.ModelManager.PlayerInfoModel.GetId() === t.GetPlayerId() &&
@@ -301,4 +301,4 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
     n !== e &&
       ModelManager_1.ModelManager.ControlScreenModel.RefreshRotationScreenRate();
   });
-// # sourceMappingURL=ControlScreenController.js.map
+//# sourceMappingURL=ControlScreenController.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FilterModel = void 0);
-const ModelBase_1 = require("../../../../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const FilterLogic_1 = require("../Logic/FilterLogic");
+const ModelBase_1 = require("../../../../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  FilterLogic_1 = require("../Logic/FilterLogic");
 class FilterModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -38,4 +38,4 @@ class FilterModel extends ModelBase_1.ModelBase {
   }
 }
 exports.FilterModel = FilterModel;
-// # sourceMappingURL=FilterModel.js.map
+//# sourceMappingURL=FilterModel.js.map

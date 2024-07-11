@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LockCursorHandle = void 0);
-const UE = require("ue");
-const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil");
-const TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const BattleUiControl_1 = require("../../BattleUi/BattleUiControl");
-const LockCursorUnit_1 = require("../HudUnit/LockCursorUnit");
-const HudUnitHandleBase_1 = require("./HudUnitHandleBase");
-const HIT_CASE_SOCKET = new UE.FName("HitCase");
+const UE = require("ue"),
+  FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  BattleUiControl_1 = require("../../BattleUi/BattleUiControl"),
+  LockCursorUnit_1 = require("../HudUnit/LockCursorUnit"),
+  HudUnitHandleBase_1 = require("./HudUnitHandleBase"),
+  HIT_CASE_SOCKET = new UE.FName("HitCase");
 class LockCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   constructor() {
     super(...arguments),
@@ -25,15 +25,15 @@ class LockCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       (this.wii = 0),
       (this.Bii = (t, e) => {
         ModelManager_1.ModelManager.PlatformModel.IsGamepad() &&
-          (e === 0 ? (this.xii = void 0 !== this.Aii) : (this.Pii = !0)),
+          (0 === e ? (this.xii = void 0 !== this.Aii) : (this.Pii = !0)),
           this.Aii &&
             !ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
               185,
             )?.HasTag(-2140742267) &&
-            (e === 0 ? this.bii() : this.qii());
+            (0 === e ? this.bii() : this.qii());
       }),
       (this.Gii = (t, e) => {
-        e === 102 && (t ? this.bii() : this.qii());
+        102 === e && (t ? this.bii() : this.qii());
       }),
       (this.AYe = (t, e) => {
         t ? (this.wii = e) : e === this.wii && (this.wii = 0);
@@ -71,7 +71,7 @@ class LockCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     this.Aii = void 0;
   }
   bii() {
-    let t, e;
+    var t, e;
     this.Aii &&
       ((e = (t =
         ModelManager_1.ModelManager.SceneTeamModel
@@ -87,7 +87,7 @@ class LockCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     this.Aii?.DeactivateUnlockTimeDown();
   }
   OnTick(t) {
-    let e;
+    var e;
     super.OnTick(t),
       this.aXe ||
         ((t = this.GetTargetInfo()),
@@ -111,7 +111,7 @@ class LockCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
           : this.Deactivate());
   }
   Nii() {
-    const t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     return (
       !!t?.Valid &&
       t.Entity.GetComponent(158)?.DirectionState ===
@@ -134,13 +134,13 @@ class LockCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     this.Aii && this.Aii.Deactivate();
   }
   GetTargetInfo() {
-    const t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     if (t?.Valid) return t.Entity.CheckGetComponent(29).GetTargetInfo();
   }
   GetWorldLocation() {
-    const e = this.GetTargetInfo();
+    var e = this.GetTargetInfo();
     if (e) {
-      let i = e.ShowTarget;
+      var i = e.ShowTarget;
       if (i?.Valid) {
         i = i.Entity.GetComponent(1).Owner;
         if (i instanceof TsBaseCharacter_1.default) {
@@ -156,4 +156,4 @@ class LockCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   }
 }
 exports.LockCursorHandle = LockCursorHandle;
-// # sourceMappingURL=LockCursorHandle.js.map
+//# sourceMappingURL=LockCursorHandle.js.map

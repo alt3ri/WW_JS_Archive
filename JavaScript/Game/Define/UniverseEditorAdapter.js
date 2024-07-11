@@ -17,4 +17,4 @@ class AdaptLevelsConfig extends Json_1.JsonObjBase {}
 exports.AdaptLevelsConfig = AdaptLevelsConfig;
 class AdaptLevelRefList extends Json_1.JsonObjBase {}
 exports.AdaptLevelRefList = AdaptLevelRefList;
-// # sourceMappingURL=UniverseEditorAdapter.js.map
+//# sourceMappingURL=UniverseEditorAdapter.js.map

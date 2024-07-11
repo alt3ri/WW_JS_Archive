@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChatPanel = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../../RedDot/RedDotController");
-const InputDistributeController_1 = require("../../../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../../../Ui/InputDistribute/InputMappingsDefine");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const ChatDefine_1 = require("../../../Chat/ChatDefine");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const RoguelikeController_1 = require("../../../Roguelike/RoguelikeController");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const ChatRowItem_1 = require("../ChatRowItem");
-const CommonKeyItem_1 = require("../KeyItem/CommonKeyItem");
-const BattleChildViewPanel_1 = require("./BattleChildViewPanel");
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../../RedDot/RedDotController"),
+  InputDistributeController_1 = require("../../../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../../../Ui/InputDistribute/InputMappingsDefine"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  ChatDefine_1 = require("../../../Chat/ChatDefine"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  RoguelikeController_1 = require("../../../Roguelike/RoguelikeController"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  ChatRowItem_1 = require("../ChatRowItem"),
+  CommonKeyItem_1 = require("../KeyItem/CommonKeyItem"),
+  BattleChildViewPanel_1 = require("./BattleChildViewPanel");
 class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
@@ -30,7 +30,7 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.YYe = void 0),
       (this.EPe = void 0),
       (this.jwn = (e) => {
-        this.GetOperationType() === 2 &&
+        2 === this.GetOperationType() &&
           this.rJe().then(
             () => {
               this.WYe.size <= 0
@@ -56,7 +56,7 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       }),
       (this.bMe = (e, t) => {
         if (e === InputMappingsDefine_1.actionMappings.环境特性) {
-          if (t === 0)
+          if (0 === t)
             switch (
               ModelManager_1.ModelManager.BattleUiModel?.EnvironmentKeyData?.GetCurEnvironmentalKey() ??
               0
@@ -83,8 +83,8 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   InitializeTemp() {
     this.QYe =
       CommonParamById_1.configCommonParamById.GetIntConfig("ChatViewTimeDown");
-    const e = this.GetOperationType();
-    e === 2 &&
+    var e = this.GetOperationType();
+    2 === e &&
       (this.rJe().then(
         () => {
           !(this.WYe.size <= 0) &&
@@ -97,7 +97,7 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.GetItem(3),
       ))),
-      e === 1 &&
+      1 === e &&
         (RedDotController_1.RedDotController.BindRedDot(
           "ChatView",
           this.GetItem(1),
@@ -106,19 +106,19 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           this.GetItem(2),
         ))),
       this.EPe.BindSequenceCloseEvent((e) => {
-        e === "Close" && this.vJe(!1);
+        "Close" === e && this.vJe(!1);
       });
   }
   Reset() {
     super.Reset(),
       this.MJe(),
       this.SJe(),
-      this.GetOperationType() === 1 &&
+      1 === this.GetOperationType() &&
         RedDotController_1.RedDotController.UnBindRedDot("ChatView");
   }
   OnRegisterComponent() {
-    const e = this.GetOperationType();
-    e === 2
+    var e = this.GetOperationType();
+    2 === e
       ? ((this.ComponentRegisterInfos = [
           [0, UE.UIButtonComponent],
           [1, UE.UIScrollViewWithScrollbarComponent],
@@ -131,7 +131,7 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           [9, UE.UIText],
         ]),
         (this.BtnBindInfo = [[0, this.cJe]]))
-      : e === 1 &&
+      : 1 === e &&
         ((this.ComponentRegisterInfos = [
           [0, UE.UIButtonComponent],
           [1, UE.UIItem],
@@ -140,7 +140,7 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         (this.BtnBindInfo = [[0, this.cJe]]));
   }
   async InitializeAsync() {
-    let e;
+    var e;
     await super.InitializeAsync(),
       ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
         ((e = this.GetItem(8)),
@@ -148,14 +148,14 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         await this.YYe.CreateThenShowByActorAsync(e.GetOwner()));
   }
   OnShowBattleChildViewPanel() {
-    let e = ModelManager_1.ModelManager.PlatformModel.OperationType;
-    if (e === 2) {
-      const t = ModelManager_1.ModelManager.FriendModel;
-      const i = [];
+    var e = ModelManager_1.ModelManager.PlatformModel.OperationType;
+    if (2 === e) {
+      var t = ModelManager_1.ModelManager.FriendModel,
+        i = [];
       for (const a of this.WYe.values()) {
-        var s;
-        var r;
-        const n = a.GetChatRowData();
+        var s,
+          r,
+          n = a.GetChatRowData();
         n &&
           ((s = n.UniqueId),
           (r = n.TargetPlayerId) && t.HasBlockedPlayer(r) && i.push(s),
@@ -176,25 +176,25 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     }
   }
   iJe() {
-    const e = ModelManager_1.ModelManager.PlatformModel.IsGamepad();
+    var e = ModelManager_1.ModelManager.PlatformModel.IsGamepad();
     this.GetItem(4)?.SetUIActive(!e),
       this.GetItem(5)?.SetUIActive(e),
       this._Je();
   }
   _Je() {
-    const e = ModelManager_1.ModelManager.PlatformModel.IsGamepad();
-    const t =
-      ModelManager_1.ModelManager.BattleUiModel?.EnvironmentKeyData?.GetCurEnvironmentalKey() ??
-      0;
-    this.GetItem(7)?.SetUIActive(t !== 0 && this.$Ye && e);
+    var e = ModelManager_1.ModelManager.PlatformModel.IsGamepad(),
+      t =
+        ModelManager_1.ModelManager.BattleUiModel?.EnvironmentKeyData?.GetCurEnvironmentalKey() ??
+        0;
+    this.GetItem(7)?.SetUIActive(0 !== t && this.$Ye && e);
   }
   uJe() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.BattleUiModel?.EnvironmentKeyData?.GetCurKeyText();
     e && LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(9), e);
   }
   AddEvents() {
-    this.GetOperationType() === 2 &&
+    2 === this.GetOperationType() &&
       (EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRefreshChatRowData,
         this.jwn,
@@ -216,7 +216,7 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ));
   }
   RemoveEvents() {
-    this.GetOperationType() === 2 &&
+    2 === this.GetOperationType() &&
       (EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.OnRefreshChatRowData,
         this.jwn,
@@ -250,7 +250,7 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ));
   }
   gJe(e) {
-    (this.$Ye = e === 0), this._Je();
+    (this.$Ye = 0 === e), this._Je();
   }
   dJe() {
     !this.EJe() ||
@@ -275,15 +275,15 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   }
   async rJe() {
     this.IJe();
-    let e;
-    const t = [];
+    var e,
+      t = [];
     for (const i of ModelManager_1.ModelManager.ChatModel.GetChatRowDataList())
       i.IsVisible && ((e = this.zYe(i)), t.push(e));
     await Promise.all(t);
   }
   async zYe(e) {
-    const t = e.UniqueId;
-    if (e.ContentChatRoomType === 1) {
+    var t = e.UniqueId;
+    if (1 === e.ContentChatRoomType) {
       var i = e.TargetPlayerId;
       if (!i) return;
       var s = ModelManager_1.ModelManager.FriendModel;
@@ -302,7 +302,7 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   }
   DelayScroll(e) {
     this.MJe(),
-      this.GetOperationType() === 2 &&
+      2 === this.GetOperationType() &&
         (this.XYe = TimerSystem_1.TimerSystem.Delay(this.fJe, e));
   }
   MJe() {
@@ -316,16 +316,16 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.KYe = void 0);
   }
   nJe() {
-    const e = this.j6s();
+    var e = this.j6s();
     e && this.GetScrollViewWithScrollbar(1)?.ScrollTo(e.GetRootItem());
   }
   tJe(e) {
-    var t = this.WYe.get(e);
-    var t =
-      (t?.GetRootActor()?.IsValid() && t.Destroy(),
-      this.WYe.delete(e),
-      this.H6s.indexOf(e));
-    t >= 0 && this.H6s.splice(t, 1);
+    var t = this.WYe.get(e),
+      t =
+        (t?.GetRootActor()?.IsValid() && t.Destroy(),
+        this.WYe.delete(e),
+        this.H6s.indexOf(e));
+    0 <= t && this.H6s.splice(t, 1);
   }
   IJe() {
     for (const e of this.WYe.values())
@@ -333,7 +333,7 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     this.WYe.clear(), (this.H6s.length = 0);
   }
   j6s() {
-    let e = this.H6s.length;
+    var e = this.H6s.length;
     if (!(e <= 0)) {
       e = this.H6s[e - 1];
       if (e) return this.WYe.get(e);
@@ -351,4 +351,4 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   }
 }
 exports.ChatPanel = ChatPanel;
-// # sourceMappingURL=ChatPanel.js.map
+//# sourceMappingURL=ChatPanel.js.map

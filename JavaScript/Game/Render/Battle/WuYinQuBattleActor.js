@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const StateMachine_1 = require("../../../Core/Utils/StateMachine/StateMachine");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const RoleTriggerController_1 = require("../../NewWorld/Character/Role/RoleTriggerController");
-const PostProcessTrigger_1 = require("../GI/PostProcessTrigger/PostProcessTrigger");
-const RenderModuleController_1 = require("../Manager/RenderModuleController");
-const WuYinQuBattleStateFighting1_1 = require("./States/WuYinQuBattleStateFighting1");
-const WuYinQuBattleStateFighting2_1 = require("./States/WuYinQuBattleStateFighting2");
-const WuYinQuBattleStateFighting3_1 = require("./States/WuYinQuBattleStateFighting3");
-const WuYinQuBattleStateFightingToFighting_1 = require("./States/WuYinQuBattleStateFightingToFighting");
-const WuYinQuBattleStateFightingToIdle_1 = require("./States/WuYinQuBattleStateFightingToIdle");
-const WuYinQuBattleStateIdle_1 = require("./States/WuYinQuBattleStateIdle");
-const WuYinQuBattleStateIdleToFighting_1 = require("./States/WuYinQuBattleStateIdleToFighting");
-const WuYinQuBattleConfig_1 = require("./WuYinQuBattleConfig");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  StateMachine_1 = require("../../../Core/Utils/StateMachine/StateMachine"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  RoleTriggerController_1 = require("../../NewWorld/Character/Role/RoleTriggerController"),
+  PostProcessTrigger_1 = require("../GI/PostProcessTrigger/PostProcessTrigger"),
+  RenderModuleController_1 = require("../Manager/RenderModuleController"),
+  WuYinQuBattleStateFighting1_1 = require("./States/WuYinQuBattleStateFighting1"),
+  WuYinQuBattleStateFighting2_1 = require("./States/WuYinQuBattleStateFighting2"),
+  WuYinQuBattleStateFighting3_1 = require("./States/WuYinQuBattleStateFighting3"),
+  WuYinQuBattleStateFightingToFighting_1 = require("./States/WuYinQuBattleStateFightingToFighting"),
+  WuYinQuBattleStateFightingToIdle_1 = require("./States/WuYinQuBattleStateFightingToIdle"),
+  WuYinQuBattleStateIdle_1 = require("./States/WuYinQuBattleStateIdle"),
+  WuYinQuBattleStateIdleToFighting_1 = require("./States/WuYinQuBattleStateIdleToFighting"),
+  WuYinQuBattleConfig_1 = require("./WuYinQuBattleConfig");
 class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
   constructor() {
     super(...arguments),
@@ -110,7 +110,7 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
             [" fromState:", this.LastBattleState],
             [" toState:", this.CurrentBattleState],
           ),
-        t === 0
+        0 === t
           ? (i ? this.StateMachine.Switch(0) : this.StateMachine.Switch(6),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
@@ -120,7 +120,7 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
                 ["Key:", this.Key],
                 ["Instant:", i],
               ))
-          : t === 1
+          : 1 === t
             ? (i ? this.StateMachine.Switch(1) : this.StateMachine.Switch(4),
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
@@ -130,7 +130,7 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
                   ["Key:", this.Key],
                   ["Instant:", i],
                 ))
-            : t === 2
+            : 2 === t
               ? (i ? this.StateMachine.Switch(2) : this.StateMachine.Switch(5),
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
@@ -140,7 +140,7 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
                     ["Key:", this.Key],
                     ["Instant:", i],
                   ))
-              : t === 3 &&
+              : 3 === t &&
                 (i ? this.StateMachine.Switch(3) : this.StateMachine.Switch(5),
                 Log_1.Log.CheckInfo()) &&
                 Log_1.Log.Info(
@@ -269,7 +269,7 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
           !1);
   }
   InitComponents() {
-    let t, i;
+    var t, i;
     (this.IdleInnerPostProcess.BlendWeight = 0),
       (this.IdleOuterPostProcess.BlendWeight = 0),
       (this.FightingPhase1PostProcess.BlendWeight = 0),
@@ -391,4 +391,4 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
   }
 }
 exports.default = WuYinQuBattleActor;
-// # sourceMappingURL=WuYinQuBattleActor.js.map
+//# sourceMappingURL=WuYinQuBattleActor.js.map

@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventAdjustPlayerCamera = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CurveUtils_1 = require("../../../Core/Utils/Curve/CurveUtils");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const CameraController_1 = require("../../Camera/CameraController");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController");
-const RenderUtil_1 = require("../../Render/Utils/RenderUtil");
-const ConfigCurveUtils_1 = require("../../Utils/ConfigCurveUtils");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const IMMEDIATELY_FADE_CAMERA_TIME = 0.1;
-const noAimGameplayTag = -1036349300;
+const Log_1 = require("../../../Core/Common/Log"),
+  CurveUtils_1 = require("../../../Core/Utils/Curve/CurveUtils"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController"),
+  RenderUtil_1 = require("../../Render/Utils/RenderUtil"),
+  ConfigCurveUtils_1 = require("../../Utils/ConfigCurveUtils"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  IMMEDIATELY_FADE_CAMERA_TIME = 0.1,
+  noAimGameplayTag = -1036349300;
 class LevelEventAdjustPlayerCamera extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments), (this.yLe = void 0);
@@ -51,8 +51,8 @@ class LevelEventAdjustPlayerCamera extends LevelGeneralBase_1.LevelEventBase {
           break;
         case IAction_1.EAdjustPlayerCamera.Dialog:
           this.TLe(t);
-          let e = t.Option.PitchAngle;
-          let r = (void 0 !== e && (e = -e), t.Option.YawAngle);
+          let e = t.Option.PitchAngle,
+            r = (void 0 !== e && (e = -e), t.Option.YawAngle);
           void 0 !== r && (r += 180);
           var o = this.yLe.DefaultConfig.get(1);
           CameraController_1.CameraController.FightCamera.LogicComponent.AdjustDialogueCamera(
@@ -64,8 +64,8 @@ class LevelEventAdjustPlayerCamera extends LevelGeneralBase_1.LevelEventBase {
           break;
         case IAction_1.EAdjustPlayerCamera.Fixed:
           this.TLe(t);
-          var o = Vector_1.Vector.Create();
-          var a = Rotator_1.Rotator.Create();
+          var o = Vector_1.Vector.Create(),
+            a = Rotator_1.Rotator.Create();
           o.Set(
             t.Option.CenterPos.X ?? 0,
             t.Option.CenterPos.Y ?? 0,
@@ -136,10 +136,10 @@ class LevelEventAdjustPlayerCamera extends LevelGeneralBase_1.LevelEventBase {
     else this.FinishExecute(!1);
   }
   ILe(e) {
-    let r;
-    let t =
-      CameraController_1.CameraController.FightCamera.LogicComponent
-        .CameraConfigController;
+    var r,
+      t =
+        CameraController_1.CameraController.FightCamera.LogicComponent
+          .CameraConfigController;
     return t
       ? ((r = e.Option.Type),
         (t = t.GetCameraConfigByTag(
@@ -160,25 +160,25 @@ class LevelEventAdjustPlayerCamera extends LevelGeneralBase_1.LevelEventBase {
                     e.Option.FadeOutCurve,
                   ))
               : (t.FadeOutCurve = CurveUtils_1.CurveUtils.CreateCurve(0)),
-            e.Option.ArmLength && e.Option.ArmLength !== 0
+            e.Option.ArmLength && 0 !== e.Option.ArmLength
               ? t.DefaultConfig.set(1, e.Option.ArmLength)
               : t.DefaultConfig.delete(1),
-            e.Option.MinumArmLength && e.Option.MinumArmLength !== 0
+            e.Option.MinumArmLength && 0 !== e.Option.MinumArmLength
               ? t.DefaultConfig.set(2, e.Option.MinumArmLength)
               : t.DefaultConfig.delete(2),
-            e.Option.MaxiumArmLength && e.Option.MaxiumArmLength !== 0
+            e.Option.MaxiumArmLength && 0 !== e.Option.MaxiumArmLength
               ? t.DefaultConfig.set(3, e.Option.MaxiumArmLength)
               : t.DefaultConfig.delete(3),
-            e.Option.Offset.X && e.Option.Offset.X !== 0
+            e.Option.Offset.X && 0 !== e.Option.Offset.X
               ? t.DefaultConfig.set(6, e.Option.Offset.X)
               : t.DefaultConfig.delete(6),
-            e.Option.Offset.Y && e.Option.Offset.Y !== 0
+            e.Option.Offset.Y && 0 !== e.Option.Offset.Y
               ? t.DefaultConfig.set(7, e.Option.Offset.Y)
               : t.DefaultConfig.delete(7),
-            e.Option.Offset.Z && e.Option.Offset.Z !== 0
+            e.Option.Offset.Z && 0 !== e.Option.Offset.Z
               ? t.DefaultConfig.set(8, e.Option.Offset.Z)
               : t.DefaultConfig.delete(8),
-            e.Option.Fov && e.Option.Fov !== 0
+            e.Option.Fov && 0 !== e.Option.Fov
               ? t.DefaultConfig.set(5, e.Option.Fov)
               : t.DefaultConfig.delete(5),
             void 0 === e.Option.IsDisableResetFocus
@@ -211,4 +211,4 @@ class LevelEventAdjustPlayerCamera extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventAdjustPlayerCamera = LevelEventAdjustPlayerCamera;
-// # sourceMappingURL=LevelEventAdjustPlayerCamera.js.map
+//# sourceMappingURL=LevelEventAdjustPlayerCamera.js.map

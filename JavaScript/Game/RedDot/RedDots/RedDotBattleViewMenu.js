@@ -4,4 +4,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const RedDotBase_1 = require("../RedDotBase");
 class RedDotBattleViewMenu extends RedDotBase_1.RedDotBase {}
 exports.RedDotBattleViewMenu = RedDotBattleViewMenu;
-// # sourceMappingURL=RedDotBattleViewMenu.js.map
+//# sourceMappingURL=RedDotBattleViewMenu.js.map

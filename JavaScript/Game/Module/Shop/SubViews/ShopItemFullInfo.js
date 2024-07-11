@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ShopItemFullInfo = void 0);
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ShopDefine_1 = require("../ShopDefine");
-const ShopUtils_1 = require("../ShopUtils");
+const StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ShopDefine_1 = require("../ShopDefine"),
+  ShopUtils_1 = require("../ShopUtils");
 class ItemPrice {
   constructor(t, i, e) {
     (this.CoinId = t), (this.CoinPrice = i), (this.OriginalPrice = e);
@@ -22,9 +22,9 @@ class ShopItemFullInfo {
       (this.BuyLimit = s.yxs),
       (this.StackSize = s.k4n),
       s.Exs.forEach((i, t) => {
-        var e = s.Ixs.find((t) => t.gVn === i.gVn);
-        var e = new ItemPrice(i.gVn, i.Mxs, e?.Mxs ?? -1);
-        this.Price.set(i.gVn, e), t === 0 && (this.DefaultPrice = e);
+        var e = s.Ixs.find((t) => t.gVn === i.gVn),
+          e = new ItemPrice(i.gVn, i.Mxs, e?.Mxs ?? -1);
+        this.Price.set(i.gVn, e), 0 === t && (this.DefaultPrice = e);
       }),
       (this.Id = s.Ekn),
       (this.Label = s.Txs),
@@ -34,7 +34,7 @@ class ShopItemFullInfo {
       i,
       s.Ekn,
     );
-    t.CondId !== 0 &&
+    0 !== t.CondId &&
       (this.ConditionText =
         ConfigManager_1.ConfigManager.ConditionConfig.GetConditionGroupConfig(
           t?.CondId,
@@ -45,9 +45,9 @@ class ShopItemFullInfo {
       (this.ShopId = i);
   }
   get LockInfo() {
-    let t, i, e, s;
+    var t, i, e, s;
     if (
-      this.BeginTime > 0 &&
+      0 < this.BeginTime &&
       this.BeginTime > TimeUtil_1.TimeUtil.GetServerTime()
     )
       return (
@@ -60,21 +60,21 @@ class ShopItemFullInfo {
           (s % ShopDefine_1.SECONDS_PRE_HOUR) / ShopDefine_1.SECONDS_PRE_MIN,
         )),
         (s = Math.trunc(s) % ShopDefine_1.SECONDS_PRE_MIN),
-        t > 0
+        0 < t
           ? StringUtils_1.StringUtils.Format(
               ConfigManager_1.ConfigManager.TextConfig.GetTextById(
                 "ShopLockTime1",
               ),
               t.toString(),
             )
-          : i > 0
+          : 0 < i
             ? StringUtils_1.StringUtils.Format(
                 ConfigManager_1.ConfigManager.TextConfig.GetTextById(
                   "ShopLockTime2",
                 ),
                 i.toString(),
               )
-            : e > 0
+            : 0 < e
               ? StringUtils_1.StringUtils.Format(
                   ConfigManager_1.ConfigManager.TextConfig.GetTextById(
                     "ShopLockTime3",
@@ -92,14 +92,14 @@ class ShopItemFullInfo {
   }
   IsUnlocked() {
     return !(
-      (this.BeginTime > 0 &&
+      (0 < this.BeginTime &&
         this.BeginTime > TimeUtil_1.TimeUtil.GetServerTime()) ||
       this.IsLocked
     );
   }
   InSellTime() {
     return (
-      !(this.EndTime > 0) ||
+      !(0 < this.EndTime) ||
       (TimeUtil_1.TimeUtil.GetServerTime() >= this.BeginTime &&
         this.EndTime > TimeUtil_1.TimeUtil.GetServerTime())
     );
@@ -112,34 +112,34 @@ class ShopItemFullInfo {
     );
   }
   GetMaxBuyCount() {
-    let t;
+    var t;
     return this.DefaultPrice
       ? ((t = ShopUtils_1.ShopUtils.GetResource(this.DefaultPrice.CoinId)),
         (t = Math.trunc(t / this.DefaultPrice.CoinPrice)),
-        this.BuyLimit > 0 ? Math.min(this.BuyLimit - this.BoughtCount, t) : t)
+        0 < this.BuyLimit ? Math.min(this.BuyLimit - this.BoughtCount, t) : t)
       : -1;
   }
   IsOutOfDate() {
     return (
-      this.EndTime > 0 && this.EndTime < TimeUtil_1.TimeUtil.GetServerTime()
+      0 < this.EndTime && this.EndTime < TimeUtil_1.TimeUtil.GetServerTime()
     );
   }
   IsSoldOut() {
-    return this.BuyLimit > 0 && this.BoughtCount === this.BuyLimit;
+    return 0 < this.BuyLimit && this.BoughtCount === this.BuyLimit;
   }
   InSaleTime() {
-    let t;
+    var t;
     return (
-      this.BeginTime > 0 &&
-      this.EndTime > 0 &&
+      0 < this.BeginTime &&
+      0 < this.EndTime &&
       ((t = TimeUtil_1.TimeUtil.GetServerTime()), this.BeginTime < t) &&
       t < this.EndTime
     );
   }
   IsOutOfStock() {
     return (
-      (this.BuyLimit > 0 && this.BoughtCount === this.BuyLimit) ||
-      (this.EndTime > 0 && this.EndTime < TimeUtil_1.TimeUtil.GetServerTime())
+      (0 < this.BuyLimit && this.BoughtCount === this.BuyLimit) ||
+      (0 < this.EndTime && this.EndTime < TimeUtil_1.TimeUtil.GetServerTime())
     );
   }
   IsInteractive() {
@@ -152,7 +152,7 @@ class ShopItemFullInfo {
     return this.DefaultPrice ? this.DefaultPrice.CoinPrice : -1;
   }
   GetPrice(t) {
-    return this.Price && this.Price.size !== 0
+    return this.Price && 0 !== this.Price.size
       ? this.Price.get(t).CoinPrice
       : -1;
   }
@@ -161,4 +161,4 @@ class ShopItemFullInfo {
   }
 }
 exports.ShopItemFullInfo = ShopItemFullInfo;
-// # sourceMappingURL=ShopItemFullInfo.js.map
+//# sourceMappingURL=ShopItemFullInfo.js.map

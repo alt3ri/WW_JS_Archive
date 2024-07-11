@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ComposeIngredientsVerticalView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const MediumItemGrid_1 = require("../../../Common/MediumItemGrid/MediumItemGrid");
-const NumberSelectComponent_1 = require("../../../Common/NumberSelect/NumberSelectComponent");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const GenericScrollViewNew_1 = require("../../../Util/ScrollView/GenericScrollViewNew");
-const CommonManager_1 = require("../../Common/CommonManager");
-const ManufactureMaterialItem_1 = require("../../Common/Item/ManufactureMaterialItem");
-const ComposeController_1 = require("../ComposeController");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  MediumItemGrid_1 = require("../../../Common/MediumItemGrid/MediumItemGrid"),
+  NumberSelectComponent_1 = require("../../../Common/NumberSelect/NumberSelectComponent"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  GenericScrollViewNew_1 = require("../../../Util/ScrollView/GenericScrollViewNew"),
+  CommonManager_1 = require("../../Common/CommonManager"),
+  ManufactureMaterialItem_1 = require("../../Common/Item/ManufactureMaterialItem"),
+  ComposeController_1 = require("../ComposeController");
 class ProficiencyView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -47,17 +47,17 @@ class ProficiencyView extends UiPanelBase_1.UiPanelBase {
     this.uqt = e;
   }
   SetExpNum(e, i, t, s) {
-    var t = i * t;
-    var e = e * i;
-    const r = t - e;
-    var e = StringUtils_1.StringUtils.Format(
-      ConfigManager_1.ConfigManager.TextConfig.GetTextById(
-        "CumulativeProficiency",
-      ),
-      e.toString(),
-      t.toString(),
-    );
-    r > 0
+    var t = i * t,
+      e = e * i,
+      r = t - e,
+      e = StringUtils_1.StringUtils.Format(
+        ConfigManager_1.ConfigManager.TextConfig.GetTextById(
+          "CumulativeProficiency",
+        ),
+        e.toString(),
+        t.toString(),
+      );
+    0 < r
       ? ((t = Math.min(r, i * s)),
         (i = StringUtils_1.StringUtils.Format(
           ConfigManager_1.ConfigManager.TextConfig.GetTextById(
@@ -78,7 +78,7 @@ class ProficiencyView extends UiPanelBase_1.UiPanelBase {
     this.GetText(0).SetUIActive(e);
   }
   SetRoleTexture(e, i) {
-    const t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e);
+    var t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e);
     this.SetRoleIcon(
       t.GetRoleConfig().RoleHeadIconLarge,
       this.GetTexture(1),
@@ -91,7 +91,7 @@ class ProficiencyView extends UiPanelBase_1.UiPanelBase {
         : this.Gft?.StopCurrentSequence(!1, !0);
   }
   SetTypeContent(e = void 0) {
-    const i = this.GetText(3);
+    var i = this.GetText(3);
     e ? (i.SetUIActive(!0), i.SetText(e)) : i.SetUIActive(!1);
   }
 }
@@ -111,7 +111,7 @@ class SvInfo extends UiPanelBase_1.UiPanelBase {
     this.GetItem(1).SetUIActive(!1);
   }
   SetTypeName(e = void 0) {
-    const i = this.GetText(0);
+    var i = this.GetText(0);
     e ? (i.SetUIActive(!0), i.SetText(e)) : i.SetUIActive(!1);
   }
   SetDescVisible(e) {
@@ -154,7 +154,7 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
         this.vIi && this.vIi();
       }),
       (this.Eqt = () => {
-        const e = new ManufactureMaterialItem_1.ManufactureMaterialItem();
+        var e = new ManufactureMaterialItem_1.ManufactureMaterialItem();
         return (
           e.BindOnCanExecuteChange(() => !1),
           e.BindOnExtendToggleClicked((e) => {
@@ -217,10 +217,10 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
       this.GetText(23).ShowTextNew("NeedMaterialTitleText"),
       this.GetText(17).ShowTextNew("PrefabTextItem_MaterialChoose_Text"),
       this.GetItem(18).SetUIActive(!0);
-    var e = this.GetItem(8);
-    var e =
-      ((this.WGe = new NumberSelectComponent_1.NumberSelectComponent(e)),
-      { MaxNumber: 0, ValueChangeFunction: this.yqt });
+    var e = this.GetItem(8),
+      e =
+        ((this.WGe = new NumberSelectComponent_1.NumberSelectComponent(e)),
+        { MaxNumber: 0, ValueChangeFunction: this.yqt });
     this.WGe.Init(e),
       this.WGe.SetUiActive(!0),
       this.WGe.SetNumberSelectTipsVisible(!1),
@@ -237,7 +237,7 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
   }
   Iqt() {
     this.Tqt(this.vqt, this.Mqt * this.t6);
-    const e = this.pqt?.GetScrollItemList();
+    var e = this.pqt?.GetScrollItemList();
     if (e) for (const i of e) i.SetTimes(this.t6);
   }
   OnBeforeDestroy() {
@@ -259,19 +259,19 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
     );
   }
   kqn(e) {
-    const i = CommonManager_1.CommonManager.GetCurrentRoleId();
+    var i = CommonManager_1.CommonManager.GetCurrentRoleId();
     i && this.mqt.SetRoleTexture(i, e);
   }
   EIi(e) {
-    let i;
+    var i;
     this.gqt(e) &&
       (i = CommonManager_1.CommonManager.GetManufactureRoleId(e.ItemId)) &&
       (CommonManager_1.CommonManager.SetCurrentRoleId(i),
       this.mqt.SetRoleTexture(i, e.ItemId));
   }
   Uqt(e) {
-    let i = !1;
-    let t = 0;
+    let i = !1,
+      t = 0;
     e = e.filter(
       (e) =>
         e.G3n !== ComposeController_1.ComposeController.ComposeCoinId ||
@@ -282,26 +282,28 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
   eOt(e) {
     (this.dqt = e), (this.t6 = 1);
     var i = ComposeController_1.ComposeController.GetMaxCreateCount(
-      this.dqt.ItemId,
-    );
-    var i =
-      (this.WGe.Refresh(i),
-      ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-        e.ItemId,
-      ));
-    let t =
-      (this.fqt.SetDescVisible(!0),
-      this.fqt.SetDescBgVisible(!1),
-      ConfigManager_1.ConfigManager.ItemConfig?.GetItemAttributeDesc(i.ItemId));
-    var i = StringUtils_1.StringUtils.IsEmpty(i.ComposeBackground)
-      ? ""
-      : ConfigManager_1.ConfigManager.CookConfig.GetLocalText(
-          i.ComposeBackground,
-        );
+        this.dqt.ItemId,
+      ),
+      i =
+        (this.WGe.Refresh(i),
+        ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
+          e.ItemId,
+        )),
+      t =
+        (this.fqt.SetDescVisible(!0),
+        this.fqt.SetDescBgVisible(!1),
+        ConfigManager_1.ConfigManager.ItemConfig?.GetItemAttributeDesc(
+          i.ItemId,
+        )),
+      i = StringUtils_1.StringUtils.IsEmpty(i.ComposeBackground)
+        ? ""
+        : ConfigManager_1.ConfigManager.CookConfig.GetLocalText(
+            i.ComposeBackground,
+          );
     this.fqt.SetDesc(t),
       this.fqt.SetDescBg(i),
-      this.WGe.SetUiActive(e.IsUnlock > 0),
-      this.GetItem(9).SetUIActive(e.IsUnlock > 0),
+      this.WGe.SetUiActive(0 < e.IsUnlock),
+      this.GetItem(9).SetUIActive(0 < e.IsUnlock),
       e.IsUnlock
         ? (this.GetItem(20).SetUIActive(!1),
           this.GetItem(18).SetUIActive(!0),
@@ -336,10 +338,10 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
   }
   MIi(e) {
     var i = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-      e.ItemId,
-    );
-    const t = i.Proficiency;
-    var i = i.MaxProficiencyCount;
+        e.ItemId,
+      ),
+      t = i.Proficiency,
+      i = i.MaxProficiencyCount;
     this.SIi(e.ComposeCount, t, i, this.t6);
   }
   OnSecondTimerRefresh() {
@@ -364,10 +366,10 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
     if (i.TotalMakeCountInLimitTime <= 0)
       this.GetItem(3).SetUIActive(!1), this.WGe.ResetLimitMaxValue();
     else {
-      const t = i.TotalMakeCountInLimitTime - i.MadeCountInLimitTime;
+      var t = i.TotalMakeCountInLimitTime - i.MadeCountInLimitTime;
       this.WGe.SetLimitMaxValue(Math.max(1, t));
       let e = t.toString();
-      t === 0 &&
+      0 === t &&
         (e = StringUtils_1.StringUtils.Format(
           "<color=#c25757>{0}</color>",
           t.toString(),
@@ -382,7 +384,7 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
     }
   }
   Tqt(e, i) {
-    let t;
+    var t;
     this.GetText(12).GetParentAsUIItem().SetUIActive(e),
       e &&
         ((e = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
@@ -432,4 +434,4 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ComposeIngredientsVerticalView = ComposeIngredientsVerticalView;
-// # sourceMappingURL=ComposeIngerdientsVerticalView.js.map
+//# sourceMappingURL=ComposeIngerdientsVerticalView.js.map

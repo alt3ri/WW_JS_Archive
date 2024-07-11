@@ -1,26 +1,30 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, s, n) {
-    let o;
-    const i = arguments.length;
-    let r =
-      i < 3 ? e : n === null ? (n = Object.getOwnPropertyDescriptor(e, s)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      i = arguments.length,
+      r =
+        i < 3
+          ? e
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(e, s))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(t, e, s, n);
     else
-      for (let h = t.length - 1; h >= 0; h--)
-        (o = t[h]) && (r = (i < 3 ? o(r) : i > 3 ? o(e, s, r) : o(e, s)) || r);
-    return i > 3 && r && Object.defineProperty(e, s, r), r;
+      for (var h = t.length - 1; 0 <= h; h--)
+        (o = t[h]) && (r = (i < 3 ? o(r) : 3 < i ? o(e, s, r) : o(e, s)) || r);
+    return 3 < i && r && Object.defineProperty(e, s, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PawnSensoryComponent = void 0);
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const PawnSensoryInfoController_1 = require("../Controllers/PawnSensoryInfoController");
-const TICK_INTERVAL_TIME = 1e3;
+const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  PawnSensoryInfoController_1 = require("../Controllers/PawnSensoryInfoController"),
+  TICK_INTERVAL_TIME = 1e3;
 let PawnSensoryComponent = class PawnSensoryComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -50,13 +54,13 @@ let PawnSensoryComponent = class PawnSensoryComponent extends EntityComponent_1.
     this.$hn.RemoveSensoryInfo(t), this.Jhn();
   }
   Jhn() {
-    const t = this.$hn.MaxSensoryRange;
+    var t = this.$hn.MaxSensoryRange;
     this.Xhn !== t && (this.Xhn = t);
   }
   OnTick(t) {
     this.Hte &&
       this.$hn &&
-      this.$hn.SensoryInfoType !== 0 &&
+      0 !== this.$hn.SensoryInfoType &&
       (this.$hn.Tick(t),
       (this.Yhn += t),
       this.Yhn < TICK_INTERVAL_TIME ||
@@ -85,4 +89,4 @@ let PawnSensoryComponent = class PawnSensoryComponent extends EntityComponent_1.
   PawnSensoryComponent,
 )),
   (exports.PawnSensoryComponent = PawnSensoryComponent);
-// # sourceMappingURL=PawnSensoryComponent.js.map
+//# sourceMappingURL=PawnSensoryComponent.js.map

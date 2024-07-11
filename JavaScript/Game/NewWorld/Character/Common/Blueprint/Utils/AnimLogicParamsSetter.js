@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AnimLogicParamsSetter = void 0);
-const FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil");
-const Rotator_1 = require("../../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const Vector2D_1 = require("../../../../../../Core/Utils/Math/Vector2D");
-const CharacterUnifiedStateTypes_1 = require("../../Component/Abilities/CharacterUnifiedStateTypes");
-const CharacterClimbComponent_1 = require("../../Component/Move/CharacterClimbComponent");
+const FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil"),
+  Rotator_1 = require("../../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  Vector2D_1 = require("../../../../../../Core/Utils/Math/Vector2D"),
+  CharacterUnifiedStateTypes_1 = require("../../Component/Abilities/CharacterUnifiedStateTypes"),
+  CharacterClimbComponent_1 = require("../../Component/Move/CharacterClimbComponent");
 class AnimLogicParamsSetter {
   constructor() {
     (this.AcceptedNewBeHit = !1),
@@ -59,4 +59,4 @@ class AnimLogicParamsSetter {
   }
 }
 exports.AnimLogicParamsSetter = AnimLogicParamsSetter;
-// # sourceMappingURL=AnimLogicParamsSetter.js.map
+//# sourceMappingURL=AnimLogicParamsSetter.js.map

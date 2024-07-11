@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AudioModel = exports.AudioBox = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../Actor/ActorSystem");
-const PriorityQueue_1 = require("../Container/PriorityQueue");
-const ModelBase_1 = require("../Framework/ModelBase");
-const MathUtils_1 = require("../Utils/MathUtils");
+const UE = require("ue"),
+  ActorSystem_1 = require("../Actor/ActorSystem"),
+  PriorityQueue_1 = require("../Container/PriorityQueue"),
+  ModelBase_1 = require("../Framework/ModelBase"),
+  MathUtils_1 = require("../Utils/MathUtils");
 class AudioBox {
   constructor(e, t, i) {
     (this.Priority = e), (this.PbDataId = t), (this.BoxType = i);
@@ -13,7 +13,7 @@ class AudioBox {
 }
 (exports.AudioBox = AudioBox).Compare = (e, t) => {
   let i = t.Priority - e.Priority;
-  return i === 0 && i--, i;
+  return 0 === i && i--, i;
 };
 class AudioModel extends ModelBase_1.ModelBase {
   constructor() {
@@ -44,8 +44,8 @@ class AudioModel extends ModelBase_1.ModelBase {
     return (this.Q6 = void 0), !(this.X6 = void 0);
   }
   UpdateAudioBoxQueue(e, t) {
-    let i = void 0;
-    let r = void 0;
+    let i = void 0,
+      r = void 0;
     switch (e.BoxType) {
       case "AudioAMB":
         this.Q6 && !this.Q6.Empty && (i = this.Q6.Top), (r = this.Q6);
@@ -56,7 +56,7 @@ class AudioModel extends ModelBase_1.ModelBase {
       default:
         return;
     }
-    const o = i === e;
+    var o = i === e;
     switch (t) {
       case 0:
         if ((r.Push(e), r.Top === e)) return r.Top;
@@ -68,8 +68,9 @@ class AudioModel extends ModelBase_1.ModelBase {
         if (o) return r.Top;
         break;
       default:
+        return;
     }
   }
 }
 (exports.AudioModel = AudioModel).Y6 = void 0;
-// # sourceMappingURL=AudioModel.js.map
+//# sourceMappingURL=AudioModel.js.map

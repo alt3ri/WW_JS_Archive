@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuideTutorialPagePanel = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GuideDescribeNew_1 = require("./GuideDescribeNew");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GuideDescribeNew_1 = require("./GuideDescribeNew");
 class GuideTutorialPagePanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(), (this.pzt = void 0), (this.EPe = void 0);
@@ -51,4 +51,4 @@ class GuideTutorialPagePanel extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.GuideTutorialPagePanel = GuideTutorialPagePanel;
-// # sourceMappingURL=GuideTutorialPagePanel.js.map
+//# sourceMappingURL=GuideTutorialPagePanel.js.map

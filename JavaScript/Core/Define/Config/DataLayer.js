@@ -30,25 +30,25 @@ class DataLayer {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   datalayer(t) {
-    const r = this.J7.__offset(this.z7, 6);
+    var r = this.J7.__offset(this.z7, 6);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   cnname(t) {
-    const r = this.J7.__offset(this.z7, 8);
+    var r = this.J7.__offset(this.z7, 8);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   levelid() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   initload() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
 }
 exports.DataLayer = DataLayer;
-// # sourceMappingURL=DataLayer.js.map
+//# sourceMappingURL=DataLayer.js.map

@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.platformUe = exports.PlatformUe = void 0);
-const puerts_1 = require("puerts");
-const ue_1 = require("ue");
-const Log_1 = require("../Misc/Log");
-const Util_1 = require("../Unreal/Util");
-const Platform_1 = require("./Platform");
+const puerts_1 = require("puerts"),
+  ue_1 = require("ue"),
+  Log_1 = require("../Misc/Log"),
+  Util_1 = require("../Unreal/Util"),
+  Platform_1 = require("./Platform");
 class PlatformUe extends Platform_1.Platform {
   constructor() {
     super(...arguments), (this.Be = () => {});
   }
   ReadFile(e) {
-    const t = (0, puerts_1.$ref)("");
+    var t = (0, puerts_1.$ref)("");
     return (
       ue_1.KuroStaticLibrary.LoadFileToString(t, e), (0, puerts_1.$unref)(t)
     );
@@ -32,7 +32,7 @@ class PlatformUe extends Platform_1.Platform {
     return ue_1.MyFileHelper.ExistDir(e);
   }
   CreateDir(e) {
-    const t = e.split("/");
+    var t = e.split("/");
     let r = t[0];
     for (let e = 1; e < t.length; e++)
       if (((r = r + "/" + t[e]), !ue_1.MyFileHelper.CreateDir(r)))
@@ -55,7 +55,7 @@ class PlatformUe extends Platform_1.Platform {
     );
   }
   ListFiles(e, t, r) {
-    const s = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.BuiltinString));
+    var s = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.BuiltinString));
     return (
       void 0 === t && (t = ""),
       r
@@ -65,7 +65,7 @@ class PlatformUe extends Platform_1.Platform {
     );
   }
   ListDirs(e, t) {
-    const r = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.BuiltinString));
+    var r = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.BuiltinString));
     return (
       t
         ? ue_1.MyFileHelper.FindDirsRecursively(r, e)
@@ -101,8 +101,8 @@ class PlatformUe extends Platform_1.Platform {
   }
   Exec(e, t) {
     e.includes("\\") && (e = e.split("\\").join("\\\\"));
-    const r = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry));
-    const s = (0, puerts_1.$ref)("");
+    var r = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry)),
+      s = (0, puerts_1.$ref)("");
     let u = "";
     (u = (
       t
@@ -112,7 +112,7 @@ class PlatformUe extends Platform_1.Platform {
             `ret, output = subprocess.getstatusoutput('''${e}''')`,
             "print(output)",
             "if ret != 0:",
-            "	raise Exception('ret != 0')",
+            `	raise Exception('ret != 0')`,
           ]
     ).join("\n")),
       (0, Log_1.log)("ExecutePythonCommandEx: " + u);
@@ -121,7 +121,7 @@ class PlatformUe extends Platform_1.Platform {
     let o = (0, puerts_1.$unref)(s);
     return [
       t,
-      (o = !(o = o === "None" ? "" : o) && e.Num() > 0 ? e.Get(0).Output : o),
+      (o = !(o = "None" === o ? "" : o) && 0 < e.Num() ? e.Get(0).Output : o),
     ];
   }
   GetMacAddress() {
@@ -134,12 +134,12 @@ class PlatformUe extends Platform_1.Platform {
     return e.endsWith(".uasset") &&
       this.ExistFile(e) &&
       (e = ue_1.MyFileHelper.ReadUassetInfo(e)) &&
-      e !== ""
+      "" !== e
       ? e
       : "";
   }
   ConvertExcelToCsv(e, t, r, s) {
-    let u;
+    var u;
     return (
       !!this.ExistFile(e) &&
       ((u = this.GetProjectPath(
@@ -159,27 +159,26 @@ class PlatformUe extends Platform_1.Platform {
           )),
           (0, Log_1.log)("ExecutePythonCommandEx: " + t),
           ue_1.PythonScriptLibrary.ExecutePythonCommandEx(t, void 0, r),
-          (e = (0, puerts_1.$unref)(r)).Num() !== 0 &&
-            e.Get(0).Output.replace(/\r\n/g, "\n").split("\n")[0] !== "false")
+          0 !== (e = (0, puerts_1.$unref)(r)).Num() &&
+            "false" !== e.Get(0).Output.replace(/\r\n/g, "\n").split("\n")[0])
         : ((0, Log_1.error)("ExcelConverter not exist: " + u), !1))
     );
   }
-
   CheckFileIsInUse(e) {
     var e = [
-      "try:",
-      `   fd = open('${e}', "r+")`,
-      "   fd.close()",
-      '   print("false")',
-      "except:",
-      '   print("true")',
-    ].join("\n");
-    const t = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry));
-    var e =
-      ((0, Log_1.log)("ExecutePythonCommandEx: " + e),
-      ue_1.PythonScriptLibrary.ExecutePythonCommandEx(e, void 0, t),
-      (0, puerts_1.$unref)(t));
-    return e.Num() !== 0 && e.Get(0).Output === "true";
+        "try:",
+        `   fd = open('${e}', "r+")`,
+        "   fd.close()",
+        '   print("false")',
+        "except:",
+        '   print("true")',
+      ].join("\n"),
+      t = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry)),
+      e =
+        ((0, Log_1.log)("ExecutePythonCommandEx: " + e),
+        ue_1.PythonScriptLibrary.ExecutePythonCommandEx(e, void 0, t),
+        (0, puerts_1.$unref)(t));
+    return 0 !== e.Num() && "true" === e.Get(0).Output;
   }
   IsPortInUse(e) {
     return ue_1.EditorRuntimeOperations.IsPortInUse(e);
@@ -217,8 +216,8 @@ class PlatformUe extends Platform_1.Platform {
     });
   }
   GetProcessImagePathsByName(e) {
-    const t = ue_1.KuroProcessUtils.GetProcessImagePathsByName(e);
-    const r = [];
+    var t = ue_1.KuroProcessUtils.GetProcessImagePathsByName(e),
+      r = [];
     for (let e = 0; e < t.Num(); e++) r.push(t.Get(e));
     return r;
   }
@@ -227,4 +226,4 @@ class PlatformUe extends Platform_1.Platform {
   }
 }
 (exports.PlatformUe = PlatformUe), (exports.platformUe = new PlatformUe());
-// # sourceMappingURL=PlatformUe.js.map
+//# sourceMappingURL=PlatformUe.js.map

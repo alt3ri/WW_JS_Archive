@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configRoleQuestByRoleIdAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const RoleQuest_1 = require("../Config/RoleQuest");
-const DB = "db_rolequest.db";
-const FILE = "j.角色任务.xlsx";
-const TABLE = "RoleQuest";
-const COMMAND = "select BinData from `RoleQuest` where RoleId =?";
-const KEY_PREFIX = "RoleQuestByRoleIdAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  RoleQuest_1 = require("../Config/RoleQuest"),
+  DB = "db_rolequest.db",
+  FILE = "j.角色任务.xlsx",
+  TABLE = "RoleQuest",
+  COMMAND = "select BinData from `RoleQuest` where RoleId =?",
+  KEY_PREFIX = "RoleQuestByRoleIdAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX = "configRoleQuestByRoleIdAll.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configRoleQuestByRoleIdAll.GetConfigList(";
 exports.configRoleQuestByRoleIdAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -29,7 +29,7 @@ exports.configRoleQuestByRoleIdAll = {
     );
   },
   GetConfigList: (o, e = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -44,13 +44,14 @@ exports.configRoleQuestByRoleIdAll = {
         const r = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "RoleId",
               o,
-            ]) !== 1
+            ])
           )
             break;
-          let t = void 0;
+          var t = void 0;
           if (
             (([n, t] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -78,4 +79,4 @@ exports.configRoleQuestByRoleIdAll = {
     }
   },
 };
-// # sourceMappingURL=RoleQuestByRoleIdAll.js.map
+//# sourceMappingURL=RoleQuestByRoleIdAll.js.map

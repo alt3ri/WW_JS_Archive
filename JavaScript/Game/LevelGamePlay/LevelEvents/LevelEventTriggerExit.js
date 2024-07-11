@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventTriggerExit = void 0);
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventTriggerExit extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -25,4 +25,4 @@ class LevelEventTriggerExit extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventTriggerExit = LevelEventTriggerExit;
-// # sourceMappingURL=LevelEventTriggerExit.js.map
+//# sourceMappingURL=LevelEventTriggerExit.js.map

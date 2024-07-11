@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DynamicEntityMarkItem = void 0);
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const DynamicEntityMarkItemView_1 = require("../MarkItemView/DynamicEntityMarkItemView");
-const DynamicConfigMarkItem_1 = require("./DynamicConfigMarkItem");
+const ModelManager_1 = require("../../../../Manager/ModelManager"),
+  DynamicEntityMarkItemView_1 = require("../MarkItemView/DynamicEntityMarkItemView"),
+  DynamicConfigMarkItem_1 = require("./DynamicConfigMarkItem");
 class DynamicEntityMarkItem extends DynamicConfigMarkItem_1.DynamicConfigMarkItem {
   constructor(e, t, i, r, a, n) {
     super(e, t, i, a, n, 1), (this.TrackTarget = r);
@@ -20,7 +20,7 @@ class DynamicEntityMarkItem extends DynamicConfigMarkItem_1.DynamicConfigMarkIte
   }
   CheckCanShowView() {
     return (
-      (typeof this.TrackTarget !== "number" ||
+      ("number" != typeof this.TrackTarget ||
         !!ModelManager_1.ModelManager.CreatureModel.CheckEntityVisible(
           this.TrackTarget,
         )) &&
@@ -29,4 +29,4 @@ class DynamicEntityMarkItem extends DynamicConfigMarkItem_1.DynamicConfigMarkIte
   }
 }
 exports.DynamicEntityMarkItem = DynamicEntityMarkItem;
-// # sourceMappingURL=DynamicEntityMarkItem.js.map
+//# sourceMappingURL=DynamicEntityMarkItem.js.map

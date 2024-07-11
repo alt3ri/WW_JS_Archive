@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskFindRandomPosition extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -34,8 +34,8 @@ class TsTaskFindRandomPosition extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveExecuteAI(t, s) {
     this.InitTsVariables();
-    let i;
-    let e = t.AiController;
+    var i,
+      e = t.AiController;
     e
       ? ((e = e.CharActorComp),
         this.TsSaveBlackBoardKey &&
@@ -56,28 +56,28 @@ class TsTaskFindRandomPosition extends TsTaskAbortImmediatelyBase_1.default {
         this.FinishExecute(!1));
   }
   CalculateTargetPosition(t) {
-    var s = t.ActorLocationProxy;
-    var t = t.ActorForwardProxy;
-    var i = MathUtils_1.MathUtils.GetRandomFloatNumber(
-      0,
-      MathUtils_1.PI_DEG_DOUBLE,
-    );
-    var t = Vector_1.Vector.Create(t);
-    var i =
-      (t.RotateAngleAxis(i, Vector_1.Vector.UpVectorProxy, t),
-      Vector_1.Vector.Create(this.TsStartPositionOffset));
-    var s =
-      (i.AdditionEqual(s),
-      t.MultiplyEqual(
-        this.TsUseFullRange
-          ? this.TsMaxRange
-          : MathUtils_1.MathUtils.GetRandomFloatNumber(
-              this.TsMinRange,
-              this.TsMaxRange,
-            ),
-      ));
+    var s = t.ActorLocationProxy,
+      t = t.ActorForwardProxy,
+      i = MathUtils_1.MathUtils.GetRandomFloatNumber(
+        0,
+        MathUtils_1.PI_DEG_DOUBLE,
+      ),
+      t = Vector_1.Vector.Create(t),
+      i =
+        (t.RotateAngleAxis(i, Vector_1.Vector.UpVectorProxy, t),
+        Vector_1.Vector.Create(this.TsStartPositionOffset)),
+      s =
+        (i.AdditionEqual(s),
+        t.MultiplyEqual(
+          this.TsUseFullRange
+            ? this.TsMaxRange
+            : MathUtils_1.MathUtils.GetRandomFloatNumber(
+                this.TsMinRange,
+                this.TsMaxRange,
+              ),
+        ));
     return i.AdditionEqual(s);
   }
 }
 exports.default = TsTaskFindRandomPosition;
-// # sourceMappingURL=TsTaskFindRandomPosition.js.map
+//# sourceMappingURL=TsTaskFindRandomPosition.js.map

@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CookingIngredientsView = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const CookController_1 = require("../CookController");
-const CookingIngredientsVerticalView_1 = require("../CookingIngredientsVerticalView");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  CookController_1 = require("../CookController"),
+  CookingIngredientsVerticalView_1 = require("../CookingIngredientsVerticalView");
 class CookingIngredientsView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -18,7 +18,7 @@ class CookingIngredientsView extends UiPanelBase_1.UiPanelBase {
       (this.JNt = void 0),
       (this.nNt = () => {
         this.GetButton(3).IsSelfInteractive
-          ? ModelManager_1.ModelManager.CookModel.CurrentCookListType === 0
+          ? 0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType
             ? (ModelManager_1.ModelManager.CookModel.CleanAddExp(),
               CookController_1.CookController.SendCookFoodRequest(
                 this.dqt.ItemId,
@@ -81,8 +81,8 @@ class CookingIngredientsView extends UiPanelBase_1.UiPanelBase {
     this.C4e();
   }
   C4e() {
-    let e;
-    this.dqt.MainType === 0
+    var e;
+    0 === this.dqt.MainType
       ? ((e = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
           this.dqt.ItemId,
         )),
@@ -100,11 +100,11 @@ class CookingIngredientsView extends UiPanelBase_1.UiPanelBase {
   }
   hNt() {
     var e = ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
-      this.dqt.ItemId,
-    );
-    var e = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
-      e.FinalItemId,
-    );
+        this.dqt.ItemId,
+      ),
+      e = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
+        e.FinalItemId,
+      );
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), "Have", e),
       this.JNt.RefreshMachining(this.dqt),
       this.ZNt(),
@@ -114,23 +114,23 @@ class CookingIngredientsView extends UiPanelBase_1.UiPanelBase {
   }
   aNt() {
     var e = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
-      this.dqt.ItemId,
-    );
-    var e = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
-      e.FoodItemId,
-    );
+        this.dqt.ItemId,
+      ),
+      e = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
+        e.FoodItemId,
+      );
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), "Have", e),
       this.JNt.RefreshCooking(this.dqt),
       this.ZNt(),
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(5), "CookButtonText");
   }
   ZNt() {
-    const e = this.dqt.IsUnLock;
-    let i = !1;
-    let t = !0;
-    let r = !0;
-    if (ModelManager_1.ModelManager.CookModel.CurrentCookListType === 0) {
-      const a = ModelManager_1.ModelManager.CookModel;
+    var e = this.dqt.IsUnLock;
+    let i = !1,
+      t = !0,
+      r = !0;
+    if (0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType) {
+      var a = ModelManager_1.ModelManager.CookModel;
       (i = a.CheckMaterialEnough(this.dqt.ItemId)),
         (t = a.CheckCoinEnough(this.dqt.ItemId)),
         (r = a.CheckLimitCount(this.dqt.ItemId));
@@ -186,4 +186,4 @@ class CookingIngredientsView extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.CookingIngredientsView = CookingIngredientsView;
-// # sourceMappingURL=CookingIngredientsView.js.map
+//# sourceMappingURL=CookingIngredientsView.js.map

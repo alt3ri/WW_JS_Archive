@@ -6,4 +6,4 @@ class BulletEventSystem extends BulletSystemBase_1.BulletSystemBase {
   OnTick(e) {}
 }
 exports.BulletEventSystem = BulletEventSystem;
-// # sourceMappingURL=BulletEventSystem.js.map
+//# sourceMappingURL=BulletEventSystem.js.map

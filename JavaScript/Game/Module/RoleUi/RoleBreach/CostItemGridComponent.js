@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CostItemGridComponent = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const ButtonItem_1 = require("../../Common/Button/ButtonItem");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
-const CostMediumItemGrid_1 = require("./CostMediumItemGrid");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  ButtonItem_1 = require("../../Common/Button/ButtonItem"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  CostMediumItemGrid_1 = require("./CostMediumItemGrid"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class CostItemGridComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t, e, i, s = void 0) {
     super(),
@@ -22,7 +22,7 @@ class CostItemGridComponent extends UiPanelBase_1.UiPanelBase {
       (this.i3e = void 0),
       (this.Nlo = !1),
       (this.sGe = (t, e, i) => {
-        const s = new CostMediumItemGrid_1.CostMediumItemGrid();
+        var s = new CostMediumItemGrid_1.CostMediumItemGrid();
         return (
           s.Initialize(e.GetOwner()),
           s.Refresh(t, !1, i),
@@ -59,7 +59,7 @@ class CostItemGridComponent extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     (this.i3e = new ButtonItem_1.ButtonItem(this.GetItem(11))),
       this.i3e.SetFunction(this.Blo);
-    const t = this.GetScrollViewWithScrollbar(5);
+    var t = this.GetScrollViewWithScrollbar(5);
     (this.ScrollView = new GenericScrollView_1.GenericScrollView(t, this.sGe)),
       this.GetButton(17)?.RootUIComp?.SetUIActive(void 0 !== this.blo);
   }
@@ -103,4 +103,4 @@ class CostItemGridComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.CostItemGridComponent = CostItemGridComponent;
-// # sourceMappingURL=CostItemGridComponent.js.map
+//# sourceMappingURL=CostItemGridComponent.js.map

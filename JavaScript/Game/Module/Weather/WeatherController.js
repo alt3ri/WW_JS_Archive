@@ -1,21 +1,21 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeatherController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../GlobalData");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const WeatherModel_1 = require("./WeatherModel");
-const CHANGE_WEATHER_SMOOTH_TIME = 10;
-const CHANGE_WEATHER_SMOOTH_TIME_QUICK = 1;
-const CHECKGAP = 300;
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../GlobalData"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  WeatherModel_1 = require("./WeatherModel"),
+  CHANGE_WEATHER_SMOOTH_TIME = 10,
+  CHANGE_WEATHER_SMOOTH_TIME_QUICK = 1,
+  CHECKGAP = 300;
 class WeatherController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return this.OnAddEvents(), this.OnRegisterNetEvent(), this.CFe(), !0;
@@ -86,7 +86,7 @@ class WeatherController extends ControllerBase_1.ControllerBase {
     WeatherModel_1.WeatherModel.GetWorldWeatherActor().Destroy();
   }
   static RequestChangeWeather(e) {
-    const t = new Protocol_1.Aki.Protocol.q1s();
+    var t = new Protocol_1.Aki.Protocol.q1s();
     (t.PVn = e),
       Net_1.Net.Call(20738, t, (e) => {
         e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
@@ -135,7 +135,7 @@ class WeatherController extends ControllerBase_1.ControllerBase {
   }),
   (WeatherController.JOo = () => {
     ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() ||
-      ModelManager_1.ModelManager.WeatherModel.CurrentWeatherId === 0 ||
+      0 === ModelManager_1.ModelManager.WeatherModel.CurrentWeatherId ||
       WeatherModel_1.WeatherModel.GetWorldWeatherActor().ChangeWeather(
         ModelManager_1.ModelManager.WeatherModel.CurrentWeatherId,
         0,
@@ -154,4 +154,4 @@ class WeatherController extends ControllerBase_1.ControllerBase {
             CHANGE_WEATHER_SMOOTH_TIME,
           );
   });
-// # sourceMappingURL=WeatherController.js.map
+//# sourceMappingURL=WeatherController.js.map

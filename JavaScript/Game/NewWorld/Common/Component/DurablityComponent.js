@@ -1,27 +1,31 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, n) {
-    let o;
-    const r = arguments.length;
-    let s =
-      r < 3 ? e : n === null ? (n = Object.getOwnPropertyDescriptor(e, i)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      r = arguments.length,
+      s =
+        r < 3
+          ? e
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(e, i))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(t, e, i, n);
     else
-      for (let h = t.length - 1; h >= 0; h--)
-        (o = t[h]) && (s = (r < 3 ? o(s) : r > 3 ? o(e, i, s) : o(e, i)) || s);
-    return r > 3 && s && Object.defineProperty(e, i, s), s;
+      for (var h = t.length - 1; 0 <= h; h--)
+        (o = t[h]) && (s = (r < 3 ? o(s) : 3 < r ? o(e, i, s) : o(e, i)) || s);
+    return 3 < r && s && Object.defineProperty(e, i, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DurabilityComponent = void 0);
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
+const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager");
 let DurabilityComponent = class DurabilityComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -32,17 +36,14 @@ let DurabilityComponent = class DurabilityComponent extends EntityComponent_1.En
       (this.DeadActions = void 0);
   }
   get IsDestroyed() {
-    return this.ac >= 1;
+    return 1 <= this.ac;
   }
   OnInit() {
     (this.zht = this.Entity.GetComponent(0)),
       (this.ac = 0),
       (this.ect = void 0);
-    var t = this.zht.GetPbEntityInitData();
-    var t = (0, IComponent_1.getComponent)(
-      t.ComponentsData,
-      "DestructibleItem",
-    );
+    var t = this.zht.GetPbEntityInitData(),
+      t = (0, IComponent_1.getComponent)(t.ComponentsData, "DestructibleItem");
     return (
       t.DurabilityStateConfig?.NonDestructable ||
         (this.DeadActions = t.DestructionActions),
@@ -82,8 +83,8 @@ let DurabilityComponent = class DurabilityComponent extends EntityComponent_1.En
     );
   }
   dnn() {
-    this.ac !== 0 ||
-      this.zht.GetDurabilityValue() > 0 ||
+    0 !== this.ac ||
+      0 < this.zht.GetDurabilityValue() ||
       (EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnSceneItemDestroy,
         this.Entity,
@@ -96,4 +97,4 @@ let DurabilityComponent = class DurabilityComponent extends EntityComponent_1.En
   DurabilityComponent,
 )),
   (exports.DurabilityComponent = DurabilityComponent);
-// # sourceMappingURL=DurablityComponent.js.map
+//# sourceMappingURL=DurablityComponent.js.map

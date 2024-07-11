@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TemporaryTeleportMarkItem = void 0);
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const TemporaryTeleportMarkItemView_1 = require("../MarkItemView/TemporaryTeleportMarkItemView");
-const ServerMarkItem_1 = require("./ServerMarkItem");
+const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  TemporaryTeleportMarkItemView_1 = require("../MarkItemView/TemporaryTeleportMarkItemView"),
+  ServerMarkItem_1 = require("./ServerMarkItem");
 class TemporaryTeleportMarkItem extends ServerMarkItem_1.ServerMarkItem {
   constructor(e, r, t, i) {
     super(e, r, t, i),
@@ -20,7 +20,7 @@ class TemporaryTeleportMarkItem extends ServerMarkItem_1.ServerMarkItem {
   }
   Initialize() {
     super.Initialize();
-    const e = this.ServerMarkInfo;
+    var e = this.ServerMarkInfo;
     this.SetTrackData(e.TrackTarget),
       this.SetConfigId(this.ConfigId),
       this.UpdateTrackState();
@@ -43,14 +43,14 @@ class TemporaryTeleportMarkItem extends ServerMarkItem_1.ServerMarkItem {
     this.NLi = e;
   }
   GetTitleText() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.MapConfig.GetTemporaryTeleportMarkConfigById(
         this.ConfigId,
       );
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.MarkTitle);
   }
   GetDescText() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.MapConfig.GetTemporaryTeleportMarkConfigById(
         this.ConfigId,
       );
@@ -58,4 +58,4 @@ class TemporaryTeleportMarkItem extends ServerMarkItem_1.ServerMarkItem {
   }
 }
 exports.TemporaryTeleportMarkItem = TemporaryTeleportMarkItem;
-// # sourceMappingURL=TemporaryTeleportMarkItem.js.map
+//# sourceMappingURL=TemporaryTeleportMarkItem.js.map

@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotViewHud = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const PlotTextLogic_1 = require("./PlotTextLogic");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  PlotTextLogic_1 = require("./PlotTextLogic");
 class PlotViewHud extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -71,7 +71,7 @@ class PlotViewHud extends UiViewBase_1.UiViewBase {
     ];
   }
   OnStart() {
-    const e = this.GetScrollView(8);
+    var e = this.GetScrollView(8);
     e?.SetCanScroll(!1),
       e?.SetRayCastTargetForScrollView(!1),
       (this.vZi = new PlotTextLogic_1.PlotTextCommonLogic(
@@ -89,7 +89,7 @@ class PlotViewHud extends UiViewBase_1.UiViewBase {
   }
   ZZi() {
     this.WZi();
-    const e =
+    var e =
       ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig.EndWaitTimeLevelD *
       CommonDefine_1.MILLIONSECOND_PER_SECOND;
     this.xNi = TimerSystem_1.TimerSystem.Delay(
@@ -173,30 +173,30 @@ class PlotViewHud extends UiViewBase_1.UiViewBase {
       ControllerHolder_1.ControllerHolder.FlowController.CountDownSkip(!1);
   }
   Ueo() {
-    let e;
-    const t = this.OpenParam;
+    var e,
+      t = this.OpenParam;
     t &&
       t.Position &&
       t.ViewName &&
-      t.ViewName !== "BattleView" &&
+      "BattleView" !== t.ViewName &&
       ((e = this.GetItem(4)),
-      t.Position === 3
+      3 === t.Position
         ? e.SetUIParent(this.GetItem(6))
-        : t.Position === 2
+        : 2 === t.Position
           ? e.SetUIParent(this.GetItem(7))
           : e.SetUIParent(this.GetItem(5)),
       e.SetAnchorOffsetX(0));
   }
   Reo() {
-    let e;
+    var e;
     ModelManager_1.ModelManager.PlatformModel?.IsMobile() ||
       ((e = this.OpenParam) &&
         e.TextWidth &&
         this.GetText(2)?.SetWidth(e.TextWidth));
   }
   Deo() {
-    let e;
-    const t = this.OpenParam;
+    var e,
+      t = this.OpenParam;
     t?.ViewName &&
       ((e = UiManager_1.UiManager.GetViewByName(t.ViewName))
         ? (e.AddChild(this),
@@ -232,4 +232,4 @@ class PlotViewHud extends UiViewBase_1.UiViewBase {
   }
 }
 exports.PlotViewHud = PlotViewHud;
-// # sourceMappingURL=PlotViewHud.js.map
+//# sourceMappingURL=PlotViewHud.js.map

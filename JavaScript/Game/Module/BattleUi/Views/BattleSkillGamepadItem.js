@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleSkillGamepadItem = void 0);
-const InputEnums_1 = require("../../../Input/InputEnums");
-const InputSettingsManager_1 = require("../../../InputSettings/InputSettingsManager");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const BattleSkillItem_1 = require("./BattleSkillItem");
-const BattleSkillSecondCdItem_1 = require("./BattleSkillSecondCdItem");
-const MAIN_KEY_NUM = 4;
+const InputEnums_1 = require("../../../Input/InputEnums"),
+  InputSettingsManager_1 = require("../../../InputSettings/InputSettingsManager"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  BattleSkillItem_1 = require("./BattleSkillItem"),
+  BattleSkillSecondCdItem_1 = require("./BattleSkillSecondCdItem"),
+  MAIN_KEY_NUM = 4;
 class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
   constructor() {
     super(...arguments),
@@ -40,7 +40,7 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
     super.Tick(t), this.jet?.Tick(t);
   }
   Refresh(t) {
-    const i = void 0 !== this.SkillButtonData || void 0 !== this.Vet;
+    var i = void 0 !== this.SkillButtonData || void 0 !== this.Vet;
     (this.Vet = void 0),
       t
         ? (this.SkillButtonData !== t &&
@@ -110,7 +110,7 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
   RefreshSkillIcon() {
     this.Vet
       ? this.SetSkillIcon(this.Vet.SkillIconPathList[this.Vet.State])
-      : this.GamepadData.InWater && this.SkillButtonData?.GetButtonType() === 5
+      : this.GamepadData.InWater && 5 === this.SkillButtonData?.GetButtonType()
         ? this.SetSkillIcon(this.GamepadData.SwimIcon)
         : super.RefreshSkillIcon();
   }
@@ -118,14 +118,14 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
     return (
       !(
         this.GamepadData.GetIsPressCombineButton() &&
-        (this.HSe === "Gamepad_LeftTrigger" ||
-          this.HSe === "Gamepad_RightTrigger") &&
+        ("Gamepad_LeftTrigger" === this.HSe ||
+          "Gamepad_RightTrigger" === this.HSe) &&
         !this.GamepadData.IsAim()
       ) &&
       (this.Vet
         ? this.Vet.IsVisible
         : !(
-            this.SkillButtonData?.GetButtonType() !== 11 ||
+            11 !== this.SkillButtonData?.GetButtonType() ||
             !this.GamepadData.IsAim()
           ) || super.IsVisible())
     );
@@ -152,11 +152,11 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
       ) {
         let t = 0;
         i === InputMappingsDefine_1.actionMappings.攻击 &&
-          this.HSe === "Gamepad_RightTrigger" &&
+          "Gamepad_RightTrigger" === this.HSe &&
           (s =
             InputSettingsManager_1.InputSettingsManager.GetActionBinding(i)) &&
           (s.GetGamepadKeyNameList((s = [])), s) &&
-          s.length > 0 &&
+          0 < s.length &&
           (t = s.indexOf(this.HSe)) < 0 &&
           (t = 0);
         var s = { ActionOrAxisName: i, Index: t };
@@ -197,4 +197,4 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
   }
 }
 exports.BattleSkillGamepadItem = BattleSkillGamepadItem;
-// # sourceMappingURL=BattleSkillGamepadItem.js.map
+//# sourceMappingURL=BattleSkillGamepadItem.js.map

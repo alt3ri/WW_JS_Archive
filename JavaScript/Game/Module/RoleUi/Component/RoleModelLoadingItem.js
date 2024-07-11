@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleModelLoadingItem = void 0);
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class RoleModelLoadingItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments), (this.clo = !0), (this.TDe = void 0), (this.R2e = !0);
@@ -33,4 +33,4 @@ class RoleModelLoadingItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleModelLoadingItem = RoleModelLoadingItem;
-// # sourceMappingURL=RoleModelLoadingItem.js.map
+//# sourceMappingURL=RoleModelLoadingItem.js.map

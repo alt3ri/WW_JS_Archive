@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CreateCharacterView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const TextInputComponent_1 = require("../../Common/InputView/View/TextInputComponent");
-const LoginDefine_1 = require("../../Login/Data/LoginDefine");
-const LoginController_1 = require("../../Login/LoginController");
-const UiLoginSceneManager_1 = require("../../UiComponent/UiLoginSceneManager");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  TextInputComponent_1 = require("../../Common/InputView/View/TextInputComponent"),
+  LoginDefine_1 = require("../../Login/Data/LoginDefine"),
+  LoginController_1 = require("../../Login/LoginController"),
+  UiLoginSceneManager_1 = require("../../UiComponent/UiLoginSceneManager");
 class CreateCharacterView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -82,7 +82,7 @@ class CreateCharacterView extends UiViewBase_1.UiViewBase {
       ]);
   }
   hOt(e) {
-    let i;
+    var i;
     this.iOt !== e &&
       ((i = this.iOt),
       (this.iOt = e),
@@ -151,7 +151,7 @@ class CreateCharacterView extends UiViewBase_1.UiViewBase {
     );
   }
   MOt() {
-    const e = {
+    var e = {
       ConfirmFunc: this.mOt,
       ResultFunc: this.dOt,
       InputText: "",
@@ -161,16 +161,16 @@ class CreateCharacterView extends UiViewBase_1.UiViewBase {
   }
   SOt() {
     var e = new GenderButton(
-      this.GetButton(2),
-      this.rOt[LoginDefine_1.ELoginSex.Girl],
-    );
-    var e =
-      (e.BindFunction(),
-      this.nOt.push(e),
-      new GenderButton(
-        this.GetButton(1),
-        this.rOt[LoginDefine_1.ELoginSex.Boy],
-      ));
+        this.GetButton(2),
+        this.rOt[LoginDefine_1.ELoginSex.Girl],
+      ),
+      e =
+        (e.BindFunction(),
+        this.nOt.push(e),
+        new GenderButton(
+          this.GetButton(1),
+          this.rOt[LoginDefine_1.ELoginSex.Boy],
+        ));
     e.BindFunction(), this.nOt.push(e);
   }
   OnBeforeDestroy() {
@@ -266,4 +266,4 @@ class GenderButton {
       this.VCt.OnPointExitCallBack.Unbind();
   }
 }
-// # sourceMappingURL=CreateCharacterView.js.map
+//# sourceMappingURL=CreateCharacterView.js.map

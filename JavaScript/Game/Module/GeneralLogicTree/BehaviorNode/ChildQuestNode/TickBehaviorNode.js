@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TickBehaviorNode = void 0);
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
+const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
 class TickBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   constructor() {
     super(...arguments),
@@ -28,4 +28,4 @@ class TickBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   OnTick(e) {}
 }
 exports.TickBehaviorNode = TickBehaviorNode;
-// # sourceMappingURL=TickBehaviorNode.js.map
+//# sourceMappingURL=TickBehaviorNode.js.map

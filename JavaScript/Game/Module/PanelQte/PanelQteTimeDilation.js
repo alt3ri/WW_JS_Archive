@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PanelQteTimeDilation = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
+const Log_1 = require("../../../Core/Common/Log"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem");
 class PanelQteTimeDilation {
   constructor() {
     (this.RNi = 0), (this.UNi = 0);
@@ -14,7 +14,7 @@ class PanelQteTimeDilation {
   Clear() {}
   Start(t) {
     (this.RNi = t.Config.WorldTimeDilation),
-      this.RNi >= 1 || this.RNi < 0
+      1 <= this.RNi || this.RNi < 0
         ? (this.RNi = 1)
         : (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("PanelQte", 18, "界面QTE时停开始"),
@@ -24,7 +24,7 @@ class PanelQteTimeDilation {
           ));
   }
   Stop() {
-    this.RNi !== 1 &&
+    1 !== this.RNi &&
       ((this.RNi = 1),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("PanelQte", 18, "界面QTE时停结束"),
@@ -41,4 +41,4 @@ class PanelQteTimeDilation {
   }
 }
 exports.PanelQteTimeDilation = PanelQteTimeDilation;
-// # sourceMappingURL=PanelQteTimeDilation.js.map
+//# sourceMappingURL=PanelQteTimeDilation.js.map

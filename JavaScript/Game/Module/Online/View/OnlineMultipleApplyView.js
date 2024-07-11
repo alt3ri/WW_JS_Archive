@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OnlineMultipleApplyView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const OnlineMultipleApplyItem_1 = require("./OnlineMultipleApplyItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  OnlineMultipleApplyItem_1 = require("./OnlineMultipleApplyItem");
 class OnlineMultipleApplyView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -16,7 +16,7 @@ class OnlineMultipleApplyView extends UiTickViewBase_1.UiTickViewBase {
       (this.oNi = () =>
         new OnlineMultipleApplyItem_1.OnlineMultipleApplyItem()),
       (this.rNi = () => {
-        const e = ModelManager_1.ModelManager.OnlineModel.GetCurrentApplyList();
+        var e = ModelManager_1.ModelManager.OnlineModel.GetCurrentApplyList();
         e.length <= 0 &&
           UiManager_1.UiManager.CloseView("OnlineMultipleApplyView"),
           this.bGi.ReloadData(e);
@@ -45,7 +45,7 @@ class OnlineMultipleApplyView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnTick(e) {
     if (!(this.bGi.IZt < 0)) {
-      const i = this.bGi.GetDisplayGridNum();
+      var i = this.bGi.GetDisplayGridNum();
       for (let e = this.bGi.IZt; e < i; e++)
         this.bGi.UnsafeGetGridProxy(e)?.UpdateCountDownProgressBar();
     }
@@ -59,11 +59,11 @@ class OnlineMultipleApplyView extends UiTickViewBase_1.UiTickViewBase {
     );
   }
   nNi() {
-    const e = this.GetLoopScrollViewComponent(0);
-    const i = this.GetItem(1).GetOwner();
+    var e = this.GetLoopScrollViewComponent(0),
+      i = this.GetItem(1).GetOwner();
     (this.bGi = new LoopScrollView_1.LoopScrollView(e, i, this.oNi)),
       this.RefreshLoopScrollView();
   }
 }
 exports.OnlineMultipleApplyView = OnlineMultipleApplyView;
-// # sourceMappingURL=OnlineMultipleApplyView.js.map
+//# sourceMappingURL=OnlineMultipleApplyView.js.map

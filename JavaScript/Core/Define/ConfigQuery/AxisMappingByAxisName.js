@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configAxisMappingByAxisName = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const AxisMapping_1 = require("../Config/AxisMapping");
-const DB = "db_input_settings.db";
-const FILE = "s.输入配置.xlsx";
-const TABLE = "AxisMapping";
-const COMMAND = "select BinData from `AxisMapping` where AxisName=?";
-const KEY_PREFIX = "AxisMappingByAxisName";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  AxisMapping_1 = require("../Config/AxisMapping"),
+  DB = "db_input_settings.db",
+  FILE = "s.输入配置.xlsx",
+  TABLE = "AxisMapping",
+  COMMAND = "select BinData from `AxisMapping` where AxisName=?",
+  KEY_PREFIX = "AxisMappingByAxisName",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configAxisMappingByAxisName.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configAxisMappingByAxisName.GetConfig(";
 exports.configAxisMappingByAxisName = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configAxisMappingByAxisName = {
       if (
         (e =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, i, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "AxisName",
-            i,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "AxisName",
+              i,
+            ]))
       ) {
-        var e;
-        var n = void 0;
+        var e,
+          n = void 0;
         if (
           (([e, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configAxisMappingByAxisName = {
     }
   },
 };
-// # sourceMappingURL=AxisMappingByAxisName.js.map
+//# sourceMappingURL=AxisMappingByAxisName.js.map

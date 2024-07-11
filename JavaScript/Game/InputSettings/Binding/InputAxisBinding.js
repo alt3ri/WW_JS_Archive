@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputAxisBinding = void 0);
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const InputSettings_1 = require("../InputSettings");
+const EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  InputSettings_1 = require("../InputSettings");
 class InputAxisBinding {
   constructor() {
     (this.sSe = void 0),
@@ -27,7 +27,7 @@ class InputAxisBinding {
     return InputSettings_1.InputSettings.GetInputAxisKeyMap(this.sSe);
   }
   GetCurrentPlatformKey() {
-    const t = ModelManager_1.ModelManager.PlatformModel;
+    var t = ModelManager_1.ModelManager.PlatformModel;
     return t.IsPc()
       ? this.GetPcKey()
       : t.IsGamepad()
@@ -35,13 +35,13 @@ class InputAxisBinding {
         : void 0;
   }
   GetCurrentPlatformKeyNameList(t) {
-    const e = ModelManager_1.ModelManager.PlatformModel;
+    var e = ModelManager_1.ModelManager.PlatformModel;
     e.IsPc()
       ? this.GetPcKeyNameList(t)
       : e.IsGamepad() && this.GetGamepadKeyNameList(t);
   }
   GetCurrentPlatformKeyByIndex(t) {
-    const e = ModelManager_1.ModelManager.PlatformModel;
+    var e = ModelManager_1.ModelManager.PlatformModel;
     return e.IsPc()
       ? this.GetPcKeyByIndex(t)
       : e.IsGamepad()
@@ -83,7 +83,7 @@ class InputAxisBinding {
     return InputSettings_1.InputSettings.GetInputAxisKeyMap(this.sSe).has(t);
   }
   GetKey(t) {
-    const e = [];
+    var e = [];
     for (const i of InputSettings_1.InputSettings.GetInputAxisKeyMap(
       this.sSe,
     ).values())
@@ -102,8 +102,8 @@ class InputAxisBinding {
   }
   RefreshKeys(e) {
     this.rSe.length = 0;
-    for (let t = e.Num() - 1; t >= 0; t--) {
-      const i = e.Get(t).Key.KeyName.toString();
+    for (let t = e.Num() - 1; 0 <= t; t--) {
+      var i = e.Get(t).Key.KeyName.toString();
       this.rSe.push(i);
     }
     this.nSe(),
@@ -113,7 +113,7 @@ class InputAxisBinding {
       );
   }
   AddKeys(t) {
-    for (const [e, i] of t)
+    for (var [e, i] of t)
       InputSettings_1.InputSettings.AddAxisMapping(this.sSe, e, i),
         this.rSe.push(e);
     this.nSe();
@@ -121,7 +121,7 @@ class InputAxisBinding {
   RemoveKeys(t) {
     for (const i of t) {
       InputSettings_1.InputSettings.RemoveAxisMapping(this.sSe, i);
-      const e = this.rSe.indexOf(i);
+      var e = this.rSe.indexOf(i);
       this.rSe.splice(e, 1);
     }
     this.nSe();
@@ -149,7 +149,7 @@ class InputAxisBinding {
       this.rSe)
     ) {
       this.rSe.sort((t, e) => {
-        let i =
+        var i =
           InputSettings_1.InputSettings.IsKeyboardKey(t) ||
           InputSettings_1.InputSettings.IsMouseButton(t);
         return i !==
@@ -163,7 +163,7 @@ class InputAxisBinding {
           : 0;
       });
       for (const e of this.rSe) {
-        const t = InputSettings_1.InputSettings.GetKey(e);
+        var t = InputSettings_1.InputSettings.GetKey(e);
         t &&
           (t.IsKeyboardKey || t.IsMouseButton
             ? this.tSe.push(t.GetKeyName())
@@ -173,4 +173,4 @@ class InputAxisBinding {
   }
 }
 exports.InputAxisBinding = InputAxisBinding;
-// # sourceMappingURL=InputAxisBinding.js.map
+//# sourceMappingURL=InputAxisBinding.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleSkillNumItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class BattleSkillNumItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -20,14 +20,14 @@ class BattleSkillNumItem extends UiPanelBase_1.UiPanelBase {
     for (const t of this.nit.values()) t();
   }
   SetComponentActive(t) {
-    const e = () => {
+    var e = () => {
       this.SetActive(t);
     };
     this.InAsyncLoading() ? this.nit.set("SetActive", e) : e();
   }
   SetTotalCount(t) {}
   SetRemainingCount(t) {
-    const e = () => {
+    var e = () => {
       this.rit !== t && (this.GetText(1).SetText(t.toString()), (this.rit = t));
     };
     this.InAsyncLoading() ? this.nit.set("SetRemainingCount", e) : e();
@@ -36,4 +36,4 @@ class BattleSkillNumItem extends UiPanelBase_1.UiPanelBase {
   RefreshTotalCount(t) {}
 }
 exports.BattleSkillNumItem = BattleSkillNumItem;
-// # sourceMappingURL=BattleSkillNumItem.js.map
+//# sourceMappingURL=BattleSkillNumItem.js.map

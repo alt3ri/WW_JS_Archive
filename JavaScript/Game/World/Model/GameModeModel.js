@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameModeModel = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const LogProfiler_1 = require("../../../Core/Common/LogProfiler");
-const InstanceDungeonById_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const GlobalData_1 = require("../../GlobalData");
-const GameModePromise_1 = require("../Define/GameModePromise");
-const LoadLevelDefine_1 = require("../Define/LoadLevelDefine");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const WorldDefine_1 = require("../Define/WorldDefine");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  LogProfiler_1 = require("../../../Core/Common/LogProfiler"),
+  InstanceDungeonById_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  GlobalData_1 = require("../../GlobalData"),
+  GameModePromise_1 = require("../Define/GameModePromise"),
+  LoadLevelDefine_1 = require("../Define/LoadLevelDefine"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  WorldDefine_1 = require("../Define/WorldDefine");
 class GameModeModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -121,7 +121,7 @@ class GameModeModel extends ModelBase_1.ModelBase {
     this.hMr = e;
   }
   get Loading() {
-    return this.hMr > 1;
+    return 1 < this.hMr;
   }
   get HasGameModeData() {
     return this.kvr;
@@ -143,7 +143,7 @@ class GameModeModel extends ModelBase_1.ModelBase {
   }
   AddLoadMapHandle(e) {
     this.Vvr || (this.Vvr = new Map());
-    let t = this.Vvr.get(e);
+    var t = this.Vvr.get(e);
     return (
       t ? this.Vvr.set(e, ++t) : this.Vvr.set(e, 1),
       Log_1.Log.CheckInfo() &&
@@ -158,7 +158,7 @@ class GameModeModel extends ModelBase_1.ModelBase {
     );
   }
   RemoveLoadMapHandle(e) {
-    let t;
+    var t;
     return this.Vvr?.has(e)
       ? ((t = this.Vvr.get(e)),
         --t ? this.Vvr.set(e, t) : this.Vvr.delete(e),
@@ -182,7 +182,7 @@ class GameModeModel extends ModelBase_1.ModelBase {
         !1);
   }
   get MapDone() {
-    return !!this.Vvr && this.Vvr.size === 0;
+    return !!this.Vvr && 0 === this.Vvr.size;
   }
   get NavMeshDone() {
     return this.Hvr;
@@ -305,31 +305,31 @@ class GameModeModel extends ModelBase_1.ModelBase {
     return this.uMr;
   }
   static c9s(e, t, i) {
-    const s = ActorSystem_1.ActorSystem.Get(UE.Actor.StaticClass(), e);
-    const o =
-      (s.AddComponentByClass(
-        UE.SceneComponent.StaticClass(),
-        !1,
-        MathUtils_1.MathUtils.DefaultTransform,
-        !1,
-      ),
-      s.K2_SetActorLocation(e.GetLocation(), !1, void 0, !1),
-      s.AddComponentByClass(
-        UE.WorldPartitionStreamingSourceComponent.StaticClass(),
-        !1,
-        MathUtils_1.MathUtils.DefaultTransform,
-        !1,
-      ));
+    var s = ActorSystem_1.ActorSystem.Get(UE.Actor.StaticClass(), e),
+      o =
+        (s.AddComponentByClass(
+          UE.SceneComponent.StaticClass(),
+          !1,
+          MathUtils_1.MathUtils.DefaultTransform,
+          !1,
+        ),
+        s.K2_SetActorLocation(e.GetLocation(), !1, void 0, !1),
+        s.AddComponentByClass(
+          UE.WorldPartitionStreamingSourceComponent.StaticClass(),
+          !1,
+          MathUtils_1.MathUtils.DefaultTransform,
+          !1,
+        ));
     if (((o.TargetBehavior = t), i)) for (const r of i) o.TargetGrids.Add(r);
     return o.DisableStreamingSource(), s;
   }
   InitStreamingSources() {
-    const e = new UE.Transform(
-      this.BornRotator,
-      this.BornLocation,
-      new UE.Vector(1, 1, 1),
-    );
-    const t = [WorldDefine_1.VOXEL_GRID_NAME];
+    var e = new UE.Transform(
+        this.BornRotator,
+        this.BornLocation,
+        new UE.Vector(1, 1, 1),
+      ),
+      t = [WorldDefine_1.VOXEL_GRID_NAME];
     (this.u9s = GameModeModel.c9s(e, 0, t)),
       (this.$vr = GameModeModel.c9s(e, 1, t)),
       Log_1.Log.CheckInfo() &&
@@ -350,7 +350,7 @@ class GameModeModel extends ModelBase_1.ModelBase {
     this.uMr.Set(e.X, e.Y, e.Z);
   }
   AddSubLevel(e) {
-    let t;
+    var t;
     if (!this.SubLevelMap.has(e))
       return (
         (t = new LoadLevelDefine_1.SubLevel(e)), this.SubLevelMap.set(e, t), t
@@ -385,7 +385,7 @@ class GameModeModel extends ModelBase_1.ModelBase {
           ["Path", e],
         );
     else {
-      let t;
+      var t;
       if (!this.SubLevelMap.has(e))
         return (
           (t = new LoadLevelDefine_1.SubLevel(e)),
@@ -408,7 +408,7 @@ class GameModeModel extends ModelBase_1.ModelBase {
     return this.PreloadLevelMap.get(e);
   }
   async RemoveSubLevel(e) {
-    let t, i, s;
+    var t, i, s;
     return this.SubLevelMap.has(e)
       ? ((t = this.SubLevelMap.get(e)),
         this.SubLevelMap.delete(e),
@@ -569,9 +569,9 @@ class GameModeModel extends ModelBase_1.ModelBase {
       (ActorSystem_1.ActorSystem.Put(this.u9s), (this.u9s = void 0));
   }
   OnLeaveLevel() {
-    let e;
-    let t;
-    const i = new Array();
+    var e,
+      t,
+      i = new Array();
     for ([e] of this.PreloadLevelMap) i.push(e);
     for ([t] of this.SubLevelMap) i.push(t);
     for (const s of i) this.RemoveSubLevel(s);
@@ -608,4 +608,4 @@ class GameModeModel extends ModelBase_1.ModelBase {
   }
 }
 exports.GameModeModel = GameModeModel;
-// # sourceMappingURL=GameModeModel.js.map
+//# sourceMappingURL=GameModeModel.js.map

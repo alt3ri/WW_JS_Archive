@@ -19,4 +19,4 @@ class NpcRedDotFlowLogic {
   }
 }
 exports.NpcRedDotFlowLogic = NpcRedDotFlowLogic;
-// # sourceMappingURL=NpcRedDotFlowLogic.js.map
+//# sourceMappingURL=NpcRedDotFlowLogic.js.map

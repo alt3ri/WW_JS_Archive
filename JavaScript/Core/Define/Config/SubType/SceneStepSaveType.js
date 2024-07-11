@@ -1,5 +1,5 @@
 "use strict";
-let SceneStepSaveType;
+var SceneStepSaveType;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneStepSaveType = void 0),
   (function (e) {
@@ -11,4 +11,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     (SceneStepSaveType =
       exports.SceneStepSaveType || (exports.SceneStepSaveType = {})),
   );
-// # sourceMappingURL=SceneStepSaveType.js.map
+//# sourceMappingURL=SceneStepSaveType.js.map

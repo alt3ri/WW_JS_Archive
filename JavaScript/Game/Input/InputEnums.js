@@ -1,5 +1,5 @@
 "use strict";
-let EInputAction, EInputAxis;
+var EInputAction, EInputAxis;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EInputAxis = exports.EInputAction = void 0),
   (function (o) {
@@ -29,4 +29,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (o[(o.Zoom = 5)] = "Zoom"),
       (o[(o.WheelAxis = 6)] = "WheelAxis");
   })((EInputAxis = exports.EInputAxis || (exports.EInputAxis = {})));
-// # sourceMappingURL=InputEnums.js.map
+//# sourceMappingURL=InputEnums.js.map

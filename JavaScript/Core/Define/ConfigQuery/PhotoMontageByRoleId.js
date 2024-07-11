@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configPhotoMontageByRoleId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const PhotoMontage_1 = require("../Config/PhotoMontage");
-const DB = "db_photograph.db";
-const FILE = "p.拍照.xlsx";
-const TABLE = "PhotoMontage";
-const COMMAND = "select BinData from `PhotoMontage` where RoleId=?";
-const KEY_PREFIX = "PhotoMontageByRoleId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  PhotoMontage_1 = require("../Config/PhotoMontage"),
+  DB = "db_photograph.db",
+  FILE = "p.拍照.xlsx",
+  TABLE = "PhotoMontage",
+  COMMAND = "select BinData from `PhotoMontage` where RoleId=?",
+  KEY_PREFIX = "PhotoMontageByRoleId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX = "configPhotoMontageByRoleId.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configPhotoMontageByRoleId.GetConfigList(";
 exports.configPhotoMontageByRoleId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -29,7 +29,7 @@ exports.configPhotoMontageByRoleId = {
     );
   },
   GetConfigList: (o, n = !0) => {
-    let e;
+    var e;
     if (
       (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -44,13 +44,14 @@ exports.configPhotoMontageByRoleId = {
         const r = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "RoleId",
               o,
-            ]) !== 1
+            ])
           )
             break;
-          let t = void 0;
+          var t = void 0;
           if (
             (([e, t] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -78,4 +79,4 @@ exports.configPhotoMontageByRoleId = {
     }
   },
 };
-// # sourceMappingURL=PhotoMontageByRoleId.js.map
+//# sourceMappingURL=PhotoMontageByRoleId.js.map

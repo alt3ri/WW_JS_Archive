@@ -1,32 +1,32 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MonsterDetectView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const ConditionGroupById_1 = require("../../../../Core/Define/ConfigQuery/ConditionGroupById");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const TextById_1 = require("../../../../Core/Define/ConfigQuery/TextById");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const FilterSortEntrance_1 = require("../../Common/FilterSort/FilterSortEntrance");
-const CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const HelpController_1 = require("../../Help/HelpController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const AdventureDefine_1 = require("../AdventureDefine");
-const AdventureGuideController_1 = require("../AdventureGuideController");
-const MonsterDetectItem_1 = require("./MonsterDetectItem");
-const MONSTER_HELP = 17;
-const LEFT_TIME_HELP = 72;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  ConditionGroupById_1 = require("../../../../Core/Define/ConfigQuery/ConditionGroupById"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  TextById_1 = require("../../../../Core/Define/ConfigQuery/TextById"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  FilterSortEntrance_1 = require("../../Common/FilterSort/FilterSortEntrance"),
+  CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  HelpController_1 = require("../../Help/HelpController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  AdventureDefine_1 = require("../AdventureDefine"),
+  AdventureGuideController_1 = require("../AdventureGuideController"),
+  MonsterDetectItem_1 = require("./MonsterDetectItem"),
+  MONSTER_HELP = 17,
+  LEFT_TIME_HELP = 72;
 class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -59,51 +59,51 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
           (this.UVe = t),
           (this.DVe = e);
         var t =
-          ModelManager_1.ModelManager.AdventureGuideModel.GetMonsterDetectData(
-            e,
-          );
-        const i =
-          ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterInfoConfig(
-            t.Conf.MonsterInfoId,
-          ).Name;
-        var r = {
-          Data: [{ IncId: 0, ItemId: t.Conf.MonsterInfoId }, 1],
-          Type: 3,
-          BottomText: "",
-          IsNotFoundVisible: t.IsLock,
-          IsSelectedFlag: !1,
-          MonsterId: t.Conf.MonsterInfoId,
-          IsQualityHidden: !0,
-          IconHidden: t.IsLock,
-        };
-        var r =
-          (this.bVe?.Apply(r),
-          this.bVe?.SetToggleInteractive(!1),
-          MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-            TextById_1.configTextById.GetConfig(
-              AdventureGuideController_1.DETECT,
-            ).Text,
-          ));
-        var r =
-          (this.AVe.SetText(r),
-          t.IsLock
-            ? (LguiUtil_1.LguiUtil.SetLocalText(
-                this.GetText(4),
-                AdventureGuideController_1.UNKNOWNTEXT,
-              ),
-              LguiUtil_1.LguiUtil.SetLocalTextNew(
-                this.GetText(5),
-                t.Conf.AttributesDescriptionLock,
-              ))
-            : (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), i),
-              LguiUtil_1.LguiUtil.SetLocalTextNew(
-                this.GetText(5),
-                t.Conf.AttributesDescriptionUnlock,
-              ),
-              this.GVe()),
-          ConfigManager_1.ConfigManager.AdventureModuleConfig.GetSecondaryGuideDataConf(
-            t.Conf.DangerType,
-          ));
+            ModelManager_1.ModelManager.AdventureGuideModel.GetMonsterDetectData(
+              e,
+            ),
+          i =
+            ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterInfoConfig(
+              t.Conf.MonsterInfoId,
+            ).Name,
+          r = {
+            Data: [{ IncId: 0, ItemId: t.Conf.MonsterInfoId }, 1],
+            Type: 3,
+            BottomText: "",
+            IsNotFoundVisible: t.IsLock,
+            IsSelectedFlag: !1,
+            MonsterId: t.Conf.MonsterInfoId,
+            IsQualityHidden: !0,
+            IconHidden: t.IsLock,
+          },
+          r =
+            (this.bVe?.Apply(r),
+            this.bVe?.SetToggleInteractive(!1),
+            MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+              TextById_1.configTextById.GetConfig(
+                AdventureGuideController_1.DETECT,
+              ).Text,
+            )),
+          r =
+            (this.AVe.SetText(r),
+            t.IsLock
+              ? (LguiUtil_1.LguiUtil.SetLocalText(
+                  this.GetText(4),
+                  AdventureGuideController_1.UNKNOWNTEXT,
+                ),
+                LguiUtil_1.LguiUtil.SetLocalTextNew(
+                  this.GetText(5),
+                  t.Conf.AttributesDescriptionLock,
+                ))
+              : (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), i),
+                LguiUtil_1.LguiUtil.SetLocalTextNew(
+                  this.GetText(5),
+                  t.Conf.AttributesDescriptionUnlock,
+                ),
+                this.GVe()),
+            ConfigManager_1.ConfigManager.AdventureModuleConfig.GetSecondaryGuideDataConf(
+              t.Conf.DangerType,
+            ));
         LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(11),
           ConfigManager_1.ConfigManager.AdventureModuleConfig.GetSecondaryGuideDataTextById(
@@ -119,7 +119,7 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
           );
       }),
       (this.OVe = (e) => {
-        const t = new Array();
+        var t = new Array();
         for (const i of e) t.push(i);
         this.kVe(t);
       }),
@@ -139,7 +139,7 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
               "DungeonDetection",
             );
           else {
-            let t =
+            var t =
               ModelManager_1.ModelManager.AdventureGuideModel.GetAllDetectMonsters().get(
                 this.DVe,
               );
@@ -211,7 +211,7 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
       this.GetLoopScrollViewComponent(7),
       this.GetItem(2).GetOwner(),
       () => {
-        const e = new MonsterDetectItem_1.MonsterDetectItem();
+        var e = new MonsterDetectItem_1.MonsterDetectItem();
         return e.BindCallback(this.RefreshByDetectingId), e;
       },
     )),
@@ -232,7 +232,7 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
       (this.DVe =
         ModelManager_1.ModelManager.AdventureGuideModel.GetCurDetectingMonsterConfId()),
       (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.CalabashConfig.GetIntensifyCaptureGuarantee() -
       ModelManager_1.ModelManager.CalabashModel.GetIdentifyGuaranteeCount();
     LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -242,10 +242,10 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
     );
   }
   OnBeforeShow() {
-    var e = this.ExtraParams;
-    var e = e[0] === "MonsterDetectView" ? e[1] : void 0;
+    var e = this.ExtraParams,
+      e = "MonsterDetectView" === e[0] ? e[1] : void 0;
     let t = void 0;
-    void 0 !== e && (e > 0 ? (t = Number(e)) : (this.xVe = -Number(e))),
+    void 0 !== e && (0 < e ? (t = Number(e)) : (this.xVe = -Number(e))),
       (this.PVe = t),
       (ModelManager_1.ModelManager.AdventureGuideModel.CurrentMonsterId = t),
       Log_1.Log.CheckDebug() &&
@@ -277,7 +277,7 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
     this.LVe.length = 0;
     for (const t of e)
       this.LVe.push(t),
-        this.PVe !== -1 && this.PVe === t.Conf.Id && (this.PVe = -1);
+        -1 !== this.PVe && this.PVe === t.Conf.Id && (this.PVe = -1);
     ModelManager_1.ModelManager.AdventureGuideModel.CurrentMonsterId ||
       ((e = this.HVe()),
       (ModelManager_1.ModelManager.AdventureGuideModel.CurrentMonsterId = e));
@@ -293,17 +293,17 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
     );
   }
   HVe() {
-    const e = this.xVe;
-    const t = ((this.xVe = void 0), this.LVe[0].Conf.Id);
+    var e = this.xVe,
+      t = ((this.xVe = void 0), this.LVe[0].Conf.Id);
     if (void 0 !== e)
       for (const i of this.LVe)
         if (!i.IsLock && i.Conf.DangerType === e) return i.Conf.Id;
     return t;
   }
   GVe() {
-    let e;
-    let t;
-    let i = this.GetCurrentId();
+    var e,
+      t,
+      i = this.GetCurrentId();
     i &&
       (i =
         ModelManager_1.ModelManager.AdventureGuideModel.GetMonsterDetectData(
@@ -324,18 +324,18 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
     this.GVe();
   }
   NVe(e, t) {
-    const i =
-      ConfigManager_1.ConfigManager.AdventureModuleConfig.GetDropShowInfo(e);
-    const r = new Array();
+    var i =
+        ConfigManager_1.ConfigManager.AdventureModuleConfig.GetDropShowInfo(e),
+      r = new Array();
     for (const n of i.keys()) {
-      const o = [{ IncId: 0, ItemId: n }, i.get(n)];
+      var o = [{ IncId: 0, ItemId: n }, i.get(n)];
       r.push(o);
     }
     this.DFe.RefreshByData(r);
   }
   JumpToTarget(e) {
-    let t = 0;
-    let i = !1;
+    let t = 0,
+      i = !1;
     for (const r of this.LVe) {
       if (e === r.Conf.Id) {
         this.TVe.DeselectCurrentGridProxy(),
@@ -355,4 +355,4 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.MonsterDetectView = MonsterDetectView;
-// # sourceMappingURL=MonsterDetectView.js.map
+//# sourceMappingURL=MonsterDetectView.js.map

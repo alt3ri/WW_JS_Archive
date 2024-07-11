@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraHookController = void 0);
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CameraControllerBase_1 = require("./CameraControllerBase");
+const Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CameraControllerBase_1 = require("./CameraControllerBase");
 class CameraHookController extends CameraControllerBase_1.CameraControllerBase {
   constructor() {
     super(...arguments),
@@ -24,7 +24,7 @@ class CameraHookController extends CameraControllerBase_1.CameraControllerBase {
     (this.U_e = t), (this.WI = !0), this.w_e();
   }
   ExitCameraHook(t = !0) {
-    (this.WI = !1), this.f_e !== 0 && this.B_e(t);
+    (this.WI = !1), 0 !== this.f_e && this.B_e(t);
   }
   w_e() {
     this.ResetBreakModifyInfo(),
@@ -55,16 +55,16 @@ class CameraHookController extends CameraControllerBase_1.CameraControllerBase {
       ) {
         case 1:
           var i =
-            this.U_e.CameraGaze.FadeInTime > 0
-              ? this.H6 / this.U_e.CameraGaze.FadeInTime
-              : 1;
-          var i = MathUtils_1.MathUtils.Clamp(i, 0, 1);
+              0 < this.U_e.CameraGaze.FadeInTime
+                ? this.H6 / this.U_e.CameraGaze.FadeInTime
+                : 1,
+            i = MathUtils_1.MathUtils.Clamp(i, 0, 1);
           this.q_e(i),
             this.H6 > this.U_e.CameraGaze.FadeInTime && (this.f_e = 2);
           break;
         case 2:
           this.G_e(),
-            this.U_e.CameraGaze.StayTime >= 0 &&
+            0 <= this.U_e.CameraGaze.StayTime &&
               this.H6 >
                 this.U_e.CameraGaze.FadeInTime + this.U_e.CameraGaze.StayTime &&
               (void 0 === this.U_e.CameraGaze.FadeOutTime
@@ -75,7 +75,7 @@ class CameraHookController extends CameraControllerBase_1.CameraControllerBase {
         case 3:
           this.p_e += t;
           (i =
-            this.U_e.CameraGaze.FadeOutTime > 0
+            0 < this.U_e.CameraGaze.FadeOutTime
               ? this.p_e / this.U_e.CameraGaze.FadeOutTime
               : 1),
             (i = MathUtils_1.MathUtils.Clamp(i, 0, 1));
@@ -86,10 +86,10 @@ class CameraHookController extends CameraControllerBase_1.CameraControllerBase {
     else this.ExitCameraHook();
   }
   UpdateDeactivateInternal(t) {
-    this.f_e === 3 &&
+    3 === this.f_e &&
       ((this.p_e += t),
       (t =
-        this.U_e.CameraGaze.FadeOutTime > 0
+        0 < this.U_e.CameraGaze.FadeOutTime
           ? this.p_e / this.U_e.CameraGaze.FadeOutTime
           : 1),
       (t = MathUtils_1.MathUtils.Clamp(t, 0, 1)),
@@ -98,29 +98,29 @@ class CameraHookController extends CameraControllerBase_1.CameraControllerBase {
       ((this.f_e = 0), this.B_e());
   }
   q_e(t) {
-    const i = Vector_1.Vector.Create();
-    var t =
-      (Vector_1.Vector.LerpSin(this.A_e, this.x_e, t, i),
-      i.ToUeVector().Rotation());
+    var i = Vector_1.Vector.Create(),
+      t =
+        (Vector_1.Vector.LerpSin(this.A_e, this.x_e, t, i),
+        i.ToUeVector().Rotation());
     this.Camera.DesiredCamera.ArmRotation.DeepCopy(t),
       (this.Camera.IsModifiedArmRotation = !0);
   }
   G_e() {
-    const t = this.x_e.ToUeVector().Rotation();
+    var t = this.x_e.ToUeVector().Rotation();
     this.Camera.DesiredCamera.ArmRotation.DeepCopy(t),
       (this.Camera.IsModifiedArmRotation = !0);
   }
   D_e(t) {
-    const i = Vector_1.Vector.Create();
-    var t =
-      (Vector_1.Vector.LerpSin(this.P_e, this.A_e, t, i),
-      i.ToUeVector().Rotation());
+    var i = Vector_1.Vector.Create(),
+      t =
+        (Vector_1.Vector.LerpSin(this.P_e, this.A_e, t, i),
+        i.ToUeVector().Rotation());
     this.Camera.DesiredCamera.ArmRotation.DeepCopy(t),
       (this.Camera.IsModifiedArmRotation = !0);
   }
   b_e() {
-    const t = this.U_e.Location;
-    const i = this.Camera.PlayerLocation;
+    var t = this.U_e.Location,
+      i = this.Camera.PlayerLocation;
     t.Subtraction(i, this.x_e),
       this.x_e.Normalize(),
       Math.abs(this.x_e.X) < MathUtils_1.MathUtils.SmallNumber &&
@@ -129,7 +129,7 @@ class CameraHookController extends CameraControllerBase_1.CameraControllerBase {
   }
   B_e(t = !0) {
     (this.WI = !1),
-      (this.f_e !== 1 && this.f_e !== 2) ||
+      (1 !== this.f_e && 2 !== this.f_e) ||
       !this.U_e?.Valid ||
       void 0 === this.U_e?.CameraGaze?.FadeOutTime
         ? (ModelManager_1.ModelManager.CameraModel.FightCamera.LogicComponent.CameraInputController.Unlock(
@@ -144,4 +144,4 @@ class CameraHookController extends CameraControllerBase_1.CameraControllerBase {
   }
 }
 exports.CameraHookController = CameraHookController;
-// # sourceMappingURL=CameraHookController.js.map
+//# sourceMappingURL=CameraHookController.js.map

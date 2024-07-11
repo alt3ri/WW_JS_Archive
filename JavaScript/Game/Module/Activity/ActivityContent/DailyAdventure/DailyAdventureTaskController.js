@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DailyAdventureTaskController = void 0);
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../../../Ui/Base/UiControllerBase");
-const RoleController_1 = require("../../../RoleUi/RoleController");
-const WorldMapController_1 = require("../../../WorldMap/WorldMapController");
+const ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../../../Ui/Base/UiControllerBase"),
+  RoleController_1 = require("../../../RoleUi/RoleController"),
+  WorldMapController_1 = require("../../../WorldMap/WorldMapController");
 class DailyAdventureTaskController extends UiControllerBase_1.UiControllerBase {
   static TrackTaskByType(e, r) {
     switch (e) {
@@ -17,14 +17,14 @@ class DailyAdventureTaskController extends UiControllerBase_1.UiControllerBase {
         break;
       case 3: {
         let e = "DailyActivityTabView";
-        r && r.length >= 1 && (e = r[0]), DailyAdventureTaskController.COe(e);
+        r && 1 <= r.length && (e = r[0]), DailyAdventureTaskController.COe(e);
         break;
       }
     }
   }
   static dOe(e) {
     let r = 0;
-    e.length > 1 &&
+    1 < e.length &&
       ((o = ModelManager_1.ModelManager.MapModel.IsConfigMarkIdUnlock(e[0])),
       (r = o ? e[0] : e[1]));
     var o = { MarkId: r, MarkType: 0, OpenAreaId: 0 };
@@ -35,4 +35,4 @@ class DailyAdventureTaskController extends UiControllerBase_1.UiControllerBase {
   }
 }
 exports.DailyAdventureTaskController = DailyAdventureTaskController;
-// # sourceMappingURL=DailyAdventureTaskController.js.map
+//# sourceMappingURL=DailyAdventureTaskController.js.map

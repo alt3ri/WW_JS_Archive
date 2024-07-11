@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleVisionCommonItem = void 0);
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
+const ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
 class RoleVisionCommonItem extends UiPanelBase_1.UiPanelBase {
   constructor(t, e, i, s = !1) {
     super(),
@@ -110,4 +110,4 @@ class RoleVisionCommonItem extends UiPanelBase_1.UiPanelBase {
   OnBeforeClearComponent() {}
 }
 exports.RoleVisionCommonItem = RoleVisionCommonItem;
-// # sourceMappingURL=RoleVisionCommonItem.js.map
+//# sourceMappingURL=RoleVisionCommonItem.js.map

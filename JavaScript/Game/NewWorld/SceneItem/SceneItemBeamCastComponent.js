@@ -1,44 +1,49 @@
 "use strict";
-let SceneItemBeamCastComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, s) {
-    let h;
-    const o = arguments.length;
-    let a =
-      o < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      a = Reflect.decorate(t, e, i, s);
-    else
-      for (let r = t.length - 1; r >= 0; r--)
-        (h = t[r]) && (a = (o < 3 ? h(a) : o > 3 ? h(e, i, a) : h(e, i)) || a);
-    return o > 3 && a && Object.defineProperty(e, i, a), a;
-  };
+var SceneItemBeamCastComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, s) {
+      var h,
+        o = arguments.length,
+        a =
+          o < 3
+            ? e
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        a = Reflect.decorate(t, e, i, s);
+      else
+        for (var r = t.length - 1; 0 <= r; r--)
+          (h = t[r]) &&
+            (a = (o < 3 ? h(a) : 3 < o ? h(e, i, a) : h(e, i)) || a);
+      return 3 < o && a && Object.defineProperty(e, i, a), a;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemBeamCastComponent = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const EffectSystem_1 = require("../../Effect/EffectSystem");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const SceneInteractionManager_1 = require("../../Render/Scene/Interaction/SceneInteractionManager");
-const ColorUtils_1 = require("../../Utils/ColorUtils");
-const RoleTriggerController_1 = require("../Character/Role/RoleTriggerController");
-const UPDATE_INTERVAL_MS = 100;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  EffectSystem_1 = require("../../Effect/EffectSystem"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  SceneInteractionManager_1 = require("../../Render/Scene/Interaction/SceneInteractionManager"),
+  ColorUtils_1 = require("../../Utils/ColorUtils"),
+  RoleTriggerController_1 = require("../Character/Role/RoleTriggerController"),
+  UPDATE_INTERVAL_MS = 100;
 let SceneItemBeamCastComponent =
   (SceneItemBeamCastComponent_1 = class SceneItemBeamCastComponent extends (
     EntityComponent_1.EntityComponent
@@ -82,7 +87,7 @@ let SceneItemBeamCastComponent =
           this.rdn();
         }),
         (this.ndn = (t, e) => {
-          const i = this.Ntn(e);
+          var i = this.Ntn(e);
           (i && i.Id === this.Entity.Id) ||
             (t ? this.Kmn.add(e) : this.Kmn.delete(e), this.rdn());
         });
@@ -236,7 +241,7 @@ let SceneItemBeamCastComponent =
         (this.Cji = UE.NewObject(UE.TraceBoxElement.StaticClass())),
           (this.Cji.bIsSingle = !0),
           this.Cji.ActorsToIgnore.Empty();
-        const e =
+        var e =
           SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionAllActorsInLevel(
             this.Hte.GetSceneInteractionLevelHandleId(),
           );
@@ -247,12 +252,12 @@ let SceneItemBeamCastComponent =
             this.Lo.Range.Radius,
             this.Lo.Range.Radius,
           );
-        var t = UE.NewArray(UE.BuiltinByte);
-        var t =
-          (t.Add(QueryTypeDefine_1.KuroObjectTypeQuery.WorldStatic),
-          t.Add(QueryTypeDefine_1.KuroObjectTypeQuery.WorldDynamic),
-          t.Add(QueryTypeDefine_1.KuroObjectTypeQuery.PawnMonster),
-          (0, puerts_1.$ref)(t));
+        var t = UE.NewArray(UE.BuiltinByte),
+          t =
+            (t.Add(QueryTypeDefine_1.KuroObjectTypeQuery.WorldStatic),
+            t.Add(QueryTypeDefine_1.KuroObjectTypeQuery.WorldDynamic),
+            t.Add(QueryTypeDefine_1.KuroObjectTypeQuery.PawnMonster),
+            (0, puerts_1.$ref)(t));
         this.Cji.SetObjectTypesQuery(t);
       }
       (this.Cji.WorldContextObject = this.Hte.Owner),
@@ -281,29 +286,29 @@ let SceneItemBeamCastComponent =
     }
     hdn() {
       this.uJr();
-      let e = this.$mn;
-      let i = void 0;
-      const t = TraceElementCommon_1.TraceElementCommon.BoxTrace(
-        this.Cji,
-        "[BeamCastComp.TraceAndUpdate]",
-      );
-      const s = this.Cji.HitResult;
+      let e = this.$mn,
+        i = void 0;
+      var t = TraceElementCommon_1.TraceElementCommon.BoxTrace(
+          this.Cji,
+          "[BeamCastComp.TraceAndUpdate]",
+        ),
+        s = this.Cji.HitResult;
       if (t && s?.bBlockingHit)
         for (let t = 0; t < s.GetHitCount(); ++t) {
-          var h = s.ImpactPointX_Array.Get(t);
-          var o = s.ImpactPointY_Array.Get(t);
-          var a = s.ImpactPointZ_Array.Get(t);
-          var h = Vector_1.Vector.Create(h, o, a);
-          var o = MathUtils_1.MathUtils.CommonTempVector;
-          var a =
-            (MathUtils_1.MathUtils.InverseTransformPosition(
-              this.Hte.ActorLocationProxy,
-              this.Hte.ActorRotationProxy,
-              this.Hte.ActorScaleProxy,
-              h,
-              o,
-            ),
-            o.Z - this.Ymn.Z);
+          var h = s.ImpactPointX_Array.Get(t),
+            o = s.ImpactPointY_Array.Get(t),
+            a = s.ImpactPointZ_Array.Get(t),
+            h = Vector_1.Vector.Create(h, o, a),
+            o = MathUtils_1.MathUtils.CommonTempVector,
+            a =
+              (MathUtils_1.MathUtils.InverseTransformPosition(
+                this.Hte.ActorLocationProxy,
+                this.Hte.ActorRotationProxy,
+                this.Hte.ActorScaleProxy,
+                h,
+                o,
+              ),
+              o.Z - this.Ymn.Z);
           a < 0 ||
             a > e ||
             !(h = s.Actors.Get(t))?.IsValid() ||
@@ -314,17 +319,17 @@ let SceneItemBeamCastComponent =
     }
     ddn(t, e) {
       this.Cdn(e), this.gdn(), this.ODn();
-      let i;
-      var e = this.SIe.GetEntityOnlineInteractType();
-      var e =
-        LevelGamePlayController_1.LevelGamePlayController.MultiplayerLimitTypeCheck(
-          e,
-          !1,
-        );
-      const s = ModelManager_1.ModelManager.CreatureModel.GetEntityById(
-        this.Entity.Id,
-      );
-      var t = this.Ntn(t);
+      var i,
+        e = this.SIe.GetEntityOnlineInteractType(),
+        e =
+          LevelGamePlayController_1.LevelGamePlayController.MultiplayerLimitTypeCheck(
+            e,
+            !1,
+          ),
+        s = ModelManager_1.ModelManager.CreatureModel.GetEntityById(
+          this.Entity.Id,
+        ),
+        t = this.Ntn(t);
       !this.Zmn?.Valid ||
         (t && t.Id === this.Zmn.Id) ||
         ((i = this.Zmn.Entity),
@@ -372,7 +377,7 @@ let SceneItemBeamCastComponent =
           )),
           this.tdn.ClearSplinePoints();
       }
-      const t = this.Lo.EffectPath;
+      var t = this.Lo.EffectPath;
       if (!this.odn || !EffectSystem_1.EffectSystem.IsValid(this.odn)) {
         if (
           ((this.odn = EffectSystem_1.EffectSystem.SpawnEffect(
@@ -414,7 +419,7 @@ let SceneItemBeamCastComponent =
         this.ddn(void 0, 0);
     }
     $rt() {
-      let t, e, i, s;
+      var t, e, i, s;
       !this.Hte?.Owner ||
         !(t = this.Lo.HitEffectPath) ||
         (this.GDn && EffectSystem_1.EffectSystem.IsValid(this.GDn)) ||
@@ -457,7 +462,7 @@ let SceneItemBeamCastComponent =
         (this.odn &&
           EffectSystem_1.EffectSystem.SetEffectIgnoreVisibilityOptimize(
             this.odn,
-            this.zmn > 0,
+            0 < this.zmn,
           ),
         this.idn.Empty(),
         this.idn.Add(this.Ymn.ToUeVector()),
@@ -465,7 +470,7 @@ let SceneItemBeamCastComponent =
         this.tdn.SetSplinePoints(this.idn, 0, !0));
     }
     ODn() {
-      let t, e;
+      var t, e;
       this.Hte?.Owner?.IsValid() &&
         (this.zmn >= this.$mn
           ? this.NDn()
@@ -517,4 +522,4 @@ let SceneItemBeamCastComponent =
     SceneItemBeamCastComponent,
   )),
   (exports.SceneItemBeamCastComponent = SceneItemBeamCastComponent);
-// # sourceMappingURL=SceneItemBeamCastComponent.js.map
+//# sourceMappingURL=SceneItemBeamCastComponent.js.map

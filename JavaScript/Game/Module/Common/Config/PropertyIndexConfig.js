@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PropertyIndexConfig = void 0);
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const PropertyIndexAll_1 = require("../../../../Core/Define/ConfigQuery/PropertyIndexAll");
-const PropertyIndexById_1 = require("../../../../Core/Define/ConfigQuery/PropertyIndexById");
-const ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
+const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  PropertyIndexAll_1 = require("../../../../Core/Define/ConfigQuery/PropertyIndexAll"),
+  PropertyIndexById_1 = require("../../../../Core/Define/ConfigQuery/PropertyIndexById"),
+  ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
 class PropertyIndexConfig extends ConfigBase_1.ConfigBase {
   GetPropertyIndexInfo(e) {
     return PropertyIndexById_1.configPropertyIndexById.GetConfig(e);
@@ -24,4 +24,4 @@ class PropertyIndexConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.PropertyIndexConfig = PropertyIndexConfig;
-// # sourceMappingURL=PropertyIndexConfig.js.map
+//# sourceMappingURL=PropertyIndexConfig.js.map

@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const Quat_1 = require("../../../../Core/Utils/Math/Quat");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../GlobalData");
-const CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const AiLibrary_1 = require("../../Common/AiLibrary");
-const AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary");
-const TsAiController_1 = require("../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
-const THRESHOLD_RATE = 1 / 3;
-const OTHER_THRESHOLD_RATE = 1 - THRESHOLD_RATE;
-const NAV_INTERVAL_TIME = 3;
+const Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  Quat_1 = require("../../../../Core/Utils/Math/Quat"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../GlobalData"),
+  CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  AiLibrary_1 = require("../../Common/AiLibrary"),
+  AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
+  TsAiController_1 = require("../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
+  THRESHOLD_RATE = 1 / 3,
+  OTHER_THRESHOLD_RATE = 1 - THRESHOLD_RATE,
+  NAV_INTERVAL_TIME = 3;
 class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -65,7 +65,7 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
     if (i) {
       this.TsWalkOff ||
         i.CharActorComp.Entity.GetComponent(161)?.SetWalkOffLedgeRecord(!1);
-      const s = i.CharActorComp.Entity.CheckGetComponent(158);
+      var s = i.CharActorComp.Entity.CheckGetComponent(158);
       if (s.Valid)
         switch (this.TsMoveState) {
           case 1:
@@ -85,24 +85,24 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
     if (s) {
       var e = s.AiHateList.GetCurrentTarget();
       if (e?.Valid) {
-        const h = s.CharActorComp;
-        var e = e.Entity.GetComponent(3);
-        let r =
-          (MathUtils_1.MathUtils.InverseTransformPositionNoScale(
-            e.FloorLocation,
-            e.ActorRotationProxy,
-            h.FloorLocation,
-            this.TmpVector,
-          ),
-          MathUtils_1.MathUtils.GetAngleByVector2D(this.TmpVector));
-        const o =
-          (e.FloorLocation.Subtraction(h.FloorLocation, this.TmpSelfToTarget),
-          this.TmpSelfToTarget.Size2D() - h.ScaledRadius - e.ScaledRadius);
-        let a = this.TmpSelfToTarget.Z;
-        let l = MathUtils_1.MathUtils.WrapAngle(
-          MathUtils_1.MathUtils.GetAngleByVector2D(this.TmpSelfToTarget) -
-            h.ActorRotationProxy.Yaw,
-        );
+        var h = s.CharActorComp,
+          e = e.Entity.GetComponent(3),
+          r =
+            (MathUtils_1.MathUtils.InverseTransformPositionNoScale(
+              e.FloorLocation,
+              e.ActorRotationProxy,
+              h.FloorLocation,
+              this.TmpVector,
+            ),
+            MathUtils_1.MathUtils.GetAngleByVector2D(this.TmpVector)),
+          o =
+            (e.FloorLocation.Subtraction(h.FloorLocation, this.TmpSelfToTarget),
+            this.TmpSelfToTarget.Size2D() - h.ScaledRadius - e.ScaledRadius),
+          a = this.TmpSelfToTarget.Z,
+          l = MathUtils_1.MathUtils.WrapAngle(
+            MathUtils_1.MathUtils.GetAngleByVector2D(this.TmpSelfToTarget) -
+              h.ActorRotationProxy.Yaw,
+          );
         if (
           !this.NextCheckSkillTime ||
           this.NextCheckSkillTime < Time_1.Time.WorldTime
@@ -137,11 +137,11 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
           let i = l.RunTurnSpeed;
           this.TmpVector.DeepCopy(this.TmpSelfToTarget),
             o < a
-              ? ((i = this.TsMoveState === 2 ? i : l.TurnSpeeds[1]),
+              ? ((i = 2 === this.TsMoveState ? i : l.TurnSpeeds[1]),
                 (this.TmpVector.X = -this.TmpVector.X),
                 (this.TmpVector.Y = -this.TmpVector.Y),
                 (this.PreForward = !1))
-              : ((i = this.TsMoveState === 2 ? i : l.TurnSpeeds[0]),
+              : ((i = 2 === this.TsMoveState ? i : l.TurnSpeeds[0]),
                 (this.PreForward = !0));
           if (!r && this.NavigationInterval > NAV_INTERVAL_TIME) {
             if (
@@ -222,16 +222,16 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
     );
   }
   FindArea(i, t, s, e, h) {
-    const r = i.CharAiDesignComp.Entity.CheckGetComponent(33);
-    const o = r.Entity.GetComponent(185);
+    var r = i.CharAiDesignComp.Entity.CheckGetComponent(33),
+      o = r.Entity.GetComponent(185);
     this.TmpForward.DeepCopy(h),
       (this.TmpForward.Z = 0),
       this.TmpForward.Normalize(),
       this.TmpForward.UnaryNegation(this.TmpBackward);
-    let a = MathUtils_1.MathUtils.MaxFloat;
-    let l = MathUtils_1.MathUtils.MaxFloat;
-    let _ = ((this.SelectedSkillPrecondition = void 0), 4);
-    let n = MathUtils_1.MathUtils.MaxFloat;
+    let a = MathUtils_1.MathUtils.MaxFloat,
+      l = MathUtils_1.MathUtils.MaxFloat,
+      _ = ((this.SelectedSkillPrecondition = void 0), 4),
+      n = MathUtils_1.MathUtils.MaxFloat;
     this.TsDebugLog &&
       Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
@@ -243,10 +243,10 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
       );
     for (const L of i.AiSkill.ActiveSkillGroup)
       for (const A of i.AiSkill.BaseSkill.RandomSkills[L].ArrayInt) {
-        const T = i.AiSkill.SkillInfos.get(A);
+        var T = i.AiSkill.SkillInfos.get(A);
         if (T) {
-          var c;
-          const d = i.AiSkill.SkillPreconditionMap.get(T.SkillPreconditionId);
+          var c,
+            d = i.AiSkill.SkillPreconditionMap.get(T.SkillPreconditionId);
           if (d) {
             if (
               !(T.SkillWeight <= 0) &&
@@ -265,7 +265,7 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
               )
             )
               if (t < d.DistanceRange.Min)
-                this.TsForwardFirst && _ === 0
+                this.TsForwardFirst && 0 === _
                   ? this.TsDebugLog &&
                     Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info("AI", 6, "    Failed: ForwardFirst")
@@ -304,7 +304,7 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
                   this.SelectedSkillPrecondition = d;
                   break;
                 }
-                this.TsForwardFirst || _ !== 1
+                this.TsForwardFirst || 1 !== _
                   ? ((c = t - d.DistanceRange.Max),
                     n < c || a < c
                       ? this.TsDebugLog &&
@@ -352,7 +352,7 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
     return void 0 !== this.SelectedSkillPrecondition;
   }
   OnClear() {
-    let i;
+    var i;
     this.AIOwner instanceof TsAiController_1.default &&
       ((i =
         this.AIOwner.AiController.CharActorComp.Entity.GetComponent(
@@ -364,4 +364,4 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskSkillWander;
-// # sourceMappingURL=TsTaskSkillWander.js.map
+//# sourceMappingURL=TsTaskSkillWander.js.map

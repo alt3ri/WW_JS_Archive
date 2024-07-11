@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonEntranceRewardItem = void 0);
-const ue_1 = require("ue");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const CommonItemSmallItemGrid_1 = require("../Common/ItemGrid/CommonItemSmallItemGrid");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const GenericScrollViewNew_1 = require("../Util/ScrollView/GenericScrollViewNew");
+const ue_1 = require("ue"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  CommonItemSmallItemGrid_1 = require("../Common/ItemGrid/CommonItemSmallItemGrid"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  GenericScrollViewNew_1 = require("../Util/ScrollView/GenericScrollViewNew");
 class InstanceDungeonEntranceRewardItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(),
@@ -73,4 +73,4 @@ class InstanceDungeonEntranceRewardItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.InstanceDungeonEntranceRewardItem = InstanceDungeonEntranceRewardItem;
-// # sourceMappingURL=InstanceDungeonEntranceRewardItem.js.map
+//# sourceMappingURL=InstanceDungeonEntranceRewardItem.js.map

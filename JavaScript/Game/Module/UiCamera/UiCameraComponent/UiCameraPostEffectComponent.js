@@ -29,4 +29,4 @@ class UiCameraPostEffectComponent extends UiCameraComponent_1.UiCameraComponent 
   }
 }
 exports.UiCameraPostEffectComponent = UiCameraPostEffectComponent;
-// # sourceMappingURL=UiCameraPostEffectComponent.js.map
+//# sourceMappingURL=UiCameraPostEffectComponent.js.map

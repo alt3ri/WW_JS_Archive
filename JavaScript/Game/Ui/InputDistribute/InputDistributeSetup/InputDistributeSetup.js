@@ -20,4 +20,4 @@ class InputDistributeSetup {
   }
 }
 exports.InputDistributeSetup = InputDistributeSetup;
-// # sourceMappingURL=InputDistributeSetup.js.map
+//# sourceMappingURL=InputDistributeSetup.js.map

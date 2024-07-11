@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlatformModel = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../Core/Audio/AudioSystem");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const NetworkDefine_1 = require("../../../Launcher/NetworkDefine");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LguiEventSystemManager_1 = require("../../Ui/LguiEventSystem/LguiEventSystemManager");
-const PlatformDefine_1 = require("./PlatformDefine");
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  NetworkDefine_1 = require("../../../Launcher/NetworkDefine"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LguiEventSystemManager_1 = require("../../Ui/LguiEventSystem/LguiEventSystemManager"),
+  PlatformDefine_1 = require("./PlatformDefine");
 class PlatformModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -58,14 +58,14 @@ class PlatformModel extends ModelBase_1.ModelBase {
       case "PS4":
         e = 7;
     }
-    const t = PlatformDefine_1.inputControllerMap.get(e);
+    var t = PlatformDefine_1.inputControllerMap.get(e);
     this.SwitchInputControllerType(t, e);
   }
   SwitchInputControllerType(e, t = void 0) {
     if (!this.IsGmLockGamepad)
       if ((this.dQi(e), t)) this.CQi(t);
       else
-        for (const [r, o] of PlatformDefine_1.inputControllerMap)
+        for (var [r, o] of PlatformDefine_1.inputControllerMap)
           if (o === e) {
             this.CQi(r);
             break;
@@ -73,8 +73,8 @@ class PlatformModel extends ModelBase_1.ModelBase {
   }
   dQi(t) {
     if (
-      (t === 0 &&
-        this._Qi === 2 &&
+      (0 === t &&
+        2 === this._Qi &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Platform",
@@ -85,7 +85,7 @@ class PlatformModel extends ModelBase_1.ModelBase {
         ),
       this._Qi !== t)
     ) {
-      let r = this._Qi;
+      var r = this._Qi;
       switch (
         ((this._Qi = t),
         EventSystem_1.EventSystem.Emit(
@@ -134,7 +134,7 @@ class PlatformModel extends ModelBase_1.ModelBase {
     }
   }
   CQi(e) {
-    let t, r;
+    var t, r;
     this.PlatformType !== e &&
       ((t = this.lQi),
       (r = this.PlatformType),
@@ -166,32 +166,32 @@ class PlatformModel extends ModelBase_1.ModelBase {
           : this.SwitchInputControllerType(2));
   }
   RefreshPlatformByDevice() {
-    const e = this.GetCurrentDeviceControllerPlatform();
-    return e !== 0 && (this.SwitchInputControllerType(1, e), !0);
+    var e = this.GetCurrentDeviceControllerPlatform();
+    return 0 !== e && (this.SwitchInputControllerType(1, e), !0);
   }
   GetCurrentDeviceControllerPlatform() {
-    const t = UE.RawInputFunctionLibrary.GetRegisteredDevices();
+    var t = UE.RawInputFunctionLibrary.GetRegisteredDevices();
     if (t)
       for (let e = 0; e < t.Num(); e++) {
-        var r = t.Get(e);
-        var r = r.VendorID + "_" + r.ProductID;
-        var r = PlatformDefine_1.deviceIdMap.get(r);
+        var r = t.Get(e),
+          r = r.VendorID + "_" + r.ProductID,
+          r = PlatformDefine_1.deviceIdMap.get(r);
         if (r) return r;
       }
     return 0;
   }
   IsPc() {
     return (
-      this.PlatformType === 3 ||
-      this.PlatformType === 4 ||
-      this.PlatformType === 5
+      3 === this.PlatformType ||
+      4 === this.PlatformType ||
+      5 === this.PlatformType
     );
   }
   IsMobile() {
-    return this.PlatformType === 1 || this.PlatformType === 2;
+    return 1 === this.PlatformType || 2 === this.PlatformType;
   }
   IsGamepad() {
-    return this.PlatformType === 6 || this.PlatformType === 7;
+    return 6 === this.PlatformType || 7 === this.PlatformType;
   }
   IsMobileSource() {
     return Info_1.Info.IsMobile();
@@ -209,10 +209,10 @@ class PlatformModel extends ModelBase_1.ModelBase {
     return UE.GameplayStatics.GetPlatformName();
   }
   IsInGamepad() {
-    return this._Qi === 1;
+    return 1 === this._Qi;
   }
   IsInKeyBoard() {
-    return this._Qi === 0;
+    return 0 === this._Qi;
   }
   GetNetStatus() {
     return this.IsMobile()
@@ -234,4 +234,4 @@ class PlatformModel extends ModelBase_1.ModelBase {
   }
 }
 exports.PlatformModel = PlatformModel;
-// # sourceMappingURL=PlatformModel.js.map
+//# sourceMappingURL=PlatformModel.js.map

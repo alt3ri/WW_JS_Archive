@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuideTipsView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const Global_1 = require("../../../Global");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const UiManager_1 = require("../../../Ui/UiManager");
-const GuideBaseView_1 = require("./GuideBaseView");
-const GuideCountDownItem_1 = require("./GuideCountDownItem");
-const GuideDescribeNew_1 = require("./GuideDescribeNew");
-const GuidePrefabDefine_1 = require("./GuidePrefabDefine");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../Global"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  GuideBaseView_1 = require("./GuideBaseView"),
+  GuideCountDownItem_1 = require("./GuideCountDownItem"),
+  GuideDescribeNew_1 = require("./GuideDescribeNew"),
+  GuidePrefabDefine_1 = require("./GuidePrefabDefine");
 class GuideTipsView extends GuideBaseView_1.GuideBaseView {
   constructor() {
     super(...arguments),
@@ -84,12 +84,12 @@ class GuideTipsView extends GuideBaseView_1.GuideBaseView {
       ...this.Lo.Button,
     ),
       (0, GuidePrefabDefine_1.setPrefabText)(e, e.GetText());
-    var e = this.GetItem(7);
-    const i = MathCommon_1.MathCommon.Clamp(this.Lo.UseMask / 100, 0, 1);
-    e.SetAlpha(i), e.SetRaycastTarget(i > 0);
+    var e = this.GetItem(7),
+      i = MathCommon_1.MathCommon.Clamp(this.Lo.UseMask / 100, 0, 1);
+    e.SetAlpha(i), e.SetRaycastTarget(0 < i);
   }
   OnGuideViewAfterShow() {
-    const e = this.GetItem(3);
+    var e = this.GetItem(3);
     this.TotalDuration
       ? ((this.ZBt = new GuideCountDownItem_1.GuideCountDownItem(
           this.TotalDuration,
@@ -99,7 +99,7 @@ class GuideTipsView extends GuideBaseView_1.GuideBaseView {
       this.BindInput(this.Lo.InputEnums, this.Lo.InputEnums, this.mzt);
   }
   async OnBeforeHideAsync() {
-    const e = this.GetItem(3);
+    var e = this.GetItem(3);
     this.UiViewSequence.StopSequenceByKey("Start"),
       e.SetUIActive(!1),
       this.l4s(),
@@ -110,7 +110,7 @@ class GuideTipsView extends GuideBaseView_1.GuideBaseView {
         await this.PlaySequenceAsync("TipsGuideFinished"));
   }
   OnGuideBaseViewTick(e) {
-    const i =
+    var i =
       UiManager_1.UiManager.IsViewShow("BattleView") &&
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.GetChildVisible(
         0,
@@ -124,7 +124,7 @@ class GuideTipsView extends GuideBaseView_1.GuideBaseView {
       : this.UiViewSequence.StopSequenceByKey("AutoLoop1");
   }
   h4s() {
-    const e = Global_1.Global.CharacterController;
+    var e = Global_1.Global.CharacterController;
     this.a4s ||
       UE.KuroInputFunctionLibrary.HasInputModeReply(this.a4s) ||
       (this.a4s = UE.KuroInputFunctionLibrary.SetGameOnlyInputMode(
@@ -133,7 +133,7 @@ class GuideTipsView extends GuideBaseView_1.GuideBaseView {
       ));
   }
   l4s() {
-    let e;
+    var e;
     this.a4s &&
       ((e = Global_1.Global.CharacterController),
       UE.KuroInputFunctionLibrary.ReplyInputMode(e, this.a4s),
@@ -144,4 +144,4 @@ class GuideTipsView extends GuideBaseView_1.GuideBaseView {
   }
 }
 exports.GuideTipsView = GuideTipsView;
-// # sourceMappingURL=GuideTipsView.js.map
+//# sourceMappingURL=GuideTipsView.js.map

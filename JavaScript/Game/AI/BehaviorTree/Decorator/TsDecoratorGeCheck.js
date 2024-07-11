@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const GlobalData_1 = require("../../../GlobalData");
-const CharacterController_1 = require("../../../NewWorld/Character/CharacterController");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../GlobalData"),
+  CharacterController_1 = require("../../../NewWorld/Character/CharacterController"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController");
 class TsDecoratorGeCheck extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -21,18 +21,18 @@ class TsDecoratorGeCheck extends UE.BTDecorator_BlueprintBase {
       (this.IsInitTsVariables = !0),
         (this.TsBlackboardKeyTarget = this.BlackboardKeyTarget),
         (this.TsChecks = new Map());
-      const t = this.Checks.Num();
-      if (t > 0)
+      var t = this.Checks.Num();
+      if (0 < t)
         for (let r = 0; r < t; r++) {
-          const e = this.Checks.GetKey(r);
-          const o = this.Checks.Get(e);
+          var e = this.Checks.GetKey(r),
+            o = this.Checks.Get(e);
           this.TsChecks.set(e, o);
         }
       this.TsLogic = this.Logic;
     }
   }
   PerformConditionCheckAI(r, t) {
-    let e = r.AiController;
+    var e = r.AiController;
     if (!e)
       return (
         Log_1.Log.CheckError() &&
@@ -57,20 +57,20 @@ class TsDecoratorGeCheck extends UE.BTDecorator_BlueprintBase {
       if (!e) return !1;
       o = e;
     }
-    const i = o.Entity.CheckGetComponent(157);
+    var i = o.Entity.CheckGetComponent(157);
     if (!i) return !1;
-    if (this.TsLogic === 1) {
-      for (const [s, a] of this.TsChecks)
-        if (i.GetBuffTotalStackById(s) > 0 === a) return !0;
+    if (1 === this.TsLogic) {
+      for (var [s, a] of this.TsChecks)
+        if (0 < i.GetBuffTotalStackById(s) === a) return !0;
       return !1;
     }
     for (let r = 0; r < this.Checks.Num(); ++r) {
-      const h = this.Checks.GetKey(r);
-      const l = this.Checks.Get(h);
-      if (i.GetBuffTotalStackById(h) > 0 !== l) return !1;
+      var h = this.Checks.GetKey(r),
+        l = this.Checks.Get(h);
+      if (0 < i.GetBuffTotalStackById(h) !== l) return !1;
     }
     return !0;
   }
 }
 exports.default = TsDecoratorGeCheck;
-// # sourceMappingURL=TsDecoratorGeCheck.js.map
+//# sourceMappingURL=TsDecoratorGeCheck.js.map

@@ -1,33 +1,38 @@
 "use strict";
-let SceneItemPortalComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (e, t, n, r) {
-    let i;
-    const o = arguments.length;
-    let s =
-      o < 3 ? t : r === null ? (r = Object.getOwnPropertyDescriptor(t, n)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      s = Reflect.decorate(e, t, n, r);
-    else
-      for (let h = e.length - 1; h >= 0; h--)
-        (i = e[h]) && (s = (o < 3 ? i(s) : o > 3 ? i(t, n, s) : i(t, n)) || s);
-    return o > 3 && s && Object.defineProperty(t, n, s), s;
-  };
+var SceneItemPortalComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (e, t, n, r) {
+      var i,
+        o = arguments.length,
+        s =
+          o < 3
+            ? t
+            : null === r
+              ? (r = Object.getOwnPropertyDescriptor(t, n))
+              : r;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        s = Reflect.decorate(e, t, n, r);
+      else
+        for (var h = e.length - 1; 0 <= h; h--)
+          (i = e[h]) &&
+            (s = (o < 3 ? i(s) : 3 < o ? i(t, n, s) : i(t, n)) || s);
+      return 3 < o && s && Object.defineProperty(t, n, s), s;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemPortalComponent = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const CameraController_1 = require("../../../../Camera/CameraController");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const PortalController_1 = require("../../Controller/PortalController");
-const INVALID_ENTITY = 0;
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  CameraController_1 = require("../../../../Camera/CameraController"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  PortalController_1 = require("../../Controller/PortalController"),
+  INVALID_ENTITY = 0;
 let SceneItemPortalComponent =
   (SceneItemPortalComponent_1 = class SceneItemPortalComponent extends (
     EntityComponent_1.EntityComponent
@@ -40,14 +45,14 @@ let SceneItemPortalComponent =
         (this.PortalCapture = void 0),
         (this.wDe = 0),
         (this.A1n = (e, t, n) => {
-          let r;
+          var r;
           t?.Valid &&
             (r = t.Entity.GetComponent(0)?.GetPbDataId()) &&
             this.R1n === r &&
             this.PortalCapture?.IsValid() &&
             ((r = t.Entity.GetComponent(193)) &&
               r.PortalCapture &&
-              (this.PortalCapture.SetPair(r.PortalCapture), this.D1n === "A") &&
+              (this.PortalCapture.SetPair(r.PortalCapture), "A" === this.D1n) &&
               PortalController_1.PortalController.RegisterPair(
                 this.wDe,
                 this.PortalCapture.Plane.K2_GetComponentToWorld(),
@@ -77,13 +82,13 @@ let SceneItemPortalComponent =
                 this.A1n,
               ),
             this.PortalCapture?.IsValid()) &&
-            (this.PortalCapture.SetPair(void 0), this.D1n === "A") &&
+            (this.PortalCapture.SetPair(void 0), "A" === this.D1n) &&
             PortalController_1.PortalController.UnRegisterPair(this.wDe);
         }),
         (this.P1n = (e) => {
-          const t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+          var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
           if (t?.Valid) {
-            const n = t.Entity.GetComponent(3);
+            var n = t.Entity.GetComponent(3);
             CameraController_1.CameraController.FightCamera.LogicComponent.SetRotation(
               n.Actor.K2_GetActorRotation(),
             ),
@@ -103,7 +108,7 @@ let SceneItemPortalComponent =
         });
     }
     OnInitData(e) {
-      const t = e.GetParam(SceneItemPortalComponent_1)[0];
+      var t = e.GetParam(SceneItemPortalComponent_1)[0];
       switch (t.Config.Type) {
         case "Dynamic":
           break;
@@ -120,7 +125,7 @@ let SceneItemPortalComponent =
       return (this.Hte = this.Entity.GetComponent(182)), !0;
     }
     OnActivate() {
-      let e;
+      var e;
       return (
         this.Hte?.Valid &&
           ((this.PortalCapture = ActorSystem_1.ActorSystem.Spawn(
@@ -145,7 +150,7 @@ let SceneItemPortalComponent =
             ? ((e = e.Entity.GetComponent(193)) &&
                 e.PortalCapture &&
                 (this.PortalCapture.SetPair(e.PortalCapture),
-                this.D1n === "A") &&
+                "A" === this.D1n) &&
                 PortalController_1.PortalController.RegisterPair(
                   this.wDe,
                   this.PortalCapture.Plane.K2_GetComponentToWorld(),
@@ -187,7 +192,7 @@ let SceneItemPortalComponent =
             this.A1n,
           ),
         this.PortalCapture?.IsValid() &&
-          (this.D1n === "A" &&
+          ("A" === this.D1n &&
             PortalController_1.PortalController.UnRegisterPair(this.wDe),
           this.PortalCapture.SetPair(void 0),
           this.PortalCapture.K2_DetachFromActor(),
@@ -203,4 +208,4 @@ let SceneItemPortalComponent =
     SceneItemPortalComponent,
   )),
   (exports.SceneItemPortalComponent = SceneItemPortalComponent);
-// # sourceMappingURL=SceneItemPortalComponent.js.map
+//# sourceMappingURL=SceneItemPortalComponent.js.map

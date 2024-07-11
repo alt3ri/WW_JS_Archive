@@ -1,30 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TopPanel = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Stats_1 = require("../../../../../Core/Common/Stats");
-const BaseConfigController_1 = require("../../../../../Launcher/BaseConfig/BaseConfigController");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const ActivityController_1 = require("../../../Activity/ActivityController");
-const FunctionController_1 = require("../../../Functional/FunctionController");
-const InstanceDungeonController_1 = require("../../../InstanceDungeon/InstanceDungeonController");
-const InstanceDungeonGuideController_1 = require("../../../InstanceDungeon/InstanceDungeonGuideController");
-const OnlineController_1 = require("../../../Online/OnlineController");
-const RoguelikeController_1 = require("../../../Roguelike/RoguelikeController");
-const TowerController_1 = require("../../../TowerDetailUi/TowerController");
-const BattleEntranceButton_1 = require("../BattleChildView/BattleEntranceButton");
-const BattleOnlineButton_1 = require("../BattleChildView/BattleOnlineButton");
-const BattleTowerButton_1 = require("../BattleChildView/BattleTowerButton");
-const MiniMapView_1 = require("../MiniMapView");
-const SilentAreaInfoView_1 = require("../SilentAreaView/SilentAreaInfoView");
-const BattleChildViewPanel_1 = require("./BattleChildViewPanel");
-const BattleQuestButton_1 = require("../BattleChildView/BattleQuestButton");
-const battleUiChildren = [4, 3, 2, 1];
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../../Core/Common/Stats"),
+  BaseConfigController_1 = require("../../../../../Launcher/BaseConfig/BaseConfigController"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  ActivityController_1 = require("../../../Activity/ActivityController"),
+  FunctionController_1 = require("../../../Functional/FunctionController"),
+  InstanceDungeonController_1 = require("../../../InstanceDungeon/InstanceDungeonController"),
+  InstanceDungeonGuideController_1 = require("../../../InstanceDungeon/InstanceDungeonGuideController"),
+  OnlineController_1 = require("../../../Online/OnlineController"),
+  RoguelikeController_1 = require("../../../Roguelike/RoguelikeController"),
+  TowerController_1 = require("../../../TowerDetailUi/TowerController"),
+  BattleEntranceButton_1 = require("../BattleChildView/BattleEntranceButton"),
+  BattleOnlineButton_1 = require("../BattleChildView/BattleOnlineButton"),
+  BattleTowerButton_1 = require("../BattleChildView/BattleTowerButton"),
+  MiniMapView_1 = require("../MiniMapView"),
+  SilentAreaInfoView_1 = require("../SilentAreaView/SilentAreaInfoView"),
+  BattleChildViewPanel_1 = require("./BattleChildViewPanel"),
+  BattleQuestButton_1 = require("../BattleChildView/BattleQuestButton"),
+  battleUiChildren = [4, 3, 2, 1];
 class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
@@ -43,7 +43,7 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.DLn = void 0),
       (this.DJe = !1),
       (this.Vze = (t) => {
-        const e =
+        var e =
           ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
             t.TreeIncId,
           );
@@ -72,7 +72,7 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         ModelManager_1.ModelManager.InstanceDungeonGuideModel.GetHaveGuide()
           ? (this.PZe.SetOtherHide(!0), this.xZe.SetOtherHide(!1))
           : (this.PZe.SetOtherHide(!1), this.xZe.SetOtherHide(!0));
-        const t = ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike();
+        var t = ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike();
         t && (this.PZe.SetOtherHide(!0), this.xZe.SetOtherHide(!0));
       }),
       (this.xie = () => {
@@ -93,8 +93,8 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         InstanceDungeonController_1.InstanceDungeonController.OnClickInstanceDungeonExitButton();
       }),
       (this.B$e = () => {
-        const t = ModelManager_1.ModelManager.GameModeModel.IsMulti;
-        const e = ModelManager_1.ModelManager.OnlineModel.IsOnlineDisabled();
+        var t = ModelManager_1.ModelManager.GameModeModel.IsMulti,
+          e = ModelManager_1.ModelManager.OnlineModel.IsOnlineDisabled();
         !t && e
           ? OnlineController_1.OnlineController.ShowTipsWhenOnlineDisabled()
           : UiManager_1.UiManager.OpenView("OnlineWorldHallView");
@@ -137,7 +137,7 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         FunctionController_1.FunctionController.OpenFunctionRelateView(10007);
       }),
       (this.oet = () => {
-        const t = this.GetExtendToggle(18).ToggleState;
+        var t = this.GetExtendToggle(18).ToggleState;
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "BattleUiSet",
@@ -145,11 +145,11 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
             "当前背景播放音乐按钮 ToggleState",
             ["currentToggleState", t],
           ),
-          t === 0
+          0 === t
             ? (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("BattleUiSet", 28, "停止背景音乐"),
               UE.KuroBgPlayerStatic.Stop())
-            : t === 1 &&
+            : 1 === t &&
               (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("BattleUiSet", 28, "背景播放音乐"),
               UE.KuroBgPlayerStatic.Play());
@@ -236,7 +236,7 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           " BaseConfigController.GetIosAuditFirstDownloadTip()",
           BaseConfigController_1.BaseConfigController.GetIosAuditFirstDownloadTip(),
         ]),
-      ModelManager_1.ModelManager.PlatformModel.PlatformType === 1 &&
+      1 === ModelManager_1.ModelManager.PlatformModel.PlatformType &&
         BaseConfigController_1.BaseConfigController.GetIosAuditFirstDownloadTip() &&
         (this.GetExtendToggle(18)?.RootUIComp.SetUIActive(!0),
         this.GetExtendToggle(18)?.SetToggleState(0),
@@ -349,7 +349,7 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     );
   }
   Let() {
-    const t = ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike();
+    var t = ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike();
     t &&
       (this.LZe.forEach((t) => {
         t.SetOtherHide(!0);
@@ -359,38 +359,38 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       this.wZe.SetOtherHide(!t);
   }
   PLn() {
-    const t = ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike();
+    var t = ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike();
     this.DLn.SetOtherHide(!t);
   }
   async ret() {
-    const t = this.GetItem(1);
+    var t = this.GetItem(1);
     (this.RZe = await this.Det(t, "BattleViewMenu", void 0, !1, !0, 2)),
       this.RZe.BindOnClicked(this.VZe);
   }
   async net() {
-    const t = this.GetItem(3);
+    var t = this.GetItem(3);
     (await this.Det(t, "BattleViewGachaButton", 10009)).BindOnClicked(this.HZe);
   }
   async aet() {
-    const t = this.GetItem(2);
+    var t = this.GetItem(2);
     (this.DZe = await this.Det(t, void 0, void 0, !1, !1, 1)),
       this.DZe.BindOnClicked(this.WZe);
   }
   async det() {
-    const t = this.GetItem(10);
+    var t = this.GetItem(10);
     (this.UZe = await this.Det(t, "ActivityEntrance", 10053)),
       this.UZe.SetGetOtherHideCallCall(this.jZe),
       this.UZe.BindOnClicked(this.XZe);
   }
   async het() {
-    const t = this.GetItem(4);
-    const e = {
-      RedDotName: void 0,
-      FunctionType: 10021,
-      ChildType: 3,
-      HideInGamepad: !0,
-      HideByRoleConfig: !0,
-    };
+    var t = this.GetItem(4),
+      e = {
+        RedDotName: void 0,
+        FunctionType: 10021,
+        ChildType: 3,
+        HideInGamepad: !0,
+        HideByRoleConfig: !0,
+      };
     (this.AZe = await this.NewStaticChildViewAsync(
       t.GetOwner(),
       BattleOnlineButton_1.BattleOnlineButton,
@@ -400,48 +400,48 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       this.AZe.BindOnClicked(this.B$e);
   }
   async _et() {
-    const t = this.GetItem(6);
+    var t = this.GetItem(6);
     (await this.Det(t, "FunctionInventory", void 0, !0)).BindOnClicked(
       this.KZe,
     );
   }
   async uet() {
-    const t = this.GetItem(7);
+    var t = this.GetItem(7);
     (await this.Det(t, "BattlePass", 10040)).BindOnClicked(this.QZe);
   }
   async cet() {
-    const t = this.GetItem(8);
+    var t = this.GetItem(8);
     (await this.Det(t, "FunctionRole", 10001, !0)).BindOnClicked(this.$Ze);
   }
   async met() {
-    const t = this.GetItem(9);
+    var t = this.GetItem(9);
     (await this.Det(t, "AdventureBattleButton", 10023, !0)).BindOnClicked(
       this.YZe,
     );
   }
   async let() {
-    const t = this.GetItem(0);
+    var t = this.GetItem(0);
     this.TZe = await this.NewStaticChildViewAsync(
       t.GetOwner(),
       MiniMapView_1.MiniMapView,
     );
   }
   async Met() {
-    const t = this.GetItem(15);
+    var t = this.GetItem(15);
     this.bZe = await this.NewDynamicChildViewAsync(
       t.GetOwner(),
       SilentAreaInfoView_1.SilentAreaView,
     );
   }
   async Eet() {
-    const t = this.GetItem(16);
-    const e = {
-      RedDotName: void 0,
-      FunctionType: void 0,
-      ChildType: 3,
-      HideInGamepad: !1,
-      HideByRoleConfig: !0,
-    };
+    var t = this.GetItem(16),
+      e = {
+        RedDotName: void 0,
+        FunctionType: void 0,
+        ChildType: 3,
+        HideInGamepad: !1,
+        HideByRoleConfig: !0,
+      };
     (this.qZe = await this.NewStaticChildViewAsync(
       t.GetOwner(),
       BattleTowerButton_1.BattleTowerButton,
@@ -465,7 +465,7 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     return this.LZe.push(i), i;
   }
   async Cet() {
-    const t = this.GetItem(11);
+    var t = this.GetItem(11);
     (this.PZe = await this.NewStaticChildViewAsync(
       t.GetOwner(),
       BattleQuestButton_1.BattleQuestButton,
@@ -481,27 +481,27 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       this.PZe.BindOnClicked(this.JZe);
   }
   async fet() {
-    const t = this.GetItem(12);
+    var t = this.GetItem(12);
     (this.xZe = await this.Det(t, void 0, void 0)),
       this.xZe.BindOnClicked(this.zZe);
   }
   async pet() {
-    const t = this.GetItem(13);
+    var t = this.GetItem(13);
     (this.wZe = await this.Det(t, void 0, void 0)),
       this.wZe.BindOnClicked(this.eet),
       this.wZe.SetGetOtherHideCallCall(this.tet);
   }
   async ULn() {
-    const t = this.GetItem(19);
+    var t = this.GetItem(19);
     (this.DLn = await this.Det(t, void 0, void 0)),
       this.DLn.BindOnClicked(this.RLn),
       this.DLn.SetGetOtherHideCallCall(this.ALn);
   }
   async vet() {
-    const t = this.GetItem(17);
+    var t = this.GetItem(17);
     (this.BZe = await this.Det(t, void 0, 10007, !0)),
       this.BZe.BindOnClicked(this.iet);
   }
 }
 (exports.TopPanel = TopPanel).aYe = void 0;
-// # sourceMappingURL=TopPanel.js.map
+//# sourceMappingURL=TopPanel.js.map

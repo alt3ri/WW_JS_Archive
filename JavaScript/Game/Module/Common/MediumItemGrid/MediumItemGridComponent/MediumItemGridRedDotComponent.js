@@ -8,4 +8,4 @@ class MediumItemGridRedDotComponent extends MediumItemGridVisibleComponent_1.Med
   }
 }
 exports.MediumItemGridRedDotComponent = MediumItemGridRedDotComponent;
-// # sourceMappingURL=MediumItemGridRedDotComponent.js.map
+//# sourceMappingURL=MediumItemGridRedDotComponent.js.map

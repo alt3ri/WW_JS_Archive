@@ -9,21 +9,21 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.LevelConditionSlotOfCurrentRole =
     exports.LevelConditionFunctionUnlock =
       void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../Core/Define/CommonDefine");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const LocalStorageDefine_1 = require("../../Common/LocalStorageDefine");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const SceneTeamDefine_1 = require("../../Module/SceneTeam/SceneTeamDefine");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const LevelGeneralDefine_1 = require("../LevelGeneralDefine");
-const EAttributeId = Protocol_1.Aki.Protocol.KBs;
+const Log_1 = require("../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  SceneTeamDefine_1 = require("../../Module/SceneTeam/SceneTeamDefine"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  LevelGeneralDefine_1 = require("../LevelGeneralDefine");
+var EAttributeId = Protocol_1.Aki.Protocol.KBs;
 class LevelConditionFunctionUnlock extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, n, ...o) {
-    let t, i;
-    return e.LimitParams.size === 0
+    var t, i;
+    return 0 === e.LimitParams.size
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
@@ -48,8 +48,8 @@ class LevelConditionFunctionUnlock extends LevelGeneralBase_1.LevelConditionBase
 exports.LevelConditionFunctionUnlock = LevelConditionFunctionUnlock;
 class LevelConditionSlotOfCurrentRole extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, n) {
-    let o;
-    return e.LimitParams.size === 0
+    var o;
+    return 0 === e.LimitParams.size
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
@@ -79,8 +79,8 @@ class LevelConditionSlotOfCurrentRole extends LevelGeneralBase_1.LevelConditionB
 exports.LevelConditionSlotOfCurrentRole = LevelConditionSlotOfCurrentRole;
 class LevelConditionHpLowerThan extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, n) {
-    let o, t, i, r;
-    return e.LimitParams.size === 0
+    var o, t, i, r;
+    return 0 === e.LimitParams.size
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
@@ -112,10 +112,10 @@ class LevelConditionHpLowerThan extends LevelGeneralBase_1.LevelConditionBase {
 exports.LevelConditionHpLowerThan = LevelConditionHpLowerThan;
 class LevelConditionHarmonyQte extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, n, ...o) {
-    let t;
+    var t;
     return (
       !!o?.length &&
-      (e.LimitParams.size === 0
+      (0 === e.LimitParams.size
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
@@ -124,7 +124,7 @@ class LevelConditionHarmonyQte extends LevelGeneralBase_1.LevelConditionBase {
               ["inConditionInfo.Id", e.Id],
             ),
           !1)
-        : !(t = Number(e.LimitParams.get("ElementType"))) && t >= 7
+        : !(t = Number(e.LimitParams.get("ElementType"))) && 7 <= t
           ? (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "LevelCondition",
@@ -143,8 +143,8 @@ class LevelConditionHarmonyQte extends LevelGeneralBase_1.LevelConditionBase {
 exports.LevelConditionHarmonyQte = LevelConditionHarmonyQte;
 class LevelConditionGetWhichRole extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, n) {
-    let o;
-    return e.LimitParams.size === 0
+    var o;
+    return 0 === e.LimitParams.size
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
@@ -167,7 +167,7 @@ class LevelConditionGetWhichRole extends LevelGeneralBase_1.LevelConditionBase {
 exports.LevelConditionGetWhichRole = LevelConditionGetWhichRole;
 class LevelConditionGetNewItem extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, n, ...o) {
-    if (e.LimitParams.size === 0)
+    if (0 === e.LimitParams.size)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -178,7 +178,7 @@ class LevelConditionGetNewItem extends LevelGeneralBase_1.LevelConditionBase {
           ),
         !1
       );
-    const t = Number(e.LimitParams.get("ItemId"));
+    var t = Number(e.LimitParams.get("ItemId"));
     if (!t)
       return (
         Log_1.Log.CheckError() &&
@@ -189,7 +189,7 @@ class LevelConditionGetNewItem extends LevelGeneralBase_1.LevelConditionBase {
           ),
         !1
       );
-    const i = ModelManager_1.ModelManager.InventoryModel;
+    var i = ModelManager_1.ModelManager.InventoryModel;
     if (o)
       return (e = i.GetAttributeItemData(o[0]))
         ? t === e.GetConfigId()
@@ -201,10 +201,10 @@ class LevelConditionGetNewItem extends LevelGeneralBase_1.LevelConditionBase {
       )
     )
       return !0;
-    var e = i.GetNewAttributeItemUniqueIdList();
-    const r = new Set();
+    var e = i.GetNewAttributeItemUniqueIdList(),
+      r = new Set();
     for (const a of e) {
-      const l = i.GetAttributeItemData(a);
+      var l = i.GetAttributeItemData(a);
       l && r.add(l.GetConfigId());
     }
     return r.has(t);
@@ -213,10 +213,10 @@ class LevelConditionGetNewItem extends LevelGeneralBase_1.LevelConditionBase {
 exports.LevelConditionGetNewItem = LevelConditionGetNewItem;
 class LevelConditionFightWithMonster extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, n, ...o) {
-    let t;
+    var t;
     return (
       !!o?.length &&
-      (e.LimitParams.size === 0
+      (0 === e.LimitParams.size
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
@@ -244,10 +244,10 @@ class LevelConditionFightWithMonster extends LevelGeneralBase_1.LevelConditionBa
 exports.LevelConditionFightWithMonster = LevelConditionFightWithMonster;
 class LevelConditionPawnInRange extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, n, ...o) {
-    let t;
+    var t;
     return !(
       !o?.length ||
-      (e.LimitParams.size === 0
+      (0 === e.LimitParams.size
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
@@ -271,4 +271,4 @@ class LevelConditionPawnInRange extends LevelGeneralBase_1.LevelConditionBase {
   }
 }
 exports.LevelConditionPawnInRange = LevelConditionPawnInRange;
-// # sourceMappingURL=LevelConditionInvokeCheckedByEvent.js.map
+//# sourceMappingURL=LevelConditionInvokeCheckedByEvent.js.map

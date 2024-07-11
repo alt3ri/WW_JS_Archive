@@ -1,29 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuideStepInfo = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const StateBase_1 = require("../../../../Core/Utils/StateMachine/StateBase");
-const StateMachine_1 = require("../../../../Core/Utils/StateMachine/StateMachine");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiBehaviorBase_1 = require("../../../Ui/Base/UiBehaviorBase");
-const UiTimeDilation_1 = require("../../../Ui/Base/UiTimeDilation");
-const UiConfig_1 = require("../../../Ui/Define/UiConfig");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const UiManager_1 = require("../../../Ui/UiManager");
-const UiModel_1 = require("../../../Ui/UiModel");
-const TutorialController_1 = require("../../Tutorial/TutorialController");
-const UiBehaviorGuideFocus_1 = require("../Views/UiBehaviorGuideFocus");
-const GuideViewData_1 = require("./GuideViewData");
-const TutorialListInfo_1 = require("./TutorialListInfo");
-const stateDesc = ["Init", "Executing", "Pending", "Break", "Finish", "End"];
-const GUARANTEED_TIME = 3e4;
-const OFFSET_TIME = 2e3;
+const Log_1 = require("../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  StateBase_1 = require("../../../../Core/Utils/StateMachine/StateBase"),
+  StateMachine_1 = require("../../../../Core/Utils/StateMachine/StateMachine"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiBehaviorBase_1 = require("../../../Ui/Base/UiBehaviorBase"),
+  UiTimeDilation_1 = require("../../../Ui/Base/UiTimeDilation"),
+  UiConfig_1 = require("../../../Ui/Define/UiConfig"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  UiModel_1 = require("../../../Ui/UiModel"),
+  TutorialController_1 = require("../../Tutorial/TutorialController"),
+  UiBehaviorGuideFocus_1 = require("../Views/UiBehaviorGuideFocus"),
+  GuideViewData_1 = require("./GuideViewData"),
+  TutorialListInfo_1 = require("./TutorialListInfo"),
+  stateDesc = ["Init", "Executing", "Pending", "Break", "Finish", "End"],
+  GUARANTEED_TIME = 3e4,
+  OFFSET_TIME = 2e3;
 class InitState extends StateBase_1.StateBase {}
 class ExecutingState extends StateBase_1.StateBase {
   constructor() {
@@ -45,7 +45,7 @@ class ExecutingState extends StateBase_1.StateBase {
         e.Config.ContentType)
       ) {
         case 3: {
-          const i = ConfigManager_1.ConfigManager.GuideConfig.GetGuideTutorial(
+          var i = ConfigManager_1.ConfigManager.GuideConfig.GetGuideTutorial(
             this.Owner.Id,
           );
           const t = this.Owner.OwnerGroup.GetIfPreExecute();
@@ -91,8 +91,8 @@ class ExecutingState extends StateBase_1.StateBase {
       (TimerSystem_1.TimerSystem.Remove(this.$Yt), (this.$Yt = void 0));
   }
   tJt() {
-    const e = this.Owner.Config.Duration;
-    if (e !== 0 && void 0 === this.$Yt) {
+    var e = this.Owner.Config.Duration;
+    if (0 !== e && void 0 === this.$Yt) {
       let i = GUARANTEED_TIME;
       e > GUARANTEED_TIME &&
         (Log_1.Log.CheckInfo() &&
@@ -120,19 +120,19 @@ class ExecutingState extends StateBase_1.StateBase {
   }
   OnEnter() {
     this.QYt = !0;
-    const i = this.Owner.Config;
-    var e = i.TimeScale;
-    var e =
-      (e < 1 &&
-        !ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-        (InputDistributeController_1.InputDistributeController.RefreshInputTag(),
-        UiTimeDilation_1.UiTimeDilation.SetTimeDilationHighLevel(
-          e,
-          "GuideStep",
-        ),
-        this.tJt()),
-      i.ShowDelay);
-    e > 0
+    var i = this.Owner.Config,
+      e = i.TimeScale,
+      e =
+        (e < 1 &&
+          !ModelManager_1.ModelManager.GameModeModel.IsMulti &&
+          (InputDistributeController_1.InputDistributeController.RefreshInputTag(),
+          UiTimeDilation_1.UiTimeDilation.SetTimeDilationHighLevel(
+            e,
+            "GuideStep",
+          ),
+          this.tJt()),
+        i.ShowDelay);
+    0 < e
       ? (this.ZYt(),
         (this.YYt = TimerSystem_1.TimerSystem.Delay((i) => {
           (this.YYt = void 0), this.iJt();
@@ -147,17 +147,19 @@ class ExecutingState extends StateBase_1.StateBase {
   }
   OnExit() {
     this.QYt = !1;
-    let i;
-    const e = this.Owner;
-    var t = ((e.IsExitingFromExecuting = !0), this.Owner.Config.TimeScale);
-    var t =
-      (t < 1 &&
-        !ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-        (this.eJt(),
-        UiTimeDilation_1.UiTimeDilation.ResetTimeDilationHighLevel("GuideStep"),
-        InputDistributeController_1.InputDistributeController.RefreshInputTag()),
-      this.ZYt(),
-      e.GuideView);
+    var i,
+      e = this.Owner,
+      t = ((e.IsExitingFromExecuting = !0), this.Owner.Config.TimeScale),
+      t =
+        (t < 1 &&
+          !ModelManager_1.ModelManager.GameModeModel.IsMulti &&
+          (this.eJt(),
+          UiTimeDilation_1.UiTimeDilation.ResetTimeDilationHighLevel(
+            "GuideStep",
+          ),
+          InputDistributeController_1.InputDistributeController.RefreshInputTag()),
+        this.ZYt(),
+        e.GuideView);
     t &&
       ((i = t.GetViewId()),
       t.IsDestroyOrDestroying ||
@@ -236,11 +238,11 @@ class GuideStepInfo {
     this.CanEnterExecuting() ? this.SwitchState(1) : this.SwitchState(2);
   }
   AssignGuideView(i) {
-    let e, t;
+    var e, t;
     i &&
       ((e = i.Info.Name),
       (t = i.GetViewId()),
-      this.StateMachine.CurrentState !== 1
+      1 !== this.StateMachine.CurrentState
         ? (UiManager_1.UiManager.CloseViewById(t),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
@@ -263,7 +265,7 @@ class GuideStepInfo {
             )));
   }
   SwitchState(i) {
-    this.StateMachine.CurrentState === 5 && i !== 0
+    5 === this.StateMachine.CurrentState && 0 !== i
       ? Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Guide",
@@ -295,16 +297,16 @@ class GuideStepInfo {
   }
   aJt() {
     if (
-      this.Config.ContentType === 4 &&
+      4 === this.Config.ContentType &&
       ConfigManager_1.ConfigManager.GuideConfig.GetGuideFocus(this.Id).UseMask
     )
       return !0;
     return !1;
   }
   hJt() {
-    let i;
-    const e = ConfigManager_1.ConfigManager.GuideConfig.GetGuideFocus(this.Id);
-    const t = e.ViewName;
+    var i,
+      e = ConfigManager_1.ConfigManager.GuideConfig.GetGuideFocus(this.Id),
+      t = e.ViewName;
     return t
       ? !(
           !(i = UiConfig_1.UiConfig.TryGetViewInfo(t)) ||
@@ -372,7 +374,7 @@ class GuideStepInfo {
         if (!this.hJt()) return this.StopLockInput(), !1;
         this.aJt() && this.lJt();
         const e = this.ViewData.GetAttachedView();
-        let i;
+        var i;
         return e
           ? (this.oJt ||
               ((this.oJt = new UiBehaviorGuideFocus_1.UiBehaviorGuideFocus(e)),
@@ -462,4 +464,4 @@ class GuideStepInfo {
   }
 }
 exports.GuideStepInfo = GuideStepInfo;
-// # sourceMappingURL=GuideStepInfo.js.map
+//# sourceMappingURL=GuideStepInfo.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BehaviorTreeShowBridge = void 0);
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const PublicUtil_1 = require("../../../Common/PublicUtil");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GeneralLogicTreeDefine_1 = require("../Define/GeneralLogicTreeDefine");
+const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  PublicUtil_1 = require("../../../Common/PublicUtil"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GeneralLogicTreeDefine_1 = require("../Define/GeneralLogicTreeDefine");
 class BehaviorTreeShowBridge {
   constructor() {
     (this.Yre = void 0),
@@ -20,7 +20,7 @@ class BehaviorTreeShowBridge {
       (this.TrackTextConfig = void 0);
   }
   static Create(i) {
-    if (BehaviorTreeShowBridge.RUe.length === 0) {
+    if (0 === BehaviorTreeShowBridge.RUe.length) {
       const e = new BehaviorTreeShowBridge();
       return e.Reset(i), e;
     }
@@ -65,7 +65,7 @@ class BehaviorTreeShowBridge {
     return this.Yre.ContainTag(5);
   }
   CheckShowConfigEmpty() {
-    const i = this.TrackTextConfig;
+    var i = this.TrackTextConfig;
     let e = void 0;
     if (
       (e =
@@ -75,10 +75,10 @@ class BehaviorTreeShowBridge {
       !StringUtils_1.StringUtils.IsBlank(e)
     )
       return !1;
-    if (i.SubTitles && i.SubTitles.length !== 0)
+    if (i.SubTitles && 0 !== i.SubTitles.length)
       for (const r of i.SubTitles)
         if (r.TidTitle) {
-          const t = PublicUtil_1.PublicUtil.GetConfigTextByKey(r.TidTitle);
+          var t = PublicUtil_1.PublicUtil.GetConfigTextByKey(r.TidTitle);
           if (!StringUtils_1.StringUtils.IsBlank(t)) return !1;
         }
     return !0;
@@ -91,4 +91,4 @@ class BehaviorTreeShowBridge {
   }
 }
 (exports.BehaviorTreeShowBridge = BehaviorTreeShowBridge).RUe = [];
-// # sourceMappingURL=BehaviorTreeShowBridge.js.map
+//# sourceMappingURL=BehaviorTreeShowBridge.js.map

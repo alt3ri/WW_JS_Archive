@@ -1,33 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const AiAlertById_1 = require("../../../Core/Define/ConfigQuery/AiAlertById");
-const AiBaseById_1 = require("../../../Core/Define/ConfigQuery/AiBaseById");
-const AiBaseSkillById_1 = require("../../../Core/Define/ConfigQuery/AiBaseSkillById");
-const AiBattleWanderById_1 = require("../../../Core/Define/ConfigQuery/AiBattleWanderById");
-const AiBattleWanderGroupById_1 = require("../../../Core/Define/ConfigQuery/AiBattleWanderGroupById");
-const AiFleeById_1 = require("../../../Core/Define/ConfigQuery/AiFleeById");
-const AiHateById_1 = require("../../../Core/Define/ConfigQuery/AiHateById");
-const AiPatrolById_1 = require("../../../Core/Define/ConfigQuery/AiPatrolById");
-const AiSenseById_1 = require("../../../Core/Define/ConfigQuery/AiSenseById");
-const AiSenseGroupById_1 = require("../../../Core/Define/ConfigQuery/AiSenseGroupById");
-const AiSkillInfosById_1 = require("../../../Core/Define/ConfigQuery/AiSkillInfosById");
-const AiSkillPreconditionById_1 = require("../../../Core/Define/ConfigQuery/AiSkillPreconditionById");
-const AiStateMachineConfigById_1 = require("../../../Core/Define/ConfigQuery/AiStateMachineConfigById");
-const AiTeamAreaNewById_1 = require("../../../Core/Define/ConfigQuery/AiTeamAreaNewById");
-const AiTeamAttackById_1 = require("../../../Core/Define/ConfigQuery/AiTeamAttackById");
-const AiTeamLevelNewById_1 = require("../../../Core/Define/ConfigQuery/AiTeamLevelNewById");
-const AiWanderById_1 = require("../../../Core/Define/ConfigQuery/AiWanderById");
-const AiWanderRadiusConfigById_1 = require("../../../Core/Define/ConfigQuery/AiWanderRadiusConfigById");
-const BlackboardWhiteListAll_1 = require("../../../Core/Define/ConfigQuery/BlackboardWhiteListAll");
-const SpecialHateAndSenseById_1 = require("../../../Core/Define/ConfigQuery/SpecialHateAndSenseById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const AiPerception_1 = require("../Controller/AiPerception");
-const AiSkill_1 = require("../Controller/AiSkill");
-const AiWanderInfos_1 = require("../Controller/AiWanderInfos");
-const commonStateMachine = "SM_Common";
+const Log_1 = require("../../../Core/Common/Log"),
+  AiAlertById_1 = require("../../../Core/Define/ConfigQuery/AiAlertById"),
+  AiBaseById_1 = require("../../../Core/Define/ConfigQuery/AiBaseById"),
+  AiBaseSkillById_1 = require("../../../Core/Define/ConfigQuery/AiBaseSkillById"),
+  AiBattleWanderById_1 = require("../../../Core/Define/ConfigQuery/AiBattleWanderById"),
+  AiBattleWanderGroupById_1 = require("../../../Core/Define/ConfigQuery/AiBattleWanderGroupById"),
+  AiFleeById_1 = require("../../../Core/Define/ConfigQuery/AiFleeById"),
+  AiHateById_1 = require("../../../Core/Define/ConfigQuery/AiHateById"),
+  AiPatrolById_1 = require("../../../Core/Define/ConfigQuery/AiPatrolById"),
+  AiSenseById_1 = require("../../../Core/Define/ConfigQuery/AiSenseById"),
+  AiSenseGroupById_1 = require("../../../Core/Define/ConfigQuery/AiSenseGroupById"),
+  AiSkillInfosById_1 = require("../../../Core/Define/ConfigQuery/AiSkillInfosById"),
+  AiSkillPreconditionById_1 = require("../../../Core/Define/ConfigQuery/AiSkillPreconditionById"),
+  AiStateMachineConfigById_1 = require("../../../Core/Define/ConfigQuery/AiStateMachineConfigById"),
+  AiTeamAreaNewById_1 = require("../../../Core/Define/ConfigQuery/AiTeamAreaNewById"),
+  AiTeamAttackById_1 = require("../../../Core/Define/ConfigQuery/AiTeamAttackById"),
+  AiTeamLevelNewById_1 = require("../../../Core/Define/ConfigQuery/AiTeamLevelNewById"),
+  AiWanderById_1 = require("../../../Core/Define/ConfigQuery/AiWanderById"),
+  AiWanderRadiusConfigById_1 = require("../../../Core/Define/ConfigQuery/AiWanderRadiusConfigById"),
+  BlackboardWhiteListAll_1 = require("../../../Core/Define/ConfigQuery/BlackboardWhiteListAll"),
+  SpecialHateAndSenseById_1 = require("../../../Core/Define/ConfigQuery/SpecialHateAndSenseById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  AiPerception_1 = require("../Controller/AiPerception"),
+  AiSkill_1 = require("../Controller/AiSkill"),
+  AiWanderInfos_1 = require("../Controller/AiWanderInfos"),
+  commonStateMachine = "SM_Common";
 class AiConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments),
@@ -35,7 +35,7 @@ class AiConfig extends ConfigBase_1.ConfigBase {
       (this.Ste = new Set());
   }
   OnInit() {
-    const e =
+    var e =
       AiStateMachineConfigById_1.configAiStateMachineConfigById.GetConfig(
         commonStateMachine,
       );
@@ -61,7 +61,7 @@ class AiConfig extends ConfigBase_1.ConfigBase {
     return this.Ste.has(e);
   }
   LoadAiConfig(e, r, i = !1) {
-    const o = e.CharActorComp;
+    var o = e.CharActorComp;
     (e.AiBase = AiBaseById_1.configAiBaseById.GetConfig(r)),
       e.AiBase
         ? (e.AiBase.SubBehaviorConfigs && this.Ete(e, i),
@@ -81,12 +81,12 @@ class AiConfig extends ConfigBase_1.ConfigBase {
           );
   }
   yte(e) {
-    const r = e.CharActorComp;
-    let i = r.CreatureData?.GetPbEntityInitData();
+    var r = e.CharActorComp,
+      i = r.CreatureData?.GetPbEntityInitData();
     i &&
       (i = (0, IComponent_1.getComponent)(i.ComponentsData, "AiComponent"))
         ?.InitState &&
-      i.InitState.Type === 1 &&
+      1 === i.InitState.Type &&
       i.InitState.Wander &&
       !e.AiWanderRadiusConfig &&
       ((e.AiWanderRadiusConfig =
@@ -105,8 +105,8 @@ class AiConfig extends ConfigBase_1.ConfigBase {
       );
   }
   Ete(e, r = !1) {
-    const i = e.CharActorComp;
-    const o = this.LoadSpecialHateAndSenseConfig(e);
+    var i = e.CharActorComp,
+      o = this.LoadSpecialHateAndSenseConfig(e);
     this.yte(e);
     let a = e.AiBase.SubBehaviorConfigs.get("AiWander");
     if (
@@ -134,18 +134,18 @@ class AiConfig extends ConfigBase_1.ConfigBase {
         Number(a),
       );
       if (n)
-        if (n.GroupIds.length === 0)
+        if (0 === n.GroupIds.length)
           e.AiWanderInfos.AiBattleWanderGroups = new Array();
         else {
-          const t = new Array();
+          var t = new Array();
           for (const f of n.GroupIds) {
-            const d =
+            var d =
               AiBattleWanderGroupById_1.configAiBattleWanderGroupById.GetConfig(
                 f,
               );
             t.push(d);
           }
-          const A = new Map();
+          var A = new Map();
           for (const B of t) A.set(B.Id, B);
           t.length = 0;
           for (const l of n.GroupIds) t.push(A.get(l));
@@ -216,10 +216,10 @@ class AiConfig extends ConfigBase_1.ConfigBase {
             )));
   }
   Ite(e) {
-    e.BaseSkill.RandomSkills.length > 0 && e.ActiveSkillGroup.add(0);
-    let r;
-    const i = new Set();
-    const o = new Array();
+    0 < e.BaseSkill.RandomSkills.length && e.ActiveSkillGroup.add(0);
+    var r,
+      i = new Set(),
+      o = new Array();
     for (const t of e.BaseSkill.RandomSkills)
       for (const d of t.ArrayInt)
         i.has(d) ||
@@ -227,8 +227,8 @@ class AiConfig extends ConfigBase_1.ConfigBase {
           (r = AiSkillInfosById_1.configAiSkillInfosById.GetConfig(d)),
           o.push(r));
     i.clear();
-    let a;
-    const n = new Array();
+    var a,
+      n = new Array();
     for (const A of o)
       e.SkillInfos.set(A.Id, A),
         i.has(A.SkillPreconditionId) ||
@@ -249,13 +249,13 @@ class AiConfig extends ConfigBase_1.ConfigBase {
     ) {
       e.AiTeamAreas = [];
       for (const n of e.AiTeamLevel.PositionId) {
-        const i = AiTeamAreaNewById_1.configAiTeamAreaNewById.GetConfig(n);
+        var i = AiTeamAreaNewById_1.configAiTeamAreaNewById.GetConfig(n);
         e.AiTeamAreas.push(i);
       }
       e.AiTeamAttacks = new Array();
-      const o = new Map();
+      var o = new Map();
       for (const t of e.AiTeamAreas) {
-        let a = o.get(t.AttackWeightId);
+        var a = o.get(t.AttackWeightId);
         a
           ? e.AiTeamAttacks.push(a)
           : (a = AiTeamAttackById_1.configAiTeamAttackById.GetConfig(
@@ -281,7 +281,7 @@ class AiConfig extends ConfigBase_1.ConfigBase {
       if (e) {
         e = e.split("|");
         if (!(e.length <= r)) {
-          const i = AiPatrolById_1.configAiPatrolById.GetConfig(Number(e[r]));
+          var i = AiPatrolById_1.configAiPatrolById.GetConfig(Number(e[r]));
           if (i) return i;
           Log_1.Log.CheckError() &&
             Log_1.Log.Error("BehaviorTree", 6, "缺少AiPatrol配置", [
@@ -293,29 +293,29 @@ class AiConfig extends ConfigBase_1.ConfigBase {
     }
   }
   LoadAiPatrolConfigById(e) {
-    const r = AiPatrolById_1.configAiPatrolById.GetConfig(e);
+    var r = AiPatrolById_1.configAiPatrolById.GetConfig(e);
     if (r) return r;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("BehaviorTree", 6, "缺少AiPatrol配置", ["Id", e]);
   }
   Tte(e, r, i) {
     if (r) {
-      const o = AiSenseGroupById_1.configAiSenseGroupById.GetConfig(Number(r));
+      var o = AiSenseGroupById_1.configAiSenseGroupById.GetConfig(Number(r));
       if (o) {
-        if (o.AiSenseIds.length === 0)
+        if (0 === o.AiSenseIds.length)
           return new AiPerception_1.AiPerception(e, o, new Array());
         let r = 0;
-        const a = [];
-        const n = new Array();
+        var a = [],
+          n = new Array();
         for (const A of o.AiSenseIds) {
           let e = -1;
-          r === 0 && i
+          0 === r && i
             ? ((e = i.FirstAiSenseId), a.push(i.FirstAiSenseId))
             : ((e = A), a.push(A));
-          const t = AiSenseById_1.configAiSenseById.GetConfig(e);
+          var t = AiSenseById_1.configAiSenseById.GetConfig(e);
           n.push(t), ++r;
         }
-        const d = new Map();
+        var d = new Map();
         for (const f of n) d.set(f.Id, f);
         n.length = 0;
         for (const B of a) n.push(d.get(B));
@@ -332,7 +332,7 @@ class AiConfig extends ConfigBase_1.ConfigBase {
     }
   }
   LoadAiSense(e) {
-    const r = AiSenseById_1.configAiSenseById.GetConfig(Number(e));
+    var r = AiSenseById_1.configAiSenseById.GetConfig(Number(e));
     if (r) return r;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("BehaviorTree", 6, "缺少AiSense配置", ["AiSenseId", e]);
@@ -354,7 +354,7 @@ class AiConfig extends ConfigBase_1.ConfigBase {
     );
   }
   LoadAiHate(e) {
-    let r;
+    var r;
     if (e)
       return (
         (r = AiHateById_1.configAiHateById.GetConfig(Number(e))) ||
@@ -371,7 +371,7 @@ class AiConfig extends ConfigBase_1.ConfigBase {
     return this.LoadAiHate(Number(r));
   }
   LoadAiAlert(e) {
-    let r;
+    var r;
     if (e)
       return (
         (r = AiAlertById_1.configAiAlertById.GetConfig(Number(e))) ||
@@ -382,4 +382,4 @@ class AiConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.AiConfig = AiConfig;
-// # sourceMappingURL=AiConfig.js.map
+//# sourceMappingURL=AiConfig.js.map

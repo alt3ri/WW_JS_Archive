@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleFloatTipsView = void 0);
-const UE = require("ue");
-const Time_1 = require("../../../../../Core/Common/Time");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const TIMER_INTERVAL = 100;
-const COUNTDOWN_TEXT_KEY = "BattleTipCountdown";
+const UE = require("ue"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  TIMER_INTERVAL = 100,
+  COUNTDOWN_TEXT_KEY = "BattleTipCountdown";
 class BattleFloatTipsView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -18,10 +18,10 @@ class BattleFloatTipsView extends UiViewBase_1.UiViewBase {
       (this.tdt = 0),
       (this.j3 = void 0),
       (this.OnTimerUpdate = () => {
-        let e;
+        var e;
         !this.edt || this.edt.EndTime <= Time_1.Time.WorldTimeSeconds
           ? this.idt()
-          : this.edt.Type === 1 &&
+          : 1 === this.edt.Type &&
             (e = Math.max(
               Math.ceil(
                 this.edt.CountdownEndTime - Time_1.Time.WorldTimeSeconds,
@@ -36,7 +36,7 @@ class BattleFloatTipsView extends UiViewBase_1.UiViewBase {
             ));
       }),
       (this.odt = () => {
-        const e = ModelManager_1.ModelManager.BattleUiModel.FloatTipsData;
+        var e = ModelManager_1.ModelManager.BattleUiModel.FloatTipsData;
         (this.edt = e.CurTip), this.rdt();
       });
   }
@@ -53,7 +53,7 @@ class BattleFloatTipsView extends UiViewBase_1.UiViewBase {
         this.OnTimerUpdate,
         TIMER_INTERVAL,
       ));
-    const e = ModelManager_1.ModelManager.BattleUiModel.FloatTipsData;
+    var e = ModelManager_1.ModelManager.BattleUiModel.FloatTipsData;
     let t = e.CurTip;
     (t = e.CheckIsExpired(t) ? e.GetNextFloatTip() : t) &&
       ((this.edt = t), this.rdt());
@@ -75,7 +75,7 @@ class BattleFloatTipsView extends UiViewBase_1.UiViewBase {
     );
   }
   idt() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.BattleUiModel.FloatTipsData.GetNextFloatTip();
     e ? ((this.edt = e), this.rdt()) : this.CloseMe();
   }
@@ -102,4 +102,4 @@ class BattleFloatTipsView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.BattleFloatTipsView = BattleFloatTipsView;
-// # sourceMappingURL=BattleFloatTipsView.js.map
+//# sourceMappingURL=BattleFloatTipsView.js.map

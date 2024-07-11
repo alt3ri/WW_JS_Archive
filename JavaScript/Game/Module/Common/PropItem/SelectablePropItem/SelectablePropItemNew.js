@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SelectablePropItemNew = void 0);
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const LguiEventSystemManager_1 = require("../../../../Ui/LguiEventSystem/LguiEventSystemManager");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const LongPressButtonItem_1 = require("../../Button/LongPressButtonItem");
-const SelectablePropItemBase_1 = require("./SelectablePropItemBase");
+const StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LguiEventSystemManager_1 = require("../../../../Ui/LguiEventSystem/LguiEventSystemManager"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  LongPressButtonItem_1 = require("../../Button/LongPressButtonItem"),
+  SelectablePropItemBase_1 = require("./SelectablePropItemBase");
 class SelectablePropItemNew extends SelectablePropItemBase_1.SelectablePropItemBase {
   constructor() {
     super(...arguments),
@@ -25,8 +25,8 @@ class SelectablePropItemNew extends SelectablePropItemBase_1.SelectablePropItemB
       (this.Qwt = void 0),
       (this.Xwt = !1),
       (this.Gwt = () => {
-        let t;
-        if (this.Xwt && this.GetSelectedNumber?.(this.PropData) === 1)
+        var t;
+        if (this.Xwt && 1 === this.GetSelectedNumber?.(this.PropData))
           return this.Fwt();
         return (
           this.PromptFunction &&
@@ -44,7 +44,7 @@ class SelectablePropItemNew extends SelectablePropItemBase_1.SelectablePropItemB
         );
       }),
       (this.Fwt = () => {
-        let t;
+        var t;
         return (
           !!this.ReduceFunction &&
           ((t = this.ReduceFunction(this.PropData, this.GridIndex)) &&
@@ -59,8 +59,9 @@ class SelectablePropItemNew extends SelectablePropItemBase_1.SelectablePropItemB
         );
       }),
       (this.Nwt = (t) => {
-        LguiEventSystemManager_1.LguiEventSystemManager.GetPointerEventData(0)
-          .inputType === 1 &&
+        1 ===
+          LguiEventSystemManager_1.LguiEventSystemManager.GetPointerEventData(0)
+            .inputType &&
           (this.ShowItemTipsFunction?.(this.PropData, this.GridIndex),
           this.ScrollViewDelegate) &&
           this.ScrollViewDelegate.SelectGridProxy(
@@ -70,17 +71,17 @@ class SelectablePropItemNew extends SelectablePropItemBase_1.SelectablePropItemB
           );
       }),
       (this.T7e = () => {
-        let t, i;
+        var t, i;
         return !(
           !this.GetSelectableToggle() ||
           ((t = this.GetSelectableToggle().GetToggleState()),
-          (i = this.GetSelectedNumber?.(this.PropData) ?? 0) > 0 && t === 1) ||
-          (i <= 0 && t === 0)
+          0 < (i = this.GetSelectedNumber?.(this.PropData) ?? 0) && 1 === t) ||
+          (i <= 0 && 0 === t)
         );
       });
   }
   OnStart() {
-    let t;
+    var t;
     this.GetControlItem()?.SetUIActive(!1),
       this.GetSelectableToggle() &&
         ((t = this.GetSelectableToggle()).OnPointEnterCallBack.Bind(this.Nwt),
@@ -100,12 +101,12 @@ class SelectablePropItemNew extends SelectablePropItemBase_1.SelectablePropItemB
       ));
   }
   Vwt() {
-    let t, i;
+    var t, i;
     this.HideSelectNumberStateFunction
       ? this.SetControllerState(
           this.HideSelectNumberStateFunction(this.PropData, this.GridIndex),
         )
-      : ((this.GetSelectedNumber?.(this.PropData) ?? 0) > 0
+      : (0 < (this.GetSelectedNumber?.(this.PropData) ?? 0)
           ? this.SetControllerState(!0)
           : this.SetControllerState(!1),
         this.Oqe()),
@@ -113,7 +114,7 @@ class SelectablePropItemNew extends SelectablePropItemBase_1.SelectablePropItemB
         ((t = ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(
           this.PropData.IncId,
         )),
-        (i = this.GetSelectedNumber?.(this.PropData) ?? 0) > 0 &&
+        0 < (i = this.GetSelectedNumber?.(this.PropData) ?? 0) &&
         StringUtils_1.StringUtils.IsEmpty(t?.GetDefaultDownText())
           ? LguiUtil_1.LguiUtil.SetLocalText(
               this.GetSelectNumberText(),
@@ -124,19 +125,19 @@ class SelectablePropItemNew extends SelectablePropItemBase_1.SelectablePropItemB
           : this.ShowDefaultDownText());
   }
   SetControllerState(t) {
-    const i = this.GetControlItem();
-    const s = ModelManager_1.ModelManager.InventoryModel.GetItemDataBase(
-      this.PropData,
-    )[0];
+    var i = this.GetControlItem(),
+      s = ModelManager_1.ModelManager.InventoryModel.GetItemDataBase(
+        this.PropData,
+      )[0];
     s
       ? (i?.SetUIActive(t),
         t &&
-          ((t = s.GetMaxStackCount() === 1),
+          ((t = 1 === s.GetMaxStackCount()),
           this.GetFinishSelectItem()?.SetUIActive(t)))
       : i?.SetUIActive(!1);
   }
   Oqe() {
-    (this.GetSelectedNumber?.(this.PropData) ?? 0) > 0
+    0 < (this.GetSelectedNumber?.(this.PropData) ?? 0)
       ? this.fRt(1)
       : this.fRt(0);
   }
@@ -156,8 +157,7 @@ class SelectablePropItemNew extends SelectablePropItemBase_1.SelectablePropItemB
   }
   OnRefresh(t, i) {
     this.Vwt(), this.Oqe();
-    const s =
-      this.GetSelectedSpriteActive?.(this.PropData, this.GridIndex) ?? !1;
+    var s = this.GetSelectedSpriteActive?.(this.PropData, this.GridIndex) ?? !1;
     this.GetSelectItem()?.SetUIActive(s);
   }
   OnSelected(t) {
@@ -204,4 +204,4 @@ class SelectablePropItemNew extends SelectablePropItemBase_1.SelectablePropItemB
   }
 }
 exports.SelectablePropItemNew = SelectablePropItemNew;
-// # sourceMappingURL=SelectablePropItemNew.js.map
+//# sourceMappingURL=SelectablePropItemNew.js.map

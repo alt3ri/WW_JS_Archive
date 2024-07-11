@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HudUnitBase = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const UiLayer_1 = require("../../Ui/UiLayer");
-const VisibleStateUtil_1 = require("../BattleUi/VisibleStateUtil");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
+  VisibleStateUtil_1 = require("../BattleUi/VisibleStateUtil");
 class HudUnitBase extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -29,14 +29,14 @@ class HudUnitBase extends UiPanelBase_1.UiPanelBase {
   Tick(i) {}
   AfterTick(i) {}
   SetVisible(i, t = 0) {
-    const e = this.GetVisible();
-    var t =
-      ((this.VisibleState = VisibleStateUtil_1.VisibleStateUtil.SetVisible(
-        this.VisibleState,
-        i,
-        t,
-      )),
-      this.GetVisible());
+    var e = this.GetVisible(),
+      t =
+        ((this.VisibleState = VisibleStateUtil_1.VisibleStateUtil.SetVisible(
+          this.VisibleState,
+          i,
+          t,
+        )),
+        this.GetVisible());
     (e === t && this.GetActive() === t) || this.SetActive(i);
   }
   GetVisible() {
@@ -50,11 +50,11 @@ class HudUnitBase extends UiPanelBase_1.UiPanelBase {
       (this.RootItem.SetAnchorOffsetX(i), this.RootItem.SetAnchorOffsetY(t));
   }
   InitTweenAnim(i) {
-    const t = [];
-    const e = this.GetItem(i)
-      .GetOwner()
-      .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass());
-    const s = e.Num();
+    var t = [],
+      e = this.GetItem(i)
+        .GetOwner()
+        .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass()),
+      s = e.Num();
     for (let i = 0; i < s; i++) t.push(e.Get(i));
     this.TweenAnimMap || (this.TweenAnimMap = new Map()),
       this.TweenAnimMap.set(i, t);
@@ -69,4 +69,4 @@ class HudUnitBase extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.HudUnitBase = HudUnitBase;
-// # sourceMappingURL=HudUnitBase.js.map
+//# sourceMappingURL=HudUnitBase.js.map

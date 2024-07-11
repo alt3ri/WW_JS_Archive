@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionTeamRoleLevel = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionTeamRoleLevel extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, a) {
-    let r, l;
+    var r, l;
     return (
       !!e.LimitParams &&
       !!(r = e.LimitParams.get("Level")) &&
@@ -24,4 +24,4 @@ class LevelConditionTeamRoleLevel extends LevelGeneralBase_1.LevelConditionBase 
   }
 }
 exports.LevelConditionTeamRoleLevel = LevelConditionTeamRoleLevel;
-// # sourceMappingURL=LevelConditionTeamRoleLevel.js.map
+//# sourceMappingURL=LevelConditionTeamRoleLevel.js.map

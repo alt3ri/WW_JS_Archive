@@ -1,23 +1,23 @@
 "use strict";
 function getExploreLevel(e) {
   if (e && e.Conditions) {
-    var e = e.Conditions.filter((e) => e.Type === "ExploreLevel");
-    if (e && e.length !== 0) return (e = e[0]) ? e.ExploreLevel : 0;
+    var e = e.Conditions.filter((e) => "ExploreLevel" === e.Type);
+    if (e && 0 !== e.length) return (e = e[0]) ? e.ExploreLevel : 0;
   }
 }
 function getPreQuests(e) {
   if (e?.Conditions) {
-    e = e.Conditions.filter((e) => e.Type === "PreQuest");
+    e = e.Conditions.filter((e) => "PreQuest" === e.Type);
     if (e) return e ? e.map((e) => e.PreQuest) : [];
   }
 }
 function getPreChildQuests(e) {
   if (e && e.Conditions) {
-    e = e.Conditions.filter((e) => e.Type === "PreChildQuest");
+    e = e.Conditions.filter((e) => "PreChildQuest" === e.Type);
     if (e) return e ? e.map((e) => e.PreChildQuest) : [];
   }
 }
-let EAiStateType,
+var EAiStateType,
   ELevelPlayState,
   ESkillReadyType,
   ECheckJigsawInfoType,
@@ -58,7 +58,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.countNameMap =
       void 0),
   (exports.countNameMap = {
-    0: "全部满足",
+    [0]: "全部满足",
     1: "任意满足",
     2: "满足2个",
     3: "满足3个",
@@ -146,4 +146,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e.EventKeyB = "EventKeyB"),
       (e.EventKeyC = "EventKeyC");
   })((EEventKey = exports.EEventKey || (exports.EEventKey = {})));
-// # sourceMappingURL=ICondition.js.map
+//# sourceMappingURL=ICondition.js.map

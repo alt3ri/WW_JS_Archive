@@ -12,21 +12,21 @@ class RedDotEventData {
 const TICK_LIMITCOUNT = 10;
 class RedDotSystem {
   static PushToEventQueue(e, s) {
-    let t;
+    var t;
     this.Xsr.find((t) => t.Event === e && t.Param === s) ||
       ((t = new RedDotEventData(e, s)), this.Xsr.push(t));
   }
   static $sr() {
-    const t = RedDotSystem.Xsr.shift();
+    var t = RedDotSystem.Xsr.shift();
     t && t.HandleEvent();
   }
   static Tick(t) {
-    const e = RedDotSystem.Xsr.length;
+    var e = RedDotSystem.Xsr.length;
     if (!(e <= 0)) {
-      const s = e > TICK_LIMITCOUNT ? TICK_LIMITCOUNT : e;
+      var s = e > TICK_LIMITCOUNT ? TICK_LIMITCOUNT : e;
       for (let t = 0; t < s; t++) RedDotSystem.$sr();
     }
   }
 }
 (exports.RedDotSystem = RedDotSystem).Xsr = [];
-// # sourceMappingURL=RedDotSystem.js.map
+//# sourceMappingURL=RedDotSystem.js.map

@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelAiTaskTurnAndPlayMontage = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const AiContollerLibrary_1 = require("../../../AI/Controller/AiContollerLibrary");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const BasePerformComponent_1 = require("../../../NewWorld/Character/Common/Component/BasePerformComponent");
-const LevelAiTask_1 = require("../LevelAiTask");
-const TURN_SPEED = 200;
-const TOLERANCE = 10;
+const Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  AiContollerLibrary_1 = require("../../../AI/Controller/AiContollerLibrary"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  BasePerformComponent_1 = require("../../../NewWorld/Character/Common/Component/BasePerformComponent"),
+  LevelAiTask_1 = require("../LevelAiTask"),
+  TURN_SPEED = 200,
+  TOLERANCE = 10;
 class LevelAiTaskTurnAndPlayMontage extends LevelAiTask_1.LevelAiTask {
   constructor() {
     super(...arguments),
@@ -69,8 +69,8 @@ class LevelAiTaskTurnAndPlayMontage extends LevelAiTask_1.LevelAiTask {
     (this.Tae = void 0), (this.WTe = 0);
   }
   QTe() {
-    let t;
-    const e = this.Params;
+    var t,
+      e = this.Params;
     e
       ? (t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
           e.EntityId,
@@ -99,14 +99,14 @@ class LevelAiTaskTurnAndPlayMontage extends LevelAiTask_1.LevelAiTask {
       : this.FinishLatentTask(1);
   }
   XTe() {
-    let t;
-    let e;
-    let s = this.Params;
+    var t,
+      e,
+      s = this.Params;
     s
       ? ((this.NTe = s.LoopDuration ?? 0),
         (this.OTe = s.RepeatTimes ?? 0),
-        (this.qTe = void 0 !== this.NTe && this.NTe !== 0),
-        (this.GTe = this.NTe === -1 || this.OTe === -1),
+        (this.qTe = void 0 !== this.NTe && 0 !== this.NTe),
+        (this.GTe = -1 === this.NTe || -1 === this.OTe),
         (t = this.CreatureDataComponent.Entity.GetComponent(37)),
         (e = new BasePerformComponent_1.PlayMontageConfig(
           this.OTe,
@@ -130,4 +130,4 @@ class LevelAiTaskTurnAndPlayMontage extends LevelAiTask_1.LevelAiTask {
   }
 }
 exports.LevelAiTaskTurnAndPlayMontage = LevelAiTaskTurnAndPlayMontage;
-// # sourceMappingURL=LevelAiTaskTurnAndPlayMontage.js.map
+//# sourceMappingURL=LevelAiTaskTurnAndPlayMontage.js.map

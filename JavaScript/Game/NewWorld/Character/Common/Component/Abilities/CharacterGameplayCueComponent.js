@@ -1,42 +1,46 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, a, t, r) {
-    let o;
-    const i = arguments.length;
-    let u =
-      i < 3 ? a : r === null ? (r = Object.getOwnPropertyDescriptor(a, t)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      i = arguments.length,
+      u =
+        i < 3
+          ? a
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(a, t))
+            : r;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       u = Reflect.decorate(e, a, t, r);
     else
-      for (let l = e.length - 1; l >= 0; l--)
-        (o = e[l]) && (u = (i < 3 ? o(u) : i > 3 ? o(a, t, u) : o(a, t)) || u);
-    return i > 3 && u && Object.defineProperty(a, t, u), u;
+      for (var l = e.length - 1; 0 <= l; l--)
+        (o = e[l]) && (u = (i < 3 ? o(u) : 3 < i ? o(a, t, u) : o(a, t)) || u);
+    return 3 < i && u && Object.defineProperty(a, t, u), u;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterGameplayCueComponent = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const GameplayCueById_1 = require("../../../../../../Core/Define/ConfigQuery/GameplayCueById");
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const TimeUtil_1 = require("../../../../../Common/TimeUtil");
-const EffectSystem_1 = require("../../../../../Effect/EffectSystem");
-const CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage");
-const GameplayCueBeam_1 = require("./GameplayCueSFX/GameplayCueBeam");
-const GameplayCueCameraEffect_1 = require("./GameplayCueSFX/GameplayCueCameraEffect");
-const GameplayCueEffect_1 = require("./GameplayCueSFX/GameplayCueEffect");
-const GameplayCueFixHook_1 = require("./GameplayCueSFX/GameplayCueFixHook");
-const GameplayCueFollow_1 = require("./GameplayCueSFX/GameplayCueFollow");
-const GameplayCueFromSummoned_1 = require("./GameplayCueSFX/GameplayCueFromSummoned");
-const GameplayCueHideBone_1 = require("./GameplayCueSFX/GameplayCueHideBone");
-const GameplayCueHideMesh_1 = require("./GameplayCueSFX/GameplayCueHideMesh");
-const GameplayCueHookUp_1 = require("./GameplayCueSFX/GameplayCueHookUp");
-const GameplayCueManipulateInteract_1 = require("./GameplayCueSFX/GameplayCueManipulateInteract");
-const GameplayCueMaterial_1 = require("./GameplayCueSFX/GameplayCueMaterial");
-const GameplayCueMoveSpline_1 = require("./GameplayCueSFX/GameplayCueMoveSpline");
-const GameplayCueUIEffect_1 = require("./GameplayCueSFX/GameplayCueUIEffect");
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  GameplayCueById_1 = require("../../../../../../Core/Define/ConfigQuery/GameplayCueById"),
+  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  TimeUtil_1 = require("../../../../../Common/TimeUtil"),
+  EffectSystem_1 = require("../../../../../Effect/EffectSystem"),
+  CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage"),
+  GameplayCueBeam_1 = require("./GameplayCueSFX/GameplayCueBeam"),
+  GameplayCueCameraEffect_1 = require("./GameplayCueSFX/GameplayCueCameraEffect"),
+  GameplayCueEffect_1 = require("./GameplayCueSFX/GameplayCueEffect"),
+  GameplayCueFixHook_1 = require("./GameplayCueSFX/GameplayCueFixHook"),
+  GameplayCueFollow_1 = require("./GameplayCueSFX/GameplayCueFollow"),
+  GameplayCueFromSummoned_1 = require("./GameplayCueSFX/GameplayCueFromSummoned"),
+  GameplayCueHideBone_1 = require("./GameplayCueSFX/GameplayCueHideBone"),
+  GameplayCueHideMesh_1 = require("./GameplayCueSFX/GameplayCueHideMesh"),
+  GameplayCueHookUp_1 = require("./GameplayCueSFX/GameplayCueHookUp"),
+  GameplayCueManipulateInteract_1 = require("./GameplayCueSFX/GameplayCueManipulateInteract"),
+  GameplayCueMaterial_1 = require("./GameplayCueSFX/GameplayCueMaterial"),
+  GameplayCueMoveSpline_1 = require("./GameplayCueSFX/GameplayCueMoveSpline"),
+  GameplayCueUIEffect_1 = require("./GameplayCueSFX/GameplayCueUIEffect");
 let CharacterGameplayCueComponent = class CharacterGameplayCueComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -63,7 +67,7 @@ let CharacterGameplayCueComponent = class CharacterGameplayCueComponent extends 
     this.SetHidden(!0);
   }
   OnTick(e) {
-    const a = e * TimeUtil_1.TimeUtil.Millisecond;
+    var a = e * TimeUtil_1.TimeUtil.Millisecond;
     for (const t of this.GetAllCurrentCueRef()) t.Tick(a);
   }
   OnChangeTimeDilation(a) {
@@ -80,8 +84,8 @@ let CharacterGameplayCueComponent = class CharacterGameplayCueComponent extends 
   CreateGameplayCue(e, a = {}) {
     a.Sync && this.w6s(e.Id);
     let t = !0;
-    const r = a.Buff;
-    const o = (r && (t = r.IsInstantBuff()), this.rGr(e, t));
+    var r = a.Buff,
+      o = (r && (t = r.IsInstantBuff()), this.rGr(e, t));
     if (o)
       return o.Spawn({
         Entity: this.Entity,
@@ -94,12 +98,12 @@ let CharacterGameplayCueComponent = class CharacterGameplayCueComponent extends 
       });
   }
   CreateGameplayCueByBuff(e) {
-    const a = e.Config.GameplayCueIds;
-    const t = e.Handle;
+    var a = e.Config.GameplayCueIds,
+      t = e.Handle;
     if (a)
       for (const o of a) {
         if (this.WKo.get(t)?.get(o)) return;
-        let r = GameplayCueById_1.configGameplayCueById.GetConfig(o);
+        var r = GameplayCueById_1.configGameplayCueById.GetConfig(o);
         if (!r)
           return void (
             Log_1.Log.CheckError() &&
@@ -128,11 +132,11 @@ let CharacterGameplayCueComponent = class CharacterGameplayCueComponent extends 
     for (const e of this.WKo.values()) for (const a of e.values()) yield a;
   }
   DestroyGameplayCue(e) {
-    const a = e.Config.GameplayCueIds;
-    const t = e.Handle;
+    var a = e.Config.GameplayCueIds,
+      t = e.Handle;
     if (a)
       for (const o of a) {
-        let r = this.WKo.get(t)?.get(o);
+        var r = this.WKo.get(t)?.get(o);
         if (!r) return;
         r.Destroy();
         r = this.WKo.get(t);
@@ -186,10 +190,11 @@ let CharacterGameplayCueComponent = class CharacterGameplayCueComponent extends 
       case 13:
         return GameplayCueManipulateInteract_1.GameplayCueManipulateInteract;
       default:
+        return;
     }
   }
   w6s(e) {
-    const a = Protocol_1.Aki.Protocol.R6s.create();
+    var a = Protocol_1.Aki.Protocol.R6s.create();
     (a.A6s = MathUtils_1.MathUtils.BigIntToLong(e)),
       CombatMessage_1.CombatNet.Call(16292, this.Entity, a, () => {});
   }
@@ -211,4 +216,4 @@ __decorate(
     CharacterGameplayCueComponent,
   )),
   (exports.CharacterGameplayCueComponent = CharacterGameplayCueComponent);
-// # sourceMappingURL=CharacterGameplayCueComponent.js.map
+//# sourceMappingURL=CharacterGameplayCueComponent.js.map

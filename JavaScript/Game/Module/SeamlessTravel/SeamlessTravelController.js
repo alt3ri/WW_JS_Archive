@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SeamlessTravelController = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const CameraController_1 = require("../../Camera/CameraController");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const EffectSystem_1 = require("../../Effect/EffectSystem");
-const Global_1 = require("../../Global");
-const InputController_1 = require("../../Input/InputController");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const GameModePromise_1 = require("../../World/Define/GameModePromise");
-const WorldGlobal_1 = require("../../World/WorldGlobal");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  EffectSystem_1 = require("../../Effect/EffectSystem"),
+  Global_1 = require("../../Global"),
+  InputController_1 = require("../../Input/InputController"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  GameModePromise_1 = require("../../World/Define/GameModePromise"),
+  WorldGlobal_1 = require("../../World/WorldGlobal");
 class SeamlessTravelController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return !0;
@@ -24,7 +24,7 @@ class SeamlessTravelController extends ControllerBase_1.ControllerBase {
     return !0;
   }
   static StartTravel(e) {
-    let r;
+    var r;
     return ModelManager_1.ModelManager.SeamlessTravelModel.IsSeamlessTravel
       ? (r =
           ModelManager_1.ModelManager.SeamlessTravelModel
@@ -65,7 +65,7 @@ class SeamlessTravelController extends ControllerBase_1.ControllerBase {
     (a.SeamlessTravelPlayer = e),
       (a.SeamlessTravelController = r),
       SeamlessTravelController.AddSeamlessTravelActor(e);
-    const l =
+    var l =
       CameraController_1.CameraController.FightCamera.LogicComponent
         .CameraActor;
     return (
@@ -85,7 +85,7 @@ class SeamlessTravelController extends ControllerBase_1.ControllerBase {
           3,
           void 0,
           (e, r) => {
-            e === 5
+            5 === e
               ? (a.SeamlessTravelEffectPromise.SetResult(!0),
                 SeamlessTravelController.AddSeamlessTravelActor(
                   EffectSystem_1.EffectSystem.GetSureEffectActor(r),
@@ -151,7 +151,7 @@ class SeamlessTravelController extends ControllerBase_1.ControllerBase {
       Log_1.Log.Info("SeamlessTravel", 30, "[无缝加载:PostOpenLevel完成]");
   }
   static PostLoadedLevel() {
-    let e;
+    var e;
     ModelManager_1.ModelManager.SeamlessTravelModel.IsSeamlessTravel &&
       ((e =
         ModelManager_1.ModelManager.SeamlessTravelModel
@@ -165,7 +165,7 @@ class SeamlessTravelController extends ControllerBase_1.ControllerBase {
       Log_1.Log.Info("SeamlessTravel", 30, "[无缝加载:PostLoadedLevel完成]");
   }
   static FixBornLocation(e) {
-    let r, o;
+    var r, o;
     ModelManager_1.ModelManager.SeamlessTravelModel.IsSeamlessTravel &&
       (Global_1.Global.BaseCharacter.CharacterMovement.SetMovementMode(0),
       Global_1.Global.BaseCharacter) &&
@@ -203,7 +203,7 @@ class SeamlessTravelController extends ControllerBase_1.ControllerBase {
       Log_1.Log.Info("SeamlessTravel", 30, "[无缝加载:FixBornLocation完成]");
   }
   static FinishSeamlessTravel() {
-    const e = ModelManager_1.ModelManager.SeamlessTravelModel;
+    var e = ModelManager_1.ModelManager.SeamlessTravelModel;
     EffectSystem_1.EffectSystem.StopEffectById(
       e.SeamlessTravelEffectHandle,
       "无缝加载:过渡特效结束",
@@ -216,7 +216,7 @@ class SeamlessTravelController extends ControllerBase_1.ControllerBase {
       (e.SeamlessTravelController = void 0),
       (e.SeamlessTravelPlayer = void 0),
       (e.SeamlessTravelCamera = void 0);
-    const r =
+    var r =
       e.SeamlessTravelPlayerEntity.Entity.GetComponent(
         0,
       )?.GetCreatureDataId() ?? 0;
@@ -241,4 +241,4 @@ class SeamlessTravelController extends ControllerBase_1.ControllerBase {
   }
 }
 exports.SeamlessTravelController = SeamlessTravelController;
-// # sourceMappingURL=SeamlessTravelController.js.map
+//# sourceMappingURL=SeamlessTravelController.js.map

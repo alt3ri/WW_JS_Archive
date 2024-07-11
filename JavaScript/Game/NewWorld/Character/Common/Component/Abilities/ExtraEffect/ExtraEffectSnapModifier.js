@@ -6,23 +6,23 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.CommonSnapshotModify =
     exports.SnapModifier =
       void 0);
-const Log_1 = require("../../../../../../../Core/Common/Log");
-const AbilityUtils_1 = require("../AbilityUtils");
-const CharacterAttributeTypes_1 = require("../CharacterAttributeTypes");
-const ExtraEffectBase_1 = require("./ExtraEffectBase");
+const Log_1 = require("../../../../../../../Core/Common/Log"),
+  AbilityUtils_1 = require("../AbilityUtils"),
+  CharacterAttributeTypes_1 = require("../CharacterAttributeTypes"),
+  ExtraEffectBase_1 = require("./ExtraEffectBase");
 class SnapModifier {
   static WQo(t, s, i) {
-    const e = new Map();
-    const r = new Map();
-    const h = s.Attacker.OwnerBuffComponent.BuffEffectManager;
-    const a = s.Target.OwnerBuffComponent.BuffEffectManager;
+    var e = new Map(),
+      r = new Map(),
+      h = s.Attacker.OwnerBuffComponent.BuffEffectManager,
+      a = s.Target.OwnerBuffComponent.BuffEffectManager;
     for (const [c, u, f] of [
       [e, 0, h],
       [r, 1, h],
       [e, 2, a],
       [r, 3, a],
     ]) {
-      const o = f.FilterById(
+      var o = f.FilterById(
         [1, 46],
         (t) => t.TargetType === u && t.NeedCheckCritical === i,
       );
@@ -51,9 +51,9 @@ class SnapModifier {
   }
   static QQo(t, s) {
     for (var [i, e] of t.entries()) {
-      var i = CharacterAttributeTypes_1.EAttributeId[i];
-      const r = s.BaseValues[i];
-      var e = s.CurrentValues[i] + e;
+      var i = CharacterAttributeTypes_1.EAttributeId[i],
+        r = s.BaseValues[i],
+        e = s.CurrentValues[i] + e;
       (s.BaseValues[i] = r), (s.CurrentValues[i] = e);
     }
   }
@@ -71,7 +71,7 @@ class SnapModifyBuffEffect extends ExtraEffectBase_1.BuffEffect {
   GetAttrValue(t, s, i, e) {
     t = this.XQo(t, e);
     return t
-      ? i === 0
+      ? 0 === i
         ? t.GetBaseValue(s)
         : t.GetCurrentValue(s)
       : (Log_1.Log.CheckWarn() &&
@@ -93,6 +93,7 @@ class SnapModifyBuffEffect extends ExtraEffectBase_1.BuffEffect {
       case 3:
         return t.TargetSnapshot;
       default:
+        return;
     }
   }
 }
@@ -111,22 +112,22 @@ class CommonSnapshotModify extends SnapModifyBuffEffect {
       (this.RefParam2 = 0);
   }
   InitParameters(t) {
-    const s = t.ExtraEffectParameters;
-    const i = t.ExtraEffectGrowParameters1;
-    var t = t.ExtraEffectGrowParameters2;
-    const e = this.Level;
+    var s = t.ExtraEffectParameters,
+      i = t.ExtraEffectGrowParameters1,
+      t = t.ExtraEffectGrowParameters2,
+      e = this.Level;
     (this.TargetType = Number(s[0])),
       (this.AttrId = Number(s[1])),
       (this.CalculationPolicy = Number(s[2])),
       (this.RefAttrId = Number(s[3])),
-      this.CalculationPolicy === 1 && (this.RefAttrId = this.AttrId),
+      1 === this.CalculationPolicy && (this.RefAttrId = this.AttrId),
       (this.RefTargetType = Number(s[4])),
       (this.RefValueType = Number(s[5])),
       (this.StackType = Number(s[6] ?? 0)),
       (this.RefParam1 = AbilityUtils_1.AbilityUtils.GetLevelValue(i, e, 0)),
       (this.RefParam2 = AbilityUtils_1.AbilityUtils.GetLevelValue(t, e, 0)),
       (this.NeedCheckCritical = this.RequireAndLimits.Requirements.some(
-        (t) => t.Type === 6,
+        (t) => 6 === t.Type,
       ));
   }
   OnExecute(s, i) {
@@ -138,11 +139,11 @@ class CommonSnapshotModify extends SnapModifyBuffEffect {
           "[SnapModifier] Modify without resultMap.",
         );
     else {
-      const e = this.AttrId;
-      const r = s.get(e) ?? 0;
-      const h = this.Buff?.StackCount ?? 1;
-      const a = this.StackType === 1 ? this.RefParam1 * h : this.RefParam1;
-      const o = this.RefParam2;
+      var e = this.AttrId,
+        r = s.get(e) ?? 0,
+        h = this.Buff?.StackCount ?? 1,
+        a = 1 === this.StackType ? this.RefParam1 * h : this.RefParam1,
+        o = this.RefParam2;
       let t = 0;
       switch (this.CalculationPolicy) {
         case 0:
@@ -188,9 +189,9 @@ class ShieldSnapshotModify extends SnapModifyBuffEffect {
       (this.ConvertRatio = 0);
   }
   InitParameters(t) {
-    const s = t.ExtraEffectParameters;
-    const i = t.ExtraEffectGrowParameters1;
-    var t = t.ExtraEffectGrowParameters2;
+    var s = t.ExtraEffectParameters,
+      i = t.ExtraEffectGrowParameters1,
+      t = t.ExtraEffectGrowParameters2;
     (this.TargetType = Number(s[0])),
       (this.BuffHolderType = Number(s[1])),
       (this.ShieldId = Number(s[2])),
@@ -209,29 +210,29 @@ class ShieldSnapshotModify extends SnapModifyBuffEffect {
         0,
       )),
       (this.NeedCheckCritical = this.RequireAndLimits.Requirements.some(
-        (t) => t.Type === 6,
+        (t) => 6 === t.Type,
       ));
   }
   OnExecute(i, e) {
-    const r = i.get(this.AttributeId) ?? 0;
-    var h = this.BuffHolderType
-      ? this.InstigatorEntity?.Entity
-      : this.OwnerEntity;
+    var r = i.get(this.AttributeId) ?? 0,
+      h = this.BuffHolderType
+        ? this.InstigatorEntity?.Entity
+        : this.OwnerEntity;
     if (h) {
-      let a;
-      var h = h.CheckGetComponent(64)?.GetShieldValue(this.ShieldId) ?? 0;
-      let t = h >= this.ConvertThreshold;
-      let s = h;
-      this.ConvertLimit > 0 && (s = Math.min(s, this.ConvertLimit)),
-        this.CompareFactor > 0 &&
-          ((a = this.BuffHolderType === 0 ? 1 : 0),
+      var a,
+        h = h.CheckGetComponent(64)?.GetShieldValue(this.ShieldId) ?? 0;
+      let t = h >= this.ConvertThreshold,
+        s = h;
+      0 < this.ConvertLimit && (s = Math.min(s, this.ConvertLimit)),
+        0 < this.CompareFactor &&
+          ((a = 0 === this.BuffHolderType ? 1 : 0),
           (e = this.GetAttrValue(e, this.CompareFactor, 1, a)),
           (t =
             h >=
             e *
               this.ConvertThreshold *
               CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND),
-          this.ConvertLimit > 0) &&
+          0 < this.ConvertLimit) &&
           (s = Math.min(
             h,
             e *
@@ -264,8 +265,8 @@ class DamageAmplifyOnHit extends ExtraEffectBase_1.BuffEffect {
     return this.Value * (this.Buff?.StackCount ?? 1);
   }
   static ApplyEffects(t, s) {
-    const i = s.Attacker.OwnerBuffComponent;
-    const e = s.Target.OwnerBuffComponent;
+    var i = s.Attacker.OwnerBuffComponent,
+      e = s.Target.OwnerBuffComponent;
     let r = 0;
     for (const h of i.BuffEffectManager.FilterById(37))
       h.Check(t, e) && (r += h.Execute());
@@ -288,7 +289,7 @@ class DamageAmplifyOnBeHit extends ExtraEffectBase_1.BuffEffect {
     return this.Value * (this.Buff?.StackCount ?? 1);
   }
   static ApplyEffects(t, s) {
-    const i = s.Attacker.OwnerBuffComponent;
+    var i = s.Attacker.OwnerBuffComponent;
     let e = 0;
     for (const r of s.Target.OwnerBuffComponent.BuffEffectManager.FilterById(
       38,
@@ -298,4 +299,4 @@ class DamageAmplifyOnBeHit extends ExtraEffectBase_1.BuffEffect {
   }
 }
 (exports.DamageAmplifyOnBeHit = DamageAmplifyOnBeHit).TempModifiedResult = 0;
-// # sourceMappingURL=ExtraEffectSnapModifier.js.map
+//# sourceMappingURL=ExtraEffectSnapModifier.js.map

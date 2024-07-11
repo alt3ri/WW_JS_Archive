@@ -1,22 +1,26 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, s) {
-    let o;
-    const h = arguments.length;
-    let n =
-      h < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      h = arguments.length,
+      n =
+        h < 3
+          ? e
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(e, i))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(t, e, i, s);
     else
-      for (let d = t.length - 1; d >= 0; d--)
-        (o = t[d]) && (n = (h < 3 ? o(n) : h > 3 ? o(e, i, n) : o(e, i)) || n);
-    return h > 3 && n && Object.defineProperty(e, i, n), n;
+      for (var d = t.length - 1; 0 <= d; d--)
+        (o = t[d]) && (n = (h < 3 ? o(n) : 3 < h ? o(e, i, n) : o(e, i)) || n);
+    return 3 < h && n && Object.defineProperty(e, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiModelFadeComponent = void 0);
-const UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine");
-const UiModelComponentBase_1 = require("../UiModelComponentBase");
+const UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine"),
+  UiModelComponentBase_1 = require("../UiModelComponentBase");
 let UiModelFadeComponent = class UiModelFadeComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
     super(...arguments),
@@ -70,4 +74,4 @@ let UiModelFadeComponent = class UiModelFadeComponent extends UiModelComponentBa
   UiModelFadeComponent,
 )),
   (exports.UiModelFadeComponent = UiModelFadeComponent);
-// # sourceMappingURL=UiModelFadeComponent.js.map
+//# sourceMappingURL=UiModelFadeComponent.js.map

@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configCommonSkillPreloadById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const CommonSkillPreload_1 = require("../Config/CommonSkillPreload");
-const DB = "db_common_skill_preload.db";
-const FILE = "Preload/CommonSkillPreload.csv";
-const TABLE = "CommonSkillPreload";
-const COMMAND = "select BinData from `CommonSkillPreload` where Id=?";
-const KEY_PREFIX = "CommonSkillPreloadById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  CommonSkillPreload_1 = require("../Config/CommonSkillPreload"),
+  DB = "db_common_skill_preload.db",
+  FILE = "Preload/CommonSkillPreload.csv",
+  TABLE = "CommonSkillPreload",
+  COMMAND = "select BinData from `CommonSkillPreload` where Id=?",
+  KEY_PREFIX = "CommonSkillPreloadById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configCommonSkillPreloadById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configCommonSkillPreloadById.GetConfig(";
 exports.configCommonSkillPreloadById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configCommonSkillPreloadById = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var i;
-        var e = void 0;
+        var i,
+          e = void 0;
         if (
           (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configCommonSkillPreloadById = {
     }
   },
 };
-// # sourceMappingURL=CommonSkillPreloadById.js.map
+//# sourceMappingURL=CommonSkillPreloadById.js.map

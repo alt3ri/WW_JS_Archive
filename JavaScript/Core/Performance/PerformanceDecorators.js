@@ -8,16 +8,16 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.EntityTickPerformanceEx =
     exports.PerformanceFunctionEx =
       void 0);
-const cpp_1 = require("cpp");
-const Log_1 = require("../Common/Log");
-const PerformanceController_1 = require("./PerformanceController");
+const cpp_1 = require("cpp"),
+  Log_1 = require("../Common/Log"),
+  PerformanceController_1 = require("./PerformanceController");
 function PerformanceFunctionEx(n) {
   return (r, e, o) => {
     const t = o.value;
     o.value = function (...r) {
       let e;
       if (PerformanceController_1.PerformanceController.IsOpen) {
-        const o = PerformanceController_1.PerformanceController.StartMonitor(n);
+        var o = PerformanceController_1.PerformanceController.StartMonitor(n);
         try {
           e = t.call(this, ...r);
         } catch (r) {
@@ -55,7 +55,7 @@ function EntityTickPerformanceEx(c) {
         PerformanceController_1.PerformanceController
           .IsEntityTickPerformanceTest
       ) {
-        const o = cpp_1.KuroTime.GetMilliseconds64();
+        var o = cpp_1.KuroTime.GetMilliseconds64();
         try {
           e = n.call(this, ...r);
         } catch (r) {
@@ -74,7 +74,7 @@ function EntityTickPerformanceEx(c) {
                 r ?? void 0,
               ]);
         }
-        const t = cpp_1.KuroTime.GetMilliseconds64();
+        var t = cpp_1.KuroTime.GetMilliseconds64();
         PerformanceController_1.PerformanceController.CollectTickPerformanceInfo(
           "EntityTick" + this.Id,
           c,
@@ -94,7 +94,7 @@ function EntityComponentTickPerformanceEx(i) {
         PerformanceController_1.PerformanceController
           .IsEntityTickPerformanceTest
       ) {
-        const o = cpp_1.KuroTime.GetMilliseconds64();
+        var o = cpp_1.KuroTime.GetMilliseconds64();
         try {
           e = c.call(this, ...r);
         } catch (r) {
@@ -115,8 +115,8 @@ function EntityComponentTickPerformanceEx(i) {
                 ["error", r ?? void 0],
               );
         }
-        const t = cpp_1.KuroTime.GetMilliseconds64();
-        const n = this;
+        var t = cpp_1.KuroTime.GetMilliseconds64(),
+          n = this;
         PerformanceController_1.PerformanceController.CollectComponentTickPerformanceInfo(
           n.Entity.Id,
           n.constructor.name,
@@ -137,7 +137,7 @@ function TickPerformanceEx(c, i, f = 1) {
         PerformanceController_1.PerformanceController
           .IsEntityTickPerformanceTest
       ) {
-        const o = cpp_1.KuroTime.GetMilliseconds64();
+        var o = cpp_1.KuroTime.GetMilliseconds64();
         try {
           e = n.call(this, ...r);
         } catch (r) {
@@ -153,7 +153,7 @@ function TickPerformanceEx(c, i, f = 1) {
                 r ?? void 0,
               ]);
         }
-        const t = cpp_1.KuroTime.GetMilliseconds64();
+        var t = cpp_1.KuroTime.GetMilliseconds64();
         PerformanceController_1.PerformanceController.CollectTickPerformanceInfo(
           c,
           i,
@@ -174,7 +174,7 @@ function TickEffectPerformanceEx(f, a = 1) {
         PerformanceController_1.PerformanceController
           .IsEntityTickPerformanceTest
       ) {
-        const o = cpp_1.KuroTime.GetMilliseconds64();
+        var o = cpp_1.KuroTime.GetMilliseconds64();
         try {
           e = i.call(this, ...r);
         } catch (r) {
@@ -190,10 +190,10 @@ function TickEffectPerformanceEx(f, a = 1) {
                 r ?? void 0,
               ]);
         }
-        let t;
-        let n;
-        const c = cpp_1.KuroTime.GetMilliseconds64();
-        a === 0 && e !== 0
+        var t,
+          n,
+          c = cpp_1.KuroTime.GetMilliseconds64();
+        0 === a && 0 !== e
           ? (([t, n] =
               (this.DebugUpdate(e, !0), this.GetNiagaraParticleCount(e))),
             PerformanceController_1.PerformanceController.CollectEffectTickPerformanceInfo(
@@ -206,7 +206,7 @@ function TickEffectPerformanceEx(f, a = 1) {
               t,
               n,
             ))
-          : a === 1 &&
+          : 1 === a &&
             (([t, n] = this.GetNiagaraParticleCount()),
             PerformanceController_1.PerformanceController.CollectEffectTickPerformanceInfo(
               this.Path,
@@ -232,7 +232,7 @@ function TickEntitySkeletonProxyPerformance() {
         PerformanceController_1.PerformanceController
           .IsEntityTickPerformanceTest
       ) {
-        let o = cpp_1.KuroTime.GetMilliseconds64();
+        var o = cpp_1.KuroTime.GetMilliseconds64();
         try {
           e = t.call(this, ...r);
         } catch (r) {
@@ -284,8 +284,8 @@ function TickEffectPerformanceWithEntity() {
                 r ?? void 0,
               ]);
         }
-        var o = cpp_1.KuroTime.GetMilliseconds64() - o;
-        const t = this.GetOwnerEntityId();
+        var o = cpp_1.KuroTime.GetMilliseconds64() - o,
+          t = this.GetOwnerEntityId();
         t &&
           PerformanceController_1.PerformanceController.CollectTickPerformanceInfo(
             "EntityTick" + t,
@@ -305,4 +305,4 @@ function TickEffectPerformanceWithEntity() {
   (exports.TickEntitySkeletonProxyPerformance =
     TickEntitySkeletonProxyPerformance),
   (exports.TickEffectPerformanceWithEntity = TickEffectPerformanceWithEntity);
-// # sourceMappingURL=PerformanceDecorators.js.map
+//# sourceMappingURL=PerformanceDecorators.js.map

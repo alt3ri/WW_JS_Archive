@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiCameraAnimationConfig = void 0);
-const ChildUiCameraMappingAll_1 = require("../../../Core/Define/ConfigQuery/ChildUiCameraMappingAll");
-const ChildUiCameraMappingByViewName_1 = require("../../../Core/Define/ConfigQuery/ChildUiCameraMappingByViewName");
-const UiCameraMappingAll_1 = require("../../../Core/Define/ConfigQuery/UiCameraMappingAll");
-const UiCameraMappingByViewName_1 = require("../../../Core/Define/ConfigQuery/UiCameraMappingByViewName");
-const UiShowByViewName_1 = require("../../../Core/Define/ConfigQuery/UiShowByViewName");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil");
+const ChildUiCameraMappingAll_1 = require("../../../Core/Define/ConfigQuery/ChildUiCameraMappingAll"),
+  ChildUiCameraMappingByViewName_1 = require("../../../Core/Define/ConfigQuery/ChildUiCameraMappingByViewName"),
+  UiCameraMappingAll_1 = require("../../../Core/Define/ConfigQuery/UiCameraMappingAll"),
+  UiCameraMappingByViewName_1 = require("../../../Core/Define/ConfigQuery/UiCameraMappingByViewName"),
+  UiShowByViewName_1 = require("../../../Core/Define/ConfigQuery/UiShowByViewName"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil");
 class UiCameraAnimationConfig extends ConfigBase_1.ConfigBase {
   GetViewConfig(e) {
     return UiShowByViewName_1.configUiShowByViewName.GetConfig(e);
@@ -36,4 +36,4 @@ class UiCameraAnimationConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.UiCameraAnimationConfig = UiCameraAnimationConfig;
-// # sourceMappingURL=UiCameraAnimationConfig.js.map
+//# sourceMappingURL=UiCameraAnimationConfig.js.map

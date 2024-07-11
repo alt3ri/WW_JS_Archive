@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EventResultView = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiActorPool_1 = require("../../../Ui/UiActorPool");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
-const CommonSelectItem_1 = require("./CommonSelectItem");
-const RogueSelectResultBaseView_1 = require("./RogueSelectResultBaseView");
+const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiActorPool_1 = require("../../../Ui/UiActorPool"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
+  CommonSelectItem_1 = require("./CommonSelectItem"),
+  RogueSelectResultBaseView_1 = require("./RogueSelectResultBaseView");
 class EventResultView extends RogueSelectResultBaseView_1.RogueSelectResultBaseView {
   constructor() {
     super(...arguments),
@@ -27,7 +27,7 @@ class EventResultView extends RogueSelectResultBaseView_1.RogueSelectResultBaseV
       });
   }
   async OnBeforeStartAsync() {
-    const e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+    var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
       RoguelikeDefine_1.COMMON_SELECT_ITEM,
     );
     (this.$so = await UiActorPool_1.UiActorPool.GetAsync(e)),
@@ -39,7 +39,7 @@ class EventResultView extends RogueSelectResultBaseView_1.RogueSelectResultBaseV
   }
   OnStart() {
     super.OnStart(), (this.aao = this.OpenParam);
-    const e = this.GetHorizontalLayout(3).GetRootComponent();
+    var e = this.GetHorizontalLayout(3).GetRootComponent();
     this.$so.UiItem.SetUIParent(e), this.Refresh();
   }
   OnBeforeDestroy() {
@@ -68,4 +68,4 @@ class EventResultView extends RogueSelectResultBaseView_1.RogueSelectResultBaseV
   }
 }
 exports.EventResultView = EventResultView;
-// # sourceMappingURL=EventResultView.js.map
+//# sourceMappingURL=EventResultView.js.map

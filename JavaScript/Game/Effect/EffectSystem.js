@@ -1,57 +1,62 @@
 "use strict";
-let _a;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, f) {
-    let r;
-    const s = arguments.length;
-    let a =
-      s < 3 ? e : f === null ? (f = Object.getOwnPropertyDescriptor(e, i)) : f;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      a = Reflect.decorate(t, e, i, f);
-    else
-      for (let o = t.length - 1; o >= 0; o--)
-        (r = t[o]) && (a = (s < 3 ? r(a) : s > 3 ? r(e, i, a) : r(e, i)) || a);
-    return s > 3 && a && Object.defineProperty(e, i, a), a;
-  };
+var _a,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, f) {
+      var r,
+        s = arguments.length,
+        a =
+          s < 3
+            ? e
+            : null === f
+              ? (f = Object.getOwnPropertyDescriptor(e, i))
+              : f;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        a = Reflect.decorate(t, e, i, f);
+      else
+        for (var o = t.length - 1; 0 <= o; o--)
+          (r = t[o]) &&
+            (a = (s < 3 ? r(a) : 3 < s ? r(e, i, a) : r(e, i)) || a);
+      return 3 < s && a && Object.defineProperty(e, i, a), a;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectSystem = exports.EFFECT_REASON_LENGTH_LIMIT = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../Core/Actor/ActorSystem");
-const Info_1 = require("../../Core/Common/Info");
-const Log_1 = require("../../Core/Common/Log");
-const Stats_1 = require("../../Core/Common/Stats");
-const Time_1 = require("../../Core/Common/Time");
-const Lru_1 = require("../../Core/Container/Lru");
-const Queue_1 = require("../../Core/Container/Queue");
-const EffectSpecDataByPath_1 = require("../../Core/Define/ConfigQuery/EffectSpecDataByPath");
-const Protocol_1 = require("../../Core/Define/Net/Protocol");
-const EffectEnvironment_1 = require("../../Core/Effect/EffectEnvironment");
-const GameBudgetInterfaceController_1 = require("../../Core/GameBudgetAllocator/GameBudgetInterfaceController");
-const PerformanceDecorators_1 = require("../../Core/Performance/PerformanceDecorators");
-const ResourceSystem_1 = require("../../Core/Resource/ResourceSystem");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const PublicUtil_1 = require("../Common/PublicUtil");
-const TimeUtil_1 = require("../Common/TimeUtil");
-const GlobalData_1 = require("../GlobalData");
-const ModelManager_1 = require("../Manager/ModelManager");
-const EffectModelNiagara_1 = require("../Render/Effect/Data/EffectModelNiagara");
-const CustomMap_1 = require("../World/Define/CustomMap");
-const GameBudgetAllocatorConfigCreator_1 = require("../World/Define/GameBudgetAllocatorConfigCreator");
-const EEffectCreateFromType_1 = require("./EEffectCreateFromType");
-const EffectDefine_1 = require("./EffectDefine");
-const EffectHandle_1 = require("./EffectHandle");
-const EffectProfiler_1 = require("./EffectProfiler/EffectProfiler");
-const EffectModelTrailSpec_1 = require("./EffectSpec/EffectModelTrailSpec");
-const PlayerEffectContainer_1 = require("./PlayerEffectContainer");
-const EFFECT_SPEC_DATA_PATH =
-  ((exports.EFFECT_REASON_LENGTH_LIMIT = 4), "../Config/Client/EffectData/");
-const EFFECT_LRU_CAPACITY = 100;
-const PERCENT = 100;
-const lruFolderPath = new UE.FName("LruActorPool");
-const CHECK_EFFECT_OWNER_INTERVAL = 6e4;
-const MIN_NIAGARA_SIMULATION_TICK_TIME = 0.033;
+const UE = require("ue"),
+  ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
+  Info_1 = require("../../Core/Common/Info"),
+  Log_1 = require("../../Core/Common/Log"),
+  Stats_1 = require("../../Core/Common/Stats"),
+  Time_1 = require("../../Core/Common/Time"),
+  Lru_1 = require("../../Core/Container/Lru"),
+  Queue_1 = require("../../Core/Container/Queue"),
+  EffectSpecDataByPath_1 = require("../../Core/Define/ConfigQuery/EffectSpecDataByPath"),
+  Protocol_1 = require("../../Core/Define/Net/Protocol"),
+  EffectEnvironment_1 = require("../../Core/Effect/EffectEnvironment"),
+  GameBudgetInterfaceController_1 = require("../../Core/GameBudgetAllocator/GameBudgetInterfaceController"),
+  PerformanceDecorators_1 = require("../../Core/Performance/PerformanceDecorators"),
+  ResourceSystem_1 = require("../../Core/Resource/ResourceSystem"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../Common/PublicUtil"),
+  TimeUtil_1 = require("../Common/TimeUtil"),
+  GlobalData_1 = require("../GlobalData"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  EffectModelNiagara_1 = require("../Render/Effect/Data/EffectModelNiagara"),
+  CustomMap_1 = require("../World/Define/CustomMap"),
+  GameBudgetAllocatorConfigCreator_1 = require("../World/Define/GameBudgetAllocatorConfigCreator"),
+  EEffectCreateFromType_1 = require("./EEffectCreateFromType"),
+  EffectDefine_1 = require("./EffectDefine"),
+  EffectHandle_1 = require("./EffectHandle"),
+  EffectProfiler_1 = require("./EffectProfiler/EffectProfiler"),
+  EffectModelTrailSpec_1 = require("./EffectSpec/EffectModelTrailSpec"),
+  PlayerEffectContainer_1 = require("./PlayerEffectContainer"),
+  EFFECT_SPEC_DATA_PATH =
+    ((exports.EFFECT_REASON_LENGTH_LIMIT = 4), "../Config/Client/EffectData/"),
+  EFFECT_LRU_CAPACITY = 100,
+  PERCENT = 100,
+  lruFolderPath = new UE.FName("LruActorPool"),
+  CHECK_EFFECT_OWNER_INTERVAL = 6e4,
+  MIN_NIAGARA_SIMULATION_TICK_TIME = 0.033;
 class EffectSystem {
   static Initialize() {
     return (
@@ -108,7 +113,7 @@ class EffectSystem {
   }
   static Ufe(i, f, r, s, a = !0, t, o, n, c) {
     const E = i.Id;
-    let e;
+    var e;
     i.IsRoot() &&
       (this.Afe.Set(E, i),
       Info_1.Info.IsGameRunning() &&
@@ -135,9 +140,10 @@ class EffectSystem {
                 ? f.GetWorld()?.IsValid()
                   ? (!i.IsRoot() ||
                       i.IsExternalActor ||
-                      UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(
-                        f,
-                      ) !== 3 ||
+                      3 !==
+                        UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(
+                          f,
+                        ) ||
                       UE.KuroRenderingEditorBPPluginBPLibrary.IsSimulateInEditorInProgress() ||
                       f.SetActorLabel(r),
                     this.xfe(i, a, e, n).then((t) => {
@@ -287,8 +293,8 @@ class EffectSystem {
         this.wfe(c, 0, 0),
         0
       );
-    const d = this.qfe(i, !1);
-    const l = this.Gfe(i, f, !1, d);
+    var d = this.qfe(i, !1),
+      l = this.Gfe(i, f, !1, d);
     if (!l) return this.wfe(c, 0, 0), 0;
     l.SetEffectType(_);
     (_ = this.Nfe(e, i, o, E, void 0, l, f, s, d ? d.LifeTime : 0)),
@@ -296,12 +302,12 @@ class EffectSystem {
     return e ? (_.PendingInit(t, i, f, r, a, n, c, h), e) : 0;
   }
   static Ofe(t) {
-    let e = 0;
-    let i = 0;
+    let e = 0,
+      i = 0;
     if (this.Effects.length < this.aY)
       (e = this.Effects.length), this.Effects.push(t), this.rY.push(1), (i = 1);
     else {
-      if (!(this.nY.length > 0)) {
+      if (!(0 < this.nY.length)) {
         if (
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -316,11 +322,11 @@ class EffectSystem {
           this.Dfe)
         ) {
           this.Dfe = !1;
-          const f = new Map();
-          const r = new Map();
+          var f = new Map(),
+            r = new Map();
           for (let t = 0; t < this.Effects.length; t++) {
-            var s;
-            const a = this.Effects[t];
+            var s,
+              a = this.Effects[t];
             a
               ? a.IsRoot &&
                 (f.has(a.Path)
@@ -337,7 +343,7 @@ class EffectSystem {
                   ["Index", t],
                 );
           }
-          const o = new Array();
+          var o = new Array();
           for (const E of f) E[1] < 5 || o.push([E[0], E[1]]);
           o.sort((t, e) => e[1] - t[1]);
           let t = "\n";
@@ -349,7 +355,7 @@ class EffectSystem {
               "[特效句柄分配错误]此时占据句柄的Path统计",
               ["统计", t],
             );
-          const n = new Array();
+          var n = new Array();
           for (const _ of r) _[1] < 5 || n.push([_[0], _[1]]);
           n.sort((t, e) => e[1] - t[1]), (t = "\n");
           for (const d of n) t += d[0] + "|" + d[1] + "\n";
@@ -368,13 +374,13 @@ class EffectSystem {
         (i = ++this.rY[e]) > this.hY && ((i = 1), (this.rY[e] = i));
     }
     this.Ffe++, t.IsRoot() && this.kfe++;
-    const c = (e << this.Vfe) | i;
+    var c = (e << this.Vfe) | i;
     return (t.Id = c), t.Id;
   }
   static Hfe(t, e, i) {
     return !(
       !this.jfe ||
-      (e !== 3 && e !== 0) ||
+      (3 !== e && 0 !== e) ||
       i >= GameBudgetAllocatorConfigCreator_1.EFFECT_IMPORTANCE_ENABLE_RANGE ||
       ((e =
         GameBudgetInterfaceController_1.GameBudgetInterfaceController
@@ -431,7 +437,7 @@ class EffectSystem {
           ),
         !1
       );
-    const f = t.Id;
+    var f = t.Id;
     if (
       (EffectEnvironment_1.EffectEnvironment.UseLog &&
         Log_1.Log.CheckInfo() &&
@@ -448,7 +454,7 @@ class EffectSystem {
         ),
       t.IsRoot())
     ) {
-      const r = t.GetSureEffectActor();
+      var r = t.GetSureEffectActor();
       if (
         (r?.IsValid() &&
           r.RootComponent?.bHiddenInGame &&
@@ -490,8 +496,8 @@ class EffectSystem {
     );
   }
   static Yfe(t) {
-    const e = t >>> this.Vfe;
-    const i = this.Effects[e];
+    var e = t >>> this.Vfe,
+      i = this.Effects[e];
     return (
       !!i &&
       i.Id === t &&
@@ -504,7 +510,7 @@ class EffectSystem {
   }
   static epe(t, e, i, f = !0, r, s, a, o, n = 3) {
     if (Info_1.Info.IsGameRunning()) {
-      const c = this.ipe(e, r);
+      var c = this.ipe(e, r);
       if (c)
         if (c?.GetSureEffectActor()?.IsValid()) {
           (c.IsPendingStop = !1),
@@ -533,7 +539,7 @@ class EffectSystem {
                 : i.IsA(UE.BP_EffectPreview_C.StaticClass()) &&
                   (i.EffectView = r),
               this.Afe.Set(r, c),
-              UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(i) !== 3 ||
+              3 !== UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(i) ||
                 UE.KuroRenderingEditorBPPluginBPLibrary.IsSimulateInEditorInProgress() ||
                 i.SetFolderPath(void 0),
               EffectProfiler_1.EffectProfiler.NoticeRemovedFromLru(e, "InUsed"),
@@ -570,15 +576,15 @@ class EffectSystem {
     if (!t.IsRoot()) return !1;
     if (t.IsExternalActor) return !1;
     if (!t.IsDone()) return !1;
-    const e = t.GetSureEffectActor();
+    var e = t.GetSureEffectActor();
     if (!e?.IsValid()) return !1;
     if (!e.GetWorld()?.IsValid()) return !1;
     e.InPool = 2;
-    let i = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(e);
-    (i !== 3 && i !== 2) || e.SetFolderPath(lruFolderPath),
-      t.CreateSource > 0 && ((t.InContainer = !0), t.OnEnterPool());
-    const f = t.Path;
-    const r = t.Id;
+    var i = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(e);
+    (3 !== i && 2 !== i) || e.SetFolderPath(lruFolderPath),
+      0 < t.CreateSource && ((t.InContainer = !0), t.OnEnterPool());
+    const f = t.Path,
+      r = t.Id;
     e.OnEndPlay.Add((t, e) => {
       switch (e) {
         case 2:
@@ -603,7 +609,7 @@ class EffectSystem {
   static Zfe(t) {
     if (!t.Clear()) return !1;
     t.Destroy();
-    const e = t.GetSureEffectActor();
+    var e = t.GetSureEffectActor();
     return (
       t.IsExternalActor ||
         (e?.IsValid() &&
@@ -631,14 +637,9 @@ class EffectSystem {
       if (UE.BlueprintPathsLibrary.DirectoryExists(t))
         try {
           this.lpe.clear();
-          let e;
-          const i = UE.KuroStaticLibrary.LoadFilesRecursive(
-            t,
-            "*.json",
-            !0,
-            !1,
-          );
-          const f = new Array();
+          var e,
+            i = UE.KuroStaticLibrary.LoadFilesRecursive(t, "*.json", !0, !1),
+            f = new Array();
           for (let t = 0; t < i.Num(); ++t) f.push(i.Get(t));
           for (const r of f)
             !r ||
@@ -673,7 +674,7 @@ class EffectSystem {
     }
   }
   static Tick(t) {
-    const e = t * TimeUtil_1.TimeUtil.Millisecond;
+    var e = t * TimeUtil_1.TimeUtil.Millisecond;
     if (
       !GameBudgetInterfaceController_1.GameBudgetInterfaceController.IsOpen ||
       Info_1.Info.IsInCg()
@@ -698,14 +699,14 @@ class EffectSystem {
   }
   static AfterTick(t) {
     for (; this.upe.Size; ) {
-      const e = this.upe.Pop();
-      const i = e[0];
+      var e = this.upe.Pop(),
+        i = e[0];
       this.IsValid(i.Id) && this.StopEffect(i, e[1], !0);
     }
   }
   static cpe(t) {
-    var e = t >>> this.Vfe;
-    var e = this.Effects[e];
+    var e = t >>> this.Vfe,
+      e = this.Effects[e];
     if (e && e.Id === t) return e;
   }
   static mpe(t, e) {
@@ -733,7 +734,7 @@ class EffectSystem {
     return (t = t && this.qfe(t, e)) ? t.EffectRegularType : 0;
   }
   static ppe(t) {
-    if (t < 0 || t >= 20)
+    if (t < 0 || 20 <= t)
       return GameBudgetAllocatorConfigCreator_1.EFFECT_ENABLE_RANGE;
     let e = this.vpe.get(t);
     return (
@@ -796,7 +797,7 @@ class EffectSystem {
   }
   static Nfe(t, e, i, f, r, s, a, o, n) {
     let c = void 0;
-    const E = this.L0(r);
+    var E = this.L0(r);
     return (
       ((c =
         f || E ? new EffectHandle_1.EffectHandle() : this.Spe(e, i)).IsPreview =
@@ -862,16 +863,17 @@ class EffectSystem {
   }
   static async xfe(t, e, i, f) {
     Stats_1.Stat.Enable;
-    let r = Info_1.Info.IsGameRunning()
+    var r = Info_1.Info.IsGameRunning()
       ? GlobalData_1.GlobalData.IsEs3
-      : UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldFeatureLevel(
+      : 0 ===
+        UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldFeatureLevel(
           UE.EditorLevelLibrary.GetEditorWorld(),
-        ) === 0;
+        );
     if (i.DisableOnMobile && r) return 1;
     r = await t.Init(i);
-    if (r !== 5)
+    if (5 !== r)
       return (
-        r === 0 &&
+        0 === r &&
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderEffect",
@@ -916,7 +918,7 @@ class EffectSystem {
     return 5;
   }
   static ope(t) {
-    let e;
+    var e;
     return (
       !!EffectEnvironment_1.EffectEnvironment.DisableOtherEffect &&
       !(
@@ -959,7 +961,7 @@ class EffectSystem {
             ["Path", t.Path],
           ),
         this.yfe.PutEffectHandleToPool(t))
-      : t.CreateSource === 1 &&
+      : 1 === t.CreateSource &&
           (EffectEnvironment_1.EffectEnvironment.UseLog &&
             Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -977,13 +979,13 @@ class EffectSystem {
       !!t &&
       (t.CreateFromPlayerEffectPool
         ? this.yfe.LruRemoveExternal(t)
-        : t.CreateSource === 1 && this.Lru.RemoveExternal(t))
+        : 1 === t.CreateSource && this.Lru.RemoveExternal(t))
     );
   }
   static qfe(t, e = !1) {
-    const i = t.toLowerCase();
+    var i = t.toLowerCase();
     return e || !PublicUtil_1.PublicUtil.UseDbConfig()
-      ? (this.lpe.size === 0 && Info_1.Info.IsPlayInEditor && this.Sfe(!0),
+      ? (0 === this.lpe.size && Info_1.Info.IsPlayInEditor && this.Sfe(!0),
         this.lpe.get(i))
       : ((e = EffectSpecDataByPath_1.configEffectSpecDataByPath.GetConfig(i)) ||
           (Log_1.Log.CheckError() &&
@@ -996,7 +998,7 @@ class EffectSystem {
         e);
   }
   static InitHandleWhenEnable(t) {
-    const e = t.InitCache;
+    var e = t.InitCache;
     if (!e) return !1;
     let i = e.WorldContext;
     i?.IsValid() ||
@@ -1008,7 +1010,7 @@ class EffectSystem {
           ["path", e.Path],
         ),
       (i = GlobalData_1.GlobalData.World));
-    const f = this.mpe(i, e.EffectActorHandle.Transform);
+    var f = this.mpe(i, e.EffectActorHandle.Transform);
     return f?.IsValid()
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("RenderEffect", 37, "EffectHandle.SetEffectActor", [
@@ -1027,7 +1029,7 @@ class EffectSystem {
           e.Callback,
           e.BeforePlayCallback,
           (t, e) => {
-            t === 5 &&
+            5 === t &&
               ((t = this.cpe(e)).InitEffectActorAfterPendingInit(),
               t.PlayEffectAfterPendingInit(),
               t.ClearInitCache());
@@ -1136,9 +1138,9 @@ class EffectSystem {
         this.wfe(n, 0, 0),
         0
       );
-    var t = this.L0(i);
-    const l = this.qfe(f, t);
-    const u = this.Gfe(f, r, t, l);
+    var t = this.L0(i),
+      l = this.qfe(f, t),
+      u = this.Gfe(f, r, t, l);
     if (!u) return this.wfe(n, 0, 0), 0;
     u.SetEffectType(h);
     let S = _;
@@ -1261,7 +1263,7 @@ class EffectSystem {
     return new Lru_1.Lru(
       t,
       (t) => {
-        const e = new EffectHandle_1.EffectHandle();
+        var e = new EffectHandle_1.EffectHandle();
         return EffectProfiler_1.EffectProfiler.NoticeCreatedFromLru(t, e), e;
       },
       (t) => {
@@ -1285,8 +1287,8 @@ class EffectSystem {
   }
   static SpawnUnloopedEffect(t, e, i, f, r, s = 3, a, o, n, c = !1, E = !1) {
     if (i) {
-      var h = this.L0(t);
-      var h = this.qfe(i, h);
+      var h = this.L0(t),
+        h = this.qfe(i, h);
       if (h && h.LifeTime < 0)
         return (
           Log_1.Log.CheckError() &&
@@ -1303,7 +1305,7 @@ class EffectSystem {
     return this.SpawnEffect(t, e, i, f, r, s, a, o, n, c, E);
   }
   static SpawnEffect(t, e, i, f, r, s = 3, a, o, n, c = !1, E = !1) {
-    const h = !c;
+    var h = !c;
     if ((Stats_1.Stat.Enable, !i))
       return (
         Log_1.Log.CheckError() &&
@@ -1409,9 +1411,9 @@ class EffectSystem {
           ),
         d.Id
       );
-    var _ = e.GetLocation();
-    var l = this.L0(t);
-    var l = this.ppe(this.fpe(i, l));
+    var _ = e.GetLocation(),
+      l = this.L0(t),
+      l = this.ppe(this.fpe(i, l));
     if (
       E ||
       !this.Hfe(_, s, l) ||
@@ -1545,7 +1547,7 @@ class EffectSystem {
     );
   }
   static IsValid(t) {
-    let e;
+    var e;
     return (
       !!t &&
       ((e = t >>> this.Vfe), !!(e = this.Effects[e])) &&
@@ -1572,7 +1574,7 @@ class EffectSystem {
     if (this.IsValid(t)) return this.cpe(t).GetNiagaraComponents();
   }
   static ReplayEffect(t, e, i = void 0) {
-    let f;
+    var f;
     this.IsValid(t) &&
       (((t = this.cpe(t)).IsPendingStop = !1), (f = t.GetSureEffectActor())) &&
       (f.SetActorHiddenInGame(!1),
@@ -1615,7 +1617,7 @@ class EffectSystem {
     if (this.IsValid(t)) return this.cpe(t).Path;
   }
   static SetEffectDataByNiagaraParam(t, e, i) {
-    let f;
+    var f;
     this.IsValid(t) &&
       ((f = this.cpe(t)?.GetEffectData()) instanceof
         EffectModelNiagara_1.default &&
@@ -1732,14 +1734,14 @@ class EffectSystem {
         4,
         "<<<<<<<<<<<<<<<<特效打印开始:>>>>>>>>>>>>>>>",
       );
-    const t = EffectSystem.GetEffectCount();
-    const e = EffectSystem.GetActiveEffectCount();
-    const i = EffectSystem.GetEffectLruSize();
-    const f = EffectSystem.GetEffectLruCapacity();
-    const r = EffectSystem.GetPlayerEffectLruSize(0);
-    const s = EffectSystem.GetPlayerEffectLruSize(1);
-    const a = EffectSystem.GetPlayerEffectLruSize(2);
-    const o = EffectSystem.GetPlayerEffectLruSize(3);
+    var t = EffectSystem.GetEffectCount(),
+      e = EffectSystem.GetActiveEffectCount(),
+      i = EffectSystem.GetEffectLruSize(),
+      f = EffectSystem.GetEffectLruCapacity(),
+      r = EffectSystem.GetPlayerEffectLruSize(0),
+      s = EffectSystem.GetPlayerEffectLruSize(1),
+      a = EffectSystem.GetPlayerEffectLruSize(2),
+      o = EffectSystem.GetPlayerEffectLruSize(3);
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Battle",
@@ -1754,10 +1756,10 @@ class EffectSystem {
         ["3号池内数量", a],
         ["4号池内数量", o],
       );
-    let n = "\n";
-    let c = "\n";
+    let n = "\n",
+      c = "\n";
     this.Effects.forEach((t) => {
-      let e;
+      var e;
       t &&
         t.IsRoot() &&
         t.GetEffectSpec() &&
@@ -1785,13 +1787,12 @@ class EffectSystem {
         );
   }
   static Rpe(t) {
-    const e = t.GetEffectSpec();
+    var e = t.GetEffectSpec();
     return `Path:${t.Path}
 Id:${t.Id} 存活帧数:${UE.KismetSystemLibrary.GetFrameCount() - t.BornFrameCount} IsVisible:${e?.IsVisible()} IsEnable: ${e?.IsEnable()} TimeScale: ${e?.GetTimeScale()} 
 CreateEntityId:${t.GetContext()?.EntityId} CreateFromType:${t.GetContext()?.CreateFromType.toString()} CreateReason:${t.CreateReason}
 `;
   }
-
   static GetPlayerEffectLruSize(t) {
     return this.yfe.GetPlayerEffectPoolSize(t);
   }
@@ -1818,7 +1819,7 @@ CreateEntityId:${t.GetContext()?.EntityId} CreateFromType:${t.GetContext()?.Crea
   (EffectSystem.Lru = new Lru_1.Lru(
     EFFECT_LRU_CAPACITY,
     (t) => {
-      const e = new EffectHandle_1.EffectHandle();
+      var e = new EffectHandle_1.EffectHandle();
       return EffectProfiler_1.EffectProfiler.NoticeCreatedFromLru(t, e), e;
     },
     (t) => {
@@ -1866,4 +1867,4 @@ CreateEntityId:${t.GetContext()?.EntityId} CreateFromType:${t.GetContext()?.Crea
     null,
   ),
   (exports.EffectSystem = EffectSystem);
-// # sourceMappingURL=EffectSystem.js.map
+//# sourceMappingURL=EffectSystem.js.map

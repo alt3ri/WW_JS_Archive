@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const ModelManager_1 = require("../Manager/ModelManager");
-const PanelQteController_1 = require("../Module/PanelQte/PanelQteController");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  PanelQteController_1 = require("../Module/PanelQte/PanelQteController"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyChangeRoleQte extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.QteId = 0), (this.QteDistance = 0);
   }
   K2_Notify(r, e) {
     if (!ModelManager_1.ModelManager.GameModeModel.IsMulti) {
-      const t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentTeamItem;
-      if (t?.CanGoDown(!0) !== 0)
+      var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentTeamItem;
+      if (0 !== t?.CanGoDown(!0))
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("PanelQte", 18, "当前角色不能下场，不触发换人QTE");
       else {
-        if (this.QteDistance > 0) {
-          var a = r.GetOwner()?.K2_GetActorLocation();
-          var o = t?.EntityHandle?.Entity?.GetComponent(3).ActorLocationProxy;
+        if (0 < this.QteDistance) {
+          var a = r.GetOwner()?.K2_GetActorLocation(),
+            o = t?.EntityHandle?.Entity?.GetComponent(3).ActorLocationProxy;
           if (!a || !o)
             return (
               Log_1.Log.CheckDebug() &&
@@ -45,7 +45,7 @@ class TsAnimNotifyChangeRoleQte extends UE.KuroAnimNotify {
         for (const n of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems())
           if (
             n.GetCreatureDataId() !== t.GetCreatureDataId() &&
-            n.CanGoBattle() === 0
+            0 === n.CanGoBattle()
           )
             return (
               PanelQteController_1.PanelQteController.StartAnimNotifyQte(
@@ -66,4 +66,4 @@ class TsAnimNotifyChangeRoleQte extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifyChangeRoleQte;
-// # sourceMappingURL=TsAnimNotifyChangeRoleQte.js.map
+//# sourceMappingURL=TsAnimNotifyChangeRoleQte.js.map

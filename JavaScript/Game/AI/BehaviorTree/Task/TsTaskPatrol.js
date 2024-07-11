@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const Net_1 = require("../../../../Core/Net/Net");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../GlobalData");
-const LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const TsAiController_1 = require("../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../GlobalData"),
+  LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  TsAiController_1 = require("../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskPatrol extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -43,8 +43,8 @@ class TsTaskPatrol extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveExecuteAI(t, i) {
     this.InitTsVariables();
-    let s;
-    const e = t.AiController;
+    var s,
+      e = t.AiController;
     e
       ? ((this.PatrolLogic = e.AiPatrol),
         (this.PatrolConfig = this.PatrolLogic.GetConfig()),
@@ -80,7 +80,7 @@ class TsTaskPatrol extends TsTaskAbortImmediatelyBase_1.default {
         this.FinishExecute(!1));
   }
   CallOutside() {
-    let t;
+    var t;
     GlobalData_1.GlobalData.BpEventManager &&
       (t = this.PatrolLogic?.PatrolPoint) &&
       t.IsMain &&
@@ -103,23 +103,24 @@ class TsTaskPatrol extends TsTaskAbortImmediatelyBase_1.default {
   MoveToPatrolPoint() {
     const s = this.PatrolLogic?.PatrolPoint;
     if (s) {
-      const e = [];
+      var e = [];
       let i = 0;
       for (let t = 0; t < this.PatrolLogic.AllPatrolPoints.length; t++) {
-        const h = this.PatrolLogic.AllPatrolPoints[t];
-        const o = {
-          Index: h.IsMain ? i : -1,
-          Position: h.Point,
-          MoveState: h.MoveState,
-          MoveSpeed: h.MoveSpeed,
-          Actions: h.Actions,
-          Callback: () => {
-            this.PatrolLogic.SetPatrolIndex(t), s.IsMain && this.CallOutside();
-          },
-        };
+        var h = this.PatrolLogic.AllPatrolPoints[t],
+          o = {
+            Index: h.IsMain ? i : -1,
+            Position: h.Point,
+            MoveState: h.MoveState,
+            MoveSpeed: h.MoveSpeed,
+            Actions: h.Actions,
+            Callback: () => {
+              this.PatrolLogic.SetPatrolIndex(t),
+                s.IsMain && this.CallOutside();
+            },
+          };
         h.IsMain && i++, o.Actions || (o.Actions = []), e.push(o);
       }
-      const t = {
+      var t = {
         Points: e,
         Navigation: this.PatrolConfig.IsNavigation,
         IsFly: this.PatrolConfig.ContainZ,
@@ -128,7 +129,7 @@ class TsTaskPatrol extends TsTaskAbortImmediatelyBase_1.default {
         CircleMove: this.PatrolConfig.CirclePatrol,
         StartWithInversePath: this.PatrolLogic.StartWithInversePath,
         Callback: (t) => {
-          t === 1 && this.PatrolFinish(), this.Finish(!0);
+          1 === t && this.PatrolFinish(), this.Finish(!0);
         },
         UsePreviousIndex: this.UseLastMoveIndex,
         UseNearestPoint: this.UseLastMoveIndex,
@@ -138,7 +139,7 @@ class TsTaskPatrol extends TsTaskAbortImmediatelyBase_1.default {
     }
   }
   ExecuteMoveEnd(t) {
-    t === 1
+    1 === t
       ? this.PatrolLogic?.PatrolPoint &&
         ((t = this.PatrolLogic.PatrolPoint),
         this.CheckMoveEnd(t)
@@ -176,7 +177,7 @@ class TsTaskPatrol extends TsTaskAbortImmediatelyBase_1.default {
     this.PatrolFinish(), this.MoveComp?.StopMove(!0);
   }
   OnClear() {
-    let t;
+    var t;
     this.AIOwner instanceof TsAiController_1.default &&
       (EntitySystem_1.EntitySystem.Get(this.Entity.Id) &&
         (((t = Protocol_1.Aki.Protocol.QYn.create()).rkn =
@@ -197,4 +198,4 @@ class TsTaskPatrol extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskPatrol;
-// # sourceMappingURL=TsTaskPatrol.js.map
+//# sourceMappingURL=TsTaskPatrol.js.map

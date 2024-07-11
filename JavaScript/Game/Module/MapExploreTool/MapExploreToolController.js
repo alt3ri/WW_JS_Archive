@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MapExploreToolController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../GlobalData");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
-const MapExploreToolDefine_1 = require("./MapExploreToolDefine");
-const MAX_ROLE_HALF_HEIGHT = 85;
-const MAX_ROLE_RADIUS = 25;
-const TRACE_PROFILE_KEY = "CheckUpperSpaceEnoughForRole";
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../GlobalData"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  MapExploreToolDefine_1 = require("./MapExploreToolDefine"),
+  MAX_ROLE_HALF_HEIGHT = 85,
+  MAX_ROLE_RADIUS = 25,
+  TRACE_PROFILE_KEY = "CheckUpperSpaceEnoughForRole";
 class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return !0;
@@ -25,12 +25,12 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {}
   static OnRemoveEvents() {}
   static CheckUseMapExploreTool(o, e) {
-    const r =
+    var r =
       ModelManager_1.ModelManager.MapExploreToolModel.GetPhantomSkillIdBySkillId(
         e,
       );
     if (r) {
-      const a =
+      var a =
         ModelManager_1.ModelManager.CreatureModel.GetEntityById(
           o,
         )?.Entity?.GetComponent(3);
@@ -88,7 +88,7 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
           ?.ModifyCdTime([o.SkillId], 0, -1);
   }
   static SUi(o) {
-    let e, r, a;
+    var e, r, a;
     return ModelManager_1.ModelManager.MapExploreToolModel.GetCharExploreSkillBusy()
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -120,7 +120,7 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
                     r,
                   ))?.InstType !==
                   Protocol_1.Aki.Protocol.sOs.Proto_BigWorldInstance ||
-                a?.InstSubType !== 13
+                13 !== a?.InstSubType
                   ? (this.RUi(o, "ExplorePositionError"),
                     Log_1.Log.CheckInfo() &&
                       Log_1.Log.Info(
@@ -130,7 +130,7 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
                         ["UsingInfo", o],
                       ),
                     !1)
-                  : o.PhantomSkillId !== 1010 || this.UUi(o))
+                  : 1010 !== o.PhantomSkillId || this.UUi(o))
             : (this.RUi(o, "OnylHostUse"),
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("Phantom", 40, "[MapExploreTool] 非主控使用", [
@@ -147,7 +147,7 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
   }
   static UUi(o) {
     return !(
-      o.PhantomSkillId !== 1010 ||
+      1010 !== o.PhantomSkillId ||
       (ModelManager_1.ModelManager.LevelFuncFlagModel.GetFuncFlagEnable(0)
         ? ModelManager_1.ModelManager.MapModel.IsInMapPolygon(o.Pos)
           ? !this.AUi(o.Pos) &&
@@ -181,21 +181,21 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static AUi(o) {
-    const e = ModelManager_1.ModelManager.TraceElementModel.GetCapsuleTrace();
+    var e = ModelManager_1.ModelManager.TraceElementModel.GetCapsuleTrace();
     if (!e) return !1;
     (e.WorldContextObject = GlobalData_1.GlobalData.World),
       (e.HalfHeight = MAX_ROLE_HALF_HEIGHT),
       (e.Radius = MAX_ROLE_RADIUS);
-    const r = ModelManager_1.ModelManager.TraceElementModel.CommonStartLocation;
-    var o =
-      (r.DeepCopy(o),
-      (r.Z += MAX_ROLE_HALF_HEIGHT),
-      TraceElementCommon_1.TraceElementCommon.SetStartLocation(e, r),
-      TraceElementCommon_1.TraceElementCommon.SetEndLocation(e, r),
-      TraceElementCommon_1.TraceElementCommon.CapsuleTrace(
-        e,
-        TRACE_PROFILE_KEY,
-      ));
+    var r = ModelManager_1.ModelManager.TraceElementModel.CommonStartLocation,
+      o =
+        (r.DeepCopy(o),
+        (r.Z += MAX_ROLE_HALF_HEIGHT),
+        TraceElementCommon_1.TraceElementCommon.SetStartLocation(e, r),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(e, r),
+        TraceElementCommon_1.TraceElementCommon.CapsuleTrace(
+          e,
+          TRACE_PROFILE_KEY,
+        ));
     return (
       ModelManager_1.ModelManager.TraceElementModel.ClearCapsuleTrace(), !o
     );
@@ -205,8 +205,8 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
   }
   static yUi(o, e) {
     if (e) {
-      const r = this.PUi(o, e);
-      const a = this.xUi(o, e);
+      var r = this.PUi(o, e),
+        a = this.xUi(o, e);
       if (
         ModelManager_1.ModelManager.MapExploreToolModel.IsRespMeanCheckPass(
           o,
@@ -214,7 +214,7 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
         )
       )
         return void (a || this.TUi(o));
-      if (o.PhantomSkillId === 1011) if (this.wUi(o, e)) return;
+      if (1011 === o.PhantomSkillId) if (this.wUi(o, e)) return;
       r ||
         a ||
         (Log_1.Log.CheckWarn() &&
@@ -238,7 +238,7 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
   }
   static wUi(o, e) {
     return (
-      o.PhantomSkillId === 1011 &&
+      1011 === o.PhantomSkillId &&
       e?.Kms === Protocol_1.Aki.Protocol.lkn.Proto_ErrSkillIsEffect &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -266,8 +266,10 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
       this.IUi(o, !0);
   }
   static xUi(r, o) {
-    const a =
-      ModelManager_1.ModelManager.MapExploreToolModel.GetRespConfirmBoxId(r, o);
+    var a = ModelManager_1.ModelManager.MapExploreToolModel.GetRespConfirmBoxId(
+      r,
+      o,
+    );
     if (!a) return !1;
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
@@ -278,20 +280,20 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
         ["Response", o],
         ["ConfirmBoxId", a],
       );
-    const t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(a);
+    var t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(a);
     switch (a) {
       case 139:
       case 141:
       case 142: {
-        const n =
+        var n =
           ConfigManager_1.ConfigManager.RouletteConfig.GetCostByPhantomSkillId(
             r.PhantomSkillId,
           );
         let o = void 0;
-        let i = void 0;
+        var i = void 0;
         let e = void 0;
         n &&
-          n.size === 1 &&
+          1 === n.size &&
           (([[i, e]] = n),
           (o = ConfigManager_1.ConfigManager.ItemConfig.GetItemName(i))),
           n
@@ -327,10 +329,7 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static PUi(o, e) {
-    const r = ModelManager_1.ModelManager.MapExploreToolModel.GetRespTipsId(
-      o,
-      e,
-    );
+    var r = ModelManager_1.ModelManager.MapExploreToolModel.GetRespTipsId(o, e);
     return (
       !!r &&
       (Log_1.Log.CheckDebug() &&
@@ -347,7 +346,7 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static RUi(o, e) {
-    const r = [];
+    var r = [];
     switch (e) {
       case "ExploreActivating":
         var a =
@@ -372,8 +371,8 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
             o.PhantomSkillId,
           );
         if (!a || a.size <= 0) return;
-        var [a] = a.keys();
-        var a = ConfigManager_1.ConfigManager.ItemConfig.GetItemName(a);
+        var [a] = a.keys(),
+          a = ConfigManager_1.ConfigManager.ItemConfig.GetItemName(a);
         if (!a || a.length <= 0)
           return void (
             Log_1.Log.CheckError() &&
@@ -391,8 +390,8 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static $xn(o, e) {
-    const r = [];
-    if (e === "ExploreDeploySuccess") {
+    var r = [];
+    if ("ExploreDeploySuccess" === e) {
       o = ConfigManager_1.ConfigManager.RouletteConfig.GetNameByPhantomSkillId(
         o.PhantomSkillId,
       );
@@ -413,7 +412,7 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static LUi(o, e, r) {
-    const a = Protocol_1.Aki.Protocol.SJn.create();
+    var a = Protocol_1.Aki.Protocol.SJn.create();
     (a.M3n = o.Pos),
       (a.S3n = o.Rot),
       (a.vkn = o.PhantomSkillId),
@@ -422,4 +421,4 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
   }
 }
 exports.MapExploreToolController = MapExploreToolController;
-// # sourceMappingURL=MapExploreToolController.js.map
+//# sourceMappingURL=MapExploreToolController.js.map

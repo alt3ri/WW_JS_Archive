@@ -1,34 +1,39 @@
 "use strict";
-let SceneItemBeamReceiveComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (e, t, i, s) {
-    let o;
-    const r = arguments.length;
-    let n =
-      r < 3 ? t : s === null ? (s = Object.getOwnPropertyDescriptor(t, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      n = Reflect.decorate(e, t, i, s);
-    else
-      for (let a = e.length - 1; a >= 0; a--)
-        (o = e[a]) && (n = (r < 3 ? o(n) : r > 3 ? o(t, i, n) : o(t, i)) || n);
-    return r > 3 && n && Object.defineProperty(t, i, n), n;
-  };
+var SceneItemBeamReceiveComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (e, t, i, s) {
+      var o,
+        r = arguments.length,
+        n =
+          r < 3
+            ? t
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(t, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        n = Reflect.decorate(e, t, i, s);
+      else
+        for (var a = e.length - 1; 0 <= a; a--)
+          (o = e[a]) &&
+            (n = (r < 3 ? o(n) : 3 < r ? o(t, i, n) : o(t, i)) || n);
+      return 3 < r && n && Object.defineProperty(t, i, n), n;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemBeamReceiveComponent = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const Net_1 = require("../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController");
-const BattleUiDefine_1 = require("../../Module/BattleUi/BattleUiDefine");
-const castingPerformTag = -308662637;
-const stopCastingPerformTag = -1101371633;
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
+  BattleUiDefine_1 = require("../../Module/BattleUi/BattleUiDefine"),
+  castingPerformTag = -308662637,
+  stopCastingPerformTag = -1101371633;
 let SceneItemBeamReceiveComponent =
   (SceneItemBeamReceiveComponent_1 = class SceneItemBeamReceiveComponent extends (
     EntityComponent_1.EntityComponent
@@ -43,15 +48,15 @@ let SceneItemBeamReceiveComponent =
         (this.pdn = 0),
         (this.vdn = void 0),
         (this.Mdn = (e) => {
-          const t = this.SIe.GetEntityOnlineInteractType();
+          var t = this.SIe.GetEntityOnlineInteractType();
           LevelGamePlayController_1.LevelGamePlayController.MultiplayerLimitTypeCheck(
             t,
           ) &&
-            this.fdn !== 1 &&
+            1 !== this.fdn &&
             ((this.fdn = 1),
             this.Sdn(1),
             this.Edn(Protocol_1.Aki.Protocol.CBs.Proto_BeginAction),
-            this.pdn === 0
+            0 === this.pdn
               ? this.ydn(e)
               : (this.vdn && TimerSystem_1.TimerSystem.Has(this.vdn)) ||
                 (this.vdn = TimerSystem_1.TimerSystem.Delay(() => {
@@ -59,11 +64,11 @@ let SceneItemBeamReceiveComponent =
                 }, this.pdn)));
         }),
         (this.Idn = (e) => {
-          const t = this.SIe.GetEntityOnlineInteractType();
+          var t = this.SIe.GetEntityOnlineInteractType();
           LevelGamePlayController_1.LevelGamePlayController.MultiplayerLimitTypeCheck(
             t,
           ) &&
-            this.fdn !== 0 &&
+            0 !== this.fdn &&
             ((this.fdn = 0),
             this.Sdn(0),
             this.vdn &&
@@ -73,11 +78,11 @@ let SceneItemBeamReceiveComponent =
             this.Edn(Protocol_1.Aki.Protocol.CBs.Proto_StopAction));
         }),
         (this.ydn = (e) => {
-          const t = this.SIe.GetEntityOnlineInteractType();
+          var t = this.SIe.GetEntityOnlineInteractType();
           LevelGamePlayController_1.LevelGamePlayController.MultiplayerLimitTypeCheck(
             t,
           ) &&
-            this.fdn !== 2 &&
+            2 !== this.fdn &&
             ((this.fdn = 2),
             this.Sdn(2),
             this.vdn &&
@@ -187,7 +192,7 @@ let SceneItemBeamReceiveComponent =
       }
     }
     Edn(t) {
-      const e = Protocol_1.Aki.Protocol.dds.create();
+      var e = Protocol_1.Aki.Protocol.dds.create();
       (e.rkn = this.SIe.GetCreatureDataId()),
         (e.AFn = t),
         Net_1.Net.Call(1508, e, (e) => {
@@ -213,6 +218,7 @@ let SceneItemBeamReceiveComponent =
         case Protocol_1.Aki.Protocol.CBs.Proto_StopAction:
           return this.Lo?.StopActions;
         default:
+          return;
       }
     }
   });
@@ -222,4 +228,4 @@ let SceneItemBeamReceiveComponent =
     SceneItemBeamReceiveComponent,
   )),
   (exports.SceneItemBeamReceiveComponent = SceneItemBeamReceiveComponent);
-// # sourceMappingURL=SceneItemBeamReceiveComponent.js.map
+//# sourceMappingURL=SceneItemBeamReceiveComponent.js.map

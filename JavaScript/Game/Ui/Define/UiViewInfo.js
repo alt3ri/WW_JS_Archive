@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiViewInfo = void 0);
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class UiViewInfo {
   constructor(
     e,
@@ -61,7 +61,7 @@ class UiViewInfo {
       : this.Path;
   }
   get ScenePath() {
-    const e = UiViewInfo.icr.get(this.Name);
+    var e = UiViewInfo.icr.get(this.Name);
     return e
       ? ConfigManager_1.ConfigManager.UiViewConfig.GetUiShowConfig(e).ScenePath
       : this.ScenePathInternal;
@@ -83,4 +83,4 @@ class UiViewInfo {
   ["VisionRecoveryResultView", "CalabashRootView"],
   ["GachaScanView", "DrawMainView"],
 ]);
-// # sourceMappingURL=UiViewInfo.js.map
+//# sourceMappingURL=UiViewInfo.js.map

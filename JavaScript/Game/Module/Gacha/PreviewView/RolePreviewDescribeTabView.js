@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RolePreviewDescribeTabView = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const RoleController_1 = require("../../RoleUi/RoleController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  RoleController_1 = require("../../RoleUi/RoleController"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class RolePreviewDescribeTabView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -37,12 +37,9 @@ class RolePreviewDescribeTabView extends UiTabViewBase_1.UiTabViewBase {
       (this.AttributeText = void 0);
   }
   rdt() {
-    let e;
-    var i =
-      ModelManager_1.ModelManager.RoleModel.GetCurSelectMainRoleInstance();
-    var i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
-      i.GetRoleId(),
-    );
+    var e,
+      i = ModelManager_1.ModelManager.RoleModel.GetCurSelectMainRoleInstance(),
+      i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i.GetRoleId());
     i &&
       (this.GetText(0).ShowTextNew(i.Name),
       (e = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponTypeName(
@@ -74,4 +71,4 @@ class RolePreviewDescribeTabView extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.RolePreviewDescribeTabView = RolePreviewDescribeTabView;
-// # sourceMappingURL=RolePreviewDescribeTabView.js.map
+//# sourceMappingURL=RolePreviewDescribeTabView.js.map

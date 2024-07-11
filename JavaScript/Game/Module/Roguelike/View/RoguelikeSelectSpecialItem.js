@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoguelikeSelectSpecialItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
-const RoguelikeSelectSpecialStarItem_1 = require("./RoguelikeSelectSpecialStarItem");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
+  RoguelikeSelectSpecialStarItem_1 = require("./RoguelikeSelectSpecialStarItem");
 class RoguelikeSelectSpecialItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(e) {
     super(),
@@ -47,7 +47,7 @@ class RoguelikeSelectSpecialItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(e, i, t) {
     this.fao = e;
-    const r =
+    var r =
       ConfigManager_1.ConfigManager.RoguelikeConfig?.GetRoguelikeSpecialConfig(
         e.ConfigId,
       );
@@ -58,44 +58,45 @@ class RoguelikeSelectSpecialItem extends GridProxyAbstract_1.GridProxyAbstract {
           o.SetUIActive(!0);
         });
       var s =
-        ModelManager_1.ModelManager.RoguelikeModel?.GetDescModel() === 0
-          ? r.BriefDescribe
-          : r.Describe;
-      var s =
-        (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(6), s),
-        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(5), r.Name),
-        this.GetText(7));
-      var s =
-        (LguiUtil_1.LguiUtil.SetLocalTextNew(
-          s,
-          "RogueSpecialRemainTime",
-          e.RestCount,
-        ),
-        s.SetUIActive(e.RestCount !== 0),
-        r.Level > 0
-          ? (this.GetItem(2).SetUIActive(!0),
-            this.GetItem(3).SetUIActive(!1),
-            this.Zbe(r.Level, r.MaxLevel))
-          : (this.GetItem(2).SetUIActive(!1), this.GetItem(3).SetUIActive(!0)),
-        e.IsValid
-          ? (this.GetItem(8).SetUIActive(!1),
-            this.GetTexture(0).SetAlpha(
-              RoguelikeDefine_1.ROGUELIKE_SPECIAL_ITEM_UNLOCK_ALPHA,
-            ))
-          : (this.GetItem(8).SetUIActive(!0),
-            this.GetTexture(0).SetAlpha(
-              RoguelikeDefine_1.ROGUELIKE_SPECIAL_ITEM_LOCK_ALPHA,
-            )),
-        r.Category === 1 ? "FFFFFF" : "FFC3CC");
-      var e = r.Category === 1 ? "FFFFFF" : "FFEEF4";
+          0 === ModelManager_1.ModelManager.RoguelikeModel?.GetDescModel()
+            ? r.BriefDescribe
+            : r.Describe,
+        s =
+          (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(6), s),
+          LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(5), r.Name),
+          this.GetText(7)),
+        s =
+          (LguiUtil_1.LguiUtil.SetLocalTextNew(
+            s,
+            "RogueSpecialRemainTime",
+            e.RestCount,
+          ),
+          s.SetUIActive(0 !== e.RestCount),
+          0 < r.Level
+            ? (this.GetItem(2).SetUIActive(!0),
+              this.GetItem(3).SetUIActive(!1),
+              this.Zbe(r.Level, r.MaxLevel))
+            : (this.GetItem(2).SetUIActive(!1),
+              this.GetItem(3).SetUIActive(!0)),
+          e.IsValid
+            ? (this.GetItem(8).SetUIActive(!1),
+              this.GetTexture(0).SetAlpha(
+                RoguelikeDefine_1.ROGUELIKE_SPECIAL_ITEM_UNLOCK_ALPHA,
+              ))
+            : (this.GetItem(8).SetUIActive(!0),
+              this.GetTexture(0).SetAlpha(
+                RoguelikeDefine_1.ROGUELIKE_SPECIAL_ITEM_LOCK_ALPHA,
+              )),
+          1 === r.Category ? "FFFFFF" : "FFC3CC"),
+        e = 1 === r.Category ? "FFFFFF" : "FFEEF4";
       this.GetUiNiagara(10).SetColor(UE.Color.FromHex(s)),
         this.GetUiNiagara(11).SetColor(UE.Color.FromHex(e));
     }
   }
   Zbe(i, t) {
-    const r = [];
+    var r = [];
     for (let e = 0; e < t; e++) {
-      const s = i > e;
+      var s = i > e;
       r.push(s);
     }
     this.$be.RefreshByData(r);
@@ -106,4 +107,4 @@ class RoguelikeSelectSpecialItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.RoguelikeSelectSpecialItem = RoguelikeSelectSpecialItem;
-// # sourceMappingURL=RoguelikeSelectSpecialItem.js.map
+//# sourceMappingURL=RoguelikeSelectSpecialItem.js.map

@@ -1,5 +1,5 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SdkReportLevel =
     exports.SdkReportChapter =
@@ -16,51 +16,51 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.SdkReportGameInitFinish =
     exports.KuroSdkReport =
       void 0);
-const Protocol_1 = require("../../Core/Define/Net/Protocol");
-const StringUtils_1 = require("../../Core/Utils/StringUtils");
-const HotPatchKuroSdk_1 = require("../../Launcher/HotPatchKuroSdk/HotPatchKuroSdk");
-const SdkReportData_1 = require("../../Launcher/HotPatchKuroSdk/SdkReportData");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const ModelManager_1 = require("../Manager/ModelManager");
-const PayShopDefine_1 = require("../Module/PayShop/PayShopDefine");
-const KILLPHANTOMMISSION = 139000025;
-const CAPTUREPHANTOMMISSION = 139000026;
-const CHAPTERCPRE1 = 139000025;
-const CHAPTERCPRE2 = 139000026;
-const CHAPTERC11 = 139000027;
-const CHAPTERC12 = 139000029;
-const CHAPTERC13 = 139000030;
-const CHAPTERC14 = 139000031;
-const CHAPTERC15 = 114000020;
-const CHAPTERC16 = 140000004;
-const KILLPHANTOMSTEP1 = 6;
-const KILLPHANTOMSTEP2 = 10;
-const KILLPHANTOMSTEP3 = 91;
-const KILLPHANTOMSTEP4 = 132;
-const GOJINZHOU = 16;
-const STARTFLOW = 1;
-const STARTSTATE = 1;
-const RECHARGEONE = 1;
-const RECHARGETWO = 2;
-const RECHARGETHREE = 3;
-const RECHARGEFOUR = 4;
-const RECHARGEFIVE = 5;
-const RECHARGESIX = 6;
-const REPORTLEVEL8 = 8;
-const REPORTLEVEL10 = 10;
-const REPORTLEVEL12 = 12;
-const REPORTLEVEL15 = 15;
-const REPORTLEVEL20 = 20;
-const REPORTLEVEL25 = 25;
-const REPORTLEVEL30 = 30;
-const REPORTLEVEL35 = 35;
-const REPORTLEVEL40 = 40;
-const REPORTLEVEL45 = 45;
-const CREATEROLEEVENTID = "101104";
-const BATTLEEVENTID = "101803";
-const QUESTEVENTID = "101805";
-const FLOWEVENTID = "123000";
+const Protocol_1 = require("../../Core/Define/Net/Protocol"),
+  StringUtils_1 = require("../../Core/Utils/StringUtils"),
+  HotPatchKuroSdk_1 = require("../../Launcher/HotPatchKuroSdk/HotPatchKuroSdk"),
+  SdkReportData_1 = require("../../Launcher/HotPatchKuroSdk/SdkReportData"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  PayShopDefine_1 = require("../Module/PayShop/PayShopDefine"),
+  KILLPHANTOMMISSION = 139000025,
+  CAPTUREPHANTOMMISSION = 139000026,
+  CHAPTERCPRE1 = 139000025,
+  CHAPTERCPRE2 = 139000026,
+  CHAPTERC11 = 139000027,
+  CHAPTERC12 = 139000029,
+  CHAPTERC13 = 139000030,
+  CHAPTERC14 = 139000031,
+  CHAPTERC15 = 114000020,
+  CHAPTERC16 = 140000004,
+  KILLPHANTOMSTEP1 = 6,
+  KILLPHANTOMSTEP2 = 10,
+  KILLPHANTOMSTEP3 = 91,
+  KILLPHANTOMSTEP4 = 132,
+  GOJINZHOU = 16,
+  STARTFLOW = 1,
+  STARTSTATE = 1,
+  RECHARGEONE = 1,
+  RECHARGETWO = 2,
+  RECHARGETHREE = 3,
+  RECHARGEFOUR = 4,
+  RECHARGEFIVE = 5,
+  RECHARGESIX = 6,
+  REPORTLEVEL8 = 8,
+  REPORTLEVEL10 = 10,
+  REPORTLEVEL12 = 12,
+  REPORTLEVEL15 = 15,
+  REPORTLEVEL20 = 20,
+  REPORTLEVEL25 = 25,
+  REPORTLEVEL30 = 30,
+  REPORTLEVEL35 = 35,
+  REPORTLEVEL40 = 40,
+  REPORTLEVEL45 = 45,
+  CREATEROLEEVENTID = "101104",
+  BATTLEEVENTID = "101803",
+  QUESTEVENTID = "101805",
+  FLOWEVENTID = "123000";
 class KuroSdkReport {
   static Init() {
     this.mEe();
@@ -83,22 +83,22 @@ class KuroSdkReport {
       );
   }
   static OnPlayerLevelChange(e) {
-    let t;
+    var t;
     SdkReportLevel.IfNeedReport(e) &&
       (((t = new SdkReportLevel(void 0)).Level = e), this.Report(t));
   }
   static OnPlotFinish(e) {
-    let t;
+    var t;
     SdkReportStartFlow.IfNeedReport(e.FlowId, e.FlowStateId) &&
       (((t = new SdkReportStartFlow(void 0)).FlowId = e.FlowId),
       this.Report(t));
   }
   static OnSdkPay() {
-    const e = new SdkReportPay(void 0);
+    var e = new SdkReportPay(void 0);
     this.Report(e);
   }
   static OnPayShopDirectBuy(e) {
-    let t;
+    var t;
     SdkReportDirectBuy.IfNeedReport(e) &&
       (((t = new SdkReportDirectBuy(void 0)).PayItemId = e), this.Report(t));
   }
@@ -106,13 +106,13 @@ class KuroSdkReport {
 }
 (exports.KuroSdkReport = KuroSdkReport),
   ((_a = KuroSdkReport).UEe = (e) => {
-    let t;
+    var t;
     SdkReportRecharge.IfNeedReport(e.PayItemId) &&
       (((t = new SdkReportRecharge(void 0)).PayItemId = e.PayItemId),
       _a.Report(t));
   }),
   (KuroSdkReport.DEe = (e, t) => {
-    let r;
+    var r;
     SdkReportQuestFinish.IfNeedReport(e) &&
       (((r = new SdkReportQuestFinish(void 0)).QuestId = e), _a.Report(r)),
       SdkReportChapter.IfNeedReport(e, 0) &&
@@ -120,8 +120,8 @@ class KuroSdkReport {
         (((r = new SdkReportChapter(void 0)).TreeConfigId = e), _a.Report(r));
   }),
   (KuroSdkReport.REe = (e, t, r) => {
-    let E;
-    e.Type === 6 &&
+    var E;
+    6 === e.Type &&
       ((E = e.TreeConfigId),
       (e = e.NodeId),
       SdkReportBattleTech.IfNeedReport(E, e)) &&
@@ -211,7 +211,7 @@ class SdkReportQuestFinish extends SdkReportData_1.SdkReportData {
   static IfNeedReport(e) {
     if (
       e === CAPTUREPHANTOMMISSION &&
-      ModelManager_1.ModelManager.QuestNewModel.GetQuestState(e) === 3
+      3 === ModelManager_1.ModelManager.QuestNewModel.GetQuestState(e)
     )
       return !0;
     return !1;
@@ -264,7 +264,7 @@ class SdkReportRecharge extends SdkReportData_1.SdkReportData {
   GetEventName() {
     if (this.IfGlobalSdk) {
       const e = SdkReportRecharge.AEe.get(this.PayItemId);
-      return e || "";
+      return e ? e : "";
     }
     const e = SdkReportRecharge.PEe.get(this.PayItemId);
     return e || "";
@@ -338,7 +338,7 @@ class SdkReportChapter extends SdkReportData_1.SdkReportData {
   GetEventName() {
     if (this.IfGlobalSdk) {
       const e = SdkReportChapter.AEe.get(this.TreeConfigId);
-      return e || "";
+      return e ? e : "";
     }
     const e = SdkReportChapter.PEe.get(this.TreeConfigId);
     return e || "";
@@ -401,4 +401,4 @@ class SdkReportLevel extends SdkReportData_1.SdkReportData {
     [REPORTLEVEL40, "event_28"],
     [REPORTLEVEL45, "event_29"],
   ]));
-// # sourceMappingURL=KuroSdkReport.js.map
+//# sourceMappingURL=KuroSdkReport.js.map

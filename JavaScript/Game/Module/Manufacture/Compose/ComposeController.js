@@ -1,30 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ComposeController = void 0);
-const AudioController_1 = require("../../../../Core/Audio/AudioController");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const Net_1 = require("../../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ItemRewardController_1 = require("../../ItemReward/ItemRewardController");
-const RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData");
-const CommonManager_1 = require("../Common/CommonManager");
-const ComposeDefine_1 = require("./ComposeDefine");
-const ENTER_AUDIO_ID = "play_ui_fx_spl_gen_page_open";
-const LEAVE_AUDIO_ID = "play_ui_fx_spl_gen_page_close";
-const SUCCESS_AUDIO_ID = "play_ui_fx_spl_gen_robot_success_vo";
+const AudioController_1 = require("../../../../Core/Audio/AudioController"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ItemRewardController_1 = require("../../ItemReward/ItemRewardController"),
+  RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData"),
+  CommonManager_1 = require("../Common/CommonManager"),
+  ComposeDefine_1 = require("./ComposeDefine"),
+  ENTER_AUDIO_ID = "play_ui_fx_spl_gen_page_open",
+  LEAVE_AUDIO_ID = "play_ui_fx_spl_gen_page_close",
+  SUCCESS_AUDIO_ID = "play_ui_fx_spl_gen_robot_success_vo";
 class ComposeController extends UiControllerBase_1.UiControllerBase {
   static get ComposeCoinId() {
     return (
@@ -112,7 +112,7 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
       ModelManager_1.ModelManager.ComposeModel.SaveLimitRefreshTime(e.rLs);
   }
   static SendSynthesisInfoRequest() {
-    let e;
+    var e;
     ComposeController.zyi
       ? Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
@@ -151,8 +151,8 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
         50,
         "10273_客户端请求合成系统相关数据(异步刷新)",
       );
-    var e = new Protocol_1.Aki.Protocol.Z_s();
-    var e = await Net_1.Net.CallAsync(26777, e);
+    var e = new Protocol_1.Aki.Protocol.Z_s(),
+      e = await Net_1.Net.CallAsync(26777, e);
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Compose",
@@ -172,7 +172,7 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
             UiManager_1.UiManager.CloseView("ComposeRootView"));
   }
   static SendSynthesisItemRequest(e, o, t) {
-    const r = new Protocol_1.Aki.Protocol.tus();
+    var r = new Protocol_1.Aki.Protocol.tus();
     (r.Ekn = e),
       (r.l3n = o),
       (r.I5n = t),
@@ -200,18 +200,18 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
             ModelManager_1.ModelManager.ComposeModel.GetPurificationDataById(
               t.Ekn,
             )) && (e.LastRoleId = t.l3n);
-          const r = t.QTs;
-          const n =
-            (t.YTs.length !== 0 && r.push(...t.YTs),
-            ModelManager_1.ModelManager.ComposeModel);
-          var a = n.GetComposeInfo();
-          const s = a.ComposeLevel;
-          let i = n.GetComposeMaxLevel();
-          var l = n.GetComposeLevelByLevel(i);
-          var a = a.TotalProficiency;
-          var l = l.Completeness;
+          var r = t.QTs,
+            n =
+              (0 !== t.YTs.length && r.push(...t.YTs),
+              ModelManager_1.ModelManager.ComposeModel),
+            a = n.GetComposeInfo(),
+            s = a.ComposeLevel,
+            i = n.GetComposeMaxLevel(),
+            l = n.GetComposeLevelByLevel(i),
+            a = a.TotalProficiency,
+            l = l.Completeness;
           let o = void 0;
-          n.CurrentComposeListType === 1 &&
+          1 === n.CurrentComposeListType &&
             (n.LastExp < l || (s < i && a < l)) &&
             ((l = n.GetComposeLevelByLevel(Math.min(i, s + 1))),
             (i = {
@@ -223,9 +223,9 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
             (n.LastExp = a);
           const m = [];
           for (const g of r) {
-            var _ = g.G3n;
-            const C = g.k4n;
-            var _ = new RewardItemData_1.RewardItemData(_, C);
+            var _ = g.G3n,
+              C = g.k4n,
+              _ = new RewardItemData_1.RewardItemData(_, C);
             m.push(_);
           }
           ComposeController.PlayCompositeWorkingDisplay(() => {
@@ -253,7 +253,7 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static SendSynthesisLevelRewardRequest() {
-    let e;
+    var e;
     ComposeController.eIi
       ? Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
@@ -278,10 +278,10 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
         }));
   }
   static SendSynthesisFormulaUnlockRequest(t) {
-    const e = new Protocol_1.Aki.Protocol.aus();
+    var e = new Protocol_1.Aki.Protocol.aus();
     (e.Ekn = t),
       Net_1.Net.Call(12637, Protocol_1.Aki.Protocol.aus.create(e), (e) => {
-        let o;
+        var o;
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Compose", 50, "10281_制药配方解锁请求返回"),
           e.Kms === Protocol_1.Aki.Protocol.lkn.Sys
@@ -322,7 +322,7 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
     for (const t of ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillList(
       e.SkillId,
     ))
-      t.LeftSkillEffect !== 0 &&
+      0 !== t.LeftSkillEffect &&
         (o = StringUtils_1.StringUtils.Format(
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.SkillDescribe),
           ...t.SkillDetailNum,
@@ -365,7 +365,7 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
     return ModelManager_1.ModelManager.ComposeModel.CheckCanStructure(e);
   }
   static CheckIsBuffEx(e, o) {
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(o);
     if (!t.RoleList.includes(e))
       for (const r of ModelManager_1.ModelManager.RoleModel.GetRoleIdList())
@@ -388,16 +388,16 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
   static kbt(e, o) {
     let t = 0;
     t =
-      o !== 0
+      0 !== o
         ? o
         : CommonParamById_1.configCommonParamById.GetIntConfig(
             "max_cooking_count",
           );
     for (const a of e) {
-      const r = a.Count;
-      let n = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-        a.ItemId,
-      );
+      var r = a.Count,
+        n = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+          a.ItemId,
+        );
       if (n < r) return 0;
       n = MathUtils_1.MathUtils.GetFloatPointFloor(n / r, 0);
       t = t < n ? t : n;
@@ -406,8 +406,9 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
   }
   static SendManufacture(e, o) {
     ModelManager_1.ModelManager.ComposeModel.CheckComposeMaterialEnough(e)
-      ? (ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType ===
-          1 && ModelManager_1.ModelManager.ComposeModel.CleanAddExp(),
+      ? (1 ===
+          ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType &&
+          ModelManager_1.ModelManager.ComposeModel.CleanAddExp(),
         ComposeController.SendSynthesisItemRequest(
           e,
           ComposeController.GetCurrentRoleId(),
@@ -447,16 +448,16 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
   }
   static CheckCanShowExpItem() {
     return (
-      ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType === 1
+      1 === ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType
     );
   }
   static CheckCanGetComposeLevel() {
-    const e = ModelManager_1.ModelManager.ComposeModel.GetComposeInfo();
+    var e = ModelManager_1.ModelManager.ComposeModel.GetComposeInfo();
     if (
       e.ComposeLevel !==
       ModelManager_1.ModelManager.ComposeModel.GetComposeMaxLevel()
     ) {
-      const o = ModelManager_1.ModelManager.ComposeModel.GetSumExpByLevel(
+      var o = ModelManager_1.ModelManager.ComposeModel.GetSumExpByLevel(
         e.ComposeLevel,
       );
       if (e.TotalProficiency >= o) return !0;
@@ -465,8 +466,8 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
   }
   static PlayCompositeEnterDisplay(e) {
     this.ClearCompositeDisplay();
-    let o;
-    const t = this.Fbt();
+    var o,
+      t = this.Fbt();
     t &&
       ((o = ModelManager_1.ModelManager.ComposeModel.ComposeEnterFlow),
       ComposeController.PlayCompositeFlow(o),
@@ -481,7 +482,7 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
   }
   static PlayCompositeLoopDisplay() {
     this.ClearCompositeDisplay();
-    const e = this.Fbt();
+    var e = this.Fbt();
     e &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Test", 8, "[CompositeDisplay]播放合成循环表现"),
@@ -489,7 +490,7 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
   }
   static PlayCompositeWorkingDisplay(e) {
     this.ClearCompositeDisplay();
-    const o = this.Fbt();
+    var o = this.Fbt();
     o &&
       (EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnBeginPlayCompositeWorkingDisplay,
@@ -506,7 +507,7 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
       }, ComposeDefine_1.COMPOSITE_WORKING_SEQUENCE_TIME_LENGTH)));
   }
   static PlayCompositeFlow(e) {
-    let o;
+    var o;
     e &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -526,7 +527,7 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
       ));
   }
   static Zyi(e, o) {
-    const t = ConfigManager_1.ConfigManager.AudioConfig.GetAudioPath(e);
+    var t = ConfigManager_1.ConfigManager.AudioConfig.GetAudioPath(e);
     t &&
       (AudioController_1.AudioController.PostEventByUi(t.Path, o),
       Log_1.Log.CheckDebug()) &&
@@ -537,8 +538,8 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
   }
   static PlayCompositeFailDisplay(e) {
     this.ClearCompositeDisplay();
-    let o;
-    const t = this.Fbt();
+    var o,
+      t = this.Fbt();
     t &&
       ((o = ModelManager_1.ModelManager.ComposeModel.ComposeFailFlow),
       ComposeController.PlayCompositeFlow(o),
@@ -551,7 +552,7 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
       }, ComposeDefine_1.COMPOSITE_FAIL_SEQUENCE_TIME_LENGTH)));
   }
   static ClearCompositeDisplay() {
-    const e = this.Fbt();
+    var e = this.Fbt();
     e &&
       (e.RemoveTag(-269686894),
       e.RemoveTag(686058684),
@@ -568,7 +569,7 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
   }
   static Fbt() {
     if (this.Yyi) {
-      const e = EntitySystem_1.EntitySystem.Get(this.Yyi);
+      var e = EntitySystem_1.EntitySystem.Get(this.Yyi);
       if (e) return e.GetComponent(177);
     }
   }
@@ -582,7 +583,7 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.ComposeModel.CreatePurificationDataList();
   }),
   (ComposeController.Xyi = (e) => {
-    if (CommonManager_1.CommonManager.GetCurrentSystem() === 1)
+    if (1 === CommonManager_1.CommonManager.GetCurrentSystem())
       switch (e) {
         case 0:
           ModelManager_1.ModelManager.ComposeModel.CurrentComposeViewType = 1;
@@ -595,7 +596,7 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
       }
   }),
   (ComposeController.$yi = (e, o) => {
-    let t = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e);
+    var t = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e);
     (t.ShowTypes.includes(35) || t.ShowTypes.includes(37)) &&
       ((t =
         ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaByFormulaItemId(
@@ -613,4 +614,4 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
   }),
   (ComposeController.zyi = !1),
   (ComposeController.eIi = !1);
-// # sourceMappingURL=ComposeController.js.map
+//# sourceMappingURL=ComposeController.js.map

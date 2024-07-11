@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomAttrItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
-const ElementItem_1 = require("./ElementItem");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
+  ElementItem_1 = require("./ElementItem"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class PhantomAttrItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -49,18 +49,18 @@ class PhantomAttrItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.lao(), this._ao(), this.o3e(), this.OPt();
   }
   lao() {
-    const e = ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.GetIsUnlock(
+    var e = ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.GetIsUnlock(
       this.AffixEntry,
     );
     this.GetSprite(3).SetUIActive(e), this.GetSprite(4).SetUIActive(!e);
   }
   _ao() {
-    let e;
-    let t;
-    let i;
-    const r = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueAffixConfig(
-      this.AffixEntry.Id,
-    );
+    var e,
+      t,
+      i,
+      r = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueAffixConfig(
+        this.AffixEntry.Id,
+      );
     r &&
       ((e = ModelManager_1.ModelManager.RoguelikeModel.GetDescModel()),
       (t = this.GetText(0)),
@@ -74,7 +74,7 @@ class PhantomAttrItem extends GridProxyAbstract_1.GridProxyAbstract {
           ? UE.Color.FromHex("BEFE58FF")
           : UE.Color.FromHex("ECE5D8FF"),
       ),
-      e === 0
+      0 === e
         ? (t.ShowTextNew(r.AffixDescSimple), i.ShowTextNew(r.AffixDescSimple))
         : (LguiUtil_1.LguiUtil.SetLocalTextNew(
             t,
@@ -88,16 +88,14 @@ class PhantomAttrItem extends GridProxyAbstract_1.GridProxyAbstract {
           )));
   }
   o3e() {
-    var e = this.GetText(0);
-    var e = e.GetTextRenderSize().X < e.Width;
-    const t = this.GetHorizontalLayout(1)
-      .GetRootComponent()
-      .GetParentAsUIItem();
-    const i = this.GetItem(6);
-    const r = this.GetItem(5)
-      .GetOwner()
-      .GetComponentByClass(UE.UISizeControlByOther.StaticClass());
-    const s = (e ? t : i).GetOwner();
+    var e = this.GetText(0),
+      e = e.GetTextRenderSize().X < e.Width,
+      t = this.GetHorizontalLayout(1).GetRootComponent().GetParentAsUIItem(),
+      i = this.GetItem(6),
+      r = this.GetItem(5)
+        .GetOwner()
+        .GetComponentByClass(UE.UISizeControlByOther.StaticClass()),
+      s = (e ? t : i).GetOwner();
     r.SetTargetActor(s),
       t.SetUIActive(e),
       i.SetUIActive(!e),
@@ -115,7 +113,7 @@ class PhantomAttrItem extends GridProxyAbstract_1.GridProxyAbstract {
         ));
   }
   OPt() {
-    const e = this.AffixEntry.GetSortElementInfoArrayByCount();
+    var e = this.AffixEntry.GetSortElementInfoArrayByCount();
     this.Mhi?.RefreshByData(e), this.hao?.RefreshByData(e);
   }
   PlayComplete() {
@@ -123,4 +121,4 @@ class PhantomAttrItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.PhantomAttrItem = PhantomAttrItem;
-// # sourceMappingURL=PhantomAttrItem.js.map
+//# sourceMappingURL=PhantomAttrItem.js.map

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleSetting = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const moduleNetworkState = [];
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  moduleNetworkState = [];
 class BattleSetting {
   static RequestSetModuleNetworkState(t, e) {
-    const o = Protocol_1.Aki.Protocol.vzn.create();
+    var o = Protocol_1.Aki.Protocol.vzn.create();
     (o.c9n = t),
       (o.u9n = e),
       Log_1.Log.CheckDebug() &&
@@ -38,4 +38,4 @@ class BattleSetting {
   }
 }
 exports.BattleSetting = BattleSetting;
-// # sourceMappingURL=BattleSetting.js.map
+//# sourceMappingURL=BattleSetting.js.map

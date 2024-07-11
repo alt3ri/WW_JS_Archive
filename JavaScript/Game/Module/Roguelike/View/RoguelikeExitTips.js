@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoguelikeExitTips = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RoguelikeController_1 = require("../RoguelikeController");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RoguelikeController_1 = require("../RoguelikeController");
 class RoguelikeExitTips extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -45,4 +45,4 @@ class RoguelikeExitTips extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RoguelikeExitTips = RoguelikeExitTips;
-// # sourceMappingURL=RoguelikeExitTips.js.map
+//# sourceMappingURL=RoguelikeExitTips.js.map

@@ -8,4 +8,4 @@ class LevelConditionOnPlayerRevive extends LevelGeneralBase_1.LevelConditionBase
   }
 }
 exports.LevelConditionOnPlayerRevive = LevelConditionOnPlayerRevive;
-// # sourceMappingURL=LevelConditionOnPlayerRevive.js.map
+//# sourceMappingURL=LevelConditionOnPlayerRevive.js.map

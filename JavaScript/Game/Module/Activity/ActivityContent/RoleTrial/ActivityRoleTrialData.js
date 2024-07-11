@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRoleTrialData = exports.stateResolver = void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ActivityData_1 = require("../../ActivityData");
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ActivityData_1 = require("../../ActivityData");
 exports.stateResolver = {
   [Protocol_1.Aki.Protocol.r0s.Proto_Running]: 0,
   [Protocol_1.Aki.Protocol.r0s.Proto_WaitTakeReward]: 1,
@@ -22,21 +22,21 @@ class ActivityRoleTrialData extends ActivityData_1.ActivityBaseData {
     this.Gke = t;
   }
   IsRolePreviewOn() {
-    return this.Gke === 2;
+    return 2 === this.Gke;
   }
   IsRoleInstanceOn() {
-    return this.Gke === 3;
+    return 3 === this.Gke;
   }
   PhraseEx(t) {
     (this.RoleIdList.length = 0), (this.RoleTrialIdList.length = 0);
     t = t.v0s;
     if (t)
       for (const o of t.o0s) {
-        const e = exports.stateResolver[o.r0s];
-        const r =
-          ConfigManager_1.ConfigManager.ActivityRoleTrialConfig.GetRoleTrialInfoConfigByRoleId(
-            o.l3n,
-          );
+        var e = exports.stateResolver[o.r0s],
+          r =
+            ConfigManager_1.ConfigManager.ActivityRoleTrialConfig.GetRoleTrialInfoConfigByRoleId(
+              o.l3n,
+            );
         this.RoleTrialIdList.push(r.TrialRoleId),
           this.RoleIdList.push(o.l3n),
           this.qke.set(o.l3n, e);
@@ -54,18 +54,18 @@ class ActivityRoleTrialData extends ActivityData_1.ActivityBaseData {
     )?.InstanceId;
   }
   GetRewardDataByRoleId(t) {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.ActivityRoleTrialConfig.GetRoleTrialInfoConfigByRoleId(
         t,
       );
     if (e && e.RewardItem) {
-      let r;
-      let o;
-      const a = this.GetRewardStateByRoleId(t);
-      const i = [];
+      var r,
+        o,
+        a = this.GetRewardStateByRoleId(t),
+        i = [];
       for ([r, o] of e.RewardItem) {
-        const s = [{ IncId: 0, ItemId: r }, o];
-        i.push({ Item: s, HasClaimed: a === 2 });
+        var s = [{ IncId: 0, ItemId: r }, o];
+        i.push({ Item: s, HasClaimed: 2 === a });
       }
       return i;
     }
@@ -74,9 +74,9 @@ class ActivityRoleTrialData extends ActivityData_1.ActivityBaseData {
     return !1;
   }
   GetExDataRedPointShowState() {
-    for (const [, t] of this.qke) if (t === 1) return !0;
+    for (var [, t] of this.qke) if (1 === t) return !0;
     return !1;
   }
 }
 exports.ActivityRoleTrialData = ActivityRoleTrialData;
-// # sourceMappingURL=ActivityRoleTrialData.js.map
+//# sourceMappingURL=ActivityRoleTrialData.js.map

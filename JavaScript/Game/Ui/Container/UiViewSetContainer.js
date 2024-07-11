@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiViewSetContainer = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const UiViewContainer_1 = require("./UiViewContainer");
+const Log_1 = require("../../../Core/Common/Log"),
+  UiViewContainer_1 = require("./UiViewContainer");
 class UiViewSetContainer extends UiViewContainer_1.UiViewContainer {
   constructor(e) {
     super(), (this.EFo = void 0), (this.EFo = e);
   }
   async OpenViewAsync(e) {
-    const i = e.Info.Name;
+    var i = e.Info.Name;
     this.EFo.has(i)
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("UiCore", 1, "界面重复", ["name", i])
@@ -18,9 +18,9 @@ class UiViewSetContainer extends UiViewContainer_1.UiViewContainer {
     this.EFo.delete(e.Info.Name), await this.CloseViewImplementAsync(e);
   }
   ClearContainer() {
-    let e;
-    let i;
-    const o = [];
+    var e,
+      i,
+      o = [];
     for ([e, i] of this.EFo)
       (i.IsExistInLeaveLevel = !0),
         i.Info.IsPermanent ||
@@ -55,4 +55,4 @@ class UiViewSetContainer extends UiViewContainer_1.UiViewContainer {
   }
 }
 exports.UiViewSetContainer = UiViewSetContainer;
-// # sourceMappingURL=UiViewSetContainer.js.map
+//# sourceMappingURL=UiViewSetContainer.js.map

@@ -1,39 +1,39 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SettlementCamera = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const QueryTypeDefine_1 = require("../../Core/Define/QueryTypeDefine");
-const MathCommon_1 = require("../../Core/Utils/Math/MathCommon");
-const Rotator_1 = require("../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../Core/Utils/ObjectUtils");
-const StringUtils_1 = require("../../Core/Utils/StringUtils");
-const TraceElementCommon_1 = require("../../Core/Utils/TraceElementCommon");
-const GlobalData_1 = require("../GlobalData");
-const ColorUtils_1 = require("../Utils/ColorUtils");
-const CameraController_1 = require("./CameraController");
-const MIN_CAMERA_DISTANCE = 100;
-const TARGET_PITCH_MIN = -5;
-const TARGET_PITCH_MAX = -8;
-const TRACE_TOP_ADDITION_Z = 50;
-const TRACE_BOTTOM_ADDITION_Z = 50;
-const LEFT_YAW_RANGE_MIN = -180;
-const LEFT_YAW_RANGE_MAX = 0;
-const RIGHT_YAW_RANGE_MIN = 0;
-const RIGHT_YAW_RANGE_MAX = 180;
-const MIN_VALID_YAW_RANGE = 0;
-const MIN_SHAPE_RADUIS = 30;
-const MAX_CACHE_CAPSULE_COUNT = 4;
-const PTICH_MAX = 90;
-const PITCH_MIN = -90;
-const MINUS_FLAT_ANGLE = -180;
-const FLAT_ANGLE = 180;
-const PROFILE_KEY = "FightCameraLogicComponent_TraceValidRange_Camera";
-const DEBUG_DRAW_DURATION = 10;
-const THICKNESS = 5;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  QueryTypeDefine_1 = require("../../Core/Define/QueryTypeDefine"),
+  MathCommon_1 = require("../../Core/Utils/Math/MathCommon"),
+  Rotator_1 = require("../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../Core/Utils/ObjectUtils"),
+  StringUtils_1 = require("../../Core/Utils/StringUtils"),
+  TraceElementCommon_1 = require("../../Core/Utils/TraceElementCommon"),
+  GlobalData_1 = require("../GlobalData"),
+  ColorUtils_1 = require("../Utils/ColorUtils"),
+  CameraController_1 = require("./CameraController"),
+  MIN_CAMERA_DISTANCE = 100,
+  TARGET_PITCH_MIN = -5,
+  TARGET_PITCH_MAX = -8,
+  TRACE_TOP_ADDITION_Z = 50,
+  TRACE_BOTTOM_ADDITION_Z = 50,
+  LEFT_YAW_RANGE_MIN = -180,
+  LEFT_YAW_RANGE_MAX = 0,
+  RIGHT_YAW_RANGE_MIN = 0,
+  RIGHT_YAW_RANGE_MAX = 180,
+  MIN_VALID_YAW_RANGE = 0,
+  MIN_SHAPE_RADUIS = 30,
+  MAX_CACHE_CAPSULE_COUNT = 4,
+  PTICH_MAX = 90,
+  PITCH_MIN = -90,
+  MINUS_FLAT_ANGLE = -180,
+  FLAT_ANGLE = 180,
+  PROFILE_KEY = "FightCameraLogicComponent_TraceValidRange_Camera",
+  DEBUG_DRAW_DURATION = 10,
+  THICKNESS = 5;
 class YawRange {
   constructor(t, i) {
     (this.Min = 0), (this.Max = 0), (this.Min = t), (this.Max = i);
@@ -257,8 +257,8 @@ class SettlementCamera {
     this.Qme.length = 0;
     for (const i of this.Wme) i.Max - i.Min > this.qme && this.Qme.push(i);
     for (const s of this.Kme) s.Max - s.Min > this.qme && this.Qme.push(s);
-    let t;
-    this.Qme.length > 0
+    var t;
+    0 < this.Qme.length
       ? ((t = ObjectUtils_1.ObjectUtils.GetRandomArrayItem(this.Qme)),
         (t =
           MathUtils_1.MathUtils.Lerp(t.Min, t.Max, Math.random()) + this.Gme),
@@ -305,13 +305,13 @@ class SettlementCamera {
   }
   Jme(i) {
     if ((this.kme.clear(), this.Fme.clear(), this.Vme.clear(), i)) {
-      const s = i.GetHitCount();
-      const h = this.Hh.PlayerLocation.Z + this.Ame;
-      const _ = this.Hh.PlayerLocation.Z - this.Pme;
+      var s = i.GetHitCount(),
+        h = this.Hh.PlayerLocation.Z + this.Ame,
+        _ = this.Hh.PlayerLocation.Z - this.Pme;
       for (let t = 0; t < s; ++t) {
-        var e;
-        var a;
-        const r = i.Actors.Get(t);
+        var e,
+          a,
+          r = i.Actors.Get(t);
         r &&
           (e = i.Components?.Get(t)) &&
           (TraceElementCommon_1.TraceElementCommon.GetImpactPoint(
@@ -355,20 +355,20 @@ class SettlementCamera {
   }
   zme(_) {
     this.jme.length = 0;
-    for (const [t, i] of this.kme) {
-      const s = _.Components?.Get(i);
+    for (var [t, i] of this.kme) {
+      var s = _.Components?.Get(i);
       s &&
         (TraceElementCommon_1.TraceElementCommon.GetImpactPoint(_, i, this.Lz),
         this.jme.push(this.ide(t.GetTransform(), s, this.Lz)));
     }
-    for (const [, h] of this.Fme) {
+    for (var [, h] of this.Fme) {
       h.sort((t, i) => {
-        let s = _.Components?.Get(t);
-        const h = _.Components?.Get(i);
+        var s = _.Components?.Get(t),
+          h = _.Components?.Get(i);
         return h ? (s ? ((s = this.ode(s, t)), this.ode(h, i) - s) : 1) : -1;
       });
       for (let t = 0; t < h.length && t < MAX_CACHE_CAPSULE_COUNT; ++t) {
-        const e = _.Components?.Get(h[t]);
+        var e = _.Components?.Get(h[t]);
         e && this.jme.push(this.rde(e, h[t]));
       }
     }
@@ -376,10 +376,10 @@ class SettlementCamera {
   rde(t, i) {
     let s = 0;
     this.Lz.DeepCopy(t.K2_GetComponentLocation());
-    const h = this.Ime;
-    var t = this.ode(t, i);
-    var i = Vector_1.Vector.Dist2D(this.Hh.PlayerLocation, this.Lz);
-    const _ = this.nde(this.Lz);
+    var h = this.Ime,
+      t = this.ode(t, i),
+      i = Vector_1.Vector.Dist2D(this.Hh.PlayerLocation, this.Lz),
+      _ = this.nde(this.Lz);
     return (
       (s =
         i < h
@@ -390,126 +390,130 @@ class SettlementCamera {
     );
   }
   ide(t, i, s) {
-    const h = t.InverseTransformPositionNoScale(this.Nme.ToUeVector());
-    var s = t.InverseTransformPositionNoScale(s.ToUeVector());
-    const _ = this.Ime;
-    var [i, e] = this.tde(t, i);
-    let a = 0;
-    let r = 0;
-    let o;
-    let A;
-    const T = Vector_1.Vector.Create();
-    const n = Vector_1.Vector.Create();
-    var i =
-      (h.Y >= -e && h.Y <= e
-        ? ((E = e + h.Y),
-          (o = e - h.Y),
-          (A = s.X - h.X),
-          (a =
-            _ * _ < E * E + A * A ? h.Y - Math.sqrt(_ * _ - A * A) : h.Y - E),
-          (r =
-            _ * _ < o * o + A * A ? h.Y + Math.sqrt(_ * _ - A * A) : h.Y + o),
-          (T.X = s.X),
-          (T.Y = h.X <= 0 ? a : r),
-          (T.Z = s.Z),
-          (n.X = s.X),
-          (n.Y = h.X > 0 ? a : r),
-          (n.Z = s.Z))
-        : h.X >= -i && h.X <= i
-          ? ((E = i - h.X),
-            (A = i + h.X),
-            (o = s.Y - h.Y),
+    var h = t.InverseTransformPositionNoScale(this.Nme.ToUeVector()),
+      s = t.InverseTransformPositionNoScale(s.ToUeVector()),
+      _ = this.Ime,
+      [i, e] = this.tde(t, i);
+    let a = 0,
+      r = 0;
+    var o,
+      A,
+      T = Vector_1.Vector.Create(),
+      n = Vector_1.Vector.Create(),
+      i =
+        (h.Y >= -e && h.Y <= e
+          ? ((E = e + h.Y),
+            (o = e - h.Y),
+            (A = s.X - h.X),
             (a =
-              _ * _ < E * E + o * o ? h.X + Math.sqrt(_ * _ - o * o) : h.X + E),
+              _ * _ < E * E + A * A ? h.Y - Math.sqrt(_ * _ - A * A) : h.Y - E),
             (r =
-              _ * _ < A * A + o * o ? h.X - Math.sqrt(_ * _ - o * o) : h.X - A),
-            (T.X = h.Y <= 0 ? a : r),
-            (T.Y = s.Y),
+              _ * _ < o * o + A * A ? h.Y + Math.sqrt(_ * _ - A * A) : h.Y + o),
+            (T.X = s.X),
+            (T.Y = h.X <= 0 ? a : r),
             (T.Z = s.Z),
-            (n.X = h.Y > 0 ? a : r),
-            (n.Y = s.Y),
+            (n.X = s.X),
+            (n.Y = 0 < h.X ? a : r),
             (n.Z = s.Z))
-          : h.Y < -e && h.X < -i
+          : h.X >= -i && h.X <= i
             ? ((E = i - h.X),
-              (o = e - h.Y),
-              (A = s.X - h.X),
-              (M = s.Y - h.Y),
+              (A = i + h.X),
+              (o = s.Y - h.Y),
               (a =
-                _ * _ < E * E + M * M
-                  ? h.X + Math.sqrt(_ * _ - M * M)
+                _ * _ < E * E + o * o
+                  ? h.X + Math.sqrt(_ * _ - o * o)
                   : h.X + E),
               (r =
-                _ * _ < o * o + A * A
-                  ? h.Y + Math.sqrt(_ * _ - A * A)
-                  : h.Y + o),
-              (T.X = a),
+                _ * _ < A * A + o * o
+                  ? h.X - Math.sqrt(_ * _ - o * o)
+                  : h.X - A),
+              (T.X = h.Y <= 0 ? a : r),
               (T.Y = s.Y),
               (T.Z = s.Z),
-              (n.X = s.X),
-              (n.Y = r),
+              (n.X = 0 < h.Y ? a : r),
+              (n.Y = s.Y),
               (n.Z = s.Z))
-            : h.Y > e && h.X < -i
-              ? ((M = i - h.X),
-                (E = e + h.Y),
+            : h.Y < -e && h.X < -i
+              ? ((E = i - h.X),
+                (o = e - h.Y),
                 (A = s.X - h.X),
-                (o = s.Y - h.Y),
+                (M = s.Y - h.Y),
                 (a =
-                  _ * _ < M * M + o * o
-                    ? h.X + Math.sqrt(_ * _ - o * o)
-                    : h.X + M),
+                  _ * _ < E * E + M * M
+                    ? h.X + Math.sqrt(_ * _ - M * M)
+                    : h.X + E),
                 (r =
-                  _ * _ < E * E + A * A
-                    ? h.Y - Math.sqrt(_ * _ - A * A)
-                    : h.Y - E),
-                (n.X = a),
-                (n.Y = s.Y),
-                (n.Z = s.Z),
-                (T.X = s.X),
-                (T.Y = r),
-                (T.Z = s.Z))
-              : h.Y < -e && h.X > i
-                ? ((o = i + h.X),
-                  (M = e - h.Y),
+                  _ * _ < o * o + A * A
+                    ? h.Y + Math.sqrt(_ * _ - A * A)
+                    : h.Y + o),
+                (T.X = a),
+                (T.Y = s.Y),
+                (T.Z = s.Z),
+                (n.X = s.X),
+                (n.Y = r),
+                (n.Z = s.Z))
+              : h.Y > e && h.X < -i
+                ? ((M = i - h.X),
+                  (E = e + h.Y),
                   (A = s.X - h.X),
-                  (E = s.Y - h.Y),
+                  (o = s.Y - h.Y),
                   (a =
-                    _ * _ < o * o + E * E
-                      ? h.X - Math.sqrt(_ * _ - E * E)
-                      : h.X - o),
+                    _ * _ < M * M + o * o
+                      ? h.X + Math.sqrt(_ * _ - o * o)
+                      : h.X + M),
                   (r =
-                    _ * _ < M * M + A * A
-                      ? h.Y + Math.sqrt(_ * _ - A * A)
-                      : h.Y + M),
-                  (T.X = s.X),
-                  (T.Y = r),
-                  (T.Z = s.Z),
+                    _ * _ < E * E + A * A
+                      ? h.Y - Math.sqrt(_ * _ - A * A)
+                      : h.Y - E),
                   (n.X = a),
                   (n.Y = s.Y),
-                  (n.Z = s.Z))
-                : h.Y > e &&
-                  h.X > i &&
-                  ((E = i + h.X),
-                  (o = e + h.Y),
-                  (A = s.X - h.X),
-                  (M = s.Y - h.Y),
-                  (a =
-                    _ * _ < E * E + M * M
-                      ? h.X - Math.sqrt(_ * _ - M * M)
-                      : h.X - E),
-                  (r =
-                    _ * _ < o * o + A * A
-                      ? h.Y - Math.sqrt(_ * _ - A * A)
-                      : h.Y - o),
-                  (T.X = a),
-                  (T.Y = s.Y),
-                  (T.Z = s.Z),
-                  (n.X = s.X),
-                  (n.Y = r),
-                  (n.Z = s.Z)),
-      t.TransformPositionNoScale(T.ToUeVector()));
-    var e = t.TransformPositionNoScale(n.ToUeVector());
-    var M = this.sde(i);
-    var E = this.sde(e);
+                  (n.Z = s.Z),
+                  (T.X = s.X),
+                  (T.Y = r),
+                  (T.Z = s.Z))
+                : h.Y < -e && h.X > i
+                  ? ((o = i + h.X),
+                    (M = e - h.Y),
+                    (A = s.X - h.X),
+                    (E = s.Y - h.Y),
+                    (a =
+                      _ * _ < o * o + E * E
+                        ? h.X - Math.sqrt(_ * _ - E * E)
+                        : h.X - o),
+                    (r =
+                      _ * _ < M * M + A * A
+                        ? h.Y + Math.sqrt(_ * _ - A * A)
+                        : h.Y + M),
+                    (T.X = s.X),
+                    (T.Y = r),
+                    (T.Z = s.Z),
+                    (n.X = a),
+                    (n.Y = s.Y),
+                    (n.Z = s.Z))
+                  : h.Y > e &&
+                    h.X > i &&
+                    ((E = i + h.X),
+                    (o = e + h.Y),
+                    (A = s.X - h.X),
+                    (M = s.Y - h.Y),
+                    (a =
+                      _ * _ < E * E + M * M
+                        ? h.X - Math.sqrt(_ * _ - M * M)
+                        : h.X - E),
+                    (r =
+                      _ * _ < o * o + A * A
+                        ? h.Y - Math.sqrt(_ * _ - A * A)
+                        : h.Y - o),
+                    (T.X = a),
+                    (T.Y = s.Y),
+                    (T.Z = s.Z),
+                    (n.X = s.X),
+                    (n.Y = r),
+                    (n.Z = s.Z)),
+        t.TransformPositionNoScale(T.ToUeVector())),
+      e = t.TransformPositionNoScale(n.ToUeVector()),
+      M = this.sde(i),
+      E = this.sde(e);
     return new YawRange(M, E);
   }
   Zme() {
@@ -518,18 +522,18 @@ class SettlementCamera {
       this.Wme.push(new YawRange(this.xme, this.wme)),
       this.Kme.push(new YawRange(this.Bme, this.bme));
     for (const l of this.jme) {
-      const t = MathCommon_1.MathCommon.WrapAngle(l.Max - this.Gme);
-      const i = MathCommon_1.MathCommon.WrapAngle(l.Min - this.Gme);
-      let s = 0;
-      let h = 0;
-      let _ = 0;
-      let e = 0;
-      let a = 0;
-      let r = 0;
-      let o = 0;
-      let A = 0;
-      let T = 0;
-      let n = 0;
+      var t = MathCommon_1.MathCommon.WrapAngle(l.Max - this.Gme),
+        i = MathCommon_1.MathCommon.WrapAngle(l.Min - this.Gme);
+      let s = 0,
+        h = 0,
+        _ = 0,
+        e = 0,
+        a = 0,
+        r = 0,
+        o = 0,
+        A = 0,
+        T = 0,
+        n = 0;
       t < 0 && i < 0
         ? t < i
           ? ((T = 1), (s = t), (h = i))
@@ -541,7 +545,7 @@ class SettlementCamera {
             (n = 1),
             (a = 0),
             (r = FLAT_ANGLE))
-        : t > 0 && i > 0
+        : 0 < t && 0 < i
           ? t < i
             ? ((n = 1), (a = t), (r = i))
             : ((n = 2),
@@ -552,9 +556,9 @@ class SettlementCamera {
               (T = 1),
               (s = MINUS_FLAT_ANGLE),
               (h = 0))
-          : t < 0 && i > 0
+          : t < 0 && 0 < i
             ? ((T = 1), (n = 1), (s = t), (h = 0), (a = 0), (r = i))
-            : t > 0 &&
+            : 0 < t &&
               i < 0 &&
               ((T = 1),
               (n = 1),
@@ -562,18 +566,18 @@ class SettlementCamera {
               (h = i),
               (a = t),
               (r = FLAT_ANGLE));
-      for (let i = this.Wme.length - 1; i >= 0; --i) {
+      for (let i = this.Wme.length - 1; 0 <= i; --i) {
         let t = !0;
-        var M;
-        var E;
-        const C = this.Wme[i];
-        T >= 2 &&
+        var M,
+          E,
+          C = this.Wme[i];
+        2 <= T &&
           (C.Min > e ||
             C.Max < _ ||
             ((M = Math.max(C.Min, _)),
             (E = Math.min(C.Max, e)),
             this.Wme.push(new YawRange(M, E)))),
-          T >= 1 &&
+          1 <= T &&
             (C.Min > h ||
               C.Max < s ||
               ((t = !1),
@@ -581,18 +585,18 @@ class SettlementCamera {
               (C.Max = Math.min(C.Max, h)))),
           t && this.Wme.splice(i, 1);
       }
-      for (let i = this.Kme.length - 1; i >= 0; --i) {
+      for (let i = this.Kme.length - 1; 0 <= i; --i) {
         let t = !0;
-        var I;
-        var R;
-        const N = this.Kme[i];
-        n >= 2 &&
+        var I,
+          R,
+          N = this.Kme[i];
+        2 <= n &&
           (N.Min > A ||
             N.Max < o ||
             ((I = Math.max(N.Min, o)),
             (R = Math.min(N.Max, A)),
             this.Kme.push(new YawRange(I, R)))),
-          n >= 1 &&
+          1 <= n &&
             (N.Min > r ||
               N.Max < a ||
               ((t = !1),
@@ -633,9 +637,9 @@ class SettlementCamera {
   }
   Xme() {
     for (const _ of this.jme) {
-      const i = _.Min;
-      const s = _.Max;
-      const h = Vector_1.Vector.Create();
+      var i = _.Min,
+        s = _.Max,
+        h = Vector_1.Vector.Create();
       let t = s - i;
       t < 0 && (t += 360),
         new Rotator_1.Rotator(0, t / 2 + i, 0).Vector(h),
@@ -657,10 +661,10 @@ class SettlementCamera {
   }
   $me() {
     for (const o of this.Wme) {
-      const t = o.Min + this.Gme;
-      const i = o.Max + this.Gme;
-      const s = new Rotator_1.Rotator(0, (i + t) / 2, 0);
-      const h = Vector_1.Vector.Create();
+      var t = o.Min + this.Gme,
+        i = o.Max + this.Gme,
+        s = new Rotator_1.Rotator(0, (i + t) / 2, 0),
+        h = Vector_1.Vector.Create();
       s.Vector(h),
         UE.KismetSystemLibrary.DrawDebugCone(
           GlobalData_1.GlobalData.World,
@@ -678,10 +682,10 @@ class SettlementCamera {
         );
     }
     for (const A of this.Kme) {
-      const _ = A.Min + this.Gme;
-      const e = A.Max + this.Gme;
-      const a = new Rotator_1.Rotator(0, (e + _) / 2, 0);
-      const r = Vector_1.Vector.Create();
+      var _ = A.Min + this.Gme,
+        e = A.Max + this.Gme,
+        a = new Rotator_1.Rotator(0, (e + _) / 2, 0),
+        r = Vector_1.Vector.Create();
       a.Vector(r),
         UE.KismetSystemLibrary.DrawDebugCone(
           GlobalData_1.GlobalData.World,
@@ -700,8 +704,8 @@ class SettlementCamera {
     }
   }
   Yme() {
-    const t = Vector_1.Vector.Create();
-    const i = (this.Ome.Vector(t), Vector_1.Vector.Create());
+    var t = Vector_1.Vector.Create(),
+      i = (this.Ome.Vector(t), Vector_1.Vector.Create());
     t.MultiplyEqual(this.Hh.FinalCameraDistance),
       t.Addition(this.Nme, i),
       UE.KismetSystemLibrary.DrawDebugArrow(
@@ -726,4 +730,4 @@ class SettlementCamera {
   }
 }
 exports.SettlementCamera = SettlementCamera;
-// # sourceMappingURL=SettlementCamera.js.map
+//# sourceMappingURL=SettlementCamera.js.map

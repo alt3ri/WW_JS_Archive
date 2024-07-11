@@ -7,4 +7,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TIPS_DELAT_TIME = 2e3),
   (exports.MAX_MULTI_LENGTH = 40),
   (exports.MAX_SINGLE_LENGTH = 12);
-// # sourceMappingURL=CommonInputViewDefine.js.map
+//# sourceMappingURL=CommonInputViewDefine.js.map

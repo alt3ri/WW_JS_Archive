@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuideLineAssistant = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../Core/Actor/ActorSystem");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const GlobalData_1 = require("../../../GlobalData");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase");
-const GeneralLogicTreeUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeUtil");
-const QUERY_VALUE = 500;
-const SPLIT_Z_LIMIT = 2e3;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  ActorSystem_1 = require("../../../../Core/Actor/ActorSystem"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase"),
+  GeneralLogicTreeUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeUtil"),
+  QUERY_VALUE = 500,
+  SPLIT_Z_LIMIT = 2e3;
 class PendingProcess {
   constructor(t) {
     (this.ProcessType = t),
@@ -66,7 +66,7 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
           this.U$t.push(new StartShowProcess());
       }),
       (this.ooo = (t, e) => {
-        e === 210004 &&
+        210004 === e &&
           ModelManager_1.ModelManager.QuestNewModel.UpdateGuideLineStartShowTime();
       }),
       (this.Gdt = (t) => {
@@ -75,8 +75,8 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
           this.Loo());
       }),
       (this.DKt = (t, e, i) => {
-        let s;
-        t.Type === 6 &&
+        var s;
+        6 === t.Type &&
           (s =
             ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest()) &&
           s.Id === t.TreeConfigId &&
@@ -146,10 +146,10 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
       this.CheckCanShowGuideLine()
         ? ((t = this.Poo()),
           (this.Too && (!t || this.Ioo)) || ((this.Too = !0), this.Loo()))
-        : (this.Eoo > 0 && this.Too && this.Uoo(), (this.Too = !1));
+        : (0 < this.Eoo && this.Too && this.Uoo(), (this.Too = !1));
   }
   sti() {
-    if (this.U$t?.length !== 0 && !this.bze)
+    if (0 !== this.U$t?.length && !this.bze)
       switch (((this.bze = this.U$t[0]), this.bze.ProcessType)) {
         case 0:
           this.xoo();
@@ -162,7 +162,7 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
     this.U$t.push(new EndShowProcess());
   }
   CheckCanShowGuideLine() {
-    let t;
+    var t;
     return !(
       ModelManager_1.ModelManager.PlotModel.IsInPlot ||
       ((t =
@@ -177,7 +177,7 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
     );
   }
   Poo() {
-    const t =
+    var t =
       ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
         36,
       );
@@ -188,20 +188,19 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
       ((this.yoo = MathUtils_1.MathUtils.Clamp(this.yoo + t / 500, 0, 1)),
       (this.Eoo = MathUtils_1.MathUtils.Lerp(this.voo, this.Moo, this.yoo)),
       this.moo.NS_Fx_WayFinding.SetNiagaraVariableFloat("Spawn", this.Eoo),
-      this.yoo >= 1 && this.Soo < 1 && this.Doo(),
+      1 <= this.yoo && this.Soo < 1 && this.Doo(),
       (this.Soo = this.yoo));
   }
   xoo() {
-    const t = ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest();
+    var t = ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest();
     if (t && t.CanShowGuideLine()) {
-      const e = t.GetCurrentActiveChildQuestNode();
+      var e = t.GetCurrentActiveChildQuestNode();
       if (e) {
-        const i = t.GetNodeTrackPosition(e.NodeId);
-        const s =
-          GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
+        var i = t.GetNodeTrackPosition(e.NodeId),
+          s = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
         if (i && s) {
           this.foo.Set(s.X, s.Y, s.Z);
-          const r =
+          var r =
             UE.RoadNetNavigationSystem.RoadNet_FindPathToLocationSynchronously(
               GlobalData_1.GlobalData.World,
               this.foo.ToUeVector(),
@@ -213,7 +212,7 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
             else {
               this.doo.Empty();
               for (let t = 0; t < r.PathPoints.Num(); t++) {
-                const h = r.PathPoints.Get(t);
+                var h = r.PathPoints.Get(t);
                 this.doo.Add(h);
               }
               this.boo(this.moo.Spline, this.doo, 4),
@@ -226,22 +225,22 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
   }
   boo(i, e, s) {
     i.ClearSplinePoints();
-    const r = UE.NewArray(UE.Vector);
+    var r = UE.NewArray(UE.Vector);
     for (let t = 0; t < e.Num() - 1; ++t) {
-      const h = e.Get(t);
-      const n = e.Get(t + 1);
+      var h = e.Get(t),
+        n = e.Get(t + 1);
       if ((r.Add(h), Math.abs(n.Z - h.Z) > SPLIT_Z_LIMIT)) break;
       t + 1 === e.Num() - 1 && r.Add(n);
     }
     i.SetSplinePoints(r, 1, !0), this.goo.Empty();
-    const o = i.GetSplineLength();
+    var o = i.GetSplineLength();
     for (let t = 0; t < i.GetNumberOfSplinePoints() - 1; ++t) {
-      const a = i.GetDistanceAlongSplineAtSplinePoint(t);
-      const _ = i.GetDistanceAlongSplineAtSplinePoint(t + 1);
-      const l = (_ - a) / s;
+      var a = i.GetDistanceAlongSplineAtSplinePoint(t),
+        _ = i.GetDistanceAlongSplineAtSplinePoint(t + 1),
+        l = (_ - a) / s;
       for (let e = a; e <= _ && e <= o; e += l) {
-        const v = i.GetWorldLocationAtDistanceAlongSpline(e);
-        const c = (0, puerts_1.$ref)(void 0);
+        var v = i.GetWorldLocationAtDistanceAlongSpline(e),
+          c = (0, puerts_1.$ref)(void 0);
         let t = v;
         UE.NavigationSystemV1.K2_ProjectPointToNavigation(
           GlobalData_1.GlobalData.World,
@@ -270,4 +269,4 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
   }
 }
 exports.GuideLineAssistant = GuideLineAssistant;
-// # sourceMappingURL=GuideLineAssistant.js.map
+//# sourceMappingURL=GuideLineAssistant.js.map

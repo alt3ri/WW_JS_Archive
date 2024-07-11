@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const ResourceSystem_1 = require("../../Core/Resource/ResourceSystem");
-const GlobalData_1 = require("../GlobalData");
-const ModelManager_1 = require("../Manager/ModelManager");
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../Core/Resource/ResourceSystem"),
+  GlobalData_1 = require("../GlobalData"),
+  ModelManager_1 = require("../Manager/ModelManager");
 class GmDebugBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static TsRunGm(e) {
     ModelManager_1.ModelManager.SundryModel.GetGmBlueprintFunctionLib()?.RunGm(
@@ -40,7 +40,7 @@ class GmDebugBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     ModelManager_1.ModelManager.SundryModel.GetGmUniverseEditorFunctionLib()?.GmStopGameCommandService();
   }
   static OpenWbpDebugWin() {
-    const e = ResourceSystem_1.ResourceSystem.Load(
+    var e = ResourceSystem_1.ResourceSystem.Load(
       "/Game/NotInFinalPackage/DebugWin/WBP_DebugWin.WBP_DebugWin_C",
       UE.Class,
     );
@@ -72,4 +72,4 @@ class GmDebugBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
 }
 exports.default = GmDebugBlueprintFunctionLibrary;
-// # sourceMappingURL=GmDebugBlueprintFunctionLibrary.js.map
+//# sourceMappingURL=GmDebugBlueprintFunctionLibrary.js.map

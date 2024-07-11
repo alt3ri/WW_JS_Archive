@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PersonalBirthItem = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const AutoAttachExhibitionItem_1 = require("../../CircleExhibition/AutoAttachExhibitionItem");
-const MIN_ALPHA = 0.5;
-const MAX_ALPHA = 1;
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  AutoAttachExhibitionItem_1 = require("../../CircleExhibition/AutoAttachExhibitionItem"),
+  MIN_ALPHA = 0.5,
+  MAX_ALPHA = 1;
 class PersonalBirthItem extends AutoAttachExhibitionItem_1.AutoAttachExhibitionItemAbstract {
   constructor() {
     super(...arguments),
@@ -28,10 +28,10 @@ class PersonalBirthItem extends AutoAttachExhibitionItem_1.AutoAttachExhibitionI
     this.Dates = t;
   }
   OnMoveItem(t) {
-    var i = this.GetAttachItem().ExhibitionView.ItemActor.GetHeight();
-    var e = this.GetRootItem();
-    var e = Math.abs(e.GetAnchorOffsetY()) / (i / 2);
-    var i = MathUtils_1.MathUtils.Lerp(MAX_ALPHA, MIN_ALPHA, e);
+    var i = this.GetAttachItem().ExhibitionView.ItemActor.GetHeight(),
+      e = this.GetRootItem(),
+      e = Math.abs(e.GetAnchorOffsetY()) / (i / 2),
+      i = MathUtils_1.MathUtils.Lerp(MAX_ALPHA, MIN_ALPHA, e);
     (this.kG.X = 1),
       (this.kG.Y = 1),
       (this.kG.Z = 1),
@@ -46,4 +46,4 @@ class PersonalBirthItem extends AutoAttachExhibitionItem_1.AutoAttachExhibitionI
   }
 }
 exports.PersonalBirthItem = PersonalBirthItem;
-// # sourceMappingURL=PersonalBirthItem.js.map
+//# sourceMappingURL=PersonalBirthItem.js.map

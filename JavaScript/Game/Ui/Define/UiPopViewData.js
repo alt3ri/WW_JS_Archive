@@ -8,4 +8,4 @@ class UiPopViewData extends UiViewData_1.UiViewData {
   }
 }
 exports.UiPopViewData = UiPopViewData;
-// # sourceMappingURL=UiPopViewData.js.map
+//# sourceMappingURL=UiPopViewData.js.map

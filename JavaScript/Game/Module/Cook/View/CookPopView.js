@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CookPopView = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
-const CookController_1 = require("../CookController");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  CookController_1 = require("../CookController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class CookPopView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -68,22 +68,22 @@ class CookPopView extends UiViewBase_1.UiViewBase {
   }
   OnStart() {
     this.ChildPopView?.PopItem.OverrideBackBtnCallBack(this.mIt);
-    var e = this.OpenParam;
-    var e =
-      ((this.S9 = e.CookRewardPopType),
-      (this.$qt = new GenericScrollView_1.GenericScrollView(
-        this.GetScrollViewWithScrollbar(1),
-        this.InitCookPopItem,
-      )),
-      this.GetItem(2).SetUIActive(this.S9 === 0 || this.S9 === 3),
-      this.GetItem(4).SetUIActive(this.S9 === 0),
-      this.S9 === 1 && CookController_1.CookController.CheckCanShowExpItem());
+    var e = this.OpenParam,
+      e =
+        ((this.S9 = e.CookRewardPopType),
+        (this.$qt = new GenericScrollView_1.GenericScrollView(
+          this.GetScrollViewWithScrollbar(1),
+          this.InitCookPopItem,
+        )),
+        this.GetItem(2).SetUIActive(0 === this.S9 || 3 === this.S9),
+        this.GetItem(4).SetUIActive(0 === this.S9),
+        1 === this.S9 && CookController_1.CookController.CheckCanShowExpItem());
     this.GetItem(7).SetUIActive(e),
-      this.S9 === 1 && (this.Yqt = new ExpItem(this.GetItem(7))),
+      1 === this.S9 && (this.Yqt = new ExpItem(this.GetItem(7))),
       this.GetButton(8)
         .GetOwner()
         .GetUIItem()
-        .SetUIActive(this.S9 !== 0);
+        .SetUIActive(0 !== this.S9);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -127,12 +127,12 @@ class CookPopView extends UiViewBase_1.UiViewBase {
     }
   }
   tGt() {
-    if (this.S9 === 0) {
-      const e = new Array();
+    if (0 === this.S9) {
+      var e = new Array();
       for (const i of ConfigManager_1.ConfigManager.CookConfig.GetCookFixToolById(
         CookController_1.CookController.GetCurrentFixId(),
       ).Items) {
-        const t =
+        var t =
           ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
             i[0],
           );
@@ -145,18 +145,18 @@ class CookPopView extends UiViewBase_1.UiViewBase {
       );
   }
   iGt() {
-    if (this.S9 === 0) {
-      const i = ConfigManager_1.ConfigManager.CookConfig.GetCookFixToolById(
-        CookController_1.CookController.GetCurrentFixId(),
-      );
-      const s = ConfigManager_1.ConfigManager.CookConfig.GetLocalText(
-        i.Description,
-      );
-      let e = 0;
-      let t = "";
+    if (0 === this.S9) {
+      var i = ConfigManager_1.ConfigManager.CookConfig.GetCookFixToolById(
+          CookController_1.CookController.GetCurrentFixId(),
+        ),
+        s = ConfigManager_1.ConfigManager.CookConfig.GetLocalText(
+          i.Description,
+        );
+      let e = 0,
+        t = "";
       for (const o of i.Items) {
         e = o[1];
-        const r = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(o[0]);
+        var r = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(o[0]);
         t = ConfigManager_1.ConfigManager.CookConfig.GetLocalText(r.Name);
       }
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(3), "FixText", e, t, s);
@@ -164,25 +164,25 @@ class CookPopView extends UiViewBase_1.UiViewBase {
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(3), "MaciningStudyFail");
   }
   rGt() {
-    const e = ModelManager_1.ModelManager.CookModel.GetCookerInfo();
-    const t = ModelManager_1.ModelManager.CookModel.GetSumExpByLevel(
-      ModelManager_1.ModelManager.CookModel.GetCookerInfo().CookingLevel,
-    );
+    var e = ModelManager_1.ModelManager.CookModel.GetCookerInfo(),
+      t = ModelManager_1.ModelManager.CookModel.GetSumExpByLevel(
+        ModelManager_1.ModelManager.CookModel.GetCookerInfo().CookingLevel,
+      );
     this.Yqt.SetExpSprite(e.TotalProficiencys, t),
       this.Yqt.SetAddText(e.AddExp),
       this.Yqt.SetLastText(e.TotalProficiencys),
       this.Yqt.SetSumText(t);
   }
   oGt() {
-    const e = this.GetButton(6)
-      .GetOwner()
-      .GetComponentByClass(UE.UIInteractionGroup.StaticClass());
-    const t = CookController_1.CookController.CheckCanFix();
+    var e = this.GetButton(6)
+        .GetOwner()
+        .GetComponentByClass(UE.UIInteractionGroup.StaticClass()),
+      t = CookController_1.CookController.CheckCanFix();
     e.SetInteractable(t),
       this.GetButton(9).GetOwner().GetUIItem().SetUIActive(!t);
   }
   Jqt() {
-    this.S9 === 0
+    0 === this.S9
       ? UiManager_1.UiManager.CloseView("CookPopFixView")
       : UiManager_1.UiManager.CloseView("CookPopView");
   }
@@ -234,7 +234,7 @@ class ExpItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   SetExpSprite(e, t) {
-    e = (e = MathUtils_1.MathUtils.GetFloatPointFloor(e / t, 3)) > 1 ? 1 : e;
+    e = 1 < (e = MathUtils_1.MathUtils.GetFloatPointFloor(e / t, 3)) ? 1 : e;
     this.GetSprite(0).SetFillAmount(e);
   }
   SetAddText(e) {
@@ -247,4 +247,4 @@ class ExpItem extends UiPanelBase_1.UiPanelBase {
     this.GetText(3).SetText(e.toString());
   }
 }
-// # sourceMappingURL=CookPopView.js.map
+//# sourceMappingURL=CookPopView.js.map

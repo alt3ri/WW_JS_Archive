@@ -51,22 +51,22 @@ class HardnessMode {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetReductiondataAt(t) {
     return this.reductiondata(t);
   }
   reductiondata(t) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s ? this.J7.readFloat32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   reductiondataLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   reductiondataArray() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -79,15 +79,15 @@ class HardnessMode {
     return this.attacktypedata(t);
   }
   attacktypedata(t) {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s ? this.J7.readFloat32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   attacktypedataLength() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   attacktypedataArray() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -100,15 +100,15 @@ class HardnessMode {
     return this.correctdata(t);
   }
   correctdata(t) {
-    const s = this.J7.__offset(this.z7, 10);
+    var s = this.J7.__offset(this.z7, 10);
     return s ? this.J7.readFloat32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   correctdataLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   correctdataArray() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -121,15 +121,15 @@ class HardnessMode {
     return this.weaponreduction(t);
   }
   weaponreduction(t) {
-    const s = this.J7.__offset(this.z7, 12);
+    var s = this.J7.__offset(this.z7, 12);
     return s ? this.J7.readFloat32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   weaponreductionLength() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   weaponreductionArray() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -142,15 +142,15 @@ class HardnessMode {
     return this.skilltypeparam(t);
   }
   skilltypeparam(t) {
-    const s = this.J7.__offset(this.z7, 14);
+    var s = this.J7.__offset(this.z7, 14);
     return s ? this.J7.readFloat32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   skilltypeparamLength() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   skilltypeparamArray() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -160,9 +160,9 @@ class HardnessMode {
       : null;
   }
   percent() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.HardnessMode = HardnessMode;
-// # sourceMappingURL=HardnessMode.js.map
+//# sourceMappingURL=HardnessMode.js.map

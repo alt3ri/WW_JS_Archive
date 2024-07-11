@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonInfo = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const PublicUtil_1 = require("../../Common/PublicUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LogicTreeContainer_1 = require("../GeneralLogicTree/LogicTreeContainer");
+const Log_1 = require("../../../Core/Common/Log"),
+  PublicUtil_1 = require("../../Common/PublicUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LogicTreeContainer_1 = require("../GeneralLogicTree/LogicTreeContainer");
 class InstanceDungeonInfo extends LogicTreeContainer_1.LogicTreeContainer {
   constructor(e) {
     super(),
@@ -61,12 +61,12 @@ class InstanceDungeonInfo extends LogicTreeContainer_1.LogicTreeContainer {
     return this.Eli;
   }
   InitConfig() {
-    const e = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayConfig(
+    var e = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayConfig(
       this.uli,
     );
     if (e) {
       this.dli = e.LevelId;
-      const t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+      var t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
         ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
       );
       if (t)
@@ -116,4 +116,4 @@ class InstanceDungeonInfo extends LogicTreeContainer_1.LogicTreeContainer {
   }
 }
 exports.InstanceDungeonInfo = InstanceDungeonInfo;
-// # sourceMappingURL=InstanceDungeonInfo.js.map
+//# sourceMappingURL=InstanceDungeonInfo.js.map

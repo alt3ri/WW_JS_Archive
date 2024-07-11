@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configMonsterDetectionById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const MonsterDetection_1 = require("../Config/MonsterDetection");
-const DB = "db_adventure_detect.db";
-const FILE = "k.开拓探测.xlsx";
-const TABLE = "MonsterDetection";
-const COMMAND = "select BinData from `MonsterDetection` where id=?";
-const KEY_PREFIX = "MonsterDetectionById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  MonsterDetection_1 = require("../Config/MonsterDetection"),
+  DB = "db_adventure_detect.db",
+  FILE = "k.开拓探测.xlsx",
+  TABLE = "MonsterDetection",
+  COMMAND = "select BinData from `MonsterDetection` where id=?",
+  KEY_PREFIX = "MonsterDetectionById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configMonsterDetectionById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configMonsterDetectionById.GetConfig(";
 exports.configMonsterDetectionById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configMonsterDetectionById = {
       if (
         (t =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var t;
-        var n = void 0;
+        var t,
+          n = void 0;
         if (
           (([t, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configMonsterDetectionById = {
     }
   },
 };
-// # sourceMappingURL=MonsterDetectionById.js.map
+//# sourceMappingURL=MonsterDetectionById.js.map

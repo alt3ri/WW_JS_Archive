@@ -10,4 +10,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     "/Game/Aki/UI/UIResources/Common/LevelSequence/Curve/VelocityCurve.VelocityCurve"),
   (exports.BOUNDARY_CURVE_PATH =
     "/Game/Aki/UI/UIResources/Common/LevelSequence/Curve/BoundaryCurve.BoundaryCurve");
-// # sourceMappingURL=AutoAttachDefine.js.map
+//# sourceMappingURL=AutoAttachDefine.js.map

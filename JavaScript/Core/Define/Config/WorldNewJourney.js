@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldNewJourney = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const DicIntString_1 = require("./SubType/DicIntString");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  DicIntString_1 = require("./SubType/DicIntString");
 class WorldNewJourney {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -45,38 +45,38 @@ class WorldNewJourney {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   sort() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 10;
   }
   sourcetype() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   sourceid() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   sourcetitle(t) {
-    const r = this.J7.__offset(this.z7, 12);
+    var r = this.J7.__offset(this.z7, 12);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   sourcedesc(t) {
-    const r = this.J7.__offset(this.z7, 14);
+    var r = this.J7.__offset(this.z7, 14);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   conditionid() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetJumptoAt(t, r) {
     return this.jumpto(t);
   }
   jumpto(t, r) {
-    const i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 18);
     return i
       ? (r || new DicIntString_1.DicIntString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
@@ -85,9 +85,9 @@ class WorldNewJourney {
       : null;
   }
   jumptoLength() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.WorldNewJourney = WorldNewJourney;
-// # sourceMappingURL=WorldNewJourney.js.map
+//# sourceMappingURL=WorldNewJourney.js.map

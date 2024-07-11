@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletEffectInfo = void 0);
-const EffectSystem_1 = require("../../../Effect/EffectSystem");
-const BulletStaticFunction_1 = require("../BulletStaticMethod/BulletStaticFunction");
+const EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  BulletStaticFunction_1 = require("../BulletStaticMethod/BulletStaticFunction");
 class BulletEffectInfo {
   constructor() {
     (this.EffectData = void 0),
@@ -39,4 +39,4 @@ class BulletEffectInfo {
   }
 }
 exports.BulletEffectInfo = BulletEffectInfo;
-// # sourceMappingURL=BulletEffectInfo.js.map
+//# sourceMappingURL=BulletEffectInfo.js.map

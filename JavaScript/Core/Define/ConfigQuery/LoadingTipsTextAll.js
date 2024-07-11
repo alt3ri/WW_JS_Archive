@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configLoadingTipsTextAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const LoadingTipsText_1 = require("../Config/LoadingTipsText");
-const DB = "db_loadingtips.db";
-const FILE = "z.载入提示.xlsx";
-const TABLE = "LoadingTipsText";
-const COMMAND = "select BinData from `LoadingTipsText`";
-const KEY_PREFIX = "LoadingTipsTextAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  LoadingTipsText_1 = require("../Config/LoadingTipsText"),
+  DB = "db_loadingtips.db",
+  FILE = "z.载入提示.xlsx",
+  TABLE = "LoadingTipsText",
+  COMMAND = "select BinData from `LoadingTipsText`",
+  KEY_PREFIX = "LoadingTipsTextAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configLoadingTipsTextAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configLoadingTipsTextAll = {
     );
   },
   GetConfigList: (o = !0) => {
-    let i;
+    var i;
     if (
       (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configLoadingTipsTextAll = {
       }
       const t = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let e = void 0;
+        var e = void 0;
         if (
           (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configLoadingTipsTextAll = {
     }
   },
 };
-// # sourceMappingURL=LoadingTipsTextAll.js.map
+//# sourceMappingURL=LoadingTipsTextAll.js.map

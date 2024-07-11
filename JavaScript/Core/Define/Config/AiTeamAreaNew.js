@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiTeamAreaNew = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const FloatRange_1 = require("./SubType/FloatRange");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  FloatRange_1 = require("./SubType/FloatRange");
 class AiTeamAreaNew {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -40,15 +40,15 @@ class AiTeamAreaNew {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   maxcharacter() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   reactiontime(t) {
-    const e = this.J7.__offset(this.z7, 8);
+    var e = this.J7.__offset(this.z7, 8);
     return e
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + e),
@@ -60,15 +60,15 @@ class AiTeamAreaNew {
     return this.chartypes(t);
   }
   chartypes(t) {
-    const e = this.J7.__offset(this.z7, 10);
+    var e = this.J7.__offset(this.z7, 10);
     return e ? this.J7.readFloat32(this.J7.__vector(this.z7 + e) + 4 * t) : 0;
   }
   chartypesLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   chartypesArray() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -78,11 +78,11 @@ class AiTeamAreaNew {
       : null;
   }
   areaangle() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readFloat32(this.z7 + t) : 75;
   }
   areadistance(t) {
-    const e = this.J7.__offset(this.z7, 14);
+    var e = this.J7.__offset(this.z7, 14);
     return e
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + e),
@@ -91,9 +91,9 @@ class AiTeamAreaNew {
       : null;
   }
   attackweightid() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
 }
 exports.AiTeamAreaNew = AiTeamAreaNew;
-// # sourceMappingURL=AiTeamAreaNew.js.map
+//# sourceMappingURL=AiTeamAreaNew.js.map

@@ -4,16 +4,16 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.INVALID_INDEX =
     exports.FINISH_INDEX =
       void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const TeleportController_1 = require("../../Teleport/TeleportController");
-const PlotController_1 = require("../PlotController");
-const SequenceController_1 = require("../Sequence/SequenceController");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  TeleportController_1 = require("../../Teleport/TeleportController"),
+  PlotController_1 = require("../PlotController"),
+  SequenceController_1 = require("../Sequence/SequenceController");
 (exports.FINISH_INDEX = -1), (exports.INVALID_INDEX = -2);
 class FlowSequence {
   constructor() {
@@ -59,7 +59,7 @@ class FlowSequence {
           ControllerHolder_1.ControllerHolder.FlowController.RunNextAction();
       }),
       (this.BXi = () => {
-        let t;
+        var t;
         this.DXi &&
           (this.bXi()
             ? this.OnSelectOption(
@@ -74,7 +74,7 @@ class FlowSequence {
                 this.OnSubtitleEnd(t)));
       }),
       (this.qXi = () => {
-        let t;
+        var t;
         this.DXi &&
           (this.RXi >= this.SXi.TalkItems.length
             ? this.OnSequenceStop()
@@ -150,40 +150,41 @@ class FlowSequence {
       (this.MXi = !0),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Plot", 27, "[FlowSequence] 开始"),
-        ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel === "LevelA"
+        "LevelA" === ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel
           ? (ModelManager_1.ModelManager.SequenceModel.Type = 0)
-          : ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel ===
-              "LevelB" && (ModelManager_1.ModelManager.SequenceModel.Type = 1),
+          : "LevelB" ===
+              ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel &&
+            (ModelManager_1.ModelManager.SequenceModel.Type = 1),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.PlotStartShowTalk,
           this.SXi,
         ),
         (ModelManager_1.ModelManager.PlotModel.CurShowTalk = this.SXi);
-      const i = new Array();
-      const e =
-        (this.SXi.TalkFrameEvents?.forEach((t) => {
-          let e;
-          i.push(t.FrameEvent),
-            ModelManager_1.ModelManager.SequenceModel.FrameEventsMap.has(
-              t.Position?.TalkItemId,
-            )
-              ? (e =
-                  ModelManager_1.ModelManager.SequenceModel.FrameEventsMap.get(
+      const i = new Array(),
+        e =
+          (this.SXi.TalkFrameEvents?.forEach((t) => {
+            var e;
+            i.push(t.FrameEvent),
+              ModelManager_1.ModelManager.SequenceModel.FrameEventsMap.has(
+                t.Position?.TalkItemId,
+              )
+                ? (e =
+                    ModelManager_1.ModelManager.SequenceModel.FrameEventsMap.get(
+                      t.Position.TalkItemId,
+                    )) &&
+                  (e.push(t.FrameEvent.EventKey),
+                  ModelManager_1.ModelManager.SequenceModel.FrameEventsMap.set(
                     t.Position.TalkItemId,
-                  )) &&
-                (e.push(t.FrameEvent.EventKey),
-                ModelManager_1.ModelManager.SequenceModel.FrameEventsMap.set(
-                  t.Position.TalkItemId,
-                  e,
-                ))
-              : ((e = new Array()).push(t.FrameEvent.EventKey),
-                ModelManager_1.ModelManager.SequenceModel.FrameEventsMap.set(
-                  t.Position.TalkItemId,
-                  e,
-                ));
-        }),
-        []);
-      ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel === "LevelB" &&
+                    e,
+                  ))
+                : ((e = new Array()).push(t.FrameEvent.EventKey),
+                  ModelManager_1.ModelManager.SequenceModel.FrameEventsMap.set(
+                    t.Position.TalkItemId,
+                    e,
+                  ));
+          }),
+          []);
+      "LevelB" === ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel &&
         this.SXi.TalkItems?.forEach((t) => {
           t.TidTalk && t.PlayVoice && e.push(t.TidTalk);
         }),
@@ -210,10 +211,10 @@ class FlowSequence {
       this.NXi().finally(this.wXi));
   }
   async NXi() {
-    let t;
+    var t;
     await PlotController_1.PlotController.CheckFormation(),
       this.DXi &&
-        ((t = this.IXi ? this.EXi.get(this.IXi.Id) : 0) >= 0 &&
+        (0 <= (t = this.IXi ? this.EXi.get(this.IXi.Id) : 0) &&
           t < this.AXi.length &&
           this.AXi[t] &&
           (ModelManager_1.ModelManager.PlotModel.IsFadeIn = !0),
@@ -232,14 +233,14 @@ class FlowSequence {
             ));
   }
   Skip() {
-    let t;
+    var t;
     this.IsInit &&
       this.IsPlaying &&
       !this.DXi &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 27, "[FlowSequence] 执行跳过"),
       (this.DXi = !0),
-      ModelManager_1.ModelManager.SequenceModel.CurFinalPos?.length !== 0 &&
+      0 !== ModelManager_1.ModelManager.SequenceModel.CurFinalPos?.length &&
         (this.UXi = Object.assign(
           [],
           ModelManager_1.ModelManager.SequenceModel.CurFinalPos,
@@ -272,7 +273,7 @@ class FlowSequence {
               this.OnSubtitleEnd(t)));
   }
   bXi() {
-    return !!this.IXi?.Options && this.IXi?.Options?.length > 0;
+    return !!this.IXi?.Options && 0 < this.IXi?.Options?.length;
   }
   GXi() {
     this.xXi &&
@@ -307,7 +308,7 @@ class FlowSequence {
       this.OnSequenceStop();
   }
   OnSubtitleStart(e) {
-    let t;
+    var t;
     this.IsInit &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Plot", 27, "[FlowSequence][Subtitle] 字幕显示", [
@@ -349,7 +350,7 @@ class FlowSequence {
   }
   OnSelectOption(t) {
     this.IsInit &&
-      this.nx.CurOptionId === -1 &&
+      -1 === this.nx.CurOptionId &&
       !this.LXi &&
       (this.OnSubtitleEnd(this.IXi.Id),
       (this.LXi = !0),
@@ -385,7 +386,7 @@ class FlowSequence {
     );
   }
   CreateSubtitleFromTalkItem(e) {
-    let t;
+    var t;
     if (this.IsInit)
       return (
         (t = this.SXi.TalkItems.find((t) => t.Id === e)) ||
@@ -399,7 +400,7 @@ class FlowSequence {
   GetNextTalkItem() {
     return void 0 !== this.RXi &&
       void 0 !== this.SXi &&
-      this.SXi.TalkItems.length > 0 &&
+      0 < this.SXi.TalkItems.length &&
       this.SXi.TalkItems.length > this.RXi
       ? this.SXi.TalkItems[this.RXi]
       : void 0;
@@ -408,9 +409,9 @@ class FlowSequence {
     let t = void 0;
     (t = this.i5s.has(i) ? this.i5s.get(i) : t) &&
       t.forEach((t) => {
-        const e = this.r5s.get(t);
+        var e = this.r5s.get(t);
         e &&
-          e.length !== 0 &&
+          0 !== e.length &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Plot",
@@ -427,4 +428,4 @@ class FlowSequence {
   }
 }
 exports.FlowSequence = FlowSequence;
-// # sourceMappingURL=FlowSequence.js.map
+//# sourceMappingURL=FlowSequence.js.map

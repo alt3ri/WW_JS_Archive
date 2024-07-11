@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayShopGoods = void 0);
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const LevelGeneralCommons_1 = require("../../../LevelGamePlay/LevelGeneralCommons");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ItemDefines_1 = require("../../Item/Data/ItemDefines");
-const PayShopItemBase_1 = require("../PayShopTab/TabItem/PayShopItemBase");
+const CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  LevelGeneralCommons_1 = require("../../../LevelGamePlay/LevelGeneralCommons"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ItemDefines_1 = require("../../Item/Data/ItemDefines"),
+  PayShopItemBase_1 = require("../PayShopTab/TabItem/PayShopItemBase");
 class PayShopGoods {
   constructor(t) {
     (this.Pe = void 0),
@@ -41,10 +41,10 @@ class PayShopGoods {
     return this.Pe.Locked;
   }
   GetConditionTextId() {
-    const t = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
+    var t = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
       this.Pe.Id,
     ).BuyConditionId;
-    return t !== 0
+    return 0 !== t
       ? LevelGeneralCommons_1.LevelGeneralCommons.GetConditionGroupHintText(
           t,
         ) ?? ""
@@ -54,19 +54,19 @@ class PayShopGoods {
     return this.Pe.LabelId;
   }
   GetItemData() {
-    var t = ConfigManager_1.ConfigManager.InventoryConfig;
-    const e = this.Pe.ItemId;
-    var t = t.GetItemConfigData(e);
+    var t = ConfigManager_1.ConfigManager.InventoryConfig,
+      e = this.Pe.ItemId,
+      t = t.GetItemConfigData(e);
     return { Quality: t.QualityId, ItemId: e, Name: t.Name };
   }
   IfPayGift() {
     return this.Pe.IfPayGift();
   }
   GetPriceData() {
-    const t = this.Pe.GetNowPrice();
-    const e = this.Pe.GetOriginalPrice();
+    var t = this.Pe.GetNowPrice(),
+      e = this.Pe.GetOriginalPrice();
     const i = this.Pe.Price.Id;
-    const r =
+    var r =
       ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(i);
     return {
       OwnNumber: () =>
@@ -74,12 +74,12 @@ class PayShopGoods {
       NowPrice: t,
       OriginalPrice: e,
       CurrencyId: i,
-      Enough: r - t >= 0,
+      Enough: 0 <= r - t,
       InDiscountTime: this.Pe.HasDiscount(),
     };
   }
   GetDirectPriceText() {
-    let t = ModelManager_1.ModelManager.KuroSdkModel?.GetQueryProductShowPrice(
+    var t = ModelManager_1.ModelManager.KuroSdkModel?.GetQueryProductShowPrice(
       this.Pe.Price.Id.toString(),
     );
     return (
@@ -89,7 +89,7 @@ class PayShopGoods {
     );
   }
   GetRemainingData() {
-    let t;
+    var t;
     if (this.Pe.HasBuyLimit())
       return (
         (t = this.Pe.GetRemainingCount()),
@@ -107,16 +107,16 @@ class PayShopGoods {
   }
   IsPermanentDiscount() {
     return (
-      (this.Pe.EndPromotionTime === 0 && this.Pe.BeginPromotionTime === 0) ||
-      (this.Pe.EndPromotionTime === 0 &&
+      (0 === this.Pe.EndPromotionTime && 0 === this.Pe.BeginPromotionTime) ||
+      (0 === this.Pe.EndPromotionTime &&
         TimeUtil_1.TimeUtil.GetServerTime() >= Number(this.Pe.BeginTime))
     );
   }
   IsPermanentSell() {
     return (
-      (this.Pe.BeginTime === 0 && this.Pe.EndTime === 0) ||
+      (0 === this.Pe.BeginTime && 0 === this.Pe.EndTime) ||
       (TimeUtil_1.TimeUtil.GetServerTime() >= Number(this.Pe.BeginTime) &&
-        this.Pe.EndTime === 0)
+        0 === this.Pe.EndTime)
     );
   }
   InSellTime() {
@@ -137,15 +137,15 @@ class PayShopGoods {
     );
   }
   GetDiscountTimeData() {
-    let t;
-    const e = this.Pe.GetPromotionText();
+    var t,
+      e = this.Pe.GetPromotionText();
     return StringUtils_1.StringUtils.IsEmpty(e)
       ? ((t = Number(this.Pe.EndPromotionTime)),
         PayShopGoods.GetEndTimeShowText(t))
       : e;
   }
   GetDiscountRemainTime() {
-    const t =
+    var t =
       Number(this.Pe.EndPromotionTime) - TimeUtil_1.TimeUtil.GetServerTime();
     let e = TimeUtil_1.TimeUtil.CalculateRemainingTime(t);
     return (e = e || {
@@ -155,12 +155,12 @@ class PayShopGoods {
     });
   }
   GetDiscountCountDown() {
-    const t =
+    var t =
       Number(this.Pe.EndPromotionTime) - TimeUtil_1.TimeUtil.GetServerTime();
     return TimeUtil_1.TimeUtil.GetCountDownData(t);
   }
   GetUpdateTimeRemainData() {
-    const t = Number(this.Pe.UpdateTime);
+    var t = Number(this.Pe.UpdateTime);
     return PayShopGoods.GetEndTimeShowText(t);
   }
   GetUpdateRemainTime() {
@@ -173,7 +173,7 @@ class PayShopGoods {
   InUpdateTime() {
     return (
       !!this.Pe.HasBuyLimit() &&
-      this.Pe.UpdateTime !== 0 &&
+      0 !== this.Pe.UpdateTime &&
       Number(this.Pe.UpdateTime) > TimeUtil_1.TimeUtil.GetServerTime()
     );
   }
@@ -181,15 +181,15 @@ class PayShopGoods {
     return this.InSellTime() && !this.S2i
       ? (this.S2i = !0)
       : !!this.Pe.HasBuyLimit() &&
-          this.Pe.UpdateTime !== 0 &&
+          0 !== this.Pe.UpdateTime &&
           Number(this.Pe.UpdateTime) <= TimeUtil_1.TimeUtil.GetServerTime() &&
           this.InSellTime();
   }
   static GetEndTimeShowText(t) {
-    var e = TimeUtil_1.TimeUtil.GetServerTime();
-    var t = Math.max(t - e, 0);
-    var e = PayShopGoods.GetTimeTypeData(t);
-    return e[0] === 0
+    var e = TimeUtil_1.TimeUtil.GetServerTime(),
+      t = Math.max(t - e, 0),
+      e = PayShopGoods.GetTimeTypeData(t);
+    return 0 === e[0]
       ? ConfigManager_1.ConfigManager.TextConfig.GetTextById("NotEnoughOneHour")
       : TimeUtil_1.TimeUtil.GetCountDownDataFormat2(t, e[0], e[1])
           .CountDownText;
@@ -211,8 +211,8 @@ class PayShopGoods {
     });
   }
   GetEndTimeRemainData() {
-    let t;
-    const e = this.Pe.GetSellTimeText();
+    var t,
+      e = this.Pe.GetSellTimeText();
     return StringUtils_1.StringUtils.IsEmpty(e)
       ? ((t = Number(this.Pe.EndTime)), PayShopGoods.GetEndTimeShowText(t))
       : e;
@@ -229,7 +229,7 @@ class PayShopGoods {
         return ConfigManager_1.ConfigManager.TextConfig.GetTextById(
           "Text_Shop_Role_Text",
         );
-      const t = this.GetConditionTextId();
+      var t = this.GetConditionTextId();
       if (!StringUtils_1.StringUtils.IsEmpty(t))
         return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t);
     }
@@ -239,7 +239,7 @@ class PayShopGoods {
     return this.Pe.GetIfCanBuy() ? "" : this.Pe.GetUnFinishConditionText();
   }
   GetExtraLimitText() {
-    let t;
+    var t;
     return this.CheckIfMonthCardItem()
       ? "Text_MonthlyCardMax_Text"
       : this.IfCanBuy()
@@ -261,7 +261,7 @@ class PayShopGoods {
   }
   GetIfNeedShowDownTipsText() {
     if (this.CheckIfMonthCardItem()) {
-      const t = ModelManager_1.ModelManager.MonthCardModel.GetRemainDays();
+      var t = ModelManager_1.ModelManager.MonthCardModel.GetRemainDays();
       if (
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "MonthCardMaxDays",
@@ -273,7 +273,7 @@ class PayShopGoods {
   }
   GetSpriteTextBgColor() {
     if (this.CheckIfMonthCardItem()) {
-      const t = ModelManager_1.ModelManager.MonthCardModel.GetRemainDays();
+      var t = ModelManager_1.ModelManager.MonthCardModel.GetRemainDays();
       if (
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "MonthCardMaxDays",
@@ -285,7 +285,7 @@ class PayShopGoods {
   }
   GetTextTipsColor() {
     if (this.CheckIfMonthCardItem()) {
-      const t = ModelManager_1.ModelManager.MonthCardModel.GetRemainDays();
+      var t = ModelManager_1.ModelManager.MonthCardModel.GetRemainDays();
       if (
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "MonthCardMaxDays",
@@ -296,14 +296,14 @@ class PayShopGoods {
     return this.IsLimitGoods() && this.IsSoldOut() ? "F9F9F9FF" : "181818FF";
   }
   GetCountDownData() {
-    let t = void 0;
-    let e = 0;
-    let i = 0;
+    let t = void 0,
+      e = 0,
+      i = 0;
     return (
       t ||
         (this.IsLimitGoods() &&
           this.GetGoodsData().IsWeeklyRefresh() &&
-          this.GetRemainingData().Count === 0 &&
+          0 === this.GetRemainingData().Count &&
           this.GetGoodsData().IfMayReSell() &&
           ((t = this.GetUpdateTimeRemainData()),
           (e = 2),
@@ -326,9 +326,9 @@ class PayShopGoods {
     return (
       this.IsLimitGoods() &&
         this.GetGoodsData().IsWeeklyRefresh() &&
-        (this.GetRemainingData().Count !== 0 ||
+        (0 !== this.GetRemainingData().Count ||
         this.GetGoodsData().IfMayReSell()
-          ? this.GetRemainingData().Count === 0 &&
+          ? 0 === this.GetRemainingData().Count &&
             this.GetGoodsData().IfMayReSell() &&
             (t = "ReSell")
           : (t = "DistanceToDown")),
@@ -340,7 +340,7 @@ class PayShopGoods {
     return (t =
       this.IsLimitGoods() &&
       this.GetGoodsData().IsWeeklyRefresh() &&
-      this.GetRemainingData().Count === 0 &&
+      0 === this.GetRemainingData().Count &&
       this.GetGoodsData().IfMayReSell()
         ? "SoldOut"
         : t);
@@ -348,17 +348,18 @@ class PayShopGoods {
   GetBuyLimitText() {
     if (this.IsLimitGoods()) {
       let t = "";
-      let e;
-      return (t =
-        this.Pe.UpdateType === 0
-          ? "LimitBuy"
-          : this.Pe.UpdateType === 1
-            ? "DailyLeftTime"
-            : this.Pe.UpdateType === 2
-              ? "WeekLeftTime"
-              : this.Pe.UpdateType === 3
-                ? "MonthLeftTime"
-                : "LimitBuy") === "LimitBuy"
+      var e;
+      return "LimitBuy" ===
+        (t =
+          0 === this.Pe.UpdateType
+            ? "LimitBuy"
+            : 1 === this.Pe.UpdateType
+              ? "DailyLeftTime"
+              : 2 === this.Pe.UpdateType
+                ? "WeekLeftTime"
+                : 3 === this.Pe.UpdateType
+                  ? "MonthLeftTime"
+                  : "LimitBuy")
         ? ((e = this.Pe.BuyLimit - this.Pe.BoughtCount),
           StringUtils_1.StringUtils.Format(
             ConfigManager_1.ConfigManager.TextConfig.GetTextById(t),
@@ -376,23 +377,23 @@ class PayShopGoods {
     if (this.CheckIfMonthCardItem())
       return ModelManager_1.ModelManager.MonthCardModel.GetRemainDayText();
     if (this.IsLimitGoods()) {
-      let t = "";
-      let e =
-        ((t =
-          this.Pe.UpdateType === 0
-            ? "LimitBuy_B"
-            : this.Pe.UpdateType === 1
-              ? "DayLimitBuy_B"
-              : this.Pe.UpdateType === 2
-                ? "WeekLimitBuy_B"
-                : this.Pe.UpdateType === 3
-                  ? "MonthLimitBuy_B"
-                  : "LimitBuy_B"),
-        "");
-      const i = this.Pe.BuyLimit - this.Pe.BoughtCount;
+      let t = "",
+        e =
+          ((t =
+            0 === this.Pe.UpdateType
+              ? "LimitBuy_B"
+              : 1 === this.Pe.UpdateType
+                ? "DayLimitBuy_B"
+                : 2 === this.Pe.UpdateType
+                  ? "WeekLimitBuy_B"
+                  : 3 === this.Pe.UpdateType
+                    ? "MonthLimitBuy_B"
+                    : "LimitBuy_B"),
+          "");
+      var i = this.Pe.BuyLimit - this.Pe.BoughtCount;
       return (
         (e =
-          this.GetGoodsData().GetRemainingCount() > 0
+          0 < this.GetGoodsData().GetRemainingCount()
             ? StringUtils_1.StringUtils.Format(
                 ConfigManager_1.ConfigManager.TextConfig.GetTextById(
                   "BuyTextEnough",
@@ -421,16 +422,16 @@ class PayShopGoods {
     if (this.IsLimitGoods()) {
       let t = "";
       t =
-        this.Pe.UpdateType === 0
+        0 === this.Pe.UpdateType
           ? "LimitBuy"
-          : this.Pe.UpdateType === 1
+          : 1 === this.Pe.UpdateType
             ? "DayLimitBuy"
-            : this.Pe.UpdateType === 2
+            : 2 === this.Pe.UpdateType
               ? "WeekLimitBuy"
-              : this.Pe.UpdateType === 3
+              : 3 === this.Pe.UpdateType
                 ? "MonthLimitBuy"
                 : "LimitBuy";
-      const e = this.Pe.BuyLimit - this.Pe.BoughtCount;
+      var e = this.Pe.BuyLimit - this.Pe.BoughtCount;
       return StringUtils_1.StringUtils.Format(
         ConfigManager_1.ConfigManager.TextConfig.GetTextById(t),
         e.toString(),
@@ -447,10 +448,10 @@ class PayShopGoods {
   }
   IfCanBuy() {
     if (this.CheckIfMonthCardItem()) {
-      var e = ModelManager_1.ModelManager.MonthCardModel.GetRemainDays();
-      var i = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(
-        this.GetGoodsData().ItemId,
-      );
+      var e = ModelManager_1.ModelManager.MonthCardModel.GetRemainDays(),
+        i = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(
+          this.GetGoodsData().ItemId,
+        );
       let t = i.Parameters.get(
         ItemDefines_1.EItemFunctionType.ManualOpenMonthCard,
       );
@@ -472,13 +473,14 @@ class PayShopGoods {
       e = ModelManager_1.ModelManager.RoleModel.GetResonantItemRoleId(
         this.GetGoodsData().ItemId,
       );
-      if (e && e.length > 0)
+      if (e && 0 < e.length)
         return (
           (i = e[0]),
           !!ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(i) &&
-            ModelManager_1.ModelManager.RoleModel.GetRoleLeftResonantCountWithInventoryItem(
-              i,
-            ) > 0
+            0 <
+              ModelManager_1.ModelManager.RoleModel.GetRoleLeftResonantCountWithInventoryItem(
+                i,
+              )
         );
     }
     return this.Pe.GetIfCanBuy();
@@ -509,4 +511,4 @@ class PayShopGoods {
   }
 }
 exports.PayShopGoods = PayShopGoods;
-// # sourceMappingURL=PayShopGoods.js.map
+//# sourceMappingURL=PayShopGoods.js.map

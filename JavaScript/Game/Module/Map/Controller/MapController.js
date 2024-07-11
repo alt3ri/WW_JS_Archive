@@ -1,25 +1,25 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MapController = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ControllerWithAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerWithAssistantBase");
-const AreaAssistant_1 = require("./AreaAssistant");
-const MarkAssistant_1 = require("./MarkAssistant");
-const TeleportAssistant_1 = require("./TeleportAssistant");
-const SCALE_XY = 100;
-const SCALE_Z = 1e6;
-const PROFILE_KEY = "WorldMapView_CreateNewCustomMarkItem";
-const assistantMap = { 0: void 0, 1: void 0, 2: void 0 };
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ControllerWithAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerWithAssistantBase"),
+  AreaAssistant_1 = require("./AreaAssistant"),
+  MarkAssistant_1 = require("./MarkAssistant"),
+  TeleportAssistant_1 = require("./TeleportAssistant"),
+  SCALE_XY = 100,
+  SCALE_Z = 1e6,
+  PROFILE_KEY = "WorldMapView_CreateNewCustomMarkItem",
+  assistantMap = { [0]: void 0, 1: void 0, 2: void 0 };
 class LineTraceSaver {
   constructor() {
     this.uoe = void 0;
@@ -36,11 +36,11 @@ class LineTraceSaver {
     let r = void 0;
     this.uoe.SetStartLocation(e * SCALE_XY, t * SCALE_XY, SCALE_Z),
       this.uoe.SetEndLocation(e * SCALE_XY, t * SCALE_XY, -SCALE_Z);
-    let a = TraceElementCommon_1.TraceElementCommon.LineTrace(
-      this.uoe,
-      PROFILE_KEY,
-    );
-    const o = this.uoe.HitResult;
+    var a = TraceElementCommon_1.TraceElementCommon.LineTrace(
+        this.uoe,
+        PROFILE_KEY,
+      ),
+      o = this.uoe.HitResult;
     return (
       a &&
         o.bBlockingHit &&
@@ -56,7 +56,7 @@ class LineTraceSaver {
 }
 class MapController extends ControllerWithAssistantBase_1.ControllerWithAssistantBase {
   static OnInit() {
-    const e = super.OnInit();
+    var e = super.OnInit();
     return (this.NTi = new LineTraceSaver()), e;
   }
   static OnClear() {
@@ -128,7 +128,7 @@ class MapController extends ControllerWithAssistantBase_1.ControllerWithAssistan
     MapController.c$t(0).RequestCreateCustomMark(e, t);
   }
   static RequestRemoveMapMark(e, t) {
-    const r = ModelManager_1.ModelManager.MapModel.GetCurTrackMark();
+    var r = ModelManager_1.ModelManager.MapModel.GetCurTrackMark();
     r &&
       r[0] === e &&
       r[1] === t &&
@@ -156,7 +156,7 @@ class MapController extends ControllerWithAssistantBase_1.ControllerWithAssistan
     MapController.c$t(0).RequestRemoveDynamicMapMark(e);
   }
   static RequestTeleportToTargetByTemporaryTeleport(e) {
-    let t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     t?.Valid &&
       (t = t.Entity.GetComponent(3)) &&
       MapController.c$t(0).RequestTeleportToTargetByTemporaryTeleport(
@@ -185,4 +185,4 @@ class MapController extends ControllerWithAssistantBase_1.ControllerWithAssistan
   (MapController.hJe = () => {
     _a.OTi();
   });
-// # sourceMappingURL=MapController.js.map
+//# sourceMappingURL=MapController.js.map

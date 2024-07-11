@@ -1,32 +1,32 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LauncherConfigLib = void 0);
-const cpp_1 = require("cpp");
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const LauncherLanguageLib_1 = require("../Util/LauncherLanguageLib");
-const LauncherLog_1 = require("../Util/LauncherLog");
-const LauncherMenuConfig_1 = require("./LauncherMenuConfig");
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
+  UE = require("ue"),
+  LauncherLanguageLib_1 = require("../Util/LauncherLanguageLib"),
+  LauncherLog_1 = require("../Util/LauncherLog"),
+  LauncherMenuConfig_1 = require("./LauncherMenuConfig");
 class DbInfo {
   constructor(e, n) {
     (this.ConfigDbPath = e), (this.TextDb = n);
   }
 }
-const DB = "lang_hot_patch.db";
-const TABLE = "HotPatchText";
+const DB = "lang_hot_patch.db",
+  TABLE = "HotPatchText";
 class LauncherConfigLib {
   static Initialize() {
     if (!this.gU) {
       this.gU = !0;
-      var e = cpp_1.KuroApplication.ProjectContentDir();
-      const i =
-        ((LauncherConfigLib.te = e + "Aki/ConfigDB/"),
-        LauncherMenuConfig_1.LauncherMenuConfig.GetTableName());
+      var e = cpp_1.KuroApplication.ProjectContentDir(),
+        i =
+          ((LauncherConfigLib.te = e + "Aki/ConfigDB/"),
+          LauncherMenuConfig_1.LauncherMenuConfig.GetTableName());
       let n = 0;
-      var e = e + "Aki/ConfigDB/aki_base.csv";
-      const a = UE.KuroStaticLibrary.LoadFileToStringArray(e);
+      var e = e + "Aki/ConfigDB/aki_base.csv",
+        a = UE.KuroStaticLibrary.LoadFileToStringArray(e);
       for (let e = 1; e < a.Num(); e++) {
-        const r = a.Get(e).split(",");
+        var r = a.Get(e).split(",");
         if (
           !(r.length <= 2) &&
           (LauncherConfigLib._Sr ||
@@ -36,17 +36,17 @@ class LauncherConfigLib {
                 r[2],
               )),
               n++)),
-          n >= 2)
+          2 <= n)
         )
           break;
       }
     }
   }
   static GetMenuConfigByFunctionId(e) {
-    let n =
-      `SELECT FunctionId, OptionsDefault FROM \`${LauncherMenuConfig_1.LauncherMenuConfig.GetTableName()}\` WHERE FunctionId=` +
-      e;
-    const i = new UE.KuroSqliteResultSet();
+    var n =
+        `SELECT FunctionId, OptionsDefault FROM \`${LauncherMenuConfig_1.LauncherMenuConfig.GetTableName()}\` WHERE FunctionId=` +
+        e,
+      i = new UE.KuroSqliteResultSet();
     if (
       UE.KuroSqliteLibrary.Query(LauncherConfigLib._Sr.ConfigDbPath, n, i) &&
       i.HasValue()
@@ -60,8 +60,8 @@ class LauncherConfigLib {
     ]);
   }
   static IsLanguageValid(e) {
-    let n = `SELECT * FROM \`${LauncherMenuConfig_1.LauncherMenuConfig.GetLanguageTableName()}\` WHERE LanguageCode='${e}'`;
-    const i = new UE.KuroSqliteResultSet();
+    var n = `SELECT * FROM \`${LauncherMenuConfig_1.LauncherMenuConfig.GetLanguageTableName()}\` WHERE LanguageCode='${e}'`,
+      i = new UE.KuroSqliteResultSet();
     return UE.KuroSqliteLibrary.Query(
       LauncherConfigLib._Sr.ConfigDbPath,
       n,
@@ -83,12 +83,12 @@ class LauncherConfigLib {
   }
   static GetHotPatchText(e) {
     if (e) {
-      let n = LauncherConfigLib.uSr.get(e);
+      var n = LauncherConfigLib.uSr.get(e);
       if (n) return n;
-      const i = `SELECT * FROM \`${TABLE}\` WHERE Id="${e}"`;
-      const a = new UE.KuroSqliteResultSet();
-      const r = UE.KuroSqliteLibrary.Query(LauncherConfigLib.cSr(DB), i, a);
-      const u = (0, puerts_1.$ref)(void 0);
+      var i = `SELECT * FROM \`${TABLE}\` WHERE Id="${e}"`,
+        a = new UE.KuroSqliteResultSet(),
+        r = UE.KuroSqliteLibrary.Query(LauncherConfigLib.cSr(DB), i, a),
+        u = (0, puerts_1.$ref)(void 0);
       if (r && a.HasValue()) {
         if (a.GetString("Content", u))
           return (
@@ -121,4 +121,4 @@ class LauncherConfigLib {
   (LauncherConfigLib._Sr = void 0),
   (LauncherConfigLib.uSr = new Map()),
   (LauncherConfigLib.gU = !1);
-// # sourceMappingURL=LauncherConfigLib.js.map
+//# sourceMappingURL=LauncherConfigLib.js.map

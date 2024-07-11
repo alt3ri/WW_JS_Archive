@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyBreakPoint extends UE.KuroAnimNotify {
   K2_Notify(e, r) {
     var e = e.GetOwner();
@@ -17,4 +17,4 @@ class TsAnimNotifyBreakPoint extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifyBreakPoint;
-// # sourceMappingURL=TsAnimNotifyBreakPoint.js.map
+//# sourceMappingURL=TsAnimNotifyBreakPoint.js.map

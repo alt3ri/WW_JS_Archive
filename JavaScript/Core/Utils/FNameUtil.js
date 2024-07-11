@@ -19,4 +19,4 @@ class FNameUtil {
 ((exports.FNameUtil = FNameUtil).EMPTY = new UE.FName("")),
   (FNameUtil.NONE = new UE.FName("None")),
   (FNameUtil.BJ = new Map());
-// # sourceMappingURL=FNameUtil.js.map
+//# sourceMappingURL=FNameUtil.js.map

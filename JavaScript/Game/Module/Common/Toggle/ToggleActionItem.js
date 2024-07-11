@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ToggleActionItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../LevelSequencePlayer");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../LevelSequencePlayer");
 class ToggleActionItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -67,4 +67,4 @@ class ToggleActionItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ToggleActionItem = ToggleActionItem;
-// # sourceMappingURL=ToggleActionItem.js.map
+//# sourceMappingURL=ToggleActionItem.js.map

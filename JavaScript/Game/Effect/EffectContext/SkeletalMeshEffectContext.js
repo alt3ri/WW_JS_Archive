@@ -8,4 +8,4 @@ class SkeletalMeshEffectContext extends EffectContext_1.EffectContext {
   }
 }
 exports.SkeletalMeshEffectContext = SkeletalMeshEffectContext;
-// # sourceMappingURL=SkeletalMeshEffectContext.js.map
+//# sourceMappingURL=SkeletalMeshEffectContext.js.map

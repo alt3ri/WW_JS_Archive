@@ -34,4 +34,4 @@ class UiModelComponentBase {
   OnClear() {}
 }
 (exports.UiModelComponentBase = UiModelComponentBase).Id = -1;
-// # sourceMappingURL=UiModelComponentBase.js.map
+//# sourceMappingURL=UiModelComponentBase.js.map

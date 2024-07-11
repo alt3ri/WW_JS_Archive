@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraFixedController = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const GlobalData_1 = require("../../GlobalData");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CameraController_1 = require("../CameraController");
-const CameraControllerBase_1 = require("./CameraControllerBase");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  GlobalData_1 = require("../../GlobalData"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CameraController_1 = require("../CameraController"),
+  CameraControllerBase_1 = require("./CameraControllerBase");
 class CameraFixedController extends CameraControllerBase_1.CameraControllerBase {
   constructor() {
     super(...arguments),
@@ -90,7 +90,7 @@ class CameraFixedController extends CameraControllerBase_1.CameraControllerBase 
       TimerSystem_1.TimerSystem.Has(this.K1e) &&
       (TimerSystem_1.TimerSystem.Remove(this.K1e), this.Y1e()),
       this.e_e(),
-      this.j1e > 0.2
+      0.2 < this.j1e
         ? (this.K1e = TimerSystem_1.TimerSystem.Delay(
             this.Y1e,
             this.j1e * TimeUtil_1.TimeUtil.InverseMillisecond,
@@ -107,7 +107,7 @@ class CameraFixedController extends CameraControllerBase_1.CameraControllerBase 
       TimerSystem_1.TimerSystem.Has(this.Q1e) &&
       (TimerSystem_1.TimerSystem.Remove(this.Q1e), this.J1e()),
       this.Z1e(),
-      this.W1e > 0.2
+      0.2 < this.W1e
         ? (this.Q1e = TimerSystem_1.TimerSystem.Delay(
             this.J1e,
             this.W1e * TimeUtil_1.TimeUtil.InverseMillisecond,
@@ -136,7 +136,7 @@ class CameraFixedController extends CameraControllerBase_1.CameraControllerBase 
       this.r_e();
   }
   FixedCameraResetViewTarget() {
-    let e, t, i;
+    var e, t, i;
     return (
       this.$1e !== this.X1e &&
       !!(e =
@@ -214,7 +214,7 @@ class CameraFixedController extends CameraControllerBase_1.CameraControllerBase 
         );
   }
   t_e(e) {
-    const t = this.X1e?.K2_GetActorLocation();
+    var t = this.X1e?.K2_GetActorLocation();
     return (
       t.X === e.ToUeVector().X &&
       (Log_1.Log.CheckDebug() && Log_1.Log.Debug("Camera", 46, "X==X"),
@@ -226,4 +226,4 @@ class CameraFixedController extends CameraControllerBase_1.CameraControllerBase 
   }
 }
 exports.CameraFixedController = CameraFixedController;
-// # sourceMappingURL=CameraFixedController.js.map
+//# sourceMappingURL=CameraFixedController.js.map

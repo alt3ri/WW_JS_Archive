@@ -4,24 +4,24 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.VisionDetailMonsterItemData =
     exports.PhantomBattleFettersViewItem =
       void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const FilterEntrance_1 = require("../../../Common/FilterSort/Filter/View/FilterEntrance");
-const SortEntrance_1 = require("../../../Common/FilterSort/Sort/View/SortEntrance");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const LoopScrollSmallItemGrid_1 = require("../../../Common/SmallItemGrid/LoopScrollSmallItemGrid");
-const UiSceneManager_1 = require("../../../UiComponent/UiSceneManager");
-const UiModelUtil_1 = require("../../../UiModel/UiModelUtil");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView");
-const PhantomBattleItemView_1 = require("./PhantomBattleItemView");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  FilterEntrance_1 = require("../../../Common/FilterSort/Filter/View/FilterEntrance"),
+  SortEntrance_1 = require("../../../Common/FilterSort/Sort/View/SortEntrance"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  LoopScrollSmallItemGrid_1 = require("../../../Common/SmallItemGrid/LoopScrollSmallItemGrid"),
+  UiSceneManager_1 = require("../../../UiComponent/UiSceneManager"),
+  UiModelUtil_1 = require("../../../UiModel/UiModelUtil"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView"),
+  PhantomBattleItemView_1 = require("./PhantomBattleItemView");
 class PhantomBattleFettersViewItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -44,7 +44,7 @@ class PhantomBattleFettersViewItem extends UiPanelBase_1.UiPanelBase {
         return new VisionFetterDescItem();
       }),
       (this.z9e = () => {
-        const e = new PhantomBattleItemView_1.PhantomFettersItem();
+        var e = new PhantomBattleItemView_1.PhantomFettersItem();
         return e.BindOnItemButtonClickedCallback(this.UIt), e;
       }),
       (this.bpt = (e) => {
@@ -55,12 +55,12 @@ class PhantomBattleFettersViewItem extends UiPanelBase_1.UiPanelBase {
           if (
             (this.t6i.DeselectCurrentGridProxy(),
             this.t6i.ReloadData(this.i6i),
-            this.r6i === 0)
+            0 === this.r6i)
           )
             this.t6i.SelectGridProxy(0), this.t6i.RefreshGridProxy(0);
           else {
             let t = 0;
-            const i = this.i6i.length;
+            var i = this.i6i.length;
             for (let e = 0; e < i; e++)
               if (this.i6i[e].Id === this.r6i) {
                 t = e;
@@ -76,7 +76,7 @@ class PhantomBattleFettersViewItem extends UiPanelBase_1.UiPanelBase {
       }),
       (this.UIt = (e) => {
         this.t6i.DeselectCurrentGridProxy();
-        const t = this.i6i.indexOf(e);
+        var t = this.i6i.indexOf(e);
         this.t6i.IsGridDisplaying(t) &&
           (this.h6i(e),
           this.t6i.SelectGridProxy(t),
@@ -129,15 +129,15 @@ class PhantomBattleFettersViewItem extends UiPanelBase_1.UiPanelBase {
       );
   }
   async PlayStartSequence() {
-    const e = new CustomPromise_1.CustomPromise();
+    var e = new CustomPromise_1.CustomPromise();
     await this.EPe.PlaySequenceAsync("Start", e);
   }
   async PlayHideSequence() {
-    const e = new CustomPromise_1.CustomPromise();
+    var e = new CustomPromise_1.CustomPromise();
     await this.EPe.PlaySequenceAsync("Close", e);
   }
   OnBeforeShow() {
-    let e;
+    var e;
     UiSceneManager_1.UiSceneManager.HasVisionSkeletalHandle() &&
       ((e =
         UiSceneManager_1.UiSceneManager.GetVisionSkeletalHandle().Model?.CheckGetComponent(
@@ -148,32 +148,32 @@ class PhantomBattleFettersViewItem extends UiPanelBase_1.UiPanelBase {
       this.l6i();
   }
   l6i() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.CalabashModel.GetPhantomFetterGroupList();
     this.aft.UpdateData(this.e6i, e), this.hft.UpdateData(this.e6i, e);
   }
   a6i(e) {
-    this.GetItem(8).SetUIActive(e.length > 0),
+    this.GetItem(8).SetUIActive(0 < e.length),
       this.GetButton(5).RootUIComp.SetUIActive(
-        e.length > 0 && void 0 !== this.OnFastFilter,
+        0 < e.length && void 0 !== this.OnFastFilter,
       );
   }
   _6i(t) {
-    const i = new Array();
-    const r = t.length;
+    var i = new Array(),
+      r = t.length;
     for (let e = 0; e < r; e++) i.push(new VisionDetailMonsterItemData(t[e]));
-    var e = r > 0;
-    var e =
-      (e && this.Hli.RefreshByData(i),
-      this.GetGridLayout(9).RootUIComp.SetUIActive(e),
-      ModelManager_1.ModelManager.PhantomBattleModel.GetMonsterFindCountByMonsterIdArray(
-        t,
-      ));
+    var e = 0 < r,
+      e =
+        (e && this.Hli.RefreshByData(i),
+        this.GetGridLayout(9).RootUIComp.SetUIActive(e),
+        ModelManager_1.ModelManager.PhantomBattleModel.GetMonsterFindCountByMonsterIdArray(
+          t,
+        ));
     this.GetText(10).SetText(e + "/" + t.length);
   }
   SelectByFetterId(t) {
-    const e = this.i6i.findIndex((e) => e.Id === t);
-    e > 0 && (this.t6i.ScrollToGridIndex(e, !0), this.t6i.SelectGridProxy(e));
+    var e = this.i6i.findIndex((e) => e.Id === t);
+    0 < e && (this.t6i.ScrollToGridIndex(e, !0), this.t6i.SelectGridProxy(e));
   }
   h6i(e) {
     (this.o6i = e.Id),
@@ -193,11 +193,11 @@ class PhantomBattleFettersViewItem extends UiPanelBase_1.UiPanelBase {
   nOe(e) {
     const r = new Array();
     e.forEach((e, t) => {
-      const i = new DescData();
+      var i = new DescData();
       (i.Key = t), (i.Value = e), r.push(i);
     }),
       this.eGe.RefreshByData(r, void 0, !0),
-      this.EPe?.GetCurrentSequence() === "Switch"
+      "Switch" === this.EPe?.GetCurrentSequence()
         ? this.EPe?.ReplaySequenceByKey("Switch")
         : (this.EPe?.StopCurrentSequence(),
           this.EPe?.PlayLevelSequenceByName("Switch"));
@@ -209,7 +209,7 @@ class PhantomBattleFettersViewItem extends UiPanelBase_1.UiPanelBase {
     return this.o6i;
   }
   OnBeforeDestroy() {
-    let e;
+    var e;
     (ModelManager_1.ModelManager.PhantomBattleModel.CurrentSelectedFetter =
       void 0),
       UiSceneManager_1.UiSceneManager.HasVisionSkeletalHandle() &&
@@ -251,7 +251,7 @@ class VisionFetterDescItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   Update(e) {
-    const t = e.Value;
+    var t = e.Value;
     this.L4e(t), this.C4e(t, e.Key);
   }
   C4e(e, t) {
@@ -316,16 +316,15 @@ class VisionDetailMonsterItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallI
   }
   Refresh(t) {
     this.c6i = t.MonsterId;
-    let i = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
-      1,
-      this.c6i,
-    );
-    const e =
-      ModelManager_1.ModelManager.RoleModel.GetCurSelectMainRoleInstance();
-    let r = e?.GetPhantomData()?.GetDataMap();
+    var i = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
+        1,
+        this.c6i,
+      ),
+      e = ModelManager_1.ModelManager.RoleModel.GetCurSelectMainRoleInstance(),
+      r = e?.GetPhantomData()?.GetDataMap();
     let s = 0;
     if (r)
-      for (const [, o] of r)
+      for (var [, o] of r)
         if (o?.GetConfig().MonsterId === this.c6i) {
           s = e?.GetRoleId();
           break;
@@ -337,7 +336,7 @@ class VisionDetailMonsterItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallI
     if (r) {
       i = void 0 !== i;
       let e = void 0;
-      t.QualityId > 0 &&
+      0 < t.QualityId &&
         ((a =
           ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomItemIdArrayByMonsterId(
             this.c6i,
@@ -357,4 +356,4 @@ class VisionDetailMonsterItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallI
   }
 }
 exports.VisionDetailMonsterItem = VisionDetailMonsterItem;
-// # sourceMappingURL=PhantomBattleFettersViewItem.js.map
+//# sourceMappingURL=PhantomBattleFettersViewItem.js.map

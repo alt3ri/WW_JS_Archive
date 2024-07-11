@@ -31,4 +31,4 @@ class ExchangeShareData {
   }
 }
 exports.ExchangeShareData = ExchangeShareData;
-// # sourceMappingURL=ExchangeRewardData.js.map
+//# sourceMappingURL=ExchangeRewardData.js.map

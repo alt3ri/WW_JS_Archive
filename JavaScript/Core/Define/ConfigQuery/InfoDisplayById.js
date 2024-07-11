@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configInfoDisplayById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const InfoDisplay_1 = require("../Config/InfoDisplay");
-const DB = "db_infodisplay.db";
-const FILE = "x.信息展示.xlsx";
-const TABLE = "InfoDisplay";
-const COMMAND = "select BinData from `InfoDisplay` where Id=?";
-const KEY_PREFIX = "InfoDisplayById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  InfoDisplay_1 = require("../Config/InfoDisplay"),
+  DB = "db_infodisplay.db",
+  FILE = "x.信息展示.xlsx",
+  TABLE = "InfoDisplay",
+  COMMAND = "select BinData from `InfoDisplay` where Id=?",
+  KEY_PREFIX = "InfoDisplayById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configInfoDisplayById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configInfoDisplayById.GetConfig(";
 exports.configInfoDisplayById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configInfoDisplayById = {
       if (
         (e =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var e;
-        var i = void 0;
+        var e,
+          i = void 0;
         if (
           (([e, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configInfoDisplayById = {
     }
   },
 };
-// # sourceMappingURL=InfoDisplayById.js.map
+//# sourceMappingURL=InfoDisplayById.js.map

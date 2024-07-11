@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const EffectSystem_1 = require("./EffectSystem");
+const UE = require("ue"),
+  EffectSystem_1 = require("./EffectSystem");
 class TsEffectActor extends UE.Actor {
   constructor() {
     super(...arguments),
@@ -36,4 +36,4 @@ class TsEffectActor extends UE.Actor {
   }
 }
 exports.default = TsEffectActor;
-// # sourceMappingURL=TsEffectActor.js.map
+//# sourceMappingURL=TsEffectActor.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Application = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../Common/Log");
-const CommonDefine_1 = require("../Define/CommonDefine");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../Common/Log"),
+  CommonDefine_1 = require("../Define/CommonDefine");
 class Application {
   static Initialize() {
     Application.gU ||
@@ -52,7 +52,7 @@ class Application {
   (Application.FTn = new Set()),
   (Application.gU = !1),
   (Application.R6 = (i) => {
-    const p = i;
+    var p = i;
     Application.A6.has(p) &&
       (Application.A6.get(p).forEach((i) => {
         i();
@@ -68,4 +68,4 @@ class Application {
         Log_1.Log.Debug("Core", 42, "OnEditorPreEndPIE: " + i);
   }),
   (Application.GmSimulatePublication = !1);
-// # sourceMappingURL=Application.js.map
+//# sourceMappingURL=Application.js.map

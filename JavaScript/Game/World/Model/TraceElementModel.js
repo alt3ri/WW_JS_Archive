@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TraceElementModel = void 0);
-const UE = require("ue");
-const QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon");
-const ColorUtils_1 = require("../../Utils/ColorUtils");
+const UE = require("ue"),
+  QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon"),
+  ColorUtils_1 = require("../../Utils/ColorUtils");
 class TraceElementModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -26,7 +26,7 @@ class TraceElementModel extends ModelBase_1.ModelBase {
       ((this.eJo.WorldContextObject = void 0), this.eJo.ActorsToIgnore.Empty());
   }
   tJo() {
-    const e = UE.NewObject(UE.TraceSphereElement.StaticClass());
+    var e = UE.NewObject(UE.TraceSphereElement.StaticClass());
     (e.bIsSingle = !1),
       (e.bIgnoreSelf = !0),
       e.SetTraceTypeQuery(QueryTypeDefine_1.KuroTraceTypeQuery.IkGround),
@@ -48,7 +48,7 @@ class TraceElementModel extends ModelBase_1.ModelBase {
       ((this.uoe.WorldContextObject = void 0), this.uoe.ActorsToIgnore.Empty());
   }
   GMr() {
-    const e = UE.NewObject(UE.TraceLineElement.StaticClass());
+    var e = UE.NewObject(UE.TraceLineElement.StaticClass());
     (e.bIsSingle = !0),
       (e.bIgnoreSelf = !0),
       e.SetTraceTypeQuery(QueryTypeDefine_1.KuroTraceTypeQuery.IkGround),
@@ -70,7 +70,7 @@ class TraceElementModel extends ModelBase_1.ModelBase {
       ((this.bMr.WorldContextObject = void 0), this.bMr.ActorsToIgnore.Empty());
   }
   NMr() {
-    const e = UE.NewObject(UE.TraceBoxElement.StaticClass());
+    var e = UE.NewObject(UE.TraceBoxElement.StaticClass());
     (e.bIsSingle = !0),
       (e.bIgnoreSelf = !0),
       e.SetTraceTypeQuery(QueryTypeDefine_1.KuroTraceTypeQuery.IkGround),
@@ -92,7 +92,7 @@ class TraceElementModel extends ModelBase_1.ModelBase {
       ((this.qMr.WorldContextObject = void 0), this.qMr.ActorsToIgnore.Empty());
   }
   OMr() {
-    const e = UE.NewObject(UE.TraceCapsuleElement.StaticClass());
+    var e = UE.NewObject(UE.TraceCapsuleElement.StaticClass());
     (e.bIsSingle = !0),
       (e.bIgnoreSelf = !0),
       e.SetTraceTypeQuery(QueryTypeDefine_1.KuroTraceTypeQuery.IkGround),
@@ -108,4 +108,4 @@ class TraceElementModel extends ModelBase_1.ModelBase {
   }
 }
 exports.TraceElementModel = TraceElementModel;
-// # sourceMappingURL=TraceElementModel.js.map
+//# sourceMappingURL=TraceElementModel.js.map

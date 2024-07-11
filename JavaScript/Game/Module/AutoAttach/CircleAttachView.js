@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CircleAttachView = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const AutoAttachBaseView_1 = require("./AutoAttachBaseView");
+const Log_1 = require("../../../Core/Common/Log"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  AutoAttachBaseView_1 = require("./AutoAttachBaseView");
 class CircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
   FindAutoAttachItem() {
     return this.FindNearestMiddleItem();
@@ -16,8 +16,8 @@ class CircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("UiCommon", 28, "组件数据长度需要大于等于展示长度");
     else {
-      let i;
-      const s = this.Items.length;
+      var i,
+        s = this.Items.length;
       for (let t = 0; t < s; t++) this.Items[t].SetUiActive(!1);
       for (let t = 0; t < this.ShowItemNum + 1; t++)
         t >= this.Items.length &&
@@ -37,21 +37,21 @@ class CircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
     }
   }
   FindNextDirectionItem(t) {
-    const s = this.FindNearestMiddleItem();
-    const r = this.GetItems();
+    var s = this.FindNearestMiddleItem(),
+      r = this.GetItems();
     if (void 0 !== r && void 0 !== s) {
       let e = s;
-      const o = s.GetCurrentPosition();
-      const h = r.length;
+      var o = s.GetCurrentPosition(),
+        h = r.length;
       let i = 99999;
-      if (t > 0)
+      if (0 < t)
         for (let t = 0; t < h; t++) {
-          const l = r[t].GetCurrentPosition();
+          var l = r[t].GetCurrentPosition();
           o < l && l - o < i && ((e = r[t]), (i = l - o));
         }
       else
         for (let t = 0; t < h; t++) {
-          const a = r[t].GetCurrentPosition();
+          var a = r[t].GetCurrentPosition();
           a < o && o - a < i && ((e = r[t]), (i = o - a));
         }
       return e;
@@ -62,4 +62,4 @@ class CircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
   }
 }
 exports.CircleAttachView = CircleAttachView;
-// # sourceMappingURL=CircleAttachView.js.map
+//# sourceMappingURL=CircleAttachView.js.map

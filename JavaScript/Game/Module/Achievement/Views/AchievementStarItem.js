@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AchievementStarItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class AchievementStarItem extends UiPanelBase_1.UiPanelBase {
   constructor(t, e, i) {
     super(),
@@ -39,17 +39,17 @@ class AchievementStarItem extends UiPanelBase_1.UiPanelBase {
       if (t.CanShowStarState())
         for (let t = 0; t < this.TGe; t++) this.LGe[t].SetUIActive(!0);
     } else {
-      const e = t.GetAchievementShowStar();
+      var e = t.GetAchievementShowStar();
       for (let t = 0; t < e; t++) this.LGe[t].SetUIActive(!0);
     }
   }
   DGe(t) {
-    return t === 1
+    return 1 === t
       ? "UiItem_AchvStarA"
-      : t === 2
+      : 2 === t
         ? "UiItem_AchvStarB"
         : "UiItem_AchvStarC";
   }
 }
 exports.AchievementStarItem = AchievementStarItem;
-// # sourceMappingURL=AchievementStarItem.js.map
+//# sourceMappingURL=AchievementStarItem.js.map

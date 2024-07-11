@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FragmentMemoryActivityData = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ActivityData_1 = require("../Activity/ActivityData");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  ActivityData_1 = require("../Activity/ActivityData");
 class FragmentMemoryActivityData extends ActivityData_1.ActivityBaseData {
   GetExDataRedPointShowState() {
     return this.EntranceRedDot();
@@ -12,4 +12,4 @@ class FragmentMemoryActivityData extends ActivityData_1.ActivityBaseData {
   }
 }
 exports.FragmentMemoryActivityData = FragmentMemoryActivityData;
-// # sourceMappingURL=FragmentMemoryActivityData.js.map
+//# sourceMappingURL=FragmentMemoryActivityData.js.map

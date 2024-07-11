@@ -6,88 +6,88 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.LOAD_FINISHED_PROGRESS =
     exports.OPENLOADING_END_PROGRESS =
       void 0);
-const cpp_1 = require("cpp");
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Application_1 = require("../../../Core/Application/Application");
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const LogProfiler_1 = require("../../../Core/Common/LogProfiler");
-const Stats_1 = require("../../../Core/Common/Stats");
-const Time_1 = require("../../../Core/Common/Time");
-const Queue_1 = require("../../../Core/Container/Queue");
-const AreaMpcById_1 = require("../../../Core/Define/ConfigQuery/AreaMpcById");
-const DataLayerById_1 = require("../../../Core/Define/ConfigQuery/DataLayerById");
-const InstanceDungeonById_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EffectEnvironment_1 = require("../../../Core/Effect/EffectEnvironment");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const TickSystem_1 = require("../../../Core/Tick/TickSystem");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const CameraController_1 = require("../../Camera/CameraController");
-const CameraUtility_1 = require("../../Camera/CameraUtility");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const EffectSystem_1 = require("../../Effect/EffectSystem");
-const GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const InputController_1 = require("../../Input/InputController");
-const LevelEventLockInputState_1 = require("../../LevelGamePlay/LevelEventLockInputState");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const FormationDataController_1 = require("../../Module/Abilities/FormationDataController");
-const BattleUiControl_1 = require("../../Module/BattleUi/BattleUiControl");
-const BlackScreenController_1 = require("../../Module/BlackScreen/BlackScreenController");
-const LevelSequencePlayer_1 = require("../../Module/Common/LevelSequencePlayer");
-const LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController");
-const LoadingController_1 = require("../../Module/Loading/LoadingController");
-const Heartbeat_1 = require("../../Module/Login/Heartbeat");
-const LogReportController_1 = require("../../Module/LogReport/LogReportController");
-const LogReportDefine_1 = require("../../Module/LogReport/LogReportDefine");
-const SeamlessTravelController_1 = require("../../Module/SeamlessTravel/SeamlessTravelController");
-const TeleportController_1 = require("../../Module/Teleport/TeleportController");
-const TimeOfDayController_1 = require("../../Module/TimeOfDay/TimeOfDayController");
-const VideoLauncher_1 = require("../../Module/Video/VideoLauncher");
-const BulletController_1 = require("../../NewWorld/Bullet/BulletController");
-const CharacterController_1 = require("../../NewWorld/Character/CharacterController");
-const PreloadDefine_1 = require("../../Preload/PreloadDefine");
-const RenderModuleController_1 = require("../../Render/Manager/RenderModuleController");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const LguiEventSystemManager_1 = require("../../Ui/LguiEventSystem/LguiEventSystemManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const GameModePromise_1 = require("../Define/GameModePromise");
-const WorldDefine_1 = require("../Define/WorldDefine");
-const AsyncTask_1 = require("../Task/AsyncTask");
-const TaskSystem_1 = require("../Task/TaskSystem");
-const WorldGlobal_1 = require("../WorldGlobal");
-const ComponentForceTickController_1 = require("./ComponentForceTickController");
-const PreloadController_1 = require("./PreloadController");
-const PreloadControllerNew_1 = require("./PreloadControllerNew");
-const TOP_CONSUMING_COUNT = 20;
-const ONE_SECOND = 1e3;
-const OPENLEVEL_END_PROGRESS = ((exports.OPENLOADING_END_PROGRESS = 10), 30);
-const PRELOAD_END_PROGRESS = 35;
-const SETDATALAYER_AND_LOADSUBLEVEL_END_PROGRESS = 40;
-const CHECK_VOXEL_STREAMING_END_PROGRESS = 50;
-const CHECK_STREAMING_END_PROGRESS = 75;
-const CREATE_ENTITY_END_PROGRESS = 80;
-const WORLD_DONE_END_PROGRESS = 90;
-const cellNum =
-  ((exports.LOAD_FINISHED_PROGRESS = 100),
-  (exports.LOADED_SPEED_RATE = 2),
-  (exports.BASE_SPEED = 25),
-  (0, puerts_1.$ref)(0));
-const matchCellNum = (0, puerts_1.$ref)(0);
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
+  UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Application_1 = require("../../../Core/Application/Application"),
+  CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  LogProfiler_1 = require("../../../Core/Common/LogProfiler"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  Time_1 = require("../../../Core/Common/Time"),
+  Queue_1 = require("../../../Core/Container/Queue"),
+  AreaMpcById_1 = require("../../../Core/Define/ConfigQuery/AreaMpcById"),
+  DataLayerById_1 = require("../../../Core/Define/ConfigQuery/DataLayerById"),
+  InstanceDungeonById_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EffectEnvironment_1 = require("../../../Core/Effect/EffectEnvironment"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  TickSystem_1 = require("../../../Core/Tick/TickSystem"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  CameraUtility_1 = require("../../Camera/CameraUtility"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  EffectSystem_1 = require("../../Effect/EffectSystem"),
+  GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  InputController_1 = require("../../Input/InputController"),
+  LevelEventLockInputState_1 = require("../../LevelGamePlay/LevelEventLockInputState"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  FormationDataController_1 = require("../../Module/Abilities/FormationDataController"),
+  BattleUiControl_1 = require("../../Module/BattleUi/BattleUiControl"),
+  BlackScreenController_1 = require("../../Module/BlackScreen/BlackScreenController"),
+  LevelSequencePlayer_1 = require("../../Module/Common/LevelSequencePlayer"),
+  LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController"),
+  LoadingController_1 = require("../../Module/Loading/LoadingController"),
+  Heartbeat_1 = require("../../Module/Login/Heartbeat"),
+  LogReportController_1 = require("../../Module/LogReport/LogReportController"),
+  LogReportDefine_1 = require("../../Module/LogReport/LogReportDefine"),
+  SeamlessTravelController_1 = require("../../Module/SeamlessTravel/SeamlessTravelController"),
+  TeleportController_1 = require("../../Module/Teleport/TeleportController"),
+  TimeOfDayController_1 = require("../../Module/TimeOfDay/TimeOfDayController"),
+  VideoLauncher_1 = require("../../Module/Video/VideoLauncher"),
+  BulletController_1 = require("../../NewWorld/Bullet/BulletController"),
+  CharacterController_1 = require("../../NewWorld/Character/CharacterController"),
+  PreloadDefine_1 = require("../../Preload/PreloadDefine"),
+  RenderModuleController_1 = require("../../Render/Manager/RenderModuleController"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  LguiEventSystemManager_1 = require("../../Ui/LguiEventSystem/LguiEventSystemManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  GameModePromise_1 = require("../Define/GameModePromise"),
+  WorldDefine_1 = require("../Define/WorldDefine"),
+  AsyncTask_1 = require("../Task/AsyncTask"),
+  TaskSystem_1 = require("../Task/TaskSystem"),
+  WorldGlobal_1 = require("../WorldGlobal"),
+  ComponentForceTickController_1 = require("./ComponentForceTickController"),
+  PreloadController_1 = require("./PreloadController"),
+  PreloadControllerNew_1 = require("./PreloadControllerNew"),
+  TOP_CONSUMING_COUNT = 20,
+  ONE_SECOND = 1e3,
+  OPENLEVEL_END_PROGRESS = ((exports.OPENLOADING_END_PROGRESS = 10), 30),
+  PRELOAD_END_PROGRESS = 35,
+  SETDATALAYER_AND_LOADSUBLEVEL_END_PROGRESS = 40,
+  CHECK_VOXEL_STREAMING_END_PROGRESS = 50,
+  CHECK_STREAMING_END_PROGRESS = 75,
+  CREATE_ENTITY_END_PROGRESS = 80,
+  WORLD_DONE_END_PROGRESS = 90,
+  cellNum =
+    ((exports.LOAD_FINISHED_PROGRESS = 100),
+    (exports.LOADED_SPEED_RATE = 2),
+    (exports.BASE_SPEED = 25),
+    (0, puerts_1.$ref)(0)),
+  matchCellNum = (0, puerts_1.$ref)(0);
 class SubLevelInfo {
   constructor(e, o, a, r, t, l) {
     (this.UnloadLevels = void 0),
@@ -153,9 +153,9 @@ class GameModeController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetGameModeData(e, o) {
-    let a;
-    const r = ModelManager_1.ModelManager.GameModeModel;
-    const t = InstanceDungeonById_1.configInstanceDungeonById.GetConfig(e);
+    var a,
+      r = ModelManager_1.ModelManager.GameModeModel,
+      t = InstanceDungeonById_1.configInstanceDungeonById.GetConfig(e);
     return t
       ? (a = ConfigManager_1.ConfigManager.WorldMapConfig.GetAkiMapSourceConfig(
           t.MapConfigId,
@@ -191,9 +191,9 @@ class GameModeController extends ControllerBase_1.ControllerBase {
   }
   static async Load(r) {
     const t = ModelManager_1.ModelManager.GameModeModel;
-    let e = t.Mode;
+    var e = t.Mode;
     const l = t.InstanceDungeon;
-    const o = t.MapConfig;
+    var o = t.MapConfig;
     if (
       ((t.RenderAssetDone = !1),
       Log_1.Log.CheckInfo() &&
@@ -413,12 +413,12 @@ class GameModeController extends ControllerBase_1.ControllerBase {
                   !0
                 ),
                 async () => {
-                  const e = this.Manager.Preload();
+                  var e = this.Manager.Preload();
                   if (e.length) {
-                    const o = new Array();
+                    var o = new Array();
                     for (const r of e) {
                       const t = r[0];
-                      const a = r[1];
+                      var a = r[1];
                       a.Promise.then((e) => {
                         e ||
                           (Log_1.Log.CheckError() &&
@@ -739,7 +739,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
   }
   static m6(e) {}
   static async Change(e) {
-    let o = e.w6n;
+    var o = e.w6n;
     const r = ModelManager_1.ModelManager.GameModeModel;
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
@@ -758,40 +758,40 @@ class GameModeController extends ControllerBase_1.ControllerBase {
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.ChangeMode),
       r.CreateChangeModePromise();
     o = new AsyncTask_1.AsyncTask("GameModeController.Change", async () => {
-      const e = new LogProfiler_1.LogProfiler("改变场景模式");
-      var o = e.CreateChild("打开Loading界面");
-      const a = e.CreateChild("关闭Loading界面");
-      var o =
-        (e.Start(),
-        LoadingController_1.LoadingController.SetProgress(0, void 0, 1, !0),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("GameMode", 3, "改变场景模式:打开Loading界面(开始)"),
-        o.Restart(),
-        await LoadingController_1.LoadingController.GameModeOpenLoading(),
-        o.Stop(),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("GameMode", 3, "改变场景模式:打开Loading界面(完成)"),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "GameMode",
-            3,
-            "改变场景模式:打开ChangeSceneModeEndNotify协议(开始)",
-          ),
-        await r.ChangeSceneModeEndNotifyPromise.Promise,
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "GameMode",
-            3,
-            "改变场景模式:打开ChangeSceneModeEndNotify协议(完成)",
-          ),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "GameMode",
-            3,
-            "改变场景模式:请求服务器SceneModeChangeFinishRequest(开始)",
-          ),
-        Protocol_1.Aki.Protocol.nms.create());
-      var o = await Net_1.Net.CallAsync(8583, o);
+      var e = new LogProfiler_1.LogProfiler("改变场景模式"),
+        o = e.CreateChild("打开Loading界面"),
+        a = e.CreateChild("关闭Loading界面"),
+        o =
+          (e.Start(),
+          LoadingController_1.LoadingController.SetProgress(0, void 0, 1, !0),
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("GameMode", 3, "改变场景模式:打开Loading界面(开始)"),
+          o.Restart(),
+          await LoadingController_1.LoadingController.GameModeOpenLoading(),
+          o.Stop(),
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("GameMode", 3, "改变场景模式:打开Loading界面(完成)"),
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "GameMode",
+              3,
+              "改变场景模式:打开ChangeSceneModeEndNotify协议(开始)",
+            ),
+          await r.ChangeSceneModeEndNotifyPromise.Promise,
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "GameMode",
+              3,
+              "改变场景模式:打开ChangeSceneModeEndNotify协议(完成)",
+            ),
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "GameMode",
+              3,
+              "改变场景模式:请求服务器SceneModeChangeFinishRequest(开始)",
+            ),
+          Protocol_1.Aki.Protocol.nms.create()),
+        o = await Net_1.Net.CallAsync(8583, o);
       return o && o.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
         ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             o.lkn,
@@ -832,7 +832,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
     TaskSystem_1.TaskSystem.AddTask(o), await TaskSystem_1.TaskSystem.Run();
   }
   static async PreloadSubLevel(e) {
-    const o = ModelManager_1.ModelManager.GameModeModel;
+    var o = ModelManager_1.ModelManager.GameModeModel;
     if (!o.WorldDone)
       return (
         Log_1.Log.CheckError() &&
@@ -848,7 +848,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         "加载的子关卡",
         e?.join(),
       ]);
-    const a = new Array();
+    var a = new Array();
     for (const r of e)
       o.SubLevelMap.has(r) || o.PreloadLevelMap.has(r) || a.push(r);
     return (
@@ -866,8 +866,8 @@ class GameModeController extends ControllerBase_1.ControllerBase {
   }
   static p5s() {
     if (this.g5s && !(this.g5s.Size <= 0))
-      for (; this.g5s.Size > 0; ) {
-        const e = this.g5s.Front;
+      for (; 0 < this.g5s.Size; ) {
+        var e = this.g5s.Front;
         e
           ? (this.g5s.Pop(),
             this.ChangeSubLevel(
@@ -882,8 +882,8 @@ class GameModeController extends ControllerBase_1.ControllerBase {
       }
   }
   static async U0r(e, o, a, r, t, l) {
-    const n = ModelManager_1.ModelManager.GameModeModel;
-    const _ = ModelManager_1.ModelManager.SubLevelLoadingModel;
+    var n = ModelManager_1.ModelManager.GameModeModel,
+      _ = ModelManager_1.ModelManager.SubLevelLoadingModel;
     if (n.WorldDone)
       if (_.LoadSubLeveling)
         Log_1.Log.CheckError() &&
@@ -906,8 +906,9 @@ class GameModeController extends ControllerBase_1.ControllerBase {
               ["旋转", t],
             ),
           (_.LoadSubLeveling = !0),
-          (ModelManager_1.ModelManager.SubLevelLoadingModel.ScreenEffect =
-            a) !== 0 &&
+          0 !==
+            (ModelManager_1.ModelManager.SubLevelLoadingModel.ScreenEffect =
+              a) &&
             (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "GameMode",
@@ -976,7 +977,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
             GlobalData_1.GlobalData.World,
             "GameModeController.ChangeSubLevelInternal",
           ),
-          a !== 0 &&
+          0 !== a &&
             (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "GameMode",
@@ -1009,24 +1010,24 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         l?.(!1);
   }
   static async Wxn() {
-    const e = ModelManager_1.ModelManager.GameModeModel;
+    var e = ModelManager_1.ModelManager.GameModeModel;
     if (e.SubLevelMap.size) {
-      let o;
-      let a;
-      const r = new Array();
+      var o,
+        a,
+        r = new Array();
       for ([, o] of e.PreloadLevelMap)
-        o.LoadType === 1 && r.push(o.LoadPromise.Promise);
+        1 === o.LoadType && r.push(o.LoadPromise.Promise);
       for ([, a] of e.SubLevelMap)
-        a.LoadType === 1 && r.push(a.LoadPromise.Promise);
+        1 === a.LoadType && r.push(a.LoadPromise.Promise);
       r.length && (await Promise.all(r));
     }
     return !0;
   }
   static async jxn() {
-    const e = ModelManager_1.ModelManager.GameModeModel;
+    var e = ModelManager_1.ModelManager.GameModeModel;
     if (e.UnloadLevelMap.size) {
-      let o;
-      const a = new Array();
+      var o,
+        a = new Array();
       for ([, o] of e.UnloadLevelMap) a.push(o.UnLoadPromise.Promise);
       a.length && (await Promise.all(a));
     }
@@ -1088,7 +1089,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
     this.P0r(e, o, a, r, t);
   }
   static async P0r(o, a, r, t, l) {
-    const n = ModelManager_1.ModelManager.GameModeModel;
+    var n = ModelManager_1.ModelManager.GameModeModel;
     if (n.DataLayerSwitching)
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("GameMode", 30, "当前正在切换DataLayer"),
@@ -1227,23 +1228,23 @@ class GameModeController extends ControllerBase_1.ControllerBase {
     );
   }
   static CanLoadEntity() {
-    const e = ModelManager_1.ModelManager.GameModeModel;
+    var e = ModelManager_1.ModelManager.GameModeModel;
     return e.WorldDone && !e.IsTeleport && !e.ChangeModeState;
   }
   static BeforeLoadMap() {
     ModelManager_1.ModelManager.GameModeModel.BeginLoadMapPromise.SetResult(!0);
   }
   static InitAllPlayerStarts() {
-    const e = (0, puerts_1.$ref)(UE.NewArray(UE.Actor));
-    const o =
-      (UE.GameplayStatics.GetAllActorsOfClass(
-        GlobalData_1.GlobalData.World,
-        UE.PlayerStart.StaticClass(),
-        e,
-      ),
-      ModelManager_1.ModelManager.GameModeModel.ClearPlayerStart(),
-      (0, puerts_1.$unref)(e));
-    if (o.Num() > 0)
+    var e = (0, puerts_1.$ref)(UE.NewArray(UE.Actor)),
+      o =
+        (UE.GameplayStatics.GetAllActorsOfClass(
+          GlobalData_1.GlobalData.World,
+          UE.PlayerStart.StaticClass(),
+          e,
+        ),
+        ModelManager_1.ModelManager.GameModeModel.ClearPlayerStart(),
+        (0, puerts_1.$unref)(e));
+    if (0 < o.Num())
       for (let e = 0; e < o.Num(); ++e)
         ModelManager_1.ModelManager.GameModeModel.AddPlayerStart(o.Get(e));
   }
@@ -1252,8 +1253,8 @@ class GameModeController extends ControllerBase_1.ControllerBase {
       ModelManager_1.ModelManager.GameModeModel.OpenLevelPromise.SetResult(!0);
   }
   static OnLoadSubLevel(e, o, a) {
-    let r;
-    const t = ModelManager_1.ModelManager.GameModeModel;
+    var r,
+      t = ModelManager_1.ModelManager.GameModeModel;
     let l = void 0;
     for ([, r] of t.PreloadLevelMap)
       if (r.LinkId === e) {
@@ -1261,7 +1262,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         break;
       }
     if (!l)
-      for (const [, n] of t.SubLevelMap)
+      for (var [, n] of t.SubLevelMap)
         if (n.LinkId === e) {
           l = n;
           break;
@@ -1290,9 +1291,9 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         );
   }
   static OnUnLoadSubLevel(e, o) {
-    let a;
-    let r;
-    const t = ModelManager_1.ModelManager.GameModeModel;
+    var a,
+      r,
+      t = ModelManager_1.ModelManager.GameModeModel;
     let l = void 0;
     for ([a, r] of t.UnloadLevelMap)
       if (a === e) {
@@ -1321,7 +1322,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         );
   }
   static OnTick(e) {
-    let o, a;
+    var o, a;
     ModelManager_1.ModelManager.GameModeModel.IsMulti ||
     ModelManager_1.ModelManager.CombatMessageModel.AnyEntityInFight
       ? Heartbeat_1.Heartbeat.SetHeartBeatMode(1)
@@ -1344,25 +1345,25 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         a.K2_SetActorTransform(o, !0, void 0, !1);
   }
   static PrintLoadDetail() {
-    const e = ModelManager_1.ModelManager.GameModeModel.LoadWorldProfiler;
-    const a =
-      (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "World",
-          3,
-          "加载详情",
-          ["MapPath", ModelManager_1.ModelManager.GameModeModel.MapPath],
-          ["耗时", e.ToString()],
-        ),
-      ModelManager_1.ModelManager.PreloadModel.ResourcesLoadTime);
+    var e = ModelManager_1.ModelManager.GameModeModel.LoadWorldProfiler,
+      a =
+        (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "World",
+            3,
+            "加载详情",
+            ["MapPath", ModelManager_1.ModelManager.GameModeModel.MapPath],
+            ["耗时", e.ToString()],
+          ),
+        ModelManager_1.ModelManager.PreloadModel.ResourcesLoadTime);
     if (
       (a.sort((e, o) => o[1] - e[1]),
       ModelManager_1.ModelManager.PreloadModel.LoadAssetOneByOneState)
     ) {
       for (let o = 0; o < TOP_CONSUMING_COUNT && !(o >= a.length); ++o) {
-        const r = a[o];
+        var r = a[o];
         let e = "";
-        const t = r[1];
+        var t = r[1];
         (e = t < ONE_SECOND ? t + " ms" : t / ONE_SECOND + " s"),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -1378,7 +1379,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
   }
   static SetGamePaused(e, o, a = Time_1.Time.OriginTimeDilation) {
     Time_1.Time.OriginTimeDilation = a;
-    const r = ModelManager_1.ModelManager.GameModeModel.GamePausedReasons;
+    var r = ModelManager_1.ModelManager.GameModeModel.GamePausedReasons;
     if (
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -1411,7 +1412,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
             Log_1.Log.Info("GameMode", 55, "时停:执行真时停"),
           UE.GameplayStatics.SetGamePaused(GlobalData_1.GlobalData.World, !0))
       : (r.has(o) && r.delete(o),
-        r.size !== 0 ||
+        0 !== r.size ||
           ((TickSystem_1.TickSystem.IsPaused = !1),
           GameModeController.SetTimeDilation(a, !0),
           Log_1.Log.CheckInfo() &&
@@ -1429,7 +1430,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         UE.GameplayStatics.SetGamePaused(GlobalData_1.GlobalData.World, !1))
       : ((ModelManager_1.ModelManager.GameModeModel.ForceDisableGamePaused =
           !1),
-        ModelManager_1.ModelManager.GameModeModel.GamePausedReasons.size > 0
+        0 < ModelManager_1.ModelManager.GameModeModel.GamePausedReasons.size
           ? ((TickSystem_1.TickSystem.IsPaused = !0),
             GameModeController.SetTimeDilation(0, !0),
             Log_1.Log.CheckInfo() &&
@@ -1456,32 +1457,32 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         ["timeDilation", e],
         ["bCallByGamePaused", o],
       );
-    const a = e < MathUtils_1.MathUtils.KindaSmallNumber ? 0 : e;
-    var o =
-      (o || (Time_1.Time.OriginTimeDilation = a),
-      Time_1.Time.SetTimeDilation(a),
-      TimeOfDayController_1.TimeOfDayController.ChangeTimeScale(a),
-      CharacterController_1.CharacterController.SetTimeDilation(a),
-      FormationDataController_1.FormationDataController.SetTimeDilation(a),
-      BulletController_1.BulletController.SetTimeDilation(a),
-      CameraController_1.CameraController.SetTimeDilation(a),
-      ComponentForceTickController_1.ComponentForceTickController.SetTimeDilation(
-        a,
-      ),
-      (EffectEnvironment_1.EffectEnvironment.GlobalTimeScale = a),
-      Protocol_1.Aki.Protocol.Bus.create());
+    var a = e < MathUtils_1.MathUtils.KindaSmallNumber ? 0 : e,
+      o =
+        (o || (Time_1.Time.OriginTimeDilation = a),
+        Time_1.Time.SetTimeDilation(a),
+        TimeOfDayController_1.TimeOfDayController.ChangeTimeScale(a),
+        CharacterController_1.CharacterController.SetTimeDilation(a),
+        FormationDataController_1.FormationDataController.SetTimeDilation(a),
+        BulletController_1.BulletController.SetTimeDilation(a),
+        CameraController_1.CameraController.SetTimeDilation(a),
+        ComponentForceTickController_1.ComponentForceTickController.SetTimeDilation(
+          a,
+        ),
+        (EffectEnvironment_1.EffectEnvironment.GlobalTimeScale = a),
+        Protocol_1.Aki.Protocol.Bus.create());
     (o.L7n = e),
       Net_1.Net.Send(4768, o),
-      e === 0 &&
+      0 === e &&
         EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.PauseGame, 1),
-      e === 1 &&
+      1 === e &&
         EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.PauseGame, 0),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.TriggerUiTimeDilation,
       );
   }
   static D0r(e = void 0) {
-    let o;
+    var o;
     Global_1.Global.BaseCharacter &&
       (e
         ? Global_1.Global.BaseCharacter.CharacterActorComponent.TeleportAndFindStandLocation(
@@ -1500,7 +1501,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
       e.GetComponent(158)?.ResetCharState());
   }
   static async T0r(e) {
-    const o = ModelManager_1.ModelManager.GameModeModel;
+    var o = ModelManager_1.ModelManager.GameModeModel;
     let a = void 0;
     return (
       !(a = e.nys?.length ? e.nys : o.InstanceDungeon.SubLevels) ||
@@ -1509,14 +1510,13 @@ class GameModeController extends ControllerBase_1.ControllerBase {
     );
   }
   static async Hxn(e, o = !0) {
-    const a = ModelManager_1.ModelManager.GameModeModel;
-    if (typeof e === "string") {
-      const r = a.AddPreloadSubLevel(e);
+    var a = ModelManager_1.ModelManager.GameModeModel;
+    if ("string" == typeof e) {
+      var r = a.AddPreloadSubLevel(e);
       if (!r) return !1;
       (r.IsPreload = !0), (r.LoadType = 1);
-      var t = FNameUtil_1.FNameUtil.GetDynamicFName(r.Path);
-      var t =
-        GlobalData_1.GlobalData.GameInstance.场景加载通知器.LoadStreamLevel(
+      var t = FNameUtil_1.FNameUtil.GetDynamicFName(r.Path),
+        t = GlobalData_1.GlobalData.GameInstance.场景加载通知器.LoadStreamLevel(
           t,
           o,
           !1,
@@ -1534,10 +1534,10 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         r.LoadPromise.Promise
       );
     }
-    const l = new Array();
+    var l = new Array();
     for (const i of e) {
-      var n;
-      const _ = a.AddPreloadSubLevel(i);
+      var n,
+        _ = a.AddPreloadSubLevel(i);
       _ &&
         ((_.IsPreload = !0),
         (_.LoadType = 1),
@@ -1561,18 +1561,18 @@ class GameModeController extends ControllerBase_1.ControllerBase {
     return await Promise.all(l), !0;
   }
   static async R0r(o, a = !0) {
-    const r = ModelManager_1.ModelManager.GameModeModel;
-    if (typeof o === "string") {
-      let t;
-      const l = o;
+    var r = ModelManager_1.ModelManager.GameModeModel;
+    if ("string" == typeof o) {
+      var t,
+        l = o;
       let e = r.GetPreloadSubLevel(l);
       return (e
         ? (r.RemovePreloadSubLevel(l),
           r.AddSubLevelInstance(e),
-          e.LoadType === 2 && e.Level.SetShouldBeVisible(a))
+          2 === e.LoadType && e.Level.SetShouldBeVisible(a))
         : (e = r.AddSubLevel(l)),
       e)
-        ? (e.LoadType === 0 &&
+        ? (0 === e.LoadType &&
             ((t = FNameUtil_1.FNameUtil.GetDynamicFName(e.Path)),
             (t =
               GlobalData_1.GlobalData.GameInstance.场景加载通知器.LoadStreamLevel(
@@ -1592,17 +1592,17 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         : !1;
     }
     let n = !1;
-    let _;
-    const i = new Array();
+    var _,
+      i = new Array();
     for (const d of o) {
       let e = r.GetPreloadSubLevel(d);
       e
         ? (r.RemovePreloadSubLevel(d),
           r.AddSubLevelInstance(e),
-          e.LoadType === 2 && (e.Level.SetShouldBeVisible(a), (n = !0)))
+          2 === e.LoadType && (e.Level.SetShouldBeVisible(a), (n = !0)))
         : (e = r.AddSubLevel(d)),
         e &&
-          (i.push(e.LoadPromise.Promise), e.LoadType === 0) &&
+          (i.push(e.LoadPromise.Promise), 0 === e.LoadType) &&
           ((_ =
             GlobalData_1.GlobalData.GameInstance.场景加载通知器.LoadStreamLevel(
               FNameUtil_1.FNameUtil.GetDynamicFName(d),
@@ -1631,7 +1631,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
   static I0r(e) {
     if (e?.hys)
       for (const a of e.hys) {
-        const o = DataLayerById_1.configDataLayerById.GetConfig(a);
+        var o = DataLayerById_1.configDataLayerById.GetConfig(a);
         o
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("GameMode", 3, "加载场景:加载DataLayer", [
@@ -1663,7 +1663,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
       );
   }
   static q0r() {
-    const e = Protocol_1.Aki.Protocol.a_s.create();
+    var e = Protocol_1.Aki.Protocol.a_s.create();
     (e.vFn = ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.Id),
       Net_1.Net.Call(28313, e, (e) => {
         e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
@@ -1676,9 +1676,9 @@ class GameModeController extends ControllerBase_1.ControllerBase {
   static E0r(e) {
     ModelManager_1.ModelManager.GameModeModel.MaterialParameterCollectionMap.clear();
     for (const a of Object.keys(e.lys)) {
-      var o = e.lys[a];
-      var o = AreaMpcById_1.configAreaMpcById.GetConfig(o).MpcData;
-      o && o !== "None" && o !== "Empty"
+      var o = e.lys[a],
+        o = AreaMpcById_1.configAreaMpcById.GetConfig(o).MpcData;
+      o && "None" !== o && "Empty" !== o
         ? ModelManager_1.ModelManager.GameModeModel.MaterialParameterCollectionMap.set(
             o,
             !1,
@@ -1693,8 +1693,9 @@ class GameModeController extends ControllerBase_1.ControllerBase {
           );
     }
     if (
+      0 ===
       ModelManager_1.ModelManager.GameModeModel.MaterialParameterCollectionMap
-        .size === 0
+        .size
     )
       ModelManager_1.ModelManager.GameModeModel.ApplyMaterialParameterCollectionPromise.SetResult(
         !0,
@@ -1729,7 +1730,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
       );
   }
   static async B0r(e) {
-    let o, a;
+    var o, a;
     e &&
       ((o = ModelManager_1.ModelManager.GameModeModel),
       TimerSystem_1.TimerSystem.Has(o.CheckStreamingCompletedTimerId)
@@ -1772,46 +1773,46 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         "World",
         61,
         "[CheckTargetStreamingCompleted] 检测参数",
-        ["dataLayers", o != null && o.Num() > 0 ? o.Get(0).toString() : void 0],
+        ["dataLayers", null != o && 0 < o.Num() ? o.Get(0).toString() : void 0],
         [
           "targetGrids",
-          r != null && r.Num() > 0 ? r.Get(0).toString() : void 0,
+          null != r && 0 < r.Num() ? r.Get(0).toString() : void 0,
         ],
       );
     e = new UE.WorldPartitionStreamingQuerySource(
       e,
       ResourceSystem_1.STREAMING_SOURCE_RADIUS,
       !1,
-      o != null && o.Num() > 0,
+      null != o && 0 < o.Num(),
       o,
       !1,
       !0,
       r,
     );
-    const l = UE.NewArray(UE.WorldPartitionStreamingQuerySource);
-    const n =
-      (l.Add(e),
-      UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
-        GlobalData_1.GlobalData.World,
-        UE.WorldPartitionSubsystem.StaticClass(),
-      ));
-    const _ = TimerSystem_1.TimerSystem.Forever(() => {
-      let e;
-      const o = n.IsStreamingCompleted(2, l, !0, cellNum, matchCellNum, !0);
-      t &&
-        ((e =
-          (0, puerts_1.$unref)(matchCellNum) /
-          Math.max((0, puerts_1.$unref)(cellNum), 1)),
-        t(e)),
-        o && (TimerSystem_1.TimerSystem.Remove(_), a.SetResult(!0));
-    }, ResourceSystem_1.CHECK_STREAMING_INTERVAL);
+    const l = UE.NewArray(UE.WorldPartitionStreamingQuerySource),
+      n =
+        (l.Add(e),
+        UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
+          GlobalData_1.GlobalData.World,
+          UE.WorldPartitionSubsystem.StaticClass(),
+        )),
+      _ = TimerSystem_1.TimerSystem.Forever(() => {
+        var e,
+          o = n.IsStreamingCompleted(2, l, !0, cellNum, matchCellNum, !0);
+        t &&
+          ((e =
+            (0, puerts_1.$unref)(matchCellNum) /
+            Math.max((0, puerts_1.$unref)(cellNum), 1)),
+          t(e)),
+          o && (TimerSystem_1.TimerSystem.Remove(_), a.SetResult(!0));
+      }, ResourceSystem_1.CHECK_STREAMING_INTERVAL);
     return _;
   }
   static async V6s(o, a) {
-    let e;
-    let r;
-    let t;
-    const l = ModelManager_1.ModelManager.GameModeModel;
+    var e,
+      r,
+      t,
+      l = ModelManager_1.ModelManager.GameModeModel;
     GlobalData_1.GlobalData.World.GetWorld().K2_GetWorldSettings()
       .bEnableWorldPartition
       ? ((l.UseWorldPartition = !0),
@@ -1857,8 +1858,8 @@ class GameModeController extends ControllerBase_1.ControllerBase {
   }
   static async Kyo(a, r) {
     cpp_1.FKuroGameBudgetAllocatorInterface.SetGlobalCavernMode(1);
-    const e = ModelManager_1.ModelManager.GameModeModel;
-    let t = ModelManager_1.ModelManager.WorldModel;
+    var e = ModelManager_1.ModelManager.GameModeModel,
+      t = ModelManager_1.ModelManager.WorldModel;
     if ((t && t.CurEnvironmentInfo?.ResetInfo(), e.UseWorldPartition)) {
       t = e.BornLocation;
       if (t) {
@@ -1872,7 +1873,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         ModelManager_1.ModelManager.GameModeModel.StreamingSource.GetComponentByClass(
           UE.WorldPartitionStreamingSourceComponent.StaticClass(),
         ).EnableStreamingSource();
-        const l = UE.NewArray(UE.BuiltinName);
+        var l = UE.NewArray(UE.BuiltinName);
         let o =
           ControllerHolder_1.ControllerHolder.WorldController.EnvironmentInfoUpdate(
             t,
@@ -1903,7 +1904,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
             e)
           )
             for (const i of WorldDefine_1.dataLayerRuntimeHLOD) {
-              const _ = (0, puerts_1.$ref)(void 0);
+              var _ = (0, puerts_1.$ref)(void 0);
               (o = FNameUtil_1.FNameUtil.GetDynamicFName(i)),
                 UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldPartitionDataLayerNameByLabel(
                   GlobalData_1.GlobalData.World,
@@ -1936,7 +1937,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         e.StreamingCompleted.SetResult(!0);
   }
   static AddOrRemoveRenderAssetsQueryViewInfo(e, o) {
-    let a;
+    var a;
     GlobalData_1.GlobalData.World.GetWorld().K2_GetWorldSettings()
       .bEnableWorldPartition &&
       (e
@@ -1948,7 +1949,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
           Log_1.Log.Error("World", 3, "viewOrigin参数无效", ["坐标", e]));
   }
   static NVs(e, o, a) {
-    const r = ModelManager_1.ModelManager.GameModeModel;
+    var r = ModelManager_1.ModelManager.GameModeModel;
     r.CheckRenderAssetsStreamingCompletedTimerId?.Valid() &&
       (TimerSystem_1.TimerSystem.Remove(
         r.CheckRenderAssetsStreamingCompletedTimerId,
@@ -1986,34 +1987,34 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         !1
       );
     const t = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
-      GlobalData_1.GlobalData.World,
-      UE.WorldPartitionSubsystem.StaticClass(),
-    );
-    const l =
-      (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "World",
-          3,
-          "检查渲染资源(开始)",
-          ["Reason", a],
-          ["坐标", o],
-        ),
-      new UE.WorldPartitionStreamingQuerySource(
-        o,
-        ResourceSystem_1.RENDER_ASSETS_RADIUS,
-        !1,
-        !1,
-        void 0,
-        !1,
-        !0,
-        void 0,
-      ));
-    const n =
-      (this.NVs(t, l, !0),
-      r.CheckRenderAssetsTimeoutId?.Valid() &&
-        (TimerSystem_1.TimerSystem.Remove(r.CheckRenderAssetsTimeoutId),
-        (r.CheckRenderAssetsTimeoutId = void 0)),
-      new GameModePromise_1.GameModePromise());
+        GlobalData_1.GlobalData.World,
+        UE.WorldPartitionSubsystem.StaticClass(),
+      ),
+      l =
+        (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "World",
+            3,
+            "检查渲染资源(开始)",
+            ["Reason", a],
+            ["坐标", o],
+          ),
+        new UE.WorldPartitionStreamingQuerySource(
+          o,
+          ResourceSystem_1.RENDER_ASSETS_RADIUS,
+          !1,
+          !1,
+          void 0,
+          !1,
+          !0,
+          void 0,
+        )),
+      n =
+        (this.NVs(t, l, !0),
+        r.CheckRenderAssetsTimeoutId?.Valid() &&
+          (TimerSystem_1.TimerSystem.Remove(r.CheckRenderAssetsTimeoutId),
+          (r.CheckRenderAssetsTimeoutId = void 0)),
+        new GameModePromise_1.GameModePromise());
     let _ = !1;
     return (
       !GlobalData_1.GlobalData.IsPlayInEditor &&
@@ -2050,7 +2051,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         }, ResourceSystem_1.RENDER_ASSETS_TIMEOUT)),
       (r.CheckRenderAssetsStreamingCompletedTimerId =
         TimerSystem_1.TimerSystem.Forever(() => {
-          let e;
+          var e;
           r.RenderAssetDone ||
             ((e = t.IsRenderAssetsStreamingCompleted(l, _, !1, !1)),
             (_ = !0),
@@ -2098,7 +2099,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         );
   }
   static async S0r() {
-    const e = new GameModePromise_1.GameModePromise();
+    var e = new GameModePromise_1.GameModePromise();
     return (
       ModelManager_1.ModelManager.SeamlessTravelModel.IsSeamlessTravel
         ? (ModelManager_1.ModelManager.LoadingModel.SetIsLoading(!0),
@@ -2209,7 +2210,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
     }
   }
   static UpdateFoliageDataLayer() {
-    let e;
+    var e;
     GlobalData_1.GlobalData.World.GetWorld().K2_GetWorldSettings()
       ?.bEnableWorldPartition &&
       ((e = GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
@@ -2221,14 +2222,15 @@ class GameModeController extends ControllerBase_1.ControllerBase {
       ));
   }
   static UpdateStreamingQualityLevel() {
-    let e, o;
+    var e, o;
     GlobalData_1.GlobalData.World.GetWorld().K2_GetWorldSettings()
       ?.bEnableWorldPartition
       ? ((e =
           "wp.Runtime.ModifyQualityLevelStreamingValue " +
-          ((o =
+          (0 ===
+          (o =
             GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo()
-              .StreamLevel) === 0
+              .StreamLevel)
             ? 0.8
             : 1)),
         (o = "wp.Runtime.CurStreamingQualityLevel " + o),
@@ -2268,7 +2270,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         );
   }
   static _4s() {
-    const e = Global_1.Global.CharacterController;
+    var e = Global_1.Global.CharacterController;
     this.a4s ||
       UE.KuroInputFunctionLibrary.HasInputModeReply(this.a4s) ||
       (this.a4s = UE.KuroInputFunctionLibrary.SetGameAndUIInputMode(
@@ -2277,7 +2279,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
       ));
   }
   static u4s() {
-    let e;
+    var e;
     this.a4s &&
       ((e = Global_1.Global.CharacterController),
       UE.KuroInputFunctionLibrary.ReplyInputMode(e, this.a4s),
@@ -2287,7 +2289,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
 ((exports.GameModeController = GameModeController).a4s = void 0),
   (GameModeController.g5s = void 0),
   (GameModeController.JVs = () => {
-    const e = Protocol_1.Aki.Protocol.Bus.create();
+    var e = Protocol_1.Aki.Protocol.Bus.create();
     (e.L7n = 0),
       Net_1.Net.Send(4768, e),
       Log_1.Log.CheckInfo() &&
@@ -2299,7 +2301,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         );
   }),
   (GameModeController.DHe = () => {
-    const e = Protocol_1.Aki.Protocol.Bus.create();
+    var e = Protocol_1.Aki.Protocol.Bus.create();
     (e.L7n = Time_1.Time.TimeDilation),
       Net_1.Net.Send(4768, e),
       Log_1.Log.CheckInfo() &&
@@ -2319,8 +2321,8 @@ class LoadGroup {
   }
   async Run() {
     for (const t of this.nK) {
-      let e = t[1];
-      const o = t[2];
+      var e = t[1],
+        o = t[2];
       const l = t[3];
       if (e && !e()) return !0;
       e = o();
@@ -2329,9 +2331,9 @@ class LoadGroup {
       }),
         this.N0r.push(e);
     }
-    const a = await Promise.all(this.N0r);
+    var a = await Promise.all(this.N0r);
     for (let e = 0; e < a.length; ++e) {
-      const r = this.nK[e][0];
+      var r = this.nK[e][0];
       if (!a[e])
         return (
           Log_1.Log.CheckError() &&
@@ -2351,4 +2353,4 @@ class LoadGroup {
     return this.nK.push([e, o, a, r]), !0;
   }
 }
-// # sourceMappingURL=GameModeController.js.map
+//# sourceMappingURL=GameModeController.js.map

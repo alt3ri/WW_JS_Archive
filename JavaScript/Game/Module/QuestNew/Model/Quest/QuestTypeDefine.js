@@ -8,8 +8,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.MainQuest =
     exports.createQuestObj =
       void 0);
-const DailyQuest_1 = require("./DailyQuest");
-const Quest_1 = require("./Quest");
+const DailyQuest_1 = require("./DailyQuest"),
+  Quest_1 = require("./Quest");
 function createQuestObj(s) {
   if (s) {
     let e = void 0;
@@ -54,4 +54,4 @@ class GuideQuest extends Quest_1.Quest {}
 exports.GuideQuest = GuideQuest;
 class PoiQuest extends Quest_1.Quest {}
 exports.PoiQuest = PoiQuest;
-// # sourceMappingURL=QuestTypeDefine.js.map
+//# sourceMappingURL=QuestTypeDefine.js.map

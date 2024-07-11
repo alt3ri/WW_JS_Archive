@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FailRangeTimer = void 0);
-const UiManager_1 = require("../../../Ui/UiManager");
-const LogicTreeTimerBase_1 = require("./LogicTreeTimerBase");
+const UiManager_1 = require("../../../Ui/UiManager"),
+  LogicTreeTimerBase_1 = require("./LogicTreeTimerBase");
 class PendingProcess {
   constructor(s) {
     (this.ProcessType = s),
@@ -28,7 +28,7 @@ class FailRangeTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
       (this.U$t = []),
       (this.bze = void 0),
       (this.OnTick = (s) => {
-        if (this.U$t.length !== 0 && !this.bze)
+        if (0 !== this.U$t.length && !this.bze)
           switch (((this.bze = this.U$t[0]), this.bze.ProcessType)) {
             case 0:
               UiManager_1.UiManager.OpenView(
@@ -62,4 +62,4 @@ class FailRangeTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
   }
 }
 exports.FailRangeTimer = FailRangeTimer;
-// # sourceMappingURL=FailRangeTimer.js.map
+//# sourceMappingURL=FailRangeTimer.js.map

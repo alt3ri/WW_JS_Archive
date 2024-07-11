@@ -1,31 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkillButtonPanel = void 0);
-const UE = require("ue");
-const Stats_1 = require("../../../../../Core/Common/Stats");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const InputEnums_1 = require("../../../../Input/InputEnums");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const CharacterUnifiedStateTypes_1 = require("../../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const InputDistributeController_1 = require("../../../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../../../Ui/InputDistribute/InputMappingsDefine");
-const BattleSkillExploreItem_1 = require("../BattleSkillExploreItem");
-const BattleSkillItem_1 = require("../BattleSkillItem");
-const BehaviorButton_1 = require("../BehaviorButton");
-const BattleChildViewPanel_1 = require("./BattleChildViewPanel");
-const INIT_OFFSET_X = -86;
-const ITEM_WIDTH = 144;
-const MOBILE_INDEX_EXPLORE_ITEM = 3;
-const actionNameList = [
-  InputMappingsDefine_1.actionMappings.大招,
-  InputMappingsDefine_1.actionMappings.幻象1,
-  InputMappingsDefine_1.actionMappings.幻象2,
-  InputMappingsDefine_1.actionMappings.技能1,
-  InputMappingsDefine_1.actionMappings.闪避,
-  InputMappingsDefine_1.actionMappings.瞄准,
-  InputMappingsDefine_1.actionMappings.锁定目标,
-];
+const UE = require("ue"),
+  Stats_1 = require("../../../../../Core/Common/Stats"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  InputEnums_1 = require("../../../../Input/InputEnums"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  CharacterUnifiedStateTypes_1 = require("../../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  InputDistributeController_1 = require("../../../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../../../Ui/InputDistribute/InputMappingsDefine"),
+  BattleSkillExploreItem_1 = require("../BattleSkillExploreItem"),
+  BattleSkillItem_1 = require("../BattleSkillItem"),
+  BehaviorButton_1 = require("../BehaviorButton"),
+  BattleChildViewPanel_1 = require("./BattleChildViewPanel"),
+  INIT_OFFSET_X = -86,
+  ITEM_WIDTH = 144,
+  MOBILE_INDEX_EXPLORE_ITEM = 3,
+  actionNameList = [
+    InputMappingsDefine_1.actionMappings.大招,
+    InputMappingsDefine_1.actionMappings.幻象1,
+    InputMappingsDefine_1.actionMappings.幻象2,
+    InputMappingsDefine_1.actionMappings.技能1,
+    InputMappingsDefine_1.actionMappings.闪避,
+    InputMappingsDefine_1.actionMappings.瞄准,
+    InputMappingsDefine_1.actionMappings.锁定目标,
+  ];
 class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
@@ -38,10 +38,10 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         if (t) for (const e of this.JJe) e.RefreshEnable(!0);
       }),
       (this.gKe = (t, e) => {
-        t === 10031 && this.dZe(102)?.SetActive(e);
+        10031 === t && this.dZe(102)?.SetActive(e);
       }),
       (this.ZJe = (t) => {
-        t !== 3 && t !== 2 && (this.eze(), this.CZe());
+        3 !== t && 2 !== t && (this.eze(), this.CZe());
       }),
       (this.tze = () => {
         this.ize();
@@ -66,7 +66,7 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         t && t.GetSkillButtonData() && t.RefreshDynamicEffect();
       }),
       (this.lze = (t) => {
-        const e =
+        var e =
           ModelManager_1.ModelManager.SkillButtonUiModel.GetSkillButtonDataByButton(
             t,
           );
@@ -122,14 +122,14 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           this.SZe(t, !0);
       }),
       (this.bMe = (t, e) => {
-        if (e === 0)
+        if (0 === e)
           if (t === InputMappingsDefine_1.actionMappings.瞄准)
             this._Ze.get(101)?.OnInputAction();
           else if (t === InputMappingsDefine_1.actionMappings.锁定目标)
             this._Ze.get(102)?.OnInputAction();
           else
             for (const s of this.JJe) {
-              const i = s.GetSkillButtonData();
+              var i = s.GetSkillButtonData();
               if (i && i.GetActionName() === t) return void s.OnInputAction();
             }
       });
@@ -192,12 +192,12 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     if (this.Visible) for (const e of this.JJe) e.Tick(t);
   }
   eze() {
-    const e = ModelManager_1.ModelManager.SkillButtonUiModel;
-    const i = e.GetButtonTypeList();
+    var e = ModelManager_1.ModelManager.SkillButtonUiModel,
+      i = e.GetButtonTypeList();
     for (let t = 0; t < this.JJe.length; t++) {
-      const s = i[t];
-      const n = this.JJe[t];
-      const h = e.GetSkillButtonDataByButton(s);
+      var s = i[t],
+        n = this.JJe[t],
+        h = e.GetSkillButtonDataByButton(s);
       h
         ? s && !(s < 0) && h.GetSkillId()
           ? n.Refresh(h)
@@ -210,8 +210,8 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   }
   async NewAllBattleSkillItems() {
     let t = void 0;
-    const e = this.GetOperationType();
-    e === 2
+    var e = this.GetOperationType();
+    2 === e
       ? (t = [
           this.GetItem(0).GetOwner(),
           this.GetItem(1).GetOwner(),
@@ -220,7 +220,7 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           this.GetItem(4).GetOwner(),
           this.GetItem(5).GetOwner(),
         ])
-      : e === 1 &&
+      : 1 === e &&
         (t = [
           this.GetItem(0).GetOwner(),
           this.GetItem(1).GetOwner(),
@@ -232,7 +232,7 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           this.GetItem(9).GetOwner(),
           this.GetItem(10).GetOwner(),
         ]);
-    const i = e === 1;
+    const i = 1 === e;
     await Promise.all(t.map(async (t, e) => this.Uze(t, e, i)));
   }
   async Uze(t, e, i) {
@@ -265,10 +265,10 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     if (!(t < 0)) return this.Aze(t);
   }
   async EZe() {
-    let t;
-    let e;
-    const i = this.GetOperationType();
-    i === 2
+    var t,
+      e,
+      i = this.GetOperationType();
+    2 === i
       ? ((t = this.GetItem(6)),
         (e = this.GetItem(7)),
         await Promise.all([
@@ -284,7 +284,7 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
             InputEnums_1.EInputAction[InputEnums_1.EInputAction.锁定目标],
           ),
         ]))
-      : i === 1 &&
+      : 1 === i &&
         ((t = this.GetItem(8)),
         (e = this.GetItem(7)),
         await Promise.all([
@@ -302,15 +302,15 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     return this._Ze.set(e, s), s;
   }
   pZe() {
-    const t = ModelManager_1.ModelManager.SkillButtonUiModel;
+    var t = ModelManager_1.ModelManager.SkillButtonUiModel;
     for (const i of this._Ze.values()) {
-      const e = t.GetBehaviorButtonDataByButton(i.BehaviorType);
+      var e = t.GetBehaviorButtonDataByButton(i.BehaviorType);
       i.Refresh(e);
     }
   }
   fZe() {
-    let t;
-    let e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var t,
+      e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     e?.Valid &&
       ((e = e.Entity.GetComponent(158).DirectionState),
       (t = this.dZe(101)) &&
@@ -414,7 +414,7 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         EventDefine_1.EEventName.BattleUiExploreModeChanged,
         this.MZe,
       ),
-      this.GetOperationType() === 2 &&
+      2 === this.GetOperationType() &&
         InputDistributeController_1.InputDistributeController.BindActions(
           actionNameList,
           this.bMe,
@@ -509,14 +509,14 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         EventDefine_1.EEventName.BattleUiExploreModeChanged,
         this.MZe,
       ),
-      this.GetOperationType() === 2 &&
+      2 === this.GetOperationType() &&
         InputDistributeController_1.InputDistributeController.UnBindActions(
           actionNameList,
           this.bMe,
         );
   }
   CZe() {
-    const t =
+    var t =
       ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.GetIsInExploreMode();
     if (
       ModelManager_1.ModelManager.SkillButtonUiModel.IsNormalButtonTypeList ||
@@ -529,7 +529,7 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     this.GKe && this.SZe(!1);
   }
   SZe(t, e = !1) {
-    const i = !(this.GKe = t);
+    var i = !(this.GKe = t);
     this._Ze.get(101)?.SetVisibleByExploreMode(i, e),
       this._Ze.get(102)?.SetVisibleByExploreMode(i, e),
       this.JJe[1]?.SetVisibleByExploreMode(i, e),
@@ -558,4 +558,4 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   }
 }
 (exports.SkillButtonPanel = SkillButtonPanel).RKe = void 0;
-// # sourceMappingURL=SkillButtonPanel.js.map
+//# sourceMappingURL=SkillButtonPanel.js.map

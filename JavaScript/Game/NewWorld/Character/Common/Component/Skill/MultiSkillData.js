@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MultiSkillData = exports.MultiSkillInfo = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../../../Common/TimeUtil");
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../../../Common/TimeUtil");
 class MultiSkillInfo {
   constructor() {
     (this.FirstSkillId = 0),
@@ -30,12 +30,12 @@ class MultiSkillData {
     (this.EntityId = t), (this.VisionEntityId = i);
   }
   IsMultiSkill(t) {
-    return t.CooldownConfig.SectionCount > 1;
+    return 1 < t.CooldownConfig.SectionCount;
   }
   CanStartMultiSkill(t) {
-    const i = t.SkillId;
-    const e = this.MultiSkillInfoMap.get(i);
-    var t = t.SkillInfo.CooldownConfig;
+    var i = t.SkillId,
+      e = this.MultiSkillInfoMap.get(i),
+      t = t.SkillInfo.CooldownConfig;
     return e
       ? e.NextSkillId
         ? e.NextSkillId !== i
@@ -49,7 +49,7 @@ class MultiSkillData {
               ),
             !1)
           : !(
-              e.RemainingStartTime > 0 &&
+              0 < e.RemainingStartTime &&
               (Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "Battle",
@@ -94,7 +94,7 @@ class MultiSkillData {
       (e.NextSkillId = t.NextSkillId),
       (e.IsReset = t.IsReset),
       (e.IsResetOnChangeRole = t.IsResetOnChangeRole),
-      e.NextSkillId === 0
+      0 === e.NextSkillId
         ? this.RJo(e)
         : ((e.StartTime = t.StartTime),
           (e.RemainingStartTime = e.StartTime),
@@ -106,10 +106,10 @@ class MultiSkillData {
     );
   }
   OnTick(t) {
-    const i = t * TimeUtil_1.TimeUtil.Millisecond;
+    var i = t * TimeUtil_1.TimeUtil.Millisecond;
     for (const e of this.MultiSkillInfos)
-      e.NextSkillId !== 0 &&
-        (e.RemainingStartTime > 0 &&
+      0 !== e.NextSkillId &&
+        (0 < e.RemainingStartTime &&
           ((e.RemainingStartTime -= i), e.RemainingStartTime <= 0) &&
           this.UJo(e),
         (e.RemainingStopTime -= i),
@@ -117,7 +117,7 @@ class MultiSkillData {
         ((e.NextSkillId = 0), this.RJo(e));
   }
   ResetMultiSkills(t, i = !1) {
-    const e = this.MultiSkillInfoMap.get(t);
+    var e = this.MultiSkillInfoMap.get(t);
     e &&
       (e.IsReset || i) &&
       e.NextSkillId &&
@@ -144,7 +144,7 @@ class MultiSkillData {
   }
   ClearAllSkill() {
     for (const t of this.MultiSkillInfos)
-      t.NextSkillId !== 0 &&
+      0 !== t.NextSkillId &&
         ((t.NextSkillId = 0),
         (t.RemainingStartTime = 0),
         (t.RemainingStopTime = 0),
@@ -156,7 +156,7 @@ class MultiSkillData {
         this.RJo(t));
   }
   GetNextMultiSkillId(t) {
-    const i = this.MultiSkillInfoMap.get(t);
+    var i = this.MultiSkillInfoMap.get(t);
     return i ? i.NextSkillId || i.FirstSkillId : t;
   }
   GetMultiSkillInfo(t) {
@@ -196,4 +196,4 @@ class MultiSkillData {
   }
 }
 exports.MultiSkillData = MultiSkillData;
-// # sourceMappingURL=MultiSkillData.js.map
+//# sourceMappingURL=MultiSkillData.js.map

@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FocusItemText = void 0);
-const UE = require("ue");
-const Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const GuideCountDownItem_1 = require("./GuideCountDownItem");
-const GuideDescribeNew_1 = require("./GuideDescribeNew");
+const UE = require("ue"),
+  Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  GuideCountDownItem_1 = require("./GuideCountDownItem"),
+  GuideDescribeNew_1 = require("./GuideDescribeNew");
 class FocusItemText extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -40,9 +40,9 @@ class FocusItemText extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    const e = this.YJt.TotalDuration;
-    const t = this.GetItem(8);
-    e > 0
+    var e = this.YJt.TotalDuration,
+      t = this.GetItem(8);
+    0 < e
       ? ((this.ZBt = new GuideCountDownItem_1.GuideCountDownItem(e)),
         this.ZBt.Init(t),
         t.SetUIActive(!0))
@@ -50,18 +50,18 @@ class FocusItemText extends UiPanelBase_1.UiPanelBase {
       this.RootItem.SetAnchorOffset(Vector2D_1.Vector2D.ZeroVector);
   }
   ShowText() {
-    var e = this.GetText(7);
-    var e =
-      (this.GetHorizontalLayout(3).OnRebuildLayoutDelegate.Bind(this.JJt),
-      new GuideDescribeNew_1.GuideDescribeNew(e));
-    let t = this.YJt.GetFocusViewConf();
-    const i =
-      ((this.$Jt = t.TextInScreen),
-      e.SetUpText(t.Content, ...t.Button),
-      this.GetItem(1));
-    const s = this.GetItem(2);
-    const r = this.GetItem(4);
-    const a = this.GetItem(5);
+    var e = this.GetText(7),
+      e =
+        (this.GetHorizontalLayout(3).OnRebuildLayoutDelegate.Bind(this.JJt),
+        new GuideDescribeNew_1.GuideDescribeNew(e)),
+      t = this.YJt.GetFocusViewConf(),
+      i =
+        ((this.$Jt = t.TextInScreen),
+        e.SetUpText(t.Content, ...t.Button),
+        this.GetItem(1)),
+      s = this.GetItem(2),
+      r = this.GetItem(4),
+      a = this.GetItem(5);
     if (
       (i.SetUIActive(!1),
       s.SetUIActive(!1),
@@ -93,12 +93,12 @@ class FocusItemText extends UiPanelBase_1.UiPanelBase {
     this.zJt(), this.ZJt();
   }
   zJt() {
-    const e = this.OKt.RectItem;
-    const t = this.GetHorizontalLayout(3);
-    let i = this.YJt.GetFocusViewConf();
-    const s = t.RootUIComp.K2_GetComponentScale().X;
+    var e = this.OKt.RectItem,
+      t = this.GetHorizontalLayout(3),
+      i = this.YJt.GetFocusViewConf(),
+      s = t.RootUIComp.K2_GetComponentScale().X;
     let r = 0;
-    const a = this.RootItem;
+    var a = this.RootItem;
     switch (i.ContentDirection) {
       case "U":
         (r = e.Height + a.Height), (r *= 0.5), a.SetAnchorOffsetY(r);
@@ -126,25 +126,25 @@ class FocusItemText extends UiPanelBase_1.UiPanelBase {
       (i.SetWidth(FocusItemText.ezt), i.SetOverflowType(1));
   }
   ZJt() {
-    if (!(!this.$Jt || this.XJt <= 0 || --this.XJt > 0)) {
-      const r = this.GetHorizontalLayout(3).RootUIComp;
-      const a = r.K2_GetComponentLocation();
-      const h = this.RootItem.K2_GetComponentLocation();
-      var o = r.K2_GetComponentScale();
-      const n = o.X;
-      var o = o.Y;
-      var c = UiLayer_1.UiLayer.UiRootItem;
-      var u = c.Width;
-      var U = c.Height;
-      var c = c.K2_GetComponentLocation();
-      var u = u / 2;
-      var U = U / 2;
-      const _ = r.Width;
-      const x = r.Height;
-      let e = c.X - u + (r.GetPivot().X * _ + FocusItemText.tzt) * n;
-      let t = c.X + u - ((1 - r.GetPivot().X) * _ + FocusItemText.tzt) * n;
-      let i = c.Y - U + (r.GetPivot().Y * x + FocusItemText.izt) * o;
-      let s = c.Y + U - ((1 - r.GetPivot().Y) * x + FocusItemText.izt) * o;
+    if (!(!this.$Jt || this.XJt <= 0 || 0 < --this.XJt)) {
+      var r = this.GetHorizontalLayout(3).RootUIComp,
+        a = r.K2_GetComponentLocation(),
+        h = this.RootItem.K2_GetComponentLocation(),
+        o = r.K2_GetComponentScale(),
+        n = o.X,
+        o = o.Y,
+        c = UiLayer_1.UiLayer.UiRootItem,
+        u = c.Width,
+        U = c.Height,
+        c = c.K2_GetComponentLocation(),
+        u = u / 2,
+        U = U / 2,
+        _ = r.Width,
+        x = r.Height;
+      let e = c.X - u + (r.GetPivot().X * _ + FocusItemText.tzt) * n,
+        t = c.X + u - ((1 - r.GetPivot().X) * _ + FocusItemText.tzt) * n,
+        i = c.Y - U + (r.GetPivot().Y * x + FocusItemText.izt) * o,
+        s = c.Y + U - ((1 - r.GetPivot().Y) * x + FocusItemText.izt) * o;
       e > t && ((e += t), (t = e - t), (e -= t)),
         i > s && ((i += s), (s = i - s), (i -= s)),
         (a.X = MathUtils_1.MathUtils.Clamp(h.X, e, t)),
@@ -163,4 +163,4 @@ class FocusItemText extends UiPanelBase_1.UiPanelBase {
 ((exports.FocusItemText = FocusItemText).tzt = 80),
   (FocusItemText.izt = 10),
   (FocusItemText.ezt = 1120);
-// # sourceMappingURL=GuideFocusItemText.js.map
+//# sourceMappingURL=GuideFocusItemText.js.map

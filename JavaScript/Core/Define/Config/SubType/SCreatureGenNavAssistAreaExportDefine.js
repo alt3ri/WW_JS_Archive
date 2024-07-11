@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SCreatureGenNavAssistAreaExportDefine = void 0);
-const GameUtils_1 = require("../../../../Game/GameUtils");
-const IntVector_1 = require("./IntVector");
+const GameUtils_1 = require("../../../../Game/GameUtils"),
+  IntVector_1 = require("./IntVector");
 class SCreatureGenNavAssistAreaExportDefine {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -25,7 +25,7 @@ class SCreatureGenNavAssistAreaExportDefine {
     return this.points(t);
   }
   points(t, e) {
-    const s = this.J7.__offset(this.z7, 4);
+    var s = this.J7.__offset(this.z7, 4);
     return s
       ? (e || new IntVector_1.IntVector()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -34,10 +34,10 @@ class SCreatureGenNavAssistAreaExportDefine {
       : null;
   }
   pointsLength() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.SCreatureGenNavAssistAreaExportDefine =
   SCreatureGenNavAssistAreaExportDefine;
-// # sourceMappingURL=SCreatureGenNavAssistAreaExportDefine.js.map
+//# sourceMappingURL=SCreatureGenNavAssistAreaExportDefine.js.map

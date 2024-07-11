@@ -1,21 +1,21 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AoiController = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../Core/Define/CommonDefine");
-const MonsterBattleConfById_1 = require("../../../Core/Define/ConfigQuery/MonsterBattleConfById");
-const MonsterSizeIdById_1 = require("../../../Core/Define/ConfigQuery/MonsterSizeIdById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../GlobalData");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
+  MonsterBattleConfById_1 = require("../../../Core/Define/ConfigQuery/MonsterBattleConfById"),
+  MonsterSizeIdById_1 = require("../../../Core/Define/ConfigQuery/MonsterSizeIdById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../GlobalData"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class AoiController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -42,9 +42,9 @@ class AoiController extends ControllerBase_1.ControllerBase {
     );
   }
   static agr(e, o) {
-    const r = new Array();
+    var r = new Array();
     for (const l of e) {
-      let t = MathUtils_1.MathUtils.LongToNumber(l.Ekn);
+      var t = MathUtils_1.MathUtils.LongToNumber(l.Ekn);
       ControllerHolder_1.ControllerHolder.CreatureController.CheckDelayRemove(
         t,
         l.mVn,
@@ -85,12 +85,12 @@ class AoiController extends ControllerBase_1.ControllerBase {
           AoiController.AddMonsterSizeTag(i);
   }
   static lgr(e, o, r, t) {
-    var o = 0.5 * o;
-    const l = new UE.Vector(e.PTs + o, e.UTs + o, 0.5 * (e.xTs + e.wTs));
-    var o = new UE.Vector(o, o, 0.5 * (e.xTs - e.wTs));
-    var e = new UE.Rotator(0, 0, 0);
-    var t = t ? new UE.LinearColor(1, 0, 0, 1) : new UE.LinearColor(0, 1, 0, 1);
-    var r = r / CommonDefine_1.MILLIONSECOND_PER_SECOND;
+    var o = 0.5 * o,
+      l = new UE.Vector(e.PTs + o, e.UTs + o, 0.5 * (e.xTs + e.wTs)),
+      o = new UE.Vector(o, o, 0.5 * (e.xTs - e.wTs)),
+      e = new UE.Rotator(0, 0, 0),
+      t = t ? new UE.LinearColor(1, 0, 0, 1) : new UE.LinearColor(0, 1, 0, 1),
+      r = r / CommonDefine_1.MILLIONSECOND_PER_SECOND;
     UE.KismetSystemLibrary.DrawDebugBox(
       GlobalData_1.GlobalData.World,
       l,
@@ -112,7 +112,7 @@ class AoiController extends ControllerBase_1.ControllerBase {
         (this.ugr = void 0));
   }
   static AddMonsterSizeTag(e) {
-    let o = e.Entity?.GetComponent(0)?.GetMonsterComponent()?.FightConfigId;
+    var o = e.Entity?.GetComponent(0)?.GetMonsterComponent()?.FightConfigId;
     const r = e.Entity?.GetComponent(185);
     o &&
       r?.Valid &&
@@ -128,7 +128,7 @@ class AoiController extends ControllerBase_1.ControllerBase {
 (exports.AoiController = AoiController),
   ((_a = AoiController).egr = (e) => {
     for (const r of e.sfs) {
-      const o = MathUtils_1.MathUtils.LongToNumber(r);
+      var o = MathUtils_1.MathUtils.LongToNumber(r);
       ControllerHolder_1.ControllerHolder.CreatureController.RemoveEntity(
         o,
         "LeaveAoiNotify",
@@ -138,7 +138,7 @@ class AoiController extends ControllerBase_1.ControllerBase {
   }),
   (AoiController.tgr = (e) => {
     for (const r of e.PMs) {
-      const o = MathUtils_1.MathUtils.LongToNumber(r.rkn);
+      var o = MathUtils_1.MathUtils.LongToNumber(r.rkn);
       ControllerHolder_1.ControllerHolder.CreatureController.RemoveEntity(
         o,
         "RemoveEntityAoiNotify",
@@ -157,7 +157,7 @@ class AoiController extends ControllerBase_1.ControllerBase {
   }),
   (AoiController.rgr = (e) => {
     for (const r of e.PMs) {
-      const o = MathUtils_1.MathUtils.LongToNumber(r.rkn);
+      var o = MathUtils_1.MathUtils.LongToNumber(r.rkn);
       ControllerHolder_1.ControllerHolder.CreatureController.RemoveEntity(
         o,
         "EntityRemoveNotify",
@@ -168,7 +168,7 @@ class AoiController extends ControllerBase_1.ControllerBase {
   (AoiController.ugr = void 0),
   (AoiController._gr = void 0),
   (AoiController.sgr = (e) => {
-    const o = TimerSystem_1.TimerSystem.Forever(() => {
+    var o = TimerSystem_1.TimerSystem.Forever(() => {
       _a.lgr(e.DTs, e.LTs, 2e3, e.ATs);
     }, 2e3);
     o &&
@@ -178,7 +178,7 @@ class AoiController extends ControllerBase_1.ControllerBase {
       (_a._gr = o));
   }),
   (AoiController.ngr = (o) => {
-    const e = TimerSystem_1.TimerSystem.Forever(() => {
+    var e = TimerSystem_1.TimerSystem.Forever(() => {
       for (const e of o.RTs) _a.lgr(e, o.LTs, 2e3);
     }, 2e3);
     e &&
@@ -187,4 +187,4 @@ class AoiController extends ControllerBase_1.ControllerBase {
         TimerSystem_1.TimerSystem.Remove(_a.ugr),
       (_a.ugr = e));
   });
-// # sourceMappingURL=AoiController.js.map
+//# sourceMappingURL=AoiController.js.map

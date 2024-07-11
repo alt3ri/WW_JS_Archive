@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController");
 class TsDecoratorBlackboard extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -20,7 +20,7 @@ class TsDecoratorBlackboard extends UE.BTDecorator_BlueprintBase {
       (this.TsIsSet = this.IsSet));
   }
   PerformConditionCheckAI(r, o) {
-    const t = r.AiController;
+    var t = r.AiController;
     if (!t)
       return (
         Log_1.Log.CheckError() &&
@@ -39,4 +39,4 @@ class TsDecoratorBlackboard extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorBlackboard;
-// # sourceMappingURL=TsDecoratorBlackboard.js.map
+//# sourceMappingURL=TsDecoratorBlackboard.js.map

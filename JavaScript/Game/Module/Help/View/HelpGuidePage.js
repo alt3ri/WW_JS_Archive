@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HelpGuidePage = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
 class HelpGuidePage extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments), (this.EPe = void 0);
@@ -29,7 +29,7 @@ class HelpGuidePage extends UiPanelBase_1.UiPanelBase {
     this.EPe.Clear(), (this.EPe = void 0);
   }
   RefreshPage(e) {
-    let i;
+    var i;
     e &&
       ((i = !StringUtils_1.StringUtils.IsEmpty(e.Picture)),
       this.GetTexture(3).SetUIActive(i),
@@ -47,4 +47,4 @@ class HelpGuidePage extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.HelpGuidePage = HelpGuidePage;
-// # sourceMappingURL=HelpGuidePage.js.map
+//# sourceMappingURL=HelpGuidePage.js.map

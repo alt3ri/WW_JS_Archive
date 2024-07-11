@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelPlayModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const PublicUtil_1 = require("../../../Game/Common/PublicUtil");
-const ICondition_1 = require("../../../UniverseEditor/Interface/ICondition");
-const IGlobal_1 = require("../../../UniverseEditor/Interface/IGlobal");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const GeneralLogicTreeConfigUtil_1 = require("../GeneralLogicTree/GeneralLogicTreeConfigUtil");
-const LevelPlay_1 = require("./LevelPlay");
-const LevelPlayDefine_1 = require("./LevelPlayDefine");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  PublicUtil_1 = require("../../../Game/Common/PublicUtil"),
+  ICondition_1 = require("../../../UniverseEditor/Interface/ICondition"),
+  IGlobal_1 = require("../../../UniverseEditor/Interface/IGlobal"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  GeneralLogicTreeConfigUtil_1 = require("../GeneralLogicTree/GeneralLogicTreeConfigUtil"),
+  LevelPlay_1 = require("./LevelPlay"),
+  LevelPlayDefine_1 = require("./LevelPlayDefine");
 class LevelPlayModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -55,7 +55,7 @@ class LevelPlayModel extends ModelBase_1.ModelBase {
     return !0;
   }
   InitLevelPlayConfig() {
-    let e;
+    var e;
     PublicUtil_1.PublicUtil.UseDbConfig() ||
       (this.Yfi.clear(),
       this.Jfi.clear(),
@@ -70,7 +70,7 @@ class LevelPlayModel extends ModelBase_1.ModelBase {
   GetLevelPlayConfig(e) {
     if (!PublicUtil_1.PublicUtil.UseDbConfig()) return this.Yfi.get(e);
     let i = this.Yfi.get(e);
-    let t;
+    var t;
     return (
       i ||
         ((t =
@@ -82,8 +82,8 @@ class LevelPlayModel extends ModelBase_1.ModelBase {
   }
   GetLevelPlayNodeConfig(e, i) {
     if (!PublicUtil_1.PublicUtil.UseDbConfig()) return this.Jfi.get(e)?.get(i);
-    let t = this.Jfi.get(e);
-    let r = (t = t || new Map()).get(i);
+    let t = this.Jfi.get(e),
+      r = (t = t || new Map()).get(i);
     return (
       r ||
         ((e =
@@ -97,22 +97,22 @@ class LevelPlayModel extends ModelBase_1.ModelBase {
     );
   }
   CreateLevelPlayInfo(e) {
-    const i = new LevelPlay_1.LevelPlayInfo(e);
+    var i = new LevelPlay_1.LevelPlayInfo(e);
     return i.InitConfig(), this.Qfi.set(e, i), i;
   }
   EnterLevelPlayRange(e) {
-    const i = this.SafeCreateLevelPlayInfo(e);
+    var i = this.SafeCreateLevelPlayInfo(e);
     return this.Xfi.set(e, i), i;
   }
   LeaveLevelPlayRange(e) {
-    const i = this.GetProcessingLevelPlayInfo(e);
+    var i = this.GetProcessingLevelPlayInfo(e);
     i &&
       (i.RemoveBehaviorTree(),
       this.Xfi.delete(e),
       i.NeedShowInMap || this.Qfi.delete(e));
   }
   LevelPlayFinish(e) {
-    const i = this.GetProcessingLevelPlayInfo(e);
+    var i = this.GetProcessingLevelPlayInfo(e);
     i &&
       (i.RemoveBehaviorTree(),
       i.UpdateState(3),
@@ -135,18 +135,18 @@ class LevelPlayModel extends ModelBase_1.ModelBase {
   }
   CheckLevelPlayState(e, i, t) {
     let r = !1;
-    const l = this.GetLevelPlayInfo(e)?.PlayState;
+    var l = this.GetLevelPlayInfo(e)?.PlayState;
     switch (i) {
       case ICondition_1.ELevelPlayState.Close:
-        r = void 0 === l || l === 0 || l === 1;
+        r = void 0 === l || 0 === l || 1 === l;
         break;
       case ICondition_1.ELevelPlayState.Running:
-        r = l === 2;
+        r = 2 === l;
         break;
       case ICondition_1.ELevelPlayState.Complete:
-        r = l === 3;
+        r = 3 === l;
     }
-    return t === "Eq" ? r : !r;
+    return "Eq" === t ? r : !r;
   }
   SafeCreateLevelPlayInfo(e) {
     let i = this.GetLevelPlayInfo(e);
@@ -169,8 +169,8 @@ class LevelPlayModel extends ModelBase_1.ModelBase {
     return this.$fi;
   }
   GetLevelPlayInfoByRewardEntityId(e) {
-    for (const [, i] of this.Qfi) if (i.RewardEntityId === e) return i;
+    for (var [, i] of this.Qfi) if (i.RewardEntityId === e) return i;
   }
 }
 exports.LevelPlayModel = LevelPlayModel;
-// # sourceMappingURL=LevelPlayModel.js.map
+//# sourceMappingURL=LevelPlayModel.js.map

@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GeneralLogicTreeModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const BaseBehaviorTree_1 = require("./BaseBehaviorTree/BaseBehaviorTree");
-const GeneralLogicTreeDefine_1 = require("./Define/GeneralLogicTreeDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  BaseBehaviorTree_1 = require("./BaseBehaviorTree/BaseBehaviorTree"),
+  GeneralLogicTreeDefine_1 = require("./Define/GeneralLogicTreeDefine");
 class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -44,7 +44,7 @@ class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
     return this.p$t(), !0;
   }
   p$t() {
-    for (const [, e] of this.C$t) e.SetSleep(!0);
+    for (var [, e] of this.C$t) e.SetSleep(!0);
     this.IsWakeUp = !1;
   }
   OnClear() {
@@ -64,7 +64,7 @@ class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
     return this.d$t === e;
   }
   CreateBehaviorTree(i) {
-    const r = MathUtils_1.MathUtils.LongToBigInt(i.L5n);
+    var r = MathUtils_1.MathUtils.LongToBigInt(i.L5n);
     let t = this.C$t.get(r);
     if (t) return t.Recover(i), t;
     let o = !this.IsWakeUp;
@@ -178,7 +178,7 @@ class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
       );
   }
   RemoveBehaviorTree(e) {
-    const i = this.C$t.get(e);
+    var i = this.C$t.get(e);
     i && (i.Destroy(), this.C$t.delete(e), this.g$t.get(i.BtType)?.delete(e));
   }
   GetBehaviorTree(e) {
@@ -194,16 +194,17 @@ class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
     return this.C$t;
   }
   SaveUpdateInfo(e, i, r) {
-    const t =
-      ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode() !== "Disabled";
-    var e = new GeneralLogicTreeDefine_1.NodeStatusChangeInfo(e, i, t, r);
+    var t =
+        "Disabled" !==
+        ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode(),
+      e = new GeneralLogicTreeDefine_1.NodeStatusChangeInfo(e, i, t, r);
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.QuestUpdateInfoAdd,
       e,
     );
   }
   ForceShowDailyQuestInfo(e, i) {
-    const r = this.GetBehaviorTree(e);
+    var r = this.GetBehaviorTree(e);
     r && this.SaveUpdateInfo(e, i, r.CreateShowBridge());
   }
   ApplyExpressionOccupation(e) {
@@ -261,4 +262,4 @@ class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
   }
 }
 exports.GeneralLogicTreeModel = GeneralLogicTreeModel;
-// # sourceMappingURL=GeneralLogicTreeModel.js.map
+//# sourceMappingURL=GeneralLogicTreeModel.js.map

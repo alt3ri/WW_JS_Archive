@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configQuestMainTypeById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const QuestMainType_1 = require("../Config/QuestMainType");
-const DB = "db_questtype.db";
-const FILE = "r.任务类型.xlsx";
-const TABLE = "QuestMainType";
-const COMMAND = "select BinData from `QuestMainType` where Id=?";
-const KEY_PREFIX = "QuestMainTypeById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  QuestMainType_1 = require("../Config/QuestMainType"),
+  DB = "db_questtype.db",
+  FILE = "r.任务类型.xlsx",
+  TABLE = "QuestMainType",
+  COMMAND = "select BinData from `QuestMainType` where Id=?",
+  KEY_PREFIX = "QuestMainTypeById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configQuestMainTypeById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configQuestMainTypeById.GetConfig(";
 exports.configQuestMainTypeById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configQuestMainTypeById = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            e,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              e,
+            ]))
       ) {
-        var i;
-        var n = void 0;
+        var i,
+          n = void 0;
         if (
           (([i, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configQuestMainTypeById = {
     }
   },
 };
-// # sourceMappingURL=QuestMainTypeById.js.map
+//# sourceMappingURL=QuestMainTypeById.js.map

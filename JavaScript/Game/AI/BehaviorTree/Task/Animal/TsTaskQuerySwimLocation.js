@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon");
-const IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent");
-const IEntity_1 = require("../../../../../UniverseEditor/Interface/IEntity");
-const GlobalData_1 = require("../../../../GlobalData");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RenderConfig_1 = require("../../../../Render/Config/RenderConfig");
-const ColorUtils_1 = require("../../../../Utils/ColorUtils");
-const BlackboardController_1 = require("../../../../World/Controller/BlackboardController");
-const TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase");
-const DISTANCE_FROM_WATER_SURFACE = 200;
-const SAFE_RANGE = 20;
-const BLACKBOARD_KEY_SWIM_LOCATION = "SwimLocation";
-const PROFILE_KEY = "TsTaskQuerySwimLocation";
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon"),
+  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  IEntity_1 = require("../../../../../UniverseEditor/Interface/IEntity"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RenderConfig_1 = require("../../../../Render/Config/RenderConfig"),
+  ColorUtils_1 = require("../../../../Utils/ColorUtils"),
+  BlackboardController_1 = require("../../../../World/Controller/BlackboardController"),
+  TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase"),
+  DISTANCE_FROM_WATER_SURFACE = 200,
+  SAFE_RANGE = 20,
+  BLACKBOARD_KEY_SWIM_LOCATION = "SwimLocation",
+  PROFILE_KEY = "TsTaskQuerySwimLocation";
 class TsTaskQuerySwimLocation extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -63,8 +63,8 @@ class TsTaskQuerySwimLocation extends TsTaskAbortImmediatelyBase_1.default {
     var s = t.AiController;
     if (s) {
       this.InitTsVariables(), this.InitTraceElement();
-      let e;
-      var s = s.CharActorComp;
+      var e,
+        s = s.CharActorComp;
       const h = s.CreatureData;
       if (((this.HaveRangeConfig = this.InitRange(h)), !this.InitZ)) {
         const h = s.CreatureData;
@@ -123,26 +123,26 @@ class TsTaskQuerySwimLocation extends TsTaskAbortImmediatelyBase_1.default {
   }
   InitRange(t) {
     if (!this.RangeInited) {
-      var i = t.GetPbEntityInitData().ComponentsData;
-      var i = (0, IComponent_1.getComponent)(i, "AnimalComponent");
+      var i = t.GetPbEntityInitData().ComponentsData,
+        i = (0, IComponent_1.getComponent)(i, "AnimalComponent");
       if (!i || void 0 === i.MoveRange) return !1;
       var i = ModelManager_1.ModelManager.CreatureModel.GetEntityData(
-        i.MoveRange,
-      );
-      var s = ModelManager_1.ModelManager.CreatureModel.GetEntityTemplate(
-        i.BlueprintType,
-      );
-      var i = (0, IEntity_1.decompressEntityData)(i, s);
-      var s = (0, IComponent_1.getComponent)(
-        i.ComponentsData,
-        "RangeComponent",
-      ).Shape;
-      if (s.Type !== "Box") return !1;
+          i.MoveRange,
+        ),
+        s = ModelManager_1.ModelManager.CreatureModel.GetEntityTemplate(
+          i.BlueprintType,
+        ),
+        i = (0, IEntity_1.decompressEntityData)(i, s),
+        s = (0, IComponent_1.getComponent)(
+          i.ComponentsData,
+          "RangeComponent",
+        ).Shape;
+      if ("Box" !== s.Type) return !1;
       i = i.Transform;
       this.InitCenter(i, s),
         this.InitSize(i, s),
         this.InitRotator(i, s),
-        (this.Rotator.Pitch === 0 && this.Rotator.Roll === 0) ||
+        (0 === this.Rotator.Pitch && 0 === this.Rotator.Roll) ||
           (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("BehaviorTree", 30, "池塘范围不支持Roll和Pitch", [
               "EntityConfigId",
@@ -182,11 +182,11 @@ class TsTaskQuerySwimLocation extends TsTaskAbortImmediatelyBase_1.default {
       (this.Rotator.Roll += t?.Rot?.X ?? 0);
   }
   static RandomPointInBoxRange2D(t, i, s) {
-    var t = MathUtils_1.MathUtils.GetRandomRange(-t, t);
-    var i = MathUtils_1.MathUtils.GetRandomRange(-i, i);
-    var s = s * MathUtils_1.MathUtils.DegToRad;
-    const e = Math.cos(s);
-    var s = Math.sin(s);
+    var t = MathUtils_1.MathUtils.GetRandomRange(-t, t),
+      i = MathUtils_1.MathUtils.GetRandomRange(-i, i),
+      s = s * MathUtils_1.MathUtils.DegToRad,
+      e = Math.cos(s),
+      s = Math.sin(s);
     return { X: t * e - i * s, Y: t * s + i * e };
   }
   static RandomPointInFanRing(t, i, s, e) {
@@ -199,11 +199,11 @@ class TsTaskQuerySwimLocation extends TsTaskAbortImmediatelyBase_1.default {
   IsInBoxRange2D(t) {
     this.VectorCache2.DeepCopy(t),
       this.VectorCache2.SubtractionEqual(this.Center);
-    var t = this.VectorCache2.X;
-    const i = this.VectorCache2.Y;
-    var s = -this.Rotator.Yaw * MathUtils_1.MathUtils.DegToRad;
-    const e = Math.cos(s);
-    var s = Math.sin(s);
+    var t = this.VectorCache2.X,
+      i = this.VectorCache2.Y,
+      s = -this.Rotator.Yaw * MathUtils_1.MathUtils.DegToRad,
+      e = Math.cos(s),
+      s = Math.sin(s);
     return (
       (this.VectorCache2.X = e * t - s * i),
       (this.VectorCache2.Y = s * t + e * i),
@@ -270,25 +270,25 @@ class TsTaskQuerySwimLocation extends TsTaskAbortImmediatelyBase_1.default {
     );
   }
   CheckReachable(t, i) {
-    const s = RenderConfig_1.RenderConfig.WaterCollisionProfileName;
-    var t =
-      (TraceElementCommon_1.TraceElementCommon.SetStartLocation(
-        this.ShallowTraceElement,
-        t,
-      ),
-      TraceElementCommon_1.TraceElementCommon.SetEndLocation(
-        this.ShallowTraceElement,
-        i,
-      ),
-      TraceElementCommon_1.TraceElementCommon.BoxTrace(
-        this.ShallowTraceElement,
-        PROFILE_KEY,
-      ));
+    var s = RenderConfig_1.RenderConfig.WaterCollisionProfileName,
+      t =
+        (TraceElementCommon_1.TraceElementCommon.SetStartLocation(
+          this.ShallowTraceElement,
+          t,
+        ),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(
+          this.ShallowTraceElement,
+          i,
+        ),
+        TraceElementCommon_1.TraceElementCommon.BoxTrace(
+          this.ShallowTraceElement,
+          PROFILE_KEY,
+        ));
     if (t && this.ShallowTraceElement.HitResult.bBlockingHit) {
-      const e = this.ShallowTraceElement.HitResult.Actors;
-      const h = this.ShallowTraceElement.HitResult.Components;
+      var e = this.ShallowTraceElement.HitResult.Actors,
+        h = this.ShallowTraceElement.HitResult.Components;
       for (let t = 0; t < e.Num(); t++) {
-        let o = e.Get(t);
+        var o = e.Get(t);
         if (void 0 !== o) {
           o = h.Get(t);
           if (o && !s.op_Equality(o.GetCollisionProfileName())) return !1;
@@ -324,4 +324,4 @@ class TsTaskQuerySwimLocation extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskQuerySwimLocation;
-// # sourceMappingURL=TsTaskQuerySwimLocation.js.map
+//# sourceMappingURL=TsTaskQuerySwimLocation.js.map

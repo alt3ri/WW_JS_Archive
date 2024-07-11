@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const EntitySystem_1 = require("../../Core/Entity/EntitySystem");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const CharacterNameDefines_1 = require("../NewWorld/Character/Common/CharacterNameDefines");
+const UE = require("ue"),
+  EntitySystem_1 = require("../../Core/Entity/EntitySystem"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  CharacterNameDefines_1 = require("../NewWorld/Character/Common/CharacterNameDefines");
 class TsAnimNotifyStateVisionMove extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -46,4 +46,4 @@ class TsAnimNotifyStateVisionMove extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateVisionMove;
-// # sourceMappingURL=TsAnimNotifyStateVisionMove.js.map
+//# sourceMappingURL=TsAnimNotifyStateVisionMove.js.map

@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configBossRushBuffAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const BossRushBuff_1 = require("../Config/BossRushBuff");
-const DB = "db_activity.db";
-const FILE = "b.bossrush活动.xlsx";
-const TABLE = "BossRushBuff";
-const COMMAND = "select BinData from `BossRushBuff`";
-const KEY_PREFIX = "BossRushBuffAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  BossRushBuff_1 = require("../Config/BossRushBuff"),
+  DB = "db_activity.db",
+  FILE = "b.bossrush活动.xlsx",
+  TABLE = "BossRushBuff",
+  COMMAND = "select BinData from `BossRushBuff`",
+  KEY_PREFIX = "BossRushBuffAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configBossRushBuffAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configBossRushBuffAll = {
     );
   },
   GetConfigList: (o = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configBossRushBuffAll = {
       }
       const f = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let e = void 0;
+        var e = void 0;
         if (
           (([n, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configBossRushBuffAll = {
     }
   },
 };
-// # sourceMappingURL=BossRushBuffAll.js.map
+//# sourceMappingURL=BossRushBuffAll.js.map

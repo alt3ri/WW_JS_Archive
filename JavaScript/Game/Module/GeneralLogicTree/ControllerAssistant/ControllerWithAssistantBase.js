@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const ControllerBase_1 = require("../../../../Core/Framework/ControllerBase");
 class ControllerWithAssistantBase extends ControllerBase_1.ControllerBase {
   static Init() {
-    const t = super.Init();
+    var t = super.Init();
     return this.OnRegisterNetEvent(), this.OnAddEvents(), t;
   }
   static Clear() {
@@ -34,24 +34,23 @@ class ControllerWithAssistantBase extends ControllerBase_1.ControllerBase {
   static RegisterAssistant() {}
   static VXt() {
     if (this.Assistants) {
-      for (const [, t] of this.Assistants) t.Destroy();
+      for (var [, t] of this.Assistants) t.Destroy();
       this.Assistants.clear(), (this.Assistants = void 0);
     }
   }
   static HXt() {
     if (this.Assistants)
-      for (const [, t] of this.Assistants) t.OnRegisterNetEvent();
+      for (var [, t] of this.Assistants) t.OnRegisterNetEvent();
   }
   static jXt() {
     if (this.Assistants)
-      for (const [, t] of this.Assistants) t.OnUnRegisterNetEvent();
+      for (var [, t] of this.Assistants) t.OnUnRegisterNetEvent();
   }
   static WXt() {
-    if (this.Assistants) for (const [, t] of this.Assistants) t.OnAddEvents();
+    if (this.Assistants) for (var [, t] of this.Assistants) t.OnAddEvents();
   }
   static KXt() {
-    if (this.Assistants)
-      for (const [, t] of this.Assistants) t.OnRemoveEvents();
+    if (this.Assistants) for (var [, t] of this.Assistants) t.OnRemoveEvents();
   }
   static AddAssistant(t, s) {
     s && (s.Init(), this.Assistants.set(t, s));
@@ -59,4 +58,4 @@ class ControllerWithAssistantBase extends ControllerBase_1.ControllerBase {
 }
 (exports.ControllerWithAssistantBase = ControllerWithAssistantBase).Assistants =
   void 0;
-// # sourceMappingURL=ControllerWithAssistantBase.js.map
+//# sourceMappingURL=ControllerWithAssistantBase.js.map

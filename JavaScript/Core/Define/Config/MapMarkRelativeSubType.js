@@ -28,15 +28,15 @@ class MapMarkRelativeSubType {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   functionid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   position(t) {
-    const e = this.J7.__offset(this.z7, 8);
+    var e = this.J7.__offset(this.z7, 8);
     return e
       ? (t || new IntVector_1.IntVector()).__init(
           this.J7.__indirect(this.z7 + e),
@@ -45,9 +45,9 @@ class MapMarkRelativeSubType {
       : null;
   }
   scale() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readFloat32(this.z7 + t) : 1;
   }
 }
 exports.MapMarkRelativeSubType = MapMarkRelativeSubType;
-// # sourceMappingURL=MapMarkRelativeSubType.js.map
+//# sourceMappingURL=MapMarkRelativeSubType.js.map

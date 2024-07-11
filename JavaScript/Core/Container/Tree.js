@@ -13,14 +13,14 @@ class Tree {
     return this.Q7 || (this.Q7 = new Map()), this.Q7;
   }
   AddChild(t) {
-    const e = t.Element;
+    var e = t.Element;
     this.ChildMap.has(e)
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("RedDot", 17, "重复添加子节点！", ["element", e])
       : (t.Parent = this).ChildMap.set(e, t);
   }
   AddChildElement(t) {
-    let e;
+    var e;
     this.ChildMap.has(t)
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("RedDot", 17, "重复添加子节点！", ["element", t])
@@ -56,4 +56,4 @@ class Tree {
   }
 }
 exports.Tree = Tree;
-// # sourceMappingURL=Tree.js.map
+//# sourceMappingURL=Tree.js.map

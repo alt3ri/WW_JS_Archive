@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RequestToServerAssistant = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const Net_1 = require("../../../../Core/Net/Net");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const CharacterController_1 = require("../../../NewWorld/Character/CharacterController");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const TimeOfDayController_1 = require("../../TimeOfDay/TimeOfDayController");
-const GeneralLogicTreeDefine_1 = require("../Define/GeneralLogicTreeDefine");
-const GeneralLogicTreeUtil_1 = require("../GeneralLogicTreeUtil");
-const ControllerAssistantBase_1 = require("./ControllerAssistantBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  CharacterController_1 = require("../../../NewWorld/Character/CharacterController"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  TimeOfDayController_1 = require("../../TimeOfDay/TimeOfDayController"),
+  GeneralLogicTreeDefine_1 = require("../Define/GeneralLogicTreeDefine"),
+  GeneralLogicTreeUtil_1 = require("../GeneralLogicTreeUtil"),
+  ControllerAssistantBase_1 = require("./ControllerAssistantBase");
 class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor() {
     super(...arguments),
@@ -26,8 +26,8 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
       (this.VGn = new Map()),
       (this.iut = !1),
       (this.zpe = (e, o) => {
-        const r = ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
-        const t = (this.HGn(r, o.PbDataId), this.GetEntityPos(o, !0));
+        var r = ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
+          t = (this.HGn(r, o.PbDataId), this.GetEntityPos(o, !0));
         this.jGn(r, o.PbDataId, t);
       });
   }
@@ -47,14 +47,14 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
     this.FGn.clear(), this.VGn.clear();
   }
   RequestSubmitNode(e, r, o = 0) {
-    let t;
-    let i = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetNodeConfig(
-      e.BtType,
-      e.TreeConfigId,
-      e.NodeId,
-    );
+    var t,
+      i = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetNodeConfig(
+        e.BtType,
+        e.TreeConfigId,
+        e.NodeId,
+      );
     i
-      ? i.Type !== "ChildQuest"
+      ? "ChildQuest" !== i.Type
         ? r(!1)
         : ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckConditionNew(
               i.Condition.PreConditions,
@@ -71,7 +71,7 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
             (t.L5n = MathUtils_1.MathUtils.BigIntToLong(e.TreeIncId)),
             (t.Jkn = e.NodeId),
             Net_1.Net.Call(21993, t, (e) => {
-              let o;
+              var o;
               e.uvs !== Protocol_1.Aki.Protocol.lkn.Sys &&
                 e.uvs !==
                   Protocol_1.Aki.Protocol.lkn.Proto_ErrTreeNodeNotActive &&
@@ -103,17 +103,17 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
   }
   RequestSetTimerInfo(o, e, r, t, i) {
     var n =
-      ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTreeOwnerId(
-        o,
-      );
-    var n = Protocol_1.Aki.Protocol.sKn.create({
-      T5n: n,
-      L5n: MathUtils_1.MathUtils.BigIntToLong(o),
-      Jkn: e,
-      y5n: r,
-      A5n: t,
-      akn: i,
-    });
+        ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTreeOwnerId(
+          o,
+        ),
+      n = Protocol_1.Aki.Protocol.sKn.create({
+        T5n: n,
+        L5n: MathUtils_1.MathUtils.BigIntToLong(o),
+        Jkn: e,
+        y5n: r,
+        A5n: t,
+        akn: i,
+      });
     Net_1.Net.Call(14526, n, (e) => {
       e.uvs !== Protocol_1.Aki.Protocol.lkn.Sys &&
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
@@ -130,9 +130,9 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
     });
   }
   RequestGiveUp(e, o) {
-    let r;
-    let t = ModelManager_1.ModelManager.GeneralLogicTreeModel;
-    let i = t.GetBehaviorTree(e);
+    var r,
+      t = ModelManager_1.ModelManager.GeneralLogicTreeModel,
+      i = t.GetBehaviorTree(e);
     i && (r = i.GetProcessingFailedNode()) && i.CheckCanGiveUp()
       ? ((i = t.GetBehaviorTreeOwnerId(e)),
         (t = Protocol_1.Aki.Protocol.gKn.create({
@@ -151,7 +151,7 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
       : o(!1);
   }
   RequestRollback(o, e) {
-    let r =
+    var r =
       ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(o);
     r
       ? r.GetProcessingFailedNode()?.NeedSecondaryConfirm
@@ -180,7 +180,7 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
         ]);
   }
   QXt(e, o) {
-    let r =
+    var r =
       ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(e);
     r
       ? (r.SetRollbackWaiting(!1),
@@ -210,14 +210,14 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
   }
   RequestTimerEnd(e, o) {
     var r =
-      ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTreeOwnerId(
-        e,
-      );
-    var r = Protocol_1.Aki.Protocol.AKn.create({
-      T5n: r,
-      L5n: MathUtils_1.MathUtils.BigIntToLong(e),
-      y5n: o,
-    });
+        ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTreeOwnerId(
+          e,
+        ),
+      r = Protocol_1.Aki.Protocol.AKn.create({
+        T5n: r,
+        L5n: MathUtils_1.MathUtils.BigIntToLong(e),
+        y5n: o,
+      });
     Net_1.Net.Call(20600, r, (e) => {
       e.uvs !== Protocol_1.Aki.Protocol.lkn.Sys &&
         ((e = ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(
@@ -228,7 +228,7 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
     });
   }
   RequestFinishUiGameplay(e, o) {
-    const r = Protocol_1.Aki.Protocol.UKn.create();
+    var r = Protocol_1.Aki.Protocol.UKn.create();
     (r.ykn = o),
       (r.Ikn = e),
       Net_1.Net.Call(19172, r, (e) => {
@@ -242,7 +242,7 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
       });
   }
   RequestForcedOccupation(o, r) {
-    const e = Protocol_1.Aki.Protocol.mKn.create({
+    var e = Protocol_1.Aki.Protocol.mKn.create({
       L5n: MathUtils_1.MathUtils.BigIntToLong(o),
     });
     Net_1.Net.Call(29440, e, (e) => {
@@ -257,8 +257,8 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
     });
   }
   RequestEntityPosition(o, r, e) {
-    var e = e ?? Vector_1.Vector.Create();
-    let t = this.WGn(o, r);
+    var e = e ?? Vector_1.Vector.Create(),
+      t = this.WGn(o, r);
     return (
       t
         ? e.Set(t.X, t.Y, t.Z)
@@ -275,13 +275,13 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
     );
   }
   GetEntityPos(e, o, r) {
-    var r = r ?? Vector_1.Vector.Create();
-    const t = CharacterController_1.CharacterController.GetActorComponent(e);
+    var r = r ?? Vector_1.Vector.Create(),
+      t = CharacterController_1.CharacterController.GetActorComponent(e);
     if (t && ObjectUtils_1.ObjectUtils.IsValid(t.Owner)) {
       if (t.SkeletalMesh) {
         r.FromUeVector(t.SkeletalMesh.K2_GetComponentLocation());
-        const i = e.Entity.GetComponent(0);
-        const n = i?.GetPbModelConfig();
+        const i = e.Entity.GetComponent(0),
+          n = i?.GetPbModelConfig();
         n && r.Set(r.X, r.Y, r.Z + n.HalfHeight);
       } else r.FromUeVector(t.Owner.K2_GetActorLocation());
       const i = e.Entity.GetComponent(0);
@@ -318,4 +318,4 @@ class RequestToServerAssistant extends ControllerAssistantBase_1.ControllerAssis
   }
 }
 exports.RequestToServerAssistant = RequestToServerAssistant;
-// # sourceMappingURL=RequestToServerAssistant.js.map
+//# sourceMappingURL=RequestToServerAssistant.js.map

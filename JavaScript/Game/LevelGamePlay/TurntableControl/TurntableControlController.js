@@ -1,14 +1,14 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TurntableControlController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
+const Log_1 = require("../../../Core/Common/Log"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager");
 class TurntableControlController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -26,7 +26,7 @@ class TurntableControlController extends UiControllerBase_1.UiControllerBase {
     return this.Owe(), super.Clear();
   }
   static kwe() {
-    const e = ModelManager_1.ModelManager.TurntableControlModel;
+    var e = ModelManager_1.ModelManager.TurntableControlModel;
     e?.CurControllerEntity &&
       !EventSystem_1.EventSystem.HasWithTarget(
         e.CurControllerEntity,
@@ -40,7 +40,7 @@ class TurntableControlController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static Owe() {
-    const e = ModelManager_1.ModelManager.TurntableControlModel;
+    var e = ModelManager_1.ModelManager.TurntableControlModel;
     e?.CurControllerEntity &&
       EventSystem_1.EventSystem.HasWithTarget(
         e.CurControllerEntity,
@@ -54,7 +54,7 @@ class TurntableControlController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static async OpenTurntableControlView(e) {
-    let t;
+    var t;
     return !(
       !UiManager_1.UiManager.IsViewShow("TurntableControlView") &&
       ((t = ModelManager_1.ModelManager.TurntableControlModel)
@@ -71,8 +71,8 @@ class TurntableControlController extends UiControllerBase_1.UiControllerBase {
   }
   static HandleTurntableControlViewClose() {
     this.Owe();
-    const e = ModelManager_1.ModelManager.TurntableControlModel;
-    const t = e.CurControllerEntityComp;
+    var e = ModelManager_1.ModelManager.TurntableControlModel,
+      t = e.CurControllerEntityComp;
     t &&
       (t.TriggerStopAllRingsRotate(),
       t.DeselectAllRings(!0),
@@ -84,35 +84,35 @@ class TurntableControlController extends UiControllerBase_1.UiControllerBase {
       .CurControllerEntity;
   }
   static StartRotateSelected() {
-    const e = ModelManager_1.ModelManager.TurntableControlModel;
+    var e = ModelManager_1.ModelManager.TurntableControlModel;
     e?.CurControllerEntityComp &&
       e.CurControllerEntityComp.TriggerStartSelectedRingsRotate();
   }
   static StopAllRotate() {
-    const e = ModelManager_1.ModelManager.TurntableControlModel;
+    var e = ModelManager_1.ModelManager.TurntableControlModel;
     e?.CurControllerEntityComp &&
       e.CurControllerEntityComp.GetControlType() ===
         IComponent_1.EControllerType.FreeAngle &&
       e.CurControllerEntityComp.TriggerStopAllRingsRotate();
   }
   static IsAllRingsAtTarget() {
-    const e = ModelManager_1.ModelManager.TurntableControlModel;
+    var e = ModelManager_1.ModelManager.TurntableControlModel;
     return (
       !!e?.CurControllerEntityComp &&
       e.CurControllerEntityComp.IsAllRingsAtTarget()
     );
   }
   static IsBusyRotating() {
-    const e = ModelManager_1.ModelManager.TurntableControlModel;
+    var e = ModelManager_1.ModelManager.TurntableControlModel;
     return (
       !!e?.CurControllerEntityComp && e.CurControllerEntityComp.IsBusyRotating()
     );
   }
   static SwitchSelectedRing() {
-    const t = ModelManager_1.ModelManager.TurntableControlModel;
+    var t = ModelManager_1.ModelManager.TurntableControlModel;
     if (t?.CurControllerEntityComp) {
-      let n;
-      const r = t.CurControllerEntityComp.GetRingsNum();
+      var n,
+        r = t.CurControllerEntityComp.GetRingsNum();
       for (let e = 0; e < r; e++)
         if (t.CurControllerEntityComp.IsRingSelectedByIndex(e))
           return (
@@ -122,7 +122,7 @@ class TurntableControlController extends UiControllerBase_1.UiControllerBase {
     }
   }
   static SelectRingByIndex(e, t) {
-    const n = ModelManager_1.ModelManager.TurntableControlModel;
+    var n = ModelManager_1.ModelManager.TurntableControlModel;
     n?.CurControllerEntityComp &&
       (t
         ? (n.CurControllerEntityComp.DeselectAllRings(!1),
@@ -131,17 +131,17 @@ class TurntableControlController extends UiControllerBase_1.UiControllerBase {
         : n.CurControllerEntityComp.SelectRingByIndex(e, !0));
   }
   static DeselectRingByIndex(e) {
-    const t = ModelManager_1.ModelManager.TurntableControlModel;
+    var t = ModelManager_1.ModelManager.TurntableControlModel;
     t?.CurControllerEntityComp &&
       t.CurControllerEntityComp.DeselectRingByIndex(e, !0);
   }
   static ResetRingsAngle() {
-    const e = ModelManager_1.ModelManager.TurntableControlModel;
+    var e = ModelManager_1.ModelManager.TurntableControlModel;
     e?.CurControllerEntityComp &&
       e.CurControllerEntityComp.TriggerResetAllRingsToInitAngle();
   }
   static GetControlType() {
-    const e = ModelManager_1.ModelManager.TurntableControlModel;
+    var e = ModelManager_1.ModelManager.TurntableControlModel;
     if (e?.CurControllerEntityComp)
       return e.CurControllerEntityComp.GetControlType();
   }
@@ -158,9 +158,9 @@ class TurntableControlController extends UiControllerBase_1.UiControllerBase {
         UiManager_1.UiManager.CloseView("TurntableControlView");
   }),
   (TurntableControlController.Fwe = (e, t) => {
-    e === 1298716444 &&
+    1298716444 === e &&
       t &&
       (_a.HandleTurntableControlViewClose(),
       UiManager_1.UiManager.CloseView("TurntableControlView"));
   });
-// # sourceMappingURL=TurntableControlController.js.map
+//# sourceMappingURL=TurntableControlController.js.map

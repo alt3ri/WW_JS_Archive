@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckCurWorldLevelOp = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionCheckCurWorldLevelOp extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, r) {
     if (!e.LimitParams) return !1;
-    const a = e.LimitParams.get("Level");
+    var a = e.LimitParams.get("Level");
     if (!a) return !1;
-    const t = parseInt(a);
-    const n = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel;
+    var t = parseInt(a),
+      n = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel;
     if (!n) return !1;
     switch (e.LimitParams.get("Op")) {
       case "Eq":
@@ -30,4 +30,4 @@ class LevelConditionCheckCurWorldLevelOp extends LevelGeneralBase_1.LevelConditi
   }
 }
 exports.LevelConditionCheckCurWorldLevelOp = LevelConditionCheckCurWorldLevelOp;
-// # sourceMappingURL=LevelConditionCheckCurWorldLevelOp.js.map
+//# sourceMappingURL=LevelConditionCheckCurWorldLevelOp.js.map

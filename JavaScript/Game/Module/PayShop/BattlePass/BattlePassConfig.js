@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattlePassConfig = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const BattlePassById_1 = require("../../../../Core/Define/ConfigQuery/BattlePassById");
-const BattlePassRewardByBattlePassId_1 = require("../../../../Core/Define/ConfigQuery/BattlePassRewardByBattlePassId");
-const BattlePassTaskByTaskId_1 = require("../../../../Core/Define/ConfigQuery/BattlePassTaskByTaskId");
-const BattlePassUnlockPopByBattlePassTypeId_1 = require("../../../../Core/Define/ConfigQuery/BattlePassUnlockPopByBattlePassTypeId");
-const ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  BattlePassById_1 = require("../../../../Core/Define/ConfigQuery/BattlePassById"),
+  BattlePassRewardByBattlePassId_1 = require("../../../../Core/Define/ConfigQuery/BattlePassRewardByBattlePassId"),
+  BattlePassTaskByTaskId_1 = require("../../../../Core/Define/ConfigQuery/BattlePassTaskByTaskId"),
+  BattlePassUnlockPopByBattlePassTypeId_1 = require("../../../../Core/Define/ConfigQuery/BattlePassUnlockPopByBattlePassTypeId"),
+  ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
 class BattlePassConfig extends ConfigBase_1.ConfigBase {
   GetAllRewardData(e) {
     return BattlePassRewardByBattlePassId_1.configBattlePassRewardByBattlePassId
@@ -18,7 +18,7 @@ class BattlePassConfig extends ConfigBase_1.ConfigBase {
       );
   }
   GetBattlePassData(e) {
-    const a = BattlePassById_1.configBattlePassById.GetConfig(e);
+    var a = BattlePassById_1.configBattlePassById.GetConfig(e);
     if (a) return a;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
@@ -29,8 +29,7 @@ class BattlePassConfig extends ConfigBase_1.ConfigBase {
       );
   }
   GetBattlePassTask(e) {
-    const a =
-      BattlePassTaskByTaskId_1.configBattlePassTaskByTaskId.GetConfig(e);
+    var a = BattlePassTaskByTaskId_1.configBattlePassTaskByTaskId.GetConfig(e);
     if (a) return a;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
@@ -41,7 +40,7 @@ class BattlePassConfig extends ConfigBase_1.ConfigBase {
       );
   }
   GetBattlePassUnlock(e) {
-    const a =
+    var a =
       BattlePassUnlockPopByBattlePassTypeId_1.configBattlePassUnlockPopByBattlePassTypeId.GetConfig(
         e,
       );
@@ -56,12 +55,12 @@ class BattlePassConfig extends ConfigBase_1.ConfigBase {
   }
   GetBattlePassUnlockReward(e, a) {
     a.length = 0;
-    const s =
+    var s =
       BattlePassUnlockPopByBattlePassTypeId_1.configBattlePassUnlockPopByBattlePassTypeId.GetConfig(
         e,
       );
     if (s)
-      for (let [t, B] of s.UnlockReward) {
+      for (var [t, B] of s.UnlockReward) {
         t = [{ IncId: 0, ItemId: t }, B];
         a.push(t);
       }
@@ -74,4 +73,4 @@ class BattlePassConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.BattlePassConfig = BattlePassConfig;
-// # sourceMappingURL=BattlePassConfig.js.map
+//# sourceMappingURL=BattlePassConfig.js.map

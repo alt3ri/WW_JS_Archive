@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DamageUiManager = exports.DamageInfo = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Queue_1 = require("../../../Core/Container/Queue");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const Global_1 = require("../../Global");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiLayer_1 = require("../../Ui/UiLayer");
-const BattleUiDefine_1 = require("../BattleUi/BattleUiDefine");
-const DamageUiSequencePool_1 = require("./DamageUiSequencePool");
-const DamageViewData_1 = require("./DamageViewData");
-const DamageView_1 = require("./View/DamageView");
-const PRELOAD_DAMAGE_VIEW_COUNT = 21;
-const MAX_DAMAGE_PER_FRAME = 1;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Queue_1 = require("../../../Core/Container/Queue"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  Global_1 = require("../../Global"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
+  BattleUiDefine_1 = require("../BattleUi/BattleUiDefine"),
+  DamageUiSequencePool_1 = require("./DamageUiSequencePool"),
+  DamageViewData_1 = require("./DamageViewData"),
+  DamageView_1 = require("./View/DamageView"),
+  PRELOAD_DAMAGE_VIEW_COUNT = 21,
+  MAX_DAMAGE_PER_FRAME = 1;
 class DamageInfo {
   constructor() {
     (this.Damage = 0),
@@ -55,7 +55,7 @@ class DamageUiManager {
   }
   static InitializeDamageViewData() {
     for (const e of this.Okt) {
-      const a = new DamageViewData_1.DamageViewData();
+      var a = new DamageViewData_1.DamageViewData();
       a.Initialize(e), this.kkt.set(e.Id, a);
     }
   }
@@ -67,7 +67,7 @@ class DamageUiManager {
   }
   static PreloadDamageView() {
     for (let a = this.Fkt.length; a < PRELOAD_DAMAGE_VIEW_COUNT; a++) {
-      const e = new DamageView_1.DamageView();
+      var e = new DamageView_1.DamageView();
       e.Init(), this.TotalDamageViewNum++, this.Fkt.push(e);
     }
   }
@@ -76,13 +76,13 @@ class DamageUiManager {
     if (
       DamageUiManager.Vkt &&
       r.Active &&
-      !(o < 0 || (o === 1 && n && e === 0))
+      !(o < 0 || (1 === o && n && 0 === e))
     ) {
-      let m = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+      var m = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
       if (m) {
         m = m.Id === r.Id;
         let a = void 0;
-        ((a = this.Hkt.length > 0 ? this.Hkt.pop() : new DamageInfo()).Damage =
+        ((a = 0 < this.Hkt.length ? this.Hkt.pop() : new DamageInfo()).Damage =
           e),
           (a.ElementId = i),
           (a.DamagePosition = t),
@@ -96,7 +96,7 @@ class DamageUiManager {
     }
   }
   static Wkt(a) {
-    let e, i, t, r;
+    var e, i, t, r;
     DamageUiManager.Vkt &&
       ((e = Math.floor(Math.abs(a.Damage))),
       (i = DamageUiManager.Kkt(
@@ -139,30 +139,30 @@ class DamageUiManager {
   static Tick(a) {
     for (const i of DamageUiManager.Xkt) i.Tick(a);
     for (let a = 0; a < MAX_DAMAGE_PER_FRAME && !this.jkt.Empty; a++) {
-      const e = this.jkt.Pop();
+      var e = this.jkt.Pop();
       this.Wkt(e), this.Hkt.push(e);
     }
   }
   static Kkt(a, e, i, t = -1) {
     let r = -1;
     return (r =
-      t && t !== -1
+      t && -1 !== t
         ? t
-        : i === 0
+        : 0 === i
           ? BattleUiDefine_1.IMMUNITY_DAMAGE_TEXT_ID
-          : a > 0
+          : 0 < a
             ? a
             : e
               ? BattleUiDefine_1.CURE_DAMAGE_TEXT
               : BattleUiDefine_1.ATK_DAMAGE_TEXT);
   }
   static ProjectWorldLocationToScreenPosition(a) {
-    let e = Global_1.Global.CharacterController;
+    var e = Global_1.Global.CharacterController;
     if (UE.GameplayStatics.ProjectWorldToScreen(e, a, this.$kt, !1)) {
       e = (0, puerts_1.$unref)(this.$kt);
       if (e) {
-        var a = e.X;
-        const i = e.Y;
+        var a = e.X,
+          i = e.Y;
         if (!isNaN(a) && !isNaN(i) && isFinite(a) && isFinite(i)) return e;
       }
     }
@@ -175,7 +175,7 @@ class DamageUiManager {
   static Qkt(a, e, i, t, r = !1, g = !1, n = !1, o = "") {
     let s = void 0;
     return (
-      this.Fkt.length > 0
+      0 < this.Fkt.length
         ? (s = this.Fkt.pop())
         : ((s = new DamageView_1.DamageView()).Init(),
           this.TotalDamageViewNum++),
@@ -217,4 +217,4 @@ class DamageUiManager {
   (DamageUiManager.DamagePositionCache = void 0),
   (DamageUiManager.Okt = void 0),
   (DamageUiManager.$kt = (0, puerts_1.$ref)(void 0));
-// # sourceMappingURL=DamageUiManager.js.map
+//# sourceMappingURL=DamageUiManager.js.map

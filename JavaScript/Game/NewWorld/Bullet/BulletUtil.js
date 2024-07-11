@@ -1,31 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletUtil = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const MathCommon_1 = require("../../../Core/Utils/Math/MathCommon");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const SpaceUtils_1 = require("../../../Core/Utils/SpaceUtils");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const EffectSystem_1 = require("../../Effect/EffectSystem");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const PhantomUtil_1 = require("../../Module/Phantom/PhantomUtil");
-const CampUtils_1 = require("../Character/Common/Blueprint/Utils/CampUtils");
-const PawnTimeScaleComponent_1 = require("../Pawn/Component/PawnTimeScaleComponent");
-const BulletController_1 = require("./BulletController");
-const BulletStaticFunction_1 = require("./BulletStaticMethod/BulletStaticFunction");
-const BulletPool_1 = require("./Model/BulletPool");
-const QUARTER_PI_DEGREE = 45;
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  MathCommon_1 = require("../../../Core/Utils/Math/MathCommon"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  SpaceUtils_1 = require("../../../Core/Utils/SpaceUtils"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  EffectSystem_1 = require("../../Effect/EffectSystem"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  PhantomUtil_1 = require("../../Module/Phantom/PhantomUtil"),
+  CampUtils_1 = require("../Character/Common/Blueprint/Utils/CampUtils"),
+  PawnTimeScaleComponent_1 = require("../Pawn/Component/PawnTimeScaleComponent"),
+  BulletController_1 = require("./BulletController"),
+  BulletStaticFunction_1 = require("./BulletStaticMethod/BulletStaticFunction"),
+  BulletPool_1 = require("./Model/BulletPool"),
+  QUARTER_PI_DEGREE = 45;
 class BulletUtil {
   static GetTargetLocation(t, e, o) {
-    return o.BulletDataMain.Move.TrackTarget === 10
+    return 10 === o.BulletDataMain.Move.TrackTarget
       ? o.BulletInitParams.InitTargetLocation
       : t?.Valid && t.Entity?.IsInit
         ? t.GetSocketLocation(e)
@@ -38,8 +38,8 @@ class BulletUtil {
       this.DoesEntityContainsTag(e.Entity, -208062360)
     )
       return !1;
-    let o = e.Entity.GetComponent(0);
-    if (t.BulletCamp === 11)
+    var o = e.Entity.GetComponent(0);
+    if (11 === t.BulletCamp)
       return o.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Vision
         ? o.GetPlayerId() === t.AttackerPlayerId
         : ((r = ModelManager_1.ModelManager.GameModeModel.IsMulti
@@ -86,18 +86,18 @@ class BulletUtil {
   }
   static ShakeTest(t, e) {
     let o = !1;
-    const r = t.BulletDataMain.Render;
+    var r = t.BulletDataMain.Render;
     return (
       (0, RegisterComponent_1.isComponentInstance)(e, 3) &&
         e.IsRoleAndCtrlByMe &&
-        r.VictimCameraShakeOnHit.length > 0 &&
+        0 < r.VictimCameraShakeOnHit.length &&
         r.CameraShakeCountMax > t.ShakeNumbers &&
         (o = !0),
       (o =
         t.Attacker &&
         t.IsAutonomousProxy &&
-        (r.AttackerCameraShakeOnHit.length > 0 ||
-          r.AttackerCameraShakeOnHitWeakPoint.length > 0) &&
+        (0 < r.AttackerCameraShakeOnHit.length ||
+          0 < r.AttackerCameraShakeOnHitWeakPoint.length) &&
         r.CameraShakeCountMax > t.ShakeNumbers &&
         BulletUtil.IsPlayerOrSummons(t)
           ? !0
@@ -106,7 +106,7 @@ class BulletUtil {
     );
   }
   static IsPlayerOrSummons(t) {
-    let e;
+    var e;
     return (
       !!t.AttackerActorComp.IsRoleAndCtrlByMe ||
       !(
@@ -122,7 +122,7 @@ class BulletUtil {
     );
   }
   static SummonBullet(t, e, o, r, l = void 0, a = void 0) {
-    const i =
+    var i =
       BulletController_1.BulletController.GetActionCenter().CreateBulletActionInfo(
         11,
       );
@@ -135,7 +135,7 @@ class BulletUtil {
   }
   static CheckSupport(t, e) {
     t = t.BulletDataMain.Execution.SupportCamp;
-    if (t && t.length > 0) for (const o of t) if (o === e) return !0;
+    if (t && 0 < t.length) for (const o of t) if (o === e) return !0;
     return !1;
   }
   static ProcessHandOverEffectToSon(t, e) {
@@ -149,7 +149,7 @@ class BulletUtil {
   }
   static BulletFrozen(t) {
     t.IsFrozen = !0;
-    const e = t.ActorComponent;
+    var e = t.ActorComponent;
     e &&
       (e.SetBulletCustomTimeDilation(0),
       BulletStaticFunction_1.BulletStaticFunction.SetBulletEffectTimeScale(
@@ -169,7 +169,7 @@ class BulletUtil {
     t = ModelManager_1.ModelManager.BulletModel.GetBulletSetByAttacker(t);
     if (t)
       for (const l of t) {
-        const r = l.GetBulletInfo();
+        var r = l.GetBulletInfo();
         (!StringUtils_1.StringUtils.IsEmpty(e) &&
           r.BulletDataMain.BulletName !== e) ||
           BulletUtil.FrozenBulletTime(r, o);
@@ -179,7 +179,7 @@ class BulletUtil {
     t = ModelManager_1.ModelManager.BulletModel.GetBulletSetByAttacker(t);
     if (t)
       for (const r of t) {
-        const o = r.GetBulletInfo();
+        var o = r.GetBulletInfo();
         (!StringUtils_1.StringUtils.IsEmpty(e) &&
           o.BulletDataMain.BulletName !== e) ||
           BulletUtil.BulletUnfrozen(o);
@@ -187,11 +187,11 @@ class BulletUtil {
   }
   static SetTimeScale(t, e, o, r, l, a, i = 0, n = 0) {
     if (l <= 0 || t.BulletDataMain.TimeScale.TimeScaleWithAttacker) return 0;
-    if (i > 0 && l <= i) return 0;
-    var i = Time_1.Time.WorldTimeSeconds - i;
-    const u = i + l;
+    if (0 < i && l <= i) return 0;
+    var i = Time_1.Time.WorldTimeSeconds - i,
+      u = i + l;
     let _ = n;
-    n >= 0 && ((t.TimeScaleId += 1), (_ = t.TimeScaleId));
+    0 <= n && ((t.TimeScaleId += 1), (_ = t.TimeScaleId));
     n = new PawnTimeScaleComponent_1.TimeScale(i, u, e, o, r, l, _, a);
     return t.TimeScaleList.Push(n), t.TimeScaleMap.set(_, n), _;
   }
@@ -201,15 +201,15 @@ class BulletUtil {
   }
   static GetHitRotator(t, e, o) {
     o.FromUeRotator(e.ActorRotationProxy);
-    const r = t.BulletDataMain.Base.RelativeDirection;
-    if (r === 3) return !1;
+    var r = t.BulletDataMain.Base.RelativeDirection;
+    if (3 === r) return !1;
     if (
       (0, RegisterComponent_1.isComponentInstance)(e, 3) &&
       e.Entity.GetComponent(185)?.HasTag(855966206)
     )
       return !1;
-    const l = t.AttackerActorComp;
-    const a = Vector_1.Vector.Create();
+    var l = t.AttackerActorComp,
+      a = Vector_1.Vector.Create();
     switch (r) {
       case 0:
         a.FromUeVector(l.ActorLocationProxy),
@@ -263,7 +263,7 @@ class BulletUtil {
     return !0;
   }
   static SetHitRotator(t, e, o) {
-    const r = Rotator_1.Rotator.Create();
+    var r = Rotator_1.Rotator.Create();
     return (
       BulletUtil.GetHitRotator(t, e, r) &&
         !e.Entity.GetComponent(185)?.HasTag(1447214865) &&
@@ -276,9 +276,9 @@ class BulletUtil {
   }
   static GetOverrideHitAnimByAngle(t, e, o) {
     let r = e;
-    var e = (0, RegisterComponent_1.isComponentInstance)(t, 182);
-    const l = ModelManager_1.ModelManager.BulletModel;
-    const a = l.SelfAdaptBeHitAnim.has(r);
+    var e = (0, RegisterComponent_1.isComponentInstance)(t, 182),
+      l = ModelManager_1.ModelManager.BulletModel,
+      a = l.SelfAdaptBeHitAnim.has(r);
     return (
       (a || e) &&
         ((o =
@@ -302,7 +302,7 @@ class BulletUtil {
     );
   }
   static FindLookAtRot(t, e, o) {
-    let r, l;
+    var r, l;
     return o
       ? ((o = BulletPool_1.BulletPool.CreateVector()).FromUeVector(e),
         (r = BulletPool_1.BulletPool.CreateVector()).FromUeVector(t),
@@ -317,39 +317,39 @@ class BulletUtil {
       : UE.KismetMathLibrary.FindLookAtRotation(t.ToUeVector(!0), e);
   }
   static ClampBeginRotator(o) {
-    const r = o.BulletDataMain.Move.BeginVelocityLimitMap;
+    var r = o.BulletDataMain.Move.BeginVelocityLimitMap;
     if (!(r.size <= 0)) {
-      const l = BulletPool_1.BulletPool.CreateRotator();
-      const a =
-        (o.AttackerActorComp.ActorRotationProxy.Clamp(l),
-        BulletPool_1.BulletPool.CreateRotator());
+      var l = BulletPool_1.BulletPool.CreateRotator(),
+        a =
+          (o.AttackerActorComp.ActorRotationProxy.Clamp(l),
+          BulletPool_1.BulletPool.CreateRotator());
       o.MoveInfo.BeginSpeedRotator.Clamp(a);
-      let t = a.Pitch;
-      let e =
-        (void 0 !== (n = r.get(0)) &&
-          t < MathCommon_1.MathCommon.FlatAngle &&
-          (t = Math.min(t, n)),
-        void 0 !== (n = r.get(1)) &&
-          t > MathCommon_1.MathCommon.FlatAngle &&
-          (t = Math.max(t, MathCommon_1.MathCommon.RoundAngle - n)),
-        a.Yaw);
+      let t = a.Pitch,
+        e =
+          (void 0 !== (n = r.get(0)) &&
+            t < MathCommon_1.MathCommon.FlatAngle &&
+            (t = Math.min(t, n)),
+          void 0 !== (n = r.get(1)) &&
+            t > MathCommon_1.MathCommon.FlatAngle &&
+            (t = Math.max(t, MathCommon_1.MathCommon.RoundAngle - n)),
+          a.Yaw);
       e =
         e > MathCommon_1.MathCommon.FlatAngle
           ? e - MathCommon_1.MathCommon.RoundAngle
           : e;
-      let i;
-      var n = r.get(3);
-      var u =
-        (u = l.Yaw) > MathCommon_1.MathCommon.FlatAngle
-          ? u - MathCommon_1.MathCommon.RoundAngle
-          : u;
+      var i,
+        n = r.get(3),
+        u =
+          (u = l.Yaw) > MathCommon_1.MathCommon.FlatAngle
+            ? u - MathCommon_1.MathCommon.RoundAngle
+            : u;
       void 0 !== n &&
-        (i = e - u) > 0 &&
+        0 < (i = e - u) &&
         i < MathCommon_1.MathCommon.FlatAngle &&
         n < i &&
         (e = Rotator_1.Rotator.ClampAxis(l.Yaw + n)),
         void 0 !== (n = r.get(2)) &&
-          (i = u - e) > 0 &&
+          0 < (i = u - e) &&
           i < MathCommon_1.MathCommon.FlatAngle &&
           n < i &&
           (e = Rotator_1.Rotator.ClampAxis(l.Yaw - n)),
@@ -360,7 +360,7 @@ class BulletUtil {
     }
   }
   static CreateBulletFromAN(t, e, o, r, l, a, i, n) {
-    let u = t.GetEntityNoBlueprint();
+    var u = t.GetEntityNoBlueprint();
     let _ = u?.GetComponent(187);
     n &&
       ((n = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
@@ -384,7 +384,7 @@ class BulletUtil {
     return n ? n.Id : -1;
   }
   static AttachParentEffectSkeleton(t, e, o) {
-    const r = t.BulletDataMain.Move;
+    var r = t.BulletDataMain.Move;
     return (
       r.IsLockScale && t.Actor.RootComponent.SetAbsolute(!1, !1, !0),
       t.ClearCacheLocationAndRotation(),
@@ -413,4 +413,4 @@ class BulletUtil {
   }
 }
 exports.BulletUtil = BulletUtil;
-// # sourceMappingURL=BulletUtil.js.map
+//# sourceMappingURL=BulletUtil.js.map

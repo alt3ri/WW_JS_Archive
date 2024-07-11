@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ParallaxBehaviorNode = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem");
-const MathCommon_1 = require("../../../../../Core/Utils/Math/MathCommon");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D");
-const Global_1 = require("../../../../Global");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const TickBehaviorNode_1 = require("./TickBehaviorNode");
-const EMISSION_PARAM_NAME = "E_Action_EmissionColor";
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem"),
+  MathCommon_1 = require("../../../../../Core/Utils/Math/MathCommon"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D"),
+  Global_1 = require("../../../../Global"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  TickBehaviorNode_1 = require("./TickBehaviorNode"),
+  EMISSION_PARAM_NAME = "E_Action_EmissionColor";
 class ParallaxBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
   constructor() {
     super(...arguments),
@@ -25,10 +25,10 @@ class ParallaxBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
       (this.nXt = void 0);
   }
   OnCreate(t) {
-    let i;
+    var i;
     return (
       !!super.OnCreate(t) &&
-      (i = t.Condition).Type === "ParallaxAlign" &&
+      "ParallaxAlign" === (i = t.Condition).Type &&
       ((this.Lo = i), !!this.Lo) &&
       ((this.eXt = Vector_1.Vector.Create(
         this.Lo.SourcePos.X,
@@ -44,7 +44,7 @@ class ParallaxBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
     );
   }
   OnStart(t) {
-    let i;
+    var i;
     (this.rXt = !1),
       this.Lo.BallEntity &&
         (i = ModelManager_1.ModelManager.CreatureModel?.GetEntityIdByPbDataId(
@@ -57,7 +57,7 @@ class ParallaxBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
     (this.rXt = !0), super.OnEnd(t);
   }
   OnTick(t) {
-    let i, s, e, h, r, o, a;
+    var i, s, e, h, r, o, a;
     this.rXt ||
       ((i = (0, puerts_1.$ref)(void 0)),
       !UE.GameplayStatics.ProjectWorldToScreen(
@@ -144,4 +144,4 @@ class ParallaxBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
   }
 }
 exports.ParallaxBehaviorNode = ParallaxBehaviorNode;
-// # sourceMappingURL=ParallaxBehaviorNode.js.map
+//# sourceMappingURL=ParallaxBehaviorNode.js.map

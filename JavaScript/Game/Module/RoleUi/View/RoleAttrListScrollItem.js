@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleAttrListScrollItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const RoleDefine_1 = require("../RoleDefine");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  RoleDefine_1 = require("../RoleDefine");
 class RoleAttrListScrollItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, i) {
     super(),
@@ -20,7 +20,7 @@ class RoleAttrListScrollItem extends UiPanelBase_1.UiPanelBase {
         ).Dec;
       }),
       (this.ToggleEvent = (e) => {
-        (e = e === 1),
+        (e = 1 === e),
           this.GetText(8).SetUIActive(e),
           this.GetItem(7).SetUIActive(e),
           (e = e ? "Show" : "Hide");
@@ -45,7 +45,7 @@ class RoleAttrListScrollItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.ToggleEvent]]);
   }
   OnStart() {
-    const e = this.GetExtendToggle(0);
+    var e = this.GetExtendToggle(0);
     e.RootUIComp.SetUIActive(!0),
       e.CanExecuteChange.Unbind(),
       e.CanExecuteChange.Bind(this.r7e),
@@ -75,9 +75,9 @@ class RoleAttrListScrollItem extends UiPanelBase_1.UiPanelBase {
         Log_1.Log.Error("Role", 38, "属性表中找不到对应的属性ID配置数据");
   }
   SetAttrValue(e) {
-    let i = void 0;
-    let t = void 0;
-    let s, r;
+    let i = void 0,
+      t = void 0;
+    var s, r;
     e.Id === RoleDefine_1.HP_ATTR_ID ||
     e.Id === RoleDefine_1.ATTACK_ATTR_ID ||
     e.Id === RoleDefine_1.DEF_ATTR_ID
@@ -86,7 +86,7 @@ class RoleAttrListScrollItem extends UiPanelBase_1.UiPanelBase {
           e.Id === RoleDefine_1.STRENGTH_MAX_ID
             ? (e.BaseValue + e.AddValue) / 100
             : e.BaseValue + e.AddValue),
-      this.S9 === 1
+      1 === this.S9
         ? ((s = e.BaseValue + e.AddValue),
           (t = e.Id === RoleDefine_1.STRENGTH_MAX_ID ? s / 100 : s),
           this.GetText(4).SetText(
@@ -105,7 +105,7 @@ class RoleAttrListScrollItem extends UiPanelBase_1.UiPanelBase {
           ),
           (s = this.GetText(5)),
           t
-            ? ((r = t >= 0 ? "+" : StringUtils_1.EMPTY_STRING),
+            ? ((r = 0 <= t ? "+" : StringUtils_1.EMPTY_STRING),
               s.SetText(
                 r +
                   ModelManager_1.ModelManager.AttributeModel.GetFormatAttributeValueString(
@@ -119,4 +119,4 @@ class RoleAttrListScrollItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleAttrListScrollItem = RoleAttrListScrollItem;
-// # sourceMappingURL=RoleAttrListScrollItem.js.map
+//# sourceMappingURL=RoleAttrListScrollItem.js.map

@@ -14,4 +14,4 @@ class CustomMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
   }
 }
 exports.CustomMarkItemView = CustomMarkItemView;
-// # sourceMappingURL=CustomMarkItemView.js.map
+//# sourceMappingURL=CustomMarkItemView.js.map

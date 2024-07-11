@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityTowerGuideData = void 0);
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ActivityData_1 = require("../../ActivityData");
-const ActivityTowerGuideController_1 = require("./ActivityTowerGuideController");
+const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ActivityData_1 = require("../../ActivityData"),
+  ActivityTowerGuideController_1 = require("./ActivityTowerGuideController");
 class ActivityTowerGuideData extends ActivityData_1.ActivityBaseData {
   constructor() {
     super(...arguments),
@@ -21,7 +21,7 @@ class ActivityTowerGuideData extends ActivityData_1.ActivityBaseData {
       this.Id;
     for (const r of this.TowerDifficultIdList) this.SetRewardClaimed(r, !1);
     ActivityTowerGuideController_1.ActivityTowerGuideController.RequestTowerRewardInfo();
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.ActivityTowerGuideConfig?.GetTowerGuideById(
         1,
       );
@@ -29,14 +29,14 @@ class ActivityTowerGuideData extends ActivityData_1.ActivityBaseData {
   }
   GetExDataRedPointShowState() {
     for (const e of this.TowerDifficultIdList)
-      if (this.GetTowerProgressState(e) === 2) return !0;
+      if (2 === this.GetTowerProgressState(e)) return !0;
     return !1;
   }
   GetViewState() {
     if (!this.IsUnLock()) return 0;
     let e = !0;
     for (const t of this.TowerDifficultIdList)
-      if (this.GetTowerProgressState(t) !== 3) {
+      if (3 !== this.GetTowerProgressState(t)) {
         e = !1;
         break;
       }
@@ -46,7 +46,7 @@ class ActivityTowerGuideData extends ActivityData_1.ActivityBaseData {
     this.FFe.set(e, t), this.RefreshRewardState(e);
   }
   RefreshRewardState(e) {
-    const t = this.VFe(e);
+    var t = this.VFe(e);
     this.kFe.set(e, t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
@@ -75,4 +75,4 @@ class ActivityTowerGuideData extends ActivityData_1.ActivityBaseData {
   }
 }
 exports.ActivityTowerGuideData = ActivityTowerGuideData;
-// # sourceMappingURL=ActivityTowerGuideData.js.map
+//# sourceMappingURL=ActivityTowerGuideData.js.map

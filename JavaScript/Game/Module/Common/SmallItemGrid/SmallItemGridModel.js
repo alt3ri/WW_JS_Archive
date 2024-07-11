@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SmallItemGridModel = void 0);
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const ModelBase_1 = require("../../../../Core/Framework/ModelBase");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
+const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager");
 class SmallItemGridModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -30,4 +30,4 @@ class SmallItemGridModel extends ModelBase_1.ModelBase {
   }
 }
 exports.SmallItemGridModel = SmallItemGridModel;
-// # sourceMappingURL=SmallItemGridModel.js.map
+//# sourceMappingURL=SmallItemGridModel.js.map

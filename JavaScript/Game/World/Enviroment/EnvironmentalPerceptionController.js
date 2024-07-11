@@ -1,26 +1,26 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EnvironmentalPerceptionController = void 0);
-const cpp_1 = require("cpp");
-const UE = require("ue");
-const Stats_1 = require("../../../Core/Common/Stats");
-const Pool_1 = require("../../../Core/Container/Pool");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const UnopenedAreaController_1 = require("../../LevelGamePlay/UnopenedArea/UnopenedAreaController");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const SimpleNpcController_1 = require("../../NewWorld/Character/SimpleNpc/Logics/SimpleNpcController");
-const PerceptionRange_1 = require("../../NewWorld/Common/Perception/PerceptionRange");
-const PlayerPerceptionEvent_1 = require("../../NewWorld/Common/Perception/PlayerPerceptionEvent");
-const TICK_INTERNVAL = 8e3;
-const TICK_DAMPING_RATIO = 80;
-const TICK_DAMPING_RATIO_INFIGHT = 16;
-const FORCE_UPDATE_SPEED = 850;
-const PERCEPTION_EVENT_POOL_CAPACITY = 32;
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  Pool_1 = require("../../../Core/Container/Pool"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  UnopenedAreaController_1 = require("../../LevelGamePlay/UnopenedArea/UnopenedAreaController"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  SimpleNpcController_1 = require("../../NewWorld/Character/SimpleNpc/Logics/SimpleNpcController"),
+  PerceptionRange_1 = require("../../NewWorld/Common/Perception/PerceptionRange"),
+  PlayerPerceptionEvent_1 = require("../../NewWorld/Common/Perception/PlayerPerceptionEvent"),
+  TICK_INTERNVAL = 8e3,
+  TICK_DAMPING_RATIO = 80,
+  TICK_DAMPING_RATIO_INFIGHT = 16,
+  FORCE_UPDATE_SPEED = 850,
+  PERCEPTION_EVENT_POOL_CAPACITY = 32;
 class EnvironmentalPerceptionController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -62,7 +62,7 @@ class EnvironmentalPerceptionController extends ControllerBase_1.ControllerBase 
         this.ovr());
   }
   static ovr() {
-    let e = Global_1.Global.BaseCharacter;
+    var e = Global_1.Global.BaseCharacter;
     e &&
       (e = e.CharacterActorComponent) &&
       (ModelManager_1.ModelManager.MapModel.IsInMapPolygon(e.ActorLocationProxy)
@@ -70,21 +70,21 @@ class EnvironmentalPerceptionController extends ControllerBase_1.ControllerBase 
         : UnopenedAreaController_1.UnopenedAreaController.OnEnterUnopenedArea());
   }
   static InitializeEnvironment() {
-    const e = UE.NewMap(UE.BuiltinName, UE.BuiltinInt);
+    var e = UE.NewMap(UE.BuiltinName, UE.BuiltinInt);
     e.Add(new UE.FName("NormalEntity"), 1),
       e.Add(new UE.FName("CharacterEntity"), 2),
       e.Add(new UE.FName("PlayerAlwaysTickGroup"), 4),
       cpp_1.FKuroPerceptionInterface.InitializeEnvironment(3e3, 3e3, e, !0);
   }
   static CreatePlayerPerceptionEvent() {
-    const e = this.rvr.Get();
+    var e = this.rvr.Get();
     return e || this.rvr.Create();
   }
   static DestroyPlayerPerceptionEvent(e) {
     e && (e.Clear(), this.rvr.Put(e));
   }
   static CreatePerceptionRange() {
-    const e = this.nvr.Get();
+    var e = this.nvr.Get();
     return e || this.nvr.Create();
   }
   static DestroyPerceptionRange(e) {
@@ -118,4 +118,4 @@ class EnvironmentalPerceptionController extends ControllerBase_1.ControllerBase 
     PERCEPTION_EVENT_POOL_CAPACITY,
     _a.avr,
   ));
-// # sourceMappingURL=EnvironmentalPerceptionController.js.map
+//# sourceMappingURL=EnvironmentalPerceptionController.js.map

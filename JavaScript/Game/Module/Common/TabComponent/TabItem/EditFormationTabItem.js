@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EditFormationTabItem = void 0);
-const UE = require("ue");
-const RedDotController_1 = require("../../../../RedDot/RedDotController");
-const CommonTabItemBase_1 = require("./CommonTabItemBase");
+const UE = require("ue"),
+  RedDotController_1 = require("../../../../RedDot/RedDotController"),
+  CommonTabItemBase_1 = require("./CommonTabItemBase");
 class EditFormationTabItem extends CommonTabItemBase_1.CommonTabItemBase {
   constructor() {
     super(...arguments),
       (this.QFe = void 0),
       (this.x4e = (t) => {
-        t === 1 && this.SelectedCallBack(this.GridIndex);
+        1 === t && this.SelectedCallBack(this.GridIndex);
       }),
       (this.RefreshTransition = () => {
-        const t = this.GetUiExtendToggleSpriteTransition(3);
+        var t = this.GetUiExtendToggleSpriteTransition(3);
         t && t.SetAllStateSprite(this.GetSprite(0).GetSprite());
       });
   }
@@ -72,4 +72,4 @@ class EditFormationTabItem extends CommonTabItemBase_1.CommonTabItemBase {
   }
 }
 exports.EditFormationTabItem = EditFormationTabItem;
-// # sourceMappingURL=EditFormationTabItem.js.map
+//# sourceMappingURL=EditFormationTabItem.js.map

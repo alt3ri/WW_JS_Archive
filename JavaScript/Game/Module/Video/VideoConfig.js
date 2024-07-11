@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VideoConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const VideoCaptionByCgName_1 = require("../../../Core/Define/ConfigQuery/VideoCaptionByCgName");
-const VideoDataByCgNameAndGirlOrBoy_1 = require("../../../Core/Define/ConfigQuery/VideoDataByCgNameAndGirlOrBoy");
-const VideoSoundByCgNameAndGirlOrBoy_1 = require("../../../Core/Define/ConfigQuery/VideoSoundByCgNameAndGirlOrBoy");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const Log_1 = require("../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  VideoCaptionByCgName_1 = require("../../../Core/Define/ConfigQuery/VideoCaptionByCgName"),
+  VideoDataByCgNameAndGirlOrBoy_1 = require("../../../Core/Define/ConfigQuery/VideoDataByCgNameAndGirlOrBoy"),
+  VideoSoundByCgNameAndGirlOrBoy_1 = require("../../../Core/Define/ConfigQuery/VideoSoundByCgNameAndGirlOrBoy"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class VideoConfig extends ConfigBase_1.ConfigBase {
   OnInit() {
     return !0;
@@ -17,8 +17,8 @@ class VideoConfig extends ConfigBase_1.ConfigBase {
   }
   GetVideoData(e) {
     let o = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
-    o === 2 && (o = 0);
-    const r =
+    2 === o && (o = 0);
+    var r =
       VideoDataByCgNameAndGirlOrBoy_1.configVideoDataByCgNameAndGirlOrBoy.GetConfig(
         e,
         o,
@@ -31,9 +31,8 @@ class VideoConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetVideoCaptions(e) {
-    const o =
-      VideoCaptionByCgName_1.configVideoCaptionByCgName.GetConfigList(e);
-    return o && o.length !== 0
+    var o = VideoCaptionByCgName_1.configVideoCaptionByCgName.GetConfigList(e);
+    return o && 0 !== o.length
       ? o
       : (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Video", 39, "找不到cg字幕配置！", ["名称", e]),
@@ -49,16 +48,16 @@ class VideoConfig extends ConfigBase_1.ConfigBase {
         o,
         2,
       );
-    if (!r || r.length === 0) {
+    if (!r || 0 === r.length) {
       let e = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
-      e === 2 && (e = 0),
+      2 === e && (e = 0),
         (r =
           VideoSoundByCgNameAndGirlOrBoy_1.configVideoSoundByCgNameAndGirlOrBoy.GetConfigList(
             o,
             e,
           ));
     }
-    return r && r.length !== 0
+    return r && 0 !== r.length
       ? r
       : (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Video", 39, "找不到cg字幕配置！", ["名称", o]),
@@ -66,4 +65,4 @@ class VideoConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.VideoConfig = VideoConfig;
-// # sourceMappingURL=VideoConfig.js.map
+//# sourceMappingURL=VideoConfig.js.map

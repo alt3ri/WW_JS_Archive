@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Queue = void 0);
-const Log_1 = require("../Common/Log");
-const MINIMUM_GROW = 4;
-const THREE_QUARTER = 0.75;
+const Log_1 = require("../Common/Log"),
+  MINIMUM_GROW = 4,
+  THREE_QUARTER = 0.75;
 class Queue {
   constructor(t = MINIMUM_GROW) {
     (this.t7 = 0),
@@ -26,7 +26,7 @@ class Queue {
       this.n6++;
   }
   Pop() {
-    let t, i, s;
+    var t, i, s;
     if (this.n6)
       return (
         (t = this.r7[this.t7]),
@@ -62,34 +62,34 @@ class Queue {
       Log_1.Log.CheckError() && Log_1.Log.Error("Container", 15, "队列为空");
   }
   n7(t) {
-    if (this.n6 === 0) (this.r7.length = t), (this.t7 = 0), (this.i7 = 0);
+    if (0 === this.n6) (this.r7.length = t), (this.t7 = 0), (this.i7 = 0);
     else {
-      const i = this.r7.length;
+      var i = this.r7.length;
       if (t < i)
-        if (this.t7 === 0) (this.r7.length = t), (this.i7 = this.i7 % t);
+        if (0 === this.t7) (this.r7.length = t), (this.i7 = this.i7 % t);
         else {
-          let s = i - t;
-          const h = i - s;
+          var s = i - t,
+            h = i - s;
           if (this.t7 < this.i7) {
             let i = 0;
             for (let t = h; t < this.i7; ++t)
               (this.r7[i++] = this.r7[t]), (this.r7[t] = void 0);
             h <= this.t7 && (this.t7 = (this.t7 + s) % t);
             s = this.i7 - h;
-            (this.i7 = s > 0 ? s % t : this.i7 % t), void (this.r7.length = t);
+            (this.i7 = 0 < s ? s % t : this.i7 % t), void (this.r7.length = t);
           } else if (this.t7 >= this.i7) {
-            const e = i - this.t7;
-            const r = t - e;
+            var e = i - this.t7,
+              r = t - e;
             for (let t = 0; t < e; ++t)
               (this.r7[r + t] = this.r7[this.t7 + t]),
                 (this.r7[this.t7 + t] = void 0);
             (this.r7.length = t), (this.t7 = r);
           }
         }
-      else if (((this.r7.length = t), this.i7 === 0)) this.i7 = this.n6;
+      else if (((this.r7.length = t), 0 === this.i7)) this.i7 = this.n6;
       else if (this.t7 >= this.i7) {
-        const o = i - this.t7;
-        const _ = this.r7.length - o;
+        var o = i - this.t7,
+          _ = this.r7.length - o;
         for (let t = 0; t < o; ++t)
           (this.r7[_ + t] = this.r7[this.t7 + t]),
             (this.r7[this.t7 + t] = void 0);
@@ -98,11 +98,11 @@ class Queue {
     }
   }
   get Empty() {
-    return this.n6 === 0;
+    return 0 === this.n6;
   }
   Clear() {
     (this.r7.length = 0), (this.t7 = 0), (this.i7 = 0), (this.n6 = 0);
   }
 }
 exports.Queue = Queue;
-// # sourceMappingURL=Queue.js.map
+//# sourceMappingURL=Queue.js.map

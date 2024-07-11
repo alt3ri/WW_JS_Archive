@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BehaviorTreeTimerCenter = void 0);
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const GeneralLogicTreeDefine_1 = require("../Define/GeneralLogicTreeDefine");
-const CountDownTimer_1 = require("../Timer/CountDownTimer");
-const FailRangeTimer_1 = require("../Timer/FailRangeTimer");
-const LevelPlayPrepareTimer_1 = require("../Timer/LevelPlayPrepareTimer");
-const NoUiTimer_1 = require("../Timer/NoUiTimer");
-const TICK_INTETVAL_TIME = 20;
-const FAILEDRANGE_INTERTVAL = 100;
+const MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  GeneralLogicTreeDefine_1 = require("../Define/GeneralLogicTreeDefine"),
+  CountDownTimer_1 = require("../Timer/CountDownTimer"),
+  FailRangeTimer_1 = require("../Timer/FailRangeTimer"),
+  LevelPlayPrepareTimer_1 = require("../Timer/LevelPlayPrepareTimer"),
+  NoUiTimer_1 = require("../Timer/NoUiTimer"),
+  TICK_INTETVAL_TIME = 20,
+  FAILEDRANGE_INTERTVAL = 100;
 class BehaviorTreeTimerCenter {
   constructor(e) {
     (this.Gct = BigInt(0)),
@@ -17,14 +17,14 @@ class BehaviorTreeTimerCenter {
       (this.EJ = new Map());
   }
   Dispose() {
-    for (const [, e] of this.EJ) e.Destroy();
+    for (var [, e] of this.EJ) e.Destroy();
     this.EJ.clear();
   }
   UpdateTimerInfo(e) {
-    let i;
+    var i;
     e &&
       ((i = e.y5n),
-      !e.jCs || (e = MathUtils_1.MathUtils.LongToNumber(e.jCs)) === 0
+      !e.jCs || 0 === (e = MathUtils_1.MathUtils.LongToNumber(e.jCs))
         ? this.dKt(i)
         : this.CKt(i, e));
   }
@@ -68,7 +68,7 @@ class BehaviorTreeTimerCenter {
     r?.StartShowTimer(i);
   }
   dKt(e) {
-    const i = this.GetTimer(e);
+    var i = this.GetTimer(e);
     if (i)
       switch (e) {
         case GeneralLogicTreeDefine_1.OUTRANGEFAILED_TIMERTYPE:
@@ -88,4 +88,4 @@ class BehaviorTreeTimerCenter {
   }
 }
 exports.BehaviorTreeTimerCenter = BehaviorTreeTimerCenter;
-// # sourceMappingURL=BehaviorTreeTimerComponent.js.map
+//# sourceMappingURL=BehaviorTreeTimerComponent.js.map

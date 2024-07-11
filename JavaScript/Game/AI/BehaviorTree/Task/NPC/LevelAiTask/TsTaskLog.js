@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../../../Core/Common/Log");
-const TsTaskAbortImmediatelyBase_1 = require("../../TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  TsTaskAbortImmediatelyBase_1 = require("../../TsTaskAbortImmediatelyBase");
 class TsTaskLog extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments), (this.Level = ""), (this.Content = "");
@@ -30,4 +30,4 @@ class TsTaskLog extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskLog;
-// # sourceMappingURL=TsTaskLog.js.map
+//# sourceMappingURL=TsTaskLog.js.map

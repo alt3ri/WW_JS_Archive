@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OpenSystemCook = void 0);
-const UiManager_1 = require("../../../Ui/UiManager");
-const OpenSystemBase_1 = require("./OpenSystemBase");
+const UiManager_1 = require("../../../Ui/UiManager"),
+  OpenSystemBase_1 = require("./OpenSystemBase");
 class OpenSystemCook extends OpenSystemBase_1.OpenSystemBase {
   async ExecuteOpenView(e, t) {
     return (
@@ -14,4 +14,4 @@ class OpenSystemCook extends OpenSystemBase_1.OpenSystemBase {
   }
 }
 exports.OpenSystemCook = OpenSystemCook;
-// # sourceMappingURL=OpenSystemCook.js.map
+//# sourceMappingURL=OpenSystemCook.js.map

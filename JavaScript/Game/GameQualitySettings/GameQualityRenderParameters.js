@@ -7,4 +7,4 @@ class GameQualityRenderParameters {
   }
 }
 exports.GameQualityRenderParameters = GameQualityRenderParameters;
-// # sourceMappingURL=GameQualityRenderParameters.js.map
+//# sourceMappingURL=GameQualityRenderParameters.js.map

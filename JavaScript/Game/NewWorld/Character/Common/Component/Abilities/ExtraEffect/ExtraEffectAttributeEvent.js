@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AttributeEventEffects = void 0);
-const Log_1 = require("../../../../../../../Core/Common/Log");
-const BulletController_1 = require("../../../../../Bullet/BulletController");
-const AbilityUtils_1 = require("../AbilityUtils");
-const CharacterAttributeIntervalCheck_1 = require("../CharacterAttributeIntervalCheck");
-const ExtraEffectBase_1 = require("./ExtraEffectBase");
-const ExtraEffectPassiveEffects_1 = require("./ExtraEffectPassiveEffects");
+const Log_1 = require("../../../../../../../Core/Common/Log"),
+  BulletController_1 = require("../../../../../Bullet/BulletController"),
+  AbilityUtils_1 = require("../AbilityUtils"),
+  CharacterAttributeIntervalCheck_1 = require("../CharacterAttributeIntervalCheck"),
+  ExtraEffectBase_1 = require("./ExtraEffectBase"),
+  ExtraEffectPassiveEffects_1 = require("./ExtraEffectPassiveEffects");
 class AttributeEventEffects extends ExtraEffectBase_1.BuffEffect {
   constructor() {
     super(...arguments),
@@ -21,20 +21,20 @@ class AttributeEventEffects extends ExtraEffectBase_1.BuffEffect {
       (this.zKo = new Array()),
       (this.ZKo = 0),
       (this.mEo = (t, i, e) => {
-        const s = this.xat;
+        var s = this.xat;
         (this.xat = this.$Ko.CheckListenActiveness(i, this.YKo)),
           s !== this.xat && this.TryExecute({}, this.OwnerBuffComponent);
       });
   }
   InitParameters(t) {
-    const i = t.ExtraEffectParameters;
-    var e = t.ExtraEffectGrowParameters1;
-    var t = t.ExtraEffectGrowParameters2;
-    const s = this.Level;
-    const h = Number(i[0]);
-    const r = Number(i[1]) === 1;
-    var e = AbilityUtils_1.AbilityUtils.GetLevelValue(e, s, -1);
-    var t = AbilityUtils_1.AbilityUtils.GetLevelValue(t, s, -1);
+    var i = t.ExtraEffectParameters,
+      e = t.ExtraEffectGrowParameters1,
+      t = t.ExtraEffectGrowParameters2,
+      s = this.Level,
+      h = Number(i[0]),
+      r = 1 === Number(i[1]),
+      e = AbilityUtils_1.AbilityUtils.GetLevelValue(e, s, -1),
+      t = AbilityUtils_1.AbilityUtils.GetLevelValue(t, s, -1);
     (this.$Ko = new CharacterAttributeIntervalCheck_1.AttributeIntervalCheck(
       h,
       e,
@@ -43,12 +43,12 @@ class AttributeEventEffects extends ExtraEffectBase_1.BuffEffect {
     )),
       (this.GoalType = Number(i[2])),
       (this.Ids = i[3].split("#").map((t) => BigInt(t))),
-      (this.JKo = Number(i[4] ?? 0) === 1),
-      Number(i[5] ?? 0) === 1 ? (this.ZKo = 2) : (this.ZKo = 0),
-      Number(i[6] ?? 0) === 1 ? (this.TargetType = 2) : (this.TargetType = 0);
+      (this.JKo = 1 === Number(i[4] ?? 0)),
+      1 === Number(i[5] ?? 0) ? (this.ZKo = 2) : (this.ZKo = 0),
+      1 === Number(i[6] ?? 0) ? (this.TargetType = 2) : (this.TargetType = 0);
   }
   OnCreated() {
-    let t = this.eQo();
+    var t = this.eQo();
     t
       ? ((this.YKo = t.GetComponent(156)),
         this.$Ko.IsPerTenThousand && void 0 === this.$Ko.MaxAttributeId
@@ -104,15 +104,15 @@ class AttributeEventEffects extends ExtraEffectBase_1.BuffEffect {
     else this.tQo();
   }
   eQo() {
-    return this.ZKo !== 2 ? this.OwnerEntity : this.InstigatorEntity?.Entity;
+    return 2 !== this.ZKo ? this.OwnerEntity : this.InstigatorEntity?.Entity;
   }
   GetEffectTarget() {
-    return this.TargetType !== 2
+    return 2 !== this.TargetType
       ? this.OwnerBuffComponent
       : this.InstigatorBuffComponent;
   }
   tQo() {
-    if (this.GoalType === 0) {
+    if (0 === this.GoalType) {
       if (this.JKo)
         for (const t of this.zKo)
           this.GetEffectTarget()?.RemoveBuffByHandle(
@@ -124,40 +124,40 @@ class AttributeEventEffects extends ExtraEffectBase_1.BuffEffect {
     }
   }
   ExecuteAddBuffs() {
-    const i = this.GetEffectTarget();
+    var i = this.GetEffectTarget();
     if (this.CheckExecutable() && i)
       for (let t = 0; t < this.Ids.length; t++) {
-        var e = this.Ids[t];
-        const s = AbilityUtils_1.AbilityUtils.GetArrayValue(
-          this.Times,
-          t,
-          ExtraEffectPassiveEffects_1.DEFAULT_PASSIVE_BUFF_ADD_TIMES,
-        );
-        var e = i.AddBuffLocal(e, {
-          InstigatorId: this.InstigatorBuffComponent.CreatureDataId,
-          Level: this.Level,
-          OuterStackCount: s,
-          PreMessageId: this.Buff.MessageId,
-          ServerId: this.ServerId,
-          Reason: `因为其它buff额外效果而添加（前置buff Id=${this.BuffId}, handle=${this.ActiveHandleId}）`,
-        });
-        this.JKo && e > 0 && this.zKo.push(e);
+        var e = this.Ids[t],
+          s = AbilityUtils_1.AbilityUtils.GetArrayValue(
+            this.Times,
+            t,
+            ExtraEffectPassiveEffects_1.DEFAULT_PASSIVE_BUFF_ADD_TIMES,
+          ),
+          e = i.AddBuffLocal(e, {
+            InstigatorId: this.InstigatorBuffComponent.CreatureDataId,
+            Level: this.Level,
+            OuterStackCount: s,
+            PreMessageId: this.Buff.MessageId,
+            ServerId: this.ServerId,
+            Reason: `因为其它buff额外效果而添加（前置buff Id=${this.BuffId}, handle=${this.ActiveHandleId}）`,
+          });
+        this.JKo && 0 < e && this.zKo.push(e);
       }
   }
   ExecuteAddBullet() {
-    const t = this.GetEffectTarget().GetActorComponent();
-    const i = t?.ActorTransform;
-    const e = this.InstigatorEntity;
-    const s = t?.Actor;
+    var t = this.GetEffectTarget().GetActorComponent(),
+      i = t?.ActorTransform,
+      e = this.InstigatorEntity,
+      s = t?.Actor;
     if (i && e && s)
       for (let t = 0; t < this.Ids.length; t++) {
-        const h = String(this.Ids[t]);
-        const r = AbilityUtils_1.AbilityUtils.GetArrayValue(
-          this.Times,
-          t,
-          ExtraEffectPassiveEffects_1.DEFAULT_PASSIVE_BULLET_TIMES,
-        );
-        const a = this.Buff.MessageId;
+        var h = String(this.Ids[t]),
+          r = AbilityUtils_1.AbilityUtils.GetArrayValue(
+            this.Times,
+            t,
+            ExtraEffectPassiveEffects_1.DEFAULT_PASSIVE_BULLET_TIMES,
+          ),
+          a = this.Buff.MessageId;
         for (let t = 0; t < r; t++)
           BulletController_1.BulletController.CreateBulletCustomTarget(
             s,
@@ -170,4 +170,4 @@ class AttributeEventEffects extends ExtraEffectBase_1.BuffEffect {
   }
 }
 exports.AttributeEventEffects = AttributeEventEffects;
-// # sourceMappingURL=ExtraEffectAttributeEvent.js.map
+//# sourceMappingURL=ExtraEffectAttributeEvent.js.map

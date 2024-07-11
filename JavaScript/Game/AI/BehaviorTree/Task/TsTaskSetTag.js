@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil");
-const Global_1 = require("../../../Global");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  Global_1 = require("../../../Global"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskSetTag extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -38,8 +38,8 @@ class TsTaskSetTag extends TsTaskAbortImmediatelyBase_1.default {
     var e = t.AiController;
     if (e)
       if ((this.InitTsVariables(), this.TsGameplayTag || this.TsActorTag)) {
-        let h;
-        var e = e.CharActorComp;
+        var h,
+          e = e.CharActorComp;
         if (e?.Valid) {
           let s = e.Entity;
           if (this.TsSetToPlayer)
@@ -64,7 +64,7 @@ class TsTaskSetTag extends TsTaskAbortImmediatelyBase_1.default {
                   ((h = (e = e.Owner.Tags).FindIndex(this.TsActorTag)),
                   this.TsIsAdd && h < 0
                     ? e.Add(this.TsActorTag)
-                    : h > -1 && e.RemoveAt(h)),
+                    : -1 < h && e.RemoveAt(h)),
               this.FinishExecute(!0))
             : this.FinishExecute(!1);
         } else this.FinishExecute(!1);
@@ -83,9 +83,9 @@ class TsTaskSetTag extends TsTaskAbortImmediatelyBase_1.default {
       ((i = this.TsGameplayTag.TagId),
       (e = s.HasTag(i)),
       this.TsIsAdd && !e ? s.AddTag(i) : !this.TsIsAdd && e && s.RemoveTag(i));
-    let s;
-    let i;
-    var e = t.GetComponent(185);
+    var s,
+      i,
+      e = t.GetComponent(185);
     e &&
       ((s = this.TsGameplayTag.TagId),
       (i = e.HasTag(s)),
@@ -93,4 +93,4 @@ class TsTaskSetTag extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskSetTag;
-// # sourceMappingURL=TsTaskSetTag.js.map
+//# sourceMappingURL=TsTaskSetTag.js.map

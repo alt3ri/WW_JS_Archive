@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskChangePatrol extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -21,8 +21,8 @@ class TsTaskChangePatrol extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveExecuteAI(e, t) {
     this.InitTsVariables();
-    let s;
-    let r = e.AiController;
+    var s,
+      r = e.AiController;
     r
       ? ((s = r.CharActorComp.Entity.Id),
         (r = r.AiPatrol),
@@ -44,4 +44,4 @@ class TsTaskChangePatrol extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskChangePatrol;
-// # sourceMappingURL=TsTaskChangePatrol.js.map
+//# sourceMappingURL=TsTaskChangePatrol.js.map

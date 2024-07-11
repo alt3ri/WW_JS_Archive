@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotOptionItem = void 0);
-const UE = require("ue");
-const GlobalConfigFromCsvByName_1 = require("../../../../Core/Define/ConfigQuery/GlobalConfigFromCsvByName");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const TalkOptionIconById_1 = require("../../../../Core/Define/ConfigQuery/TalkOptionIconById");
-const TextById_1 = require("../../../../Core/Define/ConfigQuery/TextById");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const PublicUtil_1 = require("../../../Common/PublicUtil");
-const LevelGameplayActionsDefine_1 = require("../../../LevelGamePlay/LevelGameplayActionsDefine");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ToggleActionItem_1 = require("../../Common/Toggle/ToggleActionItem");
-const TsInteractionUtils_1 = require("../../Interaction/TsInteractionUtils");
-const PlotSubtitleView_1 = require("../../Sequence/Subtitle/PlotSubtitleView");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const PlotController_1 = require("../PlotController");
-const SequenceController_1 = require("../Sequence/SequenceController");
-const PlotView_1 = require("./PlotView");
+const UE = require("ue"),
+  GlobalConfigFromCsvByName_1 = require("../../../../Core/Define/ConfigQuery/GlobalConfigFromCsvByName"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  TalkOptionIconById_1 = require("../../../../Core/Define/ConfigQuery/TalkOptionIconById"),
+  TextById_1 = require("../../../../Core/Define/ConfigQuery/TextById"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  PublicUtil_1 = require("../../../Common/PublicUtil"),
+  LevelGameplayActionsDefine_1 = require("../../../LevelGamePlay/LevelGameplayActionsDefine"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ToggleActionItem_1 = require("../../Common/Toggle/ToggleActionItem"),
+  TsInteractionUtils_1 = require("../../Interaction/TsInteractionUtils"),
+  PlotSubtitleView_1 = require("../../Sequence/Subtitle/PlotSubtitleView"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  PlotController_1 = require("../PlotController"),
+  SequenceController_1 = require("../Sequence/SequenceController"),
+  PlotView_1 = require("./PlotView");
 class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(t) {
     super(),
@@ -35,8 +35,8 @@ class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.TJi = void 0),
       (this.a_i = !1),
       (this.T7e = () => {
-        const t = this.$1i.GetToggleItem().GetToggleState();
-        return !this.a_i || t !== 1;
+        var t = this.$1i.GetToggleItem().GetToggleState();
+        return !this.a_i || 1 !== t;
       }),
       (this.__i = () => {
         this.t_i && this.t_i(this);
@@ -51,7 +51,7 @@ class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
             case 0:
               this.SJi
                 ? (PlotController_1.PlotController.EndInteraction(
-                    this.EJi.Type.Type === "Flow",
+                    "Flow" === this.EJi.Type.Type,
                   ),
                   TsInteractionUtils_1.TsInteractionUtils.HandleInteractionOptionNew(
                     this.EJi,
@@ -88,7 +88,7 @@ class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.$1i = new ToggleActionItem_1.ToggleActionItem(this.GetItem(0))),
       this.$1i.SetFunction(this.OptionClick),
       this.$1i.GetToggleItem().OnUndeterminedClicked.Add(this.OptionClick);
-    const t = this.$1i.GetToggleItem();
+    var t = this.$1i.GetToggleItem();
     t.SetToggleState(1),
       t.SetToggleState(0),
       t.CanExecuteChange.Bind(this.T7e),
@@ -143,7 +143,7 @@ class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
           break;
         }
         if (this.IsTask()) {
-          const r = this.EJi.Context;
+          var r = this.EJi.Context;
           if (!r) break;
           let t = void 0;
           switch (r.Type) {
@@ -163,7 +163,7 @@ class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
           break;
         }
         let t = "Dialog";
-        (t = this.Option?.OptionStyle === 1 ? "OS" : this.EJi.Icon ?? "Dialog"),
+        (t = 1 === this.Option?.OptionStyle ? "OS" : this.EJi.Icon ?? "Dialog"),
           (e = this.UJi(t));
         break;
       }
@@ -177,7 +177,7 @@ class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   RJi(t, e) {
     let i = e;
-    this.vJi === 1 &&
+    1 === this.vJi &&
       (i = ModelManager_1.ModelManager.PlotModel.PlotTextReplacer.Replace(i)),
       this.$1i.SetToggleTexture(t),
       this.$1i.SetToggleText(i);
@@ -193,18 +193,18 @@ class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
     return void 0 === t ? "" : t.Value;
   }
   IsTask() {
-    const t = this.EJi?.Context;
+    var t = this.EJi?.Context;
     return (
       !!t &&
-      (t.Type === 2 ||
-        (t.Type === 6 &&
+      (2 === t.Type ||
+        (6 === t.Type &&
           t.BtType === Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest))
     );
   }
   IsOpenSystemBoard() {
-    if (this.EJi?.Type?.Type === "Actions")
+    if ("Actions" === this.EJi?.Type?.Type)
       for (const t of (this.EJi?.Type).Actions)
-        if (t.Name === "OpenSystemBoard") return !0;
+        if ("OpenSystemBoard" === t.Name) return !0;
     return !1;
   }
   IsLeaveItem() {
@@ -239,7 +239,7 @@ class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.SetActive(!0));
   }
   xJi() {
-    const t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+    var t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
       TextById_1.configTextById.GetConfig("Leave").Text,
     );
     this.SetupLeaveOption(t);
@@ -252,4 +252,4 @@ class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.PlotOptionItem = PlotOptionItem;
-// # sourceMappingURL=PlotOptionItem.js.map
+//# sourceMappingURL=PlotOptionItem.js.map

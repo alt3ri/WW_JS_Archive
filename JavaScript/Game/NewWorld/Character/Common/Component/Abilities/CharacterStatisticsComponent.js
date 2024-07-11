@@ -1,61 +1,66 @@
 "use strict";
-let CharacterStatisticsComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, i, e, a) {
-    let s;
-    const r = arguments.length;
-    let n =
-      r < 3 ? i : a === null ? (a = Object.getOwnPropertyDescriptor(i, e)) : a;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      n = Reflect.decorate(t, i, e, a);
-    else
-      for (let o = t.length - 1; o >= 0; o--)
-        (s = t[o]) && (n = (r < 3 ? s(n) : r > 3 ? s(i, e, n) : s(i, e)) || n);
-    return r > 3 && n && Object.defineProperty(i, e, n), n;
-  };
+var CharacterStatisticsComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, i, e, a) {
+      var s,
+        r = arguments.length,
+        n =
+          r < 3
+            ? i
+            : null === a
+              ? (a = Object.getOwnPropertyDescriptor(i, e))
+              : a;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        n = Reflect.decorate(t, i, e, a);
+      else
+        for (var o = t.length - 1; 0 <= o; o--)
+          (s = t[o]) &&
+            (n = (r < 3 ? s(n) : 3 < r ? s(i, e, n) : s(i, e)) || n);
+      return 3 < r && n && Object.defineProperty(i, e, n), n;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterStatisticsComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../../Core/Common/Time");
-const DamageById_1 = require("../../../../../../Core/Define/ConfigQuery/DamageById");
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent");
-const EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const StringBuilder_1 = require("../../../../../../Core/Utils/StringBuilder");
-const StringUtils_1 = require("../../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const PublicUtil_1 = require("../../../../../Common/PublicUtil");
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const CharacterUnifiedStateTypes_1 = require("./CharacterUnifiedStateTypes");
-const skillTypeToString = [
-  "常态攻击",
-  "共鸣技能",
-  "共鸣解放",
-  "固有技能",
-  "连携技能",
-  "异能力",
-  "声骸技能",
-];
-const attackTypeToString = [
-  "普攻伤害",
-  "蓄力攻击伤害",
-  "大招伤害",
-  "QTE伤害",
-  "普通技能伤害",
-  "战斗幻象技能伤害",
-  "探索幻象技能伤害",
-];
+const UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../../Core/Common/Time"),
+  DamageById_1 = require("../../../../../../Core/Define/ConfigQuery/DamageById"),
+  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  StringBuilder_1 = require("../../../../../../Core/Utils/StringBuilder"),
+  StringUtils_1 = require("../../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../../../../Common/PublicUtil"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  CharacterUnifiedStateTypes_1 = require("./CharacterUnifiedStateTypes"),
+  skillTypeToString = [
+    "常态攻击",
+    "共鸣技能",
+    "共鸣解放",
+    "固有技能",
+    "连携技能",
+    "异能力",
+    "声骸技能",
+  ],
+  attackTypeToString = [
+    "普攻伤害",
+    "蓄力攻击伤害",
+    "大招伤害",
+    "QTE伤害",
+    "普通技能伤害",
+    "战斗幻象技能伤害",
+    "探索幻象技能伤害",
+  ];
 class TargetDamageStatistics {
   constructor(t) {
     (this.TargetId = t), (this.AKo = 0), (this.IsValid = !0);
-    var t = EntitySystem_1.EntitySystem.Get(t).GetComponent(0);
-    let i = t.GetEntityType();
+    var t = EntitySystem_1.EntitySystem.Get(t).GetComponent(0),
+      i = t.GetEntityType();
     (this.JB = i === Protocol_1.Aki.Protocol.HBs.Proto_Monster),
       (this.XHt = i === Protocol_1.Aki.Protocol.HBs.Proto_Player),
       (this.Mne = 0),
@@ -111,7 +116,7 @@ class DamageStatisticsData {
     return this.xKo.size;
   }
   ToString() {
-    const t = new StringBuilder_1.StringBuilder();
+    var t = new StringBuilder_1.StringBuilder();
     for (const i of this.xKo.values()) t.Append(i.ToString());
     return StringUtils_1.StringUtils.Format(
       "{0},{1},{2},{3}{4}\n",
@@ -126,10 +131,10 @@ class DamageStatisticsData {
 class CombatDataBase {
   constructor(t, i = 0) {
     (this.AttackerId = t), (this.TargetId = i), (this.String = "");
-    var t = new Date();
-    var i = t.getHours();
-    const e = t.getMinutes();
-    var t = t.getSeconds();
+    var t = new Date(),
+      i = t.getHours(),
+      e = t.getMinutes(),
+      t = t.getSeconds();
     this.DateCreate = StringUtils_1.StringUtils.Format(
       "{0}-{1}-{2}",
       i < 10 ? "0" + i : i.toString(),
@@ -139,7 +144,7 @@ class CombatDataBase {
   }
   ToString() {
     return (
-      (this.String && this.String.length > 0) ||
+      (this.String && 0 < this.String.length) ||
         (this.String = this.ParseToString()),
       this.String
     );
@@ -147,9 +152,9 @@ class CombatDataBase {
   static GetEntityConfigName(t) {
     t = EntitySystem_1.EntitySystem.Get(t);
     if (t) {
-      let i;
-      var t = t.GetComponent(0);
-      const e = t?.GetEntityType();
+      var i,
+        t = t.GetComponent(0),
+        e = t?.GetEntityType();
       if (e === Protocol_1.Aki.Protocol.HBs.Proto_Player)
         return (
           (i = t.Valid ? t.GetRoleId() : 0),
@@ -171,14 +176,14 @@ class CombatDataBase {
   }
   static GetEntityConfigNameAndSkillName(t, i, e) {
     t = EntitySystem_1.EntitySystem.Get(t);
-    let a = void 0;
-    let s = void 0;
+    let a = void 0,
+      s = void 0;
     if (t) {
-      const r = t.GetComponent(0);
-      const n = r?.GetEntityType();
+      var r = t.GetComponent(0),
+        n = r?.GetEntityType();
       if (n === Protocol_1.Aki.Protocol.HBs.Proto_Player) {
-        var o = r.Valid ? r.GetRoleId() : 0;
-        var o = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(o);
+        var o = r.Valid ? r.GetRoleId() : 0,
+          o = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(o);
         if (!o) return [void 0, void 0];
         (o = o.GetRoleId()),
           (o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(o)),
@@ -196,7 +201,7 @@ class CombatDataBase {
             }
         return (
           t < 0 &&
-            DamageById_1.configDamageById.GetConfig(i).Type === 5 &&
+            5 === DamageById_1.configDamageById.GetConfig(i).Type &&
             (s = "幻象技能"),
           [a, s]
         );
@@ -222,16 +227,16 @@ class CombatDataDamage extends CombatDataBase {
       (this.SkillId = a);
   }
   ParseToString() {
-    const [t, i] = CombatDataBase.GetEntityConfigNameAndSkillName(
-      this.AttackerId,
-      this.DamageId,
-      this.SkillId,
-    );
-    const e = CombatDataBase.GetEntityConfigName(this.TargetId);
-    var a = 0;
-    var a = EntitySystem_1.EntitySystem.Get(this.TargetId)
-      .GetComponent(156)
-      .GetCurrentValue(Protocol_1.Aki.Protocol.KBs.Proto_Life);
+    var [t, i] = CombatDataBase.GetEntityConfigNameAndSkillName(
+        this.AttackerId,
+        this.DamageId,
+        this.SkillId,
+      ),
+      e = CombatDataBase.GetEntityConfigName(this.TargetId),
+      a = 0,
+      a = EntitySystem_1.EntitySystem.Get(this.TargetId)
+        .GetComponent(156)
+        .GetCurrentValue(Protocol_1.Aki.Protocol.KBs.Proto_Life);
     return StringUtils_1.StringUtils.Format(
       "<Date>[{0}]</><Atk>{1}</>施放了<Skill>{2}</>对<Victim>{3}</>造成<NumDmg>{4}</>点伤害<Change>{5}</>",
       this.DateCreate,
@@ -254,16 +259,16 @@ class CombatDataHeal extends CombatDataBase {
     super(t, s), (this.HealId = i), (this.HealValue = e), (this.SkillId = a);
   }
   ParseToString() {
-    const [t, i] = CombatDataBase.GetEntityConfigNameAndSkillName(
-      this.AttackerId,
-      this.HealId,
-      this.SkillId,
-    );
-    const e = CombatDataBase.GetEntityConfigName(this.TargetId);
-    var a = 0;
-    var s = EntitySystem_1.EntitySystem.Get(this.TargetId).GetComponent(156);
-    var a = s.GetCurrentValue(Protocol_1.Aki.Protocol.KBs.Proto_Life);
-    var s = s.GetCurrentValue(Protocol_1.Aki.Protocol.KBs.Tkn);
+    var [t, i] = CombatDataBase.GetEntityConfigNameAndSkillName(
+        this.AttackerId,
+        this.HealId,
+        this.SkillId,
+      ),
+      e = CombatDataBase.GetEntityConfigName(this.TargetId),
+      a = 0,
+      s = EntitySystem_1.EntitySystem.Get(this.TargetId).GetComponent(156),
+      a = s.GetCurrentValue(Protocol_1.Aki.Protocol.KBs.Proto_Life),
+      s = s.GetCurrentValue(Protocol_1.Aki.Protocol.KBs.Tkn);
     return StringUtils_1.StringUtils.Format(
       "<Date>[{0}]</><Atk>{1}</>施放了<Skill>{2}</>使<Victim>{3}</>恢复<NumDmg>{4}</>点生命<Change>{5}</>",
       this.DateCreate,
@@ -286,8 +291,8 @@ class CombatDataSkill extends CombatDataBase {
     super(t, e), (this.SkillId = i);
   }
   ParseToString() {
-    const t = CombatDataBase.GetEntityConfigName(this.AttackerId);
-    const i = CombatDataBase.GetSkillConfigName(this.AttackerId, this.SkillId);
+    var t = CombatDataBase.GetEntityConfigName(this.AttackerId),
+      i = CombatDataBase.GetSkillConfigName(this.AttackerId, this.SkillId);
     return StringUtils_1.StringUtils.Format(
       "<Date>[{0}]</><Atk>{1}</>施放了技能<Skill>{2}</>。",
       this.DateCreate,
@@ -301,8 +306,8 @@ class CombatDataBuffAdded extends CombatDataBase {
     super(t, e), (this.BuffId = i);
   }
   ParseToString() {
-    const t = CombatDataBase.GetEntityConfigName(this.AttackerId);
-    const i = CombatDataBase.GetEntityConfigName(this.TargetId);
+    var t = CombatDataBase.GetEntityConfigName(this.AttackerId),
+      i = CombatDataBase.GetEntityConfigName(this.TargetId);
     return StringUtils_1.StringUtils.Format(
       "<Date>{0}</><Victim>{1}</>获得了<Atk>{2}</>添加的Buff<NumDmg>{3}</>",
       this.DateCreate,
@@ -317,7 +322,7 @@ class CombatDataBuffRemoved extends CombatDataBase {
     super(t, e), (this.BuffId = i);
   }
   ParseToString() {
-    const t = CombatDataBase.GetEntityConfigName(this.TargetId);
+    var t = CombatDataBase.GetEntityConfigName(this.TargetId);
     return StringUtils_1.StringUtils.Format(
       "<Date>{0}</><Victim>{1}</>失去了Buff<NumDmg>{2}</>",
       this.DateCreate,
@@ -328,8 +333,8 @@ class CombatDataBuffRemoved extends CombatDataBase {
 }
 class CombatDataKilled extends CombatDataBase {
   ParseToString() {
-    const t = CombatDataBase.GetEntityConfigName(this.AttackerId);
-    const i = CombatDataBase.GetEntityConfigName(this.TargetId);
+    var t = CombatDataBase.GetEntityConfigName(this.AttackerId),
+      i = CombatDataBase.GetEntityConfigName(this.TargetId);
     return StringUtils_1.StringUtils.Format(
       "<Date>{0}</><Atk>{1}</>消灭了<Victim>{2}</>!",
       this.DateCreate,
@@ -340,7 +345,7 @@ class CombatDataKilled extends CombatDataBase {
 }
 class CombatDataRevive extends CombatDataBase {
   ParseToString() {
-    const t = CombatDataBase.GetEntityConfigName(this.AttackerId);
+    var t = CombatDataBase.GetEntityConfigName(this.AttackerId);
     return StringUtils_1.StringUtils.Format(
       "<Date>{0}</><Atk>{1}</>复活",
       this.DateCreate,
@@ -405,7 +410,7 @@ let CharacterStatisticsComponent =
             (this.Mkr(t), this.Skr(i));
         }),
         (this.Ekr = (t, i) => {
-          let e;
+          var e;
           CharacterStatisticsComponent_1.vkr &&
             this.Entity.GetComponent(0).IsRole() &&
             (this.dkr.get(i) &&
@@ -462,11 +467,11 @@ let CharacterStatisticsComponent =
           if (CharacterStatisticsComponent_1.vkr)
             if (a) this.Ckr.set(e, Time_1.Time.NowSeconds);
             else {
-              var a = this.Ckr.get(e);
-              const s = Time_1.Time.NowSeconds - a;
-              const r = this.Entity.Id;
+              var a = this.Ckr.get(e),
+                s = Time_1.Time.NowSeconds - a,
+                r = this.Entity.Id;
               let t = CharacterStatisticsComponent_1.Ikr.get(r);
-              const n = this.Entity.GetComponent(0);
+              var n = this.Entity.GetComponent(0);
               t ||
                 ((o = n.GetEntityType()) ===
                 Protocol_1.Aki.Protocol.HBs.Proto_Monster
@@ -482,8 +487,8 @@ let CharacterStatisticsComponent =
                     (t = new CharacterOperationRecord(o, r, h.Id))),
                 CharacterStatisticsComponent_1.Ikr.set(r, t));
               let i = t.TagOperationMap.get(e);
-              var o = n.GetEntityType();
-              var h = CharacterStatisticsComponent_1.StageInfo(o);
+              var o = n.GetEntityType(),
+                h = CharacterStatisticsComponent_1.StageInfo(o);
               i ||
                 ((i = new SkillOperationRecord(h.get(e))),
                 t.TagOperationMap.set(e, i)),
@@ -569,14 +574,14 @@ let CharacterStatisticsComponent =
     }
     static SetStatisticsEnable(t) {
       if (t) {
-        let i;
+        var i;
         for (const a of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
           CharacterStatisticsComponent_1.IsInRecordArea(a.Entity) &&
             (i = a.Entity.GetComponent(24))?.Valid &&
             ((i.akr = !0), this.qkr.push(a.Id));
       } else {
         for (const s of this.qkr) {
-          const e = EntitySystem_1.EntitySystem.Get(s);
+          var e = EntitySystem_1.EntitySystem.Get(s);
           e?.Valid && (e.GetComponent(24).akr = !1);
         }
         this.qkr.length = 0;
@@ -586,8 +591,8 @@ let CharacterStatisticsComponent =
       this.Gkr.clear(), this.Nkr.clear(), this.Okr.clear(), this.kkr.clear();
     }
     hkr(t, i, e, a) {
-      const s = a.Damage;
-      var a = a.DamageData.Id;
+      var s = a.Damage,
+        a = a.DamageData.Id;
       CharacterStatisticsComponent_1.ProcessRecordBySkillType(s, i, e, a, !0),
         CharacterStatisticsComponent_1.Fkr(s, i, e, a, !0);
     }
@@ -606,17 +611,15 @@ let CharacterStatisticsComponent =
     static ProcessRecordBySkillType(a, t, s, r, n, o, h) {
       t = t.GetComponent(0);
       if (t.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Player) {
-        var t = t.Valid ? t.GetRoleId() : 0;
-        var c = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(t);
+        var t = t.Valid ? t.GetRoleId() : 0,
+          c = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(t);
         if (c) {
-          var c = c.GetRoleId();
-          var C = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(c);
-          const _ = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(
-            C.Name,
-          );
-          var C = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillList(
-            C.SkillId,
-          );
+          var c = c.GetRoleId(),
+            C = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(c),
+            _ = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(C.Name),
+            C = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillList(
+              C.SkillId,
+            );
           let i = 0;
           if (C)
             for (const m of C)
@@ -628,7 +631,7 @@ let CharacterStatisticsComponent =
             ? CharacterStatisticsComponent_1.kkr
             : CharacterStatisticsComponent_1.Okr;
           let e = C.get(c);
-          if ((e || ((e = new Map()), C.set(c, e)), i > 0)) {
+          if ((e || ((e = new Map()), C.set(c, e)), 0 < i)) {
             let t = e.get(i);
             t ||
               ((C = skillTypeToString[i - 1]),
@@ -644,7 +647,7 @@ let CharacterStatisticsComponent =
               e.set(i, t)),
               t.AddDamageValue(s.Id, a),
               t.GetTargetCount() > this.Vkr && (this.Vkr = t.GetTargetCount());
-          } else if (DamageById_1.configDamageById.GetConfig(r).Type !== 5)
+          } else if (5 !== DamageById_1.configDamageById.GetConfig(r).Type)
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Test",
@@ -678,19 +681,17 @@ let CharacterStatisticsComponent =
     static Fkr(e, t, a, i, s) {
       t = t.GetComponent(0);
       if (t?.IsRole()) {
-        const r = DamageById_1.configDamageById.GetConfig(i);
+        var r = DamageById_1.configDamageById.GetConfig(i);
         if (r) {
-          var t = t.Valid ? t.GetRoleId() : 0;
-          var n = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(t);
+          var t = t.Valid ? t.GetRoleId() : 0,
+            n = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(t);
           if (n) {
-            var n = n.GetRoleId();
-            var o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(n);
-            var o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(
-              o.Name,
-            );
-            const h = s ? this.Nkr : this.Gkr;
-            let t = h.get(n);
-            let i = (t || ((t = new Map()), h.set(n, t)), t.get(r.Type));
+            var n = n.GetRoleId(),
+              o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(n),
+              o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(o.Name),
+              h = s ? this.Nkr : this.Gkr;
+            let t = h.get(n),
+              i = (t || ((t = new Map()), h.set(n, t)), t.get(r.Type));
             i ||
               ((i = new DamageStatisticsData(
                 n,
@@ -710,40 +711,40 @@ let CharacterStatisticsComponent =
       }
     }
     static ExportStatisticsBySkillType() {
-      const i = new StringBuilder_1.StringBuilder();
+      var i = new StringBuilder_1.StringBuilder();
       i.Append("角色Id,名称,治疗/伤害,技能");
       for (let t = 0; t < this.Vkr; t++) {
-        const e = (t + 1).toString();
+        var e = (t + 1).toString();
         i.Append(StringUtils_1.StringUtils.Format(this.jkr, e, e, e, e, e));
       }
       i.Append("\n");
-      let t = this.Okr;
-      if (t?.size > 0)
-        for (const [, a] of t) for (const [, s] of a) i.Append(s.ToString());
-      if ((t = this.kkr)?.size > 0)
-        for (const [, r] of t) for (const [, n] of r) i.Append(n.ToString());
+      var t = this.Okr;
+      if (0 < t?.size)
+        for (var [, a] of t) for (var [, s] of a) i.Append(s.ToString());
+      if (0 < (t = this.kkr)?.size)
+        for (var [, r] of t) for (var [, n] of r) i.Append(n.ToString());
       return i.ToString();
     }
     static ExportStatisticsByAttackType() {
-      const i = new StringBuilder_1.StringBuilder();
+      var i = new StringBuilder_1.StringBuilder();
       i.Append("角色Id,名称,治疗/伤害,伤害类型");
       for (let t = 0; t < this.Hkr; t++) {
-        const e = (t + 1).toString();
+        var e = (t + 1).toString();
         i.Append(StringUtils_1.StringUtils.Format(this.jkr, e, e, e, e, e));
       }
       i.Append("\n");
-      let t = this.Gkr;
-      if (t?.size > 0)
-        for (const [, a] of t) for (const [, s] of a) i.Append(s.ToString());
-      if ((t = this.Nkr)?.size > 0)
-        for (const [, r] of t) for (const [, n] of r) i.Append(n.ToString());
+      var t = this.Gkr;
+      if (0 < t?.size)
+        for (var [, a] of t) for (var [, s] of a) i.Append(s.ToString());
+      if (0 < (t = this.Nkr)?.size)
+        for (var [, r] of t) for (var [, n] of r) i.Append(n.ToString());
       return i.ToString();
     }
     static get OpenOperationRecord() {
       return this.vkr;
     }
     xkr() {
-      let t;
+      var t;
       CharacterStatisticsComponent_1.vkr &&
         ((t = this.Entity),
         CharacterStatisticsComponent_1.Ikr.has(t.Id) ||
@@ -772,24 +773,24 @@ let CharacterStatisticsComponent =
             EventDefine_1.EEventName.CharOnUnifiedMoveStateChanged,
             this.pkr,
           );
-        let t;
-        let i = this.Entity.GetComponent(158);
-        const e =
-          (i?.Valid && ((i = i.MoveState), this.Skr(i)),
-          this.Entity.CheckGetComponent(185));
+        var t,
+          i = this.Entity.GetComponent(158),
+          e =
+            (i?.Valid && ((i = i.MoveState), this.Skr(i)),
+            this.Entity.CheckGetComponent(185));
         e?.Valid &&
           this.fkr.push(e.ListenForTagAddOrRemove(-2044964178, this.Pji));
         for ([t] of CharacterStatisticsComponent_1.Qkr)
           e.HasTag(t) && this.Ckr.set(t, Time_1.Time.NowSeconds);
       } else {
-        const a = this.Entity.CheckGetComponent(185);
+        var a = this.Entity.CheckGetComponent(185);
         if (a?.Valid) {
           CharacterStatisticsComponent_1.Kkr.push(this.Entity.Id),
             this.fkr.push(a.ListenForTagAddOrRemove(-1112841587, this.Pji)),
             this.fkr.push(a.ListenForTagAddOrRemove(-1109506297, this.Pji)),
             this.fkr.push(a.ListenForTagAddOrRemove(-1838149281, this.Pji)),
             this.fkr.push(a.ListenForTagAddOrRemove(1922078392, this.Pji));
-          for (const [s] of CharacterStatisticsComponent_1.Xkr)
+          for (var [s] of CharacterStatisticsComponent_1.Xkr)
             a.HasTag(s) && this.Ckr.set(s, Time_1.Time.NowSeconds);
         }
       }
@@ -815,7 +816,7 @@ let CharacterStatisticsComponent =
       this.fkr.length = 0;
     }
     Skr(t) {
-      let i;
+      var i;
       CharacterStatisticsComponent_1.$kr.has(t) &&
         (this.gkr.get(t) &&
           ((i = this.Entity.GetComponent(0).GetRoleConfig()),
@@ -834,22 +835,24 @@ let CharacterStatisticsComponent =
     }
     Mkr(e) {
       if (CharacterStatisticsComponent_1.$kr.has(e)) {
-        const a = this.Entity.Id;
-        let t = CharacterStatisticsComponent_1.Ikr.get(a);
-        let i =
-          (t ||
-            ((s = this.Entity.GetComponent(0).GetRoleConfig()),
-            (r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(s.Name)),
-            (t = new CharacterOperationRecord(r, a, s.Id)),
-            CharacterStatisticsComponent_1.Ikr.set(a, t)),
-          t.MoveOperationMap.get(e));
+        var a = this.Entity.Id;
+        let t = CharacterStatisticsComponent_1.Ikr.get(a),
+          i =
+            (t ||
+              ((s = this.Entity.GetComponent(0).GetRoleConfig()),
+              (r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(
+                s.Name,
+              )),
+              (t = new CharacterOperationRecord(r, a, s.Id)),
+              CharacterStatisticsComponent_1.Ikr.set(a, t)),
+            t.MoveOperationMap.get(e));
         i ||
           ((i = new SkillOperationRecord(
             CharacterStatisticsComponent_1.$kr.get(e),
           )),
           t.MoveOperationMap.set(e, i));
-        let s;
-        var r = this.gkr.get(e);
+        var s,
+          r = this.gkr.get(e);
         void 0 === r
           ? Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -873,10 +876,10 @@ let CharacterStatisticsComponent =
     }
     Pkr() {
       if (CharacterStatisticsComponent_1.vkr) {
-        const t = this.Entity.GetComponent(185);
+        var t = this.Entity.GetComponent(185);
         if (t) {
-          let i;
-          const e = this.Entity.GetComponent(0).GetEntityType();
+          var i,
+            e = this.Entity.GetComponent(0).GetEntityType();
           for ([i] of CharacterStatisticsComponent_1.StageInfo(e))
             t.HasTag(i) &&
               (this.Pji(i, !0), Log_1.Log.CheckDebug()) &&
@@ -893,7 +896,7 @@ let CharacterStatisticsComponent =
     static OperationRecord(t) {
       if ((this.vkr = t))
         for (const a of ModelManager_1.ModelManager.CreatureModel.GetAllEntities()) {
-          const i = a.Entity.GetComponent(24);
+          var i = a.Entity.GetComponent(24);
           i &&
             a.Entity.GetComponent(17)?.Valid &&
             this.IsInRecordArea(a.Entity) &&
@@ -901,7 +904,7 @@ let CharacterStatisticsComponent =
         }
       else {
         for (const s of this.Kkr) {
-          let e = EntitySystem_1.EntitySystem.Get(s);
+          var e = EntitySystem_1.EntitySystem.Get(s);
           e?.Valid && (e = e.GetComponent(24)) && ((e.akr = !1), e.wkr());
         }
         this.Kkr.length = 0;
@@ -909,7 +912,7 @@ let CharacterStatisticsComponent =
     }
     static IsInRecordArea(t) {
       if (t?.Valid) {
-        let i = t.GetComponent(0);
+        var i = t.GetComponent(0);
         if (i.IsRole()) return !0;
         if (i.IsMonster()) {
           i = t.GetComponent(1);
@@ -926,10 +929,10 @@ let CharacterStatisticsComponent =
       return !1;
     }
     static ExportRecord() {
-      if (this.Ikr.size !== 0) {
+      if (0 !== this.Ikr.size) {
         this.vkr && this.OperationRecord(!1);
-        let t;
-        const i = new StringBuilder_1.StringBuilder();
+        var t,
+          i = new StringBuilder_1.StringBuilder();
         i.Append(this.Ykr);
         for ([, t] of this.Ikr) i.Append(t.ToString());
         return i.ToString();
@@ -937,7 +940,7 @@ let CharacterStatisticsComponent =
     }
     static OperationRecordCount() {
       let t = 0;
-      for (const [, i] of this.Ikr)
+      for (var [, i] of this.Ikr)
         t =
           (t = (t += i.SkillOperationMap.size) + i.MoveOperationMap.size) +
           i.TagOperationMap.size;
@@ -954,32 +957,32 @@ let CharacterStatisticsComponent =
     }
     static GetAttackerCombatEntities() {
       this.Jkr.length = 0;
-      const t = UE.NewArray(UE.BuiltinString);
-      const i =
-        (t.Add("无"),
-        this.Jkr.push(0),
-        ModelManager_1.ModelManager.CreatureModel.GetAllEntities());
+      var t = UE.NewArray(UE.BuiltinString),
+        i =
+          (t.Add("无"),
+          this.Jkr.push(0),
+          ModelManager_1.ModelManager.CreatureModel.GetAllEntities());
       for (const a of i) {
-        const e = this.GetEntityName(a);
+        var e = this.GetEntityName(a);
         e && (t.Add(e), this.Jkr.push(a.Id));
       }
       return t;
     }
     static GetTargetCombatEntities() {
       this.zkr.length = 0;
-      const t = UE.NewArray(UE.BuiltinString);
-      const i =
-        (t.Add("无"),
-        this.zkr.push(0),
-        ModelManager_1.ModelManager.CreatureModel.GetAllEntities());
+      var t = UE.NewArray(UE.BuiltinString),
+        i =
+          (t.Add("无"),
+          this.zkr.push(0),
+          ModelManager_1.ModelManager.CreatureModel.GetAllEntities());
       for (const a of i) {
-        const e = this.GetEntityName(a);
+        var e = this.GetEntityName(a);
         e && (t.Add(e), this.zkr.push(a.Id));
       }
       return t;
     }
     static GetEntityName(t) {
-      let i, e;
+      var i, e;
       if (t)
         return (i = (t = t.Entity.GetComponent(0))?.GetEntityType()) ===
           Protocol_1.Aki.Protocol.HBs.Proto_Player
@@ -997,11 +1000,11 @@ let CharacterStatisticsComponent =
     }
     static SetTypeOpen(e) {
       if (!this.Zkr) {
-        const i = e.length;
+        var i = e.length;
         if (this.e2r.size !== i) this.Zkr = !0;
         else
           for (let t = 0; t < i; t++) {
-            const a = e[t];
+            var a = e[t];
             if (!this.e2r.get(a)) {
               this.Zkr = !0;
               break;
@@ -1010,7 +1013,7 @@ let CharacterStatisticsComponent =
       }
       this.e2r.clear();
       for (let t = 0, i = e.length; t < i; t++) {
-        const s = e[t];
+        var s = e[t];
         this.e2r.set(s, !0);
       }
     }
@@ -1030,7 +1033,7 @@ let CharacterStatisticsComponent =
       for (const t of this.Rkr) this.Akr(t) && this.Ukr.push(t);
     }
     static GetSubItemsListView(i, e) {
-      const a = UE.NewArray(UE.BuiltinString);
+      var a = UE.NewArray(UE.BuiltinString);
       for (let t = 0; t < e; t++) a.Add(this.Ukr[i + t].ToString());
       return a;
     }
@@ -1038,7 +1041,7 @@ let CharacterStatisticsComponent =
       return this.Ukr.length;
     }
     lkr(t, i, e, a, s) {
-      let r;
+      var r;
       CharacterStatisticsComponent_1.Dkr &&
         ((r = a.Damage),
         (a = a.DamageData.Id),
@@ -1060,7 +1063,7 @@ let CharacterStatisticsComponent =
         CharacterStatisticsComponent_1.Ukr.push(t);
     }
     Bkr(t) {
-      let i;
+      var i;
       !CharacterStatisticsComponent_1.Dkr ||
         !(i = t.Config.Id) ||
         i <= 0 ||
@@ -1074,7 +1077,7 @@ let CharacterStatisticsComponent =
           CharacterStatisticsComponent_1.Ukr.push(i));
     }
     bkr(t) {
-      let i;
+      var i;
       !CharacterStatisticsComponent_1.Dkr ||
         !(i = t.Config.Id) ||
         i <= 0 ||
@@ -1088,7 +1091,7 @@ let CharacterStatisticsComponent =
           CharacterStatisticsComponent_1.Ukr.push(i));
     }
     mkr() {
-      let t;
+      var t;
       CharacterStatisticsComponent_1.Dkr &&
         ((t = new CombatDataRevive(this.Entity.Id)).ToString(),
         CharacterStatisticsComponent_1.Rkr.push(t),
@@ -1097,8 +1100,8 @@ let CharacterStatisticsComponent =
     }
     static Akr(t) {
       return !(
-        (this.t2r > 0 && this.t2r !== t.AttackerId) ||
-        (this.i2r > 0 && this.i2r !== t.TargetId) ||
+        (0 < this.t2r && this.t2r !== t.AttackerId) ||
+        (0 < this.i2r && this.i2r !== t.TargetId) ||
         (!this.e2r.get(0) && t instanceof CombatDataDamage) ||
         (!this.e2r.get(1) && t instanceof CombatDataHeal) ||
         (!this.e2r.get(2) && t instanceof CombatDataSkill) ||
@@ -1196,12 +1199,12 @@ class CharacterOperationRecord {
       (this.TagOperationMap = new Map());
   }
   ToString() {
-    let t;
-    let i;
-    let e;
-    const a = new StringBuilder_1.StringBuilder();
+    var t,
+      i,
+      e,
+      a = new StringBuilder_1.StringBuilder();
     for ([, t] of this.SkillOperationMap) {
-      const s = StringUtils_1.StringUtils.Format(
+      var s = StringUtils_1.StringUtils.Format(
         CHARACTER_RECORD_FMT,
         this.EntityId.toString(),
         this.Name,
@@ -1211,7 +1214,7 @@ class CharacterOperationRecord {
       a.Append(s);
     }
     for ([, i] of this.MoveOperationMap) {
-      const r = StringUtils_1.StringUtils.Format(
+      var r = StringUtils_1.StringUtils.Format(
         CHARACTER_RECORD_FMT,
         this.EntityId.toString(),
         this.Name,
@@ -1221,7 +1224,7 @@ class CharacterOperationRecord {
       a.Append(r);
     }
     for ([, e] of this.TagOperationMap) {
-      const n = StringUtils_1.StringUtils.Format(
+      var n = StringUtils_1.StringUtils.Format(
         CHARACTER_RECORD_FMT,
         this.EntityId.toString(),
         this.Name,
@@ -1233,4 +1236,4 @@ class CharacterOperationRecord {
     return a.ToString();
   }
 }
-// # sourceMappingURL=CharacterStatisticsComponent.js.map
+//# sourceMappingURL=CharacterStatisticsComponent.js.map

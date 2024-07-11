@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiSkill = void 0);
-const Time_1 = require("../../../Core/Common/Time");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const Time_1 = require("../../../Core/Common/Time"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class AiSkill {
   constructor(t) {
     (this.BaseSkill = void 0),
@@ -17,7 +17,7 @@ class AiSkill {
       (this.Bte = t);
   }
   ActivateSkillGroup(t, i) {
-    t >= 0 &&
+    0 <= t &&
       t < this.BaseSkill.RandomSkills.length &&
       (i ? this.ActiveSkillGroup.add(t) : this.ActiveSkillGroup.delete(t));
   }
@@ -28,7 +28,7 @@ class AiSkill {
     return this.Bte.GetCoolDownReady(t);
   }
   SetSkillCdFromNow(t) {
-    let i;
+    var i;
     t &&
       (i = this.SkillInfos.get(t)) &&
       this.Bte.AddCoolDownTime(
@@ -40,15 +40,15 @@ class AiSkill {
       );
   }
   GetSkillWeight(t) {
-    let i = this.Tre.get(t);
+    var i = this.Tre.get(t);
     return void 0 !== i ? i : (i = this.SkillInfos.get(t)) ? i.SkillWeight : 0;
   }
   ChangeSkillWeight(t, i) {
-    i > 0 ? this.Tre.set(t, i) : this.Tre.delete(t);
+    0 < i ? this.Tre.set(t, i) : this.Tre.delete(t);
   }
   InitTagMap() {
     this.PreconditionTagMap.clear();
-    for (let [t, i] of this.SkillPreconditionMap)
+    for (var [t, i] of this.SkillPreconditionMap)
       i.NeedTag &&
         (i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagByName(
           i.NeedTag,
@@ -57,15 +57,15 @@ class AiSkill {
   }
   GetCdDebugString() {
     let t = "";
-    let i;
-    let e;
-    const s = ModelManager_1.ModelManager.GameModeModel.IsMulti
-      ? TimeUtil_1.TimeUtil.GetServerTimeStamp()
-      : Time_1.Time.WorldTime;
+    var i,
+      e,
+      s = ModelManager_1.ModelManager.GameModeModel.IsMulti
+        ? TimeUtil_1.TimeUtil.GetServerTimeStamp()
+        : Time_1.Time.WorldTime;
     for ([i, [e]] of this.Bte.AiCoolDownList)
       t += "\n\t\t\t" + i + " : " + Math.max(0, e - s);
     return t;
   }
 }
 exports.AiSkill = AiSkill;
-// # sourceMappingURL=AiSkill.js.map
+//# sourceMappingURL=AiSkill.js.map

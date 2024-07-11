@@ -23,4 +23,4 @@ class BulletDataAimed {
   }
 }
 exports.BulletDataAimed = BulletDataAimed;
-// # sourceMappingURL=BulletDataAimed.js.map
+//# sourceMappingURL=BulletDataAimed.js.map

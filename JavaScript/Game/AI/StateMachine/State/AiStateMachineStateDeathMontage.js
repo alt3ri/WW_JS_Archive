@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineStateDeathMontage = void 0);
-const AiStateMachine_1 = require("../AiStateMachine");
-const AiStateMachineState_1 = require("./AiStateMachineState");
+const AiStateMachine_1 = require("../AiStateMachine"),
+  AiStateMachineState_1 = require("./AiStateMachineState");
 class AiStateMachineStateDeathMontage extends AiStateMachineState_1.AiStateMachineState {
   constructor() {
     super(...arguments),
@@ -11,7 +11,7 @@ class AiStateMachineStateDeathMontage extends AiStateMachineState_1.AiStateMachi
       (this.Handle = -1);
   }
   OnActivate() {
-    const t = this.Node.MontageComponent;
+    var t = this.Node.MontageComponent;
     if (t)
       switch (this.DeathType) {
         case 1:
@@ -40,4 +40,4 @@ class AiStateMachineStateDeathMontage extends AiStateMachineState_1.AiStateMachi
   }
 }
 exports.AiStateMachineStateDeathMontage = AiStateMachineStateDeathMontage;
-// # sourceMappingURL=AiStateMachineStateDeathMontage.js.map
+//# sourceMappingURL=AiStateMachineStateDeathMontage.js.map

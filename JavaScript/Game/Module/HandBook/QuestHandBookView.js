@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestHandBookView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../Ui/Common/PopupCaptionItem");
-const UiManager_1 = require("../../Ui/UiManager");
-const GenericLayoutNew_1 = require("../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const HandBookController_1 = require("./HandBookController");
-const PlotHandBookItem_1 = require("./PlotHandBookItem");
-const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
+const UE = require("ue"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../Ui/Common/PopupCaptionItem"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  GenericLayoutNew_1 = require("../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  HandBookController_1 = require("./HandBookController"),
+  PlotHandBookItem_1 = require("./PlotHandBookItem"),
+  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
 class QuestHandBookView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -33,7 +33,7 @@ class QuestHandBookView extends UiViewBase_1.UiViewBase {
       (this.OnPhotoSelect = (e) => {
         for (const i of this.GenericLayout?.GetLayoutItemList())
           for (const o of i.GetChildItemList()) {
-            const t = o.GetTog();
+            var t = o.GetTog();
             o.GetData()?.Config.Id === e
               ? t.SetToggleStateForce(1, !1, !0)
               : t.SetToggleStateForce(0, !1, !0);
@@ -80,7 +80,7 @@ class QuestHandBookView extends UiViewBase_1.UiViewBase {
   }
   OnAfterShow() {}
   InitCommonTabTitle() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.HandBookConfig.GetHandBookEntranceConfig(7);
     (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
       this.lqe.SetCloseCallBack(this.JSt),
@@ -88,7 +88,7 @@ class QuestHandBookView extends UiViewBase_1.UiViewBase {
       this.lqe.SetTitleIcon(e.TitleIcon);
   }
   InitVerticalLayout() {
-    const e = ConfigCommon_1.ConfigCommon.ToList(
+    var e = ConfigCommon_1.ConfigCommon.ToList(
       ConfigManager_1.ConfigManager.HandBookConfig.GetPlotTypeConfigList(),
     );
     e.sort(this.aZt),
@@ -102,7 +102,7 @@ class QuestHandBookView extends UiViewBase_1.UiViewBase {
       this.GenericLayout.RebuildLayoutByDataNew(this.hei);
   }
   RefreshCollectText() {
-    const e = HandBookController_1.HandBookController.GetCollectProgress(7);
+    var e = HandBookController_1.HandBookController.GetCollectProgress(7);
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(2), "RoleExp", e[0], e[1]),
       this.GetText(2)?.SetUIActive(!1);
   }
@@ -110,7 +110,7 @@ class QuestHandBookView extends UiViewBase_1.UiViewBase {
     let e = !0;
     for (const i of this.GenericLayout?.GetLayoutItemList())
       for (const o of i.GetChildItemList()) {
-        const t = o.GetTog();
+        var t = o.GetTog();
         e && o.GetIsUnlock()
           ? (t.SetToggleStateForce(1, !1, !0), (e = !1))
           : t.SetToggleStateForce(0, !1, !0);
@@ -123,4 +123,4 @@ class QuestHandBookView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.QuestHandBookView = QuestHandBookView;
-// # sourceMappingURL=QuestHandBookView.js.map
+//# sourceMappingURL=QuestHandBookView.js.map

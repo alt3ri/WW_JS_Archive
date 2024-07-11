@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configUiFloatConfigByViewName = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const UiFloatConfig_1 = require("../Config/UiFloatConfig");
-const DB = "db_ui.db";
-const FILE = "u.UiFloat层级配置.csv";
-const TABLE = "UiFloatConfig";
-const COMMAND = "select BinData from `UiFloatConfig` where ViewName = ?";
-const KEY_PREFIX = "UiFloatConfigByViewName";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  UiFloatConfig_1 = require("../Config/UiFloatConfig"),
+  DB = "db_ui.db",
+  FILE = "u.UiFloat层级配置.csv",
+  TABLE = "UiFloatConfig",
+  COMMAND = "select BinData from `UiFloatConfig` where ViewName = ?",
+  KEY_PREFIX = "UiFloatConfigByViewName",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configUiFloatConfigByViewName.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configUiFloatConfigByViewName.GetConfig(";
 exports.configUiFloatConfigByViewName = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configUiFloatConfigByViewName = {
       if (
         (e =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "ViewName",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "ViewName",
+              o,
+            ]))
       ) {
-        var e;
-        var n = void 0;
+        var e,
+          n = void 0;
         if (
           (([e, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configUiFloatConfigByViewName = {
     }
   },
 };
-// # sourceMappingURL=UiFloatConfigByViewName.js.map
+//# sourceMappingURL=UiFloatConfigByViewName.js.map

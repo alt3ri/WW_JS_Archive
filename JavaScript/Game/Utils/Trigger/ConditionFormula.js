@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Formula = void 0);
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
+const Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log");
 class Lexer {
   constructor(t) {
     (this.LCr = t), (this.cC = 0);
   }
   Tokenize() {
     for (var t = []; this.cC < this.LCr.length; ) {
-      const r = this.LCr[this.cC];
+      var r = this.LCr[this.cC];
       if (/\d/.test(r)) t.push(this.DCr());
       else if (/[a-zA-Z]/.test(r)) t.push(this.RCr());
       else if (/['"`]/.test(r)) t.push(this.UCr());
       else if (/\+|-|\*|\/|%|>|<|=|!|&|\|/.test(r)) t.push(this.ACr());
       else {
-        if (r === ",") t.push({ TokenType: 5, TokenString: "," });
-        else if (r === "(") t.push({ TokenType: 6, TokenString: "(" });
-        else if (r === ")") t.push({ TokenType: 7, TokenString: ")" });
-        else if (r === "[") t.push({ TokenType: 8, TokenString: "[" });
-        else if (r === "]") t.push({ TokenType: 9, TokenString: "]" });
+        if ("," === r) t.push({ TokenType: 5, TokenString: "," });
+        else if ("(" === r) t.push({ TokenType: 6, TokenString: "(" });
+        else if (")" === r) t.push({ TokenType: 7, TokenString: ")" });
+        else if ("[" === r) t.push({ TokenType: 8, TokenString: "[" });
+        else if ("]" === r) t.push({ TokenType: 9, TokenString: "]" });
         else if (!/\s/.test(r)) throw new Error("Invalid character: " + r);
         this.cC++;
       }
@@ -30,7 +30,7 @@ class Lexer {
     let t = "";
     for (; this.cC < this.LCr.length && /\d/.test(this.LCr[this.cC]); )
       (t += this.LCr[this.cC]), this.cC++;
-    if (this.LCr[this.cC] === ".")
+    if ("." === this.LCr[this.cC])
       for (
         t += ".", this.cC++;
         this.cC < this.LCr.length && /\d/.test(this.LCr[this.cC]);
@@ -43,23 +43,23 @@ class Lexer {
     let t = "";
     for (; this.cC < this.LCr.length && /[a-zA-Z0-9]/.test(this.LCr[this.cC]); )
       t += this.LCr[this.cC++];
-    return t === "TRUE" || t === "FALSE"
+    return "TRUE" === t || "FALSE" === t
       ? { TokenType: 1, TokenString: t.toLowerCase() }
-      : t === "AND"
+      : "AND" === t
         ? { TokenType: 4, TokenString: "&&" }
-        : t === "OR"
+        : "OR" === t
           ? { TokenType: 4, TokenString: "||" }
-          : t === "XOR"
+          : "XOR" === t
             ? { TokenType: 4, TokenString: "!=" }
-            : t === "NOT"
+            : "NOT" === t
               ? { TokenType: 4, TokenString: "!" }
               : { TokenType: 3, TokenString: t };
   }
   UCr() {
-    const t = this.LCr[this.cC++];
+    var t = this.LCr[this.cC++];
     let r = "";
     for (; this.cC < this.LCr.length; ) {
-      const e = this.LCr[this.cC++];
+      var e = this.LCr[this.cC++];
       if (e === t) return { TokenType: 2, TokenString: r };
       r += e;
     }
@@ -83,7 +83,7 @@ class Parser {
   }
   Parse(t) {
     this.PCr = t;
-    const r = this.wCr();
+    var r = this.wCr();
     if (this.cC !== this.xCr.length - 1)
       throw new Error("Unexpected token when parsing expression " + t);
     return r;
@@ -94,8 +94,8 @@ class Parser {
   BCr() {
     let t = this.bCr();
     for (; this.qCr("||"); ) {
-      const r = this.GCr().TokenString;
-      const e = this.bCr();
+      var r = this.GCr().TokenString,
+        e = this.bCr();
       t = { NodeType: 5, Operator: r, Args: [t, e] };
     }
     return t;
@@ -103,8 +103,8 @@ class Parser {
   bCr() {
     let t = this.NCr();
     for (; this.qCr("&&"); ) {
-      const r = this.GCr().TokenString;
-      const e = this.NCr();
+      var r = this.GCr().TokenString,
+        e = this.NCr();
       t = { NodeType: 5, Operator: r, Args: [t, e] };
     }
     return t;
@@ -112,8 +112,8 @@ class Parser {
   NCr() {
     let t = this.OCr();
     for (; this.qCr("==", "!="); ) {
-      const r = this.GCr().TokenString;
-      const e = this.OCr();
+      var r = this.GCr().TokenString,
+        e = this.OCr();
       t = { NodeType: 5, Operator: r, Args: [t, e] };
     }
     return t;
@@ -121,8 +121,8 @@ class Parser {
   OCr() {
     let t = this.kCr();
     for (; this.qCr(">", ">=", "<", "<="); ) {
-      const r = this.GCr().TokenString;
-      const e = this.kCr();
+      var r = this.GCr().TokenString,
+        e = this.kCr();
       t = { NodeType: 5, Operator: r, Args: [t, e] };
     }
     return t;
@@ -130,8 +130,8 @@ class Parser {
   kCr() {
     let t = this.FCr();
     for (; this.qCr("+", "-"); ) {
-      const r = this.GCr().TokenString;
-      const e = this.FCr();
+      var r = this.GCr().TokenString,
+        e = this.FCr();
       t = { NodeType: 5, Operator: r, Args: [t, e] };
     }
     return t;
@@ -139,8 +139,8 @@ class Parser {
   FCr() {
     let t = this.VCr();
     for (; this.qCr("*", "/", "%"); ) {
-      const r = this.GCr().TokenString;
-      const e = this.VCr();
+      var r = this.GCr().TokenString,
+        e = this.VCr();
       t = { NodeType: 5, Operator: r, Args: [t, e] };
     }
     return t;
@@ -151,26 +151,26 @@ class Parser {
       : this.HCr();
   }
   HCr() {
-    const r = this.jCr();
-    if (r.TokenType === 0)
+    var r = this.jCr();
+    if (0 === r.TokenType)
       return (
         this.WCr(),
         r.TokenString.includes(".")
           ? { NodeType: 0, Value: parseFloat(r.TokenString) }
-          : r.TokenString.length > 10
+          : 10 < r.TokenString.length
             ? { NodeType: 0, Value: BigInt(r.TokenString) }
             : { NodeType: 0, Value: parseInt(r.TokenString) }
       );
-    if (r.TokenType === 1)
-      return this.WCr(), { NodeType: 1, Value: r.TokenString === "true" };
-    if (r.TokenType === 2)
+    if (1 === r.TokenType)
+      return this.WCr(), { NodeType: 1, Value: "true" === r.TokenString };
+    if (2 === r.TokenType)
       return this.WCr(), { NodeType: 2, Value: r.TokenString };
-    if (r.TokenType === 3) {
+    if (3 === r.TokenType) {
       var e = r.TokenString;
       if ((this.WCr(), this.KCr(6))) return this.QCr(e);
       let t = { NodeType: 4, Value: e };
       for (; this.KCr(8); ) {
-        const i = this.wCr();
+        var i = this.wCr();
         this.XCr(
           9,
           "Expected ']' after array when parsing expression " + this.PCr,
@@ -189,7 +189,7 @@ class Parser {
     throw new Error(r.TokenString + " when parsing expression " + this.PCr);
   }
   QCr(t) {
-    const r = [];
+    var r = [];
     if (!this.Ii(7)) for (; r.push(this.wCr()), this.KCr(5); );
     return (
       this.XCr(
@@ -200,12 +200,12 @@ class Parser {
     );
   }
   $Cr() {
-    const t = [];
+    var t = [];
     if (!this.Ii(9)) for (; t.push(this.wCr()), this.KCr(5); );
     this.XCr(9, "Expected ']' after array when parsing expression " + this.PCr);
     let r = { NodeType: 3, Value: t };
     for (; this.KCr(8); ) {
-      const e = this.wCr();
+      var e = this.wCr();
       this.XCr(
         9,
         "Expected ']' after array when parsing expression " + this.PCr,
@@ -234,7 +234,7 @@ class Parser {
     return this.YCr() || this.cC++, this.GCr();
   }
   YCr() {
-    return this.jCr().TokenType === 10;
+    return 10 === this.jCr().TokenType;
   }
   jCr() {
     return this.xCr[this.cC];
@@ -253,13 +253,13 @@ class Formula {
       (this.ujn = ""),
       (this.cjn = new Set()),
       (this.PCr = t);
-    var r = new Lexer(t).Tokenize();
-    var r = new Parser(r);
+    var r = new Lexer(t).Tokenize(),
+      r = new Parser(r);
     (this.JCr = r.Parse(t)), (this.Params = void 0);
   }
   SetBuiltinFunctions(t) {
     this.zCr.clear();
-    for (const [r, e] of t) this.zCr.set(r, e);
+    for (var [r, e] of t) this.zCr.set(r, e);
     return this;
   }
   AddBuiltinFunction(t, r) {
@@ -291,7 +291,7 @@ class Formula {
         if (void 0 === t || !Array.isArray(t))
           throw new Error("Variable is not a valid array");
         var e = this.ZCr(r.Index);
-        if (void 0 === e || typeof e !== "number" || e < 0 || e >= t.length)
+        if (void 0 === e || "number" != typeof e || e < 0 || e >= t.length)
           throw new Error("Invalid array index: " + String(e));
         return (
           Info_1.Info.IsBuildDevelopmentOrDebug &&
@@ -311,8 +311,8 @@ class Formula {
             throw new Error("Invalid unary operator: " + r.Operator);
         }
       case 5:
-        var s = this.ZCr(r.Args[0]);
-        var n = this.ZCr(r.Args[1]);
+        var s = this.ZCr(r.Args[0]),
+          n = this.ZCr(r.Args[1]);
         try {
           switch (r.Operator) {
             case "+":
@@ -426,4 +426,4 @@ class Formula {
   }
 }
 exports.Formula = Formula;
-// # sourceMappingURL=ConditionFormula.js.map
+//# sourceMappingURL=ConditionFormula.js.map

@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AreaModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiManager_1 = require("../../Ui/UiManager");
+const Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiManager_1 = require("../../Ui/UiManager");
 class AreaModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -60,19 +60,19 @@ class AreaModel extends ModelBase_1.ModelBase {
   }
   GetCurrentAreaId(e) {
     if (void 0 === e) return this.AreaInfo.AreaId;
-    const r = ConfigManager_1.ConfigManager.AreaConfig;
-    let t = this.AreaInfo.AreaId;
-    let i = r.GetAreaInfo(t);
+    var r = ConfigManager_1.ConfigManager.AreaConfig;
+    let t = this.AreaInfo.AreaId,
+      i = r.GetAreaInfo(t);
     for (; i && i.Level !== e; ) (t = i.Father), (i = r.GetAreaInfo(t));
     return t;
   }
   SetAreaInfo(e) {
-    e !== 0 &&
+    0 !== e &&
       (this.fje = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(e));
   }
   SetAreaName(e, r = !1) {
-    let t;
-    e !== 0 &&
+    var t;
+    0 !== e &&
       ((this.fje = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(e)),
       this.fje.Tips &&
         ((this.pje = this.fje.Title),
@@ -97,7 +97,7 @@ class AreaModel extends ModelBase_1.ModelBase {
     return this.Mje.get(e);
   }
   ToggleAreaState(e, r) {
-    const t = this.vje.get(e);
+    var t = this.vje.get(e);
     this.Mje.get(e) !== r && (this.Mje.set(e, r), t?.ToggleArea(r));
   }
   InitAreaStates(e) {
@@ -107,7 +107,7 @@ class AreaModel extends ModelBase_1.ModelBase {
   }
   GetAreaCountryId() {
     if (this.fje) {
-      if (this.fje.CountryId !== 0) return this.fje.CountryId;
+      if (0 !== this.fje.CountryId) return this.fje.CountryId;
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Area", 11, "[区域.xlsx]当前区域没有配置所属国家id", [
           "区域id",
@@ -123,14 +123,14 @@ class AreaModel extends ModelBase_1.ModelBase {
       t < e.GetLevelData().GetLevel() && (t = e.GetLevelData().GetLevel());
     });
     var e = CommonParamById_1.configCommonParamById.GetIntConfig(
-      "HighDangerLevelOffset",
-    );
-    const r = CommonParamById_1.configCommonParamById.GetIntConfig(
-      "MidDangerLevelOffset",
-    );
-    let i = this.fje.WorldMonsterLevelMax.get(
-      ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
-    );
+        "HighDangerLevelOffset",
+      ),
+      r = CommonParamById_1.configCommonParamById.GetIntConfig(
+        "MidDangerLevelOffset",
+      ),
+      i = this.fje.WorldMonsterLevelMax.get(
+        ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
+      );
     if (i) {
       i = t - i;
       if (i < r && e <= i) return 1;
@@ -154,4 +154,4 @@ class AreaModel extends ModelBase_1.ModelBase {
   }
 }
 exports.AreaModel = AreaModel;
-// # sourceMappingURL=AreaModel.js.map
+//# sourceMappingURL=AreaModel.js.map

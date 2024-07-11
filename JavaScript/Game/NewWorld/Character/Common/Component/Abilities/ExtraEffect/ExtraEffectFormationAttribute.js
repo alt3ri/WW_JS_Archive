@@ -6,11 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.ModifyFormationAttributeIncreaseRate =
     exports.SetFormationAttributeRate =
       void 0);
-const Log_1 = require("../../../../../../../Core/Common/Log");
-const FormationAttributeController_1 = require("../../../../../../Module/Abilities/FormationAttributeController");
-const AbilityUtils_1 = require("../AbilityUtils");
-const CharacterAttributeTypes_1 = require("../CharacterAttributeTypes");
-const ExtraEffectBase_1 = require("./ExtraEffectBase");
+const Log_1 = require("../../../../../../../Core/Common/Log"),
+  FormationAttributeController_1 = require("../../../../../../Module/Abilities/FormationAttributeController"),
+  AbilityUtils_1 = require("../AbilityUtils"),
+  CharacterAttributeTypes_1 = require("../CharacterAttributeTypes"),
+  ExtraEffectBase_1 = require("./ExtraEffectBase");
 class SetFormationAttributeRate extends ExtraEffectBase_1.BuffEffect {
   constructor() {
     super(...arguments),
@@ -176,11 +176,11 @@ class FormationLockUpperBound extends ExtraEffectBase_1.BuffEffect {
         this.Level,
         0,
       )),
-      t.ExtraEffectParameters.length > 2 &&
+      2 < t.ExtraEffectParameters.length &&
         (this.Percent = Number(t.ExtraEffectParameters[2]));
   }
   OnCreated() {
-    this.AttributeId !== -1 &&
+    -1 !== this.AttributeId &&
       this.OwnerBuffComponent?.HasBuffAuthority() &&
       FormationAttributeController_1.FormationAttributeController.AddBoundsLocker(
         this.AttributeId,
@@ -198,7 +198,7 @@ class FormationLockUpperBound extends ExtraEffectBase_1.BuffEffect {
   }
   OnExecute() {}
   OnRemoved() {
-    this.AttributeId !== -1 &&
+    -1 !== this.AttributeId &&
       this.OwnerBuffComponent?.HasBuffAuthority() &&
       FormationAttributeController_1.FormationAttributeController.RemoveBoundsLocker(
         this.AttributeId,
@@ -226,11 +226,11 @@ class FormationLockLowerBound extends ExtraEffectBase_1.BuffEffect {
         this.Level,
         0,
       )),
-      t.ExtraEffectParameters.length > 2 &&
+      2 < t.ExtraEffectParameters.length &&
         (this.Percent = Number(t.ExtraEffectParameters[2]));
   }
   OnCreated() {
-    this.AttributeId !== -1 &&
+    -1 !== this.AttributeId &&
       this.OwnerBuffComponent?.HasBuffAuthority() &&
       FormationAttributeController_1.FormationAttributeController.AddBoundsLocker(
         this.AttributeId,
@@ -248,7 +248,7 @@ class FormationLockLowerBound extends ExtraEffectBase_1.BuffEffect {
   }
   OnExecute() {}
   OnRemoved() {
-    this.AttributeId !== -1 &&
+    -1 !== this.AttributeId &&
       this.OwnerBuffComponent?.HasBuffAuthority() &&
       FormationAttributeController_1.FormationAttributeController.RemoveBoundsLocker(
         this.AttributeId,
@@ -257,4 +257,4 @@ class FormationLockLowerBound extends ExtraEffectBase_1.BuffEffect {
   }
 }
 exports.FormationLockLowerBound = FormationLockLowerBound;
-// # sourceMappingURL=ExtraEffectFormationAttribute.js.map
+//# sourceMappingURL=ExtraEffectFormationAttribute.js.map

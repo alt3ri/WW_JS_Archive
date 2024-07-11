@@ -25,17 +25,17 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.getLevelsConfig =
     exports.getMapConfigFromCsv =
       void 0);
-const IGlobal_1 = require("../../Interface/IGlobal");
-const Init_1 = require("../../Interface/Init");
-const CsvRegistry_1 = require("../CsvConfig/CsvRegistry");
-const DungeonRewardWhiteListCsv_1 = require("../CsvConfig/DungeonRewardWhiteListCsv");
-const LevelsConfigCsv_1 = require("../CsvConfig/LevelsConfigCsv");
-const SetEntityVisibleWhiteListCsv_1 = require("../CsvConfig/SetEntityVisibleWhiteListCsv");
-const File_1 = require("../Misc/File");
-const Util_1 = require("../Misc/Util");
-const SegmentIdGenerator_1 = require("./SegmentIdGenerator");
+const IGlobal_1 = require("../../Interface/IGlobal"),
+  Init_1 = require("../../Interface/Init"),
+  CsvRegistry_1 = require("../CsvConfig/CsvRegistry"),
+  DungeonRewardWhiteListCsv_1 = require("../CsvConfig/DungeonRewardWhiteListCsv"),
+  LevelsConfigCsv_1 = require("../CsvConfig/LevelsConfigCsv"),
+  SetEntityVisibleWhiteListCsv_1 = require("../CsvConfig/SetEntityVisibleWhiteListCsv"),
+  File_1 = require("../Misc/File"),
+  Util_1 = require("../Misc/Util"),
+  SegmentIdGenerator_1 = require("./SegmentIdGenerator");
 function getMapConfigFromCsv() {
-  const e = CsvRegistry_1.CsvRegistry.Instance.GetAllCsvRows(
+  var e = CsvRegistry_1.CsvRegistry.Instance.GetAllCsvRows(
     LevelsConfigCsv_1.LevelsConfigCsv,
   );
   const t = [];
@@ -82,13 +82,11 @@ class LevelsConfigManager {
       (this.ge = (0, Util_1.arrayToMap)(this.ye.Levels, "Name"));
   }
   GetJsonLevelsConfig() {
-    const e = (0, File_1.getProjectPath)(
-      IGlobal_1.globalConfig.LevelsConfigPath,
-    );
+    var e = (0, File_1.getProjectPath)(IGlobal_1.globalConfig.LevelsConfigPath);
     return (0, Util_1.readJsonObj)(e, { Levels: [] });
   }
   ExportLevelsConfig() {
-    if ((0, Util_1.getPlatformType)() === 2)
+    if (2 === (0, Util_1.getPlatformType)())
       return (
         (e = (0, File_1.getProjectPath)(
           IGlobal_1.globalConfig.LevelsConfigPath,
@@ -136,7 +134,7 @@ function getExportConfig() {
   );
 }
 function isExistLevel(t) {
-  return typeof t === "number"
+  return "number" == typeof t
     ? void 0 !== getLevels().find((e) => e.Id === t)
     : void 0 !== getLevels().find((e) => e.Name === t);
 }
@@ -178,22 +176,20 @@ function getTemplateLevelId() {
   return exports.TEMPLATE_MAP_ID;
 }
 function getLevelAssetPath(e) {
-  const t = (typeof e === "number" ? getLevelConfigById : getLevelConfigByName)(
-    e,
-  );
+  var t = ("number" == typeof e ? getLevelConfigById : getLevelConfigByName)(e);
   if (t)
     return "" + (0, File_1.getProjectPath)(`Content/${t.ContentPath}.umap`);
   throw new Error(`getLevelAssetPath: levelNameOrId = ${e} is not exist`);
 }
 function getEntityPath(e, t) {
-  e = typeof e === "string" ? levelNameToId(e) : e;
+  e = "string" == typeof e ? levelNameToId(e) : e;
   return (
     (0, File_1.getProjectPath)(IGlobal_1.globalConfig.LevelsDir) +
     `/${e}/${t}.json`
   );
 }
 function getEntityPathByIdAndName(e, t, n) {
-  e = typeof e === "string" ? levelNameToId(e) : e;
+  e = "string" == typeof e ? levelNameToId(e) : e;
   return (
     (0, File_1.getProjectPath)(IGlobal_1.globalConfig.LevelsDir) +
     `/${e}/${(0, SegmentIdGenerator_1.getCreatorById)(t)}/${t}_${n}.json`
@@ -206,8 +202,8 @@ function getDefaultLevelId() {
   return (0, Init_1.isUe5)() ? 1 : 8;
 }
 function getLevelRewardWhiteList(t) {
-  const n = new Set();
-  const i = new Set();
+  const n = new Set(),
+    i = new Set();
   return (
     CsvRegistry_1.CsvRegistry.Instance.GetAllCsvRows(
       DungeonRewardWhiteListCsv_1.DungeonRewardWhiteListCsv,
@@ -251,4 +247,4 @@ function getSetEntityVisibleWhiteList() {
   (exports.getDefaultLevelId = getDefaultLevelId),
   (exports.getLevelRewardWhiteList = getLevelRewardWhiteList),
   (exports.getSetEntityVisibleWhiteList = getSetEntityVisibleWhiteList);
-// # sourceMappingURL=Level.js.map
+//# sourceMappingURL=Level.js.map

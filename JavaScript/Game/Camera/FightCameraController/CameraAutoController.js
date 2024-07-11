@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraAutoController = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../GlobalData");
-const CameraUtility_1 = require("../CameraUtility");
-const CameraControllerBase_1 = require("./CameraControllerBase");
-const IS_DEBUG = !1;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../GlobalData"),
+  CameraUtility_1 = require("../CameraUtility"),
+  CameraControllerBase_1 = require("./CameraControllerBase"),
+  IS_DEBUG = !1;
 class CameraAutoController extends CameraControllerBase_1.CameraControllerBase {
   constructor() {
     super(...arguments),
@@ -98,7 +98,7 @@ class CameraAutoController extends CameraControllerBase_1.CameraControllerBase {
   UpdateCustomEnableCondition() {
     return (
       !!this.Camera.TargetEntity &&
-      (this.mle.size > 0 ||
+      (0 < this.mle.size ||
         (CameraUtility_1.CameraUtility.GetSocketLocation(
           void 0,
           this.Camera.TargetSocketName,
@@ -116,7 +116,7 @@ class CameraAutoController extends CameraControllerBase_1.CameraControllerBase {
     );
   }
   UpdateInternal(t) {
-    let i, s, h, e, r;
+    var i, s, h, e, r;
     this.Camera.TargetEntity &&
       this.Camera.IsTargetLocationValid &&
       ((i = this.Camera.PlayerLocation),
@@ -187,7 +187,7 @@ class CameraAutoController extends CameraControllerBase_1.CameraControllerBase {
     (this.ule = 0), this.cle.Reset(), this.Cle(t, !1);
   }
   Cle(t, i) {
-    let s, h;
+    var s, h;
     this.Camera.CameraModifyController?.ModifySettings?.IsModifiedArmLength ||
       this.Camera.CameraModifyController?.ModifyFadeOutData?.ModifyArmLength ||
       (this.CurrentAutoCameraArmLengthAddition = MathUtils_1.MathUtils.InterpTo(
@@ -246,9 +246,9 @@ class CameraAutoController extends CameraControllerBase_1.CameraControllerBase {
       this.ResultPositionRef,
       !1,
     );
-    var t = (0, puerts_1.$unref)(this.ResultPositionRef);
-    const i = (0, puerts_1.$ref)(0);
-    const s = (0, puerts_1.$ref)(0);
+    var t = (0, puerts_1.$unref)(this.ResultPositionRef),
+      i = (0, puerts_1.$ref)(0),
+      s = (0, puerts_1.$ref)(0);
     return (
       this.Camera.CharacterController.GetViewportSize(i, s),
       t.Y / (0, puerts_1.$unref)(s)
@@ -256,4 +256,4 @@ class CameraAutoController extends CameraControllerBase_1.CameraControllerBase {
   }
 }
 exports.CameraAutoController = CameraAutoController;
-// # sourceMappingURL=CameraAutoController.js.map
+//# sourceMappingURL=CameraAutoController.js.map

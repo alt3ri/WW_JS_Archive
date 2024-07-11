@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelFuncFlagModel = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ModelBase_1 = require("../../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const LevelFuncFlagDefine_1 = require("./LevelFuncFlagDefine");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  LevelFuncFlagDefine_1 = require("./LevelFuncFlagDefine");
 class LevelFuncFlagModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments), (this.BRe = new Map());
   }
   OnInit() {
-    for (const [e, n] of LevelFuncFlagDefine_1.levelFuncFlagDefaultVal)
+    for (var [e, n] of LevelFuncFlagDefine_1.levelFuncFlagDefaultVal)
       this.BRe.set(e, n);
-    for (const [t, r] of this.BRe)
+    for (var [t, r] of this.BRe)
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnLevelFuncFlagSet,
         t,
@@ -48,9 +48,9 @@ class LevelFuncFlagModel extends ModelBase_1.ModelBase {
       ));
   }
   ResetFuncFlagToDefault(e) {
-    const n = LevelFuncFlagDefine_1.levelFuncFlagDefaultVal.get(e) ?? !1;
+    var n = LevelFuncFlagDefine_1.levelFuncFlagDefaultVal.get(e) ?? !1;
     this.SetFuncFlagEnable(e, n);
   }
 }
 exports.LevelFuncFlagModel = LevelFuncFlagModel;
-// # sourceMappingURL=LevelFuncFlagModel.js.map
+//# sourceMappingURL=LevelFuncFlagModel.js.map

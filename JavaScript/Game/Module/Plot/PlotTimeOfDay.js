@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotTimeOfDay = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const TimeOfDayController_1 = require("../TimeOfDay/TimeOfDayController");
-const TimeOfDayDefine_1 = require("../TimeOfDay/TimeOfDayDefine");
-const TimeOfDayModel_1 = require("../TimeOfDay/TimeOfDayModel");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  TimeOfDayController_1 = require("../TimeOfDay/TimeOfDayController"),
+  TimeOfDayDefine_1 = require("../TimeOfDay/TimeOfDayDefine"),
+  TimeOfDayModel_1 = require("../TimeOfDay/TimeOfDayModel");
 class PlotTimeOfDay {
   constructor() {
     (this.cJi = !1),
@@ -41,7 +41,7 @@ class PlotTimeOfDay {
     this.pJi(),
       (ModelManager_1.ModelManager.TimeOfDayModel.TimeRunLockState = this.cJi),
       this.Uk &&
-        this.CJi !== 0 &&
+        0 !== this.CJi &&
         this.CJi !==
           ModelManager_1.ModelManager.TimeOfDayModel.GameTime.Second &&
         TimeOfDayController_1.TimeOfDayController.AdjustTime(
@@ -56,7 +56,7 @@ class PlotTimeOfDay {
       ((ModelManager_1.ModelManager.TimeOfDayModel.TimeRunLockState = this.gJi),
       (ModelManager_1.ModelManager.TimeOfDayModel.TimeSynLockState = this.fJi),
       this.gJi &&
-        this.dJi !== 0 &&
+        0 !== this.dJi &&
         this.dJi !==
           ModelManager_1.ModelManager.TimeOfDayModel.GameTime.Second &&
         TimeOfDayController_1.TimeOfDayController.AdjustTime(
@@ -97,7 +97,7 @@ class PlotTimeOfDay {
         (e += TimeOfDayDefine_1.TOD_SECOND_PER_DAY);
       t = TimeOfDayModel_1.TodDayTime.ConvertFromRealTimeSecond(r);
       let i = 1;
-      t > 0 && (i = (e - a) / t),
+      0 < t && (i = (e - a) / t),
         (ModelManager_1.ModelManager.TimeOfDayModel.TimeRunLockState = !1),
         TimeOfDayController_1.TimeOfDayController.AdjustTime(
           a,
@@ -125,4 +125,4 @@ class PlotTimeOfDay {
   }
 }
 exports.PlotTimeOfDay = PlotTimeOfDay;
-// # sourceMappingURL=PlotTimeOfDay.js.map
+//# sourceMappingURL=PlotTimeOfDay.js.map

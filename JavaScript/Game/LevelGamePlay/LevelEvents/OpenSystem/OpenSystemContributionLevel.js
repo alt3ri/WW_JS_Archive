@@ -8,4 +8,4 @@ class OpenSystemContributionLevel extends OpenSystemBase_1.OpenSystemBase {
   }
 }
 exports.OpenSystemContributionLevel = OpenSystemContributionLevel;
-// # sourceMappingURL=OpenSystemContributionLevel.js.map
+//# sourceMappingURL=OpenSystemContributionLevel.js.map

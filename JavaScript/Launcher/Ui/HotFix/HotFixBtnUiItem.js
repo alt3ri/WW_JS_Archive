@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HotFixBtnUiItem = void 0);
-const LaunchComponentsAction_1 = require("../LaunchComponentsAction");
-const HotFixManager_1 = require("./HotFixManager");
+const LaunchComponentsAction_1 = require("../LaunchComponentsAction"),
+  HotFixManager_1 = require("./HotFixManager");
 class HotFixBtnUiItem extends LaunchComponentsAction_1.LaunchComponentsAction {
   constructor() {
     super(...arguments),
@@ -26,4 +26,4 @@ class HotFixBtnUiItem extends LaunchComponentsAction_1.LaunchComponentsAction {
   }
 }
 exports.HotFixBtnUiItem = HotFixBtnUiItem;
-// # sourceMappingURL=HotFixBtnUiItem.js.map
+//# sourceMappingURL=HotFixBtnUiItem.js.map

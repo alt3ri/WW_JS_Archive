@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.EPowerShopType =
       void 0);
 const UiPopViewData_1 = require("../../Ui/Define/UiPopViewData");
-let EPowerShopType;
+var EPowerShopType;
 !(function (t) {
   (t[(t.BuyWithMoney = 6)] = "BuyWithMoney"),
     (t[(t.BuyWithItem = 7)] = "BuyWithItem");
@@ -56,4 +56,4 @@ class PowerViewData extends UiPopViewData_1.UiPopViewData {
   }
 }
 exports.PowerViewData = PowerViewData;
-// # sourceMappingURL=PowerDefines.js.map
+//# sourceMappingURL=PowerDefines.js.map

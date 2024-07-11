@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityDoubleRewardController = void 0);
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ActivityControllerBase_1 = require("../../ActivityControllerBase");
-const ActivityDoubleRewardData_1 = require("./ActivityDoubleRewardData");
-const ActivitySubViewDoubleReward_1 = require("./ActivitySubViewDoubleReward");
+const ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ActivityControllerBase_1 = require("../../ActivityControllerBase"),
+  ActivityDoubleRewardData_1 = require("./ActivityDoubleRewardData"),
+  ActivitySubViewDoubleReward_1 = require("./ActivitySubViewDoubleReward");
 class ActivityDoubleRewardController extends ActivityControllerBase_1.ActivityControllerBase {
   OnGetIsOpeningActivityRelativeView() {
     return !1;
@@ -30,14 +30,14 @@ class ActivityDoubleRewardController extends ActivityControllerBase_1.ActivityCo
   }
   static GetAdventureUpActivity(e) {
     for (const r of ActivityDoubleRewardController.UniversalActivityIdSet) {
-      const t = ModelManager_1.ModelManager.ActivityModel?.GetActivityById(r);
+      var t = ModelManager_1.ModelManager.ActivityModel?.GetActivityById(r);
       if (t?.CheckIfInOpenTime() && t?.AdventureGuideUpList.includes(e))
         return t;
     }
   }
   static GetDungeonUpActivity(t, e = !0) {
     for (const i of ActivityDoubleRewardController.UniversalActivityIdSet) {
-      const r = ModelManager_1.ModelManager.ActivityModel?.GetActivityById(i);
+      var r = ModelManager_1.ModelManager.ActivityModel?.GetActivityById(i);
       if (
         r?.CheckIfInOpenTime() &&
         void 0 !== r.GetDungeonUpList(e).find((e) => t.includes(e))
@@ -54,4 +54,4 @@ class ActivityDoubleRewardController extends ActivityControllerBase_1.ActivityCo
 }
 (exports.ActivityDoubleRewardController =
   ActivityDoubleRewardController).UniversalActivityIdSet = new Set();
-// # sourceMappingURL=ActivityDoubleRewardController.js.map
+//# sourceMappingURL=ActivityDoubleRewardController.js.map

@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MarkItemView = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById");
-const Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../../../GlobalData");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const MarkChildIconComponent_1 = require("./Components/MarkChildIconComponent");
-const MarkNameComponent_1 = require("./Components/MarkNameComponent");
-const MarkOutOfBoundComponent_1 = require("./Components/MarkOutOfBoundComponent");
-const MarkRangeImageComponent_1 = require("./Components/MarkRangeImageComponent");
-const MarkSelectComponent_1 = require("./Components/MarkSelectComponent");
-const MarkTrackComponent_1 = require("./Components/MarkTrackComponent");
-const MarkVerticalPointerComponent_1 = require("./Components/MarkVerticalPointerComponent");
-const POINTER_RANGE = 2e3;
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  MarkChildIconComponent_1 = require("./Components/MarkChildIconComponent"),
+  MarkNameComponent_1 = require("./Components/MarkNameComponent"),
+  MarkOutOfBoundComponent_1 = require("./Components/MarkOutOfBoundComponent"),
+  MarkRangeImageComponent_1 = require("./Components/MarkRangeImageComponent"),
+  MarkSelectComponent_1 = require("./Components/MarkSelectComponent"),
+  MarkTrackComponent_1 = require("./Components/MarkTrackComponent"),
+  MarkVerticalPointerComponent_1 = require("./Components/MarkVerticalPointerComponent"),
+  POINTER_RANGE = 2e3;
 class MarkItemView extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -56,7 +56,7 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
       }),
       (this.OnLevelSequenceStop = (t) => {
         this.Holder.OnLevelSequenceStop(t),
-          t === "HideView" &&
+          "HideView" === t &&
             ((t = this.Holder.IsCanShowView),
             this.SetUiActive(t),
             this.SDi?.SetAlpha(1));
@@ -229,7 +229,7 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
       ),
       this.LevelSequencePlayer.BindSequenceCloseEvent(this.OnLevelSequenceStop),
       this.GetSprite(1).SetUIActive(!1);
-    const t = new UE.Vector(this.Holder.ConfigScale);
+    var t = new UE.Vector(this.Holder.ConfigScale);
     this.GetSprite(1).SetUIItemScale(t),
       this.SetScale(this.Holder.MarkScale),
       this.OnInitialize(),
@@ -257,7 +257,7 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
       (this.Holder = void 0);
   }
   SetScale(t) {
-    const i = 1 / this.Holder.LogicWorldScale;
+    var i = 1 / this.Holder.LogicWorldScale;
     this.pDi.Set(t * i, t * i, t * i),
       this.RootItem.SetUIRelativeScale3D(this.pDi);
   }
@@ -277,9 +277,9 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
       };
     else {
       this.bDi(this.yDi);
-      let s = this.Holder.IsCanShowView;
+      var s = this.Holder.IsCanShowView;
       if ((this.SetUiActive(s), s)) {
-        this.Holder.MapType === 2 &&
+        2 === this.Holder.MapType &&
           ((s = CommonParamById_1.configCommonParamById.GetFloatConfig(
             "MapMarkSelectedAdditionScale",
           )),
@@ -357,15 +357,15 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
   }
   SetOutOfBoundDirection(e) {
     this.GetOutOfBoundComponentAsync().then((t) => {
-      var i = this.Holder.UiPosition;
-      var i = Vector2D_1.Vector2D.Create(i.X, i.Y);
+      var i = this.Holder.UiPosition,
+        i = Vector2D_1.Vector2D.Create(i.X, i.Y);
       i.SubtractionEqual(e), t.SetOutOfBoundDirection(i);
     });
   }
   OnStartTrack() {}
   OnEndTrack() {}
   OnIconPathChanged(t) {
-    const i = this.GetSprite(1);
+    var i = this.GetSprite(1);
     this.LoadIcon(i, t);
   }
   LoadIcon(t, i) {
@@ -413,7 +413,7 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
     return e;
   }
   qDi(t, i) {
-    return this.Holder.MapType === 2 ||
+    return 2 === this.Holder.MapType ||
       ((t = t.Z - i.Z), Math.abs(t) < POINTER_RANGE)
       ? 0
       : t < 0
@@ -431,4 +431,4 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
   async PlayUnlockSequence() {}
 }
 exports.MarkItemView = MarkItemView;
-// # sourceMappingURL=MarkItemView.js.map
+//# sourceMappingURL=MarkItemView.js.map

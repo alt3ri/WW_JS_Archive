@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayShopSecondTabItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
 class PayShopSecondTabItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -12,11 +12,11 @@ class PayShopSecondTabItem extends UiPanelBase_1.UiPanelBase {
       (this.ToggleFunction = void 0),
       (this.Toggle = void 0),
       (this.x4e = (t) => {
-        t === 1 && ((this.IsSelected = !0), this.ToggleFunction?.(this.TabId));
+        1 === t && ((this.IsSelected = !0), this.ToggleFunction?.(this.TabId));
       }),
       (this.T7e = () => {
-        const t = this.Toggle.GetToggleState();
-        return !this.IsSelected || t !== 1;
+        var t = this.Toggle.GetToggleState();
+        return !this.IsSelected || 1 !== t;
       }),
       this.CreateThenShowByActor(t.GetOwner());
   }
@@ -48,4 +48,4 @@ class PayShopSecondTabItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.PayShopSecondTabItem = PayShopSecondTabItem;
-// # sourceMappingURL=PayShopSecondTabItem.js.map
+//# sourceMappingURL=PayShopSecondTabItem.js.map

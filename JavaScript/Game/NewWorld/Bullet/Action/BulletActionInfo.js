@@ -70,4 +70,4 @@ class BulletActionInfoAttachActor extends BulletActionInfoBase {
   }
 }
 exports.BulletActionInfoAttachActor = BulletActionInfoAttachActor;
-// # sourceMappingURL=BulletActionInfo.js.map
+//# sourceMappingURL=BulletActionInfo.js.map

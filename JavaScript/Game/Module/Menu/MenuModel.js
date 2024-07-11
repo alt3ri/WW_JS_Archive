@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MenuModel = void 0);
-const LanguageSystem_1 = require("../../../Core/Common/LanguageSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController");
-const LocalStorage_1 = require("../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../Common/LocalStorageDefine");
-const PublicUtil_1 = require("../../Common/PublicUtil");
-const GlobalData_1 = require("../../GlobalData");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const MenuData_1 = require("./MenuData");
-const MenuTool_1 = require("./MenuTool");
+const LanguageSystem_1 = require("../../../Core/Common/LanguageSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController"),
+  LocalStorage_1 = require("../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
+  PublicUtil_1 = require("../../Common/PublicUtil"),
+  GlobalData_1 = require("../../GlobalData"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  MenuData_1 = require("./MenuData"),
+  MenuTool_1 = require("./MenuTool");
 class MenuModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -57,11 +57,11 @@ class MenuModel extends ModelBase_1.ModelBase {
       this.Initialize();
   }
   Lxi() {
-    let e;
-    let t = LocalStorage_1.LocalStorage.GetGlobal(
-      LocalStorageDefine_1.ELocalStorageGlobalKey.PlayMenuInfo,
-      "",
-    );
+    var e,
+      t = LocalStorage_1.LocalStorage.GetGlobal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.PlayMenuInfo,
+        "",
+      );
     !StringUtils_1.StringUtils.IsEmpty(t) ||
     GlobalData_1.GlobalData.IsPlayInEditor ||
     MenuTool_1.MenuTool.IsExcludeLanguageSetting(4)
@@ -104,7 +104,7 @@ class MenuModel extends ModelBase_1.ModelBase {
         100);
   }
   Txi() {
-    let e, t, i;
+    var e, t, i;
     for (const o of ConfigManager_1.ConfigManager.MenuBaseConfig.GetMenuBaseConfig())
       !MenuTool_1.MenuTool.CheckPlatform(o.Platform) ||
         (this.IsCheckDeviceVendor &&
@@ -112,7 +112,7 @@ class MenuModel extends ModelBase_1.ModelBase {
         this.CheckIosReviewShield(o) ||
         ((e = o.MainType),
         (t = new MenuData_1.MenuData(o)),
-        (i = this.Sxi.get(e)) && i.length > 0
+        (i = this.Sxi.get(e)) && 0 < i.length
           ? (i.push(t), this.Sxi.set(e, i))
           : this.Sxi.set(e, [t]));
     for (const a of this.Sxi.keys()) this.Rxi(a);
@@ -148,10 +148,10 @@ class MenuModel extends ModelBase_1.ModelBase {
   AOn() {
     for (const i of this.Sxi.values())
       for (const o of i) {
-        const e = this.GetTargetConfig(o.MenuDataFunctionId);
+        var e = this.GetTargetConfig(o.MenuDataFunctionId);
         if (void 0 !== e && o.HasDisableFunction() && o.IsAffectedDisable(e))
           for (const a of o.DisableFunction) {
-            const t = this.GetTargetMenuData(a);
+            var t = this.GetTargetMenuData(a);
             t && (t.IsEnable = !1);
           }
       }
@@ -164,16 +164,16 @@ class MenuModel extends ModelBase_1.ModelBase {
   }
   SaveLocalConfig() {
     Log_1.Log.CheckDebug() && Log_1.Log.Debug("Menu", 8, "保存数据!");
-    const e = JSON.stringify(PublicUtil_1.PublicUtil.MapToObj(this.Exi));
+    var e = JSON.stringify(PublicUtil_1.PublicUtil.MapToObj(this.Exi));
     LocalStorage_1.LocalStorage.SetGlobal(
       LocalStorageDefine_1.ELocalStorageGlobalKey.PlayMenuInfo,
       e,
     );
   }
   Rxi(e) {
-    const t = this.Sxi.get(e);
+    var t = this.Sxi.get(e);
     t &&
-      t.length !== 0 &&
+      0 !== t.length &&
       (t.sort((e, t) =>
         e.MenuDataSubSort === t.MenuDataSubSort
           ? e.MenuDataFunctionSort - t.MenuDataFunctionSort
@@ -183,7 +183,7 @@ class MenuModel extends ModelBase_1.ModelBase {
   }
   GetMainTypeList() {
     let t = new Array();
-    for (const [i, o] of this.Sxi) {
+    for (var [i, o] of this.Sxi) {
       let e = o.length;
       for (const a of o) a.CheckCondition() || e--;
       e <= 0 || t.push(i);
@@ -195,7 +195,7 @@ class MenuModel extends ModelBase_1.ModelBase {
         return e.MainSort - t.MainSort;
       }),
       (t = MenuTool_1.MenuTool.IsExcludeLanguageSetting(4)
-        ? t.filter((e) => e !== 4)
+        ? t.filter((e) => 4 !== e)
         : t)
     );
   }
@@ -207,7 +207,7 @@ class MenuModel extends ModelBase_1.ModelBase {
   }
   SetRestartMap(e, t) {
     this.Ixi || (this.Ixi = new Map());
-    let i = this.Ixi.get(e);
+    var i = this.Ixi.get(e);
     i
       ? ((i = [i[0], t]), this.Ixi.set(e, i))
       : ((i = this.GetTargetConfig(e)), this.Ixi.set(e, [i, t]));
@@ -224,7 +224,7 @@ class MenuModel extends ModelBase_1.ModelBase {
     this.Ixi.clear();
   }
   GetTargetMenuData(e) {
-    let t =
+    var t =
       ConfigManager_1.ConfigManager.MenuBaseConfig.GetMenuConfigByFunctionId(e);
     if (t) {
       (t = t.MainType), (t = this.Sxi.get(t));
@@ -232,7 +232,7 @@ class MenuModel extends ModelBase_1.ModelBase {
     }
   }
   GetMenuDataKeys() {
-    if (this.Exi && this.Exi.size > 0) return this.Exi.keys();
+    if (this.Exi && 0 < this.Exi.size) return this.Exi.keys();
   }
   CheckIosReviewShield(e) {
     return !(
@@ -244,4 +244,4 @@ class MenuModel extends ModelBase_1.ModelBase {
   }
 }
 exports.MenuModel = MenuModel;
-// # sourceMappingURL=MenuModel.js.map
+//# sourceMappingURL=MenuModel.js.map

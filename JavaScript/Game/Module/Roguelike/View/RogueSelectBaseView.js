@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RogueSelectBaseView = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiActorPool_1 = require("../../../Ui/UiActorPool");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiActorPool_1 = require("../../../Ui/UiActorPool");
 class RogueSelectBaseView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -61,4 +61,4 @@ class RogueSelectBaseView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RogueSelectBaseView = RogueSelectBaseView;
-// # sourceMappingURL=RogueSelectBaseView.js.map
+//# sourceMappingURL=RogueSelectBaseView.js.map

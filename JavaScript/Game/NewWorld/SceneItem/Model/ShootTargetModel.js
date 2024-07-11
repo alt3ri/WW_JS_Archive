@@ -13,4 +13,4 @@ class ShootTargetModel extends ModelBase_1.ModelBase {
   }
 }
 exports.ShootTargetModel = ShootTargetModel;
-// # sourceMappingURL=ShootTargetModel.js.map
+//# sourceMappingURL=ShootTargetModel.js.map

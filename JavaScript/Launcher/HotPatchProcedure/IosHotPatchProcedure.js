@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.IosHotPatchProcedure = void 0);
-const BaseConfigController_1 = require("../BaseConfig/BaseConfigController");
-const LauncherTextLib_1 = require("../Util/LauncherTextLib");
-const MobileHotPatchProcedure_1 = require("./MobileHotPatchProcedure");
+const BaseConfigController_1 = require("../BaseConfig/BaseConfigController"),
+  LauncherTextLib_1 = require("../Util/LauncherTextLib"),
+  MobileHotPatchProcedure_1 = require("./MobileHotPatchProcedure");
 class IosHotPatchProcedure extends MobileHotPatchProcedure_1.MobileHotPatchProcedure {
   constructor(e, o) {
     super(e, o);
@@ -12,7 +12,7 @@ class IosHotPatchProcedure extends MobileHotPatchProcedure_1.MobileHotPatchProce
     return (
       BaseConfigController_1.BaseConfigController.GetIosAuditFirstDownloadTip() &&
         this.UpdateSize &&
-        this.UpdateSize > 0n &&
+        0n < this.UpdateSize &&
         (await this.ViewMgr?.ShowDialog(
           !1,
           "DownloadTitle",
@@ -27,4 +27,4 @@ class IosHotPatchProcedure extends MobileHotPatchProcedure_1.MobileHotPatchProce
   }
 }
 exports.IosHotPatchProcedure = IosHotPatchProcedure;
-// # sourceMappingURL=IosHotPatchProcedure.js.map
+//# sourceMappingURL=IosHotPatchProcedure.js.map

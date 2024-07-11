@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExpComponent = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const ExpTweenComponent_1 = require("./ExpTweenComponent");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ExpTweenComponent_1 = require("./ExpTweenComponent");
 class ExpComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t, i = !1) {
     super(),
@@ -57,12 +57,12 @@ class ExpComponent extends UiPanelBase_1.UiPanelBase {
 
     )
       i++;
-    i > 2 && (i = 2),
-      e >= 1 && (i = 1),
+    2 < i && (i = 2),
+      1 <= e && (i = 1),
       this.ExpTweenComponent.PlayExpTween(i, e);
   }
   UpdateInitState(t) {
-    let i, e;
+    var i, e;
     StringUtils_1.StringUtils.IsEmpty(this.RTt)
       ? this.GetText(0).SetText(t.GetCurrentLevel().toString())
       : LguiUtil_1.LguiUtil.SetLocalText(
@@ -93,7 +93,7 @@ class ExpComponent extends UiPanelBase_1.UiPanelBase {
   }
   Update(t, i = !0) {
     this.GetText(2).SetText("+" + Math.floor(t.GetCurrentAddExp()).toString()),
-      this.GetText(2).SetUIActive(t.GetCurrentAddExp() > 0),
+      this.GetText(2).SetUIActive(0 < t.GetCurrentAddExp()),
       t.GetIfNext() ? this.xTt(t, i) : this.wTt(t, i);
   }
   xTt(t, i = !0) {
@@ -163,4 +163,4 @@ class ExpComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ExpComponent = ExpComponent;
-// # sourceMappingURL=ExpComponent.js.map
+//# sourceMappingURL=ExpComponent.js.map

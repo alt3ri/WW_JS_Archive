@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventWaitFlyControl = void 0);
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
+const EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder");
 class LevelEventWaitFlyControl extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -45,10 +45,10 @@ class LevelEventWaitFlyControl extends LevelGeneralBase_1.LevelEventBase {
       : ((this.oUe -= e), this.oUe <= 0 && this.FinishExecute(!1));
   }
   OnFinish() {
-    const e = Global_1.Global.BaseCharacter;
+    var e = Global_1.Global.BaseCharacter;
     e &&
       (this.rUe &&
-        this.rUe !== "" &&
+        "" !== this.rUe &&
         ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsByString(
           this.rUe,
           e,
@@ -56,10 +56,10 @@ class LevelEventWaitFlyControl extends LevelGeneralBase_1.LevelEventBase {
       this.Cde());
   }
   OnFailure() {
-    const e = Global_1.Global.BaseCharacter;
+    var e = Global_1.Global.BaseCharacter;
     e &&
       (this.nUe &&
-        this.nUe !== "" &&
+        "" !== this.nUe &&
         ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsByString(
           this.nUe,
           e,
@@ -68,7 +68,7 @@ class LevelEventWaitFlyControl extends LevelGeneralBase_1.LevelEventBase {
   }
   Cde() {
     if (this.aUe) {
-      const e = Global_1.Global.BaseCharacter;
+      var e = Global_1.Global.BaseCharacter;
       if (!e) return;
       EventSystem_1.EventSystem.RemoveWithTarget(
         e.CharacterActorComponent.Entity,
@@ -88,4 +88,4 @@ class LevelEventWaitFlyControl extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventWaitFlyControl = LevelEventWaitFlyControl;
-// # sourceMappingURL=LevelEventWaitFlyControl.js.map
+//# sourceMappingURL=LevelEventWaitFlyControl.js.map

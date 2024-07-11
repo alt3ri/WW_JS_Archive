@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiInputDistribute = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const UiManager_1 = require("../../UiManager");
-const InputDistributeDefine_1 = require("../InputDistributeDefine");
-const InputDistributeSetup_1 = require("./InputDistributeSetup");
+const Log_1 = require("../../../../Core/Common/Log"),
+  UiManager_1 = require("../../UiManager"),
+  InputDistributeDefine_1 = require("../InputDistributeDefine"),
+  InputDistributeSetup_1 = require("./InputDistributeSetup");
 class UiInputDistribute extends InputDistributeSetup_1.InputDistributeSetup {
   OnRefresh() {
     return (
@@ -37,4 +37,4 @@ class UiInputDistribute extends InputDistributeSetup_1.InputDistributeSetup {
   }
 }
 exports.UiInputDistribute = UiInputDistribute;
-// # sourceMappingURL=UiInputDistribute.js.map
+//# sourceMappingURL=UiInputDistribute.js.map

@@ -1,48 +1,48 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ComboTeachingNode = void 0);
-const UE = require("ue");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const Global_1 = require("../../../Global");
-const InputEnums_1 = require("../../../Input/InputEnums");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const CommonKeyItem_1 = require("../../BattleUi/Views/KeyItem/CommonKeyItem");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const ComboTeachingController_1 = require("../ComboTeachingController");
-const KeyMap = new Map([
-  ["攻击", InputEnums_1.EInputAction.攻击],
-  ["技能", InputEnums_1.EInputAction.技能1],
-  ["大招", InputEnums_1.EInputAction.大招],
-  ["跳跃", InputEnums_1.EInputAction.跳跃],
-  ["瞄准", InputEnums_1.EInputAction.瞄准],
-  ["闪避", InputEnums_1.EInputAction.闪避],
-  ["普通#1", InputEnums_1.EInputAction.攻击],
-  ["技能#1", InputEnums_1.EInputAction.技能1],
-  ["大招#1", InputEnums_1.EInputAction.大招],
-  ["跳跃#1", InputEnums_1.EInputAction.跳跃],
-  ["瞄准#1", InputEnums_1.EInputAction.瞄准],
-  ["闪避#1", InputEnums_1.EInputAction.闪避],
-]);
-const ActionMap = new Map([
-  ["攻击", InputMappingsDefine_1.actionMappings.攻击],
-  ["技能", InputMappingsDefine_1.actionMappings.技能1],
-  ["大招", InputMappingsDefine_1.actionMappings.大招],
-  ["跳跃", InputMappingsDefine_1.actionMappings.跳跃],
-  ["瞄准", InputMappingsDefine_1.actionMappings.瞄准],
-  ["闪避", InputMappingsDefine_1.actionMappings.闪避],
-  ["普通#1", InputMappingsDefine_1.actionMappings.攻击],
-  ["技能#1", InputMappingsDefine_1.actionMappings.技能1],
-  ["大招#1", InputMappingsDefine_1.actionMappings.大招],
-  ["跳跃#1", InputMappingsDefine_1.actionMappings.跳跃],
-  ["瞄准#1", InputMappingsDefine_1.actionMappings.瞄准],
-  ["闪避#1", InputMappingsDefine_1.actionMappings.闪避],
-]);
+const UE = require("ue"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../Global"),
+  InputEnums_1 = require("../../../Input/InputEnums"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  CommonKeyItem_1 = require("../../BattleUi/Views/KeyItem/CommonKeyItem"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ComboTeachingController_1 = require("../ComboTeachingController"),
+  KeyMap = new Map([
+    ["攻击", InputEnums_1.EInputAction.攻击],
+    ["技能", InputEnums_1.EInputAction.技能1],
+    ["大招", InputEnums_1.EInputAction.大招],
+    ["跳跃", InputEnums_1.EInputAction.跳跃],
+    ["瞄准", InputEnums_1.EInputAction.瞄准],
+    ["闪避", InputEnums_1.EInputAction.闪避],
+    ["普通#1", InputEnums_1.EInputAction.攻击],
+    ["技能#1", InputEnums_1.EInputAction.技能1],
+    ["大招#1", InputEnums_1.EInputAction.大招],
+    ["跳跃#1", InputEnums_1.EInputAction.跳跃],
+    ["瞄准#1", InputEnums_1.EInputAction.瞄准],
+    ["闪避#1", InputEnums_1.EInputAction.闪避],
+  ]),
+  ActionMap = new Map([
+    ["攻击", InputMappingsDefine_1.actionMappings.攻击],
+    ["技能", InputMappingsDefine_1.actionMappings.技能1],
+    ["大招", InputMappingsDefine_1.actionMappings.大招],
+    ["跳跃", InputMappingsDefine_1.actionMappings.跳跃],
+    ["瞄准", InputMappingsDefine_1.actionMappings.瞄准],
+    ["闪避", InputMappingsDefine_1.actionMappings.闪避],
+    ["普通#1", InputMappingsDefine_1.actionMappings.攻击],
+    ["技能#1", InputMappingsDefine_1.actionMappings.技能1],
+    ["大招#1", InputMappingsDefine_1.actionMappings.大招],
+    ["跳跃#1", InputMappingsDefine_1.actionMappings.跳跃],
+    ["瞄准#1", InputMappingsDefine_1.actionMappings.瞄准],
+    ["闪避#1", InputMappingsDefine_1.actionMappings.闪避],
+  ]);
 class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
   constructor(i, t) {
     super(),
@@ -99,7 +99,7 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
       ConfigManager_1.ConfigManager.ComboTeachingConfig.GetComboTeachingConditionConfig(
         t.CommandID[i],
       );
-    let s, n;
+    var s, n;
     (this.GuideGroupIdList = t.guideID),
       (this.SuccessCondition =
         ComboTeachingController_1.ComboTeachingController.GetSuccessChecker(
@@ -109,7 +109,7 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
       (this.FailUpdateCondition.length = 0),
       (this.FailEventCondition.length = 0),
       e.FailedCondition.forEach((i, t) => {
-        const s =
+        var s =
           ComboTeachingController_1.ComboTeachingController.GetFailChecker(
             i,
             e.FailedParam[t],
@@ -124,7 +124,7 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
       }),
       (this.Xy = i),
       (this.IsEmit = !1),
-      t.KeyID[i]?.length === 0 || void 0 === t.KeyID[i]
+      0 === t.KeyID[i]?.length || void 0 === t.KeyID[i]
         ? this.RootItem.SetAlpha(0)
         : ((s = t.KeyID[i].split(";")[1]),
           (n = t.KeyID[i].split(";")[0]),
@@ -132,7 +132,7 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
           this.KeyComponent?.RefreshAction(ActionMap.get(n.split("#")[0])),
           (this.IsHoldAction = n.includes("#")),
           (this.IsShowTag =
-            t.IconTagText.length > i && t.IconTagText[i] !== ""),
+            t.IconTagText.length > i && "" !== t.IconTagText[i]),
           this.IsHoldAction &&
             ((this.HoldTotalTime = Number(n.split("#")[1])),
             this.EPe.PlayLevelSequenceByName("AutoLoop")),
@@ -150,7 +150,7 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
               "ComboTeachingView",
             ),
           t.IconTagText.length > i &&
-            t.IconTagText[i] !== "" &&
+            "" !== t.IconTagText[i] &&
             LguiUtil_1.LguiUtil.SetLocalTextNew(
               this.GetText(5),
               t.IconTagText[i],
@@ -204,13 +204,13 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
       ((this.HoldTime = t),
       this.GetItem(4)?.SetUIActive(this.IsShowTag),
       this.GetSprite(3).SetFillAmount(this.HoldTime / this.HoldTotalTime),
-      this.EPe.GetCurrentSequence() !== "LongPress") &&
+      "LongPress" !== this.EPe.GetCurrentSequence()) &&
       (this.EPe.PlayLevelSequenceByName("LongPress"),
       this.GetItem(8).SetUIActive(!0),
       this.GetItem(6).SetUIActive(!1));
   }
   OnUseSkill(i) {
-    this.SuccessCondition.Type === 0 && this.CheckSuccessCondition(),
+    0 === this.SuccessCondition.Type && this.CheckSuccessCondition(),
       this.IsHoldAction || this.CheckFailEventCondition();
   }
   CheckAllCondition() {
@@ -237,7 +237,7 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
   }
   OnTick(i) {
     this.IsEmit ||
-      (this.SuccessCondition.Type === 1 && this.CheckSuccessCondition()) ||
+      (1 === this.SuccessCondition.Type && this.CheckSuccessCondition()) ||
       this.CheckFailCondition();
   }
   CheckSuccessCondition() {
@@ -294,4 +294,4 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ComboTeachingNode = ComboTeachingNode;
-// # sourceMappingURL=ComboTeachingNode.js.map
+//# sourceMappingURL=ComboTeachingNode.js.map

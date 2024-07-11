@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ShowUiBehaviorNode = void 0);
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const RoguelikeController_1 = require("../../../Roguelike/RoguelikeController");
-const ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
+const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  RoguelikeController_1 = require("../../../Roguelike/RoguelikeController"),
+  ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
 class ShowUiBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   constructor() {
     super(...arguments),
@@ -22,7 +22,7 @@ class ShowUiBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   OnCreate(e) {
     return (
       !!super.OnCreate(e) &&
-      (e = e.Condition).Type === "ShowUi" &&
+      "ShowUi" === (e = e.Condition).Type &&
       ((this.IXt = e.UiType), (this.TXt = e.KeepUiOpen), !0)
     );
   }
@@ -32,14 +32,14 @@ class ShowUiBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   OnNodeActive() {
     super.OnNodeActive(),
       this.TXt &&
-        this.IXt.Type === "RogueAbilitySelect" &&
+        "RogueAbilitySelect" === this.IXt.Type &&
         RoguelikeController_1.RoguelikeController.OpenBuffSelectViewByIdAsync(
           this.IXt.BindId,
         );
   }
   AddEventsOnChildQuestStart() {
     super.AddEventsOnChildQuestStart(),
-      this.IXt.Type === "All" &&
+      "All" === this.IXt.Type &&
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.ActiveBattleView,
           this.yze,
@@ -47,7 +47,7 @@ class ShowUiBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   }
   RemoveEventsOnChildQuestEnd() {
     super.RemoveEventsOnChildQuestEnd(),
-      this.IXt.Type === "All" &&
+      "All" === this.IXt.Type &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.ActiveBattleView,
           this.yze,
@@ -58,4 +58,4 @@ class ShowUiBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   }
 }
 exports.ShowUiBehaviorNode = ShowUiBehaviorNode;
-// # sourceMappingURL=ShowUiBehaviorNode.js.map
+//# sourceMappingURL=ShowUiBehaviorNode.js.map

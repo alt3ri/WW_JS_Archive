@@ -1,38 +1,42 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, s) {
-    let n;
-    const o = arguments.length;
-    let h =
-      o < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var n,
+      o = arguments.length,
+      h =
+        o < 3
+          ? e
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(e, i))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       h = Reflect.decorate(t, e, i, s);
     else
-      for (let r = t.length - 1; r >= 0; r--)
-        (n = t[r]) && (h = (o < 3 ? n(h) : o > 3 ? n(e, i, h) : n(e, i)) || h);
-    return o > 3 && h && Object.defineProperty(e, i, h), h;
+      for (var r = t.length - 1; 0 <= r; r--)
+        (n = t[r]) && (h = (o < 3 ? n(h) : 3 < o ? n(e, i, h) : n(e, i)) || h);
+    return 3 < o && h && Object.defineProperty(e, i, h), h;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemStateComponent = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const IAction_1 = require("../../../../../UniverseEditor/Interface/IAction");
-const IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const Global_1 = require("../../../../Global");
-const LevelGeneralNetworks_1 = require("../../../../LevelGamePlay/LevelGeneralNetworks");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const BulletController_1 = require("../../../Bullet/BulletController");
-const MIN_DELAY_THRESHOLD = 0.1;
-const RESET_LIMIT = 2;
-const SERVER_DATA = "_ps";
+const Log_1 = require("../../../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  IAction_1 = require("../../../../../UniverseEditor/Interface/IAction"),
+  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  Global_1 = require("../../../../Global"),
+  LevelGeneralNetworks_1 = require("../../../../LevelGamePlay/LevelGeneralNetworks"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  BulletController_1 = require("../../../Bullet/BulletController"),
+  MIN_DELAY_THRESHOLD = 0.1,
+  RESET_LIMIT = 2,
+  SERVER_DATA = "_ps";
 let SceneItemStateComponent = class SceneItemStateComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -58,7 +62,7 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
           this.Qnn,
         );
-        const t = this.T_n?.CreateStageConfig.PerformDuration;
+        var t = this.T_n?.CreateStageConfig.PerformDuration;
         t >= MIN_DELAY_THRESHOLD
           ? TimerSystem_1.TimerSystem.Delay(() => {
               this.Xte?.RemoveTag(-991879492),
@@ -91,7 +95,7 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
     return this.c_n || 0;
   }
   OnInitData() {
-    const t = this.Entity?.GetComponent(0);
+    var t = this.Entity?.GetComponent(0);
     if (((this.Hte = this.Entity?.GetComponent(1)), t)) {
       (this.fXr = t.GetSummonerId()),
         (this.TXr = this.Hte?.CreatureData.GetModelConfig()),
@@ -110,11 +114,11 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
             "EntityStateComponent",
           ));
         var e = (0, IComponent_1.getComponent)(
-          e.ComponentsData,
-          "EntityStateComponent",
-        );
-        let i = ((this.BehaviorMap = new Map()), e);
-        let s = e?.StateChangeBehaviors;
+            e.ComponentsData,
+            "EntityStateComponent",
+          ),
+          i = ((this.BehaviorMap = new Map()), e),
+          s = e?.StateChangeBehaviors;
         if (i && s) {
           let t = 0;
           for (const n of e.StateChangeBehaviors)
@@ -150,12 +154,12 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
     return this._ti === t;
   }
   HandleDestroyState() {
-    let t, e;
+    var t, e;
     if (
       ((this.D_n = !1),
       this.Xte?.HasTag(-991879492) &&
         (this.Xte?.RemoveTag(-991879492), this.UpdateState(-1278190765, !0)),
-      this._ti !== 3 || !this.T_n)
+      3 !== this._ti || !this.T_n)
     )
       return (e = this.Entity.GetComponent(147))
         ? ((t = (t = this.StateConfig?.State)
@@ -221,7 +225,7 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
             this.jDn,
           );
     }
-    if (((this.D_n = !1), t !== 2096634051)) this.UpdateState(t, !0, !0);
+    if (((this.D_n = !1), 2096634051 !== t)) this.UpdateState(t, !0, !0);
     else {
       (this.c_n = t), (this._ti = 0);
       (i = this.T_n?.CreateStageConfig.PerformDuration),
@@ -301,7 +305,7 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
               (this.A_n = t),
               this.Xte?.ChangeLocalLevelTag(this.A_n, i))
             : ((this.A_n = t), this.Xte?.AddTag(t)),
-          (this.U_n = t !== -687845e3)));
+          (this.U_n = -687845e3 !== t)));
   }
   GetLifeCycleStageActions(t) {
     return (t ? this.T_n?.CreateStageConfig : this.T_n?.DestroyStageConfig)
@@ -313,4 +317,4 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
   SceneItemStateComponent,
 )),
   (exports.SceneItemStateComponent = SceneItemStateComponent);
-// # sourceMappingURL=SceneItemStateComponent.js.map
+//# sourceMappingURL=SceneItemStateComponent.js.map

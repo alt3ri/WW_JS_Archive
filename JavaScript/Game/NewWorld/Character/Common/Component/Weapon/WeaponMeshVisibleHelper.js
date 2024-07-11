@@ -47,7 +47,7 @@ class WeaponMeshVisibleHelper {
     t = this.dZo();
     return (
       t &&
-        (t.Priority === 0 && i && t.Active
+        (0 === t.Priority && i && t.Active
           ? (t.Active = !1)
           : (s = t.IsHidden)),
       s
@@ -58,12 +58,12 @@ class WeaponMeshVisibleHelper {
     e && (e.Active = i);
   }
   dZo() {
-    let e = -1;
-    let i = void 0;
-    for (const [, t] of this.WeaponVisibleTable)
+    let e = -1,
+      i = void 0;
+    for (var [, t] of this.WeaponVisibleTable)
       t.Active && t.Priority > e && ((e = t.Priority), (i = t));
     return i;
   }
 }
 exports.WeaponMeshVisibleHelper = WeaponMeshVisibleHelper;
-// # sourceMappingURL=WeaponMeshVisibleHelper.js.map
+//# sourceMappingURL=WeaponMeshVisibleHelper.js.map

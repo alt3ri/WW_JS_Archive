@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ButtonAndTextItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class ButtonAndTextItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -40,4 +40,4 @@ class ButtonAndTextItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ButtonAndTextItem = ButtonAndTextItem;
-// # sourceMappingURL=ButtonAndTextItem.js.map
+//# sourceMappingURL=ButtonAndTextItem.js.map

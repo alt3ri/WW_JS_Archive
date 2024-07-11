@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PatrolMoveLogic = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../../../Core/Define/CommonDefine");
-const QueryTypeDefine_1 = require("../../../../../../Core/Define/QueryTypeDefine");
-const Quat_1 = require("../../../../../../Core/Utils/Math/Quat");
-const Rotator_1 = require("../../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const TraceElementCommon_1 = require("../../../../../../Core/Utils/TraceElementCommon");
-const AiContollerLibrary_1 = require("../../../../../AI/Controller/AiContollerLibrary");
-const GlobalData_1 = require("../../../../../GlobalData");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const ColorUtils_1 = require("../../../../../Utils/ColorUtils");
-const CharacterUnifiedStateTypes_1 = require("../Abilities/CharacterUnifiedStateTypes");
-const CharacterActorComponent_1 = require("../CharacterActorComponent");
-const FIX_LOCATION_TOLERANCE = 2;
-const PROFILE_KEY = "PatrolMoveLogic_ResetActorLocation";
-const RESET_LOCATION_TOLERANCE = 10;
+const UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../../../Core/Define/CommonDefine"),
+  QueryTypeDefine_1 = require("../../../../../../Core/Define/QueryTypeDefine"),
+  Quat_1 = require("../../../../../../Core/Utils/Math/Quat"),
+  Rotator_1 = require("../../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  TraceElementCommon_1 = require("../../../../../../Core/Utils/TraceElementCommon"),
+  AiContollerLibrary_1 = require("../../../../../AI/Controller/AiContollerLibrary"),
+  GlobalData_1 = require("../../../../../GlobalData"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  ColorUtils_1 = require("../../../../../Utils/ColorUtils"),
+  CharacterUnifiedStateTypes_1 = require("../Abilities/CharacterUnifiedStateTypes"),
+  CharacterActorComponent_1 = require("../CharacterActorComponent"),
+  FIX_LOCATION_TOLERANCE = 2,
+  PROFILE_KEY = "PatrolMoveLogic_ResetActorLocation",
+  RESET_LOCATION_TOLERANCE = 10;
 class PatrolMoveLogic {
   constructor() {
     (this.Entity = void 0),
@@ -48,7 +48,7 @@ class PatrolMoveLogic {
       this.tJo();
   }
   GetMovePoint(t) {
-    if (t >= 0 && t < this.ZYo.length) return this.ZYo[t];
+    if (0 <= t && t < this.ZYo.length) return this.ZYo[t];
   }
   UpdateMovePath(t, i, s, e) {
     (this.ZYo.length = 0),
@@ -138,7 +138,7 @@ class PatrolMoveLogic {
       (this.jye.Z = 0),
       this.RTe.DeepCopy(this.XYo),
       (this.RTe.Z = 0);
-    const t = this.RTe.DotProduct(this.jye);
+    var t = this.RTe.DotProduct(this.jye);
     return (
       t < 0 &&
         (this.sJo(), Log_1.Log.CheckDebug()) &&
@@ -179,7 +179,7 @@ class PatrolMoveLogic {
     );
   }
   ResetLastPatrolPoint(t, i) {
-    let s;
+    var s;
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "AI",
@@ -238,7 +238,7 @@ class PatrolMoveLogic {
           );
   }
   tJo() {
-    const t = UE.NewObject(UE.TraceSphereElement.StaticClass());
+    var t = UE.NewObject(UE.TraceSphereElement.StaticClass());
     (t.bIsSingle = !1),
       (t.bIgnoreSelf = !0),
       t.SetTraceTypeQuery(QueryTypeDefine_1.KuroTraceTypeQuery.IkGround),
@@ -254,12 +254,12 @@ class PatrolMoveLogic {
   }
   hJo(t, h) {
     this.jye.DeepCopy(t), (this.jye.Z += this.Hte.HalfHeight);
-    var i = this.jye;
-    var t =
-      (this.RTe.DeepCopy(t),
-      (this.RTe.Z += CharacterActorComponent_1.FIX_SPAWN_TRACE_HEIGHT),
-      this.RTe);
-    const s = this.eJo;
+    var i = this.jye,
+      t =
+        (this.RTe.DeepCopy(t),
+        (this.RTe.Z += CharacterActorComponent_1.FIX_SPAWN_TRACE_HEIGHT),
+        this.RTe),
+      s = this.eJo;
     (s.WorldContextObject = this.Hte.Actor),
       (s.Radius = this.Hte.ScaledRadius),
       TraceElementCommon_1.TraceElementCommon.SetStartLocation(s, i),
@@ -268,21 +268,21 @@ class PatrolMoveLogic {
     for (const e of ModelManager_1.ModelManager.WorldModel.ActorsToIgnoreSet)
       s.ActorsToIgnore.Add(e);
     var i = TraceElementCommon_1.TraceElementCommon.ShapeTrace(
-      this.Hte.Actor.CapsuleComponent,
-      s,
-      PROFILE_KEY,
-      PROFILE_KEY,
-    );
-    const o = s.HitResult;
+        this.Hte.Actor.CapsuleComponent,
+        s,
+        PROFILE_KEY,
+        PROFILE_KEY,
+      ),
+      o = s.HitResult;
     if (i && o.bBlockingHit) {
-      const r = ModelManager_1.ModelManager.TraceElementModel.CommonHitLocation;
+      var r = ModelManager_1.ModelManager.TraceElementModel.CommonHitLocation;
       let i = "";
-      const a = o.Actors.Num();
-      let s = -1;
-      let e = "";
+      var a = o.Actors.Num();
+      let s = -1,
+        e = "";
       TraceElementCommon_1.TraceElementCommon.GetHitLocation(o, 0, r);
       for (let t = 0; t < a; ++t) {
-        const n = o.Actors.Get(t);
+        var n = o.Actors.Get(t);
         if (
           n?.IsValid() &&
           ((i += n.GetName() + ", "), !n.IsA(UE.Character.StaticClass()))
@@ -325,9 +325,9 @@ class PatrolMoveLogic {
     );
   }
   DYo() {
-    if (this.ZYo.length !== 0 && GlobalData_1.GlobalData.IsPlayInEditor)
-      for (let t = this.ZYo.length - 1; t > -1; t--) {
-        const i = this.ZYo[t];
+    if (0 !== this.ZYo.length && GlobalData_1.GlobalData.IsPlayInEditor)
+      for (let t = this.ZYo.length - 1; -1 < t; t--) {
+        var i = this.ZYo[t];
         UE.KismetSystemLibrary.DrawDebugSphere(
           GlobalData_1.GlobalData.World,
           i.ToUeVector(),
@@ -341,4 +341,4 @@ class PatrolMoveLogic {
   }
 }
 exports.PatrolMoveLogic = PatrolMoveLogic;
-// # sourceMappingURL=PatrolMoveLogic.js.map
+//# sourceMappingURL=PatrolMoveLogic.js.map

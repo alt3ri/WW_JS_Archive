@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomBattleFettersTabView = void 0);
-const UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase");
-const PhantomBattleFettersViewItem_1 = require("../../../Phantom/PhantomBattle/View/PhantomBattleFettersViewItem");
+const UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase"),
+  PhantomBattleFettersViewItem_1 = require("../../../Phantom/PhantomBattle/View/PhantomBattleFettersViewItem");
 class PhantomBattleFettersTabView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments), (this.Rpt = void 0);
@@ -13,9 +13,9 @@ class PhantomBattleFettersTabView extends UiTabViewBase_1.UiTabViewBase {
       await this.Rpt.CreateThenShowByActorAsync(this.GetRootItem().GetOwner());
   }
   OnBeforeShow() {
-    const e = this.ExtraParams;
-    e > 0 && this.Rpt.SelectByFetterId(e);
+    var e = this.ExtraParams;
+    0 < e && this.Rpt.SelectByFetterId(e);
   }
 }
 exports.PhantomBattleFettersTabView = PhantomBattleFettersTabView;
-// # sourceMappingURL=PhantomBattleFettersTabView.js.map
+//# sourceMappingURL=PhantomBattleFettersTabView.js.map

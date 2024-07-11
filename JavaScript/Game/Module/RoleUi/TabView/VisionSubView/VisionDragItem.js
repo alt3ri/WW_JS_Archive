@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionDragItem = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../Core/Common/Time");
-const TickSystem_1 = require("../../../../../Core/Tick/TickSystem");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const LguiEventSystemManager_1 = require("../../../../Ui/LguiEventSystem/LguiEventSystemManager");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const CLICKTIME = 300;
-const CLICKCALLGAP = 1;
-const MOVEPARENTDELAYTIME = 1;
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  TickSystem_1 = require("../../../../../Core/Tick/TickSystem"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  LguiEventSystemManager_1 = require("../../../../Ui/LguiEventSystem/LguiEventSystemManager"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  CLICKTIME = 300,
+  CLICKCALLGAP = 1,
+  MOVEPARENTDELAYTIME = 1;
 class VisionDragItem extends UiPanelBase_1.UiPanelBase {
   constructor(t, i, s, e, h) {
     super(),
@@ -63,7 +63,7 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
       (this.MCo = 0),
       (this.LCo = 0),
       (this.WFt = (t) => {
-        t === "Cease" &&
+        "Cease" === t &&
           (this.CeaseAnimationPromise.SetResult(!0),
           this.lCo?.(this.GetCurrentIndex()));
       }),
@@ -102,7 +102,7 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
           this.eCo?.(this.GetCurrentIndex());
       }),
       (this.OnPointUp = (t) => {
-        let i;
+        var i;
         this.jCo(),
           this.WCo(),
           Log_1.Log.CheckDebug() &&
@@ -231,21 +231,21 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
   }
   CacheStartDragPosition() {
     this.Zdo.RootUIComp.SetAnchorAlign(2, 2);
-    const t = this.Zdo.RootUIComp.GetLGUISpaceAbsolutePosition();
-    var i =
-      (this.Zdo.RootUIComp.SetUIParent(this.ago, !0),
-      this.Zdo.RootUIComp.SetLGUISpaceAbsolutePosition(t),
-      this.Zdo.RootUIComp.GetLGUISpaceAbsolutePosition());
-    var i =
-      ((this.DCo = new Vector2D_1.Vector2D(i.X, i.Y)),
-      (this.RCo = new Vector2D_1.Vector2D(t.X, t.Y)),
-      this.JCo(),
-      new UE.Vector(1, 1, 1));
+    var t = this.Zdo.RootUIComp.GetLGUISpaceAbsolutePosition(),
+      i =
+        (this.Zdo.RootUIComp.SetUIParent(this.ago, !0),
+        this.Zdo.RootUIComp.SetLGUISpaceAbsolutePosition(t),
+        this.Zdo.RootUIComp.GetLGUISpaceAbsolutePosition()),
+      i =
+        ((this.DCo = new Vector2D_1.Vector2D(i.X, i.Y)),
+        (this.RCo = new Vector2D_1.Vector2D(t.X, t.Y)),
+        this.JCo(),
+        new UE.Vector(1, 1, 1));
     this.Zdo.RootUIComp.SetUIItemScale(i);
   }
   StartDragState() {
     (this.TCo = !0), this.Zdo.RootUIComp.SetAnchorAlign(2, 2);
-    const t = this.Zdo.RootUIComp.GetLGUISpaceAbsolutePosition();
+    var t = this.Zdo.RootUIComp.GetLGUISpaceAbsolutePosition();
     this.Zdo.RootUIComp.SetUIParent(this.ago, !0),
       this.Zdo.RootUIComp.SetLGUISpaceAbsolutePosition(t),
       (this.LCo = 0);
@@ -258,7 +258,7 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
     this.WCo(),
       (this.gCo = TickSystem_1.TickSystem.Add(
         () => {
-          this.lgo() === 0 && (this.OnPointUp(void 0), this.WCo());
+          0 === this.lgo() && (this.OnPointUp(void 0), this.WCo());
         },
         "DragTick",
         0,
@@ -269,19 +269,19 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
     this.eCo = t;
   }
   YCo() {
-    const t =
-      LguiEventSystemManager_1.LguiEventSystemManager.IsPressComponentIsValid(
-        0,
-      );
-    const i =
-      LguiEventSystemManager_1.LguiEventSystemManager.IsPressComponentIsValid(
-        1,
-      );
+    var t =
+        LguiEventSystemManager_1.LguiEventSystemManager.IsPressComponentIsValid(
+          0,
+        ),
+      i =
+        LguiEventSystemManager_1.LguiEventSystemManager.IsPressComponentIsValid(
+          1,
+        );
     let s = 0;
     return t && s++, i && s++, s;
   }
   VCo() {
-    this.YCo() >= 2 || this.YCo() === 0
+    2 <= this.YCo() || 0 === this.YCo()
       ? this.jCo()
       : this.Uqe >= CLICKTIME &&
         (this.jCo(), this.Y6i) &&
@@ -291,14 +291,14 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
         this.pCt(this.uCo);
   }
   lgo() {
-    const t =
-      LguiEventSystemManager_1.LguiEventSystemManager.IsPressComponentIsValid(
-        0,
-      );
-    const i =
-      LguiEventSystemManager_1.LguiEventSystemManager.IsPressComponentIsValid(
-        1,
-      );
+    var t =
+        LguiEventSystemManager_1.LguiEventSystemManager.IsPressComponentIsValid(
+          0,
+        ),
+      i =
+        LguiEventSystemManager_1.LguiEventSystemManager.IsPressComponentIsValid(
+          1,
+        );
     let s = 0;
     return t && s++, i && s++, s;
   }
@@ -325,7 +325,7 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
   JCo() {
     this.Zdo.RootUIComp.SetAnchorAlign(4, 4),
       this.Zdo.RootUIComp.SetUIParent(this.ACo, !0);
-    const t = new UE.Vector(1, 1, 1);
+    var t = new UE.Vector(1, 1, 1);
     this.Zdo.RootUIComp.SetUIItemScale(t),
       this.Zdo.RootUIComp.SetHorizontalStretch(this.PCo),
       this.Zdo.RootUIComp.SetVerticalStretch(this.PCo);
@@ -353,7 +353,7 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
       (this.LEt = TickSystem_1.TickSystem.InvalidId));
   }
   SetItemToPointerPosition() {
-    let t, i, s;
+    var t, i, s;
     this.TCo &&
       ((s =
         LguiEventSystemManager_1.LguiEventSystemManager.GetPointerEventData(
@@ -417,14 +417,14 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
     this.OnOverlayCallBack?.();
   }
   CheckOverlap(t, i) {
-    const s = t.X;
-    var t = t.Y;
-    const e = i.X;
-    var i = i.Y;
-    const h = this.tgo().X;
-    const r = this.tgo().Y;
-    const a = this.igo().X;
-    const n = this.igo().Y;
+    var s = t.X,
+      t = t.Y,
+      e = i.X,
+      i = i.Y,
+      h = this.tgo().X,
+      r = this.tgo().Y,
+      a = this.igo().X,
+      n = this.igo().Y;
     return s < r && h < t && e < n && a < i;
   }
   Kbe(t) {
@@ -439,19 +439,19 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
     this.ngo.SetUIActive(void 0 !== t);
   }
   tgo() {
-    var t = this.Zdo.RootUIComp;
-    const i = this.vCo / 2;
-    const s = t.GetLGUISpaceCenterAbsolutePosition().X - i;
-    var t = t.GetLGUISpaceCenterAbsolutePosition().X + i;
+    var t = this.Zdo.RootUIComp,
+      i = this.vCo / 2,
+      s = t.GetLGUISpaceCenterAbsolutePosition().X - i,
+      t = t.GetLGUISpaceCenterAbsolutePosition().X + i;
     return (this.SCo.X = s), (this.SCo.Y = t), this.SCo;
   }
   igo() {
-    var t = this.Zdo.RootUIComp;
-    const i = this.MCo / 2;
-    const s = t.GetLGUISpaceCenterAbsolutePosition().Y - i;
-    var t = t.GetLGUISpaceCenterAbsolutePosition().Y + i;
+    var t = this.Zdo.RootUIComp,
+      i = this.MCo / 2,
+      s = t.GetLGUISpaceCenterAbsolutePosition().Y - i,
+      t = t.GetLGUISpaceCenterAbsolutePosition().Y + i;
     return (this.ECo.X = s), (this.ECo.Y = t), this.ECo;
   }
 }
 exports.VisionDragItem = VisionDragItem;
-// # sourceMappingURL=VisionDragItem.js.map
+//# sourceMappingURL=VisionDragItem.js.map

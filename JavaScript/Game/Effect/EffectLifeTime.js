@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectLifeTime = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Info_1 = require("../../Core/Common/Info");
-const Log_1 = require("../../Core/Common/Log");
-const Stats_1 = require("../../Core/Common/Stats");
-const EffectEnvironment_1 = require("../../Core/Effect/EffectEnvironment");
-const TimerSystem_1 = require("../../Core/Timer/TimerSystem");
-const TimeUtil_1 = require("../Common/TimeUtil");
-const NEAR_ZERO = 0.001;
-const CHECK_CAN_STOP_INTERVAL = 1e3;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Info_1 = require("../../Core/Common/Info"),
+  Log_1 = require("../../Core/Common/Log"),
+  Stats_1 = require("../../Core/Common/Stats"),
+  EffectEnvironment_1 = require("../../Core/Effect/EffectEnvironment"),
+  TimerSystem_1 = require("../../Core/Timer/TimerSystem"),
+  TimeUtil_1 = require("../Common/TimeUtil"),
+  NEAR_ZERO = 0.001,
+  CHECK_CAN_STOP_INTERVAL = 1e3;
 class EffectLifeTime {
   constructor(i) {
     (this.Rge = i),
@@ -46,8 +46,8 @@ class EffectLifeTime {
             );
       }),
       (this.Nge = () => {
-        let i;
-        const t = this.Rge;
+        var i,
+          t = this.Rge;
         (this.Bge = void 0),
           t.GetHandle().IsRoot()
             ? t.CanStop()
@@ -91,7 +91,7 @@ class EffectLifeTime {
       (this.EndTime = s),
       (this.LoopTimeStamp = i + t),
       (this.LifeTimeStamp = i + t + s),
-      (this.Uge = this.StartTime < 0 || this.LoopTime > 0),
+      (this.Uge = this.StartTime < 0 || 0 < this.LoopTime),
       (this.Age = this.Uge || this.LifeTimeStamp <= 0),
       this.IsLoop || this.Bge || this.SetLifeCycle(this.LifeTimeStamp);
   }
@@ -127,7 +127,7 @@ class EffectLifeTime {
     this.kge(this.LifeTimeStamp - this.PassTime);
   }
   kge(i) {
-    let t, s;
+    var t, s;
     this.Bge
       ? ((t = this.Bge.Id),
         TimerSystem_1.TimerSystem.Remove(this.Bge),
@@ -151,7 +151,7 @@ class EffectLifeTime {
   SetTimeScale(i) {
     this.bge !== i &&
       ((this.bge = i), this.Bge) &&
-      (i > 0
+      (0 < i
         ? (TimerSystem_1.TimerSystem.IsPause(this.Bge) &&
             TimerSystem_1.TimerSystem.Resume(this.Bge),
           TimerSystem_1.TimerSystem.ChangeDilation(this.Bge, i))
@@ -190,7 +190,7 @@ class EffectLifeTime {
     );
   }
   Fge() {
-    let i, t;
+    var i, t;
     this.LoopTime <= NEAR_ZERO
       ? (this.PassTime = this.StartTime)
       : this.PassTime >= this.LoopTimeStamp + this.LoopTime
@@ -216,8 +216,8 @@ class EffectLifeTime {
     if (i > TimerSystem_1.MIN_TIME)
       return (
         (i = TimerSystem_1.TimerSystem.Delay(this.Nge, i)) &&
-          this.bge !== 1 &&
-          (this.bge > 0
+          1 !== this.bge &&
+          (0 < this.bge
             ? TimerSystem_1.TimerSystem.ChangeDilation(i, this.bge)
             : TimerSystem_1.TimerSystem.Pause(i)),
         i
@@ -226,4 +226,4 @@ class EffectLifeTime {
   }
 }
 exports.EffectLifeTime = EffectLifeTime;
-// # sourceMappingURL=EffectLifeTime.js.map
+//# sourceMappingURL=EffectLifeTime.js.map

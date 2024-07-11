@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RouletteGridExplore = void 0);
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const RouletteController_1 = require("../RouletteController");
-const RouletteGridBase_1 = require("./RouletteGridBase");
+const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  RouletteController_1 = require("../RouletteController"),
+  RouletteGridBase_1 = require("./RouletteGridBase");
 class RouletteGridExplore extends RouletteGridBase_1.RouletteGridBase {
   Init() {
-    let e, t;
+    var e, t;
     (this.IsIconTexture = !1),
       (this.Data.ShowNum = !1),
       this.IsDataValid() &&
@@ -27,7 +27,7 @@ class RouletteGridExplore extends RouletteGridBase_1.RouletteGridBase {
             )),
         (this.Data.Name = e.Name),
         (t = e.Cost) &&
-          t.size > 0 &&
+          0 < t.size &&
           ((this.Data.ShowNum = !0),
           ([t] = t.keys()),
           (t =
@@ -36,10 +36,10 @@ class RouletteGridExplore extends RouletteGridBase_1.RouletteGridBase {
             )),
           (this.Data.DataNum = t)),
         this.LoadSpriteIcon(e.Icon)),
-      this.Data.State === 1 && this.IsForbiddenState() && (this.Data.State = 0);
+      1 === this.Data.State && this.IsForbiddenState() && (this.Data.State = 0);
   }
   IsForbiddenState() {
-    return this.Data.Id === 1001 && this.qgo();
+    return 1001 === this.Data.Id && this.qgo();
   }
   qgo() {
     return (
@@ -67,4 +67,4 @@ class RouletteGridExplore extends RouletteGridBase_1.RouletteGridBase {
   }
 }
 exports.RouletteGridExplore = RouletteGridExplore;
-// # sourceMappingURL=RouletteGridExplore.js.map
+//# sourceMappingURL=RouletteGridExplore.js.map

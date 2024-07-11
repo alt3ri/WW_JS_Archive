@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CombatMessage_1 = require("../../Module/CombatMessage/CombatMessage");
-const RenderDataManager_1 = require("../Data/RenderDataManager");
-const DebugDrawManager_1 = require("../DebugDraw/DebugDrawManager");
-const SceneCharacterInteraction_1 = require("../Scene/Interaction/SceneCharacterInteraction");
-const FoliageClusteredEffectManager_1 = require("./ClusteredStuff/FoliageClusteredEffectManager");
-const EffectGlobal_1 = require("./EffectGlobal");
-const LensFlareManager_1 = require("./LensFlare/LensFlareManager");
-const ScreenEffectSystem_1 = require("./ScreenEffectSystem/ScreenEffectSystem");
+const UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CombatMessage_1 = require("../../Module/CombatMessage/CombatMessage"),
+  RenderDataManager_1 = require("../Data/RenderDataManager"),
+  DebugDrawManager_1 = require("../DebugDraw/DebugDrawManager"),
+  SceneCharacterInteraction_1 = require("../Scene/Interaction/SceneCharacterInteraction"),
+  FoliageClusteredEffectManager_1 = require("./ClusteredStuff/FoliageClusteredEffectManager"),
+  EffectGlobal_1 = require("./EffectGlobal"),
+  LensFlareManager_1 = require("./LensFlare/LensFlareManager"),
+  ScreenEffectSystem_1 = require("./ScreenEffectSystem/ScreenEffectSystem");
 class EffectBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static SetMaterialControllerDataSync(e, t, a) {
-    if (!(t.length <= 0 || t === "None")) {
+    if (!(t.length <= 0 || "None" === t)) {
       e = ModelManager_1.ModelManager.CreatureModel.GetEntityById(e);
       const c = e?.Entity?.GetComponent(3)?.Actor?.CharRenderingComponent;
       a
@@ -47,7 +47,7 @@ class EffectBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
                   ]);
             },
           );
-      const r = Protocol_1.Aki.Protocol.eNn.create();
+      var r = Protocol_1.Aki.Protocol.eNn.create();
       (r.f4n = new Protocol_1.Aki.Protocol.f4n()),
         (r.f4n.g4n = t),
         (r.f4n.p4n = a),
@@ -165,4 +165,4 @@ class EffectBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
 }
 exports.default = EffectBlueprintFunctionLibrary;
-// # sourceMappingURL=EffectBlueprintFunctionLibrary.js.map
+//# sourceMappingURL=EffectBlueprintFunctionLibrary.js.map

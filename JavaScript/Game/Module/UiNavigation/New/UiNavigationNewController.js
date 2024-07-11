@@ -1,29 +1,29 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiNavigationNewController = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const LguiEventSystemManager_1 = require("../../../Ui/LguiEventSystem/LguiEventSystemManager");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const HotKeyViewDefine_1 = require("../HotKeyViewDefine");
-const UiNavigationJoystickInput_1 = require("../Module/UiNavigationJoystickInput");
-const TsUiNavigationBehaviorListener_1 = require("./TsUiNavigationBehaviorListener");
-const UiNavigationDefine_1 = require("./UiNavigationDefine");
-const UiNavigationGlobalData_1 = require("./UiNavigationGlobalData");
-const UiNavigationLogic_1 = require("./UiNavigationLogic");
-const UiNavigationViewManager_1 = require("./UiNavigationViewManager");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  LguiEventSystemManager_1 = require("../../../Ui/LguiEventSystem/LguiEventSystemManager"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  HotKeyViewDefine_1 = require("../HotKeyViewDefine"),
+  UiNavigationJoystickInput_1 = require("../Module/UiNavigationJoystickInput"),
+  TsUiNavigationBehaviorListener_1 = require("./TsUiNavigationBehaviorListener"),
+  UiNavigationDefine_1 = require("./UiNavigationDefine"),
+  UiNavigationGlobalData_1 = require("./UiNavigationGlobalData"),
+  UiNavigationLogic_1 = require("./UiNavigationLogic"),
+  UiNavigationViewManager_1 = require("./UiNavigationViewManager");
 class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
   static $wo() {
-    const i =
+    var i =
       UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle();
     if (i) return i.GetScrollbarData();
     Log_1.Log.CheckInfo() &&
@@ -34,7 +34,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static GetCurrentNavigationActiveListenerByTag(i, t = !1) {
-    let e =
+    var e =
       UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle();
     if (e) {
       e = e.GetActiveListenerByTag(i);
@@ -55,7 +55,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
         );
   }
   static GetCurrentNavigationFocusListener() {
-    let i =
+    var i =
       UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle();
     if (i) {
       i = i.GetFocusListener();
@@ -75,7 +75,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
         );
   }
   static Ywo() {
-    let i = this.GetCurrentNavigationFocusListener();
+    var i = this.GetCurrentNavigationFocusListener();
     if (i) {
       UiNavigationLogic_1.UiNavigationLogic.MemoryGroupConfigLastSelect(i);
       i = i.GetNavigationGroup();
@@ -155,7 +155,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
       ModelManager_1.ModelManager.UiNavigationModel.Tick(i);
   }
   static HotKeyCloseView() {
-    const i = this.GetCurrentNavigationActiveListenerByTag(
+    var i = this.GetCurrentNavigationActiveListenerByTag(
       HotKeyViewDefine_1.EXIT_TAG,
     );
     this.JumpNavigationGroup(6)
@@ -176,7 +176,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     i && this.CHe(i);
   }
   static SimulateClickItem(i, t) {
-    const e =
+    var e =
       LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystemActor;
     return (
       !!e && e.SimulateClickButton(UiNavigationDefine_1.GAMEPAD_POINT_ID, i, t)
@@ -196,7 +196,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
           ));
   }
   static ClickButtonInside(t) {
-    const e = this.GetCurrentNavigationFocusListener();
+    var e = this.GetCurrentNavigationFocusListener();
     if (e) {
       let i = UiNavigationNewController.GetFocusListenerInsideListenerByTag(
         e,
@@ -214,7 +214,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     }
   }
   static Interact(i) {
-    const t = this.GetCurrentNavigationFocusListener();
+    var t = this.GetCurrentNavigationFocusListener();
     return (
       !!t &&
       (i
@@ -223,24 +223,24 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static InteractClick() {
-    const i = this.GetCurrentNavigationFocusListener();
+    var i = this.GetCurrentNavigationFocusListener();
     this.InteractClickByListener(i);
   }
   static InteractClickByListener(i) {
     i && this.CHe(i);
   }
   static FindScrollbar(i) {
-    const t = this.$wo();
+    var t = this.$wo();
     t && (i ? t.FindNextScrollbar() : t.FindPrevScrollbar());
   }
   static ScrollBarChangeSchedule(i) {
-    let t = this.$wo();
+    var t = this.$wo();
     t && ((t = t.GetCurrentScrollbar()), this.iBo(t, i));
   }
   static BookMarkNavigation(a, i) {
     const n = this.GetCurrentNavigationActiveListenerByTag(i);
     if (n) {
-      const r = n.GetNavigationGroup();
+      var r = n.GetNavigationGroup();
       if (r) {
         let e = void 0;
         for (let i = 0, t = r.ListenerList.Num(); i < t; ++i) {
@@ -306,9 +306,9 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle().MarkRefreshNavigationDirty();
   }
   static JumpNavigationGroupByTag(i) {
-    let t;
-    let e;
-    const a = this.Ywo();
+    var t,
+      e,
+      a = this.Ywo();
     return (
       !!a &&
       (StringUtils_1.StringUtils.IsBlank(i)
@@ -323,9 +323,9 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static JumpNavigationGroup(i) {
-    const t = this.Ywo();
+    var t = this.Ywo();
     if (!t) return !1;
-    const e =
+    var e =
       UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle();
     switch (i) {
       case 5:
@@ -361,7 +361,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static oBo(i) {
-    let t;
+    var t;
     i.ScrollView &&
       (t = i.GetSelectableComponent()) &&
       i.ScrollView.ScrollTo(t.GetRootComponent());
@@ -369,7 +369,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
   static nBo(i) {
     if (i) {
       if (i.SelectableMemory && i.LastSelectListener) {
-        const t = i.LastSelectListener;
+        var t = i.LastSelectListener;
         if (t.IsCanFocus()) return t;
       }
       return this.sBo(i);
@@ -383,14 +383,14 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
   }
   static sBo(i) {
     if (i.DefaultListener) {
-      const t = i.DefaultListener;
+      var t = i.DefaultListener;
       if (t.IsIgnoreScrollOrLayoutCheckInSwitchGroup()) return this.aBo(i);
       if (!t.IsScrollOrLayoutActor() && t.IsCanFocus()) return t;
     }
     return this.FindLoopOrDynListener(i);
   }
   static FindLoopOrDynListener(i) {
-    let t = i.DefaultListener;
+    var t = i.DefaultListener;
     if (t) {
       t = this.hBo(i, t);
       if (t) return t;
@@ -400,7 +400,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
   static aBo(e) {
     let a = void 0;
     for (let i = 0, t = e.ListenerList.Num(); i < t; ++i) {
-      const n = e.ListenerList.Get(i);
+      var n = e.ListenerList.Get(i);
       if ((!a && n.IsCanFocus() && (a = n), n.IsInScrollOrLayoutCanFocus()))
         return n;
     }
@@ -412,22 +412,22 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
       : UiNavigationNewController.E5s(i, t);
   }
   static y5s(i, e) {
-    const a = UE.LGUIBPLibrary.GetComponentsInChildren(
+    var a = UE.LGUIBPLibrary.GetComponentsInChildren(
       i,
       UE.TsUiNavigationBehaviorListener_C.StaticClass(),
       !0,
     );
     for (let i = 0, t = a.Num(); i < t; ++i) {
-      const n = a.Get(i);
+      var n = a.Get(i);
       if (n.GroupName === e.GroupName) return n;
     }
   }
   static S5s(e, i) {
     let a = void 0;
-    const n = i.ScrollView.DisplayItemArray;
+    var n = i.ScrollView.DisplayItemArray;
     for (let i = 0, t = n.Num(); i < t; ++i) {
-      const r = n.Get(i);
-      const o = UiNavigationNewController.y5s(r, e);
+      var r = n.Get(i),
+        o = UiNavigationNewController.y5s(r, e);
       if (
         o &&
         o.IsInDynScrollDisplay(r) &&
@@ -440,9 +440,9 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
   }
   static E5s(e, i) {
     let a = void 0;
-    const n = i.GetScrollOrLayoutActor();
+    var n = i.GetScrollOrLayoutActor();
     for (let i = 0, t = e.ListenerList.Num(); i < t; ++i) {
-      const r = e.ListenerList.Get(i);
+      var r = e.ListenerList.Get(i);
       if (
         r.IsScrollOrLayoutActor() &&
         (!a && r.IsCanFocus() && (a = r),
@@ -454,15 +454,15 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     return a;
   }
   static GetCanFocusInsideListener(i) {
-    const t = i.GetNavigationGroup().InsideGroupName;
-    const e = UE.LGUIBPLibrary.GetComponentsInChildren(
-      i.InsideGroupActor,
-      UE.TsUiNavigationBehaviorListener_C.StaticClass(),
-      !0,
-    );
+    var t = i.GetNavigationGroup().InsideGroupName,
+      e = UE.LGUIBPLibrary.GetComponentsInChildren(
+        i.InsideGroupActor,
+        UE.TsUiNavigationBehaviorListener_C.StaticClass(),
+        !0,
+      );
     if (e)
-      for (let i = e.Num() - 1; i >= 0; --i) {
-        const a = e.Get(i);
+      for (let i = e.Num() - 1; 0 <= i; --i) {
+        var a = e.Get(i);
         if (
           !StringUtils_1.StringUtils.IsEmpty(a.GroupName) &&
           t === a.GroupName &&
@@ -472,7 +472,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
       }
   }
   static IsInFocusInsideListenerList(i, t) {
-    let e;
+    var e;
     return (
       !StringUtils_1.StringUtils.IsEmpty(t.GroupName) &&
       ((e = i.GetNavigationGroup().InsideGroupName),
@@ -486,8 +486,8 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static JumpInsideNavigationGroup() {
-    let i;
-    const t = this.Ywo();
+    var i,
+      t = this.Ywo();
     t &&
       ((i = this.GetCurrentNavigationFocusListener()),
       (i = this.GetCanFocusInsideListener(i))
@@ -509,7 +509,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
             .LguiEventSystemActor) && i.ResetNowIsTriggerPressed();
   }
   static SimulationPointUpInside(i) {
-    let t = this.GetCurrentNavigationFocusListener();
+    var t = this.GetCurrentNavigationFocusListener();
     t &&
       ((t = t.GetChildListenerByTag(i))
         ? this.tBo(t.GetSelectableComponent(), !1)
@@ -522,7 +522,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
           ));
   }
   static tBo(i, t) {
-    let e;
+    var e;
     return (
       !UiLayer_1.UiLayer.IsInMask() &&
       !!(e =
@@ -539,7 +539,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     i && this.tBo(i.GetSelectableComponent(), !0);
   }
   static SimulationPointDownInside(i) {
-    let t = this.GetCurrentNavigationFocusListener();
+    var t = this.GetCurrentNavigationFocusListener();
     t &&
       ((t = t.GetChildListenerByTag(i))
         ? this.tBo(t.GetSelectableComponent(), !0)
@@ -552,7 +552,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
           ));
   }
   static FindTarget(i) {
-    let t = this.GetCurrentNavigationFocusListener();
+    var t = this.GetCurrentNavigationFocusListener();
     t &&
       ((t = t.GetSelectableComponent()),
       (i = UiNavigationLogic_1.UiNavigationLogic.TryFindNavigationDelegate(
@@ -571,7 +571,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     i && this.lBo(i.GetSelectableComponent(), t);
   }
   static SliderInsideComponentSetValue(i, t) {
-    let e = this.GetCurrentNavigationFocusListener();
+    var e = this.GetCurrentNavigationFocusListener();
     e &&
       ((e = e.GetChildListenerByTag(i))
         ? this.lBo(e.GetSelectableComponent(), t)
@@ -584,7 +584,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
           ));
   }
   static ScrollbarInsideComponentSetValue(i, t) {
-    let e = this.GetCurrentNavigationFocusListener();
+    var e = this.GetCurrentNavigationFocusListener();
     e &&
       ((e = this.GetFocusListenerInsideListenerByTag(e, i))
         ? this.iBo(e.GetBehaviorComponent(), t)
@@ -601,12 +601,12 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
       i.SetScrollProgressIncrement(t * UiNavigationDefine_1.SCROLLBAR_INTERVAL);
   }
   static lBo(i, t) {
-    let e;
+    var e;
     i &&
       ((e = i.Value),
       i.SetProgressIncrement(t, i.WholeNumbers),
       e === i.Value) &&
-      (t > 0 && e !== i.MaxValue
+      (0 < t && e !== i.MaxValue
         ? i.SetValue(e + 1)
         : t < 0 && e !== i.MinValue && i.SetValue(e - 1));
   }
@@ -615,7 +615,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     i && this._Bo(i.GetSelectableComponent(), t);
   }
   static DraggableInsideComponentNavigate(i, t) {
-    let e = this.GetCurrentNavigationFocusListener();
+    var e = this.GetCurrentNavigationFocusListener();
     e &&
       ((e = this.GetFocusListenerInsideListenerByTag(e, i))
         ? this._Bo(e.GetSelectableComponent(), t)
@@ -652,8 +652,8 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
           0,
         ));
     var t =
-      LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystemActor;
-    const e = i?.GetSceneComponent();
+        LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystemActor,
+      e = i?.GetSceneComponent();
     t?.UpdateNavigationListener(e),
       i ||
         UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle().UpdateFocus(
@@ -663,7 +663,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
         !1);
   }
   static SetNavigationFocusForView(i) {
-    let t, e;
+    var t, e;
     ModelManager_1.ModelManager.PlatformModel?.IsGamepad() &&
       i?.IsValid() &&
       (t = i
@@ -673,7 +673,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
         )) &&
       !StringUtils_1.StringUtils.IsBlank(t.GroupName) &&
       (e = t.GetNavigationGroup()) &&
-      e.GroupType !== 2 &&
+      2 !== e.GroupType &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("UiNavigation", 11, "业务设置了导航对象", [
           "名字",
@@ -682,7 +682,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
       this.SwitchNavigationFocus(t));
   }
   static SetNavigationFocusForGuide(i) {
-    let t, e;
+    var t, e;
     ModelManager_1.ModelManager.PlatformModel?.IsGamepad() &&
       i?.IsValid() &&
       (t = i
@@ -692,8 +692,8 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
         )) &&
       !StringUtils_1.StringUtils.IsBlank(t.GroupName) &&
       (e = t.GetNavigationGroup()) &&
-      e.GroupType !== 2 &&
-      (e.GroupType === 0
+      2 !== e.GroupType &&
+      (0 === e.GroupType
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("UiNavigation", 11, "引导设置了导航对象", [
               "名字",
@@ -716,23 +716,23 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
   static GetFocusListenerInsideListenerByTag(i, t) {
     let e = i.InsideActorMap?.Get(t);
     e = e || i.GetOwner();
-    const a = UE.LGUIBPLibrary.GetComponentsInChildren(
+    var a = UE.LGUIBPLibrary.GetComponentsInChildren(
       e,
       UE.TsUiNavigationBehaviorListener_C.StaticClass(),
       !0,
     );
     if (a)
-      for (let i = a.Num() - 1; i >= 0; --i) {
-        const n = a.Get(i);
+      for (let i = a.Num() - 1; 0 <= i; --i) {
+        var n = a.Get(i);
         if (n.TagArray?.Contains(t) && n.IsCanFocus()) return n;
       }
   }
   static GetMarkBookActiveListenerList(e) {
     if (!e) return [];
-    if (e?.GroupType !== 1) return [];
-    const a = [];
+    if (1 !== e?.GroupType) return [];
+    var a = [];
     for (let i = 0, t = e.ListenerList.Num(); i < t; ++i) {
-      const n = e.ListenerList.Get(i);
+      var n = e.ListenerList.Get(i);
       n.IsListenerActive() && a.push(n);
     }
     return a;
@@ -742,7 +742,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     i && i.GetBehaviorComponent().ActivateInputText();
   }
   static ActiveTextInputInside(i) {
-    let t = this.GetCurrentNavigationFocusListener();
+    var t = this.GetCurrentNavigationFocusListener();
     t &&
       (t = this.GetFocusListenerInsideListenerByTag(t, i)) &&
       t.GetBehaviorComponent().ActivateInputText();
@@ -751,7 +751,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
 (exports.UiNavigationNewController = UiNavigationNewController),
   ((_a = UiNavigationNewController).IsTickEvenPausedInternal = !0),
   (UiNavigationNewController.aGe = () => {
-    const i = LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystem;
+    var i = LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystem;
     i &&
       (UiNavigationLogic_1.UiNavigationLogic.InitNavigationDelegate(
         LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystem,
@@ -797,9 +797,9 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     UiNavigationLogic_1.UiNavigationLogic.ExecuteInputNavigation(i, t);
   }),
   (UiNavigationNewController.eBo = () => {
-    const i = ModelManager_1.ModelManager.UiNavigationModel;
+    var i = ModelManager_1.ModelManager.UiNavigationModel;
     i &&
       i.GuideFocusListener &&
       (_a.CHe(i.GuideFocusListener), _a.ResetNavigationFocusForGuide());
   });
-// # sourceMappingURL=UiNavigationNewController.js.map
+//# sourceMappingURL=UiNavigationNewController.js.map

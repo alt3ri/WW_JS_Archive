@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.KuroSdkModel = void 0);
-const UE = require("ue");
-const ModelBase_1 = require("../../Core/Framework/ModelBase");
-const BaseConfigController_1 = require("../../Launcher/BaseConfig/BaseConfigController");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const ConfigManager_1 = require("../Manager/ConfigManager");
-const KuroSdkDefine_1 = require("./KuroSdkDefine");
-const KuroSdkReport_1 = require("./KuroSdkReport");
+const UE = require("ue"),
+  ModelBase_1 = require("../../Core/Framework/ModelBase"),
+  BaseConfigController_1 = require("../../Launcher/BaseConfig/BaseConfigController"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../Manager/ConfigManager"),
+  KuroSdkDefine_1 = require("./KuroSdkDefine"),
+  KuroSdkReport_1 = require("./KuroSdkReport");
 class KuroSdkModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -70,4 +70,4 @@ class KuroSdkModel extends ModelBase_1.ModelBase {
   }
 }
 exports.KuroSdkModel = KuroSdkModel;
-// # sourceMappingURL=KuroSdkModel.js.map
+//# sourceMappingURL=KuroSdkModel.js.map

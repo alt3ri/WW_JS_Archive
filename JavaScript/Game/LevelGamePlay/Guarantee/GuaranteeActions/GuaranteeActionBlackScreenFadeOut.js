@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuaranteeActionBlackScreenFadeOut = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Global_1 = require("../../../Global");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LevelLoadingController_1 = require("../../../Module/LevelLoading/LevelLoadingController");
-const GuaranteeActionBase_1 = require("./GuaranteeActionBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Global_1 = require("../../../Global"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LevelLoadingController_1 = require("../../../Module/LevelLoading/LevelLoadingController"),
+  GuaranteeActionBase_1 = require("./GuaranteeActionBase");
 class GuaranteeActionBlackScreenFadeOut extends GuaranteeActionBase_1.GuaranteeActionBase {
   OnExecute(e) {
     Log_1.Log.CheckInfo() && Log_1.Log.Info("LevelEvent", 46, "保底黑幕结束"),
@@ -21,4 +21,4 @@ class GuaranteeActionBlackScreenFadeOut extends GuaranteeActionBase_1.GuaranteeA
   }
 }
 exports.GuaranteeActionBlackScreenFadeOut = GuaranteeActionBlackScreenFadeOut;
-// # sourceMappingURL=GuaranteeActionBlackScreenFadeOut.js.map
+//# sourceMappingURL=GuaranteeActionBlackScreenFadeOut.js.map

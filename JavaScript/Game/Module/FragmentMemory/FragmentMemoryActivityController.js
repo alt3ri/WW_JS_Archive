@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FragmentMemoryActivityController = void 0);
-const FragmentMemorySubView_1 = require("../Activity/ActivityContent/FragmentMemory/FragmentMemorySubView");
-const ActivityControllerBase_1 = require("../Activity/ActivityControllerBase");
-const FragmentMemoryActivityData_1 = require("./FragmentMemoryActivityData");
+const FragmentMemorySubView_1 = require("../Activity/ActivityContent/FragmentMemory/FragmentMemorySubView"),
+  ActivityControllerBase_1 = require("../Activity/ActivityControllerBase"),
+  FragmentMemoryActivityData_1 = require("./FragmentMemoryActivityData");
 class FragmentMemoryActivityController extends ActivityControllerBase_1.ActivityControllerBase {
   OnOpenView(e) {}
   OnGetActivityResource(e) {
@@ -20,4 +20,4 @@ class FragmentMemoryActivityController extends ActivityControllerBase_1.Activity
   }
 }
 exports.FragmentMemoryActivityController = FragmentMemoryActivityController;
-// # sourceMappingURL=FragmentMemoryActivityController.js.map
+//# sourceMappingURL=FragmentMemoryActivityController.js.map

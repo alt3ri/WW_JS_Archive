@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OnlineChallengePlayerStateItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const OnlineModel_1 = require("../OnlineModel");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  OnlineModel_1 = require("../OnlineModel");
 class OnlineChallengePlayerStateItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, r) {
     super(), (this.j8 = r), this.CreateThenShowByActor(e.GetOwner());
@@ -20,7 +20,7 @@ class OnlineChallengePlayerStateItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    let e = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
+    var e = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
       this.j8,
     );
     e
@@ -48,4 +48,4 @@ class OnlineChallengePlayerStateItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.OnlineChallengePlayerStateItem = OnlineChallengePlayerStateItem;
-// # sourceMappingURL=OnlineChallengePlayerStateItem.js.map
+//# sourceMappingURL=OnlineChallengePlayerStateItem.js.map

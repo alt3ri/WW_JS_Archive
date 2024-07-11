@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleSkillSecondCdItem = void 0);
-const UE = require("ue");
-const Time_1 = require("../../../../Core/Common/Time");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const SkillCdController_1 = require("../../Battle/SkillCdController");
-const AMOUNT_START = 0.3;
-const AMOUNT_SCALE = 0.4;
+const UE = require("ue"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  SkillCdController_1 = require("../../Battle/SkillCdController"),
+  AMOUNT_START = 0.3,
+  AMOUNT_SCALE = 0.4;
 class BattleSkillSecondCdItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -62,38 +62,38 @@ class BattleSkillSecondCdItem extends UiPanelBase_1.UiPanelBase {
           this.zet.SetFillAmount(i)));
   }
   xtt() {
-    return this.sit?.GetButtonType() === 7 && this.sit.IsSkillInItemUseBuffCd();
+    return 7 === this.sit?.GetButtonType() && this.sit.IsSkillInItemUseBuffCd();
   }
   wtt() {
-    const [i, t] = this.sit.GetEquippedItemUsingBuffCd();
-    return i > 0 && (this.Ott(i, t), !0);
+    var [i, t] = this.sit.GetEquippedItemUsingBuffCd();
+    return 0 < i && (this.Ott(i, t), !0);
   }
   Btt() {
     return (
-      this.sit?.GetButtonType() === 7 && this.sit.IsSkillInItemUseSkillCd()
+      7 === this.sit?.GetButtonType() && this.sit.IsSkillInItemUseSkillCd()
     );
   }
   btt() {
-    const [i, t] = this.sit.GetEquippedItemUsingSkillCd();
-    return i > 0 && (this.Ott(i, t), !0);
+    var [i, t] = this.sit.GetEquippedItemUsingSkillCd();
+    return 0 < i && (this.Ott(i, t), !0);
   }
   ait() {
-    let i;
-    let t = this.sit.GetMultiSkillInfo();
+    var i,
+      t = this.sit.GetMultiSkillInfo();
     return !(
       !t ||
-      t.NextSkillId === 0 ||
+      0 === t.NextSkillId ||
       ((i = t.RemainingStartTime),
       (t = t.StartTime),
-      i > 0 ? this.Ott(i, t) : this.hit(),
+      0 < i ? this.Ott(i, t) : this.hit(),
       0)
     );
   }
   qtt() {
-    let i;
-    let t = this.sit.GetGroupSkillCdInfo();
+    var i,
+      t = this.sit.GetGroupSkillCdInfo();
     t && ((i = t.CurRemainingCd), (t = t.CurMaxCd), this.Ott(i, t));
   }
 }
 exports.BattleSkillSecondCdItem = BattleSkillSecondCdItem;
-// # sourceMappingURL=BattleSkillSecondCdItem.js.map
+//# sourceMappingURL=BattleSkillSecondCdItem.js.map

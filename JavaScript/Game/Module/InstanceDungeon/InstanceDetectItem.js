@@ -4,16 +4,16 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.InstanceSeriesItem =
     exports.InstanceDetectItem =
       void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const ActivityMowingController_1 = require("../Activity/ActivityContent/Mowing/ActivityMowingController");
-const LguiUtil_1 = require("../Util/LguiUtil");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  ActivityMowingController_1 = require("../Activity/ActivityContent/Mowing/ActivityMowingController"),
+  LguiUtil_1 = require("../Util/LguiUtil");
 class InstanceDetectItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -54,7 +54,7 @@ class InstanceDetectItem extends UiPanelBase_1.UiPanelBase {
       ]);
   }
   GetUsingItem(i) {
-    const t =
+    var t =
       ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceUnlock(
         i.InstanceGirdId,
       );
@@ -67,12 +67,12 @@ class InstanceDetectItem extends UiPanelBase_1.UiPanelBase {
   }
   Update(i, t) {
     this.Data = i;
-    const s =
+    var s =
       !ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceUnlock(
         i.InstanceGirdId,
       );
-    let e = this.qsi;
-    let h = this.Gsi;
+    let e = this.qsi,
+      h = this.Gsi;
     this.qsi.SetUiActive(!s),
       this.Gsi.SetUiActive(!s),
       this.Nsi.SetUiActive(s),
@@ -140,7 +140,7 @@ class InstanceSeriesItem extends UiPanelBase_1.UiPanelBase {
       (this.Xsi = !1),
       (this.CurrentData = void 0),
       (this.$si = () => {
-        let i =
+        var i =
           ActivityMowingController_1.ActivityMowingController.GetMowingActivityData();
         i &&
           ((i = i.GetActivityLevelCountdownText(this.jsi)),
@@ -149,14 +149,14 @@ class InstanceSeriesItem extends UiPanelBase_1.UiPanelBase {
           ((this.Xsi = !1), this.Update(this.jsi, this.Wsi, this.Ksi));
       }),
       (this.OnClickExtendToggle = (i) => {
-        i === 1 &&
+        1 === i &&
           ((this.Wsi = !0),
           this.Zqe && this.Zqe(this.jsi, this.b5e, this.Wsi),
           this.Hsi) &&
           this.Hsi(this.jsi, this.b5e, this.CurrentData);
       }),
       (this.Ysi = (i) => {
-        i = i === 1;
+        i = 1 === i;
         (this.Wsi = i), this.GetItem(5)?.SetUIActive(i);
       });
   }
@@ -204,25 +204,25 @@ class InstanceSeriesItem extends UiPanelBase_1.UiPanelBase {
       t)
     ) {
       var i = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-        this.jsi,
-      );
-      var s =
-        (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), i.MapName),
-        s && this.Hsi && this.Hsi(this.jsi, this.b5e, this.CurrentData),
-        i.DifficultyIcon);
-      var s =
-        (this.GetSprite(2)?.SetUIActive(!0),
-        this.GetItem(1)?.SetUIActive(!0),
-        this.SetTextureByPath(s, this.GetTexture(2)),
-        this.GetText(8)?.SetUIActive(!0),
-        i.SubTitle);
-      if (s?.size > 0) {
-        let i = void 0;
-        let t = void 0;
-        for (const [e, h] of s) (i = e), (t = h);
-        i === 1
+          this.jsi,
+        ),
+        s =
+          (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), i.MapName),
+          s && this.Hsi && this.Hsi(this.jsi, this.b5e, this.CurrentData),
+          i.DifficultyIcon),
+        s =
+          (this.GetSprite(2)?.SetUIActive(!0),
+          this.GetItem(1)?.SetUIActive(!0),
+          this.SetTextureByPath(s, this.GetTexture(2)),
+          this.GetText(8)?.SetUIActive(!0),
+          i.SubTitle);
+      if (0 < s?.size) {
+        let i = void 0,
+          t = void 0;
+        for (var [e, h] of s) (i = e), (t = h);
+        1 === i
           ? LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), t)
-          : i === 2 &&
+          : 2 === i &&
             ((s =
               ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
                 this.jsi,
@@ -259,11 +259,11 @@ class InstanceSeriesItem extends UiPanelBase_1.UiPanelBase {
         i,
       )
     ) {
-      const t =
+      var t =
         ActivityMowingController_1.ActivityMowingController.GetMowingActivityData();
       if (!t) return !1;
       this.Qsi = this.$si;
-      const s = t.GetActivityLevelUnlockState(i);
+      var s = t.GetActivityLevelUnlockState(i);
       return (
         s &&
           LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -283,7 +283,7 @@ class InstanceSeriesItem extends UiPanelBase_1.UiPanelBase {
     this.Hsi = i;
   }
   zsi(i) {
-    const t =
+    var t =
       !ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceUnlock(
         this.jsi,
       );
@@ -309,7 +309,7 @@ class InstanceItem extends UiPanelBase_1.UiPanelBase {
       (this.NUe = 0),
       (this.T7e = () => !this.Vsi || this.Vsi(this.NUe)),
       (this.OnClickExtendToggle = (i) => {
-        i === 1 && this.Zqe && this.Zqe(this.NUe, this.ExtendToggle, void 0);
+        1 === i && this.Zqe && this.Zqe(this.NUe, this.ExtendToggle, void 0);
       });
   }
   OnRegisterComponent() {
@@ -350,21 +350,20 @@ class InstanceItem extends UiPanelBase_1.UiPanelBase {
   }
   Zsi() {
     var s = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-      this.NUe,
-    );
-    const e =
-      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
+        this.NUe,
+      ),
+      e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
         this.NUe,
         ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
-      );
-    var s = s.SubTitle;
-    if (s?.size > 0) {
-      let i = void 0;
-      let t = void 0;
-      for (const [h, r] of s) (i = h), (t = r);
-      void (i === 1
+      ),
+      s = s.SubTitle;
+    if (0 < s?.size) {
+      let i = void 0,
+        t = void 0;
+      for (var [h, r] of s) (i = h), (t = r);
+      void (1 === i
         ? LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), t)
-        : i === 2 &&
+        : 2 === i &&
           LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(2),
             "RecommendLevel",
@@ -378,7 +377,7 @@ class InstanceItem extends UiPanelBase_1.UiPanelBase {
       );
   }
   eai() {
-    const i = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+    var i = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
       this.NUe,
     ).DifficultyIcon;
     i && this.SetTextureByPath(i, this.GetTexture(1));
@@ -391,4 +390,4 @@ class InstanceItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.InstanceItem = InstanceItem;
-// # sourceMappingURL=InstanceDetectItem.js.map
+//# sourceMappingURL=InstanceDetectItem.js.map

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SignalDecodeConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CatchSignalDifficultyById_1 = require("../../../Core/Define/ConfigQuery/CatchSignalDifficultyById");
-const CatchSignalGameplayById_1 = require("../../../Core/Define/ConfigQuery/CatchSignalGameplayById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  CatchSignalDifficultyById_1 = require("../../../Core/Define/ConfigQuery/CatchSignalDifficultyById"),
+  CatchSignalGameplayById_1 = require("../../../Core/Define/ConfigQuery/CatchSignalGameplayById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class SignalDecodeConfig extends ConfigBase_1.ConfigBase {
   GetGameplayConfig(e) {
-    const i =
+    var i =
       CatchSignalGameplayById_1.configCatchSignalGameplayById.GetConfig(e);
     return (
       i ||
@@ -20,7 +20,7 @@ class SignalDecodeConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetDifficultyConfig(e) {
-    const i =
+    var i =
       CatchSignalDifficultyById_1.configCatchSignalDifficultyById.GetConfig(e);
     return (
       i ||
@@ -36,4 +36,4 @@ class SignalDecodeConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.SignalDecodeConfig = SignalDecodeConfig;
-// # sourceMappingURL=SignalDecodeConfig.js.map
+//# sourceMappingURL=SignalDecodeConfig.js.map

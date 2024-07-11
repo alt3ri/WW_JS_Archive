@@ -1,30 +1,34 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, s) {
-    let h;
-    const o = arguments.length;
-    let r =
-      o < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var h,
+      o = arguments.length,
+      r =
+        o < 3
+          ? e
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(e, i))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(t, e, i, s);
     else
-      for (let n = t.length - 1; n >= 0; n--)
-        (h = t[n]) && (r = (o < 3 ? h(r) : o > 3 ? h(e, i, r) : h(e, i)) || r);
-    return o > 3 && r && Object.defineProperty(e, i, r), r;
+      for (var n = t.length - 1; 0 <= n; n--)
+        (h = t[n]) && (r = (o < 3 ? h(r) : 3 < o ? h(e, i, r) : h(e, i)) || r);
+    return 3 < o && r && Object.defineProperty(e, i, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemMoveComponent = exports.MoveTarget = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Info_1 = require("../../../../../Core/Common/Info");
-const Log_1 = require("../../../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const IAction_1 = require("../../../../../UniverseEditor/Interface/IAction");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Info_1 = require("../../../../../Core/Common/Info"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  IAction_1 = require("../../../../../UniverseEditor/Interface/IAction"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil");
 class MoveTarget {
   constructor(t, e, i = 0, s = -1, h = -1) {
     (this.TargetPosData = t),
@@ -71,13 +75,13 @@ let SceneItemMoveComponent = class SceneItemMoveComponent extends EntityComponen
   }
   get IsMoving() {
     return Info_1.Info.EnableForceTick
-      ? this.s1n.length > 0 || this._ti === 0
+      ? 0 < this.s1n.length || 0 === this._ti
       : this.IsMovingPrepareCompleted
         ? this.s3o.IsMoving()
-        : this.s1n.length > 0;
+        : 0 < this.s1n.length;
   }
   OnStart() {
-    const t = this.Entity.GetComponent(0);
+    var t = this.Entity.GetComponent(0);
     return (
       (this.ActorComp = this.Entity.GetComponent(182)),
       (this.o1n = this.Entity.GetComponent(142)),
@@ -100,7 +104,7 @@ let SceneItemMoveComponent = class SceneItemMoveComponent extends EntityComponen
     );
   }
   OnActivate() {
-    if (!Info_1.Info.EnableForceTick && this.s1n.length > 0) {
+    if (!Info_1.Info.EnableForceTick && 0 < this.s1n.length) {
       for (const t of this.s1n)
         this.s3o.AddMoveTarget(
           new UE.Vector(
@@ -122,10 +126,10 @@ let SceneItemMoveComponent = class SceneItemMoveComponent extends EntityComponen
   }
   OnTick(t) {
     this.r1n.IsMoving
-      ? (this.IsMoving && this.s3o.GetSimpleRunState() !== 2) ||
+      ? (this.IsMoving && 2 !== this.s3o.GetSimpleRunState()) ||
         (this.r1n.IsMoving = !1)
       : this.IsMoving &&
-        this.s3o.GetSimpleRunState() === 1 &&
+        1 === this.s3o.GetSimpleRunState() &&
         (this.r1n.IsMoving = !0),
       this.n1n &&
         !this.IsMoving &&
@@ -133,16 +137,16 @@ let SceneItemMoveComponent = class SceneItemMoveComponent extends EntityComponen
         this.o1n?.TryDisable("[SceneItemMoveComponent] Stop Moving"));
   }
   OnForceTick(t) {
-    let e, i;
+    var e, i;
     super.OnTick(t),
-      this._ti === 0
+      0 === this._ti
         ? (this.wrr.Addition(this.ActorComp.ActorLocationProxy, this.a1n),
           this.m1n()
             ? (this.ActorComp.SetActorLocation(this.Due.ToUeVector()),
               (this._ti = 1))
             : this.ActorComp.SetActorLocation(this.a1n.ToUeVector()))
         : this.s1n &&
-          this.s1n.length !== 0 &&
+          0 !== this.s1n.length &&
           ((e = this.s1n[0]),
           this.s1n.splice(0, 1),
           (this.Due = Vector_1.Vector.Create(
@@ -174,7 +178,7 @@ let SceneItemMoveComponent = class SceneItemMoveComponent extends EntityComponen
         );
     else {
       let t = void 0;
-      let i;
+      var i;
       (t =
         e instanceof MoveTarget
           ? e
@@ -197,7 +201,7 @@ let SceneItemMoveComponent = class SceneItemMoveComponent extends EntityComponen
             ),
             this.r1n.IsMoving || this.AddStopMoveCallback(this.c1n),
             this.s3o.SetTickingMoveEnable(!0),
-            this.s3o.GetSimpleRunState() !== 2 && (this.r1n.IsMoving = !0))
+            2 !== this.s3o.GetSimpleRunState() && (this.r1n.IsMoving = !0))
           : this.s1n.push(t),
         (this.n1n = !0),
         this.o1n?.TryEnable(),
@@ -233,7 +237,7 @@ let SceneItemMoveComponent = class SceneItemMoveComponent extends EntityComponen
         : (this.s1n = []);
   }
   GetNextTarget() {
-    let t, e;
+    var t, e;
     return this.s3o?.IsValid()
       ? ((t = (0, puerts_1.$ref)(new UE.Vector())),
         (e = (0, puerts_1.$ref)(new UE.Vector())),
@@ -273,4 +277,4 @@ let SceneItemMoveComponent = class SceneItemMoveComponent extends EntityComponen
   SceneItemMoveComponent,
 )),
   (exports.SceneItemMoveComponent = SceneItemMoveComponent);
-// # sourceMappingURL=SceneItemMoveComponent.js.map
+//# sourceMappingURL=SceneItemMoveComponent.js.map

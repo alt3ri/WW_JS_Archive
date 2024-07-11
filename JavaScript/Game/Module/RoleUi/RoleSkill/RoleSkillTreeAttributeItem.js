@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleSkillTreeAttributeItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class RoleSkillTreeAttributeItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(), this.CreateThenShowByActor(e.GetOwner());
@@ -20,7 +20,7 @@ class RoleSkillTreeAttributeItem extends UiPanelBase_1.UiPanelBase {
     this.SetNextLevelItem(!1);
   }
   Refresh(e, t) {
-    let s;
+    var s;
     e.AttrNameText && this.GetText(0).SetText(e.AttrNameText),
       e.AttrBaseValue && this.GetText(1).SetText(e.AttrBaseValue),
       t &&
@@ -35,4 +35,4 @@ class RoleSkillTreeAttributeItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleSkillTreeAttributeItem = RoleSkillTreeAttributeItem;
-// # sourceMappingURL=RoleSkillTreeAttributeItem.js.map
+//# sourceMappingURL=RoleSkillTreeAttributeItem.js.map

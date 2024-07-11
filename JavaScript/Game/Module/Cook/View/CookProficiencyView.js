@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ProficiencyView = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const CookController_1 = require("../CookController");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  CookController_1 = require("../CookController");
 class ProficiencyView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -38,17 +38,17 @@ class ProficiencyView extends UiPanelBase_1.UiPanelBase {
     this.uqt = e;
   }
   SetExpNum(e, i, r, t) {
-    var r = i * r;
-    var e = e * i;
-    const n = r - e;
-    var e = StringUtils_1.StringUtils.Format(
-      ConfigManager_1.ConfigManager.TextConfig.GetTextById(
-        "CumulativeProficiency",
-      ),
-      e.toString(),
-      r.toString(),
-    );
-    n > 0
+    var r = i * r,
+      e = e * i,
+      n = r - e,
+      e = StringUtils_1.StringUtils.Format(
+        ConfigManager_1.ConfigManager.TextConfig.GetTextById(
+          "CumulativeProficiency",
+        ),
+        e.toString(),
+        r.toString(),
+      );
+    0 < n
       ? ((r = Math.min(n, i * t)),
         (i = StringUtils_1.StringUtils.Format(
           ConfigManager_1.ConfigManager.TextConfig.GetTextById(
@@ -66,7 +66,7 @@ class ProficiencyView extends UiPanelBase_1.UiPanelBase {
         this.GetText(0).SetText(t));
   }
   SetRoleTexture(e, i) {
-    const r = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e);
+    var r = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e);
     this.SetRoleIcon(
       r.GetRoleConfig().RoleHeadIconLarge,
       this.GetTexture(1),
@@ -79,9 +79,9 @@ class ProficiencyView extends UiPanelBase_1.UiPanelBase {
         : this.Gft?.StopCurrentSequence(!1, !0);
   }
   SetTypeContent(e = void 0) {
-    const i = this.GetText(3);
+    var i = this.GetText(3);
     e ? (i.SetUIActive(!0), i.SetText(e)) : i.SetUIActive(!1);
   }
 }
 exports.ProficiencyView = ProficiencyView;
-// # sourceMappingURL=CookProficiencyView.js.map
+//# sourceMappingURL=CookProficiencyView.js.map

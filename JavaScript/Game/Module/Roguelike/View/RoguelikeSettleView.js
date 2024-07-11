@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoguelikeSettleRecordItem = exports.RoguelikeSettleView = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
 class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -74,133 +74,143 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
       (this.RecordItemList = []);
   }
   pie() {
-    const e = this.OpenParam;
-    var t =
-      (this.GetItem(6).SetUIActive(e.IAs),
-      ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterConfig(
-        e.vws.R5n,
-      ));
-    var i = ConfigManager_1.ConfigManager.RoleConfig?.GetRoleConfig(t.RoleId);
-    var s = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguePhantomConfig(
-      e.pws.R5n,
-    );
-    var o = TimeUtil_1.TimeUtil.GetTimeString(e.kws);
-    var o =
-      (this.GetText(21).SetText(o),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), i.Name),
-      ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(t.RoleId));
-    var i =
-      (o && this.SetTextureByPath(o.FormationRoleCard, this.GetTexture(1)),
-      s
-        ? (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), s.PokemonName),
-          this.SetTextureByPath(s.PokemonSettleIcon, this.GetTexture(3)))
-        : (this.GetText(4).SetUIActive(!1), this.GetTexture(3).SetUIActive(!1)),
-      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e.vFn));
-    var t =
-      (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), i.MapName),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(
-        this.GetText(8),
-        i.difficultydescLength() > 0 ? i.DifficultyDesc[0] : "",
+    var e = this.OpenParam,
+      t =
+        (this.GetItem(6).SetUIActive(e.IAs),
+        ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterConfig(
+          e.vws.R5n,
+        )),
+      i = ConfigManager_1.ConfigManager.RoleConfig?.GetRoleConfig(t.RoleId),
+      s = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguePhantomConfig(
+        e.pws.R5n,
       ),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(
-        this.GetText(10),
-        "RoguelikeSettlePlayerName",
-        ModelManager_1.ModelManager.FunctionModel.GetPlayerName(),
-      ),
-      TimeUtil_1.TimeUtil.DateFormatString(e.Bws));
-    var o = (this.GetText(9).SetText(t), Math.floor((e.Pws / e.Uws) * 100));
-    var s =
-      (this.GetSprite(14).SetFillAmount(o / 100),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(
-        this.GetText(13),
-        "RoguelikeSettleProgress",
-        o,
-      ),
-      ModelManager_1.ModelManager.RoguelikeModel.GetParamConfigBySeasonId());
-    var i = this.GetItem(0);
-    var t = this.GetSprite(5);
-    var r = this.GetSprite(14);
-    let n = this.GetTexture(19);
-    var i =
-      (o >= s.RoguelikeSettleS
-        ? (i.SetUIActive(!0),
-          this.SetSpriteByPath(
-            CommonParamById_1.configCommonParamById.GetStringConfig(
-              "RoguelikeSettle_S_Sprite",
+      o = TimeUtil_1.TimeUtil.GetTimeString(e.kws),
+      o =
+        (this.GetText(21).SetText(o),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), i.Name),
+        ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(t.RoleId)),
+      i =
+        (o && this.SetTextureByPath(o.FormationRoleCard, this.GetTexture(1)),
+        s
+          ? (LguiUtil_1.LguiUtil.SetLocalTextNew(
+              this.GetText(4),
+              s.PokemonName,
             ),
-            t,
-            !1,
-          ),
-          this.SetSpriteByPath(
-            CommonParamById_1.configCommonParamById.GetStringConfig(
-              "RoguelikeSettle_S_Bar_Sprite",
-            ),
-            r,
-            !1,
-          ),
-          this.SetTextureByPath(s.RoguelikeSettleBgS, n))
-        : (o >= s.RoguelikeSettleA
-            ? (i.SetUIActive(!1),
-              this.SetSpriteByPath(
-                CommonParamById_1.configCommonParamById.GetStringConfig(
-                  "RoguelikeSettle_A_Sprite",
-                ),
-                t,
-                !1,
+            this.SetTextureByPath(s.PokemonSettleIcon, this.GetTexture(3)))
+          : (this.GetText(4).SetUIActive(!1),
+            this.GetTexture(3).SetUIActive(!1)),
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e.vFn)),
+      t =
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), i.MapName),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(
+          this.GetText(8),
+          0 < i.difficultydescLength() ? i.DifficultyDesc[0] : "",
+        ),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(
+          this.GetText(10),
+          "RoguelikeSettlePlayerName",
+          ModelManager_1.ModelManager.FunctionModel.GetPlayerName(),
+        ),
+        TimeUtil_1.TimeUtil.DateFormatString(e.Bws)),
+      o = (this.GetText(9).SetText(t), Math.floor((e.Pws / e.Uws) * 100)),
+      s =
+        (this.GetSprite(14).SetFillAmount(o / 100),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(
+          this.GetText(13),
+          "RoguelikeSettleProgress",
+          o,
+        ),
+        ModelManager_1.ModelManager.RoguelikeModel.GetParamConfigBySeasonId()),
+      i = this.GetItem(0),
+      t = this.GetSprite(5),
+      r = this.GetSprite(14),
+      n = this.GetTexture(19),
+      i =
+        (o >= s.RoguelikeSettleS
+          ? (i.SetUIActive(!0),
+            this.SetSpriteByPath(
+              CommonParamById_1.configCommonParamById.GetStringConfig(
+                "RoguelikeSettle_S_Sprite",
               ),
-              this.SetSpriteByPath(
-                CommonParamById_1.configCommonParamById.GetStringConfig(
-                  "RoguelikeSettle_A_Bar_Sprite",
-                ),
-                r,
-                !1,
-              ))
-            : o >= s.RoguelikeSettleB
+              t,
+              !1,
+            ),
+            this.SetSpriteByPath(
+              CommonParamById_1.configCommonParamById.GetStringConfig(
+                "RoguelikeSettle_S_Bar_Sprite",
+              ),
+              r,
+              !1,
+            ),
+            this.SetTextureByPath(s.RoguelikeSettleBgS, n))
+          : (o >= s.RoguelikeSettleA
               ? (i.SetUIActive(!1),
                 this.SetSpriteByPath(
                   CommonParamById_1.configCommonParamById.GetStringConfig(
-                    "RoguelikeSettle_B_Sprite",
+                    "RoguelikeSettle_A_Sprite",
                   ),
                   t,
                   !1,
                 ),
                 this.SetSpriteByPath(
                   CommonParamById_1.configCommonParamById.GetStringConfig(
-                    "RoguelikeSettle_B_Bar_Sprite",
+                    "RoguelikeSettle_A_Bar_Sprite",
                   ),
                   r,
                   !1,
                 ))
-              : (i.SetUIActive(!1),
-                this.SetSpriteByPath(
-                  CommonParamById_1.configCommonParamById.GetStringConfig(
-                    "RoguelikeSettle_C_Sprite",
+              : o >= s.RoguelikeSettleB
+                ? (i.SetUIActive(!1),
+                  this.SetSpriteByPath(
+                    CommonParamById_1.configCommonParamById.GetStringConfig(
+                      "RoguelikeSettle_B_Sprite",
+                    ),
+                    t,
+                    !1,
                   ),
-                  t,
-                  !1,
+                  this.SetSpriteByPath(
+                    CommonParamById_1.configCommonParamById.GetStringConfig(
+                      "RoguelikeSettle_B_Bar_Sprite",
+                    ),
+                    r,
+                    !1,
+                  ))
+                : (i.SetUIActive(!1),
+                  this.SetSpriteByPath(
+                    CommonParamById_1.configCommonParamById.GetStringConfig(
+                      "RoguelikeSettle_C_Sprite",
+                    ),
+                    t,
+                    !1,
+                  ),
+                  this.SetSpriteByPath(
+                    CommonParamById_1.configCommonParamById.GetStringConfig(
+                      "RoguelikeSettle_C_Bar_Sprite",
+                    ),
+                    r,
+                    !1,
+                  )),
+            this.SetTextureByPath(s.RoguelikeSettleBgNormal, n)),
+        o >= s.RoguelikeSettleS
+          ? AudioSystem_1.AudioSystem.SetState("ui_rogue_settle", "settle_s")
+          : o >= s.RoguelikeSettleA
+            ? AudioSystem_1.AudioSystem.SetState("ui_rogue_settle", "settle_a")
+            : o >= s.RoguelikeSettleB
+              ? AudioSystem_1.AudioSystem.SetState(
+                  "ui_rogue_settle",
+                  "settle_b",
+                )
+              : AudioSystem_1.AudioSystem.SetState(
+                  "ui_rogue_settle",
+                  "settle_c",
                 ),
-                this.SetSpriteByPath(
-                  CommonParamById_1.configCommonParamById.GetStringConfig(
-                    "RoguelikeSettle_C_Bar_Sprite",
-                  ),
-                  r,
-                  !1,
-                )),
-          this.SetTextureByPath(s.RoguelikeSettleBgNormal, n)),
-      o >= s.RoguelikeSettleS
-        ? AudioSystem_1.AudioSystem.SetState("ui_rogue_settle", "settle_s")
-        : o >= s.RoguelikeSettleA
-          ? AudioSystem_1.AudioSystem.SetState("ui_rogue_settle", "settle_a")
-          : o >= s.RoguelikeSettleB
-            ? AudioSystem_1.AudioSystem.SetState("ui_rogue_settle", "settle_b")
-            : AudioSystem_1.AudioSystem.SetState("ui_rogue_settle", "settle_c"),
-      LguiUtil_1.LguiUtil.CopyItem(this.GetItem(12), this.GetItem(11)));
-    var t = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(12), this.GetItem(11));
-    var r = Object.keys(e.wPs);
-    let a = 0;
-    let l = 0;
-    let g = 0;
-    const _ =
+        LguiUtil_1.LguiUtil.CopyItem(this.GetItem(12), this.GetItem(11))),
+      t = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(12), this.GetItem(11)),
+      r = Object.keys(e.wPs);
+    let a = 0,
+      l = 0,
+      g = 0;
+    var _ =
       ModelManager_1.ModelManager.RoguelikeModel.GetParamConfigBySeasonId();
     for (const u of r)
       Number(u) === _.SkillPoint
@@ -263,7 +273,7 @@ class RoguelikeSettleCurrencyItem extends UiPanelBase_1.UiPanelBase {
               )),
             this.SetTextureByPath(i, this.GetTexture(4))),
       this.GetItem(3).SetUIActive(s),
-      this.RootItem?.SetUIActive(t > 0);
+      this.RootItem?.SetUIActive(0 < t);
   }
 }
 class RoguelikeSettleRecordItem extends UiPanelBase_1.UiPanelBase {
@@ -303,4 +313,4 @@ class RoguelikeSettleRecordItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoguelikeSettleRecordItem = RoguelikeSettleRecordItem;
-// # sourceMappingURL=RoguelikeSettleView.js.map
+//# sourceMappingURL=RoguelikeSettleView.js.map

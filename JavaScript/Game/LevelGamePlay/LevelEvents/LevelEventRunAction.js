@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventRunAction = void 0);
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const LevelGeneralContextDefine_1 = require("../LevelGeneralContextDefine");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
+const LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  LevelGeneralContextDefine_1 = require("../LevelGeneralContextDefine"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder");
 class LevelEventRunAction extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, t) {
     e
@@ -13,7 +13,7 @@ class LevelEventRunAction extends LevelGeneralBase_1.LevelEventBase {
           this.IsAsync
             ? () => {}
             : (e) => {
-                this.FinishExecute(e === 1);
+                this.FinishExecute(1 === e);
               },
         ),
         this.IsAsync && this.FinishExecute(!0))
@@ -21,4 +21,4 @@ class LevelEventRunAction extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventRunAction = LevelEventRunAction;
-// # sourceMappingURL=LevelEventRunAction.js.map
+//# sourceMappingURL=LevelEventRunAction.js.map

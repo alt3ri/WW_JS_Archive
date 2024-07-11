@@ -1,5 +1,5 @@
 "use strict";
-let ECharPositionState,
+var ECharPositionState,
   ECharMoveState,
   ECharDirectionState,
   ECharPositionSubState;
@@ -136,4 +136,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     (ECharPositionSubState =
       exports.ECharPositionSubState || (exports.ECharPositionSubState = {})),
   );
-// # sourceMappingURL=CharacterUnifiedStateTypes.js.map
+//# sourceMappingURL=CharacterUnifiedStateTypes.js.map

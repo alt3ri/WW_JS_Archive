@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configRoleIconTagById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const RoleIconTag_1 = require("../Config/RoleIconTag");
-const DB = "db_component_config.db";
-const FILE = "t.通用组件配置.xlsx";
-const TABLE = "RoleIconTag";
-const COMMAND = "select BinData from `RoleIconTag` where Id=?";
-const KEY_PREFIX = "RoleIconTagById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  RoleIconTag_1 = require("../Config/RoleIconTag"),
+  DB = "db_component_config.db",
+  FILE = "t.通用组件配置.xlsx",
+  TABLE = "RoleIconTag",
+  COMMAND = "select BinData from `RoleIconTag` where Id=?",
+  KEY_PREFIX = "RoleIconTagById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configRoleIconTagById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configRoleIconTagById.GetConfig(";
 exports.configRoleIconTagById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configRoleIconTagById = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var i;
-        var e = void 0;
+        var i,
+          e = void 0;
         if (
           (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configRoleIconTagById = {
     }
   },
 };
-// # sourceMappingURL=RoleIconTagById.js.map
+//# sourceMappingURL=RoleIconTagById.js.map

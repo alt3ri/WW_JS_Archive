@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ServerGmController = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const GlobalData_1 = require("../../GlobalData");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  GlobalData_1 = require("../../GlobalData");
 class ServerGmController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -43,4 +43,4 @@ class ServerGmController extends ControllerBase_1.ControllerBase {
           Log_1.Log.Warn("Test", 6, "AnimErrorCheck End");
     }, 3e3));
 };
-// # sourceMappingURL=ServerGmController.js.map
+//# sourceMappingURL=ServerGmController.js.map

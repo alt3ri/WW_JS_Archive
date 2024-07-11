@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiHateList = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const OnlineController_1 = require("../../Module/Online/OnlineController");
-const CharacterController_1 = require("../../NewWorld/Character/CharacterController");
-const CampUtils_1 = require("../../NewWorld/Character/Common/Blueprint/Utils/CampUtils");
-const BlackboardController_1 = require("../../World/Controller/BlackboardController");
-const MIN_HATE = 1;
-const ONE_THOUSAND_MILLISECONDS = 1e3;
+const Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  OnlineController_1 = require("../../Module/Online/OnlineController"),
+  CharacterController_1 = require("../../NewWorld/Character/CharacterController"),
+  CampUtils_1 = require("../../NewWorld/Character/Common/Blueprint/Utils/CampUtils"),
+  BlackboardController_1 = require("../../World/Controller/BlackboardController"),
+  MIN_HATE = 1,
+  ONE_THOUSAND_MILLISECONDS = 1e3;
 class HatredItem {
   constructor() {
     (this.HatredValue = 0),
@@ -29,7 +29,7 @@ class HatredItem {
       (this.InMaxArea = !1);
   }
   get InDecreasing() {
-    return this.NextDecreaseTime > 0;
+    return 0 < this.NextDecreaseTime;
   }
   get HatredValueActual() {
     return this.HatredValue + this.TauntValue;
@@ -54,14 +54,15 @@ class AiHateList {
       (this.Die = void 0),
       (this.Rie = Vector_1.Vector.Create()),
       (this.Uie = (t, e, i, s, r, h, n) => {
-        s.CalculateType !== 0 ||
+        0 !== s.CalculateType ||
           (this.Lie?.Valid && this.Lie.HasTag(-893996770)) ||
           ((s = t.GetComponent(185))?.Valid && s.HasTag(-1566015933)) ||
           ((s = t.CheckGetComponent(3))?.Valid &&
-            CampUtils_1.CampUtils.GetCampRelationship(
-              this.Bte.CharActorComp.Actor.Camp,
-              s.Actor.Camp,
-            ) === 2 &&
+            2 ===
+              CampUtils_1.CampUtils.GetCampRelationship(
+                this.Bte.CharActorComp.Actor.Camp,
+                s.Actor.Camp,
+              ) &&
             ((s = this.Aie.get(t.Id))
               ? (s.HatredValue += Math.max(
                   MIN_HATE,
@@ -72,7 +73,7 @@ class AiHateList {
               : this.Pie(t.Id, Math.max(MIN_HATE, -i))));
       }),
       (this.xie = (t, e) => {
-        let i;
+        var i;
         e &&
           this.vie &&
           (this.Die?.Valid &&
@@ -109,7 +110,7 @@ class AiHateList {
     return this.vie;
   }
   set AiHate(t) {
-    let e, i;
+    var e, i;
     this.vie !== t &&
       ((e = this.Bte.CharActorComp.Entity.GetComponent(161)) &&
         ((i = this.Fie()) &&
@@ -157,7 +158,7 @@ class AiHateList {
   }
   GetHatredMapDebugText() {
     let t = "";
-    for (let [e, i] of this.Aie) {
+    for (var [e, i] of this.Aie) {
       e =
         CharacterController_1.CharacterController.GetCharacterActorComponentById(
           e,
@@ -180,7 +181,7 @@ class AiHateList {
     return this.Die;
   }
   get IsCurrentTargetInMaxArea() {
-    let t;
+    var t;
     return !!this.Die && !!(t = this.Aie.get(this.Die.Id)) && t.InMaxArea;
   }
   BindEvents() {
@@ -236,7 +237,7 @@ class AiHateList {
       this.Bie(0, "Clear");
   }
   Tick(t) {
-    let e;
+    var e;
     this.vie &&
       ((e = this.Bte.CharActorComp.ScaledHalfHeight),
       (t = this.Vie(t * MathUtils_1.MathUtils.MillisecondToSecond, e)),
@@ -304,7 +305,7 @@ class AiHateList {
         EventSystem_1.EventSystem.EmitWithTarget(
           this.Bte.CharAiDesignComp.Entity,
           EventDefine_1.EEventName.AiInFight,
-          this.Aie.size > 0,
+          0 < this.Aie.size,
         ));
   }
   Pie(e, i = MIN_HATE, s) {
@@ -339,7 +340,7 @@ class AiHateList {
               EventSystem_1.EventSystem.EmitWithTarget(
                 this.Bte.CharAiDesignComp.Entity,
                 EventDefine_1.EEventName.AiInFight,
-                this.Aie.size > 0,
+                0 < this.Aie.size,
               )),
         t
       );
@@ -347,7 +348,7 @@ class AiHateList {
   }
   Bie(t, e) {
     if (
-      (e === "MaxArea" &&
+      ("MaxArea" === e &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "AI",
@@ -389,11 +390,11 @@ class AiHateList {
           EventSystem_1.EventSystem.EmitWithTarget(
             this.Bte.CharAiDesignComp.Entity,
             EventDefine_1.EEventName.AiInFight,
-            this.Aie.size > 0,
+            0 < this.Aie.size,
           );
       }
     } else if (this.Aie.size) {
-      for (const [i] of this.Aie) {
+      for (var [i] of this.Aie) {
         const s = EntitySystem_1.EntitySystem.Get(i);
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -419,13 +420,13 @@ class AiHateList {
         EventSystem_1.EventSystem.EmitWithTarget(
           this.Bte.CharAiDesignComp.Entity,
           EventDefine_1.EEventName.AiInFight,
-          this.Aie.size > 0,
+          0 < this.Aie.size,
         );
     }
   }
   Vie(t, e) {
     this.Rie.FromUeVector(this.Bte.CharActorComp.GetInitLocation());
-    const i = this.Bte.CharActorComp.ActorLocationProxy;
+    var i = this.Bte.CharActorComp.ActorLocationProxy;
     this.Hie(t, this.Rie, i, e), this.jie(this.Rie, i, e);
     let s = 0;
     for (const r of this.bie) this.Bie(r, this.qie[s]), ++s;
@@ -438,15 +439,15 @@ class AiHateList {
       (this.kie = 2),
       (this.bie.length = 0),
       (this.qie.length = 0);
-    for (const [r, h] of this.Aie) {
-      const n =
+    for (var [r, h] of this.Aie) {
+      var n =
         CharacterController_1.CharacterController.GetCharacterActorComponentById(
           r,
         );
       if (n && n.Entity.Active) {
-        const a = Vector_1.Vector.DistSquared2D(i, n.ActorLocationProxy);
-        let o = n.ActorLocationProxy.Z - i.Z + s - n.ScaledHalfHeight;
-        const _ = Vector_1.Vector.DistSquared2D(e, n.ActorLocationProxy);
+        var a = Vector_1.Vector.DistSquared2D(i, n.ActorLocationProxy),
+          o = n.ActorLocationProxy.Z - i.Z + s - n.ScaledHalfHeight,
+          _ = Vector_1.Vector.DistSquared2D(e, n.ActorLocationProxy);
         if (
           ((h.InMaxArea = this.Wie(a, o, _)),
           Time_1.Time.WorldTime < h.EarliestClearTime)
@@ -464,7 +465,7 @@ class AiHateList {
             this.bie.push(r), this.qie.push("MaxArea");
             continue;
           }
-          if (h.DisengageTime > 0) {
+          if (0 < h.DisengageTime) {
             if (h.TauntValue <= 0 && Time_1.Time.WorldTime > h.DisengageTime) {
               this.bie.push(r), this.qie.push("MinAreaTimer");
               continue;
@@ -501,7 +502,7 @@ class AiHateList {
     }
   }
   AddNewHateListForTaunt(t, e) {
-    const i = this.Aie.get(t);
+    var i = this.Aie.get(t);
     i ? (i.TauntValue = e) : this.Pie(t, MIN_HATE, e);
   }
   RemoveHateListForTaunt(t) {
@@ -517,11 +518,11 @@ class AiHateList {
               a,
             );
           if (s?.Valid) {
-            const r = this.Qie(s.Entity, 0);
+            var r = this.Qie(s.Entity, 0);
             if (!(r <= 1)) {
-              const h = Vector_1.Vector.DistSquared2D(e, s.ActorLocationProxy);
-              let n = s.ActorLocationProxy.Z - e.Z + i - s.HalfHeight;
-              var s = Vector_1.Vector.DistSquared2D(t, s.ActorLocationProxy);
+              var h = Vector_1.Vector.DistSquared2D(e, s.ActorLocationProxy),
+                n = s.ActorLocationProxy.Z - e.Z + i - s.HalfHeight,
+                s = Vector_1.Vector.DistSquared2D(t, s.ActorLocationProxy);
               if (this.Kie(h, n, s)) {
                 n = this.Pie(a);
                 if ((n && (n.InMaxArea = !0), !(this.kie > r))) {
@@ -540,27 +541,27 @@ class AiHateList {
         }
   }
   ChangeHatred(t, e, i) {
-    if (t === 0)
-      for (const [s, r] of this.Aie)
+    if (0 === t)
+      for (var [s, r] of this.Aie)
         (r.HatredValue = r.HatredValue * e + i),
           r.HatredValue <= 0 && this.Bie(s, "ForceChanged");
     else {
-      const h = this.Aie.get(t);
-      h ? (h.HatredValue = h.HatredValue * e + i) : i > 0 && this.Pie(t, i);
+      var h = this.Aie.get(t);
+      h ? (h.HatredValue = h.HatredValue * e + i) : 0 < i && this.Pie(t, i);
     }
   }
   ClearHatred(t) {
-    t === 0 ? this.Bie(0, "Clear") : this.Bie(t, "Clear");
+    0 === t ? this.Bie(0, "Clear") : this.Bie(t, "Clear");
   }
   Qie(t, e) {
     if (!t?.Active) return 0;
-    let i = t.GetComponent(158);
+    var i = t.GetComponent(158);
     if (i?.Valid && !i.IsInGame) return 0;
     i = t.GetComponent(185);
     if (i) {
       if (this.Mie && i.HasTag(this.Mie)) return 1;
       if (i.HasTag(1008164187)) return 2;
-      if (e > 0) return 6;
+      if (0 < e) return 6;
       e = t.GetComponent(0).GetPlayerId();
       if (!OnlineController_1.OnlineController.CheckPlayerNetHealthy(e))
         return 3;
@@ -587,7 +588,7 @@ class AiHateList {
     );
   }
   SharedHatredTarget(t) {
-    let e;
+    var e;
     this.vie &&
       ((e = this.Aie.get(t))
         ? (e.EarliestClearTime = Time_1.Time.WorldTime + this.vie.MinClearTime)
@@ -623,4 +624,4 @@ class AiHateList {
   }
 }
 exports.AiHateList = AiHateList;
-// # sourceMappingURL=AiHateList.js.map
+//# sourceMappingURL=AiHateList.js.map

@@ -1,28 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotTipsView = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const ExternalSourceSettingById_1 = require("../../../../Core/Define/ConfigQuery/ExternalSourceSettingById");
-const InterjectionByTimberIdAndUniversalToneId_1 = require("../../../../Core/Define/ConfigQuery/InterjectionByTimberIdAndUniversalToneId");
-const PlotAudioById_1 = require("../../../../Core/Define/ConfigQuery/PlotAudioById");
-const SpeakerById_1 = require("../../../../Core/Define/ConfigQuery/SpeakerById");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils");
-const IAction_1 = require("../../../../UniverseEditor/Interface/IAction");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const PlotAudioModel_1 = require("../PlotAudioModel");
-const BREAK_TIME = 1e3;
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  ExternalSourceSettingById_1 = require("../../../../Core/Define/ConfigQuery/ExternalSourceSettingById"),
+  InterjectionByTimberIdAndUniversalToneId_1 = require("../../../../Core/Define/ConfigQuery/InterjectionByTimberIdAndUniversalToneId"),
+  PlotAudioById_1 = require("../../../../Core/Define/ConfigQuery/PlotAudioById"),
+  SpeakerById_1 = require("../../../../Core/Define/ConfigQuery/SpeakerById"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils"),
+  IAction_1 = require("../../../../UniverseEditor/Interface/IAction"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  PlotAudioModel_1 = require("../PlotAudioModel"),
+  BREAK_TIME = 1e3;
 class PlotTipsView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -47,7 +47,7 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
                 ),
               this.bPn.Resume())
             : (this.ywn !== LanguageSystem_1.LanguageSystem.PackageAudio &&
-                (this.czi !== -1 &&
+                (-1 !== this.czi &&
                   (PlotTipsView.Iwn++,
                   AudioSystem_1.AudioSystem.ExecuteAction(this.czi, 0, {
                     TransitionDuration: 0,
@@ -89,7 +89,7 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
           this.bPn?.Remove(),
           (this.bPn = void 0),
           (this.BPn = void 0),
-          this.czi !== -1 &&
+          -1 !== this.czi &&
             (AudioSystem_1.AudioSystem.ExecuteAction(this.czi, 0, {
               TransitionDuration: BREAK_TIME,
             }),
@@ -147,8 +147,8 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
       );
   }
   async OnCreateAsync() {
-    const e = new Array();
-    const t = this.OpenParam;
+    var e = new Array(),
+      t = this.OpenParam;
     if (t.TipsTalkTexturePaths) {
       for (const i of t.TipsTalkTexturePaths) {
         const o = new CustomPromise_1.CustomPromise();
@@ -200,7 +200,7 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
         ["isPause", t],
       ),
       (this.bPn = TimerSystem_1.TimerSystem.Delay(() => {
-        const e = this.BPn;
+        var e = this.BPn;
         this.heo(),
           ControllerHolder_1.ControllerHolder.FlowController.FlowShowTalk.SubmitSubtitle(
             e,
@@ -210,7 +210,7 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
   }
   kPn() {
     this.bPn?.Pause(),
-      this.czi !== -1 &&
+      -1 !== this.czi &&
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Plot", 27, "[PlotTips] 暂停语音"),
         AudioSystem_1.AudioSystem.ExecuteAction(this.czi, 1, {
@@ -218,8 +218,8 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
         }));
   }
   Deo() {
-    let e;
-    const t = this.OpenParam;
+    var e,
+      t = this.OpenParam;
     t?.ViewName &&
       ((e = UiManager_1.UiManager.GetViewByName(t.ViewName))
         ? (e.AddChild(this),
@@ -241,11 +241,11 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
           this.CloseMe()));
   }
   Izi() {
-    let e = this.BPn.PlayVoice
+    var e = this.BPn.PlayVoice
       ? PlotAudioById_1.configPlotAudioById.GetConfig(this.BPn.TidTalk)
       : void 0;
     if (!e) return !1;
-    const t =
+    var t =
       ExternalSourceSettingById_1.configExternalSourceSettingById.GetConfig(
         e.ExternalSourceSetting,
       );
@@ -254,7 +254,7 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
       e.FileName,
     ]);
     e = (0, AudioSystem_1.parseAudioEventPath)(t.AudioEventPath);
-    if (this.czi === -1) {
+    if (-1 === this.czi) {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 27, "[PlotTips] 语音播放", ["mediaName", i]),
         PlotTipsView.Iwn++;
@@ -269,7 +269,7 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
               "mediaName",
               i,
             ]),
-            e === 0 &&
+            0 === e &&
               o === PlotTipsView.Iwn &&
               ((this.czi = -1),
               this.NPn(
@@ -288,10 +288,10 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
   }
   Szi() {
     if (!this.BPn?.UniversalTone) return !1;
-    const e =
-      this.BPn.UniversalTone.TimberId ??
-      SpeakerById_1.configSpeakerById.GetConfig(this.BPn.WhoId)?.TimberId;
-    const t = this.BPn.UniversalTone.UniversalToneId;
+    var e =
+        this.BPn.UniversalTone.TimberId ??
+        SpeakerById_1.configSpeakerById.GetConfig(this.BPn.WhoId)?.TimberId,
+      t = this.BPn.UniversalTone.UniversalToneId;
     if (!e || !t)
       return (
         ControllerHolder_1.ControllerHolder.FlowController.LogError(
@@ -299,7 +299,7 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
         ),
         !1
       );
-    const i =
+    var i =
       InterjectionByTimberIdAndUniversalToneId_1.configInterjectionByTimberIdAndUniversalToneId.GetConfig(
         e,
         t,
@@ -314,7 +314,7 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
         !1
       );
     const o = (0, AudioSystem_1.parseAudioEventPath)(i.AkEvent);
-    if (this.czi === -1) {
+    if (-1 === this.czi) {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 27, "[PlotTips] 语气播放", ["event", o]),
         PlotTipsView.Iwn++;
@@ -327,7 +327,7 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
               "event",
               o,
             ]),
-            e === 0 &&
+            0 === e &&
               s === PlotTipsView.Iwn &&
               ((this.czi = -1),
               this.NPn(
@@ -345,9 +345,9 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
     return !0;
   }
   yzi() {
-    let e;
-    let t;
-    let i = this.BPn.TalkAkEvent;
+    var e,
+      t,
+      i = this.BPn.TalkAkEvent;
     i &&
       (e = (0, AudioSystem_1.parseAudioEventPath)(i.AkEvent)) &&
       (i.Type === IAction_1.EPostAkEvent.Global
@@ -368,4 +368,4 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
   }
 }
 (exports.PlotTipsView = PlotTipsView).Iwn = 0;
-// # sourceMappingURL=PlotTipsView.js.map
+//# sourceMappingURL=PlotTipsView.js.map

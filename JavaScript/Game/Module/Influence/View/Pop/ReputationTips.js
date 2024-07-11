@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ReputationTips = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../../Util/LguiUtil");
 class ReputationTips extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments), (this.Bni = void 0), (this.g4e = void 0);
@@ -43,10 +43,10 @@ class ReputationTipsItem extends UiPanelBase_1.UiPanelBase {
   }
   UpdateItem(e, t) {
     var e =
-      ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(e);
-    const i = e / t;
+        ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(e),
+      i = e / t;
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(0), "ReputationValue", e, t),
       this.GetSprite(1).SetFillAmount(i);
   }
 }
-// # sourceMappingURL=ReputationTips.js.map
+//# sourceMappingURL=ReputationTips.js.map

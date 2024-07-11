@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonLevelUpAttributeItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
 class CommonLevelUpAttributeItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(), this.CreateThenShowByActor(e.GetOwner());
@@ -19,7 +19,7 @@ class CommonLevelUpAttributeItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   Update(e) {
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
         e.Id,
       );
@@ -39,9 +39,9 @@ class CommonLevelUpAttributeItem extends UiPanelBase_1.UiPanelBase {
           e.IsRatio,
         ),
       ),
-      this.GetItem(2).SetUIActive(e.AddValue - e.BaseValue > 0),
-      this.GetText(3).SetUIActive(e.AddValue - e.BaseValue > 0);
+      this.GetItem(2).SetUIActive(0 < e.AddValue - e.BaseValue),
+      this.GetText(3).SetUIActive(0 < e.AddValue - e.BaseValue);
   }
 }
 exports.CommonLevelUpAttributeItem = CommonLevelUpAttributeItem;
-// # sourceMappingURL=CommonLevelUpAttributeItem.js.map
+//# sourceMappingURL=CommonLevelUpAttributeItem.js.map

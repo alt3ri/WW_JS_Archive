@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HudEntityData = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ObjectSystem_1 = require("../../../../Core/Object/ObjectSystem");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const CharacterController_1 = require("../../../NewWorld/Character/CharacterController");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ObjectSystem_1 = require("../../../../Core/Object/ObjectSystem"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  CharacterController_1 = require("../../../NewWorld/Character/CharacterController");
 class HudEntityData {
   constructor() {
     (this.Jh = void 0),
@@ -25,7 +25,7 @@ class HudEntityData {
       this.ClearAllTagCountChangedCallback();
   }
   SetComponent(t) {
-    const e = this.Jh.GetComponent(t);
+    var e = this.Jh.GetComponent(t);
     this._At.set(t, e);
   }
   GetComponent(t) {
@@ -51,7 +51,7 @@ class HudEntityData {
     return this.Jh.Id;
   }
   ListenForTagCountChanged(t, e) {
-    const r = this.GetComponent(185);
+    var r = this.GetComponent(185);
     r &&
       ((this.eii = e),
       (e = r.ListenForTagAddOrRemove(t, this.tii)),
@@ -76,13 +76,13 @@ class HudEntityData {
     return this.GetComponent(0).GetMonsterMatchType();
   }
   GetMonsterMatchTypeNumber() {
-    const t = this.GetMonsterMatchType();
+    var t = this.GetMonsterMatchType();
     return t || 0;
   }
   GetDistanceSquaredTo(t) {
-    const e = this.GetLocationProxy();
+    var e = this.GetLocationProxy();
     return Vector_1.Vector.DistSquared(t, e);
   }
 }
 exports.HudEntityData = HudEntityData;
-// # sourceMappingURL=HudEntityData.js.map
+//# sourceMappingURL=HudEntityData.js.map

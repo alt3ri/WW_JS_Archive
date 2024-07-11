@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem");
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const CameraController_1 = require("../../../../../Camera/CameraController");
-const Global_1 = require("../../../../../Global");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const CharacterGasDebugComponent_1 = require("../../Component/Abilities/CharacterGasDebugComponent");
-const CharacterStatisticsComponent_1 = require("../../Component/Abilities/CharacterStatisticsComponent");
-const SAVE_PATH = "Statistics/FightDataRecord/";
+const UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  CameraController_1 = require("../../../../../Camera/CameraController"),
+  Global_1 = require("../../../../../Global"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  CharacterGasDebugComponent_1 = require("../../Component/Abilities/CharacterGasDebugComponent"),
+  CharacterStatisticsComponent_1 = require("../../Component/Abilities/CharacterStatisticsComponent"),
+  SAVE_PATH = "Statistics/FightDataRecord/";
 class CharacterBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static SetPartCollisionSwitch(t, e, a, r, i) {
     t?.IsValid() && t.CharacterActorComponent?.Valid
@@ -18,8 +18,8 @@ class CharacterBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
         Log_1.Log.Error("Character", 21, "传入的character为空");
   }
   static ResetPartCollisionSwitch(t, e) {
-    var t = t.CharacterActorComponent;
-    const a = t.GetPartConf(e);
+    var t = t.CharacterActorComponent,
+      a = t.GetPartConf(e);
     t.SetPartCollisionSwitch(
       e,
       a.IsBlockPawn,
@@ -45,7 +45,7 @@ class CharacterBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static SaveCharacterOperationRecord() {
     CharacterGasDebugComponent_1.CharacterGasDebugComponent.EndRecord();
-    const t =
+    var t =
       CharacterStatisticsComponent_1.CharacterStatisticsComponent.ExportRecord();
     if (t) {
       if (
@@ -67,12 +67,12 @@ class CharacterBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return !1;
   }
   static SaveCharacterStatisticsData() {
-    let t =
-      CharacterStatisticsComponent_1.CharacterStatisticsComponent.ExportStatisticsByAttackType();
-    const e =
-      CharacterStatisticsComponent_1.CharacterStatisticsComponent.ExportStatisticsBySkillType();
-    let a = !t;
-    let r = !e;
+    var t =
+        CharacterStatisticsComponent_1.CharacterStatisticsComponent.ExportStatisticsByAttackType(),
+      e =
+        CharacterStatisticsComponent_1.CharacterStatisticsComponent.ExportStatisticsBySkillType(),
+      a = !t,
+      r = !e;
     if (a || r)
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
@@ -124,7 +124,7 @@ class CharacterBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       Math.pow(t, 2);
   }
   static SetCombatStarted(t, e, a, r, i, o, s, n, c) {
-    const C = new Array();
+    var C = new Array();
     r && C.push(0),
       i && C.push(1),
       o && C.push(2),
@@ -139,7 +139,7 @@ class CharacterBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       );
   }
   static SetTypeOpen(t, e, a, r, i, o) {
-    const s = new Array();
+    var s = new Array();
     t && s.push(0),
       e && s.push(1),
       a && s.push(2),
@@ -187,7 +187,7 @@ class CharacterBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       CameraController_1.CameraController.FightCamera.LogicComponent.ExitCameraSpline();
   }
   static GetBaseCharacterTransform() {
-    const t = Global_1.Global.BaseCharacter?.CharacterActorComponent;
+    var t = Global_1.Global.BaseCharacter?.CharacterActorComponent;
     return t ? t.ActorTransform : MathUtils_1.MathUtils.DefaultTransform;
   }
   static SetActorExtraSkeletalMeshComponent(t, e) {
@@ -196,4 +196,4 @@ class CharacterBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
 }
 exports.default = CharacterBlueprintFunctionLibrary;
-// # sourceMappingURL=CharacterBlueprintFunctionLibrary.js.map
+//# sourceMappingURL=CharacterBlueprintFunctionLibrary.js.map

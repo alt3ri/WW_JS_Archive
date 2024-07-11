@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BaseHotPatchProcedure = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const BaseConfigController_1 = require("../BaseConfig/BaseConfigController");
-const DownloadDefine_1 = require("../Download/DownloadDefine");
-const UrlPrefixDownload_1 = require("../Download/UrlPrefixDownload");
-const UrlPrefixHttpRequest_1 = require("../Download/UrlPrefixHttpRequest");
-const HotPatchLogReport_1 = require("../HotPatchLogReport");
-const RemoteConfig_1 = require("../RemoteConfig");
-const AppUtil_1 = require("../Update/AppUtil");
-const LauncherLog_1 = require("../Util/LauncherLog");
-const LauncherStorageLib_1 = require("../Util/LauncherStorageLib");
-const LauncherTextLib_1 = require("../Util/LauncherTextLib");
-const ProcedureUtil_1 = require("../Util/ProcedureUtil");
-const LauncherSerialize_1 = require("../Util/LauncherSerialize");
-const DEFAULT_CONFIG_TRY_COUNT = 3;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  BaseConfigController_1 = require("../BaseConfig/BaseConfigController"),
+  DownloadDefine_1 = require("../Download/DownloadDefine"),
+  UrlPrefixDownload_1 = require("../Download/UrlPrefixDownload"),
+  UrlPrefixHttpRequest_1 = require("../Download/UrlPrefixHttpRequest"),
+  HotPatchLogReport_1 = require("../HotPatchLogReport"),
+  RemoteConfig_1 = require("../RemoteConfig"),
+  AppUtil_1 = require("../Update/AppUtil"),
+  LauncherLog_1 = require("../Util/LauncherLog"),
+  LauncherStorageLib_1 = require("../Util/LauncherStorageLib"),
+  LauncherTextLib_1 = require("../Util/LauncherTextLib"),
+  ProcedureUtil_1 = require("../Util/ProcedureUtil"),
+  LauncherSerialize_1 = require("../Util/LauncherSerialize"),
+  DEFAULT_CONFIG_TRY_COUNT = 3;
 class BaseHotPatchProcedure {
   constructor(e, t) {
     (this.QSr = !1),
@@ -69,16 +69,16 @@ class BaseHotPatchProcedure {
     );
   }
   async UpdateResource(e, ...t) {
-    let o = new HotPatchLogReport_1.HotPatchLog();
+    var o = new HotPatchLogReport_1.HotPatchLog();
     (o.s_step_id = "hotpatch_procedure_update_res_start"),
       HotPatchLogReport_1.HotPatchLogReport.Report(o);
     let r = !0;
     for (const c of t) {
-      var a = new HotPatchLogReport_1.HotPatchLog();
-      var a =
-        ((a.s_step_id = "hotpatch_procedure_check_version"),
-        HotPatchLogReport_1.HotPatchLogReport.Report(a),
-        await this.CheckResourceVersion(c));
+      var a = new HotPatchLogReport_1.HotPatchLog(),
+        a =
+          ((a.s_step_id = "hotpatch_procedure_check_version"),
+          HotPatchLogReport_1.HotPatchLogReport.Report(a),
+          await this.CheckResourceVersion(c));
       if (a) {
         a = new HotPatchLogReport_1.HotPatchLog();
         if (
@@ -101,13 +101,13 @@ class BaseHotPatchProcedure {
           !(r = await this.CheckResourceFiles(c)))
         )
           return !1;
-        var a = new HotPatchLogReport_1.HotPatchLog();
-        var a =
-          ((a.s_step_id = "hotpatch_procedure_check_resource_complete"),
-          HotPatchLogReport_1.HotPatchLogReport.Report(a),
-          c.GetUpdateSize());
-        let i = c.GetNeedSpace();
-        if (a > 0n) {
+        var a = new HotPatchLogReport_1.HotPatchLog(),
+          a =
+            ((a.s_step_id = "hotpatch_procedure_check_resource_complete"),
+            HotPatchLogReport_1.HotPatchLogReport.Report(a),
+            c.GetUpdateSize()),
+          i = c.GetNeedSpace();
+        if (0n < a) {
           a = new HotPatchLogReport_1.HotPatchLog();
           if (
             ((a.s_step_id = "hotpatch_procedure_check_space"),
@@ -159,17 +159,17 @@ class BaseHotPatchProcedure {
   }
   async DownloadIndexFile(t) {
     let a = !1;
-    const e = BigInt(1048576);
+    var e = BigInt(1048576);
     return (
       !!(a = await this.DoesSavedDirHaveEnoughSpace(e)) &&
       (await (0, ProcedureUtil_1.whetherRepeatDoOnFailedAsync)(
         async () => {
-          const e = await t.DownloadIndexFile();
+          var e = await t.DownloadIndexFile();
           return { Success: e.Success, Others: e };
         },
         async (e, t) => {
-          let o = DownloadDefine_1.EDownloadState.None;
-          let r = 0;
+          let o = DownloadDefine_1.EDownloadState.None,
+            r = 0;
           e && ((e = e), (o = e.DownloadState || o), (r = e.HttpCode || r));
           e =
             o === DownloadDefine_1.EDownloadState.HttpError
@@ -234,7 +234,7 @@ class BaseHotPatchProcedure {
     await this.ViewMgr.ShowInfo(!0, void 0);
     let o = !1;
     const t = async (e) => {
-      const t = 100 * e;
+      var t = 100 * e;
       await this.ViewMgr.UpdateProgress(!0, e, "CheckIntegrity", t.toFixed(0));
     };
     return (
@@ -267,17 +267,17 @@ class BaseHotPatchProcedure {
   async DoesSavedDirHaveEnoughSpace(e) {
     do {
       var t = UE.KuroLauncherLibrary.DoesDiskHaveEnoughSpace(
-        UE.BlueprintPathsLibrary.ProjectSavedDir(),
-        e,
-      );
-      const o = new HotPatchLogReport_1.HotPatchLog();
-      const r =
-        ((o.s_step_id = "check_have_enough_space"),
-        {
-          IsEnough: t,
-          Path: UE.BlueprintPathsLibrary.ProjectSavedDir(),
-          NeedSize: e.toString(),
-        });
+          UE.BlueprintPathsLibrary.ProjectSavedDir(),
+          e,
+        ),
+        o = new HotPatchLogReport_1.HotPatchLog(),
+        r =
+          ((o.s_step_id = "check_have_enough_space"),
+          {
+            IsEnough: t,
+            Path: UE.BlueprintPathsLibrary.ProjectSavedDir(),
+            NeedSize: e.toString(),
+          });
       if (
         ((o.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(r)),
         HotPatchLogReport_1.HotPatchLogReport.Report(o),
@@ -301,18 +301,18 @@ class BaseHotPatchProcedure {
     return !0;
   }
   async DownloadFiles(e, ...t) {
-    let o = new HotPatchLogReport_1.HotPatchLog();
+    var o = new HotPatchLogReport_1.HotPatchLog();
     (o.s_step_id = "hotpatch_procedure_download_file_start"),
       HotPatchLogReport_1.HotPatchLogReport.Report(o),
       await this.ViewMgr.ShowInfo(!0, void 0);
     let i = 0n;
     for (const _ of t) i += _.GetUpdateSize();
-    let c = 0n;
-    let a = !0;
+    let c = 0n,
+      a = !0;
     const r = (e, t, o, r) => {
-      var o = c + o;
-      var a = (100n * o) / i;
-      var a = Number(a) / 100;
+      var o = c + o,
+        a = (100n * o) / i,
+        a = Number(a) / 100;
       this.ViewMgr.UpdatePatchDownProgress(
         !1,
         a,
@@ -322,9 +322,9 @@ class BaseHotPatchProcedure {
         LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(i),
       );
     };
-    const n = async (e, t) => {
-      let o = DownloadDefine_1.EDownloadState.None;
-      let r = 0;
+    var n = async (e, t) => {
+      let o = DownloadDefine_1.EDownloadState.None,
+        r = 0;
       e && ((e = e), (o = e.DownloadState || o), (r = e.HttpCode || r));
       e =
         o === DownloadDefine_1.EDownloadState.HttpError
@@ -354,7 +354,7 @@ class BaseHotPatchProcedure {
     for (const h of t) {
       if (
         (await (0, ProcedureUtil_1.whetherRepeatDoOnFailedAsync)(async () => {
-          const e = await h.DownloadResourceFiles(r);
+          var e = await h.DownloadResourceFiles(r);
           return { Success: e.Success, Others: e };
         }, n),
         !a)
@@ -404,12 +404,12 @@ class BaseHotPatchProcedure {
     return !1;
   }
   async MountPak(...e) {
-    const t = new HotPatchLogReport_1.HotPatchLog();
+    var t = new HotPatchLogReport_1.HotPatchLog();
     (t.s_step_id = "mount_update_paks"),
       HotPatchLogReport_1.HotPatchLogReport.Report(t),
       await this.ViewMgr.ShowInfo(!1, "MountPak");
     for (const r of e) {
-      const o = r.GetPakList();
+      var o = r.GetPakList();
       if (o)
         for (const a of o)
           UE.KuroPakMountStatic.MountPak(a.SavePath + ".pak", a.MountOrder);
@@ -428,14 +428,14 @@ class BaseHotPatchProcedure {
           RemoteConfig_1.RemoteInfo?.Config?.ResourceVersion,
         ),
       RemoteConfig_1.RemoteInfo?.Config?.ChangeList &&
-        RemoteConfig_1.RemoteInfo?.Config?.ChangeList.length > 0 &&
+        0 < RemoteConfig_1.RemoteInfo?.Config?.ChangeList.length &&
         LauncherStorageLib_1.LauncherStorageLib.SetGlobal(
           LauncherStorageLib_1.ELauncherStorageGlobalKey.PatchP4Version,
           RemoteConfig_1.RemoteInfo?.Config?.ChangeList,
         );
   }
   async Complete() {
-    const e = new HotPatchLogReport_1.HotPatchLog();
+    var e = new HotPatchLogReport_1.HotPatchLog();
     return (
       (e.s_step_id = "complete_hot_patch"),
       HotPatchLogReport_1.HotPatchLogReport.Report(e),
@@ -444,9 +444,9 @@ class BaseHotPatchProcedure {
     );
   }
   async YSr() {
-    let e = UE.BlueprintPathsLibrary.ProjectConfigDir() + "Kuro/RConfig.ini";
-    let r = (0, puerts_1.$ref)(void 0);
-    let a = (0, puerts_1.$ref)(void 0);
+    var e = UE.BlueprintPathsLibrary.ProjectConfigDir() + "Kuro/RConfig.ini",
+      r = (0, puerts_1.$ref)(void 0),
+      a = (0, puerts_1.$ref)(void 0);
     if (
       UE.BlueprintPathsLibrary.FileExists(e) &&
       UE.KuroStaticLibrary.LoadFileToString(r, e) &&
@@ -457,12 +457,12 @@ class BaseHotPatchProcedure {
           (0, puerts_1.$unref)(a),
         ));
     else {
-      const i = `${BaseConfigController_1.BaseConfigController.GetMixUri()}/${this.$Sr.GetPlatform()}/config.json`;
+      var i = `${BaseConfigController_1.BaseConfigController.GetMixUri()}/${this.$Sr.GetPlatform()}/config.json`;
       UrlPrefixDownload_1.UrlPrefixSelector.Init(),
         this.QSr ||
           (UrlPrefixDownload_1.UrlPrefixSelector.Reset(), (this.QSr = !0));
-      let t = !1;
-      let o = void 0;
+      let t = !1,
+        o = void 0;
       (e = UrlPrefixDownload_1.UrlPrefixSelector.GetAllPrefixList()),
         (r = new HotPatchLogReport_1.HotPatchLog());
       (r.s_step_id = "start_download_remote_config"),
@@ -477,14 +477,14 @@ class BaseHotPatchProcedure {
               ["configUrl", i],
               ["tryCount", e],
             );
-          let c = await (0, UrlPrefixHttpRequest_1.httpRequest)(h + i);
-          const n = new HotPatchLogReport_1.HotPatchLog();
-          const _ =
-            ((n.s_url_prefix = h),
-            (n.s_step_id = "request_remote_config"),
-            (n.i_try_count = e.toString()),
-            { success: !0 });
-          if (c.Code === 200) {
+          var c = await (0, UrlPrefixHttpRequest_1.httpRequest)(h + i),
+            n = new HotPatchLogReport_1.HotPatchLog(),
+            _ =
+              ((n.s_url_prefix = h),
+              (n.s_step_id = "request_remote_config"),
+              (n.i_try_count = e.toString()),
+              { success: !0 });
+          if (200 === c.Code) {
             LauncherLog_1.LauncherLog.Info("获取远程配置文件成功"),
               (n.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(_)),
               HotPatchLogReport_1.HotPatchLogReport.Report(n),
@@ -539,4 +539,4 @@ class BaseHotPatchProcedure {
   }
 }
 exports.BaseHotPatchProcedure = BaseHotPatchProcedure;
-// # sourceMappingURL=BaseHotPatchProcedure.js.map
+//# sourceMappingURL=BaseHotPatchProcedure.js.map

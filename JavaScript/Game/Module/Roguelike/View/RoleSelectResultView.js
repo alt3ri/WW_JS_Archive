@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleSelectResultView = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiActorPool_1 = require("../../../Ui/UiActorPool");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
-const RogueSelectResultBaseView_1 = require("./RogueSelectResultBaseView");
-const RoleSelectItem_1 = require("./RoleSelectItem");
+const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiActorPool_1 = require("../../../Ui/UiActorPool"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
+  RogueSelectResultBaseView_1 = require("./RogueSelectResultBaseView"),
+  RoleSelectItem_1 = require("./RoleSelectItem");
 class RoleSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResultBaseView {
   constructor() {
     super(...arguments),
@@ -20,9 +20,9 @@ class RoleSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResult
         this.Refresh();
       }),
       (this.qho = () => {
-        let e = this.Xso.NewRogueGainEntry;
-        const t = this.Xso.OldRogueGainEntry;
-        const i = new Set();
+        var e = this.Xso.NewRogueGainEntry,
+          t = this.Xso.OldRogueGainEntry,
+          i = new Set();
         if (e)
           for (const s of e.AffixEntryList)
             t?.AffixEntryList?.find((e) => e.Id === s.Id) ||
@@ -34,7 +34,7 @@ class RoleSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResult
       });
   }
   async OnCreateAsync() {
-    const e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+    var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
       RoguelikeDefine_1.ROLE_SELECT_ITEM,
     );
     this.UiPoolActorPrivate = await UiActorPool_1.UiActorPool.GetAsync(e);
@@ -73,4 +73,4 @@ class RoleSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResult
   }
 }
 exports.RoleSelectResultView = RoleSelectResultView;
-// # sourceMappingURL=RoleSelectResultView.js.map
+//# sourceMappingURL=RoleSelectResultView.js.map

@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChatModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LocalStorage_1 = require("../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../Common/LocalStorageDefine");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ChatController_1 = require("./ChatController");
-const ChatDefine_1 = require("./ChatDefine");
-const ChatPlayerData_1 = require("./ChatPlayerData");
-const ChatRowData_1 = require("./ChatRowData");
-const PrivateChatRoom_1 = require("./PrivateChatRoom");
-const TeamChatRoom_1 = require("./TeamChatRoom");
-const WorldTeamChatRoom_1 = require("./WorldTeamChatRoom");
+const Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ChatController_1 = require("./ChatController"),
+  ChatDefine_1 = require("./ChatDefine"),
+  ChatPlayerData_1 = require("./ChatPlayerData"),
+  ChatRowData_1 = require("./ChatRowData"),
+  PrivateChatRoom_1 = require("./PrivateChatRoom"),
+  TeamChatRoom_1 = require("./TeamChatRoom"),
+  WorldTeamChatRoom_1 = require("./WorldTeamChatRoom");
 class ChatModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -58,7 +58,7 @@ class ChatModel extends ModelBase_1.ModelBase {
     return this.SaveChatSaveContent(), !0;
   }
   AddChatPlayerData(t) {
-    const e = new ChatPlayerData_1.ChatPlayerData(t);
+    var e = new ChatPlayerData_1.ChatPlayerData(t);
     return this.RMt.set(t, e), e;
   }
   GetChatPlayerData(t) {
@@ -66,10 +66,10 @@ class ChatModel extends ModelBase_1.ModelBase {
   }
   RefreshChatPlayerData(t, e, o) {
     let a = this.GetChatPlayerData(t);
-    const i = (a = a || this.AddChatPlayerData(t)).GetPlayerIcon();
-    const r = a.GetPlayerName();
-    const n = ModelManager_1.ModelManager.PersonalModel;
-    const h = n.GetPersonalInfoData();
+    var i = (a = a || this.AddChatPlayerData(t)).GetPlayerIcon(),
+      r = a.GetPlayerName(),
+      n = ModelManager_1.ModelManager.PersonalModel,
+      h = n.GetPersonalInfoData();
     h && h.PlayerId === t
       ? (a.SetPlayerIcon(n.GetHeadPhotoId()), a.SetPlayerName(h.Name))
       : (a.SetPlayerIcon(e), a.SetPlayerName(o)),
@@ -84,8 +84,8 @@ class ChatModel extends ModelBase_1.ModelBase {
   }
   AddChatContent(t, e, o, a, i, r, n, h, s, C, _) {
     n = t.AddChatContent(e, o, a, i, r, n, h, s, C, _);
-    let v = 0;
-    let m = 0;
+    let v = 0,
+      m = 0;
     t instanceof PrivateChatRoom_1.PrivateChatRoom
       ? ((v = t.GetTargetPlayerId()),
         this.AddAndSavePrivateChatContent(t, i, a, e, !1, o, h),
@@ -111,16 +111,16 @@ class ChatModel extends ModelBase_1.ModelBase {
     for (const t of this.xMt.values()) t.ClearCreateTime();
   }
   LoadAllChatSaveContent() {
-    const t = LocalStorage_1.LocalStorage.GetPlayer(
+    var t = LocalStorage_1.LocalStorage.GetPlayer(
       LocalStorageDefine_1.ELocalStoragePlayerKey.Chat,
     );
     if (t) {
-      let e;
-      let o;
-      const a = LocalStorage_1.LocalStorage.GetPlayer(
-        LocalStorageDefine_1.ELocalStoragePlayerKey.IsErrorChatReplace,
-        !1,
-      );
+      var e,
+        o,
+        a = LocalStorage_1.LocalStorage.GetPlayer(
+          LocalStorageDefine_1.ELocalStoragePlayerKey.IsErrorChatReplace,
+          !1,
+        );
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Chat",
@@ -151,7 +151,7 @@ class ChatModel extends ModelBase_1.ModelBase {
           )
             for (const n of o.ChatRows)
               n.Content = n.Content.replace(/'/g, "''");
-        const i = Number(e);
+        var i = Number(e);
         this.GMt.set(i, o);
       }
       a ||
@@ -185,7 +185,7 @@ class ChatModel extends ModelBase_1.ModelBase {
   }
   AddChatSaveContent(t, e, o) {
     let a = this.GMt.get(t);
-    let i;
+    var i;
     a
       ? ((i = a.ChatRows).length >= o && i.shift(),
         (e.Content = e.Content.replace(/'/g, "''")),
@@ -215,7 +215,7 @@ class ChatModel extends ModelBase_1.ModelBase {
   SaveChatSaveContent() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Chat", 8, "------保存本地缓存的聊天记录-----");
-    for (const [t, e] of this.GMt) {
+    for (var [t, e] of this.GMt) {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Chat",
@@ -234,7 +234,7 @@ class ChatModel extends ModelBase_1.ModelBase {
             ["uniqueId", a.MsgId],
           );
     }
-    const o = LocalStorage_1.LocalStorage.SetPlayer(
+    var o = LocalStorage_1.LocalStorage.SetPlayer(
       LocalStorageDefine_1.ELocalStoragePlayerKey.Chat,
       this.GMt,
     );
@@ -247,10 +247,10 @@ class ChatModel extends ModelBase_1.ModelBase {
   GetChatRoomSaveInfo(t, o, a) {
     t = this.GMt.get(t);
     if (t) {
-      const i = t.ChatRows;
+      var i = t.ChatRows;
       let e = -1;
-      for (let t = i.length - 1; t > 0; t--) {
-        const r = i[t];
+      for (let t = i.length - 1; 0 < t; t--) {
+        var r = i[t];
         if (r) {
           if (r.MsgId === o) {
             e = t;
@@ -263,8 +263,8 @@ class ChatModel extends ModelBase_1.ModelBase {
     }
   }
   RequestPrivateRoomLocalHistory(t) {
-    let e = t.GetUniqueId();
-    const o = t.GetEarliestHistoryContentUniqueId();
+    var e = t.GetUniqueId(),
+      o = t.GetEarliestHistoryContentUniqueId();
     if (
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -278,14 +278,14 @@ class ChatModel extends ModelBase_1.ModelBase {
     ) {
       e = this.GetChatRoomSaveInfo(e, o, ChatDefine_1.READ_HISTORY_COUNT);
       if (e) {
-        const a = [];
+        var a = [];
         for (const r of e) {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Chat", 8, "读取本地聊天记录:", [
               "content",
               r.Content,
             ]);
-          const i = new Protocol_1.Aki.Protocol.BGs();
+          var i = new Protocol_1.Aki.Protocol.BGs();
           (i.U3n = r.ChatContentType),
             (i.H3n = r.Content),
             (i.X3n = r.MsgId),
@@ -308,7 +308,7 @@ class ChatModel extends ModelBase_1.ModelBase {
     this.AMt.sort((t, e) => t.TimeStamp - e.TimeStamp);
   }
   ClampChatRowDataListLength() {
-    const t = this.AMt.length;
+    var t = this.AMt.length;
     t <= ChatDefine_1.CHAT_CONTENT_QUEUE_SIZE ||
       (this.AMt = this.AMt.slice(
         Math.max(t - ChatDefine_1.CHAT_CONTENT_QUEUE_SIZE, 0),
@@ -316,8 +316,8 @@ class ChatModel extends ModelBase_1.ModelBase {
   }
   SetTeamChatRowDataVisible(t) {
     for (const o of this.AMt) {
-      const e = o.ContentChatRoomType;
-      (e !== 2 && e !== 3) || (o.IsVisible = t);
+      var e = o.ContentChatRoomType;
+      (2 !== e && 3 !== e) || (o.IsVisible = t);
     }
   }
   OMt(t, e, o, a, i, r, n, h, s) {
@@ -340,9 +340,9 @@ class ChatModel extends ModelBase_1.ModelBase {
         ["chatRoomType", e],
         ["chatRowDataListLength", this.AMt.length],
       );
-    const o = [];
+    var o = [];
     for (let t = 0; t < this.AMt.length; t++) {
-      const a = this.AMt[t];
+      var a = this.AMt[t];
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Chat",
@@ -364,7 +364,7 @@ class ChatModel extends ModelBase_1.ModelBase {
       );
   }
   kMt() {
-    const t = this.AMt.shift();
+    var t = this.AMt.shift();
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.OnPopChatRowData,
       t,
@@ -378,19 +378,20 @@ class ChatModel extends ModelBase_1.ModelBase {
     return !1;
   }
   AddPrivateHistoryChatContent(t, e) {
-    const o = [];
+    var o = [];
     for (const r of e) {
-      const a = r.Y3n;
-      var i = {
-        UtcTime: r.J3n,
-        MsgId: r.X3n,
-        SenderUid: a,
-        Content: r.H3n,
-        ChatContentType: r.U3n,
-        OfflineMsg: r.z3n,
-      };
-      var i =
-        (o.push(i), ModelManager_1.ModelManager.FriendModel?.GetFriendById(a));
+      var a = r.Y3n,
+        i = {
+          UtcTime: r.J3n,
+          MsgId: r.X3n,
+          SenderUid: a,
+          Content: r.H3n,
+          ChatContentType: r.U3n,
+          OfflineMsg: r.z3n,
+        },
+        i =
+          (o.push(i),
+          ModelManager_1.ModelManager.FriendModel?.GetFriendById(a));
       i && this.RefreshChatPlayerData(a, i.PlayerHeadPhoto, i.PlayerName);
     }
     t.AddHistoryChatContent(o),
@@ -401,9 +402,9 @@ class ChatModel extends ModelBase_1.ModelBase {
       );
   }
   AddTeamHistoryChatContent(t, e) {
-    const o = [];
+    var o = [];
     for (const i of e) {
-      const a = {
+      var a = {
         SenderPlayerId: i.uEs,
         SenderPlayerName: i.dEs,
         UtcTime: i.CEs,
@@ -457,7 +458,7 @@ class ChatModel extends ModelBase_1.ModelBase {
     this.bMt instanceof PrivateChatRoom_1.PrivateChatRoom &&
       this.bMt.GetTargetPlayerId() === t &&
       this.LeaveCurrentChatRoom();
-    const e = this.GetPrivateChatRoom(t);
+    var e = this.GetPrivateChatRoom(t);
     e &&
       (e.Reset(),
       Log_1.Log.CheckInfo() &&
@@ -472,7 +473,7 @@ class ChatModel extends ModelBase_1.ModelBase {
     this.bMt instanceof PrivateChatRoom_1.PrivateChatRoom &&
       this.bMt.GetTargetPlayerId() === t &&
       (this.bMt = void 0);
-    const e = this.GetPrivateChatRoom(t);
+    var e = this.GetPrivateChatRoom(t);
     e &&
       (e.Close(),
       Log_1.Log.CheckInfo() &&
@@ -483,7 +484,7 @@ class ChatModel extends ModelBase_1.ModelBase {
       ));
   }
   RequestOpenPrivateChatRoom(t) {
-    let e;
+    var e;
     t.GetIsOpen() ||
       ((e = t.GetTargetPlayerId()),
       Log_1.Log.CheckInfo() &&
@@ -541,7 +542,7 @@ class ChatModel extends ModelBase_1.ModelBase {
     return (e = e || this.NewPrivateChatRoom(t));
   }
   NewPrivateChatRoom(t) {
-    const e = new PrivateChatRoom_1.PrivateChatRoom(t, 1);
+    var e = new PrivateChatRoom_1.PrivateChatRoom(t, 1);
     return (
       this.xMt.set(t, e),
       EventSystem_1.EventSystem.Emit(
@@ -577,27 +578,27 @@ class ChatModel extends ModelBase_1.ModelBase {
     this.BMt = t;
   }
   GetAllSortedChatRoom() {
-    const t = [];
+    var t = [];
     for (const o of this.xMt.values())
       o.GetIsOpen() && o.CanChat() && t.push(o);
     t.sort((t, e) => {
-      let o = t.GetIsShowRedDot() ? 1 : 0;
-      let a = e.GetIsShowRedDot() ? 1 : 0;
+      var o = t.GetIsShowRedDot() ? 1 : 0,
+        a = e.GetIsShowRedDot() ? 1 : 0;
       return o != a
         ? a - o
         : (a = t.IsOnline() ? 1 : 0) != (o = e.IsOnline() ? 1 : 0)
           ? o - a
           : ((o = t.GetLastTimeStamp()),
             (a = e.GetLastTimeStamp()),
-            o === 0
+            0 === o
               ? -1
-              : a === 0
+              : 0 === a
                 ? 1
                 : o !== a
                   ? a - o
                   : e.GetCreateTimeStamp() - t.GetCreateTimeStamp());
     });
-    let e = this.GetTeamChatRoom();
+    var e = this.GetTeamChatRoom();
     return e ? t.unshift(e) : (e = this.GetWorldChatRoom()) && t.unshift(e), t;
   }
   IsInPrivateChatRoom(t) {
@@ -612,7 +613,7 @@ class ChatModel extends ModelBase_1.ModelBase {
       );
   }
   RemoveMutePlayer(t) {
-    const e = this.qMt.indexOf(t);
+    var e = this.qMt.indexOf(t);
     e < 0 ||
       (this.qMt.splice(e, 1),
       EventSystem_1.EventSystem.Emit(
@@ -624,8 +625,8 @@ class ChatModel extends ModelBase_1.ModelBase {
     this.qMt.length = 0;
   }
   IsInMute(t) {
-    return this.qMt.indexOf(t) >= 0;
+    return 0 <= this.qMt.indexOf(t);
   }
 }
 exports.ChatModel = ChatModel;
-// # sourceMappingURL=ChatModel.js.map
+//# sourceMappingURL=ChatModel.js.map

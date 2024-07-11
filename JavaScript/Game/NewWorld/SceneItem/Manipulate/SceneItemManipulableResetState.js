@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulableResetState = void 0);
-const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil");
-const SceneItemManipulableBaseState_1 = require("./SceneItemManipulableBaseState");
+const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  SceneItemManipulableBaseState_1 = require("./SceneItemManipulableBaseState");
 class SceneItemManipulableResetState extends SceneItemManipulableBaseState_1.SceneItemManipulableBaseState {
   constructor(e) {
     super(e), (this.StateType = "Reset");
@@ -30,4 +30,4 @@ class SceneItemManipulableResetState extends SceneItemManipulableBaseState_1.Sce
   }
 }
 exports.SceneItemManipulableResetState = SceneItemManipulableResetState;
-// # sourceMappingURL=SceneItemManipulableResetState.js.map
+//# sourceMappingURL=SceneItemManipulableResetState.js.map

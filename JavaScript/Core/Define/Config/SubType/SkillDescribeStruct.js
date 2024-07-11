@@ -21,13 +21,13 @@ class SkillDescribeStruct {
     );
   }
   title(t) {
-    const e = this.J7.__offset(this.z7, 4);
+    var e = this.J7.__offset(this.z7, 4);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   content(t) {
-    const e = this.J7.__offset(this.z7, 6);
+    var e = this.J7.__offset(this.z7, 6);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
 }
 exports.SkillDescribeStruct = SkillDescribeStruct;
-// # sourceMappingURL=SkillDescribeStruct.js.map
+//# sourceMappingURL=SkillDescribeStruct.js.map

@@ -8,4 +8,4 @@ class LevelConditionOnViewClose extends LevelGeneralBase_1.LevelConditionBase {
   }
 }
 exports.LevelConditionOnViewClose = LevelConditionOnViewClose;
-// # sourceMappingURL=LevelConditionOnViewClose.js.map
+//# sourceMappingURL=LevelConditionOnViewClose.js.map

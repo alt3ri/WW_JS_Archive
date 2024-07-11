@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.skipClassMap = void 0);
-const SkipTaskAdventureGuide_1 = require("./SkipTask/SkipTaskAdventureGuide");
-const SkipTaskEnterEntrance_1 = require("./SkipTask/SkipTaskEnterEntrance");
-const SkipTaskPayShop_1 = require("./SkipTask/SkipTaskPayShop");
-const SkipTaskQuest_1 = require("./SkipTask/SkipTaskQuest");
-const SkipTaskRogueActivity_1 = require("./SkipTask/SkipTaskRogueActivity");
-const SkipTaskVisionIntensifyView_1 = require("./SkipTask/SkipTaskVisionIntensifyView");
-const SkipTaskWeaponRoot_1 = require("./SkipTask/SkipTaskWeaponRoot");
-const SkipTaskWorldMap_1 = require("./SkipTask/SkipTaskWorldMap");
-const SkipToDyMarkEntity_1 = require("./SkipTask/SkipToDyMarkEntity");
+const SkipTaskAdventureGuide_1 = require("./SkipTask/SkipTaskAdventureGuide"),
+  SkipTaskEnterEntrance_1 = require("./SkipTask/SkipTaskEnterEntrance"),
+  SkipTaskPayShop_1 = require("./SkipTask/SkipTaskPayShop"),
+  SkipTaskQuest_1 = require("./SkipTask/SkipTaskQuest"),
+  SkipTaskRogueActivity_1 = require("./SkipTask/SkipTaskRogueActivity"),
+  SkipTaskVisionIntensifyView_1 = require("./SkipTask/SkipTaskVisionIntensifyView"),
+  SkipTaskWeaponRoot_1 = require("./SkipTask/SkipTaskWeaponRoot"),
+  SkipTaskWorldMap_1 = require("./SkipTask/SkipTaskWorldMap"),
+  SkipToDyMarkEntity_1 = require("./SkipTask/SkipToDyMarkEntity");
 exports.skipClassMap = new Map([
   [0, SkipTaskWorldMap_1.SkipTaskWorldMap],
   [1, SkipTaskAdventureGuide_1.SkipTaskAdventureGuide],
@@ -21,4 +21,4 @@ exports.skipClassMap = new Map([
   [7, SkipTaskQuest_1.SkipTaskQuest],
   [8, SkipToDyMarkEntity_1.SkipToDyMarkEntity],
 ]);
-// # sourceMappingURL=SkipInterfaceDefine.js.map
+//# sourceMappingURL=SkipInterfaceDefine.js.map

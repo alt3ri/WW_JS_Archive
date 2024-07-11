@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventOpenUi = void 0);
-const UiManager_1 = require("../../Ui/UiManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const UiManager_1 = require("../../Ui/UiManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventOpenUi extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, a) {
     e = e.get("UIName");
@@ -10,4 +10,4 @@ class LevelEventOpenUi extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventOpenUi = LevelEventOpenUi;
-// # sourceMappingURL=LevelEventOpenUI.js.map
+//# sourceMappingURL=LevelEventOpenUI.js.map

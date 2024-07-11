@@ -6,4 +6,4 @@ class LevelEventAddBuffToTriggeredEntity extends LevelGeneralBase_1.LevelEventBa
   ExecuteNew(e, t) {}
 }
 exports.LevelEventAddBuffToTriggeredEntity = LevelEventAddBuffToTriggeredEntity;
-// # sourceMappingURL=LevelEventAddBuffToTriggeredEntity.js.map
+//# sourceMappingURL=LevelEventAddBuffToTriggeredEntity.js.map

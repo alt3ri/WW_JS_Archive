@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AchievementMainView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const AchievementCategoryItem_1 = require("./AchievementCategoryItem");
-const AchievementSmallItem_1 = require("./AchievementSmallItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  AchievementCategoryItem_1 = require("./AchievementCategoryItem"),
+  AchievementSmallItem_1 = require("./AchievementSmallItem");
 class AchievementMainView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -53,7 +53,7 @@ class AchievementMainView extends UiViewBase_1.UiViewBase {
         this.GetItem(5).GetOwner(),
         this.Jqe,
       ));
-    const e = this.GetScrollViewWithScrollbar(4);
+    var e = this.GetScrollViewWithScrollbar(4);
     this.xqe = new GenericLayout_1.GenericLayout(
       e.GetContent().GetComponentByClass(UE.UILayoutBase.StaticClass()),
       this.Xqe,
@@ -81,20 +81,20 @@ class AchievementMainView extends UiViewBase_1.UiViewBase {
       this.Kqe && (this.Kqe = void 0);
   }
   aqe() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.AchievementModel.GetAchievementFinishedStar();
     this.Kqe.SetText(e.toString());
   }
   Yqe() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.AchievementModel.GetFinishedAchievementNum();
     this.Wqe?.SetText(e.toString());
   }
   $qe() {
     const t = ModelManager_1.ModelManager.AchievementModel;
-    const e =
-      ModelManager_1.ModelManager.AchievementModel.GetRecentFinishedAchievementList();
-    const i = e.length > 0;
+    var e =
+        ModelManager_1.ModelManager.AchievementModel.GetRecentFinishedAchievementList(),
+      i = 0 < e.length;
     const s = new Array();
     e.forEach((e) => {
       s.push(t.GetAchievementData(e));
@@ -104,7 +104,7 @@ class AchievementMainView extends UiViewBase_1.UiViewBase {
       this.GetItem(6).SetUIActive(!i);
   }
   zqe() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.AchievementModel.GetAchievementCategoryArray();
     this.xqe.RefreshByData(e);
   }
@@ -113,4 +113,4 @@ class AchievementMainView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.AchievementMainView = AchievementMainView;
-// # sourceMappingURL=AchievementMainView.js.map
+//# sourceMappingURL=AchievementMainView.js.map

@@ -16,4 +16,4 @@ class EffectEnvironment {
   (EffectEnvironment.DisableOtherEffect = !1),
   (EffectEnvironment.UsePool = !0),
   (EffectEnvironment.EffectQualityBiasRemote = -1);
-// # sourceMappingURL=EffectEnvironment.js.map
+//# sourceMappingURL=EffectEnvironment.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayCueHookUp = void 0);
-const UE = require("ue");
-const FNameUtil_1 = require("../../../../../../../Core/Utils/FNameUtil");
-const GameplayCueController_1 = require("./Controller/GameplayCueController");
-const GameplayCueBase_1 = require("./GameplayCueBase");
+const UE = require("ue"),
+  FNameUtil_1 = require("../../../../../../../Core/Utils/FNameUtil"),
+  GameplayCueController_1 = require("./Controller/GameplayCueController"),
+  GameplayCueBase_1 = require("./GameplayCueBase");
 class GameplayCueHookUp extends GameplayCueBase_1.GameplayCueBase {
   constructor() {
     super(...arguments), (this.zXo = void 0);
@@ -32,4 +32,4 @@ class GameplayCueHookUp extends GameplayCueBase_1.GameplayCueBase {
   }
 }
 exports.GameplayCueHookUp = GameplayCueHookUp;
-// # sourceMappingURL=GameplayCueHookUp.js.map
+//# sourceMappingURL=GameplayCueHookUp.js.map

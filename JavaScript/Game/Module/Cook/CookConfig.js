@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CookConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CookFixToolById_1 = require("../../../Core/Define/ConfigQuery/CookFixToolById");
-const CookFormulaAll_1 = require("../../../Core/Define/ConfigQuery/CookFormulaAll");
-const CookFormulaByFormulaItemId_1 = require("../../../Core/Define/ConfigQuery/CookFormulaByFormulaItemId");
-const CookFormulaById_1 = require("../../../Core/Define/ConfigQuery/CookFormulaById");
-const CookLevelAll_1 = require("../../../Core/Define/ConfigQuery/CookLevelAll");
-const CookLevelById_1 = require("../../../Core/Define/ConfigQuery/CookLevelById");
-const CookProcessedAll_1 = require("../../../Core/Define/ConfigQuery/CookProcessedAll");
-const CookProcessedById_1 = require("../../../Core/Define/ConfigQuery/CookProcessedById");
-const CookProcessMsgById_1 = require("../../../Core/Define/ConfigQuery/CookProcessMsgById");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  CookFixToolById_1 = require("../../../Core/Define/ConfigQuery/CookFixToolById"),
+  CookFormulaAll_1 = require("../../../Core/Define/ConfigQuery/CookFormulaAll"),
+  CookFormulaByFormulaItemId_1 = require("../../../Core/Define/ConfigQuery/CookFormulaByFormulaItemId"),
+  CookFormulaById_1 = require("../../../Core/Define/ConfigQuery/CookFormulaById"),
+  CookLevelAll_1 = require("../../../Core/Define/ConfigQuery/CookLevelAll"),
+  CookLevelById_1 = require("../../../Core/Define/ConfigQuery/CookLevelById"),
+  CookProcessedAll_1 = require("../../../Core/Define/ConfigQuery/CookProcessedAll"),
+  CookProcessedById_1 = require("../../../Core/Define/ConfigQuery/CookProcessedById"),
+  CookProcessMsgById_1 = require("../../../Core/Define/ConfigQuery/CookProcessMsgById"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class CookConfig extends ConfigBase_1.ConfigBase {
   GetLocalText(o) {
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(o) ?? "";
   }
   GetCookFormulaByFormulaItemId(o) {
-    const e =
+    var e =
       CookFormulaByFormulaItemId_1.configCookFormulaByFormulaItemId.GetConfig(
         o,
       );
@@ -38,7 +38,7 @@ class CookConfig extends ConfigBase_1.ConfigBase {
     return CookFormulaAll_1.configCookFormulaAll.GetConfigList();
   }
   GetCookFormulaById(o) {
-    const e = CookFormulaById_1.configCookFormulaById.GetConfig(o);
+    var e = CookFormulaById_1.configCookFormulaById.GetConfig(o);
     return (
       e ||
         (Log_1.Log.CheckError() &&
@@ -52,7 +52,7 @@ class CookConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetCookProcessedById(o) {
-    const e = CookProcessedById_1.configCookProcessedById.GetConfig(o);
+    var e = CookProcessedById_1.configCookProcessedById.GetConfig(o);
     return (
       e ||
         (Log_1.Log.CheckError() &&
@@ -66,7 +66,7 @@ class CookConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetCookProcessed() {
-    const o = CookProcessedAll_1.configCookProcessedAll.GetConfigList();
+    var o = CookProcessedAll_1.configCookProcessedAll.GetConfigList();
     return (
       o ||
         (Log_1.Log.CheckError() &&
@@ -79,7 +79,7 @@ class CookConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetCookProcessMsgById(o) {
-    const e = CookProcessMsgById_1.configCookProcessMsgById.GetConfig(o);
+    var e = CookProcessMsgById_1.configCookProcessMsgById.GetConfig(o);
     return (
       e ||
         (Log_1.Log.CheckError() &&
@@ -93,7 +93,7 @@ class CookConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetCookLevel() {
-    const o = CookLevelAll_1.configCookLevelAll.GetConfigList();
+    var o = CookLevelAll_1.configCookLevelAll.GetConfigList();
     return (
       o ||
         (Log_1.Log.CheckError() &&
@@ -102,7 +102,7 @@ class CookConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetCookLevelByLevel(o) {
-    const e = CookLevelById_1.configCookLevelById.GetConfig(o);
+    var e = CookLevelById_1.configCookLevelById.GetConfig(o);
     return (
       e ||
         (Log_1.Log.CheckError() &&
@@ -114,7 +114,7 @@ class CookConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetCookFixToolById(o) {
-    const e = CookFixToolById_1.configCookFixToolById.GetConfig(o);
+    var e = CookFixToolById_1.configCookFixToolById.GetConfig(o);
     return (
       e ||
         (Log_1.Log.CheckError() &&
@@ -129,4 +129,4 @@ class CookConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.CookConfig = CookConfig;
-// # sourceMappingURL=CookConfig.js.map
+//# sourceMappingURL=CookConfig.js.map

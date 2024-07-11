@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattlePassMainView = void 0);
-const UE = require("ue");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiLayerType_1 = require("../../../Ui/Define/UiLayerType");
-const UiModel_1 = require("../../../Ui/UiModel");
-const CommonTabComponentData_1 = require("../../Common/TabComponent/CommonTabComponentData");
-const CommonTabData_1 = require("../../Common/TabComponent/CommonTabData");
-const CommonTabTitleData_1 = require("../../Common/TabComponent/CommonTabTitleData");
-const TabComponentWithCaptionItem_1 = require("../../Common/TabComponent/TabComponentWithCaptionItem");
-const CommonTabItem_1 = require("../../Common/TabComponent/TabItem/CommonTabItem");
-const TabViewComponent_1 = require("../../Common/TabComponent/TabViewComponent");
-const UiSceneManager_1 = require("../../UiComponent/UiSceneManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const WeaponDefine_1 = require("../../Weapon/WeaponDefine");
-const BattlePassController_1 = require("./BattlePassController");
+const UE = require("ue"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiLayerType_1 = require("../../../Ui/Define/UiLayerType"),
+  UiModel_1 = require("../../../Ui/UiModel"),
+  CommonTabComponentData_1 = require("../../Common/TabComponent/CommonTabComponentData"),
+  CommonTabData_1 = require("../../Common/TabComponent/CommonTabData"),
+  CommonTabTitleData_1 = require("../../Common/TabComponent/CommonTabTitleData"),
+  TabComponentWithCaptionItem_1 = require("../../Common/TabComponent/TabComponentWithCaptionItem"),
+  CommonTabItem_1 = require("../../Common/TabComponent/TabItem/CommonTabItem"),
+  TabViewComponent_1 = require("../../Common/TabComponent/TabViewComponent"),
+  UiSceneManager_1 = require("../../UiComponent/UiSceneManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  WeaponDefine_1 = require("../../Weapon/WeaponDefine"),
+  BattlePassController_1 = require("./BattlePassController");
 class BattlePassMainView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -34,14 +34,14 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
         return new CommonTabItem_1.CommonTabItem();
       }),
       (this.pqe = (e) => {
-        const t = this.TabDataList[e];
-        const i = t.ChildViewName;
-        var e = this.TabComponent.GetTabItemByIndex(e);
+        var t = this.TabDataList[e],
+          i = t.ChildViewName,
+          e = this.TabComponent.GetTabItemByIndex(e);
         this.TabViewComponent.ToggleCallBack(t, i, e, this.SOi),
-          this.GetItem(2).SetUIActive(i !== "BattlePassWeaponView"),
-          this.GetItem(4).SetUIActive(i !== "BattlePassWeaponView"),
-          this.GetItem(5).SetUIActive(i !== "BattlePassWeaponView"),
-          this.GetItem(6).SetUIActive(i !== "BattlePassWeaponView"),
+          this.GetItem(2).SetUIActive("BattlePassWeaponView" !== i),
+          this.GetItem(4).SetUIActive("BattlePassWeaponView" !== i),
+          this.GetItem(5).SetUIActive("BattlePassWeaponView" !== i),
+          this.GetItem(6).SetUIActive("BattlePassWeaponView" !== i),
           (ModelManager_1.ModelManager.AdventureGuideModel.CurrentGuideTabName =
             i);
       }),
@@ -62,8 +62,8 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
           BattlePassController_1.BattlePassController.TryShowUpLevelView(!1);
       }),
       (this.RefreshLeftTime = () => {
-        var e = TimeUtil_1.TimeUtil.GetServerTime();
-        var e = this.MOi - e;
+        var e = TimeUtil_1.TimeUtil.GetServerTime(),
+          e = this.MOi - e;
         e < 0
           ? this.WaitToDestroy ||
             BattlePassController_1.BattlePassController.ShowTimePassConfirm()
@@ -92,7 +92,7 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
       ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTabList(
         "BattlePassMainView",
       );
-    const e = new CommonTabComponentData_1.CommonTabComponentData(
+    var e = new CommonTabComponentData_1.CommonTabComponentData(
       this.dVe,
       this.pqe,
       this.yqe,
@@ -133,11 +133,11 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
     );
   }
   BindTabViewRed(t, e) {
-    const i = this.TabDataList.findIndex((e) => e.ChildViewName === t);
+    var i = this.TabDataList.findIndex((e) => e.ChildViewName === t);
     this.TabComponent.GetTabItemByIndex(i).BindRedDot(e);
   }
   yOi(t) {
-    const e = this.TabDataList.findIndex((e) => e.ChildViewName === t);
+    var e = this.TabDataList.findIndex((e) => e.ChildViewName === t);
     this.TabComponent.GetTabItemByIndex(e).UnBindRedDot();
   }
   OnBeforeShow() {
@@ -180,4 +180,4 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.BattlePassMainView = BattlePassMainView;
-// # sourceMappingURL=BattlePassMainView.js.map
+//# sourceMappingURL=BattlePassMainView.js.map

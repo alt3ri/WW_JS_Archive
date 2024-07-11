@@ -11,4 +11,4 @@ class LogicDataManipulatableTagsChange extends LogicDataBase_1.default {
   }
 }
 exports.default = LogicDataManipulatableTagsChange;
-// # sourceMappingURL=LogicDataManipulatableTagsChange.js.map
+//# sourceMappingURL=LogicDataManipulatableTagsChange.js.map

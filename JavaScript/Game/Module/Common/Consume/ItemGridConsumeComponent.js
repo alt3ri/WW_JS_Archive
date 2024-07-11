@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemGridConsumeComponent = void 0);
-const UE = require("ue");
-const QualityInfoAll_1 = require("../../../../Core/Define/ConfigQuery/QualityInfoAll");
-const LocalStorage_1 = require("../../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew");
-const ButtonItem_1 = require("../Button/ButtonItem");
-const CommonDropDown_1 = require("../DropDown/CommonDropDown");
-const OneTextDropDownItem_1 = require("../DropDown/Item/OneText/OneTextDropDownItem");
-const OneTextTitleItem_1 = require("../DropDown/Item/OneText/OneTextTitleItem");
-const ConsumeMediumItemGrid_1 = require("./ConsumeMediumItemGrid");
+const UE = require("ue"),
+  QualityInfoAll_1 = require("../../../../Core/Define/ConfigQuery/QualityInfoAll"),
+  LocalStorage_1 = require("../../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
+  ButtonItem_1 = require("../Button/ButtonItem"),
+  CommonDropDown_1 = require("../DropDown/CommonDropDown"),
+  OneTextDropDownItem_1 = require("../DropDown/Item/OneText/OneTextDropDownItem"),
+  OneTextTitleItem_1 = require("../DropDown/Item/OneText/OneTextTitleItem"),
+  ConsumeMediumItemGrid_1 = require("./ConsumeMediumItemGrid");
 class ItemGridConsumeComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t, e, i = void 0) {
     super(),
@@ -43,7 +43,7 @@ class ItemGridConsumeComponent extends UiPanelBase_1.UiPanelBase {
       }),
       (this.t6e = (t) => {
         this.ZIt = t;
-        const e =
+        var e =
           LocalStorage_1.LocalStorage.GetPlayer(
             LocalStorageDefine_1.ELocalStoragePlayerKey.ItemGridDropDown,
           ) ?? new Map();
@@ -55,7 +55,7 @@ class ItemGridConsumeComponent extends UiPanelBase_1.UiPanelBase {
           this.e6e?.(t);
       }),
       (this.sGe = () => {
-        const t = new ConsumeMediumItemGrid_1.ConsumeMediumItemGrid();
+        var t = new ConsumeMediumItemGrid_1.ConsumeMediumItemGrid();
         return this.tTt(t), t;
       }),
       (this.wqe = t);
@@ -105,13 +105,13 @@ class ItemGridConsumeComponent extends UiPanelBase_1.UiPanelBase {
       this.GetItem(2).SetUIActive(!0);
   }
   HasSelect() {
-    return this.GetSelectedGridCount() > 0;
+    return 0 < this.GetSelectedGridCount();
   }
   GetSelectedGridCount() {
     let t = 0;
-    if (this.ConsumeList && this.ConsumeList.length !== 0)
+    if (this.ConsumeList && 0 !== this.ConsumeList.length)
       for (const e of this.ConsumeList) {
-        if (e[0].ItemId === 0) break;
+        if (0 === e[0].ItemId) break;
         t++;
       }
     return t;
@@ -124,7 +124,7 @@ class ItemGridConsumeComponent extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     (this.StrengthItem = new ButtonItem_1.ButtonItem(this.GetItem(11))),
       this.StrengthItem.SetFunction(this.ConsumeFunction.StrengthFunction);
-    const t = this.GetScrollViewWithScrollbar(5);
+    var t = this.GetScrollViewWithScrollbar(5);
     (this.ScrollView = new GenericScrollViewNew_1.GenericScrollViewNew(
       t,
       this.sGe,
@@ -204,4 +204,4 @@ class ItemGridConsumeComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ItemGridConsumeComponent = ItemGridConsumeComponent;
-// # sourceMappingURL=ItemGridConsumeComponent.js.map
+//# sourceMappingURL=ItemGridConsumeComponent.js.map

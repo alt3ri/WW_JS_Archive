@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcIconComponent = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const CommonDefine_1 = require("../../../Core/Define/CommonDefine");
-const GameBudgetInterfaceController_1 = require("../../../Core/GameBudgetAllocator/GameBudgetInterfaceController");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const CameraController_1 = require("../../Camera/CameraController");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiActorPool_1 = require("../../Ui/UiActorPool");
-const UiLayer_1 = require("../../Ui/UiLayer");
-const UiManager_1 = require("../../Ui/UiManager");
-const UiModel_1 = require("../../Ui/UiModel");
-const GameBudgetAllocatorConfigCreator_1 = require("../../World/Define/GameBudgetAllocatorConfigCreator");
-const TrackController_1 = require("../Track/TrackController");
-const NpcIconComponentView_1 = require("./NpcIconComponentView");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
+  GameBudgetInterfaceController_1 = require("../../../Core/GameBudgetAllocator/GameBudgetInterfaceController"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiActorPool_1 = require("../../Ui/UiActorPool"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  UiModel_1 = require("../../Ui/UiModel"),
+  GameBudgetAllocatorConfigCreator_1 = require("../../World/Define/GameBudgetAllocatorConfigCreator"),
+  TrackController_1 = require("../Track/TrackController"),
+  NpcIconComponentView_1 = require("./NpcIconComponentView");
 class NpcIconComponent {
   constructor(t) {
     (this.Sbi = void 0),
@@ -58,7 +58,7 @@ class NpcIconComponent {
           ["Path", this.n8],
         ),
       this.UnregisterTick());
-    const t =
+    var t =
       GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator
         .TsHUDTickConfig;
     this.yW =
@@ -114,7 +114,7 @@ class NpcIconComponent {
     );
   }
   async CreateNpcIcon(t) {
-    let e;
+    var e;
     return (
       (this.n8 = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
         "UiItem_NPCIcon_Prefab",
@@ -144,15 +144,15 @@ class NpcIconComponent {
     );
   }
   SetCharacterIconLocation() {
-    var t = this.Pe.GetAttachToMeshComponent();
-    var t =
-      (t.IsA(UE.StaticMeshComponent.StaticClass())
-        ? this.Lz.FromUeVector(t.K2_GetComponentLocation())
-        : this.Pe.GetAttachToLocation(this.Lz),
-      this.Pe.GetAddOffsetZ());
-    var t =
-      ConfigManager_1.ConfigManager.NpcIconConfig.GetNpcIconLocationOffsetZ() +
-      t;
+    var t = this.Pe.GetAttachToMeshComponent(),
+      t =
+        (t.IsA(UE.StaticMeshComponent.StaticClass())
+          ? this.Lz.FromUeVector(t.K2_GetComponentLocation())
+          : this.Pe.GetAttachToLocation(this.Lz),
+        this.Pe.GetAddOffsetZ()),
+      t =
+        ConfigManager_1.ConfigManager.NpcIconConfig.GetNpcIconLocationOffsetZ() +
+        t;
     this.HeadView.InitItemLocation(this.Lz.ToUeVector(), t);
   }
   SetCharacterName(t) {
@@ -206,7 +206,7 @@ class NpcIconComponent {
     return this.HeadView?.GetDialogueActive() ?? !1;
   }
   wbi(t) {
-    const e = ModelManager_1.ModelManager.TrackModel.IsTargetTracking(this.Ubi);
+    var e = ModelManager_1.ModelManager.TrackModel.IsTargetTracking(this.Ubi);
     e &&
       this.Abi &&
       (TrackController_1.TrackController.SetTrackMarkOccupied(5, e.Id, t),
@@ -221,7 +221,7 @@ class NpcIconComponent {
       (this.Bbi(), this.TickDialogueText(t));
   }
   Bbi() {
-    let t;
+    var t;
     ModelManager_1.ModelManager.CameraModel &&
       ((t = Vector_1.Vector.DistSquared(
         ModelManager_1.ModelManager.CameraModel.CameraLocation,
@@ -231,22 +231,22 @@ class NpcIconComponent {
       this.qbi());
   }
   qbi() {
-    let t;
+    var t;
     this.HeadView &&
       (t = CameraController_1.CameraController.CameraRotator) &&
       this.HeadView.UpdateRotation(t.Yaw, t.Pitch);
   }
   Gbi(t) {
-    const e = this.Pe.IsInHeadItemShowRange(
-      t,
-      this.ybi,
-      ConfigManager_1.ConfigManager.NpcIconConfig
-        .NpcIconHeadInfoLimitMinDistanceSquared,
-    );
-    const i = ModelManager_1.ModelManager.TrackModel.IsTargetTracking(this.Ubi);
-    this.SetQuestTrackCellState(i && i.TrackSource === 5),
+    var e = this.Pe.IsInHeadItemShowRange(
+        t,
+        this.ybi,
+        ConfigManager_1.ConfigManager.NpcIconConfig
+          .NpcIconHeadInfoLimitMinDistanceSquared,
+      ),
+      i = ModelManager_1.ModelManager.TrackModel.IsTargetTracking(this.Ubi);
+    this.SetQuestTrackCellState(i && 5 === i.TrackSource),
       this.SetHeadItemState(e),
-      this.Ebi > 0 &&
+      0 < this.Ebi &&
         (this.Rbi <
           ConfigManager_1.ConfigManager.NpcIconConfig
             .NpcIconHeadInfoLimitMinDistanceSquared ||
@@ -255,7 +255,7 @@ class NpcIconComponent {
       e && this.Nbi(t);
   }
   Obi(t) {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.NpcIconConfig.GetNpcIconHeadInfoNameLimitDistance();
     return t <= e * e;
   }
@@ -264,13 +264,13 @@ class NpcIconComponent {
       ((t = this.Obi(t)), this.SetHeadInfoNameState(t));
   }
   Fbi(t) {
-    return this.Ibi === 0 || t <= this.Ibi * this.Ibi;
+    return 0 === this.Ibi || t <= this.Ibi * this.Ibi;
   }
   Vbi(t) {
-    return this.Tbi === 0 || t <= this.Tbi * this.Tbi;
+    return 0 === this.Tbi || t <= this.Tbi * this.Tbi;
   }
   Hbi(t) {
-    let e;
+    var e;
     this.Pe.IsShowQuestInfo() &&
       ((e = this.Fbi(t)),
       this.SetQuestInfoState(e),
@@ -299,4 +299,4 @@ class NpcIconComponent {
   }
 }
 exports.NpcIconComponent = NpcIconComponent;
-// # sourceMappingURL=NpcIconComponent.js.map
+//# sourceMappingURL=NpcIconComponent.js.map

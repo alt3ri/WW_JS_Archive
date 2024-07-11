@@ -1,27 +1,31 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, n) {
-    let o;
-    const s = arguments.length;
-    let h =
-      s < 3 ? e : n === null ? (n = Object.getOwnPropertyDescriptor(e, i)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      s = arguments.length,
+      h =
+        s < 3
+          ? e
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(e, i))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       h = Reflect.decorate(t, e, i, n);
     else
-      for (let r = t.length - 1; r >= 0; r--)
-        (o = t[r]) && (h = (s < 3 ? o(h) : s > 3 ? o(e, i, h) : o(e, i)) || h);
-    return s > 3 && h && Object.defineProperty(e, i, h), h;
+      for (var r = t.length - 1; 0 <= r; r--)
+        (o = t[r]) && (h = (s < 3 ? o(h) : 3 < s ? o(e, i, h) : o(e, i)) || h);
+    return 3 < s && h && Object.defineProperty(e, i, h), h;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiModelAnimationComponent = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const CharacterNameDefines_1 = require("../../../../NewWorld/Character/Common/CharacterNameDefines");
-const UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine");
-const UiModelComponentBase_1 = require("../UiModelComponentBase");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  CharacterNameDefines_1 = require("../../../../NewWorld/Character/Common/CharacterNameDefines"),
+  UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine"),
+  UiModelComponentBase_1 = require("../UiModelComponentBase");
 let UiModelAnimationComponent = class UiModelAnimationComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
     super(...arguments),
@@ -59,7 +63,7 @@ let UiModelAnimationComponent = class UiModelAnimationComponent extends UiModelC
     );
   }
   cBr() {
-    const t = this.nXt?.MainMeshComponent;
+    var t = this.nXt?.MainMeshComponent;
     t?.GetLinkedAnimGraphInstanceByTag(FNameUtil_1.FNameUtil.NONE) &&
       Log_1.Log.CheckError() &&
       Log_1.Log.Error(
@@ -71,7 +75,7 @@ let UiModelAnimationComponent = class UiModelAnimationComponent extends UiModelC
       );
   }
   UpdateAnimInstance() {
-    const t = this.nXt?.MainMeshComponent;
+    var t = this.nXt?.MainMeshComponent;
     t &&
       (this.cBr(),
       (this.sBr = t.GetLinkedAnimGraphInstanceByTag(
@@ -83,12 +87,12 @@ let UiModelAnimationComponent = class UiModelAnimationComponent extends UiModelC
     return this.sBr?.IsAnyMontagePlaying() ?? !1;
   }
   PlayMontage(t) {
-    this.Qwr?.GetModelLoadState() !== 2
+    2 !== this.Qwr?.GetModelLoadState()
       ? (this.aBr = t)
       : this.sBr.Montage_Play(t);
   }
   StopMontage(t = 0) {
-    this.Qwr?.GetModelLoadState() !== 2
+    2 !== this.Qwr?.GetModelLoadState()
       ? (this.aBr = void 0)
       : this.sBr.Montage_Stop(t);
   }
@@ -99,17 +103,17 @@ let UiModelAnimationComponent = class UiModelAnimationComponent extends UiModelC
     return this.nXt?.MainMeshComponent?.IsPlaying() ?? !1;
   }
   PlayAnimation(t, e = !0) {
-    this.Qwr?.GetModelLoadState() !== 2
+    2 !== this.Qwr?.GetModelLoadState()
       ? ((this.hBr = t), (this.lBr = e))
       : this.nXt.MainMeshComponent.PlayAnimation(t, e);
   }
   StopAnimation() {
-    this.Qwr?.GetModelLoadState() !== 2
+    2 !== this.Qwr?.GetModelLoadState()
       ? (this.hBr = void 0)
       : this.nXt.MainMeshComponent.Stop();
   }
   SetAnimationMode(t) {
-    this.Qwr?.GetModelLoadState() !== 2
+    2 !== this.Qwr?.GetModelLoadState()
       ? (this._Br = t)
       : this.nXt.MainMeshComponent.SetAnimationMode(t);
   }
@@ -119,4 +123,4 @@ let UiModelAnimationComponent = class UiModelAnimationComponent extends UiModelC
   UiModelAnimationComponent,
 )),
   (exports.UiModelAnimationComponent = UiModelAnimationComponent);
-// # sourceMappingURL=UiModelAnimationComponent.js.map
+//# sourceMappingURL=UiModelAnimationComponent.js.map

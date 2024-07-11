@@ -1,29 +1,34 @@
 "use strict";
-let SceneItemMonsterGachaItemComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (e, t, n, r) {
-    let o;
-    const a = arguments.length;
-    let i =
-      a < 3 ? t : r === null ? (r = Object.getOwnPropertyDescriptor(t, n)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      i = Reflect.decorate(e, t, n, r);
-    else
-      for (let s = e.length - 1; s >= 0; s--)
-        (o = e[s]) && (i = (a < 3 ? o(i) : a > 3 ? o(t, n, i) : o(t, n)) || i);
-    return a > 3 && i && Object.defineProperty(t, n, i), i;
-  };
+var SceneItemMonsterGachaItemComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (e, t, n, r) {
+      var o,
+        a = arguments.length,
+        i =
+          a < 3
+            ? t
+            : null === r
+              ? (r = Object.getOwnPropertyDescriptor(t, n))
+              : r;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        i = Reflect.decorate(e, t, n, r);
+      else
+        for (var s = e.length - 1; 0 <= s; s--)
+          (o = e[s]) &&
+            (i = (a < 3 ? o(i) : 3 < a ? o(t, n, i) : o(t, n)) || i);
+      return 3 < a && i && Object.defineProperty(t, n, i), i;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemMonsterGachaItemComponent = void 0);
-const UE = require("ue");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const SceneInteractionManager_1 = require("../../Render/Scene/Interaction/SceneInteractionManager");
-const ItemMaterialManager_1 = require("../../Render/Scene/Item/MaterialController/ItemMaterialManager");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
+const UE = require("ue"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  SceneInteractionManager_1 = require("../../Render/Scene/Interaction/SceneInteractionManager"),
+  ItemMaterialManager_1 = require("../../Render/Scene/Item/MaterialController/ItemMaterialManager"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
 let SceneItemMonsterGachaItemComponent =
   (SceneItemMonsterGachaItemComponent_1 = class SceneItemMonsterGachaItemComponent extends (
     EntityComponent_1.EntityComponent
@@ -38,12 +43,12 @@ let SceneItemMonsterGachaItemComponent =
             UE.ItemMaterialControllerActorData_C,
             (t) => {
               if (t) {
-                const n =
+                var n =
                   SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionAllActorsInLevel(
                     this.Hte.GetSceneInteractionLevelHandleId(),
                   );
                 for (let e = 0; e < n.Num(); e++) {
-                  const r = n.Get(e);
+                  var r = n.Get(e);
                   ItemMaterialManager_1.ItemMaterialManager.AddMaterialData(
                     r,
                     t,
@@ -77,4 +82,4 @@ let SceneItemMonsterGachaItemComponent =
   )),
   (exports.SceneItemMonsterGachaItemComponent =
     SceneItemMonsterGachaItemComponent);
-// # sourceMappingURL=SceneItemMonsterGachaItemComponent.js.map
+//# sourceMappingURL=SceneItemMonsterGachaItemComponent.js.map

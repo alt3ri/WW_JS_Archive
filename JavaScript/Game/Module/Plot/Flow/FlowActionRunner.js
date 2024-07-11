@@ -5,23 +5,23 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.SKIP_FADE_TIME =
     exports.OPTION_SKIPPING_SELECTED =
       void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const KuroSdkReport_1 = require("../../../KuroSdk/KuroSdkReport");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase");
-const LevelLoadingController_1 = require("../../LevelLoading/LevelLoadingController");
-const PlotController_1 = require("../PlotController");
-const FlowNetworks_1 = require("./FlowNetworks");
-const FlowSequence_1 = require("./FlowSequence");
-const FlowShowTalk_1 = require("./FlowShowTalk");
+const Log_1 = require("../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  KuroSdkReport_1 = require("../../../KuroSdk/KuroSdkReport"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase"),
+  LevelLoadingController_1 = require("../../LevelLoading/LevelLoadingController"),
+  PlotController_1 = require("../PlotController"),
+  FlowNetworks_1 = require("./FlowNetworks"),
+  FlowSequence_1 = require("./FlowSequence"),
+  FlowShowTalk_1 = require("./FlowShowTalk");
 (exports.OPTION_SKIPPING_SELECTED = 0),
   (exports.SKIP_FADE_TIME = 0.25),
   (exports.HANG_COUNT_DOWN = 2e4);
@@ -63,7 +63,7 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
           i && this.OQi();
       }),
       (this.kQi = (t) => {
-        t || this.RIn !== 0
+        t || 0 !== this.RIn
           ? (t || FlowNetworks_1.FlowNetworks.RequestFlowRestart(this.RIn),
             (this.RIn = 0))
           : this.LogError("ContextCache undefined");
@@ -102,11 +102,11 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
     let t = void 0;
     if (
       (t =
-        this.nx && this.nx.Context.Type === 1
+        this.nx && 1 === this.nx.Context.Type
           ? EntitySystem_1.EntitySystem.Get(this.nx.Context.EntityId)
           : t)
     ) {
-      const i = t.GetComponent(178);
+      var i = t.GetComponent(178);
       if (i) return i.GetInteractController()?.GetInteractPoint();
     }
   }
@@ -120,8 +120,8 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
     if (!i || i.length <= 0) this.KQi();
     else {
       (this.nx = t), (this.DQi.length = 0);
-      for (let t = i.length - 1; t >= 0; t--) this.DQi.push(i[t]);
-      this.DQi[this.DQi.length - 1].Name === "SetPlotMode" ||
+      for (let t = i.length - 1; 0 <= t; t--) this.DQi.push(i[t]);
+      "SetPlotMode" === this.DQi[this.DQi.length - 1].Name ||
         (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Plot", 39, "第一个行为不是SetPlotMode，自动添加。"),
         this.DQi.push(this.GQi)),
@@ -132,7 +132,7 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
     }
   }
   OQi() {
-    let t, i, e;
+    var t, i, e;
     this.nx.IsBreakdown || this.DQi.length <= 0
       ? this.KQi()
       : ((t = this.DQi.pop()),
@@ -187,7 +187,7 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
       ControllerHolder_1.ControllerHolder.PlotController.UnProtectPlotView(),
       this.XQi(() => {
         this.$Qi(), (this.nx = void 0);
-        const t = this.wQi;
+        var t = this.wQi;
         (this.wQi = void 0), t?.();
       });
   }
@@ -231,10 +231,10 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
   }
   YQi(i, t) {
     if (((this.RQi.length = 0), (this.BQi = t), i))
-      for (let t = i.length - 1; t >= 0; t--) this.RQi.push(i[t]);
+      for (let t = i.length - 1; 0 <= t; t--) this.RQi.push(i[t]);
   }
   VQi() {
-    let t, i, e;
+    var t, i, e;
     this.RQi.length <= 0
       ? this.BQi && ((t = this.BQi), (this.BQi = void 0), t())
       : ((t = this.RQi.pop()),
@@ -256,18 +256,18 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
   }
   FinishShowCenterTextAction(t) {
     let i = !0;
-    let e;
+    var e;
     this.UQi
-      ? this.DQi.length > 0 &&
+      ? 0 < this.DQi.length &&
         ((e = this.DQi[this.DQi.length - 1]) ||
           this.LogError("FinishShowCenterTextAction:nextAction丢失"),
-        e.Name === "ShowCenterText") &&
+        "ShowCenterText" === e.Name) &&
         (i = !1)
       : this.PQi &&
-        this.RQi.length > 0 &&
+        0 < this.RQi.length &&
         ((e = this.RQi[this.RQi.length - 1]) ||
           this.LogError("FinishShowCenterTextAction:nextAction丢失"),
-        e.Name === "ShowCenterText") &&
+        "ShowCenterText" === e.Name) &&
         (i = !1),
       i && UiManager_1.UiManager.IsViewOpen("PlotTransitionView")
         ? UiManager_1.UiManager.CloseView("PlotTransitionView", () => {
@@ -321,7 +321,7 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
       this.FlowShowTalk.Skip();
   }
   HandleInputBeforePlay(t = "LevelC") {
-    t !== "LevelD" && t !== "Prompt"
+    "LevelD" !== t && "Prompt" !== t
       ? ((ModelManager_1.ModelManager.PlotModel.PlotConfig.DisableInput = !0),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.ForceReleaseInput,
@@ -331,15 +331,15 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
       : (ModelManager_1.ModelManager.PlotModel.PlotConfig.DisableInput = !1);
   }
   QQi() {
-    if (this.DQi.length !== 0)
-      for (const t of this.DQi) if (t.Name === "AdjustPlayerCamera") return !0;
+    if (0 !== this.DQi.length)
+      for (const t of this.DQi) if ("AdjustPlayerCamera" === t.Name) return !0;
     return !1;
   }
   GetOptionToSelect(t) {
-    let i = this.nx.CurShowTalkActionId;
-    var t =
-      t ??
-      this.nx.CurShowTalk.TalkItems.find((t) => t.Id === this.nx.CurTalkId);
+    var i = this.nx.CurShowTalkActionId,
+      t =
+        t ??
+        this.nx.CurShowTalk.TalkItems.find((t) => t.Id === this.nx.CurTalkId);
     return t?.Options &&
       (i = this.nx.OptionsHistory.get(i))?.has(t.Id) &&
       (i = i.get(t.Id) + 1) < t.Options.length
@@ -356,7 +356,7 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
   }
   CheckCanSkipTmp() {
     if (!this.DQi) return !1;
-    for (const t of this.DQi) if (t.Name === "PlaySequenceData") return !1;
+    for (const t of this.DQi) if ("PlaySequenceData" === t.Name) return !1;
     return !0;
   }
   JumpTalk(t) {
@@ -404,9 +404,9 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
   }
   GetNextAction(t) {
     if (this.nx)
-      return t && this.RQi.length > 0
+      return t && 0 < this.RQi.length
         ? this.RQi[this.RQi.length - 1]
-        : this.DQi.length > 0
+        : 0 < this.DQi.length
           ? this.DQi[this.DQi.length - 1]
           : void 0;
   }
@@ -417,4 +417,4 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
   }
 }
 exports.FlowActionRunner = FlowActionRunner;
-// # sourceMappingURL=FlowActionRunner.js.map
+//# sourceMappingURL=FlowActionRunner.js.map

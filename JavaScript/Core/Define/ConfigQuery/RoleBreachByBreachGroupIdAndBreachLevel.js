@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configRoleBreachByBreachGroupIdAndBreachLevel = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const RoleBreach_1 = require("../Config/RoleBreach");
-const DB = "db_role_level.db";
-const FILE = "j.角色升级突破.xlsx";
-const TABLE = "RoleBreach";
-const COMMAND =
-  "select BinData from `RoleBreach` where BreachGroupId=? AND BreachLevel=?";
-const KEY_PREFIX = "RoleBreachByBreachGroupIdAndBreachLevel";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  RoleBreach_1 = require("../Config/RoleBreach"),
+  DB = "db_role_level.db",
+  FILE = "j.角色升级突破.xlsx",
+  TABLE = "RoleBreach",
+  COMMAND =
+    "select BinData from `RoleBreach` where BreachGroupId=? AND BreachLevel=?",
+  KEY_PREFIX = "RoleBreachByBreachGroupIdAndBreachLevel",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX =
-  "configRoleBreachByBreachGroupIdAndBreachLevel.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX =
+    "configRoleBreachByBreachGroupIdAndBreachLevel.GetConfig(";
 exports.configRoleBreachByBreachGroupIdAndBreachLevel = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -43,16 +43,17 @@ exports.configRoleBreachByBreachGroupIdAndBreachLevel = {
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(
-            handleId,
-            !0,
-            ...logPair,
-            ["BreachGroupId", e],
-            ["BreachLevel", o],
-          ) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(
+              handleId,
+              !0,
+              ...logPair,
+              ["BreachGroupId", e],
+              ["BreachLevel", o],
+            ))
       ) {
-        var i;
-        var n = void 0;
+        var i,
+          n = void 0;
         if (
           (([i, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -79,4 +80,4 @@ exports.configRoleBreachByBreachGroupIdAndBreachLevel = {
     }
   },
 };
-// # sourceMappingURL=RoleBreachByBreachGroupIdAndBreachLevel.js.map
+//# sourceMappingURL=RoleBreachByBreachGroupIdAndBreachLevel.js.map

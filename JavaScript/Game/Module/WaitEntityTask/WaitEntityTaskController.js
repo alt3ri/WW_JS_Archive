@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WaitEntityTaskController = void 0);
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class WaitEntityTaskController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -33,7 +33,7 @@ class WaitEntityTaskController extends ControllerBase_1.ControllerBase {
     );
   }
   static AddTask(e) {
-    const t = WaitEntityTaskController.BOe++;
+    var t = WaitEntityTaskController.BOe++;
     return ModelManager_1.ModelManager.WaitEntityTaskModel.AddTask(t, e), t;
   }
   static RemoveTask(e) {
@@ -42,15 +42,15 @@ class WaitEntityTaskController extends ControllerBase_1.ControllerBase {
 }
 ((exports.WaitEntityTaskController = WaitEntityTaskController).BOe = 0),
   (WaitEntityTaskController.GUe = (e, t, n) => {
-    var t = t.Entity.GetComponent(0);
-    const r = t.GetCreatureDataId();
-    var t = t.GetPbDataId();
+    var t = t.Entity.GetComponent(0),
+      r = t.GetCreatureDataId(),
+      t = t.GetPbDataId();
     ModelManager_1.ModelManager.WaitEntityTaskModel.OnAddEntity(r, t);
   }),
   (WaitEntityTaskController.zpe = (e, t) => {
-    var t = t.Entity.GetComponent(0);
-    const n = t.GetCreatureDataId();
-    var t = t.GetPbDataId();
+    var t = t.Entity.GetComponent(0),
+      n = t.GetCreatureDataId(),
+      t = t.GetPbDataId();
     ModelManager_1.ModelManager.WaitEntityTaskModel.OnRemoveEntity(n, t);
   });
-// # sourceMappingURL=WaitEntityTaskController.js.map
+//# sourceMappingURL=WaitEntityTaskController.js.map

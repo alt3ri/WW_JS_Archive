@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const SceneInteractionManager_1 = require("./SceneInteractionManager");
-const SceneObjectWaterEffect_1 = require("./SceneObjectWaterEffect");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  SceneInteractionManager_1 = require("./SceneInteractionManager"),
+  SceneObjectWaterEffect_1 = require("./SceneObjectWaterEffect");
 class SceneInteractionDebugTool extends UE.Actor {
   constructor() {
     super(...arguments),
@@ -37,4 +37,4 @@ class SceneInteractionDebugTool extends UE.Actor {
   }
 }
 exports.default = SceneInteractionDebugTool;
-// # sourceMappingURL=SceneInteractionDebugTool.js.map
+//# sourceMappingURL=SceneInteractionDebugTool.js.map

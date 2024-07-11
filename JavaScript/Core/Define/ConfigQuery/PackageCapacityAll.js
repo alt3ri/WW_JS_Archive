@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configPackageCapacityAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const PackageCapacity_1 = require("../Config/PackageCapacity");
-const DB = "db_bag.db";
-const FILE = "b.背包.xlsx";
-const TABLE = "PackageCapacity";
-const COMMAND = "select BinData from `PackageCapacity`";
-const KEY_PREFIX = "PackageCapacityAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  PackageCapacity_1 = require("../Config/PackageCapacity"),
+  DB = "db_bag.db",
+  FILE = "b.背包.xlsx",
+  TABLE = "PackageCapacity",
+  COMMAND = "select BinData from `PackageCapacity`",
+  KEY_PREFIX = "PackageCapacityAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configPackageCapacityAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configPackageCapacityAll = {
     );
   },
   GetConfigList: (o = !0) => {
-    let a;
+    var a;
     if (
       (a = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configPackageCapacityAll = {
       }
       const n = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let i = void 0;
+        var i = void 0;
         if (
           (([a, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configPackageCapacityAll = {
     }
   },
 };
-// # sourceMappingURL=PackageCapacityAll.js.map
+//# sourceMappingURL=PackageCapacityAll.js.map

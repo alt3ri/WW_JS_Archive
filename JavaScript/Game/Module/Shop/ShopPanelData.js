@@ -15,11 +15,11 @@ class ShopPanelData {
       (this.BuySuccessFunction = void 0);
   }
   IsSoldOut() {
-    return this.BuyLimit > 0 && this.BoughtCount === this.BuyLimit;
+    return 0 < this.BuyLimit && this.BoughtCount === this.BuyLimit;
   }
   IsInteractive() {
     return !this.IsSoldOut() && this.InSellTime && !this.IsLock;
   }
 }
 exports.ShopPanelData = ShopPanelData;
-// # sourceMappingURL=ShopPanelData.js.map
+//# sourceMappingURL=ShopPanelData.js.map

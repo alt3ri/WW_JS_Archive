@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineActionActivateSkillGroup = void 0);
-const AiStateMachine_1 = require("../AiStateMachine");
-const AiStateMachineAction_1 = require("./AiStateMachineAction");
+const AiStateMachine_1 = require("../AiStateMachine"),
+  AiStateMachineAction_1 = require("./AiStateMachineAction");
 class AiStateMachineActionActivateSkillGroup extends AiStateMachineAction_1.AiStateMachineAction {
   constructor() {
     super(...arguments), (this.ConfigId = 0), (this.Activate = !1);
@@ -26,4 +26,4 @@ class AiStateMachineActionActivateSkillGroup extends AiStateMachineAction_1.AiSt
 }
 exports.AiStateMachineActionActivateSkillGroup =
   AiStateMachineActionActivateSkillGroup;
-// # sourceMappingURL=AiStateMachineActionActivateSkillGroup.js.map
+//# sourceMappingURL=AiStateMachineActionActivateSkillGroup.js.map

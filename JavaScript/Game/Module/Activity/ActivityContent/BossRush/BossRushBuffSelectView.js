@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BossRushBuffSelectView = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView");
-const BossRushModel_1 = require("./BossRushModel");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView"),
+  BossRushModel_1 = require("./BossRushModel");
 class BossRushBuffSelectView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -28,8 +28,8 @@ class BossRushBuffSelectView extends UiTabViewBase_1.UiTabViewBase {
         return new BuffGridItem();
       }),
       (this.nNt = () => {
-        let t;
-        const e = [];
+        var t,
+          e = [];
         let i = 1;
         for (const o of this.UUr)
           o.Selected &&
@@ -39,11 +39,11 @@ class BossRushBuffSelectView extends UiTabViewBase_1.UiTabViewBase {
             (t.Slot = i),
             i++,
             e.push(t));
-        const s = this.PUr();
+        var s = this.PUr();
         if (s < this.RUr.GetBuffMaxCount())
           for (let t = s; t < this.RUr.GetBuffMaxCount(); t++) {
-            const r = this.RUr.GetIndexPrepareSelectBuff(t);
-            const h = new BossRushModel_1.BossRushBuffInfo();
+            var r = this.RUr.GetIndexPrepareSelectBuff(t),
+              h = new BossRushModel_1.BossRushBuffInfo();
             (h.BuffId = 0),
               (h.ChangeAble = r.ChangeAble),
               (h.State = r.State),
@@ -98,13 +98,14 @@ class BossRushBuffSelectView extends UiTabViewBase_1.UiTabViewBase {
       (this.RUr = ModelManager_1.ModelManager.BossRushModel.CurrentTeamInfo),
       (this.UUr = []);
     for (const e of this.RUr.GetOptionBuff()) {
-      const t = new BuffScrollItemData();
+      var t = new BuffScrollItemData();
       (t.BuffId = e.BuffId),
         (t.State = e.State),
         (t.Selected =
+          -1 !==
           this.RUr.GetPrepareSelectBuff().findIndex(
             (t) => t.BuffId === e.BuffId,
-          ) !== -1),
+          )),
         (t.SelectedAtStart = t.Selected),
         (t.OnClickToggle = this.kqe),
         (t.CheckClickAble = this.xUr),
@@ -136,10 +137,10 @@ class BossRushBuffSelectView extends UiTabViewBase_1.UiTabViewBase {
   }
   Mni() {
     if (this.v5t) {
-      const e = [];
+      var e = [];
       this.AUr = !0;
       for (let t = 0; t < this.UUr.length; t += 2) {
-        const i = new BuffGridItemData();
+        var i = new BuffGridItemData();
         if (((i.BuffScrollItemData1 = this.UUr[t]), t + 1 >= this.UUr.length)) {
           e.push(i);
           break;
@@ -149,7 +150,7 @@ class BossRushBuffSelectView extends UiTabViewBase_1.UiTabViewBase {
       this.v5t.RefreshByData(e, !1, () => {
         this.AUr = !1;
       }),
-        this.GetLoopScrollViewComponent(0).RootUIComp.SetUIActive(e.length > 0);
+        this.GetLoopScrollViewComponent(0).RootUIComp.SetUIActive(0 < e.length);
     }
   }
   OnBeforeHide() {
@@ -232,7 +233,7 @@ class BuffScrollItem extends UiPanelBase_1.UiPanelBase {
         if (!this.Y6i) return !1;
         if (
           this.Y6i.State === Protocol_1.Aki.Protocol.ABs.KPs &&
-          this.GetExtendToggle(0).GetToggleState() === 0
+          0 === this.GetExtendToggle(0).GetToggleState()
         )
           return !0;
         return this.Y6i.CheckClickAble(this.Y6i);
@@ -268,7 +269,7 @@ class BuffScrollItem extends UiPanelBase_1.UiPanelBase {
     this.GetItem(5).SetUIActive(this.Y6i.SelectedAtStart);
   }
   Oqe() {
-    const t = this.Y6i.Selected ? 1 : 0;
+    var t = this.Y6i.Selected ? 1 : 0;
     this.GetExtendToggle(0).SetToggleState(t);
   }
   L7e() {
@@ -277,30 +278,30 @@ class BuffScrollItem extends UiPanelBase_1.UiPanelBase {
     );
   }
   C4e() {
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.BossRushConfig.GetBossRushBuffConfigById(
         this.Y6i.BuffId,
       );
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), t.Name);
   }
   Pqe() {
-    const t =
-      ConfigManager_1.ConfigManager.BossRushConfig.GetBossRushBuffConfigById(
-        this.Y6i.BuffId,
-      );
-    const e = [];
+    var t =
+        ConfigManager_1.ConfigManager.BossRushConfig.GetBossRushBuffConfigById(
+          this.Y6i.BuffId,
+        ),
+      e = [];
     for (const s of t.DescriptionParam) {
-      const i = RegExp(/\[(.*?)\]/g).exec(s);
-      i && i.length > 1 && e.push(...i[1].split(","));
+      var i = RegExp(/\[(.*?)\]/g).exec(s);
+      i && 1 < i.length && e.push(...i[1].split(","));
     }
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), t.Description, ...e);
   }
   GUr() {
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.BossRushConfig.GetBossRushBuffConfigById(
         this.Y6i.BuffId,
       ).Texture;
     this.SetTextureByPath(t, this.GetTexture(1));
   }
 }
-// # sourceMappingURL=BossRushBuffSelectView.js.map
+//# sourceMappingURL=BossRushBuffSelectView.js.map

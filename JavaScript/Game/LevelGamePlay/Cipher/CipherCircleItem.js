@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CipherCircleItem = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const AutoAttachExhibitionItem_1 = require("../../Module/CircleExhibition/AutoAttachExhibitionItem");
-const WRONG_COLOR = "BB5C58";
-const RIGHT_COLOR = "F6D03F";
-const NORMAL_COLOR = "FFFFFF";
+const UE = require("ue"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  AutoAttachExhibitionItem_1 = require("../../Module/CircleExhibition/AutoAttachExhibitionItem"),
+  WRONG_COLOR = "BB5C58",
+  RIGHT_COLOR = "F6D03F",
+  NORMAL_COLOR = "FFFFFF";
 class CipherCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExhibitionItemAbstract {
   constructor() {
     super(...arguments),
@@ -54,4 +54,4 @@ class CipherCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExhibitionIt
   }
 }
 exports.CipherCircleItem = CipherCircleItem;
-// # sourceMappingURL=CipherCircleItem.js.map
+//# sourceMappingURL=CipherCircleItem.js.map

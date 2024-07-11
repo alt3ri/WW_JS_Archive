@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraAdjustController = void 0);
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const CameraControllerBase_1 = require("./CameraControllerBase");
+const Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  CameraControllerBase_1 = require("./CameraControllerBase");
 class CameraAdjustController extends CameraControllerBase_1.CameraControllerBase {
   constructor() {
     super(...arguments),
@@ -57,7 +57,7 @@ class CameraAdjustController extends CameraControllerBase_1.CameraControllerBase
     this.tle && this._le();
   }
   ApplyCameraAdjust() {
-    let t, s, h, i, e, a, r, l, n;
+    var t, s, h, i, e, a, r, l, n;
     this.IsActivate &&
       this.Camera.TargetEntity &&
       this.Camera.IsTargetLocationValid &&
@@ -111,7 +111,7 @@ class CameraAdjustController extends CameraControllerBase_1.CameraControllerBase
         (n = Rotator_1.Rotator.Create()),
         this.lle.Rotation(n),
         (this.ale = n.Yaw),
-        l > 0
+        0 < l
           ? !r || i > Math.cos(e * MathUtils_1.MathUtils.DegToRad)
             ? (this.ale += e)
             : i < Math.cos(a * MathUtils_1.MathUtils.DegToRad)
@@ -122,9 +122,9 @@ class CameraAdjustController extends CameraControllerBase_1.CameraControllerBase
             : i < Math.cos(a * MathUtils_1.MathUtils.DegToRad)
               ? (this.ale -= a)
               : (this.ale = this.sle),
-        this.sle - this.ale > 180
+        180 < this.sle - this.ale
           ? (this.ale += 360)
-          : this.ale - this.sle > 180 && (this.ale -= 360)),
+          : 180 < this.ale - this.sle && (this.ale -= 360)),
       this.ile) &&
       ((this.ole = MathUtils_1.MathUtils.StandardizingPitch(
         this.Camera.CurrentCamera.ArmRotation.Pitch,
@@ -133,7 +133,9 @@ class CameraAdjustController extends CameraControllerBase_1.CameraControllerBase
         this.Camera.AdjustPitch(this.lle),
       )));
   }
-  UpdateInternal(t) {}
+  UpdateInternal(t) {
+    return;
+  }
   _le() {
     this.Camera.CameraAutoController.DisableForce(this),
       (this.tle = !1),
@@ -142,4 +144,4 @@ class CameraAdjustController extends CameraControllerBase_1.CameraControllerBase
   }
 }
 exports.CameraAdjustController = CameraAdjustController;
-// # sourceMappingURL=CameraAdjustController.js.map
+//# sourceMappingURL=CameraAdjustController.js.map

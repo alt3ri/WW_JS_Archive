@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleInstance = void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const LocalStorageDefine_1 = require("../../../../Common/LocalStorageDefine");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ResonanceDataInfo_1 = require("../../RoleData/Module/DataInfo/ResonanceDataInfo");
-const SkillNodeDataInfo_1 = require("../../RoleData/Module/DataInfo/SkillNodeDataInfo");
-const RoleSkillData_1 = require("../../RoleData/Module/RoleSkillData");
-const RoleDataBase_1 = require("../../RoleData/RoleDataBase");
-const EAttributeId = Protocol_1.Aki.Protocol.KBs;
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  LocalStorageDefine_1 = require("../../../../Common/LocalStorageDefine"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ResonanceDataInfo_1 = require("../../RoleData/Module/DataInfo/ResonanceDataInfo"),
+  SkillNodeDataInfo_1 = require("../../RoleData/Module/DataInfo/SkillNodeDataInfo"),
+  RoleSkillData_1 = require("../../RoleData/Module/RoleSkillData"),
+  RoleDataBase_1 = require("../../RoleData/RoleDataBase");
+var EAttributeId = Protocol_1.Aki.Protocol.KBs;
 class RoleInstance extends RoleDataBase_1.RoleDataBase {
   constructor(e) {
     super(e), (this.CreateTime = 0);
@@ -21,7 +21,7 @@ class RoleInstance extends RoleDataBase_1.RoleDataBase {
     return !1;
   }
   SetRoleName(e) {
-    let t;
+    var t;
     StringUtils_1.StringUtils.IsEmpty(e)
       ? ((t = this.GetRoleConfig()),
         (this.Name = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(
@@ -52,11 +52,11 @@ class RoleInstance extends RoleDataBase_1.RoleDataBase {
     return this.CreateTime;
   }
   RefreshSkillInfo(e, t) {
-    var a = this.GetSkillData();
-    var a =
-      (a.SetSkillLevel(e, t),
-      a.SetSkillReferenceMapBySkillId(e),
-      new Protocol_1.Aki.Protocol.oNs());
+    var a = this.GetSkillData(),
+      a =
+        (a.SetSkillLevel(e, t),
+        a.SetSkillReferenceMapBySkillId(e),
+        new Protocol_1.Aki.Protocol.oNs());
     (a.Ckn = e),
       (a.gkn = t),
       EventSystem_1.EventSystem.EmitWithTarget(
@@ -67,17 +67,18 @@ class RoleInstance extends RoleDataBase_1.RoleDataBase {
       );
   }
   RefreshRoleAttr(e, t) {
-    const a = this.GetAttributeData();
-    const o = a.GetOldRoleBaseAttr();
+    var a = this.GetAttributeData(),
+      o = a.GetOldRoleBaseAttr();
     a.ClearRoleBaseAttr();
     for (const n of e) a.SetRoleBaseAttr(n.Ckn, n.gkn), o.set(n.Ckn, n.gkn);
-    const r = a.GetOldRoleAddAttr();
+    var r = a.GetOldRoleAddAttr();
     a.ClearRoleAddAttr();
     for (const i of t) a.SetRoleAddAttr(i.Ckn, i.gkn), r.set(i.Ckn, i.gkn);
     e = ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId;
-    e !== 0 &&
-      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
-        .ShareAttri === 0 &&
+    0 !== e &&
+      0 ===
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
+          .ShareAttri &&
       (o.delete(EAttributeId.Proto_Life), r.delete(EAttributeId.Proto_Life)),
       EventSystem_1.EventSystem.EmitWithTarget(
         this,
@@ -93,20 +94,20 @@ class RoleInstance extends RoleDataBase_1.RoleDataBase {
   }
   RefreshRoleInfo(t) {
     this.SetRoleName(t.e4n), (this.CreateTime = t.BRs);
-    const e = this.GetLevelData();
-    const a =
-      (e.SetLevel(t.r3n),
-      e.SetExp(t.k3n),
-      e.SetBreachLevel(t.ADs),
-      this.GetSkillData());
+    var e = this.GetLevelData(),
+      a =
+        (e.SetLevel(t.r3n),
+        e.SetExp(t.k3n),
+        e.SetBreachLevel(t.ADs),
+        this.GetSkillData());
     for (const l of t.BDs)
       a.SetSkillLevel(l.Ckn, l.gkn), a.SetSkillReferenceMapBySkillId(l.Ckn);
-    const o = this.GetPhantomData();
+    var o = this.GetPhantomData();
     for (const s of t.qDs) o.RefreshPhantom(s.Ckn, s.gkn);
-    const r = t.FDs.length;
-    const n = [];
+    var r = t.FDs.length,
+      n = [];
     for (let e = 0; e < r; e++) {
-      const i = t.FDs[e];
+      var i = t.FDs[e];
       n.push(new SkillNodeDataInfo_1.SkillNodeDataInfo(i.$8n, i.rVn, i.vkn));
     }
     a.SetSkillNodeStateData(n), this.RefreshRoleAttr(t.hDs, t.lDs);
@@ -114,8 +115,8 @@ class RoleInstance extends RoleDataBase_1.RoleDataBase {
     this.GetResonanceData().SetResonantChainGroupIndex(t.VDs);
   }
   RefreshResonance(e) {
-    const t = this.GetResonanceData();
-    var e = new ResonanceDataInfo_1.ResonanceDataInfo(e.xDs, e.zCs, e.bDs);
+    var t = this.GetResonanceData(),
+      e = new ResonanceDataInfo_1.ResonanceDataInfo(e.xDs, e.zCs, e.bDs);
     t.SetResonance(e);
   }
   CanChangeName() {
@@ -145,4 +146,4 @@ class RoleInstance extends RoleDataBase_1.RoleDataBase {
   }
 }
 exports.RoleInstance = RoleInstance;
-// # sourceMappingURL=RoleInstance.js.map
+//# sourceMappingURL=RoleInstance.js.map

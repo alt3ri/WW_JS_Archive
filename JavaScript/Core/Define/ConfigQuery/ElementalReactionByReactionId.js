@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configElementalReactionByReactionId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const ElementalReaction_1 = require("../Config/ElementalReaction");
-const DB = "db_element_info.db";
-const FILE = "y.元素属性.xlsx";
-const TABLE = "ElementalReaction";
-const COMMAND = "select BinData from `ElementalReaction` where ReactionId=?";
-const KEY_PREFIX = "ElementalReactionByReactionId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  ElementalReaction_1 = require("../Config/ElementalReaction"),
+  DB = "db_element_info.db",
+  FILE = "y.元素属性.xlsx",
+  TABLE = "ElementalReaction",
+  COMMAND = "select BinData from `ElementalReaction` where ReactionId=?",
+  KEY_PREFIX = "ElementalReactionByReactionId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configElementalReactionByReactionId.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configElementalReactionByReactionId.GetConfig(";
 exports.configElementalReactionByReactionId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configElementalReactionByReactionId = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "ReactionId",
-            e,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "ReactionId",
+              e,
+            ]))
       ) {
-        var i;
-        var n = void 0;
+        var i,
+          n = void 0;
         if (
           (([i, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configElementalReactionByReactionId = {
     }
   },
 };
-// # sourceMappingURL=ElementalReactionByReactionId.js.map
+//# sourceMappingURL=ElementalReactionByReactionId.js.map

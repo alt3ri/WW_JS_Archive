@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRunController = void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../../Core/Net/Net");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const ActivityControllerBase_1 = require("../../ActivityControllerBase");
-const ActivitySubViewRun_1 = require("../../View/SubView/ActivitySubViewRun");
-const ActivityRunData_1 = require("./ActivityRunData");
-const ActivityRunModel_1 = require("./ActivityRunModel");
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  ActivityControllerBase_1 = require("../../ActivityControllerBase"),
+  ActivitySubViewRun_1 = require("../../View/SubView/ActivitySubViewRun"),
+  ActivityRunData_1 = require("./ActivityRunData"),
+  ActivityRunModel_1 = require("./ActivityRunModel");
 class ActivityRunController extends ActivityControllerBase_1.ActivityControllerBase {
   OnGetIsOpeningActivityRelativeView() {
     return UiManager_1.UiManager.IsViewOpen("ActivityRunView");
@@ -55,13 +55,13 @@ class ActivityRunController extends ActivityControllerBase_1.ActivityControllerB
     ModelManager_1.ModelManager.ActivityRunModel.SetStartViewSelectIndex(e);
   }
   static f2e() {
-    const e = new Protocol_1.Aki.Protocol.Aos();
+    var e = new Protocol_1.Aki.Protocol.Aos();
     Net_1.Net.Call(15732, e, (e) => {
       ModelManager_1.ModelManager.ActivityRunModel.OnReceiveMessageData(e);
     });
   }
   static RequestTakeChallengeReward(t, i) {
-    const e = new Protocol_1.Aki.Protocol.xos();
+    var e = new Protocol_1.Aki.Protocol.xos();
     (e._3n = t),
       (e.u3n = i),
       Net_1.Net.Call(18162, e, (e) => {
@@ -77,7 +77,7 @@ class ActivityRunController extends ActivityControllerBase_1.ActivityControllerB
       });
   }
   static RequestTransToParkourChallenge(e) {
-    const t = new Protocol_1.Aki.Protocol.qos();
+    var t = new Protocol_1.Aki.Protocol.qos();
     (t._3n = e),
       Net_1.Net.Call(18895, t, (e) => {
         e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
@@ -99,12 +99,12 @@ class ActivityRunController extends ActivityControllerBase_1.ActivityControllerB
         t._3n,
       );
       if (i) {
-        const n = i.GetMiniTime();
-        var r = i.GetMaxScore();
-        let o = (i.OnChallengeEnd(t), i.GetMiniTime());
-        var i = i.GetMaxScore();
+        var n = i.GetMiniTime(),
+          r = i.GetMaxScore(),
+          o = (i.OnChallengeEnd(t), i.GetMiniTime()),
+          i = i.GetMaxScore();
         let e = !1;
-        (o < n || r < i || n === 0) && (e = !0);
+        (o < n || r < i || 0 === n) && (e = !0);
         o = new ActivityRunModel_1.RunEndData();
         o.Phrase(t),
           o.SetIfNewRecord(e),
@@ -118,4 +118,4 @@ class ActivityRunController extends ActivityControllerBase_1.ActivityControllerB
   (ActivityRunController.d2e = (e, t) => {
     ActivityRunController.f2e();
   });
-// # sourceMappingURL=ActivityRunController.js.map
+//# sourceMappingURL=ActivityRunController.js.map

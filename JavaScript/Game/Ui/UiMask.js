@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiMask = void 0);
-const Log_1 = require("../../Core/Common/Log");
-const TimerSystem_1 = require("../../Core/Timer/TimerSystem");
-const UiLayer_1 = require("./UiLayer");
-const MASK_DESTROY_TIME = 2e3;
+const Log_1 = require("../../Core/Common/Log"),
+  TimerSystem_1 = require("../../Core/Timer/TimerSystem"),
+  UiLayer_1 = require("./UiLayer"),
+  MASK_DESTROY_TIME = 2e3;
 class UiMask {
   constructor(i) {
     (this.Zdr = 0), (this.IRe = void 0), (this.eCr = i);
@@ -57,9 +57,9 @@ class UiMask {
       UiLayer_1.UiLayer.SetShowMaskLayer(this.eCr, !1);
   }
   SetMask(i) {
-    i ? (this.p7e(), this.iCr()) : this.Zdr > 0 && this.oCr(),
+    i ? (this.p7e(), this.iCr()) : 0 < this.Zdr && this.oCr(),
       this.Zdr <= 0 && this.p7e();
   }
 }
 exports.UiMask = UiMask;
-// # sourceMappingURL=UiMask.js.map
+//# sourceMappingURL=UiMask.js.map

@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ForgingIngredientsView = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const CommonManager_1 = require("../../Common/CommonManager");
-const ForgingController_1 = require("../ForgingController");
-const ForgingIngredientsVerticalView_1 = require("./ForgingIngredientsVerticalView");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  CommonManager_1 = require("../../Common/CommonManager"),
+  ForgingController_1 = require("../ForgingController"),
+  ForgingIngredientsVerticalView_1 = require("./ForgingIngredientsVerticalView");
 class ForgingIngredientsView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -106,26 +106,26 @@ class ForgingIngredientsView extends UiPanelBase_1.UiPanelBase {
   RefreshTips(e) {
     this.STi = e;
     var e = ConfigManager_1.ConfigManager.ForgingConfig.GetForgeFormulaById(
-      e.ItemId,
-    );
-    var t = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponConfigByItemId(
-      e.ItemId,
-    );
-    var t =
-      (this.GetText(0).ShowTextNew(t?.WeaponName ?? ""),
-      ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
         e.ItemId,
-      ));
+      ),
+      t = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponConfigByItemId(
+        e.ItemId,
+      ),
+      t =
+        (this.GetText(0).ShowTextNew(t?.WeaponName ?? ""),
+        ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+          e.ItemId,
+        ));
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), "Have", t),
       this.JNt.RefreshForging(this.STi),
       this.ZNt();
   }
   ZNt() {
     let e = !0;
-    const t = ModelManager_1.ModelManager.ForgingModel;
-    const i = t.CheckUnlock(this.STi);
-    const n = t.CheckCoinEnough(this.STi.ItemId);
-    const r = t.CheckLimitCount(this.STi);
+    var t = ModelManager_1.ModelManager.ForgingModel,
+      i = t.CheckUnlock(this.STi),
+      n = t.CheckCoinEnough(this.STi.ItemId),
+      r = t.CheckLimitCount(this.STi);
     let s = "";
     i
       ? ((s =
@@ -180,4 +180,4 @@ class ForgingIngredientsView extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ForgingIngredientsView = ForgingIngredientsView;
-// # sourceMappingURL=ForgingIngredientsView.js.map
+//# sourceMappingURL=ForgingIngredientsView.js.map

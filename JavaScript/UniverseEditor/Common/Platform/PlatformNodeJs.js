@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.platformNodeJs = exports.PlatformNodeJs = void 0);
-const child_process_1 = require("child_process");
-const fs_1 = require("fs");
-const os_1 = require("os");
-const path = require("path");
-const Platform_1 = require("./Platform");
+const child_process_1 = require("child_process"),
+  fs_1 = require("fs"),
+  os_1 = require("os"),
+  path = require("path"),
+  Platform_1 = require("./Platform");
 class PlatformNodeJs extends Platform_1.Platform {
   ReadFile(e) {
     return (0, fs_1.existsSync)(e)
@@ -13,7 +13,7 @@ class PlatformNodeJs extends Platform_1.Platform {
       : "";
   }
   WriteFile(e, r) {
-    const t = path.dirname(e);
+    var t = path.dirname(e);
     (0, fs_1.existsSync)(t) || (0, fs_1.mkdirSync)(t, { recursive: !0 }),
       (0, fs_1.writeFileSync)(e, r);
   }
@@ -51,11 +51,11 @@ class PlatformNodeJs extends Platform_1.Platform {
     return (0, os_1.homedir)() + "/" + e;
   }
   ListFiles(e, r, t) {
-    const s = [];
+    var s = [];
     return this.Oe(e, r, t, s), s;
   }
   ListDirs(e, r) {
-    const t = [];
+    var t = [];
     return this.De(e, r, t), t;
   }
   De(r, t, s = []) {
@@ -76,7 +76,7 @@ class PlatformNodeJs extends Platform_1.Platform {
     return this.ExistFile(e) ? (0, fs_1.statSync)(e).mtime.getTime() : 0n;
   }
   ke() {
-    const e = new Date();
+    var e = new Date();
     return `${e.getHours()}:${e.getMinutes()}:` + e.getSeconds();
   }
   Log(e, r) {
@@ -102,9 +102,9 @@ class PlatformNodeJs extends Platform_1.Platform {
     }
   }
   GetMacAddress() {
-    const e = (0, os_1.networkInterfaces)();
+    var e = (0, os_1.networkInterfaces)();
     for (const t of Object.entries(e)) {
-      const r = t[1];
+      var r = t[1];
       if (r)
         for (const s of r)
           if (s.mac) return s.mac.replace(/:/gi, "").toLocaleUpperCase();
@@ -118,14 +118,14 @@ class PlatformNodeJs extends Platform_1.Platform {
     (0, fs_1.existsSync)(t) &&
       (s && !s.startsWith(".") && (s = "." + s),
       (0, fs_1.readdirSync)(t).forEach((e) => {
-        const r = t + "/" + e;
+        var r = t + "/" + e;
         (0, fs_1.lstatSync)(r).isDirectory() && i
           ? this.Oe(r, s, i, n)
           : (s && path.extname(e) !== s) || n.push(r);
       }));
   }
   Ae() {
-    const e = __dirname.indexOf("Content");
+    var e = __dirname.indexOf("Content");
     if (e < 0) throw new Error("Invalid project!!!");
     return ("" + __dirname.substring(0, e)).replace(/\\/g, "/");
   }
@@ -133,17 +133,17 @@ class PlatformNodeJs extends Platform_1.Platform {
     if (n.endsWith(".uasset") && this.ExistFile(n)) {
       const a = (0, fs_1.readFileSync)(n);
       n = new Uint8Array(a);
-      let e = !1;
-      let r = this.be("##KUROS##");
-      let t = this.qe(r, n);
-      let s =
-        (t < 0 && ((r = this.Ue("##KUROS##")), (t = this.qe(r, n)), (e = !0)),
-        void 0);
-      let i = -1;
+      let e = !1,
+        r = this.be("##KUROS##"),
+        t = this.qe(r, n),
+        s =
+          (t < 0 && ((r = this.Ue("##KUROS##")), (t = this.qe(r, n)), (e = !0)),
+          void 0),
+        i = -1;
       i =
         ((s = e ? this.Ue("##KUROE##") : this.be("##KUROE##")), this.qe(s, n));
-      const o = t + r.length;
-      if (t >= 0 && i >= 0 && o < i) {
+      var o = t + r.length;
+      if (0 <= t && 0 <= i && o < i) {
         n = new Uint8Array(n.subarray(o, i));
         const a = Buffer.from(n);
         return e ? a.toString("ucs2") : a.toString("utf8");
@@ -178,7 +178,7 @@ class PlatformNodeJs extends Platform_1.Platform {
   }
   IsPortInUse(e) {
     var [e, r] = this.Exec(`netstat -ano | grep ":${e}"`);
-    return !!e && void 0 !== r && r !== "";
+    return !!e && void 0 !== r && "" !== r;
   }
   GetCommandLine() {
     return process.argv;
@@ -221,4 +221,4 @@ class PlatformNodeJs extends Platform_1.Platform {
 }
 (exports.PlatformNodeJs = PlatformNodeJs),
   (exports.platformNodeJs = new PlatformNodeJs());
-// # sourceMappingURL=PlatformNodeJs.js.map
+//# sourceMappingURL=PlatformNodeJs.js.map

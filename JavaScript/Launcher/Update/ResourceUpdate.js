@@ -4,15 +4,15 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.PatchFileInfo =
     exports.DownloadViewInfo =
       void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const BaseConfigController_1 = require("../BaseConfig/BaseConfigController");
-const DownloadDefine_1 = require("../Download/DownloadDefine");
-const UrlPrefixDownload_1 = require("../Download/UrlPrefixDownload");
-const HotPatchLogReport_1 = require("../HotPatchLogReport");
-const LauncherLog_1 = require("../Util/LauncherLog");
-const LauncherSerialize_1 = require("../Util/LauncherSerialize");
-const HUNDRED_PERCENT = 1;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  BaseConfigController_1 = require("../BaseConfig/BaseConfigController"),
+  DownloadDefine_1 = require("../Download/DownloadDefine"),
+  UrlPrefixDownload_1 = require("../Download/UrlPrefixDownload"),
+  HotPatchLogReport_1 = require("../HotPatchLogReport"),
+  LauncherLog_1 = require("../Util/LauncherLog"),
+  LauncherSerialize_1 = require("../Util/LauncherSerialize"),
+  HUNDRED_PERCENT = 1;
 class DownloadViewInfo {
   constructor() {
     (this.Name = ""), (this.Size = void 0), (this.SavedSize = void 0);
@@ -60,7 +60,7 @@ class ResourceUpdate {
     this.PSr = e;
   }
   static ReadPatchInfoList(t, i, s, r) {
-    const o = [];
+    var o = [];
     if (!t || !i || t.length !== i.length)
       return (
         LauncherLog_1.LauncherLog.Warn(
@@ -71,15 +71,15 @@ class ResourceUpdate {
         [!1, o]
       );
     for (let e = 0; e < t.length; e++) {
-      const n = t[e];
-      const h = i[e];
-      var a = (0, puerts_1.$ref)(void 0);
+      var n = t[e],
+        h = i[e],
+        a = (0, puerts_1.$ref)(void 0);
       if (!UE.KuroStaticLibrary.LoadFileToString(a, n))
         return (
           LauncherLog_1.LauncherLog.Warn("index文件不存在", ["file", n]),
           [!1, o]
         );
-      let c = (0, puerts_1.$ref)(void 0);
+      var c = (0, puerts_1.$ref)(void 0);
       if (!UE.KuroLauncherLibrary.Decrypt((0, puerts_1.$unref)(a), c))
         return (
           LauncherLog_1.LauncherLog.Warn("index文件内容无法解析", ["file", n]),
@@ -89,11 +89,11 @@ class ResourceUpdate {
       if (a && !(a.length <= 0)) {
         c = JSON.parse(a);
         if (!(Object.keys(c).length <= 0)) {
-          var u;
-          var d;
-          var l;
-          var _;
-          var a = c[h];
+          var u,
+            d,
+            l,
+            _,
+            a = c[h];
           if (!a)
             return (
               LauncherLog_1.LauncherLog.Warn(
@@ -105,13 +105,13 @@ class ResourceUpdate {
             );
           for (const L of a)
             L &&
-              L.length !== 0 &&
+              0 !== L.length &&
               ((u = L.split(",")).length < 12 ||
                 (((d = new PatchFileInfo()).Name = u[0].substring(
                   0,
                   u[0].length - 4,
                 )),
-                (d.NeedRestart = u[1] === "1"),
+                (d.NeedRestart = "1" === u[1]),
                 (d.MountType = Number(u[2])),
                 (l = s.GetPackageVersion()),
                 (_ = BaseConfigController_1.BaseConfigController.GetResUri()),
@@ -138,14 +138,14 @@ class ResourceUpdate {
     return [!0, o];
   }
   qyr() {
-    const t = new Map();
-    const e = this.Byr.GetMountFilePath();
+    var t = new Map(),
+      e = this.Byr.GetMountFilePath();
     if (UE.BlueprintPathsLibrary.FileExists(e)) {
-      const i = UE.KuroStaticLibrary.LoadFileToStringArray(e);
-      const s = i.Num();
+      var i = UE.KuroStaticLibrary.LoadFileToStringArray(e),
+        s = i.Num();
       for (let e = 0; e < s; e++) {
-        var r;
-        const o = i.Get(e).split(",");
+        var r,
+          o = i.Get(e).split(",");
         o.length < 9 ||
           (((r = new PatchFileInfo()).Name =
             o[1] === this.Byr.GetResType() ? o[0] : o[0] + "_" + o[1]),
@@ -179,13 +179,13 @@ class ResourceUpdate {
     return [0n, ""];
   }
   Oyr(t, i, s, r) {
-    const [o, n] = this.Nyr(t, r);
+    var [o, n] = this.Nyr(t, r);
     if (o <= 0n) return 0n;
     let h = 0n;
-    const a = "" + t.SavePath + r;
-    let c = "" + t.SavePath + r + UrlPrefixDownload_1.DOWNLOAD_SUFFIX;
+    var a = "" + t.SavePath + r,
+      c = "" + t.SavePath + r + UrlPrefixDownload_1.DOWNLOAD_SUFFIX;
     let e = !0;
-    let u = UE.KuroLauncherLibrary.CheckFileSha1(a, n);
+    var u = UE.KuroLauncherLibrary.CheckFileSha1(a, n);
     if (
       (e =
         (e = u ? !1 : e) &&
@@ -198,7 +198,7 @@ class ResourceUpdate {
     ) {
       let e = UE.KuroLauncherLibrary.GetFileSize(c);
       e >= o && (UE.KuroLauncherLibrary.DeleteFile(c), (e = 0n)),
-        (e = e >= 0n ? e : 0n),
+        (e = 0n <= e ? e : 0n),
         (this.zSr += o - e);
       (u = new UrlPrefixDownload_1.RequestFileInfo()),
         (c =
@@ -219,17 +219,17 @@ class ResourceUpdate {
     return h;
   }
   kyr(e, t, i) {
-    var s = 0n;
-    var s =
-      (s =
-        (s = (s += this.Oyr(e, t, i, ".pak")) + this.Oyr(e, t, i, ".utoc")) +
-        this.Oyr(e, t, i, ".ucas")) + this.Oyr(e, t, i, ".sig");
-    return !this.Lyr && s > 0n && (this.Lyr = e.NeedRestart), s;
+    var s = 0n,
+      s =
+        (s =
+          (s = (s += this.Oyr(e, t, i, ".pak")) + this.Oyr(e, t, i, ".utoc")) +
+          this.Oyr(e, t, i, ".ucas")) + this.Oyr(e, t, i, ".sig");
+    return !this.Lyr && 0n < s && (this.Lyr = e.NeedRestart), s;
   }
   CheckResourceVersion() {
-    const e = this.Byr.HasNewResourceVersionBaseOnPackage();
-    const t = this.Byr.IsBasePackageSplited();
-    const i = new HotPatchLogReport_1.HotPatchLog();
+    var e = this.Byr.HasNewResourceVersionBaseOnPackage(),
+      t = this.Byr.IsBasePackageSplited(),
+      i = new HotPatchLogReport_1.HotPatchLog();
     if (
       ((i.s_step_id = "check_resource_version"),
       (i.s_update_type = this.Tyr),
@@ -266,21 +266,21 @@ class ResourceUpdate {
     );
   }
   async DownloadIndexFile() {
-    const t = this.Byr.GetIndexSha1s();
-    const i = this.Byr.GetIndexSavePaths(this.$Sr);
-    const s = this.Byr.GetIndexFileNames();
+    var t = this.Byr.GetIndexSha1s(),
+      i = this.Byr.GetIndexSavePaths(this.$Sr),
+      s = this.Byr.GetIndexFileNames();
     let r = !1;
-    let e;
-    let o;
-    let n;
-    const h = new Array();
-    const a = new Array();
+    var e,
+      o,
+      n,
+      h = new Array(),
+      a = new Array();
     for (let e = 0; e < i.length; e++) {
-      var c;
-      var u;
-      const d = i[e];
-      const l = t[e];
-      const _ = s[e];
+      var c,
+        u,
+        d = i[e],
+        l = t[e],
+        _ = s[e];
       UE.KuroLauncherLibrary.CheckFileSha1(d, l)
         ? LauncherLog_1.LauncherLog.Info("已下载过index文件", ["file", d])
         : ((r = !0),
@@ -327,7 +327,7 @@ class ResourceUpdate {
         });
   }
   ResolveIndexFile() {
-    let e, t, i;
+    var e, t, i;
     return (
       !!this.byr ||
       ((i = this.Byr.GetIndexSavePaths(this.$Sr)),
@@ -348,11 +348,11 @@ class ResourceUpdate {
   }
   async CheckResourceFiles(i) {
     if (!this.byr) {
-      const s = this.qyr();
-      const r = this.Dyr.length === s.size;
+      var s = this.qyr(),
+        r = this.Dyr.length === s.size;
       let e = !r;
       (this.Ayr = new Array()), (this.Pyr = new Map()), (this.xyr = 0n);
-      const o = this.Dyr ? this.Dyr.length : 0;
+      var o = this.Dyr ? this.Dyr.length : 0;
       let t = 0;
       this.zSr = 0n;
       for (const c of this.Dyr) {
@@ -379,61 +379,61 @@ class ResourceUpdate {
           this.Byr.IsFirstUpdateResources() ||
             UE.KuroLauncherLibrary.SetRestartApp(2)),
         LauncherLog_1.LauncherLog.Info("需要更新文件大小", ["size", this.xyr]);
-      const h = new HotPatchLogReport_1.HotPatchLog();
-      const a =
-        ((h.s_step_id = "check_resource_files"),
-        (h.s_update_type = this.Tyr),
-        {
-          NeedDownloadSize: this.xyr.toString(),
-          NeedFilesCount: this.Ayr?.length,
-        });
+      var h = new HotPatchLogReport_1.HotPatchLog(),
+        a =
+          ((h.s_step_id = "check_resource_files"),
+          (h.s_update_type = this.Tyr),
+          {
+            NeedDownloadSize: this.xyr.toString(),
+            NeedFilesCount: this.Ayr?.length,
+          });
       (h.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(a)),
         HotPatchLogReport_1.HotPatchLogReport.Report(h);
     }
     return !0;
   }
   async DownloadResourceFiles(a, c = void 0) {
-    let u = 0;
-    let d = 0;
-    let l = 0n;
-    let _ = -1;
-    let L = 0n;
-    var e = new HotPatchLogReport_1.HotPatchLog();
-    var e =
-      ((e.s_step_id = "start_download_paks"),
-      (e.s_update_type = this.Tyr),
-      HotPatchLogReport_1.HotPatchLogReport.Report(e),
-      LauncherLog_1.LauncherLog.Info("开始下载补丁文件"),
-      new Date());
-    var e =
-      ((u = e.getTime()),
-      (d = u),
-      await this.wyr.RequestFiles(
-        this.Ayr,
-        !1,
-        3,
-        (e, t, i, s, r) => {
-          let o;
-          let n;
-          var e = this.Pyr.get(e);
-          e && (e.SavedSize = r);
-          let h = 0n;
-          for ([o, n] of this.Pyr) h += n.SavedSize;
-          L += i;
-          (e = new Date().getTime()), (r = e - d);
-          (_ -= r) < 0 &&
-            e !== u &&
-            ((_ = 500),
-            (l = (1000n * L) / (BigInt(e) - BigInt(u))),
-            (L = 0n),
-            (u = e)),
-            (d = e),
-            c && c(i, h, this.xyr, l),
-            a && a(t, l, h, this.xyr);
-        },
-        !0,
-      ));
-    const t = new HotPatchLogReport_1.HotPatchLog();
+    let u = 0,
+      d = 0,
+      l = 0n,
+      _ = -1,
+      L = 0n;
+    var e = new HotPatchLogReport_1.HotPatchLog(),
+      e =
+        ((e.s_step_id = "start_download_paks"),
+        (e.s_update_type = this.Tyr),
+        HotPatchLogReport_1.HotPatchLogReport.Report(e),
+        LauncherLog_1.LauncherLog.Info("开始下载补丁文件"),
+        new Date()),
+      e =
+        ((u = e.getTime()),
+        (d = u),
+        await this.wyr.RequestFiles(
+          this.Ayr,
+          !1,
+          3,
+          (e, t, i, s, r) => {
+            var o,
+              n,
+              e = this.Pyr.get(e);
+            e && (e.SavedSize = r);
+            let h = 0n;
+            for ([o, n] of this.Pyr) h += n.SavedSize;
+            L += i;
+            (e = new Date().getTime()), (r = e - d);
+            (_ -= r) < 0 &&
+              e !== u &&
+              ((_ = 500),
+              (l = (1000n * L) / (BigInt(e) - BigInt(u))),
+              (L = 0n),
+              (u = e)),
+              (d = e),
+              c && c(i, h, this.xyr, l),
+              a && a(t, l, h, this.xyr);
+          },
+          !0,
+        )),
+      t = new HotPatchLogReport_1.HotPatchLog();
     return (
       (t.s_step_id = "end_download_paks"),
       (t.s_update_type = this.Tyr),
@@ -451,14 +451,14 @@ class ResourceUpdate {
     );
   }
   CheckNeedRestartApp() {
-    (this.Ryr = this.Ayr.length > 0),
+    (this.Ryr = 0 < this.Ayr.length),
       (this.Uyr = 0),
       this.Byr.IsFirstUpdateResources()
         ? (this.Byr.UpdateSavedVersion(this.PSr), (this.Uyr = 1))
         : (this.Uyr = 2),
       LauncherLog_1.LauncherLog.Info("检测是否需要重启");
-    const e =
-      UE.KuroLauncherLibrary.NeedRestartApp() > 0 ||
+    var e =
+      0 < UE.KuroLauncherLibrary.NeedRestartApp() ||
       this.Lyr ||
       !UE.KuroLauncherLibrary.IsFirstIntoLauncher();
     return (
@@ -476,27 +476,25 @@ class ResourceUpdate {
     );
   }
   GetRevertInfo() {
-    const e = this.Byr.NeedRevert();
-    const t = this.Byr.GetRevertVersions();
-    const i = new Set();
-    const s = new Set();
-    const r = { NeedRevert: e, Paks: i, Files: s };
+    var e = this.Byr.NeedRevert(),
+      t = this.Byr.GetRevertVersions(),
+      i = new Set(),
+      s = new Set(),
+      r = { NeedRevert: e, Paks: i, Files: s };
     if (e) {
-      const o =
-        "" +
-        this.$Sr.GetPatchSaveDir() +
-        this.Byr.GetPackageVersion() +
-        `/${this.Byr.GetResType()}/`;
-      const n = UE.KuroStaticLibrary.GetFiles(o, "*");
-      const h = n.Num();
+      var o =
+          "" +
+          this.$Sr.GetPatchSaveDir() +
+          this.Byr.GetPackageVersion() +
+          `/${this.Byr.GetResType()}/`,
+        n = UE.KuroStaticLibrary.GetFiles(o, "*"),
+        h = n.Num();
       for (let e = 0; e < h; e++) {
-        var a;
-        var c;
-        const u = n.Get(e);
-        var d = u.toLowerCase();
-        var d = d.endsWith(".download")
-          ? d.substring(0, d.lastIndexOf("."))
-          : d;
+        var a,
+          c,
+          u = n.Get(e),
+          d = u.toLowerCase(),
+          d = d.endsWith(".download") ? d.substring(0, d.lastIndexOf(".")) : d;
         d.endsWith(".txt")
           ? ((a = d.substring(d.lastIndexOf("_") + 1, d.lastIndexOf("."))),
             t.has(a) && s.add(o + u))
@@ -529,7 +527,7 @@ class ResourceUpdate {
     return this.Ryr;
   }
   GetNeedRestart() {
-    return UE.KuroLauncherLibrary.NeedRestartApp() > 0;
+    return 0 < UE.KuroLauncherLibrary.NeedRestartApp();
   }
   GetResType() {
     return this.Tyr;
@@ -539,4 +537,4 @@ class ResourceUpdate {
   }
 }
 exports.ResourceUpdate = ResourceUpdate;
-// # sourceMappingURL=ResourceUpdate.js.map
+//# sourceMappingURL=ResourceUpdate.js.map

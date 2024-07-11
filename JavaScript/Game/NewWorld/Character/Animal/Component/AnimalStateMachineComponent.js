@@ -1,35 +1,40 @@
 "use strict";
-let AnimalStateMachineComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, r, a) {
-    let i;
-    const n = arguments.length;
-    let s =
-      n < 3 ? e : a === null ? (a = Object.getOwnPropertyDescriptor(e, r)) : a;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      s = Reflect.decorate(t, e, r, a);
-    else
-      for (let o = t.length - 1; o >= 0; o--)
-        (i = t[o]) && (s = (n < 3 ? i(s) : n > 3 ? i(e, r, s) : i(e, r)) || s);
-    return n > 3 && s && Object.defineProperty(e, r, s), s;
-  };
+var AnimalStateMachineComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, r, a) {
+      var i,
+        n = arguments.length,
+        s =
+          n < 3
+            ? e
+            : null === a
+              ? (a = Object.getOwnPropertyDescriptor(e, r))
+              : a;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        s = Reflect.decorate(t, e, r, a);
+      else
+        for (var o = t.length - 1; 0 <= o; o--)
+          (i = t[o]) &&
+            (s = (n < 3 ? i(s) : 3 < n ? i(e, r, s) : i(e, r)) || s);
+      return 3 < n && s && Object.defineProperty(e, r, s), s;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AnimalStateMachineComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const StateMachine_1 = require("../../../../../Core/Utils/StateMachine/StateMachine");
-const CharacterNameDefines_1 = require("../../Common/CharacterNameDefines");
-const AnimalPerformAlertState_1 = require("../StateMachine/AnimalPerformAlertState");
-const AnimalPerformBornState_1 = require("../StateMachine/AnimalPerformBornState");
-const AnimalPerformIdleState_1 = require("../StateMachine/AnimalPerformIdleState");
-const AnimalPerformInteractState_1 = require("../StateMachine/AnimalPerformInteractState");
-const AnimalPerformStandState_1 = require("../StateMachine/AnimalPerformStandState");
-const AnimalPerformSystemUiState_1 = require("../StateMachine/AnimalPerformSystemUiState");
-const AnimalPerformTakeOffState_1 = require("../StateMachine/AnimalPerformTakeOffState");
-const AnimalPerformUnderAttackState_1 = require("../StateMachine/AnimalPerformUnderAttackState");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  StateMachine_1 = require("../../../../../Core/Utils/StateMachine/StateMachine"),
+  CharacterNameDefines_1 = require("../../Common/CharacterNameDefines"),
+  AnimalPerformAlertState_1 = require("../StateMachine/AnimalPerformAlertState"),
+  AnimalPerformBornState_1 = require("../StateMachine/AnimalPerformBornState"),
+  AnimalPerformIdleState_1 = require("../StateMachine/AnimalPerformIdleState"),
+  AnimalPerformInteractState_1 = require("../StateMachine/AnimalPerformInteractState"),
+  AnimalPerformStandState_1 = require("../StateMachine/AnimalPerformStandState"),
+  AnimalPerformSystemUiState_1 = require("../StateMachine/AnimalPerformSystemUiState"),
+  AnimalPerformTakeOffState_1 = require("../StateMachine/AnimalPerformTakeOffState"),
+  AnimalPerformUnderAttackState_1 = require("../StateMachine/AnimalPerformUnderAttackState"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
 let AnimalStateMachineComponent =
   (AnimalStateMachineComponent_1 = class AnimalStateMachineComponent extends (
     EntityComponent_1.EntityComponent
@@ -50,11 +55,11 @@ let AnimalStateMachineComponent =
       );
     }
     OnStart() {
-      var t = this.Entity.GetComponent(0);
-      var t =
-        ((this.Mne = t.GetPbDataId()),
-        (this.oRe = this.Entity.GetComponent(160)),
-        this.oRe?.MainAnimInstance);
+      var t = this.Entity.GetComponent(0),
+        t =
+          ((this.Mne = t.GetPbDataId()),
+          (this.oRe = this.Entity.GetComponent(160)),
+          this.oRe?.MainAnimInstance);
       return (
         t &&
         UE.KuroStaticLibrary.IsImplementInterface(
@@ -217,4 +222,4 @@ let AnimalStateMachineComponent =
     AnimalStateMachineComponent,
   )),
   (exports.AnimalStateMachineComponent = AnimalStateMachineComponent);
-// # sourceMappingURL=AnimalStateMachineComponent.js.map
+//# sourceMappingURL=AnimalStateMachineComponent.js.map

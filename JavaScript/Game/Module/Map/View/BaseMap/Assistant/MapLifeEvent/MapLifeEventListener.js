@@ -10,4 +10,4 @@ class MapLifeEventListener {
   OnWorldMapAfterShow() {}
 }
 exports.MapLifeEventListener = MapLifeEventListener;
-// # sourceMappingURL=MapLifeEventListener.js.map
+//# sourceMappingURL=MapLifeEventListener.js.map

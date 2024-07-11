@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoguelikeEntrancePanel = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ButtonItem_1 = require("../../../Common/Button/ButtonItem");
-const InstanceDungeonEntranceConfig_1 = require("../../../InstanceDungeon/InstanceDungeonEntranceConfig");
-const InstanceDungeonEntranceController_1 = require("../../../InstanceDungeon/InstanceDungeonEntranceController");
-const InstanceTipGrid_1 = require("../../../InstanceDungeon/InstanceTipGrid");
-const MapController_1 = require("../../../Map/Controller/MapController");
-const RoguelikeController_1 = require("../../../Roguelike/RoguelikeController");
-const GenericLayoutAdd_1 = require("../../../Util/GenericLayoutAdd");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi");
-const WorldMapController_1 = require("../../WorldMapController");
-const WorldMapDefine_1 = require("../../WorldMapDefine");
-const TipsListView_1 = require("../TipsListView");
-const ROGUE_SCORE_KEY = "rougeScore";
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
+  InstanceDungeonEntranceConfig_1 = require("../../../InstanceDungeon/InstanceDungeonEntranceConfig"),
+  InstanceDungeonEntranceController_1 = require("../../../InstanceDungeon/InstanceDungeonEntranceController"),
+  InstanceTipGrid_1 = require("../../../InstanceDungeon/InstanceTipGrid"),
+  MapController_1 = require("../../../Map/Controller/MapController"),
+  RoguelikeController_1 = require("../../../Roguelike/RoguelikeController"),
+  GenericLayoutAdd_1 = require("../../../Util/GenericLayoutAdd"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
+  WorldMapController_1 = require("../../WorldMapController"),
+  WorldMapDefine_1 = require("../../WorldMapDefine"),
+  TipsListView_1 = require("../TipsListView"),
+  ROGUE_SCORE_KEY = "rougeScore";
 class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
@@ -31,7 +31,7 @@ class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       (this.wko = void 0),
       (this.$Ut = void 0),
       (this.OnInstanceRefresh = (e, t, n, i) => {
-        const r = new TipsListView_1.InstanceDungeonCostTip();
+        var r = new TipsListView_1.InstanceDungeonCostTip();
         return r.SetRootActor(t.GetOwner(), !0), { Key: e, Value: r };
       }),
       (this.gko = () => {
@@ -92,11 +92,11 @@ class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
     this.xko.ClearChildren(), this.$Ut.Destroy();
   }
   OnShowWorldMapSecondaryUi(e) {
-    let t;
+    var t;
     e
       ? ((this.dko = e),
         (this.thi =
-          e.MarkConfig.RelativeId !== 0
+          0 !== e.MarkConfig.RelativeId
             ? e.MarkConfig.RelativeId
             : ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.GetEntranceIdByMarkId(
                 e.MarkConfigId,
@@ -135,9 +135,8 @@ class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
         );
   }
   GetMaxUnlockInstanceList() {
-    let e = new Array();
-    let t =
-      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
+    let e = new Array(),
+      t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
         this.rhi[0],
         ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
       );
@@ -153,9 +152,9 @@ class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
           )) < t ||
         (n > t && ((e = []), (t = n)), e.push(r));
     }
-    if (e.length === 0)
+    if (0 === e.length)
       for (const o of this.rhi) {
-        const i =
+        var i =
           ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
             o,
             ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
@@ -180,7 +179,7 @@ class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
     );
   }
   h7e() {
-    let e = this.Bko;
+    var e = this.Bko;
     e &&
       (this.GetText(4).ShowTextNew(e.Description),
       this.SetSpriteByPath(this.dko.IconPath, this.GetSprite(0), !1),
@@ -193,16 +192,16 @@ class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
   bko() {
     this.rhi.length = 0;
-    let e;
-    let t;
-    let n =
-      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetSortedByTitleEntranceInstanceIdList(
-        this.thi,
-      );
-    let i =
-      ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig?.GetInstanceDungeonEntranceFlowId(
-        this.thi,
-      );
+    var e,
+      t,
+      n =
+        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetSortedByTitleEntranceInstanceIdList(
+          this.thi,
+        ),
+      i =
+        ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig?.GetInstanceDungeonEntranceFlowId(
+          this.thi,
+        );
     for ([e] of Array.from(n).sort((e, t) => e[1] - t[1])) this.rhi.push(e);
     (this.rhi = this.GetMaxUnlockInstanceList()),
       this.wko.RefreshByData(this.rhi),
@@ -258,4 +257,4 @@ class RoguelikeEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
 }
 exports.RoguelikeEntrancePanel = RoguelikeEntrancePanel;
-// # sourceMappingURL=RoguelikeEntrancePanel.js.map
+//# sourceMappingURL=RoguelikeEntrancePanel.js.map

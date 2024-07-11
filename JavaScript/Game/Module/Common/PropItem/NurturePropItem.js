@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NurturePropItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const CommonComponentDefine_1 = require("../CommonComponentDefine");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  CommonComponentDefine_1 = require("../CommonComponentDefine");
 class NurturePropItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(t = void 0, i = void 0, s = void 0) {
     super(),
@@ -17,12 +17,14 @@ class NurturePropItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.Jxt = void 0),
       (this.zxt = 1),
       (this.Zxt = () => {
-        const t = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-          this.$xt.Id,
-        );
-        const i =
-          ((this.$xt.RoleId = t.GetRoleId()),
-          ConfigManager_1.ConfigManager.TextConfig.GetTextById("WeaponLevel"));
+        var t = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
+            this.$xt.Id,
+          ),
+          i =
+            ((this.$xt.RoleId = t.GetRoleId()),
+            ConfigManager_1.ConfigManager.TextConfig.GetTextById(
+              "WeaponLevel",
+            ));
         (this.$xt.BottomText = StringUtils_1.StringUtils.Format(
           i,
           t.GetLevel().toString(),
@@ -30,16 +32,16 @@ class NurturePropItem extends GridProxyAbstract_1.GridProxyAbstract {
           (this.$xt.TopText = t.GetResonanceLevel().toString());
       }),
       (this.ewt = () => {
-        const t =
+        var t =
           ConfigManager_1.ConfigManager.TextConfig.GetTextById("RoleCount");
         this.$xt.BottomText = StringUtils_1.StringUtils.Format(
           t,
           this.$xt.Count.toString(),
         );
       }),
-      (this.NurturePropDataFunction = { 2: this.Zxt, 4: this.ewt }),
+      (this.NurturePropDataFunction = { [2]: this.Zxt, 4: this.ewt }),
       (this.x4e = (t) => {
-        let i;
+        var i;
         this.U4e && ((i = this.$xt ? this.$xt.Id : void 0), this.U4e(t, i));
       }),
       (this.twt = () => {
@@ -93,8 +95,8 @@ class NurturePropItem extends GridProxyAbstract_1.GridProxyAbstract {
         ((this.$xt.ItemType = 4), (this.$xt.IsSingle = !1));
   }
   swt() {
-    let t;
-    this.$xt.RoleId > 0
+    var t;
+    0 < this.$xt.RoleId
       ? (this.GetItem(8).SetUIActive(!0),
         (t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
           this.$xt.RoleId,
@@ -114,15 +116,15 @@ class NurturePropItem extends GridProxyAbstract_1.GridProxyAbstract {
       t &&
         ((this.$xt = new CommonComponentDefine_1.NurturePropItemData()),
         (this.$xt.Id = t),
-        this.zxt === 1
+        1 === this.zxt
           ? this.UpdatePropItem()
-          : this.zxt === 0 && this.UpdatePropItemByItemId());
+          : 0 === this.zxt && this.UpdatePropItemByItemId());
   }
   SetUseType(t) {
     this.zxt = t;
   }
   UpdatePropItem() {
-    const t = ModelManager_1.ModelManager.InventoryModel.GetWeaponItemData(
+    var t = ModelManager_1.ModelManager.InventoryModel.GetWeaponItemData(
       this.$xt.Id,
     );
     t ||
@@ -224,4 +226,4 @@ class NurturePropItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.NurturePropItem = NurturePropItem;
-// # sourceMappingURL=NurturePropItem.js.map
+//# sourceMappingURL=NurturePropItem.js.map

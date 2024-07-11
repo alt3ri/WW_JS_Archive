@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleGaitStatic = void 0);
-const CommonParamById_1 = require("../../../../../../Core/Define/ConfigCommon/CommonParamById");
-const WALK_TO_RUN_RATE = 0.3;
+const CommonParamById_1 = require("../../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  WALK_TO_RUN_RATE = 0.3;
 class RoleGaitStatic {
   static Init() {
     RoleGaitStatic.IsInit ||
@@ -26,4 +26,4 @@ class RoleGaitStatic {
   (RoleGaitStatic.MovementStatusGapValueSquare = 0),
   (RoleGaitStatic.IsInit = !1),
   (RoleGaitStatic.Etr = WALK_TO_RUN_RATE);
-// # sourceMappingURL=RoleGaitStatic.js.map
+//# sourceMappingURL=RoleGaitStatic.js.map

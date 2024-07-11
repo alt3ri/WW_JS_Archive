@@ -1,30 +1,34 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, o, t, l) {
-    let r;
-    const i = arguments.length;
-    let a =
-      i < 3 ? o : l === null ? (l = Object.getOwnPropertyDescriptor(o, t)) : l;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      i = arguments.length,
+      a =
+        i < 3
+          ? o
+          : null === l
+            ? (l = Object.getOwnPropertyDescriptor(o, t))
+            : l;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       a = Reflect.decorate(e, o, t, l);
     else
-      for (let s = e.length - 1; s >= 0; s--)
-        (r = e[s]) && (a = (i < 3 ? r(a) : i > 3 ? r(o, t, a) : r(o, t)) || a);
-    return i > 3 && a && Object.defineProperty(o, t, a), a;
+      for (var s = e.length - 1; 0 <= s; s--)
+        (r = e[s]) && (a = (i < 3 ? r(a) : 3 < i ? r(o, t, a) : r(o, t)) || a);
+    return 3 < i && a && Object.defineProperty(o, t, a), a;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkillMessageController = void 0);
-const ue_1 = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CombatDebugController_1 = require("../../Utils/CombatDebugController");
-const CombatMessage_1 = require("./CombatMessage");
-const SKILL_PLAY_MONTAGE = 1;
+const ue_1 = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CombatDebugController_1 = require("../../Utils/CombatDebugController"),
+  CombatMessage_1 = require("./CombatMessage"),
+  SKILL_PLAY_MONTAGE = 1;
 class SkillMessageController extends ControllerBase_1.ControllerBase {
   static AddSkillMessageId(e) {
     this.pyt.add(e);
@@ -40,7 +44,7 @@ class SkillMessageController extends ControllerBase_1.ControllerBase {
     return !(e && !e.PreSwitchRemoteFightState(o.T4n.I4n));
   }
   static UseSkillNotify(e, o, t) {
-    let l;
+    var l;
     e && o && o.T4n && o.T4n.vkn
       ? o.T4n.Ekn &&
         ((t = MathUtils_1.MathUtils.LongToBigInt(t.s4n)),
@@ -56,7 +60,7 @@ class SkillMessageController extends ControllerBase_1.ControllerBase {
         );
   }
   static SkillNotify(e, o, t) {
-    const l = e?.GetComponent(33);
+    var l = e?.GetComponent(33);
     l
       ? ((t = MathUtils_1.MathUtils.LongToBigInt(t.n4n)),
         SkillMessageController.pyt.has(t)
@@ -102,17 +106,17 @@ class SkillMessageController extends ControllerBase_1.ControllerBase {
   }
   static UseSkillRequest(o, e, t) {
     const l = o.GetComponent(33);
-    var r = e.SkillId;
-    const i = e.SkillInfo.AutonomouslyBySimulate;
-    const a = e.SkillInfo.MoveControllerTime;
-    const s = e.SkillInfo.InterruptLevel;
-    const _ = e.PreContextId;
-    const n = e.CombatMessageId;
-    const C = Protocol_1.Aki.Protocol.J2n.create();
-    var r =
-      ((C.T4n = Protocol_1.Aki.Protocol.Jqs.create()),
-      (C.T4n.vkn = r),
-      ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(t));
+    var r = e.SkillId,
+      i = e.SkillInfo.AutonomouslyBySimulate,
+      a = e.SkillInfo.MoveControllerTime,
+      s = e.SkillInfo.InterruptLevel,
+      _ = e.PreContextId,
+      n = e.CombatMessageId,
+      C = Protocol_1.Aki.Protocol.J2n.create(),
+      r =
+        ((C.T4n = Protocol_1.Aki.Protocol.Jqs.create()),
+        (C.T4n.vkn = r),
+        ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(t));
     (C.T4n.L4n = MathUtils_1.MathUtils.NumberToLong(r)),
       (C.T4n.h4n = Time_1.Time.NowSeconds),
       (C.T4n.D4n = i),
@@ -155,7 +159,7 @@ class SkillMessageController extends ControllerBase_1.ControllerBase {
     );
   }
   static EndSkillRequest(e, o) {
-    let t;
+    var t;
     return e
       ? (((t = Protocol_1.Aki.Protocol.z2n.create()).T4n =
           Protocol_1.Aki.Protocol.Jqs.create()),
@@ -240,7 +244,7 @@ class SkillMessageController extends ControllerBase_1.ControllerBase {
       ["MontageIndex", t],
       ["animNotifyIndex", l],
     );
-    const a = Protocol_1.Aki.Protocol.ANn.create();
+    var a = Protocol_1.Aki.Protocol.ANn.create();
     (a.w4n = l),
       (a.M4n = t),
       (a.vkn = o),
@@ -260,11 +264,11 @@ class SkillMessageController extends ControllerBase_1.ControllerBase {
       "添加被动Request",
       ["被动技能Id", o],
     );
-    const l = Protocol_1.Aki.Protocol.PNn.create();
-    var o =
-      ((l.b4n = MathUtils_1.MathUtils.BigIntToLong(o)),
-      (l.q4n = e.GetComponent(0).GetCreatureDataId()),
-      ModelManager_1.ModelManager.CombatMessageModel.GenMessageId());
+    var l = Protocol_1.Aki.Protocol.PNn.create(),
+      o =
+        ((l.b4n = MathUtils_1.MathUtils.BigIntToLong(o)),
+        (l.q4n = e.GetComponent(0).GetCreatureDataId()),
+        ModelManager_1.ModelManager.CombatMessageModel.GenMessageId());
     return (
       CombatMessage_1.CombatNet.Call(
         17373,
@@ -284,7 +288,7 @@ class SkillMessageController extends ControllerBase_1.ControllerBase {
       "移除被动Request",
       ["被动技能Id", o],
     );
-    const r = Protocol_1.Aki.Protocol.WNn.create();
+    var r = Protocol_1.Aki.Protocol.WNn.create();
     (r.b4n = MathUtils_1.MathUtils.BigIntToLong(o)),
       (r.q4n = e.GetComponent(0).GetCreatureDataId()),
       CombatMessage_1.CombatNet.Call(
@@ -323,4 +327,4 @@ class SkillMessageController extends ControllerBase_1.ControllerBase {
     null,
   ),
   (exports.SkillMessageController = SkillMessageController);
-// # sourceMappingURL=SkillMessageController.js.map
+//# sourceMappingURL=SkillMessageController.js.map

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskAiGetItemInfo extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -34,13 +34,13 @@ class TsTaskAiGetItemInfo extends TsTaskAbortImmediatelyBase_1.default {
     var o = e.AiController;
     if (o) {
       this.InitTsVariables();
-      var o = o.CharActorComp;
-      var i = BlackboardController_1.BlackboardController.GetIntValueByEntity(
-        o.Entity.Id,
-        this.TsItemBlackboardKey,
-      );
-      var i = EntitySystem_1.EntitySystem.Get(i);
-      let s = i.GetComponent(0);
+      var o = o.CharActorComp,
+        i = BlackboardController_1.BlackboardController.GetIntValueByEntity(
+          o.Entity.Id,
+          this.TsItemBlackboardKey,
+        ),
+        i = EntitySystem_1.EntitySystem.Get(i),
+        s = i.GetComponent(0);
       if (s)
         if (
           void 0 === i ||
@@ -91,4 +91,4 @@ class TsTaskAiGetItemInfo extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskAiGetItemInfo;
-// # sourceMappingURL=TsTaskAiGetItemInfo.js.map
+//# sourceMappingURL=TsTaskAiGetItemInfo.js.map

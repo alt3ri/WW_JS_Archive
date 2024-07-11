@@ -1,29 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PatrolPoint = exports.AiPatrolController = void 0);
-const UE = require("ue");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine");
-const Net_1 = require("../../../Core/Net/Net");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils");
-const TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const GlobalData_1 = require("../../GlobalData");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const BlackboardController_1 = require("../../World/Controller/BlackboardController");
-const AiPatrolConfig_1 = require("./AiPatrolConfig");
-const PATROL_ANGLE_LIMIT = 15;
-const TRACE_DISTANCE = 500;
-const PROFILE_KEY = "AiPatrolController_GenerateNavigationPoint";
-const INDEX_KEY = "PatrolIndex";
-const TIMES_KEY = "PatrolTimes";
-const END_KEY = "PatrolEnd";
+const UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine"),
+  Net_1 = require("../../../Core/Net/Net"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
+  TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  GlobalData_1 = require("../../GlobalData"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  BlackboardController_1 = require("../../World/Controller/BlackboardController"),
+  AiPatrolConfig_1 = require("./AiPatrolConfig"),
+  PATROL_ANGLE_LIMIT = 15,
+  TRACE_DISTANCE = 500,
+  PROFILE_KEY = "AiPatrolController_GenerateNavigationPoint",
+  INDEX_KEY = "PatrolIndex",
+  TIMES_KEY = "PatrolTimes",
+  END_KEY = "PatrolEnd";
 class AiPatrolController {
   constructor() {
     (this.Hte = void 0),
@@ -50,14 +50,14 @@ class AiPatrolController {
     return this.Zie;
   }
   HasPatrolConfig() {
-    return !!this.$ie && !!this.Zie && this.Xie.length !== 0;
+    return !!this.$ie && !!this.Zie && 0 !== this.Xie.length;
   }
   ResetPatrol(t) {
-    var i = this.Hte.Entity.GetComponent(38);
-    var i = ConfigManager_1.ConfigManager.AiConfig.LoadAiPatrolConfig(
-      i.AiController.AiBase,
-      t,
-    );
+    var i = this.Hte.Entity.GetComponent(38),
+      i = ConfigManager_1.ConfigManager.AiConfig.LoadAiPatrolConfig(
+        i.AiController.AiBase,
+        t,
+      );
     this.ResetConfig(i);
   }
   ResetPatrolById(t) {
@@ -65,7 +65,7 @@ class AiPatrolController {
     this.ResetConfig(t);
   }
   ResetConfig(t) {
-    let i;
+    var i;
     t &&
       t !== this.$ie &&
       ((this.$ie = t),
@@ -87,7 +87,7 @@ class AiPatrolController {
               )),
             Net_1.Net.Call(21134, t, () => {}))
           : (this.Yie.Id = 0)),
-      this.Yie.Id !== 0) &&
+      0 !== this.Yie.Id) &&
       (t = this.Hte.Entity.GetComponent(185)) &&
       !t.HasTag((i = 2003306528)) &&
       t.AddTag(i);
@@ -114,10 +114,10 @@ class AiPatrolController {
         );
   }
   HC(t) {
-    let i;
-    let e;
-    const r = this.Yie.SplineEntityId;
-    let o = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(r);
+    var i,
+      e,
+      r = this.Yie.SplineEntityId,
+      o = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(r);
     o
       ? (i = (0, IComponent_1.getComponent)(
           o.ComponentsData,
@@ -180,17 +180,17 @@ class AiPatrolController {
       o &&
         ((o = (0, IComponent_1.getComponent)(o.ComponentsData, "AiComponent")),
         (i = o?.Patrol));
-      const s = this.zie;
-      const h = this.Jie;
-      const a = this.Yie.IsNavigation;
-      const n = this.Yie.Sampling;
-      var o = s.GetNumberOfSplinePoints();
-      const l = GlobalData_1.GlobalData.World;
-      const _ = this.Xie;
+      var s = this.zie,
+        h = this.Jie,
+        a = this.Yie.IsNavigation,
+        n = this.Yie.Sampling,
+        o = s.GetNumberOfSplinePoints(),
+        l = GlobalData_1.GlobalData.World,
+        _ = this.Xie;
       (_.length = 0), _.splice(0, _.length);
       for (let t = 0, e = o; t < e; t++) {
-        var C = s.GetWorldLocationAtSplinePoint(t);
-        const d = (a && l && this.aoe(C, l), new PatrolPoint());
+        var C = s.GetWorldLocationAtSplinePoint(t),
+          d = (a && l && this.aoe(C, l), new PatrolPoint());
         if (
           ((d.IsMain = !0),
           (d.Point = Vector_1.Vector.Create(C)),
@@ -201,12 +201,12 @@ class AiPatrolController {
           r)
         ) {
           let i = s.GetDirectionAtSplinePoint(t, 1);
-          if (n > 0 && t < e - 1) {
-            var C = s.GetDistanceAlongSplineAtSplinePoint(t);
-            const E = s.GetDistanceAlongSplineAtSplinePoint(t + 1);
+          if (0 < n && t < e - 1) {
+            var C = s.GetDistanceAlongSplineAtSplinePoint(t),
+              E = s.GetDistanceAlongSplineAtSplinePoint(t + 1);
             for (let t = C + n; t < E; t += n) {
-              var c;
-              let P = s.GetDirectionAtDistanceAlongSpline(t, 1);
+              var c,
+                P = s.GetDirectionAtDistanceAlongSpline(t, 1);
               MathUtils_1.MathUtils.GetAngleByVectorDot(i, P) <
                 PATROL_ANGLE_LIMIT ||
                 ((i = P),
@@ -219,7 +219,7 @@ class AiPatrolController {
           }
         }
       }
-      _.length === 0 &&
+      0 === _.length &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error("Level", 30, "Spline初始化移动点为空", ["Path", t]);
     }
@@ -236,8 +236,8 @@ class AiPatrolController {
     (e.WorldContextObject = i),
       TraceElementCommon_1.TraceElementCommon.SetStartLocation(e, t),
       e.SetEndLocation(t.X, t.Y, t.Z - TRACE_DISTANCE);
-    var i = TraceElementCommon_1.TraceElementCommon.LineTrace(e, PROFILE_KEY);
-    const r = e.HitResult;
+    var i = TraceElementCommon_1.TraceElementCommon.LineTrace(e, PROFILE_KEY),
+      r = e.HitResult;
     (i ||
       (e.SetEndLocation(t.X, t.Y, t.Z + TRACE_DISTANCE),
       TraceElementCommon_1.TraceElementCommon.LineTrace(e, PROFILE_KEY))) &&
@@ -268,10 +268,10 @@ class AiPatrolController {
     e && (i.Actions = e);
   }
   GetNearestPatrolPointIndex(e) {
-    let r = 0;
-    let o = Number.MAX_VALUE;
+    let r = 0,
+      o = Number.MAX_VALUE;
     for (let t = 0, i = this.Xie.length; t < i; t++) {
-      let s = this.Xie[t];
+      var s = this.Xie[t];
       s.IsMain &&
         (s = Vector_1.Vector.DistSquared(e, s.Point)) < o &&
         ((o = s), (r = t));
@@ -279,19 +279,19 @@ class AiPatrolController {
     return r;
   }
   ResetBaseInfoByMainPoint(e, r, o) {
-    let s = this.ioe;
-    if (!(this.Xie.length === 0 || this.Xie.length <= s)) {
+    var s = this.ioe;
+    if (!(0 === this.Xie.length || this.Xie.length <= s)) {
       let i = this.Xie[s];
       if (!i?.IsMain)
-        for (let t = s; t > -1; t--) {
-          const h = this.Xie[t];
+        for (let t = s; -1 < t; t--) {
+          var h = this.Xie[t];
           if (h?.IsMain) {
             i = h;
             break;
           }
         }
       let t = o;
-      i?.IsMain && i.MoveState > 0 && (t = i.MoveState),
+      i?.IsMain && 0 < i.MoveState && (t = i.MoveState),
         this.ChangeMoveState(r, t),
         i?.IsMain &&
           (this.ChangeMoveSpeed(e, r, i.MoveSpeed),
@@ -305,7 +305,7 @@ class AiPatrolController {
   }
   ChangeMoveSpeed(t, i, e) {
     t &&
-      (e > 0 ? t.SetMaxSpeed(e) : i && ((e = i.MoveState), t.ResetMaxSpeed(e)));
+      (0 < e ? t.SetMaxSpeed(e) : i && ((e = i.MoveState), t.ResetMaxSpeed(e)));
   }
   CheckMoveStateChanged(t, i) {
     let e = CharacterUnifiedStateTypes_1.ECharMoveState.Stand;
@@ -345,12 +345,12 @@ class AiPatrolController {
   AddPerformanceTags(e) {
     this.eoe || (this.eoe = new Array());
     for (let t = 0, i = e.length; t < i; t++) this.eoe.push(e[t]);
-    let t;
-    const i = this.Hte.Entity.GetComponent(185);
+    var t,
+      i = this.Hte.Entity.GetComponent(185);
     i && !i.HasTag((t = -1645015979)) && i.AddTag(t);
   }
   GetNextPerformanceTag() {
-    if (this.eoe && this.eoe.length !== 0) return this.eoe.shift();
+    if (this.eoe && 0 !== this.eoe.length) return this.eoe.shift();
   }
   soe() {
     this.Yie?.SplineEntityId &&
@@ -363,19 +363,19 @@ class AiPatrolController {
       (this.zie = void 0);
   }
   StartPatrol(t, i) {
-    const e = this.Hte;
-    var i =
-      ((this.E0 = e.Entity.Id),
-      (this.roe = i),
-      BlackboardController_1.BlackboardController.SetIntValueByEntity(
-        this.E0,
-        END_KEY,
-        0,
-      ),
-      BlackboardController_1.BlackboardController.GetIntValueByEntity(
-        this.E0,
-        TIMES_KEY,
-      ));
+    var e = this.Hte,
+      i =
+        ((this.E0 = e.Entity.Id),
+        (this.roe = i),
+        BlackboardController_1.BlackboardController.SetIntValueByEntity(
+          this.E0,
+          END_KEY,
+          0,
+        ),
+        BlackboardController_1.BlackboardController.GetIntValueByEntity(
+          this.E0,
+          TIMES_KEY,
+        ));
     i
       ? ((this.toe = i), this.toe % 2 != 0 && (this.ooe = !0))
       : ((this.toe = 0), (this.ooe = !!this.StartWithInversePath)),
@@ -421,7 +421,7 @@ class AiPatrolController {
               1,
             ))
         : this.ooe
-          ? this.ioe === 0 &&
+          ? 0 === this.ioe &&
             ((this.ooe = !1),
             ++this.toe,
             BlackboardController_1.BlackboardController.SetIntValueByEntity(
@@ -471,7 +471,7 @@ class AiPatrolController {
   }
   doe() {
     if (this.ooe)
-      this.ioe === 0
+      0 === this.ioe
         ? ((this.ooe = !1),
           this.coe(0),
           ++this.toe,
@@ -516,7 +516,7 @@ class AiPatrolController {
       (this.roe = void 0);
   }
   GetPatrolPoint(t) {
-    if (this.Xie && this.Xie.length !== 0 && !(this.Xie.length <= t))
+    if (this.Xie && 0 !== this.Xie.length && !(this.Xie.length <= t))
       return this.Xie[t];
   }
   get PatrolIndex() {
@@ -529,7 +529,7 @@ class AiPatrolController {
     return this.Xie;
   }
   GetLastPatrolPoint() {
-    let t = BlackboardController_1.BlackboardController.GetIntValueByEntity(
+    var t = BlackboardController_1.BlackboardController.GetIntValueByEntity(
       this.E0,
       INDEX_KEY,
     );
@@ -560,4 +560,4 @@ class PatrolPoint {
   }
 }
 exports.PatrolPoint = PatrolPoint;
-// # sourceMappingURL=AiPatrolController.js.map
+//# sourceMappingURL=AiPatrolController.js.map

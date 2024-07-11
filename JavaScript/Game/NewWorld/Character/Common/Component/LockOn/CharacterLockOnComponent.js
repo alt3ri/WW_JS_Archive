@@ -1,63 +1,68 @@
 "use strict";
-let CharacterLockOnComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, i, e, s) {
-    let r;
-    const h = arguments.length;
-    let o =
-      h < 3 ? i : s === null ? (s = Object.getOwnPropertyDescriptor(i, e)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      o = Reflect.decorate(t, i, e, s);
-    else
-      for (let a = t.length - 1; a >= 0; a--)
-        (r = t[a]) && (o = (h < 3 ? r(o) : h > 3 ? r(i, e, o) : r(i, e)) || o);
-    return h > 3 && o && Object.defineProperty(i, e, o), o;
-  };
+var CharacterLockOnComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, i, e, s) {
+      var r,
+        h = arguments.length,
+        o =
+          h < 3
+            ? i
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(i, e))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        o = Reflect.decorate(t, i, e, s);
+      else
+        for (var a = t.length - 1; 0 <= a; a--)
+          (r = t[a]) &&
+            (o = (h < 3 ? r(o) : 3 < h ? r(i, e, o) : r(i, e)) || o);
+      return 3 < h && o && Object.defineProperty(i, e, o), o;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterLockOnComponent =
     exports.LockOnInfo =
     exports.ShowTargetInfo =
       void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Stats_1 = require("../../../../../../Core/Common/Stats");
-const Time_1 = require("../../../../../../Core/Common/Time");
-const CommonParamById_1 = require("../../../../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const QueryTypeDefine_1 = require("../../../../../../Core/Define/QueryTypeDefine");
-const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil");
-const Quat_1 = require("../../../../../../Core/Utils/Math/Quat");
-const Rotator_1 = require("../../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const Vector2D_1 = require("../../../../../../Core/Utils/Math/Vector2D");
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../../../Core/Utils/TraceElementCommon");
-const CameraController_1 = require("../../../../../Camera/CameraController");
-const CameraUtility_1 = require("../../../../../Camera/CameraUtility");
-const TsBaseCharacter_1 = require("../../../../../Character/TsBaseCharacter");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const StatDefine_1 = require("../../../../../Common/StatDefine");
-const Global_1 = require("../../../../../Global");
-const GlobalData_1 = require("../../../../../GlobalData");
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage");
-const ColorUtils_1 = require("../../../../../Utils/ColorUtils");
-const CharacterController_1 = require("../../../CharacterController");
-const CampUtils_1 = require("../../Blueprint/Utils/CampUtils");
-const CharacterUnifiedStateTypes_1 = require("../Abilities/CharacterUnifiedStateTypes");
-const LockOnDebug_1 = require("./LockOnDebug");
-const PROFILE_KEY = "CharacterLockOnComponent_IsBlock";
-const DELAY_TIME = 1e3;
-const CHECK_COUNT = 3;
-const RESET_FOCUS_TIME = 0.6;
-const RESET_TARGETS_ISLOCK_TIME = 1e4;
-const DEFAULT_LOCKON_CONFIG_ID = 0;
-const OFFSET = 250;
+const UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../../../Core/Common/Stats"),
+  Time_1 = require("../../../../../../Core/Common/Time"),
+  CommonParamById_1 = require("../../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  QueryTypeDefine_1 = require("../../../../../../Core/Define/QueryTypeDefine"),
+  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil"),
+  Quat_1 = require("../../../../../../Core/Utils/Math/Quat"),
+  Rotator_1 = require("../../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  Vector2D_1 = require("../../../../../../Core/Utils/Math/Vector2D"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../../../Core/Utils/TraceElementCommon"),
+  CameraController_1 = require("../../../../../Camera/CameraController"),
+  CameraUtility_1 = require("../../../../../Camera/CameraUtility"),
+  TsBaseCharacter_1 = require("../../../../../Character/TsBaseCharacter"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  StatDefine_1 = require("../../../../../Common/StatDefine"),
+  Global_1 = require("../../../../../Global"),
+  GlobalData_1 = require("../../../../../GlobalData"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage"),
+  ColorUtils_1 = require("../../../../../Utils/ColorUtils"),
+  CharacterController_1 = require("../../../CharacterController"),
+  CampUtils_1 = require("../../Blueprint/Utils/CampUtils"),
+  CharacterUnifiedStateTypes_1 = require("../Abilities/CharacterUnifiedStateTypes"),
+  LockOnDebug_1 = require("./LockOnDebug"),
+  PROFILE_KEY = "CharacterLockOnComponent_IsBlock",
+  DELAY_TIME = 1e3,
+  CHECK_COUNT = 3,
+  RESET_FOCUS_TIME = 0.6,
+  RESET_TARGETS_ISLOCK_TIME = 1e4,
+  DEFAULT_LOCKON_CONFIG_ID = 0,
+  OFFSET = 250;
 class ShowTargetInfo {
   constructor() {
     (this.ShowTarget = void 0), (this.SocketName = ""), (this.LastSetTime = -0);
@@ -154,7 +159,7 @@ let CharacterLockOnComponent =
         (this.T$r = void 0),
         (this.L$r = void 0),
         (this.D$r = (t, i) => {
-          let e;
+          var e;
           i
             ? this.M$r && (this.a$r = this.o$r)
             : ((i = this.a$r?.EntityHandle?.Entity),
@@ -186,7 +191,7 @@ let CharacterLockOnComponent =
         (this.P$r = !1);
     }
     E$r(t) {
-      const i = this.o$r;
+      var i = this.o$r;
       (this.o$r = t),
         (i?.EntityHandle === t?.EntityHandle &&
           i?.SocketName === t?.SocketName) ||
@@ -222,7 +227,7 @@ let CharacterLockOnComponent =
     }
     SetShowTarget(t, i = "") {
       this.h$r = Time_1.Time.WorldTime;
-      const e = t?.Entity?.GetComponent(3);
+      var e = t?.Entity?.GetComponent(3);
       if (this.ShowTarget !== t || this.ShowTargetSocket !== i) {
         if (
           (Log_1.Log.CheckDebug() &&
@@ -254,7 +259,7 @@ let CharacterLockOnComponent =
       return !0;
     }
     x$r(t, i = "") {
-      let e, s;
+      var e, s;
       return (
         !this.M$r &&
         !this.Xte.HasTag(2066208190) &&
@@ -297,7 +302,7 @@ let CharacterLockOnComponent =
     }
     OnStart() {
       this.ActorComp = this.Entity.CheckGetComponent(3);
-      const t = this.Entity.GetComponent(0);
+      var t = this.Entity.GetComponent(0);
       return (
         this.SetLockOnConfig(
           t.GetRoleConfig().LockOnDefaultId,
@@ -363,10 +368,10 @@ let CharacterLockOnComponent =
           ));
     }
     SetLockOnConfig(t, i) {
-      t !== 0 &&
+      0 !== t &&
         (this.l$r =
           ConfigManager_1.ConfigManager.WorldConfig.GetLockOnConfig(t)),
-        i !== 0 &&
+        0 !== i &&
           (this._$r =
             ConfigManager_1.ConfigManager.WorldConfig.GetLockOnConfig(i));
     }
@@ -406,7 +411,7 @@ let CharacterLockOnComponent =
     }
     SelectSoftLockTarget(i = DEFAULT_LOCKON_CONFIG_ID, t = 0, e = 4, s = !1) {
       if (!this.M$r && !this.c$r)
-        if (t !== 0) this.o$r || this.SelectSoftLockTarget();
+        if (0 !== t) this.o$r || this.SelectSoftLockTarget();
         else {
           let t = this.l$r;
           DEFAULT_LOCKON_CONFIG_ID !== i &&
@@ -420,15 +425,15 @@ let CharacterLockOnComponent =
         }
     }
     G$r(t, i) {
-      const e = this.N$r(t, !1);
+      var e = this.N$r(t, !1);
       let s = void 0;
       (s = s || this.O$r(this.k$r(e, !1), i, !1, t.ToleranceAngle)),
         this.E$r(s),
         s?.EntityHandle?.Valid && LockOnDebug_1.LockOnDebug.SetDebugArrow(s);
     }
     O$r(t, i, e, s) {
-      let r = void 0;
-      let h = !1;
+      let r = void 0,
+        h = !1;
       switch (i) {
         case 0:
           (h = !this.P$r),
@@ -446,9 +451,9 @@ let CharacterLockOnComponent =
         case 4:
           r = this.F$r();
       }
-      let o = void 0;
-      let a = 180 / s;
-      let n = Number.MAX_VALUE;
+      let o = void 0,
+        a = 180 / s,
+        n = Number.MAX_VALUE;
       for (const C of t) {
         switch (this.V$r(C, e, h)) {
           case 0:
@@ -461,8 +466,8 @@ let CharacterLockOnComponent =
             );
         }
         this.GetSkillBoneLocation(C.EntityHandle, C.SocketName, this.f7o);
-        let _ = this.ActorComp.ActorLocationProxy;
-        const c = Vector_1.Vector.Dist(_, this.f7o);
+        var _ = this.ActorComp.ActorLocationProxy,
+          c = Vector_1.Vector.Dist(_, this.f7o);
         let t = 0;
         r &&
           (this.Tz.DeepCopy(r),
@@ -487,7 +492,7 @@ let CharacterLockOnComponent =
           : 1;
     }
     F$r() {
-      const t = Vector_1.Vector.Create();
+      var t = Vector_1.Vector.Create();
       return (
         CameraController_1.CameraController.CameraRotator.Quaternion().RotateVector(
           Vector_1.Vector.ForwardVectorProxy,
@@ -506,7 +511,7 @@ let CharacterLockOnComponent =
       );
     }
     ForceLookAtTarget(t, i, e = !1) {
-      const s = this.c$r;
+      var s = this.c$r;
       if (i) {
         if (
           ((this.c$r = !0),
@@ -594,12 +599,12 @@ let CharacterLockOnComponent =
     }
     ResetPitch(t = RESET_FOCUS_TIME, i = void 0) {
       var e =
-        CommonParamById_1.configCommonParamById.GetFloatConfig(
-          "InitialCameraPitch",
-        );
-      const s =
-        CameraController_1.CameraController.FightCamera.LogicComponent.CameraRotation.ToUeRotator().Euler();
-      var e = Rotator_1.Rotator.Create(e, s.Z, s.X);
+          CommonParamById_1.configCommonParamById.GetFloatConfig(
+            "InitialCameraPitch",
+          ),
+        s =
+          CameraController_1.CameraController.FightCamera.LogicComponent.CameraRotation.ToUeRotator().Euler(),
+        e = Rotator_1.Rotator.Create(e, s.Z, s.X);
       CameraController_1.CameraController.FightCamera.LogicComponent.PlayCameraEulerRotatorWithCurve(
         e,
         t,
@@ -619,7 +624,7 @@ let CharacterLockOnComponent =
       );
     }
     XVs() {
-      let t;
+      var t;
       this.c$r ||
         (this.Xte.HasTag(2066208190)
           ? this.YVs()
@@ -644,7 +649,7 @@ let CharacterLockOnComponent =
                 (this.E$r(void 0), this.SetShowTarget(void 0))));
     }
     GetSkillBoneLocation(t, i, e) {
-      const s = t?.Entity?.GetComponent(1);
+      var s = t?.Entity?.GetComponent(1);
       s
         ? (t = t?.Entity?.GetComponent(3)?.Actor)?.IsValid() &&
           i &&
@@ -656,7 +661,7 @@ let CharacterLockOnComponent =
         : e.Reset();
     }
     LockOnSpecifyTarget(t) {
-      let i;
+      var i;
       this.M$r ||
         this.c$r ||
         (this.j$r(t) &&
@@ -665,7 +670,7 @@ let CharacterLockOnComponent =
           this.SetShowTarget(t)));
     }
     j$r(t) {
-      let i;
+      var i;
       return !(
         !t?.Valid ||
         !t?.IsInit ||
@@ -682,7 +687,7 @@ let CharacterLockOnComponent =
       this.m$r.FromUeVector(
         Global_1.Global.CharacterCameraManager.K2_GetActorLocation(),
       );
-      const i = t.EntityHandle.Entity.GetComponent(1);
+      var i = t.EntityHandle.Entity.GetComponent(1);
       return (
         t.SocketName
           ? this.GetSkillBoneLocation(t.EntityHandle, t.SocketName, this.d$r)
@@ -734,8 +739,8 @@ let CharacterLockOnComponent =
     }
     N$r(i, t) {
       LockOnDebug_1.LockOnDebug.Clear();
-      const e = [];
-      const s = Vector_1.Vector.Create();
+      var e = [],
+        s = Vector_1.Vector.Create();
       CameraController_1.CameraController.CameraRotator &&
         CameraController_1.CameraController.CameraRotator.Quaternion().RotateVector(
           Vector_1.Vector.ForwardVectorProxy,
@@ -745,18 +750,19 @@ let CharacterLockOnComponent =
         s.Normalize(MathUtils_1.MathUtils.SmallNumber);
       for (const u of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
         if (this.j$r(u) && u.Id !== this.Entity.Id) {
-          var r = u.Entity.GetComponent(0)?.GetEntityType();
-          var h = CharacterController_1.CharacterController.GetActor(u);
+          var r = u.Entity.GetComponent(0)?.GetEntityType(),
+            h = CharacterController_1.CharacterController.GetActor(u);
           if (h?.IsValid()) {
-            let o = h;
-            var h = h instanceof TsBaseCharacter_1.default;
-            const a = this.W$r(u);
+            var o = h,
+              h = h instanceof TsBaseCharacter_1.default,
+              a = this.W$r(u);
             if (a) {
               if (
+                2 !==
                 CampUtils_1.CampUtils.GetCampRelationship(
                   o.Camp,
                   this.ActorComp.Actor.Camp,
-                ) !== 2
+                )
               )
                 continue;
               if (!o || !h) continue;
@@ -764,7 +770,7 @@ let CharacterLockOnComponent =
               if (t) continue;
               if (r !== Protocol_1.Aki.Protocol.HBs.Proto_SceneItem) continue;
               o = u.Entity.GetComponent(102)?.LockRange;
-              if (!o || o === -1) continue;
+              if (!o || -1 === o) continue;
               if (
                 o * o <
                 Vector_1.Vector.DistSquared(
@@ -776,10 +782,10 @@ let CharacterLockOnComponent =
             }
             if (t ? !this.K$r(u) : !this.X$r(u)) {
               h = u.Entity.GetComponent(3);
-              if ((h?.LockOnParts?.size ?? 0) > 0) {
+              if (0 < (h?.LockOnParts?.size ?? 0)) {
                 let t = !1;
-                var r = h.LockOnParts.values();
-                const n = this.f7o;
+                var r = h.LockOnParts.values(),
+                  n = this.f7o;
                 for (const v of r)
                   if (
                     (this.GetSkillBoneLocation(u, v.BoneNameString, n),
@@ -794,9 +800,9 @@ let CharacterLockOnComponent =
               if (a) {
                 o = u.Entity.GetComponent(3);
                 if (o?.LockOnParts.size) {
-                  var _;
-                  const c = u.Entity.GetComponent(58);
-                  const C = u.Entity.GetComponent(33);
+                  var _,
+                    c = u.Entity.GetComponent(58),
+                    C = u.Entity.GetComponent(33);
                   for ([, _] of o.LockOnParts)
                     if (
                       (t ? _.HardLockValid : _.SoftLockValid) &&
@@ -830,7 +836,7 @@ let CharacterLockOnComponent =
       return e;
     }
     k$r(t, i) {
-      const e = t.filter((t) =>
+      var e = t.filter((t) =>
         t.EntityHandle?.Entity?.GetComponent(185)?.HasTag(1659143519),
       );
       return i
@@ -864,7 +870,7 @@ let CharacterLockOnComponent =
       );
     }
     $$r(t, i, e) {
-      let s = i.Z - e.Z;
+      var s = i.Z - e.Z;
       if (s < -t.UpDistance || s > t.DownDistance) return !1;
       if (Vector_1.Vector.DistSquared(i, e) <= t.Distance * t.Distance)
         return !0;
@@ -876,10 +882,10 @@ let CharacterLockOnComponent =
       e.Subtraction(i, this.f7o).Normalize(MathUtils_1.MathUtils.SmallNumber);
       (e = (180 * Math.atan2(this.f7o.Y, this.f7o.X)) / Math.PI),
         (i = Math.abs(((360 + e) % 360) - s));
-      return (i > 180 ? 360 - i : i) <= t.SectorAngle / 2;
+      return (180 < i ? 360 - i : i) <= t.SectorAngle / 2;
     }
     Y$r(t, i, e) {
-      let s;
+      var s;
       return (
         !!t.Entity?.GetComponent(185)?.HasAnyTag([-336338240, -164894127]) &&
         !!(t = t.Entity.GetComponent(3))?.LockOnConfig &&
@@ -892,7 +898,7 @@ let CharacterLockOnComponent =
       );
     }
     q$r() {
-      const t = this.M$r;
+      var t = this.M$r;
       this.A$r !== t &&
         (CombatMessage_1.CombatNet.Call(
           t ? 20063 : 16772,
@@ -905,7 +911,7 @@ let CharacterLockOnComponent =
         (this.A$r = t));
     }
     RefreshCurrentLockState(t) {
-      let i;
+      var i;
       this.o$r?.EntityHandle === t &&
         (t = t?.Entity?.GetComponent(3)) &&
         (i = this.o$r?.SocketName) &&
@@ -917,7 +923,7 @@ let CharacterLockOnComponent =
       return this.Xte.HasTag(-1150819426);
     }
     w$r() {
-      const t = this.PSo.GetMoveDirectionCache();
+      var t = this.PSo.GetMoveDirectionCache();
       this.U$r.Equals(t, MathUtils_1.MathUtils.SmallNumber) ||
         (this.U$r?.Set(t.X, t.Y),
         this.cVr.DeepCopy(this.ActorComp.InputDirectProxy),
@@ -929,29 +935,29 @@ let CharacterLockOnComponent =
     }
     ChangeShowTarget(t, i, e) {
       if (this.c$r || !this.M$r) return !1;
-      let s;
-      let r;
-      let h;
-      const o = this.N$r(this._$r, !0);
-      const a = this.ActorComp.ActorLocationProxy;
-      const n =
-        (this.GetSkillBoneLocation(
-          this.o$r.EntityHandle,
-          this.o$r.SocketName,
-          this.f7o,
-        ),
-        this.Tz.DeepCopy(a),
-        (this.Tz.Z = this.f7o.Z),
-        this.f7o.SubtractionEqual(a),
-        MathUtils_1.MathUtils.LookRotationUpFirst(
-          this.f7o,
-          Vector_1.Vector.UpVectorProxy,
-          this.Dz,
-        ),
-        this.Dz.Inverse(this.Dz),
-        t.SizeSquared());
-      let _ = void 0;
-      let c = MathUtils_1.MathUtils.LargeNumber;
+      var s,
+        r,
+        h,
+        o = this.N$r(this._$r, !0),
+        a = this.ActorComp.ActorLocationProxy,
+        n =
+          (this.GetSkillBoneLocation(
+            this.o$r.EntityHandle,
+            this.o$r.SocketName,
+            this.f7o,
+          ),
+          this.Tz.DeepCopy(a),
+          (this.Tz.Z = this.f7o.Z),
+          this.f7o.SubtractionEqual(a),
+          MathUtils_1.MathUtils.LookRotationUpFirst(
+            this.f7o,
+            Vector_1.Vector.UpVectorProxy,
+            this.Dz,
+          ),
+          this.Dz.Inverse(this.Dz),
+          t.SizeSquared());
+      let _ = void 0,
+        c = MathUtils_1.MathUtils.LargeNumber;
       for (const C of o)
         !this.j$r(C.EntityHandle) ||
           C.Equal(this.o$r) ||
@@ -989,4 +995,4 @@ let CharacterLockOnComponent =
       CharacterLockOnComponent,
     )),
   (exports.CharacterLockOnComponent = CharacterLockOnComponent);
-// # sourceMappingURL=CharacterLockOnComponent.js.map
+//# sourceMappingURL=CharacterLockOnComponent.js.map

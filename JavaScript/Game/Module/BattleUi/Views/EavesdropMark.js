@@ -1,30 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EavesdropMark = void 0);
-const UE = require("ue");
-const ue_1 = require("ue");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const CameraController_1 = require("../../../Camera/CameraController");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const Global_1 = require("../../../Global");
-const GlobalData_1 = require("../../../GlobalData");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const UPDATE_TOLERATION = 0.1;
-const HEAD_OFFSET = 150;
-const NORMAL_START = "Eavesdrop_Start";
-const NORMAL_END = "Eavesdrop_Close";
-const TAKING_START = "Talk_Start";
-const TAKING_LOOP = "Loop";
-const TAKING_END = "Talk_Close";
-const FOUND = "BeFound_Start";
-const normalTag = -1304517334;
-const startTakingTag = 570573252;
-const endTag = -56767509;
-const headName = new ue_1.FName("Bip001Head");
+const UE = require("ue"),
+  ue_1 = require("ue"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  CameraController_1 = require("../../../Camera/CameraController"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../Global"),
+  GlobalData_1 = require("../../../GlobalData"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  UPDATE_TOLERATION = 0.1,
+  HEAD_OFFSET = 150,
+  NORMAL_START = "Eavesdrop_Start",
+  NORMAL_END = "Eavesdrop_Close",
+  TAKING_START = "Talk_Start",
+  TAKING_LOOP = "Loop",
+  TAKING_END = "Talk_Close",
+  FOUND = "BeFound_Start",
+  normalTag = -1304517334,
+  startTakingTag = 570573252,
+  endTag = -56767509,
+  headName = new ue_1.FName("Bip001Head");
 class EavesdropMark extends UiPanelBase_1.UiPanelBase {
   constructor(t, i) {
     super(),
@@ -41,13 +41,13 @@ class EavesdropMark extends UiPanelBase_1.UiPanelBase {
       (this.Mqn = 3),
       (this.Sqn = 3),
       (this.Eqn = (t, i) => {
-        i && this.Mqn !== 0 && this.PlayChangeToNormalSeq();
+        i && 0 !== this.Mqn && this.PlayChangeToNormalSeq();
       }),
       (this.yqn = (t, i) => {
-        i && this.Mqn === 0 && this.PlayTakingSeq();
+        i && 0 === this.Mqn && this.PlayTakingSeq();
       }),
       (this.Iqn = (t, i) => {
-        i && this.Mqn !== 3 && this.PlayEndSeq();
+        i && 3 !== this.Mqn && this.PlayEndSeq();
       }),
       (this.KIt = (t) => {
         if (t === NORMAL_END || t === TAKING_END)
@@ -117,10 +117,10 @@ class EavesdropMark extends UiPanelBase_1.UiPanelBase {
     this.T_e(), this.Aqn(), this.Kwr();
   }
   T_e() {
-    var t = CameraController_1.CameraController.CameraRotator;
-    const i = t.Yaw + 90;
-    var t = t.Pitch - 90;
-    const s = Rotator_1.Rotator.Create(this.RootItem.RelativeRotation);
+    var t = CameraController_1.CameraController.CameraRotator,
+      i = t.Yaw + 90,
+      t = t.Pitch - 90,
+      s = Rotator_1.Rotator.Create(this.RootItem.RelativeRotation);
     (Math.abs(i - this.Glt.Yaw) < UPDATE_TOLERATION &&
       Math.abs(t - this.Glt.Roll) < UPDATE_TOLERATION &&
       s.Equals(this.Glt, UPDATE_TOLERATION)) ||
@@ -130,10 +130,10 @@ class EavesdropMark extends UiPanelBase_1.UiPanelBase {
       this.RootItem?.SetUIRelativeRotation(this.Glt.ToUeRotator()));
   }
   Aqn() {
-    const t =
-      Global_1.Global.BaseCharacter?.CharacterActorComponent
-        ?.ActorLocationProxy;
-    let i = this.lXe?.K2_GetActorLocation();
+    var t =
+        Global_1.Global.BaseCharacter?.CharacterActorComponent
+          ?.ActorLocationProxy,
+      i = this.lXe?.K2_GetActorLocation();
     if (t && i)
       return (
         (i = Vector_1.Vector.Create(i).SubtractionEqual(
@@ -145,14 +145,14 @@ class EavesdropMark extends UiPanelBase_1.UiPanelBase {
     this.fqn?.SetText("");
   }
   Kwr() {
-    const t = this.Ken.GetSocketLocation(headName);
+    var t = this.Ken.GetSocketLocation(headName);
     (t.Z += HEAD_OFFSET), this.RootItem.SetUIRelativeLocation(t);
   }
   PlayFoundSeq() {
-    this.Mqn !== 2 &&
-      (this.Mqn === 0
+    2 !== this.Mqn &&
+      (0 === this.Mqn
         ? (this.EPe?.PlaySequencePurely(NORMAL_END), (this.Sqn = 2))
-        : this.Mqn === 1 &&
+        : 1 === this.Mqn &&
           (this.EPe?.PlaySequencePurely(TAKING_END), (this.Sqn = 2)));
   }
   Lqn() {
@@ -162,20 +162,20 @@ class EavesdropMark extends UiPanelBase_1.UiPanelBase {
     this.EPe?.PlaySequencePurely(NORMAL_START), (this.Mqn = 0), (this.Sqn = 3);
   }
   PlayEndSeq() {
-    this.Mqn !== 3 &&
-      (this.Mqn === 1
+    3 !== this.Mqn &&
+      (1 === this.Mqn
         ? this.EPe?.PlaySequencePurely(TAKING_END)
-        : this.Mqn === 0 && this.EPe?.PlaySequencePurely(NORMAL_END),
+        : 0 === this.Mqn && this.EPe?.PlaySequencePurely(NORMAL_END),
       (this.Mqn = 3));
   }
   PlayTakingSeq() {
-    this.Mqn !== 1 &&
-      this.Mqn === 0 &&
+    1 !== this.Mqn &&
+      0 === this.Mqn &&
       (this.EPe?.PlaySequencePurely(NORMAL_END), (this.Sqn = 1));
   }
   PlayChangeToNormalSeq() {
-    this.Mqn !== 0 &&
-      this.Mqn === 1 &&
+    0 !== this.Mqn &&
+      1 === this.Mqn &&
       (this.EPe?.PlaySequencePurely(TAKING_END), (this.Sqn = 0));
   }
   Tqn() {
@@ -187,4 +187,4 @@ class EavesdropMark extends UiPanelBase_1.UiPanelBase {
   OnEnd() {}
 }
 exports.EavesdropMark = EavesdropMark;
-// # sourceMappingURL=EavesdropMark.js.map
+//# sourceMappingURL=EavesdropMark.js.map

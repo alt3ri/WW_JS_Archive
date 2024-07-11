@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityControllerBase = void 0);
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const UiManager_1 = require("../../Ui/UiManager");
+const ConfigManager_1 = require("../../Manager/ConfigManager"),
+  UiManager_1 = require("../../Ui/UiManager");
 class ActivityControllerBase {
   Init() {
-    const e = this.OnInit();
+    var e = this.OnInit();
     return this.OnRegisterNetEvent(), this.OnAddEvents(), e;
   }
   Clear() {
@@ -47,4 +47,4 @@ class ActivityControllerBase {
   }
 }
 exports.ActivityControllerBase = ActivityControllerBase;
-// # sourceMappingURL=ActivityControllerBase.js.map
+//# sourceMappingURL=ActivityControllerBase.js.map

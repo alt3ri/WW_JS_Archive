@@ -7,4 +7,4 @@ class LevelBuffSceneItem extends LevelBuffBase_1.LevelBuffBase {
   OnStackChanged(e, s, t) {}
 }
 exports.LevelBuffSceneItem = LevelBuffSceneItem;
-// # sourceMappingURL=LevelBuffSceneItem.js.map
+//# sourceMappingURL=LevelBuffSceneItem.js.map

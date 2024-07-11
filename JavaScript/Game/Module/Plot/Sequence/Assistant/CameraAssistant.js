@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraAssistant = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../../../Core/Common/Log");
-const CameraBlueprintFunctionLibrary_1 = require("../../../../Camera/CameraBlueprintFunctionLibrary");
-const CameraController_1 = require("../../../../Camera/CameraController");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiCameraPostEffectComponent_1 = require("../../../UiCamera/UiCameraComponent/UiCameraPostEffectComponent");
-const UiCameraManager_1 = require("../../../UiCamera/UiCameraManager");
-const SequenceDefine_1 = require("../SequenceDefine");
-const SeqBaseAssistant_1 = require("./SeqBaseAssistant");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  CameraBlueprintFunctionLibrary_1 = require("../../../../Camera/CameraBlueprintFunctionLibrary"),
+  CameraController_1 = require("../../../../Camera/CameraController"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiCameraPostEffectComponent_1 = require("../../../UiCamera/UiCameraComponent/UiCameraPostEffectComponent"),
+  UiCameraManager_1 = require("../../../UiCamera/UiCameraManager"),
+  SequenceDefine_1 = require("../SequenceDefine"),
+  SeqBaseAssistant_1 = require("./SeqBaseAssistant");
 class CameraAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   constructor() {
     super(...arguments),
@@ -20,7 +20,7 @@ class CameraAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       (this.m8s = void 0);
   }
   PreAllPlay() {
-    let e;
+    var e;
     this.Model.IsViewTargetControl &&
       ((e = this.Model.SequenceData.CameraBlendInTime),
       CameraController_1.CameraController.EnterCameraMode(1, e),
@@ -44,10 +44,10 @@ class CameraAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
         this.m8s.K2_AttachToActor(e, void 0, 2, 1, 1, !1)));
   }
   PreEachPlay() {
-    const e = UE.NewArray(UE.Actor);
-    const r =
-      ModelManager_1.ModelManager.CameraModel.SequenceCamera.DisplayComponent
-        .CineCamera;
+    var e = UE.NewArray(UE.Actor),
+      r =
+        ModelManager_1.ModelManager.CameraModel.SequenceCamera.DisplayComponent
+          .CineCamera;
     r.ResetSeqCineCamSetting(),
       e.Add(r),
       this.Model.CurLevelSeqActor.SetBindingByTag(
@@ -67,7 +67,7 @@ class CameraAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
     ModelManager_1.ModelManager.CameraModel.SequenceCamera.DisplayComponent.CineCamera.ResetSeqCineCamSetting();
   }
   AllStop() {
-    let e, r, a;
+    var e, r, a;
     this.Model.IsViewTargetControl &&
       (this.Model.Config.KeepCamera
         ? (Log_1.Log.CheckDebug() &&
@@ -127,18 +127,18 @@ class CameraAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   CalcPreloadLocation() {
     if (ModelManager_1.ModelManager.PlotModel.PlotConfig.IsPreStreaming) {
       this.m8s?.WorldPartitionStreamingSource?.EnableStreamingSource();
-      const a =
+      var a =
         this.Model.CurLevelSeqActor.SequencePlayer.GetCurrentTime().Time
           .FrameNumber.Value;
-      let e = SequenceDefine_1.MAX_FRAME;
-      let r = !1;
+      let e = SequenceDefine_1.MAX_FRAME,
+        r = !1;
       for (const i of this.Model.CurShotStartFrames)
         if (i > a) {
           (e = i + 1), (r = !0);
           break;
         }
-      const t = this.Model.CurLevelSeqActor?.GetSequence();
-      const o = (0, puerts_1.$ref)(void 0);
+      var t = this.Model.CurLevelSeqActor?.GetSequence(),
+        o = (0, puerts_1.$ref)(void 0);
       r &&
       UE.KuroSequenceRuntimeFunctionLibrary.GetFrameTransformByTag(
         t,
@@ -171,4 +171,4 @@ class CameraAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   }
 }
 exports.CameraAssistant = CameraAssistant;
-// # sourceMappingURL=CameraAssistant.js.map
+//# sourceMappingURL=CameraAssistant.js.map

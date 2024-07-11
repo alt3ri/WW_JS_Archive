@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiComponentUtil = void 0);
-const UE = require("ue");
-const AudioController_1 = require("../../../Core/Audio/AudioController");
+const UE = require("ue"),
+  AudioController_1 = require("../../../Core/Audio/AudioController");
 class UiComponentUtil {
   static SetStarActiveNew(o, e, t = void 0, i = !0) {
-    const r = o.length;
-    const n = t ?? r;
+    var r = o.length,
+      n = t ?? r;
     let l = void 0;
     for (let t = 0; t < r; ++t) {
-      const u = o[t];
+      var u = o[t];
       u.SetActive(t + 1 <= n),
         t + 1 > n ||
           (u.SetImgStarOnActive(t < e),
@@ -57,4 +57,4 @@ class UiComponentUtil {
   }
 }
 exports.UiComponentUtil = UiComponentUtil;
-// # sourceMappingURL=UiComponentUtil.js.map
+//# sourceMappingURL=UiComponentUtil.js.map

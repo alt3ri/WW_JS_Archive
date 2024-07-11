@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LauncherResourceLib = void 0);
-const UE = require("ue");
-const LauncherLog_1 = require("./LauncherLog");
+const UE = require("ue"),
+  LauncherLog_1 = require("./LauncherLog");
 class LauncherResourceLib {
   static Initialize() {
     this.gU ||
@@ -17,9 +17,9 @@ class LauncherResourceLib {
     let c = void 0;
     if (LauncherResourceLib.Xyr && LauncherResourceLib.Xyr.IsValid()) {
       if (LauncherResourceLib.rJ(e)) {
-        const u = LauncherResourceLib.pJo++;
-        var r = LauncherResourceLib.Xyr.LoadAsyncWithId(e, u, r);
-        if (r === -1)
+        var u = LauncherResourceLib.pJo++,
+          r = LauncherResourceLib.Xyr.LoadAsyncWithId(e, u, r);
+        if (-1 === r)
           LauncherLog_1.LauncherLog.Error(
             "LauncherResourceLib.Load()传入的handleId重复！",
             ["handleId", u],
@@ -28,7 +28,7 @@ class LauncherResourceLib {
           L = L ? L.StaticClass() : void 0;
           if (L)
             if (L.IsValid()) {
-              if (r === 1) return (c = LauncherResourceLib.Ed(e, u, L));
+              if (1 === r) return (c = LauncherResourceLib.Ed(e, u, L));
               LauncherResourceLib.Xyr.WaitComplete(u, 0)
                 ? (c = LauncherResourceLib.Ed(e, u, L))
                 : LauncherLog_1.LauncherLog.Error(
@@ -73,24 +73,24 @@ class LauncherResourceLib {
                 );
           }
         };
-        const a = () => {
-          let e = r ? r.StaticClass() : void 0;
-          e
-            ? e.IsValid()
-              ? ((e = LauncherResourceLib.Ed(L, u, e)), o(e, L))
+        var a = () => {
+            var e = r ? r.StaticClass() : void 0;
+            e
+              ? e.IsValid()
+                ? ((e = LauncherResourceLib.Ed(L, u, e)), o(e, L))
+                : (LauncherLog_1.LauncherLog.Error(
+                    "LauncherResourceLib.Load()传入的目标类型无效",
+                  ),
+                  o(void 0, L))
               : (LauncherLog_1.LauncherLog.Error(
-                  "LauncherResourceLib.Load()传入的目标类型无效",
+                  "LauncherResourceLib.Load()传入的目标类型为空",
                 ),
-                o(void 0, L))
-            : (LauncherLog_1.LauncherLog.Error(
-                "LauncherResourceLib.Load()传入的目标类型为空",
-              ),
-              o(void 0, L));
-        };
-        var e =
-          ((u = LauncherResourceLib.pJo++),
-          LauncherResourceLib.Xyr.LoadAsyncWithId(L, u, e));
-        e === 1 ? a() : this._Ke.set(u, a);
+                o(void 0, L));
+          },
+          e =
+            ((u = LauncherResourceLib.pJo++),
+            LauncherResourceLib.Xyr.LoadAsyncWithId(L, u, e));
+        1 === e ? a() : this._Ke.set(u, a);
       }
     } else
       LauncherLog_1.LauncherLog.Error(
@@ -99,7 +99,7 @@ class LauncherResourceLib {
     return u;
   }
   static Ed(e, L, r) {
-    const c = LauncherResourceLib.Xyr.GetAsset(L);
+    var c = LauncherResourceLib.Xyr.GetAsset(L);
     if ((LauncherResourceLib.Xyr.Release(L), c))
       if (c.IsValid()) {
         if (c.IsA(r)) return c;
@@ -122,7 +122,7 @@ class LauncherResourceLib {
   }
   static rJ(e) {
     return e
-      ? e.length === 0
+      ? 0 === e.length
         ? (LauncherLog_1.LauncherLog.Error("路径长度为零", ["路径", e]), !1)
         : !!e.startsWith("/") ||
           (LauncherLog_1.LauncherLog.Error("传入资源路径不符合规范", [
@@ -133,10 +133,10 @@ class LauncherResourceLib {
       : (LauncherLog_1.LauncherLog.Error("路径为空"), !1);
   }
   static KY(e) {
-    const L = LauncherResourceLib._Ke.get(e);
+    var L = LauncherResourceLib._Ke.get(e);
     L && (LauncherResourceLib._Ke.delete(e), L());
   }
 }
 ((exports.LauncherResourceLib = LauncherResourceLib).pJo = 0),
   (LauncherResourceLib.gU = !1);
-// # sourceMappingURL=LauncherResourceLib.js.map
+//# sourceMappingURL=LauncherResourceLib.js.map

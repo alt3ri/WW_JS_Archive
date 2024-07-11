@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckUIOpen = void 0);
-const UiManager_1 = require("../../Ui/UiManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const UiManager_1 = require("../../Ui/UiManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionCheckUIOpen extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, r) {
     e = e.LimitParams.get("UIName");
@@ -10,4 +10,4 @@ class LevelConditionCheckUIOpen extends LevelGeneralBase_1.LevelConditionBase {
   }
 }
 exports.LevelConditionCheckUIOpen = LevelConditionCheckUIOpen;
-// # sourceMappingURL=LevelConditionCheckUIOpen.js.map
+//# sourceMappingURL=LevelConditionCheckUIOpen.js.map

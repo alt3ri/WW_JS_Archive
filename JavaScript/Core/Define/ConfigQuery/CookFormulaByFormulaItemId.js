@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configCookFormulaByFormulaItemId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const CookFormula_1 = require("../Config/CookFormula");
-const DB = "db_cook.db";
-const FILE = "p.烹饪.xlsx";
-const TABLE = "CookFormula";
-const COMMAND = "select BinData from `CookFormula` where FormulaItemId=?";
-const KEY_PREFIX = "CookFormulaByFormulaItemId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  CookFormula_1 = require("../Config/CookFormula"),
+  DB = "db_cook.db",
+  FILE = "p.烹饪.xlsx",
+  TABLE = "CookFormula",
+  COMMAND = "select BinData from `CookFormula` where FormulaItemId=?",
+  KEY_PREFIX = "CookFormulaByFormulaItemId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configCookFormulaByFormulaItemId.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configCookFormulaByFormulaItemId.GetConfig(";
 exports.configCookFormulaByFormulaItemId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configCookFormulaByFormulaItemId = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "FormulaItemId",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "FormulaItemId",
+              o,
+            ]))
       ) {
-        var i;
-        var e = void 0;
+        var i,
+          e = void 0;
         if (
           (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configCookFormulaByFormulaItemId = {
     }
   },
 };
-// # sourceMappingURL=CookFormulaByFormulaItemId.js.map
+//# sourceMappingURL=CookFormulaByFormulaItemId.js.map

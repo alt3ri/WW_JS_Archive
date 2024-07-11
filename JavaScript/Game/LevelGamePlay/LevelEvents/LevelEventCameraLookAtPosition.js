@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventCameraLookAtPosition = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../Core/Define/CommonDefine");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const CameraController_1 = require("../../Camera/CameraController");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventCameraLookAtPosition extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -20,7 +20,7 @@ class LevelEventCameraLookAtPosition extends LevelGeneralBase_1.LevelEventBase {
       (this.pLe = "CameraLookAtPosition Ban Input");
   }
   Execute(e, t) {
-    let i, r, o, a, s, n;
+    var i, r, o, a, s, n;
     e
       ? ((n = parseFloat(e.get("X"))),
         (i = parseFloat(e.get("Y"))),
@@ -64,16 +64,16 @@ class LevelEventCameraLookAtPosition extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(t, e) {
     const i = t;
     if (i) {
-      var t = i.Pos.X;
-      const r = i.Pos.Y;
-      const o = i.Pos.Z;
-      const a = i.FadeInTime;
-      const s = i.StayTime;
-      const n = i.FadeOutTime;
-      let l = i.CameraPos?.X;
-      const m = i.CameraPos?.Y;
-      const _ = i.CameraPos?.Z;
-      const C = i.Fov;
+      var t = i.Pos.X,
+        r = i.Pos.Y,
+        o = i.Pos.Z,
+        a = i.FadeInTime,
+        s = i.StayTime,
+        n = i.FadeOutTime,
+        l = i.CameraPos?.X,
+        m = i.CameraPos?.Y,
+        _ = i.CameraPos?.Z,
+        C = i.Fov;
       if (
         !t ||
         !r ||
@@ -159,4 +159,4 @@ class LevelEventCameraLookAtPosition extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventCameraLookAtPosition = LevelEventCameraLookAtPosition;
-// # sourceMappingURL=LevelEventCameraLookAtPosition.js.map
+//# sourceMappingURL=LevelEventCameraLookAtPosition.js.map

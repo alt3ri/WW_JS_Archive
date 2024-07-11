@@ -13,4 +13,4 @@ class BulletRayInfo {
   }
 }
 exports.BulletRayInfo = BulletRayInfo;
-// # sourceMappingURL=BulletRayInfo.js.map
+//# sourceMappingURL=BulletRayInfo.js.map

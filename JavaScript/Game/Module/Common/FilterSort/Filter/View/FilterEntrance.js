@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FilterEntrance = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase");
-const FilterSortController_1 = require("../../FilterSortController");
-const FilterViewData_1 = require("../Model/FilterViewData");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase"),
+  FilterSortController_1 = require("../../FilterSortController"),
+  FilterViewData_1 = require("../Model/FilterViewData");
 class FilterEntrance extends UiPanelBase_1.UiPanelBase {
   constructor(t, e) {
     super(),
@@ -20,7 +20,7 @@ class FilterEntrance extends UiPanelBase_1.UiPanelBase {
       (this.sLt = void 0),
       (this.Mne = 0),
       (this.aLt = () => {
-        const t = new FilterViewData_1.FilterViewData(this.Mne, this.cIt);
+        var t = new FilterViewData_1.FilterViewData(this.Mne, this.cIt);
         FilterSortController_1.FilterSortController.OpenFilterView(t);
       }),
       (this.cIt = () => {
@@ -68,26 +68,26 @@ class FilterEntrance extends UiPanelBase_1.UiPanelBase {
     );
   }
   C4e() {
-    const t = this.rLt.ShowAllFilterContent();
-    const e = this.GetItem(1);
+    var t = this.rLt.ShowAllFilterContent(),
+      e = this.GetItem(1);
     StringUtils_1.StringUtils.IsBlank(t)
       ? e.SetUIActive(!1)
       : (e.SetUIActive(!0), this.GetText(2).SetText(t));
   }
   Ift(t) {
     var e = ConfigManager_1.ConfigManager.FilterConfig.GetFilterConfig(
-      this.Mne,
-    );
-    var i = e.DataType;
-    var s = this.rLt.GetSelectRuleData();
-    var i = ModelManager_1.ModelManager.FilterModel.GetFilterList(
-      this.uft,
-      i,
-      e.IsSupportSelectAll,
-      s,
-    );
-    var e = ConfigManager_1.ConfigManager.SortConfig.GetSortId(this.sLt);
-    var s = ModelManager_1.ModelManager.SortModel.GetSortResultData(e);
+        this.Mne,
+      ),
+      i = e.DataType,
+      s = this.rLt.GetSelectRuleData(),
+      i = ModelManager_1.ModelManager.FilterModel.GetFilterList(
+        this.uft,
+        i,
+        e.IsSupportSelectAll,
+        s,
+      ),
+      e = ConfigManager_1.ConfigManager.SortConfig.GetSortId(this.sLt),
+      s = ModelManager_1.ModelManager.SortModel.GetSortResultData(e);
     s &&
       ModelManager_1.ModelManager.SortModel.SortDataList(i, e, s, ...this.nLt),
       this.UpdateDataListFunction?.(i, t, 0);
@@ -109,7 +109,7 @@ class FilterEntrance extends UiPanelBase_1.UiPanelBase {
         ));
   }
   uLt() {
-    this.SetActive(this.Mne > 0);
+    this.SetActive(0 < this.Mne);
   }
   UpdateData(t, e, ...i) {
     this.lLt(t),
@@ -119,9 +119,9 @@ class FilterEntrance extends UiPanelBase_1.UiPanelBase {
         (this.nLt = i),
         this._Lt(),
         this.C4e(),
-        ConfigManager_1.ConfigManager.SortConfig.GetSortId(this.sLt) === 0 &&
+        0 === ConfigManager_1.ConfigManager.SortConfig.GetSortId(this.sLt) &&
           this.Ift(!0));
   }
 }
 exports.FilterEntrance = FilterEntrance;
-// # sourceMappingURL=FilterEntrance.js.map
+//# sourceMappingURL=FilterEntrance.js.map

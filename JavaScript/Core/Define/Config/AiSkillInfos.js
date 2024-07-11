@@ -34,23 +34,23 @@ class AiSkillInfos {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   skillweight() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   skillpreconditionid() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   skillid(t) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   skillcdrange(t) {
-    const i = this.J7.__offset(this.z7, 12);
+    var i = this.J7.__offset(this.z7, 12);
     return i
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -59,9 +59,9 @@ class AiSkillInfos {
       : null;
   }
   skilltype() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : -1;
   }
 }
 exports.AiSkillInfos = AiSkillInfos;
-// # sourceMappingURL=AiSkillInfos.js.map
+//# sourceMappingURL=AiSkillInfos.js.map

@@ -1,43 +1,43 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ReConnectController = void 0);
-const cpp_1 = require("cpp");
-const UE = require("ue");
-const Application_1 = require("../../../Core/Application/Application");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const AppLinks_1 = require("../../../Launcher/AppLinks");
-const BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController");
-const NetworkDefine_1 = require("../../../Launcher/NetworkDefine");
-const HotFixSceneManager_1 = require("../../../Launcher/Ui/HotFix/HotFixSceneManager");
-const AppUtil_1 = require("../../../Launcher/Update/AppUtil");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LocalStorage_1 = require("../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../Common/LocalStorageDefine");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const GlobalData_1 = require("../../GlobalData");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ThirdPartySdkManager_1 = require("../../Manager/ThirdPartySdkManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
-const LoadingController_1 = require("../Loading/LoadingController");
-const Heartbeat_1 = require("../Login/Heartbeat");
-const HeartbeatDefine_1 = require("../Login/HeartbeatDefine");
-const LoginController_1 = require("../Login/LoginController");
-const LogReportController_1 = require("../LogReport/LogReportController");
-const LogReportDefine_1 = require("../LogReport/LogReportDefine");
-const ReconnectDefine_1 = require("./ReconnectDefine");
-const ReConnectModel_1 = require("./ReConnectModel");
-const ONE_THOUSAND = 1e3;
-const TWO_THOUSAND = 2e3;
-const RECONNECT_TIME_OUT = 2e4;
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
+  Application_1 = require("../../../Core/Application/Application"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  AppLinks_1 = require("../../../Launcher/AppLinks"),
+  BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController"),
+  NetworkDefine_1 = require("../../../Launcher/NetworkDefine"),
+  HotFixSceneManager_1 = require("../../../Launcher/Ui/HotFix/HotFixSceneManager"),
+  AppUtil_1 = require("../../../Launcher/Update/AppUtil"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  GlobalData_1 = require("../../GlobalData"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ThirdPartySdkManager_1 = require("../../Manager/ThirdPartySdkManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  LoadingController_1 = require("../Loading/LoadingController"),
+  Heartbeat_1 = require("../Login/Heartbeat"),
+  HeartbeatDefine_1 = require("../Login/HeartbeatDefine"),
+  LoginController_1 = require("../Login/LoginController"),
+  LogReportController_1 = require("../LogReport/LogReportController"),
+  LogReportDefine_1 = require("../LogReport/LogReportDefine"),
+  ReconnectDefine_1 = require("./ReconnectDefine"),
+  ReConnectModel_1 = require("./ReConnectModel"),
+  ONE_THOUSAND = 1e3,
+  TWO_THOUSAND = 2e3,
+  RECONNECT_TIME_OUT = 2e4;
 class ReconnectResult {
   constructor(e, n, o = void 0) {
     (this.Result = 0),
@@ -49,8 +49,8 @@ class ReconnectResult {
   }
 }
 function reportReconnectProcess(e, n = Protocol_1.Aki.Protocol.lkn.Sys) {
-  const o = ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig();
-  const t = new LogReportDefine_1.ReconvProcessLink();
+  var o = ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig(),
+    t = new LogReportDefine_1.ReconvProcessLink();
   (t.s_trace_id = ModelManager_1.ModelManager.ReConnectModel.ReconvTraceId),
     (t.s_player_id =
       ModelManager_1.ModelManager.PlayerInfoModel.GetId()?.toString() ?? "0"),
@@ -78,9 +78,9 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
       Net_1.Net.SetAddRequestMaskHandle(ReConnectController.mno),
       Net_1.Net.SetRemoveRequestMaskHandle(ReConnectController.dno),
       Net_1.Net.SetNetworkErrorHandle(ReConnectController.Cno);
-    const e = ModelManager_1.ModelManager.PlatformModel.PlatformType;
+    var e = ModelManager_1.ModelManager.PlatformModel.PlatformType;
     return (
-      (e !== 1 && e !== 2) ||
+      (1 !== e && 2 !== e) ||
         Application_1.Application.AddApplicationHandler(
           1,
           ReConnectController.DHe,
@@ -89,9 +89,9 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static OnClear() {
-    const e = ModelManager_1.ModelManager.PlatformModel.PlatformType;
+    var e = ModelManager_1.ModelManager.PlatformModel.PlatformType;
     return (
-      (e !== 1 && e !== 2) ||
+      (1 !== e && 2 !== e) ||
         Application_1.Application.RemoveApplicationHandler(
           1,
           ReConnectController.DHe,
@@ -100,7 +100,7 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static OnAddEvents() {
-    const e = ModelManager_1.ModelManager.ReConnectModel;
+    var e = ModelManager_1.ModelManager.ReConnectModel;
     (e.LastNetworkType = AppUtil_1.AppUtil.GetNetworkConnectionType()),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Reconnect", 31, "Reconnect OnNetworkChange listen"),
@@ -117,7 +117,7 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
     ReConnectController.fno(e, n);
   }
   static pno(e) {
-    return ModelManager_1.ModelManager.ReConnectModel.GetReConnectStatus() !== 0
+    return 0 !== ModelManager_1.ModelManager.ReConnectModel.GetReConnectStatus()
       ? (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Reconnect", 9, "正在尝试重连中, 请勿重复!", [
             "调用函数",
@@ -145,7 +145,7 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
         );
   }
   static qqi() {
-    const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(38);
+    var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(38);
     e.SetCloseFunction(() => {
       ReConnectController.vno();
     }),
@@ -175,21 +175,23 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
           ["距离上次重连时间", (e / 1e3).toFixed(2)],
         );
     var e = await ReConnectController.Sno();
-    return e.Result !== 0 || (e = await ReConnectController.xvi()).Result !== 0
+    return 0 !== e.Result || 0 !== (e = await ReConnectController.xvi()).Result
       ? e
       : await ReConnectController.Eno();
   }
   static async Sno() {
-    var e = ModelManager_1.ModelManager.LoginModel.GetReconnectHost();
-    var n = ModelManager_1.ModelManager.LoginModel.GetReconnectPort();
-    var e =
-      (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Reconnect", 9, "重连流程, 尝试连接网关"),
-      reportReconnectProcess(ReconnectDefine_1.EReconnectProcessStep.ConvGate),
-      await Net_1.Net.ConnectAsync(e, n, 3e3, 1));
-    var n = ReconnectDefine_1.EReconnectProcessStep.ConvRet;
+    var e = ModelManager_1.ModelManager.LoginModel.GetReconnectHost(),
+      n = ModelManager_1.ModelManager.LoginModel.GetReconnectPort(),
+      e =
+        (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Reconnect", 9, "重连流程, 尝试连接网关"),
+        reportReconnectProcess(
+          ReconnectDefine_1.EReconnectProcessStep.ConvGate,
+        ),
+        await Net_1.Net.ConnectAsync(e, n, 3e3, 1)),
+      n = ReconnectDefine_1.EReconnectProcessStep.ConvRet;
     return ModelManager_1.ModelManager.ReConnectModel.IsReConnectIdSame()
-      ? e !== 0
+      ? 0 !== e
         ? (reportReconnectProcess(
             n,
             Protocol_1.Aki.Protocol.lkn.Proto_ConvGateTimeout,
@@ -208,12 +210,12 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
       reportReconnectProcess(
         ReconnectDefine_1.EReconnectProcessStep.ProtoKeyReq,
       );
-    var e = new Protocol_1.Aki.Protocol.Eis();
-    var e =
-      ((e.W4n = !1),
-      (e.A6n = ModelManager_1.ModelManager.ReConnectModel.ReconvTraceId),
-      await Net_1.Net.CallAsync(111, e, 3e3));
-    const n = ReconnectDefine_1.EReconnectProcessStep.ProtoKeyRet;
+    var e = new Protocol_1.Aki.Protocol.Eis(),
+      e =
+        ((e.W4n = !1),
+        (e.A6n = ModelManager_1.ModelManager.ReConnectModel.ReconvTraceId),
+        await Net_1.Net.CallAsync(111, e, 3e3)),
+      n = ReconnectDefine_1.EReconnectProcessStep.ProtoKeyRet;
     return ModelManager_1.ModelManager.ReConnectModel.IsReConnectIdSame()
       ? e
         ? (reportReconnectProcess(n),
@@ -229,26 +231,28 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
       : new ReconnectResult(2, n);
   }
   static async Eno() {
-    var e = Net_1.Net.GetDownStreamSeqNo();
-    var n = ModelManager_1.ModelManager.LoginModel.GetReconnectToken();
-    let o = new Protocol_1.Aki.Protocol.vis();
-    var e =
-      ((o.aFn = ModelManager_1.ModelManager.PlayerInfoModel.GetId()),
-      (o.R8n = e),
-      (o.R6n = n),
-      (o.x8n = ModelManager_1.ModelManager.ReConnectModel.ReconvTraceId),
-      cpp_1.FuncOpenLibrary.SetFirstTimestamp(0),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "Reconnect",
-          9,
-          "重连流程, 发起登录",
-          ["下行包", e],
-          ["token", n],
+    var e = Net_1.Net.GetDownStreamSeqNo(),
+      n = ModelManager_1.ModelManager.LoginModel.GetReconnectToken(),
+      o = new Protocol_1.Aki.Protocol.vis(),
+      e =
+        ((o.aFn = ModelManager_1.ModelManager.PlayerInfoModel.GetId()),
+        (o.R8n = e),
+        (o.R6n = n),
+        (o.x8n = ModelManager_1.ModelManager.ReConnectModel.ReconvTraceId),
+        cpp_1.FuncOpenLibrary.SetFirstTimestamp(0),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Reconnect",
+            9,
+            "重连流程, 发起登录",
+            ["下行包", e],
+            ["token", n],
+          ),
+        reportReconnectProcess(
+          ReconnectDefine_1.EReconnectProcessStep.ReconvReq,
         ),
-      reportReconnectProcess(ReconnectDefine_1.EReconnectProcessStep.ReconvReq),
-      await Net_1.Net.CallAsync(107, o, RECONNECT_TIME_OUT));
-    var n = ReconnectDefine_1.EReconnectProcessStep.ReconvRet;
+        await Net_1.Net.CallAsync(107, o, RECONNECT_TIME_OUT)),
+      n = ReconnectDefine_1.EReconnectProcessStep.ReconvRet;
     if (!ModelManager_1.ModelManager.ReConnectModel.IsReConnectIdSame())
       return new ReconnectResult(2, n);
     if (!e)
@@ -301,8 +305,8 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
       );
   }),
   (ReConnectController.Logout = (e) => {
-    const n =
-      ModelManager_1.ModelManager.ReConnectModel.GetReConnectStatus() !== 0;
+    var n =
+      0 !== ModelManager_1.ModelManager.ReConnectModel.GetReConnectStatus();
     n &&
       reportReconnectProcess(
         ReconnectDefine_1.EReconnectProcessStep.ReconvCancel,
@@ -352,7 +356,7 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
     ReConnectController.TryReConnect(!1, "Net.OnNetworkError");
   }),
   (ReConnectController.gno = (e) => {
-    const n = ModelManager_1.ModelManager.ReConnectModel;
+    var n = ModelManager_1.ModelManager.ReConnectModel;
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Reconnect", 31, "OnNetworkTypeChange called", [
         "new type",
@@ -369,7 +373,7 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
           ReConnectController.TryReConnect(!0, "OnNetworkTypeChange"));
   }),
   (ReConnectController.DHe = () => {
-    const e = Date.now();
+    var e = Date.now();
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Reconnect",
@@ -480,7 +484,7 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
       reportReconnectProcess(
         ReconnectDefine_1.EReconnectProcessStep.ReconvSuccess,
       );
-    const e = ModelManager_1.ModelManager.LoginModel.GetReconnectToken();
+    var e = ModelManager_1.ModelManager.LoginModel.GetReconnectToken();
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Reconnect",
@@ -554,4 +558,4 @@ class ReConnectController extends UiControllerBase_1.UiControllerBase {
       }, o);
     }
   });
-// # sourceMappingURL=ReConnectController.js.map
+//# sourceMappingURL=ReConnectController.js.map

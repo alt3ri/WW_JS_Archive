@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivitySubViewBeginnerBook = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const ActivityManager_1 = require("../../ActivityManager");
-const ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase");
-const ActivityBeginnerTargetItem_1 = require("./ActivityBeginnerTargetItem");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  ActivityManager_1 = require("../../ActivityManager"),
+  ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase"),
+  ActivityBeginnerTargetItem_1 = require("./ActivityBeginnerTargetItem");
 class ActivitySubViewBeginnerBook extends ActivitySubViewBase_1.ActivitySubViewBase {
   constructor() {
     super(...arguments),
@@ -38,13 +38,12 @@ class ActivitySubViewBeginnerBook extends ActivitySubViewBase_1.ActivitySubViewB
         this.sGe,
         this.GetItem(3).GetOwner(),
       ));
-    const i =
-      ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender() === 0;
+    var i = 0 === ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
     this.GetItem(4)?.SetUIActive(i),
       this.GetItem(5)?.SetUIActive(!i),
       (this.mNe = this.GetText(1)),
-      (this.dNe = this.CNe.EndShowTime !== 0),
-      this.mNe.SetUIActive(this.CNe.EndShowTime !== 0),
+      (this.dNe = 0 !== this.CNe.EndShowTime),
+      this.mNe.SetUIActive(0 !== this.CNe.EndShowTime),
       this.fNe();
   }
   async OnBeforeShowSelfAsync() {
@@ -54,8 +53,8 @@ class ActivitySubViewBeginnerBook extends ActivitySubViewBase_1.ActivitySubViewB
   }
   OnRefreshView() {
     this.gNe?.RefreshByData(this.CNe.AllBeginnerTargetList, () => {
-      const i = this.gNe?.GetLayoutItemList();
-      const t = this.ActivityBaseData;
+      var i = this.gNe?.GetLayoutItemList(),
+        t = this.ActivityBaseData;
       for (const e of i)
         e.SetEnableJump(t.GetEnableJump(e.DataId)),
           e.SetFinish(t.GetFinishState(e.DataId));
@@ -65,7 +64,7 @@ class ActivitySubViewBeginnerBook extends ActivitySubViewBase_1.ActivitySubViewB
     this.dNe !== i && ((this.dNe = i), this.mNe.SetUIActive(i));
   }
   fNe() {
-    const [i, t] = this.GetTimeVisibleAndRemainTime();
+    var [i, t] = this.GetTimeVisibleAndRemainTime();
     this.pNe(i), i && this.mNe.SetText(t);
   }
   OnTimer(i) {
@@ -73,4 +72,4 @@ class ActivitySubViewBeginnerBook extends ActivitySubViewBase_1.ActivitySubViewB
   }
 }
 exports.ActivitySubViewBeginnerBook = ActivitySubViewBeginnerBook;
-// # sourceMappingURL=ActivitySubViewBeginnerBook.js.map
+//# sourceMappingURL=ActivitySubViewBeginnerBook.js.map

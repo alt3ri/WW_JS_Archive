@@ -6,4 +6,4 @@ class BulletSystemBase {
   OnAfterTick(e) {}
 }
 exports.BulletSystemBase = BulletSystemBase;
-// # sourceMappingURL=BulletSystemBase.js.map
+//# sourceMappingURL=BulletSystemBase.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GenericLayoutNew = void 0);
-const UE = require("ue");
-const UiComponentsAction_1 = require("../../../Ui/Base/UiComponentsAction");
-const InTurnGridAppearAnimation_1 = require("../Grid/GridAnimation/InTurnGridAppearAnimation");
-const LguiUtil_1 = require("../LguiUtil");
+const UE = require("ue"),
+  UiComponentsAction_1 = require("../../../Ui/Base/UiComponentsAction"),
+  InTurnGridAppearAnimation_1 = require("../Grid/GridAnimation/InTurnGridAppearAnimation"),
+  LguiUtil_1 = require("../LguiUtil");
 class GenericLayoutNew {
   constructor(t, i, e = void 0) {
     (this.Cqo = void 0),
@@ -59,15 +59,15 @@ class GenericLayoutNew {
     return this.GetRootUiItem().GetParentAsUIItem();
   }
   Bqo() {
-    const t = this.Tqo.pop();
+    var t = this.Tqo.pop();
     t && (t.SetUIActive(!1), this.Lqo.push(t));
   }
   wqo() {
-    const t = LguiUtil_1.LguiUtil.CopyItem(this.NPo, this.GetRootUiItem());
+    var t = LguiUtil_1.LguiUtil.CopyItem(this.NPo, this.GetRootUiItem());
     return this.Tqo.push(t), t;
   }
   bqo() {
-    const t = this.Lqo.pop();
+    var t = this.Lqo.pop();
     t ? (t.SetUIActive(!0), this.Tqo.push(t)) : this.wqo().SetUIActive(!0);
   }
   qqo() {
@@ -91,9 +91,9 @@ class GenericLayoutNew {
   }
   RebuildLayoutByDataNew(i, t = void 0) {
     this.Aqo(void 0), this.Pqo();
-    const e = i ? i.length : 0;
-    const s = t || e;
-    const r = this.Tqo.length;
+    var e = i ? i.length : 0,
+      s = t || e,
+      r = this.Tqo.length;
     if (((this.Dqo = s), (this.vK = !1), s < this.Tqo.length)) {
       for (let t = 0; t < s; ++t) this.Tqo[t].SetUIActive(!0);
       for (let t = s; t < r; ++t) this.Bqo();
@@ -104,15 +104,15 @@ class GenericLayoutNew {
     let h = 0;
     for (let t = 0; t < s; ++t) {
       this.Tqo[t].SetDisplayName(this.Rqo + "_" + t);
-      var n = t < e ? i[t] : void 0;
-      var n = this.Ybo?.(n, this.Tqo[t], h);
+      var n = t < e ? i[t] : void 0,
+        n = this.Ybo?.(n, this.Tqo[t], h);
       n && (this.AQ.set(n.Key, n.Value), this.g4e.push(n.Value), h++);
     }
     this.Cqo && this.P9t && this.Cqo.PlayGridAnim(this.Dqo);
   }
   GetItemByIndex(t) {
     if (this.$bo) {
-      const i = this.GetRootUiItem().GetAttachUIChildren();
+      var i = this.GetRootUiItem().GetAttachUIChildren();
       if (t < i.Num()) return i.Get(t);
     }
   }
@@ -186,4 +186,4 @@ class GenericLayoutNew {
   }
 }
 exports.GenericLayoutNew = GenericLayoutNew;
-// # sourceMappingURL=GenericLayoutNew.js.map
+//# sourceMappingURL=GenericLayoutNew.js.map

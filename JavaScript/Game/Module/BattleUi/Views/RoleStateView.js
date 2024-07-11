@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleStateView = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const BattleChildView_1 = require("./BattleChildView/BattleChildView");
-const EAttributeId = Protocol_1.Aki.Protocol.KBs;
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  BattleChildView_1 = require("./BattleChildView/BattleChildView");
+var EAttributeId = Protocol_1.Aki.Protocol.KBs;
 const LOW_HP_PERCENT = 0.2;
 class RoleStateView extends BattleChildView_1.BattleChildView {
   constructor() {
@@ -47,11 +47,11 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
       }),
       (this.sct = () => {
         if (this.IsValid()) {
-          const t = this.GetText(2);
-          if (this.wnt.RoleConfig?.RoleType === 2) t.SetText("");
+          var t = this.GetText(2);
+          if (2 === this.wnt.RoleConfig?.RoleType) t.SetText("");
           else {
-            var i = this.wnt.CreatureRoleId;
-            var i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(i);
+            var i = this.wnt.CreatureRoleId,
+              i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(i);
             if (i?.IsTrialRole()) {
               const e = i.GetLevelData().GetLevel();
               void LguiUtil_1.LguiUtil.SetLocalText(t, "LevelShow", e);
@@ -165,8 +165,8 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
       this.IsShowOrShowing && this.Hide();
   }
   Qut(t) {
-    let i;
-    this.Blt === -1 ||
+    var i;
+    -1 === this.Blt ||
       (this.Blt >= this.qot && this.Hrt(), this.xlt >= this.wlt) ||
       ((i = this.Blt / this.qot),
       (i = MathUtils_1.MathUtils.Lerp(this.wlt, this.xlt, i)),
@@ -174,7 +174,7 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
       (this.Blt = this.Blt + t));
   }
   SetNiagaraActive(t) {
-    const i = this.GetUiNiagara(6);
+    var i = this.GetUiNiagara(6);
     i.SetUIActive(t),
       t
         ? (i.SetNiagaraVarFloat("Dissolve", this.Xot), i.ActivateSystem(!0))
@@ -188,7 +188,7 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
       this.IsShowOrShowing || this.Show());
   }
   RefreshHpAndShield(t = !1) {
-    let i, e, s, h;
+    var i, e, s, h;
     this.IsValid() &&
       (i = this.$te) &&
       ((h = i.GetCurrentValue(EAttributeId.Proto_Life)),
@@ -207,8 +207,8 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
       (this.Xot = e));
   }
   rnt() {
-    let t;
-    let i = this.$te;
+    var t,
+      i = this.$te;
     i &&
       ((i =
         i.GetCurrentValue(EAttributeId.Proto_Life) /
@@ -216,7 +216,7 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
       (t = this.Xot) <= i || ((this.xlt = i), (this.wlt = t), (this.Blt = 0)));
   }
   Xrt(t) {
-    const i = this.GetSprite(4);
+    var i = this.GetSprite(4);
     i.SetFillAmount(t), i.SetUIActive(!0);
   }
   Hrt() {
@@ -227,20 +227,20 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
   }
   int(t) {
     this.lct(t);
-    const i = this.GetSprite(3);
-    const e = this.GetSprite(0);
+    var i = this.GetSprite(3),
+      e = this.GetSprite(0);
     i.bIsUIActive && i.SetFillAmount(t), e.bIsUIActive && e.SetFillAmount(t);
   }
   lct(t) {
-    const i = this.GetSprite(3);
-    const e = this.GetSprite(0);
+    var i = this.GetSprite(3),
+      e = this.GetSprite(0);
     t <= LOW_HP_PERCENT
       ? (i.SetUIActive(!0), e.SetUIActive(!1))
       : (i.SetUIActive(!1), e.SetUIActive(!0));
   }
   ont(t) {
-    const i = this.GetSprite(5);
-    const e = t > 0;
+    var i = this.GetSprite(5),
+      e = 0 < t;
     i.SetUIActive(e),
       this.nct !== e &&
         (this.nct = e) &&
@@ -249,4 +249,4 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
   }
 }
 exports.RoleStateView = RoleStateView;
-// # sourceMappingURL=RoleStateView.js.map
+//# sourceMappingURL=RoleStateView.js.map

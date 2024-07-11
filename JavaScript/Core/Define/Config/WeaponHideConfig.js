@@ -25,22 +25,22 @@ class WeaponHideConfig {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetHideweapontagsAt(t) {
     return this.hideweapontags(t);
   }
   hideweapontags(t, e) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i
       ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, e)
       : null;
   }
   hideweapontagsLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.WeaponHideConfig = WeaponHideConfig;
-// # sourceMappingURL=WeaponHideConfig.js.map
+//# sourceMappingURL=WeaponHideConfig.js.map

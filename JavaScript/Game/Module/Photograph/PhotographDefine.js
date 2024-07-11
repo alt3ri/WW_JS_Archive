@@ -36,4 +36,4 @@ const ue_1 = require("ue");
   (exports.ignoreTouchTag = new ue_1.FName("IgnoreTouch")),
   (exports.DEFAULT_SHARE_WIDTH = 1750),
   (exports.DEFAULT_SHARE_HEIGHT = 986);
-// # sourceMappingURL=PhotographDefine.js.map
+//# sourceMappingURL=PhotographDefine.js.map

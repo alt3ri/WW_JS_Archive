@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TeamPlayerSelectionComponent = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
 class TeamPlayerSelectionComponent extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -28,16 +28,16 @@ class TeamPlayerSelectionComponent extends UiPanelBase_1.UiPanelBase {
     this.KBt = e;
   }
   RefreshItem() {
-    var e = this.GetTexture(0);
-    var i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
-      this.zke,
-    ).RoleHeadIconBig;
-    var i = (this.SetTextureByPath(i, e), this.GetSprite(1));
-    var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-      `SP_Online${this.KBt}PIcon`,
-    );
+    var e = this.GetTexture(0),
+      i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
+        this.zke,
+      ).RoleHeadIconBig,
+      i = (this.SetTextureByPath(i, e), this.GetSprite(1)),
+      e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+        `SP_Online${this.KBt}PIcon`,
+      );
     this.SetSpriteByPath(e, i, !1), (this.IsSet = !0);
   }
 }
 exports.TeamPlayerSelectionComponent = TeamPlayerSelectionComponent;
-// # sourceMappingURL=TeamPlayerSelectionComponent.js.map
+//# sourceMappingURL=TeamPlayerSelectionComponent.js.map

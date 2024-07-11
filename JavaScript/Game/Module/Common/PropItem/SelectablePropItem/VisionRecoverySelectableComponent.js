@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionRecoverySelectableComponent = void 0);
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController");
-const SelectableComponent_1 = require("./SelectableComponent");
-const SelectablePropVisionRecoveryItemGrid_1 = require("./SelectablePropVisionRecoveryItemGrid");
+const ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
+  SelectableComponent_1 = require("./SelectableComponent"),
+  SelectablePropVisionRecoveryItemGrid_1 = require("./SelectablePropVisionRecoveryItemGrid");
 class VisionRecoverySelectableComponent extends SelectableComponent_1.SelectableComponent {
   constructor() {
     super(...arguments),
       (this.InitItem = () => {
-        const e =
+        var e =
           new SelectablePropVisionRecoveryItemGrid_1.SelectablePropVisionRecoveryItemGrid();
         return (
           e.BindLongPress(1, this.AddFunction, this.CanItemLongPress),
@@ -21,10 +21,11 @@ class VisionRecoverySelectableComponent extends SelectableComponent_1.Selectable
       });
   }
   CanAddMaterial(e, o = !1) {
-    let r;
-    return ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-      e.IncId,
-    ).GetPhantomLevel() > 0
+    var r;
+    return 0 <
+      ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
+        e.IncId,
+      ).GetPhantomLevel()
       ? (o &&
           ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
             "Text_EchoFull_Text",
@@ -56,4 +57,4 @@ class VisionRecoverySelectableComponent extends SelectableComponent_1.Selectable
   }
 }
 exports.VisionRecoverySelectableComponent = VisionRecoverySelectableComponent;
-// # sourceMappingURL=VisionRecoverySelectableComponent.js.map
+//# sourceMappingURL=VisionRecoverySelectableComponent.js.map

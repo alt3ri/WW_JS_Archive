@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LockExecutionUnit = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const HudUnitBase_1 = require("../HudUnitBase");
-const CLOSE_ANIM_TIME = 200;
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  HudUnitBase_1 = require("../HudUnitBase"),
+  CLOSE_ANIM_TIME = 200;
 class LockExecutionUnit extends HudUnitBase_1.HudUnitBase {
   constructor() {
     super(...arguments),
@@ -57,4 +57,4 @@ class LockExecutionUnit extends HudUnitBase_1.HudUnitBase {
   }
 }
 exports.LockExecutionUnit = LockExecutionUnit;
-// # sourceMappingURL=LockExecutionUnit.js.map
+//# sourceMappingURL=LockExecutionUnit.js.map

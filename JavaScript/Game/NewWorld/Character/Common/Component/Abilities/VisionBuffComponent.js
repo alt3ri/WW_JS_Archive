@@ -1,28 +1,32 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, o, r) {
-    let s;
-    const i = arguments.length;
-    let n =
-      i < 3 ? t : r === null ? (r = Object.getOwnPropertyDescriptor(t, o)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var s,
+      i = arguments.length,
+      n =
+        i < 3
+          ? t
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(t, o))
+            : r;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(e, t, o, r);
     else
-      for (let f = e.length - 1; f >= 0; f--)
-        (s = e[f]) && (n = (i < 3 ? s(n) : i > 3 ? s(t, o, n) : s(t, o)) || n);
-    return i > 3 && n && Object.defineProperty(t, o, n), n;
+      for (var f = e.length - 1; 0 <= f; f--)
+        (s = e[f]) && (n = (i < 3 ? s(n) : 3 < i ? s(t, o, n) : s(t, o)) || n);
+    return 3 < i && n && Object.defineProperty(t, o, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionBuffComponent = void 0);
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const CharacterBuffComponent_1 = require("./CharacterBuffComponent");
+const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  CharacterBuffComponent_1 = require("./CharacterBuffComponent");
 let VisionBuffComponent = class VisionBuffComponent extends CharacterBuffComponent_1.CharacterBuffComponent {
   constructor() {
     super(...arguments), (this.P2r = void 0);
   }
   x2r() {
-    let e, t;
+    var e, t;
     return void 0 !== this.P2r
       ? this.P2r
       : (t = this.Entity.GetComponent(47)?.GetAttributeHolder()) !==
@@ -55,4 +59,4 @@ let VisionBuffComponent = class VisionBuffComponent extends CharacterBuffCompone
   VisionBuffComponent,
 )),
   (exports.VisionBuffComponent = VisionBuffComponent);
-// # sourceMappingURL=VisionBuffComponent.js.map
+//# sourceMappingURL=VisionBuffComponent.js.map

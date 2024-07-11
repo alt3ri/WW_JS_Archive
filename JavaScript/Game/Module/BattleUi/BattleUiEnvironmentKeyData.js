@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleUiEnvironmentKeyData = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
+const Log_1 = require("../../../Core/Common/Log"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem");
 class BattleUiEnvironmentKeyData {
   constructor() {
     (this.xKe = 0), (this.wKe = []);
@@ -22,7 +22,7 @@ class BattleUiEnvironmentKeyData {
     if (this.wKe[t] !== e)
       if ((this.wKe[t] = e)) this.xKe < t && ((this.xKe = t), this.bKe());
       else if (!(this.xKe > t))
-        for (let e = t - 1; e >= 0; e--)
+        for (let e = t - 1; 0 <= e; e--)
           if (this.wKe[e]) return (this.xKe = e), void this.bKe();
   }
   bKe() {
@@ -47,4 +47,4 @@ class BattleUiEnvironmentKeyData {
   "HotKeyText_EnvironmentBuffTips_Name",
   "HotKeyText_RogueInfoTips_Name",
 ];
-// # sourceMappingURL=BattleUiEnvironmentKeyData.js.map
+//# sourceMappingURL=BattleUiEnvironmentKeyData.js.map

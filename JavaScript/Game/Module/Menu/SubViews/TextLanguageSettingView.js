@@ -4,11 +4,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const LanguageSettingViewBase_1 = require("./LanguageSettingViewBase");
 class TextLanguageSettingView extends LanguageSettingViewBase_1.LanguageSettingViewBase {
   CreateToggle(e, t, g) {
-    const a = new TextLanguageToggle();
+    var a = new TextLanguageToggle();
     return a.Initialize(e, t, g), a;
   }
   OnRefreshView(e) {
-    const t = this.MenuDataIns.MenuDataOptionsNameList[e.GetIndex()];
+    var t = this.MenuDataIns.MenuDataOptionsNameList[e.GetIndex()];
     e.SetMainText(t);
   }
   OnSelected(e, t) {
@@ -23,4 +23,4 @@ class TextLanguageToggle extends LanguageSettingViewBase_1.LanguageToggleBase {
   SetSpriteActive(e) {}
 }
 exports.TextLanguageToggle = TextLanguageToggle;
-// # sourceMappingURL=TextLanguageSettingView.js.map
+//# sourceMappingURL=TextLanguageSettingView.js.map

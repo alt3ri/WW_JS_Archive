@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayItemData = void 0);
-const PayItem_1 = require("../../../Core/Define/Config/PayItem");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const PayShopItemBase_1 = require("../PayShop/PayShopTab/TabItem/PayShopItemBase");
+const PayItem_1 = require("../../../Core/Define/Config/PayItem"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  PayShopItemBase_1 = require("../PayShop/PayShopTab/TabItem/PayShopItemBase");
 class PayItemData {
   constructor() {
     (this.XNi = void 0),
@@ -45,27 +45,26 @@ class PayItemData {
     return this.XNi.Refresh(this), this.XNi;
   }
   GetPayItemShowName() {
-    const t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-      ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-        this.ItemId,
-      ).Name,
-    );
-    var e =
-      ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
-        "GoodsName",
-      );
-    var e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e);
+    var t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+        ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+          this.ItemId,
+        ).Name,
+      ),
+      e =
+        ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
+          "GoodsName",
+        ),
+      e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e);
     return StringUtils_1.StringUtils.Format(e, t, this.ItemCount.toString());
   }
   GetDirectPriceText() {
-    const t =
-      ModelManager_1.ModelManager.KuroSdkModel?.GetQueryProductShowPrice(
-        this.$Ni.toString(),
-      );
+    var t = ModelManager_1.ModelManager.KuroSdkModel?.GetQueryProductShowPrice(
+      this.$Ni.toString(),
+    );
     return (
       t || ConfigManager_1.ConfigManager.PayItemConfig.GetPayShow(this.$Ni)
     );
   }
 }
 exports.PayItemData = PayItemData;
-// # sourceMappingURL=PayItemDefine.js.map
+//# sourceMappingURL=PayItemDefine.js.map

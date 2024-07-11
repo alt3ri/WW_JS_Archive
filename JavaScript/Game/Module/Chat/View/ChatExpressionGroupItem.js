@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChatExpressionGroupItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class ChatExpressionGroupItem extends UiPanelBase_1.UiPanelBase {
   constructor(s) {
     super(),
       (this.Q9e = 0),
       (this.x$e = void 0),
       (this.YMt = (s) => {
-        s === 1 && this.x$e && this.x$e(this.Q9e);
+        1 === s && this.x$e && this.x$e(this.Q9e);
       }),
       this.CreateThenShowByActor(s);
   }
@@ -37,4 +37,4 @@ class ChatExpressionGroupItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ChatExpressionGroupItem = ChatExpressionGroupItem;
-// # sourceMappingURL=ChatExpressionGroupItem.js.map
+//# sourceMappingURL=ChatExpressionGroupItem.js.map

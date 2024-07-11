@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletConstant = void 0);
-const UE = require("ue");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
+const UE = require("ue"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator");
 class BulletConstant {}
 ((exports.BulletConstant = BulletConstant).ProfileNameWater = new UE.FName(
   "水体",
@@ -26,4 +26,4 @@ class BulletConstant {}
   (BulletConstant.HitCase = new UE.FName("HitCase")),
   (BulletConstant.MoveCylinder = "CollisionCylinder"),
   (BulletConstant.RegionKey = "Region");
-// # sourceMappingURL=BulletConstant.js.map
+//# sourceMappingURL=BulletConstant.js.map

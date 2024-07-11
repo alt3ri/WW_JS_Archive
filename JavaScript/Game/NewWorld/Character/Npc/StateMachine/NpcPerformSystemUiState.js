@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcPerformSystemUiState = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../Core/Common/Time");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const StateBase_1 = require("../../../../../Core/Utils/StateMachine/StateBase");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const NpcPerformSequence_1 = require("./NpcPerformSequence/NpcPerformSequence");
-const STAND_BY_MONTAGE_CD = 20;
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  StateBase_1 = require("../../../../../Core/Utils/StateMachine/StateBase"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  NpcPerformSequence_1 = require("./NpcPerformSequence/NpcPerformSequence"),
+  STAND_BY_MONTAGE_CD = 20;
 class NpcPerformSystemUiState extends StateBase_1.StateBase {
   constructor() {
     super(...arguments),
@@ -134,7 +134,7 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
               "[CollectionItemDisplay]当提交物品升级成功时,Npc类型不是ChengXiaoShanShop或AntiqueShop,播放失败",
               ["NpcUiInteractType", this.Wer],
             )
-          : StringUtils_1.StringUtils.IsEmpty(this.str) || this.otr === "Empty"
+          : StringUtils_1.StringUtils.IsEmpty(this.str) || "Empty" === this.otr
             ? (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "NPC",
@@ -200,7 +200,7 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
           let t = this.str;
           this.Wer === IComponent_1.ENpcUiInteractType.ChengXiaoShanShop &&
             (t = this.VDn),
-            StringUtils_1.StringUtils.IsEmpty(t) || this.otr === "Empty"
+            StringUtils_1.StringUtils.IsEmpty(t) || "Empty" === this.otr
               ? (Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "NPC",
@@ -324,21 +324,21 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
       this.Ore(),
       this.ftr(!0),
       StringUtils_1.StringUtils.IsEmpty(this.zer) ||
-        this.zer === "Empty" ||
+        "Empty" === this.zer ||
         ResourceSystem_1.ResourceSystem.LoadAsync(
           this.zer,
           UE.AnimMontage,
           this.ltr,
         ),
       StringUtils_1.StringUtils.IsEmpty(this.otr) ||
-        this.otr === "Empty" ||
+        "Empty" === this.otr ||
         ResourceSystem_1.ResourceSystem.LoadAsync(
           this.otr,
           UE.AnimMontage,
           this._tr,
         ),
       StringUtils_1.StringUtils.IsEmpty(this.ntr) ||
-        this.ntr === "Empty" ||
+        "Empty" === this.ntr ||
         ResourceSystem_1.ResourceSystem.LoadAsync(
           this.ntr,
           UE.AnimMontage,
@@ -442,13 +442,13 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
     if (this.Ker) {
       const s = this.Owner.Entity.Disable("播放Sequence隐藏Npc");
       this.Qer.push({ HandleId: s, EntityHandle: this.Owner });
-      let t = this.Owner?.Entity.GetComponent(0);
+      var t = this.Owner?.Entity.GetComponent(0);
       if (t?.Valid) {
         t = t.GetBaseInfo().ChildEntityIds;
         if (t && !(t.length < 1)) {
-          const e = ModelManager_1.ModelManager.CreatureModel;
+          var e = ModelManager_1.ModelManager.CreatureModel;
           for (const h of t) {
-            const i = e.GetEntityByPbDataId(h);
+            var i = e.GetEntityByPbDataId(h);
             if (i?.Valid) {
               const s = i.Entity.Disable("播放Sequence隐藏子实体");
               this.Qer.push({ HandleId: s, EntityHandle: i });
@@ -459,7 +459,7 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
     }
   }
   ftr(t) {
-    const e = this.Owner?.Entity?.GetComponent(1);
+    var e = this.Owner?.Entity?.GetComponent(1);
     e?.SkeletalMesh?.IsValid() && (e.SkeletalMesh.ForcedLodModel = t ? 1 : 0);
   }
   SetNpcAndChildEnable() {
@@ -502,4 +502,4 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
   }
 }
 exports.NpcPerformSystemUiState = NpcPerformSystemUiState;
-// # sourceMappingURL=NpcPerformSystemUiState.js.map
+//# sourceMappingURL=NpcPerformSystemUiState.js.map

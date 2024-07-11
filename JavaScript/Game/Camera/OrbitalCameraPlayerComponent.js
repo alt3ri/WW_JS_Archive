@@ -1,35 +1,39 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, s) {
-    let r;
-    const o = arguments.length;
-    let h =
-      o < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      o = arguments.length,
+      h =
+        o < 3
+          ? e
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(e, i))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       h = Reflect.decorate(t, e, i, s);
     else
-      for (let a = t.length - 1; a >= 0; a--)
-        (r = t[a]) && (h = (o < 3 ? r(h) : o > 3 ? r(e, i, h) : r(e, i)) || h);
-    return o > 3 && h && Object.defineProperty(e, i, h), h;
+      for (var a = t.length - 1; 0 <= a; a--)
+        (r = t[a]) && (h = (o < 3 ? r(h) : 3 < o ? r(e, i, h) : r(e, i)) || h);
+    return 3 < o && h && Object.defineProperty(e, i, h), h;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OrbitalCameraPlayerComponent = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../Core/Actor/ActorSystem");
-const Log_1 = require("../../Core/Common/Log");
-const EntityComponent_1 = require("../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const Global_1 = require("../Global");
-const CameraController_1 = require("./CameraController");
-const CameraUtility_1 = require("./CameraUtility");
-const SEQUENCE_CAMERA = new UE.FName("SequenceCamera");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../Core/Common/Log"),
+  EntityComponent_1 = require("../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  Global_1 = require("../Global"),
+  CameraController_1 = require("./CameraController"),
+  CameraUtility_1 = require("./CameraUtility"),
+  SEQUENCE_CAMERA = new UE.FName("SequenceCamera");
 let OrbitalCameraPlayerComponent = class OrbitalCameraPlayerComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -50,14 +54,14 @@ let OrbitalCameraPlayerComponent = class OrbitalCameraPlayerComponent extends En
       (this.Lz = Vector_1.Vector.Create()),
       (this.Uxr = void 0),
       (this.OnModeChanged = (t, e) => {
-        t === 4
+        4 === t
           ? this.Uxr &&
             (this.Enable(
               this.Uxr,
               "[OrbitalCameraPlayerComponent.OnModeChanged] newMode === Orbital",
             ),
             (this.Uxr = void 0))
-          : e !== 4 ||
+          : 4 !== e ||
             this.Uxr ||
             (this.Uxr = this.Disable(
               "[OrbitalCameraPlayerComponent.OnModeChanged] oldMode === Orbital",
@@ -98,7 +102,7 @@ let OrbitalCameraPlayerComponent = class OrbitalCameraPlayerComponent extends En
     );
   }
   OnTick(t) {
-    let e;
+    var e;
     this.Ixr
       ? ((e = this.xxr()), this.wxr(e), this.Txr.JumpToFrame(this.d4i))
       : this.Uxr
@@ -166,7 +170,7 @@ let OrbitalCameraPlayerComponent = class OrbitalCameraPlayerComponent extends En
     );
   }
   jer() {
-    const t = new UE.MovieSceneSequencePlaybackSettings();
+    var t = new UE.MovieSceneSequencePlaybackSettings();
     (t.bDisableMovementInput = !1),
       (t.bDisableLookAtInput = !1),
       (this.Ixr = ActorSystem_1.ActorSystem.Get(
@@ -188,7 +192,7 @@ let OrbitalCameraPlayerComponent = class OrbitalCameraPlayerComponent extends En
       CameraController_1.CameraController.EnterCameraMode(4, this.ose, 0);
   }
   xxr() {
-    let t;
+    var t;
     return !Global_1.Global.BaseCharacter ||
       this.hYo < MathUtils_1.MathUtils.SmallNumber
       ? 0
@@ -200,9 +204,9 @@ let OrbitalCameraPlayerComponent = class OrbitalCameraPlayerComponent extends En
         MathUtils_1.MathUtils.Clamp(t, 0, 1));
   }
   wxr(t) {
-    var t = t * this.Axr;
-    const e = Math.floor(t);
-    var t = t - e;
+    var t = t * this.Axr,
+      e = Math.floor(t),
+      t = t - e;
     return (this.d4i.FrameNumber.Value = e), (this.d4i.SubFrame = t), this.d4i;
   }
 };
@@ -211,4 +215,4 @@ let OrbitalCameraPlayerComponent = class OrbitalCameraPlayerComponent extends En
   OrbitalCameraPlayerComponent,
 )),
   (exports.OrbitalCameraPlayerComponent = OrbitalCameraPlayerComponent);
-// # sourceMappingURL=OrbitalCameraPlayerComponent.js.map
+//# sourceMappingURL=OrbitalCameraPlayerComponent.js.map

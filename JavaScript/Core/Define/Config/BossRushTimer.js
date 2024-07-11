@@ -18,9 +18,9 @@ class BossRushTimer {
     );
   }
   id() {
-    const s = this.J7.__offset(this.z7, 4);
+    var s = this.J7.__offset(this.z7, 4);
     return s ? this.J7.readInt32(this.z7 + s) : 0;
   }
 }
 exports.BossRushTimer = BossRushTimer;
-// # sourceMappingURL=BossRushTimer.js.map
+//# sourceMappingURL=BossRushTimer.js.map

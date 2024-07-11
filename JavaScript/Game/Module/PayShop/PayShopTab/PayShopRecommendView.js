@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayShopRecommendView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const TabComponent_1 = require("../../Common/TabComponent/TabComponent");
-const TabViewComponent_1 = require("../../Common/TabComponent/TabViewComponent");
-const PayShopDefine_1 = require("../PayShopDefine");
-const PayShopSwitchItem_1 = require("./TabItem/PayShopSwitchItem");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  TabComponent_1 = require("../../Common/TabComponent/TabComponent"),
+  TabViewComponent_1 = require("../../Common/TabComponent/TabViewComponent"),
+  PayShopDefine_1 = require("../PayShopDefine"),
+  PayShopSwitchItem_1 = require("./TabItem/PayShopSwitchItem");
 class PayShopRecommendView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -22,9 +22,9 @@ class PayShopRecommendView extends UiTabViewBase_1.UiTabViewBase {
       }),
       (this.pqe = (e) => {
         this.CurrentSelectTabId = this.TabList[e];
-        const i = this.CurrentSelectTabId;
-        const t = PayShopDefine_1.recommendTabView[i];
-        var e = this.TabGroup.GetTabItemByIndex(e);
+        var i = this.CurrentSelectTabId,
+          t = PayShopDefine_1.recommendTabView[i],
+          e = this.TabGroup.GetTabItemByIndex(e);
         this.TabViewComponent.ToggleCallBack(i, t, e);
       });
   }
@@ -61,8 +61,7 @@ class PayShopRecommendView extends UiTabViewBase_1.UiTabViewBase {
   }
   OnBeforeShow() {
     (this._Fi = this.Params), this.GetText(5).SetUIActive(!1);
-    const e =
-      ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopTableList(1);
+    var e = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopTableList(1);
     this.TabList = e;
     let i = 0;
     this.ExtraParams && (i = this.ExtraParams) >= e.length && (i = 0),
@@ -82,12 +81,12 @@ class PayShopRecommendView extends UiTabViewBase_1.UiTabViewBase {
     this.TabViewComponent.SetCurrentTabViewState(!1);
   }
   async t7e() {
-    let e;
-    let i;
-    var t = this.TabList.length;
-    var t =
-      (await this.TabGroup.RefreshTabItemByLengthAsync(t),
-      this.TabGroup.GetTabItemMap());
+    var e,
+      i,
+      t = this.TabList.length,
+      t =
+        (await this.TabGroup.RefreshTabItemByLengthAsync(t),
+        this.TabGroup.GetTabItemMap());
     for ([e, i] of t) i.UpdateView(this._Fi, this.TabList[e]);
   }
   OnBeforeDestroy() {
@@ -98,4 +97,4 @@ class PayShopRecommendView extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.PayShopRecommendView = PayShopRecommendView;
-// # sourceMappingURL=PayShopRecommendView.js.map
+//# sourceMappingURL=PayShopRecommendView.js.map

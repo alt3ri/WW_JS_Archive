@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const AudioSystem_1 = require("../../Core/Audio/AudioSystem");
-const Log_1 = require("../../Core/Common/Log");
-const DEFAULT_FADE_DURATION = 500;
+const UE = require("ue"),
+  AudioSystem_1 = require("../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../Core/Common/Log"),
+  DEFAULT_FADE_DURATION = 500;
 class TsAnimNotifyStateAudioEvent extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -43,7 +43,7 @@ class TsAnimNotifyStateAudioEvent extends UE.KuroAnimNotifyState {
     );
   }
   K2_NotifyEnd(t, i) {
-    let e, o;
+    var e, o;
     return !(
       (this.KeepAlive &&
         this.GetCurrentTriggerOffsetInThisNotifyTick() > this.NotifyDuration) ||
@@ -71,8 +71,8 @@ class TsAnimNotifyStateAudioEvent extends UE.KuroAnimNotifyState {
     );
   }
   PostAudioEvent(t, i, e) {
-    let o;
-    const s = i.GetOwner();
+    var o,
+      s = i.GetOwner();
     s?.IsValid() &&
       (this.Follow
         ? (o = this.GetAkComponent(s, this.SocketName))?.IsValid() &&
@@ -107,7 +107,7 @@ class TsAnimNotifyStateAudioEvent extends UE.KuroAnimNotifyState {
   GetAkComponent(t, i) {
     let e = void 0;
     if (t.IsA(UE.TsBaseCharacter_C.StaticClass())) {
-      const o = t.CharacterActorComponent?.Entity?.GetComponent(42);
+      var o = t.CharacterActorComponent?.Entity?.GetComponent(42);
       if (!o?.Valid) return;
       e = o.GetAkComponent(i);
     } else
@@ -142,4 +142,4 @@ class TsAnimNotifyStateAudioEvent extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateAudioEvent;
-// # sourceMappingURL=TsAnimNotifyStateAudioEvent.js.map
+//# sourceMappingURL=TsAnimNotifyStateAudioEvent.js.map

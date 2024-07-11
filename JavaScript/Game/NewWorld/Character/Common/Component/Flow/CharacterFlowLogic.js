@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterFlowLogic = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ObjectUtils_1 = require("../../../../../../Core/Utils/ObjectUtils");
-const StringUtils_1 = require("../../../../../../Core/Utils/StringUtils");
-const Global_1 = require("../../../../../Global");
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const LogReportController_1 = require("../../../../../Module/LogReport/LogReportController");
-const LogReportDefine_1 = require("../../../../../Module/LogReport/LogReportDefine");
-const SimpleNpcFlowConditionChecker_1 = require("../../../SimpleNpc/Logics/SimpleNpcFlowConditionChecker");
-const DynamicFlowController_1 = require("./DynamicFlowController");
-const DEFAULT_WAIT_TIME = 3;
-const DEFAULT_LOOP_TIME = 10;
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ObjectUtils_1 = require("../../../../../../Core/Utils/ObjectUtils"),
+  StringUtils_1 = require("../../../../../../Core/Utils/StringUtils"),
+  Global_1 = require("../../../../../Global"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  LogReportController_1 = require("../../../../../Module/LogReport/LogReportController"),
+  LogReportDefine_1 = require("../../../../../Module/LogReport/LogReportDefine"),
+  SimpleNpcFlowConditionChecker_1 = require("../../../SimpleNpc/Logics/SimpleNpcFlowConditionChecker"),
+  DynamicFlowController_1 = require("./DynamicFlowController"),
+  DEFAULT_WAIT_TIME = 3,
+  DEFAULT_LOOP_TIME = 10;
 class CharacterFlowLogic {
   constructor(t, i) {
     (this.K$o = 0),
@@ -59,10 +59,10 @@ class CharacterFlowLogic {
       (e = this.DynamicFlowData
         ? this.DynamicFlowData.EntityIds
         : this.EntityList) &&
-      e.length > 2
+      2 < e.length
     )
       for (let t = 0, i = e.length; t < i; t++) {
-        const o = this.GetEntity(e[t]);
+        var o = this.GetEntity(e[t]);
         o && o.GetComponent(28).RemoveFlowActions();
       }
     else this.ActorComp.Entity.GetComponent(28).RemoveFlowActions();
@@ -70,9 +70,9 @@ class CharacterFlowLogic {
   PlayFlow() {
     if (this.CurrentFlowInfo || this.DynamicFlowData) {
       if (!this.DynamicFlowData || this.IsDynamicFlowActorsReady()) {
-        let t = void 0;
-        let i = 0;
-        let e;
+        let t = void 0,
+          i = 0;
+        var e;
         this.DynamicFlowData
           ? ((t = this.DynamicFlowData.Flow),
             (i = this.DynamicFlowData.Flow?.StateId
@@ -110,20 +110,20 @@ class CharacterFlowLogic {
             ["WaitTime", this.WaitSecondsRemain],
           );
     else {
-      let o = this.DynamicFlowData
-        ? this.DynamicFlowData.Flow
-        : this.CurrentFlowInfo?.Flow.FlowIndex;
-      let s = this.DynamicFlowData
-        ? this.DynamicFlowData.EntityIds
-        : this.EntityList;
-      var e = e[i];
+      var o = this.DynamicFlowData
+          ? this.DynamicFlowData.Flow
+          : this.CurrentFlowInfo?.Flow.FlowIndex,
+        s = this.DynamicFlowData
+          ? this.DynamicFlowData.EntityIds
+          : this.EntityList,
+        e = e[i];
       let t = this.ActorComp.Entity;
-      if (s && s?.length >= 2) {
+      if (s && 2 <= s?.length) {
         var r =
           SimpleNpcFlowConditionChecker_1.SimpleNpcFlowConditionChecker.GetFlowActorIndex(
             e.WhoId,
           );
-        if (r === -1)
+        if (-1 === r)
           return (
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
@@ -189,11 +189,11 @@ class CharacterFlowLogic {
   HandleFlowEnd() {
     if (((this.IsExecuteFlowEnd = !0), this.DynamicFlowData)) {
       this.WaitSecondsRemain = DEFAULT_LOOP_TIME;
-      var i = this.ActorComp.CreatureData.GetPbDataId();
-      var i =
-        DynamicFlowController_1.DynamicFlowController.GetDynamicFlowByMasterActor(
-          i,
-        ).Callback;
+      var i = this.ActorComp.CreatureData.GetPbDataId(),
+        i =
+          DynamicFlowController_1.DynamicFlowController.GetDynamicFlowByMasterActor(
+            i,
+          ).Callback;
       i && i();
     } else if (this.CurrentFlowInfo) {
       i = this.CurrentFlowInfo.Flow;
@@ -236,24 +236,26 @@ class CharacterFlowLogic {
   }
   GetWaitSeconds(t, i = 0) {
     let e = t.WaitTime;
-    return (e && e !== 0) || (e = DEFAULT_WAIT_TIME), (e += i);
+    return (e && 0 !== e) || (e = DEFAULT_WAIT_TIME), (e += i);
   }
   GetFlowText(t) {
     if (t && !StringUtils_1.StringUtils.IsEmpty(t))
       return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t);
   }
   hDi(t) {
-    const i = new LogReportDefine_1.PlayFlowLogData();
-    const e =
-      ((i.i_bubble_type = this.DynamicFlowData ? 2 : 1),
-      (i.s_flow_file = t.FlowListName),
-      (i.i_flow_id = t.FlowId),
-      (i.i_flow_status_id = t.StateId ?? 0),
-      (i.i_config_id = this.K$o),
-      (i.i_area_id = ModelManager_1.ModelManager.AreaModel.GetCurrentAreaId()),
-      (i.i_father_area_id =
-        ModelManager_1.ModelManager.AreaModel.AreaInfo.Father),
-      Global_1.Global.BaseCharacter.CharacterActorComponent.ActorLocationProxy);
+    var i = new LogReportDefine_1.PlayFlowLogData(),
+      e =
+        ((i.i_bubble_type = this.DynamicFlowData ? 2 : 1),
+        (i.s_flow_file = t.FlowListName),
+        (i.i_flow_id = t.FlowId),
+        (i.i_flow_status_id = t.StateId ?? 0),
+        (i.i_config_id = this.K$o),
+        (i.i_area_id =
+          ModelManager_1.ModelManager.AreaModel.GetCurrentAreaId()),
+        (i.i_father_area_id =
+          ModelManager_1.ModelManager.AreaModel.AreaInfo.Father),
+        Global_1.Global.BaseCharacter.CharacterActorComponent
+          .ActorLocationProxy);
     (i.f_pos_x = e.X),
       (i.f_pos_y = e.Y),
       (i.f_pos_z = e.Z),
@@ -274,15 +276,15 @@ class CharacterFlowLogic {
     return void 0 !== this.DynamicFlowData;
   }
   FindDynamicFlow() {
-    var t = this.ActorComp.CreatureData.GetPbDataId();
-    var t =
-      DynamicFlowController_1.DynamicFlowController.GetDynamicFlowByMasterActor(
-        t,
-      );
+    var t = this.ActorComp.CreatureData.GetPbDataId(),
+      t =
+        DynamicFlowController_1.DynamicFlowController.GetDynamicFlowByMasterActor(
+          t,
+        );
     return (this.DynamicFlowData = t?.BubbleData), !!t;
   }
   IsDynamicFlowActorsReady() {
-    const t = this.DynamicFlowData?.EntityIds;
+    var t = this.DynamicFlowData?.EntityIds;
     if (!t) return !1;
     for (const i of t)
       if (
@@ -294,4 +296,4 @@ class CharacterFlowLogic {
   }
 }
 exports.CharacterFlowLogic = CharacterFlowLogic;
-// # sourceMappingURL=CharacterFlowLogic.js.map
+//# sourceMappingURL=CharacterFlowLogic.js.map

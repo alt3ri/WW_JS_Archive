@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AudioPool = void 0);
-const UE = require("ue");
-const Log_1 = require("../Common/Log");
-const Time_1 = require("../Common/Time");
-const ResourceSystem_1 = require("../Resource/ResourceSystem");
-const StringUtils_1 = require("../Utils/StringUtils");
-const AudioPoolItem_1 = require("./AudioPoolItem");
+const UE = require("ue"),
+  Log_1 = require("../Common/Log"),
+  Time_1 = require("../Common/Time"),
+  ResourceSystem_1 = require("../Resource/ResourceSystem"),
+  StringUtils_1 = require("../Utils/StringUtils"),
+  AudioPoolItem_1 = require("./AudioPoolItem");
 class AudioPool {
   constructor() {
     (this.J6 = 1e4),
@@ -16,12 +16,12 @@ class AudioPool {
       (this.t8 = new Map());
   }
   GetAudioPool(e, o = !0) {
-    const t = this.Z6.get(e);
+    var t = this.Z6.get(e);
     if (t) return t.AudioEvent;
     o &&
       (this.Z6.set(e, new AudioPoolItem_1.AudioPoolItem(e)),
       this.i8(e, (o) => {
-        const t = this.Z6.get(e);
+        var t = this.Z6.get(e);
         t
           ? ((t.AudioEvent = o), t.DoCallback())
           : Log_1.Log.CheckWarn() &&
@@ -34,7 +34,7 @@ class AudioPool {
       }));
   }
   AddCallbackToLoad(o, t) {
-    const e = this.Z6.get(o);
+    var e = this.Z6.get(o);
     if (e) return e.AddCallback(t);
     Log_1.Log.CheckWarn() &&
       Log_1.Log.Warn(
@@ -50,7 +50,7 @@ class AudioPool {
     o = i.AddCallback(o);
     t && t.AddCallbackId(o),
       this.i8(e, (o) => {
-        const t = this.Z6.get(e);
+        var t = this.Z6.get(e);
         t
           ? ((t.AudioEvent = o), t.DoCallback())
           : Log_1.Log.CheckWarn() &&
@@ -63,7 +63,7 @@ class AudioPool {
       });
   }
   DeleteCallback(o, t) {
-    const e = this.Z6.get(o);
+    var e = this.Z6.get(o);
     e
       ? e.DeleteCallback(t)
       : Log_1.Log.CheckWarn() &&
@@ -75,7 +75,7 @@ class AudioPool {
         );
   }
   SetPlayFlag(o) {
-    const t = this.Z6.get(o);
+    var t = this.Z6.get(o);
     t
       ? (t.UseTime = Time_1.Time.Now)
       : Log_1.Log.CheckWarn() &&
@@ -89,11 +89,11 @@ class AudioPool {
   Tick(o) {
     if (((this.e8 += o), this.e8 > this.J6)) {
       this.e8 = 0;
-      let t;
-      let e;
-      let i;
-      let s;
-      const a = Time_1.Time.Now;
+      var t,
+        e,
+        i,
+        s,
+        a = Time_1.Time.Now;
       for ([t, e] of this.Z6)
         a - e.UseTime >= this.z6 && (e.Destroy(), this.Z6.delete(t));
       for ([i, s] of this.t8)
@@ -121,7 +121,7 @@ class AudioPool {
       ((t = new AudioPoolItem_1.ExternalSourcesPoolItem(t)), this.t8.set(o, t));
   }
   SetExternalSourcesPlayFlag(o) {
-    const t = this.t8.get(o);
+    var t = this.t8.get(o);
     t
       ? (t.UseTime = Time_1.Time.Now)
       : Log_1.Log.CheckError() &&
@@ -134,4 +134,4 @@ class AudioPool {
   }
 }
 exports.AudioPool = AudioPool;
-// # sourceMappingURL=AudioPool.js.map
+//# sourceMappingURL=AudioPool.js.map

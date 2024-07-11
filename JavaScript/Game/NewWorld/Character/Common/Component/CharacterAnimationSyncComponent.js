@@ -1,43 +1,48 @@
 "use strict";
-let CharacterAnimationSyncComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, a, i) {
-    let o;
-    const n = arguments.length;
-    let r =
-      n < 3 ? e : i === null ? (i = Object.getOwnPropertyDescriptor(e, a)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(t, e, a, i);
-    else
-      for (let s = t.length - 1; s >= 0; s--)
-        (o = t[s]) && (r = (n < 3 ? o(r) : n > 3 ? o(e, a, r) : o(e, a)) || r);
-    return n > 3 && r && Object.defineProperty(e, a, r), r;
-  };
+var CharacterAnimationSyncComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, a, i) {
+      var o,
+        n = arguments.length,
+        r =
+          n < 3
+            ? e
+            : null === i
+              ? (i = Object.getOwnPropertyDescriptor(e, a))
+              : i;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        r = Reflect.decorate(t, e, a, i);
+      else
+        for (var s = t.length - 1; 0 <= s; s--)
+          (o = t[s]) &&
+            (r = (n < 3 ? o(r) : 3 < n ? o(e, a, r) : o(e, a)) || r);
+      return 3 < n && r && Object.defineProperty(e, a, r), r;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterAnimationSyncComponent = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const StringBuilder_1 = require("../../../../../Core/Utils/StringBuilder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage");
-const CombatMessageController_1 = require("../../../../Module/CombatMessage/CombatMessageController");
-const CombatDebugController_1 = require("../../../../Utils/CombatDebugController");
-const WorldGlobal_1 = require("../../../../World/WorldGlobal");
-const animationStateListRef = (0, puerts_1.$ref)(UE.NewArray(UE.BuiltinInt));
-const specialStateListRef = (0, puerts_1.$ref)(UE.NewArray(UE.BuiltinInt));
-const animationStates = UE.NewArray(UE.BuiltinInt);
-const specialAnimationStates = UE.NewArray(UE.BuiltinInt);
-const animationTagList = [
-  792724096, -100527303, -1664105924, -1388636447, -513324610, 1818764431,
-  -726891989, -182271791, -1761987351, 967041502, 1491611589, 20810141,
-  1173061094,
-];
-const MAX_ANIM_STATE_CHANGE_COUNT = 600;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  StringBuilder_1 = require("../../../../../Core/Utils/StringBuilder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
+  CombatMessageController_1 = require("../../../../Module/CombatMessage/CombatMessageController"),
+  CombatDebugController_1 = require("../../../../Utils/CombatDebugController"),
+  WorldGlobal_1 = require("../../../../World/WorldGlobal"),
+  animationStateListRef = (0, puerts_1.$ref)(UE.NewArray(UE.BuiltinInt)),
+  specialStateListRef = (0, puerts_1.$ref)(UE.NewArray(UE.BuiltinInt)),
+  animationStates = UE.NewArray(UE.BuiltinInt),
+  specialAnimationStates = UE.NewArray(UE.BuiltinInt),
+  animationTagList = [
+    792724096, -100527303, -1664105924, -1388636447, -513324610, 1818764431,
+    -726891989, -182271791, -1761987351, 967041502, 1491611589, 20810141,
+    1173061094,
+  ],
+  MAX_ANIM_STATE_CHANGE_COUNT = 600;
 let CharacterAnimationSyncComponent =
   (CharacterAnimationSyncComponent_1 = class CharacterAnimationSyncComponent extends (
     EntityComponent_1.EntityComponent
@@ -52,7 +57,7 @@ let CharacterAnimationSyncComponent =
           this.g4r();
         }),
         (this.f4r = (t, e) => {
-          let a;
+          var a;
           ModelManager_1.ModelManager.GameModeModel.IsMulti &&
             this.Hte.IsMoveAutonomousProxy &&
             (((a = Protocol_1.Aki.Protocol.gNn.create()).E9n = t),
@@ -84,7 +89,7 @@ let CharacterAnimationSyncComponent =
         this.Lie)
       )
         for (const e of animationTagList) {
-          const t = this.Lie.ListenForTagAddOrRemove(e, this.f4r);
+          var t = this.Lie.ListenForTagAddOrRemove(e, this.f4r);
           this.d4r.push(t);
         }
       return !0;
@@ -98,15 +103,15 @@ let CharacterAnimationSyncComponent =
         this.oRe.MainAnimInstance &&
         UE.KismetSystemLibrary.IsValid(this.oRe.MainAnimInstance)
       ) {
-        const t = this.Entity.GetComponent(0).ComponentDataMap.get("Vvs");
-        var e = t?.Vvs.Kps;
-        let a = t?.Vvs.p9n;
+        var t = this.Entity.GetComponent(0).ComponentDataMap.get("Vvs"),
+          e = t?.Vvs.Kps,
+          a = t?.Vvs.p9n;
         if (this.Hte.IsMoveAutonomousProxy)
           this.oRe.MainAnimInstance.SetStateMachineNetMode(!1),
             this.AnimationStateInitPush();
         else {
           this.oRe.MainAnimInstance.SetStateMachineNetMode(!0),
-            e && e.length > 0
+            e && 0 < e.length
               ? ((i = (0, puerts_1.$unref)(animationStateListRef)),
                 WorldGlobal_1.WorldGlobal.ToUeInt32Array(e, i),
                 this.oRe.MainAnimInstance.SetStateOrdersReceivePending(i),
@@ -122,13 +127,13 @@ let CharacterAnimationSyncComponent =
                   "动画状态机初始化失败",
                 ),
             a &&
-              a.length > 0 &&
+              0 < a.length &&
               ((i = (0, puerts_1.$unref)(specialStateListRef)),
               WorldGlobal_1.WorldGlobal.ToUeInt32Array(a, i),
               this.oRe.SpecialAnimInstance?.SetStateOrdersReceivePending(i));
-          let i;
-          var e = t?.Vvs?.Xps;
-          if (e && e.length > 0) {
+          var i,
+            e = t?.Vvs?.Xps;
+          if (e && 0 < e.length) {
             for (const o of e) this.Lie.AddTag(o);
             CombatDebugController_1.CombatDebugController.CombatInfo(
               "Animation",
@@ -139,7 +144,7 @@ let CharacterAnimationSyncComponent =
           }
         }
         a = t?.Vvs?.Qps;
-        if (a && a.length > 0)
+        if (a && 0 < a.length)
           for (const n of a)
             this.oRe.HideBone(
               FNameUtil_1.FNameUtil.GetDynamicFName(n.M9n),
@@ -149,7 +154,7 @@ let CharacterAnimationSyncComponent =
       }
     }
     g4r() {
-      let t, e, a, i;
+      var t, e, a, i;
       ModelManager_1.ModelManager.GameModeModel.IsMulti &&
         this.Hte.IsMoveAutonomousProxy &&
         this.oRe.MainAnimInstance &&
@@ -162,7 +167,7 @@ let CharacterAnimationSyncComponent =
           specialStateListRef,
         ),
         (e = (0, puerts_1.$unref)(specialStateListRef)),
-        t.Num() > 0 || (this.oRe.SpecialAnimInstance && e.Num() > 0)) &&
+        0 < t.Num() || (this.oRe.SpecialAnimInstance && 0 < e.Num())) &&
         ((a = []),
         (i = []),
         WorldGlobal_1.WorldGlobal.ToTsArray(t, a),
@@ -193,7 +198,7 @@ let CharacterAnimationSyncComponent =
       t?.GetComponent(41)?.AnimationGameplayTagHandle(e);
     }
     AnimationStateChangedPush(t, e, a) {
-      let i;
+      var i;
       ModelManager_1.ModelManager.GameModeModel.IsMulti &&
         (((i = Protocol_1.Aki.Protocol.nNn.create()).f9n = e),
         (i.p9n = a),
@@ -219,7 +224,7 @@ let CharacterAnimationSyncComponent =
         CombatMessage_1.CombatNet.Call(18967, t, i, () => {}));
     }
     AnimationStateInitPush() {
-      let t, e, a, i;
+      var t, e, a, i;
       ModelManager_1.ModelManager.GameModeModel.IsMulti &&
         (this.oRe.MainAnimInstance.GetOriginStates(animationStateListRef),
         (i = (0, puerts_1.$unref)(animationStateListRef)),
@@ -253,7 +258,7 @@ let CharacterAnimationSyncComponent =
         CombatMessage_1.CombatNet.Call(26094, this.Entity, i, () => {}));
     }
     static AnimationStateChangedNotify(t, e) {
-      let a = t?.GetComponent(1);
+      var a = t?.GetComponent(1);
       t &&
         a &&
         !a.IsMoveAutonomousProxy &&
@@ -278,8 +283,8 @@ let CharacterAnimationSyncComponent =
         "动画状态机初始化通知",
         ["v", this.OrderToString(e.f9n)],
       );
-      var t = t.GetComponent(160);
-      let a = UE.NewArray(UE.BuiltinInt);
+      var t = t.GetComponent(160),
+        a = UE.NewArray(UE.BuiltinInt);
       WorldGlobal_1.WorldGlobal.ToUeInt32Array(e.f9n, a),
         t.MainAnimInstance.SetStateOrdersReceivePending(a),
         t.SpecialAnimInstance &&
@@ -288,15 +293,15 @@ let CharacterAnimationSyncComponent =
           t.SpecialAnimInstance.SetStateOrdersReceivePending(a));
     }
     static OrderToString(t) {
-      const e = new StringBuilder_1.StringBuilder();
+      var e = new StringBuilder_1.StringBuilder();
       let a = -1;
       for (; a + 5 <= t.length; ) {
-        const i = t[++a];
-        const o = t[++a];
-        const n = a + o;
+        var i = t[++a],
+          o = t[++a],
+          n = a + o;
         for (e.Append("[" + i); a + 3 <= n; ) {
-          const r = t[++a];
-          const s = (++a, t[++a]);
+          var r = t[++a],
+            s = (++a, t[++a]);
           e.Append("=>" + r), (a += s);
         }
         e.Append("]");
@@ -329,4 +334,4 @@ let CharacterAnimationSyncComponent =
       CharacterAnimationSyncComponent,
     )),
   (exports.CharacterAnimationSyncComponent = CharacterAnimationSyncComponent);
-// # sourceMappingURL=CharacterAnimationSyncComponent.js.map
+//# sourceMappingURL=CharacterAnimationSyncComponent.js.map

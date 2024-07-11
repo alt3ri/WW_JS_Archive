@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EditBattleTeamModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const InstOnlineType_1 = require("../../../Core/Define/Config/SubType/InstOnlineType");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const RoleDefine_1 = require("../RoleUi/RoleDefine");
-const SceneTeamDefine_1 = require("../SceneTeam/SceneTeamDefine");
-const EditBattleRoleData_1 = require("./EditBattleRoleData");
-const EditBattleRoleSlotData_1 = require("./EditBattleRoleSlotData");
-const EditBattleTeamController_1 = require("./EditBattleTeamController");
-const LIMIT_COUNT_MAX_LENGTH = 3;
+const Log_1 = require("../../../Core/Common/Log"),
+  InstOnlineType_1 = require("../../../Core/Define/Config/SubType/InstOnlineType"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  RoleDefine_1 = require("../RoleUi/RoleDefine"),
+  SceneTeamDefine_1 = require("../SceneTeam/SceneTeamDefine"),
+  EditBattleRoleData_1 = require("./EditBattleRoleData"),
+  EditBattleRoleSlotData_1 = require("./EditBattleRoleSlotData"),
+  EditBattleTeamController_1 = require("./EditBattleTeamController"),
+  LIMIT_COUNT_MAX_LENGTH = 3;
 class EditBattleTeamModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -46,9 +46,9 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
     return this.JFt;
   }
   get GetAllRoleConfigIdList() {
-    const t = [];
+    var t = [];
     for (let e = 1; e <= SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++) {
-      let r = this.GetRoleSlotData(e);
+      var r = this.GetRoleSlotData(e);
       r && r.HasRole && ((r = r.GetRoleData.ConfigId), t.push(r));
     }
     return t;
@@ -56,7 +56,7 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
   get IsAllRoleDie() {
     for (const t of this.GetAllRoleSlotData)
       if (t.HasRole) {
-        const e = t.GetRoleData.ConfigId;
+        var e = t.GetRoleData.ConfigId;
         if (this.IsTrialRole(e)) return !1;
         if (!ModelManager_1.ModelManager.EditFormationModel.IsRoleDead(e))
           return !1;
@@ -64,11 +64,11 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
     return !0;
   }
   get GetOwnRoleConfigIdList() {
-    const t = new Array();
-    const r = new Array();
-    const i = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
+    var t = new Array(),
+      r = new Array(),
+      i = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
     for (let e = 1; e <= SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++) {
-      let o = this.GetRoleSlotData(e);
+      var o = this.GetRoleSlotData(e);
       o &&
         o.HasRole &&
         i === (o = o.GetRoleData).PlayerId &&
@@ -77,7 +77,7 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
     return [t, r];
   }
   get IsMultiInstanceDungeon() {
-    const e = this.GetCurrentDungeonConfig;
+    var e = this.GetCurrentDungeonConfig;
     return (
       (!e || e.OnlineType !== InstOnlineType_1.InstOnlineType.Single) &&
       this.InstanceMultiEnter
@@ -111,9 +111,9 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
   }
   InitTrailRoleInstance() {
     this.ZFt.clear();
-    let e;
-    const t = this.GetCurrentFightFormation.TrialRole;
-    const r = ModelManager_1.ModelManager.RoleModel;
+    var e,
+      t = this.GetCurrentFightFormation.TrialRole,
+      r = ModelManager_1.ModelManager.RoleModel;
     for (const i of t)
       this.ZFt.has(i) ||
         ((e = r.GetRoleDataById(
@@ -124,18 +124,18 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
         this.ZFt.set(i, e));
   }
   GetRoleList() {
-    const t = ModelManager_1.ModelManager.RoleModel;
-    const r = [];
-    let e = t.GetRoleMap();
+    var t = ModelManager_1.ModelManager.RoleModel,
+      r = [],
+      e = t.GetRoleMap();
     if (this.o3t())
       for (const s of this.r3t()) {
-        var i;
-        const o = t.GetRoleDataById(s);
+        var i,
+          o = t.GetRoleDataById(s);
         o && ((i = o.GetDataId()), this.CanAddRoleToEditTeam(i)) && r.push(o);
       }
     else {
       for (const l of e.values()) {
-        const a = l.GetDataId();
+        var a = l.GetDataId();
         this.CanAddRoleToEditTeam(a) && r.push(l);
       }
       for (const f of this.ZFt.values()) r.push(f);
@@ -147,7 +147,7 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
       if (e) for (const h of e) this.e3t.push(h.Id);
     }
     for (let e = 0; e < r.length; ) {
-      const n = r[e].GetRoleId();
+      var n = r[e].GetRoleId();
       t.IsMainRole(n) && !this.e3t.includes(n) ? r.splice(e, 1) : e++;
     }
     return r;
@@ -156,41 +156,41 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
     return !!(this.o3t() || this.n3t() || this.s3t() || this.a3t());
   }
   r3t() {
-    const e = this.GetCurrentFightFormation;
+    var e = this.GetCurrentFightFormation;
     if (e) return e.LimitRole;
   }
   o3t() {
-    const e = this.r3t();
-    return !!e && e.length > 0;
+    var e = this.r3t();
+    return !!e && 0 < e.length;
   }
   n3t() {
-    let e = this.GetCurrentFightFormation;
-    return !!e && (e = e.LimitCount.length) !== LIMIT_COUNT_MAX_LENGTH && e > 0;
+    var e = this.GetCurrentFightFormation;
+    return !!e && (e = e.LimitCount.length) !== LIMIT_COUNT_MAX_LENGTH && 0 < e;
   }
   s3t() {
-    const e = this.GetCurrentFightFormation;
-    return !!e && e.LitmitElement.length > 0;
+    var e = this.GetCurrentFightFormation;
+    return !!e && 0 < e.LitmitElement.length;
   }
   a3t() {
     return !!ModelManager_1.ModelManager.InstanceDungeonEntranceModel.IsMowingInstanceDungeon();
   }
   CanAddRoleToEditTeam(e) {
-    let t;
+    var t;
     return (
       !!this.IsTrialRole(e) ||
       ((t = this.IsInLimitRole(e)), (e = this.IsInLimitElement(e)), t && e)
     );
   }
   IsInLimitRoleCount(e) {
-    const t = this.GetLimitRoleCountList();
+    var t = this.GetLimitRoleCountList();
     return !t || t.includes(e);
   }
   IsInLimitRole(e) {
-    let t = this.GetCurrentFightFormation;
+    var t = this.GetCurrentFightFormation;
     return !t || (t = t.LimitRole).length <= 0 || t.includes(e);
   }
   IsInLimitElement(e) {
-    let t = this.GetCurrentFightFormation;
+    var t = this.GetCurrentFightFormation;
     return (
       !t ||
       (!!(e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e)) &&
@@ -200,13 +200,13 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
   GetLimitRoleCountList() {
     var e = this.GetCurrentFightFormation;
     if (e) {
-      var e = e.LimitCount;
-      const t = e.length;
-      if (t !== 0) return e;
+      var e = e.LimitCount,
+        t = e.length;
+      if (0 !== t) return e;
     }
   }
   GetMaxLimitRoleCount() {
-    const e = this.GetLimitRoleCountList();
+    var e = this.GetLimitRoleCountList();
     return e ? e[e.length - 1] : 0;
   }
   get GetCurrentDungeonConfig() {
@@ -216,10 +216,10 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
       );
   }
   get GetCurrentFightFormation() {
-    let e = this.GetCurrentDungeonConfig;
+    var e = this.GetCurrentDungeonConfig;
     if (e) {
       e = e.FightFormationId;
-      if (e !== 0)
+      if (0 !== e)
         return ConfigManager_1.ConfigManager.EditBattleTeamConfig.GetFightFormationConfig(
           e,
         );
@@ -227,7 +227,7 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
   }
   CreateAllRoleSlotData() {
     for (let e = 1; e <= SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++) {
-      const t = new EditBattleRoleSlotData_1.EditBattleRoleSlotData(e);
+      var t = new EditBattleRoleSlotData_1.EditBattleRoleSlotData(e);
       this.$Ft.set(e, t);
     }
   }
@@ -239,25 +239,25 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
   }
   HasSameConfigIdInAnyOwnRoleSlot(e) {
     for (const r of this.$Ft.values()) {
-      const t = r.GetRoleData;
+      var t = r.GetRoleData;
       if (t && t.IsSelf && r.GetRoleConfigId === e) return !0;
     }
     return !1;
   }
   GetPlayerRoleNumber(e) {
     let t = 0;
-    for (const [, r] of this.$Ft) e === r.GetRoleData?.PlayerId && t++;
+    for (var [, r] of this.$Ft) e === r.GetRoleData?.PlayerId && t++;
     return t;
   }
   GetParentRolePositionInEditBattleTeam(e) {
-    let t;
+    var t;
     if (this.IsTrialRole(e))
       return (
         (t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e).Id),
         (t = this.GetSlotDataByConfigId(t)) ? t.GetPosition : -1
       );
     for (const i of this.GetAllRoleSlotData) {
-      let r = i.GetRoleData;
+      var r = i.GetRoleData;
       if (r) {
         r = r.GetTrialRoleConfig;
         if (r) if (r.ParentId === e) return i.GetPosition;
@@ -268,7 +268,7 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
   get GetOwnRoleCountInRoleSlot() {
     let e = 0;
     for (const r of this.$Ft.values()) {
-      const t = r.GetRoleData;
+      var t = r.GetRoleData;
       t && t.IsSelf && e++;
     }
     return e;
@@ -280,7 +280,7 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
   }
   PrintRoleSlotsDebugString() {
     for (let e = 1; e <= SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++) {
-      let t = this.GetRoleSlotData(e);
+      var t = this.GetRoleSlotData(e);
       t.HasRole
         ? ((t = t.GetRoleData),
           Log_1.Log.CheckInfo() &&
@@ -307,9 +307,9 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
     if (this.YFt) return this.GetRoleSlotData(this.YFt);
   }
   IsInEditBattleTeam(e, t = !1) {
-    const r = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
+    var r = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
     for (const o of this.$Ft.values()) {
-      const i = o.GetRoleData;
+      var i = o.GetRoleData;
       if (i && (!t || r === i.PlayerId) && i.ConfigId === e) return !0;
     }
     return !1;
@@ -320,12 +320,12 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
   }
   GetSlotDataByConfigId(e) {
     for (const r of this.$Ft.values()) {
-      const t = r.GetRoleData;
+      var t = r.GetRoleData;
       if (t && t.ConfigId === e) return r;
     }
   }
   InitAllRoleSlotData() {
-    let e;
+    var e;
     this.IsMultiInstanceDungeon
       ? (ModelManager_1.ModelManager.InstanceDungeonModel.SetPrewarFormationDataList(),
         (e =
@@ -338,14 +338,14 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
   }
   RefreshAllEmptySlotData() {
     for (let t = 1; t <= this.$Ft.size; t++) {
-      const r = this.$Ft.get(t);
+      var r = this.$Ft.get(t);
       if (r) {
-        const e = r.GetRoleData;
+        var e = r.GetRoleData;
         if (!e)
           for (let e = t + 1; e <= this.$Ft.size; e++) {
-            const i = this.$Ft.get(e);
+            var i = this.$Ft.get(e);
             if (i) {
-              const o = i.GetRoleData;
+              var o = i.GetRoleData;
               if (o) {
                 r.SetRoleData(o), i.ResetRoleData();
                 break;
@@ -356,12 +356,12 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
     }
   }
   get GetAllRoleSlotData() {
-    const e = [];
+    var e = [];
     for (const t of this.$Ft.values()) e.push(t);
     return e;
   }
   SetPlayerReady(e, t) {
-    for (const [, r] of this.$Ft) {
+    for (var [, r] of this.$Ft) {
       var i;
       r.HasRole &&
         (i = r.GetRoleData).PlayerId === e &&
@@ -375,27 +375,27 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
     }
   }
   get GetIsAllReady() {
-    const e = this.GetAllRoleSlotData;
-    const t = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
-    const r = this.GetLeaderIsSelf;
+    var e = this.GetAllRoleSlotData,
+      t = ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
+      r = this.GetLeaderIsSelf;
     for (const o of e)
       if (o.HasRole) {
-        const i = o.GetRoleData;
+        var i = o.GetRoleData;
         if (r) if (t === i.PlayerId) continue;
         if (!i.IsReady) return !1;
       }
     return !0;
   }
   get HasSameRole() {
-    const e = this.GetAllRoleSlotData;
+    var e = this.GetAllRoleSlotData;
     for (const o of e)
       if (o.HasRole && o.GetRoleData.IsSelf) {
-        const r = o.GetRoleData;
+        var r = o.GetRoleData;
         let t = r.ConfigId;
         this.IsTrialRole(t) && (t = r.GetTrialRoleConfig.ParentId);
         for (const a of e)
           if (a.HasRole && o.GetPosition !== a.GetPosition) {
-            const i = a.GetRoleData;
+            var i = a.GetRoleData;
             let e = i.ConfigId;
             if (
               (this.IsTrialRole(e) && (e = i.GetTrialRoleConfig.ParentId),
@@ -407,23 +407,23 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
     return !1;
   }
   IsRoleConflict(e, t) {
-    for (const [, r] of this.$Ft)
+    for (var [, r] of this.$Ft)
       if (r && r.GetRoleData?.PlayerId !== e && r.GetRoleConfigId === t)
         return !0;
     return !1;
   }
   get GetSelfIsReady() {
-    const e = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
+    var e = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
     return ModelManager_1.ModelManager.InstanceDungeonModel.GetPrewarPlayerReadyState(
       e,
     );
   }
   RefreshAllMultiRoleData() {
-    const t =
-      ModelManager_1.ModelManager.InstanceDungeonModel.GetPrewarFormationDataList();
-    const r = t.length;
+    var t =
+        ModelManager_1.ModelManager.InstanceDungeonModel.GetPrewarFormationDataList(),
+      r = t.length;
     for (let e = 0; e < LIMIT_COUNT_MAX_LENGTH; e++) {
-      const i = this.$Ft.get(e + 1);
+      var i = this.$Ft.get(e + 1);
       e + 1 > r ? i.ResetRoleData() : i.SetRoleDataByPrewarInfo(t[e]);
     }
     EventSystem_1.EventSystem.Emit(
@@ -433,8 +433,8 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
   InitAllMultiRoleData(e) {
     this.ResetAllRoleSlotData();
     for (const i of e) {
-      let t = i.GetIndex();
-      let r = this.GetRoleSlotData(t);
+      var t = i.GetIndex(),
+        r = this.GetRoleSlotData(t);
       r &&
         (i.IsEmpty() && i.IsLeader()
           ? Log_1.Log.CheckInfo() &&
@@ -470,8 +470,8 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
     this.ResetAllRoleSlotData();
     const t = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
     this.SetLeaderPlayerId(t), this.InitTrailRoleInstance();
-    let r = this.GetCurrentFightFormation.AutoRole;
-    if (r && r.length > 0) {
+    var r = this.GetCurrentFightFormation.AutoRole;
+    if (r && 0 < r.length) {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Formation",
@@ -481,8 +481,8 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
         );
       let e = 1;
       for (const d of r) {
-        var i;
-        const o = this.GetRoleSlotData(e);
+        var i,
+          o = this.GetRoleSlotData(e);
         o &&
           ((i = this.ZFt.get(d))
             ? ((i = this.CreateRoleDataFromRoleInstance(i)),
@@ -515,7 +515,7 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
         let e = void 0;
         (e =
           !ModelManager_1.ModelManager.TowerModel.CheckInTower() ||
-          r?.length > 0
+          0 < r?.length
             ? r
             : ModelManager_1.ModelManager.TowerModel.CurrentTowerFormation),
           EditBattleTeamController_1.EditBattleTeamController.SetEditBattleTeamByRoleId(
@@ -523,14 +523,14 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
           );
       } else {
         let e = 1;
-        const a = ModelManager_1.ModelManager.FunctionModel.GetPlayerName();
+        var a = ModelManager_1.ModelManager.FunctionModel.GetPlayerName();
         const t = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
-        const n = ModelManager_1.ModelManager.RoleModel;
+        var n = ModelManager_1.ModelManager.RoleModel;
         for (const _ of ModelManager_1.ModelManager.EditFormationModel.GetCurrentFormationData.GetRoleDataMap().values()) {
-          var s;
-          var l;
-          var f;
-          const h = _.ConfigId;
+          var s,
+            l,
+            f,
+            h = _.ConfigId;
           h <= 0 ||
             t !== _.PlayerId ||
             (Log_1.Log.CheckInfo() &&
@@ -542,7 +542,7 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
                 ["{ConfigId}", h],
                 ["{PlayerId}", _.PlayerId],
               ),
-            (s = this.GetMaxLimitRoleCount()) > 0 && e > s) ||
+            0 < (s = this.GetMaxLimitRoleCount()) && e > s) ||
             ((s = this.GetRoleSlotData(e)),
             this.CanAddRoleToEditTeam(h) &&
               ((l = new EditBattleRoleData_1.EditBattleRoleData()),
@@ -559,24 +559,24 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
     }
   }
   CreateRoleDataFromPrewarData(e) {
-    const t = e.GetConfigId();
-    const r = e.GetOnlineNumber();
-    const i = e.GetPlayerName();
-    const o = e.GetPlayerId();
-    const a = e.GetLevel();
-    const n = e.IsSelf();
-    var e = e.GetIsReady();
-    const s = new EditBattleRoleData_1.EditBattleRoleData();
+    var t = e.GetConfigId(),
+      r = e.GetOnlineNumber(),
+      i = e.GetPlayerName(),
+      o = e.GetPlayerId(),
+      a = e.GetLevel(),
+      n = e.IsSelf(),
+      e = e.GetIsReady(),
+      s = new EditBattleRoleData_1.EditBattleRoleData();
     return s.Init(o, t, r, i, a, n, e), s;
   }
   CreateRoleDataFromRoleInstance(e) {
-    const t = e.GetDataId();
-    var e = e.GetLevelData();
-    const r = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
-    const i = ModelManager_1.ModelManager.PlayerInfoModel.GetAccountName();
-    var e = e.GetLevel();
-    const o = this.GetSelfIsReady;
-    const a = new EditBattleRoleData_1.EditBattleRoleData();
+    var t = e.GetDataId(),
+      e = e.GetLevelData(),
+      r = ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
+      i = ModelManager_1.ModelManager.PlayerInfoModel.GetAccountName(),
+      e = e.GetLevel(),
+      o = this.GetSelfIsReady,
+      a = new EditBattleRoleData_1.EditBattleRoleData();
     return a.Init(r, t, 1, i, e, !0, o), a;
   }
   IsTrialRole(e) {
@@ -584,11 +584,11 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
   }
   ChangeMainRoleData() {
     if (!ModelManager_1.ModelManager.GameModeModel.IsMulti) {
-      const e = ModelManager_1.ModelManager.RoleModel;
+      var e = ModelManager_1.ModelManager.RoleModel;
       for (const o of this.$Ft.values()) {
-        var t;
-        const r = o.GetRoleData;
-        const i = r?.ConfigId;
+        var t,
+          r = o.GetRoleData,
+          i = r?.ConfigId;
         i &&
           !this.IsTrialRole(i) &&
           e.IsMainRole(i) &&
@@ -603,4 +603,4 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
   }
 }
 exports.EditBattleTeamModel = EditBattleTeamModel;
-// # sourceMappingURL=EditBattleTeamModel.js.map
+//# sourceMappingURL=EditBattleTeamModel.js.map

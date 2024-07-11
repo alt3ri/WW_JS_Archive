@@ -1,32 +1,32 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonBossStateView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const PublicUtil_1 = require("../../../../Common/PublicUtil");
-const GlobalData_1 = require("../../../../GlobalData");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const BattleUiDefine_1 = require("../../BattleUiDefine");
-const BuffItem_1 = require("../BuffItem");
-const HpBufferStateMachine_1 = require("../HeadState/HpBufferStateMachine");
-const RageBufferStateMachine_1 = require("../HeadState/RageBufferStateMachine");
-const VisibleAnimMachine_1 = require("../State/VisibleAnimMachine");
-const BossStateViewBase_1 = require("./BossStateViewBase");
-const FallDownPercentMachine_1 = require("./FallDownPercentMachine");
-const EAttributeId = Protocol_1.Aki.Protocol.KBs;
-const rgbSplitProgress = new UE.FName("RGBSplit_Progress");
-const FALL_DOWN_DISAPPEAR_PERCENT = 0.9;
-const FALL_DOWN_DISAPPEAR_TAIL_COUNT_FACTOR = 10;
-const SHOW_VIEW_ANIM_TIME = 667;
-const CLOSE_VIEW_ANIM_TIME = 167;
-const TOUGH_ANIM_TIME = 250;
-const fallDownAttributeId = EAttributeId.Proto_ParalysisTime;
-const fallDownMaxAttributeId = EAttributeId.Proto_ParalysisTimeMax;
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  PublicUtil_1 = require("../../../../Common/PublicUtil"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  BattleUiDefine_1 = require("../../BattleUiDefine"),
+  BuffItem_1 = require("../BuffItem"),
+  HpBufferStateMachine_1 = require("../HeadState/HpBufferStateMachine"),
+  RageBufferStateMachine_1 = require("../HeadState/RageBufferStateMachine"),
+  VisibleAnimMachine_1 = require("../State/VisibleAnimMachine"),
+  BossStateViewBase_1 = require("./BossStateViewBase"),
+  FallDownPercentMachine_1 = require("./FallDownPercentMachine");
+var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+const rgbSplitProgress = new UE.FName("RGBSplit_Progress"),
+  FALL_DOWN_DISAPPEAR_PERCENT = 0.9,
+  FALL_DOWN_DISAPPEAR_TAIL_COUNT_FACTOR = 10,
+  SHOW_VIEW_ANIM_TIME = 667,
+  CLOSE_VIEW_ANIM_TIME = 167,
+  TOUGH_ANIM_TIME = 250,
+  fallDownAttributeId = EAttributeId.Proto_ParalysisTime,
+  fallDownMaxAttributeId = EAttributeId.Proto_ParalysisTimeMax;
 class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
   constructor() {
     super(...arguments),
@@ -67,7 +67,7 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
       }),
       (this.OnVulnerabilityActivated = (t, i) => {
         this.drt = i;
-        const s = this.GetSprite(21);
+        var s = this.GetSprite(21);
         s.SetUIActive(i),
           this.drt
             ? (([i] = this.GetHpAndShieldPercent()),
@@ -95,7 +95,7 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
           t ? this.Irt(27) : this.Irt(30);
       }),
       (this.Trt = (t, i, s) => {
-        let e;
+        var e;
         t <= i
           ? this.Lrt()
           : ((e = this.GetSprite(20)).SetUIActive(!0),
@@ -104,7 +104,7 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
             s && this.Ert(28));
       }),
       (this.Drt = (t, i) => {
-        let s;
+        var s;
         t <= i
           ? this.Rrt()
           : ((s = this.GetItem(22)).SetUIActive(!0),
@@ -261,7 +261,7 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
     this.Nrt(!0), this.Ort();
   }
   Tick(i) {
-    let t;
+    var t;
     this.frt &&
       ((t = this.ert.UpdatePercent(i)) < 0
         ? this.Hrt()
@@ -269,10 +269,10 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
       this.irt.Update(i),
       this.Krt(i),
       this.rrt > this.nrt && (this.$rt(0), (this.rrt = -1)),
-      this.rrt >= 0 && (this.rrt += i);
+      0 <= this.rrt && (this.rrt += i);
     for (const e of this.Jot.values()) e.Tick(i);
-    for (let t = this.zot.length - 1; t >= 0; t--) {
-      const s = this.zot[t];
+    for (let t = this.zot.length - 1; 0 <= t; t--) {
+      var s = this.zot[t];
       s.TickHiding(i) || (this.zot.splice(t, 1), this.Zot.push(s));
     }
     super.Tick(i);
@@ -287,18 +287,18 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
     }
   }
   Zrt() {
-    const t = this.GetItem(13);
+    var t = this.GetItem(13);
     return new BuffItem_1.BuffItem(t);
   }
   ent(t, i, s, e = !1) {
-    const h = this.Jot.size;
-    const r = this.GetEntity().CheckGetComponent(157)?.GetBuffByHandle(s);
+    var h = this.Jot.size,
+      r = this.GetEntity().CheckGetComponent(157)?.GetBuffByHandle(s);
     t.Activate(i, r, e),
       t.GetRootItem().SetHierarchyIndex(h),
       this.Jot.set(s, t);
   }
   Jrt(t, i = !1) {
-    const s = this.tnt(t);
+    var s = this.tnt(t);
     s &&
       (this.Jot.delete(t),
       (i
@@ -307,7 +307,7 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
       ).push(s));
   }
   zrt() {
-    let t;
+    var t;
     if (!(this.Zot.length < 1))
       return (t = this.Zot[0]), this.Zot.splice(0, 1), t;
   }
@@ -323,11 +323,11 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
     this.Zot.length = 0;
   }
   prt(t = !1) {
-    const [i, s] = this.GetHpAndShieldPercent();
+    var [i, s] = this.GetHpAndShieldPercent();
     this.int(i), this.ont(s), t ? this.rnt(i) : this.Hrt(), (this.Xot = i);
   }
   rnt(t) {
-    let i;
+    var i;
     t < this.Xot &&
       ((i = this.ert.IsOriginState()),
       this.ert.GetHit(t, this.Xot),
@@ -354,33 +354,33 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
       this.drt && this.GetSprite(21).SetFillAmount(t);
   }
   Xrt(t) {
-    var i = this.srt * this.Xot;
-    var t = this.srt * t;
-    var i = t - i;
-    var t = t - (this.srt + i) / 2;
-    const s = this.GetItem(8);
+    var i = this.srt * this.Xot,
+      t = this.srt * t,
+      i = t - i,
+      t = t - (this.srt + i) / 2,
+      s = this.GetItem(8);
     s.SetAnchorOffsetX(t),
       s.SetWidth(i),
       s.SetUIActive(!0),
       this.GetSprite(9).SetAnchorOffsetX(-t);
   }
   ont(t) {
-    const i = this.GetSprite(10);
-    t > 0 ? (i.SetFillAmount(t), i.SetUIActive(!0)) : i.SetUIActive(!1);
+    var i = this.GetSprite(10);
+    0 < t ? (i.SetFillAmount(t), i.SetUIActive(!0)) : i.SetUIActive(!1);
   }
   Vrt() {
     if ((this.Wrt(), this.IsValid()))
       for (const i of this.GetEntity().GetComponent(19).GetAllCurrentCueRef()) {
-        const t = i.CueConfig;
+        var t = i.CueConfig;
         t.CueType === BattleUiDefine_1.UI_EFFECT_CUE_TYPE &&
           this.Yrt(t, i.ActiveHandleId);
       }
   }
   vrt() {
-    let t, i;
+    var t, i;
     this.IsValid() &&
       (t = this.GetText(0)) &&
-      (this.GetMonsterConfig()?.BossStateInfoShowType === 1
+      (1 === this.GetMonsterConfig()?.BossStateInfoShowType
         ? t.SetText("")
         : (i = this.GetMonsterConfig()?.TidLevelText)
           ? ((i = PublicUtil_1.PublicUtil.GetConfigTextByKey(i)),
@@ -389,7 +389,7 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
             LguiUtil_1.LguiUtil.SetLocalText(t, "LevelShow", i)));
   }
   qrt() {
-    let t, i;
+    var t, i;
     this.IsValid() &&
       ((i = this.GetCurrentAttributeValueById(EAttributeId.Proto_Lv)),
       (t = this.GetText(0)),
@@ -399,7 +399,7 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
       this.GetText(1).SetColor(i));
   }
   brt() {
-    let t, i, s;
+    var t, i, s;
     this.IsValid() &&
       ((t = PublicUtil_1.PublicUtil.GetConfigTextByKey(
         this.GetBaseInfo().TidName,
@@ -411,11 +411,11 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
       s.SetText(t + i);
   }
   Ort() {
-    const t = this.lrt || this.urt;
+    var t = this.lrt || this.urt;
     this.hrt !== t && ((this.hrt = t), this.Kot.SetVisible(t, TOUGH_ANIM_TIME));
   }
   krt() {
-    let t;
+    var t;
     this.IsValid() &&
       this.HardnessAttributeId === EAttributeId.Proto_Rage &&
       ((t =
@@ -442,7 +442,7 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
           : (this.mrt = !0));
   }
   jrt() {
-    const t = this.GetUiNiagara(12);
+    var t = this.GetUiNiagara(12);
     t.IsUIActiveSelf() && t.SetUIActive(!1);
   }
   Nrt(t = !1) {
@@ -476,13 +476,13 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
   }
   Krt(t = 0) {
     if (this.lrt) {
-      var i = this.GetCurrentAttributeValueById(fallDownAttributeId);
-      let s = this.GetCurrentAttributeValueById(fallDownMaxAttributeId);
-      var i =
-        (this.trt.SetTargetPercent(1 - i / s),
-        t > 0 && this.trt.Update(t),
-        this.trt.GetCurPercent());
-      if (i >= 0 && i <= 1) {
+      var i = this.GetCurrentAttributeValueById(fallDownAttributeId),
+        s = this.GetCurrentAttributeValueById(fallDownMaxAttributeId),
+        i =
+          (this.trt.SetTargetPercent(1 - i / s),
+          0 < t && this.trt.Update(t),
+          this.trt.GetCurPercent());
+      if (0 <= i && i <= 1) {
         s = this.GetSprite(18);
         this.Crt || (this.Crt = this.GetItem(17).GetWidth()),
           s.SetStretchRight(this.Crt * i);
@@ -505,11 +505,11 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
       this.hnt(31);
   }
   hnt(t) {
-    const i = [];
-    const s = this.GetItem(t)
-      .GetOwner()
-      .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass());
-    const e = s.Num();
+    var i = [],
+      s = this.GetItem(t)
+        .GetOwner()
+        .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass()),
+      e = s.Num();
     for (let t = 0; t < e; t++) i.push(s.Get(t));
     this.Art.set(t, i);
   }
@@ -529,4 +529,4 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
   }
 }
 exports.CommonBossStateView = CommonBossStateView;
-// # sourceMappingURL=CommonBossStateView.js.map
+//# sourceMappingURL=CommonBossStateView.js.map

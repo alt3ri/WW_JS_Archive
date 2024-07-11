@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleSkillExploreItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const TouchFingerManager_1 = require("../../../Ui/TouchFinger/TouchFingerManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const BattleSkillItem_1 = require("./BattleSkillItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  TouchFingerManager_1 = require("../../../Ui/TouchFinger/TouchFingerManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  BattleSkillItem_1 = require("./BattleSkillItem");
 class BattleSkillExploreItem extends BattleSkillItem_1.BattleSkillItem {
   constructor() {
     super(...arguments),
@@ -17,7 +17,7 @@ class BattleSkillExploreItem extends BattleSkillItem_1.BattleSkillItem {
         this.IsLongPress || (this.qet.GetOwner() === t && (this.Oet = e));
       }),
       (this.OnTouch = (e, t) => {
-        let i;
+        var i;
         this.IsLongPress ||
           ((e = Number(e)),
           (i =
@@ -74,4 +74,4 @@ class BattleSkillExploreItem extends BattleSkillItem_1.BattleSkillItem {
   }
 }
 exports.BattleSkillExploreItem = BattleSkillExploreItem;
-// # sourceMappingURL=BattleSkillExploreItem.js.map
+//# sourceMappingURL=BattleSkillExploreItem.js.map

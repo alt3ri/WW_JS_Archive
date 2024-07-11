@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonExchangeData = exports.ExchangeUnitData = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPopViewData_1 = require("../../../Ui/Define/UiPopViewData");
-const ItemDefines_1 = require("../../Item/Data/ItemDefines");
-const ItemExchangeDefine_1 = require("../ItemExchangeDefine");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPopViewData_1 = require("../../../Ui/Define/UiPopViewData"),
+  ItemDefines_1 = require("../../Item/Data/ItemDefines"),
+  ItemExchangeDefine_1 = require("../ItemExchangeDefine");
 class ExchangeUnitData {
   constructor() {
     (this.ItemId = 0),
@@ -35,12 +35,12 @@ class CommonExchangeData extends UiPopViewData_1.UiPopViewData {
       (this.ConfirmCallBack = void 0);
   }
   InitByItemId(e) {
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.ItemExchangeConfig.GetFirstExChangeConfigList(
         e,
       );
     e === ItemDefines_1.EItemId.BlackCard && (this.ShowPayGold = !0),
-      t.Consume.size > 1 &&
+      1 < t.Consume.size &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "ItemExchange",
@@ -67,4 +67,4 @@ class CommonExchangeData extends UiPopViewData_1.UiPopViewData {
   }
 }
 exports.CommonExchangeData = CommonExchangeData;
-// # sourceMappingURL=CommonExchangeData.js.map
+//# sourceMappingURL=CommonExchangeData.js.map

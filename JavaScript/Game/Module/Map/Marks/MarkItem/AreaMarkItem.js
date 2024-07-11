@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AreaMarkItem = void 0);
-const AreaMarkItemView_1 = require("../MarkItemView/AreaMarkItemView");
-const ConfigMarkItem_1 = require("./ConfigMarkItem");
+const AreaMarkItemView_1 = require("../MarkItemView/AreaMarkItemView"),
+  ConfigMarkItem_1 = require("./ConfigMarkItem");
 class AreaMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
   constructor() {
     super(...arguments), (this.InnerView = void 0);
@@ -12,4 +12,4 @@ class AreaMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
   }
 }
 exports.AreaMarkItem = AreaMarkItem;
-// # sourceMappingURL=AreaMarkItem.js.map
+//# sourceMappingURL=AreaMarkItem.js.map

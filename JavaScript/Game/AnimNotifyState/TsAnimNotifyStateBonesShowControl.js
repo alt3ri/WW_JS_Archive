@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyStateBonesShowControl extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.EndPlay = !0), (this.BoneName = void 0);
   }
   K2_NotifyBegin(t, e, r) {
-    let s = t.GetOwner();
+    var s = t.GetOwner();
     if (s instanceof TsBaseCharacter_1.default) {
       s = s.CharacterActorComponent.Entity;
       if (!s?.Valid) return !1;
@@ -18,7 +18,7 @@ class TsAnimNotifyStateBonesShowControl extends UE.KuroAnimNotifyState {
     return !1;
   }
   K2_NotifyEnd(t, e) {
-    let r = t.GetOwner();
+    var r = t.GetOwner();
     if (r instanceof TsBaseCharacter_1.default) {
       r = r.CharacterActorComponent?.Entity;
       if (!r?.Valid) return !1;
@@ -33,4 +33,4 @@ class TsAnimNotifyStateBonesShowControl extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateBonesShowControl;
-// # sourceMappingURL=TsAnimNotifyStateBonesShowControl.js.map
+//# sourceMappingURL=TsAnimNotifyStateBonesShowControl.js.map

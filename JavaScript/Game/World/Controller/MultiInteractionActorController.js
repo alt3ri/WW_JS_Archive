@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MultiInteractionActorController = void 0);
-const Queue_1 = require("../../../Core/Container/Queue");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const AttachToActorController_1 = require("./AttachToActorController");
-const MAX_DESTROY_TIME = 3;
+const Queue_1 = require("../../../Core/Container/Queue"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  AttachToActorController_1 = require("./AttachToActorController"),
+  MAX_DESTROY_TIME = 3;
 class MultiInteractionActorController extends ControllerBase_1.ControllerBase {
   static OnTick() {
     if (!(this.W0r.Size <= 0)) {
@@ -22,8 +22,8 @@ class MultiInteractionActorController extends ControllerBase_1.ControllerBase {
     return this.K0r(), !0;
   }
   static K0r() {
-    for (; this.W0r.Size > 0; ) {
-      const t = this.W0r.Pop();
+    for (; 0 < this.W0r.Size; ) {
+      var t = this.W0r.Pop();
       t?.IsValid() && t.DestroySelf();
     }
   }
@@ -41,4 +41,4 @@ class MultiInteractionActorController extends ControllerBase_1.ControllerBase {
 }
 (exports.MultiInteractionActorController =
   MultiInteractionActorController).W0r = new Queue_1.Queue();
-// # sourceMappingURL=MultiInteractionActorController.js.map
+//# sourceMappingURL=MultiInteractionActorController.js.map

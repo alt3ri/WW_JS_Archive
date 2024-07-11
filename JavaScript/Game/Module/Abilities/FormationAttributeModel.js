@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FormationAttributeModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const CommonDefine_1 = require("../../../Core/Define/CommonDefine");
-const FormationPropertyAll_1 = require("../../../Core/Define/ConfigQuery/FormationPropertyAll");
-const FormationPropertyById_1 = require("../../../Core/Define/ConfigQuery/FormationPropertyById");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const FormationAttributeController_1 = require("./FormationAttributeController");
+const Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
+  FormationPropertyAll_1 = require("../../../Core/Define/ConfigQuery/FormationPropertyAll"),
+  FormationPropertyById_1 = require("../../../Core/Define/ConfigQuery/FormationPropertyById"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  FormationAttributeController_1 = require("./FormationAttributeController");
 class FormationAttributeModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -17,8 +17,8 @@ class FormationAttributeModel extends ModelBase_1.ModelBase {
       (this.BoundsLockerMap = new Map());
   }
   GetConfig(e) {
-    let t;
-    let r = this.pK.get(e);
+    var t,
+      r = this.pK.get(e);
     return (
       r ||
         ((r = {
@@ -36,7 +36,7 @@ class FormationAttributeModel extends ModelBase_1.ModelBase {
     );
   }
   OnInit() {
-    const e = Time_1.Time.WorldTime;
+    var e = Time_1.Time.WorldTime;
     for (const t of FormationPropertyAll_1.configFormationPropertyAll.GetConfigList())
       this.zBe.set(t.Id, {
         Max: t.InitMax,
@@ -52,12 +52,12 @@ class FormationAttributeModel extends ModelBase_1.ModelBase {
     return this.pK.clear(), this.zBe.clear(), !0;
   }
   GetValue(e) {
-    let t;
-    let r;
-    const o = this.GetData(e);
+    var t,
+      r,
+      o = this.GetData(e);
     return o
       ? ((r = this.GetPredictedServerStopTime() - o.Timestamp),
-        (t = o.Speed) === 0 || r <= 0
+        0 === (t = o.Speed) || r <= 0
           ? o.Value
           : ((r = r * CommonDefine_1.SECOND_PER_MILLIONSECOND * t),
             this.ClampValue(e, o.Value + r, 0, o.Max)))
@@ -76,7 +76,7 @@ class FormationAttributeModel extends ModelBase_1.ModelBase {
     return this.GetData(e)?.Speed ?? 0;
   }
   GetData(e) {
-    const t = this.zBe.get(e);
+    var t = this.zBe.get(e);
     if (t) return t;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("CombatInfo", 20, "尝试读取不存在的队伍属性。", [
@@ -94,7 +94,7 @@ class FormationAttributeModel extends ModelBase_1.ModelBase {
       (e.Timestamp = a));
   }
   SetSpeed(e, t) {
-    const r = this.GetData(e);
+    var r = this.GetData(e);
     r &&
       ((e = this.GetValue(e)),
       (r.Timestamp = this.GetPredictedServerStopTime()),
@@ -102,13 +102,13 @@ class FormationAttributeModel extends ModelBase_1.ModelBase {
       (r.Speed = t));
   }
   SetValue(e, t) {
-    const r = this.GetData(e);
+    var r = this.GetData(e);
     r &&
       ((r.Timestamp = this.GetPredictedServerStopTime()),
       (r.Value = this.ClampValue(e, t, 0, r.Max)));
   }
   SetMax(e, t) {
-    const r = this.zBe.get(e);
+    var r = this.zBe.get(e);
     r &&
       ((e = this.GetValue(e)),
       (r.Timestamp = this.GetPredictedServerStopTime()),
@@ -116,11 +116,11 @@ class FormationAttributeModel extends ModelBase_1.ModelBase {
       (r.Max = t));
   }
   ClampValue(e, t, r, o) {
-    let i = t;
-    let a = r;
-    let s = o;
-    let n;
-    var t = this.BoundsLockerMap.get(e);
+    let i = t,
+      a = r,
+      s = o;
+    var n,
+      t = this.BoundsLockerMap.get(e);
     if (t)
       for (const h of t.values())
         h.LockLowerBounds &&
@@ -154,7 +154,7 @@ class FormationAttributeModel extends ModelBase_1.ModelBase {
   }
   RemoveBoundsLocker(e, t) {
     this.SetValue(e, this.GetValue(e));
-    const r = this.BoundsLockerMap.get(e);
+    var r = this.BoundsLockerMap.get(e);
     return !(!r || !r.delete(t) || (this.SetValue(e, this.GetValue(e)), 0));
   }
   GetPredictedServerStopTime() {
@@ -164,4 +164,4 @@ class FormationAttributeModel extends ModelBase_1.ModelBase {
   }
 }
 exports.FormationAttributeModel = FormationAttributeModel;
-// # sourceMappingURL=FormationAttributeModel.js.map
+//# sourceMappingURL=FormationAttributeModel.js.map

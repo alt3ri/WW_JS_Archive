@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayPackageData = void 0);
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const PayShopGoods_1 = require("./PayShopGoods");
-const PayShopGoodsData_1 = require("./PayShopGoodsData");
+const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  PayShopGoods_1 = require("./PayShopGoods"),
+  PayShopGoodsData_1 = require("./PayShopGoodsData");
 class PayPackageData {
   constructor() {
     (this.he = ""),
@@ -47,11 +47,11 @@ class PayPackageData {
       this.v2i.SetPayGiftId(this.Id);
   }
   M2i() {
-    let t = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+    var t = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
       this.ItemId,
     );
     (this.he = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.Name)),
-      this.ItemCount > 1 &&
+      1 < this.ItemCount &&
         ((t =
           ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
             "GoodsName",
@@ -64,7 +64,7 @@ class PayPackageData {
         )));
   }
   ShowInShop() {
-    return this.Type !== 2;
+    return 2 !== this.Type;
   }
   GetName() {
     return this.he;
@@ -73,9 +73,9 @@ class PayPackageData {
     return this.v2i;
   }
   ConvertToPayShopGoodsData() {
-    const t = new PayShopGoodsData_1.PayShopGoodsData();
+    var t = new PayShopGoodsData_1.PayShopGoodsData();
     return t.PhraseFromPayPackageData(this), t;
   }
 }
 exports.PayPackageData = PayPackageData;
-// # sourceMappingURL=PayPackageData.js.map
+//# sourceMappingURL=PayPackageData.js.map

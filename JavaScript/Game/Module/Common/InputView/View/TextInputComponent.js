@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TextInputComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const TickSystem_1 = require("../../../../../Core/Tick/TickSystem");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const CommonInputViewDefine_1 = require("../Model/CommonInputViewDefine");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  TickSystem_1 = require("../../../../../Core/Tick/TickSystem"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  CommonInputViewDefine_1 = require("../Model/CommonInputViewDefine");
 class TextInputComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t, i) {
     super(),
@@ -23,14 +23,14 @@ class TextInputComponent extends UiPanelBase_1.UiPanelBase {
       (this.zvt = CommonInputViewDefine_1.MAX_SINGLE_LENGTH),
       (this.Zvt = 0),
       (this.AUt = (t) => {
-        t && this.DUt === 1 && this.ZFe(0);
+        t && 1 === this.DUt && this.ZFe(0);
       }),
       (this.xUt = () => {
-        const t = this.vUt.GetText();
-        const i = StringUtils_1.StringUtils.GetStringRealCount(t);
+        var t = this.vUt.GetText(),
+          i = StringUtils_1.StringUtils.GetStringRealCount(t);
         i > this.zvt
           ? (this.ZFe(2), (this.j3 = 0))
-          : i === 0 && this.XUt.IsCheckNone
+          : 0 === i && this.XUt.IsCheckNone
             ? (this.ZFe(1), (this.j3 = 0))
             : i < this.Zvt
               ? (this.ZFe(3), (this.j3 = 0))
@@ -106,7 +106,7 @@ class TextInputComponent extends UiPanelBase_1.UiPanelBase {
   }
   OnStart() {
     (this.RUt = {
-      0: this.wUt,
+      [0]: this.wUt,
       1: this.BUt,
       2: this.qUt,
       3: this.GUt,
@@ -131,7 +131,7 @@ class TextInputComponent extends UiPanelBase_1.UiPanelBase {
   }
   bUt(t, i) {
     this.GetItem(0).SetUIActive(!0);
-    const e = this.GetText(1);
+    var e = this.GetText(1);
     LguiUtil_1.LguiUtil.SetLocalTextNew(e, t), (this.j3 = i);
   }
   OnBeforeDestroy() {
@@ -142,4 +142,4 @@ class TextInputComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.TextInputComponent = TextInputComponent;
-// # sourceMappingURL=TextInputComponent.js.map
+//# sourceMappingURL=TextInputComponent.js.map

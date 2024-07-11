@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayCueMagnitude = void 0);
-const Log_1 = require("../../../../../../../Core/Common/Log");
-const GameplayTagUtils_1 = require("../../../../../../../Core/Utils/GameplayTagUtils");
-const MathUtils_1 = require("../../../../../../../Core/Utils/MathUtils");
-const CharacterAttributeTypes_1 = require("../CharacterAttributeTypes");
-const GameplayCueBase_1 = require("./GameplayCueBase");
+const Log_1 = require("../../../../../../../Core/Common/Log"),
+  GameplayTagUtils_1 = require("../../../../../../../Core/Utils/GameplayTagUtils"),
+  MathUtils_1 = require("../../../../../../../Core/Utils/MathUtils"),
+  CharacterAttributeTypes_1 = require("../CharacterAttributeTypes"),
+  GameplayCueBase_1 = require("./GameplayCueBase");
 class GameplayCueMagnitude extends GameplayCueBase_1.GameplayCueBase {
   constructor() {
     super(...arguments),
@@ -27,7 +27,7 @@ class GameplayCueMagnitude extends GameplayCueBase_1.GameplayCueBase {
       });
   }
   OnInit() {
-    const t = this.Entity;
+    var t = this.Entity;
     (this.$te = t.CheckGetComponent(156)),
       (this.elt = t.CheckGetComponent(157)),
       (this.Xte = t.CheckGetComponent(185)),
@@ -46,7 +46,7 @@ class GameplayCueMagnitude extends GameplayCueBase_1.GameplayCueBase {
   }
   OnSetMagnitude(t) {}
   UseMagnitude() {
-    return this.CueConfig.Magni !== 0 && !this.IsInstant;
+    return 0 !== this.CueConfig.Magni && !this.IsInstant;
   }
   s$o() {
     let t = 0;
@@ -143,11 +143,11 @@ class GameplayCueMagnitude extends GameplayCueBase_1.GameplayCueBase {
     );
   }
   n$o() {
-    const t =
-      this.elt.GetBuffByHandle(this.ActiveHandleId)?.GetRemainDuration() ?? 0;
-    const i = this.elt.GetBuffByHandle(this.ActiveHandleId)?.Duration ?? 1;
-    return i > 0 ? t / i : 0;
+    var t =
+        this.elt.GetBuffByHandle(this.ActiveHandleId)?.GetRemainDuration() ?? 0,
+      i = this.elt.GetBuffByHandle(this.ActiveHandleId)?.Duration ?? 1;
+    return 0 < i ? t / i : 0;
   }
 }
 exports.GameplayCueMagnitude = GameplayCueMagnitude;
-// # sourceMappingURL=GameplayCueMagnitude.js.map
+//# sourceMappingURL=GameplayCueMagnitude.js.map

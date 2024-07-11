@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TsUiNavigationPlatformChangeListener = void 0);
-const UE = require("ue");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
+const UE = require("ue"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager");
 class TsUiNavigationPlatformChangeListener extends UE.LGUIBehaviour {
   constructor() {
     super(...arguments), (this.IsChangeAlpha = !1);
@@ -29,4 +29,4 @@ class TsUiNavigationPlatformChangeListener extends UE.LGUIBehaviour {
 (exports.TsUiNavigationPlatformChangeListener =
   TsUiNavigationPlatformChangeListener),
   (exports.default = TsUiNavigationPlatformChangeListener);
-// # sourceMappingURL=TsUiNavigationPlatformChangeListener.js.map
+//# sourceMappingURL=TsUiNavigationPlatformChangeListener.js.map

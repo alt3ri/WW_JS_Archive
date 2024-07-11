@@ -11,4 +11,4 @@ class MingSuNpcMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
   }
 }
 exports.MingSuNpcMarkItemView = MingSuNpcMarkItemView;
-// # sourceMappingURL=MingSuNpcMarkItemView.js.map
+//# sourceMappingURL=MingSuNpcMarkItemView.js.map

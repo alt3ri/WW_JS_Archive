@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneCharacterWaterEffect = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EffectContext_1 = require("../../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../../Effect/EffectSystem");
-const GlobalData_1 = require("../../../GlobalData");
-const CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const ONE_SECOND = 1e3;
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EffectContext_1 = require("../../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  ONE_SECOND = 1e3;
 class WaterEffectItem {
   constructor() {
     (this.SpeedThreshold = 0),
@@ -35,11 +35,11 @@ class WaterEffectGroup {
       e < this.EffectItems.length && !(t < this.EffectItems[e].SpeedThreshold);
       ++e
     );
-    if (e !== 0) return this.EffectItems[e - 1];
+    if (0 !== e) return this.EffectItems[e - 1];
   }
   Init(e) {
     this.WaterDepthThreshold = e.WaterDepth;
-    const i = e.EffectConfig.Num();
+    var i = e.EffectConfig.Num();
     this.EffectItems.length = i;
     for (let t = 0; t < i; t++)
       (this.EffectItems[t] = new WaterEffectItem()),
@@ -61,7 +61,7 @@ class WaterEffectSubConfig {
       !(t < this.MoveEffects[i].WaterDepthThreshold);
       ++i
     );
-    if (i !== 0) return this.MoveEffects[i - 1].FindEffectAtSpeed(e);
+    if (0 !== i) return this.MoveEffects[i - 1].FindEffectAtSpeed(e);
   }
   FindFallEffectAtSpeed(t) {
     let e = 0;
@@ -70,7 +70,7 @@ class WaterEffectSubConfig {
       e < this.FallEffects.length && !(t < this.FallEffects[e].SpeedThreshold);
       ++e
     );
-    if (e !== 0) return this.FallEffects[e - 1];
+    if (0 !== e) return this.FallEffects[e - 1];
   }
   FindJumpEffectAtSpeed(t) {
     let e = 0;
@@ -79,20 +79,20 @@ class WaterEffectSubConfig {
       e < this.JumpEffects.length && !(t < this.JumpEffects[e].SpeedThreshold);
       ++e
     );
-    if (e !== 0) return this.JumpEffects[e - 1];
+    if (0 !== e) return this.JumpEffects[e - 1];
   }
   Init(e) {
-    const i = e.MoveEffects.Num();
+    var i = e.MoveEffects.Num();
     this.MoveEffects.length = i;
     for (let t = 0; t < i; t++)
       (this.MoveEffects[t] = new WaterEffectGroup()),
         this.MoveEffects[t].Init(e.MoveEffects.Get(t));
-    const s = e.FallEffects.Num();
+    var s = e.FallEffects.Num();
     this.FallEffects.length = s;
     for (let t = 0; t < s; t++)
       (this.FallEffects[t] = new WaterEffectItem()),
         this.FallEffects[t].Init(e.FallEffects.Get(t));
-    const h = e.JumpEffects.Num();
+    var h = e.JumpEffects.Num();
     this.JumpEffects.length = h;
     for (let t = 0; t < h; t++)
       (this.JumpEffects[t] = new WaterEffectItem()),
@@ -160,11 +160,11 @@ class SceneCharacterWaterEffect {
         (this.SwimIdleEffect = this.Config.SwimIdleEffectRef),
         (this.SwimNormalEffect = this.Config.SwimNormalEffectRef),
         (this.SwimFastEffect = this.Config.SwimFastEffectRef);
-      const e = this.Config.MaterialEffectConfig.Num();
+      var e = this.Config.MaterialEffectConfig.Num();
       for (let t = 0; t < e; t++) {
-        var i;
-        const s = this.Config.MaterialEffectConfig.GetKey(t);
-        const h = this.Config.MaterialEffectConfig.Get(s);
+        var i,
+          s = this.Config.MaterialEffectConfig.GetKey(t),
+          h = this.Config.MaterialEffectConfig.Get(s);
         h &&
           ((i = new WaterEffectSubConfig()).Init(h),
           this.OnMaterialSubConfig.set(s, i));
@@ -213,7 +213,7 @@ class SceneCharacterWaterEffect {
       ]);
   }
   Tick() {
-    let t, e, i, s;
+    var t, e, i, s;
     this.IsEnabled &&
       (EffectSystem_1.EffectSystem.IsValid(this.Handle) &&
         (EffectSystem_1.EffectSystem.HandleSeekToTime(
@@ -246,7 +246,7 @@ class SceneCharacterWaterEffect {
           void 0,
           !0,
         ),
-      this.OwnerHeight > 0) &&
+      0 < this.OwnerHeight) &&
       ((s = MathUtils_1.MathUtils.Clamp(
         this.CurrentWaterDepth / this.OwnerHeight,
         0,
@@ -263,7 +263,7 @@ class SceneCharacterWaterEffect {
     this.IsEnabled &&
       (this.VelocityHistory.AddVelocity(t),
       (this.CurrentSpeed = t.Size()),
-      this.State !== 0) &&
+      0 !== this.State) &&
       (this.CurrentSubConfig &&
         this.OnCharacterJumpOutWater(
           t,
@@ -283,7 +283,7 @@ class SceneCharacterWaterEffect {
       (this.CurrentWaterNormal = e),
       this.VelocityHistory.AddVelocity(i),
       (this.CurrentSpeed = i.Size()),
-      this.State === 0 &&
+      0 === this.State &&
         this.OnCharacterFallInWater(
           i,
           this.CurrentWaterLocation,
@@ -311,7 +311,7 @@ class SceneCharacterWaterEffect {
           (this.CurrentWaterNormal = i),
           this.VelocityHistory.AddVelocity(s),
           (this.CurrentSpeed = s.Size()),
-          this.State === 0 &&
+          0 === this.State &&
             this.OnCharacterFallInWater(s, this.CurrentWaterLocation, i, t, e),
           (f = t.FindMoveEffect(e, this.CurrentSpeed)) &&
             this.SpawnEffect(f.EffectDataPath, f.AudioEffectDataPath, h, i),
@@ -362,7 +362,7 @@ class SceneCharacterWaterEffect {
   }
   StopEffect() {
     const t = this.Handle;
-    let e;
+    var e;
     t &&
       EffectSystem_1.EffectSystem.IsValid(t) &&
       (EffectSystem_1.EffectSystem.HandleSeekToTime(t, 0, !1),
@@ -409,7 +409,7 @@ class SceneCharacterWaterEffect {
         EffectSystem_1.EffectSystem.IsValid(this.Handle) &&
           (this.HandlePath = t),
         e) &&
-        (i = e.ToAssetPathName()).length > 0 &&
+        0 < (i = e.ToAssetPathName()).length &&
         (this.AudioEffectHandle = EffectSystem_1.EffectSystem.SpawnEffect(
           this.Owner,
           this.EmptyUeTransform,
@@ -433,7 +433,7 @@ class SceneCharacterWaterEffect {
     );
     return (
       e &&
-        (s = e.ToAssetPathName()).length > 0 &&
+        0 < (s = e.ToAssetPathName()).length &&
         EffectSystem_1.EffectSystem.SpawnUnloopedEffect(
           GlobalData_1.GlobalData.World,
           this.EmptyUeTransform,
@@ -447,4 +447,4 @@ class SceneCharacterWaterEffect {
   }
 }
 exports.SceneCharacterWaterEffect = SceneCharacterWaterEffect;
-// # sourceMappingURL=SceneCharacterWaterEffect.js.map
+//# sourceMappingURL=SceneCharacterWaterEffect.js.map

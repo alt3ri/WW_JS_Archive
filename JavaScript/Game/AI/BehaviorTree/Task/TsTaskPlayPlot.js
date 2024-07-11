@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const DEFAULT_WAIT_TICK = 5;
+const Log_1 = require("../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  DEFAULT_WAIT_TICK = 5;
 class TsTaskPlayPlot extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -60,4 +60,4 @@ class TsTaskPlayPlot extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskPlayPlot;
-// # sourceMappingURL=TsTaskPlayPlot.js.map
+//# sourceMappingURL=TsTaskPlayPlot.js.map

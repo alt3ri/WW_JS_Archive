@@ -1,32 +1,36 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, o, r) {
-    let n;
-    const i = arguments.length;
-    let s =
-      i < 3 ? t : r === null ? (r = Object.getOwnPropertyDescriptor(t, o)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var n,
+      i = arguments.length,
+      s =
+        i < 3
+          ? t
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(t, o))
+            : r;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(e, t, o, r);
     else
-      for (let a = e.length - 1; a >= 0; a--)
-        (n = e[a]) && (s = (i < 3 ? n(s) : i > 3 ? n(t, o, s) : n(t, o)) || s);
-    return i > 3 && s && Object.defineProperty(t, o, s), s;
+      for (var a = e.length - 1; 0 <= a; a--)
+        (n = e[a]) && (s = (i < 3 ? n(s) : 3 < i ? n(t, o, s) : n(t, o)) || s);
+    return 3 < i && s && Object.defineProperty(t, o, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PasserbyGeneratorComponent = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const Net_1 = require("../../../../../Core/Net/Net");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent");
-const Global_1 = require("../../../../Global");
-const GameSplineComponent_1 = require("../../../../LevelGamePlay/Common/GameSplineComponent");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  Global_1 = require("../../../../Global"),
+  GameSplineComponent_1 = require("../../../../LevelGamePlay/Common/GameSplineComponent"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager");
 class SplineStateInfo {
   constructor(e, t) {
     (this.PbDataId = 0),
@@ -49,12 +53,12 @@ let PasserbyGeneratorComponent = class PasserbyGeneratorComponent extends Entity
   OnStart() {
     (this.Hte = this.Entity.GetComponent(1)),
       (this.SIe = this.Entity.GetComponent(0));
-    let e;
-    let t;
-    const o = (0, IComponent_1.getComponent)(
-      this.SIe.GetPbEntityInitData().ComponentsData,
-      "PasserbyNpcSpawnComponent",
-    );
+    var e,
+      t,
+      o = (0, IComponent_1.getComponent)(
+        this.SIe.GetPbEntityInitData().ComponentsData,
+        "PasserbyNpcSpawnComponent",
+      );
     if (!o?.SpawnConfig.MinDistance) return !(this.Qin = !1);
     this.Kin = o.SpawnConfig.MinDistance * o.SpawnConfig.MinDistance;
     for (const r of o.MoveConfig.Routes)
@@ -98,7 +102,7 @@ let PasserbyGeneratorComponent = class PasserbyGeneratorComponent extends Entity
   }
   Xin(e) {
     let t = MathUtils_1.MathUtils.MaxFloat;
-    let o;
+    var o;
     return (
       ModelManager_1.ModelManager.GameModeModel.IsMulti
         ? ((o = this.Yin(e)), (t = o.MinDistSquared))
@@ -112,7 +116,7 @@ let PasserbyGeneratorComponent = class PasserbyGeneratorComponent extends Entity
     );
   }
   $in(e, t) {
-    const o = Protocol_1.Aki.Protocol.iJn.create();
+    var o = Protocol_1.Aki.Protocol.iJn.create();
     (o.rkn = MathUtils_1.MathUtils.NumberToLong(
       this.Hte.CreatureData.GetCreatureDataId(),
     )),
@@ -128,16 +132,13 @@ let PasserbyGeneratorComponent = class PasserbyGeneratorComponent extends Entity
       });
   }
   Yin(e) {
-    const t = ModelManager_1.ModelManager.CreatureModel.ScenePlayerDataMap;
-    const o = ModelManager_1.ModelManager.SceneTeamModel;
-    let r = void 0;
-    let n = MathUtils_1.MathUtils.MaxFloat;
+    var t = ModelManager_1.ModelManager.CreatureModel.ScenePlayerDataMap,
+      o = ModelManager_1.ModelManager.SceneTeamModel;
+    let r = void 0,
+      n = MathUtils_1.MathUtils.MaxFloat;
     for (const a of t) {
-      var i;
-      const s = o.GetTeamItem(a[0], {
-        ParamType: 2,
-        IsControl: !0,
-      })?.EntityHandle;
+      var i,
+        s = o.GetTeamItem(a[0], { ParamType: 2, IsControl: !0 })?.EntityHandle;
       s &&
         (s.Entity.GetComponent(3).ActorLocationProxy.Subtraction(e, this.wit),
         (i = this.wit.SizeSquared2D()) < n) &&
@@ -151,4 +152,4 @@ let PasserbyGeneratorComponent = class PasserbyGeneratorComponent extends Entity
   PasserbyGeneratorComponent,
 )),
   (exports.PasserbyGeneratorComponent = PasserbyGeneratorComponent);
-// # sourceMappingURL=PasserbyGeneratorComponent.js.map
+//# sourceMappingURL=PasserbyGeneratorComponent.js.map

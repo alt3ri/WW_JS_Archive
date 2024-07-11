@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PsGamepadItem = void 0);
-const UE = require("ue");
-const GamepadItemBase_1 = require("./GamepadItemBase");
+const UE = require("ue"),
+  GamepadItemBase_1 = require("./GamepadItemBase");
 class PsGamepadItem extends GamepadItemBase_1.GamepadItemBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -75,4 +75,4 @@ class PsGamepadItem extends GamepadItemBase_1.GamepadItemBase {
   }
 }
 exports.PsGamepadItem = PsGamepadItem;
-// # sourceMappingURL=PsGamepadItem.js.map
+//# sourceMappingURL=PsGamepadItem.js.map

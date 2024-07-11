@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BossRushConfig = void 0);
-const BossRushActivityByActivityIdAndInstanceId_1 = require("../../../../../Core/Define/ConfigQuery/BossRushActivityByActivityIdAndInstanceId");
-const BossRushActivityById_1 = require("../../../../../Core/Define/ConfigQuery/BossRushActivityById");
-const BossRushBuffById_1 = require("../../../../../Core/Define/ConfigQuery/BossRushBuffById");
-const BossRushMapMarkByActivityId_1 = require("../../../../../Core/Define/ConfigQuery/BossRushMapMarkByActivityId");
-const BossRushScoreById_1 = require("../../../../../Core/Define/ConfigQuery/BossRushScoreById");
-const ConfigBase_1 = require("../../../../../Core/Framework/ConfigBase");
+const BossRushActivityByActivityIdAndInstanceId_1 = require("../../../../../Core/Define/ConfigQuery/BossRushActivityByActivityIdAndInstanceId"),
+  BossRushActivityById_1 = require("../../../../../Core/Define/ConfigQuery/BossRushActivityById"),
+  BossRushBuffById_1 = require("../../../../../Core/Define/ConfigQuery/BossRushBuffById"),
+  BossRushMapMarkByActivityId_1 = require("../../../../../Core/Define/ConfigQuery/BossRushMapMarkByActivityId"),
+  BossRushScoreById_1 = require("../../../../../Core/Define/ConfigQuery/BossRushScoreById"),
+  ConfigBase_1 = require("../../../../../Core/Framework/ConfigBase");
 class BossRushConfig extends ConfigBase_1.ConfigBase {
   GetBossRushActivityConfigById(s) {
     return BossRushActivityById_1.configBossRushActivityById.GetConfig(s);
@@ -17,7 +17,7 @@ class BossRushConfig extends ConfigBase_1.ConfigBase {
         s,
         e,
       );
-    if (void 0 !== s && s.length !== 0) return s[0];
+    if (void 0 !== s && 0 !== s.length) return s[0];
   }
   GetBossRushBuffConfigById(s) {
     return BossRushBuffById_1.configBossRushBuffById.GetConfig(s);
@@ -35,4 +35,4 @@ class BossRushConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.BossRushConfig = BossRushConfig;
-// # sourceMappingURL=BossRushConfig.js.map
+//# sourceMappingURL=BossRushConfig.js.map

@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FriendSearchView = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const ButtonAndSpriteItem_1 = require("../../Common/Button/ButtonAndSpriteItem");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const FriendController_1 = require("../FriendController");
-const FriendItem_1 = require("./FriendItem");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  ButtonAndSpriteItem_1 = require("../../Common/Button/ButtonAndSpriteItem"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  FriendController_1 = require("../FriendController"),
+  FriendItem_1 = require("./FriendItem");
 class FriendSearchView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -21,7 +21,7 @@ class FriendSearchView extends UiViewBase_1.UiViewBase {
         return new FriendItem_1.FriendItem(this.Info.Name);
       }),
       (this.h8t = () => {
-        this.GetInputText(0).GetText() === ""
+        "" === this.GetInputText(0).GetText()
           ? (this.a8t.RefreshSprite("SP_Paste"),
             this.a8t.BindCallback(this.HUt))
           : (this.a8t.RefreshSprite("SP_Clear"),
@@ -31,21 +31,21 @@ class FriendSearchView extends UiViewBase_1.UiViewBase {
         this.GetInputText(0).SetText(""), this.h8t();
       }),
       (this.HUt = () => {
-        const e = this.GetInputText(0);
-        let t = (0, puerts_1.$ref)("");
+        var e = this.GetInputText(0),
+          t = (0, puerts_1.$ref)("");
         UE.LGUIBPLibrary.ClipBoardPaste(t),
           (t = (0, puerts_1.$unref)(t)),
           e.SetText(t),
           this.h8t();
       }),
       (this.l8t = () => {
-        var e = ModelManager_1.ModelManager.FriendModel;
-        var e =
-          (e.ClearApplyFriendList(),
-          e.ClearApproveFriendList(),
-          e.ClearRefuseFriendList(),
-          this.GetInputText(0).GetText());
-        e.length > 0 &&
+        var e = ModelManager_1.ModelManager.FriendModel,
+          e =
+            (e.ClearApplyFriendList(),
+            e.ClearApproveFriendList(),
+            e.ClearRefuseFriendList(),
+            this.GetInputText(0).GetText());
+        0 < e.length &&
           FriendController_1.FriendController.RequestSearchPlayerBasicInfo(
             Number(e),
           );
@@ -134,15 +134,15 @@ class FriendSearchView extends UiViewBase_1.UiViewBase {
   }
   OnStart() {
     this.a8t = new ButtonAndSpriteItem_1.ButtonAndSpriteItem(this.GetItem(1));
-    var e = this.GetItem(3);
-    var e =
-      ((this.n8t = new LoopScrollView_1.LoopScrollView(
-        this.GetLoopScrollViewComponent(4),
-        e.GetOwner(),
-        this.fGe,
-      )),
-      this.GetInputText(0).OnTextChange.Bind(this.h8t),
-      ModelManager_1.ModelManager.FriendModel);
+    var e = this.GetItem(3),
+      e =
+        ((this.n8t = new LoopScrollView_1.LoopScrollView(
+          this.GetLoopScrollViewComponent(4),
+          e.GetOwner(),
+          this.fGe,
+        )),
+        this.GetInputText(0).OnTextChange.Bind(this.h8t),
+        ModelManager_1.ModelManager.FriendModel);
     e.ClearFriendSearchResults(),
       (this.s8t = FriendController_1.FriendController.CreateFriendItemSt(
         e.GetFriendSearchResultListIds(),
@@ -151,7 +151,7 @@ class FriendSearchView extends UiViewBase_1.UiViewBase {
       this.u6t();
   }
   OnAfterHide() {
-    const e = ModelManager_1.ModelManager.FriendModel;
+    var e = ModelManager_1.ModelManager.FriendModel;
     e.ClearApplyFriendList(),
       e.ClearApproveFriendList(),
       e.ClearRefuseFriendList();
@@ -161,7 +161,7 @@ class FriendSearchView extends UiViewBase_1.UiViewBase {
       ModelManager_1.ModelManager.FriendModel.ResetShowingView();
   }
   u6t() {
-    this.s8t.length > 0 && this.n8t.ReloadData(this.s8t), this.d8t();
+    0 < this.s8t.length && this.n8t.ReloadData(this.s8t), this.d8t();
   }
   d8t() {
     this.GetInputText(0).SetText(""),
@@ -170,4 +170,4 @@ class FriendSearchView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.FriendSearchView = FriendSearchView;
-// # sourceMappingURL=FriendSearchView.js.map
+//# sourceMappingURL=FriendSearchView.js.map

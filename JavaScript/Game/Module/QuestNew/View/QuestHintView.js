@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestHintView = void 0);
-const UE = require("ue");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
+const UE = require("ue"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager");
 class QuestHintView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -36,4 +36,4 @@ class QuestHintView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.QuestHintView = QuestHintView;
-// # sourceMappingURL=QuestHintView.js.map
+//# sourceMappingURL=QuestHintView.js.map

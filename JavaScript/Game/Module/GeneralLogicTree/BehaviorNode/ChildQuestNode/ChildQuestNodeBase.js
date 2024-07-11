@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChildQuestNodeBase = void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const GeneralLogicTreeController_1 = require("../../GeneralLogicTreeController");
-const BehaviorNodeBase_1 = require("../BehaviorNodeBase");
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  GeneralLogicTreeController_1 = require("../../GeneralLogicTreeController"),
+  BehaviorNodeBase_1 = require("../BehaviorNodeBase");
 class ChildQuestNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
   constructor(t) {
     super(t),
@@ -28,7 +28,7 @@ class ChildQuestNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
     );
   }
   Init(t, e, i, s, o) {
-    s.Type === "ChildQuest" &&
+    "ChildQuest" === s.Type &&
       (super.Init(t, e, i, s, o),
       (this.ChildQuestStatus =
         Protocol_1.Aki.Protocol.W2s.Proto_CQNS_NotActive),
@@ -37,7 +37,7 @@ class ChildQuestNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
       this.UpdateProgress(i.Bfs.Gms));
   }
   UpdateChildQuestStatus(t, e) {
-    const i = this.ChildQuestStatus;
+    var i = this.ChildQuestStatus;
     if (((this.ChildQuestStatus = t), i !== this.ChildQuestStatus)) {
       switch (t) {
         case Protocol_1.Aki.Protocol.W2s.Proto_CQNS_Progress:
@@ -105,4 +105,4 @@ class ChildQuestNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
   }
 }
 exports.ChildQuestNodeBase = ChildQuestNodeBase;
-// # sourceMappingURL=ChildQuestNodeBase.js.map
+//# sourceMappingURL=ChildQuestNodeBase.js.map

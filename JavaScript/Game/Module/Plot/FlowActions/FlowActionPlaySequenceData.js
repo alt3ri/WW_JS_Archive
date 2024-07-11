@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionPlaySequenceData = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const TeleportController_1 = require("../../Teleport/TeleportController");
-const PlotController_1 = require("../PlotController");
-const SequenceController_1 = require("../Sequence/SequenceController");
-const FlowActionBase_1 = require("./FlowActionBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  TeleportController_1 = require("../../Teleport/TeleportController"),
+  PlotController_1 = require("../PlotController"),
+  SequenceController_1 = require("../Sequence/SequenceController"),
+  FlowActionBase_1 = require("./FlowActionBase");
 class FlowActionPlaySequenceData extends FlowActionBase_1.FlowActionBase {
   constructor() {
     super(...arguments),
@@ -33,16 +33,17 @@ class FlowActionPlaySequenceData extends FlowActionBase_1.FlowActionBase {
       });
   }
   OnExecute() {
-    const e = this.ActionInfo.Params;
+    var e = this.ActionInfo.Params;
     StringUtils_1.StringUtils.IsEmpty(e.Path)
       ? (ControllerHolder_1.ControllerHolder.FlowController.LogError(
           "SequenceData路径为空",
         ),
         this.FinishExecute(!0))
-      : (ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel === "LevelA"
+      : ("LevelA" === ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel
           ? (ModelManager_1.ModelManager.SequenceModel.Type = 0)
-          : ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel ===
-              "LevelB" && (ModelManager_1.ModelManager.SequenceModel.Type = 1),
+          : "LevelB" ===
+              ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel &&
+            (ModelManager_1.ModelManager.SequenceModel.Type = 1),
         EventSystem_1.EventSystem.Once(
           EventDefine_1.EEventName.PlotSequencePlay,
           this.ZPt,
@@ -72,15 +73,15 @@ class FlowActionPlaySequenceData extends FlowActionBase_1.FlowActionBase {
       });
   }
   async $Xi() {
-    var e = ModelManager_1.ModelManager.SequenceModel.IsFadeEnd.length - 1;
-    var e =
-      ((ModelManager_1.ModelManager.PlotModel.IsFadeIn =
-        e >= 0 && ModelManager_1.ModelManager.SequenceModel.IsFadeEnd[e]),
-      ModelManager_1.ModelManager.SequenceModel.CurFinalPos.length - 1);
-    var e =
-      e >= 0
-        ? ModelManager_1.ModelManager.SequenceModel.CurFinalPos[e]
-        : void 0;
+    var e = ModelManager_1.ModelManager.SequenceModel.IsFadeEnd.length - 1,
+      e =
+        ((ModelManager_1.ModelManager.PlotModel.IsFadeIn =
+          0 <= e && ModelManager_1.ModelManager.SequenceModel.IsFadeEnd[e]),
+        ModelManager_1.ModelManager.SequenceModel.CurFinalPos.length - 1),
+      e =
+        0 <= e
+          ? ModelManager_1.ModelManager.SequenceModel.CurFinalPos[e]
+          : void 0;
     SequenceController_1.SequenceController.ManualFinish(),
       await PlotController_1.PlotController.CheckFormation(),
       e &&
@@ -92,4 +93,4 @@ class FlowActionPlaySequenceData extends FlowActionBase_1.FlowActionBase {
   }
 }
 exports.FlowActionPlaySequenceData = FlowActionPlaySequenceData;
-// # sourceMappingURL=FlowActionPlaySequenceData.js.map
+//# sourceMappingURL=FlowActionPlaySequenceData.js.map

@@ -6,17 +6,17 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.FoleySynthModelConfig =
     exports.FoleySynthAllConfig =
       void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const CharacterAudioConfigByIdWithDefaultId_1 = require("../../../../../../Core/Define/ConfigQuery/CharacterAudioConfigByIdWithDefaultId");
-const EntityAudioConfigByIdWithZero_1 = require("../../../../../../Core/Define/ConfigQuery/EntityAudioConfigByIdWithZero");
-const FoleySynthBoneConfigById_1 = require("../../../../../../Core/Define/ConfigQuery/FoleySynthBoneConfigById");
-const FoleySynthConfigByIdWithDefaultId_1 = require("../../../../../../Core/Define/ConfigQuery/FoleySynthConfigByIdWithDefaultId");
-const ConfigBase_1 = require("../../../../../../Core/Framework/ConfigBase");
-const ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem");
-const FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const DEFAULT_DB_ID = 0;
+const UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  CharacterAudioConfigByIdWithDefaultId_1 = require("../../../../../../Core/Define/ConfigQuery/CharacterAudioConfigByIdWithDefaultId"),
+  EntityAudioConfigByIdWithZero_1 = require("../../../../../../Core/Define/ConfigQuery/EntityAudioConfigByIdWithZero"),
+  FoleySynthBoneConfigById_1 = require("../../../../../../Core/Define/ConfigQuery/FoleySynthBoneConfigById"),
+  FoleySynthConfigByIdWithDefaultId_1 = require("../../../../../../Core/Define/ConfigQuery/FoleySynthConfigByIdWithDefaultId"),
+  ConfigBase_1 = require("../../../../../../Core/Framework/ConfigBase"),
+  ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem"),
+  FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  DEFAULT_DB_ID = 0;
 class FoleySynthAllConfig {
   constructor() {
     (this.FoleySynthModel1Configs = new Array()),
@@ -26,7 +26,7 @@ class FoleySynthAllConfig {
       (this.CurLoadCount = 0);
   }
   IsLoadSuccess() {
-    return this.CurLoadCount === 0;
+    return 0 === this.CurLoadCount;
   }
 }
 exports.FoleySynthAllConfig = FoleySynthAllConfig;
@@ -82,16 +82,16 @@ class EntityAkComponentConfig extends ConfigBase_1.ConfigBase {
     o = o.GetComponent(0);
     if (o) {
       var e = ModelManager_1.ModelManager.RoleModel?.GetRoleDataById(
-        o.GetPbDataId(),
-      );
-      var e = e?.IsTrialRole() ? e.GetRoleId() : o.GetPbDataId();
-      var o =
-        FoleySynthConfigByIdWithDefaultId_1.configFoleySynthConfigByIdWithDefaultId.GetConfig(
-          DEFAULT_DB_ID,
-          e,
-          e,
-          e,
-        );
+          o.GetPbDataId(),
+        ),
+        e = e?.IsTrialRole() ? e.GetRoleId() : o.GetPbDataId(),
+        o =
+          FoleySynthConfigByIdWithDefaultId_1.configFoleySynthConfigByIdWithDefaultId.GetConfig(
+            DEFAULT_DB_ID,
+            e,
+            e,
+            e,
+          );
       if (o) {
         if (o.Id !== DEFAULT_DB_ID) {
           const i = new FoleySynthAllConfig();
@@ -243,8 +243,8 @@ class EntityAkComponentConfig extends ConfigBase_1.ConfigBase {
     }
   }
   GetCharacterAudioConfigByEntity(o) {
-    let e;
-    var o = o.GetComponent(0);
+    var e,
+      o = o.GetComponent(0);
     if (o)
       return (
         (e = (e = ModelManager_1.ModelManager.RoleModel?.GetRoleDataById(
@@ -256,7 +256,7 @@ class EntityAkComponentConfig extends ConfigBase_1.ConfigBase {
       );
   }
   GetCharacterAudioConfigByConfigId(o) {
-    const e =
+    var e =
       CharacterAudioConfigByIdWithDefaultId_1.configCharacterAudioConfigByIdWithDefaultId.GetConfig(
         DEFAULT_DB_ID,
         o,
@@ -284,4 +284,4 @@ class EntityAkComponentConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.EntityAkComponentConfig = EntityAkComponentConfig;
-// # sourceMappingURL=EntityAkComponentConfig.js.map
+//# sourceMappingURL=EntityAkComponentConfig.js.map

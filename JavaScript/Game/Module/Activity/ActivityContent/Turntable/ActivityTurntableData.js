@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityTurntableData = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ActivityData_1 = require("../../ActivityData");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ActivityData_1 = require("../../ActivityData");
 class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
   constructor() {
     super(...arguments),
@@ -27,20 +27,20 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
           );
       }),
       (this.ENe = (t, e) => {
-        const i = t.IsSpecial ? 1 : 0;
-        const s = e.IsSpecial ? 1 : 0;
+        var i = t.IsSpecial ? 1 : 0,
+          s = e.IsSpecial ? 1 : 0;
         return i == s ? t.Id - e.Id : s - i;
       });
   }
   PhraseEx(t) {
     (this.QuestList.length = 0), this.QuestStateMap.clear();
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.ActivityTurntableConfig.GetTurntableActivityByActivityId(
         this.Id,
       );
     for (let t = 0; t < e.length; t++) {
       this.QuestList.push(e[t].CoinQuestId);
-      const i = {
+      var i = {
         QuestState: ModelManager_1.ModelManager.QuestNewModel.GetQuestState(
           e[t].CoinQuestId,
         ),
@@ -48,7 +48,7 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
       };
       this.QuestStateMap.set(e[t].CoinQuestId, i);
     }
-    let s =
+    var s =
       ConfigManager_1.ConfigManager.ActivityTurntableConfig.GetTurntableInfoByActivityId(
         this.Id,
       );
@@ -64,21 +64,21 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
         )),
         (t = t.I0s);
       if (t) {
-        let r;
-        let n;
-        const a = t.q0s;
-        const h = t.G0s;
-        const o = t.O0s;
-        const u = new Map();
+        var r,
+          n,
+          a = t.q0s,
+          h = t.G0s,
+          o = t.O0s,
+          u = new Map();
         for (const M of s) {
-          var f;
-          var v;
-          const _ = [];
+          var f,
+            v,
+            _ = [];
           for ([f, v] of M.RewardItem) {
-            const l = [{ IncId: 0, ItemId: f }, v];
+            var l = [{ IncId: 0, ItemId: f }, v];
             _.push(l);
           }
-          if (_.length !== 1)
+          if (1 !== _.length)
             Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Activity",
@@ -89,7 +89,7 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
           else {
             let t = !1;
             (a || M.GroupId < h || o.includes(M.Id)) && (t = !0);
-            const c = {
+            var c = {
               Id: M.Id,
               RoundId: M.GroupId,
               IsClaimed: t,
@@ -103,7 +103,7 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
         }
         for ([r, n] of u.entries()) {
           n.sort(this.ENe);
-          const d = [];
+          var d = [];
           for (const g of n) d.push(g.Id);
           this.RoundRewardIdMap.set(r, d), this.RoundIdList.push(r);
         }
@@ -131,8 +131,8 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
   OnQuestStateChange(t, e) {
     let i = !1;
     this.LocalConfig.PreShowGuideQuest.includes(t) && (i = !0);
-    let s;
-    const r = this.QuestStateMap.get(t);
+    var s,
+      r = this.QuestStateMap.get(t);
     r &&
       ((s = ModelManager_1.ModelManager.QuestNewModel.GetQuestState(t)),
       (r.QuestState = s),
@@ -142,7 +142,7 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
         t,
         0,
         0,
-        s === 2 ? 1 : 0,
+        2 === s ? 1 : 0,
       ),
       (i = !0)),
       i &&
@@ -156,11 +156,11 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
         ));
   }
   ReadCurrentUnlockQuest() {
-    let t;
+    var t;
     this.IsActivityUnFinished() &&
       ((t = this.GetCurrentQuestIndex()),
       (t = this.QuestList[t]),
-      this.QuestStateMap.get(t).QuestState === 2 &&
+      2 === this.QuestStateMap.get(t).QuestState &&
         ModelManager_1.ModelManager.ActivityModel.SaveActivityData(
           this.Id,
           t,
@@ -178,7 +178,7 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
       switch (this.QuestStateMap.get(this.QuestList[t]).QuestState) {
         case 0:
         case 1:
-          return t > 0 ? t - 1 : t;
+          return 0 < t ? t - 1 : t;
         case 2:
           return t;
       }
@@ -203,7 +203,7 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
     let i = 0;
     return (
       this.QuestStateMap.forEach((t, e) => {
-        t.QuestState === 3 && i++;
+        3 === t.QuestState && i++;
       }),
       i
     );
@@ -230,13 +230,14 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
   IsHasPreQuestRedDot() {
     return (
       !this.GetPreGuideQuestFinishState() &&
-      ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
-        this.Id,
-        0,
-        this.GetUnFinishPreGuideQuestId(),
-        0,
-        0,
-      ) === 0
+      0 ===
+        ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
+          this.Id,
+          0,
+          this.GetUnFinishPreGuideQuestId(),
+          0,
+          0,
+        )
     );
   }
   IsActivityUnFinished() {
@@ -276,4 +277,4 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
   }
 }
 exports.ActivityTurntableData = ActivityTurntableData;
-// # sourceMappingURL=ActivityTurntableData.js.map
+//# sourceMappingURL=ActivityTurntableData.js.map

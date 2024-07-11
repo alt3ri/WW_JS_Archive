@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletActionDestroyBullet = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Stats_1 = require("../../../../Core/Common/Stats");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const BulletController_1 = require("../BulletController");
-const BulletCollisionUtil_1 = require("../BulletStaticMethod/BulletCollisionUtil");
-const BulletHitCountUtil_1 = require("../BulletStaticMethod/BulletHitCountUtil");
-const BulletStaticFunction_1 = require("../BulletStaticMethod/BulletStaticFunction");
-const BulletUtil_1 = require("../BulletUtil");
-const BulletActionBase_1 = require("./BulletActionBase");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  BulletController_1 = require("../BulletController"),
+  BulletCollisionUtil_1 = require("../BulletStaticMethod/BulletCollisionUtil"),
+  BulletHitCountUtil_1 = require("../BulletStaticMethod/BulletHitCountUtil"),
+  BulletStaticFunction_1 = require("../BulletStaticMethod/BulletStaticFunction"),
+  BulletUtil_1 = require("../BulletUtil"),
+  BulletActionBase_1 = require("./BulletActionBase");
 class BulletActionDestroyBullet extends BulletActionBase_1.BulletActionBase {
   OnExecute() {
-    const t = this.ActionInfo;
+    var t = this.ActionInfo;
     if (
       (t.SummonChild &&
         (this.BulletInfo.ChildInfo
@@ -29,7 +29,7 @@ class BulletActionDestroyBullet extends BulletActionBase_1.BulletActionBase {
               ["BulletId", this.BulletInfo.BulletRowName],
               ["EntityId", this.BulletInfo.BulletEntityId],
             )),
-      t.DestroyReason === 1 && this.x4o(),
+      1 === t.DestroyReason && this.x4o(),
       this.BulletInfo.AttackerHandle?.Valid &&
         this.BulletInfo.AttackerActorComp?.Actor &&
         (this.B4o(), this.b4o()),
@@ -59,7 +59,7 @@ class BulletActionDestroyBullet extends BulletActionBase_1.BulletActionBase {
       this.BulletInfo.ChildInfo?.SetIsNumberNotEnough(!0));
   }
   b4o() {
-    let t, e;
+    var t, e;
     this.BulletInfo.AttackerActorComp?.Actor?.IsValid() &&
       ((t =
         this.BulletInfo.BulletDataMain.Execution
@@ -80,8 +80,8 @@ class BulletActionDestroyBullet extends BulletActionBase_1.BulletActionBase {
       ));
   }
   N4o() {
-    const t = this.BulletInfo.BulletDataMain;
-    this.BulletInfo.SummonServerEntityId === 0 ||
+    var t = this.BulletInfo.BulletDataMain;
+    0 === this.BulletInfo.SummonServerEntityId ||
       t.Summon.EntityId <= 0 ||
       !t.Summon.DestroyEntityOnBulletEnd ||
       ControllerHolder_1.ControllerHolder.CreatureController.RemoveSummonEntityByServerIdRequest(
@@ -91,15 +91,15 @@ class BulletActionDestroyBullet extends BulletActionBase_1.BulletActionBase {
       );
   }
   B4o() {
-    const e = this.BulletInfo.ChildInfo;
-    const l = this.BulletInfo.BulletDataMain.Children;
-    const i = l.length;
+    var e = this.BulletInfo.ChildInfo,
+      l = this.BulletInfo.BulletDataMain.Children,
+      i = l.length;
     for (let t = 0; t < i; ++t) {
-      var o;
-      const s = l[t];
-      ((s.Condition === 4 && this.BulletInfo.IsTimeNotEnough) ||
-        (s.Condition === 3 && e.IsNumberNotEnough) ||
-        (s.Condition === 0 && e.IsActiveSummonChildBullet)) &&
+      var o,
+        s = l[t];
+      ((4 === s.Condition && this.BulletInfo.IsTimeNotEnough) ||
+        (3 === s.Condition && e.IsNumberNotEnough) ||
+        (0 === s.Condition && e.IsActiveSummonChildBullet)) &&
         ((o = Number(s.RowName)),
         isNaN(o) ||
           !o ||
@@ -146,4 +146,4 @@ class BulletActionDestroyBullet extends BulletActionBase_1.BulletActionBase {
   (BulletActionDestroyBullet.k4o = void 0),
   (BulletActionDestroyBullet.F4o = void 0),
   (BulletActionDestroyBullet.O4o = void 0);
-// # sourceMappingURL=BulletActionDestroyBullet.js.map
+//# sourceMappingURL=BulletActionDestroyBullet.js.map

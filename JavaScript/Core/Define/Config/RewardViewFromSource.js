@@ -24,17 +24,17 @@ class RewardViewFromSource {
     );
   }
   id() {
-    const r = this.J7.__offset(this.z7, 4);
+    var r = this.J7.__offset(this.z7, 4);
     return r ? this.J7.readInt32(this.z7 + r) : 0;
   }
   rewardsourceid() {
-    const r = this.J7.__offset(this.z7, 6);
+    var r = this.J7.__offset(this.z7, 6);
     return r ? this.J7.readInt32(this.z7 + r) : 0;
   }
   rewardviewid() {
-    const r = this.J7.__offset(this.z7, 8);
+    var r = this.J7.__offset(this.z7, 8);
     return r ? this.J7.readInt32(this.z7 + r) : 0;
   }
 }
 exports.RewardViewFromSource = RewardViewFromSource;
-// # sourceMappingURL=RewardViewFromSource.js.map
+//# sourceMappingURL=RewardViewFromSource.js.map

@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleController = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LocalStorageDefine_1 = require("../../Common/LocalStorageDefine");
-const Global_1 = require("../../Global");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const InputManager_1 = require("../../Ui/Input/InputManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const UiRoleUtils_1 = require("../UiComponent/UiRoleUtils");
-const UiSceneManager_1 = require("../UiComponent/UiSceneManager");
-const UiModelUtil_1 = require("../UiModel/UiModelUtil");
-const RoleLevelUpSuccessController_1 = require("./RoleLevel/RoleLevelUpSuccessController");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
+  Global_1 = require("../../Global"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  InputManager_1 = require("../../Ui/Input/InputManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  UiRoleUtils_1 = require("../UiComponent/UiRoleUtils"),
+  UiSceneManager_1 = require("../UiComponent/UiSceneManager"),
+  UiModelUtil_1 = require("../UiModel/UiModelUtil"),
+  RoleLevelUpSuccessController_1 = require("./RoleLevel/RoleLevelUpSuccessController");
 class RoleController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
@@ -54,7 +54,7 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static CheckCharacterInBattleTag() {
-    const e = Global_1.Global.BaseCharacter;
+    var e = Global_1.Global.BaseCharacter;
     return (
       !!e &&
       e.CharacterActorComponent.Entity.CheckGetComponent(185).HasTag(1996802261)
@@ -98,13 +98,13 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
       UiSceneManager_1.UiSceneManager.AddUiShowRoomShowActor(r, !0));
   }
   static ShowUiSceneActorAndShadow(e) {
-    var o = UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor()?.Model;
-    var o =
-      (o && UiModelUtil_1.UiModelUtil.SetVisible(o, !0),
-      UE.KuroCollectActorComponent.GetActorWithTag(
-        FNameUtil_1.FNameUtil.GetDynamicFName("BP_UIShowRoom"),
-        1,
-      ));
+    var o = UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor()?.Model,
+      o =
+        (o && UiModelUtil_1.UiModelUtil.SetVisible(o, !0),
+        UE.KuroCollectActorComponent.GetActorWithTag(
+          FNameUtil_1.FNameUtil.GetDynamicFName("BP_UIShowRoom"),
+          1,
+        ));
     o && o.SetActorHiddenInGame(!e);
   }
   static OnAddEvents() {
@@ -155,7 +155,7 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
         );
       }),
       Net_1.Net.Register(18460, (e) => {
-        const o = e.tRs.l3n;
+        var o = e.tRs.l3n;
         ModelManager_1.ModelManager.RoleModel.UpdateRoleInfo(e.tRs),
           ModelManager_1.ModelManager.NewFlagModel.AddNewFlag(
             LocalStorageDefine_1.ELocalStoragePlayerKey.RoleDataItem,
@@ -194,7 +194,7 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
             );
           for (const o of e.xkn)
             ModelManager_1.ModelManager.RoleModel.RoleTrialIdList.add(o);
-          ModelManager_1.ModelManager.RoleModel.RoleTrialIdList.size > 0 &&
+          0 < ModelManager_1.ModelManager.RoleModel.RoleTrialIdList.size &&
             ((ModelManager_1.ModelManager.RoleModel.IsInRoleTrial = !0),
             Log_1.Log.CheckInfo()) &&
             Log_1.Log.Info("Role", 11, "进入角色试用状态");
@@ -226,10 +226,10 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
       }),
       Net_1.Net.Register(15733, (e) => {
         if (e) {
-          const o = new Map();
-          const r = e.LLs;
+          var o = new Map(),
+            r = e.LLs;
           for (const l of Object.keys(r)) {
-            const t = Number(l);
+            var t = Number(l);
             o.set(t, r[t]);
           }
           ModelManager_1.ModelManager.RoleModel.UpdateRoleFavorCondition(o),
@@ -251,10 +251,10 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
       }),
       Net_1.Net.Register(6900, (e) => {
         if (e) {
-          const o = new Map();
-          const r = e.LLs;
+          var o = new Map(),
+            r = e.LLs;
           for (const l of Object.keys(r)) {
-            const t = Number(l);
+            var t = Number(l);
             o.set(t, r[t]);
           }
           ModelManager_1.ModelManager.RoleModel.UpdateRoleFavorCondition(o);
@@ -292,7 +292,7 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
     return ModelManager_1.ModelManager.RoleModel.IsInRoleTrial;
   }
   static SendPbUpLevelRoleRequest(e, o, r) {
-    let t;
+    var t;
     !o ||
       o.length <= 0 ||
       (((t = Protocol_1.Aki.Protocol.Was.create()).l3n = e),
@@ -317,7 +317,7 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
       }));
   }
   static SendPbOverRoleRequest(e) {
-    const o = Protocol_1.Aki.Protocol.Qas.create();
+    var o = Protocol_1.Aki.Protocol.Qas.create();
     (o.l3n = e),
       Net_1.Net.Call(18268, o, (e) => {
         e &&
@@ -333,10 +333,10 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
     if (!RoleController.CheckCharacterInBattleTagAndShowTips()) {
       var r = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(e);
       if (!r.IsTrialRole()) {
-        var r = Protocol_1.Aki.Protocol.Yas.create();
-        const t =
-          ((r.l3n = e),
-          ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(o));
+        var r = Protocol_1.Aki.Protocol.Yas.create(),
+          t =
+            ((r.l3n = e),
+            ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(o));
         r.vkn = t.SkillId;
         const l =
           ModelManager_1.ModelManager.RoleModel.GetRoleSkillTreeNodeLevel(e, o);
@@ -361,7 +361,7 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
     }
   }
   static SendRoleLevelUpViewRequest(e, o, r = void 0) {
-    const t = Protocol_1.Aki.Protocol.lhs.create();
+    var t = Protocol_1.Aki.Protocol.lhs.create();
     (t.l3n = e),
       (t.Y5n = o),
       (t.Q8n = r),
@@ -378,7 +378,7 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static SendRoleLevelUpViewRequestWithOpenView(o, r = void 0) {
-    const e = Protocol_1.Aki.Protocol.lhs.create();
+    var e = Protocol_1.Aki.Protocol.lhs.create();
     (e.l3n = o),
       Net_1.Net.Call(18825, e, (e) => {
         e &&
@@ -398,7 +398,7 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static SendRoleBreakThroughViewRequest(o, e = 0) {
-    const r = Protocol_1.Aki.Protocol.uhs.create();
+    var r = Protocol_1.Aki.Protocol.uhs.create();
     (r.l3n = o),
       Net_1.Net.Call(8794, r, (e) => {
         e &&
@@ -414,10 +414,10 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static SendRoleSkillLevelUpViewRequest(e, o) {
-    const r = Protocol_1.Aki.Protocol.dhs.create();
-    var e =
-      ((r.l3n = e),
-      ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(o));
+    var r = Protocol_1.Aki.Protocol.dhs.create(),
+      e =
+        ((r.l3n = e),
+        ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(o));
     (r.vkn = e.SkillId),
       Net_1.Net.Call(10645, r, (e) => {
         e &&
@@ -431,11 +431,11 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
   static SendResonanceUnlockRequest(e) {
     if (!RoleController.CheckCharacterInBattleTagAndShowTips()) {
       const t = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(e);
-      let o;
+      var o;
       t.IsTrialRole() ||
         (((o = Protocol_1.Aki.Protocol.yhs.create()).l3n = e),
         Net_1.Net.Call(7816, o, (e) => {
-          let o, r;
+          var o, r;
           e &&
             (e.X5n === Protocol_1.Aki.Protocol.lkn.Sys
               ? (t.GetResonanceData().SetResonantChainGroupIndex(e.VDs),
@@ -468,12 +468,14 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
   static SendRoleSkillViewRequest(e, o, r) {
     ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(e) ||
       ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e);
-    const t =
-      ModelManager_1.ModelManager.RoleModel.GetCurRoleSkillViewDataLocal(e, o);
-    var e = ModelManager_1.ModelManager.RoleModel.GetNextRoleSkillViewDataLocal(
-      e,
-      o,
-    );
+    var t = ModelManager_1.ModelManager.RoleModel.GetCurRoleSkillViewDataLocal(
+        e,
+        o,
+      ),
+      e = ModelManager_1.ModelManager.RoleModel.GetNextRoleSkillViewDataLocal(
+        e,
+        o,
+      );
     ModelManager_1.ModelManager.RoleModel.UpdateRoleSkillViewData(t, e, o),
       r?.();
   }
@@ -486,7 +488,7 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
       ?.SetState(e, o, r, t);
   }
   static SendRoleActivateSkillRequest(e, o) {
-    let r;
+    var r;
     RoleController.CheckCharacterInBattleTagAndShowTips() ||
       ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
         e,
@@ -508,7 +510,7 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
       }));
   }
   static SendRoleFavorListRequest() {
-    const e = Protocol_1.Aki.Protocol.PJn.create();
+    var e = Protocol_1.Aki.Protocol.PJn.create();
     Net_1.Net.Call(22638, e, (e) => {
       e &&
         (e.X5n === Protocol_1.Aki.Protocol.lkn.Sys
@@ -520,12 +522,12 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
     });
   }
   static SendRoleFavorUnLockRequest(e, r, o) {
-    const t = Protocol_1.Aki.Protocol.OJn.create();
+    var t = Protocol_1.Aki.Protocol.OJn.create();
     (t.t6n = e),
       (t.l3n = r),
       (t.Z6n = o),
       Net_1.Net.Call(23207, t, (e) => {
-        let o;
+        var o;
         e &&
           ((o = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
             e.l3n,
@@ -539,7 +541,7 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static SendRoleActiveRequest(o) {
-    const e = Protocol_1.Aki.Protocol.Vas.create();
+    var e = Protocol_1.Aki.Protocol.Vas.create();
     (e.l3n = o),
       Net_1.Net.Call(22652, e, (e) => {
         e &&
@@ -555,25 +557,25 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static CheckRoleTargetLevel(o) {
-    const r = ModelManager_1.ModelManager.RoleModel.GetAllRoleList();
+    var r = ModelManager_1.ModelManager.RoleModel.GetAllRoleList();
     if (r) {
-      const t = r.length;
+      var t = r.length;
       for (let e = 0; e < t; e++) {
-        const l = r[e].GetLevelData();
+        var l = r[e].GetLevelData();
         if (l && l.GetLevel() > o) return !0;
       }
     }
     return !1;
   }
   static CheckRoleSkillTargetLevel(o) {
-    const r = ModelManager_1.ModelManager.RoleModel.GetAllRoleList();
+    var r = ModelManager_1.ModelManager.RoleModel.GetAllRoleList();
     if (r) {
-      const t = r.length;
+      var t = r.length;
       for (let e = 0; e < t; e++) {
-        const l = r[e].GetSkillData();
+        var l = r[e].GetSkillData();
         if (l) {
-          const n = l.GetAllSkillLevel();
-          const a = n.length;
+          var n = l.GetAllSkillLevel(),
+            a = n.length;
           for (let e = 0; e < a; e++) if (o <= n[e]) return !0;
         }
       }
@@ -622,57 +624,59 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static ShowInnerSkillNodeLevelUpSuccessView(e, o) {
-    const r = [];
-    const t =
-      ModelManager_1.ModelManager.RoleModel.RoleSkillResponseData.GetSkillEffect()
-        ?.EffectDescList;
-    const l =
-      ModelManager_1.ModelManager.RoleModel.RoleSkillResponseData.GetNextLevelSkillEffect()
-        ?.EffectDescList;
+    var r = [],
+      t =
+        ModelManager_1.ModelManager.RoleModel.RoleSkillResponseData.GetSkillEffect()
+          ?.EffectDescList,
+      l =
+        ModelManager_1.ModelManager.RoleModel.RoleSkillResponseData.GetNextLevelSkillEffect()
+          ?.EffectDescList;
     for (let e = 0; e < t.length; e++) {
-      var n = t[e];
-      var a = l[e];
-      const _ =
-        ModelManager_1.ModelManager.RoleModel.GetSkillAttributeNameByOneSkillEffect(
-          n,
-        );
-      var n =
-        ModelManager_1.ModelManager.RoleModel.GetSkillAttributeDescriptionByOneSkillEffect(
-          n,
-        );
-      var a =
-        ModelManager_1.ModelManager.RoleModel.GetSkillAttributeDescriptionByOneSkillEffect(
-          a,
-        );
+      var n = t[e],
+        a = l[e],
+        _ =
+          ModelManager_1.ModelManager.RoleModel.GetSkillAttributeNameByOneSkillEffect(
+            n,
+          ),
+        n =
+          ModelManager_1.ModelManager.RoleModel.GetSkillAttributeDescriptionByOneSkillEffect(
+            n,
+          ),
+        a =
+          ModelManager_1.ModelManager.RoleModel.GetSkillAttributeDescriptionByOneSkillEffect(
+            a,
+          );
       n !== a && r.push({ Name: _, ShowArrow: !0, PreText: n, CurText: a });
     }
     var e =
-      ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(e).SkillId;
-    const i = o + 1;
-    var o = {
-      LevelInfo: {
-        PreUpgradeLv: o,
-        UpgradeLv: i,
-        FormatStringId: "Text_LevelShow_Text",
-        IsMaxLevel:
-          i ===
-          ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(e)
-            .MaxSkillLevel,
-      },
-      WiderScrollView: !0,
-      AttributeInfo: r,
-    };
+        ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(
+          e,
+        ).SkillId,
+      i = o + 1,
+      o = {
+        LevelInfo: {
+          PreUpgradeLv: o,
+          UpgradeLv: i,
+          FormatStringId: "Text_LevelShow_Text",
+          IsMaxLevel:
+            i ===
+            ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(e)
+              .MaxSkillLevel,
+        },
+        WiderScrollView: !0,
+        AttributeInfo: r,
+      };
     RoleLevelUpSuccessController_1.RoleLevelUpSuccessController.OpenSuccessAttributeView(
       o,
     );
   }
   static async RobotRolePropRequest(e) {
-    const o = Protocol_1.Aki.Protocol.Pms.create();
-    var e = ((o.xkn = e), await Net_1.Net.CallAsync(13392, o));
+    var o = Protocol_1.Aki.Protocol.Pms.create(),
+      e = ((o.xkn = e), await Net_1.Net.CallAsync(13392, o));
     if (e)
       if (e.K0s === Protocol_1.Aki.Protocol.lkn.Sys)
         for (const t of e.DDs) {
-          const r = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
+          var r = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
             t.l3n,
           ).GetAttributeData();
           for (const l of t.hDs) r.SetRoleBaseAttr(l.Ckn, l.gkn);
@@ -717,20 +721,20 @@ class RoleController extends UiControllerBase_1.UiControllerBase {
       (ModelManager_1.ModelManager.RoleModel.IsInRoleTrial = !1));
   }),
   (RoleController.jJe = () => {
-    let e;
-    let o;
-    let r;
-    const t = ModelManager_1.ModelManager.RoleModel.GetRoleMap();
-    const l = ModelManager_1.ModelManager.RoleModel.GetRoleRobotMap();
+    var e,
+      o,
+      r,
+      t = ModelManager_1.ModelManager.RoleModel.GetRoleMap(),
+      l = ModelManager_1.ModelManager.RoleModel.GetRoleRobotMap();
     for ([, e] of t)
       ModelManager_1.ModelManager.PlayerInfoModel.IsPlayerId(e.GetRoleId()) ||
         ((o = e.GetRoleConfig()),
         (o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(o.Name)),
         e.SetRoleName(o));
     for ([, r] of l) {
-      var n = r.GetRoleConfig();
-      var n = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(n.Name);
+      var n = r.GetRoleConfig(),
+        n = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(n.Name);
       r.SetName(n);
     }
   });
-// # sourceMappingURL=RoleController.js.map
+//# sourceMappingURL=RoleController.js.map

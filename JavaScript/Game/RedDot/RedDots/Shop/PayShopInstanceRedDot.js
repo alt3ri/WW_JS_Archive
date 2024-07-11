@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayShopInstanceRedDot = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const RedDotBase_1 = require("../../RedDotBase");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  RedDotBase_1 = require("../../RedDotBase");
 class PayShopInstanceRedDot extends RedDotBase_1.RedDotBase {
   OnGetParentName() {
     return "FunctionPayShop";
@@ -30,4 +30,4 @@ class PayShopInstanceRedDot extends RedDotBase_1.RedDotBase {
   }
 }
 exports.PayShopInstanceRedDot = PayShopInstanceRedDot;
-// # sourceMappingURL=PayShopInstanceRedDot.js.map
+//# sourceMappingURL=PayShopInstanceRedDot.js.map

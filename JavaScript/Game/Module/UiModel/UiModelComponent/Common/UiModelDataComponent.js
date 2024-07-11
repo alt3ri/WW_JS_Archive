@@ -1,25 +1,29 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, i, o) {
-    let n;
-    const s = arguments.length;
-    let r =
-      s < 3 ? t : o === null ? (o = Object.getOwnPropertyDescriptor(t, i)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var n,
+      s = arguments.length,
+      r =
+        s < 3
+          ? t
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(t, i))
+            : o;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(e, t, i, o);
     else
-      for (let h = e.length - 1; h >= 0; h--)
-        (n = e[h]) && (r = (s < 3 ? n(r) : s > 3 ? n(t, i, r) : n(t, i)) || r);
-    return s > 3 && r && Object.defineProperty(t, i, r), r;
+      for (var h = e.length - 1; 0 <= h; h--)
+        (n = e[h]) && (r = (s < 3 ? n(r) : 3 < s ? n(t, i, r) : n(t, i)) || r);
+    return 3 < s && r && Object.defineProperty(t, i, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiModelDataComponent = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine");
-const UiModelComponentBase_1 = require("../UiModelComponentBase");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine"),
+  UiModelComponentBase_1 = require("../UiModelComponentBase");
 let UiModelDataComponent = class UiModelDataComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
     super(...arguments),
@@ -37,12 +41,12 @@ let UiModelDataComponent = class UiModelDataComponent extends UiModelComponentBa
     return this.pBr;
   }
   SetModelLoadState(e) {
-    (this.pBr = e) === 1
+    1 === (this.pBr = e)
       ? EventSystem_1.EventSystem.EmitWithTarget(
           this.Owner,
           EventDefine_1.EEventName.BeforeUiModelLoadStart,
         )
-      : e === 2 &&
+      : 2 === e &&
         EventSystem_1.EventSystem.EmitWithTarget(
           this.Owner,
           EventDefine_1.EEventName.OnUiModelLoadComplete,
@@ -104,4 +108,4 @@ let UiModelDataComponent = class UiModelDataComponent extends UiModelComponentBa
   UiModelDataComponent,
 )),
   (exports.UiModelDataComponent = UiModelDataComponent);
-// # sourceMappingURL=UiModelDataComponent.js.map
+//# sourceMappingURL=UiModelDataComponent.js.map

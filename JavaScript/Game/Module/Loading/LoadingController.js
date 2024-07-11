@@ -1,22 +1,22 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoadingController = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Net_1 = require("../../../Core/Net/Net");
-const MathCommon_1 = require("../../../Core/Utils/Math/MathCommon");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../GlobalData");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterBuffIds_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const GameModeController_1 = require("../../World/Controller/GameModeController");
-const BlackScreenController_1 = require("../BlackScreen/BlackScreenController");
-const UiLoginSceneManager_1 = require("../UiComponent/UiLoginSceneManager");
-const NormalLoadingViewGlobalData_1 = require("./Data/NormalLoadingViewGlobalData");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Net_1 = require("../../../Core/Net/Net"),
+  MathCommon_1 = require("../../../Core/Utils/Math/MathCommon"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../GlobalData"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterBuffIds_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  GameModeController_1 = require("../../World/Controller/GameModeController"),
+  BlackScreenController_1 = require("../BlackScreen/BlackScreenController"),
+  UiLoginSceneManager_1 = require("../UiComponent/UiLoginSceneManager"),
+  NormalLoadingViewGlobalData_1 = require("./Data/NormalLoadingViewGlobalData");
 class LoadingController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
@@ -105,16 +105,16 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static UpdateUidViewShow() {
-    const e = ModelManager_1.ModelManager.LoadingModel.IsShowUidView;
+    var e = ModelManager_1.ModelManager.LoadingModel.IsShowUidView;
     UiManager_1.UiManager.IsViewOpen("UidView") !== e &&
       (e
         ? UiManager_1.UiManager.OpenView("UidView")
         : UiManager_1.UiManager.CloseView("UidView"));
   }
   static async Ipi() {
-    let e;
-    let o;
-    const a = ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities();
+    var e,
+      o,
+      a = ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities();
     for (const n of a)
       n.Valid &&
         (e = n.Entity.GetComponent(157)) &&
@@ -134,7 +134,7 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
         );
   }
   static async GameModeOpenLoading(e) {
-    let o;
+    var o;
     NormalLoadingViewGlobalData_1.NormalLoadingViewGlobalData
       .FirstProgressPromise
       ? Log_1.Log.CheckInfo() &&
@@ -209,7 +209,7 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
   static SetProgress(e, o = void 0, a = 1, n = !1, r = !0) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Loading", 17, "SetProgress", ["progress", e]);
-    const t = ModelManager_1.ModelManager.LoadingModel;
+    var t = ModelManager_1.ModelManager.LoadingModel;
     o && t.ReachHandleQueue.Push([e, o]),
       n && ((t.CurrentProgress = 0), t.ReachHandleQueue.Clear()),
       (t.SpeedRate = a),
@@ -221,7 +221,7 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
       r || (t.CurrentProgress = e);
   }
   static AddProgress(e, o) {
-    const a = ModelManager_1.ModelManager.LoadingModel;
+    var a = ModelManager_1.ModelManager.LoadingModel;
     for (
       a.NextProgress = Math.min(a.NextProgress + e, o),
         a.NextProgress = Math.min(
@@ -231,7 +231,7 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
       a.ReachHandleQueue.Size;
 
     ) {
-      const n = a.ReachHandleQueue.Front;
+      var n = a.ReachHandleQueue.Front;
       if (n[0] > a.CurrentProgress) break;
       a.ReachHandleQueue.Pop(),
         n[1](),
@@ -270,4 +270,4 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
   (LoadingController.ypi = () => {
     ModelManager_1.ModelManager.LoadingModel.IsLoadingView && _a.Ipi();
   });
-// # sourceMappingURL=LoadingController.js.map
+//# sourceMappingURL=LoadingController.js.map

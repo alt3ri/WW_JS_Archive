@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TeamRoleGrid = void 0);
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LoopScrollMediumItemGrid_1 = require("../Common/MediumItemGrid/LoopScrollMediumItemGrid");
+const ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LoopScrollMediumItemGrid_1 = require("../Common/MediumItemGrid/LoopScrollMediumItemGrid");
 class TeamRoleGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   constructor() {
     super(...arguments), (this.IsHighlightIndex = void 0);
   }
   OnRefresh(e, o, r) {
-    const a = e.GetLevelData();
-    const t = e.GetDataId();
-    var i = ModelManager_1.ModelManager.EditFormationModel;
-    const d = ModelManager_1.ModelManager.RoleSelectModel.GetRoleIndex(t);
+    var a = e.GetLevelData(),
+      t = e.GetDataId(),
+      i = ModelManager_1.ModelManager.EditFormationModel,
+      d = ModelManager_1.ModelManager.RoleSelectModel.GetRoleIndex(t);
     let l = !1;
-    let n = e.IsTrialRole();
-    var i =
-      (n ||
-        ModelManager_1.ModelManager.TowerModel.IsOpenFloorFormation() ||
-        (l = i.IsRoleDead(t)),
-      this.IsHighlightIndex?.(d));
+    var n = e.IsTrialRole(),
+      i =
+        (n ||
+          ModelManager_1.ModelManager.TowerModel.IsOpenFloorFormation() ||
+          (l = i.IsRoleDead(t)),
+        this.IsHighlightIndex?.(d));
     let s = !1;
     ModelManager_1.ModelManager.InstanceDungeonEntranceModel.SelectInstanceId &&
       ((M = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
@@ -33,7 +33,7 @@ class TeamRoleGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
       IsTrialRoleVisible: n,
       BottomTextId: "Text_LevelShow_Text",
       BottomTextParameter: [a.GetLevel()],
-      Index: d > 0 ? d : void 0,
+      Index: 0 < d ? d : void 0,
       HighlightIndex: i,
       ElementId: e.GetRoleConfig().ElementId,
       IsShowCost: ModelManager_1.ModelManager.TowerModel.IsOpenFloorFormation(),
@@ -62,4 +62,4 @@ class TeamRoleGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   }
 }
 exports.TeamRoleGrid = TeamRoleGrid;
-// # sourceMappingURL=TeamRoleGrid.js.map
+//# sourceMappingURL=TeamRoleGrid.js.map

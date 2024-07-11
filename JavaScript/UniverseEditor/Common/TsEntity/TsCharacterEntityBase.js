@@ -17,4 +17,4 @@ class TsCharacterEntityBase extends ue_1.KuroEffectActor {
 }
 (exports.TsCharacterEntityBase = TsCharacterEntityBase),
   (exports.default = TsCharacterEntityBase);
-// # sourceMappingURL=TsCharacterEntityBase.js.map
+//# sourceMappingURL=TsCharacterEntityBase.js.map

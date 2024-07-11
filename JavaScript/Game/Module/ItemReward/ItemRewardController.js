@@ -1,23 +1,23 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemRewardController = void 0);
-const AudioController_1 = require("../../../Core/Audio/AudioController");
-const Log_1 = require("../../../Core/Common/Log");
-const Net_1 = require("../../../Core/Net/Net");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const UiModel_1 = require("../../Ui/UiModel");
-const ActivityDoubleRewardController_1 = require("../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController");
-const GachaController_1 = require("../Gacha/GachaController");
-const ItemExchangeController_1 = require("../ItemExchange/ItemExchangeController");
-const ItemRewardDefine_1 = require("./ItemRewardDefine");
-const RewardItemData_1 = require("./RewardData/RewardItemData");
+const AudioController_1 = require("../../../Core/Audio/AudioController"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Net_1 = require("../../../Core/Net/Net"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  UiModel_1 = require("../../Ui/UiModel"),
+  ActivityDoubleRewardController_1 = require("../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController"),
+  GachaController_1 = require("../Gacha/GachaController"),
+  ItemExchangeController_1 = require("../ItemExchange/ItemExchangeController"),
+  ItemRewardDefine_1 = require("./ItemRewardDefine"),
+  RewardItemData_1 = require("./RewardData/RewardItemData");
 class ItemRewardController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
     Net_1.Net.Register(5944, this.Bgi);
@@ -66,7 +66,7 @@ class ItemRewardController extends UiControllerBase_1.UiControllerBase {
     e && this.Open(e);
   }
   static OpenExploreLevelRewardView(e) {
-    let r =
+    var r =
       ModelManager_1.ModelManager.ExploreLevelModel.GetCurrentCountryExploreLevelData();
     r &&
       ((r = r.GetExploreLevel()),
@@ -106,7 +106,7 @@ class ItemRewardController extends UiControllerBase_1.UiControllerBase {
     return !!e && (this.Open(e, _), !0);
   }
   static Open(e, t) {
-    let r;
+    var r;
     UiManager_1.UiManager.IsViewOpen("DrawMainView") ||
       ((r = e.GetRewardInfo()),
       UiManager_1.UiManager.IsViewOpen(r.ViewName)
@@ -151,7 +151,7 @@ class ItemRewardController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.ItemRewardModel.SetButtonList(e);
   }
   static PlayAudio(e, r) {
-    let t;
+    var t;
     StringUtils_1.StringUtils.IsEmpty(e) ||
       ((t = ConfigManager_1.ConfigManager.AudioConfig.GetAudioPath(e)) &&
         (AudioController_1.AudioController.PostEventByUi(t.Path, r),
@@ -164,13 +164,13 @@ class ItemRewardController extends UiControllerBase_1.UiControllerBase {
   (ItemRewardController.bgi = (e) => {
     var r = e.Y5n;
     if (!(r.length <= 0)) {
-      const t = [];
+      var t = [];
       for (const i of r) {
-        const a = new RewardItemData_1.RewardItemData(i.G3n, i.I5n, i.Q5n);
+        var a = new RewardItemData_1.RewardItemData(i.G3n, i.I5n, i.Q5n);
         t.push(a);
       }
-      var r = ModelManager_1.ModelManager.ItemRewardModel;
-      const o = e.V5n;
+      var r = ModelManager_1.ModelManager.ItemRewardModel,
+        o = e.V5n;
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Test", 8, "[ItemRewardController]当掉落协议通知时", [
           "reasonId",
@@ -194,7 +194,7 @@ class ItemRewardController extends UiControllerBase_1.UiControllerBase {
                   },
                 }),
                 (e =
-                  e.W5n > 1
+                  1 < e.W5n
                     ? ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetDungeonUpActivityFullTip(
                         [3],
                         !1,
@@ -226,17 +226,18 @@ class ItemRewardController extends UiControllerBase_1.UiControllerBase {
     }
   }),
   (ItemRewardController.Bgi = (e) => {
-    let r = e._gs;
+    var r = e._gs;
     if (!(r.length <= 0)) {
-      const t = [];
+      var t = [];
       const o = [];
       for (const i of r)
         if (
+          1 !==
           ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
             i.Ekn,
-          ) !== 1
+          )
         ) {
-          const a = new RewardItemData_1.RewardItemData(i.Ekn, i.I5n, i.Q5n);
+          var a = new RewardItemData_1.RewardItemData(i.Ekn, i.I5n, i.Q5n);
           t.push(a);
         } else for (let e = 0; e < i.I5n; e++) o.push(i.Ekn);
       (r = ModelManager_1.ModelManager.ItemRewardModel),
@@ -264,9 +265,9 @@ class ItemRewardController extends UiControllerBase_1.UiControllerBase {
         )
           if (r === ItemRewardDefine_1.QUEST_SPECIAL_REWARD)
             ItemRewardController.OpenQuestRewardView(e, t);
-          else if (o.length === 0)
+          else if (0 === o.length)
             ItemRewardController.OpenCommonRewardView(e, t);
-          else if (t.length === 0)
+          else if (0 === t.length)
             for (const n of o)
               GachaController_1.GachaController.CommonShowRoleResult(n, !0, !1);
           else
@@ -281,4 +282,4 @@ class ItemRewardController extends UiControllerBase_1.UiControllerBase {
       } else ItemRewardController.AddItemList(t);
     }
   });
-// # sourceMappingURL=ItemRewardController.js.map
+//# sourceMappingURL=ItemRewardController.js.map

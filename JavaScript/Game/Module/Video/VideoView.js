@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VideoView = void 0);
-const UE = require("ue");
-const Application_1 = require("../../../Core/Application/Application");
-const AudioController_1 = require("../../../Core/Audio/AudioController");
-const AudioDefine_1 = require("../../../Core/Audio/AudioDefine");
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase");
-const UiLayer_1 = require("../../Ui/UiLayer");
-const PlotSkipComponent_1 = require("../Plot/PlotView/PlotSkipComponent");
-const VideoDefine_1 = require("./VideoDefine");
-const VideoLauncher_1 = require("./VideoLauncher");
-const USE_TICK = !0;
+const UE = require("ue"),
+  Application_1 = require("../../../Core/Application/Application"),
+  AudioController_1 = require("../../../Core/Audio/AudioController"),
+  AudioDefine_1 = require("../../../Core/Audio/AudioDefine"),
+  CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
+  PlotSkipComponent_1 = require("../Plot/PlotView/PlotSkipComponent"),
+  VideoDefine_1 = require("./VideoDefine"),
+  VideoLauncher_1 = require("./VideoLauncher"),
+  USE_TICK = !0;
 class VideoView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -58,7 +58,7 @@ class VideoView extends UiTickViewBase_1.UiTickViewBase {
           ),
           (this.WGo = !0),
           this.HGo &&
-            (ModelManager_1.ModelManager.PlatformModel.PlatformType !== 2 &&
+            (2 !== ModelManager_1.ModelManager.PlatformModel.PlatformType &&
               this.qGo?.Seek(this.HGo),
             this.qGo?.Play(),
             (this.HGo = void 0)),
@@ -84,11 +84,12 @@ class VideoView extends UiTickViewBase_1.UiTickViewBase {
               ["this.VideoPauseTime", this.HGo],
             ),
           (this.WGo = !1),
-          ModelManager_1.ModelManager.PlatformModel.PlatformType !== 2 &&
+          2 !== ModelManager_1.ModelManager.PlatformModel.PlatformType &&
             this.qGo?.Pause(),
           this.VGo &&
-            VideoLauncher_1.VideoLauncher.AudioEventResult.PlayingIds.length !==
-              0 &&
+            0 !==
+              VideoLauncher_1.VideoLauncher.AudioEventResult.PlayingIds
+                .length &&
             (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Audio",
@@ -100,7 +101,7 @@ class VideoView extends UiTickViewBase_1.UiTickViewBase {
               TimerSystem_1.TimerSystem.Pause(this.NGo));
       }),
       (this.WPn = () => {
-        const i = this.OpenParam.RemainViewWhenEnd;
+        var i = this.OpenParam.RemainViewWhenEnd;
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Video", 39, "开始关闭VideoView", ["bRemain", i]),
           this.HPn &&
@@ -178,7 +179,7 @@ class VideoView extends UiTickViewBase_1.UiTickViewBase {
                             this.VGo,
                           )));
                       for (const t of i) {
-                        const e = t.EventPath;
+                        var e = t.EventPath;
                         AudioController_1.AudioController.PostEventByUi(
                           e,
                           VideoLauncher_1.VideoLauncher.AudioEventResult,
@@ -262,11 +263,11 @@ class VideoView extends UiTickViewBase_1.UiTickViewBase {
         }
       }),
       (this.ZGo = () => {
-        let i;
-        const e = this.qGo.GetVideoTrackAspectRatio(0, 0);
-        const t =
-          UiLayer_1.UiLayer.UiRootItem.GetWidth() /
-          UiLayer_1.UiLayer.UiRootItem.GetHeight();
+        var i,
+          e = this.qGo.GetVideoTrackAspectRatio(0, 0),
+          t =
+            UiLayer_1.UiLayer.UiRootItem.GetWidth() /
+            UiLayer_1.UiLayer.UiRootItem.GetHeight();
         t < e
           ? ((i = UiLayer_1.UiLayer.UiRootItem.GetWidth() / e),
             this.bGo.SetHeight(i),
@@ -302,18 +303,18 @@ class VideoView extends UiTickViewBase_1.UiTickViewBase {
         .GetComponentByClass(UE.UITexture.StaticClass())),
       this.bGo)
     ) {
-      const e = this.bGo.GetTexture();
-      const t =
-        ((this.qGo = e?.GetMediaPlayer()),
-        this.qGo ||
-          (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Video", 39, "获取MediaPlayer异常！！")),
-        this.qGo.OnEndReached.Add(this.$Go),
-        this.qGo.OnMediaOpened.Add(this.ZGo),
-        this.qGo.OnMediaOpenFailed.Add(this.YGo),
-        this.GetText(2).SetUIActive(!1),
-        this.OpenParam?.BackgroundColor?.FadeInBackgroundType ??
-          IAction_1.EMovieBackgroundType.Black);
+      var e = this.bGo.GetTexture(),
+        t =
+          ((this.qGo = e?.GetMediaPlayer()),
+          this.qGo ||
+            (Log_1.Log.CheckError() &&
+              Log_1.Log.Error("Video", 39, "获取MediaPlayer异常！！")),
+          this.qGo.OnEndReached.Add(this.$Go),
+          this.qGo.OnMediaOpened.Add(this.ZGo),
+          this.qGo.OnMediaOpenFailed.Add(this.YGo),
+          this.GetText(2).SetUIActive(!1),
+          this.OpenParam?.BackgroundColor?.FadeInBackgroundType ??
+            IAction_1.EMovieBackgroundType.Black);
       let i = void 0;
       (i =
         t === IAction_1.EMovieBackgroundType.White
@@ -402,12 +403,12 @@ class VideoView extends UiTickViewBase_1.UiTickViewBase {
     if (!this.GGo?.length || USE_TICK) this.NGo = void 0;
     else {
       const o = this.GGo.pop();
-      const i =
+      var i =
         ((o.ShowMoment - this.kGo - this.FGo) /
           VideoDefine_1.VideoUtils.FramePerSecond) *
         TimeUtil_1.TimeUtil.InverseMillisecond;
       this.NGo = TimerSystem_1.TimerSystem.Delay((i) => {
-        let e =
+        var e =
           ConfigManager_1.ConfigManager.VideoConfig.GetVideoCaptionText(o);
         const t = this.GetText(2);
         t.SetUIActive(!0), t.SetText(e);
@@ -425,11 +426,11 @@ class VideoView extends UiTickViewBase_1.UiTickViewBase {
   }
   eNo(i) {
     if (this.GGo?.length && USE_TICK && this.WGo) {
-      let e;
-      let t;
-      const o = UE.KismetMathLibrary.GetTotalMilliseconds(this.qGo.GetTime());
+      var e,
+        t,
+        o = UE.KismetMathLibrary.GetTotalMilliseconds(this.qGo.GetTime());
       let i = void 0;
-      for (; this.GGo.length > 0; ) {
+      for (; 0 < this.GGo.length; ) {
         if (
           !(
             ((i = this.GGo[this.GGo.length - 1]).ShowMoment + i.Duration) *
@@ -476,9 +477,9 @@ class VideoView extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   MFs() {
-    const i = this.OpenParam?.BackgroundColor?.FadeOutBackgroundType;
-    let e = void 0;
-    let t = !0;
+    var i = this.OpenParam?.BackgroundColor?.FadeOutBackgroundType;
+    let e = void 0,
+      t = !0;
     switch (i) {
       case IAction_1.EMovieBackgroundType.White:
         (e = new UE.LinearColor(1, 1, 1, 1)),
@@ -513,4 +514,4 @@ class VideoView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.VideoView = VideoView;
-// # sourceMappingURL=VideoView.js.map
+//# sourceMappingURL=VideoView.js.map

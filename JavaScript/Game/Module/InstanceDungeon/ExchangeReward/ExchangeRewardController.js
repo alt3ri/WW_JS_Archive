@@ -1,13 +1,13 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExchangeRewardController = void 0);
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../../Core/Net/Net");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
+const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager");
 class ExchangeRewardController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return this.OnAddEvents(), this.OnRegisterNetEvent(), !0;
@@ -43,8 +43,8 @@ class ExchangeRewardController extends ControllerBase_1.ControllerBase {
     ModelManager_1.ModelManager.ExchangeRewardModel.OnShareInfoNotify(e);
   }),
   (ExchangeRewardController.RequestExchangeData = async () => {
-    var e = new Protocol_1.Aki.Protocol.Qes();
-    var e = await Net_1.Net.CallAsync(18665, e);
+    var e = new Protocol_1.Aki.Protocol.Qes(),
+      e = await Net_1.Net.CallAsync(18665, e);
     ModelManager_1.ModelManager.ExchangeRewardModel.Phrase(e);
   });
-// # sourceMappingURL=ExchangeRewardController.js.map
+//# sourceMappingURL=ExchangeRewardController.js.map

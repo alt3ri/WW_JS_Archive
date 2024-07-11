@@ -28,4 +28,4 @@ class ChatRowData {
   }
 }
 exports.ChatRowData = ChatRowData;
-// # sourceMappingURL=ChatRowData.js.map
+//# sourceMappingURL=ChatRowData.js.map

@@ -1,39 +1,44 @@
 "use strict";
-let SceneItemLevitateMagnetComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (e, t, i, n) {
-    let s;
-    const o = arguments.length;
-    let r =
-      o < 3 ? t : n === null ? (n = Object.getOwnPropertyDescriptor(t, i)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(e, t, i, n);
-    else
-      for (let h = e.length - 1; h >= 0; h--)
-        (s = e[h]) && (r = (o < 3 ? s(r) : o > 3 ? s(t, i, r) : s(t, i)) || r);
-    return o > 3 && r && Object.defineProperty(t, i, r), r;
-  };
+var SceneItemLevitateMagnetComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (e, t, i, n) {
+      var s,
+        o = arguments.length,
+        r =
+          o < 3
+            ? t
+            : null === n
+              ? (n = Object.getOwnPropertyDescriptor(t, i))
+              : n;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        r = Reflect.decorate(e, t, i, n);
+      else
+        for (var h = e.length - 1; 0 <= h; h--)
+          (s = e[h]) &&
+            (r = (o < 3 ? s(r) : 3 < o ? s(t, i, r) : s(t, i)) || r);
+      return 3 < o && r && Object.defineProperty(t, i, r), r;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemLevitateMagnetComponent = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const SceneInteractionManager_1 = require("../../Render/Scene/Interaction/SceneInteractionManager");
-const SceneItemMoveComponent_1 = require("./Common/Component/SceneItemMoveComponent");
-const COS_45 = Math.cos((45 * Math.PI) / 180);
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  SceneInteractionManager_1 = require("../../Render/Scene/Interaction/SceneInteractionManager"),
+  SceneItemMoveComponent_1 = require("./Common/Component/SceneItemMoveComponent"),
+  COS_45 = Math.cos((45 * Math.PI) / 180);
 let SceneItemLevitateMagnetComponent =
   (SceneItemLevitateMagnetComponent_1 = class SceneItemLevitateMagnetComponent extends (
     EntityComponent_1.EntityComponent
@@ -77,10 +82,10 @@ let SceneItemLevitateMagnetComponent =
                   if (e.Attacker.GetComponent(1).IsAutonomousProxy) break;
                   return;
               }
-            let i;
-            let n;
-            let s = e.Attacker.GetComponent(1).ActorLocationProxy;
-            const o = Vector_1.Vector.Create();
+            var i,
+              n,
+              s = e.Attacker.GetComponent(1).ActorLocationProxy,
+              o = Vector_1.Vector.Create();
             this.Hte.ActorLocationProxy.Subtraction(s, o),
               o.Normalize(),
               this.hpn?.Valid &&
@@ -99,7 +104,7 @@ let SceneItemLevitateMagnetComponent =
           }
         }),
         (this.gIe = (e, t) => {
-          e.indexOf(-709838471) > -1 &&
+          -1 < e.indexOf(-709838471) &&
             (EventSystem_1.EventSystem.RemoveWithTarget(
               this,
               EventDefine_1.EEventName.OnSceneItemHitByHitData,
@@ -133,7 +138,7 @@ let SceneItemLevitateMagnetComponent =
               SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
                 this.Hte.GetSceneInteractionLevelHandleId(),
               ));
-          const t =
+          var t =
             SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionAllActorsInLevel(
               this.Hte.GetSceneInteractionLevelHandleId(),
             );
@@ -141,12 +146,12 @@ let SceneItemLevitateMagnetComponent =
             this.bMr.ActorsToIgnore.Add(t.Get(e));
           this.upn =
             this.cpn.K2_GetActorLocation().Z - this.Hte.ActorLocationProxy.Z;
-          var e = Vector_1.Vector.Create();
-          var e =
-            (this.Hte?.ActorUpProxy.Multiply(this.upn, e),
-            (this.Frr = Vector_1.Vector.Create(this.Hte?.ActorLocationProxy)),
-            this.Frr.AdditionEqual(e),
-            this.Hte.ActorRotation);
+          var e = Vector_1.Vector.Create(),
+            e =
+              (this.Hte?.ActorUpProxy.Multiply(this.upn, e),
+              (this.Frr = Vector_1.Vector.Create(this.Hte?.ActorLocationProxy)),
+              this.Frr.AdditionEqual(e),
+              this.Hte.ActorRotation);
           this.Hte.SetActorRotation(Rotator_1.Rotator.ZeroRotator),
             this.cpn.GetActorBounds(!1, void 0, this.Hme),
             TraceElementCommon_1.TraceElementCommon.SetBoxHalfSize(
@@ -254,9 +259,9 @@ let SceneItemLevitateMagnetComponent =
         this.Lie.AddTag(-1063846162));
     }
     mpn(e) {
-      const t = Vector_1.Vector.Create(e);
-      let i = Vector_1.Vector.Create(this.Hte.ActorUpProxy);
-      let n = (i.Normalize(), Vector_1.Vector.Create());
+      var t = Vector_1.Vector.Create(e),
+        i = Vector_1.Vector.Create(this.Hte.ActorUpProxy),
+        n = (i.Normalize(), Vector_1.Vector.Create());
       const s = e.DotProduct(i);
       i.Multiply(s, n), t.SubtractionEqual(n), t.Normalize();
       (e = Vector_1.Vector.Create(0, 0, 0)),
@@ -287,7 +292,7 @@ let SceneItemLevitateMagnetComponent =
         this.Lie.RemoveTag(-1945582411);
     }
     UpdateBoxTrace(e, t) {
-      let i;
+      var i;
       this.bMr &&
         ((i =
           SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
@@ -313,14 +318,14 @@ let SceneItemLevitateMagnetComponent =
       if (!this.bMr) return !1;
       SceneItemLevitateMagnetComponent_1.TraceDebug &&
         this.bMr.SetDrawDebugTrace(2);
-      const t = Vector_1.Vector.Create(this.Frr);
-      var e = Vector_1.Vector.Create(e);
-      var e = (e.SubtractionEqual(t), Vector_1.Vector.Create(e));
-      var i = Vector_1.Vector.Create(this.Hte.ActorUpProxy);
-      const n = (i.Normalize(), Vector_1.Vector.Create());
-      const s = e.DotProduct(i);
-      var i =
-        (i.Multiply(s, n), e.SubtractionEqual(n), Vector_1.Vector.Create(t));
+      var t = Vector_1.Vector.Create(this.Frr),
+        e = Vector_1.Vector.Create(e),
+        e = (e.SubtractionEqual(t), Vector_1.Vector.Create(e)),
+        i = Vector_1.Vector.Create(this.Hte.ActorUpProxy),
+        n = (i.Normalize(), Vector_1.Vector.Create()),
+        s = e.DotProduct(i),
+        i =
+          (i.Multiply(s, n), e.SubtractionEqual(n), Vector_1.Vector.Create(t));
       return (
         i.AdditionEqual(e),
         TraceElementCommon_1.TraceElementCommon.SetEndLocation(this.bMr, i),
@@ -338,4 +343,4 @@ let SceneItemLevitateMagnetComponent =
       SceneItemLevitateMagnetComponent,
     )),
   (exports.SceneItemLevitateMagnetComponent = SceneItemLevitateMagnetComponent);
-// # sourceMappingURL=SceneItemLevitateMagnetComponent.js.map
+//# sourceMappingURL=SceneItemLevitateMagnetComponent.js.map

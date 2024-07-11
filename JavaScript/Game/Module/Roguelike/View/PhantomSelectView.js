@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomSelectView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiActorPool_1 = require("../../../Ui/UiActorPool");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ButtonItem_1 = require("../../Common/Button/ButtonItem");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
-const RogueSelectResult_1 = require("../Define/RogueSelectResult");
-const RoguelikeController_1 = require("../RoguelikeController");
-const ElementPanel_1 = require("./ElementPanel");
-const PhantomSelectItem_1 = require("./PhantomSelectItem");
-const RogueSelectBaseView_1 = require("./RogueSelectBaseView");
-const TopPanel_1 = require("./TopPanel");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiActorPool_1 = require("../../../Ui/UiActorPool"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ButtonItem_1 = require("../../Common/Button/ButtonItem"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
+  RogueSelectResult_1 = require("../Define/RogueSelectResult"),
+  RoguelikeController_1 = require("../RoguelikeController"),
+  ElementPanel_1 = require("./ElementPanel"),
+  PhantomSelectItem_1 = require("./PhantomSelectItem"),
+  RogueSelectBaseView_1 = require("./RogueSelectBaseView"),
+  TopPanel_1 = require("./TopPanel");
 class PhantomSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
   constructor() {
     super(...arguments),
@@ -26,7 +26,7 @@ class PhantomSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
       (this.PhantomSelectItemLayout = void 0),
       (this.IsShowChooseTips = !1),
       (this.ConfirmBtn = () => {
-        const e = this.GetCommonSelectItem();
+        var e = this.GetCommonSelectItem();
         e
           ? ((ModelManager_1.ModelManager.RoguelikeModel.CurrentRogueGainEntry =
               e.RogueGainEntry),
@@ -44,7 +44,7 @@ class PhantomSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
         this.ButtonItem.SetEnableClick(void 0 !== t);
       }),
       (this.CreatePhantomSelectItem = () => {
-        const e = new PhantomSelectItem_1.PhantomSelectItem();
+        var e = new PhantomSelectItem_1.PhantomSelectItem();
         return e.SetToggleStateChangeCallback(this.RefreshBtnEnableClick), e;
       }),
       (this.RoguelikeChooseDataResult = (e, t, i, o) => {
@@ -74,7 +74,7 @@ class PhantomSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
       [2, UE.UIButtonComponent],
       [3, UE.UIItem],
     ]),
-      this.Info.Name === "RoguePhantomReplaceView" &&
+      "RoguePhantomReplaceView" === this.Info.Name &&
         (this.ComponentRegisterInfos.push([4, UE.UIText]),
         this.ComponentRegisterInfos.push([5, UE.UIText]),
         this.ComponentRegisterInfos.push([6, UE.UIItem]));
@@ -84,7 +84,7 @@ class PhantomSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
       if (e.IsSelect()) return e;
   }
   async OnCreateAsync() {
-    const e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+    var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
       RoguelikeDefine_1.PHANTOM_SELECT_ITEM,
     );
     this.UiPoolActorPrivate = await UiActorPool_1.UiActorPool.GetAsync(e);
@@ -150,17 +150,17 @@ class PhantomSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
     this.ButtonItem.SetShowText(RoguelikeDefine_1.ROGUELIKEVIEW_13_TEXT);
   }
   Pao() {
-    this.Info.Name === "RoguePhantomReplaceView" &&
+    "RoguePhantomReplaceView" === this.Info.Name &&
       (this.GetText(4).ShowTextNew(RoguelikeDefine_1.ROGUELIKEVIEW_22_TEXT),
       this.GetText(5).ShowTextNew(RoguelikeDefine_1.ROGUELIKEVIEW_24_TEXT));
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
-    if (e.length === 2 || isNaN(Number(e[0]))) {
-      const t = Number(e[0]);
-      let i = this.PhantomSelectItemLayout?.GetItemByIndex(t);
+    if (2 === e.length || isNaN(Number(e[0]))) {
+      var t = Number(e[0]),
+        i = this.PhantomSelectItemLayout?.GetItemByIndex(t);
       if (i) {
-        if (e[1] === "All") return [i, i];
-        if (e[1] === "Sub") {
+        if ("All" === e[1]) return [i, i];
+        if ("Sub" === e[1]) {
           i =
             this.PhantomSelectItemLayout.GetLayoutItemByIndex(t)?.GetSubItem();
           if (i) return [i, i];
@@ -175,4 +175,4 @@ class PhantomSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
   }
 }
 exports.PhantomSelectView = PhantomSelectView;
-// # sourceMappingURL=PhantomSelectView.js.map
+//# sourceMappingURL=PhantomSelectView.js.map

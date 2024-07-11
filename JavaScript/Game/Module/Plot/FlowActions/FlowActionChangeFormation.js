@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionChangeFormation = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const PlotController_1 = require("../PlotController");
-const FlowActionServerAction_1 = require("./FlowActionServerAction");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  PlotController_1 = require("../PlotController"),
+  FlowActionServerAction_1 = require("./FlowActionServerAction");
 class FlowActionChangeFormation extends FlowActionServerAction_1.FlowActionServerAction {
   OnExecute() {
     ModelManager_1.ModelManager.PlotModel.IsInSequencePlot() &&
@@ -18,4 +18,4 @@ class FlowActionChangeFormation extends FlowActionServerAction_1.FlowActionServe
   OnBackgroundExecute() {}
 }
 exports.FlowActionChangeFormation = FlowActionChangeFormation;
-// # sourceMappingURL=FlowActionChangeFormation.js.map
+//# sourceMappingURL=FlowActionChangeFormation.js.map

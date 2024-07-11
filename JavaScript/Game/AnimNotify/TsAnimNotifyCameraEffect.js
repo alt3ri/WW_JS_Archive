@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const ScreenEffectSystem_1 = require("../Render/Effect/ScreenEffectSystem/ScreenEffectSystem");
+const UE = require("ue"),
+  ScreenEffectSystem_1 = require("../Render/Effect/ScreenEffectSystem/ScreenEffectSystem");
 class TsAnimNotifyCameraEffect extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.EffectData = void 0);
@@ -20,4 +20,4 @@ class TsAnimNotifyCameraEffect extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifyCameraEffect;
-// # sourceMappingURL=TsAnimNotifyCameraEffect.js.map
+//# sourceMappingURL=TsAnimNotifyCameraEffect.js.map

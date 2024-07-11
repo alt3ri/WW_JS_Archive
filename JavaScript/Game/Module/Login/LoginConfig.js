@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoginConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const InstanceDungeonAll_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonAll");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  InstanceDungeonAll_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonAll"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class LoginConfig extends ConfigBase_1.ConfigBase {
   GetAllInstanceDungeon() {
     return InstanceDungeonAll_1.configInstanceDungeonAll.GetConfigList();
@@ -14,11 +14,11 @@ class LoginConfig extends ConfigBase_1.ConfigBase {
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e) ?? "";
   }
   GetLoginFailResetTime() {
-    const e = CommonParamById_1.configCommonParamById.GetIntConfig(
+    var e = CommonParamById_1.configCommonParamById.GetIntConfig(
       "login_fail_reset_time",
     );
     return (
-      e === 0 &&
+      0 === e &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error("Login", 9, "登录失败次数重置参数错误", [
           "loginFailResetTime",
@@ -28,12 +28,12 @@ class LoginConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetLoginFailParam(n) {
-    const r =
-      CommonParamById_1.configCommonParamById.GetStringConfig(
-        "login_fail_params",
-      );
-    const o = r.split(/[,|]/g);
-    if (o.length === 0 || o.length % 2 != 0)
+    var r =
+        CommonParamById_1.configCommonParamById.GetStringConfig(
+          "login_fail_params",
+        ),
+      o = r.split(/[,|]/g);
+    if (0 === o.length || o.length % 2 != 0)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("Login", 9, "登录失败重试参数错误, 请检查个数", [
@@ -44,8 +44,8 @@ class LoginConfig extends ConfigBase_1.ConfigBase {
       );
     let i = 0;
     for (let e = 0; e < o.length; e += 2) {
-      const a = Number(o[e]);
-      const t = Number(o[e + 1]);
+      var a = Number(o[e]),
+        t = Number(o[e + 1]);
       if (isNaN(a) || a <= 0 || isNaN(t) || t <= 0)
         return (
           Log_1.Log.CheckError() &&
@@ -86,4 +86,4 @@ class LoginConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.LoginConfig = LoginConfig;
-// # sourceMappingURL=LoginConfig.js.map
+//# sourceMappingURL=LoginConfig.js.map

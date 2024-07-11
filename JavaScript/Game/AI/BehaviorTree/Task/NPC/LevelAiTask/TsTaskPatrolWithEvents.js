@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const IComponent_1 = require("../../../../../../UniverseEditor/Interface/IComponent");
-const GlobalData_1 = require("../../../../../GlobalData");
-const GameSplineComponent_1 = require("../../../../../LevelGamePlay/Common/GameSplineComponent");
-const BehaviorTreeDefines_1 = require("../../../../../LevelGamePlay/LevelAi/BehaviorTree/BehaviorTreeDefines");
-const BlackboardController_1 = require("../../../../../World/Controller/BlackboardController");
-const TsAiController_1 = require("../../../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("../../TsTaskAbortImmediatelyBase");
-const MAX_DISTANCE = 200;
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  IComponent_1 = require("../../../../../../UniverseEditor/Interface/IComponent"),
+  GlobalData_1 = require("../../../../../GlobalData"),
+  GameSplineComponent_1 = require("../../../../../LevelGamePlay/Common/GameSplineComponent"),
+  BehaviorTreeDefines_1 = require("../../../../../LevelGamePlay/LevelAi/BehaviorTree/BehaviorTreeDefines"),
+  BlackboardController_1 = require("../../../../../World/Controller/BlackboardController"),
+  TsAiController_1 = require("../../../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("../../TsTaskAbortImmediatelyBase"),
+  MAX_DISTANCE = 200;
 class TsTaskPatrolWithEvents extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -42,7 +42,7 @@ class TsTaskPatrolWithEvents extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveExecuteAI(t, i) {
     this.InitTsVariables();
-    const e = t.AiController;
+    var e = t.AiController;
     e
       ? ((this.Entity = e.CharAiDesignComp.Entity),
         (this.MoveComp = this.Entity.GetComponent(36)),
@@ -59,7 +59,7 @@ class TsTaskPatrolWithEvents extends TsTaskAbortImmediatelyBase_1.default {
         this.FinishExecute(!1));
   }
   InitSpline() {
-    const i = new GameSplineComponent_1.GameSplineComponent(this.SplineId);
+    var i = new GameSplineComponent_1.GameSplineComponent(this.SplineId);
     if (!i.Initialize())
       return (
         Log_1.Log.CheckError() &&
@@ -88,9 +88,9 @@ class TsTaskPatrolWithEvents extends TsTaskAbortImmediatelyBase_1.default {
       ((this.SplineComp = i),
       (this.IsCircle = !!i.Option.CycleOption?.IsCircle),
       (this.SplinePoints = i.Option.Points.slice(0)),
-      this.IsCircle && this.SplinePoints.length > 2)
+      this.IsCircle && 2 < this.SplinePoints.length)
     )
-      for (let t = i.Option.Points.length - 2; t > 0; --t)
+      for (let t = i.Option.Points.length - 2; 0 < t; --t)
         this.SplinePoints.push(i.Option.Points[t]);
     return this.PartitionSpline(), (this.SplineInited = !0);
   }
@@ -109,45 +109,45 @@ class TsTaskPatrolWithEvents extends TsTaskAbortImmediatelyBase_1.default {
       this.SplineComp.Option.Type === IComponent_1.ESplineType.LevelAI
     ) {
       this.SegmentsMoveConfig = new Array();
-      let i = [];
-      let e = 0;
-      const s = this.SplinePoints.length;
+      let i = [],
+        e = 0;
+      var s = this.SplinePoints.length;
       for (let t = 0; t < s; ++t) {
-        const o = this.SplinePoints[t];
+        var o = this.SplinePoints[t];
         i.push(o),
-          ((o.Actions && o.Actions.length !== 0) || t === s - 1) &&
+          ((o.Actions && 0 !== o.Actions.length) || t === s - 1) &&
             (this.CreateMoveConfig(i, e), (e += i.length), (i = []));
       }
     }
   }
   CreateMoveConfig(i, e) {
     if (i.length) {
-      const s = [];
+      var s = [];
       for (let t = 0; t < i.length; t++) {
-        var o = i[t];
-        var o = {
-          Index: t,
-          Position: this.GetWorldLocationAtSplinePoint(t + e),
-          Actions: new Array(),
-          MoveState: o.MoveState,
-          MoveSpeed: o.MoveSpeed,
-        };
+        var o = i[t],
+          o = {
+            Index: t,
+            Position: this.GetWorldLocationAtSplinePoint(t + e),
+            Actions: new Array(),
+            MoveState: o.MoveState,
+            MoveSpeed: o.MoveSpeed,
+          };
         s.push(o);
       }
-      const r = {
-        Points: s,
-        Navigation: this.SplineComp.Option.UsePathFinding ?? !1,
-        IsFly: !1,
-        DebugMode: this.TsOpenDebugNode,
-        Loop: !1,
-        CircleMove: !1,
-        UsePreviousIndex: this.TsUseLastMoveIndex,
-        UseNearestPoint: this.TsUseLastMoveIndex,
-        ReturnFalseWhenNavigationFailed: !1,
-      };
-      const h = i.length - 1;
+      var r = {
+          Points: s,
+          Navigation: this.SplineComp.Option.UsePathFinding ?? !1,
+          IsFly: !1,
+          DebugMode: this.TsOpenDebugNode,
+          Loop: !1,
+          CircleMove: !1,
+          UsePreviousIndex: this.TsUseLastMoveIndex,
+          UseNearestPoint: this.TsUseLastMoveIndex,
+          ReturnFalseWhenNavigationFailed: !1,
+        },
+        h = i.length - 1;
       if (i[h].Actions && i[h].Actions?.length) {
-        const n = this.SplineComp.GetNumberOfSplinePoints();
+        var n = this.SplineComp.GetNumberOfSplinePoints();
         let t = h + e;
         this.IsCircle && t >= n && (t = 2 * n - 2 - t);
         const a =
@@ -191,23 +191,23 @@ class TsTaskPatrolWithEvents extends TsTaskAbortImmediatelyBase_1.default {
           ),
         0
       );
-    const e = this.SplinePoints;
-    let s = 0;
-    let o = Number.MAX_VALUE;
-    const r = this.ActorComp.ActorLocationProxy;
-    const h = Vector_1.Vector.Create();
+    var e = this.SplinePoints;
+    let s = 0,
+      o = Number.MAX_VALUE;
+    var r = this.ActorComp.ActorLocationProxy,
+      h = Vector_1.Vector.Create();
     for (let t = 0, i = e.length; t < i; t++) {
       h.DeepCopy(this.GetWorldLocationAtSplinePoint(t)),
         this.CacheVector.Set(h.X, h.Y, h.Z);
-      const n = Vector_1.Vector.Dist(r, this.CacheVector);
+      var n = Vector_1.Vector.Dist(r, this.CacheVector);
       n < o && ((o = n), (s = t));
     }
-    const i = Vector_1.Vector.Create();
-    const a = Vector_1.Vector.Create();
-    if (s === 0) return 0;
+    var i = Vector_1.Vector.Create(),
+      a = Vector_1.Vector.Create();
+    if (0 === s) return 0;
     if (s === e.length - 1) {
-      const t = e[0].Position;
-      const l = e[e.length - 1].Position;
+      var t = e[0].Position,
+        l = e[e.length - 1].Position;
       if (
         (i.Set(t.X, t.Y, t.Z),
         a.Set(l.X, l.Y, l.Z),
@@ -220,10 +220,10 @@ class TsTaskPatrolWithEvents extends TsTaskAbortImmediatelyBase_1.default {
         a.DeepCopy(this.SplineComp.GetWorldLocationAtSplinePoint(t + 1)),
         this.CacheVector.Set(a.X, a.Y, a.Z),
         this.CacheVector.Subtraction(i, this.CacheVector);
-      let v = this.CacheVector.Size();
+      var v = this.CacheVector.Size();
       this.CacheVector2.Set(r.X, r.Y, r.Z),
         this.CacheVector2.Subtraction(a, this.CacheVector2),
-        this.CacheVector.DotProduct(this.CacheVector2) > 0 ||
+        0 < this.CacheVector.DotProduct(this.CacheVector2) ||
           (this.CacheVector2.Set(r.X, r.Y, r.Z),
           this.CacheVector2.Subtraction(i, this.CacheVector2),
           this.CacheVector.DotProduct(this.CacheVector2) < 0) ||
@@ -234,7 +234,7 @@ class TsTaskPatrolWithEvents extends TsTaskAbortImmediatelyBase_1.default {
   }
   GetPatrolMoveConfig() {
     if (this.SegmentsMoveConfig) {
-      const t = BlackboardController_1.BlackboardController.GetIntValueByEntity(
+      var t = BlackboardController_1.BlackboardController.GetIntValueByEntity(
         this.Entity.Id,
         BehaviorTreeDefines_1.BehaviorTreeDefines.PatrolFinishSegmentIndexName,
       );
@@ -244,10 +244,10 @@ class TsTaskPatrolWithEvents extends TsTaskAbortImmediatelyBase_1.default {
           this.SegmentsMoveConfig[this.CurrentSegmentIndex]
         );
       let i = 0;
-      const e = this.GetNearestPatrolPointIndex();
-      const s = this.SegmentsMoveConfig.length;
+      var e = this.GetNearestPatrolPointIndex(),
+        s = this.SegmentsMoveConfig.length;
       for (let t = 0; t < s; ++t) {
-        const o = this.SegmentsMoveConfig[t].Points.length;
+        var o = this.SegmentsMoveConfig[t].Points.length;
         if (e >= i && e < i + o)
           return (
             Log_1.Log.CheckInfo() &&
@@ -269,7 +269,7 @@ class TsTaskPatrolWithEvents extends TsTaskAbortImmediatelyBase_1.default {
   }
   GetWorldLocationAtSplinePoint(t) {
     if (this.SplineComp && this.SplinePoints) {
-      const i = this.SplineComp.GetNumberOfSplinePoints();
+      var i = this.SplineComp.GetNumberOfSplinePoints();
       if (
         !(
           (!this.IsCircle && i <= t) ||
@@ -291,4 +291,4 @@ class TsTaskPatrolWithEvents extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskPatrolWithEvents;
-// # sourceMappingURL=TsTaskPatrolWithEvents.js.map
+//# sourceMappingURL=TsTaskPatrolWithEvents.js.map

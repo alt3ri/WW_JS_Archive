@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NoCircleAttachView = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const AutoAttachBaseView_1 = require("./AutoAttachBaseView");
-const FLOATDURABLENUM = 0.01;
+const Log_1 = require("../../../Core/Common/Log"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  AutoAttachBaseView_1 = require("./AutoAttachBaseView"),
+  FLOATDURABLENUM = 0.01;
 class NoCircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
   constructor() {
     super(...arguments),
@@ -24,14 +24,14 @@ class NoCircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
     return this.RWe();
   }
   RWe() {
-    let i = void 0;
-    let s = 1e7;
-    const e = this.Items.length;
+    let i = void 0,
+      s = 1e7;
+    var e = this.Items.length;
     for (let t = 0; t < e; t++) {
-      const h = Math.abs(this.Items[t].GetCurrentPosition());
-      const r =
-        this.Items[t].GetCurrentShowItemIndex() >= 0 &&
-        this.Items[t].GetCurrentShowItemIndex() < this.DataLength;
+      var h = Math.abs(this.Items[t].GetCurrentPosition()),
+        r =
+          0 <= this.Items[t].GetCurrentShowItemIndex() &&
+          this.Items[t].GetCurrentShowItemIndex() < this.DataLength;
       h < s && r && ((i = this.Items[t]), (s = h));
     }
     return (
@@ -46,7 +46,7 @@ class NoCircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
     if (void 0 === this.LWe) {
       let i = 0;
       for (let t = 0; t < 1; t += FLOATDURABLENUM) {
-        const s = this.GetCurveValue(this.BoundaryCurve, t);
+        var s = this.GetCurveValue(this.BoundaryCurve, t);
         i += FLOATDURABLENUM * s * this.MoveBoundary;
       }
       this.LWe = i;
@@ -55,24 +55,24 @@ class NoCircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
   }
   RecalculateMoveOffset(t) {
     t = this.AWe(t);
-    if (this.AttachDirection === 0) {
+    if (0 === this.AttachDirection) {
       if (!this.PWe(t)) return 0;
     } else if (!this.xWe(t)) return 0;
     return t;
   }
   wWe(t) {
-    const i = this.FindNearestMiddleItem();
-    const s = i.GetCurrentPosition();
+    var i = this.FindNearestMiddleItem(),
+      s = i.GetCurrentPosition();
     let e = 0;
     return (e =
-      t > 0
-        ? this.GetCurrentMoveDirection() === 0
+      0 < t
+        ? 0 === this.GetCurrentMoveDirection()
           ? i.GetCurrentShowItemIndex() * (this.GetItemSize() + this.Gap) + s
           : (this.DataLength - 1 - i.GetCurrentShowItemIndex()) *
               (this.GetItemSize() + this.Gap) *
               -1 +
             s
-        : this.GetCurrentMoveDirection() === 0
+        : 0 === this.GetCurrentMoveDirection()
           ? (this.DataLength - 1 - i.GetCurrentShowItemIndex()) *
               (this.GetItemSize() + this.Gap) *
               -1 +
@@ -80,30 +80,30 @@ class NoCircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
           : i.GetCurrentShowItemIndex() * (this.GetItemSize() + this.Gap) + s);
   }
   AWe(t) {
-    let i = t > 0 ? 0 : this.DataLength - 1;
-    this.AttachDirection !== 0 && (i = t > 0 ? this.DataLength - 1 : 0);
-    let s;
-    const e = this.GetShowIndexItem(i);
+    let i = 0 < t ? 0 : this.DataLength - 1;
+    0 !== this.AttachDirection && (i = 0 < t ? this.DataLength - 1 : 0);
+    var s,
+      e = this.GetShowIndexItem(i);
     if (!e) return (s = this.wWe(t)), Math.abs(s) < Math.abs(t) ? s : t;
-    let h = e.GetCurrentPosition();
-    let r = (h = -FLOATDURABLENUM < h && h < FLOATDURABLENUM ? 0 : h) + t;
-    if ((this.AttachDirection !== 0 && (r = h - t), t > 0)) {
+    let h = e.GetCurrentPosition(),
+      r = (h = -FLOATDURABLENUM < h && h < FLOATDURABLENUM ? 0 : h) + t;
+    if ((0 !== this.AttachDirection && (r = h - t), 0 < t)) {
       if (r < 0) return t;
-    } else if (r > 0) return t;
+    } else if (0 < r) return t;
     return this.BWe(t, h);
   }
   BWe(t, i) {
-    let s = 0;
-    let e = 0;
-    t > 0 ? i < 0 && (e = 0 - i) : i > 0 && (e = 0 - i);
-    var h = t - (s = 0 + e);
-    var r = this.bWe(t, i);
-    var h = s + h * r;
-    var r = i + h;
+    let s = 0,
+      e = 0;
+    0 < t ? i < 0 && (e = 0 - i) : 0 < i && (e = 0 - i);
+    var h = t - (s = 0 + e),
+      r = this.bWe(t, i),
+      h = s + h * r,
+      r = i + h;
     return (s =
-      t > 0
+      0 < t
         ? r >= this.qWe()
-          ? e > 0
+          ? 0 < e
             ? e + this.qWe()
             : this.qWe() - i
           : h
@@ -117,7 +117,7 @@ class NoCircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
     if (void 0 === this.U1e) {
       let i = 0;
       for (let t = 0; t < this.MoveBoundary; t += 1) {
-        const s = this.bWe(1, t);
+        var s = this.bWe(1, t);
         i += +s;
       }
       this.U1e = i;
@@ -128,18 +128,18 @@ class NoCircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
     return this.UWe() <= 0
       ? 0
       : ((i = Math.abs(i) / this.UWe()),
-        this.GetCurveValue(this.BoundaryCurve, (i = i > 1 ? 1 : i)));
+        this.GetCurveValue(this.BoundaryCurve, (i = 1 < i ? 1 : i)));
   }
   PWe(i) {
     let s = void 0;
-    const e = this.Items.length;
+    var e = this.Items.length;
     for (let t = 0; t < e - 1; t++)
-      if (this.Items[t].GetCurrentShowItemIndex() === 0) {
+      if (0 === this.Items[t].GetCurrentShowItemIndex()) {
         s = this.Items[t];
         break;
       }
-    if (s && i > 0) {
-      const t = s.GetCurrentPosition() + i;
+    if (s && 0 < i) {
+      var t = s.GetCurrentPosition() + i;
       if (
         (this.GetItemSize() + this.Gap) *
           Math.ceil((this.ShowItemNum + 1) / 2) <
@@ -158,44 +158,44 @@ class NoCircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
   }
   xWe(i) {
     let s = void 0;
-    const e = this.Items.length;
+    var e = this.Items.length;
     for (let t = 0; t < e - 1; t++)
-      if (this.Items[t].GetCurrentShowItemIndex() === 0) {
+      if (0 === this.Items[t].GetCurrentShowItemIndex()) {
         s = this.Items[t];
         break;
       }
-    if (i > 0) {
+    if (0 < i) {
       for (let t = 0; t < e; t++)
         if (this.Items[t].GetCurrentShowItemIndex() === this.DataLength - 1) {
-          const h = this.Items[t].GetCurrentPosition() + i;
+          var h = this.Items[t].GetCurrentPosition() + i;
           if (0 - this.Items[t].GetCurrentPosition() + this.UWe() < h)
             return !1;
         }
     } else if (s && i < 0) {
-      const t = s.GetCurrentPosition() + i;
-      const r = s.GetCurrentPosition() + this.UWe();
+      var t = s.GetCurrentPosition() + i,
+        r = s.GetCurrentPosition() + this.UWe();
       if (Math.abs(t) > Math.abs(r)) return !1;
     }
     return !0;
   }
   FindNextDirectionItem(t) {
     let i = 0;
-    const s = this.FindNearestMiddleItem().GetCurrentShowItemIndex();
+    var s = this.FindNearestMiddleItem().GetCurrentShowItemIndex();
     return (
       (i =
-        t > 0
+        0 < t
           ? s + t < this.DataLength
             ? s + t
             : this.DataLength - 1
-          : s + t > 0
+          : 0 < s + t
             ? s + t
             : 0),
       this.GetShowIndexItem(i)
     );
   }
   ReloadItems(t, i) {
-    let s;
-    const e = t > this.ShowItemNum || this.DWe ? this.ShowItemNum + 1 : t;
+    var s,
+      e = t > this.ShowItemNum || this.DWe ? this.ShowItemNum + 1 : t;
     for (let t = 0; t < this.Items.length; t++) this.Items[t].SetUiActive(!1);
     for (let t = 0; t < e; t++)
       t >= this.Items.length &&
@@ -219,4 +219,4 @@ class NoCircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
   }
 }
 exports.NoCircleAttachView = NoCircleAttachView;
-// # sourceMappingURL=NoCircleAttachView.js.map
+//# sourceMappingURL=NoCircleAttachView.js.map

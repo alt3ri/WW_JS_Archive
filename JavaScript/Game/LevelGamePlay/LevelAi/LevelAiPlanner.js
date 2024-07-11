@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelAiPlanner = exports.PlanningContext = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const PriorityQueue_1 = require("../../../Core/Container/PriorityQueue");
-const LevelAiPlan_1 = require("./LevelAiPlan");
+const Log_1 = require("../../../Core/Common/Log"),
+  PriorityQueue_1 = require("../../../Core/Container/PriorityQueue"),
+  LevelAiPlan_1 = require("./LevelAiPlan");
 class PlanningContext {
   constructor(t, i, e, s, n) {
     (this.sTe = void 0),
@@ -24,24 +24,24 @@ class PlanningContext {
     return this.lTe.StepIndex;
   }
   MakePlanCopyWithAddedStep() {
-    const t = this.hTe.MakeCopy();
-    var i = t.Levels[this.lTe.LevelIndex];
-    const e = new LevelAiPlan_1.LevelAiPlanStep(this.aTe, this._Te);
-    var i =
-      (i.Steps.push(e),
-      new LevelAiPlan_1.LevelAiPlanStepId(
-        this.lTe.LevelIndex,
-        i.Steps.length - 1,
-      ));
+    var t = this.hTe.MakeCopy(),
+      i = t.Levels[this.lTe.LevelIndex],
+      e = new LevelAiPlan_1.LevelAiPlanStep(this.aTe, this._Te),
+      i =
+        (i.Steps.push(e),
+        new LevelAiPlan_1.LevelAiPlanStepId(
+          this.lTe.LevelIndex,
+          i.Steps.length - 1,
+        ));
     return { PlanCopy: t, OutAddedStep: e, OutAddedStepId: i };
   }
   AddLevel(t, i = LevelAiPlan_1.LevelAiPlanStepId.None) {
     return t.Levels.push(new LevelAiPlan_1.LevelAiPlanLevel(this._Te, i)) - 1;
   }
   SubmitCandidatePlanStep(t, i, e) {
-    const s = this.hTe.MakeCopy();
-    var t = new LevelAiPlan_1.LevelAiPlanStep(t, i, e);
-    var i = s.Levels[this.lTe.LevelIndex];
+    var s = this.hTe.MakeCopy(),
+      t = new LevelAiPlan_1.LevelAiPlanStep(t, i, e),
+      i = s.Levels[this.lTe.LevelIndex];
     i.Steps.push(t), (i.Cost += e), (s.Cost += e), this.SubmitCandidatePlan(s);
   }
   SubmitCandidatePlan(t) {
@@ -72,7 +72,7 @@ class LevelAiPlanner {
       ));
   }
   StartPlanning() {
-    let t;
+    var t;
     this.gTe ||
       ((t = this.cTe),
       this.Clear(),
@@ -118,9 +118,9 @@ class LevelAiPlanner {
           this.RIe.GetCreatureDataComponent().GetPbDataId(),
         ]);
     else {
-      let t;
-      const i = this.uTe.GetNextNodes(this.lTe);
-      const e = this.uTe.GetWorldState(this.lTe);
+      var t,
+        i = this.uTe.GetNextNodes(this.lTe),
+        e = this.uTe.GetWorldState(this.lTe);
       for (const s of i)
         (this.RIe.WorldStateProxy = e),
           LevelAiPlanner.STe(s) &&
@@ -134,8 +134,8 @@ class LevelAiPlanner {
       let i = 1;
       for (const s of t)
         if (s) {
-          const e = s.WrappedCheckCondition(0);
-          if ((i = Math.min(i, e)) !== 1) return !1;
+          var e = s.WrappedCheckCondition(0);
+          if (1 !== (i = Math.min(i, e))) return !1;
         }
       return !0;
     })(t.Decorators);
@@ -145,4 +145,4 @@ class LevelAiPlanner {
   }
 }
 exports.LevelAiPlanner = LevelAiPlanner;
-// # sourceMappingURL=LevelAiPlanner.js.map
+//# sourceMappingURL=LevelAiPlanner.js.map

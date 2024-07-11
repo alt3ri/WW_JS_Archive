@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceInfoView = void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const Global_1 = require("../../../Global");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiConfig_1 = require("../../../Ui/Define/UiConfig");
-const UiLayerType_1 = require("../../../Ui/Define/UiLayerType");
-const AdviceController_1 = require("../AdviceController");
-const CHECKTIMEGAP = 500;
-const ROLEMOVERAGE = 3;
+const UE = require("ue"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../Global"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiConfig_1 = require("../../../Ui/Define/UiConfig"),
+  UiLayerType_1 = require("../../../Ui/Define/UiLayerType"),
+  AdviceController_1 = require("../AdviceController"),
+  CHECKTIMEGAP = 500,
+  ROLEMOVERAGE = 3;
 class AdviceInfoView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -34,14 +34,14 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
       }),
       (this.r7e = () => !0),
       (this.n7e = () => {
-        var e = ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityId();
-        var e = EntitySystem_1.EntitySystem.Get(e)
-          ?.GetComponent(0)
-          .GetCreatureDataId();
-        const t =
-          ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityAdviceData()
-            .GetAdviceData()
-            .GetAdviceBigId();
+        var e = ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityId(),
+          e = EntitySystem_1.EntitySystem.Get(e)
+            ?.GetComponent(0)
+            .GetCreatureDataId(),
+          t =
+            ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityAdviceData()
+              .GetAdviceData()
+              .GetAdviceBigId();
         ModelManager_1.ModelManager.AdviceModel.GetUpVoteIds().includes(t) &&
           ((e = MathUtils_1.MathUtils.NumberToLong(e)),
           this.GetExtendToggle(6).SetToggleStateForce(0, !1),
@@ -52,15 +52,15 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
           ));
       }),
       (this.s7e = () => {
-        var e = ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityId();
-        var e = EntitySystem_1.EntitySystem.Get(e)
-          ?.GetComponent(0)
-          .GetCreatureDataId();
-        const t =
-          ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityAdviceData()
-            .GetAdviceData()
-            .GetAdviceBigId();
-        var e = MathUtils_1.MathUtils.NumberToLong(e);
+        var e = ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityId(),
+          e = EntitySystem_1.EntitySystem.Get(e)
+            ?.GetComponent(0)
+            .GetCreatureDataId(),
+          t =
+            ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityAdviceData()
+              .GetAdviceData()
+              .GetAdviceBigId(),
+          e = MathUtils_1.MathUtils.NumberToLong(e);
         this.GetExtendToggle(7).SetToggleStateForce(0, !1),
           ModelManager_1.ModelManager.AdviceModel.GetUpVoteIds().includes(t)
             ? AdviceController_1.AdviceController.RequestVote(
@@ -111,7 +111,7 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
   OnStart() {
     this.IRe = void 0;
     this.GetExtendToggle(6).SetToggleGroup(void 0);
-    const e = this.GetExtendToggle(7);
+    var e = this.GetExtendToggle(7);
     e.CanExecuteChange.Unbind(),
       e.CanExecuteChange.Bind(this.r7e),
       e.SetToggleGroup(void 0),
@@ -171,8 +171,8 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
       );
   }
   y9e() {
-    let e;
-    const t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var e,
+      t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     t.Valid &&
       ((e = t.Entity.GetComponent(185)),
       (this.r9e = e.HasTag(1996802261)),
@@ -187,9 +187,8 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
     this.o9e?.EndTask(), (this.o9e = void 0);
   }
   _7e() {
-    const e = ModelManager_1.ModelManager.AdviceModel.GetUpVoteIds();
-    const t =
-      ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityAdviceData()
+    var e = ModelManager_1.ModelManager.AdviceModel.GetUpVoteIds(),
+      t = ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityAdviceData()
         .GetAdviceData()
         .GetAdviceBigId();
     e.includes(t)
@@ -219,7 +218,7 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
       (TimerSystem_1.TimerSystem.Remove(this.IRe), (this.IRe = void 0));
   }
   m7e() {
-    let e;
+    var e;
     this.i7e ||
       ((e = Vector_1.Vector.Create()).DeepCopy(
         Global_1.Global.BaseCharacter.CharacterActorComponent
@@ -231,27 +230,27 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
     this.u7e(), this.hke(), this.v7e(), this._7e(), this.x9e();
   }
   u7e() {
-    var e = this.S8e.GetVote();
-    var e =
-      (this.GetText(5).SetText(e.toString()),
-      e >= ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceHighNum()
-        ? "F9D751"
-        : "FFFFFF");
-    var e = UE.Color.FromHex(e);
+    var e = this.S8e.GetVote(),
+      e =
+        (this.GetText(5).SetText(e.toString()),
+        e >= ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceHighNum()
+          ? "F9D751"
+          : "FFFFFF"),
+      e = UE.Color.FromHex(e);
     this.GetText(5).SetColor(e);
   }
   hke() {
-    const e = this.S8e.GetAdviceShowText();
+    var e = this.S8e.GetAdviceShowText();
     this.GetText(4).SetText(e);
   }
   x9e() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityAdviceData().GetPlayerName();
     this.GetText(2).SetText(e);
   }
   v7e() {
-    let e;
-    this.S8e.GetAdviceExpressionId() > 0
+    var e;
+    0 < this.S8e.GetAdviceExpressionId()
       ? (this.GetTexture(1).SetUIActive(!0),
         (e = ConfigManager_1.ConfigManager.ChatConfig.GetExpressionConfig(
           this.S8e.GetAdviceExpressionId(),
@@ -260,7 +259,7 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
       : this.GetTexture(1).SetUIActive(!1);
   }
   C7e() {
-    let e;
+    var e;
     ModelManager_1.ModelManager.InteractionModel.IsHideInteractHint &&
       ((e =
         Global_1.Global.BaseCharacter.CharacterActorComponent
@@ -277,10 +276,10 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
     return e < i && -1 * i < e;
   }
   d7e() {
-    let e;
-    let t;
-    var i = ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityId();
-    var i = EntitySystem_1.EntitySystem.Get(i);
+    var e,
+      t,
+      i = ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityId(),
+      i = EntitySystem_1.EntitySystem.Get(i);
     (!i ||
       ((t = Global_1.Global.BaseCharacter),
       (e = i.GetComponent(1)?.Owner),
@@ -303,4 +302,4 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.AdviceInfoView = AdviceInfoView;
-// # sourceMappingURL=AdviceInfoView.js.map
+//# sourceMappingURL=AdviceInfoView.js.map

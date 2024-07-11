@@ -1,38 +1,38 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActorAssistant = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const Info_1 = require("../../../../../Core/Common/Info");
-const Log_1 = require("../../../../../Core/Common/Log");
-const PlotAudioById_1 = require("../../../../../Core/Define/ConfigQuery/PlotAudioById");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const Net_1 = require("../../../../../Core/Net/Net");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const DataTableUtil_1 = require("../../../../../Core/Utils/DataTableUtil");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const Global_1 = require("../../../../Global");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const CharacterBuffIds_1 = require("../../../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds");
-const WorldFunctionLibrary_1 = require("../../../../World/Bridge/WorldFunctionLibrary");
-const WaitEntityTask_1 = require("../../../../World/Define/WaitEntityTask");
-const LoginDefine_1 = require("../../../Login/Data/LoginDefine");
-const PhantomUtil_1 = require("../../../Phantom/PhantomUtil");
-const PlotAudioModel_1 = require("../../PlotAudioModel");
-const PlotController_1 = require("../../PlotController");
-const SequenceDefine_1 = require("../SequenceDefine");
-const SeqBaseAssistant_1 = require("./SeqBaseAssistant");
-const BindingActorAnimBlendOutTime = 0.2;
-const MaxPos = -999999;
-const HidePos = new UE.Vector(0, 0, MaxPos);
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  Info_1 = require("../../../../../Core/Common/Info"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  PlotAudioById_1 = require("../../../../../Core/Define/ConfigQuery/PlotAudioById"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  DataTableUtil_1 = require("../../../../../Core/Utils/DataTableUtil"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  Global_1 = require("../../../../Global"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  CharacterBuffIds_1 = require("../../../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds"),
+  WorldFunctionLibrary_1 = require("../../../../World/Bridge/WorldFunctionLibrary"),
+  WaitEntityTask_1 = require("../../../../World/Define/WaitEntityTask"),
+  LoginDefine_1 = require("../../../Login/Data/LoginDefine"),
+  PhantomUtil_1 = require("../../../Phantom/PhantomUtil"),
+  PlotAudioModel_1 = require("../../PlotAudioModel"),
+  PlotController_1 = require("../../PlotController"),
+  SequenceDefine_1 = require("../SequenceDefine"),
+  SeqBaseAssistant_1 = require("./SeqBaseAssistant"),
+  BindingActorAnimBlendOutTime = 0.2,
+  MaxPos = -999999,
+  HidePos = new UE.Vector(0, 0, MaxPos);
 class ActorAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   constructor() {
     super(...arguments),
@@ -120,7 +120,7 @@ class ActorAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       this.hto(),
       this.Model.BindingEntityMap.clear();
     let e = this.Model.BlendOutCharacter;
-    let t;
+    var t;
     return (e = void 0 === e ? this.Model.SeqMainCharacter : e)
       ? ((t = e),
         this.ato(!1),
@@ -157,8 +157,8 @@ class ActorAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       this.Promise && (this.Promise.SetResult(!0), (this.Promise = void 0));
   }
   TeleportToFinal() {
-    let e;
-    const t = Global_1.Global.BaseCharacter?.CharacterActorComponent;
+    var e,
+      t = Global_1.Global.BaseCharacter?.CharacterActorComponent;
     t?.Valid &&
       this.Model.SequenceData.SaveFinalTransform &&
       ((e = this.Model.GetLastTransform())
@@ -193,22 +193,22 @@ class ActorAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   tto() {
     (this.Model.BlendInCharacter = void 0),
       (this.Model.BlendOutCharacter = void 0);
-    const t = this.Model.SequenceData.GeneratedData?.BindingBP;
+    var t = this.Model.SequenceData.GeneratedData?.BindingBP;
     if (t) {
-      const i = this.Model.SequenceData.GeneratedData?.BlendInTag;
-      const o = this.Model.SequenceData.GeneratedData?.BlendOutTag;
-      const s = this.Model.SequenceData.葫芦状态;
-      const r = t.Num();
+      var i = this.Model.SequenceData.GeneratedData?.BlendInTag,
+        o = this.Model.SequenceData.GeneratedData?.BlendOutTag,
+        s = this.Model.SequenceData.葫芦状态,
+        r = t.Num();
       for (let e = 0; e < r; e++) {
-        var n;
-        const h = t.Get(e);
-        const l = UE.KuroActorManager.SpawnActor(
-          Info_1.Info.World,
-          h,
-          MathUtils_1.MathUtils.DefaultTransform,
-          1,
-          void 0,
-        );
+        var n,
+          h = t.Get(e),
+          l = UE.KuroActorManager.SpawnActor(
+            Info_1.Info.World,
+            h,
+            MathUtils_1.MathUtils.DefaultTransform,
+            1,
+            void 0,
+          );
         ObjectUtils_1.ObjectUtils.IsValid(l)
           ? (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("Plot", 27, "生成Seq绑定蓝图的Actor", [
@@ -218,7 +218,7 @@ class ActorAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
             (n = l) &&
               (this.Model.BindingActorMap.set(n.BindingTag, l),
               l.K2_SetActorLocation(HidePos, !1, void 0, !0),
-              s > 0 && n.ChangeHuluState(s),
+              0 < s && n.ChangeHuluState(s),
               i &&
                 i.op_Equality(n.BindingTag) &&
                 !FNameUtil_1.FNameUtil.IsNothing(i) &&
@@ -237,7 +237,7 @@ class ActorAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   }
   lto() {
     this.Model.BindingActorMap &&
-      this.Model.BindingActorMap.size !== 0 &&
+      0 !== this.Model.BindingActorMap.size &&
       (this.Model.BindingActorMap.forEach((e) => {
         e.K2_SetActorLocation(HidePos, !1, void 0, !0),
           e && e.CleanHuluState(),
@@ -250,8 +250,7 @@ class ActorAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       (this.Model.BlendOutCharacter = void 0));
   }
   ato(e) {
-    const t =
-      ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity;
+    var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity;
     e
       ? this.Model.HidePlayer ||
         (ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
@@ -286,14 +285,14 @@ class ActorAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   }
   ito(t) {
     const i = new Map();
-    const o = this.Model.SequenceData.绑定角色标签;
-    const s = o.Num();
-    if (s === 0) t(void 0);
+    var o = this.Model.SequenceData.绑定角色标签,
+      s = o.Num();
+    if (0 === s) t(void 0);
     else {
-      const r = new Array();
-      const n = new Array();
+      var r = new Array(),
+        n = new Array();
       for (let e = 0; e < s; e++) {
-        const h = o.Get(e);
+        var h = o.Get(e);
         if (
           !SequenceDefine_1.HERO_TAG.op_Equality(h) &&
           ((n.length = 0),
@@ -309,16 +308,16 @@ class ActorAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
               ["Tag", h.toString()],
               ["num", n.length],
             ),
-          n.length !== 0)
+          0 !== n.length)
         ) {
           i.set(h, n);
           for (const a of n) {
-            const l = a.Entity.GetComponent(0);
+            var l = a.Entity.GetComponent(0);
             r.push(l.GetCreatureDataId());
           }
         }
       }
-      r.length === 0
+      0 === r.length
         ? t(void 0)
         : (this.Xeo = WaitEntityTask_1.WaitEntityTask.Create(
             r,
@@ -339,14 +338,14 @@ class ActorAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   }
   oto(t) {
     if (t) {
-      let i;
-      const o =
-        Global_1.Global.BaseCharacter?.CharacterActorComponent
-          ?.ActorLocationProxy;
+      var i,
+        o =
+          Global_1.Global.BaseCharacter?.CharacterActorComponent
+            ?.ActorLocationProxy;
       if (o) {
         let e = void 0;
-        for (const [s, r] of t)
-          if (r && r.length !== 0)
+        for (var [s, r] of t)
+          if (r && 0 !== r.length)
             for (const n of r)
               n?.IsInit &&
                 n?.Valid &&
@@ -370,38 +369,38 @@ class ActorAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   }
   rto() {
     for (var [e, t] of this.Model.BindingEntityMap) {
-      const i = new SequenceDefine_1.SequenceEntityInfo();
-      var o =
-        (this.Model.ControlEntityMap.set(t.Id, i), t.Entity.GetComponent(33));
-      var o =
-        (o?.Valid && o.StopAllSkills("ActorAssistant.ControlBindingEntity"),
-        t.Entity.GetComponent(1));
-      var o =
-        (o?.Valid &&
-          (o.SetCollisionEnable(!1, "Plot Sequence Binding"),
-          o.SetSequenceBinding(!0),
-          (0, RegisterComponent_1.isComponentInstance)(o, 3)) &&
-          o.Actor.CharRenderingComponent?.ResetAllRenderingState(),
-        t.Entity.GetComponent(57));
-      var e =
-        (o?.Valid &&
-          ((i.CacheMovementSync = o.GetEnableMovementSync()),
-          o.SetEnableMovementSync(!1)),
-        e.op_Equality(SequenceDefine_1.BOSS_TAG) &&
-          (o = t.Entity.GetComponent(160))?.Valid &&
-          (o.StopMontage(), o.StartForceDisableAnimOptimization(3, !1)),
-        t.Entity.GetComponent(36));
-      var o =
-        (e?.Valid &&
-          (e.StopMove(!0),
-          (i.MoveCompDisableHandle = e.Disable("Plot Sequence Binding")),
-          (i.CacheMovementMode = e.CharacterMovement.MovementMode.valueOf()),
-          e.CharacterMovement.SetMovementMode(0)),
-        t.Entity.GetComponent(98));
-      var e =
-        (o?.Valid &&
-          (i.UeMoveCompDisableHandle = o.Disable("Plot Sequence Binding")),
-        t.Entity.GetComponent(157));
+      var i = new SequenceDefine_1.SequenceEntityInfo(),
+        o =
+          (this.Model.ControlEntityMap.set(t.Id, i), t.Entity.GetComponent(33)),
+        o =
+          (o?.Valid && o.StopAllSkills("ActorAssistant.ControlBindingEntity"),
+          t.Entity.GetComponent(1)),
+        o =
+          (o?.Valid &&
+            (o.SetCollisionEnable(!1, "Plot Sequence Binding"),
+            o.SetSequenceBinding(!0),
+            (0, RegisterComponent_1.isComponentInstance)(o, 3)) &&
+            o.Actor.CharRenderingComponent?.ResetAllRenderingState(),
+          t.Entity.GetComponent(57)),
+        e =
+          (o?.Valid &&
+            ((i.CacheMovementSync = o.GetEnableMovementSync()),
+            o.SetEnableMovementSync(!1)),
+          e.op_Equality(SequenceDefine_1.BOSS_TAG) &&
+            (o = t.Entity.GetComponent(160))?.Valid &&
+            (o.StopMontage(), o.StartForceDisableAnimOptimization(3, !1)),
+          t.Entity.GetComponent(36)),
+        o =
+          (e?.Valid &&
+            (e.StopMove(!0),
+            (i.MoveCompDisableHandle = e.Disable("Plot Sequence Binding")),
+            (i.CacheMovementMode = e.CharacterMovement.MovementMode.valueOf()),
+            e.CharacterMovement.SetMovementMode(0)),
+          t.Entity.GetComponent(98)),
+        e =
+          (o?.Valid &&
+            (i.UeMoveCompDisableHandle = o.Disable("Plot Sequence Binding")),
+          t.Entity.GetComponent(157));
       e?.Valid &&
         e.AddBuff(CharacterBuffIds_1.buffId.StoryInvincibleCommon, {
           InstigatorId: e.CreatureDataId,
@@ -411,12 +410,12 @@ class ActorAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
     }
   }
   hto() {
-    if (this.Model.BindingEntityMap && this.Model.BindingEntityMap.size !== 0) {
-      for (let [e, t] of this.Model.BindingEntityMap) {
-        var i;
-        var o;
-        var s;
-        const r = this.Model.ControlEntityMap.get(t.Id);
+    if (this.Model.BindingEntityMap && 0 !== this.Model.BindingEntityMap.size) {
+      for (var [e, t] of this.Model.BindingEntityMap) {
+        var i,
+          o,
+          s,
+          r = this.Model.ControlEntityMap.get(t.Id);
         t?.Entity &&
           ((o = t.Entity.GetComponent(1))?.Valid &&
             (o.SetCollisionEnable(!0, "Plot Sequence Binding"),
@@ -503,7 +502,7 @@ class ActorAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
         this.Model.SeqMainCharacterModelConfig = i;
       }
       i = this.Model.SeqMainCharacterModelConfig.网格体?.ToAssetPathName();
-      i && i.length && i !== "None"
+      i && i.length && "None" !== i
         ? (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("Plot", 18, "剧情加载等待-Seq主角-开始"),
           (this.Jeo = ResourceSystem_1.ResourceSystem.LoadAsync(
@@ -528,11 +527,11 @@ class ActorAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
     } else t(!0);
   }
   sto(i) {
-    let e;
+    var e;
     this.Model.SequenceData.NeedSwitchMainCharacter
       ? (e = this.Model.SeqMainCharacterModelConfig.蓝图?.ToAssetPathName()) &&
         e.length &&
-        e !== "None"
+        "None" !== e
         ? (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("Plot", 18, "剧情加载等待-Seq主角BP-开始"),
           (this.Yeo = ResourceSystem_1.ResourceSystem.LoadAsync(
@@ -551,32 +550,32 @@ class ActorAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
                   void 0,
                 ));
               var e = this.Model.SeqMainCharacter.GetComponentByClass(
-                UE.SkeletalMeshComponent.StaticClass(),
-              );
-              var t =
-                (e
-                  ? (e.SetSkeletalMesh(this.Model.MainSeqCharacterMesh),
-                    (this.Model.Type !== 0 && this.Model.Type !== 2) ||
-                      ((t = e.GetRelativeTransform()),
-                      this.Model.SeqMainCharacter.K2_AddActorWorldTransform(
-                        t,
-                        !1,
-                        void 0,
-                        !1,
+                  UE.SkeletalMeshComponent.StaticClass(),
+                ),
+                t =
+                  (e
+                    ? (e.SetSkeletalMesh(this.Model.MainSeqCharacterMesh),
+                      (0 !== this.Model.Type && 2 !== this.Model.Type) ||
+                        ((t = e.GetRelativeTransform()),
+                        this.Model.SeqMainCharacter.K2_AddActorWorldTransform(
+                          t,
+                          !1,
+                          void 0,
+                          !1,
+                        ),
+                        e.K2_SetRelativeLocationAndRotation(
+                          Vector_1.Vector.ZeroVector,
+                          Rotator_1.Rotator.ZeroRotator,
+                          !1,
+                          void 0,
+                          !1,
+                        )))
+                    : ControllerHolder_1.ControllerHolder.FlowController.LogError(
+                        "网格体类型错误",
                       ),
-                      e.K2_SetRelativeLocationAndRotation(
-                        Vector_1.Vector.ZeroVector,
-                        Rotator_1.Rotator.ZeroRotator,
-                        !1,
-                        void 0,
-                        !1,
-                      )))
-                  : ControllerHolder_1.ControllerHolder.FlowController.LogError(
-                      "网格体类型错误",
-                    ),
-                this.Model.SeqMainCharacter);
+                  this.Model.SeqMainCharacter);
               t &&
-                (e = this.Model.SequenceData.葫芦状态) > 0 &&
+                0 < (e = this.Model.SequenceData.葫芦状态) &&
                 (Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug("Plot", 39, "葫芦状态", ["HuluState", e]),
                 t.ChangeHuluState(e)),
@@ -608,7 +607,7 @@ class ActorAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
           Log_1.Log.Debug("Plot", 39, "预加载口型资源跳过，textKey 为空"),
           this._to();
       else {
-        const e = PlotAudioById_1.configPlotAudioById.GetConfig(t);
+        var e = PlotAudioById_1.configPlotAudioById.GetConfig(t);
         if (e) {
           const i = PlotAudioModel_1.PlotAudioModel.GetAudioMouthAnimName([
             e.IsCheckSex,
@@ -648,7 +647,7 @@ class ActorAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       (this.CurLoadMouthIndex = 0),
       this.PreLoadMouthAssetMap.clear(),
       void 0 === this.PreLoadMouthAssetName ||
-        this.PreLoadMouthAssetName.length === 0 ||
+        0 === this.PreLoadMouthAssetName.length ||
         (this._to(), this.eto.Promise)
     );
   }
@@ -656,7 +655,7 @@ class ActorAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
     this.StopMouthAnim(),
       (this.zeo = void 0),
       (this.Zeo = void 0),
-      this.Model.Type === 1 &&
+      1 === this.Model.Type &&
         ((this.zeo = this.PreLoadMouthAssetMap.get(e)),
         this.zeo
           ? (this.FindApplyMouthAnim(t),
@@ -706,10 +705,10 @@ class ActorAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       }),
       !i && void 0 !== this.Model.TalkNpcList)
     ) {
-      const o = this.Model.TalkNpcList.Num();
+      var o = this.Model.TalkNpcList.Num();
       for (let e = 0; e < o; e++) {
-        const s = this.Model.TalkNpcList.Get(e);
-        let r = s;
+        var s = this.Model.TalkNpcList.Get(e),
+          r = s;
         if (
           r?.IsValid() &&
           (r.TalkID === t || r.TalkID_SP === t) &&
@@ -733,4 +732,4 @@ class ActorAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   }
 }
 exports.ActorAssistant = ActorAssistant;
-// # sourceMappingURL=ActorAssistant.js.map
+//# sourceMappingURL=ActorAssistant.js.map

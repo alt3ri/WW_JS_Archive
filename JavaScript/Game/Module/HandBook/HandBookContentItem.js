@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HandBookContentItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
 class HandBookContentItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, t) {
     super(),
@@ -16,7 +16,7 @@ class HandBookContentItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    let e;
+    var e;
     this.HandBookContentItemData &&
       ((e = this.GetText(0)),
       this.HandBookContentItemData.Title
@@ -30,4 +30,4 @@ class HandBookContentItem extends UiPanelBase_1.UiPanelBase {
   OnBeforeDestroy() {}
 }
 exports.HandBookContentItem = HandBookContentItem;
-// # sourceMappingURL=HandBookContentItem.js.map
+//# sourceMappingURL=HandBookContentItem.js.map

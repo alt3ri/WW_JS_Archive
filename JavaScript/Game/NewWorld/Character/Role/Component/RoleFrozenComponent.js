@@ -1,28 +1,33 @@
 "use strict";
-let RoleFrozenComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (e, o, t, n) {
-    let i;
-    const r = arguments.length;
-    let s =
-      r < 3 ? o : n === null ? (n = Object.getOwnPropertyDescriptor(o, t)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      s = Reflect.decorate(e, o, t, n);
-    else
-      for (let h = e.length - 1; h >= 0; h--)
-        (i = e[h]) && (s = (r < 3 ? i(s) : r > 3 ? i(o, t, s) : i(o, t)) || s);
-    return r > 3 && s && Object.defineProperty(o, t, s), s;
-  };
+var RoleFrozenComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (e, o, t, n) {
+      var i,
+        r = arguments.length,
+        s =
+          r < 3
+            ? o
+            : null === n
+              ? (n = Object.getOwnPropertyDescriptor(o, t))
+              : n;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        s = Reflect.decorate(e, o, t, n);
+      else
+        for (var h = e.length - 1; 0 <= h; h--)
+          (i = e[h]) &&
+            (s = (r < 3 ? i(s) : 3 < r ? i(o, t, s) : i(o, t)) || s);
+      return 3 < r && s && Object.defineProperty(o, t, s), s;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleFrozenComponent = void 0);
-const GameplayCueById_1 = require("../../../../../Core/Define/ConfigQuery/GameplayCueById");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const BaseFrozenComponent_1 = require("../../Common/Component/Abilities/BaseFrozenComponent");
-const CustomMovementDefine_1 = require("../../Common/Component/Move/CustomMovementDefine");
-const frozenCueId = 1003n;
-const cancelFrozenCueId = 100302n;
+const GameplayCueById_1 = require("../../../../../Core/Define/ConfigQuery/GameplayCueById"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  BaseFrozenComponent_1 = require("../../Common/Component/Abilities/BaseFrozenComponent"),
+  CustomMovementDefine_1 = require("../../Common/Component/Move/CustomMovementDefine"),
+  frozenCueId = 1003n,
+  cancelFrozenCueId = 100302n;
 let RoleFrozenComponent =
   (RoleFrozenComponent_1 = class RoleFrozenComponent extends (
     BaseFrozenComponent_1.BaseFrozenComponent
@@ -40,7 +45,7 @@ let RoleFrozenComponent =
       return this.IsFrozenInternal;
     }
     SetFrozen(e) {
-      let o, t, n, i, r, s;
+      var o, t, n, i, r, s;
       this.IsFrozenInternal !== e &&
         ((this.IsFrozenInternal = e),
         (o = this.Entity.GetComponent(161)),
@@ -77,7 +82,7 @@ let RoleFrozenComponent =
               (RoleFrozenComponent_1.TmpVector.DeepCopy(
                 this.ActorComponent.ActorVelocityProxy,
               ),
-              RoleFrozenComponent_1.TmpVector.Z > 0) &&
+              0 < RoleFrozenComponent_1.TmpVector.Z) &&
               ((RoleFrozenComponent_1.TmpVector.Z = 0),
               o.SetForceSpeed(RoleFrozenComponent_1.TmpVector)))
           : (void 0 !== this.MoveForbidHandle &&
@@ -129,13 +134,13 @@ let RoleFrozenComponent =
               e.MainAnimInstance.冰冻结束事件()));
     }
     ChangeMovementModeInFrozen(e) {
-      let o, t;
+      var o, t;
       e.CharacterMovement &&
         ((o = e.CharacterMovement.MovementMode),
         (t = e.CharacterMovement.CustomMovementMode),
-        o === 1 ||
-          o === 3 ||
-          (o === 6 && t === CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SWIM) ||
+        1 === o ||
+          3 === o ||
+          (6 === o && t === CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SWIM) ||
           e.CharacterMovement.SetMovementMode(3));
     }
   });
@@ -146,4 +151,4 @@ let RoleFrozenComponent =
       RoleFrozenComponent,
     )),
   (exports.RoleFrozenComponent = RoleFrozenComponent);
-// # sourceMappingURL=RoleFrozenComponent.js.map
+//# sourceMappingURL=RoleFrozenComponent.js.map

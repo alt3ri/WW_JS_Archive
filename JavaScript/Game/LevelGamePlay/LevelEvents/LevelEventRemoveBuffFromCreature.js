@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventRemoveBuffFromCreature = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventRemoveBuffFromCreature extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments), (this.gLe = void 0), (this.fLe = void 0);
@@ -44,10 +44,9 @@ class LevelEventRemoveBuffFromCreature extends LevelGeneralBase_1.LevelEventBase
   }
   ExecuteWhenEntitiesReady() {
     for (const o of this.fLe) {
-      const e =
-        ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(o);
+      var e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(o);
       if (e?.IsInit) {
-        const t = e.Entity.GetComponent(157);
+        var t = e.Entity.GetComponent(157);
         for (const r of this.gLe.BuffIds)
           t.RemoveBuff(BigInt(r), -1, "LevelEventRemoveBuffFromCreature");
       }
@@ -74,4 +73,4 @@ class LevelEventRemoveBuffFromCreature extends LevelGeneralBase_1.LevelEventBase
   }
 }
 exports.LevelEventRemoveBuffFromCreature = LevelEventRemoveBuffFromCreature;
-// # sourceMappingURL=LevelEventRemoveBuffFromCreature.js.map
+//# sourceMappingURL=LevelEventRemoveBuffFromCreature.js.map

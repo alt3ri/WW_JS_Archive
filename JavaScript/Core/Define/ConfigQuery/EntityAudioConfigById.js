@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configEntityAudioConfigById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const EntityAudioConfig_1 = require("../Config/EntityAudioConfig");
-const DB = "db_entity_audio.db";
-const FILE = "y.音频组件配置.xlsx";
-const TABLE = "EntityAudioConfig";
-const COMMAND = "select BinData from `EntityAudioConfig` where Id=?";
-const KEY_PREFIX = "EntityAudioConfigById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  EntityAudioConfig_1 = require("../Config/EntityAudioConfig"),
+  DB = "db_entity_audio.db",
+  FILE = "y.音频组件配置.xlsx",
+  TABLE = "EntityAudioConfig",
+  COMMAND = "select BinData from `EntityAudioConfig` where Id=?",
+  KEY_PREFIX = "EntityAudioConfigById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configEntityAudioConfigById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configEntityAudioConfigById.GetConfig(";
 exports.configEntityAudioConfigById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configEntityAudioConfigById = {
       if (
         (t =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var t;
-        var n = void 0;
+        var t,
+          n = void 0;
         if (
           (([t, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configEntityAudioConfigById = {
     }
   },
 };
-// # sourceMappingURL=EntityAudioConfigById.js.map
+//# sourceMappingURL=EntityAudioConfigById.js.map

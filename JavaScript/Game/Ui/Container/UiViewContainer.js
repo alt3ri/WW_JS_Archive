@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiViewContainer = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const UiConfig_1 = require("../Define/UiConfig");
-const UiLayerType_1 = require("../Define/UiLayerType");
-const UiPopViewData_1 = require("../Define/UiPopViewData");
-const UiMask_1 = require("../UiMask");
-const UiModel_1 = require("../UiModel");
+const Log_1 = require("../../../Core/Common/Log"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  UiConfig_1 = require("../Define/UiConfig"),
+  UiLayerType_1 = require("../Define/UiLayerType"),
+  UiPopViewData_1 = require("../Define/UiPopViewData"),
+  UiMask_1 = require("../UiMask"),
+  UiModel_1 = require("../UiModel");
 class UiViewContainer {
   constructor() {
     this.OpenViewMask = new UiMask_1.UiMask("OpenView");
@@ -126,13 +126,13 @@ class UiViewContainer {
   }
   IsIgnoreOpenViewMask(e) {
     return (
+      0 !=
       (UiConfig_1.UiConfig.TryGetViewInfo(e.Info.Name).Type &
-        UiLayerType_1.IGNORE_MASK_TYPE) !=
-      0
+        UiLayerType_1.IGNORE_MASK_TYPE)
     );
   }
   OnContainerOpenView(e) {
-    let i = e.GetViewParam();
+    var i = e.GetViewParam();
     i instanceof UiPopViewData_1.UiPopViewData &&
       (i.NotAddChildToTopStackView ||
         ((i = UiModel_1.UiModel.NormalStack.Peek()) && i.AddChild(e)));
@@ -169,4 +169,4 @@ class UiViewContainer {
   }
 }
 exports.UiViewContainer = UiViewContainer;
-// # sourceMappingURL=UiViewContainer.js.map
+//# sourceMappingURL=UiViewContainer.js.map

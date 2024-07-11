@@ -18,4 +18,4 @@ const UE = require("ue");
     new UE.LinearColor(0.745404, 0.262251, 0.072272, 1),
   ]),
   (exports.INTERACT_GUIDE_MAX_TEXT_WIDTH = 760);
-// # sourceMappingURL=InteractionDefine.js.map
+//# sourceMappingURL=InteractionDefine.js.map

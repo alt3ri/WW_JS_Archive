@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiCameraSequence = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const CameraController_1 = require("../../Camera/CameraController");
-const GlobalData_1 = require("../../GlobalData");
-const UiLayerType_1 = require("../../Ui/Define/UiLayerType");
-const UiLayer_1 = require("../../Ui/UiLayer");
-const BlackScreenView_1 = require("./View/BlackScreenView");
-const BLACK_TEXTURE_TAG = new UE.FName("BlackTexture");
-const UI_CAMERA = new UE.FName("UiCamera");
-const FIGHT_CAMERA = new UE.FName("FightCamera");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  GlobalData_1 = require("../../GlobalData"),
+  UiLayerType_1 = require("../../Ui/Define/UiLayerType"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
+  BlackScreenView_1 = require("./View/BlackScreenView"),
+  BLACK_TEXTURE_TAG = new UE.FName("BlackTexture"),
+  UI_CAMERA = new UE.FName("UiCamera"),
+  FIGHT_CAMERA = new UE.FName("FightCamera");
 class UiCameraSequence {
   constructor() {
     (this.Bkt = void 0),
@@ -38,13 +38,13 @@ class UiCameraSequence {
       i ? t.PlayReverse() : t.Play());
   }
   Pause() {
-    let e;
+    var e;
     this.Bkt?.IsValid() &&
       (e = this.Bkt.SequencePlayer)?.IsValid() &&
       e.Pause();
   }
   Continue() {
-    let e;
+    var e;
     this.Bkt?.IsValid() &&
       (e = this.Bkt.SequencePlayer)?.IsValid() &&
       e.IsPaused() &&
@@ -87,21 +87,21 @@ class UiCameraSequence {
     e && this.qRo.push(e);
   }
   QRo(e) {
-    const i = (0, puerts_1.$ref)(void 0);
-    var e =
-      (UE.LevelSequencePlayer.CreateLevelSequencePlayer(
-        GlobalData_1.GlobalData.World,
-        e,
-        new UE.MovieSceneSequencePlaybackSettings(),
-        i,
-      ),
-      (0, puerts_1.$unref)(i));
+    var i = (0, puerts_1.$ref)(void 0),
+      e =
+        (UE.LevelSequencePlayer.CreateLevelSequencePlayer(
+          GlobalData_1.GlobalData.World,
+          e,
+          new UE.MovieSceneSequencePlaybackSettings(),
+          i,
+        ),
+        (0, puerts_1.$unref)(i));
     return e;
   }
   VRo(i) {
     i.ResetBindings();
-    let e;
-    const t = i.GetSequence();
+    var e,
+      t = i.GetSequence();
     t.HasBindingTag(BLACK_TEXTURE_TAG, !0) &&
       this.YRo().then(
         (e) => {
@@ -124,7 +124,7 @@ class UiCameraSequence {
         i.AddBindingByTag(FIGHT_CAMERA, e));
   }
   async YRo() {
-    let e;
+    var e;
     return (
       this.bRo ||
         ((e = UiLayer_1.UiLayer.GetLayerRootUiItem(
@@ -143,4 +143,4 @@ class UiCameraSequence {
   }
 }
 exports.UiCameraSequence = UiCameraSequence;
-// # sourceMappingURL=UiCameraSequence.js.map
+//# sourceMappingURL=UiCameraSequence.js.map

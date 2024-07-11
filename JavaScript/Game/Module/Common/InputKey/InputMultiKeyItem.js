@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputMultiKeyItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const InputKeyDisplayData_1 = require("../../../InputSettings/InputKeyDisplayData");
-const InputSettingsManager_1 = require("../../../InputSettings/InputSettingsManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const InputKeyDefine_1 = require("./InputKeyDefine");
-const InputKeyItem_1 = require("./InputKeyItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  InputKeyDisplayData_1 = require("../../../InputSettings/InputKeyDisplayData"),
+  InputSettingsManager_1 = require("../../../InputSettings/InputSettingsManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  InputKeyDefine_1 = require("./InputKeyDefine"),
+  InputKeyItem_1 = require("./InputKeyItem");
 class InputMultiKeyItem extends UiPanelBase_1.UiPanelBase {
   constructor(e = !0, s = !0, t) {
     super(),
@@ -116,8 +116,8 @@ class InputMultiKeyItem extends UiPanelBase_1.UiPanelBase {
   }
   cUt(s) {
     if (this.hUt) {
-      let t;
-      let i = s.ActionOrAxisName;
+      var t,
+        i = s.ActionOrAxisName;
       this.hUt.Reset();
       let e =
         InputSettingsManager_1.InputSettingsManager.GetActionKeyDisplayData(
@@ -133,7 +133,7 @@ class InputMultiKeyItem extends UiPanelBase_1.UiPanelBase {
         ((i = s.Index ?? 0),
         !(i = this.hUt.GetDisplayKeyNameList(i)) ||
           i.length <= 0 ||
-          (i.length === 1 &&
+          (1 === i.length &&
             ((t = {
               KeyName: i[0],
               IsLongPressDisable: s.IsLongPressDisable,
@@ -148,7 +148,7 @@ class InputMultiKeyItem extends UiPanelBase_1.UiPanelBase {
               DescriptionId: s.DescriptionId,
             }),
             this.mUt(t)),
-          i.length === 2 &&
+          2 === i.length &&
             ((t = { KeyName: i[0] }),
             (i = {
               KeyName: i[1],
@@ -186,4 +186,4 @@ class InputMultiKeyItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.InputMultiKeyItem = InputMultiKeyItem;
-// # sourceMappingURL=InputMultiKeyItem.js.map
+//# sourceMappingURL=InputMultiKeyItem.js.map

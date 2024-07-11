@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhotographOptionSetup = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const PhotographController_1 = require("../PhotographController");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  PhotographController_1 = require("../PhotographController");
 class PhotographOptionSetup extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -46,12 +46,12 @@ class PhotographOptionSetup extends UiPanelBase_1.UiPanelBase {
     (this.xWi = t), this.GWi(this.xWi), this.qWi();
   }
   Refresh() {
-    let t, e;
+    var t, e;
     (this.PWi =
       ConfigManager_1.ConfigManager.PhotographConfig.GetPhotoSetupConfig(
         this.AWi,
       )),
-      this.PWi.Type === 0 &&
+      0 === this.PWi.Type &&
         ((t = ModelManager_1.ModelManager.PhotographModel.GetPhotographOption(
           this.AWi,
         )),
@@ -73,11 +73,11 @@ class PhotographOptionSetup extends UiPanelBase_1.UiPanelBase {
     return this.PWi;
   }
   GWi(t) {
-    const e = this.PWi.Options.length - 1;
+    var e = this.PWi.Options.length - 1;
     this.fRt(t === e, !1);
   }
   bWi(t) {
-    const e = this.PWi.Options.length - 1;
+    var e = this.PWi.Options.length - 1;
     this.xWi = t ? e : 0;
   }
   fRt(t, e = !0) {
@@ -93,4 +93,4 @@ class PhotographOptionSetup extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.PhotographOptionSetup = PhotographOptionSetup;
-// # sourceMappingURL=PhotographOptionSetup.js.map
+//# sourceMappingURL=PhotographOptionSetup.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiTickConditionModule = void 0);
-const Log_1 = require("../../Core/Common/Log");
-const TickSystem_1 = require("../../Core/Tick/TickSystem");
+const Log_1 = require("../../Core/Common/Log"),
+  TickSystem_1 = require("../../Core/Tick/TickSystem");
 class UiTickConditionModule {
   constructor(i) {
     (this.HDe = void 0),
@@ -62,4 +62,4 @@ class UiTickConditionModule {
   }
 }
 exports.UiTickConditionModule = UiTickConditionModule;
-// # sourceMappingURL=UiTickConditionModule.js.map
+//# sourceMappingURL=UiTickConditionModule.js.map

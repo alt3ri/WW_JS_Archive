@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InventoryModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LocalStorageDefine_1 = require("../../Common/LocalStorageDefine");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ItemDefines_1 = require("../Item/Data/ItemDefines");
-const CommonItemData_1 = require("./ItemData/CommonItemData");
-const PhantomItemData_1 = require("./ItemData/PhantomItemData");
-const WeaponItemData_1 = require("./ItemData/WeaponItemData");
-const ItemMainTypeMapping_1 = require("./ItemMainTypeMapping");
-const CD_TIME_REASON = "限时物品主动添加倒计时 [ConfigId:{0}, UniqueId:{1}]";
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ItemDefines_1 = require("../Item/Data/ItemDefines"),
+  CommonItemData_1 = require("./ItemData/CommonItemData"),
+  PhantomItemData_1 = require("./ItemData/PhantomItemData"),
+  WeaponItemData_1 = require("./ItemData/WeaponItemData"),
+  ItemMainTypeMapping_1 = require("./ItemMainTypeMapping"),
+  CD_TIME_REASON = "限时物品主动添加倒计时 [ConfigId:{0}, UniqueId:{1}]";
 class InventoryModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -48,33 +48,33 @@ class InventoryModel extends ModelBase_1.ModelBase {
     return this.tci.clear(), !0;
   }
   SetInventoryTabOpenIdList(e) {
-    const t = e.indexOf(0);
-    t > -1 && e.splice(t, 1), (this.Qui = e);
+    var t = e.indexOf(0);
+    -1 < t && e.splice(t, 1), (this.Qui = e);
   }
   GetOpenIdMainTypeConfig() {
-    const e = [];
+    var e = [];
     for (const r of this.Qui) {
-      const t =
+      var t =
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemMainTypeConfig(r);
       e.push(t);
     }
     return e;
   }
   ici(e) {
-    const t = e.GetType();
+    var t = e.GetType();
     let r = this.Yui.get(t);
     r || ((r = new Set()), this.Yui.set(t, r)), r.add(e);
   }
   oci(e) {
-    var t = e.GetType();
-    var t = this.Yui.get(t);
+    var t = e.GetType(),
+      t = this.Yui.get(t);
     t && t.delete(e);
   }
   rci(e) {
     this.Yui.delete(e);
   }
   nci(e) {
-    const t = e.GetMainType();
+    var t = e.GetMainType();
     let r = this.Jui.get(t);
     r ||
       ((r = new ItemMainTypeMapping_1.ItemMainTypeMapping(t)),
@@ -82,8 +82,8 @@ class InventoryModel extends ModelBase_1.ModelBase {
       r.Add(e);
   }
   sci(e) {
-    var t = e.GetMainType();
-    var t = this.Jui.get(t);
+    var t = e.GetMainType(),
+      t = this.Jui.get(t);
     t && t.Remove(e);
   }
   aci(e) {
@@ -99,12 +99,12 @@ class InventoryModel extends ModelBase_1.ModelBase {
       this.hci(t);
   }
   RemoveCommonItemData(e, t = 0) {
-    let r;
-    const a = this.Xui.get(e);
+    var r,
+      a = this.Xui.get(e);
     a &&
       (r = a.get(t)) &&
       (a.delete(t),
-      a.size === 0 && this.Xui.delete(e),
+      0 === a.size && this.Xui.delete(e),
       this.oci(r),
       this.sci(r));
   }
@@ -119,12 +119,12 @@ class InventoryModel extends ModelBase_1.ModelBase {
       this.SaveRedDotAttributeItemUniqueIdList();
   }
   hci(e) {
-    if (e.GetEndTime() > 0)
+    if (0 < e.GetEndTime())
       if (e.IsOverTime())
         ControllerHolder_1.ControllerHolder.InventoryController.InvalidItemRemoveRequest();
       else {
         const r = e.GetEndTime();
-        let t;
+        var t;
         this.eci.has(r) ||
           ((t = Math.max(
             r - TimeUtil_1.TimeUtil.GetServerTimeStamp(),
@@ -147,7 +147,7 @@ class InventoryModel extends ModelBase_1.ModelBase {
   }
   lci(e) {
     ControllerHolder_1.ControllerHolder.InventoryController.InvalidItemRemoveRequest();
-    const t = this.tci.get(e);
+    var t = this.tci.get(e);
     t && (TimerSystem_1.RealTimeTimerSystem.Remove(t), this.tci.delete(e)),
       this.eci.delete(e);
   }
@@ -159,8 +159,8 @@ class InventoryModel extends ModelBase_1.ModelBase {
     }
   }
   GetAllCommonItemDataByConfigId(e) {
-    const t = [];
-    var e = this.Xui.get(e);
+    var t = [],
+      e = this.Xui.get(e);
     if (e) for (const r of Array.from(e.values())) r.IsValid() && t.push(r);
     return t;
   }
@@ -177,22 +177,22 @@ class InventoryModel extends ModelBase_1.ModelBase {
     }
   }
   GetAllPhantomItemDataByConfigId(e) {
-    const t = [];
+    var t = [];
     for (const r of this.GetAllPhantomItemDataIterator())
       r.GetConfigId() === e && t.push(r);
     return t;
   }
   GetAllWeaponItemDataByConfigId(e) {
-    const t = [];
+    var t = [];
     for (const r of this.GetWeaponItemDataList())
       r.GetConfigId() === e && t.push(r);
     return t;
   }
   GetAllWeaponItemDataByQualityAndType(e, t) {
-    const r = [];
+    var r = [];
     for (const a of this.GetWeaponItemDataList())
-      (e !== 0 && a.GetQuality() !== e) ||
-        (t !== 0 && a.GetConfig().WeaponType !== t) ||
+      (0 !== e && a.GetQuality() !== e) ||
+        (0 !== t && a.GetConfig().WeaponType !== t) ||
         r.push(a);
     return r;
   }
@@ -205,7 +205,7 @@ class InventoryModel extends ModelBase_1.ModelBase {
     this.djt.set(t, e), this.ici(e), this.nci(e);
   }
   RemoveWeaponItemData(e) {
-    const t = this.djt.get(e);
+    var t = this.djt.get(e);
     t && (this.djt.delete(e), this.oci(t), this.sci(t));
   }
   RemoveWeaponItemDataAndSaveNewList(e) {
@@ -224,7 +224,7 @@ class InventoryModel extends ModelBase_1.ModelBase {
     this.$ui.set(t, e), this.ici(e), this.nci(e);
   }
   RemovePhantomItemData(e) {
-    const t = this.$ui.get(e);
+    var t = this.$ui.get(e);
     t && (this.$ui.delete(e), this.oci(t), this.sci(t));
   }
   RemovePhantomItemDataAndSaveNewList(e) {
@@ -241,24 +241,24 @@ class InventoryModel extends ModelBase_1.ModelBase {
   ClearCommonItemData() {
     for (const r of this.Xui.values())
       for (const a of r.values()) {
-        const e = a.GetMainType();
-        const t = a.GetType();
+        var e = a.GetMainType(),
+          t = a.GetType();
         this.aci(e), this.rci(t);
       }
     this.Xui.clear();
   }
   ClearWeaponItemData() {
     for (const r of this.djt.values()) {
-      const e = r.GetMainType();
-      const t = r.GetType();
+      var e = r.GetMainType(),
+        t = r.GetType();
       this.aci(e), this.rci(t);
     }
     this.djt.clear();
   }
   ClearPhantomItemData() {
     for (const r of this.$ui.values()) {
-      const e = r.GetMainType();
-      const t = r.GetType();
+      var e = r.GetMainType(),
+        t = r.GetType();
       this.aci(e), this.rci(t);
     }
     this.$ui.clear();
@@ -275,7 +275,7 @@ class InventoryModel extends ModelBase_1.ModelBase {
     return (t = t || this.GetPhantomItemData(e));
   }
   GetWeaponItemDataList() {
-    const e = [];
+    var e = [];
     for (const t of this._ci())
       ModelManager_1.ModelManager.WeaponModel.IsWeaponUsedByUncommonRole(
         t.GetUniqueId(),
@@ -283,12 +283,12 @@ class InventoryModel extends ModelBase_1.ModelBase {
     return e;
   }
   GetPhantomItemDataList() {
-    const e = [];
+    var e = [];
     for (const t of this.$ui.values()) e.push(t);
     return e;
   }
   GetUnEquipPhantomItemDataList() {
-    const e = this.GetPhantomItemDataList();
+    var e = this.GetPhantomItemDataList();
     const t = [];
     return (
       e.forEach((e) => {
@@ -300,7 +300,7 @@ class InventoryModel extends ModelBase_1.ModelBase {
     );
   }
   GetPhantomItemDataListByPhantomItemId(e) {
-    const t = [];
+    var t = [];
     for (const r of this.$ui.values()) r.GetConfigId() === e && t.push(r);
     return t;
   }
@@ -325,38 +325,38 @@ class InventoryModel extends ModelBase_1.ModelBase {
     );
   }
   GetCommonItemDataList() {
-    const e = [];
+    var e = [];
     for (const t of this.Xui.values())
       for (const r of t.values()) r.IsValid() && e.push(r);
     return e;
   }
   GetCommonItemByItemType(e) {
-    const t = [];
+    var t = [];
     for (const r of this.Xui.values())
       for (const a of r.values()) a.GetType() === e && a.IsValid() && t.push(a);
     return t;
   }
   GetCommonItemByShowType(e) {
-    const t = [];
+    var t = [];
     for (const r of this.Xui.values())
       for (const a of r.values())
         a.GetShowTypeList().includes(e) && a.IsValid() && t.push(a);
     return t;
   }
   GetWeaponItemByItemType(e) {
-    const t = [];
+    var t = [];
     for (const r of this.GetWeaponItemDataList())
       r.GetType() === e && t.push(r);
     return t;
   }
   GetPhantomItemByItemType(e) {
-    const t = [];
+    var t = [];
     for (const r of this.$ui.values()) r.GetType() === e && t.push(r);
     return t;
   }
   GetItemDataBase(e) {
-    const t = e.IncId;
-    return t > 0
+    var t = e.IncId;
+    return 0 < t
       ? [this.GetAttributeItemData(t)]
       : this.GetItemDataBaseByConfigId(e.ItemId);
   }
@@ -364,16 +364,16 @@ class InventoryModel extends ModelBase_1.ModelBase {
     return this.Jui.get(e);
   }
   GetItemDataBaseByMainType(e) {
-    const t = new Set();
-    var e = this.Jui.get(e);
+    var t = new Set(),
+      e = this.Jui.get(e);
     if (e) for (const r of e.GetSet()) r.IsValid() && t.add(r);
     return t;
   }
   GetInventoryItemGridCountByMainType(e) {
-    let t;
+    var t;
     let r = 0;
     for (const a of this.GetItemDataBaseByMainType(e))
-      a.GetType() !== 0 &&
+      0 !== a.GetType() &&
         (a instanceof CommonItemData_1.CommonItemData
           ? (t = a.GetMaxStackCount()) <= 0 ||
             (r += Math.ceil(a.GetCount() / t))
@@ -381,8 +381,8 @@ class InventoryModel extends ModelBase_1.ModelBase {
     return r;
   }
   GetItemDataBaseByItemType(e) {
-    const t = new Set();
-    var e = this.Yui.get(e);
+    var t = new Set(),
+      e = this.Yui.get(e);
     if (e) for (const r of e) r.IsValid() && t.add(r);
     return t;
   }
@@ -454,13 +454,13 @@ class InventoryModel extends ModelBase_1.ModelBase {
     return t;
   }
   mci(t) {
-    const r = ModelManager_1.ModelManager.PersonalModel.GetCardUnlockList();
-    const a = r.length;
+    var r = ModelManager_1.ModelManager.PersonalModel.GetCardUnlockList(),
+      a = r.length;
     for (let e = 0; e < a; e++) if (r[e].CardId === t) return 1;
     return 0;
   }
   TryAddNewCommonItem(e, t = 0) {
-    return t !== 0
+    return 0 !== t
       ? this.TryAddNewAttributeItem(t)
       : !ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
           LocalStorageDefine_1.ELocalStoragePlayerKey.InventoryCommonItem,
@@ -491,7 +491,7 @@ class InventoryModel extends ModelBase_1.ModelBase {
     );
   }
   RemoveNewCommonItem(e, t = 0) {
-    return t !== 0
+    return 0 !== t
       ? this.RemoveNewAttributeItem(t)
       : ModelManager_1.ModelManager.NewFlagModel.RemoveNewFlag(
           LocalStorageDefine_1.ELocalStoragePlayerKey.InventoryCommonItem,
@@ -515,7 +515,7 @@ class InventoryModel extends ModelBase_1.ModelBase {
     );
   }
   IsNewCommonItem(e, t = 0) {
-    return t !== 0
+    return 0 !== t
       ? this.IsNewAttributeItem(t)
       : ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
           LocalStorageDefine_1.ELocalStoragePlayerKey.InventoryCommonItem,
@@ -534,15 +534,15 @@ class InventoryModel extends ModelBase_1.ModelBase {
     );
   }
   TryAddRedDotCommonItem(e, t = 0) {
-    let r;
+    var r;
     return (
       !ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
         LocalStorageDefine_1.ELocalStoragePlayerKey.InventoryCommonItemRedDot,
         e,
       ) &&
       !!(r = this.GetCommonItemData(e, t)) &&
-      r.GetRedDotDisableRule() !== 0 &&
-      (t !== 0
+      0 !== r.GetRedDotDisableRule() &&
+      (0 !== t
         ? ModelManager_1.ModelManager.NewFlagModel.AddNewFlag(
             LocalStorageDefine_1.ELocalStoragePlayerKey
               .InventoryAttributeItemRedDot,
@@ -557,7 +557,7 @@ class InventoryModel extends ModelBase_1.ModelBase {
     );
   }
   TryAddRedDotAttributeItem(e) {
-    let t;
+    var t;
     return (
       !ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
         LocalStorageDefine_1.ELocalStoragePlayerKey
@@ -565,7 +565,7 @@ class InventoryModel extends ModelBase_1.ModelBase {
         e,
       ) &&
       !!(t = this.GetAttributeItemData(e)) &&
-      t.GetRedDotDisableRule() !== 0 &&
+      0 !== t.GetRedDotDisableRule() &&
       (ModelManager_1.ModelManager.NewFlagModel.AddNewFlag(
         LocalStorageDefine_1.ELocalStoragePlayerKey
           .InventoryAttributeItemRedDot,
@@ -575,20 +575,21 @@ class InventoryModel extends ModelBase_1.ModelBase {
     );
   }
   HasRedDot() {
-    var e = ModelManager_1.ModelManager.NewFlagModel;
-    const t = e.GetNewFlagSet(
-      LocalStorageDefine_1.ELocalStoragePlayerKey.InventoryCommonItemRedDot,
-    ).size;
-    var e = e.GetNewFlagSet(
-      LocalStorageDefine_1.ELocalStoragePlayerKey.InventoryAttributeItemRedDot,
-    ).size;
-    return t > 0 || e > 0;
+    var e = ModelManager_1.ModelManager.NewFlagModel,
+      t = e.GetNewFlagSet(
+        LocalStorageDefine_1.ELocalStoragePlayerKey.InventoryCommonItemRedDot,
+      ).size,
+      e = e.GetNewFlagSet(
+        LocalStorageDefine_1.ELocalStoragePlayerKey
+          .InventoryAttributeItemRedDot,
+      ).size;
+    return 0 < t || 0 < e;
   }
   IsMainTypeHasRedDot(e) {
     return this.GetItemMainTypeMapping(e)?.HasRedDot() ?? !1;
   }
   IsCommonItemHasRedDot(e, t = 0) {
-    return t !== 0
+    return 0 !== t
       ? this.IsAttributeItemHasRedDot(t)
       : ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
           LocalStorageDefine_1.ELocalStoragePlayerKey.InventoryCommonItemRedDot,
@@ -602,7 +603,7 @@ class InventoryModel extends ModelBase_1.ModelBase {
     );
   }
   RemoveRedDotCommonItem(e, t = 0) {
-    return t !== 0
+    return 0 !== t
       ? this.RemoveRedDotAttributeItem(t)
       : !!ModelManager_1.ModelManager.NewFlagModel.RemoveNewFlag(
           LocalStorageDefine_1.ELocalStoragePlayerKey.InventoryCommonItemRedDot,
@@ -654,4 +655,4 @@ class InventoryModel extends ModelBase_1.ModelBase {
   }
 }
 exports.InventoryModel = InventoryModel;
-// # sourceMappingURL=InventoryModel.js.map
+//# sourceMappingURL=InventoryModel.js.map

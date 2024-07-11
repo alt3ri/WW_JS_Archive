@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlatformController = void 0);
-const UE = require("ue");
-const LanguageSystem_1 = require("../../../Core/Common/LanguageSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
+const UE = require("ue"),
+  LanguageSystem_1 = require("../../../Core/Common/LanguageSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils");
 class PlatformController extends ControllerBase_1.ControllerBase {
   static Init() {
     return this.ControlScreenSaver(!1), this.rQi(), this.nQi(), this.OnInit();
@@ -39,8 +39,8 @@ class PlatformController extends ControllerBase_1.ControllerBase {
       UE.KismetSystemLibrary.ControlScreensaver(e);
   }
   static SendClientBasicInfo() {
-    const e = new Protocol_1.Aki.Protocol.gWn();
-    const t = PlatformController.PackageClientBasicInfo();
+    var e = new Protocol_1.Aki.Protocol.gWn(),
+      t = PlatformController.PackageClientBasicInfo();
     (e.u6n = t),
       Net_1.Net.Call(7034, e, () => {}),
       t &&
@@ -57,20 +57,20 @@ class PlatformController extends ControllerBase_1.ControllerBase {
         );
   }
   static PackageClientBasicInfo() {
-    const e = new Protocol_1.Aki.Protocol.u6n();
-    var t =
-      ((e.p8n = ModelManager_1.ModelManager.PlatformModel.GetNetStatus()),
-      (e.U6n = ModelManager_1.ModelManager.PlatformModel.GetPlatformName()),
-      ModelManager_1.ModelManager.KuroSdkModel.GetBasicInfo());
-    var t =
-      ((e.C8n = t?.CPUModelName ?? ""),
-      (e.g8n = t?.DeviceId ?? ""),
-      (e.f8n = t?.ModelName ?? ""),
-      (e.v8n = UE.ThinkingAnalytics.GetDeviceId()),
-      (e.d5n = LanguageSystem_1.LanguageSystem.GetLanguageDefineByCode(
-        LanguageSystem_1.LanguageSystem.PackageLanguage,
-      ).LanguageType),
-      UE.KuroStaticLibrary.GetMacAddress());
+    var e = new Protocol_1.Aki.Protocol.u6n(),
+      t =
+        ((e.p8n = ModelManager_1.ModelManager.PlatformModel.GetNetStatus()),
+        (e.U6n = ModelManager_1.ModelManager.PlatformModel.GetPlatformName()),
+        ModelManager_1.ModelManager.KuroSdkModel.GetBasicInfo()),
+      t =
+        ((e.C8n = t?.CPUModelName ?? ""),
+        (e.g8n = t?.DeviceId ?? ""),
+        (e.f8n = t?.ModelName ?? ""),
+        (e.v8n = UE.ThinkingAnalytics.GetDeviceId()),
+        (e.d5n = LanguageSystem_1.LanguageSystem.GetLanguageDefineByCode(
+          LanguageSystem_1.LanguageSystem.PackageLanguage,
+        ).LanguageType),
+        UE.KuroStaticLibrary.GetMacAddress());
     return StringUtils_1.StringUtils.IsEmpty(t) || (e.M8n = t), e;
   }
   static IsPc() {
@@ -81,10 +81,10 @@ class PlatformController extends ControllerBase_1.ControllerBase {
   }
 }
 (exports.PlatformController = PlatformController).aQi = (e, t) => {
-  t === 0 ||
+  0 === t ||
     !(t = ModelManager_1.ModelManager.PlatformModel) ||
     t.IsPc() ||
     t.IsMobileSource() ||
     t.SwitchInputControllerType(0);
 };
-// # sourceMappingURL=PlatformController.js.map
+//# sourceMappingURL=PlatformController.js.map

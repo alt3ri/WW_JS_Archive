@@ -8,4 +8,4 @@ class RoleNewJoinAgent extends RoleViewAgent_1.RoleViewAgent {
   }
 }
 exports.RoleNewJoinAgent = RoleNewJoinAgent;
-// # sourceMappingURL=RoleNewJoinAgent.js.map
+//# sourceMappingURL=RoleNewJoinAgent.js.map

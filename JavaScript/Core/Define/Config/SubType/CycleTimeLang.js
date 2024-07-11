@@ -24,17 +24,17 @@ class CycleTimeLang {
     );
   }
   cycletype() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   cycleparam() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   timeparam() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.CycleTimeLang = CycleTimeLang;
-// # sourceMappingURL=CycleTimeLang.js.map
+//# sourceMappingURL=CycleTimeLang.js.map

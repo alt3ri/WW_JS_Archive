@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ForgeFormula = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const OneItemConfig_1 = require("./SubType/OneItemConfig");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  OneItemConfig_1 = require("./SubType/OneItemConfig");
 class ForgeFormula {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -52,34 +52,34 @@ class ForgeFormula {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   formulaitemid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   itemid() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   typeid() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   unlock() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   name(t) {
-    const s = this.J7.__offset(this.z7, 14);
+    var s = this.J7.__offset(this.z7, 14);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   GetConsumeitemsAt(t, s) {
     return this.consumeitems(t);
   }
   consumeitems(t, s) {
-    const i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 16);
     return i
       ? (s || new OneItemConfig_1.OneItemConfig()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
@@ -88,30 +88,30 @@ class ForgeFormula {
       : null;
   }
   consumeitemsLength() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   forgecontent(t) {
-    const s = this.J7.__offset(this.z7, 18);
+    var s = this.J7.__offset(this.z7, 18);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   background(t) {
-    const s = this.J7.__offset(this.z7, 20);
+    var s = this.J7.__offset(this.z7, 20);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   GetRolelistAt(t) {
     return this.rolelist(t);
   }
   rolelist(t) {
-    const s = this.J7.__offset(this.z7, 22);
+    var s = this.J7.__offset(this.z7, 22);
     return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   rolelistLength() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   rolelistArray() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -122,4 +122,4 @@ class ForgeFormula {
   }
 }
 exports.ForgeFormula = ForgeFormula;
-// # sourceMappingURL=ForgeFormula.js.map
+//# sourceMappingURL=ForgeFormula.js.map

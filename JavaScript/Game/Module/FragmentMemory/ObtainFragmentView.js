@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ObtainFragmentView = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const FragmentMemoryData_1 = require("./FragmentMemoryData");
+const UE = require("ue"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  FragmentMemoryData_1 = require("./FragmentMemoryData");
 class ObtainFragmentView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.vxn = void 0),
       (this.tjt = () => {
         this.CloseMe(() => {
-          const e = new FragmentMemoryData_1.FragmentMemoryMainViewOpenData();
+          var e = new FragmentMemoryData_1.FragmentMemoryMainViewOpenData();
           (e.FragmentMemoryTopicData = this.vxn.GetTopicData()),
             (e.CurrentSelectId = this.vxn.GetId()),
             (ModelManager_1.ModelManager.FragmentMemoryModel.MemoryFragmentMainViewTryPlayAnimation =
@@ -32,11 +32,12 @@ class ObtainFragmentView extends UiViewBase_1.UiViewBase {
       (this.BtnBindInfo = [[3, this.tjt]]);
   }
   OnBeforeShow() {
-    var e = this.ChildPopView.PopItem;
-    var e =
-      (e &&
-        ((e = e).SetCaptionTitleVisible(!1), e.SetCaptionTitleIconVisible(!1)),
-      this.OpenParam);
+    var e = this.ChildPopView.PopItem,
+      e =
+        (e &&
+          ((e = e).SetCaptionTitleVisible(!1),
+          e.SetCaptionTitleIconVisible(!1)),
+        this.OpenParam);
     (this.vxn =
       ModelManager_1.ModelManager.FragmentMemoryModel.GetCollectDataById(e)),
       (ModelManager_1.ModelManager.FragmentMemoryModel.CurrentUnlockCollectId = 0),
@@ -69,4 +70,4 @@ class ObtainFragmentView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.ObtainFragmentView = ObtainFragmentView;
-// # sourceMappingURL=ObtainFragmentView.js.map
+//# sourceMappingURL=ObtainFragmentView.js.map

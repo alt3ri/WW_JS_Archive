@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NormalHotKeyType = void 0);
-const UE = require("ue");
-const HotKeyItemFactory_1 = require("../HotKeyItemFactory");
-const HotKeyTypeBase_1 = require("./HotKeyTypeBase");
+const UE = require("ue"),
+  HotKeyItemFactory_1 = require("../HotKeyItemFactory"),
+  HotKeyTypeBase_1 = require("./HotKeyTypeBase");
 class NormalHotKeyType extends HotKeyTypeBase_1.HotKeyTypeBase {
   constructor() {
     super(...arguments), (this.HotKeyComponent = void 0);
@@ -12,7 +12,7 @@ class NormalHotKeyType extends HotKeyTypeBase_1.HotKeyTypeBase {
     this.ComponentRegisterInfos = [[0, UE.UIItem]];
   }
   async OnBeforeStartAsync() {
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     this.HotKeyComponent =
       await HotKeyItemFactory_1.HotKeyItemFactory.CreateHotKeyComponent(
         this.GetItem(0).GetOwner(),
@@ -31,4 +31,4 @@ class NormalHotKeyType extends HotKeyTypeBase_1.HotKeyTypeBase {
   }
 }
 exports.NormalHotKeyType = NormalHotKeyType;
-// # sourceMappingURL=NormalHotKeyType.js.map
+//# sourceMappingURL=NormalHotKeyType.js.map

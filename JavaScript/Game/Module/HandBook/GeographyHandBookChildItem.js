@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GeographyHandBookChildItem = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract");
-const HandBookController_1 = require("./HandBookController");
-const HandBookDefine_1 = require("./HandBookDefine");
-const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract"),
+  HandBookController_1 = require("./HandBookController"),
+  HandBookDefine_1 = require("./HandBookDefine"),
+  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
 class GeographyHandBookChildItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(e = void 0) {
     super(),
       (this.kzt = void 0),
       (this.mZt = (e) => {
-        const i = this.kzt.Config;
+        var i = this.kzt.Config;
         if (this.kzt.IsLock)
           ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
             "CurGeographyHandBookLock",
@@ -24,23 +24,23 @@ class GeographyHandBookChildItem extends GridProxyAbstract_1.GridProxyAbstract {
             this.SetToggleState(0);
         else {
           this.dZt();
-          const o = ConfigCommon_1.ConfigCommon.ToList(
-            ConfigManager_1.ConfigManager.HandBookConfig.GetAllGeographyHandBookConfig(),
-          );
-          const t = (o.sort(this.aZt), o.length);
-          const n = [];
-          const a = [];
-          const s = [];
-          const l = [];
-          const h = [];
-          const g = [];
+          var o = ConfigCommon_1.ConfigCommon.ToList(
+              ConfigManager_1.ConfigManager.HandBookConfig.GetAllGeographyHandBookConfig(),
+            ),
+            t = (o.sort(this.aZt), o.length),
+            n = [],
+            a = [],
+            s = [],
+            l = [],
+            h = [],
+            g = [];
           let r = 0;
           for (let e = 0; e < t; e++) {
-            const d = o[e];
-            let u = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
-              2,
-              d.Id,
-            );
+            var d = o[e],
+              u = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
+                2,
+                d.Id,
+              );
             u &&
               (n.push(d.Texture),
               h.push(u.CreateTime),
@@ -65,7 +65,7 @@ class GeographyHandBookChildItem extends GridProxyAbstract_1.GridProxyAbstract {
               d.Id === i.Id) &&
               (r = n.length - 1);
           }
-          const _ = new HandBookDefine_1.HandBookPhotoData();
+          var _ = new HandBookDefine_1.HandBookPhotoData();
           (_.DescrtptionText = a),
             (_.TypeText = l),
             (_.NameText = s),
@@ -93,9 +93,9 @@ class GeographyHandBookChildItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(e, r, i) {
     this.kzt = e;
-    const o = this.kzt.Config;
-    const t = e.IsNew;
-    var e = e.IsLock;
+    var o = this.kzt.Config,
+      t = e.IsNew,
+      e = e.IsLock;
     this.SetTextureByPath(o.Texture, this.GetTexture(0)),
       this.GetText(1).ShowTextNew(o.Name),
       this.GetItem(2).SetUIActive(t),
@@ -111,10 +111,10 @@ class GeographyHandBookChildItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   SetToggleState(e) {
     this.GetExtendToggle(4).SetToggleStateForce(e, !1, !0),
-      e === 1 && this.dZt();
+      1 === e && this.dZt();
   }
   dZt() {
-    let e;
+    var e;
     this.kzt.IsNew &&
       ((e = this.kzt.Config),
       HandBookController_1.HandBookController.SendIllustratedReadRequest(
@@ -133,4 +133,4 @@ class GeographyHandBookChildItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.GeographyHandBookChildItem = GeographyHandBookChildItem;
-// # sourceMappingURL=GeographyHandBookChildItem.js.map
+//# sourceMappingURL=GeographyHandBookChildItem.js.map

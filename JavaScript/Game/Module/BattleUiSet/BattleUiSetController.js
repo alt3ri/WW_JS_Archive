@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleUiSetController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
 class BattleUiSetController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return !0;
@@ -21,7 +21,7 @@ class BattleUiSetController extends UiControllerBase_1.UiControllerBase {
     Net_1.Net.UnRegister(20372);
   }
   static MobileButtonSettingUpdateRequest(e) {
-    const t = new Protocol_1.Aki.Protocol.x_s();
+    var t = new Protocol_1.Aki.Protocol.x_s();
     (t.R3n = e),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -41,10 +41,10 @@ class BattleUiSetController extends UiControllerBase_1.UiControllerBase {
     ]);
   e = e.R3n;
   if (e) {
-    const t = ModelManager_1.ModelManager.BattleUiSetModel;
+    var t = ModelManager_1.ModelManager.BattleUiSetModel;
     for (const r of e) {
-      var o = r.Ekn;
-      var o = t.GetPanelItemDataByConfigId(o);
+      var o = r.Ekn,
+        o = t.GetPanelItemDataByConfigId(o);
       if (!o) return;
       (o.Size = r.x3n),
         (o.EditSize = r.x3n),
@@ -72,4 +72,4 @@ class BattleUiSetController extends UiControllerBase_1.UiControllerBase {
           "SaveButton",
         );
   });
-// # sourceMappingURL=BattleUiSetController.js.map
+//# sourceMappingURL=BattleUiSetController.js.map

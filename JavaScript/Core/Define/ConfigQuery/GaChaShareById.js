@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configGaChaShareById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const GaChaShare_1 = require("../Config/GaChaShare");
-const DB = "db_shareinfo.db";
-const FILE = "f.分享.xlsx";
-const TABLE = "GaChaShare";
-const COMMAND = "select BinData from `GaChaShare` where Id=?";
-const KEY_PREFIX = "GaChaShareById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  GaChaShare_1 = require("../Config/GaChaShare"),
+  DB = "db_shareinfo.db",
+  FILE = "f.分享.xlsx",
+  TABLE = "GaChaShare",
+  COMMAND = "select BinData from `GaChaShare` where Id=?",
+  KEY_PREFIX = "GaChaShareById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configGaChaShareById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configGaChaShareById.GetConfig(";
 exports.configGaChaShareById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configGaChaShareById = {
       if (
         (a =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var a;
-        var n = void 0;
+        var a,
+          n = void 0;
         if (
           (([a, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configGaChaShareById = {
     }
   },
 };
-// # sourceMappingURL=GaChaShareById.js.map
+//# sourceMappingURL=GaChaShareById.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponResonanceSuccessView = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class WeaponResonanceSuccessView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -22,13 +22,13 @@ class WeaponResonanceSuccessView extends UiViewBase_1.UiViewBase {
       (this.BtnBindInfo = [[0, this.xUt]]);
   }
   OnBeforeShow() {
-    var e = this.OpenParam;
-    var i = e.WeaponIncId;
-    var e = e.LastLevel;
-    var i =
-      ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-        i,
-      ).GetResonanceLevel();
+    var e = this.OpenParam,
+      i = e.WeaponIncId,
+      e = e.LastLevel,
+      i =
+        ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
+          i,
+        ).GetResonanceLevel();
     LguiUtil_1.LguiUtil.SetLocalText(
       this.GetText(1),
       "WeaponResonanceLevelText",
@@ -42,4 +42,4 @@ class WeaponResonanceSuccessView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.WeaponResonanceSuccessView = WeaponResonanceSuccessView;
-// # sourceMappingURL=WeaponResonanceSuccessView.js.map
+//# sourceMappingURL=WeaponResonanceSuccessView.js.map

@@ -1,34 +1,34 @@
 "use strict";
-let _SwitchRef_Group;
-let _SwitchRef_State;
-let _SwitchRef_Actor;
-const __classPrivateFieldSet =
-  (this && this.__classPrivateFieldSet) ||
-  function (t, e, i, r, _) {
-    if (r === "m") throw new TypeError("Private method is not writable");
-    if (r === "a" && !_)
-      throw new TypeError("Private accessor was defined without a setter");
-    if (typeof e === "function" ? t === e && _ : e.has(t))
-      return r === "a" ? _.call(t, i) : _ ? (_.value = i) : e.set(t, i), i;
-    throw new TypeError(
-      "Cannot write private member to an object whose class did not declare it",
-    );
-  };
-const __classPrivateFieldGet =
-  (this && this.__classPrivateFieldGet) ||
-  function (t, e, i, r) {
-    if (i === "a" && !r)
-      throw new TypeError("Private accessor was defined without a getter");
-    if (typeof e === "function" ? t === e && r : e.has(t))
-      return i === "m" ? r : i === "a" ? r.call(t) : r ? r.value : e.get(t);
-    throw new TypeError(
-      "Cannot read private member from an object whose class did not declare it",
-    );
-  };
+var _SwitchRef_Group,
+  _SwitchRef_State,
+  _SwitchRef_Actor,
+  __classPrivateFieldSet =
+    (this && this.__classPrivateFieldSet) ||
+    function (t, e, i, r, _) {
+      if ("m" === r) throw new TypeError("Private method is not writable");
+      if ("a" === r && !_)
+        throw new TypeError("Private accessor was defined without a setter");
+      if ("function" == typeof e ? t === e && _ : e.has(t))
+        return "a" === r ? _.call(t, i) : _ ? (_.value = i) : e.set(t, i), i;
+      throw new TypeError(
+        "Cannot write private member to an object whose class did not declare it",
+      );
+    },
+  __classPrivateFieldGet =
+    (this && this.__classPrivateFieldGet) ||
+    function (t, e, i, r) {
+      if ("a" === i && !r)
+        throw new TypeError("Private accessor was defined without a getter");
+      if ("function" == typeof e ? t === e && r : e.has(t))
+        return "m" === i ? r : "a" === i ? r.call(t) : r ? r.value : e.get(t);
+      throw new TypeError(
+        "Cannot read private member from an object whose class did not declare it",
+      );
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SwitchRef = void 0);
-const AudioSystem_1 = require("../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../Core/Common/Log");
+const AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../Core/Common/Log");
 class SwitchRef {
   constructor(t, e) {
     _SwitchRef_Group.set(this, void 0),
@@ -71,4 +71,4 @@ class SwitchRef {
   (_SwitchRef_Group = new WeakMap()),
   (_SwitchRef_State = new WeakMap()),
   (_SwitchRef_Actor = new WeakMap());
-// # sourceMappingURL=SwitchRef.js.map
+//# sourceMappingURL=SwitchRef.js.map

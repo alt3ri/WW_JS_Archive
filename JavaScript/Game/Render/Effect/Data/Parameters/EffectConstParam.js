@@ -6,4 +6,4 @@ class EffectConstParameter {
   }
 }
 exports.default = EffectConstParameter;
-// # sourceMappingURL=EffectConstParam.js.map
+//# sourceMappingURL=EffectConstParam.js.map

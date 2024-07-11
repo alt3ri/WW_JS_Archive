@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattlePassModel = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../../Core/Framework/ModelBase");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const StringBuilder_1 = require("../../../../Core/Utils/StringBuilder");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const LocalStorage_1 = require("../../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const WeaponTrialData_1 = require("../../Weapon/Data/WeaponTrialData");
-const BattlePassController_1 = require("./BattlePassController");
-const BattlePassRewardGridItem_1 = require("./BattlePassTabView/BattlePassRewardGridItem");
-const BattlePassTaskLoopItem_1 = require("./BattlePassTabView/BattlePassTaskLoopItem");
-const GIFT_ID = 301;
+const Log_1 = require("../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  StringBuilder_1 = require("../../../../Core/Utils/StringBuilder"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  WeaponTrialData_1 = require("../../Weapon/Data/WeaponTrialData"),
+  BattlePassController_1 = require("./BattlePassController"),
+  BattlePassRewardGridItem_1 = require("./BattlePassTabView/BattlePassRewardGridItem"),
+  BattlePassTaskLoopItem_1 = require("./BattlePassTabView/BattlePassTaskLoopItem"),
+  GIFT_ID = 301;
 class BattlePassModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -91,14 +91,14 @@ class BattlePassModel extends ModelBase_1.ModelBase {
       for (const e of CommonParamById_1.configCommonParamById.GetIntArrayConfig(
         "BattlePassUnlockWeapons",
       )) {
-        const t = new WeaponTrialData_1.WeaponTrialData();
+        var t = new WeaponTrialData_1.WeaponTrialData();
         t.SetTrialId(e), this.TOi.push(t);
       }
     }
     return this.TOi;
   }
   GetRewardData(t) {
-    const e = this.RewardDataList[t - 1];
+    var e = this.RewardDataList[t - 1];
     if (e) return e;
     Log_1.Log.CheckWarn() &&
       Log_1.Log.Warn("Temp", 11, "战令奖励数据 没有这个等级的", ["level", t]);
@@ -133,27 +133,27 @@ class BattlePassModel extends ModelBase_1.ModelBase {
     return e;
   }
   InitBattlePassConfigData() {
-    var t = this.BattlePassId;
-    const e =
-      ((this.RewardDataList.length = 0),
-      ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassData(t));
-    var t =
-      ((this.UQ = e.LevelLimit),
-      ConfigManager_1.ConfigManager.BattlePassConfig.GetAllRewardData(t));
+    var t = this.BattlePassId,
+      e =
+        ((this.RewardDataList.length = 0),
+        ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassData(t)),
+      t =
+        ((this.UQ = e.LevelLimit),
+        ConfigManager_1.ConfigManager.BattlePassConfig.GetAllRewardData(t));
     for (const l of t)
       if (!(l.Level > this.UQ)) {
-        var a;
-        var r;
-        var s;
-        var i;
-        const o = new BattlePassRewardGridItem_1.BattlePassRewardData(l.Level);
+        var a,
+          r,
+          s,
+          i,
+          o = new BattlePassRewardGridItem_1.BattlePassRewardData(l.Level);
         for ([a, r] of l.FreeReward) {
-          const n = new BattlePassRewardGridItem_1.BattlePassRewardItem(a, r);
+          var n = new BattlePassRewardGridItem_1.BattlePassRewardItem(a, r);
           this.BattlePassLevel >= l.Level && (n.ItemType = 1),
             o.FreeRewardItem.push(n);
         }
         for ([s, i] of l.PayReward) {
-          const h = new BattlePassRewardGridItem_1.BattlePassRewardItem(s, i);
+          var h = new BattlePassRewardGridItem_1.BattlePassRewardItem(s, i);
           this.BattlePassLevel >= l.Level &&
             this.qOi !== Protocol_1.Aki.Protocol.B2s.Proto_NoPaid &&
             (h.ItemType = 1),
@@ -169,17 +169,17 @@ class BattlePassModel extends ModelBase_1.ModelBase {
       (this.ROi = this.OOi - this.WeekExp);
   }
   VOi(t) {
-    let e = 0;
-    let a = 0;
+    let e = 0,
+      a = 0;
     for (const s of t) {
-      const r = this.GetTaskData(s);
-      (e += r.Exp), (a += r.UpdateType === 0 ? 0 : r.Exp);
+      var r = this.GetTaskData(s);
+      (e += r.Exp), (a += 0 === r.UpdateType ? 0 : r.Exp);
     }
     return [e, a];
   }
   TryRequestTaskList(t) {
-    var [e, a] = this.VOi(t);
-    var e = e - Math.max(0, a - this.ROi);
+    var [e, a] = this.VOi(t),
+      e = e - Math.max(0, a - this.ROi);
     this.IsLevelMax() || e > this.UOi
       ? (ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           "BattlePassExpMax",
@@ -206,7 +206,7 @@ class BattlePassModel extends ModelBase_1.ModelBase {
           );
   }
   UpdateBattlePassRewardDataFromResponse(t) {
-    if (void 0 !== t && t.length !== 0)
+    if (void 0 !== t && 0 !== t.length)
       for (const e of t) this.TakeReward(e.Ikn, e.r3n, e.G3n);
   }
   UpdateRewardDataWithTargetLevel(e) {
@@ -216,10 +216,10 @@ class BattlePassModel extends ModelBase_1.ModelBase {
     t = this.RewardDataList[t - 1];
     if (t) {
       for (const a of t.FreeRewardItem)
-        (a.ItemType !== 0 && !e) || (a.ItemType = 1);
+        (0 !== a.ItemType && !e) || (a.ItemType = 1);
       if (this.PayType !== Protocol_1.Aki.Protocol.B2s.Proto_NoPaid)
         for (const r of t.PayRewardItem)
-          (r.ItemType !== 0 && !e) || (r.ItemType = 1);
+          (0 !== r.ItemType && !e) || (r.ItemType = 1);
     }
   }
   TakeReward(t, e, a) {
@@ -329,24 +329,24 @@ class BattlePassModel extends ModelBase_1.ModelBase {
     return TimeUtil_1.TimeUtil.CalculateHourGapBetweenNow(this.NOi, !0);
   }
   GetBattlePassRemainTimeSecond() {
-    const t =
+    var t =
       TimeUtil_1.TimeUtil.GetServerTimeStamp() /
       TimeUtil_1.TimeUtil.InverseMillisecond;
     return this.NOi - t;
   }
   GetTargetLevelRewardList(e, t) {
     t.length = 0;
-    let a;
-    const r = this.wOi;
-    const s = new Map();
+    var a,
+      r = this.wOi,
+      s = new Map();
     for (let t = r + 1; t <= e; t++) {
-      const i = this.GetRewardData(t);
+      var i = this.GetRewardData(t);
       if (i)
         for (const h of this.qOi === Protocol_1.Aki.Protocol.B2s.Proto_NoPaid
           ? i.FreeRewardItem
           : i.FreeRewardItem.concat(i.PayRewardItem)) {
-          const o = h.Item[0].ItemId;
-          const n = h.Item[1];
+          var o = h.Item[0].ItemId,
+            n = h.Item[1];
           s.has(o)
             ? (s.get(o)[1] += n)
             : s.set(o, [{ IncId: 0, ItemId: o }, n]);
@@ -354,12 +354,12 @@ class BattlePassModel extends ModelBase_1.ModelBase {
     }
     for ([, a] of s) t.push(a);
     t.sort((t, e) => {
-      const a = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(
-        t[0].ItemId,
-      ).QualityId;
-      const r = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(
-        e[0].ItemId,
-      ).QualityId;
+      var a = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(
+          t[0].ItemId,
+        ).QualityId,
+        r = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(
+          e[0].ItemId,
+        ).QualityId;
       return a === r ? t[1] - e[1] : r - a;
     });
   }
@@ -368,11 +368,11 @@ class BattlePassModel extends ModelBase_1.ModelBase {
   }
   GetTaskList(t, e) {
     e.length = 0;
-    for (const [, a] of this.BattlePassTaskMap) a.UpdateType === t && e.push(a);
+    for (var [, a] of this.BattlePassTaskMap) a.UpdateType === t && e.push(a);
     e.sort((t, e) =>
-      t.TaskState === 3 || e.TaskState === 2
+      3 === t.TaskState || 2 === e.TaskState
         ? -1
-        : t.TaskState === 2 || e.TaskState === 3
+        : 2 === t.TaskState || 3 === e.TaskState
           ? 1
           : 0,
     );
@@ -396,43 +396,44 @@ class BattlePassModel extends ModelBase_1.ModelBase {
     );
   }
   GetAllFinishedTask() {
-    let t;
-    let e;
-    const a = [];
-    for ([t, e] of this.BattlePassTaskMap) e.TaskState === 3 && a.push(t);
+    var t,
+      e,
+      a = [];
+    for ([t, e] of this.BattlePassTaskMap) 3 === e.TaskState && a.push(t);
     return a;
   }
   CheckHasRewardWaitTake() {
     for (const t of this.RewardDataList) {
-      for (const e of t.FreeRewardItem) if (e.ItemType === 1) return !0;
-      for (const a of t.PayRewardItem) if (a.ItemType === 1) return !0;
+      for (const e of t.FreeRewardItem) if (1 === e.ItemType) return !0;
+      for (const a of t.PayRewardItem) if (1 === a.ItemType) return !0;
     }
     return !1;
   }
   CheckHasTaskWaitTake() {
     if (this.UQ !== this.BattlePassLevel)
-      for (const [, t] of this.BattlePassTaskMap)
-        if (t.TaskState === 3) return !0;
+      for (var [, t] of this.BattlePassTaskMap)
+        if (3 === t.TaskState) return !0;
     return !1;
   }
   CheckHasTaskWaitTakeWithType(t) {
     if (this.wOi !== this.UQ)
-      for (const [, e] of this.BattlePassTaskMap)
-        if (t === e.UpdateType && e.TaskState === 3) return !0;
+      for (var [, e] of this.BattlePassTaskMap)
+        if (t === e.UpdateType && 3 === e.TaskState) return !0;
     return !1;
   }
   AddTaskDataFromProtocol(t) {
-    let e;
-    let a;
-    const r =
-      CommonParamById_1.configCommonParamById.GetIntConfig("BattlePassExp");
-    const s = this.BattlePassTaskMap;
-    const i = new BattlePassTaskLoopItem_1.BattlePassTaskData();
-    const o =
-      ((i.TaskId = t.Ekn),
-      ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassTask(t.Ekn));
+    var e,
+      a,
+      r = CommonParamById_1.configCommonParamById.GetIntConfig("BattlePassExp"),
+      s = this.BattlePassTaskMap,
+      i = new BattlePassTaskLoopItem_1.BattlePassTaskData(),
+      o =
+        ((i.TaskId = t.Ekn),
+        ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassTask(
+          t.Ekn,
+        ));
     for ([e, a] of o.TaskReward) {
-      const n = [{ IncId: 0, ItemId: e }, a];
+      var n = [{ IncId: 0, ItemId: e }, a];
       e === r && (i.Exp += a), i.RewardItemList.push(n);
     }
     (i.CurrentProgress = t.k0s ?? 0),
@@ -446,7 +447,7 @@ class BattlePassModel extends ModelBase_1.ModelBase {
       s.set(t.Ekn, i);
   }
   SetDataFromBattlePassResponse(t) {
-    const e = t.wfs;
+    var e = t.wfs;
     (this.IOi = e.Lfs ?? !1),
       this.IOi &&
         ((this.HadEnter = e.Ufs),
@@ -465,9 +466,9 @@ class BattlePassModel extends ModelBase_1.ModelBase {
         ));
   }
   UpdateTaskDataFromBattlePassTaskTakeResponse(t) {
-    const e = this.BattlePassTaskMap;
+    var e = this.BattlePassTaskMap;
     for (const r of t) {
-      const a = e.get(r);
+      var a = e.get(r);
       a && (a.TaskState = 2);
     }
     EventSystem_1.EventSystem.Emit(
@@ -497,12 +498,12 @@ class BattlePassModel extends ModelBase_1.ModelBase {
   }
   UpdateRewardDataFormFreeToPay() {
     for (let t = 1; t <= this.wOi; t++) {
-      const e = this.GetRewardData(t);
+      var e = this.GetRewardData(t);
       if (e) for (const a of e.PayRewardItem) a.ItemType = 1;
     }
   }
   GetBattlePassIconPath() {
-    const t = ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassData(
+    var t = ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassData(
       this.BattlePassId,
     );
     if (t) return t.ExclusiveRewardPath;
@@ -514,27 +515,27 @@ class BattlePassModel extends ModelBase_1.ModelBase {
         t = e.Level;
         break;
       }
-    if (t === 0)
+    if (0 === t)
       for (const a of this.RewardDataList) a.IsThisType(2) && (t = a.Level);
-    return (t = t === 0 ? 1 : t);
+    return (t = 0 === t ? 1 : t);
   }
   GetHighBattlePassOriginalPrice() {
-    var t = this.GetPrimaryBattlePassGoodsId();
-    var e = CommonParamById_1.configCommonParamById.GetIntConfig(
-      "AdvancedWithoutActive",
-    );
-    var t =
-      ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopDirectGoods(
-        t,
-      ).PayId;
-    var t = ConfigManager_1.ConfigManager.PayItemConfig.GetPayConf(t).Amount;
-    var e =
-      ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopDirectGoods(
-        e,
-      ).PayId;
-    const a = ConfigManager_1.ConfigManager.PayItemConfig.GetPayConf(e).Amount;
-    const r = new StringBuilder_1.StringBuilder();
-    var e = ConfigManager_1.ConfigManager.PayItemConfig.GetPayShow(e);
+    var t = this.GetPrimaryBattlePassGoodsId(),
+      e = CommonParamById_1.configCommonParamById.GetIntConfig(
+        "AdvancedWithoutActive",
+      ),
+      t =
+        ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopDirectGoods(
+          t,
+        ).PayId,
+      t = ConfigManager_1.ConfigManager.PayItemConfig.GetPayConf(t).Amount,
+      e =
+        ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopDirectGoods(
+          e,
+        ).PayId,
+      a = ConfigManager_1.ConfigManager.PayItemConfig.GetPayConf(e).Amount,
+      r = new StringBuilder_1.StringBuilder(),
+      e = ConfigManager_1.ConfigManager.PayItemConfig.GetPayShow(e);
     return (
       r.Append(
         ConfigManager_1.ConfigManager.PayItemConfig.GetPayShowCurrency(),
@@ -567,4 +568,4 @@ class BattlePassModel extends ModelBase_1.ModelBase {
   }
 }
 exports.BattlePassModel = BattlePassModel;
-// # sourceMappingURL=BattlePassModel.js.map
+//# sourceMappingURL=BattlePassModel.js.map

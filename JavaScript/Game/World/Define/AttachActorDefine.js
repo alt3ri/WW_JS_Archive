@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AttachActorEntry = exports.AttachActorItem = void 0);
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const GlobalData_1 = require("../../GlobalData");
-const CustomMap_1 = require("./CustomMap");
+const FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  GlobalData_1 = require("../../GlobalData"),
+  CustomMap_1 = require("./CustomMap");
 class AttachActorItem {
   constructor() {
     (this.Id = 0),
@@ -25,7 +25,7 @@ class AttachActorEntry {
   AddAttachActorItem(t, s, r, e, i, h) {
     if (this.EPn.has(r)) return !1;
     this.EPn.set(r, ++this.SPn);
-    const o = new AttachActorItem();
+    var o = new AttachActorItem();
     return (
       (o.Id = t),
       (o.EntityId = s),
@@ -51,7 +51,7 @@ class AttachActorEntry {
     return this.EPn.size;
   }
   RemoveAttachActorItem(t) {
-    const s = this.EPn.get(t);
+    var s = this.EPn.get(t);
     return !!s && this.EPn.delete(t) && this.wQe.Remove(s);
   }
   Clear() {
@@ -59,4 +59,4 @@ class AttachActorEntry {
   }
 }
 exports.AttachActorEntry = AttachActorEntry;
-// # sourceMappingURL=AttachActorDefine.js.map
+//# sourceMappingURL=AttachActorDefine.js.map

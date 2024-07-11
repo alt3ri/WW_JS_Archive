@@ -4,12 +4,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.LevelLayoutGrid =
     exports.RoleBreakPreviewView =
       void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout");
 class RoleBreakPreviewView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -123,13 +123,13 @@ class LevelLayoutGrid extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(t, e, s) {
     this.GridIndex = s;
-    const i = t.IsAvailable;
-    const h = t.LevelContent.toString();
+    var i = t.IsAvailable,
+      h = t.LevelContent.toString();
     this.GetItem(0).SetUIActive(!i),
       this.GetText(1).SetText(i ? "" : h),
       this.GetItem(2).SetUIActive(i),
       this.GetText(3).SetText(i ? h : ""),
-      this.GetItem(4).SetUIActive(s !== 0),
+      this.GetItem(4).SetUIActive(0 !== s),
       this.GetExtendToggle(5).SetToggleState(t.IsChosen ? 1 : 0);
   }
   OnBeforeDestroy() {
@@ -167,4 +167,4 @@ class CostContentItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.CostContentItem = CostContentItem;
-// # sourceMappingURL=RoleBreakPreviewView.js.map
+//# sourceMappingURL=RoleBreakPreviewView.js.map

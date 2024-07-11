@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MarkItemDataUtil = void 0);
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
+const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager");
 class MarkItemDataUtil {
   static TransformMarkTypeToClient(r) {
     switch (r) {
@@ -48,7 +48,7 @@ class MarkItemDataUtil {
     }
   }
   static GetMarkIcon(r) {
-    const e = ConfigManager_1.ConfigManager.MapConfig.GetConfigMark(r);
+    var e = ConfigManager_1.ConfigManager.MapConfig.GetConfigMark(r);
     if (e)
       switch (e.ObjectType) {
         case 10:
@@ -63,4 +63,4 @@ class MarkItemDataUtil {
   }
 }
 exports.MarkItemDataUtil = MarkItemDataUtil;
-// # sourceMappingURL=MarkItemDataUtil.js.map
+//# sourceMappingURL=MarkItemDataUtil.js.map

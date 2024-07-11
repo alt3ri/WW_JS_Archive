@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BuffItem = void 0);
-const UE = require("ue");
-const Time_1 = require("../../../../Core/Common/Time");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const BattleUiControl_1 = require("../BattleUiControl");
-const CLOSE_ANIM_TIME = 200;
-const FADE_ANIM_PERCENT = 0.2;
-const BUFF = "1";
-const DEBUFF = "2";
+const UE = require("ue"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  BattleUiControl_1 = require("../BattleUiControl"),
+  CLOSE_ANIM_TIME = 200,
+  FADE_ANIM_PERCENT = 0.2,
+  BUFF = "1",
+  DEBUFF = "2";
 class BuffItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -57,10 +57,10 @@ class BuffItem extends UiPanelBase_1.UiPanelBase {
         : this.Unt(i.GetRemainDuration() / i.Duration);
     i = t.Parameters.length;
     let h = void 0;
-    i > 0 && (h = t.Parameters[0]),
+    0 < i && (h = t.Parameters[0]),
       this.GetSprite(8)?.SetUIActive(h === BUFF),
       this.GetSprite(4)?.SetUIActive(h === DEBUFF),
-      i > 1 && t.Parameters[1] !== "" ? this.Ant(t.Parameters[1]) : this.Ant(),
+      1 < i && "" !== t.Parameters[1] ? this.Ant(t.Parameters[1]) : this.Ant(),
       this.SetActive(!0),
       s
         ? this.Ert(5)
@@ -77,7 +77,7 @@ class BuffItem extends UiPanelBase_1.UiPanelBase {
   }
   Rnt(t) {
     t !== this.Mnt &&
-      (t > this.Mnt && this.Mnt > 0 && this.Ert(5),
+      (t > this.Mnt && 0 < this.Mnt && this.Ert(5),
       (this.Mnt = t) <= 1
         ? this.fnt.SetText("")
         : this.fnt.SetText(t.toString()));
@@ -102,7 +102,7 @@ class BuffItem extends UiPanelBase_1.UiPanelBase {
   }
   Tick(t) {
     this.Ent &&
-      (this.Ent.Duration > 0 &&
+      (0 < this.Ent.Duration &&
         this.Unt(this.Ent.GetRemainDuration() / this.Ent.Duration),
       this.Rnt(this.Ent.StackCount));
   }
@@ -131,11 +131,11 @@ class BuffItem extends UiPanelBase_1.UiPanelBase {
     );
   }
   hnt(t) {
-    const i = [];
-    const s = this.GetItem(t)
-      .GetOwner()
-      .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass());
-    const h = s.Num();
+    var i = [],
+      s = this.GetItem(t)
+        .GetOwner()
+        .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass()),
+      h = s.Num();
     for (let t = 0; t < h; t++) i.push(s.Get(t));
     this.Art || (this.Art = new Map()), this.Art.set(t, i);
   }
@@ -149,4 +149,4 @@ class BuffItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.BuffItem = BuffItem;
-// # sourceMappingURL=BuffItem.js.map
+//# sourceMappingURL=BuffItem.js.map

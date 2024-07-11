@@ -6,11 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.OnlineApplyData =
     exports.OnlineHallData =
       void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const PersonalDefine_1 = require("../Personal/Model/PersonalDefine");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  PersonalDefine_1 = require("../Personal/Model/PersonalDefine");
 class OnlineHallData {
   constructor(e) {
     (this.CardUnlockList = []), (this.Oqi = 0);
@@ -231,4 +231,4 @@ class WorldTeamRoleInfo {
   }
 }
 exports.WorldTeamRoleInfo = WorldTeamRoleInfo;
-// # sourceMappingURL=OnlineHallData.js.map
+//# sourceMappingURL=OnlineHallData.js.map

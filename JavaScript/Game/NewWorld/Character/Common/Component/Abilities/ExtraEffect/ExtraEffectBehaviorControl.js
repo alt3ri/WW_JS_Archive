@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExtraEffectBehaviorControl = void 0);
-const EventDefine_1 = require("../../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../../Common/Event/EventSystem");
-const BlackboardController_1 = require("../../../../../../World/Controller/BlackboardController");
-const ExtraEffectBase_1 = require("./ExtraEffectBase");
+const EventDefine_1 = require("../../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../../Common/Event/EventSystem"),
+  BlackboardController_1 = require("../../../../../../World/Controller/BlackboardController"),
+  ExtraEffectBase_1 = require("./ExtraEffectBase");
 class ExtraEffectBehaviorControl extends ExtraEffectBase_1.BuffEffect {
   constructor() {
     super(...arguments), (this.rQo = 0), (this.dce = !1);
@@ -23,15 +23,15 @@ class ExtraEffectBehaviorControl extends ExtraEffectBase_1.BuffEffect {
       ));
   }
   OnRemoved() {
-    this.dce && (this.nQo(!1), this.rQo === 1) && this.sQo(!1);
+    this.dce && (this.nQo(!1), 1 === this.rQo) && this.sQo(!1);
   }
   OnExecute() {
     this.dce = !0;
-    const t = `被嘲讽buff ${this.BuffId}覆盖`;
+    var t = `被嘲讽buff ${this.BuffId}覆盖`;
     for (const e of this.OwnerEffectManager.FilterById(10))
       e !== this &&
         this.OwnerBuffComponent.RemoveBuffByHandle(e.ActiveHandleId, -1, t);
-    this.nQo(!0), this.rQo === 1 && this.sQo(!0);
+    this.nQo(!0), 1 === this.rQo && this.sQo(!0);
   }
   nQo(t) {
     EventSystem_1.EventSystem.EmitWithTarget(
@@ -60,4 +60,4 @@ class ExtraEffectBehaviorControl extends ExtraEffectBase_1.BuffEffect {
   }
 }
 exports.ExtraEffectBehaviorControl = ExtraEffectBehaviorControl;
-// # sourceMappingURL=ExtraEffectBehaviorControl.js.map
+//# sourceMappingURL=ExtraEffectBehaviorControl.js.map

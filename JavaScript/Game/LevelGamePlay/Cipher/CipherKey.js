@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CipherKey = void 0);
-const UE = require("ue");
-const CircleAttachView_1 = require("../../Module/AutoAttach/CircleAttachView");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const CipherCircleAttachItem_1 = require("./CipherCircleAttachItem");
-const INITGP = 0;
-const LEN = 10;
+const UE = require("ue"),
+  CircleAttachView_1 = require("../../Module/AutoAttach/CircleAttachView"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  CipherCircleAttachItem_1 = require("./CipherCircleAttachItem"),
+  INITGP = 0,
+  LEN = 10;
 class CipherKey extends UiPanelBase_1.UiPanelBase {
   constructor(t, i) {
     super(),
@@ -68,4 +68,4 @@ class CipherKey extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.CipherKey = CipherKey;
-// # sourceMappingURL=CipherKey.js.map
+//# sourceMappingURL=CipherKey.js.map

@@ -12,7 +12,7 @@ class InventoryViewPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHand
   swo() {
     let e = "";
     for (const t of this.DefaultNavigationListener)
-      if (t.GetNavigationComponent().GetType() === "InventoryItemGridToggle") {
+      if ("InventoryItemGridToggle" === t.GetNavigationComponent().GetType()) {
         e = t.GroupName;
         break;
       }
@@ -20,11 +20,11 @@ class InventoryViewPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHand
   }
   SetItemGridDestroyMode(r) {
     this.nwo = r;
-    const n = this.swo();
+    var n = this.swo();
     if (n)
       for (let e = 0, t = n.ListenerList.Num(); e < t; ++e)
         n.ListenerList.Get(e).GetBehaviorComponent().bToggleOnSelect = !r;
   }
 }
 exports.InventoryViewPanelHandle = InventoryViewPanelHandle;
-// # sourceMappingURL=InventoryViewPanelHandle.js.map
+//# sourceMappingURL=InventoryViewPanelHandle.js.map

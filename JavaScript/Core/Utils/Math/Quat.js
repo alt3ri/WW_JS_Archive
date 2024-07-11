@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Quat = void 0);
-const UE = require("ue");
-const MathCommon_1 = require("./MathCommon");
-const Rotator_1 = require("./Rotator");
-const Vector_1 = require("./Vector");
-const FIND_BETWEEN_CONST = 1e-6;
-const SLERP_CONST = 0.9999;
-const SINGULARITY_THRESHOLD = 0.4999995;
+const UE = require("ue"),
+  MathCommon_1 = require("./MathCommon"),
+  Rotator_1 = require("./Rotator"),
+  Vector_1 = require("./Vector"),
+  FIND_BETWEEN_CONST = 1e-6,
+  SLERP_CONST = 0.9999,
+  SINGULARITY_THRESHOLD = 0.4999995;
 class Quat {
   constructor(t, i, h, s) {
     (this.NJ = void 0),
@@ -46,7 +46,7 @@ class Quat {
     );
   }
   ToUeQuat() {
-    const t = this.Tuple;
+    var t = this.Tuple;
     return (
       void 0 === this.NJ
         ? (this.NJ = new UE.Quat(t[0], t[1], t[2], t[3]))
@@ -58,18 +58,18 @@ class Quat {
     );
   }
   FromUeQuat(t) {
-    const i = this.Tuple;
+    var i = this.Tuple;
     (i[0] = t.X), (i[1] = t.Y), (i[2] = t.Z), (i[3] = t.W);
   }
   static Create(...t) {
-    let i;
-    let h;
-    let s;
-    const a = new Quat();
+    var i,
+      h,
+      s,
+      a = new Quat();
     return (
-      t.length === 1 && t[0]
+      1 === t.length && t[0]
         ? a.FromUeQuat(t[0])
-        : (void 0 !== t[0] && typeof t[0] !== "number") ||
+        : (void 0 !== t[0] && "number" != typeof t[0]) ||
           ((i = t[0]),
           (h = t[1]),
           (s = t[2]),
@@ -82,14 +82,14 @@ class Quat {
     this.Set(t.X, t.Y, t.Z, t.W);
   }
   Set(t, i, h, s) {
-    const a = this.Tuple;
+    var a = this.Tuple;
     (a[0] = t), (a[1] = i), (a[2] = h), (a[3] = s), this.NJ && this.ToUeQuat();
   }
   Multiply(t, i) {
     Quat.VectorQuaternionMultiply(this, t, i), i.Inverse2(i);
   }
   get Vector4() {
-    const t = this.Tuple;
+    var t = this.Tuple;
     return (
       void 0 === this.OJ
         ? (this.OJ = [t[0], t[1], t[2], t[3]])
@@ -101,10 +101,10 @@ class Quat {
     );
   }
   static FJ(t, i, h, s) {
-    const a = t.Tuple;
-    const e = i.Tuple;
-    const r = s.Tuple;
-    var t = h + Vector_1.Vector.DotProduct(t, i);
+    var a = t.Tuple,
+      e = i.Tuple,
+      r = s.Tuple,
+      t = h + Vector_1.Vector.DotProduct(t, i);
     t > FIND_BETWEEN_CONST * h
       ? ((r[0] = a[1] * e[2] - a[2] * e[1]),
         (r[1] = a[2] * e[0] - a[0] * e[2]),
@@ -118,14 +118,14 @@ class Quat {
       s.Normalize();
   }
   static VJ(t, i, h, s) {
-    let a;
-    var t = t.Tuple;
-    var i = i.Tuple;
-    var s = s.Tuple;
-    const e = t[0] * i[0] + t[1] * i[1] + t[2] * i[2] + t[3] * i[3];
-    let r = MathCommon_1.MathCommon.FloatSelect(e, e, -e);
-    let o = 0;
-    let u = 0;
+    var a,
+      t = t.Tuple,
+      i = i.Tuple,
+      s = s.Tuple,
+      e = t[0] * i[0] + t[1] * i[1] + t[2] * i[2] + t[3] * i[3],
+      r = MathCommon_1.MathCommon.FloatSelect(e, e, -e);
+    let o = 0,
+      u = 0;
     (u =
       r < SLERP_CONST
         ? ((r = Math.acos(r)),
@@ -143,7 +143,7 @@ class Quat {
     this.FindBetweenVectors(t, i, h);
   }
   static FindBetweenVectors(t, i, h) {
-    const s = Math.sqrt(t.SizeSquared() * i.SizeSquared());
+    var s = Math.sqrt(t.SizeSquared() * i.SizeSquared());
     this.FJ(t, i, s, h);
   }
   static Slerp(t, i, h, s) {
@@ -153,8 +153,8 @@ class Quat {
     return this.GetNormalized(this, t), !0;
   }
   GetNormalized(t, i = MathCommon_1.MathCommon.SmallNumber) {
-    var h = this.Tuple;
-    var h = h[0] * h[0] + h[1] * h[1] + h[2] * h[2] + h[3] * h[3];
+    var h = this.Tuple,
+      h = h[0] * h[0] + h[1] * h[1] + h[2] * h[2] + h[3] * h[3];
     i <= h
       ? ((i = t.Tuple),
         (h = 1 / Math.sqrt(h)),
@@ -165,33 +165,33 @@ class Quat {
       : t.Reset();
   }
   Reset() {
-    const t = this.Tuple;
+    var t = this.Tuple;
     (t[0] = 0), (t[1] = 0), (t[2] = 0), (t[3] = 1), this.NJ && this.ToUeQuat();
   }
   RotateVector(t, i) {
-    const h = this.Tuple;
-    var t = t.Tuple;
-    var i = i.Tuple;
-    const s = 2 * (h[1] * t[2] - h[2] * t[1]);
-    const a = 2 * (h[2] * t[0] - h[0] * t[2]);
-    const e = 2 * (h[0] * t[1] - h[1] * t[0]);
-    const r = h[1] * e - h[2] * a;
-    const o = h[2] * s - h[0] * e;
-    const u = h[0] * a - h[1] * s;
+    var h = this.Tuple,
+      t = t.Tuple,
+      i = i.Tuple,
+      s = 2 * (h[1] * t[2] - h[2] * t[1]),
+      a = 2 * (h[2] * t[0] - h[0] * t[2]),
+      e = 2 * (h[0] * t[1] - h[1] * t[0]),
+      r = h[1] * e - h[2] * a,
+      o = h[2] * s - h[0] * e,
+      u = h[0] * a - h[1] * s;
     (i[0] = t[0] + h[3] * s + r),
       (i[1] = t[1] + h[3] * a + o),
       (i[2] = t[2] + h[3] * e + u);
   }
   Rotator(t) {
-    const i = this.Tuple;
+    var i = this.Tuple;
     let h = void 0;
     var t = (h =
-      t ||
-      (void 0 === this.kJ && (this.kJ = Rotator_1.Rotator.Create()), this.kJ))
-      .Tuple;
-    const s = i[2] * i[0] - i[3] * i[1];
-    const a = 2 * (i[3] * i[2] + i[0] * i[1]);
-    const e = 1 - 2 * (i[1] * i[1] + i[2] * i[2]);
+        t ||
+        (void 0 === this.kJ && (this.kJ = Rotator_1.Rotator.Create()), this.kJ))
+        .Tuple,
+      s = i[2] * i[0] - i[3] * i[1],
+      a = 2 * (i[3] * i[2] + i[0] * i[1]),
+      e = 1 - 2 * (i[1] * i[1] + i[2] * i[2]);
     return (
       s < -SINGULARITY_THRESHOLD
         ? ((t[0] = -MathCommon_1.MathCommon.RightAngle),
@@ -218,21 +218,21 @@ class Quat {
     );
   }
   Inverse(t) {
-    const i = this.Tuple;
-    var t = t.Tuple;
+    var i = this.Tuple,
+      t = t.Tuple;
     (t[0] = -i[0]), (t[1] = -i[1]), (t[2] = -i[2]), (t[3] = i[3]);
   }
   Inverse2(t) {
-    const i = this.Tuple;
-    var t = t.Tuple;
+    var i = this.Tuple,
+      t = t.Tuple;
     (t[0] = -i[0]), (t[1] = -i[1]), (t[2] = -i[2]), (t[3] = -i[3]);
   }
   static ConstructorByAxisAngle(t, i, h) {
-    var t = t.Tuple;
-    var h = h.Tuple;
-    var i = 0.5 * i;
-    const s = Math.sin(i);
-    var i = Math.cos(i);
+    var t = t.Tuple,
+      h = h.Tuple,
+      i = 0.5 * i,
+      s = Math.sin(i),
+      i = Math.cos(i);
     (h[0] = s * t[0]), (h[1] = s * t[1]), (h[2] = s * t[2]), (h[3] = i);
   }
   static VectorQuaternionMultiply(t, i, h) {
@@ -292,4 +292,4 @@ class Quat {
   (Quat.WJ = Quat.Create()),
   (Quat.KJ = Quat.Create()),
   (Quat.QJ = Quat.Create());
-// # sourceMappingURL=Quat.js.map
+//# sourceMappingURL=Quat.js.map

@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleSkillTreeView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const UiSceneManager_1 = require("../../UiComponent/UiSceneManager");
-const RoleController_1 = require("../RoleController");
-const RoleSkillDefine_1 = require("./RoleSkillDefine");
-const RoleSkillInnerPassiveSkillAndOuterPassiveSkillItem_1 = require("./RoleSkillInnerPassiveSkillAndOuterPassiveSkillItem");
-const RoleSkillInnerSkillAndOuterAttributeItem_1 = require("./RoleSkillInnerSkillAndOuterAttributeItem");
-const RoleSkillOuterPassiveSkillItem_1 = require("./RoleSkillOuterPassiveSkillItem");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  UiSceneManager_1 = require("../../UiComponent/UiSceneManager"),
+  RoleController_1 = require("../RoleController"),
+  RoleSkillDefine_1 = require("./RoleSkillDefine"),
+  RoleSkillInnerPassiveSkillAndOuterPassiveSkillItem_1 = require("./RoleSkillInnerPassiveSkillAndOuterPassiveSkillItem"),
+  RoleSkillInnerSkillAndOuterAttributeItem_1 = require("./RoleSkillInnerSkillAndOuterAttributeItem"),
+  RoleSkillOuterPassiveSkillItem_1 = require("./RoleSkillOuterPassiveSkillItem");
 class RoleSkillTreeView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -36,13 +36,13 @@ class RoleSkillTreeView extends UiTabViewBase_1.UiTabViewBase {
             this.Rmo());
       }),
       (this.Umo = (e) => {
-        this.Amo(e), this.plo.RoleViewState === 1 && this.Pmo();
+        this.Amo(e), 1 === this.plo.RoleViewState && this.Pmo();
       }),
       (this.xmo = (e) => {
-        const i =
+        var i =
           ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(e);
         this.Amo(e),
-          this.plo.RoleViewState === 1 &&
+          1 === this.plo.RoleViewState &&
             RoleController_1.RoleController.SendRoleSkillViewRequest(
               this.zke,
               i.SkillId,
@@ -62,9 +62,9 @@ class RoleSkillTreeView extends UiTabViewBase_1.UiTabViewBase {
           this.wmo(!0);
       }),
       (this.Pmo = () => {
-        let e;
+        var e;
         this.Tmo &&
-          this.plo.RoleViewState !== 0 &&
+          0 !== this.plo.RoleViewState &&
           ((e = this.Tmo.GetSkillNodeId()),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.UpdateSkillTreeInfoView,
@@ -73,9 +73,9 @@ class RoleSkillTreeView extends UiTabViewBase_1.UiTabViewBase {
           ));
       }),
       (this.bmo = () => {
-        let e, i;
+        var e, i;
         this.Tmo &&
-          this.plo.RoleViewState !== 1 &&
+          1 !== this.plo.RoleViewState &&
           ((e = this.Tmo.GetSkillNodeId()),
           ((i = new RoleSkillDefine_1.RoleSkillTreeInfoViewData()).RoleId =
             this.zke),
@@ -126,12 +126,12 @@ class RoleSkillTreeView extends UiTabViewBase_1.UiTabViewBase {
           this.Gmo());
   }
   Gmo() {
-    const i = [1, 2, 3, 4];
+    var i = [1, 2, 3, 4];
     this.ymo = new Array(i.length);
     for (let e = 0; e < i.length; e++) {
-      const t = i[e];
-      const s =
-        new RoleSkillInnerSkillAndOuterAttributeItem_1.RoleSkillInnerSkillAndOuterAttributeItem();
+      var t = i[e],
+        s =
+          new RoleSkillInnerSkillAndOuterAttributeItem_1.RoleSkillInnerSkillAndOuterAttributeItem();
       s.CreateThenShowByActor(this.GetItem(t).GetOwner()), (this.ymo[e] = s);
     }
   }
@@ -189,7 +189,7 @@ class RoleSkillTreeView extends UiTabViewBase_1.UiTabViewBase {
   }
   OnBeforeShow() {
     RoleController_1.RoleController.PlayRoleMontage(3);
-    const e = this.plo.GetCurSelectRoleId();
+    var e = this.plo.GetCurSelectRoleId();
     this.qmo(e),
       UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor()
         .Model?.CheckGetComponent(3)
@@ -210,18 +210,18 @@ class RoleSkillTreeView extends UiTabViewBase_1.UiTabViewBase {
     this.Imo.OnNodeLevelChange(e);
   }
   wmo(e) {
-    const i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(this.zke);
-    const t = this.GetButton(6).GetRootComponent();
+    var i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(this.zke),
+      t = this.GetButton(6).GetRootComponent();
     i.IsTrialRole() ? t.SetUIActive(!1) : t.SetUIActive(e);
   }
   Rmo() {
     if (this.Tmo) {
-      const i = this.Tmo.GetRoleId();
-      const t = this.Tmo.GetSkillNodeId();
+      var i = this.Tmo.GetRoleId(),
+        t = this.Tmo.GetSkillNodeId();
       let e = void 0;
-      e = this.plo.RoleViewState === 1 ? this.Pmo : this.bmo;
-      let s = this.Tmo.GetType();
-      s === 4 || s === 3
+      e = 1 === this.plo.RoleViewState ? this.Pmo : this.bmo;
+      var s = this.Tmo.GetType();
+      4 === s || 3 === s
         ? e()
         : ((s =
             ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(t)),
@@ -233,7 +233,7 @@ class RoleSkillTreeView extends UiTabViewBase_1.UiTabViewBase {
     }
   }
   Refresh() {
-    const e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(this.zke);
+    var e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(this.zke);
     this.wmo(!e.IsTrialRole()), this.RefreshRole(e.GetRoleSkillTreeConfig());
   }
   RefreshRole(e) {
@@ -249,10 +249,10 @@ class RoleSkillTreeView extends UiTabViewBase_1.UiTabViewBase {
         case 4:
           break;
         case 3:
-          (void 0 !== i.ParentNodes && i.ParentNodes.length !== 0) ||
+          (void 0 !== i.ParentNodes && 0 !== i.ParentNodes.length) ||
             this.Imo?.Update(this.zke, i.Id);
       }
   }
 }
 exports.RoleSkillTreeView = RoleSkillTreeView;
-// # sourceMappingURL=RoleSkillTreeView.js.map
+//# sourceMappingURL=RoleSkillTreeView.js.map

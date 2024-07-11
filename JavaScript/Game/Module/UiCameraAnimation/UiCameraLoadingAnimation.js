@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiCameraLoadingAnimation = void 0);
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const UiCameraPostEffectComponent_1 = require("../UiCamera/UiCameraComponent/UiCameraPostEffectComponent");
-const UiCameraManager_1 = require("../UiCamera/UiCameraManager");
+const MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  UiCameraPostEffectComponent_1 = require("../UiCamera/UiCameraComponent/UiCameraPostEffectComponent"),
+  UiCameraManager_1 = require("../UiCamera/UiCameraManager");
 class UiCameraLoadingAnimation {
   constructor() {
     (this.Cce = 0),
@@ -35,7 +35,7 @@ class UiCameraLoadingAnimation {
     (this.dUo = 0), (this.IsPlaying = !1), (this.JAo = void 0);
   }
   Tick(i) {
-    let t, s;
+    var t, s;
     this.dUo &&
       this.IsPlaying &&
       (this.Cce >= this.dUo
@@ -56,4 +56,4 @@ class UiCameraLoadingAnimation {
   }
 }
 exports.UiCameraLoadingAnimation = UiCameraLoadingAnimation;
-// # sourceMappingURL=UiCameraLoadingAnimation.js.map
+//# sourceMappingURL=UiCameraLoadingAnimation.js.map

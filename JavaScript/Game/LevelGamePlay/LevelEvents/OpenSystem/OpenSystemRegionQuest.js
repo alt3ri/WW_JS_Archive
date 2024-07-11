@@ -8,4 +8,4 @@ class OpenSystemRegionQuest extends OpenSystemBase_1.OpenSystemBase {
   }
 }
 exports.OpenSystemRegionQuest = OpenSystemRegionQuest;
-// # sourceMappingURL=OpenSystemRegionQuest.js.map
+//# sourceMappingURL=OpenSystemRegionQuest.js.map

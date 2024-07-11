@@ -5,8 +5,8 @@ const ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
 class PlayFlowBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   get CorrelativeEntities() {}
   OnCreate(e) {
-    return !!super.OnCreate(e) && e.Condition.Type === "PlayFlow";
+    return !!super.OnCreate(e) && "PlayFlow" === e.Condition.Type;
   }
 }
 exports.PlayFlowBehaviorNode = PlayFlowBehaviorNode;
-// # sourceMappingURL=PlayFlowBehaviorNode.js.map
+//# sourceMappingURL=PlayFlowBehaviorNode.js.map

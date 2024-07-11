@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Time_1 = require("../../../../Core/Common/Time");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Time_1 = require("../../../../Core/Common/Time"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskWait extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -48,4 +48,4 @@ class TsTaskWait extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskWait;
-// # sourceMappingURL=TsTaskWait.js.map
+//# sourceMappingURL=TsTaskWait.js.map

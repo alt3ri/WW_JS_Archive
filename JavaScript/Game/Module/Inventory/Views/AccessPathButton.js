@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AccessPathButton = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class AccessPathButton extends UiPanelBase_1.UiPanelBase {
   constructor(t, s) {
     super(),
@@ -26,15 +26,15 @@ class AccessPathButton extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[6, this.Rci]]);
   }
   OnStart() {
-    let t;
-    let s;
-    let e;
-    let i;
-    let a;
-    let n;
-    let r = ConfigManager_1.ConfigManager.InventoryConfig.GetAccessPathConfig(
-      this.Aci,
-    );
+    var t,
+      s,
+      e,
+      i,
+      a,
+      n,
+      r = ConfigManager_1.ConfigManager.InventoryConfig.GetAccessPathConfig(
+        this.Aci,
+      );
     r &&
       ((t = this.GetText(0)),
       (s = this.GetText(1)),
@@ -64,4 +64,4 @@ class AccessPathButton extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.AccessPathButton = AccessPathButton;
-// # sourceMappingURL=AccessPathButton.js.map
+//# sourceMappingURL=AccessPathButton.js.map

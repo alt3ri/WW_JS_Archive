@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LanguageUpdateManager = exports.LanguageUpdater = void 0);
-const UE = require("ue");
-const UrlPrefixDownload_1 = require("../Download/UrlPrefixDownload");
-const LauncherLanguageLib_1 = require("../Util/LauncherLanguageLib");
-const LauncherLog_1 = require("../Util/LauncherLog");
-const AppPathMisc_1 = require("./AppPathMisc");
-const AppUtil_1 = require("./AppUtil");
-const AppVersionMisc_1 = require("./AppVersionMisc");
-const ResourceUpdate_1 = require("./ResourceUpdate");
+const UE = require("ue"),
+  UrlPrefixDownload_1 = require("../Download/UrlPrefixDownload"),
+  LauncherLanguageLib_1 = require("../Util/LauncherLanguageLib"),
+  LauncherLog_1 = require("../Util/LauncherLog"),
+  AppPathMisc_1 = require("./AppPathMisc"),
+  AppUtil_1 = require("./AppUtil"),
+  AppVersionMisc_1 = require("./AppVersionMisc"),
+  ResourceUpdate_1 = require("./ResourceUpdate");
 class LanguageUpdateViewAgent {
   constructor() {
     this.gyr = void 0;
@@ -43,10 +43,10 @@ class LanguageUpdater {
       this.CalculateDownloadStatus();
   }
   Delete(e) {
-    var t = this.VersionMisc.GetMountFilePath();
-    var t = (LanguageUpdater.fyr(t), this.VersionMisc.ReadPatchFileInfoList());
+    var t = this.VersionMisc.GetMountFilePath(),
+      t = (LanguageUpdater.fyr(t), this.VersionMisc.ReadPatchFileInfoList());
     for (const i of t) {
-      const a = i.SavePath + ".pak";
+      var a = i.SavePath + ".pak";
       UE.KuroPakMountStatic.UnmountPak(a),
         LauncherLog_1.LauncherLog.Info(
           "UnMountPak in LanguageUpdater.Delete()",
@@ -84,7 +84,7 @@ class LanguageUpdater {
       ) {
         a = this.Updater.GetUpdateSize();
         if (!(a <= 0n)) {
-          const i = this.Updater.GetNeedSpace();
+          var i = this.Updater.GetNeedSpace();
           let e = !1;
           do {
             if (
@@ -118,8 +118,8 @@ class LanguageUpdater {
           if (!(a = this.Updater.CheckNeedRestartApp()))
             throw new Error("检测使用语音包是否需要重启app失败");
           this.IsDownloading = !1;
-          var t = this.Updater.GetNeedRemount();
-          const r = this.Updater.GetPakList();
+          var t = this.Updater.GetNeedRemount(),
+            r = this.Updater.GetPakList();
           if (t && r) {
             for (const s of r)
               UE.KuroPakMountStatic.MountPak(s.SavePath + ".pak", s.MountOrder);
@@ -137,15 +137,15 @@ class LanguageUpdater {
       this.CalculateDownloadStatus();
   }
   CalculateDownloadStatus() {
-    const [e, t] = this.VersionMisc.CalculateLocalSize();
+    var [e, t] = this.VersionMisc.CalculateLocalSize();
     ((this.LocalDiskSize = e) === (this.TotalDiskSize = t) &&
       this.VersionMisc.HasMountFile()) ||
     !UE.KuroLauncherLibrary.NeedHotPatch()
       ? ((this.Status = 2), (this.IsDownloading = !1))
-      : e > 0 && e !== t && (this.Status = 1);
+      : 0 < e && e !== t && (this.Status = 1);
   }
   static fyr(e) {
-    let t;
+    var t;
     LauncherLog_1.LauncherLog.Info("SafeDeleteFile", ["path", e]),
       UE.BlueprintPathsLibrary.FileExists(e) &&
         ((t = UE.KuroLauncherLibrary.DeleteFile(e)),
@@ -160,8 +160,8 @@ exports.LanguageUpdater = LanguageUpdater;
 class LanguageUpdateManager {
   static Init(e) {
     if (!this.E_e) {
-      let t;
-      const a = new AppPathMisc_1.AppPathMisc();
+      var t,
+        a = new AppPathMisc_1.AppPathMisc();
       for (const i of LauncherLanguageLib_1.LauncherLanguageLib.GetAllLanguageDefines())
         this.pyr.has(i.AudioCode) ||
           (((t = new LanguageUpdater()).LanguageCode = i.AudioCode),
@@ -185,8 +185,8 @@ class LanguageUpdateManager {
     return this.vyr;
   }
   static GetAllLanguagesVersionMisc() {
-    let e;
-    const t = [];
+    var e,
+      t = [];
     for ([, e] of this.pyr) t.push(e.VersionMisc);
     return t;
   }
@@ -194,10 +194,10 @@ class LanguageUpdateManager {
     return this.pyr.get(e);
   }
   static StopAllDownload() {
-    for (const [, e] of LanguageUpdateManager.pyr) e.Pause();
+    for (var [, e] of LanguageUpdateManager.pyr) e.Pause();
   }
 }
 ((exports.LanguageUpdateManager = LanguageUpdateManager).E_e = !1),
   (LanguageUpdateManager.pyr = new Map()),
   (LanguageUpdateManager.vyr = []);
-// # sourceMappingURL=LanguageUpdateManager.js.map
+//# sourceMappingURL=LanguageUpdateManager.js.map

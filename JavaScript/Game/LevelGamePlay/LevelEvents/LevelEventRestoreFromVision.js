@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventRestoreFromVision = void 0);
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const Global_1 = require("../../Global");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  Global_1 = require("../../Global"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventRestoreFromVision extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, t, s) {
     if (e) {
       const r = Global_1.Global.BaseCharacter.CharacterActorComponent.Entity;
       e = r?.GetComponent(33);
       if (e && r) {
-        const o = r.GetComponent(47)?.FollowIds;
+        var o = r.GetComponent(47)?.FollowIds;
         if (o) {
           for (const i of o) {
             const r = EntitySystem_1.EntitySystem.Get(i);
@@ -23,4 +23,4 @@ class LevelEventRestoreFromVision extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventRestoreFromVision = LevelEventRestoreFromVision;
-// # sourceMappingURL=LevelEventRestoreFromVision.js.map
+//# sourceMappingURL=LevelEventRestoreFromVision.js.map

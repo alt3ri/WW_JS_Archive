@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineGroup = void 0);
-const Time_1 = require("../../../Core/Common/Time");
-const AiBaseById_1 = require("../../../Core/Define/ConfigQuery/AiBaseById");
-const AiStateMachineConfigById_1 = require("../../../Core/Define/ConfigQuery/AiStateMachineConfigById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const StringBuilder_1 = require("../../../Core/Utils/StringBuilder");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const CombatMessage_1 = require("../../Module/CombatMessage/CombatMessage");
-const PreloadDefine_1 = require("../../Preload/PreloadDefine");
-const CombatDebugController_1 = require("../../Utils/CombatDebugController");
-const FrequencyMonitor_1 = require("../../Utils/FrequencyMonitor");
-const AiStateMachine_1 = require("./AiStateMachine");
-const AiStateMachineTaskSkill_1 = require("./Task/AiStateMachineTaskSkill");
+const Time_1 = require("../../../Core/Common/Time"),
+  AiBaseById_1 = require("../../../Core/Define/ConfigQuery/AiBaseById"),
+  AiStateMachineConfigById_1 = require("../../../Core/Define/ConfigQuery/AiStateMachineConfigById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  StringBuilder_1 = require("../../../Core/Utils/StringBuilder"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  CombatMessage_1 = require("../../Module/CombatMessage/CombatMessage"),
+  PreloadDefine_1 = require("../../Preload/PreloadDefine"),
+  CombatDebugController_1 = require("../../Utils/CombatDebugController"),
+  FrequencyMonitor_1 = require("../../Utils/FrequencyMonitor"),
+  AiStateMachine_1 = require("./AiStateMachine"),
+  AiStateMachineTaskSkill_1 = require("./Task/AiStateMachineTaskSkill");
 class AiStateMachineGroup {
   constructor(t) {
     (this.Kre = 0),
@@ -48,7 +48,7 @@ class AiStateMachineGroup {
         }
       }),
       (this.Zre = (t, i) => {
-        if (this.zre.size > 0)
+        if (0 < this.zre.size)
           for (const e of this.zre) {
             if (
               e.Task instanceof
@@ -100,7 +100,7 @@ class AiStateMachineGroup {
         ));
   }
   SetCurrentTaskNode(t) {
-    if ((this.zre.add(t), this.zre.size > 1)) {
+    if ((this.zre.add(t), 1 < this.zre.size)) {
       const i = new Array();
       this.zre.forEach((t) => {
         i.push(t.Name);
@@ -138,7 +138,7 @@ class AiStateMachineGroup {
       this.ErrorMessage.Append("\n");
   }
   GetNodeData(t) {
-    const i = this.NodeOverrideMap.get(t);
+    var i = this.NodeOverrideMap.get(t);
     return void 0 === i ? this.NodeDataMap.get(t) : this.NodeDataMap.get(i);
   }
   GetBlackboard(t) {
@@ -148,7 +148,7 @@ class AiStateMachineGroup {
     return this.Jre?.get(t);
   }
   RegisterNode(t) {
-    let i;
+    var i;
     this.NodeMap.set(t.Uuid, t),
       t.IsReferenceNode ||
         (this.NodeMapByName.set(t.Name, t),
@@ -160,17 +160,17 @@ class AiStateMachineGroup {
   InitFsmJson() {
     var t = this.Entity?.GetComponent(0).GetPbEntityInitData();
     let i = 0;
-    let e;
-    let s;
-    var t = (i =
-      t?.ComponentsData &&
-      (t = (0, IComponent_1.getComponent)(t.ComponentsData, "AiComponent"))
-        ?.AiId &&
-      !t.Disabled
-        ? t.AiId
-        : i)
-      ? AiBaseById_1.configAiBaseById.GetConfig(i)
-      : void 0;
+    var e,
+      s,
+      t = (i =
+        t?.ComponentsData &&
+        (t = (0, IComponent_1.getComponent)(t.ComponentsData, "AiComponent"))
+          ?.AiId &&
+        !t.Disabled
+          ? t.AiId
+          : i)
+        ? AiBaseById_1.configAiBaseById.GetConfig(i)
+        : void 0;
     return (
       t?.StateMachine &&
         (e =
@@ -185,9 +185,8 @@ class AiStateMachineGroup {
   }
   OnActivate() {
     PreloadDefine_1.PreloadSetting.UseNewPreload && this.InitFsmJson();
-    const t = this.StateMachineComp.StateMachineJsonObject;
-    const i =
-      ConfigManager_1.ConfigManager.AiConfig.CommonStateMachineJsonObject;
+    var t = this.StateMachineComp.StateMachineJsonObject,
+      i = ConfigManager_1.ConfigManager.AiConfig.CommonStateMachineJsonObject;
     if (i && t) {
       (this.Kre = i.Version),
         (this.Qre = t.Version),
@@ -217,7 +216,7 @@ class AiStateMachineGroup {
             "状态机初始化失败，不存在状态机",
             ["stateMachineId", r],
           );
-        const e = new AiStateMachine_1.AiStateMachineBase(this, void 0, t);
+        var e = new AiStateMachine_1.AiStateMachineBase(this, void 0, t);
         e.IsReferenceNode || this.StateMachines.push(e);
       }
       for (const n of this.NodeReferenceMap.values()) {
@@ -235,8 +234,8 @@ class AiStateMachineGroup {
     }
   }
   StartStateMachines() {
-    const t = this.Entity.GetComponent(0).ComponentDataMap.get("aps")?.aps;
-    if (t?.mSs && t.mSs.length > 0) {
+    var t = this.Entity.GetComponent(0).ComponentDataMap.get("aps")?.aps;
+    if (t?.mSs && 0 < t.mSs.length) {
       if (
         ((this.Xre = Number(t.gSs)),
         (this.$re = Number(t.CSs)),
@@ -355,7 +354,7 @@ class AiStateMachineGroup {
       for (const i of this.StateMachines) i.Activated && i.Tick(t);
   }
   GetNodeByUuid(t) {
-    let i;
+    var i;
     if (this.NodeMap)
       return void 0 === (i = this.NodeOverrideMap.get(t))
         ? this.NodeMap.get(t)
@@ -379,16 +378,15 @@ class AiStateMachineGroup {
   }
   BlackboardToString() {
     if (this.Jre) {
-      let t;
-      let i;
-      const e = new StringBuilder_1.StringBuilder("状态机黑板值\n");
+      var t,
+        i,
+        e = new StringBuilder_1.StringBuilder("状态机黑板值\n");
       e.Append(
         "-------------------------------------------------------------\n",
       );
-      for ([t, i] of this.Jre) {
+      for ([t, i] of this.Jre)
         e.Append(`[${t}]: ${i}
 `);
-      }
       return (
         e.Append(
           "-------------------------------------------------------------\n",
@@ -398,9 +396,8 @@ class AiStateMachineGroup {
     }
     return "";
   }
-
   ToString(t = 0, i) {
-    const e = new StringBuilder_1.StringBuilder();
+    var e = new StringBuilder_1.StringBuilder();
     if (
       (e.Append(`------[${this.StateMachineComp.StateMachineName}]------
 `),
@@ -426,7 +423,7 @@ ${this.ErrorMessage.ToString()}
         ),
         [e.ToString(), ""]
       );
-    const s = new StringBuilder_1.StringBuilder();
+    var s = new StringBuilder_1.StringBuilder();
     this.StateMachinesActivated
       ? e.Append(">>> 状态机已启动 <<<\n")
       : e.Append(">>> 状态机未启动 <<<\n服务器状态机配置错误或者怪物已死亡\n"),
@@ -444,9 +441,8 @@ ${this.ErrorMessage.ToString()}
         );
     return [e.ToString(), s.ToString()];
   }
-
   StartState(t, i, e) {
-    let s = this.GetNodeByUuid(i);
+    var s = this.GetNodeByUuid(i);
     s
       ? s.Activated ||
         (CombatDebugController_1.CombatDebugController.CombatWarn(
@@ -466,8 +462,8 @@ ${this.ErrorMessage.ToString()}
         );
   }
   HandleSwitch(t, i, e, s) {
-    const o = this.GetNodeByUuid(t);
-    const h = this.GetNodeByUuid(e);
+    var o = this.GetNodeByUuid(t),
+      h = this.GetNodeByUuid(e);
     h
       ? o.WaitSwitchState
         ? ((o.RemoteSwitchPending = e),
@@ -502,7 +498,7 @@ ${this.ErrorMessage.ToString()}
         );
   }
   HandleChangeStateConfirm(t, i) {
-    const e = this.GetNodeByUuid(i);
+    var e = this.GetNodeByUuid(i);
     e
       ? e.Activated
         ? e.SetExecutedAction()
@@ -530,14 +526,14 @@ ${this.ErrorMessage.ToString()}
         this.Entity,
         "状态机重置",
       ),
-      t?.mSs && t.mSs.length > 0)
+      t?.mSs && 0 < t.mSs.length)
     ) {
       if (
         ((this.Xre = Number(t.gSs)), (this.$re = Number(t.CSs)), this.Inited)
       ) {
         for (const o of t.mSs) {
-          const e = this.GetNodeByUuid(o.ukn);
-          const s = this.GetNodeByUuid(o.cSs);
+          var e = this.GetNodeByUuid(o.ukn),
+            s = this.GetNodeByUuid(o.cSs);
           if (!s)
             return void CombatDebugController_1.CombatDebugController.CombatError(
               "StateMachineNew",
@@ -572,4 +568,4 @@ ${this.ErrorMessage.ToString()}
   }
 }
 exports.AiStateMachineGroup = AiStateMachineGroup;
-// # sourceMappingURL=AiStateMachineGroup.js.map
+//# sourceMappingURL=AiStateMachineGroup.js.map

@@ -4,18 +4,18 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.parseAudioEventPath =
     exports.parseAudioEventPathInConfig =
       void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Info_1 = require("../Common/Info");
-const Log_1 = require("../Common/Log");
-const AudioEventPool_1 = require("./AudioEventPool");
-const ExecutionQueue_1 = require("./ExecutionQueue");
-const INVALID_PLAYING_ID = 0;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Info_1 = require("../Common/Info"),
+  Log_1 = require("../Common/Log"),
+  AudioEventPool_1 = require("./AudioEventPool"),
+  ExecutionQueue_1 = require("./ExecutionQueue"),
+  INVALID_PLAYING_ID = 0;
 function instanceOf(t, e) {
   return t.IsValid() && t.IsA(e.StaticClass());
 }
 function parseAudioEventPathInConfig(t) {
-  const e = /^\/Game\/Aki\/WwiseAudio\/Events\/(?<name>\w+)/.exec(t);
+  var e = /^\/Game\/Aki\/WwiseAudio\/Events\/(?<name>\w+)/.exec(t);
   return (
     e ||
       (Log_1.Log.CheckWarn() &&
@@ -33,7 +33,7 @@ function parseAudioEventPathInConfig(t) {
   );
 }
 function parseAudioEventPath(t) {
-  t = typeof t === "string" ? t : t.ToAssetPathName();
+  t = "string" == typeof t ? t : t.ToAssetPathName();
   return t ? t.split(".").at(-1)?.toLowerCase() : void 0;
 }
 (exports.parseAudioEventPathInConfig = parseAudioEventPathInConfig),
@@ -44,26 +44,26 @@ class AudioSystem {
   }
   static PostEvent(i, o, n) {
     return this.h8.Enqueue(async (t) => {
-      const e = await this.l8(i, o, n);
+      var e = await this.l8(i, o, n);
       e && (this._8.set(t, e), this.u8.set(e, t));
     });
   }
   static async l8(e, i, o = {}) {
-    const n = await this.a8.GetAudioEvent(e);
+    var n = await this.a8.GetAudioEvent(e);
     if (n) {
-      var { ExternalSourceName: s, ExternalSourceMediaName: r } = o;
-      var { CallbackMask: s = 1, CallbackHandler: r } =
-        (s &&
-          r &&
-          UE.WwiseExternalSourceStatics.SetExternalSourceMediaByName(s, r),
-        o);
-      var s = 1 | s;
-      var r = this.c8(r);
+      var { ExternalSourceName: s, ExternalSourceMediaName: r } = o,
+        { CallbackMask: s = 1, CallbackHandler: r } =
+          (s &&
+            r &&
+            UE.WwiseExternalSourceStatics.SetExternalSourceMediaByName(s, r),
+          o),
+        s = 1 | s,
+        r = this.c8(r);
       let t = void 0;
       if (void 0 === i) t = n.PostOnActor(void 0, r, s, !1);
       else if (i instanceof UE.Transform) {
-        var a = i.GetLocation();
-        var u = i.GetRotation().Rotator();
+        var a = i.GetLocation(),
+          u = i.GetRotation().Rotator();
         t = n.PostAtLocation(a, u, r, s, Info_1.Info.World);
       } else if (instanceOf(i, UE.Actor)) {
         var { StopWhenOwnerDestroyed: a = !1 } = o;
@@ -107,7 +107,7 @@ class AudioSystem {
   static c8(i) {
     const o = (t, e) => {
       i?.(t, e),
-        t === 0 &&
+        0 === t &&
           ((0, puerts_1.releaseManualReleaseDelegate)(o),
           (t = e.PlayingID),
           (e = this.u8.get(t))) &&
@@ -116,19 +116,19 @@ class AudioSystem {
     return (0, puerts_1.toManualReleaseDelegate)(o);
   }
   static ExecuteAction(...t) {
-    if (typeof t[0] === "string") {
+    if ("string" == typeof t[0]) {
       const [o, n, s = {}] = t;
       this.h8.Enqueue(() => {
-        const { Actor: t, TransitionDuration: e, TransitionFadeCurve: i } = s;
+        var { Actor: t, TransitionDuration: e, TransitionFadeCurve: i } = s;
         UE.KuroAudioStatics.ExecuteActionOnEventName(o, n, t, e, i);
       });
     } else {
       const [r, a, u = {}] = t;
-      (a === 0 && this.h8.Cancel(r)) ||
+      (0 === a && this.h8.Cancel(r)) ||
         this.h8.Enqueue(() => {
-          let t;
-          let e;
-          const i = this._8.get(r);
+          var t,
+            e,
+            i = this._8.get(r);
           i &&
             (({ TransitionDuration: t, TransitionFadeCurve: e } = u),
             UE.KuroAudioStatics.ExecuteActionOnPlayingId(i, a, t, e));
@@ -136,7 +136,7 @@ class AudioSystem {
     }
   }
   static SeekOnEvent(t, e, i = {}) {
-    let o;
+    var o;
     void 0 === i.Handle
       ? UE.KuroAudioStatics.SeekOnEventName(
           t,
@@ -150,7 +150,7 @@ class AudioSystem {
   }
   static GetSourcePlayPosition(t) {
     var t = this._8.get(t);
-    return !t || (t = UE.KuroAudioStatics.GetSourcePlayPosition(t)) === -1
+    return !t || -1 === (t = UE.KuroAudioStatics.GetSourcePlayPosition(t))
       ? void 0
       : t;
   }
@@ -168,9 +168,9 @@ class AudioSystem {
     UE.KuroAudioStatics.StopAll(t);
   }
   static GetAkComponent(t, e = {}) {
-    var { SocketName: e, OnCreated: i } = e;
-    var e = typeof e === "string" ? new UE.FName(e) : e;
-    const o = (0, puerts_1.$ref)(!1);
+    var { SocketName: e, OnCreated: i } = e,
+      e = "string" == typeof e ? new UE.FName(e) : e,
+      o = (0, puerts_1.$ref)(!1);
     let n = void 0;
     return (
       instanceOf(t, UE.Actor)
@@ -187,4 +187,4 @@ class AudioSystem {
   (AudioSystem.h8 = new ExecutionQueue_1.ExecutionQueue()),
   (AudioSystem._8 = new Map()),
   (AudioSystem.u8 = new Map());
-// # sourceMappingURL=AudioSystem.js.map
+//# sourceMappingURL=AudioSystem.js.map

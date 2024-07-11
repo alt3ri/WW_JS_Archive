@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const AiLibrary_1 = require("../../Common/AiLibrary");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  AiLibrary_1 = require("../../Common/AiLibrary"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskSelectSkill extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -23,9 +23,9 @@ class TsTaskSelectSkill extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsDebugLog = this.DebugLog));
   }
   ReceiveTickAI(t, e, r) {
-    let i;
-    let o;
-    const l = t.AiController;
+    var i,
+      o,
+      l = t.AiController;
     l
       ? (this.InitTsVariables(),
         l.AiSkill
@@ -52,30 +52,30 @@ class TsTaskSelectSkill extends TsTaskAbortImmediatelyBase_1.default {
         this.FinishExecute(!1));
   }
   SelectSkillWithTarget(t, e, r) {
-    const i = t.CharActorComp;
-    const o = i.Entity.GetComponent(185);
-    const l = Vector_1.Vector.Create();
-    const s =
-      (MathUtils_1.MathUtils.InverseTransformPositionNoScale(
-        r.FloorLocation,
-        r.ActorRotationProxy,
-        i.FloorLocation,
-        l,
-      ),
-      Vector_1.Vector.GetAngleByVector2D(l));
-    const a =
-      (MathUtils_1.MathUtils.InverseTransformPositionNoScale(
-        i.FloorLocation,
-        i.ActorRotationProxy,
-        r.FloorLocation,
-        l,
-      ),
-      l.Z);
-    const h = l.Size2D() - i.ScaledRadius - r.ScaledRadius;
-    const _ = Vector_1.Vector.GetAngleByVector2D(l);
-    let c = 0;
-    let k = 0;
-    let T = 0;
+    var i = t.CharActorComp,
+      o = i.Entity.GetComponent(185),
+      l = Vector_1.Vector.Create(),
+      s =
+        (MathUtils_1.MathUtils.InverseTransformPositionNoScale(
+          r.FloorLocation,
+          r.ActorRotationProxy,
+          i.FloorLocation,
+          l,
+        ),
+        Vector_1.Vector.GetAngleByVector2D(l)),
+      a =
+        (MathUtils_1.MathUtils.InverseTransformPositionNoScale(
+          i.FloorLocation,
+          i.ActorRotationProxy,
+          r.FloorLocation,
+          l,
+        ),
+        l.Z),
+      h = l.Size2D() - i.ScaledRadius - r.ScaledRadius,
+      _ = Vector_1.Vector.GetAngleByVector2D(l);
+    let c = 0,
+      k = 0,
+      T = 0;
     this.TsDebugLog &&
       Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
@@ -87,8 +87,8 @@ class TsTaskSelectSkill extends TsTaskAbortImmediatelyBase_1.default {
       );
     for (const b of t.AiSkill.ActiveSkillGroup)
       for (const g of t.AiSkill.BaseSkill.RandomSkills[b].ArrayInt) {
-        var n;
-        const d = t.AiSkill.SkillInfos.get(g);
+        var n,
+          d = t.AiSkill.SkillInfos.get(g);
         d
           ? d.SkillWeight <= 0 ||
             (AiLibrary_1.AiLibrary.IsSkillAvailable(
@@ -133,21 +133,21 @@ class TsTaskSelectSkill extends TsTaskAbortImmediatelyBase_1.default {
     );
   }
   SelectSkillWithoutTarget(s, a) {
-    const t = s.CharActorComp;
+    var t = s.CharActorComp;
     const h = t.Entity.GetComponent(185);
-    let _ = 0;
-    let c = 0;
-    let k = 0;
+    let _ = 0,
+      c = 0,
+      k = 0;
     return (
       s.AiSkill.ActiveSkillGroup.forEach((t, e, r) => {
         s.AiSkill.BaseSkill.RandomSkills[t].ArrayInt.forEach((t, e, r) => {
-          let i;
-          let o;
-          const l = s.AiSkill.SkillInfos.get(t);
+          var i,
+            o,
+            l = s.AiSkill.SkillInfos.get(t);
           l
             ? (o = s.AiSkill.SkillPreconditionMap.get(l.SkillPreconditionId))
               ? o.NeedTarget ||
-                (this.TsSkillType >= 0 && l.SkillType !== this.TsSkillType) ||
+                (0 <= this.TsSkillType && l.SkillType !== this.TsSkillType) ||
                 (a.IsCanUseSkill(Number(l.SkillId)) &&
                   s.AiSkill.CanActivate(t) &&
                   ((i = s.AiSkill.PreconditionTagMap.get(
@@ -183,4 +183,4 @@ class TsTaskSelectSkill extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskSelectSkill;
-// # sourceMappingURL=TsTaskSelectSkill.js.map
+//# sourceMappingURL=TsTaskSelectSkill.js.map

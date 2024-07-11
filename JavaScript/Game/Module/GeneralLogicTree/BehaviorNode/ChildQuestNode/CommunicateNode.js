@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommunicateNode = void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const QuestController_1 = require("../../../QuestNew/Controller/QuestController");
-const ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  QuestController_1 = require("../../../QuestNew/Controller/QuestController"),
+  ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
 class CommunicateNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   constructor() {
     super(...arguments),
@@ -31,7 +31,7 @@ class CommunicateNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
           (this.NQt(), (this.BQt = !1));
       }),
       (this.$Ge = (e) => {
-        e !== "CommunicateView" ||
+        "CommunicateView" !== e ||
           this.ChildQuestStatus !==
             Protocol_1.Aki.Protocol.W2s.Proto_CQNS_Progress ||
           (this.Blackboard.AddTag(7), this.bQt) ||
@@ -50,7 +50,7 @@ class CommunicateNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   OnCreate(e) {
     return (
       !!super.OnCreate(e) &&
-      (e = e.Condition).Type === "ReceiveTelecom" &&
+      "ReceiveTelecom" === (e = e.Condition).Type &&
       ((this.CommunicateId = e.TelecomId), !0)
     );
   }
@@ -116,4 +116,4 @@ class CommunicateNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   }
 }
 exports.CommunicateNode = CommunicateNode;
-// # sourceMappingURL=CommunicateNode.js.map
+//# sourceMappingURL=CommunicateNode.js.map

@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionNewQualityView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../../Ui/Base/UiTickViewBase");
-const GameModeController_1 = require("../../../../World/Controller/GameModeController");
-const CalabashController_1 = require("../../../Calabash/CalabashController");
-const SmallItemGrid_1 = require("../../../Common/SmallItemGrid/SmallItemGrid");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../../Ui/Base/UiTickViewBase"),
+  GameModeController_1 = require("../../../../World/Controller/GameModeController"),
+  CalabashController_1 = require("../../../Calabash/CalabashController"),
+  SmallItemGrid_1 = require("../../../Common/SmallItemGrid/SmallItemGrid"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../../Util/LguiUtil");
 class VisionNewQualityView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -22,14 +22,14 @@ class VisionNewQualityView extends UiTickViewBase_1.UiTickViewBase {
       (this.KHi = void 0),
       (this.sGe = () => new QualityStarItem()),
       (this.Uvt = () => {
-        let e;
+        var e;
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Calabash", 28, "跳转到鸣域终端收集页签", [
             "目标幻象Id",
             this.Lvt.PhantomItem.MonsterId,
           ]),
           this.CloseViewOrShowNextData(),
-          this.KHi.SkinId === 0
+          0 === this.KHi.SkinId
             ? CalabashController_1.CalabashController.JumpToCalabashCollectTabView(
                 this.Lvt.PhantomItem.MonsterId,
               )
@@ -96,22 +96,21 @@ class VisionNewQualityView extends UiTickViewBase_1.UiTickViewBase {
   Og() {
     this.O8s(), this.N8s()?.SetUIActive(!0);
     var e =
-      ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
-        this.Lvt.PhantomItem.MonsterId,
-      );
-    var e =
-      ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterInfoConfig(
+        ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
+          this.Lvt.PhantomItem.MonsterId,
+        ),
+      e = ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterInfoConfig(
         e.MonsterInfoId,
-      );
-    var e =
-      ((this.Tvt = ConfigManager_1.ConfigManager.CalabashConfig.MaxTipCd),
-      this.N8s().ShowTextNew(e.Name),
-      {
-        Data: this.Lvt.PhantomItem.ItemId,
-        Type: 4,
-        ItemConfigId: this.Lvt.PhantomItem.ItemId,
-        IconPath: e.Icon,
-      });
+      ),
+      e =
+        ((this.Tvt = ConfigManager_1.ConfigManager.CalabashConfig.MaxTipCd),
+        this.N8s().ShowTextNew(e.Name),
+        {
+          Data: this.Lvt.PhantomItem.ItemId,
+          Type: 4,
+          ItemConfigId: this.Lvt.PhantomItem.ItemId,
+          IconPath: e.Icon,
+        });
     this.Xgt.Apply(e),
       this.aqe(),
       this.Pvt(),
@@ -120,20 +119,20 @@ class VisionNewQualityView extends UiTickViewBase_1.UiTickViewBase {
       this.F8s();
   }
   N8s() {
-    const e = this.KHi.SkinId === 0 ? 0 : 9;
+    var e = 0 === this.KHi.SkinId ? 0 : 9;
     return this.GetText(e);
   }
   F8s() {
-    const e = this.KHi.SkinId === 0;
+    var e = 0 === this.KHi.SkinId;
     this.GetItem(7)?.SetUIActive(e);
   }
   k8s() {
-    const e = this.KHi.SkinId !== 0;
+    var e = 0 !== this.KHi.SkinId;
     this.GetItem(8)?.SetUIActive(e);
   }
   Pvt() {
-    let e;
-    this.KHi.SkinId === 0 &&
+    var e;
+    0 === this.KHi.SkinId &&
       ((e = this.KHi.UnlockQuality),
       (e =
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemQualityConfig(
@@ -142,23 +141,23 @@ class VisionNewQualityView extends UiTickViewBase_1.UiTickViewBase {
       this.N8s().SetColor(UE.Color.FromHex(e)));
   }
   aqe() {
-    const e = this.KHi.SkinId === 0;
-    const i =
-      (this.eGe?.SetActive(e),
-      this.GetItem(5)?.SetUIActive(e),
-      this.KHi.UnlockQuality);
-    const t = new Array();
+    var e = 0 === this.KHi.SkinId,
+      i =
+        (this.eGe?.SetActive(e),
+        this.GetItem(5)?.SetUIActive(e),
+        this.KHi.UnlockQuality),
+      t = new Array();
     for (let e = 0; e < i - 1; e++) t.push(e);
     this.eGe?.RefreshByData(t);
   }
   C6s() {
-    const e =
-      this.KHi.SkinId === 0 ? "UnLockNewVisionQuality" : "UnLockNewVisionSkin";
+    var e =
+      0 === this.KHi.SkinId ? "UnLockNewVisionQuality" : "UnLockNewVisionSkin";
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(6), e);
   }
   CloseViewOrShowNextData() {
-    ModelManager_1.ModelManager.PhantomBattleModel.QualityUnlockTipsList
-      .length > 0
+    0 <
+    ModelManager_1.ModelManager.PhantomBattleModel.QualityUnlockTipsList.length
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Calabash", 28, "刷新下个声骸数据"),
         this.Refresh(),
@@ -174,4 +173,4 @@ exports.VisionNewQualityView = VisionNewQualityView;
 class QualityStarItem extends GridProxyAbstract_1.GridProxyAbstract {
   Refresh(e, i, t) {}
 }
-// # sourceMappingURL=VisionNewQualityView.js.map
+//# sourceMappingURL=VisionNewQualityView.js.map

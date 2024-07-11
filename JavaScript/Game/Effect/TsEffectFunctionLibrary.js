@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const EffectContext_1 = require("./EffectContext/EffectContext");
-const EffectParameterNiagara_1 = require("./EffectParameter/EffectParameterNiagara");
-const EffectSystem_1 = require("./EffectSystem");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  EffectContext_1 = require("./EffectContext/EffectContext"),
+  EffectParameterNiagara_1 = require("./EffectParameter/EffectParameterNiagara"),
+  EffectSystem_1 = require("./EffectSystem");
 class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static SpawnEffect(e, t, f, c, n, o) {
     if (t?.IsValid())
       if (n) {
-        let a;
+        var a;
         if (!(n.length < EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT))
           return (
             (a = `[蓝图:${t.GetName()}] ` + n),
@@ -53,7 +53,7 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static SpawnEffectUI(e, t, f, c, n) {
     if (t?.IsValid())
       if (n) {
-        let o;
+        var o;
         if (!(n.length < EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT))
           return (
             (o = `[蓝图:${t.GetName()}] ` + n),
@@ -95,8 +95,8 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
         );
   }
   static SpawnEffectWithActor(e, t, f, c, n, o, a) {
-    let i = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(e);
-    if (i === 2 || i === 4)
+    var i = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(e);
+    if (2 === i || 4 === i)
       if (f?.IsValid())
         if (t?.IsValid())
           if (n) {
@@ -170,7 +170,7 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return EffectSystem_1.EffectSystem.IsValid(e);
   }
   static StopEffect(e, t, f, c, n) {
-    let o;
+    var o;
     return t?.IsValid()
       ? f
         ? f.length < EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT
@@ -264,47 +264,47 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static SetEffectParameterNiagara(e, t, f, c, n, o) {
     if (e) {
-      const a = new EffectParameterNiagara_1.EffectParameterNiagara();
+      var a = new EffectParameterNiagara_1.EffectParameterNiagara();
       if (t) {
-        const i = (0, puerts_1.$unref)(t);
-        const r = i.Num();
-        if (r > 0) {
+        var i = (0, puerts_1.$unref)(t),
+          r = i.Num();
+        if (0 < r) {
           a.UserParameterFloat = [];
           for (let e = 0; e < r; ++e)
             a.UserParameterFloat.push([i.Get(e).Name, i.Get(e).Value]);
         }
       }
       if (f) {
-        const s = (0, puerts_1.$unref)(f);
-        const E = s.Num();
-        if (E > 0) {
+        var s = (0, puerts_1.$unref)(f),
+          E = s.Num();
+        if (0 < E) {
           a.UserParameterColor = [];
           for (let e = 0; e < E; ++e)
             a.UserParameterColor.push([s.Get(e).Name, s.Get(e).Value]);
         }
       }
       if (c) {
-        const _ = (0, puerts_1.$unref)(c);
-        const y = _.Num();
-        if (y > 0) {
+        var _ = (0, puerts_1.$unref)(c),
+          y = _.Num();
+        if (0 < y) {
           a.UserParameterVector = [];
           for (let e = 0; e < y; ++e)
             a.UserParameterVector.push([_.Get(e).Name, _.Get(e).Value]);
         }
       }
       if (n) {
-        const L = (0, puerts_1.$unref)(n);
-        const S = L.Num();
-        if (S > 0) {
+        var L = (0, puerts_1.$unref)(n),
+          S = L.Num();
+        if (0 < S) {
           a.MaterialParameterFloat = [];
           for (let e = 0; e < S; ++e)
             a.MaterialParameterFloat.push([L.Get(e).Name, L.Get(e).Value]);
         }
       }
       if (o) {
-        const g = (0, puerts_1.$unref)(o);
-        const l = g.Num();
-        if (l > 0) {
+        var g = (0, puerts_1.$unref)(o),
+          l = g.Num();
+        if (0 < l) {
           a.MaterialParameterColor = [];
           for (let e = 0; e < l; ++e)
             a.MaterialParameterColor.push([g.Get(e).Name, g.Get(e).Value]);
@@ -328,6 +328,7 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
       case 2:
         return !1;
       default:
+        return;
     }
   }
   static AttachEffectActorToActor(e, t, f, c, n, o, a) {
@@ -399,4 +400,4 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
 }
 exports.default = TsEffectFunctionLibrary;
-// # sourceMappingURL=TsEffectFunctionLibrary.js.map
+//# sourceMappingURL=TsEffectFunctionLibrary.js.map

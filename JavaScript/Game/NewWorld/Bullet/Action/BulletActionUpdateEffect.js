@@ -1,29 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletActionUpdateEffect = void 0);
-const UE = require("ue");
-const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EffectSystem_1 = require("../../../Effect/EffectSystem");
-const BulletConstant_1 = require("../BulletConstant");
-const BulletStaticFunction_1 = require("../BulletStaticMethod/BulletStaticFunction");
-const BulletPool_1 = require("../Model/BulletPool");
-const BulletActionBase_1 = require("./BulletActionBase");
+const UE = require("ue"),
+  FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  BulletConstant_1 = require("../BulletConstant"),
+  BulletStaticFunction_1 = require("../BulletStaticMethod/BulletStaticFunction"),
+  BulletPool_1 = require("../Model/BulletPool"),
+  BulletActionBase_1 = require("./BulletActionBase");
 class BulletActionUpdateEffect extends BulletActionBase_1.BulletActionBase {
   OnExecute() {
-    const t = this.BulletInfo.EffectInfo;
-    let e = this.BulletInfo.BulletDataMain;
-    let l =
-      ((t.EffectData = e.Render),
-      (t.IsFinishAuto = t.EffectData.EffectStopInsteadDestroy),
-      t.EffectData.SpecialEffect);
+    var t = this.BulletInfo.EffectInfo,
+      e = this.BulletInfo.BulletDataMain,
+      l =
+        ((t.EffectData = e.Render),
+        (t.IsFinishAuto = t.EffectData.EffectStopInsteadDestroy),
+        t.EffectData.SpecialEffect);
     this.W5o(),
-      e.Base.Shape === 4
+      4 === e.Base.Shape
         ? ((e = t.EffectData.EffectBulletParams.get(1)),
           (e = Number(e)),
           (t.EffectOriginSize = 1 / (isNaN(e) ? 1 : e)),
           (e = l.get(1)) &&
-            e.length > 0 &&
+            0 < e.length &&
             ((t.EffectExtremity =
               BulletStaticFunction_1.BulletStaticFunction.PlayBulletEffect(
                 this.BulletInfo.Actor,
@@ -37,7 +37,7 @@ class BulletActionUpdateEffect extends BulletActionBase_1.BulletActionBase {
               t.EffectExtremity,
             ).SetActorHiddenInGame(!0),
           (e = l.get(2)) &&
-            e.length > 0 &&
+            0 < e.length &&
             ((l = this.BulletInfo.Actor),
             (t.EffectBlock =
               BulletStaticFunction_1.BulletStaticFunction.PlayBulletEffect(
@@ -54,12 +54,12 @@ class BulletActionUpdateEffect extends BulletActionBase_1.BulletActionBase {
         : (this.IsFinish = !0);
   }
   W5o() {
-    let t;
-    let e;
-    let l;
-    let i;
-    let u;
-    let s = this.BulletInfo.ActorComponent;
+    var t,
+      e,
+      l,
+      i,
+      u,
+      s = this.BulletInfo.ActorComponent;
     s &&
       (this.BulletInfo.BulletDataMain.Render.HandOverParentEffect
         ? BulletStaticFunction_1.BulletStaticFunction.HandOverEffectsAfterInitTransform(
@@ -128,7 +128,7 @@ class BulletActionUpdateEffect extends BulletActionBase_1.BulletActionBase {
             BulletPool_1.BulletPool.RecycleVector(u))));
   }
   OnTick(t) {
-    let e, l;
+    var e, l;
     this.BulletInfo.NeedDestroy ||
       ((e = this.BulletInfo.EffectInfo),
       ((l = BulletPool_1.BulletPool.CreateVector()).X = 1),
@@ -167,4 +167,4 @@ class BulletActionUpdateEffect extends BulletActionBase_1.BulletActionBase {
   }
 }
 exports.BulletActionUpdateEffect = BulletActionUpdateEffect;
-// # sourceMappingURL=BulletActionUpdateEffect.js.map
+//# sourceMappingURL=BulletActionUpdateEffect.js.map

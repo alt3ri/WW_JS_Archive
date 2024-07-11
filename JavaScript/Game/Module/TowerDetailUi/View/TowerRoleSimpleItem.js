@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerRoleSimpleItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
 class TowerRoleSimpleItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super();
@@ -12,7 +12,7 @@ class TowerRoleSimpleItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.ComponentRegisterInfos = [[0, UE.UITexture]];
   }
   Refresh(e, r, t) {
-    let s;
+    var s;
     e
       ? (this.GetTexture(0).SetUIActive(!0),
         (s = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e)),
@@ -21,4 +21,4 @@ class TowerRoleSimpleItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.TowerRoleSimpleItem = TowerRoleSimpleItem;
-// # sourceMappingURL=TowerRoleSimpleItem.js.map
+//# sourceMappingURL=TowerRoleSimpleItem.js.map

@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const InputSettingsManager_1 = require("../../InputSettings/InputSettingsManager");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const InputDefine_1 = require("../Input/InputDefine");
-const InputMappingsDefine_1 = require("../InputDistribute/InputMappingsDefine");
-const UiViewStorage_1 = require("../UiViewStorage");
-const UiLayerType_1 = require("./UiLayerType");
-const UiViewInfo_1 = require("./UiViewInfo");
+const Log_1 = require("../../../Core/Common/Log"),
+  InputSettingsManager_1 = require("../../InputSettings/InputSettingsManager"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  InputDefine_1 = require("../Input/InputDefine"),
+  InputMappingsDefine_1 = require("../InputDistribute/InputMappingsDefine"),
+  UiViewStorage_1 = require("../UiViewStorage"),
+  UiLayerType_1 = require("./UiLayerType"),
+  UiViewInfo_1 = require("./UiViewInfo");
 class UiConfig {
   static TryGetViewInfo(n) {
     let r = UiConfig.ecr.get(n);
     if (!r) {
-      const o = ConfigManager_1.ConfigManager.UiViewConfig.GetUiShowConfig(n);
-      const a = UiViewStorage_1.UiViewStorage.GetUiTsInfo(n);
+      var o = ConfigManager_1.ConfigManager.UiViewConfig.GetUiShowConfig(n),
+        a = UiViewStorage_1.UiViewStorage.GetUiTsInfo(n);
       if (!a)
         return void (
           Log_1.Log.CheckError() &&
@@ -25,14 +25,14 @@ class UiConfig {
             ["name", n],
           )
         );
-      let t = a.ResourceId;
-      let e = "";
-      let i = "";
+      var t = a.ResourceId;
+      let e = "",
+        i = "";
       if (this.tcr(n))
         (e = ConfigManager_1.ConfigManager.CommonConfig.GetDebugGmViewPath(n)),
           (i = e);
       else {
-        const g =
+        var g =
           ConfigManager_1.ConfigManager.UiResourceConfig.GetResourceConfig(t);
         if (!g)
           return void (
@@ -47,15 +47,16 @@ class UiConfig {
           );
         (e = g.Path), (i = g.PcPath);
       }
-      const f = [];
+      var f = [];
       if (o.SkipAnim)
         if (o.IsShortKeysExitView) {
-          for (const [u, p] of InputDefine_1.openViewActionsMap.entries())
+          for (var [u, p] of InputDefine_1.openViewActionsMap.entries())
             if (n === p) {
               if (
+                "Escape" ===
                 InputSettingsManager_1.InputSettingsManager.GetActionBinding(u)
                   ?.GetPcKey()
-                  ?.GetKeyName() === "Escape"
+                  ?.GetKeyName()
               )
                 break;
               f.push(u);
@@ -104,9 +105,9 @@ class UiConfig {
     return r;
   }
   static tcr(e) {
-    return e === "GmView" || e === "LoginDebugView";
+    return "GmView" === e || "LoginDebugView" === e;
   }
 }
 ((exports.UiConfig = UiConfig).ecr = new Map()),
   (UiConfig.CanOpenWhileClearSceneViewNameSet = new Set(["LoadingView"]));
-// # sourceMappingURL=UiConfig.js.map
+//# sourceMappingURL=UiConfig.js.map

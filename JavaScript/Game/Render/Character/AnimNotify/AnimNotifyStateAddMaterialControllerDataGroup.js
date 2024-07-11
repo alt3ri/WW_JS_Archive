@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const materialControllerStateHandleMap = new Map();
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  materialControllerStateHandleMap = new Map();
 class AnimNotifyStateAddMaterialControllerDataGroup extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.MaterialAssetData = void 0);
@@ -17,7 +17,7 @@ class AnimNotifyStateAddMaterialControllerDataGroup extends UE.KuroAnimNotifySta
         (a = e.CharRenderingComponent.AddMaterialControllerDataGroup(
           this.MaterialAssetData,
         ))),
-      a >= 0)
+      0 <= a)
     ) {
       let e = materialControllerStateHandleMap.get(t);
       return (
@@ -29,14 +29,14 @@ class AnimNotifyStateAddMaterialControllerDataGroup extends UE.KuroAnimNotifySta
     return !1;
   }
   K2_NotifyEnd(e, t) {
-    let r = materialControllerStateHandleMap.get(e);
+    var r = materialControllerStateHandleMap.get(e);
     if (!r) return !0;
-    const a = r.get(this);
+    var a = r.get(this);
     if (!a) return !0;
     if (
       (r.delete(this),
       r.size || materialControllerStateHandleMap.delete(e),
-      a >= 0)
+      0 <= a)
     ) {
       r = e.GetOwner();
       if (r instanceof UE.TsBaseCharacter_C)
@@ -92,11 +92,11 @@ class AnimNotifyStateAddMaterialControllerDataGroup extends UE.KuroAnimNotifySta
         !1);
   }
   GetNotifyName() {
-    const e = this.MaterialAssetData.GetName();
+    var e = this.MaterialAssetData.GetName();
     return e
       ? "材质控制器组:" + UE.BlueprintPathsLibrary.GetBaseFilename(e, !0)
       : "材质控制器组";
   }
 }
 exports.default = AnimNotifyStateAddMaterialControllerDataGroup;
-// # sourceMappingURL=AnimNotifyStateAddMaterialControllerDataGroup.js.map
+//# sourceMappingURL=AnimNotifyStateAddMaterialControllerDataGroup.js.map

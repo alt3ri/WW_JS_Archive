@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceCreateWordItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const AdviceCreateWordBtnItem_1 = require("./AdviceCreateWordBtnItem");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  AdviceCreateWordBtnItem_1 = require("./AdviceCreateWordBtnItem");
 class AdviceCreateWordItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -32,20 +32,20 @@ class AdviceCreateWordItem extends UiPanelBase_1.UiPanelBase {
   }
   k9e() {
     for (let t = 0; t < 2; t++) {
-      const e = LguiUtil_1.LguiUtil.CopyItem(this.GetText(0), this.RootItem);
+      var e = LguiUtil_1.LguiUtil.CopyItem(this.GetText(0), this.RootItem);
       this.G9e.push(e);
     }
   }
   F9e() {
-    var t = this.GetItem(1);
-    var t = LguiUtil_1.LguiUtil.CopyItem(t, this.RootItem);
-    var t = new AdviceCreateWordBtnItem_1.AdviceCreateWordBtnItem(t);
+    var t = this.GetItem(1),
+      t = LguiUtil_1.LguiUtil.CopyItem(t, this.RootItem),
+      t = new AdviceCreateWordBtnItem_1.AdviceCreateWordBtnItem(t);
     (this.N9e = t), this.N9e.SetType(1);
   }
   V9e() {
-    var t = this.GetItem(1);
-    var t = LguiUtil_1.LguiUtil.CopyItem(t, this.RootItem);
-    var t = new AdviceCreateWordBtnItem_1.AdviceCreateWordBtnItem(t);
+    var t = this.GetItem(1),
+      t = LguiUtil_1.LguiUtil.CopyItem(t, this.RootItem),
+      t = new AdviceCreateWordBtnItem_1.AdviceCreateWordBtnItem(t);
     (this.O9e = t), this.O9e.SetType(0);
   }
   SetIndex(t) {
@@ -65,16 +65,15 @@ class AdviceCreateWordItem extends UiPanelBase_1.UiPanelBase {
       this.O9e.GetRootItem().SetUIActive(!1);
   }
   q9e() {
-    const t =
-      ModelManager_1.ModelManager.AdviceModel.CurrentSentenceWordMap.get(
-        this.Xy,
-      );
+    var t = ModelManager_1.ModelManager.AdviceModel.CurrentSentenceWordMap.get(
+      this.Xy,
+    );
     if (!(t <= 0)) {
-      this.Xy > 0 &&
+      0 < this.Xy &&
         (this.N9e.GetRootItem().SetUIParent(this.RootItem),
         this.N9e.GetRootItem().SetUIActive(!0),
         this.N9e.RefreshView());
-      const e =
+      var e =
         ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceSentenceText(
           t,
         ).split("{}");
@@ -90,4 +89,4 @@ class AdviceCreateWordItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.AdviceCreateWordItem = AdviceCreateWordItem;
-// # sourceMappingURL=AdviceCreateWordItem.js.map
+//# sourceMappingURL=AdviceCreateWordItem.js.map

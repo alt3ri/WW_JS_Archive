@@ -2,14 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonEntranceConfig = exports.EInstanceEntranceFlowType =
     void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const InstanceDungeonEntranceAll_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonEntranceAll");
-const InstanceDungeonEntranceById_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonEntranceById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const InstanceDungeonEntranceFlowNormal_1 = require("./Define/InstanceDungeonEntranceFlowNormal");
-const InstanceDungeonEntranceFlowRoguelike_1 = require("./Define/InstanceDungeonEntranceFlowRoguelike");
-const InstanceDungeonEntranceFlowSkipEditFormation_1 = require("./Define/InstanceDungeonEntranceFlowSkipEditFormation");
-let EInstanceEntranceFlowType;
+const Log_1 = require("../../../Core/Common/Log"),
+  InstanceDungeonEntranceAll_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonEntranceAll"),
+  InstanceDungeonEntranceById_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonEntranceById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  InstanceDungeonEntranceFlowNormal_1 = require("./Define/InstanceDungeonEntranceFlowNormal"),
+  InstanceDungeonEntranceFlowRoguelike_1 = require("./Define/InstanceDungeonEntranceFlowRoguelike"),
+  InstanceDungeonEntranceFlowSkipEditFormation_1 = require("./Define/InstanceDungeonEntranceFlowSkipEditFormation");
+var EInstanceEntranceFlowType;
 !(function (n) {
   (n[(n.Normal = 1)] = "Normal"),
     (n[(n.SkipEditFormation = 2)] = "SkipEditFormation"),
@@ -45,7 +45,7 @@ class InstanceDungeonEntranceConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetConfig(n) {
-    const e =
+    var e =
       InstanceDungeonEntranceById_1.configInstanceDungeonEntranceById.GetConfig(
         n,
       );
@@ -88,7 +88,7 @@ class InstanceDungeonEntranceConfig extends ConfigBase_1.ConfigBase {
     return this.lai.get(n) ?? 0;
   }
   CheckMarkIdLinkDungeonEntrance(n) {
-    return this.GetEntranceIdByMarkId(n) > 0;
+    return 0 < this.GetEntranceIdByMarkId(n);
   }
   CheckMarkIdIsTowerEntrance(n) {
     var n = this.lai.get(n);
@@ -108,4 +108,4 @@ class InstanceDungeonEntranceConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.InstanceDungeonEntranceConfig = InstanceDungeonEntranceConfig;
-// # sourceMappingURL=InstanceDungeonEntranceConfig.js.map
+//# sourceMappingURL=InstanceDungeonEntranceConfig.js.map

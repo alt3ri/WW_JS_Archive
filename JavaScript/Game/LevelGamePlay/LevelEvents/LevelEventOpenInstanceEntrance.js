@@ -6,4 +6,4 @@ class LevelEventOpenInstanceEntrance extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, n) {}
 }
 exports.LevelEventOpenInstanceEntrance = LevelEventOpenInstanceEntrance;
-// # sourceMappingURL=LevelEventOpenInstanceEntrance.js.map
+//# sourceMappingURL=LevelEventOpenInstanceEntrance.js.map

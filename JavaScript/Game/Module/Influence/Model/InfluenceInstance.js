@@ -19,7 +19,7 @@ class InfluenceInstance {
     this.Qri = e;
   }
   GetCanReceiveReward() {
-    const e = ConfigManager_1.ConfigManager.InfluenceConfig.GetInfluenceConfig(
+    var e = ConfigManager_1.ConfigManager.InfluenceConfig.GetInfluenceConfig(
       this.Id,
     );
     return e.ReputationReward.length === this.RewardIndex + 1
@@ -33,4 +33,4 @@ class InfluenceInstance {
   }
 }
 exports.InfluenceInstance = InfluenceInstance;
-// # sourceMappingURL=InfluenceInstance.js.map
+//# sourceMappingURL=InfluenceInstance.js.map

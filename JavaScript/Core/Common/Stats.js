@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.statDecorator = exports.Stat = void 0);
-const UE = require("ue");
-const CycleCounter_1 = require("../Performance/CycleCounter");
-const Macro_1 = require("../Preprocessor/Macro");
-const Log_1 = require("./Log");
+const UE = require("ue"),
+  CycleCounter_1 = require("../Performance/CycleCounter"),
+  Macro_1 = require("../Preprocessor/Macro"),
+  Log_1 = require("./Log");
 class Stat {
   constructor(t, r) {
     (this.Name = t),
@@ -18,7 +18,7 @@ class Stat {
   }
   static CreateStatOfType(t, r, e, a) {
     if (!Stat.Enable) return Stat.y9;
-    if (!r || r.length === 0)
+    if (!r || 0 === r.length)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("Stat", 1, "统计创建失败，名字为空"),
@@ -29,7 +29,7 @@ class Stat {
       (Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Stat", 31, "名字过长", ["name", r]),
       (o = r.substring(0, Stat.I9)));
-    const s = new Stat(o, e);
+    var s = new Stat(o, e);
     switch (((s.S9 = t), (s.ac = 2), t)) {
       case 1:
         s.E9 = UE.KuroJsStatsLibrary.CreateCycleCounter(o, e, a);
@@ -83,4 +83,4 @@ function statDecorator(o) {
   (Stat.V8 = { stack: void 0 }),
   Log_1.Log.InitStat(Stat),
   (exports.statDecorator = statDecorator);
-// # sourceMappingURL=Stats.js.map
+//# sourceMappingURL=Stats.js.map

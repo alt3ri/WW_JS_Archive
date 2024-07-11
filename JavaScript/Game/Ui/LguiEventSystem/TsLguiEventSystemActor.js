@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TsLguiEventSystemActor = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Global_1 = require("../../../Game/Global");
-const ModelManager_1 = require("../../../Game/Manager/ModelManager");
-const CursorController_1 = require("../../../Game/Module/Cursor/CursorController");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Global_1 = require("../../../Game/Global"),
+  ModelManager_1 = require("../../../Game/Manager/ModelManager"),
+  CursorController_1 = require("../../../Game/Module/Cursor/CursorController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem");
 class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
   constructor() {
     super(...arguments),
@@ -20,7 +20,7 @@ class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
   }
   InitializeLguiEventSystemActor() {
     this.RefreshCurrentInputModule();
-    const t = (0, puerts_1.toManualReleaseDelegate)(
+    var t = (0, puerts_1.toManualReleaseDelegate)(
       TsLguiEventSystemActor.ChangeController,
     );
     (this.HandleWrapper =
@@ -55,7 +55,7 @@ class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
     );
   }
   InputTrigger(t, e) {
-    let s;
+    var s;
     ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
       ((s = Global_1.Global.CharacterController) &&
         s.bShowMouseCursor &&
@@ -73,8 +73,8 @@ class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
   InputScroll(t) {
     this.StandaloneInputModule.InputScroll(t),
       ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
-        (t !== 0 &&
-          (t = this.GetPointerEventData(0, !0)).inputType !== 0 &&
+        (0 !== t &&
+          0 !== (t = this.GetPointerEventData(0, !0)).inputType &&
           ((t.inputType = 0),
           TsLguiEventSystemActor.ChangeController(t.inputType)));
   }
@@ -123,7 +123,7 @@ class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
     this.StandaloneInputModule.SetIsForceChange(t);
   }
   SetPrevMousePosition(t, e) {
-    const s = this.GetPointerEventData(0, !0);
+    var s = this.GetPointerEventData(0, !0);
     s && (s.prevMousePos = new UE.Vector2D(t, e));
   }
   SetCurrentInputKeyType(t) {
@@ -156,7 +156,7 @@ class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
 ((exports.TsLguiEventSystemActor = TsLguiEventSystemActor).ChangeController = (
   t,
 ) => {
-  t === 0 &&
+  0 === t &&
     ModelManager_1.ModelManager.PlatformModel.SwitchInputControllerType(0, 3),
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.PointerInputTypeChange,
@@ -164,4 +164,4 @@ class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
     );
 }),
   (exports.default = TsLguiEventSystemActor);
-// # sourceMappingURL=TsLguiEventSystemActor.js.map
+//# sourceMappingURL=TsLguiEventSystemActor.js.map

@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InfluenceReputationController = void 0);
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../Core/Net/Net");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ItemRewardController_1 = require("../../ItemReward/ItemRewardController");
-const RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ItemRewardController_1 = require("../../ItemReward/ItemRewardController"),
+  RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class InfluenceReputationController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -31,7 +31,7 @@ class InfluenceReputationController extends UiControllerBase_1.UiControllerBase 
     Net_1.Net.UnRegister(23256);
   }
   static RequestInfluenceReward(e) {
-    const t = Protocol_1.Aki.Protocol.Aes.create();
+    var t = Protocol_1.Aki.Protocol.Aes.create();
     (t.w5n = e),
       Net_1.Net.Call(26578, t, (e) => {
         e.Kms !== Protocol_1.Aki.Protocol.lkn.Sys
@@ -50,11 +50,11 @@ class InfluenceReputationController extends UiControllerBase_1.UiControllerBase 
       });
   }
   static Wri(e) {
-    const t = [];
+    var t = [];
     for (const o of Object.keys(e)) {
-      var n = Number.parseInt(o);
-      const r = e[o];
-      var n = new RewardItemData_1.RewardItemData(n, r);
+      var n = Number.parseInt(o),
+        r = e[o],
+        n = new RewardItemData_1.RewardItemData(n, r);
       t.push(n);
     }
     ItemRewardController_1.ItemRewardController.OpenCommonRewardView(1009, t);
@@ -80,7 +80,7 @@ class InfluenceReputationController extends UiControllerBase_1.UiControllerBase 
   ModelManager_1.ModelManager.InfluenceReputationModel.SetInfluenceInfoList(e);
 }),
   (InfluenceReputationController.RequestInfluenceInfo = () => {
-    const e = Protocol_1.Aki.Protocol.Les.create();
+    var e = Protocol_1.Aki.Protocol.Les.create();
     Net_1.Net.Call(10411, e, (e) => {
       e = e.VRs;
       ModelManager_1.ModelManager.InfluenceReputationModel.SetInfluenceInfoList(
@@ -90,4 +90,4 @@ class InfluenceReputationController extends UiControllerBase_1.UiControllerBase 
   }),
   (InfluenceReputationController.V4e = (e) =>
     ModelManager_1.ModelManager.FunctionModel.IsOpen(10029));
-// # sourceMappingURL=InfluenceReputationController.js.map
+//# sourceMappingURL=InfluenceReputationController.js.map

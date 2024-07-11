@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulableCastToOutletState = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const SceneItemManipulableCastState_1 = require("./SceneItemManipulableCastState");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  SceneItemManipulableCastState_1 = require("./SceneItemManipulableCastState");
 class SceneItemManipulableCastToOutletState extends SceneItemManipulableCastState_1.SceneItemManipulableCastState {
   constructor(t, i) {
     super(t, i), (this.F7o = void 0), (this.StateType = "BeCastingToOutlet");
@@ -47,11 +47,11 @@ class SceneItemManipulableCastToOutletState extends SceneItemManipulableCastStat
     super.OnExit(), (this.F7o = void 0), this.SceneItem.StopSequence();
   }
   T_e(t) {
-    var t = UE.KismetMathLibrary.Ease(0, 1, t, 7);
-    const i = this.SceneItem.TargetOutletComponent.GetSocketRotator(
-      this.SceneItem.Entity,
-    );
-    const s = Rotator_1.Rotator.Create();
+    var t = UE.KismetMathLibrary.Ease(0, 1, t, 7),
+      i = this.SceneItem.TargetOutletComponent.GetSocketRotator(
+        this.SceneItem.Entity,
+      ),
+      s = Rotator_1.Rotator.Create();
     Rotator_1.Rotator.Lerp(this.StartRot, i, t, s),
       this.SceneItem.ActorComp.SetActorRotation(
         s.ToUeRotator(),
@@ -60,7 +60,7 @@ class SceneItemManipulableCastToOutletState extends SceneItemManipulableCastStat
       );
   }
   kxe() {
-    (this.Timer < this.CastDuration && this.CastDuration > 0) ||
+    (this.Timer < this.CastDuration && 0 < this.CastDuration) ||
       this.SceneItem.PlayingMatchSequence ||
       (this.SceneItem.MatchSequence
         ? ((this.SceneItem.PlayingMatchSequence = !0),
@@ -73,7 +73,7 @@ class SceneItemManipulableCastToOutletState extends SceneItemManipulableCastStat
   enr() {
     (this.SceneItem.ActivatedOutlet = this.SceneItem.TargetOutletComponent),
       (this.SceneItem.ActivatedOutlet.EntityInSocket = this.SceneItem);
-    const t = this.SceneItem.TargetOutletComponent.Entity;
+    var t = this.SceneItem.TargetOutletComponent.Entity;
     this.SceneItem.ShouldPlayMismatchSequence(t)
       ? ((this.SceneItem.CastFreeState.NeedResetPhysicsMode = !1),
         (this.SceneItem.CurrentState = this.SceneItem.CastFreeState),
@@ -84,4 +84,4 @@ class SceneItemManipulableCastToOutletState extends SceneItemManipulableCastStat
 }
 exports.SceneItemManipulableCastToOutletState =
   SceneItemManipulableCastToOutletState;
-// # sourceMappingURL=SceneItemManipulableCastToOutletState.js.map
+//# sourceMappingURL=SceneItemManipulableCastToOutletState.js.map

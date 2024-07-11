@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputCombinationActionBinding = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const InputSettings_1 = require("../InputSettings");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  InputSettings_1 = require("../InputSettings");
 class InputCombinationActionBinding {
   constructor() {
     (this.hSe = new Map()),
@@ -22,7 +22,7 @@ class InputCombinationActionBinding {
   }
   AddKey(t, i) {
     this.uSe.set(t, i);
-    const e = InputSettings_1.InputSettings.GetKey(t);
+    var e = InputSettings_1.InputSettings.GetKey(t);
     e &&
       ((e.IsKeyboardKey || e.IsMouseButton) && this.hSe.set(t, i),
       e.IsGamepadKey) &&
@@ -32,10 +32,10 @@ class InputCombinationActionBinding {
     this.uSe.delete(t), this.hSe.delete(t), this.lSe.delete(t);
   }
   GetKeyMap(t) {
-    for (const [i, e] of this.uSe) t.set(i, e);
+    for (var [i, e] of this.uSe) t.set(i, e);
   }
   IsValid() {
-    return !!this.uSe && this.uSe.size > 0;
+    return !!this.uSe && 0 < this.uSe.size;
   }
   GetActionName() {
     return this.ZMe;
@@ -44,22 +44,22 @@ class InputCombinationActionBinding {
     return InputSettings_1.InputSettings.GetCombinationActionKeyMap(this.ZMe);
   }
   HasKeyboardCombinationAction() {
-    return !!this.hSe && this.hSe.size > 0;
+    return !!this.hSe && 0 < this.hSe.size;
   }
   HasGamepadCombinationAction() {
-    return !!this.lSe && this.lSe.size > 0;
+    return !!this.lSe && 0 < this.lSe.size;
   }
   GetSecondaryKeyValidTime() {
     return this.cSe;
   }
   GetPcKeyNameMap(t) {
-    for (const [i, e] of this.hSe) t.set(i, e);
+    for (var [i, e] of this.hSe) t.set(i, e);
   }
   GetGamepadKeyNameMap(t) {
-    for (const [i, e] of this.lSe) t.set(i, e);
+    for (var [i, e] of this.lSe) t.set(i, e);
   }
   GetCurrentPlatformKeyNameMap(t) {
-    const i = ModelManager_1.ModelManager.PlatformModel;
+    var i = ModelManager_1.ModelManager.PlatformModel;
     i.IsPc()
       ? this.GetPcKeyNameMap(t)
       : i.IsGamepad() && this.GetGamepadKeyNameMap(t);
@@ -69,4 +69,4 @@ class InputCombinationActionBinding {
   }
 }
 exports.InputCombinationActionBinding = InputCombinationActionBinding;
-// # sourceMappingURL=InputCombinationActionBinding.js.map
+//# sourceMappingURL=InputCombinationActionBinding.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FormationProperty = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const FloatRange_1 = require("./SubType/FloatRange");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  FloatRange_1 = require("./SubType/FloatRange");
 class FormationProperty {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -84,49 +84,49 @@ class FormationProperty {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   initvalue() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   initrecoveryrate() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : -500;
   }
   initmax() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 1e4;
   }
   GetMarktagAt(t) {
     return this.marktag(t);
   }
   marktag(t, r) {
-    const i = this.J7.__offset(this.z7, 12);
+    var i = this.J7.__offset(this.z7, 12);
     return i
       ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, r)
       : null;
   }
   marktagLength() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetResisttagAt(t) {
     return this.resisttag(t);
   }
   resisttag(t, r) {
-    const i = this.J7.__offset(this.z7, 14);
+    var i = this.J7.__offset(this.z7, 14);
     return i
       ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, r)
       : null;
   }
   resisttagLength() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   triggerrange1(t) {
-    const r = this.J7.__offset(this.z7, 16);
+    var r = this.J7.__offset(this.z7, 16);
     return r
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + r),
@@ -135,28 +135,28 @@ class FormationProperty {
       : null;
   }
   triggertype1() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   triggereffect1() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetTriggereffectparams1At(t) {
     return this.triggereffectparams1(t);
   }
   triggereffectparams1(t) {
-    const r = this.J7.__offset(this.z7, 22);
+    var r = this.J7.__offset(this.z7, 22);
     return r
       ? this.J7.readInt64(this.J7.__vector(this.z7 + r) + 8 * t)
       : BigInt(0);
   }
   triggereffectparams1Length() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   triggerrange2(t) {
-    const r = this.J7.__offset(this.z7, 24);
+    var r = this.J7.__offset(this.z7, 24);
     return r
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + r),
@@ -165,28 +165,28 @@ class FormationProperty {
       : null;
   }
   triggertype2() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   triggereffect2() {
-    const t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetTriggereffectparams2At(t) {
     return this.triggereffectparams2(t);
   }
   triggereffectparams2(t) {
-    const r = this.J7.__offset(this.z7, 30);
+    var r = this.J7.__offset(this.z7, 30);
     return r
       ? this.J7.readInt64(this.J7.__vector(this.z7 + r) + 8 * t)
       : BigInt(0);
   }
   triggereffectparams2Length() {
-    const t = this.J7.__offset(this.z7, 30);
+    var t = this.J7.__offset(this.z7, 30);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   triggerrange3(t) {
-    const r = this.J7.__offset(this.z7, 32);
+    var r = this.J7.__offset(this.z7, 32);
     return r
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + r),
@@ -195,26 +195,26 @@ class FormationProperty {
       : null;
   }
   triggertype3() {
-    const t = this.J7.__offset(this.z7, 34);
+    var t = this.J7.__offset(this.z7, 34);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   triggereffect3() {
-    const t = this.J7.__offset(this.z7, 36);
+    var t = this.J7.__offset(this.z7, 36);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetTriggereffectparams3At(t) {
     return this.triggereffectparams3(t);
   }
   triggereffectparams3(t) {
-    const r = this.J7.__offset(this.z7, 38);
+    var r = this.J7.__offset(this.z7, 38);
     return r
       ? this.J7.readInt64(this.J7.__vector(this.z7 + r) + 8 * t)
       : BigInt(0);
   }
   triggereffectparams3Length() {
-    const t = this.J7.__offset(this.z7, 38);
+    var t = this.J7.__offset(this.z7, 38);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.FormationProperty = FormationProperty;
-// # sourceMappingURL=FormationProperty.js.map
+//# sourceMappingURL=FormationProperty.js.map

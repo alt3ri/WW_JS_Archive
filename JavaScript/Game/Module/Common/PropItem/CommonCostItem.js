@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonCostItem = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class CommonCostItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -51,4 +51,4 @@ class CommonCostItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.CommonCostItem = CommonCostItem;
-// # sourceMappingURL=CommonCostItem.js.map
+//# sourceMappingURL=CommonCostItem.js.map

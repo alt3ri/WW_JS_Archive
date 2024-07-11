@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SortResultData = exports.SortViewData = void 0);
-const StringBuilder_1 = require("../../../../../../Core/Utils/StringBuilder");
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
+const StringBuilder_1 = require("../../../../../../Core/Utils/StringBuilder"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager");
 class SortViewData {
   constructor(t, e) {
     (this.ConfigId = t), (this.ConfirmFunction = e);
@@ -35,8 +35,8 @@ class SortResultData {
     return this.dRt;
   }
   GetAllSelectRuleSet() {
-    const t = new Set();
-    const e = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne);
+    var t = new Set(),
+      e = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne);
     for (const r of e.FrontSortList) t.add(r);
     if ((t.add(this.cRt[0]), this.mRt))
       for (const s of this.mRt.keys()) t.add(s);
@@ -44,11 +44,11 @@ class SortResultData {
     return t;
   }
   ShowAllSortContent() {
-    const t = new StringBuilder_1.StringBuilder();
+    var t = new StringBuilder_1.StringBuilder();
     if ((t.Append(this.cRt[1]), t.Append(","), this.mRt))
       for (const e of this.mRt.values()) t.Append(e), t.Append(",");
     return t.RemoveLast(1), t.ToString();
   }
 }
 exports.SortResultData = SortResultData;
-// # sourceMappingURL=SortViewData.js.map
+//# sourceMappingURL=SortViewData.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HotFixPopupUiView = void 0);
-const LaunchComponentsAction_1 = require("../LaunchComponentsAction");
-const HotFixBtnUiItem_1 = require("./HotFixBtnUiItem");
-const HotFixManager_1 = require("./HotFixManager");
+const LaunchComponentsAction_1 = require("../LaunchComponentsAction"),
+  HotFixBtnUiItem_1 = require("./HotFixBtnUiItem"),
+  HotFixManager_1 = require("./HotFixManager");
 class HotFixPopupUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
   OnStart() {
     this.AttachElement(5, HotFixBtnUiItem_1.HotFixBtnUiItem),
@@ -52,4 +52,4 @@ class HotFixPopupUiView extends LaunchComponentsAction_1.LaunchComponentsAction 
   }
 }
 exports.HotFixPopupUiView = HotFixPopupUiView;
-// # sourceMappingURL=HotFixPopupUiView.js.map
+//# sourceMappingURL=HotFixPopupUiView.js.map

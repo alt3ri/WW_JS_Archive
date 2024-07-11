@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const EntitySystem_1 = require("../../Core/Entity/EntitySystem");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const BlackboardController_1 = require("../World/Controller/BlackboardController");
+const UE = require("ue"),
+  EntitySystem_1 = require("../../Core/Entity/EntitySystem"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  BlackboardController_1 = require("../World/Controller/BlackboardController");
 class AddLocationBlackboardParams {
   constructor() {
     (this.TotalDuration = -0),
@@ -12,9 +12,9 @@ class AddLocationBlackboardParams {
       (this.RunTime = -0);
   }
 }
-const paramsPool = new Array();
-const paramsMaps = new Map();
-const tmpVector = Vector_1.Vector.Create();
+const paramsPool = new Array(),
+  paramsMaps = new Map(),
+  tmpVector = Vector_1.Vector.Create();
 class TsAnimNotifyStateAddLocationBlackboard extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -24,14 +24,14 @@ class TsAnimNotifyStateAddLocationBlackboard extends UE.KuroAnimNotifyState {
       (this.黑板类型 = 0);
   }
   K2_NotifyBegin(r, t, a) {
-    const e = r.GetOwner();
+    var e = r.GetOwner();
     if (!(e instanceof TsBaseCharacter_1.default)) return !1;
-    const s = e.CharacterActorComponent.Entity.Id;
+    var s = e.CharacterActorComponent.Entity.Id;
     if (!this.AddLocationKey) return !1;
     let o = paramsMaps.get(this.AddLocationKey);
     o || ((o = new Map()), paramsMaps.set(this.AddLocationKey, o));
-    const i =
-      paramsPool.length > 0
+    var i =
+      0 < paramsPool.length
         ? paramsPool.pop()
         : new AddLocationBlackboardParams();
     switch (((i.TotalDuration = a), (i.RunTime = 0), this.黑板类型)) {
@@ -60,7 +60,7 @@ class TsAnimNotifyStateAddLocationBlackboard extends UE.KuroAnimNotifyState {
         let r = void 0;
         if (
           !(r =
-            this.黑板类型 === 2
+            2 === this.黑板类型
               ? BlackboardController_1.BlackboardController.GetEntityIdByEntity(
                   s,
                   this.AddLocationKey,
@@ -95,9 +95,9 @@ class TsAnimNotifyStateAddLocationBlackboard extends UE.KuroAnimNotifyState {
   K2_NotifyTick(t, r, a) {
     t = t.GetOwner();
     if (!(t instanceof TsBaseCharacter_1.default)) return !1;
-    var t = t.CharacterActorComponent.Entity;
-    let e = t.Id;
-    let s = paramsMaps.get(this.AddLocationKey);
+    var t = t.CharacterActorComponent.Entity,
+      e = t.Id,
+      s = paramsMaps.get(this.AddLocationKey);
     if (!s) return !1;
     s = s.get(e);
     if (!s) return !1;
@@ -116,9 +116,9 @@ class TsAnimNotifyStateAddLocationBlackboard extends UE.KuroAnimNotifyState {
     return !0;
   }
   K2_NotifyEnd(r, t) {
-    let a;
-    let e;
-    var r = r.GetOwner();
+    var a,
+      e,
+      r = r.GetOwner();
     return (
       r instanceof TsBaseCharacter_1.default &&
       !!(a = paramsMaps.get(this.AddLocationKey)) &&
@@ -132,4 +132,4 @@ class TsAnimNotifyStateAddLocationBlackboard extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateAddLocationBlackboard;
-// # sourceMappingURL=TsAnimNotifyStateAddLocationBlackboard.js.map
+//# sourceMappingURL=TsAnimNotifyStateAddLocationBlackboard.js.map

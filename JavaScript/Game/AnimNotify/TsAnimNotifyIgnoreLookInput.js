@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Global_1 = require("../Global");
+const UE = require("ue"),
+  Global_1 = require("../Global");
 class TsAnimNotifyIgnoreLookInput extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.bIgnoreLookInput = !1);
   }
   K2_Notify(e, t) {
-    const o = Global_1.Global.CharacterController;
+    var o = Global_1.Global.CharacterController;
     return (
       o?.IsValid() &&
         o.IsLookInputIgnored() !== this.bIgnoreLookInput &&
@@ -20,4 +20,4 @@ class TsAnimNotifyIgnoreLookInput extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifyIgnoreLookInput;
-// # sourceMappingURL=TsAnimNotifyIgnoreLookInput.js.map
+//# sourceMappingURL=TsAnimNotifyIgnoreLookInput.js.map

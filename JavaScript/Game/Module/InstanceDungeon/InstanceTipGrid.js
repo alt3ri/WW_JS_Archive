@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceTipGrid = void 0);
-const ue_1 = require("ue");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ActivityDoubleRewardController_1 = require("../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController");
-const CommonItemSmallItemGrid_1 = require("../Common/ItemGrid/CommonItemSmallItemGrid");
-const GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../Util/LguiUtil");
+const ue_1 = require("ue"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ActivityDoubleRewardController_1 = require("../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController"),
+  CommonItemSmallItemGrid_1 = require("../Common/ItemGrid/CommonItemSmallItemGrid"),
+  GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../Util/LguiUtil");
 class InstanceTipGrid extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -42,28 +42,28 @@ class InstanceTipGrid extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Yhi() {
     var t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-      this.NUe,
-    );
-    var t =
-      ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetDungeonUpActivity(
-        t.CustomTypes,
-      );
-    const i =
-      (this.GetItem(4).SetUIActive(void 0 !== t),
-      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetInstanceRewardId(
         this.NUe,
-      ));
-    var t =
-      ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardPreviewRewardList(
-        i,
-      );
-    const e =
-      ((this.sOe = t),
-      (this.a1i = this.sOe && this.sOe.length > 0),
-      this.GetItem(2).GetOwner());
-    const r = this.GetItem(1);
+      ),
+      t =
+        ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetDungeonUpActivity(
+          t.CustomTypes,
+        ),
+      i =
+        (this.GetItem(4).SetUIActive(void 0 !== t),
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetInstanceRewardId(
+          this.NUe,
+        )),
+      t =
+        ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardPreviewRewardList(
+          i,
+        ),
+      e =
+        ((this.sOe = t),
+        (this.a1i = this.sOe && 0 < this.sOe.length),
+        this.GetItem(2).GetOwner()),
+      r = this.GetItem(1);
     let s = 0;
-    const o = ModelManager_1.ModelManager.ExchangeRewardModel.IsFinishInstance(
+    var o = ModelManager_1.ModelManager.ExchangeRewardModel.IsFinishInstance(
       this.NUe,
     );
     for (const a of this.sOe) {
@@ -86,11 +86,11 @@ class InstanceTipGrid extends GridProxyAbstract_1.GridProxyAbstract {
     this.RootItem.SetUIActive(this.a1i && this.s1i);
   }
   _1i() {
-    const t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+    var t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
       this.NUe,
     );
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), t.MapName);
   }
 }
 exports.InstanceTipGrid = InstanceTipGrid;
-// # sourceMappingURL=InstanceTipGrid.js.map
+//# sourceMappingURL=InstanceTipGrid.js.map

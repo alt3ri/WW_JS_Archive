@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OpenSystemInformationView = void 0);
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const InfoDisplayController_1 = require("../../../Module/InfoDisplay/InfoDisplayController");
-const OpenSystemBase_1 = require("./OpenSystemBase");
+const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  InfoDisplayController_1 = require("../../../Module/InfoDisplay/InfoDisplayController"),
+  OpenSystemBase_1 = require("./OpenSystemBase");
 class OpenSystemInformationView extends OpenSystemBase_1.OpenSystemBase {
   async ExecuteOpenView(e, o) {
     if (!e.BoardId) return !1;
@@ -25,16 +25,16 @@ class OpenSystemInformationView extends OpenSystemBase_1.OpenSystemBase {
         e.BoardId,
       );
     return (
-      e === 1
+      1 === e
         ? (o = "InfoDisplayTypeOneView")
-        : e === 2
+        : 2 === e
           ? (o = "InfoDisplayTypeTwoView")
-          : e === 3
+          : 3 === e
             ? (o = "InfoDisplayTypeThreeView")
-            : e === 4 && (o = "InfoDisplayTypeFourView"),
+            : 4 === e && (o = "InfoDisplayTypeFourView"),
       o
     );
   }
 }
 exports.OpenSystemInformationView = OpenSystemInformationView;
-// # sourceMappingURL=OpenSystemInformationView.js.map
+//# sourceMappingURL=OpenSystemInformationView.js.map

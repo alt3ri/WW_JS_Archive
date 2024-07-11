@@ -11,11 +11,11 @@ class HudEntitySet {
     (this.iii.length = 0), this.oii.clear();
   }
   Add(t) {
-    const i = new HudEntityData_1.HudEntityData();
+    var i = new HudEntityData_1.HudEntityData();
     return i.Initialize(t), this.oii.set(t.Id, i), this.iii.push(i), i;
   }
   Remove(t) {
-    let i = this.GetByEntity(t);
+    var i = this.GetByEntity(t);
     i &&
       (i.Destroy(),
       (i = this.iii.indexOf(i)),
@@ -36,4 +36,4 @@ class HudEntitySet {
   }
 }
 exports.HudEntitySet = HudEntitySet;
-// # sourceMappingURL=HudEntitySet.js.map
+//# sourceMappingURL=HudEntitySet.js.map

@@ -1,23 +1,23 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ErrorCodeController = void 0);
-const Cpp = require("cpp");
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const PackageConfigUtil_1 = require("../../Common/PackageConfigUtil");
-const PublicUtil_1 = require("../../Common/PublicUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
-const LoginModel_1 = require("../Login/LoginModel");
-const LogReportController_1 = require("../LogReport/LogReportController");
-const LogReportDefine_1 = require("../LogReport/LogReportDefine");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
+const Cpp = require("cpp"),
+  UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  PackageConfigUtil_1 = require("../../Common/PackageConfigUtil"),
+  PublicUtil_1 = require("../../Common/PublicUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  LoginModel_1 = require("../Login/LoginModel"),
+  LogReportController_1 = require("../LogReport/LogReportController"),
+  LogReportDefine_1 = require("../LogReport/LogReportDefine"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
 class MessageDecodeData extends LogReportDefine_1.CommonLogData {
   constructor() {
     super(),
@@ -58,20 +58,20 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
     Net_1.Net.UnRegister(7982), Net_1.Net.UnRegister(19534);
   }
   static OpenErrorCodeScrollingTipsView(r, o) {
-    const e = ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(r);
-    var r =
-      (r === Protocol_1.Aki.Protocol.lkn.Proto_PropRewardTips &&
-        ((r = o[0]),
-        (o[0] =
-          ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexLocalName(
-            Number(r),
-          ))),
-      ErrorCodeController.J4t(e, o));
+    var e = ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(r),
+      r =
+        (r === Protocol_1.Aki.Protocol.lkn.Proto_PropRewardTips &&
+          ((r = o[0]),
+          (o[0] =
+            ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexLocalName(
+              Number(r),
+            ))),
+        ErrorCodeController.J4t(e, o));
     ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(r);
   }
   static OpenErrorCodeTipView(r, o, e = void 0, t = !0, i = !0) {
-    let n = ConfigManager_1.ConfigManager.ErrorCodeConfig;
-    let l = n.GetTextByErrorId(r);
+    var n = ConfigManager_1.ConfigManager.ErrorCodeConfig,
+      l = n.GetTextByErrorId(r);
     let C = ErrorCodeController.J4t(l, e);
     (l = n.IsTipsOnly(r)),
       (n =
@@ -111,8 +111,8 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static LogOnlyErrorCode(r, o = void 0) {
-    const e = ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(r);
-    var r = `[${r}]:` + ErrorCodeController.J4t(e, o);
+    var e = ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(r),
+      r = `[${r}]:` + ErrorCodeController.J4t(e, o);
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "ErrorCode",
@@ -126,14 +126,14 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
     let e = r;
     if (o)
       for (let r = 0; r < o.length; r++) {
-        const t = o[r];
-        const i = `{${r}}`;
+        var t = o[r],
+          i = `{${r}}`;
         e = e.split(i).join(t);
       }
     return e;
   }
   static OpenLoginStatusCodeTipView(r) {
-    const o = ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(r);
+    var o = ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(r);
     ErrorCodeController.IsErrorCodeOpen && this.OpenConfirmBoxByText(o),
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -145,7 +145,7 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
         );
   }
   static OpenConfirmBoxByTextId(r) {
-    let o;
+    var o;
     ErrorCodeController.IsErrorCodeOpen &&
       ((r = ConfigManager_1.ConfigManager.TextConfig.GetTextById(r)),
       (o = new ConfirmBoxDefine_1.ConfirmBoxDataNew(33)).SetTextArgs(r),
@@ -163,7 +163,7 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
         "notify",
         r,
       ]);
-    const o = new MessageDecodeData();
+    var o = new MessageDecodeData();
     (o.s_channel_id = r.Z4n),
       (o.i_kcp_conv = r.tPs),
       (o.i_error_code = r.Kms),
@@ -179,8 +179,8 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
         "notify",
         r,
       ]);
-    const o = r.Fms;
-    var r = r.lkn;
+    var o = r.Fms,
+      r = r.lkn;
     ErrorCodeController.OpenErrorCodeScrollingTipsView(r, o);
   }),
   (ErrorCodeController.X4t = (r, o, e, t, i) => {
@@ -214,10 +214,10 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
           ));
   }),
   (ErrorCodeController.OpenConfirmBoxByText = (r) => {
-    const o = new ConfirmBoxDefine_1.ConfirmBoxDataNew(33);
+    var o = new ConfirmBoxDefine_1.ConfirmBoxDataNew(33);
     o.SetTextArgs(r),
       ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
         o,
       );
   });
-// # sourceMappingURL=ErrorCodeController.js.map
+//# sourceMappingURL=ErrorCodeController.js.map

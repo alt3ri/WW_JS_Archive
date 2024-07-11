@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcPerformIdleState = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../Core/Common/Time");
-const AiAlertById_1 = require("../../../../../Core/Define/ConfigQuery/AiAlertById");
-const AiSenseById_1 = require("../../../../../Core/Define/ConfigQuery/AiSenseById");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const StateBase_1 = require("../../../../../Core/Utils/StateMachine/StateBase");
-const IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent");
-const AiContollerLibrary_1 = require("../../../../AI/Controller/AiContollerLibrary");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const Global_1 = require("../../../../Global");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const CharacterActorComponent_1 = require("../../Common/Component/CharacterActorComponent");
-const IDLE_MONTAGE_CD_MIN = 2;
-const IDLE_MONTAGE_CD_MAX = 4;
-const INITIAL_IDLE_MONTAGE_CD_MIN = 0;
-const INITIAL_IDLE_MONTAGE_CD_MAX = 10;
-const IMMEDIATE_PLAY_PROBABILITY = 0.1;
-const ALERT_TURN_SPEED = 2e4;
+const Log_1 = require("../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  AiAlertById_1 = require("../../../../../Core/Define/ConfigQuery/AiAlertById"),
+  AiSenseById_1 = require("../../../../../Core/Define/ConfigQuery/AiSenseById"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  StateBase_1 = require("../../../../../Core/Utils/StateMachine/StateBase"),
+  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  AiContollerLibrary_1 = require("../../../../AI/Controller/AiContollerLibrary"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../../Global"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  CharacterActorComponent_1 = require("../../Common/Component/CharacterActorComponent"),
+  IDLE_MONTAGE_CD_MIN = 2,
+  IDLE_MONTAGE_CD_MAX = 4,
+  INITIAL_IDLE_MONTAGE_CD_MIN = 0,
+  INITIAL_IDLE_MONTAGE_CD_MAX = 10,
+  IMMEDIATE_PLAY_PROBABILITY = 0.1,
+  ALERT_TURN_SPEED = 2e4;
 class NpcPerformIdleState extends StateBase_1.StateBase {
   constructor() {
     super(...arguments),
@@ -69,7 +69,7 @@ class NpcPerformIdleState extends StateBase_1.StateBase {
       (this.per = void 0),
       (this.ver = !1),
       (this.OnLoopMontageEndForTurning = (t, i) => {
-        const s = this.Owner.Entity.GetComponent(0);
+        var s = this.Owner.Entity.GetComponent(0);
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "NPC",
@@ -84,7 +84,7 @@ class NpcPerformIdleState extends StateBase_1.StateBase {
         this.StateMachine.Switch(2);
       }),
       (this.Ser = () => {
-        let t, i;
+        var t, i;
         this.XZo && this.Eer(),
           this.Owner.Entity.GetComponent(168)?.PauseAi("StalkAlert"),
           (this.fer = !0),
@@ -168,7 +168,7 @@ class NpcPerformIdleState extends StateBase_1.StateBase {
             (this.WZo = Time_1.Time.WorldTimeSeconds)));
   }
   OnEnter(t) {
-    const i = this.Owner.Entity.GetComponent(168);
+    var i = this.Owner.Entity.GetComponent(168);
     i?.ResumeAi("NpcPerformIdleState"),
       this.Ore(),
       this.ner ||
@@ -223,7 +223,7 @@ class NpcPerformIdleState extends StateBase_1.StateBase {
       this.kre();
   }
   Rer() {
-    let t, i, s, e, h, r, n;
+    var t, i, s, e, h, r, n;
     this.aer &&
       !this._er &&
       ((this.her =
@@ -270,10 +270,10 @@ class NpcPerformIdleState extends StateBase_1.StateBase {
   Uer() {
     if (this.ler) {
       this.ler = !1;
-      const i = this.Owner.Entity.GetComponent(2);
+      var i = this.Owner.Entity.GetComponent(2);
       let t = void 0;
       (t =
-        i.CreatureData.GetSubEntityType() === 1
+        1 === i.CreatureData.GetSubEntityType()
           ? this.Owner.Entity.GetComponent(176)
           : this.Owner.Entity.GetComponent(160)),
         (this.i4s = 3),
@@ -281,11 +281,11 @@ class NpcPerformIdleState extends StateBase_1.StateBase {
     }
   }
   r4s() {
-    if (!(this.i4s <= 0) && --this.i4s == 0) {
-      const i = this.Owner.Entity.GetComponent(2);
+    if (!(this.i4s <= 0) && 0 == --this.i4s) {
+      var i = this.Owner.Entity.GetComponent(2);
       let t = void 0;
       (t =
-        i.CreatureData.GetSubEntityType() === 1
+        1 === i.CreatureData.GetSubEntityType()
           ? this.Owner.Entity.GetComponent(176)
           : this.Owner.Entity.GetComponent(
               160,
@@ -296,10 +296,10 @@ class NpcPerformIdleState extends StateBase_1.StateBase {
     if (!this.XZo) {
       let t = i;
       if (t) {
-        if (t === "Empty") return;
+        if ("Empty" === t) return;
       } else {
         i = this.Aer();
-        if (!i || !i.Montage || i.Montage === "" || i.Montage === "Empty")
+        if (!i || !i.Montage || "" === i.Montage || "Empty" === i.Montage)
           return;
         (t = i.Montage), (this.zZo = i.Time);
       }
@@ -324,10 +324,10 @@ class NpcPerformIdleState extends StateBase_1.StateBase {
     if (!this.XZo) {
       let t = i;
       if (t) {
-        if (t === "Empty") return;
+        if ("Empty" === t) return;
       } else {
         i = this.Aer();
-        if (!i || !i.Montage || i.Montage === "" || i.Montage === "Empty")
+        if (!i || !i.Montage || "" === i.Montage || "Empty" === i.Montage)
           return;
         (t = i.Montage), (this.zZo = i.Time);
       }
@@ -373,16 +373,16 @@ class NpcPerformIdleState extends StateBase_1.StateBase {
     }
   }
   Ier() {
-    let t;
-    let i;
-    const s = this.Owner.Entity.GetComponent(38);
+    var t,
+      i,
+      s = this.Owner.Entity.GetComponent(38);
     s?.IsEnabled() &&
       ((t = s.AiController?.AiBase?.SubBehaviorConfigs?.get("AiSense")) &&
         ((i = this.Owner.Entity.GetComponent(106)),
         (t = AiSenseById_1.configAiSenseById.GetConfig(Number(t)))) &&
         ((t = Math.max(t.SenseDistanceRange.Max, 0)),
         i.SetLogicRange(t),
-        (this.Cer = t > 0)),
+        (this.Cer = 0 < t)),
       (i = s.AiController?.AiBase?.SubBehaviorConfigs?.get("AiAlert"))) &&
       AiAlertById_1.configAiAlertById.GetConfig(Number(i)) &&
       (this.ger = !0);
@@ -455,16 +455,16 @@ class NpcPerformIdleState extends StateBase_1.StateBase {
   OnPlayerInteractTurnActionStart() {
     this.Owner.Entity.GetComponent(168)?.PauseAi("PlayerInteractTurnAction"),
       (this.ver = !0);
-    const t = this.Owner.Entity.GetComponent(0);
-    const i =
-      (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "NPC",
-          51,
-          "[NpcPerformIdleState.OnPlayerInteractTurnActionStart] 开始执行交互转身",
-          ["PbDataID", t?.GetPbDataId()],
-        ),
-      this.Owner?.Entity?.GetComponent(35));
+    var t = this.Owner.Entity.GetComponent(0),
+      i =
+        (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "NPC",
+            51,
+            "[NpcPerformIdleState.OnPlayerInteractTurnActionStart] 开始执行交互转身",
+            ["PbDataID", t?.GetPbDataId()],
+          ),
+        this.Owner?.Entity?.GetComponent(35));
     i?.MainAnimInstance?.IsAnyMontagePlaying() && this.uer.NeedTurn
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -483,8 +483,8 @@ class NpcPerformIdleState extends StateBase_1.StateBase {
       : this.uer.TurnToInteractTarget();
   }
   OnPlayerInteractTurnActionEnd() {
-    const t = this.Owner.Entity.GetComponent(0);
-    const i = this.Owner.Entity.GetComponent(35);
+    var t = this.Owner.Entity.GetComponent(0),
+      i = this.Owner.Entity.GetComponent(35);
     i.MainAnimInstance.IsAnyMontagePlaying() &&
       this.uer.NeedTurn &&
       (Log_1.Log.CheckInfo() &&
@@ -524,4 +524,4 @@ class NpcPerformIdleState extends StateBase_1.StateBase {
   }
 }
 exports.NpcPerformIdleState = NpcPerformIdleState;
-// # sourceMappingURL=NpcPerformIdleState.js.map
+//# sourceMappingURL=NpcPerformIdleState.js.map

@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivitySubViewLongShan = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const LongShanStageById_1 = require("../../../../../Core/Define/ConfigQuery/LongShanStageById");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase");
-const ActivitySubViewGeneralInfo_1 = require("../../View/SubView/ActivitySubViewGeneralInfo");
-const ActivityLongShanController_1 = require("./ActivityLongShanController");
-const LongShanStageItem_1 = require("./LongShanStageItem");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  LongShanStageById_1 = require("../../../../../Core/Define/ConfigQuery/LongShanStageById"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase"),
+  ActivitySubViewGeneralInfo_1 = require("../../View/SubView/ActivitySubViewGeneralInfo"),
+  ActivityLongShanController_1 = require("./ActivityLongShanController"),
+  LongShanStageItem_1 = require("./LongShanStageItem");
 class ActivitySubViewLongShan extends ActivitySubViewBase_1.ActivitySubViewBase {
   constructor() {
     super(...arguments),
@@ -30,9 +30,10 @@ class ActivitySubViewLongShan extends ActivitySubViewBase_1.ActivitySubViewBase 
           t.RefreshState();
         }),
           this.GetButton(3).RootUIComp.SetUIActive(
-            this.ActivityBaseData.StageIds.findIndex(
-              (t) => void 0 === this.ActivityBaseData.GetStageInfoById(t),
-            ) >= 0,
+            0 <=
+              this.ActivityBaseData.StageIds.findIndex(
+                (t) => void 0 === this.ActivityBaseData.GetStageInfoById(t),
+              ),
           ),
           this.BNe();
       }),
@@ -41,8 +42,7 @@ class ActivitySubViewLongShan extends ActivitySubViewBase_1.ActivitySubViewBase 
           let t = void 0;
           for (const i of this.ActivityBaseData.StageIds)
             if (!this.ActivityBaseData?.GetStageInfoById(i)) {
-              const e =
-                LongShanStageById_1.configLongShanStageById.GetConfig(i);
+              var e = LongShanStageById_1.configLongShanStageById.GetConfig(i);
               t = e?.QuestionId;
               break;
             }
@@ -79,12 +79,12 @@ class ActivitySubViewLongShan extends ActivitySubViewBase_1.ActivitySubViewBase 
       new ActivitySubViewGeneralInfo_1.ActivitySubViewGeneralInfo()),
       this.CommonInfoPanel.SetData(this.ActivityBaseData),
       this.AddChild(this.CommonInfoPanel);
-    const t = [
+    var t = [
       this.CommonInfoPanel.OnlyCreateByActorAsync(this.GetItem(2).GetOwner()),
     ];
     this.StageItems = [];
     for (const i of this.ActivityBaseData.StageIds) {
-      const e = new LongShanStageItem_1.LongShanStageItem(i);
+      var e = new LongShanStageItem_1.LongShanStageItem(i);
       (e.OnClickStageDetail = this.wOe),
         this.AddChild(e),
         t.push(
@@ -139,23 +139,23 @@ class ActivitySubViewLongShan extends ActivitySubViewBase_1.ActivitySubViewBase 
     this.PlaySubViewSequence(t ? "SwitchOut" : "SwitchIn", !0);
   }
   OnSequenceStart(t) {
-    t === "Start" || t === "SwitchOut"
+    "Start" === t || "SwitchOut" === t
       ? this.Bxn(!1)
-      : t === "SwitchIn" && this.Bxn(!0);
+      : "SwitchIn" === t && this.Bxn(!0);
   }
   Bxn(t) {
     if ((this.GetButton(3)?.SetSelfInteractive(t), this.StageItems))
       for (const e of this.StageItems) e.SetButtonInteractive(t);
   }
   FNe() {
-    const [t, e] = this.GetTimeVisibleAndRemainTime();
+    var [t, e] = this.GetTimeVisibleAndRemainTime();
     this.GetText(1).SetUIActive(t), t && this.GetText(1).SetText(e);
   }
   BNe() {
-    const t =
+    var t =
       ActivityLongShanController_1.ActivityLongShanController.GetActivityData().CheckAnyStageRed();
     this.CommonInfoPanel?.SetFunctionRedDotVisible(t);
   }
 }
 exports.ActivitySubViewLongShan = ActivitySubViewLongShan;
-// # sourceMappingURL=ActivitySubViewLongShan.js.map
+//# sourceMappingURL=ActivitySubViewLongShan.js.map

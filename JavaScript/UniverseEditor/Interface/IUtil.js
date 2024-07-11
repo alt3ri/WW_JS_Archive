@@ -6,7 +6,7 @@ function isGuid(e) {
   return e.endsWith("Guid");
 }
 function isActionId(e) {
-  return e === "ActionId";
+  return "ActionId" === e;
 }
 function entityDataIgnoreFunc(e) {
   return ignoreUnderScore(e) || isGuid(e) || isActionId(e);
@@ -22,14 +22,14 @@ function editorFieldIgnoreFunc(e) {
 }
 function deepEquals(r, o, t) {
   if (r !== o) {
-    const e = typeof r;
-    if (e !== typeof o) return !1;
+    var e = typeof r;
+    if (e != typeof o) return !1;
     if (
-      e != "object" ||
+      "object" != e ||
       void 0 === r ||
       void 0 === o ||
-      r === null ||
-      o === null
+      null === r ||
+      null === o
     )
       return !1;
     if (r instanceof Array) {
@@ -45,15 +45,15 @@ function deepEquals(r, o, t) {
   return !0;
 }
 function clearIgnoreField(r, o) {
-  if (!o || r === null) return r;
+  if (!o || null === r) return r;
   if (r instanceof Array) {
-    const t = [];
+    var t = [];
     for (let e = 0; e < r.length; e++) t[e] = clearIgnoreField(r[e], o);
     return t;
   }
-  if (typeof r !== "object") return r;
-  let e;
-  const n = {};
+  if ("object" != typeof r) return r;
+  var e,
+    n = {};
   for (const i in r)
     o(i) ? (n[i] = void 0) : ((e = r[i]), (n[i] = clearIgnoreField(e, o)));
   return n;
@@ -61,17 +61,17 @@ function clearIgnoreField(r, o) {
 function createDiff(e, r, o) {
   if (void 0 === r) return clearIgnoreField(e, o);
   if (void 0 === e) return null;
-  if (typeof e !== "object" || typeof r !== "object") return e;
+  if ("object" != typeof e || "object" != typeof r) return e;
   if (r instanceof Array)
     return r.length === e.length && deepEquals(r, e, o)
       ? void 0
       : clearIgnoreField(e, o);
   let t = 0;
-  let n;
-  let i;
-  let f;
-  let u;
-  const c = {};
+  var n,
+    i,
+    f,
+    u,
+    c = {};
   for (const l in e)
     o?.(l) ||
       (void 0 === r[l] && ((n = e[l]), (c[l] = clearIgnoreField(n, o)), t++));
@@ -80,16 +80,16 @@ function createDiff(e, r, o) {
       ((i = e[s]),
       (f = r[s]),
       void 0 !== i
-        ? (u = typeof i) === typeof f && u == "object"
+        ? (u = typeof i) == typeof f && "object" == u
           ? ((u = createDiff(i, f, o)), void 0 !== (c[s] = u) && t++)
           : i !== f && ((c[s] = clearIgnoreField(i, o)), t++)
         : ((c[s] = null), t++));
-  return t !== 0 ? c : void 0;
+  return 0 !== t ? c : void 0;
 }
 function containsNullField(e) {
   if (void 0 !== e) {
-    if (e === null) return !0;
-    if (typeof e === "object")
+    if (null === e) return !0;
+    if ("object" == typeof e)
       if (e instanceof Array) {
         for (const r of e) if (containsNullField(r)) return !0;
       } else for (const o in e) if (containsNullField(e[o])) return !0;
@@ -97,16 +97,16 @@ function containsNullField(e) {
   return !1;
 }
 function removeNullField(e) {
-  if (e != null) {
-    if (typeof e !== "object") return e;
+  if (null != e) {
+    if ("object" != typeof e) return e;
     if (e instanceof Array) {
-      const r = [];
+      var r = [];
       for (const n of e) r.push(removeNullField(n));
       return r;
     }
-    const o = {};
+    var o = {};
     for (const i in e) {
-      const t = removeNullField(e[i]);
+      var t = removeNullField(e[i]);
       o[i] = t;
     }
     return o;
@@ -114,29 +114,29 @@ function removeNullField(e) {
 }
 function applyDiff(e, r, o) {
   if (void 0 === e) return r;
-  if (e !== null) {
+  if (null !== e) {
     if (void 0 === r) return e;
-    if (r === null) throw new Error("Base can not be null");
-    if (typeof e !== "object") return e;
-    if (typeof r !== "object") return e;
+    if (null === r) throw new Error("Base can not be null");
+    if ("object" != typeof e) return e;
+    if ("object" != typeof r) return e;
     if (r instanceof Array) return e;
-    let t;
-    let n;
-    let i;
-    let f;
-    const u = {};
+    var t,
+      n,
+      i,
+      f,
+      u = {};
     for (const c in e)
       o?.(c) ||
-        (void 0 === r[c] && (t = e[c]) !== null && (u[c] = removeNullField(t)));
+        (void 0 === r[c] && null !== (t = e[c]) && (u[c] = removeNullField(t)));
     for (const l in r)
       o?.(l) ||
         ((n = e[l]),
         (i = r[l]),
         void 0 === n
           ? (u[l] = i)
-          : n !== null &&
+          : null !== n &&
             ((f = typeof n),
-            (u[l] = f === typeof i && f == "object" ? applyDiff(n, i, o) : n)));
+            (u[l] = f == typeof i && "object" == f ? applyDiff(n, i, o) : n)));
     return u;
   }
 }
@@ -150,8 +150,8 @@ function diffArrays(r, o) {
 }
 function matchCategory(e, r) {
   for (const n in e) {
-    const o = e[n];
-    const t = r[n];
+    var o = e[n],
+      t = r[n];
     if (void 0 === t || t !== o) return !1;
   }
   return !0;
@@ -160,7 +160,7 @@ function matchCategoryType(e, r) {
   return void 0 === e || void 0 !== r[e];
 }
 function isEntitiyMatch(e, r) {
-  let o;
+  var o;
   return (
     !(!e || !r) &&
     ((void 0 === e.Category && void 0 === e.CategoryType) ||
@@ -214,4 +214,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.diffArrays = diffArrays),
   (exports.isEntitiyMatch = isEntitiyMatch),
   (exports.isMatchCategory = isMatchCategory);
-// # sourceMappingURL=IUtil.js.map
+//# sourceMappingURL=IUtil.js.map

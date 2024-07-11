@@ -24,17 +24,17 @@ class Swim {
     );
   }
   id(t) {
-    const s = this.J7.__offset(this.z7, 4);
+    var s = this.J7.__offset(this.z7, 4);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   sprintzoffsetrate() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readFloat32(this.z7 + t) : 0.2;
   }
   sprintzoffsetspeed() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readFloat32(this.z7 + t) : 100;
   }
 }
 exports.Swim = Swim;
-// # sourceMappingURL=Swim.js.map
+//# sourceMappingURL=Swim.js.map

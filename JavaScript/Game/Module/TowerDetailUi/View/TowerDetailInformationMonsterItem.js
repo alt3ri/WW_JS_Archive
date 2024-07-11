@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerDetailInformationMonsterItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const TowerDetailInformationMonsterSubItem_1 = require("./TowerDetailInformationMonsterSubItem");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  TowerDetailInformationMonsterSubItem_1 = require("./TowerDetailInformationMonsterSubItem");
 class TowerDetailInformationMonsterItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -37,7 +37,7 @@ class TowerDetailInformationMonsterItem extends UiPanelBase_1.UiPanelBase {
     (this.ILo = e), this.Og();
   }
   Og() {
-    const e = this.ILo.MonsterInfos;
+    var e = this.ILo.MonsterInfos;
     this.MonsterLayout.RebuildLayoutByDataNew(e);
   }
   OnBeforeDestroy() {
@@ -45,4 +45,4 @@ class TowerDetailInformationMonsterItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.TowerDetailInformationMonsterItem = TowerDetailInformationMonsterItem;
-// # sourceMappingURL=TowerDetailInformationMonsterItem.js.map
+//# sourceMappingURL=TowerDetailInformationMonsterItem.js.map

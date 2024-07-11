@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiSceneManager = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const Stack_1 = require("../../../Core/Container/Stack");
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const CameraController_1 = require("../../Camera/CameraController");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager");
-const GlobalData_1 = require("../../GlobalData");
-const RenderModuleController_1 = require("../../Render/Manager/RenderModuleController");
-const SkeletalObserverManager_1 = require("../SkeletalObserver/SkeletalObserverManager");
-const UiModelUtil_1 = require("../UiModel/UiModelUtil");
-const UiSceneRoleActorManager_1 = require("./UiSceneRoleActorManager");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Stack_1 = require("../../../Core/Container/Stack"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
+  GlobalData_1 = require("../../GlobalData"),
+  RenderModuleController_1 = require("../../Render/Manager/RenderModuleController"),
+  SkeletalObserverManager_1 = require("../SkeletalObserver/SkeletalObserverManager"),
+  UiModelUtil_1 = require("../UiModel/UiModelUtil"),
+  UiSceneRoleActorManager_1 = require("./UiSceneRoleActorManager");
 class UiSceneManager {
   static Initialize() {
     GlobalData_1.GlobalData.SetUiState(0),
@@ -28,13 +28,13 @@ class UiSceneManager {
       );
   }
   static OpenUiScene(e, a) {
-    let r, t;
+    var r, t;
     return (
-      UiSceneManager.GetUiSceneLoadingState() !== 1 &&
+      1 !== UiSceneManager.GetUiSceneLoadingState() &&
       !!GlobalData_1.GlobalData.World &&
       (UiSceneManager.CurUiSceneName === e
         ? a?.()
-        : (UiSceneManager.CurUiSceneName !== "" &&
+        : ("" !== UiSceneManager.CurUiSceneName &&
             UiSceneManager.ForceCloseUiScene(),
           (UiSceneManager.CurUiSceneName = e),
           RenderModuleController_1.RenderModuleController
@@ -44,7 +44,7 @@ class UiSceneManager {
               )),
               (t =
                 RenderModuleController_1.RenderModuleController.GetKuroUiSceneLoadOffset()),
-              r.GetUiSceneLoadingState(e) === 0
+              0 === r.GetUiSceneLoadingState(e)
                 ? (r.PreloadUiScene(e, t),
                   RenderModuleController_1.RenderModuleController.UiSceneOffsetTransform.SetLocation(
                     t,
@@ -82,7 +82,7 @@ class UiSceneManager {
     this.vPo();
   }
   static vPo() {
-    let e, a;
+    var e, a;
     StringUtils_1.StringUtils.IsEmpty(UiSceneManager.CurUiSceneName) ||
       ((UiSceneManager.CurUiSceneName = ""),
       RenderModuleController_1.RenderModuleController.DebugNewUiSceneWorkflow
@@ -126,17 +126,17 @@ class UiSceneManager {
       : 0;
   }
   static Tick() {
-    let e, a, r;
+    var e, a, r;
     GlobalData_1.GlobalData.IsUiSceneLoading &&
       (RenderModuleController_1.RenderModuleController.DebugNewUiSceneWorkflow
         ? ((e = UE.KuroUiSceneSystem.GetKuroUiSceneSystem(
             GlobalData_1.GlobalData.World.GetWorld(),
           )),
           (a = UiSceneManager.CurUiSceneName),
-          (r = e.GetUiSceneLoadingState(a)) !== 2 ||
+          2 !== (r = e.GetUiSceneLoadingState(a)) ||
           RenderModuleController_1.RenderModuleController
             .DebugStartShowingUiSceneRendering
-            ? r === 3
+            ? 3 === r
               ? (GlobalData_1.GlobalData.SetUiState(2),
                 this.LoadSuccessFunction &&
                   (this.LoadSuccessFunction(),
@@ -169,7 +169,7 @@ class UiSceneManager {
             : (e.StartUiSceneRendering(a),
               (RenderModuleController_1.RenderModuleController.DebugStartShowingUiSceneRendering =
                 !0)))
-        : (r = UiSceneManager.GetUiSceneLoadingState()) === 2
+        : 2 === (r = UiSceneManager.GetUiSceneLoadingState())
           ? (GlobalData_1.GlobalData.SetUiState(2),
             this.LoadSuccessFunction && this.LoadSuccessFunction(),
             EventSystem_1.EventSystem.Emit(
@@ -190,7 +190,7 @@ class UiSceneManager {
       );
   }
   static InitWeaponObserver() {
-    const e = UiSceneManager.MPo(3);
+    var e = UiSceneManager.MPo(3);
     return this.SPo.Push(e), e;
   }
   static GetWeaponObserver() {
@@ -207,12 +207,12 @@ class UiSceneManager {
   }
   static DestroyAllWeaponObserver() {
     for (; !this.SPo.Empty; ) {
-      const e = this.SPo.Pop();
+      var e = this.SPo.Pop();
       this.DestroyWeaponObserver(e);
     }
   }
   static InitWeaponScabbardObserver() {
-    const e = UiSceneManager.MPo(3);
+    var e = UiSceneManager.MPo(3);
     return this.EPo.Push(e), e;
   }
   static GetWeaponScabbardObserver() {
@@ -229,7 +229,7 @@ class UiSceneManager {
   }
   static DestroyAllWeaponScabbardObserver() {
     for (; !this.EPo.Empty; ) {
-      const e = this.EPo.Pop();
+      var e = this.EPo.Pop();
       this.DestroyWeaponScabbardObserver(e);
     }
   }
@@ -270,12 +270,12 @@ class UiSceneManager {
       (UiSceneManager.IPo = void 0));
   }
   static InitRoleSystemRoleActor(e) {
-    var a = this.TPo.Peek();
-    var a =
-      (a && a.SetMoveOutActor(),
-      UiSceneRoleActorManager_1.UiSceneRoleActorManager.CreateUiSceneRoleActor(
-        e,
-      ));
+    var a = this.TPo.Peek(),
+      a =
+        (a && a.SetMoveOutActor(),
+        UiSceneRoleActorManager_1.UiSceneRoleActorManager.CreateUiSceneRoleActor(
+          e,
+        ));
     return this.TPo.Push(a), a;
   }
   static GetRoleSystemRoleActor() {
@@ -287,13 +287,13 @@ class UiSceneManager {
     return !this.TPo.Empty;
   }
   static HideRoleSystemRoleActor() {
-    let e;
+    var e;
     this.TPo.Empty ||
       ((e = UiSceneManager.TPo.Peek().Model),
       UiModelUtil_1.UiModelUtil.SetVisible(e, !1));
   }
   static ShowRoleSystemRoleActor() {
-    let e;
+    var e;
     this.TPo.Empty ||
       ((e = UiSceneManager.TPo.Peek().Model),
       UiModelUtil_1.UiModelUtil.SetVisible(e, !0));
@@ -317,7 +317,7 @@ class UiSceneManager {
   }
   static DestroyAllRoleSystemRoleActor() {
     for (; !this.TPo.Empty; ) {
-      const e = this.TPo.Pop().GetRoleActorIndex();
+      var e = this.TPo.Pop().GetRoleActorIndex();
       UiSceneRoleActorManager_1.UiSceneRoleActorManager.DestroyUiSceneRoleActor(
         e,
       );
@@ -330,7 +330,7 @@ class UiSceneManager {
       : (UiSceneManager.MWt = UiSceneManager.MPo(3));
   }
   static GetGachaItemObserver() {
-    const e = UiSceneManager.MWt;
+    var e = UiSceneManager.MWt;
     if (e) return e;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("UiSceneManager", 17, "[GachaItemObserver]未初始化");
@@ -343,17 +343,15 @@ class UiSceneManager {
       (UiSceneManager.MWt = void 0));
   }
   static CreateHandBookVision(e) {
-    var e = ActorSystem_1.ActorSystem.Get(e, new UE.Transform(), void 0);
-    var a = UE.KuroCollectActorComponent.GetActorWithTag(
-      FNameUtil_1.FNameUtil.GetDynamicFName("MonsterCase"),
-      1,
-    );
-    const r = e?.K2_GetComponentsByClass(
-      UE.SkeletalMeshComponent.StaticClass(),
-    );
+    var e = ActorSystem_1.ActorSystem.Get(e, new UE.Transform(), void 0),
+      a = UE.KuroCollectActorComponent.GetActorWithTag(
+        FNameUtil_1.FNameUtil.GetDynamicFName("MonsterCase"),
+        1,
+      ),
+      r = e?.K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass());
     if (r) for (let e = 0; e < r.Num(); e++) r.Get(e).SetTickableWhenPaused(!0);
-    const t = a.K2_GetActorLocation();
-    var a = a.K2_GetActorRotation();
+    var t = a.K2_GetActorLocation(),
+      a = a.K2_GetActorRotation();
     e.K2_SetActorLocationAndRotation(t, a, !1, void 0, !1),
       this.LPo && this.DestroyHandBookVision(),
       (this.LPo = e);
@@ -383,7 +381,7 @@ class UiSceneManager {
     return void 0 !== UiSceneManager.i7i;
   }
   static GetVisionSkeletalHandle() {
-    const e = UiSceneManager.i7i;
+    var e = UiSceneManager.i7i;
     if (e) return e;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("UiSceneManager", 17, "[VisionSkeletalHandle]未初始化");
@@ -396,7 +394,7 @@ class UiSceneManager {
       (UiSceneManager.i7i = void 0));
   }
   static AddUiShowRoomShowActor(e, a) {
-    const r = UE.KuroCollectActorComponent.GetActorWithTag(
+    var r = UE.KuroCollectActorComponent.GetActorWithTag(
       FNameUtil_1.FNameUtil.GetDynamicFName("BP_UIShowRoom"),
       1,
     );
@@ -428,10 +426,10 @@ class UiSceneManager {
       CameraController_1.CameraController.EnterCameraMode(2, 0, 2, 0));
   }
   static SetUiStartSequenceFrame(e) {
-    this.RPo === 0 && (this.RPo = e);
+    0 === this.RPo && (this.RPo = e);
   }
   static SetUiEndSequenceFrame(e) {
-    this.UPo === 0 && (this.UPo = e);
+    0 === this.UPo && (this.UPo = e);
   }
   static ClearUiSequenceFrame() {
     (this.RPo = 0), (this.UPo = 0);
@@ -480,4 +478,4 @@ class UiSceneManager {
   (UiSceneManager.i7i = void 0),
   (UiSceneManager.RPo = 0),
   (UiSceneManager.UPo = 0);
-// # sourceMappingURL=UiSceneManager.js.map
+//# sourceMappingURL=UiSceneManager.js.map

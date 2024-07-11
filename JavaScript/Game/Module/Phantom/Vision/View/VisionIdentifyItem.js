@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionIdentifyItem = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
-const NORMALCOLOR = "EBE5D7FF";
-const GREENCOLOR = "63FF9CFF";
-const WHITECOLOR = "FFFFFFFF";
-const GRAYCOLOR = "ADADADFF";
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  NORMALCOLOR = "EBE5D7FF",
+  GREENCOLOR = "63FF9CFF",
+  WHITECOLOR = "FFFFFFFF",
+  GRAYCOLOR = "ADADADFF";
 class VisionIdentifyItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -65,7 +65,7 @@ class VisionIdentifyItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   async PlaySequenceAndUpdate(e, t) {
     (this.R7i = new CustomPromise_1.CustomPromise()),
-      e > 0
+      0 < e
         ? TimerSystem_1.TimerSystem.Delay(() => {
             this.bPe?.PlaySequencePurely("Update");
           }, e)
@@ -84,7 +84,7 @@ class VisionIdentifyItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.w7i(e));
   }
   Update(e, t) {
-    const i = e.Data;
+    var i = e.Data;
     (this.L7i = t),
       (this.Wpt = e.CurrentVisionData),
       (this.Y6i = i),
@@ -98,22 +98,22 @@ class VisionIdentifyItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   x7i(e) {
     this.GetButton(5).RootUIComp.SetRaycastTarget(
-      e.SlotState === 1 && this.B7i(),
+      1 === e.SlotState && this.B7i(),
     ),
-      this.GetItem(2).SetUIActive(e.SlotState === 1 && this.B7i());
+      this.GetItem(2).SetUIActive(1 === e.SlotState && this.B7i());
   }
   Rh(e) {
     let t = "";
     return (
-      e.SlotState === 0
+      0 === e.SlotState
         ? (t = GRAYCOLOR)
-        : e.SlotState === 1
+        : 1 === e.SlotState
           ? (t = this.B7i() ? GREENCOLOR : WHITECOLOR)
-          : e.SlotState === 3
+          : 3 === e.SlotState
             ? (t = NORMALCOLOR)
-            : e.SlotState === 2
+            : 2 === e.SlotState
               ? (t = WHITECOLOR)
-              : (e.SlotState !== 5 && e.SlotState !== 4) || (t = GREENCOLOR),
+              : (5 !== e.SlotState && 4 !== e.SlotState) || (t = GREENCOLOR),
       t
     );
   }
@@ -124,18 +124,18 @@ class VisionIdentifyItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.GetItem(2).SetColor(e);
   }
   w7i(e) {
-    var e = UE.Color.FromHex(this.Rh(e));
-    var t = this.GetUiSpriteTransition(7).TransitionInfo;
-    var t =
-      ((t.HighlightedTransition.Color = e),
-      (t.NormalTransition.Color = e),
-      (t.DisabledTransition.Color = e),
-      this.GetUITextTransition(6).TransitionInfo);
-    var t =
-      ((t.HighlightedTransition.FontColor = e),
-      (t.DisabledTransition.FontColor = e),
-      (t.NormalTransition.FontColor = e),
-      this.GetUITextTransition(8).TransitionInfo);
+    var e = UE.Color.FromHex(this.Rh(e)),
+      t = this.GetUiSpriteTransition(7).TransitionInfo,
+      t =
+        ((t.HighlightedTransition.Color = e),
+        (t.NormalTransition.Color = e),
+        (t.DisabledTransition.Color = e),
+        this.GetUITextTransition(6).TransitionInfo),
+      t =
+        ((t.HighlightedTransition.FontColor = e),
+        (t.DisabledTransition.FontColor = e),
+        (t.NormalTransition.FontColor = e),
+        this.GetUITextTransition(8).TransitionInfo);
     (t.HighlightedTransition.FontColor = e),
       (t.DisabledTransition.FontColor = e),
       (t.NormalTransition.FontColor = e);
@@ -144,18 +144,18 @@ class VisionIdentifyItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetText(0).SetText(e.GetLevelUpViewName());
   }
   P7i(e) {
-    const t = e.SlotState === 3;
+    var t = 3 === e.SlotState;
     this.GetText(1).SetUIActive(t),
       t && this.GetText(1).SetText(e.GetAttributeValueString());
   }
   B7i() {
     return (
-      this.L7i === "VisionLevelUpView" || this.L7i === "VisionEquipmentView"
+      "VisionLevelUpView" === this.L7i || "VisionEquipmentView" === this.L7i
     );
   }
   wxt(e) {
-    this.GetItem(3).SetUIActive(e.SlotState === 1 && this.B7i());
+    this.GetItem(3).SetUIActive(1 === e.SlotState && this.B7i());
   }
 }
 exports.VisionIdentifyItem = VisionIdentifyItem;
-// # sourceMappingURL=VisionIdentifyItem.js.map
+//# sourceMappingURL=VisionIdentifyItem.js.map

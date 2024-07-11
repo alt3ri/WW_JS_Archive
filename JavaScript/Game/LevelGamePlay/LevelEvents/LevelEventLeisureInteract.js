@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventLeisureInteract = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const Global_1 = require("../../Global");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  Global_1 = require("../../Global"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventLeisureInteract extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -14,17 +14,17 @@ class LevelEventLeisureInteract extends LevelGeneralBase_1.LevelEventBase {
       (this.M8s = void 0);
   }
   ExecuteNew(e, t, i) {
-    const s = e;
+    var s = e;
     if (s)
       if (Global_1.Global.BaseCharacter) {
-        const r =
+        var r =
           Global_1.Global.BaseCharacter.CharacterActorComponent.Entity.GetComponent(
             26,
           );
         switch (s.Option.Type) {
           case IAction_1.ELeisureInteract.SitDown:
-            var o = t;
-            var o = EntitySystem_1.EntitySystem.Get(o.EntityId);
+            var o = t,
+              o = EntitySystem_1.EntitySystem.Get(o.EntityId);
             if (!o)
               return (
                 Log_1.Log.CheckError() &&
@@ -94,4 +94,4 @@ class LevelEventLeisureInteract extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventLeisureInteract = LevelEventLeisureInteract;
-// # sourceMappingURL=LevelEventLeisureInteract.js.map
+//# sourceMappingURL=LevelEventLeisureInteract.js.map

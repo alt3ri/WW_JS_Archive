@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HandBookEntranceView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../Ui/Common/PopupCaptionItem");
-const UiManager_1 = require("../../Ui/UiManager");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const GenericScrollView_1 = require("../Util/ScrollView/GenericScrollView");
-const HandBookController_1 = require("./HandBookController");
-const HandBookEntranceItem_1 = require("./HandBookEntranceItem");
-const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
+const UE = require("ue"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../Ui/Common/PopupCaptionItem"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  GenericScrollView_1 = require("../Util/ScrollView/GenericScrollView"),
+  HandBookController_1 = require("./HandBookController"),
+  HandBookEntranceItem_1 = require("./HandBookEntranceItem"),
+  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
 class HandBookEntranceView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -22,8 +22,7 @@ class HandBookEntranceView extends UiViewBase_1.UiViewBase {
       (this.lqe = void 0),
       (this.OnHandBookDataInit = () => {
         this.InitVerticalLayout();
-        const e =
-          HandBookController_1.HandBookController.GetAllCollectProgress();
+        var e = HandBookController_1.HandBookController.GetAllCollectProgress();
         LguiUtil_1.LguiUtil.SetLocalText(
           this.GetText(1),
           "RoleExp",
@@ -34,11 +33,11 @@ class HandBookEntranceView extends UiViewBase_1.UiViewBase {
           HandBookController_1.HandBookController.SendIllustratedRedDotRequest();
       }),
       (this.OnHandBookRedDotUpdate = () => {
-        const t = this.qZt.length;
+        var t = this.qZt.length;
         for (let e = 0; e < t; e++) this.qZt[e].RefreshRedDot();
       }),
       (this.InitVerticalLayout = () => {
-        const e = ConfigCommon_1.ConfigCommon.ToList(
+        var e = ConfigCommon_1.ConfigCommon.ToList(
           ConfigManager_1.ConfigManager.HandBookConfig.GetHandBookEntranceConfigList(),
         );
         e.sort(this.aZt),
@@ -72,7 +71,7 @@ class HandBookEntranceView extends UiViewBase_1.UiViewBase {
     this.InitCommonTabTitle(), this.AddEvents(), this.InitData();
   }
   InitData() {
-    const e = [];
+    var e = [];
     e.push(0),
       e.push(1),
       e.push(2),
@@ -107,14 +106,14 @@ class HandBookEntranceView extends UiViewBase_1.UiViewBase {
       );
   }
   InitCommonTabTitle() {
-    const e =
-      ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-        "HandBookEntrance",
-      );
-    const t =
-      ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
-        "HandBookEntrance",
-      );
+    var e =
+        ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+          "HandBookEntrance",
+        ),
+      t =
+        ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
+          "HandBookEntrance",
+        );
     (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
       this.lqe.SetCloseCallBack(this.JSt),
       this.lqe.SetTitleLocalText(t),
@@ -128,4 +127,4 @@ class HandBookEntranceView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.HandBookEntranceView = HandBookEntranceView;
-// # sourceMappingURL=HandBookEntranceView.js.map
+//# sourceMappingURL=HandBookEntranceView.js.map

@@ -1,28 +1,28 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleUiControl = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Stats_1 = require("../../../Core/Common/Stats");
-const ObjectSystem_1 = require("../../../Core/Object/ObjectSystem");
-const CameraController_1 = require("../../Camera/CameraController");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LocalStorage_1 = require("../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../Common/LocalStorageDefine");
-const InputSettingsManager_1 = require("../../InputSettings/InputSettingsManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiLayerType_1 = require("../../Ui/Define/UiLayerType");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine");
-const UiLayer_1 = require("../../Ui/UiLayer");
-const UiManager_1 = require("../../Ui/UiManager");
-const DamageUiManager_1 = require("../DamageUi/DamageUiManager");
-const SceneTeamController_1 = require("../SceneTeam/SceneTeamController");
-const BattleUiModel_1 = require("./BattleUiModel");
-const BattleUiPool_1 = require("./BattleUiPool");
+const Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  ObjectSystem_1 = require("../../../Core/Object/ObjectSystem"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
+  InputSettingsManager_1 = require("../../InputSettings/InputSettingsManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiLayerType_1 = require("../../Ui/Define/UiLayerType"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  DamageUiManager_1 = require("../DamageUi/DamageUiManager"),
+  SceneTeamController_1 = require("../SceneTeam/SceneTeamController"),
+  BattleUiModel_1 = require("./BattleUiModel"),
+  BattleUiPool_1 = require("./BattleUiPool");
 class BattleUiControl extends UiControllerBase_1.UiControllerBase {
   static OnClear() {
     return this.Pool.Clear(), !0;
@@ -98,13 +98,13 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
         this.MKe,
       );
     var e =
-      ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.GetActionNames();
-    var e =
-      (InputDistributeController_1.InputDistributeController.BindActions(
-        e,
-        this.bMe,
-      ),
-      ModelManager_1.ModelManager.BattleUiModel.FormationPanelData.GetActionNames());
+        ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.GetActionNames(),
+      e =
+        (InputDistributeController_1.InputDistributeController.BindActions(
+          e,
+          this.bMe,
+        ),
+        ModelManager_1.ModelManager.BattleUiModel.FormationPanelData.GetActionNames());
     InputDistributeController_1.InputDistributeController.BindActions(
       e,
       this.$yn,
@@ -184,13 +184,13 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
         this.MKe,
       );
     var e =
-      ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.GetActionNames();
-    var e =
-      (InputDistributeController_1.InputDistributeController.UnBindActions(
-        e,
-        this.bMe,
-      ),
-      ModelManager_1.ModelManager.BattleUiModel.FormationPanelData.GetActionNames());
+        ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.GetActionNames(),
+      e =
+        (InputDistributeController_1.InputDistributeController.UnBindActions(
+          e,
+          this.bMe,
+        ),
+        ModelManager_1.ModelManager.BattleUiModel.FormationPanelData.GetActionNames());
     InputDistributeController_1.InputDistributeController.UnBindActions(
       e,
       this.$yn,
@@ -249,7 +249,7 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
   }
   static SetBattleViewVisible(e) {
     !this.LKe.delete(e) ||
-      this.LKe.size > 0 ||
+      0 < this.LKe.size ||
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.ShowBattleView(9);
   }
   static SetBattleViewDisable() {
@@ -261,11 +261,11 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
     );
   }
   static FocusToTargetLocation(e) {
-    const t =
-      ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
-        3,
-      ).ActorLocationProxy;
-    const n = ModelManager_1.ModelManager.BattleUiModel;
+    var t =
+        ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
+          3,
+        ).ActorLocationProxy,
+      n = ModelManager_1.ModelManager.BattleUiModel;
     CameraController_1.CameraController.FightCamera.LogicComponent.PlayCameraRotatorWithCurve(
       t,
       e,
@@ -274,7 +274,7 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
     );
   }
   static ResetFocus() {
-    const e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     e?.Valid && e.Entity.GetComponent(29).ResetFocus();
   }
 }
@@ -315,7 +315,7 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       });
   }),
   (BattleUiControl.CKe = (e, t) => {
-    (e !== 10016 && !t) ||
+    (10016 !== e && !t) ||
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Battle",
@@ -327,7 +327,7 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       ));
   }),
   (BattleUiControl.gKe = (e, t) => {
-    (e !== 10016 && !t) ||
+    (10016 !== e && !t) ||
       (LocalStorage_1.LocalStorage.SetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.FirstOpenShop,
         !0,
@@ -337,7 +337,7 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       ));
   }),
   (BattleUiControl.pKe = (e, t, n) => {
-    let a = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var a = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     a?.Valid &&
       a.Id === e &&
       ((a = t.Id),
@@ -354,7 +354,7 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
   (BattleUiControl.vKe = (e, t) => {
     ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Valid &&
       !ModelManager_1.ModelManager.PlatformModel.IsMobile() &&
-      ModelManager_1.ModelManager.PlatformModel.InputController !== 1 &&
+      1 !== ModelManager_1.ModelManager.PlatformModel.InputController &&
       e !== t &&
       ((e = InputSettingsManager_1.InputSettingsManager.GetActionBinding(
         InputMappingsDefine_1.actionMappings.走跑切换,
@@ -377,11 +377,11 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
   (BattleUiControl.bMe = (e, t) => {
     ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.InputAction(
       e,
-      t === 0,
+      0 === t,
     );
   }),
   (BattleUiControl.$yn = (t, n) => {
-    if (n === 0) {
+    if (0 === n) {
       let e = -1;
       switch (t) {
         case InputMappingsDefine_1.actionMappings.切换角色1:
@@ -411,7 +411,7 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       : _a.TKe();
   }),
   (BattleUiControl.EKe = () => {
-    const e =
+    var e =
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.GetChildVisible(
         18,
       );
@@ -424,4 +424,4 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
         1,
       ).SetUIActive(e);
   });
-// # sourceMappingURL=BattleUiControl.js.map
+//# sourceMappingURL=BattleUiControl.js.map

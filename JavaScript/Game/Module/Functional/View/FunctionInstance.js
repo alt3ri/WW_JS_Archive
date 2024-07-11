@@ -9,17 +9,17 @@ class FunctionInstance {
     return this.w9t;
   }
   GetIsShow() {
-    return (1 & this.ige) > 0;
+    return 0 < (1 & this.ige);
   }
   GetIsOpen() {
-    return (2 & this.ige) > 0;
+    return 0 < (2 & this.ige);
   }
   GetHasManualShowUi() {
-    return (4 & this.ige) > 0;
+    return 0 < (4 & this.ige);
   }
   SetFlag(t) {
     this.ige = t;
   }
 }
 exports.FunctionInstance = FunctionInstance;
-// # sourceMappingURL=FunctionInstance.js.map
+//# sourceMappingURL=FunctionInstance.js.map

@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConfirmBoxController = void 0);
-const UE = require("ue");
-const GlobalData_1 = require("../../GlobalData");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const ReconnectDefine_1 = require("../ReConnect/ReconnectDefine");
-const ConfirmBoxDefine_1 = require("./ConfirmBoxDefine");
+const UE = require("ue"),
+  GlobalData_1 = require("../../GlobalData"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ReconnectDefine_1 = require("../ReConnect/ReconnectDefine"),
+  ConfirmBoxDefine_1 = require("./ConfirmBoxDefine");
 class ConfirmBoxController extends UiControllerBase_1.UiControllerBase {
   static ShowConfirmBoxNew(o) {
-    const e = ConfirmBoxController.GetUiViewName(o.ConfigId);
+    var e = ConfirmBoxController.GetUiViewName(o.ConfigId);
     return (
-      o.FunctionMap.size > 0 && (o.IsMultipleView = !0),
+      0 < o.FunctionMap.size && (o.IsMultipleView = !0),
       !!e && (UiManager_1.UiManager.OpenView(e, o, o.FinishOpenFunction), !0)
     );
   }
@@ -34,9 +34,9 @@ class ConfirmBoxController extends UiControllerBase_1.UiControllerBase {
     UiManager_1.UiManager.CloseViewById(o, e);
   }
   static ShowFirstCurrencyConfirm() {
-    var o = ConfigManager_1.ConfigManager.GachaConfig.PrimaryCurrency();
-    const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(63);
-    var o = ConfigManager_1.ConfigManager.ItemConfig.GetItemName(o);
+    var o = ConfigManager_1.ConfigManager.GachaConfig.PrimaryCurrency(),
+      e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(63),
+      o = ConfigManager_1.ConfigManager.ItemConfig.GetItemName(o);
     e.SetTextArgs(o),
       e.FunctionMap.set(2, () => {
         ControllerHolder_1.ControllerHolder.PayShopController.OpenPayShopViewToRecharge();
@@ -44,7 +44,7 @@ class ConfirmBoxController extends UiControllerBase_1.UiControllerBase {
       ConfirmBoxController.ShowConfirmBoxNew(e);
   }
   static ShowExitGameConfirmBox() {
-    let o;
+    var o;
     ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
       ? ControllerHolder_1.ControllerHolder.KuroSdkController.PostKuroSdkEvent(
           5,
@@ -65,7 +65,7 @@ class ConfirmBoxController extends UiControllerBase_1.UiControllerBase {
         ConfirmBoxController.ShowConfirmBoxNew(o));
   }
   static ShowReturnLoginConfirmBox() {
-    const o = new ConfirmBoxDefine_1.ConfirmBoxDataNew(51);
+    var o = new ConfirmBoxDefine_1.ConfirmBoxDataNew(51);
     o.FunctionMap.set(2, () => {
       ControllerHolder_1.ControllerHolder.ReConnectController.Logout(
         ReconnectDefine_1.ELogoutReason.ExitGameConfirmBox,
@@ -83,4 +83,4 @@ class ConfirmBoxController extends UiControllerBase_1.UiControllerBase {
   [1, "ConfirmBoxMiddleView"],
   [2, "ConfirmBoxMiddleWithoutItemView"],
 ]);
-// # sourceMappingURL=ConfirmBoxController.js.map
+//# sourceMappingURL=ConfirmBoxController.js.map

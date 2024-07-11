@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityPageSelectContent = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../../RedDot/RedDotController");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
-const ActivityController_1 = require("../../ActivityController");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../../RedDot/RedDotController"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  ActivityController_1 = require("../../ActivityController");
 class ActivityPageSelectContent extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -79,7 +79,7 @@ class ActivityPageSelectContent extends GridProxyAbstract_1.GridProxyAbstract {
     this.RemoveEventListener();
   }
   Oqe() {
-    const t =
+    var t =
       ModelManager_1.ModelManager.ActivityModel.GetCurrentSelectActivityId() ===
       this.Pe.Id
         ? 1
@@ -109,11 +109,11 @@ class ActivityPageSelectContent extends GridProxyAbstract_1.GridProxyAbstract {
       );
   }
   C4e() {
-    const t = this.Pe.GetTitle();
+    var t = this.Pe.GetTitle();
     this.GetText(1).SetText(t.replace(/<.*?>/g, ""));
   }
   $2e() {
-    let t, e;
+    var t, e;
     this.Pe.EndOpenTime <= 0 || !this.Pe.CheckIfInOpenTime()
       ? (this.GetText(3).SetUIActive(!1), this.GetItem(4).SetUIActive(!0))
       : (this.GetItem(4).SetUIActive(!1),
@@ -132,12 +132,12 @@ class ActivityPageSelectContent extends GridProxyAbstract_1.GridProxyAbstract {
         this.GetText(3).SetText(t));
   }
   Kbe() {
-    const e = this.Pe.LocalConfig.TabSprite;
+    var e = this.Pe.LocalConfig.TabSprite;
     const i = this.GetSprite(5);
-    if ((i.SetUIActive(!1), e && e.length !== 0)) {
-      const s = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
+    if ((i.SetUIActive(!1), e && 0 !== e.length)) {
+      var s = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
       let t = 0;
-      e.length >= 2 && (t = s === 0 ? 0 : 1),
+      2 <= e.length && (t = 0 === s ? 0 : 1),
         this.SetSpriteByPath(e[t], i, !1, void 0, () => {
           i.SetUIActive(!0);
         });
@@ -155,4 +155,4 @@ class ActivityPageSelectContent extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.ActivityPageSelectContent = ActivityPageSelectContent;
-// # sourceMappingURL=ActivityPageSelectContent.js.map
+//# sourceMappingURL=ActivityPageSelectContent.js.map

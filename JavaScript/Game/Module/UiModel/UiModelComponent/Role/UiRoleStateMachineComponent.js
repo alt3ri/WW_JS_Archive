@@ -1,25 +1,29 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, i, n) {
-    let o;
-    const s = arguments.length;
-    let h =
-      s < 3 ? t : n === null ? (n = Object.getOwnPropertyDescriptor(t, i)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      s = arguments.length,
+      h =
+        s < 3
+          ? t
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(t, i))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       h = Reflect.decorate(e, t, i, n);
     else
-      for (let r = e.length - 1; r >= 0; r--)
-        (o = e[r]) && (h = (s < 3 ? o(h) : s > 3 ? o(t, i, h) : o(t, i)) || h);
-    return s > 3 && h && Object.defineProperty(t, i, h), h;
+      for (var r = e.length - 1; 0 <= r; r--)
+        (o = e[r]) && (h = (s < 3 ? o(h) : 3 < s ? o(t, i, h) : o(t, i)) || h);
+    return 3 < s && h && Object.defineProperty(t, i, h), h;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiRoleStateMachineComponent = void 0);
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine");
-const UiModelComponentBase_1 = require("../UiModelComponentBase");
+const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine"),
+  UiModelComponentBase_1 = require("../UiModelComponentBase");
 let UiRoleStateMachineComponent = class UiRoleStateMachineComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
     super(...arguments),
@@ -55,18 +59,18 @@ let UiRoleStateMachineComponent = class UiRoleStateMachineComponent extends UiMo
     (this.Fmo = e), (this.HBr = t), (this.WBr = i), (this.jBr = n), this.m8();
   }
   m8() {
-    let e;
-    this.Qwr.GetModelLoadState() === 2 &&
+    var e;
+    2 === this.Qwr.GetModelLoadState() &&
       ((e = this.nXt.MainMeshComponent),
       this.nXt
         .GetAnimInstanceFromSkeletalMesh(e)
         ?.SetState(this.Fmo, this.HBr, this.WBr, this.jBr));
   }
   KBr() {
-    var e = this.nXt.MainMeshComponent;
-    var e = this.nXt.GetAnimInstanceFromSkeletalMesh(e);
-    const t =
-      ConfigManager_1.ConfigManager.RoleConfig.GetRolePerformanceDelayTime();
+    var e = this.nXt.MainMeshComponent,
+      e = this.nXt.GetAnimInstanceFromSkeletalMesh(e),
+      t =
+        ConfigManager_1.ConfigManager.RoleConfig.GetRolePerformanceDelayTime();
     e?.SetPerformDelay(t);
   }
 };
@@ -75,4 +79,4 @@ let UiRoleStateMachineComponent = class UiRoleStateMachineComponent extends UiMo
   UiRoleStateMachineComponent,
 )),
   (exports.UiRoleStateMachineComponent = UiRoleStateMachineComponent);
-// # sourceMappingURL=UiRoleStateMachineComponent.js.map
+//# sourceMappingURL=UiRoleStateMachineComponent.js.map

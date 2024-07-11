@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerReviewItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class TowerReviewItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super();
@@ -28,4 +28,4 @@ class TowerReviewItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.TowerReviewItem = TowerReviewItem;
-// # sourceMappingURL=TowerReviewItem.js.map
+//# sourceMappingURL=TowerReviewItem.js.map

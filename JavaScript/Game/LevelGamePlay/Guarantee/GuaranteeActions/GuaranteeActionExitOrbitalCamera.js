@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuaranteeActionExitOrbitalCamera = void 0);
-const CameraController_1 = require("../../../Camera/CameraController");
-const GuaranteeActionBase_1 = require("./GuaranteeActionBase");
+const CameraController_1 = require("../../../Camera/CameraController"),
+  GuaranteeActionBase_1 = require("./GuaranteeActionBase");
 class GuaranteeActionExitOrbitalCamera extends GuaranteeActionBase_1.GuaranteeActionBase {
   OnExecute(e) {
     CameraController_1.CameraController.OrbitalCamera.PlayerComponent.StopCameraOrbital();
   }
 }
 exports.GuaranteeActionExitOrbitalCamera = GuaranteeActionExitOrbitalCamera;
-// # sourceMappingURL=GuaranteeActionExitOrbitalCamera.js.map
+//# sourceMappingURL=GuaranteeActionExitOrbitalCamera.js.map

@@ -1,34 +1,39 @@
 "use strict";
-let CharacterPendulumComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, n, i) {
-    let r;
-    const s = arguments.length;
-    let o =
-      s < 3 ? e : i === null ? (i = Object.getOwnPropertyDescriptor(e, n)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      o = Reflect.decorate(t, e, n, i);
-    else
-      for (let h = t.length - 1; h >= 0; h--)
-        (r = t[h]) && (o = (s < 3 ? r(o) : s > 3 ? r(e, n, o) : r(e, n)) || o);
-    return s > 3 && o && Object.defineProperty(e, n, o), o;
-  };
+var CharacterPendulumComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, n, i) {
+      var r,
+        s = arguments.length,
+        o =
+          s < 3
+            ? e
+            : null === i
+              ? (i = Object.getOwnPropertyDescriptor(e, n))
+              : i;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        o = Reflect.decorate(t, e, n, i);
+      else
+        for (var h = t.length - 1; 0 <= h; h--)
+          (r = t[h]) &&
+            (o = (s < 3 ? r(o) : 3 < s ? r(e, n, o) : r(e, n)) || o);
+      return 3 < s && o && Object.defineProperty(e, n, o), o;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterPendulumComponent = void 0);
-const UE = require("ue");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../../../GlobalData");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const LIMIT_FRAME_TIME = 33;
-const LIMIT_FRAME_TIME2 = 50;
-const UPDATE_UP_Z = 5;
-const UPDATE_UP_Z2 = 11;
-const LIMIT_FORCE = 6e5;
+const UE = require("ue"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  LIMIT_FRAME_TIME = 33,
+  LIMIT_FRAME_TIME2 = 50,
+  UPDATE_UP_Z = 5,
+  UPDATE_UP_Z2 = 11,
+  LIMIT_FORCE = 6e5;
 let CharacterPendulumComponent =
   (CharacterPendulumComponent_1 = class CharacterPendulumComponent extends (
     EntityComponent_1.EntityComponent
@@ -92,20 +97,20 @@ let CharacterPendulumComponent =
       return this.Gjr;
     }
     OnStart() {
-      var t = this.Entity.CheckGetComponent(3);
-      var t =
-        ((this.Pjr = t.Actor),
-        EventSystem_1.EventSystem.AddWithTarget(
-          this.Entity,
-          EventDefine_1.EEventName.CustomMovePendulum,
-          this.kjr,
-        ),
-        EventSystem_1.EventSystem.AddWithTarget(
-          this.Entity,
-          EventDefine_1.EEventName.CharMovementModeChanged,
-          this.Fjr,
-        ),
-        this.Entity.GetComponent(161).CharacterMovement);
+      var t = this.Entity.CheckGetComponent(3),
+        t =
+          ((this.Pjr = t.Actor),
+          EventSystem_1.EventSystem.AddWithTarget(
+            this.Entity,
+            EventDefine_1.EEventName.CustomMovePendulum,
+            this.kjr,
+          ),
+          EventSystem_1.EventSystem.AddWithTarget(
+            this.Entity,
+            EventDefine_1.EEventName.CharMovementModeChanged,
+            this.Fjr,
+          ),
+          this.Entity.GetComponent(161).CharacterMovement);
       return (this.Ojr = t.AirControl), !0;
     }
     OnEnd() {
@@ -125,10 +130,10 @@ let CharacterPendulumComponent =
       );
     }
     OnTick(t) {
-      this.Njr === 1 ? (this.Njr = 0) : this.Hjr(t);
+      1 === this.Njr ? (this.Njr = 0) : this.Hjr(t);
     }
     DrawCube(t, e) {
-      let n, i, r, s;
+      var n, i, r, s;
       t &&
         ((n = 156),
         (n = new UE.LinearColor(n, n, n, n)),
@@ -177,7 +182,7 @@ let CharacterPendulumComponent =
         ));
     }
     Hjr(t) {
-      let e, n, i;
+      var e, n, i;
       this.xjr &&
         (this.wrr.FromUeVector(this.Pjr.GetVelocity()),
         (e = 1),
@@ -186,7 +191,7 @@ let CharacterPendulumComponent =
             t > LIMIT_FRAME_TIME2
               ? t / LIMIT_FRAME_TIME2
               : t / LIMIT_FRAME_TIME),
-          (e = this.wrr.Size() / i) > 1) &&
+          1 < (e = this.wrr.Size() / i)) &&
           this.wrr.Z < 0 &&
           ((i = this.Entity.GetComponent(161)),
           (n = t > LIMIT_FRAME_TIME2 ? UPDATE_UP_Z2 : UPDATE_UP_Z),
@@ -231,4 +236,4 @@ let CharacterPendulumComponent =
       CharacterPendulumComponent,
     )),
   (exports.CharacterPendulumComponent = CharacterPendulumComponent);
-// # sourceMappingURL=CharacterPendulumComponent.js.map
+//# sourceMappingURL=CharacterPendulumComponent.js.map

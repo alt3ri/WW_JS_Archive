@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DailyActiveTaskController = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const RoleController_1 = require("../../RoleUi/RoleController");
-const WorldMapController_1 = require("../../WorldMap/WorldMapController");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  RoleController_1 = require("../../RoleUi/RoleController"),
+  WorldMapController_1 = require("../../WorldMap/WorldMapController");
 class DailyActiveTaskController extends UiControllerBase_1.UiControllerBase {
   static TrackTaskByType(e, a) {
     switch (e) {
@@ -23,26 +23,26 @@ class DailyActiveTaskController extends UiControllerBase_1.UiControllerBase {
         DailyActiveTaskController.dOe(r);
         break;
       case 4: {
-        let e = "DailyActivityTabView";
-        let r = void 0;
-        a && a.length >= 1 && ((e = a[0]), a.length >= 2) && (r = a.slice(1)),
+        let e = "DailyActivityTabView",
+          r = void 0;
+        a && 1 <= a.length && ((e = a[0]), 2 <= a.length) && (r = a.slice(1)),
           DailyActiveTaskController.FOt(e, r);
         break;
       }
       case 5: {
         let e = "DailyActivityTabView";
-        a && a.length >= 1 && (e = a[0]), DailyActiveTaskController.COe(e);
+        a && 1 <= a.length && (e = a[0]), DailyActiveTaskController.COe(e);
         break;
       }
       case 6: {
         let e = 0;
-        a && a.length >= 1 && (e = Number(a[0])),
+        a && 1 <= a.length && (e = Number(a[0])),
           DailyActiveTaskController.VOt(e);
         break;
       }
       case 7: {
         let e = -1;
-        a && a.length >= 1 && (e = Number(a[0])),
+        a && 1 <= a.length && (e = Number(a[0])),
           DailyActiveTaskController.HOt(e);
         break;
       }
@@ -53,15 +53,15 @@ class DailyActiveTaskController extends UiControllerBase_1.UiControllerBase {
       let o = new Map();
       ModelManager_1.ModelManager.DailyTaskModel.GetAllDailyQuest().forEach(
         (e) => {
-          const r = e.TreeId;
-          const a = e.GetCurrentActiveChildQuestNode();
+          var r = e.TreeId,
+            a = e.GetCurrentActiveChildQuestNode();
           a && ((e = e.GetTrackDistance(a.NodeId)), o.set(e, r));
         },
       );
-      const [r] = (o = new Map(
-        [...o.entries()].sort((e, r) => e[0] - r[0]),
-      )).values();
-      let a = ModelManager_1.ModelManager.MapModel.GetAllDynamicMarks().get(12);
+      var [r] = (o = new Map(
+          [...o.entries()].sort((e, r) => e[0] - r[0]),
+        )).values(),
+        a = ModelManager_1.ModelManager.MapModel.GetAllDynamicMarks().get(12);
       if (a) {
         let e = void 0;
         for (const l of a.values())
@@ -80,11 +80,11 @@ class DailyActiveTaskController extends UiControllerBase_1.UiControllerBase {
   }
   static dOe(e) {
     let r = void 0;
-    const a = ModelManager_1.ModelManager.AreaModel.GetAreaCountryId() ?? 1;
+    var a = ModelManager_1.ModelManager.AreaModel.GetAreaCountryId() ?? 1;
     if (
-      (e.length === 0
+      (0 === e.length
         ? (r = void 0)
-        : e.length === 1
+        : 1 === e.length
           ? (r = e[0])
           : e.length < a
             ? ((r = e[0]),
@@ -135,4 +135,4 @@ class DailyActiveTaskController extends UiControllerBase_1.UiControllerBase {
   }
 }
 exports.DailyActiveTaskController = DailyActiveTaskController;
-// # sourceMappingURL=DailyActivityTaskController.js.map
+//# sourceMappingURL=DailyActivityTaskController.js.map

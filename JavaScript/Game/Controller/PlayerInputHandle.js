@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlayerInputHandle = void 0);
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const ModelManager_1 = require("../Manager/ModelManager");
-const InputDistributeController_1 = require("../Ui/InputDistribute/InputDistributeController");
-const LguiEventSystemManager_1 = require("../Ui/LguiEventSystem/LguiEventSystemManager");
-const TouchFingerManager_1 = require("../Ui/TouchFinger/TouchFingerManager");
-const CombinationActionHandle_1 = require("./CombinationActionHandle");
-const CombinationAxisHandle_1 = require("./CombinationAxisHandle");
-const MIN_AXIS_INPUT = 0.1;
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  InputDistributeController_1 = require("../Ui/InputDistribute/InputDistributeController"),
+  LguiEventSystemManager_1 = require("../Ui/LguiEventSystem/LguiEventSystemManager"),
+  TouchFingerManager_1 = require("../Ui/TouchFinger/TouchFingerManager"),
+  CombinationActionHandle_1 = require("./CombinationActionHandle"),
+  CombinationAxisHandle_1 = require("./CombinationAxisHandle"),
+  MIN_AXIS_INPUT = 0.1;
 class PlayerInputHandle {
   constructor() {
     (this.Zde = new Map()),
@@ -53,8 +53,8 @@ class PlayerInputHandle {
           ));
   }
   TouchBegin(e, t) {
-    var e = Number(e);
-    const n = { TouchType: 0, TouchId: e, TouchPosition: this.oCe(e, t) };
+    var e = Number(e),
+      n = { TouchType: 0, TouchId: e, TouchPosition: this.oCe(e, t) };
     TouchFingerManager_1.TouchFingerManager.StartTouch(e, t),
       LguiEventSystemManager_1.LguiEventSystemManager.InputTouchTrigger(
         !0,
@@ -64,8 +64,8 @@ class PlayerInputHandle {
       InputDistributeController_1.InputDistributeController.InputTouch(e, n);
   }
   TouchEnd(e, t) {
-    var e = Number(e);
-    const n = { TouchType: 1, TouchId: e, TouchPosition: this.oCe(e, t) };
+    var e = Number(e),
+      n = { TouchType: 1, TouchId: e, TouchPosition: this.oCe(e, t) };
     TouchFingerManager_1.TouchFingerManager.EndTouch(e),
       LguiEventSystemManager_1.LguiEventSystemManager.InputTouchTrigger(
         !1,
@@ -75,14 +75,14 @@ class PlayerInputHandle {
       InputDistributeController_1.InputDistributeController.InputTouch(e, n);
   }
   TouchMove(e, t) {
-    var e = Number(e);
-    const n = { TouchType: 2, TouchId: e, TouchPosition: this.oCe(e, t) };
+    var e = Number(e),
+      n = { TouchType: 2, TouchId: e, TouchPosition: this.oCe(e, t) };
     TouchFingerManager_1.TouchFingerManager.MoveTouch(e, t),
       LguiEventSystemManager_1.LguiEventSystemManager.InputLguiTouchMove(e, t),
       InputDistributeController_1.InputDistributeController.InputTouch(e, n);
   }
   PressAnyKey(e) {
-    let t;
+    var t;
     (ModelManager_1.ModelManager.PlatformModel?.IsMobileSource() &&
       ModelManager_1.ModelManager.PlatformModel?.IsKeyFromGamepadKey(e)) ||
       ((t = e.KeyName.toString()),
@@ -99,7 +99,7 @@ class PlayerInputHandle {
       ));
   }
   ReleaseAnyKey(e) {
-    let t;
+    var t;
     (ModelManager_1.ModelManager.PlatformModel?.IsMobileSource() &&
       ModelManager_1.ModelManager.PlatformModel?.IsKeyFromGamepadKey(e)) ||
       ((t = e.KeyName.toString()),
@@ -119,7 +119,7 @@ class PlayerInputHandle {
     return this.Zde.get(e);
   }
   oCe(e, t) {
-    const n = this.rCe(e);
+    var n = this.rCe(e);
     return n ? (n.Set(t.X, t.Y, t.Z), n) : this.nCe(e, t);
   }
   nCe(e, t) {
@@ -139,4 +139,4 @@ class PlayerInputHandle {
   }
 }
 exports.PlayerInputHandle = PlayerInputHandle;
-// # sourceMappingURL=PlayerInputHandle.js.map
+//# sourceMappingURL=PlayerInputHandle.js.map

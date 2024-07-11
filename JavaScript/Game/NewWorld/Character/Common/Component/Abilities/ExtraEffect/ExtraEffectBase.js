@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BuffEffect = exports.BuffEffectBase = void 0);
-const Log_1 = require("../../../../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../../../../Core/Define/CommonDefine");
-const EntitySystem_1 = require("../../../../../../../Core/Entity/EntitySystem");
-const RegisterComponent_1 = require("../../../../../../../Core/Entity/RegisterComponent");
-const RandomSystem_1 = require("../../../../../../../Core/Random/RandomSystem");
-const GameplayTagUtils_1 = require("../../../../../../../Core/Utils/GameplayTagUtils");
-const ModelManager_1 = require("../../../../../../Manager/ModelManager");
-const PhantomUtil_1 = require("../../../../../../Module/Phantom/PhantomUtil");
-const ActiveBuffConfigs_1 = require("../Buff/ActiveBuffConfigs");
+const Log_1 = require("../../../../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../../../../Core/Define/CommonDefine"),
+  EntitySystem_1 = require("../../../../../../../Core/Entity/EntitySystem"),
+  RegisterComponent_1 = require("../../../../../../../Core/Entity/RegisterComponent"),
+  RandomSystem_1 = require("../../../../../../../Core/Random/RandomSystem"),
+  GameplayTagUtils_1 = require("../../../../../../../Core/Utils/GameplayTagUtils"),
+  ModelManager_1 = require("../../../../../../Manager/ModelManager"),
+  PhantomUtil_1 = require("../../../../../../Module/Phantom/PhantomUtil"),
+  ActiveBuffConfigs_1 = require("../Buff/ActiveBuffConfigs");
 class BuffEffectBase {
   constructor(t) {
     (this.RequireAndLimits = t),
@@ -67,7 +67,7 @@ class BuffEffectBase {
     return !this.IsInLoop;
   }
   CheckRequirements(t) {
-    if (this.RequireAndLimits.Requirements.length === 0) return !0;
+    if (0 === this.RequireAndLimits.Requirements.length) return !0;
     switch (this.RequireAndLimits.CheckType) {
       case 0:
         for (const e of this.RequireAndLimits.Requirements)
@@ -173,6 +173,7 @@ class BuffEffectBase {
       case 2:
         return this.InstigatorBuffComponent;
       default:
+        return;
     }
   }
   GetDebugString() {
@@ -233,7 +234,7 @@ class BuffEffect extends (exports.BuffEffectBase = BuffEffectBase) {
     return this.PostExecuted(), (this.IsInLoop = !1), t;
   }
   PostExecuted() {
-    let t;
+    var t;
     this.ActiveHandleId < 0 ||
       !this.OwnerBuffComponent ||
       ((t =
@@ -243,7 +244,7 @@ class BuffEffect extends (exports.BuffEffectBase = BuffEffectBase) {
         this.OwnerBuffComponent.SetBuffEffectCd(this.BuffId, this.Index, t),
       (t = this.RequireAndLimits.Limits.ExtraEffectRemoveStackNum),
       this.CheckAuthority() &&
-        t > 0 &&
+        0 < t &&
         this.OwnerBuffComponent.RemoveBuffByHandle(
           this.ActiveHandleId,
           t,
@@ -254,7 +255,7 @@ class BuffEffect extends (exports.BuffEffectBase = BuffEffectBase) {
     return (
       this.ActiveHandleId < 0 ||
       !(
-        this.RemainCd > 0 ||
+        0 < this.RemainCd ||
         RandomSystem_1.default.GetRandomPercent() >
           this.RequireAndLimits.Limits.ExtraEffectProbability
       )
@@ -262,4 +263,4 @@ class BuffEffect extends (exports.BuffEffectBase = BuffEffectBase) {
   }
 }
 exports.BuffEffect = BuffEffect;
-// # sourceMappingURL=ExtraEffectBase.js.map
+//# sourceMappingURL=ExtraEffectBase.js.map

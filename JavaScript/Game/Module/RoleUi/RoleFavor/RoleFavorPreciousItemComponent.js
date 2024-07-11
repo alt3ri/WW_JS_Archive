@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleFavorPreciousItemComponent = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const GRAY_COLOR = "8F8F8FFF";
-const NORMAL_COLOR = "FFFFFFFF";
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  GRAY_COLOR = "8F8F8FFF",
+  NORMAL_COLOR = "FFFFFFFF";
 class RoleFavorPreciousItemComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t, i, s = !1) {
     super(),
@@ -59,4 +59,4 @@ class RoleFavorPreciousItemComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleFavorPreciousItemComponent = RoleFavorPreciousItemComponent;
-// # sourceMappingURL=RoleFavorPreciousItemComponent.js.map
+//# sourceMappingURL=RoleFavorPreciousItemComponent.js.map

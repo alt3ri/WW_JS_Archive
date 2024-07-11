@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleLogicController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Stats_1 = require("../../../Core/Common/Stats");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const StatDefine_1 = require("../../Common/StatDefine");
-const GlobalData_1 = require("../../GlobalData");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  StatDefine_1 = require("../../Common/StatDefine"),
+  GlobalData_1 = require("../../GlobalData"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class BattleLogicController extends ControllerBase_1.ControllerBase {
   static ExecuteEntityLivingStatusNotify(e) {
     const o = ModelManager_1.ModelManager.CreatureModel.GetEntity(
@@ -69,4 +69,4 @@ class BattleLogicController extends ControllerBase_1.ControllerBase {
   (BattleLogicController.dgr = void 0),
   (BattleLogicController.Cgr = void 0),
   (BattleLogicController.ggr = void 0);
-// # sourceMappingURL=BattleLogicController.js.map
+//# sourceMappingURL=BattleLogicController.js.map

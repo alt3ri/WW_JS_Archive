@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerRoleComplexItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class TowerRoleComplexItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super();
@@ -20,9 +20,9 @@ class TowerRoleComplexItem extends UiPanelBase_1.UiPanelBase {
     this.GetItem(2).SetUIActive(!1);
   }
   RefreshRoleId(e) {
-    let r;
-    const s = this.GetTexture(1);
-    const t = this.GetSprite(0);
+    var r,
+      s = this.GetTexture(1),
+      t = this.GetSprite(0);
     e
       ? (s.SetUIActive(!0),
         t.SetUIActive(!0),
@@ -36,4 +36,4 @@ class TowerRoleComplexItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.TowerRoleComplexItem = TowerRoleComplexItem;
-// # sourceMappingURL=TowerRoleComplexItem.js.map
+//# sourceMappingURL=TowerRoleComplexItem.js.map

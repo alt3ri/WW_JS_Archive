@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ElementPanel = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
-const ElementItem_1 = require("./ElementItem");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
+  ElementItem_1 = require("./ElementItem");
 class TipPanel extends UiPanelBase_1.UiPanelBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -19,7 +19,7 @@ class TipPanel extends UiPanelBase_1.UiPanelBase {
   }
   UpdateNum(e) {
     this.GetText(1).SetText(e.toString()),
-      e === 0
+      0 === e
         ? LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(2),
             "Roguelike_Yuansu_Empty",
@@ -93,11 +93,11 @@ class ElementPanel extends UiPanelBase_1.UiPanelBase {
       this.GetItem(4).SetUIActive(!1);
   }
   Refresh(e = void 0) {
-    const i = new Array();
-    const [, t] =
-      ModelManager_1.ModelManager.RoguelikeModel.GetSortElementInfoArrayMap(
-        e?.ElementDict,
-      );
+    var i = new Array(),
+      [, t] =
+        ModelManager_1.ModelManager.RoguelikeModel.GetSortElementInfoArrayMap(
+          e?.ElementDict,
+        );
     for (const n of RoguelikeDefine_1.sortElementArray) {
       let e = t.get(n);
       (e = e || new RoguelikeDefine_1.ElementInfo(n, 0)), i.push(e);
@@ -105,7 +105,7 @@ class ElementPanel extends UiPanelBase_1.UiPanelBase {
     this.Mhi.RefreshByData(i);
     let s = 0;
     i.forEach((e) => {
-      e.ElementId !== 7 && (s += e.Count);
+      7 !== e.ElementId && (s += e.Count);
     }),
       void 0 === e || e.ElementDict.size <= 0
         ? this.GetText(1).SetText(s.toString())
@@ -118,4 +118,4 @@ class ElementPanel extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ElementPanel = ElementPanel;
-// # sourceMappingURL=ElementPanel.js.map
+//# sourceMappingURL=ElementPanel.js.map

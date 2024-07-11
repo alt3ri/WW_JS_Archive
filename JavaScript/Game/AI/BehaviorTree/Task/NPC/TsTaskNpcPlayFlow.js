@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const GlobalData_1 = require("../../../../GlobalData");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const TsAiController_1 = require("../../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase");
-const DEFAULT_WAIT_TIME = 3;
-const STOP_MONTAGE_BLEND_OUT_TIME = 0.1;
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  TsAiController_1 = require("../../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase"),
+  DEFAULT_WAIT_TIME = 3,
+  STOP_MONTAGE_BLEND_OUT_TIME = 0.1;
 class TsTaskNpcPlayFlow extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -47,12 +47,12 @@ class TsTaskNpcPlayFlow extends TsTaskAbortImmediatelyBase_1.default {
   ReceiveTickAI(t, i, s) {
     this.FlowEnd
       ? this.Finish(!0)
-      : this.TimeRemain > 0 &&
+      : 0 < this.TimeRemain &&
         ((this.TimeRemain -= s), this.TimeRemain < 0) &&
         this.HandleFlowAction(this.TempFlowIndex + 1);
   }
   HandlePlayFlow() {
-    const t = ConfigManager_1.ConfigManager.FlowConfig.GetRandomFlow(
+    var t = ConfigManager_1.ConfigManager.FlowConfig.GetRandomFlow(
       this.TsFlowListName,
       Number(this.TsFlowSubTitle),
       this.ActorOwner.ActorLabel,
@@ -61,19 +61,19 @@ class TsTaskNpcPlayFlow extends TsTaskAbortImmediatelyBase_1.default {
   }
   HandleFlowAction(t) {
     this.TempFlowIndex = t;
-    let i = this.TempTalkItems;
+    var i = this.TempTalkItems;
     i.length > t
       ? ((i = i[t]),
         this.ExecuteNpcFlow(i)
           ? ((this.FlowEnd = !1),
             (this.TimeRemain =
-              i.WaitTime && i.WaitTime > 0 ? i.WaitTime : DEFAULT_WAIT_TIME))
+              i.WaitTime && 0 < i.WaitTime ? i.WaitTime : DEFAULT_WAIT_TIME))
           : this.HandleFlowAction(t + 1))
       : (this.FlowEnd = !0);
   }
   ExecuteNpcFlow(t) {
     let i = !1;
-    let s = this.GetFlowText(t.TidTalk);
+    var s = this.GetFlowText(t.TidTalk);
     return (
       s &&
         ((i = !0), this.HeadInfoComp) &&
@@ -116,4 +116,4 @@ class TsTaskNpcPlayFlow extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskNpcPlayFlow;
-// # sourceMappingURL=TsTaskNpcPlayFlow.js.map
+//# sourceMappingURL=TsTaskNpcPlayFlow.js.map

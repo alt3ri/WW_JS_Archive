@@ -1,22 +1,22 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActorSystem = void 0);
-const cpp_1 = require("cpp");
-const UE = require("ue");
-const Info_1 = require("../Common/Info");
-const Log_1 = require("../Common/Log");
-const Stats_1 = require("../Common/Stats");
-const PriorityQueue_1 = require("../Container/PriorityQueue");
-const TickSystem_1 = require("../Tick/TickSystem");
-const ActorPoolGuard_1 = require("./ActorPoolGuard");
-const ActorSystemDebugger_1 = require("./ActorSystemDebugger");
-const DEFAULT_CAPACITY = 300;
-const ACCESS_WEIGHT = 1;
-const FRESHNESS_WIGHT = 1;
-const COST_WIGHT = 10;
-const INDEX_WIGHT = 5;
-const COST_DECAY_RATE = 0.5;
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
+  Info_1 = require("../Common/Info"),
+  Log_1 = require("../Common/Log"),
+  Stats_1 = require("../Common/Stats"),
+  PriorityQueue_1 = require("../Container/PriorityQueue"),
+  TickSystem_1 = require("../Tick/TickSystem"),
+  ActorPoolGuard_1 = require("./ActorPoolGuard"),
+  ActorSystemDebugger_1 = require("./ActorSystemDebugger"),
+  DEFAULT_CAPACITY = 300,
+  ACCESS_WEIGHT = 1,
+  FRESHNESS_WIGHT = 1,
+  COST_WIGHT = 10,
+  INDEX_WIGHT = 5,
+  COST_DECAY_RATE = 0.5;
 class Entry {
   constructor(t, e) {
     (this.Class = t),
@@ -40,10 +40,10 @@ class Entry {
 }
 (Entry.o6 = 0),
   (Entry.Compare = (t, e) => {
-    var r = t.Values.size;
-    const o = e.Values.size;
-    var r = t.Budget === 0 || r <= t.Budget;
-    return r == (e.Budget === 0 || o <= e.Budget)
+    var r = t.Values.size,
+      o = e.Values.size,
+      r = 0 === t.Budget || r <= t.Budget;
+    return r == (0 === e.Budget || o <= e.Budget)
       ? t.Score - e.Score
       : r
         ? 1
@@ -77,22 +77,22 @@ class ActorSystem {
         ActorSystem._6();
   }
   static get HitRate() {
-    return ActorSystem.h6 > 0
+    return 0 < ActorSystem.h6
       ? ActorSystem.h6 / (ActorSystem.h6 + ActorSystem.l6)
       : 0;
   }
   static Get(r, o, s, c = !0) {
     if (ActorSystem.c6(r)) {
       ActorSystem.m6(ActorSystem.d6, r, "ActorSystem.Get.");
-      if (!ActorSystem.Enable || ActorSystem.State !== 1) {
+      if (!ActorSystem.Enable || 1 !== ActorSystem.State) {
         const t = ActorSystem.Spawn(r, o, s);
         return t;
       }
       let e = ActorSystem.ve.get(r);
       if (!e) {
         e = new Entry(r, ActorSystem.C6.get(r) ?? 0);
-        const A = cpp_1.KuroTime.GetMilliseconds64();
-        const t = ActorSystem.g6(r, o, s);
+        const A = cpp_1.KuroTime.GetMilliseconds64(),
+          t = ActorSystem.g6(r, o, s);
         return (
           e.Touch(cpp_1.KuroTime.GetMilliseconds64() - A),
           ActorSystem.mp.Push(e),
@@ -113,10 +113,10 @@ class ActorSystem {
           t
         );
       }
-      const m = e.Values;
+      var m = e.Values;
       let t = void 0;
       for (; m.size; ) {
-        let S = m.values().next();
+        var S = m.values().next();
         if (((t = S.value), m.delete(t), --ActorSystem.n6, t)) {
           if (t.IsValid()) {
             S = t.GetWorld();
@@ -216,8 +216,8 @@ class ActorSystem {
         UE.KuroActorManager.DestroyActor(e),
         !1
       );
-    if (ActorSystem.Enable && ActorSystem.State === 1) {
-      const r = e.GetClass();
+    if (ActorSystem.Enable && 1 === ActorSystem.State) {
+      var r = e.GetClass();
       ActorSystem.m6(ActorSystem.v6, r, "ActorSystem.Put.");
       if (ActorPoolGuard_1.ActorPoolGuard.CleanActorBeforeEnPool(e, t)) {
         let t = ActorSystem.ve.get(r);
@@ -294,11 +294,11 @@ class ActorSystem {
         !1);
   }
   static _6() {
-    let t;
-    let e;
-    const r = ActorSystem.mp.Top;
+    var t,
+      e,
+      r = ActorSystem.mp.Top;
     return r
-      ? ((t = r.Values).size === 0
+      ? (0 === (t = r.Values).size
           ? (ActorSystem.mp.Pop(), ActorSystem.ve.delete(r.Class))
           : ((e = t.values().next().value),
             t.delete(e),
@@ -359,8 +359,8 @@ class ActorSystem {
     }
   }
   static IsActorInPool(t) {
-    var e = t.GetClass();
-    var e = ActorSystem.ve.get(e);
+    var e = t.GetClass(),
+      e = ActorSystem.ve.get(e);
     return !!e && e?.Values.has(t);
   }
 }
@@ -388,8 +388,8 @@ class ActorSystem {
   (ActorSystem.S6 = new WeakMap()),
   (ActorSystem.r6 = () => {
     for (; ActorSystem.f6.length; ) {
-      const t = ActorSystem.f6.pop();
-      const e = t.Actor;
+      var t = ActorSystem.f6.pop(),
+        e = t.Actor;
       if (e && e.IsValid()) {
         ActorSystem.m6(ActorSystem.T6, e.GetClass(), "ActorSystem.Destroy.");
         UE.KuroActorManager.DestroyActor(e),
@@ -414,7 +414,7 @@ class ActorSystem {
     }
   }),
   (ActorSystem.ClearPool = () => {
-    for (; ActorSystem.n6 > 0; ) ActorSystem._6();
+    for (; 0 < ActorSystem.n6; ) ActorSystem._6();
     _a.Clear();
   });
-// # sourceMappingURL=ActorSystem.js.map
+//# sourceMappingURL=ActorSystem.js.map

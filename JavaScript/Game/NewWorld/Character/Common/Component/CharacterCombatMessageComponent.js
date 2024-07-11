@@ -1,35 +1,39 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, o, s) {
-    let r;
-    const i = arguments.length;
-    let a =
-      i < 3 ? t : s === null ? (s = Object.getOwnPropertyDescriptor(t, o)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      i = arguments.length,
+      a =
+        i < 3
+          ? t
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(t, o))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       a = Reflect.decorate(e, t, o, s);
     else
-      for (let n = e.length - 1; n >= 0; n--)
-        (r = e[n]) && (a = (i < 3 ? r(a) : i > 3 ? r(t, o, a) : r(t, o)) || a);
-    return i > 3 && a && Object.defineProperty(t, o, a), a;
+      for (var n = e.length - 1; 0 <= n; n--)
+        (r = e[n]) && (a = (i < 3 ? r(a) : 3 < i ? r(t, o, a) : r(t, o)) || a);
+    return 3 < i && a && Object.defineProperty(t, o, a), a;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterCombatMessageComponent = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../Core/Common/Time");
-const Queue_1 = require("../../../../../Core/Container/Queue");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const CombatMessageController_1 = require("../../../../Module/CombatMessage/CombatMessageController");
-const CombatDebugController_1 = require("../../../../Utils/CombatDebugController");
-const MESSAGE_BUFFER_MAX_SIZE = 50;
+const Log_1 = require("../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  Queue_1 = require("../../../../../Core/Container/Queue"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  CombatMessageController_1 = require("../../../../Module/CombatMessage/CombatMessageController"),
+  CombatDebugController_1 = require("../../../../Utils/CombatDebugController"),
+  MESSAGE_BUFFER_MAX_SIZE = 50;
 let CharacterCombatMessageComponent = class CharacterCombatMessageComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
       (this.t5r = new Queue_1.Queue(MESSAGE_BUFFER_MAX_SIZE)),
       (this.i5r = () => {
-        for (; this.t5r.Size > 0; ) {
-          const e = this.t5r.Front;
+        for (; 0 < this.t5r.Size; ) {
+          var e = this.t5r.Front;
           if (Time_1.Time.NowSeconds < e[3]) {
             if (this.t5r.Size < MESSAGE_BUFFER_MAX_SIZE) break;
             CombatDebugController_1.CombatDebugController.CombatWarn(
@@ -68,8 +72,8 @@ let CharacterCombatMessageComponent = class CharacterCombatMessageComponent exte
           this.o5r(e));
   }
   OnActivate() {
-    for (; this.t5r.Size > 0; ) {
-      const e = this.t5r.Pop();
+    for (; 0 < this.t5r.Size; ) {
+      var e = this.t5r.Pop();
       CombatDebugController_1.CombatDebugController.CombatInfo(
         "Notify",
         this.Entity,
@@ -92,8 +96,8 @@ let CharacterCombatMessageComponent = class CharacterCombatMessageComponent exte
   }
   OnDisable() {
     if (this.Entity.IsInit)
-      for (; this.t5r.Size > 0; ) {
-        const e = this.t5r.Pop();
+      for (; 0 < this.t5r.Size; ) {
+        var e = this.t5r.Pop();
         CombatDebugController_1.CombatDebugController.CombatInfo(
           "Notify",
           this.Entity,
@@ -139,4 +143,4 @@ let CharacterCombatMessageComponent = class CharacterCombatMessageComponent exte
   CharacterCombatMessageComponent,
 )),
   (exports.CharacterCombatMessageComponent = CharacterCombatMessageComponent);
-// # sourceMappingURL=CharacterCombatMessageComponent.js.map
+//# sourceMappingURL=CharacterCombatMessageComponent.js.map

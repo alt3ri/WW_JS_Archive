@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventSetVar = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const LevelGeneralNetworks_1 = require("../LevelGeneralNetworks");
+const Log_1 = require("../../../Core/Common/Log"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  LevelGeneralNetworks_1 = require("../LevelGeneralNetworks");
 class LevelEventSetVar extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, r, t) {
     e
@@ -19,4 +19,4 @@ class LevelEventSetVar extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventSetVar = LevelEventSetVar;
-// # sourceMappingURL=LevelEventSetVar.js.map
+//# sourceMappingURL=LevelEventSetVar.js.map

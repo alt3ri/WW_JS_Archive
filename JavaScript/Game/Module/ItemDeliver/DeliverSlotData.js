@@ -25,13 +25,13 @@ class DeliverSlotData {
     (this.lCi = 0), (this.kAt = 0);
   }
   CanSet(t) {
-    return !((this.lCi > 0 && this.lCi !== t) || !this.aCi.has(t));
+    return !((0 < this.lCi && this.lCi !== t) || !this.aCi.has(t));
   }
   IsEnough() {
     return this.kAt >= this.hCi;
   }
   HasItem() {
-    return this.lCi > 0;
+    return 0 < this.lCi;
   }
   GetItemRangeSet() {
     return this.aCi;
@@ -53,4 +53,4 @@ class DeliverSlotData {
   }
 }
 exports.DeliverSlotData = DeliverSlotData;
-// # sourceMappingURL=DeliverSlotData.js.map
+//# sourceMappingURL=DeliverSlotData.js.map

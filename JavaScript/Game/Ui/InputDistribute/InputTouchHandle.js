@@ -14,4 +14,4 @@ class InputTouchHandle extends InputDistributeHandle_1.InputDistributeHandle {
   }
 }
 exports.InputTouchHandle = InputTouchHandle;
-// # sourceMappingURL=InputTouchHandle.js.map
+//# sourceMappingURL=InputTouchHandle.js.map

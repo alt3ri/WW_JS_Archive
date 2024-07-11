@@ -10,4 +10,4 @@ class UiModelCreateData {
   }
 }
 exports.UiModelCreateData = UiModelCreateData;
-// # sourceMappingURL=UiModelCreateData.js.map
+//# sourceMappingURL=UiModelCreateData.js.map

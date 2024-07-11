@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotFormation = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelLoadingController_1 = require("../LevelLoading/LevelLoadingController");
+const Log_1 = require("../../../Core/Common/Log"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelLoadingController_1 = require("../LevelLoading/LevelLoadingController");
 class PlotFormation {
   ChangeFormation() {
     Log_1.Log.CheckInfo() &&
@@ -20,7 +20,7 @@ class PlotFormation {
         0,
       ),
       await ModelManager_1.ModelManager.SceneTeamModel.LoadTeamPromise.Promise);
-    const o = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var o = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     o?.Entity?.IsInit
       ? ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
           o.Entity,
@@ -38,4 +38,4 @@ class PlotFormation {
   }
 }
 exports.PlotFormation = PlotFormation;
-// # sourceMappingURL=PlotFormation.js.map
+//# sourceMappingURL=PlotFormation.js.map

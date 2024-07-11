@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ThreeSectionTimeline = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const RenderModuleController_1 = require("../Manager/RenderModuleController");
+const UE = require("ue"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  RenderModuleController_1 = require("../Manager/RenderModuleController");
 class ThreeSectionTimeline {
   constructor() {
     (this.il = -0),
@@ -112,7 +112,7 @@ class ThreeSectionTimeline {
     )
       return 0;
     if (this.Nhr) {
-      const i =
+      var i =
         RenderModuleController_1.RenderModuleController.GlobalTimeDilation;
       if (!MathUtils_1.MathUtils.IsNearlyEqual(i, 1)) return t * (1 / i);
     }
@@ -132,4 +132,4 @@ class ThreeSectionTimeline {
   }
 }
 exports.ThreeSectionTimeline = ThreeSectionTimeline;
-// # sourceMappingURL=ThreeSectionTimeline.js.map
+//# sourceMappingURL=ThreeSectionTimeline.js.map

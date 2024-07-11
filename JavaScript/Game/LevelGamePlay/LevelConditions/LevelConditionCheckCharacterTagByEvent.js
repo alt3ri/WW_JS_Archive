@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckCharacterTagByEvent = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionCheckCharacterTagByEvent extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, a, ...r) {
-    let n;
+    var n;
     return !(
       r[2] >= r[3] ||
       !(n = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity) ||
@@ -15,4 +15,4 @@ class LevelConditionCheckCharacterTagByEvent extends LevelGeneralBase_1.LevelCon
 }
 exports.LevelConditionCheckCharacterTagByEvent =
   LevelConditionCheckCharacterTagByEvent;
-// # sourceMappingURL=LevelConditionCheckCharacterTagByEvent.js.map
+//# sourceMappingURL=LevelConditionCheckCharacterTagByEvent.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletLogicDestroyBulletController = void 0);
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const BulletController_1 = require("../BulletController");
-const BulletHitActorData_1 = require("../Model/BulletHitActorData");
-const BulletLogicController_1 = require("./BulletLogicController");
-const NONE_STRING = "None";
+const ModelManager_1 = require("../../../Manager/ModelManager"),
+  BulletController_1 = require("../BulletController"),
+  BulletHitActorData_1 = require("../Model/BulletHitActorData"),
+  BulletLogicController_1 = require("./BulletLogicController"),
+  NONE_STRING = "None";
 class BulletLogicDestroyBulletController extends BulletLogicController_1.BulletLogicController {
   constructor(t, e) {
     super(t, e), (this.u9o = t);
@@ -21,7 +21,7 @@ class BulletLogicDestroyBulletController extends BulletLogicController_1.BulletL
       );
       if (e)
         for (const r of e) {
-          const l = r.GetBulletInfo();
+          var l = r.GetBulletInfo();
           l.BulletRowName === this.u9o.DestroyBulletRowName &&
             BulletController_1.BulletController.DestroyBullet(
               l.BulletEntityId,
@@ -42,4 +42,4 @@ class BulletLogicDestroyBulletController extends BulletLogicController_1.BulletL
   }
 }
 exports.BulletLogicDestroyBulletController = BulletLogicDestroyBulletController;
-// # sourceMappingURL=BulletLogicDestroyBulletController.js.map
+//# sourceMappingURL=BulletLogicDestroyBulletController.js.map

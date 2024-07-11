@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HandBookModel = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const HandBookController_1 = require("./HandBookController");
-const HandBookDefine_1 = require("./HandBookDefine");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  HandBookController_1 = require("./HandBookController"),
+  HandBookDefine_1 = require("./HandBookDefine");
 class HandBookModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -18,17 +18,17 @@ class HandBookModel extends ModelBase_1.ModelBase {
       (this.HZt = new Map());
   }
   UpdateHandBookActiveStateMap(e, o) {
-    var e = this.GetClientHandBookType(e, o.qRs);
-    let t = o.Ekn;
-    const r = TimeUtil_1.TimeUtil.DateFormat4(
-      new Date(o.BRs * TimeUtil_1.TimeUtil.InverseMillisecond),
-    );
-    const a = o.cfs;
-    const n = o.O3n;
-    const i = new HandBookDefine_1.HandBookEntry(t, r, n, a);
-    const s = this.kZt.get(e);
+    var e = this.GetClientHandBookType(e, o.qRs),
+      t = o.Ekn,
+      r = TimeUtil_1.TimeUtil.DateFormat4(
+        new Date(o.BRs * TimeUtil_1.TimeUtil.InverseMillisecond),
+      ),
+      a = o.cfs,
+      n = o.O3n,
+      i = new HandBookDefine_1.HandBookEntry(t, r, n, a),
+      s = this.kZt.get(e);
     if (s) {
-      const l = s.length;
+      var l = s.length;
       let t = !1;
       for (let e = 0; e < l; e++) {
         const o = s[e];
@@ -55,13 +55,13 @@ class HandBookModel extends ModelBase_1.ModelBase {
     this.kZt.clear();
   }
   InitHandBookActiveStateMap(t, o) {
-    const r = this.GetClientHandBookEntryList(o);
-    const a = [];
-    const n = r.length;
+    var r = this.GetClientHandBookEntryList(o),
+      a = [],
+      n = r.length;
     if (t !== Protocol_1.Aki.Protocol.Hks.Proto_Photograph) {
-      const i = this.GetClientHandBookType(t);
+      var i = this.GetClientHandBookType(t);
       for (let e = 0; e < n; e++) {
-        const s = r[e];
+        var s = r[e];
         HandBookController_1.HandBookController.CheckConfigIsLegal(i, s.Id) &&
           a.push(s);
       }
@@ -69,8 +69,8 @@ class HandBookModel extends ModelBase_1.ModelBase {
     } else {
       this.ZBn();
       for (let e = 0; e < n; e++) {
-        const l = r[e];
-        const _ = this.GetClientHandBookType(t, o[e].qRs);
+        var l = r[e],
+          _ = this.GetClientHandBookType(t, o[e].qRs);
         HandBookController_1.HandBookController.CheckConfigIsLegal(_, l.Id) &&
           this.kZt.get(_).push(l);
       }
@@ -82,15 +82,15 @@ class HandBookModel extends ModelBase_1.ModelBase {
   }
   InitHandBookRedDotList(t) {
     this.FZt = [];
-    const o = t.length;
+    var o = t.length;
     for (let e = 0; e < o; e++) {
-      const r = this.GetClientHandBookType(t[e]);
-      if (r === 5) {
-        const a =
-          ConfigManager_1.ConfigManager.HandBookConfig.GetItemHandBookTypeConfigList();
-        const n = a.length;
+      var r = this.GetClientHandBookType(t[e]);
+      if (5 === r) {
+        var a =
+            ConfigManager_1.ConfigManager.HandBookConfig.GetItemHandBookTypeConfigList(),
+          n = a.length;
         for (let e = 0; e < n; e++) {
-          const i = a[e];
+          var i = a[e];
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnItemReadRedDotUpdate,
             i.Id,
@@ -104,11 +104,11 @@ class HandBookModel extends ModelBase_1.ModelBase {
     );
   }
   UpdateRedDot(t, o) {
-    const r = this.kZt.get(t);
+    var r = this.kZt.get(t);
     if (r) {
-      const a = r.length;
+      var a = r.length;
       for (let e = 0; e < a; e++) {
-        let n = r[e];
+        var n = r[e];
         if (n.Id === o) {
           (n.IsRead = !0),
             EventSystem_1.EventSystem.Emit(
@@ -119,7 +119,7 @@ class HandBookModel extends ModelBase_1.ModelBase {
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnPhantomReadRedDotUpdate,
             ),
-            t === 5 &&
+            5 === t &&
               ((n =
                 ConfigManager_1.ConfigManager.HandBookConfig.GetItemHandBookConfigById(
                   o,
@@ -134,7 +134,7 @@ class HandBookModel extends ModelBase_1.ModelBase {
     }
   }
   IsShowRedDot(t) {
-    const o = this.FZt.length;
+    var o = this.FZt.length;
     for (let e = 0; e < o; e++) if (t === this.FZt[e]) return !0;
     return !1;
   }
@@ -143,27 +143,27 @@ class HandBookModel extends ModelBase_1.ModelBase {
     return e ? e.length : 0;
   }
   GetClientHandBookEntryList(t) {
-    const o = [];
-    const r = t.length;
+    var o = [],
+      r = t.length;
     for (let e = 0; e < r; e++) {
-      var a = t[e];
-      var n = a.Ekn;
-      const i = TimeUtil_1.TimeUtil.DateFormat4(
-        new Date(a.BRs * TimeUtil_1.TimeUtil.InverseMillisecond),
-      );
-      const s = a.cfs;
-      var a = a.O3n;
-      var n = new HandBookDefine_1.HandBookEntry(n, i, a, s);
+      var a = t[e],
+        n = a.Ekn,
+        i = TimeUtil_1.TimeUtil.DateFormat4(
+          new Date(a.BRs * TimeUtil_1.TimeUtil.InverseMillisecond),
+        ),
+        s = a.cfs,
+        a = a.O3n,
+        n = new HandBookDefine_1.HandBookEntry(n, i, a, s);
       o.push(n);
     }
     return o;
   }
   GetHandBookInfo(e, t) {
-    const o = this.kZt.get(e);
+    var o = this.kZt.get(e);
     if (o) {
-      const r = o.length;
+      var r = o.length;
       for (let e = 0; e < r; e++) {
-        const a = o[e];
+        var a = o[e];
         if (a.Id === t) return a;
       }
     }
@@ -245,16 +245,16 @@ class HandBookModel extends ModelBase_1.ModelBase {
     return t;
   }
   GetServerHandBookTypeList(t) {
-    const o = t.length;
-    const r = [];
+    var o = t.length,
+      r = [];
     for (let e = 0; e < o; e++) {
-      const a = this.GetServerHandBookType(t[e]);
+      var a = this.GetServerHandBookType(t[e]);
       r.push(a);
     }
     return r;
   }
   GetConfigListIdByType(e) {
-    const t = this.VZt.get(e);
+    var t = this.VZt.get(e);
     if (t) return t;
     let o = void 0;
     switch (e) {
@@ -290,21 +290,21 @@ class HandBookModel extends ModelBase_1.ModelBase {
         o =
           ConfigManager_1.ConfigManager.HandBookConfig.GetAllPlotHandBookConfig();
     }
-    const r = o.length;
-    const a = [];
+    var r = o.length,
+      a = [];
     for (let e = 0; e < r; e++) {
-      const n = o[e];
+      var n = o[e];
       a.push(n.Id);
     }
     return this.VZt.set(e, a), a;
   }
   GetAnimalConfigByMeshId(e) {
-    if (this.HZt.size === 0) {
-      const t =
-        ConfigManager_1.ConfigManager.HandBookConfig.GetAnimalHandBookConfigList();
-      const o = t.length;
+    if (0 === this.HZt.size) {
+      var t =
+          ConfigManager_1.ConfigManager.HandBookConfig.GetAnimalHandBookConfigList(),
+        o = t.length;
       for (let e = 0; e < o; e++) {
-        const r = t[e];
+        var r = t[e];
         this.HZt.set(r.MeshId, r);
       }
     }
@@ -312,4 +312,4 @@ class HandBookModel extends ModelBase_1.ModelBase {
   }
 }
 exports.HandBookModel = HandBookModel;
-// # sourceMappingURL=HandBookModel.js.map
+//# sourceMappingURL=HandBookModel.js.map

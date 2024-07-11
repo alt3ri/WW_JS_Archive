@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QteTipItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class QteTipItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments), (this.WNi = "");
@@ -24,4 +24,4 @@ class QteTipItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.QteTipItem = QteTipItem;
-// # sourceMappingURL=QteTipItem.js.map
+//# sourceMappingURL=QteTipItem.js.map

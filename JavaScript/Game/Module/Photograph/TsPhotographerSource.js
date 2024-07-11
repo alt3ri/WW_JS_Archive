@@ -5,4 +5,4 @@ const UE = require("ue");
 class TsPhotographerSource extends UE.Actor {}
 (exports.TsPhotographerSource = TsPhotographerSource),
   (exports.default = TsPhotographerSource);
-// # sourceMappingURL=TsPhotographerSource.js.map
+//# sourceMappingURL=TsPhotographerSource.js.map

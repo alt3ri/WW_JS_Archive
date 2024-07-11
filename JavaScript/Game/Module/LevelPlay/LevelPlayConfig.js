@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelPlayConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ExchangeRewardById_1 = require("../../../Core/Define/ConfigQuery/ExchangeRewardById");
-const LevelPlayDataById_1 = require("../../../Core/Define/ConfigQuery/LevelPlayDataById");
-const LevelPlayNodeDataByKey_1 = require("../../../Core/Define/ConfigQuery/LevelPlayNodeDataByKey");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  ExchangeRewardById_1 = require("../../../Core/Define/ConfigQuery/ExchangeRewardById"),
+  LevelPlayDataById_1 = require("../../../Core/Define/ConfigQuery/LevelPlayDataById"),
+  LevelPlayNodeDataByKey_1 = require("../../../Core/Define/ConfigQuery/LevelPlayNodeDataByKey"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class LevelPlayConfig extends ConfigBase_1.ConfigBase {
   GetExchangeRewardInfo(e) {
-    const a = ExchangeRewardById_1.configExchangeRewardById.GetConfig(e);
+    var a = ExchangeRewardById_1.configExchangeRewardById.GetConfig(e);
     return (
       a ||
         (Log_1.Log.CheckError() &&
@@ -23,7 +23,7 @@ class LevelPlayConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetLevelPlayConfig(e) {
-    const a = LevelPlayDataById_1.configLevelPlayDataById.GetConfig(e, !1);
+    var a = LevelPlayDataById_1.configLevelPlayDataById.GetConfig(e, !1);
     return (
       a ||
         (Log_1.Log.CheckError() &&
@@ -35,7 +35,7 @@ class LevelPlayConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetLevelPlayNodeConfig(e, a) {
-    const o = LevelPlayNodeDataByKey_1.configLevelPlayNodeDataByKey.GetConfig(
+    var o = LevelPlayNodeDataByKey_1.configLevelPlayNodeDataByKey.GetConfig(
       e + "_" + a,
       !1,
     );
@@ -54,4 +54,4 @@ class LevelPlayConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.LevelPlayConfig = LevelPlayConfig;
-// # sourceMappingURL=LevelPlayConfig.js.map
+//# sourceMappingURL=LevelPlayConfig.js.map

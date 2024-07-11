@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const CharacterBuffIds_1 = require("../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds");
-const CombatDebugController_1 = require("../Utils/CombatDebugController");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  CharacterBuffIds_1 = require("../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds"),
+  CombatDebugController_1 = require("../Utils/CombatDebugController");
 class TsAnimNotifyEndSkill extends UE.KuroAnimNotify {
   K2_Notify(e, r) {
     e = e.GetOwner();
     if (e instanceof TsBaseCharacter_1.default) {
       e = e.CharacterActorComponent?.Entity;
       if (!e?.Valid) return !1;
-      const t = e.GetComponent(185);
-      const a = e.GetComponent(33);
-      const i = e.GetComponent(157);
+      var t = e.GetComponent(185),
+        a = e.GetComponent(33),
+        i = e.GetComponent(157);
       if (!t?.Valid || !a?.Valid || !i?.Valid) return !1;
       r = UE.KismetSystemLibrary.GetPathName(r);
       if (
@@ -44,4 +44,4 @@ class TsAnimNotifyEndSkill extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifyEndSkill;
-// # sourceMappingURL=TsAnimNotifyEndSkill.js.map
+//# sourceMappingURL=TsAnimNotifyEndSkill.js.map

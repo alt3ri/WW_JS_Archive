@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UidView = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const FeatureRestrictionTemplate_1 = require("../Common/FeatureRestrictionTemplate");
-const LguiUtil_1 = require("../Util/LguiUtil");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  FeatureRestrictionTemplate_1 = require("../Common/FeatureRestrictionTemplate"),
+  LguiUtil_1 = require("../Util/LguiUtil");
 class UidView extends UiViewBase_1.UiViewBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIText]];
@@ -25,4 +25,4 @@ class UidView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.UidView = UidView;
-// # sourceMappingURL=UidView.js.map
+//# sourceMappingURL=UidView.js.map

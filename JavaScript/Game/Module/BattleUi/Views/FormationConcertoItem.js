@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FormationConcertoItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class FormationConcertoItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(), (this.sst = ""), this.CreateThenShowByActor(e);
@@ -14,7 +14,7 @@ class FormationConcertoItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   RefreshConcertoInfoView(e, s, t) {
-    const o = this.GetTexture(1);
+    var o = this.GetTexture(1);
     o.SetColor(t),
       this.GetSprite(0).SetColor(t),
       this.sst !== e.Icon3 &&
@@ -25,4 +25,4 @@ class FormationConcertoItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.FormationConcertoItem = FormationConcertoItem;
-// # sourceMappingURL=FormationConcertoItem.js.map
+//# sourceMappingURL=FormationConcertoItem.js.map

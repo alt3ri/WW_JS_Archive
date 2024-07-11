@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PersonalOptionItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const PersonalTipsById_1 = require("../../../../Core/Define/ConfigQuery/PersonalTipsById");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const PersonalOptionController_1 = require("../Model/PersonalOptionController");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  PersonalTipsById_1 = require("../../../../Core/Define/ConfigQuery/PersonalTipsById"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  PersonalOptionController_1 = require("../Model/PersonalOptionController");
 class PersonalOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(e) {
     super(),
@@ -51,4 +51,4 @@ class PersonalOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.PersonalOptionItem = PersonalOptionItem;
-// # sourceMappingURL=PersonalOptionItem.js.map
+//# sourceMappingURL=PersonalOptionItem.js.map

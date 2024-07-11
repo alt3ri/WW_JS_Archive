@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleBuffSelectView = exports.RoleBuffSelectItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ButtonItem_1 = require("../../Common/Button/ButtonItem");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
-const RogueSelectResult_1 = require("../Define/RogueSelectResult");
-const RoguelikeController_1 = require("../RoguelikeController");
-const RogueSelectBaseView_1 = require("./RogueSelectBaseView");
-const TopPanel_1 = require("./TopPanel");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ButtonItem_1 = require("../../Common/Button/ButtonItem"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
+  RogueSelectResult_1 = require("../Define/RogueSelectResult"),
+  RoguelikeController_1 = require("../RoguelikeController"),
+  RogueSelectBaseView_1 = require("./RogueSelectBaseView"),
+  TopPanel_1 = require("./TopPanel");
 class RoleBuffSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -34,7 +34,7 @@ class RoleBuffSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.yao = e;
   }
   IsSelect() {
-    return this.GetExtendToggle(0).GetToggleState() === 1;
+    return 1 === this.GetExtendToggle(0).GetToggleState();
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -47,12 +47,12 @@ class RoleBuffSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.BtnBindInfo = [[0, this.Iao]]);
   }
   PWt() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterBuffConfig(
         this.RogueGainEntry.ConfigId,
       );
     e &&
-      (ModelManager_1.ModelManager.RoguelikeModel?.GetDescModel() === 0
+      (0 === ModelManager_1.ModelManager.RoguelikeModel?.GetDescModel()
         ? this.GetText(1).ShowTextNew(e.AffixDescSimple)
         : LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(1),
@@ -73,7 +73,7 @@ class RoleBuffSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
       (this.ButtonItem = void 0),
       (this.RoleBuffSelectLayout = void 0),
       (this.m6t = () => {
-        let e;
+        var e;
         this.dho.RogueGainEntryList.length <= 0
           ? RoguelikeController_1.RoguelikeController.RogueChooseDataResultRequest(
               3,
@@ -88,14 +88,14 @@ class RoleBuffSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
               Log_1.Log.Error("Roguelike", 9, "当前没有选中的角色Buff");
       }),
       (this.RefreshBtnEnableClick = () => {
-        let e;
+        var e;
         this.dho.RogueGainEntryList?.length <= 0
           ? this.ButtonItem.SetEnableClick(!0)
           : ((e = this.GetRoleBuffSelectItem()),
             this.ButtonItem.SetEnableClick(void 0 !== e));
       }),
       (this.Rho = () => {
-        const e = new RoleBuffSelectItem();
+        var e = new RoleBuffSelectItem();
         return e.SetToggleStateChangeCallback(this.RefreshBtnEnableClick), e;
       }),
       (this.OnDescModelChange = () => {
@@ -130,7 +130,7 @@ class RoleBuffSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
     (this.Cho = new TopPanel_1.TopPanel()),
       this.AddChild(this.Cho),
       await this.Cho.CreateThenShowByActorAsync(this.GetItem(0).GetOwner());
-    let e = ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.RoleEntry;
+    var e = ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.RoleEntry;
     e &&
       ((e =
         ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterConfig(
@@ -177,4 +177,4 @@ class RoleBuffSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
   }
 }
 exports.RoleBuffSelectView = RoleBuffSelectView;
-// # sourceMappingURL=RoleBuffSelectView.js.map
+//# sourceMappingURL=RoleBuffSelectView.js.map

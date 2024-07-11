@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.IconKeyComponent = void 0);
-const UE = require("ue");
-const KeyComponent_1 = require("./KeyComponent");
+const UE = require("ue"),
+  KeyComponent_1 = require("./KeyComponent");
 class IconKeyComponent extends KeyComponent_1.KeyBaseComponent {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -34,4 +34,4 @@ class IconKeyComponent extends KeyComponent_1.KeyBaseComponent {
   }
 }
 exports.IconKeyComponent = IconKeyComponent;
-// # sourceMappingURL=IconKeyComponent.js.map
+//# sourceMappingURL=IconKeyComponent.js.map

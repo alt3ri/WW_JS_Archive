@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OpenSystemGameSysOpen = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const FunctionController_1 = require("../../../Module/Functional/FunctionController");
-const OpenSystemBase_1 = require("./OpenSystemBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  FunctionController_1 = require("../../../Module/Functional/FunctionController"),
+  OpenSystemBase_1 = require("./OpenSystemBase");
 class OpenSystemGameSysOpen extends OpenSystemBase_1.OpenSystemBase {
   async ExecuteOpenView(e, n) {
     return (
@@ -23,4 +23,4 @@ class OpenSystemGameSysOpen extends OpenSystemBase_1.OpenSystemBase {
   }
 }
 exports.OpenSystemGameSysOpen = OpenSystemGameSysOpen;
-// # sourceMappingURL=OpenSystemGameSysOpen.js.map
+//# sourceMappingURL=OpenSystemGameSysOpen.js.map

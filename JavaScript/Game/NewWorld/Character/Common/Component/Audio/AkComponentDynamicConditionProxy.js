@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AkComponentDynamicConditionProxy = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil");
-const BONE_HIDDEN_SWITCH = 4;
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil"),
+  BONE_HIDDEN_SWITCH = 4;
 class BoneHiddenSwitch {
   constructor() {
     (this.BoneName = ""),
@@ -13,7 +13,7 @@ class BoneHiddenSwitch {
       (this.LastHidden = !1);
   }
   Init(t, i) {
-    const o = i.BoneHiddenSwitch;
+    var o = i.BoneHiddenSwitch;
     o.length !== BONE_HIDDEN_SWITCH &&
       Log_1.Log.CheckWarn() &&
       Log_1.Log.Warn(
@@ -32,10 +32,10 @@ class BoneHiddenSwitch {
       this.S$o(this.LastHidden, t);
   }
   Do(t) {
-    const i = t.Actor.Mesh.IsBoneHiddenByName(
-      FNameUtil_1.FNameUtil.GetDynamicFName(this.BoneName),
-    );
-    const o = i !== this.LastHidden;
+    var i = t.Actor.Mesh.IsBoneHiddenByName(
+        FNameUtil_1.FNameUtil.GetDynamicFName(this.BoneName),
+      ),
+      o = i !== this.LastHidden;
     (this.LastHidden = i), o && this.S$o(this.LastHidden, t);
   }
   S$o(t, i) {}
@@ -46,9 +46,9 @@ class AkComponentDynamicConditionProxy {
     this.Qte = new Array();
   }
   Init(t, i) {
-    let o;
+    var o;
     this.Clear(),
-      i.BoneHiddenSwitch.length > 0 &&
+      0 < i.BoneHiddenSwitch.length &&
         ((o = new BoneHiddenSwitch()).Init(t, i), this.Qte.push(o));
   }
   Do(t) {
@@ -60,4 +60,4 @@ class AkComponentDynamicConditionProxy {
   }
 }
 exports.AkComponentDynamicConditionProxy = AkComponentDynamicConditionProxy;
-// # sourceMappingURL=AkComponentDynamicConditionProxy.js.map
+//# sourceMappingURL=AkComponentDynamicConditionProxy.js.map

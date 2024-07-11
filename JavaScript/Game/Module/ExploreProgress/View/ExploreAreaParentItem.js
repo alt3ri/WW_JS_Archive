@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExploreAreaParentItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const ExploreAreaItem_1 = require("./ExploreAreaItem");
-const ExploreCountryItem_1 = require("./ExploreCountryItem");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  ExploreAreaItem_1 = require("./ExploreAreaItem"),
+  ExploreCountryItem_1 = require("./ExploreCountryItem");
 class ExploreAreaParentItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -46,7 +46,7 @@ class ExploreAreaParentItem extends UiPanelBase_1.UiPanelBase {
       this.ExploreAreaItem.Initialize(this.GetItem(1));
   }
   Update(t, e) {
-    const i = (this.Data = t).IsCountry;
+    var i = (this.Data = t).IsCountry;
     (i
       ? (this.z5t.BindOnSelected(this.tVt),
         this.z5t.BindCanExecuteChange(this.oVt),
@@ -73,4 +73,4 @@ class ExploreAreaParentItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ExploreAreaParentItem = ExploreAreaParentItem;
-// # sourceMappingURL=ExploreAreaParentItem.js.map
+//# sourceMappingURL=ExploreAreaParentItem.js.map

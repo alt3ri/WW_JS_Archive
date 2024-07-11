@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (Error.stackTraceLimit = 500);
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyStateRunRotateBoneToLocation extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -25,8 +25,8 @@ class TsAnimNotifyStateRunRotateBoneToLocation extends UE.KuroAnimNotifyState {
         )
       )
         return !1;
-      let t = 1;
-      let e = (this.TurnSpeed && (t = this.TurnSpeed.GetFloatValue(0)), 1);
+      let t = 1,
+        e = (this.TurnSpeed && (t = this.TurnSpeed.GetFloatValue(0)), 1);
       this.LookUpSpeed && (e = this.LookUpSpeed.GetFloatValue(0)),
         i.MainAnimInstance.SetBoneRotateToLocationInfoRunBegin(
           t,
@@ -68,9 +68,9 @@ class TsAnimNotifyStateRunRotateBoneToLocation extends UE.KuroAnimNotifyState {
         )
       )
         return !1;
-      const s = this.GetCurrentTriggerOffsetInThisNotifyTick();
-      let t = 1;
-      let e = (this.TurnSpeed && (t = this.TurnSpeed.GetFloatValue(s)), 1);
+      var s = this.GetCurrentTriggerOffsetInThisNotifyTick();
+      let t = 1,
+        e = (this.TurnSpeed && (t = this.TurnSpeed.GetFloatValue(s)), 1);
       this.LookUpSpeed && (e = this.LookUpSpeed.GetFloatValue(s)),
         i.MainAnimInstance.SetBoneRotateToLocationInfoRunTick(t, e);
     }
@@ -81,4 +81,4 @@ class TsAnimNotifyStateRunRotateBoneToLocation extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateRunRotateBoneToLocation;
-// # sourceMappingURL=TsAnimNotifyStateRunRotateBoneToLocation.js.map
+//# sourceMappingURL=TsAnimNotifyStateRunRotateBoneToLocation.js.map

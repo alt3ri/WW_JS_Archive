@@ -33,29 +33,29 @@ class LangOfLogo {
     );
   }
   name(t) {
-    const s = this.J7.__offset(this.z7, 4);
+    var s = this.J7.__offset(this.z7, 4);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   zhhanslogo(t) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   enlogo(t) {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   jplogo(t) {
-    const s = this.J7.__offset(this.z7, 10);
+    var s = this.J7.__offset(this.z7, 10);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   zhhantlogo(t) {
-    const s = this.J7.__offset(this.z7, 12);
+    var s = this.J7.__offset(this.z7, 12);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   krlogo(t) {
-    const s = this.J7.__offset(this.z7, 14);
+    var s = this.J7.__offset(this.z7, 14);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
 }
 exports.LangOfLogo = LangOfLogo;
-// # sourceMappingURL=LangOfLogo.js.map
+//# sourceMappingURL=LangOfLogo.js.map

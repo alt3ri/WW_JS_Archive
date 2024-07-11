@@ -1,58 +1,62 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, o, i) {
-    let l;
-    const a = arguments.length;
-    let r =
-      a < 3 ? e : i === null ? (i = Object.getOwnPropertyDescriptor(e, o)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var l,
+      a = arguments.length,
+      r =
+        a < 3
+          ? e
+          : null === i
+            ? (i = Object.getOwnPropertyDescriptor(e, o))
+            : i;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(t, e, o, i);
     else
-      for (let s = t.length - 1; s >= 0; s--)
-        (l = t[s]) && (r = (a < 3 ? l(r) : a > 3 ? l(e, o, r) : l(e, o)) || r);
-    return a > 3 && r && Object.defineProperty(e, o, r), r;
+      for (var s = t.length - 1; 0 <= s; s--)
+        (l = t[s]) && (r = (a < 3 ? l(r) : 3 < a ? l(e, o, r) : l(e, o)) || r);
+    return 3 < a && r && Object.defineProperty(e, o, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletActionLogicComponent = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const PerformanceDecorators_1 = require("../../../../Core/Performance/PerformanceDecorators");
-const BulletLogicAdditiveAccelerateController_1 = require("../BulletLogicDataAssetController/BulletLogicAdditiveAccelerateController");
-const BulletLogicCreateBulletController_1 = require("../BulletLogicDataAssetController/BulletLogicCreateBulletController");
-const BulletLogicCurveMovementController_1 = require("../BulletLogicDataAssetController/BulletLogicCurveMovementController");
-const BulletLogicDestroyBulletController_1 = require("../BulletLogicDataAssetController/BulletLogicDestroyBulletController");
-const BulletLogicDestroyOtherBullet_1 = require("../BulletLogicDataAssetController/BulletLogicDestroyOtherBullet");
-const BulletLogicForceController_1 = require("../BulletLogicDataAssetController/BulletLogicForceController");
-const BulletLogicFreezeController_1 = require("../BulletLogicDataAssetController/BulletLogicFreezeController");
-const BulletLogicManipulatableCreateBullet_1 = require("../BulletLogicDataAssetController/BulletLogicManipulatableCreateBullet");
-const BulletLogicManipulatableTagsChange_1 = require("../BulletLogicDataAssetController/BulletLogicManipulatableTagsChange");
-const BulletLogicReboundController_1 = require("../BulletLogicDataAssetController/BulletLogicReboundController");
-const BulletLogicShakeCameraController_1 = require("../BulletLogicDataAssetController/BulletLogicShakeCameraController");
-const BulletLogicShowMesh_1 = require("../BulletLogicDataAssetController/BulletLogicShowMesh");
-const BulletLogicSpawnObstacles_1 = require("../BulletLogicDataAssetController/BulletLogicSpawnObstacles");
-const BulletLogicSpeedReduceController_1 = require("../BulletLogicDataAssetController/BulletLogicSpeedReduceController");
-const BulletLogicSuiGuang_1 = require("../BulletLogicDataAssetController/BulletLogicSuiGuang");
-const BulletLogicSupportController_1 = require("../BulletLogicDataAssetController/BulletLogicSupportController");
-const BulletLogicWhirlpool_1 = require("../BulletLogicDataAssetController/BulletLogicWhirlpool");
-const LogicDataAdditiveAccelerate_1 = require("../LogicDataClass/LogicDataAdditiveAccelerate");
-const LogicDataCreateBullet_1 = require("../LogicDataClass/LogicDataCreateBullet");
-const LogicDataDestroyBullet_1 = require("../LogicDataClass/LogicDataDestroyBullet");
-const LogicDataDestroyOtherBullet_1 = require("../LogicDataClass/LogicDataDestroyOtherBullet");
-const LogicDataForce_1 = require("../LogicDataClass/LogicDataForce");
-const LogicDataFreeze_1 = require("../LogicDataClass/LogicDataFreeze");
-const LogicDataManipulatableCreateBullet_1 = require("../LogicDataClass/LogicDataManipulatableCreateBullet");
-const LogicDataManipulatableTagsChange_1 = require("../LogicDataClass/LogicDataManipulatableTagsChange");
-const LogicDataRebound_1 = require("../LogicDataClass/LogicDataRebound");
-const LogicDataShakeScreen_1 = require("../LogicDataClass/LogicDataShakeScreen");
-const LogicDataShowMesh_1 = require("../LogicDataClass/LogicDataShowMesh");
-const LogicDataSpawnObstacles_1 = require("../LogicDataClass/LogicDataSpawnObstacles");
-const LogicDataSpeedReduce_1 = require("../LogicDataClass/LogicDataSpeedReduce");
-const LogicDataSplineMovement_1 = require("../LogicDataClass/LogicDataSplineMovement");
-const LogicDataSuiGuang_1 = require("../LogicDataClass/LogicDataSuiGuang");
-const LogicDataSupport_1 = require("../LogicDataClass/LogicDataSupport");
-const LogicDataWhirlpool_1 = require("../LogicDataClass/LogicDataWhirlpool");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
+const Log_1 = require("../../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  PerformanceDecorators_1 = require("../../../../Core/Performance/PerformanceDecorators"),
+  BulletLogicAdditiveAccelerateController_1 = require("../BulletLogicDataAssetController/BulletLogicAdditiveAccelerateController"),
+  BulletLogicCreateBulletController_1 = require("../BulletLogicDataAssetController/BulletLogicCreateBulletController"),
+  BulletLogicCurveMovementController_1 = require("../BulletLogicDataAssetController/BulletLogicCurveMovementController"),
+  BulletLogicDestroyBulletController_1 = require("../BulletLogicDataAssetController/BulletLogicDestroyBulletController"),
+  BulletLogicDestroyOtherBullet_1 = require("../BulletLogicDataAssetController/BulletLogicDestroyOtherBullet"),
+  BulletLogicForceController_1 = require("../BulletLogicDataAssetController/BulletLogicForceController"),
+  BulletLogicFreezeController_1 = require("../BulletLogicDataAssetController/BulletLogicFreezeController"),
+  BulletLogicManipulatableCreateBullet_1 = require("../BulletLogicDataAssetController/BulletLogicManipulatableCreateBullet"),
+  BulletLogicManipulatableTagsChange_1 = require("../BulletLogicDataAssetController/BulletLogicManipulatableTagsChange"),
+  BulletLogicReboundController_1 = require("../BulletLogicDataAssetController/BulletLogicReboundController"),
+  BulletLogicShakeCameraController_1 = require("../BulletLogicDataAssetController/BulletLogicShakeCameraController"),
+  BulletLogicShowMesh_1 = require("../BulletLogicDataAssetController/BulletLogicShowMesh"),
+  BulletLogicSpawnObstacles_1 = require("../BulletLogicDataAssetController/BulletLogicSpawnObstacles"),
+  BulletLogicSpeedReduceController_1 = require("../BulletLogicDataAssetController/BulletLogicSpeedReduceController"),
+  BulletLogicSuiGuang_1 = require("../BulletLogicDataAssetController/BulletLogicSuiGuang"),
+  BulletLogicSupportController_1 = require("../BulletLogicDataAssetController/BulletLogicSupportController"),
+  BulletLogicWhirlpool_1 = require("../BulletLogicDataAssetController/BulletLogicWhirlpool"),
+  LogicDataAdditiveAccelerate_1 = require("../LogicDataClass/LogicDataAdditiveAccelerate"),
+  LogicDataCreateBullet_1 = require("../LogicDataClass/LogicDataCreateBullet"),
+  LogicDataDestroyBullet_1 = require("../LogicDataClass/LogicDataDestroyBullet"),
+  LogicDataDestroyOtherBullet_1 = require("../LogicDataClass/LogicDataDestroyOtherBullet"),
+  LogicDataForce_1 = require("../LogicDataClass/LogicDataForce"),
+  LogicDataFreeze_1 = require("../LogicDataClass/LogicDataFreeze"),
+  LogicDataManipulatableCreateBullet_1 = require("../LogicDataClass/LogicDataManipulatableCreateBullet"),
+  LogicDataManipulatableTagsChange_1 = require("../LogicDataClass/LogicDataManipulatableTagsChange"),
+  LogicDataRebound_1 = require("../LogicDataClass/LogicDataRebound"),
+  LogicDataShakeScreen_1 = require("../LogicDataClass/LogicDataShakeScreen"),
+  LogicDataShowMesh_1 = require("../LogicDataClass/LogicDataShowMesh"),
+  LogicDataSpawnObstacles_1 = require("../LogicDataClass/LogicDataSpawnObstacles"),
+  LogicDataSpeedReduce_1 = require("../LogicDataClass/LogicDataSpeedReduce"),
+  LogicDataSplineMovement_1 = require("../LogicDataClass/LogicDataSplineMovement"),
+  LogicDataSuiGuang_1 = require("../LogicDataClass/LogicDataSuiGuang"),
+  LogicDataSupport_1 = require("../LogicDataClass/LogicDataSupport"),
+  LogicDataWhirlpool_1 = require("../LogicDataClass/LogicDataWhirlpool"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
 let BulletActionLogicComponent = class BulletActionLogicComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -76,22 +80,22 @@ let BulletActionLogicComponent = class BulletActionLogicComponent extends Entity
       ((this._9o.ActionLogicComponent = this).tbr = this._9o.BulletDataMain),
       (this._br =
         this.tbr.Base.ContinuesCollision &&
-        (this.tbr.Base.Interval > 0 || this.tbr.Base.CollisionActiveDelay > 0));
-    const t = this.tbr.Execution.GbDataList;
-    if (t && t.length > 0)
+        (0 < this.tbr.Base.Interval || 0 < this.tbr.Base.CollisionActiveDelay));
+    var t = this.tbr.Execution.GbDataList;
+    if (t && 0 < t.length)
       for (const o of t) {
-        const e = this.ubr(o);
-        o.ExecuteStage === 0
+        var e = this.ubr(o);
+        0 === o.ExecuteStage
           ? (this.ibr || (this.ibr = []), this.ibr.push(e))
-          : o.ExecuteStage === 2
+          : 2 === o.ExecuteStage
             ? (this.rbr || (this.rbr = []), this.rbr.push(e))
-            : o.ExecuteStage === 1
+            : 1 === o.ExecuteStage
               ? (this.obr || (this.obr = []), this.obr.push(e))
-              : o.ExecuteStage === 3
+              : 3 === o.ExecuteStage
                 ? (this.nbr || (this.nbr = []), this.nbr.push(e))
-                : o.ExecuteStage === 4
+                : 4 === o.ExecuteStage
                   ? (this.sbr || (this.sbr = []), this.sbr.push(e))
-                  : o.ExecuteStage === 5 &&
+                  : 5 === o.ExecuteStage &&
                     (this.abr || (this.abr = []), this.abr.push(e)),
           e.NeedTick && (this.hbr || (this.hbr = []), this.hbr.push(e));
       }
@@ -258,4 +262,4 @@ __decorate(
     BulletActionLogicComponent,
   )),
   (exports.BulletActionLogicComponent = BulletActionLogicComponent);
-// # sourceMappingURL=BulletActionLogicComponent.js.map
+//# sourceMappingURL=BulletActionLogicComponent.js.map

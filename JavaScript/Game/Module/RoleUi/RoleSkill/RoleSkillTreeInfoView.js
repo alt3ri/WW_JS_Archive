@@ -1,28 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleSkillTreeInfoView = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ButtonItem_1 = require("../../Common/Button/ButtonItem");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const ItemDefines_1 = require("../../Item/Data/ItemDefines");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
-const CostMediumItemGrid_1 = require("../RoleBreach/CostMediumItemGrid");
-const RoleController_1 = require("../RoleController");
-const CommonAttributeData_1 = require("../View/ViewData/CommonAttributeData");
-const RoleSkillInputPanel_1 = require("./RoleSkillInputPanel");
-const RoleSkillTreeAttributeItem_1 = require("./RoleSkillTreeAttributeItem");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ButtonItem_1 = require("../../Common/Button/ButtonItem"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  ItemDefines_1 = require("../../Item/Data/ItemDefines"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  CostMediumItemGrid_1 = require("../RoleBreach/CostMediumItemGrid"),
+  RoleController_1 = require("../RoleController"),
+  CommonAttributeData_1 = require("../View/ViewData/CommonAttributeData"),
+  RoleSkillInputPanel_1 = require("./RoleSkillInputPanel"),
+  RoleSkillTreeAttributeItem_1 = require("./RoleSkillTreeAttributeItem");
 class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -77,14 +77,14 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
         (this.jco = 2), this.Xco(this.jco);
       }),
       (this.rmo = () => {
-        var i = this.Nco.GetSkillNodeLevel(this.Oco);
-        var i =
-          ConfigManager_1.ConfigManager.RoleSkillConfig.GetRoleSkillTreeConsume(
-            this.Ico,
-            i + 1,
-          );
+        var i = this.Nco.GetSkillNodeLevel(this.Oco),
+          i =
+            ConfigManager_1.ConfigManager.RoleSkillConfig.GetRoleSkillTreeConsume(
+              this.Ico,
+              i + 1,
+            );
         if (i)
-          for (const [t, e] of i)
+          for (var [t, e] of i)
             if (
               ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
                 t,
@@ -98,7 +98,7 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
                     "RoleNoMaterial",
                   ));
         i = this.Oco.NodeType;
-        i === 1 || i === 2
+        1 === i || 2 === i
           ? RoleController_1.RoleController.SendPbUpLevelSkillRequest(
               this.zke,
               this.Ico,
@@ -109,7 +109,7 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
             );
       }),
       (this.nmo = () => {
-        const i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(172);
+        var i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(172);
         i.FunctionMap.set(2, () => {
           this.CloseMe(),
             EventSystem_1.EventSystem.Emit(
@@ -123,7 +123,7 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
           );
       }),
       (this.Wyt = () => {
-        const i = new CostMediumItemGrid_1.CostMediumItemGrid();
+        var i = new CostMediumItemGrid_1.CostMediumItemGrid();
         return (
           i.BindOnExtendToggleClicked((i) => {
             i = i.Data;
@@ -136,9 +136,9 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
         );
       }),
       (this.Dje = (i, t, e) => {
-        var t = new RoleSkillTreeAttributeItem_1.RoleSkillTreeAttributeItem(t);
-        const s = this.Wco[e];
-        const h = e < this.Kco.length ? this.Kco[e] : void 0;
+        var t = new RoleSkillTreeAttributeItem_1.RoleSkillTreeAttributeItem(t),
+          s = this.Wco[e],
+          h = e < this.Kco.length ? this.Kco[e] : void 0;
         return t.Refresh(s, h), { Key: e, Value: t };
       });
   }
@@ -191,7 +191,7 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
   }
   async OnBeforeStartAsync() {
     this.Vco = new RoleSkillInputPanel_1.RoleSkillInputPanel();
-    const i = this.GetItem(28).GetOwner();
+    var i = this.GetItem(28).GetOwner();
     await this.Vco.CreateThenShowByActorAsync(i);
   }
   OnStart() {
@@ -210,15 +210,15 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
       this.p8t.SetFunction(this.rmo),
       this.GetItem(20).SetUIActive(!1),
       this.SetItemIcon(this.GetTexture(12), ItemDefines_1.EItemId.Gold);
-    var i = ModelManager_1.ModelManager.GameModeModel.IsMulti;
-    var i =
-      (this.GetItem(31).SetUIActive(i),
-      (this.x4t =
-        ModelManager_1.ModelManager.RoleModel.IsShowMultiSkillDesc && i),
-      this.x4t ? 1 : 0);
-    var i = (this.GetExtendToggle(30).SetToggleState(i), this.OpenParam);
-    const t = i.RoleId;
-    var i = i.SkillNodeId;
+    var i = ModelManager_1.ModelManager.GameModeModel.IsMulti,
+      i =
+        (this.GetItem(31).SetUIActive(i),
+        (this.x4t =
+          ModelManager_1.ModelManager.RoleModel.IsShowMultiSkillDesc && i),
+        this.x4t ? 1 : 0),
+      i = (this.GetExtendToggle(30).SetToggleState(i), this.OpenParam),
+      t = i.RoleId,
+      i = i.SkillNodeId;
     (this.jco = 1), this.Update(t, i), this.smo(!1);
   }
   OnAddEventListener() {
@@ -284,7 +284,7 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
         this.GetText(2),
         "SkillType_AttributeNode_TypeName",
       );
-    const i = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(
+    var i = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(
       this.Ico,
     );
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(9), i.PropertyNodeTitle),
@@ -314,13 +314,13 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
   }
   dmo() {
     this.GetText(3).SetUIActive(!0), this.GetItem(6).SetUIActive(!0);
-    const i = ModelManager_1.ModelManager.RoleModel.GetRoleSkillTreeNodeLevel(
-      this.zke,
-      this.Ico,
-    );
-    const t = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(
-      this.Oco.SkillId,
-    ).MaxSkillLevel;
+    var i = ModelManager_1.ModelManager.RoleModel.GetRoleSkillTreeNodeLevel(
+        this.zke,
+        this.Ico,
+      ),
+      t = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(
+        this.Oco.SkillId,
+      ).MaxSkillLevel;
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(3), "RoleResonanceLevel", i),
       i === t
         ? LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -335,10 +335,10 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
       this.Cmo();
   }
   tlo() {
-    let i;
-    let t = this.Oco.SkillId;
+    var i,
+      t = this.Oco.SkillId;
     t &&
-      t > 0 &&
+      0 < t &&
       ((t =
         ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(t)),
       (i =
@@ -362,12 +362,12 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
     var i = this.Oco.SkillId;
     let t = void 0;
     t =
-      i && i > 0
+      i && 0 < i
         ? ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(i)
             ?.Icon
         : this.Oco.PropertyNodeIcon;
-    var i = this.GetTexture(1);
-    const e = this.GetSprite(0);
+    var i = this.GetTexture(1),
+      e = this.GetSprite(0);
     this.yco
       ? (i.SetUIActive(!0), e.SetUIActive(!1), this.SetTextureByPath(t, i))
       : (i.SetUIActive(!1), e.SetUIActive(!0), this.SetSpriteByPath(t, e, !1));
@@ -377,12 +377,12 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
       this.Ico,
       t,
     );
-    if (t && t.size !== 0) {
+    if (t && 0 !== t.size) {
       this.GetItem(22).SetUIActive(!0), this.GetItem(23).SetUIActive(!0);
-      let e;
-      let s;
-      let h;
-      const r = [];
+      var e,
+        s,
+        h,
+        r = [];
       let i = 0;
       for ([e, s] of t)
         e === ItemDefines_1.EItemId.Gold
@@ -397,61 +397,61 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
                 ),
             }),
             r.push(h));
-      var t = this.GetText(13);
-      const o =
-        (t.SetText(i.toString()),
-        ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-          ItemDefines_1.EItemId.Gold,
-        ));
+      var t = this.GetText(13),
+        o =
+          (t.SetText(i.toString()),
+          ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+            ItemDefines_1.EItemId.Gold,
+          ));
       (t.useChangeColor = o < i), this.kco.RefreshByData(r);
     } else this.GetItem(22).SetUIActive(!1), this.GetItem(23).SetUIActive(!1);
   }
   cmo() {
-    let i = this.Nco.GetSkillTreeNodeState(this.Oco, this.zke);
-    this.p8t.SetActive(i === 2),
-      this.GetItem(22).SetUIActive(i === 2),
-      this.GetItem(23).SetUIActive(i === 2),
-      this.GetItem(17).SetUIActive(i === 1),
-      this.GetItem(15).SetUIActive(i === 3),
-      i === 3
+    var i = this.Nco.GetSkillTreeNodeState(this.Oco, this.zke);
+    this.p8t.SetActive(2 === i),
+      this.GetItem(22).SetUIActive(2 === i),
+      this.GetItem(23).SetUIActive(2 === i),
+      this.GetItem(17).SetUIActive(1 === i),
+      this.GetItem(15).SetUIActive(3 === i),
+      3 === i
         ? LguiUtil_1.LguiUtil.SetLocalText(this.GetText(16), "Actived")
         : (this.oHi(),
-          i === 2
+          2 === i
             ? this.p8t.SetLocalText("RoleResonActive")
-            : i === 1 &&
+            : 1 === i &&
               ((i = this.Nco.GetUnlockConditionTextId(this.Oco)),
               LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(18), i)),
           (i = this.Nco.GetSkillTreeUnsatisfiedCondition(this.Oco)),
-          this.GetButton(26).RootUIComp.SetUIActive(!(i?.ConditionType === 2)));
+          this.GetButton(26).RootUIComp.SetUIActive(!(2 === i?.ConditionType)));
   }
   Cmo() {
-    let i;
-    let t = this.Nco.GetSkillTreeNodeState(this.Oco, this.zke);
-    this.p8t.SetActive(t === 2),
-      this.GetItem(22).SetUIActive(t !== 3),
-      this.GetItem(23).SetUIActive(t !== 3),
-      this.GetItem(17).SetUIActive(t === 1),
-      this.GetItem(15).SetUIActive(t === 3),
+    var i,
+      t = this.Nco.GetSkillTreeNodeState(this.Oco, this.zke);
+    this.p8t.SetActive(2 === t),
+      this.GetItem(22).SetUIActive(3 !== t),
+      this.GetItem(23).SetUIActive(3 !== t),
+      this.GetItem(17).SetUIActive(1 === t),
+      this.GetItem(15).SetUIActive(3 === t),
       this.GetExtendToggle(19).RootUIComp.SetUIActive(!0),
       this.gmo(),
-      t === 3
+      3 === t
         ? LguiUtil_1.LguiUtil.SetLocalText(this.GetText(16), "RoleAlreadyMax")
         : ((i = this.Nco.GetSkillNodeLevel(this.Oco)),
           this.oHi(i + 1),
-          t === 2
+          2 === t
             ? this.p8t.SetLocalText("RoleLevelUp")
-            : t === 1 &&
+            : 1 === t &&
               ((i = this.Nco.GetUnlockConditionTextId(this.Oco)),
               LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(18), i)),
           (t = this.Nco.GetSkillTreeUnsatisfiedCondition(this.Oco)),
-          this.GetButton(26).RootUIComp.SetUIActive(!(t?.ConditionType === 2)));
+          this.GetButton(26).RootUIComp.SetUIActive(!(2 === t?.ConditionType)));
   }
   fmo(i) {
-    const t = new CommonAttributeData_1.CommonAttributeData();
-    const e =
-      ModelManager_1.ModelManager.RoleModel.GetSkillAttributeNameByOneSkillEffect(
-        i,
-      );
+    var t = new CommonAttributeData_1.CommonAttributeData(),
+      e =
+        ModelManager_1.ModelManager.RoleModel.GetSkillAttributeNameByOneSkillEffect(
+          i,
+        );
     return (
       (t.AttrNameText =
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e) ?? ""),
@@ -464,19 +464,19 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
   }
   gmo() {
     (this.Wco.length = 0), (this.Kco.length = 0);
-    const t =
-      ModelManager_1.ModelManager.RoleModel.RoleSkillResponseData.GetSkillEffect()
-        .EffectDescList;
-    const e = void 0 !== t ? t.length : 0;
-    const s =
-      ModelManager_1.ModelManager.RoleModel.RoleSkillResponseData.GetNextLevelSkillEffect()
-        ?.EffectDescList;
+    var t =
+        ModelManager_1.ModelManager.RoleModel.RoleSkillResponseData.GetSkillEffect()
+          .EffectDescList,
+      e = void 0 !== t ? t.length : 0,
+      s =
+        ModelManager_1.ModelManager.RoleModel.RoleSkillResponseData.GetNextLevelSkillEffect()
+          ?.EffectDescList;
     for (let i = 0; i < e; i++)
       this.Wco.push(this.fmo(t[i])), s && this.Kco.push(this.fmo(s[i]));
     this.Fco.RefreshByData(this.Wco);
   }
   Xco(i) {
-    i === 1 ? this.smo() : this.pmo();
+    1 === i ? this.smo() : this.pmo();
   }
   smo(i = 0) {
     this.GetExtendToggle(4).SetToggleState(1),
@@ -495,7 +495,7 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
       this.Yco(this.jco, this.Hco);
   }
   Yco(i, t) {
-    this.jco === 2
+    2 === this.jco
       ? t
         ? this.vmo()
         : this.Zco()
@@ -526,4 +526,4 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RoleSkillTreeInfoView = RoleSkillTreeInfoView;
-// # sourceMappingURL=RoleSkillTreeInfoView.js.map
+//# sourceMappingURL=RoleSkillTreeInfoView.js.map

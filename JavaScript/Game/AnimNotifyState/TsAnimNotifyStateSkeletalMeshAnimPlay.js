@@ -10,7 +10,7 @@ class TsAnimNotifyStateSkeletalMeshAnimPlay extends UE.KuroAnimNotifyState {
       .GetOwner()
       .GetComponentsByTag(UE.SkeletalMeshComponent.StaticClass(), this.Tag);
     return (
-      t.Num() !== 0 &&
+      0 !== t.Num() &&
       !!(t = t.Get(0))?.IsValid() &&
       (t.SetHiddenInGame(!1, !1), t.PlayAnimation(this.动画资产, !1), !0)
     );
@@ -20,7 +20,7 @@ class TsAnimNotifyStateSkeletalMeshAnimPlay extends UE.KuroAnimNotifyState {
       .GetOwner()
       .GetComponentsByTag(UE.SkeletalMeshComponent.StaticClass(), this.Tag);
     return (
-      t.Num() !== 0 &&
+      0 !== t.Num() &&
       !!(t = t.Get(0))?.IsValid() &&
       (t.SetHiddenInGame(!0, !1), t.Stop(), !0)
     );
@@ -30,4 +30,4 @@ class TsAnimNotifyStateSkeletalMeshAnimPlay extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateSkeletalMeshAnimPlay;
-// # sourceMappingURL=TsAnimNotifyStateSkeletalMeshAnimPlay.js.map
+//# sourceMappingURL=TsAnimNotifyStateSkeletalMeshAnimPlay.js.map

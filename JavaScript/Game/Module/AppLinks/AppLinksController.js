@@ -1,13 +1,13 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AppLinksController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const AppLinks_1 = require("../../../Launcher/AppLinks");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const FunctionController_1 = require("../Functional/FunctionController");
+const Log_1 = require("../../../Core/Common/Log"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  AppLinks_1 = require("../../../Launcher/AppLinks"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  FunctionController_1 = require("../Functional/FunctionController");
 class AppLinksController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return this.$bn(), super.OnInit();
@@ -48,4 +48,4 @@ class AppLinksController extends ControllerBase_1.ControllerBase {
       : Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Functional", 22, "未完成游戏登录");
   });
-// # sourceMappingURL=AppLinksController.js.map
+//# sourceMappingURL=AppLinksController.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TabViewComponent = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const UiTabViewStorage_1 = require("../../../Ui/UiTabViewStorage");
+const Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  UiTabViewStorage_1 = require("../../../Ui/UiTabViewStorage");
 class TabViewComponent {
   constructor(e) {
     (this.kBt = e),
@@ -12,7 +12,7 @@ class TabViewComponent {
       (this.y9 = void 0),
       (this.FBt = new Map()),
       (this.VBt = (e, t) => {
-        const i = this.IVe ?? this.y9;
+        var i = this.IVe ?? this.y9;
         t.DynamicTabName === i &&
           (t = this.FBt.get(i)) &&
           e.ViewData.SetAttachedView(t);
@@ -30,7 +30,7 @@ class TabViewComponent {
     this.FBt.clear();
   }
   WBt() {
-    const e = this.FBt.get(this.IVe);
+    var e = this.FBt.get(this.IVe);
     e &&
       (e.InAsyncLoading() &&
         (Log_1.Log.CheckInfo() &&
@@ -45,7 +45,7 @@ class TabViewComponent {
   ToggleCallBack(e, t, i = void 0, s = void 0) {
     void 0 !== this.IVe && this.WBt(), (this.IVe = t);
     let r = this.FBt.get(t);
-    let o;
+    var o;
     r ||
       ((o = UiTabViewStorage_1.UiTabViewStorage.GetUiTabViewBase(t)),
       (r = new o.CreateUiTabView()).SetTabViewName(t),
@@ -66,7 +66,7 @@ class TabViewComponent {
     return this.FBt.get(e);
   }
   SetCurrentTabViewState(e) {
-    let t;
+    var t;
     this.IVe &&
       (t = this.FBt.get(this.IVe)) &&
       (e && t.IsHideOrHiding
@@ -82,4 +82,4 @@ class TabViewComponent {
   }
 }
 exports.TabViewComponent = TabViewComponent;
-// # sourceMappingURL=TabViewComponent.js.map
+//# sourceMappingURL=TabViewComponent.js.map

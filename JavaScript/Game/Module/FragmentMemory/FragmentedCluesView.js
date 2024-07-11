@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FragmentedCluesView = void 0);
-const UE = require("ue");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract");
-const GenericLayout_1 = require("../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../Util/LguiUtil");
+const UE = require("ue"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../Util/LguiUtil");
 class FragmentedCluesView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -50,7 +50,7 @@ class FragmentedCluesView extends UiViewBase_1.UiViewBase {
   }
   OnBeforeShow() {
     (this.BUn = this.OpenParam), (this.wUn = []);
-    const i = this.BUn.GetClueContent().length;
+    var i = this.BUn.GetClueContent().length;
     for (let t = 0; t < i; t++) this.wUn?.push(!1);
     (this.qUn = this.wUn.length),
       (this.iwo = 0),
@@ -76,15 +76,15 @@ class FragmentedCluesView extends UiViewBase_1.UiViewBase {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), this.WUn(this.iwo));
   }
   VUn() {
-    const t = this.iwo < this.qUn - 1;
+    var t = this.iwo < this.qUn - 1;
     this.GetButton(5)?.SetSelfInteractive(t);
   }
   HUn() {
-    const t = this.iwo > 0;
+    var t = 0 < this.iwo;
     this.GetButton(4)?.SetSelfInteractive(t);
   }
   Aqe() {
-    const t = this.jUn(this.iwo);
+    var t = this.jUn(this.iwo);
     this.SetTextureByPath(t, this.GetTexture(1));
   }
   FUn() {
@@ -100,4 +100,4 @@ class MemoryPageDot extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetItem(0)?.SetUIActive(t);
   }
 }
-// # sourceMappingURL=FragmentedCluesView.js.map
+//# sourceMappingURL=FragmentedCluesView.js.map

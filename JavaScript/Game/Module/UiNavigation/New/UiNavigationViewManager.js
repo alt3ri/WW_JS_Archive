@@ -1,17 +1,17 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiNavigationViewManager = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const TickSystem_1 = require("../../../../Core/Tick/TickSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiNavigationDefine_1 = require("./UiNavigationDefine");
-const UiNavigationGlobalData_1 = require("./UiNavigationGlobalData");
-const UiNavigationLogic_1 = require("./UiNavigationLogic");
-const UiNavigationViewHandle_1 = require("./UiNavigationViewHandle");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TickSystem_1 = require("../../../../Core/Tick/TickSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiNavigationDefine_1 = require("./UiNavigationDefine"),
+  UiNavigationGlobalData_1 = require("./UiNavigationGlobalData"),
+  UiNavigationLogic_1 = require("./UiNavigationLogic"),
+  UiNavigationViewHandle_1 = require("./UiNavigationViewHandle");
 class UiNavigationViewManager {
   static Initialize() {
     this.dde(), this.agt();
@@ -63,15 +63,15 @@ class UiNavigationViewManager {
     if (e.ViewName !== UiNavigationDefine_1.POP_TAG)
       UiNavigationViewManager.FBo(a, e);
     else {
-      const t = UE.LGUIBPLibrary.GetComponentsInChildren(
+      var t = UE.LGUIBPLibrary.GetComponentsInChildren(
         e.GetOwner(),
         UE.TsUiNavigationPanelConfig_C.StaticClass(),
         !1,
       );
       if (t.Num() <= 0) UiNavigationViewManager.FBo(a, e);
       else
-        for (let i = t.Num() - 1; i >= 0; --i) {
-          const n = t.Get(i);
+        for (let i = t.Num() - 1; 0 <= i; --i) {
+          var n = t.Get(i);
           if (n.Independent && n.ViewName === UiNavigationDefine_1.POP_TAG) {
             UiNavigationViewManager.VBo(n)
               ? UiNavigationViewManager.FBo(a, e)
@@ -82,7 +82,7 @@ class UiNavigationViewManager {
     }
   }
   static jBo(i, a) {
-    const e = new UiNavigationViewHandle_1.UiNavigationViewHandle(i, a);
+    var e = new UiNavigationViewHandle_1.UiNavigationViewHandle(i, a);
     e.AddPanelConfig(i, a), this.WBo.set(i, e), this.uBo.set(i, e);
   }
   static VBo(i) {
@@ -100,11 +100,11 @@ class UiNavigationViewManager {
       : this.KBo(i, a);
   }
   static XBo(i) {
-    const a = this.uBo.get(i);
+    var a = this.uBo.get(i);
     return !!a && (this.uBo.delete(i), a.DeletePanelConfig(i), i === a.TagId);
   }
   static $Bo(i) {
-    const a = this.WBo.get(i);
+    var a = this.WBo.get(i);
     if (a) {
       this.WBo.delete(i);
       for (const e of a.GetPanelConfigMap().keys()) this.uBo.delete(e);
@@ -143,7 +143,7 @@ class UiNavigationViewManager {
   }
   static ebo(i, a) {
     (i = i.GetDepth()), (a = a.GetDepth());
-    return i !== -1 && a !== -1;
+    return -1 !== i && -1 !== a;
   }
   static ZBo() {
     if (this.WBo.size <= 0)
@@ -156,8 +156,8 @@ class UiNavigationViewManager {
           ),
         UiNavigationLogic_1.UiNavigationLogic.UpdateNavigationListener(void 0);
     else {
-      let i = void 0;
-      let a = !0;
+      let i = void 0,
+        a = !0;
       for (const e of this.WBo.values())
         if (e.GetIsActive() && e.GetIsUsable())
           if (i) {
@@ -195,15 +195,15 @@ class UiNavigationViewManager {
   }
   static obo() {
     if (!(this.QBo.size <= 0)) {
-      for (const [i, a] of this.QBo) this.KBo(i, a);
+      for (var [i, a] of this.QBo) this.KBo(i, a);
       this.QBo.clear();
     }
   }
   static rbo() {
     if (!(this.HBo.size <= 0) && this.JBo) {
-      let i;
-      let a;
-      const e = [];
+      var i,
+        a,
+        e = [];
       for ([i, a] of this.HBo)
         a === this.JBo.MainPanel && (e.push(i), this.FBo(i[0], i[1]));
       for (const t of e) this.HBo.delete(t);
@@ -263,4 +263,4 @@ class UiNavigationViewManager {
       (_a.JBo.ResetNavigationListener(),
       ModelManager_1.ModelManager.UiNavigationModel.MarkMoveInstantly());
   });
-// # sourceMappingURL=UiNavigationViewManager.js.map
+//# sourceMappingURL=UiNavigationViewManager.js.map

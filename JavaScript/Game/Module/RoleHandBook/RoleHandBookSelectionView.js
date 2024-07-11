@@ -2,20 +2,20 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleHandBookSelectionView = exports.ROLE_HAND_BOOK_BLENDNAME =
     void 0);
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const EffectContext_1 = require("../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../Effect/EffectSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const EffectUtil_1 = require("../../Utils/EffectUtil");
-const RoleController_1 = require("../RoleUi/RoleController");
-const RoleDefine_1 = require("../RoleUi/RoleDefine");
-const UiCameraAnimationManager_1 = require("../UiCameraAnimation/UiCameraAnimationManager");
-const UiSceneManager_1 = require("../UiComponent/UiSceneManager");
-const RoleHandBookSelectionComponent_1 = require("./RoleHandBookSelectionComponent");
-const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
+const EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  EffectContext_1 = require("../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../Effect/EffectSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  EffectUtil_1 = require("../../Utils/EffectUtil"),
+  RoleController_1 = require("../RoleUi/RoleController"),
+  RoleDefine_1 = require("../RoleUi/RoleDefine"),
+  UiCameraAnimationManager_1 = require("../UiCameraAnimation/UiCameraAnimationManager"),
+  UiSceneManager_1 = require("../UiComponent/UiSceneManager"),
+  RoleHandBookSelectionComponent_1 = require("./RoleHandBookSelectionComponent"),
+  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
 exports.ROLE_HAND_BOOK_BLENDNAME = "10061";
 class RoleHandBookSelectionView extends UiViewBase_1.UiViewBase {
   constructor() {
@@ -26,7 +26,7 @@ class RoleHandBookSelectionView extends UiViewBase_1.UiViewBase {
       (this.w5i = void 0),
       (this.RoleRootUiCameraHandleData = void 0),
       (this.MIt = () => {
-        let e;
+        var e;
         this.RoleSelectionComponent &&
           (e = this.RoleSelectionComponent.GetCurSelectRoleId()) &&
           this.RoleSelectionComponent.UpdateItemByRoleId(e);
@@ -69,7 +69,7 @@ class RoleHandBookSelectionView extends UiViewBase_1.UiViewBase {
       this.LoadFloorEffect();
   }
   OnAfterShow() {
-    let e;
+    var e;
     RoleController_1.RoleController.PlayRoleMontage(1),
       UiCameraAnimationManager_1.UiCameraAnimationManager.PushCameraHandleByHandleName(
         "10061",
@@ -106,20 +106,20 @@ class RoleHandBookSelectionView extends UiViewBase_1.UiViewBase {
       );
   }
   InitRoleList() {
-    const t = ConfigCommon_1.ConfigCommon.ToList(
-      ConfigManager_1.ConfigManager.RoleConfig.GetRoleListByType(1),
-    );
-    const i = (t.sort((e, t) => e.Id - t.Id), t.length);
+    var t = ConfigCommon_1.ConfigCommon.ToList(
+        ConfigManager_1.ConfigManager.RoleConfig.GetRoleListByType(1),
+      ),
+      i = (t.sort((e, t) => e.Id - t.Id), t.length);
     this.RoleList = [];
     for (let e = 0; e < i; e++) {
-      let o = t[e];
-      o.PartyId !== 9 &&
+      var o = t[e];
+      9 !== o.PartyId &&
         ((o = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(o.Id)),
         this.RoleList.push(o));
     }
   }
   LoadFloorEffect() {
-    const e = UiSceneManager_1.UiSceneManager.GetActorByTag("RoleFloorCase");
+    var e = UiSceneManager_1.UiSceneManager.GetActorByTag("RoleFloorCase");
     e &&
       (this.Fho = EffectUtil_1.EffectUtil.SpawnUiEffect(
         "RoleSystemFloorEffect",
@@ -152,4 +152,4 @@ class RoleHandBookSelectionView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RoleHandBookSelectionView = RoleHandBookSelectionView;
-// # sourceMappingURL=RoleHandBookSelectionView.js.map
+//# sourceMappingURL=RoleHandBookSelectionView.js.map

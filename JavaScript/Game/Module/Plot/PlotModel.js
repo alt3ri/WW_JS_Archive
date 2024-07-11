@@ -5,51 +5,51 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.INTERLUDE_FADE_OUT =
     exports.INTERLUDE_FADE_IN =
       void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const AudioDefine_1 = require("../../../Core/Audio/AudioDefine");
-const AudioSystem_1 = require("../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const GameBudgetInterfaceController_1 = require("../../../Core/GameBudgetAllocator/GameBudgetInterfaceController");
-const IGlobal_1 = require("../../../UniverseEditor/Interface/IGlobal");
-const CameraController_1 = require("../../Camera/CameraController");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const PublicUtil_1 = require("../../Common/PublicUtil");
-const GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const UiManager_1 = require("../../Ui/UiManager");
-const LevelLoadingController_1 = require("../LevelLoading/LevelLoadingController");
-const PlotCleanRange_1 = require("./PlotCleanRange");
-const PlotController_1 = require("./PlotController");
-const PlotData_1 = require("./PlotData");
-const PlotGlobalConfig_1 = require("./PlotGlobalConfig");
-const PlotMontage_1 = require("./PlotMontage");
-const PlotTemplate_1 = require("./PlotTemplate");
-const PlotTextReplacer_1 = require("./PlotTextReplacer");
-const PlotTimeOfDay_1 = require("./PlotTimeOfDay");
-const PlotWeather_1 = require("./PlotWeather");
-const AUDIO_STATE_PLOT_LEVEL_GROUP =
-  ((exports.INTERLUDE_FADE_IN = 1),
-  (exports.INTERLUDE_FADE_OUT = 1),
-  "plot_perform_level");
-const AUDIO_STATE_NOT_PLOT = "not_plot";
-const PLOT_END_AUDIO_EVENT = "plot_controller_end_plot";
-const CAN_SKIP = !0;
-const audioStatePlotLevel = {
-  LevelA: "level_a",
-  LevelB: "level_b",
-  LevelC: "level_c",
-  LevelD: "level_d",
-  Prompt: "level_d",
-};
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  AudioDefine_1 = require("../../../Core/Audio/AudioDefine"),
+  AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  GameBudgetInterfaceController_1 = require("../../../Core/GameBudgetAllocator/GameBudgetInterfaceController"),
+  IGlobal_1 = require("../../../UniverseEditor/Interface/IGlobal"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../Common/PublicUtil"),
+  GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  LevelLoadingController_1 = require("../LevelLoading/LevelLoadingController"),
+  PlotCleanRange_1 = require("./PlotCleanRange"),
+  PlotController_1 = require("./PlotController"),
+  PlotData_1 = require("./PlotData"),
+  PlotGlobalConfig_1 = require("./PlotGlobalConfig"),
+  PlotMontage_1 = require("./PlotMontage"),
+  PlotTemplate_1 = require("./PlotTemplate"),
+  PlotTextReplacer_1 = require("./PlotTextReplacer"),
+  PlotTimeOfDay_1 = require("./PlotTimeOfDay"),
+  PlotWeather_1 = require("./PlotWeather"),
+  AUDIO_STATE_PLOT_LEVEL_GROUP =
+    ((exports.INTERLUDE_FADE_IN = 1),
+    (exports.INTERLUDE_FADE_OUT = 1),
+    "plot_perform_level"),
+  AUDIO_STATE_NOT_PLOT = "not_plot",
+  PLOT_END_AUDIO_EVENT = "plot_controller_end_plot",
+  CAN_SKIP = !0,
+  audioStatePlotLevel = {
+    LevelA: "level_a",
+    LevelB: "level_b",
+    LevelC: "level_c",
+    LevelD: "level_d",
+    Prompt: "level_d",
+  };
 class PlotConfig {
   constructor() {
     (this.DisableInput = !1),
@@ -228,10 +228,10 @@ class PlotModel extends ModelBase_1.ModelBase {
     if (t.StateActions) {
       if (!this.IsInPlot) return !0;
       this.PendingPlot(t),
-        (this.PlotConfig.PlotLevel === "LevelD" ||
-          (this.PlotConfig.PlotLevel === "Prompt" &&
-            t.PlotLevel !== "LevelD" &&
-            t.PlotLevel !== "Prompt")) &&
+        ("LevelD" === this.PlotConfig.PlotLevel ||
+          ("Prompt" === this.PlotConfig.PlotLevel &&
+            "LevelD" !== t.PlotLevel &&
+            "Prompt" !== t.PlotLevel)) &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Plot",
@@ -264,21 +264,21 @@ class PlotModel extends ModelBase_1.ModelBase {
   IsInHighLevelPlot() {
     return (
       this.IsInPlot &&
-      this.PlotConfig.PlotLevel !== "LevelD" &&
-      this.PlotConfig.PlotLevel !== "Prompt"
+      "LevelD" !== this.PlotConfig.PlotLevel &&
+      "Prompt" !== this.PlotConfig.PlotLevel
     );
   }
   IsInSequencePlot() {
     return (
       this.IsInPlot &&
-      (this.PlotConfig.PlotLevel === "LevelA" ||
-        this.PlotConfig.PlotLevel === "LevelB")
+      ("LevelA" === this.PlotConfig.PlotLevel ||
+        "LevelB" === this.PlotConfig.PlotLevel)
     );
   }
   PendingPlot(e) {
-    for (let t = this.PlotPendingList.length - 1; t >= 0; t--) {
-      const i = this.PlotPendingList[t];
-      if (i.PlotLevel === "LevelD")
+    for (let t = this.PlotPendingList.length - 1; 0 <= t; t--) {
+      var i = this.PlotPendingList[t];
+      if ("LevelD" === i.PlotLevel)
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Plot",
@@ -292,10 +292,10 @@ class PlotModel extends ModelBase_1.ModelBase {
           );
       else {
         if (
-          i.PlotLevel !== "Prompt" ||
-          (e.PlotLevel !== "LevelA" &&
-            e.PlotLevel !== "LevelB" &&
-            e.PlotLevel !== "LevelC")
+          "Prompt" !== i.PlotLevel ||
+          ("LevelA" !== e.PlotLevel &&
+            "LevelB" !== e.PlotLevel &&
+            "LevelC" !== e.PlotLevel)
         )
           break;
         Log_1.Log.CheckInfo() &&
@@ -381,7 +381,7 @@ class PlotModel extends ModelBase_1.ModelBase {
       PlotController_1.PlotController.HandleShowCenterText(!1));
   }
   ShowCenterTextForTeleport(t) {
-    let e;
+    var e;
     this.PlayFlow &&
       (e =
         PlotController_1.PlotController.GetTalkItemsOfCenterTextForTeleport()) &&
@@ -403,7 +403,7 @@ class PlotModel extends ModelBase_1.ModelBase {
       );
   }
   Y$i() {
-    this.PlotConfig.PlotLevel === "LevelC"
+    "LevelC" === this.PlotConfig.PlotLevel
       ? this.SetRender(!0)
       : this.SetRender(!1);
   }
@@ -418,7 +418,7 @@ class PlotModel extends ModelBase_1.ModelBase {
             .CancleSequenceFrameRateLimit());
   }
   J$i() {
-    this.PlotConfig.PlotLevel !== "LevelD" && this.SetInPlotGameBudget(!0);
+    "LevelD" !== this.PlotConfig.PlotLevel && this.SetInPlotGameBudget(!0);
   }
   SetInPlotGameBudget(t) {
     this.HasSetGameBudget !== t &&
@@ -464,12 +464,12 @@ class PlotModel extends ModelBase_1.ModelBase {
   }
   PlayCameraAnim(t) {
     this.PlotTemplate.IsInTemplate &&
-      this.PlotConfig.CameraMode === 3 &&
+      3 === this.PlotConfig.CameraMode &&
       this.PlotTemplate.PlayCameraAnimCompatible(t);
   }
   W$i() {
-    let t;
-    this.PlotConfig.PlotLevel !== "LevelD" &&
+    var t;
+    "LevelD" !== this.PlotConfig.PlotLevel &&
       Global_1.Global.BaseCharacter &&
       (t =
         Global_1.Global.BaseCharacter.CharacterActorComponent?.Entity.GetComponent(
@@ -509,7 +509,7 @@ class PlotModel extends ModelBase_1.ModelBase {
       }
   }
   $$i() {
-    this.PlotConfig.PlotLevel === "LevelD"
+    "LevelD" === this.PlotConfig.PlotLevel
       ? this.ResetAudioState()
       : ((this.V$i = !0),
         AudioSystem_1.AudioSystem.SetState(
@@ -546,12 +546,12 @@ class PlotModel extends ModelBase_1.ModelBase {
   CheckOptionCondition(t, e) {
     if (!t.PreCondition) return !0;
     let i = !1;
-    return (i = t.PreCondition.Type === "PreOption" ? this.z$i(t, e) : i);
+    return (i = "PreOption" === t.PreCondition.Type ? this.z$i(t, e) : i);
   }
   z$i(t, e) {
     let i = !0;
     for (const s of t.PreCondition.PreOptions) {
-      const o = this.GrayOptionMap.get(e.Id);
+      var o = this.GrayOptionMap.get(e.Id);
       i = i && !!o && o.has(s);
     }
     return i;
@@ -564,7 +564,7 @@ class PlotModel extends ModelBase_1.ModelBase {
     );
   }
   SaveCharacterLockOn() {
-    let t;
+    var t;
     this.Z$i() &&
       ((t = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
       EntitySystem_1.EntitySystem.Get(t)
@@ -576,7 +576,7 @@ class PlotModel extends ModelBase_1.ModelBase {
     this.O$i && ((this.O$i = !1), this.Z$i()?.EnterLockDirection());
   }
   Z$i() {
-    let t = Global_1.Global.BaseCharacter?.GetEntityIdNoBlueprint();
+    var t = Global_1.Global.BaseCharacter?.GetEntityIdNoBlueprint();
     if (t) {
       t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(29);
       if (t?.Valid) return t;
@@ -602,7 +602,7 @@ class PlotModel extends ModelBase_1.ModelBase {
       (t = (0, PublicUtil_1.getConfigPath)(
         IGlobal_1.globalConfigTemp.FlowTemplateCameraConfigPath,
       ));
-    let e = (0, puerts_1.$ref)("");
+    var e = (0, puerts_1.$ref)("");
     if (
       (UE.KuroStaticLibrary.LoadFileToString(e, t),
       (e = (0, puerts_1.$unref)(e)))
@@ -618,7 +618,7 @@ class PlotModel extends ModelBase_1.ModelBase {
       (t = (0, PublicUtil_1.getConfigPath)(
         IGlobal_1.globalConfigTemp.MontageConfigPath,
       ));
-    let e = (0, puerts_1.$ref)("");
+    var e = (0, puerts_1.$ref)("");
     if (
       (UE.KuroStaticLibrary.LoadFileToString(e, t),
       (e = (0, puerts_1.$unref)(e)))
@@ -628,7 +628,7 @@ class PlotModel extends ModelBase_1.ModelBase {
   GetMontageConfig(t) {
     if (PublicUtil_1.PublicUtil.UseDbConfig()) {
       if ((this.jZ || (this.jZ = new Map()), !this.jZ.get(t))) {
-        let e =
+        var e =
           ConfigManager_1.ConfigManager.PlotMontageConfig.GetPlotMontageConfig(
             t,
           );
@@ -653,7 +653,7 @@ class PlotModel extends ModelBase_1.ModelBase {
       (t = (0, PublicUtil_1.getConfigPath)(
         IGlobal_1.globalConfigTemp.AbpMontageConfigPath,
       ));
-    let e = (0, puerts_1.$ref)("");
+    var e = (0, puerts_1.$ref)("");
     if (
       (UE.KuroStaticLibrary.LoadFileToString(e, t),
       (e = (0, puerts_1.$unref)(e)))
@@ -663,7 +663,7 @@ class PlotModel extends ModelBase_1.ModelBase {
   GetAbpMontageConfig(t) {
     if (PublicUtil_1.PublicUtil.UseDbConfig()) {
       if ((this.WZ || (this.WZ = new Map()), !this.WZ.get(t))) {
-        let e =
+        var e =
           ConfigManager_1.ConfigManager.PlotMontageConfig.GetPlotAbpMontageConfig(
             t,
           );
@@ -688,7 +688,7 @@ class PlotModel extends ModelBase_1.ModelBase {
       (t = (0, PublicUtil_1.getConfigPath)(
         IGlobal_1.globalConfigTemp.AbpOverlayMontageConfigPath,
       ));
-    let e = (0, puerts_1.$ref)("");
+    var e = (0, puerts_1.$ref)("");
     if (
       (UE.KuroStaticLibrary.LoadFileToString(e, t),
       (e = (0, puerts_1.$unref)(e)))
@@ -698,7 +698,7 @@ class PlotModel extends ModelBase_1.ModelBase {
   GetOverlayAbpMontageConfig(t) {
     if (PublicUtil_1.PublicUtil.UseDbConfig()) {
       if ((this.F$i || (this.F$i = new Map()), !this.F$i.get(t))) {
-        let e =
+        var e =
           ConfigManager_1.ConfigManager.PlotMontageConfig.GetOverlayAbpMontageConfig(
             t,
           );
@@ -717,7 +717,7 @@ class PlotModel extends ModelBase_1.ModelBase {
   GetPlotTemplateConfig(t) {
     if (PublicUtil_1.PublicUtil.UseDbConfig()) {
       if ((this.k$i || (this.k$i = new Map()), !this.k$i.get(t))) {
-        let e =
+        var e =
           ConfigManager_1.ConfigManager.CameraTemplateConfig.GetCameraTemplateConfig(
             t,
           );
@@ -739,4 +739,4 @@ class PlotModel extends ModelBase_1.ModelBase {
   }
 }
 exports.PlotModel = PlotModel;
-// # sourceMappingURL=PlotModel.js.map
+//# sourceMappingURL=PlotModel.js.map

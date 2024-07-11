@@ -22,7 +22,7 @@ class CreatureDensityContainer {
     return this.CreatureDensityMap.get(t);
   }
   AddItem(t, e, s) {
-    const r = new CreatureDensityItem(t, e, s);
+    var r = new CreatureDensityItem(t, e, s);
     for (
       this.CreatureDensityMap.set(t, r);
       this.DensityArray.length <= r.DensityLevel;
@@ -32,7 +32,7 @@ class CreatureDensityContainer {
     return this.DensityArray[r.DensityLevel].set(t, r), r;
   }
   RemoveItem(t) {
-    const e = this.CreatureDensityMap.get(t);
+    var e = this.CreatureDensityMap.get(t);
     return (
       !!e &&
       (this.CreatureDensityMap.delete(t),
@@ -46,4 +46,4 @@ class CreatureDensityContainer {
   }
 }
 exports.CreatureDensityContainer = CreatureDensityContainer;
-// # sourceMappingURL=CreatureDensityContainer.js.map
+//# sourceMappingURL=CreatureDensityContainer.js.map

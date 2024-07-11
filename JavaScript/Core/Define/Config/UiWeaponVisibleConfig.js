@@ -24,22 +24,22 @@ class UiWeaponVisibleConfig {
     );
   }
   id() {
-    const i = this.J7.__offset(this.z7, 4);
+    var i = this.J7.__offset(this.z7, 4);
     return i ? this.J7.readInt32(this.z7 + i) : 0;
   }
   GetVisiblelistAt(i) {
     return this.visiblelist(i);
   }
   visiblelist(i) {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return !!t && !!this.J7.readInt8(this.J7.__vector(this.z7 + t) + i);
   }
   visiblelistLength() {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__vector_len(this.z7 + i) : 0;
   }
   visiblelistArray() {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i
       ? new Int8Array(
           this.J7.bytes().buffer,
@@ -50,4 +50,4 @@ class UiWeaponVisibleConfig {
   }
 }
 exports.UiWeaponVisibleConfig = UiWeaponVisibleConfig;
-// # sourceMappingURL=UiWeaponVisibleConfig.js.map
+//# sourceMappingURL=UiWeaponVisibleConfig.js.map

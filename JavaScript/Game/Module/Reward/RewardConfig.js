@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RewardConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const DropPackageById_1 = require("../../../Core/Define/ConfigQuery/DropPackageById");
-const DropShowPlanById_1 = require("../../../Core/Define/ConfigQuery/DropShowPlanById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  DropPackageById_1 = require("../../../Core/Define/ConfigQuery/DropPackageById"),
+  DropShowPlanById_1 = require("../../../Core/Define/ConfigQuery/DropShowPlanById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class RewardConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments),
@@ -145,20 +145,20 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetMergedDropPackagePreviewItemList(t) {
-    const o = [];
+    var o = [];
     if (t)
       for (const r of t) {
-        const e = this.GetDropPackage(r)?.DropPreview;
+        var e = this.GetDropPackage(r)?.DropPreview;
         if (e)
           for (const _ of e) {
-            const i = [{ IncId: 0, ItemId: _[0] }, _[1]];
+            var i = [{ IncId: 0, ItemId: _[0] }, _[1]];
             o.push(i);
           }
       }
     return o;
   }
   GetLowModeCount() {
-    const t = CommonParamById_1.configCommonParamById.GetIntConfig(
+    var t = CommonParamById_1.configCommonParamById.GetIntConfig(
       "into_bag_list_low_count",
     );
     return (
@@ -169,11 +169,11 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
           9,
           '慢速模式最大数量无法找到, 请检测c.参数字段"into_bag_list_low_count"',
         ),
-      t >= 0 ? t : 1
+      0 <= t ? t : 1
     );
   }
   GetFastModeCount() {
-    const t = CommonParamById_1.configCommonParamById.GetIntConfig(
+    var t = CommonParamById_1.configCommonParamById.GetIntConfig(
       "into_bag_list_fast_count",
     );
     return (
@@ -184,11 +184,11 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
           9,
           '快速模式最大数量无法找到, 请检测c.参数字段"into_bag_list_fast_count"',
         ),
-      t >= 0 ? t : 1
+      0 <= t ? t : 1
     );
   }
   GetLowModeNextAddItemTime() {
-    const t = CommonParamById_1.configCommonParamById.GetIntConfig(
+    var t = CommonParamById_1.configCommonParamById.GetIntConfig(
       "into_bag_next_item_low_time",
     );
     return (
@@ -199,11 +199,11 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
           9,
           '慢速模式下一个物品进包时间无法找到, 请检测c.参数字段"into_bag_next_item_low_time"',
         ),
-      t >= 0 ? t : 1
+      0 <= t ? t : 1
     );
   }
   GetFastModeNextAddItemTime() {
-    const t = CommonParamById_1.configCommonParamById.GetIntConfig(
+    var t = CommonParamById_1.configCommonParamById.GetIntConfig(
       "into_bag_next_item_fast_time",
     );
     return (
@@ -214,11 +214,11 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
           9,
           '快速模式下一个物品进包时间无法找到, 请检测c.参数字段"into_bag_next_item_fast_time"',
         ),
-      t >= 0 ? t : 1
+      0 <= t ? t : 1
     );
   }
   GetIntoBagMaxCount() {
-    const t =
+    var t =
       CommonParamById_1.configCommonParamById.GetIntConfig(
         "item_list_max_size",
       );
@@ -230,11 +230,11 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
           9,
           '外入包列表最大数量无法找到, 请检测c.参数字段"item_list_max_size"',
         ),
-      t >= 0 ? t : 1
+      0 <= t ? t : 1
     );
   }
   GetShowTime() {
-    const t =
+    var t =
       CommonParamById_1.configCommonParamById.GetIntConfig(
         "into_bag_show_time",
       );
@@ -246,11 +246,11 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
           9,
           '入包每个物品的显示时间无法找到, 请检测c.参数字段"into_bag_show_time"',
         ),
-      t >= 0 ? t : 3e3
+      0 <= t ? t : 3e3
     );
   }
   GetNextItemTime() {
-    const t = CommonParamById_1.configCommonParamById.GetIntConfig(
+    var t = CommonParamById_1.configCommonParamById.GetIntConfig(
       "into_bag_next_item_time",
     );
     return (
@@ -261,11 +261,11 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
           9,
           '下一个物品添加进来的时间无法找到, 请检测c.参数字段"into_bag_next_item_time"',
         ),
-      t >= 0 ? t : 300
+      0 <= t ? t : 300
     );
   }
   GetSliderTime() {
-    const t = CommonParamById_1.configCommonParamById.GetIntConfig(
+    var t = CommonParamById_1.configCommonParamById.GetIntConfig(
       "into_bag_slide_time",
     );
     return (
@@ -276,7 +276,7 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
           9,
           '上滑时间无法找到, 请检测c.参数字段"into_bag_slide_time"',
         ),
-      t >= 0 ? t : 200
+      0 <= t ? t : 200
     );
   }
   OnClear() {
@@ -296,4 +296,4 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.RewardConfig = RewardConfig;
-// # sourceMappingURL=RewardConfig.js.map
+//# sourceMappingURL=RewardConfig.js.map

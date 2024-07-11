@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TeleportPanel = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ButtonItem_1 = require("../../../Common/Button/ButtonItem");
-const MapController_1 = require("../../../Map/Controller/MapController");
-const WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi");
-const WorldMapController_1 = require("../../WorldMapController");
-const WorldMapDefine_1 = require("../../WorldMapDefine");
-const MULTI_MAP_SELECT_ICON_PATH = "SP_MarkMultiMapSelect";
-const BLOCK_MARK_ICON_PATH = "SP_MarkBlock";
+const Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
+  MapController_1 = require("../../../Map/Controller/MapController"),
+  WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
+  WorldMapController_1 = require("../../WorldMapController"),
+  WorldMapDefine_1 = require("../../WorldMapDefine"),
+  MULTI_MAP_SELECT_ICON_PATH = "SP_MarkMultiMapSelect",
+  BLOCK_MARK_ICON_PATH = "SP_MarkBlock";
 class TeleportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
@@ -49,29 +49,29 @@ class TeleportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
   OnShowWorldMapSecondaryUi(t) {
     this.dko = t;
-    const e = ModelManager_1.ModelManager.MapModel?.GetMarkExtraShowState(
-      this.dko.MarkId,
-    );
-    var r =
-      (e.ShowFlag === Protocol_1.Aki.Protocol.BNs.Proto_ShowDisable
-        ? this.$Ut.SetEnableClick(!1)
-        : this.$Ut.SetEnableClick(!0),
-      this.Uko(),
-      this.GetText(1).SetText(this.dko.GetTitleText()),
-      this.dko.GetAreaText());
-    var r =
-      (r && this.GetText(3).SetText(r),
-      this.GetText(4).ShowTextNew(this.dko.GetLocaleDesc()),
-      this.SetSpriteByPath(this.dko.IconPath, this.GetSprite(0), !1),
-      t.IsMultiMapTeleport);
-    var r =
-      (this.GetSprite(23).SetUIActive(r),
-      r &&
-        ((t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-          MULTI_MAP_SELECT_ICON_PATH,
-        )),
-        this.SetSpriteByPath(t, this.GetSprite(23), !1)),
-      e.ShowFlag === Protocol_1.Aki.Protocol.BNs.Proto_ShowDisable);
+    var e = ModelManager_1.ModelManager.MapModel?.GetMarkExtraShowState(
+        this.dko.MarkId,
+      ),
+      r =
+        (e.ShowFlag === Protocol_1.Aki.Protocol.BNs.Proto_ShowDisable
+          ? this.$Ut.SetEnableClick(!1)
+          : this.$Ut.SetEnableClick(!0),
+        this.Uko(),
+        this.GetText(1).SetText(this.dko.GetTitleText()),
+        this.dko.GetAreaText()),
+      r =
+        (r && this.GetText(3).SetText(r),
+        this.GetText(4).ShowTextNew(this.dko.GetLocaleDesc()),
+        this.SetSpriteByPath(this.dko.IconPath, this.GetSprite(0), !1),
+        t.IsMultiMapTeleport),
+      r =
+        (this.GetSprite(23).SetUIActive(r),
+        r &&
+          ((t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+            MULTI_MAP_SELECT_ICON_PATH,
+          )),
+          this.SetSpriteByPath(t, this.GetSprite(23), !1)),
+        e.ShowFlag === Protocol_1.Aki.Protocol.BNs.Proto_ShowDisable);
     this.GetSprite(24).SetUIActive(r),
       r &&
         ((t =
@@ -102,4 +102,4 @@ class TeleportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
 }
 exports.TeleportPanel = TeleportPanel;
-// # sourceMappingURL=TeleportPanel.js.map
+//# sourceMappingURL=TeleportPanel.js.map

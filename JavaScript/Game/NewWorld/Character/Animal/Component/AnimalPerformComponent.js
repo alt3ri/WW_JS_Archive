@@ -1,46 +1,51 @@
 "use strict";
-let AnimalPerformComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, s) {
-    let r;
-    const n = arguments.length;
-    let o =
-      n < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      o = Reflect.decorate(t, e, i, s);
-    else
-      for (let h = t.length - 1; h >= 0; h--)
-        (r = t[h]) && (o = (n < 3 ? r(o) : n > 3 ? r(e, i, o) : r(e, i)) || o);
-    return n > 3 && o && Object.defineProperty(e, i, o), o;
-  };
+var AnimalPerformComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, s) {
+      var r,
+        n = arguments.length,
+        o =
+          n < 3
+            ? e
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        o = Reflect.decorate(t, e, i, s);
+      else
+        for (var h = t.length - 1; 0 <= h; h--)
+          (r = t[h]) &&
+            (o = (n < 3 ? r(o) : 3 < n ? r(e, i, o) : r(e, i)) || o);
+      return 3 < n && o && Object.defineProperty(e, i, o), o;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AnimalPerformComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const Global_1 = require("../../../../Global");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ActorUtils_1 = require("../../../../Utils/ActorUtils");
-const CharacterNameDefines_1 = require("../../Common/CharacterNameDefines");
-const BasePerformComponent_1 = require("../../Common/Component/BasePerformComponent");
-const DEFAULT_SIGHT_RANGE = 300;
-const SIGHT_OPEN_DEGREE = 80;
-const GAMEPLAY_TAG_DISAPPEAR = 1800978500;
-const GAMEPLAY_TAG_BLUR = -1683566877;
-const DESTROY_DISAPPEAR_TIME = 2e3;
-const GAMEPLAY_TAG_INVISIBILITY = -208062360;
-const GAMEPLAY_TAG_ON_HIT = -1555907721;
-const ALERT_RANGE = 500;
-const GAMEPLAY_TAG_ALERT = 836814667;
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../../Global"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ActorUtils_1 = require("../../../../Utils/ActorUtils"),
+  CharacterNameDefines_1 = require("../../Common/CharacterNameDefines"),
+  BasePerformComponent_1 = require("../../Common/Component/BasePerformComponent"),
+  DEFAULT_SIGHT_RANGE = 300,
+  SIGHT_OPEN_DEGREE = 80,
+  GAMEPLAY_TAG_DISAPPEAR = 1800978500,
+  GAMEPLAY_TAG_BLUR = -1683566877,
+  DESTROY_DISAPPEAR_TIME = 2e3,
+  GAMEPLAY_TAG_INVISIBILITY = -208062360,
+  GAMEPLAY_TAG_ON_HIT = -1555907721,
+  ALERT_RANGE = 500,
+  GAMEPLAY_TAG_ALERT = 836814667;
 let AnimalPerformComponent =
   (AnimalPerformComponent_1 = class AnimalPerformComponent extends (
     BasePerformComponent_1.BasePerformComponent
@@ -84,7 +89,7 @@ let AnimalPerformComponent =
                 ));
         }),
         (this.ybr = (t, e) => {
-          const i = this.TBr.get(t);
+          var i = this.TBr.get(t);
           i &&
             (e
               ? (this.Ibr(i),
@@ -110,8 +115,8 @@ let AnimalPerformComponent =
         (this.Rbr = (e) => {
           if (e.BulletDataMain.Base.DamageId !== BigInt(0)) {
             let t = !1;
-            var e = e.Attacker;
-            let i = e.GetComponent(0);
+            var e = e.Attacker,
+              i = e.GetComponent(0);
             (t =
               i?.IsRole() ||
               i?.IsVision() ||
@@ -181,13 +186,13 @@ let AnimalPerformComponent =
           !1
         );
       this.AnimComp.EnableSightDirect = this.gbr;
-      const t = this.AnimComp.MainAnimInstance;
+      var t = this.AnimComp.MainAnimInstance;
       if (t) {
-        const e = t.材质配置;
-        const i = e.Num();
+        var e = t.材质配置,
+          i = e.Num();
         for (let t = 0; t < i; ++t) {
-          var s;
-          const r = e.GetKey(t);
+          var s,
+            r = e.GetKey(t);
           r.TagName.includes("动物.")
             ? ((s = e.Get(r)), this.TBr.set(r.TagId, s.ToAssetPathName()))
             : Log_1.Log.CheckError() &&
@@ -253,16 +258,16 @@ let AnimalPerformComponent =
           : this.Bbr(void 0));
     }
     wbr() {
-      var t = Global_1.Global.BaseCharacter.CharacterActorComponent;
-      var t =
-        (this.fbr.FromUeVector(t.ActorLocationProxy),
-        this.fbr.SubtractionEqual(this.Hte.ActorLocationProxy),
-        (this.fbr.Z = 0),
-        this.fbr.Normalize(),
-        MathUtils_1.MathUtils.GetAngleByVectorDot(
-          this.fbr,
-          this.Hte.ActorForwardProxy,
-        ));
+      var t = Global_1.Global.BaseCharacter.CharacterActorComponent,
+        t =
+          (this.fbr.FromUeVector(t.ActorLocationProxy),
+          this.fbr.SubtractionEqual(this.Hte.ActorLocationProxy),
+          (this.fbr.Z = 0),
+          this.fbr.Normalize(),
+          MathUtils_1.MathUtils.GetAngleByVectorDot(
+            this.fbr,
+            this.Hte.ActorForwardProxy,
+          ));
       return t <= SIGHT_OPEN_DEGREE;
     }
     Bbr(t) {
@@ -275,7 +280,7 @@ let AnimalPerformComponent =
       return this.Cbr.RemoveTagAddOrRemoveListener(1008164187, this.Sbr), !0;
     }
     Ibr(t) {
-      this.pbr > -1 && this.Tbr(),
+      -1 < this.pbr && this.Tbr(),
         ResourceSystem_1.ResourceSystem.LoadAsync(
           t,
           UE.PD_CharacterControllerData_C,
@@ -292,14 +297,14 @@ let AnimalPerformComponent =
         );
     }
     Tbr() {
-      this.pbr > -1 &&
+      -1 < this.pbr &&
         this.Hte.Actor.CharRenderingComponent.RemoveMaterialControllerData(
           this.pbr,
         ),
         (this.pbr = -1);
     }
     Lbr() {
-      let t;
+      var t;
       this.Mbr ||
         (this.Hte?.Valid &&
           this.Hte.Actor?.IsValid() &&
@@ -314,7 +319,7 @@ let AnimalPerformComponent =
           (this.Mbr = !0)));
     }
     Dbr() {
-      let t;
+      var t;
       this.Mbr &&
         this.Hte?.Valid &&
         this.Hte.Actor?.IsValid() &&
@@ -329,8 +334,8 @@ let AnimalPerformComponent =
         (this.Mbr = !1));
     }
     SetUiOpenPerformance(t, e) {
-      const i = this.Entity.GetComponent(14);
-      i.CurrentState() === 6
+      var i = this.Entity.GetComponent(14);
+      6 === i.CurrentState()
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Animal",
@@ -394,4 +399,4 @@ let AnimalPerformComponent =
     AnimalPerformComponent,
   )),
   (exports.AnimalPerformComponent = AnimalPerformComponent);
-// # sourceMappingURL=AnimalPerformComponent.js.map
+//# sourceMappingURL=AnimalPerformComponent.js.map

@@ -8,4 +8,4 @@ class LevelConditionCheckRogueTerm extends LevelGeneralBase_1.LevelConditionBase
   }
 }
 exports.LevelConditionCheckRogueTerm = LevelConditionCheckRogueTerm;
-// # sourceMappingURL=LevelConditionCheckRogueTerm.js.map
+//# sourceMappingURL=LevelConditionCheckRogueTerm.js.map

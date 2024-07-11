@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TreeExpressAssistant = void 0);
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const IQuest_1 = require("../../../../UniverseEditor/Interface/IQuest");
-const IVar_1 = require("../../../../UniverseEditor/Interface/IVar");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const PublicUtil_1 = require("../../../Common/PublicUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ControllerAssistantBase_1 = require("./ControllerAssistantBase");
-const ONE_HUNDRED = 100;
+const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  IQuest_1 = require("../../../../UniverseEditor/Interface/IQuest"),
+  IVar_1 = require("../../../../UniverseEditor/Interface/IVar"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../../Common/PublicUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ControllerAssistantBase_1 = require("./ControllerAssistantBase"),
+  ONE_HUNDRED = 100;
 class TreeExpressAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor() {
     super(...arguments),
@@ -114,14 +114,14 @@ class TreeExpressAssistant extends ControllerAssistantBase_1.ControllerAssistant
             )).replace("{q_count}", n + "%")));
           break;
         case IQuest_1.EQuestScheduleType.ChildQuestCompletedCount: {
-          const i =
+          var i =
             ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
               t,
             );
           if (!i) break;
-          var s = PublicUtil_1.PublicUtil.GetConfigTextByKey(r.TidTitle);
-          var n = r.QuestScheduleType.AssociatedChildQuestIds;
-          var o = n.length;
+          var s = PublicUtil_1.PublicUtil.GetConfigTextByKey(r.TidTitle),
+            n = r.QuestScheduleType.AssociatedChildQuestIds,
+            o = n.length;
           let e = 0;
           for (const _ of n) i.GetNode(_)?.IsSuccess && e++;
           a = `${s}(${e}/${o})`;
@@ -147,10 +147,10 @@ class TreeExpressAssistant extends ControllerAssistantBase_1.ControllerAssistant
               t,
             );
           s &&
-            (((n = (o = r.QuestScheduleType).Var.Type) !== "Int" &&
-              n !== "Float" &&
-              n !== "String" &&
-              n !== "Boolean") ||
+            (("Int" !== (n = (o = r.QuestScheduleType).Var.Type) &&
+              "Float" !== n &&
+              "String" !== n &&
+              "Boolean" !== n) ||
               ((n = this.h$t(s, o.Var)),
               (a = (a = PublicUtil_1.PublicUtil.GetConfigTextByKey(
                 r.TidTitle,
@@ -172,30 +172,30 @@ class TreeExpressAssistant extends ControllerAssistantBase_1.ControllerAssistant
     let r = "";
     if (t)
       for (let e = 0; e < t.length; e++) {
-        var a = t[e];
-        var a = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-          "T_Num" + a,
-        );
+        var a = t[e],
+          a = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+            "T_Num" + a,
+          );
         r += `<texture=${a}/>`;
       }
     return r;
   }
   l$t(e, t, r) {
-    if (r && r.length !== 0)
+    if (r && 0 !== r.length)
       for (const s of r) {
         var a;
-        (s.Source !== "Self" && s.Source !== "Other") ||
+        ("Self" !== s.Source && "Other" !== s.Source) ||
           ((a = this.h$t(e, s)),
           void 0 !== s && (t = t.replace(`{${s.Name}}`, a)));
       }
     return t;
   }
   h$t(e, t) {
-    const r = t.Source;
-    const a = t.Type;
-    if (r === "Constant") return String(t.Value);
-    if (r === "Self" || r === "Other") {
-      const s = e.GetTreeVarByKey(t.Name);
+    var r = t.Source,
+      a = t.Type;
+    if ("Constant" === r) return String(t.Value);
+    if ("Self" === r || "Other" === r) {
+      var s = e.GetTreeVarByKey(t.Name);
       if (void 0 === s) return "";
       if (s.xMs === (0, IVar_1.getVarConfigIndex)(a))
         switch (a) {
@@ -214,19 +214,19 @@ class TreeExpressAssistant extends ControllerAssistantBase_1.ControllerAssistant
   GetNodeTrackText(e, t, r, a) {
     e = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(e);
     if (!e) return "";
-    const s = e.GetNode(t);
+    var s = e.GetNode(t);
     if (!s) return "";
-    const i = r ?? s.TrackTextConfig;
-    if (void 0 === i || i.length === 0) return "";
+    var i = r ?? s.TrackTextConfig;
+    if (void 0 === i || 0 === i.length) return "";
     let n = void 0;
     switch (s.TrackTextRule) {
       case 0:
         n = PublicUtil_1.PublicUtil.GetConfigTextByKey(i);
         break;
       case 1:
-        var o = PublicUtil_1.PublicUtil.GetConfigTextByKey(i);
-        var _ = s.GetProgress() ?? "0";
-        var l = s.GetProgressMax() ?? "0";
+        var o = PublicUtil_1.PublicUtil.GetConfigTextByKey(i),
+          _ = s.GetProgress() ?? "0",
+          l = s.GetProgressMax() ?? "0";
         n = o.replace("{q_count}", _).replace("{q_countMax}", l);
         break;
       case 2:
@@ -256,4 +256,4 @@ class TreeExpressAssistant extends ControllerAssistantBase_1.ControllerAssistant
   }
 }
 exports.TreeExpressAssistant = TreeExpressAssistant;
-// # sourceMappingURL=TreeExpressAssistant.js.map
+//# sourceMappingURL=TreeExpressAssistant.js.map

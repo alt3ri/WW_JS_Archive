@@ -1,5 +1,5 @@
 "use strict";
-let ECommonNodeState, EChildQuestNodeState;
+var ECommonNodeState, EChildQuestNodeState;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EChildQuestNodeState = exports.ECommonNodeState = void 0),
   (function (e) {
@@ -26,4 +26,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     (EChildQuestNodeState =
       exports.EChildQuestNodeState || (exports.EChildQuestNodeState = {})),
   );
-// # sourceMappingURL=IGameStatusDefine.js.map
+//# sourceMappingURL=IGameStatusDefine.js.map

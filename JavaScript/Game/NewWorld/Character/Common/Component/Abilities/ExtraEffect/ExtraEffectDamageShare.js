@@ -1,30 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DamageShare = void 0);
-const Log_1 = require("../../../../../../../Core/Common/Log");
-const DamageById_1 = require("../../../../../../../Core/Define/ConfigQuery/DamageById");
-const EntitySystem_1 = require("../../../../../../../Core/Entity/EntitySystem");
-const AbilityUtils_1 = require("../AbilityUtils");
-const CharacterAttributeTypes_1 = require("../CharacterAttributeTypes");
-const ExtraEffectBase_1 = require("./ExtraEffectBase");
+const Log_1 = require("../../../../../../../Core/Common/Log"),
+  DamageById_1 = require("../../../../../../../Core/Define/ConfigQuery/DamageById"),
+  EntitySystem_1 = require("../../../../../../../Core/Entity/EntitySystem"),
+  AbilityUtils_1 = require("../AbilityUtils"),
+  CharacterAttributeTypes_1 = require("../CharacterAttributeTypes"),
+  ExtraEffectBase_1 = require("./ExtraEffectBase");
 class DamageShare extends ExtraEffectBase_1.BuffEffect {
   constructor() {
     super(...arguments), (this.ShareType = 0), (this.ShareRate = -0);
   }
   InitParameters(t) {
-    const e = t.ExtraEffectParameters;
-    var t = t.ExtraEffectGrowParameters1;
+    var e = t.ExtraEffectParameters,
+      t = t.ExtraEffectGrowParameters1;
     (this.ShareType = Number(e[0] ?? 0)),
       (this.ShareRate =
         AbilityUtils_1.AbilityUtils.GetLevelValue(t, this.Level, 0) *
         CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND);
   }
   static ApplyHitShare(t, e, r, a) {
-    let i;
-    let s;
-    const o = DamageById_1.configDamageById.GetConfig(
-      e.ReBulletData.Base.DamageId,
-    );
+    var i,
+      s,
+      o = DamageById_1.configDamageById.GetConfig(e.ReBulletData.Base.DamageId);
     for ([i, s] of this.GetShareRateMap(t, o))
       EntitySystem_1.EntitySystem.Get(i)
         ?.CheckGetComponent(51)
@@ -32,8 +30,8 @@ class DamageShare extends ExtraEffectBase_1.BuffEffect {
   }
   static ApplyBuffShare(t, e, r, a, i) {
     for (var [s, o] of this.GetShareRateMap(t, e)) {
-      var s = EntitySystem_1.EntitySystem.Get(s);
-      const h = s?.CheckGetComponent(1)?.ActorLocation;
+      var s = EntitySystem_1.EntitySystem.Get(s),
+        h = s?.CheckGetComponent(1)?.ActorLocation;
       s?.CheckGetComponent(18)?.ExecuteBuffShareDamage(
         { ...r, HitPosition: h },
         a,
@@ -61,19 +59,19 @@ class DamageShare extends ExtraEffectBase_1.BuffEffect {
   IsShareable(t) {
     switch (this.ShareType) {
       case 2:
-        return t === 1;
+        return 1 === t;
       case 1:
-        return t === 0;
+        return 0 === t;
       default:
         return !0;
     }
   }
   static GetShareRateMap(t, e) {
-    let r;
-    let a;
-    const i = t.GetComponent(157);
-    var t = i.BuffEffectManager.FilterById(18);
-    const s = new Map();
+    var r,
+      a,
+      i = t.GetComponent(157),
+      t = i.BuffEffectManager.FilterById(18),
+      s = new Map();
     for (const o of t)
       o.Check({}, i) &&
         (([r, a] = o.Execute(e)), void 0 !== r) &&
@@ -82,4 +80,4 @@ class DamageShare extends ExtraEffectBase_1.BuffEffect {
   }
 }
 exports.DamageShare = DamageShare;
-// # sourceMappingURL=ExtraEffectDamageShare.js.map
+//# sourceMappingURL=ExtraEffectDamageShare.js.map

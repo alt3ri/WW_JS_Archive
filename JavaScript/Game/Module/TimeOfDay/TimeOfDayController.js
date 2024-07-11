@@ -1,27 +1,27 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TimeOfDayController = void 0);
-const ue_1 = require("ue");
-const AudioSystem_1 = require("../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const TimeOfDayDefine_1 = require("./TimeOfDayDefine");
-const TimeOfDayModel_1 = require("./TimeOfDayModel");
-const SENDTIMEGAP = 2e3;
+const ue_1 = require("ue"),
+  AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  TimeOfDayDefine_1 = require("./TimeOfDayDefine"),
+  TimeOfDayModel_1 = require("./TimeOfDayModel"),
+  SENDTIMEGAP = 2e3;
 class TimeOfDayController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -84,12 +84,12 @@ class TimeOfDayController extends UiControllerBase_1.UiControllerBase {
       ((this.gIo += e), this.fIo(this.gIo), (this.gIo = 0));
   }
   static fIo(e) {
-    const a = ModelManager_1.ModelManager.GameModeModel.IsMulti
-      ? 1
-      : ModelManager_1.ModelManager.TimeOfDayModel.TimeScale;
-    var e = TimeOfDayModel_1.TodDayTime.ConvertFromRealTimeSecond(
-      (e / TimeOfDayDefine_1.TOD_MILLIONSECOND_PER_SECOND) * a,
-    );
+    var a = ModelManager_1.ModelManager.GameModeModel.IsMulti
+        ? 1
+        : ModelManager_1.ModelManager.TimeOfDayModel.TimeScale,
+      e = TimeOfDayModel_1.TodDayTime.ConvertFromRealTimeSecond(
+        (e / TimeOfDayDefine_1.TOD_MILLIONSECOND_PER_SECOND) * a,
+      );
     e <= 0 ||
       this.pIo(ModelManager_1.ModelManager.TimeOfDayModel.GameTime.Second + e);
   }
@@ -145,20 +145,20 @@ class TimeOfDayController extends UiControllerBase_1.UiControllerBase {
   static SIo(e) {
     let a = e;
     a > TimeOfDayDefine_1.TOD_SECOND_PER_DAY && (a = 0);
-    var i = ModelManager_1.ModelManager.TimeOfDayModel.GameTime.DayState;
-    var i =
-      (this.EIo !== i &&
-        ((this.EIo = i),
-        EventSystem_1.EventSystem.Emit(
-          EventDefine_1.EEventName.DayStateChange,
-        )),
-      Time_1.Time.Now - this.yIo);
-    var i =
-      (((i > SENDTIMEGAP &&
-        a - this.IIo > TimeOfDayDefine_1.TOD_SECOND_PER_MINUTE) ||
-        this.IIo > a) &&
-        this.SyncServerGameTime(a),
-      Math.floor(e / TimeOfDayDefine_1.TOD_SECOND_PER_HOUR));
+    var i = ModelManager_1.ModelManager.TimeOfDayModel.GameTime.DayState,
+      i =
+        (this.EIo !== i &&
+          ((this.EIo = i),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.DayStateChange,
+          )),
+        Time_1.Time.Now - this.yIo),
+      i =
+        (((i > SENDTIMEGAP &&
+          a - this.IIo > TimeOfDayDefine_1.TOD_SECOND_PER_MINUTE) ||
+          this.IIo > a) &&
+          this.SyncServerGameTime(a),
+        Math.floor(e / TimeOfDayDefine_1.TOD_SECOND_PER_HOUR));
     i < this.TIo &&
       ((e = Math.floor(
         (e - i * TimeOfDayDefine_1.TOD_SECOND_PER_HOUR) /
@@ -168,7 +168,7 @@ class TimeOfDayController extends UiControllerBase_1.UiControllerBase {
       (this.TIo = i);
   }
   static SyncServerGameTime(e) {
-    let a, i;
+    var a, i;
     !GlobalData_1.GlobalData.World ||
       (ModelManager_1.ModelManager.GameModeModel.IsMulti &&
         !ModelManager_1.ModelManager.CreatureModel.IsMyWorld()) ||
@@ -191,7 +191,7 @@ class TimeOfDayController extends UiControllerBase_1.UiControllerBase {
         ));
   }
   static MIo(e) {
-    let a;
+    var a;
     GlobalData_1.GlobalData.World &&
       ((a = TimeOfDayController.DIo - e) > TimeOfDayController.RIo ||
         a < -TimeOfDayController.RIo) &&
@@ -258,7 +258,7 @@ class TimeOfDayController extends UiControllerBase_1.UiControllerBase {
     }
   }
   static AdjustTime(e, a, i = 0) {
-    let t, r;
+    var t, r;
     !GlobalData_1.GlobalData.World ||
       (ModelManager_1.ModelManager.GameModeModel.IsMulti &&
         !ModelManager_1.ModelManager.CreatureModel.IsMyWorld()) ||
@@ -275,7 +275,7 @@ class TimeOfDayController extends UiControllerBase_1.UiControllerBase {
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.AdjustTime));
   }
   static LIo(e, a, i, t) {
-    let r;
+    var r;
     !GlobalData_1.GlobalData.World ||
       (ModelManager_1.ModelManager.GameModeModel.IsMulti &&
         !ModelManager_1.ModelManager.CreatureModel.IsMyWorld()) ||
@@ -334,9 +334,9 @@ class TimeOfDayController extends UiControllerBase_1.UiControllerBase {
       );
   }),
   (TimeOfDayController.dze = (e) => {
-    e === 1
+    1 === e
       ? TimeOfDayController.PauseTime()
-      : e === 0 && TimeOfDayController.ResumeTimeScale();
+      : 0 === e && TimeOfDayController.ResumeTimeScale();
   }),
   (TimeOfDayController.gEe = (e) => {
     ModelManager_1.ModelManager.TimeOfDayModel.PlayerAccount = e;
@@ -361,4 +361,4 @@ class TimeOfDayController extends UiControllerBase_1.UiControllerBase {
       : ((ModelManager_1.ModelManager.TimeOfDayModel.TimeRunLockState = !1),
         (ModelManager_1.ModelManager.TimeOfDayModel.TimeSynLockState = !1));
   });
-// # sourceMappingURL=TimeOfDayController.js.map
+//# sourceMappingURL=TimeOfDayController.js.map

@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelUpgradeView = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const RedDotController_1 = require("../../../RedDot/RedDotController");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LoopScrollSmallItemGrid_1 = require("../../Common/SmallItemGrid/LoopScrollSmallItemGrid");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const ComposeDefine_1 = require("../Compose/ComposeDefine");
-const CommonManager_1 = require("./CommonManager");
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  RedDotController_1 = require("../../../RedDot/RedDotController"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LoopScrollSmallItemGrid_1 = require("../../Common/SmallItemGrid/LoopScrollSmallItemGrid"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ComposeDefine_1 = require("../Compose/ComposeDefine"),
+  CommonManager_1 = require("./CommonManager");
 class StarItem extends UiPanelBase_1.UiPanelBase {
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [[0, UE.UISprite]]), (this.BtnBindInfo = []);
@@ -30,7 +30,7 @@ class LevelRewardItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid 
       Data: e,
       Type: 4,
       ItemConfigId: e.RewardId,
-      BottomText: e.Count > 0 ? "" + e.Count : "",
+      BottomText: 0 < e.Count ? "" + e.Count : "",
       IsReceivedVisible: e.IsGet,
     };
     this.Apply(e);
@@ -39,7 +39,7 @@ class LevelRewardItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid 
     return !1;
   }
   OnExtendToggleClicked() {
-    const e = this.Data;
+    var e = this.Data;
     ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
       e.RewardId,
     );
@@ -53,7 +53,7 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
       (this.RNt = !0),
       (this.$be = void 0),
       (this.Gqt = (e, t, o) => {
-        const r = new StarItem();
+        var r = new StarItem();
         return (
           r.CreateThenShowByActor(t.GetOwner()),
           r.SetState(e),
@@ -64,7 +64,7 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
         return new LevelRewardItem();
       }),
       (this.Oqt = () => {
-        this.qqt.length !== 0 && this.Cl();
+        0 !== this.qqt.length && this.Cl();
       }),
       (this.Kyt = () => {
         this.GetButton(4).GetSelfInteractive()
@@ -178,36 +178,36 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
       this.CFs();
   }
   qyi() {
-    const e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+    var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
       ComposeDefine_1.COMPOSE_TYPE_TEXTURE_PATH_KEY,
     );
     this.SetTextureByPath(e, this.GetTexture(9));
   }
   C4e() {
     var e = CommonManager_1.CommonManager.GetComposeLevelByLevel(
-      CommonManager_1.CommonManager.GetSelectedLevel(),
-    );
-    var e = ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(e.Name);
+        CommonManager_1.CommonManager.GetSelectedLevel(),
+      ),
+      e = ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(e.Name);
     this.GetText(0).SetText(e);
   }
   nOe() {
     var e = CommonManager_1.CommonManager.GetComposeLevelByLevel(
-      CommonManager_1.CommonManager.GetSelectedLevel(),
-    );
-    var e = ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
-      e.AttributesDescription,
-    );
+        CommonManager_1.CommonManager.GetSelectedLevel(),
+      ),
+      e = ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
+        e.AttributesDescription,
+      );
     this.GetText(1).SetText(e);
   }
   sct() {
-    const e = CommonManager_1.CommonManager.GetComposeMaxLevel();
-    const t = new Array(e);
+    var e = CommonManager_1.CommonManager.GetComposeMaxLevel(),
+      t = new Array(e);
     for (let e = 0; e < CommonManager_1.CommonManager.GetSelectedLevel(); e++)
       t[e] = !0;
     this.$be.RebuildLayoutByDataNew(t);
   }
   Fqt() {
-    const e = CommonManager_1.CommonManager.GetCurrentRewardTotalProficiency();
+    var e = CommonManager_1.CommonManager.GetCurrentRewardTotalProficiency();
     let t = "";
     (t =
       CommonManager_1.CommonManager.GetSelectedLevel() ===
@@ -221,19 +221,18 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
       this.GetText(2).SetText(t);
   }
   Vqt() {
-    var e = CommonManager_1.CommonManager.GetCurrentRewardTotalProficiency();
-    const t = CommonManager_1.CommonManager.GetSumExpByLevel(
-      CommonManager_1.CommonManager.GetSelectedLevel(),
-    );
-    var e =
-      (e = MathUtils_1.MathUtils.GetFloatPointFloor(e / t, 3)) > 1 ? 1 : e;
+    var e = CommonManager_1.CommonManager.GetCurrentRewardTotalProficiency(),
+      t = CommonManager_1.CommonManager.GetSumExpByLevel(
+        CommonManager_1.CommonManager.GetSelectedLevel(),
+      ),
+      e = 1 < (e = MathUtils_1.MathUtils.GetFloatPointFloor(e / t, 3)) ? 1 : e;
     this.GetSprite(3).SetFillAmount(e);
   }
   rFe() {
-    const e = CommonManager_1.CommonManager.GetComposeMaxLevel();
-    const t = CommonManager_1.CommonManager.GetCurrentRewardLevel();
-    let o = CommonManager_1.CommonManager.GetSelectedLevel();
-    let r = this.GetButton(4).GetOwner();
+    var e = CommonManager_1.CommonManager.GetComposeMaxLevel(),
+      t = CommonManager_1.CommonManager.GetCurrentRewardLevel(),
+      o = CommonManager_1.CommonManager.GetSelectedLevel(),
+      r = this.GetButton(4).GetOwner();
     r.GetUIItem().SetUIActive(!0),
       e <= t || e <= o || o < t
         ? r.GetUIItem().SetUIActive(!1)
@@ -246,10 +245,10 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
   }
   Hqt() {
     this.qqt.length = 0;
-    let e = CommonManager_1.CommonManager.GetDropIdByLevel(
+    var e = CommonManager_1.CommonManager.GetDropIdByLevel(
       CommonManager_1.CommonManager.GetSelectedLevel(),
     );
-    if (e === -1) this.GetItem(8).SetUIActive(!1);
+    if (-1 === e) this.GetItem(8).SetUIActive(!1);
     else {
       this.GetItem(8).SetUIActive(!0);
       e = ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(e);
@@ -269,7 +268,7 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
     this.GetButton(5)
       .GetOwner()
       .GetComponentByClass(UE.UIItem.StaticClass())
-      .SetUIActive(CommonManager_1.CommonManager.GetSelectedLevel() !== 1),
+      .SetUIActive(1 !== CommonManager_1.CommonManager.GetSelectedLevel()),
       this.GetButton(6)
         .GetOwner()
         .GetComponentByClass(UE.UIItem.StaticClass())
@@ -299,4 +298,4 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.LevelUpgradeView = LevelUpgradeView;
-// # sourceMappingURL=LevelUpgradeView.js.map
+//# sourceMappingURL=LevelUpgradeView.js.map

@@ -1,35 +1,39 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, i, e, s) {
-    let r;
-    const a = arguments.length;
-    let o =
-      a < 3 ? i : s === null ? (s = Object.getOwnPropertyDescriptor(i, e)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      a = arguments.length,
+      o =
+        a < 3
+          ? i
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(i, e))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       o = Reflect.decorate(t, i, e, s);
     else
-      for (let h = t.length - 1; h >= 0; h--)
-        (r = t[h]) && (o = (a < 3 ? r(o) : a > 3 ? r(i, e, o) : r(i, e)) || o);
-    return a > 3 && o && Object.defineProperty(i, e, o), o;
+      for (var h = t.length - 1; 0 <= h; h--)
+        (r = t[h]) && (o = (a < 3 ? r(o) : 3 < a ? r(i, e, o) : r(i, e)) || o);
+    return 3 < a && o && Object.defineProperty(i, e, o), o;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterPartComponent = exports.CharacterPart = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const DataTableUtil_1 = require("../../../../../Core/Utils/DataTableUtil");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage");
-const CombatDebugController_1 = require("../../../../Utils/CombatDebugController");
-const EAttributeId = Protocol_1.Aki.Protocol.KBs;
-const GlobalData_1 = require("../../../../GlobalData");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  DataTableUtil_1 = require("../../../../../Core/Utils/DataTableUtil"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
+  CombatDebugController_1 = require("../../../../Utils/CombatDebugController");
+var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+const GlobalData_1 = require("../../../../GlobalData"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
 class CharacterPart {
   constructor(t, i, e) {
     (this.BaseEntity = void 0),
@@ -75,7 +79,7 @@ class CharacterPart {
       (this.WeaknessAngle = e.弱点受击角度),
       (this.BoneName = FNameUtil_1.FNameUtil.GetDynamicFName(e.部位名)),
       (this.SeparateDamage = e.是否独立承伤),
-      (this.InheritLife = e.继承生命值比例 > 0),
+      (this.InheritLife = 0 < e.继承生命值比例),
       (this.WeaknessTypeSet = new Set()),
       (this.PartSocketName = e.部位状态条骨骼插槽),
       (this.IsPartStateVisible = e.是否在目标创建时显示部位状态条),
@@ -124,8 +128,8 @@ class CharacterPart {
   }
   OnDamage(t, i, e, s = !0) {
     let r = !1;
-    const a = this.ActorComp.Actor;
-    const o = this.RemainedLifeRate();
+    var a = this.ActorComp.Actor,
+      o = this.RemainedLifeRate();
     return (
       s &&
         ((this.Life -= t),
@@ -142,7 +146,7 @@ class CharacterPart {
           t,
           this,
         ),
-        o > 0) &&
+        0 < o) &&
         s <= 0 &&
         (r = !0),
       i &&
@@ -156,9 +160,9 @@ class CharacterPart {
     );
   }
   HandleChangeLife(t, i = !0) {
-    let e;
-    const s = this.Life - t;
-    s != 0 &&
+    var e,
+      s = this.Life - t;
+    0 != s &&
       ((e = this.RemainedLifeRate()), (this.Life = t), i) &&
       (e !== (t = this.RemainedLifeRate()) &&
         ((i = this.ActorComp.Actor),
@@ -176,7 +180,7 @@ class CharacterPart {
       ));
   }
   RemainedLife() {
-    return this.InheritLife ? (this.Life >= 0 ? this.Life : 0) : -1;
+    return this.InheritLife ? (0 <= this.Life ? this.Life : 0) : -1;
   }
   RemainedLifeRate() {
     return this.InheritLife ? this.RemainedLife() / this.LifeMax : -1;
@@ -204,7 +208,7 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
     return this.Djr;
   }
   OnInitData() {
-    const t = this.Entity.GetComponent(0);
+    var t = this.Entity.GetComponent(0);
     return (
       (this.Ljr = t.ComponentDataMap.get("Nvs")?.Nvs),
       (this.Parts = []),
@@ -228,21 +232,21 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
       (this.ActorComp = this.Entity.GetComponent(3)),
         (this.BaseChar = this.ActorComp.Actor),
         (this.DtCharacterPart = this.BaseChar.DtCharacterPart);
-      const i = DataTableUtil_1.DataTableUtil.GetAllDataTableRowFromTable(
-        this.DtCharacterPart,
-      );
-      const e = this.Ljr;
+      var i = DataTableUtil_1.DataTableUtil.GetAllDataTableRowFromTable(
+          this.DtCharacterPart,
+        ),
+        e = this.Ljr;
       for (let t = 0; t < i.length; t++) {
-        var s;
-        const r = i[t];
-        const a = new CharacterPart(this.Entity, t, r);
-        const o =
-          (this.Parts.push(a),
-          this.PartMapByBone.set(r.部位名, a),
-          r.骨骼名.Num());
-        const h = a.IsWeakness;
+        var s,
+          r = i[t],
+          a = new CharacterPart(this.Entity, t, r),
+          o =
+            (this.Parts.push(a),
+            this.PartMapByBone.set(r.部位名, a),
+            r.骨骼名.Num()),
+          h = a.IsWeakness;
         for (let t = 0; t < o; t++) {
-          const n = r.骨骼名.Get(t);
+          var n = r.骨骼名.Get(t);
           this.GroupMapByBone.set(n, r.部位名),
             h && this.WeaknessByBone.set(n, a);
         }
@@ -291,7 +295,7 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
     return this.PartMapByBone.get(t);
   }
   GetPartByTag(t) {
-    const i = this.PartMapByTag.get(t.TagName);
+    var i = this.PartMapByTag.get(t.TagName);
     return (
       i ||
         CombatDebugController_1.CombatDebugController.CombatError(
@@ -318,8 +322,8 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
     });
   }
   static PartUpdateNotify(t, i) {
-    var e = MathUtils_1.MathUtils.LongToNumber(i.rkn);
-    var e = ModelManager_1.ModelManager.CreatureModel.GetEntity(e);
+    var e = MathUtils_1.MathUtils.LongToNumber(i.rkn),
+      e = ModelManager_1.ModelManager.CreatureModel.GetEntity(e);
     if (e) {
       CombatDebugController_1.CombatDebugController.CombatDebug(
         "Part",
@@ -327,20 +331,20 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
         "PartUpdateNotify",
         ["data", JSON.stringify(i)],
       );
-      const s = e.Entity.GetComponent(58);
+      var s = e.Entity.GetComponent(58);
       for (const r of i.aSs) s.GetPartByIndex(r.o9n)?.UpdatePartInfo(r);
     }
   }
   static PartComponentInitNotify(t, i) {
-    var e = MathUtils_1.MathUtils.LongToNumber(i.rkn);
-    var e = ModelManager_1.ModelManager.CreatureModel.GetEntity(e);
+    var e = MathUtils_1.MathUtils.LongToNumber(i.rkn),
+      e = ModelManager_1.ModelManager.CreatureModel.GetEntity(e);
     if (e) {
       CombatDebugController_1.CombatDebugController.CombatInfo(
         "Part",
         t,
         "PartComponentInitNotify",
       );
-      const s = e.Entity.GetComponent(58);
+      var s = e.Entity.GetComponent(58);
       for (const r of i.Nvs.oSs) s.GetPartByIndex(r.o9n)?.UpdatePartInfo(r);
     }
   }
@@ -376,4 +380,4 @@ __decorate(
     CharacterPartComponent,
   )),
   (exports.CharacterPartComponent = CharacterPartComponent);
-// # sourceMappingURL=CharacterPartComponent.js.map
+//# sourceMappingURL=CharacterPartComponent.js.map

@@ -15,11 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.AssetRecord =
     exports.USE_DB =
       void 0);
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const GlobalData_1 = require("../GlobalData");
-const ModelManager_1 = require("../Manager/ModelManager");
-const FORBID_PATH = ((exports.USE_DB = !1), "/Game/Aki/Scene/Assets/Temp");
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  GlobalData_1 = require("../GlobalData"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  FORBID_PATH = ((exports.USE_DB = !1), "/Game/Aki/Scene/Assets/Temp");
 class AssetRecord {
   constructor() {
     (this.AssetSet = new Set()),
@@ -130,12 +130,12 @@ class AssetElement {
     this.B7 = t;
   }
   ExecuteCallback() {
-    const t = this.B7;
+    var t = this.B7;
     (this.B7 = void 0), t?.(!this.HasError);
   }
   CheckPath(t) {
     return (
-      !(!t || t.length === 0) ||
+      !(!t || 0 === t.length) ||
       (Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "World",
@@ -248,7 +248,7 @@ class AssetElement {
     return this.LoadedSet.delete(t);
   }
   Loading() {
-    return this.NeedLoadAssets.length > 0 || this.LoadingSet.size > 0;
+    return 0 < this.NeedLoadAssets.length || 0 < this.LoadingSet.size;
   }
   Clear() {
     this.AssetForIndexMap.clear(),
@@ -269,24 +269,23 @@ class CommonAssetElement extends (exports.AssetElement = AssetElement) {
       );
   }
   PrintDebugInfo() {
-    const s =
+    var s =
       ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.CommonAssets;
     let e = `
 预加载的公共资源列表如下(数量:${s.Num()}):
 `;
-    let t;
-    let i;
-    const r = new Map();
+    var t,
+      i,
+      r = new Map();
     for ([t, i] of this.AssetForIndexMap) r.set(i, t);
     for (let t = 0; t < s.Num(); ++t) {
-      const h = s.Get(t);
-      const o = r.get(t);
+      var h = s.Get(t),
+        o = r.get(t);
       e += `    索引:${t}, Path:${o}, IsValid:${h?.IsValid()}, Name:${h?.IsValid() ? h.GetName() : void 0}
 `;
     }
     Log_1.Log.CheckDebug() && Log_1.Log.Debug("Preload", 3, e);
   }
-
   Clear() {
     ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.ClearCommonAsset(),
       super.Clear();
@@ -316,7 +315,7 @@ class SkillAssetManager {
         : t
           ? (this.SkillAssetMap.set(e, t),
             (t.AddObjectCallback = (t, s) => {
-              this.FightAssetManager.EntityAssetElement.LoadState !== 3 &&
+              3 !== this.FightAssetManager.EntityAssetElement.LoadState &&
                 this.msr.AddEntityAsset(e, t);
             }),
             !0)
@@ -389,7 +388,7 @@ class BulletAssetManager {
       this.IndexMapping.set(e, t),
       this.BulletAssetMap.set(e, s),
       (s.AddObjectCallback = (t, s) => {
-        this.FightAssetManager.EntityAssetElement.LoadState !== 3 &&
+        3 !== this.FightAssetManager.EntityAssetElement.LoadState &&
           this.msr.AddEntityAsset(e, t);
       }),
       !0
@@ -400,7 +399,7 @@ class BulletAssetManager {
     if (void 0 !== t) return this.BulletAssetMap.get(t);
   }
   RemoveBullet(t) {
-    const s = this.BulletMapping.get(t);
+    var s = this.BulletMapping.get(t);
     return (
       void 0 !== s &&
       (this.IndexMapping.delete(s),
@@ -463,7 +462,7 @@ class StateMachineAssetManager {
       this.IndexMapping.set(e, t),
       this.StateMachineAssetMap.set(e, s),
       (s.AddObjectCallback = (t, s) => {
-        this.FightAssetManager.EntityAssetElement.LoadState !== 3 &&
+        3 !== this.FightAssetManager.EntityAssetElement.LoadState &&
           this.msr.AddEntityAsset(e, t);
       }),
       !0
@@ -474,7 +473,7 @@ class StateMachineAssetManager {
     if (void 0 !== t) return this.StateMachineAssetMap.get(t);
   }
   RemoveStateMachine(t) {
-    const s = this.StateMachineMapping.get(t);
+    var s = this.StateMachineMapping.get(t);
     return (
       void 0 !== s &&
       (this.IndexMapping.delete(s),
@@ -591,4 +590,4 @@ class PreloadSetting {
 }
 ((exports.PreloadSetting = PreloadSetting).Default = new PreloadSetting()),
   (PreloadSetting.fsr = !1);
-// # sourceMappingURL=PreloadDefine.js.map
+//# sourceMappingURL=PreloadDefine.js.map

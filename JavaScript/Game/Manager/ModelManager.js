@@ -174,4 +174,4 @@ class ModelManager extends ModelManagerBase_1.ModelManagerBase {}
   (ModelManager.PortalModel = void 0),
   (ModelManager.AlertMarkModel = void 0),
   (ModelManager.BossRushModel = void 0);
-// # sourceMappingURL=ModelManager.js.map
+//# sourceMappingURL=ModelManager.js.map

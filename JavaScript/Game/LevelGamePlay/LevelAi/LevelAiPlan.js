@@ -56,7 +56,7 @@ class LevelAiPlanLevel {
       (this.Cost = 0);
   }
   MakeCopy() {
-    const e = new LevelAiPlanLevel(
+    var e = new LevelAiPlanLevel(
       this.WorldStateAtLevelStart,
       this.ParentStepId,
     );
@@ -77,19 +77,19 @@ class LevelAiPlan {
     return t < this.Levels.length && void 0 !== this.Levels[t];
   }
   HasStep(t, e = 0) {
-    let s;
+    var s;
     return (
       !(!this.HasLevel(t.LevelIndex) || !this.HasLevel(e)) &&
       (t.LevelIndex === e
         ? ((s = this.Levels[e]),
           t.StepIndex < s.Steps.length && void 0 !== s.Steps[t.StepIndex])
-        : t.LevelIndex !== 0 &&
+        : 0 !== t.LevelIndex &&
           this.HasStep(this.Levels[t.LevelIndex].ParentStepId, e))
     );
   }
   GetStep(t) {
     if (t) {
-      const e = this.Levels[t.LevelIndex];
+      var e = this.Levels[t.LevelIndex];
       if (e) return e.Steps[t.StepIndex];
     }
   }
@@ -99,19 +99,19 @@ class LevelAiPlan {
     return !0;
   }
   IsLevelComplete(t) {
-    let e;
+    var e;
     return !(
       !this.HasLevel(t) ||
-      (t = this.Levels[t]).Steps.length === 0 ||
+      0 === (t = this.Levels[t]).Steps.length ||
       ((e = t.Steps.length - 1),
-      (e = (t = t.Steps[e]).SubLevelIndex !== -1) ||
+      (e = -1 !== (t = t.Steps[e]).SubLevelIndex) ||
       (void 0 !== t.Node && !t.Node.PlanNextNodesAfterThis)
         ? e && !this.IsLevelComplete(t.SubLevelIndex)
-        : t.Node.NextNodes.length !== 0)
+        : 0 !== t.Node.NextNodes.length)
     );
   }
   FindStepToAddAfter(e) {
-    for (let t = this.Levels.length - 1; t >= 0; --t) {
+    for (let t = this.Levels.length - 1; 0 <= t; --t) {
       var s;
       if (!this.IsLevelComplete(t))
         return (
@@ -124,9 +124,9 @@ class LevelAiPlan {
     return e.Reset(), !1;
   }
   GetNextNodes(t) {
-    let e;
-    const s = this.Levels[t.LevelIndex];
-    return t.StepIndex === -1
+    var e,
+      s = this.Levels[t.LevelIndex];
+    return -1 === t.StepIndex
       ? s.ParentStepId.Equal(LevelAiPlanStepId.None)
         ? this.yIe.StartNodes.values()
         : (e = this.GetStep(s.ParentStepId))
@@ -138,13 +138,13 @@ class LevelAiPlan {
       : s.Steps[t.StepIndex].Node.NextNodes.values();
   }
   GetWorldState(t) {
-    const e = this.Levels[t.LevelIndex];
-    return t.StepIndex === -1
+    var e = this.Levels[t.LevelIndex];
+    return -1 === t.StepIndex
       ? e.WorldStateAtLevelStart
       : e.Steps[t.StepIndex].WorldState;
   }
   MakeCopy() {
-    const e = new LevelAiPlan(this.yIe, void 0);
+    var e = new LevelAiPlan(this.yIe, void 0);
     e.Levels.length = this.Levels.length;
     for (let t = 0; t < this.Levels.length; ++t)
       e.Levels[t] = this.Levels[t].MakeCopy();
@@ -154,12 +154,12 @@ class LevelAiPlan {
     if (this.HasStep(e)) {
       let t = e;
       for (;;) {
-        const i = this.Levels[t.LevelIndex];
-        const r = i.Steps[t.StepIndex];
+        var i = this.Levels[t.LevelIndex],
+          r = i.Steps[t.StepIndex];
         if (
           (s.push(r.SubNodesInfo),
           s.push(i.RootSubNodesInfo),
-          !(t.LevelIndex > 0))
+          !(0 < t.LevelIndex))
         )
           break;
         t = i.ParentStepId;
@@ -168,4 +168,4 @@ class LevelAiPlan {
   }
 }
 exports.LevelAiPlan = LevelAiPlan;
-// # sourceMappingURL=LevelAiPlan.js.map
+//# sourceMappingURL=LevelAiPlan.js.map

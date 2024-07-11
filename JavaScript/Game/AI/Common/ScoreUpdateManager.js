@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ScoreUpdateManager = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Stats_1 = require("../../../Core/Common/Stats");
+const Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats");
 class ScoreUpdateManager {
   constructor(t = 1, e = 10) {
     (this.Rte = t),
@@ -16,24 +16,24 @@ class ScoreUpdateManager {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("AI", 6, "AddScore is less than 1");
     else {
-      const r = this.Pte.get(t);
-      const o = (r && this.Ate[r].delete(t), r ? r + e : e);
+      var r = this.Pte.get(t),
+        o = (r && this.Ate[r].delete(t), r ? r + e : e);
       for (this.xte < o && (this.xte = o); this.Ate.length <= o; )
         this.Ate.push(new Set());
       this.Ate[o].add(t), this.Pte.set(t, o);
     }
   }
   RemoveObject(t) {
-    const e = this.Pte.get(t);
+    var e = this.Pte.get(t);
     e && this.Ate[e].delete(t), this.Pte.delete(t);
   }
   Update() {
-    if (this.xte !== 0) {
-      let e = 0;
-      let r = 0;
-      for (let t = this.xte; t > 0; --t) {
-        const o = this.Ate[t];
-        const s = 1 / t;
+    if (0 !== this.xte) {
+      let e = 0,
+        r = 0;
+      for (let t = this.xte; 0 < t; --t) {
+        var o = this.Ate[t],
+          s = 1 / t;
         for (const i of o) {
           try {
             i.ScoreUpdate();
@@ -72,4 +72,4 @@ class ScoreUpdateManager {
   }
 }
 (exports.ScoreUpdateManager = ScoreUpdateManager).wte = void 0;
-// # sourceMappingURL=ScoreUpdateManager.js.map
+//# sourceMappingURL=ScoreUpdateManager.js.map

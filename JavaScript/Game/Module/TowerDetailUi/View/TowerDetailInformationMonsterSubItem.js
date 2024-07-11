@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerDetailInformationMonsterSubItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class TowerDetailInformationMonsterSubItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -25,15 +25,17 @@ class TowerDetailInformationMonsterSubItem extends UiPanelBase_1.UiPanelBase {
   }
   Og() {
     var e = ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterName(
-      this.TLo,
-    );
-    var e = (this.GetText(0).SetText(e), this.LLo.toString());
-    var e =
-      (this.GetText(1).SetText(e),
-      ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterIcon(this.TLo));
+        this.TLo,
+      ),
+      e = (this.GetText(0).SetText(e), this.LLo.toString()),
+      e =
+        (this.GetText(1).SetText(e),
+        ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterIcon(
+          this.TLo,
+        ));
     this.SetTextureByPath(e, this.GetTexture(2));
   }
 }
 exports.TowerDetailInformationMonsterSubItem =
   TowerDetailInformationMonsterSubItem;
-// # sourceMappingURL=TowerDetailInformationMonsterSubItem.js.map
+//# sourceMappingURL=TowerDetailInformationMonsterSubItem.js.map

@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AchievementGroupTitleItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const AchievementController_1 = require("../AchievementController");
-const AchievementGridItem_1 = require("./AchievementGridItem");
-const AchievementProgressConfirmItem_1 = require("./AchievementProgressConfirmItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  AchievementController_1 = require("../AchievementController"),
+  AchievementGridItem_1 = require("./AchievementGridItem"),
+  AchievementProgressConfirmItem_1 = require("./AchievementProgressConfirmItem");
 class AchievementGroupTitleItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -61,24 +61,24 @@ class AchievementGroupTitleItem extends UiPanelBase_1.UiPanelBase {
     (this.Fqe = e), this.Hqe(e);
   }
   Hqe(e) {
-    let t, i, s, r, n;
+    var t, i, s, r, n;
     e &&
       ((t = this.GetText(3)),
       (i = this.GetText(5)),
       (s = this.GetText(6)),
       (r = e.GetFinishState()),
-      (n = e.GetRewards().length > 0),
+      (n = 0 < e.GetRewards().length),
       this.GetText(2)?.SetText(e.GetTitle()),
       t.SetText(e.GetAchievementGroupProgress()),
       t?.SetUIActive(n),
       s?.SetUIActive(n),
       this.SetTextureByPath(e.GetTexture(), this.GetTexture(4)),
       this.SetTextureByPath(e.GetBackgroundIcon(), this.GetTexture(7)),
-      this.Vqe?.SetActive(r === 1 && n),
+      this.Vqe?.SetActive(1 === r && n),
       this.Vqe?.RefreshRedPoint(e.RedPoint()),
-      !n || r === 1
+      !n || 1 === r
         ? i?.SetUIActive(!1)
-        : r === 2
+        : 2 === r
           ? (i?.SetUIActive(!0),
             LguiUtil_1.LguiUtil.SetLocalTextNew(
               i,
@@ -89,12 +89,12 @@ class AchievementGroupTitleItem extends UiPanelBase_1.UiPanelBase {
       this.jqe(e));
   }
   jqe(e) {
-    let t;
-    const i = e?.GetRewards();
-    i.length > 0
+    var t,
+      i = e?.GetRewards();
+    0 < i.length
       ? (this.oqe.SetActive(!0),
         ((t = new AchievementGridItem_1.AchievementGridItemData()).Data = i[0]),
-        (t.GetRewardState = e.GetFinishState() === 2),
+        (t.GetRewardState = 2 === e.GetFinishState()),
         this.oqe.Refresh(t))
       : this.oqe.SetActive(!1);
   }
@@ -109,4 +109,4 @@ class AchievementGroupTitleItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.AchievementGroupTitleItem = AchievementGroupTitleItem;
-// # sourceMappingURL=AchievementGroupTitleItem.js.map
+//# sourceMappingURL=AchievementGroupTitleItem.js.map

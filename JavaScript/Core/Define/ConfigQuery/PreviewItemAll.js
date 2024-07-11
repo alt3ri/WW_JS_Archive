@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configPreviewItemAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const PreviewItem_1 = require("../Config/PreviewItem");
-const DB = "db_item.db";
-const FILE = "d.道具.xlsx";
-const TABLE = "PreviewItem";
-const COMMAND = "select BinData from `PreviewItem`";
-const KEY_PREFIX = "PreviewItemAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  PreviewItem_1 = require("../Config/PreviewItem"),
+  DB = "db_item.db",
+  FILE = "d.道具.xlsx",
+  TABLE = "PreviewItem",
+  COMMAND = "select BinData from `PreviewItem`",
+  KEY_PREFIX = "PreviewItemAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configPreviewItemAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configPreviewItemAll = {
     );
   },
   GetConfigList: (e = !0) => {
-    let o;
+    var o;
     if (
       (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configPreviewItemAll = {
       }
       const r = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let n = void 0;
+        var n = void 0;
         if (
           (([o, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configPreviewItemAll = {
     }
   },
 };
-// # sourceMappingURL=PreviewItemAll.js.map
+//# sourceMappingURL=PreviewItemAll.js.map

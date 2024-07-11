@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MemoryDetailAttachItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const AutoAttachItem_1 = require("../AutoAttach/AutoAttachItem");
-const LevelSequencePlayer_1 = require("../Common/LevelSequencePlayer");
-const LguiUtil_1 = require("../Util/LguiUtil");
+const UE = require("ue"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  AutoAttachItem_1 = require("../AutoAttach/AutoAttachItem"),
+  LevelSequencePlayer_1 = require("../Common/LevelSequencePlayer"),
+  LguiUtil_1 = require("../Util/LguiUtil");
 class MemoryDetailAttachItem extends AutoAttachItem_1.AutoAttachItem {
   constructor() {
     super(...arguments),
@@ -44,7 +44,7 @@ class MemoryDetailAttachItem extends AutoAttachItem_1.AutoAttachItem {
   }
   OnRefreshItem(e) {
     this.Sbn(),
-      (this.I7e = e) === -1
+      -1 === (this.I7e = e)
         ? (this.Y6i = void 0)
         : ((e =
             ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetPhotoMemoryTopicById(
@@ -57,7 +57,7 @@ class MemoryDetailAttachItem extends AutoAttachItem_1.AutoAttachItem {
       this.J8e();
   }
   J8e() {
-    this.I7e === -1
+    -1 === this.I7e
       ? (this.SetSpriteByPath(
           ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetTopicNotOpenTexturePath(),
           this.GetSprite(0),
@@ -72,7 +72,7 @@ class MemoryDetailAttachItem extends AutoAttachItem_1.AutoAttachItem {
         this.SetSpriteByPath(this.Y6i.BgResourceLight, this.GetSprite(1), !1));
   }
   Wbe() {
-    this.I7e === -1 || void 0 === this.Y6i
+    -1 === this.I7e || void 0 === this.Y6i
       ? LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(2),
           "FragmentMemoryNotOpen",
@@ -80,15 +80,15 @@ class MemoryDetailAttachItem extends AutoAttachItem_1.AutoAttachItem {
       : this.GetText(2)?.ShowTextNew(this.Y6i.Title);
   }
   KUn() {
-    if (this.I7e === -1 || void 0 === this.Y6i) this.GetText(3)?.SetText("");
+    if (-1 === this.I7e || void 0 === this.Y6i) this.GetText(3)?.SetText("");
     else {
-      const t =
+      var t =
         ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetPhotoMemoryCollectConfigListByTopicId(
           this.Y6i.Id,
         );
       let e = 0;
       for (const s of t) {
-        const i =
+        var i =
           ModelManager_1.ModelManager.FragmentMemoryModel.GetCollectDataById(
             s.Id,
           );
@@ -105,10 +105,9 @@ class MemoryDetailAttachItem extends AutoAttachItem_1.AutoAttachItem {
   k5e() {
     if (void 0 === this.Y6i) this.GetItem(4)?.SetUIActive(!1);
     else {
-      const t =
-        ModelManager_1.ModelManager.FragmentMemoryModel.GetTopicDataById(
-          this.Y6i.Id,
-        );
+      var t = ModelManager_1.ModelManager.FragmentMemoryModel.GetTopicDataById(
+        this.Y6i.Id,
+      );
       let e = !1;
       t && t.GetAllCollectState() && (e = !0), this.GetItem(4)?.SetUIActive(e);
     }
@@ -131,4 +130,4 @@ class MemoryDetailAttachItem extends AutoAttachItem_1.AutoAttachItem {
   OnMoveItem() {}
 }
 exports.MemoryDetailAttachItem = MemoryDetailAttachItem;
-// # sourceMappingURL=MemoryDetailAttachItem.js.map
+//# sourceMappingURL=MemoryDetailAttachItem.js.map

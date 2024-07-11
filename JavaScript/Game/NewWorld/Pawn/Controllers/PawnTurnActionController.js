@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PawnTurnActionController = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const AiContollerLibrary_1 = require("../../../AI/Controller/AiContollerLibrary");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const Global_1 = require("../../../Global");
-const TURN_ANGLE_MAX = 60;
+const Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  AiContollerLibrary_1 = require("../../../AI/Controller/AiContollerLibrary"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../Global"),
+  TURN_ANGLE_MAX = 60;
 class PawnTurnActionController {
   constructor(t) {
     (this.Jh = void 0),
@@ -40,7 +40,7 @@ class PawnTurnActionController {
           this.OnTurnEndHandle && this.OnTurnEndHandle();
       }),
       (this.Zor = () => {
-        let t;
+        var t;
         this.Gce?.Valid
           ? ((t = Global_1.Global.BaseCharacter.CharacterActorComponent),
             this.Gce.Entity.GetComponent(160).SetSightTargetItem(t),
@@ -97,7 +97,7 @@ class PawnTurnActionController {
       ));
   }
   TurnToInteractTarget() {
-    let t, i, s, e, o, r;
+    var t, i, s, e, o, r;
     this.NeedTurn
       ? this.Gce?.Valid
         ? ((this.Yor = this.Gce.CharacterMovement.MovementMode),
@@ -163,8 +163,8 @@ class PawnTurnActionController {
           this.OnTurnToInteractTargetEndHandle());
   }
   err(t) {
-    let i;
-    const s = Global_1.Global.BaseCharacter?.CharacterActorComponent?.Entity;
+    var i,
+      s = Global_1.Global.BaseCharacter?.CharacterActorComponent?.Entity;
     s &&
       ((i = s.GetComponent(52)),
       t
@@ -174,10 +174,10 @@ class PawnTurnActionController {
         : i.SetActive(!0));
   }
   TurnToDefaultForward() {
-    let t, i;
+    var t, i;
     this.NeedTurn && this.$or
       ? this.Gce?.Valid
-        ? ((t = this.Gce.CharacterMovement).MovementMode !== 1 &&
+        ? (1 !== (t = this.Gce.CharacterMovement).MovementMode &&
             t.SetMovementMode(1),
           (t = this.Gce.Entity).GetComponent(168)?.OpenLookAt ||
             ((i = t.GetComponent(160)) && i.SetSightTargetItem(void 0)),
@@ -214,4 +214,4 @@ class PawnTurnActionController {
   }
 }
 exports.PawnTurnActionController = PawnTurnActionController;
-// # sourceMappingURL=PawnTurnActionController.js.map
+//# sourceMappingURL=PawnTurnActionController.js.map

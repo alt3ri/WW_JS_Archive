@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelPlayPrepareTimer = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const UiManager_1 = require("../../../Ui/UiManager");
-const GeneralLogicTreeController_1 = require("../GeneralLogicTreeController");
-const LogicTreeTimerBase_1 = require("./LogicTreeTimerBase");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  GeneralLogicTreeController_1 = require("../GeneralLogicTreeController"),
+  LogicTreeTimerBase_1 = require("./LogicTreeTimerBase"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class LevelPlayPrepareTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
   constructor() {
     super(...arguments),
       (this.M$t = -0),
       (this.y$t = !1),
       (this.$Ge = (e) => {
-        e === "PrepareCountdownFloatTips" && this.T$t();
+        "PrepareCountdownFloatTips" === e && this.T$t();
       });
   }
   StartShowTimer(e) {
@@ -55,4 +55,4 @@ class LevelPlayPrepareTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
   }
 }
 exports.LevelPlayPrepareTimer = LevelPlayPrepareTimer;
-// # sourceMappingURL=LevelPlayPrepareTimer.js.map
+//# sourceMappingURL=LevelPlayPrepareTimer.js.map

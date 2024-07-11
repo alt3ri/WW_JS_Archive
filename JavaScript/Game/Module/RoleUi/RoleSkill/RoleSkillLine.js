@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleSkillLine = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class RoleSkillLine extends UiPanelBase_1.UiPanelBase {
   constructor(s, i, t, e) {
     super(),
@@ -45,4 +45,4 @@ class RoleSkillLine extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleSkillLine = RoleSkillLine;
-// # sourceMappingURL=RoleSkillLine.js.map
+//# sourceMappingURL=RoleSkillLine.js.map

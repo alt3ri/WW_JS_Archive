@@ -11,4 +11,4 @@ class EffectModelGroup extends UE.EffectModelBase {
   }
 }
 exports.default = EffectModelGroup;
-// # sourceMappingURL=EffectModelGroup.js.map
+//# sourceMappingURL=EffectModelGroup.js.map

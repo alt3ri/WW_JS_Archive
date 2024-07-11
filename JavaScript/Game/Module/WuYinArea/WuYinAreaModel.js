@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WuYinAreaModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const RenderModuleController_1 = require("../../Render/Manager/RenderModuleController");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  RenderModuleController_1 = require("../../Render/Manager/RenderModuleController");
 class WuYinAreaModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments), (this.v4o = new Map());
@@ -17,9 +17,9 @@ class WuYinAreaModel extends ModelBase_1.ModelBase {
     if (this.v4o.has(e)) return this.v4o.get(e);
   }
   PlayWuYinSequence(e, r) {
-    r = r === "Play" ? 1 : 0;
+    r = "Play" === r ? 1 : 0;
     RenderModuleController_1.RenderModuleController.SetBattleState(e, r);
   }
 }
 exports.WuYinAreaModel = WuYinAreaModel;
-// # sourceMappingURL=WuYinAreaModel.js.map
+//# sourceMappingURL=WuYinAreaModel.js.map

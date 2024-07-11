@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldSkillCdData = exports.SkillCdData = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const MultiSkillData_1 = require("../../../NewWorld/Character/Common/Component/Skill/MultiSkillData");
-const GroupSkillCdInfo_1 = require("./GroupSkillCdInfo");
-const MIN_SHARE_GROUP_ID = 1e3;
+const Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  MultiSkillData_1 = require("../../../NewWorld/Character/Common/Component/Skill/MultiSkillData"),
+  GroupSkillCdInfo_1 = require("./GroupSkillCdInfo"),
+  MIN_SHARE_GROUP_ID = 1e3;
 class SkillCdData {
   constructor() {
     (this.SkillId2GroupIdMap = new Map()),
@@ -18,7 +18,7 @@ class SkillCdData {
       (this.ServerGroupSkillCd = new Map());
   }
   GenerateCdShareGroupId(t) {
-    return t === 0 ? (this.XWe++, this.XWe) : t;
+    return 0 === t ? (this.XWe++, this.XWe) : t;
   }
   Tick(t) {
     for (const i of this.GroupSkillCdInfoMap.values()) i.Tick(t);
@@ -69,15 +69,15 @@ class WorldSkillCdData {
               ? (this.OffRoleSkillCdMap.delete(f), h)
               : new SkillCdData()),
           this.EntitySkillCdMap.set(n, a)));
-    let n;
-    let h;
-    var f = a.SkillId2GroupIdMap.get(i);
+    var n,
+      h,
+      f = a.SkillId2GroupIdMap.get(i);
     if (f) {
-      const _ = a.GroupSkillCdInfoMap.get(f);
-      const d = _.SkillCdInfoMap.get(i);
+      const _ = a.GroupSkillCdInfoMap.get(f),
+        d = _.SkillCdInfoMap.get(i);
       return (d.SkillCd = e), _.EntityIds.add(t.Id), _;
     }
-    l !== 0 &&
+    0 !== l &&
       l < MIN_SHARE_GROUP_ID &&
       Log_1.Log.CheckError() &&
       Log_1.Log.Error("Battle", 18, "自定义的冷却组不能小于1000", [
@@ -94,7 +94,7 @@ class WorldSkillCdData {
       (_.MaxCount = r),
       (_.LimitCount = r),
       (_.RemainingCount = r),
-      l !== 0
+      0 !== l
         ? this.$We(a.ServerGroupSkillCd, l, _, i)
         : this.$We(a.ServerSkillCd, i, _, i),
       a.GroupSkillCdInfoMap.set(f, _));
@@ -119,15 +119,15 @@ class WorldSkillCdData {
     );
   }
   $We(t, i, e, o) {
-    const r = t.get(i);
+    var r = t.get(i);
     if (r) {
-      if (r.length > 0) {
-        const l = Time_1.Time.ServerTimeStamp;
-        let t = 0;
-        let i = 0;
+      if (0 < r.length) {
+        var l = Time_1.Time.ServerTimeStamp;
+        let t = 0,
+          i = 0;
         for (const s of r)
           s <= l ||
-            (++t === 1
+            (1 === ++t
               ? ((e.CurRemainingCd = (s - l) * TimeUtil_1.TimeUtil.Millisecond),
                 (e.CurMaxCd = e.CurRemainingCd))
               : (e.SkillIdQueue.Push(o),
@@ -139,7 +139,7 @@ class WorldSkillCdData {
     }
   }
   InitMultiSkill(t) {
-    let i = this.MultiSkillMap.get(t);
+    var i = this.MultiSkillMap.get(t);
     return (
       i
         ? Log_1.Log.CheckError() &&
@@ -150,8 +150,8 @@ class WorldSkillCdData {
     );
   }
   RemoveEntity(t) {
-    const i = t.Id;
-    const e = this.EntitySkillCdMap.get(i);
+    var i = t.Id,
+      e = this.EntitySkillCdMap.get(i);
     if (e && (this.EntitySkillCdMap.delete(i), t.GetComponent(0).IsRole())) {
       t = t.GetComponent(0).GetPbDataId();
       for (const o of e.GroupSkillCdInfoMap.values()) o.EntityIds.clear();
@@ -172,7 +172,7 @@ class WorldSkillCdData {
   }
   HandlePlayerSkillInfoPbNotify(t) {
     if (t.uxs) {
-      const i = t.uxs.lxs;
+      var i = t.uxs.lxs;
       i && this.YWe(this.AllShareSkillCdData, i);
       for (const e of t.uxs._xs)
         if (e.hxs) {
@@ -183,38 +183,38 @@ class WorldSkillCdData {
     }
   }
   YWe(t, i) {
-    const e = Time_1.Time.ServerTimeStamp;
+    var e = Time_1.Time.ServerTimeStamp;
     for (const r of i.nxs)
       this.JWe(r, e, t.ServerSkillCd, r.vkn), this.zWe(t, r, 0);
     for (const l of i.sxs) {
-      const o = l.oxs;
+      var o = l.oxs;
       o && (this.JWe(o, e, t.ServerGroupSkillCd, l.rxs), this.zWe(t, o, l.rxs));
     }
   }
   zWe(t, i, e = 0) {
-    let o = t.SkillId2GroupIdMap.get(i.vkn);
+    var o = t.SkillId2GroupIdMap.get(i.vkn);
     return (
       !!o &&
       !!(o = t.GroupSkillCdInfoMap.get(o)) &&
-      (e !== 0
+      (0 !== e
         ? this.$We(t.ServerSkillCd, e, o, i.vkn)
         : this.$We(t.ServerSkillCd, i.vkn, o, i.vkn),
       !0)
     );
   }
   JWe(t, i, e, o) {
-    const r = [];
+    var r = [];
     for (const s of t.ixs) {
-      const l = MathUtils_1.MathUtils.LongToNumber(s);
+      var l = MathUtils_1.MathUtils.LongToNumber(s);
       i < l && r.push(l);
     }
-    r.length > 0 && (r.length > 1 && r.sort((t, i) => t - i), e.set(o, r));
+    0 < r.length && (1 < r.length && r.sort((t, i) => t - i), e.set(o, r));
   }
   QWe(t) {
     const i = this.OffRoleSkillCdMap.get(t);
     if (i) return i;
     for (const [o, i] of this.EntitySkillCdMap) {
-      let e = ModelManager_1.ModelManager.CharacterModel?.GetHandle(o);
+      var e = ModelManager_1.ModelManager.CharacterModel?.GetHandle(o);
       if (e?.Valid) {
         e = e.Entity;
         if (!i)
@@ -225,4 +225,4 @@ class WorldSkillCdData {
   }
 }
 exports.WorldSkillCdData = WorldSkillCdData;
-// # sourceMappingURL=SkillCdData.js.map
+//# sourceMappingURL=SkillCdData.js.map

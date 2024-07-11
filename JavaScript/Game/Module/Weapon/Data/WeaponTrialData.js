@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponTrialData = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const WeaponDataBase_1 = require("./WeaponDataBase");
+const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  WeaponDataBase_1 = require("./WeaponDataBase");
 class WeaponTrialData extends WeaponDataBase_1.WeaponDataBase {
   constructor() {
     super(...arguments),
@@ -20,8 +20,8 @@ class WeaponTrialData extends WeaponDataBase_1.WeaponDataBase {
       this.InitWeaponBreachLevel();
   }
   InitWeaponBreachLevel() {
-    const e = this.GetBreachConfigList();
-    const t = this.GetLevel();
+    var e = this.GetBreachConfigList(),
+      t = this.GetLevel();
     for (const r of e)
       if (t <= r.LevelLimit) {
         this.BreachLevel = r.Level;
@@ -41,7 +41,7 @@ class WeaponTrialData extends WeaponDataBase_1.WeaponDataBase {
     return this.BreachLevel;
   }
   HasRole() {
-    return this.RoleId !== 0;
+    return 0 !== this.RoleId;
   }
   SetRoleId(e) {
     this.RoleId = e;
@@ -60,4 +60,4 @@ class WeaponTrialData extends WeaponDataBase_1.WeaponDataBase {
   }
 }
 exports.WeaponTrialData = WeaponTrialData;
-// # sourceMappingURL=WeaponTrialData.js.map
+//# sourceMappingURL=WeaponTrialData.js.map

@@ -1,18 +1,18 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemExchangeController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const LoginDefine_1 = require("../Login/Data/LoginDefine");
-const CommonExchangeData_1 = require("./View/CommonExchangeData");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  LoginDefine_1 = require("../Login/Data/LoginDefine"),
+  CommonExchangeData_1 = require("./View/CommonExchangeData");
 class ItemExchangeController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -38,7 +38,7 @@ class ItemExchangeController extends UiControllerBase_1.UiControllerBase {
     return this.LCi;
   }
   static OpenExchangeViewByItemId(e, t = void 0, n = !1) {
-    const o = new CommonExchangeData_1.CommonExchangeData();
+    var o = new CommonExchangeData_1.CommonExchangeData();
     o.InitByItemId(e),
       (o.ConfirmNoClose = n),
       (o.ConfirmCallBack = t),
@@ -52,7 +52,7 @@ class ItemExchangeController extends UiControllerBase_1.UiControllerBase {
 }
 (exports.ItemExchangeController = ItemExchangeController),
   ((_a = ItemExchangeController).TCi = () => {
-    const e = ModelManager_1.ModelManager.LoginModel.GetLoginStatus();
+    var e = ModelManager_1.ModelManager.LoginModel.GetLoginStatus();
     e < LoginDefine_1.ELoginStatus.EnterGameRet
       ? Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
@@ -66,7 +66,7 @@ class ItemExchangeController extends UiControllerBase_1.UiControllerBase {
   (ItemExchangeController.ICi = () => {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("ItemExchange", 9, "请求物品兑换数据");
-    const e = Protocol_1.Aki.Protocol.Ots.create();
+    var e = Protocol_1.Aki.Protocol.Ots.create();
     Net_1.Net.Call(16460, e, (e) => {
       ModelManager_1.ModelManager.ItemExchangeModel.InitItemExchangeTimeInfo(
         e.zDs,
@@ -75,7 +75,7 @@ class ItemExchangeController extends UiControllerBase_1.UiControllerBase {
   }),
   (ItemExchangeController.LCi = !0),
   (ItemExchangeController.ItemExchangeRequest = (t, n, e = !0, o = void 0) => {
-    n !== 0 &&
+    0 !== n &&
       ((_a.LCi = e),
       ((e = Protocol_1.Aki.Protocol.Nts.create()).G3n = t),
       (e.i6n = n),
@@ -99,4 +99,4 @@ class ItemExchangeController extends UiControllerBase_1.UiControllerBase {
                 o && o(e.G3n, e.g5n)));
       }));
   });
-// # sourceMappingURL=ItemExchangeController.js.map
+//# sourceMappingURL=ItemExchangeController.js.map

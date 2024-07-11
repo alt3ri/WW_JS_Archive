@@ -9,10 +9,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CVS_START_INDEX = 8),
   (exports.CSV_LANG_INDEX = 1),
   (exports.tableTextMap = {
-    0: ["Speaker_", "_Name"],
+    [0]: ["Speaker_", "_Name"],
     1: ["Speaker_", "_Title"],
     2: ["MonsterDisplay_", "_Name"],
     3: ["MonsterDisplay_", "_Introduce"],
     4: ["OccupationConfig_", "_Name"],
   });
-// # sourceMappingURL=MultiTextDefine.js.map
+//# sourceMappingURL=MultiTextDefine.js.map

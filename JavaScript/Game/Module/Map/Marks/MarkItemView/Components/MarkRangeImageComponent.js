@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MarkRangeImageComponent = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase");
 class MarkRangeImageComponent extends UiPanelBase_1.UiPanelBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UISprite]];
@@ -12,4 +12,4 @@ class MarkRangeImageComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.MarkRangeImageComponent = MarkRangeImageComponent;
-// # sourceMappingURL=MarkRangeImageComponent.js.map
+//# sourceMappingURL=MarkRangeImageComponent.js.map

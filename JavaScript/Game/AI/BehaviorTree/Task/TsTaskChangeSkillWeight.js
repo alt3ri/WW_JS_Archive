@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const GlobalData_1 = require("../../../GlobalData");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../GlobalData"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskChangeSkillWeight extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -20,7 +20,7 @@ class TsTaskChangeSkillWeight extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveTickAI(s, e, t) {
     this.InitTsVariables();
-    const i = s.AiController;
+    var i = s.AiController;
     i
       ? i.AiSkill
         ? (i.AiSkill.ChangeSkillWeight(this.TsSkillInfoId, this.TsWeight),
@@ -40,4 +40,4 @@ class TsTaskChangeSkillWeight extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskChangeSkillWeight;
-// # sourceMappingURL=TsTaskChangeSkillWeight.js.map
+//# sourceMappingURL=TsTaskChangeSkillWeight.js.map

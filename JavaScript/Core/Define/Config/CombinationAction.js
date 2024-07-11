@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CombinationAction = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const DicStringString_1 = require("./SubType/DicStringString");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  DicStringString_1 = require("./SubType/DicStringString");
 class CombinationAction {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -49,22 +49,22 @@ class CombinationAction {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   actionname(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   actiontype() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetPckeysAt(t, i) {
     return this.pckeys(t);
   }
   pckeys(t, i) {
-    const s = this.J7.__offset(this.z7, 10);
+    var s = this.J7.__offset(this.z7, 10);
     return s
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -73,14 +73,14 @@ class CombinationAction {
       : null;
   }
   pckeysLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetGamepadkeysAt(t, i) {
     return this.gamepadkeys(t);
   }
   gamepadkeys(t, i) {
-    const s = this.J7.__offset(this.z7, 12);
+    var s = this.J7.__offset(this.z7, 12);
     return s
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -89,21 +89,21 @@ class CombinationAction {
       : null;
   }
   gamepadkeysLength() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   secondarykeyvalidtime() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : -1;
   }
   mobileiconpath(t) {
-    const i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 16);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   displayname(t) {
-    const i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 18);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.CombinationAction = CombinationAction;
-// # sourceMappingURL=CombinationAction.js.map
+//# sourceMappingURL=CombinationAction.js.map

@@ -10,8 +10,8 @@ class VersionItem {
       (this.Version = t.Version),
       (this.IndexSha1 = new Map()),
       Object.entries(t.IndexSha1).forEach((t) => {
-        const s = t[0];
-        var t = t[1];
+        var s = t[0],
+          t = t[1];
         this.IndexSha1.set(s, t);
       });
   }
@@ -32,14 +32,14 @@ class RemoteConfig {
       (this.ChangeList = t.ChangeList),
       (this.LauncherIndexSha1 = new Map()),
       Object.entries(t.LauncherIndexSha1).forEach((t) => {
-        const s = t[0];
-        var t = t[1];
+        var s = t[0],
+          t = t[1];
         this.LauncherIndexSha1.set(s, t);
       }),
       (this.ResourceIndexSha1 = new Map()),
       Object.entries(t.ResourceIndexSha1).forEach((t) => {
-        const s = t[0];
-        var t = t[1];
+        var s = t[0],
+          t = t[1];
         this.ResourceIndexSha1.set(s, t);
       }),
       (this.Versions = new Array());
@@ -49,4 +49,4 @@ class RemoteConfig {
 exports.RemoteConfig = RemoteConfig;
 class RemoteInfo {}
 exports.RemoteInfo = RemoteInfo;
-// # sourceMappingURL=RemoteConfig.js.map
+//# sourceMappingURL=RemoteConfig.js.map

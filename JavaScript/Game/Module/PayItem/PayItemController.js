@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayItemController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const FeatureRestrictionTemplate_1 = require("../Common/FeatureRestrictionTemplate");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  FeatureRestrictionTemplate_1 = require("../Common/FeatureRestrictionTemplate"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
 class PayItemController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
     Net_1.Net.Register(3901, (e) => {
@@ -44,7 +44,7 @@ class PayItemController extends UiControllerBase_1.UiControllerBase {
       );
     if (
       this.CurrentBlockIosPayState &&
-      ModelManager_1.ModelManager.PlatformModel.PlatformType === 1
+      1 === ModelManager_1.ModelManager.PlatformModel.PlatformType
     )
       return (
         (e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(134)),
@@ -81,7 +81,7 @@ class PayItemController extends UiControllerBase_1.UiControllerBase {
     ControllerHolder_1.ControllerHolder.KuroSdkController.CancelCurrentWaitPayItemTimer();
   }
   static SendPayItemInfoRequest() {
-    const e = Protocol_1.Aki.Protocol.Fos.create();
+    var e = Protocol_1.Aki.Protocol.Fos.create();
     (e.o8n = ModelManager_1.ModelManager.PayItemModel.Version),
       Net_1.Net.Call(10022, e, (e) => {
         if (
@@ -98,10 +98,10 @@ class PayItemController extends UiControllerBase_1.UiControllerBase {
             ModelManager_1.ModelManager.PayItemModel.InitDataListByServer(
               e.cRs,
             );
-          var e = ModelManager_1.ModelManager.PayItemModel.GetDataList();
-          const r = new Array();
+          var e = ModelManager_1.ModelManager.PayItemModel.GetDataList(),
+            r = new Array();
           for (const t of e) {
-            const o = ConfigManager_1.ConfigManager.PayItemConfig.GetPayItem(
+            var o = ConfigManager_1.ConfigManager.PayItemConfig.GetPayItem(
               t.PayItemId,
             );
             r.push(o.PayId.toString());
@@ -116,4 +116,4 @@ class PayItemController extends UiControllerBase_1.UiControllerBase {
   (PayItemController.QNi = (e) => {
     ModelManager_1.ModelManager.PayItemModel.ResetSpecialBonus(e.j4n);
   });
-// # sourceMappingURL=PayItemController.js.map
+//# sourceMappingURL=PayItemController.js.map

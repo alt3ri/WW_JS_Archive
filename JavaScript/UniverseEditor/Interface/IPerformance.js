@@ -13,4 +13,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CHARACTER_NORMAL_NOT_RENDER_MAX_INTERVAL = 120),
   (exports.CHARACTER_NORMAL_NOT_RENDER_TICK_REDUCTION_START_SIZE = 1e3),
   (exports.CHARACTER_NORMAL_NOT_RENDER_TICK_REDUCTION_INTERVAL_SIZE = 100);
-// # sourceMappingURL=IPerformance.js.map
+//# sourceMappingURL=IPerformance.js.map

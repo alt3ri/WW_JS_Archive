@@ -26,4 +26,4 @@ class UiBehaviorBaseProxy extends ComponentAction_1.ComponentAction {
   }
 }
 exports.UiBehaviorBaseProxy = UiBehaviorBaseProxy;
-// # sourceMappingURL=UiBehaviorBase.js.map
+//# sourceMappingURL=UiBehaviorBase.js.map

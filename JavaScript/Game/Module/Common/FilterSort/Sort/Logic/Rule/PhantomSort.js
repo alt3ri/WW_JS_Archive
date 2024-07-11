@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomSort = void 0);
-const ConfigManager_1 = require("../../../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../../../Manager/ModelManager");
-const CommonItemData_1 = require("../../../../../Inventory/ItemData/CommonItemData");
-const PhantomItemData_1 = require("../../../../../Inventory/ItemData/PhantomItemData");
-const ItemViewData_1 = require("../../../../../Inventory/ItemViewData");
-const CommonSort_1 = require("./CommonSort");
+const ConfigManager_1 = require("../../../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../../../Manager/ModelManager"),
+  CommonItemData_1 = require("../../../../../Inventory/ItemData/CommonItemData"),
+  PhantomItemData_1 = require("../../../../../Inventory/ItemData/PhantomItemData"),
+  ItemViewData_1 = require("../../../../../Inventory/ItemViewData"),
+  CommonSort_1 = require("./CommonSort");
 class PhantomSort extends CommonSort_1.CommonSort {
   constructor() {
     super(...arguments),
       (this.ZLt = (t, i, s) => {
-        let e, h, a;
+        var e, h, a;
         return (t instanceof ItemViewData_1.ItemViewData &&
           i instanceof ItemViewData_1.ItemViewData) ||
           (t instanceof PhantomItemData_1.PhantomItemData &&
@@ -29,23 +29,21 @@ class PhantomSort extends CommonSort_1.CommonSort {
             : 0;
       }),
       (this.iDt = (t, i, s) => {
-        const e = t;
-        const h = i;
-        var t =
-          ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomDataBase(
+        var e = t,
+          h = i,
+          t = ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomDataBase(
             e.GetUniqueId(),
-          );
-        var i =
-          ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomDataBase(
+          ),
+          i = ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomDataBase(
             h.GetUniqueId(),
           );
-        let a = 0;
-        let n = 0;
+        let a = 0,
+          n = 0;
         if (t) a = t.GetExp();
         else {
-          const r =
-            ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomExpItemList();
-          const o = r.length;
+          var r =
+              ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomExpItemList(),
+            o = r.length;
           for (let t = 0; t < o; t++)
             if (r[t].ItemId === e.GetConfigId()) {
               a = r[t].Exp;
@@ -54,9 +52,9 @@ class PhantomSort extends CommonSort_1.CommonSort {
         }
         if (i) n = t.GetExp();
         else {
-          const m =
-            ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomExpItemList();
-          const _ = m.length;
+          var m =
+              ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomExpItemList(),
+            _ = m.length;
           for (let t = 0; t < _; t++)
             if (m[t].ItemId === h.GetConfigId()) {
               n = m[t].Exp;
@@ -66,11 +64,11 @@ class PhantomSort extends CommonSort_1.CommonSort {
         return a !== n ? (n - a) * (s ? -1 : 1) : 0;
       }),
       (this.oDt = (t, i, s) => {
-        const e = t;
-        const h = i;
-        const a =
-          ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomExpItemList();
-        const n = a.length;
+        var e = t,
+          h = i,
+          a =
+            ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomExpItemList(),
+          n = a.length;
         let r = !1;
         for (let t = 0; t < n; t++)
           if (a[t].ItemId === e.GetConfigId()) {
@@ -86,7 +84,7 @@ class PhantomSort extends CommonSort_1.CommonSort {
         return r !== o ? ((t = r ? 1 : 0), (o ? 1 : 0) - t) : 0;
       }),
       (this.rDt = (t, i, s) => {
-        let e, h, a;
+        var e, h, a;
         return (t instanceof ItemViewData_1.ItemViewData &&
           i instanceof ItemViewData_1.ItemViewData) ||
           (t instanceof PhantomItemData_1.PhantomItemData &&
@@ -98,7 +96,7 @@ class PhantomSort extends CommonSort_1.CommonSort {
             (e = e.GetPhantomBattleData(a)),
             (a = h.GetPhantomSubProp()),
             (h = e.GetPhantomSubProp()),
-            (e = a?.length > 0 ? 1 : 0) != (a = h?.length > 0 ? 1 : 0)
+            (e = 0 < a?.length ? 1 : 0) != (a = 0 < h?.length ? 1 : 0)
               ? (a - e) * (s ? -1 : 1)
               : 0)
           : (h = t.IsBreach ? 1 : 0) != (a = i.IsBreach ? 1 : 0)
@@ -106,7 +104,7 @@ class PhantomSort extends CommonSort_1.CommonSort {
             : 0;
       }),
       (this.VLt = (t, i, s) => {
-        let e, h, a;
+        var e, h, a;
         return t instanceof CommonItemData_1.CommonItemData &&
           i instanceof CommonItemData_1.CommonItemData
           ? (i.GetQuality() - t.GetQuality()) * (s ? -1 : 1)
@@ -127,7 +125,7 @@ class PhantomSort extends CommonSort_1.CommonSort {
               : 0;
       }),
       (this.WLt = (t, i, s) => {
-        let e, h, a;
+        var e, h, a;
         return (t instanceof ItemViewData_1.ItemViewData &&
           i instanceof ItemViewData_1.ItemViewData) ||
           (t instanceof PhantomItemData_1.PhantomItemData &&
@@ -145,7 +143,7 @@ class PhantomSort extends CommonSort_1.CommonSort {
             : 0;
       }),
       (this.eDt = (t, i, s) => {
-        let e, h, a;
+        var e, h, a;
         return (t instanceof ItemViewData_1.ItemViewData &&
           i instanceof ItemViewData_1.ItemViewData) ||
           (t instanceof PhantomItemData_1.PhantomItemData &&
@@ -163,7 +161,7 @@ class PhantomSort extends CommonSort_1.CommonSort {
             : 0;
       }),
       (this.nDt = (i, s, e = !1) => {
-        const h = i.length;
+        var h = i.length;
         for (let t = 0; t < h; t++)
           if (i[t].PhantomPropId === s) {
             if (e && i[t].IfPercentage) return i[t].Value;
@@ -320,22 +318,22 @@ class PhantomSort extends CommonSort_1.CommonSort {
           (t instanceof PhantomItemData_1.PhantomItemData &&
             i instanceof PhantomItemData_1.PhantomItemData)
         ) {
-          var e = t.GetUniqueId();
-          var h = i.GetUniqueId();
-          var e =
-            ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-              e,
-            );
-          var h =
-            ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-              h,
-            );
-          const a = e.GetEquipRoleId() > 0 ? 1 : 0;
-          const n = h.GetEquipRoleId() > 0 ? 1 : 0;
+          var e = t.GetUniqueId(),
+            h = i.GetUniqueId(),
+            e =
+              ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
+                e,
+              ),
+            h =
+              ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
+                h,
+              );
+          const a = 0 < e.GetEquipRoleId() ? 1 : 0,
+            n = 0 < h.GetEquipRoleId() ? 1 : 0;
           if (a != n) return (a - n) * (s ? -1 : 1);
         }
-        const a = t.Role > 0 ? 1 : 0;
-        const n = i.Role > 0 ? 1 : 0;
+        const a = 0 < t.Role ? 1 : 0,
+          n = 0 < i.Role ? 1 : 0;
         return a !== n ? (a - n) * (s ? -1 : 1) : 0;
       }),
       (this.FDt = (t, i, s, e) => {
@@ -346,23 +344,23 @@ class PhantomSort extends CommonSort_1.CommonSort {
           (t instanceof PhantomItemData_1.PhantomItemData &&
             i instanceof PhantomItemData_1.PhantomItemData)
         ) {
-          var h = t.GetUniqueId();
-          var a = i.GetUniqueId();
-          var h =
-            ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-              h,
-            );
-          var a =
-            ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-              a,
-            );
-          const n = h.GetEquipRoleId() === e ? 1 : 0;
-          const r = a.GetEquipRoleId() === e ? 1 : 0;
-          if ((n == 1 || r == 1) && n != r) return -1 * (n - r);
+          var h = t.GetUniqueId(),
+            a = i.GetUniqueId(),
+            h =
+              ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
+                h,
+              ),
+            a =
+              ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
+                a,
+              );
+          const n = h.GetEquipRoleId() === e ? 1 : 0,
+            r = a.GetEquipRoleId() === e ? 1 : 0;
+          if ((1 == n || 1 == r) && n != r) return -1 * (n - r);
         }
-        const n = t.Role === e ? 1 : 0;
-        const r = i.Role === e ? 1 : 0;
-        return (n !== 1 && r !== 1) || n === r ? 0 : -1 * (n - r);
+        const n = t.Role === e ? 1 : 0,
+          r = i.Role === e ? 1 : 0;
+        return (1 !== n && 1 !== r) || n === r ? 0 : -1 * (n - r);
       }),
       (this.VDt = (t, i, s) => {
         if (
@@ -371,22 +369,22 @@ class PhantomSort extends CommonSort_1.CommonSort {
           (t instanceof PhantomItemData_1.PhantomItemData &&
             i instanceof PhantomItemData_1.PhantomItemData)
         ) {
-          var e = t.GetUniqueId();
-          var h = i.GetUniqueId();
-          var e =
-            ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-              e,
-            );
-          var h =
-            ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-              h,
-            );
-          const a = e.GetIfLock() ? 1 : 0;
-          const n = h.GetIfLock() ? 1 : 0;
+          var e = t.GetUniqueId(),
+            h = i.GetUniqueId(),
+            e =
+              ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
+                e,
+              ),
+            h =
+              ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
+                h,
+              );
+          const a = e.GetIfLock() ? 1 : 0,
+            n = h.GetIfLock() ? 1 : 0;
           if (a != n) return a - n;
         }
-        const a = t.IsLock ? 1 : 0;
-        const n = i.IsLock ? 1 : 0;
+        const a = t.IsLock ? 1 : 0,
+          n = i.IsLock ? 1 : 0;
         return a !== n ? -1 * (a - n) : 0;
       }),
       (this.HDt = (t, i, s) => {
@@ -396,22 +394,22 @@ class PhantomSort extends CommonSort_1.CommonSort {
           (t instanceof PhantomItemData_1.PhantomItemData &&
             i instanceof PhantomItemData_1.PhantomItemData)
         ) {
-          var e = t.GetUniqueId();
-          var h = i.GetUniqueId();
-          var e =
-            ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-              e,
-            );
-          var h =
-            ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-              h,
-            );
-          const a = e.GetConfig().Rarity;
-          const n = h.GetConfig().Rarity;
+          var e = t.GetUniqueId(),
+            h = i.GetUniqueId(),
+            e =
+              ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
+                e,
+              ),
+            h =
+              ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
+                h,
+              );
+          const a = e.GetConfig().Rarity,
+            n = h.GetConfig().Rarity;
           if (a !== n) return (a - n) * (s ? 1 : -1);
         }
-        const a = t.Rarity;
-        const n = i.Rarity;
+        const a = t.Rarity,
+          n = i.Rarity;
         return a !== n ? (a - n) * (s ? 1 : -1) : 0;
       }),
       (this.QLt = (t, i, s) => {
@@ -476,4 +474,4 @@ class PhantomSort extends CommonSort_1.CommonSort {
   }
 }
 exports.PhantomSort = PhantomSort;
-// # sourceMappingURL=PhantomSort.js.map
+//# sourceMappingURL=PhantomSort.js.map

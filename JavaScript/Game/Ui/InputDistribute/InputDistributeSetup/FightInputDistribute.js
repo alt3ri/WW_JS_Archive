@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FightInputDistribute = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const InputManager_1 = require("../../Input/InputManager");
-const UiLayer_1 = require("../../UiLayer");
-const InputDistributeDefine_1 = require("../InputDistributeDefine");
-const InputDistributeSetup_1 = require("./InputDistributeSetup");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  InputManager_1 = require("../../Input/InputManager"),
+  UiLayer_1 = require("../../UiLayer"),
+  InputDistributeDefine_1 = require("../InputDistributeDefine"),
+  InputDistributeSetup_1 = require("./InputDistributeSetup");
 class FightInputDistribute extends InputDistributeSetup_1.InputDistributeSetup {
   OnRefresh() {
     return (
@@ -48,4 +48,4 @@ class FightInputDistribute extends InputDistributeSetup_1.InputDistributeSetup {
   }
 }
 exports.FightInputDistribute = FightInputDistribute;
-// # sourceMappingURL=FightInputDistribute.js.map
+//# sourceMappingURL=FightInputDistribute.js.map

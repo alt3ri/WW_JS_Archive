@@ -1,42 +1,42 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon");
-const TsSimpleInteractBase_1 = require("./TsSimpleInteractBase");
-const redColor = new UE.LinearColor(1, 0, 0, 1);
-const yellowColor = new UE.LinearColor(1, 1, 0, 1);
-const greenColor = new UE.LinearColor(0, 1, 0, 1);
-const DRAW_TIME = 0.05;
-const DEFAULT_THICKNESS = 4;
-const DEFAULT_ARROW_SIZE = 50;
-const NOT_INTRO_SIZE = 1.5;
-const DRAW_ANGLE_PERIOD = 10;
-const textColor = new UE.Color(255, 128, 128, 255);
-const TEXT_SIZE = 200;
-const CHECK_ANGLE_PERIODIC = 1;
-const MINUS_180 = -180;
-const TRY_GET_ANGLE_PERIODIC = 15;
-const PROFILE_KEY_CEHCK_LEGAL = "TsSimpleInteractCylinder_CheckLegal";
-const PROFILE_KEY = "TsSimpleInteractCylindere_GetBestTransform";
+const UE = require("ue"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
+  TsSimpleInteractBase_1 = require("./TsSimpleInteractBase"),
+  redColor = new UE.LinearColor(1, 0, 0, 1),
+  yellowColor = new UE.LinearColor(1, 1, 0, 1),
+  greenColor = new UE.LinearColor(0, 1, 0, 1),
+  DRAW_TIME = 0.05,
+  DEFAULT_THICKNESS = 4,
+  DEFAULT_ARROW_SIZE = 50,
+  NOT_INTRO_SIZE = 1.5,
+  DRAW_ANGLE_PERIOD = 10,
+  textColor = new UE.Color(255, 128, 128, 255),
+  TEXT_SIZE = 200,
+  CHECK_ANGLE_PERIODIC = 1,
+  MINUS_180 = -180,
+  TRY_GET_ANGLE_PERIODIC = 15,
+  PROFILE_KEY_CEHCK_LEGAL = "TsSimpleInteractCylinder_CheckLegal",
+  PROFILE_KEY = "TsSimpleInteractCylindere_GetBestTransform";
 class AngleLimit {
   constructor() {
     this.Limits = new Array();
   }
   GetAngleFromLimits(i) {
-    if (this.Limits.length === 0) return [i, 0];
-    let s = 360;
-    let h = 360;
+    if (0 === this.Limits.length) return [i, 0];
+    let s = 360,
+      h = 360;
     for (const r of this.Limits) {
-      if (r[2] === 0) {
+      if (0 === r[2]) {
         var e = r[0] - i;
-        if (e > 0) {
+        if (0 < e) {
           s > e && ((s = e), (h = r[0]));
           continue;
         }
-        if ((e = i - r[1]) > 0) {
+        if (0 < (e = i - r[1])) {
           s > e && ((s = e), (h = r[0]));
           continue;
         }
@@ -45,8 +45,8 @@ class AngleLimit {
       let t = 0;
       e = r[0] - i;
       if (
-        (e > 0 && (s > e && ((s = e), (h = r[0])), ++t),
-        (e = i - r[1]) > 0 && (s > e && ((s = e), (h = r[0])), ++t),
+        (0 < e && (s > e && ((s = e), (h = r[0])), ++t),
+        0 < (e = i - r[1]) && (s > e && ((s = e), (h = r[0])), ++t),
         t < 2)
       )
         return [i, 0];
@@ -88,7 +88,7 @@ class TsSimpleInteractCylinder extends TsSimpleInteractBase_1.default {
   }
   UpdateData() {
     super.UpdateData();
-    const t = this.SelfTransform.GetRotation();
+    var t = this.SelfTransform.GetRotation();
     t.RotateVector(Vector_1.Vector.ForwardVectorProxy, this.SelfForward),
       t.RotateVector(Vector_1.Vector.RightVectorProxy, this.SelfRight),
       this.SelfForward.CrossProduct(this.SelfRight, this.SelfUp),
@@ -104,12 +104,12 @@ class TsSimpleInteractCylinder extends TsSimpleInteractBase_1.default {
       void 0 !== this.IsLegal)
     ) {
       var t = UE.EditorLevelLibrary.GetSelectedLevelActors();
-      if (t.Num() === 0 || t.Get(0) !== this) return this.IsLegal;
+      if (0 === t.Num() || t.Get(0) !== this) return this.IsLegal;
     }
     this.LineTrace || this.InitTraceInfo();
-    var t = Math.min(180, this.Angle);
-    const i = Math.ceil((2 * t) / CHECK_ANGLE_PERIODIC) + 1;
-    const s = i > 1 ? ((2 * t) / (i - 1)) * MathUtils_1.MathUtils.DegToRad : 0;
+    var t = Math.min(180, this.Angle),
+      i = Math.ceil((2 * t) / CHECK_ANGLE_PERIODIC) + 1,
+      s = 1 < i ? ((2 * t) / (i - 1)) * MathUtils_1.MathUtils.DegToRad : 0;
     let h = -t * MathUtils_1.MathUtils.DegToRad;
     for (let t = 0; t < i; ++t) {
       if (
@@ -146,15 +146,15 @@ class TsSimpleInteractCylinder extends TsSimpleInteractBase_1.default {
   }
   OnDraw() {
     this.LineTrace || this.InitTraceInfo();
-    const i = this.IsLegal ? greenColor : yellowColor;
-    const t = Math.min(180, this.Angle);
-    const s = Math.floor((2 * t) / DRAW_ANGLE_PERIOD) + 1;
-    const h = s > 1 ? ((2 * t) / (s - 1)) * MathUtils_1.MathUtils.DegToRad : 0;
+    var i = this.IsLegal ? greenColor : yellowColor,
+      t = Math.min(180, this.Angle),
+      s = Math.floor((2 * t) / DRAW_ANGLE_PERIOD) + 1,
+      h = 1 < s ? ((2 * t) / (s - 1)) * MathUtils_1.MathUtils.DegToRad : 0;
     let e = -t * MathUtils_1.MathUtils.DegToRad;
-    const r = Vector_1.Vector.Create();
-    const o = Vector_1.Vector.Create();
-    const _ = Vector_1.Vector.Create();
-    const a = Vector_1.Vector.Create();
+    var r = Vector_1.Vector.Create(),
+      o = Vector_1.Vector.Create(),
+      _ = Vector_1.Vector.Create(),
+      a = Vector_1.Vector.Create();
     for (let t = 0; t < s; ++t)
       (this.TmpLocation.X = Math.cos(e) * this.CylinderRadius),
         (this.TmpLocation.Y = Math.sin(e) * this.CylinderRadius),
@@ -176,7 +176,7 @@ class TsSimpleInteractCylinder extends TsSimpleInteractBase_1.default {
           DRAW_TIME,
           DEFAULT_THICKNESS,
         ),
-        t === 0
+        0 === t
           ? (r.DeepCopy(this.StartLocation), o.DeepCopy(this.EndLocation))
           : (UE.KismetSystemLibrary.DrawDebugLine(
               this,
@@ -197,7 +197,7 @@ class TsSimpleInteractCylinder extends TsSimpleInteractBase_1.default {
         _.DeepCopy(this.StartLocation),
         a.DeepCopy(this.EndLocation),
         (e += h);
-    this.Angle >= 180 &&
+    180 <= this.Angle &&
       (UE.KismetSystemLibrary.DrawDebugLine(
         this,
         _.ToUeVector(),
@@ -246,8 +246,8 @@ class TsSimpleInteractCylinder extends TsSimpleInteractBase_1.default {
   }
   OnGetBestTransform(t, i, s, h) {
     this.UpdateData();
-    const e = this.TmpResult;
-    const r = this.Intro ? this.CylinderRadius - h : this.CylinderRadius + h;
+    var e = this.TmpResult,
+      r = this.Intro ? this.CylinderRadius - h : this.CylinderRadius + h;
     if (r <= 0) e.Success = !1;
     else if (
       (this.ActorLocation.FromUeVector(t.K2_GetActorLocation()),
@@ -257,37 +257,37 @@ class TsSimpleInteractCylinder extends TsSimpleInteractBase_1.default {
     ) {
       this.TmpVector1.DeepCopy(this.ActorLocation),
         (this.TmpVector1.Z += this.MoveOffset.Z);
-      const o = this.MoveOffset.SizeSquared2D();
-      const _ = this.ActorLocation.Z + this.MoveOffset.Z;
-      const a = this.CylinderHalfHeight / this.SelfUp.Z;
-      let s = MathUtils_1.MathUtils.LargeNumber;
-      let h = ((e.Success = !1), 1);
+      var o = this.MoveOffset.SizeSquared2D(),
+        _ = this.ActorLocation.Z + this.MoveOffset.Z,
+        a = this.CylinderHalfHeight / this.SelfUp.Z;
+      let s = MathUtils_1.MathUtils.LargeNumber,
+        h = ((e.Success = !1), 1);
       for (const T of this.AngleLimit.Limits) {
         let t = T[1] - T[0];
-        T[2] > 0 && (t += 360);
-        const E = Math.ceil(t / TRY_GET_ANGLE_PERIODIC) + 1;
-        const l = (t / (E - 1)) * MathUtils_1.MathUtils.DegToRad;
+        0 < T[2] && (t += 360);
+        var E = Math.ceil(t / TRY_GET_ANGLE_PERIODIC) + 1,
+          l = (t / (E - 1)) * MathUtils_1.MathUtils.DegToRad;
         let i = T[0] * MathUtils_1.MathUtils.DegToRad;
         for (let t = 0; t < E; ++t) {
           this.SelfForward.Multiply(Math.cos(i) * r, this.TmpVector3),
             this.SelfRight.Multiply(Math.sin(i) * r, this.TmpVector4),
             this.TmpVector3.AdditionEqual(this.TmpVector4),
             this.TmpVector3.AdditionEqual(this.SelfLocation);
-          var n = _ - this.TmpVector3.Z;
-          var n =
-            (this.SelfUp.Multiply(
-              (Math.sign(n) * Math.min(Math.abs(n), a)) / this.SelfUp.Z,
-              this.TmpVector4,
-            ),
-            this.TmpVector3.AdditionEqual(this.TmpVector4),
-            Vector_1.Vector.DistSquared2D(this.TmpVector1, this.TmpVector3));
-          var n =
-            MathUtils_1.MathUtils.Square(
-              this.TmpVector1.Z - this.TmpVector3.Z,
-            ) +
-            n +
-            o -
-            2 * Math.sqrt(n * o);
+          var n = _ - this.TmpVector3.Z,
+            n =
+              (this.SelfUp.Multiply(
+                (Math.sign(n) * Math.min(Math.abs(n), a)) / this.SelfUp.Z,
+                this.TmpVector4,
+              ),
+              this.TmpVector3.AdditionEqual(this.TmpVector4),
+              Vector_1.Vector.DistSquared2D(this.TmpVector1, this.TmpVector3)),
+            n =
+              MathUtils_1.MathUtils.Square(
+                this.TmpVector1.Z - this.TmpVector3.Z,
+              ) +
+              n +
+              o -
+              2 * Math.sqrt(n * o);
           Math.abs(s - n) < MathUtils_1.MathUtils.KindaSmallNumber
             ? (++h,
               Math.random() * h < 1 &&
@@ -342,9 +342,9 @@ class TsSimpleInteractCylinder extends TsSimpleInteractBase_1.default {
         this.ActorLocation,
         this.TmpVector1,
       );
-    const i = this.TmpVector1;
-    var t = (t * t) / i.SizeSquared2D();
-    if (t >= 1)
+    var i = this.TmpVector1,
+      t = (t * t) / i.SizeSquared2D();
+    if (1 <= t)
       return (
         !!this.Intro &&
         (this.Angle < 180
@@ -354,14 +354,14 @@ class TsSimpleInteractCylinder extends TsSimpleInteractBase_1.default {
       );
     t = Math.acos(Math.sqrt(t)) * MathUtils_1.MathUtils.RadToDeg;
     this.ActorAngleInSelf = MathUtils_1.MathUtils.GetAngleByVector2D(i);
-    let s = 0;
-    let h = 0;
+    let s = 0,
+      h = 0;
     if (
       (this.Intro
         ? ((h = this.ActorAngleInSelf - t) < MINUS_180 && (h += 360),
-          (s = this.ActorAngleInSelf + t) > 180 && (s -= 360))
+          180 < (s = this.ActorAngleInSelf + t) && (s -= 360))
         : ((s = this.ActorAngleInSelf - t) < MINUS_180 && (s += 360),
-          (h = this.ActorAngleInSelf + t) > 180 && (h -= 360)),
+          180 < (h = this.ActorAngleInSelf + t) && (h -= 360)),
       this.Angle < 180)
     ) {
       if (s < h)
@@ -377,7 +377,7 @@ class TsSimpleInteractCylinder extends TsSimpleInteractBase_1.default {
         h <= this.Angle &&
           h >= -this.Angle &&
           this.AngleLimit.Limits.push([-this.Angle, h, 0]),
-        this.AngleLimit.Limits.length === 0)
+        0 === this.AngleLimit.Limits.length)
       ) {
         if (s * h < 0) return !1;
         this.AngleLimit.Limits.push([-this.Angle, this.Angle, 0]);
@@ -387,4 +387,4 @@ class TsSimpleInteractCylinder extends TsSimpleInteractBase_1.default {
   }
 }
 exports.default = TsSimpleInteractCylinder;
-// # sourceMappingURL=TsSimpleInteractCylinder.js.map
+//# sourceMappingURL=TsSimpleInteractCylinder.js.map

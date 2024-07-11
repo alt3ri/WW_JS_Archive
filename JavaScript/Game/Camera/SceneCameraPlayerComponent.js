@@ -1,25 +1,29 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, r, o) {
-    let n;
-    const a = arguments.length;
-    let i =
-      a < 3 ? t : o === null ? (o = Object.getOwnPropertyDescriptor(t, r)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var n,
+      a = arguments.length,
+      i =
+        a < 3
+          ? t
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(t, r))
+            : o;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       i = Reflect.decorate(e, t, r, o);
     else
-      for (let s = e.length - 1; s >= 0; s--)
-        (n = e[s]) && (i = (a < 3 ? n(i) : a > 3 ? n(t, r, i) : n(t, r)) || i);
-    return a > 3 && i && Object.defineProperty(t, r, i), i;
+      for (var s = e.length - 1; 0 <= s; s--)
+        (n = e[s]) && (i = (a < 3 ? n(i) : 3 < a ? n(t, r, i) : n(t, r)) || i);
+    return 3 < a && i && Object.defineProperty(t, r, i), i;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneCameraPlayerComponent = void 0);
-const UE = require("ue");
-const EntityComponent_1 = require("../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../Core/Entity/RegisterComponent");
-const ModelManager_1 = require("../Manager/ModelManager");
-const CameraController_1 = require("./CameraController");
+const UE = require("ue"),
+  EntityComponent_1 = require("../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../Core/Entity/RegisterComponent"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  CameraController_1 = require("./CameraController");
 let SceneCameraPlayerComponent = class SceneCameraPlayerComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments), (this.yxr = void 0), (this.Fxr = void 0);
@@ -37,7 +41,7 @@ let SceneCameraPlayerComponent = class SceneCameraPlayerComponent extends Entity
   ExitCameraMode(e = () => {}, t, r) {
     CameraController_1.CameraController.ExitCameraMode(
       3,
-      r && r === 1 ? 0 : t ? t.FadeOut : 1,
+      r && 1 === r ? 0 : t ? t.FadeOut : 1,
       0,
       0,
       e,
@@ -83,7 +87,7 @@ let SceneCameraPlayerComponent = class SceneCameraPlayerComponent extends Entity
         !0,
       ),
       this.Fxr.push(a),
-      ModelManager_1.ModelManager.CameraModel.CameraMode === 3
+      3 === ModelManager_1.ModelManager.CameraModel.CameraMode
         ? this.EnterSceneSubCamera(a)
         : CameraController_1.CameraController.EnterCameraMode(3, o, 0, 0));
   }
@@ -94,16 +98,16 @@ let SceneCameraPlayerComponent = class SceneCameraPlayerComponent extends Entity
       );
       let e = void 0;
       for (
-        this.yxr.CurSceneSubCamera.Type === 1 &&
+        1 === this.yxr.CurSceneSubCamera.Type &&
         this.yxr.DefaultSceneSubCamera !== this.yxr.CurSceneSubCamera &&
         (e = this.yxr.CurSceneSubCamera);
         this.Fxr.length;
 
       ) {
-        const t = this.Fxr.pop();
+        var t = this.Fxr.pop();
         this.yxr.RemoveBoundSceneCamera(t);
       }
-      if (ModelManager_1.ModelManager.CameraModel.CameraMode === 3)
+      if (3 === ModelManager_1.ModelManager.CameraModel.CameraMode)
         return this.yxr.IsIdle()
           ? ModelManager_1.ModelManager.CameraModel.IsInHigherMode(3)
             ? void this.ExitCameraMode(void 0)
@@ -132,4 +136,4 @@ let SceneCameraPlayerComponent = class SceneCameraPlayerComponent extends Entity
   SceneCameraPlayerComponent,
 )),
   (exports.SceneCameraPlayerComponent = SceneCameraPlayerComponent);
-// # sourceMappingURL=SceneCameraPlayerComponent.js.map
+//# sourceMappingURL=SceneCameraPlayerComponent.js.map

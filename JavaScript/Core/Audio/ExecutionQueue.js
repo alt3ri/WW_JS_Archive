@@ -1,31 +1,31 @@
 "use strict";
-let _ExecutionQueue_Handle;
-let _ExecutionQueue_Executing;
-let _ExecutionQueue_Pending;
-let _ExecutionQueue_TaskQueue;
-const __classPrivateFieldGet =
-  (this && this.__classPrivateFieldGet) ||
-  function (e, t, i, u) {
-    if (i === "a" && !u)
-      throw new TypeError("Private accessor was defined without a getter");
-    if (typeof t === "function" ? e === t && u : t.has(e))
-      return i === "m" ? u : i === "a" ? u.call(e) : u ? u.value : t.get(e);
-    throw new TypeError(
-      "Cannot read private member from an object whose class did not declare it",
-    );
-  };
-const __classPrivateFieldSet =
-  (this && this.__classPrivateFieldSet) ||
-  function (e, t, i, u, n) {
-    if (u === "m") throw new TypeError("Private method is not writable");
-    if (u === "a" && !n)
-      throw new TypeError("Private accessor was defined without a setter");
-    if (typeof t === "function" ? e === t && n : t.has(e))
-      return u === "a" ? n.call(e, i) : n ? (n.value = i) : t.set(e, i), i;
-    throw new TypeError(
-      "Cannot write private member to an object whose class did not declare it",
-    );
-  };
+var _ExecutionQueue_Handle,
+  _ExecutionQueue_Executing,
+  _ExecutionQueue_Pending,
+  _ExecutionQueue_TaskQueue,
+  __classPrivateFieldGet =
+    (this && this.__classPrivateFieldGet) ||
+    function (e, t, i, u) {
+      if ("a" === i && !u)
+        throw new TypeError("Private accessor was defined without a getter");
+      if ("function" == typeof t ? e === t && u : t.has(e))
+        return "m" === i ? u : "a" === i ? u.call(e) : u ? u.value : t.get(e);
+      throw new TypeError(
+        "Cannot read private member from an object whose class did not declare it",
+      );
+    },
+  __classPrivateFieldSet =
+    (this && this.__classPrivateFieldSet) ||
+    function (e, t, i, u, n) {
+      if ("m" === u) throw new TypeError("Private method is not writable");
+      if ("a" === u && !n)
+        throw new TypeError("Private accessor was defined without a setter");
+      if ("function" == typeof t ? e === t && n : t.has(e))
+        return "a" === u ? n.call(e, i) : n ? (n.value = i) : t.set(e, i), i;
+      throw new TypeError(
+        "Cannot write private member to an object whose class did not declare it",
+      );
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const EXECUTION_QUEUE_ENABLE = !(exports.ExecutionQueue = void 0);
 class ExecutionQueue {
@@ -36,7 +36,7 @@ class ExecutionQueue {
       _ExecutionQueue_TaskQueue.set(this, []);
   }
   Enqueue(e) {
-    let t, i;
+    var t, i;
     __classPrivateFieldSet(
       this,
       _ExecutionQueue_Handle,
@@ -70,7 +70,7 @@ class ExecutionQueue {
   }
   async m8() {
     for (__classPrivateFieldSet(this, _ExecutionQueue_Executing, !0, "f"); ; ) {
-      const e = __classPrivateFieldGet(
+      var e = __classPrivateFieldGet(
         this,
         _ExecutionQueue_TaskQueue,
         "f",
@@ -91,4 +91,4 @@ class ExecutionQueue {
   (_ExecutionQueue_Executing = new WeakMap()),
   (_ExecutionQueue_Pending = new WeakMap()),
   (_ExecutionQueue_TaskQueue = new WeakMap());
-// # sourceMappingURL=ExecutionQueue.js.map
+//# sourceMappingURL=ExecutionQueue.js.map

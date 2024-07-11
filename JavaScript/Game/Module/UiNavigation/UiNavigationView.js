@@ -24,4 +24,4 @@ class UiNavigationView extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.UiNavigationView = UiNavigationView;
-// # sourceMappingURL=UiNavigationView.js.map
+//# sourceMappingURL=UiNavigationView.js.map

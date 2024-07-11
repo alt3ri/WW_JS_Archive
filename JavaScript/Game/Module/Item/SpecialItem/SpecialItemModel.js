@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SpecialItemModel = void 0);
-const ModelBase_1 = require("../../../../Core/Framework/ModelBase");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const SpecialItemDefine_1 = require("./SpecialItemDefine");
+const ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  SpecialItemDefine_1 = require("./SpecialItemDefine");
 class SpecialItemModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -17,7 +17,7 @@ class SpecialItemModel extends ModelBase_1.ModelBase {
   }
   OnInit() {
     for (const t of this.oCi) {
-      const e = new SpecialItemDefine_1.specialItemLogic[t](t);
+      var e = new SpecialItemDefine_1.specialItemLogic[t](t);
       e.Init(), this.iCi.set(t, e);
     }
     return !0;
@@ -31,7 +31,7 @@ class SpecialItemModel extends ModelBase_1.ModelBase {
     }
   }
   GetEquipSpecialItemId() {
-    if (ModelManager_1.ModelManager.RouletteModel.EquipItemType === 13)
+    if (13 === ModelManager_1.ModelManager.RouletteModel.EquipItemType)
       return ModelManager_1.ModelManager.RouletteModel.CurrentEquipItemId;
   }
   OnClear() {
@@ -45,4 +45,4 @@ class SpecialItemModel extends ModelBase_1.ModelBase {
   }
 }
 exports.SpecialItemModel = SpecialItemModel;
-// # sourceMappingURL=SpecialItemModel.js.map
+//# sourceMappingURL=SpecialItemModel.js.map

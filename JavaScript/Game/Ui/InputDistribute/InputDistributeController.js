@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputDistributeController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const ConfigManager_1 = require("../../../Game/Manager/ConfigManager");
-const ModelManager_1 = require("../../../Game/Manager/ModelManager");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const InputDistributeDefine_1 = require("./InputDistributeDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  ConfigManager_1 = require("../../../Game/Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Game/Manager/ModelManager"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  InputDistributeDefine_1 = require("./InputDistributeDefine");
 class InputDistributeController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return this.Ore(), !0;
@@ -255,4 +255,4 @@ class InputDistributeController extends ControllerBase_1.ControllerBase {
         EventDefine_1.EEventName.OnRemoveNotAllowFightInputViewName,
       );
   });
-// # sourceMappingURL=InputDistributeController.js.map
+//# sourceMappingURL=InputDistributeController.js.map

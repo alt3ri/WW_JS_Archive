@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletActionContainer = exports.BulletActionCenter = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const BulletConstant_1 = require("../BulletConstant");
-const BulletActionAfterInit_1 = require("./BulletActionAfterInit");
-const BulletActionAttachActor_1 = require("./BulletActionAttachActor");
-const BulletActionAttachParentEffect_1 = require("./BulletActionAttachParentEffect");
-const BulletActionBase_1 = require("./BulletActionBase");
-const BulletActionChild_1 = require("./BulletActionChild");
-const BulletActionDestroyBullet_1 = require("./BulletActionDestroyBullet");
-const BulletActionInfo_1 = require("./BulletActionInfo");
-const BulletActionInitBullet_1 = require("./BulletActionInitBullet");
-const BulletActionInitCollision_1 = require("./BulletActionInitCollision");
-const BulletActionInitHit_1 = require("./BulletActionInitHit");
-const BulletActionInitMove_1 = require("./BulletActionInitMove");
-const BulletActionInitRender_1 = require("./BulletActionInitRender");
-const BulletActionSummonBullet_1 = require("./BulletActionSummonBullet");
-const BulletActionSummonEntity_1 = require("./BulletActionSummonEntity");
-const BulletActionTimeScale_1 = require("./BulletActionTimeScale");
-const BulletActionUpdateAttackerFrozen_1 = require("./BulletActionUpdateAttackerFrozen");
-const BulletActionUpdateEffect_1 = require("./BulletActionUpdateEffect");
-const BulletActionUpdateLiveTime_1 = require("./BulletActionUpdateLiveTime");
+const Log_1 = require("../../../../Core/Common/Log"),
+  BulletConstant_1 = require("../BulletConstant"),
+  BulletActionAfterInit_1 = require("./BulletActionAfterInit"),
+  BulletActionAttachActor_1 = require("./BulletActionAttachActor"),
+  BulletActionAttachParentEffect_1 = require("./BulletActionAttachParentEffect"),
+  BulletActionBase_1 = require("./BulletActionBase"),
+  BulletActionChild_1 = require("./BulletActionChild"),
+  BulletActionDestroyBullet_1 = require("./BulletActionDestroyBullet"),
+  BulletActionInfo_1 = require("./BulletActionInfo"),
+  BulletActionInitBullet_1 = require("./BulletActionInitBullet"),
+  BulletActionInitCollision_1 = require("./BulletActionInitCollision"),
+  BulletActionInitHit_1 = require("./BulletActionInitHit"),
+  BulletActionInitMove_1 = require("./BulletActionInitMove"),
+  BulletActionInitRender_1 = require("./BulletActionInitRender"),
+  BulletActionSummonBullet_1 = require("./BulletActionSummonBullet"),
+  BulletActionSummonEntity_1 = require("./BulletActionSummonEntity"),
+  BulletActionTimeScale_1 = require("./BulletActionTimeScale"),
+  BulletActionUpdateAttackerFrozen_1 = require("./BulletActionUpdateAttackerFrozen"),
+  BulletActionUpdateEffect_1 = require("./BulletActionUpdateEffect"),
+  BulletActionUpdateLiveTime_1 = require("./BulletActionUpdateLiveTime");
 class BulletActionCenter {
   constructor() {
     this.M4o = void 0;
@@ -127,7 +127,7 @@ class BulletActionCenter {
       );
   }
   IQi(t, e, i, l = !1) {
-    let n;
+    var n;
     this.M4o[t] ||
       ((n = new BulletActionContainer()).Init(t, e, i, l), (this.M4o[t] = n));
   }
@@ -180,11 +180,11 @@ class BulletActionContainer {
     return this.S9;
   }
   R4o() {
-    const t = new this.S4o(this.S9);
+    var t = new this.S4o(this.S9);
     return (t.Index = this.I4o.length), this.I4o.push(t), t;
   }
   GetActionInfo() {
-    let t;
+    var t;
     return this.D4o
       ? this.DQi[0]
       : this.DQi.length <= 0
@@ -192,11 +192,11 @@ class BulletActionContainer {
         : (((t = this.DQi.pop()).IsInPool = !1), t);
   }
   dZ() {
-    const t = new this.E4o(this.S9);
+    var t = new this.E4o(this.S9);
     return (t.Index = this.T4o.length), this.T4o.push(t), t;
   }
   GetAction() {
-    let t;
+    var t;
     return this.y4o
       ? this.L4o.length <= 0
         ? this.dZ()
@@ -211,22 +211,22 @@ class BulletActionContainer {
         : (t.Clear(), (t.IsInPool = !0), this.DQi.push(this.I4o[t.Index])));
   }
   RecycleAction(t) {
-    const e = t.GetActionInfo();
+    var e = t.GetActionInfo();
     if (
       (this.RecycleActionInfo(e),
       t.Clear(),
       BulletConstant_1.BulletConstant.OpenClearCheck)
     ) {
       for (const u in e) {
-        const i = e[u];
-        const l = typeof i;
-        (l == "number" && i === 0) ||
-          (l == "boolean" && !1 === i) ||
+        var i = e[u],
+          l = typeof i;
+        ("number" == l && 0 === i) ||
+          ("boolean" == l && !1 === i) ||
           (void 0 !== i &&
-            u !== "Type" &&
-            u !== "Index" &&
-            u !== "IsInPool" &&
-            l != "function" &&
+            "Type" !== u &&
+            "Index" !== u &&
+            "IsInPool" !== u &&
+            "function" != l &&
             Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Bullet",
@@ -237,17 +237,17 @@ class BulletActionContainer {
             ));
       }
       for (const c in t) {
-        const n = t[c];
-        const o = typeof n;
-        (o == "number" && n === 0) ||
-          (o == "boolean" && !1 === n) ||
+        var n = t[c],
+          o = typeof n;
+        ("number" == o && 0 === n) ||
+          ("boolean" == o && !1 === n) ||
           (void 0 !== n &&
-            c !== "Type" &&
-            c !== "Index" &&
-            c !== "IsInPool" &&
-            c !== "Stat" &&
-            c !== "TickStat" &&
-            o != "function" &&
+            "Type" !== c &&
+            "Index" !== c &&
+            "IsInPool" !== c &&
+            "Stat" !== c &&
+            "TickStat" !== c &&
+            "function" != o &&
             Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Bullet",
@@ -266,4 +266,4 @@ class BulletActionContainer {
   }
 }
 exports.BulletActionContainer = BulletActionContainer;
-// # sourceMappingURL=BulletActionCenter.js.map
+//# sourceMappingURL=BulletActionCenter.js.map

@@ -19,4 +19,4 @@ class BlackScreenViewData {
   }
 }
 exports.BlackScreenViewData = BlackScreenViewData;
-// # sourceMappingURL=BlackScreenViewData.js.map
+//# sourceMappingURL=BlackScreenViewData.js.map

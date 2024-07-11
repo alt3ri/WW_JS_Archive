@@ -1,5 +1,5 @@
 "use strict";
-let FavorPropType;
+var FavorPropType;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FavorPropType = void 0),
   (function (e) {
@@ -7,4 +7,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e[(e.FightRole = 1)] = "FightRole"),
       (e[(e.SpecifiedRole = 2)] = "SpecifiedRole");
   })((FavorPropType = exports.FavorPropType || (exports.FavorPropType = {})));
-// # sourceMappingURL=FavorPropType.js.map
+//# sourceMappingURL=FavorPropType.js.map

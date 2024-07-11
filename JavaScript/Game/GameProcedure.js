@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameProcedure = void 0);
-const UE = require("ue");
-const Info_1 = require("../Core/Common/Info");
-const Log_1 = require("../Core/Common/Log");
-const LogAnalyzer_1 = require("../Core/Common/LogAnalyzer");
-const ResourceSystem_1 = require("../Core/Resource/ResourceSystem");
-const BaseConfigController_1 = require("../Launcher/BaseConfig/BaseConfigController");
-const GameUtils_1 = require("./GameUtils");
-const GlobalData_1 = require("./GlobalData");
+const UE = require("ue"),
+  Info_1 = require("../Core/Common/Info"),
+  Log_1 = require("../Core/Common/Log"),
+  LogAnalyzer_1 = require("../Core/Common/LogAnalyzer"),
+  ResourceSystem_1 = require("../Core/Resource/ResourceSystem"),
+  BaseConfigController_1 = require("../Launcher/BaseConfig/BaseConfigController"),
+  GameUtils_1 = require("./GameUtils"),
+  GlobalData_1 = require("./GlobalData");
 class GameProcedure {
   static Start(e) {
     Info_1.Info.Initialize(e);
-    const r =
+    var r =
       BaseConfigController_1.BaseConfigController.GetPackageConfigOrDefault(
         "JSDebugId",
       );
@@ -67,7 +67,7 @@ class GameProcedure {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Game", 1, "GameProcedure：初始化 Game"),
       GameUtils_1.GameUtils.CreateStat("GameProcedure_InitGame");
-    const o = (await Promise.resolve().then(() => require("./Game"))).Game;
+    var o = (await Promise.resolve().then(() => require("./Game"))).Game;
     o.Start(e),
       o.ModuleStart(),
       Log_1.Log.CheckInfo() &&
@@ -101,4 +101,4 @@ class GameProcedure {
   }
 }
 (exports.GameProcedure = GameProcedure).Inited = !1;
-// # sourceMappingURL=GameProcedure.js.map
+//# sourceMappingURL=GameProcedure.js.map

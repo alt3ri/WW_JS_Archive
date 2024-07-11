@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AchievementDataItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const AchievementController_1 = require("../AchievementController");
-const AchievementGridItem_1 = require("./AchievementGridItem");
-const AchievementStarItem_1 = require("./AchievementStarItem");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  AchievementController_1 = require("../AchievementController"),
+  AchievementGridItem_1 = require("./AchievementGridItem"),
+  AchievementStarItem_1 = require("./AchievementStarItem");
 class AchievementDataItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -25,7 +25,7 @@ class AchievementDataItem extends GridProxyAbstract_1.GridProxyAbstract {
         e === this.iqe?.GetId() &&
           (this.iqe?.IfSingleAchievement() ||
             (!this.iqe?.IfSingleAchievement() &&
-              this.iqe.GetNextLink() === 0)) &&
+              0 === this.iqe.GetNextLink())) &&
           this.RefreshUi(this.iqe);
       }),
       (this.nqe = () => {
@@ -63,7 +63,7 @@ class AchievementDataItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.RefreshUi(e);
   }
   RefreshUi(e) {
-    let t, i, s, r, h, n, o;
+    var t, i, s, r, h, n, o;
     void 0 === e
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("Achievement", 59, "AchievementDataItem Data为空")
@@ -85,13 +85,13 @@ class AchievementDataItem extends GridProxyAbstract_1.GridProxyAbstract {
           t,
           i,
         ),
-        this.SetButtonUiActive(2, s === 1),
+        this.SetButtonUiActive(2, 1 === s),
         this.GetItem(1)?.SetUIActive(e.RedPoint()),
-        this.GetItem(4)?.SetUIActive(s === 2),
-        s === 0
+        this.GetItem(4)?.SetUIActive(2 === s),
+        0 === s
           ? (h?.SetUIActive(!0),
             LguiUtil_1.LguiUtil.SetLocalTextNew(h, "Text_Doing_Text"))
-          : s === 1
+          : 1 === s
             ? h?.SetUIActive(!1)
             : (h?.SetUIActive(!0),
               (n = TimeUtil_1.TimeUtil.DateFormat4(
@@ -100,7 +100,7 @@ class AchievementDataItem extends GridProxyAbstract_1.GridProxyAbstract {
                 ),
               )),
               h?.SetText(n)),
-        (o = e.GetRewards()).length > 0 && this.sqe(o[0]),
+        0 < (o = e.GetRewards()).length && this.sqe(o[0]),
         this.aqe());
   }
   ClearItem() {
@@ -123,7 +123,7 @@ class AchievementDataItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   aqe() {
     void 0 !== this.tqe && (this.tqe.Destroy(), (this.tqe = void 0));
-    const e = this.iqe.IfSingleAchievement()
+    var e = this.iqe.IfSingleAchievement()
       ? this.iqe.GetAchievementShowStar()
       : AchievementDataItem.hqe;
     this.tqe = new AchievementStarItem_1.AchievementStarItem(
@@ -134,9 +134,9 @@ class AchievementDataItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   sqe(e) {
     this.oqe.SetActive(!0);
-    const t = new AchievementGridItem_1.AchievementGridItemData();
+    var t = new AchievementGridItem_1.AchievementGridItemData();
     (t.Data = e),
-      (t.GetRewardState = this.iqe.GetFinishState() === 2),
+      (t.GetRewardState = 2 === this.iqe.GetFinishState()),
       this.oqe.Refresh(t);
   }
   OnBeforeDestroy() {
@@ -147,4 +147,4 @@ class AchievementDataItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 (exports.AchievementDataItem = AchievementDataItem).hqe = 3;
-// # sourceMappingURL=AchievementDataItem.js.map
+//# sourceMappingURL=AchievementDataItem.js.map

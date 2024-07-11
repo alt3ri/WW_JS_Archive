@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FormationPanel = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Stats_1 = require("../../../../../Core/Common/Stats");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const SceneTeamDefine_1 = require("../../../SceneTeam/SceneTeamDefine");
-const FormationItem_1 = require("../FormationItem");
-const BattleChildViewPanel_1 = require("./BattleChildViewPanel");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../../Core/Common/Stats"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  SceneTeamDefine_1 = require("../../../SceneTeam/SceneTeamDefine"),
+  FormationItem_1 = require("../FormationItem"),
+  BattleChildViewPanel_1 = require("./BattleChildViewPanel");
 class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
@@ -23,9 +23,9 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       }),
       (this.PJe = () => {
         if (!(this.UJe.length <= 0)) {
-          const e = this.GetOperationType();
+          var e = this.GetOperationType();
           for (const t of this.UJe)
-            e === 2 ? this.xJe(t[0], t[1]) : e === 1 && this.wJe(t[0], t[1]);
+            2 === e ? this.xJe(t[0], t[1]) : 1 === e && this.wJe(t[0], t[1]);
           for (const i of this.TJe) i.FormationIns && i.RefreshQteActive();
           this.UJe.length = 0;
         }
@@ -54,7 +54,7 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       }),
       (this.fKe = (e) => {
         for (const i of e) {
-          const t = this.GJe(i);
+          var t = this.GJe(i);
           t && t.PlayReviveSequence();
         }
       }),
@@ -113,15 +113,15 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     (this.TJe.length = 0), super.Reset();
   }
   OnRegisterComponent() {
-    const e = this.GetOperationType();
-    e === 2
+    var e = this.GetOperationType();
+    2 === e
       ? (this.ComponentRegisterInfos = [
           [0, UE.UIItem],
           [1, UE.UIItem],
           [2, UE.UIItem],
           [3, UE.UIItem],
         ])
-      : e === 1 &&
+      : 1 === e &&
         (this.ComponentRegisterInfos = [
           [0, UE.UIItem],
           [1, UE.UIItem],
@@ -143,19 +143,19 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       if (
         ((this.LJe = !0),
         await this.XJe(),
-        ModelManager_1.ModelManager.SceneTeamModel.CurrentGroupType !== 3)
+        3 !== ModelManager_1.ModelManager.SceneTeamModel.CurrentGroupType)
       ) {
         this.RJe =
           ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Id;
-        const i = this.GetOperationType() === 2;
-        const s = ModelManager_1.ModelManager.FunctionModel.IsOpen(10036);
+        var i = 2 === this.GetOperationType(),
+          s = ModelManager_1.ModelManager.FunctionModel.IsOpen(10036);
         let t = 0;
         for (let e = 1; e <= SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++) {
-          var n;
-          var h;
-          var o;
-          var a;
-          const _ = this.TJe[t];
+          var n,
+            h,
+            o,
+            a,
+            _ = this.TJe[t];
           _ &&
             (t++,
             _.RefreshConcertoResponseModule(s),
@@ -186,13 +186,13 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     }
   }
   async XJe() {
-    if (this.TJe.length === 0)
+    if (0 === this.TJe.length)
       switch (this.GetOperationType()) {
         case 2:
-          var e = this.GetItem(0).GetOwner();
-          var t = this.GetItem(1).GetOwner();
-          var i = this.GetItem(2).GetOwner();
-          var s = this.GetItem(3).GetOwner();
+          var e = this.GetItem(0).GetOwner(),
+            t = this.GetItem(1).GetOwner(),
+            i = this.GetItem(2).GetOwner(),
+            s = this.GetItem(3).GetOwner();
           await Promise.all([
             this.QJe(e, 1),
             this.QJe(t, 2),
@@ -354,9 +354,9 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       );
   }
   xJe(e, t) {
-    const i = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(e);
-    let s = this.GJe(this.RJe);
-    var e = ((this.RJe = e), this.GJe(this.RJe));
+    var i = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(e),
+      s = this.GJe(this.RJe),
+      e = ((this.RJe = e), this.GJe(this.RJe));
     s && s.RefreshSelectedRole(),
       e &&
         (e.RefreshSelectedRole(),
@@ -366,8 +366,8 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         e.ActivateConcertoChangeEffect(i.ElementType, s.ElementType);
   }
   wJe(e, t) {
-    const i = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(t);
-    const s = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(e);
+    var i = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(t),
+      s = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(e);
     (this.RJe = e),
       this.RJe &&
         ((e = this.GJe(this.RJe))
@@ -393,4 +393,4 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
 }
 ((exports.FormationPanel = FormationPanel).aYe = void 0),
   (FormationPanel.RKe = void 0);
-// # sourceMappingURL=FormationPanel.js.map
+//# sourceMappingURL=FormationPanel.js.map

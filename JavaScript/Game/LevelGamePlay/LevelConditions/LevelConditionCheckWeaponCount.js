@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckWeaponCount = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionCheckWeaponCount extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, a) {
-    let r, n, o;
+    var r, n, o;
     return (
       !!(
         e.LimitParams &&
@@ -26,4 +26,4 @@ class LevelConditionCheckWeaponCount extends LevelGeneralBase_1.LevelConditionBa
   }
 }
 exports.LevelConditionCheckWeaponCount = LevelConditionCheckWeaponCount;
-// # sourceMappingURL=LevelConditionCheckWeaponCount.js.map
+//# sourceMappingURL=LevelConditionCheckWeaponCount.js.map

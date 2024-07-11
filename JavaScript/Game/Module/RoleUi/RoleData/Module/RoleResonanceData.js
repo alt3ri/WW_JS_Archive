@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleResonanceData = void 0);
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RoleModuleDataBase_1 = require("./RoleModuleDataBase");
+const ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RoleModuleDataBase_1 = require("./RoleModuleDataBase");
 class RoleResonanceData extends RoleModuleDataBase_1.RoleModuleDataBase {
   constructor() {
     super(...arguments),
@@ -62,7 +62,7 @@ class RoleResonanceData extends RoleModuleDataBase_1.RoleModuleDataBase {
     return e;
   }
   IsResonanceFullyUnLock() {
-    const e = this.GetRoleConfig().ResonanceId;
+    var e = this.GetRoleConfig().ResonanceId;
     for (const n of ConfigManager_1.ConfigManager.RoleResonanceConfig.GetRoleResonanceList(
       e,
     ))
@@ -71,4 +71,4 @@ class RoleResonanceData extends RoleModuleDataBase_1.RoleModuleDataBase {
   }
 }
 exports.RoleResonanceData = RoleResonanceData;
-// # sourceMappingURL=RoleResonanceData.js.map
+//# sourceMappingURL=RoleResonanceData.js.map

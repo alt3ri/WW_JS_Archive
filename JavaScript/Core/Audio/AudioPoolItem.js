@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExternalSourcesPoolItem = exports.AudioPoolItem = void 0);
-const Log_1 = require("../Common/Log");
-const Time_1 = require("../Common/Time");
+const Log_1 = require("../Common/Log"),
+  Time_1 = require("../Common/Time");
 class AudioPoolItem {
   constructor(t) {
     (this.AudioEvent = void 0),
@@ -36,7 +36,7 @@ class AudioPoolItem {
   }
   DoCallback() {
     if (this.o8) {
-      for (const [, t] of this.o8) t();
+      for (var [, t] of this.o8) t();
       this.o8.clear();
     }
   }
@@ -76,4 +76,4 @@ class ExternalSourcesPoolItem {
   }
 }
 exports.ExternalSourcesPoolItem = ExternalSourcesPoolItem;
-// # sourceMappingURL=AudioPoolItem.js.map
+//# sourceMappingURL=AudioPoolItem.js.map

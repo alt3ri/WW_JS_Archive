@@ -6,10 +6,10 @@ class CookFilter extends CommonFilter_1.CommonFilter {
   constructor() {
     super(...arguments),
       (this.GetCookTypeList = (t) => {
-        return t.MainType === 0 ? t.EffectType : 0;
+        return 0 === t.MainType ? t.EffectType : 0;
       }),
       (this.GetCookMenuList = (t) => {
-        return t.MainType === 0 ? t.SubType : 0;
+        return 0 === t.MainType ? t.SubType : 0;
       });
   }
   OnInitFilterMap() {
@@ -18,4 +18,4 @@ class CookFilter extends CommonFilter_1.CommonFilter {
   }
 }
 exports.CookFilter = CookFilter;
-// # sourceMappingURL=CookFilter.js.map
+//# sourceMappingURL=CookFilter.js.map

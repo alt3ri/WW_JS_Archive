@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonEntranceFlowSkipEditFormation = void 0);
-const UiManager_1 = require("../../../Ui/UiManager");
-const EditBattleTeamController_1 = require("../../EditBattleTeam/EditBattleTeamController");
-const InstanceDungeonEntranceController_1 = require("../InstanceDungeonEntranceController");
-const InstanceDungeonEntranceFlowBase_1 = require("./InstanceDungeonEntranceFlowBase");
+const UiManager_1 = require("../../../Ui/UiManager"),
+  EditBattleTeamController_1 = require("../../EditBattleTeam/EditBattleTeamController"),
+  InstanceDungeonEntranceController_1 = require("../InstanceDungeonEntranceController"),
+  InstanceDungeonEntranceFlowBase_1 = require("./InstanceDungeonEntranceFlowBase");
 class InstanceDungeonEntranceFlowSkipEditFormation extends InstanceDungeonEntranceFlowBase_1.InstanceDungeonEntranceFlowBase {
   OnCreate() {
     this.AddStep(() => {
@@ -27,4 +27,4 @@ class InstanceDungeonEntranceFlowSkipEditFormation extends InstanceDungeonEntran
 }
 exports.InstanceDungeonEntranceFlowSkipEditFormation =
   InstanceDungeonEntranceFlowSkipEditFormation;
-// # sourceMappingURL=InstanceDungeonEntranceFlowSkipEditFormation.js.map
+//# sourceMappingURL=InstanceDungeonEntranceFlowSkipEditFormation.js.map

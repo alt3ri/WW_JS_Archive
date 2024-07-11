@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayShopRechargeView = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const PayItemController_1 = require("../../PayItem/PayItemController");
-const DiscountShopView_1 = require("./DiscountShopView");
-const PayShopRechargeItem_1 = require("./TabItem/PayShopRechargeItem");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  PayItemController_1 = require("../../PayItem/PayItemController"),
+  DiscountShopView_1 = require("./DiscountShopView"),
+  PayShopRechargeItem_1 = require("./TabItem/PayShopRechargeItem");
 class PayShopRechargeView extends DiscountShopView_1.DiscountShopView {
   constructor() {
     super(...arguments),
@@ -20,7 +20,7 @@ class PayShopRechargeView extends DiscountShopView_1.DiscountShopView {
       (this.GetProxyData = (e) => this.PayShopGoodsList[e]),
       (this.UEe = (e) => {}),
       (this.lFi = () => {
-        let e;
+        var e;
         this.rFi
           ? this.RefreshLoopScroll(this.CurrentSelectTabId)
           : ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
@@ -60,10 +60,10 @@ class PayShopRechargeView extends DiscountShopView_1.DiscountShopView {
       );
   }
   RefreshLoopScroll(e) {
-    const t = ModelManager_1.ModelManager.PayItemModel.GetDataList().sort(
-      (e, t) => e.ItemCount - t.ItemCount,
-    );
-    const r = new Array();
+    var t = ModelManager_1.ModelManager.PayItemModel.GetDataList().sort(
+        (e, t) => e.ItemCount - t.ItemCount,
+      ),
+      r = new Array();
     for (const n of t)
       ConfigManager_1.ConfigManager.PayItemConfig.GetPayItem(n.PayItemId)
         .IsDisplay && r.push(n);
@@ -87,4 +87,4 @@ class PayShopRechargeView extends DiscountShopView_1.DiscountShopView {
   }
 }
 exports.PayShopRechargeView = PayShopRechargeView;
-// # sourceMappingURL=PayShopRechargeView.js.map
+//# sourceMappingURL=PayShopRechargeView.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConfigCommon = exports.ConfigBase = exports.dataRef = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const LanguageSystem_1 = require("../Common/LanguageSystem");
-const Log_1 = require("../Common/Log");
-const Stats_1 = require("../Common/Stats");
-const TrimLru_1 = require("../Container/TrimLru");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  LanguageSystem_1 = require("../Common/LanguageSystem"),
+  Log_1 = require("../Common/Log"),
+  Stats_1 = require("../Common/Stats"),
+  TrimLru_1 = require("../Container/TrimLru");
 exports.dataRef = (0, puerts_1.$ref)(void 0);
 class ConfigBase {
   constructor() {
@@ -26,8 +26,8 @@ class ConfigCommon {
   }
   static ToList(n) {
     if (n) {
-      const i = n.length;
-      const t = new Array(i);
+      var i = n.length,
+        t = new Array(i);
       for (let o = 0; o < i; o++) t[o] = n[o];
       return t;
     }
@@ -40,7 +40,7 @@ class ConfigCommon {
     );
   }
   static InitDataStatement(o, n, i) {
-    if (o !== 0) return o;
+    if (0 !== o) return o;
     n.length <= 0 &&
       Log_1.Log.CheckError() &&
       Log_1.Log.Error(
@@ -48,8 +48,8 @@ class ConfigCommon {
         2,
         "dbName为空！请确认该配置表在拆分Db表中是否有正确配置！",
       );
-    const t = ConfigCommon.GetProjectContentDir() + "Aki/ConfigDB/" + n;
-    var o = UE.KuroPrepareStatementLib.CreateStatement(t, i);
+    var t = ConfigCommon.GetProjectContentDir() + "Aki/ConfigDB/" + n,
+      o = UE.KuroPrepareStatementLib.CreateStatement(t, i);
     switch (o) {
       case -1:
         Log_1.Log.CheckError() &&
@@ -76,11 +76,11 @@ class ConfigCommon {
         "dbName为空！请确认该配置表在拆分Db表中是否有正确配置！",
       );
     t =
-      t && t.length !== 0 ? t : LanguageSystem_1.LanguageSystem.PackageLanguage;
-    let e = ConfigCommon.F9.get(o);
-    let g = (e || ((e = new Map()), ConfigCommon.F9.set(o, e)), e.get(t));
+      t && 0 !== t.length ? t : LanguageSystem_1.LanguageSystem.PackageLanguage;
+    let e = ConfigCommon.F9.get(o),
+      g = (e || ((e = new Map()), ConfigCommon.F9.set(o, e)), e.get(t));
     if (!g) {
-      const a = ConfigCommon.GetProjectContentDir() + `Aki/ConfigDB/${t}/` + n;
+      var a = ConfigCommon.GetProjectContentDir() + `Aki/ConfigDB/${t}/` + n;
       switch ((g = UE.KuroPrepareStatementLib.CreateStatement(a, i))) {
         case -1:
           Log_1.Log.CheckError() &&
@@ -101,8 +101,8 @@ class ConfigCommon {
     return g;
   }
   static CheckStatement(o, ...n) {
-    let i = !0;
-    let t = "";
+    let i = !0,
+      t = "";
     switch (o) {
       case 0:
         t = "语句未初始化！";
@@ -121,7 +121,7 @@ class ConfigCommon {
     );
   }
   static BindBigInt(o, n, i, ...t) {
-    return typeof i !== "bigint"
+    return "bigint" != typeof i
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Config",
@@ -213,7 +213,7 @@ class ConfigCommon {
     UE.KuroPrepareStatementLib.ClearBindings(o);
   }
   static Reset(o, ...n) {
-    const i = UE.KuroPrepareStatementLib.Reset(o);
+    var i = UE.KuroPrepareStatementLib.Reset(o);
     return (
       i ||
         (Log_1.Log.CheckError() &&
@@ -228,7 +228,7 @@ class ConfigCommon {
     );
   }
   static Step(o, n = !1, ...i) {
-    const t = UE.KuroPrepareStatementLib.Step(o);
+    var t = UE.KuroPrepareStatementLib.Step(o);
     let e = "";
     switch (t) {
       case 0:
@@ -284,4 +284,4 @@ class ConfigCommon {
   (ConfigCommon.K9 = void 0),
   (ConfigCommon.Q9 = void 0),
   (ConfigCommon.AllConfigStatementStat = void 0);
-// # sourceMappingURL=ConfigCommon.js.map
+//# sourceMappingURL=ConfigCommon.js.map

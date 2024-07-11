@@ -1,18 +1,18 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleAudioController = void 0);
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const ControllerBase_1 = require("../../../../Core/Framework/ControllerBase");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const FormationAttributeController_1 = require("../../../Module/Abilities/FormationAttributeController");
-const STRENGTH_CHANGED_TRIGGER_INTERVAL = 8e3;
-const OPEN_TREASURE_BOX_TRIGGER_INTERVAL = 1e4;
+const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  ControllerBase_1 = require("../../../../Core/Framework/ControllerBase"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  FormationAttributeController_1 = require("../../../Module/Abilities/FormationAttributeController"),
+  STRENGTH_CHANGED_TRIGGER_INTERVAL = 8e3,
+  OPEN_TREASURE_BOX_TRIGGER_INTERVAL = 1e4;
 class RoleAudioController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -69,7 +69,7 @@ class RoleAudioController extends ControllerBase_1.ControllerBase {
         );
   }),
   (RoleAudioController.Ttr = () => {
-    let e, o;
+    var e, o;
     Time_1.Time.Now - _a.Dtr > OPEN_TREASURE_BOX_TRIGGER_INTERVAL &&
       ((_a.Dtr = Time_1.Time.Now),
       (e = _a.ActorComponent?.Owner),
@@ -86,7 +86,7 @@ class RoleAudioController extends ControllerBase_1.ControllerBase {
       );
   }),
   (RoleAudioController.Pri = (e, o, r) => {
-    e !== 1 ||
+    1 !== e ||
       r < o ||
       ModelManager_1.ModelManager.SceneTeamModel?.ChangingRole ||
       o /
@@ -113,4 +113,4 @@ class RoleAudioController extends ControllerBase_1.ControllerBase {
           ["Reason", "StrengthChanged"],
         ));
   });
-// # sourceMappingURL=RoleAudioController.js.map
+//# sourceMappingURL=RoleAudioController.js.map

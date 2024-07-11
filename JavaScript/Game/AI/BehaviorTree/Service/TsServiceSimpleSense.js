@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Global_1 = require("../../../Global");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsAiController_1 = require("../../Controller/TsAiController");
-const NRARER_PLAYER_INT_ID = "NearerPlayerIntId";
+const UE = require("ue"),
+  Global_1 = require("../../../Global"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsAiController_1 = require("../../Controller/TsAiController"),
+  NRARER_PLAYER_INT_ID = "NearerPlayerIntId";
 class TsServiceSimpleSense extends UE.BTService_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -17,14 +17,14 @@ class TsServiceSimpleSense extends UE.BTService_BlueprintBase {
   }
   ReceiveTickAI(e, r, t) {
     if (e instanceof TsAiController_1.default) {
-      const i = Global_1.Global.BaseCharacter;
+      var i = Global_1.Global.BaseCharacter;
       if (i) {
         e = e.AiController;
         if (e) {
           e = e.CharActorComp;
           if (e) {
-            var e = e.Entity;
-            const l = e.GetComponent(106);
+            var e = e.Entity,
+              l = e.GetComponent(106);
             if (l) {
               this.IsInit ||
                 ((this.IsInit = !0),
@@ -33,8 +33,8 @@ class TsServiceSimpleSense extends UE.BTService_BlueprintBase {
                 (this.MinRangeSquared = o * o),
                 (this.MaxRangeSquared = s * s),
                 l.SetLogicRange(s));
-              let s;
-              var o = l.PlayerDistSquared;
+              var s,
+                o = l.PlayerDistSquared;
               let r = 0;
               o > this.MaxRangeSquared
                 ? ((r = 0), this.IsEnter && (this.IsEnter = !1))
@@ -42,7 +42,7 @@ class TsServiceSimpleSense extends UE.BTService_BlueprintBase {
                   ? (r = this.IsEnter ? i.CharacterActorComponent.Entity.Id : 0)
                   : ((r = i.CharacterActorComponent.Entity.Id),
                     this.IsEnter || (this.IsEnter = !0)),
-                r === 0
+                0 === r
                   ? this.IsSetNearerPlayerId &&
                     ((this.IsSetNearerPlayerId = !1),
                     BlackboardController_1.BlackboardController.RemoveValueByEntity(
@@ -68,4 +68,4 @@ class TsServiceSimpleSense extends UE.BTService_BlueprintBase {
   }
 }
 exports.default = TsServiceSimpleSense;
-// # sourceMappingURL=TsServiceSimpleSense.js.map
+//# sourceMappingURL=TsServiceSimpleSense.js.map

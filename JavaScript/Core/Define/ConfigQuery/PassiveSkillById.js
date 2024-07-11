@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configPassiveSkillById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const PassiveSkill_1 = require("../Config/PassiveSkill");
-const DB = "db_passiveskill.db";
-const FILE = "b.被动技能.xlsx";
-const TABLE = "PassiveSkill";
-const COMMAND = "select BinData from `PassiveSkill` where Id=?";
-const KEY_PREFIX = "PassiveSkillById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  PassiveSkill_1 = require("../Config/PassiveSkill"),
+  DB = "db_passiveskill.db",
+  FILE = "b.被动技能.xlsx",
+  TABLE = "PassiveSkill",
+  COMMAND = "select BinData from `PassiveSkill` where Id=?",
+  KEY_PREFIX = "PassiveSkillById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configPassiveSkillById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configPassiveSkillById.GetConfig(";
 exports.configPassiveSkillById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configPassiveSkillById = {
       if (
         (n =
           ConfigCommon_1.ConfigCommon.BindBigInt(handleId, 1, i, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            i,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              i,
+            ]))
       ) {
-        var n;
-        var e = void 0;
+        var n,
+          e = void 0;
         if (
           (([n, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configPassiveSkillById = {
     }
   },
 };
-// # sourceMappingURL=PassiveSkillById.js.map
+//# sourceMappingURL=PassiveSkillById.js.map

@@ -45,45 +45,45 @@ class PropertyIndex {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   key(t) {
-    const r = this.J7.__offset(this.z7, 6);
+    var r = this.J7.__offset(this.z7, 6);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   name(t) {
-    const r = this.J7.__offset(this.z7, 8);
+    var r = this.J7.__offset(this.z7, 8);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   anothername(t) {
-    const r = this.J7.__offset(this.z7, 10);
+    var r = this.J7.__offset(this.z7, 10);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   converttowhiteid() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   isshow() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   ispercent() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   priority() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   icon(t) {
-    const r = this.J7.__offset(this.z7, 20);
+    var r = this.J7.__offset(this.z7, 20);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   dec(t) {
-    const r = this.J7.__offset(this.z7, 22);
+    var r = this.J7.__offset(this.z7, 22);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
 }
 exports.PropertyIndex = PropertyIndex;
-// # sourceMappingURL=PropertyIndex.js.map
+//# sourceMappingURL=PropertyIndex.js.map

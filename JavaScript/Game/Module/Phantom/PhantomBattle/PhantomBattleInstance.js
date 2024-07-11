@@ -36,7 +36,7 @@ class PhantomBattleInstance {
     return this.oVi[0].Id;
   }
   GetPhantomSkillInfoByLevel() {
-    return this.PhantomSkill.length > 0 ? this.PhantomSkill[0] : void 0;
+    return 0 < this.PhantomSkill.length ? this.PhantomSkill[0] : void 0;
   }
   GetModelZoom() {
     return this.PhantomItem.Zoom;
@@ -52,4 +52,4 @@ class PhantomBattleInstance {
   }
 }
 exports.PhantomBattleInstance = PhantomBattleInstance;
-// # sourceMappingURL=PhantomBattleInstance.js.map
+//# sourceMappingURL=PhantomBattleInstance.js.map

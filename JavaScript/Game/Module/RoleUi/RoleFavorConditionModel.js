@@ -7,19 +7,19 @@ class RoleFavorConditionModel extends ModelBase_1.ModelBase {
     super(...arguments), (this.Cbi = new Map());
   }
   UpdateRoleFavorCondtion(e, o) {
-    const r = this.Cbi.get(e) ?? new Map();
-    const t = o.wLs;
+    var r = this.Cbi.get(e) ?? new Map(),
+      t = o.wLs;
     for (const f of Object.keys(t)) {
-      const s = Number(f);
-      const a = t[s].ULs;
-      const i = r.get(s) ?? new Map();
+      var s = Number(f),
+        a = t[s].ULs,
+        i = r.get(s) ?? new Map();
       for (const u of Object.keys(a)) {
-        const n = Number(u);
-        const d = a[n].PLs;
-        const l = i.get(n) ?? [];
-        const v = d.length;
+        var n = Number(u),
+          d = a[n].PLs,
+          l = i.get(n) ?? [],
+          v = d.length;
         for (let e = 0; e < v; e++) {
-          const c = d[e];
+          var c = d[e];
           l.push(c);
         }
         i.set(n, l);
@@ -33,9 +33,9 @@ class RoleFavorConditionModel extends ModelBase_1.ModelBase {
     if (e) {
       e = e.get(o);
       if (e) {
-        const s = e.get(r);
+        var s = e.get(r);
         if (s) {
-          const a = s.length;
+          var a = s.length;
           for (let e = 0; e < a; e++) if (s[e] === t) return !0;
         }
       }
@@ -44,4 +44,4 @@ class RoleFavorConditionModel extends ModelBase_1.ModelBase {
   }
 }
 exports.RoleFavorConditionModel = RoleFavorConditionModel;
-// # sourceMappingURL=RoleFavorConditionModel.js.map
+//# sourceMappingURL=RoleFavorConditionModel.js.map

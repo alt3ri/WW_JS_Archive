@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SilentAreaItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class SilentAreaItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -52,17 +52,17 @@ class SilentAreaItem extends GridProxyAbstract_1.GridProxyAbstract {
             this.GetText(1),
             this.Pe.Conf.Name,
           );
-    var t = this.GetSprite(2);
-    var s = (t.SetUIActive(!0), this.Pe.Conf.DangerType);
-    var s =
-      ConfigManager_1.ConfigManager.AdventureModuleConfig.GetSecondaryGuideDataConf(
-        s,
-      );
-    var s =
-      (this.SetSpriteByPath(s.Icon, t, !1),
-      this.RootItem.SetUIActive(!0),
-      ModelManager_1.ModelManager.AdventureGuideModel.CurrentSilentId ===
-        this.Pe.Conf.Id);
+    var t = this.GetSprite(2),
+      s = (t.SetUIActive(!0), this.Pe.Conf.DangerType),
+      s =
+        ConfigManager_1.ConfigManager.AdventureModuleConfig.GetSecondaryGuideDataConf(
+          s,
+        ),
+      s =
+        (this.SetSpriteByPath(s.Icon, t, !1),
+        this.RootItem.SetUIActive(!0),
+        ModelManager_1.ModelManager.AdventureGuideModel.CurrentSilentId ===
+          this.Pe.Conf.Id);
     this.IVe(s, !1), s && this.yVe();
   }
   OnSelected(t) {
@@ -79,4 +79,4 @@ class SilentAreaItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.SilentAreaItem = SilentAreaItem;
-// # sourceMappingURL=SilentAreaItem.js.map
+//# sourceMappingURL=SilentAreaItem.js.map

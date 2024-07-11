@@ -1,5 +1,5 @@
 "use strict";
-let ETriggerEvent;
+var ETriggerEvent;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.INVALID_TRIGGER_HANDLE = exports.ETriggerEvent = void 0),
   (function (e) {
@@ -15,4 +15,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e[(e.BeDamageTrigger = 8)] = "BeDamageTrigger");
   })((ETriggerEvent = exports.ETriggerEvent || (exports.ETriggerEvent = {}))),
   (exports.INVALID_TRIGGER_HANDLE = -1);
-// # sourceMappingURL=TriggerType.js.map
+//# sourceMappingURL=TriggerType.js.map

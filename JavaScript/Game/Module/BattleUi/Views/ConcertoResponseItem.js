@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConcertoResponseItem = void 0);
-const UE = require("ue");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const SceneTeamDefine_1 = require("../../SceneTeam/SceneTeamDefine");
-const BattleUiRoleData_1 = require("../BattleUiRoleData");
-const BattleChildView_1 = require("./BattleChildView/BattleChildView");
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  SceneTeamDefine_1 = require("../../SceneTeam/SceneTeamDefine"),
+  BattleUiRoleData_1 = require("../BattleUiRoleData"),
+  BattleChildView_1 = require("./BattleChildView/BattleChildView");
 class ConcertoResponseItem extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
@@ -41,12 +41,12 @@ class ConcertoResponseItem extends BattleChildView_1.BattleChildView {
     this.kre(), super.Reset();
   }
   Refresh(e) {
-    e && e.RoleConfig?.RoleType !== 2
+    e && 2 !== e.RoleConfig?.RoleType
       ? ((this.wnt = e),
         (this.E0 = e?.EntityHandle?.Id),
         (this.Bnt = this.wnt.GameplayTagComponent),
         (this.bnt = this.wnt.ElementConfig),
-        this.hJ !== 0 &&
+        0 !== this.hJ &&
           (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.hJ),
           (this.hJ = 0)),
         this.Ont(this.wnt.ElementType),
@@ -91,7 +91,7 @@ class ConcertoResponseItem extends BattleChildView_1.BattleChildView {
       } else this.SetActive(!1);
   }
   Ont(e) {
-    let t, i, s;
+    var t, i, s;
     this.qnt !== e &&
       ((t = this.bnt.Icon5),
       (i = this.GetTexture(1)),
@@ -102,16 +102,16 @@ class ConcertoResponseItem extends BattleChildView_1.BattleChildView {
       (this.qnt = e));
   }
   Gnt(e) {
-    const t = this.GetSprite(0);
-    var e = e / SceneTeamDefine_1.MAX_ELEMENT_ENERGY;
+    var t = this.GetSprite(0),
+      e = e / SceneTeamDefine_1.MAX_ELEMENT_ENERGY;
     t.SetFillAmount(e);
   }
   GetElementValue() {
-    let e;
+    var e;
     return this.wnt && (e = this.wnt.GetElementAttributeId())
       ? this.wnt.AttributeComponent.GetCurrentValue(e)
       : 0;
   }
 }
 exports.ConcertoResponseItem = ConcertoResponseItem;
-// # sourceMappingURL=ConcertoResponseItem.js.map
+//# sourceMappingURL=ConcertoResponseItem.js.map

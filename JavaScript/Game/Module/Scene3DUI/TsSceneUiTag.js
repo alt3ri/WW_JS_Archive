@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const CameraController_1 = require("../../Camera/CameraController");
-const Global_1 = require("../../Global");
+const UE = require("ue"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  Global_1 = require("../../Global");
 class TsSceneUiTag extends UE.Actor {
   constructor() {
     super(...arguments),
@@ -22,7 +22,7 @@ class TsSceneUiTag extends UE.Actor {
       if (!e) return 0;
       r = e.CameraTransform;
     } else {
-      const t = Global_1.Global.BaseCharacter;
+      var t = Global_1.Global.BaseCharacter;
       if (!t) return 0;
       r = t.GetTransform();
     }
@@ -38,4 +38,4 @@ class TsSceneUiTag extends UE.Actor {
   }
 }
 exports.default = TsSceneUiTag;
-// # sourceMappingURL=TsSceneUiTag.js.map
+//# sourceMappingURL=TsSceneUiTag.js.map

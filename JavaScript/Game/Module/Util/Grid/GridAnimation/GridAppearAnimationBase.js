@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GridAppearAnimationBase = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const PerformanceController_1 = require("../../../../../Core/Performance/PerformanceController");
-const TickSystem_1 = require("../../../../../Core/Tick/TickSystem");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  PerformanceController_1 = require("../../../../../Core/Performance/PerformanceController"),
+  TickSystem_1 = require("../../../../../Core/Tick/TickSystem"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
 class GridAppearAnimationBase {
   constructor(t) {
     (this.GridPreserver = void 0),
@@ -20,7 +20,7 @@ class GridAppearAnimationBase {
         this.GridPreserver.NotifyAnimationEnd();
       }),
       (this.Tick = (t) => {
-        const e = PerformanceController_1.PerformanceController.StartMonitor(
+        var e = PerformanceController_1.PerformanceController.StartMonitor(
           "GridAppearAnimationBase.Tick",
         );
         this.OnUpdate(t),
@@ -71,9 +71,9 @@ class GridAppearAnimationBase {
   OnStart() {}
   OnUpdate(t) {}
   GridsForEach(e) {
-    const i = this.GridPreserver.GetPreservedGridNum() - 1;
+    var i = this.GridPreserver.GetPreservedGridNum() - 1;
     for (let t = 0; t <= i; t++) {
-      const r = this.GridPreserver.GetGridByDisplayIndex(t);
+      var r = this.GridPreserver.GetGridByDisplayIndex(t);
       e(t, r);
     }
   }
@@ -115,4 +115,4 @@ class GridAppearAnimationBase {
   }
 }
 exports.GridAppearAnimationBase = GridAppearAnimationBase;
-// # sourceMappingURL=GridAppearAnimationBase.js.map
+//# sourceMappingURL=GridAppearAnimationBase.js.map

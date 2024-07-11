@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter");
-const EffectContext_1 = require("../../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../../Effect/EffectSystem");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter"),
+  EffectContext_1 = require("../../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../../Effect/EffectSystem");
 class AnimNotifyStateTrail extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -34,10 +34,10 @@ class AnimNotifyStateTrail extends UE.KuroAnimNotifyState {
       );
     let r = t;
     if (this.UseWeapon) {
-      const f = "WeaponCase" + this.WeaponCaseIndex;
-      const s = t
-        .GetOwner()
-        .K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass());
+      var f = "WeaponCase" + this.WeaponCaseIndex,
+        s = t
+          .GetOwner()
+          .K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass());
       let e = !1;
       for (let t = 0; t < s.Num(); t++)
         if (s.Get(t).GetName() === f) {
@@ -51,8 +51,8 @@ class AnimNotifyStateTrail extends UE.KuroAnimNotifyState {
           !1
         );
     }
-    var e = r.GetOwner();
-    const o = new EffectContext_1.EffectContext(void 0);
+    var e = r.GetOwner(),
+      o = new EffectContext_1.EffectContext(void 0);
     return (
       e instanceof TsBaseCharacter_1.default &&
         e.CharacterActorComponent?.Entity &&
@@ -67,7 +67,7 @@ class AnimNotifyStateTrail extends UE.KuroAnimNotifyState {
         3,
         void 0,
         (t, e) => {
-          t === 5 && EffectSystem_1.EffectSystem.SetupEffectTrailSpec(e, r);
+          5 === t && EffectSystem_1.EffectSystem.SetupEffectTrailSpec(e, r);
         },
       )),
       !!EffectSystem_1.EffectSystem.IsValid(this.Handle) &&
@@ -87,4 +87,4 @@ class AnimNotifyStateTrail extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = AnimNotifyStateTrail;
-// # sourceMappingURL=AnimNotifyStateTrail.js.map
+//# sourceMappingURL=AnimNotifyStateTrail.js.map

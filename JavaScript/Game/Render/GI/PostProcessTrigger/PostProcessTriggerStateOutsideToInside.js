@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const PostProcessTriggerStateBase_1 = require("./PostProcessTriggerStateBase");
+const MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  PostProcessTriggerStateBase_1 = require("./PostProcessTriggerStateBase");
 class PostProcessTriggerStateOutsideToInside extends PostProcessTriggerStateBase_1.default {
   constructor() {
     super(...arguments), (this.Timer = -0);
@@ -22,4 +22,4 @@ class PostProcessTriggerStateOutsideToInside extends PostProcessTriggerStateBase
   }
 }
 exports.default = PostProcessTriggerStateOutsideToInside;
-// # sourceMappingURL=PostProcessTriggerStateOutsideToInside.js.map
+//# sourceMappingURL=PostProcessTriggerStateOutsideToInside.js.map

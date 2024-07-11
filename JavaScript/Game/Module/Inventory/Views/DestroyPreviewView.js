@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DestroyPreviewView = void 0);
-const UE = require("ue");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const ButtonItem_1 = require("../../Common/Button/ButtonItem");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const DestroyPreviewGrid_1 = require("./DestroyPreviewGrid");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const GRID_SIZE = 210;
-const GRID_NORMAL_WIDTH_SIZE = 630;
-const GRID_NORMAL_HEIGHT_SIZE = 525;
-const layoutSize = [
-  [GRID_NORMAL_WIDTH_SIZE, GRID_NORMAL_HEIGHT_SIZE],
-  [GRID_SIZE, GRID_SIZE],
-  [2 * GRID_SIZE, GRID_SIZE],
-  [GRID_NORMAL_WIDTH_SIZE, GRID_SIZE],
-  [GRID_NORMAL_WIDTH_SIZE, 2 * GRID_SIZE],
-  [GRID_NORMAL_WIDTH_SIZE, 2 * GRID_SIZE],
-  [GRID_NORMAL_WIDTH_SIZE, 2 * GRID_SIZE],
-];
+const UE = require("ue"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  ButtonItem_1 = require("../../Common/Button/ButtonItem"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  DestroyPreviewGrid_1 = require("./DestroyPreviewGrid"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  GRID_SIZE = 210,
+  GRID_NORMAL_WIDTH_SIZE = 630,
+  GRID_NORMAL_HEIGHT_SIZE = 525,
+  layoutSize = [
+    [GRID_NORMAL_WIDTH_SIZE, GRID_NORMAL_HEIGHT_SIZE],
+    [GRID_SIZE, GRID_SIZE],
+    [2 * GRID_SIZE, GRID_SIZE],
+    [GRID_NORMAL_WIDTH_SIZE, GRID_SIZE],
+    [GRID_NORMAL_WIDTH_SIZE, 2 * GRID_SIZE],
+    [GRID_NORMAL_WIDTH_SIZE, 2 * GRID_SIZE],
+    [GRID_NORMAL_WIDTH_SIZE, 2 * GRID_SIZE],
+  ];
 class DestroyPreviewView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -43,9 +43,9 @@ class DestroyPreviewView extends UiViewBase_1.UiViewBase {
     ];
   }
   async OnBeforeStartAsync() {
-    let e;
-    let t;
-    const i = this.OpenParam;
+    var e,
+      t,
+      i = this.OpenParam;
     i &&
       ((e = this.GetLoopScrollViewComponent(0)),
       (this.Nci = new LoopScrollView_1.LoopScrollView(
@@ -62,7 +62,7 @@ class DestroyPreviewView extends UiViewBase_1.UiViewBase {
         this.GetItem(2).GetOwner(),
         this.jci,
       )),
-      (t = i.ResultList.length === 0),
+      (t = 0 === i.ResultList.length),
       this.GetText(3).SetUIActive(t),
       e.RootUIComp.SetUIActive(!t),
       t ||
@@ -82,16 +82,16 @@ class DestroyPreviewView extends UiViewBase_1.UiViewBase {
     this.Hci && this.UiViewSequence.PlaySequence("Notice");
   }
   Wci(e, t) {
-    let i = GRID_NORMAL_WIDTH_SIZE;
-    let o = GRID_NORMAL_HEIGHT_SIZE;
+    let i = GRID_NORMAL_WIDTH_SIZE,
+      o = GRID_NORMAL_HEIGHT_SIZE;
     e < layoutSize.length && ((i = layoutSize[e][0]), (o = layoutSize[e][1])),
       t.RootUIComp.SetWidth(i),
       t.RootUIComp.SetHeight(o);
   }
   Kci() {
-    const e = [];
+    var e = [];
     for (const i of this.kci) {
-      const t = { G3n: i[0].ItemId, Q5n: i[0].IncId, I5n: i[1] };
+      var t = { G3n: i[0].ItemId, Q5n: i[0].IncId, I5n: i[1] };
       e.push(t);
     }
     ControllerHolder_1.ControllerHolder.InventoryController.ItemDestructRequest(
@@ -100,4 +100,4 @@ class DestroyPreviewView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.DestroyPreviewView = DestroyPreviewView;
-// # sourceMappingURL=DestroyPreviewView.js.map
+//# sourceMappingURL=DestroyPreviewView.js.map

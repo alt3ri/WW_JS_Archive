@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UnopenedAreaPullback = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const SceneEffectStateManager_1 = require("../../Render/Effect/PostProcess/SceneEffectStateManager");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const UiManager_1 = require("../../Ui/UiManager");
-const DISTANCE_FACOR = 100;
-const TOLERANCE_DISTANCE = 5;
-const TELEPORT_DELAY_TIME = 2e4;
-const END_DISTANCE = 250;
-const TIPS_NAME = "NotOpenArea";
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  SceneEffectStateManager_1 = require("../../Render/Effect/PostProcess/SceneEffectStateManager"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  DISTANCE_FACOR = 100,
+  TOLERANCE_DISTANCE = 5,
+  TELEPORT_DELAY_TIME = 2e4,
+  END_DISTANCE = 250,
+  TIPS_NAME = "NotOpenArea";
 class UnopenedAreaPullback {
   constructor() {
     (this.pLe = "Input Limited Action"),
@@ -48,7 +48,7 @@ class UnopenedAreaPullback {
       });
   }
   Tick(t) {
-    let e, i;
+    var e, i;
     this.hBe &&
       this.dBe?.Valid &&
       !ModelManager_1.ModelManager.TeleportModel.IsTeleport &&
@@ -75,7 +75,7 @@ class UnopenedAreaPullback {
     );
   }
   pBe() {
-    const t =
+    var t =
       ControllerHolder_1.ControllerHolder.GenericPromptController.GetViewNameByPromptId(
         TIPS_NAME,
       );
@@ -157,8 +157,8 @@ class UnopenedAreaPullback {
   }
   fBe(t) {
     this.DBe(t);
-    var t = t.Entity.GetComponent(161);
-    const e = { Index: 0, Position: this._Be };
+    var t = t.Entity.GetComponent(161),
+      e = { Index: 0, Position: this._Be };
     t.MoveAlongPath({
       Points: e,
       Navigation: !1,
@@ -195,8 +195,8 @@ class UnopenedAreaPullback {
     });
   }
   TBe(t) {
-    var e = t.Entity.GetComponent(161);
-    var e = (e.StopMove(!1), e.MoveToLocationEnd(1), t.Entity.GetComponent(52));
+    var e = t.Entity.GetComponent(161),
+      e = (e.StopMove(!1), e.MoveToLocationEnd(1), t.Entity.GetComponent(52));
     e.ClearMoveVectorCache(),
       e.SetActive(!0),
       this.gBe(t, !1),
@@ -216,7 +216,7 @@ class UnopenedAreaPullback {
         (this.cBe.EndOwnerAndFollowSkills(),
         this.ABe(this.dBe.Entity.GetComponent(36), 0, 0)),
       this.Hte.ClearInput();
-    const t = this.dBe.Entity.GetComponent(52);
+    var t = this.dBe.Entity.GetComponent(52);
     t.ClearMoveVectorCache(),
       t.SetActive(!1),
       this.gBe(this.dBe, !0),
@@ -233,8 +233,8 @@ class UnopenedAreaPullback {
       (this.mBe = this.dBe.Entity.GetComponent(158));
   }
   ABe(t, e, i) {
-    const r = t.Entity.GetComponent(185);
-    e === 0 || r?.HasTag(-2100129479)
+    var r = t.Entity.GetComponent(185);
+    0 === e || r?.HasTag(-2100129479)
       ? t.CharacterMovement.SetMovementMode(1, i)
       : t.CharacterMovement.SetMovementMode(e, i);
   }
@@ -275,7 +275,7 @@ class UnopenedAreaPullback {
         (this.lBe = void 0));
   }
   gBe(t, e) {
-    let i;
+    var i;
     t &&
       t.Valid &&
       (e &&
@@ -292,4 +292,4 @@ class UnopenedAreaPullback {
   }
 }
 exports.UnopenedAreaPullback = UnopenedAreaPullback;
-// # sourceMappingURL=UnopenedAreaPullback.js.map
+//# sourceMappingURL=UnopenedAreaPullback.js.map

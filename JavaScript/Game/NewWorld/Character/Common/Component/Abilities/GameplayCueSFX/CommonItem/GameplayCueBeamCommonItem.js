@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayCueBeamCommonItem = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../../../../../Core/Actor/ActorSystem");
-const ResourceSystem_1 = require("../../../../../../../../Core/Resource/ResourceSystem");
-const Rotator_1 = require("../../../../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../../../../../GlobalData");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../../../../../Core/Actor/ActorSystem"),
+  ResourceSystem_1 = require("../../../../../../../../Core/Resource/ResourceSystem"),
+  Rotator_1 = require("../../../../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../../../../../GlobalData");
 class GameplayCueBeamCommonItem {
   constructor(t, e) {
     (this.OKt = t),
@@ -24,7 +24,7 @@ class GameplayCueBeamCommonItem {
     this._Xo
       .GetOwner()
       .K2_SetActorLocation(this.OKt.K2_GetActorLocation(), !1, void 0, !0);
-    const r = e.length;
+    var r = e.length;
     r !== this.uXo && this.mXo(r);
     for (let t = 0; t < r; t++) this._Xo.SetWorldLocationAtSplinePoint(t, e[t]);
   }
@@ -37,27 +37,27 @@ class GameplayCueBeamCommonItem {
   }
   cXo() {
     const r = ActorSystem_1.ActorSystem.Get(
-      UE.Actor.StaticClass(),
-      MathUtils_1.MathUtils.DefaultTransform,
-    );
-    const s =
-      (GlobalData_1.GlobalData.IsPlayInEditor &&
-        r.SetActorLabel(
-          this.OKt.GetActorLabel() + ":" + GameplayCueBeamCommonItem.name,
-        ),
-      r.AddComponentByClass(
-        UE.SplineComponent.StaticClass(),
-        !1,
+        UE.Actor.StaticClass(),
         MathUtils_1.MathUtils.DefaultTransform,
-        !1,
-      ));
+      ),
+      s =
+        (GlobalData_1.GlobalData.IsPlayInEditor &&
+          r.SetActorLabel(
+            this.OKt.GetActorLabel() + ":" + GameplayCueBeamCommonItem.name,
+          ),
+        r.AddComponentByClass(
+          UE.SplineComponent.StaticClass(),
+          !1,
+          MathUtils_1.MathUtils.DefaultTransform,
+          !1,
+        ));
     return (
       s.ClearSplinePoints(),
       ResourceSystem_1.ResourceSystem.LoadAsync(
         this.n8,
         UE.NiagaraSystem,
         (t) => {
-          let e;
+          var e;
           this.dce &&
             t?.IsValid() &&
             r?.IsValid() &&
@@ -80,16 +80,16 @@ class GameplayCueBeamCommonItem {
   mXo(e) {
     if (e > this.uXo)
       for (let t = 0; t < e - this.uXo; t++) {
-        var r = this.uXo + t;
-        var r = new UE.SplinePoint(
-          r,
-          Vector_1.Vector.ZeroVector,
-          Vector_1.Vector.ZeroVector,
-          Vector_1.Vector.ZeroVector,
-          Rotator_1.Rotator.ZeroRotator,
-          Vector_1.Vector.OneVector,
-          0,
-        );
+        var r = this.uXo + t,
+          r = new UE.SplinePoint(
+            r,
+            Vector_1.Vector.ZeroVector,
+            Vector_1.Vector.ZeroVector,
+            Vector_1.Vector.ZeroVector,
+            Rotator_1.Rotator.ZeroRotator,
+            Vector_1.Vector.OneVector,
+            0,
+          );
         this._Xo.AddPoint(r);
       }
     else for (let t = this.uXo - 1; t >= e; t--) this._Xo.RemoveSplinePoint(t);
@@ -97,4 +97,4 @@ class GameplayCueBeamCommonItem {
   }
 }
 exports.GameplayCueBeamCommonItem = GameplayCueBeamCommonItem;
-// # sourceMappingURL=GameplayCueBeamCommonItem.js.map
+//# sourceMappingURL=GameplayCueBeamCommonItem.js.map

@@ -16,13 +16,13 @@ class Pool {
   }
   Create() {
     if (this.a7) {
-      const t = this.a7();
+      var t = this.a7();
       if (t) return (this.M7 += 1), this.v7.add(t), t;
       Log_1.Log.CheckError() && Log_1.Log.Error("Core", 1, "创建器创建值为空");
     } else Log_1.Log.CheckError() && Log_1.Log.Error("Core", 1, "创建器不存在");
   }
   Get() {
-    let t;
+    var t;
     if (!(this.p7.length <= 0))
       return (t = this.p7.pop()), (this.M7 += 1), this.v7.add(t), t;
   }
@@ -45,4 +45,4 @@ class Pool {
   }
 }
 exports.Pool = Pool;
-// # sourceMappingURL=Pool.js.map
+//# sourceMappingURL=Pool.js.map

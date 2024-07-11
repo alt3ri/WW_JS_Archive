@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SwitcherManager = void 0);
-const TimeOfDayController_1 = require("../Module/TimeOfDay/TimeOfDayController");
-const EffectGlobal_1 = require("../Render/Effect/EffectGlobal");
+const TimeOfDayController_1 = require("../Module/TimeOfDay/TimeOfDayController"),
+  EffectGlobal_1 = require("../Render/Effect/EffectGlobal");
 class SwitcherManager {
   static Initialize() {
     this.AllSwitcher.set("特效生成Log", [
@@ -20,4 +20,4 @@ class SwitcherManager {
   }
 }
 (exports.SwitcherManager = SwitcherManager).AllSwitcher = new Map();
-// # sourceMappingURL=SwitcherManager.js.map
+//# sourceMappingURL=SwitcherManager.js.map

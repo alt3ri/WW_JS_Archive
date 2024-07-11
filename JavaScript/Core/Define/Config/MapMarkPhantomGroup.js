@@ -24,22 +24,22 @@ class MapMarkPhantomGroup {
     );
   }
   markid() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetShowrangeAt(t) {
     return this.showrange(t);
   }
   showrange(t) {
-    const r = this.J7.__offset(this.z7, 6);
+    var r = this.J7.__offset(this.z7, 6);
     return r ? this.J7.readInt32(this.J7.__vector(this.z7 + r) + 4 * t) : 0;
   }
   showrangeLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   showrangeArray() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -50,4 +50,4 @@ class MapMarkPhantomGroup {
   }
 }
 exports.MapMarkPhantomGroup = MapMarkPhantomGroup;
-// # sourceMappingURL=MapMarkPhantomGroup.js.map
+//# sourceMappingURL=MapMarkPhantomGroup.js.map

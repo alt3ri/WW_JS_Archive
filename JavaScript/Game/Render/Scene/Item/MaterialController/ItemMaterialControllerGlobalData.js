@@ -24,4 +24,4 @@ class ItemMaterialControllerGlobalData extends UE.PrimaryDataAsset {
   }
 }
 exports.default = ItemMaterialControllerGlobalData;
-// # sourceMappingURL=ItemMaterialControllerGlobalData.js.map
+//# sourceMappingURL=ItemMaterialControllerGlobalData.js.map

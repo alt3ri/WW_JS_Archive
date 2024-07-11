@@ -14,4 +14,4 @@ class AntiCheatHeartbeatData extends LogReportDefine_1.PlayerCommonLogData {
   }
 }
 exports.AntiCheatHeartbeatData = AntiCheatHeartbeatData;
-// # sourceMappingURL=AntiCheatData.js.map
+//# sourceMappingURL=AntiCheatData.js.map

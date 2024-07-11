@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChatExpressionItem = void 0);
-const UE = require("ue");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
+const UE = require("ue"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
 class ChatExpressionItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -22,7 +22,7 @@ class ChatExpressionItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(t, s, i) {
     this.C8e = t.Id;
-    let e = t.ExpressionTexturePath;
+    var e = t.ExpressionTexturePath;
     const r = this.GetTexture(2);
     r.SetUIActive(!1),
       this.SetTextureByPath(e, r, void 0, () => {
@@ -36,4 +36,4 @@ class ChatExpressionItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.ChatExpressionItem = ChatExpressionItem;
-// # sourceMappingURL=ChatExpressionItem.js.map
+//# sourceMappingURL=ChatExpressionItem.js.map

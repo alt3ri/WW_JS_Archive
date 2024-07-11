@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SequenceModel = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Queue_1 = require("../../../../Core/Container/Queue");
-const ModelBase_1 = require("../../../../Core/Framework/ModelBase");
-const Transform_1 = require("../../../../Core/Utils/Math/Transform");
-const FlowSequence_1 = require("../Flow/FlowSequence");
-const SequenceDefine_1 = require("./SequenceDefine");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Queue_1 = require("../../../../Core/Container/Queue"),
+  ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
+  Transform_1 = require("../../../../Core/Utils/Math/Transform"),
+  FlowSequence_1 = require("../Flow/FlowSequence"),
+  SequenceDefine_1 = require("./SequenceDefine");
 class SequenceModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -129,13 +129,13 @@ class SequenceModel extends ModelBase_1.ModelBase {
   }
   GetLastFadeEnd() {
     return (
-      this.LastIndex >= 0 &&
+      0 <= this.LastIndex &&
       this.IsFadeEnd.length > this.LastIndex &&
       this.IsFadeEnd[this.LastIndex]
     );
   }
   GetLastTransform() {
-    return this.LastIndex >= 0 && this.CurFinalPos.length > this.LastIndex
+    return 0 <= this.LastIndex && this.CurFinalPos.length > this.LastIndex
       ? this.CurFinalPos[this.LastIndex]
       : void 0;
   }
@@ -150,18 +150,18 @@ class SequenceModel extends ModelBase_1.ModelBase {
   }
   HasSubtitle() {
     return (
-      this.CurSubtitleStartFrames.length !== 0 &&
-      this.CurSubtitleEndFrames.length !== 0
+      0 !== this.CurSubtitleStartFrames.length &&
+      0 !== this.CurSubtitleEndFrames.length
     );
   }
   get IsEnding() {
-    return this.State === 5;
+    return 5 === this.State;
   }
   get IsPlaying() {
-    return this.State !== 0;
+    return 0 !== this.State;
   }
   AddFinalPos(i) {
-    let t;
+    var t;
     i || this.CurFinalPos.push(i),
       this.RelativeTransform
         ? ((t = Transform_1.Transform.Create()),
@@ -171,4 +171,4 @@ class SequenceModel extends ModelBase_1.ModelBase {
   }
 }
 exports.SequenceModel = SequenceModel;
-// # sourceMappingURL=SequenceModel.js.map
+//# sourceMappingURL=SequenceModel.js.map

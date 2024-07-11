@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceWordSelectItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class AdviceWordSelectItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -42,19 +42,19 @@ class AdviceWordSelectItem extends UiPanelBase_1.UiPanelBase {
     (this.X7e = e), (this.S9 = t), this.Og(), this.hke();
   }
   W9e() {
-    const e = this.GetExtendToggle(0).ToggleState;
+    var e = this.GetExtendToggle(0).ToggleState;
     this.X7e === ModelManager_1.ModelManager.AdviceModel.CurrentPreSelectWordId
-      ? e !== 1 && this.GetExtendToggle(0).SetToggleStateForce(1, !1)
-      : e !== 0 && this.GetExtendToggle(0).SetToggleStateForce(0, !1);
+      ? 1 !== e && this.GetExtendToggle(0).SetToggleStateForce(1, !1)
+      : 0 !== e && this.GetExtendToggle(0).SetToggleStateForce(0, !1);
   }
   hke() {
-    if (this.S9 === 0) {
+    if (0 === this.S9) {
       let e = ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceSentenceText(
         this.X7e,
       );
       (e = e.replace("{}", "_")), this.GetText(1).SetText(e);
     } else {
-      const e =
+      var e =
         ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceConjunctionText(
           this.X7e,
         );
@@ -62,7 +62,7 @@ class AdviceWordSelectItem extends UiPanelBase_1.UiPanelBase {
     }
   }
   Og() {
-    const e =
+    var e =
       this.X7e === ModelManager_1.ModelManager.AdviceModel.CurrentSelectWordId;
     this.GetItem(2).SetUIActive(e), this.W9e();
   }
@@ -74,4 +74,4 @@ class AdviceWordSelectItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.AdviceWordSelectItem = AdviceWordSelectItem;
-// # sourceMappingURL=AdviceWordSelectItem.js.map
+//# sourceMappingURL=AdviceWordSelectItem.js.map

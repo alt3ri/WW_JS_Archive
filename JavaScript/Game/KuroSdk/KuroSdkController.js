@@ -1,32 +1,34 @@
 "use strict";
-let _a;
-Object.defineProperty(exports, "__esModule", { value: !0 }),
+var _a;
+Object.defineProperty(exports, "__esModule", {
+  value: !0,
+}),
   (exports.KuroSdkController = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const ControllerBase_1 = require("../../Core/Framework/ControllerBase");
-const TimerSystem_1 = require("../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../Core/Utils/StringUtils");
-const BaseConfigController_1 = require("../../Launcher/BaseConfig/BaseConfigController");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const PublicUtil_1 = require("../Common/PublicUtil");
-const GlobalData_1 = require("../GlobalData");
-const ConfigManager_1 = require("../Manager/ConfigManager");
-const ControllerHolder_1 = require("../Manager/ControllerHolder");
-const ModelManager_1 = require("../Manager/ModelManager");
-const ChannelController_1 = require("../Module/Channel/ChannelController");
-const ConfirmBoxDefine_1 = require("../Module/ConfirmBox/ConfirmBoxDefine");
-const UiLayer_1 = require("../Ui/UiLayer");
-const KuroSdkData_1 = require("./KuroSdkData");
-const KuroSdkDefine_1 = require("./KuroSdkDefine");
-const PlatformSdkAndroid_1 = require("./PlatformSdk/PlatformSdkAndroid");
-const PlatformSdkAndroidGlobal_1 = require("./PlatformSdk/PlatformSdkAndroidGlobal");
-const PlatformSdkIos_1 = require("./PlatformSdk/PlatformSdkIos");
-const PlatformSdkIosGlobal_1 = require("./PlatformSdk/PlatformSdkIosGlobal");
-const PlatformSdkWindows_1 = require("./PlatformSdk/PlatformSdkWindows");
-const PlatformSdkWindowsGlobal_1 = require("./PlatformSdk/PlatformSdkWindowsGlobal");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  ControllerBase_1 = require("../../Core/Framework/ControllerBase"),
+  TimerSystem_1 = require("../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../Core/Utils/StringUtils"),
+  BaseConfigController_1 = require("../../Launcher/BaseConfig/BaseConfigController"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../Common/PublicUtil"),
+  GlobalData_1 = require("../GlobalData"),
+  ConfigManager_1 = require("../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  ChannelController_1 = require("../Module/Channel/ChannelController"),
+  ConfirmBoxDefine_1 = require("../Module/ConfirmBox/ConfirmBoxDefine"),
+  UiLayer_1 = require("../Ui/UiLayer"),
+  KuroSdkData_1 = require("./KuroSdkData"),
+  KuroSdkDefine_1 = require("./KuroSdkDefine"),
+  PlatformSdkAndroid_1 = require("./PlatformSdk/PlatformSdkAndroid"),
+  PlatformSdkAndroidGlobal_1 = require("./PlatformSdk/PlatformSdkAndroidGlobal"),
+  PlatformSdkIos_1 = require("./PlatformSdk/PlatformSdkIos"),
+  PlatformSdkIosGlobal_1 = require("./PlatformSdk/PlatformSdkIosGlobal"),
+  PlatformSdkWindows_1 = require("./PlatformSdk/PlatformSdkWindows"),
+  PlatformSdkWindowsGlobal_1 = require("./PlatformSdk/PlatformSdkWindowsGlobal");
 class KuroSdkController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -83,19 +85,19 @@ class KuroSdkController extends ControllerBase_1.ControllerBase {
       );
   }
   static uEe() {
-    let r;
+    var r;
     void 0 === KuroSdkController.cEe &&
-      ((r = UE.GameplayStatics.GetPlatformName()) !== "Android" ||
+      ("Android" !== (r = UE.GameplayStatics.GetPlatformName()) ||
       this.GetIfGlobalSdk()
-        ? r === "Android" && this.GetIfGlobalSdk()
+        ? "Android" === r && this.GetIfGlobalSdk()
           ? (KuroSdkController.cEe =
               new PlatformSdkAndroidGlobal_1.PlatformSdkAndroidGlobal())
-          : r === "IOS" && this.GetIfGlobalSdk()
+          : "IOS" === r && this.GetIfGlobalSdk()
             ? (KuroSdkController.cEe =
                 new PlatformSdkIosGlobal_1.PlatformSdkIosGlobal())
-            : r !== "IOS" || this.GetIfGlobalSdk()
-              ? r !== "Windows" || this.GetIfGlobalSdk()
-                ? r === "Windows" &&
+            : "IOS" !== r || this.GetIfGlobalSdk()
+              ? "Windows" !== r || this.GetIfGlobalSdk()
+                ? "Windows" === r &&
                   this.GetIfGlobalSdk() &&
                   (KuroSdkController.cEe =
                     new PlatformSdkWindowsGlobal_1.PlatformSdkWindowsGlobal())
@@ -112,7 +114,7 @@ class KuroSdkController extends ControllerBase_1.ControllerBase {
     return KuroSdkController.cEe.GetChannelId();
   }
   static CheckIfSdkLogin() {
-    return !!KuroSdkController.CanUseSdk() && this.pEe().Uid !== "0";
+    return !!KuroSdkController.CanUseSdk() && "0" !== this.pEe().Uid;
   }
   static pEe() {
     return UE.KuroSDKManager.GetCurrentLoginInfo();
@@ -137,11 +139,8 @@ class KuroSdkController extends ControllerBase_1.ControllerBase {
     );
   }
   static CanUseSdk() {
-    return !(
-      !UE.KuroStaticLibrary.IsModuleLoaded("KuroSDK") ||
-      BaseConfigController_1.BaseConfigController.GetPublicValue("UseSDK") !==
-        KuroSdkDefine_1.USESDK
-    );
+    return false; // Patch 1.1
+    // return !(!UE.KuroStaticLibrary.IsModuleLoaded("KuroSDK") || BaseConfigController_1.BaseConfigController.GetPublicValue("UseSDK") !== KuroSdkDefine_1.USESDK)
   }
   static PostKuroSdkEvent(r) {
     if (KuroSdkController.cEe)
@@ -194,7 +193,7 @@ class KuroSdkController extends ControllerBase_1.ControllerBase {
         case 15:
           KuroSdkController.cEe?.ShowAgreement();
       }
-    else r === 5 && this.vEe();
+    else 5 === r && this.vEe();
   }
   static vEe() {
     GlobalData_1.GlobalData.IsPlayInEditor
@@ -209,9 +208,9 @@ class KuroSdkController extends ControllerBase_1.ControllerBase {
   static SdkPay(...o) {
     if (KuroSdkController.CanUseSdk()) {
       let r = void 0;
-      let e, t, l, n, a;
+      var e, t, l, n, a;
       (r =
-        o.length > 1
+        1 < o.length
           ? ((e = o[0]),
             (t = o[1]),
             (l = o[2]),
@@ -320,8 +319,8 @@ class KuroSdkController extends ControllerBase_1.ControllerBase {
   static StartWaitPayItemTimer() {
     this.CancelCurrentWaitPayItemTimer(!1),
       (this.yEe = TimerSystem_1.TimerSystem.Delay(() => {
-        let r;
-        const o = ModelManager_1.ModelManager.KuroSdkModel.CurrentPayItemName;
+        var r,
+          o = ModelManager_1.ModelManager.KuroSdkModel.CurrentPayItemName;
         StringUtils_1.StringUtils.IsBlank(o) ||
           ((r = new ConfirmBoxDefine_1.ConfirmBoxDataNew(73)).SetTextArgs(o),
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
@@ -344,7 +343,7 @@ class KuroSdkController extends ControllerBase_1.ControllerBase {
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnAndroidConfigurationChange,
       );
-    const r = UiLayer_1.UiLayer.UiRootItem?.GetRenderCanvas();
+    var r = UiLayer_1.UiLayer.UiRootItem?.GetRenderCanvas();
     r &&
       Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
@@ -356,7 +355,7 @@ class KuroSdkController extends ControllerBase_1.ControllerBase {
       );
   }),
   (KuroSdkController.gEe = (r) => {
-    const o =
+    var o =
       ConfigManager_1.ConfigManager.PayItemConfig.GetCurrentRegionPayConfigList();
     const e = new Array();
     o?.forEach((r) => {
@@ -369,7 +368,7 @@ class KuroSdkController extends ControllerBase_1.ControllerBase {
   }),
   (KuroSdkController.MEe = (r, o) => {
     r &&
-      ModelManager_1.ModelManager.KuroSdkModel.CurrentPayItemName !== "" &&
+      "" !== ModelManager_1.ModelManager.KuroSdkModel.CurrentPayItemName &&
       _a.StartWaitPayItemTimer();
   });
-// # sourceMappingURL=KuroSdkController.js.map
+//# sourceMappingURL=KuroSdkController.js.map

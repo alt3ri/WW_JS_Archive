@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionEquipmentDropDownItem = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const DropDownItemBase_1 = require("../../../Common/DropDown/Item/DropDownItemBase");
-const VisionFetterSuitItem_1 = require("./VisionFetterSuitItem");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  DropDownItemBase_1 = require("../../../Common/DropDown/Item/DropDownItemBase"),
+  VisionFetterSuitItem_1 = require("./VisionFetterSuitItem");
 class VisionEquipmentDropDownItem extends DropDownItemBase_1.DropDownItemBase {
   constructor() {
     super(...arguments), (this.PPt = void 0);
@@ -28,11 +28,11 @@ class VisionEquipmentDropDownItem extends DropDownItemBase_1.DropDownItemBase {
       this.GetItem(2),
     )),
       this.PPt.Init();
-    const t = e;
-    let i = [];
-    let o = "";
+    var t = e;
+    let i = [],
+      o = "";
     (o =
-      e > 0
+      0 < e
         ? ((i =
             ModelManager_1.ModelManager.PhantomBattleModel.GetVisionSortUseDataList(
               e,
@@ -65,4 +65,4 @@ class VisionEquipmentDropDownItem extends DropDownItemBase_1.DropDownItemBase {
   }
 }
 exports.VisionEquipmentDropDownItem = VisionEquipmentDropDownItem;
-// # sourceMappingURL=VisionEquipmentDropDownItem.js.map
+//# sourceMappingURL=VisionEquipmentDropDownItem.js.map

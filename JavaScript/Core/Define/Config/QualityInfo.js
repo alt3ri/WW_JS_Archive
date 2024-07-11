@@ -117,141 +117,141 @@ class QualityInfo {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   name(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   textcolor(t) {
-    const i = this.J7.__offset(this.z7, 8);
+    var i = this.J7.__offset(this.z7, 8);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   dropcolor(t) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   frameiconcolor(t) {
-    const i = this.J7.__offset(this.z7, 12);
+    var i = this.J7.__offset(this.z7, 12);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   backgroundcolor(t) {
-    const i = this.J7.__offset(this.z7, 14);
+    var i = this.J7.__offset(this.z7, 14);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   phantomcolor(t) {
-    const i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 16);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   gachaqualityniagara(t) {
-    const i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 18);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   tipqualitytexture(t) {
-    const i = this.J7.__offset(this.z7, 20);
+    var i = this.J7.__offset(this.z7, 20);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   gachaqualitytexture(t) {
-    const i = this.J7.__offset(this.z7, 22);
+    var i = this.J7.__offset(this.z7, 22);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   gachabgtexture(t) {
-    const i = this.J7.__offset(this.z7, 24);
+    var i = this.J7.__offset(this.z7, 24);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   backgroundsprite(t) {
-    const i = this.J7.__offset(this.z7, 26);
+    var i = this.J7.__offset(this.z7, 26);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   verticalgradientsprite(t) {
-    const i = this.J7.__offset(this.z7, 28);
+    var i = this.J7.__offset(this.z7, 28);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   tipssprite(t) {
-    const i = this.J7.__offset(this.z7, 30);
+    var i = this.J7.__offset(this.z7, 30);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   specialeffects(t) {
-    const i = this.J7.__offset(this.z7, 32);
+    var i = this.J7.__offset(this.z7, 32);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   dissipateeffects(t) {
-    const i = this.J7.__offset(this.z7, 34);
+    var i = this.J7.__offset(this.z7, 34);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   newitemgeteffects(t) {
-    const i = this.J7.__offset(this.z7, 36);
+    var i = this.J7.__offset(this.z7, 36);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   consumefiltertext(t) {
-    const i = this.J7.__offset(this.z7, 38);
+    var i = this.J7.__offset(this.z7, 38);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   payshoptexture(t) {
-    const i = this.J7.__offset(this.z7, 40);
+    var i = this.J7.__offset(this.z7, 40);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   newpayshoptexture(t) {
-    const i = this.J7.__offset(this.z7, 42);
+    var i = this.J7.__offset(this.z7, 42);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   payshopqualitysprite(t) {
-    const i = this.J7.__offset(this.z7, 44);
+    var i = this.J7.__offset(this.z7, 44);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   phantomsprite(t) {
-    const i = this.J7.__offset(this.z7, 46);
+    var i = this.J7.__offset(this.z7, 46);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   dropitemqualityniagarapath(t) {
-    const i = this.J7.__offset(this.z7, 48);
+    var i = this.J7.__offset(this.z7, 48);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   mediumitemgridqualityspritepath(t) {
-    const i = this.J7.__offset(this.z7, 50);
+    var i = this.J7.__offset(this.z7, 50);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   qualitycolor(t) {
-    const i = this.J7.__offset(this.z7, 52);
+    var i = this.J7.__offset(this.z7, 52);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   roulettetipsqualitytexpath(t) {
-    const i = this.J7.__offset(this.z7, 54);
+    var i = this.J7.__offset(this.z7, 54);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   acquirequalitytexpath(t) {
-    const i = this.J7.__offset(this.z7, 56);
+    var i = this.J7.__offset(this.z7, 56);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   acquirenewitemqualitytexpath(t) {
-    const i = this.J7.__offset(this.z7, 58);
+    var i = this.J7.__offset(this.z7, 58);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   acquirequalityspritepath(t) {
-    const i = this.J7.__offset(this.z7, 60);
+    var i = this.J7.__offset(this.z7, 60);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   filtericonpath(t) {
-    const i = this.J7.__offset(this.z7, 62);
+    var i = this.J7.__offset(this.z7, 62);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   calabashlevelupviewshowtext(t) {
-    const i = this.J7.__offset(this.z7, 64);
+    var i = this.J7.__offset(this.z7, 64);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   unlockvisionquality(t) {
-    const i = this.J7.__offset(this.z7, 66);
+    var i = this.J7.__offset(this.z7, 66);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   unlockvisionqualitycolor(t) {
-    const i = this.J7.__offset(this.z7, 68);
+    var i = this.J7.__offset(this.z7, 68);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   trainingweight() {
-    const t = this.J7.__offset(this.z7, 70);
+    var t = this.J7.__offset(this.z7, 70);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
 }
 exports.QualityInfo = QualityInfo;
-// # sourceMappingURL=QualityInfo.js.map
+//# sourceMappingURL=QualityInfo.js.map

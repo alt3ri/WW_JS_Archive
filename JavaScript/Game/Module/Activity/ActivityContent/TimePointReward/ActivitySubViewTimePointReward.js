@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivitySubViewTimePointReward = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase");
-const ActivityTitleTypeA_1 = require("../UniversalComponents/Title/ActivityTitleTypeA");
-const ActivityTimePointRewardController_1 = require("./ActivityTimePointRewardController");
-const TimePointRewardItem_1 = require("./TimePointRewardItem");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase"),
+  ActivityTitleTypeA_1 = require("../UniversalComponents/Title/ActivityTitleTypeA"),
+  ActivityTimePointRewardController_1 = require("./ActivityTimePointRewardController"),
+  TimePointRewardItem_1 = require("./TimePointRewardItem");
 class ActivitySubViewTimePointReward extends ActivitySubViewBase_1.ActivitySubViewBase {
   constructor() {
     super(...arguments),
@@ -20,7 +20,7 @@ class ActivitySubViewTimePointReward extends ActivitySubViewBase_1.ActivitySubVi
       (this.TZt = void 0),
       (this.T8s = void 0),
       (this.sGe = () => {
-        const e = new TimePointRewardItem_1.TimePointRewardItem();
+        var e = new TimePointRewardItem_1.TimePointRewardItem();
         return (e.OnClickToGet = this.L8s), e;
       }),
       (this.wNe = (e) => {
@@ -46,18 +46,18 @@ class ActivitySubViewTimePointReward extends ActivitySubViewBase_1.ActivitySubVi
     this.ActivityTimePointRewardData = this.ActivityBaseData;
   }
   async OnBeforeStartAsync() {
-    const e = [];
-    var i = this.GetItem(0);
-    var i =
-      ((this.LNe = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
-      e.push(this.LNe.CreateThenShowByActorAsync(i.GetOwner())),
-      (this.TZt = new GenericLayout_1.GenericLayout(
-        this.GetHorizontalLayout(2),
-        this.sGe,
-      )),
-      ConfigManager_1.ConfigManager.ActivityTimePointRewardConfig.GetConfigByActivityId(
-        this.ActivityBaseData.Id,
-      ));
+    var e = [],
+      i = this.GetItem(0),
+      i =
+        ((this.LNe = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
+        e.push(this.LNe.CreateThenShowByActorAsync(i.GetOwner())),
+        (this.TZt = new GenericLayout_1.GenericLayout(
+          this.GetHorizontalLayout(2),
+          this.sGe,
+        )),
+        ConfigManager_1.ConfigManager.ActivityTimePointRewardConfig.GetConfigByActivityId(
+          this.ActivityBaseData.Id,
+        ));
     (this.T8s = new UiPanelBase_1.UiPanelBase()),
       e.push(
         this.T8s.CreateThenShowByResourceIdAsync(i.UiPrefab, this.GetItem(4)),
@@ -66,15 +66,15 @@ class ActivitySubViewTimePointReward extends ActivitySubViewBase_1.ActivitySubVi
       await Promise.all(e);
   }
   OnStart() {
-    const e = this.ActivityTimePointRewardData.LocalConfig;
-    var i =
-      (this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
-      !StringUtils_1.StringUtils.IsEmpty(e?.DescTheme));
-    var i =
-      (this.LNe.SetSubTitleVisible(i),
-      i && this.LNe.SetSubTitleByTextId(e.DescTheme),
-      this.GetText(1));
-    const t = !StringUtils_1.StringUtils.IsEmpty(e?.Desc);
+    var e = this.ActivityTimePointRewardData.LocalConfig,
+      i =
+        (this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
+        !StringUtils_1.StringUtils.IsEmpty(e?.DescTheme)),
+      i =
+        (this.LNe.SetSubTitleVisible(i),
+        i && this.LNe.SetSubTitleByTextId(e.DescTheme),
+        this.GetText(1)),
+      t = !StringUtils_1.StringUtils.IsEmpty(e?.Desc);
     i.SetUIActive(t), t && i.ShowTextNew(e.Desc);
   }
   OnAddEventListener() {
@@ -93,16 +93,16 @@ class ActivitySubViewTimePointReward extends ActivitySubViewBase_1.ActivitySubVi
     await this.GFe();
   }
   async GFe() {
-    const e = this.ActivityTimePointRewardData.GetRewardDataList();
+    var e = this.ActivityTimePointRewardData.GetRewardDataList();
     await this.TZt.RefreshByDataAsync(e);
   }
   OnTimer(e) {
     this.FNe();
   }
   FNe() {
-    const [e, i] = this.GetTimeVisibleAndRemainTime();
+    var [e, i] = this.GetTimeVisibleAndRemainTime();
     this.LNe.SetTimeTextVisible(e), e && this.LNe.SetTimeTextByText(i);
   }
 }
 exports.ActivitySubViewTimePointReward = ActivitySubViewTimePointReward;
-// # sourceMappingURL=ActivitySubViewTimePointReward.js.map
+//# sourceMappingURL=ActivitySubViewTimePointReward.js.map

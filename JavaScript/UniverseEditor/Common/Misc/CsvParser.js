@@ -1,33 +1,33 @@
 "use strict";
 function parseCsv(t) {
-  let r = "";
-  let e = [""];
-  let s;
-  const i = [e];
-  let n = 0;
-  let o = 0;
-  let u = !0;
+  let r = "",
+    e = [""];
+  var s,
+    i = [e];
+  let n = 0,
+    o = 0,
+    u = !0;
   for (s of t.startsWith(exports.UTF8_BOM_HEAD) ? t.replace(/^\ufeff/, "") : t)
-    s === '"'
+    '"' === s
       ? (u && s === r && (e[n] += s), (u = !u))
-      : s === "," && u
+      : "," === s && u
         ? ((e[++n] = ""), (s = ""))
-        : s === "\n" && u
-          ? (r === "\r" && (e[n] = e[n].slice(0, -1)),
+        : "\n" === s && u
+          ? ("\r" === r && (e[n] = e[n].slice(0, -1)),
             (e = [(s = "")]),
             (i[++o] = e),
             (n = 0))
           : (e[n] += s),
       (r = s);
   t = i[i.length - 1];
-  return t.length === 1 && t[0] === "" && i.splice(i.length - 1, 1), i;
+  return 1 === t.length && "" === t[0] && i.splice(i.length - 1, 1), i;
 }
 function stringifyCsv(t) {
   t = t.map((t) => {
     return t
       .map((t) => {
         let r = !1;
-        for (const e of t) (e !== "," && e !== '"' && e !== "\n") || (r = !0);
+        for (const e of t) ("," !== e && '"' !== e && "\n" !== e) || (r = !0);
         return r ? `"${t.replace(/"/g, '""')}"` : t;
       })
       .join(",");
@@ -51,7 +51,7 @@ class LineReader {
       t && ((this.se = parseCsv(t)), (this.le = 0));
   }
   ReadNext() {
-    let t;
+    var t;
     if (!this.IsEnd) return (t = this.se[this.le]), this.le++, t;
   }
   get CurrentLineNumber() {
@@ -80,4 +80,4 @@ class LineWriter {
   }
 }
 exports.LineWriter = LineWriter;
-// # sourceMappingURL=CsvParser.js.map
+//# sourceMappingURL=CsvParser.js.map

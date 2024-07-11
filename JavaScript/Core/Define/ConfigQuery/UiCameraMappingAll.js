@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configUiCameraMappingAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const UiCameraMapping_1 = require("../Config/UiCameraMapping");
-const DB = "db_uicamera.db";
-const FILE = "u.Ui相机.xlsx";
-const TABLE = "UiCameraMapping";
-const COMMAND = "select BinData from `UiCameraMapping`";
-const KEY_PREFIX = "UiCameraMappingAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  UiCameraMapping_1 = require("../Config/UiCameraMapping"),
+  DB = "db_uicamera.db",
+  FILE = "u.Ui相机.xlsx",
+  TABLE = "UiCameraMapping",
+  COMMAND = "select BinData from `UiCameraMapping`",
+  KEY_PREFIX = "UiCameraMappingAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configUiCameraMappingAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configUiCameraMappingAll = {
     );
   },
   GetConfigList: (i = !0) => {
-    let o;
+    var o;
     if (
       (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configUiCameraMappingAll = {
       }
       const a = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let e = void 0;
+        var e = void 0;
         if (
           (([o, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configUiCameraMappingAll = {
     }
   },
 };
-// # sourceMappingURL=UiCameraMappingAll.js.map
+//# sourceMappingURL=UiCameraMappingAll.js.map

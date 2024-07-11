@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TutorialListInfo = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
+const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager");
 class TutorialListInfo {
   constructor(t) {
     (this.OwnerStep = void 0),
@@ -28,18 +28,18 @@ class TutorialListInfo {
   }
   Tick(t) {
     return (
-      this.TipState === 1 &&
+      1 === this.TipState &&
       ((this.Duration -= t), this.Duration <= 0) &&
       (this.StopGuide(), !0)
     );
   }
   ClickToPopState() {
-    this.TipState !== 2 &&
-      this.Duration > 0 &&
+    2 !== this.TipState &&
+      0 < this.Duration &&
       ((this.TipState = 2),
       this.StopGuide(),
       ModelManager_1.ModelManager.GuideModel.TryPauseTimer());
   }
 }
 exports.TutorialListInfo = TutorialListInfo;
-// # sourceMappingURL=TutorialListInfo.js.map
+//# sourceMappingURL=TutorialListInfo.js.map

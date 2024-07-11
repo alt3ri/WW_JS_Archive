@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MonthCardRewardView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ItemRewardController_1 = require("../../ItemReward/ItemRewardController");
-const RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ItemRewardController_1 = require("../../ItemReward/ItemRewardController"),
+  RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData");
 class MonthCardRewardView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.YOt = 0),
       (this.Yki = 0),
       (this.Jki = () => {
-        var e = new RewardItemData_1.RewardItemData(this.YOt, this.Yki);
-        const r = new Array();
-        var e =
-          (r.push(e),
-          ConfigManager_1.ConfigManager.PayShopConfig.GetMonthCardRewardId());
+        var e = new RewardItemData_1.RewardItemData(this.YOt, this.Yki),
+          r = new Array(),
+          e =
+            (r.push(e),
+            ConfigManager_1.ConfigManager.PayShopConfig.GetMonthCardRewardId());
         ItemRewardController_1.ItemRewardController.OpenCommonRewardView(e, r),
           UiManager_1.UiManager.CloseView(this.Info.Name);
       }),
@@ -48,7 +48,7 @@ class MonthCardRewardView extends UiViewBase_1.UiViewBase {
     );
   }
   OnBeforeShow() {
-    const e = ModelManager_1.ModelManager.MonthCardModel.LocalDailyReward;
+    var e = ModelManager_1.ModelManager.MonthCardModel.LocalDailyReward;
     (this.YOt = e[0].ItemId),
       (this.Yki = e[1]),
       this.Og(),
@@ -62,4 +62,4 @@ class MonthCardRewardView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.MonthCardRewardView = MonthCardRewardView;
-// # sourceMappingURL=MonthCardRewardView.js.map
+//# sourceMappingURL=MonthCardRewardView.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const SplineMoveComponent_1 = require("../NewWorld/Common/Component/SplineMoveComponent");
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  SplineMoveComponent_1 = require("../NewWorld/Common/Component/SplineMoveComponent");
 class TsAnimNotifyStateAccelInSplineMove extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.AddSpeedMap = void 0);
@@ -13,11 +13,11 @@ class TsAnimNotifyStateAccelInSplineMove extends UE.KuroAnimNotifyState {
   K2_NotifyTick(t, e, i) {
     t = t.GetOwner();
     if (!(t instanceof TsBaseCharacter_1.default)) return !1;
-    let n = t.GetEntityNoBlueprint();
+    var n = t.GetEntityNoBlueprint();
     if (!n?.Valid) return !1;
     n = n.GetComponent(95);
     if (!n?.Active) return !1;
-    if (n.CurrentSplineMoveType !== "PathLine") return !1;
+    if ("PathLine" !== n.CurrentSplineMoveType) return !1;
     n = t.CharacterActorComponent;
     if (!n) return !1;
     if (
@@ -25,7 +25,7 @@ class TsAnimNotifyStateAccelInSplineMove extends UE.KuroAnimNotifyState {
       this.InitializeSelf(),
       n.Entity.GetComponent(160)?.HasKuroRootMotion)
     ) {
-      const o = n.Entity.GetComponent(161);
+      var o = n.Entity.GetComponent(161);
       if (!o) return !1;
       let e = this.AddSpeedMap.get(t);
       return (e ||
@@ -94,9 +94,9 @@ class TsAnimNotifyStateAccelInSplineMove extends UE.KuroAnimNotifyState {
     ),
       e.AdditionEqual(TsAnimNotifyStateAccelInSplineMove.TmpVector);
     var o = MathUtils_1.MathUtils.Square(
-      SplineMoveComponent_1.SplineMoveComponent.SplineMoveConfig.MaxFlySpeed,
-    );
-    var t = e.SizeSquared2D();
+        SplineMoveComponent_1.SplineMoveComponent.SplineMoveConfig.MaxFlySpeed,
+      ),
+      t = e.SizeSquared2D();
     return (
       o < t && ((i = Math.sqrt(o / t)), (e.X *= i), (e.Y *= i)),
       !e.ContainsNaN() ||
@@ -127,4 +127,4 @@ class TsAnimNotifyStateAccelInSplineMove extends UE.KuroAnimNotifyState {
 (TsAnimNotifyStateAccelInSplineMove.CurrentSpeed = void 0),
   (TsAnimNotifyStateAccelInSplineMove.TmpVector = void 0),
   (exports.default = TsAnimNotifyStateAccelInSplineMove);
-// # sourceMappingURL=TsAnimNotifyStateAccelInSplineMove.js.map
+//# sourceMappingURL=TsAnimNotifyStateAccelInSplineMove.js.map

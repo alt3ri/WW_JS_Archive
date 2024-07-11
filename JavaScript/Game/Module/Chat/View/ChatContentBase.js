@@ -16,4 +16,4 @@ class ChatContentBase extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ChatContentBase = ChatContentBase;
-// # sourceMappingURL=ChatContentBase.js.map
+//# sourceMappingURL=ChatContentBase.js.map

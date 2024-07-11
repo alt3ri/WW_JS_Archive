@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiCameraAnimationHandle = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const UiManager_1 = require("../../Ui/UiManager");
-const UiCameraAnimationManager_1 = require("./UiCameraAnimationManager");
-const UiCameraLoadingAnimation_1 = require("./UiCameraLoadingAnimation");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  UiCameraAnimationManager_1 = require("./UiCameraAnimationManager"),
+  UiCameraLoadingAnimation_1 = require("./UiCameraLoadingAnimation");
 class UiCameraAnimationHandle {
   constructor() {
     (this.JUo = void 0),
@@ -50,9 +50,9 @@ class UiCameraAnimationHandle {
           "HandleData",
           this.zUo.ToString(),
         ]);
-    let t;
-    let n;
-    const r = this.zUo.GetUiCameraAnimationConfig();
+    var t,
+      n,
+      r = this.zUo.GetUiCameraAnimationConfig();
     r
       ? i.IsEmptyState
         ? (Log_1.Log.CheckInfo() &&
@@ -68,6 +68,7 @@ class UiCameraAnimationHandle {
           ))
         : ((this.JUo = r),
           (this.iAo = !1),
+          2 ===
           (n = this.nAo(
             r.BlendInCameraSequence,
             r.BlendInCameraSequencePlayRate,
@@ -79,7 +80,7 @@ class UiCameraAnimationHandle {
                   i,
                 );
             },
-          )) === 2
+          ))
             ? ((this.iAo = !1),
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
@@ -93,7 +94,7 @@ class UiCameraAnimationHandle {
                 this.zUo,
               ),
               this.Deactivate())
-            : n === 0
+            : 0 === n
               ? ((this.iAo = !0),
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
@@ -221,21 +222,22 @@ class UiCameraAnimationHandle {
     return this.iRo;
   }
   Revert(i = !0, a = void 0) {
-    let e;
-    let t;
-    let n;
-    let r;
-    let s;
-    let m;
-    let o = this.zUo.GetUiCameraAnimationConfig();
+    var e,
+      t,
+      n,
+      r,
+      s,
+      m,
+      o = this.zUo.GetUiCameraAnimationConfig();
     o
       ? ((e = (this.JUo = o).BlendOutCameraSequence),
         (t = o.BlendOutCameraSequencePlayRate),
         (o = o.bRevertBlendOutCameraSequence),
         (this.ZUo = a),
+        0 ===
         this.nAo(e, t, o, () => {
           this.rAo();
-        }) === 0
+        })
           ? Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "CameraAnimation",
@@ -322,13 +324,13 @@ class UiCameraAnimationHandle {
     return UiCameraAnimationManager_1.UiCameraAnimationManager.UiCameraSpringStructure.GetOwnActor();
   }
   nAo(i, a, e, t) {
-    let n;
+    var n;
     return UE.KismetSystemLibrary.IsValidSoftObjectReference(i)
       ? (n = this.zUo.GetTargetActor())?.IsValid()
         ? (this.SetWidgetCameraDetachFromAnimationActor(),
           this.aAo(i, a, e, n).then(
             () => {
-              const i = this.zUo.GetUiCameraAnimationConfig();
+              var i = this.zUo.GetUiCameraAnimationConfig();
               UiCameraAnimationManager_1.UiCameraAnimationManager.UiCamera.Enter(
                 i.BlendInTime,
                 i.BlendInFunction,
@@ -422,4 +424,4 @@ class UiCameraAnimationHandle {
   }
 }
 exports.UiCameraAnimationHandle = UiCameraAnimationHandle;
-// # sourceMappingURL=UiCameraAnimationHandle.js.map
+//# sourceMappingURL=UiCameraAnimationHandle.js.map

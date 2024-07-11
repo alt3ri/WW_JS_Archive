@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const WuYinQuBattleConfig_1 = require("../WuYinQuBattleConfig");
-const WuYinQuBattleNameDefines_1 = require("../WuYinQuBattleNameDefines");
-const WuYinQuBattleStateBase_1 = require("./WuYinQuBattleStateBase");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  WuYinQuBattleConfig_1 = require("../WuYinQuBattleConfig"),
+  WuYinQuBattleNameDefines_1 = require("../WuYinQuBattleNameDefines"),
+  WuYinQuBattleStateBase_1 = require("./WuYinQuBattleStateBase");
 class WuYinQuBattleStateFightingToFighting extends WuYinQuBattleStateBase_1.default {
   constructor() {
     super(...arguments),
@@ -55,17 +55,17 @@ class WuYinQuBattleStateFightingToFighting extends WuYinQuBattleStateBase_1.defa
   }
   Zsr() {
     this.Timer = 0;
-    var e = this.Owner.GetLastBattleState();
-    var t = this.Owner.GetCurrentBattleState();
+    var e = this.Owner.GetLastBattleState(),
+      t = this.Owner.GetCurrentBattleState();
     let i = "未知状态";
-    e === 1
+    1 === e
       ? (i = "战斗阶段1")
-      : e === 2
+      : 2 === e
         ? (i = "战斗阶段2")
-        : e === 3 && (i = "战斗阶段3");
+        : 3 === e && (i = "战斗阶段3");
     e = this.Owner.GetKuroLevelSequenceActor();
     let s = "未知状态";
-    t === 1
+    1 === t
       ? ((s = "战斗阶段1"),
         e &&
           UE.KismetSystemLibrary.IsValid(e) &&
@@ -75,7 +75,7 @@ class WuYinQuBattleStateFightingToFighting extends WuYinQuBattleStateBase_1.defa
             WuYinQuBattleConfig_1.default.MarkFightingStart1,
           ),
           e.SequencePlayer.Play()))
-      : t === 2
+      : 2 === t
         ? ((s = "战斗阶段2"),
           e &&
             UE.KismetSystemLibrary.IsValid(e) &&
@@ -85,7 +85,7 @@ class WuYinQuBattleStateFightingToFighting extends WuYinQuBattleStateBase_1.defa
               WuYinQuBattleConfig_1.default.MarkFightingStart2,
             ),
             e.SequencePlayer.Play()))
-        : t === 3 &&
+        : 3 === t &&
           ((s = "战斗阶段3"), e) &&
           UE.KismetSystemLibrary.IsValid(e) &&
           UE.KismetSystemLibrary.IsValid(e.GetSequence()) &&
@@ -94,9 +94,9 @@ class WuYinQuBattleStateFightingToFighting extends WuYinQuBattleStateBase_1.defa
             WuYinQuBattleConfig_1.default.MarkFightingStart3,
           ),
           e.SequencePlayer.Play());
-    let u;
-    var t = this.Owner.WuYinQuFightingData.GlobalMPC;
-    var e = this.Owner.WuYinQuFightingData;
+    var u,
+      t = this.Owner.WuYinQuFightingData.GlobalMPC,
+      e = this.Owner.WuYinQuFightingData;
     t &&
       ((u = this.Owner.K2_GetActorLocation()),
       UE.KismetMaterialLibrary.SetVectorParameterValue(
@@ -123,10 +123,10 @@ class WuYinQuBattleStateFightingToFighting extends WuYinQuBattleStateBase_1.defa
         Log_1.Log.Info("RenderBattle", 12, "进入战斗过度阶段");
   }
   OnUpdate(e) {
-    const t = this.Owner.GetCurrentBattleState();
+    var t = this.Owner.GetCurrentBattleState();
     if (this.Timer > this.Owner.WuYinQuFightingData.FightingTransitionTime) {
-      if (t === 2) return void this.StateMachine.Switch(2);
-      if (t === 3) return void this.StateMachine.Switch(3);
+      if (2 === t) return void this.StateMachine.Switch(2);
+      if (3 === t) return void this.StateMachine.Switch(3);
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("RenderBattle", 12, "战斗过度状态错误!!!!");
     }
@@ -148,4 +148,4 @@ class WuYinQuBattleStateFightingToFighting extends WuYinQuBattleStateBase_1.defa
   }
 }
 exports.default = WuYinQuBattleStateFightingToFighting;
-// # sourceMappingURL=WuYinQuBattleStateFightingToFighting.js.map
+//# sourceMappingURL=WuYinQuBattleStateFightingToFighting.js.map

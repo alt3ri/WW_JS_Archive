@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Rotator_1 = require("../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  Rotator_1 = require("../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyStateRoleRotate extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -50,10 +50,10 @@ class TsAnimNotifyStateRoleRotate extends UE.KuroAnimNotifyState {
         r.SetSkillRotateToTarget(r.SkillTarget?.Valid ?? !1, !1, 0),
           r.SetSkillRotateSpeed(this.旋转速度);
       else {
-        let s;
-        let a;
-        var r = t.CharacterActorComponent;
-        let o = r.InputDirect ?? Vector_1.Vector.ZeroVectorProxy;
+        var s,
+          a,
+          r = t.CharacterActorComponent,
+          o = r.InputDirect ?? Vector_1.Vector.ZeroVectorProxy;
         if (!o.IsNearlyZero(1e-4))
           return (
             (s = Vector_1.Vector.Create(t.GetActorForwardVector())),
@@ -104,4 +104,4 @@ class TsAnimNotifyStateRoleRotate extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateRoleRotate;
-// # sourceMappingURL=TsAnimNotifyStateRoleRotate.js.map
+//# sourceMappingURL=TsAnimNotifyStateRoleRotate.js.map

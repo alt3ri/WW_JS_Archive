@@ -8,4 +8,4 @@ class TsDecoratorFight extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorFight;
-// # sourceMappingURL=TsDecoratorFight.js.map
+//# sourceMappingURL=TsDecoratorFight.js.map

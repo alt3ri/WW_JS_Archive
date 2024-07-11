@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GenericPromptView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const PriorityQueue_1 = require("../../../Core/Container/PriorityQueue");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase");
-const PromptForFloatLineView_1 = require("./GenericPromptSubViews/PromptForFloatLineView");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  PriorityQueue_1 = require("../../../Core/Container/PriorityQueue"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase"),
+  PromptForFloatLineView_1 = require("./GenericPromptSubViews/PromptForFloatLineView");
 class GenericPromptView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
       (this.S7 = (e, i) => {
-        const t = ConfigManager_1.ConfigManager.GenericPromptConfig;
-        var e = t.GetPriority(e);
+        var t = ConfigManager_1.ConfigManager.GenericPromptConfig,
+          e = t.GetPriority(e);
         return t.GetPriority(i) - e;
       }),
       (this.eYt = new PriorityQueue_1.PriorityQueue(this.S7)),
@@ -60,10 +60,10 @@ class GenericPromptView extends UiTickViewBase_1.UiTickViewBase {
     );
   }
   nYt() {
-    let e;
-    const i =
-      ConfigManager_1.ConfigManager.GenericPromptConfig.GetPromptTypeInfo(9);
-    i.OffsetY !== 0 &&
+    var e,
+      i =
+        ConfigManager_1.ConfigManager.GenericPromptConfig.GetPromptTypeInfo(9);
+    0 !== i.OffsetY &&
       (e = this.GetItem(0)).SetAnchorOffsetY(e.GetAnchorOffsetY() + i.OffsetY);
   }
   sYt(e) {
@@ -76,9 +76,9 @@ class GenericPromptView extends UiTickViewBase_1.UiTickViewBase {
       this.tYt.ShowView();
   }
   oYt() {
-    const e = this.eYt.Pop();
+    var e = this.eYt.Pop();
     this.sYt(e);
   }
 }
 exports.GenericPromptView = GenericPromptView;
-// # sourceMappingURL=GenericPromptView.js.map
+//# sourceMappingURL=GenericPromptView.js.map

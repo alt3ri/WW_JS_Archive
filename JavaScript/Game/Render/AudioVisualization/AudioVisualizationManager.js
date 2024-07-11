@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AudioVisualizationManager = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Stats_1 = require("../../../Core/Common/Stats");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
 class AudioVisualizationManager {
   constructor() {
     (this.GlobalConfig = void 0),
@@ -59,4 +59,4 @@ class AudioVisualizationManager {
 }
 ((exports.AudioVisualizationManager = AudioVisualizationManager).Ysr = void 0),
   (AudioVisualizationManager.xW = void 0);
-// # sourceMappingURL=AudioVisualizationManager.js.map
+//# sourceMappingURL=AudioVisualizationManager.js.map

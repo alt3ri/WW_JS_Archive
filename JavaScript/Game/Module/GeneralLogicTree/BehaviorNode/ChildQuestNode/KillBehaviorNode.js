@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.KillBehaviorNode = void 0);
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
+const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
 class KillBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   constructor() {
     super(...arguments), (this.xQt = void 0), (this.PQt = []), (this.$Qt = 0);
@@ -14,7 +14,7 @@ class KillBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   OnCreate(e) {
     if (!super.OnCreate(e)) return !1;
     e = e.Condition;
-    if (e.Type !== "Kill") return !1;
+    if ("Kill" !== e.Type) return !1;
     (this.TrackTextRuleInner = 1), (this.PQt = []);
     for (const t of e.ExistTargets) this.PQt.push(t);
     for (const s of e.TargetsToAwake) this.PQt.push(s);
@@ -42,4 +42,4 @@ class KillBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   }
 }
 exports.KillBehaviorNode = KillBehaviorNode;
-// # sourceMappingURL=KillBehaviorNode.js.map
+//# sourceMappingURL=KillBehaviorNode.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MiniElementItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
 class MiniElementItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, i, t) {
     super(),
@@ -26,16 +26,16 @@ class MiniElementItem extends UiPanelBase_1.UiPanelBase {
     this.RefreshMiniElement(this.Vyt);
   }
   RefreshMiniElement(e) {
-    let i;
-    const t = this.GetTexture(1);
+    var i,
+      t = this.GetTexture(1);
     t &&
       (e = ConfigManager_1.ConfigManager.CommonConfig.GetElementConfig(e)) &&
-      (i = e.Icon5) !== "" &&
-      i.length !== 0 &&
+      "" !== (i = e.Icon5) &&
+      0 !== i.length &&
       ((i = UE.Color.FromHex(e.ElementColor)),
       this.GetSprite(0).SetColor(i),
       this.SetTextureByPath(e.Icon5, t));
   }
 }
 exports.MiniElementItem = MiniElementItem;
-// # sourceMappingURL=MiniElementItem.js.map
+//# sourceMappingURL=MiniElementItem.js.map

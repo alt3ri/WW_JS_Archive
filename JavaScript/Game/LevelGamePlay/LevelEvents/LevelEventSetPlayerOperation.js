@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventSetPlayerOperation = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Global_1 = require("../../../Game/Global");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const InputController_1 = require("../../Input/InputController");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const InputDefine_1 = require("../../Ui/Input/InputDefine");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const LevelEventLockInputState_1 = require("../LevelEventLockInputState");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  Global_1 = require("../../../Game/Global"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  InputController_1 = require("../../Input/InputController"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  InputDefine_1 = require("../../Ui/Input/InputDefine"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  LevelEventLockInputState_1 = require("../LevelEventLockInputState"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventSetPlayerOperation extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -23,7 +23,7 @@ class LevelEventSetPlayerOperation extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, t) {
     if (e) {
       this.xRe = !1;
-      const n = e;
+      var n = e;
       switch (
         ((this.wRe = []),
         EventSystem_1.EventSystem.Emit(
@@ -105,7 +105,7 @@ class LevelEventSetPlayerOperation extends LevelGeneralBase_1.LevelEventBase {
                 o.push(3), o.push(2);
               else
                 for (const r of InputDefine_1.openViewActionsMap.values())
-                  r !== "WorldMapView" &&
+                  "WorldMapView" !== r &&
                     LevelEventLockInputState_1.LevelEventLockInputState.InputLimitView.push(
                       r,
                     );
@@ -113,7 +113,7 @@ class LevelEventSetPlayerOperation extends LevelGeneralBase_1.LevelEventBase {
                 i.SceneInteractionOption?.Type !==
                   IAction_1.ESceneInteractionOperationType.Enable) ||
                 o.push(19),
-                o.length > 0 &&
+                0 < o.length &&
                   ModelManager_1.ModelManager.BattleUiModel.ChildViewData.HideBattleView(
                     1,
                     o,
@@ -192,7 +192,7 @@ class LevelEventSetPlayerOperation extends LevelGeneralBase_1.LevelEventBase {
     }
   }
   GRe() {
-    for (const [e, t] of this.BRe)
+    for (var [e, t] of this.BRe)
       ModelManager_1.ModelManager.LevelFuncFlagModel.SetFuncFlagEnable(e, t);
   }
   ORe() {
@@ -217,7 +217,7 @@ class LevelEventSetPlayerOperation extends LevelGeneralBase_1.LevelEventBase {
     );
   }
   NRe(e) {
-    let t;
+    var t;
     e &&
       ((t = Global_1.Global.BaseCharacter?.CharacterActorComponent?.Entity),
       e.ForbidSprint &&
@@ -242,8 +242,8 @@ class LevelEventSetPlayerOperation extends LevelGeneralBase_1.LevelEventBase {
   }
   bRe() {
     InputController_1.InputController.SetMoveControlEnabled(!0, !0, !0, !0);
-    let e;
-    let t = Global_1.Global.BaseCharacter?.CharacterActorComponent?.Entity;
+    var e,
+      t = Global_1.Global.BaseCharacter?.CharacterActorComponent?.Entity;
     t?.Valid &&
       ((t = t.GetComponent(185))?.HasTag((e = 477750727)) &&
         (t.RemoveTag(e), Log_1.Log.CheckDebug()) &&
@@ -269,4 +269,4 @@ class LevelEventSetPlayerOperation extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventSetPlayerOperation = LevelEventSetPlayerOperation;
-// # sourceMappingURL=LevelEventSetPlayerOperation.js.map
+//# sourceMappingURL=LevelEventSetPlayerOperation.js.map

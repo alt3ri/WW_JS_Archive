@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemTipsComponentUtilTool = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ItemTipsDefine_1 = require("./ItemTipsDefine");
+const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ItemTipsDefine_1 = require("./ItemTipsDefine");
 class ItemTipsComponentUtilTool {
   static GetTipsDataById(i, t) {
-    let o =
+    var o =
       ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
         i,
       );
@@ -18,7 +18,7 @@ class ItemTipsComponentUtilTool {
   }
 }
 ((exports.ItemTipsComponentUtilTool = ItemTipsComponentUtilTool).CPt = {
-  0: ItemTipsDefine_1.TipsMaterialData,
+  [0]: ItemTipsDefine_1.TipsMaterialData,
   1: ItemTipsDefine_1.TipsWeaponData,
   2: ItemTipsDefine_1.TipsVisionData,
   3: ItemTipsDefine_1.TipsCharacterData,
@@ -28,4 +28,4 @@ class ItemTipsComponentUtilTool {
     [2, 1],
     [1, 3],
   ]));
-// # sourceMappingURL=ItemTipsUtilTool.js.map
+//# sourceMappingURL=ItemTipsUtilTool.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TaskSystem = void 0);
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const Queue_1 = require("../../../Core/Container/Queue");
+const CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Queue_1 = require("../../../Core/Container/Queue");
 class TaskSystem {
   static get Promise() {
     return this.$Mr?.Promise;
@@ -40,22 +40,22 @@ class TaskSystem {
         "Task个数",
         this.zMr.Size,
       ]);
-    let s = !0;
-    let t = -1;
+    let s = !0,
+      t = -1;
     for (; this.zMr.Size; ) {
-      const e = this.zMr.Pop();
-      const i =
-        (t++,
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "World",
-            3,
-            "TaskSystem:执行Task前",
-            ["Index", t],
-            ["Name", e.Name],
-            ["剩余Task个数", this.zMr.Size],
-          ),
-        await e.Run());
+      var e = this.zMr.Pop(),
+        i =
+          (t++,
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "World",
+              3,
+              "TaskSystem:执行Task前",
+              ["Index", t],
+              ["Name", e.Name],
+              ["剩余Task个数", this.zMr.Size],
+            ),
+          await e.Run());
       if (
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -91,7 +91,7 @@ class TaskSystem {
       Log_1.Log.Info("World", 3, "TaskSystem:结束", ["Success", s]),
       (this.Running = !1),
       this.$Mr.SetResult(s);
-    const a = this.YMr;
+    var a = this.YMr;
     return this.AW(), a?.(s), s;
   }
 }
@@ -99,4 +99,4 @@ class TaskSystem {
   (TaskSystem.HasLoadingTask = !1),
   (TaskSystem.Running = !1),
   (TaskSystem.Ife = !1);
-// # sourceMappingURL=TaskSystem.js.map
+//# sourceMappingURL=TaskSystem.js.map

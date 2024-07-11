@@ -17,4 +17,4 @@ class GridProxyAbstract extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.GridProxyAbstract = GridProxyAbstract;
-// # sourceMappingURL=GridProxyAbstract.js.map
+//# sourceMappingURL=GridProxyAbstract.js.map

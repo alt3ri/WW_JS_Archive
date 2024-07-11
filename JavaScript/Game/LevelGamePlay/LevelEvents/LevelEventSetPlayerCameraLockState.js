@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventSetPlayerCameraLockState = void 0);
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const CameraController_1 = require("../../Camera/CameraController");
-const Global_1 = require("../../Global");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  Global_1 = require("../../Global"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventSetPlayerCameraLockState extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, r) {
     e = e.get("IsLock") === StringUtils_1.ONE_STRING;
@@ -15,4 +15,4 @@ class LevelEventSetPlayerCameraLockState extends LevelGeneralBase_1.LevelEventBa
   }
 }
 exports.LevelEventSetPlayerCameraLockState = LevelEventSetPlayerCameraLockState;
-// # sourceMappingURL=LevelEventSetPlayerCameraLockState.js.map
+//# sourceMappingURL=LevelEventSetPlayerCameraLockState.js.map

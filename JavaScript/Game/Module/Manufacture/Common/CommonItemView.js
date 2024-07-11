@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MaterialItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class MaterialItem extends UiPanelBase_1.UiPanelBase {
   constructor(i) {
     super(),
@@ -28,7 +28,7 @@ class MaterialItem extends UiPanelBase_1.UiPanelBase {
   }
   Update(i) {
     (this.ItemData = i),
-      this.ItemData.G3n !== 0
+      0 !== this.ItemData.G3n
         ? (this.ItemInfo = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(
             this.ItemData.G3n,
           ))
@@ -40,10 +40,10 @@ class MaterialItem extends UiPanelBase_1.UiPanelBase {
   }
   RefreshNeed(i = 1) {
     let e = this.ItemData.k4n;
-    i !== 1 && (e *= i), this.GetText(2).SetText(e.toString());
+    1 !== i && (e *= i), this.GetText(2).SetText(e.toString());
   }
   RefreshHave() {
-    const i = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+    var i = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
       this.ItemData.G3n,
     );
     let e = void 0;
@@ -71,4 +71,4 @@ class MaterialItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.MaterialItem = MaterialItem;
-// # sourceMappingURL=CommonItemView.js.map
+//# sourceMappingURL=CommonItemView.js.map

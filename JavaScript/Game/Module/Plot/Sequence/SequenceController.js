@@ -1,48 +1,48 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SequenceController = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../../GlobalData");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ControllerWithAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerWithAssistantBase");
-const ActorAssistant_1 = require("./Assistant/ActorAssistant");
-const CameraAssistant_1 = require("./Assistant/CameraAssistant");
-const FlowAssistant_1 = require("./Assistant/FlowAssistant");
-const FunctionAssistant_1 = require("./Assistant/FunctionAssistant");
-const RenderAssistant_1 = require("./Assistant/RenderAssistant");
-const SequenceAssistant_1 = require("./Assistant/SequenceAssistant");
-const UiAssistant_1 = require("./Assistant/UiAssistant");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ControllerWithAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerWithAssistantBase"),
+  ActorAssistant_1 = require("./Assistant/ActorAssistant"),
+  CameraAssistant_1 = require("./Assistant/CameraAssistant"),
+  FlowAssistant_1 = require("./Assistant/FlowAssistant"),
+  FunctionAssistant_1 = require("./Assistant/FunctionAssistant"),
+  RenderAssistant_1 = require("./Assistant/RenderAssistant"),
+  SequenceAssistant_1 = require("./Assistant/SequenceAssistant"),
+  UiAssistant_1 = require("./Assistant/UiAssistant");
 class SequenceController extends ControllerWithAssistantBase_1.ControllerWithAssistantBase {
   static OnInit() {
-    const t = super.OnInit();
+    var t = super.OnInit();
     return (this.Xto = ModelManager_1.ModelManager.SequenceModel), t;
   }
   static OnClear() {
     return (this.Xto = void 0), super.OnClear();
   }
   static OnTick(t) {
-    this.Xto.DisableMotionBlurFrame > 0 &&
+    0 < this.Xto.DisableMotionBlurFrame &&
       (this.Xto.DisableMotionBlurFrame--,
-      this.Xto.DisableMotionBlurFrame === 0) &&
+      0 === this.Xto.DisableMotionBlurFrame) &&
       this.$to.SetMotionBlurState(!0),
-      this.Xto.BeginSwitchFrame > 0 &&
-        (this.Xto.BeginSwitchFrame--, this.Xto.BeginSwitchFrame === 0) &&
+      0 < this.Xto.BeginSwitchFrame &&
+        (this.Xto.BeginSwitchFrame--, 0 === this.Xto.BeginSwitchFrame) &&
         (this.Yto
           ? this.Yto.EndSwitchPose()
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("Plot", 39, "SwitchPose 失败!"),
         Log_1.Log.CheckDebug()) &&
         Log_1.Log.Debug("Plot", 39, "SwitchPose 结束"),
-      this.Xto.BeginBlendFrame > 0 &&
-        (this.Xto.BeginBlendFrame--, this.Xto.BeginBlendFrame === 0) &&
+      0 < this.Xto.BeginBlendFrame &&
+        (this.Xto.BeginBlendFrame--, 0 === this.Xto.BeginBlendFrame) &&
         (this.Jto
           ? this.Jto.EndSwitchPose()
           : Log_1.Log.CheckWarn() &&
@@ -89,7 +89,7 @@ class SequenceController extends ControllerWithAssistantBase_1.ControllerWithAss
         ),
         i(!1))
       : t
-        ? (s && s.length > 0
+        ? (s && 0 < s.length
             ? (this.Yto.PreLoadMouthAssetName = s)
             : (this.Yto.PreLoadMouthAssetName.length = 0),
           (this.Xto.Config = t),
@@ -129,7 +129,7 @@ class SequenceController extends ControllerWithAssistantBase_1.ControllerWithAss
           i(!1));
   }
   static ManualFinish() {
-    this.Xto.State === 0 || this.Xto.State === 4 || this.Xto.State === 5
+    0 === this.Xto.State || 4 === this.Xto.State || 5 === this.Xto.State
       ? (this.Xto.FinishCallback = void 0)
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Plot", 27, "剧情Sequence强制停止"),
@@ -142,8 +142,8 @@ class SequenceController extends ControllerWithAssistantBase_1.ControllerWithAss
     var t = this.Xto.Config.Path;
     if (!StringUtils_1.StringUtils.IsEmpty(t)) {
       this.Xto.State = 1;
-      var t = this.iio.LoadPromise();
-      const i = this.Yto.BeginLoadMouthAssetPromise();
+      var t = this.iio.LoadPromise(),
+        i = this.Yto.BeginLoadMouthAssetPromise();
       const e = new CustomPromise_1.CustomPromise();
       this.Jto.Load((t) => {
         t
@@ -228,7 +228,7 @@ class SequenceController extends ControllerWithAssistantBase_1.ControllerWithAss
       this.$to.AllStop(),
       this.tio.AllStop(),
       this.iio.AllStop();
-    const t = this.Yto.AllStopPromise();
+    var t = this.Yto.AllStopPromise();
     this.eio.AllStop(),
       t.then((t) => {
         t ? (this.Jto.AllStop(), this.sio(), s(!0)) : s(!1);
@@ -244,25 +244,25 @@ class SequenceController extends ControllerWithAssistantBase_1.ControllerWithAss
         this.Zto.End(),
         this.tio.End(),
         this.eio.End();
-      const t = (0, puerts_1.$ref)(UE.NewArray(UE.KuroPostProcessVolume));
-      const s =
-        (UE.GameplayStatics.GetAllActorsOfClass(
-          GlobalData_1.GlobalData.World,
-          UE.KuroPostProcessVolume.StaticClass(),
-          t,
-        ),
-        (0, puerts_1.$unref)(t));
-      const i = s.Num();
-      const e = new UE.FName("SequencePostProcess");
+      var t = (0, puerts_1.$ref)(UE.NewArray(UE.KuroPostProcessVolume)),
+        s =
+          (UE.GameplayStatics.GetAllActorsOfClass(
+            GlobalData_1.GlobalData.World,
+            UE.KuroPostProcessVolume.StaticClass(),
+            t,
+          ),
+          (0, puerts_1.$unref)(t)),
+        i = s.Num(),
+        e = new UE.FName("SequencePostProcess");
       for (let t = 0; t < i; t++) {
-        const r = s.Get(t);
+        var r = s.Get(t);
         r.ActorHasTag(e) && (r.Settings = new UE.PostProcessSettings());
       }
       this.Xto.State = 0;
     }
   }
   static Neo(t) {
-    let s;
+    var s;
     this.Xto.FinishCallback &&
       ((s = this.Xto.FinishCallback), (this.Xto.FinishCallback = void 0), s(t));
   }
@@ -321,4 +321,4 @@ class SequenceController extends ControllerWithAssistantBase_1.ControllerWithAss
   !0),
   (SequenceController.zto = void 0),
   (SequenceController.Xto = void 0);
-// # sourceMappingURL=SequenceController.js.map
+//# sourceMappingURL=SequenceController.js.map

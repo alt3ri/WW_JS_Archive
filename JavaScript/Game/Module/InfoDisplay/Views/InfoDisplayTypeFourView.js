@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InfoDisplayTypeFourView = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const InfoDisplayController_1 = require("../InfoDisplayController");
-const InfoDisplayAudioPlayer_1 = require("./InfoDisplayAudioPlayer");
-const LERP_PERCENTAGE = 0.3;
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  InfoDisplayController_1 = require("../InfoDisplayController"),
+  InfoDisplayAudioPlayer_1 = require("./InfoDisplayAudioPlayer"),
+  LERP_PERCENTAGE = 0.3;
 class InfoDisplayTypeFourView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -31,12 +31,12 @@ class InfoDisplayTypeFourView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.lsi = () => {
         var i =
-          ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId();
-        var i =
-          ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayPictures(
-            i,
-          );
-        i.length > 0 &&
+            ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId(),
+          i =
+            ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayPictures(
+              i,
+            );
+        0 < i.length &&
           (ModelManager_1.ModelManager.InfoDisplayModel.SetCurrentOpenInformationTexture(
             i[0],
           ),
@@ -64,16 +64,16 @@ class InfoDisplayTypeFourView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnStart() {
     this.nsi = new InfoDisplayAudioPlayer_1.InfoDisplayAudioPlayer();
-    let i = this.GetItem(8);
-    const e =
-      (this.nsi.Initialize(i.GetOwner()),
-      this.nsi.SetShowTextComponent(this.GetText(6)),
-      this.nsi.SetSpectrumCallBack(this.hsi),
-      (this.ssi = new Array()),
-      this.GetItem(10));
+    var i = this.GetItem(8),
+      e =
+        (this.nsi.Initialize(i.GetOwner()),
+        this.nsi.SetShowTextComponent(this.GetText(6)),
+        this.nsi.SetSpectrumCallBack(this.hsi),
+        (this.ssi = new Array()),
+        this.GetItem(10));
     for (let i = 0; i < e.UIChildren.Num(); i++)
       this.ssi.push(e.UIChildren.Get(i)),
-        i === 0 && (this.asi = e.UIChildren.Get(i).Height);
+        0 === i && (this.asi = e.UIChildren.Get(i).Height);
     i = ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId();
     this.OPt(i),
       this.nsi.Refresh(
@@ -90,20 +90,20 @@ class InfoDisplayTypeFourView extends UiTickViewBase_1.UiTickViewBase {
       ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayPictures(
         i,
       );
-    i.length > 0 &&
-      (i = i[0]) !== "" &&
+    0 < i.length &&
+      "" !== (i = i[0]) &&
       this.SetTextureByPath(i, this.GetTexture(1));
   }
   $8e(i) {
     var e =
-      ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayTitle(
-        i,
-      );
-    var e =
-      (this.GetText(2).SetText(e),
-      ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayDesc(
-        i,
-      ));
+        ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayTitle(
+          i,
+        ),
+      e =
+        (this.GetText(2).SetText(e),
+        ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayDesc(
+          i,
+        ));
     this.GetText(4).SetText(e);
   }
   usi(i) {
@@ -111,24 +111,22 @@ class InfoDisplayTypeFourView extends UiTickViewBase_1.UiTickViewBase {
       ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayBgStamp(
         i,
       );
-    i !== "" && this.SetTextureByPath(i, this.GetTexture(7));
+    "" !== i && this.SetTextureByPath(i, this.GetTexture(7));
   }
   OnTick(i) {
     this.nsi?.OnTick(i);
   }
   msi(i) {
-    ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayAudio(
-      i,
-    ) !== ""
+    "" !==
+    ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayAudio(i)
       ? (this.GetItem(8).SetUIActive(!0), this.GetItem(9).SetUIActive(!0))
       : (this.GetItem(8).SetUIActive(!1), this.GetItem(9).SetUIActive(!1));
   }
   OnBeforeDestroy() {
     this.nsi.Destroy();
-    const i =
-      ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId();
+    var i = ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId();
     InfoDisplayController_1.InfoDisplayController.RequestReadDisplayInfo(i);
   }
 }
 exports.InfoDisplayTypeFourView = InfoDisplayTypeFourView;
-// # sourceMappingURL=InfoDisplayTypeFourView.js.map
+//# sourceMappingURL=InfoDisplayTypeFourView.js.map

@@ -1,28 +1,32 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, a, i) {
-    let o;
-    const s = arguments.length;
-    let r =
-      s < 3 ? e : i === null ? (i = Object.getOwnPropertyDescriptor(e, a)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      s = arguments.length,
+      r =
+        s < 3
+          ? e
+          : null === i
+            ? (i = Object.getOwnPropertyDescriptor(e, a))
+            : i;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(t, e, a, i);
     else
-      for (let n = t.length - 1; n >= 0; n--)
-        (o = t[n]) && (r = (s < 3 ? o(r) : s > 3 ? o(e, a, r) : o(e, a)) || r);
-    return s > 3 && r && Object.defineProperty(e, a, r), r;
+      for (var n = t.length - 1; 0 <= n; n--)
+        (o = t[n]) && (r = (s < 3 ? o(r) : 3 < s ? o(e, a, r) : o(e, a)) || r);
+    return 3 < s && r && Object.defineProperty(e, a, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelTagComponent = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../../GlobalData");
-const BaseTagComponent_1 = require("./BaseTagComponent");
-const shouldNotifyTagType = [2128634312, 992548024];
+const Log_1 = require("../../../../Core/Common/Log"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BaseTagComponent_1 = require("./BaseTagComponent"),
+  shouldNotifyTagType = [2128634312, 992548024];
 let LevelTagComponent = class LevelTagComponent extends BaseTagComponent_1.BaseTagComponent {
   constructor() {
     super(...arguments),
@@ -35,7 +39,7 @@ let LevelTagComponent = class LevelTagComponent extends BaseTagComponent_1.BaseT
   }
   set NotifyLock(t) {
     t !== this.fnn &&
-      ((this.fnn = t), this.fnn === 0) &&
+      ((this.fnn = t), 0 === this.fnn) &&
       this.NotifyTagChanged();
   }
   OnInitData() {
@@ -45,8 +49,8 @@ let LevelTagComponent = class LevelTagComponent extends BaseTagComponent_1.BaseT
       (this.zht = this.Entity.GetComponent(0)),
       this.zht)
     ) {
-      const t = this.zht.GetPbDataId();
-      const e = this.zht.GetCreatureDataId();
+      var t = this.zht.GetPbDataId(),
+        e = this.zht.GetCreatureDataId();
       for (const a of this.zht.GetEntityCommonTags())
         this.pnn(a),
           Log_1.Log.CheckDebug() &&
@@ -67,10 +71,10 @@ let LevelTagComponent = class LevelTagComponent extends BaseTagComponent_1.BaseT
   }
   OnStart() {
     super.OnStart();
-    var t = this.Entity.GetComponent(0);
-    var t =
-      (t?.IsConcealed && this.AddTag(1227933697),
-      t?.GetModelComponent()?.PerformanceTags);
+    var t = this.Entity.GetComponent(0),
+      t =
+        (t?.IsConcealed && this.AddTag(1227933697),
+        t?.GetModelComponent()?.PerformanceTags);
     if (t)
       for (const e of t)
         GameplayTagUtils_1.GameplayTagUtils.IsChildTag(e, 991613615)
@@ -95,9 +99,9 @@ let LevelTagComponent = class LevelTagComponent extends BaseTagComponent_1.BaseT
   }
   GetTagNames() {
     if (GlobalData_1.GlobalData.IsPlayInEditor) {
-      const t = new Array();
+      var t = new Array();
       for (const a of this.GetTagIds()) {
-        const e = GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(a);
+        var e = GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(a);
         t.includes(e) || t.push(e);
       }
       return t;
@@ -123,7 +127,7 @@ let LevelTagComponent = class LevelTagComponent extends BaseTagComponent_1.BaseT
     this.NotifyLock++, this.RemoveTag(e), this.AddTag(t), this.NotifyLock--;
   }
   pnn(t) {
-    let e;
+    var e;
     this.HasTag(t) ||
       (void 0 === (e = GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(t))
         ? Log_1.Log.CheckError() &&
@@ -165,7 +169,7 @@ let LevelTagComponent = class LevelTagComponent extends BaseTagComponent_1.BaseT
   }
   SyncTagsFromServer(t) {
     for (const a of t) {
-      const e = a.Ukn;
+      var e = a.Ukn;
       a.y9n ? this.pnn(e) : this.vnn(e);
     }
   }
@@ -186,22 +190,22 @@ let LevelTagComponent = class LevelTagComponent extends BaseTagComponent_1.BaseT
         ]);
   }
   NotifyTagChanged() {
-    const t = [];
-    const e = [];
+    var t = [],
+      e = [];
     for (const s of this.gnn.keys()) {
-      const a = this.gnn.get(s);
-      const i = this.GetTagCountById(s);
-      a > 0 && i <= 0 ? e.push(s) : a <= 0 && i > 0 && t.push(s);
+      var a = this.gnn.get(s),
+        i = this.GetTagCountById(s);
+      0 < a && i <= 0 ? e.push(s) : a <= 0 && 0 < i && t.push(s);
     }
     this.gnn.clear();
     let o = !1;
-    if (t.length > 0)
+    if (0 < t.length)
       for (const r of t)
         if (this.Mnn(r)) {
           o = !0;
           break;
         }
-    if (!o && e.length > 0)
+    if (!o && 0 < e.length)
       for (const n of e)
         if (this.Mnn(n)) {
           o = !0;
@@ -235,4 +239,4 @@ let LevelTagComponent = class LevelTagComponent extends BaseTagComponent_1.BaseT
   LevelTagComponent,
 )),
   (exports.LevelTagComponent = LevelTagComponent);
-// # sourceMappingURL=LevelTagComponent.js.map
+//# sourceMappingURL=LevelTagComponent.js.map

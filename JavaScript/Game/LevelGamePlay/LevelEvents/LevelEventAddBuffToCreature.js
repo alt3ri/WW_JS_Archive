@@ -6,4 +6,4 @@ class LevelEventAddBuffToCreature extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, r) {}
 }
 exports.LevelEventAddBuffToCreature = LevelEventAddBuffToCreature;
-// # sourceMappingURL=LevelEventAddBuffToCreature.js.map
+//# sourceMappingURL=LevelEventAddBuffToCreature.js.map

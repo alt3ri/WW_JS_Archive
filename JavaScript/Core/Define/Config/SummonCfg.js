@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SummonCfg = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const DicIntIntArray_1 = require("./SubType/DicIntIntArray");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  DicIntIntArray_1 = require("./SubType/DicIntIntArray");
 class SummonCfg {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -50,38 +50,38 @@ class SummonCfg {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   blueprinttype(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   survivaltime() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 3;
   }
   inheritleveltype() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   inheritlevelparam() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   attributetype() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   inheritattributebasetype() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetInheritsummonerattributeAt(t, i) {
     return this.inheritsummonerattribute(t);
   }
   inheritsummonerattribute(t, i) {
-    const r = this.J7.__offset(this.z7, 18);
+    var r = this.J7.__offset(this.z7, 18);
     return r
       ? (i || new DicIntIntArray_1.DicIntIntArray()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -90,22 +90,22 @@ class SummonCfg {
       : null;
   }
   inheritsummonerattributeLength() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetBornbuffidAt(t) {
     return this.bornbuffid(t);
   }
   bornbuffid(t) {
-    const i = this.J7.__offset(this.z7, 20);
+    var i = this.J7.__offset(this.z7, 20);
     return i
       ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
       : BigInt(0);
   }
   bornbuffidLength() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.SummonCfg = SummonCfg;
-// # sourceMappingURL=SummonCfg.js.map
+//# sourceMappingURL=SummonCfg.js.map

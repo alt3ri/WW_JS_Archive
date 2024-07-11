@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityTurntableConfig = void 0);
-const TurntableActivityByActivityId_1 = require("../../../../../Core/Define/ConfigQuery/TurntableActivityByActivityId");
-const TurntableAwardsByActivityId_1 = require("../../../../../Core/Define/ConfigQuery/TurntableAwardsByActivityId");
-const TurntableInfoById_1 = require("../../../../../Core/Define/ConfigQuery/TurntableInfoById");
-const ConfigBase_1 = require("../../../../../Core/Framework/ConfigBase");
+const TurntableActivityByActivityId_1 = require("../../../../../Core/Define/ConfigQuery/TurntableActivityByActivityId"),
+  TurntableAwardsByActivityId_1 = require("../../../../../Core/Define/ConfigQuery/TurntableAwardsByActivityId"),
+  TurntableInfoById_1 = require("../../../../../Core/Define/ConfigQuery/TurntableInfoById"),
+  ConfigBase_1 = require("../../../../../Core/Framework/ConfigBase");
 class ActivityTurntableConfig extends ConfigBase_1.ConfigBase {
   GetTurntableAwardsByActivityId(t) {
     return (
@@ -25,4 +25,4 @@ class ActivityTurntableConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.ActivityTurntableConfig = ActivityTurntableConfig;
-// # sourceMappingURL=ActivityTurntableConfig.js.map
+//# sourceMappingURL=ActivityTurntableConfig.js.map

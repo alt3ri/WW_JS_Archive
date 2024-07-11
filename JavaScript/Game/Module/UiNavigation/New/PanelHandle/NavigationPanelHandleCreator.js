@@ -6,8 +6,8 @@ class NavigationPanelHandleCreator {
     NavigationPanelHandleCreator.awo.set(a, e);
   }
   static GetPanelHandle(a) {
-    let e = NavigationPanelHandleCreator.awo.get(a);
-    let t = a;
+    let e = NavigationPanelHandleCreator.awo.get(a),
+      t = a;
     return (
       e ||
         ((e = NavigationPanelHandleCreator.awo.get("Default")),
@@ -18,4 +18,4 @@ class NavigationPanelHandleCreator {
 }
 (exports.NavigationPanelHandleCreator = NavigationPanelHandleCreator).awo =
   new Map();
-// # sourceMappingURL=NavigationPanelHandleCreator.js.map
+//# sourceMappingURL=NavigationPanelHandleCreator.js.map

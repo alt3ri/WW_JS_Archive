@@ -1,35 +1,35 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TsInteractionUtils = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const LevelGeneralContextDefine_1 = require("../../LevelGamePlay/LevelGeneralContextDefine");
-const LevelGeneralContextUtil_1 = require("../../LevelGamePlay/LevelGeneralContextUtil");
-const LevelGeneralNetworks_1 = require("../../LevelGamePlay/LevelGeneralNetworks");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiConfig_1 = require("../../Ui/Define/UiConfig");
-const UiLayerType_1 = require("../../Ui/Define/UiLayerType");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const UiManager_1 = require("../../Ui/UiManager");
-const WaitEntityTask_1 = require("../../World/Define/WaitEntityTask");
+const Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  LevelGeneralContextDefine_1 = require("../../LevelGamePlay/LevelGeneralContextDefine"),
+  LevelGeneralContextUtil_1 = require("../../LevelGamePlay/LevelGeneralContextUtil"),
+  LevelGeneralNetworks_1 = require("../../LevelGamePlay/LevelGeneralNetworks"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiConfig_1 = require("../../Ui/Define/UiConfig"),
+  UiLayerType_1 = require("../../Ui/Define/UiLayerType"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  WaitEntityTask_1 = require("../../World/Define/WaitEntityTask");
 class TsInteractionUtils {
   static GetInteractionConfig(e) {
     return DataTableUtil_1.DataTableUtil.GetDataTableRowFromName(8, e);
   }
   static HandleInteractionOptionFromVision(e, t, n) {
-    let i, r;
-    e.OptionType === 0 &&
+    var i, r;
+    0 === e.OptionType &&
       (r = e.Type) &&
       r.Actions &&
-      r.Actions.length === 1 &&
-      r.Actions[0].Name === "Collect" &&
+      1 === r.Actions.length &&
+      "Collect" === r.Actions[0].Name &&
       (i = EntitySystem_1.EntitySystem.GetComponent(n, 0)) &&
       (t.HandleInteractRequest(),
       (r = e.InstanceId - 1),
@@ -57,7 +57,7 @@ class TsInteractionUtils {
           EventDefine_1.EEventName.DynamicInteractServerResponse,
           t.Guid,
         ),
-        t.OptionType !== 3 &&
+        3 !== t.OptionType &&
           Global_1.Global.BaseCharacter.CharacterActorComponent?.Entity?.GetComponent(
             57,
           )?.CollectSampleAndSend(!0),
@@ -103,11 +103,11 @@ class TsInteractionUtils {
             );
           break;
         case 3:
-          if (t.Type.Type === "Flow")
+          if ("Flow" === t.Type.Type)
             Log_1.Log.CheckError() &&
               Log_1.Log.Error("Plot", 18, "交互触发剧情必须由服务端下发"),
               n?.OnInteractActionEnd && n.OnInteractActionEnd();
-          else if (t.Type.Type === "Actions") {
+          else if ("Actions" === t.Type.Type) {
             n?.HandleInteractClientAction();
             let e = t.Context;
             (e = e
@@ -177,7 +177,7 @@ class TsInteractionUtils {
           8,
           "[InteractionDebug]尝试打开交互界面，开始打开交互界面",
         );
-    const e = await UiManager_1.UiManager.OpenViewAsync("InteractionHintView");
+    var e = await UiManager_1.UiManager.OpenViewAsync("InteractionHintView");
     return (
       (TsInteractionUtils.G1i = void 0 !== e),
       Log_1.Log.CheckDebug() &&
@@ -301,9 +301,9 @@ class TsInteractionUtils {
             if (t) {
               t = t.GetInteractController();
               if (t) {
-                let n = t.GetOptionByIndex(e);
+                var n = t.GetOptionByIndex(e);
                 if (n)
-                  if (n.Type.Type !== "Actions")
+                  if ("Actions" !== n.Type.Type)
                     Log_1.Log.CheckWarn() &&
                       Log_1.Log.Warn(
                         "Interaction",
@@ -311,7 +311,7 @@ class TsInteractionUtils {
                         "[基础交互选项继续执行]实体当前交互不是行为",
                       );
                   else {
-                    const i = n.Type;
+                    var i = n.Type;
                     let e = n.Context;
                     if (
                       (e = e
@@ -381,17 +381,17 @@ class TsInteractionUtils {
     );
   }
   static HandleEntityDynamicInteractByServerNotify(e, t) {
-    let n;
-    let i;
-    let r;
-    const a =
-      LevelGeneralContextUtil_1.LevelGeneralContextUtil.CreateByServerContext(
-        e?.Hms,
-      );
+    var n,
+      i,
+      r,
+      a =
+        LevelGeneralContextUtil_1.LevelGeneralContextUtil.CreateByServerContext(
+          e?.Hms,
+        );
     a
       ? (t = (n =
           ModelManager_1.ModelManager.InteractionModel).GetDynamicConfig(t))
-        ? t.Type.Type !== "Actions"
+        ? "Actions" !== t.Type.Type
           ? Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Interaction",
@@ -445,4 +445,4 @@ class TsInteractionUtils {
     _a.WaitOpenViewName && _a.O1i(_a.WaitOpenViewName, void 0),
       _a.k1i && _a.$Ge(_a.k1i);
   });
-// # sourceMappingURL=TsInteractionUtils.js.map
+//# sourceMappingURL=TsInteractionUtils.js.map

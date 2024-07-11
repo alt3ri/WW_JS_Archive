@@ -4,23 +4,23 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.BulletDataCacheInfo =
     exports.PreloadBulletConfig =
       void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Stats_1 = require("../../../Core/Common/Stats");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil");
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const GlobalData_1 = require("../../GlobalData");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const BulletDataMain_1 = require("./BulletConf/BulletDataMain");
-const bulletDtPath = [
-  void 0,
-  void 0,
-  "/Game/Aki/Data/Fight/DT_CommonBulletDataMain_Rogue.DT_CommonBulletDataMain_Rogue",
-];
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  GlobalData_1 = require("../../GlobalData"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  BulletDataMain_1 = require("./BulletConf/BulletDataMain"),
+  bulletDtPath = [
+    void 0,
+    void 0,
+    "/Game/Aki/Data/Fight/DT_CommonBulletDataMain_Rogue.DT_CommonBulletDataMain_Rogue",
+  ];
 class PreloadBulletConfig {
   constructor() {
     (this.ModelId = 0),
@@ -45,12 +45,12 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
     super(...arguments), (this.O8o = []), (this.k8o = void 0);
   }
   static RemoveCacheBulletDataByEntityId(e) {
-    let t;
-    const l = BulletConfig.F8o.get(e);
+    var t,
+      l = BulletConfig.F8o.get(e);
     l &&
       (BulletConfig.F8o.delete(e),
       (t = BulletConfig.V8o.get(l))
-        ? (t.EntityCount--, t.EntityCount === 0 && BulletConfig.V8o.delete(l))
+        ? (t.EntityCount--, 0 === t.EntityCount && BulletConfig.V8o.delete(l))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Bullet",
@@ -66,26 +66,26 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
       BulletConfig.F8o.clear();
   }
   GetBulletData(e, t, l = !0, a = -1) {
-    const o = e.CheckGetComponent(33);
-    const i = e.Id;
-    let r = BulletConfig.F8o.get(i);
-    let n = !0;
-    let u =
-      (r || ((r = e.CheckGetComponent(0).GetModelId()), (n = !1)),
-      BulletConfig.V8o.get(r));
+    var o = e.CheckGetComponent(33),
+      i = e.Id;
+    let r = BulletConfig.F8o.get(i),
+      n = !0,
+      u =
+        (r || ((r = e.CheckGetComponent(0).GetModelId()), (n = !1)),
+        BulletConfig.V8o.get(r));
     if (u) {
       var s = u.BulletDataMap.get(t);
       if (s) return n || (BulletConfig.F8o.set(i, r), u.EntityCount++), s;
     }
     let f = this.j8o(a, t);
     if (f) return f;
-    let g = void 0;
-    let B = void 0;
-    let _ =
-      ((B = u
-        ? ((g = u.DataTable), u.DataTableExtra)
-        : ((g = o.DtBulletInfo), o.DtBulletInfoExtra)),
-      DataTableUtil_1.DataTableUtil.GetDataTableRow(g, t));
+    let g = void 0,
+      B = void 0,
+      _ =
+        ((B = u
+          ? ((g = u.DataTable), u.DataTableExtra)
+          : ((g = o.DtBulletInfo), o.DtBulletInfoExtra)),
+        DataTableUtil_1.DataTableUtil.GetDataTableRow(g, t));
     if ((_ = _ || DataTableUtil_1.DataTableUtil.GetDataTableRow(B, t))) {
       const f = new BulletDataMain_1.BulletDataMain(_, t);
       return f.CheckValid()
@@ -117,15 +117,15 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
       );
   }
   j8o(e, t) {
-    if (e === -1)
+    if (-1 === e)
       for (const o of BulletConfig.H8o.values()) {
-        const l = o.BulletDataMap.get(t);
+        var l = o.BulletDataMap.get(t);
         if (l) return l;
       }
-    else if (e !== 0) {
+    else if (0 !== e) {
       const o = BulletConfig.H8o.get(e);
       if (o) {
-        const a = o.BulletDataMap.get(t);
+        var a = o.BulletDataMap.get(t);
         if (a) return a;
       } else
         Log_1.Log.CheckError() &&
@@ -139,7 +139,7 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
     }
   }
   W8o(e, t) {
-    if (e === -1)
+    if (-1 === e)
       for (const a of BulletConfig.H8o.values()) {
         const o = DataTableUtil_1.DataTableUtil.GetDataTableRow(a.DataTable, t);
         var l;
@@ -192,15 +192,15 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
     this.K8o(1),
       ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike() &&
         this.K8o(2);
-    const e = ConfigManager_1.ConfigManager.WorldConfig.GetCommonBulletData();
+    var e = ConfigManager_1.ConfigManager.WorldConfig.GetCommonBulletData();
     return this.X8o(e, void 0, 0, 0, preloadCommonBulletRowNames), !0;
   }
   K8o(t) {
-    let l;
-    let a = BulletConfig.H8o.get(t);
+    var l,
+      a = BulletConfig.H8o.get(t);
     if (!a) {
       let e = void 0;
-      t === 1
+      1 === t
         ? (e = ConfigManager_1.ConfigManager.WorldConfig.GetCommonBulletData())
         : (l = bulletDtPath[t]) &&
           (e = ResourceSystem_1.ResourceSystem.SyncLoad(l, UE.DataTable)),
@@ -212,7 +212,7 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
     }
   }
   PreloadBulletData(e) {
-    let t, l;
+    var t, l;
     e?.GetComponent(0)?.IsRole() &&
       ((t = e.CheckGetComponent(33)),
       (l = e.CheckGetComponent(0).GetModelId()),
@@ -228,15 +228,15 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
       let t = i;
       if (!t) {
         t = [];
-        var i = (0, puerts_1.$ref)(void 0);
-        const r =
-          (UE.DataTableFunctionLibrary.GetDataTableRowNames(e, i),
-          (0, puerts_1.$unref)(i));
+        var i = (0, puerts_1.$ref)(void 0),
+          r =
+            (UE.DataTableFunctionLibrary.GetDataTableRowNames(e, i),
+            (0, puerts_1.$unref)(i));
         if (!r) return;
-        const n = r.Num();
+        var n = r.Num();
         if (n <= 0) return;
         for (let e = 0; e < n; e++) {
-          const u = r.Get(e).toString();
+          var u = r.Get(e).toString();
           t.push(u);
         }
       }
@@ -258,16 +258,16 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
   TickPreload() {
     if (this.k8o) {
       if (this.k8o.RowNames.length <= this.k8o.CurIndex) {
-        if (this.O8o.length === 0) return void (this.k8o = void 0);
+        if (0 === this.O8o.length) return void (this.k8o = void 0);
         if (
           ((this.k8o = this.O8o.pop()),
           this.k8o.RowNames.length <= this.k8o.CurIndex)
         )
           return;
       }
-      let e;
-      let t;
-      const l = BulletConfig.V8o.get(this.k8o.ModelId);
+      var e,
+        t,
+        l = BulletConfig.V8o.get(this.k8o.ModelId);
       l
         ? ((e = this.k8o.RowNames[this.k8o.CurIndex]),
           (t = DataTableUtil_1.DataTableUtil.GetDataTableRow(
@@ -300,4 +300,4 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
   (BulletConfig.V8o = new Map()),
   (BulletConfig.H8o = new Map()),
   (BulletConfig.F8o = new Map());
-// # sourceMappingURL=BulletConfig.js.map
+//# sourceMappingURL=BulletConfig.js.map

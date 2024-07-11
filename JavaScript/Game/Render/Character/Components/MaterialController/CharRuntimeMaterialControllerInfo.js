@@ -7,17 +7,17 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.CharMaterialControlFloatGroup =
     exports.InterpolateFactor =
       void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Stats_1 = require("../../../../../Core/Common/Stats");
-const TickSystem_1 = require("../../../../../Core/Tick/TickSystem");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../../GlobalData");
-const RenderConfig_1 = require("../../../Config/RenderConfig");
-const RenderModuleConfig_1 = require("../../../Manager/RenderModuleConfig");
-const RenderModuleController_1 = require("../../../Manager/RenderModuleController");
-const RenderUtil_1 = require("../../../Utils/RenderUtil");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../../Core/Common/Stats"),
+  TickSystem_1 = require("../../../../../Core/Tick/TickSystem"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  RenderConfig_1 = require("../../../Config/RenderConfig"),
+  RenderModuleConfig_1 = require("../../../Manager/RenderModuleConfig"),
+  RenderModuleController_1 = require("../../../Manager/RenderModuleController"),
+  RenderUtil_1 = require("../../../Utils/RenderUtil");
 class InterpolateFactor {
   constructor() {
     (this.M6o = 0), (this.Factor = 0);
@@ -169,35 +169,35 @@ class CharMaterialControlDataCache {
       (this.StatCharMaterialControlCacheData = void 0),
       (this.RefCount = 0),
       (this.DataType = t.DataType);
-    var i = t.LoopTime;
-    const h =
-      ((this.DataLoopEnd = i.End),
-      (this.DataLoopStart = i.Start),
-      (this.DataLoopTime = i.Loop),
-      (this.WholeLoopTime =
-        this.DataLoopStart + this.DataLoopTime + this.DataLoopEnd),
-      (this.IgnoreTimeDilation = t.IgnoreTimeDilation),
-      (this.SpecifiedBodyType = t.SpecifiedBodyType),
-      (this.SpecifiedSlotType = t.SpecifiedSlotType),
-      (this.MaterialModifyType = t.MaterialModifyType),
-      t.OtherCases);
+    var i = t.LoopTime,
+      h =
+        ((this.DataLoopEnd = i.End),
+        (this.DataLoopStart = i.Start),
+        (this.DataLoopTime = i.Loop),
+        (this.WholeLoopTime =
+          this.DataLoopStart + this.DataLoopTime + this.DataLoopEnd),
+        (this.IgnoreTimeDilation = t.IgnoreTimeDilation),
+        (this.SpecifiedBodyType = t.SpecifiedBodyType),
+        (this.SpecifiedSlotType = t.SpecifiedSlotType),
+        (this.MaterialModifyType = t.MaterialModifyType),
+        t.OtherCases);
     let s = h.Num();
-    if (s > 0) {
+    if (0 < s) {
       this.OtherCases = new Set();
       for (let i = 0; i < s; i++) this.OtherCases.add(h.Get(i));
     }
-    const o = t.WeaponCases;
-    if ((s = o.Num()) > 0) {
+    var o = t.WeaponCases;
+    if (0 < (s = o.Num())) {
       this.WeaponCases = new Set();
       for (let i = 0; i < s; i++) this.WeaponCases.add(o.Get(i));
     }
-    const r = t.SpecifiedParts;
-    if ((s = r.Num()) > 0) {
+    var r = t.SpecifiedParts;
+    if (0 < (s = r.Num())) {
       this.SpecifiedParts = new Array(s);
       for (let i = 0; i < s; i++) this.SpecifiedParts[i] = r.Get(i);
     }
-    const a = t.CustomPartNames;
-    if ((s = a.Num()) > 0) {
+    var a = t.CustomPartNames;
+    if (0 < (s = a.Num())) {
       this.CustomPartNames = new Array(s);
       for (let i = 0; i < s; i++) this.CustomPartNames[i] = a.Get(i);
     }
@@ -231,7 +231,7 @@ class CharMaterialControlDataCache {
       this.UseDissolve &&
         ((i = t.DissolveChannel),
         (this.DissolveChannel =
-          i === 0
+          0 === i
             ? new UE.LinearColor(1, 0, 0, 0)
             : RenderUtil_1.RenderUtil.GetSelectedChannel(t.DissolveChannel)),
         (i = t.DissolveProgress),
@@ -291,12 +291,12 @@ class CharMaterialControlDataCache {
     ) {
       (this.UseParameterModify = t.UseParameterModify),
         (this.RevertMaterial = t.RevertMaterial);
-      const e = t.ColorParameters;
-      if ((s = e.Num()) > 0) {
+      var e = t.ColorParameters;
+      if (0 < (s = e.Num())) {
         (this.ColorParameterNames = new Array()),
           (this.ColorParameterValues = new Array());
         for (let i = 0; i < s; i++) {
-          let l = e.Get(i);
+          var l = e.Get(i);
           l.ParameterName.op_Equality(FNameUtil_1.FNameUtil.NONE) ||
             (this.ColorParameterNames.push(l.ParameterName),
             (l = l.ParameterValue),
@@ -309,12 +309,12 @@ class CharMaterialControlDataCache {
             ));
         }
       }
-      const d = t.FloatParameters;
-      if ((s = d.Num()) > 0) {
+      var d = t.FloatParameters;
+      if (0 < (s = d.Num())) {
         (this.FloatParameterNames = new Array()),
           (this.FloatParameterValues = new Array());
         for (let i = 0; i < s; i++) {
-          let v = d.Get(i);
+          var v = d.Get(i);
           v.ParameterName.op_Equality(FNameUtil_1.FNameUtil.NONE) ||
             (this.FloatParameterNames.push(v.ParameterName),
             (v = v.ParameterValue),
@@ -385,35 +385,35 @@ class CharMaterialControlDataCache {
         default:
           this.UvSelection = new UE.LinearColor(0, 0, 0, 0);
       }
-      var i = t.TextureScaleAndOffset;
-      var i =
-        ((this.TextureScaleAndOffset = new CharMaterialControlColorGroup(
-          this.DataLoopEnd ? i.End : void 0,
-          this.DataLoopTime ? i.Loop : void 0,
-          this.DataLoopStart ? i.Start : void 0,
-        )),
-        t.TextureSpeed);
-      var i =
-        ((this.TextureSpeed = new CharMaterialControlColorGroup(
-          this.DataLoopEnd ? i.End : void 0,
-          this.DataLoopTime ? i.Loop : void 0,
-          this.DataLoopStart ? i.Start : void 0,
-        )),
-        t.TextureColorTint);
-      var i =
-        ((this.TextureColorTint = new CharMaterialControlColorGroup(
-          this.DataLoopEnd ? i.End : void 0,
-          this.DataLoopTime ? i.Loop : void 0,
-          this.DataLoopStart ? i.Start : void 0,
-        )),
-        t.Rotation);
-      var i =
-        ((this.Rotation = new CharMaterialControlFloatGroup(
-          this.DataLoopEnd ? i.End : void 0,
-          this.DataLoopTime ? i.Loop : void 0,
-          this.DataLoopStart ? i.Start : void 0,
-        )),
-        t.TextureMaskRange);
+      var i = t.TextureScaleAndOffset,
+        i =
+          ((this.TextureScaleAndOffset = new CharMaterialControlColorGroup(
+            this.DataLoopEnd ? i.End : void 0,
+            this.DataLoopTime ? i.Loop : void 0,
+            this.DataLoopStart ? i.Start : void 0,
+          )),
+          t.TextureSpeed),
+        i =
+          ((this.TextureSpeed = new CharMaterialControlColorGroup(
+            this.DataLoopEnd ? i.End : void 0,
+            this.DataLoopTime ? i.Loop : void 0,
+            this.DataLoopStart ? i.Start : void 0,
+          )),
+          t.TextureColorTint),
+        i =
+          ((this.TextureColorTint = new CharMaterialControlColorGroup(
+            this.DataLoopEnd ? i.End : void 0,
+            this.DataLoopTime ? i.Loop : void 0,
+            this.DataLoopStart ? i.Start : void 0,
+          )),
+          t.Rotation),
+        i =
+          ((this.Rotation = new CharMaterialControlFloatGroup(
+            this.DataLoopEnd ? i.End : void 0,
+            this.DataLoopTime ? i.Loop : void 0,
+            this.DataLoopStart ? i.Start : void 0,
+          )),
+          t.TextureMaskRange);
       (this.TextureMaskRange = new CharMaterialControlFloatGroup(
         this.DataLoopEnd ? i.End : void 0,
         this.DataLoopTime ? i.Loop : void 0,
@@ -447,12 +447,12 @@ class CharMaterialControlDataCache {
       this.UseCustomMaterialEffect)
     ) {
       this.CustomRevertProperty = t.CustomRevertProperty;
-      const n = t.CustomColorParameters;
-      if ((s = n.Num()) > 0) {
+      var n = t.CustomColorParameters;
+      if (0 < (s = n.Num())) {
         (this.CustomColorParameterNames = new Array()),
           (this.CustomColorParameterValues = new Array());
         for (let i = 0; i < s; i++) {
-          let C = n.Get(i);
+          var C = n.Get(i);
           C.ParameterName.op_Equality(FNameUtil_1.FNameUtil.NONE) ||
             (this.CustomColorParameterNames.push(C.ParameterName),
             (C = C.ParameterValue),
@@ -465,12 +465,12 @@ class CharMaterialControlDataCache {
             ));
         }
       }
-      const c = t.CustomFloatParameters;
-      if ((s = c.Num()) > 0) {
+      var c = t.CustomFloatParameters;
+      if (0 < (s = c.Num())) {
         (this.CustomFloatParameterNames = new Array()),
           (this.CustomFloatParameterValues = new Array());
         for (let i = 0; i < s; i++) {
-          let M = c.Get(i);
+          var M = c.Get(i);
           M.ParameterName.op_Equality(FNameUtil_1.FNameUtil.NONE) ||
             (this.CustomFloatParameterNames.push(M.ParameterName),
             (M = M.ParameterValue),
@@ -483,12 +483,12 @@ class CharMaterialControlDataCache {
             ));
         }
       }
-      const u = t.CustomTextureParameters;
-      if ((s = u.Num()) > 0) {
+      var u = t.CustomTextureParameters;
+      if (0 < (s = u.Num())) {
         (this.CustomTextureParameterNames = new Array()),
           (this.CustomTextureParameterValues = new Array());
         for (let i = 0; i < s; i++) {
-          let p = u.Get(i);
+          var p = u.Get(i);
           p.ParameterName.op_Equality(FNameUtil_1.FNameUtil.NONE) ||
             (this.CustomTextureParameterNames.push(p.ParameterName),
             (p = p.ParameterValue),
@@ -514,18 +514,18 @@ class CharMaterialControlDataCacheMgr {
       (this.gW = void 0),
       (this.e8 = 0),
       (this.r6 = (i) => {
-        if (((this.e8 -= i), !(this.e8 > 0))) {
+        if (((this.e8 -= i), !(0 < this.e8))) {
           var i = GlobalData_1.GlobalData.IsPlayInEditor
-            ? CharMaterialControlDataCacheMgr.Ohr
-            : CharMaterialControlDataCacheMgr.khr;
-          const t = i - this.e8;
+              ? CharMaterialControlDataCacheMgr.Ohr
+              : CharMaterialControlDataCacheMgr.khr,
+            t = i - this.e8;
           for (const s of this.DataCacheGcCountDownTime.keys()) {
-            const h = this.DataCacheGcCountDownTime.get(s) - t;
+            var h = this.DataCacheGcCountDownTime.get(s) - t;
             h <= 0
               ? this.WaitingRemoveDataCacheNames.push(s)
               : this.DataCacheGcCountDownTime.set(s, h);
           }
-          if (this.WaitingRemoveDataCacheNames.length > 0) {
+          if (0 < this.WaitingRemoveDataCacheNames.length) {
             for (const o of this.WaitingRemoveDataCacheNames)
               this.DataCacheGcCountDownTime.delete(o),
                 this.DataCacheMap.has(o) && this.DataCacheMap.delete(o);
@@ -558,7 +558,7 @@ class CharMaterialControlDataCacheMgr {
   }
   GetOrCreateDataCache(t) {
     if (t) {
-      const h = t.GetName();
+      var h = t.GetName();
       let i = this.DataCacheMap.get(h);
       return (
         i ||
@@ -572,8 +572,8 @@ class CharMaterialControlDataCacheMgr {
     }
   }
   RecycleDataCache(i) {
-    let t;
-    const h = this.DataCacheMap.get(i);
+    var t,
+      h = this.DataCacheMap.get(i);
     h
       ? (--h.RefCount,
         h.RefCount <= 0 &&
@@ -673,41 +673,41 @@ class CharMaterialControlRuntimeData {
   }
   SetSpecifiedMaterialIndex(t) {
     (this.SelectedAllBodies =
-      this.DataCache.SpecifiedBodyType === 0 &&
+      0 === this.DataCache.SpecifiedBodyType &&
       void 0 === this.DataCache.WeaponCases &&
       void 0 === this.DataCache.OtherCases),
       (this.SelectedAllParts =
-        this.DataCache.SpecifiedSlotType === 0 &&
+        0 === this.DataCache.SpecifiedSlotType &&
         void 0 === this.DataCache.SpecifiedParts &&
         void 0 === this.DataCache.CustomPartNames);
-    const h = RenderConfig_1.RenderConfig.GetBodyNamesByBodyType(
+    var h = RenderConfig_1.RenderConfig.GetBodyNamesByBodyType(
       this.DataCache.SpecifiedBodyType,
     );
     if (h)
       for (let i = 0; i < h.length; i++) {
-        const s = h[i];
-        const o = t.AllBodyInfoList.get(s);
+        var s = h[i],
+          o = t.AllBodyInfoList.get(s);
         if (o) {
-          const r = o.BodyType;
+          var r = o.BodyType;
           if (
-            (r !== 1 ||
+            (1 !== r ||
               void 0 === this.DataCache.WeaponCases ||
               this.DataCache.WeaponCases.has(s)) &&
-            (r !== 3 ||
+            (3 !== r ||
               void 0 === this.DataCache.OtherCases ||
               this.DataCache.OtherCases.has(s))
           ) {
-            const a = o.SpecifiedSlotList[this.DataCache.SpecifiedSlotType];
-            const e = new Array();
+            var a = o.SpecifiedSlotList[this.DataCache.SpecifiedSlotType],
+              e = new Array();
             for (let h = 0; h < a.length; h++) {
-              const l = a[h];
-              const d = o.MaterialSlotList[l];
-              let t = !1;
-              let i = !0;
-              const v = this.DataCache.SpecifiedParts;
+              var l = a[h],
+                d = o.MaterialSlotList[l];
+              let t = !1,
+                i = !0;
+              var v = this.DataCache.SpecifiedParts;
               if (void 0 !== v) {
-                const n = v.length;
-                if (n > 0) {
+                var n = v.length;
+                if (0 < n) {
                   i = !1;
                   for (let i = 0; i < n; i++)
                     if (d.MaterialPartType === v[i]) {
@@ -716,10 +716,10 @@ class CharMaterialControlRuntimeData {
                     }
                 }
               }
-              const C = this.DataCache.CustomPartNames;
+              var C = this.DataCache.CustomPartNames;
               if (void 0 !== C) {
-                const c = C.length;
-                if (c > 0) {
+                var c = C.length;
+                if (0 < c) {
                   i = !1;
                   for (let i = 0; i < c; i++)
                     if (d.SlotName.includes(C[i])) {
@@ -750,7 +750,7 @@ class CharMaterialControlRuntimeData {
           "RuntimeData UpdateState: 已经结束的效果，还在更新",
           ["id", this.Id],
         );
-    else if (this.DataCache.DataType !== 2)
+    else if (2 !== this.DataCache.DataType)
       if (this.DataCache.WholeLoopTime <= 0)
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("RenderCharacter", 41, "材质控制器的总时长需大于0", [
@@ -759,7 +759,7 @@ class CharMaterialControlRuntimeData {
           ]),
           (this.IsDead = !0);
       else if (
-        this.DataCache.DataType === 1 &&
+        1 === this.DataCache.DataType &&
         this.DataCache.DataLoopTime <= 0
       )
         Log_1.Log.CheckError() &&
@@ -787,7 +787,7 @@ class CharMaterialControlRuntimeData {
             0,
             1,
           )),
-          this.DataCache.DataType === 0 &&
+          0 === this.DataCache.DataType &&
             this.CurrentTimeCounter >= this.DataCache.WholeLoopTime - i &&
             (this.IsDead = !0),
           this.ReadyToDie &&
@@ -800,24 +800,24 @@ class CharMaterialControlRuntimeData {
       this.IsDead ? i.StateRevert(this) : i.StateUpdate(this);
   }
   Whr(i) {
-    const t = this.DataCache.DataLoopStart;
-    const h = this.DataCache.DataLoopTime;
+    var t = this.DataCache.DataLoopStart,
+      h = this.DataCache.DataLoopTime;
     !this.ReadyToDie && this.WholeLoopTimeCounter <= t - i
-      ? (this.InterpolateFactor.Type !== 0 && (this.LoopTimeCounter = 0),
+      ? (0 !== this.InterpolateFactor.Type && (this.LoopTimeCounter = 0),
         (this.InterpolateFactor.Type = 0))
       : !this.ReadyToDie && this.WholeLoopTimeCounter <= t + h - i
-        ? (this.InterpolateFactor.Type !== 1 && (this.LoopTimeCounter = 0),
+        ? (1 !== this.InterpolateFactor.Type && (this.LoopTimeCounter = 0),
           (this.InterpolateFactor.Type = 1))
         : this.WholeLoopTimeCounter <= this.DataCache.WholeLoopTime &&
-          (this.InterpolateFactor.Type !== 2 && (this.LoopTimeCounter = 0),
-          this.ReadyToDie || this.DataCache.DataType !== 1
+          (2 !== this.InterpolateFactor.Type && (this.LoopTimeCounter = 0),
+          this.ReadyToDie || 1 !== this.DataCache.DataType
             ? (this.InterpolateFactor.Type = 2)
             : ((this.InterpolateFactor.Type = 1),
               (this.WholeLoopTimeCounter -= h)));
   }
   SetReadyToDie() {
-    if (((this.ReadyToDie = !0), this.InterpolateFactor.Type === 2)) {
-      const i = this.DataCache.WholeLoopTime - this.WholeLoopTimeCounter;
+    if (((this.ReadyToDie = !0), 2 === this.InterpolateFactor.Type)) {
+      var i = this.DataCache.WholeLoopTime - this.WholeLoopTimeCounter;
       if (i < this.DataCache.DataLoopEnd)
         return void (this.CurrentTimeCounter = this.DataCache.DataLoopEnd - i);
       Log_1.Log.CheckError() &&
@@ -834,14 +834,14 @@ class CharMaterialControlRuntimeData {
     this.CurrentTimeCounter = 0;
   }
   SetProgress(i) {
-    this.DataCache.DataType === 2 &&
+    2 === this.DataCache.DataType &&
       ((i = MathUtils_1.MathUtils.Clamp(i, 0, 1)),
       (i = this.DataCache.WholeLoopTime * i),
       this.Khr(i));
   }
   Khr(i) {
-    const t = this.DataCache.DataLoopStart;
-    const h = this.DataCache.DataLoopTime;
+    var t = this.DataCache.DataLoopStart,
+      h = this.DataCache.DataLoopTime;
     i <= t
       ? ((this.InterpolateFactor.Type = 0),
         (this.InterpolateFactor.Factor = MathUtils_1.MathUtils.SafeDivide(
@@ -880,4 +880,4 @@ class CharMaterialControlRuntimeData {
   }
 }
 exports.CharMaterialControlRuntimeData = CharMaterialControlRuntimeData;
-// # sourceMappingURL=CharRuntimeMaterialControllerInfo.js.map
+//# sourceMappingURL=CharRuntimeMaterialControllerInfo.js.map

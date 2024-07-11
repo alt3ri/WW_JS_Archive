@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRunCycleItem = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../../RedDot/RedDotController");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const ROME_ICON_PATH =
-  "/Game/Aki/UI/UIResources/Common/Atlas/SP_ComRomeText_0{0}.SP_ComRomeText_0{1}";
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../../RedDot/RedDotController"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  ROME_ICON_PATH =
+    "/Game/Aki/UI/UIResources/Common/Atlas/SP_ComRomeText_0{0}.SP_ComRomeText_0{1}";
 class ActivityRunCycleItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -20,7 +20,7 @@ class ActivityRunCycleItem extends UiPanelBase_1.UiPanelBase {
       (this.v2e = void 0),
       (this.M2e = !1),
       (this.jbe = (t) => {
-        t === 1 &&
+        1 === t &&
           this.ScrollViewDelegate.SelectGridProxy(
             this.GridIndex,
             this.DisplayIndex,
@@ -100,7 +100,7 @@ class ActivityRunCycleItem extends UiPanelBase_1.UiPanelBase {
     this.GetSprite(3).SetUIActive(this.v2e.GetIfRewardAllFinished()),
       this.GetSprite(8).SetUIActive(this.v2e.GetIfRewardAllFinished()),
       this.GetSprite(2).SetUIActive(!1);
-    const t = (this.GridIndex + 1).toString();
+    var t = (this.GridIndex + 1).toString();
     this.SetSpriteByPath(
       StringUtils_1.StringUtils.Format(ROME_ICON_PATH, t, t),
       this.GetSprite(7),
@@ -140,4 +140,4 @@ class ActivityRunCycleItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ActivityRunCycleItem = ActivityRunCycleItem;
-// # sourceMappingURL=ActivityRunCycleItem.js.map
+//# sourceMappingURL=ActivityRunCycleItem.js.map

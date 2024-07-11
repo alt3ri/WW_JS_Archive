@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayFirstPassView = void 0);
-const UE = require("ue");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const PublicUtil_1 = require("../../../../Game/Common/PublicUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const GameplayViewDefine_1 = require("./GameplayViewDefine");
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  PublicUtil_1 = require("../../../../Game/Common/PublicUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  GameplayViewDefine_1 = require("./GameplayViewDefine");
 class GameplayFirstPassView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments), (this.TimerId = void 0);
@@ -18,8 +18,8 @@ class GameplayFirstPassView extends UiViewBase_1.UiViewBase {
     ];
   }
   OnStart() {
-    let e;
-    let i = this.OpenParam;
+    var e,
+      i = this.OpenParam;
     i &&
       ((e = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
         i.InfoId ?? "",
@@ -47,4 +47,4 @@ class GameplayFirstPassView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.GameplayFirstPassView = GameplayFirstPassView;
-// # sourceMappingURL=GameplayFirstPassView.js.map
+//# sourceMappingURL=GameplayFirstPassView.js.map

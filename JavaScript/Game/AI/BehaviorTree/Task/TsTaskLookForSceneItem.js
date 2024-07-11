@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskLookForSceneItem extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -39,41 +39,41 @@ class TsTaskLookForSceneItem extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveTickAI(s, t, e) {
     this.InitTsVariables();
-    let r = s.AiController;
+    var r = s.AiController;
     if (r)
       if (this.TsOutBlackboardKey) {
-        const o = r.CharActorComp.ActorLocationProxy;
+        var o = r.CharActorComp.ActorLocationProxy;
         ModelManager_1.ModelManager.CreatureModel.GetEntitiesInRangeWithLocation(
           o,
           this.TsDetectDistance,
           1,
           this.TmpHandles,
         );
-        let e = MathUtils_1.MathUtils.Square(this.DetectDistance);
-        let i = void 0;
+        let e = MathUtils_1.MathUtils.Square(this.DetectDistance),
+          i = void 0;
         for (const _ of this.TmpHandles)
           if (_.Entity?.Active) {
-            const a = _.Entity.GetComponent(1).ActorLocationProxy;
-            const l = Vector_1.Vector.DistSquared(o, a);
+            var a = _.Entity.GetComponent(1).ActorLocationProxy,
+              l = Vector_1.Vector.DistSquared(o, a);
             if (!(l > e)) {
-              var h = _.Entity.GetComponent(0);
-              const n = h.GetBaseInfo()?.Category?.CollectType;
-              var h = h.GetBaseInfo()?.Category?.MainType;
+              var h = _.Entity.GetComponent(0),
+                n = h.GetBaseInfo()?.Category?.CollectType,
+                h = h.GetBaseInfo()?.Category?.MainType;
               let t = !1;
               !(t =
                 !(t =
                   !(t =
                     this.TsBotanyItem &&
-                    n === "Botany" &&
+                    "Botany" === n &&
                     _.Entity.GetComponent(178)?.IsOnlyCollectOption()
                       ? !0
                       : t) &&
                   this.TsMineralItem &&
-                  n === "Mineral"
+                  "Mineral" === n
                     ? !0
                     : t) &&
                 this.TsDropItem &&
-                h === "Drop"
+                "Drop" === h
                   ? !0
                   : t) ||
                 (this.TsNavigationOn &&
@@ -109,4 +109,4 @@ class TsTaskLookForSceneItem extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskLookForSceneItem;
-// # sourceMappingURL=TsTaskLookForSceneItem.js.map
+//# sourceMappingURL=TsTaskLookForSceneItem.js.map

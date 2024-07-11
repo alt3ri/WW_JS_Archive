@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const FunctionConditionByFunctionId_1 = require("../../../../Core/Define/ConfigQuery/FunctionConditionByFunctionId");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../RedDot/RedDotController");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const GeneralLogicTreeController_1 = require("../../GeneralLogicTree/GeneralLogicTreeController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const TickInterval = 1e3;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  FunctionConditionByFunctionId_1 = require("../../../../Core/Define/ConfigQuery/FunctionConditionByFunctionId"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../RedDot/RedDotController"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  GeneralLogicTreeController_1 = require("../../GeneralLogicTree/GeneralLogicTreeController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  TickInterval = 1e3;
 class QuestItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -93,18 +93,18 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
   }
   Tro(e) {
     var e = ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestTypeColor(
-      e.Type,
-    );
-    const t = this.GetSprite(5);
+        e.Type,
+      ),
+      t = this.GetSprite(5);
     StringUtils_1.StringUtils.IsEmpty(e)
       ? t.SetUIActive(!1)
       : (t.SetUIActive(!0), t.SetColor(UE.Color.FromHex(e)));
   }
   Lro() {
-    const e = ModelManager_1.ModelManager.QuestNewModel.GetQuestLockIconPath(
-      this.QuestId,
-    );
-    const t = this.GetSprite(1);
+    var e = ModelManager_1.ModelManager.QuestNewModel.GetQuestLockIconPath(
+        this.QuestId,
+      ),
+      t = this.GetSprite(1);
     StringUtils_1.StringUtils.IsEmpty(e) ||
     ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest()?.Id ===
       this.QuestId
@@ -121,7 +121,7 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
     );
   }
   UpdateTrackIconActive() {
-    const e = this.GetExtendToggle(4).ToggleState;
+    var e = this.GetExtendToggle(4).ToggleState;
     this.Aro(e),
       this.GetSprite(0).SetUIActive(
         this.QuestId ===
@@ -130,15 +130,15 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
   }
   Mro() {
     this.GetExtendToggle(4).OnStateChange.Add((e) => {
-      e === 1 && this.vro(this.QuestId);
+      1 === e && this.vro(this.QuestId);
     });
   }
   Q_t(e) {
     this.GetText(2).SetText(e.Name);
   }
   Rro(e) {
-    let t;
-    const i = this.GetText(3);
+    var t,
+      i = this.GetText(3);
     e.IsSuspend() ||
     !(t = e.GetCurrentActiveChildQuestNode()) ||
     !GeneralLogicTreeController_1.GeneralLogicTreeController.IsShowNodeTrackDistance(
@@ -151,10 +151,10 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
       : (LguiUtil_1.LguiUtil.SetLocalText(i, "Meter", t), i.SetUIActive(!0));
   }
   UpdateFunctionIcon(e) {
-    const t = this.GetTexture(8);
-    const i = this.GetSprite(9);
+    var t = this.GetTexture(8),
+      i = this.GetSprite(9);
     (e &&
-    e.Type === 7 &&
+    7 === e.Type &&
     e.FunctionId &&
     (e =
       FunctionConditionByFunctionId_1.configFunctionConditionByFunctionId.GetConfig(
@@ -170,18 +170,18 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
   }
   Uro(i) {
     this.Nwn = !1;
-    const r = i.IsQuestCanPreShow();
-    let n = i.IsSuspend() ?? !1;
-    const o = i.IsQuestHasRecommendPreQuest() ?? !1;
-    const s = i.HasRefOccupiedEntity() ?? !1;
-    const a = this.GetText(10);
-    let l = ModelManager_1.ModelManager.QuestNewModel.GetQuestBindingActivityId(
-      i.Id,
-    );
+    var r = i.IsQuestCanPreShow(),
+      n = i.IsSuspend() ?? !1,
+      o = i.IsQuestHasRecommendPreQuest() ?? !1,
+      s = i.HasRefOccupiedEntity() ?? !1,
+      a = this.GetText(10),
+      l = ModelManager_1.ModelManager.QuestNewModel.GetQuestBindingActivityId(
+        i.Id,
+      );
     if (r || n || o || s || l) {
       a.SetUIActive(!0);
-      let e = "";
-      let t = "";
+      let e = "",
+        t = "";
       if (n)
         (e = i.GetSuspendText()?.split("，")[0]),
           a.SetText(e),
@@ -230,7 +230,7 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
     } else a.SetUIActive(!1);
   }
   kwn(e, t) {
-    let i, r, n, o;
+    var i, r, n, o;
     this.Nwn &&
       (ModelManager_1.ModelManager.QuestNewModel.GetQuest(this.QuestId)
         ? ((i = this.GetText(10)),
@@ -266,12 +266,12 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
           (this.Nwn = !1)));
   }
   SetSelected(e) {
-    const t = e ? 1 : 0;
+    var t = e ? 1 : 0;
     this.GetExtendToggle(4).SetToggleState(t, !1), e && this.Pro(), this.Aro(t);
   }
   Aro(e) {
-    const t = this.GetItem(7);
-    e === 1
+    var t = this.GetItem(7);
+    1 === e
       ? (this.QuestId !==
         ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest()?.Id
           ? t.SetUIActive(!0)
@@ -281,8 +281,8 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
       : t.SetUIActive(!1);
   }
   SetNotAllowNoneSelect() {
-    const e = this.GetExtendToggle(4);
-    e.RootUIComp.SetRaycastTarget(e.ToggleState !== 1);
+    var e = this.GetExtendToggle(4);
+    e.RootUIComp.SetRaycastTarget(1 !== e.ToggleState);
   }
   Pro() {
     EventSystem_1.EventSystem.Emit(
@@ -297,4 +297,4 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
   OnBeforeDestroy() {}
 }
 exports.QuestItem = QuestItem;
-// # sourceMappingURL=QuestItem.js.map
+//# sourceMappingURL=QuestItem.js.map

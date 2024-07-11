@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DiscountShopView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const TabComponent_1 = require("../../Common/TabComponent/TabComponent");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const PayShopItem_1 = require("./TabItem/PayShopItem");
-const PayShopSwitchItem_1 = require("./TabItem/PayShopSwitchItem");
-const TIMEGAP = 1e3;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  TabComponent_1 = require("../../Common/TabComponent/TabComponent"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  PayShopItem_1 = require("./TabItem/PayShopItem"),
+  PayShopSwitchItem_1 = require("./TabItem/PayShopSwitchItem"),
+  TIMEGAP = 1e3;
 class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -43,7 +43,7 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
             "ViewName",
             this.GetViewName(),
           ]);
-        const t = ModelManager_1.ModelManager.PayShopModel.GetPayShopTabIdList(
+        var t = ModelManager_1.ModelManager.PayShopModel.GetPayShopTabIdList(
           this.CurrentShopId,
         );
         (this.CurrentSelectTabId = t[e]),
@@ -91,7 +91,7 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
       this.pqe,
       this.GetItem(3),
     );
-    const e = this.GetScrollItem();
+    var e = this.GetScrollItem();
     (this.LoopScrollView = new LoopScrollView_1.LoopScrollView(
       this.GetLoopScrollViewComponent(1),
       e.GetOwner(),
@@ -121,7 +121,7 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
         !1,
       ),
       this.GetLoopScrollViewComponent(1).RootUIComp.SetUIActive(
-        this.PayShopGoodsList.length > 0,
+        0 < this.PayShopGoodsList.length,
       ),
       this.GetItem(8).SetUIActive(this.PayShopGoodsList.length <= 0);
   }
@@ -130,7 +130,7 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
     let e = 0;
     if (this.ExtraParams) {
       const i = this.ExtraParams;
-      const t = ModelManager_1.ModelManager.PayShopModel.GetPayShopTabIdList(
+      var t = ModelManager_1.ModelManager.PayShopModel.GetPayShopTabIdList(
         this.CurrentShopId,
       );
       (e = t.findIndex((e) => e === i)),
@@ -173,10 +173,10 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
         ["ViewName", this.GetViewName()],
         ["Data", s],
       );
-    const e = s.length;
+    var e = s.length;
     this.TabGroup.ResetLastSelectTab();
     this.TabGroup.RefreshTabItemByLength(e, () => {
-      let e, t;
+      var e, t;
       for ([e, t] of this.TabGroup.GetTabItemMap())
         t.UpdateView(this.CurrentShopId, s[e]),
           t.BindRedDot("PayShopTab", s[e]);
@@ -189,7 +189,7 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
         ]);
   }
   RefreshView(e) {
-    typeof e !== "number" && this.RefreshLoopScroll(this.CurrentSelectTabId);
+    "number" != typeof e && this.RefreshLoopScroll(this.CurrentSelectTabId);
   }
   OnHideUiTabViewBase(e) {
     this.p7e();
@@ -199,4 +199,4 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.DiscountShopView = DiscountShopView;
-// # sourceMappingURL=DiscountShopView.js.map
+//# sourceMappingURL=DiscountShopView.js.map

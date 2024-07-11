@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configDebugEntranceConfigAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const DebugEntranceConfig_1 = require("../Config/DebugEntranceConfig");
-const DB = "db_debugview.db";
-const FILE = "t.调试界面.xlsx";
-const TABLE = "DebugEntranceConfig";
-const COMMAND = "select BinData from `DebugEntranceConfig`";
-const KEY_PREFIX = "DebugEntranceConfigAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  DebugEntranceConfig_1 = require("../Config/DebugEntranceConfig"),
+  DB = "db_debugview.db",
+  FILE = "t.调试界面.xlsx",
+  TABLE = "DebugEntranceConfig",
+  COMMAND = "select BinData from `DebugEntranceConfig`",
+  KEY_PREFIX = "DebugEntranceConfigAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configDebugEntranceConfigAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configDebugEntranceConfigAll = {
     );
   },
   GetConfigList: (n = !0) => {
-    let o;
+    var o;
     if (
       (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configDebugEntranceConfigAll = {
       }
       const r = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let i = void 0;
+        var i = void 0;
         if (
           (([o, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -67,4 +67,4 @@ exports.configDebugEntranceConfigAll = {
     }
   },
 };
-// # sourceMappingURL=DebugEntranceConfigAll.js.map
+//# sourceMappingURL=DebugEntranceConfigAll.js.map

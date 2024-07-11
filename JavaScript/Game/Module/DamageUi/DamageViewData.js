@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DamageViewData = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
+const UE = require("ue"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils");
 class DamageViewData {
   constructor() {
     (this.Mne = 0),
@@ -67,4 +67,4 @@ class DamageViewData {
   }
 }
 exports.DamageViewData = DamageViewData;
-// # sourceMappingURL=DamageViewData.js.map
+//# sourceMappingURL=DamageViewData.js.map

@@ -7,12 +7,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.PlotStateInfo =
     exports.PlotInfo =
       void 0);
-const Pool_1 = require("../../../Core/Container/Pool");
-const SpeakerById_1 = require("../../../Core/Define/ConfigQuery/SpeakerById");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const CAPACITY = 20;
+const Pool_1 = require("../../../Core/Container/Pool"),
+  SpeakerById_1 = require("../../../Core/Define/ConfigQuery/SpeakerById"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  CAPACITY = 20;
 class PlotInfo {
   constructor() {
     (this.FlowListName = ""),
@@ -52,14 +52,14 @@ class PlotInfo {
       PlotInfo.AnalyzeLevel(this, h);
   }
   static AnalyzeLevel(t, i) {
-    let s = "LevelC";
-    let o = !1;
-    let e = !1;
-    let h = void 0;
-    let r;
+    let s = "LevelC",
+      o = !1,
+      e = !1,
+      h = void 0;
+    var r;
     !(h =
-      i.length > 0 &&
-      (r = i[0]).Name === "SetPlotMode" &&
+      0 < i.length &&
+      "SetPlotMode" === (r = i[0]).Name &&
       ((r = r.Params),
       (s = r.Mode),
       (o = r.WaitForPlayerMotionEnd ?? !1),
@@ -67,25 +67,25 @@ class PlotInfo {
       r.FastFadeIn)
         ? r.FastFadeIn.ScreenType ?? IAction_1.EFadeInScreenShowType.Black
         : h) &&
-      i.length > 1 &&
-      (r = i[1]).Name === "FadeInScreen" &&
+      1 < i.length &&
+      "FadeInScreen" === (r = i[1]).Name &&
       ((r = r.Params),
       (h = r.ScreenType ?? IAction_1.EFadeInScreenShowType.Black)),
       (t.PlotLevel = s),
       (t.IsWaitAnim = o),
       (t.UiParam.DisableAnim = e),
       (t.FadeBegin = h),
-      (s !== "LevelD" && s !== "Prompt") ||
+      ("LevelD" !== s && "Prompt" !== s) ||
         t.UiParam.ViewName ||
         (t.UiParam.ViewName = "BattleView"),
-      s === "Prompt" && this.xPn(i, t);
+      "Prompt" === s && this.xPn(i, t);
   }
   static xPn(t, i) {
-    let s;
-    let o;
-    const e = new Map();
+    var s,
+      o,
+      e = new Map();
     for (const h of t)
-      if (h.Name === "ShowTalk")
+      if ("ShowTalk" === h.Name)
         for (const r of h.Params.TalkItems)
           r.WhoId &&
             ((s = SpeakerById_1.configSpeakerById.GetConfig(r.WhoId)),
@@ -201,4 +201,4 @@ class PlotFlow {
   }
 }
 exports.PlotFlow = PlotFlow;
-// # sourceMappingURL=PlotData.js.map
+//# sourceMappingURL=PlotData.js.map

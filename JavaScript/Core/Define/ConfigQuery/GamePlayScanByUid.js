@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configGamePlayScanByUid = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const GamePlayScan_1 = require("../Config/GamePlayScan");
-const DB = "db_levelgameplay.db";
-const FILE = "g.关卡玩法数据.xlsx";
-const TABLE = "GamePlayScan";
-const COMMAND = "select BinData from `GamePlayScan` where UID=?";
-const KEY_PREFIX = "GamePlayScanByUid";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  GamePlayScan_1 = require("../Config/GamePlayScan"),
+  DB = "db_levelgameplay.db",
+  FILE = "g.关卡玩法数据.xlsx",
+  TABLE = "GamePlayScan",
+  COMMAND = "select BinData from `GamePlayScan` where UID=?",
+  KEY_PREFIX = "GamePlayScanByUid",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configGamePlayScanByUid.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configGamePlayScanByUid.GetConfig(";
 exports.configGamePlayScanByUid = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configGamePlayScanByUid = {
       if (
         (a =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "UId",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "UId",
+              o,
+            ]))
       ) {
-        var a;
-        var e = void 0;
+        var a,
+          e = void 0;
         if (
           (([a, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configGamePlayScanByUid = {
     }
   },
 };
-// # sourceMappingURL=GamePlayScanByUid.js.map
+//# sourceMappingURL=GamePlayScanByUid.js.map

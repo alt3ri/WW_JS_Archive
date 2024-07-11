@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const FNameUtil_1 = require("../../Core/Utils/FNameUtil");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const MeshComponentUtils_1 = require("../NewWorld/Character/Common/Component/MeshHelper/MeshComponentUtils");
+const UE = require("ue"),
+  FNameUtil_1 = require("../../Core/Utils/FNameUtil"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  MeshComponentUtils_1 = require("../NewWorld/Character/Common/Component/MeshHelper/MeshComponentUtils");
 class TsAnimNotifyStateHideBone extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -41,4 +41,4 @@ class TsAnimNotifyStateHideBone extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateHideBone;
-// # sourceMappingURL=TsAnimNotifyStateHideBone.js.map
+//# sourceMappingURL=TsAnimNotifyStateHideBone.js.map

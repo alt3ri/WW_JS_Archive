@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldMapSubMapItem = void 0);
-const UE = require("ue");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../Util/LguiUtil");
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../Util/LguiUtil");
 class WorldMapSubMapItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
       (this.MultiMapConfigId = 0),
       (this.OnToggleStateChange = (e) => {
-        e === 1 &&
+        1 === e &&
           (EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.WorldMapSelectMultiMap,
             this.MultiMapConfigId,
@@ -33,7 +33,7 @@ class WorldMapSubMapItem extends GridProxyAbstract_1.GridProxyAbstract {
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), e.FloorName);
     (i = ModelManager_1.ModelManager.AreaModel.GetCurrentAreaId()),
       (t = ConfigManager_1.ConfigManager.MapConfig?.GetSubMapConfigByAreaId(i));
-    if (e.Area.includes(i) || (!e.Area.includes(i) && e.Floor === 0 && !t)) {
+    if (e.Area.includes(i) || (!e.Area.includes(i) && 0 === e.Floor && !t)) {
       i = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
         "SP_MultiMapCurrentAreaIcon",
       );
@@ -92,4 +92,4 @@ class WorldMapSubMapItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.WorldMapSubMapItem = WorldMapSubMapItem;
-// # sourceMappingURL=WorldMapSubMapItem.js.map
+//# sourceMappingURL=WorldMapSubMapItem.js.map

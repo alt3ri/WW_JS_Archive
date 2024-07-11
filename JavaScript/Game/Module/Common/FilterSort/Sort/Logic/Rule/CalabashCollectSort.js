@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CalabashCollectSort = void 0);
-const ModelManager_1 = require("../../../../../../Manager/ModelManager");
-const CommonSort_1 = require("./CommonSort");
+const ModelManager_1 = require("../../../../../../Manager/ModelManager"),
+  CommonSort_1 = require("./CommonSort");
 class CalabashCollectSort extends CommonSort_1.CommonSort {
   constructor() {
     super(...arguments),
@@ -60,4 +60,4 @@ class CalabashCollectSort extends CommonSort_1.CommonSort {
   }
 }
 exports.CalabashCollectSort = CalabashCollectSort;
-// # sourceMappingURL=CalabashCollectSort.js.map
+//# sourceMappingURL=CalabashCollectSort.js.map

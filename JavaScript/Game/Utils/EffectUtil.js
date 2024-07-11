@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectUtil = void 0);
-const UE = require("ue");
-const EffectConfigById_1 = require("../../Core/Define/ConfigQuery/EffectConfigById");
-const EffectSystem_1 = require("../Effect/EffectSystem");
-const GlobalData_1 = require("../GlobalData");
+const UE = require("ue"),
+  EffectConfigById_1 = require("../../Core/Define/ConfigQuery/EffectConfigById"),
+  EffectSystem_1 = require("../Effect/EffectSystem"),
+  GlobalData_1 = require("../GlobalData");
 class EffectUtil {
   static GetEffectPath(e) {
     return EffectConfigById_1.configEffectConfigById.GetConfig(e).Path;
@@ -22,4 +22,4 @@ class EffectUtil {
   }
 }
 exports.EffectUtil = EffectUtil;
-// # sourceMappingURL=EffectUtil.js.map
+//# sourceMappingURL=EffectUtil.js.map

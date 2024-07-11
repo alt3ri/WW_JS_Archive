@@ -1,23 +1,27 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, n, o) {
-    let i;
-    const r = arguments.length;
-    let c =
-      r < 3 ? e : o === null ? (o = Object.getOwnPropertyDescriptor(e, n)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var i,
+      r = arguments.length,
+      c =
+        r < 3
+          ? e
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(e, n))
+            : o;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       c = Reflect.decorate(t, e, n, o);
     else
-      for (let s = t.length - 1; s >= 0; s--)
-        (i = t[s]) && (c = (r < 3 ? i(c) : r > 3 ? i(e, n, c) : i(e, n)) || c);
-    return r > 3 && c && Object.defineProperty(e, n, c), c;
+      for (var s = t.length - 1; 0 <= s; s--)
+        (i = t[s]) && (c = (r < 3 ? i(c) : 3 < r ? i(e, n, c) : i(e, n)) || c);
+    return 3 < r && c && Object.defineProperty(e, n, c), c;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UeActorTickManageComponent = void 0);
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
+const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
 let UeActorTickManageComponent = class UeActorTickManageComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments), (this.Hte = void 0);
@@ -43,4 +47,4 @@ let UeActorTickManageComponent = class UeActorTickManageComponent extends Entity
   UeActorTickManageComponent,
 )),
   (exports.UeActorTickManageComponent = UeActorTickManageComponent);
-// # sourceMappingURL=UeActorTickManageComponent.js.map
+//# sourceMappingURL=UeActorTickManageComponent.js.map

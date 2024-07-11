@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HandBookQuestView = void 0);
-const UE = require("ue");
-const Time_1 = require("../../../Core/Common/Time");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const CommonTabComponentData_1 = require("../Common/TabComponent/CommonTabComponentData");
-const CommonTabData_1 = require("../Common/TabComponent/CommonTabData");
-const CommonTabTitleData_1 = require("../Common/TabComponent/CommonTabTitleData");
-const TabComponentWithCaptionItem_1 = require("../Common/TabComponent/TabComponentWithCaptionItem");
-const CommonTabItem_1 = require("../Common/TabComponent/TabItem/CommonTabItem");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const GenericScrollViewNew_1 = require("../Util/ScrollView/GenericScrollViewNew");
-const HandBookController_1 = require("./HandBookController");
-const HandBookQuestItem_1 = require("./HandBookQuestItem");
+const UE = require("ue"),
+  Time_1 = require("../../../Core/Common/Time"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  CommonTabComponentData_1 = require("../Common/TabComponent/CommonTabComponentData"),
+  CommonTabData_1 = require("../Common/TabComponent/CommonTabData"),
+  CommonTabTitleData_1 = require("../Common/TabComponent/CommonTabTitleData"),
+  TabComponentWithCaptionItem_1 = require("../Common/TabComponent/TabComponentWithCaptionItem"),
+  CommonTabItem_1 = require("../Common/TabComponent/TabItem/CommonTabItem"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  GenericScrollViewNew_1 = require("../Util/ScrollView/GenericScrollViewNew"),
+  HandBookController_1 = require("./HandBookController"),
+  HandBookQuestItem_1 = require("./HandBookQuestItem");
 class HandBookQuestView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -51,7 +51,7 @@ class HandBookQuestView extends UiViewBase_1.UiViewBase {
         !this.cVe ||
         Time_1.Time.Now - this.cVe >= this.Zzt),
       (this.dUn = () => {
-        const t = new HandBookQuestItem_1.HandBookQuestItem();
+        var t = new HandBookQuestItem_1.HandBookQuestItem();
         return this.mUn.push(t), t;
       }),
       (this.aZt = (t, e) => t.Id - e.Id),
@@ -60,12 +60,12 @@ class HandBookQuestView extends UiViewBase_1.UiViewBase {
       }),
       (this.OnHandBookRead = (t, e) => {
         if (t === this.upt[this._Ve].Type) {
-          const i = this.mUn.length;
+          var i = this.mUn.length;
           for (let t = 0; t < i; t++) {
-            const o = this.mUn[t].GetChildItemList();
-            const n = o.length;
+            var o = this.mUn[t].GetChildItemList(),
+              n = o.length;
             for (let t = 0; t < n; t++) {
-              const s = o[t];
+              var s = o[t];
               if (s.GetData()?.ConfigId === e) return void s.SetNewState(!1);
             }
           }
@@ -74,7 +74,7 @@ class HandBookQuestView extends UiViewBase_1.UiViewBase {
       (this.OnPhotoSelect = (t) => {
         for (const i of this.mUn)
           for (const o of i.GetChildItemList()) {
-            const e = o.GetTog();
+            var e = o.GetTog();
             o.GetData()?.ConfigId === t
               ? e.SetToggleStateForce(1, !1, !0)
               : e.SetToggleStateForce(0, !1, !0);
@@ -136,7 +136,7 @@ class HandBookQuestView extends UiViewBase_1.UiViewBase {
     let t = !0;
     for (const i of this.mUn)
       for (const o of i.GetChildItemList()) {
-        const e = o.GetTog();
+        var e = o.GetTog();
         t && o.GetIsUnlock()
           ? (e.SetToggleStateForce(1, !1, !0), (t = !1))
           : e.SetToggleStateForce(0, !1, !0);
@@ -148,38 +148,38 @@ class HandBookQuestView extends UiViewBase_1.UiViewBase {
       "panel_interval_time",
     );
     var t = new CommonTabComponentData_1.CommonTabComponentData(
-      this.dVe,
-      this.pqe,
-      this.yqe,
-    );
-    var t =
-      ((this.cpt =
-        new TabComponentWithCaptionItem_1.TabComponentWithCaptionItem(
-          this.GetItem(0),
-          t,
-          this.JSt,
-        )),
-      this.cpt.SetCanChange(this.CanToggleChange),
-      this.upt.length);
-    var t = this.cpt.CreateTabItemDataByLength(t);
+        this.dVe,
+        this.pqe,
+        this.yqe,
+      ),
+      t =
+        ((this.cpt =
+          new TabComponentWithCaptionItem_1.TabComponentWithCaptionItem(
+            this.GetItem(0),
+            t,
+            this.JSt,
+          )),
+        this.cpt.SetCanChange(this.CanToggleChange),
+        this.upt.length),
+      t = this.cpt.CreateTabItemDataByLength(t);
     await this.cpt.RefreshTabItemAsync(t);
   }
   RefreshLoopScrollView() {
     this.KVe ||
       (this.KVe =
         ConfigManager_1.ConfigManager.HandBookConfig.GetPlotTypeConfigList());
-    const e = [];
-    const t = this.upt[this._Ve].Type;
+    var e = [],
+      t = this.upt[this._Ve].Type;
     for (const s of this.KVe)
       if (s.Type === t) {
-        const i =
+        var i =
           ConfigManager_1.ConfigManager.HandBookConfig.GetPlotHandBookConfigByType(
             s.Id,
           );
         if (i) {
           let t = !0;
           for (const a of i) {
-            const o = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
+            var o = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
               s.Type,
               a.Id,
             );
@@ -189,7 +189,7 @@ class HandBookQuestView extends UiViewBase_1.UiViewBase {
         }
       }
     e.sort(this.aZt);
-    const n = this.GetScrollViewWithScrollbar(1);
+    var n = this.GetScrollViewWithScrollbar(1);
     this.GenericScroll ||
       (this.GenericScroll = new GenericScrollViewNew_1.GenericScrollViewNew(
         n,
@@ -201,12 +201,12 @@ class HandBookQuestView extends UiViewBase_1.UiViewBase {
         : (this.GenericScroll.SetActive(!0),
           this.GetItem(4)?.SetUIActive(!1),
           this.GenericScroll.RefreshByData(e, () => {
-            const t = this.GenericScroll?.GetItemByIndex(0);
+            var t = this.GenericScroll?.GetItemByIndex(0);
             t && this.GenericScroll?.ScrollTo(t);
           }));
   }
   RefreshCollectText() {
-    const t = HandBookController_1.HandBookController.GetCollectProgress(
+    var t = HandBookController_1.HandBookController.GetCollectProgress(
       this.upt[this._Ve].Type,
     );
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(2), "RoleExp", t[0], t[1]),
@@ -224,4 +224,4 @@ class HandBookQuestView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.HandBookQuestView = HandBookQuestView;
-// # sourceMappingURL=HandBookQuestView.js.map
+//# sourceMappingURL=HandBookQuestView.js.map

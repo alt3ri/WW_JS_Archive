@@ -1,5 +1,5 @@
 "use strict";
-let ELocalStorageGlobalKey, ELocalStoragePlayerKey;
+var ELocalStorageGlobalKey, ELocalStoragePlayerKey;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ELocalStoragePlayerKey = exports.ELocalStorageGlobalKey = void 0),
   (function (e) {
@@ -82,4 +82,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     (ELocalStoragePlayerKey =
       exports.ELocalStoragePlayerKey || (exports.ELocalStoragePlayerKey = {})),
   );
-// # sourceMappingURL=LocalStorageDefine.js.map
+//# sourceMappingURL=LocalStorageDefine.js.map

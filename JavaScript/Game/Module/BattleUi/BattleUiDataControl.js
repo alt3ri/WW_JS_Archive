@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleUiDataControl = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LevelGeneralContextDefine_1 = require("../../LevelGamePlay/LevelGeneralContextDefine");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LevelGeneralContextDefine_1 = require("../../LevelGamePlay/LevelGeneralContextDefine"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
 class BattleUiDataControl extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.OpenView, this.UKe),
@@ -49,7 +49,7 @@ class BattleUiDataControl extends UiControllerBase_1.UiControllerBase {
         EventDefine_1.EEventName.GeneralLogicTreeRemove,
         this.PKe,
       );
-    const e =
+    var e =
       ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.GetActionNames();
     InputDistributeController_1.InputDistributeController.UnBindActions(
       e,
@@ -58,19 +58,19 @@ class BattleUiDataControl extends UiControllerBase_1.UiControllerBase {
   }
 }
 ((exports.BattleUiDataControl = BattleUiDataControl).UKe = (e) => {
-  e === "GuideFocusView" &&
+  "GuideFocusView" === e &&
     ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.UpdateGuidingState(
       !0,
     );
 }),
   (BattleUiDataControl.$Ge = (e) => {
-    e === "GuideFocusView" &&
+    "GuideFocusView" === e &&
       ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.UpdateGuidingState(
         !1,
       );
   }),
   (BattleUiDataControl.AKe = (t, n) => {
-    if (t && t.Type === 6 && n.Wfs) {
+    if (t && 6 === t.Type && n.Wfs) {
       let e = void 0;
       switch (t.BtType) {
         case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest:
@@ -86,10 +86,10 @@ class BattleUiDataControl extends UiControllerBase_1.UiControllerBase {
             t.NodeId,
           );
       }
-      let o;
+      var o;
       e &&
-        e.Type === "ChildQuest" &&
-        (o = e.Condition).Type === "MonsterCreator" &&
+        "ChildQuest" === e.Type &&
+        "MonsterCreator" === (o = e.Condition).Type &&
         o.ShowMonsterMergedHpBar &&
         ModelManager_1.ModelManager.BattleUiModel.MergeHeadStateData.UpdateProgress(
           t.TreeIncId,
@@ -115,7 +115,7 @@ class BattleUiDataControl extends UiControllerBase_1.UiControllerBase {
   (BattleUiDataControl.bMe = (e, t) => {
     ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.InputAction(
       e,
-      t === 0,
+      0 === t,
     );
   });
-// # sourceMappingURL=BattleUiDataControl.js.map
+//# sourceMappingURL=BattleUiDataControl.js.map

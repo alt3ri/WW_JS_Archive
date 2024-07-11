@@ -14,4 +14,4 @@ class SmallItemGridSelectedFlagComponent extends SmallItemGridVisibleComponent_1
   }
 }
 exports.SmallItemGridSelectedFlagComponent = SmallItemGridSelectedFlagComponent;
-// # sourceMappingURL=SmallItemGridSelectedFlagComponent.js.map
+//# sourceMappingURL=SmallItemGridSelectedFlagComponent.js.map

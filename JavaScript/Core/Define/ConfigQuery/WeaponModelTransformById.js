@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configWeaponModelTransformById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const WeaponModelTransform_1 = require("../Config/WeaponModelTransform");
-const DB = "db_weapon.db";
-const FILE = "w.武器基础配置.xlsx";
-const TABLE = "WeaponModelTransform";
-const COMMAND = "select BinData from `WeaponModelTransform` where Id = ?";
-const KEY_PREFIX = "WeaponModelTransformById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  WeaponModelTransform_1 = require("../Config/WeaponModelTransform"),
+  DB = "db_weapon.db",
+  FILE = "w.武器基础配置.xlsx",
+  TABLE = "WeaponModelTransform",
+  COMMAND = "select BinData from `WeaponModelTransform` where Id = ?",
+  KEY_PREFIX = "WeaponModelTransformById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configWeaponModelTransformById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configWeaponModelTransformById.GetConfig(";
 exports.configWeaponModelTransformById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configWeaponModelTransformById = {
       if (
         (r =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var r;
-        var e = void 0;
+        var r,
+          e = void 0;
         if (
           (([r, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configWeaponModelTransformById = {
     }
   },
 };
-// # sourceMappingURL=WeaponModelTransformById.js.map
+//# sourceMappingURL=WeaponModelTransformById.js.map

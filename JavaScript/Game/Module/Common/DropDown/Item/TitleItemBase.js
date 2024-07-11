@@ -8,4 +8,4 @@ class TitleItemBase extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.TitleItemBase = TitleItemBase;
-// # sourceMappingURL=TitleItemBase.js.map
+//# sourceMappingURL=TitleItemBase.js.map

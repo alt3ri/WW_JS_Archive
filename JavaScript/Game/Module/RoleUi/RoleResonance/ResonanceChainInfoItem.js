@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ResonanceChainInfoItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const ButtonItem_1 = require("../../Common/Button/ButtonItem");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const MediumItemGrid_1 = require("../../Common/MediumItemGrid/MediumItemGrid");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RoleController_1 = require("../RoleController");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  ButtonItem_1 = require("../../Common/Button/ButtonItem"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  MediumItemGrid_1 = require("../../Common/MediumItemGrid/MediumItemGrid"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RoleController_1 = require("../RoleController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class ResonanceChainInfoItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -23,7 +23,7 @@ class ResonanceChainInfoItem extends UiPanelBase_1.UiPanelBase {
       (this.buo = void 0),
       (this.Gft = void 0),
       (this.quo = () => {
-        const e =
+        var e =
           ConfigManager_1.ConfigManager.RoleResonanceConfig.GetRoleResonanceById(
             this.Buo,
           );
@@ -90,22 +90,22 @@ class ResonanceChainInfoItem extends UiPanelBase_1.UiPanelBase {
   }
   async Refresh(e = !1) {
     await this.LoadPromise;
-    let t;
-    const i =
-      ConfigManager_1.ConfigManager.RoleResonanceConfig.GetRoleResonanceById(
-        this.Buo,
-      );
+    var t,
+      i =
+        ConfigManager_1.ConfigManager.RoleResonanceConfig.GetRoleResonanceById(
+          this.Buo,
+        );
     i &&
       ((t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(this.zke)),
       (t = ModelManager_1.ModelManager.RoleModel.GetRoleResonanceState(
         t,
         i.GroupIndex,
       )),
-      this.GetItem(5).SetUIActive(t === 1 && !e),
-      this.GetItem(6).SetUIActive(t === 2 && !e),
-      this.GetItem(7).SetUIActive(t === 0 && !e),
-      this.buo.GetRootItem().SetUIActive(t !== 2 && !e),
-      this.GetItem(10).SetUIActive(t !== 2 && !e),
+      this.GetItem(5).SetUIActive(1 === t && !e),
+      this.GetItem(6).SetUIActive(2 === t && !e),
+      this.GetItem(7).SetUIActive(0 === t && !e),
+      this.buo.GetRootItem().SetUIActive(2 !== t && !e),
+      this.GetItem(10).SetUIActive(2 !== t && !e),
       this.GetText(0).ShowTextNew(i.NodeName),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(2),
@@ -121,9 +121,9 @@ class ResonanceChainInfoItem extends UiPanelBase_1.UiPanelBase {
       this.p8t.SetRedDotVisible(t),
       e ||
         i.ActivateConsume.forEach((e, t) => {
-          const i = { Type: 4, ItemConfigId: t };
-          const n =
-            ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(t);
+          var i = { Type: 4, ItemConfigId: t },
+            n =
+              ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(t);
           (i.BottomTextId = "Text_ItemEnoughText_Text"),
             n < e && (i.BottomTextId = "Text_ItemNotEnoughText_Text"),
             (i.BottomTextParameter = [n, e]),
@@ -150,4 +150,4 @@ class ResonanceChainInfoItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ResonanceChainInfoItem = ResonanceChainInfoItem;
-// # sourceMappingURL=ResonanceChainInfoItem.js.map
+//# sourceMappingURL=ResonanceChainInfoItem.js.map

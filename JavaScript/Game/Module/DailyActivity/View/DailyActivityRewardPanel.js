@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DailyActivityRewardPanel = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const DailyActivityRewardItem_1 = require("./DailyActivityRewardItem");
-const PROGRESS_ANIMATE_TIME = 0.5;
-const REWARD_WIDTH = 120;
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  DailyActivityRewardItem_1 = require("./DailyActivityRewardItem"),
+  PROGRESS_ANIMATE_TIME = 0.5,
+  REWARD_WIDTH = 120;
 class DailyActivityRewardPanel extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -35,10 +35,10 @@ class DailyActivityRewardPanel extends UiPanelBase_1.UiPanelBase {
         for (const i of t) this.sqe(i);
       }),
       (this.mkt = () => {
-        const t = this.GetSprite(2);
-        const i = this.GetItem(1);
-        const s = this.GetItem(5);
-        const e = this.GetSprite(6);
+        var t = this.GetSprite(2),
+          i = this.GetItem(1),
+          s = this.GetItem(5),
+          e = this.GetSprite(6);
         return (
           LguiUtil_1.LguiUtil.CopyItem(e, s),
           LguiUtil_1.LguiUtil.CopyItem(t, i),
@@ -63,7 +63,7 @@ class DailyActivityRewardPanel extends UiPanelBase_1.UiPanelBase {
       this.GetHorizontalLayout(3),
       this.mkt,
     );
-    const t = this.GetItem(0);
+    var t = this.GetItem(0);
     (this.hkt = t.GetWidth()),
       (this.ekt = this.GetItem(0)),
       this.AddEventListener();
@@ -84,12 +84,11 @@ class DailyActivityRewardPanel extends UiPanelBase_1.UiPanelBase {
     );
   }
   Init() {
-    const t = ModelManager_1.ModelManager.DailyActivityModel;
-    const i = t.DailyActivityGoalMap;
-    const s =
-      ((this.qte = t.ActivityValue), (this.BY = t.ActivityMaxValue), []);
+    var t = ModelManager_1.ModelManager.DailyActivityModel,
+      i = t.DailyActivityGoalMap,
+      s = ((this.qte = t.ActivityValue), (this.BY = t.ActivityMaxValue), []);
     this.akt = 0;
-    for (const e of i.values()) e.State !== 2 && this.akt++, s.push(e.Id);
+    for (const e of i.values()) 2 !== e.State && this.akt++, s.push(e.Id);
     (this.ukt = s.length),
       this.ukt <= 0 ||
         ((this.skt = s),
@@ -106,7 +105,7 @@ class DailyActivityRewardPanel extends UiPanelBase_1.UiPanelBase {
   Ckt() {
     let t = 0;
     for (const i of this.DFe.GetLayoutItemList())
-      i.RefreshSelf(), i.DailyActiveState !== 2 && t++;
+      i.RefreshSelf(), 2 !== i.DailyActiveState && t++;
     this.akt = t;
   }
   sqe(t) {
@@ -114,8 +113,8 @@ class DailyActivityRewardPanel extends UiPanelBase_1.UiPanelBase {
     t < 0 || this.DFe.GetLayoutItemList()[t].RefreshSelf();
   }
   gkt(t) {
-    let i;
-    this.nkt.length !== 0 &&
+    var i;
+    0 !== this.nkt.length &&
       (i = this.nkt[0])[0] <= t &&
       (this.sqe(i[1]), this.nkt.shift(), this.akt++);
   }
@@ -131,9 +130,9 @@ class DailyActivityRewardPanel extends UiPanelBase_1.UiPanelBase {
       this.fkt();
   }
   dkt(t) {
-    var i = Math.min(this.akt, this.ukt - 1) * this.lkt;
-    var t = this._kt * this.ukt * Math.min(t, 1);
-    var i = this.hkt - i - t;
+    var i = Math.min(this.akt, this.ukt - 1) * this.lkt,
+      t = this._kt * this.ukt * Math.min(t, 1),
+      i = this.hkt - i - t;
     this.ekt.SetStretchRight(i);
   }
   pkt(t) {
@@ -141,11 +140,11 @@ class DailyActivityRewardPanel extends UiPanelBase_1.UiPanelBase {
   }
   fkt() {
     (this.okt = !1), (this.qte = this.tkt);
-    const t = MathUtils_1.MathUtils.Clamp(this.tkt / this.BY, 0, 1);
+    var t = MathUtils_1.MathUtils.Clamp(this.tkt / this.BY, 0, 1);
     this.Ckt(), this.dkt(t);
   }
   RefreshProgressBarDynamic(s) {
-    let t;
+    var t;
     s <= this.qte ||
       (this.okt && this.fkt(),
       (t = ModelManager_1.ModelManager.DailyActivityModel.DailyActivityGoalMap),
@@ -157,4 +156,4 @@ class DailyActivityRewardPanel extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.DailyActivityRewardPanel = DailyActivityRewardPanel;
-// # sourceMappingURL=DailyActivityRewardPanel.js.map
+//# sourceMappingURL=DailyActivityRewardPanel.js.map

@@ -1,16 +1,16 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Heartbeat = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const OperationsPerformance_1 = require("../PerformanceCollection/OperationsPerformance");
-const HeartbeatDefine_1 = require("./HeartbeatDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  OperationsPerformance_1 = require("../PerformanceCollection/OperationsPerformance"),
+  HeartbeatDefine_1 = require("./HeartbeatDefine");
 class Heartbeat {
   static SetMaxTimeOutHandler(e) {
     this.t8s = e;
@@ -79,7 +79,7 @@ class Heartbeat {
   }
   static StopHeartBeat(e) {
     this.hvi = !1;
-    const t = this.uvi;
+    var t = this.uvi;
     (this.uvi = 0),
       this.SetHeartBeatMode(0),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.StopHeartBeat),
@@ -116,7 +116,7 @@ class Heartbeat {
   static gvi() {
     (this.avi = 0),
       Log_1.Log.CheckDebug() && Log_1.Log.Debug("Net", 9, "发送心跳");
-    const e = new Protocol_1.Aki.Protocol.des();
+    var e = new Protocol_1.Aki.Protocol.des();
     Net_1.Net.Call(
       21988,
       Protocol_1.Aki.Protocol.des.create(e),
@@ -142,10 +142,10 @@ class Heartbeat {
   (Heartbeat.t8s = void 0),
   (Heartbeat.mvi = void 0),
   (Heartbeat.ResetHeartbeatSendTime = () => {
-    _a.mvi !== 1 && (_a.avi = 0);
+    1 !== _a.mvi && (_a.avi = 0);
   }),
   (Heartbeat.Tick = (e) => {
-    let t;
+    var t;
     _a.hvi &&
       ((t = Date.now()),
       (e = Math.max(t - _a._vi, e)),
@@ -157,7 +157,7 @@ class Heartbeat {
     (_a.lvi = !1),
       void 0 === e
         ? Heartbeat.dvi()
-        : Heartbeat.pvi !== 0
+        : 0 !== Heartbeat.pvi
           ? ((e = Date.now()),
             OperationsPerformance_1.OperationsPerformance.AddPing(
               e - Heartbeat.pvi,
@@ -170,4 +170,4 @@ class Heartbeat {
               "ping值计算有误！Heartbeat.LastSendTime为0",
             );
   });
-// # sourceMappingURL=Heartbeat.js.map
+//# sourceMappingURL=Heartbeat.js.map

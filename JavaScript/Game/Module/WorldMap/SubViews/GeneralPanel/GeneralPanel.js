@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GeneralPanel = void 0);
-const ButtonItem_1 = require("../../../Common/Button/ButtonItem");
-const MapController_1 = require("../../../Map/Controller/MapController");
-const WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi");
-const WorldMapDefine_1 = require("../../WorldMapDefine");
+const ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
+  MapController_1 = require("../../../Map/Controller/MapController"),
+  WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
+  WorldMapDefine_1 = require("../../WorldMapDefine");
 class GeneralPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
@@ -45,8 +45,8 @@ class GeneralPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       this.GetVerticalLayout(5).RootUIComp.SetUIActive(!1),
       this.GetItem(9).SetUIActive(!1),
       this.GetItem(8).SetUIActive(!1);
-    var t = this.dko.GetAreaText();
-    const e = void 0 !== t;
+    var t = this.dko.GetAreaText(),
+      e = void 0 !== t;
     this.GetText(3).SetUIActive(e),
       this.GetItem(22).SetUIActive(e),
       e && this.GetText(3).SetText(t),
@@ -65,4 +65,4 @@ class GeneralPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
 }
 exports.GeneralPanel = GeneralPanel;
-// # sourceMappingURL=GeneralPanel.js.map
+//# sourceMappingURL=GeneralPanel.js.map

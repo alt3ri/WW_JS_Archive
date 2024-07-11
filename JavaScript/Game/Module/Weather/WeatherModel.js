@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeatherModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const WeatherActor_1 = require("./WeatherActor");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  WeatherActor_1 = require("./WeatherActor");
 class WeatherModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments), (this.Heo = 0);
@@ -24,4 +24,4 @@ class WeatherModel extends ModelBase_1.ModelBase {
   }
 }
 (exports.WeatherModel = WeatherModel).zOo = new WeatherActor_1.WeatherActor();
-// # sourceMappingURL=WeatherModel.js.map
+//# sourceMappingURL=WeatherModel.js.map

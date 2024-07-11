@@ -7,7 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.EReconnectProcessStep =
       void 0);
 const UE = require("ue");
-let EReconnectProcessStep, ELogoutReason, EBackLoginViewReason;
+var EReconnectProcessStep, ELogoutReason, EBackLoginViewReason;
 !(function (o) {
   (o[(o.ConvGate = 0)] = "ConvGate"),
     (o[(o.ConvRet = 1)] = "ConvRet"),
@@ -41,4 +41,4 @@ let EReconnectProcessStep, ELogoutReason, EBackLoginViewReason;
   ),
   (exports.reconnectMapName = new UE.FName("/Game/Aki/Map/Launch/Bootstrap")),
   (exports.ellipsis = ["", ".", "..", "..."]);
-// # sourceMappingURL=ReconnectDefine.js.map
+//# sourceMappingURL=ReconnectDefine.js.map

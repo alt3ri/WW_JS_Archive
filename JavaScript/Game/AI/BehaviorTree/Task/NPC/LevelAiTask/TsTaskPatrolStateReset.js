@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../../../Core/Common/Log");
-const BehaviorTreeDefines_1 = require("../../../../../LevelGamePlay/LevelAi/BehaviorTree/BehaviorTreeDefines");
-const BlackboardController_1 = require("../../../../../World/Controller/BlackboardController");
-const TsTaskAbortImmediatelyBase_1 = require("../../TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  BehaviorTreeDefines_1 = require("../../../../../LevelGamePlay/LevelAi/BehaviorTree/BehaviorTreeDefines"),
+  BlackboardController_1 = require("../../../../../World/Controller/BlackboardController"),
+  TsTaskAbortImmediatelyBase_1 = require("../../TsTaskAbortImmediatelyBase");
 class TsTaskPatrolStateReset extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments), (this.SplineId = 0);
   }
   ReceiveExecuteAI(e, r) {
-    let o;
-    const a = e.AiController;
+    var o,
+      a = e.AiController;
     a
       ? (BlackboardController_1.BlackboardController.GetStringValueByEntity(
           a.CharAiDesignComp.Entity.Id,
@@ -39,4 +39,4 @@ class TsTaskPatrolStateReset extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskPatrolStateReset;
-// # sourceMappingURL=TsTaskPatrolStateReset.js.map
+//# sourceMappingURL=TsTaskPatrolStateReset.js.map

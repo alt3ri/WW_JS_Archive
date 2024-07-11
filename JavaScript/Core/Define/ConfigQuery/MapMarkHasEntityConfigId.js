@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configMapMarkHasEntityConfigId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const MapMark_1 = require("../Config/MapMark");
-const DB = "db_map_mark.db";
-const FILE = "d.地图标记.xlsx";
-const TABLE = "MapMark";
-const COMMAND = "select BinData from `MapMark` where EntityConfigId > 0";
-const KEY_PREFIX = "MapMarkHasEntityConfigId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  MapMark_1 = require("../Config/MapMark"),
+  DB = "db_map_mark.db",
+  FILE = "d.地图标记.xlsx",
+  TABLE = "MapMark",
+  COMMAND = "select BinData from `MapMark` where EntityConfigId > 0",
+  KEY_PREFIX = "MapMarkHasEntityConfigId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configMapMarkHasEntityConfigId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configMapMarkHasEntityConfigId = {
     );
   },
   GetConfigList: (o = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configMapMarkHasEntityConfigId = {
       }
       const r = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let e = void 0;
+        var e = void 0;
         if (
           (([n, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configMapMarkHasEntityConfigId = {
     }
   },
 };
-// # sourceMappingURL=MapMarkHasEntityConfigId.js.map
+//# sourceMappingURL=MapMarkHasEntityConfigId.js.map

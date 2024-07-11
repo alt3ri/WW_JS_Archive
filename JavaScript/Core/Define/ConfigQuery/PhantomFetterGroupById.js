@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configPhantomFetterGroupById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const PhantomFetterGroup_1 = require("../Config/PhantomFetterGroup");
-const DB = "db_phantom.db";
-const FILE = "h.幻象.xlsx";
-const TABLE = "PhantomFetterGroup";
-const COMMAND = "select BinData from `PhantomFetterGroup` where Id=?";
-const KEY_PREFIX = "PhantomFetterGroupById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  PhantomFetterGroup_1 = require("../Config/PhantomFetterGroup"),
+  DB = "db_phantom.db",
+  FILE = "h.幻象.xlsx",
+  TABLE = "PhantomFetterGroup",
+  COMMAND = "select BinData from `PhantomFetterGroup` where Id=?",
+  KEY_PREFIX = "PhantomFetterGroupById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configPhantomFetterGroupById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configPhantomFetterGroupById.GetConfig(";
 exports.configPhantomFetterGroupById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configPhantomFetterGroupById = {
       if (
         (t =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var t;
-        var n = void 0;
+        var t,
+          n = void 0;
         if (
           (([t, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configPhantomFetterGroupById = {
     }
   },
 };
-// # sourceMappingURL=PhantomFetterGroupById.js.map
+//# sourceMappingURL=PhantomFetterGroupById.js.map

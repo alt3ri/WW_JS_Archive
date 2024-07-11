@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleLevelData = void 0);
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RoleModuleDataBase_1 = require("./RoleModuleDataBase");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
+const ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RoleModuleDataBase_1 = require("./RoleModuleDataBase"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
 class RoleLevelData extends RoleModuleDataBase_1.RoleModuleDataBase {
   constructor() {
     super(...arguments),
@@ -40,7 +40,7 @@ class RoleLevelData extends RoleModuleDataBase_1.RoleModuleDataBase {
     return this.Zlo(this.Level + 1);
   }
   GetLevelUpNeedExp() {
-    const e = this.Zlo(this.Level + 1);
+    var e = this.Zlo(this.Level + 1);
     return Math.max(0, e - this.Exp);
   }
   Zlo(e) {
@@ -51,19 +51,19 @@ class RoleLevelData extends RoleModuleDataBase_1.RoleModuleDataBase {
     return e ? e.ExpCount : 1;
   }
   GetMaxBreachLevel() {
-    const r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleBreachList(
-      this.GetRoleConfig().BreachId,
-    );
-    const t = r.length;
+    var r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleBreachList(
+        this.GetRoleConfig().BreachId,
+      ),
+      t = r.length;
     let a = 0;
     for (let e = 0; e < t; e++) {
-      const i = r[e];
+      var i = r[e];
       i.BreachLevel > a && (a = i.BreachLevel);
     }
     return a;
   }
   GetCurrentMaxLevel() {
-    const e = this.GetBreachConfig(this.BreachLevel);
+    var e = this.GetBreachConfig(this.BreachLevel);
     return e ? e.MaxLevel : 0;
   }
   GetBreachConfig(e) {
@@ -79,7 +79,7 @@ class RoleLevelData extends RoleModuleDataBase_1.RoleModuleDataBase {
     );
   }
   GetExpPercentage() {
-    let e;
+    var e;
     return this.GetRoleIsMaxLevel()
       ? 1
       : (e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleLevelConsume(
@@ -90,7 +90,7 @@ class RoleLevelData extends RoleModuleDataBase_1.RoleModuleDataBase {
         : 0;
   }
   IsEnoughBreachConsume() {
-    const e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleBreachConfig(
+    var e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleBreachConfig(
       this.GetRoleConfig().BreachId,
       this.BreachLevel + 1,
     );
@@ -116,4 +116,4 @@ class RoleLevelData extends RoleModuleDataBase_1.RoleModuleDataBase {
   }
 }
 exports.RoleLevelData = RoleLevelData;
-// # sourceMappingURL=RoleLevelData.js.map
+//# sourceMappingURL=RoleLevelData.js.map

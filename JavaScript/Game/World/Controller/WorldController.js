@@ -1,48 +1,48 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldController = void 0);
-const cpp_1 = require("cpp");
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const EntityVoxelInfoByMapIdAndEntityId_1 = require("../../../Core/Define/ConfigQuery/EntityVoxelInfoByMapIdAndEntityId");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const GameBudgetInterfaceController_1 = require("../../../Core/GameBudgetAllocator/GameBudgetInterfaceController");
-const Net_1 = require("../../../Core/Net/Net");
-const TickSystem_1 = require("../../../Core/Tick/TickSystem");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const PhantomUtil_1 = require("../../Module/Phantom/PhantomUtil");
-const ActorUtils_1 = require("../../Utils/ActorUtils");
-const WorldModel_1 = require("../Model/WorldModel");
-const AttachToActorController_1 = require("./AttachToActorController");
-const DELTA_TIME_LIMIT_LOW = 20;
-const DELTA_TIME_LIMIT_HIGH = 25;
-const MIN_DELTA = 0;
-const MAX_DELTA = 0;
-const SCHEDULER_MINUS_FRAME_COUNT = 5;
-const DEFAULT_ENVIRONMENTTYPE = 255;
-const WP_WORLD_ID = 8;
-const IOS_STREAMING_POOL_SIZE = 250;
-const IOS_STREAMING_POOL_SIZE_FOR_MESHES = 250;
-const IOS_STREAMING_POOL_SIZE_IN_LOADING = 90;
-const IOS_STREAMING_POOL_SIZE_FOR_MESHES_IN_LOADING = 90;
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
+  UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  EntityVoxelInfoByMapIdAndEntityId_1 = require("../../../Core/Define/ConfigQuery/EntityVoxelInfoByMapIdAndEntityId"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  GameBudgetInterfaceController_1 = require("../../../Core/GameBudgetAllocator/GameBudgetInterfaceController"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TickSystem_1 = require("../../../Core/Tick/TickSystem"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  PhantomUtil_1 = require("../../Module/Phantom/PhantomUtil"),
+  ActorUtils_1 = require("../../Utils/ActorUtils"),
+  WorldModel_1 = require("../Model/WorldModel"),
+  AttachToActorController_1 = require("./AttachToActorController"),
+  DELTA_TIME_LIMIT_LOW = 20,
+  DELTA_TIME_LIMIT_HIGH = 25,
+  MIN_DELTA = 0,
+  MAX_DELTA = 0,
+  SCHEDULER_MINUS_FRAME_COUNT = 5,
+  DEFAULT_ENVIRONMENTTYPE = 255,
+  WP_WORLD_ID = 8,
+  IOS_STREAMING_POOL_SIZE = 250,
+  IOS_STREAMING_POOL_SIZE_FOR_MESHES = 250,
+  IOS_STREAMING_POOL_SIZE_IN_LOADING = 90,
+  IOS_STREAMING_POOL_SIZE_FOR_MESHES_IN_LOADING = 90;
 class WorldController extends ControllerBase_1.ControllerBase {
   static OnInit() {
-    let e;
+    var e;
     return (
       (ModelManager_1.ModelManager.WorldModel.CurrentSchedulerDelta =
         MAX_DELTA),
@@ -123,9 +123,9 @@ class WorldController extends ControllerBase_1.ControllerBase {
     );
   }
   static ManuallyGarbageCollection(e) {
-    let t;
-    this.hVs === 0 &&
-      ((this.hVs = 1), UE.GameplayStatics.GetPlatformName() === "Android") &&
+    var t;
+    0 === this.hVs &&
+      ((this.hVs = 1), "Android" === UE.GameplayStatics.GetPlatformName()) &&
       (t = UE.KuroStaticLibrary.GetDeviceCPU()).includes("SDM660") &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("World", 31, "Disable ManuallyGarbageCollection", [
@@ -133,7 +133,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
           t,
         ]),
       (this.hVs = 2)),
-      this.hVs === 1 &&
+      1 === this.hVs &&
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("World", 25, "ManuallyGarbageCollection", [
             "Reason: ",
@@ -145,7 +145,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
         global.memoryPressureNotification());
   }
   static ManuallyClearStreamingPool() {
-    ModelManager_1.ModelManager.PlatformModel.PlatformType === 1 &&
+    1 === ModelManager_1.ModelManager.PlatformModel.PlatformType &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("World", 37, "ManuallyClearStreamingPool In IOS"),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
@@ -159,7 +159,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
       ));
   }
   static ManuallyResetStreamingPool() {
-    ModelManager_1.ModelManager.PlatformModel.PlatformType === 1 &&
+    1 === ModelManager_1.ModelManager.PlatformModel.PlatformType &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("World", 37, "ManuallyResetStreamingPool In IOS"),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
@@ -173,7 +173,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
   }
   static Hlr() {
     if (!GameBudgetInterfaceController_1.GameBudgetInterfaceController.IsOpen) {
-      const e = ModelManager_1.ModelManager.WorldModel;
+      var e = ModelManager_1.ModelManager.WorldModel;
       if (
         Time_1.Time.DeltaTime <= DELTA_TIME_LIMIT_HIGH &&
         Time_1.Time.DeltaTime >= DELTA_TIME_LIMIT_LOW
@@ -183,7 +183,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
         Time_1.Time.DeltaTime > DELTA_TIME_LIMIT_HIGH &&
         e.CurrentSchedulerDelta > MIN_DELTA
       ) {
-        if (e.ChangeSchedulerLastType !== 1)
+        if (1 !== e.ChangeSchedulerLastType)
           (e.ChangeSchedulerLastType = 1),
             (e.ChangeSchedulerDeltaFrameCount = 0);
         else if (
@@ -203,10 +203,10 @@ class WorldController extends ControllerBase_1.ControllerBase {
         Time_1.Time.DeltaTime < DELTA_TIME_LIMIT_LOW &&
         e.CurrentSchedulerDelta < MAX_DELTA
       )
-        if (e.ChangeSchedulerLastType !== 2)
+        if (2 !== e.ChangeSchedulerLastType)
           (e.ChangeSchedulerLastType = 2),
             (e.ChangeSchedulerDeltaFrameCount = 0);
-        else if (++e.ChangeSchedulerDeltaFrameCount >= 10) {
+        else if (10 <= ++e.ChangeSchedulerDeltaFrameCount) {
           ++e.CurrentSchedulerDelta, (e.ChangeSchedulerDeltaFrameCount = 0);
           for (const r of ModelManager_1.ModelManager.WorldModel
             .TickIntervalSchedulers)
@@ -224,11 +224,11 @@ class WorldController extends ControllerBase_1.ControllerBase {
     this.kfr(), this.Ffr();
   }
   static kfr() {
-    const e = ModelManager_1.ModelManager.CreatureModel;
+    var e = ModelManager_1.ModelManager.CreatureModel;
     e.PendingRemoveEntitySize() && this.Vfr(e.PopPendingRemoveEntity());
   }
   static Vfr(e) {
-    let t, r, o, a, l;
+    var t, r, o, a, l;
     e
       ? Global_1.Global.WorldEntityHelper
         ? ((t =
@@ -270,8 +270,8 @@ class WorldController extends ControllerBase_1.ControllerBase {
         );
   }
   static Ffr() {
-    let e = ModelManager_1.ModelManager.WorldModel;
-    e.DestroyActorQueue.Size !== 0 &&
+    var e = ModelManager_1.ModelManager.WorldModel;
+    0 !== e.DestroyActorQueue.Size &&
       ((e = e.PopDestroyActor()), GlobalData_1.GlobalData.World?.IsValid()) &&
       (ModelManager_1.ModelManager.WorldModel.RemoveIgnore(e[2]),
       this.DestroyEntityActor(e[0], e[1], e[2]));
@@ -279,7 +279,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
   static DoLeaveLevel() {
     if (GlobalData_1.GlobalData.World?.IsValid()) {
       for (
-        let e = ModelManager_1.ModelManager.CreatureModel;
+        var e = ModelManager_1.ModelManager.CreatureModel;
         e.PendingRemoveEntitySize();
 
       )
@@ -289,7 +289,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
         t.DestroyActorQueue.Size;
 
       ) {
-        const r = t.PopDestroyActor();
+        var r = t.PopDestroyActor();
         this.DestroyEntityActor(r[0], r[1], r[2]);
       }
       t.ClearIgnore();
@@ -299,8 +299,8 @@ class WorldController extends ControllerBase_1.ControllerBase {
     this.Hfr(e), this.SetActorLocationAndRotation(e, t), this.jfr(e, t);
   }
   static Hfr(e) {
-    const t = e.Entity;
-    let r = e.GetEntityType();
+    var t = e.Entity,
+      r = e.GetEntityType();
     r !== Protocol_1.Aki.Protocol.HBs.Proto_Monster &&
       ((r =
         (e =
@@ -310,7 +310,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
       t.GetComponent(1).SetAutonomous(e, r));
   }
   static SetActorLocationAndRotation(e, t) {
-    let r, o;
+    var r, o;
     t &&
       ((r = e.GetLocation()),
       (e = e.GetRotation()),
@@ -334,7 +334,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
       e = e.GetPublicTags();
       if (void 0 !== e)
         for (const o of e) {
-          const r = FNameUtil_1.FNameUtil.GetDynamicFName(o);
+          var r = FNameUtil_1.FNameUtil.GetDynamicFName(o);
           t.Tags.Add(r);
         }
     }
@@ -361,8 +361,8 @@ class WorldController extends ControllerBase_1.ControllerBase {
     if (!e.GetWorld()?.IsValid()) return !1;
     let r = void 0;
     e.IsA(UE.Pawn.StaticClass()) && (r = e.Controller);
-    let o = !1;
-    let a = 0;
+    let o = !1,
+      a = 0;
     for (
       UE.KuroStaticLibrary.IsImplementInterface(
         e.GetClass(),
@@ -373,7 +373,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
       this.Wfr.length;
 
     ) {
-      const l = this.Wfr.pop();
+      var l = this.Wfr.pop();
       l?.IsValid() &&
         l.GetWorld()?.IsValid() &&
         l !== r &&
@@ -401,8 +401,8 @@ class WorldController extends ControllerBase_1.ControllerBase {
   static Kfr(e, t, r) {
     if (e?.IsValid()) {
       r || t.push(e);
-      var r = (0, puerts_1.$ref)(UE.NewArray(UE.Actor));
-      const o = (e.GetAttachedActors(r, !0), (0, puerts_1.$unref)(r));
+      var r = (0, puerts_1.$ref)(UE.NewArray(UE.Actor)),
+        o = (e.GetAttachedActors(r, !0), (0, puerts_1.$unref)(r));
       for (let e = 0; e < o.Num(); ++e) this.Kfr(o.Get(e), t, !1);
     }
   }
@@ -412,12 +412,11 @@ class WorldController extends ControllerBase_1.ControllerBase {
       t &&
       ModelManager_1.ModelManager.GameModeModel.UseWorldPartition
     ) {
-      const o = GlobalData_1.GlobalData.World;
+      var o = GlobalData_1.GlobalData.World;
       if (o?.IsValid()) {
-        const a = UE.KuroVoxelSystem.GetVoxelInfoAtPos(o, e);
-        var t =
-          ModelManager_1.ModelManager.WorldModel.HandleEnvironmentUpdate(a);
-        if (t !== 0) {
+        var a = UE.KuroVoxelSystem.GetVoxelInfoAtPos(o, e),
+          t = ModelManager_1.ModelManager.WorldModel.HandleEnvironmentUpdate(a);
+        if (0 !== t) {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "LevelEvent",
@@ -426,14 +425,14 @@ class WorldController extends ControllerBase_1.ControllerBase {
               ["LoadAdjustValue", a.LoadAdjustValue],
               ["StreamingType", a.StreamingType],
             );
-          const l = FNameUtil_1.FNameUtil.GetDynamicFName(
-            ModelManager_1.ModelManager.WorldModel.CurEnvironmentInfo
-              .DataLayerType,
-          );
-          const _ = FNameUtil_1.FNameUtil.GetDynamicFName(
-            ModelManager_1.ModelManager.WorldModel.CurEnvironmentInfo
-              .SubDataLayerType,
-          );
+          var l = FNameUtil_1.FNameUtil.GetDynamicFName(
+              ModelManager_1.ModelManager.WorldModel.CurEnvironmentInfo
+                .DataLayerType,
+            ),
+            _ = FNameUtil_1.FNameUtil.GetDynamicFName(
+              ModelManager_1.ModelManager.WorldModel.CurEnvironmentInfo
+                .SubDataLayerType,
+            );
           switch (
             (EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnEncloseSpaceTypeChange,
@@ -600,7 +599,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
   static IsEncloseSpace(e, t, r, o) {
     if (!ModelManager_1.ModelManager.GameModeModel.UseWorldPartition || !e)
       return !1;
-    const a = GlobalData_1.GlobalData.World;
+    var a = GlobalData_1.GlobalData.World;
     if (!a?.IsValid()) return !1;
     if (ModelManager_1.ModelManager.GameModeModel.MapId !== WP_WORLD_ID)
       return !1;
@@ -648,7 +647,7 @@ class WorldController extends ControllerBase_1.ControllerBase {
     });
   }
   static GetEntitiesInRangeWithLocation(e, t, r, o, a) {
-    const l = [];
+    var l = [];
     a && (o.length = 0),
       cpp_1.FKuroGameBudgetAllocatorInterface.GetEntitiesInRangeWithLocation(
         e,
@@ -657,12 +656,12 @@ class WorldController extends ControllerBase_1.ControllerBase {
         l,
       );
     for (const n of l) {
-      const _ = ModelManager_1.ModelManager.CharacterModel.GetHandleByEntity(n);
+      var _ = ModelManager_1.ModelManager.CharacterModel.GetHandleByEntity(n);
       _ && o.push(_);
     }
   }
   static GetCustomEntityId(e, t) {
-    let r = EntitySystem_1.EntitySystem.Get(e);
+    var r = EntitySystem_1.EntitySystem.Get(e);
     if (r) {
       r = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
         r,
@@ -704,19 +703,19 @@ class WorldController extends ControllerBase_1.ControllerBase {
       GameBudgetInterfaceController_1.GameBudgetInterfaceController.SetPerformanceLimitMode(
         e && !t,
       );
-    const r = UE.KuroTrailSystem.GetKuroTrailSystem(
-      GlobalData_1.GlobalData.World.GetWorld(),
-    );
-    const o = UE.KuroGISystem.GetKuroGISystem(
-      GlobalData_1.GlobalData.World.GetWorld(),
-    ).GetKuroGlobalGIActor();
+    var r = UE.KuroTrailSystem.GetKuroTrailSystem(
+        GlobalData_1.GlobalData.World.GetWorld(),
+      ),
+      o = UE.KuroGISystem.GetKuroGISystem(
+        GlobalData_1.GlobalData.World.GetWorld(),
+      ).GetKuroGlobalGIActor();
     e && !t
       ? ((r.bTickEnabled = !1), (o.EnableImposterUpdate = !1))
       : ((r.bTickEnabled = !0), (o.EnableImposterUpdate = !0));
   }),
   (WorldController.Zpe = (e) => {
     _a.Xfr = e;
-    const t =
+    var t =
       GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
     e
       ? t.TryReduceCsmUpdateFrequency("Battle")
@@ -753,4 +752,4 @@ class WorldController extends ControllerBase_1.ControllerBase {
       }
     }
   });
-// # sourceMappingURL=WorldController.js.map
+//# sourceMappingURL=WorldController.js.map

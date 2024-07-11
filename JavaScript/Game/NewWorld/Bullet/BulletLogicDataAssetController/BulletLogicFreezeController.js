@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletLogicFreezeController = void 0);
-const BulletUtil_1 = require("../BulletUtil");
-const BulletHitActorData_1 = require("../Model/BulletHitActorData");
-const BulletLogicController_1 = require("./BulletLogicController");
+const BulletUtil_1 = require("../BulletUtil"),
+  BulletHitActorData_1 = require("../Model/BulletHitActorData"),
+  BulletLogicController_1 = require("./BulletLogicController");
 class BulletLogicFreezeController extends BulletLogicController_1.BulletLogicController {
   constructor(t, e) {
     super(t, e), (this._9o = this.Bullet.GetBulletInfo()), (this.u9o = t);
@@ -11,9 +11,9 @@ class BulletLogicFreezeController extends BulletLogicController_1.BulletLogicCon
   BulletLogicAction(t = void 0) {
     let e = void 0;
     t && t instanceof BulletHitActorData_1.BulletHitActorData && (e = t.Entity);
-    const l = this.p9o(this.u9o.Target, e);
-    const r = this.u9o.Tags.GameplayTags.Num();
-    if (l || !(r > 0)) {
+    var l = this.p9o(this.u9o.Target, e),
+      r = this.u9o.Tags.GameplayTags.Num();
+    if (l || !(0 < r)) {
       for (let t = 0; t < r; ++t)
         if (
           !l.GetComponent(185).HasTag(this.u9o.Tags.GameplayTags.Get(t)?.TagId)
@@ -34,4 +34,4 @@ class BulletLogicFreezeController extends BulletLogicController_1.BulletLogicCon
   }
 }
 exports.BulletLogicFreezeController = BulletLogicFreezeController;
-// # sourceMappingURL=BulletLogicFreezeController.js.map
+//# sourceMappingURL=BulletLogicFreezeController.js.map

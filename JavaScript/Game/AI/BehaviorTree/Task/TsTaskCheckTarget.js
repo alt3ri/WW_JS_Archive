@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../GlobalData");
-const CharacterController_1 = require("../../../NewWorld/Character/CharacterController");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
-const SELF_MASK = 1;
-const ALLY_MASK = 2;
-const ENEMY_MASK = 4;
-const NEUTRAL_MASK = 8;
+const Log_1 = require("../../../../Core/Common/Log"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../GlobalData"),
+  CharacterController_1 = require("../../../NewWorld/Character/CharacterController"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
+  SELF_MASK = 1,
+  ALLY_MASK = 2,
+  ENEMY_MASK = 4,
+  NEUTRAL_MASK = 8;
 class TsTaskCheckTarget extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -41,7 +41,7 @@ class TsTaskCheckTarget extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsCheckCamp = this.CheckCamp));
   }
   static SwapAndClearTmpTargets() {
-    const s = TsTaskCheckTarget.TmpTargets;
+    var s = TsTaskCheckTarget.TmpTargets;
     (TsTaskCheckTarget.TmpTargets = TsTaskCheckTarget.TmpTargets2),
       (TsTaskCheckTarget.TmpTargets2 = s),
       TsTaskCheckTarget.TmpTargets.clear();
@@ -57,9 +57,9 @@ class TsTaskCheckTarget extends TsTaskAbortImmediatelyBase_1.default {
         (this.HeightRange = [-this.CheckHeight, this.CheckHeight]));
   }
   ReceiveTickAI(s, t, e) {
-    let a = s.AiController;
+    var a = s.AiController;
     if (a) {
-      const r = a.CharActorComp;
+      var r = a.CharActorComp;
       if (
         (BlackboardController_1.BlackboardController.RemoveValueByEntity(
           r.Entity.Id,
@@ -75,10 +75,10 @@ class TsTaskCheckTarget extends TsTaskAbortImmediatelyBase_1.default {
           : ((TsTaskCheckTarget.TmpTargets = new Set()),
             (TsTaskCheckTarget.TmpTargets2 = new Set())),
         this.RelevanceAndCamp(a, r),
-        TsTaskCheckTarget.TmpTargets.size === 0)
+        0 === TsTaskCheckTarget.TmpTargets.size)
       )
         this.FinishExecute(!1);
-      else if ((this.Tags(), TsTaskCheckTarget.TmpTargets.size === 0))
+      else if ((this.Tags(), 0 === TsTaskCheckTarget.TmpTargets.size))
         this.FinishExecute(!1);
       else {
         if (this.TsCheckSight) {
@@ -94,12 +94,12 @@ class TsTaskCheckTarget extends TsTaskAbortImmediatelyBase_1.default {
               this.HeightRange,
             ) && TsTaskCheckTarget.TmpTargets.add(i);
         }
-        const h = new Array();
+        var h = new Array();
         for (const T of TsTaskCheckTarget.TmpTargets)
           (!this.TsNeedCheckAutonomous ||
             T.Entity.GetComponent(3)?.IsAutonomousProxy) &&
             h.push(T.Entity.Id);
-        h.length === 0
+        0 === h.length
           ? this.FinishExecute(!1)
           : (BlackboardController_1.BlackboardController.SetIntValuesByEntity(
               r.Entity.Id,
@@ -126,12 +126,12 @@ class TsTaskCheckTarget extends TsTaskAbortImmediatelyBase_1.default {
   }
   RelevanceAndCamp(s, t) {
     if (
-      ((this.TsCheckCampRelevance & SELF_MASK) > 0 &&
+      (0 < (this.TsCheckCampRelevance & SELF_MASK) &&
         TsTaskCheckTarget.TmpTargets.add(t),
-      (this.TsCheckCampRelevance & ALLY_MASK) > 0)
+      0 < (this.TsCheckCampRelevance & ALLY_MASK))
     ) {
-      let e;
-      const a = s.CharAiDesignComp.Entity.Id;
+      var e,
+        a = s.CharAiDesignComp.Entity.Id;
       for (const i of s.AiPerception.Allies)
         i !== a &&
           (e =
@@ -140,23 +140,23 @@ class TsTaskCheckTarget extends TsTaskAbortImmediatelyBase_1.default {
             )) &&
           TsTaskCheckTarget.TmpTargets.add(e);
     }
-    if ((this.TsCheckCampRelevance & ENEMY_MASK) > 0)
+    if (0 < (this.TsCheckCampRelevance & ENEMY_MASK))
       for (const T of s.AiPerception.AllEnemies) {
-        const r =
+        var r =
           CharacterController_1.CharacterController.GetCharacterActorComponentById(
             T,
           );
         r && TsTaskCheckTarget.TmpTargets.add(r);
       }
-    if ((this.TsCheckCampRelevance & NEUTRAL_MASK) > 0)
+    if (0 < (this.TsCheckCampRelevance & NEUTRAL_MASK))
       for (const o of s.AiPerception.Neutrals) {
-        const h =
+        var h =
           CharacterController_1.CharacterController.GetCharacterActorComponentById(
             o,
           );
         h && TsTaskCheckTarget.TmpTargets.add(h);
       }
-    if (this.TsCheckCamp !== 13) {
+    if (13 !== this.TsCheckCamp) {
       TsTaskCheckTarget.SwapAndClearTmpTargets();
       for (const k of TsTaskCheckTarget.TmpTargets2)
         k.Actor.Camp === this.TsCheckCamp &&
@@ -166,19 +166,19 @@ class TsTaskCheckTarget extends TsTaskAbortImmediatelyBase_1.default {
   Tags() {
     if (!this.CheckTagsCopy) {
       (this.NeedOneTag = !1), (this.CheckTagsCopy = new Array());
-      for (let s = this.CheckTags.Num() - 1; s >= 0; --s) {
-        const t = this.CheckTags.GetKey(s);
-        const e = this.CheckTags.Get(t);
+      for (let s = this.CheckTags.Num() - 1; 0 <= s; --s) {
+        var t = this.CheckTags.GetKey(s),
+          e = this.CheckTags.Get(t);
         this.CheckTagsCopy.push([t, e]), e && (this.NeedOneTag = !0);
       }
     }
     if (this.CheckTagsCopy.length) {
       TsTaskCheckTarget.SwapAndClearTmpTargets();
       for (const i of TsTaskCheckTarget.TmpTargets2) {
-        const a = i.Entity.GetComponent(185);
+        var a = i.Entity.GetComponent(185);
         if (a?.Valid) {
           let s = !0;
-          for (const [r, h] of this.CheckTagsCopy)
+          for (var [r, h] of this.CheckTagsCopy)
             if (a.HasTag(r?.TagId) !== h) {
               s = !1;
               break;
@@ -190,4 +190,4 @@ class TsTaskCheckTarget extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskCheckTarget;
-// # sourceMappingURL=TsTaskCheckTarget.js.map
+//# sourceMappingURL=TsTaskCheckTarget.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldMapComponentBase = void 0);
-const Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D");
-const WorldMapUtil_1 = require("../WorldMapUtil");
+const Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
+  WorldMapUtil_1 = require("../WorldMapUtil");
 class WorldMapComponentBase {
   constructor(t) {
     (this.Map = t),
@@ -30,4 +30,4 @@ class WorldMapComponentBase {
   RemoveEventListener() {}
 }
 exports.WorldMapComponentBase = WorldMapComponentBase;
-// # sourceMappingURL=WorldMapComponentBase.js.map
+//# sourceMappingURL=WorldMapComponentBase.js.map

@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MarkItemUtil = void 0);
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const AreaMarkItem_1 = require("./MarkItem/AreaMarkItem");
-const ConfigMarkItem_1 = require("./MarkItem/ConfigMarkItem");
-const CustomMarkItem_1 = require("./MarkItem/CustomMarkItem");
-const DynamicEntityMarkItem_1 = require("./MarkItem/DynamicEntityMarkItem");
-const EntityMarkItem_1 = require("./MarkItem/EntityMarkItem");
-const FixedSceneGamePlayMarkItem_1 = require("./MarkItem/FixedSceneGamePlayMarkItem");
-const LandscapeMark_1 = require("./MarkItem/LandscapeMark");
-const MingSuNpcMarkItem_1 = require("./MarkItem/MingSuNpcMarkItem");
-const ParkourMarkItem_1 = require("./MarkItem/ParkourMarkItem");
-const PlayerMarkItem_1 = require("./MarkItem/PlayerMarkItem");
-const SceneGameplayMarkItem_1 = require("./MarkItem/SceneGameplayMarkItem");
-const SoundBoxMarkItem_1 = require("./MarkItem/SoundBoxMarkItem");
-const TaskMarkItem_1 = require("./MarkItem/TaskMarkItem");
-const TeleportMarkItem_1 = require("./MarkItem/TeleportMarkItem");
-const TemporaryTeleportMarkItem_1 = require("./MarkItem/TemporaryTeleportMarkItem");
-const TreasureBoxDetectorMarkItem_1 = require("./MarkItem/TreasureBoxDetectorMarkItem");
-const TreasureBoxMarkItem_1 = require("./MarkItem/TreasureBoxMarkItem");
+const Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  AreaMarkItem_1 = require("./MarkItem/AreaMarkItem"),
+  ConfigMarkItem_1 = require("./MarkItem/ConfigMarkItem"),
+  CustomMarkItem_1 = require("./MarkItem/CustomMarkItem"),
+  DynamicEntityMarkItem_1 = require("./MarkItem/DynamicEntityMarkItem"),
+  EntityMarkItem_1 = require("./MarkItem/EntityMarkItem"),
+  FixedSceneGamePlayMarkItem_1 = require("./MarkItem/FixedSceneGamePlayMarkItem"),
+  LandscapeMark_1 = require("./MarkItem/LandscapeMark"),
+  MingSuNpcMarkItem_1 = require("./MarkItem/MingSuNpcMarkItem"),
+  ParkourMarkItem_1 = require("./MarkItem/ParkourMarkItem"),
+  PlayerMarkItem_1 = require("./MarkItem/PlayerMarkItem"),
+  SceneGameplayMarkItem_1 = require("./MarkItem/SceneGameplayMarkItem"),
+  SoundBoxMarkItem_1 = require("./MarkItem/SoundBoxMarkItem"),
+  TaskMarkItem_1 = require("./MarkItem/TaskMarkItem"),
+  TeleportMarkItem_1 = require("./MarkItem/TeleportMarkItem"),
+  TemporaryTeleportMarkItem_1 = require("./MarkItem/TemporaryTeleportMarkItem"),
+  TreasureBoxDetectorMarkItem_1 = require("./MarkItem/TreasureBoxDetectorMarkItem"),
+  TreasureBoxMarkItem_1 = require("./MarkItem/TreasureBoxMarkItem");
 class MarkItemUtil {
   static Create(r, a, t, k) {
     if (r) {
@@ -39,7 +39,7 @@ class MarkItemUtil {
     }
   }
   static GetTrackSourceTypeByMarkType(e) {
-    return e !== 10 ? 1 : 4;
+    return 10 !== e ? 1 : 4;
   }
   static CreateConfigMark(r, a, t, k, M) {
     if (a) {
@@ -174,26 +174,26 @@ class MarkItemUtil {
       );
   }
   static IsTrackPointedMarkInCurrentDungeon(e, r = !1) {
-    if (e.TrackSource !== 1) return !0;
-    const a =
+    if (1 !== e.TrackSource) return !0;
+    var a =
       ModelManager_1.ModelManager.GameModeModel.InstanceDungeon?.MapConfigId;
     if (e.Id <= 0) {
       const t = ModelManager_1.ModelManager.MapModel.GetDynamicMarkInfoById(
         e.Id,
       );
-      return t && t.MapId ? t.MarkType === 12 || a === t.MapId : r;
+      return t && t.MapId ? 12 === t.MarkType || a === t.MapId : r;
     }
     const t = ModelManager_1.ModelManager.MapModel.GetDynamicMarkInfoById(e.Id);
     return t && t.MapId
-      ? t.MarkType === 12 || a === t.MapId
+      ? 12 === t.MarkType || a === t.MapId
       : (e = ConfigManager_1.ConfigManager.MapConfig.GetConfigMark(e.Id)) &&
           e.MapId
         ? a === e.MapId
         : r;
   }
   static IsHideTrackInView(e) {
-    return e.MarkType !== 12 && e.TrackSource === 1;
+    return 12 !== e.MarkType && 1 === e.TrackSource;
   }
 }
 exports.MarkItemUtil = MarkItemUtil;
-// # sourceMappingURL=MarkItemUtil.js.map
+//# sourceMappingURL=MarkItemUtil.js.map

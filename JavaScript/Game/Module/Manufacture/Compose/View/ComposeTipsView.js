@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConfirmButtonCompose = exports.ComposeTipsView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const GenericLayoutNew_1 = require("../../../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const CommonItemView_1 = require("../../Common/CommonItemView");
-const ComposeController_1 = require("../ComposeController");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  GenericLayoutNew_1 = require("../../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  CommonItemView_1 = require("../../Common/CommonItemView"),
+  ComposeController_1 = require("../ComposeController"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
 class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -37,7 +37,7 @@ class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
         ) {
           case 1:
             var e = this.dqt;
-            e.SubType === 35
+            35 === e.SubType
               ? ((i =
                   ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaByFormulaItemId(
                     e.ItemId,
@@ -52,7 +52,7 @@ class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
             break;
           case 2:
             var i = this.dqt;
-            i.SubType === 37
+            37 === i.SubType
               ? ((e =
                   ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaByFormulaItemId(
                     i.ItemId,
@@ -124,7 +124,7 @@ class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
     }
   }
   $Ii() {
-    const e = this.dqt;
+    var e = this.dqt;
     switch (e.SubType) {
       case 35:
         this.YIi(), this.JIi(e);
@@ -134,69 +134,69 @@ class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
     }
   }
   JIi(e) {
-    const i =
-      ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaByFormulaItemId(
-        e.ItemId,
-      );
-    var t =
-      (this.mNt(1),
-      ConfigManager_1.ConfigManager.TextConfig.GetTextById("Formula"));
-    var t =
-      (this.dNt(t),
-      ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(i.Name));
-    var t =
-      (this.CNt(t),
-      ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e.ItemId));
-    var e =
-      (this.gNt(t.Icon),
-      ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
-        i.ComposeContent,
-      ));
-    var t =
-      (this.fNt(e),
-      ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
-        i.ComposeBackground,
-      ));
-    var e =
-      (this.pNt(t),
-      this.vNt(!0),
-      ConfigManager_1.ConfigManager.TextConfig.GetTextById("Study"));
+    var i =
+        ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaByFormulaItemId(
+          e.ItemId,
+        ),
+      t =
+        (this.mNt(1),
+        ConfigManager_1.ConfigManager.TextConfig.GetTextById("Formula")),
+      t =
+        (this.dNt(t),
+        ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(i.Name)),
+      t =
+        (this.CNt(t),
+        ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e.ItemId)),
+      e =
+        (this.gNt(t.Icon),
+        ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
+          i.ComposeContent,
+        )),
+      t =
+        (this.fNt(e),
+        ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
+          i.ComposeBackground,
+        )),
+      e =
+        (this.pNt(t),
+        this.vNt(!0),
+        ConfigManager_1.ConfigManager.TextConfig.GetTextById("Study"));
     this.rFe(e, !0);
   }
   LIi(e) {
     var i = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-      e.ItemId,
-    );
-    var t = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
-      i.ItemId,
-    );
-    var t =
-      (this.mNt(t),
-      ConfigManager_1.ConfigManager.TextConfig.GetTextById("Medicament"));
-    var t =
-      (this.dNt(t),
-      ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(i.Name));
-    var t =
-      (this.CNt(t),
-      ConfigManager_1.ConfigManager.ItemConfig.GetConfig(i.ItemId));
-    var s =
-      (this.gNt(t.Icon),
-      ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
-        t.AttributesDescription,
-      ));
-    var s =
-      (this.fNt(s),
-      ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
-        t.BgDescription,
-      ));
-    var t = (this.pNt(s), i.Proficiency);
-    var s = i.MaxProficiencyCount;
-    var i =
-      (this.MNt(e.ComposeCount, t, s),
-      ConfigManager_1.ConfigManager.TextConfig.GetTextById("Making"));
-    var t = ComposeController_1.ComposeController.CheckCanReagentProduction(
-      e.ItemId,
-    );
+        e.ItemId,
+      ),
+      t = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
+        i.ItemId,
+      ),
+      t =
+        (this.mNt(t),
+        ConfigManager_1.ConfigManager.TextConfig.GetTextById("Medicament")),
+      t =
+        (this.dNt(t),
+        ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(i.Name)),
+      t =
+        (this.CNt(t),
+        ConfigManager_1.ConfigManager.ItemConfig.GetConfig(i.ItemId)),
+      s =
+        (this.gNt(t.Icon),
+        ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
+          t.AttributesDescription,
+        )),
+      s =
+        (this.fNt(s),
+        ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
+          t.BgDescription,
+        )),
+      t = (this.pNt(s), i.Proficiency),
+      s = i.MaxProficiencyCount,
+      i =
+        (this.MNt(e.ComposeCount, t, s),
+        ConfigManager_1.ConfigManager.TextConfig.GetTextById("Making")),
+      t = ComposeController_1.ComposeController.CheckCanReagentProduction(
+        e.ItemId,
+      );
     this.rFe(i, t), this.vNt(t), this.SNt(e.ItemId);
   }
   YIi() {
@@ -218,7 +218,7 @@ class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
       this.GetText(16).SetUIActive(!0);
   }
   RefreshStructureData() {
-    const e = this.dqt;
+    var e = this.dqt;
     switch (e.SubType) {
       case 37:
         this.ZIi(), this.RefreshStructureMenu(e);
@@ -229,64 +229,64 @@ class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
   }
   RefreshStructure(e) {
     var i = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-      e.ItemId,
-    );
-    var t = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
-      i.ItemId,
-    );
-    var t =
-      (this.mNt(t),
-      ConfigManager_1.ConfigManager.TextConfig.GetTextById("Prop"));
-    var t =
-      (this.dNt(t),
-      ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(i.Name));
-    var t =
-      (this.CNt(t),
-      ConfigManager_1.ConfigManager.ItemConfig.GetConfig(i.ItemId));
-    var i =
-      (this.gNt(t.Icon),
-      ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
-        t.AttributesDescription,
-      ));
-    var i =
-      (this.fNt(i),
-      ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
-        t.BgDescription,
-      ));
-    var t =
-      (this.pNt(i),
-      ConfigManager_1.ConfigManager.TextConfig.GetTextById("Making"));
-    var i = ComposeController_1.ComposeController.CheckCanStructure(e.ItemId);
+        e.ItemId,
+      ),
+      t = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
+        i.ItemId,
+      ),
+      t =
+        (this.mNt(t),
+        ConfigManager_1.ConfigManager.TextConfig.GetTextById("Prop")),
+      t =
+        (this.dNt(t),
+        ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(i.Name)),
+      t =
+        (this.CNt(t),
+        ConfigManager_1.ConfigManager.ItemConfig.GetConfig(i.ItemId)),
+      i =
+        (this.gNt(t.Icon),
+        ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
+          t.AttributesDescription,
+        )),
+      i =
+        (this.fNt(i),
+        ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
+          t.BgDescription,
+        )),
+      t =
+        (this.pNt(i),
+        ConfigManager_1.ConfigManager.TextConfig.GetTextById("Making")),
+      i = ComposeController_1.ComposeController.CheckCanStructure(e.ItemId);
     this.rFe(t, i), this.vNt(i), this.SNt(e.ItemId);
   }
   RefreshStructureMenu(e) {
-    const i =
-      ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaByFormulaItemId(
-        e.ItemId,
-      );
-    var t =
-      (this.mNt(1),
-      ConfigManager_1.ConfigManager.TextConfig.GetTextById("Formula"));
-    var t =
-      (this.dNt(t),
-      ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(i.Name));
-    var t =
-      (this.CNt(t),
-      ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e.ItemId));
-    var e =
-      (this.gNt(t.Icon),
-      ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
-        i.ComposeContent,
-      ));
-    var t =
-      (this.fNt(e),
-      ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
-        i.ComposeBackground,
-      ));
-    var e =
-      (this.pNt(t),
-      this.vNt(!0),
-      ConfigManager_1.ConfigManager.TextConfig.GetTextById("Study"));
+    var i =
+        ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaByFormulaItemId(
+          e.ItemId,
+        ),
+      t =
+        (this.mNt(1),
+        ConfigManager_1.ConfigManager.TextConfig.GetTextById("Formula")),
+      t =
+        (this.dNt(t),
+        ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(i.Name)),
+      t =
+        (this.CNt(t),
+        ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e.ItemId)),
+      e =
+        (this.gNt(t.Icon),
+        ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
+          i.ComposeContent,
+        )),
+      t =
+        (this.fNt(e),
+        ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
+          i.ComposeBackground,
+        )),
+      e =
+        (this.pNt(t),
+        this.vNt(!0),
+        ConfigManager_1.ConfigManager.TextConfig.GetTextById("Study"));
     this.rFe(e, !0);
   }
   eTi() {
@@ -308,40 +308,39 @@ class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
       this.GetText(16).SetUIActive(!1);
   }
   RefreshPurificationData() {
-    const e = this.dqt;
+    var e = this.dqt;
     this.SetPurificationHide(), this.RefreshPurification(e);
   }
   RefreshPurification(e) {
-    const i =
-      ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
+    var i = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
         e.ItemId,
-      );
-    var t = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
-      i.ItemId,
-    );
-    var t =
-      (this.mNt(t),
-      ConfigManager_1.ConfigManager.TextConfig.GetTextById("Material"));
-    var t =
-      (this.dNt(t),
-      ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(i.Name));
-    var t =
-      (this.CNt(t),
-      ConfigManager_1.ConfigManager.ItemConfig.GetConfig(i.ItemId));
-    var s =
-      (this.gNt(t.Icon),
-      ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
-        t.AttributesDescription,
-      ));
-    var s =
-      (this.fNt(s),
-      ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
-        t.BgDescription,
-      ));
+      ),
+      t = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
+        i.ItemId,
+      ),
+      t =
+        (this.mNt(t),
+        ConfigManager_1.ConfigManager.TextConfig.GetTextById("Material")),
+      t =
+        (this.dNt(t),
+        ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(i.Name)),
+      t =
+        (this.CNt(t),
+        ConfigManager_1.ConfigManager.ItemConfig.GetConfig(i.ItemId)),
+      s =
+        (this.gNt(t.Icon),
+        ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
+          t.AttributesDescription,
+        )),
+      s =
+        (this.fNt(s),
+        ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
+          t.BgDescription,
+        ));
     this.pNt(s);
-    let r = "";
-    let a = !1;
-    e.IsUnlock === 1
+    let r = "",
+      a = !1;
+    1 === e.IsUnlock
       ? ((r = ConfigManager_1.ConfigManager.TextConfig.GetTextById("Making")),
         (a = ComposeController_1.ComposeController.CheckCanPurification(
           e.ItemId,
@@ -447,4 +446,4 @@ class ConfirmButtonCompose extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ConfirmButtonCompose = ConfirmButtonCompose;
-// # sourceMappingURL=ComposeTipsView.js.map
+//# sourceMappingURL=ComposeTipsView.js.map

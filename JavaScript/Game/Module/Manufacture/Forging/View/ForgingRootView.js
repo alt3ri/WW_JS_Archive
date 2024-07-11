@@ -1,31 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ForgingRootView = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const LocalStorageDefine_1 = require("../../../../Common/LocalStorageDefine");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const FilterEntrance_1 = require("../../../Common/FilterSort/Filter/View/FilterEntrance");
-const SortEntrance_1 = require("../../../Common/FilterSort/Sort/View/SortEntrance");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const UiCameraAnimationManager_1 = require("../../../UiCameraAnimation/UiCameraAnimationManager");
-const GenericLayoutNew_1 = require("../../../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView");
-const CommonManager_1 = require("../../Common/CommonManager");
-const ForgingController_1 = require("../ForgingController");
-const ForgingIngredientsView_1 = require("./ForgingIngredientsView");
-const ForgingMediumItemGrid_1 = require("./ForgingMediumItemGrid");
-const TIMERGAP = 1e3;
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  LocalStorageDefine_1 = require("../../../../Common/LocalStorageDefine"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  FilterEntrance_1 = require("../../../Common/FilterSort/Filter/View/FilterEntrance"),
+  SortEntrance_1 = require("../../../Common/FilterSort/Sort/View/SortEntrance"),
+  UiCameraAnimationManager_1 = require("../../../UiCameraAnimation/UiCameraAnimationManager"),
+  GenericLayoutNew_1 = require("../../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView"),
+  CommonManager_1 = require("../../Common/CommonManager"),
+  ForgingController_1 = require("../ForgingController"),
+  ForgingIngredientsView_1 = require("./ForgingIngredientsView"),
+  ForgingMediumItemGrid_1 = require("./ForgingMediumItemGrid"),
+  TIMERGAP = 1e3;
 class ForgingRootView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -38,7 +37,6 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
       (this.pGt = void 0),
       (this.vGt = void 0),
       (this.GOe = void 0),
-      (this.EPe = void 0),
       (this.m5s = void 0),
       (this.c4s = !1),
       (this.DTi = void 0),
@@ -52,7 +50,7 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
             );
       }),
       (this.UTi = () => {
-        this.EPe?.PlaySequenceAsync(
+        this.ChildPopView?.PlaySequenceAsync(
           "Close",
           new CustomPromise_1.CustomPromise(),
           !0,
@@ -66,9 +64,9 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
           ForgingController_1.ForgingController.PlayForgingLoopDisplay();
       }),
       (this.$Ge = (e) => {
-        e === "CompositeRewardView" &&
+        "CompositeRewardView" === e &&
           (this.ChildPopView?.PopItem.SetActive(!0),
-          this.EPe?.PlayLevelSequenceByName("Start"),
+          this.ChildPopView?.PlayLevelSequenceByName("Start"),
           (e = ModelManager_1.ModelManager.ComposeModel.ComposeSuccessFlow),
           ForgingController_1.ForgingController.PlayForgingFlow(e));
       }),
@@ -76,12 +74,8 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
         this.vGt.UpdateData(24, this.TGt()), this.Dqt();
       }),
       (this.jwe = (e) => {
-        e === "OnBlackScreen" &&
-          (this.EPe ||
-            (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(
-              this.ChildPopView?.PopItem.GetRootItem(),
-            )),
-          this.EPe?.PlayLevelSequenceByName("Start", !0),
+        "OnBlackScreen" === e &&
+          (this.ChildPopView?.PlayLevelSequenceByName("Start"),
           this.m5s?.SetResult(),
           this.ChildPopView?.PopItem.SetActive(!0),
           ForgingController_1.ForgingController.PlayForgingEnterDisplay(
@@ -101,7 +95,7 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
         (this.MGt = !0), this.xTi();
       }),
       (this.z9e = () => {
-        const e = new ForgingMediumItemGrid_1.ForgingMediumItemGrid();
+        var e = new ForgingMediumItemGrid_1.ForgingMediumItemGrid();
         return e.BindOnExtendToggleStateChanged(this.HIi), e;
       }),
       (this.HIi = (e) => {
@@ -145,7 +139,7 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
               ),
           )),
           this.HGt(),
-          this.TTi.length === 0
+          0 === this.TTi.length
             ? (this.GetItem(8).SetUIActive(!0), this.DTi.SetActive(!1))
             : (this.GetItem(8).SetUIActive(!1),
               this.DTi.SetActive(!0),
@@ -212,7 +206,7 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
         (TimerSystem_1.TimerSystem.Remove(this.GOe), (this.GOe = void 0));
   }
   Dqt() {
-    const e = ModelManager_1.ModelManager.ForgingModel.GetRefreshLimitTime();
+    var e = ModelManager_1.ModelManager.ForgingModel.GetRefreshLimitTime();
     e
       ? (this.GetItem(12).SetUIActive(!0),
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(13), "RefreshTime", e))
@@ -224,11 +218,11 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
     );
   }
   GGt() {
-    const e = this.TGt();
+    var e = this.TGt();
     if (e)
       for (const i of e)
         if (
-          i.ExistEndTime > 0 &&
+          0 < i.ExistEndTime &&
           !TimeUtil_1.TimeUtil.IsInTimeSpan(i.ExistStartTime, i.ExistEndTime)
         )
           return !0;
@@ -311,13 +305,11 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
       this.DTi.Destroy(),
       ForgingController_1.ForgingController.PlayLeaveForgingAudio(),
       ForgingController_1.ForgingController.ClearCurrentInteractionEntityDisplay(),
-      this.EPe?.Clear(),
-      (this.EPe = void 0),
       (this.m5s = void 0);
   }
   YGt() {
-    let e;
-    const i = this.ChildPopView.PopItem;
+    var e,
+      i = this.ChildPopView.PopItem;
     i &&
       !this.c4s &&
       ((e =
@@ -335,10 +327,10 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
   TGt(e = !0) {
     let i = ModelManager_1.ModelManager.ForgingModel.GetForgingDataList();
     return (i =
-      i && e ? i.filter((e) => e.IsUnlock > 0 || e.FormulaItemId > 0) : i);
+      i && e ? i.filter((e) => 0 < e.IsUnlock || 0 < e.FormulaItemId) : i);
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
-    let i;
+    var i;
     if (this.ITi?.DataInited)
       return (
         (i = Number(e[0])),
@@ -362,7 +354,7 @@ class MainTypeItem extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.OnClickedCallback = void 0),
       (this.OnItemButtonClicked = (e) => {
-        e === 1 && this.SelectedItem();
+        1 === e && this.SelectedItem();
       }),
       this.CreateThenShowByActor(e.GetOwner()),
       (this.zGt = i);
@@ -381,7 +373,7 @@ class MainTypeItem extends UiPanelBase_1.UiPanelBase {
     this.OnClickedCallback = e;
   }
   Update() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
         "SP_Forging",
       );
@@ -397,4 +389,4 @@ class MainTypeItem extends UiPanelBase_1.UiPanelBase {
     this.GetExtendToggle(1).SetToggleState(0, !1);
   }
 }
-// # sourceMappingURL=ForgingRootView.js.map
+//# sourceMappingURL=ForgingRootView.js.map

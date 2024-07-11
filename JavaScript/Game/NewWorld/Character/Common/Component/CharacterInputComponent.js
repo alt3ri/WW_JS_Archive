@@ -1,52 +1,57 @@
 "use strict";
-let CharacterInputComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, i, s, e) {
-    let h;
-    const n = arguments.length;
-    let r =
-      n < 3 ? i : e === null ? (e = Object.getOwnPropertyDescriptor(i, s)) : e;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(t, i, s, e);
-    else
-      for (let a = t.length - 1; a >= 0; a--)
-        (h = t[a]) && (r = (n < 3 ? h(r) : n > 3 ? h(i, s, r) : h(i, s)) || r);
-    return n > 3 && r && Object.defineProperty(i, s, r), r;
-  };
+var CharacterInputComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, i, s, e) {
+      var h,
+        n = arguments.length,
+        r =
+          n < 3
+            ? i
+            : null === e
+              ? (e = Object.getOwnPropertyDescriptor(i, s))
+              : e;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        r = Reflect.decorate(t, i, s, e);
+      else
+        for (var a = t.length - 1; 0 <= a; a--)
+          (h = t[a]) &&
+            (r = (n < 3 ? h(r) : 3 < n ? h(i, s, r) : h(i, s)) || r);
+      return 3 < n && r && Object.defineProperty(i, s, r), r;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterInputComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../Core/Common/Time");
-const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const CameraController_1 = require("../../../../Camera/CameraController");
-const CameraUtility_1 = require("../../../../Camera/CameraUtility");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const Global_1 = require("../../../../Global");
-const GlobalData_1 = require("../../../../GlobalData");
-const InputController_1 = require("../../../../Input/InputController");
-const InputEnums_1 = require("../../../../Input/InputEnums");
-const InputFilter_1 = require("../../../../Input/InputFilter");
-const InputFilterManager_1 = require("../../../../Input/InputFilterManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RoleGaitStatic_1 = require("../../Role/Component/Define/RoleGaitStatic");
-const CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes");
-const CustomMovementDefine_1 = require("./Move/CustomMovementDefine");
-const ZERO_TIME = 0;
-const NULL_CONFIG_TIME = -1;
-const INVALID_INPUT_RESULT = 0;
-const INVALID_PRIORITY = -1;
-const INVALID_PRIORITY_INDEX = -1;
-const INVALID_INPUT_TIME = -1;
-const MOVE_VECTOR_CACHE_TIME = 100;
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  CameraController_1 = require("../../../../Camera/CameraController"),
+  CameraUtility_1 = require("../../../../Camera/CameraUtility"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../../Global"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  InputController_1 = require("../../../../Input/InputController"),
+  InputEnums_1 = require("../../../../Input/InputEnums"),
+  InputFilter_1 = require("../../../../Input/InputFilter"),
+  InputFilterManager_1 = require("../../../../Input/InputFilterManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RoleGaitStatic_1 = require("../../Role/Component/Define/RoleGaitStatic"),
+  CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
+  CustomMovementDefine_1 = require("./Move/CustomMovementDefine"),
+  ZERO_TIME = 0,
+  NULL_CONFIG_TIME = -1,
+  INVALID_INPUT_RESULT = 0,
+  INVALID_PRIORITY = -1,
+  INVALID_PRIORITY_INDEX = -1,
+  INVALID_INPUT_TIME = -1,
+  MOVE_VECTOR_CACHE_TIME = 100;
 class InputEvent {
   constructor(t, i, s) {
     (this.Action = void 0),
@@ -103,7 +108,7 @@ class AutomaticFlightData {
       (this.SpeedTransitionCurve = t.速度过渡曲线),
       (this.ForwardAxisResponseValue = t.前向轴输入响应比例),
       (this.BackwardAxisResponseValue =
-        t.后向轴输入响应比例 > 0
+        0 < t.后向轴输入响应比例
           ? -t.后向轴输入响应比例
           : t.后向轴输入响应比例),
       (this.ForwardSkill = t.前向轴输入响应技能),
@@ -222,24 +227,24 @@ let CharacterInputComponent =
       const h = new Array();
       if (
         (this.l8r.forEach((t, i) => {
-          const s = this.Q8r(e, t);
+          var s = this.Q8r(e, t);
           s &&
-            s.CommandType !== 0 &&
+            0 !== s.CommandType &&
             h.push(new InputCommand(t.Action, t.State, s, i));
         }),
-        this.D8r.length > 0)
+        0 < this.D8r.length)
       ) {
         let t = this.l8r.length;
         for (const n of this.D8r) {
-          const i = this.Q8r(e, n);
+          var i = this.Q8r(e, n);
           i && h.push(new InputCommand(n.Action, n.State, i, t)), t++;
         }
         this.D8r.length = 0;
       }
-      const s = this.X8r(h);
+      var s = this.X8r(h);
       this.$8r(s),
         (this.l8r.length = 0),
-        s?.State === 3 && CharacterInputComponent_1.j8r.set(s.Action, !0),
+        3 === s?.State && CharacterInputComponent_1.j8r.set(s.Action, !0),
         void 0 !== s &&
           (ModelManager_1.ModelManager.SundryModel.SceneCheckOn &&
             Log_1.Log.CheckDebug() &&
@@ -257,7 +262,7 @@ let CharacterInputComponent =
       let s = void 0;
       switch (i.State) {
         case 1:
-          if (this.C8r.length > 0)
+          if (0 < this.C8r.length)
             for (const h of this.C8r)
               if (
                 h.ForbidExecuteCommand &&
@@ -268,17 +273,17 @@ let CharacterInputComponent =
           this.J8r(i.Action, i.Time), (s = this.z8r(i.Action, i.Time));
           break;
         case 2:
-          if (this.C8r.length > 0) {
+          if (0 < this.C8r.length) {
             for (const n of this.C8r)
               if (
                 n.ReleaseHoldCache &&
                 n.Action === i.Action &&
-                n.State === 3
+                3 === n.State
               ) {
-                for (let t = this._8r.length - 1; t >= 0; t--) {
-                  const e = this._8r[t];
+                for (let t = this._8r.length - 1; 0 <= t; t--) {
+                  var e = this._8r[t];
                   e.Action === i.Action &&
-                    e.State === 3 &&
+                    3 === e.State &&
                     this._8r.splice(t, 1);
                 }
                 break;
@@ -296,7 +301,7 @@ let CharacterInputComponent =
         case 3:
           if (!this.t9r(i.Action, i.Time, t))
             return void (i.Action = InputEnums_1.EInputAction.None);
-          if (this.C8r.length > 0)
+          if (0 < this.C8r.length)
             for (const a of this.C8r)
               if (
                 a.ForbidExecuteCommand &&
@@ -313,13 +318,13 @@ let CharacterInputComponent =
       const n = void 0 !== t ? t.Index : -1;
       this.l8r.forEach((i, t) => {
         if (t !== n && i.Action !== InputEnums_1.EInputAction.None) {
-          for (let t = this._8r.length - 1; t >= 0; t--) {
-            const s = this._8r[t];
+          for (let t = this._8r.length - 1; 0 <= t; t--) {
+            var s = this._8r[t];
             s.Action === i.Action &&
               s.State === i.State &&
               this._8r.slice(t, 1);
           }
-          if (this.C8r.length > 0)
+          if (0 < this.C8r.length)
             for (const e of this.C8r)
               e.Action === i.Action &&
                 e.State === i.State &&
@@ -357,15 +362,15 @@ let CharacterInputComponent =
     }
     GetWorldMoveDirectionCache() {
       if (!this.Hte.IsAutonomousProxy) return this.m8r;
-      const t = Global_1.Global.CharacterCameraManager.GetCameraRotation().Yaw;
+      var t = Global_1.Global.CharacterCameraManager.GetCameraRotation().Yaw;
       if (
         this.aYo?.DirectionState ===
         CharacterUnifiedStateTypes_1.ECharDirectionState.LockDirection
       ) {
-        const i =
+        var i =
           ModelManager_1.ModelManager.CameraModel?.FightCamera?.LogicComponent;
         if (i) {
-          let s = i.TargetEntity;
+          var s = i.TargetEntity;
           if (s)
             return (
               (s = this.n9r(s, i.TargetSocketName, t)),
@@ -376,7 +381,7 @@ let CharacterInputComponent =
       return UE.KismetMathLibrary.GetRotated2D(this.c8r, t);
     }
     GetMoveVector() {
-      let t, i;
+      var t, i;
       return this.g8r
         ? new UE.Vector2D(0, 0)
         : ((t = this.QueryInputAxis(InputEnums_1.EInputAxis.MoveForward) ?? 0),
@@ -412,10 +417,10 @@ let CharacterInputComponent =
       var i = i.GetComponent(0).GetRoleId();
       let s = 0;
       return (
-        t === 1
+        1 === t
           ? (s =
               ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId)
-          : t === 2 &&
+          : 2 === t &&
             ((i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(i)),
             (s = i.GetPhantomData().GetPhantomId(t))),
         (s = s ?? INVALID_INPUT_RESULT)
@@ -425,21 +430,21 @@ let CharacterInputComponent =
       this.s9r() && this.I8r();
     }
     ClearInputCache(i, s) {
-      if (i === 0) this.I8r();
+      if (0 === i) this.I8r();
       else
-        for (let t = this._8r.length - 1; t >= 0; t--) {
-          const e = this._8r[t];
+        for (let t = this._8r.length - 1; 0 <= t; t--) {
+          var e = this._8r[t];
           e.Action !== i ||
-            (e.State !== 0 && e.State !== s) ||
+            (0 !== e.State && e.State !== s) ||
             this._8r.splice(t, 1);
         }
     }
     LimitInputCache(i) {
       this.C8r.push(i);
-      for (let t = this._8r.length - 1; t >= 0; t--) {
-        const s = this._8r[t];
+      for (let t = this._8r.length - 1; 0 <= t; t--) {
+        var s = this._8r[t];
         s.Action !== i.Action ||
-          (s.State !== 0 && s.State !== i.State) ||
+          (0 !== s.State && s.State !== i.State) ||
           this._8r.splice(t, 1);
       }
     }
@@ -657,7 +662,7 @@ let CharacterInputComponent =
           this.m9r();
     }
     l9r(t) {
-      let i;
+      var i;
       this.Lie?.Valid &&
         this.Szo?.Valid &&
         (this.Lie.HasTag(1616400338) ||
@@ -676,7 +681,7 @@ let CharacterInputComponent =
                       (this.f8r.LastFlySpeed = this.f8r.TargetFlySpeed),
                       (this.f8r.TargetFlySpeed = this.f8r.MaxFlySpeed),
                       this.Gce.SetMaxSpeed(this.f8r.MaxFlySpeed),
-                      this.f8r.ForwardSkill > 0 &&
+                      0 < this.f8r.ForwardSkill &&
                         this.rDr.BeginSkill(this.f8r.ForwardSkill, {
                           Target: this.Entity,
                           Context: "EAutomaticFlightState.Max",
@@ -687,7 +692,7 @@ let CharacterInputComponent =
                         (this.f8r.LastFlySpeed = this.f8r.TargetFlySpeed),
                         (this.f8r.TargetFlySpeed = this.f8r.MinFlySpeed),
                         this.Gce.SetMaxSpeed(this.f8r.MinFlySpeed),
-                        this.f8r.BackwardSkill > 0 &&
+                        0 < this.f8r.BackwardSkill &&
                           this.rDr.BeginSkill(this.f8r.BackwardSkill, {
                             Target: this.Entity,
                             Context: "EAutomaticFlightState.Min",
@@ -716,8 +721,8 @@ let CharacterInputComponent =
                 this.Gce.SetForceSpeed(this.cz))));
     }
     C9r() {
-      const t = this.Hte.Actor.Controller.GetControlRotation();
-      const i = this.Hte.UseControllerRotation;
+      var t = this.Hte.Actor.Controller.GetControlRotation(),
+        i = this.Hte.UseControllerRotation;
       this.Hte.SetInputRotatorByNumber(
         i.Pitch ? t.Pitch : 0,
         i.Yaw ? t.Yaw : 0,
@@ -725,7 +730,7 @@ let CharacterInputComponent =
       );
     }
     d9r() {
-      let t;
+      var t;
       this.Hte.UseControllerRotation.IsNearlyZero()
         ? this.mBe.DirectionState ===
             CharacterUnifiedStateTypes_1.ECharDirectionState.LockDirection &&
@@ -757,7 +762,7 @@ let CharacterInputComponent =
           this.Hte.SetInputRotatorByNumber(0, this.Hte.ActorRotation.Yaw, 0);
     }
     t9r(t, i, s) {
-      const [e, h] = this.GetHoldConfig(t);
+      var [e, h] = this.GetHoldConfig(t);
       return (
         h !== NULL_CONFIG_TIME &&
         !(
@@ -770,7 +775,7 @@ let CharacterInputComponent =
       );
     }
     W8r() {
-      const t = this.GetMoveVector();
+      var t = this.GetMoveVector();
       this.g9r(t)
         ? Time_1.Time.Now - this.d8r > MOVE_VECTOR_CACHE_TIME &&
           ((this.u8r = t),
@@ -792,7 +797,7 @@ let CharacterInputComponent =
         : MathUtils_1.MathUtils.RangeClamp(i, this.v8r, this.M8r, 0, t);
     }
     g9r(t) {
-      return ModelManager_1.ModelManager.PlatformModel.InputController !== 0
+      return 0 !== ModelManager_1.ModelManager.PlatformModel.InputController
         ? t.SizeSquared() <=
             MathUtils_1.MathUtils.Square(
               RoleGaitStatic_1.RoleGaitStatic.GetWalkOrRunRate(),
@@ -800,28 +805,28 @@ let CharacterInputComponent =
         : t.IsNearlyZero(MathUtils_1.MathUtils.SmallNumber);
     }
     K8r() {
-      const i = this.o9r();
-      for (let t = this._8r.length - 1; t >= 0; t--) {
-        const s = this._8r[t];
-        const e = this.r9r(s.Action, s.State);
-        this.C8r.length === 0 && i - s.Time > e && this._8r.splice(t, 1);
+      var i = this.o9r();
+      for (let t = this._8r.length - 1; 0 <= t; t--) {
+        var s = this._8r[t],
+          e = this.r9r(s.Action, s.State);
+        0 === this.C8r.length && i - s.Time > e && this._8r.splice(t, 1);
       }
     }
     f9r() {
-      const i = new Array();
+      var i = new Array();
       i.length = this._8r.length;
-      for (let t = this._8r.length - 1; t >= 0; t--) i.push(this._8r[t]);
+      for (let t = this._8r.length - 1; 0 <= t; t--) i.push(this._8r[t]);
       return i;
     }
     I8r() {
       this._8r.splice(0, this._8r.length);
     }
     s9r() {
-      if (this._8r.length === 0) return !1;
-      let t = this.f9r();
+      if (0 === this._8r.length) return !1;
+      var t = this.f9r();
       const h = new Array();
       t.forEach((t, i) => {
-        if (this.C8r.length > 0)
+        if (0 < this.C8r.length)
           for (const e of this.C8r)
             if (
               e.ForbidExecuteCommand &&
@@ -841,13 +846,13 @@ let CharacterInputComponent =
             s = this.i9r(t.Action, t.EventTime);
         }
         s &&
-          s.CommandType !== 0 &&
+          0 !== s.CommandType &&
           h.push(new InputCommand(t.Action, t.State, s, i));
       });
       t = this.X8r(h);
       return (
         void 0 !== t &&
-        (t?.State === 3 && CharacterInputComponent_1.j8r.set(t.Action, !0),
+        (3 === t?.State && CharacterInputComponent_1.j8r.set(t.Action, !0),
         this.Y8r(t, "QueryInputCaches"),
         !0)
       );
@@ -859,9 +864,9 @@ let CharacterInputComponent =
         this.I8r();
     }
     X8r(t) {
-      if (t.length !== 0) {
-        let s = INVALID_PRIORITY;
-        let e = INVALID_PRIORITY_INDEX;
+      if (0 !== t.length) {
+        let s = INVALID_PRIORITY,
+          e = INVALID_PRIORITY_INDEX;
         return (
           t.forEach((t, i) => {
             t = this.p9r(t.Command);
@@ -897,7 +902,7 @@ let CharacterInputComponent =
       ).GetPriority(t);
     }
     Y8r(t, i) {
-      const s = t.Command;
+      var s = t.Command;
       switch (s.CommandType) {
         case 1:
           this.M9r(s.IntValue, i);
@@ -928,14 +933,14 @@ let CharacterInputComponent =
       }
     }
     S9r(t) {
-      const i = this.Entity.GetComponent(161);
-      i.Valid && (t.IntValue === 1 ? i.JumpPress() : i.JumpRelease());
+      var i = this.Entity.GetComponent(161);
+      i.Valid && (1 === t.IntValue ? i.JumpPress() : i.JumpRelease());
     }
     E9r(t) {
-      this.Entity.GetComponent(31)?.ClimbPress(t.IntValue === 1);
+      this.Entity.GetComponent(31)?.ClimbPress(1 === t.IntValue);
     }
     y9r(t) {
-      t.IntValue === 1
+      1 === t.IntValue
         ? this.a8r.CharacterActorComponent.Entity.CheckGetComponent(
             158,
           ).SprintPress()
@@ -946,12 +951,12 @@ let CharacterInputComponent =
     I9r(t) {
       this.a8r.CharacterActorComponent.Entity.CheckGetComponent(
         158,
-      ).SwitchFastSwim(t.IntValue === 1);
+      ).SwitchFastSwim(1 === t.IntValue);
     }
     T9r(t) {
       this.a8r.CharacterActorComponent.Entity.CheckGetComponent(
         158,
-      ).SwitchFastClimb(t.IntValue === 1);
+      ).SwitchFastClimb(1 === t.IntValue);
     }
     D9r(t) {
       this.a8r.CharacterActorComponent.Entity.CheckGetComponent(
@@ -1250,4 +1255,4 @@ let CharacterInputComponent =
       CharacterInputComponent,
     )),
   (exports.CharacterInputComponent = CharacterInputComponent);
-// # sourceMappingURL=CharacterInputComponent.js.map
+//# sourceMappingURL=CharacterInputComponent.js.map

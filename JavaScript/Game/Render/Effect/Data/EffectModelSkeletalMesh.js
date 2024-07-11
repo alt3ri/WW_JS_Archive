@@ -17,4 +17,4 @@ class EffectModelSkeletalMesh extends UE.EffectModelBase {
   }
 }
 exports.default = EffectModelSkeletalMesh;
-// # sourceMappingURL=EffectModelSkeletalMesh.js.map
+//# sourceMappingURL=EffectModelSkeletalMesh.js.map

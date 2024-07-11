@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const actorAnsMap = new Map();
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  actorAnsMap = new Map();
 class TsAnimNotifyStateHideMesh extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -16,13 +16,13 @@ class TsAnimNotifyStateHideMesh extends UE.KuroAnimNotifyState {
       (this.AnimDefaultTickOption = void 0);
   }
   K2_NotifyBegin(t, r, e) {
-    const s = t.GetOwner();
+    var s = t.GetOwner();
     if (!s) return !1;
     let i = void 0;
     if (this.ChildMeshName) {
-      const a = s.K2_GetComponentsByClass(UE.MeshComponent.StaticClass());
-      for (let t = a.Num() - 1; t >= 0; --t) {
-        const o = a.Get(t);
+      var a = s.K2_GetComponentsByClass(UE.MeshComponent.StaticClass());
+      for (let t = a.Num() - 1; 0 <= t; --t) {
+        var o = a.Get(t);
         if (o.GetName() === this.ChildMeshName) {
           i = o;
           break;
@@ -32,7 +32,7 @@ class TsAnimNotifyStateHideMesh extends UE.KuroAnimNotifyState {
     if (!i) return !1;
     let h = actorAnsMap.get(s);
     h || ((h = new Map()), actorAnsMap.set(s, h));
-    let n = h.get(this);
+    var n = h.get(this);
     if (n)
       return (
         Log_1.Log.CheckError() &&
@@ -53,16 +53,16 @@ class TsAnimNotifyStateHideMesh extends UE.KuroAnimNotifyState {
       this.HideChildrenActors)
     ) {
       if (this.ChildMeshName) {
-        const f = i.AttachChildren;
-        for (let t = f.Num() - 1; t >= 0; --t) {
-          const u = f.Get(t).GetOwner();
+        var f = i.AttachChildren;
+        for (let t = f.Num() - 1; 0 <= t; --t) {
+          var u = f.Get(t).GetOwner();
           u.bHidden || n[1].push(u);
         }
       } else {
-        var t = (0, puerts_1.$ref)(void 0);
-        const c = (s.GetAllChildActors(t, !0), (0, puerts_1.$unref)(t));
-        for (let t = c.Num() - 1; t >= 0; --t) {
-          const v = c.Get(t);
+        var t = (0, puerts_1.$ref)(void 0),
+          c = (s.GetAllChildActors(t, !0), (0, puerts_1.$unref)(t));
+        for (let t = c.Num() - 1; 0 <= t; --t) {
+          var v = c.Get(t);
           v.bHidden || n[1].push(v);
         }
       }
@@ -80,9 +80,9 @@ class TsAnimNotifyStateHideMesh extends UE.KuroAnimNotifyState {
   K2_NotifyEnd(t, r) {
     t = t.GetOwner();
     if (!t) return !1;
-    const e = actorAnsMap.get(t);
+    var e = actorAnsMap.get(t);
     if (!e) return !1;
-    let s = e.get(this);
+    var s = e.get(this);
     if (!s) return !1;
     if (
       (s[0].SetVisibility(this.Hide, this.HideChildren),
@@ -91,7 +91,7 @@ class TsAnimNotifyStateHideMesh extends UE.KuroAnimNotifyState {
       for (const i of s[1]) i.SetActorHiddenInGame(!this.Hide);
     return (
       e.delete(this),
-      e.size === 0 && actorAnsMap.delete(t),
+      0 === e.size && actorAnsMap.delete(t),
       this.EndEffect &&
         t
           .GetComponentByClass(UE.CharRenderingComponent_C.StaticClass())
@@ -109,4 +109,4 @@ class TsAnimNotifyStateHideMesh extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateHideMesh;
-// # sourceMappingURL=TsAnimNotifyStateHideMesh.js.map
+//# sourceMappingURL=TsAnimNotifyStateHideMesh.js.map

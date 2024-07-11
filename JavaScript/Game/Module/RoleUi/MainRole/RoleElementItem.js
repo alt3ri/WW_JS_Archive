@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleElementItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
 class RoleElementItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -37,9 +37,9 @@ class RoleElementItem extends GridProxyAbstract_1.GridProxyAbstract {
   Update(t) {
     this.vlo = t;
     var t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
-      this.vlo.Id,
-    ).ElementId;
-    const e = ConfigManager_1.ConfigManager.ElementInfoConfig.GetElementInfo(t);
+        this.vlo.Id,
+      ).ElementId,
+      e = ConfigManager_1.ConfigManager.ElementInfoConfig.GetElementInfo(t);
     this.GetText(2).ShowTextNew(e.Name),
       this.SetElementIcon("", this.GetTexture(1), t),
       this.SetTextureByPath(e.ElementChangeTexture, this.GetTexture(0)),
@@ -49,8 +49,8 @@ class RoleElementItem extends GridProxyAbstract_1.GridProxyAbstract {
     (this.vlo = t), this.Update(t);
   }
   RefreshState() {
-    var t = this.vlo.Id;
-    var t = this.plo.GetCurSelectRoleId() === t;
+    var t = this.vlo.Id,
+      t = this.plo.GetCurSelectRoleId() === t;
     this.GetItem(4).SetUIActive(t);
   }
   OnSelected(t) {
@@ -64,4 +64,4 @@ class RoleElementItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.RoleElementItem = RoleElementItem;
-// # sourceMappingURL=RoleElementItem.js.map
+//# sourceMappingURL=RoleElementItem.js.map

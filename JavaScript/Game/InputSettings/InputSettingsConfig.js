@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputSettingsConfig = void 0);
-const ActionMappingAll_1 = require("../../Core/Define/ConfigQuery/ActionMappingAll");
-const ActionMappingByActionName_1 = require("../../Core/Define/ConfigQuery/ActionMappingByActionName");
-const ActionMappingByActionType_1 = require("../../Core/Define/ConfigQuery/ActionMappingByActionType");
-const AxisMappingAll_1 = require("../../Core/Define/ConfigQuery/AxisMappingAll");
-const AxisMappingByAxisName_1 = require("../../Core/Define/ConfigQuery/AxisMappingByAxisName");
-const AxisMappingByAxisType_1 = require("../../Core/Define/ConfigQuery/AxisMappingByAxisType");
-const CombinationActionAll_1 = require("../../Core/Define/ConfigQuery/CombinationActionAll");
-const CombinationActionByActionName_1 = require("../../Core/Define/ConfigQuery/CombinationActionByActionName");
-const CombinationActionByActionType_1 = require("../../Core/Define/ConfigQuery/CombinationActionByActionType");
-const CombinationAxisAll_1 = require("../../Core/Define/ConfigQuery/CombinationAxisAll");
-const GamepadKeyById_1 = require("../../Core/Define/ConfigQuery/GamepadKeyById");
-const GamepadKeyByKeyName_1 = require("../../Core/Define/ConfigQuery/GamepadKeyByKeyName");
-const PcKeyById_1 = require("../../Core/Define/ConfigQuery/PcKeyById");
-const PcKeyByKeyName_1 = require("../../Core/Define/ConfigQuery/PcKeyByKeyName");
-const PlatformIconById_1 = require("../../Core/Define/ConfigQuery/PlatformIconById");
-const ConfigBase_1 = require("../../Core/Framework/ConfigBase");
+const ActionMappingAll_1 = require("../../Core/Define/ConfigQuery/ActionMappingAll"),
+  ActionMappingByActionName_1 = require("../../Core/Define/ConfigQuery/ActionMappingByActionName"),
+  ActionMappingByActionType_1 = require("../../Core/Define/ConfigQuery/ActionMappingByActionType"),
+  AxisMappingAll_1 = require("../../Core/Define/ConfigQuery/AxisMappingAll"),
+  AxisMappingByAxisName_1 = require("../../Core/Define/ConfigQuery/AxisMappingByAxisName"),
+  AxisMappingByAxisType_1 = require("../../Core/Define/ConfigQuery/AxisMappingByAxisType"),
+  CombinationActionAll_1 = require("../../Core/Define/ConfigQuery/CombinationActionAll"),
+  CombinationActionByActionName_1 = require("../../Core/Define/ConfigQuery/CombinationActionByActionName"),
+  CombinationActionByActionType_1 = require("../../Core/Define/ConfigQuery/CombinationActionByActionType"),
+  CombinationAxisAll_1 = require("../../Core/Define/ConfigQuery/CombinationAxisAll"),
+  GamepadKeyById_1 = require("../../Core/Define/ConfigQuery/GamepadKeyById"),
+  GamepadKeyByKeyName_1 = require("../../Core/Define/ConfigQuery/GamepadKeyByKeyName"),
+  PcKeyById_1 = require("../../Core/Define/ConfigQuery/PcKeyById"),
+  PcKeyByKeyName_1 = require("../../Core/Define/ConfigQuery/PcKeyByKeyName"),
+  PlatformIconById_1 = require("../../Core/Define/ConfigQuery/PlatformIconById"),
+  ConfigBase_1 = require("../../Core/Framework/ConfigBase");
 class InputSettingsConfig extends ConfigBase_1.ConfigBase {
   GetAllActionMappingConfig() {
     return ActionMappingAll_1.configActionMappingAll.GetConfigList();
@@ -73,4 +73,4 @@ class InputSettingsConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.InputSettingsConfig = InputSettingsConfig;
-// # sourceMappingURL=InputSettingsConfig.js.map
+//# sourceMappingURL=InputSettingsConfig.js.map

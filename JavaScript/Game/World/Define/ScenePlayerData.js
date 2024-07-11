@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ScenePlayerData = void 0);
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const TIME_INTERVAL = 1e3;
+const TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  TIME_INTERVAL = 1e3;
 class ScenePlayerData {
   constructor(e) {
     (this.j8 = 0),
@@ -40,7 +40,7 @@ class ScenePlayerData {
     return this.Npr;
   }
   SetLocation() {
-    let e = this.ControlCreatureDataId;
+    var e = this.ControlCreatureDataId;
     e &&
       ((e =
         ModelManager_1.ModelManager.CreatureModel.GetEntity(
@@ -73,4 +73,4 @@ class ScenePlayerData {
   }
 }
 exports.ScenePlayerData = ScenePlayerData;
-// # sourceMappingURL=ScenePlayerData.js.map
+//# sourceMappingURL=ScenePlayerData.js.map

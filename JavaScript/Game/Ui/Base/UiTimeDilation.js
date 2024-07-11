@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiTimeDilation = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Net_1 = require("../../../Core/Net/Net");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../../../Game/Manager/ModelManager");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const UiConfig_1 = require("../Define/UiConfig");
+const Log_1 = require("../../../Core/Common/Log"),
+  Net_1 = require("../../../Core/Net/Net"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../../../Game/Manager/ModelManager"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  UiConfig_1 = require("../Define/UiConfig");
 class UiTimeDilation {
   static set GmSwitch(i) {
     UiTimeDilation.R4s = i;
@@ -147,7 +147,7 @@ class UiTimeDilation {
       );
   }
   static q4s(i) {
-    (UiTimeDilation.F_r && UiTimeDilation.F_r.TimeDilation !== 1) ||
+    (UiTimeDilation.F_r && 1 !== UiTimeDilation.F_r.TimeDilation) ||
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiTimeDilation",
@@ -192,8 +192,8 @@ class UiTimeDilation {
         !1);
   }
   static B_r(i) {
-    const e = i.TimeDilation;
-    (UiTimeDilation.x4s = e !== 1 ? i : void 0),
+    var e = i.TimeDilation;
+    (UiTimeDilation.x4s = 1 !== e ? i : void 0),
       UiTimeDilation.w_r(e, i.Reason),
       UiTimeDilation.q_r
         ? ((UiTimeDilation.G_r = e < MathUtils_1.MathUtils.KindaSmallNumber),
@@ -272,7 +272,7 @@ class UiTimeDilation {
         UiTimeDilation.G_r,
         "UiTimeDilation",
       );
-    const e = UiTimeDilation.Qht;
+    var e = UiTimeDilation.Qht;
     UiTimeDilation.GmSwitch
       ? ControllerHolder_1.ControllerHolder.GameModeController.SetTimeDilation(
           e,
@@ -289,7 +289,7 @@ class UiTimeDilation {
           );
   }
   static V_r() {
-    let i;
+    var i;
     UiTimeDilation.F_r &&
       (UiTimeDilation.H_r !== UiTimeDilation.F_r.ViewId
         ? (UiTimeDilation.F_r = void 0)
@@ -322,8 +322,8 @@ class UiTimeDilation {
       ((i = UiTimeDilation.j_r.indexOf(i)), UiTimeDilation.j_r.splice(i, 1));
   }
   static SetNextViewTimeDilation() {
-    let i;
-    const e = UiTimeDilation.j_r.shift();
+    var i,
+      e = UiTimeDilation.j_r.shift();
     e &&
       ((i = UiTimeDilation.W_r.get(e)),
       UiTimeDilation.SetGameTimeDilation(i)) &&
@@ -371,7 +371,7 @@ class UiTimeDilation {
         Log_1.Log.Info("UiTimeDilation", 11, "清理等待设置时停的tag");
   }
   static k_r() {
-    return UiTimeDilation.E_r.size > 0;
+    return 0 < UiTimeDilation.E_r.size;
   }
 }
 ((exports.UiTimeDilation = UiTimeDilation).R4s = !1),
@@ -382,8 +382,8 @@ class UiTimeDilation {
   (UiTimeDilation.x4s = void 0),
   (UiTimeDilation.T_r = (i, e) => {
     i &&
-      (UiTimeDilation.AddViewData(i, e), UiTimeDilation.H_r === 0) &&
-      (i = UiConfig_1.UiConfig.TryGetViewInfo(i)).TimeDilation !== 1 &&
+      (UiTimeDilation.AddViewData(i, e), 0 === UiTimeDilation.H_r) &&
+      1 !== (i = UiConfig_1.UiConfig.TryGetViewInfo(i)).TimeDilation &&
       UiTimeDilation.SetGameTimeDilation({
         ViewId: e,
         TimeDilation: i.TimeDilation,
@@ -449,7 +449,7 @@ class UiTimeDilation {
   (UiTimeDilation.O4s = 1),
   (UiTimeDilation.U_r = (i) => {
     UiTimeDilation.O4s !== i &&
-      ((UiTimeDilation.O4s = i), UiTimeDilation.Qht !== 0) &&
+      ((UiTimeDilation.O4s = i), 0 !== UiTimeDilation.Qht) &&
       ((i = UiTimeDilation.x4s ?? {
         ViewId: UiTimeDilation.P4s,
         TimeDilation: UiTimeDilation.Qht,
@@ -481,4 +481,4 @@ class UiTimeDilation {
   (UiTimeDilation.j_r = []),
   (UiTimeDilation.W_r = new Map()),
   (UiTimeDilation.E_r = new Set());
-// # sourceMappingURL=UiTimeDilation.js.map
+//# sourceMappingURL=UiTimeDilation.js.map

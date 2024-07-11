@@ -37,4 +37,4 @@ class ItemInteractionPanelItemData {
   }
 }
 exports.ItemInteractionPanelItemData = ItemInteractionPanelItemData;
-// # sourceMappingURL=ItemInteractionPanelItemData.js.map
+//# sourceMappingURL=ItemInteractionPanelItemData.js.map

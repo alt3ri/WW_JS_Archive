@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InteractionModel = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const IGlobal_1 = require("../../../UniverseEditor/Interface/IGlobal");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LocalStorage_1 = require("../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../Common/LocalStorageDefine");
-const PublicUtil_1 = require("../../Common/PublicUtil");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const TsInteractionUtils_1 = require("./TsInteractionUtils");
-const DEFAULT_CD = 0.5;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  IGlobal_1 = require("../../../UniverseEditor/Interface/IGlobal"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
+  PublicUtil_1 = require("../../Common/PublicUtil"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  TsInteractionUtils_1 = require("./TsInteractionUtils"),
+  DEFAULT_CD = 0.5;
 class SameTipInteract {
   constructor() {
     (this.EntityId = 0), (this.CurrentDistance = 0);
@@ -157,7 +157,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
     for (const e of this.R1i)
       e
         ? (t +=
-            e.DirectOptionInstanceIds.length > 1
+            1 < e.DirectOptionInstanceIds.length
               ? e.DirectOptionInstanceIds.length
               : 1)
         : t++;
@@ -167,7 +167,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
     let e = 0;
     for (const i of this.R1i)
       if (
-        (i && i.DirectOptionInstanceIds.length > 1
+        (i && 1 < i.DirectOptionInstanceIds.length
           ? (e += i.DirectOptionInstanceIds.length)
           : e++,
         e > t)
@@ -179,9 +179,9 @@ class InteractionModel extends ModelBase_1.ModelBase {
     let t = 0;
     for (const n of this.R1i)
       if (n) {
-        const i = n.GetEntity();
+        var i = n.GetEntity();
         if (i?.Valid) {
-          const r = n.DirectOptionInstanceIds.length;
+          var r = n.DirectOptionInstanceIds.length;
           if (r <= 0) e.push(i), this.CanAutoPickUp(i) && t++;
           else {
             this.CanAutoPickUp(i) && (t += r);
@@ -204,7 +204,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
     return this.x1i;
   }
   CanAutoPickUp(t) {
-    let e;
+    var e;
     return (
       !!t?.Valid &&
       !(
@@ -222,7 +222,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
   GetOptionInstanceIdByIndex(t) {
     let e = t;
     for (const i of this.R1i)
-      if (i && i.DirectOptionInstanceIds.length > 0) {
+      if (i && 0 < i.DirectOptionInstanceIds.length) {
         if (e < i.DirectOptionInstanceIds.length)
           return i.DirectOptionInstanceIds[e];
         e -= i.DirectOptionInstanceIds.length;
@@ -232,7 +232,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
   GetOptionNameByIndex(t) {
     let e = t;
     for (const i of this.R1i)
-      if (i && !i.IsAdvice && i.DirectOptionInstanceIds.length > 0) {
+      if (i && !i.IsAdvice && 0 < i.DirectOptionInstanceIds.length) {
         if (e < i.DirectOptionNames.length) return i.DirectOptionNames[e];
         e -= i.DirectOptionNames.length;
       } else e--;
@@ -258,7 +258,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
               return;
           } else this.D1i.push(e), this.R1i.push(n);
         TsInteractionUtils_1.TsInteractionUtils.IsInteractHintViewOpened()
-          ? this.D1i.length > 0 &&
+          ? 0 < this.D1i.length &&
             TsInteractionUtils_1.TsInteractionUtils.UpdateInteractHintView()
           : TsInteractionUtils_1.TsInteractionUtils.OpenInteractHintView();
       } else
@@ -270,22 +270,22 @@ class InteractionModel extends ModelBase_1.ModelBase {
           );
     } else {
       t = this.D1i.indexOf(e);
-      t > -1 &&
+      -1 < t &&
         (this.D1i.splice(t, 1),
         this.R1i.splice(t, 1),
-        this.D1i.length > 0
+        0 < this.D1i.length
           ? TsInteractionUtils_1.TsInteractionUtils.UpdateInteractHintView()
           : TsInteractionUtils_1.TsInteractionUtils.CloseInteractHintView());
     }
   }
   B1i(t, e = void 0, i = -1) {
     let r = !1;
-    if (e.CustomOptionType === 1) return !1;
+    if (1 === e.CustomOptionType) return !1;
     if (!e.IsUniqueness) return !0;
     if (e.UniequenessType === IAction_1.EInteractUniqueness.Closest) {
-      if (e.TidContent === "" || i === -1) return !0;
-      let n;
-      const o = this.U1i.get(e.TidContent);
+      if ("" === e.TidContent || -1 === i) return !0;
+      var n,
+        o = this.U1i.get(e.TidContent);
       if (!o)
         return (
           ((n = new SameTipInteract()).EntityId = t),
@@ -296,7 +296,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
       this.D1i.includes(o.EntityId)
         ? o.CurrentDistance > i && t !== o.EntityId
           ? ((r = !0),
-            (e = this.D1i.indexOf(o.EntityId)) > -1 &&
+            -1 < (e = this.D1i.indexOf(o.EntityId)) &&
               (this.D1i.splice(e, 1), this.R1i.splice(e, 1)),
             (o.EntityId = t),
             (o.CurrentDistance = i))
@@ -355,12 +355,12 @@ class InteractionModel extends ModelBase_1.ModelBase {
   }
   get CurrentInteractUeActor() {
     if (this.A1i) {
-      const t = EntitySystem_1.EntitySystem.Get(this.A1i);
+      var t = EntitySystem_1.EntitySystem.Get(this.A1i);
       if (t) return t.GetComponent(1)?.Owner;
     }
   }
   b1i() {
-    let t = (0, puerts_1.$ref)("");
+    var t = (0, puerts_1.$ref)("");
     let e = (0, PublicUtil_1.getConfigPath)(
       IGlobal_1.globalConfig.InteractOptionConfigPath,
     );
@@ -389,27 +389,27 @@ class InteractionModel extends ModelBase_1.ModelBase {
   GetDynamicConfig(t) {
     if (PublicUtil_1.PublicUtil.UseDbConfig()) {
       if ((this.S1i || (this.S1i = new Map()), !this.S1i.get(t))) {
-        const e =
+        var e =
           ConfigManager_1.ConfigManager.InteractOptionConfig.GetInteractionConfig(
             t,
           );
         if (!e) return;
-        const i = {
+        var i = {
           Guid: e.Guid,
           Type: JSON.parse(e.Type),
           Icon: e.Icon || void 0,
-          TidContent: e.TidContent !== "" ? e.TidContent : void 0,
+          TidContent: "" !== e.TidContent ? e.TidContent : void 0,
           Condition: void 0,
-          UniquenessTest: e.UniquenessTest !== "" ? e.UniquenessTest : void 0,
-          DoIntactType: e.DoIntactType !== "" ? e.DoIntactType : void 0,
+          UniquenessTest: "" !== e.UniquenessTest ? e.UniquenessTest : void 0,
+          DoIntactType: "" !== e.DoIntactType ? e.DoIntactType : void 0,
           Range: e.Range || void 0,
           Duration: void 0,
         };
         e.Condition &&
-          e.Condition !== "" &&
+          "" !== e.Condition &&
           (i.Condition = JSON.parse(e.Condition)),
           e.Duration &&
-            e.Duration !== "" &&
+            "" !== e.Duration &&
             (i.Duration = JSON.parse(e.Duration)),
           this.S1i.set(t, i);
       }
@@ -448,7 +448,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
         ));
   }
   RecoverInteractFromLock() {
-    let t;
+    var t;
     this.LockInteractionEntity &&
       ((t = EntitySystem_1.EntitySystem.GetComponent(
         this.LockInteractionEntity,
@@ -465,4 +465,4 @@ class InteractionModel extends ModelBase_1.ModelBase {
   }
 }
 exports.InteractionModel = InteractionModel;
-// # sourceMappingURL=InteractionModel.js.map
+//# sourceMappingURL=InteractionModel.js.map

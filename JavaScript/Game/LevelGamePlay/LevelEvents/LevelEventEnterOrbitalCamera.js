@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventEnterOrbitalCamera = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const CameraController_1 = require("../../Camera/CameraController");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventEnterOrbitalCamera extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -15,7 +15,7 @@ class LevelEventEnterOrbitalCamera extends LevelGeneralBase_1.LevelEventBase {
       (this.fDe = Vector_1.Vector.Create());
   }
   ExecuteNew(e, r) {
-    let t;
+    var t;
     e
       ? ((e = e.Option),
         (t = ModelManager_1.ModelManager.CreatureModel.GetEntityData(
@@ -49,4 +49,4 @@ class LevelEventEnterOrbitalCamera extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventEnterOrbitalCamera = LevelEventEnterOrbitalCamera;
-// # sourceMappingURL=LevelEventEnterOrbitalCamera.js.map
+//# sourceMappingURL=LevelEventEnterOrbitalCamera.js.map

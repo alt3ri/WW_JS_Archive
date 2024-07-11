@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventSendAiEvent = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventSendAiEvent extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, t) {
     e || (Log_1.Log.CheckError() && Log_1.Log.Error("Event", 30, "参数不合法"));
-    const n = t;
+    var n = t;
     switch (
       (n ||
         (Log_1.Log.CheckError() &&
@@ -27,9 +27,9 @@ class LevelEventSendAiEvent extends LevelGeneralBase_1.LevelEventBase {
     }
   }
   fRe(e) {
-    let t;
-    let n;
-    var e = ModelManager_1.ModelManager.CreatureModel.GetEntityById(e);
+    var t,
+      n,
+      e = ModelManager_1.ModelManager.CreatureModel.GetEntityById(e);
     e?.Valid
       ? e.Entity.GetComponent(38)
         ? ((t = (e = e.Entity.GetComponent(185))?.HasTag(393622611)),
@@ -78,4 +78,4 @@ class LevelEventSendAiEvent extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventSendAiEvent = LevelEventSendAiEvent;
-// # sourceMappingURL=LevelEventSendAiEvent.js.map
+//# sourceMappingURL=LevelEventSendAiEvent.js.map

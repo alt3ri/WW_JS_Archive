@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ParkourEntrancePanel = void 0);
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ParkourChallengeByMarkId_1 = require("../../../../../Core/Define/ConfigQuery/ParkourChallengeByMarkId");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ButtonItem_1 = require("../../../Common/Button/ButtonItem");
-const MapController_1 = require("../../../Map/Controller/MapController");
-const WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi");
-const WorldMapDefine_1 = require("../../WorldMapDefine");
-const TipsListView_1 = require("../TipsListView");
-const SCORE_KEY = "score";
-const LINE_NUMBER_KEY = "line";
+const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ParkourChallengeByMarkId_1 = require("../../../../../Core/Define/ConfigQuery/ParkourChallengeByMarkId"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
+  MapController_1 = require("../../../Map/Controller/MapController"),
+  WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
+  WorldMapDefine_1 = require("../../WorldMapDefine"),
+  TipsListView_1 = require("../TipsListView"),
+  SCORE_KEY = "score",
+  LINE_NUMBER_KEY = "line";
 class ParkourEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
@@ -62,41 +62,42 @@ class ParkourEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       this.GetText(1).ShowTextNew(this.dko.MarkConfig.MarkTitle);
   }
   fko() {
-    const e = this.dko.GetAreaText();
+    var e = this.dko.GetAreaText();
     e && this.GetText(3).SetText(e);
   }
   Q2e() {
-    const e =
-      ModelManager_1.ModelManager.ActivityRunModel.GetChallengeDataByMarkId(
-        this.dko.MarkConfigId,
-      );
-    var t = ParkourChallengeByMarkId_1.configParkourChallengeByMarkId.GetConfig(
-      this.dko.MarkId,
-    );
-    var i = this.Cko.AddItemByKey(LINE_NUMBER_KEY);
-    var t =
-      (i.SetLeftText(
-        MultiTextLang_1.configMultiTextLang.GetLocalTextNew("CurrentLine") ??
-          "",
+    var e =
+        ModelManager_1.ModelManager.ActivityRunModel.GetChallengeDataByMarkId(
+          this.dko.MarkConfigId,
+        ),
+      t = ParkourChallengeByMarkId_1.configParkourChallengeByMarkId.GetConfig(
+        this.dko.MarkId,
       ),
-      StringUtils_1.StringUtils.Format(
-        MultiTextLang_1.configMultiTextLang.GetLocalTextNew("LineNumber") ?? "",
-        t.Id.toString(),
-      ));
-    var t =
-      (i.SetRightText(t),
-      i.SetHelpButtonVisible(!1),
-      this.Cko.AddItemByKey(SCORE_KEY));
-    var i =
-      (t.SetHelpButtonVisible(!1),
-      StringUtils_1.StringUtils.Format(
-        MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-          "Text_ActiveRunMaxPoint_Text",
-        ) ?? "",
-        "",
-      ));
+      i = this.Cko.AddItemByKey(LINE_NUMBER_KEY),
+      t =
+        (i.SetLeftText(
+          MultiTextLang_1.configMultiTextLang.GetLocalTextNew("CurrentLine") ??
+            "",
+        ),
+        StringUtils_1.StringUtils.Format(
+          MultiTextLang_1.configMultiTextLang.GetLocalTextNew("LineNumber") ??
+            "",
+          t.Id.toString(),
+        )),
+      t =
+        (i.SetRightText(t),
+        i.SetHelpButtonVisible(!1),
+        this.Cko.AddItemByKey(SCORE_KEY)),
+      i =
+        (t.SetHelpButtonVisible(!1),
+        StringUtils_1.StringUtils.Format(
+          MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+            "Text_ActiveRunMaxPoint_Text",
+          ) ?? "",
+          "",
+        ));
     t.SetLeftText(i),
-      e.GetMiniTime() === 0
+      0 === e.GetMiniTime()
         ? t.SetRightText(
             MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
               "Text_ActivityRunNoPoint_Text",
@@ -116,4 +117,4 @@ class ParkourEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
 }
 exports.ParkourEntrancePanel = ParkourEntrancePanel;
-// # sourceMappingURL=ParkourEntrancePanel.js.map
+//# sourceMappingURL=ParkourEntrancePanel.js.map

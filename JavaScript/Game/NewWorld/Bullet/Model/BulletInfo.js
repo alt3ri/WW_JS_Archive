@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletInfo = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const PerformanceController_1 = require("../../../../Core/Performance/PerformanceController");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Transform_1 = require("../../../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const BulletConstant_1 = require("../../Bullet/BulletConstant");
-const BulletController_1 = require("../BulletController");
-const BulletCollisionInfo_1 = require("./BulletCollisionInfo");
-const BulletEffectInfo_1 = require("./BulletEffectInfo");
-const BulletMoveInfo_1 = require("./BulletMoveInfo");
-const BulletRayInfo_1 = require("./BulletRayInfo");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  PerformanceController_1 = require("../../../../Core/Performance/PerformanceController"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Transform_1 = require("../../../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  BulletConstant_1 = require("../../Bullet/BulletConstant"),
+  BulletController_1 = require("../BulletController"),
+  BulletCollisionInfo_1 = require("./BulletCollisionInfo"),
+  BulletEffectInfo_1 = require("./BulletEffectInfo"),
+  BulletMoveInfo_1 = require("./BulletMoveInfo"),
+  BulletRayInfo_1 = require("./BulletRayInfo");
 class BulletInfo {
   constructor() {
     (this.xe = 0),
@@ -138,10 +138,10 @@ class BulletInfo {
     return this.Lo;
   }
   get IsTensile() {
-    return this.BulletDataMain.Move.FollowType === 2;
+    return 2 === this.BulletDataMain.Move.FollowType;
   }
   get BaseTransformEntity() {
-    let t;
+    var t;
     return (
       this.bEn ||
         this.L7o ||
@@ -244,7 +244,7 @@ class BulletInfo {
     this.A7o.push(t);
   }
   HasTag(t) {
-    if (this.A7o && this.A7o.length > 0)
+    if (this.A7o && 0 < this.A7o.length)
       for (const i of this.A7o) if (i === t.TagId) return !0;
     return !1;
   }
@@ -379,7 +379,7 @@ class BulletInfo {
       (this.Entity = void 0),
       (this.T7o = void 0),
       (this.Lo = void 0);
-    const t = BulletController_1.BulletController.GetActionCenter();
+    var t = BulletController_1.BulletController.GetActionCenter();
     for (const i of this.ActionInfoList) t.RecycleBulletActionInfo(i);
     for (const s of this.NextActionInfoList) t.RecycleBulletActionInfo(s);
     for (const e of this.PersistentActionList) t.RecycleBulletAction(e);
@@ -450,7 +450,7 @@ class BulletInfo {
       BulletConstant_1.BulletConstant.OpenClearCheck && BulletInfo.tHo(this);
   }
   SwapActionInfoList() {
-    let t;
+    var t;
     (this.ActionInfoList.length = 0) < this.NextActionInfoList.length &&
       ((t = this.ActionInfoList),
       (this.ActionInfoList = this.NextActionInfoList),
@@ -490,12 +490,12 @@ class BulletInfo {
   }
   static tHo(t) {
     for (const e in t) {
-      const i = t[e];
-      const s = typeof i;
+      var i = t[e],
+        s = typeof i;
       void 0 === i ||
-        s == "function" ||
-        (s == "number" && i === 0) ||
-        (s == "boolean" && !1 === i) ||
+        "function" == s ||
+        ("number" == s && 0 === i) ||
+        ("boolean" == s && !1 === i) ||
         (i instanceof BulletCollisionInfo_1.BulletCollisionInfo ||
         i instanceof BulletMoveInfo_1.BulletMoveInfo ||
         i instanceof BulletEffectInfo_1.BulletEffectInfo
@@ -521,10 +521,10 @@ class BulletInfo {
               : i instanceof Transform_1.Transform
                 ? (i.GetLocation().IsZero() &&
                     i.GetScale3D().IsZero() &&
-                    i.GetRotation().X === 0 &&
-                    i.GetRotation().Y === 0 &&
-                    i.GetRotation().Z === 0 &&
-                    i.GetRotation().W === 1) ||
+                    0 === i.GetRotation().X &&
+                    0 === i.GetRotation().Y &&
+                    0 === i.GetRotation().Z &&
+                    1 === i.GetRotation().W) ||
                   (Log_1.Log.CheckError() &&
                     Log_1.Log.Error(
                       "Bullet",
@@ -533,7 +533,7 @@ class BulletInfo {
                       ["key", e],
                     ))
                 : i instanceof Array
-                  ? i.length !== 0 &&
+                  ? 0 !== i.length &&
                     Log_1.Log.CheckError() &&
                     Log_1.Log.Error(
                       "Bullet",
@@ -542,7 +542,7 @@ class BulletInfo {
                       ["key", e],
                     )
                   : i instanceof Map
-                    ? i.size !== 0 &&
+                    ? 0 !== i.size &&
                       Log_1.Log.CheckError() &&
                       Log_1.Log.Error(
                         "Bullet",
@@ -551,7 +551,7 @@ class BulletInfo {
                         ["key", e],
                       )
                     : i instanceof Set
-                      ? i.size !== 0 &&
+                      ? 0 !== i.size &&
                         Log_1.Log.CheckError() &&
                         Log_1.Log.Error(
                           "Bullet",
@@ -583,4 +583,4 @@ class BulletInfo {
   }
 }
 exports.BulletInfo = BulletInfo;
-// # sourceMappingURL=BulletInfo.js.map
+//# sourceMappingURL=BulletInfo.js.map

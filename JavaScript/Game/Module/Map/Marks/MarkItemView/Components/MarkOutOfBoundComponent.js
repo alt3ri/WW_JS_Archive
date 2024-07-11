@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MarkOutOfBoundComponent = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase");
-const RAD_2_DEG = 180 / Math.PI;
-const DEG_PI_4 = 90;
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase"),
+  RAD_2_DEG = 180 / Math.PI,
+  DEG_PI_4 = 90;
 class MarkOutOfBoundComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments), (this.cie = void 0);
@@ -14,7 +14,7 @@ class MarkOutOfBoundComponent extends UiPanelBase_1.UiPanelBase {
       (this.ComponentRegisterInfos = [[0, UE.UIItem]]);
   }
   SetOutOfBoundDirection(e) {
-    const t = this.GetItem(0);
+    var t = this.GetItem(0);
     t &&
       ((e = Math.atan2(e.Y, e.X) * RAD_2_DEG - DEG_PI_4),
       (this.cie.Yaw = e),
@@ -28,4 +28,4 @@ class MarkOutOfBoundComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.MarkOutOfBoundComponent = MarkOutOfBoundComponent;
-// # sourceMappingURL=MarkOutOfBoundComponent.js.map
+//# sourceMappingURL=MarkOutOfBoundComponent.js.map

@@ -7,20 +7,20 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.RogueInfoViewShopDiscountTag =
     exports.RogueInfoViewTokenElement =
       void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid");
-const MediumItemGridComponent_1 = require("../../Common/MediumItemGrid/MediumItemGridComponent/MediumItemGridComponent");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const CommonSelectItem_1 = require("./CommonSelectItem");
-const UiViewSequence_1 = require("../../../Ui/Base/UiViewSequence");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid"),
+  MediumItemGridComponent_1 = require("../../Common/MediumItemGrid/MediumItemGridComponent/MediumItemGridComponent"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  CommonSelectItem_1 = require("./CommonSelectItem"),
+  UiViewSequence_1 = require("../../../Ui/Base/UiViewSequence");
 class RogueInfoViewTokenElement extends MediumItemGridComponent_1.MediumItemGridComponent {
   constructor() {
     super(...arguments),
@@ -89,7 +89,7 @@ class RogueInfoViewShopDiscount extends MediumItemGridComponent_1.MediumItemGrid
           "RogueInfoViewShopPrice",
           e.OriginalPrice,
         ),
-      e.ShopItemCoinId !== 0 &&
+      0 !== e.ShopItemCoinId &&
         ((e =
           ConfigManager_1.ConfigManager.RoguelikeConfig?.GetRogueCurrencyConfig(
             e.ShopItemCoinId,
@@ -128,7 +128,7 @@ class RogueInfoViewTokenDetailGrid extends LoopScrollMediumItemGrid_1.LoopScroll
   constructor() {
     super(...arguments),
       (this.OnStageChanged = (e) => {
-        e.State === 1 && this.OnSelected(!0);
+        1 === e.State && this.OnSelected(!0);
       });
   }
   OnStart() {
@@ -136,30 +136,30 @@ class RogueInfoViewTokenDetailGrid extends LoopScrollMediumItemGrid_1.LoopScroll
   }
   OnRefresh(e, t, i) {
     var o = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueBuffConfig(
-      e.ConfigId,
-    );
-    var o = {
-      Type: 4,
-      Data: e,
-      IconPath: o.BuffIcon,
-      QualityId: o.Quality,
-      QualityType: "MediumItemGridQualitySpritePath",
-    };
-    var o =
-      (this.Apply(o),
-      this.SetIsDisable(e.IsSell),
-      this.SetSelected(t),
-      t && this.OnSelected(!0),
-      this.RefreshComponent(RogueInfoViewTokenElement, !0, e));
-    var o =
-      (this.SetComponentVisible(o, e.OriginalPrice !== 0),
-      this.RefreshComponent(RogueInfoViewShopDiscount, !0, e));
-    var n =
-      (this.SetComponentVisible(o, e.OriginalPrice !== 0),
-      this.RefreshComponent(RogueInfoViewTokenDetailGridBottom, !0, e));
-    var n =
-      (this.SetComponentVisible(n, e.OriginalPrice === 0),
-      this.RefreshComponent(RogueInfoViewShopDiscountTag, !0, e));
+        e.ConfigId,
+      ),
+      o = {
+        Type: 4,
+        Data: e,
+        IconPath: o.BuffIcon,
+        QualityId: o.Quality,
+        QualityType: "MediumItemGridQualitySpritePath",
+      },
+      o =
+        (this.Apply(o),
+        this.SetIsDisable(e.IsSell),
+        this.SetSelected(t),
+        t && this.OnSelected(!0),
+        this.RefreshComponent(RogueInfoViewTokenElement, !0, e)),
+      o =
+        (this.SetComponentVisible(o, 0 !== e.OriginalPrice),
+        this.RefreshComponent(RogueInfoViewShopDiscount, !0, e)),
+      n =
+        (this.SetComponentVisible(o, 0 !== e.OriginalPrice),
+        this.RefreshComponent(RogueInfoViewTokenDetailGridBottom, !0, e)),
+      n =
+        (this.SetComponentVisible(n, 0 === e.OriginalPrice),
+        this.RefreshComponent(RogueInfoViewShopDiscountTag, !0, e));
     this.SetComponentVisible(n, e.IsDiscounted()),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
@@ -218,8 +218,7 @@ class RogueInfoViewTokenDetail extends UiPanelBase_1.UiPanelBase {
         this.GetItem(1).GetOwner(),
         this.Hao,
       ));
-    const e =
-      ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.BuffEntryList;
+    var e = ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.BuffEntryList;
     e.sort((e, t) => {
       (e = ConfigManager_1.ConfigManager.RoguelikeConfig?.GetRogueBuffConfig(
         e.ConfigId,
@@ -241,7 +240,7 @@ class RogueInfoViewTokenDetail extends UiPanelBase_1.UiPanelBase {
     this.LoopScrollView?.ReloadData(e);
   }
   OnSelected(e, t) {
-    const i = this.LoopScrollView.GetSelectedGridIndex();
+    var i = this.LoopScrollView.GetSelectedGridIndex();
     this.LoopScrollView.SelectGridProxy(t, !1),
       this.LoopScrollView.RefreshGridProxy(i),
       this.DetailItem.SetActive(!0),
@@ -249,4 +248,4 @@ class RogueInfoViewTokenDetail extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RogueInfoViewTokenDetail = RogueInfoViewTokenDetail;
-// # sourceMappingURL=RogueInfoViewTokenDetail.js.map
+//# sourceMappingURL=RogueInfoViewTokenDetail.js.map

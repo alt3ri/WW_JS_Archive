@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonEntrance = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const IntArray_1 = require("./SubType/IntArray");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  IntArray_1 = require("./SubType/IntArray");
 class InstanceDungeonEntrance {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -62,34 +62,34 @@ class InstanceDungeonEntrance {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   markid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   name(t) {
-    const i = this.J7.__offset(this.z7, 8);
+    var i = this.J7.__offset(this.z7, 8);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   description(t) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetInstancedungeonlistAt(t) {
     return this.instancedungeonlist(t);
   }
   instancedungeonlist(t) {
-    const i = this.J7.__offset(this.z7, 12);
+    var i = this.J7.__offset(this.z7, 12);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   instancedungeonlistLength() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   instancedungeonlistArray() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -99,30 +99,30 @@ class InstanceDungeonEntrance {
       : null;
   }
   flowid() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   helpbuttonid() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   titlesprite(t) {
-    const i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 18);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   teleportentityconfigid() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   unlockcondition() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetRegularrewardAt(t, i) {
     return this.regularreward(t);
   }
   regularreward(t, i) {
-    const r = this.J7.__offset(this.z7, 24);
+    var r = this.J7.__offset(this.z7, 24);
     return r
       ? (i || new IntArray_1.IntArray()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -131,17 +131,17 @@ class InstanceDungeonEntrance {
       : null;
   }
   regularrewardLength() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   powercostshow() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   mapbgpath(t) {
-    const i = this.J7.__offset(this.z7, 28);
+    var i = this.J7.__offset(this.z7, 28);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.InstanceDungeonEntrance = InstanceDungeonEntrance;
-// # sourceMappingURL=InstanceDungeonEntrance.js.map
+//# sourceMappingURL=InstanceDungeonEntrance.js.map

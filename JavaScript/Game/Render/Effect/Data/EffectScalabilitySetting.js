@@ -7,4 +7,4 @@ class EffectScalabilitySetting extends UE.PrimaryDataAsset {
   }
 }
 exports.default = EffectScalabilitySetting;
-// # sourceMappingURL=EffectScalabilitySetting.js.map
+//# sourceMappingURL=EffectScalabilitySetting.js.map

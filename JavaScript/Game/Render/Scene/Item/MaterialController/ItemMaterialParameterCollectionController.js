@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemMaterialParameterCollectionController = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const GlobalData_1 = require("../../../../GlobalData");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  GlobalData_1 = require("../../../../GlobalData");
 class ItemMaterialParameterCollectionController {
   static UpdateMaterialParameterCollection(e, a) {
     if (a.IsValid()) {
-      const t = e.Vector;
+      var t = e.Vector;
       for (let e = 0; e < t.Num(); e++)
         UE.KismetMaterialLibrary.SetVectorParameterValue(
           GlobalData_1.GlobalData.GameInstance.GetWorld(),
@@ -16,7 +16,7 @@ class ItemMaterialParameterCollectionController {
           FNameUtil_1.FNameUtil.GetDynamicFName(t.GetKey(e)),
           t.Get(t.GetKey(e)),
         );
-      const l = e.Scalar;
+      var l = e.Scalar;
       for (let e = 0; e < l.Num(); e++)
         UE.KismetMaterialLibrary.SetScalarParameterValue(
           GlobalData_1.GlobalData.GameInstance.GetWorld(),
@@ -31,4 +31,4 @@ class ItemMaterialParameterCollectionController {
 }
 exports.ItemMaterialParameterCollectionController =
   ItemMaterialParameterCollectionController;
-// # sourceMappingURL=ItemMaterialParameterCollectionController.js.map
+//# sourceMappingURL=ItemMaterialParameterCollectionController.js.map

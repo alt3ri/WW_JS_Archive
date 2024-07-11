@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventUnlockSystemItem = void 0);
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const AchievementController_1 = require("../../Module/Achievement/AchievementController");
-const CookController_1 = require("../../Module/Cook/CookController");
-const HandBookController_1 = require("../../Module/HandBook/HandBookController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  AchievementController_1 = require("../../Module/Achievement/AchievementController"),
+  CookController_1 = require("../../Module/Cook/CookController"),
+  HandBookController_1 = require("../../Module/HandBook/HandBookController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventUnlockSystemItem extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, o) {
     e &&
@@ -34,4 +34,4 @@ class LevelEventUnlockSystemItem extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventUnlockSystemItem = LevelEventUnlockSystemItem;
-// # sourceMappingURL=LevelEventUnlockSystemItem.js.map
+//# sourceMappingURL=LevelEventUnlockSystemItem.js.map

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestChapterItem = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const QuestItem_1 = require("./QuestItem");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  QuestItem_1 = require("./QuestItem");
 class QuestChapterItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -43,9 +43,9 @@ class QuestChapterItem extends UiPanelBase_1.UiPanelBase {
   }
   UpdateItem(t, i, s) {
     this.pro = t;
-    let r;
-    var t =
-      ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestMainTypeConfig(i);
+    var r,
+      t =
+        ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestMainTypeConfig(i);
     StringUtils_1.StringUtils.IsEmpty(t?.QuestChapterBg) ||
       this.SetSpriteByPath(t.QuestChapterBg, this.GetSprite(5), !1);
     {
@@ -77,21 +77,22 @@ class QuestChapterItem extends UiPanelBase_1.UiPanelBase {
   }
   Sro() {
     var t = ConfigManager_1.ConfigManager.QuestNewConfig.GetChapterConfig(
-      this.pro,
-    );
-    var e =
-      MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.ChapterName) ?? "";
-    var e =
-      (this.GetText(0).SetText(e),
-      MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.ChapterNum));
-    var t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.SectionNum);
+        this.pro,
+      ),
+      e =
+        MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.ChapterName) ??
+        "",
+      e =
+        (this.GetText(0).SetText(e),
+        MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.ChapterNum)),
+      t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.SectionNum);
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), "QuestChapterText", e, t);
   }
   Mro() {
-    const t = this.GetExtendToggle(4);
+    var t = this.GetExtendToggle(4);
     t.SetToggleState(1),
       t.OnStateChange.Add((t) => {
-        t === 1
+        1 === t
           ? this.GetItem(3).SetUIActive(!0)
           : this.GetItem(3).SetUIActive(!1);
       });
@@ -102,4 +103,4 @@ class QuestChapterItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.QuestChapterItem = QuestChapterItem;
-// # sourceMappingURL=QuestChapterItem.js.map
+//# sourceMappingURL=QuestChapterItem.js.map

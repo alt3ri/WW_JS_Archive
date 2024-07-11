@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckEnemyBuff = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const LevelGeneralDefine_1 = require("../LevelGeneralDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  LevelGeneralDefine_1 = require("../LevelGeneralDefine");
 class LevelConditionCheckEnemyBuff extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, n, ...o) {
-    let t;
+    var t;
     return (
       !!o?.length &&
-      (e.LimitParams.size === 0
+      (0 === e.LimitParams.size
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
@@ -21,9 +21,10 @@ class LevelConditionCheckEnemyBuff extends LevelGeneralBase_1.LevelConditionBase
           !1)
         : (t = BigInt(e.LimitParams.get("BuffId")))
           ? ((o = o[0]),
-            (EntitySystem_1.EntitySystem.Get(o)
-              ?.GetComponent(157)
-              ?.GetBuffTotalStackById(t) ?? 0) > 0)
+            0 <
+              (EntitySystem_1.EntitySystem.Get(o)
+                ?.GetComponent(157)
+                ?.GetBuffTotalStackById(t) ?? 0))
           : (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "LevelCondition",
@@ -35,4 +36,4 @@ class LevelConditionCheckEnemyBuff extends LevelGeneralBase_1.LevelConditionBase
   }
 }
 exports.LevelConditionCheckEnemyBuff = LevelConditionCheckEnemyBuff;
-// # sourceMappingURL=LevelConditionCheckEnemyBuff.js.map
+//# sourceMappingURL=LevelConditionCheckEnemyBuff.js.map

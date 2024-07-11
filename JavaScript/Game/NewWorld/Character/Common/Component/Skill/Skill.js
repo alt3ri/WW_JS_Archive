@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Skill = void 0);
-const UE = require("ue");
-const Stats_1 = require("../../../../../../Core/Common/Stats");
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem");
-const FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil");
-const GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils");
-const ObjectUtils_1 = require("../../../../../../Core/Utils/ObjectUtils");
-const EffectSystem_1 = require("../../../../../Effect/EffectSystem");
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const CombatDebugController_1 = require("../../../../../Utils/CombatDebugController");
-const CharacterBuffIds_1 = require("../Abilities/CharacterBuffIds");
-const EAttributeId = Protocol_1.Aki.Protocol.KBs;
-const SkillMessageController_1 = require("../../../../../Module/CombatMessage/SkillMessageController");
-const MONTAGE_BLEND_TIME = 0.2;
+const UE = require("ue"),
+  Stats_1 = require("../../../../../../Core/Common/Stats"),
+  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem"),
+  FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil"),
+  GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils"),
+  ObjectUtils_1 = require("../../../../../../Core/Utils/ObjectUtils"),
+  EffectSystem_1 = require("../../../../../Effect/EffectSystem"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  CombatDebugController_1 = require("../../../../../Utils/CombatDebugController"),
+  CharacterBuffIds_1 = require("../Abilities/CharacterBuffIds");
+var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+const SkillMessageController_1 = require("../../../../../Module/CombatMessage/SkillMessageController"),
+  MONTAGE_BLEND_TIME = 0.2;
 class Skill {
   constructor() {
     (this.AJo = void 0),
@@ -75,7 +75,7 @@ class Skill {
     return this.WJo;
   }
   get HasMontages() {
-    return !!this.QJo && this.QJo.length > 0;
+    return !!this.QJo && 0 < this.QJo.length;
   }
   GetMontageByIndex(t) {
     if (this.QJo && !(t < 0 || t >= this.QJo.length)) return this.QJo[t];
@@ -89,12 +89,12 @@ class Skill {
       (this.FJo = i),
       (this.OJo = !1),
       (this.YJo = i.InterruptLevel);
-    for (let t = i.SkillTag.Num() - 1; t >= 0; t--) {
-      var e = i.SkillTag.Get(t);
-      var e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e?.TagName);
-      e === -897737980 && (this.jJo = !0), this.HJo.push(e);
+    for (let t = i.SkillTag.Num() - 1; 0 <= t; t--) {
+      var e = i.SkillTag.Get(t),
+        e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e?.TagName);
+      -897737980 === e && (this.jJo = !0), this.HJo.push(e);
     }
-    i.SkillMode === 1 && this.ZJo(), this.ezo();
+    1 === i.SkillMode && this.ZJo(), this.ezo();
   }
   Clear() {
     return (
@@ -116,9 +116,9 @@ class Skill {
     );
   }
   ZJo() {
-    let t;
-    const i = this.SkillInfo.SkillGA.AssetPathName.toString();
-    i && i.length > 0 && i !== "None"
+    var t,
+      i = this.SkillInfo.SkillGA.AssetPathName.toString();
+    i && 0 < i.length && "None" !== i
       ? ((this.WJo = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
           i,
           UE.Class,
@@ -155,14 +155,14 @@ class Skill {
         );
   }
   ezo() {
-    if (this.SkillInfo.Animations.Num() > 0) {
+    if (0 < this.SkillInfo.Animations.Num()) {
       this.QJo = new Array(this.SkillInfo.Animations.Num());
       for (let t = 0; t < this.SkillInfo.Animations.Num(); ++t) {
         const o = this.SkillInfo.Animations.Get(t);
         if (ObjectUtils_1.ObjectUtils.SoftObjectPathIsValid(o)) {
-          const i = UE.KismetSystemLibrary.Conv_SoftObjPathToSoftObjRef(o);
+          var i = UE.KismetSystemLibrary.Conv_SoftObjPathToSoftObjRef(o);
           const a = t;
-          const s = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+          var s = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
             i.ToAssetPathName(),
             UE.AnimMontage,
           );
@@ -195,11 +195,11 @@ class Skill {
             ["索引", t],
           );
       }
-    } else if (this.SkillInfo.MontagePaths.Num() > 0) {
+    } else if (0 < this.SkillInfo.MontagePaths.Num()) {
       let i = !1;
       for (let t = 0; t < this.SkillInfo.MontagePaths.Num(); ++t) {
-        const e = this.SkillInfo.MontagePaths.Get(t);
-        (e && e.length !== 0) ||
+        var e = this.SkillInfo.MontagePaths.Get(t);
+        (e && 0 !== e.length) ||
           ((i = !0),
           CombatDebugController_1.CombatDebugController.CombatWarn(
             "Skill",
@@ -212,21 +212,21 @@ class Skill {
       }
       if (!i) {
         this.QJo = new Array(this.SkillInfo.MontagePaths.Num());
-        var t = this.cBe.Entity.GetComponent(3).Actor;
-        var t = UE.KismetSystemLibrary.Conv_ClassToSoftClassReference(
-          t.GetClass(),
-        );
-        const h = UE.KismetSystemLibrary.Conv_SoftClassReferenceToString(t);
+        var t = this.cBe.Entity.GetComponent(3).Actor,
+          t = UE.KismetSystemLibrary.Conv_ClassToSoftClassReference(
+            t.GetClass(),
+          ),
+          h = UE.KismetSystemLibrary.Conv_SoftClassReferenceToString(t);
         for (let t = 0; t < this.SkillInfo.MontagePaths.Num(); ++t) {
-          let r = this.SkillInfo.MontagePaths.Get(t);
+          var r = this.SkillInfo.MontagePaths.Get(t);
           const l = ConfigManager_1.ConfigManager.WorldConfig.GetSkillMontage(
             h,
             r,
           );
           if (
             l &&
-            l.ToAssetPathName().length !== 0 &&
-            l.ToAssetPathName() !== "None"
+            0 !== l.ToAssetPathName().length &&
+            "None" !== l.ToAssetPathName()
           ) {
             const n = t;
             r = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
@@ -266,9 +266,9 @@ class Skill {
     if (
       EffectSystem_1.EffectSystem.IsValid(i) &&
       (EffectSystem_1.EffectSystem.SetTimeScale(i, 1),
-      !(s > 0 && EffectSystem_1.EffectSystem.GetTotalPassTime(i) > s))
+      !(0 < s && EffectSystem_1.EffectSystem.GetTotalPassTime(i) > s))
     ) {
-      const e = EffectSystem_1.EffectSystem.GetSureEffectActor(i);
+      var e = EffectSystem_1.EffectSystem.GetSureEffectActor(i);
       switch (t) {
         case 2:
           e && e.K2_DetachFromActor(1, 1, 1),
@@ -314,10 +314,10 @@ class Skill {
   }
   izo() {
     if (this.$Jo) {
-      for (const [i, s] of this.$Jo)
-        for (let t = s.length - 1; t >= 0; t--) {
-          const e = s.pop();
-          const h = e.EffectHandle;
+      for (var [i, s] of this.$Jo)
+        for (let t = s.length - 1; 0 <= t; t--) {
+          var e = s.pop(),
+            h = e.EffectHandle;
           this.tzo(i, h, e.WhenSkillEndEnableTime);
         }
       this.$Jo.clear();
@@ -338,13 +338,13 @@ class Skill {
     var t = this.zJo.AddTagWithReturnHandle(this.SkillTagIds);
     if (
       (this.XJo.push(t),
-      this.SkillInfo.GroupId === 1 &&
+      1 === this.SkillInfo.GroupId &&
         (this.SkillInfo.IsFullBodySkill
           ? this.Lie.AddTag(1996624497)
           : this.Lie.AddTag(704115290)),
       !this.IsSimulated)
     ) {
-      Math.abs(this.SkillInfo.StrengthCost) > 0 &&
+      0 < Math.abs(this.SkillInfo.StrengthCost) &&
         ((t = this.zJo.AddBuffLocal(
           CharacterBuffIds_1.buffId.SkillStrengthForbidden,
           {
@@ -360,7 +360,7 @@ class Skill {
         `技能${this.SkillId}技能状态韧性系数`,
       );
       this.XJo.push(t),
-        this.SkillInfo.ImmuneFallDamageTime > 0 &&
+        0 < this.SkillInfo.ImmuneFallDamageTime &&
           ((t = this.zJo.AddBuffLocal(CharacterBuffIds_1.buffId.FallImmune, {
             InstigatorId: this.zJo.CreatureDataId,
             Duration: this.SkillInfo.ImmuneFallDamageTime,
@@ -369,7 +369,7 @@ class Skill {
           })),
           this.XJo.push(t));
       for (let t = 0; t < this.SkillInfo.SkillBuff.Num(); ++t) {
-        const s = this.zJo.AddBuffLocal(this.SkillInfo.SkillBuff.Get(t), {
+        var s = this.zJo.AddBuffLocal(this.SkillInfo.SkillBuff.Get(t), {
           InstigatorId: this.zJo.CreatureDataId,
           Level: i,
           Reason: `技能${this.SkillId}通过技能期间生效的GE添加`,
@@ -402,7 +402,7 @@ class Skill {
         this.zJo.RemoveBuffByHandle(t, -1, "技能结束移除");
       }),
       (this.XJo.length = 0),
-      this.SkillInfo.GroupId === 1 &&
+      1 === this.SkillInfo.GroupId &&
         (this.SkillInfo.IsFullBodySkill
           ? this.Lie.RemoveTag(1996624497)
           : this.Lie.RemoveTag(704115290)),
@@ -488,7 +488,7 @@ class Skill {
     );
   }
   ozo() {
-    let t;
+    var t;
     this.qJo &&
       ((t = this.qJo.MontageToPlay),
       this.qJo.EndTask(),
@@ -515,4 +515,4 @@ class Skill {
   }
 }
 exports.Skill = Skill;
-// # sourceMappingURL=Skill.js.map
+//# sourceMappingURL=Skill.js.map

@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckPhantomMaxLevel =
     exports.LevelConditionCheckPhantomLevel =
       void 0);
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
+const LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder");
 class LevelConditionCheckPhantomLevel extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, r) {
-    let l;
+    var l;
     return (
       !!e.LimitParams &&
       ((l = e.LimitParams.get("ItemId")),
@@ -28,4 +28,4 @@ class LevelConditionCheckPhantomMaxLevel extends LevelGeneralBase_1.LevelConditi
   }
 }
 exports.LevelConditionCheckPhantomMaxLevel = LevelConditionCheckPhantomMaxLevel;
-// # sourceMappingURL=LevelConditionCheckPhantom.js.map
+//# sourceMappingURL=LevelConditionCheckPhantom.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TagContainer = exports.channelDebugName = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils");
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils");
 exports.channelDebugName = {
-  1: "Tag",
+  [1]: "Tag",
   2: "Buff",
   3: "关卡服务器",
   4: "动画",
@@ -29,7 +29,7 @@ class TagContainer {
   BindTsTagContainer(t) {
     if ((this.OKo = t)) {
       for (const a of this.bKo.keys()) {
-        const r = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(a);
+        var r = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(a);
         r && t.UpdateTagMap(r, this.bKo.get(a) ?? 0);
       }
       Log_1.Log.CheckDebug() &&
@@ -54,16 +54,16 @@ class TagContainer {
   }
   kKo(t, r) {
     if (!r) return [];
-    const a = this.bKo.get(t) ?? 0;
-    const s = Math.max(0, a + r);
+    const a = this.bKo.get(t) ?? 0,
+      s = Math.max(0, a + r);
     r = s - a;
-    const i = [];
+    var i = [];
     if (a === s) return [];
     s <= 0 ? this.bKo.delete(t) : this.bKo.set(t, s);
     let e = GameplayTagUtils_1.GameplayTagUtils.GetParentTag(t);
     for (i.push([t, s, a, !0]); e; ) {
-      const a = this.qKo.get(e) ?? 0;
-      const s = Math.max(0, a + r);
+      const a = this.qKo.get(e) ?? 0,
+        s = Math.max(0, a + r);
       s <= 0 ? this.qKo.delete(e) : this.qKo.set(e, s),
         i.push([e, s, a, !1]),
         (e = GameplayTagUtils_1.GameplayTagUtils.GetParentTag(e));
@@ -73,7 +73,7 @@ class TagContainer {
   }
   FKo(t) {
     if (t && !(t.length <= 0))
-      for (const [r, a, s, i] of t) {
+      for (var [r, a, s, i] of t) {
         if (i)
           for (const e of this.NKo)
             try {
@@ -122,45 +122,45 @@ class TagContainer {
     this.FKo(t);
   }
   RemoveTag(t, r) {
-    const a = this.BKo.get(t);
+    var a = this.BKo.get(t);
     if (a) {
       const o = a.get(r) ?? 0;
       a.delete(r);
-      const s = this.kKo(r, -o) ?? [];
-      if (this.qKo.get(r) > 0) {
-        const i = [];
+      var s = this.kKo(r, -o) ?? [];
+      if (0 < this.qKo.get(r)) {
+        var i = [];
         for (const n of a.keys())
           GameplayTagUtils_1.GameplayTagUtils.IsChildTag(n, r) && i.push(n);
         for (const h of i) {
           const o = a.get(h) ?? 0;
           a.delete(h);
-          const e = this.kKo(h, -o);
+          var e = this.kKo(h, -o);
           e && s.push(...e);
         }
       }
-      a.size === 0 && this.BKo.delete(t), this.FKo(s);
+      0 === a.size && this.BKo.delete(t), this.FKo(s);
     }
   }
   RemoveExactTag(r, a) {
-    const s = this.BKo.get(r);
+    var s = this.BKo.get(r);
     if (s) {
-      const i = s.get(a) ?? 0;
+      var i = s.get(a) ?? 0;
       let t = void 0;
-      i > 0 && ((t = this.kKo(a, -i)), s.delete(a)),
-        s.size === 0 && this.BKo.delete(r),
+      0 < i && ((t = this.kKo(a, -i)), s.delete(a)),
+        0 === s.size && this.BKo.delete(r),
         this.FKo(t);
     }
   }
   UpdateExactTag(t, r, a) {
     let s = this.BKo.get(t);
     if (!s) {
-      if (!(a > 0)) return;
+      if (!(0 < a)) return;
       this.BKo.set(t, (s = new Map()));
     }
-    const i = s.get(r) ?? 0;
-    var a = Math.max(0, i + a);
-    var r = (a > 0 ? s.set(r, a) : s.delete(r), this.kKo(r, a - i));
-    s.size === 0 && this.BKo.delete(t), this.FKo(r);
+    var i = s.get(r) ?? 0,
+      a = Math.max(0, i + a),
+      r = (0 < a ? s.set(r, a) : s.delete(r), this.kKo(r, a - i));
+    0 === s.size && this.BKo.delete(t), this.FKo(r);
   }
   ContainsTag(t) {
     return this.bKo.has(t) || this.qKo.has(t);
@@ -190,7 +190,7 @@ class TagContainer {
     this.NKo.delete(t);
   }
   GetDebugString() {
-    const t = "汇总tag:\n";
+    var t = "汇总tag:\n";
     return (
       t +
       this.GetExactTagsDebugString() +
@@ -206,14 +206,13 @@ class TagContainer {
         .join("")
     );
   }
-
   GetExactTagsDebugString() {
     return [...this.bKo.entries()]
       .map(([t, r]) => {
         let a =
           GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(t) + ` x ${r}(`;
         for (const i of this.BKo.keys()) {
-          const s = this.BKo.get(i)?.get(t);
+          var s = this.BKo.get(i)?.get(t);
           s && (a += exports.channelDebugName[i] + " x " + s);
         }
         return a + ")\n";
@@ -223,4 +222,4 @@ class TagContainer {
   }
 }
 exports.TagContainer = TagContainer;
-// # sourceMappingURL=CharacterTagContainer.js.map
+//# sourceMappingURL=CharacterTagContainer.js.map

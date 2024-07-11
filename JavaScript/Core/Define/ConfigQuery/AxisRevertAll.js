@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configAxisRevertAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const AxisRevert_1 = require("../Config/AxisRevert");
-const DB = "db_menu.db";
-const FILE = "s.设置系统.xlsx";
-const TABLE = "AxisRevert";
-const COMMAND = "select BinData from `AxisRevert`";
-const KEY_PREFIX = "AxisRevertAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  AxisRevert_1 = require("../Config/AxisRevert"),
+  DB = "db_menu.db",
+  FILE = "s.设置系统.xlsx",
+  TABLE = "AxisRevert",
+  COMMAND = "select BinData from `AxisRevert`",
+  KEY_PREFIX = "AxisRevertAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configAxisRevertAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configAxisRevertAll = {
     );
   },
   GetConfigList: (e = !0) => {
-    let o;
+    var o;
     if (
       (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configAxisRevertAll = {
       }
       const r = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let n = void 0;
+        var n = void 0;
         if (
           (([o, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configAxisRevertAll = {
     }
   },
 };
-// # sourceMappingURL=AxisRevertAll.js.map
+//# sourceMappingURL=AxisRevertAll.js.map

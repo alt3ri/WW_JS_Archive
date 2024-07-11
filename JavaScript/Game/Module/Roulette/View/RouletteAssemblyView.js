@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RouletteAssemblyView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem");
-const ButtonItem_1 = require("../../Common/Button/ButtonItem");
-const SortEntrance_1 = require("../../Common/FilterSort/Sort/View/SortEntrance");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const SkipTaskManager_1 = require("../../SkipInterface/SkipTaskManager");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const RouletteDefine_1 = require("../Data/RouletteDefine");
-const RouletteComponentAssembly_1 = require("../RouletteComponent/RouletteComponentAssembly");
-const RouletteController_1 = require("../RouletteController");
-const RouletteInputManager_1 = require("../RouletteInputManager");
-const RouletteAssemblyGridItem_1 = require("./RouletteAssemblyGridItem");
-const RouletteAssemblyTips_1 = require("./RouletteAssemblyTips");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
+  ButtonItem_1 = require("../../Common/Button/ButtonItem"),
+  SortEntrance_1 = require("../../Common/FilterSort/Sort/View/SortEntrance"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  SkipTaskManager_1 = require("../../SkipInterface/SkipTaskManager"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  RouletteDefine_1 = require("../Data/RouletteDefine"),
+  RouletteComponentAssembly_1 = require("../RouletteComponent/RouletteComponentAssembly"),
+  RouletteController_1 = require("../RouletteController"),
+  RouletteInputManager_1 = require("../RouletteInputManager"),
+  RouletteAssemblyGridItem_1 = require("./RouletteAssemblyGridItem"),
+  RouletteAssemblyTips_1 = require("./RouletteAssemblyTips");
 class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -44,11 +44,11 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
       (this.hft = void 0),
       (this.RNt = !0),
       (this.x0o = () => {
-        const t = this.w0o === 0 ? 1 : 0;
+        var t = 0 === this.w0o ? 1 : 0;
         this.w0o = t;
       }),
       (this.dKe = (t, e, i) => {
-        const s = this.B0o();
+        var s = this.B0o();
         this.oPi !== s &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -60,7 +60,7 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
           this.b0o(s));
       }),
       (this.q0o = (t) => {
-        const e = this.T0o?.GridIndex;
+        var e = this.T0o?.GridIndex;
         (this.T0o = t),
           void 0 !== e &&
             e !== this.T0o.GridIndex &&
@@ -69,17 +69,17 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
           (this.w0o = 1);
       }),
       (this.G0o = (t, e) => {
-        if (this.T0o && e === 1)
+        if (this.T0o && 1 === e)
           return (
             (e = this.T0o.GridIndex === t.GridIndex),
-            this.oPi === 1 && e && this.x0o(),
+            1 === this.oPi && e && this.x0o(),
             !e
           );
         return !0;
       }),
       (this.TempKeepSelect = !1),
       (this.z9e = () => {
-        const t = new RouletteAssemblyGridItem_1.RouletteAssemblyGridItem();
+        var t = new RouletteAssemblyGridItem_1.RouletteAssemblyGridItem();
         return (
           t.BindOnExtendToggleStateChanged(this.N0o),
           t.BindOnCanExecuteChange(this.OBt),
@@ -87,35 +87,35 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
         );
       }),
       (this.N0o = (t) => {
-        const e = t.State;
-        var t = t.Data;
+        var e = t.State,
+          t = t.Data;
         (this.L0o = t),
-          e === 1 &&
+          1 === e &&
             (this.y0o.DeselectCurrentGridProxy(),
             this.y0o.SelectGridProxy(t.Index),
             this.O0o(),
             this.RefreshTips());
       }),
       (this.OBt = (t, e, i) => {
-        return !this.L0o || i !== 1 || this.L0o.Id !== t.Id;
+        return !this.L0o || 1 !== i || this.L0o.Id !== t.Id;
       }),
       (this.qft = () => {
-        const t = this.L0o;
-        const e = ModelManager_1.ModelManager.RouletteModel.CopyRouletteData(
-          this.T0o,
-        );
-        const i = t.State === 2;
+        var t = this.L0o,
+          e = ModelManager_1.ModelManager.RouletteModel.CopyRouletteData(
+            this.T0o,
+          ),
+          i = 2 === t.State;
         switch (((e.ShowIndex = !0), t.State)) {
           case 2:
             (e.Id = 0),
               (e.Name = void 0),
               (e.State = 2),
-              t.GridType === 0
+              0 === t.GridType
                 ? ModelManager_1.ModelManager.RouletteModel.SendExploreToolEquipLogData(
                     t.Id,
                     0,
                   )
-                : t.GridType === 2 &&
+                : 2 === t.GridType &&
                   ModelManager_1.ModelManager.RouletteModel.SendExploreToolEquipLogData(
                     3001,
                     0,
@@ -125,8 +125,8 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
           case 0:
             (e.Id = t.Id),
               (e.State = 1),
-              t.GridType === 0
-                ? ((s = this.T0o.Id) !== 0 &&
+              0 === t.GridType
+                ? (0 !== (s = this.T0o.Id) &&
                     ModelManager_1.ModelManager.RouletteModel.SendExploreToolEquipLogData(
                       s,
                       0,
@@ -135,8 +135,8 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
                     t.Id,
                     1,
                   ))
-                : t.GridType === 2 &&
-                  ((s = this.T0o.Id) !== 0 &&
+                : 2 === t.GridType &&
+                  (0 !== (s = this.T0o.Id) &&
                     ModelManager_1.ModelManager.RouletteModel.SendExploreToolEquipLogData(
                       3001,
                       0,
@@ -150,10 +150,10 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
             break;
           case 1: {
             (e.Id = t.Id), (e.State = 1);
-            var s = this.S0o.GetGridByValidId(t.Id);
-            const h = s.Data;
+            var s = this.S0o.GetGridByValidId(t.Id),
+              h = s.Data;
             (h.Id = this.T0o.Id),
-              this.T0o.Id === 0 && (h.State = 2),
+              0 === this.T0o.Id && (h.State = 2),
               s.RefreshGrid(h);
             const r = h.DataIndex;
             this.k0o(r, h);
@@ -165,11 +165,11 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
         this.k0o(r, e), (this.T0o = e), this.Mni(i), this.O0o(), this.F0o();
       }),
       (this.V0o = (t, e) => {
-        const i = t;
+        var i = t;
         let s = 0;
         if (this.TempKeepSelect)
           (s = this.y0o.GetSelectedGridIndex()), (this.TempKeepSelect = !1);
-        else for (let t = 0; t < i.length; t++) i[t].State === 2 && (s = t);
+        else for (let t = 0; t < i.length; t++) 2 === i[t].State && (s = t);
         this.H0o(s, i);
       }),
       (this.j0o = (t) => {
@@ -185,7 +185,7 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
         this.$0o() ? this.Y0o() : this.CloseMe();
       }),
       (this.F0o = () => {
-        let t, e, i;
+        var t, e, i;
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Phantom", 38, "保存当前轮盘数据"),
           this.$0o() &&
@@ -201,7 +201,7 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.OnDefaultButtonClick = () => {
         this.w0o = 0;
-        const t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(55);
+        var t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(55);
         t.FunctionMap.set(1, () => {
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView(),
             this.E0o.ActivateInput(!0);
@@ -282,35 +282,38 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
       this.P0o.SetActive(!1);
   }
   OnStart() {
-    var t = this.OpenParam;
-    var t =
-      ((this.M0o = t.RouletteType ?? 0),
-      (this.oPi = this.B0o()),
-      (this.A0o = new ButtonItem_1.ButtonItem(this.GetItem(7))),
-      this.A0o.SetFunction(this.qft),
-      this.A0o.SetActive(!1),
-      (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
-      this.M0o === 0
-        ? "Text_ExploreToolsTitle_Text"
-        : "Text_FuncToolsTitle_Text");
-    var t =
-      (this.lqe.SetTitleLocalText(t),
-      this.lqe.SetCloseCallBack(this.X0o),
-      (this.ToggleLeft = this.GetExtendToggle(3)),
-      this.ToggleLeft.CanExecuteChange.Bind(() =>
-        this.z0o(this.ToggleLeft.ToggleState, 1),
-      ),
-      (this.ToggleRight = this.GetExtendToggle(4)),
-      this.ToggleRight.CanExecuteChange.Bind(() =>
-        this.z0o(this.ToggleRight.ToggleState, 13),
-      ),
-      this.GetItem(9).SetUIActive(!1),
-      (this.hft = new SortEntrance_1.SortEntrance(this.GetItem(10), this.V0o)),
-      this.hft.SetActive(!1),
-      this.Z0o(),
-      this.efo(),
-      this.GetItem(1));
-    this.M0o === 0
+    var t = this.OpenParam,
+      t =
+        ((this.M0o = t.RouletteType ?? 0),
+        (this.oPi = this.B0o()),
+        (this.A0o = new ButtonItem_1.ButtonItem(this.GetItem(7))),
+        this.A0o.SetFunction(this.qft),
+        this.A0o.SetActive(!1),
+        (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
+        0 === this.M0o
+          ? "Text_ExploreToolsTitle_Text"
+          : "Text_FuncToolsTitle_Text"),
+      t =
+        (this.lqe.SetTitleLocalText(t),
+        this.lqe.SetCloseCallBack(this.X0o),
+        (this.ToggleLeft = this.GetExtendToggle(3)),
+        this.ToggleLeft.CanExecuteChange.Bind(() =>
+          this.z0o(this.ToggleLeft.ToggleState, 1),
+        ),
+        (this.ToggleRight = this.GetExtendToggle(4)),
+        this.ToggleRight.CanExecuteChange.Bind(() =>
+          this.z0o(this.ToggleRight.ToggleState, 13),
+        ),
+        this.GetItem(9).SetUIActive(!1),
+        (this.hft = new SortEntrance_1.SortEntrance(
+          this.GetItem(10),
+          this.V0o,
+        )),
+        this.hft.SetActive(!1),
+        this.Z0o(),
+        this.efo(),
+        this.GetItem(1));
+    0 === this.M0o
       ? (this.S0o =
           new RouletteComponentAssembly_1.RouletteComponentAssemblyExplore())
       : (this.S0o =
@@ -375,7 +378,7 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
       case 1:
         this.S0o.SetTipsActive(!1),
           this.S0o.SetRingVisible(!1),
-          this.oPi === 2 && this.S0o.SetNameVisible(!0),
+          2 === this.oPi && this.S0o.SetNameVisible(!0),
           this.E0o.ActivateInput(!1),
           this.afo(),
           this.Mni(),
@@ -383,8 +386,8 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   GetGuideUiItemAndUiItemForShowEx(t) {
-    let e;
-    if (t.length === 1 || isNaN(Number(t[0])))
+    var e;
+    if (1 === t.length || isNaN(Number(t[0])))
       return (
         (e = Number(t[0])),
         (e = this.y0o?.GetGridAndScrollToByJudge(e, (t, e) => t === e.Id))
@@ -422,11 +425,11 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
   }
   rfo() {
     this.E0o?.Destroy(), (this.E0o = void 0);
-    var t = this.GetItem(1).GetLGUISpaceAbsolutePosition();
-    var t = RouletteInputManager_1.AngleCalculator.ConvertLguiPosToScreenPos(
-      t.X,
-      t.Y,
-    );
+    var t = this.GetItem(1).GetLGUISpaceAbsolutePosition(),
+      t = RouletteInputManager_1.AngleCalculator.ConvertLguiPosToScreenPos(
+        t.X,
+        t.Y,
+      );
     (this.E0o = new RouletteInputManager_1.rouletteInputManager[this.oPi](
       t,
       0,
@@ -437,15 +440,15 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
   }
   sfo() {
     this.S0o.Reset();
-    const t = this.OpenParam.SelectGridIndex ?? 0;
+    var t = this.OpenParam.SelectGridIndex ?? 0;
     this.S0o.GetGridByIndex(t).SetGridToggleState(!0),
-      this.oPi === 1 ? (this.w0o = 0) : (this.w0o = 1);
+      1 === this.oPi ? (this.w0o = 0) : (this.w0o = 1);
   }
   $0o() {
     return this.hfo() || this.lfo() || this._fo();
   }
   CheckIsRouletteDataDefault() {
-    return this.M0o === 0
+    return 0 === this.M0o
       ? this.R0o.get(0).toString() ===
           ModelManager_1.ModelManager.RouletteModel.GetDefaultExploreSkillIdList().toString()
       : this.R0o.get(1).toString() ===
@@ -479,7 +482,7 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
     this.D0o && this.D0o.clear(),
       (this.D0o =
         ModelManager_1.ModelManager.RouletteModel.CreateAssemblyGridData());
-    const t = this.R0o.get(2);
+    var t = this.R0o.get(2);
     this.R0o && this.R0o.clear(),
       (this.R0o =
         ModelManager_1.ModelManager.RouletteModel.CreateDefaultAssemblyData(t));
@@ -497,12 +500,12 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
   }
   Mni(t = !1) {
     if (this.T0o) {
-      const e = this.T0o.GridType;
-      const i = this.D0o.get(e);
-      const s = [];
+      var e = this.T0o.GridType,
+        i = this.D0o.get(e),
+        s = [];
       for (let t = 0; t < i.length; t++) {
-        const h = i[t];
-        if (e === 2) if (i[t].ItemType !== this.I0o) continue;
+        var h = i[t];
+        if (2 === e) if (i[t].ItemType !== this.I0o) continue;
         (h.State = this.mfo(i[t], this.T0o)),
           (h.RelativeIndex = this.cfo(i[t])),
           s.push(h);
@@ -515,13 +518,13 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
   H0o(t, e) {
     (this.L0o = void 0),
       this.y0o.DeselectCurrentGridProxy(),
-      this.GetLoopScrollViewComponent(5).RootUIComp.SetUIActive(e.length > 0),
+      this.GetLoopScrollViewComponent(5).RootUIComp.SetUIActive(0 < e.length),
       this.GetItem(9).SetUIActive(e.length <= 0),
-      e.length > 0
+      0 < e.length
         ? (this.y0o.ReloadData(e),
           this.y0o.IsGridDisplaying(t) || this.y0o.ScrollToGridIndex(t),
           this.y0o.SelectGridProxy(t, !0))
-        : (this.oPi === 1 && (this.w0o = 0),
+        : (1 === this.oPi && (this.w0o = 0),
           this.P0o.SetActive(!1),
           this.O0o());
   }
@@ -549,8 +552,8 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
     } else this.A0o.SetActive(!1);
   }
   k0o(t, e) {
-    const i = this.R0o.get(e.GridType);
-    t >= 0 && t < i.length && (this.R0o.get(e.GridType)[t] = e.Id);
+    var i = this.R0o.get(e.GridType);
+    0 <= t && t < i.length && (this.R0o.get(e.GridType)[t] = e.Id);
   }
   RefreshItemFilterSort(t, e) {
     this.hft.UpdateData(t, e), this.hft.SetActive(!1);
@@ -569,10 +572,10 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
     this.P0o.Refresh(t);
   }
   dfo(t) {
-    const e = new RouletteDefine_1.AssemblyTipsData();
-    const i = ConfigManager_1.ConfigManager.RouletteConfig.GetExploreConfigById(
-      t.Id,
-    );
+    var e = new RouletteDefine_1.AssemblyTipsData(),
+      i = ConfigManager_1.ConfigManager.RouletteConfig.GetExploreConfigById(
+        t.Id,
+      );
     (e.GridType = 0),
       (e.GridId = t.Id),
       (e.TextMain = i.CurrentSkillInfo),
@@ -595,8 +598,8 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
     );
   }
   Cfo(t) {
-    const e = new RouletteDefine_1.AssemblyTipsData();
-    const i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(t.Id);
+    var e = new RouletteDefine_1.AssemblyTipsData(),
+      i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(t.Id);
     if (
       ((e.GridType = 2),
       (e.GridId = t.Id),
@@ -604,10 +607,10 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
       (e.Title = t.Name),
       (e.TextMain = i.AttributesDescription),
       (e.TextSub = i.BgDescription),
-      i.ItemAccess && i.ItemAccess?.length > 0)
+      i.ItemAccess && 0 < i.ItemAccess?.length)
     )
       for (const h of i.ItemAccess) {
-        let s = ConfigManager_1.ConfigManager.GetWayConfig.GetConfigById(h);
+        var s = ConfigManager_1.ConfigManager.GetWayConfig.GetConfigById(h);
         s &&
           ((s = {
             Id: h,
@@ -624,11 +627,11 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
   }
   afo() {
     if (this.T0o) {
-      let e = this.T0o.GridType === 2;
+      var e = 2 === this.T0o.GridType;
       if ((this.GetItem(2).SetUIActive(e), e)) {
         let t = this.I0o;
         e = this.T0o.Id;
-        e !== 0 &&
+        0 !== e &&
           ((t =
             ControllerHolder_1.ControllerHolder.SpecialItemController.IsSpecialItem(
               e,
@@ -636,7 +639,7 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
               ? 13
               : 1),
           (this.I0o = t)),
-          (t === 1 ? this.ToggleLeft : this.ToggleRight).SetToggleState(1);
+          (1 === t ? this.ToggleLeft : this.ToggleRight).SetToggleState(1);
       }
     } else
       Log_1.Log.CheckInfo() &&
@@ -646,29 +649,28 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
     return !t || this.I0o !== e;
   }
   Ozt(t, e) {
-    e === 1 &&
+    1 === e &&
       this.I0o !== t &&
       ((this.I0o = t),
-      (this.I0o === 1 ? this.ToggleRight : this.ToggleLeft).SetToggleState(0),
+      (1 === this.I0o ? this.ToggleRight : this.ToggleLeft).SetToggleState(0),
       this.Mni());
   }
   Q0o() {
     this.O0o();
   }
   nfo() {
-    const t =
-      ModelManager_1.ModelManager.RouletteModel.CurrentEquipItemId !== 0;
-    let e = ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId;
-    const i = this.OpenParam;
-    e === 3002 && t
+    var t = 0 !== ModelManager_1.ModelManager.RouletteModel.CurrentEquipItemId,
+      e = ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId,
+      i = this.OpenParam;
+    3002 === e && t
       ? RouletteController_1.RouletteController.ExploreSkillSetRequest(3001)
       : void 0 === (e = i.EndSwitchSkillId) ||
-        (e === 3001 && !t) ||
+        (3001 === e && !t) ||
         RouletteController_1.RouletteController.ExploreSkillSetRequest(e);
   }
   Y0o() {
     this.w0o = 0;
-    const t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(58);
+    var t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(58);
     (t.IsEscViewTriggerCallBack = !1),
       t.FunctionMap.set(1, () => {
         this.CloseMe();
@@ -695,4 +697,4 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.RouletteAssemblyView = RouletteAssemblyView;
-// # sourceMappingURL=RouletteAssemblyView.js.map
+//# sourceMappingURL=RouletteAssemblyView.js.map

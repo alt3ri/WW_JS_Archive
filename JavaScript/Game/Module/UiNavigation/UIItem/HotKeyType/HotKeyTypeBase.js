@@ -15,4 +15,4 @@ class HotKeyTypeBase extends UiPanelBase_1.UiPanelBase {
   OnClear() {}
 }
 exports.HotKeyTypeBase = HotKeyTypeBase;
-// # sourceMappingURL=HotKeyTypeBase.js.map
+//# sourceMappingURL=HotKeyTypeBase.js.map

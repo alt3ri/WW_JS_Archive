@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputActionBinding = void 0);
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const InputSettings_1 = require("../InputSettings");
+const EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  InputSettings_1 = require("../InputSettings");
 class InputActionBinding {
   constructor() {
     (this.ZMe = void 0),
@@ -36,7 +36,7 @@ class InputActionBinding {
     return InputSettings_1.InputSettings.GetInputActionKeyMap(this.ZMe);
   }
   GetCurrentPlatformKeyByIndex(t) {
-    const e = ModelManager_1.ModelManager.PlatformModel;
+    var e = ModelManager_1.ModelManager.PlatformModel;
     return e.IsPc()
       ? this.GetPcKeyByIndex(t)
       : e.IsGamepad()
@@ -44,7 +44,7 @@ class InputActionBinding {
         : void 0;
   }
   GetCurrentPlatformKey() {
-    const t = ModelManager_1.ModelManager.PlatformModel;
+    var t = ModelManager_1.ModelManager.PlatformModel;
     return t.IsPc()
       ? this.GetPcKey()
       : t.IsGamepad()
@@ -59,7 +59,7 @@ class InputActionBinding {
       );
   }
   GetPcKey() {
-    const t = this.tSe[0];
+    var t = this.tSe[0];
     return InputSettings_1.InputSettings.GetKey(t);
   }
   GetGamepadKeyByIndex(t) {
@@ -70,7 +70,7 @@ class InputActionBinding {
       );
   }
   GetGamepadKey() {
-    const t = this.iSe[0];
+    var t = this.iSe[0];
     return InputSettings_1.InputSettings.GetKey(t);
   }
   GetPcKeyNameList(t) {
@@ -83,7 +83,7 @@ class InputActionBinding {
     for (const e of this.rSe) t.push(e);
   }
   GetCurrentPlatformKeyNameList(t) {
-    const e = ModelManager_1.ModelManager.PlatformModel;
+    var e = ModelManager_1.ModelManager.PlatformModel;
     e.IsPc()
       ? this.GetPcKeyNameList(t)
       : e.IsGamepad() && this.GetGamepadKeyNameList(t);
@@ -102,8 +102,8 @@ class InputActionBinding {
   }
   RefreshKeysByActionMappings(e) {
     this.rSe.length = 0;
-    for (let t = e.Num() - 1; t >= 0; t--) {
-      const i = e.Get(t).Key.KeyName.toString();
+    for (let t = e.Num() - 1; 0 <= t; t--) {
+      var i = e.Get(t).Key.KeyName.toString();
       this.rSe.push(i);
     }
     this.nSe(),
@@ -121,7 +121,7 @@ class InputActionBinding {
   RemoveKeys(t) {
     for (const i of t) {
       InputSettings_1.InputSettings.RemoveActionMapping(this.ZMe, i);
-      const e = this.rSe.indexOf(i);
+      var e = this.rSe.indexOf(i);
       this.rSe.splice(e, 1);
     }
     this.nSe();
@@ -152,7 +152,7 @@ class InputActionBinding {
       this.rSe)
     ) {
       this.rSe.sort((t, e) => {
-        let i =
+        var i =
           InputSettings_1.InputSettings.IsKeyboardKey(t) ||
           InputSettings_1.InputSettings.IsMouseButton(t);
         return i !==
@@ -166,7 +166,7 @@ class InputActionBinding {
           : 0;
       });
       for (const e of this.rSe) {
-        const t = InputSettings_1.InputSettings.GetKey(e);
+        var t = InputSettings_1.InputSettings.GetKey(e);
         t &&
           (t.IsKeyboardKey || t.IsMouseButton
             ? this.tSe.push(e)
@@ -176,4 +176,4 @@ class InputActionBinding {
   }
 }
 exports.InputActionBinding = InputActionBinding;
-// # sourceMappingURL=InputActionBinding.js.map
+//# sourceMappingURL=InputActionBinding.js.map

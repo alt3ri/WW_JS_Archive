@@ -19,4 +19,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     HeadStateRange: 1e3,
     WalkStopSpeedLimit: 0,
   });
-// # sourceMappingURL=TsBaseRoleConfig.js.map
+//# sourceMappingURL=TsBaseRoleConfig.js.map

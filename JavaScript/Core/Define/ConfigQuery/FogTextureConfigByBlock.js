@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configFogTextureConfigByBlock = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const FogTextureConfig_1 = require("../Config/FogTextureConfig");
-const DB = "db_mapfog.db";
-const FILE = "d.地图迷雾.xlsx";
-const TABLE = "FogTextureConfig";
-const COMMAND = "select BinData from `FogTextureConfig` where Block=?";
-const KEY_PREFIX = "FogTextureConfigByBlock";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  FogTextureConfig_1 = require("../Config/FogTextureConfig"),
+  DB = "db_mapfog.db",
+  FILE = "d.地图迷雾.xlsx",
+  TABLE = "FogTextureConfig",
+  COMMAND = "select BinData from `FogTextureConfig` where Block=?",
+  KEY_PREFIX = "FogTextureConfigByBlock",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configFogTextureConfigByBlock.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configFogTextureConfigByBlock.GetConfig(";
 exports.configFogTextureConfigByBlock = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configFogTextureConfigByBlock = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Block",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Block",
+              o,
+            ]))
       ) {
-        var i;
-        var n = void 0;
+        var i,
+          n = void 0;
         if (
           (([i, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configFogTextureConfigByBlock = {
     }
   },
 };
-// # sourceMappingURL=FogTextureConfigByBlock.js.map
+//# sourceMappingURL=FogTextureConfigByBlock.js.map

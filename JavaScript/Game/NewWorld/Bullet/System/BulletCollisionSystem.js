@@ -1,53 +1,53 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletCollisionSystem = void 0);
-const cpp_1 = require("cpp");
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Stats_1 = require("../../../../Core/Common/Stats");
-const Time_1 = require("../../../../Core/Common/Time");
-const DamageById_1 = require("../../../../Core/Define/ConfigQuery/DamageById");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const PerformanceController_1 = require("../../../../Core/Performance/PerformanceController");
-const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil");
-const GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils");
-const MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon");
-const Transform_1 = require("../../../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const SpaceUtils_1 = require("../../../../Core/Utils/SpaceUtils");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon");
-const IMatch_1 = require("../../../../UniverseEditor/Interface/IMatch");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const StatDefine_1 = require("../../../Common/StatDefine");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const GlobalData_1 = require("../../../GlobalData");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const SceneTeamController_1 = require("../../../Module/SceneTeam/SceneTeamController");
-const BulletConstant_1 = require("../../Bullet/BulletConstant");
-const BulletStaticFunction_1 = require("../../Bullet/BulletStaticMethod/BulletStaticFunction");
-const BulletTypes_1 = require("../../Bullet/BulletTypes");
-const ExtraEffectBaseTypes_1 = require("../../Character/Common/Component/Abilities/ExtraEffect/ExtraEffectBaseTypes");
-const ExtraEffectDamageFilter_1 = require("../../Character/Common/Component/Abilities/ExtraEffect/ExtraEffectDamageFilter");
-const BulletActionInitHit_1 = require("../Action/BulletActionInitHit");
-const BulletController_1 = require("../BulletController");
-const BulletCollisionUtil_1 = require("../BulletStaticMethod/BulletCollisionUtil");
-const BulletHitCountUtil_1 = require("../BulletStaticMethod/BulletHitCountUtil");
-const BulletUtil_1 = require("../BulletUtil");
-const BulletEntity_1 = require("../Entity/BulletEntity");
-const BulletCollisionInfo_1 = require("../Model/BulletCollisionInfo");
-const BulletPool_1 = require("../Model/BulletPool");
-const BulletTraceElementPool_1 = require("../Model/BulletTraceElementPool");
-const BulletSystemBase_1 = require("./BulletSystemBase");
-const PROFILE_UPDATETRACE_BOX = "BulletMoveUpdateTraceBox";
-const PROFILE_UPDATETRACE_SPHERE = "BulletMoveUpdateTraceSphere";
-const PROFILE_UPDATE_TRACE_DEFAULT = "BulletMoveUpdateTraceDefault";
-const PROFILE_OBSTACLES = "BulletMoveObstacles";
-const PROFILE_TICKTRACE = "BulletOnTickTrace";
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  DamageById_1 = require("../../../../Core/Define/ConfigQuery/DamageById"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  PerformanceController_1 = require("../../../../Core/Performance/PerformanceController"),
+  FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils"),
+  MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
+  Transform_1 = require("../../../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  SpaceUtils_1 = require("../../../../Core/Utils/SpaceUtils"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
+  IMatch_1 = require("../../../../UniverseEditor/Interface/IMatch"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  StatDefine_1 = require("../../../Common/StatDefine"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  SceneTeamController_1 = require("../../../Module/SceneTeam/SceneTeamController"),
+  BulletConstant_1 = require("../../Bullet/BulletConstant"),
+  BulletStaticFunction_1 = require("../../Bullet/BulletStaticMethod/BulletStaticFunction"),
+  BulletTypes_1 = require("../../Bullet/BulletTypes"),
+  ExtraEffectBaseTypes_1 = require("../../Character/Common/Component/Abilities/ExtraEffect/ExtraEffectBaseTypes"),
+  ExtraEffectDamageFilter_1 = require("../../Character/Common/Component/Abilities/ExtraEffect/ExtraEffectDamageFilter"),
+  BulletActionInitHit_1 = require("../Action/BulletActionInitHit"),
+  BulletController_1 = require("../BulletController"),
+  BulletCollisionUtil_1 = require("../BulletStaticMethod/BulletCollisionUtil"),
+  BulletHitCountUtil_1 = require("../BulletStaticMethod/BulletHitCountUtil"),
+  BulletUtil_1 = require("../BulletUtil"),
+  BulletEntity_1 = require("../Entity/BulletEntity"),
+  BulletCollisionInfo_1 = require("../Model/BulletCollisionInfo"),
+  BulletPool_1 = require("../Model/BulletPool"),
+  BulletTraceElementPool_1 = require("../Model/BulletTraceElementPool"),
+  BulletSystemBase_1 = require("./BulletSystemBase"),
+  PROFILE_UPDATETRACE_BOX = "BulletMoveUpdateTraceBox",
+  PROFILE_UPDATETRACE_SPHERE = "BulletMoveUpdateTraceSphere",
+  PROFILE_UPDATE_TRACE_DEFAULT = "BulletMoveUpdateTraceDefault",
+  PROFILE_OBSTACLES = "BulletMoveObstacles",
+  PROFILE_TICKTRACE = "BulletOnTickTrace";
 class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
   constructor() {
     super(...arguments),
@@ -72,7 +72,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
       PerformanceController_1.PerformanceController
         .IsEntityTickPerformanceTest &&
         (e = cpp_1.KuroTime.GetMilliseconds64());
-      const i = l.GetBulletInfo();
+      var i = l.GetBulletInfo();
       !i.NeedDestroy &&
         i.IsInit &&
         (StatDefine_1.BATTLESTAT_ENABLED,
@@ -97,7 +97,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
     (this._9o = e),
       (this.GHo = e.CollisionInfo),
       (this.NHo = e.BulletDataMain.Base.Shape),
-      this.NHo === 4 && ((this.OHo = e.RayInfo), this.jHo(t)),
+      4 === this.NHo && ((this.OHo = e.RayInfo), this.jHo(t)),
       this.WHo(),
       this.KHo(),
       this.QHo(),
@@ -107,7 +107,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
       ) && BulletCollisionUtil_1.BulletCollisionUtil.ShowBulletDeBugDraw(e);
   }
   jHo(t) {
-    const e = this._9o;
+    var e = this._9o;
     if (!e.NeedDestroy && e.CollisionInfo.IsStartup) {
       this.GHo.UpdateTraceSphere ||
         (this.GHo.UpdateTraceSphere =
@@ -119,49 +119,49 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
             e.AttackerId,
             this.GHo.IgnoreQueries,
           ));
-      const i = this.GHo.UpdateTraceSphere;
-      var t =
-        ((this.OHo.IsBlock = !1),
-        this.OHo.StartPoint.FromUeVector(
-          this._9o.ActorComponent.ActorLocationProxy,
-        ),
-        this.OHo.EndPoint.FromUeVector(
-          this._9o.ActorComponent.ActorForwardProxy,
-        ),
-        (this.OHo.Length += this.OHo.Speed * t),
-        (this.OHo.Length = Math.min(this.OHo.Length, this._9o.Size.Y)),
-        this.OHo.EndPoint.MultiplyEqual(this.OHo.Length),
-        this.OHo.EndPoint.AdditionEqual(this.OHo.StartPoint),
-        i.SetStartLocation(
-          this.OHo.StartPoint.X,
-          this.OHo.StartPoint.Y,
-          this.OHo.StartPoint.Z,
-        ),
-        i.SetEndLocation(
-          this.OHo.EndPoint.X,
-          this.OHo.EndPoint.Y,
-          this.OHo.EndPoint.Z,
-        ),
-        (i.Radius = e.Size.Z),
-        this.GHo.ClearHitActorData(),
-        (this.GHo.HasSearchedHitActorsCurFrame = !0),
-        TraceElementCommon_1.TraceElementCommon.SphereTrace(
-          i,
-          PROFILE_TICKTRACE,
-        ));
+      var i = this.GHo.UpdateTraceSphere,
+        t =
+          ((this.OHo.IsBlock = !1),
+          this.OHo.StartPoint.FromUeVector(
+            this._9o.ActorComponent.ActorLocationProxy,
+          ),
+          this.OHo.EndPoint.FromUeVector(
+            this._9o.ActorComponent.ActorForwardProxy,
+          ),
+          (this.OHo.Length += this.OHo.Speed * t),
+          (this.OHo.Length = Math.min(this.OHo.Length, this._9o.Size.Y)),
+          this.OHo.EndPoint.MultiplyEqual(this.OHo.Length),
+          this.OHo.EndPoint.AdditionEqual(this.OHo.StartPoint),
+          i.SetStartLocation(
+            this.OHo.StartPoint.X,
+            this.OHo.StartPoint.Y,
+            this.OHo.StartPoint.Z,
+          ),
+          i.SetEndLocation(
+            this.OHo.EndPoint.X,
+            this.OHo.EndPoint.Y,
+            this.OHo.EndPoint.Z,
+          ),
+          (i.Radius = e.Size.Z),
+          this.GHo.ClearHitActorData(),
+          (this.GHo.HasSearchedHitActorsCurFrame = !0),
+          TraceElementCommon_1.TraceElementCommon.SphereTrace(
+            i,
+            PROFILE_TICKTRACE,
+          ));
       if (t) {
-        const l = new Array();
-        const o = i.HitResult.GetHitCount();
+        var l = new Array(),
+          o = i.HitResult.GetHitCount();
         for (let t = 0; t < o; t++)
           l.push({ Distance: i.HitResult.DistanceArray.Get(t), Index: t });
-        if (l.length > 0) {
+        if (0 < l.length) {
           l.sort((t, e) => t.Distance - e.Distance);
-          const s = i.HitResult.Actors;
-          const r = i.HitResult.Components;
+          var s = i.HitResult.Actors,
+            r = i.HitResult.Components;
           for (const h of l) {
-            const a = s.Get(h.Index);
-            const n = r.Get(h.Index);
-            if ((this.$Ho(a, n), this.GHo.ArrayHitActorData.length > 0))
+            var a = s.Get(h.Index),
+              n = r.Get(h.Index);
+            if ((this.$Ho(a, n), 0 < this.GHo.ArrayHitActorData.length))
               return (
                 (this.OHo.IsBlock = !0),
                 (this.OHo.Length = h.Distance),
@@ -177,11 +177,11 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
     }
   }
   WHo() {
-    const t = this._9o.LiveTime - this.GHo.ActiveDelayMs;
+    var t = this._9o.LiveTime - this.GHo.ActiveDelayMs;
     if (
       (!this.GHo.IsPassDelay &&
-        this.GHo.ActiveDelayMs > 0 &&
-        t >= 0 &&
+        0 < this.GHo.ActiveDelayMs &&
+        0 <= t &&
         ((this.GHo.IsPassDelay = !0),
         (this.GHo.IsStartup = !0),
         (this.GHo.IsProcessOpen = !0),
@@ -195,14 +195,14 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
           ["Actor", this._9o.Actor?.GetName()],
           ["ActiveTime", t],
         ),
-      this.GHo.IsPassDelay && this.GHo.IntervalMs > 0)
+      this.GHo.IsPassDelay && 0 < this.GHo.IntervalMs)
     ) {
-      const e = this.GHo.IntervalMs * this.GHo.StageInterval;
-      const i = this.GHo.ObjectsHitCurrent;
+      var e = this.GHo.IntervalMs * this.GHo.StageInterval,
+        i = this.GHo.ObjectsHitCurrent;
       if (this._9o.BulletDataMain.Base.IntervalAfterHit) {
-        let l;
-        let o;
-        const s = new Array();
+        var l,
+          o,
+          s = new Array();
         for ([l, o] of i)
           Time_1.Time.Now - o >= this.GHo.IntervalMs && s.push(l);
         for (let t = 0, e = s.length; t < e; t++) i.delete(s[t]);
@@ -226,7 +226,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
     }
   }
   KHo() {
-    let t, e, i, l;
+    var t, e, i, l;
     this._9o.IsTensile &&
       (e = this._9o.AttackerActorComp)?.Actor &&
       ((t = this._9o.ActorComponent),
@@ -259,7 +259,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
       BulletPool_1.BulletPool.RecycleVector(e));
   }
   QHo() {
-    let t, e;
+    var t, e;
     this.GHo.FinalScale.Equals(Vector_1.Vector.OneVectorProxy) ||
       (this.GHo.CollisionComponent
         ? ((t = this._9o.BulletDataMain).Scale.ScaleCurve
@@ -279,7 +279,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
                 this.qHo,
               ),
           t.Base.Size.Multiply(this.qHo, this._9o.Size),
-          t.Base.Shape === 3 &&
+          3 === t.Base.Shape &&
             t.Scale.ShapeSwitch &&
             ((e = t.Base.Size.X - t.Base.Size.Y),
             (this._9o.Size.Y = this._9o.Size.X - e)),
@@ -314,7 +314,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
       PerformanceController_1.PerformanceController
         .IsEntityTickPerformanceTest &&
         (e = cpp_1.KuroTime.GetMilliseconds64());
-      const i = l.GetBulletInfo();
+      var i = l.GetBulletInfo();
       if (!i.NeedDestroy && i.IsInit) {
         if (!BulletUtil_1.BulletUtil.CheckBulletAttackerExist(i)) {
           BulletController_1.BulletController.DestroyBullet(
@@ -349,7 +349,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
       (this.NHo = e.BulletDataMain.Base.Shape),
       this.JHo())
     ) {
-      if (this.NHo === 7) this.zHo();
+      if (7 === this.NHo) this.zHo();
       else {
         var i = this.ZHo();
         if (
@@ -359,29 +359,29 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
           this.tjo(),
           !this.GHo.HasSearchedHitActorsCurFrame)
         ) {
-          var i = (0, puerts_1.$ref)(void 0);
-          const l =
-            (this.GHo.CollisionComponent?.GetOverlappingComponents(i),
-            (0, puerts_1.$unref)(i));
+          var i = (0, puerts_1.$ref)(void 0),
+            l =
+              (this.GHo.CollisionComponent?.GetOverlappingComponents(i),
+              (0, puerts_1.$unref)(i));
           if (l) {
-            const o = l.Num();
+            var o = l.Num();
             for (let t = 0; t < o; t++) {
-              const s = l.Get(t);
-              const r = s.GetOwner();
+              var s = l.Get(t),
+                r = s.GetOwner();
               this.$Ho(r, s);
             }
           }
         }
       }
       this.GHo.IsInProcessHit = !0;
-      let a;
-      var e = this._9o.CollisionLocation;
-      const n = this.GHo.ArrayHitActorData;
-      const h = n.length;
-      if (h > 1) {
+      var a,
+        e = this._9o.CollisionLocation,
+        n = this.GHo.ArrayHitActorData,
+        h = n.length;
+      if (1 < h) {
         for (let t = 0; t < h; t++) {
-          const _ = n[t];
-          const u = BulletCollisionInfo_1.bulletHitPriorityList[_.Type];
+          var _ = n[t],
+            u = BulletCollisionInfo_1.bulletHitPriorityList[_.Type];
           _.Priority = void 0 !== u ? u - t : 0;
         }
         this.GHo.ArrayHitActorData.sort((t, e) => e.Priority - t.Priority);
@@ -397,7 +397,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
               this.ojo(c))
             : ((c.IsValidHit = !1), (c.IsContinueHit = !1));
         !this._9o.BulletDataMain.Base.IntervalAfterHit &&
-          this.GHo.IntervalMs > 0 &&
+          0 < this.GHo.IntervalMs &&
           (this.GHo.IsProcessOpen = !1);
       }
       for (const B of this.GHo.LastArrayHitActorData)
@@ -409,18 +409,18 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
         (this.GHo.IsInProcessHit = !1),
         this.GHo.UpdateLastHitActorData();
     } else {
-      if (this.GHo.LastArrayHitActorData.length > 0) {
+      if (0 < this.GHo.LastArrayHitActorData.length) {
         this.GHo.IsInProcessHit = !0;
         for (const m of this.GHo.LastArrayHitActorData)
           m.IsValidHit &&
             BulletCollisionUtil_1.BulletCollisionUtil.EntityLeave(this._9o, m);
         (this.GHo.IsInProcessHit = !1), this.GHo.ClearLastHitActorData();
       }
-      this.GHo.ArrayHitActor.length > 0 && this.GHo.ClearHitActorData();
+      0 < this.GHo.ArrayHitActor.length && this.GHo.ClearHitActorData();
     }
   }
   JHo() {
-    const t = this._9o;
+    var t = this._9o;
     return (
       !(
         (t.CloseCollision ||
@@ -432,23 +432,23 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
     );
   }
   rjo(t) {
-    var e = t.BulletDataMain.Move;
-    const i = t.ActorComponent.NeedDetach;
-    var e = e.Speed;
-    return !(!i && (e === 0 || e * this.mie < t.Size.X));
+    var e = t.BulletDataMain.Move,
+      i = t.ActorComponent.NeedDetach,
+      e = e.Speed;
+    return !(!i && (0 === e || e * this.mie < t.Size.X));
   }
   ZHo() {
-    if (this.NHo === 4 || this.GHo.RegionComponent) return !1;
-    const t = this._9o;
-    const e = this.GHo.NeedHitObstacles;
-    const i = t.BulletDataMain.Base.IsOversizeForTrace;
-    let l = !0;
-    let o = !0;
+    if (4 === this.NHo || this.GHo.RegionComponent) return !1;
+    var t = this._9o,
+      e = this.GHo.NeedHitObstacles,
+      i = t.BulletDataMain.Base.IsOversizeForTrace;
+    let l = !0,
+      o = !0;
     (l = this.GHo.HasObstaclesCollision
       ? ((o = e), this.rjo(t))
       : ((o = !1), e ? !i : this.rjo(t))),
       this.GHo.ClearHitActorData();
-    const s = t.CollisionLocation;
+    var s = t.CollisionLocation;
     if (
       (this.GHo.LastFramePosition.Equals(s) &&
         s.AdditionEqual(t.ActorComponent.ActorForwardProxy),
@@ -456,9 +456,9 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
       !l)
     )
       return !1;
-    let r = !(this.GHo.HasSearchedHitActorsCurFrame = !0);
-    let a = void 0;
-    let n = void 0;
+    let r = !(this.GHo.HasSearchedHitActorsCurFrame = !0),
+      a = void 0,
+      n = void 0;
     switch (t.BulletDataMain.Base.Shape) {
       case 0:
         this.GHo.UpdateTraceBox ||
@@ -595,19 +595,19 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
           )) && (a = n.HitResult);
     }
     if (r) {
-      const _ = a.GetHitCount();
+      var _ = a.GetHitCount();
       if (!(_ <= 0))
-        if (_ === 1)
+        if (1 === _)
           this.$Ho(a.Actors.Get(0), a.Components.Get(0), void 0, a, 0);
         else {
-          const u = new Array();
-          const c = a.Components;
-          const B = a.Actors;
-          const m = a.LocationX_Array;
-          const v = a.LocationY_Array;
-          const C = a.LocationZ_Array;
+          var u = new Array(),
+            c = a.Components,
+            B = a.Actors,
+            m = a.LocationX_Array,
+            v = a.LocationY_Array,
+            C = a.LocationZ_Array;
           for (let t = 0; t < _; t++) {
-            const f = BulletPool_1.BulletPool.CreateBulletHitTempResult();
+            var f = BulletPool_1.BulletPool.CreateBulletHitTempResult();
             (f.Index = t),
               (f.ImpactPoint.X = m.Get(t)),
               (f.ImpactPoint.Y = v.Get(t)),
@@ -620,7 +620,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
               (f.Actor = B.Get(t)),
               u.push(f);
           }
-          u.length > 0 && u.sort((t, e) => t.DistSquared - e.DistSquared);
+          0 < u.length && u.sort((t, e) => t.DistSquared - e.DistSquared);
           for (const E of u)
             this.$Ho(E.Actor, E.Component, E, a),
               BulletPool_1.BulletPool.RecycleBulletHitTempResult(E);
@@ -629,16 +629,16 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
     return !0;
   }
   ejo() {
-    const e = this._9o;
-    if (e.BulletDataMain.Move.BoneNameString !== "") {
-      let t = BulletPool_1.BulletPool.CreateVector();
-      var i =
-        (t.FromUeVector(e.AttackerActorComp.ActorLocationProxy),
-        BulletPool_1.BulletPool.CreateVector());
-      let l =
-        (i.FromUeVector(e.InitPosition),
-        (i.Z = t.Z),
-        Math.sqrt(e.AttackerActorComp.ScaledRadius));
+    var e = this._9o;
+    if ("" !== e.BulletDataMain.Move.BoneNameString) {
+      var t = BulletPool_1.BulletPool.CreateVector(),
+        i =
+          (t.FromUeVector(e.AttackerActorComp.ActorLocationProxy),
+          BulletPool_1.BulletPool.CreateVector()),
+        l =
+          (i.FromUeVector(e.InitPosition),
+          (i.Z = t.Z),
+          Math.sqrt(e.AttackerActorComp.ScaledRadius));
       if (Vector_1.Vector.DistSquared2D(t, i) < l)
         BulletPool_1.BulletPool.RecycleVector(t),
           BulletPool_1.BulletPool.RecycleVector(i);
@@ -659,13 +659,13 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
               "BulletCheckPosition",
             )));
         if (t) {
-          var i = l.HitResult;
-          const o = i.GetHitCount();
-          const s = i.Components;
-          const r = i.Actors;
+          var i = l.HitResult,
+            o = i.GetHitCount(),
+            s = i.Components,
+            r = i.Actors;
           for (let t = 0; t < o; t++) {
-            const a = r.Get(t);
-            const n = e.AttackerActorComp.Actor.BasePlatform;
+            var a = r.Get(t),
+              n = e.AttackerActorComp.Actor.BasePlatform;
             (n && a === n) || this.$Ho(a, s.Get(t));
           }
         }
@@ -677,15 +677,15 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
   }
   zHo() {
     this.GHo.HasSearchedHitActorsCurFrame = !0;
-    const t = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
+    var t = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
     if (t) {
-      const e = this._9o.Size.X;
-      const i = this._9o.ActorComponent.ActorLocationProxy;
+      var e = this._9o.Size.X,
+        i = this._9o.ActorComponent.ActorLocationProxy;
       for (const l of t) this.ajo(l, i, e);
     }
   }
   ajo(t, e, i) {
-    let l, o;
+    var l, o;
     t?.IsInit &&
       (o = t.Entity) &&
       (l = o.GetComponent(0)) &&
@@ -699,15 +699,15 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
       this.hjo(t, l);
   }
   tjo() {
-    const t = this.GHo.RegionDetectComponent;
+    var t = this.GHo.RegionDetectComponent;
     if (t) {
       this.GHo.HasSearchedHitActorsCurFrame = !0;
-      const e = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
+      var e = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
       if (e) for (const i of e) this.ljo(i, t);
     }
   }
   ljo(t, e) {
-    let i, l;
+    var i, l;
     t?.IsInit &&
       (i = t.Entity) &&
       (l = i.GetComponent(0)) &&
@@ -719,7 +719,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
       this.hjo(t, l);
   }
   njo(t, e) {
-    const i = t.MoveInfo;
+    var i = t.MoveInfo;
     if (t.CollisionInfo.HasObstaclesCollision) {
       this.GHo.ObstaclesTraceElement ||
         (this.GHo.ObstaclesTraceElement =
@@ -728,10 +728,10 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
             t.AttackerId,
             this.GHo.IgnoreQueries,
           ));
-      let l;
-      let o;
-      const s = this.GHo.ObstaclesTraceElement;
-      var t = t.BulletDataMain.Obstacle;
+      var l,
+        o,
+        s = this.GHo.ObstaclesTraceElement,
+        t = t.BulletDataMain.Obstacle;
       if (
         ((s.Radius = t.Radius),
         i.ObstaclesOffset.IsZero()
@@ -760,10 +760,10 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
           PROFILE_OBSTACLES,
         ))
       ) {
-        const r = s.HitResult;
-        const a = r.Components;
-        const n = r.Actors;
-        const h = r.GetHitCount();
+        var r = s.HitResult,
+          a = r.Components,
+          n = r.Actors,
+          h = r.GetHitCount();
         for (let t = 0; t < h; t++) this.ujo(n.Get(t), a.Get(t), r, t);
       }
     }
@@ -784,9 +784,9 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
     );
   }
   djo(t) {
-    const e = t.ConditionResult;
+    var e = t.ConditionResult;
     return e
-      ? (t.Type !== 0 && !!this.Cjo(t)) || !(e.KeepDisable = !0)
+      ? (0 !== t.Type && !!this.Cjo(t)) || !(e.KeepDisable = !0)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Bullet",
@@ -797,14 +797,14 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
   }
   Cjo(t) {
     return !(
-      this._9o.BulletDataMain.Base.Shape === 4 &&
-      t.Type === 1 &&
+      4 === this._9o.BulletDataMain.Base.Shape &&
+      1 === t.Type &&
       !this.OHo.BlockByCharacter
     );
   }
   ijo(t) {
     if (t.Actor?.IsValid()) {
-      const e = t.ConditionResult;
+      var e = t.ConditionResult;
       if (e)
         return (
           !e.KeepDisable && (this.gjo(t) ? this.fjo(t) : !(e.KeepDisable = !0))
@@ -829,7 +829,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
     return !1;
   }
   mjo(t) {
-    let e;
+    var e;
     return !(
       !t ||
       ((e = this._9o.BulletDataMain), t === this._9o.Actor) ||
@@ -842,11 +842,11 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
   }
   gjo(t) {
     return (
-      t.Type !== 0 &&
+      0 !== t.Type &&
       !!t.Actor?.IsValid() &&
       !(
         (t.EntityHandle && !t.EntityHandle.Valid) ||
-        (t.Type === 1 &&
+        (1 === t.Type &&
           ExtraEffectDamageFilter_1.DamageFilter.ApplyEffects(
             this._9o.Attacker,
             t.Entity,
@@ -862,8 +862,8 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
     return !!this.pjo(t) && !!this.vjo(t) && !!this.Mjo(t);
   }
   pjo(t) {
-    const e = this._9o.BulletDataMain;
-    let i = e.Base.HitConditionTagId;
+    var e = this._9o.BulletDataMain,
+      i = e.Base.HitConditionTagId;
     return i
       ? BulletUtil_1.BulletUtil.DoesEntityContainsTag(t.Entity, i)
       : !(i = e.Base.BanHitTagId) ||
@@ -881,8 +881,8 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
             return !0;
         return !1;
       case 2:
-        var i = this._9o.CenterLocation;
-        var l = BulletPool_1.BulletPool.CreateRotator();
+        var i = this._9o.CenterLocation,
+          l = BulletPool_1.BulletPool.CreateRotator();
         l.FromUeRotator(this._9o.CollisionInfo.CollisionTransform.Rotator());
         for (const s of t.Components)
           if (
@@ -901,7 +901,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
   }
   Mjo(t) {
     return (
-      t.Type !== 1 ||
+      1 !== t.Type ||
       ((t = t.Entity.GetComponent(3)),
       BulletUtil_1.BulletUtil.AttackedCondition(this._9o, t))
     );
@@ -921,15 +921,15 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
         ),
       this.cjo(i))
     ) {
-      let t = this.GHo.MapHitActorData.get(i);
-      let e = !1;
+      let t = this.GHo.MapHitActorData.get(i),
+        e = !1;
       if (t) {
         if (t.HasComponent(l)) return;
       } else if (((e = !0), !(t = this.Sjo(i, l)))) return;
       this.Ejo(t, l)
         ? (t.AddComponent(l),
           s &&
-            t.Type === 4 &&
+            4 === t.Type &&
             (o
               ? t.AddHitTempResult(o, s.BoneNameArray.Get(r))
               : t.AddHitResult(s, r)),
@@ -956,9 +956,9 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
     if (
       this.GHo.HasObstaclesCollision &&
       !this._9o.NeedDestroy &&
-      this._9o.BulletDataMain.Move.FollowType !== 2
+      2 !== this._9o.BulletDataMain.Move.FollowType
     ) {
-      let o =
+      var o =
         ModelManager_1.ModelManager.SceneInteractionModel.GetEntityByActor(e);
       if (
         !(o?.Entity?.GetComponent(138) ?? o?.Entity?.GetComponent(146)) &&
@@ -998,8 +998,8 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
     }
   }
   hjo(t, e) {
-    let i;
-    const l = e.Owner;
+    var i,
+      l = e.Owner;
     BulletConstant_1.BulletConstant.OpenHitActorLog &&
       Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
@@ -1033,7 +1033,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
           : BulletPool_1.BulletPool.RecycleBulletHitActorData(i));
   }
   Ejo(t, e) {
-    if (t.Type === 1) {
+    if (1 === t.Type) {
       (t = t.Entity.GetComponent(3)), (e = e.GetName());
       if (
         t.IsPartHit &&
@@ -1045,7 +1045,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
     return !0;
   }
   Sjo(e, t) {
-    const i = BulletPool_1.BulletPool.CreateBulletHitActorData();
+    var i = BulletPool_1.BulletPool.CreateBulletHitActorData();
     if ((i.Actor = e)) {
       let t = void 0;
       if (
@@ -1059,16 +1059,16 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
       ) {
         var l = ModelManager_1.ModelManager.CharacterModel.GetHandle(t);
         if ((i.EntityHandle = l)?.Valid) {
-          var l = l.Entity;
-          var o = l.GetComponent(0);
-          var s = o?.GetEntityType();
+          var l = l.Entity,
+            o = l.GetComponent(0),
+            s = o?.GetEntityType();
           if (s === Protocol_1.Aki.Protocol.HBs.Proto_SceneItem)
             return (i.Type = 3), i;
           if (s === Protocol_1.Aki.Protocol.HBs.Proto_Npc)
             return (i.Type = 5), i;
           if (
             s === Protocol_1.Aki.Protocol.HBs.Proto_Animal &&
-            o.GetEntityCamp() === 2
+            2 === o.GetEntityCamp()
           )
             return (i.Type = 6), i;
           if (l.GetComponent(3)) return (i.Type = 1), i;
@@ -1094,11 +1094,11 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
           i);
   }
   yjo(t) {
-    const e = BulletPool_1.BulletPool.CreateBulletHitActorData();
+    var e = BulletPool_1.BulletPool.CreateBulletHitActorData();
     return (e.Actor = t), (e.Type = 4), (e.FromObstaclesCollision = !0), e;
   }
   ojo(t) {
-    const e = this._9o;
+    var e = this._9o;
     if (!e.NeedDestroy) {
       this.Tjo(t);
       try {
@@ -1165,15 +1165,15 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
       (t.Entity.Id, t.Entity.GetComponent(0)?.GetPbDataId());
   }
   Ljo(t) {
-    let e;
+    var e;
     t.EntityHandle?.Valid &&
       ((e = t.Entity.GetComponent(58))?.Valid && e.IsMultiPart
         ? this.Ajo(t)
         : this.Pjo(t));
   }
   Ajo(s) {
-    var t = s.Entity.GetComponent(3);
-    const r = (this.xjo(s.Entity), this._9o);
+    var t = s.Entity.GetComponent(3),
+      r = (this.xjo(s.Entity), this._9o);
     if (
       this.wjo(s) &&
       BulletHitCountUtil_1.BulletHitCountUtil.CheckHitCountPerVictim(
@@ -1181,16 +1181,16 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
         s.Entity,
       )
     ) {
-      const a = t.Entity;
-      const n = t.ActorForwardProxy;
-      const h = a.GetComponent(58);
-      const _ = [];
-      const u = [];
-      const c = [];
-      const B = [];
+      var a = t.Entity,
+        n = t.ActorForwardProxy,
+        h = a.GetComponent(58),
+        _ = [],
+        u = [],
+        c = [],
+        B = [];
       let i = !1;
-      const m = new Map();
-      var t = BulletPool_1.BulletPool.CreateRotator();
+      var m = new Map(),
+        t = BulletPool_1.BulletPool.CreateRotator();
       t.FromUeRotator(
         UE.KismetMathLibrary.TransformRotation(
           r.AttackerActorComp.ActorTransform,
@@ -1198,13 +1198,13 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
         ),
       );
       let l = 0;
-      const v = s.Components;
+      var v = s.Components;
       let o = void 0;
       for (let t = 0, e = s.Components.length; t < e; t++) {
-        const C = v[t];
+        var C = v[t];
         const P = C.GetName();
         if (P !== BulletConstant_1.BulletConstant.MoveCylinder) {
-          let f = h.GetPart(P);
+          var f = h.GetPart(P);
           if (!(_.includes(f) || u.includes(f) || c.includes(f))) {
             if (
               (BulletConstant_1.BulletConstant.OpenHitActorLog &&
@@ -1273,7 +1273,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
         }
       }
       let e = !1;
-      if (_.length > 0)
+      if (0 < _.length)
         BulletHitCountUtil_1.BulletHitCountUtil.AddHitCount(r, a);
       else {
         for (const p of u) {
@@ -1295,7 +1295,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
             (e = !0),
             BulletHitCountUtil_1.BulletHitCountUtil.AddHitCount(r, a);
         }
-        if (c.length > 0) {
+        if (0 < c.length) {
           let t = void 0;
           for (const T of c)
             if (
@@ -1317,9 +1317,9 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
       BulletHitCountUtil_1.BulletHitCountUtil.CheckHitCountPerVictim(r, a)
         ? i && BulletHitCountUtil_1.BulletHitCountUtil.AddHitCount(r, a)
         : (i = !1);
-      let d = v[l];
-      const P = d.GetName();
-      const g = BulletPool_1.BulletPool.CreateVector();
+      var d = v[l];
+      const P = d.GetName(),
+        g = BulletPool_1.BulletPool.CreateVector();
       m.has(P)
         ? g.FromUeVector(m.get(P))
         : BulletCollisionUtil_1.BulletCollisionUtil.GetImpactPointCharacter(
@@ -1360,10 +1360,10 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
   }
   CheckWeakness(t, e, i, l) {
     if (t && t.IsWeakness) {
-      const o = e.BulletDataMain.Logic.Type;
+      var o = e.BulletDataMain.Logic.Type;
       if (
         !t.WeaknessTypeSet ||
-        t.WeaknessTypeSet.size === 0 ||
+        0 === t.WeaknessTypeSet.size ||
         (o && t.WeaknessTypeSet.has(o))
       )
         return this.CheckAngle(t.WeaknessAngle, e, i, l);
@@ -1371,19 +1371,19 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
     return !1;
   }
   CheckAngle(t, e, i, l) {
-    let o, s;
+    var o, s;
     return (
-      t === 0 ||
-      ((s = (o = e.Entity).Data.Logic.HitDirectionType) === 1
+      0 === t ||
+      (1 === (s = (o = e.Entity).Data.Logic.HitDirectionType)
         ? (o.GetComponent(1).ActorLocationProxy.Subtraction(i, this.kHo),
           this.kHo.Normalize(MathCommon_1.MathCommon.KindaSmallNumber))
-        : s === 0
+        : 0 === s
           ? (this.kHo.FromUeVector(e.AttackerActorComp.ActorLocationProxy),
             this.kHo.SubtractionEqual(i),
             this.kHo.Normalize(MathCommon_1.MathCommon.KindaSmallNumber))
           : this.kHo.FromUeVector(Vector_1.Vector.ForwardVectorProxy),
       this.FHo.FromUeVector(l),
-      t >= 0 && this.FHo.MultiplyEqual(-1),
+      0 <= t && this.FHo.MultiplyEqual(-1),
       Vector_1.Vector.DotProduct(this.kHo, this.FHo) >= Math.cos(t))
     );
   }
@@ -1391,17 +1391,17 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
     if (e.GetComponent(17)) {
       this.GHo.CharacterEntityMap.has(e) ||
         this.GHo.CharacterEntityMap.set(e, -1);
-      const i = this._9o.BulletDataMain;
+      var i = this._9o.BulletDataMain;
       if (
         i.Base.ContinuesCollision &&
         ((this.GHo.HaveCharacterInBullet = !0),
         BulletUtil_1.BulletUtil.SummonBullet(this._9o, 1, e, !0),
         i.Execution.GeIdApplyToVictim)
       ) {
-        let l;
-        const o = this._9o.Attacker.CheckGetComponent(157);
-        const s = e.CheckGetComponent(157);
-        let r = e.CheckGetComponent(185);
+        var l,
+          o = this._9o.Attacker.CheckGetComponent(157),
+          s = e.CheckGetComponent(157),
+          r = e.CheckGetComponent(185);
         let t = !0;
         if (
           (t =
@@ -1410,7 +1410,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
               : t)
         )
           for (const a of i.Execution.GeIdApplyToVictim)
-            s.GetBuffTotalStackById(a) === 0 &&
+            0 === s.GetBuffTotalStackById(a) &&
               s.AddBuff(a, {
                 InstigatorId: o.CreatureDataId,
                 Level: this._9o.SkillLevel,
@@ -1420,7 +1420,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
         r.HasTag(-648310348) ||
           ((r = i.TimeScale.TimeScaleOnHit),
           i.TimeScale.AreaTimeScale
-            ? this.GHo.CharacterEntityMap.get(e) > 0 ||
+            ? 0 < this.GHo.CharacterEntityMap.get(e) ||
               ((l = e.GetComponent(107))
                 ? ((l = l.SetTimeScale(
                     r.优先级,
@@ -1436,8 +1436,8 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
     }
   }
   Pjo(e) {
-    const i = e.Entity.GetComponent(3);
-    const l = this._9o;
+    var i = e.Entity.GetComponent(3),
+      l = this._9o;
     if (
       (this.xjo(e.Entity),
       this.wjo(e) &&
@@ -1450,23 +1450,22 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
           void 0,
         );
       else {
-        const o = l.BulletDataMain;
-        const s = BulletPool_1.BulletPool.CreateVector();
-        const r = e.Components;
-        const a = r.length;
+        var o = l.BulletDataMain,
+          s = BulletPool_1.BulletPool.CreateVector(),
+          r = e.Components,
+          a = r.length;
         let t = void 0;
-        if (a > 0) {
-          let e = 0;
-          let i = void 0;
+        if (0 < a) {
+          let e = 0,
+            i = void 0;
           for (let t = 0; t < a; t++) {
-            const n =
-              BulletCollisionUtil_1.BulletCollisionUtil.CalcPartDistance(
-                r[t],
-                l,
-              );
+            var n = BulletCollisionUtil_1.BulletCollisionUtil.CalcPartDistance(
+              r[t],
+              l,
+            );
             (void 0 === i || n < e) && ((e = n), (i = t));
           }
-          const h = r[i];
+          var h = r[i];
           (t = h.GetName()),
             BulletCollisionUtil_1.BulletCollisionUtil.GetImpactPointCharacter(
               h,
@@ -1504,36 +1503,35 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
     );
   }
   Bjo(t, e, i, l, o, s, r, a, n, h = !1) {
-    const _ = this._9o;
-    const u = _.AttackerActorComp;
-    const c = t.Entity.GetComponent(3);
-    var B = ConfigManager_1.ConfigManager.BulletConfig.GetBulletHitData(
-      _.Attacker,
-      e.Base.BeHitEffect,
-    );
-    let m = void 0 !== B;
-    var v = e.Base.DamageId;
-    var v =
-      v > 0 ? DamageById_1.configDamageById.GetConfig(v).CalculateType : -1;
-    var B = new BulletTypes_1.HitInformation(
-      _.Attacker,
-      t.Entity,
-      B,
-      _.BulletRowName,
-      UE.KismetMathLibrary.TransformRotation(
-        u.Actor.Mesh.K2_GetComponentToWorld(),
-        e.Base.AttackDirection.ToUeRotator(),
+    var _ = this._9o,
+      u = _.AttackerActorComp,
+      c = t.Entity.GetComponent(3),
+      B = ConfigManager_1.ConfigManager.BulletConfig.GetBulletHitData(
+        _.Attacker,
+        e.Base.BeHitEffect,
       ),
-      BulletUtil_1.BulletUtil.ShakeTest(_, t.Entity.GetComponent(1)),
-      FNameUtil_1.FNameUtil.GetDynamicFName(o) ?? FNameUtil_1.FNameUtil.NONE,
-      i.ToUeVector(),
-      _.SkillLevel,
-      e,
-      this._9o.BulletRowName,
-      e.Logic.Data,
-      _.BulletEntityId,
-      v,
-    );
+      m = void 0 !== B,
+      v = e.Base.DamageId,
+      v = 0 < v ? DamageById_1.configDamageById.GetConfig(v).CalculateType : -1,
+      B = new BulletTypes_1.HitInformation(
+        _.Attacker,
+        t.Entity,
+        B,
+        _.BulletRowName,
+        UE.KismetMathLibrary.TransformRotation(
+          u.Actor.Mesh.K2_GetComponentToWorld(),
+          e.Base.AttackDirection.ToUeRotator(),
+        ),
+        BulletUtil_1.BulletUtil.ShakeTest(_, t.Entity.GetComponent(1)),
+        FNameUtil_1.FNameUtil.GetDynamicFName(o) ?? FNameUtil_1.FNameUtil.NONE,
+        i.ToUeVector(),
+        _.SkillLevel,
+        e,
+        this._9o.BulletRowName,
+        e.Logic.Data,
+        _.BulletEntityId,
+        v,
+      );
     if (
       (GlobalData_1.GlobalData.BpEventManager.子弹命中前.Broadcast(
         this._9o.BulletEntityId,
@@ -1553,45 +1551,45 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
       this.VHo.ActionHit(t),
       this.qjo(c))
     ) {
-      var o = c.Entity.Id;
-      var i =
-        (this.GHo.ObjectsHitCurrent.set(o, Time_1.Time.Now),
-        this.Gjo(e.Base.IntervalAfterHit, _, o),
-        BulletCollisionUtil_1.BulletCollisionUtil.PlayHitEffect(
-          _,
-          c,
-          B.HitPart.toString(),
-          h,
-          B.HitPosition,
-          B.HitEffectRotation,
-        ),
-        c.Entity.GetComponent(51).OnHit(
-          B,
-          m,
-          _.Entity,
-          this.GHo.AllowedEnergy,
-          l,
-          s,
-          r,
-          a,
-          n,
-        ),
-        e.Execution.SendGameplayEventTagToAttacker);
-      var o =
-        (i.TagName !== StringUtils_1.NONE_STRING &&
-          (((v = new UE.GameplayEventData()).Target = c.Actor),
-          (v.Instigator = _.Actor),
-          UE.AbilitySystemBlueprintLibrary.SendGameplayEventToActor(
-            _.AttackerActorComp.Actor,
-            i,
-            v,
-          )),
-        e.Execution.SendGameplayEventTagToVictim);
-      const C =
-        (o.TagName !== StringUtils_1.NONE_STRING &&
-          t.Entity.GetComponent(17).SendGameplayEventToActor(o),
-        u.Entity.CheckGetComponent(157));
-      var h = B.ReBulletData.Execution;
+      var o = c.Entity.Id,
+        i =
+          (this.GHo.ObjectsHitCurrent.set(o, Time_1.Time.Now),
+          this.Gjo(e.Base.IntervalAfterHit, _, o),
+          BulletCollisionUtil_1.BulletCollisionUtil.PlayHitEffect(
+            _,
+            c,
+            B.HitPart.toString(),
+            h,
+            B.HitPosition,
+            B.HitEffectRotation,
+          ),
+          c.Entity.GetComponent(51).OnHit(
+            B,
+            m,
+            _.Entity,
+            this.GHo.AllowedEnergy,
+            l,
+            s,
+            r,
+            a,
+            n,
+          ),
+          e.Execution.SendGameplayEventTagToAttacker),
+        o =
+          (i.TagName !== StringUtils_1.NONE_STRING &&
+            (((v = new UE.GameplayEventData()).Target = c.Actor),
+            (v.Instigator = _.Actor),
+            UE.AbilitySystemBlueprintLibrary.SendGameplayEventToActor(
+              _.AttackerActorComp.Actor,
+              i,
+              v,
+            )),
+          e.Execution.SendGameplayEventTagToVictim),
+        C =
+          (o.TagName !== StringUtils_1.NONE_STRING &&
+            t.Entity.GetComponent(17).SendGameplayEventToActor(o),
+          u.Entity.CheckGetComponent(157)),
+        h = B.ReBulletData.Execution;
       for (const d of h.SendGeIdToAttacker)
         C.AddBuff(d, {
           InstigatorId: C.CreatureDataId,
@@ -1599,7 +1597,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
           PreMessageId: _.ContextId,
           Reason: `子弹${_.BulletRowName}命中后对攻击者应用GE添加`,
         });
-      const f = c.Entity.GetComponent(157);
+      var f = c.Entity.GetComponent(157);
       if (f?.Valid) {
         for (const P of h.SendGeIdToVictim)
           f.AddBuff(P, {
@@ -1611,7 +1609,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
         f.HasBuffTrigger(16) &&
           ((m = u.Entity.GetComponent(33)),
           (l =
-            e.Base.DamageId > 0
+            0 < e.Base.DamageId
               ? DamageById_1.configDamageById.GetConfig(e.Base.DamageId)
               : void 0),
           ((s = new ExtraEffectBaseTypes_1.RequirementPayload()).SkillId =
@@ -1639,7 +1637,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
         this.GHo.AllowedEnergy = !1;
       }
       if (h.SendGeIdToRoleInGame) {
-        const E =
+        var E =
           ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.CheckGetComponent(
             157,
           );
@@ -1658,9 +1656,9 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
     if (e) {
       e = i.EntityHitCount;
       let t = !0;
-      let o;
-      let s;
-      const r = e.get(l);
+      var o,
+        s,
+        r = e.get(l);
       for ([o, s] of e)
         if (o !== l && r <= s) {
           t = !1;
@@ -1681,10 +1679,10 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
     }
   }
   qjo(t) {
-    let e;
-    let i;
-    let l;
-    const o = this._9o.AttackerActorComp;
+    var e,
+      i,
+      l,
+      o = this._9o.AttackerActorComp;
     return (
       !(!o?.Valid || !t?.Valid) &&
       ((i = o.Entity),
@@ -1692,13 +1690,13 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
       (e = (i = i.GetComponent(0)).IsRole() || i.IsVision()),
       (i = i.GetSummonerPlayerId()),
       (l = l.GetComponent(0).IsRole()),
-      i > 0
+      0 < i
         ? i === ModelManager_1.ModelManager.PlayerInfoModel.GetId()
         : (e && !l ? o : t).IsAutonomousProxy)
     );
   }
   Djo(t) {
-    let e, i, l, o, s;
+    var e, i, l, o, s;
     !t.IsContinueHit &&
       this._9o &&
       ((t = ModelManager_1.ModelManager.BulletModel.GetBulletEntityById(
@@ -1738,13 +1736,13 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
                     l.AddTagWithReturnHandle([-2043183300], o.Base.Duration),
                   BulletController_1.BulletController.DestroyBullet(t.Id, !1))
                 : ((i =
+                    0 <
                     (o.Logic.ReboundChannel &
-                      e.BulletDataMain.Execution.ReboundBitMask) >
-                    0),
+                      e.BulletDataMain.Execution.ReboundBitMask)),
                   (l =
+                    0 <
                     (this._9o.BulletDataMain.Execution.ReboundBitMask &
-                      e.BulletDataMain.Logic.ReboundChannel) >
-                    0),
+                      e.BulletDataMain.Logic.ReboundChannel)),
                   (o = BulletUtil_1.BulletUtil.CheckSupport(
                     e,
                     this._9o.AttackerCamp,
@@ -1755,7 +1753,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
                         (o
                           ? t.GetComponent(13).ActionSupport(this._9o.Entity)
                           : l &&
-                            e.AttackerCamp === 0 &&
+                            0 === e.AttackerCamp &&
                             (this.VHo.ActionRebound(e),
                             BulletController_1.BulletController.DestroyBullet(
                               this._9o.BulletEntityId,
@@ -1790,9 +1788,9 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
           ]));
   }
   Njo(t) {
-    let e = t.GetBulletInfo();
-    let i = e.BulletDataMain;
-    const l = this._9o.BulletDataMain;
+    var e = t.GetBulletInfo(),
+      i = e.BulletDataMain,
+      l = this._9o.BulletDataMain;
     !l.Base.ContinuesCollision ||
       !l.TimeScale.ForceBulletTimeScaleInArea ||
       i.TimeScale.TimeScaleWithAttacker ||
@@ -1810,7 +1808,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
       this.GHo.BulletEntityMap.set(t, e));
   }
   Ojo(t) {
-    const e = t.GetComponent(3);
+    var e = t.GetComponent(3);
     return (
       !BulletUtil_1.BulletUtil.AttackedCondition(this._9o, e) ||
       !this.kjo() ||
@@ -1819,11 +1817,11 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
   }
   Rjo(i) {
     if (this.wjo(i)) {
-      const l = this._9o;
-      const o = l.BulletDataMain;
+      var l = this._9o,
+        o = l.BulletDataMain;
       if (i.EntityHandle?.Valid) {
-        const s = i.Entity;
-        let r = BulletPool_1.BulletPool.CreateVector();
+        var s = i.Entity,
+          r = BulletPool_1.BulletPool.CreateVector();
         if (i.HitResult)
           r.Set(
             i.HitResult.ImpactPointX[0],
@@ -1831,13 +1829,13 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
             i.HitResult.ImpactPointZ[0],
           );
         else {
-          const a = i.Components;
-          const n = a.length;
-          if (n > 0) {
-            let e = 0;
-            let i = void 0;
+          var a = i.Components,
+            n = a.length;
+          if (0 < n) {
+            let e = 0,
+              i = void 0;
             for (let t = 0; t < n; t++) {
-              const h =
+              var h =
                 BulletCollisionUtil_1.BulletCollisionUtil.CalcPartDistance(
                   a[t],
                   l,
@@ -1859,42 +1857,42 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
                 ["SceneItemId", i.Entity.GetComponent(0).GetCreatureDataId()],
               );
         }
-        const _ = s.Id;
-        let u = l.AttackerActorComp;
-        var c = ConfigManager_1.ConfigManager.BulletConfig.GetBulletHitData(
-          this._9o.Attacker,
-          o.Base.BeHitEffect,
-        );
-        const B =
-          (GlobalData_1.GlobalData.BpEventManager.子弹命中前.Broadcast(
-            l.BulletEntityId,
-            _,
+        var _ = s.Id,
+          u = l.AttackerActorComp,
+          c = ConfigManager_1.ConfigManager.BulletConfig.GetBulletHitData(
+            this._9o.Attacker,
+            o.Base.BeHitEffect,
           ),
-          l.BulletEntityId);
-        let m =
-          o.Base.DamageId > 0
-            ? DamageById_1.configDamageById.GetConfig(o.Base.DamageId)
-                .CalculateType
-            : -1;
-        var c = new BulletTypes_1.HitInformation(
-          l.Attacker,
-          void 0,
-          c,
-          Number(l.BulletRowName),
-          UE.KismetMathLibrary.TransformRotation(
-            u.Actor.Mesh.K2_GetComponentToWorld(),
-            o.Base.AttackDirection.ToUeRotator(),
-          ),
-          !1,
-          void 0,
-          r.ToUeVector(),
-          0,
-          o,
-          this._9o.BulletRowName,
-          o.Logic.Data,
-          B,
-          m,
-        );
+          B =
+            (GlobalData_1.GlobalData.BpEventManager.子弹命中前.Broadcast(
+              l.BulletEntityId,
+              _,
+            ),
+            l.BulletEntityId),
+          m =
+            0 < o.Base.DamageId
+              ? DamageById_1.configDamageById.GetConfig(o.Base.DamageId)
+                  .CalculateType
+              : -1,
+          c = new BulletTypes_1.HitInformation(
+            l.Attacker,
+            void 0,
+            c,
+            Number(l.BulletRowName),
+            UE.KismetMathLibrary.TransformRotation(
+              u.Actor.Mesh.K2_GetComponentToWorld(),
+              o.Base.AttackDirection.ToUeRotator(),
+            ),
+            !1,
+            void 0,
+            r.ToUeVector(),
+            0,
+            o,
+            this._9o.BulletRowName,
+            o.Logic.Data,
+            B,
+            m,
+          );
         BulletUtil_1.BulletUtil.SummonBullet(l, 1, i.Entity, !1),
           this.VHo.ActionHitObstacles(i),
           EventSystem_1.EventSystem.EmitWithTarget(
@@ -1918,8 +1916,8 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
               ["EntityId", B],
               ["VitimEntityId", _],
             );
-        let t = !0;
-        let e = IMatch_1.EBulletPenetrationType.Penetrable;
+        let t = !0,
+          e = IMatch_1.EBulletPenetrationType.Penetrable;
         (u = s.GetComponent(138)),
           (m =
             (e =
@@ -1957,7 +1955,7 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
     }
   }
   Ujo(t) {
-    let e;
+    var e;
     t.IsContinueHit ||
       ((e = BulletPool_1.BulletPool.CreateVector()),
       t.HitResult
@@ -1984,14 +1982,14 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
     return !!this.kjo() && !this.GHo.ObjectsHitCurrent.has(t.Entity.Id);
   }
   kjo() {
-    let t;
-    var e = this._9o.BulletDataMain;
-    const i = Math.max(0, e.Base.CollisionActiveDelay);
-    var e = e.Base.CollisionActiveDuration;
+    var t,
+      e = this._9o.BulletDataMain,
+      i = Math.max(0, e.Base.CollisionActiveDelay),
+      e = e.Base.CollisionActiveDuration;
     return (
       (e < 0 && i <= 0) ||
       ((t = this._9o.LiveTime / TimeUtil_1.TimeUtil.InverseMillisecond),
-      e < 0 ? i <= t : e > 0 && i <= t && t <= i + e)
+      e < 0 ? i <= t : 0 < e && i <= t && t <= i + e)
     );
   }
 }
@@ -2000,4 +1998,4 @@ class BulletCollisionSystem extends BulletSystemBase_1.BulletSystemBase {
   (BulletCollisionSystem.fW = void 0),
   (BulletCollisionSystem._jo = Transform_1.Transform.Create()),
   (BulletCollisionSystem.Ijo = void 0);
-// # sourceMappingURL=BulletCollisionSystem.js.map
+//# sourceMappingURL=BulletCollisionSystem.js.map

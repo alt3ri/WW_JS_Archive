@@ -18,9 +18,9 @@ class DailyTaskSeriesType {
     );
   }
   seriestype() {
-    const e = this.J7.__offset(this.z7, 4);
+    var e = this.J7.__offset(this.z7, 4);
     return e ? this.J7.readInt32(this.z7 + e) : 0;
   }
 }
 exports.DailyTaskSeriesType = DailyTaskSeriesType;
-// # sourceMappingURL=DailyTaskSeriesType.js.map
+//# sourceMappingURL=DailyTaskSeriesType.js.map

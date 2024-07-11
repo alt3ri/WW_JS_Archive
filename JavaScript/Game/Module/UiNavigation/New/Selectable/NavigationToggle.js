@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NavigationToggle = void 0);
-const UiNavigationViewManager_1 = require("../UiNavigationViewManager");
-const NavigationSelectableBase_1 = require("./NavigationSelectableBase");
+const UiNavigationViewManager_1 = require("../UiNavigationViewManager"),
+  NavigationSelectableBase_1 = require("./NavigationSelectableBase");
 class NavigationToggle extends NavigationSelectableBase_1.NavigationSelectableBase {
   constructor() {
     super(...arguments),
@@ -20,13 +20,13 @@ class NavigationToggle extends NavigationSelectableBase_1.NavigationSelectableBa
     this.Swo(), this.Ewo();
   }
   vwo() {
-    const t = this.Selectable;
-    this.Listener.HotKeyTipsTextIdMap.Num() > 0 &&
+    var t = this.Selectable;
+    0 < this.Listener.HotKeyTipsTextIdMap.Num() &&
       t.OnStateChange.Add(this.pwo);
   }
   Swo() {
-    const t = this.Selectable;
-    this.Listener.HotKeyTipsTextIdMap.Num() > 0 &&
+    var t = this.Selectable;
+    0 < this.Listener.HotKeyTipsTextIdMap.Num() &&
       t.OnStateChange.Remove(this.pwo);
   }
   Mwo() {
@@ -37,20 +37,20 @@ class NavigationToggle extends NavigationSelectableBase_1.NavigationSelectableBa
   }
   OnToggleClick(t) {}
   NeedAddToggleClick() {
-    return this.GetType() !== "Toggle";
+    return "Toggle" !== this.GetType();
   }
   OnCanFocusInScrollOrLayout() {
-    let t;
+    var t;
     return (
       !!this.IsInteractive &&
       !(
-        ((t = this.Selectable).ToggleState !== 1 && t.bCheckToggleSelected) ||
+        (1 !== (t = this.Selectable).ToggleState && t.bCheckToggleSelected) ||
         !this.Selectable.RootUIComp.IsUIActiveInHierarchy()
       )
     );
   }
   OnGetTipsTextId() {
-    return this.Selectable.ToggleState === 1
+    return 1 === this.Selectable.ToggleState
       ? this.Listener.HotKeyTipsTextIdMap.Get(2)
       : this.Listener.HotKeyTipsTextIdMap.Get(1);
   }
@@ -58,12 +58,12 @@ class NavigationToggle extends NavigationSelectableBase_1.NavigationSelectableBa
     return !this.Selectable.bToggleOnSelect;
   }
   OnHandlePointerSelect(t) {
-    let e;
+    var e;
     return (
       !!this.OnHandlePointerSelectInheritance(t) &&
-      ((e = this.Selectable).ToggleState === 0 &&
+      (0 === (e = this.Selectable).ToggleState &&
         t &&
-        t.inputType === 1 &&
+        1 === t.inputType &&
         e.bToggleOnSelect &&
         e.SetToggleState(1, !0),
       this.Listener.ScrollView &&
@@ -76,4 +76,4 @@ class NavigationToggle extends NavigationSelectableBase_1.NavigationSelectableBa
   }
 }
 exports.NavigationToggle = NavigationToggle;
-// # sourceMappingURL=NavigationToggle.js.map
+//# sourceMappingURL=NavigationToggle.js.map

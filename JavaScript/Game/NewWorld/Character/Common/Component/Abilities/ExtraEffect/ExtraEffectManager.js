@@ -1,26 +1,30 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, f, r) {
-    let a;
-    const s = arguments.length;
-    let o =
-      s < 3 ? t : r === null ? (r = Object.getOwnPropertyDescriptor(t, f)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var a,
+      s = arguments.length,
+      o =
+        s < 3
+          ? t
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(t, f))
+            : r;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       o = Reflect.decorate(e, t, f, r);
     else
-      for (let i = e.length - 1; i >= 0; i--)
-        (a = e[i]) && (o = (s < 3 ? a(o) : s > 3 ? a(t, f, o) : a(t, f)) || o);
-    return s > 3 && o && Object.defineProperty(t, f, o), o;
+      for (var i = e.length - 1; 0 <= i; i--)
+        (a = e[i]) && (o = (s < 3 ? a(o) : 3 < s ? a(t, f, o) : a(t, f)) || o);
+    return 3 < s && o && Object.defineProperty(t, f, o), o;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlayerExtraEffectManager =
     exports.ExtraEffectManager =
     exports.BaseExtraEffectManager =
       void 0);
-const Stats_1 = require("../../../../../../../Core/Common/Stats");
-const CombatDebugController_1 = require("../../../../../../Utils/CombatDebugController");
-const ExtraEffectLibrary_1 = require("./ExtraEffectLibrary");
+const Stats_1 = require("../../../../../../../Core/Common/Stats"),
+  CombatDebugController_1 = require("../../../../../../Utils/CombatDebugController"),
+  ExtraEffectLibrary_1 = require("./ExtraEffectLibrary");
 class BaseExtraEffectManager {
   constructor(e) {
     (this.BuffComponent = e),
@@ -28,7 +32,7 @@ class BaseExtraEffectManager {
       (this.ActivatedHandles = new Set());
   }
   static IsInitExecution(e) {
-    return e === 24;
+    return 24 === e;
   }
   static IsPeriodExecution(e) {
     switch (e) {
@@ -48,7 +52,7 @@ class BaseExtraEffectManager {
     }
   }
   OnBuffAdded(e) {
-    let t;
+    var t;
     this.TQo(e) &&
       ((t = e?.Config)
         ? t.HasBuffEffect && e.IsActive() && this.CreateBuffEffects(e)
@@ -62,7 +66,7 @@ class BaseExtraEffectManager {
           ));
   }
   OnBuffRemoved(e, t) {
-    const f = e.Handle;
+    var f = e.Handle;
     this.TQo(e) && e.IsActive() && this.RemoveBuffEffects(f, t);
   }
   OnStackIncreased(e, t, f, r) {
@@ -76,12 +80,12 @@ class BaseExtraEffectManager {
         a.OnStackDecreased(t, f, r);
   }
   OnBuffInhibitedChanged(e, t) {
-    const f = e.Handle;
+    var f = e.Handle;
     this.TQo(e) &&
       (t ? this.RemoveBuffEffects(f, !0) : this.CreateBuffEffects(e));
   }
   TQo(e) {
-    const t = e?.Config;
+    var t = e?.Config;
     return t
       ? !!t.HasBuffEffect
       : (CombatDebugController_1.CombatDebugController.CombatError(
@@ -95,7 +99,7 @@ class BaseExtraEffectManager {
         !1);
   }
   CreateBuffEffects(t) {
-    const f = t.Handle;
+    var f = t.Handle;
     const r = t.Id;
     if (this.ActivatedHandles.has(f))
       CombatDebugController_1.CombatDebugController.CombatError(
@@ -106,23 +110,23 @@ class BaseExtraEffectManager {
         ["handle", f],
       );
     else {
-      const a = t.GetInstigatorBuffComponent();
-      const s =
-        (this.ActivatedHandles.add(f),
-        t.Config.EffectInfos?.map((e) => [
-          e,
-          ExtraEffectLibrary_1.BuffExtraEffectLibrary.ResolveRequireAndLimits(
-            r,
+      var a = t.GetInstigatorBuffComponent(),
+        s =
+          (this.ActivatedHandles.add(f),
+          t.Config.EffectInfos?.map((e) => [
             e,
-            t.Level,
-          ),
-        ]));
-      const e = this.BuffComponent;
+            ExtraEffectLibrary_1.BuffExtraEffectLibrary.ResolveRequireAndLimits(
+              r,
+              e,
+              t.Level,
+            ),
+          ])),
+        e = this.BuffComponent;
       if (s && e?.Valid)
         for (let e = 0; e < s.length; e++) {
-          const o = s[e][0];
-          const i = s[e][1];
-          let n = o.ExtraEffectId;
+          var o = s[e][0],
+            i = s[e][1],
+            n = o.ExtraEffectId;
           ExtraEffectManager.IsInitExecution(n) ||
             ExtraEffectManager.IsPeriodExecution(n) ||
             ((n = require("./ExtraEffectDefine")?.getBuffEffectClass(n)) &&
@@ -156,8 +160,8 @@ class BaseExtraEffectManager {
         f.ExecutionEffect?.TryExecute(e, t);
   }
   qp(t) {
-    let e;
-    const f = t.ActiveHandleId;
+    var e,
+      f = t.ActiveHandleId;
     f < 0
       ? CombatDebugController_1.CombatDebugController.CombatWarn(
           "Buff",
@@ -179,17 +183,17 @@ class BaseExtraEffectManager {
     this.EffectHolder.clear(), this.ActivatedHandles.clear();
   }
   *FilterById(e, t) {
-    const f = [];
+    var f = [];
     if (e instanceof Array)
       for (const a of e) {
-        const r = require("./ExtraEffectDefine")?.getBuffEffectClass(a);
+        var r = require("./ExtraEffectDefine")?.getBuffEffectClass(a);
         r && f.push(r);
       }
     else {
       e = require("./ExtraEffectDefine")?.getBuffEffectClass(e);
       e && f.push(e);
     }
-    if (f.length >= 0)
+    if (0 <= f.length)
       for (const s of this.EffectHolder.values())
         if (s)
           for (const o of s)
@@ -236,4 +240,4 @@ class ExtraEffectManager extends (exports.BaseExtraEffectManager =
 exports.ExtraEffectManager = ExtraEffectManager;
 class PlayerExtraEffectManager extends BaseExtraEffectManager {}
 exports.PlayerExtraEffectManager = PlayerExtraEffectManager;
-// # sourceMappingURL=ExtraEffectManager.js.map
+//# sourceMappingURL=ExtraEffectManager.js.map

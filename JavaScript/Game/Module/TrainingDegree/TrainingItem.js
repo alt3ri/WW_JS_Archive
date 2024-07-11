@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TrainingItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../Util/LguiUtil");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../Util/LguiUtil");
 class TrainingItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(), this.CreateThenShowByActor(e.GetOwner());
@@ -22,12 +22,12 @@ class TrainingItem extends UiPanelBase_1.UiPanelBase {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), e.NameId),
       this.GetSprite(1).SetFillAmount(e.FillAmount);
     var i = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-      e.Icon,
-    );
-    var i = (this.SetSpriteByPath(i, this.GetSprite(3), !1), this.GetText(2));
-    const t = this.GetSprite(4);
-    const s = e.TipsId;
-    let r = void 0 !== s && s !== "";
+        e.Icon,
+      ),
+      i = (this.SetSpriteByPath(i, this.GetSprite(3), !1), this.GetText(2)),
+      t = this.GetSprite(4),
+      s = e.TipsId,
+      r = void 0 !== s && "" !== s;
     i.SetUIActive(r),
       t.SetUIActive(r),
       r &&
@@ -37,4 +37,4 @@ class TrainingItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.TrainingItem = TrainingItem;
-// # sourceMappingURL=TrainingItem.js.map
+//# sourceMappingURL=TrainingItem.js.map

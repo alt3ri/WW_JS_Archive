@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const TsBaseCharacter_1 = require("../../Character/TsBaseCharacter");
-const GlobalData_1 = require("../../GlobalData");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterLockOnComponent_1 = require("../../NewWorld/Character/Common/Component/LockOn/CharacterLockOnComponent");
-const ActorUtils_1 = require("../../Utils/ActorUtils");
-const CameraController_1 = require("../CameraController");
+const UE = require("ue"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  TsBaseCharacter_1 = require("../../Character/TsBaseCharacter"),
+  GlobalData_1 = require("../../GlobalData"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterLockOnComponent_1 = require("../../NewWorld/Character/Common/Component/LockOn/CharacterLockOnComponent"),
+  ActorUtils_1 = require("../../Utils/ActorUtils"),
+  CameraController_1 = require("../CameraController");
 class CameraFocusInputParams {
   constructor() {
     this.LockOnInfo = void 0;
@@ -31,22 +31,22 @@ class CameraNofityStateFocusInput extends UE.KuroAnimNotifyState {
     if (t instanceof TsBaseCharacter_1.default) {
       this.ParamsMap.has(t.EntityId) ||
         this.ParamsMap.set(t.EntityId, new CameraFocusInputParams());
-      const a = this.ParamsMap.get(t.EntityId);
+      var a = this.ParamsMap.get(t.EntityId);
       if (!a.LockOnInfo) {
-        const s = ActorUtils_1.ActorUtils.GetEntityByActor(t);
-        var t = t.GetEntityNoBlueprint();
+        var s = ActorUtils_1.ActorUtils.GetEntityByActor(t),
+          t = t.GetEntityNoBlueprint();
         if (t?.Valid) {
-          const o = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+          var o = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
           if (!o) return !1;
-          var t = t.GetComponent(1)?.ActorLocationProxy;
-          let i = o.Entity.GetComponent(1)?.ActorLocationProxy;
-          var t = Vector_1.Vector.Dist(t, i);
+          var t = t.GetComponent(1)?.ActorLocationProxy,
+            i = o.Entity.GetComponent(1)?.ActorLocationProxy,
+            t = Vector_1.Vector.Dist(t, i);
           if (t < this.MinDistance || t > this.MaxDistance) return !1;
           i = o?.Entity?.GetComponent(29);
           i &&
             (((t = new CharacterLockOnComponent_1.LockOnInfo()).EntityHandle =
               s),
-            (t.SocketName = this.LockOnPart === "None" ? "" : this.LockOnPart),
+            (t.SocketName = "None" === this.LockOnPart ? "" : this.LockOnPart),
             (a.LockOnInfo = t),
             i.ForceLookAtTarget(t, !0));
         }
@@ -61,8 +61,8 @@ class CameraNofityStateFocusInput extends UE.KuroAnimNotifyState {
     return !1;
   }
   K2_NotifyEnd(t, e) {
-    let r;
-    var t = t?.GetOwner();
+    var r,
+      t = t?.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
       !!(r = this.ParamsMap.get(t.EntityId)) &&
@@ -91,4 +91,4 @@ class CameraNofityStateFocusInput extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = CameraNofityStateFocusInput;
-// # sourceMappingURL=CameraNofityStateFocusInput.js.map
+//# sourceMappingURL=CameraNofityStateFocusInput.js.map

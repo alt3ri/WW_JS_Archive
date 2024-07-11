@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MenuScrollSettingKeyMapItem = void 0);
-const UE = require("ue");
-const MenuController_1 = require("../MenuController");
-const MenuScrollSettingBaseItem_1 = require("./MenuScrollSettingBaseItem");
+const UE = require("ue"),
+  MenuController_1 = require("../MenuController"),
+  MenuScrollSettingBaseItem_1 = require("./MenuScrollSettingBaseItem");
 class MenuScrollSettingKeyMapItem extends MenuScrollSettingBaseItem_1.MenuScrollSettingBaseItem {
   constructor() {
     super(...arguments), (this.Pe = void 0);
@@ -30,11 +30,11 @@ class MenuScrollSettingKeyMapItem extends MenuScrollSettingBaseItem_1.MenuScroll
   }
   dSe() {
     this.GetRootItem().SetUIActive(!0);
-    const e = MenuController_1.MenuController.GetTargetMenuData(
+    var e = MenuController_1.MenuController.GetTargetMenuData(
       this.Pe.MenuDataFunctionId,
     );
     this.GetText(2).ShowTextNew(e.MenuDataFunctionKeyMap ?? "");
   }
 }
 exports.MenuScrollSettingKeyMapItem = MenuScrollSettingKeyMapItem;
-// # sourceMappingURL=MenuScrollSettingKeyMapItem.js.map
+//# sourceMappingURL=MenuScrollSettingKeyMapItem.js.map

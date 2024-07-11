@@ -1,33 +1,37 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, i, r) {
-    let o;
-    const n = arguments.length;
-    let s =
-      n < 3 ? t : r === null ? (r = Object.getOwnPropertyDescriptor(t, i)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      n = arguments.length,
+      s =
+        n < 3
+          ? t
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(t, i))
+            : r;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(e, t, i, r);
     else
-      for (let a = e.length - 1; a >= 0; a--)
-        (o = e[a]) && (s = (n < 3 ? o(s) : n > 3 ? o(t, i, s) : o(t, i)) || s);
-    return n > 3 && s && Object.defineProperty(t, i, s), s;
+      for (var a = e.length - 1; 0 <= a; a--)
+        (o = e[a]) && (s = (n < 3 ? o(s) : 3 < n ? o(t, i, s) : o(t, i)) || s);
+    return 3 < n && s && Object.defineProperty(t, i, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterPlanComponent = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent");
-const BehaviorTreeDefines_1 = require("../../../../LevelGamePlay/LevelAi/BehaviorTree/BehaviorTreeDefines");
-const LevelAi_1 = require("../../../../LevelGamePlay/LevelAi/LevelAi");
-const LevelAiPlanInstance_1 = require("../../../../LevelGamePlay/LevelAi/LevelAiPlanInstance");
-const LevelAiRegistry_1 = require("../../../../LevelGamePlay/LevelAi/LevelAiRegistry");
-const LevelAiWorldState_1 = require("../../../../LevelGamePlay/LevelAi/LevelAiWorldState");
-const LevelAiNodeBehaviourActions_1 = require("../../../../LevelGamePlay/LevelAi/Nodes/LevelAiNodeBehaviourActions");
-const LevelAiNodeBehaviourSpline_1 = require("../../../../LevelGamePlay/LevelAi/Nodes/LevelAiNodeBehaviourSpline");
-const BlackboardController_1 = require("../../../../World/Controller/BlackboardController");
-const BaseActorComponent_1 = require("../../../Common/Component/BaseActorComponent");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  BehaviorTreeDefines_1 = require("../../../../LevelGamePlay/LevelAi/BehaviorTree/BehaviorTreeDefines"),
+  LevelAi_1 = require("../../../../LevelGamePlay/LevelAi/LevelAi"),
+  LevelAiPlanInstance_1 = require("../../../../LevelGamePlay/LevelAi/LevelAiPlanInstance"),
+  LevelAiRegistry_1 = require("../../../../LevelGamePlay/LevelAi/LevelAiRegistry"),
+  LevelAiWorldState_1 = require("../../../../LevelGamePlay/LevelAi/LevelAiWorldState"),
+  LevelAiNodeBehaviourActions_1 = require("../../../../LevelGamePlay/LevelAi/Nodes/LevelAiNodeBehaviourActions"),
+  LevelAiNodeBehaviourSpline_1 = require("../../../../LevelGamePlay/LevelAi/Nodes/LevelAiNodeBehaviourSpline"),
+  BlackboardController_1 = require("../../../../World/Controller/BlackboardController"),
+  BaseActorComponent_1 = require("../../../Common/Component/BaseActorComponent");
 let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -79,11 +83,11 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
       (this.DisableAiHandle = new BaseActorComponent_1.DisableEntityHandle(
         "SetLevelAiDisableInGame",
       ));
-    let t;
-    var e = (0, IComponent_1.getComponent)(e.ComponentsData, "VarComponent");
+    var t,
+      e = (0, IComponent_1.getComponent)(e.ComponentsData, "VarComponent");
     if (e)
       for (const i of e.Vars)
-        i.Type === "Int" &&
+        "Int" === i.Type &&
           ((t = i.Value),
           BehaviorTreeDefines_1.BehaviorTreeDefines.UseLevelAiBehaviorTree
             ? BlackboardController_1.BlackboardController.SetIntValueByEntity(
@@ -139,7 +143,7 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
     this.tWr && (this.zjr.Stop(), (this.iWr = !1));
   }
   Pause(e) {
-    let t;
+    var t;
     return (
       !!this.tWr &&
       (this.VFr.has(e)
@@ -164,7 +168,7 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
     );
   }
   Resume(e) {
-    let t;
+    var t;
     return !(
       !this.tWr ||
       ((t = this.VFr.get(e)),
@@ -200,26 +204,26 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
   }
   FindActiveTaskInfo(t) {
     let i = void 0;
-    const e = this.FindPlanInstanceBy(
+    var e = this.FindPlanInstanceBy(
       (e) => void 0 !== (i = e.FindActiveTaskInfo(t)),
     );
     if (e && i.PlanInstance === e) return i;
   }
   FindActiveDecoratorInfo(t) {
     let i = void 0;
-    const e = this.FindPlanInstanceBy(
+    var e = this.FindPlanInstanceBy(
       (e) => void 0 !== (i = e.FindActiveDecoratorInfo(t)),
     );
     if (e && i.PlanInstance === e) return i;
   }
   rWr(e, t) {
-    if (e.Behaviour.Type === "Actions") {
-      const i = LevelAiRegistry_1.LevelAiRegistry.Instance();
-      const r = new LevelAiNodeBehaviourActions_1.LevelAiNodeBehaviourActions();
+    if ("Actions" === e.Behaviour.Type) {
+      var i = LevelAiRegistry_1.LevelAiRegistry.Instance(),
+        r = new LevelAiNodeBehaviourActions_1.LevelAiNodeBehaviourActions();
       r.Serialize(this, this.zht, "状态" + t),
         (r.Actions = e.Behaviour.Actions);
       for (const n of e.Condition.Conditions) {
-        const o = new (i.FindDecoratorCtor(n.Type))();
+        var o = new (i.FindDecoratorCtor(n.Type))();
         o.Serialize(this, this.zht, "状态" + t, n), r.Decorators.push(o);
       }
       (r.Cost = t), this.Jjr.StartNodes.push(r);
@@ -227,15 +231,15 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
   }
   nWr(e, t) {
     if (
-      e.Behaviour.Type === "Spline" &&
+      "Spline" === e.Behaviour.Type &&
       void 0 !== e.Behaviour.SplineEntityId
     ) {
-      const i = LevelAiRegistry_1.LevelAiRegistry.Instance();
-      const r = new LevelAiNodeBehaviourSpline_1.LevelAiNodeBehaviourSpline();
+      var i = LevelAiRegistry_1.LevelAiRegistry.Instance(),
+        r = new LevelAiNodeBehaviourSpline_1.LevelAiNodeBehaviourSpline();
       r.Serialize(this, this.zht, "状态" + t),
         (r.SplineId = e.Behaviour.SplineEntityId);
       for (const n of e.Condition.Conditions) {
-        const o = new (i.FindDecoratorCtor(n.Type))();
+        var o = new (i.FindDecoratorCtor(n.Type))();
         o.Serialize(this, this.zht, "状态" + t, n), r.Decorators.push(o);
       }
       (r.Cost = t), this.Jjr.StartNodes.push(r);
@@ -247,4 +251,4 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
   CharacterPlanComponent,
 )),
   (exports.CharacterPlanComponent = CharacterPlanComponent);
-// # sourceMappingURL=CharacterPlanComponent.js.map
+//# sourceMappingURL=CharacterPlanComponent.js.map

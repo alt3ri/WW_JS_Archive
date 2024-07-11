@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelAiDecoratorCheckWeather = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LevelAiDecorator_1 = require("../LevelAiDecorator");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LevelAiDecorator_1 = require("../LevelAiDecorator");
 class LevelAiDecoratorCheckWeather extends LevelAiDecorator_1.LevelAiDecorator {
   constructor() {
     super(...arguments),
       (this.dIe = () => {
-        const e = this.CheckCondition(1);
+        var e = this.CheckCondition(1);
         this.NotifyEventBasedCondition(e);
       });
   }
@@ -26,16 +26,16 @@ class LevelAiDecoratorCheckWeather extends LevelAiDecorator_1.LevelAiDecorator {
     );
   }
   CheckCondition(e) {
-    let t;
-    const r = this.Params;
+    var t,
+      r = this.Params;
     return (
       !!r &&
       !!(t = ModelManager_1.ModelManager.WeatherModel) &&
       ((t = t.CurrentWeatherId),
       (t = r.WeatherId === t),
-      r.Compare === "Eq" ? t : !t)
+      "Eq" === r.Compare ? t : !t)
     );
   }
 }
 exports.LevelAiDecoratorCheckWeather = LevelAiDecoratorCheckWeather;
-// # sourceMappingURL=LevelAiDecoratorCheckWeather.js.map
+//# sourceMappingURL=LevelAiDecoratorCheckWeather.js.map

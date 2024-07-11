@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CheckCombatStateBehaviorNode = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const TickBehaviorNode_1 = require("./TickBehaviorNode");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  TickBehaviorNode_1 = require("./TickBehaviorNode");
 class CheckCombatStateBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
   constructor() {
     super(...arguments),
@@ -23,7 +23,7 @@ class CheckCombatStateBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
   OnCreate(e) {
     return !(
       !super.OnCreate(e) ||
-      (e = e.Condition).Type !== "DetectCombatState" ||
+      "DetectCombatState" !== (e = e.Condition).Type ||
       ((this.RQt = !1),
       (this.AQt = e.EntityId),
       (this.PQt = [e.EntityId]),
@@ -32,7 +32,7 @@ class CheckCombatStateBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
             e.State,
           )),
           this.UQt
-            ? ((this.B9s = e.Compare !== "Ne"), 0)
+            ? ((this.B9s = "Ne" !== e.Compare), 0)
             : (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "GeneralLogicTree",
@@ -52,7 +52,7 @@ class CheckCombatStateBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
   }
   OnTick() {
     if (!this.RQt && this.UQt) {
-      const t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
+      var t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
         this.AQt,
       );
       if (t?.IsInit) {
@@ -69,4 +69,4 @@ class CheckCombatStateBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
   }
 }
 exports.CheckCombatStateBehaviorNode = CheckCombatStateBehaviorNode;
-// # sourceMappingURL=CheckCombatStateBehaviorNode.js.map
+//# sourceMappingURL=CheckCombatStateBehaviorNode.js.map

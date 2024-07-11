@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhotographValueSetup = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const PhotographController_1 = require("../PhotographController");
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  PhotographController_1 = require("../PhotographController");
 class PhotographValueSetup extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.AWi = 0),
       (this.PWi = void 0),
       (this.MKi = (t, e = 0) => {
-        let i;
+        var i;
         this.PWi.IsReverseSet
           ? ((i = this.PWi.ValueRange),
             (i = MathUtils_1.MathUtils.RangeClamp(t, i[0], i[1], i[1], i[0])),
@@ -50,12 +50,12 @@ class PhotographValueSetup extends UiPanelBase_1.UiPanelBase {
         ConfigManager_1.ConfigManager.PhotographConfig.GetPhotoSetupConfig(
           this.AWi,
         )),
-      this.PWi.Type !== 0)
+      0 !== this.PWi.Type)
     ) {
-      var e = this.PWi.Name;
-      var i = this.GetText(0);
-      var i = (LguiUtil_1.LguiUtil.SetLocalTextNew(i, e), this.GetSlider(1));
-      var e = this.PWi.ValueRange;
+      var e = this.PWi.Name,
+        i = this.GetText(0),
+        i = (LguiUtil_1.LguiUtil.SetLocalTextNew(i, e), this.GetSlider(1)),
+        e = this.PWi.ValueRange;
       i.SetMinValue(e[0], !1, !1), i.SetMaxValue(e[1], !1, !1);
       let t = ModelManager_1.ModelManager.PhotographModel.GetPhotographOption(
         this.AWi,
@@ -82,4 +82,4 @@ class PhotographValueSetup extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.PhotographValueSetup = PhotographValueSetup;
-// # sourceMappingURL=PhotographValueSetup.js.map
+//# sourceMappingURL=PhotographValueSetup.js.map

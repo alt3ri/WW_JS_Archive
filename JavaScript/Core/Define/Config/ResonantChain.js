@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ResonantChain = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const ConfigPropValue_1 = require("./SubType/ConfigPropValue");
-const DicIntInt_1 = require("./SubType/DicIntInt");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  ConfigPropValue_1 = require("./SubType/ConfigPropValue"),
+  DicIntInt_1 = require("./SubType/DicIntInt");
 class ResonantChain {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -68,55 +68,55 @@ class ResonantChain {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   groupid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   groupindex() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   nodetype() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   nodeindex(t) {
-    const i = this.J7.__offset(this.z7, 12);
+    var i = this.J7.__offset(this.z7, 12);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   nodename(t) {
-    const i = this.J7.__offset(this.z7, 14);
+    var i = this.J7.__offset(this.z7, 14);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   attributesdescription(t) {
-    const i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 16);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   bgdescription(t) {
-    const i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 18);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetBuffidsAt(t) {
     return this.buffids(t);
   }
   buffids(t) {
-    const i = this.J7.__offset(this.z7, 20);
+    var i = this.J7.__offset(this.z7, 20);
     return i
       ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
       : BigInt(0);
   }
   buffidsLength() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetAddpropAt(t, i) {
     return this.addprop(t);
   }
   addprop(t, i) {
-    const s = this.J7.__offset(this.z7, 22);
+    var s = this.J7.__offset(this.z7, 22);
     return s
       ? (i || new ConfigPropValue_1.ConfigPropValue()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -125,14 +125,14 @@ class ResonantChain {
       : null;
   }
   addpropLength() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetActivateconsumeAt(t, i) {
     return this.activateconsume(t);
   }
   activateconsume(t, i) {
-    const s = this.J7.__offset(this.z7, 24);
+    var s = this.J7.__offset(this.z7, 24);
     return s
       ? (i || new DicIntInt_1.DicIntInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -141,26 +141,26 @@ class ResonantChain {
       : null;
   }
   activateconsumeLength() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetAttributesdescriptionparamsAt(t) {
     return this.attributesdescriptionparams(t);
   }
   attributesdescriptionparams(t, i) {
-    const s = this.J7.__offset(this.z7, 26);
+    var s = this.J7.__offset(this.z7, 26);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   attributesdescriptionparamsLength() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   nodeicon(t) {
-    const i = this.J7.__offset(this.z7, 28);
+    var i = this.J7.__offset(this.z7, 28);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.ResonantChain = ResonantChain;
-// # sourceMappingURL=ResonantChain.js.map
+//# sourceMappingURL=ResonantChain.js.map

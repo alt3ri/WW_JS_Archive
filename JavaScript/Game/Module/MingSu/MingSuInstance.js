@@ -57,4 +57,4 @@ class MingSuInstance {
   }
 }
 exports.MingSuInstance = MingSuInstance;
-// # sourceMappingURL=MingSuInstance.js.map
+//# sourceMappingURL=MingSuInstance.js.map

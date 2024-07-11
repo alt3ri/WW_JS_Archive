@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log");
 class AudioVisualizationInstanceBase extends UE.Actor {
   constructor() {
     super(...arguments),
@@ -49,9 +49,9 @@ class AudioVisualizationInstanceBase extends UE.Actor {
     this.CallBackInternal(i, s, e);
   }
   TriggerMidiNoteOn(i) {
-    const s = (0, puerts_1.$ref)(void 0);
+    var s = (0, puerts_1.$ref)(void 0);
     if (i.GetNoteOn(s) && s) {
-      const e = (0, puerts_1.$unref)(s).Velocity;
+      var e = (0, puerts_1.$unref)(s).Velocity;
       switch ((0, puerts_1.$unref)(s).Note) {
         case 60:
           this.MidiC3On(e);
@@ -92,9 +92,9 @@ class AudioVisualizationInstanceBase extends UE.Actor {
     }
   }
   TriggerMidiNoteOff(i) {
-    const s = (0, puerts_1.$ref)(void 0);
+    var s = (0, puerts_1.$ref)(void 0);
     if (i.GetNoteOff(s) && s) {
-      const e = (0, puerts_1.$unref)(s).Velocity;
+      var e = (0, puerts_1.$unref)(s).Velocity;
       switch ((0, puerts_1.$unref)(s).Note) {
         case 60:
           this.MidiC3Off(e);
@@ -164,4 +164,4 @@ class AudioVisualizationInstanceBase extends UE.Actor {
   MidiB3Off(i) {}
 }
 exports.default = AudioVisualizationInstanceBase;
-// # sourceMappingURL=AudioVisualizationInstanceBase.js.map
+//# sourceMappingURL=AudioVisualizationInstanceBase.js.map

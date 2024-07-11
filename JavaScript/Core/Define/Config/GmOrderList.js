@@ -27,26 +27,26 @@ class GmOrderList {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   name(t) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   GetOrderlistAt(t) {
     return this.orderlist(t);
   }
   orderlist(t, s) {
-    const r = this.J7.__offset(this.z7, 8);
+    var r = this.J7.__offset(this.z7, 8);
     return r
       ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, s)
       : null;
   }
   orderlistLength() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.GmOrderList = GmOrderList;
-// # sourceMappingURL=GmOrderList.js.map
+//# sourceMappingURL=GmOrderList.js.map

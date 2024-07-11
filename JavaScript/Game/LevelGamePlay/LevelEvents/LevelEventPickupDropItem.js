@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventPickupDropItem = void 0);
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const RewardController_1 = require("../../Module/Reward/RewardController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  RewardController_1 = require("../../Module/Reward/RewardController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventPickupDropItem extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -24,4 +24,4 @@ class LevelEventPickupDropItem extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventPickupDropItem = LevelEventPickupDropItem;
-// # sourceMappingURL=LevelEventPickupDropItem.js.map
+//# sourceMappingURL=LevelEventPickupDropItem.js.map

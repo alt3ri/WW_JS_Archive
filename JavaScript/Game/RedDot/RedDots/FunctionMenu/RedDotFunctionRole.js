@@ -8,4 +8,4 @@ class RedDotFunctionRole extends RedDotBase_1.RedDotBase {
   }
 }
 exports.RedDotFunctionRole = RedDotFunctionRole;
-// # sourceMappingURL=RedDotFunctionRole.js.map
+//# sourceMappingURL=RedDotFunctionRole.js.map

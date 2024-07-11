@@ -1,38 +1,43 @@
 "use strict";
-let CharacterUnifiedStateComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, a) {
-    let s;
-    const r = arguments.length;
-    let n =
-      r < 3 ? e : a === null ? (a = Object.getOwnPropertyDescriptor(e, i)) : a;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      n = Reflect.decorate(t, e, i, a);
-    else
-      for (let h = t.length - 1; h >= 0; h--)
-        (s = t[h]) && (n = (r < 3 ? s(n) : r > 3 ? s(e, i, n) : s(e, i)) || n);
-    return r > 3 && n && Object.defineProperty(e, i, n), n;
-  };
+var CharacterUnifiedStateComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, a) {
+      var s,
+        r = arguments.length,
+        n =
+          r < 3
+            ? e
+            : null === a
+              ? (a = Object.getOwnPropertyDescriptor(e, i))
+              : a;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        n = Reflect.decorate(t, e, i, a);
+      else
+        for (var h = t.length - 1; 0 <= h; h--)
+          (s = t[h]) &&
+            (n = (r < 3 ? s(n) : 3 < r ? s(e, i, n) : s(e, i)) || n);
+      return 3 < r && n && Object.defineProperty(e, i, n), n;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterUnifiedStateComponent = exports.outGameRoleTags = void 0);
-const cpp_1 = require("cpp");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Stats_1 = require("../../../../../../Core/Common/Stats");
-const GameplayCueById_1 = require("../../../../../../Core/Define/ConfigQuery/GameplayCueById");
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const FormationDataController_1 = require("../../../../../Module/Abilities/FormationDataController");
-const CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage");
-const CombatDebugController_1 = require("../../../../../Utils/CombatDebugController");
-const BaseUnifiedStateComponent_1 = require("../../../../Common/Component/BaseUnifiedStateComponent");
-const CharacterHitComponent_1 = require("../CharacterHitComponent");
-const CustomMovementDefine_1 = require("../Move/CustomMovementDefine");
-const CharacterUnifiedStateTypes_1 = require("./CharacterUnifiedStateTypes");
+const cpp_1 = require("cpp"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../../../Core/Common/Stats"),
+  GameplayCueById_1 = require("../../../../../../Core/Define/ConfigQuery/GameplayCueById"),
+  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  FormationDataController_1 = require("../../../../../Module/Abilities/FormationDataController"),
+  CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage"),
+  CombatDebugController_1 = require("../../../../../Utils/CombatDebugController"),
+  BaseUnifiedStateComponent_1 = require("../../../../Common/Component/BaseUnifiedStateComponent"),
+  CharacterHitComponent_1 = require("../CharacterHitComponent"),
+  CustomMovementDefine_1 = require("../Move/CustomMovementDefine"),
+  CharacterUnifiedStateTypes_1 = require("./CharacterUnifiedStateTypes");
 exports.outGameRoleTags = [1963731483, -208062360];
 let CharacterUnifiedStateComponent =
   (CharacterUnifiedStateComponent_1 = class CharacterUnifiedStateComponent extends (
@@ -47,9 +52,9 @@ let CharacterUnifiedStateComponent =
         (this.s3o = void 0),
         (this.h2r = (t, e, i) => {
           FormationDataController_1.FormationDataController.MarkAggroDirty();
-          let a;
-          const s = t.CheckGetComponent(158);
-          if (((this.l2r = s.l2r), e !== 0 || i))
+          var a,
+            s = t.CheckGetComponent(158);
+          if (((this.l2r = s.l2r), 0 !== e || i))
             CharacterUnifiedStateTypes_1.legalMoveStates
               .get(this.PositionState)
               .has(s.MoveState)
@@ -231,7 +236,7 @@ let CharacterUnifiedStateComponent =
             this.Entity.GetComponent(160)?.SetAnimParamsInFight(t);
         }),
         (this.OnUpdateSceneTeam = () => {
-          const t = this.Entity.GetComponent(0);
+          var t = this.Entity.GetComponent(0);
           t?.IsRole() &&
             ModelManager_1.ModelManager.PlayerInfoModel.GetId() ===
               t.GetPlayerId() &&
@@ -332,7 +337,7 @@ let CharacterUnifiedStateComponent =
       return super.OnDisable(), this.PreprocessChangeRole(!1), !0;
     }
     SetPositionState(t) {
-      const e = this.PositionState;
+      var e = this.PositionState;
       this.m2r(t) &&
         (this.OnPositionStateChange(e, t),
         this.ActorComponent.IsMoveAutonomousProxy ||
@@ -348,7 +353,7 @@ let CharacterUnifiedStateComponent =
       this.ActorComponent.IsMoveAutonomousProxy || this.m2r(t);
     }
     m2r(t) {
-      const e = this.PositionState;
+      var e = this.PositionState;
       return (
         e !== t &&
         (this.TagComponent.RemoveTag(1700920381),
@@ -370,7 +375,7 @@ let CharacterUnifiedStateComponent =
       return this.CachedPositionState;
     }
     OnLand() {
-      const t =
+      var t =
         GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(-2132334323);
       this.n2r.SendGameplayEventToActor(t),
         EventSystem_1.EventSystem.EmitWithTarget(
@@ -432,7 +437,7 @@ let CharacterUnifiedStateComponent =
       this.ActorComponent.IsMoveAutonomousProxy || this.g2r(t);
     }
     g2r(t) {
-      const e = this.MoveState;
+      var e = this.MoveState;
       return (
         e !== t &&
         (this.ActorComponent.IsRoleAndCtrlByMe &&
@@ -506,7 +511,7 @@ let CharacterUnifiedStateComponent =
         this.Entity.GetComponent(53)?.OnExitAimShoot();
     }
     SetDirectionState(t) {
-      let e;
+      var e;
       this.ActorComponent.IsAutonomousProxy &&
         ((e = this.DirectionState), this.f2r(t)) &&
         EventSystem_1.EventSystem.EmitWithTarget(
@@ -520,7 +525,7 @@ let CharacterUnifiedStateComponent =
       this.f2r(t);
     }
     f2r(t) {
-      const e = this.DirectionState;
+      var e = this.DirectionState;
       return e !== t && (this.UpdateDirectionTag(e, t), !0);
     }
     get DirectionState() {
@@ -599,11 +604,11 @@ let CharacterUnifiedStateComponent =
       this.SetPositionSubStateInternal(t);
     }
     SetPositionSubStateInternal(t) {
-      const e = this.PositionSubState;
+      var e = this.PositionSubState;
       return e !== t && (this.v2r(e, t), !0);
     }
     SetPositionSubState(t) {
-      let e;
+      var e;
       this.ActorComponent.IsAutonomousProxy &&
         ((e = this.PositionSubState), this.SetPositionSubStateInternal(t)) &&
         this.p2r(e, t);
@@ -667,7 +672,7 @@ let CharacterUnifiedStateComponent =
           );
       t = this.Entity.GetComponent(46);
       !t ||
-        (t.CurrentState !== 2 && t.CurrentState !== 4) ||
+        (2 !== t.CurrentState && 4 !== t.CurrentState) ||
         (this.Entity.GetComponent(46).ResetState(),
         this.ActorComponent.ResetMoveControlled("退出受击"));
     }
@@ -687,7 +692,7 @@ let CharacterUnifiedStateComponent =
       );
     }
     T2r(t) {
-      let e;
+      var e;
       return (
         t !== this.l2r &&
           ((e = this.l2r),
@@ -711,10 +716,10 @@ let CharacterUnifiedStateComponent =
       return this.TagComponent.HasTag(1996802261);
     }
     RefreshFightState(t) {
-      const e = ModelManager_1.ModelManager.PlayerInfoModel?.GetId() ?? 0;
+      var e = ModelManager_1.ModelManager.PlayerInfoModel?.GetId() ?? 0;
       ModelManager_1.ModelManager.SceneTeamModel.GetAllGroupEntities(e).some(
         (t) => t.Id === this.Entity.Id,
-      ) && (t ?? this.WHe.size > 0 ? this.R2r() : this.TryClearInFightTags());
+      ) && (t ?? 0 < this.WHe.size ? this.R2r() : this.TryClearInFightTags());
     }
     R2r() {
       return (
@@ -738,7 +743,7 @@ let CharacterUnifiedStateComponent =
       for (const a of ModelManager_1.ModelManager.SceneTeamModel.GetAllGroupEntities(
         e.aFn,
       )) {
-        const i = a.Entity?.GetComponent(158);
+        var i = a.Entity?.GetComponent(158);
         i?.RefreshFightState(e.g9n), i?.OnInFight(e.g9n);
       }
       e.aFn === ModelManager_1.ModelManager.CreatureModel.GetPlayerId() &&
@@ -818,16 +823,16 @@ let CharacterUnifiedStateComponent =
   (CharacterUnifiedStateComponent.D2r = void 0),
   (CharacterUnifiedStateComponent.PositionEnumKeys = Object.values(
     CharacterUnifiedStateTypes_1.ECharPositionState,
-  ).filter((t) => typeof t === "number")),
+  ).filter((t) => "number" == typeof t)),
   (CharacterUnifiedStateComponent.MoveEnumKeys = Object.values(
     CharacterUnifiedStateTypes_1.ECharMoveState,
-  ).filter((t) => typeof t === "number")),
+  ).filter((t) => "number" == typeof t)),
   (CharacterUnifiedStateComponent.DirectionEnumKeys = Object.values(
     CharacterUnifiedStateTypes_1.ECharDirectionState,
-  ).filter((t) => typeof t === "number")),
+  ).filter((t) => "number" == typeof t)),
   (CharacterUnifiedStateComponent.PositionSubStateEnumKeys = Object.values(
     CharacterUnifiedStateTypes_1.ECharPositionSubState,
-  ).filter((t) => typeof t === "number")),
+  ).filter((t) => "number" == typeof t)),
   (CharacterUnifiedStateComponent.U2r = !0),
   __decorate(
     [CombatMessage_1.CombatNet.Listen("N2n", !1)],
@@ -841,4 +846,4 @@ let CharacterUnifiedStateComponent =
       CharacterUnifiedStateComponent,
     )),
   (exports.CharacterUnifiedStateComponent = CharacterUnifiedStateComponent);
-// # sourceMappingURL=CharacterUnifiedStateComponent.js.map
+//# sourceMappingURL=CharacterUnifiedStateComponent.js.map

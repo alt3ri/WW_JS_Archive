@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configCombinationActionAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const CombinationAction_1 = require("../Config/CombinationAction");
-const DB = "db_input_settings.db";
-const FILE = "s.输入配置.xlsx";
-const TABLE = "CombinationAction";
-const COMMAND = "select BinData from `CombinationAction`";
-const KEY_PREFIX = "CombinationActionAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  CombinationAction_1 = require("../Config/CombinationAction"),
+  DB = "db_input_settings.db",
+  FILE = "s.输入配置.xlsx",
+  TABLE = "CombinationAction",
+  COMMAND = "select BinData from `CombinationAction`",
+  KEY_PREFIX = "CombinationActionAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configCombinationActionAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configCombinationActionAll = {
     );
   },
   GetConfigList: (o = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configCombinationActionAll = {
       }
       const e = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let t = void 0;
+        var t = void 0;
         if (
           (([n, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configCombinationActionAll = {
     }
   },
 };
-// # sourceMappingURL=CombinationActionAll.js.map
+//# sourceMappingURL=CombinationActionAll.js.map

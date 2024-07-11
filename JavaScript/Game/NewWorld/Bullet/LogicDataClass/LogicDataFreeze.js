@@ -10,4 +10,4 @@ class LogicDataFreeze extends LogicDataBase_1.default {
   }
 }
 exports.default = LogicDataFreeze;
-// # sourceMappingURL=LogicDataFreeze.js.map
+//# sourceMappingURL=LogicDataFreeze.js.map

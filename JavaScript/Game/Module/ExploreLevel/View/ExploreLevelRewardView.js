@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExploreLevelRewardView = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const RewardItemList_1 = require("../../ItemReward/View/RewardItemList");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  RewardItemList_1 = require("../../ItemReward/View/RewardItemList"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class ExploreLevelRewardView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -29,11 +29,11 @@ class ExploreLevelRewardView extends UiViewBase_1.UiViewBase {
   }
   async OnBeforeStartAsync() {
     this.jIt = this.OpenParam;
-    let e;
-    let i;
-    const t = this.jIt.GetItemList();
-    let r =
-      ModelManager_1.ModelManager.ExploreLevelModel.GetCurrentCountryExploreLevelData();
+    var e,
+      i,
+      t = this.jIt.GetItemList(),
+      r =
+        ModelManager_1.ModelManager.ExploreLevelModel.GetCurrentCountryExploreLevelData();
     r &&
       ((e = (i = this.jIt.GetRewardInfo()).CurrentExploreLevel),
       (i = i.TargetExploreLevel),
@@ -64,4 +64,4 @@ class ExploreLevelRewardView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.ExploreLevelRewardView = ExploreLevelRewardView;
-// # sourceMappingURL=ExploreLevelRewardView.js.map
+//# sourceMappingURL=ExploreLevelRewardView.js.map

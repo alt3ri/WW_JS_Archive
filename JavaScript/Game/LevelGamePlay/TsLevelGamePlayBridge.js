@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const ModelManager_1 = require("../Manager/ModelManager");
-const LevelGamePlayController_1 = require("./LevelGamePlayController");
+const UE = require("ue"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  LevelGamePlayController_1 = require("./LevelGamePlayController");
 class TsLevelGamePlayBridge extends UE.Object {
   UpdateGamePlayTimerBridge(e, l) {}
   GetDragonPoolState(e) {
@@ -18,4 +18,4 @@ class TsLevelGamePlayBridge extends UE.Object {
   }
 }
 exports.default = TsLevelGamePlayBridge;
-// # sourceMappingURL=TsLevelGamePlayBridge.js.map
+//# sourceMappingURL=TsLevelGamePlayBridge.js.map

@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FrozenQteView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const PanelQteController_1 = require("../PanelQteController");
-const PanelQteView_1 = require("./PanelQteView");
-const QteAnimItem_1 = require("./QteAnimItem");
-const QteTipItem_1 = require("./QteTipItem");
-const STOP_ANIM_TIME = 100;
-const LOOP_ANIM_TIME = 230;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  PanelQteController_1 = require("../PanelQteController"),
+  PanelQteView_1 = require("./PanelQteView"),
+  QteAnimItem_1 = require("./QteAnimItem"),
+  QteTipItem_1 = require("./QteTipItem"),
+  STOP_ANIM_TIME = 100,
+  LOOP_ANIM_TIME = 230;
 class FrozenQteView extends PanelQteView_1.PanelQteView {
   constructor() {
     super(...arguments),
@@ -25,7 +25,7 @@ class FrozenQteView extends PanelQteView_1.PanelQteView {
       (this.wNi = void 0),
       (this.BNi = (t, e) => {
         this.IsQteEnd ||
-          (e > 0
+          (0 < e
             ? (this.PNi[0].PressAnim(), this.bNi(1))
             : e < 0 && (this.PNi[0].PressAnim(), this.bNi(0)));
       });
@@ -46,7 +46,7 @@ class FrozenQteView extends PanelQteView_1.PanelQteView {
           ]);
   }
   OnStart() {
-    let t, e;
+    var t, e;
     super.OnStart(),
       this.IsMobile
         ? ((e = this.GetButton(0)),
@@ -79,7 +79,7 @@ class FrozenQteView extends PanelQteView_1.PanelQteView {
         this.CloseMe());
   }
   OnBeforeDestroy() {
-    let t, e;
+    var t, e;
     super.OnBeforeDestroy(),
       this.IsMobile &&
         ((t = this.GetButton(0)),
@@ -95,9 +95,9 @@ class FrozenQteView extends PanelQteView_1.PanelQteView {
   }
   GNi() {
     this.ANi = 0;
-    let t;
-    let e;
-    let i = this.OpenParam;
+    var t,
+      e,
+      i = this.OpenParam;
     ModelManager_1.ModelManager.PanelQteModel.IsInQte
       ? i !==
         (i = ModelManager_1.ModelManager.PanelQteModel.GetContext()).QteHandleId
@@ -137,9 +137,9 @@ class FrozenQteView extends PanelQteView_1.PanelQteView {
         );
   }
   OnPlatformChangedInner() {
-    const t = ModelManager_1.ModelManager.PlatformModel.IsGamepad();
-    const e = this.GetItem(0);
-    const i = this.GetItem(1);
+    var t = ModelManager_1.ModelManager.PlatformModel.IsGamepad(),
+      e = this.GetItem(0),
+      i = this.GetItem(1);
     e.SetUIActive(!t), i.SetUIActive(t);
   }
   qNi(t) {
@@ -171,4 +171,4 @@ class FrozenQteView extends PanelQteView_1.PanelQteView {
   }
 }
 exports.FrozenQteView = FrozenQteView;
-// # sourceMappingURL=FrozenQteView.js.map
+//# sourceMappingURL=FrozenQteView.js.map

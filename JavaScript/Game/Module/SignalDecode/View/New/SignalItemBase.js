@@ -49,4 +49,4 @@ class SignalItemBase extends UiComponentsAction_1.UiComponentsAction {
   }
 }
 exports.SignalItemBase = SignalItemBase;
-// # sourceMappingURL=SignalItemBase.js.map
+//# sourceMappingURL=SignalItemBase.js.map

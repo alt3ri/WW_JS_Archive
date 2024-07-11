@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TipsLockButton = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
 class TipsLockButton extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -30,7 +30,7 @@ class TipsLockButton extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.TPt]]);
   }
   OnStart() {
-    const e = this.GetExtendToggle(0);
+    var e = this.GetExtendToggle(0);
     e.CanExecuteChange.Unbind(), e.CanExecuteChange.Bind(this.DTt);
   }
   OnBeforeShow() {
@@ -54,9 +54,9 @@ class TipsLockButton extends UiPanelBase_1.UiPanelBase {
       (this.Bpt = t || void 0);
   }
   IPt() {
-    const e = this.yPt ? 0 : 1;
+    var e = this.yPt ? 0 : 1;
     this.GetExtendToggle(0).SetToggleState(e, !1);
   }
 }
 exports.TipsLockButton = TipsLockButton;
-// # sourceMappingURL=ItemTipsLockButton.js.map
+//# sourceMappingURL=ItemTipsLockButton.js.map

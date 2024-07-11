@@ -16,9 +16,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.genLevelPlayUid =
     exports.genEntityTemplateUid =
       void 0);
-const EditorObject_1 = require("../EditorClient/EditorObject");
-const Entity_1 = require("./Entity");
-const SegmentIdGenerator_1 = require("./SegmentIdGenerator");
+const EditorObject_1 = require("../EditorClient/EditorObject"),
+  Entity_1 = require("./Entity"),
+  SegmentIdGenerator_1 = require("./SegmentIdGenerator");
 function genEntityTemplateUid(e) {
   return "et_" + e;
 }
@@ -72,8 +72,8 @@ function getEditorObjTypeByUid(e) {
     }
 }
 function getIdByUid(e) {
-  const t = e.split("_");
-  const r = getEditorObjTypeByUid(e);
+  var t = e.split("_"),
+    r = getEditorObjTypeByUid(e);
   switch (r) {
     case "LevelPlay":
       return t[2];
@@ -102,18 +102,19 @@ function getLevelIdByObjUid(e) {
     case "Entity":
       return (0, Entity_1.getLevelIdByEntityUid)(e);
     default:
+      return;
   }
 }
 function getFlowListIdByUid(e) {
-  let t = getEditorObjTypeByUid(e);
-  if (t === "Flow") {
+  var t = getEditorObjTypeByUid(e);
+  if ("Flow" === t) {
     t = e.split("_");
     return parseInt(t[1]);
   }
 }
 function getFlowIdByUid(e) {
-  let t = getEditorObjTypeByUid(e);
-  if (t === "Flow") {
+  var t = getEditorObjTypeByUid(e);
+  if ("Flow" === t) {
     t = e.split("_");
     return parseInt(t[2]);
   }
@@ -129,8 +130,8 @@ function fetchUid(e, t) {
   );
 }
 async function fetchEntityTemplateOwner(e) {
-  var t = genEntityTemplateUid(e.BlueprintType);
-  var t = await (0, EditorObject_1.getServerEditorObjMeta)(t);
+  var t = genEntityTemplateUid(e.BlueprintType),
+    t = await (0, EditorObject_1.getServerEditorObjMeta)(t);
   return t ? t.meta.Owner : (0, SegmentIdGenerator_1.getCreaterNameById)(e.Id);
 }
 async function setEntityTemplateOwner(e, t) {
@@ -154,4 +155,4 @@ async function setEntityTemplateOwner(e, t) {
   (exports.fetchUid = fetchUid),
   (exports.fetchEntityTemplateOwner = fetchEntityTemplateOwner),
   (exports.setEntityTemplateOwner = setEntityTemplateOwner);
-// # sourceMappingURL=EditorObject.js.map
+//# sourceMappingURL=EditorObject.js.map

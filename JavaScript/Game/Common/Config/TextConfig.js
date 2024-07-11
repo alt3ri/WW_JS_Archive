@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TextConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const GenderTextByMaleText_1 = require("../../../Core/Define/ConfigQuery/GenderTextByMaleText");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const TextById_1 = require("../../../Core/Define/ConfigQuery/TextById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  GenderTextByMaleText_1 = require("../../../Core/Define/ConfigQuery/GenderTextByMaleText"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  TextById_1 = require("../../../Core/Define/ConfigQuery/TextById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class TextConfig extends ConfigBase_1.ConfigBase {
   GetTextById(e) {
     e = this.GetTextContentIdById(e);
     if (e) return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e);
   }
   GetTextContentIdById(e) {
-    const t = TextById_1.configTextById.GetConfig(e)?.Text ?? void 0;
+    var t = TextById_1.configTextById.GetConfig(e)?.Text ?? void 0;
     return (
       t ||
         (Log_1.Log.CheckError() &&
@@ -21,11 +21,11 @@ class TextConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetGenderTextById(e, t) {
-    const r = GenderTextByMaleText_1.configGenderTextByMaleText.GetConfig(e);
+    var r = GenderTextByMaleText_1.configGenderTextByMaleText.GetConfig(e);
     if (r) return t ? r.MaleText : r.FemaleText;
     Log_1.Log.CheckWarn() &&
       Log_1.Log.Warn("TextUtil", 36, "GenderText表查找不到Id = ", ["id", e]);
   }
 }
 exports.TextConfig = TextConfig;
-// # sourceMappingURL=TextConfig.js.map
+//# sourceMappingURL=TextConfig.js.map

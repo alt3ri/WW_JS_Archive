@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivitySubViewUniversal = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase");
-const ActivityDescriptionTypeA_1 = require("../UniversalComponents/Content/ActivityDescriptionTypeA");
-const ActivityRewardList_1 = require("../UniversalComponents/Content/ActivityRewardList");
-const ActivityFunctionalTypeA_1 = require("../UniversalComponents/Functional/ActivityFunctionalTypeA");
-const ActivityTitleTypeA_1 = require("../UniversalComponents/Title/ActivityTitleTypeA");
-const ActivityUniversalController_1 = require("./ActivityUniversalController");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase"),
+  ActivityDescriptionTypeA_1 = require("../UniversalComponents/Content/ActivityDescriptionTypeA"),
+  ActivityRewardList_1 = require("../UniversalComponents/Content/ActivityRewardList"),
+  ActivityFunctionalTypeA_1 = require("../UniversalComponents/Functional/ActivityFunctionalTypeA"),
+  ActivityTitleTypeA_1 = require("../UniversalComponents/Title/ActivityTitleTypeA"),
+  ActivityUniversalController_1 = require("./ActivityUniversalController");
 class ActivitySubViewUniversal extends ActivitySubViewBase_1.ActivitySubViewBase {
   constructor() {
     super(...arguments),
@@ -21,7 +21,7 @@ class ActivitySubViewUniversal extends ActivitySubViewBase_1.ActivitySubViewBase
       (this.UNe = void 0),
       (this.ANe = void 0),
       (this.u2e = () => {
-        let i;
+        var i;
         this.ActivityBaseData.GetPreGuideQuestFinishState()
           ? ActivityUniversalController_1.ActivityUniversalController.ActivityFunctionExecute(
               this.ActivityBaseData.Id,
@@ -44,26 +44,26 @@ class ActivitySubViewUniversal extends ActivitySubViewBase_1.ActivitySubViewBase
   }
   OnSetData() {}
   async OnBeforeStartAsync() {
-    var i = this.GetItem(0);
-    var i =
-      ((this.LNe = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
-      await this.LNe.CreateThenShowByActorAsync(i.GetOwner()),
-      this.GetItem(1));
-    var i =
-      ((this.DNe = new ActivityDescriptionTypeA_1.ActivityDescriptionTypeA()),
-      await this.DNe.CreateThenShowByActorAsync(i.GetOwner()),
-      this.GetItem(2));
-    var i =
-      ((this.UNe = new ActivityRewardList_1.ActivityRewardList()),
-      await this.UNe.CreateThenShowByActorAsync(i.GetOwner()),
-      this.GetItem(3));
+    var i = this.GetItem(0),
+      i =
+        ((this.LNe = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
+        await this.LNe.CreateThenShowByActorAsync(i.GetOwner()),
+        this.GetItem(1)),
+      i =
+        ((this.DNe = new ActivityDescriptionTypeA_1.ActivityDescriptionTypeA()),
+        await this.DNe.CreateThenShowByActorAsync(i.GetOwner()),
+        this.GetItem(2)),
+      i =
+        ((this.UNe = new ActivityRewardList_1.ActivityRewardList()),
+        await this.UNe.CreateThenShowByActorAsync(i.GetOwner()),
+        this.GetItem(3));
     (this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA()),
       await this.ANe.CreateThenShowByActorAsync(i.GetOwner());
   }
   OnStart() {
-    let i;
-    let t = this.ActivityBaseData.LocalConfig;
-    let e = this.ActivityBaseData.GetExtraConfig();
+    var i,
+      t = this.ActivityBaseData.LocalConfig,
+      e = this.ActivityBaseData.GetExtraConfig();
     t &&
       e &&
       (this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
@@ -88,16 +88,16 @@ class ActivitySubViewUniversal extends ActivitySubViewBase_1.ActivitySubViewBase
     this.Xke(), this.FNe();
   }
   FNe() {
-    const [i, t] = this.GetTimeVisibleAndRemainTime();
+    var [i, t] = this.GetTimeVisibleAndRemainTime();
     this.LNe.SetTimeTextVisible(i), i && this.LNe.SetTimeTextByText(t);
   }
   Xke() {
-    let i;
-    let t;
-    let e = this.ActivityBaseData.GetExtraConfig();
+    var i,
+      t,
+      e = this.ActivityBaseData.GetExtraConfig();
     e &&
       ((i = this.ActivityBaseData.IsUnLock()),
-      (e = e.FunctionType === 0),
+      (e = 0 === e.FunctionType),
       (t = this.ActivityBaseData.GetPreGuideQuestFinishState()),
       this.ANe.SetPanelConditionVisible(!i),
       i
@@ -109,4 +109,4 @@ class ActivitySubViewUniversal extends ActivitySubViewBase_1.ActivitySubViewBase
   }
 }
 exports.ActivitySubViewUniversal = ActivitySubViewUniversal;
-// # sourceMappingURL=ActivitySubViewUniversal.js.map
+//# sourceMappingURL=ActivitySubViewUniversal.js.map

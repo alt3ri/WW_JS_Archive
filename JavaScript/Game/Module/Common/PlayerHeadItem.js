@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlayerHeadItem = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
 class PlayerHeadItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(), this.CreateThenShowByActor(e);
@@ -17,8 +17,8 @@ class PlayerHeadItem extends UiPanelBase_1.UiPanelBase {
     this.QMt(e, r);
   }
   QMt(e, r = !1) {
-    let a = ModelManager_1.ModelManager.PlayerInfoModel;
-    let s = this.GetTexture(0);
+    var a = ModelManager_1.ModelManager.PlayerInfoModel,
+      s = this.GetTexture(0);
     if (a.GetId() === e)
       return r
         ? ((a = ModelManager_1.ModelManager.PlayerInfoModel.GetHeadIconId()),
@@ -37,13 +37,13 @@ class PlayerHeadItem extends UiPanelBase_1.UiPanelBase {
     this.RefreshByRoleId(e);
   }
   RefreshByRoleId(e) {
-    const r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleHeadIcon(e);
-    const a = this.GetTexture(0);
+    var r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleHeadIcon(e),
+      a = this.GetTexture(0);
     this.SetRoleIcon(r, a, e);
   }
   RefreshByRoleIdUseCard(e) {
-    const r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e).Card;
-    const a = this.GetTexture(0);
+    var r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e).Card,
+      a = this.GetTexture(0);
     this.SetRoleIcon(r, a, e);
   }
   SetIsGray(e) {
@@ -51,4 +51,4 @@ class PlayerHeadItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.PlayerHeadItem = PlayerHeadItem;
-// # sourceMappingURL=PlayerHeadItem.js.map
+//# sourceMappingURL=PlayerHeadItem.js.map

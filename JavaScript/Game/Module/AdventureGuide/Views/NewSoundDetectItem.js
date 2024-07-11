@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NewSoundDetectItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const InstanceDungeonController_1 = require("../../InstanceDungeon/InstanceDungeonController");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew");
-const AdventureDefine_1 = require("../AdventureDefine");
-const NewSoundLordItem_1 = require("./NewSoundLordItem");
-const NewSoundNormalItem_1 = require("./NewSoundNormalItem");
-const NewSoundTeachItem_1 = require("./NewSoundTeachItem");
-const NewSoundTowerItem_1 = require("./NewSoundTowerItem");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  InstanceDungeonController_1 = require("../../InstanceDungeon/InstanceDungeonController"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
+  AdventureDefine_1 = require("../AdventureDefine"),
+  NewSoundLordItem_1 = require("./NewSoundLordItem"),
+  NewSoundNormalItem_1 = require("./NewSoundNormalItem"),
+  NewSoundTeachItem_1 = require("./NewSoundTeachItem"),
+  NewSoundTowerItem_1 = require("./NewSoundTowerItem");
 class NewSoundDetectItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -46,22 +46,22 @@ class NewSoundDetectItem extends GridProxyAbstract_1.GridProxyAbstract {
           this.Pe.Conf?.Secondary === AdventureDefine_1.EDungeonType.SkillTeach
         ) {
           const i = this.Pe.Conf.SubDungeonId;
-          var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(94);
-          var t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-            this.Pe.Conf.Name,
-          );
+          var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(94),
+            t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+              this.Pe.Conf.Name,
+            );
           e.SetTextArgs(t),
             e.FunctionMap.set(2, () => {
               var e =
-                ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-                  i,
-                ).FightFormationId;
-              var e =
-                ConfigManager_1.ConfigManager.EditBattleTeamConfig.GetFightFormationConfig(
-                  e,
-                )?.AutoRole;
-              if ((e?.length ?? 0) > 0) {
-                const t = new Array();
+                  ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+                    i,
+                  ).FightFormationId,
+                e =
+                  ConfigManager_1.ConfigManager.EditBattleTeamConfig.GetFightFormationConfig(
+                    e,
+                  )?.AutoRole;
+              if (0 < (e?.length ?? 0)) {
+                var t = new Array();
                 for (const r of e)
                   t.push(
                     ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleIdConfigByGroupId(
@@ -80,7 +80,7 @@ class NewSoundDetectItem extends GridProxyAbstract_1.GridProxyAbstract {
               e,
             );
         } else
-          this.Pe.Type === 0
+          0 === this.Pe.Type
             ? ((t =
                 ModelManager_1.ModelManager.AdventureGuideModel.GetSoundAreaDetectData(
                   this.Pe.Conf.Id,
@@ -109,21 +109,21 @@ class NewSoundDetectItem extends GridProxyAbstract_1.GridProxyAbstract {
               ));
       }),
       (this.p6e = (e) => {
-        const t =
-          ConfigManager_1.ConfigManager.AdventureModuleConfig.GetShowReward(
-            this.Pe.Conf.ShowRewardMap,
-            e,
-          );
-        const r = new Array();
+        var t =
+            ConfigManager_1.ConfigManager.AdventureModuleConfig.GetShowReward(
+              this.Pe.Conf.ShowRewardMap,
+              e,
+            ),
+          r = new Array();
         for (const n of t.keys()) {
-          const i = [{ IncId: 0, ItemId: n }, t.get(n)];
+          var i = [{ IncId: 0, ItemId: n }, t.get(n)];
           r.push(i);
         }
         this.u6e.RefreshByData(r, this.v6e);
       }),
       (this.v6e = () => {
         this.u6e?.ScrollToLeft(0);
-        let e = this.Pe.Conf.Secondary;
+        var e = this.Pe.Conf.Secondary;
         if (e === AdventureDefine_1.EDungeonType.LordGym) {
           if (
             !ModelManager_1.ModelManager.LordGymModel?.GetGymEntranceAllFinish(
@@ -197,7 +197,7 @@ class NewSoundDetectItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.GetButton(1).RootUIComp.SetUIActive(!e.IsLock),
       this.GetItem(6).SetUIActive(e.IsLock);
     let i = 0;
-    if (e.Type === 0) {
+    if (0 === e.Type) {
       var n = e.Conf;
       if (
         n.SubDungeonId &&
@@ -216,13 +216,13 @@ class NewSoundDetectItem extends GridProxyAbstract_1.GridProxyAbstract {
     i &&
       ((n = ModelManager_1.ModelManager.LordGymModel.GetHasFinishLord(i)),
       (o = n + 1));
-    const s = ConfigManager_1.ConfigManager.AdventureModuleConfig.GetShowReward(
-      e.Conf.ShowRewardMap,
-      o,
-    );
-    const a = new Array();
+    var s = ConfigManager_1.ConfigManager.AdventureModuleConfig.GetShowReward(
+        e.Conf.ShowRewardMap,
+        o,
+      ),
+      a = new Array();
     for (const l of s.keys()) {
-      const h = [{ IncId: 0, ItemId: l }, s.get(l)];
+      var h = [{ IncId: 0, ItemId: l }, s.get(l)];
       a.push(h);
     }
     this.u6e.RefreshByData(a, this.v6e);
@@ -239,4 +239,4 @@ class NewSoundDetectItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.NewSoundDetectItem = NewSoundDetectItem;
-// # sourceMappingURL=NewSoundDetectItem.js.map
+//# sourceMappingURL=NewSoundDetectItem.js.map

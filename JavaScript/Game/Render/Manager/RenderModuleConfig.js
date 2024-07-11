@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RenderModuleConfig = exports.RenderStats = void 0);
-const Stats_1 = require("../../../Core/Common/Stats");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const Stats_1 = require("../../../Core/Common/Stats"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class RenderStats {
   static Init() {
     this.gU ||
@@ -61,4 +61,4 @@ class RenderStats {
 (exports.RenderStats = RenderStats).gU = !1;
 class RenderModuleConfig extends ConfigBase_1.ConfigBase {}
 exports.RenderModuleConfig = RenderModuleConfig;
-// # sourceMappingURL=RenderModuleConfig.js.map
+//# sourceMappingURL=RenderModuleConfig.js.map

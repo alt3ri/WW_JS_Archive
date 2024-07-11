@@ -1,45 +1,45 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonEntranceController = void 0);
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const BossRushController_1 = require("../Activity/ActivityContent/BossRush/BossRushController");
-const ActivityDoubleRewardController_1 = require("../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
-const EditBattleTeamController_1 = require("../EditBattleTeam/EditBattleTeamController");
-const ItemRewardController_1 = require("../ItemReward/ItemRewardController");
-const RewardItemData_1 = require("../ItemReward/RewardData/RewardItemData");
-const OnlineController_1 = require("../Online/OnlineController");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const TeleportController_1 = require("../Teleport/TeleportController");
-const TowerController_1 = require("../TowerDetailUi/TowerController");
-const InstanceDungeonController_1 = require("./InstanceDungeonController");
-const InstanceDungeonEntranceConfig_1 = require("./InstanceDungeonEntranceConfig");
-const ONE_SECONDS = 1e3;
-const INSTANCE_SUCCESS = 3004;
-const INSTANCE_FAIL = 3005;
-const INSTANCE_SUCCESS_NO_REWARD = 3007;
-const SETTLE_TYPE_ONETIME = 1;
-const SETTLE_TYPE_ROLETRIAL = 2;
-const SETTLE_TYPE_NONE = 3;
-const SETTLE_TYPE_MATERIALS = 4;
-const SETTLE_TYPE_CLOSE = 5;
+const CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  BossRushController_1 = require("../Activity/ActivityContent/BossRush/BossRushController"),
+  ActivityDoubleRewardController_1 = require("../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  EditBattleTeamController_1 = require("../EditBattleTeam/EditBattleTeamController"),
+  ItemRewardController_1 = require("../ItemReward/ItemRewardController"),
+  RewardItemData_1 = require("../ItemReward/RewardData/RewardItemData"),
+  OnlineController_1 = require("../Online/OnlineController"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  TeleportController_1 = require("../Teleport/TeleportController"),
+  TowerController_1 = require("../TowerDetailUi/TowerController"),
+  InstanceDungeonController_1 = require("./InstanceDungeonController"),
+  InstanceDungeonEntranceConfig_1 = require("./InstanceDungeonEntranceConfig"),
+  ONE_SECONDS = 1e3,
+  INSTANCE_SUCCESS = 3004,
+  INSTANCE_FAIL = 3005,
+  INSTANCE_SUCCESS_NO_REWARD = 3007,
+  SETTLE_TYPE_ONETIME = 1,
+  SETTLE_TYPE_ROLETRIAL = 2,
+  SETTLE_TYPE_NONE = 3,
+  SETTLE_TYPE_MATERIALS = 4,
+  SETTLE_TYPE_CLOSE = 5;
 class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
@@ -140,7 +140,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
       Net_1.Net.UnRegister(8740);
   }
   static async EnterEntrance(e, n = 0, o) {
-    let t;
+    var t;
     return e
       ? ((t =
           ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.GetInstanceDungeonEntranceFlowId(
@@ -173,8 +173,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
         !1);
   }
   static async Uai() {
-    const e =
-      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.EntranceId;
+    var e = ModelManager_1.ModelManager.InstanceDungeonEntranceModel.EntranceId;
     const n =
       ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.GetInstanceDungeonEntranceFlow(
         e,
@@ -189,15 +188,15 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
     );
   }
   static ContinueEntranceFlow() {
-    var e = ModelManager_1.ModelManager.InstanceDungeonEntranceModel.EntranceId;
-    var e =
-      ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.GetInstanceDungeonEntranceFlow(
-        e,
-      );
+    var e = ModelManager_1.ModelManager.InstanceDungeonEntranceModel.EntranceId,
+      e =
+        ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.GetInstanceDungeonEntranceFlow(
+          e,
+        );
     e && e.Flow();
   }
   static RevertEntranceFlowStep() {
-    let e = ModelManager_1.ModelManager.InstanceDungeonEntranceModel.EntranceId;
+    var e = ModelManager_1.ModelManager.InstanceDungeonEntranceModel.EntranceId;
     e &&
       (e =
         ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.GetInstanceDungeonEntranceFlow(
@@ -206,8 +205,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
       e.RevertStep();
   }
   static async EnterInstanceDungeon() {
-    const e =
-      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId;
+    var e = ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId;
     return e
       ? InstanceDungeonController_1.InstanceDungeonController.PrewarTeamFightRequest(
           e,
@@ -223,8 +221,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
         !1);
   }
   static async EnterInstanceDungeonByAutoRole() {
-    const e =
-      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId;
+    var e = ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId;
     if (!e)
       return (
         Log_1.Log.CheckError() &&
@@ -249,27 +246,27 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
         !1
       );
     let o = !1;
-    var t = n.TrialRoleFormation;
-    var t =
-      (t &&
-        (t =
-          ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetTrialRoleConfig(
-            t,
-          )) &&
-        ((r = t.MaleFormation.length > 0 && t.FemaleFormation.length > 0),
-        (o = t.OnlyTrial && r)),
-      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.EntranceId);
+    var t = n.TrialRoleFormation,
+      t =
+        (t &&
+          (t =
+            ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetTrialRoleConfig(
+              t,
+            )) &&
+          ((r = 0 < t.MaleFormation.length && 0 < t.FemaleFormation.length),
+          (o = t.OnlyTrial && r)),
+        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.EntranceId);
     if (o)
       return InstanceDungeonController_1.InstanceDungeonController.PrewarTeamFightRequest(
         e,
         [],
         t,
       );
-    var r = n.FightFormationId;
-    var n =
-      ConfigManager_1.ConfigManager.EditBattleTeamConfig.GetFightFormationConfig(
-        r,
-      );
+    var r = n.FightFormationId,
+      n =
+        ConfigManager_1.ConfigManager.EditBattleTeamConfig.GetFightFormationConfig(
+          r,
+        );
     if (!n)
       return (
         Log_1.Log.CheckError() &&
@@ -280,7 +277,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
         !1
       );
     r = n.AutoRole;
-    if (!r || r.length === 0)
+    if (!r || 0 === r.length)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -299,7 +296,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
         ["instanceId", e],
         ["autoRoleGroupIdList", r],
       );
-    const a = new Array();
+    var a = new Array();
     for (const l of r)
       a.push(
         ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleIdConfigByGroupId(
@@ -319,9 +316,11 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
     );
   }
   static async LeaveInstanceDungeonRequest(e, n) {
-    const o = Protocol_1.Aki.Protocol.Fes.create();
-    var e =
-      ((o.vFn = e ?? 0), (o.Pkn = n ?? 0), await Net_1.Net.CallAsync(13328, o));
+    var o = Protocol_1.Aki.Protocol.Fes.create(),
+      e =
+        ((o.vFn = e ?? 0),
+        (o.Pkn = n ?? 0),
+        await Net_1.Net.CallAsync(13328, o));
     return !(
       !e ||
       (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
@@ -344,8 +343,8 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
     );
   }
   static async InstEntranceDetailRequest(e) {
-    const n = new Protocol_1.Aki.Protocol.kes();
-    var e = ((n.G5n = e), await Net_1.Net.CallAsync(22844, n));
+    var n = new Protocol_1.Aki.Protocol.kes(),
+      e = ((n.G5n = e), await Net_1.Net.CallAsync(22844, n));
     if (!e) return !1;
     if (
       (Log_1.Log.CheckDebug() &&
@@ -378,8 +377,8 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
     );
   }
   static async MatchChangeRoleRequest(e) {
-    const n = new Protocol_1.Aki.Protocol.Urs();
-    var e = ((n.l3n = e), await Net_1.Net.CallAsync(18638, n));
+    var n = new Protocol_1.Aki.Protocol.Urs(),
+      e = ((n.l3n = e), await Net_1.Net.CallAsync(18638, n));
     return (
       !!e &&
       (Log_1.Log.CheckDebug() &&
@@ -396,8 +395,8 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
     );
   }
   static async MatchChangeReadyRequest(e) {
-    var n = new Protocol_1.Aki.Protocol.brs();
-    var n = ((n.O5n = e), await Net_1.Net.CallAsync(17935, n));
+    var n = new Protocol_1.Aki.Protocol.brs(),
+      n = ((n.O5n = e), await Net_1.Net.CallAsync(17935, n));
     return (
       !!n &&
       (Log_1.Log.CheckDebug() &&
@@ -425,8 +424,8 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
     );
   }
   static async LeaveMatchTeamRequest() {
-    var e = new Protocol_1.Aki.Protocol.Grs();
-    var e = await Net_1.Net.CallAsync(4722, e);
+    var e = new Protocol_1.Aki.Protocol.Grs(),
+      e = await Net_1.Net.CallAsync(4722, e);
     return (
       !!e &&
       (Log_1.Log.CheckDebug() &&
@@ -445,8 +444,8 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
     );
   }
   static async KickMatchTeamPlayerRequest(e) {
-    const n = new Protocol_1.Aki.Protocol.Frs();
-    var e = ((n.aFn = e), await Net_1.Net.CallAsync(26953, n));
+    var n = new Protocol_1.Aki.Protocol.Frs(),
+      e = ((n.aFn = e), await Net_1.Net.CallAsync(26953, n));
     return (
       !!e &&
       (Log_1.Log.CheckDebug() &&
@@ -463,8 +462,8 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
     );
   }
   static async SetMatchTeamMatchFlagRequest(e) {
-    const n = new Protocol_1.Aki.Protocol.$rs();
-    var e = ((n.DFn = e), await Net_1.Net.CallAsync(14330, n));
+    var n = new Protocol_1.Aki.Protocol.$rs(),
+      e = ((n.DFn = e), await Net_1.Net.CallAsync(14330, n));
     return (
       !!e &&
       (Log_1.Log.CheckDebug() &&
@@ -481,8 +480,8 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
     );
   }
   static async EnterMatchInstRequest() {
-    var e = new Protocol_1.Aki.Protocol.Wrs();
-    var e = await Net_1.Net.CallAsync(20383, e);
+    var e = new Protocol_1.Aki.Protocol.Wrs(),
+      e = await Net_1.Net.CallAsync(20383, e);
     return (
       !!e &&
       (Log_1.Log.CheckDebug() &&
@@ -501,7 +500,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
     );
   }
   static CheckInstanceShieldView(e) {
-    let n;
+    var n;
     return (
       !!InstanceDungeonEntranceController.LimitOpenView &&
       !!(n = ModelManager_1.ModelManager.CreatureModel.GetInstanceId()) &&
@@ -509,7 +508,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
     );
   }
   static RestoreDungeonEntranceEntity() {
-    let e =
+    var e =
       ModelManager_1.ModelManager.InstanceDungeonEntranceModel.EntranceEntityId;
     e &&
       (e = ModelManager_1.ModelManager.CreatureModel.GetEntityById(e))
@@ -517,7 +516,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
       e.Entity.GetComponent(72)?.Restore();
   }
   static RegisterDungeonEntranceRestoreCb(e) {
-    let n =
+    var n =
       ModelManager_1.ModelManager.InstanceDungeonEntranceModel.EntranceEntityId;
     n &&
     (n = ModelManager_1.ModelManager.CreatureModel.GetEntityById(n))?.IsInit &&
@@ -526,7 +525,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
       : e();
   }
   static StartMatchRequest(e, n = !1) {
-    const o = new Protocol_1.Aki.Protocol.vrs();
+    var o = new Protocol_1.Aki.Protocol.vrs();
     (o.vFn = e),
       (o.N5n =
         ModelManager_1.ModelManager.InstanceDungeonEntranceModel.EntranceId),
@@ -553,7 +552,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
       });
   }
   static CancelMatchRequest() {
-    const e = new Protocol_1.Aki.Protocol.Srs();
+    var e = new Protocol_1.Aki.Protocol.Srs();
     Net_1.Net.Call(11604, e, (e) => {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("InstanceDungeon", 5, "协议接收", [
@@ -583,7 +582,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
       ModelManager_1.ModelManager.InstanceDungeonEntranceModel.SetMatchingId(0);
   }
   static MatchConfirmRequest(n) {
-    const e = new Protocol_1.Aki.Protocol.Lrs();
+    var e = new Protocol_1.Aki.Protocol.Lrs();
     (e.F5n = n),
       Net_1.Net.Call(3269, e, (e) => {
         Log_1.Log.CheckDebug() &&
@@ -619,7 +618,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
       });
   }
   static TeamChallengeRequest(e, n) {
-    const o = new Protocol_1.Aki.Protocol.Qrs();
+    var o = new Protocol_1.Aki.Protocol.Qrs();
     (o.vFn = e),
       (o.N5n =
         ModelManager_1.ModelManager.InstanceDungeonEntranceModel.EntranceId),
@@ -638,7 +637,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
       });
   }
   static TeamMatchAcceptInviteRequest(e) {
-    const n = new Protocol_1.Aki.Protocol.Zrs();
+    var n = new Protocol_1.Aki.Protocol.Zrs();
     (n.vFn = ModelManager_1.ModelManager.InstanceDungeonModel.GetInstanceId()),
       (n.F5n = e),
       (n.Q4n = ModelManager_1.ModelManager.OnlineModel.OwnerId),
@@ -656,7 +655,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
       });
   }
   static TeamMatchInviteRequest() {
-    const e = new Protocol_1.Aki.Protocol.Yrs();
+    var e = new Protocol_1.Aki.Protocol.Yrs();
     (e.vFn = ModelManager_1.ModelManager.InstanceDungeonModel.GetInstanceId()),
       Net_1.Net.Call(25390, e, (e) => {
         Log_1.Log.CheckDebug() &&
@@ -676,14 +675,14 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
       return !1;
     if (ModelManager_1.ModelManager.RoguelikeModel?.CheckInRoguelike())
       return !1;
-    const e = InstanceDungeonEntranceController.Aai(!1);
+    var e = InstanceDungeonEntranceController.Aai(!1);
     if (
       UiManager_1.UiManager.IsViewShow("InstanceDungeonFailView") ||
       ModelManager_1.ModelManager.GameModeModel.IsMulti
     )
       return !1;
     {
-      const n = InstanceDungeonEntranceController.Pai();
+      var n = InstanceDungeonEntranceController.Pai();
       const o = new CustomPromise_1.CustomPromise();
       return (
         ItemRewardController_1.ItemRewardController.OpenExploreRewardView(
@@ -706,12 +705,12 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
     }
   }
   static Aai(e) {
-    const n = [];
-    let o = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-      ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
-    );
-    const t = o.SettleButtonType;
-    var r = ModelManager_1.ModelManager.GameModeModel.IsMulti;
+    var n = [],
+      o = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+        ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
+      ),
+      t = o.SettleButtonType,
+      r = ModelManager_1.ModelManager.GameModeModel.IsMulti;
     if (
       ((e &&
         !r &&
@@ -765,62 +764,70 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
         const l =
           ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId;
         var r =
-          ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetInstancePowerCost(
-            l,
-          );
-        var a =
-          (ModelManager_1.ModelManager.PowerModel.IsPowerEnough(r) ||
-            (e = `<color=#dc0300>${e}</color>`),
-          o.push(e),
-          `<texture=${this._ai}/>`);
-        var a =
-          (o.push(a),
-          {
-            ButtonTextId: "Text_ChallengeAgain_Text",
-            DescriptionTextId: r ? "Text_RemainText_Text" : void 0,
-            DescriptionArgs: r ? o : void 0,
-            IsTimeDownCloseView: !1,
-            IsClickedCloseView: !1,
-            OnClickedCallback: (e) => {
-              let n;
-              const o =
-                ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetInstancePowerCost(
-                  l,
-                );
-              ModelManager_1.ModelManager.PowerModel.IsPowerEnough(o)
-                ? ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceCanChallenge(
-                    l,
-                  )
-                  ? InstanceDungeonEntranceController.RestartInstanceDungeon().finally(
-                      () => {
-                        UiManager_1.UiManager.IsViewShow("ExploreRewardView") &&
-                          UiManager_1.UiManager.CloseView("ExploreRewardView");
-                      },
-                    )
-                  : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-                      "InstanceDungeonLackChallengeTimes",
-                    )
-                : (((n = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
-                    176,
-                  )).ShowPowerItem = !0),
-                  n.SetTextArgs(
-                    o.toString(),
-                    ModelManager_1.ModelManager.PowerModel.PowerCount.toString(),
-                  ),
-                  n.FunctionMap.set(1, () => {}),
-                  n.FunctionMap.set(2, () => {
-                    InstanceDungeonEntranceController.RestartInstanceDungeon().finally(
-                      () => {
-                        UiManager_1.UiManager.IsViewShow("ExploreRewardView") &&
-                          UiManager_1.UiManager.CloseView("ExploreRewardView");
-                      },
+            ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetInstancePowerCost(
+              l,
+            ),
+          a =
+            (ModelManager_1.ModelManager.PowerModel.IsPowerEnough(r) ||
+              (e = `<color=#dc0300>${e}</color>`),
+            o.push(e),
+            `<texture=${this._ai}/>`),
+          a =
+            (o.push(a),
+            {
+              ButtonTextId: "Text_ChallengeAgain_Text",
+              DescriptionTextId: r ? "Text_RemainText_Text" : void 0,
+              DescriptionArgs: r ? o : void 0,
+              IsTimeDownCloseView: !1,
+              IsClickedCloseView: !1,
+              OnClickedCallback: (e) => {
+                var n,
+                  o =
+                    ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetInstancePowerCost(
+                      l,
                     );
-                  }),
-                  ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-                    n,
-                  ));
-            },
-          });
+                ModelManager_1.ModelManager.PowerModel.IsPowerEnough(o)
+                  ? ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceCanChallenge(
+                      l,
+                    )
+                    ? InstanceDungeonEntranceController.RestartInstanceDungeon().finally(
+                        () => {
+                          UiManager_1.UiManager.IsViewShow(
+                            "ExploreRewardView",
+                          ) &&
+                            UiManager_1.UiManager.CloseView(
+                              "ExploreRewardView",
+                            );
+                        },
+                      )
+                    : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+                        "InstanceDungeonLackChallengeTimes",
+                      )
+                  : (((n = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
+                      176,
+                    )).ShowPowerItem = !0),
+                    n.SetTextArgs(
+                      o.toString(),
+                      ModelManager_1.ModelManager.PowerModel.PowerCount.toString(),
+                    ),
+                    n.FunctionMap.set(1, () => {}),
+                    n.FunctionMap.set(2, () => {
+                      InstanceDungeonEntranceController.RestartInstanceDungeon().finally(
+                        () => {
+                          UiManager_1.UiManager.IsViewShow(
+                            "ExploreRewardView",
+                          ) &&
+                            UiManager_1.UiManager.CloseView(
+                              "ExploreRewardView",
+                            );
+                        },
+                      );
+                    }),
+                    ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+                      n,
+                    ));
+              },
+            });
         n.push(a);
       }
       !e ||
@@ -840,19 +847,18 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
     return n;
   }
   static Pai() {
-    const e = [];
-    const n =
-      ModelManager_1.ModelManager.TrainingDegreeModel.GetTrainingDataList();
+    var e = [],
+      n = ModelManager_1.ModelManager.TrainingDegreeModel.GetTrainingDataList();
     if (n) {
       for (const t of n) {
-        const o = { TrainingData: t };
+        var o = { TrainingData: t };
         e.push(o);
       }
       return e;
     }
   }
   static Bai(e) {
-    const n = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+    var n = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
       ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e).MapName,
     );
     ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
@@ -867,7 +873,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
         UiManager_1.UiManager.IsViewOpen("InstanceDungeonEntranceView") ||
         UiManager_1.UiManager.IsViewOpen("EditBattleTeamView") ||
         ((o.MatchingTime = 0),
-        (o.OnStopTimer = () => o.GetMatchingState() !== 1),
+        (o.OnStopTimer = () => 1 !== o.GetMatchingState()),
         this.StartMatchTimer());
   }
   static StartMatchTimer(e) {
@@ -905,7 +911,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
         (InstanceDungeonEntranceController.uai = void 0));
   }),
   (InstanceDungeonEntranceController.gVe = () => {
-    let e;
+    var e;
     _a.wai &&
       ((e = _a.Aai(_a.bai)),
       ItemRewardController_1.ItemRewardController.SetButtonList(e),
@@ -1030,7 +1036,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
         e.zAs,
         !0,
       );
-    const n = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
+    var n = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
     e.zAs === n &&
       ModelManager_1.ModelManager.InstanceDungeonModel.GetMatchingTeamReady() &&
       (ModelManager_1.ModelManager.InstanceDungeonEntranceModel.SetMatchingState(
@@ -1083,7 +1089,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
         "协议id",
         "10068" + Protocol_1.Aki.Protocol.krs.name,
       ]);
-    let n = ModelManager_1.ModelManager.CreatureModel.GetPlayerId();
+    var n = ModelManager_1.ModelManager.CreatureModel.GetPlayerId();
     e.aFn === n
       ? (ModelManager_1.ModelManager.InstanceDungeonModel.IsMatchTeamHost() ||
           e.ZAs !== Protocol_1.Aki.Protocol.NNs.Proto_HostLeave ||
@@ -1147,7 +1153,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
         "协议id",
         "10076" + Protocol_1.Aki.Protocol.jrs.name,
       ]);
-    let n = ModelManager_1.ModelManager.InstanceDungeonModel.GetMatchTeamInfo();
+    var n = ModelManager_1.ModelManager.InstanceDungeonModel.GetMatchTeamInfo();
     n
       ? ((n = n.Q4n),
         ModelManager_1.ModelManager.InstanceDungeonModel.SetPlayerUiState(
@@ -1187,27 +1193,27 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
         ),
         e.QRs)
       ) {
-        const n = InstanceDungeonEntranceController.Aai(e.QRs);
-        let o = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-          ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
-        ).SettleButtonType;
+        var n = InstanceDungeonEntranceController.Aai(e.QRs),
+          o = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+            ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
+          ).SettleButtonType;
         if (o !== SETTLE_TYPE_CLOSE) {
-          const t = [];
+          var t = [];
           for (const a of Object.keys(e.HRs)) {
-            const r = new RewardItemData_1.RewardItemData(
+            var r = new RewardItemData_1.RewardItemData(
               Number.parseInt(a),
               e.HRs[a],
             );
             t.push(r);
           }
           o =
-            e.W5n > 1
+            1 < e.W5n
               ? ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetDungeonUpActivityFullTip(
                   [1, 2],
                 )
               : void 0;
           ItemRewardController_1.ItemRewardController.OpenExploreRewardView(
-            t.length > 0 ? INSTANCE_SUCCESS : INSTANCE_SUCCESS_NO_REWARD,
+            0 < t.length ? INSTANCE_SUCCESS : INSTANCE_SUCCESS_NO_REWARD,
             !0,
             t,
             void 0,
@@ -1231,8 +1237,8 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
         "协议id",
         "10217" + Protocol_1.Aki.Protocol.hYn.name,
       ]);
-    var o = MathUtils_1.MathUtils.LongToNumber(n.Ekn);
-    var o = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
+    var o = MathUtils_1.MathUtils.LongToNumber(n.Ekn),
+      o = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
     if (o) {
       let e = void 0;
       switch (n.ckn) {
@@ -1278,7 +1284,7 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
         "协议id",
         "10083" + Protocol_1.Aki.Protocol.zrs.name,
       ]);
-    const n = ModelManager_1.ModelManager.InstanceDungeonEntranceModel;
+    var n = ModelManager_1.ModelManager.InstanceDungeonEntranceModel;
     n.CancelMatchingTimer(),
       ModelManager_1.ModelManager.InstanceDungeonModel.SetInstanceId(e.vFn),
       n.SetMatchingId(e.vFn),
@@ -1300,9 +1306,9 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
         "协议id",
         "11865" + Protocol_1.Aki.Protocol.yrs.name,
       ]);
-    const n = ModelManager_1.ModelManager.InstanceDungeonEntranceModel;
+    var n = ModelManager_1.ModelManager.InstanceDungeonEntranceModel;
     ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam() ||
-      n.GetMatchingState() !== 1 ||
+      1 !== n.GetMatchingState() ||
       ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
         "LeaderCancelMatch",
       ),
@@ -1327,10 +1333,12 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
   (InstanceDungeonEntranceController.OpenEditBattleView = () => {
     const e =
       ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingId();
-    let n =
-      ModelManager_1.ModelManager.InstanceDungeonModel.GetMatchTeamInfo()?.$kn;
-    let o =
-      ModelManager_1.ModelManager.InstanceDungeonModel.GetMatchTeamInfo()?.D3n;
+    var n =
+        ModelManager_1.ModelManager.InstanceDungeonModel.GetMatchTeamInfo()
+          ?.$kn,
+      o =
+        ModelManager_1.ModelManager.InstanceDungeonModel.GetMatchTeamInfo()
+          ?.D3n;
     n && o
       ? ((n = Vector_1.Vector.Create(n)),
         (o = Rotator_1.Rotator.Create(o)),
@@ -1358,10 +1366,10 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
         EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnEnterTeam));
   }),
   (InstanceDungeonEntranceController.xai = (e) => {
-    let n, o;
+    var n, o;
     ModelManager_1.ModelManager.OnlineModel.AllowInitiate
       ? ((n = ModelManager_1.ModelManager.CreatureModel.IsMyWorld()),
-        (o = ModelManager_1.ModelManager.OnlineModel.NextInitiateLeftTime) > 0
+        0 < (o = ModelManager_1.ModelManager.OnlineModel.NextInitiateLeftTime)
           ? n
             ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                 "NextInviteTime",
@@ -1373,9 +1381,10 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
               )
           : (UiManager_1.UiManager.IsViewOpen("OnlineChallengeApplyView") &&
               UiManager_1.UiManager.CloseView("OnlineChallengeApplyView"),
-            ModelManager_1.ModelManager.OnlineModel.GetContinuingChallengeConfirmState(
-              ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
-            ) !== 2 && n
+            2 !==
+              ModelManager_1.ModelManager.OnlineModel.GetContinuingChallengeConfirmState(
+                ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
+              ) && n
               ? OnlineController_1.OnlineController.InviteRechallengeRequest()
               : OnlineController_1.OnlineController.ApplyRechallengeRequest(
                   Protocol_1.Aki.Protocol.h3s.Proto_Settle,
@@ -1384,4 +1393,4 @@ class InstanceDungeonEntranceController extends UiControllerBase_1.UiControllerB
           "CannotInvite",
         );
   });
-// # sourceMappingURL=InstanceDungeonEntranceController.js.map
+//# sourceMappingURL=InstanceDungeonEntranceController.js.map

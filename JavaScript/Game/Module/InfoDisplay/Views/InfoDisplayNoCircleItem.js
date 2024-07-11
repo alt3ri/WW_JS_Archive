@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InfoDisplayNoCircleItem = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const AutoAttachExhibitionItem_1 = require("../../CircleExhibition/AutoAttachExhibitionItem");
-const InfoDisplayController_1 = require("../InfoDisplayController");
-const FRONT_HIERACHY = 1;
-const ANIMAL_SCALE = 0.8;
-const LEFT_RANGE = 0.4;
-const MIDDLE_RANGE = 0.5;
-const RIGHT_RANGE = 0.6;
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  AutoAttachExhibitionItem_1 = require("../../CircleExhibition/AutoAttachExhibitionItem"),
+  InfoDisplayController_1 = require("../InfoDisplayController"),
+  FRONT_HIERACHY = 1,
+  ANIMAL_SCALE = 0.8,
+  LEFT_RANGE = 0.4,
+  MIDDLE_RANGE = 0.5,
+  RIGHT_RANGE = 0.6;
 class InfoDisplayNoCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExhibitionItemAbstract {
   constructor() {
     super(...arguments),
@@ -40,14 +40,14 @@ class InfoDisplayNoCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExhib
     this.Pe = t;
   }
   Aqe() {
-    this.osi !== "" && this.SetTextureByPath(this.osi, this.GetTexture(1));
+    "" !== this.osi && this.SetTextureByPath(this.osi, this.GetTexture(1));
   }
   OnMoveItem(t) {
-    let i;
-    const e = this.GetRootItem();
-    var s = this.GetAttachItem().ExhibitionView.GetWidth();
-    var s = (e.GetAnchorOffsetX() + s / 2) / s;
-    const r = e.RelativeScale3D;
+    var i,
+      e = this.GetRootItem(),
+      s = this.GetAttachItem().ExhibitionView.GetWidth(),
+      s = (e.GetAnchorOffsetX() + s / 2) / s,
+      r = e.RelativeScale3D;
     let h = 0;
     s >= LEFT_RANGE && s <= RIGHT_RANGE
       ? (s >= LEFT_RANGE && s <= MIDDLE_RANGE
@@ -63,8 +63,8 @@ class InfoDisplayNoCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExhib
       : r.X !== this.rsi.X && e.SetUIItemScale(this.rsi);
   }
   jbe() {
-    var t = this.GetAttachItem().ExhibitionView.ItemActor.GetWidth();
-    var t = (this.GetRootItem().GetAnchorOffsetX() + t / 2) / t;
+    var t = this.GetAttachItem().ExhibitionView.ItemActor.GetWidth(),
+      t = (this.GetRootItem().GetAnchorOffsetX() + t / 2) / t;
     t >= LEFT_RANGE &&
       t <= RIGHT_RANGE &&
       (ModelManager_1.ModelManager.InfoDisplayModel.SetCurrentOpenInformationTexture(
@@ -74,4 +74,4 @@ class InfoDisplayNoCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExhib
   }
 }
 exports.InfoDisplayNoCircleItem = InfoDisplayNoCircleItem;
-// # sourceMappingURL=InfoDisplayNoCircleItem.js.map
+//# sourceMappingURL=InfoDisplayNoCircleItem.js.map

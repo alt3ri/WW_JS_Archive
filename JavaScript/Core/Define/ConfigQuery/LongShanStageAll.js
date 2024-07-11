@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configLongShanStageAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const LongShanStage_1 = require("../Config/LongShanStage");
-const DB = "db_activity.db";
-const FILE = "l.龙山主题活动.xlsx";
-const TABLE = "LongShanStage";
-const COMMAND = "select BinData from `LongShanStage` where ActivityId=?";
-const KEY_PREFIX = "LongShanStageAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  LongShanStage_1 = require("../Config/LongShanStage"),
+  DB = "db_activity.db",
+  FILE = "l.龙山主题活动.xlsx",
+  TABLE = "LongShanStage",
+  COMMAND = "select BinData from `LongShanStage` where ActivityId=?",
+  KEY_PREFIX = "LongShanStageAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX = "configLongShanStageAll.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configLongShanStageAll.GetConfigList(";
 exports.configLongShanStageAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -29,7 +29,7 @@ exports.configLongShanStageAll = {
     );
   },
   GetConfigList: (o, n = !0) => {
-    let i;
+    var i;
     if (
       (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -44,13 +44,14 @@ exports.configLongShanStageAll = {
         const a = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "ActivityId",
               o,
-            ]) !== 1
+            ])
           )
             break;
-          let t = void 0;
+          var t = void 0;
           if (
             (([i, t] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -78,4 +79,4 @@ exports.configLongShanStageAll = {
     }
   },
 };
-// # sourceMappingURL=LongShanStageAll.js.map
+//# sourceMappingURL=LongShanStageAll.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TrainingView = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const GenericLayoutNew_1 = require("../Util/Layout/GenericLayoutNew");
-const TrainingItem_1 = require("./TrainingItem");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  GenericLayoutNew_1 = require("../Util/Layout/GenericLayoutNew"),
+  TrainingItem_1 = require("./TrainingItem");
 class TrainingView {
   constructor() {
     (this.E_i = void 0),
@@ -13,7 +13,7 @@ class TrainingView {
       });
   }
   Show(e) {
-    let i, r;
+    var i, r;
     e &&
       ((i = e.RootUIComp),
       (r =
@@ -28,4 +28,4 @@ class TrainingView {
   }
 }
 exports.TrainingView = TrainingView;
-// # sourceMappingURL=TrainingView.js.map
+//# sourceMappingURL=TrainingView.js.map

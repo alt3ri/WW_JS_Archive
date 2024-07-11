@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemGrid = void 0);
-const UE = require("ue");
-const QualityInfoById_1 = require("../../../../Core/Define/ConfigQuery/QualityInfoById");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const RedDotController_1 = require("../../../RedDot/RedDotController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const ItemGridAbstract_1 = require("./ItemGridAbstract");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  QualityInfoById_1 = require("../../../../Core/Define/ConfigQuery/QualityInfoById"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  RedDotController_1 = require("../../../RedDot/RedDotController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ItemGridAbstract_1 = require("./ItemGridAbstract"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class ItemGrid extends ItemGridAbstract_1.ItemGridAbstract {
   constructor() {
     super(...arguments),
@@ -16,7 +16,7 @@ class ItemGrid extends ItemGridAbstract_1.ItemGridAbstract {
       (this.eAt = ""),
       (this.tAt = 0),
       (this.iAt = () => {
-        let t;
+        var t;
         this.zUt || this.ZUt
           ? ((t = this.GetClickToggle().ToggleState),
             this.zUt?.(this.GetItemId(), this.GetItemConfig()),
@@ -58,7 +58,7 @@ class ItemGrid extends ItemGridAbstract_1.ItemGridAbstract {
     return this.GetText(2);
   }
   RefreshQualitySprite() {
-    const t = QualityInfoById_1.configQualityInfoById.GetConfig(
+    var t = QualityInfoById_1.configQualityInfoById.GetConfig(
       this.GetItemConfig().QualityId,
     ).BackgroundSprite;
     this.SetSpriteByPath(t, this.GetSprite(0), !1, this.GetBelongView());
@@ -125,4 +125,4 @@ class ItemGrid extends ItemGridAbstract_1.ItemGridAbstract {
   }
 }
 exports.ItemGrid = ItemGrid;
-// # sourceMappingURL=ItemGrid.js.map
+//# sourceMappingURL=ItemGrid.js.map

@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuideModel = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ModelBase_1 = require("../../../../Core/Framework/ModelBase");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const UiManager_1 = require("../../../Ui/UiManager");
-const GuideController_1 = require("../GuideController");
-const GuideGroupInfo_1 = require("./GuideGroupInfo");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  GuideController_1 = require("../GuideController"),
+  GuideGroupInfo_1 = require("./GuideGroupInfo");
 class GuideModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -31,7 +31,7 @@ class GuideModel extends ModelBase_1.ModelBase {
       });
   }
   get IsGuideLockingInput() {
-    return this.FYt > 0;
+    return 0 < this.FYt;
   }
   AddGuideLockInput() {
     this.FYt++ || this.HYt();
@@ -82,12 +82,12 @@ class GuideModel extends ModelBase_1.ModelBase {
       this.TryShowTutorial();
   }
   TryShowTutorial() {
-    let i;
+    var i;
     this.qYt.length <= 0 ||
       ((i = this.qYt[this.qYt.length - 1]),
       this.NYt &&
-        (this.NYt.TipState === 2 ||
-          (i.TutorialTip && this.NYt.TipState !== 1))) ||
+        (2 === this.NYt.TipState ||
+          (i.TutorialTip && 1 !== this.NYt.TipState))) ||
       this.jYt(i);
   }
   jYt(i) {
@@ -108,12 +108,12 @@ class GuideModel extends ModelBase_1.ModelBase {
     this.OYt && this.TryShowGuideTutorialView();
   }
   ClipTipState() {
-    for (const i of this.qYt) i.TipState === 0 && (i.TipState = 1);
+    for (const i of this.qYt) 0 === i.TipState && (i.TipState = 1);
   }
   RemoveCurrentTutorialInfo() {
-    const i = this.qYt.indexOf(this.NYt);
+    var i = this.qYt.indexOf(this.NYt);
     (this.NYt = void 0),
-      i >= 0 &&
+      0 <= i &&
         (this.qYt[i].StopGuide(), this.qYt.splice(i, 1), this.TryPauseTimer());
   }
   HaveCurrentTutorial() {
@@ -122,14 +122,14 @@ class GuideModel extends ModelBase_1.ModelBase {
   TryPauseTimer() {
     this.GYt &&
       !this.GYt.IsPause() &&
-      (this.qYt.length === 0 || (this.NYt && this.NYt.TipState === 2)) &&
+      (0 === this.qYt.length || (this.NYt && 2 === this.NYt.TipState)) &&
       TimerSystem_1.TimerSystem.Pause(this.GYt);
   }
   WYt() {
     this.GYt &&
       this.GYt.IsPause() &&
       this.qYt.length &&
-      (!this.NYt || this.NYt.TipState !== 2) &&
+      (!this.NYt || 2 !== this.NYt.TipState) &&
       (TimerSystem_1.TimerSystem.Has(this.GYt)
         ? TimerSystem_1.TimerSystem.Resume(this.GYt)
         : (this.GYt = TimerSystem_1.TimerSystem.Forever(
@@ -141,19 +141,19 @@ class GuideModel extends ModelBase_1.ModelBase {
     this.kYt.get(i)?.SwitchState(3), this.kYt.set(i, void 0);
   }
   OpenGuideView(i) {
-    const e = i.Config.ContentType;
+    var e = i.Config.ContentType;
     this.kYt.set(e, i),
-      e === 4
+      4 === e
         ? UiManager_1.UiManager.OpenView("GuideFocusView", i)
         : UiManager_1.UiManager.OpenView("GuideTipsView", i);
   }
   RemoveStepViewSingletonMap(i) {
-    const e = i.Config.ContentType;
+    var e = i.Config.ContentType;
     this.kYt.get(e) === i && this.kYt.set(e, void 0);
   }
   EnsureCurrentDungeonId() {
     const e = ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
-    for (const [i, t] of this.CurrentGroupMap)
+    for (var [i, t] of this.CurrentGroupMap)
       ConfigManager_1.ConfigManager.GuideConfig.GetGroup(i)?.DungeonId.find(
         (i) => i === e,
       ) ||
@@ -188,7 +188,7 @@ class GuideModel extends ModelBase_1.ModelBase {
       this.CurrentGroupMap.clear();
   }
   FinishGroup(i) {
-    const e = this.CurrentGroupMap.get(i);
+    var e = this.CurrentGroupMap.get(i);
     e && (e.Reset(), this.CurrentGroupMap.delete(i)), this.bYt.add(i);
   }
   ResetFinishedGuide(i) {
@@ -201,10 +201,10 @@ class GuideModel extends ModelBase_1.ModelBase {
     return !this.IsGroupFinished(i) || this.IsGroupCanRepeat(i);
   }
   IsGroupCanRepeat(i) {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.GuideConfig.GetLimitRepeatStepSetOfGroup(i);
     return (
-      e.size === 0 ||
+      0 === e.size ||
       !(
         e.has(-1) ||
         (this.CheckGuideInfoExist(i) &&
@@ -218,11 +218,11 @@ class GuideModel extends ModelBase_1.ModelBase {
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Guide", 17, "引导当前处于屏蔽状态, 无法创建");
     else {
-      const e = ConfigManager_1.ConfigManager.GuideConfig.GetGroup(i);
+      var e = ConfigManager_1.ConfigManager.GuideConfig.GetGroup(i);
       if (e)
         if (this.CanGroupInvoke(i)) {
-          let t;
-          const r = e.OpenLimitCondition;
+          var t,
+            r = e.OpenLimitCondition;
           if (
             !r ||
             this.IsGmInvoke ||
@@ -278,7 +278,7 @@ class GuideModel extends ModelBase_1.ModelBase {
     }
   }
   SwitchGroupState(i, e) {
-    const t = this.CurrentGroupMap.get(i);
+    var t = this.CurrentGroupMap.get(i);
     t
       ? t.SwitchState(e)
       : Log_1.Log.CheckError() &&
@@ -319,17 +319,17 @@ class GuideModel extends ModelBase_1.ModelBase {
     );
   }
   static KYt(i, e, t) {
-    return t === ""
+    return "" === t
       ? i === e
-      : t === "!="
+      : "!=" === t
         ? i !== e
-        : t === ">"
+        : ">" === t
           ? e < i
-          : t === ">="
+          : ">=" === t
             ? e <= i
-            : t === "<"
+            : "<" === t
               ? i < e
-              : t === "<=" && i <= e;
+              : "<=" === t && i <= e;
   }
   OnClear() {
     return (
@@ -349,4 +349,4 @@ class GuideModel extends ModelBase_1.ModelBase {
   }
 }
 ((exports.GuideModel = GuideModel).IsLock = !1), (GuideModel.IsGmLock = !1);
-// # sourceMappingURL=GuideModel.js.map
+//# sourceMappingURL=GuideModel.js.map

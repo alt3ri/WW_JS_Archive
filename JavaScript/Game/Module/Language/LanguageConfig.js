@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LanguageConfig = void 0);
-const LanguageDefineByLanguageCode_1 = require("../../../Core/Define/ConfigQuery/LanguageDefineByLanguageCode");
-const LanguageDefineByLanguageType_1 = require("../../../Core/Define/ConfigQuery/LanguageDefineByLanguageType");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const LanguageDefineByLanguageCode_1 = require("../../../Core/Define/ConfigQuery/LanguageDefineByLanguageCode"),
+  LanguageDefineByLanguageType_1 = require("../../../Core/Define/ConfigQuery/LanguageDefineByLanguageType"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class LanguageConfig extends ConfigBase_1.ConfigBase {
   GetLanguageDefineByLanguageCode(e) {
     return LanguageDefineByLanguageCode_1.configLanguageDefineByLanguageCode.GetConfig(
@@ -17,4 +17,4 @@ class LanguageConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.LanguageConfig = LanguageConfig;
-// # sourceMappingURL=LanguageConfig.js.map
+//# sourceMappingURL=LanguageConfig.js.map

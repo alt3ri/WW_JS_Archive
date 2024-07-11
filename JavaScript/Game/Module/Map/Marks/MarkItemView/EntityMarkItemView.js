@@ -11,4 +11,4 @@ class EntityMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
   }
 }
 exports.EntityMarkItemView = EntityMarkItemView;
-// # sourceMappingURL=EntityMarkItemView.js.map
+//# sourceMappingURL=EntityMarkItemView.js.map

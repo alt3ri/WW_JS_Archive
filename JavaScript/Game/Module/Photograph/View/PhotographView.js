@@ -1,35 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhotographView = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const Global_1 = require("../../../Global");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const UiTimeDilation_1 = require("../../../Ui/Base/UiTimeDilation");
-const UiLayerType_1 = require("../../../Ui/Define/UiLayerType");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const TouchFingerDefine_1 = require("../../../Ui/TouchFinger/TouchFingerDefine");
-const TouchFingerManager_1 = require("../../../Ui/TouchFinger/TouchFingerManager");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const UiManager_1 = require("../../../Ui/UiManager");
-const UiCameraManager_1 = require("../../UiCamera/UiCameraManager");
-const PhotographController_1 = require("../PhotographController");
-const PhotographDefine_1 = require("../PhotographDefine");
-const PhotographEntityPanel_1 = require("./PhotographEntityPanel");
-const CHANGE_FOV_INTERVAL = 100;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../Global"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  UiTimeDilation_1 = require("../../../Ui/Base/UiTimeDilation"),
+  UiLayerType_1 = require("../../../Ui/Define/UiLayerType"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  TouchFingerDefine_1 = require("../../../Ui/TouchFinger/TouchFingerDefine"),
+  TouchFingerManager_1 = require("../../../Ui/TouchFinger/TouchFingerManager"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  UiCameraManager_1 = require("../../UiCamera/UiCameraManager"),
+  PhotographController_1 = require("../PhotographController"),
+  PhotographDefine_1 = require("../PhotographDefine"),
+  PhotographEntityPanel_1 = require("./PhotographEntityPanel"),
+  CHANGE_FOV_INTERVAL = 100;
 class PhotographView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -46,23 +46,23 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
       (this.UKi = new UE.Vector2D(0, 0)),
       (this.AKi = new UE.Vector2D(0, 0)),
       (this.bNi = (t, e) => {
-        e !== 0 && this.PKi(!0);
+        0 !== e && this.PKi(!0);
       }),
       (this.O6i = (t) => {
-        t.scrollAxisValue !== 0 && (this.PKi(!0), this.xKi(t.scrollAxisValue));
+        0 !== t.scrollAxisValue && (this.PKi(!0), this.xKi(t.scrollAxisValue));
       }),
       (this.k6i = (t, e) => {
-        e !== 0 &&
+        0 !== e &&
           ModelManager_1.ModelManager.PlatformModel.IsGamepad() &&
           this.xKi(-e);
       }),
       (this.F6i = (t, e) => {
-        e !== 0 &&
+        0 !== e &&
           ModelManager_1.ModelManager.PlatformModel.IsGamepad() &&
           this.xKi(-e);
       }),
       (this.wKi = (t, e) => {
-        e === 1 &&
+        1 === e &&
           PhotographController_1.PhotographController.ScreenShot({
             ScreenShot: !0,
             IsHiddenBattleView: !1,
@@ -74,13 +74,13 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
       (this.pbt = (t, e) => {
         this.PKi(!0);
         (e = e.TouchType), (t = Number(t));
-        e === 2 && this.lCt(t);
+        2 === e && this.lCt(t);
       }),
       (this.BKi = (t) => {
         this.bKi(!t);
       }),
       (this.cCt = () => {
-        PhotographController_1.PhotographController.CameraCaptureType === 1
+        1 === PhotographController_1.PhotographController.CameraCaptureType
           ? (ModelManager_1.ModelManager.PhotographModel.UpValue = -1)
           : (ModelManager_1.ModelManager.PhotographModel.UpValue = 1),
           this.PKi(!0);
@@ -89,7 +89,7 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
         (ModelManager_1.ModelManager.PhotographModel.UpValue = 0), this.PKi(!0);
       }),
       (this._Ct = () => {
-        PhotographController_1.PhotographController.CameraCaptureType === 1
+        1 === PhotographController_1.PhotographController.CameraCaptureType
           ? (ModelManager_1.ModelManager.PhotographModel.UpValue = 1)
           : (ModelManager_1.ModelManager.PhotographModel.UpValue = -1),
           this.PKi(!0);
@@ -98,7 +98,7 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
         (ModelManager_1.ModelManager.PhotographModel.UpValue = 0), this.PKi(!0);
       }),
       (this.dCt = () => {
-        PhotographController_1.PhotographController.CameraCaptureType === 1
+        1 === PhotographController_1.PhotographController.CameraCaptureType
           ? (ModelManager_1.ModelManager.PhotographModel.RightValue = 1)
           : (ModelManager_1.ModelManager.PhotographModel.RightValue = -1),
           this.PKi(!0);
@@ -108,7 +108,7 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
           this.PKi(!0);
       }),
       (this.gCt = () => {
-        PhotographController_1.PhotographController.CameraCaptureType === 1
+        1 === PhotographController_1.PhotographController.CameraCaptureType
           ? (ModelManager_1.ModelManager.PhotographModel.RightValue = -1)
           : (ModelManager_1.ModelManager.PhotographModel.RightValue = 1),
           this.PKi(!0);
@@ -118,8 +118,8 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
           this.PKi(!0);
       }),
       (this.qKi = (t, e = 0) => {
-        let i;
-        PhotographController_1.PhotographController.CameraCaptureType === 1
+        var i;
+        1 === PhotographController_1.PhotographController.CameraCaptureType
           ? PhotographController_1.PhotographController.MinFov &&
             PhotographController_1.PhotographController.MaxFov &&
             ((i = MathUtils_1.MathUtils.RangeClamp(
@@ -143,15 +143,15 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
       (this.GKi = (t) => {
         if (
           (this.PKi(!0),
-          !(TouchFingerManager_1.TouchFingerManager.GetTouchFingerCount() > 1))
+          !(1 < TouchFingerManager_1.TouchFingerManager.GetTouchFingerCount()))
         ) {
           t = t.pointerPosition;
           if (this.IKi) {
-            const e =
+            var e =
               ModelManager_1.ModelManager.PhotographModel.GetPhotographerStructure();
             if (!e) return;
-            const i = (t.Y - this.IKi.Y) * this.TKi;
-            const o = (this.IKi.X - t.X) * this.TKi;
+            var i = (t.Y - this.IKi.Y) * this.TKi,
+              o = (this.IKi.X - t.X) * this.TKi;
             e.AddCameraArmPitchInput(i),
               e.AddPhotographerYawInput(-o),
               e.AddCameraArmYawInput(-o);
@@ -237,12 +237,12 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
           this.UiViewSequence.SequencePlayReverseByKey("ShowChanging", !1));
       }),
       (this.MKe = () => {
-        var t = Global_1.Global.CharacterController;
-        var e = (0, puerts_1.$ref)(void 0);
-        var i = (0, puerts_1.$ref)(void 0);
-        var t = (t.GetViewportSize(e, i), (0, puerts_1.$unref)(e));
-        var e = (0, puerts_1.$unref)(i);
-        var i = (this.v$e.Set(t, e), UiLayer_1.UiLayer.UiRootItem);
+        var t = Global_1.Global.CharacterController,
+          e = (0, puerts_1.$ref)(void 0),
+          i = (0, puerts_1.$ref)(void 0),
+          t = (t.GetViewportSize(e, i), (0, puerts_1.$unref)(e)),
+          e = (0, puerts_1.$unref)(i),
+          i = (this.v$e.Set(t, e), UiLayer_1.UiLayer.UiRootItem);
         i &&
           (this.UKi.Set(i.GetWidth(), i.GetHeight()),
           this.DKi.Set(0.5 * -i.GetWidth(), 0.5 * -i.GetHeight()));
@@ -279,25 +279,25 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
       ]);
   }
   OnStart() {
-    const t =
+    var t =
       ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity?.Entity;
     t?.Valid && t.GetComponent(99)?.SetLodBias(PhotographDefine_1.MAX_LOD_BIAS);
   }
   OnAfterDestroy() {
-    const t =
+    var t =
       ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity?.Entity;
     t?.Valid &&
       t.GetComponent(99)?.SetLodBias(PhotographDefine_1.DEFAULT_LOD_BIAS);
   }
   OnAddEventListener() {
-    const t = this.GetButton(0);
-    const e = this.GetButton(1);
-    const i = this.GetButton(2);
-    const o = this.GetButton(3);
-    const r = this.GetSlider(10);
-    const h = this.GetButton(4);
-    const n = this.GetButton(5);
-    const s = this.GetDraggable(13);
+    var t = this.GetButton(0),
+      e = this.GetButton(1),
+      i = this.GetButton(2),
+      o = this.GetButton(3),
+      r = this.GetSlider(10),
+      h = this.GetButton(4),
+      n = this.GetButton(5),
+      s = this.GetDraggable(13);
     t.OnPointDownCallBack.Bind(this.cCt),
       t.OnPointUpCallBack.Bind(this.mCt),
       t.OnPointCancelCallBack.Bind(this.mCt),
@@ -375,14 +375,14 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
       );
   }
   OnRemoveEventListener() {
-    const t = this.GetButton(0);
-    const e = this.GetButton(1);
-    const i = this.GetButton(2);
-    const o = this.GetButton(3);
-    const r = this.GetSlider(10);
-    const h = this.GetButton(4);
-    const n = this.GetButton(5);
-    const s = this.GetDraggable(13);
+    var t = this.GetButton(0),
+      e = this.GetButton(1),
+      i = this.GetButton(2),
+      o = this.GetButton(3),
+      r = this.GetSlider(10),
+      h = this.GetButton(4),
+      n = this.GetButton(5),
+      s = this.GetDraggable(13);
     t.OnPointDownCallBack.Unbind(),
       t.OnPointUpCallBack.Unbind(),
       e.OnPointDownCallBack.Unbind(),
@@ -457,23 +457,23 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnAfterTick(t) {
     super.OnAfterTick(t),
-      PhotographController_1.PhotographController.CameraCaptureType === 1 &&
+      1 === PhotographController_1.PhotographController.CameraCaptureType &&
         this.eai();
   }
   OnBeforeCreate() {
     PhotographController_1.PhotographController.InitPhotographRelativeContent();
   }
   OnBeforeShow() {
-    let t;
-    let e;
-    let i;
-    const o =
-      ModelManager_1.ModelManager.PhotographModel.GetPhotographerStructure();
+    var t,
+      e,
+      i,
+      o =
+        ModelManager_1.ModelManager.PhotographModel.GetPhotographerStructure();
     o &&
       (this.PKi(!0),
       (t = Global_1.Global.BaseCharacter) &&
         PhotographController_1.PhotographController.GetFightCameraActor() &&
-        PhotographController_1.PhotographController.CameraCaptureType === 1 &&
+        1 === PhotographController_1.PhotographController.CameraCaptureType &&
         ((t = new UE.Vector(
           t?.K2_GetActorLocation().X,
           t?.K2_GetActorLocation().Y,
@@ -517,8 +517,8 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
       );
   }
   ZKi() {
-    let t;
-    PhotographController_1.PhotographController.CameraCaptureType === 1 &&
+    var t;
+    1 === PhotographController_1.PhotographController.CameraCaptureType &&
       (this.SetEntityCameraVisibility(!0),
       (t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity),
       ModelManager_1.ModelManager.PhotographModel.SetEntityEnable(t, !1));
@@ -527,7 +527,7 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
     if (
       ModelManager_1.ModelManager.PhotographModel.GetPhotographerStructure()
     ) {
-      let e = TouchFingerManager_1.TouchFingerManager.GetTouchFingerCount();
+      var e = TouchFingerManager_1.TouchFingerManager.GetTouchFingerCount();
       if (!(e <= 1)) {
         let t = TouchFingerManager_1.TouchFingerManager.GetTouchFingerData(
           TouchFingerDefine_1.EFingerIndex.One,
@@ -562,8 +562,8 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
   }
   PKi(t) {
     t && (this.yKi = 0);
-    const e = this.GetItem(11);
-    PhotographController_1.PhotographController.CameraCaptureType === 1
+    var e = this.GetItem(11);
+    1 === PhotographController_1.PhotographController.CameraCaptureType
       ? (e.SetUIActive(!0),
         this.GetButton(14).RootUIComp.SetUIActive(!1),
         this.GetButton(7).RootUIComp.SetUIActive(!1))
@@ -602,11 +602,11 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
       UiLayer_1.UiLayer.SetLayerActive(UiLayerType_1.ELayerType.HUD, !0);
   }
   tQi() {
-    let t;
-    let e;
-    let i;
-    const o = this.GetSlider(10);
-    PhotographController_1.PhotographController.CameraCaptureType === 0
+    var t,
+      e,
+      i,
+      o = this.GetSlider(10);
+    0 === PhotographController_1.PhotographController.CameraCaptureType
       ? (o.SetMinValue(PhotographDefine_1.MIN_FOV, !1, !1),
         o.SetMaxValue(PhotographDefine_1.MAX_FOV, !1, !1),
         o.SetValue(PhotographDefine_1.DEFAULT_FOV, !1))
@@ -633,8 +633,8 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
           ));
   }
   xKi(t) {
-    const e = this.GetSlider(10);
-    var t = e.GetValue() + t;
+    var e = this.GetSlider(10),
+      t = e.GetValue() + t;
     e.SetValue(t, !0);
   }
   SetEntityCameraVisibility(t) {
@@ -645,18 +645,17 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
   }
   eQi() {
     PhotographController_1.PhotographController.UpdateMission();
-    const t =
-      PhotographController_1.PhotographController.CameraCaptureType === 1;
+    var t = 1 === PhotographController_1.PhotographController.CameraCaptureType;
     this.LKi.SetActive(t), t && this.iQi();
   }
   iQi() {
-    const t = PhotographController_1.PhotographController.Missions?.length;
+    var t = PhotographController_1.PhotographController.Missions?.length;
     if (!t || t <= 0) this.LKi.SetInfoPanelVisible(!1);
     else {
       this.LKi.SetInfoPanelVisible(!0);
-      const e = [];
+      var e = [];
       for (const o of PhotographController_1.PhotographController.Missions) {
-        const i = { Text: o.Description, IsFinish: o.IsFinished };
+        var i = { Text: o.Description, IsFinish: o.IsFinished };
         e.push(i);
       }
       this.LKi.Refresh(e);
@@ -676,17 +675,18 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
       .op_Multiply(this.pXe);
   }
   eai() {
-    const r = [];
-    const t =
-      PhotographController_1.PhotographController.BehaviorNode?.TakeTargetArray;
+    var r = [],
+      t =
+        PhotographController_1.PhotographController.BehaviorNode
+          ?.TakeTargetArray;
     if (t && !(t.length <= 0))
       for (const M of t) {
-        const h = PhotographController_1.PhotographController.GetAllCheckPoints(
+        var h = PhotographController_1.PhotographController.GetAllCheckPoints(
           M.EntityId,
         );
         if (h && !(h.length <= 0)) {
           let e = "RequiredPointsCenter";
-          const n = PhotographController_1.PhotographController.GetPointType(
+          var n = PhotographController_1.PhotographController.GetPointType(
             M.EntityId,
           );
           switch ((e = n ? n.Type : e)) {
@@ -714,19 +714,21 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
               r.push({ Id: M.EntityId.toString(), Vector: s, NotShow: !1 });
               continue;
             case "CustomPoints":
-              var a = n.Points;
-              var _ =
-                PhotographController_1.PhotographController.GetCheckEntityPosition(
-                  M.EntityId,
-                );
+              var a = n.Points,
+                _ =
+                  PhotographController_1.PhotographController.GetCheckEntityPosition(
+                    M.EntityId,
+                  );
               if (!_) continue;
               for (let t = 0; t < a.length; t++) {
-                var l = (a[t].X ?? 0) + (_.X ?? 0);
-                var p = (a[t].Y ?? 0) + (_.Y ?? 0);
-                let g = (a[t].Z ?? 0) + (_.Z ?? 0);
-                var l = Vector_1.Vector.Create(l, p, g);
-                var p =
-                  PhotographController_1.PhotographController.GetPosition2D(l);
+                var l = (a[t].X ?? 0) + (_.X ?? 0),
+                  p = (a[t].Y ?? 0) + (_.Y ?? 0),
+                  g = (a[t].Z ?? 0) + (_.Z ?? 0),
+                  l = Vector_1.Vector.Create(l, p, g),
+                  p =
+                    PhotographController_1.PhotographController.GetPosition2D(
+                      l,
+                    );
                 p &&
                 PhotographController_1.PhotographController.GetEntityFinishSituation(
                   M.EntityId,
@@ -745,20 +747,20 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
               }
               continue;
           }
-          let u = h.length;
-          let i = !0;
-          let o = !1;
+          var u = h.length;
+          let i = !0,
+            o = !1;
           this.RKi.Set(0, 0);
           for (let t = 0; t < h.length; t++) {
-            const C = h[t];
-            let D =
-              (PhotographController_1.PhotographController.GetEntityFinishSituation(
-                M.EntityId,
-              ) || (o = !0),
-              PhotographController_1.PhotographController.GetPosition2D(C));
+            var C = h[t],
+              D =
+                (PhotographController_1.PhotographController.GetEntityFinishSituation(
+                  M.EntityId,
+                ) || (o = !0),
+                PhotographController_1.PhotographController.GetPosition2D(C));
             D
               ? ((D = this.oQi(D)),
-                e === "RequiredPoints"
+                "RequiredPoints" === e
                   ? (r.push({
                       Id: M.EntityId.toString() + t.toString(),
                       Vector: D,
@@ -772,7 +774,7 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
                     }),
                     (i = !1))
                   : (this.RKi = this.RKi.op_Addition(D)))
-              : e === "RequiredPoints"
+              : "RequiredPoints" === e
                 ? r.push({
                     Id: M.EntityId.toString() + t.toString(),
                     Vector: this.AKi,
@@ -795,4 +797,4 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.PhotographView = PhotographView;
-// # sourceMappingURL=PhotographView.js.map
+//# sourceMappingURL=PhotographView.js.map

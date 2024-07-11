@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BigJumpUnit = exports.DEFAULT_GRAVITY = void 0);
-const UE = require("ue");
-const ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem");
-const CurveUtils_1 = require("../../../../../../Core/Utils/Curve/CurveUtils");
-const Rotator_1 = require("../../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem"),
+  CurveUtils_1 = require("../../../../../../Core/Utils/Curve/CurveUtils"),
+  Rotator_1 = require("../../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
 exports.DEFAULT_GRAVITY = 1960;
 class BigJumpUnit {
   constructor() {
@@ -44,7 +44,7 @@ class BigJumpUnit {
     this.g$i.DeepCopy(t);
   }
   Init() {
-    this.jYo > 0
+    0 < this.jYo
       ? (this.fDe.Subtraction(this.g$i, BigJumpUnit.Lz),
         this.Rotator.Set(
           0,
@@ -81,7 +81,6 @@ class BigJumpUnit {
   Gravity2: ${this.jYo}, Speeds: ${this.WYo.ToString()}, ` + this.KYo.ToString()
     );
   }
-
   get RisingTime() {
     return this.OYo;
   }
@@ -89,7 +88,7 @@ class BigJumpUnit {
     return this.OYo + this.kYo;
   }
   GetLocation(t, i) {
-    let s;
+    var s;
     t < this.OYo
       ? (Vector_1.Vector.Lerp(this.WYo, this.KYo, t / this.OYo, i),
         i.AdditionEqual(this.WYo),
@@ -119,4 +118,4 @@ class BigJumpUnit {
 }
 ((exports.BigJumpUnit = BigJumpUnit).Lz = Vector_1.Vector.Create()),
   (BigJumpUnit.Tz = Vector_1.Vector.Create());
-// # sourceMappingURL=BigJumpUnit.js.map
+//# sourceMappingURL=BigJumpUnit.js.map

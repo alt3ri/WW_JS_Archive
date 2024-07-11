@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OnlineSearchView = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const OnlineController_1 = require("../OnlineController");
-const OnlineHallItem_1 = require("./OnlineHallItem");
-const ButtonAndSpriteItem_1 = require("../../Common/Button/ButtonAndSpriteItem");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  OnlineController_1 = require("../OnlineController"),
+  OnlineHallItem_1 = require("./OnlineHallItem"),
+  ButtonAndSpriteItem_1 = require("../../Common/Button/ButtonAndSpriteItem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class OnlineSearchView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -22,10 +22,10 @@ class OnlineSearchView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.oNi = () => new OnlineHallItem_1.OnlineHallItem(this.Info.Name)),
       (this.aNi = () => {
-        let e;
-        let t;
-        const i = this.GetInputText(0);
-        i.GetText() === ""
+        var e,
+          t,
+          i = this.GetInputText(0);
+        "" === i.GetText()
           ? ((t = ((e = ""), puerts_1.$ref)("")),
             UE.LGUIBPLibrary.ClipBoardPaste(t),
             (e = (0, puerts_1.$unref)(t)),
@@ -34,13 +34,13 @@ class OnlineSearchView extends UiTickViewBase_1.UiTickViewBase {
           this.h8t();
       }),
       (this.h8t = () => {
-        this.GetInputText(0).GetText() === ""
+        "" === this.GetInputText(0).GetText()
           ? this.a8t.RefreshSprite("SP_Paste")
           : this.a8t.RefreshSprite("SP_Clear");
       }),
       (this.l8t = () => {
-        const e = this.GetInputText(0).GetText();
-        e.length > 0
+        var e = this.GetInputText(0).GetText();
+        0 < e.length
           ? OnlineController_1.OnlineController.LobbyQueryPlayersRequest(
               Number(e),
             )
@@ -63,7 +63,7 @@ class OnlineSearchView extends UiTickViewBase_1.UiTickViewBase {
   OnStart() {
     (this.a8t = new ButtonAndSpriteItem_1.ButtonAndSpriteItem(this.GetItem(1))),
       this.a8t.BindCallback(this.aNi);
-    const e = this.GetItem(4);
+    var e = this.GetItem(4);
     (this.s8t = new LoopScrollView_1.LoopScrollView(
       this.GetLoopScrollViewComponent(3),
       e.GetOwner(),
@@ -100,4 +100,4 @@ class OnlineSearchView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.OnlineSearchView = OnlineSearchView;
-// # sourceMappingURL=OnlineSearchView.js.map
+//# sourceMappingURL=OnlineSearchView.js.map

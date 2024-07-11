@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelExperienceComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const ExpTweenComponent_1 = require("./ExpTween/ExpTweenComponent");
-const LevelSequencePlayer_1 = require("./LevelSequencePlayer");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  ExpTweenComponent_1 = require("./ExpTween/ExpTweenComponent"),
+  LevelSequencePlayer_1 = require("./LevelSequencePlayer");
 class LevelExperienceComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t, i, s = !1) {
     super(),
@@ -118,8 +118,8 @@ class LevelExperienceComponent extends UiPanelBase_1.UiPanelBase {
   }
   UpdateCurrentExp(t) {
     this.SetNextLevelActive(!1);
-    var t = this.CurrentExp + t;
-    const i = t / this.CurrentMaxExp;
+    var t = this.CurrentExp + t,
+      i = t / this.CurrentMaxExp;
     this.NeedPreviewTween
       ? this.PlayPreviewExp(this.CurrentLevel, i)
       : this.UpdateCurrentExpState(i),
@@ -169,7 +169,7 @@ class LevelExperienceComponent extends UiPanelBase_1.UiPanelBase {
     return this.IsAddUp ? this.AddUpMaxExp(t) : this.StageMaxExp(t);
   }
   UpdateViewState() {
-    let t, i;
+    var t, i;
     this.CurrentLevelText.SetText(this.CurrentLevel.toString()),
       this.ExpTweenComponent.SetCurrentSpriteActive(!0),
       this.ExpTweenComponent.SetNextSpriteActive(!1),
@@ -208,7 +208,7 @@ class LevelExperienceComponent extends UiPanelBase_1.UiPanelBase {
     (this.NeedPreviewTween = i),
       (this.FrontExp = t),
       LguiUtil_1.LguiUtil.SetLocalText(this.AddExp, "AddExp", Math.floor(t)),
-      this.AddExp.SetUIActive(t > 0),
+      this.AddExp.SetUIActive(0 < t),
       this.CurrentExp + t >= this.CurrentMaxExp
         ? ((i = this.CurrentExp + t - this.CurrentMaxExp),
           this.UpdateNextExp(i, this.CurrentLevel + 1))
@@ -216,9 +216,9 @@ class LevelExperienceComponent extends UiPanelBase_1.UiPanelBase {
   }
   PlayExpTween() {
     let t = 1;
-    const i = this.CurrentExp / this.CurrentMaxExp;
+    var i = this.CurrentExp / this.CurrentMaxExp;
     this.ArrivedLevel > this.CurrentLevel &&
-      (this.ArrivedFillAmount !== 1 || i != 0) &&
+      (1 !== this.ArrivedFillAmount || 0 != i) &&
       t++,
       this.ExpTweenComponent.PlayExpTween(t, this.ArrivedFillAmount);
   }
@@ -259,4 +259,4 @@ class LevelExperienceComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.LevelExperienceComponent = LevelExperienceComponent;
-// # sourceMappingURL=LevelExperienceComponent.js.map
+//# sourceMappingURL=LevelExperienceComponent.js.map

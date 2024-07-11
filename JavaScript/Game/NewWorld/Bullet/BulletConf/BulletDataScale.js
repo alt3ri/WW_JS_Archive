@@ -30,4 +30,4 @@ class BulletDataScale {
   }
 }
 exports.BulletDataScale = BulletDataScale;
-// # sourceMappingURL=BulletDataScale.js.map
+//# sourceMappingURL=BulletDataScale.js.map

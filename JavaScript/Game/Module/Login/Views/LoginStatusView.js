@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoginStatusView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LoginDefine_1 = require("../Data/LoginDefine");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LoginDefine_1 = require("../Data/LoginDefine");
 class LoginStatusView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.RefreshStatus = () => {
-        const e = ModelManager_1.ModelManager.LoginModel.GetLoginStatus();
-        const n = ModelManager_1.ModelManager.LoginModel.GetLastFailStatus();
+        var e = ModelManager_1.ModelManager.LoginModel.GetLoginStatus(),
+          n = ModelManager_1.ModelManager.LoginModel.GetLastFailStatus();
         let t = "";
         (t = n
           ? `登录状态:${LoginDefine_1.ELoginStatus[e]}, 上一次失败:` +
@@ -41,4 +41,4 @@ class LoginStatusView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.LoginStatusView = LoginStatusView;
-// # sourceMappingURL=LoginStatusView.js.map
+//# sourceMappingURL=LoginStatusView.js.map

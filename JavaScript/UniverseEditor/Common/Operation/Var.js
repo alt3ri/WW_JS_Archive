@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.exportVarConfig = exports.getVarConfigArray = void 0);
-const CsvRegistry_1 = require("../CsvConfig/CsvRegistry");
-const VarConfigCsv_1 = require("../CsvConfig/VarConfigCsv");
+const CsvRegistry_1 = require("../CsvConfig/CsvRegistry"),
+  VarConfigCsv_1 = require("../CsvConfig/VarConfigCsv");
 class VarConfigManager {
   constructor() {
     (this.Pe = []), this.Init();
@@ -17,7 +17,7 @@ class VarConfigManager {
     this.Pe = this.LoadVarConfig();
   }
   LoadVarConfig() {
-    const r = CsvRegistry_1.CsvRegistry.Instance.GetAllCsvRows(
+    var r = CsvRegistry_1.CsvRegistry.Instance.GetAllCsvRows(
       VarConfigCsv_1.VarConfigCsv,
     );
     const n = [];
@@ -29,7 +29,7 @@ class VarConfigManager {
     );
   }
   ExportVarConfig() {
-    const r = CsvRegistry_1.CsvRegistry.Instance.GetAllCsvRows(
+    var r = CsvRegistry_1.CsvRegistry.Instance.GetAllCsvRows(
       VarConfigCsv_1.VarConfigCsv,
     );
     const n = [];
@@ -52,4 +52,4 @@ function exportVarConfig() {
 }
 (exports.getVarConfigArray = getVarConfigArray),
   (exports.exportVarConfig = exportVarConfig);
-// # sourceMappingURL=Var.js.map
+//# sourceMappingURL=Var.js.map

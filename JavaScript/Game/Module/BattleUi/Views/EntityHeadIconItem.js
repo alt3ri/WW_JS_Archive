@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EntityHeadIconItem = void 0);
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class EntityHeadIconItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -22,7 +22,7 @@ class EntityHeadIconItem extends UiPanelBase_1.UiPanelBase {
     this.RefreshAlpha();
   }
   RefreshAlpha() {
-    let e;
+    var e;
     this.RootItem &&
       (e = this.GetHeadDialogVisible()) !== this.HeadDialogVisible &&
       ((this.HeadDialogVisible = e), this.RootItem.SetAlpha(e ? 0.2 : 1));
@@ -35,4 +35,4 @@ class EntityHeadIconItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.EntityHeadIconItem = EntityHeadIconItem;
-// # sourceMappingURL=EntityHeadIconItem.js.map
+//# sourceMappingURL=EntityHeadIconItem.js.map

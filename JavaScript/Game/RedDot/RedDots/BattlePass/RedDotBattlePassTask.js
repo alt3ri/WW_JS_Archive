@@ -8,4 +8,4 @@ class RedDotBattlePassTask extends RedDotBase_1.RedDotBase {
   }
 }
 exports.RedDotBattlePassTask = RedDotBattlePassTask;
-// # sourceMappingURL=RedDotBattlePassTask.js.map
+//# sourceMappingURL=RedDotBattlePassTask.js.map

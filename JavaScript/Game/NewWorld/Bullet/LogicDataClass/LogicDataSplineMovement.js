@@ -22,4 +22,4 @@ class LogicDataSplineMovement extends LogicDataBase_1.default {
   }
 }
 exports.default = LogicDataSplineMovement;
-// # sourceMappingURL=LogicDataSplineMovement.js.map
+//# sourceMappingURL=LogicDataSplineMovement.js.map

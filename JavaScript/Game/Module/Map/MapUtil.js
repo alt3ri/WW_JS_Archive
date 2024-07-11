@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MapUtil = void 0);
-const ue_1 = require("ue");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const Vector2D_1 = require("../../../Core/Utils/Math/Vector2D");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const GeneralLogicTreeController_1 = require("../GeneralLogicTree/GeneralLogicTreeController");
-const MapDefine_1 = require("./MapDefine");
+const ue_1 = require("ue"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  Vector2D_1 = require("../../../Core/Utils/Math/Vector2D"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  GeneralLogicTreeController_1 = require("../GeneralLogicTree/GeneralLogicTreeController"),
+  MapDefine_1 = require("./MapDefine");
 class MapUtil {
   static WorldPosition2UiPosition(e, r) {
     r = r ?? Vector_1.Vector.Create();
@@ -22,16 +22,16 @@ class MapUtil {
     return e.Division(MapDefine_1.world2UiUnit, r);
   }
   static GetTilePosition(e, r = 0) {
-    var e = Vector2D_1.Vector2D.Create(e);
-    const t =
-      (e.DivisionEqual(100 * MapDefine_1.DETAIL_TILE_REALSIZE),
-      Math.ceil(e.X + r));
+    var e = Vector2D_1.Vector2D.Create(e),
+      t =
+        (e.DivisionEqual(100 * MapDefine_1.DETAIL_TILE_REALSIZE),
+        Math.ceil(e.X + r));
     return { X: t, Y: Math.ceil(-e.Y + r) };
   }
   static GetTrackPositionByTrackTarget(r, t, o, i = !0) {
     if (!r) return Vector_1.Vector.ZeroVectorProxy;
-    let n;
-    var o = o ?? Vector_1.Vector.Create();
+    var n,
+      o = o ?? Vector_1.Vector.Create();
     if (r instanceof Vector_1.Vector) o.DeepCopy(r);
     else if (r instanceof Vector2D_1.Vector2D) o.Set(r.X, r.Y, 0);
     else if (r instanceof ue_1.Actor)
@@ -75,13 +75,13 @@ class MapUtil {
   }
   static CrossingTest(r, t) {
     let o = !1;
-    let i;
+    var i;
     let n = !1;
-    let a;
-    let s = r[r.length - 1];
-    let l = r[0];
-    let c = ((o = s.Y >= t.Y), (n = !1), 0);
-    const _ = r.length;
+    var a;
+    let s = r[r.length - 1],
+      l = r[0],
+      c = ((o = s.Y >= t.Y), (n = !1), 0);
+    var _ = r.length;
     for (let e = 0; e < _; e++)
       (i = l.Y >= t.Y),
         o !== i &&
@@ -108,10 +108,11 @@ class MapUtil {
   static IsSoundBox(e) {
     e = e.ComponentsData;
     return (
+      8 ===
       (0, IComponent_1.getComponent)(e, "BaseInfoComponent").Category
-        .ExploratoryDegree === 8
+        .ExploratoryDegree
     );
   }
 }
 exports.MapUtil = MapUtil;
-// # sourceMappingURL=MapUtil.js.map
+//# sourceMappingURL=MapUtil.js.map

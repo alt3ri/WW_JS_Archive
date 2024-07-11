@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiLayer = exports.EInitState = void 0);
-const UE = require("ue");
-const Info_1 = require("../../Core/Common/Info");
-const Log_1 = require("../../Core/Common/Log");
-const StringUtils_1 = require("../../Core/Utils/StringUtils");
-const LguiUtil_1 = require("../../Game/Module/Util/LguiUtil");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const GlobalData_1 = require("../GlobalData");
-const ModelManager_1 = require("../Manager/ModelManager");
-const UiLayerType_1 = require("./Define/UiLayerType");
-let EInitState;
+const UE = require("ue"),
+  Info_1 = require("../../Core/Common/Info"),
+  Log_1 = require("../../Core/Common/Log"),
+  StringUtils_1 = require("../../Core/Utils/StringUtils"),
+  LguiUtil_1 = require("../../Game/Module/Util/LguiUtil"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  GlobalData_1 = require("../GlobalData"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  UiLayerType_1 = require("./Define/UiLayerType");
+var EInitState;
 !(function (i) {
   (i[(i.None = 0)] = "None"),
     (i[(i.Initializing = 1)] = "Initializing"),
@@ -33,24 +33,23 @@ class UiLayer {
   static async Edr(i) {
     if (this.ydr.has(i)) {
       var t = this.ydr.get(i);
-      if (t.length > 0 && void 0 !== t[0]) return;
+      if (0 < t.length && void 0 !== t[0]) return;
     }
-    var t = [];
-    const e = this.GetLayerRootUiItem(i);
+    var t = [],
+      e = this.GetLayerRootUiItem(i);
     await this.Idr(0, e, t), this.ydr.set(i, t);
   }
   static async Idr(i, t, e) {
-    let a = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
-      "UiItem_BattleViewUnitNode_Prefab",
-      t,
-    );
-    var r =
-      (LguiUtil_1.LguiUtil.SetActorIsPermanent(a, !0, !1), a.RootComponent);
-    var r =
-      (e.push(r),
-      Info_1.Info.IsPlayInEditor &&
-        (a.SetActorLabel((a = "Unit_" + i)), r.SetDisplayName(a)),
-      i + 1);
+    var a = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
+        "UiItem_BattleViewUnitNode_Prefab",
+        t,
+      ),
+      r = (LguiUtil_1.LguiUtil.SetActorIsPermanent(a, !0, !1), a.RootComponent),
+      r =
+        (e.push(r),
+        Info_1.Info.IsPlayInEditor &&
+          (a.SetActorLabel((a = "Unit_" + i)), r.SetDisplayName(a)),
+        i + 1);
     r !== UiLayerType_1.TIP_LAYER_UNIT_COUNT && (await this.Idr(r, t, e));
   }
   static GetFloatUnit(i, t) {
@@ -73,7 +72,7 @@ class UiLayer {
       );
   }
   static GetLayerRootUiItem(i) {
-    const t = this.Tdr.get(i);
+    var t = this.Tdr.get(i);
     if (t) return t;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
@@ -87,7 +86,7 @@ class UiLayer {
     return this.Ldr[i];
   }
   static SetLayerActive(i, t) {
-    const e = this.GetLayerRootUiItem(i);
+    var e = this.GetLayerRootUiItem(i);
     e
       ? (e.SetUIActive(t),
         Log_1.Log.CheckInfo() &&
@@ -137,7 +136,7 @@ class UiLayer {
             ]));
   }
   static async Udr() {
-    const i = [];
+    var i = [];
     for (const t of UiLayerType_1.LayerTypeEnumValues) i.push(this.Pdr(t));
     await Promise.all(i).then(() => {
       let i = 0;
@@ -168,15 +167,16 @@ class UiLayer {
           i = "UiItem_LayerMask_Prefab";
       }
       var e = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
-        i,
-        this.vdr,
-      );
-      const a =
-        (LguiUtil_1.LguiUtil.SetActorIsPermanent(e, !0, !1),
-        this.Tdr.set(t, e.RootComponent),
-        t === UiLayerType_1.ELayerType.Pool && e.RootComponent.SetUIActive(!1),
-        UiLayerType_1.ELayerType[t]);
-      var e = e.RootComponent;
+          i,
+          this.vdr,
+        ),
+        a =
+          (LguiUtil_1.LguiUtil.SetActorIsPermanent(e, !0, !1),
+          this.Tdr.set(t, e.RootComponent),
+          t === UiLayerType_1.ELayerType.Pool &&
+            e.RootComponent.SetUIActive(!1),
+          UiLayerType_1.ELayerType[t]),
+        e = e.RootComponent;
       e.SetDisplayName(a),
         t === UiLayerType_1.ELayerType.Debug &&
           UE.LGUIManagerActor.SetDebugRootLayer(
@@ -187,18 +187,18 @@ class UiLayer {
   }
   static async Adr() {
     if (!this.Ldr) {
-      const e = UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.HUD);
-      const a = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
-        "UiItem_BattleViewUnitNode_Prefab",
-        e,
-      );
+      var e = UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.HUD),
+        a = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
+          "UiItem_BattleViewUnitNode_Prefab",
+          e,
+        );
       let t = a;
       this.Ldr = [];
       for (let i = 0; i < UiLayerType_1.BATTLE_VIEW_UNIT_COUNT; i++) {
         (t = t || LguiUtil_1.LguiUtil.DuplicateActor(a, e)),
           LguiUtil_1.LguiUtil.SetActorIsPermanent(t, !0, !1);
-        var r;
-        const o = t.RootComponent;
+        var r,
+          o = t.RootComponent;
         Info_1.Info.IsPlayInEditor &&
           ((r = "Unit_" + i), t.SetActorLabel(r), o.SetDisplayName(r)),
           this.Ldr.push(o),
@@ -235,7 +235,7 @@ class UiLayer {
             ]));
   }
   static SetUiRootActive(i) {
-    let t;
+    var t;
     this.IsForceHideUi() ||
       ((t = UiLayer.vdr) &&
         UE.KismetSystemLibrary.IsValid(t) &&
@@ -246,7 +246,7 @@ class UiLayer {
         )));
   }
   static IsUiActive() {
-    const i = UiLayer.vdr;
+    var i = UiLayer.vdr;
     return (
       !(!i || !UE.KismetSystemLibrary.IsValid(i)) && i.IsUIActiveInHierarchy()
     );
@@ -266,15 +266,15 @@ class UiLayer {
     this.xdr = !i;
   }
   static SetWorldUiActive(i) {
-    let t;
+    var t;
     this.IsForceHideUi() ||
       ((t = UiLayer.Sdr) &&
         UE.KismetSystemLibrary.IsValid(t) &&
         t.SetUIActive(i));
   }
   static SetShowMaskLayer(i, t) {
-    let e;
-    const a = UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.Mask);
+    var e,
+      a = UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.Mask);
     a &&
       (t ? UiLayer.wdr.add(i) : UiLayer.wdr.delete(i),
       (e = UiLayer.wdr.size),
@@ -287,14 +287,14 @@ class UiLayer {
           ["show", t],
           ["size", e],
         ),
-      a?.SetRaycastTarget(e > 0));
+      a?.SetRaycastTarget(0 < e));
   }
   static IsInMask() {
-    const i = UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.Mask);
+    var i = UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.Mask);
     return !!i && i.IsRaycastTarget();
   }
   static SetShowNormalMaskLayer(i, t = "") {
-    let e;
+    var e;
     (StringUtils_1.StringUtils.IsEmpty(this.Bdr) || (this.Bdr === t && !i)) &&
       (e = UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.NormalMask)) &&
       (e?.SetRaycastTarget(i),
@@ -322,4 +322,4 @@ class UiLayer {
   (UiLayer.Tdr = new Map()),
   (UiLayer.wdr = new Set()),
   (UiLayer.ydr = new Map());
-// # sourceMappingURL=UiLayer.js.map
+//# sourceMappingURL=UiLayer.js.map

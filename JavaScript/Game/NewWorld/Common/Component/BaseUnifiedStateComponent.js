@@ -1,28 +1,33 @@
 "use strict";
-let BaseUnifiedStateComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (e, t, i, a) {
-    let n;
-    const s = arguments.length;
-    let o =
-      s < 3 ? t : a === null ? (a = Object.getOwnPropertyDescriptor(t, i)) : a;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      o = Reflect.decorate(e, t, i, a);
-    else
-      for (let r = e.length - 1; r >= 0; r--)
-        (n = e[r]) && (o = (s < 3 ? n(o) : s > 3 ? n(t, i, o) : n(t, i)) || o);
-    return s > 3 && o && Object.defineProperty(t, i, o), o;
-  };
+var BaseUnifiedStateComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (e, t, i, a) {
+      var n,
+        s = arguments.length,
+        o =
+          s < 3
+            ? t
+            : null === a
+              ? (a = Object.getOwnPropertyDescriptor(t, i))
+              : a;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        o = Reflect.decorate(e, t, i, a);
+      else
+        for (var r = e.length - 1; 0 <= r; r--)
+          (n = e[r]) &&
+            (o = (s < 3 ? n(o) : 3 < s ? n(t, i, o) : n(t, i)) || o);
+      return 3 < s && o && Object.defineProperty(t, i, o), o;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BaseUnifiedStateComponent = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const CharacterUnifiedStateTypes_1 = require("../../Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const CustomMovementDefine_1 = require("../../Character/Common/Component/Move/CustomMovementDefine");
+const Log_1 = require("../../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  CharacterUnifiedStateTypes_1 = require("../../Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  CustomMovementDefine_1 = require("../../Character/Common/Component/Move/CustomMovementDefine");
 let BaseUnifiedStateComponent =
   (BaseUnifiedStateComponent_1 = class BaseUnifiedStateComponent extends (
     EntityComponent_1.EntityComponent
@@ -277,7 +282,7 @@ let BaseUnifiedStateComponent =
       this.SetMoveState(CharacterUnifiedStateTypes_1.ECharMoveState.Other);
     }
     SetMoveState(e) {
-      let t;
+      var t;
       this.ActorComponent.IsAutonomousProxy &&
         (t = this.MoveState) !== e &&
         (Log_1.Log.CheckDebug() &&
@@ -310,7 +315,7 @@ let BaseUnifiedStateComponent =
       return this.CachedMoveState;
     }
     SetDirectionState(e) {
-      let t;
+      var t;
       this.ActorComponent.IsAutonomousProxy &&
         (t = this.DirectionState) !== e &&
         (this.UpdateDirectionTag(t, e),
@@ -361,13 +366,13 @@ let BaseUnifiedStateComponent =
   });
 (BaseUnifiedStateComponent.PositionEnumKeys = Object.values(
   CharacterUnifiedStateTypes_1.ECharPositionState,
-).filter((e) => typeof e === "number")),
+).filter((e) => "number" == typeof e)),
   (BaseUnifiedStateComponent.MoveEnumKeys = Object.values(
     CharacterUnifiedStateTypes_1.ECharMoveState,
-  ).filter((e) => typeof e === "number")),
+  ).filter((e) => "number" == typeof e)),
   (BaseUnifiedStateComponent.DirectionEnumKeys = Object.values(
     CharacterUnifiedStateTypes_1.ECharDirectionState,
-  ).filter((e) => typeof e === "number")),
+  ).filter((e) => "number" == typeof e)),
   (BaseUnifiedStateComponent.PositionTagIdList = void 0),
   (BaseUnifiedStateComponent.MoveTagIdList = void 0),
   (BaseUnifiedStateComponent.SubStateTagIdList = void 0),
@@ -385,4 +390,4 @@ let BaseUnifiedStateComponent =
       BaseUnifiedStateComponent,
     )),
   (exports.BaseUnifiedStateComponent = BaseUnifiedStateComponent);
-// # sourceMappingURL=BaseUnifiedStateComponent.js.map
+//# sourceMappingURL=BaseUnifiedStateComponent.js.map

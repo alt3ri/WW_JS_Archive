@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const LoopScrollSmallItemGrid_1 = require("../../../Common/SmallItemGrid/LoopScrollSmallItemGrid");
 class ActivityTowerGuideRewardGrid extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid {
   OnRefresh(e, t, i) {
-    const l = {
+    var l = {
       Type: 4,
       Data: e,
       IsLockVisible: e.IsLock,
@@ -25,4 +25,4 @@ class ActivityTowerGuideRewardGrid extends LoopScrollSmallItemGrid_1.LoopScrollS
   }
 }
 exports.ActivityTowerGuideRewardGrid = ActivityTowerGuideRewardGrid;
-// # sourceMappingURL=ActivityTowerGuideRewardGrid.js.map
+//# sourceMappingURL=ActivityTowerGuideRewardGrid.js.map

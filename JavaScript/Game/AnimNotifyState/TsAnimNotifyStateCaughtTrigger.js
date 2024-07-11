@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyStateCaughtTrigger extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.CaughtIds = void 0), (this.SkillId = 0);
   }
   K2_NotifyBegin(t, e, r) {
-    let s;
-    var t = t.GetOwner();
+    var s,
+      t = t.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
       !!(t = t.CharacterActorComponent.Entity) &&
@@ -33,4 +33,4 @@ class TsAnimNotifyStateCaughtTrigger extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateCaughtTrigger;
-// # sourceMappingURL=TsAnimNotifyStateCaughtTrigger.js.map
+//# sourceMappingURL=TsAnimNotifyStateCaughtTrigger.js.map

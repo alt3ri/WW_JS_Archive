@@ -24,17 +24,17 @@ class UiResource {
     );
   }
   id(t) {
-    const s = this.J7.__offset(this.z7, 4);
+    var s = this.J7.__offset(this.z7, 4);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   path(t) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   pcpath(t) {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
 }
 exports.UiResource = UiResource;
-// # sourceMappingURL=UiResource.js.map
+//# sourceMappingURL=UiResource.js.map

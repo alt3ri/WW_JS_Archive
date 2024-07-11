@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoginLoadView = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class LoginLoadView extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -35,4 +35,4 @@ class LoginLoadView extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.LoginLoadView = LoginLoadView;
-// # sourceMappingURL=LoginLoadView.js.map
+//# sourceMappingURL=LoginLoadView.js.map

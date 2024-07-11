@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelGeneralContextUtil = void 0);
-const Protocol_1 = require("../../Core/Define/Net/Protocol");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../Manager/ModelManager");
-const LevelGeneralContextDefine_1 = require("./LevelGeneralContextDefine");
+const Protocol_1 = require("../../Core/Define/Net/Protocol"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  LevelGeneralContextDefine_1 = require("./LevelGeneralContextDefine");
 class LevelGeneralContextUtil {
   static CreateByServerContext(t) {
     if (t) {
@@ -86,7 +86,7 @@ class LevelGeneralContextUtil {
     }
   }
   static AUe(e, t) {
-    const o = MathUtils_1.MathUtils.LongToBigInt(t.Ykn);
+    var o = MathUtils_1.MathUtils.LongToBigInt(t.Ykn);
     return LevelGeneralContextDefine_1.GeneralLogicTreeContext.Create(
       Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest,
       o,
@@ -102,4 +102,4 @@ class LevelGeneralContextUtil {
   }
 }
 exports.LevelGeneralContextUtil = LevelGeneralContextUtil;
-// # sourceMappingURL=LevelGeneralContextUtil.js.map
+//# sourceMappingURL=LevelGeneralContextUtil.js.map

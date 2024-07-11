@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TodTimeAdjustingAnimation = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const TimeOfDayDefine_1 = require("./TimeOfDayDefine");
-const MINIMAL_SPEED = 1e4;
+const Log_1 = require("../../../Core/Common/Log"),
+  TimeOfDayDefine_1 = require("./TimeOfDayDefine"),
+  MINIMAL_SPEED = 1e4;
 class TodTimeAdjustingAnimation {
   constructor(i, t, s, h) {
     (this.uTo = 0),
@@ -22,7 +22,7 @@ class TodTimeAdjustingAnimation {
       (this.STo = h);
   }
   get IsPlaying() {
-    return this.CTo >= 0;
+    return 0 <= this.CTo;
   }
   get IsFinished() {
     return !!this.IsPlaying && this.CTo >= this.gTo;
@@ -82,4 +82,4 @@ class TodTimeAdjustingAnimation {
   }
 }
 exports.TodTimeAdjustingAnimation = TodTimeAdjustingAnimation;
-// # sourceMappingURL=TodTimeAdjustingAnimation.js.map
+//# sourceMappingURL=TodTimeAdjustingAnimation.js.map

@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponDetailTipsComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const AttributeItem_1 = require("../Common/AttributeItem");
-const ButtonItem_1 = require("../Common/Button/ButtonItem");
-const CommonEquippedItem_1 = require("../Common/CommonEquippedItem");
-const StarItem_1 = require("../RoleUi/View/StarItem");
-const GenericLayout_1 = require("../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const WeaponInstance_1 = require("./WeaponInstance");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  AttributeItem_1 = require("../Common/AttributeItem"),
+  ButtonItem_1 = require("../Common/Button/ButtonItem"),
+  CommonEquippedItem_1 = require("../Common/CommonEquippedItem"),
+  StarItem_1 = require("../RoleUi/View/StarItem"),
+  GenericLayout_1 = require("../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  WeaponInstance_1 = require("./WeaponInstance"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder");
 class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -26,8 +26,8 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
       (this.StarLayout = void 0),
       (this.AttributeLayout = void 0),
       (this.IOo = (t) => {
-        var t = t !== 1;
-        const e = this.GetWeaponIncId();
+        var t = 1 !== t,
+          e = this.GetWeaponIncId();
         e <= 0 ||
           ControllerHolder_1.ControllerHolder.InventoryController.ItemLockRequest(
             e,
@@ -80,29 +80,29 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
   }
   jlo(t) {
     var t = [
-      { PropId: t.FirstPropId, CurveId: t.FirstCurve },
-      { PropId: t.SecondPropId, CurveId: t.SecondCurve },
-    ];
-    const e = this.WeaponData.GetLevel();
-    const i = this.WeaponData.GetBreachLevel();
-    const o = [];
+        { PropId: t.FirstPropId, CurveId: t.FirstCurve },
+        { PropId: t.SecondPropId, CurveId: t.SecondCurve },
+      ],
+      e = this.WeaponData.GetLevel(),
+      i = this.WeaponData.GetBreachLevel(),
+      o = [];
     for (const a of t) {
-      var n = a.PropId;
-      const s = ModelManager_1.ModelManager.WeaponModel.GetCurveValue(
-        a.CurveId,
-        n.Value,
-        e,
-        i,
-      );
-      var n = { Id: n.Id, IsRatio: n.IsRatio, CurValue: s, BgActive: !0 };
+      var n = a.PropId,
+        s = ModelManager_1.ModelManager.WeaponModel.GetCurveValue(
+          a.CurveId,
+          n.Value,
+          e,
+          i,
+        ),
+        n = { Id: n.Id, IsRatio: n.IsRatio, CurValue: s, BgActive: !0 };
       o.push(n);
     }
     this.AttributeLayout.RefreshByData(o);
   }
   kPt(e, i) {
-    const o = new Array(i);
+    var o = new Array(i);
     for (let t = 0; t < i; ++t) {
-      const n = {
+      var n = {
         StarOnActive: t < e,
         StarOffActive: t >= e,
         StarNextActive: !1,
@@ -122,57 +122,57 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
       }
   }
   UpdateComponent(t) {
-    const e = (this.WeaponData = t).GetWeaponConfig();
-    var i = t.GetLevel();
-    let o = t.GetBreachLevel();
-    var n = e.WeaponName;
-    const s = ModelManager_1.ModelManager.WeaponModel.GetWeaponBreachMaxLevel(
-      e.BreachId,
-    );
-    var a = t.GetBreachConfig();
-    const r = t.GetResonanceLevel();
-    var i =
-      (LguiUtil_1.LguiUtil.SetLocalText(
-        this.GetText(2),
-        "LevelRichText",
-        i,
-        a.LevelLimit,
+    var e = (this.WeaponData = t).GetWeaponConfig(),
+      i = t.GetLevel(),
+      o = t.GetBreachLevel(),
+      n = e.WeaponName,
+      s = ModelManager_1.ModelManager.WeaponModel.GetWeaponBreachMaxLevel(
+        e.BreachId,
       ),
-      ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(e.QualityId));
-    var a = UE.Color.FromHex(i.DropColor);
-    var i =
-      (this.GetText(1).SetColor(a),
-      this.GetText(1).ShowTextNew(n),
-      this.vjt(e.WeaponType),
-      this.jlo(e),
-      this.kPt(o, s),
-      LguiUtil_1.LguiUtil.SetLocalText(
-        this.GetText(6),
-        "WeaponResonanceItemLevelText",
-        r,
-      ),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(9), e.BgDescription),
-      ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponResonanceConfig(
-        e.ResonId,
-        r,
-      ));
-    var n =
-      (i
-        ? (this.GetText(7).SetUIActive(!0),
-          this.GetText(8).SetUIActive(!0),
-          this.GetText(7).SetText(
-            ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponResonanceDesc(
-              i.Name,
+      a = t.GetBreachConfig(),
+      r = t.GetResonanceLevel(),
+      i =
+        (LguiUtil_1.LguiUtil.SetLocalText(
+          this.GetText(2),
+          "LevelRichText",
+          i,
+          a.LevelLimit,
+        ),
+        ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(e.QualityId)),
+      a = UE.Color.FromHex(i.DropColor),
+      i =
+        (this.GetText(1).SetColor(a),
+        this.GetText(1).ShowTextNew(n),
+        this.vjt(e.WeaponType),
+        this.jlo(e),
+        this.kPt(o, s),
+        LguiUtil_1.LguiUtil.SetLocalText(
+          this.GetText(6),
+          "WeaponResonanceItemLevelText",
+          r,
+        ),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(9), e.BgDescription),
+        ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponResonanceConfig(
+          e.ResonId,
+          r,
+        )),
+      n =
+        (i
+          ? (this.GetText(7).SetUIActive(!0),
+            this.GetText(8).SetUIActive(!0),
+            this.GetText(7).SetText(
+              ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponResonanceDesc(
+                i.Name,
+              ),
             ),
-          ),
-          (a =
-            ModelManager_1.ModelManager.WeaponModel.GetWeaponConfigDescParams(
-              e,
-              r,
-            )),
-          LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), e.Desc, ...a))
-        : (this.GetText(7).SetUIActive(!1), this.GetText(8).SetUIActive(!1)),
-      t);
+            (a =
+              ModelManager_1.ModelManager.WeaponModel.GetWeaponConfigDescParams(
+                e,
+                r,
+              )),
+            LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), e.Desc, ...a))
+          : (this.GetText(7).SetUIActive(!1), this.GetText(8).SetUIActive(!1)),
+        t);
     n instanceof WeaponInstance_1.WeaponInstance
       ? (this.TOo(!0),
         this.LOo(!0),
@@ -196,10 +196,10 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
     this.CultureButtonItem.SetFunction(t);
   }
   UpdateEquip(t) {
-    let e;
+    var e;
     this.CanShowEquip &&
       (e = this.WeaponData) instanceof WeaponInstance_1.WeaponInstance &&
-      ((e = e.GetRoleId()) === 0
+      (0 === (e = e.GetRoleId())
         ? (this.yOo.SetCurrentEquippedState(!1),
           this.yOo.SetIconRootItemState(!1),
           this.ReplaceButtonItem.SetEnableClick(!0))
@@ -211,7 +211,7 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
           this.yOo.SetEquipText("WeaponTipsRoleText", t.GetName())));
   }
   GetWeaponIncId() {
-    const t = this.WeaponData;
+    var t = this.WeaponData;
     return t instanceof WeaponInstance_1.WeaponInstance ? t.GetIncId() ?? 0 : 0;
   }
   TOo(t) {
@@ -222,7 +222,7 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
   }
   GetGuideUiItemAndUiItemForShowEx(t) {
     if (!(t.length < 1)) {
-      const e = this.GetGuideUiItem(t[1]);
+      var e = this.GetGuideUiItem(t[1]);
       if (e) return [e, e];
     }
     Log_1.Log.CheckError() &&
@@ -233,4 +233,4 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.WeaponDetailTipsComponent = WeaponDetailTipsComponent;
-// # sourceMappingURL=WeaponDetailTipsComponent.js.map
+//# sourceMappingURL=WeaponDetailTipsComponent.js.map

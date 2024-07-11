@@ -8,4 +8,4 @@ class LevelEventSubmitQuestBehavior extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventSubmitQuestBehavior = LevelEventSubmitQuestBehavior;
-// # sourceMappingURL=LevelEventSubmitQuestBehavior.js.map
+//# sourceMappingURL=LevelEventSubmitQuestBehavior.js.map

@@ -25,4 +25,4 @@ class CommonResultButtonData {
   }
 }
 exports.CommonResultButtonData = CommonResultButtonData;
-// # sourceMappingURL=CommonResultButtonData.js.map
+//# sourceMappingURL=CommonResultButtonData.js.map

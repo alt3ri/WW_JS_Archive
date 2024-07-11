@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configSharePlatformAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const SharePlatform_1 = require("../Config/SharePlatform");
-const DB = "db_platformchannel.db";
-const FILE = "p.平台渠道.xlsx";
-const TABLE = "SharePlatform";
-const COMMAND = "select BinData from `SharePlatform` where PackageType!=?";
-const KEY_PREFIX = "SharePlatformAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  SharePlatform_1 = require("../Config/SharePlatform"),
+  DB = "db_platformchannel.db",
+  FILE = "p.平台渠道.xlsx",
+  TABLE = "SharePlatform",
+  COMMAND = "select BinData from `SharePlatform` where PackageType!=?",
+  KEY_PREFIX = "SharePlatformAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX = "configSharePlatformAll.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configSharePlatformAll.GetConfigList(";
 exports.configSharePlatformAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -29,7 +29,7 @@ exports.configSharePlatformAll = {
     );
   },
   GetConfigList: (o, e = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -44,13 +44,14 @@ exports.configSharePlatformAll = {
         const i = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "PackageType",
               o,
-            ]) !== 1
+            ])
           )
             break;
-          let a = void 0;
+          var a = void 0;
           if (
             (([n, a] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -78,4 +79,4 @@ exports.configSharePlatformAll = {
     }
   },
 };
-// # sourceMappingURL=SharePlatformAll.js.map
+//# sourceMappingURL=SharePlatformAll.js.map

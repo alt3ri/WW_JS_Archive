@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LogUploadView = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon");
-const LocalStorage_1 = require("../../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LogController_1 = require("../../../World/Controller/LogController");
-const ButtonItem_1 = require("../../Common/Button/ButtonItem");
-const LogUpload_1 = require("../../LogUpload/LogUpload");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
+  LocalStorage_1 = require("../../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LogController_1 = require("../../../World/Controller/LogController"),
+  ButtonItem_1 = require("../../Common/Button/ButtonItem"),
+  LogUpload_1 = require("../../LogUpload/LogUpload"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class LogUploadView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -29,10 +29,10 @@ class LogUploadView extends UiViewBase_1.UiViewBase {
       (this.pwi = void 0),
       (this.vwi = 1),
       (this.Mwi = (t) => {
-        this.cwi = t === 1;
+        this.cwi = 1 === t;
       }),
       (this.Swi = () => {
-        this.vwi === 2 &&
+        2 === this.vwi &&
           LogController_1.LogController.RequestOutputDebugInfo(),
           ControllerHolder_1.ControllerHolder.KuroSdkController.OpenCustomerService(
             this.vwi,
@@ -62,22 +62,22 @@ class LogUploadView extends UiViewBase_1.UiViewBase {
         }
       }),
       (this.mIt = () => {
-        (this.Ewi === 1 && !this.Twi()) || this.CloseMe();
+        (1 === this.Ewi && !this.Twi()) || this.CloseMe();
       }),
       (this.UploadEventCallBack = (t, i) => {
-        let e;
-        this.Ewi === 1 &&
+        var e;
+        1 === this.Ewi &&
           ((this.pwi = t),
-          this.pwi === 5 || this.pwi === 4
+          5 === this.pwi || 4 === this.pwi
             ? this.Lwi()
             : this.dwi === i ||
-              (this.pwi !== 1 && this.pwi !== 2) ||
+              (1 !== this.pwi && 2 !== this.pwi) ||
               ((t =
                 Math.round(
                   i * MathCommon_1.MathCommon.ProgressTotalValue,
                 ).toString() + "%"),
               (e =
-                this.pwi === 1
+                1 === this.pwi
                   ? "Text_LogCompressing_Text"
                   : "Text_LogUploading_Text"),
               LguiUtil_1.LguiUtil.SetLocalTextNew(this.Cwi, e, t),
@@ -134,9 +134,9 @@ class LogUploadView extends UiViewBase_1.UiViewBase {
   }
   set Ewi(t) {
     this.mwi = t;
-    const i = this.GetExtendToggle(6);
-    const e = this.GetItem(1);
-    const o = this.GetSprite(5);
+    var i = this.GetExtendToggle(6),
+      e = this.GetItem(1),
+      o = this.GetSprite(5);
     switch (this.mwi) {
       case 0:
         this.Rwi(!0),
@@ -177,18 +177,18 @@ class LogUploadView extends UiViewBase_1.UiViewBase {
         break;
       case 3:
         this.Rwi(!0), this.$Ut.SetShowText("Text_LogUploadRetry_Text");
-        var s = UE.KuroTencentCOSLibrary.GetAllFileNumNeedToSend();
-        var r = s - UE.KuroTencentCOSLibrary.GetSendedFileNum();
-        var r =
-          (LguiUtil_1.LguiUtil.SetLocalTextNew(
-            this.Cwi,
-            "Text_LogUploadFail_Text",
-            r,
-            s,
-          ),
-          ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-            "SP_UploadState1",
-          ));
+        var s = UE.KuroTencentCOSLibrary.GetAllFileNumNeedToSend(),
+          r = s - UE.KuroTencentCOSLibrary.GetSendedFileNum(),
+          r =
+            (LguiUtil_1.LguiUtil.SetLocalTextNew(
+              this.Cwi,
+              "Text_LogUploadFail_Text",
+              r,
+              s,
+            ),
+            ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+              "SP_UploadState1",
+            ));
         this.SetSpriteByPath(r, o, !1),
           i.RootUIComp.SetUIActive(!1),
           e.SetUIActive(!1);
@@ -198,13 +198,13 @@ class LogUploadView extends UiViewBase_1.UiViewBase {
     return this.mwi;
   }
   ywi() {
-    const t = CommonParamById_1.configCommonParamById.GetIntConfig(
-      "LogUploadTimeInterval",
-    );
-    const i = TimeUtil_1.TimeUtil.GetServerTime();
-    const e = LocalStorage_1.LocalStorage.GetGlobal(
-      LocalStorageDefine_1.ELocalStorageGlobalKey.LastTimeUploadStamp,
-    );
+    var t = CommonParamById_1.configCommonParamById.GetIntConfig(
+        "LogUploadTimeInterval",
+      ),
+      i = TimeUtil_1.TimeUtil.GetServerTime(),
+      e = LocalStorage_1.LocalStorage.GetGlobal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.LastTimeUploadStamp,
+      );
     return void 0 === e || t < i - e;
   }
   Iwi() {
@@ -215,11 +215,11 @@ class LogUploadView extends UiViewBase_1.UiViewBase {
         (this.UploadDelegate = (0, puerts_1.toManualReleaseDelegate)(
           this.UploadEventCallBack,
         )),
-      this.vwi === 2 && LogController_1.LogController.RequestOutputDebugInfo(),
+      2 === this.vwi && LogController_1.LogController.RequestOutputDebugInfo(),
       LogUpload_1.LogUpload.SendLog(this.UploadDelegate);
   }
   Twi() {
-    return this.pwi === 1
+    return 1 === this.pwi
       ? (ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           "LogUploadCompressingTip",
         ),
@@ -233,7 +233,7 @@ class LogUploadView extends UiViewBase_1.UiViewBase {
   }
   Lwi() {
     this.Dwi();
-    let t = this.pwi === 5;
+    var t = 5 === this.pwi;
     (this.Ewi = t ? 2 : 3),
       t &&
         ((t = TimeUtil_1.TimeUtil.GetServerTime()),
@@ -244,4 +244,4 @@ class LogUploadView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.LogUploadView = LogUploadView;
-// # sourceMappingURL=LogUploadView.js.map
+//# sourceMappingURL=LogUploadView.js.map

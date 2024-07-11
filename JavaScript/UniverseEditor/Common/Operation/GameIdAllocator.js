@@ -5,13 +5,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.MAX_GAME_GEN_ID =
     exports.MIN_GAME_GEN_ID =
       void 0);
-const File_1 = require("../Misc/File");
-const Log_1 = require("../Misc/Log");
-const Util_1 = require("../Misc/Util");
-const defaultSnapshot =
-  ((exports.MIN_GAME_GEN_ID = 2147483648.5),
-  (exports.MAX_GAME_GEN_ID = 4294967294),
-  { LastGenId: exports.MIN_GAME_GEN_ID - 1, Ids: [] });
+const File_1 = require("../Misc/File"),
+  Log_1 = require("../Misc/Log"),
+  Util_1 = require("../Misc/Util"),
+  defaultSnapshot =
+    ((exports.MIN_GAME_GEN_ID = 2147483648.5),
+    (exports.MAX_GAME_GEN_ID = 4294967294),
+    { LastGenId: exports.MIN_GAME_GEN_ID - 1, Ids: [] });
 class GameIdAllocator {
   constructor(t) {
     (this.Ce = 0), (this.he = t), this.Reset();
@@ -32,11 +32,11 @@ class GameIdAllocator {
     return this.Te?.size ?? 0;
   }
   Load() {
-    const t = GameIdAllocator.LoadSnapshot(this.he);
+    var t = GameIdAllocator.LoadSnapshot(this.he);
     (this.Ce = t.LastGenId), (this.Te = new Set(t.Ids));
   }
   Save() {
-    const t = { LastGenId: this.Ce, Ids: Array.from(this.Te ?? []) };
+    var t = { LastGenId: this.Ce, Ids: Array.from(this.Te ?? []) };
     GameIdAllocator.SaveSnapshot(this.he, t);
   }
   Reset() {
@@ -68,4 +68,4 @@ class GameIdAllocator {
 }
 (exports.GameIdAllocator = GameIdAllocator),
   (exports.entityIdAllocator = new GameIdAllocator("entity"));
-// # sourceMappingURL=GameIdAllocator.js.map
+//# sourceMappingURL=GameIdAllocator.js.map

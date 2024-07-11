@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlatformRuntime = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Platform_1 = require("./Platform");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Platform_1 = require("./Platform");
 class PlatformRuntime extends Platform_1.Platform {
   ReadFile(e) {
-    const t = (0, puerts_1.$ref)("");
+    var t = (0, puerts_1.$ref)("");
     return UE.KuroStaticLibrary.LoadFileToString(t, e), (0, puerts_1.$unref)(t);
   }
   WriteFile(e, t) {
@@ -48,24 +48,24 @@ class PlatformRuntime extends Platform_1.Platform {
           UE.KuroStaticLibrary.GetFilesRecursive(e, r, !0, !1))
         : (void 0 === t && (t = ""), UE.KuroStaticLibrary.GetFiles(e, t)))
     ) {
-      const n = [];
+      var n = [];
       for (let e = 0; e < o.Num(); e++) n.push(o.Get(e));
       return n;
     }
     return [];
   }
   ListDirs(e, t) {
-    const r = [];
-    const o = UE.KuroStaticLibrary.GetDirectories(e);
+    var r = [],
+      o = UE.KuroStaticLibrary.GetDirectories(e);
     for (let e = 0; e < o.Num(); e++) {
-      let n = o.Get(e);
+      var n = o.Get(e);
       r.push(n), t && ((n = this.ListDirs(n, t)), r.push(...n));
     }
     return r;
   }
   GetRelativePathToDir(e, t) {
-    var t = t.endsWith("/") ? t : t + "/";
-    const r = (0, puerts_1.$ref)("");
+    var t = t.endsWith("/") ? t : t + "/",
+      r = (0, puerts_1.$ref)("");
     return (
       UE.BlueprintPathsLibrary.MakePathRelativeTo(e, t, r),
       (0, puerts_1.$unref)(r)
@@ -76,14 +76,14 @@ class PlatformRuntime extends Platform_1.Platform {
   }
   CopyDir(e, t, r) {
     for (const n of this.ListFiles(e, void 0, !0)) {
-      const o = this.GetRelativePathToDir(n, e);
+      var o = this.GetRelativePathToDir(n, e);
       this.CopyFile(n, t + "/" + o);
     }
   }
   CopyFile(e, t) {
-    var r = t.replace(/\\/g, "/");
-    const o = r.lastIndexOf("/");
-    var r = r.substring(0, o);
+    var r = t.replace(/\\/g, "/"),
+      o = r.lastIndexOf("/"),
+      r = r.substring(0, o);
     this.ExistDir(r) || this.CreateDir(r), UE.KuroStaticLibrary.CopyFile(e, t);
   }
   GetFileModifyTick(e) {
@@ -159,4 +159,4 @@ class PlatformRuntime extends Platform_1.Platform {
   }
 }
 exports.PlatformRuntime = PlatformRuntime;
-// # sourceMappingURL=PlatformRuntime.js.map
+//# sourceMappingURL=PlatformRuntime.js.map

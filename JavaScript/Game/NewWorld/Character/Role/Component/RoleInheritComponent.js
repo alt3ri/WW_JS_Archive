@@ -1,26 +1,30 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, o, n) {
-    let r;
-    const i = arguments.length;
-    let s =
-      i < 3 ? t : n === null ? (n = Object.getOwnPropertyDescriptor(t, o)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      i = arguments.length,
+      s =
+        i < 3
+          ? t
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(t, o))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(e, t, o, n);
     else
-      for (let f = e.length - 1; f >= 0; f--)
-        (r = e[f]) && (s = (i < 3 ? r(s) : i > 3 ? r(t, o, s) : r(t, o)) || s);
-    return i > 3 && s && Object.defineProperty(t, o, s), s;
+      for (var f = e.length - 1; 0 <= f; f--)
+        (r = e[f]) && (s = (i < 3 ? r(s) : 3 < i ? r(t, o, s) : r(t, o)) || s);
+    return 3 < i && s && Object.defineProperty(t, o, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleInheritComponent = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ActiveBuffConfigs_1 = require("../../Common/Component/Abilities/Buff/ActiveBuffConfigs");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ActiveBuffConfigs_1 = require("../../Common/Component/Abilities/Buff/ActiveBuffConfigs");
 let RoleInheritComponent = class RoleInheritComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments), (this.elt = void 0);
@@ -48,14 +52,14 @@ let RoleInheritComponent = class RoleInheritComponent extends EntityComponent_1.
   }
   static Ton(t, o) {
     for (const f of t.elt.GetAllBuffs()) {
-      const n = f.StackCount;
+      var n = f.StackCount;
       if (!(n <= 0)) {
-        const r = f.Handle;
-        const i = f.InstigatorId;
-        const s = f.Config;
-        if (s.FormationPolicy === 2 || s.FormationPolicy === 3) {
+        var r = f.Handle,
+          i = f.InstigatorId,
+          s = f.Config;
+        if (2 === s.FormationPolicy || 3 === s.FormationPolicy) {
           let e = f.GetRemainDuration();
-          f.Duration > 0 &&
+          0 < f.Duration &&
             e <= 0 &&
             (e = ActiveBuffConfigs_1.MIN_BUFF_REMAIN_DURATION),
             o.elt.AddBuff(f.Id, {
@@ -68,7 +72,7 @@ let RoleInheritComponent = class RoleInheritComponent extends EntityComponent_1.
               PreMessageId: f.MessageId,
               Reason: "因为状态继承导致的buff添加",
             }),
-            s.FormationPolicy === 3 &&
+            3 === s.FormationPolicy &&
               t.elt.RemoveBuffByHandle(r, -1, "因为状态继承导致的移除");
         }
       }
@@ -80,4 +84,4 @@ let RoleInheritComponent = class RoleInheritComponent extends EntityComponent_1.
   RoleInheritComponent,
 )),
   (exports.RoleInheritComponent = RoleInheritComponent);
-// # sourceMappingURL=RoleInheritComponent.js.map
+//# sourceMappingURL=RoleInheritComponent.js.map

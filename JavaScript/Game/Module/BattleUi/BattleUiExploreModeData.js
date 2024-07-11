@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleUiExploreModeData = void 0);
-const Time_1 = require("../../../Core/Common/Time");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine");
-const AdventureDefine_1 = require("../AdventureGuide/AdventureDefine");
-const TIMER_INTERVAL = 1e3;
-const actionNames = [
-  InputMappingsDefine_1.actionMappings.攻击,
-  InputMappingsDefine_1.actionMappings.技能1,
-  InputMappingsDefine_1.actionMappings.幻象2,
-  InputMappingsDefine_1.actionMappings.瞄准,
-  InputMappingsDefine_1.actionMappings.大招,
-];
+const Time_1 = require("../../../Core/Common/Time"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine"),
+  AdventureDefine_1 = require("../AdventureGuide/AdventureDefine"),
+  TIMER_INTERVAL = 1e3,
+  actionNames = [
+    InputMappingsDefine_1.actionMappings.攻击,
+    InputMappingsDefine_1.actionMappings.技能1,
+    InputMappingsDefine_1.actionMappings.幻象2,
+    InputMappingsDefine_1.actionMappings.瞄准,
+    InputMappingsDefine_1.actionMappings.大招,
+  ];
 class BattleUiExploreModeData {
   constructor() {
     (this.qKe = !0),
@@ -40,11 +40,11 @@ class BattleUiExploreModeData {
         ) {
           for (const i of this.kKe)
             if (i) {
-              const t = this.kKe.length;
+              var t = this.kKe.length;
               for (let e = 0; e < t; e++) this.kKe[e] = !1;
               return void this.DelayExitBattleMode();
             }
-          const e = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
+          var e = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
           e &&
             e.EntityHandle &&
             (this.WKe(e) ||
@@ -61,10 +61,10 @@ class BattleUiExploreModeData {
       "ExploreModeWaitTime",
     );
     for (let e = 0; e < actionNames.length; e++) {
-      const t = actionNames[e];
+      var t = actionNames[e];
       this.kKe.push(!1), this.OKe.set(t, e);
     }
-    const e =
+    var e =
       ModelManager_1.ModelManager.BattleUiModel.GetIsAutoSwitchSkillButtonMode();
     this.SetAutoSwitch(e);
   }
@@ -118,7 +118,7 @@ class BattleUiExploreModeData {
       (this.EnterBattleMode(), this.DelayExitBattleMode());
   }
   BeHit(e) {
-    const t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
+    var t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
     t &&
       t.EntityHandle &&
       t.EntityHandle.Entity === e &&
@@ -134,10 +134,9 @@ class BattleUiExploreModeData {
     );
   }
   KKe() {
-    const e =
-      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId;
+    var e = ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId;
     return (
-      e !== 0 &&
+      0 !== e &&
       ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
         .InstSubType === AdventureDefine_1.EDungeonSubType.RoleTrail
     );
@@ -147,4 +146,4 @@ class BattleUiExploreModeData {
   }
 }
 exports.BattleUiExploreModeData = BattleUiExploreModeData;
-// # sourceMappingURL=BattleUiExploreModeData.js.map
+//# sourceMappingURL=BattleUiExploreModeData.js.map

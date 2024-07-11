@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RogueSelectResultBaseView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
 class RogueSelectResultBaseView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -16,7 +16,7 @@ class RogueSelectResultBaseView extends UiViewBase_1.UiViewBase {
         this.OnCloseBtnClick();
       }),
       (this.TabBtn = (e) => {
-        ModelManager_1.ModelManager.RoguelikeModel.UpdateDescModel(e === 1);
+        ModelManager_1.ModelManager.RoguelikeModel.UpdateDescModel(1 === e);
       });
   }
   OnRegisterComponent() {
@@ -33,8 +33,8 @@ class RogueSelectResultBaseView extends UiViewBase_1.UiViewBase {
       ]);
   }
   OnStart() {
-    const e =
-      ModelManager_1.ModelManager.RoguelikeModel.GetDescModel() === 0 ? 1 : 0;
+    var e =
+      0 === ModelManager_1.ModelManager.RoguelikeModel.GetDescModel() ? 1 : 0;
     this.GetExtendToggle(1)?.SetToggleState(e, !0);
   }
   OnAddEventListener() {
@@ -55,4 +55,4 @@ class RogueSelectResultBaseView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RogueSelectResultBaseView = RogueSelectResultBaseView;
-// # sourceMappingURL=RogueSelectResultBaseView.js.map
+//# sourceMappingURL=RogueSelectResultBaseView.js.map

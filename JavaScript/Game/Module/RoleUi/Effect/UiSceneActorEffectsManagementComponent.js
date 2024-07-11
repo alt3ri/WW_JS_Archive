@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiSceneActorEffectsManagementComponent = void 0);
-const UE = require("ue");
-const EffectContext_1 = require("../../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../../Effect/EffectSystem");
-const GlobalData_1 = require("../../../GlobalData");
-const CharacterNameDefines_1 = require("../../../NewWorld/Character/Common/CharacterNameDefines");
-const EffectUtil_1 = require("../../../Utils/EffectUtil");
+const UE = require("ue"),
+  EffectContext_1 = require("../../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  CharacterNameDefines_1 = require("../../../NewWorld/Character/Common/CharacterNameDefines"),
+  EffectUtil_1 = require("../../../Utils/EffectUtil");
 class UiSceneActorEffectsManagementComponent {
   constructor() {
     (this.Clo = new Array()),
@@ -51,7 +51,7 @@ class UiSceneActorEffectsManagementComponent {
   PlayEffectList(t, f, c, a) {
     if (t)
       for (let e = 0; e < t.Num(); e++) {
-        const r = t.Get(e);
+        var r = t.Get(e);
         this.PlayEffectByPath(r.ToAssetPathName(), f, c, a);
       }
   }
@@ -60,7 +60,7 @@ class UiSceneActorEffectsManagementComponent {
   }
   DestroyEffect() {
     this.Clo &&
-      this.Clo.length !== 0 &&
+      0 !== this.Clo.length &&
       (this.Clo.forEach((e) => {
         EffectSystem_1.EffectSystem.StopEffectById(
           e,
@@ -80,4 +80,4 @@ class UiSceneActorEffectsManagementComponent {
 }
 exports.UiSceneActorEffectsManagementComponent =
   UiSceneActorEffectsManagementComponent;
-// # sourceMappingURL=UiSceneActorEffectsManagementComponent.js.map
+//# sourceMappingURL=UiSceneActorEffectsManagementComponent.js.map

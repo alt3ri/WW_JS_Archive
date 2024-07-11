@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const GlobalData_1 = require("../../../GlobalData");
-const CharacterController_1 = require("../../../NewWorld/Character/CharacterController");
-const ActorUtils_1 = require("../../../Utils/ActorUtils");
-const WorldFunctionLibrary_1 = require("../../../World/Bridge/WorldFunctionLibrary");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  GlobalData_1 = require("../../../GlobalData"),
+  CharacterController_1 = require("../../../NewWorld/Character/CharacterController"),
+  ActorUtils_1 = require("../../../Utils/ActorUtils"),
+  WorldFunctionLibrary_1 = require("../../../World/Bridge/WorldFunctionLibrary"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskInteractTarget extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -25,8 +25,8 @@ class TsTaskInteractTarget extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveExecuteAI(r, t) {
     this.InitTsVariables();
-    let e;
-    const i = r.AiController;
+    var e,
+      i = r.AiController;
     i
       ? this.TsBlackboardKey &&
         (this.OnMontageEnded ||
@@ -51,10 +51,10 @@ class TsTaskInteractTarget extends TsTaskAbortImmediatelyBase_1.default {
         this.FinishExecute(!1));
   }
   ExecuteInteractTarget(r, t) {
-    var r = ActorUtils_1.ActorUtils.GetEntityByActor(r);
-    let e = CharacterController_1.CharacterController.GetActorComponent(r);
-    let i = e.ActorLocation;
-    let s = e.ActorRotation;
+    var r = ActorUtils_1.ActorUtils.GetEntityByActor(r),
+      e = CharacterController_1.CharacterController.GetActorComponent(r);
+    let i = e.ActorLocation,
+      s = e.ActorRotation;
     e = r.Entity.GetComponent(91);
     e?.IsInit &&
       ((r = e.GetInteractPosition()) && (i = r),
@@ -80,4 +80,4 @@ class TsTaskInteractTarget extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskInteractTarget;
-// # sourceMappingURL=TsTaskInteractTarget.js.map
+//# sourceMappingURL=TsTaskInteractTarget.js.map

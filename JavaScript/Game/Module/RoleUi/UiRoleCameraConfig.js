@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiRoleCameraConfig = void 0);
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil");
+const ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil");
 class UiRoleCameraConfig extends ConfigBase_1.ConfigBase {
   GetRoleCameraConfig(e) {
     return DataTableUtil_1.DataTableUtil.GetDataTableRowFromName(18, e);
@@ -15,4 +15,4 @@ class UiRoleCameraConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.UiRoleCameraConfig = UiRoleCameraConfig;
-// # sourceMappingURL=UiRoleCameraConfig.js.map
+//# sourceMappingURL=UiRoleCameraConfig.js.map

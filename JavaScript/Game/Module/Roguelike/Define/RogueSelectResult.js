@@ -10,16 +10,16 @@ class RogueSelectResult {
       (this.IsShowCommon = r);
   }
   GetNewUnlockAffixEntry() {
-    const e = new Set();
-    const s = this.NewRogueGainEntry.AffixEntryList;
-    const r = this.OldRogueGainEntry.AffixEntryList;
+    var e = new Set(),
+      s = this.NewRogueGainEntry.AffixEntryList,
+      r = this.OldRogueGainEntry.AffixEntryList;
     for (let t = 0; t < s.length && t < r.length; t++) {
-      const o = s[t];
-      const i = r[t];
+      var o = s[t],
+        i = r[t];
       o.IsUnlock && !i.IsUnlock && e.add(o.Id);
     }
     return e;
   }
 }
 exports.RogueSelectResult = RogueSelectResult;
-// # sourceMappingURL=RogueSelectResult.js.map
+//# sourceMappingURL=RogueSelectResult.js.map

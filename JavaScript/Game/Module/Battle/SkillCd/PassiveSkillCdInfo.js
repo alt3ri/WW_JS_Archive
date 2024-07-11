@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PassiveSkillCdInfo = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
+const Log_1 = require("../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  TimeUtil_1 = require("../../../Common/TimeUtil");
 class PassiveSkillCdInfo {
   constructor() {
     (this.SkillId = 0n),
@@ -14,7 +14,7 @@ class PassiveSkillCdInfo {
       (this.CurRemainingCd = 0);
   }
   IsInCd() {
-    const i =
+    var i =
       CommonParamById_1.configCommonParamById.GetFloatConfig(
         "PassiveSkillCdThreshold",
       ) ?? 0;
@@ -24,7 +24,7 @@ class PassiveSkillCdInfo {
     if (this.IsInCd()) return !1;
     let s = t;
     return (
-      (s = s === -1 ? this.SkillCd : s) <= 0 ||
+      (s = -1 === s ? this.SkillCd : s) <= 0 ||
         ((this.CurMaxCd = s),
         (this.CurRemainingCd =
           this.CurRemainingCd <= 0 ? s : s + this.CurRemainingCd),
@@ -74,4 +74,4 @@ class PassiveSkillCdInfo {
   }
 }
 exports.PassiveSkillCdInfo = PassiveSkillCdInfo;
-// # sourceMappingURL=PassiveSkillCdInfo.js.map
+//# sourceMappingURL=PassiveSkillCdInfo.js.map

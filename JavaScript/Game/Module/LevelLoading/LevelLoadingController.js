@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelLoadingController = void 0);
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const LoadingController_1 = require("../Loading/LoadingController");
-const WorldMapController_1 = require("../WorldMap/WorldMapController");
-const CameraFadeLoading_1 = require("./CameraFadeLoading");
+const CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  LoadingController_1 = require("../Loading/LoadingController"),
+  WorldMapController_1 = require("../WorldMap/WorldMapController"),
+  CameraFadeLoading_1 = require("./CameraFadeLoading");
 class PendingProcess {
   constructor(e) {
     (this.ProcessType = e),
@@ -62,7 +62,7 @@ class LevelLoadingController extends ControllerBase_1.ControllerBase {
   static OnTick(e) {
     if (
       LevelLoadingController.U$t &&
-      LevelLoadingController.U$t.length !== 0 &&
+      0 !== LevelLoadingController.U$t.length &&
       !LevelLoadingController.bze
     )
       switch (
@@ -134,13 +134,13 @@ class LevelLoadingController extends ControllerBase_1.ControllerBase {
       await a.Promise;
   }
   static async hfi(e, o, ...a) {
-    const n = ModelManager_1.ModelManager.LevelLoadingModel;
-    const r = n.GetPerformByReason(e);
+    var n = ModelManager_1.ModelManager.LevelLoadingModel,
+      r = n.GetPerformByReason(e);
     if (void 0 === r) {
       if (
         (n.SetLoadingState(!0),
         n.AddLoadingReason(e, o),
-        e === 16 &&
+        16 === e &&
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.LevelLoadingLockTimeDilation,
           ),
@@ -221,15 +221,15 @@ class LevelLoadingController extends ControllerBase_1.ControllerBase {
     return o;
   }
   static async lfi(e, o) {
-    const a = ModelManager_1.ModelManager.LevelLoadingModel;
-    const n = a.GetPerformByReason(e);
+    var a = ModelManager_1.ModelManager.LevelLoadingModel,
+      n = a.GetPerformByReason(e);
     a.RemoveLoadingReason(e),
       a.CheckCanDoClose(n) &&
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Loading", 19, "LevelLoading:关闭流程开始"),
         await LevelLoadingController.Cfi(n, o),
         a.CheckLoadingPerformsEmpty() &&
-          (a.SetLoadingState(!1), e === 16) &&
+          (a.SetLoadingState(!1), 16 === e) &&
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.LevelLoadingUnlockDilation,
           ),
@@ -324,4 +324,4 @@ class LevelLoadingController extends ControllerBase_1.ControllerBase {
   (LevelLoadingController.HDe = () => {
     LevelLoadingController.U$t.shift(), (LevelLoadingController.bze = void 0);
   });
-// # sourceMappingURL=LevelLoadingController.js.map
+//# sourceMappingURL=LevelLoadingController.js.map

@@ -1,59 +1,64 @@
 "use strict";
-let SceneItemFanComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, i, s, h) {
-    let e;
-    const o = arguments.length;
-    let n =
-      o < 3 ? i : h === null ? (h = Object.getOwnPropertyDescriptor(i, s)) : h;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      n = Reflect.decorate(t, i, s, h);
-    else
-      for (let r = t.length - 1; r >= 0; r--)
-        (e = t[r]) && (n = (o < 3 ? e(n) : o > 3 ? e(i, s, n) : e(i, s)) || n);
-    return o > 3 && n && Object.defineProperty(i, s, n), n;
-  };
+var SceneItemFanComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, i, s, h) {
+      var e,
+        o = arguments.length,
+        n =
+          o < 3
+            ? i
+            : null === h
+              ? (h = Object.getOwnPropertyDescriptor(i, s))
+              : h;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        n = Reflect.decorate(t, i, s, h);
+      else
+        for (var r = t.length - 1; 0 <= r; r--)
+          (e = t[r]) &&
+            (n = (o < 3 ? e(n) : 3 < o ? e(i, s, n) : e(i, s)) || n);
+      return 3 < o && n && Object.defineProperty(i, s, n), n;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemFanComponent = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const Net_1 = require("../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const Quat_1 = require("../../../Core/Utils/Math/Quat");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const EffectContext_1 = require("../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../Effect/EffectSystem");
-const GlobalData_1 = require("../../GlobalData");
-const CodeDefineLevelConditionInfo_1 = require("../../LevelGamePlay/LevelConditions/CodeDefineLevelConditionInfo");
-const LevelGameplayActionsDefine_1 = require("../../LevelGamePlay/LevelGameplayActionsDefine");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ComponentForceTickController_1 = require("../../World/Controller/ComponentForceTickController");
-const FAN_DEFAULT_ROTATE_SPEED = 120;
-const FAN_MAX_TRACE_LENGTH_OFFSET = 300;
-const FAN_DEFAULT_SPLINE_LENGTH = 300;
-const SPLINE_MOVE_SEPPD = 6e3;
-const FIRST_SPLINE_MOVE_SPEED = 3e4;
-const WAIT_RESUME_IGNORE_VISIBILITY_OPTIMIZE_TIME = 1e3;
-const PROFILE_BULLECT_TRACK = "SceneItemFanComponent_StartTrace";
-const FAN_SPHERE_TRACE_RADIUS = 10;
-const ROTATE_ACTOR_KEY = "RotateActor";
-const OFFSET_ACTOR_KEY = "OffsetActor";
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  Quat_1 = require("../../../Core/Utils/Math/Quat"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  EffectContext_1 = require("../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../Effect/EffectSystem"),
+  GlobalData_1 = require("../../GlobalData"),
+  CodeDefineLevelConditionInfo_1 = require("../../LevelGamePlay/LevelConditions/CodeDefineLevelConditionInfo"),
+  LevelGameplayActionsDefine_1 = require("../../LevelGamePlay/LevelGameplayActionsDefine"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ComponentForceTickController_1 = require("../../World/Controller/ComponentForceTickController"),
+  FAN_DEFAULT_ROTATE_SPEED = 120,
+  FAN_MAX_TRACE_LENGTH_OFFSET = 300,
+  FAN_DEFAULT_SPLINE_LENGTH = 300,
+  SPLINE_MOVE_SEPPD = 6e3,
+  FIRST_SPLINE_MOVE_SPEED = 3e4,
+  WAIT_RESUME_IGNORE_VISIBILITY_OPTIMIZE_TIME = 1e3,
+  PROFILE_BULLECT_TRACK = "SceneItemFanComponent_StartTrace",
+  FAN_SPHERE_TRACE_RADIUS = 10,
+  ROTATE_ACTOR_KEY = "RotateActor",
+  OFFSET_ACTOR_KEY = "OffsetActor";
 class SporeStruct {
   constructor() {
     (this.Length = 0),
@@ -68,8 +73,8 @@ class SporeStruct {
   }
   Clear(t = !1) {
     if (t)
-      for (let t = this.SporeEntityIds.length - 1; t > -1; t--) {
-        const i = ModelManager_1.ModelManager.CreatureModel?.GetEntity(
+      for (let t = this.SporeEntityIds.length - 1; -1 < t; t--) {
+        var i = ModelManager_1.ModelManager.CreatureModel?.GetEntity(
           this.SporeEntityIds[t],
         );
         i && this.Xnr && this.Xnr(i.Entity, !0, !1);
@@ -80,18 +85,18 @@ class SporeStruct {
       (this.gwe = 0);
   }
   NeedTick() {
-    return this.SporeEntityIds.length > 0;
+    return 0 < this.SporeEntityIds.length;
   }
   SetPreLength(t) {
     this.gwe = t + 0.01;
-    for (let t = this.SporeEntityIds.length - 1; t > -1; t--)
+    for (let t = this.SporeEntityIds.length - 1; -1 < t; t--)
       this.gwe >= this.SporeEntityLength[t] &&
         (this.SporeEntityLength.splice(t, 1), this.SporeEntityIds.splice(t, 1));
   }
   SpliceToEntity(i) {
     for (
       let t = this.SporeEntityIds.length - 1;
-      t > -1 && this.SporeEntityIds[t] !== i;
+      -1 < t && this.SporeEntityIds[t] !== i;
       t--
     )
       this.SporeEntityLength.splice(t, 1), this.SporeEntityIds.splice(t, 1);
@@ -101,7 +106,7 @@ class SporeStruct {
       t *
       TimeUtil_1.TimeUtil.Millisecond *
       (i ? FIRST_SPLINE_MOVE_SPEED : SPLINE_MOVE_SEPPD);
-    for (let t = this.SporeEntityIds.length - 1; t > -1; t--) {
+    for (let t = this.SporeEntityIds.length - 1; -1 < t; t--) {
       var s;
       this.gwe > this.SporeEntityLength[t] &&
         ((s = this.SporeEntityIds[t]),
@@ -169,12 +174,12 @@ let SceneItemFanComponent =
         (this.SceneInteractionLoadCompleted = !1),
         (this.Qnn = () => {
           this.SceneInteractionLoadCompleted = !0;
-          let t;
-          var i = this.nXt?.GetInteractionMainActor();
-          var i =
-            ((this._gn = i?.ReferenceActors?.Get(ROTATE_ACTOR_KEY)),
-            this.ugn(),
-            i?.ReferenceActors?.Get(OFFSET_ACTOR_KEY));
+          var t,
+            i = this.nXt?.GetInteractionMainActor(),
+            i =
+              ((this._gn = i?.ReferenceActors?.Get(ROTATE_ACTOR_KEY)),
+              this.ugn(),
+              i?.ReferenceActors?.Get(OFFSET_ACTOR_KEY));
           i
             ? ((this.YCn = Vector_1.Vector.Create(i.K2_GetActorLocation())),
               this.YCn.SubtractionEqual(this.nXt.ActorLocationProxy),
@@ -212,7 +217,7 @@ let SceneItemFanComponent =
                   if (this.ngn.get(i.Id)) return;
                 } else if (!this.ngn.get(i.Id)) return;
               } else this.ngn.set(i.Id, s);
-            let e;
+            var e;
             t
               ? (t = i.GetComponent(177)) &&
                 (s
@@ -225,7 +230,7 @@ let SceneItemFanComponent =
               : ((t = this.nXt.CreatureData.GetCreatureDataId()),
                 (e = i.GetComponent(0)?.GetCreatureDataId()) &&
                   this.Tgn(t, e, s, (t) => {
-                    t?.X5n !== 0
+                    0 !== t?.X5n
                       ? Log_1.Log.CheckWarn() &&
                         Log_1.Log.Warn(
                           "Level",
@@ -240,10 +245,10 @@ let SceneItemFanComponent =
         (this.Lgn = 0),
         (this.kke = (t, i) => {
           if (
-            (t === -511894810 &&
+            (-511894810 === t &&
               (this.JCn?.Dgn(this.Entity.Id, i), i) &&
               this.Rgn(),
-            t === -3775711 && i)
+            -3775711 === t && i)
           ) {
             if (
               this.dgn &&
@@ -260,11 +265,11 @@ let SceneItemFanComponent =
               this.zCn)
             )
               for (const s of this.zCn) s?.GetComponent(135)?.Ugn(!1, !1);
-            this.Ugn(!0, !1);
-          } else t === -1152559349 && i && this.Ugn(!1, !1);
-          if (this.dgn && (t === -1152559349 || t === 1298716444) && i) {
+            this.Ugn(!0);
+          } else -1152559349 === t && i && this.Ugn(!1, !1);
+          if (this.dgn && (-1152559349 === t || 1298716444 === t) && i) {
             if (this.zCn) for (const h of this.zCn) h?.GetComponent(135)?.Rgn();
-            t === 1298716444 && this.ZDn();
+            1298716444 === t && this.ZDn();
           }
           if (i)
             for (const e of this.KCn)
@@ -295,9 +300,9 @@ let SceneItemFanComponent =
           this.ExecuteInteract();
         }),
         (this.cjr = (i) => {
-          let t, s;
+          var t, s;
           if (
-            (this.Fgn > 0 &&
+            (0 < this.Fgn &&
               ((this.Fgn -= i),
               (t = MathUtils_1.MathUtils.Lerp(
                 this.fle,
@@ -318,12 +323,12 @@ let SceneItemFanComponent =
             if (
               (this.Wgn(i),
               this.rgn?.NeedTick() && this.rgn.Tick(i, this.y8s),
-              this.Lgn > 0)
+              0 < this.Lgn)
             ) {
               this.Lgn -= i;
               let t = !0;
               for (const n of this.zCn) {
-                const h = n.GetComponent(135);
+                var h = n.GetComponent(135);
                 if (h && !this.Egn && !h.dce()) {
                   t = !1;
                   break;
@@ -350,13 +355,13 @@ let SceneItemFanComponent =
                   this.Kgn());
             }
             if (this.vgn) {
-              for (let t = this.vgn.length - 1; t > -1; t--) {
-                var e;
-                var o = this.vgn[t];
-                var o =
-                  ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(
-                    o,
-                  );
+              for (let t = this.vgn.length - 1; -1 < t; t--) {
+                var e,
+                  o = this.vgn[t],
+                  o =
+                    ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(
+                      o,
+                    );
                 o?.Entity &&
                   ((e = o?.Entity?.GetComponent(135))
                     ? e.SceneInteractionLoadCompleted &&
@@ -365,10 +370,10 @@ let SceneItemFanComponent =
                       this.vgn.splice(t, 1))
                     : (this.vgn.splice(t, 1), this.zCn.push(o.Entity)));
               }
-              this.vgn.length === 0 && ((this.vgn = void 0), this.Qgn());
+              0 === this.vgn.length && ((this.vgn = void 0), this.Qgn());
             }
             if (this.S8s && this.E8s)
-              for (let t = this.E8s.length - 1; t > -1; t--)
+              for (let t = this.E8s.length - 1; -1 < t; t--)
                 this.E8s[t] <= i
                   ? ((s = this.S8s[t]),
                     this.S8s.splice(t, 1),
@@ -425,7 +430,7 @@ let SceneItemFanComponent =
         t.EffectByState)
       )
         for (const s of t.EffectByState) {
-          const i = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
+          var i = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
             s.EntityState,
           );
           i && this.KCn.set(i, s.EffectConfig);
@@ -452,7 +457,7 @@ let SceneItemFanComponent =
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
           this.Qnn,
         ),
-        this.KCn.size > 0 &&
+        0 < this.KCn.size &&
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnLevelTagChanged,
@@ -466,7 +471,7 @@ let SceneItemFanComponent =
         ((this.Xte = this.Entity.GetComponent(177)),
         (this.agn = this.Entity.GetComponent(145)),
         (this.lsn = this.Entity.GetComponent(74)),
-        this.KCn.size > 0)
+        0 < this.KCn.size)
       ) {
         for (const i of this.KCn)
           if (this.Xte?.HasTag(i[0])) {
@@ -488,7 +493,7 @@ let SceneItemFanComponent =
         (this.n0n = Vector_1.Vector.Create()),
         (this.cz = Vector_1.Vector.Create()),
         (this.ZYo = Vector_1.Vector.Create());
-      const t = this.nXt.CreatureData?.ComponentDataMap.get("cps")?.cps;
+      var t = this.nXt.CreatureData?.ComponentDataMap.get("cps")?.cps;
       return (
         t && (this.WCn = t.yMs),
         !Info_1.Info.EnableForceTick &&
@@ -528,7 +533,7 @@ let SceneItemFanComponent =
             (i = t), (this.U9r[t].EffectConfig = h);
             break;
           }
-        i > -1 &&
+        -1 < i &&
           ((i += 1),
           this.v0n(h?.EffectPath, i, this.bgn),
           this.v0n(h?.HitEffectPath, i, this.qgn),
@@ -543,7 +548,7 @@ let SceneItemFanComponent =
         this.lsn.AddOnActorOverlapCallback(this.Cgn));
     }
     M0n(t = -1) {
-      let i;
+      var i;
       this.fgn ||
         (this.fgn = new UE.Vector(
           0.1,
@@ -555,7 +560,7 @@ let SceneItemFanComponent =
           ? ((i = this.QCn
               ? this.QCn.DefaultEffectLength
               : FAN_DEFAULT_SPLINE_LENGTH),
-            (this.fgn.X = this.Ogn > 0 ? this.Ogn / 2 : i / 2))
+            (this.fgn.X = 0 < this.Ogn ? this.Ogn / 2 : i / 2))
           : (this.fgn.X = t),
         (this.pgn.X = this.fgn.X),
         this.lsn?.UpdateBoxRange(this.pgn, this.fgn);
@@ -570,31 +575,30 @@ let SceneItemFanComponent =
         this.Cji &&
         this.nXt
       ) {
-        const e = h.Entity?.Id;
-        let i = void 0;
-        let s = -1;
+        var e = h.Entity?.Id;
+        let i = void 0,
+          s = -1;
         if (h.dgn) (i = this.U9r[0]), (s = 0);
         else
           for (let t = 0; t < this.U9r.length - 1; t++) {
-            const o = this.U9r[t];
-            if (o.EntityId === 0) break;
+            var o = this.U9r[t];
+            if (0 === o.EntityId) break;
             o.EntityId === e && ((i = this.U9r[t + 1]), (s = t + 1));
           }
         if (i) {
           t || (this.Cji.Radius = 0.7 * FAN_SPHERE_TRACE_RADIUS);
-          const n = h.S0n(this.Cji, this.sgn, i, this.ign);
-          if (n > -1) {
+          var n = h.S0n(this.Cji, this.sgn, i, this.ign);
+          if (-1 < n) {
             if (
               (this.I0n &&
                 this.Zgn === s &&
                 ((this.e0n = !1), (this.t0n = !1), this.K0n(this.Zgn)),
-              i.EntityId > 0)
+              0 < i.EntityId)
             ) {
               this.rgn?.SpliceToEntity(i.EntityId);
               for (let t = this.U9r.length - 1; t >= s; t--) {
-                const r = this.U9r[t];
-                const _ =
-                  ModelManager_1.ModelManager.CreatureModel?.GetEntityById(
+                var r = this.U9r[t],
+                  _ = ModelManager_1.ModelManager.CreatureModel?.GetEntityById(
                     r.EntityId,
                   );
                 _ && _.Entity && this.Sgn(_.Entity, !1, !1),
@@ -606,18 +610,18 @@ let SceneItemFanComponent =
                 this.r0n.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
                 this.y0n(!0, !1);
             }
-            var a = this.U9r[s];
-            var a =
-              (a.HitLocation?.DeepCopy(this.ign),
-              a.Location?.DeepCopy(this.ign),
-              h.T0n().Quaternion().RotateVector(h.YCn, this.tgn),
-              this.tgn.AdditionEqual(h.nXt.ActorLocationProxy),
-              this.D0n(s, this.tgn.ToUeVector(), this.ign.ToUeVector()),
-              Math.min(
-                this.U9r.length - 1,
-                Math.min(this.qgn.length - 1, this.Zgn),
-              ));
-            a > -1 &&
+            var a = this.U9r[s],
+              a =
+                (a.HitLocation?.DeepCopy(this.ign),
+                a.Location?.DeepCopy(this.ign),
+                h.T0n().Quaternion().RotateVector(h.YCn, this.tgn),
+                this.tgn.AdditionEqual(h.nXt.ActorLocationProxy),
+                this.D0n(s, this.tgn.ToUeVector(), this.ign.ToUeVector()),
+                Math.min(
+                  this.U9r.length - 1,
+                  Math.min(this.qgn.length - 1, this.Zgn),
+                ));
+            -1 < a &&
               (h = EffectSystem_1.EffectSystem.GetEffectActor(this.qgn[a])) &&
               (this.Yyn(a, !1, 1),
               h.K2_SetActorLocationAndRotation(
@@ -627,7 +631,7 @@ let SceneItemFanComponent =
                 void 0,
                 !0,
               ));
-          } else n === -3 && this.Kgn(e);
+          } else -3 === n && this.Kgn(e);
           t || (this.Cji.Radius = FAN_SPHERE_TRACE_RADIUS);
         }
       }
@@ -644,27 +648,27 @@ let SceneItemFanComponent =
         PROFILE_BULLECT_TRACK,
       );
       if (h) {
-        const n = t.HitResult;
-        const r = n.GetHitCount();
-        const _ = n.Actors;
-        let i = !1;
-        let s = !1;
+        var n = t.HitResult,
+          r = n.GetHitCount(),
+          _ = n.Actors;
+        let i = !1,
+          s = !1;
         for (let t = 0; t < r; t++) {
-          let a = _.Get(t);
+          var a = _.Get(t);
           if (a !== this.zBn) {
             a =
               ModelManager_1.ModelManager.SceneInteractionModel.GetEntityByBaseItem(
                 a,
               );
             if (a?.Id !== this.Entity.Id) {
-              const f = a?.Entity?.GetComponent(135);
+              var f = a?.Entity?.GetComponent(135);
               if (f) {
                 if (s) {
                   i = !0;
                   break;
                 }
                 if (f.R0n()) continue;
-                if (e.EntityId === 0) return -3;
+                if (0 === e.EntityId) return -3;
               }
               if (!s) {
                 if (a && a.Entity?.Id === e.EntityId) return -1;
@@ -689,8 +693,8 @@ let SceneItemFanComponent =
       return -2;
     }
     ugn() {
-      if (((this.egn = Rotator_1.Rotator.Create()), this._se !== 0)) {
-        let t = ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(
+      if (((this.egn = Rotator_1.Rotator.Create()), 0 !== this._se)) {
+        var t = ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(
           this._se,
         );
         if (t) {
@@ -819,7 +823,7 @@ let SceneItemFanComponent =
           this.Rgn();
     }
     mgn() {
-      let t = this.Entity.GetComponent(0);
+      var t = this.Entity.GetComponent(0);
       if (t?.Valid) {
         t = t.GetBaseInfo().ChildEntityIds;
         if (t && !(t.length < 1)) {
@@ -840,15 +844,15 @@ let SceneItemFanComponent =
             QueryTypeDefine_1.KuroTraceTypeQuery.Visible,
           ),
           (this.Cji.WorldContextObject = this.nXt.Owner);
-        let n = this.nXt.ActorLocationProxy;
-        let t = n.X;
-        let i = n.Y;
-        let s = n.Z;
-        let h = n.X;
-        let e = n.Y;
-        let o = n.Z;
+        var n = this.nXt.ActorLocationProxy;
+        let t = n.X,
+          i = n.Y,
+          s = n.Z,
+          h = n.X,
+          e = n.Y,
+          o = n.Z;
         for (const a of this.zCn) {
-          const r = a.GetComponent(182);
+          var r = a.GetComponent(182);
           r &&
             ((n = r.ActorLocationProxy),
             (t = Math.min(t, n.X)),
@@ -894,7 +898,7 @@ let SceneItemFanComponent =
         }),
           this.Pgn();
         for (const v of this.zCn) {
-          const _ = v.GetComponent(135);
+          var _ = v.GetComponent(135);
           _ && _.Pgn();
         }
       }
@@ -912,7 +916,7 @@ let SceneItemFanComponent =
       return this.XCn;
     }
     static b0n() {
-      let t;
+      var t;
       return SceneItemFanComponent_1.q0n.length < 1
         ? (((t = new SplinePoint()).Location = Vector_1.Vector.Create()),
           (t.Rotator = Rotator_1.Rotator.Create()),
@@ -935,10 +939,10 @@ let SceneItemFanComponent =
     }
     G0n(t) {
       this.Vgn = !0;
-      const i = this.nXt.CreatureData.GetCreatureDataId();
+      var i = this.nXt.CreatureData.GetCreatureDataId();
       this.N0n(i, t, (t) => {
         (this.Vgn = !1),
-          t?.X5n !== 0
+          0 !== t?.X5n
             ? Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn("Level", 37, "SetFanStateResponse Failed", [
                 "ErrorCode",
@@ -982,7 +986,7 @@ let SceneItemFanComponent =
       }
       this.Bgn && (this.Bgn.length = 0);
       for (const e of this.zCn) {
-        const t = e.GetComponent(135);
+        var t = e.GetComponent(135);
         t && t.M0n(0);
       }
     }
@@ -997,26 +1001,26 @@ let SceneItemFanComponent =
       ) {
         let i = -1;
         for (let t = 0; t < this.U9r.length - 1; t++) {
-          const h = this.U9r[t];
-          if (h.EntityId === 0) break;
+          var h = this.U9r[t];
+          if (0 === h.EntityId) break;
           if (h.EntityId === s) {
             i = t - 1;
             break;
           }
         }
-        i > -1 ? ((t = this.U9r[i].EntityId), this.Kgn(t)) : this.Kgn();
+        -1 < i ? ((t = this.U9r[i].EntityId), this.Kgn(t)) : this.Kgn();
       }
     }
     Rgn() {
       this.Xte?.RemoveTag(1174613996),
         this.Xte?.RemoveTag(942900915),
         this.Xte?.RemoveTag(-216276934);
-      let t = this.agn?.EntityInSocket?.Entity?.GetComponent(177);
+      var t = this.agn?.EntityInSocket?.Entity?.GetComponent(177);
       t &&
         (t.RemoveTag(1174613996),
         t.RemoveTag(942900915),
         t.RemoveTag(-216276934)),
-        this.xgn !== 0 &&
+        0 !== this.xgn &&
           ((t = EntitySystem_1.EntitySystem.GetComponent(this.xgn, 177)) &&
             (t.RemoveTag(1174613996),
             t.RemoveTag(942900915),
@@ -1026,8 +1030,8 @@ let SceneItemFanComponent =
     I8s() {
       this.Xte && !this.Xte.HasTag(-1018185327) && this.Xte.AddTag(1174613996);
     }
-    Ugn(t, i) {
-      let s;
+    Ugn(t, i = void 0) {
+      var s;
       this.R0n() ||
         (!this.JCn?.Xte?.HasTag(-1152559349) &&
           !this.JCn?.Xte?.HasTag(1298716444) &&
@@ -1037,7 +1041,7 @@ let SceneItemFanComponent =
                 this.Xte.HasTag(942900915) || this.Xte.AddTag(942900915),
                 i
                   ? this.Xte.HasTag(-216276934) || this.Xte.AddTag(-216276934)
-                  : this.Xte.RemoveTag(-216276934))
+                  : void 0 !== i && this.Xte.RemoveTag(-216276934))
               : (this.Xte.HasTag(1174613996) || this.Xte.AddTag(1174613996),
                 this.Xte.RemoveTag(942900915),
                 this.Xte.RemoveTag(-216276934))),
@@ -1048,7 +1052,7 @@ let SceneItemFanComponent =
               s.HasTag(942900915) || s.AddTag(942900915),
               i
                 ? s.HasTag(-216276934) || s.AddTag(-216276934)
-                : s.RemoveTag(-216276934))
+                : void 0 !== i && s.RemoveTag(-216276934))
             : (s.HasTag(1174613996) || s.AddTag(1174613996),
               s.RemoveTag(942900915),
               s.RemoveTag(-216276934))));
@@ -1081,17 +1085,17 @@ let SceneItemFanComponent =
             else if (this.I0n) this.t0n = !0;
             else {
               (this.y8s = t), this.ZCn.clear();
-              for (let t = this.zCn.length - 1; t > -1; t--) {
-                const i = this.zCn[t];
+              for (let t = this.zCn.length - 1; -1 < t; t--) {
+                var i = this.zCn[t];
                 i?.Valid ? this.ZCn.add(i.Id) : this.zCn.splice(t, 1);
               }
               this.ogn.length = 0;
               for (const e of this.U9r) {
-                if (e.EntityId === 0) break;
+                if (0 === e.EntityId) break;
                 this.ogn.push(e.EntityId);
               }
               if (s)
-                for (let t = this.U9r.length - 1; t > 0; t--)
+                for (let t = this.U9r.length - 1; 0 < t; t--)
                   if (this.U9r[t - 1].EntityId === s) {
                     this.U9r[t].HitLocation?.Equals(
                       Vector_1.Vector.ZeroVectorProxy,
@@ -1116,22 +1120,22 @@ let SceneItemFanComponent =
                 s)
               ) {
                 let i = !1;
-                for (let t = this.U9r.length - 1; t > 0; t--)
+                for (let t = this.U9r.length - 1; 0 < t; t--)
                   if (this.U9r[t - 1].EntityId === s) {
                     i = !0;
                     break;
                   }
                 i || this.r0n.DeepCopy(Vector_1.Vector.ZeroVectorProxy);
               } else this.r0n.DeepCopy(Vector_1.Vector.ZeroVectorProxy);
-              for (let t = this.zCn.length - 1; t > -1; t--) {
-                const h = this.zCn[t];
+              for (let t = this.zCn.length - 1; -1 < t; t--) {
+                var h = this.zCn[t];
                 this.ZCn.has(h.Id) && this.Sgn(h, !1, !1);
               }
               if (
-                (this.k0n(), this.rgn && this.U9r.length > 0 && this.Zgn > 0)
+                (this.k0n(), this.rgn && 0 < this.U9r.length && 0 < this.Zgn)
               ) {
-                let i = this.nXt.ActorLocationProxy;
-                let s = 0;
+                let i = this.nXt.ActorLocationProxy,
+                  s = 0;
                 for (let t = 0; t < this.Zgn; t++)
                   (s += Vector_1.Vector.Dist(i, this.U9r[t].Location)),
                     (i = this.U9r[t].Location);
@@ -1166,15 +1170,15 @@ let SceneItemFanComponent =
     O0n(t, i, s, h, e = void 0) {
       this.Ngn = 0;
       var o = this.XCn
-        ? this.XCn.DefaultEffectLength
-        : FAN_DEFAULT_SPLINE_LENGTH;
-      const n = SceneItemFanComponent_1.b0n();
-      const r = this.F0n(t, s, h, n, e, o);
-      var o =
-        ((this.Ngn = this.Ngn > 0 ? this.Ngn : o),
-        e && (e.Length += this.Ngn),
-        this.L0n());
-      let _ = this.A0n();
+          ? this.XCn.DefaultEffectLength
+          : FAN_DEFAULT_SPLINE_LENGTH,
+        n = SceneItemFanComponent_1.b0n(),
+        r = this.F0n(t, s, h, n, e, o),
+        o =
+          ((this.Ngn = 0 < this.Ngn ? this.Ngn : o),
+          e && (e.Length += this.Ngn),
+          this.L0n()),
+        _ = this.A0n();
       MathUtils_1.MathUtils.LookRotationUpFirst(o, _, n.HitRotator),
         r
           ? (n.Location?.DeepCopy(r.P0n()),
@@ -1206,20 +1210,20 @@ let SceneItemFanComponent =
         PROFILE_BULLECT_TRACK,
       );
       if (n) {
-        let i = void 0;
-        let s = !1;
-        let h = !1;
-        let e = void 0;
-        let f;
-        let v;
-        let c;
-        let l;
-        const m = new Set();
-        const E = t.HitResult;
-        const d = E.GetHitCount();
-        const S = E.Actors;
+        let i = void 0,
+          s = !1,
+          h = !1,
+          e = void 0;
+        var f,
+          v,
+          c,
+          l,
+          m = new Set(),
+          E = t.HitResult,
+          d = E.GetHitCount(),
+          S = E.Actors;
         for (let t = 0; t < d; t++) {
-          let p = S.Get(t);
+          var p = S.Get(t);
           if (p !== this.zBn) {
             p =
               ModelManager_1.ModelManager.SceneInteractionModel.GetEntityByBaseItem(
@@ -1228,10 +1232,10 @@ let SceneItemFanComponent =
             if (p?.Id !== this.Entity.Id)
               if (p && o.has(p?.Id)) {
                 if (p) {
-                  const C = p.Entity.GetComponent(135);
+                  var C = p.Entity.GetComponent(135);
                   if (!C || !C.R0n()) {
                     if ((s && (h = !0), C)) {
-                      const I = C.Entity.GetComponent(182)?.ActorLocationProxy;
+                      var I = C.Entity.GetComponent(182)?.ActorLocationProxy;
                       I &&
                         (this.Ogn = Vector_1.Vector.Dist(
                           I,
@@ -1276,7 +1280,7 @@ let SceneItemFanComponent =
             this.Ngn = t;
           }
         }
-        if (this.Ngn > 0) {
+        if (0 < this.Ngn) {
           let t = 0;
           for (const L of m)
             L &&
@@ -1290,7 +1294,7 @@ let SceneItemFanComponent =
               (v = L.Entity.GetComponent(0)?.GetCreatureDataId()) &&
               (_.SporeEntityIds.push(v),
               _.SporeEntityLength.push(_.Length + f));
-          i && t > 0 && (this.Ngn = t);
+          i && 0 < t && (this.Ngn = t);
         } else
           for (const F of m)
             F &&
@@ -1308,42 +1312,42 @@ let SceneItemFanComponent =
       }
     }
     get IsRotating() {
-      return this.Fgn > 0;
+      return 0 < this.Fgn;
     }
     get IsAnyRotating() {
-      if (this.Fgn > 0) return !0;
+      if (0 < this.Fgn) return !0;
       if (!this.dgn) return !!this.JCn && this.JCn.IsAnyRotating;
       if (this.zCn)
         for (const i of this.zCn) {
-          const t = i.GetComponent(135);
-          if (t && t.Fgn > 0) return !0;
+          var t = i.GetComponent(135);
+          if (t && 0 < t.Fgn) return !0;
         }
       return !1;
     }
     ExecuteInteract() {
-      Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("SceneItem", 37, "[FanComponent] ExecuteInteract", [
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("SceneItem", 37, "[FanComponent] ExecuteInteract", [
           "EntityId",
           this.Entity.Id,
         ]),
-        this.Fgn > 0
-          ? Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug(
+        0 < this.Fgn
+          ? Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
               "SceneItem",
               37,
               "[FanComponent.ExecuteInteract] Self Is Rotating",
             )
           : this.dgn
             ? (this.Agn || this.Vgn || this.G0n(!0),
-              Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug(
+              Log_1.Log.CheckInfo() &&
+                Log_1.Log.Info(
                   "SceneItem",
                   37,
                   "[FanComponent.ExecuteInteract] Self Is Root",
                 ))
             : !this.JCn || this.JCn.V0n
-              ? Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug(
+              ? Log_1.Log.CheckInfo() &&
+                Log_1.Log.Info(
                   "SceneItem",
                   37,
                   "[FanComponent.ExecuteInteract] Root Is Rotating",
@@ -1361,7 +1365,7 @@ let SceneItemFanComponent =
                   this.nXt.CreatureData.GetCreatureDataId(),
                   this.WCn,
                   (t) => {
-                    t?.X5n !== 0 &&
+                    0 !== t?.X5n &&
                       Log_1.Log.CheckWarn() &&
                       Log_1.Log.Warn(
                         "Level",
@@ -1382,9 +1386,9 @@ let SceneItemFanComponent =
           }
         if (!(i < 0 || i >= this.Zgn)) {
           this.I0n = !1;
-          const h = this.Bgn.length;
+          var h = this.Bgn.length;
           for (let t = i + 1; t < this.U9r.length; t++) {
-            const e = EntitySystem_1.EntitySystem.GetComponent(
+            var e = EntitySystem_1.EntitySystem.GetComponent(
               this.U9r[t].EntityId,
               135,
             );
@@ -1407,9 +1411,9 @@ let SceneItemFanComponent =
         if (!(i < 0 || ((this.Zgn = i + 1), this.Zgn > this.U9r.length - 1))) {
           (this.a0n = 0), (this.s0n = this.$Cn);
           let t = void 0;
-          let n, r;
+          var n, r;
           (t =
-            this.Zgn === 0
+            0 === this.Zgn
               ? (this.g0n.DeepCopy(this.nXt.ActorLocationProxy),
                 this.f0n.DeepCopy(this.YCn),
                 this.QCn)
@@ -1418,7 +1422,7 @@ let SceneItemFanComponent =
                 this.f0n.DeepCopy(n.Offset),
                 n.EffectConfig)),
             (this.l0n = t ? t.DefaultEffectLength : FAN_DEFAULT_SPLINE_LENGTH),
-            this.l0n === 0
+            0 === this.l0n
               ? (n = this.Bgn[this.Zgn])
                 ? n.ClearSplinePoints()
                 : Log_1.Log.CheckWarn() &&
@@ -1486,7 +1490,7 @@ let SceneItemFanComponent =
         this.Xte?.RemoveTag(-687845e3));
     }
     K0n(t) {
-      t > 0
+      0 < t
         ? ((t = this.U9r[t - 1]),
           (t = ModelManager_1.ModelManager.CreatureModel?.GetEntityById(
             t.EntityId,
@@ -1527,10 +1531,10 @@ let SceneItemFanComponent =
           "[SceneItemFanComponent]CreateInteractOption",
           ["EntityId", this.Entity.Id],
         );
-      let t;
-      let i;
-      let s;
-      let h = this.Entity.GetComponent(178);
+      var t,
+        i,
+        s,
+        h = this.Entity.GetComponent(178);
       h
         ? (h = h.GetInteractController())
           ? ((t = new CodeDefineLevelConditionInfo_1.LevelConditionGroup()),
@@ -1578,7 +1582,7 @@ let SceneItemFanComponent =
           );
     }
     U0n() {
-      let t;
+      var t;
       this.Wtn &&
         (t = this.Entity.GetComponent(178)) &&
         (t = t.GetInteractController()) &&
@@ -1595,7 +1599,8 @@ let SceneItemFanComponent =
           ),
         (this.e0n = t),
         this.e0n ||
-          (this.rgn?.NeedTick() && this.rgn?.Clear(!0),
+          ((this.i0n = !1),
+          this.rgn?.NeedTick() && this.rgn?.Clear(!0),
           this.t0n && ((this.t0n = !1), this.Kgn())));
     }
     get I0n() {
@@ -1614,7 +1619,7 @@ let SceneItemFanComponent =
     }
     D0n(t, i, s) {
       this.dgn &&
-        t > -1 &&
+        -1 < t &&
         t < this.Bgn.length &&
         (t = this.Bgn[t]) &&
         (this.Ggn.Empty(),
@@ -1623,23 +1628,23 @@ let SceneItemFanComponent =
         t.SetSplinePoints(this.Ggn, 1));
     }
     y0n(h = !1, e = !0) {
-      let o = void 0;
-      let n = void 0;
-      let r = -1;
-      if (this.Zgn > -1 && this.Zgn < this.U9r.length) {
+      let o = void 0,
+        n = void 0,
+        r = -1;
+      if (-1 < this.Zgn && this.Zgn < this.U9r.length) {
         e &&
           ((this.I0n = !0), !this.i0n) &&
           this.Zgn < this.bgn.length &&
           ((e = this.bgn[this.Zgn]),
           EffectSystem_1.EffectSystem.SetEffectIgnoreVisibilityOptimize(e, !0),
-          (e = this.S8s.indexOf(e)) > -1) &&
+          -1 < (e = this.S8s.indexOf(e))) &&
           (this.S8s.splice(e, 1), this.E8s.splice(e, 1)),
-          this.Zgn > 0 &&
+          0 < this.Zgn &&
             ((e = this.bgn[this.Zgn - 1]),
             this.S8s.includes(e) ||
               (this.S8s.push(e),
               this.E8s.push(WAIT_RESUME_IGNORE_VISIBILITY_OPTIMIZE_TIME))),
-          this.Zgn === 0
+          0 === this.Zgn
             ? this.Ugn(!0, !0)
             : ((e = this.U9r[this.Zgn - 1].EntityId),
               (e = EntitySystem_1.EntitySystem.GetComponent(e, 135)) &&
@@ -1647,11 +1652,11 @@ let SceneItemFanComponent =
                 (this.Zgn === this.U9r.length - 1
                   ? e.Ugn(!0, this.U9r[this.Zgn].IsBlockInMiddle)
                   : e.Ugn(!0, !0)));
-        let t = void 0;
-        let i = void 0;
-        let s = void 0;
+        let t = void 0,
+          i = void 0,
+          s = void 0;
         (s =
-          this.Zgn === 0
+          0 === this.Zgn
             ? (this.o0n.DeepCopy(this.nXt.ActorLocationProxy),
               (t = this.T0n().Quaternion()),
               (i = this.YCn),
@@ -1665,39 +1670,39 @@ let SceneItemFanComponent =
           this.o0n.AdditionEqual(this.cz),
           this.r0n.Equals(Vector_1.Vector.ZeroVectorProxy) &&
             this.r0n.DeepCopy(this.o0n);
-        var e = s ? s.DefaultEffectLength : FAN_DEFAULT_SPLINE_LENGTH;
-        var _ =
-          (this.Egn
-            ? this.Zgn < this.U9r.length &&
-              ((_ = Vector_1.Vector.Dist(
-                this.r0n,
-                this.U9r[this.Zgn].HitLocation,
-              )),
-              (this.Zgn === this.U9r.length - 1 &&
-                e < _ &&
-                !this.U9r[this.Zgn].IsBlockInMiddle) ||
-              this.U9r[this.Zgn].HitLocation.Equals(
-                Vector_1.Vector.ZeroVectorProxy,
-              )
-                ? (t?.RotateVector(
-                    Vector_1.Vector.ForwardVectorProxy,
-                    this.ZYo,
-                  ),
-                  this.ZYo?.MultiplyEqual(e),
-                  this.ZYo?.AdditionEqual(this.o0n))
-                : this.ZYo.DeepCopy(this.U9r[this.Zgn].HitLocation))
-            : this.ZYo.DeepCopy(this.U9r[this.Zgn].Location),
-          this.n0n.DeepCopy(this.ZYo),
-          this.Egn || this.n0n.AdditionEqual(this.cz),
-          Vector_1.Vector.Dist(this.r0n, this.n0n));
-        var a = this.y8s ? FIRST_SPLINE_MOVE_SPEED : SPLINE_MOVE_SEPPD;
+        var e = s ? s.DefaultEffectLength : FAN_DEFAULT_SPLINE_LENGTH,
+          _ =
+            (this.Egn
+              ? this.Zgn < this.U9r.length &&
+                ((_ = Vector_1.Vector.Dist(
+                  this.r0n,
+                  this.U9r[this.Zgn].HitLocation,
+                )),
+                (this.Zgn === this.U9r.length - 1 &&
+                  e < _ &&
+                  !this.U9r[this.Zgn].IsBlockInMiddle) ||
+                this.U9r[this.Zgn].HitLocation.Equals(
+                  Vector_1.Vector.ZeroVectorProxy,
+                )
+                  ? (t?.RotateVector(
+                      Vector_1.Vector.ForwardVectorProxy,
+                      this.ZYo,
+                    ),
+                    this.ZYo?.MultiplyEqual(e),
+                    this.ZYo?.AdditionEqual(this.o0n))
+                  : this.ZYo.DeepCopy(this.U9r[this.Zgn].HitLocation))
+              : this.ZYo.DeepCopy(this.U9r[this.Zgn].Location),
+            this.n0n.DeepCopy(this.ZYo),
+            this.Egn || this.n0n.AdditionEqual(this.cz),
+            Vector_1.Vector.Dist(this.r0n, this.n0n)),
+          a = this.y8s ? FIRST_SPLINE_MOVE_SPEED : SPLINE_MOVE_SEPPD;
         (this.s0n = (_ / a) * TimeUtil_1.TimeUtil.InverseMillisecond),
           (this.a0n = h
             ? (e / SPLINE_MOVE_SEPPD) * TimeUtil_1.TimeUtil.InverseMillisecond
             : 0),
           this.RefreshSpline(s?.EffectPath, s?.HitEffectPath, this.Zgn, h),
           this.Q0n(this.Zgn),
-          this.Zgn === 0
+          0 === this.Zgn
             ? ((r = 0),
               this.U9r[0].IsBlockInMiddle &&
                 ((o = this.U9r[0].HitLocation), (n = this.U9r[0].HitRotator)))
@@ -1721,12 +1726,12 @@ let SceneItemFanComponent =
               (this.S8s.push(a),
               this.E8s.push(WAIT_RESUME_IGNORE_VISIBILITY_OPTIMIZE_TIME))),
           this.Zgn === this.U9r.length &&
-            this.qgn.length > 1 &&
+            1 < this.qgn.length &&
             ((e = this.U9r[this.Zgn - 1]),
             (r = this.Zgn - 1),
             e.IsBlockInMiddle) &&
             ((o = e.HitLocation), (n = e.HitRotator));
-      r > -1 &&
+      -1 < r &&
         this.qgn.length > r &&
         (o && n
           ? this.U9r[r].Location &&
@@ -1743,12 +1748,12 @@ let SceneItemFanComponent =
           : this.Yyn(r, !0, 5));
     }
     Wgn(t) {
-      let i, s;
+      var i, s;
       this.I0n &&
         (this.i0n
           ? ((this.a0n += t),
             (i =
-              this.s0n > 0
+              0 < this.s0n
                 ? MathUtils_1.MathUtils.Clamp(this.a0n / this.s0n, 0, 1)
                 : 1),
             (s = MathUtils_1.MathUtils.Lerp(this.h0n, this.l0n, i)),
@@ -1769,7 +1774,7 @@ let SceneItemFanComponent =
             Vector_1.Vector.Lerp(
               this.r0n,
               this.n0n,
-              this.s0n > 0
+              0 < this.s0n
                 ? MathUtils_1.MathUtils.Clamp(this.a0n / this.s0n, 0, 1)
                 : 1,
               this.ZYo,
@@ -1786,20 +1791,20 @@ let SceneItemFanComponent =
               this.K0n(this.Zgn - 1))));
     }
     X0n(t, i) {
-      let s;
-      const h = ActorSystem_1.ActorSystem.Get(
-        UE.BP_BasePathLine_C.StaticClass(),
-        MathUtils_1.MathUtils.DefaultTransform,
-      );
-      const e =
-        (h.K2_SetActorLocationAndRotation(
-          this.nXt?.ActorLocation,
-          this.T0n().ToUeRotator(),
-          !1,
-          void 0,
-          !0,
+      var s,
+        h = ActorSystem_1.ActorSystem.Get(
+          UE.BP_BasePathLine_C.StaticClass(),
+          MathUtils_1.MathUtils.DefaultTransform,
         ),
-        h.GetComponentByClass(UE.SplineComponent.StaticClass()));
+        e =
+          (h.K2_SetActorLocationAndRotation(
+            this.nXt?.ActorLocation,
+            this.T0n().ToUeRotator(),
+            !1,
+            void 0,
+            !0,
+          ),
+          h.GetComponentByClass(UE.SplineComponent.StaticClass()));
       t
         ? ((t = EffectSystem_1.EffectSystem.SpawnEffect(
             GlobalData_1.GlobalData.World,
@@ -1844,7 +1849,7 @@ let SceneItemFanComponent =
           this.qgn?.push(-1));
     }
     Q0n(t) {
-      t > 0 &&
+      0 < t &&
         t < this.wgn.length &&
         this.wgn[t].K2_SetActorLocation(
           this.U9r[t - 1].Location.ToUeVector(),
@@ -1854,7 +1859,7 @@ let SceneItemFanComponent =
         );
     }
     RefreshSpline(i, s, h, t = !1) {
-      const e = h + 1;
+      var e = h + 1;
       if (t) {
         if (e < this.wgn.length)
           for (let t = e; t < this.wgn.length; t++)
@@ -1865,8 +1870,8 @@ let SceneItemFanComponent =
               )?.SetActorHiddenInGame(!0);
         else {
           e <= this.wgn.length &&
-            (this.bgn[h] === -1 && this.v0n(i, h, this.bgn),
-            this.qgn[h] === -1) &&
+            (-1 === this.bgn[h] && this.v0n(i, h, this.bgn),
+            -1 === this.qgn[h]) &&
             this.v0n(s, h, this.qgn);
           for (let t = this.wgn.length; t < e; t++) this.X0n(i, s);
         }
@@ -1913,11 +1918,11 @@ let SceneItemFanComponent =
     }
     v0n(i, s, h) {
       if (this.wgn && !(this.wgn.length <= s)) {
-        let e;
-        const o = this.wgn[s];
-        let n = h[s];
+        var e,
+          o = this.wgn[s],
+          n = h[s];
         let t = !1;
-        n !== 0 &&
+        0 !== n &&
           ((e = EffectSystem_1.EffectSystem.GetEffectActor(n)) &&
             ((t = !0), this.cz.DeepCopy(e.K2_GetActorLocation())),
           EffectSystem_1.EffectSystem.StopEffectById(
@@ -1949,20 +1954,20 @@ let SceneItemFanComponent =
       }
     }
     W0n(t, i, s) {
-      const h = Protocol_1.Aki.Protocol.IJn.create();
+      var h = Protocol_1.Aki.Protocol.IJn.create();
       (h.rkn = MathUtils_1.MathUtils.NumberToLong(t)),
         (h.v7n = i),
         Net_1.Net.Call(29125, h, s);
     }
     Tgn(t, i, s, h) {
-      const e = Protocol_1.Aki.Protocol.LJn.create();
+      var e = Protocol_1.Aki.Protocol.LJn.create();
       (e.M7n = MathUtils_1.MathUtils.NumberToLong(t)),
         (e.S7n = MathUtils_1.MathUtils.NumberToLong(i)),
         (e.rVn = s ? 1 : 0),
         Net_1.Net.Call(2520, e, h);
     }
     N0n(t, i, s) {
-      const h = Protocol_1.Aki.Protocol.DJn.create();
+      var h = Protocol_1.Aki.Protocol.DJn.create();
       (h.M7n = MathUtils_1.MathUtils.NumberToLong(t)),
         (h.rVn = i ? 1 : 0),
         Net_1.Net.Call(23892, h, s);
@@ -1975,4 +1980,4 @@ let SceneItemFanComponent =
       SceneItemFanComponent,
     )),
   (exports.SceneItemFanComponent = SceneItemFanComponent);
-// # sourceMappingURL=SceneItemFanComponent.js.map
+//# sourceMappingURL=SceneItemFanComponent.js.map

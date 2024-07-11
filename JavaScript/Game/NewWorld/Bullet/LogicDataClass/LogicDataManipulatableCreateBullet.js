@@ -12,4 +12,4 @@ class LogicDataManipulatableCreateBullet extends LogicDataBase_1.default {
   }
 }
 exports.default = LogicDataManipulatableCreateBullet;
-// # sourceMappingURL=LogicDataManipulatableCreateBullet.js.map
+//# sourceMappingURL=LogicDataManipulatableCreateBullet.js.map

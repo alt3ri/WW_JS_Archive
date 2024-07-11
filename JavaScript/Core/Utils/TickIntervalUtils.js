@@ -19,44 +19,45 @@ class Config {
     );
   }
 }
-const MAX_INTERVAL = 60;
-const characterConfig = new Config(
-  5e3,
-  5e3,
-  75 * MathUtils_1.MathUtils.DegToRad,
-  10 * MathUtils_1.MathUtils.DegToRad,
-  MAX_INTERVAL,
-);
-const commonNpcConfig = new Config(
-  5e3,
-  5e3,
-  75 * MathUtils_1.MathUtils.DegToRad,
-  10 * MathUtils_1.MathUtils.DegToRad,
-  MAX_INTERVAL,
-);
-const simpleNpcConfig = new Config(
-  5e3,
-  3500,
-  75 * MathUtils_1.MathUtils.DegToRad,
-  10 * MathUtils_1.MathUtils.DegToRad,
-  MAX_INTERVAL,
-);
-const sceneItemConfig = new Config(
-  1500,
-  1e3,
-  75 * MathUtils_1.MathUtils.DegToRad,
-  10 * MathUtils_1.MathUtils.DegToRad,
-  MAX_INTERVAL,
-);
+const MAX_INTERVAL = 60,
+  characterConfig = new Config(
+    5e3,
+    5e3,
+    75 * MathUtils_1.MathUtils.DegToRad,
+    10 * MathUtils_1.MathUtils.DegToRad,
+    MAX_INTERVAL,
+  ),
+  commonNpcConfig = new Config(
+    5e3,
+    5e3,
+    75 * MathUtils_1.MathUtils.DegToRad,
+    10 * MathUtils_1.MathUtils.DegToRad,
+    MAX_INTERVAL,
+  ),
+  simpleNpcConfig = new Config(
+    5e3,
+    3500,
+    75 * MathUtils_1.MathUtils.DegToRad,
+    10 * MathUtils_1.MathUtils.DegToRad,
+    MAX_INTERVAL,
+  ),
+  sceneItemConfig = new Config(
+    1500,
+    1e3,
+    75 * MathUtils_1.MathUtils.DegToRad,
+    10 * MathUtils_1.MathUtils.DegToRad,
+    MAX_INTERVAL,
+  );
 class TickIntervalUtils {
   static Wz(t, i, e) {
     if (t < e.TickPerFrameThreshold && i < e.TickPerFrameThresholdRadio)
       return 0;
-    let s = 1;
-    let n =
-      (t > e.TickPerFrameThreshold &&
-        ((s = 1 + (t - e.TickPerFrameThreshold) / e.TickFramePeriod), (s *= s)),
-      1);
+    let s = 1,
+      n =
+        (t > e.TickPerFrameThreshold &&
+          ((s = 1 + (t - e.TickPerFrameThreshold) / e.TickFramePeriod),
+          (s *= s)),
+        1);
     return (
       i > e.TickPerFrameThresholdRadio &&
         ((n = 1 + (i - e.TickPerFrameThresholdRadio) / e.TickFramePeriodRatio),
@@ -78,4 +79,4 @@ class TickIntervalUtils {
   }
 }
 exports.TickIntervalUtils = TickIntervalUtils;
-// # sourceMappingURL=TickIntervalUtils.js.map
+//# sourceMappingURL=TickIntervalUtils.js.map

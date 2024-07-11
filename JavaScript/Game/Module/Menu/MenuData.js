@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MenuData = void 0);
-const GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const FeatureRestrictionTemplate_1 = require("../Common/FeatureRestrictionTemplate");
+const GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  FeatureRestrictionTemplate_1 = require("../Common/FeatureRestrictionTemplate");
 class MenuData {
   constructor(t) {
     (this.ixi = 0),
@@ -62,11 +62,11 @@ class MenuData {
       (this.ClickedTips = t.ClickedTips);
     for (const e of t.AffectedValue) this.AffectedValueSet.add(e);
     for (const i of t.DisableValue) this.DisableValueSet.add(i);
-    this.MenuDataFunctionId === 6
+    6 === this.MenuDataFunctionId
       ? (this.vxi = MenuData.Mxi)
       : (this.vxi = t.RelationFunction),
-      this.MenuDataFunctionId !== 11 ||
-        this.mxi[this.mxi.length - 1] !== "MenuConfig_6_OptionsName_4" ||
+      11 !== this.MenuDataFunctionId ||
+        "MenuConfig_6_OptionsName_4" !== this.mxi[this.mxi.length - 1] ||
         GameQualitySettingsManager_1.GameQualitySettingsManager.IsDlssGpuDevice() ||
         (this.mxi.pop(), this.dxi.pop());
   }
@@ -134,9 +134,9 @@ class MenuData {
     return this.YO;
   }
   CheckCondition() {
-    let t;
+    var t;
     return !(
-      (this.YO > 0 &&
+      (0 < this.YO &&
         !ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckCondition(
           this.YO.toString(),
           void 0,
@@ -145,13 +145,13 @@ class MenuData {
     );
   }
   CanAffectedFunction(t) {
-    return !!this.AffectedValueSet.has(t) && this.AffectedFunction.size > 0;
+    return !!this.AffectedValueSet.has(t) && 0 < this.AffectedFunction.size;
   }
   IsAffectedDisable(t) {
     return this.DisableValueSet.has(t);
   }
   HasDisableFunction() {
-    return this.DisableFunction.length > 0;
+    return 0 < this.DisableFunction.length;
   }
 }
 ((exports.MenuData = MenuData).Mxi = [5]),
@@ -173,4 +173,4 @@ class MenuData {
         .TemplateForPioneerClient,
     ],
   ]));
-// # sourceMappingURL=MenuData.js.map
+//# sourceMappingURL=MenuData.js.map

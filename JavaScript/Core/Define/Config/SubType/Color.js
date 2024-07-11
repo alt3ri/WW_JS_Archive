@@ -27,21 +27,21 @@ class Color {
     );
   }
   r() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   g() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   b() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   a() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
 }
 exports.Color = Color;
-// # sourceMappingURL=Color.js.map
+//# sourceMappingURL=Color.js.map

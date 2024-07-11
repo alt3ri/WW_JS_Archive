@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HandBookEntranceItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const HandBookController_1 = require("./HandBookController");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  HandBookController_1 = require("./HandBookController");
 class HandBookEntranceItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(e) {
     super(),
@@ -70,14 +70,12 @@ class HandBookEntranceItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.RefreshCollectProgress();
   }
   RefreshRedDot() {
-    const e = ModelManager_1.ModelManager.HandBookModel.IsShowRedDot(
-      this.BZt.Id,
-    );
-    const a = this.GetItem(4);
+    var e = ModelManager_1.ModelManager.HandBookModel.IsShowRedDot(this.BZt.Id),
+      a = this.GetItem(4);
     a && a.SetUIActive(e);
   }
   RefreshCollectProgress() {
-    const e = HandBookController_1.HandBookController.GetCollectProgress(
+    var e = HandBookController_1.HandBookController.GetCollectProgress(
       this.BZt.Id,
     );
     LguiUtil_1.LguiUtil.SetLocalText(
@@ -90,4 +88,4 @@ class HandBookEntranceItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.HandBookEntranceItem = HandBookEntranceItem;
-// # sourceMappingURL=HandBookEntranceItem.js.map
+//# sourceMappingURL=HandBookEntranceItem.js.map

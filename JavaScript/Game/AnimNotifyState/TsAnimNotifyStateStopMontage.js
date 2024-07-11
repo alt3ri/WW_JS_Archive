@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const QUIT_BLEND_TIME = 0.1;
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  QUIT_BLEND_TIME = 0.1;
 class TsAnimNotifyStateStopMontage extends UE.KuroAnimNotifyState {
   K2_NotifyTick(e, t, a) {
     var e = e.GetOwner();
@@ -17,4 +17,4 @@ class TsAnimNotifyStateStopMontage extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateStopMontage;
-// # sourceMappingURL=TsAnimNotifyStateStopMontage.js.map
+//# sourceMappingURL=TsAnimNotifyStateStopMontage.js.map

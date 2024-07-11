@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemGridVariantOne = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const ItemGrid_1 = require("./ItemGrid");
-const ItemGridAbstract_1 = require("./ItemGridAbstract");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  ItemGrid_1 = require("./ItemGrid"),
+  ItemGridAbstract_1 = require("./ItemGridAbstract");
 class ItemGridVariantOne extends ItemGridAbstract_1.ItemGridAbstract {
   constructor() {
     super(...arguments),
@@ -124,12 +124,12 @@ class StarLayoutItem extends UiPanelBase_1.UiPanelBase {
     );
   }
   RefreshStar(e) {
-    const t = e?.length ?? 0;
-    this.GetVerticalLayout(0).RootUIComp.SetUIActive(t > 0),
-      t > 0 && this.StarLayout.RebuildLayoutByDataNew(e);
+    var t = e?.length ?? 0;
+    this.GetVerticalLayout(0).RootUIComp.SetUIActive(0 < t),
+      0 < t && this.StarLayout.RebuildLayoutByDataNew(e);
   }
   OnBeforeDestroy() {
     this.StarLayout.ClearChildren();
   }
 }
-// # sourceMappingURL=ItemGridVariantOne.js.map
+//# sourceMappingURL=ItemGridVariantOne.js.map

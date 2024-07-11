@@ -61,4 +61,4 @@ class DungeonRewardWhiteListCsvLoader extends CsvLoader_1.CsvLoader {
 exports.DungeonRewardWhiteListCsvLoader = DungeonRewardWhiteListCsvLoader;
 class DungeonRewardWhiteListCsv extends CsvLoader_1.GlobalCsv {}
 exports.DungeonRewardWhiteListCsv = DungeonRewardWhiteListCsv;
-// # sourceMappingURL=DungeonRewardWhiteListCsv.js.map
+//# sourceMappingURL=DungeonRewardWhiteListCsv.js.map

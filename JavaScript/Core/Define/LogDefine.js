@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.logAuthorInfo = void 0),
   (exports.logAuthorInfo = {
-    0: ["C++", !0],
+    [0]: ["C++", !0],
     1: ["LCC", !0],
     2: ["LZP", !0],
     3: ["LFJW", !0],
@@ -67,4 +67,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     62: ["LC", !0],
     63: ["CYK", !0],
   });
-// # sourceMappingURL=LogDefine.js.map
+//# sourceMappingURL=LogDefine.js.map

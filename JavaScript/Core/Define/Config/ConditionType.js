@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConditionType = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const DicStringString_1 = require("./SubType/DicStringString");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  DicStringString_1 = require("./SubType/DicStringString");
 class ConditionType {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -192,30 +192,30 @@ class ConditionType {
     );
   }
   type(t) {
-    const i = this.J7.__offset(this.z7, 4);
+    var i = this.J7.__offset(this.z7, 4);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   isclienttrigger() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   subtype() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetRegisterplacesAt(t) {
     return this.registerplaces(t);
   }
   registerplaces(t) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   registerplacesLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   registerplacesArray() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -228,7 +228,7 @@ class ConditionType {
     return this.param1(t);
   }
   param1(t, i) {
-    const r = this.J7.__offset(this.z7, 12);
+    var r = this.J7.__offset(this.z7, 12);
     return r
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -237,18 +237,18 @@ class ConditionType {
       : null;
   }
   param1Length() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam1(t) {
-    const i = this.J7.__offset(this.z7, 14);
+    var i = this.J7.__offset(this.z7, 14);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetParam2At(t, i) {
     return this.param2(t);
   }
   param2(t, i) {
-    const r = this.J7.__offset(this.z7, 16);
+    var r = this.J7.__offset(this.z7, 16);
     return r
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -257,18 +257,18 @@ class ConditionType {
       : null;
   }
   param2Length() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam2(t) {
-    const i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 18);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetParam3At(t, i) {
     return this.param3(t);
   }
   param3(t, i) {
-    const r = this.J7.__offset(this.z7, 20);
+    var r = this.J7.__offset(this.z7, 20);
     return r
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -277,18 +277,18 @@ class ConditionType {
       : null;
   }
   param3Length() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam3(t) {
-    const i = this.J7.__offset(this.z7, 22);
+    var i = this.J7.__offset(this.z7, 22);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetParam4At(t, i) {
     return this.param4(t);
   }
   param4(t, i) {
-    const r = this.J7.__offset(this.z7, 24);
+    var r = this.J7.__offset(this.z7, 24);
     return r
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -297,18 +297,18 @@ class ConditionType {
       : null;
   }
   param4Length() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam4(t) {
-    const i = this.J7.__offset(this.z7, 26);
+    var i = this.J7.__offset(this.z7, 26);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetParam5At(t, i) {
     return this.param5(t);
   }
   param5(t, i) {
-    const r = this.J7.__offset(this.z7, 28);
+    var r = this.J7.__offset(this.z7, 28);
     return r
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -317,18 +317,18 @@ class ConditionType {
       : null;
   }
   param5Length() {
-    const t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam5(t) {
-    const i = this.J7.__offset(this.z7, 30);
+    var i = this.J7.__offset(this.z7, 30);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetParam6At(t, i) {
     return this.param6(t);
   }
   param6(t, i) {
-    const r = this.J7.__offset(this.z7, 32);
+    var r = this.J7.__offset(this.z7, 32);
     return r
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -337,18 +337,18 @@ class ConditionType {
       : null;
   }
   param6Length() {
-    const t = this.J7.__offset(this.z7, 32);
+    var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam6(t) {
-    const i = this.J7.__offset(this.z7, 34);
+    var i = this.J7.__offset(this.z7, 34);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetParam7At(t, i) {
     return this.param7(t);
   }
   param7(t, i) {
-    const r = this.J7.__offset(this.z7, 36);
+    var r = this.J7.__offset(this.z7, 36);
     return r
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -357,18 +357,18 @@ class ConditionType {
       : null;
   }
   param7Length() {
-    const t = this.J7.__offset(this.z7, 36);
+    var t = this.J7.__offset(this.z7, 36);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam7(t) {
-    const i = this.J7.__offset(this.z7, 38);
+    var i = this.J7.__offset(this.z7, 38);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetParam8At(t, i) {
     return this.param8(t);
   }
   param8(t, i) {
-    const r = this.J7.__offset(this.z7, 40);
+    var r = this.J7.__offset(this.z7, 40);
     return r
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -377,18 +377,18 @@ class ConditionType {
       : null;
   }
   param8Length() {
-    const t = this.J7.__offset(this.z7, 40);
+    var t = this.J7.__offset(this.z7, 40);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam8(t) {
-    const i = this.J7.__offset(this.z7, 42);
+    var i = this.J7.__offset(this.z7, 42);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetParam9At(t, i) {
     return this.param9(t);
   }
   param9(t, i) {
-    const r = this.J7.__offset(this.z7, 44);
+    var r = this.J7.__offset(this.z7, 44);
     return r
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -397,18 +397,18 @@ class ConditionType {
       : null;
   }
   param9Length() {
-    const t = this.J7.__offset(this.z7, 44);
+    var t = this.J7.__offset(this.z7, 44);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam9(t) {
-    const i = this.J7.__offset(this.z7, 46);
+    var i = this.J7.__offset(this.z7, 46);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetParam10At(t, i) {
     return this.param10(t);
   }
   param10(t, i) {
-    const r = this.J7.__offset(this.z7, 48);
+    var r = this.J7.__offset(this.z7, 48);
     return r
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -417,18 +417,18 @@ class ConditionType {
       : null;
   }
   param10Length() {
-    const t = this.J7.__offset(this.z7, 48);
+    var t = this.J7.__offset(this.z7, 48);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam10(t) {
-    const i = this.J7.__offset(this.z7, 50);
+    var i = this.J7.__offset(this.z7, 50);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetParam11At(t, i) {
     return this.param11(t);
   }
   param11(t, i) {
-    const r = this.J7.__offset(this.z7, 52);
+    var r = this.J7.__offset(this.z7, 52);
     return r
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -437,18 +437,18 @@ class ConditionType {
       : null;
   }
   param11Length() {
-    const t = this.J7.__offset(this.z7, 52);
+    var t = this.J7.__offset(this.z7, 52);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam11(t) {
-    const i = this.J7.__offset(this.z7, 54);
+    var i = this.J7.__offset(this.z7, 54);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetParam12At(t, i) {
     return this.param12(t);
   }
   param12(t, i) {
-    const r = this.J7.__offset(this.z7, 56);
+    var r = this.J7.__offset(this.z7, 56);
     return r
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -457,18 +457,18 @@ class ConditionType {
       : null;
   }
   param12Length() {
-    const t = this.J7.__offset(this.z7, 56);
+    var t = this.J7.__offset(this.z7, 56);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam12(t) {
-    const i = this.J7.__offset(this.z7, 58);
+    var i = this.J7.__offset(this.z7, 58);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetParam13At(t, i) {
     return this.param13(t);
   }
   param13(t, i) {
-    const r = this.J7.__offset(this.z7, 60);
+    var r = this.J7.__offset(this.z7, 60);
     return r
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -477,18 +477,18 @@ class ConditionType {
       : null;
   }
   param13Length() {
-    const t = this.J7.__offset(this.z7, 60);
+    var t = this.J7.__offset(this.z7, 60);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam13(t) {
-    const i = this.J7.__offset(this.z7, 62);
+    var i = this.J7.__offset(this.z7, 62);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetParam14At(t, i) {
     return this.param14(t);
   }
   param14(t, i) {
-    const r = this.J7.__offset(this.z7, 64);
+    var r = this.J7.__offset(this.z7, 64);
     return r
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -497,18 +497,18 @@ class ConditionType {
       : null;
   }
   param14Length() {
-    const t = this.J7.__offset(this.z7, 64);
+    var t = this.J7.__offset(this.z7, 64);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam14(t) {
-    const i = this.J7.__offset(this.z7, 66);
+    var i = this.J7.__offset(this.z7, 66);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetParam15At(t, i) {
     return this.param15(t);
   }
   param15(t, i) {
-    const r = this.J7.__offset(this.z7, 68);
+    var r = this.J7.__offset(this.z7, 68);
     return r
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -517,18 +517,18 @@ class ConditionType {
       : null;
   }
   param15Length() {
-    const t = this.J7.__offset(this.z7, 68);
+    var t = this.J7.__offset(this.z7, 68);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam15(t) {
-    const i = this.J7.__offset(this.z7, 70);
+    var i = this.J7.__offset(this.z7, 70);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetParam16At(t, i) {
     return this.param16(t);
   }
   param16(t, i) {
-    const r = this.J7.__offset(this.z7, 72);
+    var r = this.J7.__offset(this.z7, 72);
     return r
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -537,13 +537,13 @@ class ConditionType {
       : null;
   }
   param16Length() {
-    const t = this.J7.__offset(this.z7, 72);
+    var t = this.J7.__offset(this.z7, 72);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam16(t) {
-    const i = this.J7.__offset(this.z7, 74);
+    var i = this.J7.__offset(this.z7, 74);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.ConditionType = ConditionType;
-// # sourceMappingURL=ConditionType.js.map
+//# sourceMappingURL=ConditionType.js.map

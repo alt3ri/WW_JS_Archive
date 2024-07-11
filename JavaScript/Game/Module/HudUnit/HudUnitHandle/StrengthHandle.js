@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.StrengthHandle = void 0);
-const Stats_1 = require("../../../../Core/Common/Stats");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const FormationAttributeController_1 = require("../../Abilities/FormationAttributeController");
-const StrengthUnit_1 = require("../HudUnit/StrengthUnit");
-const HudUnitHandleBase_1 = require("./HudUnitHandleBase");
-const RECOVERY_STRENGTH_BUFF_ID = 91004001;
+const Stats_1 = require("../../../../Core/Common/Stats"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  FormationAttributeController_1 = require("../../Abilities/FormationAttributeController"),
+  StrengthUnit_1 = require("../HudUnit/StrengthUnit"),
+  HudUnitHandleBase_1 = require("./HudUnitHandleBase"),
+  RECOVERY_STRENGTH_BUFF_ID = 91004001;
 class StrengthHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   constructor() {
     super(...arguments),
@@ -27,7 +27,7 @@ class StrengthHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       (this.Uri = 0),
       (this.B8e = void 0),
       (this.xie = () => {
-        const t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
+        var t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
         this.tXe(this.B8e),
           this.eXe(t),
           this.vri &&
@@ -141,7 +141,7 @@ class StrengthHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       );
   }
   eXe(t) {
-    let i;
+    var i;
     t &&
       ((i = t.EntityHandle.Id), this.Rri !== i) &&
       ((this.Rri = i),
@@ -196,40 +196,40 @@ class StrengthHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       this.vri.SetStrengthPercent(this.Mri, this.Sri);
   }
   wri() {
-    let t, i;
+    var t, i;
     this.Fri() &&
       ((t = this.Mri - this.Sri),
       (i = this.Eri - this.Sri),
       this.vri.SetTemporaryStrengthPercent(t, i));
   }
   Ari() {
-    const t = this.Fri();
+    var t = this.Fri();
     this.vri.PlayTemporaryAnim(t);
   }
   Fri() {
-    const t = this.Sri;
+    var t = this.Sri;
     return !(this.Vri() <= 0 && this.Eri <= t);
   }
   Vri() {
     return this.Mri - this.Sri;
   }
   qri() {
-    const t = this.Eri - this.Sri;
+    var t = this.Eri - this.Sri;
     this.vri.RefreshSingleStrengthItemRotation(this.Sri),
       this.vri.RefreshSingleTemporaryStrengthItemRotation(t),
       this.vri.RefreshSingleTemporaryStrengthItemVisible(t);
   }
   Bri() {
-    let t = this.Mri;
-    let i = this.Eri;
+    var t = this.Mri,
+      i = this.Eri;
     return (
       this.Fri()
-        ? this.Vri() > 0
+        ? 0 < this.Vri()
           ? (this.vri.SetTemporaryVisible(!0), this.vri.PlayTemporaryAnim(!0))
           : this.vri.PlayTemporaryAnim(!1)
         : this.vri.SetTemporaryVisible(!1),
       i <= t
-        ? this.Uri === 0
+        ? 0 === this.Uri
           ? void 0
           : ((this.Uri = 0),
             this.vri.SetNone(!1),
@@ -237,7 +237,7 @@ class StrengthHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
             this.vri.SetNormal(!0),
             void this.vri.PlayFullAnim())
         : t <= 0
-          ? this.Uri === 3
+          ? 3 === this.Uri
             ? void 0
             : ((this.Uri = 3),
               this.vri.SetNone(!0),
@@ -257,4 +257,4 @@ class StrengthHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
 }
 ((exports.StrengthHandle = StrengthHandle).RKe = void 0),
   (StrengthHandle._$e = void 0);
-// # sourceMappingURL=StrengthHandle.js.map
+//# sourceMappingURL=StrengthHandle.js.map

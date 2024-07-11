@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PanelQteController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const PanelQteContext_1 = require("./PanelQteContext");
-const disableInputTagIds = [
-  -542518289, -541178966, -732810197, 581080458, -1802431900, -469423249,
-  766688429, -1752099043, -1697149502,
-];
+const Log_1 = require("../../../Core/Common/Log"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  PanelQteContext_1 = require("./PanelQteContext"),
+  disableInputTagIds = [
+    -542518289, -541178966, -732810197, 581080458, -1802431900, -469423249,
+    766688429, -1752099043, -1697149502,
+  ];
 class PanelQteController extends UiControllerBase_1.UiControllerBase {
   static StartAnimNotifyQte(e, t, a) {
-    let r;
+    var r;
     return this.vNi()
       ? (((r = new PanelQteContext_1.PanelQteContext()).QteId = e),
         (r.PreMessageId = a),
@@ -26,7 +26,7 @@ class PanelQteController extends UiControllerBase_1.UiControllerBase {
       : -1;
   }
   static StartBuffQte(e, t, a, r, n) {
-    let o;
+    var o;
     return this.vNi() && r && r.Id === Global_1.Global.BaseCharacter?.EntityId
       ? (((o = new PanelQteContext_1.PanelQteContext()).QteId = e),
         (o.Source = 1),
@@ -41,7 +41,7 @@ class PanelQteController extends UiControllerBase_1.UiControllerBase {
       : -1;
   }
   static StartLevelSequenceQte(e, t) {
-    let a;
+    var a;
     return this.vNi()
       ? (((a = new PanelQteContext_1.PanelQteContext()).QteId = e),
         (a.Source = 2),
@@ -51,7 +51,7 @@ class PanelQteController extends UiControllerBase_1.UiControllerBase {
   }
   static StopQte(e, t = !1) {
     if (!ModelManager_1.ModelManager.PanelQteModel.StopQte(e)) return !1;
-    const a = ModelManager_1.ModelManager.PanelQteModel;
+    var a = ModelManager_1.ModelManager.PanelQteModel;
     if (
       (a.IsHideAllBattleUi
         ? (ModelManager_1.ModelManager.BattleUiModel.ChildViewData.ShowBattleView(
@@ -99,14 +99,14 @@ class PanelQteController extends UiControllerBase_1.UiControllerBase {
     return !ModelManager_1.ModelManager.PanelQteModel.IsInQte;
   }
   static MNi(e) {
-    const t = ModelManager_1.ModelManager.PanelQteModel.GetPanelQteConfig(
+    var t = ModelManager_1.ModelManager.PanelQteModel.GetPanelQteConfig(
       e.QteId,
     );
     if (!t) return -1;
     e.Config = t;
-    const a = ModelManager_1.ModelManager.PanelQteModel;
-    const r = a.StartQte(e);
-    const n = e.Config.ViewType;
+    var a = ModelManager_1.ModelManager.PanelQteModel,
+      r = a.StartQte(e),
+      n = e.Config.ViewType;
     switch (n) {
       case 0:
         UiManager_1.UiManager.IsViewOpen("FrozenQteView") &&
@@ -131,9 +131,9 @@ class PanelQteController extends UiControllerBase_1.UiControllerBase {
         );
     else {
       a.IsHideAllBattleUi = !1;
-      const o = t.HideUIElement.Num();
-      if (o > 0) {
-        const i = [];
+      var o = t.HideUIElement.Num();
+      if (0 < o) {
+        var i = [];
         for (let e = 0; e < o; e++) i.push(t.HideUIElement.Get(e));
         ModelManager_1.ModelManager.BattleUiModel.ChildViewData.SetChildrenVisible(
           6,
@@ -146,8 +146,8 @@ class PanelQteController extends UiControllerBase_1.UiControllerBase {
     if (a.DisableFightInput) {
       e = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
       if (e) {
-        const l = e.EntityHandle;
-        const _ = e.GameplayTagComponent;
+        var l = e.EntityHandle,
+          _ = e.GameplayTagComponent;
         if (_) {
           for (const s of disableInputTagIds) _.AddTag(s);
           a.CurRoleEntity = l;
@@ -173,7 +173,7 @@ class PanelQteController extends UiControllerBase_1.UiControllerBase {
   }
 }
 (exports.PanelQteController = PanelQteController).XCt = () => {
-  const e = ModelManager_1.ModelManager.PanelQteModel.GetContext();
+  var e = ModelManager_1.ModelManager.PanelQteModel.GetContext();
   e?.QteHandleId && PanelQteController.StopQte(e.QteHandleId, !0);
 };
-// # sourceMappingURL=PanelQteController.js.map
+//# sourceMappingURL=PanelQteController.js.map

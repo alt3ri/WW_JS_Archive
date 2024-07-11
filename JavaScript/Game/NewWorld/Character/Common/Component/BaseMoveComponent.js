@@ -1,53 +1,58 @@
 "use strict";
-let BaseMoveComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, i, e, s) {
-    let h;
-    const o = arguments.length;
-    let r =
-      o < 3 ? i : s === null ? (s = Object.getOwnPropertyDescriptor(i, e)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(t, i, e, s);
-    else
-      for (let a = t.length - 1; a >= 0; a--)
-        (h = t[a]) && (r = (o < 3 ? h(r) : o > 3 ? h(i, e, r) : h(i, e)) || r);
-    return o > 3 && r && Object.defineProperty(i, e, r), r;
-  };
+var BaseMoveComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, i, e, s) {
+      var h,
+        o = arguments.length,
+        r =
+          o < 3
+            ? i
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(i, e))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        r = Reflect.decorate(t, i, e, s);
+      else
+        for (var a = t.length - 1; 0 <= a; a--)
+          (h = t[a]) &&
+            (r = (o < 3 ? h(r) : 3 < o ? h(i, e, r) : h(i, e)) || r);
+      return 3 < o && r && Object.defineProperty(i, e, r), r;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BaseMoveComponent = exports.GravityScale = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const CurveUtils_1 = require("../../../../../Core/Utils/Curve/CurveUtils");
-const Quat_1 = require("../../../../../Core/Utils/Math/Quat");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon");
-const TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter");
-const GlobalData_1 = require("../../../../GlobalData");
-const ActorUtils_1 = require("../../../../Utils/ActorUtils");
-const TsBaseItem_1 = require("../../../SceneItem/BaseItem/TsBaseItem");
-const CharacterNameDefines_1 = require("../CharacterNameDefines");
-const CharacterAttributeTypes_1 = require("./Abilities/CharacterAttributeTypes");
-const CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes");
-const BaseMoveCharacter_1 = require("./Move/BaseMoveCharacter");
-const MoveToLocationLogic_1 = require("./Move/MoveToLocationLogic");
-const PROFILE_KEY = "CharacterMoveComponent_GetHeightAboveGround";
-const ROTATION_AIM = 1500;
-const NEAR_ZERO = 1e-6;
-const HEIGHT_DETECT = 500;
-const ROTATABLE_THREADHOLD = 0.5;
-const BASE_MOVEMENT_VELOCITY_RATE = 0.2;
-const SPEED_LOCK_FRAME = 5;
-const INVALID_FORCE_SPEED = -1e8;
-const OPEN_DEBUG = !1;
-const DEFAULT_MAX_FALLING_VELOCITY_2D = 700;
-const DEFAULT_AIR_CONTROL = 0.05;
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  CurveUtils_1 = require("../../../../../Core/Utils/Curve/CurveUtils"),
+  Quat_1 = require("../../../../../Core/Utils/Math/Quat"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon"),
+  TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  ActorUtils_1 = require("../../../../Utils/ActorUtils"),
+  TsBaseItem_1 = require("../../../SceneItem/BaseItem/TsBaseItem"),
+  CharacterNameDefines_1 = require("../CharacterNameDefines"),
+  CharacterAttributeTypes_1 = require("./Abilities/CharacterAttributeTypes"),
+  CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
+  BaseMoveCharacter_1 = require("./Move/BaseMoveCharacter"),
+  MoveToLocationLogic_1 = require("./Move/MoveToLocationLogic"),
+  PROFILE_KEY = "CharacterMoveComponent_GetHeightAboveGround",
+  ROTATION_AIM = 1500,
+  NEAR_ZERO = 1e-6,
+  HEIGHT_DETECT = 500,
+  ROTATABLE_THREADHOLD = 0.5,
+  BASE_MOVEMENT_VELOCITY_RATE = 0.2,
+  SPEED_LOCK_FRAME = 5,
+  INVALID_FORCE_SPEED = -1e8,
+  OPEN_DEBUG = !1,
+  DEFAULT_MAX_FALLING_VELOCITY_2D = 700,
+  DEFAULT_AIR_CONTROL = 0.05;
 class VelocityAddition {
   constructor(t, i, e, s, h, o, r) {
     (this.ElapsedTime = -0),
@@ -212,15 +217,16 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
         this.ResetMaxSpeed(i), this.ResetCharacterMovementInfo(i);
       }),
       (this.OnMoveStateChange = (t, i) => {
-        const e = this.UnifiedStateComponent?.DirectionState;
+        var e = this.UnifiedStateComponent?.DirectionState;
         this.ResetMovementSetting(e),
           this.ResetMaxSpeed(i),
           this.ResetCharacterMovementInfo(i);
       }),
       (this.OnPositionStateChange = () => {
-        var t = this.UnifiedStateComponent?.DirectionState;
-        var t =
-          (this.ResetMovementSetting(t), this.UnifiedStateComponent?.MoveState);
+        var t = this.UnifiedStateComponent?.DirectionState,
+          t =
+            (this.ResetMovementSetting(t),
+            this.UnifiedStateComponent?.MoveState);
         this.ResetMaxSpeed(t), this.ResetCharacterMovementInfo(t);
       }),
       (this.JumpDelayTimer = void 0),
@@ -247,7 +253,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       this.ActorComp && this.ActorComp.ResetCachedVelocityTime();
   }
   get IsJump() {
-    return this.JumpFrameCount > 0;
+    return 0 < this.JumpFrameCount;
   }
   get CurrentMovementSettings() {
     return this.rFr;
@@ -269,7 +275,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
     this.FallingHorizontalMaxSpeed = DEFAULT_MAX_FALLING_VELOCITY_2D;
   }
   get BasePlatform() {
-    let t;
+    var t;
     if (this.BasePrimitiveComponent?.IsValid())
       return (t = this.BasePrimitiveComponent?.GetOwner()) instanceof
         UE.BP_BasePlatform_C
@@ -317,8 +323,8 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
         );
   }
   ResetMaxSpeed(t) {
-    if (!(this.SpeedLockFrame > 0)) {
-      const i = this.ActorComp.Actor.TsCharacterDebugComponent.MaxFixSpeed;
+    if (!(0 < this.SpeedLockFrame)) {
+      var i = this.ActorComp.Actor.TsCharacterDebugComponent.MaxFixSpeed;
       switch (t) {
         case CharacterUnifiedStateTypes_1.ECharMoveState.Walk:
           this.SetMaxSpeed(i + (this.CurrentMovementSettings?.WalkSpeed ?? 0));
@@ -340,9 +346,9 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
     }
   }
   SetMaxSpeed(t) {
-    let i = CharacterAttributeTypes_1.PER_TEN_THOUSAND;
-    var t = t * (i /= CharacterAttributeTypes_1.PER_TEN_THOUSAND);
-    this.CharacterMovement.MovementMode === 5
+    var i = CharacterAttributeTypes_1.PER_TEN_THOUSAND,
+      t = t * (i /= CharacterAttributeTypes_1.PER_TEN_THOUSAND);
+    5 === this.CharacterMovement.MovementMode
       ? (this.CharacterMovement.MaxFlySpeed = t)
       : (this.CharacterMovement.MaxWalkSpeed = t);
   }
@@ -361,7 +367,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
     (this.AddMoveOffset = t),
       this.ActorComp.IsRoleAndCtrlByMe &&
         t &&
-        t.SizeSquared() > 1e6 &&
+        1e6 < t.SizeSquared() &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Movement",
@@ -446,7 +452,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       CharacterUnifiedStateTypes_1.ECharMoveState.Stand,
       CharacterUnifiedStateTypes_1.ECharMoveState.Run,
     ),
-      this.CharacterMovement.MovementMode === 2 &&
+      2 === this.CharacterMovement.MovementMode &&
         this.CharacterMovement.SetMovementMode(1);
   }
   PrintAnimInstanceMovementInfo() {
@@ -457,7 +463,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       ]);
   }
   InitCreatureProperty() {
-    const t = this.Entity.GetComponent(0);
+    var t = this.Entity.GetComponent(0);
     (this.CreatureProperty = t.GetEntityPropertyConfig()),
       (this.CharacterMovement.Mass = this.CreatureProperty.重量),
       (this.CharacterMovement.HitPriority = this.CreatureProperty.碰撞优先级),
@@ -471,7 +477,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
         this.CreatureProperty.穿透优先级));
   }
   CanResponseInput() {
-    return this.CannotResponseInputCount === 0;
+    return 0 === this.CannotResponseInputCount;
   }
   SetInfoVar() {
     this.DeltaTimeSeconds > NEAR_ZERO &&
@@ -516,7 +522,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
     h = "Movement.SmoothCharacterRotation",
     o = !0,
   ) {
-    let r;
+    var r;
     this.IsLockedRotation ||
       (r = this.ActorComp.ActorRotationProxy).Equals2(t) ||
       (this.TempRotator.DeepCopy(t),
@@ -527,7 +533,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
         (o ? this.SpeedScaled(i) : i) * this.TurnRate,
         this.TempRotator,
       ),
-      this.Entity.GetTickInterval() > 1 &&
+      1 < this.Entity.GetTickInterval() &&
       this.AnimComp?.Valid &&
       this.ActorComp.Owner.WasRecentlyRenderedOnScreen()
         ? ((t = this.AnimComp.GetMeshTransform()),
@@ -564,7 +570,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
     return !0;
   }
   SetAddMoveWorldSpeedWithMesh(t, i) {
-    let e;
+    var e;
     t
       ? ((e = this.VelocityAdditionMapByMesh.get(t) ?? 0),
         (e = this.SetAddMoveWorld(i, -1, void 0, e)) &&
@@ -577,7 +583,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
         );
   }
   SetAddMoveWithMesh(t, i, e, s) {
-    let h;
+    var h;
     t
       ? ((h = this.VelocityAdditionMapByMesh.get(t) ?? 0),
         (i = this.ActorComp.ActorRotation.RotateVector(i)),
@@ -639,7 +645,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
     return this.VelocityAdditionMap.set(s, n), s;
   }
   SetAddMoveWorldWithMesh(t, i, e, s) {
-    let h;
+    var h;
     t
       ? ((h = this.VelocityAdditionMapByMesh.get(t) ?? 0),
         (h = this.SetAddMoveWorld(i, e, s, h)) &&
@@ -689,7 +695,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
           Math.abs(this.CharacterMovement.Velocity.Z)
             ? (this.CharacterMovement.GravityScale =
                 2 *
-                (this.CharacterMovement.Velocity.Z > 0
+                (0 < this.CharacterMovement.Velocity.Z
                   ? this.CurrentGravityScale.ScaleUp
                   : this.CurrentGravityScale.ScaleDown))
             : (this.CharacterMovement.GravityScale =
@@ -735,14 +741,14 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
     );
   }
   UpdateAddMoveSpeed(t = 1) {
-    if (this.VelocityAdditionMap.size === 0) return !1;
+    if (0 === this.VelocityAdditionMap.size) return !1;
     BaseMoveComponent_1.VelocityAdditionTotal.Reset();
-    let i;
-    let e;
-    let s;
-    const h = this.DeltaTimeSeconds * t;
+    var i,
+      e,
+      s,
+      h = this.DeltaTimeSeconds * t;
     for ([i, e] of this.VelocityAdditionMap)
-      if (e.Duration >= 0 && e.ElapsedTime >= e.Duration)
+      if (0 <= e.Duration && e.ElapsedTime >= e.Duration)
         this.VelocityAdditionMap.delete(i);
       else if (
         e.MovementMode &&
@@ -752,19 +758,19 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       else if (
         ((e.ElapsedTime += h),
         this.VelocityVector.FromUeVector(e.Velocity),
-        e.VelocityCurveType !== 0
+        0 !== e.VelocityCurveType
           ? ((s = e.VelocityCurveFunc(
-              e.Duration > 0 ? e.ElapsedTime / e.Duration : 1,
+              0 < e.Duration ? e.ElapsedTime / e.Duration : 1,
             )),
             this.VelocityVector.FromUeVector(e.Velocity),
             this.VelocityVector.MultiplyEqual(s))
           : e.CurveFloat?.IsValid() &&
             this.VelocityVector.MultiplyEqual(
               e.CurveFloat.GetFloatValue(
-                e.Duration > 0 ? e.ElapsedTime / e.Duration : 1,
+                0 < e.Duration ? e.ElapsedTime / e.Duration : 1,
               ),
             ),
-        e.Duration > 0 &&
+        0 < e.Duration &&
           e.ElapsedTime > e.Duration &&
           ((s = e.ElapsedTime - e.Duration),
           this.VelocityVector.MultiplyEqual((h - s) / h)),
@@ -788,7 +794,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
           !1
         );
     return (
-      this.VelocityAdditionMap.size !== 0 &&
+      0 !== this.VelocityAdditionMap.size &&
       (this.ActorComp.IsRoleAndCtrlByMe &&
         Math.abs(BaseMoveComponent_1.VelocityAdditionTotal.X) <
           MathUtils_1.MathUtils.SmallNumber &&
@@ -837,7 +843,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
     );
   }
   GetHeightAboveGround(t = HEIGHT_DETECT) {
-    let i, e;
+    var i, e;
     return (
       this.CharHeightAboveGround >= t ||
         (MathUtils_1.MathUtils.TransformPosition(
@@ -903,9 +909,9 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
   SetWalkOffLedgeRecord(t) {
     t
       ? (--this.WalkOffCount,
-        this.WalkOffCount === 0 && this.SetWalkOffLedge(!0))
+        0 === this.WalkOffCount && this.SetWalkOffLedge(!0))
       : (++this.WalkOffCount,
-        this.WalkOffCount === 1 && this.SetWalkOffLedge(!1));
+        1 === this.WalkOffCount && this.SetWalkOffLedge(!1));
   }
   SetWalkOffLedge(t) {
     t
@@ -919,7 +925,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
           2 * this.ActorComp.ScaledRadius));
   }
   LerpMaxAcceleration() {
-    let t, i;
+    var t, i;
     this.DesireMaxAccelerationLerpTime <= 0 ||
       (this.UnifiedStateComponent?.MoveState !==
       this.AccelerationChangeMoveState
@@ -936,8 +942,8 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
           this.SetMaxSpeed(this.CurrentMovementSettings.SprintSpeed * i)));
   }
   UpdateGroundedRotation() {
-    let t = 0;
-    let i = "";
+    let t = 0,
+      i = "";
     (i = this.ActorComp.UseControllerRotation.IsNearlyZero()
       ? ((t = this.nFr.GetSpeed(
           Math.abs(
@@ -956,8 +962,8 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       );
   }
   UpdateBaseMovement() {
-    let t;
-    const i = this.ActorComp.Actor.BasedMovement;
+    var t,
+      i = this.ActorComp.Actor.BasedMovement;
     if (
       ((this.HasBaseMovement === i.bRelativeRotation &&
         this.BasePrimitiveComponent === i.MovementBase) ||
@@ -974,7 +980,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
                 e.GetComponent(99)?.SetTakeOverTick(!0))
             : t instanceof TsBaseItem_1.default &&
               (this.IsDeltaBaseSpeedNeedZ = !0))),
-      this.HasBaseMovement && i?.MovementBase?.Mobility === 2)
+      this.HasBaseMovement && 2 === i?.MovementBase?.Mobility)
     ) {
       var e = this.CharacterMovement.BaseDeltaQuat.Rotator();
       (e.Roll = 0),
@@ -996,9 +1002,9 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
               this.DeltaBaseMovementSpeed,
             )
           : (this.DeltaBaseMovementSpeed = t),
-        (Math.abs(this.DeltaBaseMovementSpeed.X) > 3e3 ||
-          Math.abs(this.DeltaBaseMovementSpeed.Y) > 3e3 ||
-          Math.abs(this.DeltaBaseMovementSpeed.Z) > 3e3) &&
+        (3e3 < Math.abs(this.DeltaBaseMovementSpeed.X) ||
+          3e3 < Math.abs(this.DeltaBaseMovementSpeed.Y) ||
+          3e3 < Math.abs(this.DeltaBaseMovementSpeed.Z)) &&
           Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Movement",
@@ -1103,4 +1109,4 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       BaseMoveComponent,
     )),
   (exports.BaseMoveComponent = BaseMoveComponent);
-// # sourceMappingURL=BaseMoveComponent.js.map
+//# sourceMappingURL=BaseMoveComponent.js.map

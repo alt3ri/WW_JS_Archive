@@ -24,17 +24,17 @@ class DaySelectPreset {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   title(t) {
-    const e = this.J7.__offset(this.z7, 6);
+    var e = this.J7.__offset(this.z7, 6);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   changedaynum() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.DaySelectPreset = DaySelectPreset;
-// # sourceMappingURL=DaySelectPreset.js.map
+//# sourceMappingURL=DaySelectPreset.js.map

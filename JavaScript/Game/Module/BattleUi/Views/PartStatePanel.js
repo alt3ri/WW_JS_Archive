@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PartStatePanel = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Stats_1 = require("../../../../Core/Common/Stats");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const PartState_1 = require("./PartState");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  PartState_1 = require("./PartState");
 class PartStatePanel {
   constructor() {
     (this.Xut = new Map()),
       (this.$ut = (t, e, r) => {
-        const i = EntitySystem_1.EntitySystem.Get(t);
+        var i = EntitySystem_1.EntitySystem.Get(t);
         if (FNameUtil_1.FNameUtil.IsNothing(e))
           i &&
             (r
               ? this.ActivatePartStateByRole(i)
               : this.DestroyPartStateFromRole(i));
         else if (i) {
-          let s;
-          const a = i.GetComponent(58).Parts;
+          var s,
+            a = i.GetComponent(58).Parts;
           if (!(a.length <= 0))
             for (const o of a)
               o.BoneName.op_Equality(e) &&
@@ -50,12 +50,12 @@ class PartStatePanel {
   }
   OnCreateEntity(t) {
     if (t) {
-      let e = t.GetComponent(58);
+      var e = t.GetComponent(58);
       if (e) {
         e = e.Parts;
-        if (e && e.length !== 0) {
-          let r;
-          const i = t.GetComponent(1).Owner.Mesh;
+        if (e && 0 !== e.length) {
+          var r,
+            i = t.GetComponent(1).Owner.Mesh;
           for (const s of e)
             s.IsPartStateVisible &&
               ((r = s.PartSocketName),
@@ -74,12 +74,12 @@ class PartStatePanel {
   }
   ActivatePartStateByRole(t) {
     if (t) {
-      const e = t.GetComponent(58).Parts;
-      if (e.length !== 0) for (const r of e) this.ActivatePartState(t, r);
+      var e = t.GetComponent(58).Parts;
+      if (0 !== e.length) for (const r of e) this.ActivatePartState(t, r);
     }
   }
   ActivatePartState(t, e) {
-    const r = this.GetPartState(t.Id, e.Index);
+    var r = this.GetPartState(t.Id, e.Index);
     r ? r.InitializePartState(t, e) : this.Yut(t, e);
   }
   DestroyAllParStates() {
@@ -87,23 +87,23 @@ class PartStatePanel {
     this.Xut.clear();
   }
   DestroyPartStateFromRole(t) {
-    var t = t.Id;
-    const e = this.GetAllPartStates(t);
+    var t = t.Id,
+      e = this.GetAllPartStates(t);
     if (e) {
       for (const r of e.values()) r.Destroy();
       this.Xut.get(t).clear();
     }
   }
   DestroyPartState(t, e) {
-    let r = this.GetPartState(t, e);
+    var r = this.GetPartState(t, e);
     r && (r.Destroy(), (r = this.Xut.get(t))) && r.delete(e);
   }
   Tick(t) {
     for (const e of this.Xut.values()) for (const r of e.values()) r.Tick(t);
   }
   Yut(t, e) {
-    const r = t.Id;
-    var t = new PartState_1.PartState(t, e);
+    var r = t.Id,
+      t = new PartState_1.PartState(t, e);
     let i = this.Xut.get(r);
     return (
       i
@@ -121,4 +121,4 @@ class PartStatePanel {
   }
 }
 (exports.PartStatePanel = PartStatePanel).aYe = void 0;
-// # sourceMappingURL=PartStatePanel.js.map
+//# sourceMappingURL=PartStatePanel.js.map

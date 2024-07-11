@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomBattleData = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const CommonComponentDefine_1 = require("../../Common/CommonComponentDefine");
-const PhantomDataBase_1 = require("./Data/PhantomDataBase");
-const PhantomBattleModel_1 = require("./PhantomBattleModel");
+const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  CommonComponentDefine_1 = require("../../Common/CommonComponentDefine"),
+  PhantomDataBase_1 = require("./Data/PhantomDataBase"),
+  PhantomBattleModel_1 = require("./PhantomBattleModel");
 class PhantomBattleData extends PhantomDataBase_1.PhantomDataBase {
   constructor() {
     super(...arguments), (this.RIt = 0);
@@ -25,13 +25,13 @@ class PhantomBattleData extends PhantomDataBase_1.PhantomDataBase {
     return this.RIt;
   }
   GetMainPropArray() {
-    const t = new Array();
+    var t = new Array();
     for (const n of this.GetPhantomMainProp()) {
-      const e =
-        ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomMainPropertyItemId(
-          n.IDs,
-        );
-      const a = new PhantomBattleModel_1.PhantomSortStruct();
+      var e =
+          ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomMainPropertyItemId(
+            n.IDs,
+          ),
+        a = new PhantomBattleModel_1.PhantomSortStruct();
       (a.PhantomPropId = e.PropId),
         (a.Value = n.gkn),
         (a.IfPercentage = e.AddType === CommonComponentDefine_1.RATIO),
@@ -40,17 +40,17 @@ class PhantomBattleData extends PhantomDataBase_1.PhantomDataBase {
     return t;
   }
   GetSubPropArray() {
-    const t = new Array();
+    var t = new Array();
     for (const o of this.GetPhantomSubProp()) {
-      const e =
-        ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
-          o.IDs,
-        );
-      const a =
-        ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSubPropertyById(
-          o.IDs,
-        );
-      const n = new PhantomBattleModel_1.PhantomSortStruct();
+      var e =
+          ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
+            o.IDs,
+          ),
+        a =
+          ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSubPropertyById(
+            o.IDs,
+          ),
+        n = new PhantomBattleModel_1.PhantomSortStruct();
       (n.PhantomPropId = e.Id),
         (n.Value = o.gkn),
         (n.IfPercentage = a.AddType === CommonComponentDefine_1.RATIO),
@@ -59,8 +59,8 @@ class PhantomBattleData extends PhantomDataBase_1.PhantomDataBase {
     return t;
   }
   IsBreach() {
-    return this.PhantomSubProp.length > 0;
+    return 0 < this.PhantomSubProp.length;
   }
 }
 exports.PhantomBattleData = PhantomBattleData;
-// # sourceMappingURL=PhantomBattleData.js.map
+//# sourceMappingURL=PhantomBattleData.js.map

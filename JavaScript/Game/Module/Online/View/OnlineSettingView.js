@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OnlineSettingView = void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const OnlineController_1 = require("../OnlineController");
-const OnlineHallSettingButton_1 = require("./OnlineHallSettingButton");
-const SETTING_COUNT_ID = 4;
+const UE = require("ue"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  OnlineController_1 = require("../OnlineController"),
+  OnlineHallSettingButton_1 = require("./OnlineHallSettingButton"),
+  SETTING_COUNT_ID = 4;
 class OnlineSettingView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -23,7 +23,7 @@ class OnlineSettingView extends UiViewBase_1.UiViewBase {
       }),
       (this.uNi = (e) => {
         this.hNi = e;
-        for (const [t, i] of this.lNi)
+        for (var [t, i] of this.lNi)
           t === this.hNi ? i.SetSelected(!0) : i.SetSelected(!1);
       });
   }
@@ -45,13 +45,13 @@ class OnlineSettingView extends UiViewBase_1.UiViewBase {
   }
   cNi() {
     this.lNi = new Map();
-    let e;
-    let t;
-    const i = this.GetItem(1);
-    const r = this.GetItem(0);
+    var e,
+      t,
+      i = this.GetItem(1),
+      r = this.GetItem(0);
     this.mNi(i.GetOwner(), 0);
     for (let e = 1; e < SETTING_COUNT_ID; e++) {
-      const s = LguiUtil_1.LguiUtil.CopyItem(i, r);
+      var s = LguiUtil_1.LguiUtil.CopyItem(i, r);
       this.mNi(s.GetOwner(), e);
     }
     this.hNi =
@@ -67,4 +67,4 @@ class OnlineSettingView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.OnlineSettingView = OnlineSettingView;
-// # sourceMappingURL=OnlineSettingView.js.map
+//# sourceMappingURL=OnlineSettingView.js.map

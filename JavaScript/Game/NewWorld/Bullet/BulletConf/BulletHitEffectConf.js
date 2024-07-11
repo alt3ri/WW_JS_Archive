@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletHitEffectConf = void 0);
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D");
+const Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D");
 class BulletHitEffectConf {
   constructor(t) {
     (this.HighLimit = Vector2D_1.Vector2D.Create()),
@@ -13,4 +13,4 @@ class BulletHitEffectConf {
   }
 }
 exports.BulletHitEffectConf = BulletHitEffectConf;
-// # sourceMappingURL=BulletHitEffectConf.js.map
+//# sourceMappingURL=BulletHitEffectConf.js.map

@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlayerInfoModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const RandomSystem_1 = require("../../../Core/Random/RandomSystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LocalStorage_1 = require("../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../Common/LocalStorageDefine");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ItemDefines_1 = require("../Item/Data/ItemDefines");
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  RandomSystem_1 = require("../../../Core/Random/RandomSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ItemDefines_1 = require("../Item/Data/ItemDefines");
 class PlayerInfoModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments), (this.RandomSeed = 0);
@@ -57,7 +57,7 @@ class PlayerInfoModel extends ModelBase_1.ModelBase {
   }
   ChangeNumberProp(e, t) {
     void 0 !== this.SQi && this.SQi.set(e, t),
-      (e !== 13 && e !== 2 && e !== 3) ||
+      (13 !== e && 2 !== e && 3 !== e) ||
         ((t = this.GetPlayerMoneyItemId(e)),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnPlayerCurrencyChange,
@@ -71,7 +71,7 @@ class PlayerInfoModel extends ModelBase_1.ModelBase {
     if (void 0 !== this.SQi) return this.SQi.get(e);
   }
   GetPlayerGender() {
-    const e = this.GetNumberPropById(9);
+    var e = this.GetNumberPropById(9);
     return void 0 === e ? 2 : e;
   }
   GetPlayerMoney(e) {
@@ -86,11 +86,11 @@ class PlayerInfoModel extends ModelBase_1.ModelBase {
             : 0;
   }
   GetPlayerMoneyItemId(e) {
-    return e === 2
+    return 2 === e
       ? ItemDefines_1.EItemId.Gold
-      : e === 3
+      : 3 === e
         ? ItemDefines_1.EItemId.BlackCard
-        : e === 13
+        : 13 === e
           ? ItemDefines_1.EItemId.PayGold
           : void 0;
   }
@@ -105,15 +105,15 @@ class PlayerInfoModel extends ModelBase_1.ModelBase {
           ).GetRoleRealName());
   }
   IsPlayerId(e, t = void 0) {
-    var t = t ?? this.GetId();
-    const r = this.GetPlayerRoleId();
+    var t = t ?? this.GetId(),
+      r = this.GetPlayerRoleId();
     return t === this.GetId() && e === r;
   }
   GetPlayerRoleId() {
     return ModelManager_1.ModelManager.RoleModel.GetCurSelectMainRoleId();
   }
   GetPlayerHeadIconBig() {
-    let e = this.GetNumberPropById(4);
+    var e = this.GetNumberPropById(4);
     if (e) {
       e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e);
       if (e) return e.RoleHeadIconBig;
@@ -121,7 +121,7 @@ class PlayerInfoModel extends ModelBase_1.ModelBase {
     return "";
   }
   GetPlayerHeadIconLarge() {
-    let e = this.GetNumberPropById(4);
+    var e = this.GetNumberPropById(4);
     if (e) {
       e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e);
       if (e) return e.RoleHeadIconLarge;
@@ -129,14 +129,14 @@ class PlayerInfoModel extends ModelBase_1.ModelBase {
     return "";
   }
   GetHeadIconId() {
-    const e = this.GetNumberPropById(4);
+    var e = this.GetNumberPropById(4);
     return e || 0;
   }
   GetPlayerStand() {
-    const e = this.GetPlayerGender();
-    return e === 1
+    var e = this.GetPlayerGender();
+    return 1 === e
       ? ConfigManager_1.ConfigManager.PlayerInfoConfig.GetMaleStandPath()
-      : e === 0
+      : 0 === e
         ? ConfigManager_1.ConfigManager.PlayerInfoConfig.GetFemaleStandPath()
         : void 0;
   }
@@ -147,11 +147,11 @@ class PlayerInfoModel extends ModelBase_1.ModelBase {
     return this.RandomSeed;
   }
   AdvanceRandomSeed(e) {
-    const t = this.RandomSeed;
+    var t = this.RandomSeed;
     return (
       (this.RandomSeed = RandomSystem_1.default.IterateRandomSeed(t, e)), t
     );
   }
 }
 exports.PlayerInfoModel = PlayerInfoModel;
-// # sourceMappingURL=PlayerInfoModel.js.map
+//# sourceMappingURL=PlayerInfoModel.js.map

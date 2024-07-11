@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RogueInfoSpecialView = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiViewSequence_1 = require("../../../Ui/Base/UiViewSequence");
-const UiManager_1 = require("../../../Ui/UiManager");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const RoguelikeSelectSpecialItem_1 = require("./RoguelikeSelectSpecialItem");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiViewSequence_1 = require("../../../Ui/Base/UiViewSequence"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  RoguelikeSelectSpecialItem_1 = require("./RoguelikeSelectSpecialItem");
 class RogueInfoSpecialView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -37,4 +37,4 @@ class RogueInfoSpecialView extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RogueInfoSpecialView = RogueInfoSpecialView;
-// # sourceMappingURL=RogueInfoSpecialView.js.map
+//# sourceMappingURL=RogueInfoSpecialView.js.map

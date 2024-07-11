@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoadRecordItemView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LoopScrollSmallItemGrid_1 = require("../../Common/SmallItemGrid/LoopScrollSmallItemGrid");
-const EditFormationDefine_1 = require("../../EditFormation/EditFormationDefine");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LoopScrollSmallItemGrid_1 = require("../../Common/SmallItemGrid/LoopScrollSmallItemGrid"),
+  EditFormationDefine_1 = require("../../EditFormation/EditFormationDefine"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class LoadRecordItemView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -45,10 +45,10 @@ class LoadRecordItemView extends UiPanelBase_1.UiPanelBase {
   OnSelected(e) {}
   OnDeselected(e) {}
   Refresh(e, t, i) {
-    let r;
-    let o;
-    let n;
-    let a = e.MonsterList[0];
+    var r,
+      o,
+      n,
+      a = e.MonsterList[0];
     a
       ? ((r =
           ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterBigIcon(a)),
@@ -82,7 +82,7 @@ class LoadRecordItemView extends UiPanelBase_1.UiPanelBase {
         ]);
   }
   cEi(t) {
-    const i = Array(EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM);
+    var i = Array(EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM);
     for (let e = 0; e < EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM; e++)
       i[e] = t.xkn[e] ?? { RoleId: -1, Level: 1 };
     return i;
@@ -98,14 +98,14 @@ class RoleItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid {
   }
   async OnCreateAsync() {
     var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-      "UiItem_ItemBNoneRole",
-    );
-    var e = await this.LoadPrefabAsync(e, this.RootItem);
+        "UiItem_ItemBNoneRole",
+      ),
+      e = await this.LoadPrefabAsync(e, this.RootItem);
     this.mEi = e.GetComponentByClass(UE.UIItem.StaticClass());
   }
   OnRefresh(e, t, i) {
-    let r;
-    let o = e.l3n;
+    var r,
+      o = e.l3n;
     this.mEi?.SetUIActive(o < 0),
       !o || o < 0
         ? this.Apply({ Type: 1 })
@@ -125,4 +125,4 @@ class RoleItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid {
           this.Apply(e));
   }
 }
-// # sourceMappingURL=LordRecordItemView.js.map
+//# sourceMappingURL=LordRecordItemView.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Global = void 0);
-const UE = require("ue");
-const TsBaseCharacter_1 = require("./Character/TsBaseCharacter");
-const EventDefine_1 = require("./Common/Event/EventDefine");
-const EventSystem_1 = require("./Common/Event/EventSystem");
-const GlobalData_1 = require("./GlobalData");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("./Character/TsBaseCharacter"),
+  EventDefine_1 = require("./Common/Event/EventDefine"),
+  EventSystem_1 = require("./Common/Event/EventSystem"),
+  GlobalData_1 = require("./GlobalData");
 class Global {
   constructor() {}
   static get BaseCharacter() {
@@ -125,4 +125,4 @@ class Global {
         0,
       ));
   });
-// # sourceMappingURL=Global.js.map
+//# sourceMappingURL=Global.js.map

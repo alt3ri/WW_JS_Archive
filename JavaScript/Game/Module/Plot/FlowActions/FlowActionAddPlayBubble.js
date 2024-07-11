@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionAddPlayBubble = void 0);
-const DynamicFlowController_1 = require("../../../NewWorld/Character/Common/Component/Flow/DynamicFlowController");
-const FlowActionBase_1 = require("./FlowActionBase");
+const DynamicFlowController_1 = require("../../../NewWorld/Character/Common/Component/Flow/DynamicFlowController"),
+  FlowActionBase_1 = require("./FlowActionBase");
 class FlowActionAddPlayBubble extends FlowActionBase_1.FlowActionBase {
   OnExecute() {
-    let o = this.ActionInfo.Params;
-    if (o && o.EntityIds.length !== 0) {
+    var o = this.ActionInfo.Params;
+    if (o && 0 !== o.EntityIds.length) {
       const e = o.EntityIds[0];
       o = this.BTe(o);
       (o.Callback = () => {
@@ -20,9 +20,9 @@ class FlowActionAddPlayBubble extends FlowActionBase_1.FlowActionBase {
     this.OnExecute();
   }
   BTe(o) {
-    const e = new DynamicFlowController_1.CharacterDynamicFlowData();
+    var e = new DynamicFlowController_1.CharacterDynamicFlowData();
     return (e.BubbleData = o), (e.Type = 4), e;
   }
 }
 exports.FlowActionAddPlayBubble = FlowActionAddPlayBubble;
-// # sourceMappingURL=FlowActionAddPlayBubble.js.map
+//# sourceMappingURL=FlowActionAddPlayBubble.js.map

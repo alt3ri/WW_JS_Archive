@@ -14,10 +14,10 @@ class GlobalData {
     this.DMe = t;
   }
   static get IsUiSceneLoading() {
-    return this.DMe === 1;
+    return 1 === this.DMe;
   }
   static get IsUiSceneOpen() {
-    return this.DMe === 2;
+    return 2 === this.DMe;
   }
   static get IsPlayInEditor() {
     return this.IMe;
@@ -36,39 +36,38 @@ class GlobalData {
   }
   static get IsEs3() {
     return (
-      UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldFeatureLevel(
-        this.World,
-      ) === 0
+      0 ===
+      UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldFeatureLevel(this.World)
     );
   }
   static get IsSm5() {
     return (
-      UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldFeatureLevel(
-        this.World,
-      ) === 1
+      1 ===
+      UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldFeatureLevel(this.World)
     );
   }
   static Networking() {
     return (
-      void 0 === this.RMe && (this.RMe = UE.Actor.GetKuroNetMode() === 1),
+      void 0 === this.RMe && (this.RMe = 1 === UE.Actor.GetKuroNetMode()),
       this.RMe
     );
   }
   static IsRunWithEditorStartConfig() {
-    let t;
+    var t;
     return (
       void 0 === this.UMe &&
         (this.IsPlayInEditor ||
         UE.KuroStaticLibrary.IsBuildShipping() ||
-        UE.GameplayStatics.GetPlatformName() !== "Windows"
+        "Windows" !== UE.GameplayStatics.GetPlatformName()
           ? (this.UMe = !1)
           : ((t =
               UE.BlueprintPathsLibrary.ProjectDir() +
               "../Config/Raw/Tables/k.可视化编辑/__Temp__/EditorStartConfig.json"),
             (this.UMe =
-              UE.KismetSystemLibrary.GetCommandLine().search(
-                "-StartWithEditorConfig",
-              ) >= 0 && UE.BlueprintPathsLibrary.FileExists(t)))),
+              0 <=
+                UE.KismetSystemLibrary.GetCommandLine().search(
+                  "-StartWithEditorConfig",
+                ) && UE.BlueprintPathsLibrary.FileExists(t)))),
       this.UMe
     );
   }
@@ -79,4 +78,4 @@ class GlobalData {
 ((exports.GlobalData = GlobalData).RMe = void 0),
   (GlobalData.UMe = void 0),
   (GlobalData.ClearSceneDone = void 0);
-// # sourceMappingURL=GlobalData.js.map
+//# sourceMappingURL=GlobalData.js.map

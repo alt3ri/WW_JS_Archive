@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RunEndData = exports.ActivityRunModel = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const ModelBase_1 = require("../../../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const UiViewData_1 = require("../../../../Ui/Define/UiViewData");
-const ActivityRunData_1 = require("./ActivityRunData");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  UiViewData_1 = require("../../../../Ui/Define/UiViewData"),
+  ActivityRunData_1 = require("./ActivityRunData");
 class ActivityRunModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -23,7 +23,7 @@ class ActivityRunModel extends ModelBase_1.ModelBase {
       });
   }
   OnReceiveChallengeOpenNotify(e) {
-    const t = this.GetActivityRunData(e._3n);
+    var t = this.GetActivityRunData(e._3n);
     t.SetIsOpen(e.zCs),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
@@ -58,7 +58,7 @@ class ActivityRunModel extends ModelBase_1.ModelBase {
     );
   }
   GetActivityRunData(e) {
-    const t = this.K2e.get(e);
+    var t = this.K2e.get(e);
     if (t) return t;
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Activity", 28, "找不到跑酷数据", ["id", e]);
@@ -71,7 +71,7 @@ class ActivityRunModel extends ModelBase_1.ModelBase {
     );
   }
   GetDefaultOpenUiChallengeIndex(e) {
-    let t;
+    var t;
     return e instanceof ActivityRunData_1.ActivityRun
       ? ((t = e.GetChallengeDataArray()),
         e.IfAllFinish()
@@ -86,13 +86,13 @@ class ActivityRunModel extends ModelBase_1.ModelBase {
     return this.W2e;
   }
   GetChallengeDataByMarkId(i) {
-    const n = this.GetChallengeIds();
-    const s = n.length;
-    if (s !== 0) {
+    var n = this.GetChallengeIds(),
+      s = n.length;
+    if (0 !== s) {
       let t = -1;
       for (let e = 0; e < s; e++)
         this.GetActivityRunData(n[e])?.GetMarkId() === i && (t = e);
-      return t === -1 && (t = 0), this.GetActivityRunData(n[t]);
+      return -1 === t && (t = 0), this.GetActivityRunData(n[t]);
     }
   }
 }
@@ -115,4 +115,4 @@ class RunEndData extends UiViewData_1.UiViewData {
   }
 }
 exports.RunEndData = RunEndData;
-// # sourceMappingURL=ActivityRunModel.js.map
+//# sourceMappingURL=ActivityRunModel.js.map

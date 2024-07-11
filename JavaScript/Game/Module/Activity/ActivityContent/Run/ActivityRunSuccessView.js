@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRunSuccessView = void 0);
-const UE = require("ue");
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const ActivityParkourButton_1 = require("./ActivityParkourButton");
-const ActivityRunController_1 = require("./ActivityRunController");
-const LEAVETIME = 30;
-const SUCCESS_OUTLINE_COLOR = "CC9548FF";
-const TARGET_ICON_PATH =
-  "/Game/Aki/UI/UIResources/Common/Image/IconForceLogo/T_Logo_10_UI.T_Logo_10_UI";
+const UE = require("ue"),
+  CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  ActivityParkourButton_1 = require("./ActivityParkourButton"),
+  ActivityRunController_1 = require("./ActivityRunController"),
+  LEAVETIME = 30,
+  SUCCESS_OUTLINE_COLOR = "CC9548FF",
+  TARGET_ICON_PATH =
+    "/Game/Aki/UI/UIResources/Common/Image/IconForceLogo/T_Logo_10_UI.T_Logo_10_UI";
 class ActivityRunSuccessView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -48,10 +48,10 @@ class ActivityRunSuccessView extends UiViewBase_1.UiViewBase {
   }
   async G2e() {
     this.GetItem(5)?.SetUIActive(!1);
-    var e = this.k2e(this.GetItem(5), 0, this.q2e);
-    var i = this.k2e(this.GetItem(5), 1, this.b2e);
-    var e = (await Promise.all([e, i]), this.ButtonMap.get(0));
-    var i = this.ButtonMap.get(1);
+    var e = this.k2e(this.GetItem(5), 0, this.q2e),
+      i = this.k2e(this.GetItem(5), 1, this.b2e),
+      e = (await Promise.all([e, i]), this.ButtonMap.get(0)),
+      i = this.ButtonMap.get(1);
     e.SetBtnText("Leave"),
       e.SetFloatText(
         "InstanceDungeonLeftTimeToAutoLeave",
@@ -60,10 +60,10 @@ class ActivityRunSuccessView extends UiViewBase_1.UiViewBase {
       i.SetBtnText("ChallengeAgain");
   }
   async k2e(e, i, t) {
-    var s = this.GetItem(5);
-    var r = this.GetItem(4);
-    var s = LguiUtil_1.LguiUtil.DuplicateActor(s.GetOwner(), r);
-    var r = new ActivityParkourButton_1.ActivityParkourButton();
+    var s = this.GetItem(5),
+      r = this.GetItem(4),
+      s = LguiUtil_1.LguiUtil.DuplicateActor(s.GetOwner(), r),
+      r = new ActivityParkourButton_1.ActivityParkourButton();
     this.ButtonMap.set(i, r), await r.InitializeAsync(s, t), r.SetActive(!0);
   }
   OnStart() {
@@ -89,7 +89,7 @@ class ActivityRunSuccessView extends UiViewBase_1.UiViewBase {
     }, CommonDefine_1.MILLIONSECOND_PER_SECOND);
   }
   $2e() {
-    const e = TimeUtil_1.TimeUtil.GetTimeString(this.B2e.CurrentTime);
+    var e = TimeUtil_1.TimeUtil.GetTimeString(this.B2e.CurrentTime);
     this.GetText(10).SetText(e);
   }
   OnBeforeDestroy() {
@@ -102,11 +102,11 @@ class ActivityRunSuccessView extends UiViewBase_1.UiViewBase {
     this.GetItem(12).SetUIActive(!0),
       this.GetItem(13).SetUIActive(!0),
       this.GetText(14).SetUIActive(!1);
-    var e = this.GetTexture(2);
-    var e =
-      (e.SetColor(UE.Color.FromHex(SUCCESS_OUTLINE_COLOR)),
-      this.SetTextureByPath(TARGET_ICON_PATH, e),
-      this.GetText(1));
+    var e = this.GetTexture(2),
+      e =
+        (e.SetColor(UE.Color.FromHex(SUCCESS_OUTLINE_COLOR)),
+        this.SetTextureByPath(TARGET_ICON_PATH, e),
+        this.GetText(1));
     e.SetColor(UE.Color.FromHex("FFFFFFFF")),
       e.ShowTextNew("GenericPromptTypes_3_GeneralText");
   }
@@ -115,4 +115,4 @@ class ActivityRunSuccessView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.ActivityRunSuccessView = ActivityRunSuccessView;
-// # sourceMappingURL=ActivityRunSuccessView.js.map
+//# sourceMappingURL=ActivityRunSuccessView.js.map

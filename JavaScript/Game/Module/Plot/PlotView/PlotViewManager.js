@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotViewManager = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiConfig_1 = require("../../../Ui/Define/UiConfig");
-const UiLayerType_1 = require("../../../Ui/Define/UiLayerType");
-const UiManager_1 = require("../../../Ui/UiManager");
+const Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiConfig_1 = require("../../../Ui/Define/UiConfig"),
+  UiLayerType_1 = require("../../../Ui/Define/UiLayerType"),
+  UiManager_1 = require("../../../Ui/UiManager");
 class ViewHandle {
   constructor(e = void 0, t = void 0, i = void 0, s = !1) {
     (this.ViewName = e),
@@ -72,14 +72,14 @@ class PlotViewManager {
         ModelManager_1.ModelManager.PlotModel.CurTalkItem = e;
       }),
       (this.Neo = (t) => {
-        const e = this.Peo;
+        var e = this.Peo;
         (this.Peo = new Set()),
           e.forEach((e) => {
             e?.(t);
           });
       }),
       (this.keo = (e) => {
-        const t = UiConfig_1.UiConfig.TryGetViewInfo(e);
+        var t = UiConfig_1.UiConfig.TryGetViewInfo(e);
         return (
           !!t && (t.Type !== UiLayerType_1.ELayerType.Normal || this.qeo.has(e))
         );
@@ -134,7 +134,7 @@ class PlotViewManager {
   }
   InterruptHud(e, t) {
     e
-      ? t === "GuideTutorialTipsView" &&
+      ? "GuideTutorialTipsView" === t &&
         (this.beo.add(t),
         (ModelManager_1.ModelManager.PlotModel.HangViewHud = !0),
         Log_1.Log.CheckInfo() &&
@@ -144,7 +144,7 @@ class PlotViewManager {
           !0,
         ))
       : this.beo.has(t) &&
-        (this.beo.delete(t), this.beo.size === 0) &&
+        (this.beo.delete(t), 0 === this.beo.size) &&
         ((ModelManager_1.ModelManager.PlotModel.HangViewHud = !1),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Plot", 27, "[PlotView] 引导界面解除挂起HUD剧情"),
@@ -236,9 +236,9 @@ class PlotViewManager {
     e && this.Peo.delete(e);
   }
   Oeo() {
-    let e;
+    var e;
     (this.RHt = !1),
-      this.Beo.length !== 0 &&
+      0 !== this.Beo.length &&
         ((e = this.Beo.shift()).ResetToBattleView
           ? this.vji()
           : e.ViewName
@@ -246,8 +246,8 @@ class PlotViewManager {
             : this.tfi());
   }
   Veo(e) {
-    let t;
-    this.Beo.length > 0 &&
+    var t;
+    0 < this.Beo.length &&
       ((t = this.Beo[this.Beo.length - 1]).ResetToBattleView ||
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -294,4 +294,4 @@ class PlotViewManager {
   }
 }
 exports.PlotViewManager = PlotViewManager;
-// # sourceMappingURL=PlotViewManager.js.map
+//# sourceMappingURL=PlotViewManager.js.map

@@ -24,15 +24,15 @@ class IntArray {
     return this.arrayint(t);
   }
   arrayint(t) {
-    const r = this.J7.__offset(this.z7, 4);
+    var r = this.J7.__offset(this.z7, 4);
     return r ? this.J7.readInt32(this.J7.__vector(this.z7 + r) + 4 * t) : 0;
   }
   arrayintLength() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   arrayintArray() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -43,4 +43,4 @@ class IntArray {
   }
 }
 exports.IntArray = IntArray;
-// # sourceMappingURL=IntArray.js.map
+//# sourceMappingURL=IntArray.js.map

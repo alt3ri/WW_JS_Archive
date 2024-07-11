@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OpenSystemShopView = void 0);
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const ShopController_1 = require("../../../Module/Shop/ShopController");
-const OpenSystemBase_1 = require("./OpenSystemBase");
+const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  ShopController_1 = require("../../../Module/Shop/ShopController"),
+  OpenSystemBase_1 = require("./OpenSystemBase");
 class OpenSystemShopView extends OpenSystemBase_1.OpenSystemBase {
   async ExecuteOpenView(e, o) {
     if (!e.BoardId) return !1;
@@ -19,4 +19,4 @@ class OpenSystemShopView extends OpenSystemBase_1.OpenSystemBase {
   }
 }
 exports.OpenSystemShopView = OpenSystemShopView;
-// # sourceMappingURL=OpenSystemShopView.js.map
+//# sourceMappingURL=OpenSystemShopView.js.map

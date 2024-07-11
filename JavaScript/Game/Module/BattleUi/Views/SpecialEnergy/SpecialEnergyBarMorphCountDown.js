@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SpecialEnergyBarMorphCountDown = void 0);
-const UE = require("ue");
-const Time_1 = require("../../../../../Core/Common/Time");
-const SpecialEnergyBaIconHandle_1 = require("./SpecialEnergyBaIconHandle");
-const SpecialEnergyBarBase_1 = require("./SpecialEnergyBarBase");
-const SpecialEnergyBarPointItem_1 = require("./SpecialEnergyBarPointItem");
-const pointNumList = [19, 20];
-const TOTAL_NUM = 41;
-const POINT_WIDTH = 9;
-const EFFECT_DURATION = 500;
+const UE = require("ue"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  SpecialEnergyBaIconHandle_1 = require("./SpecialEnergyBaIconHandle"),
+  SpecialEnergyBarBase_1 = require("./SpecialEnergyBarBase"),
+  SpecialEnergyBarPointItem_1 = require("./SpecialEnergyBarPointItem"),
+  pointNumList = [19, 20],
+  TOTAL_NUM = 41,
+  POINT_WIDTH = 9,
+  EFFECT_DURATION = 500;
 class SpecialEnergyBarMorphCountDown extends SpecialEnergyBarBase_1.SpecialEnergyBarBase {
   constructor() {
     super(...arguments),
@@ -28,10 +28,10 @@ class SpecialEnergyBarMorphCountDown extends SpecialEnergyBarBase_1.SpecialEnerg
     ];
   }
   async OnBeforeStartAsync() {
-    this.Config.PrefabType === 5
+    5 === this.Config.PrefabType
       ? (this.Mmt = pointNumList[0])
       : (this.Mmt = pointNumList[1]);
-    const i = [];
+    var i = [];
     i.push(this.InitPointLeftItem(this.GetItem(0))),
       i.push(this.InitPointRightItem(this.GetItem(1))),
       await Promise.all(i);
@@ -47,7 +47,7 @@ class SpecialEnergyBarMorphCountDown extends SpecialEnergyBarBase_1.SpecialEnerg
       await this.vmt.CreateThenShowByActorAsync(i.GetOwner());
   }
   OnStart() {
-    let i;
+    var i;
     this.Config &&
       ((i = this.Mmt / TOTAL_NUM),
       this.pmt.SetEffectBasePercent(i),
@@ -60,7 +60,7 @@ class SpecialEnergyBarMorphCountDown extends SpecialEnergyBarBase_1.SpecialEnerg
         ((i = [this.GetSprite(2)]),
         this.Cmt.Init(i),
         this.Cmt.SetIcon(this.Config.IconPath)),
-      this.fmt === 0 && this.GetUiNiagara(3).SetUIActive(!1),
+      0 === this.fmt && this.GetUiNiagara(3).SetUIActive(!1),
       this.RefreshBarPercent());
   }
   OnChangeVisibleByTagChange(i) {
@@ -69,12 +69,12 @@ class SpecialEnergyBarMorphCountDown extends SpecialEnergyBarBase_1.SpecialEnerg
       (this.fmt = EFFECT_DURATION + Time_1.Time.Now));
   }
   OnBeforeShow() {
-    this.Config.PrefabType === 9 &&
+    9 === this.Config.PrefabType &&
       (this.GetUiNiagara(3).SetUIActive(!0),
       (this.fmt = EFFECT_DURATION + Time_1.Time.Now));
   }
   RefreshBarPercent() {
-    const i = this.PercentMachine.GetCurPercent();
+    var i = this.PercentMachine.GetCurPercent();
     this.pmt.UpdatePercent(i),
       this.vmt.UpdatePercent(i),
       this.Cmt.PlayEndAnim(i < this.Config.ExtraFloatParams[0]);
@@ -86,7 +86,7 @@ class SpecialEnergyBarMorphCountDown extends SpecialEnergyBarBase_1.SpecialEnerg
     super.Tick(i),
       this.pmt?.Tick(i),
       this.vmt?.Tick(i),
-      this.fmt > 0 &&
+      0 < this.fmt &&
         this.fmt <= Time_1.Time.Now &&
         (this.GetUiNiagara(3).SetUIActive(!1), (this.fmt = 0));
   }
@@ -95,4 +95,4 @@ class SpecialEnergyBarMorphCountDown extends SpecialEnergyBarBase_1.SpecialEnerg
   }
 }
 exports.SpecialEnergyBarMorphCountDown = SpecialEnergyBarMorphCountDown;
-// # sourceMappingURL=SpecialEnergyBarMorphCountDown.js.map
+//# sourceMappingURL=SpecialEnergyBarMorphCountDown.js.map

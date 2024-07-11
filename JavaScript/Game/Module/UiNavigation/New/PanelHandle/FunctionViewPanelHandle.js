@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FunctionViewPanelHandle = void 0);
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiNavigationNewController_1 = require("../UiNavigationNewController");
-const SpecialPanelHandleBase_1 = require("./SpecialPanelHandleBase");
+const ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiNavigationNewController_1 = require("../UiNavigationNewController"),
+  SpecialPanelHandleBase_1 = require("./SpecialPanelHandleBase");
 class FunctionViewPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHandleBase {
   constructor() {
     super(...arguments),
@@ -17,7 +17,7 @@ class FunctionViewPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHandl
     return e;
   }
   AddNavigationListener(e) {
-    let i;
+    var i;
     this.two.add(e),
       this.Zxo.has(e.LayoutActor) ||
         ((i = (i = e.LayoutActor.GetUIItem().GetParentAsUIItem())
@@ -25,7 +25,7 @@ class FunctionViewPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHandl
           .UIChildren.FindIndex(i)),
         this.Zxo.add(e.LayoutActor),
         this.ewo.set(i, e),
-        i === 1 && this.owo(i, e));
+        1 === i && this.owo(i, e));
   }
   owo(e, i) {
     (this.iwo = e),
@@ -34,8 +34,8 @@ class FunctionViewPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHandl
       this.DefaultNavigationListener.push(i);
   }
   rwo(e) {
-    let i;
-    const t = this.ewo.get(e);
+    var i,
+      t = this.ewo.get(e);
     t &&
       ((i =
         UiNavigationNewController_1.UiNavigationNewController.GetCurrentNavigationFocusListener()) &&
@@ -55,4 +55,4 @@ class FunctionViewPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHandl
   }
 }
 exports.FunctionViewPanelHandle = FunctionViewPanelHandle;
-// # sourceMappingURL=FunctionViewPanelHandle.js.map
+//# sourceMappingURL=FunctionViewPanelHandle.js.map

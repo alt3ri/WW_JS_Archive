@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DailyActivityRewardItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const DailyActivityController_1 = require("../DailyActivityController");
-const DailyActivityDefine_1 = require("../DailyActivityDefine");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  DailyActivityController_1 = require("../DailyActivityController"),
+  DailyActivityDefine_1 = require("../DailyActivityDefine");
 class DailyActivityRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -53,7 +53,7 @@ class DailyActivityRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.SetRewardGoalValue(e.Goal),
       this.DailyActiveState !== e.State
         ? this.RefreshRewardState(e.State, void 0 === this.DailyActiveState)
-        : this.DailyActiveState === 3 && this.GetUiNiagara(7).SetUIActive(!1));
+        : 3 === this.DailyActiveState && this.GetUiNiagara(7).SetUIActive(!1));
   }
   RefreshSelf() {
     this.Refresh(this.YOt, !1, 0);
@@ -62,35 +62,35 @@ class DailyActivityRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetText(0).SetText(e.toString());
   }
   RefreshRewardState(t, e) {
-    const i = [this.GetSprite(4), this.GetSprite(2), this.GetSprite(3)];
+    var i = [this.GetSprite(4), this.GetSprite(2), this.GetSprite(3)];
     for (let e = 0; e < i.length; e++) i[e].SetUIActive(e + 1 === t);
-    this.GetItem(8).SetUIActive(t === 1);
-    this.GetUiNiagara(6).SetAlpha(t === 1 ? 1 : 0);
-    var r = this.GetUiNiagara(7);
-    var e =
-      (t !== 3 || e
-        ? (r.SetUIActive(!1), r.Deactivate())
-        : (r.SetUIActive(!0), r.ActivateSystem(!0)),
-      t === 2
-        ? DailyActivityDefine_1.REWARD_BACKGROUND_COLOR_UNFINISHED
-        : DailyActivityDefine_1.REWARD_BACKGROUND_COLOR_FINISHED);
-    var r = UE.Color.FromHex(e);
+    this.GetItem(8).SetUIActive(1 === t);
+    this.GetUiNiagara(6).SetAlpha(1 === t ? 1 : 0);
+    var r = this.GetUiNiagara(7),
+      e =
+        (3 !== t || e
+          ? (r.SetUIActive(!1), r.Deactivate())
+          : (r.SetUIActive(!0), r.ActivateSystem(!0)),
+        2 === t
+          ? DailyActivityDefine_1.REWARD_BACKGROUND_COLOR_UNFINISHED
+          : DailyActivityDefine_1.REWARD_BACKGROUND_COLOR_FINISHED),
+      r = UE.Color.FromHex(e);
     this.GetSprite(5).SetColor(r),
-      (this.GetText(0).useChangeColor = t !== 2),
+      (this.GetText(0).useChangeColor = 2 !== t),
       (this.DailyActiveState = t);
   }
   ZOt() {
     DailyActivityController_1.DailyActivityController.RequestAllAvailableActivityReward();
   }
   zOt(e) {
-    const t = [];
+    var t = [];
     for (const s of ModelManager_1.ModelManager.DailyActivityModel.GetActivityRewardById(
       this.YOt,
     )) {
-      const i = { Id: s[0].ItemId, Num: s[1], Received: e };
+      var i = { Id: s[0].ItemId, Num: s[1], Received: e };
       t.push(i);
     }
-    const r = {
+    var r = {
       RewardLists: t,
       MountItem: this.GetButton(1).RootUIComp,
       PosBias: new UE.Vector(0, 30, 0),
@@ -102,4 +102,4 @@ class DailyActivityRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.DailyActivityRewardItem = DailyActivityRewardItem;
-// # sourceMappingURL=DailyActivityRewardItem.js.map
+//# sourceMappingURL=DailyActivityRewardItem.js.map

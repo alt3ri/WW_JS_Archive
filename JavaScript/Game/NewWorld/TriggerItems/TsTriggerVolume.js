@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const AudioController_1 = require("../../../Core/Audio/AudioController");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const TsBaseCharacter_1 = require("../../Character/TsBaseCharacter");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const AreaController_1 = require("../../Module/Area/AreaController");
-const RoleTriggerController_1 = require("../Character/Role/RoleTriggerController");
-const TsBaseItem_1 = require("../SceneItem/BaseItem/TsBaseItem");
-const KuroTriggerType = QueryTypeDefine_1.KuroCollisionChannel.KuroTrigger;
-const AREA_CD = 500;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  AudioController_1 = require("../../../Core/Audio/AudioController"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  TsBaseCharacter_1 = require("../../Character/TsBaseCharacter"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  AreaController_1 = require("../../Module/Area/AreaController"),
+  RoleTriggerController_1 = require("../Character/Role/RoleTriggerController"),
+  TsBaseItem_1 = require("../SceneItem/BaseItem/TsBaseItem"),
+  KuroTriggerType = QueryTypeDefine_1.KuroCollisionChannel.KuroTrigger,
+  AREA_CD = 500;
 class TsTriggerVolume extends UE.KuroEffectActor {
   constructor() {
     super(...arguments),
@@ -97,7 +97,7 @@ class TsTriggerVolume extends UE.KuroEffectActor {
   }
   InitTriggerItem(e) {
     e &&
-      this.TriggerType === 4 &&
+      4 === this.TriggerType &&
       e.BrushComponent.SetCollisionObjectType(KuroTriggerType);
   }
   ReceiveEndPlay() {
@@ -122,11 +122,11 @@ class TsTriggerVolume extends UE.KuroEffectActor {
   ReceiveTick(e) {}
   RegistEvents(e) {
     if (((this.CountInTrigger = 0), e?.IsValid())) {
-      const i = (0, puerts_1.$ref)(void 0);
-      const t = (e.GetOverlappingActors(i), (0, puerts_1.$unref)(i));
-      if (t?.Num() > 0)
+      var i = (0, puerts_1.$ref)(void 0),
+        t = (e.GetOverlappingActors(i), (0, puerts_1.$unref)(i));
+      if (0 < t?.Num())
         for (let e = 0, i = t.Num(); e < i; e++) {
-          const s = t.Get(e);
+          var s = t.Get(e);
           this.OnCollisionEnterFunc(s, void 0);
         }
       e.OnActorBeginOverlap.Add((e, i) => {
@@ -149,7 +149,7 @@ class TsTriggerVolume extends UE.KuroEffectActor {
   OnCollisionEnterFunc(e, i) {
     this.CheckCondition(e) &&
       (this.CountInTrigger++,
-      this.AreaId && this.CountInTrigger === 1 && this.HandleAreaEnter(e, i),
+      this.AreaId && 1 === this.CountInTrigger && this.HandleAreaEnter(e, i),
       Global_1.Global.BaseCharacter) &&
       this.EnterAkEvent &&
       this.PostAkEvent(e, this.EnterAkEvent);
@@ -172,7 +172,7 @@ class TsTriggerVolume extends UE.KuroEffectActor {
     return (
       !!e?.IsValid() &&
       (this.IsPlayer ||
-      this.TriggerType === 1 ||
+      1 === this.TriggerType ||
       this.EnterAkEvent ||
       this.ExitAkEvent
         ? this.CheckBeginOverlapRoleTrigger(e) || !1
@@ -243,4 +243,4 @@ class TsTriggerVolume extends UE.KuroEffectActor {
   TryReportSelfBuffDamageLog() {}
 }
 exports.default = TsTriggerVolume;
-// # sourceMappingURL=TsTriggerVolume.js.map
+//# sourceMappingURL=TsTriggerVolume.js.map

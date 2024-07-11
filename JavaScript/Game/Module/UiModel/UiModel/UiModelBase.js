@@ -10,7 +10,7 @@ class UiModelBase {
     return this.bPo[o];
   }
   CheckGetComponent(o) {
-    const t = this.GetComponent(o);
+    var t = this.GetComponent(o);
     return (
       t ||
         (Log_1.Log.CheckError() &&
@@ -26,7 +26,7 @@ class UiModelBase {
     );
   }
   AddComponent(o) {
-    const t = o.Id;
+    var t = o.Id;
     if (t < 0)
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -68,4 +68,4 @@ class UiModelBase {
   }
 }
 exports.UiModelBase = UiModelBase;
-// # sourceMappingURL=UiModelBase.js.map
+//# sourceMappingURL=UiModelBase.js.map

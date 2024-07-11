@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RpcServer = exports.Stcp = void 0);
 const MAX_MESSAGE_LENGTH = 1024;
-let EPackage, EConnectStatus;
+var EPackage, EConnectStatus;
 function packageToString(t) {
   switch (t.Type) {
     case EPackage.Connect:
@@ -48,7 +48,7 @@ class Stcp {
     this.Verbose && this.x5.Log(t);
   }
   O5() {
-    const t = { Type: EPackage.Message, Ack: this.R5, Msgs: [] };
+    var t = { Type: EPackage.Message, Ack: this.R5, Msgs: [] };
     for (const e of this.S5)
       if ((t.Msgs.push(e), JSON.stringify(t).length >= MAX_MESSAGE_LENGTH)) {
         t.Msgs.pop();
@@ -57,24 +57,24 @@ class Stcp {
     return t;
   }
   D5() {
-    let t;
+    var t;
     this.IsServer ||
-      (this.S5.length !== 0 &&
+      (0 !== this.S5.length &&
         ((t = { Type: EPackage.Connect, ConnectId: this.M5 }),
         this.uOn.Send(t),
         (this.w5 = EConnectStatus.Connecting)));
   }
   k5() {
-    let t;
+    var t;
     this.IsServer ||
       ((t = { Type: EPackage.Connect, ConnectId: this.M5 }), this.uOn.Send(t));
   }
   b5() {
-    let t;
-    (this.S5.length === 0 && !this.L5) ||
+    var t;
+    (0 === this.S5.length && !this.L5) ||
       ((t = this.O5()),
       this.uOn.Send(t),
-      this.S5.length === 0 && (this.L5 = !1),
+      0 === this.S5.length && (this.L5 = !1),
       this.A5(this.Name + " send " + packageToString(t)));
   }
   q5() {
@@ -111,8 +111,8 @@ class Stcp {
           : this.x5.Error("client recv connect")
         : this.IsServer && this.x5.Error("sv recv connect ack");
     else {
-      if ((t.Msgs.length > 0 && (this.L5 = !0), t.Ack > this.I5))
-        for (this.I5 = t.Ack; this.S5.length > 0 && this.S5[0].Seq < this.I5; )
+      if ((0 < t.Msgs.length && (this.L5 = !0), t.Ack > this.I5))
+        for (this.I5 = t.Ack; 0 < this.S5.length && this.S5[0].Seq < this.I5; )
           this.S5.shift();
       t.Msgs.forEach((t) => {
         t.Seq === this.R5 && (this.W3.push(t), this.R5++);
@@ -164,9 +164,9 @@ class Stcp {
   }
   X5() {
     if (this.W3.length >= Stcp.MaxSeqId) return !1;
-    const t = this.uOn.Recv();
+    var t = this.uOn.Recv();
     if (!t) return !1;
-    if (this.N5 > 0) this.N5--;
+    if (0 < this.N5) this.N5--;
     else
       switch (this.w5) {
         case EConnectStatus.Disconnected:
@@ -193,10 +193,10 @@ class Stcp {
     return new Promise((e, t) => {
       let i = void 0;
       const s = setInterval(() => {
-        const t = this.W3.shift();
+        var t = this.W3.shift();
         t?.Payload && (i && clearTimeout(i), clearInterval(s), e(t.Payload));
       }, 1);
-      n >= 0 &&
+      0 <= n &&
         (i = setTimeout(() => {
           clearInterval(s), e(void 0);
         }, n));
@@ -220,13 +220,13 @@ class RpcServer {
     (this.G3 = t), (this.Y5 = e), (this.x5 = i);
   }
   Update() {
-    let e = this.G3.Recv();
+    var e = this.G3.Recv();
     if (e) {
       const s = e;
       e = this.Y5[s.Name];
       if (e) {
-        let t;
-        var i = void 0;
+        var t,
+          i = void 0;
         try {
           (i = e(...s.Args)) instanceof Promise
             ? i
@@ -267,56 +267,56 @@ class RpcServer {
 }
 exports.RpcServer = RpcServer;
 const gameRpcServiceConfig = {
-  ExecGmCommand: (t) => !1,
-  IsWorldLoadDone: () => !1,
-  GetMapId: () => 0,
-  GetPlayerId: () => 0,
-  TeleportToPos: async (t, e) => !1,
-  IsInteractionHintViewOpen: () => !1,
-  IsAllowFightInput: () => !1,
-  GetPlayerPos: () => {},
-  GetPlayerRotation: () => {},
-  AddBuffToPlayer: (t) => {},
-  RemoveBuffFromPlayer: (t) => {},
-  PlayerHasBuff: (t) => !1,
-  MoveTo: async (t, e) => {},
-  FaceTo: async (t, e, i) => {},
-  NormalAttack: () => {},
-  UseRoleSkill: () => {},
-  UsePhantomSkill: () => {},
-  UseUltraSkill: () => {},
-  UseExploreSkill: () => {},
-  RequestExploreSkill: (t) => {},
-  IsInExploreSkill: (t) => !1,
-  StopAllSkills: () => {},
-  CanUseSkill: (t) => !1,
-  GetPlayerItemCount: (t) => 0,
-  DisablePlayerClientComponent: (t) => !1,
-  GetCameraTransform: () => ({}),
-  PlayDaEffect: (t, e) => [!1, ""],
-  IsEntityExist: (t) => !1,
-  IsEntityInitDone: (t) => !1,
-  IsSceneItemComponentInitDone: (t) => !1,
-  TriggerInteractOption: () => {},
-  ChangeInteractOption: () => {},
-  RequestEntityInteractOption: async (t, e) => !1,
-  AddBuffToEntity: (t, e) => {},
-  RemoveBuffFromEntity: (t, e) => {},
-  EntityHasBuff: (t, e) => !1,
-  GetEntityCurrentMontageName: (t) => "",
-  IsInEntityState: (t, e) => !1,
-  IsEntityLocked: (t) => !1,
-  GetElevatorFloor: (t) => 0,
-  IsEntityActive: (t) => !1,
-  GetEntityPos: (t) => {},
-  GetEntityRotation: (t) => {},
-  GetRuntimeActorName: (t) => "",
-  IsRuntimeActorVisible: (t) => !1,
-};
-const unitTestRpcServiceConfig = {
-  Add: (t, e) => 0,
-  Sub: (t, e) => 0,
-  Mul: (t, e) => 0,
-  Div: (t, e) => 0,
-};
-// # sourceMappingURL=ITransport.js.map
+    ExecGmCommand: (t) => !1,
+    IsWorldLoadDone: () => !1,
+    GetMapId: () => 0,
+    GetPlayerId: () => 0,
+    TeleportToPos: async (t, e) => !1,
+    IsInteractionHintViewOpen: () => !1,
+    IsAllowFightInput: () => !1,
+    GetPlayerPos: () => {},
+    GetPlayerRotation: () => {},
+    AddBuffToPlayer: (t) => {},
+    RemoveBuffFromPlayer: (t) => {},
+    PlayerHasBuff: (t) => !1,
+    MoveTo: async (t, e) => {},
+    FaceTo: async (t, e, i) => {},
+    NormalAttack: () => {},
+    UseRoleSkill: () => {},
+    UsePhantomSkill: () => {},
+    UseUltraSkill: () => {},
+    UseExploreSkill: () => {},
+    RequestExploreSkill: (t) => {},
+    IsInExploreSkill: (t) => !1,
+    StopAllSkills: () => {},
+    CanUseSkill: (t) => !1,
+    GetPlayerItemCount: (t) => 0,
+    DisablePlayerClientComponent: (t) => !1,
+    GetCameraTransform: () => ({}),
+    PlayDaEffect: (t, e) => [!1, ""],
+    IsEntityExist: (t) => !1,
+    IsEntityInitDone: (t) => !1,
+    IsSceneItemComponentInitDone: (t) => !1,
+    TriggerInteractOption: () => {},
+    ChangeInteractOption: () => {},
+    RequestEntityInteractOption: async (t, e) => !1,
+    AddBuffToEntity: (t, e) => {},
+    RemoveBuffFromEntity: (t, e) => {},
+    EntityHasBuff: (t, e) => !1,
+    GetEntityCurrentMontageName: (t) => "",
+    IsInEntityState: (t, e) => !1,
+    IsEntityLocked: (t) => !1,
+    GetElevatorFloor: (t) => 0,
+    IsEntityActive: (t) => !1,
+    GetEntityPos: (t) => {},
+    GetEntityRotation: (t) => {},
+    GetRuntimeActorName: (t) => "",
+    IsRuntimeActorVisible: (t) => !1,
+  },
+  unitTestRpcServiceConfig = {
+    Add: (t, e) => 0,
+    Sub: (t, e) => 0,
+    Mul: (t, e) => 0,
+    Div: (t, e) => 0,
+  };
+//# sourceMappingURL=ITransport.js.map

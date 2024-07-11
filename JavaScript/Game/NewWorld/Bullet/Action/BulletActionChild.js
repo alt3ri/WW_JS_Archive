@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletActionChild = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const BulletController_1 = require("../BulletController");
-const BulletUtil_1 = require("../BulletUtil");
-const BulletChildInfo_1 = require("../Model/BulletChildInfo");
-const BulletActionBase_1 = require("./BulletActionBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  BulletController_1 = require("../BulletController"),
+  BulletUtil_1 = require("../BulletUtil"),
+  BulletChildInfo_1 = require("../Model/BulletChildInfo"),
+  BulletActionBase_1 = require("./BulletActionBase");
 class BulletActionChild extends BulletActionBase_1.BulletActionBase {
   constructor() {
     super(...arguments), (this.ChildInfo = void 0), (this.U4o = void 0);
@@ -17,7 +17,7 @@ class BulletActionChild extends BulletActionBase_1.BulletActionBase {
       (this.BulletInfo.ChildInfo = this.ChildInfo),
       (this.ChildInfo.HaveSummonedBulletNumber = []),
       (this.U4o = this.BulletInfo.BulletDataMain.Children);
-    const i = this.U4o.length;
+    var i = this.U4o.length;
     for (let t = 0; t < i; t++) this.ChildInfo.HaveSummonedBulletNumber.push(0);
     this.A4o();
   }
@@ -26,24 +26,24 @@ class BulletActionChild extends BulletActionBase_1.BulletActionBase {
   }
   A4o() {
     for (const t of this.U4o)
-      if (t.Condition === 2)
+      if (2 === t.Condition)
         return void (this.ChildInfo.HaveSpecialChildrenBullet = !0);
   }
   OnTick(t) {
     this.BulletInfo.NeedDestroy || this.P4o();
   }
   P4o() {
-    const i = this.U4o.length;
+    var i = this.U4o.length;
     for (let t = 0; t < i; ++t) {
-      const e = this.U4o[t];
-      const l = t;
+      var e = this.U4o[t],
+        l = t;
       if (
         !(
           e.RowName <= MathCommon_1.MathCommon.KindaSmallNumber ||
-          e.Condition !== 0
+          0 !== e.Condition
         ) &&
         !(
-          (e.Num > 0 &&
+          (0 < e.Num &&
             !(this.ChildInfo.HaveSummonedBulletNumber[l] < e.Num)) ||
           (e.Delay < 0 &&
             Log_1.Log.CheckError() &&
@@ -55,7 +55,7 @@ class BulletActionChild extends BulletActionBase_1.BulletActionBase {
                 TimeUtil_1.TimeUtil.InverseMillisecond)
         )
       ) {
-        const o = BulletController_1.BulletController.CreateBulletCustomTarget(
+        var o = BulletController_1.BulletController.CreateBulletCustomTarget(
           this.BulletInfo.AttackerActorComp.Actor,
           e.RowName.toString(),
           this.BulletInfo.ActorComponent.ActorTransform,
@@ -79,4 +79,4 @@ class BulletActionChild extends BulletActionBase_1.BulletActionBase {
   }
 }
 exports.BulletActionChild = BulletActionChild;
-// # sourceMappingURL=BulletActionChild.js.map
+//# sourceMappingURL=BulletActionChild.js.map

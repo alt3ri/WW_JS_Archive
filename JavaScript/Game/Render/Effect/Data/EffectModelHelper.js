@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelHelper = exports.EffectTemp = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector");
 class EffectTemp {
   static Initialize() {}
   static StartStat() {}
@@ -46,4 +46,4 @@ class EffectModelHelper {
   }
 }
 exports.EffectModelHelper = EffectModelHelper;
-// # sourceMappingURL=EffectModelHelper.js.map
+//# sourceMappingURL=EffectModelHelper.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRoleDescribeComponent = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const SimpleGenericLayout_1 = require("../../../Util/Layout/SimpleGenericLayout");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  SimpleGenericLayout_1 = require("../../../Util/Layout/SimpleGenericLayout");
 class ActivityRoleDescribeComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -35,10 +35,10 @@ class ActivityRoleDescribeComponent extends UiPanelBase_1.UiPanelBase {
   }
   Update(e) {
     this.zke = e;
-    let i;
-    let t;
-    let s;
-    var e = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(this.zke);
+    var i,
+      t,
+      s,
+      e = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(this.zke);
     e &&
       (this.GetText(0).ShowTextNew(e.Name),
       (i = ConfigManager_1.ConfigManager.CommonConfig.GetElementConfig(
@@ -55,4 +55,4 @@ class ActivityRoleDescribeComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ActivityRoleDescribeComponent = ActivityRoleDescribeComponent;
-// # sourceMappingURL=ActivityRoleDescribeComponent.js.map
+//# sourceMappingURL=ActivityRoleDescribeComponent.js.map

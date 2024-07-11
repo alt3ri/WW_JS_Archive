@@ -1,28 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BaseMoveCharacter = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../../../Core/Net/Net");
-const MathCommon_1 = require("../../../../../../Core/Utils/Math/MathCommon");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const IComponent_1 = require("../../../../../../UniverseEditor/Interface/IComponent");
-const AiContollerLibrary_1 = require("../../../../../AI/Controller/AiContollerLibrary");
-const GlobalData_1 = require("../../../../../GlobalData");
-const ColorUtils_1 = require("../../../../../Utils/ColorUtils");
-const WorldFunctionLibrary_1 = require("../../../../../World/Bridge/WorldFunctionLibrary");
-const CharacterUnifiedStateTypes_1 = require("../Abilities/CharacterUnifiedStateTypes");
-const MoveToLocationLogic_1 = require("./MoveToLocationLogic");
-const PatrolMoveLogic_1 = require("./PatrolMoveLogic");
-const PatrolMovePointsLogic_1 = require("./PatrolMovePointsLogic");
-const DEFAULT_TURN_SPEED = 360;
-const END_DISTANCE = 30;
-const NAV_DISTANCE = 200;
-const NO_RESET_ANGLE = 20;
-const NO_RESET_DISTANCE = 50;
-const PER_TICK_MIN_MOVE_SPEED = 30;
+const UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../../../Core/Net/Net"),
+  MathCommon_1 = require("../../../../../../Core/Utils/Math/MathCommon"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  IComponent_1 = require("../../../../../../UniverseEditor/Interface/IComponent"),
+  AiContollerLibrary_1 = require("../../../../../AI/Controller/AiContollerLibrary"),
+  GlobalData_1 = require("../../../../../GlobalData"),
+  ColorUtils_1 = require("../../../../../Utils/ColorUtils"),
+  WorldFunctionLibrary_1 = require("../../../../../World/Bridge/WorldFunctionLibrary"),
+  CharacterUnifiedStateTypes_1 = require("../Abilities/CharacterUnifiedStateTypes"),
+  MoveToLocationLogic_1 = require("./MoveToLocationLogic"),
+  PatrolMoveLogic_1 = require("./PatrolMoveLogic"),
+  PatrolMovePointsLogic_1 = require("./PatrolMovePointsLogic"),
+  DEFAULT_TURN_SPEED = 360,
+  END_DISTANCE = 30,
+  NAV_DISTANCE = 200,
+  NO_RESET_ANGLE = 20,
+  NO_RESET_DISTANCE = 50,
+  PER_TICK_MIN_MOVE_SPEED = 30;
 class BaseMoveCharacter {
   constructor() {
     (this.wDe = 0),
@@ -56,8 +56,8 @@ class BaseMoveCharacter {
         this.EYo && this.EYo(t);
       }),
       (this.PushMoveInfo = () => {
-        const t = Protocol_1.Aki.Protocol.Zhs.create();
-        const i = Protocol_1.Aki.Protocol.o2s.create();
+        var t = Protocol_1.Aki.Protocol.Zhs.create(),
+          i = Protocol_1.Aki.Protocol.o2s.create();
         (i.rkn = MathUtils_1.MathUtils.NumberToLong(
           this.Hte.CreatureData.GetCreatureDataId(),
         )),
@@ -95,16 +95,16 @@ class BaseMoveCharacter {
     if (this.IsRunning)
       if (this.yYo.TargetPoint) {
         (this.mie += h),
-          this.mie > 1 && ((this.mie = 0), this.LYo()),
+          1 < this.mie && ((this.mie = 0), this.LYo()),
           GlobalData_1.GlobalData.IsPlayInEditor &&
             MoveToLocationLogic_1.MoveToLocationController.DebugDraw &&
             this.DYo();
-        let t = !1;
-        let i = !1;
-        let s = this.IYo.UpdateMove(h, this.SYo);
+        let t = !1,
+          i = !1,
+          s = this.IYo.UpdateMove(h, this.SYo);
         for (; !s; ) {
           if (
-            ((i = i || this.yYo.TargetPoint.Index >= 0),
+            ((i = i || 0 <= this.yYo.TargetPoint.Index),
             this.RYo(),
             this.yYo.CheckMoveLastPoint())
           ) {
@@ -128,13 +128,13 @@ class BaseMoveCharacter {
       } else this.MoveEnd(2);
   }
   xYo(t, i) {
-    const s = Vector_1.Vector.Dist(
+    var s = Vector_1.Vector.Dist(
       this.Hte.ActorLocationProxy,
       this.CurrentToLocation,
     );
     if (
       Math.abs(this.pYo - s) / t > PER_TICK_MIN_MOVE_SPEED ||
-      this.pYo === 0 ||
+      0 === this.pYo ||
       i
     )
       this.fYo = this.gYo;
@@ -169,24 +169,24 @@ class BaseMoveCharacter {
     this.jye.DeepCopy(this.Hte.ActorLocationProxy),
       this.jye.SubtractionEqual(t),
       this.lYo || (this.jye.Z = 0);
-    let i = this.jye.Size();
-    var t =
-      (this.RTe.DeepCopy(this.CurrentToLocation),
-      this.RTe.SubtractionEqual(t),
-      this.lYo || (this.RTe.Z = 0),
-      this.RTe.Size());
+    var i = this.jye.Size(),
+      t =
+        (this.RTe.DeepCopy(this.CurrentToLocation),
+        this.RTe.SubtractionEqual(t),
+        this.lYo || (this.RTe.Z = 0),
+        this.RTe.Size());
     return (
-      i !== 0 &&
-      t !== 0 &&
+      0 !== i &&
+      0 !== t &&
       ((i = this.jye.DotProduct(this.RTe) / (i * t)),
       (i = MathCommon_1.MathCommon.RadToDeg * Math.acos(i)),
       this.jye.CrossProduct(this.RTe, this.jye),
       (t = this.jye.Size() / t),
-      !(i > 0 && i < NO_RESET_ANGLE && t < NO_RESET_DISTANCE))
+      !(0 < i && i < NO_RESET_ANGLE && t < NO_RESET_DISTANCE))
     );
   }
   StopMove() {
-    let t;
+    var t;
     this.IsRunning &&
       (this.Hte.ClearInput(),
       (t = this.yYo.UpdatePreIndex()),
@@ -213,7 +213,7 @@ class BaseMoveCharacter {
       this.dYo.DeepCopy(this.Hte.ActorLocationProxy);
   }
   MoveAlongPath(t) {
-    let i;
+    var i;
     this.Hte
       ? ((this.Ioo = !0),
         (i = t.TurnSpeed ?? DEFAULT_TURN_SPEED),
@@ -224,7 +224,7 @@ class BaseMoveCharacter {
         (this.SYo = t.DebugMode),
         (this.EYo = t.Callback),
         (this.uYo = t.ReturnFalseWhenNavigationFailed),
-        t.ReturnTimeoutFailed && t.ReturnTimeoutFailed !== 0
+        t.ReturnTimeoutFailed && 0 !== t.ReturnTimeoutFailed
           ? ((this.CYo = !0),
             (this.gYo = t.ReturnTimeoutFailed),
             (this.fYo = t.ReturnTimeoutFailed))
@@ -320,7 +320,7 @@ class BaseMoveCharacter {
         t.ToUeVector(),
         i.ToUeVector(),
         s,
-      ) && s.length > 0
+      ) && 0 < s.length
     );
   }
   RYo() {
@@ -340,19 +340,19 @@ class BaseMoveCharacter {
       this.yYo.OnArriveMovePoint();
   }
   PYo() {
-    const t = WorldFunctionLibrary_1.default.GetEntityTypeByEntity(
+    var t = WorldFunctionLibrary_1.default.GetEntityTypeByEntity(
       this.Hte.Entity.Id,
     );
     t === Protocol_1.Aki.Protocol.HBs.Proto_Npc && this.qYo(),
       t === Protocol_1.Aki.Protocol.HBs.Proto_Monster && this.GYo();
   }
   GYo() {
-    const t = this.Hte.Entity.GetComponent(57);
-    const i = t.GetCurrentMoveSample();
-    const s =
-      ((i.$kn = this.Hte.ActorLocationProxy),
-      t.PendingMoveInfos.push(i),
-      Protocol_1.Aki.Protocol.Xhs.create());
+    var t = this.Hte.Entity.GetComponent(57),
+      i = t.GetCurrentMoveSample(),
+      s =
+        ((i.$kn = this.Hte.ActorLocationProxy),
+        t.PendingMoveInfos.push(i),
+        Protocol_1.Aki.Protocol.Xhs.create());
     s.Mys.push(t.CollectPendingMoveInfos()),
       Net_1.Net.Send(29494, s),
       Log_1.Log.CheckInfo() &&
@@ -368,14 +368,14 @@ class BaseMoveCharacter {
         );
   }
   qYo() {
-    const t = Protocol_1.Aki.Protocol.o2s.create();
-    const i =
-      ((t.rkn = MathUtils_1.MathUtils.NumberToLong(
-        this.Hte.CreatureData.GetCreatureDataId(),
-      )),
-      (t.$kn = this.Hte.ActorLocationProxy),
-      (t.D3n = this.Hte.ActorRotationProxy),
-      Protocol_1.Aki.Protocol.Zhs.create());
+    var t = Protocol_1.Aki.Protocol.o2s.create(),
+      i =
+        ((t.rkn = MathUtils_1.MathUtils.NumberToLong(
+          this.Hte.CreatureData.GetCreatureDataId(),
+        )),
+        (t.$kn = this.Hte.ActorLocationProxy),
+        (t.D3n = this.Hte.ActorRotationProxy),
+        Protocol_1.Aki.Protocol.Zhs.create());
     (i.m4n = [t]),
       Net_1.Net.Send(24100, i),
       Log_1.Log.CheckInfo() &&
@@ -391,7 +391,7 @@ class BaseMoveCharacter {
         );
   }
   LYo() {
-    let t, i;
+    var t, i;
     this.yYo.TargetPoint &&
       (i = this.Jh.GetComponent(36)) &&
       ((t = this.yYo.TargetPoint.MoveSpeed),
@@ -421,11 +421,11 @@ class BaseMoveCharacter {
   }
   DYo() {
     if (
-      this.yYo.MovePoint.length !== 0 &&
+      0 !== this.yYo.MovePoint.length &&
       GlobalData_1.GlobalData.IsPlayInEditor
     )
-      for (let t = this.yYo.MovePoint.length - 1; t > -1; t--) {
-        const i = this.yYo.MovePoint[t].Position;
+      for (let t = this.yYo.MovePoint.length - 1; -1 < t; t--) {
+        var i = this.yYo.MovePoint[t].Position;
         UE.KismetSystemLibrary.DrawDebugSphere(
           GlobalData_1.GlobalData.World,
           i.ToUeVector(),
@@ -442,4 +442,4 @@ class BaseMoveCharacter {
   }
 }
 exports.BaseMoveCharacter = BaseMoveCharacter;
-// # sourceMappingURL=BaseMoveCharacter.js.map
+//# sourceMappingURL=BaseMoveCharacter.js.map

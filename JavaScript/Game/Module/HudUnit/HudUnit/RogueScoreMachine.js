@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RogueScoreMachine = void 0);
-const Time_1 = require("../../../../Core/Common/Time");
-const SERVER_SCORE_UP_INTERVAL = 300;
-const SERVER_SCORE_DOWN_INTERVAL = 1e3;
-const MAX_SCORE_DIFF = 1e3;
+const Time_1 = require("../../../../Core/Common/Time"),
+  SERVER_SCORE_UP_INTERVAL = 300,
+  SERVER_SCORE_DOWN_INTERVAL = 1e3,
+  MAX_SCORE_DIFF = 1e3;
 class RogueScoreMachine {
   constructor() {
     (this.nyn = void 0),
@@ -29,9 +29,9 @@ class RogueScoreMachine {
     ) {
       s = this.apo > this.ayn;
       if ((s && this.syn?.(), this.hyn || this.lyn)) {
-        const i = this.hyn?.Level ?? 0;
-        const h = this.lyn?.Level ?? 0;
-        if (Math.abs(h - i) > 1) this._yn();
+        var i = this.hyn?.Level ?? 0,
+          h = this.lyn?.Level ?? 0;
+        if (1 < Math.abs(h - i)) this._yn();
         else {
           let i = !1;
           if (!this.hyn) {
@@ -62,21 +62,21 @@ class RogueScoreMachine {
       this.nyn?.(this.ayn, this.hyn);
   }
   Tick(i) {
-    let t;
-    this.unt !== 0 &&
+    var t;
+    0 !== this.unt &&
       this.YDn !== Time_1.Time.Frame &&
       ((this.ayn += this.unt * i),
       this.hyn !== this.lyn &&
         ((i = this.hyn.LowerUpperLimits[0]),
         (t = this.hyn.LowerUpperLimits[1]),
-        this.unt > 0
+        0 < this.unt
           ? this.ayn >= t && (this.hyn = this.lyn)
           : this.ayn < i && (this.hyn = this.lyn)),
-      this.unt > 0
+      0 < this.unt
         ? this.ayn >= this.apo && ((this.ayn = this.apo), (this.unt = 0))
         : this.ayn <= this.apo && ((this.ayn = this.apo), (this.unt = 0)),
       this.nyn?.(this.ayn, this.hyn));
   }
 }
 exports.RogueScoreMachine = RogueScoreMachine;
-// # sourceMappingURL=RogueScoreMachine.js.map
+//# sourceMappingURL=RogueScoreMachine.js.map

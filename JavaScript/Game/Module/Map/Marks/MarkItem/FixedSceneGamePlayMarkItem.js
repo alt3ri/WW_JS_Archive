@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FixedSceneGameplayMarkItem = void 0);
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const FixedSceneGamePlayMarkItemView_1 = require("../MarkItemView/FixedSceneGamePlayMarkItemView");
-const ConfigMarkItem_1 = require("./ConfigMarkItem");
+const ModelManager_1 = require("../../../../Manager/ModelManager"),
+  FixedSceneGamePlayMarkItemView_1 = require("../MarkItemView/FixedSceneGamePlayMarkItemView"),
+  ConfigMarkItem_1 = require("./ConfigMarkItem");
 class FixedSceneGameplayMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
   constructor(e, a, r, t, i, n = 1) {
     super(e, a, r, t, i, n), (this.InnerView = void 0);
@@ -16,7 +16,7 @@ class FixedSceneGameplayMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
     return super.CheckCanShowView();
   }
   InitIcon() {
-    const e = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(
+    var e = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(
       this.MarkConfig.RelativeId,
     );
     !e || e.IsClose
@@ -25,4 +25,4 @@ class FixedSceneGameplayMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
   }
 }
 exports.FixedSceneGameplayMarkItem = FixedSceneGameplayMarkItem;
-// # sourceMappingURL=FixedSceneGamePlayMarkItem.js.map
+//# sourceMappingURL=FixedSceneGamePlayMarkItem.js.map

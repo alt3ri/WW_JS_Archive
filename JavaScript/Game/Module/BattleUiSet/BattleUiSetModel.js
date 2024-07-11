@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleUiSetModel = void 0);
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const BattleUiSetController_1 = require("./BattleUiSetController");
-const BattleUiSetDefine_1 = require("./BattleUiSetDefine");
-const BattleUiSetPanelData_1 = require("./BattleUiSetPanelData");
-const BattleUiSetPanelItemData_1 = require("./BattleUiSetPanelItemData");
+const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  BattleUiSetController_1 = require("./BattleUiSetController"),
+  BattleUiSetDefine_1 = require("./BattleUiSetDefine"),
+  BattleUiSetPanelData_1 = require("./BattleUiSetPanelData"),
+  BattleUiSetPanelItemData_1 = require("./BattleUiSetPanelItemData");
 class BattleUiSetModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -24,22 +24,22 @@ class BattleUiSetModel extends ModelBase_1.ModelBase {
       (this.ControlScaleRate = 0);
   }
   OnInit() {
-    const t = ConfigManager_1.ConfigManager.BattleUiSetConfig;
+    var t = ConfigManager_1.ConfigManager.BattleUiSetConfig;
     for (
       let e = BattleUiSetDefine_1.PANEL_MIN_INDEX;
       e < BattleUiSetDefine_1.PANEL_MAX_INDEX;
       e++
     ) {
-      const a = [];
+      var a = [];
       for (const i of t.GetMobileBattleUiSetConfigList(e)) {
-        const o = i.Id;
-        const r = new BattleUiSetPanelItemData_1.BattleUiSetPanelItemData(
-          i.ItemIndex,
-          i,
-        );
+        var o = i.Id,
+          r = new BattleUiSetPanelItemData_1.BattleUiSetPanelItemData(
+            i.ItemIndex,
+            i,
+          );
         a.push(r), this.eCt.set(o, r);
       }
-      const n = new BattleUiSetPanelData_1.BattleUiSetPanelData(e, a);
+      var n = new BattleUiSetPanelData_1.BattleUiSetPanelData(e, a);
       this.Zdt.set(e, n);
     }
     return (
@@ -98,22 +98,14 @@ class BattleUiSetModel extends ModelBase_1.ModelBase {
         (e.EditorHierarchyIndex = e.SourceHierarchyIndex);
   }
   SaveSettings() {
-    const e = [];
+    var e = [];
     for (const s of this.GetPanelItemDataMap().values()) {
-      const t = s.EditSize;
-      const a = s.EditAlpha;
-      const o = s.EditOffsetX;
-      const r = s.EditOffsetY;
-      const n = s.EditorHierarchyIndex;
-      const i = {
-        Ekn: s.ConfigId,
-        x3n: t,
-        P3n: a,
-        B3n: o,
-        w3n: r,
-        b3n: n,
-        q3n: 0,
-      };
+      var t = s.EditSize,
+        a = s.EditAlpha,
+        o = s.EditOffsetX,
+        r = s.EditOffsetY,
+        n = s.EditorHierarchyIndex,
+        i = { Ekn: s.ConfigId, x3n: t, P3n: a, B3n: o, w3n: r, b3n: n, q3n: 0 };
       (s.Size = t),
         (s.Alpha = a),
         (s.OffsetX = o),
@@ -129,7 +121,7 @@ class BattleUiSetModel extends ModelBase_1.ModelBase {
     for (const e of this.GetPanelItemDataMap().values()) e.ReInit();
   }
   AddTouchFingerData(e) {
-    const t = e.GetFingerIndex();
+    var t = e.GetFingerIndex();
     this.tCt.set(t, e);
   }
   RemoveTouchFingerData(e) {
@@ -144,4 +136,4 @@ class BattleUiSetModel extends ModelBase_1.ModelBase {
   }
 }
 exports.BattleUiSetModel = BattleUiSetModel;
-// # sourceMappingURL=BattleUiSetModel.js.map
+//# sourceMappingURL=BattleUiSetModel.js.map

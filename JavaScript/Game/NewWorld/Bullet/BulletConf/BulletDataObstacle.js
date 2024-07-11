@@ -21,4 +21,4 @@ class BulletDataObstacle {
   }
 }
 exports.BulletDataObstacle = BulletDataObstacle;
-// # sourceMappingURL=BulletDataObstacle.js.map
+//# sourceMappingURL=BulletDataObstacle.js.map

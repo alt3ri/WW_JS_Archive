@@ -91,4 +91,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   ])),
   (exports.DELAY_REFRESH_ELEMENT_BALL = 3e3),
   (exports.BUFF_END_REMAINING_TIME = 2);
-// # sourceMappingURL=BattleUiDefine.js.map
+//# sourceMappingURL=BattleUiDefine.js.map

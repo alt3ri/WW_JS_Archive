@@ -21,4 +21,4 @@ class MeshComponentUtils {
   }
 }
 exports.MeshComponentUtils = MeshComponentUtils;
-// # sourceMappingURL=MeshComponentUtils.js.map
+//# sourceMappingURL=MeshComponentUtils.js.map

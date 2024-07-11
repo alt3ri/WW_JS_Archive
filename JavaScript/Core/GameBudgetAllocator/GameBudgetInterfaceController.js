@@ -1,17 +1,17 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameBudgetInterfaceController = void 0);
-const cpp_1 = require("cpp");
-const UE = require("ue");
-const EventDefine_1 = require("../../Game/Common/Event/EventDefine");
-const EventSystem_1 = require("../../Game/Common/Event/EventSystem");
-const Global_1 = require("../../Game/Global");
-const ModelManager_1 = require("../../Game/Manager/ModelManager");
-const GameBudgetAllocatorConfigCreator_1 = require("../../Game/World/Define/GameBudgetAllocatorConfigCreator");
-const Log_1 = require("../Common/Log");
-const ControllerBase_1 = require("../Framework/ControllerBase");
-const GameBudgetTimeEstimationFramesOffset_1 = require("./GameBudgetTimeEstimationFramesOffset");
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
+  EventDefine_1 = require("../../Game/Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Game/Common/Event/EventSystem"),
+  Global_1 = require("../../Game/Global"),
+  ModelManager_1 = require("../../Game/Manager/ModelManager"),
+  GameBudgetAllocatorConfigCreator_1 = require("../../Game/World/Define/GameBudgetAllocatorConfigCreator"),
+  Log_1 = require("../Common/Log"),
+  ControllerBase_1 = require("../Framework/ControllerBase"),
+  GameBudgetTimeEstimationFramesOffset_1 = require("./GameBudgetTimeEstimationFramesOffset");
 class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
   static get CenterRole() {
     return this.SK;
@@ -97,7 +97,7 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
         e);
   }
   static UnregisterTick(e) {
-    const t = this.UK.get(e);
+    var t = this.UK.get(e);
     t
       ? (this.UK.delete(e),
         cpp_1.FKuroGameBudgetAllocatorInterface.UnregisterFunction(t))
@@ -107,15 +107,15 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
     cpp_1.FKuroGameBudgetAllocatorInterface.UpdateActor(e, t, r);
   }
   static ComputeDistanceScore(e, t, r, a) {
-    var e = new UE.Vector(e[0], e[1], e[2]);
-    var t = new UE.Vector(t[0], t[1], t[2]);
-    const i =
-      (GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator
-        .TsCharacterDtailConfig ||
-        GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator.CreateCharacterEntityConfigOnly(),
-      GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator
-        .TsCharacterDtailConfig);
-    var a = a ? i.Normal_Render : i.Normal_NotRendered;
+    var e = new UE.Vector(e[0], e[1], e[2]),
+      t = new UE.Vector(t[0], t[1], t[2]),
+      i =
+        (GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator
+          .TsCharacterDtailConfig ||
+          GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator.CreateCharacterEntityConfigOnly(),
+        GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator
+          .TsCharacterDtailConfig),
+      a = a ? i.Normal_Render : i.Normal_NotRendered;
     return cpp_1.FKuroGameBudgetAllocatorInterface.ComputeDistanceScore(
       e,
       t,
@@ -164,7 +164,7 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
     (this.xK = e), this.PK();
   }
   static PK() {
-    const e = this.xK ? 2 : this.wK && !this.AK ? 1 : 0;
+    var e = this.xK ? 2 : this.wK && !this.AK ? 1 : 0;
     cpp_1.FKuroGameBudgetAllocatorInterface.SetGlobalMode(e);
   }
   static BK(e) {
@@ -182,9 +182,9 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
       this.qK(e));
   }
   static qK(e) {
-    e === 1
+    1 === e
       ? this.SetCenterRole(Global_1.Global.BaseCharacter)
-      : e === 2 &&
+      : 2 === e &&
         (this.SetCenterRole(Global_1.Global.BaseCharacter),
         (e =
           ModelManager_1.ModelManager.CameraModel?.SequenceCamera
@@ -193,7 +193,7 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
         cpp_1.FKuroGameBudgetAllocatorInterface.AddAssistantActor(e));
   }
   static bK(e) {
-    e === 2 &&
+    2 === e &&
       this.LK &&
       (cpp_1.FKuroGameBudgetAllocatorInterface.RemoveAssistantActor(this.LK),
       (this.LK = void 0));
@@ -222,8 +222,8 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
   (GameBudgetInterfaceController.TK = 0),
   (GameBudgetInterfaceController.LK = void 0),
   (GameBudgetInterfaceController.IK = (e, t) => {
-    e === 1 && ModelManager_1.ModelManager.PlotModel?.IsInPlot
+    1 === e && ModelManager_1.ModelManager.PlotModel?.IsInPlot
       ? _a.BK(2)
       : _a.BK(1);
   });
-// # sourceMappingURL=GameBudgetInterfaceController.js.map
+//# sourceMappingURL=GameBudgetInterfaceController.js.map

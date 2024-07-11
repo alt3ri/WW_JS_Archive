@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemHintItem = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const ItemController_1 = require("../../Item/ItemController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const ListSliderControl_1 = require("./ListSliderControl");
-const AUDIO_EFFECT_RARE_LEVEL = 4;
-const AUDIO_HINT_CD_MS = 500;
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  ItemController_1 = require("../../Item/ItemController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ListSliderControl_1 = require("./ListSliderControl"),
+  AUDIO_EFFECT_RARE_LEVEL = 4,
+  AUDIO_HINT_CD_MS = 500;
 class ItemHintItem extends ListSliderControl_1.SliderItem {
   constructor() {
     super(...arguments),
@@ -22,11 +22,11 @@ class ItemHintItem extends ListSliderControl_1.SliderItem {
       (this.Data = void 0),
       (this.zCi = void 0),
       (this.WFt = (e) => {
-        e === "Start"
+        "Start" === e
           ? this.FinishPlayStart()
-          : e === "Move"
+          : "Move" === e
             ? this.FinishPlayHalfway()
-            : e === "Close" && this.FinishPlayEnd();
+            : "Close" === e && this.FinishPlayEnd();
       });
   }
   OnRegisterComponent() {
@@ -57,10 +57,10 @@ class ItemHintItem extends ListSliderControl_1.SliderItem {
       await e.Promise;
   }
   InitData() {
-    let e;
-    const t = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-      this.Data.ItemId,
-    );
+    var e,
+      t = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+        this.Data.ItemId,
+      );
     t &&
       ((e = t.Name),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e),
@@ -134,4 +134,4 @@ class ItemHintItem extends ListSliderControl_1.SliderItem {
   }
 }
 exports.ItemHintItem = ItemHintItem;
-// # sourceMappingURL=ItemHintItem.js.map
+//# sourceMappingURL=ItemHintItem.js.map

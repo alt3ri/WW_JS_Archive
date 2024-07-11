@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ElementItem = void 0);
-const UE = require("ue");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const CommonSelectItem_1 = require("./CommonSelectItem");
+const UE = require("ue"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  CommonSelectItem_1 = require("./CommonSelectItem");
 class ElementItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments), (this.jso = void 0), (this.oao = void 0);
@@ -21,7 +21,7 @@ class ElementItem extends GridProxyAbstract_1.GridProxyAbstract {
     ];
   }
   PWt() {
-    let t;
+    var t;
     this.jso.Name
       ? this.GetText(1).ShowTextNew(this.jso.Name)
       : ((t = this.GetText(1)).SetChangeColor(
@@ -40,4 +40,4 @@ class ElementItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.ElementItem = ElementItem;
-// # sourceMappingURL=ElementItem.js.map
+//# sourceMappingURL=ElementItem.js.map

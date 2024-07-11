@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RedDotCookerLevel = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const CookController_1 = require("../../../Module/Cook/CookController");
-const RedDotBase_1 = require("../../RedDotBase");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  CookController_1 = require("../../../Module/Cook/CookController"),
+  RedDotBase_1 = require("../../RedDotBase");
 class RedDotCookerLevel extends RedDotBase_1.RedDotBase {
   OnGetEvents() {
     return [
@@ -19,4 +19,4 @@ class RedDotCookerLevel extends RedDotBase_1.RedDotBase {
   }
 }
 exports.RedDotCookerLevel = RedDotCookerLevel;
-// # sourceMappingURL=RedDotCookerLevel.js.map
+//# sourceMappingURL=RedDotCookerLevel.js.map

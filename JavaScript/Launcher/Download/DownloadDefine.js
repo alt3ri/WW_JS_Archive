@@ -1,5 +1,5 @@
 "use strict";
-let EDownloadState;
+var EDownloadState;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EDownloadState = void 0),
   (function (e) {
@@ -14,4 +14,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   })(
     (EDownloadState = exports.EDownloadState || (exports.EDownloadState = {})),
   );
-// # sourceMappingURL=DownloadDefine.js.map
+//# sourceMappingURL=DownloadDefine.js.map

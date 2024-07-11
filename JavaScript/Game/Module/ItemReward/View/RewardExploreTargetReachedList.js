@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RewardExploreTargetReachedList = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RewardExploreTargetReached_1 = require("./RewardExploreTargetReached");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RewardExploreTargetReached_1 = require("./RewardExploreTargetReached");
 class RewardExploreTargetReachedList extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -29,15 +29,15 @@ class RewardExploreTargetReachedList extends UiPanelBase_1.UiPanelBase {
   }
   SetBarList(e) {
     this.c0i();
-    const t = this.GetItem(0);
-    if (e && e.length !== 0) {
+    var t = this.GetItem(0);
+    if (e && 0 !== e.length) {
       for (const r of e) this.C0i(r);
       t.SetUIActive(!0);
     } else t.SetUIActive(!1);
   }
   C0i(e) {
-    var t = LguiUtil_1.LguiUtil.DuplicateActor(this._0i.GetOwner(), this.u0i);
-    var t = new RewardExploreTargetReached_1.RewardExploreTargetReached(t);
+    var t = LguiUtil_1.LguiUtil.DuplicateActor(this._0i.GetOwner(), this.u0i),
+      t = new RewardExploreTargetReached_1.RewardExploreTargetReached(t);
     t.Refresh(e),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Test", 5, e?.DescriptionTextId),
@@ -50,4 +50,4 @@ class RewardExploreTargetReachedList extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RewardExploreTargetReachedList = RewardExploreTargetReachedList;
-// # sourceMappingURL=RewardExploreTargetReachedList.js.map
+//# sourceMappingURL=RewardExploreTargetReachedList.js.map

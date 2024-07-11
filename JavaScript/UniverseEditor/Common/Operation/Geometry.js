@@ -1,5 +1,5 @@
 "use strict";
-let _a, _b, _c;
+var _a, _b, _c;
 function toVector2R(t) {
   return t ? (t.X && t.Y ? t : { X: t.X ?? 0, Y: t.Y ?? 0 }) : { X: 0, Y: 0 };
 }
@@ -17,8 +17,8 @@ class Vector2Op {
     return { X: t, Y: r };
   }
   static CacheNew(t, r) {
-    let e = this.ve.get(r);
-    let c = (e || ((e = new Map()), this.ve.set(r, e)), e.get(t));
+    let e = this.ve.get(r),
+      c = (e || ((e = new Map()), this.ve.set(r, e)), e.get(t));
     return c || ((c = this.New(t, r)), e.set(t, c)), c;
   }
   static Clone(t) {
@@ -59,13 +59,13 @@ class Vector2Op {
     return this.New(t.X / r, t.Y / r);
   }
   static SquareDistance(t, r) {
-    const e = t.X - r.X;
-    var t = t.Y - r.Y;
+    var e = t.X - r.X,
+      t = t.Y - r.Y;
     return e * e + t * t;
   }
   static Distance(t, r) {
-    const e = t.X - r.X;
-    var t = t.Y - r.Y;
+    var e = t.X - r.X,
+      t = t.Y - r.Y;
     return Math.sqrt(e * e + t * t);
   }
   static Equal(t, r) {
@@ -88,10 +88,10 @@ class RectOp {
   }
   static NewByPos(t, r) {
     if (t.X < r.X && t.Y < r.Y) return { Min: t, Max: r };
-    let e = t.X;
-    let c = r.X;
-    let s = (t.X > r.X && ((e = r.X), (c = t.X)), t.Y);
-    let a = r.Y;
+    let e = t.X,
+      c = r.X,
+      s = (t.X > r.X && ((e = r.X), (c = t.X)), t.Y),
+      a = r.Y;
     return (
       t.Y > r.Y && ((s = r.Y), (a = t.Y)),
       { Min: Vector2Op.New(e, s), Max: Vector2Op.New(c, a) }
@@ -116,8 +116,8 @@ class RectOp {
     return Vector2Op.New(t.Max.X - t.Min.X, t.Max.Y - t.Min.Y);
   }
   static ToDrawPoints(t) {
-    const r = t.Min;
-    var t = t.Max;
+    var r = t.Min,
+      t = t.Max;
     return [r, { X: r.X, Y: t.Y }, t, { X: t.X, Y: r.Y }, r];
   }
   static Contains(t, r) {
@@ -184,15 +184,15 @@ class Vector3Op {
     return Math.sqrt((t.X - r.X) ** 2 + (t.Y - r.Y) ** 2 + (t.Z - r.Z) ** 2);
   }
   static Normalize(t) {
-    const r = this.Magnitude(t);
-    const e = this.Magnitude({ X: t.X, Y: t.Y, Z: 0 });
-    const c = t.Z;
-    const s = e / r;
-    const a = t.Y / e;
+    var r = this.Magnitude(t),
+      e = this.Magnitude({ X: t.X, Y: t.Y, Z: 0 }),
+      c = t.Z,
+      s = e / r,
+      a = t.Y / e;
     return { X: (t.X / e) * s, Y: a * s, Z: c / r };
   }
 }
 (exports.Vector3Op = Vector3Op),
   ((_c = Vector3Op).One = _c.New(1, 1, 1)),
   (Vector3Op.Zero = _c.New(0, 0, 0));
-// # sourceMappingURL=Geometry.js.map
+//# sourceMappingURL=Geometry.js.map

@@ -1,56 +1,61 @@
 "use strict";
-let CharacterGlideComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, _) {
-    let h;
-    const o = arguments.length;
-    let r =
-      o < 3 ? e : _ === null ? (_ = Object.getOwnPropertyDescriptor(e, i)) : _;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(t, e, i, _);
-    else
-      for (let n = t.length - 1; n >= 0; n--)
-        (h = t[n]) && (r = (o < 3 ? h(r) : o > 3 ? h(e, i, r) : h(e, i)) || r);
-    return o > 3 && r && Object.defineProperty(e, i, r), r;
-  };
+var CharacterGlideComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, _) {
+      var h,
+        o = arguments.length,
+        r =
+          o < 3
+            ? e
+            : null === _
+              ? (_ = Object.getOwnPropertyDescriptor(e, i))
+              : _;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        r = Reflect.decorate(t, e, i, _);
+      else
+        for (var n = t.length - 1; 0 <= n; n--)
+          (h = t[n]) &&
+            (r = (o < 3 ? h(r) : 3 < o ? h(e, i, r) : h(e, i)) || r);
+      return 3 < o && r && Object.defineProperty(e, i, r), r;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterGlideComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../Core/Common/Time");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const Quat_1 = require("../../../../../Core/Utils/Math/Quat");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const CustomMovementDefine_1 = require("./Move/CustomMovementDefine");
-const FLYING_GRAVITY = 15;
-const FLYING_FRICTION = 0.1;
-const FLYING_DECELERATION = 0.068;
-const FLYING_ACCELERATOR = 55;
-const FLYING_MAX_SPEED = 650;
-const FLYING_MAX_FALLING_SPEED = 250;
-const SOAR_MAX_NORMAL_ANGLE = 45;
-const SOAR_NORMAL_SPEED = 80;
-const SOAR_AIRFRICTION = 0.1;
-const SOAR_AERODYNAMICS = 5;
-const SOAR_ROTATE_SPEED = 80;
-const SOAR_TURN_SPEED_SQR_THRESHOLD = 1e4;
-const SOAR_PITCH_MIN = 20;
-const SOAR_PITCH_MAX = 90;
-const SOAR_PITCH_AVERAGE = (SOAR_PITCH_MIN + SOAR_PITCH_MAX) / 2;
-const SOAR_INPUT_MIN_SPEED = 500;
-const SOAR_INPUT_MAX_SPEED = 1e3;
-const soarGravity = new UE.Vector(0, 0, -2e3);
-const SOAR_NORMAL_SPEED_NO_INPUT_ROLL = 45;
-const SOAR_NORMAL_SPEED_NO_INPUT_PTICH = 10;
-const DEBUG_DRAW = !1;
-const redColor = new UE.LinearColor(1, 0, 0, 1);
-const greenColor = new UE.LinearColor(0, 1, 0, 1);
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Quat_1 = require("../../../../../Core/Utils/Math/Quat"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  CustomMovementDefine_1 = require("./Move/CustomMovementDefine"),
+  FLYING_GRAVITY = 15,
+  FLYING_FRICTION = 0.1,
+  FLYING_DECELERATION = 0.068,
+  FLYING_ACCELERATOR = 55,
+  FLYING_MAX_SPEED = 650,
+  FLYING_MAX_FALLING_SPEED = 250,
+  SOAR_MAX_NORMAL_ANGLE = 45,
+  SOAR_NORMAL_SPEED = 80,
+  SOAR_AIRFRICTION = 0.1,
+  SOAR_AERODYNAMICS = 5,
+  SOAR_ROTATE_SPEED = 80,
+  SOAR_TURN_SPEED_SQR_THRESHOLD = 1e4,
+  SOAR_PITCH_MIN = 20,
+  SOAR_PITCH_MAX = 90,
+  SOAR_PITCH_AVERAGE = (SOAR_PITCH_MIN + SOAR_PITCH_MAX) / 2,
+  SOAR_INPUT_MIN_SPEED = 500,
+  SOAR_INPUT_MAX_SPEED = 1e3,
+  soarGravity = new UE.Vector(0, 0, -2e3),
+  SOAR_NORMAL_SPEED_NO_INPUT_ROLL = 45,
+  SOAR_NORMAL_SPEED_NO_INPUT_PTICH = 10,
+  DEBUG_DRAW = !1,
+  redColor = new UE.LinearColor(1, 0, 0, 1),
+  greenColor = new UE.LinearColor(0, 1, 0, 1);
 let CharacterGlideComponent =
   (CharacterGlideComponent_1 = class CharacterGlideComponent extends (
     EntityComponent_1.EntityComponent
@@ -91,7 +96,7 @@ let CharacterGlideComponent =
               );
         }),
         (this.vVr = (t) => {
-          let e, i, _;
+          var e, i, _;
           this.nXt &&
             this.s3o &&
             (e = this.s3o.CharacterMovement) &&
@@ -249,7 +254,7 @@ let CharacterGlideComponent =
         (this.OnStateInherit = (t, e, i) => {
           t?.Valid &&
             (t = t.GetComponent(50))?.Valid &&
-            e === 0 &&
+            0 === e &&
             !i &&
             (this.mVr.DeepCopy(t.mVr),
             this.dVr.DeepCopy(t.dVr),
@@ -336,13 +341,13 @@ let CharacterGlideComponent =
         this.s3o.CharacterMovement.SetMovementMode(3, 0);
     }
     CalculateSoarQuat() {
-      let t;
+      var t;
       this.nXt.ActorVelocityProxy.IsNearlyZero()
         ? this.dVr.DeepCopy(this.nXt.ActorQuatProxy)
         : (t = this.nXt.ActorVelocityProxy).SizeSquared2D() <
             SOAR_TURN_SPEED_SQR_THRESHOLD
           ? (CharacterGlideComponent_1.Lz.DeepCopy(this.nXt.ActorForwardProxy),
-            t.Z > 0 && CharacterGlideComponent_1.Lz.MultiplyEqual(-1),
+            0 < t.Z && CharacterGlideComponent_1.Lz.MultiplyEqual(-1),
             MathUtils_1.MathUtils.LookRotationForwardFirst(
               t,
               CharacterGlideComponent_1.Lz,
@@ -355,7 +360,7 @@ let CharacterGlideComponent =
             );
     }
     MVr(t) {
-      let e, i;
+      var e, i;
       this.nXt &&
         ((i = t.DotProduct(this.nXt.ActorForwardProxy)),
         (e = t.DotProduct(Vector_1.Vector.UpVectorProxy)),
@@ -390,4 +395,4 @@ let CharacterGlideComponent =
       CharacterGlideComponent,
     )),
   (exports.CharacterGlideComponent = CharacterGlideComponent);
-// # sourceMappingURL=CharacterGlideComponent.js.map
+//# sourceMappingURL=CharacterGlideComponent.js.map

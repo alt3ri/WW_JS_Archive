@@ -1,38 +1,43 @@
 "use strict";
-let CharacterLevelShootComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, o) {
-    let r;
-    const h = arguments.length;
-    let s =
-      h < 3 ? e : o === null ? (o = Object.getOwnPropertyDescriptor(e, i)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      s = Reflect.decorate(t, e, i, o);
-    else
-      for (let n = t.length - 1; n >= 0; n--)
-        (r = t[n]) && (s = (h < 3 ? r(s) : h > 3 ? r(e, i, s) : r(e, i)) || s);
-    return h > 3 && s && Object.defineProperty(e, i, s), s;
-  };
+var CharacterLevelShootComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, o) {
+      var r,
+        h = arguments.length,
+        s =
+          h < 3
+            ? e
+            : null === o
+              ? (o = Object.getOwnPropertyDescriptor(e, i))
+              : o;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        s = Reflect.decorate(t, e, i, o);
+      else
+        for (var n = t.length - 1; 0 <= n; n--)
+          (r = t[n]) &&
+            (s = (h < 3 ? r(s) : 3 < h ? r(e, i, s) : r(e, i)) || s);
+      return 3 < h && s && Object.defineProperty(e, i, s), s;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterLevelShootComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon");
-const Global_1 = require("../../../../Global");
-const LevelAimLineController_1 = require("../../../../LevelGamePlay/AimLine/LevelAimLineController");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const PROFILE_BULLECT_TRACK =
-  "CharacterLevelShootComponent_PreCalculateBulletTrack";
-const DEMO_LEVEL_AIM_LINE_EFFECT_PATH =
-  "/Game/Aki/Effect/EffectGroup/BigWorld/DA_Fx_Group_SignalSpline.DA_Fx_Group_SignalSpline";
-const REFLECT_START_OFFSET = 0.1;
-const BULLET_FIRE_BONE_NAME = "WeaponProp01_2";
-const MAX_HIT_COUNT_ON_ONE = 10;
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon"),
+  Global_1 = require("../../../../Global"),
+  LevelAimLineController_1 = require("../../../../LevelGamePlay/AimLine/LevelAimLineController"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  PROFILE_BULLECT_TRACK =
+    "CharacterLevelShootComponent_PreCalculateBulletTrack",
+  DEMO_LEVEL_AIM_LINE_EFFECT_PATH =
+    "/Game/Aki/Effect/EffectGroup/BigWorld/DA_Fx_Group_SignalSpline.DA_Fx_Group_SignalSpline",
+  REFLECT_START_OFFSET = 0.1,
+  BULLET_FIRE_BONE_NAME = "WeaponProp01_2",
+  MAX_HIT_COUNT_ON_ONE = 10;
 let CharacterLevelShootComponent =
   (CharacterLevelShootComponent_1 = class CharacterLevelShootComponent extends (
     EntityComponent_1.EntityComponent
@@ -138,62 +143,62 @@ let CharacterLevelShootComponent =
     }
     O9r() {
       var t = this.Hte.SkeletalMesh.GetSocketTransform(
-        new UE.FName(BULLET_FIRE_BONE_NAME),
-        0,
-      );
-      const e = Global_1.Global.CharacterCameraManager;
-      var t =
-        (this.x9r.FromUeVector(e.GetActorForwardVector()),
-        this.x9r.Multiply(CharacterLevelShootComponent_1.j9r, this.cz),
-        this.P9r.FromUeVector(e.GetCameraLocation()),
-        this.P9r.Addition(this.cz, this.P9r),
-        (this.w9r = this.GetEndPointPosition(this.P9r, this.x9r)),
-        TraceElementCommon_1.TraceElementCommon.SetStartLocation(
-          this.A9r,
-          this.P9r,
+          new UE.FName(BULLET_FIRE_BONE_NAME),
+          0,
         ),
-        TraceElementCommon_1.TraceElementCommon.SetEndLocation(
-          this.A9r,
-          this.w9r,
-        ),
-        this.P9r.FromUeVector(t ? t.GetLocation() : e.GetCameraLocation()),
-        this.U9r.push(this.P9r),
-        TraceElementCommon_1.TraceElementCommon.LineTrace(
-          this.A9r,
-          PROFILE_BULLECT_TRACK,
-        ));
-      let i = !1;
-      let o = !1;
+        e = Global_1.Global.CharacterCameraManager,
+        t =
+          (this.x9r.FromUeVector(e.GetActorForwardVector()),
+          this.x9r.Multiply(CharacterLevelShootComponent_1.j9r, this.cz),
+          this.P9r.FromUeVector(e.GetCameraLocation()),
+          this.P9r.Addition(this.cz, this.P9r),
+          (this.w9r = this.GetEndPointPosition(this.P9r, this.x9r)),
+          TraceElementCommon_1.TraceElementCommon.SetStartLocation(
+            this.A9r,
+            this.P9r,
+          ),
+          TraceElementCommon_1.TraceElementCommon.SetEndLocation(
+            this.A9r,
+            this.w9r,
+          ),
+          this.P9r.FromUeVector(t ? t.GetLocation() : e.GetCameraLocation()),
+          this.U9r.push(this.P9r),
+          TraceElementCommon_1.TraceElementCommon.LineTrace(
+            this.A9r,
+            PROFILE_BULLECT_TRACK,
+          ));
+      let i = !1,
+        o = !1;
       if (t)
-        for (let r = this.A9r.HitResult; r.GetHitCount() > 0; ) {
-          const h = this.k9r();
-          const s =
-            (TraceElementCommon_1.TraceElementCommon.GetImpactPoint(r, 0, h),
-            this.U9r.push(h),
-            this.U9r[this.U9r.length - 1].Subtraction(
-              this.U9r[this.U9r.length - 2],
-              this.x9r,
-            ),
-            this.x9r.Normalize(),
-            r.Actors.Get(0));
-          const n =
-            ModelManager_1.ModelManager.SceneInteractionModel.GetEntityByActor(
-              s,
-            );
+        for (var r = this.A9r.HitResult; 0 < r.GetHitCount(); ) {
+          var h = this.k9r(),
+            s =
+              (TraceElementCommon_1.TraceElementCommon.GetImpactPoint(r, 0, h),
+              this.U9r.push(h),
+              this.U9r[this.U9r.length - 1].Subtraction(
+                this.U9r[this.U9r.length - 2],
+                this.x9r,
+              ),
+              this.x9r.Normalize(),
+              r.Actors.Get(0)),
+            n =
+              ModelManager_1.ModelManager.SceneInteractionModel.GetEntityByActor(
+                s,
+              );
           if (!n) {
             i = !0;
             break;
           }
-          const a = n.Entity.GetComponent(146);
+          var a = n.Entity.GetComponent(146);
           if (!a) {
             i = !0;
             break;
           }
           if (this.B9r.has(n.Id)) {
-            const _ = this.B9r.get(n.Id);
+            var _ = this.B9r.get(n.Id);
             for (let t = 0; t < _.length; t += 2) {
-              const l = _[t];
-              const C = _[t + 1];
+              var l = _[t],
+                C = _[t + 1];
               if (h.Equals(l) && this.x9r.Equals(C)) {
                 o = !0;
                 break;
@@ -209,8 +214,8 @@ let CharacterLevelShootComponent =
               break;
             }
           } else {
-            var v = this.V9r();
-            const c = (v.push(h), this.k9r());
+            var v = this.V9r(),
+              c = (v.push(h), this.k9r());
             c.DeepCopy(this.x9r), v.push(c), this.B9r.set(n.Id, v);
           }
           if (!a.CalculateReflectDir(this.x9r, this.x9r, s)) {
@@ -235,7 +240,7 @@ let CharacterLevelShootComponent =
         }
       let m = -1;
       i || o || (m = this.U9r.push(this.w9r)),
-        this.U9r.length > 1
+        1 < this.U9r.length
           ? (this.U9r[1].Subtraction(this.U9r[0], this.q9r),
             this.q9r.Normalize(),
             LevelAimLineController_1.LevelAimLineController.UpdatePoints(
@@ -248,7 +253,7 @@ let CharacterLevelShootComponent =
               37,
               "[LevelShoot]Length of SplinePoints less then 2",
             ),
-        m > -1 && m < this.U9r.length && this.U9r.splice(m, 1);
+        -1 < m && m < this.U9r.length && this.U9r.splice(m, 1);
       for (let t = 1; t < this.U9r.length; t++) this.F9r(this.U9r[t]);
       for (const E of this.B9r.values()) this.Sz(E);
       (this.U9r.length = 0), this.B9r.clear();
@@ -263,4 +268,4 @@ let CharacterLevelShootComponent =
       CharacterLevelShootComponent,
     )),
   (exports.CharacterLevelShootComponent = CharacterLevelShootComponent);
-// # sourceMappingURL=CharacterLevelShootComponent.js.map
+//# sourceMappingURL=CharacterLevelShootComponent.js.map

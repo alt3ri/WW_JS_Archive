@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RenderModuleController = void 0);
-const UE = require("ue");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const TickSystem_1 = require("../../../Core/Tick/TickSystem");
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../GlobalData");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const RoleTriggerController_1 = require("../../NewWorld/Character/Role/RoleTriggerController");
-const RenderModuleConfig_1 = require("./RenderModuleConfig");
+const UE = require("ue"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  TickSystem_1 = require("../../../Core/Tick/TickSystem"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../GlobalData"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  RoleTriggerController_1 = require("../../NewWorld/Character/Role/RoleTriggerController"),
+  RenderModuleConfig_1 = require("./RenderModuleConfig");
 class RenderModuleController extends ControllerBase_1.ControllerBase {
   static GetKuroCurrentUiSceneTransform() {
     return this.UiSceneOffsetTransform;
   }
   static GetKuroUiSceneLoadOffset() {
-    let e = RoleTriggerController_1.RoleTriggerController.GetMyRoleTrigger();
+    var e = RoleTriggerController_1.RoleTriggerController.GetMyRoleTrigger();
     return e
       ? (((e = e.K2_GetActorLocation()).Z += 3e5), e)
       : new UE.Vector(3e5, 3e5, 0);
@@ -156,7 +156,7 @@ class RenderModuleController extends ControllerBase_1.ControllerBase {
         0,
       )),
       void 0 !== this.WaitingForAddWuYinQuBattleActors &&
-        this.WaitingForAddWuYinQuBattleActors.length !== 0 &&
+        0 !== this.WaitingForAddWuYinQuBattleActors.length &&
         (this.WaitingForAddWuYinQuBattleActors.forEach((e) => {
           this.AddWuYinQuBattleActor(e);
         }),
@@ -189,4 +189,4 @@ class RenderModuleController extends ControllerBase_1.ControllerBase {
         "r.Kuro.GlobalGIRenderQuality 0",
       );
   });
-// # sourceMappingURL=RenderModuleController.js.map
+//# sourceMappingURL=RenderModuleController.js.map

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelGeneralModel = void 0);
-const Log_1 = require("../../Core/Common/Log");
-const ActionTypeByType_1 = require("../../Core/Define/ConfigQuery/ActionTypeByType");
-const ModelBase_1 = require("../../Core/Framework/ModelBase");
-const IUtil_1 = require("../../UniverseEditor/Interface/IUtil");
-const GuaranteeActionCenter_1 = require("./Guarantee/GuaranteeActionCenter");
-const LevelConditionCenter_1 = require("./LevelConditions/LevelConditionCenter");
-const LevelEventCenter_1 = require("./LevelEvents/LevelEventCenter");
+const Log_1 = require("../../Core/Common/Log"),
+  ActionTypeByType_1 = require("../../Core/Define/ConfigQuery/ActionTypeByType"),
+  ModelBase_1 = require("../../Core/Framework/ModelBase"),
+  IUtil_1 = require("../../UniverseEditor/Interface/IUtil"),
+  GuaranteeActionCenter_1 = require("./Guarantee/GuaranteeActionCenter"),
+  LevelConditionCenter_1 = require("./LevelConditions/LevelConditionCenter"),
+  LevelEventCenter_1 = require("./LevelEvents/LevelEventCenter");
 class LevelGeneralModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -39,7 +39,7 @@ class LevelGeneralModel extends ModelBase_1.ModelBase {
     );
   }
   GetActionTypeConfig(e) {
-    let t = this.ActionTypeMap.get(e);
+    var t = this.ActionTypeMap.get(e);
     return (
       t ||
       ((t = ActionTypeByType_1.configActionTypeByType.GetConfig(e))
@@ -59,27 +59,27 @@ class LevelGeneralModel extends ModelBase_1.ModelBase {
     this.WUe.has(e) || this.WUe.set(e, []), this.WUe.get(e).push(t);
   }
   PopTreeGuaranteeActionInfo(t, n) {
-    const r = this.WUe.get(t);
+    var r = this.WUe.get(t);
     if (r)
-      for (let e = r.length - 1; e >= 0; e--) {
-        const i = r[e];
+      for (let e = r.length - 1; 0 <= e; e--) {
+        var i = r[e];
         if (i.Name === n.Name && (0, IUtil_1.deepEquals)(i, n))
-          return r.splice(e, 1), r.length === 0 && this.WUe.delete(t), i;
+          return r.splice(e, 1), 0 === r.length && this.WUe.delete(t), i;
       }
   }
   HasTreeGuaranteeActionInfo(e, t, n) {
     return (
-      n !== 0 &&
+      0 !== n &&
       !!(e = this.WUe.get(e)) &&
       e.some((e) =>
-        n === 1
+        1 === n
           ? e.Name === t.Name
           : e.Name === t.Name && (0, IUtil_1.deepEquals)(e, t),
       )
     );
   }
   RemoveTreeGuaranteeActionInfos(e) {
-    const t = this.WUe.get(e);
+    var t = this.WUe.get(e);
     if ((this.WUe.delete(e), t)) return t;
   }
   ClearTreeGuaranteeActionInfosMap() {
@@ -89,27 +89,27 @@ class LevelGeneralModel extends ModelBase_1.ModelBase {
     this.KUe.push(e);
   }
   PopSceneGuaranteeActionInfo(t) {
-    const n = this.KUe;
-    for (let e = n.length - 1; e >= 0; e--) {
-      const r = n[e];
+    var n = this.KUe;
+    for (let e = n.length - 1; 0 <= e; e--) {
+      var r = n[e];
       if (r.Name === t.Name && (0, IUtil_1.deepEquals)(r, t))
         return n.splice(e, 1), r;
     }
   }
   HasSceneGuaranteeActionInfo(t, n) {
     return (
-      n !== 0 &&
+      0 !== n &&
       this.KUe.some((e) =>
-        n === 1
+        1 === n
           ? e.Name === t.Name
           : e.Name === t.Name && (0, IUtil_1.deepEquals)(e, t),
       )
     );
   }
   RemoveSceneGuaranteeActionInfos() {
-    const e = this.KUe;
+    var e = this.KUe;
     return (this.KUe = new Array()), e;
   }
 }
 exports.LevelGeneralModel = LevelGeneralModel;
-// # sourceMappingURL=LevelGeneralModel.js.map
+//# sourceMappingURL=LevelGeneralModel.js.map

@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FunctionAssistant = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const WaitEntityTask_1 = require("../../../../World/Define/WaitEntityTask");
-const SeqBaseAssistant_1 = require("./SeqBaseAssistant");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  WaitEntityTask_1 = require("../../../../World/Define/WaitEntityTask"),
+  SeqBaseAssistant_1 = require("./SeqBaseAssistant");
 class FunctionAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   constructor() {
     super(...arguments), (this.cto = void 0), (this.mto = void 0);
   }
   Load(t) {
-    const e = this.dto(this.Model.Config.FrameEvents);
+    var e = this.dto(this.Model.Config.FrameEvents);
     this.SetFrameEvents(this.Model.Config.FrameEvents),
       (this.cto = WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(e, (e) => {
         (this.cto = void 0), t(e ?? !1);
@@ -36,7 +36,7 @@ class FunctionAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       this.Model.FrameEvents.clear();
   }
   dto(e) {
-    const t = new Array();
+    var t = new Array();
     if (e?.length)
       for (const i of e)
         if (i.EventActions?.length)
@@ -51,19 +51,19 @@ class FunctionAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
                 o = r.Params;
                 e = [o.EntityId];
             }
-            if (e && e.length > 0) for (const s of e) t.push(s);
+            if (e && 0 < e.length) for (const s of e) t.push(s);
           }
     return t;
   }
   SetFrameEvents(e) {
-    if (e && e.length !== 0)
+    if (e && 0 !== e.length)
       for (const t of e)
         this.Model.FrameEvents.set(t.EventKey, t.EventActions),
           this.Model.ActionQueue.Push(t.EventKey);
   }
   RunSequenceFrameEvents(e) {
-    let t;
-    this.Model.State !== 5 &&
+    var t;
+    5 !== this.Model.State &&
       ((t = this.Model.GetFrameEvents(e)),
       !this.Model.ActionQueue || this.Model.ActionQueue.Size <= 0
         ? Log_1.Log.CheckWarn() && Log_1.Log.Warn("Plot", 46, "ActionQueue为空")
@@ -74,7 +74,7 @@ class FunctionAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
               27,
               "编辑器与Seq帧事件顺序不一致，可能会导致跳过的表现错误",
             ),
-          t && t.length !== 0
+          t && 0 !== t.length
             ? ControllerHolder_1.ControllerHolder.FlowController.ExecuteSubActions(
                 t,
                 () => {},
@@ -96,4 +96,4 @@ class FunctionAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   }
 }
 exports.FunctionAssistant = FunctionAssistant;
-// # sourceMappingURL=FunctionAssistant.js.map
+//# sourceMappingURL=FunctionAssistant.js.map

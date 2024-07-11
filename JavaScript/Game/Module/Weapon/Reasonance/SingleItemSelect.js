@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SingleItemSelect = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const CommonItemSelectView_1 = require("../../Common/CommonItemSelectView");
-const MediumItemGrid_1 = require("../../Common/MediumItemGrid/MediumItemGrid");
-const SelectableComponent_1 = require("../../Common/PropItem/SelectablePropItem/SelectableComponent");
-const AttributeItemData_1 = require("../../Inventory/ItemData/AttributeItemData");
-const PhantomItemData_1 = require("../../Inventory/ItemData/PhantomItemData");
-const WeaponItemData_1 = require("../../Inventory/ItemData/WeaponItemData");
+const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  CommonItemSelectView_1 = require("../../Common/CommonItemSelectView"),
+  MediumItemGrid_1 = require("../../Common/MediumItemGrid/MediumItemGrid"),
+  SelectableComponent_1 = require("../../Common/PropItem/SelectablePropItem/SelectableComponent"),
+  AttributeItemData_1 = require("../../Inventory/ItemData/AttributeItemData"),
+  PhantomItemData_1 = require("../../Inventory/ItemData/PhantomItemData"),
+  WeaponItemData_1 = require("../../Inventory/ItemData/WeaponItemData");
 class SingleItemSelect {
   constructor() {
     (this.KNo = void 0),
@@ -23,13 +23,13 @@ class SingleItemSelect {
       (this.e6i = 0),
       (this.JNo = !1),
       (this.OpenItemSelectView = () => {
-        const t = [];
+        var t = [];
         this.KNo && t.push(this.KNo),
           (this.XNo.ItemDataBaseList = this.TGt()),
           (this.XNo.SelectedDataList = t),
           (this.XNo.UseWayId = this.e6i),
           (this.XNo.InitSortToggleState = this.JNo),
-          this.YNo === 0
+          0 === this.YNo
             ? UiManager_1.UiManager.OpenView(
                 "CommonItemSelectViewRight",
                 this.XNo,
@@ -40,10 +40,10 @@ class SingleItemSelect {
               );
       }),
       (this.zNo = (t, e) => {
-        t?.length > 0 ? (this.KNo = t[0]) : (this.KNo = void 0), this.ZNo();
+        0 < t?.length ? (this.KNo = t[0]) : (this.KNo = void 0), this.ZNo();
       }),
       (this.eOo = (t, e, i, a) =>
-        !(this.KNo && e === this.KNo.IncId && i === this.KNo.ItemId && a > 0));
+        !(this.KNo && e === this.KNo.IncId && i === this.KNo.ItemId && 0 < a));
   }
   Init(t, e = 0) {
     (this.Jwt = new MediumItemGrid_1.MediumItemGrid()),
@@ -69,17 +69,17 @@ class SingleItemSelect {
     if (void 0 === this.KNo)
       this.Jwt.SetSelected(!1), this.Jwt.Apply({ Type: 1 });
     else {
-      const e = this.KNo.IncId;
-      let i = this.KNo.ItemId;
-      var a = ModelManager_1.ModelManager.InventoryModel;
+      var e = this.KNo.IncId,
+        i = this.KNo.ItemId,
+        a = ModelManager_1.ModelManager.InventoryModel;
       let t = a.GetAttributeItemData(e);
-      let s;
-      let h;
-      var a = {
-        Type: 4,
-        ItemConfigId: i,
-        StarLevel: (t = t || a.GetCommonItemData(i)).GetQuality(),
-      };
+      var s,
+        h,
+        a = {
+          Type: 4,
+          ItemConfigId: i,
+          StarLevel: (t = t || a.GetCommonItemData(i)).GetQuality(),
+        };
       t instanceof AttributeItemData_1.AttributeItemData
         ? ((a.BottomTextId = "Text_LevelShow_Text"),
           t instanceof PhantomItemData_1.PhantomItemData &&
@@ -123,4 +123,4 @@ class SingleItemSelect {
   }
 }
 exports.SingleItemSelect = SingleItemSelect;
-// # sourceMappingURL=SingleItemSelect.js.map
+//# sourceMappingURL=SingleItemSelect.js.map

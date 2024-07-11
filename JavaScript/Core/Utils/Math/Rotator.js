@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Rotator = void 0);
-const UE = require("ue");
-const MathCommon_1 = require("./MathCommon");
-const Quat_1 = require("./Quat");
+const UE = require("ue"),
+  MathCommon_1 = require("./MathCommon"),
+  Quat_1 = require("./Quat");
 class Rotator {
   constructor(t, o, a) {
     (this.iz = void 0),
@@ -32,30 +32,30 @@ class Rotator {
     this.Tuple[2] = t;
   }
   Set(t, o, a) {
-    const r = this.Tuple;
+    var r = this.Tuple;
     (r[0] = t), (r[1] = o), (r[2] = a), this.oz && this.ToUeRotator();
   }
   FromUeRotator(t) {
-    const o = this.Tuple;
+    var o = this.Tuple;
     (o[0] = t.Pitch), (o[1] = t.Yaw), (o[2] = t.Roll);
   }
   DeepCopy(t) {
     this.Set(t.Pitch, t.Yaw, t.Roll);
   }
   static Create(...t) {
-    let o;
-    let a;
-    const r = new Rotator();
+    var o,
+      a,
+      r = new Rotator();
     return (
-      t.length === 1 && t[0]
+      1 === t.length && t[0]
         ? r.FromUeRotator(t[0])
-        : (void 0 !== t[0] && typeof t[0] !== "number") ||
+        : (void 0 !== t[0] && "number" != typeof t[0]) ||
           ((o = t[0]), (a = t[1]), (t = t[2]), r.Set(o || 0, a || 0, t || 0)),
       r
     );
   }
   ToUeRotator() {
-    const t = this.Tuple;
+    var t = this.Tuple;
     return (
       void 0 === this.oz
         ? (this.oz = new UE.Rotator(t[0], t[1], t[2]))
@@ -76,8 +76,8 @@ class Rotator {
     return o < 0 && (o += MathCommon_1.MathCommon.RoundAngle), o;
   }
   Clamp(t) {
-    const o = this.Tuple;
-    const a = t.Tuple;
+    var o = this.Tuple,
+      a = t.Tuple;
     return (
       (a[0] = Rotator.ClampAxis(o[0])),
       (a[1] = Rotator.ClampAxis(o[1])),
@@ -86,45 +86,45 @@ class Rotator {
     );
   }
   Vector(t) {
-    var o = this.Tuple;
-    var t = t.Tuple;
-    var a = MathCommon_1.MathCommon.WrapAngle(o[0]);
-    var o = MathCommon_1.MathCommon.WrapAngle(o[1]);
-    var a = MathCommon_1.MathCommon.DegreeToRadian(a);
-    var o = MathCommon_1.MathCommon.DegreeToRadian(o);
-    const r = Math.cos(a);
-    var a = Math.sin(a);
-    const h = Math.cos(o);
-    var o = Math.sin(o);
+    var o = this.Tuple,
+      t = t.Tuple,
+      a = MathCommon_1.MathCommon.WrapAngle(o[0]),
+      o = MathCommon_1.MathCommon.WrapAngle(o[1]),
+      a = MathCommon_1.MathCommon.DegreeToRadian(a),
+      o = MathCommon_1.MathCommon.DegreeToRadian(o),
+      r = Math.cos(a),
+      a = Math.sin(a),
+      h = Math.cos(o),
+      o = Math.sin(o);
     (t[0] = r * h), (t[1] = r * o), (t[2] = a);
   }
   Quaternion(t) {
     let o = t;
     o ||
       (void 0 === this.iz && (this.iz = Quat_1.Quat.Create()), (o = this.iz));
-    var t = o.Tuple;
-    var a = this.Tuple[0] % MathCommon_1.MathCommon.RoundAngle;
-    var r = this.Tuple[1] % MathCommon_1.MathCommon.RoundAngle;
-    var h = this.Tuple[2] % MathCommon_1.MathCommon.RoundAngle;
-    var a = a * MathCommon_1.MathCommon.RadDividedBy2;
-    var r = r * MathCommon_1.MathCommon.RadDividedBy2;
-    var h = h * MathCommon_1.MathCommon.RadDividedBy2;
-    const i = Math.sin(a);
-    var a = Math.cos(a);
-    const s = Math.sin(r);
-    var r = Math.cos(r);
-    const e = Math.sin(h);
-    var h = Math.cos(h);
-    const n = -h * i * r - e * a * s;
-    const m = +h * a * s - e * i * r;
-    const M = +h * a * r + e * i * s;
+    var t = o.Tuple,
+      a = this.Tuple[0] % MathCommon_1.MathCommon.RoundAngle,
+      r = this.Tuple[1] % MathCommon_1.MathCommon.RoundAngle,
+      h = this.Tuple[2] % MathCommon_1.MathCommon.RoundAngle,
+      a = a * MathCommon_1.MathCommon.RadDividedBy2,
+      r = r * MathCommon_1.MathCommon.RadDividedBy2,
+      h = h * MathCommon_1.MathCommon.RadDividedBy2,
+      i = Math.sin(a),
+      a = Math.cos(a),
+      s = Math.sin(r),
+      r = Math.cos(r),
+      e = Math.sin(h),
+      h = Math.cos(h),
+      n = -h * i * r - e * a * s,
+      m = +h * a * s - e * i * r,
+      M = +h * a * r + e * i * s;
     return (
       (t[0] = +h * i * s - e * a * r), (t[1] = n), (t[2] = m), (t[3] = M), o
     );
   }
   IsNearlyZero() {
-    const t = MathCommon_1.MathCommon.KindaSmallNumber;
-    const o = this.Tuple;
+    var t = MathCommon_1.MathCommon.KindaSmallNumber,
+      o = this.Tuple;
     return !(
       Math.abs(Rotator.NormalizeAxis(o[1])) > t ||
       Math.abs(Rotator.NormalizeAxis(o[0])) > t ||
@@ -132,8 +132,8 @@ class Rotator {
     );
   }
   Equals(t, o = MathCommon_1.MathCommon.KindaSmallNumber) {
-    const a = this.Tuple;
-    var t = t.Tuple;
+    var a = this.Tuple,
+      t = t.Tuple;
     return !(
       Math.abs(Rotator.NormalizeAxis(a[1] - t[1])) > o ||
       Math.abs(Rotator.NormalizeAxis(a[0] - t[0])) > o ||
@@ -141,7 +141,7 @@ class Rotator {
     );
   }
   Equals2(t, o = MathCommon_1.MathCommon.KindaSmallNumber) {
-    const a = this.Tuple;
+    var a = this.Tuple;
     return !(
       Math.abs(Rotator.NormalizeAxis(a[1] - t.Yaw)) > o ||
       Math.abs(Rotator.NormalizeAxis(a[0] - t.Pitch)) > o ||
@@ -149,20 +149,20 @@ class Rotator {
     );
   }
   AdditionEqual(t) {
-    const o = this.Tuple;
+    var o = this.Tuple;
     return (o[0] += t.Pitch), (o[1] += t.Yaw), (o[2] += t.Roll), this;
   }
   SubtractionEqual(t) {
-    const o = this.Tuple;
+    var o = this.Tuple;
     return (o[0] -= t.Pitch), (o[1] -= t.Yaw), (o[2] -= t.Roll), this;
   }
   MultiplyEqual(t) {
-    const o = this.Tuple;
+    var o = this.Tuple;
     return (o[0] *= t), (o[1] *= t), (o[2] *= t), this;
   }
   UnaryNegation(t) {
-    const o = this.Tuple;
-    var t = t.Tuple;
+    var o = this.Tuple,
+      t = t.Tuple;
     (t[0] = -o[0]), (t[1] = -o[1]), (t[2] = -o[2]);
   }
   Reset() {
@@ -175,9 +175,9 @@ class Rotator {
     (o.Pitch = t.Pitch), (o.Yaw = t.Yaw), (o.Roll = t.Roll);
   }
   static Lerp(t, o, a, r) {
-    const h = r.Tuple;
-    var o = o.Tuple;
-    var t = t.Tuple;
+    var h = r.Tuple,
+      o = o.Tuple,
+      t = t.Tuple;
     (h[0] = o[0] - t[0]),
       (h[1] = o[1] - t[1]),
       (h[2] = o[2] - t[2]),
@@ -196,4 +196,4 @@ class Rotator {
   Object.defineProperty(Rotator.ZeroRotatorProxy.Tuple, "0", { writable: !1 }),
   Object.defineProperty(Rotator.ZeroRotatorProxy.Tuple, "1", { writable: !1 }),
   Object.defineProperty(Rotator.ZeroRotatorProxy.Tuple, "2", { writable: !1 });
-// # sourceMappingURL=Rotator.js.map
+//# sourceMappingURL=Rotator.js.map

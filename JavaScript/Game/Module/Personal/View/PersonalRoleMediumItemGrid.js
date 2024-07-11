@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PersonalRoleMediumItemGrid = void 0);
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid");
+const ModelManager_1 = require("../../../Manager/ModelManager"),
+  LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid");
 class PersonalRoleMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   constructor() {
     super(...arguments), (this.zke = 0), (this.GirdIndex = 0);
@@ -24,4 +24,4 @@ class PersonalRoleMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMe
   }
 }
 exports.PersonalRoleMediumItemGrid = PersonalRoleMediumItemGrid;
-// # sourceMappingURL=PersonalRoleMediumItemGrid.js.map
+//# sourceMappingURL=PersonalRoleMediumItemGrid.js.map

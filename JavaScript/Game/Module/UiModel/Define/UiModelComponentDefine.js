@@ -7,4 +7,4 @@ function RegisterUiModelComponent(t) {
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RegisterUiModelComponent = void 0),
   (exports.RegisterUiModelComponent = RegisterUiModelComponent);
-// # sourceMappingURL=UiModelComponentDefine.js.map
+//# sourceMappingURL=UiModelComponentDefine.js.map

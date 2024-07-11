@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattlePassBuyLevelView = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid");
-const NumberSelectComponent_1 = require("../../Common/NumberSelect/NumberSelectComponent");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  NumberSelectComponent_1 = require("../../Common/NumberSelect/NumberSelectComponent"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew");
 class BattlePassBuyLevelView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -47,7 +47,7 @@ class BattlePassBuyLevelView extends UiViewBase_1.UiViewBase {
         this.bl(e);
       }),
       (this.aOi = () => {
-        this.iOi > 0 && (this.hOi(this.iOi).then(this.aOi), (this.iOi = 0));
+        0 < this.iOi && (this.hOi(this.iOi).then(this.aOi), (this.iOi = 0));
       });
   }
   OnRegisterComponent() {
@@ -70,12 +70,12 @@ class BattlePassBuyLevelView extends UiViewBase_1.UiViewBase {
   }
   OnStart() {
     this.w0t = ModelManager_1.ModelManager.BattlePassModel.BattlePassLevel;
-    const e = ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassData(
-      ModelManager_1.ModelManager.BattlePassModel.BattlePassId,
-    );
-    const t =
-      ((this.eOi = e.ConsumeId),
-      ConfigManager_1.ConfigManager.ItemConfig.GetConfig(this.eOi));
+    var e = ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassData(
+        ModelManager_1.ModelManager.BattlePassModel.BattlePassId,
+      ),
+      t =
+        ((this.eOi = e.ConsumeId),
+        ConfigManager_1.ConfigManager.ItemConfig.GetConfig(this.eOi));
     (this.tOi = e.ConsumeCount),
       this.SetTextureByPath(t.IconSmall, this.GetTexture(8)),
       LguiUtil_1.LguiUtil.SetLocalText(
@@ -102,40 +102,41 @@ class BattlePassBuyLevelView extends UiViewBase_1.UiViewBase {
     );
   }
   OnBeforeShow() {
-    var e = this.ChildPopView?.PopItem;
-    var e =
-      (e &&
-        (e.SetCurrencyItemList([this.eOi]),
-        (e = e
-          .GetCurrencyComponent()
-          .GetCurrencyItemList()[0]).SetBeforeButtonFunction(this.PCi),
-        e.SetToPayShopFunction()),
-      (this.WGe = new NumberSelectComponent_1.NumberSelectComponent(
-        this.GetItem(5),
-      )),
-      {
-        MaxNumber:
-          ModelManager_1.ModelManager.BattlePassModel.GetMaxLevel() - this.w0t,
-        GetExchangeTableText: this.KGe,
-        ValueChangeFunction: this.QGe,
-      });
+    var e = this.ChildPopView?.PopItem,
+      e =
+        (e &&
+          (e.SetCurrencyItemList([this.eOi]),
+          (e = e
+            .GetCurrencyComponent()
+            .GetCurrencyItemList()[0]).SetBeforeButtonFunction(this.PCi),
+          e.SetToPayShopFunction()),
+        (this.WGe = new NumberSelectComponent_1.NumberSelectComponent(
+          this.GetItem(5),
+        )),
+        {
+          MaxNumber:
+            ModelManager_1.ModelManager.BattlePassModel.GetMaxLevel() -
+            this.w0t,
+          GetExchangeTableText: this.KGe,
+          ValueChangeFunction: this.QGe,
+        });
     this.WGe.Init(e);
   }
   bl(e) {
-    const t = this.w0t + e;
-    var e =
-      (LguiUtil_1.LguiUtil.SetLocalTextNew(
-        this.GetText(4),
-        "Text_BattlePassLevelBuy1_Text",
-        t,
-      ),
-      e * this.tOi);
-    const i = this.GetText(6);
-    const s =
-      (i.SetText(e.toString()),
-      ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-        this.eOi,
-      ));
+    var t = this.w0t + e,
+      e =
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(
+          this.GetText(4),
+          "Text_BattlePassLevelBuy1_Text",
+          t,
+        ),
+        e * this.tOi),
+      i = this.GetText(6),
+      s =
+        (i.SetText(e.toString()),
+        ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+          this.eOi,
+        ));
     i.SetChangeColor(s < e, i.changeColor),
       this.GetButton(3).SetSelfInteractive(e <= s),
       this.GetItem(7).SetUIActive(s < e),
@@ -149,7 +150,7 @@ class BattlePassBuyLevelView extends UiViewBase_1.UiViewBase {
         this.ZNi,
       ),
       await this.bOe.RefreshByDataAsync(this.ZNi),
-      this.ZNi.length > 8 && this.bOe?.ScrollToLeft(0),
+      8 < this.ZNi.length && this.bOe?.ScrollToLeft(0),
       (this.oOi = !1);
   }
   OnDestroy() {
@@ -162,4 +163,4 @@ class BattlePassBuyLevelView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.BattlePassBuyLevelView = BattlePassBuyLevelView;
-// # sourceMappingURL=BattlePassBuyLevelView.js.map
+//# sourceMappingURL=BattlePassBuyLevelView.js.map

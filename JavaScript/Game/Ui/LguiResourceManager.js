@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LguiResourceManager = exports.ELguiLoadResultType = void 0);
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const ResourceSystem_1 = require("../../Core/Resource/ResourceSystem");
-const GlobalData_1 = require("../GlobalData");
-const ConfigManager_1 = require("../Manager/ConfigManager");
-let ELguiLoadResultType;
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../Core/Resource/ResourceSystem"),
+  GlobalData_1 = require("../GlobalData"),
+  ConfigManager_1 = require("../Manager/ConfigManager");
+var ELguiLoadResultType;
 !(function (e) {
   (e[(e.Success = 0)] = "Success"), (e[(e.Fail = 1)] = "Fail");
 })(
@@ -19,7 +19,7 @@ class LguiResourceManager {
     return LguiResourceManager.LoadPrefab(e, a, r);
   }
   static LoadPrefab(e, r, o) {
-    const a = ResourceSystem_1.ResourceSystem.LoadAsync(
+    var a = ResourceSystem_1.ResourceSystem.LoadAsync(
       e,
       UE.PrefabAsset,
       (e, a) => {
@@ -59,4 +59,4 @@ class LguiResourceManager {
 }
 ((exports.LguiResourceManager = LguiResourceManager).Vmr = new Map()),
   (LguiResourceManager.InvalidId = -1);
-// # sourceMappingURL=LguiResourceManager.js.map
+//# sourceMappingURL=LguiResourceManager.js.map

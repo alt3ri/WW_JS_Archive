@@ -41,7 +41,7 @@ class WhirlpoolPoint {
   OnTick(t) {
     return (
       (this.H6 += t),
-      !(this.Wht > 0 && this.Wht <= this.H6 && ((this.H6 = this.Wht), 1))
+      !(0 < this.Wht && this.Wht <= this.H6 && ((this.H6 = this.Wht), 1))
     );
   }
   OnEnd() {
@@ -57,7 +57,7 @@ class WhirlpoolPoint {
     );
   }
   GetAlpha() {
-    const t = this.H6 / this.e7o;
+    var t = this.H6 / this.e7o;
     switch (this.fJo) {
       case 1:
         return 1 + Math.pow(t - 1, 3);
@@ -70,4 +70,4 @@ class WhirlpoolPoint {
   }
 }
 (exports.WhirlpoolPoint = WhirlpoolPoint).pJo = 0;
-// # sourceMappingURL=WhirlpoolPoint.js.map
+//# sourceMappingURL=WhirlpoolPoint.js.map

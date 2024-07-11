@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiNavigationJoystickInput = void 0);
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const UiNavigationLogic_1 = require("../New/UiNavigationLogic");
+const Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  UiNavigationLogic_1 = require("../New/UiNavigationLogic");
 class UiNavigationJoystickInput {
   static Tick(i) {
-    const t = ModelManager_1.ModelManager.InputDistributeModel.GetAxisValue(
-      InputMappingsDefine_1.axisMappings.NavigationTopDown,
-    );
-    const s = ModelManager_1.ModelManager.InputDistributeModel.GetAxisValue(
-      InputMappingsDefine_1.axisMappings.NavigationLeftRight,
-    );
-    let n = this.yxo(s);
-    let a = this.yxo(t);
+    var t = ModelManager_1.ModelManager.InputDistributeModel.GetAxisValue(
+        InputMappingsDefine_1.axisMappings.NavigationTopDown,
+      ),
+      s = ModelManager_1.ModelManager.InputDistributeModel.GetAxisValue(
+        InputMappingsDefine_1.axisMappings.NavigationLeftRight,
+      ),
+      n = this.yxo(s),
+      a = this.yxo(t);
     if (!n || !a || this.f_t) {
       if (this.f_t) {
         this.Ixo(s, t);
@@ -32,11 +32,11 @@ class UiNavigationJoystickInput {
   static Rxo(i, t) {
     this.cz.Set(i, t, 0);
     i = Vector_1.Vector.GetAngleByVector2D(this.cz);
-    i >= -143 && i < -37
+    -143 <= i && i < -37
       ? this.xxo(InputMappingsDefine_1.actionMappings.Ui方向下)
-      : i >= -37 && i < 37
+      : -37 <= i && i < 37
         ? this.xxo(InputMappingsDefine_1.actionMappings.Ui方向右)
-        : i >= 37 && i < 143
+        : 37 <= i && i < 143
           ? this.xxo(InputMappingsDefine_1.actionMappings.Ui方向上)
           : this.xxo(InputMappingsDefine_1.actionMappings.Ui方向左);
   }
@@ -59,7 +59,7 @@ class UiNavigationJoystickInput {
       ));
   }
   static Dxo() {
-    const i = this.nCt;
+    var i = this.nCt;
     StringUtils_1.StringUtils.IsBlank(i) ||
       ((this.nCt = ""),
       (this.qxo = 0),
@@ -71,7 +71,7 @@ class UiNavigationJoystickInput {
   static Uxo(i) {
     StringUtils_1.StringUtils.IsBlank(this.nCt) ||
       ((this.qxo += i),
-      this.Oxo === 0
+      0 === this.Oxo
         ? this.qxo > this.kxo &&
           ((this.qxo -= this.kxo),
           (this.Gxo = this.Fxo),
@@ -80,7 +80,7 @@ class UiNavigationJoystickInput {
             this.nCt,
             0,
           ))
-        : this.Oxo === 1 &&
+        : 1 === this.Oxo &&
           this.qxo > this.Gxo &&
           ((this.qxo -= this.Gxo),
           (this.Oxo = 0),
@@ -90,8 +90,8 @@ class UiNavigationJoystickInput {
           )));
   }
   static Ixo(i, t) {
-    let s = 0;
-    let n = 0;
+    let s = 0,
+      n = 0;
     (n =
       this.nCt === InputMappingsDefine_1.actionMappings.Ui方向右 ||
       this.nCt === InputMappingsDefine_1.actionMappings.Ui方向上
@@ -102,9 +102,9 @@ class UiNavigationJoystickInput {
   static Lxo() {
     if (this.bxo) {
       if (StringUtils_1.StringUtils.IsBlank(this.nCt)) return;
-      const i = this.Hxo.get(this.nCt);
+      var i = this.Hxo.get(this.nCt);
       for (const s of this.jxo) {
-        const t = s[0];
+        var t = s[0];
         s[1] || t(i);
       }
     }
@@ -139,4 +139,4 @@ class UiNavigationJoystickInput {
   (UiNavigationJoystickInput.Axo = 0),
   (UiNavigationJoystickInput.Pxo = 0),
   (UiNavigationJoystickInput.bxo = !1);
-// # sourceMappingURL=UiNavigationJoystickInput.js.map
+//# sourceMappingURL=UiNavigationJoystickInput.js.map

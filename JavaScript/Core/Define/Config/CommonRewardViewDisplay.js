@@ -33,29 +33,29 @@ class CommonRewardViewDisplay {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   title(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   continuetext(t) {
-    const i = this.J7.__offset(this.z7, 8);
+    var i = this.J7.__offset(this.z7, 8);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   isitemvisible() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   issuccess() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   audioid(t) {
-    const i = this.J7.__offset(this.z7, 14);
+    var i = this.J7.__offset(this.z7, 14);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.CommonRewardViewDisplay = CommonRewardViewDisplay;
-// # sourceMappingURL=CommonRewardViewDisplay.js.map
+//# sourceMappingURL=CommonRewardViewDisplay.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiNavigationModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const InputSettingsManager_1 = require("../../InputSettings/InputSettingsManager");
-const CursorData_1 = require("./Data/CursorData");
-const UiNavigationGlobalData_1 = require("./New/UiNavigationGlobalData");
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  InputSettingsManager_1 = require("../../InputSettings/InputSettingsManager"),
+  CursorData_1 = require("./Data/CursorData"),
+  UiNavigationGlobalData_1 = require("./New/UiNavigationGlobalData");
 class UiNavigationModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -63,7 +63,7 @@ class UiNavigationModel extends ModelBase_1.ModelBase {
     return e || ((e = new Set()), this.AddActionHotKeyComponent(t, e)), e;
   }
   Wbo(t, e) {
-    const i = [];
+    var i = [];
     InputSettingsManager_1.InputSettingsManager.GetActionBinding(
       t,
     ).GetCurrentPlatformKeyNameList(i);
@@ -71,18 +71,18 @@ class UiNavigationModel extends ModelBase_1.ModelBase {
     return !1;
   }
   Kbo(t) {
-    let e = InputSettingsManager_1.InputSettingsManager.GetActionBinding(t);
+    var e = InputSettingsManager_1.InputSettingsManager.GetActionBinding(t);
     if (e) return e.GetCurrentPlatformKeyNameList((e = [])), e;
     InputSettingsManager_1.InputSettingsManager.GetCombinationActionBindingByActionName(
       t,
     );
   }
   CheckKeyNameListInNavigation(t) {
-    const e = this.Kbo(t);
+    var e = this.Kbo(t);
     if (e) {
-      let i;
-      let o;
-      const r = new Set(e);
+      var i,
+        o,
+        r = new Set(e);
       for ([i, o] of this.Fbo)
         if (t !== i && this.Wbo(i, r))
           for (const n of o)
@@ -128,4 +128,4 @@ class UiNavigationModel extends ModelBase_1.ModelBase {
   }
 }
 exports.UiNavigationModel = UiNavigationModel;
-// # sourceMappingURL=UiNavigationModel.js.map
+//# sourceMappingURL=UiNavigationModel.js.map

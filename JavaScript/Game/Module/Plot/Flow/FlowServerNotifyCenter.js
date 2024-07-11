@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowServerNotifyCenter = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine");
-const LevelGeneralContextUtil_1 = require("../../../LevelGamePlay/LevelGeneralContextUtil");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase");
-const LevelLoadingController_1 = require("../../LevelLoading/LevelLoadingController");
-const FlowController_1 = require("./FlowController");
-const FlowNetworks_1 = require("./FlowNetworks");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine"),
+  LevelGeneralContextUtil_1 = require("../../../LevelGamePlay/LevelGeneralContextUtil"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase"),
+  LevelLoadingController_1 = require("../../LevelLoading/LevelLoadingController"),
+  FlowController_1 = require("./FlowController"),
+  FlowNetworks_1 = require("./FlowNetworks");
 class FlowServerNotifyCenter extends ControllerAssistantBase_1.ControllerAssistantBase {
   OnDestroy() {}
   HandleFlowStartNotify(l) {
@@ -32,27 +32,27 @@ class FlowServerNotifyCenter extends ControllerAssistantBase_1.ControllerAssista
         ),
         FlowNetworks_1.FlowNetworks.RequestGmFinish();
     else {
-      const r = MathUtils_1.MathUtils.LongToNumber(l.E8n);
+      var r = MathUtils_1.MathUtils.LongToNumber(l.E8n);
       let e =
-        LevelGeneralContextUtil_1.LevelGeneralContextUtil.CreateByServerContext(
-          l.Hms,
-        );
-      let o =
-        ((e = e || LevelGeneralContextDefine_1.QuestContext.Create()),
-        Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug(
-            "Plot",
-            27,
-            "服务器下发剧情",
-            ["Type", e.Type],
-            ["FlowIncID", r],
-            ["isAsync", l.QLs],
-            ["isSkip", l.I8n],
+          LevelGeneralContextUtil_1.LevelGeneralContextUtil.CreateByServerContext(
+            l.Hms,
           ),
-        l.Hms?.Xms === Protocol_1.Aki.Protocol.Pbs.Proto_GmPlayFlow &&
-          (ModelManager_1.ModelManager.PlotModel.PlotConfig.IsGmPlayPlotOnce =
-            !0),
-        void 0);
+        o =
+          ((e = e || LevelGeneralContextDefine_1.QuestContext.Create()),
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
+              "Plot",
+              27,
+              "服务器下发剧情",
+              ["Type", e.Type],
+              ["FlowIncID", r],
+              ["isAsync", l.QLs],
+              ["isSkip", l.I8n],
+            ),
+          l.Hms?.Xms === Protocol_1.Aki.Protocol.Pbs.Proto_GmPlayFlow &&
+            (ModelManager_1.ModelManager.PlotModel.PlotConfig.IsGmPlayPlotOnce =
+              !0),
+          void 0);
       l.E6s &&
         (l.y6s
           ? (o = Vector_1.Vector.Create(l.y6s.X, l.y6s.Y, l.y6s.Z))
@@ -74,7 +74,7 @@ class FlowServerNotifyCenter extends ControllerAssistantBase_1.ControllerAssista
     }
   }
   HandleFlowEndNotify(e) {
-    const o = MathUtils_1.MathUtils.LongToNumber(e.E8n);
+    var o = MathUtils_1.MathUtils.LongToNumber(e.E8n);
     e.$0s
       ? ModelManager_1.ModelManager.PlotModel.SetPendingPlotState(
           o,
@@ -109,4 +109,4 @@ class FlowServerNotifyCenter extends ControllerAssistantBase_1.ControllerAssista
   }
 }
 exports.FlowServerNotifyCenter = FlowServerNotifyCenter;
-// # sourceMappingURL=FlowServerNotifyCenter.js.map
+//# sourceMappingURL=FlowServerNotifyCenter.js.map

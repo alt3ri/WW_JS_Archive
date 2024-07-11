@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleQuestUpdateTipsView = void 0);
-const ue_1 = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const InputDistributeController_1 = require("../../../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../../../Ui/InputDistribute/InputMappingsDefine");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const GeneralLogicTreeController_1 = require("../../../GeneralLogicTree/GeneralLogicTreeController");
-const QuestController_1 = require("../../../QuestNew/Controller/QuestController");
-const BattleChildView_1 = require("../BattleChildView/BattleChildView");
-const CombineKeyItem_1 = require("../KeyItem/CombineKeyItem");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
+const ue_1 = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  InputDistributeController_1 = require("../../../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../../../Ui/InputDistribute/InputMappingsDefine"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  GeneralLogicTreeController_1 = require("../../../GeneralLogicTree/GeneralLogicTreeController"),
+  QuestController_1 = require("../../../QuestNew/Controller/QuestController"),
+  BattleChildView_1 = require("../BattleChildView/BattleChildView"),
+  CombineKeyItem_1 = require("../KeyItem/CombineKeyItem"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine");
 class BattleQuestUpdateTipsView extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
@@ -29,7 +29,7 @@ class BattleQuestUpdateTipsView extends BattleChildView_1.BattleChildView {
       }),
       (this.X_t = () => {
         if (this.w_t) {
-          let t = this.w_t.TrackTextConfig?.MainTitle;
+          var t = this.w_t.TrackTextConfig?.MainTitle;
           let e = "";
           void 0 !== t
             ? (e =
@@ -46,7 +46,7 @@ class BattleQuestUpdateTipsView extends BattleChildView_1.BattleChildView {
         }
       }),
       (this.bMe = (e, t) => {
-        t === 1 && this.$_t();
+        1 === t && this.$_t();
       }),
       (this.$_t = () => {
         !this.F_t &&
@@ -86,7 +86,7 @@ class BattleQuestUpdateTipsView extends BattleChildView_1.BattleChildView {
       this.GetItem(4).SetUIActive(!0);
   }
   async InitializeAsync(e) {
-    let t;
+    var t;
     ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
       ((t = this.GetItem(5)),
       (this.xet = new CombineKeyItem_1.CombineKeyItem()),
@@ -143,8 +143,8 @@ class BattleQuestUpdateTipsView extends BattleChildView_1.BattleChildView {
       this.X_t();
   }
   Dnt() {
-    let e;
-    let t = this.w_t?.TrackIconConfigId;
+    var e,
+      t = this.w_t?.TrackIconConfigId;
     t &&
       ((t = ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestTypeMark(t)),
       (e = this.GetSprite(2)),
@@ -168,4 +168,4 @@ class BattleQuestUpdateTipsView extends BattleChildView_1.BattleChildView {
   }
 }
 exports.BattleQuestUpdateTipsView = BattleQuestUpdateTipsView;
-// # sourceMappingURL=BattleQuestUpdateTipsView.js.map
+//# sourceMappingURL=BattleQuestUpdateTipsView.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventInteractFan = void 0);
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventInteractFan extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, t) {
     e &&
@@ -12,4 +12,4 @@ class LevelEventInteractFan extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventInteractFan = LevelEventInteractFan;
-// # sourceMappingURL=LevelEventInteractFan.js.map
+//# sourceMappingURL=LevelEventInteractFan.js.map

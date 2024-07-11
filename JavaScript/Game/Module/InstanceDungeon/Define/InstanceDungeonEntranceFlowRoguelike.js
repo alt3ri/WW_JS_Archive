@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonEntranceFlowRoguelike = void 0);
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const RoguelikeController_1 = require("../../Roguelike/RoguelikeController");
-const InstanceDungeonEntranceFlowBase_1 = require("./InstanceDungeonEntranceFlowBase");
+const ModelManager_1 = require("../../../Manager/ModelManager"),
+  RoguelikeController_1 = require("../../Roguelike/RoguelikeController"),
+  InstanceDungeonEntranceFlowBase_1 = require("./InstanceDungeonEntranceFlowBase");
 class InstanceDungeonEntranceFlowRoguelike extends InstanceDungeonEntranceFlowBase_1.InstanceDungeonEntranceFlowBase {
   OnCreate() {
     this.AddStep(() => {
@@ -25,4 +25,4 @@ class InstanceDungeonEntranceFlowRoguelike extends InstanceDungeonEntranceFlowBa
 }
 exports.InstanceDungeonEntranceFlowRoguelike =
   InstanceDungeonEntranceFlowRoguelike;
-// # sourceMappingURL=InstanceDungeonEntranceFlowRoguelike.js.map
+//# sourceMappingURL=InstanceDungeonEntranceFlowRoguelike.js.map

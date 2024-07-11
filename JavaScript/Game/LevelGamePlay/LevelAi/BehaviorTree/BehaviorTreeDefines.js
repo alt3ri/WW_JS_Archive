@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BehaviorTreeDefines = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const PATROL_STATE_PREFIX = "IN_PATROL";
-const PATROL_ACTIONS_STATE_PREFIX = "PATROL_ACTIONS";
-const ACTIONS_STATE_PREFIX = "IN_ACTIONS";
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  PATROL_STATE_PREFIX = "IN_PATROL",
+  PATROL_ACTIONS_STATE_PREFIX = "PATROL_ACTIONS",
+  ACTIONS_STATE_PREFIX = "IN_ACTIONS";
 class BehaviorTreeDefines {
   static get UseLevelAiBehaviorTree() {
     return this.hIe || ((this.hIe = !0), (this.lIe = this._Ie())), this.lIe;
@@ -15,11 +15,11 @@ class BehaviorTreeDefines {
       this.lIe !== e && (this.lIe = e);
   }
   static _Ie() {
-    const e = "" + UE.BlueprintPathsLibrary.ProjectDir() + this.uIe;
-    const t = (0, puerts_1.$ref)(void 0);
+    var e = "" + UE.BlueprintPathsLibrary.ProjectDir() + this.uIe,
+      t = (0, puerts_1.$ref)(void 0);
     return (
       UE.KuroStaticLibrary.LoadFileToString(t, e) &&
-      (0, puerts_1.$unref)(t) === "true"
+      "true" === (0, puerts_1.$unref)(t)
     );
   }
   static GetPatrolActionStateName(e, t) {
@@ -45,4 +45,4 @@ class BehaviorTreeDefines {
     "PATROL_FINISH_SEGMENT_INDEX"),
   (BehaviorTreeDefines.lIe = !1),
   (BehaviorTreeDefines.hIe = !1);
-// # sourceMappingURL=BehaviorTreeDefines.js.map
+//# sourceMappingURL=BehaviorTreeDefines.js.map

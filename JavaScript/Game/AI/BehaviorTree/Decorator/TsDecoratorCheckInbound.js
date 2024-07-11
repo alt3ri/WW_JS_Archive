@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine");
-const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon");
-const GlobalData_1 = require("../../../GlobalData");
-const TsAiController_1 = require("../../Controller/TsAiController");
-const PROFILE_KEY = "TsDecoratorCheckInbound";
-const MIN_CEHCK_TIME_INTERVAL = 200;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine"),
+  FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
+  GlobalData_1 = require("../../../GlobalData"),
+  TsAiController_1 = require("../../Controller/TsAiController"),
+  PROFILE_KEY = "TsDecoratorCheckInbound",
+  MIN_CEHCK_TIME_INTERVAL = 200;
 class TsDecoratorCheckInbound extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -45,10 +45,10 @@ class TsDecoratorCheckInbound extends UE.BTDecorator_BlueprintBase {
     )
       return this.LastCheckResult;
     this.LastCheckTimeStamp = Time_1.Time.WorldTime;
-    let r;
-    let i;
-    const o = e.AiController.CharActorComp.SkeletalMesh;
-    const s = Vector_1.Vector.Create();
+    var r,
+      i,
+      o = e.AiController.CharActorComp.SkeletalMesh,
+      s = Vector_1.Vector.Create();
     let n = !0;
     for ([r, i] of this.SocketHeightInternal)
       s.FromUeVector(
@@ -70,11 +70,11 @@ class TsDecoratorCheckInbound extends UE.BTDecorator_BlueprintBase {
   InitData() {
     if (!this.SocketHeightInternal) {
       this.SocketHeightInternal = new Map();
-      const t = this.SocketHeight.Num();
-      if (t > 0)
+      var t = this.SocketHeight.Num();
+      if (0 < t)
         for (let e = 0; e < t; e++) {
-          const r = this.SocketHeight.GetKey(e);
-          const i = this.SocketHeight.Get(r);
+          var r = this.SocketHeight.GetKey(e),
+            i = this.SocketHeight.Get(r);
           this.SocketHeightInternal.set(r, i);
         }
     }
@@ -84,20 +84,20 @@ class TsDecoratorCheckInbound extends UE.BTDecorator_BlueprintBase {
       this.TsTraceElement,
       e,
     );
-    const r = Vector_1.Vector.Create();
-    var t =
-      (Vector_1.Vector.DownVectorProxy.Multiply(t, r),
-      r.AdditionEqual(e),
-      TraceElementCommon_1.TraceElementCommon.SetEndLocation(
-        this.TsTraceElement,
-        r,
-      ),
-      TraceElementCommon_1.TraceElementCommon.LineTrace(
-        this.TsTraceElement,
-        PROFILE_KEY,
-      ));
+    var r = Vector_1.Vector.Create(),
+      t =
+        (Vector_1.Vector.DownVectorProxy.Multiply(t, r),
+        r.AdditionEqual(e),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(
+          this.TsTraceElement,
+          r,
+        ),
+        TraceElementCommon_1.TraceElementCommon.LineTrace(
+          this.TsTraceElement,
+          PROFILE_KEY,
+        ));
     return !(!t || !this.TsTraceElement.HitResult.bBlockingHit);
   }
 }
 exports.default = TsDecoratorCheckInbound;
-// # sourceMappingURL=TsDecoratorCheckInbound.js.map
+//# sourceMappingURL=TsDecoratorCheckInbound.js.map

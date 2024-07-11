@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonDropDown = void 0);
-const UE = require("ue");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const Transform_1 = require("../../../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiLayerType_1 = require("../../../Ui/Define/UiLayerType");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const DynamicMaskButton_1 = require("../../DynamicMask/DynamicMaskButton");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
+const UE = require("ue"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  Transform_1 = require("../../../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiLayerType_1 = require("../../../Ui/Define/UiLayerType"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  DynamicMaskButton_1 = require("../../DynamicMask/DynamicMaskButton"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
 class CommonDropDown extends UiPanelBase_1.UiPanelBase {
   constructor(t, i, s) {
     super(),
@@ -29,7 +29,7 @@ class CommonDropDown extends UiPanelBase_1.UiPanelBase {
       (this.uTt = void 0),
       (this.RPr = void 0),
       (this.j7e = () => {
-        const t = this.GetItem(1);
+        var t = this.GetItem(1);
         t.bIsUIActive
           ? this.dTt()
           : (t.SetUIActive(!0), (this.aTt = !0), this.CTt().finally(void 0));
@@ -44,7 +44,7 @@ class CommonDropDown extends UiPanelBase_1.UiPanelBase {
         );
       }),
       (this.gTt = (t) => {
-        const i = this.oTt;
+        var i = this.oTt;
         (this.oTt = t),
           this.pTt(i),
           this.vTt(),
@@ -55,10 +55,10 @@ class CommonDropDown extends UiPanelBase_1.UiPanelBase {
         this.GetItem(1).SetUIActive(!1), this.MTt();
       }),
       (this.yTt = () => {
-        let t, i, s;
+        var t, i, s;
         this.aTt &&
-          (this.sTt !== 0 &&
-          (this.sTt === 1 ||
+          (0 !== this.sTt &&
+          (1 === this.sTt ||
             ((t = (s = this.GetButton(0).RootUIComp).GetRootCanvas()),
             (i = UiLayer_1.UiLayer.GetLayerRootUiItem(
               UiLayerType_1.ELayerType.Pop,
@@ -132,19 +132,19 @@ class CommonDropDown extends UiPanelBase_1.UiPanelBase {
       this.eGe.GetLayoutItemByKey(t).SetToggle(!1);
   }
   vTt() {
-    const t = this._Tt(this.uft[this.oTt]);
-    const i = this.eGe.GetLayoutItemByIndex(this.oTt);
+    var t = this._Tt(this.uft[this.oTt]),
+      i = this.eGe.GetLayoutItemByIndex(this.oTt);
     this.uTt.ShowTemp(t, i), this.dTt();
   }
   TTt() {
-    const t = this.GetItem(1);
+    var t = this.GetItem(1);
     t.SetAnchorVAlign(3),
       t.SetPivot(new UE.Vector2D(0.5, 1)),
       t.SetAnchorOffsetX(0),
       t.SetAnchorOffsetY(0);
   }
   ITt() {
-    const t = this.GetItem(1);
+    var t = this.GetItem(1);
     t.SetAnchorVAlign(1),
       t.SetPivot(new UE.Vector2D(0.5, 0)),
       t.SetAnchorOffsetX(0),
@@ -169,10 +169,10 @@ class CommonDropDown extends UiPanelBase_1.UiPanelBase {
     return this.eGe.GetLayoutItemList();
   }
   RefreshAllDropDownItem() {
-    const t = this._Tt(this.uft[this.oTt]);
-    const i = this.eGe.GetLayoutItemByIndex(this.oTt);
+    var t = this._Tt(this.uft[this.oTt]),
+      i = this.eGe.GetLayoutItemByIndex(this.oTt);
     this.uTt.ShowTemp(t, i), this.eGe.RebuildLayoutByDataNew(this.uft);
   }
 }
 exports.CommonDropDown = CommonDropDown;
-// # sourceMappingURL=CommonDropDown.js.map
+//# sourceMappingURL=CommonDropDown.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DebugDrawManager = void 0);
-const UE = require("ue");
-const GlobalData_1 = require("../../GlobalData");
-const RenderDataManager_1 = require("../Data/RenderDataManager");
+const UE = require("ue"),
+  GlobalData_1 = require("../../GlobalData"),
+  RenderDataManager_1 = require("../Data/RenderDataManager");
 class EffectDebugDrawInfo {
   constructor() {
     (this.Index = 0),
@@ -26,7 +26,7 @@ class DebugDrawManager {
   }
   static AddDebugLineFromPlayer(t, a, e) {
     this.EnsureInstance();
-    const i = new EffectDebugDrawInfo();
+    var i = new EffectDebugDrawInfo();
     return (
       (i.Index = this.Instance.Counter),
       (i.Type = 0),
@@ -40,7 +40,7 @@ class DebugDrawManager {
   }
   static AddDebugBox(t, a, e) {
     this.EnsureInstance();
-    const i = new EffectDebugDrawInfo();
+    var i = new EffectDebugDrawInfo();
     return (
       (i.Index = this.Instance.Counter),
       (i.Type = 1),
@@ -93,4 +93,4 @@ class DebugDrawManager {
   }
 }
 (exports.DebugDrawManager = DebugDrawManager).Instance = void 0;
-// # sourceMappingURL=DebugDrawManager.js.map
+//# sourceMappingURL=DebugDrawManager.js.map

@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneInteractionManager = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ActorUtils_1 = require("../../../Utils/ActorUtils");
-const RenderModuleConfig_1 = require("../../Manager/RenderModuleConfig");
-const SceneInteractionLevel_1 = require("../Item/SceneInteractionLevel");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ActorUtils_1 = require("../../../Utils/ActorUtils"),
+  RenderModuleConfig_1 = require("../../Manager/RenderModuleConfig"),
+  SceneInteractionLevel_1 = require("../Item/SceneInteractionLevel");
 class SceneInteractionManager {
   constructor() {
     (this.IsOnMobile = !1),
@@ -39,9 +39,10 @@ class SceneInteractionManager {
   }
   Init() {
     (this.IsOnMobile =
+      0 ===
       UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldFeatureLevel(
         GlobalData_1.GlobalData.World,
-      ) === 0),
+      )),
       (this.UniqueLevelInstanceId = 1),
       (this.AllSceneInteractionInfos = new Map()),
       (this.TempCacheIds.length = 0),
@@ -60,7 +61,7 @@ class SceneInteractionManager {
   }
   nOn() {
     for (const t of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems()) {
-      const e = t.EntityHandle?.Entity?.GetComponent(3)?.Owner;
+      var e = t.EntityHandle?.Entity?.GetComponent(3)?.Owner;
       e &&
         (t.IsControl()
           ? e.CharRenderingComponent?.AddInteraction(
@@ -89,10 +90,10 @@ class SceneInteractionManager {
       );
     let c = e;
     e.includes(".") && (c = e.split(".")[0]);
-    var e = this.UniqueLevelInstanceId;
-    const h = (0, puerts_1.$ref)(!1);
-    let u = "KuroSceneInteraction_" + e;
-    var a = UE.LevelStreamingDynamic.LoadLevelInstance(a, c, i, r, h, u);
+    var e = this.UniqueLevelInstanceId,
+      h = (0, puerts_1.$ref)(!1),
+      u = "KuroSceneInteraction_" + e,
+      a = UE.LevelStreamingDynamic.LoadLevelInstance(a, c, i, r, h, u);
     return (0, puerts_1.$unref)(h) && a
       ? ((u = new SceneInteractionLevel_1.SceneInteractionLevel()).Init(
           a,
@@ -111,13 +112,13 @@ class SceneInteractionManager {
       : -1;
   }
   DestroySceneInteraction(e) {
-    const t = this.AllSceneInteractionInfos.get(e);
+    var t = this.AllSceneInteractionInfos.get(e);
     if (t) {
       t.Destroy(), this.AllSceneInteractionInfos.delete(e);
-      const i = t.GetAllActor();
+      var i = t.GetAllActor();
       if (i)
         for (let e = 0; e < i.Num(); e++) {
-          const r = i.Get(i.GetKey(e));
+          var r = i.Get(i.GetKey(e));
           this.ActorMap.has(r) && this.ActorMap.delete(r);
         }
       return !0;
@@ -193,11 +194,11 @@ class SceneInteractionManager {
     e && e.SetCollisionActorsOwner(t);
   }
   AttachChildActor(t) {
-    const e = this.AllSceneInteractionInfos.get(t);
+    var e = this.AllSceneInteractionInfos.get(t);
     if (e) {
-      const i = e.GetAllActor();
+      var i = e.GetAllActor();
       for (let e = 0; e < i.Num(); e++) {
-        const r = i.Get(i.GetKey(e));
+        var r = i.Get(i.GetKey(e));
         this.ActorMap.set(r, t);
       }
     }
@@ -259,8 +260,8 @@ class SceneInteractionManager {
     this.WaterObjects.push(e), e.AfterRegistered();
   }
   UnregisterWaterEffectObject(t) {
-    const e = this.WaterObjects.findIndex((e) => e === t);
-    e === -1
+    var e = this.WaterObjects.findIndex((e) => e === t);
+    -1 === e
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderEffect",
@@ -296,10 +297,10 @@ class SceneInteractionManager {
     for (const t of this.AllSceneInteractionInfos.keys())
       this.TempCacheIds.push(t);
     for (const r of this.TempCacheIds) {
-      const e = this.AllSceneInteractionInfos.get(r);
+      var e = this.AllSceneInteractionInfos.get(r);
       e && !e.IsInfoDestroyed() && e.Update();
     }
   }
 }
 (exports.SceneInteractionManager = SceneInteractionManager).Instanced = void 0;
-// # sourceMappingURL=SceneInteractionManager.js.map
+//# sourceMappingURL=SceneInteractionManager.js.map

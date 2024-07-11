@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemSort = void 0);
-const CommonItemData_1 = require("../../../../../Inventory/ItemData/CommonItemData");
-const CommonSort_1 = require("./CommonSort");
+const CommonItemData_1 = require("../../../../../Inventory/ItemData/CommonItemData"),
+  CommonSort_1 = require("./CommonSort");
 class ItemSort extends CommonSort_1.CommonSort {
   constructor() {
     super(...arguments),
@@ -32,8 +32,8 @@ class ItemSort extends CommonSort_1.CommonSort {
       }),
       (this.tDt = (t, s, e) => {
         (t = t.GetItemDataBase()), (s = s.GetItemDataBase());
-        let r = 0;
-        let i = 0;
+        let r = 0,
+          i = 0;
         return (
           t instanceof CommonItemData_1.CommonItemData &&
             (r = t.IsLimitTimeItem() ? 1 : 0),
@@ -58,4 +58,4 @@ class ItemSort extends CommonSort_1.CommonSort {
   }
 }
 exports.ItemSort = ItemSort;
-// # sourceMappingURL=ItemSort.js.map
+//# sourceMappingURL=ItemSort.js.map

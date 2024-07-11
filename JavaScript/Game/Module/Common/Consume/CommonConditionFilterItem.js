@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonConditionFilterItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class CommonConditionFilterItem extends UiPanelBase_1.UiPanelBase {
   constructor(t, e) {
     super(),
@@ -39,4 +39,4 @@ class CommonConditionFilterItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.CommonConditionFilterItem = CommonConditionFilterItem;
-// # sourceMappingURL=CommonConditionFilterItem.js.map
+//# sourceMappingURL=CommonConditionFilterItem.js.map

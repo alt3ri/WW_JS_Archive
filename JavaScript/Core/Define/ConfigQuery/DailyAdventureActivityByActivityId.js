@@ -1,27 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configDailyAdventureActivityByActivityId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const DailyAdventureActivity_1 = require("../Config/DailyAdventureActivity");
-const DB = "db_activity.db";
-const FILE = "r.日常探险活动.xlsx";
-const TABLE = "DailyAdventureActivity";
-const COMMAND =
-  "select BinData from `DailyAdventureActivity` where ActivityId=?";
-const KEY_PREFIX = "DailyAdventureActivityByActivityId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  DailyAdventureActivity_1 = require("../Config/DailyAdventureActivity"),
+  DB = "db_activity.db",
+  FILE = "r.日常探险活动.xlsx",
+  TABLE = "DailyAdventureActivity",
+  COMMAND = "select BinData from `DailyAdventureActivity` where ActivityId=?",
+  KEY_PREFIX = "DailyAdventureActivityByActivityId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX =
-  "configDailyAdventureActivityByActivityId.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configDailyAdventureActivityByActivityId.GetConfig(";
 exports.configDailyAdventureActivityByActivityId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -42,13 +40,14 @@ exports.configDailyAdventureActivityByActivityId = {
       if (
         (e =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, i, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "ActivityId",
-            i,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "ActivityId",
+              i,
+            ]))
       ) {
-        var e;
-        var o = void 0;
+        var e,
+          o = void 0;
         if (
           (([e, o] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -75,4 +74,4 @@ exports.configDailyAdventureActivityByActivityId = {
     }
   },
 };
-// # sourceMappingURL=DailyAdventureActivityByActivityId.js.map
+//# sourceMappingURL=DailyAdventureActivityByActivityId.js.map

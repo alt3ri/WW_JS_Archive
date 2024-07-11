@@ -1,30 +1,35 @@
 "use strict";
-let SceneItemNearbyTrackingComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (e, t, i, n) {
-    let s;
-    const r = arguments.length;
-    let o =
-      r < 3 ? t : n === null ? (n = Object.getOwnPropertyDescriptor(t, i)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      o = Reflect.decorate(e, t, i, n);
-    else
-      for (let h = e.length - 1; h >= 0; h--)
-        (s = e[h]) && (o = (r < 3 ? s(o) : r > 3 ? s(t, i, o) : s(t, i)) || o);
-    return r > 3 && o && Object.defineProperty(t, i, o), o;
-  };
+var SceneItemNearbyTrackingComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (e, t, i, n) {
+      var s,
+        r = arguments.length,
+        o =
+          r < 3
+            ? t
+            : null === n
+              ? (n = Object.getOwnPropertyDescriptor(t, i))
+              : n;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        o = Reflect.decorate(e, t, i, n);
+      else
+        for (var h = e.length - 1; 0 <= h; h--)
+          (s = e[h]) &&
+            (o = (r < 3 ? s(o) : 3 < r ? s(t, i, o) : s(t, i)) || o);
+      return 3 < r && o && Object.defineProperty(t, i, o), o;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemNearbyTrackingComponent = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../Core/Define/CommonDefine");
-const GlobalConfigFromCsvByName_1 = require("../../../Core/Define/ConfigQuery/GlobalConfigFromCsvByName");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
+const Log_1 = require("../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
+  GlobalConfigFromCsvByName_1 = require("../../../Core/Define/ConfigQuery/GlobalConfigFromCsvByName"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem");
 let SceneItemNearbyTrackingComponent =
   (SceneItemNearbyTrackingComponent_1 = class SceneItemNearbyTrackingComponent extends (
     EntityComponent_1.EntityComponent
@@ -43,7 +48,7 @@ let SceneItemNearbyTrackingComponent =
         }),
         (this.zvn = () => {
           this.Lo?.IsEnbaleWhileHoming &&
-            this.Xvn?.Type === "Icon" &&
+            "Icon" === this.Xvn?.Type &&
             this.Xvn.Duration &&
             ((this.EnableTracking = !0),
             this.$vn &&
@@ -55,12 +60,12 @@ let SceneItemNearbyTrackingComponent =
         });
     }
     get ShowRange() {
-      return this.Xvn?.Type === "Icon"
+      return "Icon" === this.Xvn?.Type
         ? this.Xvn.ShowRange
         : this.Xvn?.FarRadius;
     }
     get HideRange() {
-      return this.Xvn?.Type === "Icon"
+      return "Icon" === this.Xvn?.Type
         ? this.Xvn.HideRange
         : this.Xvn?.FarRadius;
     }
@@ -84,23 +89,23 @@ let SceneItemNearbyTrackingComponent =
           );
     }
     get IconPath() {
-      if (this.Xvn?.Type === "Icon") return this.b$i(this.Xvn.TexturePath);
+      if ("Icon" === this.Xvn?.Type) return this.b$i(this.Xvn.TexturePath);
     }
     get TrackType() {
       return this.S9;
     }
     get AudioPointNearRadius() {
-      if (this.Xvn?.Type === "AudioPoint") return this.Xvn.NearRadius;
+      if ("AudioPoint" === this.Xvn?.Type) return this.Xvn.NearRadius;
     }
     get AudioPointMiddleRadius() {
-      if (this.Xvn?.Type === "AudioPoint") return this.Xvn.MiddleRadius;
+      if ("AudioPoint" === this.Xvn?.Type) return this.Xvn.MiddleRadius;
     }
     get AudioPointFarRadius() {
-      if (this.Xvn?.Type === "AudioPoint") return this.Xvn.FarRadius;
+      if ("AudioPoint" === this.Xvn?.Type) return this.Xvn.FarRadius;
     }
     OnInitData(e) {
-      var e = e.GetParam(SceneItemNearbyTrackingComponent_1)[0];
-      const t = this.Entity.GetComponent(0);
+      var e = e.GetParam(SceneItemNearbyTrackingComponent_1)[0],
+        t = this.Entity.GetComponent(0);
       return (
         (this.Qvn = t.GetTrackingIsEnable()),
         Log_1.Log.CheckDebug() &&
@@ -173,11 +178,11 @@ let SceneItemNearbyTrackingComponent =
       );
     }
     Zvn(e) {
-      return e?.Type === "Icon"
+      return "Icon" === e?.Type
         ? ((this.Yvn = Vector_1.Vector.Create(0, 0, 0)),
           e.UiOffset && this.Yvn.Set(e.UiOffset.X, e.UiOffset.Y, e.UiOffset.Z),
           0)
-        : e?.Type === "AudioPoint"
+        : "AudioPoint" === e?.Type
           ? 1
           : void 0;
     }
@@ -197,4 +202,4 @@ let SceneItemNearbyTrackingComponent =
     SceneItemNearbyTrackingComponent,
   )),
   (exports.SceneItemNearbyTrackingComponent = SceneItemNearbyTrackingComponent);
-// # sourceMappingURL=SceneItemNearbyTrackingComponent.js.map
+//# sourceMappingURL=SceneItemNearbyTrackingComponent.js.map

@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayAbilityVisionControl = void 0);
-const Log_1 = require("../../../../../../../Core/Common/Log");
-const GameplayCueById_1 = require("../../../../../../../Core/Define/ConfigQuery/GameplayCueById");
-const Protocol_1 = require("../../../../../../../Core/Define/Net/Protocol");
-const ModelManager_1 = require("../../../../../../Manager/ModelManager");
-const PhantomUtil_1 = require("../../../../../../Module/Phantom/PhantomUtil");
-const SceneTeamData_1 = require("../../../../../../Module/SceneTeam/SceneTeamData");
-const CharacterBuffIds_1 = require("../../Abilities/CharacterBuffIds");
-const GameplayAbilityVisionBase_1 = require("./GameplayAbilityVisionBase");
-const GameplayAbilityVisionMisc_1 = require("./GameplayAbilityVisionMisc");
+const Log_1 = require("../../../../../../../Core/Common/Log"),
+  GameplayCueById_1 = require("../../../../../../../Core/Define/ConfigQuery/GameplayCueById"),
+  Protocol_1 = require("../../../../../../../Core/Define/Net/Protocol"),
+  ModelManager_1 = require("../../../../../../Manager/ModelManager"),
+  PhantomUtil_1 = require("../../../../../../Module/Phantom/PhantomUtil"),
+  SceneTeamData_1 = require("../../../../../../Module/SceneTeam/SceneTeamData"),
+  CharacterBuffIds_1 = require("../../Abilities/CharacterBuffIds"),
+  GameplayAbilityVisionBase_1 = require("./GameplayAbilityVisionBase"),
+  GameplayAbilityVisionMisc_1 = require("./GameplayAbilityVisionMisc");
 class GameplayAbilityVisionControl extends GameplayAbilityVisionBase_1.GameplayAbilityVisionBase {
   constructor() {
     super(...arguments),
@@ -32,7 +32,7 @@ class GameplayAbilityVisionControl extends GameplayAbilityVisionBase_1.GameplayA
       });
   }
   OnCreate() {
-    let i, e, t, a;
+    var i, e, t, a;
     this.CreatureDataComponent.SummonType ===
       Protocol_1.Aki.Protocol.Oqs.Proto_ESummonTypeConcomitantPhantomRole &&
       (Log_1.Log.CheckDebug() &&
@@ -56,7 +56,7 @@ class GameplayAbilityVisionControl extends GameplayAbilityVisionBase_1.GameplayA
       }));
   }
   OnDestroy() {
-    let i;
+    var i;
     this.CreatureDataComponent.SummonType ===
       Protocol_1.Aki.Protocol.Oqs.Proto_ESummonTypeConcomitantPhantomRole &&
       (Log_1.Log.CheckDebug() &&
@@ -87,7 +87,7 @@ class GameplayAbilityVisionControl extends GameplayAbilityVisionBase_1.GameplayA
       GameplayAbilityVisionControl.VisionControlHandle)
     )
       return !1;
-    let i = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
+    var i = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
       this.Entity,
       Protocol_1.Aki.Protocol.Oqs.Proto_ESummonTypeConcomitantPhantomRole,
     );
@@ -123,13 +123,13 @@ class GameplayAbilityVisionControl extends GameplayAbilityVisionBase_1.GameplayA
     );
   }
   Ozo(i) {
-    const e = ModelManager_1.ModelManager.CreatureModel.GetEntity(
+    var e = ModelManager_1.ModelManager.CreatureModel.GetEntity(
       this.CreatureDataComponent.GetSummonerId(),
     );
     e && (e.Entity.GetComponent(0).VisionControlCreatureDataId = i);
   }
   Nzo() {
-    const i = ModelManager_1.ModelManager.CreatureModel.GetEntity(
+    var i = ModelManager_1.ModelManager.CreatureModel.GetEntity(
       this.CreatureDataComponent.GetSummonerId(),
     );
     i?.Valid
@@ -144,7 +144,7 @@ class GameplayAbilityVisionControl extends GameplayAbilityVisionBase_1.GameplayA
       );
   }
   Fzo() {
-    const i =
+    var i =
       GameplayAbilityVisionControl.VisionControlHandle.Entity.GetComponent(19);
     i?.CreateGameplayCue(
       GameplayCueById_1.configGameplayCueById.GetConfig(
@@ -165,7 +165,7 @@ class GameplayAbilityVisionControl extends GameplayAbilityVisionBase_1.GameplayA
                 Reason: "幻象变身结束时角色自身的材质和粒子",
               },
             );
-            const i = ModelManager_1.ModelManager.PlayerInfoModel.GetId() ?? 0;
+            var i = ModelManager_1.ModelManager.PlayerInfoModel.GetId() ?? 0;
             ModelManager_1.ModelManager.SceneTeamModel.SwitchGroup(
               i,
               this.Gzo ?? 1,
@@ -179,4 +179,4 @@ class GameplayAbilityVisionControl extends GameplayAbilityVisionBase_1.GameplayA
 }
 (exports.GameplayAbilityVisionControl =
   GameplayAbilityVisionControl).VisionControlHandle = void 0;
-// # sourceMappingURL=GameplayAbilityVisionControl.js.map
+//# sourceMappingURL=GameplayAbilityVisionControl.js.map

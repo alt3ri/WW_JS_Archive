@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MemoryDetailView = void 0);
-const UE = require("ue");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../Ui/Common/PopupCaptionItem");
-const UiLayer_1 = require("../../Ui/UiLayer");
-const UiManager_1 = require("../../Ui/UiManager");
-const NoCircleAttachView_1 = require("../AutoAttach/NoCircleAttachView");
-const ButtonItem_1 = require("../Common/Button/ButtonItem");
-const LevelSequencePlayer_1 = require("../Common/LevelSequencePlayer");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const FragmentMemoryData_1 = require("./FragmentMemoryData");
-const MemoryDetailAttachItem_1 = require("./MemoryDetailAttachItem");
-const FRAGMENTMEMORYMASK = "FragmentMemoryMask";
-const HIDEVIEWDELAY = 600;
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../Ui/Common/PopupCaptionItem"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  NoCircleAttachView_1 = require("../AutoAttach/NoCircleAttachView"),
+  ButtonItem_1 = require("../Common/Button/ButtonItem"),
+  LevelSequencePlayer_1 = require("../Common/LevelSequencePlayer"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  FragmentMemoryData_1 = require("./FragmentMemoryData"),
+  MemoryDetailAttachItem_1 = require("./MemoryDetailAttachItem"),
+  FRAGMENTMEMORYMASK = "FragmentMemoryMask",
+  HIDEVIEWDELAY = 600;
 class MemoryDetailView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -38,7 +38,7 @@ class MemoryDetailView extends UiViewBase_1.UiViewBase {
           TimerSystem_1.TimerSystem.Delay(() => {
             ModelManager_1.ModelManager.FragmentMemoryModel.MemoryFragmentMainViewTryPlayAnimation =
               "Start02";
-            const e = new FragmentMemoryData_1.FragmentMemoryMainViewOpenData();
+            var e = new FragmentMemoryData_1.FragmentMemoryMainViewOpenData();
             (e.FragmentMemoryTopicData = t),
               UiManager_1.UiManager.OpenView("MemoryFragmentMainView", e),
               UiLayer_1.UiLayer.SetShowMaskLayer(FRAGMENTMEMORYMASK, !1);
@@ -67,7 +67,7 @@ class MemoryDetailView extends UiViewBase_1.UiViewBase {
         this.Yao();
       }),
       (this.iIn = (e) => {
-        e === "SwitchOut" &&
+        "SwitchOut" === e &&
           (this.Og(), this.EPe?.PlayLevelSequenceByName("SwitchIn"));
       }),
       (this.DTo = (e, t, i) => {
@@ -117,8 +117,8 @@ class MemoryDetailView extends UiViewBase_1.UiViewBase {
       (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
       this.lqe.SetCloseCallBack(this.i2e),
       this.lqe.SetHelpBtnActive(!0);
-    const e = this.GetItem(1);
-    const t = this.GetItem(6);
+    var e = this.GetItem(1),
+      t = this.GetItem(6);
     (this.ITo = new NoCircleAttachView_1.NoCircleAttachView(e.GetOwner())),
       this.ITo?.SetControllerItem(t),
       this.ITo.CreateItems(this.GetItem(2).GetOwner(), 0, this.DTo, 1),
@@ -132,7 +132,7 @@ class MemoryDetailView extends UiViewBase_1.UiViewBase {
         ModelManager_1.ModelManager.FragmentMemoryModel.GetAllFragmentTopic()),
       this.OpenParam)
     ) {
-      const e = this.OpenParam;
+      var e = this.OpenParam;
       for (const t of this.XUn)
         if (t.Id === e) {
           this.QUn = t;
@@ -145,7 +145,7 @@ class MemoryDetailView extends UiViewBase_1.UiViewBase {
     this.$Un = [];
     for (const t of this.XUn) this.$Un.push(t.Id);
     this.$Un.push(-1), this.ITo?.ReloadView(this.$Un.length, this.$Un);
-    const e = this.$Un.indexOf(this.QUn.Id);
+    var e = this.$Un.indexOf(this.QUn.Id);
     this.ITo?.AttachToIndex(e, !0);
   }
   Og() {
@@ -167,7 +167,7 @@ class MemoryDetailView extends UiViewBase_1.UiViewBase {
     this.QUn && this.GetItem(4)?.SetUIActive(!this.txn());
   }
   exn() {
-    let e;
+    var e;
     void 0 === this.QUn ||
       this.txn() ||
       ((e =
@@ -177,11 +177,11 @@ class MemoryDetailView extends UiViewBase_1.UiViewBase {
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(5), e));
   }
   PWt() {
-    const e = void 0 !== this.QUn;
+    var e = void 0 !== this.QUn;
     this.GetItem(7)?.SetUIActive(e), this.GetItem(8)?.SetUIActive(!e);
   }
   cGn() {
-    let e;
+    var e;
     void 0 !== this.QUn &&
       ((e = this.QUn.TopicTexture),
       this.SetTextureByPath(e, this.GetTexture(9)));
@@ -192,4 +192,4 @@ class MemoryDetailView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.MemoryDetailView = MemoryDetailView;
-// # sourceMappingURL=MemoryDetailView.js.map
+//# sourceMappingURL=MemoryDetailView.js.map

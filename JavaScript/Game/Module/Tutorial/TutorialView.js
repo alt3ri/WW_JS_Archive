@@ -1,29 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TutorialView = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const CommonSearchComponent_1 = require("../Common/InputView/CommonSearchComponent");
-const CommonTabComponentData_1 = require("../Common/TabComponent/CommonTabComponentData");
-const CommonTabData_1 = require("../Common/TabComponent/CommonTabData");
-const CommonTabTitleData_1 = require("../Common/TabComponent/CommonTabTitleData");
-const TabComponentWithCaptionItem_1 = require("../Common/TabComponent/TabComponentWithCaptionItem");
-const CommonTabItem_1 = require("../Common/TabComponent/TabItem/CommonTabItem");
-const GenericLayoutNew_1 = require("../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const DynScrollView_1 = require("../Util/ScrollView/DynScrollView");
-const TutorialDataItem_1 = require("./SubView/TutorialDataItem");
-const TutorialDynItem_1 = require("./SubView/TutorialDynItem");
-const TutorialPageItem_1 = require("./SubView/TutorialPageItem");
-const TutorialController_1 = require("./TutorialController");
-const TutorialDefine_1 = require("./TutorialDefine");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  CommonSearchComponent_1 = require("../Common/InputView/CommonSearchComponent"),
+  CommonTabComponentData_1 = require("../Common/TabComponent/CommonTabComponentData"),
+  CommonTabData_1 = require("../Common/TabComponent/CommonTabData"),
+  CommonTabTitleData_1 = require("../Common/TabComponent/CommonTabTitleData"),
+  TabComponentWithCaptionItem_1 = require("../Common/TabComponent/TabComponentWithCaptionItem"),
+  CommonTabItem_1 = require("../Common/TabComponent/TabItem/CommonTabItem"),
+  GenericLayoutNew_1 = require("../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  DynScrollView_1 = require("../Util/ScrollView/DynScrollView"),
+  TutorialDataItem_1 = require("./SubView/TutorialDataItem"),
+  TutorialDynItem_1 = require("./SubView/TutorialDynItem"),
+  TutorialPageItem_1 = require("./SubView/TutorialPageItem"),
+  TutorialController_1 = require("./TutorialController"),
+  TutorialDefine_1 = require("./TutorialDefine");
 class TutorialView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -39,10 +39,10 @@ class TutorialView extends UiViewBase_1.UiViewBase {
       (this.HDo = void 0),
       (this.Mbe = (t) => {
         var t = ModelManager_1.ModelManager.TutorialModel.MakeSearchList(
-          t,
-          this.kDo,
-        );
-        const i = t.ItemData;
+            t,
+            this.kDo,
+          ),
+          i = t.ItemData;
         this.GetItem(5).SetUIActive(!i.length),
           i.length || this.jDo(),
           t.HasTutorial ||
@@ -54,7 +54,7 @@ class TutorialView extends UiViewBase_1.UiViewBase {
         this.WDo(this.kDo), this.GetItem(4).SetUIActive(!0);
       }),
       (this.hPe = (t, i, e) => {
-        let s = void 0;
+        var s = void 0;
         return (
           (s = new TutorialPageItem_1.TutorialPageItem(i)).Init(),
           s.UpdateShow(!1),
@@ -86,26 +86,26 @@ class TutorialView extends UiViewBase_1.UiViewBase {
           );
       }),
       (this.yqe = (t) => {
-        var i = this.KVe[t];
-        var i = TutorialDefine_1.TutorialUtils.GetTutorialTypeIconPath(i);
-        var t = TutorialDefine_1.TutorialUtils.GetTutorialTypeTxt(this.KVe[t]);
+        var i = this.KVe[t],
+          i = TutorialDefine_1.TutorialUtils.GetTutorialTypeIconPath(i),
+          t = TutorialDefine_1.TutorialUtils.GetTutorialTypeTxt(this.KVe[t]);
         return new CommonTabData_1.CommonTabData(
           i,
           new CommonTabTitleData_1.CommonTabTitleData(t),
         );
       }),
       (this.KDo = (t, i, e) => {
-        const s = new TutorialDataItem_1.TutorialDataItem();
+        var s = new TutorialDataItem_1.TutorialDataItem();
         return s.InitData(t), s.SetOnToggleSelected(this.QDo), s;
       }),
       (this.qDn = () => {
-        let t;
-        let i;
-        const e =
-          ModelManager_1.ModelManager.TutorialModel.GetUnlockedTutorialDataByType(
-            this.kDo,
-          );
-        for ([t, i] of e.entries()) i.Selected = t === 0;
+        var t,
+          i,
+          e =
+            ModelManager_1.ModelManager.TutorialModel.GetUnlockedTutorialDataByType(
+              this.kDo,
+            );
+        for ([t, i] of e.entries()) i.Selected = 0 === t;
         this.XAt.RefreshByData(e);
       }),
       (this.XDo = () => {
@@ -117,7 +117,7 @@ class TutorialView extends UiViewBase_1.UiViewBase {
           this.qIt(t);
       }),
       (this.$Do = () => {
-        this.VDo > 0 &&
+        0 < this.VDo &&
           (this.UiViewSequence.PlaySequence("SwitchLeft"),
           this.YDo(this.VDo - 1));
       }),
@@ -186,7 +186,7 @@ class TutorialView extends UiViewBase_1.UiViewBase {
   OnStart() {
     this.GetItem(3).SetUIActive(!1);
     for (const e in TutorialDefine_1.ETutorialType) {
-      const t = Number(e);
+      var t = Number(e);
       isNaN(t) || this.KVe.push(t);
     }
     this.dqe = new CommonSearchComponent_1.CommonSearchComponent(
@@ -194,7 +194,7 @@ class TutorialView extends UiViewBase_1.UiViewBase {
       this.Mbe,
       this.Tqe,
     );
-    const i = new CommonTabComponentData_1.CommonTabComponentData(
+    var i = new CommonTabComponentData_1.CommonTabComponentData(
       this.dVe,
       this.WDo,
       this.yqe,
@@ -215,10 +215,10 @@ class TutorialView extends UiViewBase_1.UiViewBase {
     this.GetItem(4).SetUIActive(!1), (this.dqt = void 0);
   }
   OnBeforeShow() {
-    const i = this.KVe.length;
-    const e = this.cpt.CreateTabItemDataByLength(i);
+    var i = this.KVe.length,
+      e = this.cpt.CreateTabItemDataByLength(i);
     for (let t = 0; t < i; t++) {
-      const s = this.KVe[t];
+      var s = this.KVe[t];
       s === TutorialDefine_1.ETutorialType.All &&
         ((e[t].RedDotName = "TutorialTypeNew"), (e[t].RedDotUid = s));
     }
@@ -263,26 +263,26 @@ class TutorialView extends UiViewBase_1.UiViewBase {
       this.YDo(this.VDo);
   }
   YDo(t) {
-    this.HDo.length > 1 &&
+    1 < this.HDo.length &&
       (this.tPe.GetLayoutItemByIndex(this.VDo).UpdateShow(!1),
       this.tPe.GetLayoutItemByIndex(t).UpdateShow(!0)),
       (this.VDo = t);
-    let i;
-    var t = ConfigManager_1.ConfigManager.GuideConfig.GetGuideTutorialPage(
-      this.HDo[t],
-    );
+    var i,
+      t = ConfigManager_1.ConfigManager.GuideConfig.GetGuideTutorialPage(
+        this.HDo[t],
+      );
     t.Pic && ((i = this.GetTexture(6)), this.SetTextureByPath(t.Pic, i)),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), t.Title),
       StringUtils_1.StringUtils.IsEmpty(t.SubTitle)
         ? this.GetItem(8).SetUIActive(!1)
         : (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(9), t.SubTitle),
           this.GetItem(8).SetUIActive(!0)),
-      this.HDo.length > 1 &&
-        (this.GetButton(14).SetSelfInteractive(this.VDo > 0),
+      1 < this.HDo.length &&
+        (this.GetButton(14).SetSelfInteractive(0 < this.VDo),
         this.GetButton(15).SetSelfInteractive(this.VDo < this.HDo.length - 1));
     let e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.Content);
     (e = e.split("/n").join("")), this.GetText(10).SetText(e);
   }
 }
 exports.TutorialView = TutorialView;
-// # sourceMappingURL=TutorialView.js.map
+//# sourceMappingURL=TutorialView.js.map

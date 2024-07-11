@@ -19,4 +19,4 @@ class DestroyPreviewGrid extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGr
   OnDeselected(e) {}
 }
 exports.DestroyPreviewGrid = DestroyPreviewGrid;
-// # sourceMappingURL=DestroyPreviewGrid.js.map
+//# sourceMappingURL=DestroyPreviewGrid.js.map

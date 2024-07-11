@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MonsterCreatorBehaviorNode = void 0);
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
+const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
 class MonsterCreatorBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   constructor() {
     super(...arguments),
@@ -19,7 +19,7 @@ class MonsterCreatorBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase
   OnCreate(e) {
     if (!super.OnCreate(e)) return !1;
     e = e.Condition;
-    if (e.Type !== "MonsterCreator" || !e.MonsterCreatorEntityIds) return !1;
+    if ("MonsterCreator" !== e.Type || !e.MonsterCreatorEntityIds) return !1;
     (this.TrackTextRuleInner = 1), (this.PQt = []);
     for (const t of e.MonsterCreatorEntityIds) this.PQt.push(t);
     return (
@@ -57,4 +57,4 @@ class MonsterCreatorBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase
   }
 }
 exports.MonsterCreatorBehaviorNode = MonsterCreatorBehaviorNode;
-// # sourceMappingURL=MonsterCreatorBehaviorNode.js.map
+//# sourceMappingURL=MonsterCreatorBehaviorNode.js.map

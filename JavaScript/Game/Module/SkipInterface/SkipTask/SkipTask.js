@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkipTask = void 0);
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../Core/Common/Log");
+const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../Core/Common/Log");
 class SkipTask {
   constructor() {
     (this.cp = !1), (this.Lbi = void 0);
@@ -71,4 +71,4 @@ class SkipTask {
   OnRemoveEvents() {}
 }
 exports.SkipTask = SkipTask;
-// # sourceMappingURL=SkipTask.js.map
+//# sourceMappingURL=SkipTask.js.map

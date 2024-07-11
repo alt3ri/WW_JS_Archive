@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelLightSpec = void 0);
-const UE = require("ue");
-const Stats_1 = require("../../../Core/Common/Stats");
-const EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper");
-const EffectSpec_1 = require("./EffectSpec");
+const UE = require("ue"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper"),
+  EffectSpec_1 = require("./EffectSpec");
 class EffectModelLightSpec extends EffectSpec_1.EffectSpec {
   constructor() {
     super(...arguments),
@@ -22,11 +22,11 @@ class EffectModelLightSpec extends EffectSpec_1.EffectSpec {
   }
   OnInit() {
     this.LightModel = this.EffectModel;
-    const t = this.Handle.GetSureEffectActor();
-    var i =
-      (Stats_1.Stat.Enable && ((this.S0e = void 0), (this.E0e = void 0)),
-      this.Handle.Parent);
-    var i = i ? i.GetEffectSpec()?.GetSceneComponent() : void 0;
+    var t = this.Handle.GetSureEffectActor(),
+      i =
+        (Stats_1.Stat.Enable && ((this.S0e = void 0), (this.E0e = void 0)),
+        this.Handle.Parent),
+      i = i ? i.GetEffectSpec()?.GetSceneComponent() : void 0;
     return (
       (this.LightComponent =
         EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
@@ -39,7 +39,7 @@ class EffectModelLightSpec extends EffectSpec_1.EffectSpec {
         )),
       (this.t0e = this.LightComponent.IsComponentTickEnabled()),
       this.LightComponent.SetComponentTickEnabled(!1),
-      this.LightComponent.SetIsUIScenePrimitive(this.GetEffectType() === 1),
+      this.LightComponent.SetIsUIScenePrimitive(1 === this.GetEffectType()),
       this.LightComponent.SetVisibility(!1),
       this.LightComponent.SetToonLightType(0),
       (this.SceneComponent = this.LightComponent),
@@ -92,10 +92,10 @@ class EffectModelLightSpec extends EffectSpec_1.EffectSpec {
   }
   OnEffectTypeChange() {
     this.LightComponent?.IsValid() &&
-      this.LightComponent.SetIsUIScenePrimitive(this.GetEffectType() === 1);
+      this.LightComponent.SetIsUIScenePrimitive(1 === this.GetEffectType());
   }
 }
 ((exports.EffectModelLightSpec = EffectModelLightSpec).I0e = 5),
   (EffectModelLightSpec.y0e = 2e3),
   (EffectModelLightSpec.MaxFightLightNumber = EffectModelLightSpec.I0e);
-// # sourceMappingURL=EffectModelLightSpec.js.map
+//# sourceMappingURL=EffectModelLightSpec.js.map

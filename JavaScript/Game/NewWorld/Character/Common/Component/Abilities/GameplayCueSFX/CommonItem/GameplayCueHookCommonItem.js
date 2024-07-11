@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayCueHookCommonItem = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../../../../../Core/Actor/ActorSystem");
-const ResourceSystem_1 = require("../../../../../../../../Core/Resource/ResourceSystem");
-const MathUtils_1 = require("../../../../../../../../Core/Utils/MathUtils");
-const EffectContext_1 = require("../../../../../../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../../../../../../Effect/EffectSystem");
-const GlobalData_1 = require("../../../../../../../GlobalData");
-const RecorderBlueprintFunctionLibrary_1 = require("../../../../../../../Recorder/RecorderBlueprintFunctionLibrary");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../../../../../Core/Actor/ActorSystem"),
+  ResourceSystem_1 = require("../../../../../../../../Core/Resource/ResourceSystem"),
+  MathUtils_1 = require("../../../../../../../../Core/Utils/MathUtils"),
+  EffectContext_1 = require("../../../../../../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../../../../../../Effect/EffectSystem"),
+  GlobalData_1 = require("../../../../../../../GlobalData"),
+  RecorderBlueprintFunctionLibrary_1 = require("../../../../../../../Recorder/RecorderBlueprintFunctionLibrary");
 class GameplayCueHookCommonItem {
   constructor(t, e, r, o) {
     (this.OKt = t),
@@ -64,7 +64,7 @@ class GameplayCueHookCommonItem {
         this.Paths[0],
         UE.NiagaraSystem,
         (t) => {
-          let e;
+          var e;
           this.dce &&
             t?.IsValid() &&
             r?.IsValid() &&
@@ -108,4 +108,4 @@ class GameplayCueHookCommonItem {
   }
 }
 exports.GameplayCueHookCommonItem = GameplayCueHookCommonItem;
-// # sourceMappingURL=GameplayCueHookCommonItem.js.map
+//# sourceMappingURL=GameplayCueHookCommonItem.js.map

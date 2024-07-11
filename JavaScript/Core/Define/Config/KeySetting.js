@@ -90,125 +90,125 @@ class KeySetting {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   typeid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   inputcontrollertype() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   name(t) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   openviewtype() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   buttontextid(t) {
-    const i = this.J7.__offset(this.z7, 14);
+    var i = this.J7.__offset(this.z7, 14);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   actionoraxis() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   actionoraxisname(t) {
-    const i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 18);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   cancombination() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   pckeyindex() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   xboxkeyindex() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   connectedkeysettingid() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   pcaxisvalue() {
-    const t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   xboxaxisvalue() {
-    const t = this.J7.__offset(this.z7, 30);
+    var t = this.J7.__offset(this.z7, 30);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   islock() {
-    const t = this.J7.__offset(this.z7, 32);
+    var t = this.J7.__offset(this.z7, 32);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   GetBothactionnameAt(t) {
     return this.bothactionname(t);
   }
   bothactionname(t, i) {
-    const s = this.J7.__offset(this.z7, 34);
+    var s = this.J7.__offset(this.z7, 34);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   bothactionnameLength() {
-    const t = this.J7.__offset(this.z7, 34);
+    var t = this.J7.__offset(this.z7, 34);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   ischecksamekey() {
-    const t = this.J7.__offset(this.z7, 36);
+    var t = this.J7.__offset(this.z7, 36);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   GetAllowkeysAt(t) {
     return this.allowkeys(t);
   }
   allowkeys(t, i) {
-    const s = this.J7.__offset(this.z7, 38);
+    var s = this.J7.__offset(this.z7, 38);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   allowkeysLength() {
-    const t = this.J7.__offset(this.z7, 38);
+    var t = this.J7.__offset(this.z7, 38);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetAllowmainkeysAt(t) {
     return this.allowmainkeys(t);
   }
   allowmainkeys(t, i) {
-    const s = this.J7.__offset(this.z7, 40);
+    var s = this.J7.__offset(this.z7, 40);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   allowmainkeysLength() {
-    const t = this.J7.__offset(this.z7, 40);
+    var t = this.J7.__offset(this.z7, 40);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetAllowsecondkeysAt(t) {
     return this.allowsecondkeys(t);
   }
   allowsecondkeys(t, i) {
-    const s = this.J7.__offset(this.z7, 42);
+    var s = this.J7.__offset(this.z7, 42);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   allowsecondkeysLength() {
-    const t = this.J7.__offset(this.z7, 42);
+    var t = this.J7.__offset(this.z7, 42);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   detailtextid(t) {
-    const i = this.J7.__offset(this.z7, 44);
+    var i = this.J7.__offset(this.z7, 44);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.KeySetting = KeySetting;
-// # sourceMappingURL=KeySetting.js.map
+//# sourceMappingURL=KeySetting.js.map

@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FoliageClusteredEffectManager = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../GlobalData");
-const RenderDataManager_1 = require("../../Data/RenderDataManager");
-const DebugDrawManager_1 = require("../../DebugDraw/DebugDrawManager");
-const RenderModuleConfig_1 = require("../../Manager/RenderModuleConfig");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../GlobalData"),
+  RenderDataManager_1 = require("../../Data/RenderDataManager"),
+  DebugDrawManager_1 = require("../../DebugDraw/DebugDrawManager"),
+  RenderModuleConfig_1 = require("../../Manager/RenderModuleConfig");
 class FoliageClusteredEffectManager {
   constructor() {
     (this.Config = void 0),
@@ -62,7 +62,7 @@ class FoliageClusteredEffectManager {
       (this.Densities = new Array()),
       (this.BoxExtend = Vector_1.Vector.Create(this.Config.BoxExtend));
     for (let t = 0; t < this.Config.SettingsData.Num(); t++) {
-      const e = this.Config.SettingsData.Get(t);
+      var e = this.Config.SettingsData.Get(t);
       this.FoliageTypes.push(e.FoliageType),
         this.ClusteredEffects.push(e.EffectSetting),
         this.NumMin.push(e.NumMin),
@@ -73,11 +73,11 @@ class FoliageClusteredEffectManager {
       (this.TempVector = Vector_1.Vector.Create());
   }
   Tick(t) {
-    let e;
+    var e;
     this.Ready &&
-      this.FoliageTypes.length !== 0 &&
+      0 !== this.FoliageTypes.length &&
       (this.UpdateCounter--,
-      this.UpdateCounter > 0 ||
+      0 < this.UpdateCounter ||
         ((this.UpdateCounter = this.UpdateInterval),
         RenderDataManager_1.RenderDataManager.Get()
           .GetCurrentCharacterPosition()
@@ -115,4 +115,4 @@ class FoliageClusteredEffectManager {
   }
 }
 exports.FoliageClusteredEffectManager = FoliageClusteredEffectManager;
-// # sourceMappingURL=FoliageClusteredEffectManager.js.map
+//# sourceMappingURL=FoliageClusteredEffectManager.js.map

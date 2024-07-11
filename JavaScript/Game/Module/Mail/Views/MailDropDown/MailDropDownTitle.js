@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MailDropDownTitle = void 0);
-const UE = require("ue");
-const TitleItemBase_1 = require("../../../Common/DropDown/Item/TitleItemBase");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
+const UE = require("ue"),
+  TitleItemBase_1 = require("../../../Common/DropDown/Item/TitleItemBase"),
+  LguiUtil_1 = require("../../../Util/LguiUtil");
 class MailDropDownTitle extends TitleItemBase_1.TitleItemBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -17,4 +17,4 @@ class MailDropDownTitle extends TitleItemBase_1.TitleItemBase {
   }
 }
 exports.MailDropDownTitle = MailDropDownTitle;
-// # sourceMappingURL=MailDropDownTitle.js.map
+//# sourceMappingURL=MailDropDownTitle.js.map

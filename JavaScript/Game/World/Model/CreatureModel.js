@@ -1,38 +1,38 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CreatureModel = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Info_1 = require("../../../Core/Common/Info");
-const Json_1 = require("../../../Core/Common/Json");
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const BlueprintConfigByBlueprintType_1 = require("../../../Core/Define/ConfigQuery/BlueprintConfigByBlueprintType");
-const LevelEntityConfigByBlueprintType_1 = require("../../../Core/Define/ConfigQuery/LevelEntityConfigByBlueprintType");
-const LevelEntityConfigByMapIdAndEntityId_1 = require("../../../Core/Define/ConfigQuery/LevelEntityConfigByMapIdAndEntityId");
-const PrefabConfigById_1 = require("../../../Core/Define/ConfigQuery/PrefabConfigById");
-const TemplateConfigByBlueprintType_1 = require("../../../Core/Define/ConfigQuery/TemplateConfigByBlueprintType");
-const TemplateConfigById_1 = require("../../../Core/Define/ConfigQuery/TemplateConfigById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntityHelper_1 = require("../../../Core/Entity/EntityHelper");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const IEntity_1 = require("../../../UniverseEditor/Interface/IEntity");
-const IGlobal_1 = require("../../../UniverseEditor/Interface/IGlobal");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const PublicUtil_1 = require("../../Common/PublicUtil");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CreatureDensityContainer_1 = require("../Define/CreatureDensityContainer");
-const EntityContainer_1 = require("../Define/EntityContainer");
-const zero = 0n;
-const ONE_HUNDRED = 100;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Json_1 = require("../../../Core/Common/Json"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  BlueprintConfigByBlueprintType_1 = require("../../../Core/Define/ConfigQuery/BlueprintConfigByBlueprintType"),
+  LevelEntityConfigByBlueprintType_1 = require("../../../Core/Define/ConfigQuery/LevelEntityConfigByBlueprintType"),
+  LevelEntityConfigByMapIdAndEntityId_1 = require("../../../Core/Define/ConfigQuery/LevelEntityConfigByMapIdAndEntityId"),
+  PrefabConfigById_1 = require("../../../Core/Define/ConfigQuery/PrefabConfigById"),
+  TemplateConfigByBlueprintType_1 = require("../../../Core/Define/ConfigQuery/TemplateConfigByBlueprintType"),
+  TemplateConfigById_1 = require("../../../Core/Define/ConfigQuery/TemplateConfigById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntityHelper_1 = require("../../../Core/Entity/EntityHelper"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  IEntity_1 = require("../../../UniverseEditor/Interface/IEntity"),
+  IGlobal_1 = require("../../../UniverseEditor/Interface/IGlobal"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../Common/PublicUtil"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CreatureDensityContainer_1 = require("../Define/CreatureDensityContainer"),
+  EntityContainer_1 = require("../Define/EntityContainer"),
+  zero = 0n,
+  ONE_HUNDRED = 100;
 class CreatureModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -78,7 +78,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
       }),
       (this.nye = () => {
         this.pvr = !1;
-        for (let [t, e] of this.fvr) {
+        for (var [t, e] of this.fvr) {
           t = ModelManager_1.ModelManager.CreatureModel.GetEntityById(t);
           t?.Valid && t.Entity.Enable(e, "CreatureModel.OnWorldDone");
         }
@@ -102,7 +102,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
       (this.uht = () => {
         if (this.pvr) {
           this.pvr = !1;
-          for (let [t, e] of this.fvr) {
+          for (var [t, e] of this.fvr) {
             t = ModelManager_1.ModelManager.CreatureModel.GetEntityById(t);
             t?.Valid && t.Entity.Enable(e, "CreatureModel.OnTeleportComplete");
           }
@@ -174,18 +174,18 @@ class CreatureModel extends ModelBase_1.ModelBase {
         Log_1.Log.Error("Entity", 3, "实体句柄无效。");
   }
   RemoveEntity(t, e) {
-    const i = this.xPr.RemoveEntity(t);
-    var e =
-      (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "Entity",
-          3,
-          "[实体生命周期:删除实体] 删除实体成功",
-          ["CreatureDataId", t],
-          ["Reason", e],
-          ["Result", i],
-        ),
-      this.GVs.GetItem(t));
+    var i = this.xPr.RemoveEntity(t),
+      e =
+        (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Entity",
+            3,
+            "[实体生命周期:删除实体] 删除实体成功",
+            ["CreatureDataId", t],
+            ["Reason", e],
+            ["Result", i],
+          ),
+        this.GVs.GetItem(t));
     return e && (e.EntityHandle = void 0), i;
   }
   GetAllEntities() {
@@ -193,9 +193,9 @@ class CreatureModel extends ModelBase_1.ModelBase {
   }
   Bvr(i, r, n) {
     if (!(i.length < 1) && r < n) {
-      const o = i[Math.floor((r + n) / 2)];
-      let t = r;
-      let e = n;
+      var o = i[Math.floor((r + n) / 2)];
+      let t = r,
+        e = n;
       for (var s; t <= e; ) {
         for (; i[t].Entity.DistanceWithCamera < o.Entity.DistanceWithCamera; )
           t++;
@@ -211,7 +211,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
       EntityHelper_1.EntitySystemHelper.IsFilterDirty = !1;
       let e = 0;
       for (let t = 0; t < this.EntitiesSortedList.length; t++) {
-        const n = this.EntitiesSortedList[t];
+        var n = this.EntitiesSortedList[t];
         n.Valid && !n.Entity
           ? Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -231,24 +231,24 @@ class CreatureModel extends ModelBase_1.ModelBase {
       ((EntityHelper_1.EntitySystemHelper.IsSortDirty = !1),
       this.Bvr(this.EntitiesSortedList, 0, this.EntitiesSortedList.length - 1),
       (EntityHelper_1.EntitySystemHelper.SortedFrame = Time_1.Time.Frame));
-    let o = 0;
-    let s = this.EntitiesSortedList.length - 1;
-    let a;
+    let o = 0,
+      s = this.EntitiesSortedList.length - 1;
+    var a;
     for (o; o <= s; ) {
-      const l = Math.floor((o + s) / 2);
+      var l = Math.floor((o + s) / 2);
       this.EntitiesSortedList[l].Entity.DistanceWithCamera <= t
         ? (o = l + 1)
         : (s = l - 1);
     }
     for (a = o, o = 0, s = a - 1; o <= s; ) {
-      const h = Math.floor((o + s) / 2);
+      var h = Math.floor((o + s) / 2);
       this.EntitiesSortedList[h].Entity.DistanceWithCamera < 0
         ? (o = h + 1)
         : (s = h - 1);
     }
-    const u = o;
-    let _ = (r && (i.length = 0), void 0);
-    let y = void 0;
+    var u = o,
+      _ = (r && (i.length = 0), void 0),
+      y = void 0;
     for (let t = u; t < a; t++)
       if ((_ = (y = this.EntitiesSortedList[t]).Entity.GetComponent(0)))
         switch (e) {
@@ -324,7 +324,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
       );
   }
   OnLeaveLevel() {
-    for (const [, t] of this.ScenePlayerDataMap) t.Clear();
+    for (var [, t] of this.ScenePlayerDataMap) t.Clear();
     return (
       this.ScenePlayerDataMap.clear(),
       this.RemoveCreaturePendingSet.clear(),
@@ -352,7 +352,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
     this.NUe = t;
   }
   GetPlayerId() {
-    const t = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
+    var t = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
     return t || 0;
   }
   IsMyWorld() {
@@ -368,13 +368,13 @@ class CreatureModel extends ModelBase_1.ModelBase {
     this.ScenePlayerDataMap.set(t, e);
   }
   GetAllScenePlayers() {
-    let t;
-    const e = new Array();
+    var t,
+      e = new Array();
     for ([, t] of this.ScenePlayerDataMap) e.push(t);
     return e;
   }
   RemoveScenePlayerData(t) {
-    const e = this.ScenePlayerDataMap.get(t);
+    var e = this.ScenePlayerDataMap.get(t);
     return e && e.Clear(), this.ScenePlayerDataMap.delete(t);
   }
   GetGameplayTagHash() {
@@ -410,7 +410,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
   InitEntityDataConfig(i) {
     if (!PublicUtil_1.PublicUtil.UseDbConfig()) {
       let t = "";
-      const r = (0, puerts_1.$ref)(t);
+      var r = (0, puerts_1.$ref)(t);
       let e = (0, PublicUtil_1.getConfigPath)(
         IGlobal_1.globalConfig.LevelsDataDir + `/${i}/Level.json`,
       );
@@ -427,8 +427,8 @@ class CreatureModel extends ModelBase_1.ModelBase {
         )
           return !1;
         t = t.trim();
-        const n = Info_1.Info.IsBuildDevelopmentOrDebug;
-        var i = JSON.parse(t);
+        var n = Info_1.Info.IsBuildDevelopmentOrDebug,
+          i = JSON.parse(t);
         this.vvr = new Map();
         for (const o of i.EntityDatas)
           (o.EdWpPath = void 0), n || (o.Name = ""), this.vvr.set(o.Id, o);
@@ -459,8 +459,8 @@ class CreatureModel extends ModelBase_1.ModelBase {
       !(t = (0, puerts_1.$unref)(t)))
     )
       return !1;
-    const i = Info_1.Info.IsBuildDevelopmentOrDebug;
-    var t = JSON.parse(t);
+    var i = Info_1.Info.IsBuildDevelopmentOrDebug,
+      t = JSON.parse(t);
     this.Mvr = new Map();
     for (const r of t.EntityDatas)
       (r.EdWpPath = void 0), i || (r.Name = ""), this.Mvr.set(r.Id, r);
@@ -480,10 +480,10 @@ class CreatureModel extends ModelBase_1.ModelBase {
         UE.BlueprintPathsLibrary.FileExists(t))
       ) {
         UE.KuroStaticLibrary.LoadFileToString(e, t);
-        let i;
-        let r;
-        var e = (0, puerts_1.$unref)(e);
-        var e = JSON.parse(e);
+        var i,
+          r,
+          e = (0, puerts_1.$unref)(e),
+          e = JSON.parse(e);
         for ([i, r] of Object.entries(e.BlueprintConfig)) this.Evr.set(i, r);
       }
     }
@@ -537,7 +537,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
             let t = this.Ivr.get(r.PrefabId);
             t || ((t = new Map()), this.Ivr.set(r.PrefabId, t));
             for (const n of r.Entities) {
-              let i = this.GetEntityTemplate(n.EntityData.BlueprintType);
+              var i = this.GetEntityTemplate(n.EntityData.BlueprintType);
               i
                 ? ((i = (0, IEntity_1.decompressEntityData)(n.EntityData, i)),
                   t.set(n.EntityData.Id, i))
@@ -574,11 +574,11 @@ class CreatureModel extends ModelBase_1.ModelBase {
         )),
       UE.BlueprintPathsLibrary.FileExists(t))
     ) {
-      var e = (0, puerts_1.$ref)("");
-      var e =
-        (UE.KuroStaticLibrary.LoadFileToString(e, t),
-        (e = (0, puerts_1.$unref)(e)),
-        JSON.parse(e));
+      var e = (0, puerts_1.$ref)(""),
+        e =
+          (UE.KuroStaticLibrary.LoadFileToString(e, t),
+          (e = (0, puerts_1.$unref)(e)),
+          JSON.parse(e));
       for (const i of e) {
         let t = this.Svr.get(i.LevelId);
         t || ((t = new Map()), this.Svr.set(i.LevelId, t)),
@@ -594,7 +594,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
         );
   }
   GetEntityData(t) {
-    let e;
+    var e;
     if (void 0 !== t)
       return !PublicUtil_1.PublicUtil.UseDbConfig() && this.vvr
         ? this.vvr.get(t)
@@ -646,12 +646,12 @@ class CreatureModel extends ModelBase_1.ModelBase {
       if (void 0 === this.vvr) return [];
       const r = new Array();
       for (const n of this.vvr.keys()) {
-        const e = this.vvr.get(n);
+        var e = this.vvr.get(n);
         e.BlueprintType === t && r.push(e.Id);
       }
       return r;
     }
-    const i =
+    var i =
       LevelEntityConfigByBlueprintType_1.configLevelEntityConfigByBlueprintType.GetConfigList(
         t,
       );
@@ -664,7 +664,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
     if (this.Mvr) return this.Mvr.get(t);
   }
   GetEntityModel(t) {
-    let e, i;
+    var e, i;
     return PublicUtil_1.PublicUtil.UseDbConfig()
       ? (e =
           BlueprintConfigByBlueprintType_1.configBlueprintConfigByBlueprintType.GetConfig(
@@ -685,12 +685,12 @@ class CreatureModel extends ModelBase_1.ModelBase {
     if (!PublicUtil_1.PublicUtil.UseDbConfig()) {
       this.yvr || this.qvr();
       let t = 0;
-      return (t = typeof e === "string" ? this.Tvr.get(e) : e), this.yvr.get(t);
+      return (t = "string" == typeof e ? this.Tvr.get(e) : e), this.yvr.get(t);
     }
     let t = void 0;
     if (
       (t = (
-        typeof e === "string"
+        "string" == typeof e
           ? TemplateConfigByBlueprintType_1.configTemplateConfigByBlueprintType
           : TemplateConfigById_1.configTemplateConfigById
       ).GetConfig(e))
@@ -709,11 +709,11 @@ class CreatureModel extends ModelBase_1.ModelBase {
     this.Ivr || (this.Ivr = new Map());
     let i = this.Ivr.get(t);
     if (i?.size) return i.get(e);
-    const r = PrefabConfigById_1.configPrefabConfigById.GetConfig(t);
+    var r = PrefabConfigById_1.configPrefabConfigById.GetConfig(t);
     if (r) {
       (i = new Map()), this.Ivr.set(t, i);
       for (const o of JSON.parse(r.Entities)) {
-        let n = this.GetEntityTemplate(o.EntityData.BlueprintType);
+        var n = this.GetEntityTemplate(o.EntityData.BlueprintType);
         n
           ? ((n = (0, IEntity_1.decompressEntityData)(o.EntityData, n)),
             i.set(o.EntityData.Id, n))
@@ -731,8 +731,8 @@ class CreatureModel extends ModelBase_1.ModelBase {
     }
   }
   GetCompleteEntityData(t) {
-    let e;
-    var t = this.GetEntityData(t);
+    var e,
+      t = this.GetEntityData(t);
     if (t)
       return (
         (e = this.GetEntityTemplate(t.BlueprintType)),
@@ -756,13 +756,13 @@ class CreatureModel extends ModelBase_1.ModelBase {
         this.Svr.get(t).set(e, i);
       }
       const r = this.Svr.get(t).get(e);
-      return r.Owner.length === 0 ? void 0 : r.Owner[0];
+      return 0 === r.Owner.length ? void 0 : r.Owner[0];
     }
     this.Svr || this.Nvr();
     i = this.Svr.get(t);
     if (i) {
       const r = i.get(e);
-      if (r && r.Owner.length !== 0) return r.Owner[0];
+      if (r && 0 !== r.Owner.length) return r.Owner[0];
     }
   }
   CheckSetPrefabEntity(t) {
@@ -871,24 +871,24 @@ class CreatureModel extends ModelBase_1.ModelBase {
           )),
       UE.BlueprintPathsLibrary.FileExists(t))
     ) {
-      var e = (0, puerts_1.$ref)("");
-      var e =
-        (UE.KuroStaticLibrary.LoadFileToString(e, t),
-        (e = (0, puerts_1.$unref)(e)) ||
-          (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("SceneItem", 7, "配置文件为空", ["filePath", t])),
-        Json_1.Json.Parse(e));
+      var e = (0, puerts_1.$ref)(""),
+        e =
+          (UE.KuroStaticLibrary.LoadFileToString(e, t),
+          (e = (0, puerts_1.$unref)(e)) ||
+            (Log_1.Log.CheckError() &&
+              Log_1.Log.Error("SceneItem", 7, "配置文件为空", ["filePath", t])),
+          Json_1.Json.Parse(e));
       for (const n of e.LevelRefList) {
-        const i = n.LevelPath;
+        var i = n.LevelPath;
         let e = this.xvr.get(i);
         e = e || new Map();
         for (const o of n.StreamingGroups) {
-          const r = o.EntityId;
+          var r = o.EntityId;
           let t = e.get(r);
           t = t || [];
           for (const s of o.RefData)
-            (s.Platform === "Desktop" && !GlobalData_1.GlobalData.IsSm5) ||
-              (s.Platform === "Mobile" && !GlobalData_1.GlobalData.IsEs3) ||
+            ("Desktop" === s.Platform && !GlobalData_1.GlobalData.IsSm5) ||
+              ("Mobile" === s.Platform && !GlobalData_1.GlobalData.IsEs3) ||
               t.push(s);
           e.set(r, t);
         }
@@ -925,10 +925,10 @@ class CreatureModel extends ModelBase_1.ModelBase {
     if (t) return t[0];
   }
   AddOwnerEntityInfo(e) {
-    const t = this.xPr.GetEntity(e)?.Entity?.GetComponent(0);
-    const i = t?.GetBaseInfo()?.ChildEntityIds;
+    var t = this.xPr.GetEntity(e)?.Entity?.GetComponent(0),
+      i = t?.GetBaseInfo()?.ChildEntityIds;
     if (i) {
-      const r = t.GetPbDataId();
+      var r = t.GetPbDataId();
       for (const n of i) {
         let t = this.gvr.get(n);
         if (t) {
@@ -961,15 +961,15 @@ class CreatureModel extends ModelBase_1.ModelBase {
     }
   }
   RemoveOwnerEntityInfo(t) {
-    const e = this.xPr
+    var e = this.xPr
       .GetEntity(t)
       ?.Entity?.GetComponent(0)
       ?.GetBaseInfo()?.ChildEntityIds;
     if (e)
       for (const r of e) {
-        const i = this.gvr.get(r);
+        var i = this.gvr.get(r);
         i &&
-          (--i[1] == 0 && this.gvr.delete(r), Log_1.Log.CheckDebug()) &&
+          (0 == --i[1] && this.gvr.delete(r), Log_1.Log.CheckDebug()) &&
           Log_1.Log.Debug(
             "World",
             51,
@@ -982,7 +982,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
       }
   }
   GetOrAddDensityItem(t, e) {
-    let i = this.GVs.GetItem(t);
+    var i = this.GVs.GetItem(t);
     if (i) return i;
     (i = e.R5n),
       (i = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(i)),
@@ -992,15 +992,15 @@ class CreatureModel extends ModelBase_1.ModelBase {
       ));
     let r = 0;
     return (
-      i?.Category.NpcType === 2
+      2 === i?.Category.NpcType
         ? (r = 2)
-        : i?.Category.NpcType === 1 &&
+        : 1 === i?.Category.NpcType &&
           (r = void 0 === i.LowerNpcDensity ? 1 : i?.LowerNpcDensity),
       this.GVs.AddItem(t, r, e)
     );
   }
   RemoveDensityItem(t) {
-    const e = this.GVs.GetItem(t);
+    var e = this.GVs.GetItem(t);
     return this.GVs.RemoveItem(t), e;
   }
   GetDensityLevelGroup(t) {
@@ -1008,4 +1008,4 @@ class CreatureModel extends ModelBase_1.ModelBase {
   }
 }
 exports.CreatureModel = CreatureModel;
-// # sourceMappingURL=CreatureModel.js.map
+//# sourceMappingURL=CreatureModel.js.map

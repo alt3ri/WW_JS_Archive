@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldLevelModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager");
 class WorldLevelModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -33,7 +33,7 @@ class WorldLevelModel extends ModelBase_1.ModelBase {
     return this.uko;
   }
   set OriginWorldLevel(e) {
-    const t = e > this.uko;
+    var t = e > this.uko;
     (this.uko = e),
       t &&
         EventSystem_1.EventSystem.Emit(
@@ -54,4 +54,4 @@ class WorldLevelModel extends ModelBase_1.ModelBase {
   }
 }
 exports.WorldLevelModel = WorldLevelModel;
-// # sourceMappingURL=WorldLevelModel.js.map
+//# sourceMappingURL=WorldLevelModel.js.map

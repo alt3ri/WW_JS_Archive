@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ReviveItemView = exports.ReviveItemData = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const BuffItemControl_1 = require("../../BuffItem/BuffItemControl");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
-const ReviveSmallItemGrid_1 = require("./ReviveSmallItemGrid");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  BuffItemControl_1 = require("../../BuffItem/BuffItemControl"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  ReviveSmallItemGrid_1 = require("./ReviveSmallItemGrid");
 class ReviveItemData {
   constructor(i, e, t) {
     (this.PlayerId = 0),
@@ -33,7 +33,7 @@ class ReviveItemView extends UiViewBase_1.UiViewBase {
         this.ConfirmBoxButtonClick();
       }),
       (this.JGe = (i, e, t) => {
-        const s = new ReviveSmallItemGrid_1.ReviveSmallItemGrid();
+        var s = new ReviveSmallItemGrid_1.ReviveSmallItemGrid();
         return (
           s.Initialize(e.GetOwner()),
           s.BindOnExtendToggleStateChanged(this.zAt),
@@ -46,7 +46,7 @@ class ReviveItemView extends UiViewBase_1.UiViewBase {
         this.O2t(i);
       }),
       (this.k2t = () => {
-        this.SelectedItemId === -1
+        -1 === this.SelectedItemId
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "ReviveItemNotClick",
             )
@@ -68,14 +68,14 @@ class ReviveItemView extends UiViewBase_1.UiViewBase {
   }
   OnStart() {
     this.ChildPopView?.PopItem.OverrideBackBtnCallBack(this.mIt);
-    const i = this.OpenParam;
+    var i = this.OpenParam;
     (this.zke = i.PlayerId),
       (this.SelectedItemId = i.ChoseId),
       (this.ItemIdMap = new Map());
     for (const t of i.ItemIdList) {
-      const e =
+      var e =
         ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(t);
-      e > 0 && this.ItemIdMap.set(t, e);
+      0 < e && this.ItemIdMap.set(t, e);
     }
     (this.PropScrollView = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(2),
@@ -84,9 +84,9 @@ class ReviveItemView extends UiViewBase_1.UiViewBase {
       this.InitPropItem();
   }
   InitPropItem() {
-    let i = this.GetScrollViewWithScrollbar(2);
-    const e = this.ItemIdMap.size;
-    if ((i.RootUIComp.SetUIActive(e > 0), e !== 0)) {
+    var i = this.GetScrollViewWithScrollbar(2),
+      e = this.ItemIdMap.size;
+    if ((i.RootUIComp.SetUIActive(0 < e), 0 !== e)) {
       const s = [];
       let t = 0;
       this.ItemIdMap.forEach((i, e) => {
@@ -121,4 +121,4 @@ class ReviveItemView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.ReviveItemView = ReviveItemView;
-// # sourceMappingURL=ReviveItemView.js.map
+//# sourceMappingURL=ReviveItemView.js.map

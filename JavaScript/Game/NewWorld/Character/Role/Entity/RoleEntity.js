@@ -1,2 +1,2 @@
 "use strict";
-// # sourceMappingURL=RoleEntity.js.map
+//# sourceMappingURL=RoleEntity.js.map

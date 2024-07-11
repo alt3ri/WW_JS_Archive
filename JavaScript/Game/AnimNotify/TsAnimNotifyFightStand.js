@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyFightStand extends UE.KuroAnimNotify {
   K2_Notify(e, t) {
     e = e.GetOwner();
@@ -18,4 +18,4 @@ class TsAnimNotifyFightStand extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifyFightStand;
-// # sourceMappingURL=TsAnimNotifyFightStand.js.map
+//# sourceMappingURL=TsAnimNotifyFightStand.js.map

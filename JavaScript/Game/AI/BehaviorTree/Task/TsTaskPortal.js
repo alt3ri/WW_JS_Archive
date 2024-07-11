@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskPortal extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -53,7 +53,7 @@ class TsTaskPortal extends TsTaskAbortImmediatelyBase_1.default {
   ReceiveTickAI(i, t, s) {
     i = i.AiController;
     if (i) {
-      const e = i.CharActorComp;
+      var e = i.CharActorComp;
       this.FollowPoint =
         BlackboardController_1.BlackboardController.GetVectorValueByEntity(
           i.CharAiDesignComp.Entity.Id,
@@ -96,4 +96,4 @@ class TsTaskPortal extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskPortal;
-// # sourceMappingURL=TsTaskPortal.js.map
+//# sourceMappingURL=TsTaskPortal.js.map

@@ -1,32 +1,36 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, o) {
-    let s;
-    const r = arguments.length;
-    let h =
-      r < 3 ? e : o === null ? (o = Object.getOwnPropertyDescriptor(e, i)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var s,
+      r = arguments.length,
+      h =
+        r < 3
+          ? e
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(e, i))
+            : o;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       h = Reflect.decorate(t, e, i, o);
     else
-      for (let n = t.length - 1; n >= 0; n--)
-        (s = t[n]) && (h = (r < 3 ? s(h) : r > 3 ? s(e, i, h) : s(e, i)) || h);
-    return r > 3 && h && Object.defineProperty(e, i, h), h;
+      for (var n = t.length - 1; 0 <= n; n--)
+        (s = t[n]) && (h = (r < 3 ? s(h) : 3 < r ? s(e, i, h) : s(e, i)) || h);
+    return 3 < r && h && Object.defineProperty(e, i, h), h;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UeSkeletalTickManageComponent = exports.UeSkeletalTickController =
     void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Stats_1 = require("../../../../Core/Common/Stats");
-const Time_1 = require("../../../../Core/Common/Time");
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const PerformanceController_1 = require("../../../../Core/Performance/PerformanceController");
-const PerformanceDecorators_1 = require("../../../../Core/Performance/PerformanceDecorators");
-const TickSystem_1 = require("../../../../Core/Tick/TickSystem");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const Global_1 = require("../../../Global");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  PerformanceController_1 = require("../../../../Core/Performance/PerformanceController"),
+  PerformanceDecorators_1 = require("../../../../Core/Performance/PerformanceDecorators"),
+  TickSystem_1 = require("../../../../Core/Tick/TickSystem"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  Global_1 = require("../../../Global");
 class UeSkeletalTickController {
   static AddManager(t) {
     this.Managers.add(t);
@@ -70,7 +74,7 @@ let UeSkeletalTickManageComponent = class UeSkeletalTickManageComponent extends 
             ["Entity", this.Entity.Id],
             ["TickMode", t],
           ),
-        (this.Ksn = t) === 1)
+        1 === (this.Ksn = t))
       ) {
         for (const e of this.Xsn)
           TickSystem_1.TickSystem.SetSkeletalMeshProxyTickFunction(0, e);
@@ -119,10 +123,10 @@ let UeSkeletalTickManageComponent = class UeSkeletalTickManageComponent extends 
             TickSystem_1.TickSystem.CleanSkeletalMeshProxyTickFunction(s);
       }
       if (
-        (t === 1 || t === 2
+        (1 === t || 2 === t
           ? UeSkeletalTickController.AddManager(this)
           : UeSkeletalTickController.DeleteManager(this),
-        t === 4)
+        4 === t)
       ) {
         for (const r of this.Xsn)
           r.SetTickGroup(1),
@@ -152,12 +156,12 @@ let UeSkeletalTickManageComponent = class UeSkeletalTickManageComponent extends 
   }
   OnActivate() {
     this.Hte = this.Entity.GetComponent(1);
-    const e = this.Hte.Owner.K2_GetComponentsByClass(
-      UE.SkeletalMeshComponent.StaticClass(),
-    );
-    const i = e.Num();
+    var e = this.Hte.Owner.K2_GetComponentsByClass(
+        UE.SkeletalMeshComponent.StaticClass(),
+      ),
+      i = e.Num();
     for (let t = 0; t < i; ++t) {
-      const o = e.Get(t);
+      var o = e.Get(t);
       o instanceof UE.SkeletalMeshComponent &&
         (o.MasterPoseComponent ? this.$sn : this.Xsn).push(o);
     }
@@ -173,36 +177,36 @@ let UeSkeletalTickManageComponent = class UeSkeletalTickManageComponent extends 
     return !0;
   }
   OnTick(t) {
-    if ((this.Ysn(), this.TickMode === 3)) {
+    if ((this.Ysn(), 3 === this.TickMode)) {
       this.b3r = Time_1.Time.Frame;
-      const e =
+      var e =
         t *
         MathUtils_1.MathUtils.MillisecondToSecond *
         this.TimeDilation *
         (this.Entity.GetComponent(107)?.CurrentTimeScale ?? 1);
       for (const i of this.Xsn)
-        (this.TickType === 2 && !this.CheckMainMesh(i)) ||
+        (2 === this.TickType && !this.CheckMainMesh(i)) ||
           i.KuroTickComponentOutside(e);
-      if (this.TickType !== 2)
+      if (2 !== this.TickType)
         for (const o of this.$sn) o.KuroTickComponentOutside(e);
     }
   }
   OnAfterTick(t) {
     if (this.jsn && ((this.jsn = !1), this.b3r !== Time_1.Time.Frame)) {
-      const e = this.Hte.Owner.CustomTimeDilation;
-      const i = t * MathUtils_1.MathUtils.MillisecondToSecond * e;
+      var e = this.Hte.Owner.CustomTimeDilation,
+        i = t * MathUtils_1.MathUtils.MillisecondToSecond * e;
       for (const o of this.Xsn) o.KuroTickComponentOutside(i);
     }
   }
   ProxyTick(t) {
-    if (this.TickType === 1 || this.TickType === 2) {
+    if (1 === this.TickType || 2 === this.TickType) {
       this.b3r = Time_1.Time.Frame;
-      const e =
+      var e =
         t *
         this.TimeDilation *
         (this.Entity.GetComponent(107)?.CurrentTimeScale ?? 1);
       for (const i of this.Xsn)
-        (this.TickType === 2 && !this.CheckMainMesh(i)) ||
+        (2 === this.TickType && !this.CheckMainMesh(i)) ||
           (i
             ? i.KuroTickComponentOutside(e)
             : Log_1.Log.CheckError() &&
@@ -216,9 +220,9 @@ let UeSkeletalTickManageComponent = class UeSkeletalTickManageComponent extends 
     }
   }
   AfterProxyTick(t) {
-    if (this.TickType === 1) {
+    if (1 === this.TickType) {
       this.b3r = Time_1.Time.Frame;
-      const e =
+      var e =
         t *
         this.TimeDilation *
         (this.Entity.GetComponent(107)?.CurrentTimeScale ?? 1);
@@ -236,11 +240,11 @@ let UeSkeletalTickManageComponent = class UeSkeletalTickManageComponent extends 
     }
   }
   OnEnable() {
-    if ((this.TickMode !== 3 && (this.jsn = !0), this.TickMode === 4))
+    if ((3 !== this.TickMode && (this.jsn = !0), 4 === this.TickMode))
       for (const t of this.Xsn) t.SetComponentTickEnabled(!0);
   }
   OnDisable() {
-    if (this.TickMode === 4)
+    if (4 === this.TickMode)
       for (const t of this.Xsn) t.SetComponentTickEnabled(!1);
   }
   SetTakeOverTick(t) {
@@ -250,7 +254,7 @@ let UeSkeletalTickManageComponent = class UeSkeletalTickManageComponent extends 
     for (const e of this.Xsn) e.SetLODBias(t);
   }
   SetSkeletalMeshTickType(t) {
-    let e;
+    var e;
     return (
       this.TickType !== t &&
         ((e = this.Hte?.CreatureData.GetPbDataId()),
@@ -267,7 +271,7 @@ let UeSkeletalTickManageComponent = class UeSkeletalTickManageComponent extends 
     );
   }
   CheckMainMesh(t) {
-    return !!t.IsValid() && t.GetName() === "CharacterMesh0";
+    return !!t.IsValid() && "CharacterMesh0" === t.GetName();
   }
   Ysn() {
     this.Wsn
@@ -297,4 +301,4 @@ __decorate(
     UeSkeletalTickManageComponent,
   )),
   (exports.UeSkeletalTickManageComponent = UeSkeletalTickManageComponent);
-// # sourceMappingURL=UeSkeletalTickManageComponent.js.map
+//# sourceMappingURL=UeSkeletalTickManageComponent.js.map

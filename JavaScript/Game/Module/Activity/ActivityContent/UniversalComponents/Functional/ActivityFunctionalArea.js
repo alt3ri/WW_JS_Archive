@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityFunctionalArea = void 0);
-const UE = require("ue");
-const RedDotController_1 = require("../../../../../RedDot/RedDotController");
-const UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase");
-const ButtonItem_1 = require("../../../../Common/Button/ButtonItem");
-const LguiUtil_1 = require("../../../../Util/LguiUtil");
+const UE = require("ue"),
+  RedDotController_1 = require("../../../../../RedDot/RedDotController"),
+  UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase"),
+  ButtonItem_1 = require("../../../../Common/Button/ButtonItem"),
+  LguiUtil_1 = require("../../../../Util/LguiUtil");
 class ActivityFunctionalArea extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -29,7 +29,7 @@ class ActivityFunctionalArea extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[4, this.XFe]]);
   }
   OnStart() {
-    const t = this.GetItem(6);
+    var t = this.GetItem(6);
     (this.FunctionButton = new ButtonItem_1.ButtonItem(t)),
       this.SetRewardRedDotVisible(!1);
   }
@@ -61,13 +61,13 @@ class ActivityFunctionalArea extends UiPanelBase_1.UiPanelBase {
     this.GetItem(5).SetUIActive(t);
   }
   BindRewardRedDot(t, e = 0) {
-    const i = this.GetItem(5);
+    var i = this.GetItem(5);
     i &&
       ((this.QFe = t), this.QFe) &&
       RedDotController_1.RedDotController.BindRedDot(t, i, void 0, e);
   }
   UnbindRewardRedDotById(t, e) {
-    const i = this.GetItem(5);
+    var i = this.GetItem(5);
     i && RedDotController_1.RedDotController.UnBindGivenUi(t, i, e);
   }
   UnBindRewardRedDot() {
@@ -77,4 +77,4 @@ class ActivityFunctionalArea extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ActivityFunctionalArea = ActivityFunctionalArea;
-// # sourceMappingURL=ActivityFunctionalArea.js.map
+//# sourceMappingURL=ActivityFunctionalArea.js.map

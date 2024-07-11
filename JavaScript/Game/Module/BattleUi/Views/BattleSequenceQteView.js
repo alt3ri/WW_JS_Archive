@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleSequenceQteView = void 0);
-const UE = require("ue");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
+const UE = require("ue"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
 class BattleSequenceQteView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments), (this.Ret = () => {});
@@ -16,4 +16,4 @@ class BattleSequenceQteView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.BattleSequenceQteView = BattleSequenceQteView;
-// # sourceMappingURL=BattleSequenceQteView.js.map
+//# sourceMappingURL=BattleSequenceQteView.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HandBookFetterItem = void 0);
-const UE = require("ue");
-const GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract");
-const GenericLayoutNew_1 = require("../Util/Layout/GenericLayoutNew");
-const HandBookCommonItem_1 = require("./HandBookCommonItem");
+const UE = require("ue"),
+  GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract"),
+  GenericLayoutNew_1 = require("../Util/Layout/GenericLayoutNew"),
+  HandBookCommonItem_1 = require("./HandBookCommonItem");
 class HandBookFetterItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -14,11 +14,11 @@ class HandBookFetterItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.LZt = 0),
       (this.FetterToggleFunction = void 0),
       (this.GZt = (t) => {
-        this.FetterToggleFunction && t === 1 && this.FetterToggleFunction(this);
+        this.FetterToggleFunction && 1 === t && this.FetterToggleFunction(this);
       }),
       (this.GetPhantomFetter = () => this.PhantomFetter),
       (this.NZt = (t, e, i) => {
-        const s = new HandBookCommonItem_1.HandBookCommonItem();
+        var s = new HandBookCommonItem_1.HandBookCommonItem();
         return (
           s.Initialize(e.GetOwner()),
           s.Refresh(t, !1, 0),
@@ -65,7 +65,7 @@ class HandBookFetterItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.FetterToggleFunction = t;
   }
   OZt(t) {
-    const e = this.GetExtendToggle(0);
+    var e = this.GetExtendToggle(0);
     t ? e.SetToggleState(1, !1) : e.SetToggleState(0, !1);
   }
   OnDeselected(t) {
@@ -87,4 +87,4 @@ class HandBookFetterItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.HandBookFetterItem = HandBookFetterItem;
-// # sourceMappingURL=HandBookFetterItem.js.map
+//# sourceMappingURL=HandBookFetterItem.js.map

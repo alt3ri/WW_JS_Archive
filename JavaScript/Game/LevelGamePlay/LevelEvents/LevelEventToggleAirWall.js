@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventToggleAirWall = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventToggleAirWall extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, t, o) {
     e
@@ -26,4 +26,4 @@ class LevelEventToggleAirWall extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventToggleAirWall = LevelEventToggleAirWall;
-// # sourceMappingURL=LevelEventToggleAirWall.js.map
+//# sourceMappingURL=LevelEventToggleAirWall.js.map

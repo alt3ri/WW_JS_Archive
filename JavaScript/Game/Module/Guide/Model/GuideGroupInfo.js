@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuideGroupInfo = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const StateBase_1 = require("../../../../Core/Utils/StateMachine/StateBase");
-const StateMachine_1 = require("../../../../Core/Utils/StateMachine/StateMachine");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const GuideConfig_1 = require("../GuideConfig");
-const GuideController_1 = require("../GuideController");
-const GuideStepInfo_1 = require("./GuideStepInfo");
-const stateDesc = ["Init", "Opening", "Executing", "Pending", "Finishing"];
+const Log_1 = require("../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  StateBase_1 = require("../../../../Core/Utils/StateMachine/StateBase"),
+  StateMachine_1 = require("../../../../Core/Utils/StateMachine/StateMachine"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  GuideConfig_1 = require("../GuideConfig"),
+  GuideController_1 = require("../GuideController"),
+  GuideStepInfo_1 = require("./GuideStepInfo"),
+  stateDesc = ["Init", "Opening", "Executing", "Pending", "Finishing"];
 class InitState extends StateBase_1.StateBase {
   OnStart() {
     this.Owner.StepInfoList.length = 0;
@@ -35,7 +35,7 @@ class OpeningState extends StateBase_1.StateBase {
     super(...arguments), (this.PYt = !1);
   }
   OnEnter() {
-    let e;
+    var e;
     this.PYt ||
       ((this.PYt = !0),
       (e = this.Owner.GetIfPreExecute()) && this.Owner.SwitchState(2),
@@ -100,21 +100,21 @@ class GuideGroupInfo {
   }
   GetIfPreExecute() {
     return (
-      this.StepInfoList.length !== 0 &&
-      this.StepInfoList[0].Config.TimeScale !== 1
+      0 !== this.StepInfoList.length &&
+      1 !== this.StepInfoList[0].Config.TimeScale
     );
   }
   SwitchState(e) {
     let t = e;
-    e === 1 && this.StateMachine.CurrentState !== 0
+    1 === e && 0 !== this.StateMachine.CurrentState
       ? Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Guide", 17, "引导组正在执行中, 不再重复执行")
-      : (e !== 2 ||
+      : (2 !== e ||
           this.CanEnterExecuting() ||
           (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("Guide", 17, "引导组暂时无法执行, 挂起"),
           (t = 3)),
-        e === 4 &&
+        4 === e &&
           (this.IsFake
             ? (Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
@@ -146,8 +146,8 @@ class GuideGroupInfo {
         this.StateMachine.Switch(t));
   }
   PumpStep() {
-    let e;
-    this.StepInfoList.length === 0
+    var e;
+    0 === this.StepInfoList.length
       ? (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Guide",
@@ -162,13 +162,13 @@ class GuideGroupInfo {
           : ((this.CurrentStepIndex = e),
             (e = this.StepInfoList[e]),
             GuideConfig_1.GuideConfig.GmMuteTutorial &&
-            e.Config.ContentType === 3
+            3 === e.Config.ContentType
               ? e.SwitchState(4)
               : (e.SwitchState(0), e.TryEnterExecuting())));
   }
   wYt() {
-    const e = this.CurrentStepIndex;
-    e >= 0 &&
+    var e = this.CurrentStepIndex;
+    0 <= e &&
       e < this.StepInfoList.length &&
       this.StepInfoList[e].SwitchState(5);
   }
@@ -183,7 +183,7 @@ class GuideGroupInfo {
   }
   HasAnyFinishedStep(t) {
     for (let e = 0; e < this.CurrentStepIndex; ++e) {
-      const i = this.StepInfoList[e].Id;
+      var i = this.StepInfoList[e].Id;
       if (t.has(i)) return !0;
     }
     return !1;
@@ -191,7 +191,7 @@ class GuideGroupInfo {
   Break() {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Guide", 17, "引导组中断", ["组Id", this.Id]),
-      this.StateMachine.CurrentState === 0
+      0 === this.StateMachine.CurrentState
         ? Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Guide", 17, "引导组已被外部终止, 中断时不做处理", [
             "组Id",
@@ -231,4 +231,4 @@ class GuideGroupInfo {
   }
 }
 exports.GuideGroupInfo = GuideGroupInfo;
-// # sourceMappingURL=GuideGroupInfo.js.map
+//# sourceMappingURL=GuideGroupInfo.js.map

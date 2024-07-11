@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PersonalRoleDisplayItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class PersonalRoleDisplayItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(t) {
     super(),
@@ -38,8 +38,8 @@ class PersonalRoleDisplayItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.InitAllItemState(),
       (this.zke = t),
       (this.LZt = i),
-      this.GetTexture(0).SetUIActive(this.zke !== -1),
-      this.zke !== -1 &&
+      this.GetTexture(0).SetUIActive(-1 !== this.zke),
+      -1 !== this.zke &&
         ((t =
           void 0 !==
           ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.zke)),
@@ -50,25 +50,25 @@ class PersonalRoleDisplayItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Jke() {
     var t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
-      this.zke,
-    ).QualityId;
-    var t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleQualityInfo(t);
+        this.zke,
+      ).QualityId,
+      t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleQualityInfo(t);
     this.SetSpriteByPath(t.Image, this.GetSprite(1), !1);
   }
   ShowLevelText() {
-    const t = this.GetText(2);
-    let e =
-      (t.SetUIActive(!0),
-      ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.zke));
+    var t = this.GetText(2),
+      e =
+        (t.SetUIActive(!0),
+        ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.zke));
     e &&
       (e = e.GetLevelData()) &&
       ((e = e.GetLevel()), LguiUtil_1.LguiUtil.SetLocalText(t, "LevelShow", e));
   }
   ShowNameText() {
-    const t = this.GetText(4);
-    const e =
-      (t.SetUIActive(!0),
-      ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(this.zke));
+    var t = this.GetText(4),
+      e =
+        (t.SetUIActive(!0),
+        ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(this.zke));
     e && t.ShowTextNew(e.Name);
   }
   InitAllItemState() {
@@ -97,4 +97,4 @@ class PersonalRoleDisplayItem extends GridProxyAbstract_1.GridProxyAbstract {
   SetSelectState(t, e = 0) {}
 }
 exports.PersonalRoleDisplayItem = PersonalRoleDisplayItem;
-// # sourceMappingURL=PersonalRoleDisplayItem.js.map
+//# sourceMappingURL=PersonalRoleDisplayItem.js.map

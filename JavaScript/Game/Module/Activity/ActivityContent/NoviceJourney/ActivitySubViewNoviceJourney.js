@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivitySubViewNoviceJourney = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase");
-const NoviceJourneyItem_1 = require("./NoviceJourneyItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase"),
+  NoviceJourneyItem_1 = require("./NoviceJourneyItem");
 class ActivitySubViewNoviceJourney extends ActivitySubViewBase_1.ActivitySubViewBase {
   constructor() {
     super(...arguments),
@@ -17,7 +17,7 @@ class ActivitySubViewNoviceJourney extends ActivitySubViewBase_1.ActivitySubView
       (this.dNe = !0),
       (this.CNe = void 0),
       (this.sGe = () => {
-        const e = new NoviceJourneyItem_1.NoviceJourneyItem();
+        var e = new NoviceJourneyItem_1.NoviceJourneyItem();
         return e.SetActivityData(this.CNe), e;
       }),
       (this.vke = (e) => {
@@ -37,9 +37,9 @@ class ActivitySubViewNoviceJourney extends ActivitySubViewBase_1.ActivitySubView
     this.CNe = this.ActivityBaseData;
   }
   async OnBeforeStartAsync() {
-    const e =
-      ConfigManager_1.ConfigManager.ActivityNoviceJourneyConfig.GetNoticeJourneyConfigList();
-    const t = [];
+    var e =
+        ConfigManager_1.ConfigManager.ActivityNoviceJourneyConfig.GetNoticeJourneyConfigList(),
+      t = [];
     for (const i of e) t.push(i.Id);
     (this.eGe = new GenericLayout_1.GenericLayout(
       this.GetLayoutBase(2),
@@ -62,9 +62,9 @@ class ActivitySubViewNoviceJourney extends ActivitySubViewBase_1.ActivitySubView
   }
   OnStart() {
     (this.mNe = this.GetText(1)),
-      (this.dNe = this.CNe.EndShowTime !== 0),
-      this.mNe.SetUIActive(this.CNe.EndShowTime !== 0);
-    const e = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerLevel();
+      (this.dNe = 0 !== this.CNe.EndShowTime),
+      this.mNe.SetUIActive(0 !== this.CNe.EndShowTime);
+    var e = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerLevel();
     this.GetText(0).SetText(e.toString()),
       this.GetText(4).SetText(this.CNe.GetTitle());
   }
@@ -78,7 +78,7 @@ class ActivitySubViewNoviceJourney extends ActivitySubViewBase_1.ActivitySubView
     this.dNe !== e && ((this.dNe = e), this.mNe.SetUIActive(e));
   }
   fNe() {
-    const [e, t] = this.GetTimeVisibleAndRemainTime();
+    var [e, t] = this.GetTimeVisibleAndRemainTime();
     this.pNe(e), e && this.mNe.SetText(t);
   }
   OnTimer(e) {
@@ -86,4 +86,4 @@ class ActivitySubViewNoviceJourney extends ActivitySubViewBase_1.ActivitySubView
   }
 }
 exports.ActivitySubViewNoviceJourney = ActivitySubViewNoviceJourney;
-// # sourceMappingURL=ActivitySubViewNoviceJourney.js.map
+//# sourceMappingURL=ActivitySubViewNoviceJourney.js.map

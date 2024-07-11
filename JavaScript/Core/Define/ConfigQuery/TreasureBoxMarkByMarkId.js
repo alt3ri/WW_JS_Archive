@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configTreasureBoxMarkByMarkId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const TreasureBoxMark_1 = require("../Config/TreasureBoxMark");
-const DB = "db_map_mark.db";
-const FILE = "d.地图标记.xlsx";
-const TABLE = "TreasureBoxMark";
-const COMMAND = "select BinData from `TreasureBoxMark` where MarkId=?";
-const KEY_PREFIX = "TreasureBoxMarkByMarkId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  TreasureBoxMark_1 = require("../Config/TreasureBoxMark"),
+  DB = "db_map_mark.db",
+  FILE = "d.地图标记.xlsx",
+  TABLE = "TreasureBoxMark",
+  COMMAND = "select BinData from `TreasureBoxMark` where MarkId=?",
+  KEY_PREFIX = "TreasureBoxMarkByMarkId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configTreasureBoxMarkByMarkId.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configTreasureBoxMarkByMarkId.GetConfig(";
 exports.configTreasureBoxMarkByMarkId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configTreasureBoxMarkByMarkId = {
       if (
         (n =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "MarkId",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "MarkId",
+              o,
+            ]))
       ) {
-        var n;
-        var e = void 0;
+        var n,
+          e = void 0;
         if (
           (([n, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configTreasureBoxMarkByMarkId = {
     }
   },
 };
-// # sourceMappingURL=TreasureBoxMarkByMarkId.js.map
+//# sourceMappingURL=TreasureBoxMarkByMarkId.js.map

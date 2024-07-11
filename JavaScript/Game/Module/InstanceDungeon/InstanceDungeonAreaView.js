@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonAreaView = void 0);
-const UE = require("ue");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const SHOW_TIME = 3e3;
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  SHOW_TIME = 3e3;
 class InstanceDungeonAreaView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.Ije = () => {
-        let e;
+        var e;
         this.GetText(0) &&
           (e =
             ModelManager_1.ModelManager.InstanceDungeonModel.GetInstanceDungeonName()) &&
@@ -32,4 +32,4 @@ class InstanceDungeonAreaView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.InstanceDungeonAreaView = InstanceDungeonAreaView;
-// # sourceMappingURL=InstanceDungeonAreaView.js.map
+//# sourceMappingURL=InstanceDungeonAreaView.js.map

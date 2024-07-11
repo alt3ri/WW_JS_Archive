@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiNavigationViewHandle = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Stats_1 = require("../../../../Core/Common/Stats");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const NavigationScrollbarData_1 = require("./NavigationScrollbarData");
-const UiNavigationGlobalData_1 = require("./UiNavigationGlobalData");
-const UiNavigationLogic_1 = require("./UiNavigationLogic");
-const UiNavigationNewController_1 = require("./UiNavigationNewController");
-const UiNavigationViewManager_1 = require("./UiNavigationViewManager");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  NavigationScrollbarData_1 = require("./NavigationScrollbarData"),
+  UiNavigationGlobalData_1 = require("./UiNavigationGlobalData"),
+  UiNavigationLogic_1 = require("./UiNavigationLogic"),
+  UiNavigationNewController_1 = require("./UiNavigationNewController"),
+  UiNavigationViewManager_1 = require("./UiNavigationViewManager");
 class UiNavigationViewHandle {
   constructor(i, t) {
     (this.TagId = 0),
@@ -71,16 +71,16 @@ class UiNavigationViewHandle {
         0);
   }
   LBo() {
-    return this.State === "HasNavigation";
+    return "HasNavigation" === this.State;
   }
   DBo() {
-    return this.State === "NavigateNext" || this.State === "None";
+    return "NavigateNext" === this.State || "None" === this.State;
   }
   HasNavigationButDisActive() {
-    return this.State === "HasNavigationButDisActive";
+    return "HasNavigationButDisActive" === this.State;
   }
   IsNonNavigation() {
-    return this.State === "NonNavigation";
+    return "NonNavigation" === this.State;
   }
   SetIsInController(i) {
     this.CBo === i ||
@@ -140,7 +140,7 @@ class UiNavigationViewHandle {
       this.SetCurrentAddPanel(t);
   }
   DeletePanelConfig(i) {
-    const t = this.uBo.get(i);
+    var t = this.uBo.get(i);
     t &&
       (this.uBo.delete(i),
       this.cBo === t &&
@@ -179,7 +179,7 @@ class UiNavigationViewHandle {
   }
   PBo() {
     this.fBo.ResumeLastListener();
-    const i = this.aFs();
+    var i = this.aFs();
     i
       ? ((this.State = "HasNavigation"),
         UiNavigationNewController_1.UiNavigationNewController.SwitchNavigationFocus(
@@ -190,10 +190,10 @@ class UiNavigationViewHandle {
   aFs() {
     if (this.dBo?.IsValid()) {
       if (this.dBo.IsInScrollOrLayoutCanFocus()) return this.dBo;
-      const e = this.dBo.GetNavigationGroup();
-      const a = this.dBo.GetScrollOrLayoutActor();
+      var e = this.dBo.GetNavigationGroup(),
+        a = this.dBo.GetScrollOrLayoutActor();
       for (let i = 0, t = e.ListenerList.Num(); i < t; ++i) {
-        const s = e.ListenerList.Get(i);
+        var s = e.ListenerList.Get(i);
         if (
           s.IsScrollOrLayoutActor() &&
           (!a || s.GetScrollOrLayoutActor() === a) &&
@@ -270,7 +270,7 @@ class UiNavigationViewHandle {
   RefreshScrollData() {
     if (this.SBo) {
       this.SBo = !1;
-      const i = UE.NewArray(UE.SNavigationGroup);
+      var i = UE.NewArray(UE.SNavigationGroup);
       for (const t of this.uBo.values())
         t.ScrollBarGroup && i.Add(t.ScrollBarGroup);
       this.wBo(i), this.MarkRefreshHotKeyDirty();
@@ -355,4 +355,4 @@ class UiNavigationViewHandle {
   }
 }
 exports.UiNavigationViewHandle = UiNavigationViewHandle;
-// # sourceMappingURL=UiNavigationViewHandle.js.map
+//# sourceMappingURL=UiNavigationViewHandle.js.map

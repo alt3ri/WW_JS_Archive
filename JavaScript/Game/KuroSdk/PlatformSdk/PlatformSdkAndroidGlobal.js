@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlatformSdkAndroidGlobal = void 0);
-const UE = require("ue");
-const ue_1 = require("ue");
-const Json_1 = require("../../../Core/Common/Json");
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const KuroSdkData_1 = require("../KuroSdkData");
-const PlatformSdkBase_1 = require("./PlatformSdkBase");
-const WEBVIEWCD = 5e3;
-const GETINFODELAY = 1e4;
+const UE = require("ue"),
+  ue_1 = require("ue"),
+  Json_1 = require("../../../Core/Common/Json"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  KuroSdkData_1 = require("../KuroSdkData"),
+  PlatformSdkBase_1 = require("./PlatformSdkBase"),
+  WEBVIEWCD = 5e3,
+  GETINFODELAY = 1e4;
 class AndroidSdkRePointSt extends Json_1.JsonObjBase {
   constructor() {
     super(...arguments), (this.showRed = !1);
@@ -43,13 +43,13 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
           );
       }),
       (this.CustomerServiceResultCallBack = (e) => {
-        const r = e.split(",");
+        var r = e.split(",");
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("KuroSdk", 28, "当前客服红点数量", ["result", e]),
-          r?.length > 1 &&
+          1 < r?.length &&
             (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("KuroSdk", 28, "当前客服红点数量", ["num", r[1]]),
-            (this.CurrentCustomerShowState = Number(r[1]) > 0)),
+            (this.CurrentCustomerShowState = 0 < Number(r[1]))),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.SdkCustomerRedPointRefresh,
           );
@@ -76,7 +76,7 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
   }
   SdkOpenUrlWnd(e, r, o, t, n = !0) {
     if (
-      this.LastOpenTime !== 0 &&
+      0 !== this.LastOpenTime &&
       Time_1.Time.Now - this.LastOpenTime <= WEBVIEWCD
     )
       return void ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -86,8 +86,8 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
       ue_1.KuroSDKManager.OpenWebView(e, r, o, t, n, "");
   }
   OpenFeedback() {
-    let e;
-    const r = BaseConfigController_1.BaseConfigController.GetFeedBackUrl();
+    var e,
+      r = BaseConfigController_1.BaseConfigController.GetFeedBackUrl();
     r
       ? ((e = this.GetFeedBackOpenUrl()),
         ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
@@ -98,7 +98,7 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
   }
   OpenWebView(e, r, o, t, n) {
     if (
-      this.LastOpenTime !== 0 &&
+      0 !== this.LastOpenTime &&
       Time_1.Time.Now - this.LastOpenTime <= WEBVIEWCD
     )
       return void ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -111,10 +111,10 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
     var e = e.split("|");
     const o = new Array();
     return (
-      e?.length > 1 &&
-        e[0] === "success" &&
+      1 < e?.length &&
+        "success" === e[0] &&
         ((e = Json_1.Json.Parse(e[1]))?.forEach((e) => {
-          const r = new PlatformSdkBase_1.QueryProductSt();
+          var r = new PlatformSdkBase_1.QueryProductSt();
           (r.Currency = e.currency),
             (r.GoodId = e.goodsId),
             (r.Name = e.name),
@@ -133,11 +133,11 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
         "OnGetSharePlatform",
         e,
       ]);
-    var r = Json_1.Json.Parse(e);
-    var r = Json_1.Json.Parse(r.data);
+    var r = Json_1.Json.Parse(e),
+      r = Json_1.Json.Parse(r.data);
     const o = new Array();
     r?.forEach((e) => {
-      const r = new PlatformSdkBase_1.SharePlatformSt();
+      var r = new PlatformSdkBase_1.SharePlatformSt();
       (r.IconUrl = e.iconUrl),
         (r.PlatformId = e.platform.toString()),
         o.push(r);
@@ -149,12 +149,12 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
       super.OnGetSharePlatform(e);
   }
   BEe(e) {
-    if (this.wEe.size === 0) {
-      const r = ue_1.KuroSDKManager.GetSdkParams("").split(",");
-      const o = r.length;
+    if (0 === this.wEe.size) {
+      var r = ue_1.KuroSDKManager.GetSdkParams("").split(","),
+        o = r.length;
       for (let e = 0; e < o; e++) {
-        const t = r[e].split("=");
-        t.length === 2 && this.wEe.set(t[0], t[1]);
+        var t = r[e].split("=");
+        2 === t.length && this.wEe.set(t[0], t[1]);
       }
     }
     e = this.wEe.get(e);
@@ -176,11 +176,11 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
     return this.BEe("accessToken");
   }
   SetFont() {
-    var e = new KuroSdkData_1.SetFontParamAndroid();
-    var e =
-      ((e.fontType = "1"),
-      (e.fontPath = "H7GBKHeavy.TTF"),
-      Json_1.Json.Stringify(e));
+    var e = new KuroSdkData_1.SetFontParamAndroid(),
+      e =
+        ((e.fontType = "1"),
+        (e.fontPath = "H7GBKHeavy.TTF"),
+        Json_1.Json.Stringify(e));
     ue_1.KuroSDKManager.SetFont(e);
   }
   IEe() {
@@ -191,31 +191,31 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
         : "";
   }
   OpenCustomerService(e) {
-    const r = ModelManager_1.ModelManager.LoginModel;
-    const o = new KuroSdkData_1.OpenCustomerServiceParamAndroid();
-    var e =
-      ((o.IsLogin = r.IsSdkLoggedIn() ? "1" : "0"),
-      (o.FromLogin = e.toString()),
-      (o.RoleId = this.IEe()),
-      (o.ServerId = r.GetServerId() ?? ""),
-      (o.IsLandscape = "0"),
-      Json_1.Json.Stringify(o));
+    var r = ModelManager_1.ModelManager.LoginModel,
+      o = new KuroSdkData_1.OpenCustomerServiceParamAndroid(),
+      e =
+        ((o.IsLogin = r.IsSdkLoggedIn() ? "1" : "0"),
+        (o.FromLogin = e.toString()),
+        (o.RoleId = this.IEe()),
+        (o.ServerId = r.GetServerId() ?? ""),
+        (o.IsLandscape = "0"),
+        Json_1.Json.Stringify(o));
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("KuroSdk", 28, "AndroidCustomerService", ["json", e]),
       ue_1.KuroSDKManager.OpenCustomerService(e);
   }
   QueryProduct(r, e) {
     let o = "";
-    const t = r.length;
+    var t = r.length;
     for (let e = 0; e < t; e++) (o += r[e]), e !== t - 1 && (o += ",");
-    const n = new KuroSdkData_1.QueryProductInfoParamAndroid();
-    var e = ((n.GoodIdList = o), (n.ChannelId = e), Json_1.Json.Stringify(n));
+    var n = new KuroSdkData_1.QueryProductInfoParamAndroid(),
+      e = ((n.GoodIdList = o), (n.ChannelId = e), Json_1.Json.Stringify(n));
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("KuroSdk", 28, "queryTable", ["json", e]),
       ue_1.KuroSDKManager.QueryProductInfo(e);
   }
   SdkPay(e) {
-    let r;
+    var r;
     ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
       ((r = this.bEe()),
       (r = this.qEe(e, r)),
@@ -230,15 +230,15 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
       ue_1.KuroSDKManager.KuroSDKEvent(8, r));
   }
   SdkCreateRole() {
-    let e;
+    var e;
     Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 28, "上报创建新角色"),
       ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
         ((e = this.GetCreateRoleInfo()),
         ue_1.KuroSDKManager.KuroSDKEvent(3, e));
   }
   GetCreateRoleInfo() {
-    const e = ModelManager_1.ModelManager.LoginModel;
-    const r = new KuroSdkData_1.RoleInfoSdk();
+    var e = ModelManager_1.ModelManager.LoginModel,
+      r = new KuroSdkData_1.RoleInfoSdk();
     return (
       (r.RoleId = this.IEe()),
       (r.RoleName = e.GetPlayerName() ? e.GetPlayerName() : ""),
@@ -266,9 +266,9 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
     );
   }
   bEe() {
-    const e = ModelManager_1.ModelManager.FunctionModel;
-    const r = ModelManager_1.ModelManager.LoginModel;
-    const o = new KuroSdkData_1.AndroidSdkPayRole();
+    var e = ModelManager_1.ModelManager.FunctionModel,
+      r = ModelManager_1.ModelManager.LoginModel,
+      o = new KuroSdkData_1.AndroidSdkPayRole();
     return (
       (o.roleId = this.IEe()),
       (o.roleName = e.GetPlayerName() ? e.GetPlayerName() : ""),
@@ -283,7 +283,7 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
     );
   }
   qEe(e, r) {
-    let o = new KuroSdkData_1.PayInfoAndroid();
+    var o = new KuroSdkData_1.PayInfoAndroid();
     (o.cpOrderId = e.cpOrderId.toString()),
       (o.callbackUrl = e.callbackUrl.toString()),
       (o.product_id = e.product_id.toString()),
@@ -330,7 +330,7 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
         ["platform", r],
         ["msg", o],
       ),
-      e === 0
+      0 === e
         ? EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnShareResult,
             !0,
@@ -342,4 +342,4 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
   }
 }
 exports.PlatformSdkAndroidGlobal = PlatformSdkAndroidGlobal;
-// # sourceMappingURL=PlatformSdkAndroidGlobal.js.map
+//# sourceMappingURL=PlatformSdkAndroidGlobal.js.map

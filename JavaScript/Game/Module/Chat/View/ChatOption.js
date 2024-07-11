@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChatOption = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const FriendController_1 = require("../../Friend/FriendController");
-const ReportController_1 = require("../../Report/ReportController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const ChatController_1 = require("../ChatController");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  FriendController_1 = require("../../Friend/FriendController"),
+  ReportController_1 = require("../../Report/ReportController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ChatController_1 = require("../ChatController");
 class ChatOption extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -32,7 +32,7 @@ class ChatOption extends UiViewBase_1.UiViewBase {
           UiManager_1.UiManager.CloseView("ChatOption");
       }),
       (this.uSt = () => {
-        const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(57);
+        var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(57);
         e.SetTextArgs(this.sSt.PlayerName),
           e.FunctionMap.set(2, () => {
             FriendController_1.FriendController.RequestBlockPlayer(this.j8),
@@ -44,9 +44,7 @@ class ChatOption extends UiViewBase_1.UiViewBase {
       }),
       (this.cSt = () => {
         UiManager_1.UiManager.CloseView("ChatOption");
-        const e = ModelManager_1.ModelManager.FriendModel.GetFriendById(
-          this.j8,
-        );
+        var e = ModelManager_1.ModelManager.FriendModel.GetFriendById(this.j8);
         ReportController_1.ReportController.OpenReportView(e, 1);
       });
   }
@@ -64,7 +62,7 @@ class ChatOption extends UiViewBase_1.UiViewBase {
       ]);
   }
   OnStart() {
-    let e;
+    var e;
     this.GetButton(1)?.RootUIComp.SetUIActive(!1),
       (this.aSt = new ChatOptionButton(this.GetItem(2))),
       this.aSt.SetClickCallBack(this._St),
@@ -101,7 +99,7 @@ class ChatOption extends UiViewBase_1.UiViewBase {
     (this.j8 = void 0), (this.sSt = void 0);
   }
   lSt() {
-    let e;
+    var e;
     ModelManager_1.ModelManager.ChatModel.IsInMute(this.j8)
       ? ((e =
           ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
@@ -141,4 +139,4 @@ class ChatOptionButton extends UiPanelBase_1.UiPanelBase {
     this.Kpt = e;
   }
 }
-// # sourceMappingURL=ChatOption.js.map
+//# sourceMappingURL=ChatOption.js.map

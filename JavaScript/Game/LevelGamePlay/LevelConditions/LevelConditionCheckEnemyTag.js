@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckEnemyTag = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const LevelGeneralDefine_1 = require("../LevelGeneralDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  LevelGeneralDefine_1 = require("../LevelGeneralDefine");
 class LevelConditionCheckEnemyTag extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, n, ...t) {
-    let i;
+    var i;
     return !(
       !t?.length ||
-      (e.LimitParams.size === 0
+      (0 === e.LimitParams.size
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
@@ -36,4 +36,4 @@ class LevelConditionCheckEnemyTag extends LevelGeneralBase_1.LevelConditionBase 
   }
 }
 exports.LevelConditionCheckEnemyTag = LevelConditionCheckEnemyTag;
-// # sourceMappingURL=LevelConditionCheckEnemyTag.js.map
+//# sourceMappingURL=LevelConditionCheckEnemyTag.js.map

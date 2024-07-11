@@ -24,17 +24,17 @@ class MapBorder {
     );
   }
   borderid() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   conditionid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   prefabpath(t) {
-    const r = this.J7.__offset(this.z7, 8);
+    var r = this.J7.__offset(this.z7, 8);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
 }
 exports.MapBorder = MapBorder;
-// # sourceMappingURL=MapBorder.js.map
+//# sourceMappingURL=MapBorder.js.map

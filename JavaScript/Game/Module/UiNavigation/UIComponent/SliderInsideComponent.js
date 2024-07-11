@@ -4,10 +4,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.SliderIncreaseInsideComponent =
     exports.SliderInsideComponent =
       void 0);
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const UiNavigationNewController_1 = require("../New/UiNavigationNewController");
-const SliderComponent_1 = require("./SliderComponent");
-const INTERVAL = 0.05;
+const StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
+  SliderComponent_1 = require("./SliderComponent"),
+  INTERVAL = 0.05;
 class SliderInsideComponent extends SliderComponent_1.SliderComponent {
   SetValue(e) {
     UiNavigationNewController_1.UiNavigationNewController.SliderInsideComponentSetValue(
@@ -16,7 +16,7 @@ class SliderInsideComponent extends SliderComponent_1.SliderComponent {
     );
   }
   OnRefreshSelfHotKeyState(e) {
-    const t = this.GetBindButtonTag();
+    var t = this.GetBindButtonTag();
     StringUtils_1.StringUtils.IsEmpty(t) ||
       ((e = e.GetFocusListener()) &&
       (e =
@@ -43,8 +43,8 @@ class SliderReduceInsideComponent extends SliderInsideComponent {
     this.SetValue(-INTERVAL);
   }
   OnInputAxis(e, t) {
-    t >= 0 || this.SetValue(t * INTERVAL);
+    0 <= t || this.SetValue(t * INTERVAL);
   }
 }
 exports.SliderReduceInsideComponent = SliderReduceInsideComponent;
-// # sourceMappingURL=SliderInsideComponent.js.map
+//# sourceMappingURL=SliderInsideComponent.js.map

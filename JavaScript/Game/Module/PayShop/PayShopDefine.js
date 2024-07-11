@@ -22,7 +22,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MONTH_CARD_HELP_ID = 9),
   (exports.LORD_GYM_TAB_INDEX = 2),
   (exports.payShopUpdateTypeTextId = {
-    0: "RemainNo",
+    [0]: "RemainNo",
     1: "RemainNoInDay",
     2: "RemainNoInWeek",
     3: "RemainNoInMonth",
@@ -30,12 +30,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   }),
   (exports.hideInPayShopViewTabType = [7]),
   (exports.payShopTabView = {
-    1: "PayShopRecommendView",
+    [1]: "PayShopRecommendView",
     3: "PayPackageShopView",
     4: "PayShopExchangeEntryView",
     5: "PayItemTabView",
     7: "RogueShopTabView",
     6: "PayShopExchangeEntryView",
   }),
-  (exports.recommendTabView = { 2: "MonthCardView" });
-// # sourceMappingURL=PayShopDefine.js.map
+  (exports.recommendTabView = { [2]: "MonthCardView" });
+//# sourceMappingURL=PayShopDefine.js.map

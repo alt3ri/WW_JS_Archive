@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GenericPromptModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Queue_1 = require("../../../Core/Container/Queue");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const Log_1 = require("../../../Core/Common/Log"),
+  Queue_1 = require("../../../Core/Container/Queue"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class GenericPromptModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -58,4 +58,4 @@ class GenericPromptModel extends ModelBase_1.ModelBase {
   }
 }
 exports.GenericPromptModel = GenericPromptModel;
-// # sourceMappingURL=GenericPromptModel.js.map
+//# sourceMappingURL=GenericPromptModel.js.map

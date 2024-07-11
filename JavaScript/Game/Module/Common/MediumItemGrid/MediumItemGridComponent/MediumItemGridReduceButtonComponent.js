@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MediumItemGridReduceButtonComponent = void 0);
-const UE = require("ue");
-const LongPressButtonItem_1 = require("../../Button/LongPressButtonItem");
-const MediumItemGridComponent_1 = require("./MediumItemGridComponent");
+const UE = require("ue"),
+  LongPressButtonItem_1 = require("../../Button/LongPressButtonItem"),
+  MediumItemGridComponent_1 = require("./MediumItemGridComponent");
 class MediumItemGridReduceButtonComponent extends MediumItemGridComponent_1.MediumItemGridComponent {
   constructor() {
     super(...arguments),
@@ -29,11 +29,11 @@ class MediumItemGridReduceButtonComponent extends MediumItemGridComponent_1.Medi
     this.Ixt = new LongPressButtonItem_1.LongPressButtonItem();
   }
   OnStart() {
-    const t = this.GetButton(0);
+    var t = this.GetButton(0);
     this.Ixt.Initialize(t, this.Dxt);
   }
   OnDeactivate() {
-    const t = this.GetButton(0);
+    var t = this.GetButton(0);
     t.OnPointDownCallBack.Unbind(),
       t.OnPointUpCallBack.Unbind(),
       this.Ixt?.Clear(),
@@ -42,8 +42,8 @@ class MediumItemGridReduceButtonComponent extends MediumItemGridComponent_1.Medi
       (this.Wgt = void 0);
   }
   OnRefresh(t) {
-    const e = t.IsVisible;
-    var t = t.LongPressConfigId;
+    var e = t.IsVisible,
+      t = t.LongPressConfigId;
     (this.Lxt = t),
       this.SetActive(e),
       void 0 === this.Lxt ||
@@ -68,4 +68,4 @@ class MediumItemGridReduceButtonComponent extends MediumItemGridComponent_1.Medi
 }
 exports.MediumItemGridReduceButtonComponent =
   MediumItemGridReduceButtonComponent;
-// # sourceMappingURL=MediumItemGridReduceButtonComponent.js.map
+//# sourceMappingURL=MediumItemGridReduceButtonComponent.js.map

@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GachaResultItemNew = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const UiManager_1 = require("../../../Ui/UiManager");
-const SmallItemGrid_1 = require("../../Common/SmallItemGrid/SmallItemGrid");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const WeaponTrialData_1 = require("../../Weapon/Data/WeaponTrialData");
-const RoleController_1 = require("../../RoleUi/RoleController");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  SmallItemGrid_1 = require("../../Common/SmallItemGrid/SmallItemGrid"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  WeaponTrialData_1 = require("../../Weapon/Data/WeaponTrialData"),
+  RoleController_1 = require("../../RoleUi/RoleController");
 class GachaResultItemNew extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -17,7 +17,7 @@ class GachaResultItemNew extends GridProxyAbstract_1.GridProxyAbstract {
       (this.Pjt = 0),
       (this.xjt = void 0),
       (this.IHt = () => {
-        let e;
+        var e;
         switch (
           ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(this.gIt)
         ) {
@@ -27,7 +27,7 @@ class GachaResultItemNew extends GridProxyAbstract_1.GridProxyAbstract {
             ]);
             break;
           case 2:
-            this.Pjt > 0 &&
+            0 < this.Pjt &&
               ((e = new WeaponTrialData_1.WeaponTrialData()).SetTrialId(
                 this.Pjt,
               ),
@@ -67,11 +67,11 @@ class GachaResultItemNew extends GridProxyAbstract_1.GridProxyAbstract {
   UpdateQuality(t) {
     for (let e = 0; e < t - 1; e++)
       LguiUtil_1.LguiUtil.CopyItem(this.GetItem(10), this.GetItem(9));
-    let e = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(t);
-    var i = e.GachaQualityTexture;
-    var i =
-      (i && this.SetSpriteByPath(i, this.GetSprite(1), !0, "GachaResultView"),
-      e.GachaBgTexture);
+    var e = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(t),
+      i = e.GachaQualityTexture,
+      i =
+        (i && this.SetSpriteByPath(i, this.GetSprite(1), !0, "GachaResultView"),
+        e.GachaBgTexture);
     i && this.SetSpriteByPath(i, this.GetSprite(0), !0, "GachaResultView");
     let a = void 0;
     switch (t) {
@@ -91,28 +91,28 @@ class GachaResultItemNew extends GridProxyAbstract_1.GridProxyAbstract {
       : e.SetUIActive(!1);
   }
   Update(e) {
-    let t = e.u5n.G3n;
-    const i =
-      ((this.gIt = t),
-      ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t));
-    const a = ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(t);
-    var r = ((this.Pjt = a.TrialId), e.v5n);
-    var r =
-      (r && r?.length > 0
-        ? (this.GetItem(6).SetUIActive(!0),
-          (r = {
-            Type: 4,
-            Data: (r = r[0]).G3n,
-            QualityId: 0,
-            ItemConfigId: r.G3n,
-            BottomText: r.g5n.toString(),
-          }),
-          this.xjt?.Apply(r))
-        : (this.xjt?.SetUiActive(!1), this.GetItem(6).SetUIActive(!e.IsNew)),
-      ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(t));
+    var t = e.u5n.G3n,
+      i =
+        ((this.gIt = t),
+        ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t)),
+      a = ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(t),
+      r = ((this.Pjt = a.TrialId), e.v5n),
+      r =
+        (r && 0 < r?.length
+          ? (this.GetItem(6).SetUIActive(!0),
+            (r = {
+              Type: 4,
+              Data: (r = r[0]).G3n,
+              QualityId: 0,
+              ItemConfigId: r.G3n,
+              BottomText: r.g5n.toString(),
+            }),
+            this.xjt?.Apply(r))
+          : (this.xjt?.SetUiActive(!1), this.GetItem(6).SetUIActive(!e.IsNew)),
+        ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(t));
     let s = 0;
-    let o;
-    r === 1
+    var o;
+    1 === r
       ? (this.GetItem(3).SetUIActive(!0),
         (r = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(t)),
         (t = ConfigManager_1.ConfigManager.CommonConfig.GetElementConfig(
@@ -143,4 +143,4 @@ class GachaResultItemNew extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.GachaResultItemNew = GachaResultItemNew;
-// # sourceMappingURL=GachaResultItemNew.js.map
+//# sourceMappingURL=GachaResultItemNew.js.map

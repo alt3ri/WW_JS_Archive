@@ -61,7 +61,7 @@ class InTurnGridAppearAnimation extends GridAppearAnimationBase_1.GridAppearAnim
         ((this.HasShowFirstGrid = !0), (this.nqo = this.sqo), this.mqo());
   }
   mqo() {
-    let i;
+    var i;
     this.aqo < this.GridPreserver.GetDisplayGridStartIndex() ||
     this.aqo > this.GridPreserver.GetDisplayGridEndIndex()
       ? this.cqo()
@@ -74,4 +74,4 @@ class InTurnGridAppearAnimation extends GridAppearAnimationBase_1.GridAppearAnim
   }
 }
 exports.InTurnGridAppearAnimation = InTurnGridAppearAnimation;
-// # sourceMappingURL=InTurnGridAppearAnimation.js.map
+//# sourceMappingURL=InTurnGridAppearAnimation.js.map

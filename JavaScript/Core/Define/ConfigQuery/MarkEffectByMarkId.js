@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configMarkEffectByMarkId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const MarkEffect_1 = require("../Config/MarkEffect");
-const DB = "db_map_mark.db";
-const FILE = "d.地图标记特效.xlsx";
-const TABLE = "MarkEffect";
-const COMMAND = "select BinData from `MarkEffect` where MarkId=?";
-const KEY_PREFIX = "MarkEffectByMarkId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  MarkEffect_1 = require("../Config/MarkEffect"),
+  DB = "db_map_mark.db",
+  FILE = "d.地图标记特效.xlsx",
+  TABLE = "MarkEffect",
+  COMMAND = "select BinData from `MarkEffect` where MarkId=?",
+  KEY_PREFIX = "MarkEffectByMarkId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configMarkEffectByMarkId.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configMarkEffectByMarkId.GetConfig(";
 exports.configMarkEffectByMarkId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configMarkEffectByMarkId = {
       if (
         (r =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "MarkId",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "MarkId",
+              o,
+            ]))
       ) {
-        var r;
-        var n = void 0;
+        var r,
+          n = void 0;
         if (
           (([r, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configMarkEffectByMarkId = {
     }
   },
 };
-// # sourceMappingURL=MarkEffectByMarkId.js.map
+//# sourceMappingURL=MarkEffectByMarkId.js.map

@@ -16,9 +16,9 @@ class LauncherMenuConfig {
     return LauncherMenuConfig.CSr;
   }
   static Parse(e) {
-    const n = (0, puerts_1.$ref)(void 0);
+    var n = (0, puerts_1.$ref)(void 0);
     if (e.GetInt("FunctionId", n)) {
-      const u = (0, puerts_1.$ref)(void 0);
+      var u = (0, puerts_1.$ref)(void 0);
       if (e.GetInt("OptionsDefault", u))
         return new LauncherMenuConfig(
           (0, puerts_1.$unref)(n),
@@ -27,9 +27,9 @@ class LauncherMenuConfig {
     }
   }
   static ParseLanguageDefine(e) {
-    const n = (0, puerts_1.$ref)(void 0);
+    var n = (0, puerts_1.$ref)(void 0);
     if (e.GetInt("LanguageType", n)) {
-      const u = (0, puerts_1.$ref)(void 0);
+      var u = (0, puerts_1.$ref)(void 0);
       if (e.GetBool("IsShow", u))
         return new LaunchLanguageDefineConfig(
           (0, puerts_1.$unref)(n),
@@ -46,4 +46,4 @@ class LaunchLanguageDefineConfig {
     (this.LanguageType = e), (this.IsShow = n);
   }
 }
-// # sourceMappingURL=LauncherMenuConfig.js.map
+//# sourceMappingURL=LauncherMenuConfig.js.map

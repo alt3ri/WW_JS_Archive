@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionMediumItemGrid = void 0);
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const LoopScrollMediumItemGrid_1 = require("../../../Common/MediumItemGrid/LoopScrollMediumItemGrid");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
+const ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LoopScrollMediumItemGrid_1 = require("../../../Common/MediumItemGrid/LoopScrollMediumItemGrid"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
 class VisionMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   constructor() {
     super(...arguments),
@@ -38,7 +38,7 @@ class VisionMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumIt
     this.kHi = e;
   }
   OnSelected(e) {
-    this.GetItemGridExtendToggle().ToggleState !== 1 &&
+    1 !== this.GetItemGridExtendToggle().ToggleState &&
       this.SetSelected(!0, !1),
       this.SetNewVisible(!1),
       this.SetRedDotVisible(
@@ -52,7 +52,7 @@ class VisionMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumIt
       ModelManager_1.ModelManager.InventoryModel.SaveNewAttributeItemUniqueIdList();
   }
   OnDeselected(e) {
-    this.GetItemGridExtendToggle().ToggleState !== 0 &&
+    0 !== this.GetItemGridExtendToggle().ToggleState &&
       this.SetSelected(!1, !0);
   }
   SetOnRefreshEvent(e) {
@@ -63,35 +63,35 @@ class VisionMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumIt
   }
   OnRefresh(e, t, i) {
     (this.Y6i = e), (this.NOe = i);
-    var i = ModelManager_1.ModelManager.InventoryModel;
-    const s = e.GetUniqueId();
-    const o = i.IsNewAttributeItem(s);
-    var i = i.GetPhantomItemData(s);
-    const r = e.GetCurrentSlotData();
-    const h = e.GetQuality();
-    let l =
-      !o &&
-      ModelManager_1.ModelManager.PhantomBattleModel.GetMonsterSkinListHasNew(
-        e.GetConfigId(),
-      );
-    const d = {
-      Type: 3,
-      Data: e,
-      ItemConfigId: e.GetConfigId(!0),
-      BottomText: "+" + e.GetPhantomLevel().toString(),
-      StarLevel: h,
-      QualityId: h,
-      IsLockVisible: i.GetIsLock(),
-      IsRedDotVisible: l,
-      IsNewVisible: o,
-      Level: e.GetCost(),
-      IsLevelTextUseChangeColor: !0,
-      FetterGroupId: e.GetFetterGroupId(),
-    };
-    if (r.length > 0) {
-      const a = r[0]?.SlotState ?? 1;
-      const n = r[1]?.SlotState ?? 1;
-      const M = r[2]?.SlotState ?? 1;
+    var i = ModelManager_1.ModelManager.InventoryModel,
+      s = e.GetUniqueId(),
+      o = i.IsNewAttributeItem(s),
+      i = i.GetPhantomItemData(s),
+      r = e.GetCurrentSlotData(),
+      h = e.GetQuality(),
+      l =
+        !o &&
+        ModelManager_1.ModelManager.PhantomBattleModel.GetMonsterSkinListHasNew(
+          e.GetConfigId(),
+        ),
+      d = {
+        Type: 3,
+        Data: e,
+        ItemConfigId: e.GetConfigId(!0),
+        BottomText: "+" + e.GetPhantomLevel().toString(),
+        StarLevel: h,
+        QualityId: h,
+        IsLockVisible: i.GetIsLock(),
+        IsRedDotVisible: l,
+        IsNewVisible: o,
+        Level: e.GetCost(),
+        IsLevelTextUseChangeColor: !0,
+        FetterGroupId: e.GetFetterGroupId(),
+      };
+    if (0 < r.length) {
+      var a = r[0]?.SlotState ?? 1,
+        n = r[1]?.SlotState ?? 1,
+        M = r[2]?.SlotState ?? 1;
       switch (h) {
         case 3:
           d.VisionSlotStateList = [a];
@@ -115,10 +115,10 @@ class VisionMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumIt
       (d.VisionRoleHeadInfo = { RoleConfigId: i, VisionUniqueId: s }),
       (d.IsMainVisionVisible = l)),
       this.Apply(d),
-      this.GetItemGridExtendToggle().ToggleState !== 0 &&
+      0 !== this.GetItemGridExtendToggle().ToggleState &&
         this.SetSelected(!1, !0),
       this.FHi?.(this);
   }
 }
 exports.VisionMediumItemGrid = VisionMediumItemGrid;
-// # sourceMappingURL=VisionMediumItemGrid.js.map
+//# sourceMappingURL=VisionMediumItemGrid.js.map

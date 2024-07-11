@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckInstanceEntranceUnlockStatus = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionCheckInstanceEntranceUnlockStatus extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, n) {
     return (
@@ -18,4 +18,4 @@ class LevelConditionCheckInstanceEntranceUnlockStatus extends LevelGeneralBase_1
 }
 exports.LevelConditionCheckInstanceEntranceUnlockStatus =
   LevelConditionCheckInstanceEntranceUnlockStatus;
-// # sourceMappingURL=LevelConditionCheckInstanceEntranceUnlockStatus.js.map
+//# sourceMappingURL=LevelConditionCheckInstanceEntranceUnlockStatus.js.map

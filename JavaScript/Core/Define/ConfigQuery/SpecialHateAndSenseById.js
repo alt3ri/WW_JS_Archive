@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configSpecialHateAndSenseById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const SpecialHateAndSense_1 = require("../Config/SpecialHateAndSense");
-const DB = "db_specialhateandsense.db";
-const FILE = "k.可视化编辑/c.Csv/t.特殊仇恨感知/*.csv*";
-const TABLE = "SpecialHateAndSense";
-const COMMAND = "select BinData from `SpecialHateAndSense` where id=?";
-const KEY_PREFIX = "SpecialHateAndSenseById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  SpecialHateAndSense_1 = require("../Config/SpecialHateAndSense"),
+  DB = "db_specialhateandsense.db",
+  FILE = "k.可视化编辑/c.Csv/t.特殊仇恨感知/*.csv*",
+  TABLE = "SpecialHateAndSense",
+  COMMAND = "select BinData from `SpecialHateAndSense` where id=?",
+  KEY_PREFIX = "SpecialHateAndSenseById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configSpecialHateAndSenseById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configSpecialHateAndSenseById.GetConfig(";
 exports.configSpecialHateAndSenseById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configSpecialHateAndSenseById = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            e,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              e,
+            ]))
       ) {
-        var i;
-        var o = void 0;
+        var i,
+          o = void 0;
         if (
           (([i, o] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configSpecialHateAndSenseById = {
     }
   },
 };
-// # sourceMappingURL=SpecialHateAndSenseById.js.map
+//# sourceMappingURL=SpecialHateAndSenseById.js.map

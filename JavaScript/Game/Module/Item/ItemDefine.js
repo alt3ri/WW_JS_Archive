@@ -8,4 +8,4 @@ class ItemTipsData extends UiPopViewData_1.UiPopViewData {
   }
 }
 exports.ItemTipsData = ItemTipsData;
-// # sourceMappingURL=ItemDefine.js.map
+//# sourceMappingURL=ItemDefine.js.map

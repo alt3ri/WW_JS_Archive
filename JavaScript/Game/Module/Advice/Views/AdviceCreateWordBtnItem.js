@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceCreateWordBtnItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class AdviceCreateWordBtnItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
       (this.S9 = 0),
       (this.Xy = 0),
       (this.YP = () => {
-        this.S9 === 0
+        0 === this.S9
           ? (this.b9e(), UiManager_1.UiManager.OpenView("AdviceSortWordView"))
           : (this.w9e(), UiManager_1.UiManager.OpenView("AdviceWordView"));
       }),
@@ -33,10 +33,10 @@ class AdviceCreateWordBtnItem extends UiPanelBase_1.UiPanelBase {
     this.Xy = e;
   }
   b9e() {
-    let e;
-    const i = ModelManager_1.ModelManager.AdviceModel;
-    const r = i.CurrentWordMap.get(this.Xy);
-    void 0 !== r && r > 0
+    var e,
+      i = ModelManager_1.ModelManager.AdviceModel,
+      r = i.CurrentWordMap.get(this.Xy);
+    void 0 !== r && 0 < r
       ? ((e = ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceWordType(r)),
         (i.CurrentSelectSortTypeId = e),
         (i.CurrentSelectSortWordId = r))
@@ -48,7 +48,7 @@ class AdviceCreateWordBtnItem extends UiPanelBase_1.UiPanelBase {
       (i.CurrentSelectWordIndex = this.Xy);
   }
   w9e() {
-    const e = ModelManager_1.ModelManager.AdviceModel;
+    var e = ModelManager_1.ModelManager.AdviceModel;
     (e.CurrentChangeWordType = 1),
       (e.CurrentSelectWordId = e.CurrentConjunctionId);
   }
@@ -56,16 +56,17 @@ class AdviceCreateWordBtnItem extends UiPanelBase_1.UiPanelBase {
     this.q9e();
   }
   q9e() {
-    let e;
-    this.S9 === 0
-      ? (e = ModelManager_1.ModelManager.AdviceModel.CurrentWordMap.get(
+    var e;
+    0 === this.S9
+      ? 0 <
+        (e = ModelManager_1.ModelManager.AdviceModel.CurrentWordMap.get(
           this.Xy,
-        )) > 0
+        ))
         ? ((e =
             ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceWordText(e)),
           this.GetText(1).SetText(e))
         : LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), "ChangeWord")
-      : (e = ModelManager_1.ModelManager.AdviceModel.CurrentConjunctionId) > 0
+      : 0 < (e = ModelManager_1.ModelManager.AdviceModel.CurrentConjunctionId)
         ? ((e =
             ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceConjunctionText(
               e,
@@ -75,4 +76,4 @@ class AdviceCreateWordBtnItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.AdviceCreateWordBtnItem = AdviceCreateWordBtnItem;
-// # sourceMappingURL=AdviceCreateWordBtnItem.js.map
+//# sourceMappingURL=AdviceCreateWordBtnItem.js.map

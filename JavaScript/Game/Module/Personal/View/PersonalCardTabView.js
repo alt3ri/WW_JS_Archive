@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PersonalCardTabView = void 0);
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const PersonalCardComponent_1 = require("./PersonalCardComponent");
+const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  PersonalCardComponent_1 = require("./PersonalCardComponent");
 class PersonalCardTabView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments), (this.Z4i = void 0);
@@ -20,4 +20,4 @@ class PersonalCardTabView extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.PersonalCardTabView = PersonalCardTabView;
-// # sourceMappingURL=PersonalCardTabView.js.map
+//# sourceMappingURL=PersonalCardTabView.js.map

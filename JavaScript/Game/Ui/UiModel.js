@@ -1,20 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiModel = void 0);
-const Stack_1 = require("../../Core/Container/Stack");
-const UiLayerType_1 = require("./Define/UiLayerType");
+const Stack_1 = require("../../Core/Container/Stack"),
+  UiLayerType_1 = require("./Define/UiLayerType");
 class UiModel {
   static GetTopView(e) {
     switch (e) {
       case UiLayerType_1.ELayerType.Normal:
         return UiModel.NormalStack.Peek();
       case UiLayerType_1.ELayerType.Pop:
-        return UiModel.PopList.length > 0
+        return 0 < UiModel.PopList.length
           ? UiModel.PopList[UiModel.PopList.length - 1]
           : void 0;
       case UiLayerType_1.ELayerType.HUD:
         return Array.from(UiModel.HudMap.values())[UiModel.HudMap.size - 1];
       default:
+        return;
     }
   }
   static AddNpcIconViewUnit(e) {
@@ -42,4 +43,4 @@ class UiModel {
   (UiModel.rCr = new Set()),
   (UiModel.IsInMainView = !1),
   (UiModel.InNormalQueue = !1);
-// # sourceMappingURL=UiModel.js.map
+//# sourceMappingURL=UiModel.js.map

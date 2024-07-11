@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TabComponentWithTitle = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const CommonTabTitle_1 = require("./CommonTabTitle");
-const TabComponent_1 = require("./TabComponent");
-const CommonTabItemBase_1 = require("./TabItem/CommonTabItemBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  CommonTabTitle_1 = require("./CommonTabTitle"),
+  TabComponent_1 = require("./TabComponent"),
+  CommonTabItemBase_1 = require("./TabItem/CommonTabItemBase");
 class TabComponentWithTitle extends UiPanelBase_1.UiPanelBase {
   constructor(t, e) {
     super(),
@@ -13,7 +13,7 @@ class TabComponentWithTitle extends UiPanelBase_1.UiPanelBase {
       (this.cpt = void 0),
       (this.xqe = void 0),
       (this.pqe = (t) => {
-        const e = this.bBt.GetCommonData(t);
+        var e = this.bBt.GetCommonData(t);
         e &&
           (this.TabTitle.UpdateIcon(e.GetSmallIcon()),
           this.TabTitle.UpdateTitle(e.GetTitleData())),
@@ -46,17 +46,17 @@ class TabComponentWithTitle extends UiPanelBase_1.UiPanelBase {
       this.TabTitle && (this.TabTitle.Destroy(), (this.TabTitle = void 0));
   }
   RefreshTabItem(e, t) {
-    const s = new Array();
+    var s = new Array();
     for (let t = 0; t < e; t++) {
-      const i = new CommonTabItemBase_1.CommonTabItemData();
+      var i = new CommonTabItemBase_1.CommonTabItemData();
       (i.Index = t), (i.Data = this.bBt.GetCommonData(t)), s.push(i);
     }
     this.cpt.RefreshTabItem(s, t);
   }
   async RefreshTabItemAsync(e) {
-    const s = new Array();
+    var s = new Array();
     for (let t = 0; t < e; t++) {
-      const i = new CommonTabItemBase_1.CommonTabItemData();
+      var i = new CommonTabItemBase_1.CommonTabItemData();
       (i.Index = t), (i.Data = this.bBt.GetCommonData(t)), s.push(i);
     }
     await this.RefreshTabItemByDataAsync(s);
@@ -91,4 +91,4 @@ class TabComponentWithTitle extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.TabComponentWithTitle = TabComponentWithTitle;
-// # sourceMappingURL=TabComponentWithTitle.js.map
+//# sourceMappingURL=TabComponentWithTitle.js.map

@@ -1,39 +1,44 @@
 "use strict";
-let SceneItemBuffProducerComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, s) {
-    let h;
-    const r = arguments.length;
-    let o =
-      r < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      o = Reflect.decorate(t, e, i, s);
-    else
-      for (let n = t.length - 1; n >= 0; n--)
-        (h = t[n]) && (o = (r < 3 ? h(o) : r > 3 ? h(e, i, o) : h(e, i)) || o);
-    return r > 3 && o && Object.defineProperty(e, i, o), o;
-  };
+var SceneItemBuffProducerComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, s) {
+      var h,
+        r = arguments.length,
+        o =
+          r < 3
+            ? e
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        o = Reflect.decorate(t, e, i, s);
+      else
+        for (var n = t.length - 1; 0 <= n; n--)
+          (h = t[n]) &&
+            (o = (r < 3 ? h(o) : 3 < r ? h(e, i, o) : h(e, i)) || o);
+      return 3 < r && o && Object.defineProperty(e, i, o), o;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemBuffProducerComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const BulletController_1 = require("../Bullet/BulletController");
-const SceneItemBuffController_1 = require("./Controller/SceneItemBuffController");
-const DISTANCE_THRESHOLD = 100;
-const NORMALIZE = 0.01;
-const SPEED = 600;
-const MAX_BULLET_HIT_TIME = 5e3;
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  BulletController_1 = require("../Bullet/BulletController"),
+  SceneItemBuffController_1 = require("./Controller/SceneItemBuffController"),
+  DISTANCE_THRESHOLD = 100,
+  NORMALIZE = 0.01,
+  SPEED = 600,
+  MAX_BULLET_HIT_TIME = 5e3;
 let SceneItemBuffProducerComponent =
   (SceneItemBuffProducerComponent_1 = class SceneItemBuffProducerComponent extends (
     EntityComponent_1.EntityComponent
@@ -55,7 +60,7 @@ let SceneItemBuffProducerComponent =
         (this.Lo = void 0),
         (this.jDn = void 0),
         (this.Gdn = (t) => {
-          (this.i_n = t), this.mvr && this.qdn === 2 && !this.i_n && this.Ndn();
+          (this.i_n = t), this.mvr && 2 === this.qdn && !this.i_n && this.Ndn();
         }),
         (this.G_n = () => {
           if (this.mvr)
@@ -77,7 +82,7 @@ let SceneItemBuffProducerComponent =
         (this.kdn = void 0),
         (this.TDe = void 0),
         (this.lHo = (t, e) => {
-          let i = Global_1.Global.BaseCharacter;
+          var i = Global_1.Global.BaseCharacter;
           i &&
             ((i = i.CharacterActorComponent.Entity), t.Target === i) &&
             (this.TDe &&
@@ -107,7 +112,7 @@ let SceneItemBuffProducerComponent =
         });
     }
     OnInitData(t) {
-      const e = t.GetParam(SceneItemBuffProducerComponent_1)[0];
+      var e = t.GetParam(SceneItemBuffProducerComponent_1)[0];
       switch (
         ((this.Lo = e), (this.MHr = BigInt(e.BuffId)), e.AddBuffMode.Type)
       ) {
@@ -190,7 +195,7 @@ let SceneItemBuffProducerComponent =
     }
     OnTick(t) {
       this.mvr &&
-        this.qdn === 2 &&
+        2 === this.qdn &&
         (this.Bdn ? this.Fdn(t) : this.i_n || this.Ndn());
     }
     OnEnd() {
@@ -236,16 +241,16 @@ let SceneItemBuffProducerComponent =
     wdn() {
       var t = Global_1.Global.BaseCharacter;
       if (!t) return !1;
-      var t = t.CharacterActorComponent.Entity;
-      let e = t.CheckGetComponent(157);
+      var t = t.CharacterActorComponent.Entity,
+        e = t.CheckGetComponent(157);
       if (!e) return !1;
-      let i = e.GetBuffTotalStackById(this.MHr) > 0;
+      let i = 0 < e.GetBuffTotalStackById(this.MHr);
       e = t.CheckGetComponent(171);
       return (
         e &&
           (i ||=
-            (e.GetFormationBuffComp()?.GetBuffTotalStackById(this.MHr) ?? 0) >
-            0),
+            0 <
+            (e.GetFormationBuffComp()?.GetBuffTotalStackById(this.MHr) ?? 0)),
         i
       );
     }
@@ -270,7 +275,7 @@ let SceneItemBuffProducerComponent =
         ));
     }
     Vdn(t) {
-      let e, i;
+      var e, i;
       Global_1.Global.BaseCharacter &&
         ((i = Global_1.Global.BaseCharacter.CharacterActorComponent),
         this.Hte.Owner.IsValid()) &&
@@ -294,7 +299,7 @@ let SceneItemBuffProducerComponent =
             this.Hte.SetActorLocation(this.U7o.ToUeVector())));
     }
     szo(t) {
-      let e, i, s, h;
+      var e, i, s, h;
       this.Tdn &&
         (e = Global_1.Global.BaseCharacter) &&
         ((e = e.CharacterActorComponent),
@@ -334,4 +339,4 @@ let SceneItemBuffProducerComponent =
     SceneItemBuffProducerComponent,
   )),
   (exports.SceneItemBuffProducerComponent = SceneItemBuffProducerComponent);
-// # sourceMappingURL=SceneItemBuffProducerComponent.js.map
+//# sourceMappingURL=SceneItemBuffProducerComponent.js.map

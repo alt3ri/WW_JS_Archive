@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RangeItemModel = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ModelBase_1 = require("../../../../Core/Framework/ModelBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../../Core/Framework/ModelBase");
 class RangeItemModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments), (this.Hnr = void 0);
@@ -32,4 +32,4 @@ class RangeItemModel extends ModelBase_1.ModelBase {
   }
 }
 exports.RangeItemModel = RangeItemModel;
-// # sourceMappingURL=RangeItemModel.js.map
+//# sourceMappingURL=RangeItemModel.js.map

@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MediumItemGridVisionSlotComponent = void 0);
-const UE = require("ue");
-const MediumItemGridComponent_1 = require("./MediumItemGridComponent");
-const UNLOCK_AND_HAVE_PROP_INDEX = 0;
-const UNLOCK_AND_NO_PROP_INDEX = 1;
-const PREVIEW_UNLOCK_INDEX = 2;
-const LOCK_INDEX = 3;
-const STATE_COUNT = 4;
-const STATE_SLOT_COUNT = 3;
+const UE = require("ue"),
+  MediumItemGridComponent_1 = require("./MediumItemGridComponent"),
+  UNLOCK_AND_HAVE_PROP_INDEX = 0,
+  UNLOCK_AND_NO_PROP_INDEX = 1,
+  PREVIEW_UNLOCK_INDEX = 2,
+  LOCK_INDEX = 3,
+  STATE_COUNT = 4,
+  STATE_SLOT_COUNT = 3;
 class MediumItemGridVisionSlotComponent extends MediumItemGridComponent_1.MediumItemGridComponent {
   constructor() {
     super(...arguments), (this.bxt = []);
@@ -60,14 +60,14 @@ class MediumItemGridVisionSlotComponent extends MediumItemGridComponent_1.Medium
   OnRefresh(e) {
     if (e) {
       for (let _ = 0; _ < STATE_SLOT_COUNT; _++) {
-        const t = e[_];
+        var t = e[_];
         this.qxt(_, t);
       }
       this.SetActive(!0);
     } else this.SetActive(!1);
   }
   qxt(_, e) {
-    const t = this.bxt[_];
+    var t = this.bxt[_];
     if (t && !(t.length < STATE_COUNT))
       if (void 0 === e) for (const N of t) N.SetUIActive(!1);
       else
@@ -99,4 +99,4 @@ class MediumItemGridVisionSlotComponent extends MediumItemGridComponent_1.Medium
   }
 }
 exports.MediumItemGridVisionSlotComponent = MediumItemGridVisionSlotComponent;
-// # sourceMappingURL=MediumItemGridVisionSlotComponent.js.map
+//# sourceMappingURL=MediumItemGridVisionSlotComponent.js.map

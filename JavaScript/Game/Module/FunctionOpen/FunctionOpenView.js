@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FunctionOpenView = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
+const UE = require("ue"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase");
 class FunctionOpenView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.I4t = () => {
-        const e =
+        var e =
           ModelManager_1.ModelManager.FunctionModel.PopNewOpenFunctionList();
         e ? this.W8t(e) : this.CloseMe();
       });
@@ -26,8 +26,7 @@ class FunctionOpenView extends UiViewBase_1.UiViewBase {
   OnStart() {
     ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot() &&
       this.RootItem.SetUIActive(!1);
-    const e =
-      ModelManager_1.ModelManager.FunctionModel.PopNewOpenFunctionList();
+    var e = ModelManager_1.ModelManager.FunctionModel.PopNewOpenFunctionList();
     this.nOe(e);
   }
   OnAfterShow() {
@@ -37,11 +36,11 @@ class FunctionOpenView extends UiViewBase_1.UiViewBase {
     this.UiViewSequence.PlaySequence("Show", !0), this.nOe(e);
   }
   nOe(e) {
-    const t = this.GetTexture(0);
+    var t = this.GetTexture(0);
     this.SetTextureByPath(e.Icon, t),
       this.GetText(1).ShowTextNew(e.Title),
       this.GetText(2).ShowTextNew(e.Desc);
   }
 }
 exports.FunctionOpenView = FunctionOpenView;
-// # sourceMappingURL=FunctionOpenView.js.map
+//# sourceMappingURL=FunctionOpenView.js.map

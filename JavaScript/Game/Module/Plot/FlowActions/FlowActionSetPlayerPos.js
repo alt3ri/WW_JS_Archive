@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionSetPlayerPos = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const Global_1 = require("../../../Global");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const FlowActionServerAction_1 = require("./FlowActionServerAction");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../Global"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  FlowActionServerAction_1 = require("./FlowActionServerAction");
 class FlowActionSetPlayerPos extends FlowActionServerAction_1.FlowActionServerAction {
   constructor() {
     super(...arguments),
@@ -37,4 +37,4 @@ class FlowActionSetPlayerPos extends FlowActionServerAction_1.FlowActionServerAc
   }
 }
 exports.FlowActionSetPlayerPos = FlowActionSetPlayerPos;
-// # sourceMappingURL=FlowActionSetPlayerPos.js.map
+//# sourceMappingURL=FlowActionSetPlayerPos.js.map

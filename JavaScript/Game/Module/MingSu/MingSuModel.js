@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MingSuModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const DragonPoolAll_1 = require("../../../Core/Define/ConfigQuery/DragonPoolAll");
-const ItemInfoById_1 = require("../../../Core/Define/ConfigQuery/ItemInfoById");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
-const MingSuInstance_1 = require("./MingSuInstance");
+const Log_1 = require("../../../Core/Common/Log"),
+  DragonPoolAll_1 = require("../../../Core/Define/ConfigQuery/DragonPoolAll"),
+  ItemInfoById_1 = require("../../../Core/Define/ConfigQuery/ItemInfoById"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  MingSuInstance_1 = require("./MingSuInstance");
 class MingSuModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -65,10 +65,10 @@ class MingSuModel extends ModelBase_1.ModelBase {
       this.RefreshDragonPoolHadCoreCount(e.z6n, e.yfs);
   }
   InitMingSuMap() {
-    const e = DragonPoolAll_1.configDragonPoolAll.GetConfigList();
+    var e = DragonPoolAll_1.configDragonPoolAll.GetConfigList();
     if (e)
       for (const r of e) {
-        const t = new MingSuInstance_1.MingSuInstance(r.Id);
+        var t = new MingSuInstance_1.MingSuInstance(r.Id);
         this.wBi.set(r.Id, t);
       }
     else
@@ -104,9 +104,9 @@ class MingSuModel extends ModelBase_1.ModelBase {
       if (e && e.length > t) {
         e = e[t]._gs;
         if (!e) return;
-        const r = new Array();
+        var r = new Array();
         for (const n of e) {
-          const o = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(n.G3n);
+          var o = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(n.G3n);
           r.push({ ItemInfo: o, Count: n.g5n });
         }
         return r;
@@ -120,7 +120,7 @@ class MingSuModel extends ModelBase_1.ModelBase {
       if (e && e.length > t) {
         e = e[t]._gs;
         if (!e) return;
-        const r = new Array();
+        var r = new Array();
         for (const o of e) r.push([{ ItemId: o.G3n, IncId: 0 }, o.g5n]);
         return r;
       }
@@ -142,28 +142,28 @@ class MingSuModel extends ModelBase_1.ModelBase {
   }
   CheckUp(e) {
     let t = this.GetTargetDragonPoolLevelById(e);
-    const r = this.GetDragonPoolInstanceById(e).GetGoalList();
-    const o = this.GetTargetDragonPoolMaxLevelById(e);
-    var n = this.GetTargetDragonPoolCoreCountById(e);
+    var r = this.GetDragonPoolInstanceById(e).GetGoalList(),
+      o = this.GetTargetDragonPoolMaxLevelById(e),
+      n = this.GetTargetDragonPoolCoreCountById(e);
     let i = 0;
     for (; t < o; t++) {
-      const a = r[t];
+      var a = r[t];
       i += a;
     }
     i -= n;
-    var n = this.GetTargetDragonPoolCoreById(e);
-    var e = this.GetItemCount(n);
-    var n = this.GetItemInfoById(n);
+    var n = this.GetTargetDragonPoolCoreById(e),
+      e = this.GetItemCount(n),
+      n = this.GetItemInfoById(n);
     return (
-      e !== 0 &&
+      0 !== e &&
       ((n = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(n.Name)),
       this.GBi({ UseCoreCount: e >= i ? i : e, CoreName: n ?? "" }),
       !0)
     );
   }
   CanLevelUp(e) {
-    const t = this.GetTargetDragonPoolLevelById(e);
-    var e = this.GetDragonPoolInstanceById(e);
+    var t = this.GetTargetDragonPoolLevelById(e),
+      e = this.GetDragonPoolInstanceById(e);
     return (
       !!e &&
       e.GetNeedCoreCount(t) <=
@@ -173,9 +173,9 @@ class MingSuModel extends ModelBase_1.ModelBase {
   GetCanUpPoolId() {
     let e = 0;
     for (var [t, r] of this.wBi) {
-      var o = r.GetDragonPoolLevel();
-      var r = r.GetNeedCoreCount(o);
-      var o = this.GetTargetDragonPoolCoreById(t);
+      var o = r.GetDragonPoolLevel(),
+        r = r.GetNeedCoreCount(o),
+        o = this.GetTargetDragonPoolCoreById(t);
       if (r <= this.GetItemCount(o)) {
         e = t;
         break;
@@ -184,7 +184,7 @@ class MingSuModel extends ModelBase_1.ModelBase {
     return e;
   }
   GBi(e) {
-    const t = [];
+    var t = [];
     t.push(e.CoreName, e.UseCoreCount.toString()),
       (this.BBi = new ConfirmBoxDefine_1.ConfirmBoxDataNew(9)),
       this.BBi.SetTextArgs(...t);
@@ -200,4 +200,4 @@ class MingSuModel extends ModelBase_1.ModelBase {
   }
 }
 exports.MingSuModel = MingSuModel;
-// # sourceMappingURL=MingSuModel.js.map
+//# sourceMappingURL=MingSuModel.js.map

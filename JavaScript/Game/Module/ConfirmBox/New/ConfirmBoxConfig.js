@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConfirmBoxConfig = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfirmBoxById_1 = require("../../../../Core/Define/ConfigQuery/ConfirmBoxById");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ConfirmBoxById_1 = require("../../../../Core/Define/ConfigQuery/ConfirmBoxById"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
 class ConfirmBoxConfig extends ConfigBase_1.ConfigBase {
   GetConfirmBoxConfig(e) {
-    const o = ConfirmBoxById_1.configConfirmBoxById.GetConfig(e);
+    var o = ConfirmBoxById_1.configConfirmBoxById.GetConfig(e);
     return (
       o ||
         (Log_1.Log.CheckError() &&
@@ -37,4 +37,4 @@ class ConfirmBoxConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.ConfirmBoxConfig = ConfirmBoxConfig;
-// # sourceMappingURL=ConfirmBoxConfig.js.map
+//# sourceMappingURL=ConfirmBoxConfig.js.map

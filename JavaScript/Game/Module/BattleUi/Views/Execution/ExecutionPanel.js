@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExecutionPanel = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const InputDistributeController_1 = require("../../../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../../../Ui/InputDistribute/InputMappingsDefine");
-const ExecutionItem_1 = require("./ExecutionItem");
-const CLOSE_ANIM_TIME = 300;
-const childType = 17;
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  InputDistributeController_1 = require("../../../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../../../Ui/InputDistribute/InputMappingsDefine"),
+  ExecutionItem_1 = require("./ExecutionItem"),
+  CLOSE_ANIM_TIME = 300,
+  childType = 17;
 class ExecutionPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -28,10 +28,10 @@ class ExecutionPanel extends UiPanelBase_1.UiPanelBase {
         (this.znt = void 0), this.Znt.SetResult(), (this.Znt = void 0);
       }),
       (this.bMe = (t, i) => {
-        i === 1 && this.ost();
+        1 === i && this.ost();
       }),
       (this.ost = () => {
-        let t;
+        var t;
         this.sDe?.Valid
           ? (this.Jnt?.OnInputAction(),
             (t = this.sDe.Entity.GetComponent(103))?.IsPawnInteractive() &&
@@ -71,8 +71,8 @@ class ExecutionPanel extends UiPanelBase_1.UiPanelBase {
     await this.oZe(), this.Ore();
   }
   async oZe() {
-    const t = new ExecutionItem_1.ExecutionItem();
-    const i = this.GetItem(0).GetOwner();
+    var t = new ExecutionItem_1.ExecutionItem(),
+      i = this.GetItem(0).GetOwner();
     return (
       await t.NewByRootActorAsync(i),
       (this.Jnt = t).Init(this.ost),
@@ -124,11 +124,11 @@ class ExecutionPanel extends UiPanelBase_1.UiPanelBase {
       this.est.RemoveCallback(childType, this.rst);
   }
   hnt(t) {
-    const i = [];
-    const e = this.GetItem(t)
-      .GetOwner()
-      .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass());
-    const s = e.Num();
+    var i = [],
+      e = this.GetItem(t)
+        .GetOwner()
+        .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass()),
+      s = e.Num();
     for (let t = 0; t < s; t++) i.push(e.Get(t));
     this.Art || (this.Art = new Map()), this.Art.set(t, i);
   }
@@ -190,4 +190,4 @@ class ExecutionPanel extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ExecutionPanel = ExecutionPanel;
-// # sourceMappingURL=ExecutionPanel.js.map
+//# sourceMappingURL=ExecutionPanel.js.map

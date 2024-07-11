@@ -1,23 +1,23 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestNewController = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../Core/Net/Net");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ControllerWithAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerWithAssistantBase");
-const MapDefine_1 = require("../../Map/MapDefine");
-const DailyQuestAssistant_1 = require("./DailyQuestAssistant");
-const GuideEffectAssistant_1 = require("./GuideEffectAssistant");
-const GuideLineAssistant_1 = require("./GuideLineAssistant");
-const QuestTrackAssistant_1 = require("./QuestTrackAssistant");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const assistantMap = { 0: void 0, 1: void 0, 2: void 0, 3: void 0 };
+const Log_1 = require("../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ControllerWithAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerWithAssistantBase"),
+  MapDefine_1 = require("../../Map/MapDefine"),
+  DailyQuestAssistant_1 = require("./DailyQuestAssistant"),
+  GuideEffectAssistant_1 = require("./GuideEffectAssistant"),
+  GuideLineAssistant_1 = require("./GuideLineAssistant"),
+  QuestTrackAssistant_1 = require("./QuestTrackAssistant"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  assistantMap = { [0]: void 0, 1: void 0, 2: void 0, 3: void 0 };
 class QuestNewController extends ControllerWithAssistantBase_1.ControllerWithAssistantBase {
   static OnRegisterNetEvent() {
     super.OnRegisterNetEvent(),
@@ -100,7 +100,7 @@ class QuestNewController extends ControllerWithAssistantBase_1.ControllerWithAss
   }
   static Woo() {
     let e = 0;
-    let t = ModelManager_1.ModelManager.MapModel.GetCurTrackMark();
+    var t = ModelManager_1.ModelManager.MapModel.GetCurTrackMark();
     return (e =
       t &&
       (t = ModelManager_1.ModelManager.MapModel.GetMark(t[0], t[1])) instanceof
@@ -115,14 +115,14 @@ class QuestNewController extends ControllerWithAssistantBase_1.ControllerWithAss
     return QuestNewController.c$t(1).TryChangeTrackedQuest(e);
   }
   static RedDotRequest(t, r) {
-    const e = Protocol_1.Aki.Protocol.Bss.create({ Xkn: t, A8n: r });
+    var e = Protocol_1.Aki.Protocol.Bss.create({ Xkn: t, A8n: r });
     Net_1.Net.Call(14850, e, (e) => {
       e.uvs !== Protocol_1.Aki.Protocol.lkn.Sys &&
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
           e.uvs,
           28838,
         ),
-        ModelManager_1.ModelManager.QuestNewModel.SetQuestRedDot(t, r === 1);
+        ModelManager_1.ModelManager.QuestNewModel.SetQuestRedDot(t, 1 === r);
     });
   }
 }
@@ -138,15 +138,15 @@ class QuestNewController extends ControllerWithAssistantBase_1.ControllerWithAss
     for (const r of e.TUs) {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Quest", 19, "上线下发进行中的任务", ["任务id", r.Xkn]);
-      const t = ModelManager_1.ModelManager.QuestNewModel.AddQuest(r.Xkn);
+      var t = ModelManager_1.ModelManager.QuestNewModel.AddQuest(r.Xkn);
       t && t.UpdateState(r.n3n, 0);
     }
   }),
   (QuestNewController.Goo = (e) => {
-    let t;
-    let r;
-    const o = QuestNewController.Woo();
-    const s = ModelManager_1.ModelManager.QuestNewModel;
+    var t,
+      r,
+      o = QuestNewController.Woo(),
+      s = ModelManager_1.ModelManager.QuestNewModel;
     for (const n of e.Xkn) {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Quest", 19, "下发可接任务", ["任务id", n]);
@@ -173,16 +173,16 @@ class QuestNewController extends ControllerWithAssistantBase_1.ControllerWithAss
     }
   }),
   (QuestNewController.joo = () => {
-    const e = ModelManager_1.ModelManager.AreaModel.GetCurrentAreaId();
-    const t = ConfigManager_1.ConfigManager.AreaConfig?.GetLevelOneAreaId(e);
+    var e = ModelManager_1.ModelManager.AreaModel.GetCurrentAreaId(),
+      t = ConfigManager_1.ConfigManager.AreaConfig?.GetLevelOneAreaId(e);
     if (t) {
-      let r;
-      let o;
-      const s = QuestNewController.Woo();
-      const n = ModelManager_1.ModelManager.QuestNewModel;
+      var r,
+        o,
+        s = QuestNewController.Woo(),
+        n = ModelManager_1.ModelManager.QuestNewModel;
       for ([r, o] of n.GetCanAcceptQuest())
         if (o) {
-          let a = n.GetQuestConfig(r);
+          var a = n.GetQuestConfig(r);
           if (a) {
             a = a.AddInteractOption;
             if (a) {
@@ -274,12 +274,12 @@ class QuestNewController extends ControllerWithAssistantBase_1.ControllerWithAss
   (QuestNewController.V4e = (e) =>
     ModelManager_1.ModelManager.FunctionModel.IsOpen(10004)),
   (QuestNewController.DEe = (e, t, r) => {
-    let o = ModelManager_1.ModelManager.QuestNewModel.GetQuest(e);
+    var o = ModelManager_1.ModelManager.QuestNewModel.GetQuest(e);
     if (o) {
       o = ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestTypeConfig(
         o.Type,
       );
-      if (o && o.NeedRedDot && r === 1)
+      if (o && o.NeedRedDot && 1 === r)
         switch (t) {
           case Protocol_1.Aki.Protocol.kMs.Gms:
             QuestNewController.RedDotRequest(e, 1);
@@ -296,4 +296,4 @@ class QuestNewController extends ControllerWithAssistantBase_1.ControllerWithAss
         ModelManager_1.ModelManager.QuestNewModel.SetQuestRedDot(t, !0);
     else _a.Koo = e;
   });
-// # sourceMappingURL=QuestController.js.map
+//# sourceMappingURL=QuestController.js.map

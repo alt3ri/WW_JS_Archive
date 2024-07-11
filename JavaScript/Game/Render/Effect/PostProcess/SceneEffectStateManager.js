@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../Core/Actor/ActorSystem");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../Core/Actor/ActorSystem");
 class SceneEffectStateManager {
   static GetPostProcessVolume() {
     return (
@@ -33,4 +33,4 @@ class SceneEffectStateManager {
 }
 (SceneEffectStateManager.PostProcessVolume = void 0),
   (exports.default = SceneEffectStateManager);
-// # sourceMappingURL=SceneEffectStateManager.js.map
+//# sourceMappingURL=SceneEffectStateManager.js.map

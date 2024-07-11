@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HotFixManager = void 0);
-const LauncherConfigLib_1 = require("../../Define/LauncherConfigLib");
-const HotFixUiView_1 = require("./HotFixUiView");
-const HotPatchLogReport_1 = require("../../HotPatchLogReport");
-const LauncherSerialize_1 = require("../../Util/LauncherSerialize");
+const LauncherConfigLib_1 = require("../../Define/LauncherConfigLib"),
+  HotFixUiView_1 = require("./HotFixUiView"),
+  HotPatchLogReport_1 = require("../../HotPatchLogReport"),
+  LauncherSerialize_1 = require("../../Util/LauncherSerialize");
 class HotFixManager {
   constructor() {
     (this.CEr = !1),
@@ -35,7 +35,7 @@ class HotFixManager {
     this.vEr(),
       this.fEr.SetProgressLeftActive(!0),
       this.fEr.SetProgressRightActive(!1),
-      i && i.length > 0 && this.fEr.SetProgressLeftTips(i, ...s),
+      i && 0 < i.length && this.fEr.SetProgressLeftTips(i, ...s),
       t ? this.fEr.UpdateProgressRate(0) : this.fEr.SetProgressActive(!1),
       await this.WaitFrame();
   }
@@ -43,7 +43,7 @@ class HotFixManager {
     this.fEr.SetProgressLeftTips(s, ...e),
       this.fEr.SetProgressActive(!0),
       this.fEr.UpdateProgressRate(i),
-      (t || i >= 1) && (await this.WaitFrame());
+      (t || 1 <= i) && (await this.WaitFrame());
   }
   async UpdatePatchDownProgress(t, i, s, e, h, a) {
     this.fEr.SetProgressText("PatchDownload", h, a),
@@ -51,7 +51,7 @@ class HotFixManager {
       this.fEr.SetSpeedText("PatchDownSpeed", e),
       this.fEr.SetProgressActive(!0),
       this.fEr.UpdateProgressRate(i),
-      (t || i >= 1) && (await this.WaitFrame());
+      (t || 1 <= i) && (await this.WaitFrame());
   }
   async ShowDialog(i, s, e, h, a, o, ...r) {
     if (this.CEr)
@@ -59,9 +59,8 @@ class HotFixManager {
         "已经有对话框，处理打开状态了，不能有新的对话框覆盖之前的。",
       );
     try {
-      const n = new HotPatchLogReport_1.HotPatchLog();
-      const c =
-        ((n.s_step_id = "start_hotpatch_dialog"), { content: e, args: r });
+      var n = new HotPatchLogReport_1.HotPatchLog(),
+        c = ((n.s_step_id = "start_hotpatch_dialog"), { content: e, args: r });
       (n.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(c)),
         HotPatchLogReport_1.HotPatchLogReport.Report(n),
         (this.CEr = !0),
@@ -78,10 +77,10 @@ class HotFixManager {
         await this.WaitFrame(),
         (this.CEr = !1),
         this.fEr.SetRepairButtonEnable(!1);
-      const w = new HotPatchLogReport_1.HotPatchLog();
-      const _ =
-        ((w.s_step_id = "end_hotpatch_dialog"),
-        { success: !0, info: { content: e, args: r, selectRet: t } });
+      var w = new HotPatchLogReport_1.HotPatchLog(),
+        _ =
+          ((w.s_step_id = "end_hotpatch_dialog"),
+          { success: !0, info: { content: e, args: r, selectRet: t } });
       return (
         (w.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(_)),
         HotPatchLogReport_1.HotPatchLogReport.Report(w),
@@ -148,8 +147,8 @@ class HotFixManager {
       let i = s;
       if (e)
         for (let t = 0; t < e.length; t++) {
-          const h = e[t];
-          const a = `{${t}}`;
+          var h = e[t],
+            a = `{${t}}`;
           i = i.split(a).join(h);
         }
       t.SetText(i);
@@ -157,4 +156,4 @@ class HotFixManager {
   }
 }
 exports.HotFixManager = HotFixManager;
-// # sourceMappingURL=HotFixManager.js.map
+//# sourceMappingURL=HotFixManager.js.map

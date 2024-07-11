@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FloatLineFloatTips = void 0);
-const UE = require("ue");
-const GenericPromptFloatTipsBase_1 = require("./GenericPromptFloatTipsBase");
+const UE = require("ue"),
+  GenericPromptFloatTipsBase_1 = require("./GenericPromptFloatTipsBase");
 class FloatLineFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptFloatTipsBase {
   constructor() {
     super(...arguments), (this.Q$t = void 0), (this.X$t = void 0);
   }
   OnStart() {
-    let t;
+    var t;
     super.OnStart(),
       (this.Q$t = this.MainText.GetOwner().GetComponentByClass(
         UE.UIEffectTextAnimation.StaticClass(),
@@ -28,4 +28,4 @@ class FloatLineFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptFloat
   }
 }
 exports.FloatLineFloatTips = FloatLineFloatTips;
-// # sourceMappingURL=FloatLineFloatTips.js.map
+//# sourceMappingURL=FloatLineFloatTips.js.map

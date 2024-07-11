@@ -24,15 +24,15 @@ class StringArrayLang {
     return this.arraystring(t);
   }
   arraystring(t) {
-    const r = this.J7.__offset(this.z7, 4);
+    var r = this.J7.__offset(this.z7, 4);
     return r ? this.J7.readInt32(this.J7.__vector(this.z7 + r) + 4 * t) : 0;
   }
   arraystringLength() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   arraystringArray() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -43,4 +43,4 @@ class StringArrayLang {
   }
 }
 exports.StringArrayLang = StringArrayLang;
-// # sourceMappingURL=StringArrayLang.js.map
+//# sourceMappingURL=StringArrayLang.js.map

@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcFlowLogic = exports.AudioDelegate = void 0);
-const puerts_1 = require("puerts");
-const AudioController_1 = require("../../../../../Core/Audio/AudioController");
-const Log_1 = require("../../../../../Core/Common/Log");
-const ExternalSourceSettingById_1 = require("../../../../../Core/Define/ConfigQuery/ExternalSourceSettingById");
-const InterjectionByTimberIdAndUniversalToneId_1 = require("../../../../../Core/Define/ConfigQuery/InterjectionByTimberIdAndUniversalToneId");
-const PlotAudioById_1 = require("../../../../../Core/Define/ConfigQuery/PlotAudioById");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const IAction_1 = require("../../../../../UniverseEditor/Interface/IAction");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const PlotAudioModel_1 = require("../../../../Module/Plot/PlotAudioModel");
-const CharacterFlowLogic_1 = require("../../Common/Component/Flow/CharacterFlowLogic");
-const NpcRedDotFlowLogic_1 = require("./NpcRedDotFlowLogic");
-const DEFAULT_WAIT_TIME = 3;
-const LOAD_AUDIO_TIME = 1;
-const PLAY_FLAG = 8;
-const BREAK_TIME = 1;
+const puerts_1 = require("puerts"),
+  AudioController_1 = require("../../../../../Core/Audio/AudioController"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  ExternalSourceSettingById_1 = require("../../../../../Core/Define/ConfigQuery/ExternalSourceSettingById"),
+  InterjectionByTimberIdAndUniversalToneId_1 = require("../../../../../Core/Define/ConfigQuery/InterjectionByTimberIdAndUniversalToneId"),
+  PlotAudioById_1 = require("../../../../../Core/Define/ConfigQuery/PlotAudioById"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  IAction_1 = require("../../../../../UniverseEditor/Interface/IAction"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  PlotAudioModel_1 = require("../../../../Module/Plot/PlotAudioModel"),
+  CharacterFlowLogic_1 = require("../../Common/Component/Flow/CharacterFlowLogic"),
+  NpcRedDotFlowLogic_1 = require("./NpcRedDotFlowLogic"),
+  DEFAULT_WAIT_TIME = 3,
+  LOAD_AUDIO_TIME = 1,
+  PLAY_FLAG = 8,
+  BREAK_TIME = 1;
 class AudioDelegate {
   constructor() {
     (this.AudioDelegate = void 0),
@@ -27,7 +27,7 @@ class AudioDelegate {
       (this.Config = void 0),
       (this.lzi = (i, t) => {
         this.AudioDelegateEnable
-          ? i === 3 && this.Callback(t.Duration, this.Entity, this.Config)
+          ? 3 === i && this.Callback(t.Duration, this.Entity, this.Config)
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error("Level", 27, "冒泡音频回调没移除成功");
       });
@@ -67,11 +67,11 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
       (this.lZt = (i, t, e) => {
         (this.bZo = !1),
           (this.WaitSecondsRemain =
-            i > 0 ? TimeUtil_1.TimeUtil.SetTimeSecond(i) : DEFAULT_WAIT_TIME);
+            0 < i ? TimeUtil_1.TimeUtil.SetTimeSecond(i) : DEFAULT_WAIT_TIME);
         i = this.GetFlowText(e.TidTalk);
         StringUtils_1.StringUtils.IsEmpty(i) ||
           ((e =
-            e.WaitTime && e.WaitTime > 0
+            e.WaitTime && 0 < e.WaitTime
               ? e.WaitTime + 0.05
               : this.WaitSecondsRemain + 0.05),
           t.GetComponent(70).SetDialogueText(i, e));
@@ -108,8 +108,8 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
     if (e) this.GZo(e, t, i);
     else {
       if (t.UniversalTone) {
-        var e = t.UniversalTone.UniversalToneId;
-        var o = t.UniversalTone.TimberId ?? i.GetComponent(167)?.GetTimberId();
+        var e = t.UniversalTone.UniversalToneId,
+          o = t.UniversalTone.TimberId ?? i.GetComponent(167)?.GetTimberId();
         if (o && e) {
           var r =
             InterjectionByTimberIdAndUniversalToneId_1.configInterjectionByTimberIdAndUniversalToneId.GetConfig(
@@ -142,18 +142,18 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
   }
   GZo(i, t, e) {
     (this.bZo = !0), (this.WaitSecondsRemain = LOAD_AUDIO_TIME);
-    const o =
-      ExternalSourceSettingById_1.configExternalSourceSettingById.GetConfig(
-        i.ExternalSourceSetting,
-      );
-    var i = PlotAudioModel_1.PlotAudioModel.GetExternalSourcesMediaName([
-      i.IsCheckSex,
-      i.FileName,
-    ]);
-    var t =
-      (this.Yzt.Init(this.lZt, e, t),
-      this.Yzt.Enable(),
-      e.GetComponent(3)?.Actor);
+    var o =
+        ExternalSourceSettingById_1.configExternalSourceSettingById.GetConfig(
+          i.ExternalSourceSetting,
+        ),
+      i = PlotAudioModel_1.PlotAudioModel.GetExternalSourcesMediaName([
+        i.IsCheckSex,
+        i.FileName,
+      ]),
+      t =
+        (this.Yzt.Init(this.lZt, e, t),
+        this.Yzt.Enable(),
+        e.GetComponent(3)?.Actor);
     AudioController_1.AudioController.PostEventByExternalSources(
       o.AudioEventPath,
       t,
@@ -180,7 +180,7 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
     );
   }
   yzi(i) {
-    let t, e, o;
+    var t, e, o;
     i &&
       (i.Type === IAction_1.EPostAkEvent.Global
         ? ((t = i.AkEvent),
@@ -240,4 +240,4 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
   }
 }
 exports.NpcFlowLogic = NpcFlowLogic;
-// # sourceMappingURL=NpcFlowLogic.js.map
+//# sourceMappingURL=NpcFlowLogic.js.map

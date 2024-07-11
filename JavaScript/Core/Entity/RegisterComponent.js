@@ -4,8 +4,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.RegisterComponent =
     exports.RegisterComponentFinish =
       void 0);
-const Log_1 = require("../Common/Log");
-const EntityComponent_1 = require("./EntityComponent");
+const Log_1 = require("../Common/Log"),
+  EntityComponent_1 = require("./EntityComponent");
 let finish = !1;
 function RegisterComponentFinish() {
   finish = !0;
@@ -37,7 +37,7 @@ function isComponentInstance(t, e) {
       n.constructor !== EntityComponent_1.EntityComponent;
 
     ) {
-      const o = n.constructor.Id;
+      var o = n.constructor.Id;
       if (void 0 === o) return !1;
       if (o === e) return !0;
       n = n?.__proto__;
@@ -48,4 +48,4 @@ function isComponentInstance(t, e) {
 (exports.RegisterComponentFinish = RegisterComponentFinish),
   (exports.RegisterComponent = RegisterComponent),
   (exports.isComponentInstance = isComponentInstance);
-// # sourceMappingURL=RegisterComponent.js.map
+//# sourceMappingURL=RegisterComponent.js.map

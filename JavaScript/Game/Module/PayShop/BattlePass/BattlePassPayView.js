@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattlePassPayView = void 0);
-const UE = require("ue");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const BattlePassController_1 = require("./BattlePassController");
+const UE = require("ue"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  BattlePassController_1 = require("./BattlePassController");
 class BattlePassPayView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -39,7 +39,7 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
         BattlePassController_1.BattlePassController.PayHighBattlePass();
       }),
       (this.eki = () => {
-        const e = {
+        var e = {
           WeaponDataList:
             ModelManager_1.ModelManager.BattlePassModel.GetWeaponDataList(),
           SelectedIndex: 0,
@@ -50,8 +50,8 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
       (this.rOe = () =>
         new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid()),
       (this.RefreshLeftTime = () => {
-        var e = TimeUtil_1.TimeUtil.GetServerTime();
-        var e = this.MOi - e;
+        var e = TimeUtil_1.TimeUtil.GetServerTime(),
+          e = this.MOi - e;
         e < 0 ||
           ((e = TimeUtil_1.TimeUtil.GetRemainTimeDataFormat(e)),
           LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -163,8 +163,8 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
       (this.TDe = void 0);
   }
   JOi() {
-    let e;
-    const t = ModelManager_1.ModelManager.BattlePassModel.PayType;
+    var e,
+      t = ModelManager_1.ModelManager.BattlePassModel.PayType;
     this.GetItem(9).SetUIActive(t === Protocol_1.Aki.Protocol.B2s.Proto_NoPaid),
       this.GetItem(11).SetUIActive(
         t !== Protocol_1.Aki.Protocol.B2s.Proto_NoPaid,
@@ -192,4 +192,4 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.BattlePassPayView = BattlePassPayView;
-// # sourceMappingURL=BattlePassPayView.js.map
+//# sourceMappingURL=BattlePassPayView.js.map

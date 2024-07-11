@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuideBaseView = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const LevelConditionRegistry_1 = require("../../../LevelGamePlay/LevelConditions/LevelConditionRegistry");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTimeDilation_1 = require("../../../Ui/Base/UiTimeDilation");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const guideConflictView = new Set([
-  "MonthCardRewardView",
-  "LoadingView",
-  "QuestRewardView",
-  "ExploreRewardView",
-  "CommonRewardView",
-  "ItemTipsView",
-]);
+const Log_1 = require("../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  LevelConditionRegistry_1 = require("../../../LevelGamePlay/LevelConditions/LevelConditionRegistry"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTimeDilation_1 = require("../../../Ui/Base/UiTimeDilation"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  guideConflictView = new Set([
+    "MonthCardRewardView",
+    "LoadingView",
+    "QuestRewardView",
+    "ExploreRewardView",
+    "CommonRewardView",
+    "ItemTipsView",
+  ]);
 class GuideBaseView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -64,8 +64,8 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
       (this.OnTick = (e) => {
         if (!UiManager_1.UiManager.IsViewShow("LoadingView")) {
           this.OnGuideBaseViewTick(e);
-          let t = this.RemainDuration;
-          if (t && t > 0) {
+          var t = this.RemainDuration;
+          if (t && 0 < t) {
             let i = e;
             (t -= i =
               !this.GuideStepInfo?.ViewData?.IsAttachToBattleView || this.IsShow
@@ -82,8 +82,8 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
     return this.GuideStepInfo ? this.GuideStepInfo.Config.Duration : 0;
   }
   yJt() {
-    let i;
-    const e = this.GuideStepInfo.Config;
+    var i,
+      e = this.GuideStepInfo.Config;
     this.fJt ||
       ((i = e.SuccessCondition) &&
         ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckCondition(
@@ -123,7 +123,7 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
       ((this.IsFinished = !0), this.OnGuideViewCloseWhenFinish(), this.SJt());
   }
   SJt() {
-    const i = this.CJt;
+    var i = this.CJt;
     i < TimerSystem_1.MIN_TIME
       ? this.Jqt()
       : (Log_1.Log.CheckDebug() &&
@@ -146,7 +146,7 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
     if (e.length === t.length && this.vJt !== i) {
       this.vJt = i;
       for (let i = 0; i < t.length; i++) {
-        const s = e[i];
+        var s = e[i];
         Object.values(InputMappingsDefine_1.actionMappings).includes(s)
           ? (InputDistributeController_1.InputDistributeController.BindAction(
               t[i],
@@ -181,19 +181,19 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
   IsAllCombineInputPass() {
     let i = !0;
     for (const s of this.CombineInputMap) {
-      const e = s[0];
-      const t = s[1];
+      var e = s[0],
+        t = s[1];
       Object.values(InputMappingsDefine_1.actionMappings).includes(e)
-        ? (i = i && t !== 1)
+        ? (i = i && 1 !== t)
         : Object.values(InputMappingsDefine_1.axisMappings).includes(e) &&
-          (i = i && t > 0);
+          (i = i && 0 < t);
     }
     return i;
   }
   UnbindInput(e, t) {
     if (e.length === t.length && this.vJt) {
       for (let i = 0; i < t.length; i++) {
-        const s = e[i];
+        var s = e[i];
         Object.values(InputMappingsDefine_1.actionMappings).includes(s)
           ? InputDistributeController_1.InputDistributeController.UnBindAction(
               t[i],
@@ -239,14 +239,14 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
         "引导步骤",
         this.GuideStepInfo.Id,
       ]);
-    var i = this.GuideStepInfo.Config;
-    var i =
-      (i.IsDangerous &&
-        LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
-          "UiItem_Danger_Tip",
-          this.RootItem,
-        ),
-      i.TimeScale);
+    var i = this.GuideStepInfo.Config,
+      i =
+        (i.IsDangerous &&
+          LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
+            "UiItem_Danger_Tip",
+            this.RootItem,
+          ),
+        i.TimeScale);
     i < 1 &&
       !ModelManager_1.ModelManager.GameModeModel.IsMulti &&
       (InputDistributeController_1.InputDistributeController.RefreshInputTag(),
@@ -270,7 +270,7 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
       this.OnGuideBaseViewAfterHide();
   }
   IJt() {
-    let i, e;
+    var i, e;
     this.gJt ||
       ((this.gJt = !0),
       (i = this.GuideStepInfo.Config).SuccessCondition &&
@@ -293,7 +293,7 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
         (this.pJt = e));
   }
   TJt() {
-    let i;
+    var i;
     this.gJt &&
       ((this.gJt = !1),
       (i = this.GuideStepInfo.Config).SuccessCondition &&
@@ -313,7 +313,7 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
   }
   OnBeforeDestroy() {
     this.TimeTicker && (this.TimeTicker.Remove(), (this.TimeTicker = void 0));
-    const i = this.GuideStepInfo;
+    var i = this.GuideStepInfo;
     this.OnGuideBaseViewDestroy(),
       this.IgnoreState ||
         (this.IsFinished
@@ -355,4 +355,4 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.GuideBaseView = GuideBaseView;
-// # sourceMappingURL=GuideBaseView.js.map
+//# sourceMappingURL=GuideBaseView.js.map

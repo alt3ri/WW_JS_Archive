@@ -25,22 +25,22 @@ class MonsterSizeId {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetMonstersizetagAt(t) {
     return this.monstersizetag(t);
   }
   monstersizetag(t, s) {
-    const e = this.J7.__offset(this.z7, 6);
+    var e = this.J7.__offset(this.z7, 6);
     return e
       ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, s)
       : null;
   }
   monstersizetagLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.MonsterSizeId = MonsterSizeId;
-// # sourceMappingURL=MonsterSizeId.js.map
+//# sourceMappingURL=MonsterSizeId.js.map

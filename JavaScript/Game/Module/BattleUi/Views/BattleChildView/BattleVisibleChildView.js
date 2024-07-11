@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleVisibleChildView = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const VisibleStateUtil_1 = require("../../VisibleStateUtil");
-const BattleChildView_1 = require("./BattleChildView");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  VisibleStateUtil_1 = require("../../VisibleStateUtil"),
+  BattleChildView_1 = require("./BattleChildView");
 class BattleVisibleChildView extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
@@ -27,12 +27,12 @@ class BattleVisibleChildView extends BattleChildView_1.BattleChildView {
   }
   ShowBattleVisibleChildView() {
     (this.IsEnable = !0), this.K$e(0, !0);
-    const i = this.GetVisible();
+    var i = this.GetVisible();
     this.SetActive(i), i && this.OnShowBattleChildView();
   }
   HideBattleVisibleChildView() {
     this.IsEnable = !1;
-    const i = this.GetVisible();
+    var i = this.GetVisible();
     this.K$e(0, !1),
       this.SetActive(this.GetVisible()),
       i && this.OnHideBattleChildView();
@@ -55,12 +55,12 @@ class BattleVisibleChildView extends BattleChildView_1.BattleChildView {
       : super.SetActive(i);
   }
   W$e() {
-    const i = this.GetVisible();
+    var i = this.GetVisible();
     (this.BaseVisible = this.ChildViewData.GetChildVisible(this.ChildType)),
       this.Q$e(i);
   }
   SetVisible(i, t) {
-    const e = this.GetVisible();
+    var e = this.GetVisible();
     this.K$e(i, t), this.Q$e(e);
   }
   Q$e(i) {
@@ -77,10 +77,10 @@ class BattleVisibleChildView extends BattleChildView_1.BattleChildView {
     );
   }
   GetVisible() {
-    return this.BaseVisible && this.InnerVisibleState === 0;
+    return this.BaseVisible && 0 === this.InnerVisibleState;
   }
   OnShowBattleChildView() {}
   OnHideBattleChildView() {}
 }
 exports.BattleVisibleChildView = BattleVisibleChildView;
-// # sourceMappingURL=BattleVisibleChildView.js.map
+//# sourceMappingURL=BattleVisibleChildView.js.map

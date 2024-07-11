@@ -1,28 +1,28 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelAimLineController = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const EffectContext_1 = require("../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../Effect/EffectSystem");
-const GlobalData_1 = require("../../GlobalData");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ItemMaterialControllerActorData_1 = require("../../Render/Scene/Item/MaterialController/ItemMaterialControllerActorData");
-const ItemMaterialManager_1 = require("../../Render/Scene/Item/MaterialController/ItemMaterialManager");
-const UPDATE_MESH_INTERVAL = 1e3;
-const DATA_PATH =
-  "/Game/Aki/Effect/MaterialController/ItemMaterial/DA_Fx_ActorItem_Scanning.DA_Fx_ActorItem_Scanning";
-const sightingTag = new UE.FName("Manipulate_Targeted");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  EffectContext_1 = require("../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../Effect/EffectSystem"),
+  GlobalData_1 = require("../../GlobalData"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ItemMaterialControllerActorData_1 = require("../../Render/Scene/Item/MaterialController/ItemMaterialControllerActorData"),
+  ItemMaterialManager_1 = require("../../Render/Scene/Item/MaterialController/ItemMaterialManager"),
+  UPDATE_MESH_INTERVAL = 1e3,
+  DATA_PATH =
+    "/Game/Aki/Effect/MaterialController/ItemMaterial/DA_Fx_ActorItem_Scanning.DA_Fx_ActorItem_Scanning",
+  sightingTag = new UE.FName("Manipulate_Targeted");
 class LevelAimLineController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -116,19 +116,19 @@ class LevelAimLineController extends ControllerBase_1.ControllerBase {
   }
   static UpdatePoints(t, e) {
     if (t?.length <= 0) return !1;
-    const i = t[0];
-    const r = Vector_1.Vector.Create();
-    const o =
-      (this.OC.K2_SetActorLocation(i.ToUeVector(), !1, void 0, !0),
-      UE.NewArray(UE.SplinePoint));
+    var i = t[0],
+      r = Vector_1.Vector.Create(),
+      o =
+        (this.OC.K2_SetActorLocation(i.ToUeVector(), !1, void 0, !0),
+        UE.NewArray(UE.SplinePoint));
     let s = 5;
-    s = e === 0 ? 0 : 1;
+    s = 0 === e ? 0 : 1;
     for (let e = 0; e < t.length; e++) {
       t[e].Subtraction(i, r);
-      const a = new UE.SplinePoint(
+      var a = new UE.SplinePoint(
         e,
         r.ToUeVector(),
-        t[e === 0 ? e : e - 1].ToUeVector(),
+        t[0 === e ? e : e - 1].ToUeVector(),
         t[e === t.length - 1 ? e : e + 1].ToUeVector(),
         Rotator_1.Rotator.ZeroRotator,
         Vector_1.Vector.OneVector,
@@ -148,9 +148,9 @@ class LevelAimLineController extends ControllerBase_1.ControllerBase {
   }
   static uye() {
     this.iye.K2_SetActorLocation(this.OC.K2_GetActorLocation(), !0, void 0, !1);
-    const t = this.zie.GetSplineLength() / (this.OC.SamplingNum - 1);
+    var t = this.zie.GetSplineLength() / (this.OC.SamplingNum - 1);
     for (let e = 0; e < this.OC.SamplingNum; e++) {
-      const i = this.zie.GetLocationAtDistanceAlongSpline((e + 1) * t, 1);
+      var i = this.zie.GetLocationAtDistanceAlongSpline((e + 1) * t, 1);
       this.iye.K2_SetActorLocation(i, !0, void 0, !1);
     }
     this.cye
@@ -164,7 +164,7 @@ class LevelAimLineController extends ControllerBase_1.ControllerBase {
       this.mye
         .filter((e) => !this.cye.includes(e))
         .forEach((e) => {
-          const t = ItemMaterialManager_1.ItemMaterialManager.AddMaterialData(
+          var t = ItemMaterialManager_1.ItemMaterialManager.AddMaterialData(
             e,
             this.rye,
           );
@@ -238,4 +238,4 @@ class LevelAimLineController extends ControllerBase_1.ControllerBase {
         ((_a.OC.ActorLabel = "AimLineController"),
         (_a.iye.ActorLabel = "AimLineBullet"));
   });
-// # sourceMappingURL=LevelAimLineController.js.map
+//# sourceMappingURL=LevelAimLineController.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneGameplayTipGrid = void 0);
-const ue_1 = require("ue");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const CommonItemSmallItemGrid_1 = require("../../../Common/ItemGrid/CommonItemSmallItemGrid");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
+const ue_1 = require("ue"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  CommonItemSmallItemGrid_1 = require("../../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  LguiUtil_1 = require("../../../Util/LguiUtil");
 class SceneGameplayTipGrid extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -45,11 +45,11 @@ class SceneGameplayTipGrid extends UiPanelBase_1.UiPanelBase {
     this.GetButton(3).RootUIComp.SetUIActive(i);
   }
   Yhi(e = !1) {
-    this.a1i = !!this.d2o && this.d2o.size > 0;
+    this.a1i = !!this.d2o && 0 < this.d2o.size;
     let s = 0;
     if (this.a1i) {
-      const r = this.GetItem(2).GetOwner();
-      const h = this.GetItem(1);
+      var r = this.GetItem(2).GetOwner(),
+        h = this.GetItem(1);
       let t = 0;
       for (const l of this.d2o) {
         let i = this.h1i[t];
@@ -75,4 +75,4 @@ class SceneGameplayTipGrid extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.SceneGameplayTipGrid = SceneGameplayTipGrid;
-// # sourceMappingURL=SceneGameplayTipGrid.js.map
+//# sourceMappingURL=SceneGameplayTipGrid.js.map

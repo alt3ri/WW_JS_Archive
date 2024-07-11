@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const RenderModuleController_1 = require("../../Manager/RenderModuleController");
-const WuYinQuBattleConfig_1 = require("../WuYinQuBattleConfig");
-const WuYinQuBattleNameDefines_1 = require("../WuYinQuBattleNameDefines");
-const WuYinQuBattleStateBase_1 = require("./WuYinQuBattleStateBase");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  RenderModuleController_1 = require("../../Manager/RenderModuleController"),
+  WuYinQuBattleConfig_1 = require("../WuYinQuBattleConfig"),
+  WuYinQuBattleNameDefines_1 = require("../WuYinQuBattleNameDefines"),
+  WuYinQuBattleStateBase_1 = require("./WuYinQuBattleStateBase");
 class WuYinQuBattleStateIdleToFighting extends WuYinQuBattleStateBase_1.default {
   constructor() {
     super(...arguments),
@@ -17,7 +17,7 @@ class WuYinQuBattleStateIdleToFighting extends WuYinQuBattleStateBase_1.default 
   }
   OnEnter(e) {
     const t = this.Owner.GetKuroLevelSequenceActor();
-    let i;
+    var i;
     t &&
     UE.KismetSystemLibrary.IsValid(t) &&
     UE.KismetSystemLibrary.IsValid(t.SequencePlayer)
@@ -60,11 +60,11 @@ class WuYinQuBattleStateIdleToFighting extends WuYinQuBattleStateBase_1.default 
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("RenderBattle", 12, "进入Idle2Fighting的过度状态"),
       (this.Owner.当前状态 = "静止状态到战斗阶段1");
-    const e = this.Owner.WuYinQuFightingData;
-    const t = this.Owner.K2_GetActorLocation();
-    let i =
-      (RenderModuleController_1.RenderModuleController.AddBattleReference(t),
-      this.Owner.GetKuroLevelSequenceActor());
+    var e = this.Owner.WuYinQuFightingData,
+      t = this.Owner.K2_GetActorLocation(),
+      i =
+        (RenderModuleController_1.RenderModuleController.AddBattleReference(t),
+        this.Owner.GetKuroLevelSequenceActor());
     i &&
       UE.KismetSystemLibrary.IsValid(i) &&
       UE.KismetSystemLibrary.IsValid(i.GetSequence()) &&
@@ -108,7 +108,7 @@ class WuYinQuBattleStateIdleToFighting extends WuYinQuBattleStateBase_1.default 
             ));
   }
   OnUpdate(e) {
-    let t, i;
+    var t, i;
     this.j3 > this.Owner.WuYinQuFightingData.IdleToFightingTransitionTime
       ? this.StateMachine.Switch(1)
       : ((this.j3 += e / 1e3),
@@ -164,4 +164,4 @@ class WuYinQuBattleStateIdleToFighting extends WuYinQuBattleStateBase_1.default 
   }
 }
 exports.default = WuYinQuBattleStateIdleToFighting;
-// # sourceMappingURL=WuYinQuBattleStateIdleToFighting.js.map
+//# sourceMappingURL=WuYinQuBattleStateIdleToFighting.js.map

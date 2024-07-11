@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleTagDetailItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class RoleTagDetailItem extends GridProxyAbstract_1.GridProxyAbstract {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -16,7 +16,7 @@ class RoleTagDetailItem extends GridProxyAbstract_1.GridProxyAbstract {
     ];
   }
   Refresh(e, i, t) {
-    const r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleTagConfig(e);
+    var r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleTagConfig(e);
     void 0 === r
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("Role", 59, "RoleTagSmallIconItem无效tagId", [
@@ -31,4 +31,4 @@ class RoleTagDetailItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.RoleTagDetailItem = RoleTagDetailItem;
-// # sourceMappingURL=RoleTagDetailItem.js.map
+//# sourceMappingURL=RoleTagDetailItem.js.map

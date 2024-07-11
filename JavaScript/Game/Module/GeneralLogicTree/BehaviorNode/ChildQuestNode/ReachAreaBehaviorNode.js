@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ReachAreaBehaviorNode = void 0);
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Transform_1 = require("../../../../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const SceneTeamController_1 = require("../../../SceneTeam/SceneTeamController");
-const GeneralLogicTreeUtil_1 = require("../../GeneralLogicTreeUtil");
-const TickBehaviorNode_1 = require("./TickBehaviorNode");
+const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Transform_1 = require("../../../../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  SceneTeamController_1 = require("../../../SceneTeam/SceneTeamController"),
+  GeneralLogicTreeUtil_1 = require("../../GeneralLogicTreeUtil"),
+  TickBehaviorNode_1 = require("./TickBehaviorNode");
 class ReachAreaBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
   constructor() {
     super(...arguments),
@@ -37,13 +37,13 @@ class ReachAreaBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
   OnCreate(e) {
     if (!super.OnCreate(e)) return !1;
     e = e.Condition;
-    if (e.Type !== "ReachArea") return !1;
+    if ("ReachArea" !== e.Type) return !1;
     (this.IntervalTime = 500),
       (this.E0 = e.EntityId),
       (this.aXt = e.MatchRoleOption),
       (this.ConditionGrop = e.PreConditions),
       (this.EffectPathKey = e.EffectPath);
-    const t =
+    var t =
       void 0 !== e.RangeEntityId
         ? ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(
             e.RangeEntityId,
@@ -51,11 +51,11 @@ class ReachAreaBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
         : void 0;
     if (t) {
       this._Xt = e.Range;
-      const i = (0, IComponent_1.getComponent)(
-        t.ComponentsData,
-        "RangeComponent",
-      );
-      const r = ((this.mXt = i.Shape.Type), t.Transform.Pos);
+      var i = (0, IComponent_1.getComponent)(
+          t.ComponentsData,
+          "RangeComponent",
+        ),
+        r = ((this.mXt = i.Shape.Type), t.Transform.Pos);
       switch (i.Shape.Type) {
         case "Sphere":
           var s = i.Shape.Center;
@@ -67,21 +67,21 @@ class ReachAreaBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
             (this._Xt = i.Shape.Radius);
           break;
         case "Box":
-          var s = t.Transform.Rot;
-          var h = i.Shape.Center;
-          var o = i.Shape.Size;
-          var a = i.Shape.Rotator;
-          var s = Rotator_1.Rotator.Create(
-            s?.Y ?? 0 + (a?.Y ?? 0),
-            s?.Z ?? 0 + (a?.Z ?? 0),
-            s?.X ?? 0 + (a?.X ?? 0),
-          ).Quaternion();
-          var a = Vector_1.Vector.Create(
-            r.X + (h?.X ?? 0),
-            r.Y + (h?.Y ?? 0),
-            r.Z + (h?.Z ?? 0),
-          );
-          var h = Transform_1.Transform.Create(s, a, Vector_1.Vector.OneVector);
+          var s = t.Transform.Rot,
+            h = i.Shape.Center,
+            o = i.Shape.Size,
+            a = i.Shape.Rotator,
+            s = Rotator_1.Rotator.Create(
+              s?.Y ?? 0 + (a?.Y ?? 0),
+              s?.Z ?? 0 + (a?.Z ?? 0),
+              s?.X ?? 0 + (a?.X ?? 0),
+            ).Quaternion(),
+            a = Vector_1.Vector.Create(
+              r.X + (h?.X ?? 0),
+              r.Y + (h?.Y ?? 0),
+              r.Z + (h?.Z ?? 0),
+            ),
+            h = Transform_1.Transform.Create(s, a, Vector_1.Vector.OneVector);
           (this.lXt = a),
             (this.dXt = Vector_1.Vector.Create(o.X ?? 0, o.Y ?? 0, o.Z ?? 0)),
             (this.CXt = h);
@@ -114,7 +114,7 @@ class ReachAreaBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
         (this.MXt() && this.SubmitNode());
   }
   MXt() {
-    if (this.aXt && this.aXt.length > 0) {
+    if (this.aXt && 0 < this.aXt.length) {
       if (
         !SceneTeamController_1.SceneTeamController.IsMatchRoleOption(this.aXt)
       )
@@ -174,4 +174,4 @@ class ReachAreaBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
   }
 }
 exports.ReachAreaBehaviorNode = ReachAreaBehaviorNode;
-// # sourceMappingURL=ReachAreaBehaviorNode.js.map
+//# sourceMappingURL=ReachAreaBehaviorNode.js.map

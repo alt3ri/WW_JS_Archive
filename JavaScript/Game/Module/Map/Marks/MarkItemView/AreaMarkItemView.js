@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AreaMarkItemView = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const AreaByDeliveryMarkId_1 = require("../../../../../Core/Define/ConfigQuery/AreaByDeliveryMarkId");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ExploreProgressDefine_1 = require("../../../ExploreProgress/ExploreProgressDefine");
-const ConfigMarkItemView_1 = require("./ConfigMarkItemView");
-const LEVEL_TWO_SIZE = 48;
-const LEVEL_TREE_SIZE = 36;
+const Log_1 = require("../../../../../Core/Common/Log"),
+  AreaByDeliveryMarkId_1 = require("../../../../../Core/Define/ConfigQuery/AreaByDeliveryMarkId"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ExploreProgressDefine_1 = require("../../../ExploreProgress/ExploreProgressDefine"),
+  ConfigMarkItemView_1 = require("./ConfigMarkItemView"),
+  LEVEL_TWO_SIZE = 48,
+  LEVEL_TREE_SIZE = 36;
 class AreaMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
   constructor(e) {
     super(e);
@@ -17,18 +17,18 @@ class AreaMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
     super.OnInitialize(), this.SetNameText();
   }
   SetNameText() {
-    let e = AreaByDeliveryMarkId_1.configAreaByDeliveryMarkId.GetConfig(
+    var e = AreaByDeliveryMarkId_1.configAreaByDeliveryMarkId.GetConfig(
       this.Holder.MarkId,
     );
     if (e) {
-      const a =
+      var a =
         ModelManager_1.ModelManager.ExploreProgressModel.GetExploreAreaData(
           e.AreaId,
         );
       const o = this.Holder.MarkConfig.MarkTitle;
-      let r = LEVEL_TREE_SIZE;
-      let i = "";
-      let t = "SmallAreaName";
+      let r = LEVEL_TREE_SIZE,
+        i = "",
+        t = "SmallAreaName";
       e.Level === ExploreProgressDefine_1.AREA_LEVEL &&
         ((e = a?.GetProgress()?.toString() ?? "0"),
         (i = StringUtils_1.StringUtils.Format("{0}%", e)),
@@ -49,4 +49,4 @@ class AreaMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
   }
 }
 exports.AreaMarkItemView = AreaMarkItemView;
-// # sourceMappingURL=AreaMarkItemView.js.map
+//# sourceMappingURL=AreaMarkItemView.js.map

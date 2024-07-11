@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PersonalRoleShowView = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
-const PersonalController_1 = require("../Controller/PersonalController");
-const PersonalRoleMediumItemGrid_1 = require("./PersonalRoleMediumItemGrid");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  PersonalController_1 = require("../Controller/PersonalController"),
+  PersonalRoleMediumItemGrid_1 = require("./PersonalRoleMediumItemGrid");
 class PersonalRoleShowView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -18,23 +18,23 @@ class PersonalRoleShowView extends UiViewBase_1.UiViewBase {
       (this.U5i = 0),
       (this.A5i = void 0),
       (this.nNt = () => {
-        const i = ModelManager_1.ModelManager.PersonalModel.GetRoleShowList();
-        const t = i.length;
-        const s = [];
-        if (this.U5i === 0) {
+        var i = ModelManager_1.ModelManager.PersonalModel.GetRoleShowList(),
+          t = i.length,
+          s = [];
+        if (0 === this.U5i) {
           for (let e = 0; e < t; e++) {
-            const r = i[e];
+            var r = i[e];
             s.push(r.l3n);
           }
           s.push(this.s5i);
-        } else if (this.U5i === 2)
+        } else if (2 === this.U5i)
           for (let e = 0; e < t; e++) {
-            const h = i[e];
+            var h = i[e];
             h.l3n !== this.s5i && s.push(h.l3n);
           }
-        else if (this.U5i === 1)
+        else if (1 === this.U5i)
           for (let e = 0; e < t; e++) {
-            const o = i[e];
+            var o = i[e];
             o.l3n === this.s5i
               ? s.push(this.R5i)
               : o.l3n === this.R5i
@@ -47,7 +47,7 @@ class PersonalRoleShowView extends UiViewBase_1.UiViewBase {
           this.CloseMe();
       }),
       (this.Hke = (e, i, t) => {
-        const s = new PersonalRoleMediumItemGrid_1.PersonalRoleMediumItemGrid();
+        var s = new PersonalRoleMediumItemGrid_1.PersonalRoleMediumItemGrid();
         return (
           s.Initialize(i.GetOwner()),
           s.Refresh(e, !1, t),
@@ -80,12 +80,12 @@ class PersonalRoleShowView extends UiViewBase_1.UiViewBase {
   }
   Refresh(e) {
     this.s5i = e;
-    var e = this.R5i === this.s5i;
-    const i = ModelManager_1.ModelManager.PersonalModel.GetRoleShowList();
-    const t =
-      (this.GetButton(1).RootUIComp.SetUIActive(!0),
-      this.IsRoleInShow(this.s5i));
-    i.length === 1 && t
+    var e = this.R5i === this.s5i,
+      i = ModelManager_1.ModelManager.PersonalModel.GetRoleShowList(),
+      t =
+        (this.GetButton(1).RootUIComp.SetUIActive(!0),
+        this.IsRoleInShow(this.s5i));
+    1 === i.length && t
       ? this.GetButton(1).RootUIComp.SetUIActive(!1)
       : void 0 === this.R5i
         ? t
@@ -97,7 +97,7 @@ class PersonalRoleShowView extends UiViewBase_1.UiViewBase {
   }
   omi(e) {
     this.U5i = e;
-    const i = this.GetText(2);
+    var i = this.GetText(2);
     switch (e) {
       case 0:
         LguiUtil_1.LguiUtil.SetLocalText(i, "JoinText");
@@ -110,8 +110,8 @@ class PersonalRoleShowView extends UiViewBase_1.UiViewBase {
     }
   }
   IsRoleInShow(e) {
-    const i = ModelManager_1.ModelManager.PersonalModel.GetRoleShowList();
-    const t = i.length;
+    var i = ModelManager_1.ModelManager.PersonalModel.GetRoleShowList(),
+      t = i.length;
     let s = !1;
     for (let e = 0; e < t; e++)
       if (i[e].l3n === this.s5i) {
@@ -122,7 +122,7 @@ class PersonalRoleShowView extends UiViewBase_1.UiViewBase {
   }
   OnAfterShow() {
     (this.n4t = ModelManager_1.ModelManager.RoleModel.GetRoleIdList()),
-      this.n4t.length > 0 &&
+      0 < this.n4t.length &&
         (this.xqe.RefreshByData(this.n4t),
         (this.s5i = this.n4t[0]),
         (this.A5i = this.xqe.GetScrollItemList()[0]),
@@ -134,4 +134,4 @@ class PersonalRoleShowView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.PersonalRoleShowView = PersonalRoleShowView;
-// # sourceMappingURL=PersonalRoleShowView.js.map
+//# sourceMappingURL=PersonalRoleShowView.js.map

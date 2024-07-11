@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const Quat_1 = require("../../../../Core/Utils/Math/Quat");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../GlobalData");
-const CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary");
-const TsAiController_1 = require("../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
-const MAX_DISTANCE_INDEX = 4;
-const SUM_WEIGHT = 100;
-const TRIGGER_PERIOD = 500;
-const NAV_INTERVAL_TIME = 3;
+const Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  Quat_1 = require("../../../../Core/Utils/Math/Quat"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../GlobalData"),
+  CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
+  TsAiController_1 = require("../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
+  MAX_DISTANCE_INDEX = 4,
+  SUM_WEIGHT = 100,
+  TRIGGER_PERIOD = 500,
+  NAV_INTERVAL_TIME = 3;
 class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -75,7 +75,7 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
             ]));
   }
   ReceiveTickAI(t, i, s) {
-    let e, h, r, a;
+    var e, h, r, a;
     (this.NavigationInterval += s),
       t instanceof TsAiController_1.default
         ? (s = t.AiController).AiWanderInfos?.AiBattleWanderGroups?.length
@@ -126,7 +126,7 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
           this.Finish(!1));
   }
   OnClear() {
-    let t;
+    var t;
     this.AIOwner instanceof TsAiController_1.default &&
       ((t =
         this.AIOwner.AiController.CharActorComp.Entity.GetComponent(
@@ -140,19 +140,19 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
     return t.AiWanderInfos.GetCurrentBattleWander();
   }
   PickDirect(t, i) {
-    let s = t.AiHateList.GetCurrentTarget();
-    var e = t.CharActorComp;
+    var s = t.AiHateList.GetCurrentTarget(),
+      e = t.CharActorComp;
     if (!s?.Valid) return !1;
     s = s.Entity.GetComponent(3);
     if (!s) return !1;
     s.ActorLocationProxy.Subtraction(e.ActorLocationProxy, this.TmpOffset),
       (this.TmpOffset.Z = 0);
-    var e = this.TmpOffset.Size2D() - e.ScaledRadius - s.ScaledRadius;
-    const h =
-      ((this.DistanceIndex = this.FindDistanceIndexByDistance(i, e)),
-      this.FindDirectByWeights(i),
-      this.CheckNavigationAndAllyBlock(t, this.TmpOffset, e),
-      t.CharAiDesignComp.Entity.GetComponent(158));
+    var e = this.TmpOffset.Size2D() - e.ScaledRadius - s.ScaledRadius,
+      h =
+        ((this.DistanceIndex = this.FindDistanceIndexByDistance(i, e)),
+        this.FindDirectByWeights(i),
+        this.CheckNavigationAndAllyBlock(t, this.TmpOffset, e),
+        t.CharAiDesignComp.Entity.GetComponent(158));
     if (h.Valid)
       switch (this.TsMoveState) {
         case 1:
@@ -172,7 +172,7 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
     return s;
   }
   FindDirectByWeights(s) {
-    if (this.DistanceIndex === 0) this.DirectIndex = 1;
+    if (0 === this.DistanceIndex) this.DirectIndex = 1;
     else if (this.DistanceIndex === MAX_DISTANCE_INDEX) this.DirectIndex = 0;
     else {
       let t = new Array();
@@ -196,7 +196,7 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
     }
   }
   CheckNavigationAndAllyBlock(t, i, s) {
-    if (this.DirectIndex !== 4 && !(s <= MathUtils_1.MathUtils.SmallNumber))
+    if (4 !== this.DirectIndex && !(s <= MathUtils_1.MathUtils.SmallNumber))
       if (
         (this.TmpVector || (this.TmpVector = Vector_1.Vector.Create()),
         this.TmpVector.DeepCopy(i),
@@ -251,7 +251,7 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
         (this.TmpOffset.X = -this.TmpOffset.Y), (this.TmpOffset.Y = e);
     }
     s =
-      this.TsMoveState === 2 ? s.RunTurnSpeed : s.TurnSpeeds[this.DirectIndex];
+      2 === this.TsMoveState ? s.RunTurnSpeed : s.TurnSpeeds[this.DirectIndex];
     if (this.NavigationInterval > NAV_INTERVAL_TIME) {
       if (
         ((this.NavigationInterval = 0),
@@ -265,7 +265,7 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
         ]),
         this.StopMoveToLocation(t);
     }
-    this.DirectIndex !== 4 &&
+    4 !== this.DirectIndex &&
     AiContollerLibrary_1.AiControllerLibrary.NavigationBlockDirectionE(
       this.AIOwner,
       t.ActorLocationProxy,
@@ -313,8 +313,8 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
       return this.LastDestination.DeepCopy(this.TmpVector2), !0;
     this.LastDestination.DeepCopy(this.TmpVector2);
     i =
-      (this.DirectIndex === 3 || this.DirectIndex === 2) &&
-      i.WanderDirectionType === 1;
+      (3 === this.DirectIndex || 2 === this.DirectIndex) &&
+      1 === i.WanderDirectionType;
     return t.MoveController.NavigateMoveToLocation(
       {
         Position: this.TmpVector2,
@@ -329,4 +329,4 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskBattleWander;
-// # sourceMappingURL=TsTaskBattleWander.js.map
+//# sourceMappingURL=TsTaskBattleWander.js.map

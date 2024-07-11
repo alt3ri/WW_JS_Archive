@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RolePhantomData = void 0);
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const PhantomDataBase_1 = require("../../../Phantom/PhantomBattle/Data/PhantomDataBase");
-const RoleModuleDataBase_1 = require("./RoleModuleDataBase");
+const ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  PhantomDataBase_1 = require("../../../Phantom/PhantomBattle/Data/PhantomDataBase"),
+  RoleModuleDataBase_1 = require("./RoleModuleDataBase");
 class RolePhantomData extends RoleModuleDataBase_1.RoleModuleDataBase {
   constructor() {
     super(...arguments),
@@ -27,17 +27,16 @@ class RolePhantomData extends RoleModuleDataBase_1.RoleModuleDataBase {
   }
   GetDataMap() {
     if (!this.H0i) {
-      const e =
-        ModelManager_1.ModelManager.PhantomBattleModel.GetBattleDataById(
-          this.RoleId,
-        ).GetIncrIdList();
+      var e = ModelManager_1.ModelManager.PhantomBattleModel.GetBattleDataById(
+        this.RoleId,
+      ).GetIncrIdList();
       if (e)
         for (let t = 0, a = e.length; t < a; ++t) {
-          var r = e[t];
-          var r =
-            ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-              r,
-            );
+          var r = e[t],
+            r =
+              ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
+                r,
+              );
           this.NQ.set(t, r);
         }
     }
@@ -47,7 +46,7 @@ class RolePhantomData extends RoleModuleDataBase_1.RoleModuleDataBase {
     return this.GetDataMap().get(t);
   }
   GetMainProp() {
-    let t;
+    var t;
     return this.H0i
       ? this.NQ.get(0)
       : ((t = ModelManager_1.ModelManager.PhantomBattleModel.GetBattleDataById(
@@ -62,7 +61,7 @@ class RolePhantomData extends RoleModuleDataBase_1.RoleModuleDataBase {
     return (
       this.GetPhantomFetterMap().forEach((t, r) => {
         t.forEach((t, a) => {
-          const e = new PhantomDataBase_1.VisionFetterData();
+          var e = new PhantomDataBase_1.VisionFetterData();
           (e.FetterGroupId = r),
             (e.FetterId = a),
             (e.NeedActiveNum = t),
@@ -75,13 +74,13 @@ class RolePhantomData extends RoleModuleDataBase_1.RoleModuleDataBase {
     );
   }
   GetPhantomFetterMap() {
-    const t = this.t1o();
+    var t = this.t1o();
     return ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterMapResultBySuitMap(
       t,
     );
   }
   GetPhantomFettersList() {
-    const t = this.t1o();
+    var t = this.t1o();
     return (
       (this.e1o =
         ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterResultBySuitMap(
@@ -91,7 +90,7 @@ class RolePhantomData extends RoleModuleDataBase_1.RoleModuleDataBase {
     );
   }
   t1o() {
-    const t = this.GetDataMap();
+    var t = this.GetDataMap();
     const e = new Array();
     return (
       t.forEach((t, a) => {
@@ -105,4 +104,4 @@ class RolePhantomData extends RoleModuleDataBase_1.RoleModuleDataBase {
   }
 }
 exports.RolePhantomData = RolePhantomData;
-// # sourceMappingURL=RolePhantomData.js.map
+//# sourceMappingURL=RolePhantomData.js.map

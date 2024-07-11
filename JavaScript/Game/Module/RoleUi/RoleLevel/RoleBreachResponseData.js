@@ -12,7 +12,7 @@ class RoleBreachResponseData {
     return this.R_o.Y8n;
   }
   GetFinalProp() {
-    const e = new Map();
+    var e = new Map();
     for (const t of this.R_o.J8n) e.set(t.Ckn, t.gkn);
     return e;
   }
@@ -33,4 +33,4 @@ class RoleBreakThroughViewResponse {
       (this.Z8n = void 0);
   }
 }
-// # sourceMappingURL=RoleBreachResponseData.js.map
+//# sourceMappingURL=RoleBreachResponseData.js.map

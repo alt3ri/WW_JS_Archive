@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LockReasonItem = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../Ui/UiManager");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../Ui/UiManager");
 class LockReasonItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -16,7 +16,7 @@ class LockReasonItem extends UiPanelBase_1.UiPanelBase {
       (this.mro = ""),
       (this.Gct = BigInt(0)),
       (this.YP = () => {
-        const e =
+        var e =
           ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
             this.Gct,
           );
@@ -47,7 +47,7 @@ class LockReasonItem extends UiPanelBase_1.UiPanelBase {
   }
   UpdateItem() {
     this.GetText(0)?.SetText(this.cro);
-    const e =
+    var e =
       MultiTextLang_1.configMultiTextLang.GetLocalTextNew("Text_OccupiedRole") +
       ":" +
       this.mro;
@@ -55,4 +55,4 @@ class LockReasonItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.LockReasonItem = LockReasonItem;
-// # sourceMappingURL=LockReasonItem.js.map
+//# sourceMappingURL=LockReasonItem.js.map

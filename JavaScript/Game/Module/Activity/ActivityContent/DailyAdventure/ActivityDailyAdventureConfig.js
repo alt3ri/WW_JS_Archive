@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityDailyAdventureConfig = void 0);
-const DailyAdventureActivityByActivityId_1 = require("../../../../../Core/Define/ConfigQuery/DailyAdventureActivityByActivityId");
-const DailyAdventurePointById_1 = require("../../../../../Core/Define/ConfigQuery/DailyAdventurePointById");
-const DailyAdventureTaskByTaskId_1 = require("../../../../../Core/Define/ConfigQuery/DailyAdventureTaskByTaskId");
-const ConfigBase_1 = require("../../../../../Core/Framework/ConfigBase");
+const DailyAdventureActivityByActivityId_1 = require("../../../../../Core/Define/ConfigQuery/DailyAdventureActivityByActivityId"),
+  DailyAdventurePointById_1 = require("../../../../../Core/Define/ConfigQuery/DailyAdventurePointById"),
+  DailyAdventureTaskByTaskId_1 = require("../../../../../Core/Define/ConfigQuery/DailyAdventureTaskByTaskId"),
+  ConfigBase_1 = require("../../../../../Core/Framework/ConfigBase");
 class ActivityDailyAdventureConfig extends ConfigBase_1.ConfigBase {
   GetActivityDailyAdventureConfig(e) {
     return DailyAdventureActivityByActivityId_1.configDailyAdventureActivityByActivityId.GetConfig(
@@ -21,4 +21,4 @@ class ActivityDailyAdventureConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.ActivityDailyAdventureConfig = ActivityDailyAdventureConfig;
-// # sourceMappingURL=ActivityDailyAdventureConfig.js.map
+//# sourceMappingURL=ActivityDailyAdventureConfig.js.map

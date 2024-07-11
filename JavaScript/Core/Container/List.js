@@ -31,8 +31,8 @@ class LinkedList {
       if (this.i7 === s)
         (this.t7.Next = void 0), (this.i7 = this.t7), (this.s7 = 1);
       else {
-        let t = this.t7.Next;
-        let i = 1;
+        let t = this.t7.Next,
+          i = 1;
         for (; t !== s && void 0 !== t; ) (t = t.Next), i++;
         void 0 !== t &&
           (e
@@ -56,4 +56,4 @@ class LinkedList {
   }
 }
 exports.default = LinkedList;
-// # sourceMappingURL=List.js.map
+//# sourceMappingURL=List.js.map

@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DrawMainView = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../Core/Actor/ActorSystem");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils");
-const CameraController_1 = require("../../../Camera/CameraController");
-const Global_1 = require("../../../Global");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const GachaController_1 = require("../GachaController");
-const GachaSceneView_1 = require("../GachaUiSceneManager/GachaSceneView");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  ActorSystem_1 = require("../../../../Core/Actor/ActorSystem"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils"),
+  CameraController_1 = require("../../../Camera/CameraController"),
+  Global_1 = require("../../../Global"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  GachaController_1 = require("../GachaController"),
+  GachaSceneView_1 = require("../GachaUiSceneManager/GachaSceneView");
 class DrawMainView extends GachaSceneView_1.GachaSceneView {
   constructor() {
     super(...arguments),
@@ -98,20 +98,20 @@ class DrawMainView extends GachaSceneView_1.GachaSceneView {
       e > t && (t = e);
     });
     var e =
-      ConfigManager_1.ConfigManager.GachaConfig.GetGachaEffectConfigByTimesAndQuality(
-        e,
-        t,
-      );
-    var i = (0, puerts_1.$ref)(0);
-    var s = (0, puerts_1.$ref)(0);
-    var i =
-      (Global_1.Global.CharacterController.GetViewportSize(i, s),
-      (this.P7t = UE.KuroCollectActorComponent.GetActorWithTag(
-        FNameUtil_1.FNameUtil.GetDynamicFName("GachaBP"),
-        0,
-      )),
-      (0, puerts_1.$unref)(i));
-    var s = (0, puerts_1.$unref)(s);
+        ConfigManager_1.ConfigManager.GachaConfig.GetGachaEffectConfigByTimesAndQuality(
+          e,
+          t,
+        ),
+      i = (0, puerts_1.$ref)(0),
+      s = (0, puerts_1.$ref)(0),
+      i =
+        (Global_1.Global.CharacterController.GetViewportSize(i, s),
+        (this.P7t = UE.KuroCollectActorComponent.GetActorWithTag(
+          FNameUtil_1.FNameUtil.GetDynamicFName("GachaBP"),
+          0,
+        )),
+        (0, puerts_1.$unref)(i)),
+      s = (0, puerts_1.$unref)(s);
     CameraController_1.CameraController.SetViewTarget(
       this.P7t.SceneCameraActor,
       "OnAfterOpenUi",
@@ -144,7 +144,7 @@ class DrawMainView extends GachaSceneView_1.GachaSceneView {
       });
   }
   InitLevelSequence() {
-    let e = ModelManager_1.ModelManager.GachaModel.CurGachaResult.length;
+    var e = ModelManager_1.ModelManager.GachaModel.CurGachaResult.length;
     let t = 1;
     ModelManager_1.ModelManager.GachaModel.CurGachaResult.forEach((e, i) => {
       e =
@@ -169,7 +169,7 @@ class DrawMainView extends GachaSceneView_1.GachaSceneView {
         this.U7t,
         UE.LevelSequence,
         (e) => {
-          let i;
+          var i;
           ObjectUtils_1.ObjectUtils.IsValid(e) &&
             ((e = e),
             ((i = new UE.MovieSceneSequencePlaybackSettings()).bRestoreState =
@@ -191,8 +191,8 @@ class DrawMainView extends GachaSceneView_1.GachaSceneView {
   OnStart() {
     this.InitLevelSequence(),
       (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
-    const e = (0, puerts_1.$ref)(0);
-    const i = (0, puerts_1.$ref)(0);
+    var e = (0, puerts_1.$ref)(0),
+      i = (0, puerts_1.$ref)(0);
     Global_1.Global.CharacterController.GetViewportSize(e, i),
       (this.O7t = (0, puerts_1.$unref)(e));
   }
@@ -239,4 +239,4 @@ class DrawMainView extends GachaSceneView_1.GachaSceneView {
   }
 }
 exports.DrawMainView = DrawMainView;
-// # sourceMappingURL=DrawMainView.js.map
+//# sourceMappingURL=DrawMainView.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionSkinItem = void 0);
-const LocalStorageDefine_1 = require("../../../../Common/LocalStorageDefine");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const LoopScrollSmallItemGrid_1 = require("../../../Common/SmallItemGrid/LoopScrollSmallItemGrid");
+const LocalStorageDefine_1 = require("../../../../Common/LocalStorageDefine"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LoopScrollSmallItemGrid_1 = require("../../../Common/SmallItemGrid/LoopScrollSmallItemGrid");
 class VisionSkinItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid {
   constructor() {
     super(...arguments),
@@ -26,32 +26,33 @@ class VisionSkinItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid {
   }
   OnRefresh(e, i, t) {
     this.gIt = e;
-    const o = ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
-      LocalStorageDefine_1.ELocalStoragePlayerKey.VisionSkin,
-      e,
-    );
-    const a =
-      !!ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomItemById(e)
-        .ParentMonsterId &&
-      !ModelManager_1.ModelManager.PhantomBattleModel.GetSkinIsUnlock(e);
-    var e =
-      (this.Apply({
-        Type: 3,
-        Data: e,
-        ItemConfigId: e,
-        IsLockVisibleBlack: a,
-        IsNewVisible: o,
-        IsQualityHidden: !0,
-      }),
-      this.GetItemGridExtendToggle().ToggleState);
-    e !== 0 && this.SetSelected(!1, !0);
+    var o = ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
+        LocalStorageDefine_1.ELocalStoragePlayerKey.VisionSkin,
+        e,
+      ),
+      a =
+        !!ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomItemById(
+          e,
+        ).ParentMonsterId &&
+        !ModelManager_1.ModelManager.PhantomBattleModel.GetSkinIsUnlock(e),
+      e =
+        (this.Apply({
+          Type: 3,
+          Data: e,
+          ItemConfigId: e,
+          IsLockVisibleBlack: a,
+          IsNewVisible: o,
+          IsQualityHidden: !0,
+        }),
+        this.GetItemGridExtendToggle().ToggleState);
+    0 !== e && this.SetSelected(!1, !0);
   }
   OnStart() {
     this.BindOnExtendToggleStateChanged(this.c2e),
       this.GetItemGridExtendToggle()?.CanExecuteChange.Bind(this.d4e);
   }
   OnSelected(e) {
-    this.GetItemGridExtendToggle().ToggleState !== 1 &&
+    1 !== this.GetItemGridExtendToggle().ToggleState &&
       this.SetSelected(!0, !0);
   }
   SetClickToggleEvent(e) {
@@ -62,4 +63,4 @@ class VisionSkinItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid {
   }
 }
 exports.VisionSkinItem = VisionSkinItem;
-// # sourceMappingURL=VisionSkinItem.js.map
+//# sourceMappingURL=VisionSkinItem.js.map

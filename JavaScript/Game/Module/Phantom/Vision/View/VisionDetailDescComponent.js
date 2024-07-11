@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionDetailDescComponent = exports.VisionDetailDesc = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const HelpController_1 = require("../../../Help/HelpController");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const VisionFetterSuitItem_1 = require("./VisionFetterSuitItem");
-const NORMALCOLOR = "EBE5D7FF";
-const GREENCOLOR = "97FF86FF";
-const GRAYCOLOR = "ADADADFF";
-const COUNTERHELPID = 59;
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  HelpController_1 = require("../../../Help/HelpController"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  VisionFetterSuitItem_1 = require("./VisionFetterSuitItem"),
+  NORMALCOLOR = "EBE5D7FF",
+  GREENCOLOR = "97FF86FF",
+  GRAYCOLOR = "ADADADFF",
+  COUNTERHELPID = 59;
 class VisionDetailDesc {
   constructor() {
     (this.Title = ""),
@@ -51,8 +51,8 @@ class VisionDetailDesc {
     return this.$6i;
   }
   static CreateEmptySkillDescData() {
-    const t = new Array();
-    const i = new VisionDetailDesc();
+    var t = new Array(),
+      i = new VisionDetailDesc();
     return (
       (i.TitleItemShowState = !0),
       (i.Title =
@@ -70,8 +70,8 @@ class VisionDetailDesc {
     );
   }
   static CreateEmptyFetterDescData() {
-    const t = new Array();
-    const i = new VisionDetailDesc();
+    var t = new Array(),
+      i = new VisionDetailDesc();
     return (
       (i.TitleItemShowState = !0),
       (i.Title =
@@ -88,8 +88,8 @@ class VisionDetailDesc {
     );
   }
   static CreateSameMonsterTips() {
-    const t = new Array();
-    const i = new VisionDetailDesc();
+    var t = new Array(),
+      i = new VisionDetailDesc();
     return (
       (i.Title =
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
@@ -102,17 +102,17 @@ class VisionDetailDesc {
     );
   }
   static ConvertVisionSkillDescToDescData(t, i, e, s, n) {
-    const h = new Array();
-    const r = new VisionDetailDesc();
-    var i =
-      ((r.TitleItemShowState = !0),
-      (r.SkillConfig = t),
-      (r.Level = i),
-      (r.Quality = n),
-      (r.IfMainPosition = e && !s),
-      (r.NeedActiveState = !0),
-      (r.GreenActiveState = !(!e || s)),
-      t.IfCounterSkill);
+    var h = new Array(),
+      r = new VisionDetailDesc(),
+      i =
+        ((r.TitleItemShowState = !0),
+        (r.SkillConfig = t),
+        (r.Level = i),
+        (r.Quality = n),
+        (r.IfMainPosition = e && !s),
+        (r.NeedActiveState = !0),
+        (r.GreenActiveState = !(!e || s)),
+        t.IfCounterSkill);
     return (
       i
         ? ((r.JumpCallBack = () => {
@@ -131,11 +131,11 @@ class VisionDetailDesc {
     );
   }
   static ConvertVisionFetterDataToDetailDescData(i, e, s = void 0) {
-    const n = new Array();
-    const h = i.length;
+    var n = new Array(),
+      h = i.length;
     for (let t = 0; t < h; t++) {
-      const r = new VisionDetailDesc();
-      t >= 1 && (r.TitleItemShowState = !1),
+      var r = new VisionDetailDesc();
+      1 <= t && (r.TitleItemShowState = !1),
         (r.Title =
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
             "VisionFetterTitle",
@@ -204,9 +204,9 @@ class VisionDetailDescComponent extends UiPanelBase_1.UiPanelBase {
     this.mEe();
   }
   GetTxtItemByIndex(t) {
-    return t === 0
+    return 0 === t
       ? this.GetItem(1)
-      : t === 1
+      : 1 === t
         ? ((this.Z6i = !0), this.GetItem(2))
         : void 0;
   }
@@ -232,13 +232,13 @@ class VisionDetailDescComponent extends UiPanelBase_1.UiPanelBase {
   }
   Refresh(t, i = 0) {
     this.Y6i = t;
-    const e = new Array();
-    const s = new Array();
+    const e = new Array(),
+      s = new Array();
     t.forEach((t) => {
-      (t.SkillConfig || (t.TitleItemShowState && t.TitleType === 0)) &&
+      (t.SkillConfig || (t.TitleItemShowState && 0 === t.TitleType)) &&
         e.push(t),
-        (t.FetterId > 0 ||
-          (t.TitleItemShowState && t.TitleType === 1) ||
+        (0 < t.FetterId ||
+          (t.TitleItemShowState && 1 === t.TitleType) ||
           t.EquipSameMonster) &&
           s.push(t);
     }),
@@ -295,14 +295,14 @@ class VisionDetailDescItem extends UiPanelBase_1.UiPanelBase {
     let i = void 0;
     const e = new Array();
     t.forEach((t) => {
-      (t.SkillConfig || (t.TitleItemShowState && t.TitleType === 0)) &&
+      (t.SkillConfig || (t.TitleItemShowState && 0 === t.TitleType)) &&
         (i = t).SkillConfig &&
         e.push(i),
-        (t.FetterId > 0 ||
-          (t.TitleItemShowState && t.TitleType === 1) ||
+        (0 < t.FetterId ||
+          (t.TitleItemShowState && 1 === t.TitleType) ||
           t.EquipSameMonster) &&
           (t.TitleItemShowState && (i = t),
-          t.FetterId > 0 || t.EquipSameMonster) &&
+          0 < t.FetterId || t.EquipSameMonster) &&
           e.push(t);
     }),
       (this.Pe = i) &&
@@ -326,7 +326,7 @@ class VisionDetailDescItem extends UiPanelBase_1.UiPanelBase {
   }
   bPt(t) {
     this.GetItem(2).SetUIActive(t.EmptyState),
-      t.EmptyState && this.GetItem(8).SetUIActive(t.TitleType === 0);
+      t.EmptyState && this.GetItem(8).SetUIActive(0 === t.TitleType);
   }
   NPt(t) {
     this.GetText(5).SetText(t.EmptyText);
@@ -404,14 +404,14 @@ class VisionDetailDescContentItem extends UiPanelBase_1.UiPanelBase {
   }
   l8i(e) {
     if (this.n8i && e.AnimationState) {
-      let t = void 0;
-      let i = !1;
+      let t = void 0,
+        i = !1;
       e.GreenActiveState &&
         e.NewState &&
-        e.FetterId > 0 &&
+        0 < e.FetterId &&
         ((t = "Choose"), (i = !0)),
-        e.FetterId > 0 && !i && e.FetterData.ActiveState && (t = "Activate");
-      const s = this.EPe.GetCurrentSequence();
+        0 < e.FetterId && !i && e.FetterData.ActiveState && (t = "Activate");
+      var s = this.EPe.GetCurrentSequence();
       void 0 !== s && t !== s && this.EPe.StopSequenceByKey(s, !1, !0),
         void 0 !== t &&
           (t !== s
@@ -429,29 +429,29 @@ class VisionDetailDescContentItem extends UiPanelBase_1.UiPanelBase {
       : t.EquipSameMonster && this.GetItem(2).SetUIActive(!1);
   }
   h8i(t) {
-    (t.GreenActiveState && !t.NewState && t.FetterId > 0) ||
+    (t.GreenActiveState && !t.NewState && 0 < t.FetterId) ||
     t.EquipSameMonster ||
     (t.GreenActiveState && t.SkillConfig)
       ? this.GetItem(1).SetUIActive(!1)
       : this.GetItem(1).SetUIActive(!0);
   }
   OPt(i) {
-    if (i.FetterId > 0) {
+    if (0 < i.FetterId) {
       this.GetItem(5).SetUIActive(!0);
       var e =
-        ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterGroupById(
-          i.FetterGroupId,
+          ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterGroupById(
+            i.FetterGroupId,
+          ),
+        e =
+          (this.PPt.Update(e),
+          i.FetterData.ActiveFetterGroupNum > i.FetterData.NeedActiveNum
+            ? i.FetterData.NeedActiveNum
+            : i.FetterData.ActiveFetterGroupNum),
+        e = StringUtils_1.StringUtils.Format(
+          "({0}/{1})",
+          e.toString(),
+          i.FetterData.NeedActiveNum.toString(),
         );
-      var e =
-        (this.PPt.Update(e),
-        i.FetterData.ActiveFetterGroupNum > i.FetterData.NeedActiveNum
-          ? i.FetterData.NeedActiveNum
-          : i.FetterData.ActiveFetterGroupNum);
-      var e = StringUtils_1.StringUtils.Format(
-        "({0}/{1})",
-        e.toString(),
-        i.FetterData.NeedActiveNum.toString(),
-      );
       let t = NORMALCOLOR;
       (t = i.FetterData.ActiveState ? GREENCOLOR : GRAYCOLOR),
         this.GetText(9).SetText(e),
@@ -459,16 +459,15 @@ class VisionDetailDescContentItem extends UiPanelBase_1.UiPanelBase {
     } else this.GetItem(5).SetUIActive(!1);
   }
   L4e(i) {
-    if (!i.EquipSameMonster || i.FetterId > 0) {
+    if (!i.EquipSameMonster || 0 < i.FetterId) {
       let t =
         ModelManager_1.ModelManager.PhantomBattleModel.GetIfSimpleState(1);
-      if (((t = !t), i.DoNotNeedCheckSimplyState && (t = !0), i.FetterId > 0)) {
+      if (((t = !t), i.DoNotNeedCheckSimplyState && (t = !0), 0 < i.FetterId)) {
         var e =
-          ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomFetterById(
-            i.FetterId,
-          );
-        var s =
-          MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.Name) ?? "";
+            ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomFetterById(
+              i.FetterId,
+            ),
+          s = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.Name) ?? "";
         if (
           (this.GetText(4).SetText(s),
           t
@@ -531,4 +530,4 @@ class VisionDetailDescContentItem extends UiPanelBase_1.UiPanelBase {
     this.EPe.StopCurrentSequence();
   }
 }
-// # sourceMappingURL=VisionDetailDescComponent.js.map
+//# sourceMappingURL=VisionDetailDescComponent.js.map

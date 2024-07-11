@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelGhostSpec = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper");
-const EffectSpec_1 = require("./EffectSpec");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper"),
+  EffectSpec_1 = require("./EffectSpec");
 class GhostElement {
   constructor(e, t) {
     (this.Name = void 0),
@@ -72,25 +72,24 @@ class EffectModelGhostSpec extends EffectSpec_1.EffectSpec {
       case 11:
         return EffectModelGhostSpec.OtherCase4Name;
       case 12:
+        return;
     }
   }
   CollectSkeletalMesh(t) {
-    const e = t.GetOwner();
+    var e = t.GetOwner();
     if (e) {
-      const s = e.K2_GetComponentsByClass(
-        UE.SkeletalMeshComponent.StaticClass(),
-      );
-      const o = s.Num();
-      const c = new Map();
+      var s = e.K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass()),
+        o = s.Num(),
+        c = new Map();
       for (let e = 0; e < o; e++) {
-        const f = s.Get(e);
+        var f = s.Get(e);
         f && f !== t && c.set(f.GetName(), f);
       }
-      const h = this.EffectModel.MeshComponentsToUse.Num();
+      var h = this.EffectModel.MeshComponentsToUse.Num();
       for (let e = 0; e < h; ++e) {
-        var r;
-        let i = this.EffectModel.MeshComponentsToUse.Get(e);
-        i === 0
+        var r,
+          i = this.EffectModel.MeshComponentsToUse.Get(e);
+        0 === i
           ? this.a0e.set(t, EffectModelGhostSpec.GetComponentName(i))
           : ((i = EffectModelGhostSpec.GetComponentName(i)),
             (r = c.get(i))
@@ -101,10 +100,10 @@ class EffectModelGhostSpec extends EffectSpec_1.EffectSpec {
                   i,
                 ]));
       }
-      const a = this.EffectModel.CustomComponentNames.Num();
+      var a = this.EffectModel.CustomComponentNames.Num();
       for (let e = 0; e < a; ++e) {
-        const n = this.EffectModel.CustomComponentNames.Get(e).toString();
-        const l = c.get(n);
+        var n = this.EffectModel.CustomComponentNames.Get(e).toString(),
+          l = c.get(n);
         l
           ? this.a0e.set(l, n)
           : Log_1.Log.CheckWarn() &&
@@ -119,7 +118,7 @@ class EffectModelGhostSpec extends EffectSpec_1.EffectSpec {
         Log_1.Log.Error("RenderEffect", 26, "残影获取Actor失败");
   }
   OnTick(e) {
-    let t;
+    var t;
     this.c0e(),
       !this.Handle.IsPlaying() ||
         this.Handle.IsStopping() ||
@@ -127,7 +126,7 @@ class EffectModelGhostSpec extends EffectSpec_1.EffectSpec {
         (this.LifeTime.TotalPassTime - this.l0e >= t && this.m0e());
   }
   OnCanStop() {
-    return !this.n0e || this.n0e.length === 0;
+    return !this.n0e || 0 === this.n0e.length;
   }
   yAr() {
     for (const e of this.n0e)
@@ -142,12 +141,12 @@ class EffectModelGhostSpec extends EffectSpec_1.EffectSpec {
     t && this.yAr();
   }
   m0e() {
-    const e = [];
+    var e = [];
     for (const h of this.a0e.keys())
       if (h && h.IsVisible() && !h.bHiddenInGame) {
-        const s = this.a0e.get(h);
+        var s = this.a0e.get(h);
         let t = void 0;
-        let o = this.s0e.get(s);
+        var o = this.s0e.get(s);
         if (o.length)
           (t = o.pop()).SetComponentTickEnabled(!1),
             t.SetVisibility(!0),
@@ -162,7 +161,7 @@ class EffectModelGhostSpec extends EffectSpec_1.EffectSpec {
             this.EffectModel,
           )).SetSkeletalMesh(h.SkeletalMesh, !1),
             t.SetLODBias(3);
-          const c = this.u0e;
+          var c = this.u0e;
           for (let e = 0; e < t.GetNumMaterials(); e++) t.SetMaterial(e, c);
         }
         o = h.K2_GetComponentToWorld();
@@ -171,8 +170,8 @@ class EffectModelGhostSpec extends EffectSpec_1.EffectSpec {
           t.SetCustomPrimitiveDataFloat(0, 1),
           e.push(new GhostElement(s, t));
       }
-    const t = this.h0e.GhostLifeTime;
-    const f = this.LifeTime.TotalPassTime;
+    var t = this.h0e.GhostLifeTime,
+      f = this.LifeTime.TotalPassTime;
     this.n0e.push([e, f + t]), (this.l0e = f);
   }
   c0e() {
@@ -180,11 +179,11 @@ class EffectModelGhostSpec extends EffectSpec_1.EffectSpec {
     for (const o of this.n0e) {
       var t = o[1];
       if (t >= this.LifeTime.TotalPassTime) {
-        var t = (t - this.LifeTime.TotalPassTime) / this.h0e.GhostLifeTime;
-        const s = UE.KuroCurveLibrary.GetValue_Float(
-          this.EffectModel.AlphaCurve,
-          t,
-        );
+        var t = (t - this.LifeTime.TotalPassTime) / this.h0e.GhostLifeTime,
+          s = UE.KuroCurveLibrary.GetValue_Float(
+            this.EffectModel.AlphaCurve,
+            t,
+          );
         for (const c of o[0]) c.PoseComponent.SetCustomPrimitiveDataFloat(0, s);
       } else {
         for (const f of o[0])
@@ -195,7 +194,7 @@ class EffectModelGhostSpec extends EffectSpec_1.EffectSpec {
         e++;
       }
     }
-    e > 0 && this.n0e.splice(0, e);
+    0 < e && this.n0e.splice(0, e);
   }
 }
 ((exports.EffectModelGhostSpec = EffectModelGhostSpec).BodyName = "Body"),
@@ -210,4 +209,4 @@ class EffectModelGhostSpec extends EffectSpec_1.EffectSpec {
   (EffectModelGhostSpec.OtherCase2Name = "OtherCase2"),
   (EffectModelGhostSpec.OtherCase3Name = "OtherCase3"),
   (EffectModelGhostSpec.OtherCase4Name = "OtherCase4");
-// # sourceMappingURL=EffectModelGhostSpec.js.map
+//# sourceMappingURL=EffectModelGhostSpec.js.map

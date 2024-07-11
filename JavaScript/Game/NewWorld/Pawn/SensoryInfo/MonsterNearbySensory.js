@@ -39,7 +39,7 @@ class MonsterNearbySensory extends BaseSensoryInfo_1.BaseSensoryInfo {
   }
   ExitRange() {
     if (
-      ((this.InRange = this.CacheEntityList.length !== 0),
+      ((this.InRange = 0 !== this.CacheEntityList.length),
       1 & this.SensoryInfoType)
     )
       for (const s of this.LastFindEntities) this.OnExitSensoryRange(s);
@@ -48,4 +48,4 @@ class MonsterNearbySensory extends BaseSensoryInfo_1.BaseSensoryInfo {
   }
 }
 (exports.MonsterNearbySensory = MonsterNearbySensory).irr = new Set([1, 3, 7]);
-// # sourceMappingURL=MonsterNearbySensory.js.map
+//# sourceMappingURL=MonsterNearbySensory.js.map

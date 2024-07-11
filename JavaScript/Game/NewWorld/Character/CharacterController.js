@@ -1,27 +1,31 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, r, a) {
-    let o;
-    const n = arguments.length;
-    let i =
-      n < 3 ? e : a === null ? (a = Object.getOwnPropertyDescriptor(e, r)) : a;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      n = arguments.length,
+      i =
+        n < 3
+          ? e
+          : null === a
+            ? (a = Object.getOwnPropertyDescriptor(e, r))
+            : a;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       i = Reflect.decorate(t, e, r, a);
     else
-      for (let c = t.length - 1; c >= 0; c--)
-        (o = t[c]) && (i = (n < 3 ? o(i) : n > 3 ? o(e, r, i) : o(e, r)) || i);
-    return n > 3 && i && Object.defineProperty(e, r, i), i;
+      for (var c = t.length - 1; 0 <= c; c--)
+        (o = t[c]) && (i = (n < 3 ? o(i) : 3 < n ? o(e, r, i) : o(e, r)) || i);
+    return 3 < n && i && Object.defineProperty(e, r, i), i;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterController = void 0);
-const cpp_1 = require("cpp");
-const Stats_1 = require("../../../Core/Common/Stats");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const cpp_1 = require("cpp"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class CharacterController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (this.sBn = new Date()), !0;
@@ -31,11 +35,11 @@ class CharacterController extends ControllerBase_1.ControllerBase {
       Net_1.Net.IsFinishLogin() && this.aBn();
   }
   static async aBn() {
-    let t;
-    let e = new Date();
-    (e.getTime() - this.sBn.getTime()) / 1e3 / 60 >= 3 &&
+    var t,
+      e = new Date();
+    3 <= (e.getTime() - this.sBn.getTime()) / 1e3 / 60 &&
       ((this.sBn = e),
-      (e = cpp_1.FuncOpenLibrary.GetEBuffer()).byteLength > 0) &&
+      0 < (e = cpp_1.FuncOpenLibrary.GetEBuffer()).byteLength) &&
       ((t = new Uint8Array(e)),
       (t = new Uint8Array(t)),
       cpp_1.FuncOpenLibrary.FreeArrayBuffer(e),
@@ -106,7 +110,7 @@ class CharacterController extends ControllerBase_1.ControllerBase {
     return t.CharacterActorComponent.Entity;
   }
   static SetTimeDilation(t) {
-    const e = ModelManager_1.ModelManager.CreatureModel;
+    var e = ModelManager_1.ModelManager.CreatureModel;
     for (const r of e.GetAllEntities()) r.IsInit && r.Entity.SetTimeDilation(t);
     for (const a of e.DelayRemoveContainer.GetAllEntities())
       a.IsInit && a.Entity.SetTimeDilation(t);
@@ -114,13 +118,13 @@ class CharacterController extends ControllerBase_1.ControllerBase {
   static CN() {
     return (
       !this.vWo &&
-      ModelManager_1.ModelManager.CharacterModel.AwakeQueue.Size === 0
+      0 === ModelManager_1.ModelManager.CharacterModel.AwakeQueue.Size
     );
   }
   static AwakeEntity() {
-    const t = ModelManager_1.ModelManager.CharacterModel;
+    var t = ModelManager_1.ModelManager.CharacterModel;
     if (this.vWo) {
-      const e = this.vWo[2];
+      var e = this.vWo[2];
       if (((this.vWo = void 0), e())) return;
     }
     if (t.AwakeQueue.Size)
@@ -154,4 +158,4 @@ class CharacterController extends ControllerBase_1.ControllerBase {
     null,
   ),
   (exports.CharacterController = CharacterController);
-// # sourceMappingURL=CharacterController.js.map
+//# sourceMappingURL=CharacterController.js.map

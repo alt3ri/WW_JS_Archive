@@ -21,8 +21,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.FLOAT_0_01 =
     exports.CALMING_WIND_BELL_MARKID =
       void 0);
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const Vector2D_1 = require("../../../Core/Utils/Math/Vector2D");
+const Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  Vector2D_1 = require("../../../Core/Utils/Math/Vector2D");
 (exports.CALMING_WIND_BELL_MARKID = 2),
   (exports.FLOAT_0_01 = 0.01),
   (exports.world2UiUnit = Vector_1.Vector.Create(
@@ -100,4 +100,4 @@ class PlayerMarkCreateInfo extends MarkCreateInfo {
   }
 }
 exports.PlayerMarkCreateInfo = PlayerMarkCreateInfo;
-// # sourceMappingURL=MapDefine.js.map
+//# sourceMappingURL=MapDefine.js.map

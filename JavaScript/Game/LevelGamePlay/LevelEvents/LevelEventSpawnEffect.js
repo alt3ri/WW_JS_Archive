@@ -1,29 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventSpawnEffect = void 0);
-const Quat_1 = require("../../../Core/Utils/Math/Quat");
-const Transform_1 = require("../../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const EffectSystem_1 = require("../../Effect/EffectSystem");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Quat_1 = require("../../../Core/Utils/Math/Quat"),
+  Transform_1 = require("../../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  EffectSystem_1 = require("../../Effect/EffectSystem"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventSpawnEffect extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(t, e) {
     if (t) {
-      const l = t;
-      let e = void 0;
-      let a = void 0;
-      let r = void 0;
+      var l = t;
+      let e = void 0,
+        a = void 0,
+        r = void 0;
       switch (l.Pos2.Type) {
         case 2:
           a = l.Pos2.Pos;
           break;
         case 1:
-          var o = l.Pos2.EntityId;
-          var o =
-            ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(o);
+          var o = l.Pos2.EntityId,
+            o =
+              ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(o);
           (r = o?.Entity?.GetComponent(1)?.ActorLocationProxy),
             (e = l.Pos2.Offset);
           break;
@@ -53,4 +53,4 @@ class LevelEventSpawnEffect extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventSpawnEffect = LevelEventSpawnEffect;
-// # sourceMappingURL=LevelEventSpawnEffect.js.map
+//# sourceMappingURL=LevelEventSpawnEffect.js.map

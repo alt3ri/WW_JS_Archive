@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ReadMailBehaviorNode = void 0);
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
+const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
 class ReadMailBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   constructor() {
     super(...arguments),
@@ -17,7 +17,7 @@ class ReadMailBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   OnCreate(e) {
     return (
       !!super.OnCreate(e) &&
-      (e = e.Condition).Type === "ReadMail" &&
+      "ReadMail" === (e = e.Condition).Type &&
       ((this.SXt = e.MailId), !0)
     );
   }
@@ -40,4 +40,4 @@ class ReadMailBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   }
 }
 exports.ReadMailBehaviorNode = ReadMailBehaviorNode;
-// # sourceMappingURL=ReadMailBehaviorNode.js.map
+//# sourceMappingURL=ReadMailBehaviorNode.js.map

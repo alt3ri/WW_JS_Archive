@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ControlScreenModel = void 0);
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const ControlScreenDefine_1 = require("./ControlScreenDefine");
+const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  ControlScreenDefine_1 = require("./ControlScreenDefine");
 class ControlScreenModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -71,7 +71,7 @@ class ControlScreenModel extends ModelBase_1.ModelBase {
   }
   IsDoubleTouch(e) {
     return (
-      this.GetTouchEmptyFingerDataCount() === 1 &&
+      1 === this.GetTouchEmptyFingerDataCount() &&
       e === this.Rbt &&
       TimeUtil_1.TimeUtil.GetServerTimeStamp() - this.Dbt <= this.Ubt
     );
@@ -86,7 +86,7 @@ class ControlScreenModel extends ModelBase_1.ModelBase {
     );
   }
   AddTouchEmptyFingerData(e) {
-    const t = e.GetFingerIndex();
+    var t = e.GetFingerIndex();
     this.Abt.set(t, e);
   }
   RemoveTouchEmptyFingerData(e) {
@@ -100,7 +100,7 @@ class ControlScreenModel extends ModelBase_1.ModelBase {
     return this.Abt.has(e);
   }
   GetTouchEmptyFingerDataByCount(e) {
-    const t = [];
+    var t = [];
     for (const o of this.Abt.values()) {
       if (e <= t.length) break;
       t.push(o);
@@ -114,7 +114,7 @@ class ControlScreenModel extends ModelBase_1.ModelBase {
     this.Tbt = e;
   }
   RefreshRotationScreenRate() {
-    const e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     e &&
     e.Entity.GetComponent(158).DirectionState ===
       CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection
@@ -126,4 +126,4 @@ class ControlScreenModel extends ModelBase_1.ModelBase {
   }
 }
 exports.ControlScreenModel = ControlScreenModel;
-// # sourceMappingURL=ControlScreenModel.js.map
+//# sourceMappingURL=ControlScreenModel.js.map

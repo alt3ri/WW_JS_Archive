@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CubicCurveWithStartSlope = void 0);
-const Log_1 = require("../../Common/Log");
-const CurveBase_1 = require("./CurveBase");
+const Log_1 = require("../../Common/Log"),
+  CurveBase_1 = require("./CurveBase");
 class CubicCurveWithStartSlope extends CurveBase_1.CurveBase {
   constructor(...t) {
     super(),
@@ -29,4 +29,4 @@ class CubicCurveWithStartSlope extends CurveBase_1.CurveBase {
   }
 }
 exports.CubicCurveWithStartSlope = CubicCurveWithStartSlope;
-// # sourceMappingURL=CubicCurveWithStartSlope.js.map
+//# sourceMappingURL=CubicCurveWithStartSlope.js.map

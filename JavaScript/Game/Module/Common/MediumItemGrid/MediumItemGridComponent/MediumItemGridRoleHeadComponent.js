@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MediumItemGridRoleHeadComponent = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const MediumItemGridComponent_1 = require("./MediumItemGridComponent");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  MediumItemGridComponent_1 = require("./MediumItemGridComponent");
 class MediumItemGridRoleHeadComponent extends MediumItemGridComponent_1.MediumItemGridComponent {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -16,10 +16,10 @@ class MediumItemGridRoleHeadComponent extends MediumItemGridComponent_1.MediumIt
     return "UiItem_ItemRole";
   }
   OnRefresh(e) {
-    const t = e.RoleConfigId;
+    var t = e.RoleConfigId;
     if (t) {
       const o = this.GetTexture(0);
-      const i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(t)?.Card;
+      var i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(t)?.Card;
       i
         ? (o.SetUIActive(!1),
           this.SetRoleIcon(i, o, t, void 0, () => {
@@ -32,4 +32,4 @@ class MediumItemGridRoleHeadComponent extends MediumItemGridComponent_1.MediumIt
   }
 }
 exports.MediumItemGridRoleHeadComponent = MediumItemGridRoleHeadComponent;
-// # sourceMappingURL=MediumItemGridRoleHeadComponent.js.map
+//# sourceMappingURL=MediumItemGridRoleHeadComponent.js.map

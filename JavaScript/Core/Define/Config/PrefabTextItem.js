@@ -27,21 +27,21 @@ class PrefabTextItem {
     );
   }
   itemid() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt64(this.z7 + t) : BigInt("0");
   }
   prefabpathhash() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt64(this.z7 + t) : BigInt("0");
   }
   itempath(t) {
-    const e = this.J7.__offset(this.z7, 8);
+    var e = this.J7.__offset(this.z7, 8);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   text(t) {
-    const e = this.J7.__offset(this.z7, 10);
+    var e = this.J7.__offset(this.z7, 10);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
 }
 exports.PrefabTextItem = PrefabTextItem;
-// # sourceMappingURL=PrefabTextItem.js.map
+//# sourceMappingURL=PrefabTextItem.js.map

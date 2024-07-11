@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SquaredCurve = void 0);
-const Log_1 = require("../../Common/Log");
-const CurveBase_1 = require("./CurveBase");
+const Log_1 = require("../../Common/Log"),
+  CurveBase_1 = require("./CurveBase");
 class SquaredCurve extends CurveBase_1.CurveBase {
   constructor(...e) {
     super(),
       (this.RJ = 0),
       (this.Sl = 1),
-      e[0] < 0 || e[0] > 2
+      e[0] < 0 || 2 < e[0]
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Core",
@@ -25,4 +25,4 @@ class SquaredCurve extends CurveBase_1.CurveBase {
   }
 }
 exports.SquaredCurve = SquaredCurve;
-// # sourceMappingURL=SquaredCurve.js.map
+//# sourceMappingURL=SquaredCurve.js.map

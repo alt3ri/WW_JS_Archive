@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoadingView = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon");
-const HotFixSceneManager_1 = require("../../../../Launcher/Ui/HotFix/HotFixSceneManager");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const InputManager_1 = require("../../../Ui/Input/InputManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const LoadingShowData_1 = require("../Data/LoadingShowData");
-const LoadingDefine_1 = require("../LoadingDefine");
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
+  HotFixSceneManager_1 = require("../../../../Launcher/Ui/HotFix/HotFixSceneManager"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  InputManager_1 = require("../../../Ui/Input/InputManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  LoadingShowData_1 = require("../Data/LoadingShowData"),
+  LoadingDefine_1 = require("../LoadingDefine");
 class LoadingView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -73,13 +73,12 @@ class LoadingView extends UiTickViewBase_1.UiTickViewBase {
         this.bpi();
   }
   kpi(e) {
-    const i = ModelManager_1.ModelManager.LoadingModel;
-    var t = i.CurrentProgress + i.Speed * i.SpeedRate * e;
-    var t = Math.min(t, i.NextProgress);
-    var e =
-      (i.CurrentProgress = t) / MathCommon_1.MathCommon.ProgressTotalValue;
+    var i = ModelManager_1.ModelManager.LoadingModel,
+      t = i.CurrentProgress + i.Speed * i.SpeedRate * e,
+      t = Math.min(t, i.NextProgress),
+      e = (i.CurrentProgress = t) / MathCommon_1.MathCommon.ProgressTotalValue;
     for (this.Ppi.SetFillAmount(e), this.Qbe(t); i.ReachHandleQueue.Size; ) {
-      const a = i.ReachHandleQueue.Front;
+      var a = i.ReachHandleQueue.Front;
       if (a[0] > t) break;
       i.ReachHandleQueue.Pop(),
         a[1](),
@@ -91,17 +90,15 @@ class LoadingView extends UiTickViewBase_1.UiTickViewBase {
       ((this.wpi = !0), UiManager_1.UiManager.CloseView(this.Info.Name));
   }
   qpi() {
-    const e =
-      ConfigManager_1.ConfigManager.LoadingConfig.GetBroadcastImageConfig(
-        this.Api.GetImageId(),
-      );
+    var e = ConfigManager_1.ConfigManager.LoadingConfig.GetBroadcastImageConfig(
+      this.Api.GetImageId(),
+    );
     this.SetTextureByPath(e.Image, this.GetTexture(3), this.Info.Name);
   }
   Gpi() {
-    const e =
-      ConfigManager_1.ConfigManager.LoadingConfig.GetBroadcastImageConfig(
-        this.Api.GetImageId(),
-      );
+    var e = ConfigManager_1.ConfigManager.LoadingConfig.GetBroadcastImageConfig(
+      this.Api.GetImageId(),
+    );
     this.SetSpriteByPath(e.Icon, this.GetSprite(6), !0, this.Info.Name);
   }
   Opi() {
@@ -113,13 +110,13 @@ class LoadingView extends UiTickViewBase_1.UiTickViewBase {
   }
   bpi() {
     this.Upi = 0;
-    const e = this.Api.GetNextTip();
+    var e = this.Api.GetNextTip();
     e &&
       (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e.TipsText),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), e.Title));
   }
   Npi() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.LoadingModel.CurrentProgress /
       MathCommon_1.MathCommon.ProgressTotalValue;
     this.Ppi.SetFillAmount(e),
@@ -133,7 +130,7 @@ class LoadingView extends UiTickViewBase_1.UiTickViewBase {
     AudioSystem_1.AudioSystem.ExecuteAction(LoadingDefine_1.MUSIC_EVENT, 0),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Audio", 57, "[Game.Loading] Loading 音乐停止");
-    const e = ModelManager_1.ModelManager.LoadingModel;
+    var e = ModelManager_1.ModelManager.LoadingModel;
     if (e)
       for (
         e.SetIsLoading(!1),
@@ -153,4 +150,4 @@ class LoadingView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.LoadingView = LoadingView;
-// # sourceMappingURL=LoadingView.js.map
+//# sourceMappingURL=LoadingView.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GiftPackageMonthlyCardItem = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const GiftPackageItem_1 = require("./GiftPackageItem");
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  GiftPackageItem_1 = require("./GiftPackageItem");
 class GiftPackageMonthlyCardItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, t) {
     super(),
@@ -32,23 +32,23 @@ class GiftPackageMonthlyCardItem extends UiPanelBase_1.UiPanelBase {
       this.Refresh();
   }
   InitDailyRewardItem() {
-    const e = CommonParamById_1.configCommonParamById.GetIntConfig(
-      "MonthCardDailyItemId",
-    );
-    const t = CommonParamById_1.configCommonParamById.GetIntConfig(
-      "MonthCardDailyItemCount",
-    );
+    var e = CommonParamById_1.configCommonParamById.GetIntConfig(
+        "MonthCardDailyItemId",
+      ),
+      t = CommonParamById_1.configCommonParamById.GetIntConfig(
+        "MonthCardDailyItemCount",
+      );
     this.e2i.UpdateItem(e, t);
   }
   Update(e) {
     (this.c3i = e), this.Refresh();
   }
   Refresh() {
-    let e;
+    var e;
     this.InAsyncLoading() ||
       ((e = ConfigManager_1.ConfigManager.MonthCardConfig.GetConfig(this.c3i)),
       this.u3i.UpdateItem(e.ItemId, e.Count));
   }
 }
 exports.GiftPackageMonthlyCardItem = GiftPackageMonthlyCardItem;
-// # sourceMappingURL=GiftPackageMonthlyCardItem.js.map
+//# sourceMappingURL=GiftPackageMonthlyCardItem.js.map

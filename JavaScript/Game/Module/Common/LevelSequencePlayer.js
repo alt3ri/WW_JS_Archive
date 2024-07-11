@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelSequencePlayer = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const UiLayer_1 = require("../../Ui/UiLayer");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  UiLayer_1 = require("../../Ui/UiLayer");
 class SequenceData {
   constructor(e, t, i, s = void 0) {
     (this.SequenceName = ""),
@@ -44,8 +44,8 @@ class LevelSequencePlayer {
     i?.IsValid() ? i.TryStop() : this.vxe(e);
   }
   ReplaySequenceByKey(e) {
-    let t;
-    const i = this.XPt.get(e);
+    var t,
+      i = this.XPt.get(e);
     i &&
       this.VPt.get(e) &&
       (t = this.HPt.GetSequencePlayerByKey(e))?.IsValid() &&
@@ -74,7 +74,7 @@ class LevelSequencePlayer {
     return this.QPt;
   }
   PauseSequence() {
-    let e;
+    var e;
     this.QPt &&
       ((e = this.$Pt(this.QPt))
         ? e.SequencePlayer.Pause()
@@ -90,7 +90,7 @@ class LevelSequencePlayer {
           e.TryStop()));
   }
   ResumeSequence() {
-    let e;
+    var e;
     this.QPt &&
       ((e = this.$Pt(this.QPt))
         ? (Log_1.Log.CheckInfo() &&
@@ -128,7 +128,7 @@ class LevelSequencePlayer {
       (this.jPt = void 0);
   }
   EndSequenceLastFrame(e) {
-    let t;
+    var t;
     this.HPt.GetUIItem().LevelSequences.Get(e) &&
       (t = this.$Pt(e)) &&
       this.HPt.SequenceJumpToSecondByKey(
@@ -143,19 +143,19 @@ class LevelSequencePlayer {
     this.PlaySequencePurely(e, i, s, t), await t?.Promise;
   }
   PlaySequencePurely(e, t = !1, i = !1, s = void 0) {
-    const h = this.JPt(e);
-    const r = this.jPt.displayName;
-    var t =
-      (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "UiCore",
-          11,
-          "播放的关卡序列",
-          ["播放节点", r],
-          ["关卡序列", e],
-        ),
-      (this.QPt = e),
-      new SequenceData(e, t, r, s));
+    var h = this.JPt(e),
+      r = this.jPt.displayName,
+      t =
+        (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "UiCore",
+            11,
+            "播放的关卡序列",
+            ["播放节点", r],
+            ["关卡序列", e],
+          ),
+        (this.QPt = e),
+        new SequenceData(e, t, r, s));
     this.XPt.set(e, t),
       LevelSequencePlayer.YPt.add(this),
       LevelSequencePlayer.zPt
@@ -185,7 +185,7 @@ class LevelSequencePlayer {
     return t;
   }
   ZPt(t) {
-    const e = this.XPt.get(t);
+    var e = this.XPt.get(t);
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "UiCore",
@@ -210,7 +210,7 @@ class LevelSequencePlayer {
       });
   }
   vxe(t) {
-    const e = this.XPt.get(t);
+    var e = this.XPt.get(t);
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "UiCore",
@@ -239,7 +239,7 @@ class LevelSequencePlayer {
         this.WPt?.forEach((e) => {
           e(t);
         }),
-      this.XPt.size === 0 && LevelSequencePlayer.YPt.delete(this),
+      0 === this.XPt.size && LevelSequencePlayer.YPt.delete(this),
       e?.StopPromise &&
         (e.StopPromise?.SetResult(!0), (e.StopPromise = void 0));
   }
@@ -280,4 +280,4 @@ class LevelSequencePlayer {
 }
 ((exports.LevelSequencePlayer = LevelSequencePlayer).YPt = new Set()),
   (LevelSequencePlayer.zPt = !1);
-// # sourceMappingURL=LevelSequencePlayer.js.map
+//# sourceMappingURL=LevelSequencePlayer.js.map

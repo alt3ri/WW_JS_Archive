@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LinkingDotItem = void 0);
-const UE = require("ue");
-const IAction_1 = require("../../../../UniverseEditor/Interface/IAction");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  IAction_1 = require("../../../../UniverseEditor/Interface/IAction"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class LinkingDotItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -61,26 +61,26 @@ class LinkingDotItem extends UiPanelBase_1.UiPanelBase {
     );
   }
   InitIcon(t) {
-    var i = LinkingDotItem.VAe.get(t);
-    var e = LinkingDotItem.HAe.get(t);
-    const n = LinkingDotItem.ColorRayIconMap.get(t);
-    var o = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(i);
-    var o =
-      (this.SetSpriteByPath(o, this.wAe, !1),
-      ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-        i + "Light",
-      ));
-    var i =
-      (this.SetSpriteByPath(o, this.BAe, !1),
-      ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(e));
-    var o =
-      (this.SetSpriteByPath(i, this.qAe, !1),
-      ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(n));
-    var e =
-      (this.SetSpriteByPath(o, this.GAe, !1), LinkingDotItem.ColorMap.get(t));
-    var i =
-      (this.NAe.SetColor(UE.Color.FromHex(e)),
-      LinkingDotItem.FxColorMap.get(t));
+    var i = LinkingDotItem.VAe.get(t),
+      e = LinkingDotItem.HAe.get(t),
+      n = LinkingDotItem.ColorRayIconMap.get(t),
+      o = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(i),
+      o =
+        (this.SetSpriteByPath(o, this.wAe, !1),
+        ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+          i + "Light",
+        )),
+      i =
+        (this.SetSpriteByPath(o, this.BAe, !1),
+        ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(e)),
+      o =
+        (this.SetSpriteByPath(i, this.qAe, !1),
+        ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(n)),
+      e =
+        (this.SetSpriteByPath(o, this.GAe, !1), LinkingDotItem.ColorMap.get(t)),
+      i =
+        (this.NAe.SetColor(UE.Color.FromHex(e)),
+        LinkingDotItem.FxColorMap.get(t));
     this.kAe.SetColor(UE.Color.FromHex(i)), this.SetLight(!1);
   }
   ResetIcon() {
@@ -133,4 +133,4 @@ class LinkingDotItem extends UiPanelBase_1.UiPanelBase {
     [IAction_1.EPieceColorType.Red, "F0477EFF"],
     [IAction_1.EPieceColorType.Yellow, "F8E56CFF"],
   ]));
-// # sourceMappingURL=LinkingDotItem.js.map
+//# sourceMappingURL=LinkingDotItem.js.map

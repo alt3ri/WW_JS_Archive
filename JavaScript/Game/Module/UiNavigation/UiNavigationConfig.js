@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiNavigationConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const HotKeyIconByKeyName_1 = require("../../../Core/Define/ConfigQuery/HotKeyIconByKeyName");
-const HotKeyMapById_1 = require("../../../Core/Define/ConfigQuery/HotKeyMapById");
-const HotKeyTextByTextId_1 = require("../../../Core/Define/ConfigQuery/HotKeyTextByTextId");
-const HotKeyTypeById_1 = require("../../../Core/Define/ConfigQuery/HotKeyTypeById");
-const HotKeyViewById_1 = require("../../../Core/Define/ConfigQuery/HotKeyViewById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  HotKeyIconByKeyName_1 = require("../../../Core/Define/ConfigQuery/HotKeyIconByKeyName"),
+  HotKeyMapById_1 = require("../../../Core/Define/ConfigQuery/HotKeyMapById"),
+  HotKeyTextByTextId_1 = require("../../../Core/Define/ConfigQuery/HotKeyTextByTextId"),
+  HotKeyTypeById_1 = require("../../../Core/Define/ConfigQuery/HotKeyTypeById"),
+  HotKeyViewById_1 = require("../../../Core/Define/ConfigQuery/HotKeyViewById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class UiNavigationConfig extends ConfigBase_1.ConfigBase {
   GetHighlightWhenMouseMoveOut() {
-    const e = CommonParamById_1.configCommonParamById.GetBoolConfig(
+    var e = CommonParamById_1.configCommonParamById.GetBoolConfig(
       "highlight_when_mouse_moveout",
     );
     return (
@@ -26,7 +26,7 @@ class UiNavigationConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetMobileHighlight() {
-    const e =
+    var e =
       CommonParamById_1.configCommonParamById.GetBoolConfig("mobile_highlight");
     return (
       void 0 === e &&
@@ -40,7 +40,7 @@ class UiNavigationConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetPcPress() {
-    const e = CommonParamById_1.configCommonParamById.GetBoolConfig("pc_press");
+    var e = CommonParamById_1.configCommonParamById.GetBoolConfig("pc_press");
     return (
       void 0 === e &&
         Log_1.Log.CheckError() &&
@@ -53,7 +53,7 @@ class UiNavigationConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetNavigateTolerance() {
-    const e =
+    var e =
       CommonParamById_1.configCommonParamById.GetFloatConfig(
         "navigate_tolerance",
       );
@@ -69,7 +69,7 @@ class UiNavigationConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetHotKeyViewConfig(e) {
-    const o = HotKeyViewById_1.configHotKeyViewById.GetConfig(e);
+    var o = HotKeyViewById_1.configHotKeyViewById.GetConfig(e);
     return (
       o ||
         (Log_1.Log.CheckError() &&
@@ -78,11 +78,11 @@ class UiNavigationConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetHotKeyMapConfig(e) {
-    let o;
-    if (e !== -1)
+    var o;
+    if (-1 !== e)
       return (
         (o = HotKeyMapById_1.configHotKeyMapById.GetConfig(e)) ||
-          e === -1 ||
+          -1 === e ||
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error("UiNavigation", 11, "热键映射配置找不到", [
               "id",
@@ -95,7 +95,7 @@ class UiNavigationConfig extends ConfigBase_1.ConfigBase {
     return HotKeyTypeById_1.configHotKeyTypeById.GetConfig(e);
   }
   GetHotKeyIconConfig(e, o = 0) {
-    const i = HotKeyIconByKeyName_1.configHotKeyIconByKeyName.GetConfig(e);
+    var i = HotKeyIconByKeyName_1.configHotKeyIconByKeyName.GetConfig(e);
     return (
       i ||
         (Log_1.Log.CheckWarn() &&
@@ -107,7 +107,7 @@ class UiNavigationConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetHotKeyText(e) {
-    const o = HotKeyTextByTextId_1.configHotKeyTextByTextId.GetConfig(e);
+    var o = HotKeyTextByTextId_1.configHotKeyTextByTextId.GetConfig(e);
     return (
       o ||
         (Log_1.Log.CheckError() &&
@@ -123,4 +123,4 @@ class UiNavigationConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.UiNavigationConfig = UiNavigationConfig;
-// # sourceMappingURL=UiNavigationConfig.js.map
+//# sourceMappingURL=UiNavigationConfig.js.map

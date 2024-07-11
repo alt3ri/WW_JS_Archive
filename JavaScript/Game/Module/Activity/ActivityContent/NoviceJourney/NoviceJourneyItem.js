@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NoviceJourneyItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const SmallItemGrid_1 = require("../../../Common/SmallItemGrid/SmallItemGrid");
-const ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
-const ActivityManager_1 = require("../../ActivityManager");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  SmallItemGrid_1 = require("../../../Common/SmallItemGrid/SmallItemGrid"),
+  ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  ActivityManager_1 = require("../../ActivityManager");
 class NoviceJourneyItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -17,11 +17,11 @@ class NoviceJourneyItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.Lo = void 0),
       (this.CNe = void 0),
       (this.hOe = () => {
-        if (this.Mke === 1)
+        if (1 === this.Mke)
           ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
             "NewbieCourse_LevelTips",
           );
-        else if (this.Mke === 2) {
+        else if (2 === this.Mke) {
           ActivityManager_1.ActivityManager.GetActivityController(
             this.CNe.Type,
           ).RequestReward(this.Lo.Id);
@@ -29,7 +29,7 @@ class NoviceJourneyItem extends GridProxyAbstract_1.GridProxyAbstract {
         }
       }),
       (this.aOe = (t) => {
-        this.Mke !== 2
+        2 !== this.Mke
           ? ((t = t.Data),
             ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
               t.ItemId,
@@ -76,14 +76,14 @@ class NoviceJourneyItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.BtnBindInfo = [[3, this.hOe]]);
   }
   async rOe(t) {
-    const i = new RewardGridItem();
+    var i = new RewardGridItem();
     i.BindOnExtendToggleClicked(this.aOe),
       await i.CreateThenShowByActorAsync(t),
       this.sOe.push(i);
   }
   async OnBeforeStartAsync() {
-    const e = [this.GetItem(1), this.GetItem(2)];
-    const s = [];
+    var e = [this.GetItem(1), this.GetItem(2)],
+      s = [];
     for (let t = 0, i = e.length; t < i; ++t) s.push(this.rOe(e[t].GetOwner()));
     await Promise.all(s);
   }
@@ -100,12 +100,12 @@ class NoviceJourneyItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(t, i, e) {
     (this.Lo = t), this.GetText(0).SetText(t.Id.toString());
-    const s =
+    var s =
       ConfigManager_1.ConfigManager.ActivityNoviceJourneyConfig.GetRewardList(
         this.Lo.Reward,
       );
     for (let t = 0, i = this.sOe.length; t < i; ++t) {
-      const r = this.sOe[t];
+      var r = this.sOe[t];
       t < s.length ? r.RefreshByData(s[t]) : r.SetActive(!1);
     }
     this.RefreshCurrentState();
@@ -134,4 +134,4 @@ class RewardGridItem extends SmallItemGrid_1.SmallItemGrid {
     this.Apply(t);
   }
 }
-// # sourceMappingURL=NoviceJourneyItem.js.map
+//# sourceMappingURL=NoviceJourneyItem.js.map

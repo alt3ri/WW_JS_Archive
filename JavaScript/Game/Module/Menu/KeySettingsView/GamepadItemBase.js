@@ -10,14 +10,14 @@ class GamepadItemBase extends UiPanelBase_1.UiPanelBase {
     this.pAi.set(e, s);
   }
   SetKeysEnable(e) {
-    for (const [s, t] of this.vAi) e.includes(s) || t.SetUIActive(!1);
+    for (var [s, t] of this.vAi) e.includes(s) || t.SetUIActive(!1);
     for (const i of e) this.SetKeySpriteVisible(i, !0);
   }
   SetAllKeyDisable() {
     for (const e of this.vAi.values()) e.SetUIActive(!1);
   }
   SetKeySpriteVisible(e, s) {
-    const t = this.pAi.get(e);
+    var t = this.pAi.get(e);
     t && (t.SetUIActive(s), s ? this.vAi.set(e, t) : this.vAi.delete(e));
   }
   OnBeforeDestroy() {
@@ -25,4 +25,4 @@ class GamepadItemBase extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.GamepadItemBase = GamepadItemBase;
-// # sourceMappingURL=GamepadItemBase.js.map
+//# sourceMappingURL=GamepadItemBase.js.map

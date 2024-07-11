@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleSkillTreeSkillSpriteItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class RoleSkillTreeSkillSpriteItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(), this.CreateThenShowByActor(e);
@@ -17,4 +17,4 @@ class RoleSkillTreeSkillSpriteItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleSkillTreeSkillSpriteItem = RoleSkillTreeSkillSpriteItem;
-// # sourceMappingURL=RoleSkillTreeSkillSpriteItem.js.map
+//# sourceMappingURL=RoleSkillTreeSkillSpriteItem.js.map

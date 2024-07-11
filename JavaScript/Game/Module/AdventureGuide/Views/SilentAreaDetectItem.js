@@ -4,10 +4,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.SilentCategoryItem =
     exports.SilentAreaDetectDynamicItem =
       void 0);
-const UE = require("ue");
-const RedDotController_1 = require("../../../RedDot/RedDotController");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  RedDotController_1 = require("../../../RedDot/RedDotController"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class SilentAreaDetectDynamicItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -175,13 +175,13 @@ class SilentResultItem extends UiPanelBase_1.UiPanelBase {
   }
   Update(t) {
     this.Pe = t;
-    const i = this.GetText(4);
-    var s = t.Conf.Name;
-    var s =
-      (LguiUtil_1.LguiUtil.SetLocalTextNew(i, s),
-      this.GetText(3).SetUIActive(!1),
-      this.GetTexture(1).SetUIActive(!1),
-      this.GetItem(2));
+    var i = this.GetText(4),
+      s = t.Conf.Name,
+      s =
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(i, s),
+        this.GetText(3).SetUIActive(!1),
+        this.GetTexture(1).SetUIActive(!1),
+        this.GetItem(2));
     t.IsLock
       ? (s.SetUIActive(!0), i.SetUIActive(!1))
       : (s.SetUIActive(!1), i.SetUIActive(!0)),
@@ -209,4 +209,4 @@ class SilentResultItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.SilentResultItem = SilentResultItem;
-// # sourceMappingURL=SilentAreaDetectItem.js.map
+//# sourceMappingURL=SilentAreaDetectItem.js.map

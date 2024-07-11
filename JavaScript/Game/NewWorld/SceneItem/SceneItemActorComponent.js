@@ -1,51 +1,55 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, n) {
-    let r;
-    const s = arguments.length;
-    let o =
-      s < 3 ? e : n === null ? (n = Object.getOwnPropertyDescriptor(e, i)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      s = arguments.length,
+      o =
+        s < 3
+          ? e
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(e, i))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       o = Reflect.decorate(t, e, i, n);
     else
-      for (let a = t.length - 1; a >= 0; a--)
-        (r = t[a]) && (o = (s < 3 ? r(o) : s > 3 ? r(e, i, o) : r(e, i)) || o);
-    return s > 3 && o && Object.defineProperty(e, i, o), o;
+      for (var a = t.length - 1; 0 <= a; a--)
+        (r = t[a]) && (o = (s < 3 ? r(o) : 3 < s ? r(e, i, o) : r(e, i)) || o);
+    return 3 < s && o && Object.defineProperty(e, i, o), o;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemActorComponent = void 0);
-const cpp_1 = require("cpp");
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const GameBudgetInterfaceController_1 = require("../../../Core/GameBudgetAllocator/GameBudgetInterfaceController");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const Quat_1 = require("../../../Core/Utils/Math/Quat");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils");
-const TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const EffectSystem_1 = require("../../Effect/EffectSystem");
-const TsEffectActor_1 = require("../../Effect/TsEffectActor");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const RenderConfig_1 = require("../../Render/Config/RenderConfig");
-const SceneInteractionManager_1 = require("../../Render/Scene/Interaction/SceneInteractionManager");
-const ActorUtils_1 = require("../../Utils/ActorUtils");
-const CharacterNameDefines_1 = require("../Character/Common/CharacterNameDefines");
-const BaseActorComponent_1 = require("../Common/Component/BaseActorComponent");
-const PROFILE_KEY = "SceneItemActorFixBornLocation";
-const FIX_SPAWN_TRACE_UP = 20;
-const FIX_SPAWN_TRACE_DOWN = -1e3;
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  GameBudgetInterfaceController_1 = require("../../../Core/GameBudgetAllocator/GameBudgetInterfaceController"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  Quat_1 = require("../../../Core/Utils/Math/Quat"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
+  TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  EffectSystem_1 = require("../../Effect/EffectSystem"),
+  TsEffectActor_1 = require("../../Effect/TsEffectActor"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  RenderConfig_1 = require("../../Render/Config/RenderConfig"),
+  SceneInteractionManager_1 = require("../../Render/Scene/Interaction/SceneInteractionManager"),
+  ActorUtils_1 = require("../../Utils/ActorUtils"),
+  CharacterNameDefines_1 = require("../Character/Common/CharacterNameDefines"),
+  BaseActorComponent_1 = require("../Common/Component/BaseActorComponent"),
+  PROFILE_KEY = "SceneItemActorFixBornLocation",
+  FIX_SPAWN_TRACE_UP = 20,
+  FIX_SPAWN_TRACE_DOWN = -1e3;
 let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorComponent_1.BaseActorComponent {
   constructor() {
     super(...arguments),
@@ -102,7 +106,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
     return this.Smn ?? this.StaticMeshComponent;
   }
   GetInteractionMainActor() {
-    if (this.J6e !== -1)
+    if (-1 !== this.J6e)
       return SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionMainActor(
         this.J6e,
       );
@@ -111,7 +115,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
     return !!this.Smn?.SkeletalMesh || !!this.StaticMeshComponent?.StaticMesh;
   }
   bmn() {
-    let t;
+    var t;
     this.Amn === this.ActorInternal
       ? (this.Umn = 0)
       : (this.Pmn || (this.Pmn = (0, puerts_1.$ref)(void 0)),
@@ -142,7 +146,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
   set PhysicsMode(t) {
     if (this.Emn !== t) {
       this.Emn = t;
-      const e = this.GetPrimitiveComponent();
+      var e = this.GetPrimitiveComponent();
       switch (t) {
         case 0:
           e.SetSimulatePhysics(!1),
@@ -171,15 +175,15 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
   OnInit() {
     super.OnInit();
     let t = 0;
-    let e = this.CreatureDataInternal.GetPbModelConfig();
-    let i = this.CreatureDataInternal.GetPbEntityInitData();
-    var n = (0, IComponent_1.getComponent)(
-      i.ComponentsData,
-      "VisionItemComponent",
-    );
-    var n =
-      ((t = n ? -1 : e.ModelId),
-      (0, IComponent_1.getComponent)(i.ComponentsData, "ModelComponent"));
+    var e = this.CreatureDataInternal.GetPbModelConfig(),
+      i = this.CreatureDataInternal.GetPbEntityInitData(),
+      n = (0, IComponent_1.getComponent)(
+        i.ComponentsData,
+        "VisionItemComponent",
+      ),
+      n =
+        ((t = n ? -1 : e.ModelId),
+        (0, IComponent_1.getComponent)(i.ComponentsData, "ModelComponent"));
     return e
       ? (n
           ? (i = this.CreatureDataInternal.GetModelConfig()).ID
@@ -193,7 +197,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
                 this.CreatureDataInternal.GetTransform(),
                 this.CreatureDataInternal.GetPbDataId(),
               ))
-          : (t > 0 && this.CreatureDataInternal.SetModelConfig(t),
+          : (0 < t && this.CreatureDataInternal.SetModelConfig(t),
             (this.ActorInternal =
               ActorUtils_1.ActorUtils.LoadActorByModelConfig(
                 this.CreatureDataInternal.GetModelConfig(),
@@ -288,7 +292,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
         !1);
   }
   OnStart() {
-    let t;
+    var t;
     return (
       (void 0 !== this.Entity.GetComponent(140) ||
         void 0 !== this.Entity.GetComponent(196)) &&
@@ -347,7 +351,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
     );
   }
   xmn() {
-    const t =
+    var t =
       SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionMainActor(
         this.J6e,
       );
@@ -360,7 +364,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
         1,
         1,
       ),
-      this.J6e !== -1 &&
+      -1 !== this.J6e &&
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Entity", 18, "销毁场景交互物", [
             "HandleId",
@@ -383,8 +387,8 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
       ));
   }
   qmn() {
-    const t = this.ActorInternal;
-    const e = this.CreatureDataInternal.GetModelConfig();
+    var t = this.ActorInternal,
+      e = this.CreatureDataInternal.GetModelConfig();
     e &&
       (UE.KismetSystemLibrary.IsValidSoftObjectReference(e.网格体)
         ? (this.InitSkeletalMeshComponent(),
@@ -406,7 +410,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
             ))));
   }
   LoadAndChangeStaticMesh(t) {
-    const e = this.CreatureDataInternal.GetModelConfig();
+    var e = this.CreatureDataInternal.GetModelConfig();
     if (e) {
       const i = e.静态网格体列表.Get(t);
       i &&
@@ -445,8 +449,8 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
   }
   LoadSceneInteractionLevel(t, e = !1) {
     this.xmn();
-    let i;
-    const n = this.CreatureDataInternal.GetModelConfig();
+    var i,
+      n = this.CreatureDataInternal.GetModelConfig();
     n &&
     (i = n.场景交互物) &&
     ObjectUtils_1.ObjectUtils.SoftObjectPathIsValid(i)
@@ -476,7 +480,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
       : this.SetIsSceneInteractionLoadCompleted();
   }
   Txe() {
-    if (this.J6e !== -1) {
+    if (-1 !== this.J6e) {
       (this.Imn = !0),
         SceneInteractionManager_1.SceneInteractionManager.Get().AttachToActor(
           this.J6e,
@@ -489,18 +493,18 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
         SceneInteractionManager_1.SceneInteractionManager.Get().AttachChildActor(
           this.J6e,
         );
-      const i =
+      var i =
         SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionAllActorsInLevel(
           this.J6e,
         );
       if (i)
         for (let t = 0, e = i.Num(); t < e; t++) {
-          const n = i.Get(t);
+          var n = i.Get(t);
           n instanceof UE.StaticMeshActor &&
             (n.Tags.Add(CharacterNameDefines_1.CharacterNameDefines.NO_SLIDE),
             n.StaticMeshComponent?.SetReceivesDecals(!1));
         }
-      const r =
+      var r =
         SceneInteractionManager_1.SceneInteractionManager.Get().GetReceivingDecalsActors(
           this.J6e,
         );
@@ -519,7 +523,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
     }
   }
   RefreshShowActor() {
-    let t;
+    var t;
     this.Entity?.Valid &&
       void 0 !== this.Entity?.GameBudgetManagedToken &&
       ((t = UE.KuroStaticLibrary.GetLevelPrefabShowActor(this.ActorInternal))
@@ -545,7 +549,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
           )));
   }
   ToggleSceneInteractionVisible(t, e = void 0) {
-    this.J6e !== -1 &&
+    -1 !== this.J6e &&
       SceneInteractionManager_1.SceneInteractionManager.Get().ToggleSceneInteractionVisible(
         this.J6e,
         t,
@@ -553,7 +557,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
       );
   }
   SwitchToState(t, e, i) {
-    this.J6e !== -1 &&
+    -1 !== this.J6e &&
       this.ymn !== t &&
       (this.Omn(t, this.ymn),
       (this.ymn = t),
@@ -578,18 +582,18 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
       this.RefreshShowActor());
   }
   Nmn() {
-    let t;
-    this.ymn === 20 &&
+    var t;
+    20 === this.ymn &&
       (t = this.GetInteractionMainActor()) &&
       !t.States.Get(this.ymn) &&
       this.Omn(this.ymn);
   }
   Omn(t, e = 22) {
-    t === 20 && this.SetSceneItemActorHide(!0),
-      e === 20 && this.SetSceneItemActorHide(!1);
+    20 === t && this.SetSceneItemActorHide(!0),
+      20 === e && this.SetSceneItemActorHide(!1);
   }
   PlaySceneInteractionEffect(t) {
-    this.J6e !== -1 &&
+    -1 !== this.J6e &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Entity",
@@ -605,14 +609,14 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
       ));
   }
   EndSceneInteractionEffect(t) {
-    this.J6e !== -1 &&
+    -1 !== this.J6e &&
       SceneInteractionManager_1.SceneInteractionManager.Get().EndSceneInteractionEffect(
         this.J6e,
         t,
       );
   }
   PlayExtraEffect(t, e = !0) {
-    this.J6e !== -1 &&
+    -1 !== this.J6e &&
       SceneInteractionManager_1.SceneInteractionManager.Get().PlayExtraEffectByTag(
         this.J6e,
         t,
@@ -620,14 +624,14 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
       );
   }
   StopExtraEffect(t) {
-    this.J6e !== -1 &&
+    -1 !== this.J6e &&
       SceneInteractionManager_1.SceneInteractionManager.Get().StopExtraEffectByTag(
         this.J6e,
         t,
       );
   }
   UpdateHitInfo(t, e) {
-    this.J6e !== -1 &&
+    -1 !== this.J6e &&
       SceneInteractionManager_1.SceneInteractionManager.Get().UpdateHitInfo(
         this.J6e,
         t,
@@ -635,7 +639,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
       );
   }
   PlaySceneInteractionEndEffect(t) {
-    this.J6e !== -1 &&
+    -1 !== this.J6e &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Entity",
@@ -651,14 +655,14 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
       ));
   }
   GetActorInSceneInteraction(t) {
-    if (this.J6e !== -1)
+    if (-1 !== this.J6e)
       return SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionActorByKey(
         this.J6e,
         t,
       );
   }
   GetActorInSceneInteractionOriginalRelTransform(t) {
-    if (this.J6e !== -1)
+    if (-1 !== this.J6e)
       return SceneInteractionManager_1.SceneInteractionManager.Get().GetActorOriginalRelTransform(
         this.J6e,
         t,
@@ -668,8 +672,8 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
     (this.Tmn = !0), this.Imn && this.Gmn();
   }
   Gmn() {
-    let t, e, i, n;
-    this.J6e !== -1 &&
+    var t, e, i, n;
+    -1 !== this.J6e &&
       (i =
         SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
           this.J6e,
@@ -684,27 +688,27 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
       (n = UE.NewArray(UE.Transform)).Add(t.GetRelativeTransform()),
       UE.KuroStaticMeshLibrary.MergeSimpleCollisions(t, n),
       e.SetStaticMesh(t.StaticMesh),
-      e.GetCollisionEnabled() === 3 && e.SetCollisionEnabled(0),
+      3 === e.GetCollisionEnabled() && e.SetCollisionEnabled(0),
       e.SetCollisionEnabled(3),
       e.SetHiddenInGame(!0),
       t.SetStaticMesh(i));
   }
   ChangeSceneInteractionPlayDirection(t) {
-    this.J6e !== -1 &&
+    -1 !== this.J6e &&
       SceneInteractionManager_1.SceneInteractionManager.Get().ChangeSceneInteractionPlayDirection(
         this.J6e,
         t,
       );
   }
   GetActiveTagSequencePlaybackProgress(t) {
-    if (this.J6e !== -1)
+    if (-1 !== this.J6e)
       return SceneInteractionManager_1.SceneInteractionManager.Get().GetActiveTagSequencePlaybackProgress(
         this.J6e,
         t,
       );
   }
   SetActiveTagSequencePlaybackProgress(t, e) {
-    this.J6e !== -1 &&
+    -1 !== this.J6e &&
       SceneInteractionManager_1.SceneInteractionManager.Get().SetActiveTagSequencePlaybackProgress(
         this.J6e,
         t,
@@ -712,7 +716,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
       );
   }
   SetActiveTagSequenceDurationTime(t, e) {
-    this.J6e !== -1 &&
+    -1 !== this.J6e &&
       SceneInteractionManager_1.SceneInteractionManager.Get().SetActiveTagSequenceDurationTime(
         this.J6e,
         t,
@@ -720,14 +724,14 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
       );
   }
   PauseActiveTagSequence(t) {
-    this.J6e !== -1 &&
+    -1 !== this.J6e &&
       SceneInteractionManager_1.SceneInteractionManager.Get().PauseActiveTagSequence(
         this.J6e,
         t,
       );
   }
   ResumeActiveTagSequence(t, e = !1) {
-    this.J6e !== -1 &&
+    -1 !== this.J6e &&
       SceneInteractionManager_1.SceneInteractionManager.Get().ResumeActiveTagSequence(
         this.J6e,
         t,
@@ -735,7 +739,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
       );
   }
   FixBornLocation(t, e) {
-    let [i, n] = this.CheckGround();
+    var [i, n] = this.CheckGround();
     i &&
       n.bBlockingHit &&
       (t &&
@@ -760,33 +764,33 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
       ModelManager_1.ModelManager.TraceElementModel.ClearLineTrace();
   }
   CheckGround() {
-    var t = this.ActorLocationProxy;
-    var e = ModelManager_1.ModelManager.TraceElementModel.CommonStartLocation;
-    var i =
-      (e.Set(t.X, t.Y, t.Z + FIX_SPAWN_TRACE_UP),
-      ModelManager_1.ModelManager.TraceElementModel.CommonEndLocation);
-    var t =
-      (i.Set(t.X, t.Y, t.Z + FIX_SPAWN_TRACE_DOWN),
-      ModelManager_1.ModelManager.TraceElementModel.GetLineTrace());
-    var e =
-      ((t.WorldContextObject = this.ActorInternal),
-      t.ActorsToIgnore.Empty(),
-      t.ActorsToIgnore.Add(Global_1.Global.BaseCharacter),
-      TraceElementCommon_1.TraceElementCommon.SetStartLocation(t, e),
-      TraceElementCommon_1.TraceElementCommon.SetEndLocation(t, i),
-      TraceElementCommon_1.TraceElementCommon.LineTrace(t, PROFILE_KEY));
-    var i = t.HitResult;
+    var t = this.ActorLocationProxy,
+      e = ModelManager_1.ModelManager.TraceElementModel.CommonStartLocation,
+      i =
+        (e.Set(t.X, t.Y, t.Z + FIX_SPAWN_TRACE_UP),
+        ModelManager_1.ModelManager.TraceElementModel.CommonEndLocation),
+      t =
+        (i.Set(t.X, t.Y, t.Z + FIX_SPAWN_TRACE_DOWN),
+        ModelManager_1.ModelManager.TraceElementModel.GetLineTrace()),
+      e =
+        ((t.WorldContextObject = this.ActorInternal),
+        t.ActorsToIgnore.Empty(),
+        t.ActorsToIgnore.Add(Global_1.Global.BaseCharacter),
+        TraceElementCommon_1.TraceElementCommon.SetStartLocation(t, e),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(t, i),
+        TraceElementCommon_1.TraceElementCommon.LineTrace(t, PROFILE_KEY)),
+      i = t.HitResult;
     return t.ClearCacheData(), [e, i];
   }
   CheckGoundWithBox() {
-    let t;
-    let e;
-    let i;
-    let n;
-    let r =
-      SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
-        this.J6e,
-      );
+    var t,
+      e,
+      i,
+      n,
+      r =
+        SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
+          this.J6e,
+        );
     return void 0 === r
       ? [!1, void 0]
       : ((t = r.K2_GetActorRotation()),
@@ -825,25 +829,25 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
   }
   kmn(t, e) {
     if (t?.IsValid()) {
-      let i = (0, puerts_1.$ref)(void 0);
-      const n = (t.GetAttachedActors(i, !0), (0, puerts_1.$unref)(i));
-      if (n && n.Num() > 0)
+      var i = (0, puerts_1.$ref)(void 0),
+        n = (t.GetAttachedActors(i, !0), (0, puerts_1.$unref)(i));
+      if (n && 0 < n.Num())
         for (let t = 0; t < n.Num(); t++) {
-          const r = n.Get(t);
+          var r = n.Get(t);
           r && this.kmn(r, e);
         }
       t !== this.ActorInternal
         ? (t.SetActorHiddenInGame(e), t.SetActorEnableCollision(!e))
         : (i = this.GetPrimitiveComponent())?.IsValid() &&
-          (e && this.Rmn === 4 && (this.Rmn = i.GetCollisionEnabled()),
+          (e && 4 === this.Rmn && (this.Rmn = i.GetCollisionEnabled()),
           i.SetCollisionEnabled(e ? 0 : this.Rmn));
     }
   }
   OnChangeTimeDilation(t) {
-    var t = t * (this.Entity.GetComponent(107)?.CurrentTimeScale ?? 1);
-    const e =
-      ((this.ActorInternal.CustomTimeDilation = t),
-      this.GetInteractionMainActor());
+    var t = t * (this.Entity.GetComponent(107)?.CurrentTimeScale ?? 1),
+      e =
+        ((this.ActorInternal.CustomTimeDilation = t),
+        this.GetInteractionMainActor());
     e?.IsValid() && e.SetTimeDilation(t);
   }
   GetSocketLocation(t) {
@@ -869,7 +873,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
     return this.ActorTransform;
   }
   UpdateInteractionMaterialColorParam(t, e, i, n, r = 1) {
-    const s = this.GetInteractionMainActor();
+    var s = this.GetInteractionMainActor();
     s &&
       s.InteractionMaterialController &&
       (this.Bmn || (this.Bmn = new UE.LinearColor()),
@@ -885,4 +889,4 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
   SceneItemActorComponent,
 )),
   (exports.SceneItemActorComponent = SceneItemActorComponent);
-// # sourceMappingURL=SceneItemActorComponent.js.map
+//# sourceMappingURL=SceneItemActorComponent.js.map

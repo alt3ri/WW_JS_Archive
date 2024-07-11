@@ -82,7 +82,7 @@ class StateMachineCommon {
   OnDeactivate(t) {}
   OnSwitchState(t, i) {}
   GetState(t) {
-    const i = this.kh.get(t);
+    var i = this.kh.get(t);
     return (
       i ||
         (Log_1.Log.CheckError() &&
@@ -108,7 +108,7 @@ class StateMachineCommon {
       (this.Gz = !0);
   }
   Switch(t, i = !0, s = !0, ...h) {
-    let e, o;
+    var e, o;
     return void 0 === this.CurrentNode
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error("StateMachine", 15, "状态机没有启动", ["state", t]),
@@ -131,4 +131,4 @@ class StateMachineCommon {
   }
 }
 exports.StateMachineCommon = StateMachineCommon;
-// # sourceMappingURL=StateMachineCommon.js.map
+//# sourceMappingURL=StateMachineCommon.js.map

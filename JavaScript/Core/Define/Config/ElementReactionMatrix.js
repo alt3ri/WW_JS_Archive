@@ -25,22 +25,22 @@ class ElementReactionMatrix {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetElementreactionlistAt(t) {
     return this.elementreactionlist(t);
   }
   elementreactionlist(t) {
-    const e = this.J7.__offset(this.z7, 6);
+    var e = this.J7.__offset(this.z7, 6);
     return e ? this.J7.readInt32(this.J7.__vector(this.z7 + e) + 4 * t) : 0;
   }
   elementreactionlistLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   elementreactionlistArray() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -51,4 +51,4 @@ class ElementReactionMatrix {
   }
 }
 exports.ElementReactionMatrix = ElementReactionMatrix;
-// # sourceMappingURL=ElementReactionMatrix.js.map
+//# sourceMappingURL=ElementReactionMatrix.js.map

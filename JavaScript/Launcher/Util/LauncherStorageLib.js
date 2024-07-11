@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LauncherStorageLib = exports.ELauncherStorageGlobalKey = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const LauncherLog_1 = require("./LauncherLog");
-let ELauncherStorageGlobalKey;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  LauncherLog_1 = require("./LauncherLog");
+var ELauncherStorageGlobalKey;
 !(function (e) {
   (e[(e.PlayMenuInfo = 0)] = "PlayMenuInfo"),
     (e[(e.CacheP4Version = 1)] = "CacheP4Version"),
@@ -19,14 +19,14 @@ let ELauncherStorageGlobalKey;
     exports.ELauncherStorageGlobalKey ||
     (exports.ELauncherStorageGlobalKey = {})),
 );
-const DBPATH = "LocalStorage/LocalStorage";
-const DBSUFFIX = ".db";
-const TABLENAME = "LocalStorage";
-const DBNUM = 10;
-const USE_THREAD = !0;
-const SQLITE_ERR = -1;
-const SQLITE_NO_DATA = 1;
-const USE_JOURNAL_MODE = 2;
+const DBPATH = "LocalStorage/LocalStorage",
+  DBSUFFIX = ".db",
+  TABLENAME = "LocalStorage",
+  DBNUM = 10,
+  USE_THREAD = !0,
+  SQLITE_ERR = -1,
+  SQLITE_NO_DATA = 1,
+  USE_JOURNAL_MODE = 2;
 function getJournalMode(e) {
   switch (e) {
     case 0:
@@ -58,7 +58,7 @@ class LauncherStorageLib {
     e = LauncherStorageLib.gde(e);
     return (
       !!e &&
-      (r == null
+      (null == r
         ? (LauncherLog_1.LauncherLog.Error(
             "value值非法",
             ["keyName", e],
@@ -74,13 +74,13 @@ class LauncherStorageLib {
   }
   static GetGlobalString(e, r = void 0) {
     if (e) {
-      let t = LauncherStorageLib.fde(e);
+      var t = LauncherStorageLib.fde(e);
       if (t[0]) return (t = t[1]) ? LauncherStorageLib.pde(t) : r;
     } else LauncherLog_1.LauncherLog.Error("key值非法", ["key", e]);
   }
   static SetGlobalString(e, r) {
     return e
-      ? r == null
+      ? null == r
         ? (LauncherLog_1.LauncherLog.Error(
             "value值非法",
             ["key", e],
@@ -96,18 +96,18 @@ class LauncherStorageLib {
       : (LauncherLog_1.LauncherLog.Error("key值非法", ["key", e]), !1);
   }
   static cde() {
-    let e;
+    var e;
     LauncherStorageLib.Ede ||
       ((e = UE.KismetSystemLibrary.GetProjectSavedDirectory()),
       (LauncherStorageLib.Ede = e + DBPATH + DBSUFFIX));
   }
   static mde() {
-    let r = LauncherStorageLib.Ede;
-    let t = UE.KuroSqliteLibrary.OpenCreateDB(r, USE_THREAD);
+    let r = LauncherStorageLib.Ede,
+      t = UE.KuroSqliteLibrary.OpenCreateDB(r, USE_THREAD);
     if (!t) {
       LauncherLog_1.LauncherLog.Error("打开DB失败！", ["dbFilePath", r]);
       for (let e = 2; e <= DBNUM; e++) {
-        const a = UE.KismetSystemLibrary.GetProjectSavedDirectory();
+        var a = UE.KismetSystemLibrary.GetProjectSavedDirectory();
         if (
           ((r = a + DBPATH + e + DBSUFFIX),
           (t = UE.KuroSqliteLibrary.OpenCreateDB(r, USE_THREAD)))
@@ -131,18 +131,18 @@ class LauncherStorageLib {
     );
   }
   static Ide() {
-    var e = LauncherStorageLib.Ede;
-    const r = `create table if not exists ${TABLENAME}(key text primary key not null , value text not null)`;
-    var e = UE.KuroSqliteLibrary.Execute(e, r);
+    var e = LauncherStorageLib.Ede,
+      r = `create table if not exists ${TABLENAME}(key text primary key not null , value text not null)`,
+      e = UE.KuroSqliteLibrary.Execute(e, r);
     return (
       e || LauncherLog_1.LauncherLog.Error("创建Table失败！", ["command", r]), e
     );
   }
   static fde(e) {
-    var r = LauncherStorageLib.Ede;
-    var e = `SELECT value FROM ${TABLENAME} WHERE key ='${e}'`;
-    const t = (0, puerts_1.$ref)(void 0);
-    var r = UE.KuroSqliteLibrary.QueryValue(r, e, t);
+    var r = LauncherStorageLib.Ede,
+      e = `SELECT value FROM ${TABLENAME} WHERE key ='${e}'`,
+      t = (0, puerts_1.$ref)(void 0),
+      r = UE.KuroSqliteLibrary.QueryValue(r, e, t);
     return r === SQLITE_ERR
       ? [!1, void 0]
       : r === SQLITE_NO_DATA
@@ -150,23 +150,23 @@ class LauncherStorageLib {
         : [!0, (0, puerts_1.$unref)(t)];
   }
   static vde(e, r) {
-    const t = LauncherStorageLib.Ede;
-    var e = `insert into ${TABLENAME} (key,value) values('${e}' , '${r}') on CONFLICT(key) do update set value = '${r}'`;
+    var t = LauncherStorageLib.Ede,
+      e = `insert into ${TABLENAME} (key,value) values('${e}' , '${r}') on CONFLICT(key) do update set value = '${r}'`;
     return USE_THREAD
       ? (UE.KuroSqliteLibrary.ExecuteAsync(t, e), !0)
       : UE.KuroSqliteLibrary.Execute(t, e);
   }
   static Mde(e) {
-    const r = LauncherStorageLib.Ede;
-    var e = `delete from ${TABLENAME} where key = '${e}'`;
+    var r = LauncherStorageLib.Ede,
+      e = `delete from ${TABLENAME} where key = '${e}'`;
     return USE_THREAD
       ? (UE.KuroSqliteLibrary.ExecuteAsync(r, e), !0)
       : UE.KuroSqliteLibrary.Execute(r, e);
   }
   static gde(e) {
-    if (e == null) LauncherLog_1.LauncherLog.Error("key值非法", ["key", e]);
+    if (null == e) LauncherLog_1.LauncherLog.Error("key值非法", ["key", e]);
     else {
-      const r = ELauncherStorageGlobalKey[e];
+      var r = ELauncherStorageGlobalKey[e];
       if (r) return r;
       LauncherLog_1.LauncherLog.Error("keyName值非法", ["key", e]);
     }
@@ -215,7 +215,7 @@ class LauncherStorageLib {
     if (Number.isNaN(r)) return "___NaN___";
     if (r === 1 / 0) return "___Infinity___";
     if (r === -1 / 0) return "___-Infinity___";
-    if (r === null) return null;
+    if (null === r) return null;
     switch (typeof r) {
       case "boolean":
         return r ? "___1B___" : "___0B___";
@@ -232,7 +232,7 @@ class LauncherStorageLib {
     }
   }),
   (LauncherStorageLib.Rde = (e, r) => {
-    if (r == null) return r;
+    if (null == r) return r;
     switch (typeof r) {
       case "string":
         switch (r) {
@@ -247,8 +247,8 @@ class LauncherStorageLib {
           default:
             {
               let e = r;
-              if (e === "___1B___") return !0;
-              if (e === "___0B___") return !1;
+              if ("___1B___" === e) return !0;
+              if ("___0B___" === e) return !1;
               if (e.endsWith("___BI___"))
                 return (e = e.replace("___BI___", "")), BigInt(e);
             }
@@ -257,12 +257,12 @@ class LauncherStorageLib {
       case "object":
         var t = r;
         if (t?.___MetaType___) {
-          if (t.___MetaType___ === "___Map___") return new Map(t.Content);
-          if (t.___MetaType___ === "___Set___") return new Set(t.Content);
+          if ("___Map___" === t.___MetaType___) return new Map(t.Content);
+          if ("___Set___" === t.___MetaType___) return new Set(t.Content);
         }
         return r;
       default:
         return r;
     }
   });
-// # sourceMappingURL=LauncherStorageLib.js.map
+//# sourceMappingURL=LauncherStorageLib.js.map

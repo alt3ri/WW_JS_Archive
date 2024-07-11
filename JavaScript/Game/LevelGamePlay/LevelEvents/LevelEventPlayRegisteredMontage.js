@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventPlayRegisteredMontage = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterNameDefines_1 = require("../../NewWorld/Character/Common/CharacterNameDefines");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterNameDefines_1 = require("../../NewWorld/Character/Common/CharacterNameDefines"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventPlayRegisteredMontage extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -28,9 +28,9 @@ class LevelEventPlayRegisteredMontage extends LevelGeneralBase_1.LevelEventBase 
           ObjectUtils_1.ObjectUtils.IsValid(this.rRe) &&
           EntitySystem_1.EntitySystem.Get(this.E0)?.IsInit
         ) ||
-        ((e = (this.nRe = e).CompositeSections.Num()) === 1
+        (1 === (e = (this.nRe = e).CompositeSections.Num())
           ? this.aRe()
-          : e === 3 && this.hRe(),
+          : 3 === e && this.hRe(),
         this.IsAsync)
           ? this.FinishExecute(!0)
           : (this.rRe.OnMontageEnded.Add(this.nse),
@@ -70,7 +70,7 @@ class LevelEventPlayRegisteredMontage extends LevelGeneralBase_1.LevelEventBase 
     (this.gLe = e), this.CreateWaitEntityTask(e.EntityId);
   }
   ExecuteWhenEntitiesReady() {
-    const e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
+    var e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
       this.gLe.EntityId,
     );
     if (e)
@@ -108,20 +108,20 @@ class LevelEventPlayRegisteredMontage extends LevelGeneralBase_1.LevelEventBase 
     else this.FinishExecute(!0);
   }
   aRe() {
-    let e = this.gLe.RepeatTimes ?? 1;
-    if ((this.rRe.Montage_Play(this.nRe), e === 1))
+    var e = this.gLe.RepeatTimes ?? 1;
+    if ((this.rRe.Montage_Play(this.nRe), 1 === e))
       this.rRe.Montage_SetNextSection(
         CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
         CharacterNameDefines_1.CharacterNameDefines.NULL_SECTION,
         this.nRe,
       );
-    else if (e === -1)
+    else if (-1 === e)
       this.rRe.Montage_SetNextSection(
         CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
         CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
         this.nRe,
       );
-    else if (e > 1) {
+    else if (1 < e) {
       this.rRe.Montage_SetNextSection(
         CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
         CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
@@ -131,10 +131,10 @@ class LevelEventPlayRegisteredMontage extends LevelGeneralBase_1.LevelEventBase 
         (e - 0.5) *
         this.nRe.SequenceLength *
         TimeUtil_1.TimeUtil.InverseMillisecond;
-      const t = this.rRe;
-      const i = this.nRe;
-      const s = this.IsAsync;
-      const r = this.E0;
+      const t = this.rRe,
+        i = this.nRe,
+        s = this.IsAsync,
+        r = this.E0;
       e < TimerSystem_1.MIN_TIME || e > TimerSystem_1.MAX_TIME
         ? this.FinishExecute(!0)
         : (this.j3 = TimerSystem_1.TimerSystem.Delay(() => {
@@ -150,30 +150,30 @@ class LevelEventPlayRegisteredMontage extends LevelGeneralBase_1.LevelEventBase 
     }
   }
   hRe() {
-    let e = this.gLe.LoopDuration ?? 0;
-    if ((this.rRe.Montage_Play(this.nRe), e === 0))
+    var e = this.gLe.LoopDuration ?? 0;
+    if ((this.rRe.Montage_Play(this.nRe), 0 === e))
       this.rRe.Montage_SetNextSection(
         CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
         CharacterNameDefines_1.CharacterNameDefines.END_SECTION,
         this.nRe,
       );
-    else if (e === -1)
+    else if (-1 === e)
       this.rRe.Montage_SetNextSection(
         CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
         CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
         this.nRe,
       );
-    else if (e > 0) {
+    else if (0 < e) {
       this.rRe.Montage_SetNextSection(
         CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
         CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
         this.nRe,
       );
       e = e * TimeUtil_1.TimeUtil.InverseMillisecond;
-      const t = this.rRe;
-      const i = this.nRe;
-      const s = this.IsAsync;
-      const r = this.E0;
+      const t = this.rRe,
+        i = this.nRe,
+        s = this.IsAsync,
+        r = this.E0;
       e < TimerSystem_1.MIN_TIME || e > TimerSystem_1.MAX_TIME
         ? this.FinishExecute(!0)
         : TimerSystem_1.TimerSystem.Delay(() => {
@@ -190,4 +190,4 @@ class LevelEventPlayRegisteredMontage extends LevelGeneralBase_1.LevelEventBase 
   }
 }
 exports.LevelEventPlayRegisteredMontage = LevelEventPlayRegisteredMontage;
-// # sourceMappingURL=LevelEventPlayRegisteredMontage.js.map
+//# sourceMappingURL=LevelEventPlayRegisteredMontage.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const LocalStorage_1 = require("../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../Common/LocalStorageDefine");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  LocalStorage_1 = require("../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine");
 class ItemModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -36,7 +36,7 @@ class ItemModel extends ModelBase_1.ModelBase {
     );
   }
   IsWaitItemListEmpty() {
-    return this.Xdi.length === 0;
+    return 0 === this.Xdi.length;
   }
   PushWaitItemList(e) {
     this.Xdi.push(e);
@@ -46,4 +46,4 @@ class ItemModel extends ModelBase_1.ModelBase {
   }
 }
 exports.ItemModel = ItemModel;
-// # sourceMappingURL=ItemModel.js.map
+//# sourceMappingURL=ItemModel.js.map

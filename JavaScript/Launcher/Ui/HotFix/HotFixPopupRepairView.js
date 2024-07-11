@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HotFixPopupRepairView = void 0);
-const HotPatch_1 = require("../../HotPatch");
-const HotFixPopupUiView_1 = require("./HotFixPopupUiView");
+const HotPatch_1 = require("../../HotPatch"),
+  HotFixPopupUiView_1 = require("./HotFixPopupUiView");
 class HotFixPopupRepairView extends HotFixPopupUiView_1.HotFixPopupUiView {
   OnStart() {
     super.OnStart(),
@@ -26,4 +26,4 @@ class HotFixPopupRepairView extends HotFixPopupUiView_1.HotFixPopupUiView {
   }
 }
 exports.HotFixPopupRepairView = HotFixPopupRepairView;
-// # sourceMappingURL=HotFixPopupRepairView.js.map
+//# sourceMappingURL=HotFixPopupRepairView.js.map

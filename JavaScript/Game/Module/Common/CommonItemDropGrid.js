@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonItemDropGrid = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract");
-const SmallItemGrid_1 = require("./SmallItemGrid/SmallItemGrid");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract"),
+  SmallItemGrid_1 = require("./SmallItemGrid/SmallItemGrid");
 class CommonItemDropGrid extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -33,7 +33,7 @@ class CommonItemDropGrid extends GridProxyAbstract_1.GridProxyAbstract {
       (this.BtnBindInfo = [[0, this.UIt]]);
   }
   Refresh(t, i, e) {
-    let s;
+    var s;
     t && (s = t[0]) && this.RefreshByItemInfo(s.ItemId, t[1], s.IncId);
   }
   RefreshByItemInfo(t, i, e) {
@@ -49,7 +49,7 @@ class CommonItemDropGrid extends GridProxyAbstract_1.GridProxyAbstract {
           Type: 4,
           Data: [t, e],
           ItemConfigId: this.Mne,
-          BottomText: i > 0 ? "" + i : "",
+          BottomText: 0 < i ? "" + i : "",
         }),
         this.Xgt.Apply(t),
         this.AIt(this.$0t.QualityId));
@@ -70,7 +70,7 @@ class CommonItemDropGrid extends GridProxyAbstract_1.GridProxyAbstract {
         Type: 4,
         Data: [t, e],
         ItemConfigId: this.Mne,
-        BottomText: i > 0 ? "" + i : "",
+        BottomText: 0 < i ? "" + i : "",
       };
       this.Xgt.Apply(t),
         this.AIt(this.$0t.QualityId, () => {
@@ -110,4 +110,4 @@ class CommonItemDropGrid extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.CommonItemDropGrid = CommonItemDropGrid;
-// # sourceMappingURL=CommonItemDropGrid.js.map
+//# sourceMappingURL=CommonItemDropGrid.js.map

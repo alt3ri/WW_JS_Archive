@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LensFlareManager = void 0);
-const UE = require("ue");
-const Info_1 = require("../../../../Core/Common/Info");
-const Log_1 = require("../../../../Core/Common/Log");
-const Stats_1 = require("../../../../Core/Common/Stats");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const RenderDataManager_1 = require("../../Data/RenderDataManager");
-const materialHaloName = new UE.FName("DynamicMaterial_LensFlareHalo");
-const materialGhostName = new UE.FName("DynamicMaterial_LensFlareGhost");
-const materialGlareName = new UE.FName("DynamicMaterial_LensFlareGlare");
-const meshHaloName = new UE.FName("StaticMesh_LensFlareHalo");
-const meshGhostName = new UE.FName("StaticMesh_LensFlareGhost");
-const meshGlareName = new UE.FName("StaticMesh_LensFlareGlare");
-const materialParameterColorTintName = new UE.FName("ColorTint");
-const materialParameterRampIndexName = new UE.FName("RampSample");
-const materialDensityName = new UE.FName("LensflareDensity");
-const actorName = new UE.FName("LensFlareActor");
-const actorFolderWp = new UE.FName("AlwaysLoad/LensFlare");
-const actorFolderPl = new UE.FName("GI/LensFlare");
+const UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  RenderDataManager_1 = require("../../Data/RenderDataManager"),
+  materialHaloName = new UE.FName("DynamicMaterial_LensFlareHalo"),
+  materialGhostName = new UE.FName("DynamicMaterial_LensFlareGhost"),
+  materialGlareName = new UE.FName("DynamicMaterial_LensFlareGlare"),
+  meshHaloName = new UE.FName("StaticMesh_LensFlareHalo"),
+  meshGhostName = new UE.FName("StaticMesh_LensFlareGhost"),
+  meshGlareName = new UE.FName("StaticMesh_LensFlareGlare"),
+  materialParameterColorTintName = new UE.FName("ColorTint"),
+  materialParameterRampIndexName = new UE.FName("RampSample"),
+  materialDensityName = new UE.FName("LensflareDensity"),
+  actorName = new UE.FName("LensFlareActor"),
+  actorFolderWp = new UE.FName("AlwaysLoad/LensFlare"),
+  actorFolderPl = new UE.FName("GI/LensFlare");
 class WorldLensFlareInfo {
   constructor() {
     (this.World = void 0),
@@ -77,9 +77,10 @@ class LensFlareManager {
     if (t)
       if (this.cY) {
         if (
-          (UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldFeatureLevel(
-            t.World,
-          ) === 1 &&
+          (1 ===
+            UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldFeatureLevel(
+              t.World,
+            ) &&
             ((n =
               UE.KuroLensflareRenderingSystem.GetKuroLensflareSceneSampleResult()),
             t.HaloMaterialDynamic?.SetScalarParameterValue(
@@ -95,7 +96,7 @@ class LensFlareManager {
               n,
             )),
           (this.Llr = this.Llr - 1),
-          !(this.Llr > 0))
+          !(0 < this.Llr))
         ) {
           this.Llr = this.MW;
           let a = e;
@@ -162,7 +163,7 @@ class LensFlareManager {
   }
   GetCurrentInfo(e) {
     if (e?.IsValid()) {
-      const a = e.GetWorld();
+      var a = e.GetWorld();
       if (a) {
         let e = void 0;
         for (const t of this.WorldLensFlareInfos)
@@ -325,9 +326,9 @@ class LensFlareManager {
       );
   }
   GetFacingSun() {
-    let e =
-      RenderDataManager_1.RenderDataManager.Get().GetCurrentCameraForward();
-    let a = RenderDataManager_1.RenderDataManager.Get().GetMainLightVector();
+    var e =
+        RenderDataManager_1.RenderDataManager.Get().GetCurrentCameraForward(),
+      a = RenderDataManager_1.RenderDataManager.Get().GetMainLightVector();
     return e && a
       ? ((e = -e.DotProduct(a)),
         (a = this.ylr - e),
@@ -338,4 +339,4 @@ class LensFlareManager {
 ((exports.LensFlareManager = LensFlareManager).Rlr = void 0),
   (LensFlareManager.Dlr = void 0),
   (LensFlareManager.Ulr = void 0);
-// # sourceMappingURL=LensFlareManager.js.map
+//# sourceMappingURL=LensFlareManager.js.map

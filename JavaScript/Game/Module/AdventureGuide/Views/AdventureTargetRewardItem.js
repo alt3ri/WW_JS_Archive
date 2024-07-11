@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdventureTargetRewardItem = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid");
+const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid");
 class AdventureTargetRewardItem extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   constructor() {
     super(...arguments),
@@ -11,9 +11,8 @@ class AdventureTargetRewardItem extends LoopScrollMediumItemGrid_1.LoopScrollMed
   }
   OnRefresh(e, t, r) {
     this.SetSelected(t);
-    var t = e[0].ItemId;
-    const o =
-      ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t);
+    var t = e[0].ItemId,
+      o = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t);
     o &&
       ((e = {
         Type: 4,
@@ -36,4 +35,4 @@ class AdventureTargetRewardItem extends LoopScrollMediumItemGrid_1.LoopScrollMed
   }
 }
 exports.AdventureTargetRewardItem = AdventureTargetRewardItem;
-// # sourceMappingURL=AdventureTargetRewardItem.js.map
+//# sourceMappingURL=AdventureTargetRewardItem.js.map

@@ -11,4 +11,4 @@ class SceneGameplayMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView 
   }
 }
 exports.SceneGameplayMarkItemView = SceneGameplayMarkItemView;
-// # sourceMappingURL=SceneGameplayMarkItemView.js.map
+//# sourceMappingURL=SceneGameplayMarkItemView.js.map

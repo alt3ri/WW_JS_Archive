@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventPlayMontage = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const DEFAULT_FINISHED_TIME = 6e4;
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  DEFAULT_FINISHED_TIME = 6e4;
 class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -29,7 +29,7 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, t) {
     if (e)
       if (
-        e.ActionMontage.MontageType !== "Normal" ||
+        "Normal" !== e.ActionMontage.MontageType ||
         StringUtils_1.StringUtils.IsEmpty(e.ActionMontage.Path)
       )
         Log_1.Log.CheckError() &&
@@ -42,7 +42,7 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
           ),
           this.FinishExecute(!1);
       else {
-        if (((this.E0 = e.EntityId), (this.gLe = e), t.Type === 1)) {
+        if (((this.E0 = e.EntityId), (this.gLe = e), 1 === t.Type)) {
           e = EntitySystem_1.EntitySystem.Get(t.EntityId ?? 0)
             ?.GetComponent(1)
             ?.CreatureData.GetPbDataId();
@@ -71,7 +71,7 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
         this.FinishExecute(!1);
   }
   ExecuteWhenEntitiesReady() {
-    let e;
+    var e;
     (this.sDe = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
       this.gLe.EntityId,
     )),
@@ -141,4 +141,4 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventPlayMontage = LevelEventPlayMontage;
-// # sourceMappingURL=LevelEventPlayMontage.js.map
+//# sourceMappingURL=LevelEventPlayMontage.js.map

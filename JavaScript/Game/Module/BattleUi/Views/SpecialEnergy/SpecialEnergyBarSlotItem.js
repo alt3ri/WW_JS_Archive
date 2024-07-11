@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SpecialEnergyBarSlotItem = void 0);
-const UE = require("ue");
-const Time_1 = require("../../../../../Core/Common/Time");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const EFFECT_DURATION = 500;
+const UE = require("ue"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  EFFECT_DURATION = 500;
 class SpecialEnergyBarSlotItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -41,7 +41,7 @@ class SpecialEnergyBarSlotItem extends UiPanelBase_1.UiPanelBase {
       this.GetUiNiagara(4).SetUIActive(!1),
       this.GetUiNiagara(5).SetUIActive(!1),
       this.GetUiNiagara(6).SetUIActive(!1);
-    const t = this.GetSprite(7);
+    var t = this.GetSprite(7);
     this.GetSprite(8).SetStretchLeft(t.GetStretchLeft()),
       (this.qmt = t.GetStretchRight()),
       (this.Gmt = t.Width),
@@ -73,7 +73,7 @@ class SpecialEnergyBarSlotItem extends UiPanelBase_1.UiPanelBase {
       ? (s = -1)
       : t >= 1 - MathUtils_1.MathUtils.SmallNumber && i && (s = 1),
       this.ac !== s &&
-        (s === -1
+        (-1 === s
           ? (this.GetSprite(0).SetUIActive(!0),
             this.GetSprite(7).SetUIActive(!0),
             this.GetSprite(8).SetUIActive(!1),
@@ -81,8 +81,8 @@ class SpecialEnergyBarSlotItem extends UiPanelBase_1.UiPanelBase {
             this.GetUiNiagara(3).SetUIActive(!1),
             this.GetUiNiagara(4).SetUIActive(!1),
             this.GetUiNiagara(5).SetUIActive(!1),
-            this.ac === 1 && this.Omt())
-          : s === 1
+            1 === this.ac && this.Omt())
+          : 1 === s
             ? (this.GetSprite(0).SetUIActive(!1),
               this.GetSprite(7).SetUIActive(!1),
               this.GetSprite(8).SetUIActive(!1),
@@ -98,9 +98,9 @@ class SpecialEnergyBarSlotItem extends UiPanelBase_1.UiPanelBase {
               this.GetUiNiagara(3).SetUIActive(!1),
               this.GetUiNiagara(4).SetUIActive(!1),
               this.GetUiNiagara(5).SetUIActive(!1),
-              this.ac === 1 && this.Omt()),
+              1 === this.ac && this.Omt()),
         (this.ac = s)),
-      s === 0 && (this.GetSprite(1).SetFillAmount(t), this.Fmt(t));
+      0 === s && (this.GetSprite(1).SetFillAmount(t), this.Fmt(t));
   }
   UpdatePercentWithVisible(t, i, s, h, e) {
     i && (this.GetSprite(1).SetFillAmount(t), this.Fmt(t)),
@@ -123,7 +123,7 @@ class SpecialEnergyBarSlotItem extends UiPanelBase_1.UiPanelBase {
                 t * this.Amt,
               ),
               this.kmt()),
-          i && t === 0
+          i && 0 === t
             ? (this.GetUiNiagara(6).SetNiagaraVarFloat(
                 "Dissolve",
                 e * this.Amt,
@@ -132,8 +132,8 @@ class SpecialEnergyBarSlotItem extends UiPanelBase_1.UiPanelBase {
             : this.GetUiNiagara(6).SetUIActive(!1));
   }
   Fmt(t) {
-    var t = Math.max(0, Math.min(1, t));
-    const i = this.GetSprite(8);
+    var t = Math.max(0, Math.min(1, t)),
+      i = this.GetSprite(8);
     i.SetStretchRight(this.qmt + this.Gmt * (1 - t)), i.SetTileX(this.Nmt * t);
   }
   PlayUseEffectWithPercent(t) {
@@ -153,17 +153,17 @@ class SpecialEnergyBarSlotItem extends UiPanelBase_1.UiPanelBase {
   Tick(t) {
     this.Umt &&
       ((this.Umt = !1),
-      this.Bmt > 0 &&
+      0 < this.Bmt &&
         (this.Bmt <= Time_1.Time.Now
           ? (this.GetUiNiagara(5).SetUIActive(!1), (this.Bmt = 0))
           : (this.Umt = !0)),
-      this.bmt > 0) &&
+      0 < this.bmt) &&
       (this.bmt <= Time_1.Time.Now
         ? (this.GetUiNiagara(6).SetUIActive(!1), (this.bmt = 0))
         : (this.Umt = !0));
   }
   ReplaceFullEffect(t) {
-    const i = this.GetUiNiagara(3);
+    var i = this.GetUiNiagara(3);
     this.pGn || (this.pGn = i.NiagaraSystemReference), i.SetNiagaraSystem(t);
   }
   OnBeforeDestroy() {
@@ -172,4 +172,4 @@ class SpecialEnergyBarSlotItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.SpecialEnergyBarSlotItem = SpecialEnergyBarSlotItem;
-// # sourceMappingURL=SpecialEnergyBarSlotItem.js.map
+//# sourceMappingURL=SpecialEnergyBarSlotItem.js.map

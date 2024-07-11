@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MediumItemGridLevelAndLockComponent = void 0);
-const UE = require("ue");
-const MediumItemGridComponent_1 = require("./MediumItemGridComponent");
+const UE = require("ue"),
+  MediumItemGridComponent_1 = require("./MediumItemGridComponent");
 class MediumItemGridLevelAndLockComponent extends MediumItemGridComponent_1.MediumItemGridComponent {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -17,7 +17,7 @@ class MediumItemGridLevelAndLockComponent extends MediumItemGridComponent_1.Medi
     this.GetItem(1).SetUIActive(!1), this.GetItem(3).SetUIActive(!1);
   }
   OnRefresh(e) {
-    let t;
+    var t;
     e
       ? (this.SetLevel(e.Level, e.IsUseVision),
         this.SetLock(e.IsLockVisible),
@@ -35,14 +35,14 @@ class MediumItemGridLevelAndLockComponent extends MediumItemGridComponent_1.Medi
     t ? (this.Sxt(void 0), this.yxt(e)) : (this.yxt(void 0), this.Sxt(e));
   }
   Sxt(e) {
-    const t = this.GetItem(1);
+    var t = this.GetItem(1);
     void 0 === e
       ? t.IsUIActiveSelf() && t.SetUIActive(!1)
       : (this.GetText(2).SetText(e.toString()),
         t.IsUIActiveSelf() || t.SetUIActive(!0));
   }
   yxt(e) {
-    const t = this.GetItem(3);
+    var t = this.GetItem(3);
     void 0 === e
       ? t.IsUIActiveSelf() && t.SetUIActive(!1)
       : (this.GetText(4).SetText(e.toString()),
@@ -54,4 +54,4 @@ class MediumItemGridLevelAndLockComponent extends MediumItemGridComponent_1.Medi
 }
 exports.MediumItemGridLevelAndLockComponent =
   MediumItemGridLevelAndLockComponent;
-// # sourceMappingURL=MediumItemGridLevelAndLockComponent.js.map
+//# sourceMappingURL=MediumItemGridLevelAndLockComponent.js.map

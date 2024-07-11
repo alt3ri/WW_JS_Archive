@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Climb = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const FloatRange_1 = require("./SubType/FloatRange");
-const Vector_1 = require("./SubType/Vector");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  FloatRange_1 = require("./SubType/FloatRange"),
+  Vector_1 = require("./SubType/Vector");
 class Climb {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -93,14 +93,14 @@ class Climb {
     );
   }
   id(t) {
-    const i = this.J7.__offset(this.z7, 4);
+    var i = this.J7.__offset(this.z7, 4);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetClimbdetectpointsAt(t, i) {
     return this.climbdetectpoints(t);
   }
   climbdetectpoints(t, i) {
-    const r = this.J7.__offset(this.z7, 6);
+    var r = this.J7.__offset(this.z7, 6);
     return r
       ? (i || new Vector_1.Vector()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -109,19 +109,19 @@ class Climb {
       : null;
   }
   climbdetectpointsLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   detectradius() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readFloat32(this.z7 + t) : 20;
   }
   climbradius() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readFloat32(this.z7 + t) : 40;
   }
   climbfromtop(t) {
-    const i = this.J7.__offset(this.z7, 12);
+    var i = this.J7.__offset(this.z7, 12);
     return i
       ? (t || new Vector_1.Vector()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -130,7 +130,7 @@ class Climb {
       : null;
   }
   climbvault(t) {
-    const i = this.J7.__offset(this.z7, 14);
+    var i = this.J7.__offset(this.z7, 14);
     return i
       ? (t || new Vector_1.Vector()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -139,7 +139,7 @@ class Climb {
       : null;
   }
   climbontop(t) {
-    const i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 16);
     return i
       ? (t || new Vector_1.Vector()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -148,7 +148,7 @@ class Climb {
       : null;
   }
   vaultrange(t) {
-    const i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 18);
     return i
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -157,7 +157,7 @@ class Climb {
       : null;
   }
   uparriverange(t) {
-    const i = this.J7.__offset(this.z7, 20);
+    var i = this.J7.__offset(this.z7, 20);
     return i
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -166,7 +166,7 @@ class Climb {
       : null;
   }
   climbsprintvault(t) {
-    const i = this.J7.__offset(this.z7, 22);
+    var i = this.J7.__offset(this.z7, 22);
     return i
       ? (t || new Vector_1.Vector()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -175,7 +175,7 @@ class Climb {
       : null;
   }
   sprintvaultrange(t) {
-    const i = this.J7.__offset(this.z7, 24);
+    var i = this.J7.__offset(this.z7, 24);
     return i
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -184,15 +184,15 @@ class Climb {
       : null;
   }
   forwardblockheight() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.readFloat32(this.z7 + t) : 50;
   }
   forwardblockradius() {
-    const t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.readFloat32(this.z7 + t) : 30;
   }
   forwardblockdistance(t) {
-    const i = this.J7.__offset(this.z7, 30);
+    var i = this.J7.__offset(this.z7, 30);
     return i
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -201,15 +201,15 @@ class Climb {
       : null;
   }
   sprintvaultlongneeddistance() {
-    const t = this.J7.__offset(this.z7, 32);
+    var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.readFloat32(this.z7 + t) : 48;
   }
   sprintvaultlongheight() {
-    const t = this.J7.__offset(this.z7, 34);
+    var t = this.J7.__offset(this.z7, 34);
     return t ? this.J7.readFloat32(this.z7 + t) : 75;
   }
   sprintvaultlongrange(t) {
-    const i = this.J7.__offset(this.z7, 36);
+    var i = this.J7.__offset(this.z7, 36);
     return i
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -218,7 +218,7 @@ class Climb {
       : null;
   }
   blockupoffset(t) {
-    const i = this.J7.__offset(this.z7, 38);
+    var i = this.J7.__offset(this.z7, 38);
     return i
       ? (t || new Vector_1.Vector()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -227,23 +227,23 @@ class Climb {
       : null;
   }
   blockupdetectradius() {
-    const t = this.J7.__offset(this.z7, 40);
+    var t = this.J7.__offset(this.z7, 40);
     return t ? this.J7.readFloat32(this.z7 + t) : 20;
   }
   blockupdetectdistance() {
-    const t = this.J7.__offset(this.z7, 42);
+    var t = this.J7.__offset(this.z7, 42);
     return t ? this.J7.readFloat32(this.z7 + t) : 250;
   }
   blockupbackdistance() {
-    const t = this.J7.__offset(this.z7, 44);
+    var t = this.J7.__offset(this.z7, 44);
     return t ? this.J7.readFloat32(this.z7 + t) : 100;
   }
   blockupbackmindist() {
-    const t = this.J7.__offset(this.z7, 46);
+    var t = this.J7.__offset(this.z7, 46);
     return t ? this.J7.readFloat32(this.z7 + t) : 50;
   }
   blockupfinalmove(t) {
-    const i = this.J7.__offset(this.z7, 48);
+    var i = this.J7.__offset(this.z7, 48);
     return i
       ? (t || new Vector_1.Vector()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -252,7 +252,7 @@ class Climb {
       : null;
   }
   blockupverticalrange(t) {
-    const i = this.J7.__offset(this.z7, 50);
+    var i = this.J7.__offset(this.z7, 50);
     return i
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -262,4 +262,4 @@ class Climb {
   }
 }
 exports.Climb = Climb;
-// # sourceMappingURL=Climb.js.map
+//# sourceMappingURL=Climb.js.map

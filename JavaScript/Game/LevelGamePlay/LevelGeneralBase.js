@@ -6,14 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.LevelConditionGroup =
     exports.LevelEventBase =
       void 0);
-const Log_1 = require("../../Core/Common/Log");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const GlobalData_1 = require("../GlobalData");
-const ModelManager_1 = require("../Manager/ModelManager");
-const WaitEntityTask_1 = require("../World/Define/WaitEntityTask");
-const ControllerHolder_1 = require("../Manager/ControllerHolder");
-const EACH_WAIT_ENTITY_OVER_TIME = 3e4;
+const Log_1 = require("../../Core/Common/Log"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  GlobalData_1 = require("../GlobalData"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  WaitEntityTask_1 = require("../World/Define/WaitEntityTask"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
+  EACH_WAIT_ENTITY_OVER_TIME = 3e4;
 class LevelEventBase {
   constructor(e) {
     (this.Id = e),
@@ -227,4 +227,4 @@ class LevelConditionBase {
 exports.LevelConditionBase = LevelConditionBase;
 class LevelConditionExParams {}
 exports.LevelConditionExParams = LevelConditionExParams;
-// # sourceMappingURL=LevelGeneralBase.js.map
+//# sourceMappingURL=LevelGeneralBase.js.map

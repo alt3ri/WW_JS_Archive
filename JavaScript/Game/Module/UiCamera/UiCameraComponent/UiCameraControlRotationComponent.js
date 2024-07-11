@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiCameraControlRotationComponent = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiCameraComponent_1 = require("./UiCameraComponent");
-const UiCameraPostEffectComponent_1 = require("./UiCameraPostEffectComponent");
+const Log_1 = require("../../../../Core/Common/Log"),
+  MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiCameraComponent_1 = require("./UiCameraComponent"),
+  UiCameraPostEffectComponent_1 = require("./UiCameraPostEffectComponent");
 class VirtualCamera {
   constructor() {
     (this.ArmLength = 0),
@@ -119,9 +119,9 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
       (this.CRo = l);
   }
   UpdateData(t, i, s, h, a) {
-    let e;
-    let o;
-    const r = this.GetCameraStructure();
+    var e,
+      o,
+      r = this.GetCameraStructure();
     r &&
       ((e = r.GetActorLocation()),
       (o = r.GetSpringRelativeRotation()),
@@ -174,9 +174,9 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
     (this.gRo = 0), (this.fRo = 0), (this.pRo = 0);
   }
   RRo(t) {
-    let i = this.gRo;
-    let s = this.fRo;
-    let h = this.pRo;
+    let i = this.gRo,
+      s = this.fRo,
+      h = this.pRo;
     this.wRo(),
       ModelManager_1.ModelManager.PlatformModel.IsGamepad()
         ? ((i *= this.oRo), (s *= this.oRo))
@@ -193,12 +193,12 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
         (this.DesiredCamera.ArmLength += h);
   }
   uxr() {
-    let t = this.DesiredCamera.ArmRotation.Yaw;
-    this.DesiredCamera.ArmRotation.Yaw = t = (t %= 360) > 180 ? t - 360 : t;
+    var t = this.DesiredCamera.ArmRotation.Yaw;
+    this.DesiredCamera.ArmRotation.Yaw = t = 180 < (t %= 360) ? t - 360 : t;
   }
   URo() {
-    var t = this.DesiredCamera.ArmRotation.Pitch;
-    var t = (t %= 360) > 180 ? t - 360 : t;
+    var t = this.DesiredCamera.ArmRotation.Pitch,
+      t = 180 < (t %= 360) ? t - 360 : t;
     (t = MathUtils_1.MathUtils.Clamp(
       t,
       this.DesiredCamera.PitchLimitMin,
@@ -260,15 +260,15 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
       : this.CurrentCamera.DeepCopy(this.DesiredCamera);
   }
   xRo() {
-    const t = this.CurrentCamera.ArmRotation;
-    let i =
-      (this.TempLookCenterLocation.DeepCopy(
-        this.CurrentCamera.LookCenterLocation,
-      ),
-      this.TempLookCenterLocation);
+    var t = this.CurrentCamera.ArmRotation,
+      i =
+        (this.TempLookCenterLocation.DeepCopy(
+          this.CurrentCamera.LookCenterLocation,
+        ),
+        this.TempLookCenterLocation);
     let s = this.CurrentCamera.ArmLength;
-    let h = this.CurrentCamera.ArmRotation.Pitch;
-    h > 0 &&
+    var h = this.CurrentCamera.ArmRotation.Pitch;
+    0 < h &&
       !MathUtils_1.MathUtils.IsNearlyZero(h) &&
       ((h = MathCommon_1.MathCommon.WrapAngle(h)),
       (h = MathCommon_1.MathCommon.DegreeToRadian(h)),
@@ -349,9 +349,9 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
       (this.DesiredCamera.ArmRotation.Roll = s);
   }
   SetArmRotationByDefaultCamera() {
-    const t = this.DefaultCamera.ArmRotation;
+    var t = this.DefaultCamera.ArmRotation;
     this.SetArmRotation(t.Pitch, t.Yaw, t.Roll);
   }
 }
 exports.UiCameraControlRotationComponent = UiCameraControlRotationComponent;
-// # sourceMappingURL=UiCameraControlRotationComponent.js.map
+//# sourceMappingURL=UiCameraControlRotationComponent.js.map

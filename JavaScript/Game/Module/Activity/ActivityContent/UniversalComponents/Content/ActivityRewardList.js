@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRewardList = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase");
-const CommonItemSmallItemGrid_1 = require("../../../../Common/ItemGrid/CommonItemSmallItemGrid");
-const GenericLayout_1 = require("../../../../Util/Layout/GenericLayout");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase"),
+  CommonItemSmallItemGrid_1 = require("../../../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  GenericLayout_1 = require("../../../../Util/Layout/GenericLayout");
 class ActivityRewardList extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -49,4 +49,4 @@ class ActivityRewardList extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ActivityRewardList = ActivityRewardList;
-// # sourceMappingURL=ActivityRewardList.js.map
+//# sourceMappingURL=ActivityRewardList.js.map

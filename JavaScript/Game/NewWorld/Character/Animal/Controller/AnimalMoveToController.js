@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AnimalMoveToController = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const AiContollerLibrary_1 = require("../../../../AI/Controller/AiContollerLibrary");
-const CharacterNameDefines_1 = require("../../Common/CharacterNameDefines");
-const CharacterUnifiedStateTypes_1 = require("../../Common/Component/Abilities/CharacterUnifiedStateTypes");
-const DISTANCE_ERROR_THRESHOLD = 100;
-const MAX_TURN_SPEED = 360;
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  AiContollerLibrary_1 = require("../../../../AI/Controller/AiContollerLibrary"),
+  CharacterNameDefines_1 = require("../../Common/CharacterNameDefines"),
+  CharacterUnifiedStateTypes_1 = require("../../Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  DISTANCE_ERROR_THRESHOLD = 100,
+  MAX_TURN_SPEED = 360;
 class AnimalMoveToController {
   constructor(t) {
     (this.tu = CharacterUnifiedStateTypes_1.ECharMoveState.Other),
@@ -62,7 +62,7 @@ class AnimalMoveToController {
           (this.nWo = 0)));
   }
   Update(t) {
-    let i;
+    var i;
     return this.aWo
       ? 2
       : (i = this.rWo[this.nWo]).ContainsNaN()
@@ -106,7 +106,7 @@ class AnimalMoveToController {
   uWo(t) {
     this.Hte.SetInputDirect(t);
     let i = this.sWo;
-    let s;
+    var s;
     this.lWo &&
       ((s =
         MathUtils_1.MathUtils.GetAngleByVectorDot(
@@ -119,4 +119,4 @@ class AnimalMoveToController {
   }
 }
 exports.AnimalMoveToController = AnimalMoveToController;
-// # sourceMappingURL=AnimalMoveToController.js.map
+//# sourceMappingURL=AnimalMoveToController.js.map

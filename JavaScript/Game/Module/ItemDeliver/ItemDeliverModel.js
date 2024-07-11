@@ -17,4 +17,4 @@ class ItemDeliverModel extends ModelBase_1.ModelBase {
   }
 }
 exports.ItemDeliverModel = ItemDeliverModel;
-// # sourceMappingURL=ItemDeliverModel.js.map
+//# sourceMappingURL=ItemDeliverModel.js.map

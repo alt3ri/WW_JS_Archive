@@ -3,16 +3,16 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonMultipleConsumeFunction =
     exports.CommonMultipleConsumeComponent =
       void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const UiComponentUtil_1 = require("../../Util/UiComponentUtil");
-const ButtonItem_1 = require("../Button/ButtonItem");
-const CommonConditionFilterComponent_1 = require("./CommonConditionFilterComponent");
-const ConsumeItem_1 = require("./ConsumeItem");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  UiComponentUtil_1 = require("../../Util/UiComponentUtil"),
+  ButtonItem_1 = require("../Button/ButtonItem"),
+  CommonConditionFilterComponent_1 = require("./CommonConditionFilterComponent"),
+  ConsumeItem_1 = require("./ConsumeItem");
 class CommonMultipleConsumeComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t, i, e = !0, s = void 0) {
     super(),
@@ -42,7 +42,7 @@ class CommonMultipleConsumeComponent extends UiPanelBase_1.UiPanelBase {
           this.$It && this.$It(t);
       }),
       (this.sGe = () => {
-        const t = new ConsumeItem_1.ConsumeItem(void 0, this.BelongView);
+        var t = new ConsumeItem_1.ConsumeItem(void 0, this.BelongView);
         return (
           t.SetButtonFunction(this.ConsumeFunction.MaterialItemFunction), t
         );
@@ -76,8 +76,8 @@ class CommonMultipleConsumeComponent extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     (this.StrengthItem = new ButtonItem_1.ButtonItem(this.GetItem(7))),
       this.StrengthItem.SetFunction(this.ConsumeFunction.StrengthFunction);
-    const t = this.GetLoopScrollViewComponent(4);
-    const i = this.GetItem(8).GetOwner();
+    var t = this.GetLoopScrollViewComponent(4),
+      i = this.GetItem(8).GetOwner();
     (this.LoopScrollView = new LoopScrollView_1.LoopScrollView(t, i, this.sGe)),
       this.GetButton(9).RootUIComp.SetUIActive(this.NeedConditionFilter),
       this.NeedConditionFilter &&
@@ -113,9 +113,9 @@ class CommonMultipleConsumeComponent extends UiPanelBase_1.UiPanelBase {
         e.length,
         this.MaxCount,
       );
-    var e = this.GetText(1);
-    const s = this.GetText(3);
-    var t = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerMoney(t);
+    var e = this.GetText(1),
+      s = this.GetText(3),
+      t = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerMoney(t);
     this.EnoughMoney = UiComponentUtil_1.UiComponentUtil.SetMoneyState(
       e,
       s,
@@ -184,4 +184,4 @@ class CommonMultipleConsumeFunction {
   }
 }
 exports.CommonMultipleConsumeFunction = CommonMultipleConsumeFunction;
-// # sourceMappingURL=CommonMultipleConsumeComponent.js.map
+//# sourceMappingURL=CommonMultipleConsumeComponent.js.map

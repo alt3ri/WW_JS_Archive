@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChangeActionTipsView = void 0);
-const UE = require("ue");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const ChangeActionRowView_1 = require("./ChangeActionRowView");
+const UE = require("ue"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  ChangeActionRowView_1 = require("./ChangeActionRowView");
 class ChangeActionTipsView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -41,13 +41,13 @@ class ChangeActionTipsView extends UiViewBase_1.UiViewBase {
       (this.mAi = new ChangeActionRowView_1.ChangeActionRowView()),
       this.cAi.BindOnSelected(this.fAi),
       this.mAi.BindOnSelected(this.fAi);
-    const i = this.cAi.CreateByActorAsync(this.GetItem(2).GetOwner());
-    const t = this.mAi.CreateByActorAsync(this.GetItem(3).GetOwner());
+    var i = this.cAi.CreateByActorAsync(this.GetItem(2).GetOwner()),
+      t = this.mAi.CreateByActorAsync(this.GetItem(3).GetOwner());
     await Promise.all([i, t]);
   }
   OnStart() {
-    const i = this.OpenParam;
-    const t = i.InputControllerType;
+    var i = this.OpenParam,
+      t = i.InputControllerType;
     (this.Xqt = i.OnConfirmCallback),
       (this.uAi = i.KeySettingRowData),
       this.cAi?.Refresh(this.uAi, t, !1),
@@ -61,4 +61,4 @@ class ChangeActionTipsView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.ChangeActionTipsView = ChangeActionTipsView;
-// # sourceMappingURL=ChangeActionTipsView.js.map
+//# sourceMappingURL=ChangeActionTipsView.js.map

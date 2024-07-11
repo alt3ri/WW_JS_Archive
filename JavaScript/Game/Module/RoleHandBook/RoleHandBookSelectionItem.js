@@ -7,4 +7,4 @@ class RoleHandBookSelectionItem extends UiPanelBase_1.UiPanelBase {
   UpdateItem(e) {}
 }
 exports.RoleHandBookSelectionItem = RoleHandBookSelectionItem;
-// # sourceMappingURL=RoleHandBookSelectionItem.js.map
+//# sourceMappingURL=RoleHandBookSelectionItem.js.map

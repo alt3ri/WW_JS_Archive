@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiShengGuYangCamera = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../Core/Actor/ActorSystem");
-const Time_1 = require("../../../../Core/Common/Time");
-const Quat_1 = require("../../../../Core/Utils/Math/Quat");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Transform_1 = require("../../../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter");
-const GameSplineUtils_1 = require("../../../LevelGamePlay/Common/GameSplineUtils");
-const TsGameSplineActor_1 = require("../../../LevelGamePlay/Common/TsGameSplineActor");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const MOVE_SPLINE_PB_DATA_ID = 118003752;
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../Core/Actor/ActorSystem"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  Quat_1 = require("../../../../Core/Utils/Math/Quat"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Transform_1 = require("../../../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter"),
+  GameSplineUtils_1 = require("../../../LevelGamePlay/Common/GameSplineUtils"),
+  TsGameSplineActor_1 = require("../../../LevelGamePlay/Common/TsGameSplineActor"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  MOVE_SPLINE_PB_DATA_ID = 118003752;
 class AiShengGuYangCamera {
   constructor() {
     (this.Ic = void 0),
@@ -92,19 +92,19 @@ class AiShengGuYangCamera {
         this.Xce
           ? (this.Hh.SetFieldOfView(120),
             (this.$ce = 4500),
-            (this.Jce = this.Yce >= 2300 ? 1.05 * this.$ce : 0.3 * this.$ce))
+            (this.Jce = 2300 <= this.Yce ? 1.05 * this.$ce : 0.3 * this.$ce))
           : ((this.$ce = 2500),
-            (this.Jce = this.Yce >= 2300 ? 1.05 * this.$ce : 0.3 * this.$ce),
+            (this.Jce = 2300 <= this.Yce ? 1.05 * this.$ce : 0.3 * this.$ce),
             this.Hh.SetFieldOfView(105)),
         Math.abs(this.Wce.X) === this.Kce.X
-          ? ((this.Wce.X > 0 && this.jce.X <= -0.5) ||
-              (this.Wce.X < 0 && this.jce.X >= 0.5)) &&
-            ((i = this.Wce.X > 0 ? this.Wce.X - 70 : this.Wce.X + 70),
+          ? ((0 < this.Wce.X && this.jce.X <= -0.5) ||
+              (this.Wce.X < 0 && 0.5 <= this.jce.X)) &&
+            ((i = 0 < this.Wce.X ? this.Wce.X - 70 : this.Wce.X + 70),
             Math.abs(i) < this.Kce.X) &&
             (this.Wce.X = MathUtils_1.MathUtils.InterpTo(this.Wce.X, i, t, 10))
           : Math.abs(this.Wce.X) < this.Kce.X
-            ? ((i = this.jce.X >= 0.5 ? this.Wce.X + 70 : this.Wce.X - 70),
-              (this.jce.X >= 0.5 || this.jce.X <= -0.5) &&
+            ? ((i = 0.5 <= this.jce.X ? this.Wce.X + 70 : this.Wce.X - 70),
+              (0.5 <= this.jce.X || this.jce.X <= -0.5) &&
                 Math.abs(i) < this.Kce.X &&
                 (this.Wce.X = MathUtils_1.MathUtils.InterpTo(
                   this.Wce.X,
@@ -112,16 +112,16 @@ class AiShengGuYangCamera {
                   t,
                   10,
                 )))
-            : (this.Wce.X = this.Wce.X > 0 ? this.Kce.X : -this.Kce.X),
+            : (this.Wce.X = 0 < this.Wce.X ? this.Kce.X : -this.Kce.X),
         Math.abs(this.Wce.Y) === this.Kce.Y
-          ? ((this.Wce.Y > 0 && this.jce.Y <= -0.5) ||
-              (this.Wce.Y < 0 && this.jce.Y >= 0.5)) &&
-            ((i = this.Wce.Y > 0 ? this.Wce.Y - 70 : this.Wce.Y + 70),
+          ? ((0 < this.Wce.Y && this.jce.Y <= -0.5) ||
+              (this.Wce.Y < 0 && 0.5 <= this.jce.Y)) &&
+            ((i = 0 < this.Wce.Y ? this.Wce.Y - 70 : this.Wce.Y + 70),
             Math.abs(i) < this.Kce.Y) &&
             (this.Wce.Y = MathUtils_1.MathUtils.InterpTo(this.Wce.Y, i, t, 10))
           : Math.abs(this.Wce.Y) < this.Kce.Y
-            ? ((i = this.jce.Y >= 0.5 ? this.Wce.Y + 70 : this.Wce.Y - 70),
-              (this.jce.Y >= 0.5 || this.jce.Y <= -0.5) &&
+            ? ((i = 0.5 <= this.jce.Y ? this.Wce.Y + 70 : this.Wce.Y - 70),
+              (0.5 <= this.jce.Y || this.jce.Y <= -0.5) &&
                 Math.abs(i) < this.Kce.Y &&
                 (this.Wce.Y = MathUtils_1.MathUtils.InterpTo(
                   this.Wce.Y,
@@ -129,7 +129,7 @@ class AiShengGuYangCamera {
                   t,
                   10,
                 )))
-            : (this.Wce.Y = this.Wce.Y > 0 ? this.Kce.Y : -this.Kce.Y),
+            : (this.Wce.Y = 0 < this.Wce.Y ? this.Kce.Y : -this.Kce.Y),
         this.Cme &&
           (this.zce.FromUeVector(
             this.kce.GetLocationAtDistanceAlongSpline(this.ome, 1),
@@ -208,8 +208,8 @@ class AiShengGuYangCamera {
           (this.Qce++,
           (this.mme = this.kce.GetDistanceAlongSplineAtSplinePoint(this.Qce)));
       if (!this.Xce) {
-        var i = this.ame === 1 ? 100 : 200;
-        var s = this.ame === 3 ? 300 : 400;
+        var i = 1 === this.ame ? 100 : 200,
+          s = 3 === this.ame ? 300 : 400;
         switch (
           (this.nme < i
             ? (this.ame = 1)
@@ -226,12 +226,12 @@ class AiShengGuYangCamera {
                 : ((this.hme = 3), (this.Jce = 1.1 * this.$ce));
             break;
           case 1:
-            this.Yce >= 1100 && ((this.hme = 2), (this.Jce = this.$ce - 100));
+            1100 <= this.Yce && ((this.hme = 2), (this.Jce = this.$ce - 100));
             break;
           case 2:
             this.Yce <= 900
               ? ((this.hme = 1), (this.Jce = 0.85 * this.$ce))
-              : this.Yce >= 1500 &&
+              : 1500 <= this.Yce &&
                 ((this.hme = 3), (this.Jce = 1.2 * this.$ce));
             break;
           case 3:
@@ -239,7 +239,7 @@ class AiShengGuYangCamera {
         }
       }
       MathUtils_1.MathUtils.IsNearlyZero(this.jce.Y)
-        ? this.lme && Time_1.Time.Now - this._me > 1e3
+        ? this.lme && 1e3 < Time_1.Time.Now - this._me
           ? (this.lme = !1)
           : (this.gme.FromUeVector(this.qce.GetActorForwardVector()),
             (this.gme.Z = 0),
@@ -370,8 +370,8 @@ class AiShengGuYangCamera {
       (this.Nce = void 0);
   }
   Sme() {
-    let t;
-    const i = ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity;
+    var t,
+      i = ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity;
     i?.Valid &&
       (t = i.Entity?.GetComponent(3)?.Actor) instanceof
         TsBaseCharacter_1.default &&
@@ -410,19 +410,19 @@ class AiShengGuYangCamera {
   }
   Eme(t, i, s) {
     var s = UE.KismetMathLibrary.FindLookAtRotation(
-      t.ToUeVector(),
-      s.ToUeVector(),
-    );
-    var s = Vector_1.Vector.Create(UE.KismetMathLibrary.GetRightVector(s));
-    const h = Vector_1.Vector.Create();
+        t.ToUeVector(),
+        s.ToUeVector(),
+      ),
+      s = Vector_1.Vector.Create(UE.KismetMathLibrary.GetRightVector(s)),
+      h = Vector_1.Vector.Create();
     return (
       i.Subtraction(t, h),
       h.Normalize(),
-      Math.acos(MathUtils_1.MathUtils.Clamp(s.DotProduct(h), -1, 1)) *
-        MathUtils_1.MathUtils.RadToDeg >
-        90
+      90 <
+        Math.acos(MathUtils_1.MathUtils.Clamp(s.DotProduct(h), -1, 1)) *
+          MathUtils_1.MathUtils.RadToDeg
     );
   }
 }
 exports.AiShengGuYangCamera = AiShengGuYangCamera;
-// # sourceMappingURL=AiShengGuYangCamera.js.map
+//# sourceMappingURL=AiShengGuYangCamera.js.map

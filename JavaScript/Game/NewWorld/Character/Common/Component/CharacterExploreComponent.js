@@ -1,34 +1,39 @@
 "use strict";
-let CharacterExploreComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, s) {
-    let h;
-    const n = arguments.length;
-    let r =
-      n < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(t, e, i, s);
-    else
-      for (let o = t.length - 1; o >= 0; o--)
-        (h = t[o]) && (r = (n < 3 ? h(r) : n > 3 ? h(e, i, r) : h(e, i)) || r);
-    return n > 3 && r && Object.defineProperty(e, i, r), r;
-  };
+var CharacterExploreComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, s) {
+      var h,
+        n = arguments.length,
+        r =
+          n < 3
+            ? e
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        r = Reflect.decorate(t, e, i, s);
+      else
+        for (var o = t.length - 1; 0 <= o; o--)
+          (h = t[o]) &&
+            (r = (n < 3 ? h(r) : 3 < n ? h(e, i, r) : h(e, i)) || r);
+      return 3 < n && r && Object.defineProperty(e, i, r), r;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterExploreComponent = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RouletteController_1 = require("../../../../Module/Roulette/RouletteController");
-const HighlightExploreSkillLogic_1 = require("./Skill/HighlightExploreSkillLogic");
-const HOOK_VISION_ID = 1001;
-const MANIPULATE_VISION_ID = 1003;
-const MANIPULATE_SKILL_IDS = [210007];
-const HOOK_SKILL_IDS = [100020, 100021];
+const Log_1 = require("../../../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RouletteController_1 = require("../../../../Module/Roulette/RouletteController"),
+  HighlightExploreSkillLogic_1 = require("./Skill/HighlightExploreSkillLogic"),
+  HOOK_VISION_ID = 1001,
+  MANIPULATE_VISION_ID = 1003,
+  MANIPULATE_SKILL_IDS = [210007],
+  HOOK_SKILL_IDS = [100020, 100021];
 let CharacterExploreComponent =
   (CharacterExploreComponent_1 = class CharacterExploreComponent extends (
     EntityComponent_1.EntityComponent
@@ -66,7 +71,7 @@ let CharacterExploreComponent =
             }
             (this.n5r = !0),
               this.M5r &&
-                (this.v5r !== 0
+                (0 !== this.v5r
                   ? (this.S5r = HOOK_VISION_ID)
                   : EventSystem_1.EventSystem.HasWithTarget(
                       this.Entity,
@@ -94,7 +99,7 @@ let CharacterExploreComponent =
                 (this.u5r = this.l5r.GetComponent(1)),
                 (this.g5r = e.Id),
                 this.M5r &&
-                  (this.v5r !== 1
+                  (1 !== this.v5r
                     ? (this.S5r = MANIPULATE_VISION_ID)
                     : EventSystem_1.EventSystem.HasWithTarget(
                         this.Entity,
@@ -181,7 +186,7 @@ let CharacterExploreComponent =
       return this.P5r(), !0;
     }
     P5r() {
-      let t;
+      var t;
       (this.n5r || this.r5r) &&
         ((t = ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId),
         this.n5r !== this.r5r ? this.x5r(t) : this.w5r(t));
@@ -198,7 +203,7 @@ let CharacterExploreComponent =
           (this.B5r(1), (this.s5r.NeedChangeTargetState = !1));
     }
     w5r(t) {
-      let e, i, s;
+      var e, i, s;
       this.a5r
         ? t !== MANIPULATE_VISION_ID && this.B5r(1)
         : ((s = this._5r.ActorLocationProxy),
@@ -266,7 +271,7 @@ let CharacterExploreComponent =
         ));
     }
     B5r(t) {
-      this.f5r === 0 &&
+      0 === this.f5r &&
         (this.f5r =
           ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId);
       let e = 0;
@@ -295,7 +300,7 @@ let CharacterExploreComponent =
     L5r(t) {
       if (this.n5r || this.r5r)
         this.n5r && (this.B5r(0), (this.s5r.NeedChangeTargetState = !0));
-      else if (this.f5r !== 0 && !CharacterExploreComponent_1.T5r)
+      else if (0 !== this.f5r && !CharacterExploreComponent_1.T5r)
         if (((CharacterExploreComponent_1.T5r = !0), this.q5r())) {
           switch (((this.v5r = t), (this.M5r = !0), (this.S5r = this.f5r), t)) {
             case 0:
@@ -339,13 +344,13 @@ let CharacterExploreComponent =
     }
     IsNeedResetSkill() {
       return (
-        this.f5r !== 0 &&
+        0 !== this.f5r &&
         this.f5r !==
           ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId
       );
     }
     q5r() {
-      let t;
+      var t;
       return !(
         !this.cBe.CurrentSkill ||
         ((t = this.cBe.CurrentSkill.SkillId),
@@ -375,4 +380,4 @@ let CharacterExploreComponent =
       CharacterExploreComponent,
     )),
   (exports.CharacterExploreComponent = CharacterExploreComponent);
-// # sourceMappingURL=CharacterExploreComponent.js.map
+//# sourceMappingURL=CharacterExploreComponent.js.map

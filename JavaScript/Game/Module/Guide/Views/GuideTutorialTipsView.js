@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuideTutorialTipsView = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const TutorialController_1 = require("../../Tutorial/TutorialController");
-const TutorialDefine_1 = require("../../Tutorial/TutorialDefine");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  TutorialController_1 = require("../../Tutorial/TutorialController"),
+  TutorialDefine_1 = require("../../Tutorial/TutorialDefine"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class GuideTutorialTipsView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -34,7 +34,7 @@ class GuideTutorialTipsView extends UiTickViewBase_1.UiTickViewBase {
           });
       }),
       (this.yzt = () => {
-        this.TutorialInfo.TipState === 2
+        2 === this.TutorialInfo.TipState
           ? this.CloseMe(() => {
               ModelManager_1.ModelManager.GuideModel.TryShowGuideTutorialView();
             })
@@ -59,8 +59,8 @@ class GuideTutorialTipsView extends UiTickViewBase_1.UiTickViewBase {
       const t = new CustomPromise_1.CustomPromise();
       (this.vzt = this.TutorialInfo.OwnerStep.ViewData.ViewConf),
         (this.Mzt = this.TutorialInfo.OwnerStep.Config.Duration);
-      const e = this.vzt.TutorialType;
-      const i = TutorialDefine_1.TutorialUtils.GetTutorialTypeIconPath(e);
+      var e = this.vzt.TutorialType,
+        i = TutorialDefine_1.TutorialUtils.GetTutorialTypeIconPath(e);
       i
         ? ResourceSystem_1.ResourceSystem.LoadAsync(
             i,
@@ -80,8 +80,8 @@ class GuideTutorialTipsView extends UiTickViewBase_1.UiTickViewBase {
     } else this.Izt();
   }
   OnStart() {
-    let e;
-    let i = this.GetText(0);
+    var e,
+      i = this.GetText(0);
     this.vzt
       ? ((e = this.vzt.GroupName),
         LguiUtil_1.LguiUtil.SetLocalTextNew(i, e),
@@ -97,7 +97,7 @@ class GuideTutorialTipsView extends UiTickViewBase_1.UiTickViewBase {
       : this.WaitToDestroy || this.Izt();
   }
   OnAfterShow() {
-    this.TutorialInfo.TipState === 0
+    0 === this.TutorialInfo.TipState
       ? this.UiViewSequence.PlaySequence("StartTips")
       : this.UiViewSequence.PlaySequence("StartAtOnce");
   }
@@ -119,12 +119,12 @@ class GuideTutorialTipsView extends UiTickViewBase_1.UiTickViewBase {
       );
   }
   OnTick(e) {
-    let i;
+    var i;
     this.IsShow &&
       ((i = this.TutorialInfo.Duration / this.Mzt),
       this.GetSprite(3)?.SetFillAmount(i),
       this.TutorialInfo.Duration <= 0) &&
-      this.UiViewSequence.CurrentSequenceName !== "CloseTips" &&
+      "CloseTips" !== this.UiViewSequence.CurrentSequenceName &&
       (this.UiViewSequence.StopPrevSequence(!1),
       this.UiViewSequence.PlaySequence("CloseTips", !0));
   }
@@ -136,4 +136,4 @@ class GuideTutorialTipsView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.GuideTutorialTipsView = GuideTutorialTipsView;
-// # sourceMappingURL=GuideTutorialTipsView.js.map
+//# sourceMappingURL=GuideTutorialTipsView.js.map

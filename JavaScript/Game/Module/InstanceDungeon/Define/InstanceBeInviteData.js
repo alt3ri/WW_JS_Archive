@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceBeInviteData = void 0);
-const InstanceDungeonById_1 = require("../../../../Core/Define/ConfigQuery/InstanceDungeonById");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
+const InstanceDungeonById_1 = require("../../../../Core/Define/ConfigQuery/InstanceDungeonById"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
 class InstanceBeInviteData {
   constructor() {
     (this.j8 = 0), (this.NUe = 0), (this.he = ""), (this.Ssi = 0);
@@ -32,12 +32,10 @@ class InstanceBeInviteData {
     return this.Ssi;
   }
   GetInstanceName() {
-    const e = InstanceDungeonById_1.configInstanceDungeonById.GetConfig(
-      this.NUe,
-    );
+    var e = InstanceDungeonById_1.configInstanceDungeonById.GetConfig(this.NUe);
     if (e)
       return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.MapName);
   }
 }
 exports.InstanceBeInviteData = InstanceBeInviteData;
-// # sourceMappingURL=InstanceBeInviteData.js.map
+//# sourceMappingURL=InstanceBeInviteData.js.map

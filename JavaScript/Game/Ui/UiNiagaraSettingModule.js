@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiNiagaraSettingModule = void 0);
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const ResourceSystem_1 = require("../../Core/Resource/ResourceSystem");
-const GlobalData_1 = require("../GlobalData");
-const UiResourceLoadModule_1 = require("./UiResourceLoadModule");
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../Core/Resource/ResourceSystem"),
+  GlobalData_1 = require("../GlobalData"),
+  UiResourceLoadModule_1 = require("./UiResourceLoadModule");
 class UiNiagaraSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
   SetNiagaraByPathAsync(e, a, r = void 0) {
     GlobalData_1.GlobalData.World &&
@@ -33,4 +33,4 @@ class UiNiagaraSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule
   }
 }
 exports.UiNiagaraSettingModule = UiNiagaraSettingModule;
-// # sourceMappingURL=UiNiagaraSettingModule.js.map
+//# sourceMappingURL=UiNiagaraSettingModule.js.map

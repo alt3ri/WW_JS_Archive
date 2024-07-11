@@ -1,39 +1,39 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SignalDecodeViewV2 = void 0);
-const UE = require("ue");
-const AudioController_1 = require("../../../../../Core/Audio/AudioController");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../../Ui/Base/UiTickViewBase");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const FailedFinishPanel_1 = require("./FailedFinishPanel");
-const PausePanel_1 = require("./PausePanel");
-const SignalMovePanel_1 = require("./SignalMovePanel");
-const SuccessFinishPanel_1 = require("./SuccessFinishPanel");
-const COUNTDOWN_SEQUENCENAME = "Counter";
-const NIAGARA_ORANGE_COLOR = "FF400FFF";
-const COUNTDOWN_AUDIO_EVENTNAME = "SignalDecodeGame_count_down";
-const COUNTDOWNEND_AUDIO_EVENTNAME = "SignalDecodeGame_count_down_End";
-const BG_NOISE_AUDIO_EVENTNAME = "SignalDecodeGame_play_base_noise";
-const BG_NOISE_STOP_AUDIO_EVENTNAME = "SignalDecodeGame_stop_base_noise";
-const BG_BGM_AUDIO_EVENTNAME = "SignalDecodeGame_music_play_BGM";
-const BG_BGM_AUDIO_PAUSE_EVENTNAME = "SignalDecodeGame_music_pause_BGM";
-const BG_BGM_AUDIO_RESUME_EVENTNAME = "SignalDecodeGame_music_resume_BGM";
-const BG_BGM_STOP_AUDIO_EVENTNAME = "SignalDecodeGame_music_stop_BGM";
-const PLAYER_CATCHDOWN_AUDIO_EVENTNAME = "SignalDecodeGame_play_press_loop";
-const PLAYER_CATCHUP_AUDIO_EVENTNAME = "SignalDecodeGame_stop_press_loop";
-const PLAYER_CATCHSUCCESS_AUDIO_EVENTNAME = "SignalDecodeGame_release_correct";
-const PLAYER_CATCHFAILED_AUDIO_EVENTNAME = "SignalDecodeGame_release_error";
-const PLAYER_CATCHFAILED2_AUDIO_EVENTNAME =
-  "SignalDecodeGame_music_play_presserror";
+const UE = require("ue"),
+  AudioController_1 = require("../../../../../Core/Audio/AudioController"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../../Ui/Base/UiTickViewBase"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  FailedFinishPanel_1 = require("./FailedFinishPanel"),
+  PausePanel_1 = require("./PausePanel"),
+  SignalMovePanel_1 = require("./SignalMovePanel"),
+  SuccessFinishPanel_1 = require("./SuccessFinishPanel"),
+  COUNTDOWN_SEQUENCENAME = "Counter",
+  NIAGARA_ORANGE_COLOR = "FF400FFF",
+  COUNTDOWN_AUDIO_EVENTNAME = "SignalDecodeGame_count_down",
+  COUNTDOWNEND_AUDIO_EVENTNAME = "SignalDecodeGame_count_down_End",
+  BG_NOISE_AUDIO_EVENTNAME = "SignalDecodeGame_play_base_noise",
+  BG_NOISE_STOP_AUDIO_EVENTNAME = "SignalDecodeGame_stop_base_noise",
+  BG_BGM_AUDIO_EVENTNAME = "SignalDecodeGame_music_play_BGM",
+  BG_BGM_AUDIO_PAUSE_EVENTNAME = "SignalDecodeGame_music_pause_BGM",
+  BG_BGM_AUDIO_RESUME_EVENTNAME = "SignalDecodeGame_music_resume_BGM",
+  BG_BGM_STOP_AUDIO_EVENTNAME = "SignalDecodeGame_music_stop_BGM",
+  PLAYER_CATCHDOWN_AUDIO_EVENTNAME = "SignalDecodeGame_play_press_loop",
+  PLAYER_CATCHUP_AUDIO_EVENTNAME = "SignalDecodeGame_stop_press_loop",
+  PLAYER_CATCHSUCCESS_AUDIO_EVENTNAME = "SignalDecodeGame_release_correct",
+  PLAYER_CATCHFAILED_AUDIO_EVENTNAME = "SignalDecodeGame_release_error",
+  PLAYER_CATCHFAILED2_AUDIO_EVENTNAME =
+    "SignalDecodeGame_music_play_presserror";
 class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -58,19 +58,19 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
       (this.zvo = !1),
       (this.Zvo = !1),
       (this.eMo = () => {
-        const e = this.GetUiNiagara(12);
+        var e = this.GetUiNiagara(12);
         e.SetNiagaraSystem(this.Fvo),
           e.SetNiagaraUIActive(!0, !1),
           e.ActivateSystem(!0);
       }),
       (this.tMo = () => {
         this.iMo();
-        var e = this.GetUiNiagara(12);
-        var e =
-          (e.SetNiagaraSystem(this.Fvo),
-          e.SetNiagaraUIActive(!1, !1),
-          e.DeactivateSystem(),
-          this.GetUiNiagara(11));
+        var e = this.GetUiNiagara(12),
+          e =
+            (e.SetNiagaraSystem(this.Fvo),
+            e.SetNiagaraUIActive(!1, !1),
+            e.DeactivateSystem(),
+            this.GetUiNiagara(11));
         e.SetNiagaraSystem(this.kvo),
           e.SetNiagaraUIActive(!0, !1),
           e.ActivateSystem(!0),
@@ -78,12 +78,12 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.oMo = () => {
         this.rMo(), (this.zvo = !0);
-        var e = this.GetUiNiagara(12);
-        var e =
-          (e.SetNiagaraSystem(this.Hvo),
-          e.SetNiagaraUIActive(!1, !1),
-          e.DeactivateSystem(),
-          this.GetUiNiagara(11));
+        var e = this.GetUiNiagara(12),
+          e =
+            (e.SetNiagaraSystem(this.Hvo),
+            e.SetNiagaraUIActive(!1, !1),
+            e.DeactivateSystem(),
+            this.GetUiNiagara(11));
         e.SetNiagaraSystem(this.Vvo),
           e.SetNiagaraUIActive(!0, !1),
           e.ActivateSystem(!0),
@@ -91,8 +91,9 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
             (this.zvo = !1), this.iMo();
           }, 1e3);
         let i = PLAYER_CATCHFAILED_AUDIO_EVENTNAME;
-        ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType ===
-          3 && (i = PLAYER_CATCHFAILED2_AUDIO_EVENTNAME),
+        3 ===
+          ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
+          (i = PLAYER_CATCHFAILED2_AUDIO_EVENTNAME),
           this.Jzi(i, this.Jvo);
       }),
       (this.nMo = () => {
@@ -105,10 +106,10 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
         e === COUNTDOWN_SEQUENCENAME && this.sMo(2, !0);
       }),
       (this.lut = (e, i) => {
-        let t;
+        var t;
         e === COUNTDOWN_SEQUENCENAME &&
           ((e = this.GetText(2)),
-          i === "开始"
+          "开始" === i
             ? ((t =
                 ConfigManager_1.ConfigManager.TextConfig.GetTextById("Start")),
               e.SetText(t),
@@ -117,7 +118,7 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.hMo = () => {
         this.qvo.OnCatchBtnDown();
-        const e = this.GetUiNiagara(13);
+        var e = this.GetUiNiagara(13);
         e?.SetNiagaraUIActive(!0, !1),
           e?.ActivateSystem(!0),
           this.lMo(),
@@ -164,8 +165,8 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
   }
   async OnBeforeStartAsync() {
     this.GetItem(1).SetUIActive(!1), this.GetItem(0).SetUIActive(!0);
-    let e = ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType;
-    const i = e === 2 ? "054522" : "6b5a25";
+    var e = ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType;
+    const i = 2 === e ? "054522" : "6b5a25";
     if (
       (this.GetTexture(9)?.SetColor(UE.Color.FromHex(i)),
       (this.LevelSequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(
@@ -175,7 +176,7 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
       this.GetText(2)?.GetOwner()?.OnSequencePlayEvent.Bind(this.lut),
       this.GetUiNiagara(12)?.SetNiagaraUIActive(!1, !1),
       this.GetUiNiagara(11)?.SetNiagaraUIActive(!1, !1),
-      ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType === 3)
+      3 === ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType)
     ) {
       const i = UE.Color.FromHex(NIAGARA_ORANGE_COLOR);
       var t = new UE.LinearColor(i);
@@ -197,14 +198,15 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
         this.Ovo.HideAsync(),
         this.qvo.Init(this.GetItem(5), e),
       ]);
-    t = ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType === 2;
-    let s = t ? "NS_Fx_LGUI_Send_G_Loop" : "NS_Fx_LGUI_Send_Y_Loop";
-    let _ =
-      (ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType ===
-        3 && (s = "NS_Fx_LGUI_Send_O_Loop"),
-      (this.Fvo = await this.mMo(s)),
-      t ? "NS_Fx_LGUI_Send_G_Burst" : "NS_Fx_LGUI_Send_Y_Burst");
-    ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType === 3 &&
+    t = 2 === ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType;
+    let s = t ? "NS_Fx_LGUI_Send_G_Loop" : "NS_Fx_LGUI_Send_Y_Loop",
+      _ =
+        (3 ===
+          ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
+          (s = "NS_Fx_LGUI_Send_O_Loop"),
+        (this.Fvo = await this.mMo(s)),
+        t ? "NS_Fx_LGUI_Send_G_Burst" : "NS_Fx_LGUI_Send_Y_Burst");
+    3 === ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
       (_ = "NS_Fx_LGUI_Send_O_Burst"),
       (this.kvo = await this.mMo(_));
     this.Hvo = await this.mMo("NS_Fx_LGUI_Send_R_Loop");
@@ -212,13 +214,13 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
     e = t ? "SignalSendProcess" : "SignalReceiveProcess";
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(14), e);
     let o = t ? "SignalSendTips" : "SignalReceiveTips";
-    ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType === 3 &&
+    3 === ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
       (o = "SignalMusicTips"),
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(15), o);
   }
   async mMo(e) {
     e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(e);
-    if (e && e.length !== 0) {
+    if (e && 0 !== e.length) {
       const i = new CustomPromise_1.CustomPromise();
       return (
         ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.NiagaraSystem, (e) => {
@@ -229,7 +231,7 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   OnBeforeShow() {
-    const e = this.GetButton(6);
+    var e = this.GetButton(6);
     e.OnPointDownCallBack.Bind(this.hMo), e.OnPointUpCallBack.Bind(this._Mo);
   }
   OnAfterShow() {
@@ -294,22 +296,22 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
       );
   }
   OnTick(e) {
-    this.Dsi === 2 && this.dMo(e);
+    2 === this.Dsi && this.dMo(e);
   }
   dMo(e) {
     this.qvo.UpdateMove(e), this.CMo();
   }
   CMo() {
-    var e = this.qvo.GetCompleteness();
-    var e = Math.floor(100 * e);
-    const i = (this.GetText(8).SetText(e + "%"), this.qvo.GetProgress());
-    this.GetSprite(10).SetFillAmount(i), i >= 1 && this.gMo(e);
+    var e = this.qvo.GetCompleteness(),
+      e = Math.floor(100 * e),
+      i = (this.GetText(8).SetText(e + "%"), this.qvo.GetProgress());
+    this.GetSprite(10).SetFillAmount(i), 1 <= i && this.gMo(e);
   }
   gMo(i) {
     this.Zvo ||
       ((this.Zvo = !0),
       TimerSystem_1.TimerSystem.Delay(() => {
-        const e =
+        var e =
           i >= ModelManager_1.ModelManager.SignalDecodeModel.TargetCompletion
             ? 4
             : 5;
@@ -332,8 +334,8 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
             this.GetItem(1).SetUIActive(!0),
             i && this.fMo();
           let e = BG_NOISE_AUDIO_EVENTNAME;
-          ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType ===
-            3 &&
+          3 ===
+            ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
             ((e = i ? BG_BGM_AUDIO_EVENTNAME : BG_BGM_AUDIO_RESUME_EVENTNAME),
             Log_1.Log.CheckError()) &&
             Log_1.Log.Error("Audio", 19, "BGM事件", ["eventName", e]),
@@ -343,24 +345,27 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
         case 3: {
           this.GetItem(1).SetUIActive(!1), this.Gvo.Show();
           let e = BG_NOISE_STOP_AUDIO_EVENTNAME;
-          ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType ===
-            3 && (e = BG_BGM_AUDIO_PAUSE_EVENTNAME),
+          3 ===
+            ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
+            (e = BG_BGM_AUDIO_PAUSE_EVENTNAME),
             this.Jzi(e, this.Qvo);
           break;
         }
         case 4: {
           this.GetItem(1).SetUIActive(!1), this.Nvo.Open();
           let e = BG_NOISE_STOP_AUDIO_EVENTNAME;
-          ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType ===
-            3 && (e = BG_BGM_STOP_AUDIO_EVENTNAME),
+          3 ===
+            ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
+            (e = BG_BGM_STOP_AUDIO_EVENTNAME),
             this.Jzi(e, this.Qvo);
           break;
         }
         case 5: {
           this.GetItem(1).SetUIActive(!1), this.Ovo.Open();
           let e = BG_NOISE_STOP_AUDIO_EVENTNAME;
-          ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType ===
-            3 && (e = BG_BGM_STOP_AUDIO_EVENTNAME),
+          3 ===
+            ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
+            (e = BG_BGM_STOP_AUDIO_EVENTNAME),
             this.Jzi(e, this.Qvo);
           break;
         }
@@ -369,13 +374,13 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   fMo() {
-    const e = this.GetItem(5);
-    const i = this.GetItem(1).Width / 2;
+    var e = this.GetItem(5),
+      i = this.GetItem(1).Width / 2;
     e.SetAnchorOffsetX(-i);
   }
   Jzi(e, i) {
-    const t = ConfigManager_1.ConfigManager.AudioConfig.GetAudioPath(e);
-    t && t.Path !== ""
+    var t = ConfigManager_1.ConfigManager.AudioConfig.GetAudioPath(e);
+    t && "" !== t.Path
       ? AudioController_1.AudioController.PostEventByUi(t.Path, i)
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -386,15 +391,15 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
         );
   }
   lMo() {
-    const e =
-      ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType === 2;
+    var e =
+      2 === ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType;
     this.cMo(e ? "SP_SignalPointerGreen" : "SP_SignalPointerYellow");
   }
   rMo() {
     this.cMo("SP_SignalPointerRed");
   }
   cMo(e) {
-    let i;
+    var i;
     this.zvo ||
       ((i = this.GetSprite(7)),
       (e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(e)),
@@ -402,4 +407,4 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.SignalDecodeViewV2 = SignalDecodeViewV2;
-// # sourceMappingURL=SignalDecodeViewV2.js.map
+//# sourceMappingURL=SignalDecodeViewV2.js.map

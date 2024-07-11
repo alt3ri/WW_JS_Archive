@@ -1,38 +1,38 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MediumItemGrid = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const ItemGridBase_1 = require("../ItemGridBase/ItemGridBase");
-const MediumItemGridBuffIconComponent_1 = require("./MediumItemGridComponent/MediumItemGridBuffIconComponent");
-const MediumItemGridCheckTickComponent_1 = require("./MediumItemGridComponent/MediumItemGridCheckTickComponent");
-const MediumItemGridCoolDownComponent_1 = require("./MediumItemGridComponent/MediumItemGridCoolDownComponent");
-const MediumItemGridCostComponent_1 = require("./MediumItemGridComponent/MediumItemGridCostComponent");
-const MediumItemGridDevelopRewardComponent_1 = require("./MediumItemGridComponent/MediumItemGridDevelopRewardComponent");
-const MediumItemGridDisableComponent_1 = require("./MediumItemGridComponent/MediumItemGridDisableComponent");
-const MediumItemGridElementComponent_1 = require("./MediumItemGridComponent/MediumItemGridElementComponent");
-const MediumItemGridEmptySlotComponent_1 = require("./MediumItemGridComponent/MediumItemGridEmptySlotComponent");
-const MediumItemGridLevelAndLockComponent_1 = require("./MediumItemGridComponent/MediumItemGridLevelAndLockComponent");
-const MediumItemGridMainVisionComponent_1 = require("./MediumItemGridComponent/MediumItemGridMainVisionComponent");
-const MediumItemGridNewFlagComponent_1 = require("./MediumItemGridComponent/MediumItemGridNewFlagComponent");
-const MediumItemGridPhantomLockComponent_1 = require("./MediumItemGridComponent/MediumItemGridPhantomLockComponent");
-const MediumItemGridProhibitComponent_1 = require("./MediumItemGridComponent/MediumItemGridProhibitComponent");
-const MediumItemGridReceivedComponent_1 = require("./MediumItemGridComponent/MediumItemGridReceivedComponent");
-const MediumItemGridRecommendComponent_1 = require("./MediumItemGridComponent/MediumItemGridRecommendComponent");
-const MediumItemGridRedDotComponent_1 = require("./MediumItemGridComponent/MediumItemGridRedDotComponent");
-const MediumItemGridReduceButtonComponent_1 = require("./MediumItemGridComponent/MediumItemGridReduceButtonComponent");
-const MediumItemGridRoleHeadComponent_1 = require("./MediumItemGridComponent/MediumItemGridRoleHeadComponent");
-const MediumItemGridSortHighlightIndexComponent_1 = require("./MediumItemGridComponent/MediumItemGridSortHighlightIndexComponent");
-const MediumItemGridSortIndexComponent_1 = require("./MediumItemGridComponent/MediumItemGridSortIndexComponent");
-const MediumItemGridSpriteIconComponent_1 = require("./MediumItemGridComponent/MediumItemGridSpriteIconComponent");
-const MediumItemGridTeamIconComponent_1 = require("./MediumItemGridComponent/MediumItemGridTeamIconComponent");
-const MediumItemGridTimeFlagComponent_1 = require("./MediumItemGridComponent/MediumItemGridTimeFlagComponent");
-const MediumItemGridVisionFetterComponent_1 = require("./MediumItemGridComponent/MediumItemGridVisionFetterComponent");
-const MediumItemGridVisionRoleHeadComponent_1 = require("./MediumItemGridComponent/MediumItemGridVisionRoleHeadComponent");
-const MediumItemGridVisionSlotComponent_1 = require("./MediumItemGridComponent/MediumItemGridVisionSlotComponent");
-const TRIAL_ROLE_ID = 1e4;
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ItemGridBase_1 = require("../ItemGridBase/ItemGridBase"),
+  MediumItemGridBuffIconComponent_1 = require("./MediumItemGridComponent/MediumItemGridBuffIconComponent"),
+  MediumItemGridCheckTickComponent_1 = require("./MediumItemGridComponent/MediumItemGridCheckTickComponent"),
+  MediumItemGridCoolDownComponent_1 = require("./MediumItemGridComponent/MediumItemGridCoolDownComponent"),
+  MediumItemGridCostComponent_1 = require("./MediumItemGridComponent/MediumItemGridCostComponent"),
+  MediumItemGridDevelopRewardComponent_1 = require("./MediumItemGridComponent/MediumItemGridDevelopRewardComponent"),
+  MediumItemGridDisableComponent_1 = require("./MediumItemGridComponent/MediumItemGridDisableComponent"),
+  MediumItemGridElementComponent_1 = require("./MediumItemGridComponent/MediumItemGridElementComponent"),
+  MediumItemGridEmptySlotComponent_1 = require("./MediumItemGridComponent/MediumItemGridEmptySlotComponent"),
+  MediumItemGridLevelAndLockComponent_1 = require("./MediumItemGridComponent/MediumItemGridLevelAndLockComponent"),
+  MediumItemGridMainVisionComponent_1 = require("./MediumItemGridComponent/MediumItemGridMainVisionComponent"),
+  MediumItemGridNewFlagComponent_1 = require("./MediumItemGridComponent/MediumItemGridNewFlagComponent"),
+  MediumItemGridPhantomLockComponent_1 = require("./MediumItemGridComponent/MediumItemGridPhantomLockComponent"),
+  MediumItemGridProhibitComponent_1 = require("./MediumItemGridComponent/MediumItemGridProhibitComponent"),
+  MediumItemGridReceivedComponent_1 = require("./MediumItemGridComponent/MediumItemGridReceivedComponent"),
+  MediumItemGridRecommendComponent_1 = require("./MediumItemGridComponent/MediumItemGridRecommendComponent"),
+  MediumItemGridRedDotComponent_1 = require("./MediumItemGridComponent/MediumItemGridRedDotComponent"),
+  MediumItemGridReduceButtonComponent_1 = require("./MediumItemGridComponent/MediumItemGridReduceButtonComponent"),
+  MediumItemGridRoleHeadComponent_1 = require("./MediumItemGridComponent/MediumItemGridRoleHeadComponent"),
+  MediumItemGridSortHighlightIndexComponent_1 = require("./MediumItemGridComponent/MediumItemGridSortHighlightIndexComponent"),
+  MediumItemGridSortIndexComponent_1 = require("./MediumItemGridComponent/MediumItemGridSortIndexComponent"),
+  MediumItemGridSpriteIconComponent_1 = require("./MediumItemGridComponent/MediumItemGridSpriteIconComponent"),
+  MediumItemGridTeamIconComponent_1 = require("./MediumItemGridComponent/MediumItemGridTeamIconComponent"),
+  MediumItemGridTimeFlagComponent_1 = require("./MediumItemGridComponent/MediumItemGridTimeFlagComponent"),
+  MediumItemGridVisionFetterComponent_1 = require("./MediumItemGridComponent/MediumItemGridVisionFetterComponent"),
+  MediumItemGridVisionRoleHeadComponent_1 = require("./MediumItemGridComponent/MediumItemGridVisionRoleHeadComponent"),
+  MediumItemGridVisionSlotComponent_1 = require("./MediumItemGridComponent/MediumItemGridVisionSlotComponent"),
+  TRIAL_ROLE_ID = 1e4;
 class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
   constructor() {
     super(...arguments),
@@ -45,12 +45,12 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
         this.rxt && this.rxt(e, this, this.Data);
       }),
       (this.OnClickedReduceButton = () => {
-        let e;
+        var e;
         this.ixt &&
           ((e = { MediumItemGrid: this, Data: this.Data }), this.ixt(e));
       }),
       (this.OnClickedEmptySlotButton = () => {
-        let e;
+        var e;
         this.oxt &&
           ((e = { MediumItemGrid: this, Data: this.Data }), this.oxt(e));
       });
@@ -80,10 +80,10 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
   Apply(e) {
     this.ClearVisibleComponent(),
       this.ClearComponentList(),
-      e.Type === 1 && this.sxt(e),
-      e.Type === 4 && this.axt(e),
-      e.Type === 3 && this.hxt(e),
-      e.Type === 2 && this.lxt(e),
+      1 === e.Type && this.sxt(e),
+      4 === e.Type && this.axt(e),
+      3 === e.Type && this.hxt(e),
+      2 === e.Type && this.lxt(e),
       this.RefreshComponentVisible(),
       this.RefreshComponentHierarchyIndex();
   }
@@ -98,30 +98,31 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
       this.ApplyEmptyDisplay(e);
   }
   axt(e) {
-    const i = e.StarLevel;
-    const t = e.IsNewVisible;
-    const o = e.BuffIconType;
-    const m = e.IsRedDotVisible;
-    const n = e.IsLockVisible;
-    const d = e.Level;
-    const r = e.IsLevelTextUseChangeColor;
-    const s = e.CoolDown;
-    const h = e.TotalCoolDown;
-    const u = e.IsProhibit;
-    const p = e.ReduceButtonInfo;
-    const I = e.IsCheckTick;
-    const C = e.IsTimeFlagVisible;
-    const M = e.IsReceivedFlagVisible;
-    const a = e.RoleHeadInfo;
-    const l = e.SortIndex;
-    const G = e.IsDisable;
-    const _ = e.IsMainVisionVisible;
-    const v = e.VisionFetterGroupId;
-    const S = e.VisionRoleHeadInfo;
-    const c =
-      ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
-        e.ItemConfigId,
-      ) === 3;
+    var i = e.StarLevel,
+      t = e.IsNewVisible,
+      o = e.BuffIconType,
+      m = e.IsRedDotVisible,
+      n = e.IsLockVisible,
+      d = e.Level,
+      r = e.IsLevelTextUseChangeColor,
+      s = e.CoolDown,
+      h = e.TotalCoolDown,
+      u = e.IsProhibit,
+      p = e.ReduceButtonInfo,
+      I = e.IsCheckTick,
+      C = e.IsTimeFlagVisible,
+      M = e.IsReceivedFlagVisible,
+      a = e.RoleHeadInfo,
+      l = e.SortIndex,
+      G = e.IsDisable,
+      _ = e.IsMainVisionVisible,
+      v = e.VisionFetterGroupId,
+      S = e.VisionRoleHeadInfo,
+      c =
+        3 ===
+        ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
+          e.ItemConfigId,
+        );
     this.SetStartLevel(i),
       this.SetBuffSprite(o),
       this.SetRedDotVisible(m),
@@ -142,18 +143,18 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
       this.ApplyPropBaseDisplay(e);
   }
   hxt(e) {
-    const i = e.StarLevel;
-    const t = e.IsMainVisionVisible;
-    const o = e.RoleHeadInfo;
-    const m = e.IsNewVisible;
-    const n = e.IsLockVisible;
-    const d = e.IsPhantomLock;
-    const r = e.DevelopRewardInfo;
-    const s = e.IsRedDotVisible;
-    const h = e.Level;
-    const u = e.IsLevelTextUseChangeColor;
-    const p = e.FetterGroupId;
-    const I = e.VisionRoleHeadInfo;
+    var i = e.StarLevel,
+      t = e.IsMainVisionVisible,
+      o = e.RoleHeadInfo,
+      m = e.IsNewVisible,
+      n = e.IsLockVisible,
+      d = e.IsPhantomLock,
+      r = e.DevelopRewardInfo,
+      s = e.IsRedDotVisible,
+      h = e.Level,
+      u = e.IsLevelTextUseChangeColor,
+      p = e.FetterGroupId,
+      I = e.VisionRoleHeadInfo;
     this.SetStartLevel(i),
       this.SetRedDotVisible(s),
       this.SetIsMainVision(t),
@@ -181,7 +182,7 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
   SetBuffSprite(e) {
     this.RefreshComponent(
       MediumItemGridBuffIconComponent_1.MediumItemGridBuffIconComponent,
-      void 0 !== e && e !== 0,
+      void 0 !== e && 0 !== e,
       e,
     );
   }
@@ -216,21 +217,21 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
   SetRoleHead(e) {
     this.RefreshComponent(
       MediumItemGridRoleHeadComponent_1.MediumItemGridRoleHeadComponent,
-      void 0 !== e && e.RoleConfigId > 0,
+      void 0 !== e && 0 < e.RoleConfigId,
       e,
     );
   }
   SetVisionRoleHead(e) {
     this.RefreshComponent(
       MediumItemGridVisionRoleHeadComponent_1.MediumItemGridVisionRoleHeadComponent,
-      void 0 !== e && e.RoleConfigId > 0,
+      void 0 !== e && 0 < e.RoleConfigId,
       e,
     );
   }
   SetVisionSlotState(e) {
     this.RefreshComponent(
       MediumItemGridVisionSlotComponent_1.MediumItemGridVisionSlotComponent,
-      void 0 !== e && e.length > 0,
+      void 0 !== e && 0 < e.length,
       e,
     );
   }
@@ -259,7 +260,7 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
     i = { CoolDown: e, TotalCdTime: i };
     this.RefreshComponent(
       MediumItemGridCoolDownComponent_1.MediumItemGridCoolDownComponent,
-      void 0 !== e && e > 0,
+      void 0 !== e && 0 < e,
       i,
     );
   }
@@ -271,12 +272,12 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
     );
   }
   SetReduceButton(e) {
-    const i = e?.IsVisible;
-    var e = this.RefreshComponent(
-      MediumItemGridReduceButtonComponent_1.MediumItemGridReduceButtonComponent,
-      i,
-      e,
-    );
+    var i = e?.IsVisible,
+      e = this.RefreshComponent(
+        MediumItemGridReduceButtonComponent_1.MediumItemGridReduceButtonComponent,
+        i,
+        e,
+      );
     e &&
       (i
         ? (e.BindReduceButtonCallback(this.OnClickedReduceButton),
@@ -310,7 +311,7 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
     this.rxt = void 0;
   }
   SetCheckTickVisible(e) {
-    const i = { IsCheckTick: e };
+    var i = { IsCheckTick: e };
     this.RefreshComponent(
       MediumItemGridCheckTickComponent_1.MediumItemGridCheckTickComponent,
       e,
@@ -340,7 +341,7 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
     );
   }
   SetEmptySlotVisible(e) {
-    const i = this.RefreshComponent(
+    var i = this.RefreshComponent(
       MediumItemGridEmptySlotComponent_1.MediumItemGridEmptySlotComponent,
       e,
       e,
@@ -377,12 +378,12 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
   SetVisionFetterGroup(e) {
     this.RefreshComponent(
       MediumItemGridVisionFetterComponent_1.MediumItemGridVisionFetterComponent,
-      void 0 !== e && e > 0,
+      void 0 !== e && 0 < e,
       e,
     );
   }
   IsDisable() {
-    const e = this.GetItemGridComponent(
+    var e = this.GetItemGridComponent(
       MediumItemGridDisableComponent_1.MediumItemGridDisableComponent,
     );
     return !!e && e.GetActive();
@@ -397,61 +398,34 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
   SetIconSprite(e) {
     this.RefreshComponent(
       MediumItemGridSpriteIconComponent_1.MediumItemGridSpriteIconComponent,
-      void 0 !== e && e !== "",
+      void 0 !== e && "" !== e,
       e,
     );
   }
   ApplyEmptyDisplay(e) {
-    const i = e.BottomTextId;
-    const t = e.BottomText;
-    var e = e.BottomTextParameter;
-    const o =
-      !StringUtils_1.StringUtils.IsEmpty(i) ||
-      !StringUtils_1.StringUtils.IsEmpty(t);
+    var i = e.BottomTextId,
+      t = e.BottomText,
+      e = e.BottomTextParameter,
+      o =
+        !StringUtils_1.StringUtils.IsEmpty(i) ||
+        !StringUtils_1.StringUtils.IsEmpty(t);
     this.cxt(o), o && (this.SetBottomTextId(i, e), this.SetBottomText(t));
   }
   ApplyPropBaseDisplay(e) {
-    const i = e.ItemConfigId;
-    const t = e.BottomTextId;
-    const o = e.BottomText;
-    const m = e.BottomTextParameter;
-    const n = e.SpriteIconPath;
-    var d =
-      ((this.Data = e.Data),
-      e.IconPath
-        ? ((d = this.GetTexture(1)),
-          this.SetTextureByPath(e.IconPath, d),
-          d?.SetUIActive(!0))
-        : this.IIt(i),
-      this.SetIconSprite(n),
-      e.QualityId
-        ? this.SetQualityIconById(
-            this.GetSprite(0),
-            e.QualityId,
-            void 0,
-            e.QualityType,
-          )
-        : this._xt(i),
-      !StringUtils_1.StringUtils.IsEmpty(t) ||
-        !StringUtils_1.StringUtils.IsEmpty(o));
-    this.cxt(d),
-      d && (this.SetBottomTextId(t, m), this.SetBottomText(o)),
-      this.SetExtendToggleEnable(!0),
-      this.uxt(!0);
-  }
-  ApplyPhantomBaseDisplay(e) {
-    const i = e.ItemConfigId;
-    const t = e.BottomTextId;
-    const o = e.BottomText;
-    const m = e.BottomTextParameter;
-    var n = e.MonsterId;
-    const d = e.QualityIconResourceId;
-    var n =
-      ((this.Data = e.Data),
-      n ? this.dxt(n) : this.IIt(i),
-      void 0 !== d
-        ? this.Cxt(d)
-        : e.QualityId
+    var i = e.ItemConfigId,
+      t = e.BottomTextId,
+      o = e.BottomText,
+      m = e.BottomTextParameter,
+      n = e.SpriteIconPath,
+      d =
+        ((this.Data = e.Data),
+        e.IconPath
+          ? ((d = this.GetTexture(1)),
+            this.SetTextureByPath(e.IconPath, d),
+            d?.SetUIActive(!0))
+          : this.IIt(i),
+        this.SetIconSprite(n),
+        e.QualityId
           ? this.SetQualityIconById(
               this.GetSprite(0),
               e.QualityId,
@@ -459,8 +433,35 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
               e.QualityType,
             )
           : this._xt(i),
-      !StringUtils_1.StringUtils.IsEmpty(t) ||
-        !StringUtils_1.StringUtils.IsEmpty(o));
+        !StringUtils_1.StringUtils.IsEmpty(t) ||
+          !StringUtils_1.StringUtils.IsEmpty(o));
+    this.cxt(d),
+      d && (this.SetBottomTextId(t, m), this.SetBottomText(o)),
+      this.SetExtendToggleEnable(!0),
+      this.uxt(!0);
+  }
+  ApplyPhantomBaseDisplay(e) {
+    var i = e.ItemConfigId,
+      t = e.BottomTextId,
+      o = e.BottomText,
+      m = e.BottomTextParameter,
+      n = e.MonsterId,
+      d = e.QualityIconResourceId,
+      n =
+        ((this.Data = e.Data),
+        n ? this.dxt(n) : this.IIt(i),
+        void 0 !== d
+          ? this.Cxt(d)
+          : e.QualityId
+            ? this.SetQualityIconById(
+                this.GetSprite(0),
+                e.QualityId,
+                void 0,
+                e.QualityType,
+              )
+            : this._xt(i),
+        !StringUtils_1.StringUtils.IsEmpty(t) ||
+          !StringUtils_1.StringUtils.IsEmpty(o));
     this.cxt(n),
       n && (this.SetBottomTextId(t, m), this.SetBottomText(o)),
       this.SetExtendToggleEnable(!0),
@@ -468,36 +469,36 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
   }
   ApplyCharacterBaseDisplay(e) {
     let i = e.ItemConfigId;
-    const t = e.BottomTextId;
-    const o = e.BottomText;
-    const m = e.BottomTextParameter;
-    var e = ((this.Data = e.Data), this.GetTexture(1));
-    var n =
-      (i > TRIAL_ROLE_ID &&
-        ((n = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(i)),
-        (i = n.ParentId)),
-      ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i));
-    var n = n.RoleHeadIconLarge;
-    var n =
-      (this.SetRoleIcon(n, e, i),
-      this._xt(i),
-      e?.SetUIActive(!0),
-      !StringUtils_1.StringUtils.IsEmpty(t) ||
-        !StringUtils_1.StringUtils.IsEmpty(o));
+    var t = e.BottomTextId,
+      o = e.BottomText,
+      m = e.BottomTextParameter,
+      e = ((this.Data = e.Data), this.GetTexture(1)),
+      n =
+        (i > TRIAL_ROLE_ID &&
+          ((n = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(i)),
+          (i = n.ParentId)),
+        ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i)),
+      n = n.RoleHeadIconLarge,
+      n =
+        (this.SetRoleIcon(n, e, i),
+        this._xt(i),
+        e?.SetUIActive(!0),
+        !StringUtils_1.StringUtils.IsEmpty(t) ||
+          !StringUtils_1.StringUtils.IsEmpty(o));
     this.cxt(n),
       n && (this.SetBottomTextId(t, m), this.SetBottomText(o)),
       this.SetExtendToggleEnable(!0),
       this.uxt(!0);
   }
   IIt(e) {
-    const i = this.GetTexture(1);
+    var i = this.GetTexture(1);
     void 0 === e
       ? i.SetUIActive(!1)
       : (this.ext !== e && ((this.ext = e), this.SetItemIcon(i, e)),
         i.SetUIActive(!0));
   }
   dxt(e) {
-    const i = this.GetTexture(1);
+    var i = this.GetTexture(1);
     void 0 === e
       ? i.SetUIActive(!1)
       : ((e =
@@ -506,7 +507,7 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
         i.SetUIActive(!0));
   }
   _xt(e) {
-    const i = this.GetSprite(0);
+    var i = this.GetSprite(0);
     void 0 === e
       ? i.SetUIActive(!1)
       : (this.txt !== e &&
@@ -520,7 +521,7 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
         i.SetUIActive(!0));
   }
   Cxt(e) {
-    const i = this.GetSprite(0);
+    var i = this.GetSprite(0);
     void 0 === e ||
     ((e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(e)),
     StringUtils_1.StringUtils.IsEmpty(e))
@@ -528,18 +529,18 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
       : (this.SetSpriteByPath(e, i, !0), i.SetUIActive(!0));
   }
   cxt(e) {
-    const i = this.GetText(2);
+    var i = this.GetText(2);
     i.IsUIActiveSelf() !== e && i.SetUIActive(e);
   }
   SetBottomTextId(e, i) {
-    const t = this.GetText(2);
+    var t = this.GetText(2);
     StringUtils_1.StringUtils.IsEmpty(e) ||
       (i
         ? LguiUtil_1.LguiUtil.SetLocalTextNew(t, e, ...i)
         : LguiUtil_1.LguiUtil.SetLocalTextNew(t, e));
   }
   SetBottomText(e) {
-    const i = this.GetText(2);
+    var i = this.GetText(2);
     StringUtils_1.StringUtils.IsEmpty(e) || i.SetText(e);
   }
   BindReduceButtonCallback(e, i) {
@@ -569,4 +570,4 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
   }
 }
 exports.MediumItemGrid = MediumItemGrid;
-// # sourceMappingURL=MediumItemGrid.js.map
+//# sourceMappingURL=MediumItemGrid.js.map

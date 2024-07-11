@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.KeySettingRowKeyItem = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class KeySettingRowKeyItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -14,7 +14,7 @@ class KeySettingRowKeyItem extends UiPanelBase_1.UiPanelBase {
       (this.EAi = void 0),
       (this.zbn = void 0),
       (this.rPi = (t) => {
-        t === 1 && this.uAi && this.EAi && this.EAi(this.uAi, this);
+        1 === t && this.uAi && this.EAi && this.EAi(this.uAi, this);
       });
   }
   OnRegisterComponent() {
@@ -47,7 +47,7 @@ class KeySettingRowKeyItem extends UiPanelBase_1.UiPanelBase {
     this.EAi = t;
   }
   Refresh(t, i) {
-    t.GetRowType() === 2 &&
+    2 === t.GetRowType() &&
       ((this.uAi = t),
       (this.oPi = i),
       this.L0t(),
@@ -57,34 +57,34 @@ class KeySettingRowKeyItem extends UiPanelBase_1.UiPanelBase {
       this.SetDetailItemVisible(t.IsExpandDetail));
   }
   L0t() {
-    const t = this.GetText(0);
-    const i = this.uAi.GetSettingName();
+    var t = this.GetText(0),
+      i = this.uAi.GetSettingName();
     StringUtils_1.StringUtils.IsEmpty(i)
       ? t.SetText(this.uAi.GetActionOrAxisName())
       : LguiUtil_1.LguiUtil.SetLocalTextNew(t, i);
   }
   nPi() {
-    let i = this.uAi.ButtonTextId;
+    var i = this.uAi.ButtonTextId;
     if (i && !StringUtils_1.StringUtils.IsBlank(i))
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), i);
     else {
       let t = "+";
       (i = this.uAi.BothActionName),
         (i =
-          (i && i.length > 1 && (t = "/"),
+          (i && 1 < i.length && (t = "/"),
           this.uAi.GetCurrentKeyNameRichText(this.oPi, t)));
       this.GetText(2)?.SetText(i);
     }
   }
   sPi() {
-    const t = this.uAi.DetailTextId;
+    var t = this.uAi.DetailTextId;
     StringUtils_1.StringUtils.IsEmpty(t)
       ? this.GetSprite(5)?.SetUIActive(!1)
       : (this.GetSprite(5)?.SetUIActive(!0),
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), t));
   }
   IPt() {
-    const t = this.uAi.IsLock;
+    var t = this.uAi.IsLock;
     this.GetSprite(6)?.SetUIActive(t),
       this.GetButton(1)?.SetSelfInteractive(!t);
   }
@@ -98,8 +98,8 @@ class KeySettingRowKeyItem extends UiPanelBase_1.UiPanelBase {
         : this.zbn.StopCurrentSequence();
   }
   SetDetailItemVisible(t) {
-    let i;
-    const e = this.GetItem(3);
+    var i,
+      e = this.GetItem(3);
     !this.uAi ||
     ((i = this.uAi.DetailTextId), StringUtils_1.StringUtils.IsEmpty(i))
       ? e.SetUIActive(!1)
@@ -107,4 +107,4 @@ class KeySettingRowKeyItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.KeySettingRowKeyItem = KeySettingRowKeyItem;
-// # sourceMappingURL=KeySettingRowKeyItem.js.map
+//# sourceMappingURL=KeySettingRowKeyItem.js.map

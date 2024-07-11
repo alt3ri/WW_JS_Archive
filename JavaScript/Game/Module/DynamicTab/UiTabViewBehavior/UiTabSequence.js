@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiTabSequence = void 0);
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const UiTabViewBehavior_1 = require("./UiTabViewBehavior");
+const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  UiTabViewBehavior_1 = require("./UiTabViewBehavior");
 class UiTabSequence extends UiTabViewBehavior_1.UiTabViewBehavior {
   constructor() {
     super(...arguments),
@@ -53,4 +53,4 @@ class UiTabSequence extends UiTabViewBehavior_1.UiTabViewBehavior {
   }
 }
 exports.UiTabSequence = UiTabSequence;
-// # sourceMappingURL=UiTabSequence.js.map
+//# sourceMappingURL=UiTabSequence.js.map

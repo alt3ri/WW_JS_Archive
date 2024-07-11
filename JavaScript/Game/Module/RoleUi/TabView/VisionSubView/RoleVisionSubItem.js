@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleVisionSubItem = void 0);
-const UE = require("ue");
-const RoleVisionCommonItem_1 = require("./RoleVisionCommonItem");
+const UE = require("ue"),
+  RoleVisionCommonItem_1 = require("./RoleVisionCommonItem");
 class RoleVisionSubItem extends RoleVisionCommonItem_1.RoleVisionCommonItem {
   constructor() {
     super(...arguments), (this.T7e = () => !1);
@@ -50,4 +50,4 @@ class RoleVisionSubItem extends RoleVisionCommonItem_1.RoleVisionCommonItem {
   }
 }
 exports.RoleVisionSubItem = RoleVisionSubItem;
-// # sourceMappingURL=RoleVisionSubItem.js.map
+//# sourceMappingURL=RoleVisionSubItem.js.map

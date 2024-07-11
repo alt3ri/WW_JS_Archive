@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestRewardItemList = void 0);
-const UE = require("ue");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
-const QuestRewardItemGrid_1 = require("./QuestRewardItemGrid");
+const UE = require("ue"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  QuestRewardItemGrid_1 = require("./QuestRewardItemGrid");
 class QuestRewardItemList extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -18,10 +18,10 @@ class QuestRewardItemList extends UiPanelBase_1.UiPanelBase {
       }),
       (this.w$t = (e) => {
         this.N2t?.SetSelected(!1, !0), (this.N2t = e.MediumItemGrid);
-        var e = e.Data;
-        const r = e.ConfigId;
-        var e = e.UniqueId;
-        void 0 !== e && e > 0
+        var e = e.Data,
+          r = e.ConfigId,
+          e = e.UniqueId;
+        void 0 !== e && 0 < e
           ? ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemUid(
               e,
               r,
@@ -50,8 +50,8 @@ class QuestRewardItemList extends UiPanelBase_1.UiPanelBase {
   }
   Refresh(e) {
     e.sort((e, r) => {
-      let t = e.GetTypeSortIndex();
-      let i = r.GetTypeSortIndex();
+      var t = e.GetTypeSortIndex(),
+        i = r.GetTypeSortIndex();
       return t !== i
         ? i - t
         : (i = e.GetQualityId()) !== (t = r.GetQualityId())
@@ -61,7 +61,7 @@ class QuestRewardItemList extends UiPanelBase_1.UiPanelBase {
       this.kGe.RefreshByData(e);
   }
   x$t(e) {
-    const r = new QuestRewardItemGrid_1.QuestRewardItemGrid();
+    var r = new QuestRewardItemGrid_1.QuestRewardItemGrid();
     return (
       r.Initialize(e.GetOwner()),
       r.BindOnCanExecuteChange(() => !1),
@@ -72,4 +72,4 @@ class QuestRewardItemList extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.QuestRewardItemList = QuestRewardItemList;
-// # sourceMappingURL=QuestRewardItemList.js.map
+//# sourceMappingURL=QuestRewardItemList.js.map

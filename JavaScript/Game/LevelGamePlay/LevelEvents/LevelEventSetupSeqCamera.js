@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventSetupSeqCamera = void 0);
-const ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils");
-const CameraController_1 = require("../../Camera/CameraController");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventSetupSeqCamera extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, r) {
-    let a, l;
+    var a, l;
     e &&
-      ModelManager_1.ModelManager.CameraModel.CameraMode === 1 &&
+      1 === ModelManager_1.ModelManager.CameraModel.CameraMode &&
       ((e = e),
       (l = (a =
         CameraController_1.CameraController.SequenceCamera.GetComponent(
@@ -24,4 +24,4 @@ class LevelEventSetupSeqCamera extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventSetupSeqCamera = LevelEventSetupSeqCamera;
-// # sourceMappingURL=LevelEventSetupSeqCamera.js.map
+//# sourceMappingURL=LevelEventSetupSeqCamera.js.map

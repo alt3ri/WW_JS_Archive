@@ -18,4 +18,4 @@ class GameplayFirstPassViewData extends UiViewData_1.UiViewData {
 }
 (exports.GameplayFirstPassViewData = GameplayFirstPassViewData),
   (exports.DelayCloseTime = 3e3);
-// # sourceMappingURL=GameplayViewDefine.js.map
+//# sourceMappingURL=GameplayViewDefine.js.map

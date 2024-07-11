@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FragmentMemoryCollectRewardRedDot = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const RedDotBase_1 = require("../../RedDotBase");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  RedDotBase_1 = require("../../RedDotBase");
 class FragmentMemoryCollectRewardRedDot extends RedDotBase_1.RedDotBase {
   OnGetEvents() {
     return [EventDefine_1.EEventName.FragmentRewardRedDot];
@@ -14,4 +14,4 @@ class FragmentMemoryCollectRewardRedDot extends RedDotBase_1.RedDotBase {
   }
 }
 exports.FragmentMemoryCollectRewardRedDot = FragmentMemoryCollectRewardRedDot;
-// # sourceMappingURL=FragmentMemoryCollectRewardRedDot.js.map
+//# sourceMappingURL=FragmentMemoryCollectRewardRedDot.js.map

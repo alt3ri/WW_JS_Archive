@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleUiAudioData = exports.BattleUiAudioInfo = void 0);
-const Time_1 = require("../../../Core/Common/Time");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const DEFAULT_COOL_DOWN = 500;
-const audioIds = ["play_ui_fb_concerto_energy"];
+const Time_1 = require("../../../Core/Common/Time"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  DEFAULT_COOL_DOWN = 500,
+  audioIds = ["play_ui_fb_concerto_energy"];
 class BattleUiAudioInfo {
   constructor() {
     (this.AudioType = 0), (this.CoolDownEndTime = 0), (this.UiChildType = 0);
@@ -42,11 +42,11 @@ class BattleUiAudioData {
   PlayAudio(e) {
     let t = this.hKe.get(e);
     t ||
-      (((t = new BattleUiAudioInfo()).AudioType = e) === 0 &&
+      (0 === ((t = new BattleUiAudioInfo()).AudioType = e) &&
         (t.UiChildType = 7),
       this.hKe.set(e, t)),
       t.PlayAudio();
   }
 }
 exports.BattleUiAudioData = BattleUiAudioData;
-// # sourceMappingURL=BattleUiAudioData.js.map
+//# sourceMappingURL=BattleUiAudioData.js.map

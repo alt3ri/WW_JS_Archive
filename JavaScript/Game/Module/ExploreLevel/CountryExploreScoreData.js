@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CountryExploreScoreData = void 0);
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class CountryExploreScoreData {
   constructor() {
     (this.CountryId = 0),
@@ -44,4 +44,4 @@ class CountryExploreScoreData {
   }
 }
 exports.CountryExploreScoreData = CountryExploreScoreData;
-// # sourceMappingURL=CountryExploreScoreData.js.map
+//# sourceMappingURL=CountryExploreScoreData.js.map

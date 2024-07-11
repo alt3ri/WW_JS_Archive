@@ -6,4 +6,4 @@ class ChallengeFailedFloatTips extends GenericPromptFloatTipsBase_1.GenericPromp
   SetExtraText() {}
 }
 exports.ChallengeFailedFloatTips = ChallengeFailedFloatTips;
-// # sourceMappingURL=ChallengeFailedFloatTips.js.map
+//# sourceMappingURL=ChallengeFailedFloatTips.js.map

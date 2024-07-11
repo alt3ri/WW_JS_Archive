@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CostTabItem = void 0);
-const UE = require("ue");
-const CommonTabItemBase_1 = require("../../../Common/TabComponent/TabItem/CommonTabItemBase");
+const UE = require("ue"),
+  CommonTabItemBase_1 = require("../../../Common/TabComponent/TabItem/CommonTabItemBase");
 class CostTabItem extends CommonTabItemBase_1.CommonTabItemBase {
   constructor(t) {
     super(),
       (this.wqe = void 0),
       (this.x4e = (t) => {
-        t === 1 && this.SelectedCallBack(this.GridIndex);
+        1 === t && this.SelectedCallBack(this.GridIndex);
       }),
       (this.wqe = t);
   }
@@ -39,4 +39,4 @@ class CostTabItem extends CommonTabItemBase_1.CommonTabItemBase {
   }
 }
 exports.CostTabItem = CostTabItem;
-// # sourceMappingURL=CostTabItem.js.map
+//# sourceMappingURL=CostTabItem.js.map

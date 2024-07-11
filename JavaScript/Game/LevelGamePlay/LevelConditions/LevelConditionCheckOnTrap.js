@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckOnTrap = void 0);
-const puerts_1 = require("puerts");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const puerts_1 = require("puerts"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionCheckOnTrap extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, r) {
-    let t, s;
+    var t, s;
     return (
       !(
         !e.LimitParams ||
@@ -21,4 +21,4 @@ class LevelConditionCheckOnTrap extends LevelGeneralBase_1.LevelConditionBase {
   }
 }
 exports.LevelConditionCheckOnTrap = LevelConditionCheckOnTrap;
-// # sourceMappingURL=LevelConditionCheckOnTrap.js.map
+//# sourceMappingURL=LevelConditionCheckOnTrap.js.map

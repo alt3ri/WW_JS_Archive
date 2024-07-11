@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MarkItem = void 0);
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const GeneralLogicTreeUtil_1 = require("../../../GeneralLogicTree/GeneralLogicTreeUtil");
-const MapController_1 = require("../../Controller/MapController");
-const MapDefine_1 = require("../../MapDefine");
-const MapUtil_1 = require("../../MapUtil");
+const Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  GeneralLogicTreeUtil_1 = require("../../../GeneralLogicTree/GeneralLogicTreeUtil"),
+  MapController_1 = require("../../Controller/MapController"),
+  MapDefine_1 = require("../../MapDefine"),
+  MapUtil_1 = require("../../MapUtil");
 class MarkItem {
   constructor(t, e, i, s = 1) {
     (this.MapType = 2),
@@ -80,7 +80,7 @@ class MarkItem {
     return Math.pow(t[0] - e[0], 2) + Math.pow(t[1] - e[1], 2);
   }
   get WorldPosition() {
-    this.MapType !== 2 &&
+    2 !== this.MapType &&
       this.TrackTarget instanceof Vector2D_1.Vector2D &&
       ((t = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation()),
       this.$Li(t, this.TrackTarget) *
@@ -174,7 +174,7 @@ class MarkItem {
     return this.KLi;
   }
   set IsTracked(t) {
-    const e = this.KLi;
+    var e = this.KLi;
     (this.KLi = t) && this.YLi(),
       e !== this.KLi && (t ? this.OnStartTrack() : this.OnEndTrack());
   }
@@ -184,7 +184,7 @@ class MarkItem {
         this.TrackSource,
         this.MarkId,
       )),
-      (this.MapType === 1 && !this.IsTracked) || (this.IsInAoiRange = !0);
+      (1 === this.MapType && !this.IsTracked) || (this.IsInAoiRange = !0);
   }
   OnStartTrack() {
     this.View?.OnStartTrack();
@@ -237,21 +237,21 @@ class MarkItem {
     this.XLi && !t && (this.XLi = t), (this.XLi = t) && this.JLi && this.YLi();
   }
   CheckCanShowView() {
-    return this.MapType === 2;
+    return 2 === this.MapType;
   }
   GetShowScale() {
-    const t = this.GetCurrentMapShowScale();
+    var t = this.GetCurrentMapShowScale();
     return Math.max(0, t);
   }
   GetCurrentMapShowScale() {
     return 100 * ModelManager_1.ModelManager.WorldMapModel.MapScale - 100;
   }
   OnLevelSequenceStart(t) {
-    (t !== "ShowView" && t !== "HideView") || (this.IsCanShowViewFinally = !0);
+    ("ShowView" !== t && "HideView" !== t) || (this.IsCanShowViewFinally = !0);
   }
   OnLevelSequenceStop(t) {
-    (t !== "ShowView" && t !== "HideView") || (this.IsCanShowViewFinally = !1);
+    ("ShowView" !== t && "HideView" !== t) || (this.IsCanShowViewFinally = !1);
   }
 }
 exports.MarkItem = MarkItem;
-// # sourceMappingURL=MarkItem.js.map
+//# sourceMappingURL=MarkItem.js.map

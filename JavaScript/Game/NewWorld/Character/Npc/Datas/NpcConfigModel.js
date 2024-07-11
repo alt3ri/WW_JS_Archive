@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcConfigModel = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const ModelBase_1 = require("../../../../../Core/Framework/ModelBase");
-const IGlobal_1 = require("../../../../../UniverseEditor/Interface/IGlobal");
-const PublicUtil_1 = require("../../../../Common/PublicUtil");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  ModelBase_1 = require("../../../../../Core/Framework/ModelBase"),
+  IGlobal_1 = require("../../../../../UniverseEditor/Interface/IGlobal"),
+  PublicUtil_1 = require("../../../../Common/PublicUtil");
 class NpcConfigModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments), (this.jZ = void 0);
@@ -22,7 +22,7 @@ class NpcConfigModel extends ModelBase_1.ModelBase {
       (e = (0, PublicUtil_1.getConfigPath)(
         IGlobal_1.globalConfigTemp.MontageConfigPath,
       ));
-    let t = (0, puerts_1.$ref)("");
+    var t = (0, puerts_1.$ref)("");
     if (
       (UE.KuroStaticLibrary.LoadFileToString(t, e),
       (t = (0, puerts_1.$unref)(t)))
@@ -34,4 +34,4 @@ class NpcConfigModel extends ModelBase_1.ModelBase {
   }
 }
 exports.NpcConfigModel = NpcConfigModel;
-// # sourceMappingURL=NpcConfigModel.js.map
+//# sourceMappingURL=NpcConfigModel.js.map

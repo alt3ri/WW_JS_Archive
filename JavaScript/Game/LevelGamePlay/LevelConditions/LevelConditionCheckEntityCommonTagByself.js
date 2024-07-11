@@ -3,12 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckEntityCommonTagBySelf =
     exports.ConditionExParamsCheckEntityCommonTagBySelf =
       void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const LevelConditionCenter_1 = require("./LevelConditionCenter");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  LevelConditionCenter_1 = require("./LevelConditionCenter");
 class ConditionExParamsCheckEntityCommonTagBySelf extends LevelGeneralBase_1.LevelConditionExParams {
   constructor() {
     super(...arguments), (this.TagIds = void 0);
@@ -29,7 +29,7 @@ class LevelConditionCheckEntityCommonTagBySelf extends LevelGeneralBase_1.LevelC
       (n = new ConditionExParamsCheckEntityCommonTagBySelf()).TagIds =
         new Array();
       for (const a of o) {
-        const r = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(a);
+        var r = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(a);
         void 0 === r
           ? Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -43,7 +43,7 @@ class LevelConditionCheckEntityCommonTagBySelf extends LevelGeneralBase_1.LevelC
       }
       LevelConditionCenter_1.LevelConditionCenter.SetConditionExParams(e.Id, n);
     }
-    if (n.TagIds && n.TagIds.length > 0) {
+    if (n.TagIds && 0 < n.TagIds.length) {
       if (
         !UE.KuroStaticLibrary.IsImplementInterface(
           t.GetClass(),
@@ -53,7 +53,7 @@ class LevelConditionCheckEntityCommonTagBySelf extends LevelGeneralBase_1.LevelC
         return !1;
       (o = t), (t = EntitySystem_1.EntitySystem.Get(o.GetEntityId()));
       if (!t) return !1;
-      const i = t.GetComponent(177);
+      var i = t.GetComponent(177);
       if (!i) return !1;
       for (const s of n.TagIds) if (!i.HasTag(s)) return !1;
     }
@@ -62,4 +62,4 @@ class LevelConditionCheckEntityCommonTagBySelf extends LevelGeneralBase_1.LevelC
 }
 exports.LevelConditionCheckEntityCommonTagBySelf =
   LevelConditionCheckEntityCommonTagBySelf;
-// # sourceMappingURL=LevelConditionCheckEntityCommonTagByself.js.map
+//# sourceMappingURL=LevelConditionCheckEntityCommonTagByself.js.map

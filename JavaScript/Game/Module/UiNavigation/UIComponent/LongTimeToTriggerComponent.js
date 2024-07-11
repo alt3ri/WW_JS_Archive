@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LongTimeToTriggerComponent = void 0);
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const HotKeyViewDefine_1 = require("../HotKeyViewDefine");
-const UiNavigationNewController_1 = require("../New/UiNavigationNewController");
-const HotKeyComponent_1 = require("./HotKeyComponent");
+const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  HotKeyViewDefine_1 = require("../HotKeyViewDefine"),
+  UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
+  HotKeyComponent_1 = require("./HotKeyComponent");
 class LongTimeToTriggerComponent extends HotKeyComponent_1.HotKeyComponent {
   constructor() {
     super(...arguments),
@@ -14,14 +14,14 @@ class LongTimeToTriggerComponent extends HotKeyComponent_1.HotKeyComponent {
       (this.Ibo = !1),
       (this.Tbo = () => {
         this.Ebo += TimerSystem_1.MIN_TIME;
-        let e;
-        const i = this.GetHotKeyConfig();
+        var e,
+          i = this.GetHotKeyConfig();
         let t = 0;
         this.Ebo > i.ReleaseFailureTime &&
           (this.Lbo(),
           (e = i.LongPressTime),
           (t = (this.Ebo - i.ReleaseFailureTime) / e)),
-          t >= 1
+          1 <= t
             ? this.ReleaseWithoutCheck()
             : this.CurComponent.SetLongPressState(t);
       });
@@ -58,7 +58,7 @@ class LongTimeToTriggerComponent extends HotKeyComponent_1.HotKeyComponent {
   Lbo() {
     if (!this.Ibo) {
       this.Ibo = !0;
-      const e = ModelManager_1.ModelManager.UiNavigationModel;
+      var e = ModelManager_1.ModelManager.UiNavigationModel;
       if (e)
         for (const i of e.GetActionHotKeyComponentSet(this.GetActionName()))
           i.ResetPressState();
@@ -66,4 +66,4 @@ class LongTimeToTriggerComponent extends HotKeyComponent_1.HotKeyComponent {
   }
 }
 exports.LongTimeToTriggerComponent = LongTimeToTriggerComponent;
-// # sourceMappingURL=LongTimeToTriggerComponent.js.map
+//# sourceMappingURL=LongTimeToTriggerComponent.js.map

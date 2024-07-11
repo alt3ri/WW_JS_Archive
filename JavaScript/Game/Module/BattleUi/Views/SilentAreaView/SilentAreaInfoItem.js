@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SilentAreaInfoItem = void 0);
-const UE = require("ue");
-const PublicUtil_1 = require("../../../../Common/PublicUtil");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const SilentAreaInfoSubItem_1 = require("./SilentAreaInfoSubItem");
+const UE = require("ue"),
+  PublicUtil_1 = require("../../../../Common/PublicUtil"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  SilentAreaInfoSubItem_1 = require("./SilentAreaInfoSubItem");
 class SilentAreaInfoItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments), (this.Rct = []);
@@ -23,22 +23,22 @@ class SilentAreaInfoItem extends UiPanelBase_1.UiPanelBase {
     });
   }
   async OnBeforeStartAsync() {
-    const e = this.GetItem(1);
-    const t = new SilentAreaInfoSubItem_1.SilentAreaInfoSubItem();
+    var e = this.GetItem(1),
+      t = new SilentAreaInfoSubItem_1.SilentAreaInfoSubItem();
     await t.CreateByActorAsync(e.GetOwner()), this.Rct.push(t);
   }
   UpdateItem(e) {
     this.Uct(e.TidMainTitle), this.Act(e.SubTitles);
   }
   Uct(e) {
-    const t = this.GetText(0);
-    var e = PublicUtil_1.PublicUtil.GetConfigTextByKey(e);
+    var t = this.GetText(0),
+      e = PublicUtil_1.PublicUtil.GetConfigTextByKey(e);
     t?.SetText(e);
   }
   Act(i) {
     for (let t = 0; t < i.length; t++) {
-      var s;
-      const r = i[t];
+      var s,
+        r = i[t];
       let e = void 0;
       t < this.Rct.length
         ? (e = this.Rct[t]).UpdateItem(r)
@@ -55,4 +55,4 @@ class SilentAreaInfoItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.SilentAreaInfoItem = SilentAreaInfoItem;
-// # sourceMappingURL=SilentAreaInfoItem.js.map
+//# sourceMappingURL=SilentAreaInfoItem.js.map

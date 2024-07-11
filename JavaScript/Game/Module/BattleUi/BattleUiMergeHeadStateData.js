@@ -4,13 +4,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.MergeHeadStateMonsterInfo =
     exports.MergeHeadStateInfo =
       void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterAttributeTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterAttributeTypes");
-const EMPTY_STR = "";
+const Log_1 = require("../../../Core/Common/Log"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterAttributeTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterAttributeTypes"),
+  EMPTY_STR = "";
 class MergeHeadStateInfo {
   constructor() {
     (this.Id = 0),
@@ -45,7 +45,7 @@ class MergeHeadStateMonsterInfo {
           ));
       }),
       (this.YKe = (t, e, i) => {
-        const s = this.Hp;
+        var s = this.Hp;
         (this.Hp = e),
           this.HpMax <= 0 ||
             ((e = ((this.Hp - s) / this.HpMax) * this.BaseLife),
@@ -55,12 +55,12 @@ class MergeHeadStateMonsterInfo {
             ));
       }),
       (this.JKe = (t, e, i) => {
-        const s = this.HpMax;
+        var s = this.HpMax;
         this.HpMax = e;
-        let r = 0;
-        let h = (s > 0 && (r = this.Hp / s), 0);
+        let r = 0,
+          h = (0 < s && (r = this.Hp / s), 0);
         e =
-          ((h = this.HpMax > 0 ? this.Hp / this.HpMax : h) - r) * this.BaseLife;
+          ((h = 0 < this.HpMax ? this.Hp / this.HpMax : h) - r) * this.BaseLife;
         ModelManager_1.ModelManager.BattleUiModel.MergeHeadStateData.OnMonsterHealthChange(
           this.Id,
           e,
@@ -75,7 +75,7 @@ class MergeHeadStateMonsterInfo {
           this.EntityHandle.Id,
         ]),
       this.RemoveListener());
-    let t = this.EntityHandle.Entity.GetComponent(185);
+    var t = this.EntityHandle.Entity.GetComponent(185);
     if (!t)
       return (
         Log_1.Log.CheckError() &&
@@ -114,7 +114,7 @@ class MergeHeadStateMonsterInfo {
     );
   }
   RemoveListener() {
-    let t;
+    var t;
     this.FightTagListenTask &&
       (this.FightTagListenTask.EndTask(), (this.FightTagListenTask = void 0)),
       this.AttributeComponent &&
@@ -139,7 +139,7 @@ class BattleUiMergeHeadStateData {
     if (!(this.ListenMonsterRemoveMap.size <= 0)) {
       for (const e of this.ListenMonsterRemoveMap.values()) {
         (e.EntityHandle = void 0), this.ZKe(e);
-        const t = this.InfoMap.get(e.Id);
+        var t = this.InfoMap.get(e.Id);
         if (!t)
           return void (
             Log_1.Log.CheckError() &&
@@ -177,8 +177,8 @@ class BattleUiMergeHeadStateData {
   }
   OnAddEntity(s) {
     if (!(this.ListenMonsterAddMap.size <= 0)) {
-      let r = ModelManager_1.ModelManager.CreatureModel.GetPbDataIdByEntity(s);
-      const h = this.ListenMonsterAddMap.get(r);
+      var r = ModelManager_1.ModelManager.CreatureModel.GetPbDataIdByEntity(s),
+        h = this.ListenMonsterAddMap.get(r);
       if (h) {
         this.ListenMonsterAddMap.delete(r), (h.EntityHandle = s), this.oQe(h);
         r = this.InfoMap.get(h.Id);
@@ -186,15 +186,15 @@ class BattleUiMergeHeadStateData {
           let i = !1;
           if (h.AttributeComponent) {
             var s = h.AttributeComponent.GetCurrentValue(
-              CharacterAttributeTypes_1.EAttributeId.Proto_Life,
-            );
-            const o = h.AttributeComponent.GetCurrentValue(
-              CharacterAttributeTypes_1.EAttributeId.Tkn,
-            );
+                CharacterAttributeTypes_1.EAttributeId.Proto_Life,
+              ),
+              o = h.AttributeComponent.GetCurrentValue(
+                CharacterAttributeTypes_1.EAttributeId.Tkn,
+              );
             if (s !== h.Hp || o !== h.HpMax) {
-              let t = 0;
-              let e = (h.HpMax > 0 && (t = h.Hp / h.HpMax), 0);
-              o > 0 && (e = s / o),
+              let t = 0,
+                e = (0 < h.HpMax && (t = h.Hp / h.HpMax), 0);
+              0 < o && (e = s / o),
                 (r.TotalHp += (e - t) * h.BaseLife),
                 (h.Hp = s),
                 (h.HpMax = o),
@@ -216,7 +216,7 @@ class BattleUiMergeHeadStateData {
     }
   }
   OnRemoveEntity(t) {
-    let e;
+    var e;
     this.ListenMonsterRemoveMap.size <= 0 ||
       ((e = this.ListenMonsterRemoveMap.get(t.Id)) &&
         (this.ListenMonsterRemoveMap.delete(t.Id),
@@ -233,7 +233,7 @@ class BattleUiMergeHeadStateData {
             )));
   }
   iQe(t, e, i, s) {
-    const r = new MergeHeadStateInfo();
+    var r = new MergeHeadStateInfo();
     this.zKe++,
       (r.Id = this.zKe),
       (r.TreeId = t),
@@ -241,10 +241,10 @@ class BattleUiMergeHeadStateData {
       (r.MonsterGroupName = s ?? EMPTY_STR);
     for (const o of i.ovs)
       for (const a of o._vs) {
-        const h = new MergeHeadStateMonsterInfo();
+        var h = new MergeHeadStateMonsterInfo();
         (h.Id = r.Id),
           (h.PbDataId = a.jkn),
-          (h.IsDead = a.ckn === 2),
+          (h.IsDead = 2 === a.ckn),
           (h.BaseLife = MathUtils_1.MathUtils.LongToNumber(a.rvs)),
           (h.EntityHandle =
             ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
@@ -267,7 +267,7 @@ class BattleUiMergeHeadStateData {
           r.MonsterInfos.set(h.PbDataId, h);
       }
     for (const n of r.MonsterInfos.values())
-      n.HpMax > 0 && (r.TotalHp += (n.Hp / n.HpMax) * n.BaseLife),
+      0 < n.HpMax && (r.TotalHp += (n.Hp / n.HpMax) * n.BaseLife),
         (r.TotalHpMax += n.BaseLife);
     this.UpdateVisible(r, !1),
       this.InfoMap.set(r.Id, r),
@@ -276,14 +276,14 @@ class BattleUiMergeHeadStateData {
   tQe(t, e) {
     for (const s of e.ovs)
       for (const r of s._vs) {
-        const i = t.MonsterInfos.get(r.jkn);
+        var i = t.MonsterInfos.get(r.jkn);
         i
           ? i.IsDead ||
-            ((i.IsDead = r.ckn === 2),
+            ((i.IsDead = 2 === r.ckn),
             i.IsDead &&
               (this.ZKe(i),
-              (i.Hp === 0 && i.HpMax === i.BaseLife) ||
-                (i.HpMax > 0 && (t.TotalHp -= (i.Hp / i.HpMax) * i.BaseLife),
+              (0 === i.Hp && i.HpMax === i.BaseLife) ||
+                (0 < i.HpMax && (t.TotalHp -= (i.Hp / i.HpMax) * i.BaseLife),
                 (i.Hp = 0),
                 (i.HpMax = i.BaseLife),
                 this.rQe(t))))
@@ -310,7 +310,7 @@ class BattleUiMergeHeadStateData {
     t.RemoveListener(), t.IsDead || this.ListenMonsterAddMap.set(t.PbDataId, t);
   }
   OnMonsterFightTagChange(t, e) {
-    const i = this.InfoMap.get(t);
+    var i = this.InfoMap.get(t);
     i
       ? i.IsVisible !== e &&
         (e ? ((i.IsVisible = !0), this.nQe(i)) : this.UpdateVisible(i, !0))
@@ -336,7 +336,7 @@ class BattleUiMergeHeadStateData {
     );
   }
   OnMonsterHealthChange(t, e) {
-    const i = this.InfoMap.get(t);
+    var i = this.InfoMap.get(t);
     i
       ? ((i.TotalHp += e), this.rQe(i))
       : Log_1.Log.CheckError() &&
@@ -353,4 +353,4 @@ class BattleUiMergeHeadStateData {
   }
 }
 exports.BattleUiMergeHeadStateData = BattleUiMergeHeadStateData;
-// # sourceMappingURL=BattleUiMergeHeadStateData.js.map
+//# sourceMappingURL=BattleUiMergeHeadStateData.js.map

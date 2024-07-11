@@ -1,28 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonEntrancePanel = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ActivityDoubleRewardController_1 = require("../../../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController");
-const ButtonItem_1 = require("../../../Common/Button/ButtonItem");
-const HelpController_1 = require("../../../Help/HelpController");
-const ExchangeRewardModel_1 = require("../../../InstanceDungeon/ExchangeReward/ExchangeRewardModel");
-const InstanceDungeonEntranceController_1 = require("../../../InstanceDungeon/InstanceDungeonEntranceController");
-const InstanceTipGrid_1 = require("../../../InstanceDungeon/InstanceTipGrid");
-const MapController_1 = require("../../../Map/Controller/MapController");
-const GenericLayoutAdd_1 = require("../../../Util/GenericLayoutAdd");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi");
-const WorldMapController_1 = require("../../WorldMapController");
-const WorldMapDefine_1 = require("../../WorldMapDefine");
-const TipsListView_1 = require("../TipsListView");
-const POWER_COST_KEY = "power";
-const COUNT_LIMMIT_KEY = "countLimit";
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ActivityDoubleRewardController_1 = require("../../../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController"),
+  ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
+  HelpController_1 = require("../../../Help/HelpController"),
+  ExchangeRewardModel_1 = require("../../../InstanceDungeon/ExchangeReward/ExchangeRewardModel"),
+  InstanceDungeonEntranceController_1 = require("../../../InstanceDungeon/InstanceDungeonEntranceController"),
+  InstanceTipGrid_1 = require("../../../InstanceDungeon/InstanceTipGrid"),
+  MapController_1 = require("../../../Map/Controller/MapController"),
+  GenericLayoutAdd_1 = require("../../../Util/GenericLayoutAdd"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
+  WorldMapController_1 = require("../../WorldMapController"),
+  WorldMapDefine_1 = require("../../WorldMapDefine"),
+  TipsListView_1 = require("../TipsListView"),
+  POWER_COST_KEY = "power",
+  COUNT_LIMMIT_KEY = "countLimit";
 class InstanceDungeonEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
@@ -33,7 +33,7 @@ class InstanceDungeonEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSeconda
       (this.wko = void 0),
       (this.$Ut = void 0),
       (this.OnInstanceRefresh = (e, t, i, n) => {
-        const r = new TipsListView_1.InstanceDungeonCostTip();
+        var r = new TipsListView_1.InstanceDungeonCostTip();
         return r.SetRootActor(t.GetOwner(), !0), { Key: e, Value: r };
       }),
       (this.gko = () => {
@@ -92,11 +92,11 @@ class InstanceDungeonEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSeconda
     this.xko.ClearChildren(), this.$Ut.Destroy();
   }
   OnShowWorldMapSecondaryUi(e) {
-    let t;
+    var t;
     e
       ? ((this.dko = e),
         (this.thi =
-          e.MarkConfig.RelativeId !== 0
+          0 !== e.MarkConfig.RelativeId
             ? e.MarkConfig.RelativeId
             : ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.GetEntranceIdByMarkId(
                 e.MarkConfigId,
@@ -135,9 +135,8 @@ class InstanceDungeonEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSeconda
         );
   }
   GetMaxUnlockInstanceList() {
-    let e = new Array();
-    let t =
-      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
+    let e = new Array(),
+      t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
         this.rhi[0],
         ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
       );
@@ -153,9 +152,9 @@ class InstanceDungeonEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSeconda
           )) < t ||
         (i > t && ((e = []), (t = i)), e.push(r));
     }
-    if (e.length === 0)
+    if (0 === e.length)
       for (const o of this.rhi) {
-        const n =
+        var n =
           ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
             o,
             ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
@@ -180,7 +179,7 @@ class InstanceDungeonEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSeconda
     );
   }
   h7e() {
-    let e = this.Bko;
+    var e = this.Bko;
     e &&
       (this.GetText(4).ShowTextNew(e.Description),
       this.SetSpriteByPath(this.dko.IconPath, this.GetSprite(0), !1),
@@ -193,37 +192,37 @@ class InstanceDungeonEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSeconda
   }
   bko() {
     this.rhi.length = 0;
-    let e;
-    var t =
-      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetSortedByTitleEntranceInstanceIdList(
-        this.thi,
-      );
+    var e,
+      t =
+        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetSortedByTitleEntranceInstanceIdList(
+          this.thi,
+        );
     for ([e] of Array.from(t).sort((e, t) => e[1] - t[1])) this.rhi.push(e);
     this.rhi = this.GetMaxUnlockInstanceList();
-    let i;
-    var t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-      this.rhi[0],
-    );
-    var n =
-      ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetDungeonUpActivity(
-        t.CustomTypes,
-      );
-    var n =
-      (this.GetItem(19).SetUIActive(void 0 !== n),
-      n &&
-        ((n = n.GetNumTxtAndParam()),
-        LguiUtil_1.LguiUtil.SetLocalTextNew(
-          this.GetText(20),
-          n[0],
-          n[1],
-          n[2],
-        )),
-      this.wko.RefreshByData(this.rhi),
-      t.RewardId);
-    var t =
-      ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardConfig(
-        n,
-      )?.SharedId;
+    var i,
+      t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+        this.rhi[0],
+      ),
+      n =
+        ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetDungeonUpActivity(
+          t.CustomTypes,
+        ),
+      n =
+        (this.GetItem(19).SetUIActive(void 0 !== n),
+        n &&
+          ((n = n.GetNumTxtAndParam()),
+          LguiUtil_1.LguiUtil.SetLocalTextNew(
+            this.GetText(20),
+            n[0],
+            n[1],
+            n[2],
+          )),
+        this.wko.RefreshByData(this.rhi),
+        t.RewardId),
+      t =
+        ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardConfig(
+          n,
+        )?.SharedId;
     t &&
       (this.xko.AddItemToLayout([COUNT_LIMMIT_KEY]),
       (n = this.xko.GetLayoutItemByKey(COUNT_LIMMIT_KEY)).SetIconVisible(!1),
@@ -259,12 +258,12 @@ class InstanceDungeonEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSeconda
       this.$Ut.SetLocalText(e);
   }
   qko() {
-    let e;
-    let t;
-    const i =
-      ModelManager_1.ModelManager.ExchangeRewardModel.GetExchangeNormalConsume(
-        this.rhi[0],
-      );
+    var e,
+      t,
+      i =
+        ModelManager_1.ModelManager.ExchangeRewardModel.GetExchangeNormalConsume(
+          this.rhi[0],
+        );
     i &&
       i[0] &&
       (this.xko.AddItemToLayout([POWER_COST_KEY]),
@@ -289,4 +288,4 @@ class InstanceDungeonEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSeconda
   }
 }
 exports.InstanceDungeonEntrancePanel = InstanceDungeonEntrancePanel;
-// # sourceMappingURL=InstanceDungeonEntrancePanel.js.map
+//# sourceMappingURL=InstanceDungeonEntrancePanel.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FunctionConfig = void 0);
-const FunctionConditionByFunctionId_1 = require("../../../Core/Define/ConfigQuery/FunctionConditionByFunctionId");
-const FunctionMenuAll_1 = require("../../../Core/Define/ConfigQuery/FunctionMenuAll");
-const FunctionMenuByFunctionId_1 = require("../../../Core/Define/ConfigQuery/FunctionMenuByFunctionId");
-const PlayerExpByPlayerLevel_1 = require("../../../Core/Define/ConfigQuery/PlayerExpByPlayerLevel");
-const PlayerExpByPlayerLevelArea_1 = require("../../../Core/Define/ConfigQuery/PlayerExpByPlayerLevelArea");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const FunctionConditionByFunctionId_1 = require("../../../Core/Define/ConfigQuery/FunctionConditionByFunctionId"),
+  FunctionMenuAll_1 = require("../../../Core/Define/ConfigQuery/FunctionMenuAll"),
+  FunctionMenuByFunctionId_1 = require("../../../Core/Define/ConfigQuery/FunctionMenuByFunctionId"),
+  PlayerExpByPlayerLevel_1 = require("../../../Core/Define/ConfigQuery/PlayerExpByPlayerLevel"),
+  PlayerExpByPlayerLevelArea_1 = require("../../../Core/Define/ConfigQuery/PlayerExpByPlayerLevelArea"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class FunctionConfig extends ConfigBase_1.ConfigBase {
   OnInit() {
     return !0;
@@ -47,4 +47,4 @@ class FunctionConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.FunctionConfig = FunctionConfig;
-// # sourceMappingURL=FunctionConfig.js.map
+//# sourceMappingURL=FunctionConfig.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const GlobalData_1 = require("../../../../GlobalData");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../../GlobalData");
 class TsDecoratorCheckAnimalState extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -19,7 +19,7 @@ class TsDecoratorCheckAnimalState extends UE.BTDecorator_BlueprintBase {
       (this.TsInverse = this.Inverse));
   }
   PerformConditionCheckAI(t, e) {
-    const s = t.AiController;
+    var s = t.AiController;
     if (!s)
       return (
         Log_1.Log.CheckError() &&
@@ -37,4 +37,4 @@ class TsDecoratorCheckAnimalState extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorCheckAnimalState;
-// # sourceMappingURL=TsDecoratorCheckAnimalState.js.map
+//# sourceMappingURL=TsDecoratorCheckAnimalState.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HandBootPlotDynamicItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
 class HandBootPlotDynamicItem extends UiPanelBase_1.UiPanelBase {
   async Init(e) {
     await super.CreateByActorAsync(e.GetOwner(), void 0, !0);
@@ -34,4 +34,4 @@ class HandBootPlotDynamicItem extends UiPanelBase_1.UiPanelBase {
   ClearItem() {}
 }
 exports.HandBootPlotDynamicItem = HandBootPlotDynamicItem;
-// # sourceMappingURL=HandBootPlotDynamicItem.js.map
+//# sourceMappingURL=HandBootPlotDynamicItem.js.map

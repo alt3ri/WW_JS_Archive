@@ -11,7 +11,7 @@ class CookSort extends CommonSort_1.CommonSort {
           : 0;
       }),
       (this.XLt = (t, s, r) => {
-        let o;
+        var o;
         return s.IsUnLock !== t.IsUnLock
           ? ((o = s.IsUnLock ? 1 : -1), r ? o : -o)
           : s.IsCook !== t.IsCook
@@ -47,4 +47,4 @@ class CookSort extends CommonSort_1.CommonSort {
   }
 }
 exports.CookSort = CookSort;
-// # sourceMappingURL=CookSort.js.map
+//# sourceMappingURL=CookSort.js.map

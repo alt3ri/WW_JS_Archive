@@ -8,4 +8,4 @@ class MultiEffectBase {
   Update(e, t, s) {}
 }
 exports.default = MultiEffectBase;
-// # sourceMappingURL=MultiEffectBase.js.map
+//# sourceMappingURL=MultiEffectBase.js.map

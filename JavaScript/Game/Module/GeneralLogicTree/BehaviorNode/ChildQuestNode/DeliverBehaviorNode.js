@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DeliverBehaviorNode = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ItemDeliverController_1 = require("../../../ItemDeliver/ItemDeliverController");
-const ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ItemDeliverController_1 = require("../../../ItemDeliver/ItemDeliverController"),
+  ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
 class DeliverBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   constructor() {
     super(...arguments),
@@ -55,11 +55,11 @@ class DeliverBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
     return this.PQt;
   }
   OnCreate(e) {
-    let t;
+    var t;
     return (
       !!super.OnCreate(e) &&
-      (e = e.Condition).Type === "HandInItems" &&
-      ((t = e.AddOption).Option.Type.Type !== "Actions"
+      "HandInItems" === (e = e.Condition).Type &&
+      ("Actions" !== (t = e.AddOption).Option.Type.Type
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Quest",
@@ -97,4 +97,4 @@ class DeliverBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   }
 }
 exports.DeliverBehaviorNode = DeliverBehaviorNode;
-// # sourceMappingURL=DeliverBehaviorNode.js.map
+//# sourceMappingURL=DeliverBehaviorNode.js.map

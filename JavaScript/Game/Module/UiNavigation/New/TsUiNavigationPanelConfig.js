@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TsUiNavigationPanelConfig = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiNavigationUtil_1 = require("../UiNavigationUtil");
-const FindNavigationResult_1 = require("./FindNavigationResult");
-const NavigationPanelHandleCreator_1 = require("./PanelHandle/NavigationPanelHandleCreator");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiNavigationUtil_1 = require("../UiNavigationUtil"),
+  FindNavigationResult_1 = require("./FindNavigationResult"),
+  NavigationPanelHandleCreator_1 = require("./PanelHandle/NavigationPanelHandleCreator");
 class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
   constructor() {
     super(...arguments),
@@ -92,13 +92,13 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
     );
   }
   GetGroupMap() {
-    const e = new Map();
+    var e = new Map();
     for (let i = 0, t = this.NormalGroup.Num(); i < t; ++i) {
-      const s = this.NormalGroup.Get(i);
+      var s = this.NormalGroup.Get(i);
       (s.GroupType = 0), e.set(s.GroupName, s);
     }
     for (let i = 0, t = this.BookmarkGroup.Num(); i < t; ++i) {
-      const a = this.BookmarkGroup.Get(i);
+      var a = this.BookmarkGroup.Get(i);
       (a.GroupType = 1), e.set(a.GroupName, a);
     }
     return (
@@ -132,7 +132,7 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
     }
   }
   RegisterNavigationListener(i) {
-    let t;
+    var t;
     this.PanelHandle.AddListener(i),
       i.GetNavigationComponent().SetPanelHandle(this.PanelHandle),
       i.GetNavigationComponent().Start(),
@@ -147,7 +147,7 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
                 ["DisplayName", i.RootUIComp.displayName],
               ),
             t.ListenerList.Add(i),
-            t.GroupType === 2 &&
+            2 === t.GroupType &&
               this.HandleViewHandleFunction(() => {
                 this.ViewHandle?.MarkRefreshScrollDataDirty();
               }))
@@ -166,7 +166,7 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
             ));
   }
   DynamicListenerConfigHandle(i) {
-    let t = i.DynamicTag;
+    var t = i.DynamicTag;
     StringUtils_1.StringUtils.IsBlank(t) ||
       StringUtils_1.StringUtils.IsBlank(i.GroupName) ||
       (this.PanelHandle.GetNavigationGroup(i.GroupName)
@@ -191,7 +191,7 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
   }
   UnRegisterNavigationListener(e) {
     this.PanelHandle.DeleteListener(e);
-    const s = this.PanelHandle.GetNavigationGroup(e.GroupName);
+    var s = this.PanelHandle.GetNavigationGroup(e.GroupName);
     if (s)
       for (let i = 0, t = s.ListenerList.Num(); i < t; ++i)
         if (s.ListenerList.Get(i).GetOwner() === e.GetOwner()) {
@@ -212,7 +212,7 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
     return this.PanelHandle;
   }
   FindSuitableNavigation(i) {
-    const t = new FindNavigationResult_1.FindNavigationResult();
+    var t = new FindNavigationResult_1.FindNavigationResult();
     if (this.IsAllowNavigate())
       if (this.RootUIComp.IsUIActiveInHierarchy()) {
         for (const s of this.PanelHandle.GetSuitableNavigationListenerList(i))
@@ -224,7 +224,7 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
                 t.Result = 4;
                 break;
               }
-              const e = this.PanelHandle.GetLoopOrLayoutListener(s);
+              var e = this.PanelHandle.GetLoopOrLayoutListener(s);
               if (!e) continue;
               i = e;
             }
@@ -237,7 +237,7 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
               break;
             }
           }
-        t.Result === 0 && (t.Result = 2), this.PanelHandle.NotifyFindResult(t);
+        0 === t.Result && (t.Result = 2), this.PanelHandle.NotifyFindResult(t);
       } else t.Result = 2;
     else t.Result = 2;
     this.ViewHandle.NotifySuitableNavigation(t);
@@ -279,14 +279,14 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
       this.ViewHandle.MarkRefreshNavigationDirty();
   }
   IsAllowNavigate() {
-    const i = ModelManager_1.ModelManager.PlatformModel?.IsInGamepad() ?? !1;
+    var i = ModelManager_1.ModelManager.PlatformModel?.IsInGamepad() ?? !1;
     return this.AllowNavigateInKeyBoard || i;
   }
   AddHotKeyItem(i) {
     this.HotKeyItemSet.add(i), this.HandleAsyncHotKeyState(i);
   }
   HandleAsyncHotKeyState(i) {
-    for (const [t, e] of this.GetOrCreateCacheHotKeyStateMap())
+    for (var [t, e] of this.GetOrCreateCacheHotKeyStateMap())
       for (const s of i.GetHotKeyComponentArray())
         s.SetVisibleMode(t, e),
           s.RefreshSelfHotKeyState(this.ViewHandle),
@@ -312,7 +312,7 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
   UpdateHotKeyTextForce(i, t) {
     for (const s of this.HotKeyItemSet)
       for (const a of s.GetHotKeyComponentArray()) {
-        const e = a.GetBindButtonTag();
+        var e = a.GetBindButtonTag();
         i.Contains(e) && a.SetHotKeyDescTextForce(t);
       }
   }
@@ -335,4 +335,4 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
 }
 (exports.TsUiNavigationPanelConfig = TsUiNavigationPanelConfig),
   (exports.default = TsUiNavigationPanelConfig);
-// # sourceMappingURL=TsUiNavigationPanelConfig.js.map
+//# sourceMappingURL=TsUiNavigationPanelConfig.js.map

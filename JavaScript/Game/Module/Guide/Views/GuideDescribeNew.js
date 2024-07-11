@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuideDescribeNew = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const InputSettingsManager_1 = require("../../../InputSettings/InputSettingsManager");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const Log_1 = require("../../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  InputSettingsManager_1 = require("../../../InputSettings/InputSettingsManager"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class GuideDescribeNew {
   constructor(e) {
     (this.UJt = void 0),
@@ -15,15 +15,15 @@ class GuideDescribeNew {
       this.UJt.SetRichText(!0);
   }
   SetUpText(e, ...t) {
-    const i = this.UJt;
-    const r = ConfigManager_1.ConfigManager.GuideConfig.GetGuideText(e);
-    if (t.length === 0) {
+    var i = this.UJt,
+      r = ConfigManager_1.ConfigManager.GuideConfig.GetGuideText(e);
+    if (0 === t.length) {
       const l = r.split("\n").length - 1;
       i.SetHeight(i.Height + i.size * l),
         void LguiUtil_1.LguiUtil.SetLocalTextNew(i, e);
     } else {
-      let n = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e);
-      const g = n.split("{");
+      var n = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e),
+        g = n.split("{");
       if (g.length - 1 !== t.length)
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -36,12 +36,12 @@ class GuideDescribeNew {
           ),
           LguiUtil_1.LguiUtil.SetLocalTextNew(i, e);
       else {
-        const s = [];
+        var s = [];
         for (const _ of t) {
-          let e = "";
-          let t = 0;
+          let e = "",
+            t = 0;
           e =
-            _.search("#") >= 0
+            0 <= _.search("#")
               ? ((u = _.split("#")), (t = Number(u[0])), u[1])
               : _;
           var u = (
@@ -51,8 +51,8 @@ class GuideDescribeNew {
             ?.GetCurrentPlatformKeyByIndex(t)
             ?.GetKey();
           if (!u) return;
-          const o = u.GetKeyName();
-          const a = u.GetKeyIconPath();
+          var o = u.GetKeyName(),
+            a = u.GetKeyIconPath();
           if (StringUtils_1.StringUtils.IsEmpty(a)) return;
           s.push(a ? `<texture=${a}/>` : `(${o})`);
         }
@@ -65,4 +65,4 @@ class GuideDescribeNew {
   }
 }
 exports.GuideDescribeNew = GuideDescribeNew;
-// # sourceMappingURL=GuideDescribeNew.js.map
+//# sourceMappingURL=GuideDescribeNew.js.map

@@ -1,28 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityMowingController = void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../../Core/Net/Net");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const AdventureDefine_1 = require("../../../AdventureGuide/AdventureDefine");
-const InstanceDungeonController_1 = require("../../../InstanceDungeon/InstanceDungeonController");
-const InstanceDungeonEntranceController_1 = require("../../../InstanceDungeon/InstanceDungeonEntranceController");
-const ItemRewardController_1 = require("../../../ItemReward/ItemRewardController");
-const ItemRewardDefine_1 = require("../../../ItemReward/ItemRewardDefine");
-const ActivityControllerBase_1 = require("../../ActivityControllerBase");
-const ActivityMowingData_1 = require("./ActivityMowingData");
-const ActivityMowingSubView_1 = require("./ActivityMowingSubView");
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  AdventureDefine_1 = require("../../../AdventureGuide/AdventureDefine"),
+  InstanceDungeonController_1 = require("../../../InstanceDungeon/InstanceDungeonController"),
+  InstanceDungeonEntranceController_1 = require("../../../InstanceDungeon/InstanceDungeonEntranceController"),
+  ItemRewardController_1 = require("../../../ItemReward/ItemRewardController"),
+  ItemRewardDefine_1 = require("../../../ItemReward/ItemRewardDefine"),
+  ActivityControllerBase_1 = require("../../ActivityControllerBase"),
+  ActivityMowingData_1 = require("./ActivityMowingData"),
+  ActivityMowingSubView_1 = require("./ActivityMowingSubView");
 class ActivityMowingController extends ActivityControllerBase_1.ActivityControllerBase {
   constructor() {
     super(...arguments),
       (this.DEe = (e, t) => {
-        let n;
-        ActivityMowingController.CurrentActivityId !== 0 &&
+        var n;
+        0 !== ActivityMowingController.CurrentActivityId &&
           (n = ActivityMowingController.GetMowingActivityData()) &&
           n.LocalConfig?.PreShowGuideQuest.includes(e) &&
           EventSystem_1.EventSystem.Emit(
@@ -35,8 +35,8 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
           ActivityMowingController.RequestExitDungeon();
       }),
       (this.oOe = () => {
-        let e;
-        ActivityMowingController.CurrentActivityId !== 0 &&
+        var e;
+        0 !== ActivityMowingController.CurrentActivityId &&
           (e = ActivityMowingController.GetMowingActivityData()) &&
           e.RedPointShowState &&
           EventSystem_1.EventSystem.Emit(
@@ -45,7 +45,7 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
           );
       }),
       (this.RequestGetLevelReward = (t, n, e) => {
-        const i = Protocol_1.Aki.Protocol.P$n.create();
+        var i = Protocol_1.Aki.Protocol.P$n.create();
         (i.YFn = t),
           (i.vFn = n),
           Net_1.Net.Call(16182, i, (e) => {
@@ -101,47 +101,46 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
           );
       }),
       (this.ZOe = (e) => {
-        const t = e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys;
-        const n =
-          (t &&
-            ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              8520,
-            ),
-          {
-            ButtonTextId: "ConfirmBox_133_ButtonText_0",
-            DescriptionTextId: void 0,
+        var t = e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys,
+          n =
+            (t &&
+              ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
+                e.lkn,
+                8520,
+              ),
+            {
+              ButtonTextId: "ConfirmBox_133_ButtonText_0",
+              DescriptionTextId: void 0,
+              IsTimeDownCloseView: !1,
+              IsClickedCloseView: !0,
+              OnClickedCallback: function () {
+                InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeon();
+              },
+            }),
+          i = {
+            ButtonTextId: "ConfirmBox_133_ButtonText_1",
+            DescriptionTextId: "MowingHighestPoint",
+            DescriptionArgs: [e.x0s.toString()],
             IsTimeDownCloseView: !1,
-            IsClickedCloseView: !0,
+            IsClickedCloseView: !1,
             OnClickedCallback: function () {
-              InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeon();
+              var e = ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
+                t = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems(!0);
+              if (0 !== t.length) {
+                var n = [];
+                for (const i of t) n.push(i.GetConfigId);
+                InstanceDungeonController_1.InstanceDungeonController.PrewarTeamFightRequest(
+                  e,
+                  n,
+                );
+              }
             },
-          });
-        const i = {
-          ButtonTextId: "ConfirmBox_133_ButtonText_1",
-          DescriptionTextId: "MowingHighestPoint",
-          DescriptionArgs: [e.x0s.toString()],
-          IsTimeDownCloseView: !1,
-          IsClickedCloseView: !1,
-          OnClickedCallback: function () {
-            const e = ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
-            const t =
-              ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems(!0);
-            if (t.length !== 0) {
-              const n = [];
-              for (const i of t) n.push(i.GetConfigId);
-              InstanceDungeonController_1.InstanceDungeonController.PrewarTeamFightRequest(
-                e,
-                n,
-              );
-            }
           },
-        };
-        const o = {
-          TitleTextId: "MowingCurrentPoint",
-          Record: e.w0s.toString(),
-          IsNewRecord: e.w0s > e.x0s,
-        };
+          o = {
+            TitleTextId: "MowingCurrentPoint",
+            Record: e.w0s.toString(),
+            IsNewRecord: e.w0s > e.x0s,
+          };
         ItemRewardController_1.ItemRewardController.OpenExploreRewardView(
           t
             ? ItemRewardDefine_1.MOWING_ERROR_RESULT
@@ -212,7 +211,7 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
     return !1;
   }
   RequestGetPointReward(t, n) {
-    const e = Protocol_1.Aki.Protocol.D$n.create();
+    var e = Protocol_1.Aki.Protocol.D$n.create();
     (e.YFn = t),
       (e.Ekn = n),
       Net_1.Net.Call(27032, e, (e) => {
@@ -245,7 +244,7 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
       this.RequestSetDifficulty(e, t);
   }
   static RequestExitDungeon() {
-    const e = new Protocol_1.Aki.Protocol.q$n();
+    var e = new Protocol_1.Aki.Protocol.q$n();
     Net_1.Net.Call(4739, e, (e) => {
       e ||
         InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeonRequest();
@@ -257,7 +256,7 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
     );
   }
   GetActivityLevelUnlockState(e) {
-    const t = ActivityMowingController.GetMowingActivityData();
+    var t = ActivityMowingController.GetMowingActivityData();
     return !t || t.GetActivityLevelUnlockState(e);
   }
   static IsMowingInstanceDungeon(e) {
@@ -271,11 +270,11 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
 ((exports.ActivityMowingController =
   ActivityMowingController).CurrentActivityId = 0),
   (ActivityMowingController.RequestSetDifficulty = (n, i) => {
-    const e = Protocol_1.Aki.Protocol.w$n.create();
+    var e = Protocol_1.Aki.Protocol.w$n.create();
     (e.YFn = n),
       (e.a3n = i),
       Net_1.Net.Call(10617, e, (e) => {
-        let t;
+        var t;
         e &&
           e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
@@ -289,9 +288,9 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
       });
   }),
   (ActivityMowingController.GetRecommendLevel = (e, t) => {
-    const n = ActivityMowingController.GetMowingActivityData();
+    var n = ActivityMowingController.GetMowingActivityData();
     return n ? n.GetLevelDiffRecommendLevel(e) : 0;
   }),
   (ActivityMowingController.CheckIsActivityLevel = (e) =>
     ActivityMowingController.IsMowingInstanceDungeon(e));
-// # sourceMappingURL=ActivityMowingController.js.map
+//# sourceMappingURL=ActivityMowingController.js.map

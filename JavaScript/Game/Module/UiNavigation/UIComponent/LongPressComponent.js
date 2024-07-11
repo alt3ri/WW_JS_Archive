@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LongPressComponent = void 0);
-const UiNavigationNewController_1 = require("../New/UiNavigationNewController");
-const HotKeyComponent_1 = require("./HotKeyComponent");
+const UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
+  HotKeyComponent_1 = require("./HotKeyComponent");
 class LongPressComponent extends HotKeyComponent_1.HotKeyComponent {
   OnRelease(e) {
     UiNavigationNewController_1.UiNavigationNewController.SimulationPointUp(
@@ -16,4 +16,4 @@ class LongPressComponent extends HotKeyComponent_1.HotKeyComponent {
   }
 }
 exports.LongPressComponent = LongPressComponent;
-// # sourceMappingURL=LongPressComponent.js.map
+//# sourceMappingURL=LongPressComponent.js.map

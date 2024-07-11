@@ -1,42 +1,47 @@
 "use strict";
-let GrapplingHookPointComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, o) {
-    let n;
-    const r = arguments.length;
-    let s =
-      r < 3 ? e : o === null ? (o = Object.getOwnPropertyDescriptor(e, i)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      s = Reflect.decorate(t, e, i, o);
-    else
-      for (let a = t.length - 1; a >= 0; a--)
-        (n = t[a]) && (s = (r < 3 ? n(s) : r > 3 ? n(e, i, s) : n(e, i)) || s);
-    return r > 3 && s && Object.defineProperty(e, i, s), s;
-  };
+var GrapplingHookPointComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, o) {
+      var n,
+        r = arguments.length,
+        s =
+          r < 3
+            ? e
+            : null === o
+              ? (o = Object.getOwnPropertyDescriptor(e, i))
+              : o;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        s = Reflect.decorate(t, e, i, o);
+      else
+        for (var a = t.length - 1; 0 <= a; a--)
+          (n = t[a]) &&
+            (s = (r < 3 ? n(s) : 3 < r ? n(e, i, s) : n(e, i)) || s);
+      return 3 < r && s && Object.defineProperty(e, i, s), s;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GrapplingHookPointComponent = void 0);
-const UE = require("ue");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const EffectSystem_1 = require("../../../../Effect/EffectSystem");
-const TsEffectActor_1 = require("../../../../Effect/TsEffectActor");
-const LevelGeneralContextDefine_1 = require("../../../../LevelGamePlay/LevelGeneralContextDefine");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const CharacterNameDefines_1 = require("../../Common/CharacterNameDefines");
-const HOOK_VISION_ID = 1001;
-const hookPointStateTagMap = new Map([
-  [0, 1888174838],
-  [1, -1156116864],
-  [2, -43463105],
-]);
+const UE = require("ue"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  EffectSystem_1 = require("../../../../Effect/EffectSystem"),
+  TsEffectActor_1 = require("../../../../Effect/TsEffectActor"),
+  LevelGeneralContextDefine_1 = require("../../../../LevelGamePlay/LevelGeneralContextDefine"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  CharacterNameDefines_1 = require("../../Common/CharacterNameDefines"),
+  HOOK_VISION_ID = 1001,
+  hookPointStateTagMap = new Map([
+    [0, 1888174838],
+    [1, -1156116864],
+    [2, -43463105],
+  ]);
 let GrapplingHookPointComponent =
   (GrapplingHookPointComponent_1 = class GrapplingHookPointComponent extends (
     EntityComponent_1.EntityComponent
@@ -133,9 +138,9 @@ let GrapplingHookPointComponent =
       return !0;
     }
     OnEnd() {
-      const t = GrapplingHookPointComponent_1.AllPoints.indexOf(this);
+      var t = GrapplingHookPointComponent_1.AllPoints.indexOf(this);
       return (
-        t >= 0 && GrapplingHookPointComponent_1.AllPoints.splice(t, 1),
+        0 <= t && GrapplingHookPointComponent_1.AllPoints.splice(t, 1),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.AddExploreVisionSkill,
           this.Fen,
@@ -146,7 +151,7 @@ let GrapplingHookPointComponent =
     ChangeHookPointState(t) {
       this.ac !== t &&
         (this.Lie.RemoveTag(hookPointStateTagMap.get(this.ac)),
-        this.ac === 1 &&
+        1 === this.ac &&
           this.Entity.GetComponent(182).PlaySceneInteractionEndEffect(0),
         (this.ac = t),
         this.Lie.AddTag(hookPointStateTagMap.get(this.ac)));
@@ -172,7 +177,7 @@ let GrapplingHookPointComponent =
       let t = this.Hte?.CurLevelPrefabShowActor;
       if (t?.IsValid()) {
         if (t instanceof TsEffectActor_1.default) {
-          const e = t.GetHandle();
+          var e = t.GetHandle();
           if (
             !EffectSystem_1.EffectSystem.IsValid(e) &&
             (this.Hte.RefreshShowActor(),
@@ -206,4 +211,4 @@ let GrapplingHookPointComponent =
       GrapplingHookPointComponent,
     )),
   (exports.GrapplingHookPointComponent = GrapplingHookPointComponent);
-// # sourceMappingURL=GrapplingHookPointComponent.js.map
+//# sourceMappingURL=GrapplingHookPointComponent.js.map

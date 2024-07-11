@@ -33,4 +33,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.cardIdRange = [8006e4, 80069999]),
   (exports.previewItemIdRange = [3e4, 39999]),
   (exports.rogueCurrencyIdRange = [801e5, 80109999]);
-// # sourceMappingURL=InventoryDefine.js.map
+//# sourceMappingURL=InventoryDefine.js.map

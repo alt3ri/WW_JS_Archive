@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputMultiKeyItemGroup = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const InputKeyDefine_1 = require("./InputKeyDefine");
-const InputMultiKeyItem_1 = require("./InputMultiKeyItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  InputKeyDefine_1 = require("./InputKeyDefine"),
+  InputMultiKeyItem_1 = require("./InputMultiKeyItem");
 class InputMultiKeyItemGroup extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -54,10 +54,10 @@ class InputMultiKeyItemGroup extends UiPanelBase_1.UiPanelBase {
     (this.fUt = e), this.pUt(e);
   }
   pUt(e) {
-    const t = e.SingleActionOrAxisKeyItem;
-    const i = e.DoubleActionOrAxisKeyItem;
-    var e = e.LinkString;
-    const s = this.GetText(0);
+    var t = e.SingleActionOrAxisKeyItem,
+      i = e.DoubleActionOrAxisKeyItem,
+      e = e.LinkString,
+      s = this.GetText(0);
     this.CUt?.RefreshByActionOrAxis(t),
       this.CUt?.SetActive(!0),
       i
@@ -76,4 +76,4 @@ class InputMultiKeyItemGroup extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.InputMultiKeyItemGroup = InputMultiKeyItemGroup;
-// # sourceMappingURL=InputMultiKeyItemGroup.js.map
+//# sourceMappingURL=InputMultiKeyItemGroup.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventCollect = void 0);
-const AudioController_1 = require("../../../Core/Audio/AudioController");
-const Log_1 = require("../../../Core/Common/Log");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const AudioController_1 = require("../../../Core/Audio/AudioController"),
+  Log_1 = require("../../../Core/Common/Log"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventCollect extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, o) {
     let r = void 0;
@@ -20,7 +20,7 @@ class LevelEventCollect extends LevelGeneralBase_1.LevelEventBase {
       default:
         return;
     }
-    let n;
+    var n;
     r &&
       ((n = ModelManager_1.ModelManager.CreatureModel?.GetEntityById(r))
         ? (n = n.Entity?.GetComponent(0)) &&
@@ -51,4 +51,4 @@ class LevelEventCollect extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventCollect = LevelEventCollect;
-// # sourceMappingURL=LevelEventCollect.js.map
+//# sourceMappingURL=LevelEventCollect.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskRandomFloat extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -25,7 +25,7 @@ class TsTaskRandomFloat extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveTickAI(t, s, e) {
     this.InitTsVariables();
-    const a = t.AiController;
+    var a = t.AiController;
     a
       ? (BlackboardController_1.BlackboardController.SetFloatValueByEntity(
           a.CharAiDesignComp.Entity.Id,
@@ -42,4 +42,4 @@ class TsTaskRandomFloat extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskRandomFloat;
-// # sourceMappingURL=TsTaskRandomFloat.js.map
+//# sourceMappingURL=TsTaskRandomFloat.js.map

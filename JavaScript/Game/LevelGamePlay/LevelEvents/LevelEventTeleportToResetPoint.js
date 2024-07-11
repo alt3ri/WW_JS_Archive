@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventTeleportToResetPoint = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController");
-const CharacterAttributeTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterAttributeTypes");
-const InputDistributeDefine_1 = require("../../Ui/InputDistribute/InputDistributeDefine");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const DAMAGE_PERCENT = 0.1;
+const Log_1 = require("../../../Core/Common/Log"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController"),
+  CharacterAttributeTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterAttributeTypes"),
+  InputDistributeDefine_1 = require("../../Ui/InputDistribute/InputDistributeDefine"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  DAMAGE_PERCENT = 0.1;
 class LevelEventTeleportToResetPoint extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, t) {
     if (e)
@@ -38,7 +38,7 @@ class LevelEventTeleportToResetPoint extends LevelGeneralBase_1.LevelEventBase {
       });
   }
   zRe() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
         156,
       );
@@ -51,7 +51,7 @@ class LevelEventTeleportToResetPoint extends LevelGeneralBase_1.LevelEventBase {
   }
   ZRe() {
     for (const t of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems()) {
-      const e = t.EntityHandle?.Entity?.GetComponent(156);
+      var e = t.EntityHandle?.Entity?.GetComponent(156);
       if (e)
         if (
           +e.GetCurrentValue(
@@ -72,4 +72,4 @@ class LevelEventTeleportToResetPoint extends LevelGeneralBase_1.LevelEventBase {
   OnReset() {}
 }
 exports.LevelEventTeleportToResetPoint = LevelEventTeleportToResetPoint;
-// # sourceMappingURL=LevelEventTeleportToResetPoint.js.map
+//# sourceMappingURL=LevelEventTeleportToResetPoint.js.map

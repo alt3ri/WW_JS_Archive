@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckPlayerMotionState = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionCheckPlayerMotionState extends LevelGeneralBase_1.LevelConditionBase {
   CheckNew(e, a) {
     if (!e) return !1;
-    const t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     if (!t)
       return (
         Log_1.Log.CheckWarn() &&
@@ -19,7 +19,7 @@ class LevelConditionCheckPlayerMotionState extends LevelGeneralBase_1.LevelCondi
           ),
         !1
       );
-    const r = t.Entity.GetComponent(158);
+    var r = t.Entity.GetComponent(158);
     if (!r)
       return (
         Log_1.Log.CheckWarn() &&
@@ -30,8 +30,8 @@ class LevelConditionCheckPlayerMotionState extends LevelGeneralBase_1.LevelCondi
           ),
         !1
       );
-    let i = !1;
-    let n = !1;
+    let i = !1,
+      n = !1;
     switch (e.MotionState) {
       case "Ground":
         i =
@@ -88,7 +88,7 @@ class LevelConditionCheckPlayerMotionState extends LevelGeneralBase_1.LevelCondi
         n = !0;
     }
     if (n) {
-      const o = t.Entity.GetComponent(185);
+      var o = t.Entity.GetComponent(185);
       if (!o)
         return (
           Log_1.Log.CheckWarn() &&
@@ -122,4 +122,4 @@ class LevelConditionCheckPlayerMotionState extends LevelGeneralBase_1.LevelCondi
 }
 exports.LevelConditionCheckPlayerMotionState =
   LevelConditionCheckPlayerMotionState;
-// # sourceMappingURL=LevelConditionCheckPlayerMotionState.js.map
+//# sourceMappingURL=LevelConditionCheckPlayerMotionState.js.map

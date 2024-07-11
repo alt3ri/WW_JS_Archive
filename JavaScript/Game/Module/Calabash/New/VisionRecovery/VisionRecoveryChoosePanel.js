@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionRecoveryChoosePanel = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const UiViewSequence_1 = require("../../../../Ui/Base/UiViewSequence");
-const CommonItemSelectView_1 = require("../../../Common/CommonItemSelectView");
-const FilterEntrance_1 = require("../../../Common/FilterSort/Filter/View/FilterEntrance");
-const SortEntrance_1 = require("../../../Common/FilterSort/Sort/View/SortEntrance");
-const ItemTipsComponent_1 = require("../../../Common/ItemTips/ItemTipsComponent");
-const ItemTipsUtilTool_1 = require("../../../Common/ItemTips/ItemTipsUtilTool");
-const ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  UiViewSequence_1 = require("../../../../Ui/Base/UiViewSequence"),
+  CommonItemSelectView_1 = require("../../../Common/CommonItemSelectView"),
+  FilterEntrance_1 = require("../../../Common/FilterSort/Filter/View/FilterEntrance"),
+  SortEntrance_1 = require("../../../Common/FilterSort/Sort/View/SortEntrance"),
+  ItemTipsComponent_1 = require("../../../Common/ItemTips/ItemTipsComponent"),
+  ItemTipsUtilTool_1 = require("../../../Common/ItemTips/ItemTipsUtilTool"),
+  ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController");
 class VisionRecoveryChoosePanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -38,8 +38,8 @@ class VisionRecoveryChoosePanel extends UiPanelBase_1.UiPanelBase {
           this.GetButton(2).RootUIComp.SetUIActive(!0);
       }),
       (this.Bpt = (t) => {
-        const i = this.Upt.GetCurrentSelectedData();
-        const s = i?.length;
+        var i = this.Upt.GetCurrentSelectedData(),
+          s = i?.length;
         for (let e = 0; e < s; e++)
           if (i[e].IncId === t)
             return (
@@ -108,15 +108,15 @@ class VisionRecoveryChoosePanel extends UiPanelBase_1.UiPanelBase {
       this.UpdateFilterComponent(e.UseWayId, e.ItemDataBaseList);
   }
   UpdateFilterComponent(e, t) {
-    let i = !1;
-    let s = !1;
-    let n;
+    let i = !1,
+      s = !1;
+    var n;
     e &&
       ((n = ConfigManager_1.ConfigManager.SortConfig.GetSortId(e)) &&
-        n > 0 &&
+        0 < n &&
         (i = !0),
       (n = ConfigManager_1.ConfigManager.FilterConfig.GetFilterId(e))) &&
-      n > 0 &&
+      0 < n &&
       (s = !0),
       this.hft.GetRootItem().SetUIActive(i),
       this.aft.GetRootItem().SetUIActive(s),
@@ -144,4 +144,4 @@ class VisionRecoveryChoosePanel extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.VisionRecoveryChoosePanel = VisionRecoveryChoosePanel;
-// # sourceMappingURL=VisionRecoveryChoosePanel.js.map
+//# sourceMappingURL=VisionRecoveryChoosePanel.js.map

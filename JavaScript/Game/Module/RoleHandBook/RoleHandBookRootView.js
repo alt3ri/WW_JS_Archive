@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleHandBookRootView = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const DynamicTabCamera_1 = require("../DynamicTab/DynamicTabCamera");
-const RoleRootView_1 = require("../RoleUi/RoleRootView");
-const UiCameraAnimationManager_1 = require("../UiCameraAnimation/UiCameraAnimationManager");
+const Log_1 = require("../../../Core/Common/Log"),
+  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  DynamicTabCamera_1 = require("../DynamicTab/DynamicTabCamera"),
+  RoleRootView_1 = require("../RoleUi/RoleRootView"),
+  UiCameraAnimationManager_1 = require("../UiCameraAnimation/UiCameraAnimationManager");
 class RoleHandBookRootView extends RoleRootView_1.RoleRootView {
   constructor() {
     super(...arguments), (this.Oho = ""), (this.kho = !0);
@@ -17,7 +17,7 @@ class RoleHandBookRootView extends RoleRootView_1.RoleRootView {
   OnHandleLoadScene() {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Role", 8, "角色预览界面场景加载成功");
-    const e = DynamicTabCamera_1.DynamicTabCamera.GetUiCameraHandleName(
+    var e = DynamicTabCamera_1.DynamicTabCamera.GetUiCameraHandleName(
       "RoleHandBookPreviewView",
     );
     this.RoleRootUiCameraHandleData =
@@ -34,7 +34,7 @@ class RoleHandBookRootView extends RoleRootView_1.RoleRootView {
   }
   OnBeforeCreate() {
     (this.Oho = this.OpenParam),
-      (this.kho = this.Oho !== "RoleHandBookSelectionView");
+      (this.kho = "RoleHandBookSelectionView" !== this.Oho);
   }
   InitRoleIdList() {
     ConfigCommon_1.ConfigCommon.ToList(
@@ -50,7 +50,7 @@ class RoleHandBookRootView extends RoleRootView_1.RoleRootView {
       ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTabList(
         "RoleHandBookRootView",
       );
-    const e = this.TabDataList.length;
+    var e = this.TabDataList.length;
     this.TabComponent.RefreshTabItemByLength(e);
   }
   OnStart() {
@@ -72,4 +72,4 @@ class RoleHandBookRootView extends RoleRootView_1.RoleRootView {
   }
 }
 exports.RoleHandBookRootView = RoleHandBookRootView;
-// # sourceMappingURL=RoleHandBookRootView.js.map
+//# sourceMappingURL=RoleHandBookRootView.js.map

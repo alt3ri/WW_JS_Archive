@@ -34,7 +34,7 @@ class FlowActionBase {
   }
   OnInterruptExecute() {}
   FinishExecute(t, i = !0) {
-    let s;
+    var s;
     this.ActionInfo &&
       this.Runner &&
       (Log_1.Log.CheckInfo() &&
@@ -58,4 +58,4 @@ class FlowActionBase {
   }
 }
 exports.FlowActionBase = FlowActionBase;
-// # sourceMappingURL=FlowActionBase.js.map
+//# sourceMappingURL=FlowActionBase.js.map

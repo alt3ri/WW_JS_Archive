@@ -1,30 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const Global_1 = require("../../../Global");
-const GlobalData_1 = require("../../../GlobalData");
-const CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const ColorUtils_1 = require("../../../Utils/ColorUtils");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary");
-const TsAiController_1 = require("../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
-const FRONT_RANDOM_RAD = 0.26;
-const HALF_PI_DEG = 90;
-const DOUBLE_PI_DEG = 360;
-const INSPECTION_INTERVAL = 200;
-const DEBUG_SEGMENTS = 10;
-const DEBUG_RADIUS = 30;
-const DEBUG_TIME = 2.5;
-const TURN_COMPLETE_DEG = 30;
-const NAVIGATION_COMPLETE_DISTANCE = 2500;
-const DEBUG_MODE = !0;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  Global_1 = require("../../../Global"),
+  GlobalData_1 = require("../../../GlobalData"),
+  CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  ColorUtils_1 = require("../../../Utils/ColorUtils"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
+  TsAiController_1 = require("../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
+  FRONT_RANDOM_RAD = 0.26,
+  HALF_PI_DEG = 90,
+  DOUBLE_PI_DEG = 360,
+  INSPECTION_INTERVAL = 200,
+  DEBUG_SEGMENTS = 10,
+  DEBUG_RADIUS = 30,
+  DEBUG_TIME = 2.5,
+  TURN_COMPLETE_DEG = 30,
+  NAVIGATION_COMPLETE_DISTANCE = 2500,
+  DEBUG_MODE = !0;
 class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -56,7 +56,7 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsTurnSpeed = this.TurnSpeed));
   }
   ReceiveExecuteAI(t, i) {
-    let s, e;
+    var s, e;
     t instanceof TsAiController_1.default
       ? ((s = t.AiController),
         this.InitConfig(s)
@@ -82,7 +82,7 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
             (e.Z = 0),
             e.Normalize(),
             this.FindOptimalDirections(e),
-            this.OptimalDirections.length === 0
+            0 === this.OptimalDirections.length
               ? (Log_1.Log.CheckWarn() &&
                   Log_1.Log.Warn(
                     "BehaviorTree",
@@ -105,7 +105,7 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
   }
   InitConfig(t) {
     if (!this.Initialized) {
-      const i = t.AiFlee;
+      var i = t.AiFlee;
       if (!i)
         return (
           Log_1.Log.CheckError() &&
@@ -130,17 +130,17 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
       (this.CurrentMoveIndex = 1);
   }
   FindOptimalDirections(i) {
-    const s = this.ActorComp.ActorForwardProxy;
-    const e = Math.max(this.AngleMax - this.AngleMin, HALF_PI_DEG);
-    const r = Vector_1.Vector.Create();
-    const h = (i.Multiply(-1, r), DOUBLE_PI_DEG / HALF_PI_DEG);
-    const o = new Array();
+    var s = this.ActorComp.ActorForwardProxy,
+      e = Math.max(this.AngleMax - this.AngleMin, HALF_PI_DEG),
+      r = Vector_1.Vector.Create(),
+      h = (i.Multiply(-1, r), DOUBLE_PI_DEG / HALF_PI_DEG),
+      o = new Array();
     for (let t = 0; t < h; t++) {
-      var a = t * HALF_PI_DEG;
-      const _ = Vector_1.Vector.Create();
-      var a =
-        (s.RotateAngleAxis(a, this.ActorComp.ActorUpProxy, _),
-        MathUtils_1.MathUtils.GetAngleByVectorDot(r, _));
+      var a = t * HALF_PI_DEG,
+        _ = Vector_1.Vector.Create(),
+        a =
+          (s.RotateAngleAxis(a, this.ActorComp.ActorUpProxy, _),
+          MathUtils_1.MathUtils.GetAngleByVectorDot(r, _));
       a < HALF_PI_DEG ||
         e < (a = MathUtils_1.MathUtils.GetAngleByVectorDot(i, _)) ||
         o.push([_, a]);
@@ -149,8 +149,8 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
     for (const t of o) this.OptimalDirections.push(t[0]);
   }
   FindEscapeLocation() {
-    const i = Vector_1.Vector.Create();
-    const s = (0, puerts_1.$ref)(void 0);
+    var i = Vector_1.Vector.Create(),
+      s = (0, puerts_1.$ref)(void 0);
     for (const h of this.OptimalDirections) {
       for (
         let t = this.OuterDiameter;
@@ -158,7 +158,7 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
         t -= INSPECTION_INTERVAL
       ) {
         h.Multiply(t, i), i.AdditionEqual(this.ActorComp.ActorLocationProxy);
-        const e = t * Math.sin(FRONT_RANDOM_RAD);
+        var e = t * Math.sin(FRONT_RANDOM_RAD);
         if (
           ((this.FoundLocation =
             UE.NavigationSystemV1.K2_GetRandomLocationInNavigableRadius(
@@ -179,8 +179,8 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
       }
     }
     if (!this.FoundLocation) {
-      const r = this.OptimalDirections[0];
-      for (let t = this.InnerDiameter; t > 0; t -= INSPECTION_INTERVAL)
+      var r = this.OptimalDirections[0];
+      for (let t = this.InnerDiameter; 0 < t; t -= INSPECTION_INTERVAL)
         if (
           (r.Multiply(t, i),
           i.AdditionEqual(this.ActorComp.ActorLocationProxy),
@@ -226,11 +226,11 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
     } else this.GenerateFailurePath();
   }
   GenerateFailurePath() {
-    const t = Vector_1.Vector.Create();
-    const i =
-      (this.OptimalDirections[0].Multiply(INSPECTION_INTERVAL, t),
-      t.AdditionEqual(this.ActorComp.ActorLocationProxy),
-      Vector_1.Vector.Create(this.ActorComp.ActorLocationProxy));
+    var t = Vector_1.Vector.Create(),
+      i =
+        (this.OptimalDirections[0].Multiply(INSPECTION_INTERVAL, t),
+        t.AdditionEqual(this.ActorComp.ActorLocationProxy),
+        Vector_1.Vector.Create(this.ActorComp.ActorLocationProxy));
     this.MovePath.splice(0, this.MovePath.length),
       this.MovePath.push(i),
       this.MovePath.push(t),
@@ -247,7 +247,7 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
         );
   }
   ReceiveTickAI(t, i, s) {
-    let e, r, h;
+    var e, r, h;
     t.AiController && this.ActorComp?.Valid
       ? Time_1.Time.WorldTime > this.EscapeEndTime
         ? this.Finish(!0)
@@ -263,7 +263,7 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
             e,
           )),
           (this.NeedTurn = h > TURN_COMPLETE_DEG),
-          this.CurrentMoveIndex === 1 && this.NeedTurn
+          1 === this.CurrentMoveIndex && this.NeedTurn
             ? (t?.Valid &&
                 t.SetMoveState(
                   CharacterUnifiedStateTypes_1.ECharMoveState.Stand,
@@ -296,4 +296,4 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskBigAnimalEscape;
-// # sourceMappingURL=TsTaskBigAnimalEscape.js.map
+//# sourceMappingURL=TsTaskBigAnimalEscape.js.map

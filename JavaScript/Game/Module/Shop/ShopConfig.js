@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ShopConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const ShopFixedByShopId_1 = require("../../../Core/Define/ConfigQuery/ShopFixedByShopId");
-const ShopFixedByShopIdAndId_1 = require("../../../Core/Define/ConfigQuery/ShopFixedByShopIdAndId");
-const ShopInfoById_1 = require("../../../Core/Define/ConfigQuery/ShopInfoById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
+const Log_1 = require("../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ShopFixedByShopId_1 = require("../../../Core/Define/ConfigQuery/ShopFixedByShopId"),
+  ShopFixedByShopIdAndId_1 = require("../../../Core/Define/ConfigQuery/ShopFixedByShopIdAndId"),
+  ShopInfoById_1 = require("../../../Core/Define/ConfigQuery/ShopInfoById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  ConfigManager_1 = require("../../Manager/ConfigManager");
 class ShopConfig extends ConfigBase_1.ConfigBase {
   GetTextConfig(e) {
     return ConfigManager_1.ConfigManager.TextConfig.GetTextById(e);
@@ -16,7 +16,7 @@ class ShopConfig extends ConfigBase_1.ConfigBase {
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e);
   }
   GetShopInfoConfig(e) {
-    const o = ShopInfoById_1.configShopInfoById.GetConfig(e);
+    var o = ShopInfoById_1.configShopInfoById.GetConfig(e);
     return (
       o ||
         (Log_1.Log.CheckError() &&
@@ -25,7 +25,7 @@ class ShopConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetFixedShopList(e) {
-    const o = ShopFixedByShopId_1.configShopFixedByShopId.GetConfigList(e);
+    var o = ShopFixedByShopId_1.configShopFixedByShopId.GetConfigList(e);
     return (
       o ||
         (Log_1.Log.CheckError() &&
@@ -34,7 +34,7 @@ class ShopConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetShopFixedInfoByItemId(e, o) {
-    const r = ShopFixedByShopIdAndId_1.configShopFixedByShopIdAndId.GetConfig(
+    var r = ShopFixedByShopIdAndId_1.configShopFixedByShopIdAndId.GetConfig(
       e,
       o,
     );
@@ -53,4 +53,4 @@ class ShopConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.ShopConfig = ShopConfig;
-// # sourceMappingURL=ShopConfig.js.map
+//# sourceMappingURL=ShopConfig.js.map

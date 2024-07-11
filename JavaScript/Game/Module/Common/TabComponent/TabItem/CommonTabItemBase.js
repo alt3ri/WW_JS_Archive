@@ -22,7 +22,7 @@ class CommonTabItemBase extends UiPanelBase_1.UiPanelBase {
       (this.SelectedCallBack = void 0),
       (this.OBt = void 0),
       (this.T7e = () => {
-        let t;
+        var t;
         return (
           !this.OBt ||
           ((t = this.OBt(this.GridIndex, this.NBt)), (this.NBt = !1), t)
@@ -63,4 +63,4 @@ class CommonTabItemBase extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.CommonTabItemBase = CommonTabItemBase;
-// # sourceMappingURL=CommonTabItemBase.js.map
+//# sourceMappingURL=CommonTabItemBase.js.map

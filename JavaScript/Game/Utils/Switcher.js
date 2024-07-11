@@ -6,13 +6,13 @@ class Switcher {
     (this.E$o = new Set()), (this.ICr = t), (this.TCr = s);
   }
   get Active() {
-    return this.E$o.size > 0 !== this.ICr;
+    return 0 < this.E$o.size !== this.ICr;
   }
   SetActive(t, s) {
-    const i = this.Active;
+    var i = this.Active;
     this.ICr !== s ? this.E$o.add(t) : this.E$o.delete(t),
       i !== this.Active && this.TCr && this.TCr(this.Active);
   }
 }
 exports.Switcher = Switcher;
-// # sourceMappingURL=Switcher.js.map
+//# sourceMappingURL=Switcher.js.map

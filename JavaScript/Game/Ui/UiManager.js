@@ -1,33 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiManager = void 0);
-const ue_1 = require("ue");
-const CustomPromise_1 = require("../../Core/Common/CustomPromise");
-const Log_1 = require("../../Core/Common/Log");
-const Stats_1 = require("../../Core/Common/Stats");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const GlobalData_1 = require("../GlobalData");
-const UiCameraAnimationManager_1 = require("../Module/UiCameraAnimation/UiCameraAnimationManager");
-const UiSceneManager_1 = require("../Module/UiComponent/UiSceneManager");
-const NavigationRegisterCenter_1 = require("../Module/UiNavigation/New/NavigationRegisterCenter");
-const UiNavigationViewManager_1 = require("../Module/UiNavigation/New/UiNavigationViewManager");
-const LguiUtil_1 = require("../Module/Util/LguiUtil");
-const UiPopFrameView_1 = require("./Base/UiPopFrameView");
-const UiViewFloatContainer_1 = require("./Container/Float/UiViewFloatContainer");
-const UiViewListContainer_1 = require("./Container/UiViewListContainer");
-const UiViewSetContainer_1 = require("./Container/UiViewSetContainer");
-const UiViewStackContainer_1 = require("./Container/UiViewStackContainer");
-const UiConfig_1 = require("./Define/UiConfig");
-const UiLayerType_1 = require("./Define/UiLayerType");
-const LguiEventSystemManager_1 = require("./LguiEventSystem/LguiEventSystemManager");
-const UiActorPool_1 = require("./UiActorPool");
-const UIGlobalMaterialParam_1 = require("./UIGlobalMaterialParam");
-const UiLayer_1 = require("./UiLayer");
-const UiModel_1 = require("./UiModel");
+const ue_1 = require("ue"),
+  CustomPromise_1 = require("../../Core/Common/CustomPromise"),
+  Log_1 = require("../../Core/Common/Log"),
+  Stats_1 = require("../../Core/Common/Stats"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  GlobalData_1 = require("../GlobalData"),
+  UiCameraAnimationManager_1 = require("../Module/UiCameraAnimation/UiCameraAnimationManager"),
+  UiSceneManager_1 = require("../Module/UiComponent/UiSceneManager"),
+  NavigationRegisterCenter_1 = require("../Module/UiNavigation/New/NavigationRegisterCenter"),
+  UiNavigationViewManager_1 = require("../Module/UiNavigation/New/UiNavigationViewManager"),
+  LguiUtil_1 = require("../Module/Util/LguiUtil"),
+  UiPopFrameView_1 = require("./Base/UiPopFrameView"),
+  UiViewFloatContainer_1 = require("./Container/Float/UiViewFloatContainer"),
+  UiViewListContainer_1 = require("./Container/UiViewListContainer"),
+  UiViewSetContainer_1 = require("./Container/UiViewSetContainer"),
+  UiViewStackContainer_1 = require("./Container/UiViewStackContainer"),
+  UiConfig_1 = require("./Define/UiConfig"),
+  UiLayerType_1 = require("./Define/UiLayerType"),
+  LguiEventSystemManager_1 = require("./LguiEventSystem/LguiEventSystemManager"),
+  UiActorPool_1 = require("./UiActorPool"),
+  UIGlobalMaterialParam_1 = require("./UIGlobalMaterialParam"),
+  UiLayer_1 = require("./UiLayer"),
+  UiModel_1 = require("./UiModel");
 class UiManager {
   static get IsInited() {
-    return UiManager.Ife === 2;
+    return 2 === UiManager.Ife;
   }
   static OpenView(i, e = void 0, a) {
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OpenViewBegined, i),
@@ -87,7 +87,7 @@ class UiManager {
         "界面名称",
         e,
       ]);
-    let a = !!i && i?.IsMultipleView;
+    var a = !!i && i?.IsMultipleView;
     if (UiManager.V4e(e, a)) {
       a = UiManager.Gdr(e);
       if (a)
@@ -152,7 +152,7 @@ class UiManager {
     );
   }
   static async CloseViewAsync(e) {
-    const i = this.Fur.get(e);
+    var i = this.Fur.get(e);
     if (!i)
       return (
         Log_1.Log.CheckWarn() &&
@@ -204,7 +204,7 @@ class UiManager {
     );
   }
   static async CloseViewByIdAsync(e) {
-    const i = this.Odr.get(e);
+    var i = this.Odr.get(e);
     return i
       ? UiManager.CloseViewImplementAsync(i)
       : (Log_1.Log.CheckWarn() &&
@@ -217,7 +217,7 @@ class UiManager {
         !1);
   }
   static async CloseViewImplementAsync(e) {
-    const i = e.Info;
+    var i = e.Info;
     return (
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -275,7 +275,7 @@ class UiManager {
     );
   }
   static async CloseAndOpenViewAsync(e, i, a) {
-    let r, n;
+    var r, n;
     return UiConfig_1.UiConfig.TryGetViewInfo(i).Type !==
       UiLayerType_1.ELayerType.Normal
       ? (Log_1.Log.CheckError() &&
@@ -325,7 +325,7 @@ class UiManager {
         "界面名称",
         e,
       ]);
-    const i = UiManager.Gdr(e);
+    var i = UiManager.Gdr(e);
     if (i)
       return (
         i.OnPreOpen(),
@@ -342,9 +342,9 @@ class UiManager {
       );
   }
   static async OpenViewAfterPreOpenedAsync(e, i) {
-    let a;
-    let r;
-    const n = UiManager.Fdr.get(e);
+    var a,
+      r,
+      n = UiManager.Fdr.get(e);
     return n
       ? ((a = n.Info.Name),
         Log_1.Log.CheckInfo() &&
@@ -451,7 +451,7 @@ class UiManager {
         UiLayerType_1.ELayerType.HUD,
         new UiViewSetContainer_1.UiViewSetContainer(UiModel_1.UiModel.HudMap),
       );
-    const e = new UiViewStackContainer_1.UiViewStackContainer(
+    var e = new UiViewStackContainer_1.UiViewStackContainer(
       UiModel_1.UiModel.NormalStack,
     );
     UiManager.Ndr.set(UiLayerType_1.ELayerType.Normal, e),
@@ -552,8 +552,8 @@ class UiManager {
     );
   }
   static async NormalResetToViewAsync(e) {
-    const i = UiManager.Ndr.get(UiLayerType_1.ELayerType.Normal);
-    const a = UiManager.kdr(e);
+    var i = UiManager.Ndr.get(UiLayerType_1.ELayerType.Normal),
+      a = UiManager.kdr(e);
     a
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("UiCore", 17, "[NormalResetToView]重置到界面", [
@@ -598,7 +598,7 @@ class UiManager {
     );
   }
   static async CloseHistoryRingViewAsync(e) {
-    const i = UiManager.Ndr.get(UiLayerType_1.ELayerType.Normal);
+    var i = UiManager.Ndr.get(UiLayerType_1.ELayerType.Normal);
     void 0 !== i && (await i.CloseHistoryRingViewAsync(e));
   }
   static AddTickView(e) {
@@ -618,12 +618,12 @@ class UiManager {
       UiManager.Qdr.delete(e);
   }
   static Gdr(e) {
-    let i;
-    let a = UiConfig_1.UiConfig.TryGetViewInfo(e);
+    var i,
+      a = UiConfig_1.UiConfig.TryGetViewInfo(e);
     if (a)
       return (
         (i = new a.Ctor(a)).InitRootActorLoadInfo(),
-        a.CommonPopBg > 0 &&
+        0 < a.CommonPopBg &&
           ((a = new UiPopFrameView_1.UiPopFrameView(a)),
           (i.ChildPopView = a),
           i.AddChild(a)),
@@ -642,11 +642,11 @@ class UiManager {
   }
   static kdr(e) {
     e = this.Fur.get(e);
-    if (e && e.size !== 0) for (const i of e.values()) return i;
+    if (e && 0 !== e.size) for (const i of e.values()) return i;
   }
   static async Initialize() {
     GlobalData_1.GlobalData.World
-      ? UiManager.Ife === 0 &&
+      ? 0 === UiManager.Ife &&
         ((UiManager.Ife = 1),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("UiCore", 17, "[Initialize]初始化UiManager"),
@@ -682,12 +682,12 @@ class UiManager {
   static async ClearAsync() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("UiCore", 17, "[UIManager.ClearAsync] 清理UIManager 开始");
-    for (const [e, i] of UiManager.Ndr)
-      (e & UiLayerType_1.NORMAL_CONTAINER_TYPE) > 0 || i.ClearContainer();
-    const a = [];
+    for (var [e, i] of UiManager.Ndr)
+      0 < (e & UiLayerType_1.NORMAL_CONTAINER_TYPE) || i.ClearContainer();
+    var a = [];
     for (const n of UiManager.Odr.values())
       n.Info?.IsPermanent ||
-        (n.Info.Type & UiLayerType_1.NORMAL_CONTAINER_TYPE) > 0 ||
+        0 < (n.Info.Type & UiLayerType_1.NORMAL_CONTAINER_TYPE) ||
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiCore",
@@ -700,7 +700,7 @@ class UiManager {
     await Promise.all(a),
       UiManager.wRn(),
       UiManager.Ndr.get(UiLayerType_1.ELayerType.Normal)?.ClearContainer();
-    const r = [];
+    var r = [];
     for (const o of UiManager.Odr.values())
       o.Info?.IsPermanent ||
         (o.Info.Type & UiLayerType_1.NORMAL_CONTAINER_TYPE) <= 0 ||
@@ -772,7 +772,7 @@ class UiManager {
           ),
         !1
       );
-    const a = UiConfig_1.UiConfig.TryGetViewInfo(e);
+    var a = UiConfig_1.UiConfig.TryGetViewInfo(e);
     if (!a)
       return (
         Log_1.Log.CheckWarn() &&
@@ -782,7 +782,7 @@ class UiManager {
           ]),
         !1
       );
-    const r = (a.Type & UiLayerType_1.MULTIPLE_VIEW_TYPE) > 0;
+    var r = 0 < (a.Type & UiLayerType_1.MULTIPLE_VIEW_TYPE);
     if (!r && !i && UiManager.IsViewOpen(e))
       return (
         Log_1.Log.CheckWarn() &&
@@ -803,7 +803,7 @@ class UiManager {
           ),
         !1
       );
-    if (a.BeObstructView.length > 0)
+    if (0 < a.BeObstructView.length)
       for (const n of a.BeObstructView)
         if (UiManager.IsViewShow(n))
           return (
@@ -841,13 +841,13 @@ class UiManager {
     r || ((r = new Map()), UiManager.zdr.set(e, r)), r.set(i, a);
   }
   static RemoveOpenViewCheckFunction(e, i) {
-    const a = UiManager.zdr.get(e);
-    a && (a.delete(i), a.size === 0) && UiManager.zdr.delete(e);
+    var a = UiManager.zdr.get(e);
+    a && (a.delete(i), 0 === a.size) && UiManager.zdr.delete(e);
   }
   static Jdr(e, i = !1) {
     i = UiManager.zdr.get(i ? "All" : e);
-    if (i && i.size > 0)
-      for (const [a, r] of i)
+    if (i && 0 < i.size)
+      for (var [a, r] of i)
         if (!a(e))
           return (
             Log_1.Log.CheckInfo() &&
@@ -870,13 +870,13 @@ class UiManager {
   }
   static Xdr(e) {
     UiManager.Odr.set(e.GetViewId(), e);
-    const i = e.Info.Name;
+    var i = e.Info.Name;
     let a = UiManager.Fur.get(i);
     a || ((a = new Set()), UiManager.Fur.set(i, a)), a.add(e);
   }
   static RemoveView(e) {
-    let i;
-    const a = UiManager.Odr.get(e);
+    var i,
+      a = UiManager.Odr.get(e);
     a &&
       (UiManager.Odr.delete(e),
       (e = a.Info.Name),
@@ -911,4 +911,4 @@ class UiManager {
       UiManager.Ndr.get(UiLayerType_1.ELayerType.Float).HideFloatTips();
   }),
   (UiManager.Ydr = !1);
-// # sourceMappingURL=UiManager.js.map
+//# sourceMappingURL=UiManager.js.map

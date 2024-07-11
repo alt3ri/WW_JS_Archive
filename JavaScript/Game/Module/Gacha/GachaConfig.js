@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GachaConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const ElementInfoById_1 = require("../../../Core/Define/ConfigQuery/ElementInfoById");
-const GachaAll_1 = require("../../../Core/Define/ConfigQuery/GachaAll");
-const GachaById_1 = require("../../../Core/Define/ConfigQuery/GachaById");
-const GachaEffectConfigByTimesAndQuality_1 = require("../../../Core/Define/ConfigQuery/GachaEffectConfigByTimesAndQuality");
-const GachaPoolById_1 = require("../../../Core/Define/ConfigQuery/GachaPoolById");
-const GachaSequenceConfigById_1 = require("../../../Core/Define/ConfigQuery/GachaSequenceConfigById");
-const GachaTextureInfoById_1 = require("../../../Core/Define/ConfigQuery/GachaTextureInfoById");
-const GachaViewInfoById_1 = require("../../../Core/Define/ConfigQuery/GachaViewInfoById");
-const GachaViewTypeInfoByType_1 = require("../../../Core/Define/ConfigQuery/GachaViewTypeInfoByType");
-const GachaWeaponTransformById_1 = require("../../../Core/Define/ConfigQuery/GachaWeaponTransformById");
-const RoleQualityInfoById_1 = require("../../../Core/Define/ConfigQuery/RoleQualityInfoById");
-const TextById_1 = require("../../../Core/Define/ConfigQuery/TextById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const GachaDefine_1 = require("./GachaDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  ElementInfoById_1 = require("../../../Core/Define/ConfigQuery/ElementInfoById"),
+  GachaAll_1 = require("../../../Core/Define/ConfigQuery/GachaAll"),
+  GachaById_1 = require("../../../Core/Define/ConfigQuery/GachaById"),
+  GachaEffectConfigByTimesAndQuality_1 = require("../../../Core/Define/ConfigQuery/GachaEffectConfigByTimesAndQuality"),
+  GachaPoolById_1 = require("../../../Core/Define/ConfigQuery/GachaPoolById"),
+  GachaSequenceConfigById_1 = require("../../../Core/Define/ConfigQuery/GachaSequenceConfigById"),
+  GachaTextureInfoById_1 = require("../../../Core/Define/ConfigQuery/GachaTextureInfoById"),
+  GachaViewInfoById_1 = require("../../../Core/Define/ConfigQuery/GachaViewInfoById"),
+  GachaViewTypeInfoByType_1 = require("../../../Core/Define/ConfigQuery/GachaViewTypeInfoByType"),
+  GachaWeaponTransformById_1 = require("../../../Core/Define/ConfigQuery/GachaWeaponTransformById"),
+  RoleQualityInfoById_1 = require("../../../Core/Define/ConfigQuery/RoleQualityInfoById"),
+  TextById_1 = require("../../../Core/Define/ConfigQuery/TextById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  GachaDefine_1 = require("./GachaDefine");
 class GachaConfig extends ConfigBase_1.ConfigBase {
   PrimaryCurrency() {
     return CommonParamById_1.configCommonParamById.GetIntConfig(
@@ -65,7 +65,7 @@ class GachaConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetTextIdByType(e) {
-    const a = GachaDefine_1.textKeyMap[e];
+    var a = GachaDefine_1.textKeyMap[e];
     return (
       a ||
         (Log_1.Log.CheckError() &&
@@ -80,8 +80,8 @@ class GachaConfig extends ConfigBase_1.ConfigBase {
     return RoleQualityInfoById_1.configRoleQualityInfoById.GetConfig(e);
   }
   GetRoleInfoById(e) {
-    let a = ConfigManager_1.ConfigManager.InventoryConfig;
-    if (a.GetItemDataTypeByConfigId(e) === 1)
+    var a = ConfigManager_1.ConfigManager.InventoryConfig;
+    if (1 === a.GetItemDataTypeByConfigId(e))
       return ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e);
     a = a.GetItemConfigData(e);
     if (a) {
@@ -93,13 +93,13 @@ class GachaConfig extends ConfigBase_1.ConfigBase {
     return this.GetGachaViewInfo(e)?.SummaryTitle;
   }
   GetGachaViewType(e) {
-    const a = this.GetGachaViewInfo(e);
+    var a = this.GetGachaViewInfo(e);
     if (a) return a.Type;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("Gacha", 44, "奖池界面信息配置为空", ["gachaPoolId", e]);
   }
   GetGachaViewInfo(e) {
-    const a = GachaViewInfoById_1.configGachaViewInfoById.GetConfig(e);
+    var a = GachaViewInfoById_1.configGachaViewInfoById.GetConfig(e);
     return (
       a ||
         (Log_1.Log.CheckError() &&
@@ -111,7 +111,7 @@ class GachaConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetGachaTextureInfo(e) {
-    const a = GachaTextureInfoById_1.configGachaTextureInfoById.GetConfig(e);
+    var a = GachaTextureInfoById_1.configGachaTextureInfoById.GetConfig(e);
     return (
       a ||
         (Log_1.Log.CheckError() &&
@@ -141,4 +141,4 @@ class GachaConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.GachaConfig = GachaConfig;
-// # sourceMappingURL=GachaConfig.js.map
+//# sourceMappingURL=GachaConfig.js.map

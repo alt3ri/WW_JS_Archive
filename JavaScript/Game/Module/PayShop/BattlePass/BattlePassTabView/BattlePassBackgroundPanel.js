@@ -2,19 +2,19 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattlePassBackgroundPanel = exports.BattlePassBackgroundPanelParam =
     void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../../RedDot/RedDotController");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const ButtonItem_1 = require("../../../Common/Button/ButtonItem");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const BattlePassController_1 = require("../BattlePassController");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../../RedDot/RedDotController"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  BattlePassController_1 = require("../BattlePassController");
 class BattlePassBackgroundPanelParam {
   constructor(e = !1, t = void 0) {
     (this.IsRewardPanel = e), (this.WeaponObservers = t);
@@ -32,7 +32,7 @@ class BattlePassBackgroundPanel extends UiPanelBase_1.UiPanelBase {
         UiManager_1.UiManager.OpenView("BattlePassBuyLevelView");
       }),
       (this.hki = () => {
-        const e = this.OpenParam;
+        var e = this.OpenParam;
         (ModelManager_1.ModelManager.BattlePassModel.PayButtonRedDotState = !1),
           UiManager_1.UiManager.OpenView(
             "BattlePassPayView",
@@ -56,31 +56,31 @@ class BattlePassBackgroundPanel extends UiPanelBase_1.UiPanelBase {
             );
       }),
       (this.u4e = () => {
-        var e = ModelManager_1.ModelManager.BattlePassModel.BattlePassLevel;
-        const t = ModelManager_1.ModelManager.BattlePassModel.GetMaxLevel();
-        var s =
-          (this.GetText(1).SetText(e.toString()),
-          this.GetSprite(3).SetSprite(t === e ? this.rki : this.nki),
-          this.iki.SetEnableClick(e < t),
-          this.iki.SetLocalTextNew(
-            e < t
-              ? "Text_BattlePassLevelBuy_Text"
-              : "Text_BattlePassLevelBuyMax_Text",
-          ),
-          this.GetItem(t === e ? 11 : 10));
-        var s =
-          (s.SetUIActive(!1),
-          s.SetUIActive(!0),
-          LguiUtil_1.LguiUtil.SetLocalTextNew(
-            this.GetText(5),
-            "Text_BattlePassWeekExp_Text",
-            ModelManager_1.ModelManager.BattlePassModel.WeekExp,
-            ModelManager_1.ModelManager.BattlePassModel.GetMaxWeekExp(),
-          ),
-          this.GetText(5).SetUIActive(e < t),
-          ModelManager_1.ModelManager.BattlePassModel.GetMaxLevelExp());
-        var e =
-          e !== t ? ModelManager_1.ModelManager.BattlePassModel.LevelExp : s;
+        var e = ModelManager_1.ModelManager.BattlePassModel.BattlePassLevel,
+          t = ModelManager_1.ModelManager.BattlePassModel.GetMaxLevel(),
+          s =
+            (this.GetText(1).SetText(e.toString()),
+            this.GetSprite(3).SetSprite(t === e ? this.rki : this.nki),
+            this.iki.SetEnableClick(e < t),
+            this.iki.SetLocalTextNew(
+              e < t
+                ? "Text_BattlePassLevelBuy_Text"
+                : "Text_BattlePassLevelBuyMax_Text",
+            ),
+            this.GetItem(t === e ? 11 : 10)),
+          s =
+            (s.SetUIActive(!1),
+            s.SetUIActive(!0),
+            LguiUtil_1.LguiUtil.SetLocalTextNew(
+              this.GetText(5),
+              "Text_BattlePassWeekExp_Text",
+              ModelManager_1.ModelManager.BattlePassModel.WeekExp,
+              ModelManager_1.ModelManager.BattlePassModel.GetMaxWeekExp(),
+            ),
+            this.GetText(5).SetUIActive(e < t),
+            ModelManager_1.ModelManager.BattlePassModel.GetMaxLevelExp()),
+          e =
+            e !== t ? ModelManager_1.ModelManager.BattlePassModel.LevelExp : s;
         this.GetText(4).SetText(e.toString() + "/" + s.toString()),
           this.GetSlider(2).SetValue(e / s),
           LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -171,7 +171,7 @@ class BattlePassBackgroundPanel extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     (this.iki = new ButtonItem_1.ButtonItem(this.GetItem(6))),
       this.iki.SetFunction(this.aki);
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     (this.oki = e.IsRewardPanel), this.u4e(), this.AddEventListener();
   }
   OnBeforeShow() {
@@ -196,4 +196,4 @@ class BattlePassBackgroundPanel extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.BattlePassBackgroundPanel = BattlePassBackgroundPanel;
-// # sourceMappingURL=BattlePassBackgroundPanel.js.map
+//# sourceMappingURL=BattlePassBackgroundPanel.js.map

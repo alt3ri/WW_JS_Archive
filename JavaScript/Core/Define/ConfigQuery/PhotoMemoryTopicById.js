@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configPhotoMemoryTopicById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const PhotoMemoryTopic_1 = require("../Config/PhotoMemoryTopic");
-const DB = "db_fragmentmemory.db";
-const FILE = "j.记忆手册.xlsx";
-const TABLE = "PhotoMemoryTopic";
-const COMMAND = "select BinData from `PhotoMemoryTopic` where Id=?";
-const KEY_PREFIX = "PhotoMemoryTopicById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  PhotoMemoryTopic_1 = require("../Config/PhotoMemoryTopic"),
+  DB = "db_fragmentmemory.db",
+  FILE = "j.记忆手册.xlsx",
+  TABLE = "PhotoMemoryTopic",
+  COMMAND = "select BinData from `PhotoMemoryTopic` where Id=?",
+  KEY_PREFIX = "PhotoMemoryTopicById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configPhotoMemoryTopicById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configPhotoMemoryTopicById.GetConfig(";
 exports.configPhotoMemoryTopicById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configPhotoMemoryTopicById = {
       if (
         (n =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var n;
-        var i = void 0;
+        var n,
+          i = void 0;
         if (
           (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configPhotoMemoryTopicById = {
     }
   },
 };
-// # sourceMappingURL=PhotoMemoryTopicById.js.map
+//# sourceMappingURL=PhotoMemoryTopicById.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemGridBase = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LongPressButtonItem_1 = require("../Button/LongPressButtonItem");
+const Log_1 = require("../../../../Core/Common/Log"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LongPressButtonItem_1 = require("../Button/LongPressButtonItem");
 class ItemGridBase extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -29,7 +29,7 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
       (this.IAt = void 0),
       (this.TAt = void 0),
       (this.LAt = () => {
-        let t;
+        var t;
         this.OnExtendTogglePress(),
           this.MAt &&
             ((t = {
@@ -40,7 +40,7 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
             this.MAt(t));
       }),
       (this.DAt = () => {
-        let t;
+        var t;
         this.OnExtendToggleRelease(),
           this.SAt &&
             ((t = {
@@ -86,7 +86,7 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
       (this.PAt = (t) => {
         this.xAt(t),
           this.uAt.delete(t),
-          this.uAt.size > 0 ||
+          0 < this.uAt.size ||
             ((this.pAt = !1),
             this.RefreshComponentVisible(),
             this.RefreshComponentHierarchyIndex());
@@ -139,7 +139,7 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
       Log_1.Log.Error("Inventory", 8, "没有实现GetItemGridExtendToggle");
   }
   AddEvents() {
-    const t = this.GetItemGridExtendToggle();
+    var t = this.GetItemGridExtendToggle();
     t.OnStateChange.Add(this.RAt),
       t.CanExecuteChange.Bind(this.T7e),
       t.OnHover.Add(this.UAt),
@@ -147,7 +147,7 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
       this.OnAddEvents();
   }
   RemoveEvents() {
-    const t = this.GetItemGridExtendToggle();
+    var t = this.GetItemGridExtendToggle();
     t.OnStateChange.Remove(this.RAt),
       t.CanExecuteChange.Unbind(),
       t.OnHover.Remove(this.UAt),
@@ -165,7 +165,7 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
     return !0;
   }
   SetSelected(t, i = !1) {
-    const s = this.GetItemGridExtendToggle();
+    var s = this.GetItemGridExtendToggle();
     t
       ? i
         ? s.SetToggleStateForce(1, !1)
@@ -177,7 +177,7 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
       (this.IsForceSelected = i);
   }
   SetExtendToggleEnable(t, i = !1) {
-    let s;
+    var s;
     (this.fAt === t && !i) ||
       ((this.fAt = t),
       (s = this.GetItemGridExtendToggle()),
@@ -239,7 +239,7 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
     t && (i ? this.cAt.add(t) : this.cAt.delete(t), t.SetActive(i));
   }
   wAt(t) {
-    let i = this._At.get(t);
+    var i = this._At.get(t);
     if (!i) {
       switch ((i = new t()).GetLayoutLevel()) {
         case 0:
@@ -299,4 +299,4 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ItemGridBase = ItemGridBase;
-// # sourceMappingURL=ItemGridBase.js.map
+//# sourceMappingURL=ItemGridBase.js.map

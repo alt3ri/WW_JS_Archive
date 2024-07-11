@@ -16,11 +16,11 @@ class DicStringIntArray {
     );
   }
   key(t) {
-    const r = this.J7.__offset(this.z7, 4);
+    var r = this.J7.__offset(this.z7, 4);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   value(t) {
-    const r = this.J7.__offset(this.z7, 6);
+    var r = this.J7.__offset(this.z7, 6);
     return r
       ? (t || new IntArray_1.IntArray()).__init(
           this.J7.__indirect(this.z7 + r),
@@ -30,4 +30,4 @@ class DicStringIntArray {
   }
 }
 exports.DicStringIntArray = DicStringIntArray;
-// # sourceMappingURL=DicStringIntArray.js.map
+//# sourceMappingURL=DicStringIntArray.js.map

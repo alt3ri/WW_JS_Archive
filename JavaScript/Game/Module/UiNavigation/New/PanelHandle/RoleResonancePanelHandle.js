@@ -10,7 +10,7 @@ class RoleResonancePanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHand
     return this.hwo ? [this.hwo] : [];
   }
   SetToggleSelectByGroupName(e) {
-    const s = this.GetNavigationGroup(e);
+    var s = this.GetNavigationGroup(e);
     if (s) {
       this.GroupName = e;
       for (let e = 0, t = s.ListenerList.Num(); e < t; ++e)
@@ -18,7 +18,7 @@ class RoleResonancePanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHand
     }
   }
   ResetToggleSelect() {
-    const s = this.GetNavigationGroup(this.GroupName);
+    var s = this.GetNavigationGroup(this.GroupName);
     if (s) {
       this.GroupName = "";
       for (let e = 0, t = s.ListenerList.Num(); e < t; ++e)
@@ -30,4 +30,4 @@ class RoleResonancePanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHand
   }
 }
 exports.RoleResonancePanelHandle = RoleResonancePanelHandle;
-// # sourceMappingURL=RoleResonancePanelHandle.js.map
+//# sourceMappingURL=RoleResonancePanelHandle.js.map

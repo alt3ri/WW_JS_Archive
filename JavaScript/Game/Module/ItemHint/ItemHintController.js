@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemHintController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const ItemHintDefines_1 = require("./Data/ItemHintDefines");
-const ItemHintDefine_1 = require("./ItemHintDefine");
-const showBgTypeToView = {
-  0: void 0,
-  1: "ItemRewardView",
-  2: "ItemRewardView",
-  3: "SceneGameplayItemRewardView",
-};
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ItemHintDefines_1 = require("./Data/ItemHintDefines"),
+  ItemHintDefine_1 = require("./ItemHintDefine"),
+  showBgTypeToView = {
+    [0]: void 0,
+    1: "ItemRewardView",
+    2: "ItemRewardView",
+    3: "SceneGameplayItemRewardView",
+  };
 class ItemHintController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
     Net_1.Net.Register(12093, this.HandleItemRewardNotify);
@@ -34,7 +34,7 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
         ));
   }
   static GCi() {
-    let e;
+    var e;
     return (
       !!UiManager_1.UiManager.IsViewOpen("BattleView") ||
       !(
@@ -50,17 +50,17 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.ItemHintModel.AddItemRewardList(e);
   }
   static CombineAllShowItems(e, t) {
-    let n;
-    let o;
-    const i = new Array();
-    const r = new Map();
+    var n,
+      o,
+      i = new Array(),
+      r = new Map();
     if (e.Y5n) {
       for (const a of e.Y5n)
         a.I5n &&
           ((n = ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(
             a.r6n,
           ))
-            ? n.ShowBg !== 0 &&
+            ? 0 !== n.ShowBg &&
               (r.has(a.G3n)
                 ? (r.get(a.G3n).ItemCount += a.I5n)
                 : ((n =
@@ -79,12 +79,8 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
       for (const _ of r.values()) i.push(_);
       t &&
         i.sort((e, t) => {
-          const n = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(
-            e.ItemId,
-          );
-          const o = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(
-            t.ItemId,
-          );
+          var n = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e.ItemId),
+            o = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(t.ItemId);
           return n.QualityId !== o.QualityId
             ? o.QualityId - n.QualityId
             : e.ItemId - t.ItemId;
@@ -93,9 +89,9 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
     return i;
   }
   static ConvertRewardListToItem(e) {
-    const t = [];
+    var t = [];
     for (const o of e) {
-      const n = [{ IncId: 0, ItemId: o.ItemId }, o.ItemCount];
+      var n = [{ IncId: 0, ItemId: o.ItemId }, o.ItemCount];
       t.push(n);
     }
     return t;
@@ -103,10 +99,10 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
   static GetFirstShowBgDropGroup(e) {
     if (e.Y5n)
       for (const n of e.Y5n) {
-        var t = n.r6n;
-        var t = ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(t);
+        var t = n.r6n,
+          t = ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(t);
         if (t) {
-          if (t.ShowBg !== 0) return t;
+          if (0 !== t.ShowBg) return t;
         } else
           Log_1.Log.CheckError() &&
             Log_1.Log.Error("ItemHint", 18, "缺少ShowPlan配置", [
@@ -200,16 +196,16 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static AddCommonItemList(e) {
-    const t = [];
-    const n = ModelManager_1.ModelManager.InventoryModel;
+    var t = [],
+      n = ModelManager_1.ModelManager.InventoryModel;
     for (const r of e) {
       var o = r.Ekn;
       if (o !== ItemHintDefine_1.EXP_ITEM_ID) {
         o = n.GetCommonItemData(o);
         if (o) {
-          var o = o.GetLastCount();
-          let i = r.I5n;
-          var o = o ? i - o : i;
+          var o = o.GetLastCount(),
+            i = r.I5n,
+            o = o ? i - o : i;
           if (!(o < 0)) {
             let e = 0;
             r instanceof Protocol_1.Aki.Protocol._Ns && (e = r.Q5n);
@@ -264,16 +260,15 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
           ["IsBlockTips", ModelManager_1.ModelManager.SundryModel.IsBlockTips],
         );
     else {
-      const t =
+      var t =
         ModelManager_1.ModelManager.ItemHintModel.PeekItemRewardListFirst();
       if (t.ItemReward?.Y5n) {
         let e = void 0;
         for (const i of t.ItemReward.Y5n) {
-          const n = i.r6n;
-          const o =
-            ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(n);
+          var n = i.r6n,
+            o = ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(n);
           if (o) {
-            if (o.ShowBg !== 0 && i.I5n && void 0 === e) {
+            if (0 !== o.ShowBg && i.I5n && void 0 === e) {
               e = o.ShowBg;
               break;
             }
@@ -357,11 +352,10 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
         ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(t.$Fn).ShowBg
       )
         for (const i of t.Y5n) {
-          const n = i.r6n;
-          const o =
-            ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(n);
+          var n = i.r6n,
+            o = ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(n);
           o
-            ? o.ShowBg !== 0 &&
+            ? 0 !== o.ShowBg &&
               i.I5n &&
               (void 0 === e
                 ? (e = o.ShowBg)
@@ -396,29 +390,29 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
     }
   }),
   (ItemHintController.Cke = (e, t, n, o, i, r, a) => {
-    const _ = [];
-    var i = { Ekn: ItemHintDefine_1.EXP_ITEM_ID, I5n: i, Q5n: 0 };
+    var _ = [],
+      i = { Ekn: ItemHintDefine_1.EXP_ITEM_ID, I5n: i, Q5n: 0 };
     _.push(i), ItemHintController.qCi(_);
   }),
   (ItemHintController.NCi = (e, t, n) => {
-    const o = [];
-    var e = { Ekn: ItemHintDefine_1.EXP_ITEM_ID, I5n: e - t, Q5n: 0 };
+    var o = [],
+      e = { Ekn: ItemHintDefine_1.EXP_ITEM_ID, I5n: e - t, Q5n: 0 };
     o.push(e), ItemHintController.qCi(o);
   }),
   (ItemHintController.wmi = (e, t, n) => {
     if (!t && n) {
-      const o = [];
+      var o = [];
       for (const r of e) {
-        const i = { Ekn: r.Ekn, I5n: 1, Q5n: 0 };
+        var i = { Ekn: r.Ekn, I5n: 1, Q5n: 0 };
         o.push(i);
       }
       ItemHintController.qCi(o);
     }
   }),
   (ItemHintController.bmi = (e) => {
-    const t = [];
+    var t = [];
     for (const o of e) {
-      const n = { Ekn: o.Ekn, I5n: 1, Q5n: 0 };
+      var n = { Ekn: o.Ekn, I5n: 1, Q5n: 0 };
       t.push(n);
     }
     ItemHintController.qCi(t);
@@ -428,11 +422,11 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
     ItemHintController.qCi([e]);
   }),
   (ItemHintController.OCi = () => {
-    const e = ModelManager_1.ModelManager.ItemHintModel.Visibility;
+    var e = ModelManager_1.ModelManager.ItemHintModel.Visibility;
     let t = !1;
-    const n = ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot();
-    const o = UiManager_1.UiManager.IsViewOpen("LoadingView");
-    const i = UiManager_1.UiManager.IsViewOpen("BattleView");
+    var n = ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot(),
+      o = UiManager_1.UiManager.IsViewOpen("LoadingView"),
+      i = UiManager_1.UiManager.IsViewOpen("BattleView");
     (t = !(n || !i || o)) !== e &&
       ((ModelManager_1.ModelManager.ItemHintModel.Visibility = t),
       Log_1.Log.CheckInfo() &&
@@ -442,4 +436,4 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
         t,
       ));
   });
-// # sourceMappingURL=ItemHintController.js.map
+//# sourceMappingURL=ItemHintController.js.map

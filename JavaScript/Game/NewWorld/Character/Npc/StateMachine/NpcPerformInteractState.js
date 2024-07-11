@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcPerformInteractState = void 0);
-const StateBase_1 = require("../../../../../Core/Utils/StateMachine/StateBase");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
+const StateBase_1 = require("../../../../../Core/Utils/StateMachine/StateBase"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem");
 class NpcPerformInteractState extends StateBase_1.StateBase {
   constructor() {
     super(...arguments),
@@ -22,8 +22,8 @@ class NpcPerformInteractState extends StateBase_1.StateBase {
     this.ser = t;
   }
   CanChangeFrom(t) {
-    const e = this.Owner.Entity.GetComponent(168);
-    return this.wer && t === 1 && !e.IsInPlot;
+    var e = this.Owner.Entity.GetComponent(168);
+    return this.wer && 1 === t && !e.IsInPlot;
   }
   OnCreate(t) {
     t?.ShowOnInteract?.Montage
@@ -56,4 +56,4 @@ class NpcPerformInteractState extends StateBase_1.StateBase {
   }
 }
 exports.NpcPerformInteractState = NpcPerformInteractState;
-// # sourceMappingURL=NpcPerformInteractState.js.map
+//# sourceMappingURL=NpcPerformInteractState.js.map

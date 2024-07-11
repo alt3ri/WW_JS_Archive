@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionUnlockEntity = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const FlowActionBase_1 = require("./FlowActionBase");
-const LOCK_TAG_NAME = "关卡.Common.属性.锁定";
+const Log_1 = require("../../../../Core/Common/Log"),
+  GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  FlowActionBase_1 = require("./FlowActionBase"),
+  LOCK_TAG_NAME = "关卡.Common.属性.锁定";
 class FlowActionUnlockEntity extends FlowActionBase_1.FlowActionBase {
   OnExecute() {
-    const o = this.ActionInfo.Params;
+    var o = this.ActionInfo.Params;
     if (GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(LOCK_TAG_NAME))
       for (const t of o.EntityIds) {
-        const e =
+        var e =
           ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
             t,
           )?.Entity?.GetComponent(115);
@@ -29,4 +29,4 @@ class FlowActionUnlockEntity extends FlowActionBase_1.FlowActionBase {
   }
 }
 exports.FlowActionUnlockEntity = FlowActionUnlockEntity;
-// # sourceMappingURL=FlowActionUnlockEntity.js.map
+//# sourceMappingURL=FlowActionUnlockEntity.js.map

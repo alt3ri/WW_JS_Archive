@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattlePassTaskTabItem = void 0);
-const UE = require("ue");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../../RedDot/RedDotController");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
+const UE = require("ue"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../../RedDot/RedDotController"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../../Util/LguiUtil");
 class BattlePassTaskTabItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -18,7 +18,7 @@ class BattlePassTaskTabItem extends UiPanelBase_1.UiPanelBase {
       (this.OnCanExecuteChange = void 0),
       (this.T7e = () => this.OnCanExecuteChange?.(this.GridIndex) ?? !0),
       (this.x4e = (t) => {
-        t === 1 && this.SelectedCallBack?.(this.GridIndex);
+        1 === t && this.SelectedCallBack?.(this.GridIndex);
       });
   }
   OnRegisterComponent() {
@@ -35,7 +35,7 @@ class BattlePassTaskTabItem extends UiPanelBase_1.UiPanelBase {
   }
   SetForceSwitch(t, e = !1) {
     this.GetExtendToggle(2).SetToggleState(t, e),
-      this.GetExtendToggle(2).SetSelfInteractive(t === 0);
+      this.GetExtendToggle(2).SetSelfInteractive(0 === t);
   }
   SetSelectedCallBack(t) {
     this.SelectedCallBack = t;
@@ -55,8 +55,8 @@ class BattlePassTaskTabItem extends UiPanelBase_1.UiPanelBase {
   OnSelected() {}
   OnDeselected() {}
   UpdateView(t) {
-    const e = this.GetText(0);
-    const s = ModelManager_1.ModelManager.BattlePassModel;
+    var e = this.GetText(0),
+      s = ModelManager_1.ModelManager.BattlePassModel;
     let i = s.GetBattlePassEndTime();
     switch (t) {
       case 0:
@@ -76,18 +76,18 @@ class BattlePassTaskTabItem extends UiPanelBase_1.UiPanelBase {
           LguiUtil_1.LguiUtil.SetLocalText(e, "BattlePassWeekTask"),
           (this.QFe = "BattlePassWeekTaskTab");
     }
-    var t = this.GetText(1);
-    var a = TimeUtil_1.TimeUtil.CalculateHourGapBetweenNow(i, !0);
-    const l = Math.floor(a / TimeUtil_1.TimeUtil.OneDayHourCount);
-    var a = Math.floor(a - l * TimeUtil_1.TimeUtil.OneDayHourCount);
-    l > 0
+    var t = this.GetText(1),
+      a = TimeUtil_1.TimeUtil.CalculateHourGapBetweenNow(i, !0),
+      l = Math.floor(a / TimeUtil_1.TimeUtil.OneDayHourCount),
+      a = Math.floor(a - l * TimeUtil_1.TimeUtil.OneDayHourCount);
+    0 < l
       ? LguiUtil_1.LguiUtil.SetLocalTextNew(
           t,
           "Text_BattlePassRefreshTime1_Text",
           l,
           a,
         )
-      : a > 0
+      : 0 < a
         ? LguiUtil_1.LguiUtil.SetLocalTextNew(
             t,
             "Text_BattlePassRefreshTime2_Text",
@@ -115,4 +115,4 @@ class BattlePassTaskTabItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.BattlePassTaskTabItem = BattlePassTaskTabItem;
-// # sourceMappingURL=BattlePassTaskTabItem.js.map
+//# sourceMappingURL=BattlePassTaskTabItem.js.map

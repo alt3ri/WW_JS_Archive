@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const AiTeam_1 = require("../Team/AiTeam");
-const ScoreUpdateManager_1 = require("./ScoreUpdateManager");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  AiTeam_1 = require("../Team/AiTeam"),
+  ScoreUpdateManager_1 = require("./ScoreUpdateManager");
 class AiModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -30,7 +30,7 @@ class AiModel extends ModelBase_1.ModelBase {
     );
   }
   AddActiveAiController(t) {
-    const e = t.CharAiDesignComp.Entity.Id;
+    var e = t.CharAiDesignComp.Entity.Id;
     if (
       !this.ActiveAiControllers.has(e) &&
       (this.ActiveAiControllers.set(e, t), t.HatredGroupId)
@@ -47,4 +47,4 @@ class AiModel extends ModelBase_1.ModelBase {
   }
 }
 exports.AiModel = AiModel;
-// # sourceMappingURL=AiModel.js.map
+//# sourceMappingURL=AiModel.js.map

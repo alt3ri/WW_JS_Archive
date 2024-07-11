@@ -7,4 +7,4 @@ class AnimNotifyAddMotionVertexOffset extends AnimNotifyAddMaterialControllerDat
   }
 }
 exports.default = AnimNotifyAddMotionVertexOffset;
-// # sourceMappingURL=AnimNotifyAddMotionVertexOffset.js.map
+//# sourceMappingURL=AnimNotifyAddMotionVertexOffset.js.map

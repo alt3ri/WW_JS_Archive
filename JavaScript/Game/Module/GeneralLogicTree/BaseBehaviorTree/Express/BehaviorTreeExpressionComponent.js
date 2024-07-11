@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BehaviorTreeExpressionComponent = void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const MapDefine_1 = require("../../../Map/MapDefine");
-const TrackDefine_1 = require("../../../Track/TrackDefine");
-const ReachAreaBehaviorNode_1 = require("../../BehaviorNode/ChildQuestNode/ReachAreaBehaviorNode");
-const GeneralLogicTreeController_1 = require("../../GeneralLogicTreeController");
-const GeneralLogicTreeUtil_1 = require("../../GeneralLogicTreeUtil");
-const CheckPointEffectController_1 = require("./CheckPointEffectController");
-const TrackEffectExpressController_1 = require("./TrackEffectExpressController");
-const TrackMarkExpressController_1 = require("./TrackMarkExpressController");
-const TrackTextExpressController_1 = require("./TrackTextExpressController");
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  MapDefine_1 = require("../../../Map/MapDefine"),
+  TrackDefine_1 = require("../../../Track/TrackDefine"),
+  ReachAreaBehaviorNode_1 = require("../../BehaviorNode/ChildQuestNode/ReachAreaBehaviorNode"),
+  GeneralLogicTreeController_1 = require("../../GeneralLogicTreeController"),
+  GeneralLogicTreeUtil_1 = require("../../GeneralLogicTreeUtil"),
+  CheckPointEffectController_1 = require("./CheckPointEffectController"),
+  TrackEffectExpressController_1 = require("./TrackEffectExpressController"),
+  TrackMarkExpressController_1 = require("./TrackMarkExpressController"),
+  TrackTextExpressController_1 = require("./TrackTextExpressController");
 class BehaviorTreeExpressionComponent {
   constructor(e) {
     (this.Yre = void 0),
@@ -24,7 +24,7 @@ class BehaviorTreeExpressionComponent {
       (this.TKt = void 0),
       (this.LKt = void 0),
       (this.DKt = (e, t, i, s) => {
-        e.Type === 6 &&
+        6 === e.Type &&
           e.TreeIncId === this.Yre.TreeIncId &&
           (e = this.Yre.GetNode(e.NodeId)) &&
           (this.yKt.UpdateTrackTextData(e, i),
@@ -34,10 +34,10 @@ class BehaviorTreeExpressionComponent {
           this.yKt.UpdateTextExpress(e));
       }),
       (this.REe = (e, t, i) => {
-        if (e.Type === 6 && e.TreeIncId === this.Yre.TreeIncId) {
-          let s;
-          let r;
-          const n = this.Yre.GetNode(e.NodeId);
+        if (6 === e.Type && e.TreeIncId === this.Yre.TreeIncId) {
+          var s,
+            r,
+            n = this.Yre.GetNode(e.NodeId);
           if (n)
             switch (i) {
               case Protocol_1.Aki.Protocol.W2s.Proto_CQNS_Progress:
@@ -83,7 +83,7 @@ class BehaviorTreeExpressionComponent {
         this.IKt.OnBattleViewHide();
       }),
       (this.wKt = (t, i) => {
-        if (t && t.Type === 6 && i && t.TreeIncId === this.Yre.TreeIncId) {
+        if (t && 6 === t.Type && i && t.TreeIncId === this.Yre.TreeIncId) {
           let e = void 0;
           switch (i.Gms) {
             case "Qfs":
@@ -235,7 +235,7 @@ class BehaviorTreeExpressionComponent {
     return this.TKt.GetNodeTrackMarkCreator(e)?.GetDefaultMark();
   }
   GetTrackDistance(e) {
-    const t = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
+    var t = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
     return t && (e = this.GetNodeTrackPosition(e))
       ? Math.round(Vector_1.Vector.Distance(e, t) * MapDefine_1.FLOAT_0_01)
       : TrackDefine_1.INVALID_TRACKDISTANCE;
@@ -252,7 +252,7 @@ class BehaviorTreeExpressionComponent {
   }
   RKt(e, t, i) {
     return (
-      i === 0 &&
+      0 === i &&
       t === Protocol_1.Aki.Protocol.N2s.Lkn &&
       this.Yre.BtType === Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest &&
       !(
@@ -275,16 +275,16 @@ class BehaviorTreeExpressionComponent {
     );
   }
   CheckCanShow() {
-    let e;
-    let t = 0;
-    let i = !1;
+    var e;
+    let t = 0,
+      i = !1;
     for ([, e] of this.Yre.GetAllNodes())
       e.ContainTag(2) && (i = !0), e.ContainTag(0) && (t += 1);
-    return t !== 0 || !i;
+    return 0 !== t || !i;
   }
   CreateMapMarks() {
     this.TKt.CreateMapMarks();
   }
 }
 exports.BehaviorTreeExpressionComponent = BehaviorTreeExpressionComponent;
-// # sourceMappingURL=BehaviorTreeExpressionComponent.js.map
+//# sourceMappingURL=BehaviorTreeExpressionComponent.js.map

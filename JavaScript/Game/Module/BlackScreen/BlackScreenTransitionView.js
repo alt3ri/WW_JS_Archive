@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BlackScreenTransitionView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../Common/LevelSequencePlayer");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const BlackScreenGlobalData_1 = require("./BlackScreenGlobalData");
-const BlackScreenViewData_1 = require("./BlackScreenViewData");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../Common/LevelSequencePlayer"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  BlackScreenGlobalData_1 = require("./BlackScreenGlobalData"),
+  BlackScreenViewData_1 = require("./BlackScreenViewData");
 class BlackScreenTransitionView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -86,16 +86,16 @@ class BlackScreenTransitionView extends UiPanelBase_1.UiPanelBase {
   }
   ShowTemp(e) {
     BlackScreenGlobalData_1.BlackScreenGlobalData.CreateShowPromise();
-    const t = this.ggt;
-    var e = (this.ggt = e) !== "None";
+    var t = this.ggt,
+      e = "None" !== (this.ggt = e);
     this.ogt.SwitchState(e ? 2 : 1) || (this.ggt = t);
   }
   HideTemp(e) {
     BlackScreenGlobalData_1.BlackScreenGlobalData.CreateHidePromise();
-    const t = this.fgt;
-    var e = (this.fgt = e) !== "None";
+    var t = this.fgt,
+      e = "None" !== (this.fgt = e);
     this.ogt.SwitchState(e ? 4 : 3) || (this.fgt = t);
   }
 }
 exports.BlackScreenTransitionView = BlackScreenTransitionView;
-// # sourceMappingURL=BlackScreenTransitionView.js.map
+//# sourceMappingURL=BlackScreenTransitionView.js.map

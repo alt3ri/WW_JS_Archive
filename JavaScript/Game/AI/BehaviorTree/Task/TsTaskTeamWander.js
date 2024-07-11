@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const Quat_1 = require("../../../../Core/Utils/Math/Quat");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../GlobalData");
-const CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary");
-const TsAiController_1 = require("../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
-const THREADHOLD_ABS = 500;
-const THREADHOLD_RATIO = 1.3;
-const THREADHOLD_ARRIVE = 10;
-const ALLY_DETECT_PERIOD = 1e3;
-const TRIGGER_PERIOD = 500;
-const NAV_INTERVAL_TIME = 3;
+const Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  Quat_1 = require("../../../../Core/Utils/Math/Quat"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../GlobalData"),
+  CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
+  TsAiController_1 = require("../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
+  THREADHOLD_ABS = 500,
+  THREADHOLD_RATIO = 1.3,
+  THREADHOLD_ARRIVE = 10,
+  ALLY_DETECT_PERIOD = 1e3,
+  TRIGGER_PERIOD = 500,
+  NAV_INTERVAL_TIME = 3;
 class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -78,8 +78,8 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
     if (
       ((this.NavigationInterval += s), t instanceof TsAiController_1.default)
     ) {
-      var s = t.AiController;
-      let e = s.AiHateList.GetCurrentTarget();
+      var s = t.AiController,
+        e = s.AiHateList.GetCurrentTarget();
       if (e?.Valid) {
         e = e.Entity.GetComponent(3);
         if (e)
@@ -100,7 +100,7 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
             );
           } else {
             this.NextTriggerTime = Time_1.Time.Now + TRIGGER_PERIOD;
-            const h = s.AiTeam.GetAiTeamAreaMemberData(s);
+            var h = s.AiTeam.GetAiTeamAreaMemberData(s);
             if (h && !(h.AreaIndex < 0)) {
               if (this.FirstFrame) {
                 if (
@@ -112,43 +112,43 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
                 AiContollerLibrary_1.AiControllerLibrary.InTeamArea(s, h, 0.5)
               )
                 return void this.Finish(!0);
-              const r = s.CharActorComp;
-              var o = e.ActorLocationProxy;
-              var a =
-                (h.CachedControllerYaw + h.AngleCenter) *
-                MathUtils_1.MathUtils.DegToRad;
-              var a =
-                ((this.Destination.X =
-                  h.CachedTargetLocation.X + Math.cos(a) * h.DistanceCenter),
-                (this.Destination.Y =
-                  h.CachedTargetLocation.Y + Math.sin(a) * h.DistanceCenter),
-                (this.Destination.Z = r.ActorLocationProxy.Z),
-                o.Subtraction(
-                  s.CharActorComp.ActorLocationProxy,
-                  this.TmpSelfToTarget,
-                ),
-                this.TmpDirection.DeepCopy(this.TmpSelfToTarget),
-                o.Subtraction(this.Destination, this.TmpDestinationToTarget),
-                this.TmpSelfToTarget.Size2D());
-              var o = this.TmpDestinationToTarget.Size2D();
-              let l =
-                (a > 0
-                  ? this.TmpSelfToTarget.DivisionEqual(a)
-                  : r.ActorForwardProxy.Multiply(-1, this.TmpSelfToTarget),
-                (this.TmpSelfToTarget.Z = 0) < o
-                  ? this.TmpDestinationToTarget.DivisionEqual(o)
-                  : r.ActorForwardProxy.Multiply(
-                      -1,
-                      this.TmpDestinationToTarget,
-                    ),
-                (this.TmpDestinationToTarget.Z = 0),
-                this.TmpSelfToTarget.DotProduct(this.TmpDestinationToTarget));
+              var r = s.CharActorComp,
+                o = e.ActorLocationProxy,
+                a =
+                  (h.CachedControllerYaw + h.AngleCenter) *
+                  MathUtils_1.MathUtils.DegToRad,
+                a =
+                  ((this.Destination.X =
+                    h.CachedTargetLocation.X + Math.cos(a) * h.DistanceCenter),
+                  (this.Destination.Y =
+                    h.CachedTargetLocation.Y + Math.sin(a) * h.DistanceCenter),
+                  (this.Destination.Z = r.ActorLocationProxy.Z),
+                  o.Subtraction(
+                    s.CharActorComp.ActorLocationProxy,
+                    this.TmpSelfToTarget,
+                  ),
+                  this.TmpDirection.DeepCopy(this.TmpSelfToTarget),
+                  o.Subtraction(this.Destination, this.TmpDestinationToTarget),
+                  this.TmpSelfToTarget.Size2D()),
+                o = this.TmpDestinationToTarget.Size2D(),
+                l =
+                  (0 < a
+                    ? this.TmpSelfToTarget.DivisionEqual(a)
+                    : r.ActorForwardProxy.Multiply(-1, this.TmpSelfToTarget),
+                  (this.TmpSelfToTarget.Z = 0) < o
+                    ? this.TmpDestinationToTarget.DivisionEqual(o)
+                    : r.ActorForwardProxy.Multiply(
+                        -1,
+                        this.TmpDestinationToTarget,
+                      ),
+                  (this.TmpDestinationToTarget.Z = 0),
+                  this.TmpSelfToTarget.DotProduct(this.TmpDestinationToTarget));
               let t = Math.acos(l);
               (l =
                 this.TmpSelfToTarget.X * this.TmpDestinationToTarget.Y -
                 this.TmpSelfToTarget.Y * this.TmpDestinationToTarget.X),
                 (a = a - o),
-                (o = o * (t = l > 0 ? -t : t));
+                (o = o * (t = 0 < l ? -t : t));
               if (
                 (Time_1.Time.Now > this.NextDetectAllyTime &&
                   ((this.NextDetectAllyTime =
@@ -222,8 +222,8 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
             t,
           )) &&
           ((t = i), (i = 4)),
-        i !== 4 && this.CurrentMoveDirect === i
-          ? (this.CurrentMoveDirect !== 0 && this.CurrentMoveDirect !== 1) ||
+        4 !== i && this.CurrentMoveDirect === i
+          ? (0 !== this.CurrentMoveDirect && 1 !== this.CurrentMoveDirect) ||
             (this.NeedChangeDirect(s, e) && (this.CurrentMoveDirect = t))
           : (this.CurrentMoveDirect = t);
     }
@@ -247,8 +247,8 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
       return this.LastDestination.DeepCopy(this.TmpVector2), !0;
     this.LastDestination.DeepCopy(this.TmpVector2);
     i =
-      (this.CurrentMoveDirect === 3 || this.CurrentMoveDirect === 2) &&
-      i.WanderDirectionType === 1;
+      (3 === this.CurrentMoveDirect || 2 === this.CurrentMoveDirect) &&
+      1 === i.WanderDirectionType;
     return t.MoveController.NavigateMoveToLocation(
       {
         Position: this.TmpVector2,
@@ -261,7 +261,7 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
     );
   }
   SetInputParams(t, i, s) {
-    this.CurrentMoveDirect === 4
+    4 === this.CurrentMoveDirect
       ? AiContollerLibrary_1.AiControllerLibrary.ClearInput(this.AIOwner)
       : (AiContollerLibrary_1.AiControllerLibrary.GetDirectionVector(
           s,
@@ -298,10 +298,10 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
         ];
   }
   GetMoveDirectionForwardBackward(t) {
-    return Math.abs(t) < THREADHOLD_ARRIVE ? 4 : t > 0 ? 0 : 1;
+    return Math.abs(t) < THREADHOLD_ARRIVE ? 4 : 0 < t ? 0 : 1;
   }
   GetMoveDirectionRightLeft(t) {
-    return Math.abs(t) < THREADHOLD_ARRIVE ? 4 : t > 0 ? 2 : 3;
+    return Math.abs(t) < THREADHOLD_ARRIVE ? 4 : 0 < t ? 2 : 3;
   }
   NeedChangeDirect(t, i) {
     t = Math.abs(t);
@@ -311,7 +311,7 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
     );
   }
   OnClear() {
-    let t;
+    var t;
     this.AIOwner instanceof TsAiController_1.default &&
       ((t =
         this.AIOwner.AiController.CharActorComp.Entity.GetComponent(
@@ -323,4 +323,4 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskTeamWander;
-// # sourceMappingURL=TsTaskTeamWander.js.map
+//# sourceMappingURL=TsTaskTeamWander.js.map

@@ -12,4 +12,4 @@ class OpenSystemBase {
   }
 }
 exports.OpenSystemBase = OpenSystemBase;
-// # sourceMappingURL=OpenSystemBase.js.map
+//# sourceMappingURL=OpenSystemBase.js.map

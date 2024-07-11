@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MenuScrollSettingContainerDynItem = void 0);
-const UE = require("ue");
-const Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class MenuScrollSettingContainerDynItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments), (this.IGe = void 0);
@@ -30,7 +30,7 @@ class MenuScrollSettingContainerDynItem extends UiPanelBase_1.UiPanelBase {
     );
   }
   $wi(e) {
-    if (e.Type === 0) return this.GetItem(1);
+    if (0 === e.Type) return this.GetItem(1);
     switch (e.Data.MenuDataSetType) {
       case 1:
         return this.GetItem(4);
@@ -46,4 +46,4 @@ class MenuScrollSettingContainerDynItem extends UiPanelBase_1.UiPanelBase {
   ClearItem() {}
 }
 exports.MenuScrollSettingContainerDynItem = MenuScrollSettingContainerDynItem;
-// # sourceMappingURL=MenuScrollSettingContainerDynItem.js.map
+//# sourceMappingURL=MenuScrollSettingContainerDynItem.js.map

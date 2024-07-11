@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharBodyInfo = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Stats_1 = require("../../../../../Core/Common/Stats");
-const RenderConfig_1 = require("../../../Config/RenderConfig");
-const CharMaterialInfo_1 = require("./CharMaterialInfo");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../../Core/Common/Stats"),
+  RenderConfig_1 = require("../../../Config/RenderConfig"),
+  CharMaterialInfo_1 = require("./CharMaterialInfo");
 class CharBodyInfo {
   constructor() {
     (this.ActorName = ""),
@@ -47,8 +47,8 @@ class CharBodyInfo {
       (this.SpecifiedSlotList[2] = new Array()),
       (this.SpecifiedSlotList[1] = new Array()),
       (this.SpecifiedSlotList[3] = new Array());
-    const r = e.GetMaterialSlotNames();
-    const a = r.Num();
+    var r = e.GetMaterialSlotNames(),
+      a = r.Num();
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "RenderCharacter",
@@ -60,7 +60,7 @@ class CharBodyInfo {
       ),
       (this.MaterialSlotList = new Array(a));
     for (let i = 0; i < a; i++) {
-      const o =
+      var o =
         UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSkeletalMaterialInterface(
           e.SkeletalMesh,
           i,
@@ -105,7 +105,7 @@ class CharBodyInfo {
             "CharBodyInfo.Init: originalMat is not valid",
           );
     }
-    const n = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetCharacterSectionCount(
+    var n = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetCharacterSectionCount(
       this.SkeletalMesh,
     );
     (this.bar = new Array(n)),
@@ -114,7 +114,7 @@ class CharBodyInfo {
       (this.Qar = new Array(n)),
       (this.Xar = new Array(n));
     for (let t = 0; t < n; t++) {
-      const l =
+      var l =
         UE.KuroRenderingRuntimeBPPluginBPLibrary.GetCharacterSectionMaterialIndex(
           this.SkeletalMesh,
           t,
@@ -156,7 +156,7 @@ class CharBodyInfo {
         this.ehr());
   }
   UseBattleMask(t) {
-    const i = this.Xar.length;
+    var i = this.Xar.length;
     t < i
       ? (++this.Xar[t],
         (this.Oar = !0),
@@ -180,12 +180,12 @@ class CharBodyInfo {
         );
   }
   RevertBattleMaskCommon() {
-    this.jar > 0 && (--this.jar, (this.Oar = !0)), this.UpdateBattleMask();
+    0 < this.jar && (--this.jar, (this.Oar = !0)), this.UpdateBattleMask();
   }
   RevertBattleMask(t) {
-    const i = this.Xar.length;
+    var i = this.Xar.length;
     t < i
-      ? this.Xar[t] > 0 && (--this.Xar[t], (this.Oar = !0))
+      ? 0 < this.Xar[t] && (--this.Xar[t], (this.Oar = !0))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
@@ -211,7 +211,7 @@ class CharBodyInfo {
         this.ehr());
   }
   UseBattle(t) {
-    const i = this.Qar.length;
+    var i = this.Qar.length;
     t < i
       ? (++this.Qar[t],
         (this.Nar = !0),
@@ -236,12 +236,12 @@ class CharBodyInfo {
         );
   }
   RevertBattleCommon() {
-    this.Har > 0 && (--this.Har, (this.Nar = !0)), this.UpdateBattle();
+    0 < this.Har && (--this.Har, (this.Nar = !0)), this.UpdateBattle();
   }
   RevertBattle(t) {
-    const i = this.Qar.length;
+    var i = this.Qar.length;
     t < i
-      ? this.Qar[t] > 0 && (--this.Qar[t], (this.Nar = !0))
+      ? 0 < this.Qar[t] && (--this.Qar[t], (this.Nar = !0))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
@@ -266,7 +266,7 @@ class CharBodyInfo {
         );
   }
   UseAlphaTest(t) {
-    const i = this.War.length;
+    var i = this.War.length;
     t < i
       ? (++this.War[t],
         (this.qar = !0),
@@ -290,12 +290,12 @@ class CharBodyInfo {
         );
   }
   RevertAlphaTestCommon() {
-    this.kar > 0 && (--this.kar, (this.qar = !0)), this.UpdateAlphaTest();
+    0 < this.kar && (--this.kar, (this.qar = !0)), this.UpdateAlphaTest();
   }
   RevertAlphaTest(t) {
-    const i = this.War.length;
+    var i = this.War.length;
     t < i
-      ? this.War[t] > 0 && (--this.War[t], (this.qar = !0))
+      ? 0 < this.War[t] && (--this.War[t], (this.qar = !0))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
@@ -320,7 +320,7 @@ class CharBodyInfo {
         );
   }
   UseOutlineStencilTest(t) {
-    const i = this.Kar.length;
+    var i = this.Kar.length;
     t < i
       ? (++this.Kar[t],
         (this.Gar = !0),
@@ -344,13 +344,13 @@ class CharBodyInfo {
         );
   }
   RevertOutlineStencilTestCommon() {
-    this.Far > 0 && (--this.Far, (this.Gar = !0)),
+    0 < this.Far && (--this.Far, (this.Gar = !0)),
       this.UpdateStencilOutlineTest();
   }
   RevertOutlineStencilTest(t) {
-    const i = this.Kar.length;
+    var i = this.Kar.length;
     t < i
-      ? this.Kar[t] > 0 && (--this.Kar[t], (this.Gar = !0))
+      ? 0 < this.Kar[t] && (--this.Kar[t], (this.Gar = !0))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
@@ -362,40 +362,40 @@ class CharBodyInfo {
         );
   }
   SetColor(i, e, t) {
-    const s = this.SpecifiedSlotList[t];
-    const h = s.length;
+    var s = this.SpecifiedSlotList[t],
+      h = s.length;
     for (let t = 0; t < h; t++) this.MaterialSlotList[s[t]].SetColor(i, e);
   }
   RevertColor(t, i) {
-    const e = this.SpecifiedSlotList[i];
-    const s = e.length;
-    const h = t.toString();
+    var e = this.SpecifiedSlotList[i],
+      s = e.length,
+      h = t.toString();
     for (let t = 0; t < s; t++) this.MaterialSlotList[e[t]].RevertColor(h);
   }
   SetFloat(i, e, t) {
-    const s = this.SpecifiedSlotList[t];
-    const h = s.length;
+    var s = this.SpecifiedSlotList[t],
+      h = s.length;
     for (let t = 0; t < h; t++) this.MaterialSlotList[s[t]].SetFloat(i, e);
   }
   RevertFloat(t, i) {
-    const e = this.SpecifiedSlotList[i];
-    const s = e.length;
-    const h = t.toString();
+    var e = this.SpecifiedSlotList[i],
+      s = e.length,
+      h = t.toString();
     for (let t = 0; t < s; t++) this.MaterialSlotList[e[t]].RevertFloat(h);
   }
   SetTexture(i, e, t) {
-    const s = this.SpecifiedSlotList[t];
-    const h = s.length;
+    var s = this.SpecifiedSlotList[t],
+      h = s.length;
     for (let t = 0; t < h; t++) this.MaterialSlotList[s[t]].SetTexture(i, e);
   }
   RevertTexture(t, i) {
-    const e = this.SpecifiedSlotList[i];
-    const s = e.length;
-    const h = t.toString();
+    var e = this.SpecifiedSlotList[i],
+      s = e.length,
+      h = t.toString();
     for (let t = 0; t < s; t++) this.MaterialSlotList[e[t]].RevertTexture(h);
   }
   SetStarScarEnergy(i) {
-    const e = this.MaterialSlotList.length;
+    var e = this.MaterialSlotList.length;
     for (let t = 0; t < e; t++) this.MaterialSlotList[t].SetStarScarEnergy(i);
   }
   Update(t = void 0) {
@@ -424,30 +424,30 @@ class CharBodyInfo {
       this.UpdateBattleMask();
   }
   ehr() {
-    const t = this.Aar.GetRenderingComponent().GetComponent(
+    var t = this.Aar.GetRenderingComponent().GetComponent(
       RenderConfig_1.RenderConfig.IdMaterialController,
     );
     t && t.PrintCurrentInfo();
   }
   thr() {
     if (this.SkeletalComp && this.SkeletalComp.IsValid()) {
-      const i = this.MaterialSlotList.length;
+      var i = this.MaterialSlotList.length;
       for (let t = 0; t < i; t++) {
-        const e = this.MaterialSlotList[t];
+        var e = this.MaterialSlotList[t];
         e.UpdateMaterialParam(), e.SetSkeletalMeshMaterial(this.SkeletalComp);
       }
     }
   }
   UpdateBattleMask() {
     if (this.Oar) {
-      let t = (this.Oar = !1);
-      let i = !1;
-      const e = UE.NewArray(UE.BuiltinInt);
-      if (this.jar > 0) (t = !0), (i = !1);
+      let t = (this.Oar = !1),
+        i = !1;
+      var e = UE.NewArray(UE.BuiltinInt);
+      if (0 < this.jar) (t = !0), (i = !1);
       else {
-        const s = this.Xar.length;
-        for (let t = 0; t < s; t++) this.Xar[t] > 0 && e.Add(t);
-        (t = e.Num() > 0), (i = t);
+        var s = this.Xar.length;
+        for (let t = 0; t < s; t++) 0 < this.Xar[t] && e.Add(t);
+        (t = 0 < e.Num()), (i = t);
       }
       this.SkeletalComp?.IsValid() &&
         (this.SkeletalComp.SetUseEnableBattleMask(t),
@@ -456,14 +456,14 @@ class CharBodyInfo {
   }
   UpdateBattle() {
     if (this.Nar) {
-      let t = (this.Nar = !1);
-      let i = !1;
-      const e = UE.NewArray(UE.BuiltinInt);
-      if (this.Har > 0) (t = !0), (i = !1);
+      let t = (this.Nar = !1),
+        i = !1;
+      var e = UE.NewArray(UE.BuiltinInt);
+      if (0 < this.Har) (t = !0), (i = !1);
       else {
-        const s = this.Qar.length;
-        for (let t = 0; t < s; t++) this.Qar[t] > 0 && e.Add(t);
-        (t = e.Num() > 0), (i = t);
+        var s = this.Qar.length;
+        for (let t = 0; t < s; t++) 0 < this.Qar[t] && e.Add(t);
+        (t = 0 < e.Num()), (i = t);
       }
       this.SkeletalComp?.IsValid() &&
         (this.SkeletalComp.SetUseEnableBattle(t),
@@ -472,14 +472,14 @@ class CharBodyInfo {
   }
   UpdateAlphaTest() {
     if (this.qar) {
-      let t = (this.qar = !1);
-      let i = !1;
-      const e = UE.NewArray(UE.BuiltinInt);
-      if (this.kar > 0) (t = !0), (i = !1);
+      let t = (this.qar = !1),
+        i = !1;
+      var e = UE.NewArray(UE.BuiltinInt);
+      if (0 < this.kar) (t = !0), (i = !1);
       else {
-        const s = this.War.length;
-        for (let t = 0; t < s; t++) this.War[t] > 0 && e.Add(t);
-        (t = e.Num() > 0), (i = t);
+        var s = this.War.length;
+        for (let t = 0; t < s; t++) 0 < this.War[t] && e.Add(t);
+        (t = 0 < e.Num()), (i = t);
       }
       this.SkeletalComp?.IsValid() &&
         (this.SkeletalComp.SetUseCustomAlphaTest(t),
@@ -488,14 +488,14 @@ class CharBodyInfo {
   }
   UpdateStencilOutlineTest() {
     if (this.Gar) {
-      let t = (this.Gar = !1);
-      let i = !1;
-      const e = UE.NewArray(UE.BuiltinInt);
-      if (this.Far > 0) (t = !0), (i = !1);
+      let t = (this.Gar = !1),
+        i = !1;
+      var e = UE.NewArray(UE.BuiltinInt);
+      if (0 < this.Far) (t = !0), (i = !1);
       else {
-        const s = this.Kar.length;
-        for (let t = 0; t < s; t++) this.Kar[t] > 0 && e.Add(t);
-        (t = e.Num() > 0), (i = t);
+        var s = this.Kar.length;
+        for (let t = 0; t < s; t++) 0 < this.Kar[t] && e.Add(t);
+        (t = 0 < e.Num()), (i = t);
       }
       this.SkeletalComp?.IsValid() &&
         (this.SkeletalComp.SetUseOutlineStencilTest(t),
@@ -504,4 +504,4 @@ class CharBodyInfo {
   }
 }
 exports.CharBodyInfo = CharBodyInfo;
-// # sourceMappingURL=CharBodyInfo.js.map
+//# sourceMappingURL=CharBodyInfo.js.map

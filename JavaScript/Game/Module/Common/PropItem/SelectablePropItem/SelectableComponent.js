@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SelectableComponent = exports.SelectableComponentData = void 0);
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController");
-const LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView");
-const SelectableExpData_1 = require("./SelectableExpData");
-const SelectablePropDataUtil_1 = require("./SelectablePropDataUtil");
-const SelectablePropMediumItemGrid_1 = require("./SelectablePropMediumItemGrid");
-const DEFAULT_MAX_SIZE = 20;
+const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
+  LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView"),
+  SelectableExpData_1 = require("./SelectableExpData"),
+  SelectablePropDataUtil_1 = require("./SelectablePropDataUtil"),
+  SelectablePropMediumItemGrid_1 = require("./SelectablePropMediumItemGrid"),
+  DEFAULT_MAX_SIZE = 20;
 class SelectableComponentData {
   constructor() {
     (this.IsSingleSelected = !1),
@@ -40,16 +40,16 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
       (this.ExpData = void 0),
       (this.LastSelectedIndex = 0),
       (this.hwt = (t) => {
-        var t = this.ItemDataList[t];
-        var t =
-          SelectablePropDataUtil_1.SelectablePropDataUtil.GetSelectablePropData(
-            t,
-          );
-        const e = this.lwt(t);
+        var t = this.ItemDataList[t],
+          t =
+            SelectablePropDataUtil_1.SelectablePropDataUtil.GetSelectablePropData(
+              t,
+            ),
+          e = this.lwt(t);
         return (t.SelectedCount = e), t;
       }),
       (this.InitItem = () => {
-        const t =
+        var t =
           new SelectablePropMediumItemGrid_1.SelectablePropMediumItemGrid();
         return (
           t.BindLongPress(1, this.AddFunction, this.CanItemLongPress),
@@ -83,18 +83,18 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
           this.AddData(i),
           this.UpdateExp(),
           this.uwt();
-        var s = this.GetSelectedData(i);
-        var s =
-          ((i.SelectedCount = s.SelectedCount),
-          e.RefreshCostCount(),
-          { IsVisible: i.SelectedCount > 0, LongPressConfigId: 1 });
-        return e.SetReduceButton(s), e.SetSelected(i.SelectedCount > 0), !0;
+        var s = this.GetSelectedData(i),
+          s =
+            ((i.SelectedCount = s.SelectedCount),
+            e.RefreshCostCount(),
+            { IsVisible: 0 < i.SelectedCount, LongPressConfigId: 1 });
+        return e.SetReduceButton(s), e.SetSelected(0 < i.SelectedCount), !0;
       }),
       (this.ReduceFunction = (t, e, i) => {
         this.SetPrevPropItemSelectedState(i);
-        let s = this.GetSelectedData(i);
+        var s = this.GetSelectedData(i);
         if (!s) return !1;
-        let r = s.SelectedCount;
+        var r = s.SelectedCount;
         if (!r) return !1;
         --r <= 0 ? this.cwt(i) : (s.SelectedCount = r),
           (i.SelectedCount = r),
@@ -103,8 +103,8 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
           this.uwt();
         (s = e),
           s.RefreshCostCount(),
-          s.SetSelected(r > 0),
-          (e = { IsVisible: i.SelectedCount > 0, LongPressConfigId: 1 });
+          s.SetSelected(0 < r),
+          (e = { IsVisible: 0 < i.SelectedCount, LongPressConfigId: 1 });
         return s.SetReduceButton(e), !0;
       });
   }
@@ -132,7 +132,7 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
   }
   mwt(t) {
     (this.SelectedDataList = t || []),
-      this.Data.IsSingleSelected && t.length > 0 && this._wt(t[0]);
+      this.Data.IsSingleSelected && 0 < t.length && this._wt(t[0]);
   }
   GetCurrentSelectedData() {
     return this.SelectedDataList;
@@ -144,7 +144,7 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
         this.ItemDataList.length,
         !1,
       ),
-      this.ItemDataList.length > 0 &&
+      0 < this.ItemDataList.length &&
         this.LoopScrollView.ScrollToGridIndex(this.LastSelectedIndex);
   }
   GetFirstOperationItem() {
@@ -163,7 +163,7 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
         this.LoopScrollView.UnsafeGetGridProxy(t).OnDeselected(!1));
   }
   CanAddMaterial(t, e = !1) {
-    let i;
+    var i;
     return t.GetIsLock()
       ? (e &&
           ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
@@ -195,21 +195,21 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
           );
   }
   dwt(t) {
-    let e;
+    var e;
     return (
       !!this.LastAddData &&
-      ((e = t.IncId) > 0
+      (0 < (e = t.IncId)
         ? this.LastAddData.IncId === e
         : this.LastAddData.ItemId === t.ItemId)
     );
   }
   Cwt(t) {
-    const i = t.IncId;
-    const s = t.ItemId;
-    if (i > 0 || s > 0)
+    var i = t.IncId,
+      s = t.ItemId;
+    if (0 < i || 0 < s)
       for (let t = 0, e = this.ItemDataList.length; t < e; ++t) {
-        const r = this.ItemDataList[t];
-        if (i > 0) {
+        var r = this.ItemDataList[t];
+        if (0 < i) {
           if (r.GetUniqueId() === i) return t;
         } else if (r.GetConfigId() === s) return t;
       }
@@ -219,19 +219,19 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
     this.dwt(t) || this.cwt(this.LastAddData);
   }
   cwt(t) {
-    let e;
-    t && ((e = t.IncId) > 0 ? this.gwt(e) : this.fwt(t.ItemId));
+    var e;
+    t && (0 < (e = t.IncId) ? this.gwt(e) : this.fwt(t.ItemId));
   }
   gwt(e) {
     for (let t = 0; t < this.SelectedDataList.length; t++) {
-      const i = this.SelectedDataList[t];
+      var i = this.SelectedDataList[t];
       if (i.IncId === e)
         return (i.SelectedCount = 0), void this.SelectedDataList.splice(t, 1);
     }
   }
   fwt(e) {
     for (let t = 0; t < this.SelectedDataList.length; t++) {
-      const i = this.SelectedDataList[t];
+      var i = this.SelectedDataList[t];
       if (i.ItemId === e)
         return (i.SelectedCount = 0), void this.SelectedDataList.splice(t, 1);
     }
@@ -249,27 +249,27 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
     this.LastAddData = t;
   }
   AddData(t) {
-    const e = this.GetSelectedData(t);
+    var e = this.GetSelectedData(t);
     e ? this.pwt(e) : (this.SelectedDataList.push(t), t.SelectedCount++),
       this.Data.OtherFunction && this.Data.OtherFunction();
   }
   pwt(e) {
-    const i = this.SelectedDataList.length;
+    var i = this.SelectedDataList.length;
     for (let t = 0; t < i; t++) {
-      const s = this.SelectedDataList[t];
-      if (s.IncId === 0 && s.ItemId === e.ItemId)
+      var s = this.SelectedDataList[t];
+      if (0 === s.IncId && s.ItemId === e.ItemId)
         return void (s.SelectedCount = s.SelectedCount + 1);
     }
     this.SelectedDataList.push(e);
   }
   GetSelectedData(t) {
     if (t) {
-      const e = t.IncId;
-      if (e > 0) {
+      var e = t.IncId;
+      if (0 < e) {
         for (const t of this.SelectedDataList) if (t.IncId === e) return t;
       } else {
-        const i = t.ItemId;
-        if (i > 0)
+        var i = t.ItemId;
+        if (0 < i)
           for (const t of this.SelectedDataList) if (t.ItemId === i) return t;
       }
     }
@@ -294,4 +294,4 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.SelectableComponent = SelectableComponent;
-// # sourceMappingURL=SelectableComponent.js.map
+//# sourceMappingURL=SelectableComponent.js.map

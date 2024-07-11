@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraBlend = void 0);
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const QueryTypeDefine_1 = require("../../Core/Define/QueryTypeDefine");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../Core/Utils/TraceElementCommon");
-const GlobalData_1 = require("../GlobalData");
-const ModelManager_1 = require("../Manager/ModelManager");
-const PROFILE_KEY1 = "FightCameraLogicComponent_CheckCollision_Water";
-const PROFILE_KEY2 = "FightCameraLogicComponent_CheckCollision_Camera";
-const LIMIT_COUNT = 1;
-const TRACE_START_HEIGHT = 300;
-const LINE_HEIGHT = 100;
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  QueryTypeDefine_1 = require("../../Core/Define/QueryTypeDefine"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../Core/Utils/TraceElementCommon"),
+  GlobalData_1 = require("../GlobalData"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  PROFILE_KEY1 = "FightCameraLogicComponent_CheckCollision_Water",
+  PROFILE_KEY2 = "FightCameraLogicComponent_CheckCollision_Camera",
+  LIMIT_COUNT = 1,
+  TRACE_START_HEIGHT = 300,
+  LINE_HEIGHT = 100;
 class CameraBlend {
   constructor() {
     (this.bse = void 0),
@@ -190,7 +190,7 @@ class CameraBlend {
             this.zse && this.aae === this.kse.HitResult.Actors.Get(0))
           )
             return (this.hae = !0), this.Wse;
-          if (this.CurrentSpringBlendState === 4) return i;
+          if (4 === this.CurrentSpringBlendState) return i;
         }
       else if (this.tae && (this.rae || this.oae))
         this.Sae(2, this.tae ? this.Wse : i);
@@ -210,7 +210,7 @@ class CameraBlend {
           this.zse && this.aae === this.kse.HitResult.Actors.Get(0))
         )
           return (this.hae = !0), this.Wse;
-        if (this.CurrentSpringBlendState === 4) return i;
+        if (4 === this.CurrentSpringBlendState) return i;
       } else this.Sae(4, this.tae ? this.Wse : i);
       if (
         (this.tae
@@ -239,13 +239,14 @@ class CameraBlend {
         this.tae || this.Eae(i),
         this.tae && !this.bse.ContainsTag(-1150819426))
       ) {
-        var t = this.Fse.HitResult.Components.Get(0);
-        var s = this.eae !== t;
-        const h =
-          t?.IsValid() &&
-          t.GetCollisionResponseToChannel(
-            QueryTypeDefine_1.KuroCollisionChannel.Water,
-          ) === 2;
+        var t = this.Fse.HitResult.Components.Get(0),
+          s = this.eae !== t,
+          h =
+            t?.IsValid() &&
+            2 ===
+              t.GetCollisionResponseToChannel(
+                QueryTypeDefine_1.KuroCollisionChannel.Water,
+              );
         if (((this.eae = t), s || h)) {
           if (!this.Zse && h) {
             var [t, s] = this.bse?.CharacterEntityHandle.Entity.GetComponent(
@@ -350,7 +351,7 @@ class CameraBlend {
         PROFILE_KEY2,
       )),
       this.rae
-        ? this.CurrentSpringBlendState !== 2 && (this.LineHitState = 3)
+        ? 2 !== this.CurrentSpringBlendState && (this.LineHitState = 3)
         : (TraceElementCommon_1.TraceElementCommon.SetStartLocation(
             this.Hse,
             this.TempCameraLocation,
@@ -364,7 +365,7 @@ class CameraBlend {
             PROFILE_KEY2,
           )),
           this.rae &&
-            this.CurrentSpringBlendState !== 2 &&
+            2 !== this.CurrentSpringBlendState &&
             (this.LineHitState = 3)),
       this.Qse.Multiply(
         2 * -this.bse.CheckWidth - 2 * this.CurrentCollisionDifferenceSize,
@@ -394,7 +395,7 @@ class CameraBlend {
         PROFILE_KEY2,
       )),
       this.oae
-        ? this.CurrentSpringBlendState !== 2 && (this.LineHitState = 1)
+        ? 2 !== this.CurrentSpringBlendState && (this.LineHitState = 1)
         : (TraceElementCommon_1.TraceElementCommon.SetStartLocation(
             this.jse,
             this.TempCameraLocation,
@@ -408,7 +409,7 @@ class CameraBlend {
             PROFILE_KEY2,
           )),
           this.oae &&
-            this.CurrentSpringBlendState !== 2 &&
+            2 !== this.CurrentSpringBlendState &&
             (this.LineHitState = 1)),
       LIMIT_COUNT > this.t6 && this.t6++,
       this.rae || this.oae)
@@ -423,7 +424,7 @@ class CameraBlend {
   }
   GetLocation(t, i, s) {
     switch (
-      (this.bse.CameraDialogueController.State !== 0
+      (0 !== this.bse.CameraDialogueController.State
         ? (this.tae
             ? this.bse.TempDesireLocation.DeepCopy(this.lae)
             : this.bse.TempDesireLocation.DeepCopy(this.Jse),
@@ -472,7 +473,7 @@ class CameraBlend {
               ));
         break;
       case 3:
-        this.$se > 0
+        0 < this.$se
           ? ((this.$se -= this.bse.OutSpeed * t),
             (this.$se = this.Iae(this.$se)),
             this.sae &&
@@ -533,13 +534,13 @@ class CameraBlend {
     switch (((this.NextSpringBlendState = t), this.NextSpringBlendState)) {
       case 2:
         if (
-          this.CurrentSpringBlendState === 1 ||
-          this.CurrentSpringBlendState === 2
+          1 === this.CurrentSpringBlendState ||
+          2 === this.CurrentSpringBlendState
         )
           this.NearCameraLocation.DeepCopy(this.bse.CameraLocation);
         else if (
-          this.CurrentSpringBlendState === 3 ||
-          this.CurrentSpringBlendState === 4
+          3 === this.CurrentSpringBlendState ||
+          4 === this.CurrentSpringBlendState
         ) {
           if (
             ((this.$se = 0),
@@ -572,10 +573,10 @@ class CameraBlend {
         }
         break;
       case 4:
-        this.CurrentSpringBlendState === 3 ||
-          this.CurrentSpringBlendState === 4 ||
-          (this.CurrentSpringBlendState !== 1 &&
-            this.CurrentSpringBlendState !== 2) ||
+        3 === this.CurrentSpringBlendState ||
+          4 === this.CurrentSpringBlendState ||
+          (1 !== this.CurrentSpringBlendState &&
+            2 !== this.CurrentSpringBlendState) ||
           (this.bse.CameraLocation.Subtraction(this.Jse, this.Yse),
           (this.Xse = this.Yse.Size()),
           (this.$se = this.Xse),
@@ -620,9 +621,9 @@ class CameraBlend {
           this.bse.CurrentCollisionSize,
           this.bse.NearCollisionProbeSize,
         )),
-        (this.CurrentSpringBlendState !== 3 &&
-          this.CurrentSpringBlendState !== 2 &&
-          this.CurrentSpringBlendState !== 1) ||
+        (3 !== this.CurrentSpringBlendState &&
+          2 !== this.CurrentSpringBlendState &&
+          1 !== this.CurrentSpringBlendState) ||
           (this.bse.CurrentCollisionSize = this.bse.NearCollisionProbeSize));
   }
   SetCharacter(t) {
@@ -680,7 +681,7 @@ class CameraBlend {
         );
   }
   DrawCube(t, i, s) {
-    let h, e, r;
+    var h, e, r;
     t &&
       ((s = new UE.LinearColor(s, s, s, s)),
       (r = t.GetLocation()),
@@ -731,4 +732,4 @@ class CameraBlend {
   }
 }
 exports.CameraBlend = CameraBlend;
-// # sourceMappingURL=CameraBlend.js.map
+//# sourceMappingURL=CameraBlend.js.map

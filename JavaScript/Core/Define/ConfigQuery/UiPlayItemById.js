@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configUiPlayItemById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const UiPlayItem_1 = require("../Config/UiPlayItem");
-const DB = "db_uiplayitem.db";
-const FILE = "u.UI玩法道具.xlsx";
-const TABLE = "UiPlayItem";
-const COMMAND = "select BinData from `UiPlayItem` where Id=?";
-const KEY_PREFIX = "UiPlayItemById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  UiPlayItem_1 = require("../Config/UiPlayItem"),
+  DB = "db_uiplayitem.db",
+  FILE = "u.UI玩法道具.xlsx",
+  TABLE = "UiPlayItem",
+  COMMAND = "select BinData from `UiPlayItem` where Id=?",
+  KEY_PREFIX = "UiPlayItemById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configUiPlayItemById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configUiPlayItemById.GetConfig(";
 exports.configUiPlayItemById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configUiPlayItemById = {
       if (
         (n =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var n;
-        var e = void 0;
+        var n,
+          e = void 0;
         if (
           (([n, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configUiPlayItemById = {
     }
   },
 };
-// # sourceMappingURL=UiPlayItemById.js.map
+//# sourceMappingURL=UiPlayItemById.js.map

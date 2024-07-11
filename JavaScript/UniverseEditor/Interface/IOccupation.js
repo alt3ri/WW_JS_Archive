@@ -8,4 +8,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     ScreenResource: "屏幕资源",
     Time: "时间",
   });
-// # sourceMappingURL=IOccupation.js.map
+//# sourceMappingURL=IOccupation.js.map

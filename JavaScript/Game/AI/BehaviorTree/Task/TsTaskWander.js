@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const EffectContext_1 = require("../../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../../Effect/EffectSystem");
-const GlobalData_1 = require("../../../GlobalData");
-const CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const ColorUtils_1 = require("../../../Utils/ColorUtils");
-const AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary");
-const TsAiController_1 = require("../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
-const NONE_PATH = "None";
-const BLINK_STATE = 3;
-const SKILL_STATE = 4;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  EffectContext_1 = require("../../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  ColorUtils_1 = require("../../../Utils/ColorUtils"),
+  AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
+  TsAiController_1 = require("../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
+  NONE_PATH = "None",
+  BLINK_STATE = 3,
+  SKILL_STATE = 4;
 class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -91,31 +91,31 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveExecuteAI(i, t) {
     this.InitTsVariables();
-    const s = i.AiController;
+    var s = i.AiController;
     if (s) {
-      let e;
-      const h = s.AiWanderInfos?.AiWander;
-      const r =
-        (h
-          ? ((this.MoveStateActural = this.TsMoveStateForWanderOrReset
-              ? h.WanderMoveState
-              : h.ResetMoveState),
-            (this.TsShowEffectDa = h.ShowEffectDaPath),
-            (this.TsHideEffectDa = h.HideEffectDaPath),
-            (this.TsShowMaterialDa = h.ShowMaterialDaPath),
-            (this.TsHideMaterialDa = h.HideMaterialDaPath))
-          : (Log_1.Log.CheckError() &&
-              Log_1.Log.Error("BehaviorTree", 6, "没有配置AiWander", [
-                "AiBaseId",
-                s.AiBase.Id,
-              ]),
-            (this.MoveStateActural = 2)),
-        s.AiWanderRadiusConfig &&
-          ((this.TsRandomRadius = s.AiWanderRadiusConfig.RandomRadius),
-          (this.TsMinWanderDistance =
-            s.AiWanderRadiusConfig.MinWanderDistance)),
-        s.CharActorComp);
-      const o = Vector_1.Vector.Create();
+      var e,
+        h = s.AiWanderInfos?.AiWander,
+        r =
+          (h
+            ? ((this.MoveStateActural = this.TsMoveStateForWanderOrReset
+                ? h.WanderMoveState
+                : h.ResetMoveState),
+              (this.TsShowEffectDa = h.ShowEffectDaPath),
+              (this.TsHideEffectDa = h.HideEffectDaPath),
+              (this.TsShowMaterialDa = h.ShowMaterialDaPath),
+              (this.TsHideMaterialDa = h.HideMaterialDaPath))
+            : (Log_1.Log.CheckError() &&
+                Log_1.Log.Error("BehaviorTree", 6, "没有配置AiWander", [
+                  "AiBaseId",
+                  s.AiBase.Id,
+                ]),
+              (this.MoveStateActural = 2)),
+          s.AiWanderRadiusConfig &&
+            ((this.TsRandomRadius = s.AiWanderRadiusConfig.RandomRadius),
+            (this.TsMinWanderDistance =
+              s.AiWanderRadiusConfig.MinWanderDistance)),
+          s.CharActorComp),
+        o = Vector_1.Vector.Create();
       switch (
         (this.TsUsePatrolPointPriority &&
         s.AiPatrol.HasPatrolConfig() &&
@@ -181,14 +181,14 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
   }
   FindNavPoint(i, t, s) {
     let e = 5;
-    for (; e > 0; --e) {
-      const h = (0, puerts_1.$ref)(this.SelectedTargetLocation);
-      const r = UE.NavigationSystemV1.K2_GetRandomLocationInNavigableRadius(
-        i,
-        t.ToUeVector(),
-        h,
-        this.TsRandomRadius,
-      );
+    for (; 0 < e; --e) {
+      var h = (0, puerts_1.$ref)(this.SelectedTargetLocation),
+        r = UE.NavigationSystemV1.K2_GetRandomLocationInNavigableRadius(
+          i,
+          t.ToUeVector(),
+          h,
+          this.TsRandomRadius,
+        );
       if (
         ((this.SelectedTargetLocation = (0, puerts_1.$unref)(h)),
         r &&
@@ -211,10 +211,10 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
     this.TsMoveStateForWanderOrReset || i.AiPerception.SetAllAiSenseEnable(t);
   }
   ReceiveTickAI(i, t, s) {
-    let e;
-    let h;
-    let r;
-    const o = i.AiController;
+    var e,
+      h,
+      r,
+      o = i.AiController;
     o
       ? this.FoundPath || this.InBlink
         ? ((e = o.CharActorComp),
@@ -262,7 +262,7 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
       : this.FinishExecute(!1);
   }
   OnClear() {
-    let i;
+    var i;
     this.AIOwner instanceof TsAiController_1.default &&
       (AiContollerLibrary_1.AiControllerLibrary.ClearInput(this.AIOwner),
       this.SetAiSceneEnable(this.AIOwner.AiController, !0),
@@ -278,13 +278,13 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
           ["Actor:", this.AIOwner.AiController.CharActorComp.Actor.GetName()],
         ),
       this.HideMaterialData &&
-        this.HideMaterialData >= 0 &&
+        0 <= this.HideMaterialData &&
         (this.AIOwner.AiController.CharActorComp.Actor.CharRenderingComponent.RemoveMaterialControllerData(
           this.HideMaterialData,
         ),
         this.AIOwner.AiController.CharActorComp.Actor.CharRenderingComponent.ResetAllRenderingState()),
       this.ShowMaterialData &&
-        this.ShowMaterialData >= 0 &&
+        0 <= this.ShowMaterialData &&
         (this.AIOwner.AiController.CharActorComp.Actor.CharRenderingComponent.RemoveMaterialControllerData(
           this.ShowMaterialData,
         ),
@@ -304,7 +304,7 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
       (this.ShowMaterialData = void 0);
   }
   CheckPreLocationDistance(i, t) {
-    let s;
+    var s;
     return this.PreLocation
       ? ((s = i.ActorLocationProxy),
         Vector_1.Vector.DistSquared(this.PreLocation, s) <
@@ -332,7 +332,7 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
           "AiWander[BlinkMoveBegin]怪物闪烁导致Actor碰撞为False",
           ["Actor:", t.Actor.GetName()],
         ),
-      this.TsHideEffectDa !== "" &&
+      "" !== this.TsHideEffectDa &&
         ((i = EffectSystem_1.EffectSystem.SpawnEffect(
           GlobalData_1.GlobalData.World,
           MathUtils_1.MathUtils.DefaultTransform,
@@ -347,7 +347,7 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
               "Type",
               t.Actor.GetName(),
             ])),
-      this.TsHideMaterialDa !== ""
+      "" !== this.TsHideMaterialDa
         ? ResourceSystem_1.ResourceSystem.LoadAsync(
             this.TsHideMaterialDa,
             UE.PD_CharacterControllerData_C,
@@ -388,7 +388,7 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
           ["Actor:", t.Actor.GetName()],
         ),
       this.ResetAiInfo(t),
-      this.TsShowEffectDa !== "" &&
+      "" !== this.TsShowEffectDa &&
         ((i = EffectSystem_1.EffectSystem.SpawnEffect(
           GlobalData_1.GlobalData.World,
           MathUtils_1.MathUtils.DefaultTransform,
@@ -404,12 +404,12 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
               t.Actor.GetName(),
             ])),
       this.HideMaterialData &&
-        this.HideMaterialData >= 0 &&
+        0 <= this.HideMaterialData &&
         (t.Actor.CharRenderingComponent.RemoveMaterialControllerData(
           this.HideMaterialData,
         ),
         (this.HideMaterialData = void 0)),
-      this.TsShowMaterialDa !== ""
+      "" !== this.TsShowMaterialDa
         ? ResourceSystem_1.ResourceSystem.LoadAsync(
             this.TsShowMaterialDa,
             UE.PD_CharacterControllerData_C,
@@ -444,7 +444,7 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
             ["Actor:", i.Actor.GetName()],
           )),
       this.ShowMaterialData &&
-        this.ShowMaterialData >= 0 &&
+        0 <= this.ShowMaterialData &&
         (i.Actor.CharRenderingComponent.RemoveMaterialControllerData(
           this.ShowMaterialData,
         ),
@@ -464,12 +464,12 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
       : this.Finish(!1);
   }
   ResetAiInfo(i) {
-    const t = i.Entity.GetComponent(0)?.GetRotation();
+    var t = i.Entity.GetComponent(0)?.GetRotation();
     i.SetActorRotation(t, "脱战节点.重置为基础方法", !1);
   }
   DrawDebugPath(t) {
-    const s = this.NavigationPath.length;
-    if (s !== 0) {
+    var s = this.NavigationPath.length;
+    if (0 !== s) {
       let i = 0;
       UE.KismetSystemLibrary.DrawDebugSphere(
         t.Actor,
@@ -511,4 +511,4 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskWander;
-// # sourceMappingURL=TsTaskWander.js.map
+//# sourceMappingURL=TsTaskWander.js.map

@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiModelResourcesManager = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const ModelUtil_1 = require("../../../Core/Utils/ModelUtil");
-const GlobalData_1 = require("../../GlobalData");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const EffectUtil_1 = require("../../Utils/EffectUtil");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  ModelUtil_1 = require("../../../Core/Utils/ModelUtil"),
+  GlobalData_1 = require("../../GlobalData"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  EffectUtil_1 = require("../../Utils/EffectUtil");
 class UiModelResourcesManager {
   static get CPo() {
     return UiModelResourcesManager.gPo++;
   }
   static LoadUiModelResources(r, a) {
-    if (!r || r.length === 0)
+    if (!r || 0 === r.length)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -25,17 +25,17 @@ class UiModelResourcesManager {
         a?.(1),
         0
       );
-    const s = [];
-    const t = [];
-    const l = UiModelResourcesManager.CPo;
-    const e = [];
+    const s = [],
+      t = [],
+      l = UiModelResourcesManager.CPo;
+    var e = [];
     const i = new Map();
     ResourceSystem_1.ResourceSystem.SetLoadModeInLoading(
       GlobalData_1.GlobalData.World,
       "UiModelResourcesManager.LoadUiModelResources",
     );
     for (const u of r) {
-      const o = ResourceSystem_1.ResourceSystem.LoadAsync(
+      var o = ResourceSystem_1.ResourceSystem.LoadAsync(
         u,
         UE.Object,
         (e, o) => {
@@ -55,7 +55,7 @@ class UiModelResourcesManager {
     return UiModelResourcesManager.fPo.set(l, e), l;
   }
   static LoadUiRoleAllResourceByRoleConfigId(e, o) {
-    const r = [];
+    var r = [];
     return (
       r.push(...UiModelResourcesManager.GetRoleResourcesPath(e)),
       r.push(
@@ -66,7 +66,7 @@ class UiModelResourcesManager {
   }
   static CancelUiModelResourceLoad(e) {
     if (e !== UiModelResourcesManager.InvalidValue) {
-      const o = UiModelResourcesManager.fPo.get(e);
+      var o = UiModelResourcesManager.fPo.get(e);
       if (o) {
         for (const e of o) ResourceSystem_1.ResourceSystem.CancelAsyncLoad(e);
         ResourceSystem_1.ResourceSystem.SetLoadModeInGame(
@@ -77,33 +77,33 @@ class UiModelResourcesManager {
     }
   }
   static GetRoleResourcesPath(e) {
-    const o = [];
-    var e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e);
-    const r = ModelUtil_1.ModelUtil.GetModelConfig(e.UiMeshId);
-    const a =
-      (o.push(r.网格体.ToAssetPathName()),
-      o.push(e.UiScenePerformanceABP),
-      r.子网格体);
+    var o = [],
+      e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e),
+      r = ModelUtil_1.ModelUtil.GetModelConfig(e.UiMeshId),
+      a =
+        (o.push(r.网格体.ToAssetPathName()),
+        o.push(e.UiScenePerformanceABP),
+        r.子网格体);
     if (a) for (let e = 0; e < a.Num(); e++) o.push(a.Get(e).ToAssetPathName());
     return o;
   }
   static GetWeaponResourcesPath(e) {
-    const o = [];
+    var o = [];
     for (const s of ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponConfigByItemId(
       e,
     ).Models) {
-      const r = ModelUtil_1.ModelUtil.GetModelConfig(s);
-      var a = r.网格体.ToAssetPathName();
-      var a = (a && o.push(a), r.动画蓝图.ToAssetPathName());
+      var r = ModelUtil_1.ModelUtil.GetModelConfig(s),
+        a = r.网格体.ToAssetPathName(),
+        a = (a && o.push(a), r.动画蓝图.ToAssetPathName());
       a && o.push(a);
     }
     return o;
   }
   static GetHuluResourcesPath(e) {
-    const o = [];
-    var e = ModelUtil_1.ModelUtil.GetModelConfig(e);
-    var r = e.网格体.ToAssetPathName();
-    var r = (r && o.push(r), e.动画蓝图.ToAssetPathName());
+    var o = [],
+      e = ModelUtil_1.ModelUtil.GetModelConfig(e),
+      r = e.网格体.ToAssetPathName(),
+      r = (r && o.push(r), e.动画蓝图.ToAssetPathName());
     return r && o.push(r), o;
   }
   static LoadMeshesComponentsBundleStreaming(e, o, r) {
@@ -121,4 +121,4 @@ class UiModelResourcesManager {
   (UiModelResourcesManager.gPo = 0),
   (UiModelResourcesManager.InvalidValue = 0),
   (UiModelResourcesManager.StreamingInvalidValue = -1);
-// # sourceMappingURL=UiModelResourcesManager.js.map
+//# sourceMappingURL=UiModelResourcesManager.js.map

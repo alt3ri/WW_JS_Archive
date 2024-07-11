@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PingView = void 0);
-const UE = require("ue");
-const NetworkDefine_1 = require("../../../Launcher/NetworkDefine");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const GOODPING = 100;
-const MIDDLEPING = 200;
-const LOOPPING = 500;
-const BADCOLOR = "FF1F1EFF";
-const MIDDLECOLOR = "FFD12FFF";
-const GOODCOLOR = "30D82DFF";
+const UE = require("ue"),
+  NetworkDefine_1 = require("../../../Launcher/NetworkDefine"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  GOODPING = 100,
+  MIDDLEPING = 200,
+  LOOPPING = 500,
+  BADCOLOR = "FF1F1EFF",
+  MIDDLECOLOR = "FFD12FFF",
+  GOODCOLOR = "30D82DFF";
 class PingView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -23,7 +23,7 @@ class PingView extends UiViewBase_1.UiViewBase {
       (this.kWt = -9999),
       (this.FWt = 0),
       (this.VWt = (e) => {
-        let i;
+        var i;
         Math.abs(e - this.kWt) < this.FWt ||
           ((i = (this.kWt = e) > LOOPPING) !== this.OWt &&
             (this.GetSprite(0).SetUIActive(!i),
@@ -83,21 +83,21 @@ class PingView extends UiViewBase_1.UiViewBase {
         : [this.QWt(), BADCOLOR];
   }
   WWt() {
-    return ModelManager_1.ModelManager.PlatformModel.PlatformType !== 3 &&
+    return 3 !== ModelManager_1.ModelManager.PlatformModel.PlatformType &&
       UE.KuroLauncherLibrary.GetNetworkConnectionType() ===
         NetworkDefine_1.ENetworkType.WiFi
       ? ConfigManager_1.ConfigManager.CommonConfig.GetNetGoodSpriteMobile()
       : ConfigManager_1.ConfigManager.CommonConfig.GetNetGoodSprite();
   }
   KWt() {
-    return ModelManager_1.ModelManager.PlatformModel.PlatformType !== 3 &&
+    return 3 !== ModelManager_1.ModelManager.PlatformModel.PlatformType &&
       UE.KuroLauncherLibrary.GetNetworkConnectionType() ===
         NetworkDefine_1.ENetworkType.WiFi
       ? ConfigManager_1.ConfigManager.CommonConfig.GetNetMiddleSpriteMobile()
       : ConfigManager_1.ConfigManager.CommonConfig.GetNetMiddleSprite();
   }
   QWt() {
-    return ModelManager_1.ModelManager.PlatformModel.PlatformType !== 3 &&
+    return 3 !== ModelManager_1.ModelManager.PlatformModel.PlatformType &&
       UE.KuroLauncherLibrary.GetNetworkConnectionType() ===
         NetworkDefine_1.ENetworkType.WiFi
       ? ConfigManager_1.ConfigManager.CommonConfig.GetNetBadSpriteMobile()
@@ -105,4 +105,4 @@ class PingView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.PingView = PingView;
-// # sourceMappingURL=PingView.js.map
+//# sourceMappingURL=PingView.js.map

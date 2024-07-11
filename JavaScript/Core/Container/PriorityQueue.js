@@ -9,13 +9,13 @@ class PriorityQueue {
   Clone(t) {
     this.Clear();
     for (const h of t.E7) this.E7.push(h);
-    for (const [i, s] of t.y7) this.y7.set(i, s);
+    for (var [i, s] of t.y7) this.y7.set(i, s);
   }
   get Size() {
     return this.E7.length;
   }
   get Empty() {
-    return this.E7.length === 0;
+    return 0 === this.E7.length;
   }
   get Top() {
     if (!(this.E7.length <= 0)) return this.E7[0];
@@ -25,23 +25,23 @@ class PriorityQueue {
     (this.E7.length = 0), this.y7.clear();
   }
   Push(t) {
-    const i = this.E7.push(t) - 1;
+    var i = this.E7.push(t) - 1;
     this.y7.set(t, i), this.I7(i);
   }
   Pop() {
-    let t, i;
+    var t, i;
     if (!(this.E7.length <= 0))
       return (
         (t = this.E7[0]),
         this.y7.delete(t),
         (i = this.E7.pop()),
-        this.E7.length > 0 && ((this.E7[0] = i), this.y7.set(i, 0), this.T7(0)),
+        0 < this.E7.length && ((this.E7[0] = i), this.y7.set(i, 0), this.T7(0)),
         t
       );
     Log_1.Log.CheckError() && Log_1.Log.Error("Container", 1, "优先队列为空");
   }
   Remove(t) {
-    const i = this.y7.get(t);
+    var i = this.y7.get(t);
     return void 0 === i
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Container", 1, "元素不在优先队列中"),
@@ -64,21 +64,21 @@ class PriorityQueue {
       : (this.I7(t) || this.T7(t), !0);
   }
   I7(t) {
-    let i = !1;
-    let s = t;
-    for (; s > 0; ) {
-      const h = Math.floor((s - 1) / 2);
-      if (this.S7(this.E7[s], this.E7[h]) >= 0) break;
+    let i = !1,
+      s = t;
+    for (; 0 < s; ) {
+      var h = Math.floor((s - 1) / 2);
+      if (0 <= this.S7(this.E7[s], this.E7[h])) break;
       this.fa(s, h), (s = h), (i = !0);
     }
     return i;
   }
   T7(t) {
-    let i = !1;
-    let s = t;
+    let i = !1,
+      s = t;
     for (;;) {
-      const h = 2 * s + 1;
-      const r = 2 * s + 2;
+      var h = 2 * s + 1,
+        r = 2 * s + 2;
       let t = h;
       if (
         (t =
@@ -92,7 +92,7 @@ class PriorityQueue {
     return i;
   }
   fa(t, i) {
-    const s = this.E7[t];
+    var s = this.E7[t];
     (this.E7[t] = this.E7[i]),
       (this.E7[i] = s),
       this.y7.set(this.E7[t], t),
@@ -100,4 +100,4 @@ class PriorityQueue {
   }
 }
 exports.PriorityQueue = PriorityQueue;
-// # sourceMappingURL=PriorityQueue.js.map
+//# sourceMappingURL=PriorityQueue.js.map

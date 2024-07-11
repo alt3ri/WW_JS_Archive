@@ -5,4 +5,4 @@ class EntitySystemHelper {}
 ((exports.EntitySystemHelper = EntitySystemHelper).IsSortDirty = !1),
   (EntitySystemHelper.IsFilterDirty = !1),
   (EntitySystemHelper.SortedFrame = -1);
-// # sourceMappingURL=EntityHelper.js.map
+//# sourceMappingURL=EntityHelper.js.map

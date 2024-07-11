@@ -1,35 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestNewConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const DropPackageById_1 = require("../../../Core/Define/ConfigQuery/DropPackageById");
-const GlobalConfigFromCsvByName_1 = require("../../../Core/Define/ConfigQuery/GlobalConfigFromCsvByName");
-const ItemInfoById_1 = require("../../../Core/Define/ConfigQuery/ItemInfoById");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const NewOccupationConfigById_1 = require("../../../Core/Define/ConfigQuery/NewOccupationConfigById");
-const OccupationConfigById_1 = require("../../../Core/Define/ConfigQuery/OccupationConfigById");
-const QuestChapterById_1 = require("../../../Core/Define/ConfigQuery/QuestChapterById");
-const QuestDataById_1 = require("../../../Core/Define/ConfigQuery/QuestDataById");
-const QuestMainTypeById_1 = require("../../../Core/Define/ConfigQuery/QuestMainTypeById");
-const QuestNodeDataByKey_1 = require("../../../Core/Define/ConfigQuery/QuestNodeDataByKey");
-const QuestTypeAll_1 = require("../../../Core/Define/ConfigQuery/QuestTypeAll");
-const QuestTypeById_1 = require("../../../Core/Define/ConfigQuery/QuestTypeById");
-const QuestTypeByMainId_1 = require("../../../Core/Define/ConfigQuery/QuestTypeByMainId");
-const TaskMarkByMarkId_1 = require("../../../Core/Define/ConfigQuery/TaskMarkByMarkId");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const PublicUtil_1 = require("../../Common/PublicUtil");
+const Log_1 = require("../../../Core/Common/Log"),
+  DropPackageById_1 = require("../../../Core/Define/ConfigQuery/DropPackageById"),
+  GlobalConfigFromCsvByName_1 = require("../../../Core/Define/ConfigQuery/GlobalConfigFromCsvByName"),
+  ItemInfoById_1 = require("../../../Core/Define/ConfigQuery/ItemInfoById"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  NewOccupationConfigById_1 = require("../../../Core/Define/ConfigQuery/NewOccupationConfigById"),
+  OccupationConfigById_1 = require("../../../Core/Define/ConfigQuery/OccupationConfigById"),
+  QuestChapterById_1 = require("../../../Core/Define/ConfigQuery/QuestChapterById"),
+  QuestDataById_1 = require("../../../Core/Define/ConfigQuery/QuestDataById"),
+  QuestMainTypeById_1 = require("../../../Core/Define/ConfigQuery/QuestMainTypeById"),
+  QuestNodeDataByKey_1 = require("../../../Core/Define/ConfigQuery/QuestNodeDataByKey"),
+  QuestTypeAll_1 = require("../../../Core/Define/ConfigQuery/QuestTypeAll"),
+  QuestTypeById_1 = require("../../../Core/Define/ConfigQuery/QuestTypeById"),
+  QuestTypeByMainId_1 = require("../../../Core/Define/ConfigQuery/QuestTypeByMainId"),
+  TaskMarkByMarkId_1 = require("../../../Core/Define/ConfigQuery/TaskMarkByMarkId"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  PublicUtil_1 = require("../../Common/PublicUtil");
 class QuestNewConfig extends ConfigBase_1.ConfigBase {
   OnInit() {
     return !0;
   }
   GetTrackEffectPath(e) {
     if (!StringUtils_1.StringUtils.IsEmpty(e)) {
-      const r = `Name = 'ETrackEffect.${e}'`;
-      var e =
-        GlobalConfigFromCsvByName_1.configGlobalConfigFromCsvByName.GetConfig(
-          "ETrackEffect." + e,
-        );
+      var r = `Name = 'ETrackEffect.${e}'`,
+        e =
+          GlobalConfigFromCsvByName_1.configGlobalConfigFromCsvByName.GetConfig(
+            "ETrackEffect." + e,
+          );
       if (e) return e.Value;
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -43,11 +43,11 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
   }
   GetGlobalConfig(e) {
     if (!StringUtils_1.StringUtils.IsEmpty(e)) {
-      const r = `Name = '${e}'`;
-      var e =
-        GlobalConfigFromCsvByName_1.configGlobalConfigFromCsvByName.GetConfig(
-          e,
-        );
+      var r = `Name = '${e}'`,
+        e =
+          GlobalConfigFromCsvByName_1.configGlobalConfigFromCsvByName.GetConfig(
+            e,
+          );
       if (e) return e.Value;
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -60,7 +60,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
     }
   }
   GetDropConfig(e) {
-    let r;
+    var r;
     if (e)
       return (
         (r = DropPackageById_1.configDropPackageById.GetConfig(e)) ||
@@ -73,7 +73,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
       );
   }
   GetItemInfoConfig(e) {
-    const r = ItemInfoById_1.configItemInfoById.GetConfig(e);
+    var r = ItemInfoById_1.configItemInfoById.GetConfig(e);
     return (
       r ||
         (Log_1.Log.CheckError() &&
@@ -85,7 +85,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
     return QuestTypeAll_1.configQuestTypeAll.GetConfigList();
   }
   GetQuestTypeConfig(e) {
-    const r = QuestTypeById_1.configQuestTypeById.GetConfig(e);
+    var r = QuestTypeById_1.configQuestTypeById.GetConfig(e);
     return (
       r ||
         (Log_1.Log.CheckError() &&
@@ -94,7 +94,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetQuestMainTypeConfig(e) {
-    const r = QuestMainTypeById_1.configQuestMainTypeById.GetConfig(e);
+    var r = QuestMainTypeById_1.configQuestMainTypeById.GetConfig(e);
     return (
       r ||
         (Log_1.Log.CheckError() &&
@@ -117,7 +117,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
     return e ? e.QuestTabIcon : "";
   }
   GetQuestTypeMark(e) {
-    const r = TaskMarkByMarkId_1.configTaskMarkByMarkId.GetConfig(e);
+    var r = TaskMarkByMarkId_1.configTaskMarkByMarkId.GetConfig(e);
     return r
       ? r.MarkPic
       : (Log_1.Log.CheckError() &&
@@ -130,7 +130,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
         "");
   }
   GetQuestMarkConfig(e) {
-    const r = TaskMarkByMarkId_1.configTaskMarkByMarkId.GetConfig(e);
+    var r = TaskMarkByMarkId_1.configTaskMarkByMarkId.GetConfig(e);
     if (r) return r;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
@@ -145,7 +145,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
     if (e) return e.TrackIconId;
   }
   GetChapterConfig(e) {
-    const r = QuestChapterById_1.configQuestChapterById.GetConfig(e);
+    var r = QuestChapterById_1.configQuestChapterById.GetConfig(e);
     if (r) return r;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("Quest", 19, "任务章节表：id = 的配置找不到", [
@@ -154,7 +154,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
       ]);
   }
   GetOccupationConfig(e) {
-    const r = OccupationConfigById_1.configOccupationConfigById.GetConfig(e);
+    var r = OccupationConfigById_1.configOccupationConfigById.GetConfig(e);
     return (
       r ||
         (Log_1.Log.CheckError() &&
@@ -172,7 +172,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetNewOccupationConfig(e) {
-    const r =
+    var r =
       NewOccupationConfigById_1.configNewOccupationConfigById.GetConfig(e);
     return (
       r ||
@@ -195,7 +195,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
     return e ? PublicUtil_1.PublicUtil.GetConfigTextByTable(4, e.Id) : "";
   }
   GetQuestConfig(e) {
-    const r = QuestDataById_1.configQuestDataById.GetConfig(e, !1);
+    var r = QuestDataById_1.configQuestDataById.GetConfig(e, !1);
     return (
       r ||
         (Log_1.Log.CheckError() &&
@@ -204,7 +204,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetQuestNodeConfig(e, r) {
-    const t = QuestNodeDataByKey_1.configQuestNodeDataByKey.GetConfig(
+    var t = QuestNodeDataByKey_1.configQuestNodeDataByKey.GetConfig(
       e + "_" + r,
       !1,
     );
@@ -222,7 +222,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetQuestTypeColor(e) {
-    const r = this.GetQuestTypeConfig(e);
+    var r = this.GetQuestTypeConfig(e);
     if (r) return r.TypeColor;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("Quest", 19, "任务类型表：id = 的配置找不到", [
@@ -231,7 +231,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
       ]);
   }
   GetQuestTypeTextColor(e) {
-    const r = this.GetQuestTypeConfig(e);
+    var r = this.GetQuestTypeConfig(e);
     if (r) return r.TextColor;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("Quest", 19, "任务类型表：id = 的配置找不到", [
@@ -249,4 +249,4 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.QuestNewConfig = QuestNewConfig;
-// # sourceMappingURL=QuestConfig.js.map
+//# sourceMappingURL=QuestConfig.js.map

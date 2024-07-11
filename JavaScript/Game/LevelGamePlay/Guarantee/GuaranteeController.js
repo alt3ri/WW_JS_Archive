@@ -1,15 +1,15 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuaranteeController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralContextDefine_1 = require("../LevelGeneralContextDefine");
-const GuaranteeActionCenter_1 = require("./GuaranteeActionCenter");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralContextDefine_1 = require("../LevelGeneralContextDefine"),
+  GuaranteeActionCenter_1 = require("./GuaranteeActionCenter");
 class GuaranteeController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -56,9 +56,9 @@ class GuaranteeController extends ControllerBase_1.ControllerBase {
   static ExecuteActions(e, t) {
     if (t)
       for (const r of e) {
-        const n = r.Name;
-        const o =
-          GuaranteeActionCenter_1.GuaranteeActionCenter.GetGuaranteeAction(n);
+        var n = r.Name,
+          o =
+            GuaranteeActionCenter_1.GuaranteeActionCenter.GetGuaranteeAction(n);
         o &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -74,11 +74,11 @@ class GuaranteeController extends ControllerBase_1.ControllerBase {
 }
 (exports.GuaranteeController = GuaranteeController),
   ((_a = GuaranteeController).ExecSceneGuaranteeActions = () => {
-    let e =
+    var e =
       ModelManager_1.ModelManager.LevelGeneralModel?.RemoveSceneGuaranteeActionInfos();
     ModelManager_1.ModelManager.LevelGeneralModel?.ClearTreeGuaranteeActionInfosMap(),
       e &&
-        e.length > 0 &&
+        0 < e.length &&
         ((e = e.reverse()),
         _a.ExecuteActions(
           e,
@@ -91,12 +91,12 @@ class GuaranteeController extends ControllerBase_1.ControllerBase {
         ]);
   }),
   (GuaranteeController.sIe = (e) => {
-    let t =
+    var t =
       ModelManager_1.ModelManager.LevelGeneralModel?.RemoveTreeGuaranteeActionInfos(
         e,
       );
     t &&
-      t.length > 0 &&
+      0 < t.length &&
       ((t = t.reverse()).forEach((e) => {
         ModelManager_1.ModelManager.LevelGeneralModel.PopSceneGuaranteeActionInfo(
           e,
@@ -122,12 +122,11 @@ class GuaranteeController extends ControllerBase_1.ControllerBase {
     _a.aIe(e, t, !1, n);
   }),
   (GuaranteeController.aIe = (t, n, o, r) => {
-    if (n && n.Type !== 7 && r && r.Name) {
-      const a =
-        GuaranteeActionCenter_1.GuaranteeActionCenter.GetActionFilterMode(
+    if (n && 7 !== n.Type && r && r.Name) {
+      var a = GuaranteeActionCenter_1.GuaranteeActionCenter.GetActionFilterMode(
           r.Name,
-        );
-      const _ = ModelManager_1.ModelManager.LevelGeneralModel;
+        ),
+        _ = ModelManager_1.ModelManager.LevelGeneralModel;
       let e = void 0;
       switch (n?.Type) {
         case 4:
@@ -192,4 +191,4 @@ class GuaranteeController extends ControllerBase_1.ControllerBase {
               ));
     }
   });
-// # sourceMappingURL=GuaranteeController.js.map
+//# sourceMappingURL=GuaranteeController.js.map

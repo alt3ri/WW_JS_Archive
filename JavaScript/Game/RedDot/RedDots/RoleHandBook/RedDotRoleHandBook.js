@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RedDotRoleHandBook = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const RedDotBase_1 = require("../../RedDotBase");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  RedDotBase_1 = require("../../RedDotBase");
 class RedDotRoleHandBook extends RedDotBase_1.RedDotBase {
   OnGetEvents() {
     return [
@@ -13,16 +13,16 @@ class RedDotRoleHandBook extends RedDotBase_1.RedDotBase {
     ];
   }
   OnCheck() {
-    const n = ConfigManager_1.ConfigManager.RoleConfig.GetRoleListByType(1);
-    const o = n.length;
+    var n = ConfigManager_1.ConfigManager.RoleConfig.GetRoleListByType(1),
+      o = n.length;
     for (let e = 0; e < o; e++) {
-      var r;
-      var a;
-      let t = n[e];
-      let i = t.Id;
-      if (t.PartyId !== 9) {
-        let e = void 0;
-        let n = void 0;
+      var r,
+        a,
+        t = n[e],
+        i = t.Id;
+      if (9 !== t.PartyId) {
+        let e = void 0,
+          n = void 0;
         for ([r, a] of t.ExchangeConsume) {
           (e = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(r)), (n = a);
           break;
@@ -39,4 +39,4 @@ class RedDotRoleHandBook extends RedDotBase_1.RedDotBase {
   }
 }
 exports.RedDotRoleHandBook = RedDotRoleHandBook;
-// # sourceMappingURL=RedDotRoleHandBook.js.map
+//# sourceMappingURL=RedDotRoleHandBook.js.map

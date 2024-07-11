@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const GlobalData_1 = require("../../../GlobalData");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const Log_1 = require("../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../GlobalData"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class TsTaskExecuteEvent extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -18,9 +18,9 @@ class TsTaskExecuteEvent extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveExecuteAI(e, t) {
     this.InitTsVariables();
-    const s = e.AiController;
+    var s = e.AiController;
     s
-      ? (this.TsEventGroupId > 0 &&
+      ? (0 < this.TsEventGroupId &&
           ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActions(
             this.TsEventGroupId,
             s.CharActorComp.Actor,
@@ -35,4 +35,4 @@ class TsTaskExecuteEvent extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskExecuteEvent;
-// # sourceMappingURL=TsTaskExecuteEvent.js.map
+//# sourceMappingURL=TsTaskExecuteEvent.js.map

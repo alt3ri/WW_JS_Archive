@@ -1,36 +1,36 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletActionInitMove = void 0);
-const UE = require("ue");
-const Info_1 = require("../../../../Core/Common/Info");
-const Log_1 = require("../../../../Core/Common/Log");
-const Stats_1 = require("../../../../Core/Common/Stats");
-const QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil");
-const MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon");
-const EffectSystem_1 = require("../../../Effect/EffectSystem");
-const Global_1 = require("../../../Global");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ActorUtils_1 = require("../../../Utils/ActorUtils");
-const ColorUtils_1 = require("../../../Utils/ColorUtils");
-const BulletConstant_1 = require("../../Bullet/BulletConstant");
-const BulletController_1 = require("../BulletController");
-const BulletUtil_1 = require("../BulletUtil");
-const BulletMoveInfo_1 = require("../Model/BulletMoveInfo");
-const BulletPool_1 = require("../Model/BulletPool");
-const BulletTraceElementPool_1 = require("../Model/BulletTraceElementPool");
-const BulletActionBase_1 = require("./BulletActionBase");
-const DEFAULT_GRAVITY = -1e3;
-const DEFAULT_UP_DISTANCE = 500;
-const PROFILE_AIMED_TOWARD = "BulletMoveAimedToward";
-const PROFILE_STICK_GROUND = "BulletMoveStickGround";
+const UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
+  QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
+  EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  Global_1 = require("../../../Global"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ActorUtils_1 = require("../../../Utils/ActorUtils"),
+  ColorUtils_1 = require("../../../Utils/ColorUtils"),
+  BulletConstant_1 = require("../../Bullet/BulletConstant"),
+  BulletController_1 = require("../BulletController"),
+  BulletUtil_1 = require("../BulletUtil"),
+  BulletMoveInfo_1 = require("../Model/BulletMoveInfo"),
+  BulletPool_1 = require("../Model/BulletPool"),
+  BulletTraceElementPool_1 = require("../Model/BulletTraceElementPool"),
+  BulletActionBase_1 = require("./BulletActionBase"),
+  DEFAULT_GRAVITY = -1e3,
+  DEFAULT_UP_DISTANCE = 500,
+  PROFILE_AIMED_TOWARD = "BulletMoveAimedToward",
+  PROFILE_STICK_GROUND = "BulletMoveStickGround";
 class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
   constructor() {
     super(...arguments),
@@ -63,26 +63,25 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
       (this.r5o = !1);
   }
   OnExecute() {
-    const t = this.BulletInfo.BulletInitParams;
+    var t = this.BulletInfo.BulletInitParams;
     const e = this.BulletInfo.BulletDataMain;
-    const l = (this.Pe = e).Move;
-    var o = e.Obstacle;
-    const i = this.BulletInfo.MoveInfo;
-    var r = ((i.BulletSpeedRatio = 1), this.BulletInfo.AttackerSkillComp);
-    var r =
-      (this.BulletInfo.TargetActorComp?.Valid &&
-        r?.Valid &&
-        r.CurrentSkill &&
-        r.SkillTargetSocket &&
-        (this.BulletInfo.SkillBoneName = FNameUtil_1.FNameUtil.GetDynamicFName(
-          r.SkillTargetSocket,
-        )),
-      (i.BulletSpeed = l.Speed),
-      i.ObstaclesOffset.FromUeVector(o.Center),
-      this.l5o(),
-      this._5o(),
-      e.Base);
-    var o = e.Aimed;
+    var l = (this.Pe = e).Move,
+      o = e.Obstacle,
+      i = this.BulletInfo.MoveInfo,
+      r = ((i.BulletSpeedRatio = 1), this.BulletInfo.AttackerSkillComp),
+      r =
+        (this.BulletInfo.TargetActorComp?.Valid &&
+          r?.Valid &&
+          r.CurrentSkill &&
+          r.SkillTargetSocket &&
+          (this.BulletInfo.SkillBoneName =
+            FNameUtil_1.FNameUtil.GetDynamicFName(r.SkillTargetSocket)),
+        (i.BulletSpeed = l.Speed),
+        i.ObstaclesOffset.FromUeVector(o.Center),
+        this.l5o(),
+        this._5o(),
+        e.Base),
+      o = e.Aimed;
     if (
       (!r.StickGround &&
         o.AimedCtrlDir &&
@@ -94,7 +93,7 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
       this.d5o(),
       this.C5o(),
       this.g5o(),
-      l.TrackParams.length > 0)
+      0 < l.TrackParams.length)
     ) {
       const e = l.TrackParams[0];
       (i.MinFollowHeight = e.Y), (i.SpeedFollowTarget = e.X);
@@ -107,22 +106,22 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
   }
   s5o(t, e) {
     if (e !== StringUtils_1.NONE_STRING) {
-      const l = t.Actor.K2_GetComponentsByClass(
-        UE.SkeletalMeshComponent.StaticClass(),
-      );
-      const o = l ? l.Num() : 0;
+      var l = t.Actor.K2_GetComponentsByClass(
+          UE.SkeletalMeshComponent.StaticClass(),
+        ),
+        o = l ? l.Num() : 0;
       for (let t = 0; t < o; t++) {
-        const i = l.Get(t);
+        var i = l.Get(t);
         if (i?.IsValid() && i.GetName() === e) return i;
       }
     }
     return t.SkeletalMesh;
   }
   f5o(t) {
-    let e;
-    let l;
-    const o = this.Pe.Move;
-    o.FollowType === 0
+    var e,
+      l,
+      o = this.Pe.Move;
+    0 === o.FollowType
       ? ((l = this.BulletInfo),
         (e = this.s5o(
           t?.Valid ? t : l.AttackerActorComp,
@@ -132,7 +131,7 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
         l.ApplyCacheLocationAndRotation(),
         l.ActorComponent.SetAttachToComponent(e, o.BoneName, 1, 1, 1, !0),
         l.InitPosition.FromUeVector(l.ActorComponent.ActorLocationProxy))
-      : o.FollowType === 3 &&
+      : 3 === o.FollowType &&
         ((e = this.BulletInfo),
         (l = this.s5o(
           t?.Valid ? t : e.AttackerActorComp,
@@ -156,7 +155,7 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
         e.InitPosition.FromUeVector(e.ActorComponent.ActorLocationProxy));
   }
   l5o() {
-    const t = this.BulletInfo;
+    var t = this.BulletInfo;
     switch (this.Pe.Base.BornPositionStandard) {
       case 0:
         this.p5o(t.AttackerActorComp);
@@ -186,21 +185,21 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
     this.y5o(void 0), this.f5o(t);
   }
   v5o(t) {
-    const e = BulletMoveInfo_1.BulletMoveInfo.TempTransform1;
+    var e = BulletMoveInfo_1.BulletMoveInfo.TempTransform1;
     this.T5o(t, e),
       this.y5o(e),
       (0, RegisterComponent_1.isComponentInstance)(t, 3) && this.f5o(t);
   }
   M5o(t) {
-    const e = BulletMoveInfo_1.BulletMoveInfo.TempTransform1;
-    var t = t?.Entity?.GetComponent(1);
+    var e = BulletMoveInfo_1.BulletMoveInfo.TempTransform1,
+      t = t?.Entity?.GetComponent(1);
     (0, RegisterComponent_1.isComponentInstance)(t, 3)
       ? (this.T5o(t, e), (this.a5o = t), this.y5o(e), this.f5o(t))
       : (this.T5o(t, e), this.y5o(e));
   }
   E5o(t) {
-    let e, l, o, i, r;
-    this.Pe.Move.FollowType === 4
+    var e, l, o, i, r;
+    4 === this.Pe.Move.FollowType
       ? this.L5o(t)
       : ((e = BulletMoveInfo_1.BulletMoveInfo.TempTransform1),
         (o = t.BulletInitParams),
@@ -233,10 +232,10 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
         BulletPool_1.BulletPool.RecycleVector(l));
   }
   L5o(t) {
-    let e;
-    let l = ModelManager_1.ModelManager.BulletModel.GetBulletEntityById(
-      t.ParentEntityId,
-    );
+    var e,
+      l = ModelManager_1.ModelManager.BulletModel.GetBulletEntityById(
+        t.ParentEntityId,
+      );
     l
       ? ((l = l.GetBulletInfo()),
         (t.ParentEffect = l.EffectInfo.Effect),
@@ -263,35 +262,35 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
         this.y5o(void 0));
   }
   I5o() {
-    const t = BulletUtil_1.BulletUtil.GetCurrentRole(this.BulletInfo);
-    const e = BulletMoveInfo_1.BulletMoveInfo.TempTransform1;
+    var t = BulletUtil_1.BulletUtil.GetCurrentRole(this.BulletInfo),
+      e = BulletMoveInfo_1.BulletMoveInfo.TempTransform1;
     e.FromUeTransform(t.ActorTransform),
       (this.a5o = t),
       this.y5o(e),
       this.f5o(t);
   }
   y5o(t) {
-    const e = this.BulletInfo;
-    const l = e.MoveInfo;
-    let o = this.Pe.Base;
-    const i = this.Pe.Move;
-    var r = o.BornPositionRandom;
-    const a = e.AttackerActorComp;
-    const _ = BulletPool_1.BulletPool.CreateVector();
-    var r =
-      (r.Equality(Vector_1.Vector.ZeroVectorProxy)
-        ? _.FromUeVector(e.BornLocationOffset)
-        : (e.BulletInitParams.FromRemote
-            ? _.FromUeVector(e.RandomPosOffset)
-            : ((_.X = this.HY(r.X)),
-              (_.Y = this.HY(r.Y)),
-              (_.Z = this.HY(r.Z)),
-              e.RandomPosOffset.FromUeVector(_)),
-          _.AdditionEqual(e.BornLocationOffset)),
-      BulletPool_1.BulletPool.CreateVector());
-    const s = BulletPool_1.BulletPool.CreateVector();
+    var e = this.BulletInfo,
+      l = e.MoveInfo,
+      o = this.Pe.Base,
+      i = this.Pe.Move,
+      r = o.BornPositionRandom,
+      a = e.AttackerActorComp,
+      _ = BulletPool_1.BulletPool.CreateVector(),
+      r =
+        (r.Equality(Vector_1.Vector.ZeroVectorProxy)
+          ? _.FromUeVector(e.BornLocationOffset)
+          : (e.BulletInitParams.FromRemote
+              ? _.FromUeVector(e.RandomPosOffset)
+              : ((_.X = this.HY(r.X)),
+                (_.Y = this.HY(r.Y)),
+                (_.Z = this.HY(r.Z)),
+                e.RandomPosOffset.FromUeVector(_)),
+            _.AdditionEqual(e.BornLocationOffset)),
+        BulletPool_1.BulletPool.CreateVector()),
+      s = BulletPool_1.BulletPool.CreateVector();
     FNameUtil_1.FNameUtil.IsEmpty(i.BoneName) || !this.n5o
-      ? (o.BornPositionStandard !== 1 && (_.Z -= a.ScaledHalfHeight),
+      ? (1 !== o.BornPositionStandard && (_.Z -= a.ScaledHalfHeight),
         (
           t ||
           ((o = BulletMoveInfo_1.BulletMoveInfo.TempTransform1).SetRotation(
@@ -314,8 +313,8 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
       BulletPool_1.BulletPool.RecycleVector(s);
   }
   T5o(t, e) {
-    let l = this.BulletInfo;
-    const o = l.AttackerActorComp;
+    var l = this.BulletInfo,
+      o = l.AttackerActorComp;
     t
       ? (e.FromUeTransform(t.GetSocketTransform(l.SkillBoneName)),
         (t = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
@@ -334,14 +333,14 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
       e.SetRotation(o.ActorQuat);
   }
   D5o(t) {
-    let e;
-    let l;
-    const o = this.BulletInfo;
-    var i = this.BulletInfo.BulletDataMain.Base;
-    const r = ((this.r5o = !1), BulletPool_1.BulletPool.CreateVector());
-    var i = (r.FromUeVector(i.BornDistLimit), r.Y);
-    const a = r.X;
-    const _ = r.Z;
+    var e,
+      l,
+      o = this.BulletInfo,
+      i = this.BulletInfo.BulletDataMain.Base,
+      r = ((this.r5o = !1), BulletPool_1.BulletPool.CreateVector()),
+      i = (r.FromUeVector(i.BornDistLimit), r.Y),
+      a = r.X,
+      _ = r.Z;
     r.IsZero() ||
       ((e = o.AttackerActorComp.ActorLocationProxy),
       r.FromUeVector(t),
@@ -363,39 +362,39 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
       BulletPool_1.BulletPool.RecycleVector(r);
   }
   c5o(t) {
-    const e = this.BulletInfo;
-    var l = this.BulletInfo.BulletDataMain.Aimed;
-    let o = Global_1.Global.CharacterCameraManager;
-    const i = BulletPool_1.BulletPool.CreateVector();
-    const r = BulletPool_1.BulletPool.CreateVector();
-    const a = BulletPool_1.BulletPool.CreateVector();
-    const _ = BulletPool_1.BulletPool.CreateVector();
-    var l =
-      (i.FromUeVector(o.GetCameraLocation()),
-      r.FromUeVector(o.GetActorForwardVector()),
-      r.MultiplyEqual(l.DistLimit),
-      r.AdditionEqual(i),
-      e.MoveInfo.AimedLineTraceElement ||
-        (e.MoveInfo.AimedLineTraceElement =
-          BulletTraceElementPool_1.BulletTraceElementPool.GetTraceLineElement(
-            ModelManager_1.ModelManager.BulletModel.ObjectTypeTakeAim,
-            e.AttackerId,
-            e.CollisionInfo.IgnoreQueries,
-          )),
-      e.MoveInfo.AimedLineTraceElement);
-    let s =
-      (TraceElementCommon_1.TraceElementCommon.SetStartLocation(l, i),
-      TraceElementCommon_1.TraceElementCommon.SetEndLocation(l, r),
-      TraceElementCommon_1.TraceElementCommon.LineTrace(
-        l,
-        PROFILE_AIMED_TOWARD,
-      ));
+    var e = this.BulletInfo,
+      l = this.BulletInfo.BulletDataMain.Aimed,
+      o = Global_1.Global.CharacterCameraManager,
+      i = BulletPool_1.BulletPool.CreateVector(),
+      r = BulletPool_1.BulletPool.CreateVector(),
+      a = BulletPool_1.BulletPool.CreateVector(),
+      _ = BulletPool_1.BulletPool.CreateVector(),
+      l =
+        (i.FromUeVector(o.GetCameraLocation()),
+        r.FromUeVector(o.GetActorForwardVector()),
+        r.MultiplyEqual(l.DistLimit),
+        r.AdditionEqual(i),
+        e.MoveInfo.AimedLineTraceElement ||
+          (e.MoveInfo.AimedLineTraceElement =
+            BulletTraceElementPool_1.BulletTraceElementPool.GetTraceLineElement(
+              ModelManager_1.ModelManager.BulletModel.ObjectTypeTakeAim,
+              e.AttackerId,
+              e.CollisionInfo.IgnoreQueries,
+            )),
+        e.MoveInfo.AimedLineTraceElement),
+      s =
+        (TraceElementCommon_1.TraceElementCommon.SetStartLocation(l, i),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(l, r),
+        TraceElementCommon_1.TraceElementCommon.LineTrace(
+          l,
+          PROFILE_AIMED_TOWARD,
+        ));
     let h = -1;
     if (s) {
-      const n = l.HitResult;
-      const u = n.GetHitCount();
-      const B = BulletPool_1.BulletPool.CreateVector();
-      const m = BulletPool_1.BulletPool.CreateVector();
+      var n = l.HitResult,
+        u = n.GetHitCount(),
+        B = BulletPool_1.BulletPool.CreateVector(),
+        m = BulletPool_1.BulletPool.CreateVector();
       m.FromUeVector(o.GetActorForwardVector());
       for (let t = 0; t < u; t++) {
         BulletConstant_1.BulletConstant.OpenMoveLog &&
@@ -406,14 +405,14 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
               ? n.Actors.Get(t)?.ActorLabel
               : n.Actors.Get(t)?.GetName(),
           ]);
-        let c = n.Components.Get(t).GetCollisionProfileName();
+        var c = n.Components.Get(t).GetCollisionProfileName();
         if (!BulletConstant_1.BulletConstant.ProfileNameWater.op_Equality(c))
           if (
             (TraceElementCommon_1.TraceElementCommon.GetHitLocation(n, t, a),
             B.FromUeVector(a),
             B.SubtractionEqual(e.GetActorLocation()),
             B.Normalize(),
-            Vector_1.Vector.DotProduct(m, B) > 0)
+            0 < Vector_1.Vector.DotProduct(m, B))
           ) {
             c = n.Actors?.Get(t);
             if (c?.IsValid()) {
@@ -458,15 +457,15 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
       BulletPool_1.BulletPool.RecycleVector(_);
   }
   _5o() {
-    let t;
-    let e;
-    let l;
-    let o = this.Pe.Aimed;
-    const i = this.Pe.Move;
+    var t,
+      e,
+      l,
+      o = this.Pe.Aimed,
+      i = this.Pe.Move;
     o.AimedCtrlDir ||
-      i.FollowType === 3 ||
-      i.Trajectory === 5 ||
-      i.Trajectory === 4 ||
+      3 === i.FollowType ||
+      5 === i.Trajectory ||
+      4 === i.Trajectory ||
       ((t = (o = this.BulletInfo).MoveInfo),
       (e = this.Pe.Base),
       this.R5o(t.BeginSpeedRotator),
@@ -487,8 +486,8 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
       BulletPool_1.BulletPool.RecycleRotator(l));
   }
   U5o(t, e) {
-    let l, o;
-    e.X > 0
+    var l, o;
+    0 < e.X
       ? ((o = BulletPool_1.BulletPool.CreateVector()),
         this.BulletInfo.BulletInitParams.FromRemote
           ? o.FromUeVector(this.BulletInfo.RandomInitSpeedOffset)
@@ -501,7 +500,7 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
         t.Quaternion().RotateVector(o, o),
         MathUtils_1.MathUtils.VectorToRotator(o, t),
         BulletPool_1.BulletPool.RecycleVector(o))
-      : (e.Y > 0 || e.Z > 0) &&
+      : (0 < e.Y || 0 < e.Z) &&
         ((l = BulletPool_1.BulletPool.CreateRotator()),
         this.BulletInfo?.BulletInitParams.FromRemote
           ? l.Set(
@@ -520,22 +519,22 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
   }
   R5o(t) {
     let e = void 0;
-    const l = this.BulletInfo;
-    const o = l.MoveInfo;
-    const i = this.Pe.Move;
-    const r = i.InitVelocityDirParam;
+    var l = this.BulletInfo,
+      o = l.MoveInfo,
+      i = this.Pe.Move,
+      r = i.InitVelocityDirParam;
     switch (i.InitVelocityDirStandard) {
       case 0:
-        if (FNameUtil_1.FNameUtil.IsEmpty(i.BoneName) || i.FollowType === 0)
+        if (FNameUtil_1.FNameUtil.IsEmpty(i.BoneName) || 0 === i.FollowType)
           return void t.FromUeRotator(l.AttackerActorComp.ActorRotationProxy);
         o.SocketTransform.GetRotation().Rotator(t);
-        var a = i.FollowSkeletonRotLimit;
-        var _ = l.GetActorRotation();
+        var a = i.FollowSkeletonRotLimit,
+          _ = l.GetActorRotation();
         return (
-          a.X >= 1 && (t.Roll = _.Roll),
-          a.Y >= 1 && (t.Pitch = _.Pitch),
+          1 <= a.X && (t.Roll = _.Roll),
+          1 <= a.Y && (t.Pitch = _.Pitch),
           void (
-            a.Z >= 1 && (t.Yaw = l.AttackerActorComp.ActorRotationProxy.Yaw)
+            1 <= a.Z && (t.Yaw = l.AttackerActorComp.ActorRotationProxy.Yaw)
           )
         );
       case 3:
@@ -616,13 +615,13 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
     t.FromUeRotator(Rotator_1.Rotator.ZeroRotatorProxy);
   }
   d5o() {
-    const e = this.BulletInfo;
-    const l = e.MoveInfo;
-    let o = e.BulletDataMain.Move;
-    if (o.Trajectory === 3) {
-      const i = BulletPool_1.BulletPool.CreateVector();
+    var e = this.BulletInfo,
+      l = e.MoveInfo,
+      o = e.BulletDataMain.Move;
+    if (3 === o.Trajectory) {
+      var i = BulletPool_1.BulletPool.CreateVector();
       let t = 0;
-      if (o.TrackTarget === 0 || o.TrackTarget === 10) {
+      if (0 === o.TrackTarget || 10 === o.TrackTarget) {
         var r = BulletUtil_1.BulletUtil.GetCurrentRole(e);
         if (!r)
           return (
@@ -671,8 +670,8 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
     }
   }
   A5o(t) {
-    const e = this.BulletInfo;
-    const l = e.MoveInfo;
+    var e = this.BulletInfo,
+      l = e.MoveInfo;
     e.ClearCacheLocationAndRotation(),
       e.ActorComponent.SetActorTransform(t.ActorTransform),
       l.RoundCenter.FromUeVector(
@@ -681,36 +680,34 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
       l.RoundCenterLastLocation.FromUeVector(t.ActorLocation);
   }
   C5o() {
-    const i = this.Pe.Move;
-    let r = i.Trajectory;
-    let a = r === 4;
-    if (a || r === 5) {
+    var i = this.Pe.Move,
+      r = i.Trajectory,
+      a = 4 === r;
+    if (a || 5 === r) {
       r = i.TrackParams;
       if (r && !(r.length < 2)) {
-        const _ = this.BulletInfo;
-        const s = _.MoveInfo;
-        let t = 0;
-        let e = !1;
-        let l = 0;
+        var _ = this.BulletInfo,
+          s = _.MoveInfo;
+        let t = 0,
+          e = !1,
+          l = 0;
         a
-          ? (h = r[2]) && ((t = h.X), (e = h.Z > 0), (l = h.Y))
+          ? (h = r[2]) && ((t = h.X), (e = 0 < h.Z), (l = h.Y))
           : (h = r[1]) && (t = h.Y),
           s.GravityMoveRotator.Reset();
-        var h = _.Attacker?.GetComponent(3);
-        const n = _.TargetActorComp;
-        const u = BulletPool_1.BulletPool.CreateVector();
-        var B = FNameUtil_1.FNameUtil.GetDynamicFName(
-          i.TrackTargetBlackboardKey,
-        );
-        var B = BulletUtil_1.BulletUtil.GetTargetLocation(
-          n,
-          FNameUtil_1.FNameUtil.IsNothing(B) ? _.SkillBoneName : B,
-          _,
-        );
+        var h = _.Attacker?.GetComponent(3),
+          n = _.TargetActorComp,
+          u = BulletPool_1.BulletPool.CreateVector(),
+          B = FNameUtil_1.FNameUtil.GetDynamicFName(i.TrackTargetBlackboardKey),
+          B = BulletUtil_1.BulletUtil.GetTargetLocation(
+            n,
+            FNameUtil_1.FNameUtil.IsNothing(B) ? _.SkillBoneName : B,
+            _,
+          );
         if (B) {
           n?.Valid && (0, RegisterComponent_1.isComponentInstance)(n, 3)
             ? (u.FromUeVector(B),
-              t !== 0 &&
+              0 !== t &&
                 (u.Z += n.Actor.CapsuleComponent.CapsuleHalfHeight * t),
               e &&
                 (m = n.Entity?.GetComponent(161)) &&
@@ -730,17 +727,17 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
             case 1:
               P.FromUeVector(n.ActorForwardProxy);
           }
-          var B = i.DestOffset.X;
-          var c = i.DestOffset.Y;
-          var v = i.DestOffset.Z;
-          c !== 0 &&
+          var B = i.DestOffset.X,
+            c = i.DestOffset.Y,
+            v = i.DestOffset.Z;
+          0 !== c &&
             ((M = BulletPool_1.BulletPool.CreateVector()),
             Vector_1.Vector.CrossProduct(P, Vector_1.Vector.UpVectorProxy, M),
             M.MultiplyEqual(c),
             m.AdditionEqual(M),
             BulletPool_1.BulletPool.RecycleVector(M)),
-            B !== 0 && (P.MultiplyEqual(B), m.AdditionEqual(P)),
-            v !== 0 &&
+            0 !== B && (P.MultiplyEqual(B), m.AdditionEqual(P)),
+            0 !== v &&
               ((c = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
                 Vector_1.Vector.UpVectorProxy,
               ),
@@ -755,51 +752,52 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
             u.MultiplyEqual(r[0].X),
             u.AdditionEqual(h.ActorLocationProxy);
         let o = 0;
-        var M = r[0];
-        var c =
-          (a
-            ? ((v = (B = r[1]).Z > 0 ? B.Z : 1),
-              (s.Gravity = M.Z !== 0 ? M.Z : DEFAULT_GRAVITY),
-              (c = Vector_1.Vector.Dist2D(u, _.GetActorLocation())),
-              (c += l),
-              (c = Math.max(c, M.X)),
-              (c = Math.min(c, M.Y)),
-              (s.BulletSpeed2D = c / v),
-              (m = u.Z - _.GetActorLocation().Z),
-              (m = Math.max(m, B.X)),
-              (m = Math.min(m, B.Y)),
-              (s.BulletSpeedZ = m / v - 0.5 * s.Gravity * v),
-              (s.BulletSpeed = Math.sqrt(
-                Math.pow(s.BulletSpeed2D, 2) + Math.pow(s.BulletSpeedZ, 2),
-              )),
-              (o =
-                Math.atan(s.BulletSpeedZ / s.BulletSpeed2D) *
-                MathCommon_1.MathCommon.RadToDeg))
-            : ((o = r[1].X),
-              (s.Gravity = M.Z !== 0 ? M.Z : DEFAULT_GRAVITY),
-              (h = Vector_1.Vector.Dist2D(u, _.GetActorLocation())),
-              (a = u.Z - _.GetActorLocation().Z),
-              (s.BulletSpeed2D = Math.sqrt(
-                Math.abs(
-                  (h * h * s.Gravity) /
-                    (2 * a -
-                      2 * Math.tan(o * MathCommon_1.MathCommon.DegToRad) * h),
-                ),
-              )),
-              (s.BulletSpeedZ =
-                Math.tan(o * MathCommon_1.MathCommon.DegToRad) *
-                s.BulletSpeed2D),
-              (s.BulletSpeed = Math.sqrt(
-                Math.pow(s.BulletSpeed2D, 2) + Math.pow(s.BulletSpeedZ, 2),
-              )),
-              (s.BulletSpeed = Math.max(M.X, s.BulletSpeed)),
-              (s.BulletSpeed = Math.min(M.Y, s.BulletSpeed)),
-              (s.BulletSpeedZ =
-                Math.sin(o * MathCommon_1.MathCommon.DegToRad) * s.BulletSpeed),
-              (s.BulletSpeed2D =
-                Math.cos(o * MathCommon_1.MathCommon.DegToRad) *
-                s.BulletSpeed)),
-          s.GravityMoveRotator);
+        var M = r[0],
+          c =
+            (a
+              ? ((v = 0 < (B = r[1]).Z ? B.Z : 1),
+                (s.Gravity = 0 !== M.Z ? M.Z : DEFAULT_GRAVITY),
+                (c = Vector_1.Vector.Dist2D(u, _.GetActorLocation())),
+                (c += l),
+                (c = Math.max(c, M.X)),
+                (c = Math.min(c, M.Y)),
+                (s.BulletSpeed2D = c / v),
+                (m = u.Z - _.GetActorLocation().Z),
+                (m = Math.max(m, B.X)),
+                (m = Math.min(m, B.Y)),
+                (s.BulletSpeedZ = m / v - 0.5 * s.Gravity * v),
+                (s.BulletSpeed = Math.sqrt(
+                  Math.pow(s.BulletSpeed2D, 2) + Math.pow(s.BulletSpeedZ, 2),
+                )),
+                (o =
+                  Math.atan(s.BulletSpeedZ / s.BulletSpeed2D) *
+                  MathCommon_1.MathCommon.RadToDeg))
+              : ((o = r[1].X),
+                (s.Gravity = 0 !== M.Z ? M.Z : DEFAULT_GRAVITY),
+                (h = Vector_1.Vector.Dist2D(u, _.GetActorLocation())),
+                (a = u.Z - _.GetActorLocation().Z),
+                (s.BulletSpeed2D = Math.sqrt(
+                  Math.abs(
+                    (h * h * s.Gravity) /
+                      (2 * a -
+                        2 * Math.tan(o * MathCommon_1.MathCommon.DegToRad) * h),
+                  ),
+                )),
+                (s.BulletSpeedZ =
+                  Math.tan(o * MathCommon_1.MathCommon.DegToRad) *
+                  s.BulletSpeed2D),
+                (s.BulletSpeed = Math.sqrt(
+                  Math.pow(s.BulletSpeed2D, 2) + Math.pow(s.BulletSpeedZ, 2),
+                )),
+                (s.BulletSpeed = Math.max(M.X, s.BulletSpeed)),
+                (s.BulletSpeed = Math.min(M.Y, s.BulletSpeed)),
+                (s.BulletSpeedZ =
+                  Math.sin(o * MathCommon_1.MathCommon.DegToRad) *
+                  s.BulletSpeed),
+                (s.BulletSpeed2D =
+                  Math.cos(o * MathCommon_1.MathCommon.DegToRad) *
+                  s.BulletSpeed)),
+            s.GravityMoveRotator);
         const P = BulletPool_1.BulletPool.CreateVector();
         u.Subtraction(_.GetActorLocation(), P),
           P.Normalize(),
@@ -819,14 +817,14 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
     }
   }
   g5o() {
-    const t = this.BulletInfo;
-    const e = t.MoveInfo;
-    const l = t.AttackerMoveComp;
-    const o = this.Pe.Move;
-    let i = o.FollowType;
-    (i !== 0 && i !== 3) || (t.ActorComponent.NeedDetach = !0),
+    var t = this.BulletInfo,
+      e = t.MoveInfo,
+      l = t.AttackerMoveComp,
+      o = this.Pe.Move,
+      i = o.FollowType;
+    (0 !== i && 3 !== i) || (t.ActorComponent.NeedDetach = !0),
       l?.HasBaseMovement &&
-        (o.Speed === 0
+        (0 === o.Speed
           ? t.ActorComponent.NeedDetach ||
             (t.ApplyCacheLocationAndRotation(),
             t.ActorComponent.SetAttachToComponent(
@@ -843,43 +841,43 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
               e.LastBaseMovementSpeed.FromUeVector(i)));
   }
   m5o() {
-    const t = this.BulletInfo;
-    const e = this.Pe.Base;
+    var t = this.BulletInfo,
+      e = this.Pe.Base;
     if (e.StickGround) {
-      const i = BulletPool_1.BulletPool.CreateVector();
-      const r = BulletPool_1.BulletPool.CreateVector();
-      var a =
-        (BulletMoveInfo_1.BulletMoveInfo.StickGroundLineTrace ||
-          (BulletMoveInfo_1.BulletMoveInfo.StickGroundLineTrace =
-            BulletTraceElementPool_1.BulletTraceElementPool.NewTraceElementByTraceChannel(
-              UE.TraceLineElement.StaticClass(),
-              QueryTypeDefine_1.KuroTraceTypeQuery.IkGround,
+      var i = BulletPool_1.BulletPool.CreateVector(),
+        r = BulletPool_1.BulletPool.CreateVector(),
+        a =
+          (BulletMoveInfo_1.BulletMoveInfo.StickGroundLineTrace ||
+            (BulletMoveInfo_1.BulletMoveInfo.StickGroundLineTrace =
+              BulletTraceElementPool_1.BulletTraceElementPool.NewTraceElementByTraceChannel(
+                UE.TraceLineElement.StaticClass(),
+                QueryTypeDefine_1.KuroTraceTypeQuery.IkGround,
+              )),
+          Info_1.Info.IsBuildDevelopmentOrDebug &&
+            ((a = (_ = ModelManager_1.ModelManager.BulletModel.ShowBulletTrace(
+              this.BulletInfo.Attacker.Id,
+            ))
+              ? 2
+              : 0),
+            BulletMoveInfo_1.BulletMoveInfo.StickGroundLineTrace.SetDrawDebugTrace(
+              a,
+            ),
+            _) &&
+            (TraceElementCommon_1.TraceElementCommon.SetTraceColor(
+              BulletMoveInfo_1.BulletMoveInfo.StickGroundLineTrace,
+              ColorUtils_1.ColorUtils.LinearGreen,
+            ),
+            TraceElementCommon_1.TraceElementCommon.SetTraceHitColor(
+              BulletMoveInfo_1.BulletMoveInfo.StickGroundLineTrace,
+              ColorUtils_1.ColorUtils.LinearRed,
             )),
-        Info_1.Info.IsBuildDevelopmentOrDebug &&
-          ((a = (_ = ModelManager_1.ModelManager.BulletModel.ShowBulletTrace(
-            this.BulletInfo.Attacker.Id,
-          ))
-            ? 2
-            : 0),
-          BulletMoveInfo_1.BulletMoveInfo.StickGroundLineTrace.SetDrawDebugTrace(
-            a,
-          ),
-          _) &&
-          (TraceElementCommon_1.TraceElementCommon.SetTraceColor(
-            BulletMoveInfo_1.BulletMoveInfo.StickGroundLineTrace,
-            ColorUtils_1.ColorUtils.LinearGreen,
-          ),
-          TraceElementCommon_1.TraceElementCommon.SetTraceHitColor(
-            BulletMoveInfo_1.BulletMoveInfo.StickGroundLineTrace,
-            ColorUtils_1.ColorUtils.LinearRed,
-          )),
-        BulletMoveInfo_1.BulletMoveInfo.StickGroundLineTrace);
-      var _ = t.BaseTransformEntity?.Entity?.GetComponent(3);
-      var s =
-        (r.FromUeVector(t.GetActorLocation()),
-        _?.Valid &&
-          !this.r5o &&
-          (0, RegisterComponent_1.isComponentInstance)(_, 3));
+          BulletMoveInfo_1.BulletMoveInfo.StickGroundLineTrace),
+        _ = t.BaseTransformEntity?.Entity?.GetComponent(3),
+        s =
+          (r.FromUeVector(t.GetActorLocation()),
+          _?.Valid &&
+            !this.r5o &&
+            (0, RegisterComponent_1.isComponentInstance)(_, 3));
       let l = 0;
       (l = (
         s
@@ -891,23 +889,23 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
         (r.Z -= e.StickTraceLen),
         TraceElementCommon_1.TraceElementCommon.SetEndLocation(a, r);
       var s = TraceElementCommon_1.TraceElementCommon.LineTrace(
-        a,
-        PROFILE_STICK_GROUND,
-      );
-      const h = a.HitResult;
+          a,
+          PROFILE_STICK_GROUND,
+        ),
+        h = a.HitResult;
       let o = -1;
       if (s) {
-        const n = h.GetHitCount();
-        if (n > 0) {
+        var n = h.GetHitCount();
+        if (0 < n) {
           let e = Math.abs(h.LocationZ_Array.Get(0) - l);
           for (let t = (o = 0); t < n; t++) {
-            var u = h.LocationZ_Array.Get(t);
-            var u = Math.abs(u - l);
+            var u = h.LocationZ_Array.Get(t),
+              u = Math.abs(u - l);
             e > u && ((e = u), (o = t));
           }
         }
       }
-      o >= 0
+      0 <= o
         ? (TraceElementCommon_1.TraceElementCommon.GetHitLocation(h, o, i),
           t.SetActorLocation(i),
           e.IgnoreGradient
@@ -927,7 +925,7 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
           a,
         ),
         t.SetActorRotation(a),
-        t.AttackerActorComp.ActorRotationProxy.Yaw !== 0 &&
+        0 !== t.AttackerActorComp.ActorRotationProxy.Yaw &&
           (a.Set(0, t.AttackerActorComp.ActorRotationProxy.Yaw, 0),
           t.AddBulletLocalRotator(a.ToUeRotator()))),
         BulletPool_1.BulletPool.RecycleVector(i),
@@ -936,9 +934,9 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
     }
   }
   HY(t) {
-    return t === 0 ? 0 : Math.random() * t;
+    return 0 === t ? 0 : Math.random() * t;
   }
 }
 ((exports.BulletActionInitMove = BulletActionInitMove).h5o = void 0),
   (BulletActionInitMove.u5o = void 0);
-// # sourceMappingURL=BulletActionInitMove.js.map
+//# sourceMappingURL=BulletActionInitMove.js.map

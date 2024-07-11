@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TeleportMarkItemView = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController");
-const ConfigMarkItemView_1 = require("./ConfigMarkItemView");
-const SUB_ICON_PATH = "SP_MarkRecommend";
-const MULTI_MAP_ICON_PATH = "SP_MarkMultiMap";
-const MULTI_MAP_SELECT_ICON_PATH = "SP_MarkMultiMapSelect";
+const Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
+  ConfigMarkItemView_1 = require("./ConfigMarkItemView"),
+  SUB_ICON_PATH = "SP_MarkRecommend",
+  MULTI_MAP_ICON_PATH = "SP_MarkMultiMap",
+  MULTI_MAP_SELECT_ICON_PATH = "SP_MarkMultiMapSelect";
 class TeleportMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
   constructor(e) {
     super(e),
@@ -33,16 +33,16 @@ class TeleportMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
     super.OnUpdate(e, t, o), this.UpdateMultiMapFloorSelectState();
   }
   UpdateMultiMapFloorSelectState(e = !1) {
-    (this.Holder?.MapType !== 2 || e) &&
+    (2 !== this.Holder?.MapType || e) &&
       (e = this.Holder).IsDirty &&
       ((e.IsDirty = !1), this.hGn());
   }
   OnIconPathChanged(e) {
-    const t = this.GetSprite(1);
-    const o = this.Holder;
-    const r = ModelManager_1.ModelManager.MapModel?.GetMarkExtraShowState(
-      this.Holder.MarkId,
-    );
+    var t = this.GetSprite(1),
+      o = this.Holder,
+      r = ModelManager_1.ModelManager.MapModel?.GetMarkExtraShowState(
+        this.Holder.MarkId,
+      );
     this.GetSprite(1).SetUIActive(!0),
       this.LoadIcon(t, e),
       o.IsDungeonEntrance && !o.IsFogUnlock
@@ -110,4 +110,4 @@ class TeleportMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
   }
 }
 exports.TeleportMarkItemView = TeleportMarkItemView;
-// # sourceMappingURL=TeleportMarkItemView.js.map
+//# sourceMappingURL=TeleportMarkItemView.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SCreatureGenBlackboardMapsLang = void 0);
-const GameUtils_1 = require("../../../../Game/GameUtils");
-const DicStringBool_1 = require("./DicStringBool");
-const DicStringInt_1 = require("./DicStringInt");
+const GameUtils_1 = require("../../../../Game/GameUtils"),
+  DicStringBool_1 = require("./DicStringBool"),
+  DicStringInt_1 = require("./DicStringInt");
 class SCreatureGenBlackboardMapsLang {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -42,7 +42,7 @@ class SCreatureGenBlackboardMapsLang {
     return this.mapstring(t);
   }
   mapstring(t, i) {
-    const s = this.J7.__offset(this.z7, 4);
+    var s = this.J7.__offset(this.z7, 4);
     return s
       ? (i || new DicStringInt_1.DicStringInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -51,14 +51,14 @@ class SCreatureGenBlackboardMapsLang {
       : null;
   }
   mapstringLength() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetMapintAt(t, i) {
     return this.mapint(t);
   }
   mapint(t, i) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s
       ? (i || new DicStringInt_1.DicStringInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -67,14 +67,14 @@ class SCreatureGenBlackboardMapsLang {
       : null;
   }
   mapintLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetMapboolAt(t, i) {
     return this.mapbool(t);
   }
   mapbool(t, i) {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s
       ? (i || new DicStringBool_1.DicStringBool()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -83,9 +83,9 @@ class SCreatureGenBlackboardMapsLang {
       : null;
   }
   mapboolLength() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.SCreatureGenBlackboardMapsLang = SCreatureGenBlackboardMapsLang;
-// # sourceMappingURL=SCreatureGenBlackboardMapsLang.js.map
+//# sourceMappingURL=SCreatureGenBlackboardMapsLang.js.map

@@ -8,7 +8,7 @@ class LongPressKeyItemBase extends KeyItemBase_1.KeyItemBase {
   }
   RefreshActionLongPress(s, t = 0) {
     this.ActionName !== s &&
-      ((this.g_t = t), this.RefreshAction(s), this.p_t(t > 0), this.v_t(0));
+      ((this.g_t = t), this.RefreshAction(s), this.p_t(0 < t), this.v_t(0));
   }
   ForceShowLongPress() {
     (this.g_t = 0), this.p_t(!0), this.v_t(100);
@@ -20,7 +20,7 @@ class LongPressKeyItemBase extends KeyItemBase_1.KeyItemBase {
     this.M_t();
   }
   OnInputAction(s, t) {
-    this.IsEnable && t === 0 ? this.S_t() : this.M_t();
+    this.IsEnable && 0 === t ? this.S_t() : this.M_t();
   }
   Tick(s) {
     this.f_t &&
@@ -44,4 +44,4 @@ class LongPressKeyItemBase extends KeyItemBase_1.KeyItemBase {
   }
 }
 exports.LongPressKeyItemBase = LongPressKeyItemBase;
-// # sourceMappingURL=LongPressKeyItemBase.js.map
+//# sourceMappingURL=LongPressKeyItemBase.js.map

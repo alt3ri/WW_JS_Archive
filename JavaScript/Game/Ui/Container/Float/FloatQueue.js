@@ -12,7 +12,7 @@ class FloatViewQueue {
   }
   Pop(r) {
     for (let e = 0, t = this.Eur.length; e < t; ++e) {
-      const i = this.Eur[e];
+      var i = this.Eur[e];
       if (!i.OnlyShowInMain || r) return this.yur(i), i;
     }
   }
@@ -22,7 +22,7 @@ class FloatViewQueue {
   }
   Delete(r, i) {
     for (let e = 0, t = this.Eur.length; e < t; ++e) {
-      const s = this.Eur[e];
+      var s = this.Eur[e];
       if (!(s.ViewBase.Info.Name !== r || (i && s.ViewBase.GetViewId() !== i)))
         return (
           this.yur(s),
@@ -38,8 +38,8 @@ class FloatViewQueue {
     return !1;
   }
   Clear() {
-    for (let e = this.Eur.length - 1; e >= 0; --e) {
-      const t = this.Eur[e].ViewBase;
+    for (let e = this.Eur.length - 1; 0 <= e; --e) {
+      var t = this.Eur[e].ViewBase;
       t.Info.IsPermanent ||
         (this.Eur.pop(), UiManager_1.UiManager.RemoveView(t.GetViewId()));
     }
@@ -49,4 +49,4 @@ class FloatViewQueue {
   }
 }
 exports.FloatViewQueue = FloatViewQueue;
-// # sourceMappingURL=FloatQueue.js.map
+//# sourceMappingURL=FloatQueue.js.map

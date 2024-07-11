@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MotionConfig = void 0);
-const MotionById_1 = require("../../../Core/Define/ConfigQuery/MotionById");
-const MotionByRoleId_1 = require("../../../Core/Define/ConfigQuery/MotionByRoleId");
-const MotionByRoleIdAndType_1 = require("../../../Core/Define/ConfigQuery/MotionByRoleIdAndType");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const MotionById_1 = require("../../../Core/Define/ConfigQuery/MotionById"),
+  MotionByRoleId_1 = require("../../../Core/Define/ConfigQuery/MotionByRoleId"),
+  MotionByRoleIdAndType_1 = require("../../../Core/Define/ConfigQuery/MotionByRoleIdAndType"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class MotionConfig extends ConfigBase_1.ConfigBase {
   GetMotionConfig(e) {
     return MotionById_1.configMotionById.GetConfig(e);
@@ -48,4 +48,4 @@ class MotionConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.MotionConfig = MotionConfig;
-// # sourceMappingURL=MotionConfig.js.map
+//# sourceMappingURL=MotionConfig.js.map

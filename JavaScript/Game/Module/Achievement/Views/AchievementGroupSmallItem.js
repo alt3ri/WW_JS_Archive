@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AchievementGroupSmallItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class AchievementGroupSmallItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -86,7 +86,7 @@ class AchievementGroupSmallItem extends UiPanelBase_1.UiPanelBase {
       );
   }
   Oqe() {
-    let e;
+    var e;
     void 0 !== this.Gqe &&
       void 0 !== this.GetRootItem() &&
       ((e =
@@ -98,14 +98,14 @@ class AchievementGroupSmallItem extends UiPanelBase_1.UiPanelBase {
       this.GetExtendToggle(1).SetToggleStateForce(e, !1);
   }
   Nqe() {
-    const e = this.Gqe.GetAchievementGroupProgress();
+    var e = this.Gqe.GetAchievementGroupProgress();
     this.GetText(3).SetText(e);
   }
   Pqe(e) {
     this.GetText(0).SetText(e.GetTitle());
-    const t = this.GetTexture(2);
+    var t = this.GetTexture(2);
     this.SetTextureByPath(e.GetSmallIcon(), t),
-      this.GetItem(5)?.SetUIActive(e.GetRewards().length > 0);
+      this.GetItem(5)?.SetUIActive(0 < e.GetRewards().length);
   }
   Vbe(e) {
     this.GetItem(4).SetUIActive(e.SmallItemRedPoint());
@@ -117,4 +117,4 @@ class AchievementGroupSmallItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.AchievementGroupSmallItem = AchievementGroupSmallItem;
-// # sourceMappingURL=AchievementGroupSmallItem.js.map
+//# sourceMappingURL=AchievementGroupSmallItem.js.map

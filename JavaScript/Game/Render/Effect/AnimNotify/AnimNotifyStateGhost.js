@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter");
-const EffectRuntimeGhostEffectContext_1 = require("../../../Effect/EffectContext/EffectRuntimeGhostEffectContext");
-const EffectSystem_1 = require("../../../Effect/EffectSystem");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter"),
+  EffectRuntimeGhostEffectContext_1 = require("../../../Effect/EffectContext/EffectRuntimeGhostEffectContext"),
+  EffectSystem_1 = require("../../../Effect/EffectSystem");
 class AnimNotifyStateGhost extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -23,9 +23,8 @@ class AnimNotifyStateGhost extends UE.KuroAnimNotifyState {
   K2_NotifyBegin(t, e, s) {
     this.EffectHandleMap || (this.EffectHandleMap = new Map()),
       EffectSystem_1.EffectSystem.InitializeWithPreview(!1);
-    let f = t.GetOwner();
-    const i =
-      new EffectRuntimeGhostEffectContext_1.EffectRuntimeGhostEffectContext(
+    var f = t.GetOwner(),
+      i = new EffectRuntimeGhostEffectContext_1.EffectRuntimeGhostEffectContext(
         void 0,
       );
     f instanceof TsBaseCharacter_1.default &&
@@ -57,7 +56,7 @@ class AnimNotifyStateGhost extends UE.KuroAnimNotifyState {
     );
   }
   K2_NotifyEnd(t, e) {
-    const s = this.EffectHandleMap.get(t);
+    var s = this.EffectHandleMap.get(t);
     return (
       s &&
         EffectSystem_1.EffectSystem.IsValid(s) &&
@@ -72,4 +71,4 @@ class AnimNotifyStateGhost extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = AnimNotifyStateGhost;
-// # sourceMappingURL=AnimNotifyStateGhost.js.map
+//# sourceMappingURL=AnimNotifyStateGhost.js.map

@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FriendBlackListView = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
-const FriendController_1 = require("../FriendController");
-const FriendItem_1 = require("./FriendItem");
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  FriendController_1 = require("../FriendController"),
+  FriendItem_1 = require("./FriendItem");
 class FriendBlackListView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -61,10 +61,10 @@ class FriendBlackListView extends UiViewBase_1.UiViewBase {
       this.c6t();
   }
   c6t() {
-    const e = this.GetText(0);
-    const i =
-      CommonParamById_1.configCommonParamById.GetIntConfig("blocklist_limit");
-    const t = this.l6t.length;
+    var e = this.GetText(0),
+      i =
+        CommonParamById_1.configCommonParamById.GetIntConfig("blocklist_limit"),
+      t = this.l6t.length;
     LguiUtil_1.LguiUtil.SetLocalText(e, "FriendBlackListCount", t, i),
       this.GetItem(3).SetUIActive(this.l6t.length <= 0);
   }
@@ -75,4 +75,4 @@ class FriendBlackListView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.FriendBlackListView = FriendBlackListView;
-// # sourceMappingURL=FriendBlackListView.js.map
+//# sourceMappingURL=FriendBlackListView.js.map

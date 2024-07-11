@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NoCircleExhibitionItem = void 0);
-const UE = require("ue");
-const AutoAttachExhibitionItem_1 = require("./AutoAttachExhibitionItem");
+const UE = require("ue"),
+  AutoAttachExhibitionItem_1 = require("./AutoAttachExhibitionItem");
 class NoCircleExhibitionItem extends AutoAttachExhibitionItem_1.AutoAttachExhibitionItem {
   constructor() {
     super(...arguments), (this.MoveCircleState = !1);
@@ -16,10 +16,10 @@ class NoCircleExhibitionItem extends AutoAttachExhibitionItem_1.AutoAttachExhibi
       : (this.ShowItemIndex = this.Index - this.ShowItemNum);
   }
   vWe() {
-    let t, i;
+    var t, i;
     this.ExhibitionView &&
       ((t = Math.floor(this.ShowItemNum / 2)),
-      this.CurrentDirection === 0
+      0 === this.CurrentDirection
         ? ((i = 0),
           (i = (this.Index - t) * (this.FullSizeX + this.InitGap)),
           this.Actor.SetAnchorOffset(new UE.Vector2D(i, 0)))
@@ -30,10 +30,10 @@ class NoCircleExhibitionItem extends AutoAttachExhibitionItem_1.AutoAttachExhibi
   OnMoveItem(t) {
     let i = 0;
     (this.MoveCircleState = !1),
-      this.CurrentDirection === 0
+      0 === this.CurrentDirection
         ? ((i = this.Actor.GetAnchorOffsetX() + t), this.AEt(i))
         : ((i = this.Actor.GetAnchorOffsetY() + t), this.PEt(i));
-    t = this.ShowItemIndex >= 0 && this.ShowItemIndex < this.DataLength;
+    t = 0 <= this.ShowItemIndex && this.ShowItemIndex < this.DataLength;
     this.Actor.SetActive(t);
   }
   AEt(t) {
@@ -108,4 +108,4 @@ class NoCircleExhibitionItem extends AutoAttachExhibitionItem_1.AutoAttachExhibi
   }
 }
 exports.NoCircleExhibitionItem = NoCircleExhibitionItem;
-// # sourceMappingURL=NoCircleExhibitionItem.js.map
+//# sourceMappingURL=NoCircleExhibitionItem.js.map

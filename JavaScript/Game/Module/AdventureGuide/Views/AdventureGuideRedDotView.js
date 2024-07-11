@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdventureGuideRedDotView = void 0);
-const RedDotController_1 = require("../../../RedDot/RedDotController");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const RedDotController_1 = require("../../../RedDot/RedDotController"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class AdventureGuideRedDotView extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(), (this.S9 = "Test"), this.CreateThenShowByActor(e);
   }
   EnableRedDot(e) {
-    const t = this.GetRootItem();
+    var t = this.GetRootItem();
     RedDotController_1.RedDotController.BindRedDot(e, t), (this.S9 = e);
   }
   OnBeforeDestroy() {
@@ -19,4 +19,4 @@ class AdventureGuideRedDotView extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.AdventureGuideRedDotView = AdventureGuideRedDotView;
-// # sourceMappingURL=AdventureGuideRedDotView.js.map
+//# sourceMappingURL=AdventureGuideRedDotView.js.map

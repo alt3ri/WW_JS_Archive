@@ -21,7 +21,7 @@ class TaskBase {
     return this.XMr.Promise;
   }
   async Run() {
-    const t = await this.OnRun();
+    var t = await this.OnRun();
     return this.OnExit(), this.XMr.SetResult(t), t;
   }
   OnInit() {
@@ -30,4 +30,4 @@ class TaskBase {
   OnExit() {}
 }
 exports.TaskBase = TaskBase;
-// # sourceMappingURL=TaskBase.js.map
+//# sourceMappingURL=TaskBase.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineActionStopMontage = void 0);
-const AiStateMachine_1 = require("../AiStateMachine");
-const AiStateMachineAction_1 = require("./AiStateMachineAction");
+const AiStateMachine_1 = require("../AiStateMachine"),
+  AiStateMachineAction_1 = require("./AiStateMachineAction");
 class AiStateMachineActionStopMontage extends AiStateMachineAction_1.AiStateMachineAction {
   OnInit(t) {
     return !0;
@@ -15,4 +15,4 @@ class AiStateMachineActionStopMontage extends AiStateMachineAction_1.AiStateMach
   }
 }
 exports.AiStateMachineActionStopMontage = AiStateMachineActionStopMontage;
-// # sourceMappingURL=AiStateMachineActionStopMontage.js.map
+//# sourceMappingURL=AiStateMachineActionStopMontage.js.map

@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configRogueTalentTreeAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const RogueTalentTree_1 = require("../Config/RogueTalentTree");
-const DB = "db_rogue.db";
-const FILE = "r.肉鸽.xlsx";
-const TABLE = "RogueTalentTree";
-const COMMAND = "select BinData from `RogueTalentTree`";
-const KEY_PREFIX = "RogueTalentTreeAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  RogueTalentTree_1 = require("../Config/RogueTalentTree"),
+  DB = "db_rogue.db",
+  FILE = "r.肉鸽.xlsx",
+  TABLE = "RogueTalentTree",
+  COMMAND = "select BinData from `RogueTalentTree`",
+  KEY_PREFIX = "RogueTalentTreeAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configRogueTalentTreeAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configRogueTalentTreeAll = {
     );
   },
   GetConfigList: (e = !0) => {
-    let o;
+    var o;
     if (
       (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configRogueTalentTreeAll = {
       }
       const i = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let r = void 0;
+        var r = void 0;
         if (
           (([o, r] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configRogueTalentTreeAll = {
     }
   },
 };
-// # sourceMappingURL=RogueTalentTreeAll.js.map
+//# sourceMappingURL=RogueTalentTreeAll.js.map

@@ -18,9 +18,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.MALE_TAG =
     exports.FRAME_PER_MILLISECOND =
       void 0);
-const UE = require("ue");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
+const UE = require("ue"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector");
 (exports.FRAME_PER_MILLISECOND = 0.03),
   (exports.MALE_TAG = new UE.FName("Male")),
   (exports.FEMALE_TAG = new UE.FName("Female")),
@@ -77,4 +77,4 @@ class PlotSubtitleConfig {
   }
 }
 exports.PlotSubtitleConfig = PlotSubtitleConfig;
-// # sourceMappingURL=SequenceDefine.js.map
+//# sourceMappingURL=SequenceDefine.js.map

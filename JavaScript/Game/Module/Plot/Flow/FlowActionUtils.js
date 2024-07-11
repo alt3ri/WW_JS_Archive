@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionUtils = exports.WAIT_ENTITY_TIME = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent");
-const Global_1 = require("../../../Global");
-const ModelManager_1 = require("../../../Manager/ModelManager");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
+  Global_1 = require("../../../Global"),
+  ModelManager_1 = require("../../../Manager/ModelManager");
 exports.WAIT_ENTITY_TIME = 2e4;
 class FlowActionUtils {
   static CheckEntityInAoi(e) {
@@ -13,15 +13,15 @@ class FlowActionUtils {
       ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(e)?.IsInit
     )
       return !0;
-    let o = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(e);
+    var o = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(e);
     if (o)
       if (o.Transform) {
-        let t;
-        let r;
-        let n = (0, IComponent_1.getComponent)(
-          o.ComponentsData,
-          "BaseInfoComponent",
-        );
+        var t,
+          r,
+          n = (0, IComponent_1.getComponent)(
+            o.ComponentsData,
+            "BaseInfoComponent",
+          );
         if (n) {
           if (Global_1.Global.BaseCharacter?.CharacterActorComponent?.Valid)
             return (
@@ -54,4 +54,4 @@ class FlowActionUtils {
   }
 }
 exports.FlowActionUtils = FlowActionUtils;
-// # sourceMappingURL=FlowActionUtils.js.map
+//# sourceMappingURL=FlowActionUtils.js.map

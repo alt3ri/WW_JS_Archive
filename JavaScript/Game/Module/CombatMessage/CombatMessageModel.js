@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CombatMessageModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const Queue_1 = require("../../../Core/Container/Queue");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CombatDebugController_1 = require("../../Utils/CombatDebugController");
-const CombatMessageController_1 = require("./CombatMessageController");
-const BUFFER_TIME_RATE = 1.05;
-const TIME_BUFFER_SIZE = 20;
-const TIME_OFFSET_LERP_RATE = 0.1;
-const FIX_BUFFER_TIME = 0.08;
-const TIME_BUFFER_CHECK_COUNT_MIN = 5;
-const TIME_BUFFER_CHECK_TIME_MAX = 3;
-const MAX_FLUCTUATE = 0.5;
-const MESSAGE_ID_MASK = (1n << MathUtils_1.intBit) - 1n;
+const Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  Queue_1 = require("../../../Core/Container/Queue"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CombatDebugController_1 = require("../../Utils/CombatDebugController"),
+  CombatMessageController_1 = require("./CombatMessageController"),
+  BUFFER_TIME_RATE = 1.05,
+  TIME_BUFFER_SIZE = 20,
+  TIME_OFFSET_LERP_RATE = 0.1,
+  FIX_BUFFER_TIME = 0.08,
+  TIME_BUFFER_CHECK_COUNT_MIN = 5,
+  TIME_BUFFER_CHECK_TIME_MAX = 3,
+  MAX_FLUCTUATE = 0.5,
+  MESSAGE_ID_MASK = (1n << MathUtils_1.intBit) - 1n;
 class CombatMessageBuffer {
   constructor(e) {
     (this.CreatureDataId = e),
@@ -34,9 +34,9 @@ class CombatMessageBuffer {
     return this.LastNotifyExecuteTime - Time_1.Time.NowSeconds;
   }
   Push(e, t, o, s) {
-    let i;
-    let r;
-    const a = t?.GetComponent(44);
+    var i,
+      r,
+      a = t?.GetComponent(44);
     a
       ? e
         ? (i = o.h4n)
@@ -70,27 +70,27 @@ class CombatMessageBuffer {
       : CombatMessageController_1.CombatMessageController.Process(e, t, s, o);
   }
   RecordMessageTime(e, t, o = !1) {
-    const s = Time_1.Time.NowSeconds;
-    const i =
-      (o ||
-        (this.cyt.Push([e, s]),
-        this.cyt.Size >= TIME_BUFFER_SIZE && this.cyt.Pop()),
-      this.myt(),
-      e + this.TimelineOffset);
+    var s = Time_1.Time.NowSeconds,
+      i =
+        (o ||
+          (this.cyt.Push([e, s]),
+          this.cyt.Size >= TIME_BUFFER_SIZE && this.cyt.Pop()),
+        this.myt(),
+        e + this.TimelineOffset);
     i > this.LastNotifyExecuteTime && (this.LastNotifyExecuteTime = i),
       this.ReportMoveDataReceiveInfo(s - e, t, o);
   }
   myt() {
-    if (this.cyt.Size !== 0) {
+    if (0 !== this.cyt.Size) {
       let e = this.cyt.Size - 1;
-      let i = this.cyt.Get(e);
-      let t = i[1] - i[0];
-      let o = t;
-      const r = i[0];
+      var i = this.cyt.Get(e);
+      let t = i[1] - i[0],
+        o = t;
+      var r = i[0];
       let s = 0;
-      for (; e > 0; e--) {
+      for (; 0 < e; e--) {
         s++;
-        let [a, _] = this.cyt.Get(e);
+        var [a, _] = this.cyt.Get(e);
         if (
           s > TIME_BUFFER_CHECK_TIME_MAX &&
           r - a > TIME_BUFFER_CHECK_COUNT_MIN
@@ -167,12 +167,12 @@ class CombatMessageModel extends ModelBase_1.ModelBase {
     return !!this.MoveSyncSet.delete(e);
   }
   GenMessageId() {
-    const e = BigInt(ModelManager_1.ModelManager.CreatureModel.GetPlayerId());
+    var e = BigInt(ModelManager_1.ModelManager.CreatureModel.GetPlayerId());
     return BigInt(++this.Cyt) | (e << MathUtils_1.intBit);
   }
   SetLastMessageId(e) {
-    const t = Number(e & MESSAGE_ID_MASK);
-    const o = Number((e & ~MESSAGE_ID_MASK) >> MathUtils_1.intBit);
+    var t = Number(e & MESSAGE_ID_MASK),
+      o = Number((e & ~MESSAGE_ID_MASK) >> MathUtils_1.intBit);
     o !== ModelManager_1.ModelManager.CreatureModel.GetPlayerId()
       ? (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -190,7 +190,7 @@ class CombatMessageModel extends ModelBase_1.ModelBase {
       : (this.Cyt = t);
   }
   GetMessageBuffer(t) {
-    if (t !== 0) {
+    if (0 !== t) {
       let e = this.CombatMessageBufferMap.get(t);
       return (
         e ||
@@ -208,8 +208,8 @@ class CombatMessageModel extends ModelBase_1.ModelBase {
     this.CombatMessageBufferMapByEntity.set(e, t);
   }
   CreateMontageContext(e, t) {
-    const o = this.GenMessageId();
-    const s = Protocol_1.Aki.Protocol.CombatMessage.HGs.create();
+    var o = this.GenMessageId(),
+      s = Protocol_1.Aki.Protocol.CombatMessage.HGs.create();
     return (
       (s.v4n = Protocol_1.Aki.Protocol.v4n.create({
         vkn: e,
@@ -230,7 +230,7 @@ class CombatMessageModel extends ModelBase_1.ModelBase {
     if (e) return this.gyt.get(e);
   }
   DebugCombatContext(e) {
-    let t, o, s;
+    var t, o, s;
     e
       ? (t = this.gyt.get(e))
         ? t.pEs
@@ -298,4 +298,4 @@ class CombatMessageModel extends ModelBase_1.ModelBase {
   }
 }
 exports.CombatMessageModel = CombatMessageModel;
-// # sourceMappingURL=CombatMessageModel.js.map
+//# sourceMappingURL=CombatMessageModel.js.map

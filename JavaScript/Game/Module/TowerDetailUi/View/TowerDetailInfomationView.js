@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerDetailView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
-const TowerDetailData_1 = require("../TowerDetailData");
-const TowerDetailInformationItem_1 = require("./TowerDetailInformationItem");
-const TowerDetailSwitchItem_1 = require("./TowerDetailSwitchItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  TowerDetailData_1 = require("../TowerDetailData"),
+  TowerDetailInformationItem_1 = require("./TowerDetailInformationItem"),
+  TowerDetailSwitchItem_1 = require("./TowerDetailSwitchItem");
 class TowerDetailView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -73,18 +73,18 @@ class TowerDetailView extends UiViewBase_1.UiViewBase {
     this.gLo(), this.dLo(), this.CLo();
   }
   dLo() {
-    const e = ModelManager_1.ModelManager.TowerDetailModel.SwitchData;
+    var e = ModelManager_1.ModelManager.TowerDetailModel.SwitchData;
     this.uLo.RebuildLayoutByDataNew(e);
   }
   CLo() {
-    const e = ModelManager_1.ModelManager.TowerDetailModel.SwitchData;
+    var e = ModelManager_1.ModelManager.TowerDetailModel.SwitchData;
     let t = void 0;
     e.forEach((e) => {
       e.Index === this.I7e && (t = e);
     });
     const i = new Array();
     ModelManager_1.ModelManager.TowerDetailModel.GetBuffs(t).forEach((e) => {
-      const t = new TowerDetailData_1.TowerInformationData();
+      var t = new TowerDetailData_1.TowerInformationData();
       (t.Type = 0),
         (t.TowerDetailBuffData = e),
         (t.Title = e.Title),
@@ -93,7 +93,7 @@ class TowerDetailView extends UiViewBase_1.UiViewBase {
     }),
       ModelManager_1.ModelManager.TowerDetailModel.GetMonsters(t).forEach(
         (e) => {
-          const t = new TowerDetailData_1.TowerInformationData();
+          var t = new TowerDetailData_1.TowerInformationData();
           (t.Type = 1),
             (t.MonsterData = e),
             (t.Title = e.Title),
@@ -105,7 +105,7 @@ class TowerDetailView extends UiViewBase_1.UiViewBase {
       this._Lo.RefreshByData(i);
   }
   gLo() {
-    const e = ModelManager_1.ModelManager.TowerDetailModel.TowerTitle;
+    var e = ModelManager_1.ModelManager.TowerDetailModel.TowerTitle;
     this.GetText(0).SetText(e);
   }
   OnBeforeDestroy() {
@@ -113,4 +113,4 @@ class TowerDetailView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.TowerDetailView = TowerDetailView;
-// # sourceMappingURL=TowerDetailInfomationView.js.map
+//# sourceMappingURL=TowerDetailInfomationView.js.map

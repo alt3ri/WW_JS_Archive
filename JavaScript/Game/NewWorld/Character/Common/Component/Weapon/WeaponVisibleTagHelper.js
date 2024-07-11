@@ -6,11 +6,11 @@ class WeaponVisibleTagHelper {
   constructor() {
     (this.CZo = 0),
       (this.gZo = (i, s) => {
-        const t = this.CZo;
+        var t = this.CZo;
         s ? this.CZo++ : this.CZo--,
-          t === 0 && this.CZo > 0
+          0 === t && 0 < this.CZo
             ? this.fZo(!0, this.Owner)
-            : t > 0 && this.CZo === 0 && this.fZo(!1, this.Owner);
+            : 0 < t && 0 === this.CZo && this.fZo(!1, this.Owner);
       }),
       (this.Tags = []),
       (this.TagComp = void 0),
@@ -27,14 +27,14 @@ class WeaponVisibleTagHelper {
         (this.Owner = i);
       for (const e of t) {
         var o;
-        e !== "" &&
+        "" !== e &&
           ((o = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e)),
           this.Tags.push(o));
       }
       for (const a of this.Tags)
         s.HasTag(a) && this.CZo++,
           this.pZo.push(s.ListenForTagAddOrRemove(a, this.gZo));
-      this.CZo > 0 && this.fZo(!0, this.Owner);
+      0 < this.CZo && this.fZo(!0, this.Owner);
     }
   }
   Clear() {
@@ -44,4 +44,4 @@ class WeaponVisibleTagHelper {
   }
 }
 exports.WeaponVisibleTagHelper = WeaponVisibleTagHelper;
-// # sourceMappingURL=WeaponVisibleTagHelper.js.map
+//# sourceMappingURL=WeaponVisibleTagHelper.js.map

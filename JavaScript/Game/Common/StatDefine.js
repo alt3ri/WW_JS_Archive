@@ -8,18 +8,18 @@ const Stats_1 = require("../../Core/Common/Stats");
 (exports.BATTLESTAT_ENABLED = !0),
   (exports.BATTLESTAT_GROUP = "STATGROUP_KuroBattle"),
   (exports.battleStat = (function () {
-    const t = {
-      BattleTotal: ["JS Total (ms)", 3],
-      BulletTick: ["Bullet Tick"],
-      BulletAfterTick: ["Bullet AfterTick"],
-      MonsterTick: ["Monster Tick"],
-      FightCameraTick: ["FightCamera Tick"],
-      BulletCreate: ["Bullet Create"],
-      BulletDestroy: ["Bullet Destroy"],
-    };
-    const e = {};
+    var t = {
+        BattleTotal: ["JS Total (ms)", 3],
+        BulletTick: ["Bullet Tick"],
+        BulletAfterTick: ["Bullet AfterTick"],
+        MonsterTick: ["Monster Tick"],
+        FightCameraTick: ["FightCamera Tick"],
+        BulletCreate: ["Bullet Create"],
+        BulletDestroy: ["Bullet Destroy"],
+      },
+      e = {};
     for (const o in t) {
-      const r = t[o];
+      var r = t[o];
       e[o] = Stats_1.Stat.CreateStatOfType(
         r[1] ?? 1,
         r[0],
@@ -29,4 +29,4 @@ const Stats_1 = require("../../Core/Common/Stats");
     }
     return e;
   })());
-// # sourceMappingURL=StatDefine.js.map
+//# sourceMappingURL=StatDefine.js.map

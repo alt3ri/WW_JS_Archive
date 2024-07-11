@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceSortWordSelectView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
-const AdviceWordItem_1 = require("./AdviceWordItem");
-const AdviceWordTypeItem_1 = require("./AdviceWordTypeItem");
-const WAITUPDATECOUNT = 1;
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  AdviceWordItem_1 = require("./AdviceWordItem"),
+  AdviceWordTypeItem_1 = require("./AdviceWordTypeItem"),
+  WAITUPDATECOUNT = 1;
 class AdviceSortWordSelectView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -30,7 +30,7 @@ class AdviceSortWordSelectView extends UiViewBase_1.UiViewBase {
         return i.UpdateItem(e), { Key: t, Value: i };
       }),
       (this._Fe = () => {
-        const e = ModelManager_1.ModelManager.AdviceModel;
+        var e = ModelManager_1.ModelManager.AdviceModel;
         e.CurrentWordMap.set(e.CurrentSelectWordIndex, e.PreSelectSortWordId),
           this.CloseMe(),
           EventSystem_1.EventSystem.Emit(
@@ -41,7 +41,7 @@ class AdviceSortWordSelectView extends UiViewBase_1.UiViewBase {
         this.CloseMe();
       }),
       (this.b7e = () => {
-        const e =
+        var e =
           ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceWordTypeConfigs();
         const i = new Array();
         e.forEach((e) => {
@@ -55,7 +55,7 @@ class AdviceSortWordSelectView extends UiViewBase_1.UiViewBase {
           this.Y7e.BindLateUpdate(this.z7e);
       }),
       (this.z7e = (e) => {
-        let i;
+        var i;
         this.J7e &&
           this.x7e >= WAITUPDATECOUNT &&
           ((this.J7e = !1),
@@ -65,11 +65,11 @@ class AdviceSortWordSelectView extends UiViewBase_1.UiViewBase {
           this.x7e++;
       }),
       (this.q7e = () => {
-        var e = ModelManager_1.ModelManager.AdviceModel.PreSelectSortTypeId;
-        var e =
-          ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceWordConfigsByType(
-            e,
-          );
+        var e = ModelManager_1.ModelManager.AdviceModel.PreSelectSortTypeId,
+          e =
+            ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceWordConfigsByType(
+              e,
+            );
         const i = new Array();
         e.forEach((e) => {
           i.push(e.Id);
@@ -81,7 +81,7 @@ class AdviceSortWordSelectView extends UiViewBase_1.UiViewBase {
           this.R7e.BindLateUpdate(this.O7e);
       }),
       (this.O7e = (e) => {
-        let i;
+        var i;
         this.U7e &&
           this.A7e >= WAITUPDATECOUNT &&
           ((this.U7e = !1),
@@ -119,8 +119,8 @@ class AdviceSortWordSelectView extends UiViewBase_1.UiViewBase {
         this.GetScrollViewWithScrollbar(2),
         this.B7e,
       ));
-    let e;
-    let i = this.R7e.TempOriginalItem;
+    var e,
+      i = this.R7e.TempOriginalItem;
     i &&
       (e = (i = i.GetOwner()).GetComponentByClass(
         UE.UIButtonComponent.StaticClass(),
@@ -149,7 +149,7 @@ class AdviceSortWordSelectView extends UiViewBase_1.UiViewBase {
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(7), "AdviceSelectWord");
   }
   N7e() {
-    const i =
+    var i =
       ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceWordTypeConfigs();
     let t = 0;
     for (let e = 0; e < i.length; e++)
@@ -162,9 +162,11 @@ class AdviceSortWordSelectView extends UiViewBase_1.UiViewBase {
     return t / (i.length - 1);
   }
   k7e() {
-    const e = ModelManager_1.ModelManager.AdviceModel.PreSelectSortTypeId;
-    const i =
-      ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceWordConfigsByType(e);
+    var e = ModelManager_1.ModelManager.AdviceModel.PreSelectSortTypeId,
+      i =
+        ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceWordConfigsByType(
+          e,
+        );
     let t = 0;
     for (let e = 0; e < i.length; e++)
       if (
@@ -181,4 +183,4 @@ class AdviceSortWordSelectView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.AdviceSortWordSelectView = AdviceSortWordSelectView;
-// # sourceMappingURL=AdviceSortWordSelectView.js.map
+//# sourceMappingURL=AdviceSortWordSelectView.js.map

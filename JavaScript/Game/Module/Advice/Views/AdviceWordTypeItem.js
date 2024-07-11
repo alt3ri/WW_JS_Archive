@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceWordTypeItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class AdviceWordTypeItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -43,7 +43,7 @@ class AdviceWordTypeItem extends UiPanelBase_1.UiPanelBase {
       EventDefine_1.EEventName.OnClickAdviceSort,
       this.b7e,
     );
-    const e = this.GetExtendToggle(0);
+    var e = this.GetExtendToggle(0);
     e.CanExecuteChange.Unbind(), e.CanExecuteChange.Bind(this.T7e);
   }
   UpdateItem(e) {
@@ -54,15 +54,15 @@ class AdviceWordTypeItem extends UiPanelBase_1.UiPanelBase {
       this.Q7e();
   }
   Og() {
-    const e = this.GetExtendToggle(0).ToggleState;
-    const t =
-      ModelManager_1.ModelManager.AdviceModel.PreSelectSortTypeId !== this.K7e
-        ? 0
-        : 1;
+    var e = this.GetExtendToggle(0).ToggleState,
+      t =
+        ModelManager_1.ModelManager.AdviceModel.PreSelectSortTypeId !== this.K7e
+          ? 0
+          : 1;
     e !== t && this.GetExtendToggle(0).SetToggleStateForce(t, !1);
   }
   Q7e() {
-    const e = ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceTypeText(
+    var e = ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceTypeText(
       this.K7e,
     );
     this.GetText(4).SetText(e);
@@ -75,4 +75,4 @@ class AdviceWordTypeItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.AdviceWordTypeItem = AdviceWordTypeItem;
-// # sourceMappingURL=AdviceWordTypeItem.js.map
+//# sourceMappingURL=AdviceWordTypeItem.js.map

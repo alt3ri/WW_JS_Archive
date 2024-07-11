@@ -1,28 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionDestroyEntity = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const WaitEntityTask_1 = require("../../../World/Define/WaitEntityTask");
-const FlowActionUtils_1 = require("../Flow/FlowActionUtils");
-const FlowActionServerAction_1 = require("./FlowActionServerAction");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  WaitEntityTask_1 = require("../../../World/Define/WaitEntityTask"),
+  FlowActionUtils_1 = require("../Flow/FlowActionUtils"),
+  FlowActionServerAction_1 = require("./FlowActionServerAction");
 class FlowActionDestroyEntity extends FlowActionServerAction_1.FlowActionServerAction {
   constructor() {
     super(...arguments),
       (this.Task = void 0),
       (this.QXi = (t) => {
         this.Task = void 0;
-        const e = this.ActionInfo.Params;
+        var e = this.ActionInfo.Params;
         t ||
           ControllerHolder_1.ControllerHolder.FlowController.LogError(
             "加载实体失败",
           );
         let o = !1;
         for (const n of e.EntityIds) {
-          var i;
-          const r =
-            ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(n);
+          var i,
+            r =
+              ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(n);
           r
             ? (i = r.Entity.GetComponent(117))
               ? (r.Entity.GetComponent(177)?.RemoveServerTagByIdLocal(
@@ -51,7 +51,7 @@ class FlowActionDestroyEntity extends FlowActionServerAction_1.FlowActionServerA
   }
   OnExecute() {
     if (this.ActionInfo.Params) {
-      const e = this.ActionInfo.Params;
+      var e = this.ActionInfo.Params;
       if (e.EntityIds?.length) {
         let t = !1;
         for (const o of e.EntityIds)
@@ -85,4 +85,4 @@ class FlowActionDestroyEntity extends FlowActionServerAction_1.FlowActionServerA
   }
 }
 exports.FlowActionDestroyEntity = FlowActionDestroyEntity;
-// # sourceMappingURL=FlowActionDestroyEntity.js.map
+//# sourceMappingURL=FlowActionDestroyEntity.js.map

@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelUpView = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const MapNoteById_1 = require("../../../../Core/Define/ConfigQuery/MapNoteById");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const EffectSystem_1 = require("../../../Effect/EffectSystem");
-const Global_1 = require("../../../Global");
-const GlobalData_1 = require("../../../GlobalData");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const EffectUtil_1 = require("../../../Utils/EffectUtil");
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  MapNoteById_1 = require("../../../../Core/Define/ConfigQuery/MapNoteById"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  Global_1 = require("../../../Global"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  EffectUtil_1 = require("../../../Utils/EffectUtil");
 class LevelUpView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -56,7 +56,7 @@ class LevelUpView extends UiViewBase_1.UiViewBase {
     ];
   }
   OnStart() {
-    const e = ModelManager_1.ModelManager.LevelUpModel.GetCacheData();
+    var e = ModelManager_1.ModelManager.LevelUpModel.GetCacheData();
     ModelManager_1.ModelManager.LevelUpModel.ClearCacheData(),
       (this.wvt = e.CurLevel > e.PreLevel),
       (this.Bvt = e.AddExp),
@@ -109,8 +109,8 @@ class LevelUpView extends UiViewBase_1.UiViewBase {
       ((this.Kvt = !0),
       this.GetText(0).SetText(this.w0t.toString()),
       this.UiViewSequence?.PlaySequence("LevelUp"));
-    const e = this.Kvt ? this.qvt - this.Gvt : this.qvt;
-    const t = this.Kvt ? this.Ovt : this.Gvt;
+    var e = this.Kvt ? this.qvt - this.Gvt : this.qvt,
+      t = this.Kvt ? this.Ovt : this.Gvt;
     this.GetText(1).SetText(Math.round(e) + "/" + t),
       this.GetSprite(2).SetFillAmount(e / t),
       this.Fvt &&
@@ -140,8 +140,8 @@ class LevelUpView extends UiViewBase_1.UiViewBase {
     if (ModelManager_1.ModelManager.LevelUpModel.CanBreakTipsShowFlag)
       for (const t of MapNoteById_1.configMapNoteById.GetConfig(4)
         .QuestIdList) {
-        const e = ModelManager_1.ModelManager.QuestNewModel.GetQuestState(t);
-        if (e === 2 || e === 1) {
+        var e = ModelManager_1.ModelManager.QuestNewModel.GetQuestState(t);
+        if (2 === e || 1 === e) {
           ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
             "WorldLevelUpgradeNotice",
           ),
@@ -152,10 +152,10 @@ class LevelUpView extends UiViewBase_1.UiViewBase {
       }
   }
   spi() {
-    let e, t, i, s;
+    var e, t, i, s;
     Global_1.Global.BaseCharacter &&
       (e = EffectUtil_1.EffectUtil.GetEffectPath("WorldLevelUpEffect")) &&
-      e.length !== 0 &&
+      0 !== e.length &&
       ((t = (i = Global_1.Global.BaseCharacter).GetTransform()),
       (i = i.CapsuleComponent.CapsuleHalfHeight),
       ((s = t.GetLocation()).Z -= i),
@@ -181,4 +181,4 @@ class LevelUpView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.LevelUpView = LevelUpView;
-// # sourceMappingURL=LevelUpView.js.map
+//# sourceMappingURL=LevelUpView.js.map

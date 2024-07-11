@@ -6,4 +6,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     "/Game/Aki/UI/UIResources/UiWorld/Curve/NPCHeadStateScaleCurve.NPCHeadStateScaleCurve"),
   (exports.DIALOG_SCALE_CURVE_PATH =
     "/Game/Aki/UI/UIResources/UiWorld/Curve/NPCDialogScaleCurve.NPCDialogScaleCurve");
-// # sourceMappingURL=NpcIconDefine.js.map
+//# sourceMappingURL=NpcIconDefine.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem");
-const FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem"),
+  FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem");
 class TsMediaBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static GetAffectedByP1orP3(t) {
     t = EntitySystem_1.EntitySystem.GetComponent(t, 40);
@@ -52,4 +52,4 @@ class TsMediaBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
 }
 exports.default = TsMediaBlueprintFunctionLibrary;
-// # sourceMappingURL=TsMediaBlueprintFunctionLibrary.js.map
+//# sourceMappingURL=TsMediaBlueprintFunctionLibrary.js.map

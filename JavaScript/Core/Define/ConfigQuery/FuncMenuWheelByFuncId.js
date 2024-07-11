@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configFuncMenuWheelByFuncId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const FuncMenuWheel_1 = require("../Config/FuncMenuWheel");
-const DB = "db_roulette.db";
-const FILE = "l.轮盘.xlsx";
-const TABLE = "FuncMenuWheel";
-const COMMAND = "select BinData from `FuncMenuWheel` where FuncId=?";
-const KEY_PREFIX = "FuncMenuWheelByFuncId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  FuncMenuWheel_1 = require("../Config/FuncMenuWheel"),
+  DB = "db_roulette.db",
+  FILE = "l.轮盘.xlsx",
+  TABLE = "FuncMenuWheel",
+  COMMAND = "select BinData from `FuncMenuWheel` where FuncId=?",
+  KEY_PREFIX = "FuncMenuWheelByFuncId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configFuncMenuWheelByFuncId.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configFuncMenuWheelByFuncId.GetConfig(";
 exports.configFuncMenuWheelByFuncId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configFuncMenuWheelByFuncId = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, n, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "FuncId",
-            n,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "FuncId",
+              n,
+            ]))
       ) {
-        var i;
-        var o = void 0;
+        var i,
+          o = void 0;
         if (
           (([i, o] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configFuncMenuWheelByFuncId = {
     }
   },
 };
-// # sourceMappingURL=FuncMenuWheelByFuncId.js.map
+//# sourceMappingURL=FuncMenuWheelByFuncId.js.map

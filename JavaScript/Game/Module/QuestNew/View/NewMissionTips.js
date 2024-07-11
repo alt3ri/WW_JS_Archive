@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NewMissionTips = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const PublicUtil_1 = require("../../../Common/PublicUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  PublicUtil_1 = require("../../../Common/PublicUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils");
 class NewMissionTips extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -17,7 +17,7 @@ class NewMissionTips extends UiTickViewBase_1.UiTickViewBase {
       (this.mNe = 5),
       (this.gro = !1),
       (this.fro = () => {
-        const i = PublicUtil_1.PublicUtil.GetConfigTextByKey(this.Cro);
+        var i = PublicUtil_1.PublicUtil.GetConfigTextByKey(this.Cro);
         this.GetText(0)?.SetText(i);
       });
   }
@@ -29,8 +29,8 @@ class NewMissionTips extends UiTickViewBase_1.UiTickViewBase {
   }
   OnBeforeCreate() {
     super.OnBeforeCreate();
-    const i = this.OpenParam;
-    const e = ModelManager_1.ModelManager.QuestNewModel.GetQuest(i);
+    var i = this.OpenParam,
+      e = ModelManager_1.ModelManager.QuestNewModel.GetQuest(i);
     e
       ? ((this.dro =
           ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestTypeMark(
@@ -51,12 +51,12 @@ class NewMissionTips extends UiTickViewBase_1.UiTickViewBase {
   }
   OnStart() {
     super.OnStart();
-    var i = this.GetSprite(1);
-    var i =
-      (i &&
-        !StringUtils_1.StringUtils.IsBlank(this.dro) &&
-        (this.SetSpriteByPath(this.dro, i, !1), i.SetUIActive(!0)),
-      this.GetText(0));
+    var i = this.GetSprite(1),
+      i =
+        (i &&
+          !StringUtils_1.StringUtils.IsBlank(this.dro) &&
+          (this.SetSpriteByPath(this.dro, i, !1), i.SetUIActive(!0)),
+        this.GetText(0));
     i.OnSelfLanguageChange.Bind(this.fro), this.fro(), i.SetUIActive(!0);
   }
   OnTick(i) {
@@ -68,4 +68,4 @@ class NewMissionTips extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.NewMissionTips = NewMissionTips;
-// # sourceMappingURL=NewMissionTips.js.map
+//# sourceMappingURL=NewMissionTips.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.getServerEditorObjMeta = exports.setServerEditorObjMeta = void 0);
-const Util_1 = require("../Misc/Util");
-const EDITOR_SERVER_URL = "http://iloop.aki.kuro.com:8002/editor-object";
-const CACHE_EXPIRE_TIME = 6e4;
-const cache = new Map();
+const Util_1 = require("../Misc/Util"),
+  EDITOR_SERVER_URL = "http://iloop.aki.kuro.com:8002/editor-object",
+  CACHE_EXPIRE_TIME = 6e4,
+  cache = new Map();
 async function setServerEditorObjMeta(e, t, r) {
   (t = { uid: e, meta: t, operator: r }),
     (r = await (0, Util_1.doJsonHttpPost)(EDITOR_SERVER_URL, t));
@@ -20,4 +20,4 @@ async function getServerEditorObjMeta(e, t) {
 }
 (exports.setServerEditorObjMeta = setServerEditorObjMeta),
   (exports.getServerEditorObjMeta = getServerEditorObjMeta);
-// # sourceMappingURL=EditorObject.js.map
+//# sourceMappingURL=EditorObject.js.map

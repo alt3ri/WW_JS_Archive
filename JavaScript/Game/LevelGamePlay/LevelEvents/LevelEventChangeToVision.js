@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventChangeToVision = void 0);
-const Global_1 = require("../../Global");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Global_1 = require("../../Global"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventChangeToVision extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, l) {
-    let o;
+    var o;
     e &&
       ((o = Global_1.Global.BaseCharacter.CharacterActorComponent.Entity)
         .GetComponent(3)
@@ -17,4 +17,4 @@ class LevelEventChangeToVision extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventChangeToVision = LevelEventChangeToVision;
-// # sourceMappingURL=LevelEventChangeToVision.js.map
+//# sourceMappingURL=LevelEventChangeToVision.js.map

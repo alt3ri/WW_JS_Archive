@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MonsterInfoConfig = void 0);
-const MonsterBodyTypeConfigById_1 = require("../../../Core/Define/ConfigQuery/MonsterBodyTypeConfigById");
-const MonsterInfoById_1 = require("../../../Core/Define/ConfigQuery/MonsterInfoById");
-const MonsterPerchById_1 = require("../../../Core/Define/ConfigQuery/MonsterPerchById");
-const MonsterRarityById_1 = require("../../../Core/Define/ConfigQuery/MonsterRarityById");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const MonsterBodyTypeConfigById_1 = require("../../../Core/Define/ConfigQuery/MonsterBodyTypeConfigById"),
+  MonsterInfoById_1 = require("../../../Core/Define/ConfigQuery/MonsterInfoById"),
+  MonsterPerchById_1 = require("../../../Core/Define/ConfigQuery/MonsterPerchById"),
+  MonsterRarityById_1 = require("../../../Core/Define/ConfigQuery/MonsterRarityById"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class MonsterInfoConfig extends ConfigBase_1.ConfigBase {
   GetMonsterInfoConfig(e) {
     e = MonsterInfoById_1.configMonsterInfoById.GetConfig(e);
@@ -33,13 +33,13 @@ class MonsterInfoConfig extends ConfigBase_1.ConfigBase {
     return this.GetMonsterInfoConfig(e).RarityId;
   }
   GetMonsterPerch(e) {
-    const r = [];
-    const t = this.GetMonsterInfoConfig(e).PerchId;
-    const n = t.length;
+    var r = [],
+      t = this.GetMonsterInfoConfig(e).PerchId,
+      n = t.length;
     for (let e = 0; e < n; e++) {
-      var o = t[e];
-      var o = MonsterPerchById_1.configMonsterPerchById.GetConfig(o);
-      var o = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(o.PerchDes);
+      var o = t[e],
+        o = MonsterPerchById_1.configMonsterPerchById.GetConfig(o),
+        o = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(o.PerchDes);
       r.push(o);
     }
     return r;
@@ -51,4 +51,4 @@ class MonsterInfoConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.MonsterInfoConfig = MonsterInfoConfig;
-// # sourceMappingURL=MonsterInfoConfig.js.map
+//# sourceMappingURL=MonsterInfoConfig.js.map

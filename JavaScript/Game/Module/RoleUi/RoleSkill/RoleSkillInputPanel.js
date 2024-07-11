@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleSkillInputPanel = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const FormationDataController_1 = require("../../Abilities/FormationDataController");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const InstanceDungeonController_1 = require("../../InstanceDungeon/InstanceDungeonController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
-const RoleSkillInputItem_1 = require("./RoleSkillInputItem");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  FormationDataController_1 = require("../../Abilities/FormationDataController"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  InstanceDungeonController_1 = require("../../InstanceDungeon/InstanceDungeonController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  RoleSkillInputItem_1 = require("./RoleSkillInputItem");
 class RoleSkillInputPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -41,14 +41,12 @@ class RoleSkillInputPanel extends UiPanelBase_1.UiPanelBase {
             "RoleGuideNotice05",
           );
         else {
-          let e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
-            this.zke,
-          );
-          const r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(
-            e.Name,
-          );
+          var e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
+              this.zke,
+            ),
+            r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(e.Name);
           const i = e.RoleGuide;
-          i === 0
+          0 === i
             ? ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                 "RoleGuideNotice02",
                 r,
@@ -58,15 +56,15 @@ class RoleSkillInputPanel extends UiPanelBase_1.UiPanelBase {
               ),
               e.FunctionMap.set(2, () => {
                 var e =
-                  ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-                    i,
-                  ).FightFormationId;
-                var e =
-                  ConfigManager_1.ConfigManager.EditBattleTeamConfig.GetFightFormationConfig(
-                    e,
-                  )?.AutoRole;
-                if ((e?.length ?? 0) > 0) {
-                  const r = new Array();
+                    ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+                      i,
+                    ).FightFormationId,
+                  e =
+                    ConfigManager_1.ConfigManager.EditBattleTeamConfig.GetFightFormationConfig(
+                      e,
+                    )?.AutoRole;
+                if (0 < (e?.length ?? 0)) {
+                  var r = new Array();
                   for (const o of e)
                     r.push(
                       ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleIdConfigByGroupId(
@@ -109,13 +107,13 @@ class RoleSkillInputPanel extends UiPanelBase_1.UiPanelBase {
   }
   RefreshUi(e) {
     this.zke = e;
-    var e = ModelManager_1.ModelManager.RoleModel?.GetRoleDataById(e);
-    let r =
-      ConfigManager_1.ConfigManager.RoleSkillConfig.GetRoleSkillInputConfigById(
-        e.GetRoleId(),
-      );
+    var e = ModelManager_1.ModelManager.RoleModel?.GetRoleDataById(e),
+      r =
+        ConfigManager_1.ConfigManager.RoleSkillConfig.GetRoleSkillInputConfigById(
+          e.GetRoleId(),
+        );
     if (r) {
-      let o = r.SkillInputIdList;
+      var o = r.SkillInputIdList;
       this.Zke.RefreshByData(o);
       const l = this.GetTexture(1);
       l.SetUIActive(!1),
@@ -123,9 +121,9 @@ class RoleSkillInputPanel extends UiPanelBase_1.UiPanelBase {
           l.SetUIActive(!0);
         }),
         this.GetItem(4).SetUIActive(void 0 !== e);
-      const i = r.DescList;
+      var i = r.DescList;
       for (let e = 0; e < this.Uco.length; e++) {
-        const n = this.Uco[e];
+        var n = this.Uco[e];
         e < i.length
           ? (n.SetUIActive(!0), LguiUtil_1.LguiUtil.SetLocalTextNew(n, i[e]))
           : n.SetUIActive(!1);
@@ -140,4 +138,4 @@ class RoleSkillInputPanel extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleSkillInputPanel = RoleSkillInputPanel;
-// # sourceMappingURL=RoleSkillInputPanel.js.map
+//# sourceMappingURL=RoleSkillInputPanel.js.map

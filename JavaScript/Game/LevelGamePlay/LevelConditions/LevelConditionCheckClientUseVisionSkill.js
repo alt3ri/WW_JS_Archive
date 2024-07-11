@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckClientUseVisionSkill = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Global_1 = require("../../Global");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const LevelGeneralDefine_1 = require("../LevelGeneralDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  Global_1 = require("../../Global"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  LevelGeneralDefine_1 = require("../LevelGeneralDefine");
 class LevelConditionCheckClientUseVisionSkill extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, l) {
-    let o, n, i;
-    return e.LimitParams.size === 0
+    var o, n, i;
+    return 0 === e.LimitParams.size
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
@@ -36,4 +36,4 @@ class LevelConditionCheckClientUseVisionSkill extends LevelGeneralBase_1.LevelCo
 }
 exports.LevelConditionCheckClientUseVisionSkill =
   LevelConditionCheckClientUseVisionSkill;
-// # sourceMappingURL=LevelConditionCheckClientUseVisionSkill.js.map
+//# sourceMappingURL=LevelConditionCheckClientUseVisionSkill.js.map

@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Protocol_1 = require("../../Core/Define/Net/Protocol");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const CharacterAttributeTypes_1 = require("../NewWorld/Character/Common/Component/Abilities/CharacterAttributeTypes");
-const MIN_JUMP_UP_RATE = 0.3;
-const MAX_JUMP_UP_RATE = 1;
+const UE = require("ue"),
+  Protocol_1 = require("../../Core/Define/Net/Protocol"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  CharacterAttributeTypes_1 = require("../NewWorld/Character/Common/Component/Abilities/CharacterAttributeTypes"),
+  MIN_JUMP_UP_RATE = 0.3,
+  MAX_JUMP_UP_RATE = 1;
 class TsAnimNotifyStateSetRootMotionScale extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.Tag = void 0);
   }
   K2_NotifyBegin(t, e, r) {
-    let o;
-    let a;
-    var t = t.GetOwner();
+    var o,
+      a,
+      t = t.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
       !!(o = t.CharacterActorComponent)?.Valid &&
@@ -22,7 +22,7 @@ class TsAnimNotifyStateSetRootMotionScale extends UE.KuroAnimNotifyState {
         o.GetSequenceBinding() ||
         !o.IsAutonomousProxy ||
         !o.Entity.GetComponent(185)?.HasTag(this.Tag.TagId) ||
-        (this.Tag?.TagId === -451106150 &&
+        (-451106150 === this.Tag?.TagId &&
           ((a = (a = o.Entity.GetComponent(156))
             ? a.GetCurrentValue(Protocol_1.Aki.Protocol.KBs.Proto_Jump) /
               CharacterAttributeTypes_1.PER_TEN_THOUSAND
@@ -39,8 +39,8 @@ class TsAnimNotifyStateSetRootMotionScale extends UE.KuroAnimNotifyState {
     );
   }
   K2_NotifyEnd(t, e) {
-    let r;
-    var t = t.GetOwner();
+    var r,
+      t = t.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
       !(
@@ -58,4 +58,4 @@ class TsAnimNotifyStateSetRootMotionScale extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateSetRootMotionScale;
-// # sourceMappingURL=TsAnimNotifyStateSetRootMotionScale.js.map
+//# sourceMappingURL=TsAnimNotifyStateSetRootMotionScale.js.map

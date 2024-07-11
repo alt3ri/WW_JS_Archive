@@ -8,4 +8,4 @@ class OthersHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
   }
 }
 exports.OthersHotPatchProcedure = OthersHotPatchProcedure;
-// # sourceMappingURL=OthersHotPatchProcedure.js.map
+//# sourceMappingURL=OthersHotPatchProcedure.js.map

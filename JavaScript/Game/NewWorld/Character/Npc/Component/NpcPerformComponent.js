@@ -1,47 +1,52 @@
 "use strict";
-let NpcPerformComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, i, e, s) {
-    let h;
-    const r = arguments.length;
-    let o =
-      r < 3 ? i : s === null ? (s = Object.getOwnPropertyDescriptor(i, e)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      o = Reflect.decorate(t, i, e, s);
-    else
-      for (let n = t.length - 1; n >= 0; n--)
-        (h = t[n]) && (o = (r < 3 ? h(o) : r > 3 ? h(i, e, o) : h(i, e)) || o);
-    return r > 3 && o && Object.defineProperty(i, e, o), o;
-  };
+var NpcPerformComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, i, e, s) {
+      var h,
+        r = arguments.length,
+        o =
+          r < 3
+            ? i
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(i, e))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        o = Reflect.decorate(t, i, e, s);
+      else
+        for (var n = t.length - 1; 0 <= n; n--)
+          (h = t[n]) &&
+            (o = (r < 3 ? h(o) : 3 < r ? h(i, e, o) : h(i, e)) || o);
+      return 3 < r && o && Object.defineProperty(i, e, o), o;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcPerformComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const MathCommon_1 = require("../../../../../Core/Utils/Math/MathCommon");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const StateMachine_1 = require("../../../../../Core/Utils/StateMachine/StateMachine");
-const IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent");
-const CameraController_1 = require("../../../../Camera/CameraController");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const Global_1 = require("../../../../Global");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const PawnTurnActionController_1 = require("../../../Pawn/Controllers/PawnTurnActionController");
-const MonsterNearbySensory_1 = require("../../../Pawn/SensoryInfo/MonsterNearbySensory");
-const BasePerformComponent_1 = require("../../Common/Component/BasePerformComponent");
-const NpcPerformAlertState_1 = require("../StateMachine/NpcPerformAlertState");
-const NpcPerformIdleState_1 = require("../StateMachine/NpcPerformIdleState");
-const NpcPerformImpactedState_1 = require("../StateMachine/NpcPerformImpactedState");
-const NpcPerformInteractState_1 = require("../StateMachine/NpcPerformInteractState");
-const NpcPerformMonsterNearbyState_1 = require("../StateMachine/NpcPerformMonsterNearbyState");
-const NpcPerformSystemUiState_1 = require("../StateMachine/NpcPerformSystemUiState");
-const NpcPerformUnderAttackState_1 = require("../StateMachine/NpcPerformUnderAttackState");
-const MIN_IMPACT_STRENGTH = 500;
-const DEFAULT_SIGHT_RANGE = 300;
-const SIGHT_OPEN_DEGREE = 80;
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  MathCommon_1 = require("../../../../../Core/Utils/Math/MathCommon"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  StateMachine_1 = require("../../../../../Core/Utils/StateMachine/StateMachine"),
+  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  CameraController_1 = require("../../../../Camera/CameraController"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../../Global"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  PawnTurnActionController_1 = require("../../../Pawn/Controllers/PawnTurnActionController"),
+  MonsterNearbySensory_1 = require("../../../Pawn/SensoryInfo/MonsterNearbySensory"),
+  BasePerformComponent_1 = require("../../Common/Component/BasePerformComponent"),
+  NpcPerformAlertState_1 = require("../StateMachine/NpcPerformAlertState"),
+  NpcPerformIdleState_1 = require("../StateMachine/NpcPerformIdleState"),
+  NpcPerformImpactedState_1 = require("../StateMachine/NpcPerformImpactedState"),
+  NpcPerformInteractState_1 = require("../StateMachine/NpcPerformInteractState"),
+  NpcPerformMonsterNearbyState_1 = require("../StateMachine/NpcPerformMonsterNearbyState"),
+  NpcPerformSystemUiState_1 = require("../StateMachine/NpcPerformSystemUiState"),
+  NpcPerformUnderAttackState_1 = require("../StateMachine/NpcPerformUnderAttackState"),
+  MIN_IMPACT_STRENGTH = 500,
+  DEFAULT_SIGHT_RANGE = 300,
+  SIGHT_OPEN_DEGREE = 80;
 let NpcPerformComponent =
   (NpcPerformComponent_1 = class NpcPerformComponent extends (
     BasePerformComponent_1.BasePerformComponent
@@ -78,9 +83,9 @@ let NpcPerformComponent =
           this.IsInPlot ||
             this.IsBeingAttacked ||
             this.IsBeingImpacted ||
-            this.Lle.CurrentState !== 1 ||
+            1 !== this.Lle.CurrentState ||
             (Global_1.Global.BaseCharacter === i &&
-              (this.Rin() && this.Hte?.CreatureData.GetSubEntityType() !== 1
+              (this.Rin() && 1 !== this.Hte?.CreatureData.GetSubEntityType()
                 ? this.Lo.NpcHitShow && this.Ain()
                 : this.Lo.IsShowStrike && this.Uin()));
         }),
@@ -100,7 +105,7 @@ let NpcPerformComponent =
         (this.win = 0),
         (this.Bin = !1),
         (this.OnNpcInAiControl = () => {
-          this.xin === 2
+          2 === this.xin
             ? Log_1.Log.CheckError() &&
               Log_1.Log.Error("NPC", 30, "关卡Ai控制中，与行为树不兼容", [
                 "ConfigID",
@@ -111,7 +116,7 @@ let NpcPerformComponent =
               : (this.xin = 1);
         }),
         (this.InLevelAiControl = () =>
-          this.xin === 1
+          1 === this.xin
             ? (Log_1.Log.CheckError() &&
                 Log_1.Log.Error("NPC", 30, "行为树控制中，与关卡Ai不兼容", [
                   "ConfigID",
@@ -123,7 +128,7 @@ let NpcPerformComponent =
               : ((this.xin = 2), !0));
     }
     OnInitData() {
-      let t = this.Entity.GetComponent(0).GetPbEntityInitData();
+      var t = this.Entity.GetComponent(0).GetPbEntityInitData();
       if (!t?.ComponentsData) return !(this.Lin = !1);
       t = (0, IComponent_1.getComponent)(
         t.ComponentsData,
@@ -131,14 +136,14 @@ let NpcPerformComponent =
       );
       if (!t) return !(this.Lin = !1);
       this.Lin = !0;
-      var i = this.Entity.GetComponent(0);
-      var i =
-        ((this.Mne = i.GetPbDataId()),
-        (this.q6e = this.Entity.GetComponent(103)),
-        (this.Lie = this.Entity.GetComponent(177)),
-        ModelManager_1.ModelManager.CreatureModel.GetEntity(
-          i.GetCreatureDataId(),
-        ));
+      var i = this.Entity.GetComponent(0),
+        i =
+          ((this.Mne = i.GetPbDataId()),
+          (this.q6e = this.Entity.GetComponent(103)),
+          (this.Lie = this.Entity.GetComponent(177)),
+          ModelManager_1.ModelManager.CreatureModel.GetEntity(
+            i.GetCreatureDataId(),
+          ));
       return (
         (this.Lle = new StateMachine_1.StateMachine(i, this.Pz)),
         this.Lle.AddState(1, NpcPerformIdleState_1.NpcPerformIdleState, t),
@@ -174,7 +179,7 @@ let NpcPerformComponent =
       );
     }
     OnStart() {
-      let t;
+      var t;
       return (
         this.Lin &&
           ((this.Hte = this.Entity.GetComponent(2)),
@@ -251,9 +256,9 @@ let NpcPerformComponent =
     }
     OnMonsterNearby() {
       return (
-        this.Lle.CurrentState === 7 ||
+        7 === this.Lle.CurrentState ||
         (!this.IsInPlot &&
-          this.Lle.CurrentState === 1 &&
+          1 === this.Lle.CurrentState &&
           this.gin.OnMonsterNearby())
       );
     }
@@ -263,18 +268,18 @@ let NpcPerformComponent =
         i.Init(this.Lo.NpcMonsterClosePerform.Range),
           (i.OnEnterSensoryRange = (t) => this.OnMonsterNearby()),
           (i.OnExitSensoryRange = (t) =>
-            !(!i.CheckInRange() && this.Lle.CurrentState === 7) ||
+            !(!i.CheckInRange() && 7 === this.Lle.CurrentState) ||
             this.Lle.Switch(1)),
           (this.Ein = this.Entity.GetComponent(105).AddSensoryInfo(i));
       }
     }
     Nin() {
-      this.Ein >= 0 &&
+      0 <= this.Ein &&
         (this.Entity.GetComponent(105).RemoveSensoryInfo(this.Ein),
         (this.Ein = -1));
     }
     OnPlayerAttack() {
-      this.IsInPlot || this.Lle.CurrentState !== 1 || this.gin.OnPlayerAttack();
+      this.IsInPlot || 1 !== this.Lle.CurrentState || this.gin.OnPlayerAttack();
     }
     OnPlayerAttackBegin() {
       Log_1.Log.CheckInfo() &&
@@ -288,7 +293,7 @@ let NpcPerformComponent =
     }
     OnPlayerAttackEnd() {
       this.kin(!1),
-        this.Lle.CurrentState !== 3
+        3 !== this.Lle.CurrentState
           ? Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "NPC",
@@ -307,7 +312,7 @@ let NpcPerformComponent =
             this.Lle.Switch(1));
     }
     OnPlayerImpact() {
-      this.IsInPlot || this.Lle.CurrentState !== 1 || this.gin.OnPlayerImpact();
+      this.IsInPlot || 1 !== this.Lle.CurrentState || this.gin.OnPlayerImpact();
     }
     OnPlayerImpactBegin() {
       Log_1.Log.CheckInfo() &&
@@ -321,7 +326,7 @@ let NpcPerformComponent =
     }
     OnPlayerImpactEnd() {
       this.kin(!1),
-        this.Lle.CurrentState !== 4
+        4 !== this.Lle.CurrentState
           ? Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "NPC",
@@ -350,7 +355,7 @@ let NpcPerformComponent =
             "[NpcPerformComp.OnPlayerInteractStart] 开始执行交互转身",
             ["PbDataID", this.Hte?.CreatureData.GetPbDataId()],
           ),
-        this.Lle.CurrentState !== 1 && this.Lle.Switch(1),
+        1 !== this.Lle.CurrentState && this.Lle.Switch(1),
         (this.uer.NeedTurn = t),
         (this.uer.WaitTurnEnd = i),
         (this.uer.OnTurnToInteractTargetEndHandle = e),
@@ -368,7 +373,7 @@ let NpcPerformComponent =
       this.Lin &&
         this.AnimComp &&
         (this.Lle.Update(t),
-        this.Lle.CurrentState === 5
+        5 === this.Lle.CurrentState
           ? (this.yin.DeepCopy(
               CameraController_1.CameraController.WidgetCamera.DisplayComponent.CineCamera.K2_GetActorLocation(),
             ),
@@ -381,7 +386,7 @@ let NpcPerformComponent =
               : this.SightTarget(void 0)));
     }
     wbr() {
-      let t;
+      var t;
       return (
         !!Global_1.Global.BaseCharacter?.IsValid() &&
         ((t = Global_1.Global.BaseCharacter.CharacterActorComponent),
@@ -425,7 +430,7 @@ let NpcPerformComponent =
             ["已开启系统UI", t],
             ["正在开启系统UI", this.Sin.SystemUiViewName],
           );
-      else if (this.Lle.CurrentState === 5)
+      else if (5 === this.Lle.CurrentState)
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "NPC",
@@ -439,13 +444,13 @@ let NpcPerformComponent =
         (this.Sin.SystemUiViewName = t),
           (this.Sin.BoardId = i),
           this.Lle.Switch(5);
-        let e = this.Entity.GetComponent(0);
+        var e = this.Entity.GetComponent(0);
         if (e?.Valid) {
           e = e.GetBaseInfo().ChildEntityIds;
           if (e && !(e.length < 1)) {
-            const s = ModelManager_1.ModelManager.CreatureModel;
+            var s = ModelManager_1.ModelManager.CreatureModel;
             for (const r of e) {
-              let h = s.GetEntityByPbDataId(r);
+              var h = s.GetEntityByPbDataId(r);
               h?.Valid &&
                 (h = h.Entity.GetComponent(168))?.Valid &&
                 h.SetUiOpenPerformance(t, i);
@@ -461,7 +466,7 @@ let NpcPerformComponent =
         this.OnPlayerAttack();
     }
     Uin() {
-      const t = Global_1.Global.BaseCharacter.GetVelocity().Size2D();
+      var t = Global_1.Global.BaseCharacter.GetVelocity().Size2D();
       t < MIN_IMPACT_STRENGTH ||
         ((this.CollisionStrength = t),
         this.Fin(),
@@ -478,7 +483,7 @@ let NpcPerformComponent =
         this.Lie.RemoveTag(-2044964178);
     }
     Rin() {
-      const t =
+      var t =
         Global_1.Global.BaseCharacter.CharacterActorComponent.Entity.GetComponent(
           185,
         );
@@ -488,15 +493,15 @@ let NpcPerformComponent =
       );
     }
     Fin() {
-      var t = Global_1.Global.BaseCharacter.GetVelocity();
-      var i = this.Hte.Actor.GetVelocity();
-      var t = t.op_Subtraction(i);
-      var i = this.Hte.ActorRight;
-      var i = t.CosineAngle2D(i);
-      var i = MathCommon_1.MathCommon.RadianToDegree(Math.acos(i));
-      var e = this.Hte.ActorForward;
-      var t = t.CosineAngle2D(e);
-      var e = MathCommon_1.MathCommon.RadianToDegree(Math.acos(t));
+      var t = Global_1.Global.BaseCharacter.GetVelocity(),
+        i = this.Hte.Actor.GetVelocity(),
+        t = t.op_Subtraction(i),
+        i = this.Hte.ActorRight,
+        i = t.CosineAngle2D(i),
+        i = MathCommon_1.MathCommon.RadianToDegree(Math.acos(i)),
+        e = this.Hte.ActorForward,
+        t = t.CosineAngle2D(e),
+        e = MathCommon_1.MathCommon.RadianToDegree(Math.acos(t));
       i > MathCommon_1.MathCommon.RightAngle
         ? (this.CollisionDirection = -1 * e)
         : (this.CollisionDirection = e),
@@ -529,18 +534,18 @@ let NpcPerformComponent =
       return "undefined";
     }
     get HasBrain() {
-      return this.xin !== 0 || this.win !== 0;
+      return 0 !== this.xin || 0 !== this.win;
     }
     ResumeAi(t) {
-      this.xin === 2
+      2 === this.xin
         ? this.Entity.GetComponent(62).Resume(t)
-        : this.xin === 1 && this.Entity.GetComponent(38).EnableAi(t),
+        : 1 === this.xin && this.Entity.GetComponent(38).EnableAi(t),
         (this.Bin = !1);
     }
     PauseAi(t) {
-      this.xin === 2
+      2 === this.xin
         ? this.Entity.GetComponent(62).Pause(t)
-        : this.xin === 1 && this.Entity.GetComponent(38).DisableAi(t),
+        : 1 === this.xin && this.Entity.GetComponent(38).DisableAi(t),
         (this.Bin = !0);
     }
     OnNpcInPlot(t) {
@@ -557,4 +562,4 @@ let NpcPerformComponent =
     NpcPerformComponent,
   )),
   (exports.NpcPerformComponent = NpcPerformComponent);
-// # sourceMappingURL=NpcPerformComponent.js.map
+//# sourceMappingURL=NpcPerformComponent.js.map

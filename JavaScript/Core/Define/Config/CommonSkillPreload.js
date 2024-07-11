@@ -66,121 +66,121 @@ class CommonSkillPreload {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   iscommon() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   hasmontagepath() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   GetActorclassAt(t) {
     return this.actorclass(t);
   }
   actorclass(t, s) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i
       ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
       : null;
   }
   actorclassLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetAnimationsAt(t) {
     return this.animations(t);
   }
   animations(t, s) {
-    const i = this.J7.__offset(this.z7, 12);
+    var i = this.J7.__offset(this.z7, 12);
     return i
       ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
       : null;
   }
   animationsLength() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetEffectsAt(t) {
     return this.effects(t);
   }
   effects(t, s) {
-    const i = this.J7.__offset(this.z7, 14);
+    var i = this.J7.__offset(this.z7, 14);
     return i
       ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
       : null;
   }
   effectsLength() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetAudiosAt(t) {
     return this.audios(t);
   }
   audios(t, s) {
-    const i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 16);
     return i
       ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
       : null;
   }
   audiosLength() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetMeshesAt(t) {
     return this.meshes(t);
   }
   meshes(t, s) {
-    const i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 18);
     return i
       ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
       : null;
   }
   meshesLength() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetMaterialsAt(t) {
     return this.materials(t);
   }
   materials(t, s) {
-    const i = this.J7.__offset(this.z7, 20);
+    var i = this.J7.__offset(this.z7, 20);
     return i
       ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
       : null;
   }
   materialsLength() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetAnimationblueprintsAt(t) {
     return this.animationblueprints(t);
   }
   animationblueprints(t, s) {
-    const i = this.J7.__offset(this.z7, 22);
+    var i = this.J7.__offset(this.z7, 22);
     return i
       ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
       : null;
   }
   animationblueprintsLength() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetOthersAt(t) {
     return this.others(t);
   }
   others(t, s) {
-    const i = this.J7.__offset(this.z7, 24);
+    var i = this.J7.__offset(this.z7, 24);
     return i
       ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
       : null;
   }
   othersLength() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.CommonSkillPreload = CommonSkillPreload;
-// # sourceMappingURL=CommonSkillPreload.js.map
+//# sourceMappingURL=CommonSkillPreload.js.map

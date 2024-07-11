@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionSkinView = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../../../Ui/Common/PopupCaptionItem");
-const UiSceneManager_1 = require("../../../UiComponent/UiSceneManager");
-const UiModelUtil_1 = require("../../../UiModel/UiModelUtil");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView");
-const VisionSkinItem_1 = require("./VisionSkinItem");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../../../Ui/Common/PopupCaptionItem"),
+  UiSceneManager_1 = require("../../../UiComponent/UiSceneManager"),
+  UiModelUtil_1 = require("../../../UiModel/UiModelUtil"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView"),
+  VisionSkinItem_1 = require("./VisionSkinItem");
 class VisionSkinView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -33,13 +33,13 @@ class VisionSkinView extends UiViewBase_1.UiViewBase {
         (this.ZHi = !this.ZHi), this.GetItem(2).SetUIActive(this.ZHi);
       }),
       (this.oji = () => {
-        const i =
+        var i =
           ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomItemById(
             this.YHi,
           );
         ControllerHolder_1.ControllerHolder.PhantomBattleController.PhantomSkinChangeRequest(
           this.lHi,
-          i?.ParentMonsterId > 0 ? this.YHi : 0,
+          0 < i?.ParentMonsterId ? this.YHi : 0,
           this.ZHi,
         ),
           this.E7i();
@@ -53,7 +53,7 @@ class VisionSkinView extends UiViewBase_1.UiViewBase {
         );
       }),
       (this.nji = () => {
-        const i = new VisionSkinItem_1.VisionSkinItem();
+        var i = new VisionSkinItem_1.VisionSkinItem();
         return (
           i.SetClickToggleEvent(this.f9i),
           i.BindCanToggleExecuteChange(this.Eft),
@@ -63,24 +63,24 @@ class VisionSkinView extends UiViewBase_1.UiViewBase {
       (this.f9i = (i, t) => {
         this.eji?.SetToggleStateForce(0), (this.eji = t);
         var t =
-          ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomItemById(
-            i,
-          );
-        const e =
-          (this.sji(
-            !!t.ParentMonsterId &&
-              !ModelManager_1.ModelManager.PhantomBattleModel.GetSkinIsUnlock(
-                i,
-              ),
-          ),
-          t.MonsterName);
+            ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomItemById(
+              i,
+            ),
+          e =
+            (this.sji(
+              !!t.ParentMonsterId &&
+                !ModelManager_1.ModelManager.PhantomBattleModel.GetSkinIsUnlock(
+                  i,
+                ),
+            ),
+            t.MonsterName);
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(5), e),
           this.tji ? this.aji(i !== this.tji) : this.aji(!!t.ParentMonsterId),
           this.u9i(i);
       }),
       (this.Eft = (i) => this.YHi !== i),
       (this.hji = () => {
-        const t =
+        var t =
           ModelManager_1.ModelManager.PhantomBattleModel.GetMonsterSkinListByMonsterId(
             this.Vli,
           );
@@ -90,7 +90,7 @@ class VisionSkinView extends UiViewBase_1.UiViewBase {
               this.lHi,
             ).SkinId;
           let i = 0;
-          (i = this.tji ? t.indexOf(this.tji) : 0) === -1 && (i = 0),
+          -1 === (i = this.tji ? t.indexOf(this.tji) : 0) && (i = 0),
             this.zHi?.SetCurrentEquipmentVisible(!1),
             (this.zHi = this.JHi?.UnsafeGetGridProxy(i)),
             this.zHi?.SetCurrentEquipmentVisible(!0),
@@ -122,12 +122,12 @@ class VisionSkinView extends UiViewBase_1.UiViewBase {
       this.GetItem(2).SetUIActive(!1),
       (this.i7i = UiSceneManager_1.UiSceneManager.GetVisionSkeletalHandle()),
       (this.lHi = this.OpenParam);
-    let i;
-    let t;
-    const e =
-      ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
-        this.lHi,
-      );
+    var i,
+      t,
+      e =
+        ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
+          this.lHi,
+        );
     e &&
       ((this.Vli = e.GetConfig()?.MonsterId),
       (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
@@ -169,7 +169,7 @@ class VisionSkinView extends UiViewBase_1.UiViewBase {
       );
     if (t) {
       let i = 0;
-      (i = this.tji ? t.indexOf(this.tji) : 0) === -1 && (i = 0),
+      -1 === (i = this.tji ? t.indexOf(this.tji) : 0) && (i = 0),
         this.JHi?.RefreshByData(t, !1, () => {
           this.JHi?.SelectGridProxy(i),
             (this.zHi = this.JHi?.UnsafeGetGridProxy(i)),
@@ -197,7 +197,7 @@ class VisionSkinView extends UiViewBase_1.UiViewBase {
         (this.YHi = i));
   }
   E7i() {
-    let i;
+    var i;
     this.i7i &&
       ((i = this.i7i.Model),
       UiModelUtil_1.UiModelUtil.PlayEffectOnRoot(i, "VisionLevelUpEffect"),
@@ -227,4 +227,4 @@ class VisionSkinView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.VisionSkinView = VisionSkinView;
-// # sourceMappingURL=VisionSkinView.js.map
+//# sourceMappingURL=VisionSkinView.js.map

@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configTowerBuffById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const TowerBuff_1 = require("../Config/TowerBuff");
-const DB = "db_tower.db";
-const FILE = "p.爬塔新.xlsx";
-const TABLE = "TowerBuff";
-const COMMAND = "select BinData from `TowerBuff` where Id = ?";
-const KEY_PREFIX = "TowerBuffById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  TowerBuff_1 = require("../Config/TowerBuff"),
+  DB = "db_tower.db",
+  FILE = "p.爬塔新.xlsx",
+  TABLE = "TowerBuff",
+  COMMAND = "select BinData from `TowerBuff` where Id = ?",
+  KEY_PREFIX = "TowerBuffById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configTowerBuffById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configTowerBuffById.GetConfig(";
 exports.configTowerBuffById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configTowerBuffById = {
       if (
         (f =
           ConfigCommon_1.ConfigCommon.BindBigInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var f;
-        var n = void 0;
+        var f,
+          n = void 0;
         if (
           (([f, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configTowerBuffById = {
     }
   },
 };
-// # sourceMappingURL=TowerBuffById.js.map
+//# sourceMappingURL=TowerBuffById.js.map

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerRewardItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew");
-const TowerController_1 = require("../TowerController");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
+  TowerController_1 = require("../TowerController");
 class TowerRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(),
@@ -48,31 +48,31 @@ class TowerRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(e) {
     (this.QSi = e.IsReceived), (this.uDo = e.Index);
-    var r = this.mDo(e.RewardId);
-    var r =
-      (this.bOe.RefreshByData(r, () => {
-        for (const e of this.bOe.GetScrollItemList())
-          e.SetReceivedVisible(this.QSi);
-      }),
-      ModelManager_1.ModelManager.TowerModel.GetDifficultyMaxStars(
-        ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties,
-      ));
+    var r = this.mDo(e.RewardId),
+      r =
+        (this.bOe.RefreshByData(r, () => {
+          for (const e of this.bOe.GetScrollItemList())
+            e.SetReceivedVisible(this.QSi);
+        }),
+        ModelManager_1.ModelManager.TowerModel.GetDifficultyMaxStars(
+          ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties,
+        ));
     this.GetText(1).SetText("" + e.Target),
       this.GetItem(3).SetUIActive(this.QSi),
       this.GetItem(4).SetUIActive(r < e.Target),
       this.GetItem(5).SetUIActive(r >= e.Target && !this.QSi);
   }
   mDo(e) {
-    let r;
-    let t;
-    const i = [];
+    var r,
+      t,
+      i = [];
     for ([r, t] of ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(e)
       ?.DropPreview) {
-      const o = [{ IncId: 0, ItemId: r }, t];
+      var o = [{ IncId: 0, ItemId: r }, t];
       i.push(o);
     }
     return i;
   }
 }
 exports.TowerRewardItem = TowerRewardItem;
-// # sourceMappingURL=TowerRewardItem.js.map
+//# sourceMappingURL=TowerRewardItem.js.map

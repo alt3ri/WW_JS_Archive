@@ -1,41 +1,45 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, i, e, s) {
-    let h;
-    const o = arguments.length;
-    let r =
-      o < 3 ? i : s === null ? (s = Object.getOwnPropertyDescriptor(i, e)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var h,
+      o = arguments.length,
+      r =
+        o < 3
+          ? i
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(i, e))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(t, i, e, s);
     else
-      for (let n = t.length - 1; n >= 0; n--)
-        (h = t[n]) && (r = (o < 3 ? h(r) : o > 3 ? h(i, e, r) : h(i, e)) || r);
-    return o > 3 && r && Object.defineProperty(i, e, r), r;
+      for (var n = t.length - 1; 0 <= n; n--)
+        (h = t[n]) && (r = (o < 3 ? h(r) : 3 < o ? h(i, e, r) : h(i, e)) || r);
+    return 3 < o && r && Object.defineProperty(i, e, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectHandle = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Info_1 = require("../../Core/Common/Info");
-const Log_1 = require("../../Core/Common/Log");
-const Stats_1 = require("../../Core/Common/Stats");
-const EffectEnvironment_1 = require("../../Core/Effect/EffectEnvironment");
-const EntitySystem_1 = require("../../Core/Entity/EntitySystem");
-const GameBudgetInterfaceController_1 = require("../../Core/GameBudgetAllocator/GameBudgetInterfaceController");
-const PerformanceDecorators_1 = require("../../Core/Performance/PerformanceDecorators");
-const TickSystem_1 = require("../../Core/Tick/TickSystem");
-const TimerSystem_1 = require("../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const TimeUtil_1 = require("../Common/TimeUtil");
-const GameBudgetAllocatorConfigCreator_1 = require("../World/Define/GameBudgetAllocatorConfigCreator");
-const EEffectFlag_1 = require("./EEffectFlag");
-const EffectActorHandle_1 = require("./EffectActorHandle");
-const EffectModelNiagaraSpec_1 = require("./EffectSpec/EffectModelNiagaraSpec");
-const EffectSystem_1 = require("./EffectSystem");
-const MAX_LOOP_EFFECT_WITHOUT_OWNER_TIME_OF_EXISTENCE = 600;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Info_1 = require("../../Core/Common/Info"),
+  Log_1 = require("../../Core/Common/Log"),
+  Stats_1 = require("../../Core/Common/Stats"),
+  EffectEnvironment_1 = require("../../Core/Effect/EffectEnvironment"),
+  EntitySystem_1 = require("../../Core/Entity/EntitySystem"),
+  GameBudgetInterfaceController_1 = require("../../Core/GameBudgetAllocator/GameBudgetInterfaceController"),
+  PerformanceDecorators_1 = require("../../Core/Performance/PerformanceDecorators"),
+  TickSystem_1 = require("../../Core/Tick/TickSystem"),
+  TimerSystem_1 = require("../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../Common/TimeUtil"),
+  GameBudgetAllocatorConfigCreator_1 = require("../World/Define/GameBudgetAllocatorConfigCreator"),
+  EEffectFlag_1 = require("./EEffectFlag"),
+  EffectActorHandle_1 = require("./EffectActorHandle"),
+  EffectModelNiagaraSpec_1 = require("./EffectSpec/EffectModelNiagaraSpec"),
+  EffectSystem_1 = require("./EffectSystem"),
+  MAX_LOOP_EFFECT_WITHOUT_OWNER_TIME_OF_EXISTENCE = 600;
 class EffectHandleInitCache {
   constructor() {
     (this.WorldContext = void 0),
@@ -115,10 +119,10 @@ class EffectHandle {
       (this.gge = !1),
       (this.fge = (t, i) => {
         this.IsEffectValid() &&
-          i !== 2 &&
-          i !== 4 &&
+          2 !== i &&
+          4 !== i &&
           (this.InContainer &&
-            this.CreateSource === 1 &&
+            1 === this.CreateSource &&
             Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "RenderEffect",
@@ -146,7 +150,7 @@ class EffectHandle {
     this.nx = t;
   }
   GetOwnerEntityId() {
-    const t = this.GetContext();
+    var t = this.GetContext();
     return t ? t.EntityId : void 0;
   }
   SetEffectParameterNiagara(t) {
@@ -227,7 +231,7 @@ class EffectHandle {
     return this.tge.GetEffectType();
   }
   get CreateFromPlayerEffectPool() {
-    return this.CreateSource >= 2 && this.CreateSource <= 5;
+    return 2 <= this.CreateSource && this.CreateSource <= 5;
   }
   GetEffectActor() {
     return this.IsPendingInit ? this.InitCache.EffectActorHandle : this.ege;
@@ -243,21 +247,21 @@ class EffectHandle {
   GetNiagaraComponents() {
     if (this.IsPendingInit)
       return this.InitCache.EffectActorHandle.NiagaraComponents;
-    const i = this.ege?.K2_GetComponentsByClass(
-      UE.NiagaraComponent.StaticClass(),
-    );
-    const e = new Array();
+    var i = this.ege?.K2_GetComponentsByClass(
+        UE.NiagaraComponent.StaticClass(),
+      ),
+      e = new Array();
     if (i) for (let t = 0; t < i.Num(); t++) e.push(i.Get(t));
     return e;
   }
   GetNiagaraParticleCount() {
-    const t = this.GetNiagaraComponents();
-    let i = 0;
-    let e = 0;
+    var t = this.GetNiagaraComponents();
+    let i = 0,
+      e = 0;
     if (t instanceof Array)
       for (const o of t) {
-        const s = (0, puerts_1.$ref)(void 0);
-        const h = (0, puerts_1.$ref)(void 0);
+        var s = (0, puerts_1.$ref)(void 0),
+          h = (0, puerts_1.$ref)(void 0);
         UE.KuroRenderingRuntimeBPPluginBPLibrary.GetNiagaraParticleCount(
           o,
           s,
@@ -344,7 +348,7 @@ class EffectHandle {
         this.RegisterTick(),
       this.tge.Play(t),
       this.ApplyEffectParameters(),
-      this.ExtraState > 0 && this.SetEffectExtraState(this.ExtraState));
+      0 < this.ExtraState && this.SetEffectExtraState(this.ExtraState));
   }
   PreStop() {
     8 & this.ige || ((this.ige |= 8), this.tge.PreStop());
@@ -432,7 +436,7 @@ class EffectHandle {
       this.GetEffectSpec()?.SetPlaying(!0));
   }
   vge(t) {
-    const i =
+    var i =
       EffectEnvironment_1.EffectEnvironment.GameTimeInSeconds -
       this.InitCache.StartTime;
     (this.InitCache.TimeDiff += i * t * this.GetGlobalTimeScale()),
@@ -457,15 +461,16 @@ class EffectHandle {
         );
   }
   PlayEffectAfterPendingInit() {
-    let t;
+    var t;
     this.InitCache.StartTime < 0 ||
       (this.InitCache.AutoPlay || this.PlayEffect("PlayEffectAfterPendingInit"),
-      (t =
-        this.InitCache.TimeDiff +
-        (EffectEnvironment_1.EffectEnvironment.GameTimeInSeconds -
-          this.InitCache.StartTime) *
-          this.GetTimeScale() *
-          this.GetGlobalTimeScale()) > 0 &&
+      0 <
+        (t =
+          this.InitCache.TimeDiff +
+          (EffectEnvironment_1.EffectEnvironment.GameTimeInSeconds -
+            this.InitCache.StartTime) *
+            this.GetTimeScale() *
+            this.GetGlobalTimeScale()) &&
         !this.tge.IsLoop &&
         this.ChaseFrame(t, !0));
   }
@@ -570,7 +575,7 @@ class EffectHandle {
   }
   RegisterTick() {
     if (!Info_1.Info.IsInCg())
-      if (this.IsTickWhenPaused || this.tge.GetEffectType() === 1)
+      if (this.IsTickWhenPaused || 1 === this.tge.GetEffectType())
         this.hge = TickSystem_1.TickSystem.Add(
           this.TickSystemTick,
           "EffectHandle_" + this.Path + "_" + this.Id,
@@ -595,10 +600,10 @@ class EffectHandle {
                 .GameBudgetAllocatorConfigCreator.TsAlwaysTickConfig
             : this.EffectEnableRange ===
                 GameBudgetAllocatorConfigCreator_1.EFFECT_ENABLE_RANGE
-              ? this.tge.GetEffectType() === 3
+              ? 3 === this.tge.GetEffectType()
                 ? GameBudgetAllocatorConfigCreator_1
                     .GameBudgetAllocatorConfigCreator.TsEffectGroupConfig
-                : this.tge.GetEffectType() === 0
+                : 0 === this.tge.GetEffectType()
                   ? GameBudgetAllocatorConfigCreator_1
                       .GameBudgetAllocatorConfigCreator.TsFightEffectGroupConfig
                   : GameBudgetAllocatorConfigCreator_1
@@ -688,7 +693,7 @@ class EffectHandle {
   }
   LocationProxyFunction() {
     if (this.IsPendingInit) {
-      const t = this.InitCache?.Location;
+      var t = this.InitCache?.Location;
       if (t) return t;
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
@@ -736,11 +741,11 @@ class EffectHandle {
   }
   Dge(t) {
     let i = t;
-    let e, s;
+    var e, s;
     this.mge
       ? (e = this.GetEffectSpec()) &&
         ((s = this._ge - e.PassTime),
-        this.uge > 0 && (i = this.uge),
+        0 < this.uge && (i = this.uge),
         Math.abs(s) < i
           ? (e.SeekTo(this._ge, !0, !1, t), (this.mge = !1))
           : ((i *= Math.sign(s)), e.SeekDelta(i, !0, !1, t)))
@@ -900,7 +905,7 @@ class EffectHandle {
       (t || (this.Cge = 0), this.OnVisibilityChanged(t));
   }
   Lge(t) {
-    let i, e;
+    var i, e;
     return this.tge?.IsReallyPlaying()
       ? ((i =
           t *
@@ -969,7 +974,7 @@ class EffectHandle {
           );
   }
   ExecuteAttachToEffectSkeletalMesh(t, i, e) {
-    let s;
+    var s;
     t.IsValid() &&
       (this.pge || (this.pge = new Array()),
       (s = this.ege?.GetComponentByClass(
@@ -1007,4 +1012,4 @@ class EffectHandle {
     null,
   ),
   (exports.EffectHandle = EffectHandle);
-// # sourceMappingURL=EffectHandle.js.map
+//# sourceMappingURL=EffectHandle.js.map

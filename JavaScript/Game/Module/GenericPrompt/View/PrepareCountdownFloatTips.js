@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PrepareCountdownFloatTips = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const DEFAULT_TIME = 3;
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  DEFAULT_TIME = 3;
 class PrepareCountdownFloatTips extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments), (this.RemainTime = 0), (this.TimerId = void 0);
@@ -25,11 +25,11 @@ class PrepareCountdownFloatTips extends UiViewBase_1.UiViewBase {
         TimerSystem_1.TimerSystem.Remove(this.TimerId),
       (this.TimerId = TimerSystem_1.TimerSystem.Loop(
         () => {
-          let e;
+          var e;
           this.RemainTime--,
             this.RemainTime < 0
               ? this.CloseMe()
-              : this.RemainTime === 0
+              : 0 === this.RemainTime
                 ? ((e =
                     ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
                       "Start",
@@ -54,4 +54,4 @@ class PrepareCountdownFloatTips extends UiViewBase_1.UiViewBase {
   }
 }
 exports.PrepareCountdownFloatTips = PrepareCountdownFloatTips;
-// # sourceMappingURL=PrepareCountdownFloatTips.js.map
+//# sourceMappingURL=PrepareCountdownFloatTips.js.map

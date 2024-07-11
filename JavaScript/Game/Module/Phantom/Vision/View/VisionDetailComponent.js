@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionDetailComponent = void 0);
-const UE = require("ue");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const VisionDetailDescComponent_1 = require("./VisionDetailDescComponent");
-const VisionDetailInfoComponent_1 = require("./VisionDetailInfoComponent");
-const VisionDetailUnderComponent_1 = require("./VisionDetailUnderComponent");
+const UE = require("ue"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  VisionDetailDescComponent_1 = require("./VisionDetailDescComponent"),
+  VisionDetailInfoComponent_1 = require("./VisionDetailInfoComponent"),
+  VisionDetailUnderComponent_1 = require("./VisionDetailUnderComponent");
 class VisionDetailComponent extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -55,8 +55,8 @@ class VisionDetailComponent extends UiPanelBase_1.UiPanelBase {
       this.K6i.Update(e);
   }
   X6i() {
-    var e = this.j6i ? 1 : 0;
-    var e = ModelManager_1.ModelManager.PhantomBattleModel.GetIfSimpleState(e);
+    var e = this.j6i ? 1 : 0,
+      e = ModelManager_1.ModelManager.PhantomBattleModel.GetIfSimpleState(e);
     const t = new VisionDetailInfoComponent_1.VisionDetailInfoComponentData();
     t.DataBase = this.W6i;
     let i = -1;
@@ -64,19 +64,17 @@ class VisionDetailComponent extends UiPanelBase_1.UiPanelBase {
       (i =
         ModelManager_1.ModelManager.PhantomBattleModel
           .CurrentEquipmentSelectIndex);
-    const s = this.W6i.GetPreviewShowFetterList(i, this.zke);
-    const n = this.W6i.IfEquipSameNameMonsterOnRole(i, this.zke, this.W6i);
+    var s = this.W6i.GetPreviewShowFetterList(i, this.zke),
+      n = this.W6i.IfEquipSameNameMonsterOnRole(i, this.zke, this.W6i);
     let o = !1;
-    const r = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-      this.zke,
-    )
+    var r = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.zke)
       .GetPhantomData()
       .GetDataByIndex(0);
     (r && r?.GetIncrId() === this.W6i.GetUniqueId()) || (o = !0),
       VisionDetailDescComponent_1.VisionDetailDesc.ConvertVisionSkillDescToDescData(
         this.W6i.GetNormalSkillConfig(),
         this.W6i.GetPhantomLevel(),
-        i === 0 || i === -1,
+        0 === i || -1 === i,
         o,
         this.W6i.GetQuality(),
       ).forEach((e) => {
@@ -117,4 +115,4 @@ class VisionDetailComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.VisionDetailComponent = VisionDetailComponent;
-// # sourceMappingURL=VisionDetailComponent.js.map
+//# sourceMappingURL=VisionDetailComponent.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TimeTrackControlModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class TimeTrackControlModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -51,7 +51,7 @@ class TimeTrackControlModel extends ModelBase_1.ModelBase {
     (this.twe = t?.GetCreatureDataId() ?? 0), this.awe(), (this.owe = !0);
   }
   awe() {
-    let t;
+    var t;
     this.zxe &&
       void 0 !== this.Zxe &&
       (t = this.zxe.Entity.GetComponent(118)) &&
@@ -72,12 +72,12 @@ class TimeTrackControlModel extends ModelBase_1.ModelBase {
     (this.iwe = t), this.UpdatePointsUsable();
   }
   UpdatePointsUsable() {
-    const i = this.GetConfigStatesCounts();
+    var i = this.GetConfigStatesCounts();
     if (i) {
       this.swe ? this.swe.fill(!1) : (this.swe = new Array(i).fill(!1));
-      const s = this.nwe[this.iwe];
+      var s = this.nwe[this.iwe];
       this.swe[this.iwe] = (s.Hxs || s.jxs) ?? !1;
-      for (let t = this.iwe - 1; t >= 0; t--)
+      for (let t = this.iwe - 1; 0 <= t; t--)
         s.Hxs && this.swe[t + 1]
           ? (this.swe[t] = this.nwe[t + 1].Hxs ?? !1)
           : (this.swe[t] = !1);
@@ -92,4 +92,4 @@ class TimeTrackControlModel extends ModelBase_1.ModelBase {
   }
 }
 exports.TimeTrackControlModel = TimeTrackControlModel;
-// # sourceMappingURL=TimeTrackControlModel.js.map
+//# sourceMappingURL=TimeTrackControlModel.js.map

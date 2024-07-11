@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneCamera = void 0);
-const Entity_1 = require("../../Core/Entity/Entity");
-const GameBudgetAllocatorConfigCreator_1 = require("../World/Define/GameBudgetAllocatorConfigCreator");
-const SceneCameraDisplayComponent_1 = require("./SceneCameraDisplayComponent");
-const SceneCameraPlayerComponent_1 = require("./SceneCameraPlayerComponent");
+const Entity_1 = require("../../Core/Entity/Entity"),
+  GameBudgetAllocatorConfigCreator_1 = require("../World/Define/GameBudgetAllocatorConfigCreator"),
+  SceneCameraDisplayComponent_1 = require("./SceneCameraDisplayComponent"),
+  SceneCameraPlayerComponent_1 = require("./SceneCameraPlayerComponent");
 class SceneCamera extends Entity_1.Entity {
   constructor() {
     super(...arguments), (this.ele = void 0), (this.yme = void 0);
@@ -43,4 +43,4 @@ class SceneCamera extends Entity_1.Entity {
   }
 }
 exports.SceneCamera = SceneCamera;
-// # sourceMappingURL=SceneCamera.js.map
+//# sourceMappingURL=SceneCamera.js.map

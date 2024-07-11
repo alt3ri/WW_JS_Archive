@@ -16,11 +16,11 @@ class DicIntIntIntMap {
     );
   }
   key() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   value(t) {
-    const n = this.J7.__offset(this.z7, 6);
+    var n = this.J7.__offset(this.z7, 6);
     return n
       ? (t || new IntIntMap_1.IntIntMap()).__init(
           this.J7.__indirect(this.z7 + n),
@@ -30,4 +30,4 @@ class DicIntIntIntMap {
   }
 }
 exports.DicIntIntIntMap = DicIntIntIntMap;
-// # sourceMappingURL=DicIntIntIntMap.js.map
+//# sourceMappingURL=DicIntIntIntMap.js.map

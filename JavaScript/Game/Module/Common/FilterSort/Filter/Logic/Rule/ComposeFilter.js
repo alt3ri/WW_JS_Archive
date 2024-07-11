@@ -6,7 +6,7 @@ class ComposeFilter extends CommonFilter_1.CommonFilter {
   constructor() {
     super(...arguments),
       (this.GetComposeMenuList = (e) => {
-        return e.MainType === 1 || e.MainType === 2 ? e.SubType : 0;
+        return 1 === e.MainType || 2 === e.MainType ? e.SubType : 0;
       });
   }
   OnInitFilterMap() {
@@ -14,4 +14,4 @@ class ComposeFilter extends CommonFilter_1.CommonFilter {
   }
 }
 exports.ComposeFilter = ComposeFilter;
-// # sourceMappingURL=ComposeFilter.js.map
+//# sourceMappingURL=ComposeFilter.js.map

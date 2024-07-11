@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleAudioData = void 0);
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const RoleModuleDataBase_1 = require("./RoleModuleDataBase");
+const ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  RoleModuleDataBase_1 = require("./RoleModuleDataBase");
 class RoleAnimAudioData {
   constructor(e, a) {
     (this.CanInterrupt = e), (this.AudioPath = a);
@@ -13,12 +13,12 @@ class RoleAudioData extends RoleModuleDataBase_1.RoleModuleDataBase {
     super(e), (this.Xlo = new Map()), this.$lo();
   }
   $lo() {
-    const e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleAudioMap(
+    var e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleAudioMap(
       this.RoleId,
     );
     if (e)
       for (const t of e) {
-        const a = new RoleAnimAudioData(t.CanInterrupt, t.AudioPath);
+        var a = new RoleAnimAudioData(t.CanInterrupt, t.AudioPath);
         this.Xlo.set(t.ActionName, a);
       }
   }
@@ -27,4 +27,4 @@ class RoleAudioData extends RoleModuleDataBase_1.RoleModuleDataBase {
   }
 }
 exports.RoleAudioData = RoleAudioData;
-// # sourceMappingURL=RoleAudioData.js.map
+//# sourceMappingURL=RoleAudioData.js.map

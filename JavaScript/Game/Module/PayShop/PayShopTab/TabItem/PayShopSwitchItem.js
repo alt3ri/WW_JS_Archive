@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayShopSwitchItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const RedDotController_1 = require("../../../../RedDot/RedDotController");
-const CommonTabItemBase_1 = require("../../../Common/TabComponent/TabItem/CommonTabItemBase");
-const UiTabSequence_1 = require("../../../DynamicTab/UiTabViewBehavior/UiTabSequence");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  RedDotController_1 = require("../../../../RedDot/RedDotController"),
+  CommonTabItemBase_1 = require("../../../Common/TabComponent/TabItem/CommonTabItemBase"),
+  UiTabSequence_1 = require("../../../DynamicTab/UiTabViewBehavior/UiTabSequence");
 class PayShopSwitchItem extends CommonTabItemBase_1.CommonTabItemBase {
   constructor() {
     super(...arguments),
       (this.QFe = void 0),
       (this.bD = 0),
       (this.X9e = (e) => {
-        e === 1 && this.SelectedCallBack(this.GridIndex);
+        1 === e && this.SelectedCallBack(this.GridIndex);
       });
   }
   OnRegisterComponent() {
@@ -54,7 +54,7 @@ class PayShopSwitchItem extends CommonTabItemBase_1.CommonTabItemBase {
   }
   BindRedDot(e, t = 0) {
     this.UnBindRedDot();
-    const i = this.GetItem(2);
+    var i = this.GetItem(2);
     (this.QFe = e),
       (this.bD = t),
       RedDotController_1.RedDotController.BindRedDot(e, i, void 0, t);
@@ -71,4 +71,4 @@ class PayShopSwitchItem extends CommonTabItemBase_1.CommonTabItemBase {
   }
 }
 exports.PayShopSwitchItem = PayShopSwitchItem;
-// # sourceMappingURL=PayShopSwitchItem.js.map
+//# sourceMappingURL=PayShopSwitchItem.js.map

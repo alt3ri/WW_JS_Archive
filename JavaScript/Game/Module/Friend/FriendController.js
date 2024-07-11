@@ -1,26 +1,26 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FriendController = exports.FriendItemSt = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const CommonDefine_1 = require("../../../Core/Define/CommonDefine");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ChatController_1 = require("../Chat/ChatController");
-const LoginDefine_1 = require("../Login/Data/LoginDefine");
-const FriendDefine_1 = require("./Data/FriendDefine");
-const FriendData_1 = require("./FriendData");
-const CHECKGAP = 3e4;
-const APPLYFRIENDCD = 1e3;
-const SERVERREQUESTCD = 2500;
+const Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ChatController_1 = require("../Chat/ChatController"),
+  LoginDefine_1 = require("../Login/Data/LoginDefine"),
+  FriendDefine_1 = require("./Data/FriendDefine"),
+  FriendData_1 = require("./FriendData"),
+  CHECKGAP = 3e4,
+  APPLYFRIENDCD = 1e3,
+  SERVERREQUESTCD = 2500;
 class FriendItemSt {
   constructor() {
     (this.Id = 0), (this.OperationType = 0);
@@ -110,7 +110,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
   }
   static RequestFriendApplyAddSend(e, r) {
     if (
-      FriendController.OVt !== 0 &&
+      0 !== FriendController.OVt &&
       Time_1.Time.Now - FriendController.OVt <= APPLYFRIENDCD
     )
       return;
@@ -196,7 +196,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
     const C = new Protocol_1.Aki.Protocol.bZn();
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Friend", 28, "协议接收", ["数据长度", a.length]),
-      a.length === 0
+      0 === a.length
         ? (EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.FriendApplicationListUpdate,
           ),
@@ -212,21 +212,21 @@ class FriendController extends ControllerBase_1.ControllerBase {
                 "9410" + Protocol_1.Aki.Protocol.BZn.name,
               ]);
             let r = FriendController.kVt(e.lkn);
-            const o = C.j4n.length > 1;
+            var o = 1 < C.j4n.length;
             let n = 0;
             if (C.s5n === Protocol_1.Aki.Protocol.xks.Proto_Approve)
               for (const _ of Object.keys(e._Rs)) {
-                var t;
-                const l = e._Rs[_];
+                var t,
+                  l = e._Rs[_];
                 l === Protocol_1.Aki.Protocol.lkn.Sys
                   ? (t =
                       ModelManager_1.ModelManager.FriendModel.GetFriendDataInApplicationById(
                         Number(_),
                       )) && ModelManager_1.ModelManager.FriendModel.AddFriend(t)
-                  : r === "" && (r = FriendController.kVt(l));
+                  : "" === r && (r = FriendController.kVt(l));
               }
             for (const d of Object.keys(e._Rs)) {
-              const i = e._Rs[d];
+              var i = e._Rs[d];
               i === Protocol_1.Aki.Protocol.lkn.Sys
                 ? (n++,
                   ModelManager_1.ModelManager.FriendModel.DeleteFriendApplication(
@@ -240,10 +240,10 @@ class FriendController extends ControllerBase_1.ControllerBase {
                       ModelManager_1.ModelManager.FriendModel.AddPlayerToRefuseFriendList(
                         Number(d),
                       ))
-                : r === "" && (r = FriendController.kVt(i));
+                : "" === r && (r = FriendController.kVt(i));
             }
-            r === "" ||
-              (o && n !== 0) ||
+            "" === r ||
+              (o && 0 !== n) ||
               ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                 r,
               ),
@@ -286,7 +286,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
       );
   }
   static RequestFriendDelete(r) {
-    const e = new Protocol_1.Aki.Protocol.OZn();
+    var e = new Protocol_1.Aki.Protocol.OZn();
     (e.Ekn = r),
       Net_1.Net.Call(6370, e, (e) => {
         if (
@@ -318,7 +318,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
       });
   }
   static RequestSearchPlayerBasicInfo(e) {
-    const r = new Protocol_1.Aki.Protocol.vWn();
+    var r = new Protocol_1.Aki.Protocol.vWn();
     (r.Ekn = e),
       Net_1.Net.Call(9045, r, (e) => {
         if (
@@ -342,7 +342,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
                   e.lkn,
                   7919,
                 );
-        const r = new FriendData_1.FriendData();
+        var r = new FriendData_1.FriendData();
         r.SetPlayerBasicInfo(e.a5n),
           ModelManager_1.ModelManager.FriendModel.AddFriendSearchResults(r),
           EventSystem_1.EventSystem.Emit(
@@ -353,14 +353,14 @@ class FriendController extends ControllerBase_1.ControllerBase {
   }
   static GetOfflineSection(e) {
     e = TimeUtil_1.TimeUtil.CalculateDayTimeStampGapBetweenNow(e, !1);
-    let r = 0;
-    let o = "FriendOfflineToday";
+    let r = 0,
+      o = "FriendOfflineToday";
     return (
       e <= 1
         ? ((r = 0), (o = "FriendOfflineToday"))
-        : e > 1 && e <= CommonDefine_1.DAY_PER_WEEK
+        : 1 < e && e <= CommonDefine_1.DAY_PER_WEEK
           ? ((r = 1), (o = "FriendOfflineInWeek"))
-          : e > 1 && e <= CommonDefine_1.DAY_PER_MONTH
+          : 1 < e && e <= CommonDefine_1.DAY_PER_MONTH
             ? ((r = 2), (o = "FriendOfflineInMonth"))
             : e > CommonDefine_1.DAY_PER_MONTH &&
               ((r = 3), (o = "FriendOfflineOverMonth")),
@@ -368,28 +368,28 @@ class FriendController extends ControllerBase_1.ControllerBase {
     );
   }
   static CheckRemarkIsValid(e) {
-    return void 0 !== e && e !== "";
+    return void 0 !== e && "" !== e;
   }
   static CreateFriendItemSt(e, r) {
-    const o = new Array();
+    var o = new Array();
     for (const t of e) {
-      const n = new FriendItemSt();
+      var n = new FriendItemSt();
       (n.Id = t), (n.OperationType = r), o.push(n);
     }
     return o;
   }
   static GetSortedFriendListByRules(r, e) {
-    const o = new Array();
-    for (let e = r.length - 1; e >= 0; e--) o.push(r[e]);
+    var o = new Array();
+    for (let e = r.length - 1; 0 <= e; e--) o.push(r[e]);
     return o.sort(e), o;
   }
   static GetSortedBlackOrApplyList(r) {
-    const o = new Array();
-    for (let e = r.length - 1; e >= 0; e--) o.push(r[e]);
+    var o = new Array();
+    for (let e = r.length - 1; 0 <= e; e--) o.push(r[e]);
     return o;
   }
   static RequestFriendRecentlyTeam() {
-    const e = Protocol_1.Aki.Protocol.NZn.create();
+    var e = Protocol_1.Aki.Protocol.NZn.create();
     Net_1.Net.Call(7695, e, (e) => {
       e &&
         (e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
@@ -405,7 +405,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
   static GetOfflineTimeString(e) {
     return e <= 1
       ? "FriendOfflineToday"
-      : e > 1 && e <= CommonDefine_1.DAY_PER_MONTH
+      : 1 < e && e <= CommonDefine_1.DAY_PER_MONTH
         ? "FriendOfflineSomeDay"
         : e > CommonDefine_1.DAY_PER_MONTH
           ? "FriendOfflineOverMonth"
@@ -451,7 +451,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
   (FriendController.FVt = 0),
   (FriendController.VVt = 0),
   (FriendController.RequestAllFriend = (e = !1, r = void 0) => {
-    let o;
+    var o;
     ((TimeUtil_1.TimeUtil.GetServerTime() <= FriendController.FVt ||
       !ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
         LoginDefine_1.ELoginStatus.EnterGameRet,
@@ -490,7 +490,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
                 (ModelManager_1.ModelManager.FriendModel.SelectedPlayerId =
                   void 0),
                   e.aRs.forEach((e) => {
-                    let r;
+                    var r;
                     ModelManager_1.ModelManager.FriendModel.HasFriend(e.a5n.aFn)
                       ? ModelManager_1.ModelManager.FriendModel.GetFriendById(
                           e.a5n.aFn,
@@ -506,7 +506,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
                             r.PlayerId));
                   }),
                   e.hRs.forEach((e) => {
-                    let r;
+                    var r;
                     ModelManager_1.ModelManager.FriendModel.HasFriendApplication(
                       e.a5n.aFn,
                     )
@@ -526,7 +526,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
             })));
   }),
   (FriendController.bVt = (e) => {
-    let r;
+    var r;
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Friend", 28, "协议接收", [
         "协议id",
@@ -550,7 +550,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
       ModelManager_1.ModelManager.FriendModel.DeleteFriend(e);
   }),
   (FriendController.GVt = (e) => {
-    let r;
+    var r;
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Friend", 28, "协议接收", [
         "协议id",
@@ -579,8 +579,8 @@ class FriendController extends ControllerBase_1.ControllerBase {
       ModelManager_1.ModelManager.FriendModel.DeleteFriendApplication(e.Ekn);
   }),
   (FriendController.RequestFriendRemarkChange = async (e, r) => {
-    const o = new Protocol_1.Aki.Protocol.qZn();
-    var e = ((o.Ekn = e), (o.h5n = r), await Net_1.Net.CallAsync(18736, o));
+    var o = new Protocol_1.Aki.Protocol.qZn(),
+      e = ((o.Ekn = e), (o.h5n = r), await Net_1.Net.CallAsync(18736, o));
     return (
       e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
         ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
@@ -606,7 +606,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
     );
   }),
   (FriendController.RequestBlackList = () => {
-    const e = new Protocol_1.Aki.Protocol.$Kn();
+    var e = new Protocol_1.Aki.Protocol.$Kn();
     Net_1.Net.Call(2749, e, (e) => {
       if (
         (Log_1.Log.CheckDebug() &&
@@ -640,7 +640,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
     });
   }),
   (FriendController.RequestBlockPlayer = (o) => {
-    const e = new Protocol_1.Aki.Protocol.jKn();
+    var e = new Protocol_1.Aki.Protocol.jKn();
     (e.Ekn = o),
       Net_1.Net.Call(13931, e, (e) => {
         if (
@@ -673,7 +673,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
           ModelManager_1.ModelManager.FriendModel.DeleteFriend(o),
           ModelManager_1.ModelManager.FriendModel.HasFriendApplication(o) &&
             ModelManager_1.ModelManager.FriendModel.DeleteFriendApplication(o);
-        const r = new FriendData_1.FriendBlackListData();
+        var r = new FriendData_1.FriendBlackListData();
         r.InitializeFriendBlackListData(e.a5n),
           ModelManager_1.ModelManager.FriendModel.AddToBlackList(r),
           ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -686,7 +686,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
       });
   }),
   (FriendController.RequestUnBlockPlayer = (r) => {
-    const e = new Protocol_1.Aki.Protocol.KKn();
+    var e = new Protocol_1.Aki.Protocol.KKn();
     (e.Ekn = r),
       Net_1.Net.Call(21738, e, (e) => {
         if (
@@ -745,19 +745,19 @@ class FriendController extends ControllerBase_1.ControllerBase {
   (FriendController.BVt = (r) => {
     ModelManager_1.ModelManager.FriendModel.ClearTestFriendData();
     for (let e = 0; e < r; ++e) {
-      const o = new FriendData_1.FriendData();
-      const n =
-        ((o.PlayerId = e + 1),
-        (o.PlayerName = "测试员" + (e + 1)),
-        (o.FriendRemark = "仅供展示使用" + (e + 1)),
-        (o.PlayerLevel = 1),
-        (o.PlayerIsOnline = !0),
-        (o.PlayerLastOfflineTime =
-          Date.parse(new Date().toString()) /
-          CommonDefine_1.MILLIONSECOND_PER_SECOND),
-        (o.Debug = !0),
-        new FriendData_1.FriendApplyData());
-      const t = new FriendData_1.FriendBlackListData();
+      var o = new FriendData_1.FriendData(),
+        n =
+          ((o.PlayerId = e + 1),
+          (o.PlayerName = "测试员" + (e + 1)),
+          (o.FriendRemark = "仅供展示使用" + (e + 1)),
+          (o.PlayerLevel = 1),
+          (o.PlayerIsOnline = !0),
+          (o.PlayerLastOfflineTime =
+            Date.parse(new Date().toString()) /
+            CommonDefine_1.MILLIONSECOND_PER_SECOND),
+          (o.Debug = !0),
+          new FriendData_1.FriendApplyData()),
+        t = new FriendData_1.FriendBlackListData();
       (n.ApplyPlayerData = o),
         (n.ApplyCreatedTime = o.PlayerLastOfflineTime + e),
         (n.Fresh = !1),
@@ -781,4 +781,4 @@ class FriendController extends ControllerBase_1.ControllerBase {
       (ModelManager_1.ModelManager.FriendModel.TestDataLoaded = !0)
     );
   });
-// # sourceMappingURL=FriendController.js.map
+//# sourceMappingURL=FriendController.js.map

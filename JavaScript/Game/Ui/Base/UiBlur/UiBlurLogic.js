@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiBlurLogic = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const GlobalData_1 = require("../../../GlobalData");
-const UiLayerType_1 = require("../../Define/UiLayerType");
-const UiModel_1 = require("../../UiModel");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../GlobalData"),
+  UiLayerType_1 = require("../../Define/UiLayerType"),
+  UiModel_1 = require("../../UiModel");
 class UiBlurLogic {
   static b1r(r) {
     if (r) {
-      const i = r.GetOwner().GetComponentByClass(UE.TsUiBlur_C.StaticClass());
+      var i = r.GetOwner().GetComponentByClass(UE.TsUiBlur_C.StaticClass());
       let e = void 0;
       (e = i
         ? void 0 === i.OverrideItem
@@ -32,7 +32,7 @@ class UiBlurLogic {
       this.b1r(this.q1r(e));
   }
   static ResumeTopUiRenderAfterBlur() {
-    let e = UiModel_1.UiModel.GetTopView(UiLayerType_1.ELayerType.Pop);
+    var e = UiModel_1.UiModel.GetTopView(UiLayerType_1.ELayerType.Pop);
     e?.IsShowOrShowing ||
     (e = UiModel_1.UiModel.GetTopView(UiLayerType_1.ELayerType.Normal))
       ? this.SetNormalUiRenderAfterBlur(e)
@@ -43,4 +43,4 @@ class UiBlurLogic {
   }
 }
 exports.UiBlurLogic = UiBlurLogic;
-// # sourceMappingURL=UiBlurLogic.js.map
+//# sourceMappingURL=UiBlurLogic.js.map

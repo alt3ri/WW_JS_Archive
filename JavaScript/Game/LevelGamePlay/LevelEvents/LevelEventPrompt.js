@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventPrompt = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const GameplayViewDefine_1 = require("../../../Game/Module/LevelPlay/GameplayView/GameplayViewDefine");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const PublicUtil_1 = require("../../Common/PublicUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const GenericPromptController_1 = require("../../Module/GenericPrompt/GenericPromptController");
-const LguiUtil_1 = require("../../Module/Util/LguiUtil");
-const UiManager_1 = require("../../Ui/UiManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  GameplayViewDefine_1 = require("../../../Game/Module/LevelPlay/GameplayView/GameplayViewDefine"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  PublicUtil_1 = require("../../Common/PublicUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  GenericPromptController_1 = require("../../Module/GenericPrompt/GenericPromptController"),
+  LguiUtil_1 = require("../../Module/Util/LguiUtil"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventPrompt extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, r) {
-    let i;
+    var i;
     e &&
       ((e = Number(e.get("TipId"))),
       isNaN(e)
@@ -38,25 +38,25 @@ class LevelEventPrompt extends LevelGeneralBase_1.LevelEventBase {
           )));
   }
   ExecuteNew(e, r) {
-    let i = e;
+    var i = e;
     if (i) {
-      if (r.Type === 3) {
+      if (3 === r.Type) {
         r = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayConfig(
           r.LevelPlayId,
         );
         if (
           r &&
-          r.OnlineType === "Hang" &&
+          "Hang" === r.OnlineType &&
           ModelManager_1.ModelManager.GameModeModel.IsMulti
         )
           return;
       }
-      const o = i.TipOption;
+      var o = i.TipOption;
       if (o) {
-        let e = void 0;
-        let r = void 0;
-        let i = 0;
-        let a = void 0;
+        let e = void 0,
+          r = void 0,
+          i = 0,
+          a = void 0;
         switch (o.Type) {
           case IAction_1.ECommonTipType.TipId:
             (a = o.Id),
@@ -104,8 +104,8 @@ class LevelEventPrompt extends LevelGeneralBase_1.LevelEventBase {
                 void UiManager_1.UiManager.OpenView("GameplayEnterView", t))
               : void 0;
           case IAction_1.ECommonTipType.FirstComplete:
-            var t;
-            var n = o.TidText;
+            var t,
+              n = o.TidText;
             return n
               ? (((t =
                   new GameplayViewDefine_1.GameplayFirstPassViewData()).InfoId =
@@ -150,4 +150,4 @@ class LevelEventPrompt extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventPrompt = LevelEventPrompt;
-// # sourceMappingURL=LevelEventPrompt.js.map
+//# sourceMappingURL=LevelEventPrompt.js.map

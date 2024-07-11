@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemTipsView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const ItemTipsComponent_1 = require("../../Common/ItemTips/ItemTipsComponent");
-const ItemTipsUtilTool_1 = require("../../Common/ItemTips/ItemTipsUtilTool");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  ItemTipsComponent_1 = require("../../Common/ItemTips/ItemTipsComponent"),
+  ItemTipsUtilTool_1 = require("../../Common/ItemTips/ItemTipsUtilTool");
 class ItemTipsView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -32,7 +32,7 @@ class ItemTipsView extends UiViewBase_1.UiViewBase {
       );
   }
   OnStart() {
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     (this.IncId = e?.ItemUid), (this.ConfigId = e.ItemId);
   }
   OnAddEventListener() {
@@ -48,20 +48,20 @@ class ItemTipsView extends UiViewBase_1.UiViewBase {
     );
   }
   OnBeforeShow() {
-    const e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-      this.ConfigId,
-    ).ItemType;
-    const t = ItemTipsUtilTool_1.ItemTipsComponentUtilTool.GetTipsDataById(
-      this.ConfigId,
-      this.IncId,
-    );
+    var e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+        this.ConfigId,
+      ).ItemType,
+      t = ItemTipsUtilTool_1.ItemTipsComponentUtilTool.GetTipsDataById(
+        this.ConfigId,
+        this.IncId,
+      );
     this.ItemTipsComponent.Refresh(t),
       void 0 === this.IncId &&
         this.ItemTipsComponent.SetTipsComponentLockButton(!1),
-      e === 0 && this.ItemTipsComponent.SetTipsNumShow(!1);
+      0 === e && this.ItemTipsComponent.SetTipsNumShow(!1);
   }
   OnBeforeDestroy() {
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.CloseItemTips,
       e.ItemId,
@@ -70,4 +70,4 @@ class ItemTipsView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.ItemTipsView = ItemTipsView;
-// # sourceMappingURL=ItemTipsView.js.map
+//# sourceMappingURL=ItemTipsView.js.map

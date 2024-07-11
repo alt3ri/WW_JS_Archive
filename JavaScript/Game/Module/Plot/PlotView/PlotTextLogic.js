@@ -4,28 +4,28 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.PlotAudioDelegate =
     exports.PLAY_FLAG =
       void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const ExternalSourceSettingById_1 = require("../../../../Core/Define/ConfigQuery/ExternalSourceSettingById");
-const InterjectionByTimberIdAndUniversalToneId_1 = require("../../../../Core/Define/ConfigQuery/InterjectionByTimberIdAndUniversalToneId");
-const PlotAudioById_1 = require("../../../../Core/Define/ConfigQuery/PlotAudioById");
-const SpeakerById_1 = require("../../../../Core/Define/ConfigQuery/SpeakerById");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const IAction_1 = require("../../../../UniverseEditor/Interface/IAction");
-const PublicUtil_1 = require("../../../Common/PublicUtil");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const PlotAudioModel_1 = require("../PlotAudioModel");
-const PlotPortraitItem_1 = require("./PlotPortraitItem");
-const MAX_LOAD_AUDIO_TIME = 3e3;
-const BREAK_TIME = 1e3;
-const OptionHeight_Offset = 265;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  ExternalSourceSettingById_1 = require("../../../../Core/Define/ConfigQuery/ExternalSourceSettingById"),
+  InterjectionByTimberIdAndUniversalToneId_1 = require("../../../../Core/Define/ConfigQuery/InterjectionByTimberIdAndUniversalToneId"),
+  PlotAudioById_1 = require("../../../../Core/Define/ConfigQuery/PlotAudioById"),
+  SpeakerById_1 = require("../../../../Core/Define/ConfigQuery/SpeakerById"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  IAction_1 = require("../../../../UniverseEditor/Interface/IAction"),
+  PublicUtil_1 = require("../../../Common/PublicUtil"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  PlotAudioModel_1 = require("../PlotAudioModel"),
+  PlotPortraitItem_1 = require("./PlotPortraitItem"),
+  MAX_LOAD_AUDIO_TIME = 3e3,
+  BREAK_TIME = 1e3,
+  OptionHeight_Offset = 265;
 exports.PLAY_FLAG = 8;
 class PlotAudioDelegate {
   constructor() {
@@ -34,7 +34,7 @@ class PlotAudioDelegate {
       (this.Callback = void 0),
       (this.lzi = (t, i) => {
         this.AudioDelegateEnable
-          ? t === 3 &&
+          ? 3 === t &&
             ((t = i),
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("Plot", 22, "回调音频时长", ["", t.Duration]),
@@ -89,14 +89,14 @@ class PlotTextCommonLogic {
       (this.pwn = void 0),
       (this.vwn = () => {
         if (((this.Gqn = void 0), this.Mwn(), this.TextScrollView)) {
-          let o = this.PlotContent.GetTextRenderSize().Y;
-          var s = this.TextScrollView.GetRootComponent();
+          var o = this.PlotContent.GetTextRenderSize().Y,
+            s = this.TextScrollView.GetRootComponent();
           if (o <= s.GetHeight())
             s.SetHeight(this.OVs),
               this.OptionAdjustItem?.SetHeight(this.OVs + OptionHeight_Offset);
           else {
-            const h = this.PlotContent.GetRenderLineNum();
-            const r = this.PlotContent.GetFontSpaceFinal().Y;
+            var h = this.PlotContent.GetRenderLineNum(),
+              r = this.PlotContent.GetFontSpaceFinal().Y;
             if (h <= 6)
               s.SetHeight(o + r),
                 this.OptionAdjustItem?.SetHeight(o + r + OptionHeight_Offset);
@@ -111,14 +111,14 @@ class PlotTextCommonLogic {
                 CommonParamById_1.configCommonParamById.GetIntConfig(
                   "PlotAutoScrollDelayCharNum",
                 ) ?? 25;
-              var s = this.PlotContent.GetDisplayCharLength();
-              const l =
-                ((t = s <= t ? this.PlotContent.GetRenderLineCharNum(0) : t) /
-                  o) *
-                1e3;
-              var s = s - t;
+              var s = this.PlotContent.GetDisplayCharLength(),
+                l =
+                  ((t = s <= t ? this.PlotContent.GetRenderLineCharNum(0) : t) /
+                    o) *
+                  1e3,
+                s = s - t;
               let e = s;
-              h > 1 && (e = s - this.PlotContent.GetRenderLineCharNum(0)),
+              1 < h && (e = s - this.PlotContent.GetRenderLineCharNum(0)),
                 (this.Cwn = (e / o) * 1e3),
                 (this.pwn = TimerSystem_1.TimerSystem.Delay(this.Ewn, l));
             }
@@ -128,9 +128,9 @@ class PlotTextCommonLogic {
       (this.Ewn = () => {
         this.gwn = 0;
         this.fwn = TimerSystem_1.TimerSystem.Forever(() => {
-          const t = this.gwn / this.Cwn;
+          var t = this.gwn / this.Cwn;
           this.TextScrollView?.SetScrollProgress(t),
-            t >= 1 &&
+            1 <= t &&
               TimerSystem_1.TimerSystem.Has(this.fwn) &&
               TimerSystem_1.TimerSystem.Remove(this.fwn),
             (this.gwn += 100);
@@ -193,11 +193,10 @@ class PlotTextCommonLogic {
   }
   Szi() {
     if (!this.qqn && this.CurrentContent.UniversalTone) {
-      const t =
-        this.CurrentContent.UniversalTone.TimberId ?? this.dzi?.TimberId;
-      const i = this.CurrentContent.UniversalTone.UniversalToneId;
+      var t = this.CurrentContent.UniversalTone.TimberId ?? this.dzi?.TimberId,
+        i = this.CurrentContent.UniversalTone.UniversalToneId;
       if (t && i) {
-        const e =
+        var e =
           InterjectionByTimberIdAndUniversalToneId_1.configInterjectionByTimberIdAndUniversalToneId.GetConfig(
             t,
             i,
@@ -216,9 +215,9 @@ class PlotTextCommonLogic {
     return !1;
   }
   yzi() {
-    let t;
-    let i;
-    let e = this.CurrentContent.TalkAkEvent;
+    var t,
+      i,
+      e = this.CurrentContent.TalkAkEvent;
     e &&
       (t = (0, AudioSystem_1.parseAudioEventPath)(e.AkEvent)) &&
       (e.Type === IAction_1.EPostAkEvent.Global
@@ -249,7 +248,7 @@ class PlotTextCommonLogic {
           ),
         (this.ywn = LanguageSystem_1.LanguageSystem.PackageAudio),
         this.ClearCurPlayAudio()),
-      this.czi !== -1)
+      -1 !== this.czi)
     )
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 恢复时：恢复音频播放"),
@@ -259,13 +258,13 @@ class PlotTextCommonLogic {
         this.uzi();
     else if (this.Bqn) this.Bqn.Resume();
     else {
-      let t = this.CurrentContent.PlayVoice
+      var t = this.CurrentContent.PlayVoice
         ? PlotAudioById_1.configPlotAudioById.GetConfig(
             this.CurrentContent.TidTalk,
           )
         : void 0;
       if (!t) return !1;
-      const i =
+      var i =
         ExternalSourceSettingById_1.configExternalSourceSettingById.GetConfig(
           t.ExternalSourceSetting,
         );
@@ -291,7 +290,7 @@ class PlotTextCommonLogic {
                 ["mediaName", e],
                 ["type", t],
               )
-            : t === 0
+            : 0 === t
               ? (Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 音频播放完毕", [
                     "mediaName",
@@ -300,7 +299,7 @@ class PlotTextCommonLogic {
                 (this.qqn = !0),
                 (this.czi = -1),
                 PlotTextCommonLogic.Iwn++)
-              : t === 3 &&
+              : 3 === t &&
                 ((this.PlayDelayTime = i.Duration),
                 Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
@@ -340,7 +339,7 @@ class PlotTextCommonLogic {
           ),
         (this.ywn = LanguageSystem_1.LanguageSystem.PackageAudio),
         this.ClearCurPlayAudio()),
-      this.czi !== -1)
+      -1 !== this.czi)
     )
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 恢复时：恢复音频播放"),
@@ -349,8 +348,8 @@ class PlotTextCommonLogic {
         }),
         this.uzi();
     else {
-      const e = (0, AudioSystem_1.parseAudioEventPath)(t.AkEvent);
-      const o = PlotTextCommonLogic.Iwn;
+      const e = (0, AudioSystem_1.parseAudioEventPath)(t.AkEvent),
+        o = PlotTextCommonLogic.Iwn;
       (this.czi = AudioSystem_1.AudioSystem.PostEvent(e, void 0, {
         CallbackMask: 1048584,
         CallbackHandler: (t, i) => {
@@ -364,7 +363,7 @@ class PlotTextCommonLogic {
                 ["eventName", e],
                 ["type", t],
               )
-            : t === 0
+            : 0 === t
               ? (Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 音频播放完毕", [
                     "eventName",
@@ -373,7 +372,7 @@ class PlotTextCommonLogic {
                 (this.qqn = !0),
                 (this.czi = -1),
                 PlotTextCommonLogic.Iwn++)
-              : t === 3 &&
+              : 3 === t &&
                 ((this.PlayDelayTime = i.Duration),
                 Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
@@ -416,7 +415,7 @@ class PlotTextCommonLogic {
   PlaySubtitle(t) {
     (this.CurrentContent = t),
       this.yzi(),
-      this.CurrentContent.Type === "Option"
+      "Option" === this.CurrentContent.Type
         ? this.PlotItem.SetUIActive(!1)
         : ((t = this.CurrentContent.CaptionParams),
           (this.dzi = SpeakerById_1.configSpeakerById.GetConfig(
@@ -435,7 +434,7 @@ class PlotTextCommonLogic {
         ? (this.Bqn.Pause(),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 暂停时：音频加载中"))
-        : (this.czi !== -1 &&
+        : (-1 !== this.czi &&
             (AudioSystem_1.AudioSystem.ExecuteAction(this.czi, 1, {
               TransitionDuration: BREAK_TIME,
             }),
@@ -466,10 +465,10 @@ class PlotTextCommonLogic {
       (this.Gqn = TimerSystem_1.TimerSystem.Next(this.vwn));
   }
   Tzi() {
-    let t;
+    var t;
     this.PlotItem.SetUIActive(!0),
-      (this.CurrentContent.Type && this.CurrentContent.Type !== "Talk") ||
-      this.CurrentContent.Style?.Type === "InnerVoice"
+      (this.CurrentContent.Type && "Talk" !== this.CurrentContent.Type) ||
+      "InnerVoice" === this.CurrentContent.Style?.Type
         ? (this.LineItem.SetUIActive(!1),
           this.NpcName.SetUIActive(!1),
           this.NpcTitle.SetUIActive(!1))
@@ -500,7 +499,7 @@ class PlotTextCommonLogic {
     return this.IsInteraction
       ? ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
           .TextAnimSpeedInteraction
-      : ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel === "LevelC"
+      : "LevelC" === ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel
         ? ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
             .TextAnimSpeedLevelC
         : ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
@@ -535,7 +534,7 @@ class PlotTextCommonLogic {
           this.Czi.Play();
       else if (this.yXt) this.gzi.SetSelectorOffset(0);
       else {
-        const o = this.PlotContent.GetDisplayCharLength();
+        var o = this.PlotContent.GetDisplayCharLength();
         this.Czi.Stop();
         let t = 1;
         (t =
@@ -544,8 +543,8 @@ class PlotTextCommonLogic {
             ? o /
               ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
                 .TextAnimSpeedInteraction
-            : ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel ===
-                "LevelC"
+            : "LevelC" ===
+                ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel
               ? o /
                 ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
                   .TextAnimSpeedLevelC
@@ -622,4 +621,4 @@ class PlotTextCommonLogic {
   }
 }
 (exports.PlotTextCommonLogic = PlotTextCommonLogic).Iwn = 0;
-// # sourceMappingURL=PlotTextLogic.js.map
+//# sourceMappingURL=PlotTextLogic.js.map

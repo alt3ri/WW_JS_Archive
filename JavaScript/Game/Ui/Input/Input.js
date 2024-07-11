@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Input = exports.TouchData = void 0);
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
+const StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem");
 class TouchData {
   constructor(t, n, e) {
     (this.IsPress = t), (this.TouchId = n), (this.TouchPosition = e);
@@ -35,7 +35,7 @@ class Input {
   (Input.OnlyRespondToKey = ""),
   (Input.Enable = !0),
   (Input.ocr = (t, n) => {
-    const e = t.KeyName.toString();
+    var e = t.KeyName.toString();
     Input.uSe.set(e, n),
       (StringUtils_1.StringUtils.IsEmpty(Input.OnlyRespondToKey) ||
         e === Input.OnlyRespondToKey ||
@@ -57,4 +57,4 @@ class Input {
   (Input.ncr = (t, n) => {
     Input.Enable && (t = Input.q2o.get(t)) && (t.TouchPosition = n);
   });
-// # sourceMappingURL=Input.js.map
+//# sourceMappingURL=Input.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExploreProgressItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const HelpController_1 = require("../../Help/HelpController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  HelpController_1 = require("../../Help/HelpController"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class ExploreProgressItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -15,7 +15,7 @@ class ExploreProgressItem extends UiPanelBase_1.UiPanelBase {
           UiManager_1.UiManager.OpenView("ExploreMissionView", this.GTn.AreaId);
       }),
       (this.NTn = () => {
-        const e = this.GTn?.GetPhantomSkillHelpId();
+        var e = this.GTn?.GetPhantomSkillHelpId();
         e && HelpController_1.HelpController.OpenHelpById(e);
       });
   }
@@ -36,7 +36,7 @@ class ExploreProgressItem extends UiPanelBase_1.UiPanelBase {
       ]);
   }
   Refresh(i) {
-    let s = (this.GTn = i).GetProgress();
+    var s = (this.GTn = i).GetProgress();
     if (
       (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), i.GetNameId()),
       this.GetSprite(2).SetFillAmount(s / 100),
@@ -51,7 +51,7 @@ class ExploreProgressItem extends UiPanelBase_1.UiPanelBase {
     else {
       (s = i.HasPhantomSkill()),
         (s =
-          (this.GetItem(3).SetUIActive(i.ExploreType === 6),
+          (this.GetItem(3).SetUIActive(6 === i.ExploreType),
           this.GetItem(5).SetUIActive(s),
           this.GetText(7)));
       let e = void 0;
@@ -63,4 +63,4 @@ class ExploreProgressItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ExploreProgressItem = ExploreProgressItem;
-// # sourceMappingURL=ExploreProgressItem.js.map
+//# sourceMappingURL=ExploreProgressItem.js.map

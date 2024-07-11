@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionRecoverySlotItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
 class VisionRecoverySlotItem extends UiPanelBase_1.UiPanelBase {
   constructor(i, s = !0) {
     super(),
@@ -35,7 +35,7 @@ class VisionRecoverySlotItem extends UiPanelBase_1.UiPanelBase {
   }
   OnStart() {
     this.RefreshUi(this.Wpt);
-    const i = void 0 !== this.Kpt;
+    var i = void 0 !== this.Kpt;
     this.GetUiSpriteTransition(0).SetEnable(i);
   }
   RefreshUi(i) {
@@ -48,19 +48,19 @@ class VisionRecoverySlotItem extends UiPanelBase_1.UiPanelBase {
       this.GetButton(5).RootUIComp.SetUIActive(!1);
   }
   RefreshByData(i) {
-    const s = this.GetTexture(2);
-    const t = this.GetSprite(3);
+    const s = this.GetTexture(2),
+      t = this.GetSprite(3);
     var e =
-      ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomQualityBgSprite(
-        i.GetQuality(),
-      );
-    var e =
-      (this.SetSpriteByPath(e, t, !1, void 0, () => {
-        t.SetUIActive(!0);
-      }),
-      ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-        i.GetConfigId(),
-      ));
+        ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomQualityBgSprite(
+          i.GetQuality(),
+        ),
+      e =
+        (this.SetSpriteByPath(e, t, !1, void 0, () => {
+          t.SetUIActive(!0);
+        }),
+        ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+          i.GetConfigId(),
+        ));
     this.SetTextureByPath(e.IconMiddle, s, void 0, () => {
       s.SetUIActive(!0),
         this.GetItem(1).SetUIActive(!1),
@@ -69,4 +69,4 @@ class VisionRecoverySlotItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.VisionRecoverySlotItem = VisionRecoverySlotItem;
-// # sourceMappingURL=VisionRecoverySlotItem.js.map
+//# sourceMappingURL=VisionRecoverySlotItem.js.map

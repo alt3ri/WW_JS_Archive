@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoguelikeActivityView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const LocalStorage_1 = require("../../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../RedDot/RedDotController");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ActivityRogueController_1 = require("../../Activity/ActivityContent/RougeActivity/ActivityRogueController");
-const PayShopViewData_1 = require("../../PayShop/PayShopData/PayShopViewData");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RoguelikeController_1 = require("../RoguelikeController");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../RedDot/RedDotController"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ActivityRogueController_1 = require("../../Activity/ActivityContent/RougeActivity/ActivityRogueController"),
+  PayShopViewData_1 = require("../../PayShop/PayShopData/PayShopViewData"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RoguelikeController_1 = require("../RoguelikeController");
 class RoguelikeActivityView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -28,8 +28,8 @@ class RoguelikeActivityView extends UiTickViewBase_1.UiTickViewBase {
       (this.Wao = void 0),
       (this.TDe = void 0),
       (this.OnBtnShop = () => {
-        let e, i;
-        this.Wao.GetRogueActivityState() === 2
+        var e, i;
+        2 === this.Wao.GetRogueActivityState()
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "Rogue_Function_End_Tip",
             )
@@ -61,8 +61,8 @@ class RoguelikeActivityView extends UiTickViewBase_1.UiTickViewBase {
             ));
       }),
       (this.OnBtnSkillTreeClick = () => {
-        let e;
-        this.Wao.GetRogueActivityState() === 2
+        var e;
+        2 === this.Wao.GetRogueActivityState()
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "Rogue_Function_End_Tip",
             )
@@ -72,23 +72,23 @@ class RoguelikeActivityView extends UiTickViewBase_1.UiTickViewBase {
             );
       }),
       (this.OnBtnDoorClick = () => {
-        this.Wao.GetRogueActivityState() === 2
+        2 === this.Wao.GetRogueActivityState()
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "Rogue_Function_End_Tip",
             )
           : UiManager_1.UiManager.OpenView("RoguelikeAchievementView");
       }),
       (this.OnBtnConfirmClick = () => {
-        this.Wao.GetRogueActivityState() === 2
+        2 === this.Wao.GetRogueActivityState()
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "Rogue_Function_End_Tip",
             )
           : RoguelikeController_1.RoguelikeController.EnterCurrentRogueEntrance();
       }),
       (this.RefreshUi = () => {
-        let e;
-        let i;
-        const t = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData;
+        var e,
+          i,
+          t = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData;
         t &&
           ((e =
             ModelManager_1.ModelManager.RoguelikeModel.GetParamConfigBySeasonId()
@@ -101,8 +101,8 @@ class RoguelikeActivityView extends UiTickViewBase_1.UiTickViewBase {
             t.Jws,
             e,
           ),
-          this.GetItem(16).SetUIActive(t.F8n === 1),
-          this.GetItem(17).SetUIActive(t.F8n === 2)),
+          this.GetItem(16).SetUIActive(1 === t.F8n),
+          this.GetItem(17).SetUIActive(2 === t.F8n)),
           this.RefreshRemainTime();
       });
   }
@@ -135,7 +135,7 @@ class RoguelikeActivityView extends UiTickViewBase_1.UiTickViewBase {
       ]);
   }
   async OnBeforeStartAsync() {
-    let e;
+    var e;
     (this.Wao =
       ActivityRogueController_1.ActivityRogueController.GetCurrentActivityData()),
       void 0 === this.Wao
@@ -146,7 +146,7 @@ class RoguelikeActivityView extends UiTickViewBase_1.UiTickViewBase {
           await RoguelikeController_1.RoguelikeController.RoguelikeTalentInfoRequest(
             e.F8n,
           ),
-          this.Wao.GetRogueActivityState() === 1 &&
+          1 === this.Wao.GetRogueActivityState() &&
             (await RoguelikeController_1.RoguelikeController.RoguelikeLastInfoRequestAsync()));
   }
   OnStart() {
@@ -156,7 +156,7 @@ class RoguelikeActivityView extends UiTickViewBase_1.UiTickViewBase {
       this.CaptionItem.SetCloseCallBack(() => {
         UiManager_1.UiManager.CloseView(this.Info.Name);
       });
-    const e = this.Wao.LocalConfig;
+    var e = this.Wao.LocalConfig;
     e &&
       (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(13), e.DescTheme),
       this.RefreshUi(),
@@ -202,20 +202,20 @@ class RoguelikeActivityView extends UiTickViewBase_1.UiTickViewBase {
     this.TDe && TimerSystem_1.TimerSystem.Remove(this.TDe);
   }
   RefreshRemainTime() {
-    let e;
-    const i = this.GetButton(4);
-    const t = this.GetItem(15);
-    const o = this.GetText(9);
-    const r = this.GetText(14);
-    let n = this.Wao.GetRogueActivityState();
-    n === 0
+    var e,
+      i = this.GetButton(4),
+      t = this.GetItem(15),
+      o = this.GetText(9),
+      r = this.GetText(14),
+      n = this.Wao.GetRogueActivityState();
+    0 === n
       ? (i.RootUIComp.SetUIActive(!0),
         t.SetUIActive(!1),
         o.SetUIActive(!1),
         (e = this.Wao.EndOpenTime - TimeUtil_1.TimeUtil.GetServerTime()),
         (e = TimeUtil_1.TimeUtil.GetRemainTimeDataFormat3(e)),
         r.SetText(e.CountDownText))
-      : (n === 1
+      : (1 === n
           ? (i.RootUIComp.SetUIActive(!1),
             t.SetUIActive(!0),
             o.SetUIActive(!0),
@@ -232,4 +232,4 @@ class RoguelikeActivityView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.RoguelikeActivityView = RoguelikeActivityView;
-// # sourceMappingURL=RoguelikeActivityView.js.map
+//# sourceMappingURL=RoguelikeActivityView.js.map

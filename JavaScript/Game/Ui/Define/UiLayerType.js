@@ -1,5 +1,5 @@
 "use strict";
-let ELayerType;
+var ELayerType;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MULTIPLE_VIEW_TYPE =
     exports.BLOCKCLICK_TYPE =
@@ -28,7 +28,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e[(e.Debug = 8192)] = "Debug");
   })((ELayerType = exports.ELayerType || (exports.ELayerType = {}))),
   (exports.LayerTypeEnumValues = Object.values(ELayerType).filter(
-    (e) => typeof e === "number",
+    (e) => "number" == typeof e,
   )),
   (exports.TIP_LAYER_UNIT_COUNT = 3),
   (exports.BATTLE_VIEW_UNIT_COUNT = 3),
@@ -37,4 +37,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UIBLUR_TYPE = ELayerType.Normal | ELayerType.Pop),
   (exports.BLOCKCLICK_TYPE = ELayerType.Normal | ELayerType.Pop),
   (exports.MULTIPLE_VIEW_TYPE = ELayerType.Float);
-// # sourceMappingURL=UiLayerType.js.map
+//# sourceMappingURL=UiLayerType.js.map

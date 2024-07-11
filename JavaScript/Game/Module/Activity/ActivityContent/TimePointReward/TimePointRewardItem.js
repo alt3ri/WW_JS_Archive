@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TimePointRewardItem = void 0);
-const UE = require("ue");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const SmallItemGrid_1 = require("../../../Common/SmallItemGrid/SmallItemGrid");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
+const UE = require("ue"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  SmallItemGrid_1 = require("../../../Common/SmallItemGrid/SmallItemGrid"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../../Util/LguiUtil");
 class TimePointRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -16,10 +16,10 @@ class TimePointRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.bni = void 0),
       (this.OnClickToGet = void 0),
       (this.m2e = () => {
-        this.Pe?.RewardState === 1 && this.OnClickToGet?.(this.Pe.Id);
+        1 === this.Pe?.RewardState && this.OnClickToGet?.(this.Pe.Id);
       }),
       (this.x8s = () => {
-        this.Pe?.RewardState === 1
+        1 === this.Pe?.RewardState
           ? this.OnClickToGet?.(this.Pe.Id)
           : this.bni &&
             ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
@@ -46,21 +46,21 @@ class TimePointRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(i, t, e) {
     this.Pe = i;
-    const r =
+    var r =
       ConfigManager_1.ConfigManager.ActivityTimePointRewardConfig.GetTimePointRewardById(
         this.Pe.Id,
       );
     if (r) {
-      let s;
-      let h;
-      const a = [];
+      var s,
+        h,
+        a = [];
       for ([s, h] of r.RewardItem) {
-        const o = [{ IncId: 0, ItemId: s }, h];
+        var o = [{ IncId: 0, ItemId: s }, h];
         a.push(o);
       }
       this.bni = a[0];
-      const n = this.GetItem(3);
-      const d = this.GetText(4);
+      var n = this.GetItem(3),
+        d = this.GetText(4);
       switch (i.RewardState) {
         case 0:
           n.SetUIActive(!1),
@@ -81,16 +81,16 @@ class TimePointRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
     }
   }
   cNe() {
-    const i = {
+    var i = {
       Data: this.Pe,
       Type: 4,
       ItemConfigId: this.bni[0].ItemId,
       BottomText: this.bni[1].toString(),
     };
     this.gOe.Apply(i),
-      this.gOe.SetReceivableVisible(this.Pe?.RewardState === 1),
-      this.gOe.SetLockVisible(this.Pe?.RewardState === 0),
-      this.gOe.SetReceivedVisible(this.Pe?.RewardState === 2);
+      this.gOe.SetReceivableVisible(1 === this.Pe?.RewardState),
+      this.gOe.SetLockVisible(0 === this.Pe?.RewardState),
+      this.gOe.SetReceivedVisible(2 === this.Pe?.RewardState);
   }
   w8s(i) {
     i = TimeUtil_1.TimeUtil.GetDataFromTimeStamp(
@@ -117,4 +117,4 @@ class TimePointRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.TimePointRewardItem = TimePointRewardItem;
-// # sourceMappingURL=TimePointRewardItem.js.map
+//# sourceMappingURL=TimePointRewardItem.js.map

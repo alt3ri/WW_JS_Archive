@@ -7,4 +7,4 @@ class SkillNodeDataInfo {
   }
 }
 exports.SkillNodeDataInfo = SkillNodeDataInfo;
-// # sourceMappingURL=SkillNodeDataInfo.js.map
+//# sourceMappingURL=SkillNodeDataInfo.js.map

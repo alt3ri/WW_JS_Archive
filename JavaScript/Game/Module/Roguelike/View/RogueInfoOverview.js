@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RogueInfoOverview = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiViewSequence_1 = require("../../../Ui/Base/UiViewSequence");
-const UiManager_1 = require("../../../Ui/UiManager");
-const AttributeItem_1 = require("../../Common/AttributeItem");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const PhantomSelectItem_1 = require("./PhantomSelectItem");
-const RoleSelectItem_1 = require("./RoleSelectItem");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiViewSequence_1 = require("../../../Ui/Base/UiViewSequence"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  AttributeItem_1 = require("../../Common/AttributeItem"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  PhantomSelectItem_1 = require("./PhantomSelectItem"),
+  RoleSelectItem_1 = require("./RoleSelectItem");
 class RogueInfoOverview extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -21,7 +21,7 @@ class RogueInfoOverview extends UiPanelBase_1.UiPanelBase {
       (this.AttributeItemList = []),
       (this.UiViewSequence = void 0),
       (this.xao = () => {
-        let e = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems();
+        var e = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems();
         e.length <= 0
           ? Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -67,39 +67,40 @@ class RogueInfoOverview extends UiPanelBase_1.UiPanelBase {
       ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.PhantomEntry,
     );
     var e = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguePhantomConfig(
-      ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.PhantomEntry
-        .ConfigId,
-    );
-    var e =
-      (this.PhantomItem?.GetRootItem().SetUIActive(void 0 !== e),
-      this.PhantomItem?.SetToggleRaycastTarget(!1),
-      this.RoleItem?.Update(
-        ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.RoleEntry,
+        ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.PhantomEntry
+          .ConfigId,
       ),
-      ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterConfig(
-        ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.RoleEntry.ConfigId,
-      ));
+      e =
+        (this.PhantomItem?.GetRootItem().SetUIActive(void 0 !== e),
+        this.PhantomItem?.SetToggleRaycastTarget(!1),
+        this.RoleItem?.Update(
+          ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.RoleEntry,
+        ),
+        ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterConfig(
+          ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.RoleEntry
+            .ConfigId,
+        ));
     this.RoleItem?.GetRootItem().SetUIActive(void 0 !== e), this.wao();
   }
   wao() {
-    const i = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
-      "RoleAttributeDisplay6",
-    );
-    const r = this.GetItem(2);
-    const a = this.GetItem(3);
-    const o = [];
+    var i = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
+        "RoleAttributeDisplay6",
+      ),
+      r = this.GetItem(2),
+      a = this.GetItem(3),
+      o = [];
     const n = i.length;
     for (let t = 0; t < n; ++t) {
       let e = void 0;
-      e = t === 0 ? a : LguiUtil_1.LguiUtil.CopyItem(a, r);
-      const l = i[t];
-      const g = new AttributeItem_1.AttributeItem();
-      const s = g.CreateThenShowByActorAsync(e.GetOwner()).then(() => {
-        const e = {
+      e = 0 === t ? a : LguiUtil_1.LguiUtil.CopyItem(a, r);
+      const l = i[t],
+        g = new AttributeItem_1.AttributeItem();
+      var s = g.CreateThenShowByActorAsync(e.GetOwner()).then(() => {
+        var e = {
           Id: l,
           IsRatio: !1,
           CurValue: 0,
-          BgActive: n > 2 && t % 2 == 0,
+          BgActive: 2 < n && t % 2 == 0,
         };
         g.Refresh(e, !1, t);
       });
@@ -110,7 +111,7 @@ class RogueInfoOverview extends UiPanelBase_1.UiPanelBase {
     });
   }
   UpdateAttribute() {
-    const e = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems();
+    var e = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems();
     if (e.length <= 0)
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -119,16 +120,16 @@ class RogueInfoOverview extends UiPanelBase_1.UiPanelBase {
           "肉鸽属性展示面板, 找不到主控角色实体!",
         );
     else {
-      const t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
-        e[0].GetConfigId,
-      );
-      const i = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
-        "RoleAttributeDisplay6",
-      );
+      var t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
+          e[0].GetConfigId,
+        ),
+        i = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
+          "RoleAttributeDisplay6",
+        );
       for (let e = 0; e < this.AttributeItemList.length; ++e) {
-        const r = this.AttributeItemList[e];
-        var a = i[e];
-        var a = t.GetShowAttributeValueById(a);
+        var r = this.AttributeItemList[e],
+          a = i[e],
+          a = t.GetShowAttributeValueById(a);
         r.SetCurrentValue(a), r.SetActive(!0);
       }
     }
@@ -138,4 +139,4 @@ class RogueInfoOverview extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RogueInfoOverview = RogueInfoOverview;
-// # sourceMappingURL=RogueInfoOverview.js.map
+//# sourceMappingURL=RogueInfoOverview.js.map

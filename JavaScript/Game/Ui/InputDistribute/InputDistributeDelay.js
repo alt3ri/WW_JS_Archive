@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputDistributeDelay = exports.delayInput = void 0);
-const Time_1 = require("../../../Core/Common/Time");
-const Queue_1 = require("../../../Core/Container/Queue");
-const UiManager_1 = require("../UiManager");
-const InputMappingsDefine_1 = require("./InputMappingsDefine");
+const Time_1 = require("../../../Core/Common/Time"),
+  Queue_1 = require("../../../Core/Container/Queue"),
+  UiManager_1 = require("../UiManager"),
+  InputMappingsDefine_1 = require("./InputMappingsDefine");
 exports.delayInput = [InputMappingsDefine_1.actionMappings.通用交互];
 class InputDistributeDelay {
   constructor() {
@@ -16,7 +16,7 @@ class InputDistributeDelay {
   IsInputActive(e) {
     let i = void 0;
     i = e ? this.jcr : this.Wcr;
-    for (let t = Time_1.Time.Now; i.Size > 0; ) {
+    for (var t = Time_1.Time.Now; 0 < i.Size; ) {
       if (t < i.Front) return i.Pop(), !0;
       i.Pop();
     }
@@ -31,4 +31,4 @@ class InputDistributeDelay {
   }
 }
 exports.InputDistributeDelay = InputDistributeDelay;
-// # sourceMappingURL=InputDistributeDelay.js.map
+//# sourceMappingURL=InputDistributeDelay.js.map

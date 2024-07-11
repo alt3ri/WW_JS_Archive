@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionCloseFlowTemplate = void 0);
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const FlowActionBase_1 = require("./FlowActionBase");
+const ModelManager_1 = require("../../../Manager/ModelManager"),
+  FlowActionBase_1 = require("./FlowActionBase");
 class FlowActionCloseFlowTemplate extends FlowActionBase_1.FlowActionBase {
   OnExecute() {
-    ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel !== "LevelC"
+    "LevelC" !== ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel
       ? this.FinishExecute(!0, !0)
       : ModelManager_1.ModelManager.PlotModel.EndPlotTemplate(
           this.ActionInfo.Params,
@@ -19,4 +19,4 @@ class FlowActionCloseFlowTemplate extends FlowActionBase_1.FlowActionBase {
   }
 }
 exports.FlowActionCloseFlowTemplate = FlowActionCloseFlowTemplate;
-// # sourceMappingURL=FlowActionCloseFlowTemplate.js.map
+//# sourceMappingURL=FlowActionCloseFlowTemplate.js.map

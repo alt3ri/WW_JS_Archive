@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AoiModel = void 0);
-const UE = require("ue");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
+const UE = require("ue"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase");
 class AoiModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments), (this.hvr = void 0), (this.lvr = void 0);
@@ -30,4 +30,4 @@ class AoiModel extends ModelBase_1.ModelBase {
   }
 }
 exports.AoiModel = AoiModel;
-// # sourceMappingURL=AoiModel.js.map
+//# sourceMappingURL=AoiModel.js.map

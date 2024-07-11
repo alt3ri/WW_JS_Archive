@@ -1,32 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ForgingSort = void 0);
-const ForgingController_1 = require("../../../../../Manufacture/Forging/ForgingController");
-const CommonSort_1 = require("./CommonSort");
+const ForgingController_1 = require("../../../../../Manufacture/Forging/ForgingController"),
+  CommonSort_1 = require("./CommonSort");
 class ForgingSort extends CommonSort_1.CommonSort {
   constructor() {
     super(...arguments),
       (this.XLt = (r, t, o) => {
-        const n =
-          ForgingController_1.ForgingController.CheckCanForgingOrCanUnlock(
-            r.ItemId,
-          )
-            ? 1
-            : 0;
-        const e =
-          ForgingController_1.ForgingController.CheckCanForgingOrCanUnlock(
+        var n =
+            ForgingController_1.ForgingController.CheckCanForgingOrCanUnlock(
+              r.ItemId,
+            )
+              ? 1
+              : 0,
+          e = ForgingController_1.ForgingController.CheckCanForgingOrCanUnlock(
             t.ItemId,
           )
             ? 1
             : 0;
-        if (n == 1 && n == e) {
+        if (1 == n && n == e) {
           if (r.IsUnlock === t.IsUnlock) return 0;
           {
             const i = r.IsUnlock - t.IsUnlock;
             return i * (o ? -1 : 1);
           }
         }
-        if (n == 0 && n == e) {
+        if (0 == n && n == e) {
           if (r.IsUnlock === t.IsUnlock) return 0;
           {
             const i = t.IsUnlock - r.IsUnlock;
@@ -52,4 +51,4 @@ class ForgingSort extends CommonSort_1.CommonSort {
   }
 }
 exports.ForgingSort = ForgingSort;
-// # sourceMappingURL=ForgingSort.js.map
+//# sourceMappingURL=ForgingSort.js.map

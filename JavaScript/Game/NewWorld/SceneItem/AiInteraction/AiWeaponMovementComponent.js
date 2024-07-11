@@ -1,38 +1,42 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, r) {
-    let o;
-    const s = arguments.length;
-    let n =
-      s < 3 ? e : r === null ? (r = Object.getOwnPropertyDescriptor(e, i)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      s = arguments.length,
+      n =
+        s < 3
+          ? e
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(e, i))
+            : r;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(t, e, i, r);
     else
-      for (let a = t.length - 1; a >= 0; a--)
-        (o = t[a]) && (n = (s < 3 ? o(n) : s > 3 ? o(e, i, n) : o(e, i)) || n);
-    return s > 3 && n && Object.defineProperty(e, i, n), n;
+      for (var a = t.length - 1; 0 <= a; a--)
+        (o = t[a]) && (n = (s < 3 ? o(n) : 3 < s ? o(e, i, n) : o(e, i)) || n);
+    return 3 < s && n && Object.defineProperty(e, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiWeaponMovementComponent = void 0);
-const UE = require("ue");
-const QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine");
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon");
-const IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent");
-const Global_1 = require("../../../Global");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ColorUtils_1 = require("../../../Utils/ColorUtils");
-const COLLISION_PROFILE_NAME = new UE.FName("DropItem");
-const GROUND_MAX_XY_VEL_SQUARED = 4;
-const GROUND_MAX_Z_VEL = 2;
-const MAX_DROP_HEIGHT = 1e4;
-const ON_WATER_MAX_DIST = 5;
+const UE = require("ue"),
+  QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine"),
+  EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
+  IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
+  Global_1 = require("../../../Global"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ColorUtils_1 = require("../../../Utils/ColorUtils"),
+  COLLISION_PROFILE_NAME = new UE.FName("DropItem"),
+  GROUND_MAX_XY_VEL_SQUARED = 4,
+  GROUND_MAX_Z_VEL = 2,
+  MAX_DROP_HEIGHT = 1e4,
+  ON_WATER_MAX_DIST = 5;
 let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -45,8 +49,8 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
   }
   OnInitData() {
     (this.SIe = this.Entity.GetComponent(0)), (this._ln = 0.01);
-    var t = this.SIe.GetPbEntityInitData();
-    var t = (0, IComponent_1.getComponent)(t.ComponentsData, "WeaponComponent");
+    var t = this.SIe.GetPbEntityInitData(),
+      t = (0, IComponent_1.getComponent)(t.ComponentsData, "WeaponComponent");
     return (
       t?.WeaponId &&
         ((t = ModelManager_1.ModelManager.AiWeaponModel.GetStaticWeaponConfig(
@@ -86,7 +90,7 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
     }
   }
   UpdateItemBorn(t) {
-    const e = MathUtils_1.MathUtils.CommonTempVector;
+    var e = MathUtils_1.MathUtils.CommonTempVector;
     e.FromConfigVector(
       this.SIe.GetInitLinearVelocity() ?? Vector_1.Vector.ZeroVector,
     ),
@@ -103,18 +107,18 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
     this.EnableMovement = !1;
   }
   uln() {
-    let t;
-    const e = this.Hte.StaticMesh;
-    const i =
-      (e.SetCollisionProfileName(COLLISION_PROFILE_NAME),
-      e.SetCollisionEnabled(2),
-      e.SetSimulatePhysics(!0),
-      this._ln >= 0 &&
-        e.SetMassOverrideInKg(FNameUtil_1.FNameUtil.NONE, this._ln, !0),
-      e.SetEnableGravity(!0),
-      e.SetConstraintMode(6),
-      e.SetUseCCD(!0),
-      MathUtils_1.MathUtils.CommonTempVector);
+    var t,
+      e = this.Hte.StaticMesh,
+      i =
+        (e.SetCollisionProfileName(COLLISION_PROFILE_NAME),
+        e.SetCollisionEnabled(2),
+        e.SetSimulatePhysics(!0),
+        0 <= this._ln &&
+          e.SetMassOverrideInKg(FNameUtil_1.FNameUtil.NONE, this._ln, !0),
+        e.SetEnableGravity(!0),
+        e.SetConstraintMode(6),
+        e.SetUseCCD(!0),
+        MathUtils_1.MathUtils.CommonTempVector);
     i.FromConfigVector(
       this.SIe.GetInitLinearVelocity() ?? Vector_1.Vector.ZeroVector,
     ),
@@ -127,7 +131,7 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
       e.SetPhysicsLinearVelocity(i.ToUeVector());
   }
   Cln() {
-    const t = this.Hte.StaticMesh;
+    var t = this.Hte.StaticMesh;
     t.SetCollisionEnabled(0),
       t.SetSimulatePhysics(!1),
       t.SetEnableGravity(!1),
@@ -155,21 +159,21 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
   }
   fln(t) {
     this.gln();
-    var e = this.Hte.ActorLocationProxy;
-    var e =
-      (this.Cji.SetStartLocation(e.X, e.Y, e.Z),
-      this.Cji.SetEndLocation(e.X, e.Y, e.Z + t),
-      TraceElementCommon_1.TraceElementCommon.LineTrace(
-        this.Cji,
-        "AiWeaponMovementComponent.TraceHitWater",
-      ));
-    var t = e && !!this.Cji.HitResult?.bBlockingHit;
+    var e = this.Hte.ActorLocationProxy,
+      e =
+        (this.Cji.SetStartLocation(e.X, e.Y, e.Z),
+        this.Cji.SetEndLocation(e.X, e.Y, e.Z + t),
+        TraceElementCommon_1.TraceElementCommon.LineTrace(
+          this.Cji,
+          "AiWeaponMovementComponent.TraceHitWater",
+        )),
+      t = e && !!this.Cji.HitResult?.bBlockingHit;
     return this.Cji.ClearCacheData(), t;
   }
   cln() {
-    let t;
+    var t;
     return (
-      !(this.Hte.StaticMesh.GetComponentVelocity().Z > 0) &&
+      !(0 < this.Hte.StaticMesh.GetComponentVelocity().Z) &&
       ((t = (t = this.SIe.GetInitLocation())
         ? this.Hte.ActorLocationProxy.Z - t.Z
         : 0),
@@ -182,7 +186,7 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
     );
   }
   mln() {
-    const t = this.Hte.StaticMesh.GetComponentVelocity();
+    var t = this.Hte.StaticMesh.GetComponentVelocity();
     return (
       t.Z <= 0 &&
       Math.abs(t.Z) <= GROUND_MAX_Z_VEL &&
@@ -201,4 +205,4 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
   AiWeaponMovementComponent,
 )),
   (exports.AiWeaponMovementComponent = AiWeaponMovementComponent);
-// # sourceMappingURL=AiWeaponMovementComponent.js.map
+//# sourceMappingURL=AiWeaponMovementComponent.js.map

@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletPool = exports.SimplePool = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Pool_1 = require("../../../../Core/Container/Pool");
-const ProxyLru_1 = require("../../../../Core/Container/ProxyLru");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const BulletConstant_1 = require("../BulletConstant");
-const BulletEntity_1 = require("../Entity/BulletEntity");
-const BulletCollisionInfo_1 = require("./BulletCollisionInfo");
-const BulletHitActorData_1 = require("./BulletHitActorData");
-const KEY_BULLET_ENTITY = "bulletEntity";
-const PRE_ADD_COUNT = 10;
-const CAPACITY = 20;
+const Log_1 = require("../../../../Core/Common/Log"),
+  Pool_1 = require("../../../../Core/Container/Pool"),
+  ProxyLru_1 = require("../../../../Core/Container/ProxyLru"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  BulletConstant_1 = require("../BulletConstant"),
+  BulletEntity_1 = require("../Entity/BulletEntity"),
+  BulletCollisionInfo_1 = require("./BulletCollisionInfo"),
+  BulletHitActorData_1 = require("./BulletHitActorData"),
+  KEY_BULLET_ENTITY = "bulletEntity",
+  PRE_ADD_COUNT = 10,
+  CAPACITY = 20;
 class SimplePool {
   constructor() {
     this.p7 = new Array();
@@ -41,17 +41,17 @@ exports.SimplePool = SimplePool;
 class BulletPool {
   static Init() {
     for (let t = 0; t < PRE_ADD_COUNT; t++) {
-      const l = BulletPool.BulletEntityPool.Create(KEY_BULLET_ENTITY);
+      var l = BulletPool.BulletEntityPool.Create(KEY_BULLET_ENTITY);
       EntitySystem_1.EntitySystem.Init(l),
         EntitySystem_1.EntitySystem.DeSpawn(l),
         BulletPool.BulletEntityPool.Put(l);
     }
     for (let t = 0; t < PRE_ADD_COUNT; t++) {
-      const e = this.BulletHitActorDataPool.Create();
+      var e = this.BulletHitActorDataPool.Create();
       this.BulletHitActorDataPool.Put(e);
     }
     for (let t = 0; t < PRE_ADD_COUNT; t++) {
-      const o = this.BulletConditionResultPool.Create();
+      var o = this.BulletConditionResultPool.Create();
       this.BulletConditionResultPool.Put(o);
     }
     for (let t = 0; t < PRE_ADD_COUNT; t++)
@@ -127,21 +127,21 @@ class BulletPool {
     this.RHo--, BulletPool.BulletHitTempResultPool.Release(t);
   }
   static CheckAtFrameEnd() {
-    this.LHo !== 0 &&
+    0 !== this.LHo &&
       (Log_1.Log.CheckError() &&
         Log_1.Log.Error("Bullet", 18, "当前帧子弹申请的Vector没有回收", [
           "VectorCount",
           this.LHo,
         ]),
       (this.LHo = 0)),
-      this.DHo !== 0 &&
+      0 !== this.DHo &&
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Bullet", 18, "当前帧子弹申请的Rotator没有回收", [
             "RotatorCount",
             this.DHo,
           ]),
         (this.DHo = 0)),
-      this.RHo !== 0 &&
+      0 !== this.RHo &&
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Bullet",
@@ -170,4 +170,4 @@ class BulletPool {
   (BulletPool.DHo = 0),
   (BulletPool.BulletHitTempResultPool = new SimplePool()),
   (BulletPool.RHo = 0);
-// # sourceMappingURL=BulletPool.js.map
+//# sourceMappingURL=BulletPool.js.map

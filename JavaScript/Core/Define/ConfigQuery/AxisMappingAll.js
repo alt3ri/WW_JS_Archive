@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configAxisMappingAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const AxisMapping_1 = require("../Config/AxisMapping");
-const DB = "db_input_settings.db";
-const FILE = "s.输入配置.xlsx";
-const TABLE = "AxisMapping";
-const COMMAND = "select BinData from `AxisMapping`";
-const KEY_PREFIX = "AxisMappingAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  AxisMapping_1 = require("../Config/AxisMapping"),
+  DB = "db_input_settings.db",
+  FILE = "s.输入配置.xlsx",
+  TABLE = "AxisMapping",
+  COMMAND = "select BinData from `AxisMapping`",
+  KEY_PREFIX = "AxisMappingAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configAxisMappingAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configAxisMappingAll = {
     );
   },
   GetConfigList: (i = !0) => {
-    let o;
+    var o;
     if (
       (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configAxisMappingAll = {
       }
       const r = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let e = void 0;
+        var e = void 0;
         if (
           (([o, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configAxisMappingAll = {
     }
   },
 };
-// # sourceMappingURL=AxisMappingAll.js.map
+//# sourceMappingURL=AxisMappingAll.js.map

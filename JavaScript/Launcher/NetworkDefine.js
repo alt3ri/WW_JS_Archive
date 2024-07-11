@@ -1,5 +1,5 @@
 "use strict";
-let ENetworkType, ETsCompileShaderBatchMode;
+var ENetworkType, ETsCompileShaderBatchMode;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ETsCompileShaderBatchMode = exports.ENetworkType = void 0),
   (function (e) {
@@ -21,4 +21,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       exports.ETsCompileShaderBatchMode ||
       (exports.ETsCompileShaderBatchMode = {})),
   );
-// # sourceMappingURL=NetworkDefine.js.map
+//# sourceMappingURL=NetworkDefine.js.map

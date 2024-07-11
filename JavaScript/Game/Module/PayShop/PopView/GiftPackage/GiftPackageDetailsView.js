@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GiftPackageDetailsView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const ItemDefines_1 = require("../../../Item/Data/ItemDefines");
-const ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const PayShopItem_1 = require("../../PayShopTab/TabItem/PayShopItem");
-const GiftPackageMonthlyCardItem_1 = require("./GiftPackageMonthlyCardItem");
-const GiftPackageSupplyPackItem_1 = require("./GiftPackageSupplyPackItem");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  ItemDefines_1 = require("../../../Item/Data/ItemDefines"),
+  ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  PayShopItem_1 = require("../../PayShopTab/TabItem/PayShopItem"),
+  GiftPackageMonthlyCardItem_1 = require("./GiftPackageMonthlyCardItem"),
+  GiftPackageSupplyPackItem_1 = require("./GiftPackageSupplyPackItem");
 class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -34,7 +34,7 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
         this.CloseMe();
       }),
       (this.xUt = () => {
-        let e;
+        var e;
         this.IsEnoughMoney() && this.GoodsData.IfPayGift()
           ? (ControllerHolder_1.ControllerHolder.PayGiftController.SendPayGiftRequest(
               this.GoodsData.Id,
@@ -65,13 +65,13 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
       }),
       (this.PFi = () => {
         this.RemoveResellTimer();
-        let e;
-        const i = this.Goods.GetExchangePopViewResellText();
+        var e,
+          i = this.Goods.GetExchangePopViewResellText();
         this.Goods.GetIfNeedExtraLimitText()
           ? (e = this.Goods.GetExtraLimitText()) &&
             (this.GetItem(7).SetUIActive(!0), this.GetText(8).ShowTextNew(e))
           : this.Goods.GetPriceData().Enough
-            ? (e = this.Goods.GetCountDownData())[0] !== 2
+            ? 2 !== (e = this.Goods.GetCountDownData())[0]
               ? (this.GetItem(7).SetUIActive(!1),
                 this.GetText(8).SetUIActive(!1))
               : (this.GetItem(7).SetUIActive(!0),
@@ -116,18 +116,18 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
       ]);
   }
   OnBeforeCreate() {
-    let e;
-    let i;
-    const t = this.OpenParam;
-    const s =
-      ((this.Goods = t.PayShopGoods),
-      (this.GoodsData = this.Goods.GetGoodsData()),
-      ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-        this.GoodsData.ItemId,
-      ));
+    var e,
+      i,
+      t = this.OpenParam,
+      s =
+        ((this.Goods = t.PayShopGoods),
+        (this.GoodsData = this.Goods.GetGoodsData()),
+        ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+          this.GoodsData.ItemId,
+        ));
     this.xe = void 0;
     for ([e, i] of s.Parameters) {
-      const r = ItemDefines_1.EItemFunctionType[e];
+      var r = ItemDefines_1.EItemFunctionType[e];
       if (!StringUtils_1.StringUtils.IsEmpty(r)) {
         (this.l3i = e), (this.xe = i);
         break;
@@ -158,7 +158,7 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
     );
   }
   OnStart() {
-    let e;
+    var e;
     this.xe &&
       ((e = this.GetItem(1)),
       this.l3i === ItemDefines_1.EItemFunctionType.AutoOpenMonthCard
@@ -185,14 +185,14 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
       this.vIt();
   }
   Wwn() {
-    const e = ConfigManager_1.ConfigManager.PayShopConfig.GetMonthCardShopId();
+    var e = ConfigManager_1.ConfigManager.PayShopConfig.GetMonthCardShopId();
     this.Goods?.GetGoodsId() === e && this.i3i.SetLeftTimeTextShowState(!0);
   }
   async vIt() {
-    let e;
+    var e;
     this.Goods.IsDirect() ||
-      (this.GoodsData.GetNowPrice() !== 0 &&
-        (this.Goods.GetPriceData().CurrencyId > 0 &&
+      (0 !== this.GoodsData.GetNowPrice() &&
+        (0 < this.Goods.GetPriceData().CurrencyId &&
           ((e = new Array()).push(this.Goods.GetPriceData().CurrencyId),
           await this.ChildPopView?.PopItem.SetCurrencyItemList(e)),
         this.ChildPopView?.PopItem.GetCurrencyComponent()
@@ -210,7 +210,7 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
       (this.ResellTimerId = void 0));
   }
   IsEnoughMoney() {
-    let e;
+    var e;
     return (
       !!this.GoodsData.IsDirect() ||
       ((e = this.GoodsData.Price.Id),
@@ -219,7 +219,7 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
     );
   }
   SetInteractionGroup() {
-    const e = this.GetInteractionGroup(6);
+    var e = this.GetInteractionGroup(6);
     this.Goods.IsLocked() ||
     this.Goods.IsSoldOut() ||
     !this.Goods.IfCanBuy() ||
@@ -229,4 +229,4 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.GiftPackageDetailsView = GiftPackageDetailsView;
-// # sourceMappingURL=GiftPackageDetailsView.js.map
+//# sourceMappingURL=GiftPackageDetailsView.js.map

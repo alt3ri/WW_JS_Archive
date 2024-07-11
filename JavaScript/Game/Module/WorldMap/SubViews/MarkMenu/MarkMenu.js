@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MarkMenu = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi");
-const MarkMenuItem_1 = require("./MarkMenuItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
+  MarkMenuItem_1 = require("./MarkMenuItem");
 class MarkMenu extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments), (this.Yko = void 0);
@@ -26,7 +26,7 @@ class MarkMenu extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   OnShowWorldMapSecondaryUi(e) {
     this.Yko = [];
     for (const r of e) {
-      const t = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(3), this.GetItem(2));
+      var t = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(3), this.GetItem(2));
       const n = new MarkMenuItem_1.MarkMenuItem();
       n.Init(t, r).finally(() => {
         n.SetOnClick((e) => {
@@ -48,4 +48,4 @@ class MarkMenu extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
 }
 exports.MarkMenu = MarkMenu;
-// # sourceMappingURL=MarkMenu.js.map
+//# sourceMappingURL=MarkMenu.js.map

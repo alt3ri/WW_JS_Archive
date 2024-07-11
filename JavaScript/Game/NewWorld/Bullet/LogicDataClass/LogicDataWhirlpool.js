@@ -7,4 +7,4 @@ class LogicDataWhirlpool extends LogicDataBase_1.default {
   }
 }
 exports.default = LogicDataWhirlpool;
-// # sourceMappingURL=LogicDataWhirlpool.js.map
+//# sourceMappingURL=LogicDataWhirlpool.js.map

@@ -8,4 +8,4 @@ class MediumItemGridProhibitComponent extends MediumItemGridVisibleComponent_1.M
   }
 }
 exports.MediumItemGridProhibitComponent = MediumItemGridProhibitComponent;
-// # sourceMappingURL=MediumItemGridProhibitComponent.js.map
+//# sourceMappingURL=MediumItemGridProhibitComponent.js.map

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BehaviorButtonData = void 0);
-const InputEnums_1 = require("../../Input/InputEnums");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const visibleTagMap = new Map([[101, 852227396]]);
-const hiddenTagMap = new Map([
-  [101, [-1987419794, 855966206, 504239013]],
-  [102, [729920684]],
-]);
+const InputEnums_1 = require("../../Input/InputEnums"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  visibleTagMap = new Map([[101, 852227396]]),
+  hiddenTagMap = new Map([
+    [101, [-1987419794, 855966206, 504239013]],
+    [102, [729920684]],
+  ]);
 class BehaviorButtonData {
   constructor() {
     (this.ButtonType = 0),
@@ -37,9 +37,9 @@ class BehaviorButtonData {
       i && this.RefreshIsVisible(i, e);
   }
   RefreshIsVisible(t, s) {
-    if (this.VisibleTagId > 0 && this.gSo(t, this.VisibleTagId))
+    if (0 < this.VisibleTagId && this.gSo(t, this.VisibleTagId))
       this.IsVisible = !0;
-    else if (this.ButtonType !== 101 || s?.IsAim) {
+    else if (101 !== this.ButtonType || s?.IsAim) {
       for (const i of this.HiddenTagIds)
         if (this.gSo(t, i)) return void (this.IsVisible = !1);
       this.IsVisible = !0;
@@ -50,4 +50,4 @@ class BehaviorButtonData {
   }
 }
 exports.BehaviorButtonData = BehaviorButtonData;
-// # sourceMappingURL=BehaviorButtonData.js.map
+//# sourceMappingURL=BehaviorButtonData.js.map

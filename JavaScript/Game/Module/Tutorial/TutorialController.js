@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TutorialController = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const ItemHintController_1 = require("../ItemHint/ItemHintController");
-const TutorialDefine_1 = require("./TutorialDefine");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ItemHintController_1 = require("../ItemHint/ItemHintController"),
+  TutorialDefine_1 = require("./TutorialDefine");
 class TutorialController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -50,7 +50,7 @@ class TutorialController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static GmUnlockOneTutorial(e) {
-    const t = Protocol_1.Aki.Protocol.Mcs.create();
+    var t = Protocol_1.Aki.Protocol.Mcs.create();
     (t.Ekn = e),
       Net_1.Net.Call(1832, t, (e) => {
         e &&
@@ -65,10 +65,10 @@ class TutorialController extends UiControllerBase_1.UiControllerBase {
       this.bDo(e);
   }
   static bDo(o) {
-    const e = Protocol_1.Aki.Protocol.Mcs.create();
+    var e = Protocol_1.Aki.Protocol.Mcs.create();
     (e.Ekn = o),
       Net_1.Net.Call(20188, e, (e) => {
-        let t;
+        var t;
         e &&
           e.lkn === Protocol_1.Aki.Protocol.lkn.Sys &&
           ((t = Number(Object.keys(e.Vms)[0])),
@@ -94,14 +94,14 @@ class TutorialController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static TryOpenAwardUiViewPending() {
-    let e;
+    var e;
     ModelManager_1.ModelManager.TutorialModel.RewardInfo &&
       ((e = ModelManager_1.ModelManager.TutorialModel.RewardInfo),
       ItemHintController_1.ItemHintController.AddItemRewardList(e),
       (ModelManager_1.ModelManager.TutorialModel.RewardInfo = void 0));
   }
   static TryUnlockAndOpenTutorialTip(e, t = void 0) {
-    let o;
+    var o;
     ModelManager_1.ModelManager.TutorialModel.GetSavedDataById(e)
       ? t(!0)
       : (((o = Protocol_1.Aki.Protocol.Mcs.create()).Ekn = e),
@@ -121,7 +121,7 @@ class TutorialController extends UiControllerBase_1.UiControllerBase {
       ModelManager_1.ModelManager.TutorialModel.UpdateUnlockTutorials(t);
 }),
   (TutorialController.w4e = () => {
-    const e = Protocol_1.Aki.Protocol.fcs.create();
+    var e = Protocol_1.Aki.Protocol.fcs.create();
     Net_1.Net.Call(1137, e, (e) => {
       e &&
         (ModelManager_1.ModelManager.TutorialModel.InitUnlockTutorials(e.ubs),
@@ -145,4 +145,4 @@ class TutorialController extends UiControllerBase_1.UiControllerBase {
   (TutorialController.OpenTutorialView = () => {
     UiManager_1.UiManager.OpenView("TutorialView");
   });
-// # sourceMappingURL=TutorialController.js.map
+//# sourceMappingURL=TutorialController.js.map

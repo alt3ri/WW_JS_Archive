@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuickChatText = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class QuickChatText extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -31,4 +31,4 @@ class QuickChatText extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.QuickChatText = QuickChatText;
-// # sourceMappingURL=QuickChatText.js.map
+//# sourceMappingURL=QuickChatText.js.map

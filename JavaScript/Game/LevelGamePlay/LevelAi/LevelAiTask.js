@@ -38,7 +38,7 @@ class LevelAiTask extends LevelAiStandaloneNode_1.LevelAiStandaloneNode {
     e.SubmitCandidatePlanStep(this, s, 0);
   }
   FinishLatentTask(e) {
-    const s = this.CharacterPlanComponent.FindActiveTaskInfo(this);
+    var s = this.CharacterPlanComponent.FindActiveTaskInfo(this);
     s && s.PlanInstance.OnTaskFinished(this, s.PlanStepId, e);
   }
   ExecuteTask() {
@@ -51,4 +51,4 @@ class LevelAiTask extends LevelAiStandaloneNode_1.LevelAiStandaloneNode {
   OnTaskFinished(e) {}
 }
 exports.LevelAiTask = LevelAiTask;
-// # sourceMappingURL=LevelAiTask.js.map
+//# sourceMappingURL=LevelAiTask.js.map

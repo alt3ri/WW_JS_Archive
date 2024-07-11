@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleFavorBaseInfoComponent = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class RoleFavorBaseInfoComponent extends UiPanelBase_1.UiPanelBase {
   constructor(e, i) {
     super(),
@@ -25,7 +25,7 @@ class RoleFavorBaseInfoComponent extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    let e, i;
+    var e, i;
     this.zke &&
       ((e = this.GetText(0)),
       (i = ConfigManager_1.ConfigManager.RoleFavorConfig.GetFavorRoleInfoConfig(
@@ -43,4 +43,4 @@ class RoleFavorBaseInfoComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleFavorBaseInfoComponent = RoleFavorBaseInfoComponent;
-// # sourceMappingURL=RoleFavorBaseInfoComponent.js.map
+//# sourceMappingURL=RoleFavorBaseInfoComponent.js.map

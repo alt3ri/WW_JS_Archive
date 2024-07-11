@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkillCdController = void 0);
-const Stats_1 = require("../../../Core/Common/Stats");
-const Time_1 = require("../../../Core/Common/Time");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const VisibleStateUtil_1 = require("../BattleUi/VisibleStateUtil");
+const Stats_1 = require("../../../Core/Common/Stats"),
+  Time_1 = require("../../../Core/Common/Time"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  VisibleStateUtil_1 = require("../BattleUi/VisibleStateUtil");
 class SkillCdController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -27,14 +27,14 @@ class SkillCdController extends ControllerBase_1.ControllerBase {
       );
   }
   static Pause(e, t) {
-    const r = this.IsPause();
-    var t =
-      ((this.tKe = VisibleStateUtil_1.VisibleStateUtil.SetVisible(
-        this.tKe,
-        !t,
-        e,
-      )),
-      this.IsPause());
+    var r = this.IsPause(),
+      t =
+        ((this.tKe = VisibleStateUtil_1.VisibleStateUtil.SetVisible(
+          this.tKe,
+          !t,
+          e,
+        )),
+        this.IsPause());
     r !== t &&
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.CharSkillCdPauseStateChanged,
@@ -42,7 +42,7 @@ class SkillCdController extends ControllerBase_1.ControllerBase {
       );
   }
   static IsPause() {
-    return this.tKe !== 0;
+    return 0 !== this.tKe;
   }
 }
 ((exports.SkillCdController = SkillCdController).gW = void 0),
@@ -53,4 +53,4 @@ class SkillCdController extends ControllerBase_1.ControllerBase {
   (SkillCdController.eKe = (e) => {
     ModelManager_1.ModelManager.SkillCdModel?.HandlePassiveSkillNotify(e);
   });
-// # sourceMappingURL=SkillCdController.js.map
+//# sourceMappingURL=SkillCdController.js.map

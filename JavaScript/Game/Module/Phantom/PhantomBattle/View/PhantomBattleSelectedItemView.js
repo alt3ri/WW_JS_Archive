@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomBattleSelectedItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
 class PhantomBattleSelectedItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(), this.CreateThenShowByActor(e.GetOwner());
@@ -29,4 +29,4 @@ class PhantomBattleSelectedItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.PhantomBattleSelectedItem = PhantomBattleSelectedItem;
-// # sourceMappingURL=PhantomBattleSelectedItemView.js.map
+//# sourceMappingURL=PhantomBattleSelectedItemView.js.map

@@ -21,4 +21,4 @@ class WeaponItemSmallItemGrid extends LoopScrollSmallItemGrid_1.LoopScrollSmallI
   }
 }
 exports.WeaponItemSmallItemGrid = WeaponItemSmallItemGrid;
-// # sourceMappingURL=WeaponItemSmallItemGrid.js.map
+//# sourceMappingURL=WeaponItemSmallItemGrid.js.map

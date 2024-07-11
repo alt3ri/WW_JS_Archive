@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configChipTypeAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const ChipType_1 = require("../Config/ChipType");
-const DB = "db_handbook.db";
-const FILE = "t.图鉴系统.xlsx";
-const TABLE = "ChipType";
-const COMMAND = "select BinData from `ChipType`";
-const KEY_PREFIX = "ChipTypeAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  ChipType_1 = require("../Config/ChipType"),
+  DB = "db_handbook.db",
+  FILE = "t.图鉴系统.xlsx",
+  TABLE = "ChipType",
+  COMMAND = "select BinData from `ChipType`",
+  KEY_PREFIX = "ChipTypeAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configChipTypeAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configChipTypeAll = {
     );
   },
   GetConfigList: (o = !0) => {
-    let e;
+    var e;
     if (
       (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configChipTypeAll = {
       }
       const r = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let n = void 0;
+        var n = void 0;
         if (
           (([e, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configChipTypeAll = {
     }
   },
 };
-// # sourceMappingURL=ChipTypeAll.js.map
+//# sourceMappingURL=ChipTypeAll.js.map

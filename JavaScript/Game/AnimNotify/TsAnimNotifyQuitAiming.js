@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyQuitAiming extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.Tag = void 0);
@@ -9,10 +9,10 @@ class TsAnimNotifyQuitAiming extends UE.KuroAnimNotify {
   K2_Notify(e, t) {
     e = e.GetOwner();
     if (e instanceof TsBaseCharacter_1.default) {
-      const r = e.CharacterActorComponent.Entity;
+      var r = e.CharacterActorComponent.Entity;
       if (!e.CharacterActorComponent.IsWorldOwner()) return !1;
       if (
-        this.Tag.TagName === "None" ||
+        "None" === this.Tag.TagName ||
         r.GetComponent(185).HasTag(this.Tag.TagId)
       )
         return r.GetComponent(158).ExitAimStatus(), !0;
@@ -24,4 +24,4 @@ class TsAnimNotifyQuitAiming extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifyQuitAiming;
-// # sourceMappingURL=TsAnimNotifyQuitAiming.js.map
+//# sourceMappingURL=TsAnimNotifyQuitAiming.js.map

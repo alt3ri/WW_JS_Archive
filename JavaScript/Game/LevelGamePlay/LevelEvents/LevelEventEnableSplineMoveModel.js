@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventEnableSplineMoveModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const Global_1 = require("../../Global");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const LevelGeneralContextDefine_1 = require("../LevelGeneralContextDefine");
-const CHECK_BASE_CHARACTER_INTERVAL = 500;
+const Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Global_1 = require("../../Global"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  LevelGeneralContextDefine_1 = require("../LevelGeneralContextDefine"),
+  CHECK_BASE_CHARACTER_INTERVAL = 500;
 class LevelEventEnableSplineMoveModel extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -16,15 +16,15 @@ class LevelEventEnableSplineMoveModel extends LevelGeneralBase_1.LevelEventBase 
       (this.uVs = () => {
         if (Global_1.Global.BaseCharacter?.IsValid()) {
           TimerSystem_1.TimerSystem.Remove(this.lVs), (this.lVs = void 0);
-          for (const [e, t] of this._Vs) this.ExecuteNew(e, t);
+          for (var [e, t] of this._Vs) this.ExecuteNew(e, t);
           this._Vs.length = 0;
         }
       });
   }
   ExecuteNew(t, i) {
     if (t) {
-      let r;
-      const n = t.Config;
+      var r,
+        n = t.Config;
       i instanceof LevelGeneralContextDefine_1.TriggerContext &&
         ((o = i.TriggerEntityId
           ? EntitySystem_1.EntitySystem.Get(i.TriggerEntityId)
@@ -95,7 +95,7 @@ class LevelEventEnableSplineMoveModel extends LevelGeneralBase_1.LevelEventBase 
       }
       var o = e?.GetComponent(95);
       o?.Valid
-        ? (n.Type === "Open"
+        ? ("Open" === n.Type
             ? o.StartSplineMove(n.SplineEntityId, n)
             : o.EndSplineMove(n.SplineEntityId),
           this.FinishExecute(!0))
@@ -104,4 +104,4 @@ class LevelEventEnableSplineMoveModel extends LevelGeneralBase_1.LevelEventBase 
   }
 }
 exports.LevelEventEnableSplineMoveModel = LevelEventEnableSplineMoveModel;
-// # sourceMappingURL=LevelEventEnableSplineMoveModel.js.map
+//# sourceMappingURL=LevelEventEnableSplineMoveModel.js.map

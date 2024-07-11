@@ -1,5 +1,5 @@
 "use strict";
-let EEventName;
+var EEventName;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EEventName = void 0),
   (function (e) {
@@ -1396,4 +1396,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
         "LevelLoadingLockTimeDilation"),
       (e[(e.LevelLoadingUnlockDilation = 1215)] = "LevelLoadingUnlockDilation");
   })((EEventName = exports.EEventName || (exports.EEventName = {})));
-// # sourceMappingURL=EventDefine.js.map
+//# sourceMappingURL=EventDefine.js.map

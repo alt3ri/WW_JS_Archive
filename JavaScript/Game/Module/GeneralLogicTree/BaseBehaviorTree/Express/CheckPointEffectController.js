@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CheckPointEffectController = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EffectSystem_1 = require("../../../../Effect/EffectSystem");
-const GlobalData_1 = require("../../../../GlobalData");
-const EffectUtil_1 = require("../../../../Utils/EffectUtil");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EffectSystem_1 = require("../../../../Effect/EffectSystem"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  EffectUtil_1 = require("../../../../Utils/EffectUtil");
 class CheckPointEffectInfo {
   constructor() {
     (this.EffectPathKey = ""),
@@ -21,10 +21,10 @@ class CheckPointEffectController {
   }
   EnableAllEffects(t) {
     if (this.GKt)
-      for (const [e, o] of this.qKt) t ? this.NKt(e, o) : this.StopEffect(e);
+      for (var [e, o] of this.qKt) t ? this.NKt(e, o) : this.StopEffect(e);
   }
   OnNodeStart(t, e, o, i) {
-    let r = this.qKt.get(t);
+    var r = this.qKt.get(t);
     r ||
       (((r = new CheckPointEffectInfo()).EffectPathKey = e),
       (r.EffectSpawnPosition = o),
@@ -42,7 +42,7 @@ class CheckPointEffectController {
     t || this.EnableAllEffects(!1);
   }
   NKt(o, t) {
-    const e = EffectUtil_1.EffectUtil.GetEffectPath(
+    var e = EffectUtil_1.EffectUtil.GetEffectPath(
       t.EffectPathKey ?? "DA_Fx_Group_Sl3_Cishi_10idle",
     );
     StringUtils_1.StringUtils.IsBlank(e) ||
@@ -59,7 +59,7 @@ class CheckPointEffectController {
         3,
         void 0,
         (t, e) => {
-          t !== 5
+          5 !== t
             ? Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "GeneralLogicTree",
@@ -78,7 +78,7 @@ class CheckPointEffectController {
       );
   }
   StopEffect(t) {
-    const e = this.GKt.get(t) ?? 0;
+    var e = this.GKt.get(t) ?? 0;
     EffectSystem_1.EffectSystem.IsValid(e) &&
       EffectSystem_1.EffectSystem.StopEffectById(
         e,
@@ -89,4 +89,4 @@ class CheckPointEffectController {
   }
 }
 exports.CheckPointEffectController = CheckPointEffectController;
-// # sourceMappingURL=CheckPointEffectController.js.map
+//# sourceMappingURL=CheckPointEffectController.js.map

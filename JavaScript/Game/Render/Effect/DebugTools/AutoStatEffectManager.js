@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AutoStatEffectDataMgr = void 0);
-const cpp_1 = require("cpp");
-const UE = require("ue");
-const Info_1 = require("../../../../Core/Common/Info");
-const Log_1 = require("../../../../Core/Common/Log");
-const Stats_1 = require("../../../../Core/Common/Stats");
-const PerformanceController_1 = require("../../../../Core/Performance/PerformanceController");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const TickSystem_1 = require("../../../../Core/Tick/TickSystem");
-const EffectSystem_1 = require("../../../Effect/EffectSystem");
-const Global_1 = require("../../../Global");
-const GlobalData_1 = require("../../../GlobalData");
-const ConfirmBoxDefine_1 = require("../../../Module/ConfirmBox/ConfirmBoxDefine");
-const EffectGlobal_1 = require("../EffectGlobal");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const EFFECT_PATHS_DA_PATH =
-  "/Game/Aki/Render/RuntimeBP/Effect/Debug/DA_EffectPaths.DA_EffectPaths";
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
+  PerformanceController_1 = require("../../../../Core/Performance/PerformanceController"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  TickSystem_1 = require("../../../../Core/Tick/TickSystem"),
+  EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  Global_1 = require("../../../Global"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ConfirmBoxDefine_1 = require("../../../Module/ConfirmBox/ConfirmBoxDefine"),
+  EffectGlobal_1 = require("../EffectGlobal"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  EFFECT_PATHS_DA_PATH =
+    "/Game/Aki/Render/RuntimeBP/Effect/Debug/DA_EffectPaths.DA_EffectPaths";
 class EffectStatData {
   constructor(t, e) {
     (this.MaxUpdateTime = -0),
@@ -27,7 +27,7 @@ class EffectStatData {
       (this.SpawnTime = e);
   }
   ToCsv() {
-    const t = new Array();
+    var t = new Array();
     return (
       t.push(this.Path),
       t.push(this.SpawnTime.toFixed()),
@@ -79,7 +79,7 @@ class AutoStatEffectDataMgr {
     );
   }
   static GetMicrosecond() {
-    return UE.GameplayStatics.GetPlatformName() === "Windows"
+    return "Windows" === UE.GameplayStatics.GetPlatformName()
       ? 0.1 * cpp_1.KuroTime.GetCycles64()
       : cpp_1.KuroTime.GetCycles64();
   }
@@ -112,10 +112,10 @@ class AutoStatEffectDataMgr {
           EFFECT_PATHS_DA_PATH,
           UE.PDA_EffectPaths_C,
           (t) => {
-            const e = t.BasePaths;
-            let s = 0;
-            let i = (a > 0 && a < e.Num() - 1 && (s = a), e.Num() - 1);
-            r !== -1 && r < e.Num() && (i = r), (this.BasePaths = new Array());
+            var e = t.BasePaths;
+            let s = 0,
+              i = (0 < a && a < e.Num() - 1 && (s = a), e.Num() - 1);
+            -1 !== r && r < e.Num() && (i = r), (this.BasePaths = new Array());
             for (let t = s; t <= i; t++) this.BasePaths.push(e.Get(t));
             (this.TickId = TickSystem_1.TickSystem.Add(
               this.r6,
@@ -183,7 +183,7 @@ class AutoStatEffectDataMgr {
     (this.ac = t), (this.olr = 0);
   }
   clr(t) {
-    let e;
+    var e;
     EffectSystem_1.EffectSystem.IsValid(this.opi) &&
       ((e =
         PerformanceController_1.PerformanceController.ConsumeTickTime(
@@ -202,29 +202,29 @@ class AutoStatEffectDataMgr {
       this.rlr[this.rlr.length - 1].OnStop(this.olr);
   }
   mlr() {
-    if (this.BasePaths.length === 0) {
+    if (0 === this.BasePaths.length) {
       this.TickId !== TickSystem_1.TickSystem.InvalidId &&
         (TickSystem_1.TickSystem.Remove(this.TickId),
         (this.TickId = TickSystem_1.TickSystem.InvalidId));
-      const t = new Array();
+      var t = new Array();
       for (const i of this.rlr.values()) t.push(i.ToCsv());
-      var e = `${UE.KismetSystemLibrary.GetProjectSavedDirectory()}Profiling/${Date.now()}_EffectStats.csv`;
-      var e =
-        (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("RenderEffect", 41, "", ["保存统计信息", e]),
-        UE.KuroStaticLibrary.SaveStringToFile(
-          EffectStatData.CsvHeader + t.join("\n"),
-          e,
-        ));
-      var e =
-        ((this.rlr.length = 0),
-        this.alr &&
-          UE.KismetSystemLibrary.ExecuteConsoleCommand(
-            GlobalData_1.GlobalData.World,
-            "Trace.Stop",
-          ),
-        `[保存特效统计信息:${e}]`);
-      var s = new ConfirmBoxDefine_1.ConfirmBoxDataNew(33);
+      var e = `${UE.KismetSystemLibrary.GetProjectSavedDirectory()}Profiling/${Date.now()}_EffectStats.csv`,
+        e =
+          (Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug("RenderEffect", 41, "", ["保存统计信息", e]),
+          UE.KuroStaticLibrary.SaveStringToFile(
+            EffectStatData.CsvHeader + t.join("\n"),
+            e,
+          )),
+        e =
+          ((this.rlr.length = 0),
+          this.alr &&
+            UE.KismetSystemLibrary.ExecuteConsoleCommand(
+              GlobalData_1.GlobalData.World,
+              "Trace.Stop",
+            ),
+          `[保存特效统计信息:${e}]`),
+        s = new ConfirmBoxDefine_1.ConfirmBoxDataNew(33);
       s.SetTextArgs(e),
         ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
           s,
@@ -265,4 +265,4 @@ class AutoStatEffectDataMgr {
 ((exports.AutoStatEffectDataMgr = AutoStatEffectDataMgr).dlr = 1),
   (AutoStatEffectDataMgr.llr = 5e3),
   (AutoStatEffectDataMgr._lr = 1e3);
-// # sourceMappingURL=AutoStatEffectManager.js.map
+//# sourceMappingURL=AutoStatEffectManager.js.map

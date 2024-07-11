@@ -1,32 +1,32 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ForgingController = void 0);
-const AudioController_1 = require("../../../../Core/Audio/AudioController");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const Net_1 = require("../../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ItemRewardController_1 = require("../../ItemReward/ItemRewardController");
-const RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData");
-const CommonManager_1 = require("../Common/CommonManager");
-const ForgingDefine_1 = require("./ForgingDefine");
-const ENTER_AUDIO_ID = "play_ui_fx_spl_gen_page_open";
-const LEAVE_AUDIO_ID = "play_ui_fx_spl_gen_page_close";
-const SUCCESS_AUDIO_ID = "play_ui_fx_spl_gen_robot_success_vo";
+const AudioController_1 = require("../../../../Core/Audio/AudioController"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ItemRewardController_1 = require("../../ItemReward/ItemRewardController"),
+  RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData"),
+  CommonManager_1 = require("../Common/CommonManager"),
+  ForgingDefine_1 = require("./ForgingDefine"),
+  ENTER_AUDIO_ID = "play_ui_fx_spl_gen_page_open",
+  LEAVE_AUDIO_ID = "play_ui_fx_spl_gen_page_close",
+  SUCCESS_AUDIO_ID = "play_ui_fx_spl_gen_robot_success_vo";
 class ForgingController extends UiControllerBase_1.UiControllerBase {
   static get ForgingCostId() {
     return (
@@ -84,11 +84,11 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
     Net_1.Net.Register(14670, (e) => {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Forging", 50, "10270_服务端主动推送锻造数据更新");
-      const r = ModelManager_1.ModelManager.ForgingModel;
+      var r = ModelManager_1.ModelManager.ForgingModel;
       let o = !1;
       for (const i of e.JLs) {
-        const t = i.Ekn;
-        const n = r.GetForgingDataById(t);
+        var t = i.Ekn,
+          n = r.GetForgingDataById(t);
         !n ||
           n.IsUnlock ||
           ((n.IsNew = !0),
@@ -108,7 +108,7 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
     Net_1.Net.UnRegister(14670);
   }
   static SendForgeInfoRequest() {
-    let e;
+    var e;
     ForgingController.iTi
       ? Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
@@ -150,8 +150,8 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
         50,
         "10266_客户端请求锻造系统相关数据(异步刷新)",
       );
-    var e = new Protocol_1.Aki.Protocol.nZn();
-    var e = await Net_1.Net.CallAsync(1698, e);
+    var e = new Protocol_1.Aki.Protocol.nZn(),
+      e = await Net_1.Net.CallAsync(1698, e);
     e.Kms === Protocol_1.Aki.Protocol.lkn.Sys
       ? (ModelManager_1.ModelManager.ForgingModel.SaveLimitRefreshTime(e.rLs),
         ForgingController.tTi(e))
@@ -166,7 +166,7 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
           UiManager_1.UiManager.CloseView("ForgingRootView"));
   }
   static SendForgeItemRequest(e, r, o) {
-    const t = new Protocol_1.Aki.Protocol.aZn();
+    var t = new Protocol_1.Aki.Protocol.aZn();
     (t.Ekn = e),
       (t.l3n = r),
       (t.I5n = o),
@@ -181,15 +181,15 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
           e.Kms === Protocol_1.Aki.Protocol.lkn.Sys)
         ) {
           var r = ModelManager_1.ModelManager.ForgingModel.GetForgingDataById(
-            e.Ekn,
-          );
-          var r = (r && (r.LastRoleId = e.l3n), e.QTs);
-          e.YTs.length !== 0 && r.push(...e.YTs);
+              e.Ekn,
+            ),
+            r = (r && (r.LastRoleId = e.l3n), e.QTs);
+          0 !== e.YTs.length && r.push(...e.YTs);
           const n = [];
           for (const i of r) {
-            const o = i.G3n;
+            var o = i.G3n;
             for (let e = 0; e < (i.k4n ?? 1); e++) {
-              const t = new RewardItemData_1.RewardItemData(o, 1);
+              var t = new RewardItemData_1.RewardItemData(o, 1);
               n.push(t);
             }
           }
@@ -215,10 +215,10 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static SendForgeFormulaUnlockRequest(o) {
-    const e = new Protocol_1.Aki.Protocol._Zn();
+    var e = new Protocol_1.Aki.Protocol._Zn();
     (e.Ekn = o),
       Net_1.Net.Call(14873, Protocol_1.Aki.Protocol._Zn.create(e), (e) => {
-        let r;
+        var r;
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Forging", 50, "10271_请求解锁配方返回"),
           e.Kms === Protocol_1.Aki.Protocol.lkn.Sys
@@ -248,8 +248,7 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
     ).RoleList.includes(e);
   }
   static CheckIsBuffEx(e, r) {
-    const o =
-      ConfigManager_1.ConfigManager.ForgingConfig.GetForgeFormulaById(r);
+    var o = ConfigManager_1.ConfigManager.ForgingConfig.GetForgeFormulaById(r);
     if (!o.RoleList.includes(e))
       for (const t of ModelManager_1.ModelManager.RoleModel.GetRoleIdList())
         if (o.RoleList.includes(t)) return !0;
@@ -265,10 +264,10 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
   static kbt(e, r) {
     let o = r;
     for (const i of e) {
-      const t = i.Count;
-      let n = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-        i.ItemId,
-      );
+      var t = i.Count,
+        n = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+          i.ItemId,
+        );
       if (n < t) return 0;
       n = MathUtils_1.MathUtils.GetFloatPointFloor(n / t, 0);
       o = o < n ? o : n;
@@ -281,7 +280,7 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
     for (const o of ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillList(
       e.SkillId,
     ))
-      o.LeftSkillEffect !== 0 &&
+      0 !== o.LeftSkillEffect &&
         (r = StringUtils_1.StringUtils.Format(
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew(o.SkillDescribe),
           ...o.SkillDetailNum,
@@ -294,9 +293,10 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
   static CheckCanUnlock(e) {
     e = ConfigManager_1.ConfigManager.ForgingConfig.GetForgeFormulaById(e);
     return (
+      0 !==
       ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
         e.FormulaItemId,
-      ) !== 0
+      )
     );
   }
   static CheckCanForgingOrCanUnlock(e) {
@@ -347,8 +347,8 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
   }
   static PlayForgingEnterDisplay(e) {
     this.ClearForgingDisplay();
-    let r;
-    const o = this.Fbt();
+    var r,
+      o = this.Fbt();
     o &&
       ((r = ModelManager_1.ModelManager.ComposeModel.ComposeEnterFlow),
       ForgingController.PlayForgingFlow(r),
@@ -361,12 +361,12 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
   }
   static PlayForgingLoopDisplay() {
     this.ClearForgingDisplay();
-    const e = this.Fbt();
+    var e = this.Fbt();
     e && e.AddTag(236686531);
   }
   static PlayForgingWorkingDisplay(e) {
     this.ClearForgingDisplay();
-    const r = this.Fbt();
+    var r = this.Fbt();
     r &&
       (EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnBeginPlayForgingWorkingDisplay,
@@ -400,7 +400,7 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
       ));
   }
   static oTi(e, r) {
-    const o = ConfigManager_1.ConfigManager.AudioConfig.GetAudioPath(e);
+    var o = ConfigManager_1.ConfigManager.AudioConfig.GetAudioPath(e);
     o &&
       (AudioController_1.AudioController.PostEventByUi(o.Path, r),
       Log_1.Log.CheckDebug()) &&
@@ -411,8 +411,8 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
   }
   static PlayForgingFailDisplay(e) {
     this.ClearForgingDisplay();
-    let r;
-    const o = this.Fbt();
+    var r,
+      o = this.Fbt();
     o &&
       ((r = ModelManager_1.ModelManager.ComposeModel.ComposeFailFlow),
       ForgingController.PlayForgingFlow(r),
@@ -423,7 +423,7 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
       }, ForgingDefine_1.FORGING_FAIL_SEQUENCE_TIME_LENGTH)));
   }
   static ClearForgingDisplay() {
-    const e = this.Fbt();
+    var e = this.Fbt();
     e &&
       (e.RemoveTag(-269686894),
       e.RemoveTag(686058684),
@@ -434,7 +434,7 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
         (TimerSystem_1.TimerSystem.Remove(this.rTi), (this.rTi = void 0));
   }
   static Fbt() {
-    let e =
+    var e =
       ModelManager_1.ModelManager.InteractionModel.CurrentInteractEntityId;
     if (e) {
       e = EntitySystem_1.EntitySystem.Get(e);
@@ -453,7 +453,7 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
       _a.SendForgeInfoRequest();
   }),
   (ForgingController.Xyi = (e) => {
-    if (CommonManager_1.CommonManager.GetCurrentSystem() === 2)
+    if (2 === CommonManager_1.CommonManager.GetCurrentSystem())
       switch (e) {
         case 0:
           ModelManager_1.ModelManager.ForgingModel.CurrentForgingViewType = 1;
@@ -466,4 +466,4 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.ForgingModel.UpdateHelpRoleItemDataList();
   }),
   (ForgingController.iTi = !1);
-// # sourceMappingURL=ForgingController.js.map
+//# sourceMappingURL=ForgingController.js.map

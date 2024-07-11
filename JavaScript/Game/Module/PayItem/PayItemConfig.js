@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayItemConfig = void 0);
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const PayById_1 = require("../../../Core/Define/ConfigQuery/PayById");
-const PayByPayIdAndRegion_1 = require("../../../Core/Define/ConfigQuery/PayByPayIdAndRegion");
-const PayByRegion_1 = require("../../../Core/Define/ConfigQuery/PayByRegion");
-const PayItemAll_1 = require("../../../Core/Define/ConfigQuery/PayItemAll");
-const PayItemById_1 = require("../../../Core/Define/ConfigQuery/PayItemById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const StringBuilder_1 = require("../../../Core/Utils/StringBuilder");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  PayById_1 = require("../../../Core/Define/ConfigQuery/PayById"),
+  PayByPayIdAndRegion_1 = require("../../../Core/Define/ConfigQuery/PayByPayIdAndRegion"),
+  PayByRegion_1 = require("../../../Core/Define/ConfigQuery/PayByRegion"),
+  PayItemAll_1 = require("../../../Core/Define/ConfigQuery/PayItemAll"),
+  PayItemById_1 = require("../../../Core/Define/ConfigQuery/PayItemById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  StringBuilder_1 = require("../../../Core/Utils/StringBuilder"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class PayItemConfig extends ConfigBase_1.ConfigBase {
   GetPayItemList() {
     return PayItemAll_1.configPayItemAll.GetConfigList();
@@ -19,23 +19,23 @@ class PayItemConfig extends ConfigBase_1.ConfigBase {
     return PayById_1.configPayById.GetConfig(e);
   }
   GetPayConf(e) {
-    const r =
+    var r =
       ModelManager_1.ModelManager.LoginServerModel.GetCurrentSelectServerName();
     if (ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()) {
       const n = PayByPayIdAndRegion_1.configPayByPayIdAndRegion.GetConfigList(
         e,
         r,
       );
-      if (void 0 !== n && n.length > 0) return n[0];
+      if (void 0 !== n && 0 < n.length) return n[0];
     }
     const n = PayByPayIdAndRegion_1.configPayByPayIdAndRegion.GetConfigList(
       e,
       r,
     );
-    if (void 0 !== n && n.length > 0) return n[0];
+    if (void 0 !== n && 0 < n.length) return n[0];
   }
   GetCurrentRegionPayConfigList() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.LoginServerModel.GetCurrentSelectServerName();
     return PayByRegion_1.configPayByRegion.GetConfigList(e);
   }
@@ -45,10 +45,10 @@ class PayItemConfig extends ConfigBase_1.ConfigBase {
       : this.GetMainlandCurrencyChar();
   }
   GetPayShow(e) {
-    let r;
-    let n = ModelManager_1.ModelManager.KuroSdkModel?.GetQueryProductShowPrice(
-      e.toString(),
-    );
+    var r,
+      n = ModelManager_1.ModelManager.KuroSdkModel?.GetQueryProductShowPrice(
+        e.toString(),
+      );
     return (
       n ||
       ((n = new StringBuilder_1.StringBuilder()),
@@ -79,4 +79,4 @@ class PayItemConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.PayItemConfig = PayItemConfig;
-// # sourceMappingURL=PayItemConfig.js.map
+//# sourceMappingURL=PayItemConfig.js.map

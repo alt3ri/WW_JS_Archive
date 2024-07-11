@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventPlayLevelSequence = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventPlayLevelSequence extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, t) {
     e
@@ -29,4 +29,4 @@ class LevelEventPlayLevelSequence extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventPlayLevelSequence = LevelEventPlayLevelSequence;
-// # sourceMappingURL=LevelEventPlayLevelSequence.js.map
+//# sourceMappingURL=LevelEventPlayLevelSequence.js.map

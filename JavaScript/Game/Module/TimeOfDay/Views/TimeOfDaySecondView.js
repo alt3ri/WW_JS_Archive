@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TimeOfDaySecondView = void 0);
-const UE = require("ue");
-const ue_1 = require("ue");
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const NoCircleAttachView_1 = require("../../AutoAttach/NoCircleAttachView");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const TimeOfDayAnimController_1 = require("../TimeOfDayAnimController");
-const TimeOfDayController_1 = require("../TimeOfDayController");
-const TimeOfDayDefine_1 = require("../TimeOfDayDefine");
-const TimeOfDaySecondCircleAttachItem_1 = require("./TimeOfDaySecondCircleAttachItem");
-const TimeOfDaySecondToggleItem_1 = require("./TimeOfDaySecondToggleItem");
-const TIMEGAP = 1e3;
+const UE = require("ue"),
+  ue_1 = require("ue"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  NoCircleAttachView_1 = require("../../AutoAttach/NoCircleAttachView"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  TimeOfDayAnimController_1 = require("../TimeOfDayAnimController"),
+  TimeOfDayController_1 = require("../TimeOfDayController"),
+  TimeOfDayDefine_1 = require("../TimeOfDayDefine"),
+  TimeOfDaySecondCircleAttachItem_1 = require("./TimeOfDaySecondCircleAttachItem"),
+  TimeOfDaySecondToggleItem_1 = require("./TimeOfDaySecondToggleItem"),
+  TIMEGAP = 1e3;
 class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -47,7 +47,7 @@ class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
         this.ATo();
       }),
       (this.$Ge = (e) => {
-        e === "TimeOfDayLoadingView" &&
+        "TimeOfDayLoadingView" === e &&
           (TimeOfDayController_1.TimeOfDayController.SetUiAnimFlag(!1),
           this.GetUiNiagara(4)?.ActivateSystem(!0),
           EventSystem_1.EventSystem.Emit(
@@ -100,13 +100,13 @@ class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
         );
       }),
       (this.PTo = (e, i, t) => {
-        const r =
-          i - e <
-          TimeOfDayDefine_1.TOD_MIN_ADJUST_MINUTE *
-            TimeOfDayDefine_1.TOD_SECOND_PER_MINUTE
-            ? i + TimeOfDayDefine_1.TOD_SECOND_PER_DAY
-            : i;
-        var t = ((this.nIn = t), this.xTo());
+        var r =
+            i - e <
+            TimeOfDayDefine_1.TOD_MIN_ADJUST_MINUTE *
+              TimeOfDayDefine_1.TOD_SECOND_PER_MINUTE
+              ? i + TimeOfDayDefine_1.TOD_SECOND_PER_DAY
+              : i,
+          t = ((this.nIn = t), this.xTo());
         TimeOfDayController_1.TimeOfDayController.SetUiAnimFlag(!0),
           TimeOfDayController_1.TimeOfDayController.AdjustTime(
             i,
@@ -143,14 +143,14 @@ class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
       this.LTo,
     );
     var e =
-      ConfigManager_1.ConfigManager.TimeOfDayConfig.GetDayTimeChangePresets();
-    const i = [];
-    var e =
-      (i.push(this.E_i.RefreshByDataAsync(e)),
-      this.E_i.SelectGridProxy(0),
-      CommonParamById_1.configCommonParamById.GetStringConfig(
-        "TimeOfDaySecondMiddleOffsetCurve",
-      ));
+        ConfigManager_1.ConfigManager.TimeOfDayConfig.GetDayTimeChangePresets(),
+      i = [],
+      e =
+        (i.push(this.E_i.RefreshByDataAsync(e)),
+        this.E_i.SelectGridProxy(0),
+        CommonParamById_1.configCommonParamById.GetStringConfig(
+          "TimeOfDaySecondMiddleOffsetCurve",
+        ));
     if (e) {
       const t = new CustomPromise_1.CustomPromise();
       ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.CurveFloat, (e) => {
@@ -163,8 +163,8 @@ class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
     await Promise.all(i);
   }
   OnStart() {
-    const e = this.GetItem(6);
-    const i = this.GetItem(7);
+    var e = this.GetItem(6),
+      i = this.GetItem(7);
     this.GetUiNiagara(4).SetUIActive(!1),
       (this.ITo = new NoCircleAttachView_1.NoCircleAttachView(e.GetOwner())),
       this.ITo?.SetControllerItem(i),
@@ -220,14 +220,13 @@ class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
       );
   }
   ATo() {
-    const e =
-      ModelManager_1.ModelManager.TimeOfDayModel.CurrentSelectTimeItemSt;
+    var e = ModelManager_1.ModelManager.TimeOfDayModel.CurrentSelectTimeItemSt;
     this.E_i.SelectGridProxy(e.ChangeDayIndex);
   }
   wTo() {
     this.TTo =
       ModelManager_1.ModelManager.TimeOfDayModel.GetTimeOfDayShowData();
-    const e = this.TTo;
+    var e = this.TTo;
     this.ITo.ReloadView(e.length, e);
     for (let e = -3; e < 3; e++)
       this.ITo.GetItemByShowIndex(e)
@@ -238,13 +237,13 @@ class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
     this.bTo();
   }
   bTo() {
-    const e = this.GetUiNiagara(4);
+    var e = this.GetUiNiagara(4);
     !this.ITo || this.ITo.MovingState()
       ? e.IsUIActiveSelf() && this.GetUiNiagara(4).SetUIActive(!1)
       : e.IsUIActiveSelf() || this.GetUiNiagara(4).SetUIActive(!0);
   }
   FNe() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.TimeOfDayModel.GameTime.HourMinuteString;
     this.GetText(1).SetText(e);
   }
@@ -276,9 +275,9 @@ class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
     const i = Number(e[0]);
-    if (i !== 0) {
+    if (0 !== i) {
       e = this.TTo?.findIndex((e) => e.SetTime === i);
-      if (e && e >= 0) {
+      if (e && 0 <= e) {
         this.ITo?.AttachToIndex(e, !0);
         e = this.ITo?.GetItemByShowIndex(e)?.GetRootItem();
         if (e) return [e, e];
@@ -287,4 +286,4 @@ class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.TimeOfDaySecondView = TimeOfDaySecondView;
-// # sourceMappingURL=TimeOfDaySecondView.js.map
+//# sourceMappingURL=TimeOfDaySecondView.js.map

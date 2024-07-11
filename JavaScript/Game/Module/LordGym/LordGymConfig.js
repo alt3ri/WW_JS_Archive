@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LordGymConfig = void 0);
-const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
-const LordGymAll_1 = require("../../../Core/Define/ConfigQuery/LordGymAll");
-const LordGymByDifficulty_1 = require("../../../Core/Define/ConfigQuery/LordGymByDifficulty");
-const LordGymById_1 = require("../../../Core/Define/ConfigQuery/LordGymById");
-const LordGymEntranceAll_1 = require("../../../Core/Define/ConfigQuery/LordGymEntranceAll");
-const LordGymEntranceById_1 = require("../../../Core/Define/ConfigQuery/LordGymEntranceById");
-const LordGymEntranceByMarkId_1 = require("../../../Core/Define/ConfigQuery/LordGymEntranceByMarkId");
-const LordGymFilterTypeAll_1 = require("../../../Core/Define/ConfigQuery/LordGymFilterTypeAll");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
+  LordGymAll_1 = require("../../../Core/Define/ConfigQuery/LordGymAll"),
+  LordGymByDifficulty_1 = require("../../../Core/Define/ConfigQuery/LordGymByDifficulty"),
+  LordGymById_1 = require("../../../Core/Define/ConfigQuery/LordGymById"),
+  LordGymEntranceAll_1 = require("../../../Core/Define/ConfigQuery/LordGymEntranceAll"),
+  LordGymEntranceById_1 = require("../../../Core/Define/ConfigQuery/LordGymEntranceById"),
+  LordGymEntranceByMarkId_1 = require("../../../Core/Define/ConfigQuery/LordGymEntranceByMarkId"),
+  LordGymFilterTypeAll_1 = require("../../../Core/Define/ConfigQuery/LordGymFilterTypeAll"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class LordGymConfig extends ConfigBase_1.ConfigBase {
   GetLordGymConfig(r) {
     return LordGymById_1.configLordGymById.GetConfig(r);
@@ -38,11 +38,11 @@ class LordGymConfig extends ConfigBase_1.ConfigBase {
       ?.EntranceTitle;
   }
   GetAllLordGymFilterTypeConfig() {
-    const r = ConfigCommon_1.ConfigCommon.ToList(
+    var r = ConfigCommon_1.ConfigCommon.ToList(
       LordGymFilterTypeAll_1.configLordGymFilterTypeAll.GetConfigList(),
     );
     return r && r.sort((r, e) => r.Id - e.Id), r;
   }
 }
 exports.LordGymConfig = LordGymConfig;
-// # sourceMappingURL=LordGymConfig.js.map
+//# sourceMappingURL=LordGymConfig.js.map

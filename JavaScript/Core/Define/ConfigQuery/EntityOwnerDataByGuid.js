@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configEntityOwnerDataByGuid = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const EntityOwnerData_1 = require("../Config/EntityOwnerData");
-const DB = "db_entityownerdata.db";
-const FILE = "UniverseEditor/EntityOwnerConfig/EntityOwner.csv";
-const TABLE = "EntityOwnerData";
-const COMMAND = "select BinData from `EntityOwnerData` where Guid=?";
-const KEY_PREFIX = "EntityOwnerDataByGuid";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  EntityOwnerData_1 = require("../Config/EntityOwnerData"),
+  DB = "db_entityownerdata.db",
+  FILE = "UniverseEditor/EntityOwnerConfig/EntityOwner.csv",
+  TABLE = "EntityOwnerData",
+  COMMAND = "select BinData from `EntityOwnerData` where Guid=?",
+  KEY_PREFIX = "EntityOwnerDataByGuid",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configEntityOwnerDataByGuid.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configEntityOwnerDataByGuid.GetConfig(";
 exports.configEntityOwnerDataByGuid = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configEntityOwnerDataByGuid = {
       if (
         (t =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, n, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Guid",
-            n,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Guid",
+              n,
+            ]))
       ) {
-        var t;
-        var i = void 0;
+        var t,
+          i = void 0;
         if (
           (([t, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configEntityOwnerDataByGuid = {
     }
   },
 };
-// # sourceMappingURL=EntityOwnerDataByGuid.js.map
+//# sourceMappingURL=EntityOwnerDataByGuid.js.map

@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MiniMap = void 0);
-const UE = require("ue");
-const Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const BattleUiDefine_1 = require("../../../BattleUi/BattleUiDefine");
-const TaskMarkItem_1 = require("../../Marks/MarkItem/TaskMarkItem");
-const MapMarkMgr_1 = require("./Assistant/MapMarkMgr");
-const MapTileMgr_1 = require("./Assistant/MapTileMgr");
+const UE = require("ue"),
+  Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  BattleUiDefine_1 = require("../../../BattleUi/BattleUiDefine"),
+  TaskMarkItem_1 = require("../../Marks/MarkItem/TaskMarkItem"),
+  MapMarkMgr_1 = require("./Assistant/MapMarkMgr"),
+  MapTileMgr_1 = require("./Assistant/MapTileMgr");
 class MiniMap extends UiPanelBase_1.UiPanelBase {
   constructor(t, e, i, s = 1, r) {
     super(),
@@ -57,12 +57,12 @@ class MiniMap extends UiPanelBase_1.UiPanelBase {
       this.RootItem.SetHierarchyIndex(0);
   }
   FXt(t) {
-    const e = this.GetItem(0);
-    const i = this.GetItem(1);
-    const s = this.GetTexture(2);
-    const r = this.GetItem(3);
-    const a = this.GetTexture(4);
-    const n = this.GetItem(5);
+    var e = this.GetItem(0),
+      i = this.GetItem(1),
+      s = this.GetTexture(2),
+      r = this.GetItem(3),
+      a = this.GetTexture(4),
+      n = this.GetItem(5);
     (this.CUi = new MapMarkMgr_1.MapMarkMgr(this.MapType, e, this.I_t, t)),
       this.CUi.Initialize(),
       (this.gUi = new MapTileMgr_1.MapTileMgr(
@@ -100,7 +100,7 @@ class MiniMap extends UiPanelBase_1.UiPanelBase {
       t,
       (e) => {
         e.LogicUpdate(t), (e.IsInAoiRange = !0), e.ViewUpdate(t);
-        let i = e.UiPosition;
+        var i = e.UiPosition;
         if (i) {
           const s = Vector2D_1.Vector2D.Create(i.X, i.Y);
           if (e.IsTracked) {
@@ -140,4 +140,4 @@ class MiniMap extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.MiniMap = MiniMap;
-// # sourceMappingURL=MiniMap.js.map
+//# sourceMappingURL=MiniMap.js.map

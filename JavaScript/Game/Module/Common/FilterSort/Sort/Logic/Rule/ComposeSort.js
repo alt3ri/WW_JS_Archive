@@ -11,7 +11,7 @@ class ComposeSort extends CommonSort_1.CommonSort {
           : 0;
       }),
       (this.XLt = (t, o, r) => {
-        let s;
+        var s;
         return o.IsUnlock !== t.IsUnlock
           ? ((s = o.IsUnlock - t.IsUnlock), r ? s : -s)
           : o.IsCompose !== t.IsCompose
@@ -19,7 +19,7 @@ class ComposeSort extends CommonSort_1.CommonSort {
             : 0;
       }),
       (this.VLt = (t, o, r) => {
-        let s;
+        var s;
         return o.IsUnlock !== t.IsUnlock
           ? ((s = o.IsUnlock - t.IsUnlock), r ? s : -s)
           : t.Quality !== o.Quality
@@ -34,4 +34,4 @@ class ComposeSort extends CommonSort_1.CommonSort {
   }
 }
 exports.ComposeSort = ComposeSort;
-// # sourceMappingURL=ComposeSort.js.map
+//# sourceMappingURL=ComposeSort.js.map

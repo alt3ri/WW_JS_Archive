@@ -6,10 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.LoginLogEvent =
     exports.HotPatchLog =
       void 0);
-const UE = require("ue");
-const BaseConfigController_1 = require("./BaseConfig/BaseConfigController");
-const NetworkDefine_1 = require("./NetworkDefine");
-const ThinkDataLaunchReporter_1 = require("./ThinkDataReport/ThinkDataLaunchReporter");
+const UE = require("ue"),
+  BaseConfigController_1 = require("./BaseConfig/BaseConfigController"),
+  NetworkDefine_1 = require("./NetworkDefine"),
+  ThinkDataLaunchReporter_1 = require("./ThinkDataReport/ThinkDataLaunchReporter");
 class HotPatchLog {
   constructor() {
     (this.event_id = "2"),
@@ -46,11 +46,11 @@ class LoginLogEventDefine {}
 class HotPatchLogReport {
   static set World(t) {
     HotPatchLogReport.HSr = t;
-    let o;
-    var t = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
-      t,
-      UE.KuroPlayerPrefsSystem.StaticClass(),
-    );
+    var o,
+      t = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
+        t,
+        UE.KuroPlayerPrefsSystem.StaticClass(),
+      );
     t?.IsValid() &&
       ((o = t.GetString(
         "LoginDeviceId",
@@ -67,18 +67,18 @@ class HotPatchLogReport {
   }
   static Init() {}
   static WSr() {
-    let t;
-    return HotPatchLogReport.rxi === "Android" ||
-      HotPatchLogReport.rxi === "IOS"
+    var t;
+    return "Android" === HotPatchLogReport.rxi ||
+      "IOS" === HotPatchLogReport.rxi
       ? (t = UE.KuroLauncherLibrary.GetNetworkConnectionType()) ===
         NetworkDefine_1.ENetworkType.WiFi
         ? "Wifi"
         : t === NetworkDefine_1.ENetworkType.Cell
           ? "Stream"
           : "Other"
-      : HotPatchLogReport.rxi === "Windows" ||
-          HotPatchLogReport.rxi === "Mac" ||
-          HotPatchLogReport.rxi === "Linux"
+      : "Windows" === HotPatchLogReport.rxi ||
+          "Mac" === HotPatchLogReport.rxi ||
+          "Linux" === HotPatchLogReport.rxi
         ? "Wired"
         : "Other";
   }
@@ -97,7 +97,7 @@ class HotPatchLogReport {
       ));
   }
   static ReportLogin(t, o) {
-    const e = new LoginLogEvent();
+    var e = new LoginLogEvent();
     (e.i_step_id = t.toString()),
       (e.s_step_result = o),
       (e.f_time = UE.GameplayStatics.GetTimeSeconds(
@@ -114,7 +114,7 @@ class HotPatchLogReport {
       );
   }
   static ReportAppLinksEvent(t, o) {
-    const e = new AppLinksLog();
+    var e = new AppLinksLog();
     (e.s_step_id = "launch_by_deeplink"),
       (e.s_deepvalue = t),
       (e.s_source = o),
@@ -134,4 +134,4 @@ class HotPatchLogReport {
   (HotPatchLogReport.Qre = void 0),
   (HotPatchLogReport.rxi = void 0),
   (HotPatchLogReport.HSr = void 0);
-// # sourceMappingURL=HotPatchLogReport.js.map
+//# sourceMappingURL=HotPatchLogReport.js.map

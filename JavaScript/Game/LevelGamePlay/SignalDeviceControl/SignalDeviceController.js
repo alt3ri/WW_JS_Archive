@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SignalDeviceController = void 0);
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
+const IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager");
 class SignalDeviceController extends UiControllerBase_1.UiControllerBase {
   static OpenGameplay(e, a) {
     ModelManager_1.ModelManager.SignalDeviceModel.InitData(e),
@@ -31,4 +31,4 @@ class SignalDeviceController extends UiControllerBase_1.UiControllerBase {
   }
 }
 (exports.SignalDeviceController = SignalDeviceController).HDe = void 0;
-// # sourceMappingURL=SignalDeviceController.js.map
+//# sourceMappingURL=SignalDeviceController.js.map

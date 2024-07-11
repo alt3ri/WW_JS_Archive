@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OpenSystemConfrimBox = void 0);
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const ConfirmBoxController_1 = require("../../../Module/ConfirmBox/ConfirmBoxController");
-const ConfirmBoxDefine_1 = require("../../../Module/ConfirmBox/ConfirmBoxDefine");
-const OpenSystemBase_1 = require("./OpenSystemBase");
+const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  ConfirmBoxController_1 = require("../../../Module/ConfirmBox/ConfirmBoxController"),
+  ConfirmBoxDefine_1 = require("../../../Module/ConfirmBox/ConfirmBoxDefine"),
+  OpenSystemBase_1 = require("./OpenSystemBase");
 class OpenSystemConfrimBox extends OpenSystemBase_1.OpenSystemBase {
   async ExecuteOpenView(e, o) {
     if (!e) return !0;
@@ -21,4 +21,4 @@ class OpenSystemConfrimBox extends OpenSystemBase_1.OpenSystemBase {
   }
 }
 exports.OpenSystemConfrimBox = OpenSystemConfrimBox;
-// # sourceMappingURL=OpenSystemConfrimBox.js.map
+//# sourceMappingURL=OpenSystemConfrimBox.js.map

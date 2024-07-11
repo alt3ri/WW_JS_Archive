@@ -1,27 +1,27 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelNiagaraSpec = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const Stats_1 = require("../../../Core/Common/Stats");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EffectEnvironment_1 = require("../../../Core/Effect/EffectEnvironment");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const TickSystem_1 = require("../../../Core/Tick/TickSystem");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../GlobalData");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper");
-const SkeletalMeshEffectContext_1 = require("../EffectContext/SkeletalMeshEffectContext");
-const EffectSystem_1 = require("../EffectSystem");
-const EffectSpec_1 = require("./EffectSpec");
-const NEAR_ZERO = 0.001;
-const niagaraCharBodyOpacityParameterName = new UE.FName("BodyOpacity");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EffectEnvironment_1 = require("../../../Core/Effect/EffectEnvironment"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  TickSystem_1 = require("../../../Core/Tick/TickSystem"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../GlobalData"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper"),
+  SkeletalMeshEffectContext_1 = require("../EffectContext/SkeletalMeshEffectContext"),
+  EffectSystem_1 = require("../EffectSystem"),
+  EffectSpec_1 = require("./EffectSpec"),
+  NEAR_ZERO = 0.001,
+  niagaraCharBodyOpacityParameterName = new UE.FName("BodyOpacity");
 class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
   constructor() {
     super(...arguments),
@@ -43,23 +43,23 @@ class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
   SetEffectParameterNiagara(t) {
     if (this.IsPlaying() && this.T0e) {
       if (t.UserParameterFloat)
-        for (const [e, i] of t.UserParameterFloat)
+        for (var [e, i] of t.UserParameterFloat)
           this.T0e.SetFloatParameter(e, i);
       if (t.UserParameterColor)
-        for (const [a, s] of t.UserParameterColor)
+        for (var [a, s] of t.UserParameterColor)
           this.T0e.SetColorParameter(a, s);
       if (t.UserParameterVector)
-        for (const [r, h] of t.UserParameterVector)
+        for (var [r, h] of t.UserParameterVector)
           this.T0e.SetVectorParameter(r, h);
       if (t.MaterialParameterFloat)
-        for (const [o, f] of t.MaterialParameterFloat)
+        for (var [o, f] of t.MaterialParameterFloat)
           this.T0e.SetKuroNiagaraEmitterFloatParam(
             EffectModelNiagaraSpec.NoneEmitterString,
             o.toString(),
             f,
           );
       if (t.MaterialParameterColor)
-        for (const [c, E] of t.MaterialParameterColor)
+        for (var [c, E] of t.MaterialParameterColor)
           this.T0e.SetKuroNiagaraEmitterVectorParam(
             EffectModelNiagaraSpec.NoneEmitterString,
             c.toString(),
@@ -71,7 +71,7 @@ class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
     (this.ExtraState = t), (this.D0e = !0);
   }
   OnInit() {
-    let t = this.Handle.GetContext();
+    var t = this.Handle.GetContext();
     if (!(t && 1 & t.PlayFlag)) {
       !this.L0e &&
         this.EffectModel.NiagaraRef &&
@@ -85,25 +85,25 @@ class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
         (EffectModelNiagaraSpec.q0e = void 0),
         (EffectModelNiagaraSpec.E0e = void 0),
         (EffectModelNiagaraSpec.G0e = void 0));
-      const e = this.Handle.GetSureEffectActor();
-      var i = this.Handle.Parent;
-      var i = i
-        ? i.GetEffectSpec()?.GetSceneComponent()
-        : e.K2_GetRootComponent();
-      const a = EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
-        e,
-        UE.NiagaraComponent.StaticClass(),
-        i,
-        void 0,
-        !0,
-        this.EffectModel,
-      );
+      var e = this.Handle.GetSureEffectActor(),
+        i = this.Handle.Parent,
+        i = i
+          ? i.GetEffectSpec()?.GetSceneComponent()
+          : e.K2_GetRootComponent(),
+        a = EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
+          e,
+          UE.NiagaraComponent.StaticClass(),
+          i,
+          void 0,
+          !0,
+          this.EffectModel,
+        );
       (this.SceneComponent = a),
         (this.T0e = a),
         (this.t0e = this.T0e.IsComponentTickEnabled()),
         UE.KuroEffectLibrary.InitModelNiagaraSpec(
           this.T0e,
-          this.GetEffectType() === 1,
+          1 === this.GetEffectType(),
           this.EffectModel.ReceiveDecal,
           this.EffectModel.TranslucencySortPriority,
         ),
@@ -132,7 +132,7 @@ class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
         this.Handle?.IsPreview ||
         TickSystem_1.TickSystem.IsPaused ||
         (this.LifeTime.IsAfterStart &&
-          this.P0e > 0 &&
+          0 < this.P0e &&
           ((this.P0e -= t), this.P0e <= 0) &&
           (this.HasBounds()
             ? this.Handle?.GetSureEffectActor()?.WasRecentlyRenderedOnScreen() ||
@@ -151,12 +151,12 @@ class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
     );
   }
   k0e(t) {
-    let e;
+    var e;
     TickSystem_1.TickSystem.IsPaused ||
-    (e = this.GetTimeScale() * this.GetGlobalTimeScale()) == 0
+    0 == (e = this.GetTimeScale() * this.GetGlobalTimeScale())
       ? this.F0e(!0)
       : (this.F0e(!1),
-        e != 1 && UE.KuroEffectLibrary.SetNiagaraFrameDeltaTime(this.T0e, t));
+        1 != e && UE.KuroEffectLibrary.SetNiagaraFrameDeltaTime(this.T0e, t));
   }
   UpdateParameter(t) {
     UE.KuroEffectLibrary.UpdateEffectModelNiagaraSpec(
@@ -179,7 +179,7 @@ class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
   }
   GetSkeletalMeshComp() {
     let t = void 0;
-    let e = this.Handle?.GetContext();
+    var e = this.Handle?.GetContext();
     return (
       e &&
         (e instanceof SkeletalMeshEffectContext_1.SkeletalMeshEffectContext
@@ -224,7 +224,7 @@ class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
     return this.T0e && EffectModelNiagaraSpec.K0e.set(this.T0e, this), !0;
   }
   OnPlay(t) {
-    let e;
+    var e;
     (this.IsEffectFinish = !1),
       this.L0e &&
         this.T0e?.IsValid() &&
@@ -321,7 +321,7 @@ class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
       : 0;
   }
   static IsNeedQualityBias(t) {
-    let e;
+    var e;
     return (
       !!t &&
       !(
@@ -343,7 +343,7 @@ class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
   }
   OnEffectTypeChange() {
     this.T0e?.IsValid() &&
-      this.T0e.SetIsUIScenePrimitive(this.GetEffectType() === 1);
+      this.T0e.SetIsUIScenePrimitive(1 === this.GetEffectType());
   }
 }
 (exports.EffectModelNiagaraSpec = EffectModelNiagaraSpec),
@@ -373,4 +373,4 @@ class EffectModelNiagaraSpec extends EffectSpec_1.EffectSpec {
           _a.Q0e,
         ]);
   });
-// # sourceMappingURL=EffectModelNiagaraSpec.js.map
+//# sourceMappingURL=EffectModelNiagaraSpec.js.map

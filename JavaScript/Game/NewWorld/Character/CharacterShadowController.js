@@ -1,18 +1,18 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterShadowController = void 0);
-const cpp_1 = require("cpp");
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const TickSystem_1 = require("../../../Core/Tick/TickSystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TickSystem_1 = require("../../../Core/Tick/TickSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class CharacterShadowController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return this.IWo(), this.OnAddEvents(), (this.sBn = new Date()), !0;
@@ -49,16 +49,16 @@ class CharacterShadowController extends ControllerBase_1.ControllerBase {
       );
   }
   static IWo() {
-    const e = GameQualitySettingsManager_1.GameQualitySettingsManager.Get();
+    var e = GameQualitySettingsManager_1.GameQualitySettingsManager.Get();
     (this.LWo = e.GetMaxRoleShadowDistance()),
       (this.DWo = e.GetMaxRoleShadowNum()),
       (this.RWo = e.GetMaxDecalShadowDistance()),
-      (this.UWo = e.IsMainPlayerUseRealRoleShadow() !== 0);
+      (this.UWo = 0 !== e.IsMainPlayerUseRealRoleShadow());
   }
   static async hBn() {
-    let e;
-    let t = new Date();
-    (t.getTime() - this.sBn.getTime()) / 1e3 / 60 >= 3 &&
+    var e,
+      t = new Date();
+    3 <= (t.getTime() - this.sBn.getTime()) / 1e3 / 60 &&
       ((this.sBn = t),
       (t = UE.Guid.NewGuid()),
       cpp_1.KuroCharacterShadowLibrary.Set(t),
@@ -73,10 +73,10 @@ class CharacterShadowController extends ControllerBase_1.ControllerBase {
       !TickSystem_1.TickSystem.IsPaused &&
         !ModelManager_1.ModelManager.PlotModel.IsInPlot)
     ) {
-      let t;
-      let r;
-      const a = new Set();
-      if (this.LWo > 0 && this.DWo > 0) {
+      var t,
+        r,
+        a = new Set();
+      if (0 < this.LWo && 0 < this.DWo) {
         ModelManager_1.ModelManager.CreatureModel.GetEntitiesInRange(
           this.LWo,
           2,
@@ -85,7 +85,7 @@ class CharacterShadowController extends ControllerBase_1.ControllerBase {
         let e = 0;
         for (const i of this.AWo)
           if (i.Valid) {
-            const o = i.Entity.GetComponent(2);
+            var o = i.Entity.GetComponent(2);
             if (
               (o &&
                 o.Actor &&
@@ -169,10 +169,10 @@ class CharacterShadowController extends ControllerBase_1.ControllerBase {
     _a.IWo();
   }),
   (CharacterShadowController.GUe = (e, t, r) => {
-    const a = t.Entity?.GetComponent(0);
+    var a = t.Entity?.GetComponent(0);
     a &&
       a.IsCharacter() &&
-      (a.IsRole() || a.GetSummonerPlayerId() !== 0 || a.IsVision()
+      (a.IsRole() || 0 !== a.GetSummonerPlayerId() || a.IsVision()
         ? _a.wWo
         : _a.xWo
       ).add(t);
@@ -180,4 +180,4 @@ class CharacterShadowController extends ControllerBase_1.ControllerBase {
   (CharacterShadowController.zpe = (e, t) => {
     _a.xWo.delete(t);
   });
-// # sourceMappingURL=CharacterShadowController.js.map
+//# sourceMappingURL=CharacterShadowController.js.map

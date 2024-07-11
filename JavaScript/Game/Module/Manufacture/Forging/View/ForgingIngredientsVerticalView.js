@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ForgingIngredientsVerticalView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const AttributeItem_1 = require("../../../Common/AttributeItem");
-const MediumItemGrid_1 = require("../../../Common/MediumItemGrid/MediumItemGrid");
-const NumberSelectComponent_1 = require("../../../Common/NumberSelect/NumberSelectComponent");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const GenericScrollViewNew_1 = require("../../../Util/ScrollView/GenericScrollViewNew");
-const CommonManager_1 = require("../../Common/CommonManager");
-const ManufactureMaterialItem_1 = require("../../Common/Item/ManufactureMaterialItem");
-const ComposeController_1 = require("../../Compose/ComposeController");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  AttributeItem_1 = require("../../../Common/AttributeItem"),
+  MediumItemGrid_1 = require("../../../Common/MediumItemGrid/MediumItemGrid"),
+  NumberSelectComponent_1 = require("../../../Common/NumberSelect/NumberSelectComponent"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  GenericScrollViewNew_1 = require("../../../Util/ScrollView/GenericScrollViewNew"),
+  CommonManager_1 = require("../../Common/CommonManager"),
+  ManufactureMaterialItem_1 = require("../../Common/Item/ManufactureMaterialItem"),
+  ComposeController_1 = require("../../Compose/ComposeController");
 class ProficiencyView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -43,8 +43,8 @@ class ProficiencyView extends UiPanelBase_1.UiPanelBase {
     this.GetText(0).SetUIActive(t);
   }
   SetExpNum(t, e, i, s) {
-    var i = e * i;
-    var t = t * e;
+    var i = e * i,
+      t = t * e;
     t !== i
       ? ((e = StringUtils_1.StringUtils.Format(
           ConfigManager_1.ConfigManager.TextConfig.GetTextById(
@@ -64,7 +64,7 @@ class ProficiencyView extends UiPanelBase_1.UiPanelBase {
       : LguiUtil_1.LguiUtil.SetLocalText(this.GetText(0), "Proficiency");
   }
   SetRoleTexture(t) {
-    const e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(t);
+    var e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(t);
     this.SetRoleIcon(
       e.GetRoleConfig().RoleHeadIconLarge,
       this.GetTexture(1),
@@ -80,7 +80,7 @@ class StarItem extends UiPanelBase_1.UiPanelBase {
       (this.DisplayIndex = 0);
   }
   Refresh(t, e, i) {
-    t === 0
+    0 === t
       ? (this.GetSprite(0).SetUIActive(!0), this.GetSprite(1).SetUIActive(!1))
       : (this.GetSprite(0).SetUIActive(!1), this.GetSprite(1).SetUIActive(!0));
   }
@@ -152,26 +152,25 @@ class WeaponAttributeView extends UiPanelBase_1.UiPanelBase {
         this.GetHorizontalLayout(3),
         this.sAt,
       ));
-    const e = this.cTi.GetRootUiItem().GetAttachUIChildren();
+    var e = this.cTi.GetRootUiItem().GetAttachUIChildren();
     for (let t = 0; t < e.Num(); t++) e.Get(t).SetUIActive(!1);
   }
   gTi() {
-    const t =
-      ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponResonanceConfig(
-        this._Ti.ResonId,
-        1,
-      );
+    var t = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponResonanceConfig(
+      this._Ti.ResonId,
+      1,
+    );
     t && this.GetText(1).ShowTextNew(t.Name);
   }
   aqe() {
     var t = ModelManager_1.ModelManager.WeaponModel.GetWeaponBreachMaxLevel(
-      this._Ti.BreachId,
-    );
-    var t = new Array(t);
+        this._Ti.BreachId,
+      ),
+      t = new Array(t);
     this.cTi.RefreshByData(t);
   }
   fTi() {
-    const t = this.uTi.LevelLimit;
+    var t = this.uTi.LevelLimit;
     LguiUtil_1.LguiUtil.SetLocalText(
       this.GetText(2),
       "ForgingWeaponLevel",
@@ -182,23 +181,23 @@ class WeaponAttributeView extends UiPanelBase_1.UiPanelBase {
   pTi() {
     this.mTi.UpdateParam(this._Ti.FirstPropId.Id, this._Ti.FirstPropId.IsRatio);
     var t = ModelManager_1.ModelManager.WeaponModel.GetCurveValue(
-      this._Ti.FirstCurve,
-      this._Ti.FirstPropId.Value,
-      this.w0t,
-      this.CTi,
-    );
-    var t =
-      (this.mTi.SetCurrentValue(t),
-      this.dTi.UpdateParam(
-        this._Ti.SecondPropId.Id,
-        this._Ti.SecondPropId.IsRatio,
-      ),
-      ModelManager_1.ModelManager.WeaponModel.GetCurveValue(
-        this._Ti.SecondCurve,
-        this._Ti.SecondPropId.Value,
+        this._Ti.FirstCurve,
+        this._Ti.FirstPropId.Value,
         this.w0t,
         this.CTi,
-      ));
+      ),
+      t =
+        (this.mTi.SetCurrentValue(t),
+        this.dTi.UpdateParam(
+          this._Ti.SecondPropId.Id,
+          this._Ti.SecondPropId.IsRatio,
+        ),
+        ModelManager_1.ModelManager.WeaponModel.GetCurveValue(
+          this._Ti.SecondCurve,
+          this._Ti.SecondPropId.Value,
+          this.w0t,
+          this.CTi,
+        ));
     this.dTi.SetCurrentValue(t),
       LguiUtil_1.LguiUtil.SetLocalText(
         this.GetText(0),
@@ -249,7 +248,7 @@ class SvInfo extends UiPanelBase_1.UiPanelBase {
     this.vTi.SetActive(!0);
   }
   SetTypeName(t = void 0) {
-    const e = this.GetText(0);
+    var e = this.GetText(0);
     t ? (e.SetUIActive(!0), e.SetText(t)) : e.SetUIActive(!1);
   }
   SetTypeNameVisible(t) {
@@ -288,7 +287,7 @@ class ForgingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
         this.vIi && this.vIi();
       }),
       (this.Eqt = () => {
-        const t = new ManufactureMaterialItem_1.ManufactureMaterialItem();
+        var t = new ManufactureMaterialItem_1.ManufactureMaterialItem();
         return (
           t.BindOnCanExecuteChange(() => !1),
           t.BindOnExtendToggleClicked((t) => {
@@ -364,10 +363,10 @@ class ForgingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
           t,
         );
       });
-    var t = this.GetItem(8);
-    var t =
-      ((this.WGe = new NumberSelectComponent_1.NumberSelectComponent(t)),
-      { MaxNumber: 0, ValueChangeFunction: this.yqt });
+    var t = this.GetItem(8),
+      t =
+        ((this.WGe = new NumberSelectComponent_1.NumberSelectComponent(t)),
+        { MaxNumber: 0, ValueChangeFunction: this.yqt });
     this.WGe.Init(t),
       this.WGe.SetNumberSelectTipsVisible(!1),
       (this.fqt.ChangeRoleClickDelegate = this._9e),
@@ -382,38 +381,38 @@ class ForgingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
   }
   Iqt() {
     this.Tqt(this.vqt, this.Mqt * this.t6);
-    const t = this.pqt?.GetScrollItemList();
+    var t = this.pqt?.GetScrollItemList();
     if (t) for (const e of t) e.SetTimes(this.t6);
   }
   eOt(t) {
     (this.dqt = t), (this.t6 = 1);
-    var e = CommonManager_1.CommonManager.GetMaxCreateCount(this.dqt.ItemId);
-    var e =
-      (this.WGe.Refresh(e),
-      this.fqt.SetDescVisible(!0),
-      this.fqt.SetDescBgVisible(!1),
-      ConfigManager_1.ConfigManager.ForgingConfig.GetForgeFormulaById(
-        t.ItemId,
-      ));
-    var t = ConfigManager_1.ConfigManager.InventoryConfig.GetWeaponItemConfig(
-      e.ItemId,
-    );
-    var i = ModelManager_1.ModelManager.WeaponModel.GetWeaponConfigDescParams(
-      t,
-      1,
-    );
-    var t = StringUtils_1.StringUtils.Format(
-      MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.Desc),
-      ...i,
-    );
-    var i = StringUtils_1.StringUtils.IsEmpty(e.Background)
-      ? ""
-      : ConfigManager_1.ConfigManager.CookConfig.GetLocalText(e.Background);
+    var e = CommonManager_1.CommonManager.GetMaxCreateCount(this.dqt.ItemId),
+      e =
+        (this.WGe.Refresh(e),
+        this.fqt.SetDescVisible(!0),
+        this.fqt.SetDescBgVisible(!1),
+        ConfigManager_1.ConfigManager.ForgingConfig.GetForgeFormulaById(
+          t.ItemId,
+        )),
+      t = ConfigManager_1.ConfigManager.InventoryConfig.GetWeaponItemConfig(
+        e.ItemId,
+      ),
+      i = ModelManager_1.ModelManager.WeaponModel.GetWeaponConfigDescParams(
+        t,
+        1,
+      ),
+      t = StringUtils_1.StringUtils.Format(
+        MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.Desc),
+        ...i,
+      ),
+      i = StringUtils_1.StringUtils.IsEmpty(e.Background)
+        ? ""
+        : ConfigManager_1.ConfigManager.CookConfig.GetLocalText(e.Background);
     this.fqt.SetDesc(t), this.fqt.SetDescBg(i), this.mqt.SetExpNumVisible(!1);
   }
   Uqt(t) {
-    let e = !1;
-    let i = 0;
+    let e = !1,
+      i = 0;
     t = t.filter(
       (t) =>
         t.G3n !== ComposeController_1.ComposeController.ComposeCoinId ||
@@ -422,7 +421,7 @@ class ForgingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
     return [e, i, t];
   }
   MTi() {
-    let t, e;
+    var t, e;
     this.dqt.IsUnlock
       ? (this.GetItem(20).SetUIActive(!1),
         this.GetItem(18).SetUIActive(!0),
@@ -460,7 +459,7 @@ class ForgingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
     );
   }
   kqn() {
-    const t = CommonManager_1.CommonManager.GetCurrentRoleId();
+    var t = CommonManager_1.CommonManager.GetCurrentRoleId();
     t && this.mqt.SetRoleTexture(t);
   }
   EIi(e) {
@@ -490,10 +489,10 @@ class ForgingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
     if (e.TotalMakeCountInLimitTime <= 0)
       this.GetItem(3).SetUIActive(!1), this.WGe.ResetLimitMaxValue();
     else {
-      const i = e.TotalMakeCountInLimitTime - e.MadeCountInLimitTime;
+      var i = e.TotalMakeCountInLimitTime - e.MadeCountInLimitTime;
       this.WGe.SetLimitMaxValue(Math.max(1, i));
       let t = i.toString();
-      i === 0 &&
+      0 === i &&
         (t = StringUtils_1.StringUtils.Format(
           "<color=#c25757>{0}</color>",
           i.toString(),
@@ -508,7 +507,7 @@ class ForgingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
     }
   }
   Tqt(t, e) {
-    let i;
+    var i;
     this.GetText(12).GetParentAsUIItem().SetUIActive(t),
       t &&
         ((t = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
@@ -548,4 +547,4 @@ class ForgingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ForgingIngredientsVerticalView = ForgingIngredientsVerticalView;
-// # sourceMappingURL=ForgingIngredientsVerticalView.js.map
+//# sourceMappingURL=ForgingIngredientsVerticalView.js.map

@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configCustomSequenceLang = void 0);
-const LanguageSystem_1 = require("../../Common/LanguageSystem");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const DeserializeConfig_1 = require("../../Config/DeserializeConfig");
-const StringUtils_1 = require("../../Utils/StringUtils");
-const CommonDefine_1 = require("../CommonDefine");
-const TEXTNOTFOUNT = "text not found";
-const DB = "lang_custom_sequence.db";
-const TABLE = "CustomSequence";
-const COMMAND = "select content from `CustomSequence` where id = ?";
-const logPair = [
-  ["数据库", DB],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
-const langCache = new Map();
-const initStat = void 0;
-const getLocalTextStat = void 0;
-const LOCAL_TEXT_STAT_PREFIX = "configCustomSequenceLang.GetLocalText(";
+const LanguageSystem_1 = require("../../Common/LanguageSystem"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  DeserializeConfig_1 = require("../../Config/DeserializeConfig"),
+  StringUtils_1 = require("../../Utils/StringUtils"),
+  CommonDefine_1 = require("../CommonDefine"),
+  TEXTNOTFOUNT = "text not found",
+  DB = "lang_custom_sequence.db",
+  TABLE = "CustomSequence",
+  COMMAND = "select content from `CustomSequence` where id = ?",
+  logPair = [
+    ["数据库", DB],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ],
+  langCache = new Map(),
+  initStat = void 0,
+  getLocalTextStat = void 0,
+  LOCAL_TEXT_STAT_PREFIX = "configCustomSequenceLang.GetLocalText(";
 exports.configCustomSequenceLang = {
   Init: () => {
     ConfigCommon_1.ConfigCommon.GetLangStatementId(TABLE, DB, COMMAND);
@@ -35,7 +35,7 @@ exports.configCustomSequenceLang = {
     var i = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(o);
     let t = n.get(i);
     if (t) return t;
-    const m = ConfigCommon_1.ConfigCommon.GetLangStatementId(
+    var m = ConfigCommon_1.ConfigCommon.GetLangStatementId(
       TABLE,
       DB,
       COMMAND,
@@ -45,16 +45,17 @@ exports.configCustomSequenceLang = {
       (g =
         ConfigCommon_1.ConfigCommon.CheckStatement(m) &&
         ConfigCommon_1.ConfigCommon.BindInt(m, 1, e, ...logPair, ["Id", e]) &&
-        ConfigCommon_1.ConfigCommon.Step(
-          m,
-          !0,
-          ...logPair,
-          ["传入语言", o],
-          ["查询语言", i],
-          ["文本Id", e],
-        ) > 0)
+        0 <
+          ConfigCommon_1.ConfigCommon.Step(
+            m,
+            !0,
+            ...logPair,
+            ["传入语言", o],
+            ["查询语言", i],
+            ["文本Id", e],
+          ))
     ) {
-      let C = void 0;
+      var C = void 0;
       if (
         (([g, C] = ConfigCommon_1.ConfigCommon.GetValue(
           m,
@@ -96,4 +97,4 @@ exports.configCustomSequenceLang = {
     ConfigCommon_1.ConfigCommon.Reset(m);
   },
 };
-// # sourceMappingURL=CustomSequenceLang.js.map
+//# sourceMappingURL=CustomSequenceLang.js.map

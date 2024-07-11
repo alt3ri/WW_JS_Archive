@@ -67,34 +67,30 @@ function isAVector(value) {
 }
 exports.isAVector = isAVector;
 function toTypedVector(valueType, length) {
-  if (length === 0) {
+  if (length === 0)
     return (
       valueType -
       value_type_js_1.ValueType.INT +
       value_type_js_1.ValueType.VECTOR_INT
     );
-  }
-  if (length === 2) {
+  if (length === 2)
     return (
       valueType -
       value_type_js_1.ValueType.INT +
       value_type_js_1.ValueType.VECTOR_INT2
     );
-  }
-  if (length === 3) {
+  if (length === 3)
     return (
       valueType -
       value_type_js_1.ValueType.INT +
       value_type_js_1.ValueType.VECTOR_INT3
     );
-  }
-  if (length === 4) {
+  if (length === 4)
     return (
       valueType -
       value_type_js_1.ValueType.INT +
       value_type_js_1.ValueType.VECTOR_INT4
     );
-  }
   throw "Unexpected length " + length;
 }
 exports.toTypedVector = toTypedVector;

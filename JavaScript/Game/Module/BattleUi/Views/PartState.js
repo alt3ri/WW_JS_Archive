@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PartState = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const Global_1 = require("../../../Global");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const BattleVisibleChildView_1 = require("./BattleChildView/BattleVisibleChildView");
-const HpBufferStateMachine_1 = require("./HeadState/HpBufferStateMachine");
-const PERCENT_TOLERATION = 0.01;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../Global"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  BattleVisibleChildView_1 = require("./BattleChildView/BattleVisibleChildView"),
+  HpBufferStateMachine_1 = require("./HeadState/HpBufferStateMachine"),
+  PERCENT_TOLERATION = 0.01;
 class PartState extends BattleVisibleChildView_1.BattleVisibleChildView {
   constructor(t, i) {
     super(),
@@ -30,10 +30,10 @@ class PartState extends BattleVisibleChildView_1.BattleVisibleChildView {
       (this.Flt = new HpBufferStateMachine_1.HpBufferStateMachine()),
       (this.srt = 0),
       (this.Vut = (t, i) => {
-        const e = this.Nut.Life;
-        this.SetVisible(2, e > 0), this.Hut(!0);
+        var e = this.Nut.Life;
+        this.SetVisible(2, 0 < e), this.Hut(!0);
       });
-    const e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+    var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
       "UiItem_PartState_Prefab",
     );
     this.CreateThenShowByPathAsync(
@@ -127,9 +127,9 @@ class PartState extends BattleVisibleChildView_1.BattleVisibleChildView {
     );
   }
   Hut(t = !1) {
-    let i;
-    let e;
-    let s = this.GetSprite(0);
+    var i,
+      e,
+      s = this.GetSprite(0);
     s &&
       ((i = this.Nut.Life),
       (e = this.Nut.LifeMax),
@@ -139,9 +139,9 @@ class PartState extends BattleVisibleChildView_1.BattleVisibleChildView {
         : (this.Hrt(), (this.Xot = s)));
   }
   rnt(t) {
-    const i = t;
-    const e = this.Xot;
-    const s = this.Flt.IsOriginState();
+    var i = t,
+      e = this.Xot,
+      s = this.Flt.IsOriginState();
     e <= i
       ? s && (this.Xot = t)
       : (this.Flt.GetHit(i, e),
@@ -169,16 +169,16 @@ class PartState extends BattleVisibleChildView_1.BattleVisibleChildView {
     this.Xrt(t);
   }
   Xrt(t) {
-    var i = this.GetSprite(1);
-    var i =
-      (i.SetFillAmount(t),
-      i.IsUIActiveSelf() || i.SetUIActive(!0),
-      this.GetSprite(2));
+    var i = this.GetSprite(1),
+      i =
+        (i.SetFillAmount(t),
+        i.IsUIActiveSelf() || i.SetUIActive(!0),
+        this.GetSprite(2));
     i.SetStretchLeft(this.srt * this.Xot - 2),
       i.SetStretchRight(this.srt * (1 - t) - 2);
   }
   RefreshPosition() {
-    let t, i;
+    var t, i;
     this.kut &&
       (i = UiLayer_1.UiLayer.UiRootItem) &&
       ((t = this.tfe.GetSocketLocation(this.olt)),
@@ -193,12 +193,12 @@ class PartState extends BattleVisibleChildView_1.BattleVisibleChildView {
     this.kut && (this.RefreshPosition(), this.Qut(t));
   }
   Qut(t) {
-    let i;
-    this.Blt === -1 ||
+    var i;
+    -1 === this.Blt ||
       ((i = this.Flt.UpdatePercent(t)) < 0 ? this.Hrt() : this.h1t(i),
       this.xlt >= this.wlt) ||
       (this.Blt = this.Blt + t);
   }
 }
 exports.PartState = PartState;
-// # sourceMappingURL=PartState.js.map
+//# sourceMappingURL=PartState.js.map

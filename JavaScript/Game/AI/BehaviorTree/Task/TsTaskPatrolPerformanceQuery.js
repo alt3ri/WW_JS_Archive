@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const TsAiController_1 = require("../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  TsAiController_1 = require("../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskPatrolPerformanceQuery extends TsTaskAbortImmediatelyBase_1.default {
   ReceiveExecuteAI(e, r) {
-    let o, s, t;
+    var o, s, t;
     e instanceof TsAiController_1.default
       ? (s = e.AiController?.AiPatrol) &&
         ((t = (o = e.AiController.CharActorComp.Entity).GetComponent(17)),
@@ -27,4 +27,4 @@ class TsTaskPatrolPerformanceQuery extends TsTaskAbortImmediatelyBase_1.default 
   }
 }
 exports.default = TsTaskPatrolPerformanceQuery;
-// # sourceMappingURL=TsTaskPatrolPerformanceQuery.js.map
+//# sourceMappingURL=TsTaskPatrolPerformanceQuery.js.map

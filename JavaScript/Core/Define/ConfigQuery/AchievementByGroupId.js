@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configAchievementByGroupId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const Achievement_1 = require("../Config/Achievement");
-const DB = "db_achievement.db";
-const FILE = "c.成就.xlsx";
-const TABLE = "Achievement";
-const COMMAND = "select BinData from `Achievement` where GroupId=?";
-const KEY_PREFIX = "AchievementByGroupId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  Achievement_1 = require("../Config/Achievement"),
+  DB = "db_achievement.db",
+  FILE = "c.成就.xlsx",
+  TABLE = "Achievement",
+  COMMAND = "select BinData from `Achievement` where GroupId=?",
+  KEY_PREFIX = "AchievementByGroupId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX = "configAchievementByGroupId.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configAchievementByGroupId.GetConfigList(";
 exports.configAchievementByGroupId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -29,7 +29,7 @@ exports.configAchievementByGroupId = {
     );
   },
   GetConfigList: (e, o = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -44,13 +44,14 @@ exports.configAchievementByGroupId = {
         const t = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "GroupId",
               e,
-            ]) !== 1
+            ])
           )
             break;
-          let r = void 0;
+          var r = void 0;
           if (
             (([n, r] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -78,4 +79,4 @@ exports.configAchievementByGroupId = {
     }
   },
 };
-// # sourceMappingURL=AchievementByGroupId.js.map
+//# sourceMappingURL=AchievementByGroupId.js.map

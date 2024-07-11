@@ -1,2 +1,2 @@
 "use strict";
-// # sourceMappingURL=PawnInteractComponent.js.map
+//# sourceMappingURL=PawnInteractComponent.js.map

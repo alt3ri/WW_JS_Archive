@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OnlineChallengeApplyView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const OnlineController_1 = require("../OnlineController");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  OnlineController_1 = require("../OnlineController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -25,9 +25,10 @@ class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
           ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
         ) {
           if (
-            ModelManager_1.ModelManager.OnlineModel.GetContinuingChallengeConfirmState(
-              ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
-            ) === 0 &&
+            0 ===
+              ModelManager_1.ModelManager.OnlineModel.GetContinuingChallengeConfirmState(
+                ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
+              ) &&
             ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()
           )
             return void OnlineController_1.OnlineController.InviteRechallengeRequest();
@@ -64,7 +65,7 @@ class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
       ]);
   }
   OnStart() {
-    let e;
+    var e;
     this.GetButton(8).GetRootComponent().SetUIActive(!0),
       (this.Q2t = this.GetText(5)),
       (this.pGi = this.GetSprite(6)),
@@ -87,21 +88,21 @@ class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
           this.pGi.SetFillAmount(this.EGi / this.yGi));
   }
   IGi() {
-    var e = this.GetItem(3);
-    var i = this.GetItem(4);
-    let t = this.GetText(7);
-    var e =
-      (e.SetUIActive(!0),
-      i.SetUIActive(!1),
-      ModelManager_1.ModelManager.SceneTeamModel.IsAllDid()
-        ? ModelManager_1.ModelManager.CreatureModel.IsMyWorld()
-          ? LguiUtil_1.LguiUtil.SetLocalText(t, "SuggestChallengeAgain")
-          : LguiUtil_1.LguiUtil.SetLocalText(t, "InviteChallengeAgain")
-        : ModelManager_1.ModelManager.CreatureModel.IsMyWorld()
-          ? LguiUtil_1.LguiUtil.SetLocalText(t, "SuggestContinueChallenge")
-          : LguiUtil_1.LguiUtil.SetLocalText(t, "InviteContinueChallenge"),
-      ModelManager_1.ModelManager.OnlineModel.ChallengeApplyPlayerId);
-    var i = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(e);
+    var e = this.GetItem(3),
+      i = this.GetItem(4),
+      t = this.GetText(7),
+      e =
+        (e.SetUIActive(!0),
+        i.SetUIActive(!1),
+        ModelManager_1.ModelManager.SceneTeamModel.IsAllDid()
+          ? ModelManager_1.ModelManager.CreatureModel.IsMyWorld()
+            ? LguiUtil_1.LguiUtil.SetLocalText(t, "SuggestChallengeAgain")
+            : LguiUtil_1.LguiUtil.SetLocalText(t, "InviteChallengeAgain")
+          : ModelManager_1.ModelManager.CreatureModel.IsMyWorld()
+            ? LguiUtil_1.LguiUtil.SetLocalText(t, "SuggestContinueChallenge")
+            : LguiUtil_1.LguiUtil.SetLocalText(t, "InviteContinueChallenge"),
+        ModelManager_1.ModelManager.OnlineModel.ChallengeApplyPlayerId),
+      i = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(e);
     i
       ? (this.GetText(1).SetText(i.Name),
         this.Q2t.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.EGi)),
@@ -116,20 +117,20 @@ class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
         ]);
   }
   TGi() {
-    var e = this.GetItem(3);
-    var i = this.GetItem(4);
-    var e = (e.SetUIActive(!0), i.SetUIActive(!1), this.GetText(1));
-    var i =
-      (LguiUtil_1.LguiUtil.SetLocalText(e, "TeamLeaderInviteToInstance"),
-      this.GetText(7));
-    var e = ModelManager_1.ModelManager.InstanceDungeonModel.GetInstanceId();
-    var e =
-      MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
-          .MapName,
-      ) ?? "";
-    var i = (i.SetText(e), ModelManager_1.ModelManager.OnlineModel.OwnerId);
-    var e = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(i);
+    var e = this.GetItem(3),
+      i = this.GetItem(4),
+      e = (e.SetUIActive(!0), i.SetUIActive(!1), this.GetText(1)),
+      i =
+        (LguiUtil_1.LguiUtil.SetLocalText(e, "TeamLeaderInviteToInstance"),
+        this.GetText(7)),
+      e = ModelManager_1.ModelManager.InstanceDungeonModel.GetInstanceId(),
+      e =
+        MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+          ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
+            .MapName,
+        ) ?? "",
+      i = (i.SetText(e), ModelManager_1.ModelManager.OnlineModel.OwnerId),
+      e = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(i);
     e
       ? (this.Q2t.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.EGi)),
         this.pGi.SetFillAmount(this.EGi / this.yGi),
@@ -144,4 +145,4 @@ class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.OnlineChallengeApplyView = OnlineChallengeApplyView;
-// # sourceMappingURL=OnlineChallengeApplyView.js.map
+//# sourceMappingURL=OnlineChallengeApplyView.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiCameraMappingData = void 0);
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const UiCameraAnimationManager_1 = require("../UiCameraAnimationManager");
+const StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  UiCameraAnimationManager_1 = require("../UiCameraAnimationManager");
 class UiCameraMappingData {
   constructor(t, i) {
     (this.WDe = t.ViewName), (this.Lo = t), (this.IsChildView = i);
@@ -11,12 +11,12 @@ class UiCameraMappingData {
     return this.Lo;
   }
   GetSourceHandleName() {
-    let t, i, e;
+    var t, i, e;
     if (this.Lo)
       return (
         (i = this.Lo.BodyTargetType),
         (t = this.Lo.DefaultUiCameraSettingsName),
-        i === 0 ||
+        0 === i ||
         !(i =
           UiCameraAnimationManager_1.UiCameraAnimationManager.GetTargetBodyKey(
             i,
@@ -28,15 +28,15 @@ class UiCameraMappingData {
       );
   }
   CanPushCameraHandle() {
-    let t;
+    var t;
     return (
       !!this.Lo &&
-      (t = this.Lo.DefaultUiCameraSettingsName) !== "None" &&
+      "None" !== (t = this.Lo.DefaultUiCameraSettingsName) &&
       !StringUtils_1.StringUtils.IsEmpty(t)
     );
   }
   GetToBlendName(t) {
-    let i = this.Lo.UiCameraBlendNameMap;
+    var i = this.Lo.UiCameraBlendNameMap;
     return !i || ((i = i.get(t)), StringUtils_1.StringUtils.IsEmpty(i))
       ? this.Lo.DefaultCameraBlendName
       : i;
@@ -49,4 +49,4 @@ class UiCameraMappingData {
   }
 }
 exports.UiCameraMappingData = UiCameraMappingData;
-// # sourceMappingURL=UiCameraMappingData.js.map
+//# sourceMappingURL=UiCameraMappingData.js.map

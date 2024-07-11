@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EnvironmentItem = void 0);
-const UE = require("ue");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ScreenEffectSystem_1 = require("../../../Render/Effect/ScreenEffectSystem/ScreenEffectSystem");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ScreenEffectSystem_1 = require("../../../Render/Effect/ScreenEffectSystem/ScreenEffectSystem"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class EnvironmentItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -52,13 +52,13 @@ class EnvironmentItem extends UiPanelBase_1.UiPanelBase {
             t,
           )),
         (this.Knt = this.knt.WarningPercent);
-      var t = this.knt.IconFrame.AssetPathName?.toString();
-      const i = this.knt.Icon.AssetPathName?.toString();
-      const s = this.knt.IconFull.AssetPathName?.toString();
-      const e = this.knt.SceneEffect.ToAssetPathName();
-      const h = this.GetSprite(1);
-      const r = this.GetSprite(4);
-      const n = this.GetSprite(5);
+      var t = this.knt.IconFrame.AssetPathName?.toString(),
+        i = this.knt.Icon.AssetPathName?.toString(),
+        s = this.knt.IconFull.AssetPathName?.toString(),
+        e = this.knt.SceneEffect.ToAssetPathName(),
+        h = this.GetSprite(1);
+      const r = this.GetSprite(4),
+        n = this.GetSprite(5);
       this.SetSpriteByPath(t, h, !1),
         r?.SetAlpha(0),
         this.SetSpriteByPath(i, r, !1, void 0, () => {
@@ -77,8 +77,8 @@ class EnvironmentItem extends UiPanelBase_1.UiPanelBase {
       s = Math.min(1, Math.max(0, s / e));
       if (this.Snt !== s) {
         (this.Snt = s), this.$nt(!0);
-        let t = 0;
-        let i = -1;
+        let t = 0,
+          i = -1;
         s < this.Knt ? (t = 0) : (i = s < 1 ? ((t = 1), 7) : ((t = 2), 8));
         var e = this.GetSprite(3);
         e.SetFillAmount(s),
@@ -89,17 +89,17 @@ class EnvironmentItem extends UiPanelBase_1.UiPanelBase {
             (s = this.knt.BarColors).Num() > t && e.SetColor(s.Get(t)),
             (e = this.GetSprite(4)),
             (s = this.GetSprite(5)),
-            t === 2
+            2 === t
               ? (e.SetUIActive(!1), s.SetUIActive(!0))
               : (e.SetUIActive(!0), s.SetUIActive(!1))),
           this.Wnt !== i &&
-            (this.Wnt >= 0 && this.Irt(this.Wnt),
-            (this.Wnt = i) >= 0
+            (0 <= this.Wnt && this.Irt(this.Wnt),
+            0 <= (this.Wnt = i)
               ? (this.Ert(this.Wnt),
                 this.GetSprite(2)?.SetAlpha(0),
                 this.GetSprite(2)?.SetUIActive(!0))
               : this.GetSprite(2)?.SetUIActive(!1),
-            t === 2) &&
+            2 === t) &&
             this.Ert(9),
           this.Ynt();
       }
@@ -118,7 +118,7 @@ class EnvironmentItem extends UiPanelBase_1.UiPanelBase {
             this.Vnt,
           ),
           this.Irt(6),
-          this.Wnt >= 0 &&
+          0 <= this.Wnt &&
             (this.Irt(this.Wnt),
             this.GetSprite(2)?.SetUIActive(!1),
             (this.Wnt = -1)),
@@ -153,7 +153,7 @@ class EnvironmentItem extends UiPanelBase_1.UiPanelBase {
       );
   }
   Qnt() {
-    this.jnt > 0 &&
+    0 < this.jnt &&
       (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.jnt),
       (this.jnt = 0)),
       this.Vnt &&
@@ -167,11 +167,11 @@ class EnvironmentItem extends UiPanelBase_1.UiPanelBase {
     super.OnBeforeDestroy(), this.Qnt();
   }
   hnt(t) {
-    const i = [];
-    const s = this.GetItem(t)
-      .GetOwner()
-      .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass());
-    const e = s.Num();
+    var i = [],
+      s = this.GetItem(t)
+        .GetOwner()
+        .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass()),
+      e = s.Num();
     for (let t = 0; t < e; t++) i.push(s.Get(t));
     this.Art || (this.Art = new Map()), this.Art.set(t, i);
   }
@@ -185,4 +185,4 @@ class EnvironmentItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.EnvironmentItem = EnvironmentItem;
-// # sourceMappingURL=EnvironmentItem.js.map
+//# sourceMappingURL=EnvironmentItem.js.map

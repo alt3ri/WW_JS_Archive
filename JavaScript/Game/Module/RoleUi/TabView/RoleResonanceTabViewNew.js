@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleResonanceTabViewNew = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../RedDot/RedDotController");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const RoleController_1 = require("../RoleController");
-const Log_1 = require("../../../../Core/Common/Log");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../RedDot/RedDotController"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  RoleController_1 = require("../RoleController"),
+  Log_1 = require("../../../../Core/Common/Log");
 class RoleResonanceTabViewNew extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -56,20 +56,20 @@ class RoleResonanceTabViewNew extends UiTabViewBase_1.UiTabViewBase {
     this.qIt();
   }
   qIt() {
-    var e = this._do.GetRoleConfig();
-    const t = this.GetText(0);
-    var e =
-      ConfigManager_1.ConfigManager.RoleResonanceConfig.GetRoleResonanceList(
-        e.ResonantChainGroupId,
-      );
-    var e =
-      (t.SetText(
-        this._do.GetResonanceData().GetResonantChainGroupIndex() +
-          "/" +
-          e.length,
-      ),
-      this.GetItem(1).SetUIActive(!this._do.IsTrialRole()),
-      UiManager_1.UiManager.IsViewShow("RoleHandBookRootView"));
+    var e = this._do.GetRoleConfig(),
+      t = this.GetText(0),
+      e =
+        ConfigManager_1.ConfigManager.RoleResonanceConfig.GetRoleResonanceList(
+          e.ResonantChainGroupId,
+        ),
+      e =
+        (t.SetText(
+          this._do.GetResonanceData().GetResonantChainGroupIndex() +
+            "/" +
+            e.length,
+        ),
+        this.GetItem(1).SetUIActive(!this._do.IsTrialRole()),
+        UiManager_1.UiManager.IsViewShow("RoleHandBookRootView"));
     e &&
       t.GetOwner().GetComponentByClass(UE.UIItem.StaticClass()).SetUIActive(!1);
   }
@@ -84,4 +84,4 @@ class RoleResonanceTabViewNew extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.RoleResonanceTabViewNew = RoleResonanceTabViewNew;
-// # sourceMappingURL=RoleResonanceTabViewNew.js.map
+//# sourceMappingURL=RoleResonanceTabViewNew.js.map

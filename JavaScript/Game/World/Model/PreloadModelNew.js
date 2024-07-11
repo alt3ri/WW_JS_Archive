@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PreloadModelNew = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const PreCreateEffect_1 = require("../../Effect/PreCreateEffect");
-const GlobalData_1 = require("../../GlobalData");
-const PreloadDefine_1 = require("../../Preload/PreloadDefine");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  PreCreateEffect_1 = require("../../Effect/PreCreateEffect"),
+  GlobalData_1 = require("../../GlobalData"),
+  PreloadDefine_1 = require("../../Preload/PreloadDefine");
 class PreloadModelNew extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -65,7 +65,7 @@ class PreloadModelNew extends ModelBase_1.ModelBase {
     );
   }
   AddPreloadResource(t) {
-    let e;
+    var e;
     this.PreloadAssetMap.has(t)
       ? ((e = this.PreloadAssetMap.get(t)), this.PreloadAssetMap.set(t, e + 1))
       : this.PreloadAssetMap.set(t, 1);
@@ -74,8 +74,8 @@ class PreloadModelNew extends ModelBase_1.ModelBase {
     if (!this.PreloadAssetMap.has(t)) return !1;
     let e = this.PreloadAssetMap.get(t);
     return (
-      e > 0 && (e--, this.PreloadAssetMap.set(t, e)),
-      e === 0 && this.PreloadAssetMap.delete(t),
+      0 < e && (e--, this.PreloadAssetMap.set(t, e)),
+      0 === e && this.PreloadAssetMap.delete(t),
       !0
     );
   }
@@ -123,4 +123,4 @@ class PreloadModelNew extends ModelBase_1.ModelBase {
   }
 }
 exports.PreloadModelNew = PreloadModelNew;
-// # sourceMappingURL=PreloadModelNew.js.map
+//# sourceMappingURL=PreloadModelNew.js.map

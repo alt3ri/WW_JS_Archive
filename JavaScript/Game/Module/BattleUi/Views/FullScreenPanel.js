@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FullScreenPanel = void 0);
-const puerts_1 = require("puerts");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ScreenEffectSystem_1 = require("../../../Render/Effect/ScreenEffectSystem/ScreenEffectSystem");
-const BattleChildViewPanel_1 = require("./BattleChildViewPanel/BattleChildViewPanel");
-const FullScreenNiagaraItem_1 = require("./FullScreenNiagaraItem");
+const puerts_1 = require("puerts"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ScreenEffectSystem_1 = require("../../../Render/Effect/ScreenEffectSystem/ScreenEffectSystem"),
+  BattleChildViewPanel_1 = require("./BattleChildViewPanel/BattleChildViewPanel"),
+  FullScreenNiagaraItem_1 = require("./FullScreenNiagaraItem");
 class FullScreenPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
@@ -14,12 +14,12 @@ class FullScreenPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.Cat = new Set()),
       (this.gat = void 0),
       (this.fat = (s) => {
-        const e = s.UniqueId;
-        const t = s.NiagaraPath;
+        var e = s.UniqueId,
+          t = s.NiagaraPath;
         this.pat(e, t).then(
           (e) => {
             if (e)
-              for (const [t, i] of s.GetFloatParameterMap())
+              for (var [t, i] of s.GetFloatParameterMap())
                 e.SetNiagaraFloatValue(t, i);
           },
           () => {},
@@ -91,14 +91,14 @@ class FullScreenPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   async pat(e, t) {
     let i = this.Lat(e);
     i || (this.Uat(e), (i = await this.Pat(e)));
-    const s = this.Aat(e);
+    var s = this.Aat(e);
     if ((this.Sat(e), s)) {
       if ((this.dat.set(e, i), await i.LoadNiagara(t), i.GetRootItem()))
         return i.SetVisible(!0), i;
     } else i.Destroy();
   }
   Eat(e) {
-    const t = this.Lat(e);
+    var t = this.Lat(e);
     return !!t && (t.Destroy(), this.dat.delete(e), !0);
   }
   async Pat(e) {
@@ -119,8 +119,8 @@ class FullScreenPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     }
   }
   Dat() {
-    const e = (0, puerts_1.$ref)(void 0);
-    const t = ScreenEffectSystem_1.ScreenEffectSystem.GetInstance();
+    var e = (0, puerts_1.$ref)(void 0),
+      t = ScreenEffectSystem_1.ScreenEffectSystem.GetInstance();
     t?.IsValid() &&
       (t.GetScreenEffectFightRoot(e),
       (this.gat = (0, puerts_1.$unref)(e)),
@@ -131,4 +131,4 @@ class FullScreenPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   }
 }
 exports.FullScreenPanel = FullScreenPanel;
-// # sourceMappingURL=FullScreenPanel.js.map
+//# sourceMappingURL=FullScreenPanel.js.map

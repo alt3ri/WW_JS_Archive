@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CollectItemViewBase = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
 class CollectItemViewBase extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -33,11 +33,11 @@ class CollectItemViewBase extends UiViewBase_1.UiViewBase {
         e === this.CollectItemConfigId && this.OnCollectItemCountChanged(t);
       }),
       (this.$Ge = (e) => {
-        e === "CompositeRewardView" && this.OnCloseRewardView();
+        "CompositeRewardView" === e && this.OnCloseRewardView();
       });
   }
   OnStart() {
-    const e = ModelManager_1.ModelManager.MingSuModel;
+    var e = ModelManager_1.ModelManager.MingSuModel;
     (this.PoolConfigId = e.GetCurrentDragonPoolId()),
       (this.CollectItemConfigId = e.GetCollectItemConfigId()),
       (this.CurrentShowLevel =
@@ -129,4 +129,4 @@ class CollectItemViewBase extends UiViewBase_1.UiViewBase {
   OnCollectItemCountChanged(e) {}
 }
 exports.CollectItemViewBase = CollectItemViewBase;
-// # sourceMappingURL=CollectItemViewBase.js.map
+//# sourceMappingURL=CollectItemViewBase.js.map

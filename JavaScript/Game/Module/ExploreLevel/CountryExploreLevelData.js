@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CountryExploreLevelData = void 0);
-const CountryExploreLevelRewardData_1 = require("./CountryExploreLevelRewardData");
-const CountryExploreScoreData_1 = require("./CountryExploreScoreData");
+const CountryExploreLevelRewardData_1 = require("./CountryExploreLevelRewardData"),
+  CountryExploreScoreData_1 = require("./CountryExploreScoreData");
 class CountryExploreLevelData {
   constructor() {
     (this.z4t = 0),
@@ -18,9 +18,9 @@ class CountryExploreLevelData {
   Initialize(e, t) {
     (this.z4t = e), (this.s5t = 0);
     for (const a of t) {
-      const r =
-        new CountryExploreLevelRewardData_1.CountryExploreLevelRewardData();
-      const o = (r.Initialize(a), a.ExploreLevel);
+      var r =
+          new CountryExploreLevelRewardData_1.CountryExploreLevelRewardData(),
+        o = (r.Initialize(a), a.ExploreLevel);
       this.t5t.set(o, r),
         this.i5t.push(r),
         a.Show && this.o5t.push(r),
@@ -28,7 +28,7 @@ class CountryExploreLevelData {
     }
   }
   AddExploreScoreData(e, t, r, o) {
-    const a = new CountryExploreScoreData_1.CountryExploreScoreData();
+    var a = new CountryExploreScoreData_1.CountryExploreScoreData();
     a.Initialize(this.z4t, e, t, r, o);
     let s = this.r5t.get(e);
     s || ((s = new Map()), this.r5t.set(e, s)), s.set(t, a), this.n5t.push(a);
@@ -40,11 +40,11 @@ class CountryExploreLevelData {
     return this.n5t;
   }
   GetVisibleExploreScoreDataList() {
-    const e = [];
+    var e = [];
     for (const a of this.r5t.values())
-      for (const [t, r] of a) {
-        var o = r.LastProgress;
-        var o = a.get(o);
+      for (var [t, r] of a) {
+        var o = r.LastProgress,
+          o = a.get(o);
         (o && !o.GetIsReceived()) ||
           ((r.CanReceive() || r.GetIsReceived() || t > r.GetAreaProgress()) &&
             e.push(r));
@@ -90,12 +90,12 @@ class CountryExploreLevelData {
   CanLevelUp() {
     let e = 0;
     for (const r of this.n5t) r.CanReceive() && (e += r.Score);
-    const t = this.GetCurrentExploreLevelRewardData();
+    var t = this.GetCurrentExploreLevelRewardData();
     return (
-      !(e === 0 || this.e5t >= t.GetMaxExploreScore()) &&
+      !(0 === e || this.e5t >= t.GetMaxExploreScore()) &&
       this.e5t + e >= t.GetMaxExploreScore()
     );
   }
 }
 exports.CountryExploreLevelData = CountryExploreLevelData;
-// # sourceMappingURL=CountryExploreLevelData.js.map
+//# sourceMappingURL=CountryExploreLevelData.js.map

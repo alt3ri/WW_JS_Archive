@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayShopExchangeEntryView = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const PayShopGiftItem_1 = require("./TabItem/PayShopGiftItem");
-const PayShopSecondTabItem_1 = require("./TabItem/PayShopSecondTabItem");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  PayShopGiftItem_1 = require("./TabItem/PayShopGiftItem"),
+  PayShopSecondTabItem_1 = require("./TabItem/PayShopSecondTabItem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class PayShopExchangeEntryView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -33,7 +33,7 @@ class PayShopExchangeEntryView extends UiTabViewBase_1.UiTabViewBase {
           this.RefreshLoopScroll();
       }),
       (this.sGe = () => {
-        const e = new PayShopGiftItem_1.PayShopGiftItem(0);
+        var e = new PayShopGiftItem_1.PayShopGiftItem(0);
         return e.SetToggleFunction(this.aFi), e;
       }),
       (this.aFi = (e) => {
@@ -55,7 +55,7 @@ class PayShopExchangeEntryView extends UiTabViewBase_1.UiTabViewBase {
       this.GetScrollViewWithScrollbar(0),
       this.Z3e,
     );
-    const e = this.GetItem(2);
+    var e = this.GetItem(2);
     this.LoopScrollView = new LoopScrollView_1.LoopScrollView(
       this.GetLoopScrollViewComponent(1),
       e.GetOwner(),
@@ -63,7 +63,7 @@ class PayShopExchangeEntryView extends UiTabViewBase_1.UiTabViewBase {
     );
   }
   RefreshTabItem() {
-    const e = ModelManager_1.ModelManager.PayShopModel.GetPayShopTabIdList(
+    var e = ModelManager_1.ModelManager.PayShopModel.GetPayShopTabIdList(
       this.Params,
     );
     (this.CurrentTabId = e[0]),
@@ -98,7 +98,7 @@ class PayShopExchangeEntryView extends UiTabViewBase_1.UiTabViewBase {
     this.TabLayout.ClearChildren(), (this.TabLayout = void 0);
   }
   RefreshView(e) {
-    typeof e === "number"
+    "number" == typeof e
       ? (this.CurrentTabId !== e &&
           ((this.CurrentTabId = e), this.SelectTabItem()),
         this.LoopScrollView.ClearGridProxies(),
@@ -108,4 +108,4 @@ class PayShopExchangeEntryView extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.PayShopExchangeEntryView = PayShopExchangeEntryView;
-// # sourceMappingURL=PayShopExchangeEntryView.js.map
+//# sourceMappingURL=PayShopExchangeEntryView.js.map

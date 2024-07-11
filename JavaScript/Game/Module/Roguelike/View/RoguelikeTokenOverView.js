@@ -4,22 +4,22 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.RoguelikeTokenGrid =
     exports.RogueTokenData =
       void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid");
-const LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid");
-const CommonTabComponentData_1 = require("../../Common/TabComponent/CommonTabComponentData");
-const CommonTabData_1 = require("../../Common/TabComponent/CommonTabData");
-const CommonTabTitleData_1 = require("../../Common/TabComponent/CommonTabTitleData");
-const TabComponentWithCaptionItem_1 = require("../../Common/TabComponent/TabComponentWithCaptionItem");
-const CommonTabItem_1 = require("../../Common/TabComponent/TabItem/CommonTabItem");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const RoguelikeController_1 = require("../RoguelikeController");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid"),
+  CommonTabComponentData_1 = require("../../Common/TabComponent/CommonTabComponentData"),
+  CommonTabData_1 = require("../../Common/TabComponent/CommonTabData"),
+  CommonTabTitleData_1 = require("../../Common/TabComponent/CommonTabTitleData"),
+  TabComponentWithCaptionItem_1 = require("../../Common/TabComponent/TabComponentWithCaptionItem"),
+  CommonTabItem_1 = require("../../Common/TabComponent/TabItem/CommonTabItem"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  RoguelikeController_1 = require("../RoguelikeController");
 class RogueTokenData {
   constructor() {
     (this.IsReceive = !1), (this.Config = void 0);
@@ -44,17 +44,17 @@ class RoguelikeTokenGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItem
   OnRefresh(e, t, i) {
     this.Data = e;
     var o = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueBuffConfig(
-      e.Config.Token,
-    );
-    var o = {
-      Type: 4,
-      Data: e,
-      IconPath: o.BuffIcon,
-      QualityId: o.Quality,
-      BottomTextId: o.BuffName,
-      QualityType: "MediumItemGridQualitySpritePath",
-      IsProhibit: void 0 === e.IsReceive,
-    };
+        e.Config.Token,
+      ),
+      o = {
+        Type: 4,
+        Data: e,
+        IconPath: o.BuffIcon,
+        QualityId: o.Quality,
+        BottomTextId: o.BuffName,
+        QualityType: "MediumItemGridQualitySpritePath",
+        IsProhibit: void 0 === e.IsReceive,
+      };
     this.Apply(o), this.SetSelected(t), t && this.OnSelected(!0);
   }
   OnSelected(e) {
@@ -88,14 +88,14 @@ class RoguelikeTokenOverView extends UiViewBase_1.UiViewBase {
       }),
       (this.pqe = (e) => {
         const t =
-          ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueTokenBySeasonId(
-            this.SeasonId,
-          );
-        const n = [];
+            ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueTokenBySeasonId(
+              this.SeasonId,
+            ),
+          n = [];
         let s = 0;
-        const i = (o) => {
+        var i = (o) => {
           t.forEach((e) => {
-            let t, i;
+            var t, i;
             (ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueBuffConfig(
               e.Token,
             ).PerkType !== o &&
@@ -122,7 +122,7 @@ class RoguelikeTokenOverView extends UiViewBase_1.UiViewBase {
           this.LoopScrollView.ScrollToGridIndex(0),
           this.LoopScrollView.SelectGridProxy(0, !0),
           this.LoopScrollView.RefreshAllGridProxies(),
-          this.GetItem(12).SetUIActive(n.length > 0),
+          this.GetItem(12).SetUIActive(0 < n.length),
           LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(3),
             "Roguelike_TokenOverView_Collect",
@@ -143,27 +143,30 @@ class RoguelikeTokenOverView extends UiViewBase_1.UiViewBase {
       }),
       (this.RefreshDetail = (e) => {
         if (this.LastSelectGrid !== e) {
-          var e = (this.LastSelectGrid = e).Data;
-          let t =
-            ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueBuffConfig(
-              e.Config.Token,
-            );
-          var n =
-            (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(11), t.BuffName),
-            LguiUtil_1.LguiUtil.SetLocalTextNew(
-              this.GetText(6),
-              t.BuffDesc,
-              ...t.BuffDescParam,
-            ),
-            this.GetText(7).SetUIActive(!1),
-            this.SetTextureByPath(t.BuffIcon, this.GetTexture(9)),
-            ConfigManager_1.ConfigManager.RewardConfig.GetDropPackagePreview(
-              e.Config.DropId,
-            ));
-          var n = Array.from(n);
-          var n = [{ IncId: 0, ItemId: n[0][0] }, n[0][1]];
-          let i = 10;
-          let o = 0;
+          var e = (this.LastSelectGrid = e).Data,
+            t =
+              ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueBuffConfig(
+                e.Config.Token,
+              ),
+            n =
+              (LguiUtil_1.LguiUtil.SetLocalTextNew(
+                this.GetText(11),
+                t.BuffName,
+              ),
+              LguiUtil_1.LguiUtil.SetLocalTextNew(
+                this.GetText(6),
+                t.BuffDesc,
+                ...t.BuffDescParam,
+              ),
+              this.GetText(7).SetUIActive(!1),
+              this.SetTextureByPath(t.BuffIcon, this.GetTexture(9)),
+              ConfigManager_1.ConfigManager.RewardConfig.GetDropPackagePreview(
+                e.Config.DropId,
+              )),
+            n = Array.from(n),
+            n = [{ IncId: 0, ItemId: n[0][0] }, n[0][1]];
+          let i = 10,
+            o = 0;
           t.BuffElement.forEach((e, t) => {
             (i = t), (o = e);
           }),
@@ -232,38 +235,38 @@ class RoguelikeTokenOverView extends UiViewBase_1.UiViewBase {
       );
   }
   async OnBeforeStartAsync() {
-    var e = this.OpenParam;
-    var e =
-      ((this.SeasonId = e.F8n),
-      e.Xws.forEach((e) => {
-        this.DataMap.set(e.Ekn, e.qms);
-      }),
-      void 0 === this.CommonGridItem &&
-        ((this.CommonGridItem = new RogueTokenCommonItemSmallItemGrid()),
-        this.CommonGridItem.Initialize(this.GetItem(8).GetOwner())),
-      this.CommonGridItem.SetActive(!1),
-      new CommonTabComponentData_1.CommonTabComponentData(
-        this.dVe,
-        this.pqe,
-        this.yqe,
-      ));
-    var e =
-      ((this.LoopScrollView = new LoopScrollView_1.LoopScrollView(
-        this.GetLoopScrollViewComponent(1),
-        this.GetItem(2).GetOwner(),
-        this.CreateLoopScrollItem,
-      )),
-      (this.TabComponent =
-        new TabComponentWithCaptionItem_1.TabComponentWithCaptionItem(
-          this.GetItem(0),
-          e,
-          this.OnCloseClick,
+    var e = this.OpenParam,
+      e =
+        ((this.SeasonId = e.F8n),
+        e.Xws.forEach((e) => {
+          this.DataMap.set(e.Ekn, e.qms);
+        }),
+        void 0 === this.CommonGridItem &&
+          ((this.CommonGridItem = new RogueTokenCommonItemSmallItemGrid()),
+          this.CommonGridItem.Initialize(this.GetItem(8).GetOwner())),
+        this.CommonGridItem.SetActive(!1),
+        new CommonTabComponentData_1.CommonTabComponentData(
+          this.dVe,
+          this.pqe,
+          this.yqe,
         )),
-      (this.TabDataList =
-        ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTabList(
-          "RoguelikeTokenOverView",
+      e =
+        ((this.LoopScrollView = new LoopScrollView_1.LoopScrollView(
+          this.GetLoopScrollViewComponent(1),
+          this.GetItem(2).GetOwner(),
+          this.CreateLoopScrollItem,
         )),
-      this.TabDataList.length);
+        (this.TabComponent =
+          new TabComponentWithCaptionItem_1.TabComponentWithCaptionItem(
+            this.GetItem(0),
+            e,
+            this.OnCloseClick,
+          )),
+        (this.TabDataList =
+          ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTabList(
+            "RoguelikeTokenOverView",
+          )),
+        this.TabDataList.length);
     await this.TabComponent.RefreshTabItemByLengthAsync(e);
   }
   OnBeforeShow() {
@@ -271,4 +274,4 @@ class RoguelikeTokenOverView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RoguelikeTokenOverView = RoguelikeTokenOverView;
-// # sourceMappingURL=RoguelikeTokenOverView.js.map
+//# sourceMappingURL=RoguelikeTokenOverView.js.map

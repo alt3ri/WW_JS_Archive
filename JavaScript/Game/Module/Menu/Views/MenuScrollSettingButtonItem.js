@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MenuScrollSettingButtonItem = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const GameQualitySettingsManager_1 = require("../../../GameQualitySettings/GameQualitySettingsManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ChannelController_1 = require("../../Channel/ChannelController");
-const MenuController_1 = require("../MenuController");
-const MenuScrollSettingBaseItem_1 = require("./MenuScrollSettingBaseItem");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  GameQualitySettingsManager_1 = require("../../../GameQualitySettings/GameQualitySettingsManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ChannelController_1 = require("../../Channel/ChannelController"),
+  MenuController_1 = require("../MenuController"),
+  MenuScrollSettingBaseItem_1 = require("./MenuScrollSettingBaseItem");
 class MenuScrollSettingButtonItem extends MenuScrollSettingBaseItem_1.MenuScrollSettingBaseItem {
   constructor() {
     super(...arguments),
@@ -20,7 +20,7 @@ class MenuScrollSettingButtonItem extends MenuScrollSettingBaseItem_1.MenuScroll
         this.RootItem?.IsActive() && this.ZGe();
       }),
       (this.Kwi = () => {
-        let t, e;
+        var t, e;
         this.GetItemClickLimit(this.GetButton(1)) ||
           ((t = this.Pe.MenuDataButtonViewName).includes(this.jwi)
             ? void 0 !== (e = Number(t.substring(this.jwi.length))) &&
@@ -32,9 +32,9 @@ class MenuScrollSettingButtonItem extends MenuScrollSettingBaseItem_1.MenuScroll
       (this.Qwi = (t, e) => {
         void 0 !== this.Pe &&
           t === this.Pe.MenuDataFunctionId &&
-          (t === 6
+          (6 === t
             ? this.Xwi(e, !0)
-            : t === 7
+            : 7 === t
               ? this.FireSaveMenuChange(e)
               : this.SetButtonText(this.Pe.MenuDataOptionsNameList[e], e, !0));
       });
@@ -76,15 +76,15 @@ class MenuScrollSettingButtonItem extends MenuScrollSettingBaseItem_1.MenuScroll
   }
   ZGe() {
     this.GetRootItem().SetUIActive(!0);
-    const t = MenuController_1.MenuController.GetTargetConfig(
+    var t = MenuController_1.MenuController.GetTargetConfig(
       this.Pe.MenuDataFunctionId,
     );
-    this.Pe.MenuDataFunctionId === 6
+    6 === this.Pe.MenuDataFunctionId
       ? this.Xwi(t)
       : this.SetButtonText(this.Pe.MenuDataOptionsNameList[t], t);
   }
   Xwi(t, e = !1) {
-    const i =
+    var i =
       GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetResolutionByList(
         t,
       );
@@ -102,8 +102,8 @@ class MenuScrollSettingButtonItem extends MenuScrollSettingBaseItem_1.MenuScroll
     e && this.FireSaveMenuChange(t);
   }
   SetButtonText(t, e, i = !1) {
-    const s = this.Pe.MenuDataButtonTextId;
-    const n = this.GetText(2);
+    var s = this.Pe.MenuDataButtonTextId,
+      n = this.GetText(2);
     s ? n.ShowTextNew(s) : n.ShowTextNew(t), i && this.FireSaveMenuChange(e);
   }
   SetInteractionActive(t) {
@@ -111,4 +111,4 @@ class MenuScrollSettingButtonItem extends MenuScrollSettingBaseItem_1.MenuScroll
   }
 }
 exports.MenuScrollSettingButtonItem = MenuScrollSettingButtonItem;
-// # sourceMappingURL=MenuScrollSettingButtonItem.js.map
+//# sourceMappingURL=MenuScrollSettingButtonItem.js.map

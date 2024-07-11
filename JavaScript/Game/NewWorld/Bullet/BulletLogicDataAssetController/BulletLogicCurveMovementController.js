@@ -1,28 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletLogicCurveMovementController = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils");
-const TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const EffectContext_1 = require("../../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../../Effect/EffectSystem");
-const GlobalData_1 = require("../../../GlobalData");
-const ColorUtils_1 = require("../../../Utils/ColorUtils");
-const BulletController_1 = require("../BulletController");
-const BulletUtil_1 = require("../BulletUtil");
-const BulletLogicController_1 = require("./BulletLogicController");
-const PROFILE_KEY = "BulletLogicCurveMovementController_GetDestLocation";
-const HEIGHT_DETECT = 500;
-const DRAW_DURATION = 5;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  ActorSystem_1 = require("../../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils"),
+  TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  EffectContext_1 = require("../../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ColorUtils_1 = require("../../../Utils/ColorUtils"),
+  BulletController_1 = require("../BulletController"),
+  BulletUtil_1 = require("../BulletUtil"),
+  BulletLogicController_1 = require("./BulletLogicController"),
+  PROFILE_KEY = "BulletLogicCurveMovementController_GetDestLocation",
+  HEIGHT_DETECT = 500,
+  DRAW_DURATION = 5;
 class BulletLogicCurveMovementController extends BulletLogicController_1.BulletLogicController {
   constructor(t, e) {
     super(t, e),
@@ -49,7 +49,7 @@ class BulletLogicCurveMovementController extends BulletLogicController_1.BulletL
       (ActorSystem_1.ActorSystem.Put(this.zie.GetOwner()), (this.zie = void 0));
   }
   C9o(t) {
-    let e, i;
+    var e, i;
     this.Bullet?.Valid &&
       this.LogicController.SplineTrace &&
       ((i = (e = this.g9o())
@@ -90,8 +90,8 @@ class BulletLogicCurveMovementController extends BulletLogicController_1.BulletL
           Log_1.Log.Error("Bullet", 21, "加载的Spline为空"));
   }
   BulletLogicAction(t) {
-    let e;
-    const i = this.m9o;
+    var e,
+      i = this.m9o;
     this.zie &&
       !this._9o.NeedDestroy &&
       ((e = this.zie.GetLocationAtTime(i, 1, !0)),
@@ -147,30 +147,30 @@ class BulletLogicCurveMovementController extends BulletLogicController_1.BulletL
         this._9o,
       );
     this.uoe || this.koe();
-    const e = t?.Valid;
-    var i = (0, puerts_1.$ref)(void 0);
-    var t =
-      (UE.BPL_Fight_C.获取Actor周围坐标点(
-        e ? t.Owner : this._9o.AttackerActorComp.Actor,
-        e ? this.LogicController.Rotate : this.LogicController.SelfRotate,
-        0,
-        e ? this.LogicController.Length : this.LogicController.SelfLength,
-        this.Hte.Owner,
-        i,
+    var e = t?.Valid,
+      i = (0, puerts_1.$ref)(void 0),
+      t =
+        (UE.BPL_Fight_C.获取Actor周围坐标点(
+          e ? t.Owner : this._9o.AttackerActorComp.Actor,
+          e ? this.LogicController.Rotate : this.LogicController.SelfRotate,
+          0,
+          e ? this.LogicController.Length : this.LogicController.SelfLength,
+          this.Hte.Owner,
+          i,
+        ),
+        (0, puerts_1.$unref)(i)),
+      i =
+        ((t.Z += e
+          ? this.LogicController.Height
+          : this.LogicController.SelfHeight),
+        this.uoe.SetStartLocation(t.X, t.Y, t.Z + HEIGHT_DETECT),
+        this.uoe.SetEndLocation(t.X, t.Y, t.Z - HEIGHT_DETECT),
+        t),
+      t = TraceElementCommon_1.TraceElementCommon.LineTrace(
+        this.uoe,
+        PROFILE_KEY,
       ),
-      (0, puerts_1.$unref)(i));
-    var i =
-      ((t.Z += e
-        ? this.LogicController.Height
-        : this.LogicController.SelfHeight),
-      this.uoe.SetStartLocation(t.X, t.Y, t.Z + HEIGHT_DETECT),
-      this.uoe.SetEndLocation(t.X, t.Y, t.Z - HEIGHT_DETECT),
-      t);
-    var t = TraceElementCommon_1.TraceElementCommon.LineTrace(
-      this.uoe,
-      PROFILE_KEY,
-    );
-    const s = this.uoe.HitResult;
+      s = this.uoe.HitResult;
     return (
       t &&
         s.bBlockingHit &&
@@ -182,12 +182,12 @@ class BulletLogicCurveMovementController extends BulletLogicController_1.BulletL
     );
   }
   f9o() {
-    const t = this.LogicController.Duration;
-    const e = this.LogicController.MaxSpeed;
-    var i = this.LogicController.MinSpeed;
-    var s = this.zie.GetSplineLength() * this.d9o;
-    var i = i > 0 ? s / i : MathUtils_1.MathUtils.MaxFloat;
-    var s = e > 0 ? s / e : 0;
+    var t = this.LogicController.Duration,
+      e = this.LogicController.MaxSpeed,
+      i = this.LogicController.MinSpeed,
+      s = this.zie.GetSplineLength() * this.d9o,
+      i = 0 < i ? s / i : MathUtils_1.MathUtils.MaxFloat,
+      s = 0 < e ? s / e : 0;
     return (
       MathUtils_1.MathUtils.Clamp(t, s, i) *
       TimeUtil_1.TimeUtil.InverseMillisecond
@@ -195,4 +195,4 @@ class BulletLogicCurveMovementController extends BulletLogicController_1.BulletL
   }
 }
 exports.BulletLogicCurveMovementController = BulletLogicCurveMovementController;
-// # sourceMappingURL=BulletLogicCurveMovementController.js.map
+//# sourceMappingURL=BulletLogicCurveMovementController.js.map

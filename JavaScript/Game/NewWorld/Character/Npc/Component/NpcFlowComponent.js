@@ -1,28 +1,32 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, o, r) {
-    let i;
-    const s = arguments.length;
-    let n =
-      s < 3 ? t : r === null ? (r = Object.getOwnPropertyDescriptor(t, o)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var i,
+      s = arguments.length,
+      n =
+        s < 3
+          ? t
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(t, o))
+            : r;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(e, t, o, r);
     else
-      for (let c = e.length - 1; c >= 0; c--)
-        (i = e[c]) && (n = (s < 3 ? i(n) : s > 3 ? i(t, o, n) : i(t, o)) || n);
-    return s > 3 && n && Object.defineProperty(t, o, n), n;
+      for (var c = e.length - 1; 0 <= c; c--)
+        (i = e[c]) && (n = (s < 3 ? i(n) : 3 < s ? i(t, o, n) : i(t, o)) || n);
+    return 3 < s && n && Object.defineProperty(t, o, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcFlowComponent = void 0);
-const UE = require("ue");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const CharacterFlowComponent_1 = require("../../Common/Component/Flow/CharacterFlowComponent");
-const NpcFlowLogic_1 = require("../Logics/NpcFlowLogic");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const STOP_MONTAGE_BLEND_OUT_TIME = 0.3;
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  CharacterFlowComponent_1 = require("../../Common/Component/Flow/CharacterFlowComponent"),
+  NpcFlowLogic_1 = require("../Logics/NpcFlowLogic"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  STOP_MONTAGE_BLEND_OUT_TIME = 0.3;
 let NpcFlowComponent = class NpcFlowComponent extends CharacterFlowComponent_1.CharacterFlowComponent {
   constructor() {
     super(...arguments), (this.Htn = void 0), (this.hin = !1);
@@ -76,7 +80,7 @@ let NpcFlowComponent = class NpcFlowComponent extends CharacterFlowComponent_1.C
     );
   }
   lin() {
-    let e;
+    var e;
     this.ActorComp &&
       this.ActorComp.SkeletalMesh &&
       (e = this.Entity.GetComponent(35)) &&
@@ -99,4 +103,4 @@ let NpcFlowComponent = class NpcFlowComponent extends CharacterFlowComponent_1.C
   NpcFlowComponent,
 )),
   (exports.NpcFlowComponent = NpcFlowComponent);
-// # sourceMappingURL=NpcFlowComponent.js.map
+//# sourceMappingURL=NpcFlowComponent.js.map

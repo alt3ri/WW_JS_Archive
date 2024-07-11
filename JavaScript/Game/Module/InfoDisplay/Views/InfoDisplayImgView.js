@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InfoDisplayImgView = void 0);
-const UE = require("ue");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
 class InfoDisplayImgView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -24,7 +24,7 @@ class InfoDisplayImgView extends UiViewBase_1.UiViewBase {
     this.Og();
   }
   Og() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.InfoDisplayModel.CurrentCurrentInformationTexture();
     const r = this.GetTexture(0);
     ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.Texture, (e, s) => {
@@ -37,4 +37,4 @@ class InfoDisplayImgView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.InfoDisplayImgView = InfoDisplayImgView;
-// # sourceMappingURL=InfoDisplayImgView.js.map
+//# sourceMappingURL=InfoDisplayImgView.js.map

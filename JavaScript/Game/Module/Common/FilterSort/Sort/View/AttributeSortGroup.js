@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AttributeSortGroup = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase");
-const GenericLayoutNew_1 = require("../../../../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../../../../Util/LguiUtil");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase"),
+  GenericLayoutNew_1 = require("../../../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../../../Util/LguiUtil");
 class SortItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -21,7 +21,7 @@ class SortItem extends UiPanelBase_1.UiPanelBase {
       }),
       (this.T7e = () => {
         return (
-          this.GetExtendToggle(1).ToggleState === 1 || !this.gRt || this.gRt()
+          1 === this.GetExtendToggle(1).ToggleState || !this.gRt || this.gRt()
         );
       }),
       this.CreateThenShowByActor(t.GetOwner());
@@ -50,19 +50,19 @@ class SortItem extends UiPanelBase_1.UiPanelBase {
   }
   IIt() {
     var t = ConfigManager_1.ConfigManager.SortConfig.GetSortRuleAttributeId(
-      this.dLt,
-      this.CRt,
-    );
-    const i = t > 0;
-    var t = i
-      ? ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexIcon(
-          t,
-        )
-      : ConfigManager_1.ConfigManager.SortConfig.GetSortRuleIcon(
-          this.dLt,
-          this.CRt,
-        );
-    const e = this.GetTexture(2);
+        this.dLt,
+        this.CRt,
+      ),
+      i = 0 < t,
+      t = i
+        ? ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexIcon(
+            t,
+          )
+        : ConfigManager_1.ConfigManager.SortConfig.GetSortRuleIcon(
+            this.dLt,
+            this.CRt,
+          ),
+      e = this.GetTexture(2);
     StringUtils_1.StringUtils.IsBlank(t)
       ? e.SetUIActive(!1)
       : (e.SetUIActive(!0),
@@ -83,12 +83,12 @@ class SortItem extends UiPanelBase_1.UiPanelBase {
       (this.CRt = i),
       this.Ije(),
       this.IIt(),
-      this.fRt(e > 0),
+      this.fRt(0 < e),
       this.RefreshIndex(e);
   }
   RefreshIndex(t) {
-    const i = this.GetText(3);
-    t === 0 ? i.SetUIActive(!1) : (i.SetUIActive(!0), i.SetText(t.toString()));
+    var i = this.GetText(3);
+    0 === t ? i.SetUIActive(!1) : (i.SetUIActive(!0), i.SetText(t.toString()));
   }
 }
 class AttributeSortGroup extends UiPanelBase_1.UiPanelBase {
@@ -100,19 +100,19 @@ class AttributeSortGroup extends UiPanelBase_1.UiPanelBase {
       (this.CRt = 1),
       (this.vRt = 0),
       (this.MRt = (t, i, e) => {
-        var i = new SortItem(i);
-        const s =
-          (i.SetToggleFunction(this.SRt),
-          i.SetCanExecuteChange(this.T7e),
-          this.ERt(t));
+        var i = new SortItem(i),
+          s =
+            (i.SetToggleFunction(this.SRt),
+            i.SetCanExecuteChange(this.T7e),
+            this.ERt(t));
         return i.ShowSortItem(t, this.CRt, s + 1), { Key: t, Value: i };
       }),
       (this.SRt = (t, i, e) => {
-        t === 1 ? this.pRt.set(i, e) : (this.pRt.delete(i), this.yRt(i)),
+        1 === t ? this.pRt.set(i, e) : (this.pRt.delete(i), this.yRt(i)),
           this.IRt(),
           this.ILt();
       }),
-      (this.T7e = () => this.vRt === 0 || this.pRt.size < this.vRt),
+      (this.T7e = () => 0 === this.vRt || this.pRt.size < this.vRt),
       this.CreateThenShowByActor(t.GetOwner());
   }
   OnRegisterComponent() {
@@ -149,20 +149,20 @@ class AttributeSortGroup extends UiPanelBase_1.UiPanelBase {
       this.eGe.GetLayoutItemByKey(i).RefreshIndex(t + 1), t++;
   }
   TRt() {
-    const t = ModelManager_1.ModelManager.SortModel.GetSortResultData(
+    var t = ModelManager_1.ModelManager.SortModel.GetSortResultData(
       this.Mne,
     ).GetSelectAttributeSort();
-    if (t) for (const [i, e] of t) this.pRt.set(i, e);
+    if (t) for (var [i, e] of t) this.pRt.set(i, e);
   }
   LRt() {
-    const t = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne);
+    var t = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne);
     (this.vRt = t.LimitNum),
       (this.CRt = t.DataId),
       this.eGe.RebuildLayoutByDataNew(t.AttributeSortList);
   }
   ILt() {
-    const t = this.GetText(0);
-    this.vRt === 0
+    var t = this.GetText(0);
+    0 === this.vRt
       ? LguiUtil_1.LguiUtil.SetLocalText(t, "AttributeSortName")
       : LguiUtil_1.LguiUtil.SetLocalText(
           t,
@@ -175,10 +175,10 @@ class AttributeSortGroup extends UiPanelBase_1.UiPanelBase {
     (this.Mne = t), this.TRt(), this.LRt(), this.ILt();
   }
   Reset() {
-    let t, i;
+    var t, i;
     this.pRt.clear();
     for ([t, i] of this.eGe.GetLayoutItemMap()) {
-      const e = t;
+      var e = t;
       i.ShowSortItem(e, this.CRt, 0);
     }
     this.ILt();
@@ -188,4 +188,4 @@ class AttributeSortGroup extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.AttributeSortGroup = AttributeSortGroup;
-// # sourceMappingURL=AttributeSortGroup.js.map
+//# sourceMappingURL=AttributeSortGroup.js.map

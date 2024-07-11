@@ -20,4 +20,4 @@ class BaseSensoryInfo {
   ClearCacheList() {}
 }
 exports.BaseSensoryInfo = BaseSensoryInfo;
-// # sourceMappingURL=BaseSensoryInfo.js.map
+//# sourceMappingURL=BaseSensoryInfo.js.map

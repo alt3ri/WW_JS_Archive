@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HandBookQuestChildItem = void 0);
-const UE = require("ue");
-const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const HandBookController_1 = require("./HandBookController");
-const HandBookDefine_1 = require("./HandBookDefine");
+const UE = require("ue"),
+  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  HandBookController_1 = require("./HandBookController"),
+  HandBookDefine_1 = require("./HandBookDefine");
 class HandBookQuestChildItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
       (this.kzt = void 0),
       (this.LZt = 0),
       (this.mZt = () => {
-        const e = this.kzt?.Config;
+        var e = this.kzt?.Config;
         e.QuestId ? this.tPn(e.Type) : this.qAn(e.Type);
       }),
       (this.aZt = (e, t) => e.Id - t.Id);
@@ -37,12 +37,12 @@ class HandBookQuestChildItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(e, t, i) {
     this.SetUiActive(!1), (this.kzt = e), (this.LZt = i);
-    var i = this.kzt.Config;
-    const r = e.IsNew;
-    var e = e.IsLock;
-    const o = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
+    var i = this.kzt.Config,
+      r = e.IsNew,
+      e = e.IsLock,
+      o = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
     this.SetTextureByPath(
-      o === 1 ? i.MaleTexture : i.FemaleTexture,
+      1 === o ? i.MaleTexture : i.FemaleTexture,
       this.GetTexture(0),
       void 0,
       () => {
@@ -71,10 +71,10 @@ class HandBookQuestChildItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   SetToggleState(e) {
     this.GetExtendToggle(3).SetToggleStateForce(e, !1, !0),
-      e === 1 && this.dZt();
+      1 === e && this.dZt();
   }
   dZt() {
-    let e, t;
+    var e, t;
     this.kzt.IsNew &&
       ((t = (e = this.kzt.Config).Type),
       (t =
@@ -97,31 +97,28 @@ class HandBookQuestChildItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   qAn(e) {
     this.dZt();
-    const t = ConfigCommon_1.ConfigCommon.ToList(
-      ConfigManager_1.ConfigManager.HandBookConfig.GetPlotHandBookConfigByType(
-        e,
+    var t = ConfigCommon_1.ConfigCommon.ToList(
+        ConfigManager_1.ConfigManager.HandBookConfig.GetPlotHandBookConfigByType(
+          e,
+        ),
       ),
-    );
-    const i =
-      (t.sort(this.aZt),
-      ConfigManager_1.ConfigManager.HandBookConfig.GetPlotTypeConfig(e));
-    const r = t.length;
-    const o = [];
-    const n = [];
-    const a = [];
-    const s = [];
-    const h = [];
-    const g = [];
+      i =
+        (t.sort(this.aZt),
+        ConfigManager_1.ConfigManager.HandBookConfig.GetPlotTypeConfig(e)),
+      r = t.length,
+      o = [],
+      n = [],
+      a = [],
+      s = [],
+      h = [],
+      g = [];
     for (let e = 0; e < r; e++) {
-      var _;
-      const l = t[e];
-      const u = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
-        7,
-        l.Id,
-      );
+      var _,
+        l = t[e],
+        u = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(7, l.Id);
       u &&
         ((_ = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender()),
-        o.push(_ === 1 ? l.MaleTexture : l.FemaleTexture),
+        o.push(1 === _ ? l.MaleTexture : l.FemaleTexture),
         h.push(u.CreateTime),
         n.push(
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew(l.Descrtption),
@@ -147,20 +144,20 @@ class HandBookQuestChildItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   tPn(e) {
     this.dZt();
-    const t = this.kzt?.Config.QuestId;
-    const i = ConfigCommon_1.ConfigCommon.ToList(
-      ConfigManager_1.ConfigManager.HandBookConfig.GetPlotHandBookConfigByType(
-        e,
+    var t = this.kzt?.Config.QuestId,
+      i = ConfigCommon_1.ConfigCommon.ToList(
+        ConfigManager_1.ConfigManager.HandBookConfig.GetPlotHandBookConfigByType(
+          e,
+        ),
       ),
-    );
-    const r =
-      (i?.sort((e, t) => e.Id - t.Id),
-      ConfigManager_1.ConfigManager.HandBookConfig.GetPlotTypeConfig(e));
-    const o = i.length;
-    const n = [];
-    const a = new HandBookDefine_1.HandBookQuestViewOpenParam();
+      r =
+        (i?.sort((e, t) => e.Id - t.Id),
+        ConfigManager_1.ConfigManager.HandBookConfig.GetPlotTypeConfig(e)),
+      o = i.length,
+      n = [],
+      a = new HandBookDefine_1.HandBookQuestViewOpenParam();
     for (let e = 0; e < o; e++) {
-      const s = i[e];
+      var s = i[e];
       ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(r.Type, s.Id) &&
         (n.push(s.Id), t === s.QuestId) &&
         (a.Index = n.indexOf(s.Id));
@@ -170,4 +167,4 @@ class HandBookQuestChildItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.HandBookQuestChildItem = HandBookQuestChildItem;
-// # sourceMappingURL=HandBookQuestChildItem.js.map
+//# sourceMappingURL=HandBookQuestChildItem.js.map

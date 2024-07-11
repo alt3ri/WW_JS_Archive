@@ -1,21 +1,21 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameAudioController = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../Core/Audio/AudioSystem");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const StateRef_1 = require("../../../Core/Utils/Audio/StateRef");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const TOLERANCE = 0.01;
-const DYNAMIC_REVERB_RTPC_1 = "reverb_azi_count";
-const DYNAMIC_REVERB_RTPC_2 = "reverb_eleva_distance";
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  StateRef_1 = require("../../../Core/Utils/Audio/StateRef"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  TOLERANCE = 0.01,
+  DYNAMIC_REVERB_RTPC_1 = "reverb_azi_count",
+  DYNAMIC_REVERB_RTPC_2 = "reverb_eleva_distance";
 class EnvironmentCache {
   constructor() {
     (this.StateEvent = ""),
@@ -103,11 +103,9 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
     }
   }
   static zin(e) {
-    let t;
-    let o;
-    const n = UE.KuroAudioStatics.GetAudioEnvironmentSubsystem(
-      Info_1.Info.World,
-    );
+    var t,
+      o,
+      n = UE.KuroAudioStatics.GetAudioEnvironmentSubsystem(Info_1.Info.World);
     n?.IsValid()
       ? ((t = n.GetEnvironmentInfo(e)).StateEvent !== this.PIn.StateEvent &&
           ((this.PIn.StateEvent = t.StateEvent),
@@ -138,7 +136,7 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
         );
   }
   static UIn(e) {
-    let t = UE.KuroAudioStatics.GetAudioEnvironmentSubsystem(Info_1.Info.World);
+    var t = UE.KuroAudioStatics.GetAudioEnvironmentSubsystem(Info_1.Info.World);
     t?.IsValid()
       ? (t = t.GetEnvironmentInfo_MusicCompatible(e)).StateEvent !==
           this.PIn.StateEvent_MusicCompatible &&
@@ -164,7 +162,7 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
         );
   }
   static xIn(e) {
-    let t;
+    var t;
     e
       ? ((t = Math.trunc((e.HorizontalHitCount - 1) / 2)),
         Math.abs(this.PIn.DynamicReverbRtpc1 - t) > TOLERANCE &&
@@ -180,15 +178,13 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
         AudioSystem_1.AudioSystem.SetRtpcValue(DYNAMIC_REVERB_RTPC_2, 0));
   }
   static Rje(e) {
-    const t = UE.KuroAudioStatics.GetAudioEnvironmentSubsystem(
-      Info_1.Info.World,
-    );
+    var t = UE.KuroAudioStatics.GetAudioEnvironmentSubsystem(Info_1.Info.World);
     if (t?.IsValid()) {
-      let o;
-      let n;
-      const i = t.GetEnvironmentStates(e);
+      var o,
+        n,
+        i = t.GetEnvironmentStates(e);
       for ([o, n] of this.Aje.entries()) {
-        const r = i.Get(o);
+        var r = i.Get(o);
         r
           ? (i.Remove(o),
             r !== n &&
@@ -214,8 +210,8 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
               ));
       }
       for (let e = 0; e < i.Num(); e++) {
-        const a = i.GetKey(e);
-        const _ = i.Get(a);
+        var a = i.GetKey(e),
+          _ = i.Get(a);
         _ &&
           (this.Aje.set(a, _),
           UE.KuroAudioStatics.SetState(a, _),
@@ -252,7 +248,7 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
     _a.WDn();
   }),
   (GameAudioController.Uje = () => {
-    const e = ModelManager_1.ModelManager.GameModeModel?.MapConfig.MapId;
+    var e = ModelManager_1.ModelManager.GameModeModel?.MapConfig.MapId;
     (_a.Pje = e
       ? ConfigManager_1.ConfigManager.AudioConfig?.GetMapConfig(e)
       : void 0),
@@ -298,4 +294,4 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
   (GameAudioController.PDn = (e) => {
     _a.UpdateAudioState(e.hfs);
   });
-// # sourceMappingURL=GameAudioController.js.map
+//# sourceMappingURL=GameAudioController.js.map

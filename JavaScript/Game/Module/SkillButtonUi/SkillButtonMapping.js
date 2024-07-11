@@ -27,4 +27,4 @@ class SkillButtonMapping {
   }
 }
 exports.SkillButtonMapping = SkillButtonMapping;
-// # sourceMappingURL=SkillButtonMapping.js.map
+//# sourceMappingURL=SkillButtonMapping.js.map

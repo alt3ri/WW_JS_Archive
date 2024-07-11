@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TimeOfDayConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const DaySelectPresetAll_1 = require("../../../Core/Define/ConfigQuery/DaySelectPresetAll");
-const DaySelectPresetById_1 = require("../../../Core/Define/ConfigQuery/DaySelectPresetById");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const TimeOfDayById_1 = require("../../../Core/Define/ConfigQuery/TimeOfDayById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const TimeOfDayDefine_1 = require("./TimeOfDayDefine");
-const TimeOfDayModel_1 = require("./TimeOfDayModel");
+const Log_1 = require("../../../Core/Common/Log"),
+  DaySelectPresetAll_1 = require("../../../Core/Define/ConfigQuery/DaySelectPresetAll"),
+  DaySelectPresetById_1 = require("../../../Core/Define/ConfigQuery/DaySelectPresetById"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  TimeOfDayById_1 = require("../../../Core/Define/ConfigQuery/TimeOfDayById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  TimeOfDayDefine_1 = require("./TimeOfDayDefine"),
+  TimeOfDayModel_1 = require("./TimeOfDayModel");
 class TimeOfDayConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments), (this.nIo = []), (this.sIo = []);
@@ -29,7 +29,7 @@ class TimeOfDayConfig extends ConfigBase_1.ConfigBase {
     return TimeOfDayDefine_1.TOD_SECOND_PER_MINUTE * (this.aIo()?.A ?? 0);
   }
   GetRate() {
-    const e = this.aIo()?.Rate;
+    var e = this.aIo()?.Rate;
     return (
       e ||
       (Log_1.Log.CheckError() &&
@@ -38,7 +38,7 @@ class TimeOfDayConfig extends ConfigBase_1.ConfigBase {
     );
   }
   InitDayStateTimeSpanList() {
-    const e = this.aIo()?.StateSpan;
+    var e = this.aIo()?.StateSpan;
     return !(
       !e ||
       e.size <= 0 ||
@@ -48,7 +48,7 @@ class TimeOfDayConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetDayStateByGameTimeMinute(t) {
-    if (this.nIo.length === 0 && !this.InitDayStateTimeSpanList())
+    if (0 === this.nIo.length && !this.InitDayStateTimeSpanList())
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("TimeOfDay", 17, "时间区间配置错误"),
@@ -60,7 +60,7 @@ class TimeOfDayConfig extends ConfigBase_1.ConfigBase {
         (e, i) =>
           !TimeOfDayModel_1.TodDayTime.CheckInMinuteSpan(t, e) || ((r = i), !1),
       ),
-      r >= 4
+      4 <= r
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error("TimeOfDay", 17, "时间区间配置超出范围"),
           0)
@@ -68,11 +68,11 @@ class TimeOfDayConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetBanGamePlayTags() {
-    if (!(this.sIo.length > 0)) {
-      const e = this.aIo()?.BanTag;
+    if (!(0 < this.sIo.length)) {
+      var e = this.aIo()?.BanTag;
       if (e)
         for (const t of e) {
-          const i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagByName(t);
+          var i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagByName(t);
           i && this.sIo.push(i);
         }
     }
@@ -94,4 +94,4 @@ class TimeOfDayConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.TimeOfDayConfig = TimeOfDayConfig;
-// # sourceMappingURL=TimeOfDayConfig.js.map
+//# sourceMappingURL=TimeOfDayConfig.js.map

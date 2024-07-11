@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcPerformUnderAttackState = void 0);
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const StateBase_1 = require("../../../../../Core/Utils/StateMachine/StateBase");
-const NpcPerceptionReactionUtil_1 = require("./Common/NpcPerceptionReactionUtil");
-const BUBBLE_TIME = 3;
+const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  StateBase_1 = require("../../../../../Core/Utils/StateMachine/StateBase"),
+  NpcPerceptionReactionUtil_1 = require("./Common/NpcPerceptionReactionUtil"),
+  BUBBLE_TIME = 3;
 class NpcPerformUnderAttackState extends StateBase_1.StateBase {
   constructor() {
     super(...arguments),
@@ -24,8 +24,8 @@ class NpcPerformUnderAttackState extends StateBase_1.StateBase {
     this.ser = t;
   }
   CanChangeFrom(t) {
-    const e = this.Owner.Entity.GetComponent(168);
-    return this.vtr && t === 1 && !e.IsInPlot;
+    var e = this.Owner.Entity.GetComponent(168);
+    return this.vtr && 1 === t && !e.IsInPlot;
   }
   SetDefaultDirect(t) {
     this.Mtr.DeepCopy(t);
@@ -57,4 +57,4 @@ class NpcPerformUnderAttackState extends StateBase_1.StateBase {
   }
 }
 exports.NpcPerformUnderAttackState = NpcPerformUnderAttackState;
-// # sourceMappingURL=NpcPerformUnderAttackState.js.map
+//# sourceMappingURL=NpcPerformUnderAttackState.js.map

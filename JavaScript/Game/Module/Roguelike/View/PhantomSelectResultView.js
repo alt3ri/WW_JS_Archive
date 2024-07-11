@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomSelectResultView = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiActorPool_1 = require("../../../Ui/UiActorPool");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
-const PhantomSelectItem_1 = require("./PhantomSelectItem");
-const RogueSelectResultBaseView_1 = require("./RogueSelectResultBaseView");
+const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiActorPool_1 = require("../../../Ui/UiActorPool"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
+  PhantomSelectItem_1 = require("./PhantomSelectItem"),
+  RogueSelectResultBaseView_1 = require("./RogueSelectResultBaseView");
 class PhantomSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResultBaseView {
   constructor() {
     super(...arguments),
@@ -21,7 +21,7 @@ class PhantomSelectResultView extends RogueSelectResultBaseView_1.RogueSelectRes
       });
   }
   async OnCreateAsync() {
-    const e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+    var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
       RoguelikeDefine_1.PHANTOM_SELECT_ITEM,
     );
     this.Rao = await UiActorPool_1.UiActorPool.GetAsync(e);
@@ -60,4 +60,4 @@ class PhantomSelectResultView extends RogueSelectResultBaseView_1.RogueSelectRes
   }
 }
 exports.PhantomSelectResultView = PhantomSelectResultView;
-// # sourceMappingURL=PhantomSelectResultView.js.map
+//# sourceMappingURL=PhantomSelectResultView.js.map

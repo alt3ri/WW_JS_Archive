@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Protocol_1 = require("../../Core/Define/Net/Protocol");
-const QueryTypeDefine_1 = require("../../Core/Define/QueryTypeDefine");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const TraceElementCommon_1 = require("../../Core/Utils/TraceElementCommon");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const GlobalData_1 = require("../GlobalData");
-const PROFILE_KEY = "FightCameraLogicComponent_CheckCollision_ExecutionAdjust";
-const AIRWALL_PORFILENAME = "InvisibleWall";
+const UE = require("ue"),
+  Protocol_1 = require("../../Core/Define/Net/Protocol"),
+  QueryTypeDefine_1 = require("../../Core/Define/QueryTypeDefine"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  TraceElementCommon_1 = require("../../Core/Utils/TraceElementCommon"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  GlobalData_1 = require("../GlobalData"),
+  PROFILE_KEY = "FightCameraLogicComponent_CheckCollision_ExecutionAdjust",
+  AIRWALL_PORFILENAME = "InvisibleWall";
 class TsAnimNotifyStateCaughtBinding extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -17,8 +17,8 @@ class TsAnimNotifyStateCaughtBinding extends UE.KuroAnimNotifyState {
       (this.SkillId = 0);
   }
   K2_NotifyBegin(e, t, i) {
-    let r;
-    var e = e.GetOwner();
+    var r,
+      e = e.GetOwner();
     return (
       e instanceof TsBaseCharacter_1.default &&
       !!(e = e.CharacterActorComponent.Entity) &&
@@ -26,25 +26,25 @@ class TsAnimNotifyStateCaughtBinding extends UE.KuroAnimNotifyState {
       (this.SkillId = r?.CurrentSkill?.SkillId ?? 0),
       r?.SetCurSkillAnIndex(this.exportIndex),
       !!(r = e.GetComponent(43))) &&
-      (this.DetectionRadius > 0 && this.CheckPosition(r),
+      (0 < this.DetectionRadius && this.CheckPosition(r),
       r.BeginCaught(this.CaughtIds, this.SkillId),
       !0)
     );
   }
   CheckPosition(i) {
     for (let e = 0; e < this.CaughtIds.Num(); e++) {
-      var r = this.CaughtIds.Get(e);
-      let o = i.Entity.GetComponent(3);
-      var r = i.PendingCaughtList.get(r);
+      var r = this.CaughtIds.Get(e),
+        o = i.Entity.GetComponent(3),
+        r = i.PendingCaughtList.get(r);
       if (!r) return;
       TsAnimNotifyStateCaughtBinding.InitTrace();
-      let s = o?.ActorLocationProxy;
-      const a = TsAnimNotifyStateCaughtBinding.SphereTrace;
-      var n =
-        (TraceElementCommon_1.TraceElementCommon.SetStartLocation(a, s),
-        TraceElementCommon_1.TraceElementCommon.SetEndLocation(a, s),
-        (a.Radius = this.DetectionRadius),
-        TraceElementCommon_1.TraceElementCommon.SphereTrace(a, PROFILE_KEY));
+      var s = o?.ActorLocationProxy,
+        a = TsAnimNotifyStateCaughtBinding.SphereTrace,
+        n =
+          (TraceElementCommon_1.TraceElementCommon.SetStartLocation(a, s),
+          TraceElementCommon_1.TraceElementCommon.SetEndLocation(a, s),
+          (a.Radius = this.DetectionRadius),
+          TraceElementCommon_1.TraceElementCommon.SphereTrace(a, PROFILE_KEY));
       if (!n) return;
       let t = !1;
       for (let e = 0; e < a.HitResult.GetHitCount(); e++)
@@ -58,8 +58,8 @@ class TsAnimNotifyStateCaughtBinding extends UE.KuroAnimNotifyState {
           break;
         }
       if (!t) return;
-      var c;
-      var n = r[0].GetComponent(0);
+      var c,
+        n = r[0].GetComponent(0);
       n?.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Monster &&
         ((n = Vector_1.Vector.Create(n?.GetInitLocation())),
         (s = Vector_1.Vector.Create(s)),
@@ -90,8 +90,8 @@ class TsAnimNotifyStateCaughtBinding extends UE.KuroAnimNotifyState {
       (this.SphereTrace.WorldContextObject = GlobalData_1.GlobalData.World);
   }
   K2_NotifyEnd(e, t) {
-    let i;
-    var e = e.GetOwner();
+    var i,
+      e = e.GetOwner();
     return (
       e instanceof TsBaseCharacter_1.default &&
       !(
@@ -110,4 +110,4 @@ class TsAnimNotifyStateCaughtBinding extends UE.KuroAnimNotifyState {
 }
 (TsAnimNotifyStateCaughtBinding.SphereTrace = void 0),
   (exports.default = TsAnimNotifyStateCaughtBinding);
-// # sourceMappingURL=TsAnimNotifyStateCaughtBinding.js.map
+//# sourceMappingURL=TsAnimNotifyStateCaughtBinding.js.map

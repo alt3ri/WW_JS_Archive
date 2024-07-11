@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MapMark = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const IntVector_1 = require("./SubType/IntVector");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  IntVector_1 = require("./SubType/IntVector");
 class MapMark {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -91,35 +91,35 @@ class MapMark {
     );
   }
   markid() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   mapid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 8;
   }
   relativetype() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   relativesubtype() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   entityconfigid() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   foghide() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   relativeid() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   markvector(t) {
-    const r = this.J7.__offset(this.z7, 18);
+    var r = this.J7.__offset(this.z7, 18);
     return r
       ? (t || new IntVector_1.IntVector()).__init(
           this.J7.__indirect(this.z7 + r),
@@ -128,42 +128,42 @@ class MapMark {
       : null;
   }
   objecttype() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   marktitle(t) {
-    const r = this.J7.__offset(this.z7, 22);
+    var r = this.J7.__offset(this.z7, 22);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   markdesc(t) {
-    const r = this.J7.__offset(this.z7, 24);
+    var r = this.J7.__offset(this.z7, 24);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   tobediscovered() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   ismonster() {
-    const t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   showpriority() {
-    const t = this.J7.__offset(this.z7, 30);
+    var t = this.J7.__offset(this.z7, 30);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetShowrangeAt(t) {
     return this.showrange(t);
   }
   showrange(t) {
-    const r = this.J7.__offset(this.z7, 32);
+    var r = this.J7.__offset(this.z7, 32);
     return r ? this.J7.readInt32(this.J7.__vector(this.z7 + r) + 4 * t) : 0;
   }
   showrangeLength() {
-    const t = this.J7.__offset(this.z7, 32);
+    var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   showrangeArray() {
-    const t = this.J7.__offset(this.z7, 32);
+    var t = this.J7.__offset(this.z7, 32);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -173,41 +173,41 @@ class MapMark {
       : null;
   }
   lockmarkpic(t) {
-    const r = this.J7.__offset(this.z7, 34);
+    var r = this.J7.__offset(this.z7, 34);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   unlockmarkpic(t) {
-    const r = this.J7.__offset(this.z7, 36);
+    var r = this.J7.__offset(this.z7, 36);
     return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   showcondition() {
-    const t = this.J7.__offset(this.z7, 38);
+    var t = this.J7.__offset(this.z7, 38);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   fogshow() {
-    const t = this.J7.__offset(this.z7, 40);
+    var t = this.J7.__offset(this.z7, 40);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   mapshow() {
-    const t = this.J7.__offset(this.z7, 42);
+    var t = this.J7.__offset(this.z7, 42);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   scale() {
-    const t = this.J7.__offset(this.z7, 44);
+    var t = this.J7.__offset(this.z7, 44);
     return t ? this.J7.readFloat32(this.z7 + t) : 1;
   }
   firstreward() {
-    const t = this.J7.__offset(this.z7, 46);
+    var t = this.J7.__offset(this.z7, 46);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   reward() {
-    const t = this.J7.__offset(this.z7, 48);
+    var t = this.J7.__offset(this.z7, 48);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   multimapfloorid() {
-    const t = this.J7.__offset(this.z7, 50);
+    var t = this.J7.__offset(this.z7, 50);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.MapMark = MapMark;
-// # sourceMappingURL=MapMark.js.map
+//# sourceMappingURL=MapMark.js.map

@@ -22,4 +22,4 @@ class RoleFilter extends CommonFilter_1.CommonFilter {
   }
 }
 exports.RoleFilter = RoleFilter;
-// # sourceMappingURL=RoleFilter.js.map
+//# sourceMappingURL=RoleFilter.js.map

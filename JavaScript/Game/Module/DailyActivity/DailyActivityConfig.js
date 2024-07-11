@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DailyActivityConfig = void 0);
-const DropPackageById_1 = require("../../../Core/Define/ConfigQuery/DropPackageById");
-const LivenessAll_1 = require("../../../Core/Define/ConfigQuery/LivenessAll");
-const LivenessTaskByTaskId_1 = require("../../../Core/Define/ConfigQuery/LivenessTaskByTaskId");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const DropPackageById_1 = require("../../../Core/Define/ConfigQuery/DropPackageById"),
+  LivenessAll_1 = require("../../../Core/Define/ConfigQuery/LivenessAll"),
+  LivenessTaskByTaskId_1 = require("../../../Core/Define/ConfigQuery/LivenessTaskByTaskId"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class DailyActivityConfig extends ConfigBase_1.ConfigBase {
   GetAllActivityGoalData() {
     return LivenessAll_1.configLivenessAll.GetConfigList();
@@ -17,4 +17,4 @@ class DailyActivityConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.DailyActivityConfig = DailyActivityConfig;
-// # sourceMappingURL=DailyActivityConfig.js.map
+//# sourceMappingURL=DailyActivityConfig.js.map

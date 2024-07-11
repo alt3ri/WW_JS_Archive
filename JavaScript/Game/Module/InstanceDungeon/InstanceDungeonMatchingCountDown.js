@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonMatchingCountDown = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const LevelSequencePlayer_1 = require("../Common/LevelSequencePlayer");
-const InstanceDungeonEntranceController_1 = require("./InstanceDungeonEntranceController");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  LevelSequencePlayer_1 = require("../Common/LevelSequencePlayer"),
+  InstanceDungeonEntranceController_1 = require("./InstanceDungeonEntranceController");
 class InstanceDungeonMatchingCountDown extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(),
@@ -18,23 +18,23 @@ class InstanceDungeonMatchingCountDown extends UiPanelBase_1.UiPanelBase {
       (this.Ili = void 0),
       (this.Tli = void 0),
       (this.n1i = () => {
-        let e;
-        this.Tli === "Close"
+        var e;
+        "Close" === this.Tli
           ? Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "InstanceDungeon",
               28,
               "当前正在播放Close动画，不响应点击事件",
             )
-          : (e =
-              ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState()) !==
-              3 &&
-            e !== 2 &&
+          : 3 !==
+              (e =
+                ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState()) &&
+            2 !== e &&
             (this.PlayAnimation("Close"), this.yli) &&
             this.yli();
       }),
       (this.aut = (e) => {
-        (e !== "Close" && e !== "Finish") || this.SetUiActive(!1),
+        ("Close" !== e && "Finish" !== e) || this.SetUiActive(!1),
           this.Ili?.(e);
       }),
       (this.Dli = () => {
@@ -81,7 +81,7 @@ class InstanceDungeonMatchingCountDown extends UiPanelBase_1.UiPanelBase {
     (this.yli = void 0), this.EPe?.Clear(), (this.EPe = void 0);
   }
   StartTimer() {
-    const e = ModelManager_1.ModelManager.InstanceDungeonEntranceModel;
+    var e = ModelManager_1.ModelManager.InstanceDungeonEntranceModel;
     this.GetText(1).SetText(TimeUtil_1.TimeUtil.GetTimeString(e.MatchingTime)),
       this.GetText(0).ShowTextNew(
         ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
@@ -91,7 +91,7 @@ class InstanceDungeonMatchingCountDown extends UiPanelBase_1.UiPanelBase {
       InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.StartMatchTimer(
         this.Dli,
       ),
-      this.EPe.GetCurrentSequence() === "AutoLoop"
+      "AutoLoop" === this.EPe.GetCurrentSequence()
         ? this.EPe.ReplaySequenceByKey("AutoLoop")
         : this.EPe.PlayLevelSequenceByName("AutoLoop");
   }
@@ -112,4 +112,4 @@ class InstanceDungeonMatchingCountDown extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.InstanceDungeonMatchingCountDown = InstanceDungeonMatchingCountDown;
-// # sourceMappingURL=InstanceDungeonMatchingCountDown.js.map
+//# sourceMappingURL=InstanceDungeonMatchingCountDown.js.map

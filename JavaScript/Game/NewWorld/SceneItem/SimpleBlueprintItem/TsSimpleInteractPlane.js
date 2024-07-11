@@ -1,31 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon");
-const TsSimpleInteractBase_1 = require("./TsSimpleInteractBase");
-const redColor = new UE.LinearColor(1, 0, 0, 1);
-const yellowColor = new UE.LinearColor(1, 1, 0, 1);
-const greenColor = new UE.LinearColor(0, 1, 0, 1);
-const DRAW_TIME = 0.05;
-const DEFAULT_THICKNESS = 4;
-const DEFAULT_ARROW_SIZE = 100;
-const DRAW_LENGTH = 200;
-const forwardOffset = Vector_1.Vector.Create(DRAW_LENGTH, 0, 0);
-const drawPoints = [
-  new UE.Vector(0, -1, -1),
-  new UE.Vector(0, -1, 1),
-  new UE.Vector(0, 1, -1),
-  new UE.Vector(0, 1, 1),
-];
-const textColor = new UE.Color(255, 128, 128, 255);
-const TEXT_SIZE = 200;
-const LEGAL_CHECK_PERIOD = 100;
-const SMALL_VALUE = 0.1;
-const PROFILE_KEY_CEHCK_LEGAL = "TsSimpleInteractPlane_CheckLegal";
-const PROFILE_KEY = "TsSimpleInteractPlane_GetBestTransform";
+const UE = require("ue"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
+  TsSimpleInteractBase_1 = require("./TsSimpleInteractBase"),
+  redColor = new UE.LinearColor(1, 0, 0, 1),
+  yellowColor = new UE.LinearColor(1, 1, 0, 1),
+  greenColor = new UE.LinearColor(0, 1, 0, 1),
+  DRAW_TIME = 0.05,
+  DEFAULT_THICKNESS = 4,
+  DEFAULT_ARROW_SIZE = 100,
+  DRAW_LENGTH = 200,
+  forwardOffset = Vector_1.Vector.Create(DRAW_LENGTH, 0, 0),
+  drawPoints = [
+    new UE.Vector(0, -1, -1),
+    new UE.Vector(0, -1, 1),
+    new UE.Vector(0, 1, -1),
+    new UE.Vector(0, 1, 1),
+  ],
+  textColor = new UE.Color(255, 128, 128, 255),
+  TEXT_SIZE = 200,
+  LEGAL_CHECK_PERIOD = 100,
+  SMALL_VALUE = 0.1,
+  PROFILE_KEY_CEHCK_LEGAL = "TsSimpleInteractPlane_CheckLegal",
+  PROFILE_KEY = "TsSimpleInteractPlane_GetBestTransform";
 class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
   constructor() {
     super(...arguments),
@@ -61,7 +61,7 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
   }
   UpdateData() {
     super.UpdateData();
-    const t = this.SelfTransform.GetRotation();
+    var t = this.SelfTransform.GetRotation();
     t.RotateVector(Vector_1.Vector.ForwardVectorProxy, this.SelfForward),
       t.RotateVector(Vector_1.Vector.RightVectorProxy, this.SelfRight),
       this.SelfForward.CrossProduct(this.SelfRight, this.SelfUp),
@@ -84,12 +84,12 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
       this.EndLocation || (this.EndLocation = Vector_1.Vector.Create()),
       void 0 !== this.IsLegal)
     ) {
-      const t = UE.EditorLevelLibrary.GetSelectedLevelActors();
-      if (t.Num() === 0 || t.Get(0) !== this) return this.IsLegal;
+      var t = UE.EditorLevelLibrary.GetSelectedLevelActors();
+      if (0 === t.Num() || t.Get(0) !== this) return this.IsLegal;
     }
     this.LineTrace || this.InitTraceInfo();
-    const h = Math.ceil((2 * this.PlaneHalfHeight) / LEGAL_CHECK_PERIOD) + 1;
-    const i = h > 1 ? (2 * this.PlaneHalfHeight) / (h - 1) : 0;
+    var h = Math.ceil((2 * this.PlaneHalfHeight) / LEGAL_CHECK_PERIOD) + 1,
+      i = 1 < h ? (2 * this.PlaneHalfHeight) / (h - 1) : 0;
     let s = -this.PlaneHalfHeight;
     for (let t = 0; t < h; ++t) {
       if (
@@ -122,8 +122,8 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
         return !1;
       s += i;
     }
-    const e = Math.ceil((2 * this.PlaneHalfWidth) / LEGAL_CHECK_PERIOD) + 1;
-    const a = e > 1 ? (2 * this.PlaneHalfWidth) / (e - 1) : 0;
+    var e = Math.ceil((2 * this.PlaneHalfWidth) / LEGAL_CHECK_PERIOD) + 1,
+      a = 1 < e ? (2 * this.PlaneHalfWidth) / (e - 1) : 0;
     let r = -this.PlaneHalfWidth;
     for (let t = 0; t < e; ++t) {
       if (
@@ -159,8 +159,8 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
     return !0;
   }
   OnDraw() {
-    const i = this.IsLegal ? greenColor : yellowColor;
-    const s = ((this.TmpLocation.X = 0), drawPoints.length);
+    var i = this.IsLegal ? greenColor : yellowColor,
+      s = ((this.TmpLocation.X = 0), drawPoints.length);
     for (let h = 0; h < s; ++h) {
       (this.TmpLocation.Y = drawPoints[h].Y * this.PlaneHalfWidth),
         (this.TmpLocation.Z = drawPoints[h].Z * this.PlaneHalfHeight),
@@ -206,7 +206,7 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
   }
   OnGetBestTransform(t, h, i, s) {
     this.UpdateData();
-    const e = this.TmpResult;
+    var e = this.TmpResult;
     return (
       this.ActorLocation.FromUeVector(t.K2_GetActorLocation()),
       this.ActorLocation.Subtraction(this.SelfLocation, this.SelfToActor),
@@ -240,14 +240,14 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
     );
   }
   GetBestTransformHorizontal(t, h) {
-    const i = this.SelfRight.DotProduct(this.SelfToActor);
-    const s = this.SelfUp.DotProduct(this.SelfToActor);
-    const e = i + this.SelfRight.DotProduct(this.MoveOffset);
-    const a = s + this.SelfUp.DotProduct(this.MoveOffset);
-    var r = Math.abs(e);
-    var o = Math.abs(a);
-    const _ = this.PlaneHalfWidth;
-    const l = this.PlaneHalfHeight;
+    var i = this.SelfRight.DotProduct(this.SelfToActor),
+      s = this.SelfUp.DotProduct(this.SelfToActor),
+      e = i + this.SelfRight.DotProduct(this.MoveOffset),
+      a = s + this.SelfUp.DotProduct(this.MoveOffset),
+      r = Math.abs(e),
+      o = Math.abs(a),
+      _ = this.PlaneHalfWidth,
+      l = this.PlaneHalfHeight;
     if (r < _ && o < l)
       return (
         this.ActorLocation.Addition(this.MoveOffset, this.TmpResultLocation),
@@ -262,15 +262,16 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
         ),
         [this.TmpResultLocation, this.TmpResultRotator, o * o]
       );
-    var r = Math.abs(i);
-    var o = Math.abs(s);
-    let M =
-      MathUtils_1.MathUtils.Square(r + _) + MathUtils_1.MathUtils.Square(o + l);
-    const n = this.MoveOffset.SizeSquared2D();
+    var r = Math.abs(i),
+      o = Math.abs(s),
+      M =
+        MathUtils_1.MathUtils.Square(r + _) +
+        MathUtils_1.MathUtils.Square(o + l),
+      n = this.MoveOffset.SizeSquared2D();
     if (M <= n) {
       (this.TmpResultLocation.X = h),
-        (this.TmpResultLocation.Y = e > 0 ? -_ : _),
-        (this.TmpResultLocation.Z = a > 0 ? -l : l),
+        (this.TmpResultLocation.Y = 0 < e ? -_ : _),
+        (this.TmpResultLocation.Z = 0 < a ? -l : l),
         this.SelfTransform.TransformPositionNoScale(
           this.TmpResultLocation,
           this.TmpResultLocation,
@@ -301,8 +302,8 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
       return [this.TmpResultLocation, this.TmpResultRotator, E];
     }
     (this.TmpResultLocation.X = h),
-      (this.TmpResultLocation.Y = e > 0 ? _ : -_),
-      (this.TmpResultLocation.Z = a > 0 ? l : -l),
+      (this.TmpResultLocation.Y = 0 < e ? _ : -_),
+      (this.TmpResultLocation.Z = 0 < a ? l : -l),
       this.SelfTransform.TransformPositionNoScale(
         this.TmpResultLocation,
         this.TmpResultLocation,
@@ -328,11 +329,11 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
   FindHitMatrixAndCircle(h, i, s, e, a, r, o) {
     let _ = 10 * a;
     for (let t = 0; t < 2; ++t) {
-      var l;
-      var M;
-      const n = t === 0 ? h : -h;
-      let E = a - MathUtils_1.MathUtils.Square(s - n);
-      E > 0 &&
+      var l,
+        M,
+        n = 0 === t ? h : -h,
+        E = a - MathUtils_1.MathUtils.Square(s - n);
+      0 < E &&
         ((l = e - (E = Math.sqrt(E))),
         Math.abs(l) < i &&
           (M =
@@ -351,11 +352,11 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
         (this.TmpResultLocation.Z = l));
     }
     for (let t = 0; t < 2; ++t) {
-      var U;
-      var c;
-      const m = t === 0 ? i : -i;
-      let C = a - MathUtils_1.MathUtils.Square(e - m);
-      C > 0 &&
+      var U,
+        c,
+        m = 0 === t ? i : -i,
+        C = a - MathUtils_1.MathUtils.Square(e - m);
+      0 < C &&
         ((U = s - (C = Math.sqrt(C))),
         Math.abs(s) < h &&
           (c =
@@ -378,11 +379,11 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
   GetBestTransformNotHorizontal(t, h) {
     this.TmpVector1.DeepCopy(this.SelfToActor),
       (this.TmpVector1.Z += this.MoveOffset.Z);
-    let i = this.SelfForward.DotProduct(this.TmpVector1);
-    const s = MathUtils_1.MathUtils.Square(i - h) / this.ForwardSizeSquared2D;
-    const e = this.MoveOffset.SizeSquared2D();
-    const a = this.PlaneHalfWidth;
-    const r = this.PlaneHalfHeight;
+    var i = this.SelfForward.DotProduct(this.TmpVector1),
+      s = MathUtils_1.MathUtils.Square(i - h) / this.ForwardSizeSquared2D,
+      e = this.MoveOffset.SizeSquared2D(),
+      a = this.PlaneHalfWidth,
+      r = this.PlaneHalfHeight;
     if (e <= s)
       return (
         this.TmpVector2.DeepCopy(this.Forward2D),
@@ -459,7 +460,7 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
         Math.max(0, Math.abs(this.TmpVector4.Z) - r),
       );
     return (
-      o > i || (Math.abs(o - i) < SMALL_VALUE && Math.random() >= 0.5)
+      o > i || (Math.abs(o - i) < SMALL_VALUE && 0.5 <= Math.random())
         ? ((o = i),
           (this.TmpVector4.Y =
             Math.sign(this.TmpVector4.Y) *
@@ -486,4 +487,4 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
   }
 }
 exports.default = TsSimpleInteractPlane;
-// # sourceMappingURL=TsSimpleInteractPlane.js.map
+//# sourceMappingURL=TsSimpleInteractPlane.js.map

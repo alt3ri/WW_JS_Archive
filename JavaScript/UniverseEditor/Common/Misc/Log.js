@@ -22,4 +22,4 @@ function error(r) {
   (exports.warn = warn),
   (exports.setErrorReportFun = setErrorReportFun),
   (exports.error = error);
-// # sourceMappingURL=Log.js.map
+//# sourceMappingURL=Log.js.map

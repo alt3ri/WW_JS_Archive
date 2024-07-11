@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PatrolMovePointsLogic = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../../../Core/Net/Net");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const LevelGeneralContextDefine_1 = require("../../../../../LevelGamePlay/LevelGeneralContextDefine");
-const ControllerHolder_1 = require("../../../../../Manager/ControllerHolder");
-const MAX_DISTANCE = 200;
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../../../Core/Net/Net"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  LevelGeneralContextDefine_1 = require("../../../../../LevelGamePlay/LevelGeneralContextDefine"),
+  ControllerHolder_1 = require("../../../../../Manager/ControllerHolder"),
+  MAX_DISTANCE = 200;
 class PatrolMovePointsLogic {
   constructor() {
     (this.Hte = void 0),
@@ -32,11 +32,11 @@ class PatrolMovePointsLogic {
     return !this.lJo && this.TargetIndex === this.MovePoint.length - 1;
   }
   GetPreviousLocation() {
-    return this.JYo >= 0 ? this.MovePoint[this.JYo].Position : void 0;
+    return 0 <= this.JYo ? this.MovePoint[this.JYo].Position : void 0;
   }
   UpdateMovePoints(t) {
-    let i = [];
-    let e = ((i = Array.isArray(t.Points) ? t.Points : [t.Points]), !0);
+    let i = [],
+      e = ((i = Array.isArray(t.Points) ? t.Points : [t.Points]), !0);
     this.uJo(this.MovePoint, i)
       ? (e = !1)
       : (Log_1.Log.CheckDebug() &&
@@ -58,7 +58,7 @@ class PatrolMovePointsLogic {
       (this.lJo = t.Loop),
       (this._Jo = t.CircleMove ?? !1),
       void 0 !== t.StartIndex &&
-      t.StartIndex >= 0 &&
+      0 <= t.StartIndex &&
       t.StartIndex < this.MovePoint.length
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -71,7 +71,7 @@ class PatrolMovePointsLogic {
             ),
           this.cJo(t.StartIndex))
         : t.UsePreviousIndex &&
-            this.JYo >= 0 &&
+            0 <= this.JYo &&
             this.JYo < this.MovePoint.length
           ? (this.cJo(this.JYo),
             this.GetNextPoint() < this.MovePoint.length &&
@@ -94,13 +94,13 @@ class PatrolMovePointsLogic {
   }
   GetNextPoint() {
     let t = 0;
-    let i;
+    var i;
     return (
       this.lJo
         ? this._Jo
           ? (t = (this.TargetIndex + 1) % this.MovePoint.length)
           : this.ooe
-            ? this.TargetIndex === 0
+            ? 0 === this.TargetIndex
               ? ((this.ooe = !1),
                 (t = 0),
                 Log_1.Log.CheckInfo() &&
@@ -135,10 +135,10 @@ class PatrolMovePointsLogic {
     );
   }
   OnArriveMovePoint() {
-    const t = this.TargetPoint;
-    t?.Index !== -1 &&
+    var t = this.TargetPoint;
+    -1 !== t?.Index &&
       (t?.Actions &&
-        t.Actions.length > 0 &&
+        0 < t.Actions.length &&
         ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsNew(
           t.Actions,
           LevelGeneralContextDefine_1.EntityContext.Create(this.Hte.Entity.Id),
@@ -149,8 +149,8 @@ class PatrolMovePointsLogic {
   }
   CJo(t) {
     this.Hte.SkeletalMesh?.SetVisibility(!t.IsHide);
-    let i;
-    const e = this.Hte.Entity.GetComponent(185);
+    var i,
+      e = this.Hte.Entity.GetComponent(185);
     e &&
       ((i = -841499802),
       t.IsHide ? e.HasTag(i) || e.AddTag(i) : e.HasTag(i) && e.RemoveTag(i));
@@ -174,7 +174,7 @@ class PatrolMovePointsLogic {
     if (i !== e) {
       if (!i || !e) return !1;
       if (i.length !== e.length) return !1;
-      const s = i.length;
+      var s = i.length;
       for (let t = 0; t < s; ++t) if (!this.gJo(i[t], e[t])) return !1;
     }
     return !0;
@@ -212,8 +212,8 @@ class PatrolMovePointsLogic {
     );
   }
   mJo() {
-    const t = this.UTe();
-    (this.TargetIndex = t - 1 >= 0 ? t - 1 : 0),
+    var t = this.UTe();
+    (this.TargetIndex = 0 <= t - 1 ? t - 1 : 0),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "AI",
@@ -226,17 +226,17 @@ class PatrolMovePointsLogic {
       this.cJo(t);
   }
   UTe() {
-    let e = 0;
-    let s = Number.MAX_VALUE;
-    const h = this.Hte.ActorLocationProxy;
+    let e = 0,
+      s = Number.MAX_VALUE;
+    var h = this.Hte.ActorLocationProxy;
     for (let t = 0, i = this.MovePoint.length; t < i; t++) {
-      let r = this.MovePoint[t];
-      r.Index >= 0 &&
+      var r = this.MovePoint[t];
+      0 <= r.Index &&
         (r = Vector_1.Vector.Dist(h, r.Position)) < s &&
         ((s = r), (e = t));
     }
     if (
-      e === 0 ||
+      0 === e ||
       (e === this.MovePoint.length - 1 &&
         s < MAX_DISTANCE &&
         Vector_1.Vector.Dist(
@@ -246,15 +246,15 @@ class PatrolMovePointsLogic {
     )
       return 0;
     for (let t = 0; t < this.MovePoint.length - 1; t++) {
-      const i = this.MovePoint[t].Position;
-      let o = this.MovePoint[t + 1].Position;
-      const n =
-        (this.jye.Set(o.X, o.Y, o.Z),
-        this.jye.Subtraction(i, this.jye),
-        this.jye.Size());
+      var i = this.MovePoint[t].Position,
+        o = this.MovePoint[t + 1].Position,
+        n =
+          (this.jye.Set(o.X, o.Y, o.Z),
+          this.jye.Subtraction(i, this.jye),
+          this.jye.Size());
       this.RTe.Set(h.X, h.Y, h.Z),
         this.RTe.Subtraction(o, this.RTe),
-        this.jye.DotProduct(this.RTe) > 0 ||
+        0 < this.jye.DotProduct(this.RTe) ||
           (this.RTe.Set(h.X, h.Y, h.Z),
           this.RTe.Subtraction(i, this.RTe),
           this.jye.DotProduct(this.RTe) < 0) ||
@@ -266,4 +266,4 @@ class PatrolMovePointsLogic {
   }
 }
 exports.PatrolMovePointsLogic = PatrolMovePointsLogic;
-// # sourceMappingURL=PatrolMovePointsLogic.js.map
+//# sourceMappingURL=PatrolMovePointsLogic.js.map

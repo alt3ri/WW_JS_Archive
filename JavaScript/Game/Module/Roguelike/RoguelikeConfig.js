@@ -1,29 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoguelikeConfig = void 0);
-const ElementLevelByLevel_1 = require("../../../Core/Define/ConfigQuery/ElementLevelByLevel");
-const RogueAffixById_1 = require("../../../Core/Define/ConfigQuery/RogueAffixById");
-const RogueBuffPoolById_1 = require("../../../Core/Define/ConfigQuery/RogueBuffPoolById");
-const RogueCharacterBuffById_1 = require("../../../Core/Define/ConfigQuery/RogueCharacterBuffById");
-const RogueCharacterById_1 = require("../../../Core/Define/ConfigQuery/RogueCharacterById");
-const RogueCurrencyById_1 = require("../../../Core/Define/ConfigQuery/RogueCurrencyById");
-const RogueEventById_1 = require("../../../Core/Define/ConfigQuery/RogueEventById");
-const RogueParamById_1 = require("../../../Core/Define/ConfigQuery/RogueParamById");
-const RoguePokemonById_1 = require("../../../Core/Define/ConfigQuery/RoguePokemonById");
-const RoguePopularEntrieArgBySeasonIdAndInstId_1 = require("../../../Core/Define/ConfigQuery/RoguePopularEntrieArgBySeasonIdAndInstId");
-const RogueQualityConfigById_1 = require("../../../Core/Define/ConfigQuery/RogueQualityConfigById");
-const RogueRoomTypeById_1 = require("../../../Core/Define/ConfigQuery/RogueRoomTypeById");
-const RogueSeasonAll_1 = require("../../../Core/Define/ConfigQuery/RogueSeasonAll");
-const RogueSeasonById_1 = require("../../../Core/Define/ConfigQuery/RogueSeasonById");
-const RogueSeasonRewardBySeasonId_1 = require("../../../Core/Define/ConfigQuery/RogueSeasonRewardBySeasonId");
-const RogueTalentTreeAll_1 = require("../../../Core/Define/ConfigQuery/RogueTalentTreeAll");
-const RogueTalentTreeById_1 = require("../../../Core/Define/ConfigQuery/RogueTalentTreeById");
-const RogueTalentTreeDescById_1 = require("../../../Core/Define/ConfigQuery/RogueTalentTreeDescById");
-const RogueTokenBySeasonId_1 = require("../../../Core/Define/ConfigQuery/RogueTokenBySeasonId");
-const RougeMiraclecreationById_1 = require("../../../Core/Define/ConfigQuery/RougeMiraclecreationById");
-const RougePopularEntrieAll_1 = require("../../../Core/Define/ConfigQuery/RougePopularEntrieAll");
-const RougePopularEntrieById_1 = require("../../../Core/Define/ConfigQuery/RougePopularEntrieById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const ElementLevelByLevel_1 = require("../../../Core/Define/ConfigQuery/ElementLevelByLevel"),
+  RogueAffixById_1 = require("../../../Core/Define/ConfigQuery/RogueAffixById"),
+  RogueBuffPoolById_1 = require("../../../Core/Define/ConfigQuery/RogueBuffPoolById"),
+  RogueCharacterBuffById_1 = require("../../../Core/Define/ConfigQuery/RogueCharacterBuffById"),
+  RogueCharacterById_1 = require("../../../Core/Define/ConfigQuery/RogueCharacterById"),
+  RogueCurrencyById_1 = require("../../../Core/Define/ConfigQuery/RogueCurrencyById"),
+  RogueEventById_1 = require("../../../Core/Define/ConfigQuery/RogueEventById"),
+  RogueParamById_1 = require("../../../Core/Define/ConfigQuery/RogueParamById"),
+  RoguePokemonById_1 = require("../../../Core/Define/ConfigQuery/RoguePokemonById"),
+  RoguePopularEntrieArgBySeasonIdAndInstId_1 = require("../../../Core/Define/ConfigQuery/RoguePopularEntrieArgBySeasonIdAndInstId"),
+  RogueQualityConfigById_1 = require("../../../Core/Define/ConfigQuery/RogueQualityConfigById"),
+  RogueRoomTypeById_1 = require("../../../Core/Define/ConfigQuery/RogueRoomTypeById"),
+  RogueSeasonAll_1 = require("../../../Core/Define/ConfigQuery/RogueSeasonAll"),
+  RogueSeasonById_1 = require("../../../Core/Define/ConfigQuery/RogueSeasonById"),
+  RogueSeasonRewardBySeasonId_1 = require("../../../Core/Define/ConfigQuery/RogueSeasonRewardBySeasonId"),
+  RogueTalentTreeAll_1 = require("../../../Core/Define/ConfigQuery/RogueTalentTreeAll"),
+  RogueTalentTreeById_1 = require("../../../Core/Define/ConfigQuery/RogueTalentTreeById"),
+  RogueTalentTreeDescById_1 = require("../../../Core/Define/ConfigQuery/RogueTalentTreeDescById"),
+  RogueTokenBySeasonId_1 = require("../../../Core/Define/ConfigQuery/RogueTokenBySeasonId"),
+  RougeMiraclecreationById_1 = require("../../../Core/Define/ConfigQuery/RougeMiraclecreationById"),
+  RougePopularEntrieAll_1 = require("../../../Core/Define/ConfigQuery/RougePopularEntrieAll"),
+  RougePopularEntrieById_1 = require("../../../Core/Define/ConfigQuery/RougePopularEntrieById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class RoguelikeConfig extends ConfigBase_1.ConfigBase {
   GetRogueBuffConfig(e) {
     return RogueBuffPoolById_1.configRogueBuffPoolById.GetConfig(e);
@@ -32,7 +32,7 @@ class RoguelikeConfig extends ConfigBase_1.ConfigBase {
     return RogueCharacterById_1.configRogueCharacterById.GetConfig(e);
   }
   GetRoguePhantomConfig(e) {
-    if (e !== 0) return RoguePokemonById_1.configRoguePokemonById.GetConfig(e);
+    if (0 !== e) return RoguePokemonById_1.configRoguePokemonById.GetConfig(e);
   }
   GetRogueAffixConfig(e) {
     return RogueAffixById_1.configRogueAffixById.GetConfig(e);
@@ -100,4 +100,4 @@ class RoguelikeConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.RoguelikeConfig = RoguelikeConfig;
-// # sourceMappingURL=RoguelikeConfig.js.map
+//# sourceMappingURL=RoguelikeConfig.js.map

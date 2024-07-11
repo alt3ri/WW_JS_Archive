@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleLevelUpSuccessEffectView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
 class RoleLevelUpSuccessEffectView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
       (this.z_o = void 0),
       (this.nqe = () => {
-        const e = this.Pe.ClickFunction;
+        var e = this.Pe.ClickFunction;
         e && e(), this.CloseMe();
       }),
       (this.Z_o = () => {
@@ -46,7 +46,7 @@ class RoleLevelUpSuccessEffectView extends UiViewBase_1.UiViewBase {
       : ((this.Pe = this.OpenParam), this.IBt());
   }
   OnStart() {
-    const e = this.GetItem(1);
+    var e = this.GetItem(1);
     this.z_o = new LoopScrollView_1.LoopScrollView(
       this.GetLoopScrollViewComponent(0),
       e.GetOwner(),
@@ -60,21 +60,21 @@ class RoleLevelUpSuccessEffectView extends UiViewBase_1.UiViewBase {
     this.z_o && (this.z_o.ClearGridProxies(), (this.z_o = void 0));
   }
   IBt() {
-    let e = this.Pe.AudioId;
+    var e = this.Pe.AudioId;
     e &&
       ((e = ConfigManager_1.ConfigManager.AudioConfig.GetAudioPath(e).Path),
       this.SetAudioEvent(e));
   }
   C_o() {
-    const e = this.Pe.ClickText ?? "Text_BackToView_Text";
+    var e = this.Pe.ClickText ?? "Text_BackToView_Text";
     this.GetText(3).ShowTextNew(e);
   }
   ILt() {
-    const e = this.Pe.Title ?? "Text_ActivedSucceed_Text";
+    var e = this.Pe.Title ?? "Text_ActivedSucceed_Text";
     this.GetText(2).ShowTextNew(e);
   }
   euo() {
-    let e;
+    var e;
     this.z_o &&
       (void 0 !== (e = this.Pe.TextList)
         ? this.z_o.ReloadData(e)
@@ -93,4 +93,4 @@ class SuccessDescriptionItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.SetDescriptionText(e);
   }
 }
-// # sourceMappingURL=RoleLevelUpSuccessEffectView.js.map
+//# sourceMappingURL=RoleLevelUpSuccessEffectView.js.map

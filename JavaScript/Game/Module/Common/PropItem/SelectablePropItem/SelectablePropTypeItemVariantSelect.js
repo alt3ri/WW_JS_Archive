@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SelectablePropTypeItemVariantSelect = void 0);
-const ItemGridVariantSelect_1 = require("../../ItemGrid/ItemGridVariantSelect");
-const SelectablePropComponentBase_1 = require("./SelectablePropComponentBase");
+const ItemGridVariantSelect_1 = require("../../ItemGrid/ItemGridVariantSelect"),
+  SelectablePropComponentBase_1 = require("./SelectablePropComponentBase");
 class SelectablePropTypeItemVariantSelect extends SelectablePropComponentBase_1.SelectablePropComponentBase {
   constructor() {
     super(...arguments), (this.Jwt = void 0);
@@ -49,4 +49,4 @@ class SelectablePropTypeItemVariantSelect extends SelectablePropComponentBase_1.
 }
 exports.SelectablePropTypeItemVariantSelect =
   SelectablePropTypeItemVariantSelect;
-// # sourceMappingURL=SelectablePropTypeItemVariantSelect.js.map
+//# sourceMappingURL=SelectablePropTypeItemVariantSelect.js.map

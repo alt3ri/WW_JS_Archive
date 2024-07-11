@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SignalDeviceModel = exports.ROWNUM = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const Net_1 = require("../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const UiManager_1 = require("../../Ui/UiManager");
-const SignalDeviceController_1 = require("./SignalDeviceController");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  SignalDeviceController_1 = require("./SignalDeviceController");
 exports.ROWNUM = 5;
 class SignalDeviceModel extends ModelBase_1.ModelBase {
   constructor() {
@@ -53,8 +53,8 @@ class SignalDeviceModel extends ModelBase_1.ModelBase {
     (this.CurrentColor = t), (this.cPe = [e]);
   }
   Linking(e) {
-    const t = this.cPe[this.cPe.length - 1];
-    !this.cPe.includes(e) && this.NeighboringType(t, e) !== 0 && this.dPe(e)
+    var t = this.cPe[this.cPe.length - 1];
+    !this.cPe.includes(e) && 0 !== this.NeighboringType(t, e) && this.dPe(e)
       ? (this.cPe.push(e),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnSignalDeviceLinking,
@@ -65,7 +65,7 @@ class SignalDeviceModel extends ModelBase_1.ModelBase {
           this.uPe[e].Color === this.CurrentColor,
         ),
         this.uPe[e].Color === this.CurrentColor && this.CheckLinking(e))
-      : this.cPe.length > 1 && this.cPe.indexOf(e) === this.cPe.length - 2
+      : 1 < this.cPe.length && this.cPe.indexOf(e) === this.cPe.length - 2
         ? (this.cPe.pop(),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnSignalDeviceLinking,
@@ -79,10 +79,10 @@ class SignalDeviceModel extends ModelBase_1.ModelBase {
           Log_1.Log.Debug("Temp", 36, "Linking Fail", ["index", e]);
   }
   NeighboringType(e, t) {
-    const i = e - t;
+    var i = e - t;
     if (
-      (i == -1 && t % exports.ROWNUM == 0) ||
-      (i == 1 && e % exports.ROWNUM == 0)
+      (-1 == i && t % exports.ROWNUM == 0) ||
+      (1 == i && e % exports.ROWNUM == 0)
     )
       return 0;
     switch (i) {
@@ -106,10 +106,10 @@ class SignalDeviceModel extends ModelBase_1.ModelBase {
     );
   }
   CheckLinking(e) {
-    let t;
-    this.cPe.length !== 0 &&
+    var t;
+    0 !== this.cPe.length &&
       ((t = this.cPe[this.cPe.length - 1]),
-      this.GetGridColor(t) !== this.CurrentColor || this.cPe.length === 1
+      this.GetGridColor(t) !== this.CurrentColor || 1 === this.cPe.length
         ? this.CancelCurrentLinking()
         : this.MarkCurrentLinking());
   }
@@ -141,7 +141,7 @@ class SignalDeviceModel extends ModelBase_1.ModelBase {
       EventDefine_1.EEventName.OnSignalDeviceFinish,
     ),
       TimerSystem_1.TimerSystem.Delay(() => {
-        const e = Protocol_1.Aki.Protocol.UKn.create();
+        var e = Protocol_1.Aki.Protocol.UKn.create();
         (e.ykn = "0"),
           (e.Ikn = Protocol_1.Aki.Protocol.dqs.Proto_SignalDevice),
           Net_1.Net.Call(19172, e, (e) => {
@@ -161,4 +161,4 @@ class SignalDeviceModel extends ModelBase_1.ModelBase {
   }
 }
 exports.SignalDeviceModel = SignalDeviceModel;
-// # sourceMappingURL=SignalDeviceModel.js.map
+//# sourceMappingURL=SignalDeviceModel.js.map

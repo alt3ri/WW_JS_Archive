@@ -11,4 +11,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TICK_TIME_MAX = 3e3),
   (exports.OPERATIONS_IS_OPEM = !0),
   (exports.PING_GET_TIME = 1e3);
-// # sourceMappingURL=PerformanceConfig.js.map
+//# sourceMappingURL=PerformanceConfig.js.map

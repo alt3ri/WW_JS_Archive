@@ -11,4 +11,4 @@ class SmallItemGridNewFlagComponent extends SmallItemGridVisibleComponent_1.Smal
   }
 }
 exports.SmallItemGridNewFlagComponent = SmallItemGridNewFlagComponent;
-// # sourceMappingURL=SmallItemGridNewFlagComponent.js.map
+//# sourceMappingURL=SmallItemGridNewFlagComponent.js.map

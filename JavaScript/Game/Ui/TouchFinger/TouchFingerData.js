@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TouchFingerData = void 0);
-const UE = require("ue");
-const LguiEventSystemManager_1 = require("../LguiEventSystem/LguiEventSystemManager");
+const UE = require("ue"),
+  LguiEventSystemManager_1 = require("../LguiEventSystem/LguiEventSystemManager");
 class TouchFingerData {
   constructor(t) {
     (this.Hmr = void 0),
@@ -46,13 +46,13 @@ class TouchFingerData {
     );
   }
   IsTouchComponentContainTag(t) {
-    var e = this.GetPointerEventData();
-    const i = e.pressComponent;
-    var e = e.enterComponent;
+    var e = this.GetPointerEventData(),
+      i = e.pressComponent,
+      e = e.enterComponent;
     return i?.IsValid()
       ? i.ComponentHasTag(t)
       : !!e?.IsValid() && e.ComponentHasTag(t);
   }
 }
 exports.TouchFingerData = TouchFingerData;
-// # sourceMappingURL=TouchFingerData.js.map
+//# sourceMappingURL=TouchFingerData.js.map

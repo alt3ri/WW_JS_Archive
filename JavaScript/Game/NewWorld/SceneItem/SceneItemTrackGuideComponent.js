@@ -1,40 +1,45 @@
 "use strict";
-let SceneItemTrackGuideComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, i, s, e) {
-    let h;
-    const n = arguments.length;
-    let o =
-      n < 3 ? i : e === null ? (e = Object.getOwnPropertyDescriptor(i, s)) : e;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      o = Reflect.decorate(t, i, s, e);
-    else
-      for (let r = t.length - 1; r >= 0; r--)
-        (h = t[r]) && (o = (n < 3 ? h(o) : n > 3 ? h(i, s, o) : h(i, s)) || o);
-    return n > 3 && o && Object.defineProperty(i, s, o), o;
-  };
+var SceneItemTrackGuideComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, i, s, e) {
+      var h,
+        n = arguments.length,
+        o =
+          n < 3
+            ? i
+            : null === e
+              ? (e = Object.getOwnPropertyDescriptor(i, s))
+              : e;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        o = Reflect.decorate(t, i, s, e);
+      else
+        for (var r = t.length - 1; 0 <= r; r--)
+          (h = t[r]) &&
+            (o = (n < 3 ? h(o) : 3 < n ? h(i, s, o) : h(i, s)) || o);
+      return 3 < n && o && Object.defineProperty(i, s, o), o;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemTrackGuideComponent = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LogReportController_1 = require("../../Module/LogReport/LogReportController");
-const LogReportDefine_1 = require("../../Module/LogReport/LogReportDefine");
-const DISTANCE_SPLINE_FOUNDATION_THRESHOLD = 1e4;
-const SPLINE_FOUNDATION_SPEED = 150;
-const DISTANCE_SQUARE_THRESHOLD = 2500;
-const MOVEMENT_SPEED = 600;
-const CONFIG_DEFAULT_MOVEMENT_SPEED = 50;
-const MAX_MOVEMENT_SPEED = 800;
-const NORMAL_RADIUS = 50;
-const COMPRESS_RADIUS = 0;
+const Log_1 = require("../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LogReportController_1 = require("../../Module/LogReport/LogReportController"),
+  LogReportDefine_1 = require("../../Module/LogReport/LogReportDefine"),
+  DISTANCE_SPLINE_FOUNDATION_THRESHOLD = 1e4,
+  SPLINE_FOUNDATION_SPEED = 150,
+  DISTANCE_SQUARE_THRESHOLD = 2500,
+  MOVEMENT_SPEED = 600,
+  CONFIG_DEFAULT_MOVEMENT_SPEED = 50,
+  MAX_MOVEMENT_SPEED = 800,
+  NORMAL_RADIUS = 50,
+  COMPRESS_RADIUS = 0;
 let SceneItemTrackGuideComponent =
   (SceneItemTrackGuideComponent_1 = class SceneItemTrackGuideComponent extends (
     EntityComponent_1.EntityComponent
@@ -112,7 +117,7 @@ let SceneItemTrackGuideComponent =
         });
     }
     OnInitData(t) {
-      const i = t.GetParam(SceneItemTrackGuideComponent_1)[0];
+      var i = t.GetParam(SceneItemTrackGuideComponent_1)[0];
       switch (
         (i.SplineEntityId && (this.vcn = i.SplineEntityId),
         (this.i_n = !1),
@@ -207,11 +212,11 @@ let SceneItemTrackGuideComponent =
         );
       this.U7o.DeepCopy(this.Hte.ActorLocationProxy),
         this.HSn.DeepCopy(this.Hte.ActorLocationProxy);
-      const t = this.Hte.CreatureData;
-      const i = t.GetBaseInfo();
+      var t = this.Hte.CreatureData,
+        i = t.GetBaseInfo();
       return i
         ? ((this.efn = i.OnlineInteractType ?? 2),
-          this.efn === 1 &&
+          1 === this.efn &&
             (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "SceneGameplay",
@@ -244,21 +249,21 @@ let SceneItemTrackGuideComponent =
           !1);
     }
     HC() {
-      const t =
+      var t =
         ModelManager_1.ModelManager.GameSplineModel.LoadAndGetSplineComponent(
           this.vcn,
           this.Hte.CreatureData.GetPbDataId(),
         );
       if (t) {
         this.PSn = t;
-        const i =
-          ModelManager_1.ModelManager.GameSplineModel.GetSplineActorBySplineId(
-            this.vcn,
-          );
-        const s =
-          (this.xSn.FromUeVector(t.GetWorldLocationAtDistanceAlongSpline(0)),
-          (this.qSn = t.GetNumberOfSplinePoints()),
-          i.SplineData);
+        var i =
+            ModelManager_1.ModelManager.GameSplineModel.GetSplineActorBySplineId(
+              this.vcn,
+            ),
+          s =
+            (this.xSn.FromUeVector(t.GetWorldLocationAtDistanceAlongSpline(0)),
+            (this.qSn = t.GetNumberOfSplinePoints()),
+            i.SplineData);
         (this.NSn = new Array(this.qSn)), (this.OSn = new Array(this.qSn));
         for (let t = 0; t < this.qSn; ++t)
           this.NSn[t] = !s.Points[t].IgnorePoint;
@@ -279,14 +284,14 @@ let SceneItemTrackGuideComponent =
             ((this.NSn[this.qSn - 1] = !1),
             (this.OSn[this.qSn - 1] = SPLINE_FOUNDATION_SPEED),
             (this.QSn = SPLINE_FOUNDATION_SPEED)),
-          this.qSn >= 2 &&
+          2 <= this.qSn &&
             ((this.GSn =
               this.Ngn - t.GetDistanceAlongSplineAtSplinePoint(this.qSn - 2)),
             this.GSn <= 1 ? (this.GSn = 0) : (this.GSn = 1 / this.GSn));
       }
     }
     OnTick(t) {
-      !this.FSn && this.WSn && (this.Rni !== 1 ? this.YSn(t) : this.JSn(t));
+      !this.FSn && this.WSn && (1 !== this.Rni ? this.YSn(t) : this.JSn(t));
     }
     JSn(t) {
       if (this.PSn?.IsValid())
@@ -300,9 +305,9 @@ let SceneItemTrackGuideComponent =
             this.ran) ||
             ((this.ran = !0), this.ZSn()),
             this.Entity.ChangeTickInterval(0);
-          const i = this.PSn;
-          var s = this.bSn === 0 ? 0 : this.bSn - 1;
-          var s = ((this.BSn += this.OSn[s] * t * 0.001), this.bSn + 1);
+          var i = this.PSn,
+            s = 0 === this.bSn ? 0 : this.bSn - 1,
+            s = ((this.BSn += this.OSn[s] * t * 0.001), this.bSn + 1);
           if (
             (this.BSn >= this.jSn &&
               ((this.bSn = s),
@@ -329,7 +334,7 @@ let SceneItemTrackGuideComponent =
               i.GetWorldLocationAtDistanceAlongSpline(this.BSn),
             ),
             this.Hte.SetActorLocation(this.U7o.ToUeVector()),
-            this.LSn === 1 &&
+            1 === this.LSn &&
               this.TSn &&
               this.bSn === this.qSn - 1 &&
               ((t = (this.Ngn - this.BSn) * this.GSn),
@@ -377,12 +382,11 @@ let SceneItemTrackGuideComponent =
     oEn(t) {
       if (this.DSn) {
         if (!this.ASn) {
-          const i =
-            ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
-              this.DSn,
-            );
+          var i = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
+            this.DSn,
+          );
           if (!i) return;
-          const s = i.Entity.GetComponent(1);
+          var s = i.Entity.GetComponent(1);
           if (!s || !s.Owner) return;
           (this.ASn = i),
             this.USn.DeepCopy(s.ActorLocationProxy),
@@ -419,19 +423,19 @@ let SceneItemTrackGuideComponent =
         this.TSn.ApplyNiagaraParameters("IsMoving", 0);
     }
     zSn() {
-      let t;
+      var t;
       return !this.PSn?.IsValid() || this.r1n?.IsLocked
         ? (this.kSn = !0)
         : this.i_n
           ? (this.kSn = !1)
           : this.KSn
-            ? ((t = this.bSn === 0 ? 0 : this.bSn - 1),
+            ? ((t = 0 === this.bSn ? 0 : this.bSn - 1),
               (this.kSn = this.NSn[t]),
               this.kSn)
             : (this.kSn = !0);
     }
     tEn(t) {
-      let i;
+      var i;
       return (
         !!this.Hte &&
         ((i = this.Hte.ActorLocationProxy),
@@ -453,7 +457,7 @@ let SceneItemTrackGuideComponent =
       );
     }
     ZSn() {
-      let t;
+      var t;
       this.XSn ||
         (((t = new ButterflyTriggerData()).event_id = "10"),
         (t.i_config_id = this.Hte.CreatureData.GetPbDataId().toString()),
@@ -487,4 +491,4 @@ class ButterflyTriggerData extends LogReportDefine_1.PlayerCommonLogData {
       (this.s_tag = "");
   }
 }
-// # sourceMappingURL=SceneItemTrackGuideComponent.js.map
+//# sourceMappingURL=SceneItemTrackGuideComponent.js.map

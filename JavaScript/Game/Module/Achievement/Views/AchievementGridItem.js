@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AchievementGridItem = exports.AchievementGridItemData = void 0);
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const LoopScrollSmallItemGrid_1 = require("../../Common/SmallItemGrid/LoopScrollSmallItemGrid");
+const ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  LoopScrollSmallItemGrid_1 = require("../../Common/SmallItemGrid/LoopScrollSmallItemGrid");
 class AchievementGridItemData {
   constructor() {
     (this.Data = void 0), (this.GetRewardState = !1);
@@ -25,7 +25,7 @@ class AchievementGridItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemG
     );
   }
   Refresh(e) {
-    let t, r;
+    var t, r;
     e?.Data &&
       ((r = e.Data[0]),
       (t = e.Data[1]),
@@ -35,11 +35,11 @@ class AchievementGridItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemG
         Data: e,
         Type: 4,
         ItemConfigId: this.Mne,
-        BottomText: t > 0 ? "" + t : "",
+        BottomText: 0 < t ? "" + t : "",
         IsReceivedVisible: r,
       }),
       this.Apply(e));
   }
 }
 exports.AchievementGridItem = AchievementGridItem;
-// # sourceMappingURL=AchievementGridItem.js.map
+//# sourceMappingURL=AchievementGridItem.js.map

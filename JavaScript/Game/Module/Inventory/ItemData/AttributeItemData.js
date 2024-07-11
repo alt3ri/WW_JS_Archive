@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AttributeItemData = void 0);
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ItemDataBase_1 = require("./ItemDataBase");
-const ATTRIBUTE_ITEM_DEFAULT_COUNT = 1;
+const ModelManager_1 = require("../../../Manager/ModelManager"),
+  ItemDataBase_1 = require("./ItemDataBase"),
+  ATTRIBUTE_ITEM_DEFAULT_COUNT = 1;
 class AttributeItemData extends ItemDataBase_1.ItemDataBase {
   constructor(t, e, r, a) {
     super(t, ATTRIBUTE_ITEM_DEFAULT_COUNT, a),
@@ -18,7 +18,7 @@ class AttributeItemData extends ItemDataBase_1.ItemDataBase {
   }
   OnSetFunctionValue(t) {}
   IsFunctionValue(t) {
-    return (this.Eci & (1 << t)) > 0;
+    return 0 < (this.Eci & (1 << t));
   }
   GetIsLock() {
     return this.IsFunctionValue(0);
@@ -30,7 +30,7 @@ class AttributeItemData extends ItemDataBase_1.ItemDataBase {
     return 1;
   }
   HasRedDot() {
-    const t = this.GetUniqueId();
+    var t = this.GetUniqueId();
     return ModelManager_1.ModelManager.InventoryModel.IsAttributeItemHasRedDot(
       t,
     );
@@ -40,4 +40,4 @@ class AttributeItemData extends ItemDataBase_1.ItemDataBase {
   }
 }
 exports.AttributeItemData = AttributeItemData;
-// # sourceMappingURL=AttributeItemData.js.map
+//# sourceMappingURL=AttributeItemData.js.map

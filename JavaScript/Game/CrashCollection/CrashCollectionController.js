@@ -1,17 +1,17 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CrashCollectionController = void 0);
-const UE = require("ue");
-const ControllerBase_1 = require("../../Core/Framework/ControllerBase");
-const GlobalData_1 = require("../GlobalData");
-const ControllerHolder_1 = require("../Manager/ControllerHolder");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const ModelManager_1 = require("../Manager/ModelManager");
-const GameQualitySettingsManager_1 = require("../GameQualitySettings/GameQualitySettingsManager");
-const Stats_1 = require("../../Core/Common/Stats");
-const FNameUtil_1 = require("../../Core/Utils/FNameUtil");
+const UE = require("ue"),
+  ControllerBase_1 = require("../../Core/Framework/ControllerBase"),
+  GlobalData_1 = require("../GlobalData"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  GameQualitySettingsManager_1 = require("../GameQualitySettings/GameQualitySettingsManager"),
+  Stats_1 = require("../../Core/Common/Stats"),
+  FNameUtil_1 = require("../../Core/Utils/FNameUtil");
 class CrashCollectionController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return this.sCe(), super.OnInit();
@@ -54,11 +54,11 @@ class CrashCollectionController extends ControllerBase_1.ControllerBase {
     this._Ce(), this.uCe(), this.cCe(), this.mCe(), this.dCe();
   }
   static _Ce() {
-    let e;
-    let t =
-      ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
-        3,
-      );
+    var e,
+      t =
+        ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
+          3,
+        );
     t?.Valid &&
       ((e = t.ActorLocationProxy),
       (t = t.ActorRotationProxy),
@@ -66,8 +66,8 @@ class CrashCollectionController extends ControllerBase_1.ControllerBase {
       UE.CrashSightProxy.SetCustomDataByFName(this.pCe, t.ToString()));
   }
   static uCe() {
-    let e;
-    let t = ControllerHolder_1.ControllerHolder.CameraController;
+    var e,
+      t = ControllerHolder_1.ControllerHolder.CameraController;
     t &&
       ((e = t.CameraLocation),
       (t = t.CameraRotator),
@@ -75,22 +75,22 @@ class CrashCollectionController extends ControllerBase_1.ControllerBase {
       UE.CrashSightProxy.SetCustomDataByFName(this.SCe, t.ToString()));
   }
   static ECe() {
-    let e = ModelManager_1.ModelManager.TimeOfDayModel;
+    var e = ModelManager_1.ModelManager.TimeOfDayModel;
     e &&
       ((e = e.GameTime.HourMinuteString),
       UE.CrashSightProxy.SetCustomDataByFName(this.ICe, e));
   }
   static cCe() {
-    const e = GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
+    var e = GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
       .GetCurrentQualityInfo()
       .GetGameQualitySettingLevel();
     UE.CrashSightProxy.SetCustomDataByFName(this.LCe, e.toString());
   }
   static mCe() {
-    let e = ModelManager_1.ModelManager.QuestNewModel;
+    var e = ModelManager_1.ModelManager.QuestNewModel;
     e &&
       (e = e.GetQuestsByType(1)) &&
-      e.length !== 0 &&
+      0 !== e.length &&
       ((e = e
         .filter((e) => e.IsProgressing)
         .map((e) => e.Id)
@@ -105,8 +105,8 @@ class CrashCollectionController extends ControllerBase_1.ControllerBase {
       );
   }
   static Bwn() {
-    const e = ModelManager_1.ModelManager.LoginModel.GetReconnectHost();
-    const t = ModelManager_1.ModelManager.LoginModel.GetReconnectPort();
+    var e = ModelManager_1.ModelManager.LoginModel.GetReconnectHost(),
+      t = ModelManager_1.ModelManager.LoginModel.GetReconnectPort();
     UE.CrashSightProxy.SetCustomDataByFName(this.qwn, e + ":" + t);
   }
   static RecordHttpInfo(e) {
@@ -149,4 +149,4 @@ class CrashCollectionController extends ControllerBase_1.ControllerBase {
   (CrashCollectionController.gEe = () => {
     _a.Bwn();
   });
-// # sourceMappingURL=CrashCollectionController.js.map
+//# sourceMappingURL=CrashCollectionController.js.map

@@ -1,5 +1,5 @@
 "use strict";
-let ELevelPlayInteractResetTime;
+var ELevelPlayInteractResetTime;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.levelPlayTypeNameMap = exports.ELevelPlayInteractResetTime = void 0),
   (function (e) {
@@ -20,4 +20,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     LordGym: "领主道馆",
     SpecialElite: "特殊精英",
   });
-// # sourceMappingURL=ILevelPlay.js.map
+//# sourceMappingURL=ILevelPlay.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiBehaviorAudio = void 0);
-const UiAudioModel_1 = require("../../UiAudioModel");
-const AudioStateData_1 = require("./AudioStateData");
+const UiAudioModel_1 = require("../../UiAudioModel"),
+  AudioStateData_1 = require("./AudioStateData");
 class UiBehaviorAudio {
   constructor(i) {
     (this.A1r = void 0),
@@ -36,4 +36,4 @@ class UiBehaviorAudio {
   }
 }
 exports.UiBehaviorAudio = UiBehaviorAudio;
-// # sourceMappingURL=UiBehaviorAudio.js.map
+//# sourceMappingURL=UiBehaviorAudio.js.map

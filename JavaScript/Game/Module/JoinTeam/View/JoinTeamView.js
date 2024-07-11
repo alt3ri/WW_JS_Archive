@@ -1,27 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.JoinTeamView = void 0);
-const UE = require("ue");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const MiniElementItem_1 = require("../../Common/MiniElementItem");
-const JoinTeamController_1 = require("../JoinTeamController");
-const RoleController_1 = require("../../RoleUi/RoleController");
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  MiniElementItem_1 = require("../../Common/MiniElementItem"),
+  JoinTeamController_1 = require("../JoinTeamController"),
+  RoleController_1 = require("../../RoleUi/RoleController");
 class JoinTeamView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.V0i = void 0),
       (this.H0i = !1),
       (this.j0i = () => {
-        var e = ModelManager_1.ModelManager.RoleModel;
-        var i =
-          ModelManager_1.ModelManager.JoinTeamModel.GetRoleDescriptionId();
-        var i = ConfigManager_1.ConfigManager.JoinTeamConfig.GetRoleConfigId(i);
-        var e = e.GetRoleDataById(i);
+        var e = ModelManager_1.ModelManager.RoleModel,
+          i = ModelManager_1.ModelManager.JoinTeamModel.GetRoleDescriptionId(),
+          i = ConfigManager_1.ConfigManager.JoinTeamConfig.GetRoleConfigId(i),
+          e = e.GetRoleDataById(i);
         JoinTeamController_1.JoinTeamController.CloseJoinTeamView(),
           e &&
             RoleController_1.RoleController.OpenRoleMainView(0, e.GetRoleId());
@@ -72,11 +71,11 @@ class JoinTeamView extends UiViewBase_1.UiViewBase {
     );
   }
   K0i() {
-    let e;
-    let i;
-    let t;
-    let r;
-    const s = ModelManager_1.ModelManager.JoinTeamModel.GetRoleDescriptionId();
+    var e,
+      i,
+      t,
+      r,
+      s = ModelManager_1.ModelManager.JoinTeamModel.GetRoleDescriptionId();
     s &&
       ((e = (r = ConfigManager_1.ConfigManager.JoinTeamConfig).GetRoleNameId(
         s,
@@ -92,7 +91,7 @@ class JoinTeamView extends UiViewBase_1.UiViewBase {
       this.J0i());
   }
   Q0i(e) {
-    const i = this.GetItem(5).GetOwner();
+    var i = this.GetItem(5).GetOwner();
     this.V0i = new MiniElementItem_1.MiniElementItem(e, void 0, i);
   }
   $0i(e) {
@@ -111,4 +110,4 @@ class JoinTeamView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.JoinTeamView = JoinTeamView;
-// # sourceMappingURL=JoinTeamView.js.map
+//# sourceMappingURL=JoinTeamView.js.map

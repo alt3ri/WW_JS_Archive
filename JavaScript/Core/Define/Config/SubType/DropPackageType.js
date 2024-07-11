@@ -1,5 +1,5 @@
 "use strict";
-let DropPackageType;
+var DropPackageType;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DropPackageType = void 0),
   (function (e) {
@@ -11,4 +11,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     (DropPackageType =
       exports.DropPackageType || (exports.DropPackageType = {})),
   );
-// # sourceMappingURL=DropPackageType.js.map
+//# sourceMappingURL=DropPackageType.js.map

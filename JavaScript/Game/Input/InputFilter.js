@@ -22,7 +22,7 @@ class InputFilter {
     return this.BlockAxes?.has(t);
   }
   Union(t) {
-    const i = new InputFilter(
+    var i = new InputFilter(
       this.Actions,
       this.BlockActions,
       this.Axes,
@@ -38,4 +38,4 @@ class InputFilter {
   }
 }
 exports.InputFilter = InputFilter;
-// # sourceMappingURL=InputFilter.js.map
+//# sourceMappingURL=InputFilter.js.map

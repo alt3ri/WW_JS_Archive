@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulableBaseState = void 0);
-const UE = require("ue");
-const Global_1 = require("../../../Global");
+const UE = require("ue"),
+  Global_1 = require("../../../Global");
 class SceneItemManipulableBaseState {
   constructor(t) {
     (this.SceneItem = void 0),
@@ -35,11 +35,11 @@ class SceneItemManipulableBaseState {
   OnExit() {}
   End() {}
   StartCameraShake(t) {
-    const i = Global_1.Global.CharacterCameraManager;
+    var i = Global_1.Global.CharacterCameraManager;
     i?.IsValid() && t?.IsValid() && (this.xrr = i.StartMatineeCameraShake(t));
   }
   StopCameraShake() {
-    const t = Global_1.Global.CharacterCameraManager;
+    var t = Global_1.Global.CharacterCameraManager;
     t?.IsValid() && this.xrr?.IsValid() && t.StopCameraShake(this.xrr);
   }
   OpenPhysicsSplit() {
@@ -53,4 +53,4 @@ class SceneItemManipulableBaseState {
   }
 }
 exports.SceneItemManipulableBaseState = SceneItemManipulableBaseState;
-// # sourceMappingURL=SceneItemManipulableBaseState.js.map
+//# sourceMappingURL=SceneItemManipulableBaseState.js.map

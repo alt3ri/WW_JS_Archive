@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerReviewView = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const TowerData_1 = require("../TowerData");
-const TowerReviewItem_1 = require("./TowerReviewItem");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  TowerData_1 = require("../TowerData"),
+  TowerReviewItem_1 = require("./TowerReviewItem");
 class TowerReviewView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -38,9 +38,8 @@ class TowerReviewView extends UiViewBase_1.UiViewBase {
     this.KLo = void 0;
   }
   Og() {
-    const e = TowerData_1.VARIATION_RISK_DIFFICULTY;
-    const r =
-      ModelManager_1.ModelManager.TowerModel.GetDifficultyAllAreaFirstFloor(
+    var e = TowerData_1.VARIATION_RISK_DIFFICULTY,
+      r = ModelManager_1.ModelManager.TowerModel.GetDifficultyAllAreaFirstFloor(
         e,
         !0,
       );
@@ -54,4 +53,4 @@ class TowerReviewView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.TowerReviewView = TowerReviewView;
-// # sourceMappingURL=TowerReviewView.js.map
+//# sourceMappingURL=TowerReviewView.js.map

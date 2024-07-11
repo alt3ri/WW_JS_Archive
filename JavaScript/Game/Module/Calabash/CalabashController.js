@@ -1,16 +1,16 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CalabashController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager");
 class CalabashController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -51,7 +51,7 @@ class CalabashController extends UiControllerBase_1.UiControllerBase {
   static RequestCalabashLevelReward(e) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Calabash", 11, "请求领取幻象等级奖励");
-    const a = Protocol_1.Aki.Protocol.wQn.create();
+    var a = Protocol_1.Aki.Protocol.wQn.create();
     (a.r3n = e),
       Net_1.Net.Call(2557, a, (e) => {
         e &&
@@ -89,11 +89,12 @@ class CalabashController extends UiControllerBase_1.UiControllerBase {
 }
 (exports.CalabashController = CalabashController),
   ((_a = CalabashController).D0t = () => {
-    ModelManager_1.ModelManager.CalabashModel.CalabashUnlockTipsList.length !==
-      0 && CalabashController.R0t();
+    0 !==
+      ModelManager_1.ModelManager.CalabashModel.CalabashUnlockTipsList.length &&
+      CalabashController.R0t();
   }),
   (CalabashController.U0t = (e) => {
-    let a;
+    var a;
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Calabash", 11, "服务端推送吸收器信息"),
       ModelManager_1.ModelManager.CalabashModel.CalabashInstance &&
@@ -120,11 +121,11 @@ class CalabashController extends UiControllerBase_1.UiControllerBase {
   (CalabashController.A0t = (e) => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Calabash", 11, "服务端推送吸收器经验变化信息");
-    const a = e.ZSs;
-    const r = e.zSs;
-    var o = ModelManager_1.ModelManager.CalabashModel.GetCurrentExp();
-    const t = ModelManager_1.ModelManager.CalabashModel.GetCalabashLevel();
-    var o = { AddExp: !0, PreLevel: t, PreExp: o, CurLevel: a, CurExp: r };
+    var a = e.ZSs,
+      r = e.zSs,
+      o = ModelManager_1.ModelManager.CalabashModel.GetCurrentExp(),
+      t = ModelManager_1.ModelManager.CalabashModel.GetCalabashLevel(),
+      o = { AddExp: !0, PreLevel: t, PreExp: o, CurLevel: a, CurExp: r };
     ModelManager_1.ModelManager.CalabashModel.SetCurrentExp(r),
       ModelManager_1.ModelManager.CalabashModel.SetCalabashLevel(a),
       ModelManager_1.ModelManager.CalabashModel.SetCalabashInstanceConfigInfo(
@@ -150,4 +151,4 @@ class CalabashController extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.Info("Calabash", 11, "服务端更新的葫芦已获得奖励等级列表数据"),
       ModelManager_1.ModelManager.CalabashModel.SetCalabashLevelsReward(e.tEs);
   });
-// # sourceMappingURL=CalabashController.js.map
+//# sourceMappingURL=CalabashController.js.map

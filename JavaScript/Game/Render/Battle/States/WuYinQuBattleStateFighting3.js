@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const WuYinQuBattleStateFighting1_1 = require("./WuYinQuBattleStateFighting1");
+const Log_1 = require("../../../../Core/Common/Log"),
+  WuYinQuBattleStateFighting1_1 = require("./WuYinQuBattleStateFighting1");
 class WuYinQuBattleStateFighting3 extends WuYinQuBattleStateFighting1_1.default {
   GetFightingData() {
     return this.Owner.WuYinQuFightingData.WuYinQuFightingData3;
@@ -22,4 +22,4 @@ class WuYinQuBattleStateFighting3 extends WuYinQuBattleStateFighting1_1.default 
   }
 }
 exports.default = WuYinQuBattleStateFighting3;
-// # sourceMappingURL=WuYinQuBattleStateFighting3.js.map
+//# sourceMappingURL=WuYinQuBattleStateFighting3.js.map

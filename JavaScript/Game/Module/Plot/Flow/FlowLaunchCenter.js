@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowLaunchCenter = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiLayerType_1 = require("../../../Ui/Define/UiLayerType");
-const UiManager_1 = require("../../../Ui/UiManager");
-const UiModel_1 = require("../../../Ui/UiModel");
-const ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase");
-const PlotData_1 = require("../PlotData");
-const FlowController_1 = require("./FlowController");
-const FlowData_1 = require("./FlowData");
+const Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiLayerType_1 = require("../../../Ui/Define/UiLayerType"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  UiModel_1 = require("../../../Ui/UiModel"),
+  ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase"),
+  PlotData_1 = require("../PlotData"),
+  FlowController_1 = require("./FlowController"),
+  FlowData_1 = require("./FlowData");
 class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor() {
     super(...arguments),
@@ -23,9 +23,9 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
       (this.pCo = new Array()),
       (this.MAn = 7),
       (this.StartPlotNetworkPending = () => {
-        let e;
+        var e;
         ModelManager_1.ModelManager.PlotModel.IsInPlot ||
-          (ModelManager_1.ModelManager.PlotModel.PlotPendingList.length !== 0 &&
+          (0 !== ModelManager_1.ModelManager.PlotModel.PlotPendingList.length &&
             ((e = ModelManager_1.ModelManager.PlotModel.PlotPendingList[0]),
             this.sXi(e)
               ? (ModelManager_1.ModelManager.PlotModel.PlotPendingList.shift(),
@@ -85,14 +85,14 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
       (this.IAn = (e, t) =>
         !ModelManager_1.ModelManager.SceneTeamModel.IsAllDid()),
       (this.TAn = (e, t) => {
-        const o = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentTeamItem;
+        var o = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentTeamItem;
         return !!o && !o.IsDead();
       }),
       (this.LAn = (e, t) =>
         ModelManager_1.ModelManager.SceneTeamModel.IsTeamReady),
       (this.DAn = (e, t) => {
         return !(
-          (t.PlotLevel === "LevelC" || t.IsWaitAnim) &&
+          ("LevelC" === t.PlotLevel || t.IsWaitAnim) &&
           (this.rXi >
           ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig.WaitCalmTime
             ? (this.rXi = 0)
@@ -141,13 +141,9 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
     _ = !1,
     g,
   ) {
-    let d;
-    let h;
-    const M = ConfigManager_1.ConfigManager.FlowConfig.GetFlowStateActions(
-      e,
-      t,
-      o,
-    );
+    var d,
+      h,
+      M = ConfigManager_1.ConfigManager.FlowConfig.GetFlowStateActions(e, t, o);
     return M
       ? ((a = i ? a : FlowLaunchCenter.hXi--),
         (r = r
@@ -205,10 +201,10 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
         0);
   }
   Tick(e) {
-    let t;
+    var t;
     this.oXi &&
       ((t =
-        ModelManager_1.ModelManager.PlotModel.PlotPendingList.length >= 0
+        0 <= ModelManager_1.ModelManager.PlotModel.PlotPendingList.length
           ? ModelManager_1.ModelManager.PlotModel.PlotPendingList[0]
           : void 0)
         ? this.sXi(t, e) &&
@@ -229,7 +225,7 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
   }
   sXi(e, t = 0) {
     if (!e.IsBreakdown) {
-      if (this.MAn !== 7 && !this.pCo[this.MAn][2](t, e)) return !1;
+      if (7 !== this.MAn && !this.pCo[this.MAn][2](t, e)) return !1;
       for (const o of this.pCo)
         if (o[0] !== this.MAn && !o[2](t, e))
           return (
@@ -303,4 +299,4 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
   }
 }
 (exports.FlowLaunchCenter = FlowLaunchCenter).hXi = -1;
-// # sourceMappingURL=FlowLaunchCenter.js.map
+//# sourceMappingURL=FlowLaunchCenter.js.map

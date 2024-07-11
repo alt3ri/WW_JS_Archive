@@ -1,54 +1,54 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CsvRegistry = exports.ECsvName = void 0);
-const IGlobal_1 = require("../../Interface/IGlobal");
-const Init_1 = require("../../Interface/Init");
-const BranchDefine_1 = require("../BranchDefine");
-const Config_1 = require("../Config");
-const EventSystem_1 = require("../Misc/EventSystem");
-const File_1 = require("../Misc/File");
-const Log_1 = require("../Misc/Log");
-const Util_1 = require("../Misc/Util");
-const BattleTagConfigCsv_1 = require("./BattleTagConfigCsv");
-const BlueprintCsv_1 = require("./BlueprintCsv");
-const BtStateConflictCheckWhiteList_1 = require("./BtStateConflictCheckWhiteList");
-const BuffCsv_1 = require("./BuffCsv");
-const BulletCsv_1 = require("./BulletCsv");
-const CipherGameplay_1 = require("./CipherGameplay");
-const CustomSeqCsv_1 = require("./CustomSeqCsv");
-const DataLayerCsv_1 = require("./DataLayerCsv");
-const DungeonRewardWhiteListCsv_1 = require("./DungeonRewardWhiteListCsv");
-const ExcelFormatCsv_1 = require("./ExcelFormatCsv");
-const ExtendedEntityCsv_1 = require("./ExtendedEntityCsv");
-const FaceExpressionCSV_1 = require("./FaceExpressionCSV");
-const FlowTemplateCsv_1 = require("./FlowTemplateCsv");
-const GlobalConfigCsv_1 = require("./GlobalConfigCsv");
-const InteractAudioMaterialCsv_1 = require("./InteractAudioMaterialCsv");
-const LevelsConfigCsv_1 = require("./LevelsConfigCsv");
-const MonsterDisplay_1 = require("./MonsterDisplay");
-const MontageCsv_1 = require("./MontageCsv");
-const MorseCodeCsv_1 = require("./MorseCodeCsv");
-const OccupationCsv_1 = require("./OccupationCsv");
-const PlayerStateRestrictionCsv_1 = require("./PlayerStateRestrictionCsv");
-const PlotHandBookCsv_1 = require("./PlotHandBookCsv");
-const RandomPrefabCsv_1 = require("./RandomPrefabCsv");
-const RegionMpcCsv_1 = require("./RegionMpcCsv");
-const SetEntityVisibleWhiteListCsv_1 = require("./SetEntityVisibleWhiteListCsv");
-const SexFormat_1 = require("./SexFormat");
-const SignalBreakCsv_1 = require("./SignalBreakCsv");
-const SkyboxCsv_1 = require("./SkyboxCsv");
-const SpecialHateAndSenseCsv_1 = require("./SpecialHateAndSenseCsv");
-const StandbyTagCsv_1 = require("./StandbyTagCsv");
-const TagCsv_1 = require("./TagCsv");
-const TalkerCsv_1 = require("./TalkerCsv");
-const TalkIconCsv_1 = require("./TalkIconCsv");
-const TelecomCsv_1 = require("./TelecomCsv");
-const TidTextCsv_1 = require("./TidTextCsv");
-const TimbreAkEvent_1 = require("./TimbreAkEvent");
-const TimbreCsv_1 = require("./TimbreCsv");
-const UniversalTone_1 = require("./UniversalTone");
-const VarConfigCsv_1 = require("./VarConfigCsv");
-let ECsvName;
+const IGlobal_1 = require("../../Interface/IGlobal"),
+  Init_1 = require("../../Interface/Init"),
+  BranchDefine_1 = require("../BranchDefine"),
+  Config_1 = require("../Config"),
+  EventSystem_1 = require("../Misc/EventSystem"),
+  File_1 = require("../Misc/File"),
+  Log_1 = require("../Misc/Log"),
+  Util_1 = require("../Misc/Util"),
+  BattleTagConfigCsv_1 = require("./BattleTagConfigCsv"),
+  BlueprintCsv_1 = require("./BlueprintCsv"),
+  BtStateConflictCheckWhiteList_1 = require("./BtStateConflictCheckWhiteList"),
+  BuffCsv_1 = require("./BuffCsv"),
+  BulletCsv_1 = require("./BulletCsv"),
+  CipherGameplay_1 = require("./CipherGameplay"),
+  CustomSeqCsv_1 = require("./CustomSeqCsv"),
+  DataLayerCsv_1 = require("./DataLayerCsv"),
+  DungeonRewardWhiteListCsv_1 = require("./DungeonRewardWhiteListCsv"),
+  ExcelFormatCsv_1 = require("./ExcelFormatCsv"),
+  ExtendedEntityCsv_1 = require("./ExtendedEntityCsv"),
+  FaceExpressionCSV_1 = require("./FaceExpressionCSV"),
+  FlowTemplateCsv_1 = require("./FlowTemplateCsv"),
+  GlobalConfigCsv_1 = require("./GlobalConfigCsv"),
+  InteractAudioMaterialCsv_1 = require("./InteractAudioMaterialCsv"),
+  LevelsConfigCsv_1 = require("./LevelsConfigCsv"),
+  MonsterDisplay_1 = require("./MonsterDisplay"),
+  MontageCsv_1 = require("./MontageCsv"),
+  MorseCodeCsv_1 = require("./MorseCodeCsv"),
+  OccupationCsv_1 = require("./OccupationCsv"),
+  PlayerStateRestrictionCsv_1 = require("./PlayerStateRestrictionCsv"),
+  PlotHandBookCsv_1 = require("./PlotHandBookCsv"),
+  RandomPrefabCsv_1 = require("./RandomPrefabCsv"),
+  RegionMpcCsv_1 = require("./RegionMpcCsv"),
+  SetEntityVisibleWhiteListCsv_1 = require("./SetEntityVisibleWhiteListCsv"),
+  SexFormat_1 = require("./SexFormat"),
+  SignalBreakCsv_1 = require("./SignalBreakCsv"),
+  SkyboxCsv_1 = require("./SkyboxCsv"),
+  SpecialHateAndSenseCsv_1 = require("./SpecialHateAndSenseCsv"),
+  StandbyTagCsv_1 = require("./StandbyTagCsv"),
+  TagCsv_1 = require("./TagCsv"),
+  TalkerCsv_1 = require("./TalkerCsv"),
+  TalkIconCsv_1 = require("./TalkIconCsv"),
+  TelecomCsv_1 = require("./TelecomCsv"),
+  TidTextCsv_1 = require("./TidTextCsv"),
+  TimbreAkEvent_1 = require("./TimbreAkEvent"),
+  TimbreCsv_1 = require("./TimbreCsv"),
+  UniversalTone_1 = require("./UniversalTone"),
+  VarConfigCsv_1 = require("./VarConfigCsv");
+var ECsvName;
 !(function (e) {
   (e.Global = "q.全局配置"),
     (e.Talker = "d.对话人"),
@@ -459,8 +459,8 @@ class CsvRegistry {
   }
   oe(e) {
     if (e.endsWith(".json")) {
-      var s = (0, Util_1.getWorkspaceBranch)();
-      var s = (0, Util_1.readJsonObj)(this.ne(e, s));
+      var s = (0, Util_1.getWorkspaceBranch)(),
+        s = (0, Util_1.readJsonObj)(this.ne(e, s));
       if (!s) throw new Error(`Can not load csv table for path [${e}]`);
       const a = [];
       return (
@@ -498,7 +498,7 @@ class CsvRegistry {
     return this.ne(a[0].TablePath, s);
   }
   GetAllBranchPaths(e) {
-    const s = this.CsvTable.get(e);
+    var s = this.CsvTable.get(e);
     if (!s) throw new Error(`Can not find csv table for name [${e}]`);
     if (s.length <= 0) throw new Error(`Table list is empty for name [${e}]`);
     const a = this.te + "/" + s[0].TablePath;
@@ -507,7 +507,7 @@ class CsvRegistry {
     );
   }
   GetTables(e) {
-    const s = this.CsvTable.get(e);
+    var s = this.CsvTable.get(e);
     if (s) return s;
     throw new Error(`Can not find csv table for name [${e}]`);
   }
@@ -515,12 +515,12 @@ class CsvRegistry {
     return this.$.has(e);
   }
   GetCsvConfig(e) {
-    const s = this.$.get(e);
+    var s = this.$.get(e);
     if (s) return s;
     throw new Error(`Can not find csv config for name [${e}]`);
   }
   GetCsvHelpUrl(e) {
-    const s = this.nBn.get(e);
+    var s = this.nBn.get(e);
     if (s) return s;
     throw new Error(`Can not find csv help url for name [${e}]`);
   }
@@ -532,9 +532,9 @@ class CsvRegistry {
     return (a.Tables = this.GetTables(e)), a;
   }
   Save(e, s, a) {
-    let t;
-    let r;
-    const C = this.$.get(e);
+    var t,
+      r,
+      C = this.$.get(e);
     C
       ? this.CsvTable.get(e)
         ? ((t = this.ie(C)),
@@ -550,7 +550,7 @@ class CsvRegistry {
     if (this.K.has(e)) return this.K.get(e);
     let s = this.K.get(e);
     if (!s) {
-      const a = this.H.get(e);
+      var a = this.H.get(e);
       if (!a) throw new Error(`No config for csvClass [${e.name}]`);
       (s = new a.CsvClass()).Bind(this.Load(a.Name)),
         this.K.set(e, s),
@@ -560,24 +560,24 @@ class CsvRegistry {
   }
   GetCsvByName(e) {
     if (this.ee.has(e)) return this.ee.get(e);
-    const s = this.$.get(e);
+    var s = this.$.get(e);
     if (s) return this.GetCsv(s.CsvClass);
     throw new Error(`No config for csvName [${e}]`);
   }
   GetCsvClassByName(e) {
-    const s = this.$.get(e);
+    var s = this.$.get(e);
     if (s) return s.CsvClass;
     throw new Error(`No config for csvName [${e}]`);
   }
   RefreshCsvData(e) {
-    const s = this.H.get(e);
+    var s = this.H.get(e);
     if (!s) throw new Error(`No config for csvClass [${e.name}]`);
-    const a = new s.CsvClass();
+    var a = new s.CsvClass();
     a.Bind(this.Load(s.Name)), this.K.set(e, a), this.ee.set(a.Name, a);
   }
   GetAllCsvRows(e, s = !1) {
-    var e = this.GetCsv(e);
-    const a = [];
+    var e = this.GetCsv(e),
+      a = [];
     a.push(...e.Rows);
     for (const t of e.OtherBranchCsv)
       ((0, Util_1.isNodeJsPlatform)() ||
@@ -597,4 +597,4 @@ class CsvRegistry {
   }
 }
 exports.CsvRegistry = CsvRegistry;
-// # sourceMappingURL=CsvRegistry.js.map
+//# sourceMappingURL=CsvRegistry.js.map

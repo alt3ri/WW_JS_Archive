@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LanguageController = void 0);
-const LanguageSystem_1 = require("../../../Core/Common/LanguageSystem");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
+const LanguageSystem_1 = require("../../../Core/Common/LanguageSystem"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder");
 class LanguageController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return this.OnAddEvents(), !0;
@@ -28,7 +28,7 @@ class LanguageController extends ControllerBase_1.ControllerBase {
     );
   }
   static RequestSetLanguage(e) {
-    const t = new Protocol_1.Aki.Protocol.B_s();
+    var t = new Protocol_1.Aki.Protocol.B_s();
     (t.d5n = e),
       Net_1.Net.Call(22277, t, (e) => {
         e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
@@ -43,4 +43,4 @@ class LanguageController extends ControllerBase_1.ControllerBase {
   t = LanguageSystem_1.LanguageSystem.GetLanguageDefineByCode(t).LanguageType;
   LanguageController.RequestSetLanguage(t);
 };
-// # sourceMappingURL=LanguageController.js.map
+//# sourceMappingURL=LanguageController.js.map

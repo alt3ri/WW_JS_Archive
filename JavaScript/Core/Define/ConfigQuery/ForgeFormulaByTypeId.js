@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configForgeFormulaByTypeId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const ForgeFormula_1 = require("../Config/ForgeFormula");
-const DB = "db_forge.db";
-const FILE = "d.锻造.xlsx";
-const TABLE = "ForgeFormula";
-const COMMAND = "select BinData from `ForgeFormula` where TypeId=?";
-const KEY_PREFIX = "ForgeFormulaByTypeId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  ForgeFormula_1 = require("../Config/ForgeFormula"),
+  DB = "db_forge.db",
+  FILE = "d.锻造.xlsx",
+  TABLE = "ForgeFormula",
+  COMMAND = "select BinData from `ForgeFormula` where TypeId=?",
+  KEY_PREFIX = "ForgeFormulaByTypeId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX = "configForgeFormulaByTypeId.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configForgeFormulaByTypeId.GetConfigList(";
 exports.configForgeFormulaByTypeId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -29,7 +29,7 @@ exports.configForgeFormulaByTypeId = {
     );
   },
   GetConfigList: (o, e = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -44,13 +44,14 @@ exports.configForgeFormulaByTypeId = {
         const a = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "TypeId",
               o,
-            ]) !== 1
+            ])
           )
             break;
-          let i = void 0;
+          var i = void 0;
           if (
             (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -78,4 +79,4 @@ exports.configForgeFormulaByTypeId = {
     }
   },
 };
-// # sourceMappingURL=ForgeFormulaByTypeId.js.map
+//# sourceMappingURL=ForgeFormulaByTypeId.js.map

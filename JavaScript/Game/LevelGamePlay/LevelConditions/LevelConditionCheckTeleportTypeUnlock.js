@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckTeleportTypeUnlock = void 0);
-const TeleporterById_1 = require("../../../Core/Define/ConfigQuery/TeleporterById");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const TeleporterById_1 = require("../../../Core/Define/ConfigQuery/TeleporterById"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionCheckTeleportTypeUnlock extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, r, ...o) {
     return !(
@@ -18,4 +18,4 @@ class LevelConditionCheckTeleportTypeUnlock extends LevelGeneralBase_1.LevelCond
 }
 exports.LevelConditionCheckTeleportTypeUnlock =
   LevelConditionCheckTeleportTypeUnlock;
-// # sourceMappingURL=LevelConditionCheckTeleportTypeUnlock.js.map
+//# sourceMappingURL=LevelConditionCheckTeleportTypeUnlock.js.map

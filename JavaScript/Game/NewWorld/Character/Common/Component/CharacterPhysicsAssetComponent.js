@@ -1,32 +1,37 @@
 "use strict";
-let CharacterPhysicsAssetComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, s, i) {
-    let o;
-    const r = arguments.length;
-    let h =
-      r < 3 ? e : i === null ? (i = Object.getOwnPropertyDescriptor(e, s)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      h = Reflect.decorate(t, e, s, i);
-    else
-      for (let n = t.length - 1; n >= 0; n--)
-        (o = t[n]) && (h = (r < 3 ? o(h) : r > 3 ? o(e, s, h) : o(e, s)) || h);
-    return r > 3 && h && Object.defineProperty(e, s, h), h;
-  };
+var CharacterPhysicsAssetComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, s, i) {
+      var o,
+        r = arguments.length,
+        h =
+          r < 3
+            ? e
+            : null === i
+              ? (i = Object.getOwnPropertyDescriptor(e, s))
+              : i;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        h = Reflect.decorate(t, e, s, i);
+      else
+        for (var n = t.length - 1; 0 <= n; n--)
+          (o = t[n]) &&
+            (h = (r < 3 ? o(h) : 3 < r ? o(e, s, h) : o(e, s)) || h);
+      return 3 < r && h && Object.defineProperty(e, s, h), h;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterPhysicsAssetComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const ragDoll = new UE.FName("RagDoll");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  ragDoll = new UE.FName("RagDoll");
 class PhysicsState {
   constructor() {
     (this.Active = !1), (this.QuitCache = !1);
@@ -51,7 +56,7 @@ class PhysicsAssetLoader {
       (this.ActorComp = void 0);
   }
   SetDataAndLoadAsset(t, e, s) {
-    if (((this.LoadSuccess = !1), e.BoneNames.length === 0))
+    if (((this.LoadSuccess = !1), 0 === e.BoneNames.length))
       return (
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -63,7 +68,7 @@ class PhysicsAssetLoader {
         !1
       );
     const i = e.PhysicsAssetPath;
-    if (!i || i === "")
+    if (!i || "" === i)
       return (
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -118,7 +123,7 @@ let CharacterPhysicsAssetComponent =
         }),
         (this.Xjr = (t, e) => {
           e ? this.Qjr++ : this.Qjr--,
-            this.Qjr === 0 ? this.$jr(!1) : this.$jr(!0);
+            0 === this.Qjr ? this.$jr(!1) : this.$jr(!0);
         });
     }
     static get Dependencies() {
@@ -141,15 +146,15 @@ let CharacterPhysicsAssetComponent =
         return (this.jjr = !1), !(this.Hte = void 0);
       (this.Lie = this.Entity.GetComponent(185)),
         (this.oRe = this.Entity.GetComponent(160));
-      var t = this.Hte.CreatureData.GetRoleConfig().RoleBody;
-      var t =
-        ConfigManager_1.ConfigManager.EntityPhysicsAssetConfig.GetPhysicsAssetConfigByRoleBody(
-          t,
-        );
+      var t = this.Hte.CreatureData.GetRoleConfig().RoleBody,
+        t =
+          ConfigManager_1.ConfigManager.EntityPhysicsAssetConfig.GetPhysicsAssetConfigByRoleBody(
+            t,
+          );
       for (const e of CharacterPhysicsAssetComponent_1.Yjr)
         this.Lie.HasTag(e) && this.Qjr++;
       if (
-        (this.Wjr.InitBaseState(this.Qjr > 0),
+        (this.Wjr.InitBaseState(0 < this.Qjr),
         (this.jjr = this.Kjr.SetDataAndLoadAsset(this.Hte, t, () => {
           this.$jr(this.Wjr.Active, !0);
         })),
@@ -247,7 +252,7 @@ let CharacterPhysicsAssetComponent =
       }
     }
     GetRagRollQuitState() {
-      const t = this.Wjr.QuitCache;
+      var t = this.Wjr.QuitCache;
       return (this.Wjr.QuitCache = !1), t;
     }
     SetDebug(t) {
@@ -271,4 +276,4 @@ let CharacterPhysicsAssetComponent =
       CharacterPhysicsAssetComponent,
     )),
   (exports.CharacterPhysicsAssetComponent = CharacterPhysicsAssetComponent);
-// # sourceMappingURL=CharacterPhysicsAssetComponent.js.map
+//# sourceMappingURL=CharacterPhysicsAssetComponent.js.map

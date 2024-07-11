@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InventoryGiftItem = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class InventoryGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -25,7 +25,7 @@ class InventoryGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
           this.Yci && this.Yci(this.dqt);
       }),
       (this.Ysi = (i) => {
-        i = i === 1;
+        i = 1 === i;
         this.Xci && this.Xci.RootUIComp.SetUIActive(i),
           this.$ci && this.$ci(this.R4e, this.Xci, i, this.dqt);
       });
@@ -71,9 +71,9 @@ class InventoryGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
   RefreshItem(i, t = 0) {
     this.PIt = i.ItemId;
     var s = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-      this.PIt,
-    );
-    var s = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(s.Name) ?? "";
+        this.PIt,
+      ),
+      s = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(s.Name) ?? "";
     this.OGe.SetText(s),
       LguiUtil_1.LguiUtil.SetLocalText(this.Qci, "Quantity", t),
       this.Xgt.RefreshByConfigId(i.ItemId);
@@ -86,4 +86,4 @@ class InventoryGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.InventoryGiftItem = InventoryGiftItem;
-// # sourceMappingURL=InventoryGiftItem.js.map
+//# sourceMappingURL=InventoryGiftItem.js.map

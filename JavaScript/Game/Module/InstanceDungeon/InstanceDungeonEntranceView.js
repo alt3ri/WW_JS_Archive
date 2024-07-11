@@ -1,47 +1,47 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonEntranceView = void 0);
-const ue_1 = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const InstOnlineType_1 = require("../../../Core/Define/Config/SubType/InstOnlineType");
-const InstanceDungeonById_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonById");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const ActivityDoubleRewardController_1 = require("../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController");
-const ActivityMowingController_1 = require("../Activity/ActivityContent/Mowing/ActivityMowingController");
-const AdventureDefine_1 = require("../AdventureGuide/AdventureDefine");
-const CommonCurrencyItem_1 = require("../Common/CommonCurrencyItem");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
-const EditBattleTeamController_1 = require("../EditBattleTeam/EditBattleTeamController");
-const HelpController_1 = require("../Help/HelpController");
-const ItemDefines_1 = require("../Item/Data/ItemDefines");
-const OnlineController_1 = require("../Online/OnlineController");
-const PowerController_1 = require("../Power/PowerController");
-const RoguelikeInstanceBtnPanel_1 = require("../Roguelike/View/RoguelikeInstanceBtnPanel");
-const RoleController_1 = require("../RoleUi/RoleController");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const TowerElementItem_1 = require("../TowerDetailUi/View/TowerElementItem");
-const GenericLayout_1 = require("../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const DynScrollView_1 = require("../Util/ScrollView/DynScrollView");
-const InstanceDungeonData_1 = require("./Define/InstanceDungeonData");
-const ExchangeRewardModel_1 = require("./ExchangeReward/ExchangeRewardModel");
-const InstanceDetectDynamicItem_1 = require("./InstanceDetectDynamicItem");
-const InstanceDetectItem_1 = require("./InstanceDetectItem");
-const InstanceDungeonEntranceController_1 = require("./InstanceDungeonEntranceController");
-const InstanceDungeonEntranceRewardItem_1 = require("./InstanceDungeonEntranceRewardItem");
-const InstanceDungeonMatchingCountDown_1 = require("./InstanceDungeonMatchingCountDown");
-const InstanceDungeonTrialRoleItem_1 = require("./InstanceDungeonTrialRoleItem");
-const MowingDifficultyDropDownPanel_1 = require("./MowingDifficultyDropDownPanel");
+const ue_1 = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  InstOnlineType_1 = require("../../../Core/Define/Config/SubType/InstOnlineType"),
+  InstanceDungeonById_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonById"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ActivityDoubleRewardController_1 = require("../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController"),
+  ActivityMowingController_1 = require("../Activity/ActivityContent/Mowing/ActivityMowingController"),
+  AdventureDefine_1 = require("../AdventureGuide/AdventureDefine"),
+  CommonCurrencyItem_1 = require("../Common/CommonCurrencyItem"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  EditBattleTeamController_1 = require("../EditBattleTeam/EditBattleTeamController"),
+  HelpController_1 = require("../Help/HelpController"),
+  ItemDefines_1 = require("../Item/Data/ItemDefines"),
+  OnlineController_1 = require("../Online/OnlineController"),
+  PowerController_1 = require("../Power/PowerController"),
+  RoguelikeInstanceBtnPanel_1 = require("../Roguelike/View/RoguelikeInstanceBtnPanel"),
+  RoleController_1 = require("../RoleUi/RoleController"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  TowerElementItem_1 = require("../TowerDetailUi/View/TowerElementItem"),
+  GenericLayout_1 = require("../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  DynScrollView_1 = require("../Util/ScrollView/DynScrollView"),
+  InstanceDungeonData_1 = require("./Define/InstanceDungeonData"),
+  ExchangeRewardModel_1 = require("./ExchangeReward/ExchangeRewardModel"),
+  InstanceDetectDynamicItem_1 = require("./InstanceDetectDynamicItem"),
+  InstanceDetectItem_1 = require("./InstanceDetectItem"),
+  InstanceDungeonEntranceController_1 = require("./InstanceDungeonEntranceController"),
+  InstanceDungeonEntranceRewardItem_1 = require("./InstanceDungeonEntranceRewardItem"),
+  InstanceDungeonMatchingCountDown_1 = require("./InstanceDungeonMatchingCountDown"),
+  InstanceDungeonTrialRoleItem_1 = require("./InstanceDungeonTrialRoleItem"),
+  MowingDifficultyDropDownPanel_1 = require("./MowingDifficultyDropDownPanel");
 class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -79,7 +79,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
         PowerController_1.PowerController.OpenPowerView();
       }),
       (this.$si = () => {
-        let e =
+        var e =
           ActivityMowingController_1.ActivityMowingController.GetMowingActivityData();
         e &&
           ((e = e.GetActivityLevelCountdownText(this.NUe)),
@@ -95,7 +95,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
           this.Thi());
       }),
       (this.Lhi = (e, t, i) => {
-        const n = new InstanceDetectItem_1.InstanceDetectItem();
+        var n = new InstanceDetectItem_1.InstanceDetectItem();
         return (
           n.BindClickInstanceCallback(this.Dhi),
           n.BindClickSeriesCallback(this.Rhi),
@@ -112,7 +112,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
         this.Chi.RefreshByData(t), this.Chi.BindLateUpdate(this.Csi);
       }),
       (this.Csi = () => {
-        const e =
+        var e =
           (this.dhi - 1) / (this.nhi.size + (this.shi.get(this.ihi) ?? 0));
         this.GetUIDynScrollViewComponent(3).SetScrollProgress(e),
           this.Chi?.UnBindLateUpdate();
@@ -161,7 +161,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
                   this.NUe,
                 ),
               );
-              let t, i;
+              var t, i;
               ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceLevelTooLow(
                 this.NUe,
               )
@@ -204,7 +204,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
             );
       }),
       (this.bhi = () => {
-        let e;
+        var e;
         ModelManager_1.ModelManager.GameModeModel.IsMulti
           ? ((ModelManager_1.ModelManager.EditBattleTeamModel.InstanceMultiEnter =
               !0),
@@ -241,7 +241,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
             );
       }),
       (this.qhi = () => {
-        let e;
+        var e;
         OnlineController_1.OnlineController.ShowTipsWhenOnlineDisabled() &&
           (ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceCanChallenge(
             this.NUe,
@@ -255,8 +255,8 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
                     !0),
                   this.ohi.BindOnStopTimer(
                     () =>
-                      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() !==
-                      1,
+                      1 !==
+                      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState(),
                   ),
                   !ModelManager_1.ModelManager.GameModeModel.IsMulti ||
                   (e =
@@ -309,9 +309,9 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
           this.UiViewSequence.PlaySequencePurely("Popup", !1, !0);
       }),
       (this.Ohi = (e) => {
-        e === "PowerView"
+        "PowerView" === e
           ? this.Bhi()
-          : e === "ActivityRewardPopUpView" && this.khi();
+          : "ActivityRewardPopUpView" === e && this.khi();
       }),
       (this.G$e = () => {
         switch (
@@ -352,14 +352,14 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
         return new TowerElementItem_1.TowerElementItem();
       }),
       (this.YZe = () => {
-        const e =
+        var e =
           ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.GetConfig(
             this.thi,
           ).HelpButtonId;
         HelpController_1.HelpController.OpenHelpById(e);
       }),
       (this.Whi = () => {
-        const e =
+        var e =
           ActivityMowingController_1.ActivityMowingController.GetMowingActivityData();
         e &&
           UiManager_1.UiManager.OpenView(
@@ -436,7 +436,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
     (this.fhi =
       new InstanceDungeonEntranceRewardItem_1.InstanceDungeonEntranceRewardItem()),
       await this.fhi.CreateByActorAsync(this.GetItem(33).GetOwner());
-    const e = this.GetItem(17);
+    var e = this.GetItem(17);
     (this.dbt = new CommonCurrencyItem_1.CommonCurrencyItem()),
       (this.dbt.SkipAutoAddEvent = !0),
       await this.dbt.CreateThenShowByActorAsync(e.GetOwner()),
@@ -462,30 +462,30 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnStart() {
     this.UiViewSequence.AddSequenceFinishEvent("Close01", this.yhi);
-    let t;
-    let i;
-    let e;
-    var n = this.GetItem(17);
-    var n =
-      (this.dbt.ShowWithoutText(ItemDefines_1.EItemId.Power),
-      this.SetPowerCount(),
-      this.dbt.SetButtonFunction(this.Ihi),
-      ModelManager_1.ModelManager.FunctionModel.IsOpen(10017) ||
-        n.SetUIActive(!1),
-      (this.ghi =
-        new InstanceDungeonEntranceRewardItem_1.InstanceDungeonEntranceRewardItem()),
-      this.ghi.SetRootActor(this.GetItem(31).GetOwner(), !0),
-      (this.Mhi = new GenericLayout_1.GenericLayout(
-        this.GetHorizontalLayout(36),
-        this.jhi,
-      )),
-      (this.thi =
-        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.EntranceId),
-      (this.rhi = []),
-      (this.shi = new Map()),
-      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetSortedByTitleEntranceInstanceIdList(
-        this.thi,
-      ));
+    var t,
+      i,
+      e,
+      n = this.GetItem(17),
+      n =
+        (this.dbt.ShowWithoutText(ItemDefines_1.EItemId.Power),
+        this.SetPowerCount(),
+        this.dbt.SetButtonFunction(this.Ihi),
+        ModelManager_1.ModelManager.FunctionModel.IsOpen(10017) ||
+          n.SetUIActive(!1),
+        (this.ghi =
+          new InstanceDungeonEntranceRewardItem_1.InstanceDungeonEntranceRewardItem()),
+        this.ghi.SetRootActor(this.GetItem(31).GetOwner(), !0),
+        (this.Mhi = new GenericLayout_1.GenericLayout(
+          this.GetHorizontalLayout(36),
+          this.jhi,
+        )),
+        (this.thi =
+          ModelManager_1.ModelManager.InstanceDungeonEntranceModel.EntranceId),
+        (this.rhi = []),
+        (this.shi = new Map()),
+        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetSortedByTitleEntranceInstanceIdList(
+          this.thi,
+        ));
     this.nhi = new Map();
     for ([t, i] of n) {
       let e = this.nhi.get(i);
@@ -505,12 +505,12 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
       InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.CancelMatchRequest();
     }),
       this.ohi?.BindOnAfterCloseAnimation((e) => {
-        e === "Close" && this.Fhi(!1);
+        "Close" === e && this.Fhi(!1);
       }),
       !this.rhi || this.rhi.length <= 0
         ? (this.GetItem(14).SetUIActive(!1), this.GetItem(5).SetUIActive(!1))
-        : ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() ===
-            1 &&
+        : 1 ===
+            ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() &&
           (this.Fhi(!0),
           this.ohi?.PlayAnimation("Start"),
           this.ohi.StartTimer());
@@ -519,8 +519,8 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
     this.Shi?.UnBindRedDot();
   }
   OnBeforeDestroy() {
-    ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() ===
-      1 &&
+    1 ===
+      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() &&
       ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
         "MatchingBackground",
       ),
@@ -575,7 +575,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
       this.dbt?.RemoveEventListener();
   }
   h7e() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.GetConfig(
         this.thi,
       );
@@ -583,13 +583,13 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
       e.TitleSprite
         ? this.SetSpriteByPath(e.TitleSprite, this.GetSprite(2), !0)
         : this.GetSprite(2).SetUIActive(!1),
-      this.GetButton(38).RootUIComp.SetUIActive(e.HelpButtonId !== 0),
+      this.GetButton(38).RootUIComp.SetUIActive(0 !== e.HelpButtonId),
       this.Qhi(),
       this.Ahi(),
       this.khi();
   }
   Jsi() {
-    let e;
+    var e;
     return (
       !!ActivityMowingController_1.ActivityMowingController.IsMowingInstanceDungeon(
         this.NUe,
@@ -600,20 +600,20 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
     );
   }
   Qhi() {
-    const e = this.Uhi();
+    var e = this.Uhi();
     this.Chi.RefreshByData(e),
       this.GetItem(14).SetUIActive(!0),
       this.Chi.BindLateUpdate(() => {
-        const e = this.Chi.GetScrollItemCount();
+        var e = this.Chi.GetScrollItemCount();
         this.dhi + 1 < e || this.Chi.ScrollToItemIndex(this.dhi),
           this.Chi.UnBindLateUpdate();
       });
   }
   khi() {
-    const e =
-      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.IsMowingInstanceDungeon();
-    const t =
-      ActivityMowingController_1.ActivityMowingController.GetMowingActivityData();
+    var e =
+        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.IsMowingInstanceDungeon(),
+      t =
+        ActivityMowingController_1.ActivityMowingController.GetMowingActivityData();
     this.GetItem(41).SetUIActive(e && void 0 !== t),
       e &&
         void 0 !== t &&
@@ -634,33 +634,33 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
   }
   Xhi() {}
   $hi() {
-    const e = this.Khi;
+    var e = this.Khi;
     e &&
       (this.GetText(6).ShowTextNew(e.MapName),
       this.GetText(7).ShowTextNew(e.DungeonDesc),
       this.SetTextureByPath(e.BannerPath, this.GetTexture(8)));
   }
   SetPowerCount() {
-    const e = ModelManager_1.ModelManager.PowerModel.PowerCount;
-    const t = ConfigManager_1.ConfigManager.PowerConfig.GetPowerNaturalLimit();
+    var e = ModelManager_1.ModelManager.PowerModel.PowerCount,
+      t = ConfigManager_1.ConfigManager.PowerConfig.GetPowerNaturalLimit();
     this.dbt.SetCountText("PowerShow", e, t);
   }
   Phi() {
-    const e =
+    var e =
       this.Khi.InstSubType === AdventureDefine_1.EDungeonSubType.Roguelike;
     this.Shi.SetUiActive(e);
   }
   tli() {
-    const e = this.Khi.InstSubType === AdventureDefine_1.EDungeonSubType.Mowing;
-    const t =
-      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceUnlock(
-        this.Khi.Id,
-      );
+    var e = this.Khi.InstSubType === AdventureDefine_1.EDungeonSubType.Mowing,
+      t =
+        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceUnlock(
+          this.Khi.Id,
+        );
     this.Ehi?.SetActive(e && t),
       e && t && this.Ehi?.RefreshByInstanceId(this.NUe);
   }
   Ahi() {
-    let e;
+    var e;
     ModelManager_1.ModelManager.GameModeModel.IsMulti &&
     !ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()
       ? (this.SetButtonUiActive(10, !1),
@@ -685,33 +685,33 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
                 this.SetButtonUiActive(11, !1)));
   }
   Yhi() {
-    var e = this.Khi.RewardId;
-    var e =
-      ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardConfig(
-        e,
-      )?.RewardId;
-    var e =
-      (this.ghi.SetRewardBtnActive((e?.size ?? 0) > 1),
-      ModelManager_1.ModelManager.ExchangeRewardModel?.IsFinishInstance(
-        this.Khi.Id,
-      ));
-    var t = e
-      ? 0
-      : ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardPreviewRewardList(
-          this.Khi.FirstRewardId,
-        )?.length;
-    var t =
-      (this.ghi.SetFirstRewardLength(t),
-      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(this.NUe)
-        .MonsterPreview);
-    var i = this.GetButton(19).GetOwner();
-    var t = t.length > 0;
-    var i =
-      (i.GetUIItem().SetUIActive(t),
-      this.GetItem(40).SetUIActive(t),
-      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetInstanceDungeonReward(
-        this.NUe,
-      ));
+    var e = this.Khi.RewardId,
+      e =
+        ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardConfig(
+          e,
+        )?.RewardId,
+      e =
+        (this.ghi.SetRewardBtnActive(1 < (e?.size ?? 0)),
+        ModelManager_1.ModelManager.ExchangeRewardModel?.IsFinishInstance(
+          this.Khi.Id,
+        )),
+      t = e
+        ? 0
+        : ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardPreviewRewardList(
+            this.Khi.FirstRewardId,
+          )?.length,
+      t =
+        (this.ghi.SetFirstRewardLength(t),
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(this.NUe)
+          .MonsterPreview),
+      i = this.GetButton(19).GetOwner(),
+      t = 0 < t.length,
+      i =
+        (i.GetUIItem().SetUIActive(t),
+        this.GetItem(40).SetUIActive(t),
+        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetInstanceDungeonReward(
+          this.NUe,
+        ));
     (this.sOe = i[0]),
       this.sOe.length <= 0
         ? this.GetItem(31).SetUIActive(!1)
@@ -720,7 +720,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
             ConfigManager_1.ConfigManager.InstanceDungeonConfig?.GetInstanceFirstRewardId(
               this.NUe,
             )),
-          this.ghi.RefreshRewardText(!e && t !== 0)),
+          this.ghi.RefreshRewardText(!e && 0 !== t)),
       this.ghi.RefreshReward(this.sOe, !i[1]),
       this.ghi.SetDoubleRewardActivity(
         ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetDungeonUpActivity(
@@ -730,12 +730,12 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
   }
   Jhi() {
     var e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-      this.NUe,
-    );
-    var e =
-      ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardPreviewRewardList(
-        e.RepeatRewardId,
-      );
+        this.NUe,
+      ),
+      e =
+        ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardPreviewRewardList(
+          e.RepeatRewardId,
+        );
     (this.ahi = e),
       this.ahi.length <= 0
         ? this.GetItem(33).SetUIActive(!1)
@@ -743,10 +743,10 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
       this.fhi.RefreshReward(this.ahi, !0);
   }
   zhi() {
-    let e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-      this.NUe,
-    );
-    const t = e?.TrialRoleFormation;
+    var e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+        this.NUe,
+      ),
+      t = e?.TrialRoleFormation;
     if (t) {
       var i =
         ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetTrialRoleConfig(
@@ -768,22 +768,22 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
             ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetTrialRoleConfig(
               t,
             )),
-          (i = ModelManager_1.ModelManager.WorldLevelModel.Sex) === 0
+          0 === (i = ModelManager_1.ModelManager.WorldLevelModel.Sex)
             ? (n.push(...e.FemaleFormation), n.push(...e.FemaleDelayFormation))
-            : i === 1 &&
+            : 1 === i &&
               (n.push(...e.MaleFormation), n.push(...e.MaleDelayFormation))),
       !n || n.length <= 0)
     )
       this.GetItem(21).SetUIActive(!1);
     else {
       this.GetItem(21).SetUIActive(!0);
-      const s = this.GetItem(22);
-      const r = s.GetParentAsUIItem();
+      var s = this.GetItem(22),
+        r = s.GetParentAsUIItem();
       let e = 0;
       for (const h of this.hhi) h.SetActive(!1);
       for (const l of n) {
-        var o;
-        let a = this.hhi[e++];
+        var o,
+          a = this.hhi[e++];
         a
           ? (a.SetActive(!0), a.SetRoleId(l))
           : ((a = LguiUtil_1.LguiUtil.CopyItem(s, r)),
@@ -794,20 +794,20 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
                   l,
                 )).CreateByActorAsync(a.GetOwner()),
               ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(l))),
-            o.SetActive(a.RoleType === 1),
+            o.SetActive(1 === a.RoleType),
             this.hhi.push(o));
       }
       s?.SetUIActive(!1);
     }
   }
   Hhi() {
-    const e = this.GetItem(15);
-    const t = this.GetItem(30);
-    const i = this.GetText(16);
-    let n =
-      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() ===
-      1;
-    const s = this.NUe;
+    var e = this.GetItem(15),
+      t = this.GetItem(30),
+      i = this.GetText(16),
+      n =
+        1 ===
+        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState(),
+      s = this.NUe;
     s &&
       (this.GetItem(20).SetUIActive(!1),
       ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceUnlock(
@@ -824,7 +824,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
           e.SetUIActive(!0)));
   }
   ili() {
-    let e =
+    var e =
       ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetInstancePowerCost(
         this.NUe,
       );
@@ -843,7 +843,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
     ).SetUIActive(!1);
   }
   Fhi(e) {
-    const t =
+    var t =
       ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceUnlock(
         this.NUe,
       );
@@ -851,7 +851,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
   }
   x9s() {
     const e = this.NUe;
-    const t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(35);
+    var t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(35);
     t.FunctionMap.set(2, () => {
       this.Bhi(),
         (ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId =
@@ -870,16 +870,16 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
   }
   Uhi() {
     this.dhi = 0;
-    const e = [];
+    var e = [];
     let t = -1;
     this.oli();
-    let i;
-    let n;
-    const s = this.shi.size === 1;
+    var i,
+      n,
+      s = 1 === this.shi.size;
     let r = !1;
     for ([i, n] of this.nhi) {
-      const o = i === this.ihi;
-      const a = this.shi.get(i) === 1;
+      var o = i === this.ihi,
+        a = 1 === this.shi.get(i);
       for (const l of n) {
         if ((t !== i && !s) || (t !== i && s && a)) {
           var h = new InstanceDungeonData_1.InstanceDetectionDynamicData();
@@ -910,16 +910,16 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
     return e;
   }
   oli() {
-    let e = 0;
-    let t = 0;
-    let i = 0;
+    let e = 0,
+      t = 0,
+      i = 0;
     this.shi.clear();
-    let n;
-    let s;
-    let r;
-    let o;
-    let a;
-    const h = !!this.NUe;
+    var n,
+      s,
+      r,
+      o,
+      a,
+      h = !!this.NUe;
     for ([n, s] of this.nhi)
       if (((t = t || n), this.shi.set(n, s.length), !h))
         for (const l of s)
@@ -950,26 +950,26 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
   }
   Zhi() {
     var e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-      this.NUe,
-    ).RewardId;
-    var e =
-      ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardConfig(
-        e,
-      )?.SharedId;
+        this.NUe,
+      ).RewardId,
+      e =
+        ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardConfig(
+          e,
+        )?.SharedId;
     if (e) {
       var t =
-        ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeShareConfig(
-          e,
-        );
-      var e =
-        (this.GetItem(24).SetUIActive(!0),
-        this.GetText(28).SetUIActive(!0),
-        ModelManager_1.ModelManager.ExchangeRewardModel.GetExchangeRewardShareCount(
-          e,
-        ));
-      var t = t.MaxCount;
+          ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeShareConfig(
+            e,
+          ),
+        e =
+          (this.GetItem(24).SetUIActive(!0),
+          this.GetText(28).SetUIActive(!0),
+          ModelManager_1.ModelManager.ExchangeRewardModel.GetExchangeRewardShareCount(
+            e,
+          )),
+        t = t.MaxCount;
       const n = t - e;
-      if ((this.GetText(28).SetText((n >= 0 ? n : 0) + "/" + t), n === t))
+      if ((this.GetText(28).SetText((0 <= n ? n : 0) + "/" + t), n === t))
         return void this.GetItem(25).SetUIActive(!1);
     } else {
       (e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
@@ -981,7 +981,7 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
           ));
       if (t?.LimitChallengedTimes) {
         this.GetItem(24).SetUIActive(!0), this.GetText(28).SetUIActive(!0);
-        const n = t.LeftChallengedTimes >= 0 ? t.LeftChallengedTimes : 0;
+        const n = 0 <= t.LeftChallengedTimes ? t.LeftChallengedTimes : 0;
         if (
           (this.GetText(28).SetText(n + "/" + t.LimitChallengedTimes),
           n === t.LimitChallengedTimes)
@@ -1000,31 +1000,31 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
           .EntranceEndTime,
       ));
     const n = Number(i) - TimeUtil_1.TimeUtil.GetServerTime();
-    i > 0 && n > 0
+    0 < i && 0 < n
       ? (this.GetItem(25).SetUIActive(!0),
         (t = TimeUtil_1.TimeUtil.CalculateRemainingTime(n)),
         LguiUtil_1.LguiUtil.SetLocalText(
           this.GetText(29),
           t.TextId,
-          t.TimeValue > 0 ? t.TimeValue : 1,
+          0 < t.TimeValue ? t.TimeValue : 1,
         ))
       : this.GetItem(25).SetUIActive(!1);
   }
   eli() {
-    const e = this.Khi;
-    var t = e?.MonsterTips;
-    var t =
-      (t
-        ? (this.GetItem(34)?.SetUIActive(!0), this.GetText(37).ShowTextNew(t))
-        : this.GetItem(34)?.SetUIActive(!1),
-      e?.RecommendElement);
+    var e = this.Khi,
+      t = e?.MonsterTips,
+      t =
+        (t
+          ? (this.GetItem(34)?.SetUIActive(!0), this.GetText(37).ShowTextNew(t))
+          : this.GetItem(34)?.SetUIActive(!1),
+        e?.RecommendElement);
     !t || t.length <= 0
       ? this.GetItem(35)?.SetUIActive(!1)
       : (this.GetItem(35)?.SetUIActive(!0), this.Mhi?.RefreshByData(t));
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
-    var t = Number(e[0]) - 1;
-    var t = this.Chi.GetScrollItemFromIndex(t);
+    var t = Number(e[0]) - 1,
+      t = this.Chi.GetScrollItemFromIndex(t);
     if (t) return [(t = t.GetExtendToggleForGuide().RootUIComp), t];
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
@@ -1036,4 +1036,4 @@ class InstanceDungeonEntranceView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.InstanceDungeonEntranceView = InstanceDungeonEntranceView;
-// # sourceMappingURL=InstanceDungeonEntranceView.js.map
+//# sourceMappingURL=InstanceDungeonEntranceView.js.map

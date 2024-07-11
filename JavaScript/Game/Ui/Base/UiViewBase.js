@@ -1,31 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiViewBase = void 0);
-const UE = require("ue");
-const AudioController_1 = require("../../../Core/Audio/AudioController");
-const AudioSystem_1 = require("../../../Core/Audio/AudioSystem");
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const Queue_1 = require("../../../Core/Container/Queue");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const BlackScreenController_1 = require("../../Module/BlackScreen/BlackScreenController");
-const UiSceneManager_1 = require("../../Module/UiComponent/UiSceneManager");
-const UiNavigationNewController_1 = require("../../Module/UiNavigation/New/UiNavigationNewController");
-const LguiUtil_1 = require("../../Module/Util/LguiUtil");
-const UiLayerType_1 = require("../Define/UiLayerType");
-const InputDistributeController_1 = require("../InputDistribute/InputDistributeController");
-const UiLayer_1 = require("../UiLayer");
-const UiManager_1 = require("../UiManager");
-const UiBehaviorAudio_1 = require("./UiAudioState/UiBehaviorAudio");
-const UiBehaviorUiBlur_1 = require("./UiBlur/UiBehaviorUiBlur");
-const UiPanelBase_1 = require("./UiPanelBase");
-const UiViewSequence_1 = require("./UiViewSequence");
+const UE = require("ue"),
+  AudioController_1 = require("../../../Core/Audio/AudioController"),
+  AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
+  CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Queue_1 = require("../../../Core/Container/Queue"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  BlackScreenController_1 = require("../../Module/BlackScreen/BlackScreenController"),
+  UiSceneManager_1 = require("../../Module/UiComponent/UiSceneManager"),
+  UiNavigationNewController_1 = require("../../Module/UiNavigation/New/UiNavigationNewController"),
+  LguiUtil_1 = require("../../Module/Util/LguiUtil"),
+  UiLayerType_1 = require("../Define/UiLayerType"),
+  InputDistributeController_1 = require("../InputDistribute/InputDistributeController"),
+  UiLayer_1 = require("../UiLayer"),
+  UiManager_1 = require("../UiManager"),
+  UiBehaviorAudio_1 = require("./UiAudioState/UiBehaviorAudio"),
+  UiBehaviorUiBlur_1 = require("./UiBlur/UiBehaviorUiBlur"),
+  UiPanelBase_1 = require("./UiPanelBase"),
+  UiViewSequence_1 = require("./UiViewSequence");
 class UiViewBase extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -47,7 +47,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
       (this.LoadScenePromise = void 0),
       (this.$_r = !1),
       (this.Y_r = (e, i) => {
-        i === 0 &&
+        0 === i &&
           ((this.$_r = !0),
           this.UiViewSequence.HasSequenceNameInPlaying(
             this.UiViewSequence.StartSequenceName,
@@ -70,7 +70,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
       (this.Info = e);
   }
   get IsQueueView() {
-    return void 0 !== this.Info && this.Info.SortIndex >= 0;
+    return void 0 !== this.Info && 0 <= this.Info.SortIndex;
   }
   GetClosePromiseImplement() {
     return this.ClosePromise;
@@ -124,7 +124,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
     this.PlaySequenceAsync(e, t).then(i);
   }
   async PlaySequenceAsync(e, i = !1) {
-    const t = new CustomPromise_1.CustomPromise();
+    var t = new CustomPromise_1.CustomPromise();
     await this.UiViewSequence.PlaySequenceAsync(e, t, i);
   }
   SetAudioEvent(e) {
@@ -137,13 +137,13 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
     this.PlaySequence(
       e,
       i,
-      (this.Info.Type & UiLayerType_1.BLOCKCLICK_TYPE) > 0,
+      0 < (this.Info.Type & UiLayerType_1.BLOCKCLICK_TYPE),
     );
   }
   async tur(e) {
     await this.PlaySequenceAsync(
       e,
-      (this.Info.Type & UiLayerType_1.BLOCKCLICK_TYPE) > 0,
+      0 < (this.Info.Type & UiLayerType_1.BLOCKCLICK_TYPE),
     );
   }
   PauseCurrentSequence() {
@@ -158,13 +158,13 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
       this.AddUiBehavior(this.UiViewSequence);
   }
   z_r() {
-    const e = new UiBehaviorUiBlur_1.UiBehaviourUiBlur();
+    var e = new UiBehaviorUiBlur_1.UiBehaviourUiBlur();
     (this.UiBlurBehaviour = e).SetCurrentLayer(this.Info.Type),
       e.SetViewInfo(this),
       this.AddUiBehavior(e);
   }
   Z_r() {
-    const e = new UiBehaviorAudio_1.UiBehaviorAudio(this);
+    var e = new UiBehaviorAudio_1.UiBehaviorAudio(this);
     this.AddUiBehavior(e);
   }
   GetUiAudioComponent() {
@@ -175,7 +175,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
     ).GetComponentByClass(UE.UIViewAudioEffectComponent.StaticClass());
   }
   iur() {
-    let e, i;
+    var e, i;
     return this.IsPreOpening
       ? UiLayer_1.UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.Pool)
       : (e = this.GetLayer()) === UiLayerType_1.ELayerType.Float
@@ -193,11 +193,11 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
         : UiLayer_1.UiLayer.GetLayerRootUiItem(e);
   }
   InitRootActorLoadInfo() {
-    const e = this.Info;
+    var e = this.Info;
     this.SetRootActorLoadInfoByPath(
       e.UiPath,
       this.iur(),
-      e.SourceType === 1,
+      1 === e.SourceType,
       e.IsPermanent,
     );
   }
@@ -434,7 +434,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
       AudioSystem_1.AudioSystem.PostEvent(this.Info.CloseAudioEvent);
   }
   async nur() {
-    const e = this.UiViewSequence.CloseSequenceName;
+    var e = this.UiViewSequence.CloseSequenceName;
     e && (await this.tur(e));
   }
   DeleteCloseSequence() {
@@ -450,7 +450,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
     this.gjt.Push(e);
   }
   HandleAllLoadingFinishOperation() {
-    for (; this.gjt.Size > 0; ) this.gjt.Pop()?.();
+    for (; 0 < this.gjt.Size; ) this.gjt.Pop()?.();
   }
   ResetOperationQueue() {
     this.gjt.Clear();
@@ -536,4 +536,4 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.UiViewBase = UiViewBase;
-// # sourceMappingURL=UiViewBase.js.map
+//# sourceMappingURL=UiViewBase.js.map

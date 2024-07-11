@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleRobotData = void 0);
-const ConfigCommon_1 = require("../../../../Core/Config/ConfigCommon");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const AttributeModel_1 = require("../../Attribute/AttributeModel");
-const PhantomTrialBattleData_1 = require("../../Phantom/PhantomBattle/Data/PhantomTrialBattleData");
-const WeaponTrialData_1 = require("../../Weapon/Data/WeaponTrialData");
-const SkillNodeDataInfo_1 = require("./Module/DataInfo/SkillNodeDataInfo");
-const RoleDataBase_1 = require("./RoleDataBase");
+const ConfigCommon_1 = require("../../../../Core/Config/ConfigCommon"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  AttributeModel_1 = require("../../Attribute/AttributeModel"),
+  PhantomTrialBattleData_1 = require("../../Phantom/PhantomBattle/Data/PhantomTrialBattleData"),
+  WeaponTrialData_1 = require("../../Weapon/Data/WeaponTrialData"),
+  SkillNodeDataInfo_1 = require("./Module/DataInfo/SkillNodeDataInfo"),
+  RoleDataBase_1 = require("./RoleDataBase");
 class RoleRobotData extends RoleDataBase_1.RoleDataBase {
   constructor(a) {
     super(a), (this.h1o = void 0), this.SetDefaultData();
@@ -17,11 +17,11 @@ class RoleRobotData extends RoleDataBase_1.RoleDataBase {
     this.l1o(), this._1o(), this.u1o(), this.c1o(), this.m1o();
   }
   l1o() {
-    const a = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(
-      this.Id,
-    );
-    const e = this.GetLevelData();
-    const t = (e.SetLevel(a.Level), this.GetRoleConfig());
+    var a = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(
+        this.Id,
+      ),
+      e = this.GetLevelData(),
+      t = (e.SetLevel(a.Level), this.GetRoleConfig());
     for (const r of ConfigManager_1.ConfigManager.RoleConfig.GetRoleBreachList(
       t.BreachId,
     ))
@@ -31,37 +31,37 @@ class RoleRobotData extends RoleDataBase_1.RoleDataBase {
       }
   }
   _1o() {
-    const a = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(
-      this.Id,
-    );
-    const e = this.GetSkillData();
-    const t = this.GetRoleConfig().SkillId;
+    var a = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(
+        this.Id,
+      ),
+      e = this.GetSkillData(),
+      t = this.GetRoleConfig().SkillId;
     for (const l of e.GetSkillList()) {
-      var r = this.d1o(l.Id);
-      var r = r < a.UnlockSkillLevel ? r : a.UnlockSkillLevel;
-      const o =
-        ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNodeByGroupIdAndSkillId(
-          t,
-          l.Id,
-        );
+      var r = this.d1o(l.Id),
+        r = r < a.UnlockSkillLevel ? r : a.UnlockSkillLevel,
+        o =
+          ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNodeByGroupIdAndSkillId(
+            t,
+            l.Id,
+          );
       o &&
-        (o?.NodeType === 3
+        (3 === o?.NodeType
           ? e.SetSkillLevel(l.Id, 0)
           : e.SetSkillLevel(l.Id, r),
         e.SetSkillReferenceMapBySkillId(l.Id));
     }
-    const n = [];
+    var n = [];
     for (const _ of a.UnlockSkillNodeList) {
-      const i =
-        ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNodeByGroupIdAndIndex(
-          t,
-          _,
-        );
-      const s = i?.NodeType;
-      (s !== 4 && s !== 3) ||
+      var i =
+          ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNodeByGroupIdAndIndex(
+            t,
+            _,
+          ),
+        s = i?.NodeType;
+      (4 !== s && 3 !== s) ||
         n.push(new SkillNodeDataInfo_1.SkillNodeDataInfo(i.Id, !0, i.SkillId));
     }
-    n.length > 0 && e.SetSkillNodeStateData(n);
+    0 < n.length && e.SetSkillNodeStateData(n);
   }
   d1o(a) {
     (a = ConfigCommon_1.ConfigCommon.ToList(
@@ -72,13 +72,13 @@ class RoleRobotData extends RoleDataBase_1.RoleDataBase {
     return a.SkillId;
   }
   u1o() {
-    const a = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(
+    var a = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(
       this.Id,
     );
     this.GetResonanceData().SetResonantChainGroupIndex(a.ResonanceLevel);
   }
   c1o() {
-    const a = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(
+    var a = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(
       this.Id,
     );
     (this.h1o = new WeaponTrialData_1.WeaponTrialData()),
@@ -86,17 +86,17 @@ class RoleRobotData extends RoleDataBase_1.RoleDataBase {
       this.h1o.SetRoleId(this.Id);
   }
   m1o() {
-    const t = this.GetPhantomData();
-    const r =
-      (t.SetIsTrial(!0),
-      ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(this.Id));
+    var t = this.GetPhantomData(),
+      r =
+        (t.SetIsTrial(!0),
+        ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(this.Id));
     for (let a = 0, e = r.PhantomEquipList.length; a < e; ++a) {
-      const o = r.PhantomEquipList[a];
-      const n =
-        ConfigManager_1.ConfigManager.PhantomBattleConfig.GetTrialPhantomPropConfig(
-          o.Item2,
-        );
-      const i = new PhantomTrialBattleData_1.PhantomTrialBattleData();
+      var o = r.PhantomEquipList[a],
+        n =
+          ConfigManager_1.ConfigManager.PhantomBattleConfig.GetTrialPhantomPropConfig(
+            o.Item2,
+          ),
+        i = new PhantomTrialBattleData_1.PhantomTrialBattleData();
       i.SetIncId(
         PhantomTrialBattleData_1.PhantomTrialBattleData.GenerateLocalUniqueId(
           this.GetRoleId(),
@@ -108,20 +108,20 @@ class RoleRobotData extends RoleDataBase_1.RoleDataBase {
         i.SetSlotIndex(a),
         i.SetFetterGroupId(n.FetterGroupId);
       for (const g of n.MainProps) {
-        const s =
-          ConfigManager_1.ConfigManager.PhantomBattleConfig.GetTrailPhantomPropItemById(
-            g,
-          );
-        var l =
-          ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomGrowthValueByGrowthIdAndLevel(
-            n.MainPropGrowth,
-            n.Level,
-          );
-        var l = AttributeModel_1.TipsDataTool.GetAttributeValue(s.Value, l, !1);
+        var s =
+            ConfigManager_1.ConfigManager.PhantomBattleConfig.GetTrailPhantomPropItemById(
+              g,
+            ),
+          l =
+            ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomGrowthValueByGrowthIdAndLevel(
+              n.MainPropGrowth,
+              n.Level,
+            ),
+          l = AttributeModel_1.TipsDataTool.GetAttributeValue(s.Value, l, !1);
         i.SetMainPropValue(s.Id, l, s.IsRatio);
       }
       for (const f of n.SubPropList) {
-        const _ =
+        var _ =
           ConfigManager_1.ConfigManager.PhantomBattleConfig.GetTrailPhantomPropItemById(
             f,
           );
@@ -166,4 +166,4 @@ class RoleRobotData extends RoleDataBase_1.RoleDataBase {
   }
 }
 exports.RoleRobotData = RoleRobotData;
-// # sourceMappingURL=RoleRobotData.js.map
+//# sourceMappingURL=RoleRobotData.js.map

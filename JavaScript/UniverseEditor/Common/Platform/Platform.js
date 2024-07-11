@@ -16,4 +16,4 @@ function getPlatform() {
   throw new Error("Platform is not set");
 }
 (exports.setPlatform = setPlatform), (exports.getPlatform = getPlatform);
-// # sourceMappingURL=Platform.js.map
+//# sourceMappingURL=Platform.js.map

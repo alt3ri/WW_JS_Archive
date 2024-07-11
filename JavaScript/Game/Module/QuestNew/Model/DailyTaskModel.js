@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DailyTaskModel = void 0);
-const ModelBase_1 = require("../../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
+const ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem");
 class DailyTaskModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments), (this.$oo = void 0);
@@ -19,7 +19,7 @@ class DailyTaskModel extends ModelBase_1.ModelBase {
   }
   GetDailyTaskCorrelativeEntities() {
     const t = new Array();
-    for (const [, e] of this.$oo)
+    for (var [, e] of this.$oo)
       e.GetCurrentCorrelativeEntities()?.forEach((e) => {
         t.push(e);
       });
@@ -35,4 +35,4 @@ class DailyTaskModel extends ModelBase_1.ModelBase {
   }
 }
 exports.DailyTaskModel = DailyTaskModel;
-// # sourceMappingURL=DailyTaskModel.js.map
+//# sourceMappingURL=DailyTaskModel.js.map

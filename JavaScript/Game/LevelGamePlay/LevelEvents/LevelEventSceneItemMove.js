@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventSceneItemMove = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const SceneItemMoveComponent_1 = require("../../NewWorld/SceneItem/Common/Component/SceneItemMoveComponent");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  SceneItemMoveComponent_1 = require("../../NewWorld/SceneItem/Common/Component/SceneItemMoveComponent"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -53,11 +53,10 @@ class LevelEventSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
   }
   ExecuteWhenEntitiesReady() {
     if (this.qAt) {
-      const e = this.qAt.EntityId;
-      const t =
-        ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(e);
+      var e = this.qAt.EntityId,
+        t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(e);
       if (t?.Valid) {
-        const i = t.Entity.GetComponent(113);
+        var i = t.Entity.GetComponent(113);
         switch (((this.CRe = i), this.qAt.MoveConfig.Type)) {
           case IAction_1.EMoveSceneItemType.MoveToPoint:
             this.MUr(this.qAt, t);
@@ -72,8 +71,8 @@ class LevelEventSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
     }
   }
   MUr(e, t) {
-    let i;
-    const s = e.MoveConfig;
+    var i,
+      s = e.MoveConfig;
     s &&
       (this.CRe?.Valid
         ? (e.StopBeforeMove && this.CRe.StopMove(),
@@ -104,7 +103,7 @@ class LevelEventSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
           this.FinishExecute(!1)));
   }
   SUr(e, t) {
-    const i = e.MoveConfig;
+    var i = e.MoveConfig;
     i &&
       (this.CRe?.Valid
         ? (e.StopBeforeMove &&
@@ -145,4 +144,4 @@ class LevelEventSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventSceneItemMove = LevelEventSceneItemMove;
-// # sourceMappingURL=LevelEventSceneItemMove.js.map
+//# sourceMappingURL=LevelEventSceneItemMove.js.map

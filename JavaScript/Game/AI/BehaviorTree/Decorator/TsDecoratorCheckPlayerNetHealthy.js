@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const OnlineController_1 = require("../../../Module/Online/OnlineController");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  OnlineController_1 = require("../../../Module/Online/OnlineController");
 class TsDecoratorCheckPlayerNetHealthy extends UE.BTDecorator_BlueprintBase {
   PerformConditionCheckAI(e, r) {
-    let o = e.AiController;
+    var o = e.AiController;
     return o
       ? ((o = o.CharAiDesignComp.Entity.GetComponent(0).GetPlayerId()),
         OnlineController_1.OnlineController.CheckPlayerNetHealthy(o))
@@ -18,4 +18,4 @@ class TsDecoratorCheckPlayerNetHealthy extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorCheckPlayerNetHealthy;
-// # sourceMappingURL=TsDecoratorCheckPlayerNetHealthy.js.map
+//# sourceMappingURL=TsDecoratorCheckPlayerNetHealthy.js.map

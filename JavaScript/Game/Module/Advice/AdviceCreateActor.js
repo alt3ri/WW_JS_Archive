@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceCreateActor = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ModelUtil_1 = require("../../../Core/Utils/ModelUtil");
-const Global_1 = require("../../Global");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const SceneInteractionManager_1 = require("../../Render/Scene/Interaction/SceneInteractionManager");
-const REVERTIME = 3e3;
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ModelUtil_1 = require("../../../Core/Utils/ModelUtil"),
+  Global_1 = require("../../Global"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  SceneInteractionManager_1 = require("../../Render/Scene/Interaction/SceneInteractionManager"),
+  REVERTIME = 3e3;
 class AdviceCreateActor {
   constructor() {
     (this.ActorInternal = void 0),
@@ -49,11 +49,11 @@ class AdviceCreateActor {
     this.r8e(!1), this.h8e(t);
   }
   r8e(i) {
-    const e =
-      SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionAllActorsInLevel(
-        this.J6e,
-      );
-    const s = e.Num();
+    var e =
+        SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionAllActorsInLevel(
+          this.J6e,
+        ),
+      s = e.Num();
     for (let t = 0; t < s; t++) e.Get(t).SetActorHiddenInGame(!i);
   }
   HideAnimation() {
@@ -64,12 +64,12 @@ class AdviceCreateActor {
       this.r8e(!0);
   }
   a8e() {
-    let t;
-    let i;
-    let e;
-    var s =
-      ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceDefaultModelConfig();
-    var s = ModelUtil_1.ModelUtil.GetModelConfig(s);
+    var t,
+      i,
+      e,
+      s =
+        ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceDefaultModelConfig(),
+      s = ModelUtil_1.ModelUtil.GetModelConfig(s);
     s &&
       (s = s.场景交互物) &&
       ((t = Vector_1.Vector.Create()),
@@ -125,21 +125,21 @@ class AdviceCreateActor {
       this.ActorInternal.OnDestroyed.Add(this.n8e);
   }
   RefreshPosition() {
-    const t = Vector_1.Vector.Create();
-    const i = Rotator_1.Rotator.Create();
-    const e =
-      (t.DeepCopy(
-        Global_1.Global.BaseCharacter.CharacterActorComponent
-          .ActorLocationProxy,
-      ),
-      (t.Z =
-        t.Z -
-        Global_1.Global.BaseCharacter.CharacterActorComponent.Actor.CapsuleComponent.GetScaledCapsuleHalfHeight()),
-      i.DeepCopy(
-        Global_1.Global.BaseCharacter.CharacterActorComponent
-          .ActorRotationProxy,
-      ),
-      ModelManager_1.ModelManager.CameraModel.CurrentCameraActor);
+    var t = Vector_1.Vector.Create(),
+      i = Rotator_1.Rotator.Create(),
+      e =
+        (t.DeepCopy(
+          Global_1.Global.BaseCharacter.CharacterActorComponent
+            .ActorLocationProxy,
+        ),
+        (t.Z =
+          t.Z -
+          Global_1.Global.BaseCharacter.CharacterActorComponent.Actor.CapsuleComponent.GetScaledCapsuleHalfHeight()),
+        i.DeepCopy(
+          Global_1.Global.BaseCharacter.CharacterActorComponent
+            .ActorRotationProxy,
+        ),
+        ModelManager_1.ModelManager.CameraModel.CurrentCameraActor);
     (i.Yaw = e.GetTransform().Rotator().Yaw + 90),
       this.ActorInternal.K2_SetActorLocation(t.ToUeVector(), !1, void 0, !0),
       this.ActorInternal.K2_SetActorRotation(i.ToUeRotator(), !1);
@@ -149,31 +149,31 @@ class AdviceCreateActor {
     const e = this.SkeletalMeshInternal;
     this.SkeletalMeshInternal.SetHiddenInGame(!0),
       this.SkeletalMeshInternal.Stop();
-    var i = ConfigManager_1.ConfigManager.MotionConfig.GetMotionRoleId(t);
-    var i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i);
-    const s = ModelUtil_1.ModelUtil.GetModelConfig(i.MeshId);
-    const o =
-      ((this.Z6e = !1),
-      (this.e8e = !1),
-      (this.t8e = !1),
-      (this.l8e = void 0),
-      ResourceSystem_1.ResourceSystem.LoadAsync(
-        s.网格体.ToAssetPathName(),
-        UE.SkeletalMesh,
-        (t, i) => {
-          e.SetSkeletalMesh(t),
-            (this.e8e = !0),
-            Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug(
-                "Advice",
-                28,
-                "modelConfig.网格体.ToAssetPathName()读取",
-                ["mesh", s.网格体.ToAssetPathName()],
-              ),
-            this._8e();
-        },
-      ),
-      ConfigManager_1.ConfigManager.MotionConfig.GetMotionAnimation(t));
+    var i = ConfigManager_1.ConfigManager.MotionConfig.GetMotionRoleId(t),
+      i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i);
+    const s = ModelUtil_1.ModelUtil.GetModelConfig(i.MeshId),
+      o =
+        ((this.Z6e = !1),
+        (this.e8e = !1),
+        (this.t8e = !1),
+        (this.l8e = void 0),
+        ResourceSystem_1.ResourceSystem.LoadAsync(
+          s.网格体.ToAssetPathName(),
+          UE.SkeletalMesh,
+          (t, i) => {
+            e.SetSkeletalMesh(t),
+              (this.e8e = !0),
+              Log_1.Log.CheckDebug() &&
+                Log_1.Log.Debug(
+                  "Advice",
+                  28,
+                  "modelConfig.网格体.ToAssetPathName()读取",
+                  ["mesh", s.网格体.ToAssetPathName()],
+                ),
+              this._8e();
+          },
+        ),
+        ConfigManager_1.ConfigManager.MotionConfig.GetMotionAnimation(t));
     if (
       (ResourceSystem_1.ResourceSystem.LoadAsync(
         o,
@@ -220,7 +220,7 @@ class AdviceCreateActor {
   }
   o8e() {
     this.$6e &&
-      this.Y6e > 0 &&
+      0 < this.Y6e &&
       (this.$6e.RemoveMaterialControllerDataWithEnding(this.Y6e),
       (this.Y6e = 0));
   }
@@ -239,4 +239,4 @@ class AdviceCreateActor {
   }
 }
 exports.AdviceCreateActor = AdviceCreateActor;
-// # sourceMappingURL=AdviceCreateActor.js.map
+//# sourceMappingURL=AdviceCreateActor.js.map

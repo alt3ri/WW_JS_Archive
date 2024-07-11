@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
-const DEFAULT_FINISHED_TIME = 6e4;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
+  DEFAULT_FINISHED_TIME = 6e4;
 class TsTaskPlayAction extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -36,22 +36,23 @@ class TsTaskPlayAction extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveExecuteAI(t, s) {
     this.InitTsVariables();
-    let e = t.AiController;
+    var e = t.AiController;
     if (e) {
       this.OnMontageEnded ||
         (this.OnMontageEnded = (t, s) => {
           this.EndTime = Time_1.Time.WorldTime;
         });
       e = e.CharActorComp.Entity;
-      let s = this.TsLoopTimeMillisecond;
-      let t =
-        (this.TsBlackboardKeyTime &&
-          (i = BlackboardController_1.BlackboardController.GetIntValueByEntity(
-            e.Id,
-            this.TsBlackboardKeyTime,
-          )) &&
-          (s = i),
-        this.TsMontageName);
+      let s = this.TsLoopTimeMillisecond,
+        t =
+          (this.TsBlackboardKeyTime &&
+            (i =
+              BlackboardController_1.BlackboardController.GetIntValueByEntity(
+                e.Id,
+                this.TsBlackboardKeyTime,
+              )) &&
+            (s = i),
+          this.TsMontageName);
       var i =
         BlackboardController_1.BlackboardController.GetStringValueByEntity(
           e.Id,
@@ -77,7 +78,7 @@ class TsTaskPlayAction extends TsTaskAbortImmediatelyBase_1.default {
           ResourceSystem_1.ResourceSystem.LoadAsync(i, UE.AnimMontage, (t) => {
             ObjectUtils_1.ObjectUtils.IsValid(t) &&
               this.AnimComp?.MainAnimInstance &&
-              (s === 0 &&
+              (0 === s &&
                 ((this.EndTime = DEFAULT_FINISHED_TIME + Time_1.Time.WorldTime),
                 this.OnMontageEnded) &&
                 this.AnimComp.MainAnimInstance.OnMontageEnded.Add(
@@ -115,4 +116,4 @@ class TsTaskPlayAction extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskPlayAction;
-// # sourceMappingURL=TsTaskPlayAction.js.map
+//# sourceMappingURL=TsTaskPlayAction.js.map

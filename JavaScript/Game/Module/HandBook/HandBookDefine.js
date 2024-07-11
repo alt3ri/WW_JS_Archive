@@ -95,4 +95,4 @@ class HandBookQuestViewOpenParam {
 (exports.HandBookQuestViewOpenParam = HandBookQuestViewOpenParam),
   (exports.selectColor = UE.Color.FromHex("ECE5D8FF")),
   (exports.noSelectColor = UE.Color.FromHex("ADADADFF"));
-// # sourceMappingURL=HandBookDefine.js.map
+//# sourceMappingURL=HandBookDefine.js.map

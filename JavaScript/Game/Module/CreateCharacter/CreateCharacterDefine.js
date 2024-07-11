@@ -4,4 +4,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CREATE_CHARACTER_SCENE_PATH =
     "/Game/Aki/Map/Level/LV_RoleCreateAndSelection.LV_RoleCreateAndSelection"),
   (exports.MAX_NAME_COUNT = 12);
-// # sourceMappingURL=CreateCharacterDefine.js.map
+//# sourceMappingURL=CreateCharacterDefine.js.map

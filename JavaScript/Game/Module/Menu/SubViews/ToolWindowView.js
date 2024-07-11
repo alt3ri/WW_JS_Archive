@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ToolWindowView = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const HotPatch_1 = require("../../../../Launcher/HotPatch");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const ToolWindowButtonItem_1 = require("./ToolWindowButtonItem");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  HotPatch_1 = require("../../../../Launcher/HotPatch"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  ToolWindowButtonItem_1 = require("./ToolWindowButtonItem");
 class ToolWindowView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -19,9 +19,9 @@ class ToolWindowView extends UiViewBase_1.UiViewBase {
         UiManager_1.UiManager.OpenView("LogUploadView");
       }),
       (this.xwi = () => {
-        const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(168);
+        var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(168);
         e.FunctionMap.set(2, () => {
-          const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(186);
+          var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(186);
           e.SetAfterShowFunction(() => {
             HotPatch_1.HotPatch.ClearPatch();
           }),
@@ -52,30 +52,30 @@ class ToolWindowView extends UiViewBase_1.UiViewBase {
         this.GetItem(1),
       ));
     var e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-      "PrefabTextItem_HotfixTool_clear_Text",
-    );
-    var e =
-      (this.Awi.SetText(e),
-      this.Awi.BindCallback(this.xwi),
-      ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-        "SP_Tool_Clean",
-      ));
-    var e =
-      (this.Awi.RefreshIcon(e, () => {
-        this.Awi.SetIconVisible(!0);
-      }),
-      (this.Uwi = new ToolWindowButtonItem_1.ToolWindowButtonItem(
-        this.GetItem(2),
-      )),
-      MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-        "PrefabTextItem_HotfixTool_upload_Text",
-      ));
-    var e =
-      (this.Uwi.SetText(e),
-      this.Uwi.BindCallback(this.Pwi),
-      ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-        "SP_Tool_Upload",
-      ));
+        "PrefabTextItem_HotfixTool_clear_Text",
+      ),
+      e =
+        (this.Awi.SetText(e),
+        this.Awi.BindCallback(this.xwi),
+        ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+          "SP_Tool_Clean",
+        )),
+      e =
+        (this.Awi.RefreshIcon(e, () => {
+          this.Awi.SetIconVisible(!0);
+        }),
+        (this.Uwi = new ToolWindowButtonItem_1.ToolWindowButtonItem(
+          this.GetItem(2),
+        )),
+        MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+          "PrefabTextItem_HotfixTool_upload_Text",
+        )),
+      e =
+        (this.Uwi.SetText(e),
+        this.Uwi.BindCallback(this.Pwi),
+        ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+          "SP_Tool_Upload",
+        ));
     this.Uwi.RefreshIcon(e, () => {
       this.Uwi.SetIconVisible(!0);
     }),
@@ -84,4 +84,4 @@ class ToolWindowView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.ToolWindowView = ToolWindowView;
-// # sourceMappingURL=ToolWindowView.js.map
+//# sourceMappingURL=ToolWindowView.js.map

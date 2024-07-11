@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RenderDataManager = void 0);
-const UE = require("ue");
-const AudioController_1 = require("../../../Core/Audio/AudioController");
-const AudioDefine_1 = require("../../../Core/Audio/AudioDefine");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const RenderConfig_1 = require("../Config/RenderConfig");
-const RenderModuleConfig_1 = require("../Manager/RenderModuleConfig");
+const UE = require("ue"),
+  AudioController_1 = require("../../../Core/Audio/AudioController"),
+  AudioDefine_1 = require("../../../Core/Audio/AudioDefine"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  RenderConfig_1 = require("../Config/RenderConfig"),
+  RenderModuleConfig_1 = require("../Manager/RenderModuleConfig");
 class RenderDataManager {
   constructor() {
     (this.Valid = !1),
@@ -136,7 +136,7 @@ class RenderDataManager {
     this.WriteTimeToCollection = e;
   }
   TickForce(e) {
-    let t, i, r;
+    var t, i, r;
     this.Valid &&
       ((t = GlobalData_1.GlobalData.World),
       (r = Global_1.Global.CharacterCameraManager)) &&
@@ -158,7 +158,7 @@ class RenderDataManager {
       ((this.IsInUiScene = r), this.WRn());
   }
   Tick(e) {
-    let t, i, r;
+    var t, i, r;
     this.Valid &&
       ((e = e * TimeUtil_1.TimeUtil.Millisecond),
       (t = GlobalData_1.GlobalData.World),
@@ -256,9 +256,9 @@ class RenderDataManager {
   }
   Destroy() {}
   SetAudioParameters(e) {
-    let t;
+    var t;
     (this.Zhr -= e),
-      this.Zhr > 0 ||
+      0 < this.Zhr ||
         ((this.Zhr = this.zhr),
         (e = this.GetRainIntensity()),
         (t = this.GetSnowIntensity()),
@@ -288,4 +288,4 @@ class RenderDataManager {
   }
 }
 (exports.RenderDataManager = RenderDataManager).Instance = void 0;
-// # sourceMappingURL=RenderDataManager.js.map
+//# sourceMappingURL=RenderDataManager.js.map

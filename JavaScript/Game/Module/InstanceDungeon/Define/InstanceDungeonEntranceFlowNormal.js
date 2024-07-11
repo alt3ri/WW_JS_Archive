@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonEntranceFlowNormal = void 0);
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const EditBattleTeamController_1 = require("../../EditBattleTeam/EditBattleTeamController");
-const InstanceDungeonEntranceController_1 = require("../InstanceDungeonEntranceController");
-const InstanceDungeonEntranceFlowBase_1 = require("./InstanceDungeonEntranceFlowBase");
+const ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  EditBattleTeamController_1 = require("../../EditBattleTeam/EditBattleTeamController"),
+  InstanceDungeonEntranceController_1 = require("../InstanceDungeonEntranceController"),
+  InstanceDungeonEntranceFlowBase_1 = require("./InstanceDungeonEntranceFlowBase");
 class InstanceDungeonEntranceFlowNormal extends InstanceDungeonEntranceFlowBase_1.InstanceDungeonEntranceFlowBase {
   OnCreate() {
     this.AddStep(() => {
@@ -32,4 +32,4 @@ class InstanceDungeonEntranceFlowNormal extends InstanceDungeonEntranceFlowBase_
   }
 }
 exports.InstanceDungeonEntranceFlowNormal = InstanceDungeonEntranceFlowNormal;
-// # sourceMappingURL=InstanceDungeonEntranceFlowNormal.js.map
+//# sourceMappingURL=InstanceDungeonEntranceFlowNormal.js.map

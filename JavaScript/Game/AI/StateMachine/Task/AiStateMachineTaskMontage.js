@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineTaskMontage = void 0);
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const AiStateMachine_1 = require("../AiStateMachine");
-const AiStateMachineTask_1 = require("./AiStateMachineTask");
+const Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  AiStateMachine_1 = require("../AiStateMachine"),
+  AiStateMachineTask_1 = require("./AiStateMachineTask");
 class AiStateMachineTaskMontage extends AiStateMachineTask_1.AiStateMachineTask {
   constructor() {
     super(...arguments),
@@ -91,4 +91,4 @@ class AiStateMachineTaskMontage extends AiStateMachineTask_1.AiStateMachineTask 
   }
 }
 exports.AiStateMachineTaskMontage = AiStateMachineTaskMontage;
-// # sourceMappingURL=AiStateMachineTaskMontage.js.map
+//# sourceMappingURL=AiStateMachineTaskMontage.js.map

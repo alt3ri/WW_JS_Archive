@@ -6,4 +6,4 @@ class BattlePassSmallGridItem extends CommonItemSmallItemGrid_1.CommonItemSmallI
   OnExtendToggleClicked() {}
 }
 exports.BattlePassSmallGridItem = BattlePassSmallGridItem;
-// # sourceMappingURL=BattlePassSmallGridItem.js.map
+//# sourceMappingURL=BattlePassSmallGridItem.js.map

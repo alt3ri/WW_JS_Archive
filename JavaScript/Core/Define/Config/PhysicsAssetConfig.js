@@ -27,26 +27,26 @@ class PhysicsAssetConfig {
     );
   }
   id(s) {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.__string(this.z7 + t, s) : null;
   }
   physicsassetpath(s) {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__string(this.z7 + t, s) : null;
   }
   GetBonenamesAt(s) {
     return this.bonenames(s);
   }
   bonenames(s, t) {
-    const i = this.J7.__offset(this.z7, 8);
+    var i = this.J7.__offset(this.z7, 8);
     return i
       ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * s, t)
       : null;
   }
   bonenamesLength() {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s ? this.J7.__vector_len(this.z7 + s) : 0;
   }
 }
 exports.PhysicsAssetConfig = PhysicsAssetConfig;
-// # sourceMappingURL=PhysicsAssetConfig.js.map
+//# sourceMappingURL=PhysicsAssetConfig.js.map

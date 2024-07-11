@@ -15,11 +15,11 @@ class DropDownItemBase extends UiPanelBase_1.UiPanelBase {
       this.CreateThenShowByActor(t.GetOwner());
   }
   OnStartImplement() {
-    const t = this.GetDropDownToggle();
+    var t = this.GetDropDownToggle();
     t.OnStateChange.Add(this.LTt), t.CanExecuteChange.Bind(this.DTt);
   }
   OnBeforeDestroyImplement() {
-    const t = this.GetDropDownToggle();
+    var t = this.GetDropDownToggle();
     t.OnStateChange.Clear(), t.CanExecuteChange.Unbind();
   }
   ShowDropDownItemBase(t, e) {
@@ -32,13 +32,13 @@ class DropDownItemBase extends UiPanelBase_1.UiPanelBase {
     this.fTt = t;
   }
   SetToggle(t) {
-    const e = t ? 1 : 0;
+    var e = t ? 1 : 0;
     this.GetDropDownToggle().SetToggleState(e, t);
   }
   SetToggleForce(t) {
-    const e = t ? 1 : 0;
+    var e = t ? 1 : 0;
     this.GetDropDownToggle().SetToggleStateForce(e, t);
   }
 }
 exports.DropDownItemBase = DropDownItemBase;
-// # sourceMappingURL=DropDownItemBase.js.map
+//# sourceMappingURL=DropDownItemBase.js.map

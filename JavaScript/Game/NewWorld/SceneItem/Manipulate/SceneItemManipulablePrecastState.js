@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulablePrecastState = void 0);
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const Global_1 = require("../../../Global");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const SceneItemManipulableBaseState_1 = require("./SceneItemManipulableBaseState");
+const Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  Global_1 = require("../../../Global"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  SceneItemManipulableBaseState_1 = require("./SceneItemManipulableBaseState");
 class SceneItemManipulablePrecastState extends SceneItemManipulableBaseState_1.SceneItemManipulableBaseState {
   constructor(e) {
     super(e),
@@ -26,12 +26,12 @@ class SceneItemManipulablePrecastState extends SceneItemManipulableBaseState_1.S
   OnTick(e) {
     this.Timer += 1e3 * e;
     var e = ConfigManager_1.ConfigManager.ManipulateConfig.GetPrecastLineValue(
-      this.Rnr,
-      this.Timer / ConfigManager_1.ConfigManager.ManipulateConfig.PrecastTime,
-    );
-    const t = Vector_1.Vector.Create();
-    const a = Vector_1.Vector.Create();
-    const i = this.soi();
+        this.Rnr,
+        this.Timer / ConfigManager_1.ConfigManager.ManipulateConfig.PrecastTime,
+      ),
+      t = Vector_1.Vector.Create(),
+      a = Vector_1.Vector.Create(),
+      i = this.soi();
     return (
       this.Pnr(),
       this.Unr.Multiply(e.X, t),
@@ -44,15 +44,15 @@ class SceneItemManipulablePrecastState extends SceneItemManipulableBaseState_1.S
   }
   soi() {
     var e =
-      Global_1.Global.BaseCharacter.CharacterActorComponent.ActorTransform;
-    const t = this.SceneItem.UsingAssistantHoldOffset
-      ? this.SceneItem.ConfigAssistantHoldOffset
-      : this.SceneItem.ConfigHoldOffset;
-    var e = e.TransformPositionNoScale(t);
+        Global_1.Global.BaseCharacter.CharacterActorComponent.ActorTransform,
+      t = this.SceneItem.UsingAssistantHoldOffset
+        ? this.SceneItem.ConfigAssistantHoldOffset
+        : this.SceneItem.ConfigHoldOffset,
+      e = e.TransformPositionNoScale(t);
     return Vector_1.Vector.Create(e);
   }
   Pnr() {
-    const e = Vector_1.Vector.Create();
+    var e = Vector_1.Vector.Create();
     (this.Unr =
       Global_1.Global.BaseCharacter?.CharacterActorComponent?.ActorForwardProxy),
       this.Unr.CrossProduct(Vector_1.Vector.UpVectorProxy, e),
@@ -61,4 +61,4 @@ class SceneItemManipulablePrecastState extends SceneItemManipulableBaseState_1.S
   }
 }
 exports.SceneItemManipulablePrecastState = SceneItemManipulablePrecastState;
-// # sourceMappingURL=SceneItemManipulablePrecastState.js.map
+//# sourceMappingURL=SceneItemManipulablePrecastState.js.map

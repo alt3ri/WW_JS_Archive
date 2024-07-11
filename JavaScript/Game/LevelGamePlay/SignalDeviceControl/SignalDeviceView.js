@@ -1,28 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SignalDeviceView = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../Core/Audio/AudioSystem");
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelSequencePlayer_1 = require("../../Module/Common/LevelSequencePlayer");
-const ConfirmBoxDefine_1 = require("../../Module/ConfirmBox/ConfirmBoxDefine");
-const LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController");
-const LguiUtil_1 = require("../../Module/Util/LguiUtil");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const LinkingDotItem_1 = require("./SiganalDeviceUIItem/LinkingDotItem");
-const LinkingEmptyToggle_1 = require("./SiganalDeviceUIItem/LinkingEmptyToggle");
-const SignalLineItem_1 = require("./SiganalDeviceUIItem/SignalLineItem");
-const SignalDeviceController_1 = require("./SignalDeviceController");
-const SignalDeviceModel_1 = require("./SignalDeviceModel");
-const GRIDNUM = SignalDeviceModel_1.ROWNUM * SignalDeviceModel_1.ROWNUM;
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
+  CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelSequencePlayer_1 = require("../../Module/Common/LevelSequencePlayer"),
+  ConfirmBoxDefine_1 = require("../../Module/ConfirmBox/ConfirmBoxDefine"),
+  LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController"),
+  LguiUtil_1 = require("../../Module/Util/LguiUtil"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  LinkingDotItem_1 = require("./SiganalDeviceUIItem/LinkingDotItem"),
+  LinkingEmptyToggle_1 = require("./SiganalDeviceUIItem/LinkingEmptyToggle"),
+  SignalLineItem_1 = require("./SiganalDeviceUIItem/SignalLineItem"),
+  SignalDeviceController_1 = require("./SignalDeviceController"),
+  SignalDeviceModel_1 = require("./SignalDeviceModel"),
+  GRIDNUM = SignalDeviceModel_1.ROWNUM * SignalDeviceModel_1.ROWNUM;
 class SignalDeviceView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -38,7 +38,7 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
       (this.IPe = []),
       (this.TPe = !1),
       (this.LPe = () => {
-        let e;
+        var e;
         this.TPe
           ? ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
               105,
@@ -51,7 +51,7 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
           : UiManager_1.UiManager.CloseView(this.Info.Name);
       }),
       (this.DPe = () => {
-        const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(105);
+        var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(105);
         e.FunctionMap.set(2, () => {
           LevelLoadingController_1.LevelLoadingController.OpenLoading(
             14,
@@ -74,7 +74,7 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
         UiManager_1.UiManager.OpenView("SignalDeviceGuideView");
       }),
       (this.FAe = (e, i, t, n, o) => {
-        let s, r;
+        var s, r;
         this.UPe(e, i, t, n, o),
           e
             ? (this.Lo[n].Color === IAction_1.EPieceColorType.White &&
@@ -93,7 +93,7 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
                 ((e = this.IPe[i].FromIndex),
                 (s = this.IPe[i].IsFromDot),
                 Math.abs(e - n) === 2 * SignalDeviceModel_1.ROWNUM ||
-                Math.abs(e - n) === 2
+                2 === Math.abs(e - n)
                   ? ((r = (s || o ? this.SPe : this.pPe).GetRootItem()),
                     (t = LguiUtil_1.LguiUtil.CopyItem(r, this.yPe[i])),
                     (r = SignalLineItem_1.LinkingLineItem.Create(4)),
@@ -206,11 +206,11 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
     const i = new LinkingEmptyToggle_1.LinkingEmptyToggle();
     i.CreateThenShowByActor(this.GetExtendToggle(5).GetOwner()),
       this.IPe.push(i);
-    const t = this.GetItem(6);
-    const n = this.GetExtendToggle(5).RootUIComp;
+    var t = this.GetItem(6),
+      n = this.GetExtendToggle(5).RootUIComp;
     this.yPe.push(n);
     for (let e = 1; e < GRIDNUM; e++) {
-      const o = LguiUtil_1.LguiUtil.CopyItem(n, t);
+      var o = LguiUtil_1.LguiUtil.CopyItem(n, t);
       this.yPe.push(o);
       const i = new LinkingEmptyToggle_1.LinkingEmptyToggle();
       i.CreateThenShowByActor(o.GetOwner()), i.InitData(e), this.IPe.push(i);
@@ -281,20 +281,20 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
       );
   }
   BPe(e, i) {
-    const t = LguiUtil_1.LguiUtil.CopyItem(this.WAe.GetRootItem(), this.yPe[e]);
+    var t = LguiUtil_1.LguiUtil.CopyItem(this.WAe.GetRootItem(), this.yPe[e]);
     t.SetHierarchyIndex(0), this.IPe[e].SetDotData(t, i);
   }
   APe(e, i, t, n, o) {
     return i
       ? Math.abs(t - e) === SignalDeviceModel_1.ROWNUM
         ? (t - e) * (n - t) == -SignalDeviceModel_1.ROWNUM
-        : Math.abs(t - e) === 1
+        : 1 === Math.abs(t - e)
           ? (t - e) * (n - t) === SignalDeviceModel_1.ROWNUM
           : (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn("Temp", 36, "IsCornerLeftOrRight Error"),
             !1)
       : o
-        ? Math.abs(t - e) === 1
+        ? 1 === Math.abs(t - e)
           ? (t - e) * (n - t) == -SignalDeviceModel_1.ROWNUM
           : Math.abs(t - e) === SignalDeviceModel_1.ROWNUM
             ? (t - e) * (n - t) === SignalDeviceModel_1.ROWNUM
@@ -312,4 +312,4 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.SignalDeviceView = SignalDeviceView;
-// # sourceMappingURL=SignalDeviceView.js.map
+//# sourceMappingURL=SignalDeviceView.js.map

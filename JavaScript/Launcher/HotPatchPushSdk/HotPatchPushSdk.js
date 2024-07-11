@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HotPatchPushSdk = void 0);
-const UE = require("ue");
-const BaseConfigController_1 = require("../BaseConfig/BaseConfigController");
-const LauncherLog_1 = require("../Util/LauncherLog");
-const LauncherStorageLib_1 = require("../Util/LauncherStorageLib");
+const UE = require("ue"),
+  BaseConfigController_1 = require("../BaseConfig/BaseConfigController"),
+  LauncherLog_1 = require("../Util/LauncherLog"),
+  LauncherStorageLib_1 = require("../Util/LauncherStorageLib");
 class HotPatchPushSdk {
   static IfCanUsePush() {
     return !!UE.KuroStaticLibrary.IsModuleLoaded("KuroPushSdk");
   }
   static StartPush() {
-    let e, r, t;
+    var e, r, t;
     this.IfCanUsePush()
       ? ((e =
           BaseConfigController_1.BaseConfigController.GetPublicValue(
@@ -73,4 +73,4 @@ class HotPatchPushSdk {
   }
 }
 exports.HotPatchPushSdk = HotPatchPushSdk;
-// # sourceMappingURL=HotPatchPushSdk.js.map
+//# sourceMappingURL=HotPatchPushSdk.js.map

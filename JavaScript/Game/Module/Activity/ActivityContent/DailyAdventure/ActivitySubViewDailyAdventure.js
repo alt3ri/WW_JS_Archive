@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivitySubViewDailyAdventure = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ConfirmBoxDefine_1 = require("../../../ConfirmBox/ConfirmBoxDefine");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase");
-const DailyAdventureRewardItem_1 = require("./DailyAdventureRewardItem");
-const DailyAdventureTaskItem_1 = require("./DailyAdventureTaskItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ConfirmBoxDefine_1 = require("../../../ConfirmBox/ConfirmBoxDefine"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase"),
+  DailyAdventureRewardItem_1 = require("./DailyAdventureRewardItem"),
+  DailyAdventureTaskItem_1 = require("./DailyAdventureTaskItem");
 class ActivitySubViewDailyAdventure extends ActivitySubViewBase_1.ActivitySubViewBase {
   constructor() {
     super(...arguments),
@@ -65,13 +65,13 @@ class ActivitySubViewDailyAdventure extends ActivitySubViewBase_1.ActivitySubVie
       this.GetVerticalLayout(3),
       this.tOe,
     );
-    const e = [];
+    var e = [];
     for (const t of [9, 10, 11, 12, 13])
       e.push(this.rOe(this.GetItem(t).GetOwner()));
     await Promise.all(e);
   }
   async rOe(e) {
-    const t = new DailyAdventureRewardItem_1.DailyAdventureRewardItem();
+    var t = new DailyAdventureRewardItem_1.DailyAdventureRewardItem();
     await t.CreateThenShowByActorAsync(e), this.RewardItemList.push(t);
   }
   OnStart() {
@@ -109,7 +109,7 @@ class ActivitySubViewDailyAdventure extends ActivitySubViewBase_1.ActivitySubVie
   }
   nOe() {
     this.GetText(4).SetText(this.DailyAdventureData.GetTitle());
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.ActivityDailyAdventureConfig.GetActivityDailyAdventureConfig(
         this.DailyAdventureData.Id,
       );
@@ -122,7 +122,7 @@ class ActivitySubViewDailyAdventure extends ActivitySubViewBase_1.ActivitySubVie
       });
   }
   iOe() {
-    const e = this.DailyAdventureData.GetAllTaskInfo();
+    var e = this.DailyAdventureData.GetAllTaskInfo();
     this.TaskLayout.RefreshByData(e);
   }
   jqe() {
@@ -130,7 +130,7 @@ class ActivitySubViewDailyAdventure extends ActivitySubViewBase_1.ActivitySubVie
       this.DailyAdventureData.ProgressPoint > this.eOe &&
         (this.ZNe.SetUIActive(!0), this.ZNe.ActivateSystem(!0)),
       (this.eOe = this.DailyAdventureData.ProgressPoint);
-    const t = this.DailyAdventureData.GetAllPointReward();
+    var t = this.DailyAdventureData.GetAllPointReward();
     for (let e = 0; e < t.length && !(e >= this.RewardItemList.length); e++)
       this.RewardItemList[e].Refresh(t[e]);
   }
@@ -138,9 +138,9 @@ class ActivitySubViewDailyAdventure extends ActivitySubViewBase_1.ActivitySubVie
     this.FNe();
   }
   FNe() {
-    const [e, t] = this.GetTimeVisibleAndRemainTime();
+    var [e, t] = this.GetTimeVisibleAndRemainTime();
     this.JNe.SetUIActive(e), e && this.zNe.SetText(t);
   }
 }
 exports.ActivitySubViewDailyAdventure = ActivitySubViewDailyAdventure;
-// # sourceMappingURL=ActivitySubViewDailyAdventure.js.map
+//# sourceMappingURL=ActivitySubViewDailyAdventure.js.map

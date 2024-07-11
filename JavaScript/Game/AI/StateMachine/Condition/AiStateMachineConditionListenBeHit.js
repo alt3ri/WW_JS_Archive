@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineConditionListenBeHit = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const AiStateMachineCondition_1 = require("./AiStateMachineCondition");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  AiStateMachineCondition_1 = require("./AiStateMachineCondition");
 class AiStateMachineConditionListenBeHit extends AiStateMachineCondition_1.AiStateMachineCondition {
   constructor() {
     super(...arguments),
@@ -11,7 +11,7 @@ class AiStateMachineConditionListenBeHit extends AiStateMachineCondition_1.AiSta
       (this.dne = new Set()),
       (this.Cne = 0),
       (this.gne = (t, i) => {
-        i.VisionCounterAttackId > 0 &&
+        0 < i.VisionCounterAttackId &&
           this.Cne === i.VisionCounterAttackId &&
           (this.ResultSelf = !0),
           i.HasBeHitAnim
@@ -68,4 +68,4 @@ class AiStateMachineConditionListenBeHit extends AiStateMachineCondition_1.AiSta
   }
 }
 exports.AiStateMachineConditionListenBeHit = AiStateMachineConditionListenBeHit;
-// # sourceMappingURL=AiStateMachineConditionListenBeHit.js.map
+//# sourceMappingURL=AiStateMachineConditionListenBeHit.js.map

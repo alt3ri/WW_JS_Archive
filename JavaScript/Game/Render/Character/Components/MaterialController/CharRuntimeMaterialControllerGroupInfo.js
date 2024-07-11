@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharMaterialControlRuntimeDataGroup = void 0);
-const MapUtils_1 = require("../../../../../Core/Utils/MapUtils");
-const RenderModuleController_1 = require("../../../Manager/RenderModuleController");
+const MapUtils_1 = require("../../../../../Core/Utils/MapUtils"),
+  RenderModuleController_1 = require("../../../Manager/RenderModuleController");
 class CharMaterialControlRuntimeDataGroup {
   constructor() {
     (this.CharRenderingComponent = void 0),
@@ -28,8 +28,8 @@ class CharMaterialControlRuntimeDataGroup {
       (this.Ghr = !1),
       MapUtils_1.MapUtils.ForEach(this.DataGroup.DataMap, (t, i) => {
         this.qhr < i && (this.qhr = i),
-          (this.Ghr = this.Ghr || t.DataType === 1),
-          i > 0
+          (this.Ghr = this.Ghr || 1 === t.DataType),
+          0 < i
             ? this.DataMap.set(t, i)
             : this.Bhr.push(s.AddMaterialControllerData(t));
       });
@@ -53,7 +53,7 @@ class CharMaterialControlRuntimeDataGroup {
               this.war.push(i))
             : this.DataMap.set(i, t);
         }),
-        this.war.length > 0)
+        0 < this.war.length)
       )
         for (const h of this.war) this.DataMap.delete(h);
       this.war = [];
@@ -67,7 +67,7 @@ class CharMaterialControlRuntimeDataGroup {
           this.Bhr[t],
         ) && this.bhr.push(this.Bhr[t]);
       (this.Bhr = this.bhr),
-        (this.IsDead = this.Bhr.length === 0 && this.DataMap.size === 0);
+        (this.IsDead = 0 === this.Bhr.length && 0 === this.DataMap.size);
     }
   }
   EndState() {
@@ -89,4 +89,4 @@ class CharMaterialControlRuntimeDataGroup {
 }
 exports.CharMaterialControlRuntimeDataGroup =
   CharMaterialControlRuntimeDataGroup;
-// # sourceMappingURL=CharRuntimeMaterialControllerGroupInfo.js.map
+//# sourceMappingURL=CharRuntimeMaterialControllerGroupInfo.js.map

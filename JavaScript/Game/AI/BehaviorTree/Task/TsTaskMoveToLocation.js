@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsAiController_1 = require("../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsAiController_1 = require("../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskMoveToLocation extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -41,8 +41,8 @@ class TsTaskMoveToLocation extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveExecuteAI(t, i) {
     this.InitTsVariables();
-    let s;
-    let e = t.AiController;
+    var s,
+      e = t.AiController;
     e
       ? ((e = e.CharActorComp.Entity),
         (s = BlackboardController_1.BlackboardController.GetVectorValueByEntity(
@@ -52,7 +52,7 @@ class TsTaskMoveToLocation extends TsTaskAbortImmediatelyBase_1.default {
           ? ((s = Vector_1.Vector.Create(s)),
             this.HandleMoveEnd ||
               (this.HandleMoveEnd = (t) => {
-                t === 1 ? this.Finish(!0) : this.Finish(!1);
+                1 === t ? this.Finish(!0) : this.Finish(!1);
               }),
             (this.MoveComp = e.GetComponent(36)),
             (e = {
@@ -65,7 +65,7 @@ class TsTaskMoveToLocation extends TsTaskAbortImmediatelyBase_1.default {
               ReturnFalseWhenNavigationFailed: !0,
             }),
             this.MoveComp.MoveAlongPath(e),
-            this.TsLimitTime > -1 &&
+            -1 < this.TsLimitTime &&
               (this.EndTime = Time_1.Time.WorldTime + this.TsLimitTime))
           : (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
@@ -85,7 +85,7 @@ class TsTaskMoveToLocation extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveTickAI(t, i, s) {
     t instanceof TsAiController_1.default
-      ? this.TsLimitTime > -1 &&
+      ? -1 < this.TsLimitTime &&
         this.EndTime < Time_1.Time.WorldTime &&
         this.Finish(!0)
       : this.Finish(!1);
@@ -96,4 +96,4 @@ class TsTaskMoveToLocation extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskMoveToLocation;
-// # sourceMappingURL=TsTaskMoveToLocation.js.map
+//# sourceMappingURL=TsTaskMoveToLocation.js.map

@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MissionPanelStep = void 0);
-const ue_1 = require("ue");
-const GeneralLogicTreeDefine_1 = require("../../../GeneralLogicTree/Define/GeneralLogicTreeDefine");
-const TreeStepBase_1 = require("../../../GeneralLogicTree/View/TreeStep/TreeStepBase");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const MissionPanelChildStep_1 = require("./MissionPanelChildStep");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const PublicUtil_1 = require("../../../../Common/PublicUtil");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest");
+const ue_1 = require("ue"),
+  GeneralLogicTreeDefine_1 = require("../../../GeneralLogicTree/Define/GeneralLogicTreeDefine"),
+  TreeStepBase_1 = require("../../../GeneralLogicTree/View/TreeStep/TreeStepBase"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  MissionPanelChildStep_1 = require("./MissionPanelChildStep"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  PublicUtil_1 = require("../../../../Common/PublicUtil"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest");
 class MissionPanelStep extends TreeStepBase_1.TreeStepBase {
   constructor() {
     super(...arguments),
@@ -29,8 +29,8 @@ class MissionPanelStep extends TreeStepBase_1.TreeStepBase {
           this.fAn()
             ? (this.TitleSequencePlayer.StopCurrentSequence(!0, !0),
               this.TitleSequencePlayer.PlayLevelSequenceByName("Start"),
-              ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode() !==
-                "Disabled" &&
+              "Disabled" !==
+                ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode() &&
                 this.TitleSequencePlayer.StopCurrentSequence(!0, !0),
               !1)
             : (this.SetUiActive(!0), this.pAn(this.G_t))
@@ -79,16 +79,15 @@ class MissionPanelStep extends TreeStepBase_1.TreeStepBase {
   }
   OnStart() {
     super.OnStart();
-    var e = this.GetItem(3);
-    var e =
-      (e.SetUIActive(!0),
-      (this.TitleSequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(
-        e,
-      )),
-      this.TitleSequencePlayer.BindSequenceStartEvent(this.ZPt),
-      this.TitleSequencePlayer.BindSequenceCloseEvent(this.aut),
-      this.GetItem(2));
-    const i = new MissionPanelChildStep_1.MissionPanelChildStep();
+    var e = this.GetItem(3),
+      e =
+        (e.SetUIActive(!0),
+        (this.TitleSequencePlayer =
+          new LevelSequencePlayer_1.LevelSequencePlayer(e)),
+        this.TitleSequencePlayer.BindSequenceStartEvent(this.ZPt),
+        this.TitleSequencePlayer.BindSequenceCloseEvent(this.aut),
+        this.GetItem(2)),
+      i = new MissionPanelChildStep_1.MissionPanelChildStep();
     i.SetRootActor(e.GetOwner(), !0), this.but.push(i), e?.SetUIActive(!1);
   }
   Dispose() {
@@ -101,8 +100,8 @@ class MissionPanelStep extends TreeStepBase_1.TreeStepBase {
     (e = this.j4s() ? "Finish" : "Close"),
       this.TitleSequencePlayer.PlayLevelSequenceByName(e),
       (e =
-        ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode() !==
-        "Disabled");
+        "Disabled" !==
+        ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode());
     return !!e && (this.TitleSequencePlayer.StopCurrentSequence(!0, !0), !0);
   }
   PauseSequence() {
@@ -115,8 +114,8 @@ class MissionPanelStep extends TreeStepBase_1.TreeStepBase {
   }
   async ExecuteSequenceOnUpdate(e, i, t) {
     this.G_t = e;
-    let s = this.But;
-    const r = i.TrackTextConfig;
+    var s = this.But,
+      r = i.TrackTextConfig;
     if (
       (0, GeneralLogicTreeDefine_1.CheckMainTitleSame)(s.MainTitle, r.MainTitle)
     )
@@ -139,7 +138,7 @@ class MissionPanelStep extends TreeStepBase_1.TreeStepBase {
   }
   pAn(i) {
     this.qut();
-    const t = this.But?.SubTitles;
+    var t = this.But?.SubTitles;
     if (!t?.length) return this.hut(), !0;
     for (let e = 0; e < t.length; e++) this.but[e].PlayStartSequence(i);
     return !1;
@@ -169,7 +168,7 @@ class MissionPanelStep extends TreeStepBase_1.TreeStepBase {
         let s = 0;
         t.SubTitles.forEach((e) => {
           let i = void 0;
-          let t;
+          var t;
           this.but.length > s
             ? (i = this.but[s])
             : ((t = LguiUtil_1.LguiUtil.CopyItem(r, r.GetParentAsUIItem())),
@@ -192,7 +191,7 @@ class MissionPanelStep extends TreeStepBase_1.TreeStepBase {
     }
   }
   fAn() {
-    let e;
+    var e;
     return (
       void 0 !== this.But?.MainTitle &&
       ((e = PublicUtil_1.PublicUtil.GetConfigTextByKey(
@@ -202,9 +201,9 @@ class MissionPanelStep extends TreeStepBase_1.TreeStepBase {
     );
   }
   j4s() {
-    const e = this.But?.MainTitle?.QuestScheduleType;
+    var e = this.But?.MainTitle?.QuestScheduleType;
     if (e && e.Type === IQuest_1.EQuestScheduleType.ChildQuestCompleted) {
-      let i = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
+      var i = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
         this.TreeIncId,
       );
       if (i) {
@@ -216,4 +215,4 @@ class MissionPanelStep extends TreeStepBase_1.TreeStepBase {
   }
 }
 exports.MissionPanelStep = MissionPanelStep;
-// # sourceMappingURL=MissionPanelStep.js.map
+//# sourceMappingURL=MissionPanelStep.js.map

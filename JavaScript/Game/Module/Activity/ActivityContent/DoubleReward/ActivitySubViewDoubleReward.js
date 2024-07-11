@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivitySubViewDoubleReward = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase");
-const ActivityDescriptionTypeA_1 = require("../UniversalComponents/Content/ActivityDescriptionTypeA");
-const ActivityTitleTypeA_1 = require("../UniversalComponents/Title/ActivityTitleTypeA");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase"),
+  ActivityDescriptionTypeA_1 = require("../UniversalComponents/Content/ActivityDescriptionTypeA"),
+  ActivityTitleTypeA_1 = require("../UniversalComponents/Title/ActivityTitleTypeA");
 class ActivitySubViewDoubleReward extends ActivitySubViewBase_1.ActivitySubViewBase {
   constructor() {
     super(...arguments),
@@ -32,10 +32,10 @@ class ActivitySubViewDoubleReward extends ActivitySubViewBase_1.ActivitySubViewB
   }
   OnSetData() {}
   async OnBeforeStartAsync() {
-    const i = this.GetItem(0);
-    const t =
-      ((this.LNe = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
-      this.GetItem(1));
+    var i = this.GetItem(0),
+      t =
+        ((this.LNe = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
+        this.GetItem(1));
     (this.DNe = new ActivityDescriptionTypeA_1.ActivityDescriptionTypeA()),
       await Promise.all([
         this.DNe.CreateThenShowByActorAsync(t.GetOwner()),
@@ -43,9 +43,9 @@ class ActivitySubViewDoubleReward extends ActivitySubViewBase_1.ActivitySubViewB
       ]);
   }
   OnStart() {
-    let i;
-    let t;
-    let e = this.ActivityBaseData.LocalConfig;
+    var i,
+      t,
+      e = this.ActivityBaseData.LocalConfig;
     e &&
       (this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
       (i = e.DescTheme),
@@ -60,8 +60,8 @@ class ActivitySubViewDoubleReward extends ActivitySubViewBase_1.ActivitySubViewB
     this.FNe();
   }
   OnRefreshView() {
-    let i = this.ActivityBaseData.GetNumTxtAndParam();
-    const t = this.ActivityBaseData.IsUnLock();
+    var i = this.ActivityBaseData.GetNumTxtAndParam(),
+      t = this.ActivityBaseData.IsUnLock();
     this.GetButton(3)?.RootUIComp.SetUIActive(
       t && ModelManager_1.ModelManager.FunctionModel.IsOpen(10023004),
     ),
@@ -75,9 +75,9 @@ class ActivitySubViewDoubleReward extends ActivitySubViewBase_1.ActivitySubViewB
       this.ActivityBaseData.ReadDailyRedDot();
   }
   FNe() {
-    const [i, t] = this.GetTimeVisibleAndRemainTime();
+    var [i, t] = this.GetTimeVisibleAndRemainTime();
     this.LNe.SetTimeTextVisible(i), i && this.LNe.SetTimeTextByText(t);
   }
 }
 exports.ActivitySubViewDoubleReward = ActivitySubViewDoubleReward;
-// # sourceMappingURL=ActivitySubViewDoubleReward.js.map
+//# sourceMappingURL=ActivitySubViewDoubleReward.js.map

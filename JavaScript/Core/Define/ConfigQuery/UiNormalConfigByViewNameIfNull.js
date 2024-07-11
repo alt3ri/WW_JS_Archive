@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configUiNormalConfigByViewNameIfNull = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const UiNormalConfig_1 = require("../Config/UiNormalConfig");
-const DB = "db_ui.db";
-const FILE = "u.UiNormal层级队列配置.csv";
-const TABLE = "UiNormalConfig";
-const COMMAND =
-  'select BinData from `UiNormalConfig` where ViewName = ? AND (SELECT count(0) from `UiNormalConfig` WHERE ViewName = ?) > 0 OR ViewName = "DefaultView" AND (SELECT count(0) from `UiNormalConfig` WHERE ViewName = ?) <= 0';
-const KEY_PREFIX = "UiNormalConfigByViewNameIfNull";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  UiNormalConfig_1 = require("../Config/UiNormalConfig"),
+  DB = "db_ui.db",
+  FILE = "u.UiNormal层级队列配置.csv",
+  TABLE = "UiNormalConfig",
+  COMMAND =
+    'select BinData from `UiNormalConfig` where ViewName = ? AND (SELECT count(0) from `UiNormalConfig` WHERE ViewName = ?) > 0 OR ViewName = "DefaultView" AND (SELECT count(0) from `UiNormalConfig` WHERE ViewName = ?) <= 0',
+  KEY_PREFIX = "UiNormalConfigByViewNameIfNull",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configUiNormalConfigByViewNameIfNull.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configUiNormalConfigByViewNameIfNull.GetConfig(";
 exports.configUiNormalConfigByViewNameIfNull = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -43,17 +43,18 @@ exports.configUiNormalConfigByViewNameIfNull = {
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindString(handleId, 2, i, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindString(handleId, 3, e, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(
-            handleId,
-            !0,
-            ...logPair,
-            ["ViewName", o],
-            ["ViewName", i],
-            ["ViewName", e],
-          ) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(
+              handleId,
+              !0,
+              ...logPair,
+              ["ViewName", o],
+              ["ViewName", i],
+              ["ViewName", e],
+            ))
       ) {
-        var m;
-        var a = void 0;
+        var m,
+          a = void 0;
         if (
           (([m, a] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -81,4 +82,4 @@ exports.configUiNormalConfigByViewNameIfNull = {
     }
   },
 };
-// # sourceMappingURL=UiNormalConfigByViewNameIfNull.js.map
+//# sourceMappingURL=UiNormalConfigByViewNameIfNull.js.map

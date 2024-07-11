@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExitSkillView = exports.ExitSkillViewData = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const ExitSkillItem_1 = require("./ExitSkillItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  ExitSkillItem_1 = require("./ExitSkillItem");
 class ExitSkillViewData {
   constructor() {
     (this.e4 = void 0), (this.e4 = new Array());
   }
   AddData(i, t, e) {
-    const s = new ExitSkillItem_1.ExitSkillItemData();
+    var s = new ExitSkillItem_1.ExitSkillItemData();
     (s.RoleId = i), (s.OnlineIndex = t), (s.PlayerId = e), this.e4.push(s);
   }
   GetItems() {
@@ -42,12 +42,12 @@ class ExitSkillView extends UiViewBase_1.UiViewBase {
           });
       }),
       (this.d3t = () => {
-        const t =
+        var t =
           ModelManager_1.ModelManager.EditBattleTeamModel.GetAllRoleSlotData;
         for (let i = 0; i < this.P4t.length; i++) {
-          const e = this.P4t[i];
-          let s = t[i];
-          const r = s?.GetRoleData;
+          var e = this.P4t[i],
+            s = t[i],
+            r = s?.GetRoleData;
           s && r
             ? (((s = new ExitSkillItem_1.ExitSkillItemData()).RoleId =
                 r.ConfigId),
@@ -94,19 +94,19 @@ class ExitSkillView extends UiViewBase_1.UiViewBase {
   }
   OnStart() {
     (this.Pe = this.OpenParam), (this.P4t = new Array());
-    const t = [this.GetItem(2), this.GetItem(3), this.GetItem(4)];
-    var i = ModelManager_1.ModelManager.GameModeModel.IsMulti;
-    var i =
-      (this.GetItem(9).SetUIActive(i),
-      (this.x4t =
-        ModelManager_1.ModelManager.RoleModel.IsShowMultiSkillDesc && i),
-      this.x4t ? 1 : 0);
-    const e =
-      (this.GetExtendToggle(8).SetToggleState(i),
-      this.B4t(this.x4t),
-      this.Pe?.GetItems());
+    var t = [this.GetItem(2), this.GetItem(3), this.GetItem(4)],
+      i = ModelManager_1.ModelManager.GameModeModel.IsMulti,
+      i =
+        (this.GetItem(9).SetUIActive(i),
+        (this.x4t =
+          ModelManager_1.ModelManager.RoleModel.IsShowMultiSkillDesc && i),
+        this.x4t ? 1 : 0),
+      e =
+        (this.GetExtendToggle(8).SetToggleState(i),
+        this.B4t(this.x4t),
+        this.Pe?.GetItems());
     for (let i = 0; i < t.length; i++) {
-      const s = new ExitSkillItem_1.ExitSkillItem(t[i]);
+      var s = new ExitSkillItem_1.ExitSkillItem(t[i]);
       this.P4t.push(s),
         e && i < e.length ? s.Refresh(e[i], this.x4t) : s.Refresh(void 0, !1);
     }
@@ -119,4 +119,4 @@ class ExitSkillView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.ExitSkillView = ExitSkillView;
-// # sourceMappingURL=ExitSkillView.js.map
+//# sourceMappingURL=ExitSkillView.js.map

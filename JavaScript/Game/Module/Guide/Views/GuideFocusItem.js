@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuideFocusItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const TouchFingerManager_1 = require("../../../Ui/TouchFinger/TouchFingerManager");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const UiNavigationGlobalData_1 = require("../../UiNavigation/New/UiNavigationGlobalData");
-const UiNavigationNewController_1 = require("../../UiNavigation/New/UiNavigationNewController");
-const GuideFocusItemText_1 = require("./GuideFocusItemText");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  TouchFingerManager_1 = require("../../../Ui/TouchFinger/TouchFingerManager"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  UiNavigationGlobalData_1 = require("../../UiNavigation/New/UiNavigationGlobalData"),
+  UiNavigationNewController_1 = require("../../UiNavigation/New/UiNavigationNewController"),
+  GuideFocusItemText_1 = require("./GuideFocusItemText");
 class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, i, t) {
     super(),
@@ -34,8 +34,8 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
         GuideFocusItem.IsOpenLog &&
           Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Guide", 17, "OnButtonClick enter");
-        let e;
-        const i = this.NJt;
+        var e,
+          i = this.NJt;
         this.kJt(),
           i?.IsInteractable() &&
             this.xJt.bIsUIActive &&
@@ -69,7 +69,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
                         "OnButtonClick execute parent SetState UIToggleComponent",
                       ))
                   : i.IsA(UE.UIExtendToggle.StaticClass())
-                    ? (e = i).GetToggleState() === 0 &&
+                    ? 0 === (e = i).GetToggleState() &&
                       (GuideFocusItem.IsOpenLog &&
                         Log_1.Log.CheckWarn() &&
                         Log_1.Log.Warn(
@@ -90,7 +90,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
                       e.OnValueChangeCb.Execute(e.Value)));
       }),
       (this.FJt = () => {
-        let e, i;
+        var e, i;
         this.BJt ||
           (GuideFocusItem.IsOpenLog &&
             Log_1.Log.CheckWarn() &&
@@ -129,8 +129,8 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
         GuideFocusItem.IsOpenLog &&
           Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Guide", 17, "OnButtonPointerUpCallBack enter");
-        let e;
-        const i = this.NJt;
+        var e,
+          i = this.NJt;
         i?.IsValid() &&
           ((this.qJt = !1),
           GuideFocusItem.IsOpenLog &&
@@ -164,7 +164,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
               e.OnPointUpCallBack.Execute(1)));
       }),
       (this.HJt = (e) => {
-        let i;
+        var i;
         this.BJt ||
           (GuideFocusItem.IsOpenLog &&
             Log_1.Log.CheckWarn() &&
@@ -188,7 +188,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
             i.OnPointerDownCallBack.Execute(e)));
       }),
       (this.jJt = (e) => {
-        let i;
+        var i;
         this.BJt ||
           (GuideFocusItem.IsOpenLog &&
             Log_1.Log.CheckWarn() &&
@@ -217,7 +217,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
             i.OnPointerBeginDragCallBack.Execute(e)));
       }),
       (this.WJt = (e) => {
-        let i;
+        var i;
         this.BJt ||
           (GuideFocusItem.IsOpenLog &&
             Log_1.Log.CheckWarn() &&
@@ -249,7 +249,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
             17,
             "OnDraggablePointerEndDragCallBack enter",
           );
-        const i = this.GJt;
+        var i = this.GJt;
         i?.IsValid() &&
           (GuideFocusItem.IsOpenLog &&
             Log_1.Log.CheckWarn() &&
@@ -273,7 +273,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
         GuideFocusItem.IsOpenLog &&
           Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Guide", 17, "OnDraggablePointerUpCallBack enter");
-        const i = this.GJt;
+        var i = this.GJt;
         i?.IsValid() &&
           (GuideFocusItem.IsOpenLog &&
             Log_1.Log.CheckWarn() &&
@@ -301,11 +301,11 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
           this.kJt());
       }),
       (this.OnTouch = (e, i) => {
-        var e = Number(e);
-        const t =
-          TouchFingerManager_1.TouchFingerManager.GetTouchFingerData(
-            e,
-          )?.GetPointerEventData()?.pressComponent;
+        var e = Number(e),
+          t =
+            TouchFingerManager_1.TouchFingerManager.GetTouchFingerData(
+              e,
+            )?.GetPointerEventData()?.pressComponent;
         t &&
           t.GetOwner() === this.GetButton(0).GetOwner() &&
           EventSystem_1.EventSystem.Emit(
@@ -333,7 +333,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.Fr]]);
   }
   async OnBeforeStartAsync() {
-    const e = this.GetItem(3);
+    var e = this.GetItem(3);
     (this.PJt = new GuideFocusItemText_1.FocusItemText(this)),
       await this.PJt.OnlyCreateByActorAsync(e.GetOwner()),
       this.AddChild(this.PJt);
@@ -351,14 +351,14 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
       (this.NJt = this.xJt
         .GetOwner()
         .GetComponentByClass(UE.UISelectableComponent.StaticClass()));
-    const e = this.GetButton(0);
-    const i =
-      (e.OnPointDownCallBack.Bind(this.FJt),
-      e.OnPointUpCallBack.Bind(this.VJt),
-      this.GetItem(3));
+    const e = this.GetButton(0),
+      i =
+        (e.OnPointDownCallBack.Bind(this.FJt),
+        e.OnPointUpCallBack.Bind(this.VJt),
+        this.GetItem(3));
     i.SetUIActive(!1),
       this.Config.ClickAnywhere &&
-        (t = this.Config.ClickAnywhereShowTime) > 0 &&
+        0 < (t = this.Config.ClickAnywhereShowTime) &&
         (e.RootUIComp.SetRaycastTarget(!1),
         TimerSystem_1.TimerSystem.Delay(() => {
           i.SetUIActive(!0), e.RootUIComp.SetRaycastTarget(!0);
@@ -473,20 +473,20 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
     this.GetActive() && this.PJt?.OnDurationChange(e);
   }
   ApplyButtonFollow() {
-    var e = this.wJt;
-    var i = e.K2_GetComponentScale();
-    var e =
-      (this.RootItem.K2_SetWorldLocation(
-        e.K2_GetComponentLocation(),
-        !1,
-        void 0,
-        !1,
-      ),
-      this.RootItem.SetPivot(e.GetPivot()),
-      this.RootItem.SetHeight(e.Height * i.Y),
-      this.RootItem.SetWidth(e.Width * i.X),
-      this.xJt);
-    var i = this.GetButton(0).RootUIComp;
+    var e = this.wJt,
+      i = e.K2_GetComponentScale(),
+      e =
+        (this.RootItem.K2_SetWorldLocation(
+          e.K2_GetComponentLocation(),
+          !1,
+          void 0,
+          !1,
+        ),
+        this.RootItem.SetPivot(e.GetPivot()),
+        this.RootItem.SetHeight(e.Height * i.Y),
+        this.RootItem.SetWidth(e.Width * i.X),
+        this.xJt),
+      i = this.GetButton(0).RootUIComp;
     this.Config.ClickAnywhere
       ? (i.K2_SetWorldLocation(
           UiLayer_1.UiLayer.UiRootItem.K2_GetComponentLocation(),
@@ -504,7 +504,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
         i.K2_SetWorldLocation(e.K2_GetComponentLocation(), !1, void 0, !1));
   }
   ApplyBgFollow() {
-    let e;
+    var e;
     this.Config.UseMask &&
       ((e = this.HXe).K2_SetWorldLocation(
         UiLayer_1.UiLayer.UiRootItem.K2_GetComponentLocation(),
@@ -518,4 +518,4 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 (exports.GuideFocusItem = GuideFocusItem).IsOpenLog = !1;
-// # sourceMappingURL=GuideFocusItem.js.map
+//# sourceMappingURL=GuideFocusItem.js.map

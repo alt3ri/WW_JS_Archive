@@ -6,4 +6,4 @@ class EffectRuntimeDataBase {
   }
 }
 exports.default = EffectRuntimeDataBase;
-// # sourceMappingURL=EffectRuntimeDataBase.js.map
+//# sourceMappingURL=EffectRuntimeDataBase.js.map

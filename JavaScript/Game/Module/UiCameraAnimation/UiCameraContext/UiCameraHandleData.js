@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiCameraHandleData = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil");
-const MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const CameraController_1 = require("../../../Camera/CameraController");
-const GlobalData_1 = require("../../../GlobalData");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const RenderModuleController_1 = require("../../../Render/Manager/RenderModuleController");
-const UiManager_1 = require("../../../Ui/UiManager");
-const UiCameraAnimationManager_1 = require("../UiCameraAnimationManager");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  CameraController_1 = require("../../../Camera/CameraController"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  RenderModuleController_1 = require("../../../Render/Manager/RenderModuleController"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  UiCameraAnimationManager_1 = require("../UiCameraAnimationManager");
 class UiCameraHandleData {
   constructor() {
     (this.AAo = void 0),
@@ -42,9 +42,9 @@ class UiCameraHandleData {
     return `UniqueId:${this.AAo},HandleName:${this.BAo},ViewName:` + this.PAo;
   }
   static NewByHandleName(t, i) {
-    const e =
-      UiCameraAnimationManager_1.UiCameraAnimationManager.GenerateHandleDataUniqueId();
-    const r = new UiCameraHandleData();
+    var e =
+        UiCameraAnimationManager_1.UiCameraAnimationManager.GenerateHandleDataUniqueId(),
+      r = new UiCameraHandleData();
     return (
       (r.UniqueId = e),
       (r.HandleName = t),
@@ -54,12 +54,12 @@ class UiCameraHandleData {
     );
   }
   static NewByView(t, i) {
-    let e;
-    let r;
-    const a =
-      UiCameraAnimationManager_1.UiCameraAnimationManager.GetCameraMappingData(
-        t,
-      );
+    var e,
+      r,
+      a =
+        UiCameraAnimationManager_1.UiCameraAnimationManager.GetCameraMappingData(
+          t,
+        );
     if (a)
       return (
         (e = UiManager_1.UiManager.GetViewByName(t)),
@@ -88,7 +88,7 @@ class UiCameraHandleData {
       (this.JUo = void 0);
   }
   Refresh() {
-    let t, i;
+    var t, i;
     (this.JUo =
       ConfigManager_1.ConfigManager.UiCameraAnimationConfig.GetUiCameraAnimationConfig(
         this.HandleName,
@@ -168,7 +168,7 @@ class UiCameraHandleData {
     return this.WAo;
   }
   GetTargetSkeletalMeshTransform() {
-    const t = this.GetTargetSkeletalMesh();
+    var t = this.GetTargetSkeletalMesh();
     if (t)
       return (
         this.kAo.SetLocation(t.K2_GetComponentLocation()),
@@ -178,13 +178,13 @@ class UiCameraHandleData {
       );
   }
   GetTargetSkeletalMeshSocketTransform() {
-    var t = this.GetUiCameraAnimationConfig();
-    var t = FNameUtil_1.FNameUtil.GetDynamicFName(t.SocketName);
-    const i = this.GetTargetSkeletalMesh();
+    var t = this.GetUiCameraAnimationConfig(),
+      t = FNameUtil_1.FNameUtil.GetDynamicFName(t.SocketName),
+      i = this.GetTargetSkeletalMesh();
     if (i) return i.GetSocketTransform(t);
   }
   GetTargetArmLength() {
-    let t, i;
+    var t, i;
     return this.NAo
       ? (t = this.GetTargetActor())?.IsValid() && this.JUo.bTargetActorAsCenter
         ? ((t = Vector_1.Vector.Create(t.K2_GetActorLocation())),
@@ -200,7 +200,7 @@ class UiCameraHandleData {
   }
   GetTargetArmOffsetRotation() {
     if (this.NAo && this.JUo.bTargetActorAsCenter) {
-      let t = this.GetTargetActor();
+      var t = this.GetTargetActor();
       if (t)
         return (
           (t = this.KAo(
@@ -235,11 +235,11 @@ class UiCameraHandleData {
       : this.GetUiCameraAnimationConfig().Aperture;
   }
   GetDefaultLocation() {
-    let t, i;
+    var t, i;
     return this.ExternalTransform
       ? this.ExternalTransform.GetLocation()
       : (t = this.GetUiCameraAnimationConfig())
-        ? ((i = t.TargetType) === 3 || i === 4 || i === 5) &&
+        ? (3 === (i = t.TargetType) || 4 === i || 5 === i) &&
           RenderModuleController_1.RenderModuleController
             .DebugNewUiSceneWorkflow &&
           RenderModuleController_1.RenderModuleController
@@ -271,7 +271,7 @@ class UiCameraHandleData {
   }
   GetTargetLocation() {
     if (this.ExternalTransform) return this.ExternalTransform.GetLocation();
-    let t = this.JUo?.ReplaceCameraTag;
+    var t = this.JUo?.ReplaceCameraTag;
     if (!StringUtils_1.StringUtils.IsEmpty(t))
       return this.NAo?.IsValid()
         ? (t = this.GetTargetActor())?.IsValid() &&
@@ -283,13 +283,13 @@ class UiCameraHandleData {
             )
           : this.NAo.K2_GetActorLocation()
         : void 0;
-    const i = this.GetDefaultLocation();
+    var i = this.GetDefaultLocation();
     switch (this.JUo.LocationType) {
       case 0:
         return i;
       case 1:
-        var e;
-        var r = this.GetTargetSkeletalMeshTransform();
+        var e,
+          r = this.GetTargetSkeletalMeshTransform();
         return r
           ? (a = (e = this.GetTargetSkeletalMesh()).GetOwner())?.IsValid()
             ? a
@@ -324,13 +324,13 @@ class UiCameraHandleData {
     }
   }
   GetDefaultRotation() {
-    let t = this.ExternalTransform;
+    var t = this.ExternalTransform;
     if (t) return t.GetRotation().Rotator();
     t = this.GetUiCameraAnimationConfig();
     if (t) {
       if (this.NAo) return this.NAo.K2_GetActorRotation();
       if (!t.IsTrack) return t.Rotation;
-      const i = CameraController_1.CameraController.CameraLocation;
+      var i = CameraController_1.CameraController.CameraLocation;
       if (t.IsTrackWorldLocation) {
         var e = t.TrackLocation;
         const a = UE.KismetMathLibrary.FindLookAtRotation(i.ToUeVector(), e);
@@ -339,8 +339,8 @@ class UiCameraHandleData {
       e = this.GetTargetActor();
       if (!e) return t.Rotation;
       if (this.bAo) {
-        const r = t.TrackLocation;
-        var e = e.K2_GetActorLocation();
+        var r = t.TrackLocation,
+          e = e.K2_GetActorLocation();
         (this.bAo.X = e.X + r.X),
           (this.bAo.Y = e.Y + r.Y),
           (this.bAo.Z = e.Z + r.Z);
@@ -353,7 +353,7 @@ class UiCameraHandleData {
     }
   }
   GetTargetRotation() {
-    let t = this.ExternalTransform;
+    var t = this.ExternalTransform;
     if (t) return t.GetRotation().Rotator();
     t = this.JUo?.ReplaceCameraTag;
     if (!StringUtils_1.StringUtils.IsEmpty(t))
@@ -362,7 +362,7 @@ class UiCameraHandleData {
           ? Rotator_1.Rotator.ZeroRotator
           : this.NAo.K2_GetActorRotation()
         : void 0;
-    const i = this.GetDefaultRotation();
+    var i = this.GetDefaultRotation();
     switch (this.JUo.RotationType) {
       case 0:
         return i;
@@ -421,10 +421,10 @@ class UiCameraHandleData {
   CanApplyAnimationHandle() {
     var t = this.GetUiCameraAnimationConfig();
     if (!t) return !1;
-    const i = t.TargetType;
-    const e = FNameUtil_1.FNameUtil.GetDynamicFName(t.SocketName);
-    var t = t.LocationType === 2;
-    if (i === 2 || i === 1) {
+    var i = t.TargetType,
+      e = FNameUtil_1.FNameUtil.GetDynamicFName(t.SocketName),
+      t = 2 === t.LocationType;
+    if (2 === i || 1 === i) {
       if (!this.WAo) return !1;
       if (t) {
         if (FNameUtil_1.FNameUtil.IsEmpty(e)) return !1;
@@ -435,4 +435,4 @@ class UiCameraHandleData {
   }
 }
 exports.UiCameraHandleData = UiCameraHandleData;
-// # sourceMappingURL=UiCameraHandleData.js.map
+//# sourceMappingURL=UiCameraHandleData.js.map

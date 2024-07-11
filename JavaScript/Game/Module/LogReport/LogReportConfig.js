@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LogReportConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const BeginnerGuideById_1 = require("../../../Core/Define/ConfigQuery/BeginnerGuideById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  BeginnerGuideById_1 = require("../../../Core/Define/ConfigQuery/BeginnerGuideById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class LogReportConfig extends ConfigBase_1.ConfigBase {
   GetBeginnerGuideConfig(e) {
-    const o = BeginnerGuideById_1.configBeginnerGuideById.GetConfig(e);
+    var o = BeginnerGuideById_1.configBeginnerGuideById.GetConfig(e);
     return (
       o ||
         (Log_1.Log.CheckError() &&
@@ -21,4 +21,4 @@ class LogReportConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.LogReportConfig = LogReportConfig;
-// # sourceMappingURL=LogReportConfig.js.map
+//# sourceMappingURL=LogReportConfig.js.map

@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DailyQuestAssistant = void 0);
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase");
-const GeneralLogicTreeUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeUtil");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase"),
+  GeneralLogicTreeUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeUtil"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class DailyQuestAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor() {
     super(...arguments),
@@ -21,10 +21,10 @@ class DailyQuestAssistant extends ControllerAssistantBase_1.ControllerAssistantB
           ModelManager_1.ModelManager.LoginModel.GetTodayFirstTimeLogin() &&
           !this.Kio
         ) {
-          let e;
+          var e;
           this.Kio = !0;
           for (const n of ModelManager_1.ModelManager.DailyTaskModel.GetDailyTaskCorrelativeEntities()) {
-            const r =
+            var r =
               ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(n);
             if (this.Qio(r)) return;
           }
@@ -32,7 +32,7 @@ class DailyQuestAssistant extends ControllerAssistantBase_1.ControllerAssistantB
             ,
             e,
           ] of ModelManager_1.ModelManager.DailyTaskModel.GetAllDailyQuest()) {
-            const t = e.GetCurrentActiveChildQuestNode();
+            var t = e.GetCurrentActiveChildQuestNode();
             t &&
               ModelManager_1.ModelManager.GeneralLogicTreeModel.ForceShowDailyQuestInfo(
                 e.TreeId,
@@ -42,11 +42,11 @@ class DailyQuestAssistant extends ControllerAssistantBase_1.ControllerAssistantB
         }
       }),
       (this.Xio = (e, r, t) => {
-        const n = ModelManager_1.ModelManager.QuestNewModel.GetQuest(e);
+        var n = ModelManager_1.ModelManager.QuestNewModel.GetQuest(e);
         if (
           n &&
-          n.Type === 4 &&
-          (n.OnlineType !== "SingleHangUpOnline" ||
+          4 === n.Type &&
+          ("SingleHangUpOnline" !== n.OnlineType ||
             !ModelManager_1.ModelManager.GameModeModel.IsMulti)
         )
           switch (t) {
@@ -60,7 +60,7 @@ class DailyQuestAssistant extends ControllerAssistantBase_1.ControllerAssistantB
           }
       }),
       (this.Jio = (e) => {
-        e.Type === 4 &&
+        4 === e.Type &&
           ModelManager_1.ModelManager.DailyTaskModel.AddDailyQuest(e);
       }),
       (this.DEe = (e, r) => {
@@ -119,9 +119,9 @@ class DailyQuestAssistant extends ControllerAssistantBase_1.ControllerAssistantB
     );
   }
   Yio(e) {
-    let r;
+    var r;
     e &&
-      e.Type === 4 &&
+      4 === e.Type &&
       !e.TriggerQuestTips &&
       ((e = ModelManager_1.ModelManager.QuestNewModel.GetQuestName(e.Id)),
       (r =
@@ -139,7 +139,7 @@ class DailyQuestAssistant extends ControllerAssistantBase_1.ControllerAssistantB
   }
   $io(e) {
     e &&
-      e.Type === 4 &&
+      4 === e.Type &&
       !e.TriggerQuestTips &&
       ModelManager_1.ModelManager.GeneralLogicTreeModel.ForceShowDailyQuestInfo(
         e.TreeId,
@@ -147,9 +147,9 @@ class DailyQuestAssistant extends ControllerAssistantBase_1.ControllerAssistantB
       );
   }
   CreateMarksOnWakeUp() {
-    const e = ModelManager_1.ModelManager.DailyTaskModel.GetAllDailyQuest();
-    if (e) for (const [, r] of e) r.CreateMapMarks();
+    var e = ModelManager_1.ModelManager.DailyTaskModel.GetAllDailyQuest();
+    if (e) for (var [, r] of e) r.CreateMapMarks();
   }
 }
 exports.DailyQuestAssistant = DailyQuestAssistant;
-// # sourceMappingURL=DailyQuestAssistant.js.map
+//# sourceMappingURL=DailyQuestAssistant.js.map

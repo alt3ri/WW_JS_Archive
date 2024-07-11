@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configBasePropertyById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const BaseProperty_1 = require("../Config/BaseProperty");
-const DB = "db_property.db";
-const FILE = "s.属性.xlsx";
-const TABLE = "BaseProperty";
-const COMMAND = "select BinData from `BaseProperty` where Id=?";
-const KEY_PREFIX = "BasePropertyById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  BaseProperty_1 = require("../Config/BaseProperty"),
+  DB = "db_property.db",
+  FILE = "s.属性.xlsx",
+  TABLE = "BaseProperty",
+  COMMAND = "select BinData from `BaseProperty` where Id=?",
+  KEY_PREFIX = "BasePropertyById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configBasePropertyById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configBasePropertyById.GetConfig(";
 exports.configBasePropertyById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configBasePropertyById = {
       if (
         (r =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var r;
-        var n = void 0;
+        var r,
+          n = void 0;
         if (
           (([r, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configBasePropertyById = {
     }
   },
 };
-// # sourceMappingURL=BasePropertyById.js.map
+//# sourceMappingURL=BasePropertyById.js.map

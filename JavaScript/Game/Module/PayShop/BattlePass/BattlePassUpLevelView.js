@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattlePassUpLevelView = void 0);
-const UE = require("ue");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager");
 class BattlePassUpLevelView extends UiViewBase_1.UiViewBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -16,8 +16,8 @@ class BattlePassUpLevelView extends UiViewBase_1.UiViewBase {
     ];
   }
   OnStart() {
-    const e = ModelManager_1.ModelManager.BattlePassModel.BattlePassLevel;
-    const i = this.OpenParam.IncreasedLevel;
+    var e = ModelManager_1.ModelManager.BattlePassModel.BattlePassLevel,
+      i = this.OpenParam.IncreasedLevel;
     this.GetText(1).SetText(e.toString()),
       this.GetText(0).SetText((e - i).toString()),
       TimerSystem_1.TimerSystem.Delay(() => {
@@ -32,4 +32,4 @@ class BattlePassUpLevelView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.BattlePassUpLevelView = BattlePassUpLevelView;
-// # sourceMappingURL=BattlePassUpLevelView.js.map
+//# sourceMappingURL=BattlePassUpLevelView.js.map

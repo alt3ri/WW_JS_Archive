@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LordGymPanel = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const DropPackageById_1 = require("../../../../../Core/Define/ConfigQuery/DropPackageById");
-const ExchangeRewardById_1 = require("../../../../../Core/Define/ConfigQuery/ExchangeRewardById");
-const MapMarkByMarkId_1 = require("../../../../../Core/Define/ConfigQuery/MapMarkByMarkId");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const ButtonItem_1 = require("../../../Common/Button/ButtonItem");
-const LevelPlay_1 = require("../../../LevelPlay/LevelPlay");
-const MapController_1 = require("../../../Map/Controller/MapController");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi");
-const WorldMapDefine_1 = require("../../WorldMapDefine");
-const SceneGameplayTipGrid_1 = require("../SceneGameplayPanel/SceneGameplayTipGrid");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  DropPackageById_1 = require("../../../../../Core/Define/ConfigQuery/DropPackageById"),
+  ExchangeRewardById_1 = require("../../../../../Core/Define/ConfigQuery/ExchangeRewardById"),
+  MapMarkByMarkId_1 = require("../../../../../Core/Define/ConfigQuery/MapMarkByMarkId"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
+  LevelPlay_1 = require("../../../LevelPlay/LevelPlay"),
+  MapController_1 = require("../../../Map/Controller/MapController"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
+  WorldMapDefine_1 = require("../../WorldMapDefine"),
+  SceneGameplayTipGrid_1 = require("../SceneGameplayPanel/SceneGameplayTipGrid");
 class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
@@ -36,7 +36,7 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       (this.Qko = !1),
       (this.OnCreateDifficultyItem = () => new DifficultyItem()),
       (this.gko = () => {
-        const e = this.dko.IsTracked;
+        var e = this.dko.IsTracked;
         MapController_1.MapController.RequestTrackMapMark(
           this.dko.MarkType,
           this.dko.MarkId,
@@ -45,7 +45,7 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
           this.Close();
       }),
       (this.UOe = () => {
-        let e = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
+        var e = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
           this.Nct.Id,
         );
         e.IsOccupied &&
@@ -108,10 +108,10 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       (TimerSystem_1.TimerSystem.Remove(this.IRe), (this.IRe = void 0));
   }
   h7e() {
-    let e;
-    let i;
-    const t = this.dko.MarkConfigId;
-    let r = MapMarkByMarkId_1.configMapMarkByMarkId.GetConfig(t);
+    var e,
+      i,
+      t = this.dko.MarkConfigId,
+      r = MapMarkByMarkId_1.configMapMarkByMarkId.GetConfig(t);
     r
       ? (this.GetText(1).ShowTextNew(r.MarkTitle),
         this.GetText(4).ShowTextNew(r.MarkDesc),
@@ -152,7 +152,7 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
         Log_1.Log.Error("SceneGameplay", 18, "缺少标记配置", ["MarkId", t]);
   }
   Xko() {
-    let e = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
+    var e = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
       this.Nct.Id,
     );
     this.$Ut.SetActive(!e.IsOccupied),
@@ -180,8 +180,8 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       this.Hko.Initialize(LguiUtil_1.LguiUtil.DuplicateActor(i, e)),
       (this.Vko = new SceneGameplayTipGrid_1.SceneGameplayTipGrid()),
       this.Vko.Initialize(LguiUtil_1.LguiUtil.DuplicateActor(i, e)));
-    let e;
-    var i = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel;
+    var e,
+      i = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel;
     this.Nct.IsFirstPass
       ? this.$ko(this.Hko, void 0, 0, "", this.Qko)
       : this.$ko(this.Hko, this.Wko, i, "FirstPassReward"),
@@ -189,28 +189,28 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
   $ko(e, r, a, i, s = !1) {
     if (r) {
-      const n = r.PreviewReward;
+      var n = r.PreviewReward;
       let t = void 0;
       if (n.has(a)) t = n.get(a).MapIntInt;
       else
-        for (let e = a - 1; e >= 0; e--)
+        for (let e = a - 1; 0 <= e; e--)
           if (n.has(e)) {
             t = n.get(e).MapIntInt;
             break;
           }
       if (!t) {
-        let o;
-        const h = r.RewardId;
+        var o,
+          h = r.RewardId;
         let i = 0;
         if (h.has(a)) i = h.get(a);
         else
-          for (let e = a - 1; e >= 0; e--)
+          for (let e = a - 1; 0 <= e; e--)
             if (h.has(e)) {
               i = h.get(e);
               break;
             }
         i &&
-          i > 0 &&
+          0 < i &&
           ((o = DropPackageById_1.configDropPackageById.GetConfig(i))
             ? (t = o.DropPreview)
             : Log_1.Log.CheckError() &&
@@ -259,16 +259,16 @@ class DifficultyItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   Refresh(e, i, t) {
-    var r = ConfigManager_1.ConfigManager.LordGymConfig.GetLordGymConfig(e);
-    var r =
-      (LguiUtil_1.LguiUtil.SetLocalTextNew(
-        this.GetText(0),
-        "LordGymDifficulty",
-        r.Difficulty,
-      ),
-      ModelManager_1.ModelManager.LordGymModel.GetLordGymIsUnLock(e));
-    const a = ModelManager_1.ModelManager.LordGymModel.GetLordGymIsFinish(e);
-    var e = ModelManager_1.ModelManager.LordGymModel.GetLastGymFinish(e);
+    var r = ConfigManager_1.ConfigManager.LordGymConfig.GetLordGymConfig(e),
+      r =
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(
+          this.GetText(0),
+          "LordGymDifficulty",
+          r.Difficulty,
+        ),
+        ModelManager_1.ModelManager.LordGymModel.GetLordGymIsUnLock(e)),
+      a = ModelManager_1.ModelManager.LordGymModel.GetLordGymIsFinish(e),
+      e = ModelManager_1.ModelManager.LordGymModel.GetLastGymFinish(e);
     this.GetSprite(3)?.SetUIActive(a),
       this.GetSprite(2)?.SetUIActive(e && r && !a),
       this.GetSprite(1)?.SetUIActive(!e || !r);
@@ -280,4 +280,4 @@ class DifficultyItem extends UiPanelBase_1.UiPanelBase {
     return this.GridIndex;
   }
 }
-// # sourceMappingURL=LordGymPanel.js.map
+//# sourceMappingURL=LordGymPanel.js.map

@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulableTrackTargetCastToFreeState = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon");
-const CameraController_1 = require("../../../Camera/CameraController");
-const SceneItemManipulableCastState_1 = require("./SceneItemManipulableCastState");
-const PROFILE_KEY = "[SceneItemManipulableTrackTargetCastToFreeState.OnEnter]";
-const MAX_DISTANCE = 5e3;
-const SPHERE_TRACE_RADIUS = 1;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
+  CameraController_1 = require("../../../Camera/CameraController"),
+  SceneItemManipulableCastState_1 = require("./SceneItemManipulableCastState"),
+  PROFILE_KEY = "[SceneItemManipulableTrackTargetCastToFreeState.OnEnter]",
+  MAX_DISTANCE = 5e3,
+  SPHERE_TRACE_RADIUS = 1;
 class SceneItemManipulableTrackTargetCastToFreeState extends SceneItemManipulableCastState_1.SceneItemManipulableCastState {
   constructor(e, t) {
     super(e, t),
@@ -27,7 +27,7 @@ class SceneItemManipulableTrackTargetCastToFreeState extends SceneItemManipulabl
     this.xnr = e;
   }
   OnEnter() {
-    let e, t;
+    var e, t;
     super.OnEnter(),
       void 0 !== this.xnr &&
         ((this.Gnr = !1),
@@ -80,13 +80,13 @@ class SceneItemManipulableTrackTargetCastToFreeState extends SceneItemManipulabl
         this.SceneItem.ActorComp.Owner),
       (SceneItemManipulableTrackTargetCastToFreeState.Nnr.bIsSingle = !0),
       (SceneItemManipulableTrackTargetCastToFreeState.Nnr.bIgnoreSelf = !0);
-    var e = UE.NewArray(UE.BuiltinByte);
-    var e =
-      (e.Add(QueryTypeDefine_1.KuroObjectTypeQuery.WorldStatic),
-      e.Add(QueryTypeDefine_1.KuroObjectTypeQuery.Pawn),
-      e.Add(QueryTypeDefine_1.KuroObjectTypeQuery.PawnMonster),
-      e.Add(QueryTypeDefine_1.KuroObjectTypeQuery.Destructible),
-      (0, puerts_1.$ref)(e));
+    var e = UE.NewArray(UE.BuiltinByte),
+      e =
+        (e.Add(QueryTypeDefine_1.KuroObjectTypeQuery.WorldStatic),
+        e.Add(QueryTypeDefine_1.KuroObjectTypeQuery.Pawn),
+        e.Add(QueryTypeDefine_1.KuroObjectTypeQuery.PawnMonster),
+        e.Add(QueryTypeDefine_1.KuroObjectTypeQuery.Destructible),
+        (0, puerts_1.$ref)(e));
     SceneItemManipulableTrackTargetCastToFreeState.Nnr.SetObjectTypesQuery(e),
       (SceneItemManipulableTrackTargetCastToFreeState.Nnr.Radius =
         SPHERE_TRACE_RADIUS),
@@ -96,8 +96,8 @@ class SceneItemManipulableTrackTargetCastToFreeState extends SceneItemManipulabl
     super.OnExit(), (this.xnr = void 0);
   }
   OnTick(e) {
-    var t = Vector_1.Vector.Create(this.SceneItem.ActorComp.ActorLocationProxy);
-    var t = Vector_1.Vector.Create(t);
+    var t = Vector_1.Vector.Create(this.SceneItem.ActorComp.ActorLocationProxy),
+      t = Vector_1.Vector.Create(t);
     let a = Vector_1.Vector.Create(this.bnr);
     if (
       (t.AdditionEqual(a.MultiplyEqual(this.Qrr * e)),
@@ -137,4 +137,4 @@ class SceneItemManipulableTrackTargetCastToFreeState extends SceneItemManipulabl
 }
 (exports.SceneItemManipulableTrackTargetCastToFreeState =
   SceneItemManipulableTrackTargetCastToFreeState).Nnr = void 0;
-// # sourceMappingURL=SceneItemManipulableTrackTargetCastToFreeState.js.map
+//# sourceMappingURL=SceneItemManipulableTrackTargetCastToFreeState.js.map

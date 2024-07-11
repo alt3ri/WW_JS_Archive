@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configInfluenceById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const Influence_1 = require("../Config/Influence");
-const DB = "db_influence.db";
-const FILE = "s.势力.xlsx";
-const TABLE = "Influence";
-const COMMAND = "select BinData from `Influence` where Id=?";
-const KEY_PREFIX = "InfluenceById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  Influence_1 = require("../Config/Influence"),
+  DB = "db_influence.db",
+  FILE = "s.势力.xlsx",
+  TABLE = "Influence",
+  COMMAND = "select BinData from `Influence` where Id=?",
+  KEY_PREFIX = "InfluenceById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configInfluenceById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configInfluenceById.GetConfig(";
 exports.configInfluenceById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configInfluenceById = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, n, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            n,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              n,
+            ]))
       ) {
-        var i;
-        var o = void 0;
+        var i,
+          o = void 0;
         if (
           (([i, o] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configInfluenceById = {
     }
   },
 };
-// # sourceMappingURL=InfluenceById.js.map
+//# sourceMappingURL=InfluenceById.js.map

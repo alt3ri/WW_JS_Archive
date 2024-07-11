@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PersonalModel = void 0);
-const ModelBase_1 = require("../../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const PersonalDefine_1 = require("./PersonalDefine");
+const ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  PersonalDefine_1 = require("./PersonalDefine");
 class PersonalModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -24,9 +24,9 @@ class PersonalModel extends ModelBase_1.ModelBase {
   }
   SetRoleShowList(t) {
     this.v4i.RoleShowList = [];
-    const r = t.length;
+    var r = t.length;
     for (let e = 0; e < r; e++) {
-      const n = t[e];
+      var n = t[e];
       this.v4i.RoleShowList.push(
         new PersonalDefine_1.RoleShowEntry(n.l3n, n.r3n),
       );
@@ -34,11 +34,13 @@ class PersonalModel extends ModelBase_1.ModelBase {
   }
   UpdateRoleShowList(t) {
     this.v4i.RoleShowList = [];
-    const r = t.length;
+    var r = t.length;
     for (let e = 0; e < r; e++) {
-      const n = t[e];
-      const i =
-        ModelManager_1.ModelManager.RoleModel.GetRoleDataById(n).GetLevelData();
+      var n = t[e],
+        i =
+          ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
+            n,
+          ).GetLevelData();
       this.v4i.RoleShowList.push(
         new PersonalDefine_1.RoleShowEntry(n, i.GetLevel()),
       );
@@ -61,7 +63,7 @@ class PersonalModel extends ModelBase_1.ModelBase {
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnCardChange);
   }
   GetCurCardId() {
-    return this.v4i.CurCardId && this.v4i.CurCardId > 0
+    return this.v4i.CurCardId && 0 < this.v4i.CurCardId
       ? this.v4i.CurCardId
       : ConfigManager_1.ConfigManager.FriendConfig.GetDefaultBackgroundCardId();
   }
@@ -103,7 +105,7 @@ class PersonalModel extends ModelBase_1.ModelBase {
       );
   }
   GetHeadPhotoId() {
-    let e;
+    var e;
     return (
       this.v4i.HeadPhotoId ||
         ((e = ModelManager_1.ModelManager.PlayerInfoModel.GetNumberPropById(4)),
@@ -113,18 +115,18 @@ class PersonalModel extends ModelBase_1.ModelBase {
   }
   SetCardUnlockList(t) {
     this.v4i.CardUnlockList = [];
-    const r = t.length;
+    var r = t.length;
     for (let e = 0; e < r; e++) {
-      const n = t[e];
+      var n = t[e];
       this.v4i.CardUnlockList.push(
         new PersonalDefine_1.CardShowEntry(n.l8n, n.cfs ?? !1),
       );
     }
   }
   UpdateCardUnlockList(t, r) {
-    const n = this.v4i.CardUnlockList.length;
+    var n = this.v4i.CardUnlockList.length;
     for (let e = 0; e < n; e++) {
-      const i = this.v4i.CardUnlockList[e];
+      var i = this.v4i.CardUnlockList[e];
       if (i.CardId === t) {
         (i.IsRead = r),
           EventSystem_1.EventSystem.Emit(
@@ -152,4 +154,4 @@ class PersonalModel extends ModelBase_1.ModelBase {
   }
 }
 exports.PersonalModel = PersonalModel;
-// # sourceMappingURL=PersonalModel.js.map
+//# sourceMappingURL=PersonalModel.js.map

@@ -1,41 +1,46 @@
 "use strict";
-let GamePlayHitGearComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (e, t, o, i) {
-    let n;
-    const r = arguments.length;
-    let s =
-      r < 3 ? t : i === null ? (i = Object.getOwnPropertyDescriptor(t, o)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      s = Reflect.decorate(e, t, o, i);
-    else
-      for (let a = e.length - 1; a >= 0; a--)
-        (n = e[a]) && (s = (r < 3 ? n(s) : r > 3 ? n(t, o, s) : n(t, o)) || s);
-    return r > 3 && s && Object.defineProperty(t, o, s), s;
-  };
+var GamePlayHitGearComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (e, t, o, i) {
+      var n,
+        r = arguments.length,
+        s =
+          r < 3
+            ? t
+            : null === i
+              ? (i = Object.getOwnPropertyDescriptor(t, o))
+              : i;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        s = Reflect.decorate(e, t, o, i);
+      else
+        for (var a = e.length - 1; 0 <= a; a--)
+          (n = e[a]) &&
+            (s = (r < 3 ? n(s) : 3 < r ? n(t, o, s) : n(t, o)) || s);
+      return 3 < r && s && Object.defineProperty(t, o, s), s;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GamePlayHitGearComponent = void 0);
-const UE = require("ue");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ComponentForceTickController_1 = require("../../World/Controller/ComponentForceTickController");
-const SceneItemMoveComponent_1 = require("./Common/Component/SceneItemMoveComponent");
-const SPEED_TO_PATROL = 500;
-const THOUSAND = 1e3;
-const MIN_HIT_CD = 0.05;
+const UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ComponentForceTickController_1 = require("../../World/Controller/ComponentForceTickController"),
+  SceneItemMoveComponent_1 = require("./Common/Component/SceneItemMoveComponent"),
+  SPEED_TO_PATROL = 500,
+  THOUSAND = 1e3,
+  MIN_HIT_CD = 0.05;
 let GamePlayHitGearComponent =
   (GamePlayHitGearComponent_1 = class GamePlayHitGearComponent extends (
     EntityComponent_1.EntityComponent
@@ -122,7 +127,7 @@ let GamePlayHitGearComponent =
         });
     }
     OnInitData(e) {
-      const t = e.GetParam(GamePlayHitGearComponent_1)[0];
+      var t = e.GetParam(GamePlayHitGearComponent_1)[0];
       if (
         ((this.ycn = !!t.Patrol),
         this.ycn
@@ -137,7 +142,7 @@ let GamePlayHitGearComponent =
         this.pcn.RegisterComponent(this, t),
         t.HitBullet)
       ) {
-        let o;
+        var o;
         switch (t.HitBullet.Type) {
           case IComponent_1.EHitBulletType.OnlyDropAttack:
             this.Dcn = 1994027462;
@@ -216,24 +221,24 @@ let GamePlayHitGearComponent =
             this.Entity.GetComponent(0).GetPbDataId(),
           );
         var t = Vector_1.Vector.Create(
-          e.Transform?.Pos.X ?? 0,
-          e.Transform?.Pos.Y ?? 0,
-          e.Transform?.Pos.Z ?? 0,
-        );
-        var e =
-          ((this.md =
-            ModelManager_1.ModelManager.GameSplineModel.GetSplineActorBySplineId(
-              this.vcn,
-            )),
-          (this.Mcn = this.md.SplineData),
-          this.md.K2_SetActorLocation(t.ToUeVector(), !1, void 0, !1),
-          this.Entity.GetComponent(113));
-        var t = Vector_1.Vector.Create(
-          this.zie.GetWorldLocationAtDistanceAlongSpline(0),
-        );
-        const o =
-          Vector_1.Vector.Dist(t, this.Hte.ActorLocationProxy) /
-          SPEED_TO_PATROL;
+            e.Transform?.Pos.X ?? 0,
+            e.Transform?.Pos.Y ?? 0,
+            e.Transform?.Pos.Z ?? 0,
+          ),
+          e =
+            ((this.md =
+              ModelManager_1.ModelManager.GameSplineModel.GetSplineActorBySplineId(
+                this.vcn,
+              )),
+            (this.Mcn = this.md.SplineData),
+            this.md.K2_SetActorLocation(t.ToUeVector(), !1, void 0, !1),
+            this.Entity.GetComponent(113)),
+          t = Vector_1.Vector.Create(
+            this.zie.GetWorldLocationAtDistanceAlongSpline(0),
+          ),
+          o =
+            Vector_1.Vector.Dist(t, this.Hte.ActorLocationProxy) /
+            SPEED_TO_PATROL;
         e.AddMoveTarget(new SceneItemMoveComponent_1.MoveTarget(t, o)),
           e.AddStopMoveCallback(this.Acn);
       }
@@ -254,7 +259,7 @@ let GamePlayHitGearComponent =
       );
     }
     BDe() {
-      const e = UE.NewArray(UE.BuiltinFloat);
+      var e = UE.NewArray(UE.BuiltinFloat);
       for (const t of this.Mcn.Points) e.Add(t.MoveSpeed);
       this.Entity.GetComponent(113).StartPatrol(
         this.zie,
@@ -291,13 +296,13 @@ let GamePlayHitGearComponent =
       );
     }
     IsCanBeManipulateLock() {
-      const e = this.Entity.GetComponent(177);
-      return this.Dcn === -1590436469 && e.HasTag(-3775711);
+      var e = this.Entity.GetComponent(177);
+      return -1590436469 === this.Dcn && e.HasTag(-3775711);
     }
     GetHitPoint() {
-      const e = Vector_1.Vector.Create(this.Rcn);
-      const t = Vector_1.Vector.Create();
-      const o = Vector_1.Vector.Create();
+      var e = Vector_1.Vector.Create(this.Rcn),
+        t = Vector_1.Vector.Create(),
+        o = Vector_1.Vector.Create();
       return (
         this.Hte.ActorForwardProxy.Multiply(e.X, o),
         t.AdditionEqual(o),
@@ -316,4 +321,4 @@ let GamePlayHitGearComponent =
     GamePlayHitGearComponent,
   )),
   (exports.GamePlayHitGearComponent = GamePlayHitGearComponent);
-// # sourceMappingURL=GamePlayHitGearComponent.js.map
+//# sourceMappingURL=GamePlayHitGearComponent.js.map

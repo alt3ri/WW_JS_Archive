@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerUnlockView = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
 class TowerUnlockView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -20,7 +20,7 @@ class TowerUnlockView extends UiViewBase_1.UiViewBase {
       (this.BtnBindInfo = [[0, this.ACt]]);
   }
   OnStart() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.TowerClimbConfig.GetNewTowerDifficultTitle(
         this.OpenParam,
       );
@@ -31,4 +31,4 @@ class TowerUnlockView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.TowerUnlockView = TowerUnlockView;
-// # sourceMappingURL=TowerUnlockView.js.map
+//# sourceMappingURL=TowerUnlockView.js.map

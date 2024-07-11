@@ -21,13 +21,13 @@ class EntranceIconTag {
     );
   }
   id(t) {
-    const n = this.J7.__offset(this.z7, 4);
+    var n = this.J7.__offset(this.z7, 4);
     return n ? this.J7.__string(this.z7 + n, t) : null;
   }
   configparam(t) {
-    const n = this.J7.__offset(this.z7, 6);
+    var n = this.J7.__offset(this.z7, 6);
     return n ? this.J7.__string(this.z7 + n, t) : null;
   }
 }
 exports.EntranceIconTag = EntranceIconTag;
-// # sourceMappingURL=EntranceIconTag.js.map
+//# sourceMappingURL=EntranceIconTag.js.map

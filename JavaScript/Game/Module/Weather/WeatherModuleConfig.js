@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeatherModuleConfig = void 0);
-const WeatherById_1 = require("../../../Core/Define/ConfigQuery/WeatherById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const WeatherById_1 = require("../../../Core/Define/ConfigQuery/WeatherById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class WeatherModuleConfig extends ConfigBase_1.ConfigBase {
   GetWeatherConfig(e) {
     e = WeatherById_1.configWeatherById.GetConfig(e);
@@ -14,4 +14,4 @@ class WeatherModuleConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.WeatherModuleConfig = WeatherModuleConfig;
-// # sourceMappingURL=WeatherModuleConfig.js.map
+//# sourceMappingURL=WeatherModuleConfig.js.map

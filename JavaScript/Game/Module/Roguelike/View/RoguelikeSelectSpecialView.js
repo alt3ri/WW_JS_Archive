@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoguelikeSelectSpecialView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
-const RoguelikeController_1 = require("../RoguelikeController");
-const ElementPanel_1 = require("./ElementPanel");
-const RoguelikeSelectSpecialItem_1 = require("./RoguelikeSelectSpecialItem");
-const RogueSelectBaseView_1 = require("./RogueSelectBaseView");
-const TopPanel_1 = require("./TopPanel");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
+  RoguelikeController_1 = require("../RoguelikeController"),
+  ElementPanel_1 = require("./ElementPanel"),
+  RoguelikeSelectSpecialItem_1 = require("./RoguelikeSelectSpecialItem"),
+  RogueSelectBaseView_1 = require("./RogueSelectBaseView"),
+  TopPanel_1 = require("./TopPanel");
 class RoguelikeSelectSpecialView extends RogueSelectBaseView_1.RogueSelectBaseView {
   constructor() {
     super(...arguments),
@@ -115,25 +115,35 @@ class RoguelikeSelectSpecialView extends RogueSelectBaseView_1.RogueSelectBaseVi
     this.vho(), this.Mho(), this.pho();
   }
   Mho() {
-    const e = this.dho.RogueGainEntryList;
+    var e = this.dho.RogueGainEntryList;
     this.Bao.RefreshByData(e);
   }
   vho() {
     this.gho.Refresh();
   }
   pho() {
-    let e;
-    let i = this.dho.MaxTime;
-    const t = i - this.dho.UseTime;
-    var s = this.GetText(7);
-    var s =
-      (t <= 0
-        ? LguiUtil_1.LguiUtil.SetLocalTextNew(s, "RoguelikeView_29_Text", t, i)
-        : LguiUtil_1.LguiUtil.SetLocalTextNew(s, "RoguelikeView_28_Text", t, i),
-      this.GetButton(3).RootUIComp.SetUIActive(i > 0),
-      this.GetButton(4).SetSelfInteractive(void 0 !== this.mho),
-      this.dho.CostCurrency);
-    s.length > 0 &&
+    var e,
+      i = this.dho.MaxTime,
+      t = i - this.dho.UseTime,
+      s = this.GetText(7),
+      s =
+        (t <= 0
+          ? LguiUtil_1.LguiUtil.SetLocalTextNew(
+              s,
+              "RoguelikeView_29_Text",
+              t,
+              i,
+            )
+          : LguiUtil_1.LguiUtil.SetLocalTextNew(
+              s,
+              "RoguelikeView_28_Text",
+              t,
+              i,
+            ),
+        this.GetButton(3).RootUIComp.SetUIActive(0 < i),
+        this.GetButton(4).SetSelfInteractive(void 0 !== this.mho),
+        this.dho.CostCurrency);
+    0 < s.length &&
       ((i = s[0]),
       (e = (s =
         ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
@@ -146,8 +156,8 @@ class RoguelikeSelectSpecialView extends RogueSelectBaseView_1.RogueSelectBaseVi
         i.Ekn,
       )),
       this.SetTextureByPath(e.IconSmall, this.GetTexture(5)),
-      this.GetButton(3).SetSelfInteractive(t > 0 && s));
+      this.GetButton(3).SetSelfInteractive(0 < t && s));
   }
 }
 exports.RoguelikeSelectSpecialView = RoguelikeSelectSpecialView;
-// # sourceMappingURL=RoguelikeSelectSpecialView.js.map
+//# sourceMappingURL=RoguelikeSelectSpecialView.js.map

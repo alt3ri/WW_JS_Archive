@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Quest = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const PublicUtil_1 = require("../../../../Common/PublicUtil");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const LogicTreeContainer_1 = require("../../../GeneralLogicTree/LogicTreeContainer");
-const MapDefine_1 = require("../../../Map/MapDefine");
-const QuestController_1 = require("../../Controller/QuestController");
-const QuestDefine_1 = require("../../QuestDefine");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../../../Common/PublicUtil"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LogicTreeContainer_1 = require("../../../GeneralLogicTree/LogicTreeContainer"),
+  MapDefine_1 = require("../../../Map/MapDefine"),
+  QuestController_1 = require("../../Controller/QuestController"),
+  QuestDefine_1 = require("../../QuestDefine");
 class Quest extends LogicTreeContainer_1.LogicTreeContainer {
   constructor(e, t) {
     super(),
@@ -100,23 +100,23 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
   get IsInteractValid() {
     return (
       !ModelManager_1.ModelManager.GameModeModel.IsMulti ||
-      this.OnlineType !== "SingleHangUpOnline"
+      "SingleHangUpOnline" !== this.OnlineType
     );
   }
   get RewardId() {
-    return this.StageRewardId !== 0 ? this.StageRewardId : this.Zoo;
+    return 0 !== this.StageRewardId ? this.StageRewardId : this.Zoo;
   }
   get Name() {
     let e = this.Joo;
     return (
-      (void 0 !== e && e.length !== 0) || (e = this.QuestNameTid),
+      (void 0 !== e && 0 !== e.length) || (e = this.QuestNameTid),
       PublicUtil_1.PublicUtil.GetConfigTextByKey(e)
     );
   }
   get QuestDescribe() {
     let e = this.zoo;
     return (
-      (void 0 !== e && e.length !== 0) || (e = this.Yoo),
+      (void 0 !== e && 0 !== e.length) || (e = this.Yoo),
       PublicUtil_1.PublicUtil.GetConfigTextByKey(e)
     );
   }
@@ -143,8 +143,8 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
       super.Destroy();
   }
   UpdateState(e, t) {
-    var i = this.InnerStatus;
-    var i = ((this.InnerStatus = e), i !== this.InnerStatus);
+    var i = this.InnerStatus,
+      i = ((this.InnerStatus = e), i !== this.InnerStatus);
     if (i) {
       switch (e) {
         case Protocol_1.Aki.Protocol.kMs.WMs:
@@ -186,7 +186,7 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
     }
   }
   iro() {
-    let e;
+    var e;
     this.HideAcceptQuestMark ||
       ((e = this.AcceptQuestOptionConfig)
         ? this.oro(e.EntityId)
@@ -205,7 +205,7 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
     this.Finished = !0;
   }
   OnQuestToDelete() {
-    let e;
+    var e;
     ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest()?.Id ===
       this.Id &&
       ((e = this.Finished ? 1 : 0),
@@ -217,7 +217,7 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
       ));
   }
   oro(e) {
-    let t;
+    var t;
     ModelManager_1.ModelManager.CreatureModel.GetEntityData(e)
       ? (t = this.QuestMarkId) &&
         this.IsInteractValid &&
@@ -246,13 +246,13 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
   CanShowInUiPanel() {
     if (this.IsQuestCanPreShow()) return !0;
     if (this.Status !== Protocol_1.Aki.Protocol.kMs.Gms) return !1;
-    let e = ModelManager_1.ModelManager.QuestNewModel.GetQuestBindingActivityId(
+    var e = ModelManager_1.ModelManager.QuestNewModel.GetQuestBindingActivityId(
       this.Id,
     );
     if (e) {
       e = ModelManager_1.ModelManager.ActivityModel.GetActivityById(e);
       if (e) {
-        const t = TimeUtil_1.TimeUtil.GetServerTime();
+        var t = TimeUtil_1.TimeUtil.GetServerTime();
         if (e.EndOpenTime - t <= 0) return !1;
       }
     }
@@ -285,4 +285,4 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
   }
 }
 exports.Quest = Quest;
-// # sourceMappingURL=Quest.js.map
+//# sourceMappingURL=Quest.js.map

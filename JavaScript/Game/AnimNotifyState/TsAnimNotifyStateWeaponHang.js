@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyStateWeaponHang extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -33,7 +33,7 @@ class TsAnimNotifyStateWeaponHang extends UE.KuroAnimNotifyState {
       if (!t?.Valid) return !1;
       if (t.BPr === this.Id)
         return (
-          (this.结束后状态 === 0 || this.结束后状态 === 1) &&
+          (0 === this.结束后状态 || 1 === this.结束后状态) &&
           (t.ChangeWeaponHangState(
             this.结束后状态,
             UE.NewArray(UE.BuiltinName),
@@ -50,4 +50,4 @@ class TsAnimNotifyStateWeaponHang extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateWeaponHang;
-// # sourceMappingURL=TsAnimNotifyStateWeaponHang.js.map
+//# sourceMappingURL=TsAnimNotifyStateWeaponHang.js.map

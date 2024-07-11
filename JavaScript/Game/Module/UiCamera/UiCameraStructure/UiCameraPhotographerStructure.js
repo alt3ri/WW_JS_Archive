@@ -1,28 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiCameraPhotographerStructure = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../Core/Actor/ActorSystem");
-const CameraController_1 = require("../../../Camera/CameraController");
-const Global_1 = require("../../../Global");
-const GlobalData_1 = require("../../../GlobalData");
-const PhotographDefine_1 = require("../../Photograph/PhotographDefine");
-const UiCameraStructure_1 = require("./UiCameraStructure");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../Core/Actor/ActorSystem"),
+  CameraController_1 = require("../../../Camera/CameraController"),
+  Global_1 = require("../../../Global"),
+  GlobalData_1 = require("../../../GlobalData"),
+  PhotographDefine_1 = require("../../Photograph/PhotographDefine"),
+  UiCameraStructure_1 = require("./UiCameraStructure");
 class UiCameraPhotographerStructure extends UiCameraStructure_1.UiCameraStructure {
   constructor() {
     super(...arguments), (this.zRo = void 0);
   }
   OnSpawnStructureActor() {
-    const t = new UE.Transform(
-      new UE.Quat(0),
-      new UE.Vector(0),
-      new UE.Vector(1, 1, 1),
-    );
-    const r = UE.GameplayStatics.BeginSpawningActorFromClass(
-      GlobalData_1.GlobalData.World,
-      UE.TsPhotographer_C.StaticClass(),
-      t,
-    );
+    var t = new UE.Transform(
+        new UE.Quat(0),
+        new UE.Vector(0),
+        new UE.Vector(1, 1, 1),
+      ),
+      r = UE.GameplayStatics.BeginSpawningActorFromClass(
+        GlobalData_1.GlobalData.World,
+        UE.TsPhotographer_C.StaticClass(),
+        t,
+      );
     return (
       r?.SetTickableWhenPaused(!0),
       (this.zRo = UE.GameplayStatics.FinishSpawningActor(r, t)),
@@ -38,14 +38,14 @@ class UiCameraPhotographerStructure extends UiCameraStructure_1.UiCameraStructur
     this.ZRo();
   }
   OnActivate() {
-    const t = this.eUo();
-    var r = this.Uji();
-    var e = Global_1.Global.BaseCharacter;
-    var r =
-      (r.SetIsDitherEffectEnable(!1),
-      e.SetDitherEffect(1, 1),
-      e.Mesh.GetSocketLocation(PhotographDefine_1.SPAWN_SOCKET_NAME));
-    var e = t.GetTransform();
+    var t = this.eUo(),
+      r = this.Uji(),
+      e = Global_1.Global.BaseCharacter,
+      r =
+        (r.SetIsDitherEffectEnable(!1),
+        e.SetDitherEffect(1, 1),
+        e.Mesh.GetSocketLocation(PhotographDefine_1.SPAWN_SOCKET_NAME)),
+      e = t.GetTransform();
     this.zRo.SetPlayerSourceLocation(r),
       this.zRo.SetCameraInitializeTransform(e),
       this.zRo.ActivateCamera(this.CameraActor);
@@ -59,11 +59,11 @@ class UiCameraPhotographerStructure extends UiCameraStructure_1.UiCameraStructur
       (this.zRo = void 0);
   }
   Uji() {
-    const t = CameraController_1.CameraController.FightCamera;
+    var t = CameraController_1.CameraController.FightCamera;
     if (t) return t.GetComponent(5);
   }
   eUo() {
-    let t = CameraController_1.CameraController.FightCamera;
+    var t = CameraController_1.CameraController.FightCamera;
     if (t) {
       t = t.GetComponent(4);
       if (t.Valid) return t.CameraActor;
@@ -107,4 +107,4 @@ class UiCameraPhotographerStructure extends UiCameraStructure_1.UiCameraStructur
   }
 }
 exports.UiCameraPhotographerStructure = UiCameraPhotographerStructure;
-// # sourceMappingURL=UiCameraPhotographerStructure.js.map
+//# sourceMappingURL=UiCameraPhotographerStructure.js.map

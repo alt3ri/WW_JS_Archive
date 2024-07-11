@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configEntranceIconTagById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const EntranceIconTag_1 = require("../Config/EntranceIconTag");
-const DB = "db_component_config.db";
-const FILE = "t.通用组件配置.xlsx";
-const TABLE = "EntranceIconTag";
-const COMMAND = "select BinData from `EntranceIconTag` where Id=?";
-const KEY_PREFIX = "EntranceIconTagById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  EntranceIconTag_1 = require("../Config/EntranceIconTag"),
+  DB = "db_component_config.db",
+  FILE = "t.通用组件配置.xlsx",
+  TABLE = "EntranceIconTag",
+  COMMAND = "select BinData from `EntranceIconTag` where Id=?",
+  KEY_PREFIX = "EntranceIconTagById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configEntranceIconTagById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configEntranceIconTagById.GetConfig(";
 exports.configEntranceIconTagById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configEntranceIconTagById = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, n, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            n,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              n,
+            ]))
       ) {
-        var i;
-        var e = void 0;
+        var i,
+          e = void 0;
         if (
           (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configEntranceIconTagById = {
     }
   },
 };
-// # sourceMappingURL=EntranceIconTagById.js.map
+//# sourceMappingURL=EntranceIconTagById.js.map

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EntityPhysicsAssetConfig = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const PhysicsAssetConfigByIdWithDefaultId_1 = require("../../../../../../Core/Define/ConfigQuery/PhysicsAssetConfigByIdWithDefaultId");
-const ConfigBase_1 = require("../../../../../../Core/Framework/ConfigBase");
-const DEFAULT_DB_ID = "0";
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  PhysicsAssetConfigByIdWithDefaultId_1 = require("../../../../../../Core/Define/ConfigQuery/PhysicsAssetConfigByIdWithDefaultId"),
+  ConfigBase_1 = require("../../../../../../Core/Framework/ConfigBase"),
+  DEFAULT_DB_ID = "0";
 class EntityPhysicsAssetConfig extends ConfigBase_1.ConfigBase {
   GetPhysicsAssetConfigByRoleBody(e) {
-    const s =
+    var s =
       PhysicsAssetConfigByIdWithDefaultId_1.configPhysicsAssetConfigByIdWithDefaultId.GetConfig(
         DEFAULT_DB_ID,
         e,
@@ -36,4 +36,4 @@ class EntityPhysicsAssetConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.EntityPhysicsAssetConfig = EntityPhysicsAssetConfig;
-// # sourceMappingURL=EntityPhysicsAssetConfig.js.map
+//# sourceMappingURL=EntityPhysicsAssetConfig.js.map

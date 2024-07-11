@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ManipulateInteractModel = void 0);
-const ModelBase_1 = require("../../../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
+const ModelBase_1 = require("../../../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem");
 class ManipulateInteractModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -32,4 +32,4 @@ class ManipulateInteractModel extends ModelBase_1.ModelBase {
   }
 }
 exports.ManipulateInteractModel = ManipulateInteractModel;
-// # sourceMappingURL=CharacterManipulateInteractModel.js.map
+//# sourceMappingURL=CharacterManipulateInteractModel.js.map

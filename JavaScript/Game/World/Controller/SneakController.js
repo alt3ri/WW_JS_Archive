@@ -1,12 +1,12 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SneakController = void 0);
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const CharacterBuffIds_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds");
+const ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  CharacterBuffIds_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds");
 class SneakController extends ControllerBase_1.ControllerBase {
   static StartSneaking() {
     (this.bfr = !0),
@@ -40,7 +40,7 @@ class SneakController extends ControllerBase_1.ControllerBase {
       );
   }
   static BXt(e) {
-    const t =
+    var t =
       Global_1.Global.BaseCharacter.GetEntityNoBlueprint().GetComponent(157);
     t?.Valid &&
       (e
@@ -68,4 +68,4 @@ class SneakController extends ControllerBase_1.ControllerBase {
           0,
         ));
   });
-// # sourceMappingURL=SneakController.js.map
+//# sourceMappingURL=SneakController.js.map

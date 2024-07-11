@@ -8,4 +8,4 @@ class GameplayCueFixHook extends GameplayCueHookUp_1.GameplayCueHookUp {
   }
 }
 exports.GameplayCueFixHook = GameplayCueFixHook;
-// # sourceMappingURL=GameplayCueFixHook.js.map
+//# sourceMappingURL=GameplayCueFixHook.js.map

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleAttributeDetailView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../Ui/Common/PopupCaptionItem");
-const RoleAttrListScrollItem_1 = require("../RoleUi/View/RoleAttrListScrollItem");
-const GenericScrollView_1 = require("../Util/ScrollView/GenericScrollView");
+const UE = require("ue"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../Ui/Common/PopupCaptionItem"),
+  RoleAttrListScrollItem_1 = require("../RoleUi/View/RoleAttrListScrollItem"),
+  GenericScrollView_1 = require("../Util/ScrollView/GenericScrollView");
 class RoleAttributeDetailView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -35,7 +35,7 @@ class RoleAttributeDetailView extends UiViewBase_1.UiViewBase {
     (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
       this.lqe.SetCloseCallBack(this.Mft),
       this.lqe.SetTitleLocalText("PrefabTextItem_1302715335_Text");
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     (this.Lje = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(1),
       this.Dje,
@@ -52,4 +52,4 @@ class RoleAttributeDetailView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RoleAttributeDetailView = RoleAttributeDetailView;
-// # sourceMappingURL=RoleAttributeDetailView.js.map
+//# sourceMappingURL=RoleAttributeDetailView.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExploreAreaData = void 0);
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ExploreAreaItemData_1 = require("./ExploreAreaItemData");
+const ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ExploreAreaItemData_1 = require("./ExploreAreaItemData");
 class ExploreAreaData {
   constructor() {
     (this.AreaId = 0),
@@ -22,8 +22,8 @@ class ExploreAreaData {
     (this.AreaId = 0), (this.V5t = 0), this.H5t.clear();
   }
   AddExploreAreaItemData(t) {
-    let e;
-    const r = t.ExploreType;
+    var e,
+      r = t.ExploreType;
     this.H5t.has(r) ||
       ((e = new ExploreAreaItemData_1.ExploreAreaItemData()).Initialize(t),
       this.H5t.set(r, e),
@@ -31,16 +31,16 @@ class ExploreAreaData {
   }
   SortExploreAreaItemDataList() {
     this.j5t.sort((t, e) => {
-      const r = t.SortIndex;
-      const a = e.SortIndex;
+      var r = t.SortIndex,
+        a = e.SortIndex;
       return r !== a ? r - a : t.ExploreProgressId - e.ExploreProgressId;
     });
   }
   Refresh(t) {
     this.V5t = t.lLs;
-    const e = ConfigManager_1.ConfigManager.ExploreProgressConfig;
+    var e = ConfigManager_1.ConfigManager.ExploreProgressConfig;
     for (const a of t.e5n) {
-      const r = e.GetExploreProgressConfigById(a._Ls).ExploreType;
+      var r = e.GetExploreProgressConfigById(a._Ls).ExploreType;
       this.H5t.get(r)?.Refresh(a);
     }
   }
@@ -61,4 +61,4 @@ class ExploreAreaData {
   }
 }
 exports.ExploreAreaData = ExploreAreaData;
-// # sourceMappingURL=ExploreAreaData.js.map
+//# sourceMappingURL=ExploreAreaData.js.map

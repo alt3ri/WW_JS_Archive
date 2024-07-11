@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SCreatureGenAreaExportDefine = void 0);
-const GameUtils_1 = require("../../../../Game/GameUtils");
-const IntVector_1 = require("./IntVector");
+const GameUtils_1 = require("../../../../Game/GameUtils"),
+  IntVector_1 = require("./IntVector");
 class SCreatureGenAreaExportDefine {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -28,14 +28,14 @@ class SCreatureGenAreaExportDefine {
     );
   }
   shapetype() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetTransformsAt(t, e) {
     return this.transforms(t);
   }
   transforms(t, e) {
-    const r = this.J7.__offset(this.z7, 6);
+    var r = this.J7.__offset(this.z7, 6);
     return r
       ? (e || new IntVector_1.IntVector()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -44,13 +44,13 @@ class SCreatureGenAreaExportDefine {
       : null;
   }
   transformsLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   weight() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
 }
 exports.SCreatureGenAreaExportDefine = SCreatureGenAreaExportDefine;
-// # sourceMappingURL=SCreatureGenAreaExportDefine.js.map
+//# sourceMappingURL=SCreatureGenAreaExportDefine.js.map

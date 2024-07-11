@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemExchangeConfig = void 0);
-const ItemExchangeContentAll_1 = require("../../../Core/Define/ConfigQuery/ItemExchangeContentAll");
-const ItemExchangeContentByItemId_1 = require("../../../Core/Define/ConfigQuery/ItemExchangeContentByItemId");
-const ItemExchangeLimitByItemId_1 = require("../../../Core/Define/ConfigQuery/ItemExchangeLimitByItemId");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const ItemExchangeContentAll_1 = require("../../../Core/Define/ConfigQuery/ItemExchangeContentAll"),
+  ItemExchangeContentByItemId_1 = require("../../../Core/Define/ConfigQuery/ItemExchangeContentByItemId"),
+  ItemExchangeLimitByItemId_1 = require("../../../Core/Define/ConfigQuery/ItemExchangeLimitByItemId"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class ItemExchangeConfig extends ConfigBase_1.ConfigBase {
   GetExChangeConfigList(e) {
-    const t = [];
+    var t = [];
     for (const n of ItemExchangeContentAll_1.configItemExchangeContentAll.GetConfigList())
       n.ItemId === e && t.push(n);
     return t?.sort((e, t) => e.Times - t.Times), t;
@@ -24,4 +24,4 @@ class ItemExchangeConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.ItemExchangeConfig = ItemExchangeConfig;
-// # sourceMappingURL=ItemExchangeConfig.js.map
+//# sourceMappingURL=ItemExchangeConfig.js.map

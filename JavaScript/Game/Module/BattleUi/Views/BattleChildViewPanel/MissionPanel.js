@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MissionPanel = void 0);
-const UE = require("ue");
-const Stats_1 = require("../../../../../Core/Common/Stats");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const GeneralLogicTreeUtil_1 = require("../../../GeneralLogicTree/GeneralLogicTreeUtil");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const BattleQuestUpdateTipsView_1 = require("../MissionView/BattleQuestUpdateTipsView");
-const BehaviorTreeView_1 = require("../MissionView/BehaviorTreeView");
-const BattleChildViewPanel_1 = require("./BattleChildViewPanel");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const QuestController_1 = require("../../../QuestNew/Controller/QuestController");
-const Log_1 = require("../../../../../Core/Common/Log");
-const MISSION_IN = "MissionIn";
-const MISSION_OUT = "MissionOut";
+const UE = require("ue"),
+  Stats_1 = require("../../../../../Core/Common/Stats"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  GeneralLogicTreeUtil_1 = require("../../../GeneralLogicTree/GeneralLogicTreeUtil"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  BattleQuestUpdateTipsView_1 = require("../MissionView/BattleQuestUpdateTipsView"),
+  BehaviorTreeView_1 = require("../MissionView/BehaviorTreeView"),
+  BattleChildViewPanel_1 = require("./BattleChildViewPanel"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  QuestController_1 = require("../../../QuestNew/Controller/QuestController"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  MISSION_IN = "MissionIn",
+  MISSION_OUT = "MissionOut";
 class PendingProcess {
   constructor(e) {
     (this.ProcessType = e),
@@ -82,13 +82,15 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         this.bze && e === this.bze.ProcessId && this.Jze(e);
       }),
       (this.Vze = (e) => {
-        const t = e.ShowBridge;
-        const i = t.TreeIncId;
-        const s =
-          ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(i);
+        var t = e.ShowBridge,
+          i = t.TreeIncId,
+          s =
+            ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
+              i,
+            );
         if (s) {
-          const r = s.BtType;
-          const h = this.Hze(r, e.Reason);
+          var r = s.BtType,
+            h = this.Hze(r, e.Reason);
           switch (h) {
             case 0:
               if (
@@ -103,14 +105,14 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         return !0;
       }),
       (this.Wze = (e) => {
-        let t = this.Pze.get(0);
-        let i = e.TreeIncId;
+        var t = this.Pze.get(0),
+          i = e.TreeIncId;
         return i === t.TreeIncId
           ? t.EndShow(e.ProcessId, e.Reason)
           : (t = this.Kze(i)) < 0 ||
               ((i = this.Pze.get(1)),
               this.wze.splice(t, 1),
-              this.wze.length === 0
+              0 === this.wze.length
                 ? i.EndShow(e.ProcessId)
                 : this.Qze(e.ProcessId));
       }),
@@ -118,7 +120,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         switch (e) {
           case MISSION_IN:
             var t = this.bze;
-            this.iAn === 1
+            1 === this.iAn
               ? (Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
                     "Log",
@@ -128,7 +130,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
                 this.xze.OnBeforePlayShowSequence(t.Info),
                 this.GetItem(1)?.SetUIActive(!0),
                 this.GetItem(2)?.SetUIActive(!1))
-              : this.iAn === 3 &&
+              : 3 === this.iAn &&
                 (Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
                     "Log",
@@ -141,7 +143,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
                 this.GetItem(2)?.SetUIActive(!0));
             break;
           case MISSION_OUT:
-            this.iAn === 1
+            1 === this.iAn
               ? (Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
                     "Log",
@@ -150,7 +152,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
                   ),
                 this.GetItem(1)?.SetUIActive(!1),
                 this.GetItem(2)?.SetUIActive(!0))
-              : this.iAn === 3 &&
+              : 3 === this.iAn &&
                 (Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
                     "Log",
@@ -166,7 +168,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         switch (e) {
           case MISSION_IN:
             var t = this.bze;
-            if (this.iAn === 1) {
+            if (1 === this.iAn) {
               (this.iAn = 2),
                 Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
@@ -174,7 +176,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
                     19,
                     "MissionPanel:QuestUpdateStart - MISSION_IN End",
                   );
-              const i = t.Info.ShowBridge;
+              var i = t.Info.ShowBridge;
               if (i) {
                 let e =
                   ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestUpdateShowTime(
@@ -193,7 +195,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
                   ));
               } else this.oAn();
             } else
-              this.iAn === 3 &&
+              3 === this.iAn &&
                 (Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
                     "Log",
@@ -203,9 +205,9 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
                 this.nAn(t));
             break;
           case MISSION_OUT:
-            this.iAn === 1
+            1 === this.iAn
               ? this.SequencePlayer.PlayLevelSequenceByName(MISSION_IN)
-              : this.iAn === 3 &&
+              : 3 === this.iAn &&
                 (Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
                     "Log",
@@ -257,19 +259,19 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   }
   async OnBeforeStartAsync() {
     await super.OnBeforeStartAsync(), (this.Pze = new Map());
-    var e = this.GetItem(0);
-    var t = await this.NewDynamicChildViewAsync(
-      e.GetOwner(),
-      BehaviorTreeView_1.BehaviorTreeView,
-    );
-    var t =
-      (t.SetActive(!1),
-      this.Pze.set(0, t),
-      LguiUtil_1.LguiUtil.CopyItem(e, e.GetParentAsUIItem()));
-    var e = await this.NewDynamicChildViewAsync(
-      t.GetOwner(),
-      BehaviorTreeView_1.BehaviorTreeView,
-    );
+    var e = this.GetItem(0),
+      t = await this.NewDynamicChildViewAsync(
+        e.GetOwner(),
+        BehaviorTreeView_1.BehaviorTreeView,
+      ),
+      t =
+        (t.SetActive(!1),
+        this.Pze.set(0, t),
+        LguiUtil_1.LguiUtil.CopyItem(e, e.GetParentAsUIItem())),
+      e = await this.NewDynamicChildViewAsync(
+        t.GetOwner(),
+        BehaviorTreeView_1.BehaviorTreeView,
+      );
     e.SetActive(!1),
       this.Pze.set(1, e),
       (this.SequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(
@@ -282,7 +284,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     (this.wze = []), (this.Bze = []);
   }
   async InitializeAsync() {
-    const e = this.GetItem(1);
+    var e = this.GetItem(1);
     this.xze = await this.NewDynamicChildViewAsync(
       e.GetOwner(),
       BattleQuestUpdateTipsView_1.BattleQuestUpdateTipsView,
@@ -290,11 +292,11 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   }
   Reset() {
     (this.wze = void 0), this.xze?.Destroy(), (this.xze = void 0);
-    for (const [, e] of this.Pze) e.Destroy();
+    for (var [, e] of this.Pze) e.Destroy();
     this.Pze.clear(), super.Reset();
   }
   OnShowBattleChildViewPanel() {
-    for (const [, e] of this.Pze) e.OnPanelShow();
+    for (var [, e] of this.Pze) e.OnPanelShow();
     this.xze.OnPanelShow(),
       this.SequencePlayer.GetCurrentSequence() &&
         this.SequencePlayer.ResumeSequence(),
@@ -303,7 +305,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         TimerSystem_1.TimerSystem.Resume(this.V_t);
   }
   OnHideBattleChildViewPanel() {
-    for (const [, e] of this.Pze) e.OnPanelHide();
+    for (var [, e] of this.Pze) e.OnPanelHide();
     this.xze.OnPanelHide(),
       this.SequencePlayer.GetCurrentSequence() &&
         this.SequencePlayer.PauseSequence(),
@@ -371,9 +373,9 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       );
   }
   Gze(i) {
-    if (this.Bze.length !== 0)
+    if (0 !== this.Bze.length)
       for (let t = 0; t < this.Bze.length; t++) {
-        const s = this.Bze[t];
+        var s = this.Bze[t];
         let e = !1;
         switch (s.ProcessType) {
           case 0:
@@ -386,7 +388,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           case 3:
             e = s.Info.TreeIncId === i;
         }
-        const r = this.bze && this.bze.ProcessId === s.ProcessId;
+        var r = this.bze && this.bze.ProcessId === s.ProcessId;
         e && !r && this.Bze.splice(t, 1);
       }
   }
@@ -400,7 +402,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     this.b4e && (this.kbn(), this.Fbn(e));
   }
   kbn() {
-    if (this.Bze.length !== 0 && !this.bze) {
+    if (0 !== this.Bze.length && !this.bze) {
       switch (((this.bze = this.Bze[0]), this.bze.ProcessType)) {
         case 0:
           this.bze.Finished = this.Vze(this.bze);
@@ -419,10 +421,10 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   }
   Fbn(e) {
     if (this.Pze)
-      for (const [, t] of this.Pze) t.OnRefresh(e, this.bze?.ProcessId ?? 0);
+      for (var [, t] of this.Pze) t.OnRefresh(e, this.bze?.ProcessId ?? 0);
   }
   Jze(e) {
-    this.Bze.length !== 0 &&
+    0 !== this.Bze.length &&
       this.Bze[0].ProcessId === e &&
       (this.Bze.shift(), (this.bze = void 0));
   }
@@ -430,7 +432,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     let i = 1;
     switch (e) {
       case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest:
-        i = t === 1 ? 1 : 0;
+        i = 1 === t ? 1 : 0;
         break;
       case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeLevelPlay:
       case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeInst:
@@ -440,13 +442,13 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   }
   $ze(e) {
     this.Xze(e.ShowBridge);
-    for (const [, t] of this.Pze)
+    for (var [, t] of this.Pze)
       if (t.TreeIncId === e.ShowBridge.TreeIncId)
         return t.OnLogicTreeUpdateShow(e.ProcessId, e.ShowBridge);
     return !0;
   }
   Xze(t) {
-    const e = this.wze.find((e) => e.ShowBridge.TreeIncId === t.TreeIncId);
+    var e = this.wze.find((e) => e.ShowBridge.TreeIncId === t.TreeIncId);
     e && (e.ShowBridge = t);
   }
   Kze(t) {
@@ -474,7 +476,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     return (
       this.Pze.get(1).TreeIncId !== t &&
       !(
-        this.Kze(t) >= 0 ||
+        0 <= this.Kze(t) ||
         ((t = {
           ShowPriority:
             GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetLogicTreeContainer(
@@ -491,13 +493,13 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   }
   Qze(e) {
     this.zze();
-    const t = this.wze[this.wze.length - 1];
+    var t = this.wze[this.wze.length - 1];
     return this.Pze.get(1).StartShow(e, t.ShowBridge);
   }
   Yze(e) {
-    let t;
-    let i;
-    const s = e.Info;
+    var t,
+      i,
+      s = e.Info;
     return (
       !s ||
       !(t = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
@@ -537,10 +539,10 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.iAn = 0);
   }
   sAn() {
-    for (const [, e] of this.Pze)
+    for (var [, e] of this.Pze)
       if (e.IsShowingBehaviorTreeView && e.CheckVisible()) return !1;
     return !0;
   }
 }
 (exports.MissionPanel = MissionPanel).aYe = void 0;
-// # sourceMappingURL=MissionPanel.js.map
+//# sourceMappingURL=MissionPanel.js.map

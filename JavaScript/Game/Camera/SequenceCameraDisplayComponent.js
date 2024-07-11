@@ -1,27 +1,31 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, n, r) {
-    let o;
-    const a = arguments.length;
-    let i =
-      a < 3 ? t : r === null ? (r = Object.getOwnPropertyDescriptor(t, n)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      a = arguments.length,
+      i =
+        a < 3
+          ? t
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(t, n))
+            : r;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       i = Reflect.decorate(e, t, n, r);
     else
-      for (let s = e.length - 1; s >= 0; s--)
-        (o = e[s]) && (i = (a < 3 ? o(i) : a > 3 ? o(t, n, i) : o(t, n)) || i);
-    return a > 3 && i && Object.defineProperty(t, n, i), i;
+      for (var s = e.length - 1; 0 <= s; s--)
+        (o = e[s]) && (i = (a < 3 ? o(i) : 3 < a ? o(t, n, i) : o(t, n)) || i);
+    return 3 < a && i && Object.defineProperty(t, n, i), i;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SequenceCameraDisplayComponent = void 0);
-const ActorSystem_1 = require("../../Core/Actor/ActorSystem");
-const Log_1 = require("../../Core/Common/Log");
-const EntityComponent_1 = require("../../Core/Entity/EntityComponent");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const CameraController_1 = require("./CameraController");
-const RegisterComponent_1 = require("../../Core/Entity/RegisterComponent");
+const ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../Core/Common/Log"),
+  EntityComponent_1 = require("../../Core/Entity/EntityComponent"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  CameraController_1 = require("./CameraController"),
+  RegisterComponent_1 = require("../../Core/Entity/RegisterComponent");
 let SequenceCameraDisplayComponent = class SequenceCameraDisplayComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -30,7 +34,7 @@ let SequenceCameraDisplayComponent = class SequenceCameraDisplayComponent extend
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Camera", 58, "[SequenceCamera] Spawn OnWorldDone"),
           (this.Vxr = CameraController_1.CameraController.SpawnCineCamera()),
-          CameraController_1.CameraController.Model.CameraMode === 1 &&
+          1 === CameraController_1.CameraController.Model.CameraMode &&
             CameraController_1.CameraController.SetViewTarget(
               this.Vxr,
               "SequenceCamera.OnWorldDone",
@@ -108,4 +112,4 @@ let SequenceCameraDisplayComponent = class SequenceCameraDisplayComponent extend
   SequenceCameraDisplayComponent,
 )),
   (exports.SequenceCameraDisplayComponent = SequenceCameraDisplayComponent);
-// # sourceMappingURL=SequenceCameraDisplayComponent.js.map
+//# sourceMappingURL=SequenceCameraDisplayComponent.js.map

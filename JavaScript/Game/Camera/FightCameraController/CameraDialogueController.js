@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraDialogueController = void 0);
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const CameraControllerBase_1 = require("./CameraControllerBase");
-const MIDDLE_OFFSET_ANGLE = 90;
+const Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  CameraControllerBase_1 = require("./CameraControllerBase"),
+  MIDDLE_OFFSET_ANGLE = 90;
 class CameraDialogueController extends CameraControllerBase_1.CameraControllerBase {
   constructor() {
     super(...arguments),
@@ -56,7 +56,7 @@ class CameraDialogueController extends CameraControllerBase_1.CameraControllerBa
       (this.State = 0);
   }
   UpdateInternal(i) {
-    const s = this.Camera.CharacterController;
+    var s = this.Camera.CharacterController;
     if (s && this.M1e)
       switch (this.State) {
         case 1:
@@ -64,26 +64,26 @@ class CameraDialogueController extends CameraControllerBase_1.CameraControllerBa
             (this.v1e += i),
               this.v1e > this.FadeInDuration &&
                 (this.v1e = this.FadeInDuration);
-            var h = this.v1e / this.FadeInDuration;
-            var h = isNaN(h) ? 1 : h;
-            let e =
-              (Vector_1.Vector.VectorBlendEaseIn(
-                this.S1e,
-                this.E1e,
-                h,
-                this.FadeInExp,
-                this.I1e,
-              ),
-              this.Camera.SetArmLocation(this.I1e),
-              s.GetControlRotation());
-            const r =
-              (e.Yaw,
-              MathUtils_1.MathUtils.BlendEaseIn(
-                this.sle,
-                this.ale,
-                h,
-                this.FadeInExp,
-              ));
+            var h = this.v1e / this.FadeInDuration,
+              h = isNaN(h) ? 1 : h,
+              e =
+                (Vector_1.Vector.VectorBlendEaseIn(
+                  this.S1e,
+                  this.E1e,
+                  h,
+                  this.FadeInExp,
+                  this.I1e,
+                ),
+                this.Camera.SetArmLocation(this.I1e),
+                s.GetControlRotation()),
+              r =
+                (e.Yaw,
+                MathUtils_1.MathUtils.BlendEaseIn(
+                  this.sle,
+                  this.ale,
+                  h,
+                  this.FadeInExp,
+                ));
             let t = e.Pitch;
             this.ile &&
               (t = MathUtils_1.MathUtils.BlendEaseIn(
@@ -129,8 +129,8 @@ class CameraDialogueController extends CameraControllerBase_1.CameraControllerBa
     else this.State = 0;
   }
   EnterSequenceDialogue(t, i = !1) {
-    this.State !== 1 &&
-      this.State !== 2 &&
+    1 !== this.State &&
+      2 !== this.State &&
       ((this.M1e = !0),
       (this.T1e = !1),
       (this.v1e = 0),
@@ -155,18 +155,18 @@ class CameraDialogueController extends CameraControllerBase_1.CameraControllerBa
         );
   }
   D1e(t) {
-    var i = Vector_1.Vector.Create(t);
-    const s = Vector_1.Vector.Create(this.Camera.PlayerLocation);
-    var i = (i.SubtractionEqual(s), i.Size());
+    var i = Vector_1.Vector.Create(t),
+      s = Vector_1.Vector.Create(this.Camera.PlayerLocation),
+      i = (i.SubtractionEqual(s), i.Size());
     let h = this.OffsetRate;
     i * this.OffsetRate > this.OffsetLengthMax &&
       (h = this.OffsetLengthMax / i),
       Vector_1.Vector.Lerp(s, t, h, this.E1e);
   }
   R1e(t, i = !0, s = !0) {
-    let h;
-    let e = this.Camera.CameraActor.K2_GetActorRotation();
-    const r = Vector_1.Vector.Create(e.Vector());
+    var h,
+      e = this.Camera.CameraActor.K2_GetActorRotation(),
+      r = Vector_1.Vector.Create(e.Vector());
     i &&
       (e.Pitch < this.CheckPitchMin
         ? ((this.ile = !0),
@@ -190,7 +190,7 @@ class CameraDialogueController extends CameraControllerBase_1.CameraControllerBa
             (e = Rotator_1.Rotator.Create()),
             s.Rotation(e),
             (this.ale = e.Yaw),
-            h > 0
+            0 < h
               ? (this.ale += i < t ? this.AdjustYaw : 180 - this.AdjustYaw)
               : (this.ale -= i < t ? this.AdjustYaw : 180 - this.AdjustYaw))
           : ((e = s.SineAngle2D(r)),
@@ -198,14 +198,14 @@ class CameraDialogueController extends CameraControllerBase_1.CameraControllerBa
             (h = Rotator_1.Rotator.Create()),
             s.Rotation(h),
             (this.ale = h.Yaw),
-            e > 0
+            0 < e
               ? (this.ale +=
                   i < t ? MIDDLE_OFFSET_ANGLE : 180 - MIDDLE_OFFSET_ANGLE)
               : (this.ale -=
                   i < t ? MIDDLE_OFFSET_ANGLE : 180 - MIDDLE_OFFSET_ANGLE)),
-        this.sle - this.ale > 180
+        180 < this.sle - this.ale
           ? (this.ale += 360)
-          : this.ale - this.sle > 180 && (this.ale -= 360));
+          : 180 < this.ale - this.sle && (this.ale -= 360));
   }
   AdjustDialogueParams(t, i, s, h) {
     (this.T1e = !0),
@@ -220,11 +220,11 @@ class CameraDialogueController extends CameraControllerBase_1.CameraControllerBa
       void 0 !== s &&
         ((this.sle = t.Yaw),
         (this.ale = s),
-        this.sle - this.ale > 180
+        180 < this.sle - this.ale
           ? (this.ale += 360)
-          : this.ale - this.sle > 180 && (this.ale -= 360)),
+          : 180 < this.ale - this.sle && (this.ale -= 360)),
       void 0 !== h && (this.DefaultArmLength = h);
   }
 }
 exports.CameraDialogueController = CameraDialogueController;
-// # sourceMappingURL=CameraDialogueController.js.map
+//# sourceMappingURL=CameraDialogueController.js.map

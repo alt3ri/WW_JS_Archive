@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary");
 class TsDecoratorInTeamArea extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments), (this.TmpVector = void 0);
   }
   PerformConditionCheckAI(r, e) {
-    let o;
-    let t;
-    const l = r.AiController;
+    var o,
+      t,
+      l = r.AiController;
     return l
       ? !(o = l.AiHateList.GetCurrentTarget())?.Valid ||
           !(
@@ -37,4 +37,4 @@ class TsDecoratorInTeamArea extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorInTeamArea;
-// # sourceMappingURL=TsDecoratorInTeamArea.js.map
+//# sourceMappingURL=TsDecoratorInTeamArea.js.map

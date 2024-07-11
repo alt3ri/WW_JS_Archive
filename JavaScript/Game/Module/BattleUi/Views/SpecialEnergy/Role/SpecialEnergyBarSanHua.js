@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SpecialEnergyBarSanHua = void 0);
-const UE = require("ue");
-const SpecialEnergyBarBase_1 = require("../SpecialEnergyBarBase");
-const SpecialEnergyBarPointItem_1 = require("../SpecialEnergyBarPointItem");
-const POINT_NUM = 41;
-const POINT_WIDTH = 9;
-const TOTAL_WIDTH = 369;
-const successTagId = 1598973985;
-const buffTagId = 1278596622;
-const buffId = BigInt(1102012003n);
+const UE = require("ue"),
+  SpecialEnergyBarBase_1 = require("../SpecialEnergyBarBase"),
+  SpecialEnergyBarPointItem_1 = require("../SpecialEnergyBarPointItem"),
+  POINT_NUM = 41,
+  POINT_WIDTH = 9,
+  TOTAL_WIDTH = 369,
+  successTagId = 1598973985,
+  buffTagId = 1278596622,
+  buffId = BigInt(1102012003n);
 class SpecialEnergyBarSanHua extends SpecialEnergyBarBase_1.SpecialEnergyBarBase {
   constructor() {
     super(...arguments),
@@ -19,8 +19,8 @@ class SpecialEnergyBarSanHua extends SpecialEnergyBarBase_1.SpecialEnergyBarBase
       (this.Wct = 1),
       (this.Kct = 0),
       (this.Qct = (t) => {
-        const s = this.GetUiNiagara(3);
-        t > 0
+        var s = this.GetUiNiagara(3);
+        0 < t
           ? (s.SetAnchorOffsetX(TOTAL_WIDTH * (this.Kct - 0.5)),
             s.SetUIActive(!0))
           : s.SetUIActive(!1);
@@ -39,7 +39,7 @@ class SpecialEnergyBarSanHua extends SpecialEnergyBarBase_1.SpecialEnergyBarBase
     ];
   }
   async OnBeforeStartAsync() {
-    const t = [];
+    var t = [];
     t.push(this.InitPointItem(this.GetItem(0))),
       t.push(this.InitKeyItem(this.GetItem(4))),
       await Promise.all(t);
@@ -50,7 +50,7 @@ class SpecialEnergyBarSanHua extends SpecialEnergyBarBase_1.SpecialEnergyBarBase
       await this.Vct.CreateThenShowByActorAsync(t.GetOwner());
   }
   OnStart() {
-    let t;
+    var t;
     this.Config &&
       (this.Config.EffectColor &&
         ((t = new UE.LinearColor(UE.Color.FromHex(this.Config.EffectColor))),
@@ -61,20 +61,18 @@ class SpecialEnergyBarSanHua extends SpecialEnergyBarBase_1.SpecialEnergyBarBase
       this.KeyItem?.RefreshKeyEnable(!0, !0));
   }
   $ct() {
-    const t = this.GetBuffCountByBuffId(buffId);
-    const s = this.AttributeComponent.GetCurrentValue(
-      this.Config.MaxAttributeId,
-    );
+    var t = this.GetBuffCountByBuffId(buffId),
+      s = this.AttributeComponent.GetCurrentValue(this.Config.MaxAttributeId);
     (this.jct = this.Config.ExtraFloatParams[2 * t] / s),
       (this.Wct = this.Config.ExtraFloatParams[2 * t + 1] / s);
   }
   RefreshBarPercent(t = !1) {
-    var s = this.PercentMachine.GetTargetPercent();
-    var s =
-      (s > 0 && (this.Kct = s),
-      this.Vct.UpdateLeftRightPercent(this.jct, this.Wct),
-      this.GetItem(1).SetAnchorOffsetX(TOTAL_WIDTH * (s - 0.5)),
-      s > this.jct && s <= this.Wct);
+    var s = this.PercentMachine.GetTargetPercent(),
+      s =
+        (0 < s && (this.Kct = s),
+        this.Vct.UpdateLeftRightPercent(this.jct, this.Wct),
+        this.GetItem(1).SetAnchorOffsetX(TOTAL_WIDTH * (s - 0.5)),
+        s > this.jct && s <= this.Wct);
     (!t && s === this.Hct) ||
       ((this.Hct = s), this.GetUiNiagara(2).SetUIActive(s));
   }
@@ -94,4 +92,4 @@ class SpecialEnergyBarSanHua extends SpecialEnergyBarBase_1.SpecialEnergyBarBase
   }
 }
 exports.SpecialEnergyBarSanHua = SpecialEnergyBarSanHua;
-// # sourceMappingURL=SpecialEnergyBarSanHua.js.map
+//# sourceMappingURL=SpecialEnergyBarSanHua.js.map

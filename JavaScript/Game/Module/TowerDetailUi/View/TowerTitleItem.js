@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerTitleItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class TowerTitleItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, t) {
     super(),
@@ -31,4 +31,4 @@ class TowerTitleItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.TowerTitleItem = TowerTitleItem;
-// # sourceMappingURL=TowerTitleItem.js.map
+//# sourceMappingURL=TowerTitleItem.js.map

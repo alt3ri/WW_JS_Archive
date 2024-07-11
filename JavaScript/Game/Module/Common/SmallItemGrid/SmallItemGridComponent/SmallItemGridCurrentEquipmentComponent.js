@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SmallItemGridCurrentEquipmentComponent = void 0);
-const UE = require("ue");
-const SmallItemGridVisibleComponent_1 = require("./SmallItemGridVisibleComponent");
-const BG_COLOR = "D5A831FF";
-const TOP_COLOR = "FFFFFFFF";
+const UE = require("ue"),
+  SmallItemGridVisibleComponent_1 = require("./SmallItemGridVisibleComponent"),
+  BG_COLOR = "D5A831FF",
+  TOP_COLOR = "FFFFFFFF";
 class SmallItemGridCurrentEquipmentComponent extends SmallItemGridVisibleComponent_1.SmallItemGridVisibleComponent {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -13,8 +13,8 @@ class SmallItemGridCurrentEquipmentComponent extends SmallItemGridVisibleCompone
     ];
   }
   OnStart() {
-    var e = UE.Color.FromHex(BG_COLOR);
-    var e = (this.GetSprite(0).SetColor(e), UE.Color.FromHex(TOP_COLOR));
+    var e = UE.Color.FromHex(BG_COLOR),
+      e = (this.GetSprite(0).SetColor(e), UE.Color.FromHex(TOP_COLOR));
     this.GetSprite(1).SetColor(e);
   }
   GetResourceId() {
@@ -29,4 +29,4 @@ class SmallItemGridCurrentEquipmentComponent extends SmallItemGridVisibleCompone
 }
 exports.SmallItemGridCurrentEquipmentComponent =
   SmallItemGridCurrentEquipmentComponent;
-// # sourceMappingURL=SmallItemGridCurrentEquipmentComponent.js.map
+//# sourceMappingURL=SmallItemGridCurrentEquipmentComponent.js.map

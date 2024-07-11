@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ManufactureHelpRoleView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const SmallItemGrid_1 = require("../../Common/SmallItemGrid/SmallItemGrid");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const CommonManager_1 = require("./CommonManager");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  SmallItemGrid_1 = require("../../Common/SmallItemGrid/SmallItemGrid"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  CommonManager_1 = require("./CommonManager");
 class ManufactureHelpRoleView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -21,7 +21,7 @@ class ManufactureHelpRoleView extends UiViewBase_1.UiViewBase {
       (this.gIt = 0),
       (this.Gyi = 0),
       (this.z9e = () => {
-        const e = new HelpRoleItem();
+        var e = new HelpRoleItem();
         return e.BindOnClickedCallback(this.lGt), e;
       }),
       (this.xyi = () => {
@@ -144,7 +144,7 @@ class HelpRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetText(1).SetText(this.dqt.RoleName);
   }
   iGt() {
-    let e;
+    var e;
     CommonManager_1.CommonManager.CheckIsBuff(this.dqt.RoleId, this.dqt.ItemId)
       ? ((e = CommonManager_1.CommonManager.GetInfoText(this.dqt.RoleId)),
         this.GetText(2).SetText(e))
@@ -163,8 +163,8 @@ class HelpRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.IVe(!1);
   }
   IVe(e, t = !0) {
-    const i = this.GetExtendToggle(0);
+    var i = this.GetExtendToggle(0);
     e ? i.SetToggleState(1, t) : i.SetToggleState(0, !1);
   }
 }
-// # sourceMappingURL=ManufactureHelpRoleView.js.map
+//# sourceMappingURL=ManufactureHelpRoleView.js.map

@@ -2,25 +2,25 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoguelikeAchievementView = exports.RoguelikeAchievementItem =
     void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const AchievementController_1 = require("../../Achievement/AchievementController");
-const CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid");
-const CommonTabComponentData_1 = require("../../Common/TabComponent/CommonTabComponentData");
-const CommonTabData_1 = require("../../Common/TabComponent/CommonTabData");
-const CommonTabTitleData_1 = require("../../Common/TabComponent/CommonTabTitleData");
-const TabComponentWithCaptionItem_1 = require("../../Common/TabComponent/TabComponentWithCaptionItem");
-const CommonTabItem_1 = require("../../Common/TabComponent/TabItem/CommonTabItem");
-const CommonTabItemBase_1 = require("../../Common/TabComponent/TabItem/CommonTabItemBase");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  AchievementController_1 = require("../../Achievement/AchievementController"),
+  CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  CommonTabComponentData_1 = require("../../Common/TabComponent/CommonTabComponentData"),
+  CommonTabData_1 = require("../../Common/TabComponent/CommonTabData"),
+  CommonTabTitleData_1 = require("../../Common/TabComponent/CommonTabTitleData"),
+  TabComponentWithCaptionItem_1 = require("../../Common/TabComponent/TabComponentWithCaptionItem"),
+  CommonTabItem_1 = require("../../Common/TabComponent/TabItem/CommonTabItem"),
+  CommonTabItemBase_1 = require("../../Common/TabComponent/TabItem/CommonTabItemBase"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew");
 class RoguelikeAchievementItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -86,7 +86,7 @@ class RoguelikeAchievementItem extends GridProxyAbstract_1.GridProxyAbstract {
           this.GetItem(6).SetUIActive(!1);
     }
     e = this.Data.GetRewards();
-    e.length > 0 &&
+    0 < e.length &&
       (this.CommonGridItem.SetActive(!0), this.CommonGridItem.Refresh(e[0]));
   }
 }
@@ -130,7 +130,7 @@ class RoguelikeAchievementView extends UiViewBase_1.UiViewBase {
     ];
   }
   async OnBeforeStartAsync() {
-    let e = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData;
+    var e = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData;
     if (void 0 !== e) {
       e =
         ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
@@ -171,15 +171,15 @@ class RoguelikeAchievementView extends UiViewBase_1.UiViewBase {
             ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTabList(
               "RoguelikeAchievementView",
             ));
-        const t = this.TabDataList.length;
-        const i = (await this.TabComponent.RefreshTabItemByLengthAsync(t), []);
+        var t = this.TabDataList.length,
+          i = (await this.TabComponent.RefreshTabItemByLengthAsync(t), []);
         for (let e = 0; e < t; e++) {
           const n = new CommonTabItemBase_1.CommonTabItemData();
-          var o = this.TabDataList[e];
-          var o = new CommonTabData_1.CommonTabData(
-            o.Icon,
-            new CommonTabTitleData_1.CommonTabTitleData(o.TabName),
-          );
+          var o = this.TabDataList[e],
+            o = new CommonTabData_1.CommonTabData(
+              o.Icon,
+              new CommonTabTitleData_1.CommonTabTitleData(o.TabName),
+            );
           (n.RedDotName = "RoguelikeAchievementGroup"),
             (n.RedDotUid = this.AchievementGroupDataList[e].GetId()),
             (n.Data = o),
@@ -211,4 +211,4 @@ class RoguelikeAchievementView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RoguelikeAchievementView = RoguelikeAchievementView;
-// # sourceMappingURL=RoguelikeAchievementView.js.map
+//# sourceMappingURL=RoguelikeAchievementView.js.map

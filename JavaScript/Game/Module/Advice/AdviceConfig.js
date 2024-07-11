@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceConfig = void 0);
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const AdviceConjunctionAll_1 = require("../../../Core/Define/ConfigQuery/AdviceConjunctionAll");
-const AdviceConjunctionById_1 = require("../../../Core/Define/ConfigQuery/AdviceConjunctionById");
-const AdviceParamsById_1 = require("../../../Core/Define/ConfigQuery/AdviceParamsById");
-const AdviceSentenceAll_1 = require("../../../Core/Define/ConfigQuery/AdviceSentenceAll");
-const AdviceSentenceById_1 = require("../../../Core/Define/ConfigQuery/AdviceSentenceById");
-const AdviceWordAll_1 = require("../../../Core/Define/ConfigQuery/AdviceWordAll");
-const AdviceWordById_1 = require("../../../Core/Define/ConfigQuery/AdviceWordById");
-const AdviceWordByType_1 = require("../../../Core/Define/ConfigQuery/AdviceWordByType");
-const AdviceWordTypeAll_1 = require("../../../Core/Define/ConfigQuery/AdviceWordTypeAll");
-const AdviceWordTypeById_1 = require("../../../Core/Define/ConfigQuery/AdviceWordTypeById");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
+const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  AdviceConjunctionAll_1 = require("../../../Core/Define/ConfigQuery/AdviceConjunctionAll"),
+  AdviceConjunctionById_1 = require("../../../Core/Define/ConfigQuery/AdviceConjunctionById"),
+  AdviceParamsById_1 = require("../../../Core/Define/ConfigQuery/AdviceParamsById"),
+  AdviceSentenceAll_1 = require("../../../Core/Define/ConfigQuery/AdviceSentenceAll"),
+  AdviceSentenceById_1 = require("../../../Core/Define/ConfigQuery/AdviceSentenceById"),
+  AdviceWordAll_1 = require("../../../Core/Define/ConfigQuery/AdviceWordAll"),
+  AdviceWordById_1 = require("../../../Core/Define/ConfigQuery/AdviceWordById"),
+  AdviceWordByType_1 = require("../../../Core/Define/ConfigQuery/AdviceWordByType"),
+  AdviceWordTypeAll_1 = require("../../../Core/Define/ConfigQuery/AdviceWordTypeAll"),
+  AdviceWordTypeById_1 = require("../../../Core/Define/ConfigQuery/AdviceWordTypeById"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  ConfigManager_1 = require("../../Manager/ConfigManager");
 class AdviceConfig extends ConfigBase_1.ConfigBase {
   GetAdviceSentenceConfigs() {
     return AdviceSentenceAll_1.configAdviceSentenceAll.GetConfigList();
@@ -81,7 +81,7 @@ class AdviceConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetAdviceInteractText() {
-    const e = this.GetAdviceSpecialParams(-2);
+    var e = this.GetAdviceSpecialParams(-2);
     if (e) return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e?.Title);
   }
   GetAdviceDefaultModelConfigId() {
@@ -130,15 +130,15 @@ class AdviceConfig extends ConfigBase_1.ConfigBase {
   }
   GetAdviceCreateText(e) {
     let i = "";
-    let r;
+    var r;
     return (i =
-      e === 0
+      0 === e
         ? ((r =
             ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
               "AdviceCreate_1",
             )),
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew(r))
-        : e === 1
+        : 1 === e
           ? ((r =
               ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
                 "AdviceCreate_2",
@@ -151,11 +151,11 @@ class AdviceConfig extends ConfigBase_1.ConfigBase {
             MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e)));
   }
   GetAdviceTemplateText() {
-    const e = ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
+    var e = ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
       "AdviceCreate_Template",
     );
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e);
   }
 }
 exports.AdviceConfig = AdviceConfig;
-// # sourceMappingURL=AdviceConfig.js.map
+//# sourceMappingURL=AdviceConfig.js.map

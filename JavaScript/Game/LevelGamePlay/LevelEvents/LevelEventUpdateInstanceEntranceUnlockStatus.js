@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventUpdateInstanceEntranceUnlockStatus = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventUpdateInstanceEntranceUnlockStatus extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, n) {
     Log_1.Log.CheckInfo() &&
@@ -15,4 +15,4 @@ class LevelEventUpdateInstanceEntranceUnlockStatus extends LevelGeneralBase_1.Le
 }
 exports.LevelEventUpdateInstanceEntranceUnlockStatus =
   LevelEventUpdateInstanceEntranceUnlockStatus;
-// # sourceMappingURL=LevelEventUpdateInstanceEntranceUnlockStatus.js.map
+//# sourceMappingURL=LevelEventUpdateInstanceEntranceUnlockStatus.js.map

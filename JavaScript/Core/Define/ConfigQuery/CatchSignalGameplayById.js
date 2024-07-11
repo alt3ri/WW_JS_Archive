@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configCatchSignalGameplayById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const CatchSignalGameplay_1 = require("../Config/CatchSignalGameplay");
-const DB = "db_catchsignalgameplay.db";
-const FILE = "k.可视化编辑/c.Csv/m.捕获信号玩法配置/*.csv*";
-const TABLE = "CatchSignalGameplay";
-const COMMAND = "select BinData from `CatchSignalGameplay` where Id=?";
-const KEY_PREFIX = "CatchSignalGameplayById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  CatchSignalGameplay_1 = require("../Config/CatchSignalGameplay"),
+  DB = "db_catchsignalgameplay.db",
+  FILE = "k.可视化编辑/c.Csv/m.捕获信号玩法配置/*.csv*",
+  TABLE = "CatchSignalGameplay",
+  COMMAND = "select BinData from `CatchSignalGameplay` where Id=?",
+  KEY_PREFIX = "CatchSignalGameplayById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configCatchSignalGameplayById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configCatchSignalGameplayById.GetConfig(";
 exports.configCatchSignalGameplayById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configCatchSignalGameplayById = {
       if (
         (e =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var e;
-        var n = void 0;
+        var e,
+          n = void 0;
         if (
           (([e, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configCatchSignalGameplayById = {
     }
   },
 };
-// # sourceMappingURL=CatchSignalGameplayById.js.map
+//# sourceMappingURL=CatchSignalGameplayById.js.map

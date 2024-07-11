@@ -22,4 +22,4 @@ class EntityHandle {
   }
 }
 exports.EntityHandle = EntityHandle;
-// # sourceMappingURL=EntityHandle.js.map
+//# sourceMappingURL=EntityHandle.js.map

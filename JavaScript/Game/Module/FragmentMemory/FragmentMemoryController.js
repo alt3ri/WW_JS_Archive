@@ -1,15 +1,15 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FragmentMemoryController = exports.INFO_FRAGMENTMEMORYITEM = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiManager_1 = require("../../Ui/UiManager");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiManager_1 = require("../../Ui/UiManager");
 exports.INFO_FRAGMENTMEMORYITEM = 70140004;
 class FragmentMemoryController extends ControllerBase_1.ControllerBase {
   static OnInit() {
@@ -61,8 +61,8 @@ class FragmentMemoryController extends ControllerBase_1.ControllerBase {
     Net_1.Net.UnRegister(11253), Net_1.Net.UnRegister(27525);
   }
   static iVi() {
-    ModelManager_1.ModelManager.FragmentMemoryModel.CurrentUnlockCollectId !==
-      0 &&
+    0 !==
+      ModelManager_1.ModelManager.FragmentMemoryModel.CurrentUnlockCollectId &&
       !UiManager_1.UiManager.IsViewShow("ObtainFragmentView") &&
       UiManager_1.UiManager.IsViewShow("BattleView") &&
       (ModelManager_1.ModelManager.FragmentMemoryModel
@@ -81,7 +81,7 @@ class FragmentMemoryController extends ControllerBase_1.ControllerBase {
     });
   }
   static RequestMemoryReward(e) {
-    const t = Protocol_1.Aki.Protocol.Cms.create();
+    var t = Protocol_1.Aki.Protocol.Cms.create();
     (t.o5n = e),
       Net_1.Net.Call(10748, t, (e) => {
         e.K0s !== Protocol_1.Aki.Protocol.lkn.Sys &&
@@ -106,7 +106,7 @@ class FragmentMemoryController extends ControllerBase_1.ControllerBase {
       ModelManager_1.ModelManager.FragmentMemoryModel.GetCollectedIds().filter(
         (e) => !t.includes(e),
       );
-    e.length > 0 &&
+    0 < e.length &&
       (ModelManager_1.ModelManager.FragmentMemoryModel.CurrentUnlockCollectId =
         e[0]),
       _a.iVi();
@@ -124,8 +124,8 @@ class FragmentMemoryController extends ControllerBase_1.ControllerBase {
     e === exports.INFO_FRAGMENTMEMORYITEM && _a.OpenFragmentMemoryView();
   }),
   (FragmentMemoryController.g7e = (e) => {
-    e.Info.Name === "CommonActivityView" &&
+    "CommonActivityView" === e.Info.Name &&
       (ModelManager_1.ModelManager.FragmentMemoryModel.ActivitySubViewTryPlayAnimation =
         "");
   });
-// # sourceMappingURL=FragmentMemoryController.js.map
+//# sourceMappingURL=FragmentMemoryController.js.map

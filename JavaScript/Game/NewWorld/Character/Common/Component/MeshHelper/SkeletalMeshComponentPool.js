@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkeletalMeshComponentPool = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const MeshComponentUtils_1 = require("./MeshComponentUtils");
-const SceneComponentPool_1 = require("./SceneComponentPool");
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  MeshComponentUtils_1 = require("./MeshComponentUtils"),
+  SceneComponentPool_1 = require("./SceneComponentPool");
 class SkeletalMeshComponentPool extends SceneComponentPool_1.SceneComponentPool {
   ActiveComponent(e) {
     e.SetHiddenInGame(!1), e.SetComponentTickEnabled(!0);
@@ -16,7 +16,7 @@ class SkeletalMeshComponentPool extends SceneComponentPool_1.SceneComponentPool 
       e.SetComponentTickEnabled(!1);
   }
   CreateComponent() {
-    let e;
+    var e;
     if (this.CheckPoolRange())
       return (
         (e = this.ActorInternal.AddComponentByClass(
@@ -34,4 +34,4 @@ class SkeletalMeshComponentPool extends SceneComponentPool_1.SceneComponentPool 
   }
 }
 exports.SkeletalMeshComponentPool = SkeletalMeshComponentPool;
-// # sourceMappingURL=SkeletalMeshComponentPool.js.map
+//# sourceMappingURL=SkeletalMeshComponentPool.js.map

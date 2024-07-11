@@ -1,39 +1,39 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletActionInitHit = exports.SELF_NUMBER = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const BulletActionBase_1 = require("./BulletActionBase");
-const FRIEND_NUMBER = ((exports.SELF_NUMBER = 1), 2);
-const TEAM_NUMBER = 3;
-const ENEMY_NUMBER = 4;
-const PLAYER_GROUP_NUMBER = 11;
-const campNumbers = [
-  exports.SELF_NUMBER,
-  FRIEND_NUMBER,
-  ENEMY_NUMBER,
-  TEAM_NUMBER,
-  PLAYER_GROUP_NUMBER,
-];
-const collisionChannelToObjectTypeQueryMap = new Map([
-  [
-    QueryTypeDefine_1.KuroCollisionChannel.Pawn,
-    QueryTypeDefine_1.KuroObjectTypeQuery.Pawn,
+const Log_1 = require("../../../../Core/Common/Log"),
+  QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  BulletActionBase_1 = require("./BulletActionBase"),
+  FRIEND_NUMBER = ((exports.SELF_NUMBER = 1), 2),
+  TEAM_NUMBER = 3,
+  ENEMY_NUMBER = 4,
+  PLAYER_GROUP_NUMBER = 11,
+  campNumbers = [
+    exports.SELF_NUMBER,
+    FRIEND_NUMBER,
+    ENEMY_NUMBER,
+    TEAM_NUMBER,
+    PLAYER_GROUP_NUMBER,
   ],
-  [
-    QueryTypeDefine_1.KuroCollisionChannel.PawnPlayer,
-    QueryTypeDefine_1.KuroObjectTypeQuery.PawnPlayer,
-  ],
-  [
-    QueryTypeDefine_1.KuroCollisionChannel.PawnMonster,
-    QueryTypeDefine_1.KuroObjectTypeQuery.PawnMonster,
-  ],
-]);
+  collisionChannelToObjectTypeQueryMap = new Map([
+    [
+      QueryTypeDefine_1.KuroCollisionChannel.Pawn,
+      QueryTypeDefine_1.KuroObjectTypeQuery.Pawn,
+    ],
+    [
+      QueryTypeDefine_1.KuroCollisionChannel.PawnPlayer,
+      QueryTypeDefine_1.KuroObjectTypeQuery.PawnPlayer,
+    ],
+    [
+      QueryTypeDefine_1.KuroCollisionChannel.PawnMonster,
+      QueryTypeDefine_1.KuroObjectTypeQuery.PawnMonster,
+    ],
+  ]);
 class BulletActionInitHit extends BulletActionBase_1.BulletActionBase {
   OnExecute() {
-    let e;
-    const i = this.BulletInfo.BulletDataMain;
+    var e,
+      i = this.BulletInfo.BulletDataMain;
     (this.BulletInfo.CountByParent = i.Base.ShareCounter),
       this.BulletInfo.CountByParent &&
         ((e = ModelManager_1.ModelManager.BulletModel.GetBulletEntityById(
@@ -58,9 +58,9 @@ class BulletActionInitHit extends BulletActionBase_1.BulletActionBase {
       this.Z4o();
   }
   Z4o() {
-    let e;
-    let i;
-    const t = this.e5o();
+    var e,
+      i,
+      t = this.e5o();
     t !== QueryTypeDefine_1.KuroCollisionChannel.Pawn &&
       ((e = this.BulletInfo.CollisionInfo),
       this.BulletInfo.BulletCamp & ENEMY_NUMBER ||
@@ -79,12 +79,12 @@ class BulletActionInitHit extends BulletActionBase_1.BulletActionBase {
       e.IgnoreQueries.add(collisionChannelToObjectTypeQueryMap.get(i)));
   }
   e5o() {
-    return this.BulletInfo.AttackerCamp === 0
+    return 0 === this.BulletInfo.AttackerCamp
       ? QueryTypeDefine_1.KuroCollisionChannel.PawnPlayer
-      : this.BulletInfo.AttackerCamp === 1
+      : 1 === this.BulletInfo.AttackerCamp
         ? QueryTypeDefine_1.KuroCollisionChannel.PawnMonster
         : QueryTypeDefine_1.KuroCollisionChannel.Pawn;
   }
 }
 exports.BulletActionInitHit = BulletActionInitHit;
-// # sourceMappingURL=BulletActionInitHit.js.map
+//# sourceMappingURL=BulletActionInitHit.js.map

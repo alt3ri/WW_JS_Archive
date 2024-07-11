@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskFightOrFlee extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -22,12 +22,12 @@ class TsTaskFightOrFlee extends TsTaskAbortImmediatelyBase_1.default {
     this.InitTsVariables();
     var r = e.AiController;
     if (r) {
-      var r = r.CharActorComp;
-      const o = r.Entity.Id;
+      var r = r.CharActorComp,
+        o = r.Entity.Id;
       if (!this.FightProbability) {
-        var r = r.CreatureData;
-        var s = r.GetPbEntityInitData().ComponentsData;
-        var s = (0, IComponent_1.getComponent)(s, "AnimalComponent");
+        var r = r.CreatureData,
+          s = r.GetPbEntityInitData().ComponentsData,
+          s = (0, IComponent_1.getComponent)(s, "AnimalComponent");
         if (!s || void 0 === s.AnimalAttackRange)
           return (
             Log_1.Log.CheckError() &&
@@ -56,4 +56,4 @@ class TsTaskFightOrFlee extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskFightOrFlee;
-// # sourceMappingURL=TsTaskFightOrFlee.js.map
+//# sourceMappingURL=TsTaskFightOrFlee.js.map

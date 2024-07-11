@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const TsEffectActor_1 = require("../../../Effect/TsEffectActor");
-const GlobalData_1 = require("../../../GlobalData");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TsEffectActor_1 = require("../../../Effect/TsEffectActor"),
+  GlobalData_1 = require("../../../GlobalData");
 class MaterialControllerData {
   constructor() {
     (this.HandleId = -1),
@@ -22,18 +22,18 @@ class AnimNotifyAddMeshMaterialControllerData extends UE.KuroAnimNotifyState {
     if (GlobalData_1.GlobalData.World)
       if (UE.KismetSystemLibrary.IsValid(e)) {
         if ((e.SetHiddenInGame(!1), this.IsAllValid(e, a))) {
-          const r = e.GetOwner();
-          const o =
-            (r instanceof UE.TsBaseCharacter_C &&
-              Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn(
-                "RenderCharacter",
-                41,
-                "除特殊情况外，TsBaseCharacter及其派生类应该使用AnimNotifyStateAddMaterialControllerData通知",
-                ["Actor", e?.GetOwner()?.GetName()],
-                ["动画", a?.GetName()],
-              ),
-            new MaterialControllerData());
+          var r = e.GetOwner(),
+            o =
+              (r instanceof UE.TsBaseCharacter_C &&
+                Log_1.Log.CheckWarn() &&
+                Log_1.Log.Warn(
+                  "RenderCharacter",
+                  41,
+                  "除特殊情况外，TsBaseCharacter及其派生类应该使用AnimNotifyStateAddMaterialControllerData通知",
+                  ["Actor", e?.GetOwner()?.GetName()],
+                  ["动画", a?.GetName()],
+                ),
+              new MaterialControllerData());
           r instanceof TsEffectActor_1.default &&
             ((o.CharRenderingComponent = r.GetComponentByClass(
               UE.CharRenderingComponent_C.StaticClass(),
@@ -103,7 +103,7 @@ class AnimNotifyAddMeshMaterialControllerData extends UE.KuroAnimNotifyState {
         !1);
   }
   K2_NotifyEnd(t, e) {
-    let a, r;
+    var a, r;
     return (
       !!GlobalData_1.GlobalData.World &&
       ((a = materialControllerStateHandleMap.get(t)) &&
@@ -111,7 +111,7 @@ class AnimNotifyAddMeshMaterialControllerData extends UE.KuroAnimNotifyState {
         (a.delete(this),
         a.size || materialControllerStateHandleMap.delete(t),
         r.CharRenderingComponent &&
-          (r.HandleId >= 0 &&
+          (0 <= r.HandleId &&
             r.CharRenderingComponent.RemoveMaterialControllerData(r.HandleId),
           GlobalData_1.GlobalData.IsUiSceneOpen) &&
           --r.CharRenderingComponent.IsUiUpdate,
@@ -124,7 +124,7 @@ class AnimNotifyAddMeshMaterialControllerData extends UE.KuroAnimNotifyState {
     );
   }
   GetNotifyName() {
-    const t = this.MaterialAssetData.GetName();
+    var t = this.MaterialAssetData.GetName();
     return t
       ? "召唤物/NPC材质控制器:" +
           UE.BlueprintPathsLibrary.GetBaseFilename(t, !0)
@@ -132,4 +132,4 @@ class AnimNotifyAddMeshMaterialControllerData extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = AnimNotifyAddMeshMaterialControllerData;
-// # sourceMappingURL=AnimNotifyAddMeshMaterialControllerData.js.map
+//# sourceMappingURL=AnimNotifyAddMeshMaterialControllerData.js.map

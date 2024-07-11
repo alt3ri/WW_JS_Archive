@@ -8,4 +8,4 @@ class LevelConditionOnTreasureBoxOpen extends LevelGeneralBase_1.LevelConditionB
   }
 }
 exports.LevelConditionOnTreasureBoxOpen = LevelConditionOnTreasureBoxOpen;
-// # sourceMappingURL=LevelConditionOnTreasureBoxOpen.js.map
+//# sourceMappingURL=LevelConditionOnTreasureBoxOpen.js.map

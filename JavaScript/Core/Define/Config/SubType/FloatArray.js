@@ -24,15 +24,15 @@ class FloatArray {
     return this.arrayfloat(t);
   }
   arrayfloat(t) {
-    const r = this.J7.__offset(this.z7, 4);
+    var r = this.J7.__offset(this.z7, 4);
     return r ? this.J7.readFloat32(this.J7.__vector(this.z7 + r) + 4 * t) : 0;
   }
   arrayfloatLength() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   arrayfloatArray() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -43,4 +43,4 @@ class FloatArray {
   }
 }
 exports.FloatArray = FloatArray;
-// # sourceMappingURL=FloatArray.js.map
+//# sourceMappingURL=FloatArray.js.map

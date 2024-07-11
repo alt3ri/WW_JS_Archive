@@ -1,27 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configPhysicsAssetConfigByIdWithDefaultId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const PhysicsAssetConfig_1 = require("../Config/PhysicsAssetConfig");
-const DB = "db_physics_asset.db";
-const FILE = "j.角色物理资产.xlsx";
-const TABLE = "PhysicsAssetConfig";
-const COMMAND =
-  "select BinData from `PhysicsAssetConfig` where id = ? AND (SELECT count() from `PhysicsAssetConfig` WHERE id = ?) <= 0 OR id = ? AND (SELECT count(0) from `PhysicsAssetConfig` WHERE id = ?) >0;";
-const KEY_PREFIX = "PhysicsAssetConfigByIdWithDefaultId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  PhysicsAssetConfig_1 = require("../Config/PhysicsAssetConfig"),
+  DB = "db_physics_asset.db",
+  FILE = "j.角色物理资产.xlsx",
+  TABLE = "PhysicsAssetConfig",
+  COMMAND =
+    "select BinData from `PhysicsAssetConfig` where id = ? AND (SELECT count() from `PhysicsAssetConfig` WHERE id = ?) <= 0 OR id = ? AND (SELECT count(0) from `PhysicsAssetConfig` WHERE id = ?) >0;",
+  KEY_PREFIX = "PhysicsAssetConfigByIdWithDefaultId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX =
-  "configPhysicsAssetConfigByIdWithDefaultId.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configPhysicsAssetConfigByIdWithDefaultId.GetConfig(";
 exports.configPhysicsAssetConfigByIdWithDefaultId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -45,18 +44,19 @@ exports.configPhysicsAssetConfigByIdWithDefaultId = {
           ConfigCommon_1.ConfigCommon.BindString(handleId, 2, i, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindString(handleId, 3, n, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindString(handleId, 4, e, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(
-            handleId,
-            !0,
-            ...logPair,
-            ["Id", o],
-            ["Id", i],
-            ["Id", n],
-            ["Id", e],
-          ) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(
+              handleId,
+              !0,
+              ...logPair,
+              ["Id", o],
+              ["Id", i],
+              ["Id", n],
+              ["Id", e],
+            ))
       ) {
-        var C;
-        var t = void 0;
+        var C,
+          t = void 0;
         if (
           (([C, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -86,4 +86,4 @@ exports.configPhysicsAssetConfigByIdWithDefaultId = {
     }
   },
 };
-// # sourceMappingURL=PhysicsAssetConfigByIdWithDefaultId.js.map
+//# sourceMappingURL=PhysicsAssetConfigByIdWithDefaultId.js.map

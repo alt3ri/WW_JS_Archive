@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemGridAbstract = void 0);
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const PhantomItemData_1 = require("../../Inventory/ItemData/PhantomItemData");
-const WeaponItemData_1 = require("../../Inventory/ItemData/WeaponItemData");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
+const StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  PhantomItemData_1 = require("../../Inventory/ItemData/PhantomItemData"),
+  WeaponItemData_1 = require("../../Inventory/ItemData/WeaponItemData"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
 class ItemGridAbstract extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(t = void 0, e = void 0, i = void 0) {
     super(),
@@ -29,7 +29,7 @@ class ItemGridAbstract extends GridProxyAbstract_1.GridProxyAbstract {
     return this.wqe ? this.wqe.GetBelongView() : this.xIt;
   }
   Refresh(t, e, i) {
-    const r = t[0];
+    var r = t[0];
     this.RefreshByItemId(r.ItemId), (this.rAt = t[1]), (this.RIt = r.IncId);
   }
   RefreshByItemId(t) {
@@ -43,13 +43,13 @@ class ItemGridAbstract extends GridProxyAbstract_1.GridProxyAbstract {
     this.nAt(this) && this.RefreshTextDown(!0, this.GetDefaultDownText());
   }
   GetDefaultDownText() {
-    let t;
-    const e = ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(
-      this.RIt,
-    );
+    var t,
+      e = ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(
+        this.RIt,
+      );
     if (
       !(
-        this.rAt > 1 ||
+        1 < this.rAt ||
         StringUtils_1.StringUtils.IsEmpty(e?.GetDefaultDownText())
       )
     ) {
@@ -79,4 +79,4 @@ class ItemGridAbstract extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.ItemGridAbstract = ItemGridAbstract;
-// # sourceMappingURL=ItemGridAbstract.js.map
+//# sourceMappingURL=ItemGridAbstract.js.map

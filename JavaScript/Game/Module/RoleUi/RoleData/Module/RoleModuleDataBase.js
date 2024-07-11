@@ -11,4 +11,4 @@ class RoleModuleDataBase {
   }
 }
 exports.RoleModuleDataBase = RoleModuleDataBase;
-// # sourceMappingURL=RoleModuleDataBase.js.map
+//# sourceMappingURL=RoleModuleDataBase.js.map

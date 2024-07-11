@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonSelectView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ButtonItem_1 = require("../../Common/Button/ButtonItem");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RogueGainEntry_1 = require("../Define/RogueGainEntry");
-const RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
-const RogueSelectResult_1 = require("../Define/RogueSelectResult");
-const RoguelikeController_1 = require("../RoguelikeController");
-const CommonSelectItem_1 = require("./CommonSelectItem");
-const ElementPanel_1 = require("./ElementPanel");
-const PhantomInfoPanel_1 = require("./PhantomInfoPanel");
-const RogueSelectBaseView_1 = require("./RogueSelectBaseView");
-const TopPanel_1 = require("./TopPanel");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ButtonItem_1 = require("../../Common/Button/ButtonItem"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RogueGainEntry_1 = require("../Define/RogueGainEntry"),
+  RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
+  RogueSelectResult_1 = require("../Define/RogueSelectResult"),
+  RoguelikeController_1 = require("../RoguelikeController"),
+  CommonSelectItem_1 = require("./CommonSelectItem"),
+  ElementPanel_1 = require("./ElementPanel"),
+  PhantomInfoPanel_1 = require("./PhantomInfoPanel"),
+  RogueSelectBaseView_1 = require("./RogueSelectBaseView"),
+  TopPanel_1 = require("./TopPanel");
 class CommonSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
   constructor() {
     super(...arguments),
@@ -33,7 +33,7 @@ class CommonSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
       (this.LastRefreshTime = 0),
       (this.IsFirstOpen = !0),
       (this.m6t = () => {
-        const e = this.tao();
+        var e = this.tao();
         e &&
           ((ModelManager_1.ModelManager.RoguelikeModel.CurrentRogueGainEntry =
             e.RogueGainEntry),
@@ -42,27 +42,27 @@ class CommonSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
           ));
       }),
       (this.iao = () => {
-        const e = TimeUtil_1.TimeUtil.GetServerTime();
-        (e - this.LastRefreshTime < 1 && this.LastRefreshTime !== 0) ||
+        var e = TimeUtil_1.TimeUtil.GetServerTime();
+        (e - this.LastRefreshTime < 1 && 0 !== this.LastRefreshTime) ||
           ((this.LastRefreshTime = e),
           RoguelikeController_1.RoguelikeController.RoguelikeRefreshGainRequest(
             this.RoguelikeChooseData.Index,
           ));
       }),
       (this.CreateCommonSelectItem = () => {
-        const e = new CommonSelectItem_1.CommonSelectItem();
+        var e = new CommonSelectItem_1.CommonSelectItem();
         return e.SetClickCallBack(this.RefreshPreview), e;
       }),
       (this.RoguelikeChooseDataResult = (e, i, t, s, o) => {
         if (t && s === this.RoguelikeChooseData?.Index) {
           t = this.tao();
           if (t) {
-            const h = new RogueSelectResult_1.RogueSelectResult(
-              e,
-              i,
-              t.RogueGainEntry,
-            );
-            var s = o.Aws.length > 0;
+            var h = new RogueSelectResult_1.RogueSelectResult(
+                e,
+                i,
+                t.RogueGainEntry,
+              ),
+              s = 0 < o.Aws.length;
             if (s) {
               h.IsShowCommon = !0;
               for (const r of o.Aws) {
@@ -193,9 +193,10 @@ class CommonSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
     let e = !1;
     for (const i of this.RoguelikeChooseData.RogueGainEntryList)
       if (
+        5 ===
         ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueBuffConfig(
           i.ConfigId,
-        )?.PerkType === 5
+        )?.PerkType
       ) {
         e = !0;
         break;
@@ -222,17 +223,25 @@ class CommonSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
     this.ButtonItem.SetShowText(RoguelikeDefine_1.ROGUELIKEVIEW_13_TEXT);
   }
   RefreshRefreshBtnText() {
-    let e;
-    let i;
-    var t = this.RoguelikeChooseData.UseTime;
-    var s = this.RoguelikeChooseData.MaxTime;
-    var t = (this.RefreshButtonItem.SetActive(s > 0), s - t);
-    var s =
-      (t <= 0
-        ? this.RefreshButtonItem.SetLocalTextNew("RoguelikeView_29_Text", t, s)
-        : this.RefreshButtonItem.SetLocalTextNew("RoguelikeView_28_Text", t, s),
-      this.RoguelikeChooseData.CostCurrency);
-    s.length > 0 &&
+    var e,
+      i,
+      t = this.RoguelikeChooseData.UseTime,
+      s = this.RoguelikeChooseData.MaxTime,
+      t = (this.RefreshButtonItem.SetActive(0 < s), s - t),
+      s =
+        (t <= 0
+          ? this.RefreshButtonItem.SetLocalTextNew(
+              "RoguelikeView_29_Text",
+              t,
+              s,
+            )
+          : this.RefreshButtonItem.SetLocalTextNew(
+              "RoguelikeView_28_Text",
+              t,
+              s,
+            ),
+        this.RoguelikeChooseData.CostCurrency);
+    0 < s.length &&
       ((s = s[0]),
       (i = (e =
         ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
@@ -241,19 +250,19 @@ class CommonSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
         ? "RogueSpecialRefreshCost"
         : "RogueSpecialRefreshCost_Not"),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), i, s.I5n),
-      this.RefreshButtonItem.SetEnableClick(t > 0 && e),
+      this.RefreshButtonItem.SetEnableClick(0 < t && e),
       (i = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCurrencyConfig(
         s.Ekn,
       )),
       this.SetTextureByPath(i.IconSmall, this.GetTexture(7)));
   }
   GetGuideUiItemAndUiItemForShowEx(i) {
-    if (i.length === 2 || isNaN(Number(i[0]))) {
+    if (2 === i.length || isNaN(Number(i[0]))) {
       let e = void 0;
       return (
-        i[1] === "Attribute"
+        "Attribute" === i[1]
           ? (e = this.PhantomInfoPanel?.GetAttributeItem(Number(i[0])))
-          : i[1] === "Cost" &&
+          : "Cost" === i[1] &&
             (e = this.TopPanel?.GetCostItemByIndex(Number(i[0]))),
         e ? [e, e] : void 0
       );
@@ -266,4 +275,4 @@ class CommonSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
   }
 }
 exports.CommonSelectView = CommonSelectView;
-// # sourceMappingURL=CommonSelectView.js.map
+//# sourceMappingURL=CommonSelectView.js.map

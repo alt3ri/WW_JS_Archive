@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivitySevenDaySignController = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../../Core/Net/Net");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ActivityControllerBase_1 = require("../../ActivityControllerBase");
-const ActivitySevenDaySignView_1 = require("../../View/SubView/ActivitySevenDaySignView");
-const ActivitySevenDaySignData_1 = require("./ActivitySevenDaySignData");
-const ActivitySubViewSevenDayVersionSign_1 = require("./ActivitySubViewSevenDayVersionSign");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ActivityControllerBase_1 = require("../../ActivityControllerBase"),
+  ActivitySevenDaySignView_1 = require("../../View/SubView/ActivitySevenDaySignView"),
+  ActivitySevenDaySignData_1 = require("./ActivitySevenDaySignData"),
+  ActivitySubViewSevenDayVersionSign_1 = require("./ActivitySubViewSevenDayVersionSign");
 class ActivitySevenDaySignController extends ActivityControllerBase_1.ActivityControllerBase {
   constructor() {
     super(...arguments),
@@ -47,7 +47,7 @@ class ActivitySevenDaySignController extends ActivityControllerBase_1.ActivityCo
   }
   OnOpenView(e) {}
   OnGetActivityResource(e) {
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.ActivitySevenDaySignConfig.GetActivitySignById(
         e.Id,
       );
@@ -77,7 +77,7 @@ class ActivitySevenDaySignController extends ActivityControllerBase_1.ActivityCo
     }
   }
   OnCreateSubPageComponent(e) {
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.ActivitySevenDaySignConfig.GetActivitySignById(
         e.Id,
       );
@@ -113,7 +113,7 @@ class ActivitySevenDaySignController extends ActivityControllerBase_1.ActivityCo
     return !1;
   }
   static GetRewardByDay(t, i) {
-    const e = Protocol_1.Aki.Protocol.I$n.create();
+    var e = Protocol_1.Aki.Protocol.I$n.create();
     (e.YFn = t),
       (e.Akn = i),
       Net_1.Net.Call(29475, e, (e) => {
@@ -133,4 +133,4 @@ class ActivitySevenDaySignController extends ActivityControllerBase_1.ActivityCo
   }
 }
 exports.ActivitySevenDaySignController = ActivitySevenDaySignController;
-// # sourceMappingURL=ActivitySevenDaySignController.js.map
+//# sourceMappingURL=ActivitySevenDaySignController.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ComponentAction = void 0);
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const List_1 = require("../../../Core/Container/List");
-let EComponentState, EActionCommandType;
+const CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  List_1 = require("../../../Core/Container/List");
+var EComponentState, EActionCommandType;
 !(function (t) {
   (t[(t.Register = 0)] = "Register"),
     (t[(t.Creating = 1)] = "Creating"),
@@ -160,7 +160,7 @@ class ComponentAction {
     return !0;
   }
   async StartAsync() {
-    let t;
+    var t;
     return (
       !!this.S1r(EActionCommandType.Start) ||
       ((t = await this.E1r()), this.y1r(), t)
@@ -218,7 +218,7 @@ class ComponentAction {
     return !0;
   }
   async ShowAsync() {
-    let t;
+    var t;
     return (
       !!this.S1r(EActionCommandType.Show) ||
       ((t = await this.I1r()), this.y1r(), t)
@@ -276,7 +276,7 @@ class ComponentAction {
     return !0;
   }
   async HideAsync() {
-    let t;
+    var t;
     return (
       !!this.S1r(EActionCommandType.Hide) ||
       ((t = await this.T1r()), this.y1r(), t)
@@ -334,7 +334,7 @@ class ComponentAction {
     return !0;
   }
   async DestroyAsync() {
-    let t;
+    var t;
     return (
       (this.WaitToDestroy = !0),
       this.v1r.RemoveAllNodeWithoutHead(),
@@ -453,7 +453,7 @@ class ComponentAction {
     }
   }
   S1r(t) {
-    let e, n;
+    var e, n;
     return (
       !!this.IsBusy &&
       (this.R1r() === t
@@ -514,7 +514,7 @@ class ComponentAction {
   async y1r() {
     let t = this.v1r.GetHeadNextNode();
     for (; void 0 !== t && !t.Element.Processed; ) {
-      const e = t.Element.ActionCommand;
+      var e = t.Element.ActionCommand;
       switch (
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
@@ -574,4 +574,4 @@ class ComponentAction {
 }
 ((exports.ComponentAction = ComponentAction).OpenLog = !0),
   (ComponentAction.M1r = 0);
-// # sourceMappingURL=ComponentAction.js.map
+//# sourceMappingURL=ComponentAction.js.map

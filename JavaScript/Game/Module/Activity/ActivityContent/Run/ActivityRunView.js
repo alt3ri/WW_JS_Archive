@@ -1,29 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRunView = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../../RedDot/RedDotController");
-const UiTickViewBase_1 = require("../../../../Ui/Base/UiTickViewBase");
-const PopupCaptionItem_1 = require("../../../../Ui/Common/PopupCaptionItem");
-const ConfirmBoxDefine_1 = require("../../../ConfirmBox/ConfirmBoxDefine");
-const HelpController_1 = require("../../../Help/HelpController");
-const TimeOfDayDefine_1 = require("../../../TimeOfDay/TimeOfDayDefine");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView");
-const WorldMapController_1 = require("../../../WorldMap/WorldMapController");
-const ActivityRunController_1 = require("./ActivityRunController");
-const ActivityRunCycleItem_1 = require("./ActivityRunCycleItem");
-const ActivityRunItem_1 = require("./ActivityRunItem");
-const TIMERGAP = 1e3;
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../../RedDot/RedDotController"),
+  UiTickViewBase_1 = require("../../../../Ui/Base/UiTickViewBase"),
+  PopupCaptionItem_1 = require("../../../../Ui/Common/PopupCaptionItem"),
+  ConfirmBoxDefine_1 = require("../../../ConfirmBox/ConfirmBoxDefine"),
+  HelpController_1 = require("../../../Help/HelpController"),
+  TimeOfDayDefine_1 = require("../../../TimeOfDay/TimeOfDayDefine"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView"),
+  WorldMapController_1 = require("../../../WorldMap/WorldMapController"),
+  ActivityRunController_1 = require("./ActivityRunController"),
+  ActivityRunCycleItem_1 = require("./ActivityRunCycleItem"),
+  ActivityRunItem_1 = require("./ActivityRunItem"),
+  TIMERGAP = 1e3;
 class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -34,7 +34,7 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
       (this.Z2e = void 0),
       (this.lqe = void 0),
       (this.eFe = (e) => {
-        let i =
+        var i =
           ModelManager_1.ModelManager.ActivityModel?.GetCurrentSelectActivity();
         e.has(i.Id) &&
           ((e = () => {
@@ -63,7 +63,7 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
         this.Z2e?.RefreshAllGridProxies();
       }),
       (this._Fe = () => {
-        let e;
+        var e;
         ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
           ModelManager_1.ModelManager.ActivityRunModel.CurrentSelectChallengeId,
         ).GetIsShow() &&
@@ -87,10 +87,11 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
       (this.cFe = !1),
       (this.kOe = () => {
         this.aFe();
-        let e;
-        let i = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
-          ModelManager_1.ModelManager.ActivityRunModel.CurrentSelectChallengeId,
-        );
+        var e,
+          i = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
+            ModelManager_1.ModelManager.ActivityRunModel
+              .CurrentSelectChallengeId,
+          );
         i &&
           ((i = i.GetIsShow()) &&
             this.cFe !== i &&
@@ -137,7 +138,7 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
       ModelManager_1.ModelManager.ActivityModel.GetCurrentSelectActivity()),
       (this.Y2e = this.J2e.GetChallengeDataArray()),
       this.mFe();
-    let e = this.GetVerticalLayout(7);
+    var e = this.GetVerticalLayout(7);
     this.z2e = new GenericLayout_1.GenericLayout(e, this.VOe);
     e = this.GetItem(1)
       .GetOwner()
@@ -188,13 +189,13 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
       );
   }
   sFe() {
-    const e = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
+    var e = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
       ModelManager_1.ModelManager.ActivityRunModel.CurrentSelectChallengeId,
     ).GetIsShow();
     this.GetItem(3)?.SetUIActive(e), this.GetItem(9).SetUIActive(!e);
   }
   rFe() {
-    const e = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
+    var e = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
       ModelManager_1.ModelManager.ActivityRunModel.CurrentSelectChallengeId,
     );
     e && this.GetButton(6).RootUIComp.SetUIActive(e.GetIsShow());
@@ -205,7 +206,7 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
       : this.UiViewSequence.PlaySequence("Switch");
   }
   OpenHelpView() {
-    const e = this.J2e.GetHelpId();
+    var e = this.J2e.GetHelpId();
     HelpController_1.HelpController.OpenHelpById(e);
   }
   OnBeforeShow() {
@@ -219,7 +220,7 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
     this.GOe = TimerSystem_1.TimerSystem.Forever(this.kOe, TIMERGAP);
   }
   aFe() {
-    let e = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
+    var e = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
       ModelManager_1.ModelManager.ActivityRunModel.CurrentSelectChallengeId,
     );
     e.GetIsShow() ||
@@ -227,9 +228,9 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
       this.GetText(10).SetText(e));
   }
   gFe(e, i) {
-    const t = TimeUtil_1.TimeUtil.GetServerTime();
-    let r = Number(e) - t;
-    let n = (r <= 10 && (r = 10), TimeUtil_1.TimeUtil.GetCountDownData(r));
+    var t = TimeUtil_1.TimeUtil.GetServerTime();
+    let r = Number(e) - t,
+      n = (r <= 10 && (r = 10), TimeUtil_1.TimeUtil.GetCountDownData(r));
     r >= TimeOfDayDefine_1.TOD_SECOND_PER_DAY &&
       (n = TimeUtil_1.TimeUtil.GetCountDownData(r, 3, 2));
     e = ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(i);
@@ -237,8 +238,8 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
     return (o = o.replace("{0}", n.CountDownText));
   }
   dFe() {
-    const i = this.Y2e.length;
-    const t = new Array();
+    var i = this.Y2e.length,
+      t = new Array();
     for (let e = 0; e < i; e++) t.push(this.Y2e[e].Id);
     this.Z2e.RefreshByDataAsync(t).then(() => {
       this.Z2e.SelectGridProxy(
@@ -248,20 +249,20 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
     });
   }
   oFe() {
-    let e = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
+    var e = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
       ModelManager_1.ModelManager.ActivityRunModel.CurrentSelectChallengeId,
     );
     e && ((e = e.GetScoreArray()), this.z2e.RefreshByData(e));
   }
   nFe() {
-    let e;
-    const i = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
-      ModelManager_1.ModelManager.ActivityRunModel.CurrentSelectChallengeId,
-    );
+    var e,
+      i = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
+        ModelManager_1.ModelManager.ActivityRunModel.CurrentSelectChallengeId,
+      );
     i &&
       (LguiUtil_1.LguiUtil.SetLocalText(this.GetText(15), "ActiveRunMaxPoint"),
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(16), "ActiveRunMinTime"),
-      i.GetMiniTime() === 0
+      0 === i.GetMiniTime()
         ? ((e =
             ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
               "ActivityRunNoPoint",
@@ -285,4 +286,4 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.ActivityRunView = ActivityRunView;
-// # sourceMappingURL=ActivityRunView.js.map
+//# sourceMappingURL=ActivityRunView.js.map

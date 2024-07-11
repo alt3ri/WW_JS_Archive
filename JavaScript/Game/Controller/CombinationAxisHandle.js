@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CombinationAxisHandle = void 0);
-const Log_1 = require("../../Core/Common/Log");
-const TimeUtil_1 = require("../Common/TimeUtil");
-const Global_1 = require("../Global");
-const InputSettings_1 = require("../InputSettings/InputSettings");
-const InputSettingsManager_1 = require("../InputSettings/InputSettingsManager");
-const InputDistributeController_1 = require("../Ui/InputDistribute/InputDistributeController");
+const Log_1 = require("../../Core/Common/Log"),
+  TimeUtil_1 = require("../Common/TimeUtil"),
+  Global_1 = require("../Global"),
+  InputSettings_1 = require("../InputSettings/InputSettings"),
+  InputSettingsManager_1 = require("../InputSettings/InputSettingsManager"),
+  InputDistributeController_1 = require("../Ui/InputDistribute/InputDistributeController");
 class CombinationAxisHandle {
   constructor() {
     (this.Hde = void 0),
@@ -42,22 +42,22 @@ class CombinationAxisHandle {
   Yde() {
     for (const i of this.Jde.values())
       for (const e of i) {
-        const t = e.GetAxisName();
+        var t = e.GetAxisName();
         InputDistributeController_1.InputDistributeController.InputAxis(t, 0);
       }
     (this.Jde = void 0), (this.Hde = void 0), (this.PressMainKeyTimeStamp = 0);
   }
   Tick(t) {
     if (!this.zde && this.Jde && !(this.Jde.size <= 0)) {
-      let i;
-      let e;
-      const s = Global_1.Global.CharacterController;
+      var i,
+        e,
+        s = Global_1.Global.CharacterController;
       for ([i, e] of this.Jde) {
-        const n = InputSettings_1.InputSettings.GetUeKey(i);
-        const r = s.GetInputAnalogKeyState(n);
+        var n = InputSettings_1.InputSettings.GetUeKey(i),
+          r = s.GetInputAnalogKeyState(n);
         for (const a of e) {
-          const o = a.GetAxisName();
-          const u = r * a.GetSourceAxisValue(i);
+          var o = a.GetAxisName(),
+            u = r * a.GetSourceAxisValue(i);
           InputDistributeController_1.InputDistributeController.InputAxis(o, u);
         }
       }
@@ -65,4 +65,4 @@ class CombinationAxisHandle {
   }
 }
 exports.CombinationAxisHandle = CombinationAxisHandle;
-// # sourceMappingURL=CombinationAxisHandle.js.map
+//# sourceMappingURL=CombinationAxisHandle.js.map

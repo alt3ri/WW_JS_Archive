@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configDeviceRenderFeatureByDeviceId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const DeviceRenderFeature_1 = require("../Config/DeviceRenderFeature");
-const DB = "db_device_render_feature.db";
-const FILE = "s.设置机型适配.xlsx";
-const TABLE = "DeviceRenderFeature";
-const COMMAND = "select BinData from `DeviceRenderFeature` where DeviceId = ?";
-const KEY_PREFIX = "DeviceRenderFeatureByDeviceId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  DeviceRenderFeature_1 = require("../Config/DeviceRenderFeature"),
+  DB = "db_device_render_feature.db",
+  FILE = "s.设置机型适配.xlsx",
+  TABLE = "DeviceRenderFeature",
+  COMMAND = "select BinData from `DeviceRenderFeature` where DeviceId = ?",
+  KEY_PREFIX = "DeviceRenderFeatureByDeviceId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX =
-  "configDeviceRenderFeatureByDeviceId.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX =
+    "configDeviceRenderFeatureByDeviceId.GetConfigList(";
 exports.configDeviceRenderFeatureByDeviceId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -30,7 +30,7 @@ exports.configDeviceRenderFeatureByDeviceId = {
     );
   },
   GetConfigList: (e, o = !0) => {
-    let i;
+    var i;
     if (
       (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -45,13 +45,14 @@ exports.configDeviceRenderFeatureByDeviceId = {
         const t = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "DeviceId",
               e,
-            ]) !== 1
+            ])
           )
             break;
-          let r = void 0;
+          var r = void 0;
           if (
             (([i, r] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -80,4 +81,4 @@ exports.configDeviceRenderFeatureByDeviceId = {
     }
   },
 };
-// # sourceMappingURL=DeviceRenderFeatureByDeviceId.js.map
+//# sourceMappingURL=DeviceRenderFeatureByDeviceId.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SelectablePropClickItem = exports.RoleHead = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const SelectablePropItemBase_1 = require("./SelectablePropItemBase");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  SelectablePropItemBase_1 = require("./SelectablePropItemBase");
 class RoleHead extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -19,15 +19,15 @@ class RoleHead extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = []);
   }
   OnStart() {
-    const t = this.GetRootItem();
+    var t = this.GetRootItem();
     t.SetAnchorAlign(1, 1),
       t.SetPivot(new UE.Vector2D(0, 1)),
       t.SetUIRelativeLocation(new UE.Vector(11, -13, 0));
   }
   async Update(t) {
-    let e;
+    var e;
     await this.Ewt,
-      t.RoleId === 0
+      0 === t.RoleId
         ? this.SetActive(!1)
         : (this.SetActive(!0),
           (e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
@@ -46,7 +46,7 @@ class SelectablePropClickItem extends SelectablePropItemBase_1.SelectablePropIte
       (this.Twt = void 0),
       (this.IsSelectableProp = !0),
       (this.OnToggleClick = (t) => {
-        t === 1 &&
+        1 === t &&
           this.ScrollViewDelegate?.SelectGridProxy(
             this.GridIndex,
             this.DisplayIndex,
@@ -54,7 +54,7 @@ class SelectablePropClickItem extends SelectablePropItemBase_1.SelectablePropIte
           );
       }),
       (this.T7e = () => {
-        const t = this.ywt?.(this.PropData.IncId, this.Iwt) ?? !1;
+        var t = this.ywt?.(this.PropData.IncId, this.Iwt) ?? !1;
         return (this.Iwt = !1), t;
       }),
       (this.Lwt = e);
@@ -66,7 +66,7 @@ class SelectablePropClickItem extends SelectablePropItemBase_1.SelectablePropIte
       this.Lwt && (this.Twt = new RoleHead(this.GetRootItem()));
   }
   SetToggleStateForce(t, e = !1) {
-    const s = this.GetSelectableToggle();
+    var s = this.GetSelectableToggle();
     s && (t !== s.GetToggleState() && (this.Iwt = !0), s.SetToggleState(t, e));
   }
   OnBeforeDestroy() {
@@ -100,4 +100,4 @@ class SelectablePropClickItem extends SelectablePropItemBase_1.SelectablePropIte
   }
 }
 exports.SelectablePropClickItem = SelectablePropClickItem;
-// # sourceMappingURL=SelectablePropClickItem.js.map
+//# sourceMappingURL=SelectablePropClickItem.js.map

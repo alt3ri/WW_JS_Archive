@@ -28,4 +28,4 @@ class ExploreAreaViewData {
   }
 }
 exports.ExploreAreaViewData = ExploreAreaViewData;
-// # sourceMappingURL=ExploreAreaViewData.js.map
+//# sourceMappingURL=ExploreAreaViewData.js.map

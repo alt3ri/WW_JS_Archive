@@ -84,13 +84,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   ]),
   (exports.INVALID_VALUE = -1),
   (exports.remainTimeTextId = {
-    3: "ShopDayText",
+    [3]: "ShopDayText",
     2: "ShopHourText",
     1: "ShopMinuteText",
     0: "ShopSecondText",
   }),
   (exports.remainTimeTextIdFormat2 = {
-    3: "ShopDayText",
+    [3]: "ShopDayText",
     2: "ShopHourText2",
     1: "ShopMinuteText2",
     0: "ShopSecondText",
@@ -100,4 +100,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     "<color=#dc0300>{0}</color>/{1}"),
   (exports.MATERIAL_ENOUGHT_TEXT_PATTERN = "<color=#ffffff>{0}</color>/{1}"),
   (exports.MATERIAL_NEED_SELECT_TEXT_PATTERN = "--/{0}");
-// # sourceMappingURL=CommonDefine.js.map
+//# sourceMappingURL=CommonDefine.js.map

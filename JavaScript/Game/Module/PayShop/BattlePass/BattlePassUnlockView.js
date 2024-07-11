@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattlePassUnlockView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const BattlePassController_1 = require("./BattlePassController");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  BattlePassController_1 = require("./BattlePassController");
 class BattlePassUnlockView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -48,29 +48,29 @@ class BattlePassUnlockView extends UiViewBase_1.UiViewBase {
     );
   }
   OnStart() {
-    const e = this.OpenParam;
-    const t =
-      ((this.ZNi = []),
-      ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassUnlockReward(
-        e,
-        this.ZNi,
-      ),
-      (this.Fki = new GenericLayout_1.GenericLayout(
-        this.GetHorizontalLayout(0),
-        this.rOe,
-      )),
-      this.Fki.RefreshByData(this.ZNi),
-      ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassUnlock(e));
+    var e = this.OpenParam,
+      t =
+        ((this.ZNi = []),
+        ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassUnlockReward(
+          e,
+          this.ZNi,
+        ),
+        (this.Fki = new GenericLayout_1.GenericLayout(
+          this.GetHorizontalLayout(0),
+          this.rOe,
+        )),
+        this.Fki.RefreshByData(this.ZNi),
+        ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassUnlock(e));
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), t.UnlockTitle),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(5), t.UnlockText),
-      this.GetItem(2).SetUIActive(e === 1),
-      this.GetItem(3).SetUIActive(e !== 1);
+      this.GetItem(2).SetUIActive(1 === e),
+      this.GetItem(3).SetUIActive(1 !== e);
   }
   OnBeforeDestroy() {
     (this.ZNi.length = 0),
       (this.ZNi = void 0),
       (this.Fki = void 0),
-      this.OpenParam === 1
+      1 === this.OpenParam
         ? EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.BattlePassFirstUnlockAnime,
           )
@@ -78,4 +78,4 @@ class BattlePassUnlockView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.BattlePassUnlockView = BattlePassUnlockView;
-// # sourceMappingURL=BattlePassUnlockView.js.map
+//# sourceMappingURL=BattlePassUnlockView.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventPlayMovie = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const VideoLauncher_1 = require("../../Module/Video/VideoLauncher");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  VideoLauncher_1 = require("../../Module/Video/VideoLauncher"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventPlayMovie extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, o) {
     e = e.get("CgName");
@@ -18,4 +18,4 @@ class LevelEventPlayMovie extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventPlayMovie = LevelEventPlayMovie;
-// # sourceMappingURL=LevelEventPlayMovie.js.map
+//# sourceMappingURL=LevelEventPlayMovie.js.map

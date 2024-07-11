@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configFavorWordByRoleIdAndType = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const FavorWord_1 = require("../Config/FavorWord");
-const DB = "db_favor.db";
-const FILE = "h.好感度.xlsx";
-const TABLE = "FavorWord";
-const COMMAND =
-  "select BinData from `FavorWord` where RoleId=? and Type=? Order By Sort";
-const KEY_PREFIX = "FavorWordByRoleIdAndType";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  FavorWord_1 = require("../Config/FavorWord"),
+  DB = "db_favor.db",
+  FILE = "h.好感度.xlsx",
+  TABLE = "FavorWord",
+  COMMAND =
+    "select BinData from `FavorWord` where RoleId=? and Type=? Order By Sort",
+  KEY_PREFIX = "FavorWordByRoleIdAndType",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX = "configFavorWordByRoleIdAndType.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configFavorWordByRoleIdAndType.GetConfigList(";
 exports.configFavorWordByRoleIdAndType = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -30,7 +30,7 @@ exports.configFavorWordByRoleIdAndType = {
     );
   },
   GetConfigList: (o, n, e = !0) => {
-    let r;
+    var r;
     if (
       (r = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -47,16 +47,17 @@ exports.configFavorWordByRoleIdAndType = {
         const a = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(
               handleId,
               !1,
               ...logPair,
               ["RoleId", o],
               ["Type", n],
-            ) !== 1
+            )
           )
             break;
-          let d = void 0;
+          var d = void 0;
           if (
             (([r, d] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -85,4 +86,4 @@ exports.configFavorWordByRoleIdAndType = {
     }
   },
 };
-// # sourceMappingURL=FavorWordByRoleIdAndType.js.map
+//# sourceMappingURL=FavorWordByRoleIdAndType.js.map

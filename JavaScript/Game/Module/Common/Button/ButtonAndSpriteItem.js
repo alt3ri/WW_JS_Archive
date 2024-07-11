@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ButtonAndSpriteItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class ButtonAndSpriteItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
       (this.yVe = void 0),
       (this.RefreshAllTransitionSprite = () => {
-        let e;
-        const t = this.GetUiSpriteTransition(2);
+        var e,
+          t = this.GetUiSpriteTransition(2);
         t && (e = this.GetSprite(1)) && t.SetAllTransitionSprite(e.GetSprite());
       }),
       (this.Kyt = () => {
@@ -47,4 +47,4 @@ class ButtonAndSpriteItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ButtonAndSpriteItem = ButtonAndSpriteItem;
-// # sourceMappingURL=ButtonAndSpriteItem.js.map
+//# sourceMappingURL=ButtonAndSpriteItem.js.map

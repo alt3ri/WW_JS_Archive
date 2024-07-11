@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiTagComponent = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
+const Log_1 = require("../../../Core/Common/Log"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
 class UiTagComponent {
   constructor() {
     (this.PPo = new Map()), (this.xPo = new Map());
@@ -16,15 +16,15 @@ class UiTagComponent {
     }
   }
   ReduceTagById(t, ...i) {
-    let e;
+    var e;
     void 0 !== t &&
       this.PPo.has(t) &&
-      (e = this.PPo.get(t)) !== 0 &&
-      (e === 1 ? this.PPo.delete(t) : this.PPo.set(t, e - 1),
+      0 !== (e = this.PPo.get(t)) &&
+      (1 === e ? this.PPo.delete(t) : this.PPo.set(t, e - 1),
       this.wPo(t, e, e - 1, ...i));
   }
   RemoveTagById(t, ...i) {
-    let e;
+    var e;
     void 0 !== t &&
       this.PPo.has(t) &&
       ((e = this.PPo.get(t)), this.PPo.delete(t), this.wPo(t, e, 0, ...i));
@@ -42,12 +42,12 @@ class UiTagComponent {
   wPo(t, i, e, ...s) {
     void 0 !== t &&
       i !== e &&
-      (i === 0) != (e === 0) &&
-      this.BPo(t, e > 0, this.xPo.get(t), ...s);
+      (0 === i) != (0 === e) &&
+      this.BPo(t, 0 < e, this.xPo.get(t), ...s);
   }
   BPo(t, i, e, ...s) {
     if (void 0 !== t && void 0 !== e) {
-      const o = GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(t);
+      var o = GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(t);
       for (const a of [...e])
         try {
           a(t, i, ...s);
@@ -86,4 +86,4 @@ class UiTagComponent {
   }
 }
 exports.UiTagComponent = UiTagComponent;
-// # sourceMappingURL=UiTagComponent.js.map
+//# sourceMappingURL=UiTagComponent.js.map

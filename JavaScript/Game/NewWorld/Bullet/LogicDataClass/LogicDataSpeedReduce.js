@@ -10,4 +10,4 @@ class LogicDataSpeedReduce extends LogicDataBase_1.default {
   }
 }
 exports.default = LogicDataSpeedReduce;
-// # sourceMappingURL=LogicDataSpeedReduce.js.map
+//# sourceMappingURL=LogicDataSpeedReduce.js.map

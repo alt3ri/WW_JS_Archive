@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TimeTrackControlView = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../Core/Audio/AudioSystem");
-const CommonDefine_1 = require("../../../Core/Define/CommonDefine");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LongPressButtonItem_1 = require("../../Module/Common/Button/LongPressButtonItem");
-const SceneTeamEvent_1 = require("../../Module/SceneTeam/SceneTeamEvent");
-const LguiUtil_1 = require("../../Module/Util/LguiUtil");
-const UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase");
-const TimeTrackController_1 = require("./TimeTrackController");
-const TimeTrackControlPoint_1 = require("./TimeTrackControlPoint");
-const ANGLE_RANGE = 26;
-const ANGLE_MIN = -13;
-const ANGLE_MAX = 13;
-const LOOP_AKEVENT = "play_ui_com_time_loop";
-const HIGHLIGHT_AKEVENT = "play_ui_com_time_bell";
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
+  CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LongPressButtonItem_1 = require("../../Module/Common/Button/LongPressButtonItem"),
+  SceneTeamEvent_1 = require("../../Module/SceneTeam/SceneTeamEvent"),
+  LguiUtil_1 = require("../../Module/Util/LguiUtil"),
+  UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase"),
+  TimeTrackController_1 = require("./TimeTrackController"),
+  TimeTrackControlPoint_1 = require("./TimeTrackControlPoint"),
+  ANGLE_RANGE = 26,
+  ANGLE_MIN = -13,
+  ANGLE_MAX = 13,
+  LOOP_AKEVENT = "play_ui_com_time_loop",
+  HIGHLIGHT_AKEVENT = "play_ui_com_time_bell";
 class TimeTrackControlView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -102,12 +102,12 @@ class TimeTrackControlView extends UiTickViewBase_1.UiTickViewBase {
       (this.ywe = Rotator_1.Rotator.Create(0, this.gwe, 0)),
       this.Ewe.SetUIRelativeRotation(this.ywe.ToUeRotator()),
       (this.vwe = !1);
-    const i = this.GetItem(4);
+    var i = this.GetItem(4);
     (this.lwe = this.GetItem(3)), (this.uwe = new Array()), i.SetUIActive(!1);
     for (let t = 0; t < this.Cwe; t++) {
-      var e = LguiUtil_1.LguiUtil.CopyItem(i, this.lwe);
-      const s = (e.SetUIActive(!0), this.Uwe(t));
-      var e = new TimeTrackControlPoint_1.TimeTrackControlPoint(e, t, s);
+      var e = LguiUtil_1.LguiUtil.CopyItem(i, this.lwe),
+        s = (e.SetUIActive(!0), this.Uwe(t)),
+        e = new TimeTrackControlPoint_1.TimeTrackControlPoint(e, t, s);
       e.UpdateState(
         ModelManager_1.ModelManager.TimeTrackControlModel.IsControlPointUsable(
           t,
@@ -202,7 +202,7 @@ class TimeTrackControlView extends UiTickViewBase_1.UiTickViewBase {
     ) {
       this.uwe[this.dwe].ToggleSelected(!0);
       for (const i of this.uwe) {
-        const t =
+        var t =
           ModelManager_1.ModelManager.TimeTrackControlModel.IsControlPointUsable(
             i.Index,
           );
@@ -229,7 +229,7 @@ class TimeTrackControlView extends UiTickViewBase_1.UiTickViewBase {
             TimeTrackController_1.TimeTrackController.TimelineTraceControlRequest(
               !0,
             )
-          : this.dwe > 0 &&
+          : 0 < this.dwe &&
             TimeTrackController_1.TimeTrackController.TimelineTraceControlRequest(
               !1,
             )));
@@ -238,17 +238,17 @@ class TimeTrackControlView extends UiTickViewBase_1.UiTickViewBase {
     this.UiViewSequence.PlaySequencePurely("Shake", !0, !1);
   }
   bwe() {
-    let t = this.dwe;
-    let i = this.dwe;
+    let t = this.dwe,
+      i = this.dwe;
     for (
       t -= 1;
-      t >= 0 &&
+      0 <= t &&
       ModelManager_1.ModelManager.TimeTrackControlModel.IsControlPointUsable(t);
       t--
     );
-    let e;
+    var e;
     for (
-      t >= 0
+      0 <= t
         ? ((e = (t + 1) / (this.Cwe - 1)),
           this.GetSprite(2).SetUIActive(!0),
           this.GetSprite(2).SetFillAmount(e))
@@ -266,4 +266,4 @@ class TimeTrackControlView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.TimeTrackControlView = TimeTrackControlView;
-// # sourceMappingURL=TimeTrackControlView.js.map
+//# sourceMappingURL=TimeTrackControlView.js.map

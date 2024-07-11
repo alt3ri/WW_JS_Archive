@@ -1,32 +1,32 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PcAndGamepadKeySettingPanel = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const InputSettings_1 = require("../../../InputSettings/InputSettings");
-const InputSettingsManager_1 = require("../../../InputSettings/InputSettingsManager");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const ConfirmBoxController_1 = require("../../ConfirmBox/ConfirmBoxController");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const GenericPromptController_1 = require("../../GenericPrompt/GenericPromptController");
-const RouletteController_1 = require("../../Roulette/RouletteController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const MenuController_1 = require("../MenuController");
-const KeySettingPanel_1 = require("./KeySettingPanel");
-const KeySettingRowData_1 = require("./KeySettingRowData");
-const PsGamepadItem_1 = require("./PsGamepadItem");
-const XboxGamepadItem_1 = require("./XboxGamepadItem");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  InputSettings_1 = require("../../../InputSettings/InputSettings"),
+  InputSettingsManager_1 = require("../../../InputSettings/InputSettingsManager"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  ConfirmBoxController_1 = require("../../ConfirmBox/ConfirmBoxController"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  GenericPromptController_1 = require("../../GenericPrompt/GenericPromptController"),
+  RouletteController_1 = require("../../Roulette/RouletteController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  MenuController_1 = require("../MenuController"),
+  KeySettingPanel_1 = require("./KeySettingPanel"),
+  KeySettingRowData_1 = require("./KeySettingRowData"),
+  PsGamepadItem_1 = require("./PsGamepadItem"),
+  XboxGamepadItem_1 = require("./XboxGamepadItem");
 class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -49,14 +49,14 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
       (this.Zbn = void 0),
       (this.SPi = () => {
         let t = this.oPi;
-        (t = this.gPi === 1 ? this.EPi(2) : this.EPi(1)), this.Refresh(t);
+        (t = 1 === this.gPi ? this.EPi(2) : this.EPi(1)), this.Refresh(t);
       }),
       (this.yPi = () => {
         let t = this.oPi;
-        (t = this.gPi === 1 ? this.EPi(2) : this.EPi(1)), this.Refresh(t);
+        (t = 1 === this.gPi ? this.EPi(2) : this.EPi(1)), this.Refresh(t);
       }),
       (this.IPi = () => {
-        const t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(179);
+        var t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(179);
         t.FunctionMap.set(2, () => {
           InputSettingsManager_1.InputSettingsManager.ClearAllKeys(),
             InputSettingsManager_1.InputSettingsManager.RefreshAllActionKeys(
@@ -74,8 +74,8 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
       (this.TPi = (t, i, e) => {
         this.aPi?.SelectKeySettingRow(e);
         var e = t.OpenViewType;
-        e !== 0
-          ? (e === 1 &&
+        0 !== e
+          ? (1 === e &&
               RouletteController_1.RouletteController.OpenAssemblyView(1),
             this.LPi())
           : t.IsLock
@@ -85,7 +85,7 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
               this.LPi())
             : ((this.cPi = t),
               (this.mPi = i),
-              t.BothActionName.length === 2
+              2 === t.BothActionName.length
                 ? ((e = {
                     InputControllerType: this.oPi,
                     KeySettingRowData: t,
@@ -96,19 +96,19 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
                 : this.RPi());
       }),
       (this.UPi = (t) => {
-        this.oPi !== 1 && (this.MPi = t) && (t = t.GetDisplayKeyName(this.oPi))
+        1 !== this.oPi && (this.MPi = t) && (t = t.GetDisplayKeyName(this.oPi))
           ? this.GamepadItem?.SetKeysEnable(t)
           : this.GamepadItem?.SetAllKeyDisable();
       }),
       (this.APi = (t) => {
-        (this.oPi !== 1 && this.MPi && this.MPi.ConfigId !== t?.ConfigId) ||
+        (1 !== this.oPi && this.MPi && this.MPi.ConfigId !== t?.ConfigId) ||
           this.GamepadItem?.SetAllKeyDisable();
       }),
       (this.PPi = (t, i, e) => {
         this.hPi?.SelectKeySettingRow(e);
         var e = t.OpenViewType;
-        e !== 0
-          ? (e === 1 &&
+        0 !== e
+          ? (1 === e &&
               RouletteController_1.RouletteController.OpenAssemblyView(1),
             this.LPi())
           : t.IsLock
@@ -118,7 +118,7 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
               this.LPi())
             : ((this.cPi = t),
               (this.mPi = i),
-              t.BothActionName.length === 2
+              2 === t.BothActionName.length
                 ? ((e = {
                     InputControllerType: this.oPi,
                     KeySettingRowData: t,
@@ -140,10 +140,10 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
           !UiManager_1.UiManager.IsViewOpen("RepeatKeyTipsView") &&
           ModelManager_1.ModelManager.MenuModel.IsWaitForKeyInput
         ) {
-          var e = e.KeyName.toString();
-          let s = InputSettingsManager_1.InputSettingsManager.GetActionBinding(
-            InputMappingsDefine_1.actionMappings.放弃改键,
-          );
+          var e = e.KeyName.toString(),
+            s = InputSettingsManager_1.InputSettingsManager.GetActionBinding(
+              InputMappingsDefine_1.actionMappings.放弃改键,
+            );
           if (s && s.HasKey(e)) this.LPi();
           else if (this.cPi)
             if (this.cPi.IsLock)
@@ -153,7 +153,7 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
                 this.LPi();
             else if (i) this.xPi(e);
             else {
-              if (this.fPi.length > 1) {
+              if (1 < this.fPi.length) {
                 if (!this.cPi.CanCombination)
                   return (
                     Log_1.Log.CheckInfo() &&
@@ -228,7 +228,7 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
                       CurrentKeySettingRowData: this.cPi,
                       RepeatKeySettingRowData: n,
                       OnCloseCallback: (t) => {
-                        let i, e, s, r, h;
+                        var i, e, s, r, h;
                         t
                           ? (this.LPi(),
                             (t = this.cPi.GetCurrentKeyName(this.oPi)),
@@ -258,7 +258,7 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
                 this.qPi(!1),
                   void UiManager_1.UiManager.OpenView("RepeatKeyTipsView", i);
               } else
-                this.fPi.length > 0 &&
+                0 < this.fPi.length &&
                   (this.cPi.SetKey(this.fPi, this.oPi),
                   this.mPi?.Refresh(this.cPi, this.oPi),
                   this.ZGn(this.cPi, this.fPi),
@@ -295,28 +295,30 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
       this.aPi.BindOnWaitInput(this.TPi),
       this.aPi.BindOnHover(this.UPi),
       this.aPi.BindOnUnHover(this.APi);
-    const t = this.aPi.CreateByActorAsync(this.GetItem(6).GetOwner());
-    const i =
-      ((this.hPi = new KeySettingPanel_1.KeySettingPanel()),
-      this.hPi.BindOnWaitInput(this.PPi),
-      this.hPi.BindOnHover(this.UPi),
-      this.hPi.BindOnUnHover(this.APi),
-      this.hPi.CreateByActorAsync(this.GetItem(5).GetOwner()));
-    const e =
-      ((this.pPi = new XboxGamepadItem_1.XboxGamepadItem()),
-      this.pPi.CreateByResourceIdAsync(
-        "UiItem_HandleSetXBox",
-        this.GetItem(10),
-      ));
-    const s =
-      ((this.vPi = new PsGamepadItem_1.PsGamepadItem()),
-      this.vPi.CreateByResourceIdAsync("UiItem_HandleSetPs", this.GetItem(10)));
+    var t = this.aPi.CreateByActorAsync(this.GetItem(6).GetOwner()),
+      i =
+        ((this.hPi = new KeySettingPanel_1.KeySettingPanel()),
+        this.hPi.BindOnWaitInput(this.PPi),
+        this.hPi.BindOnHover(this.UPi),
+        this.hPi.BindOnUnHover(this.APi),
+        this.hPi.CreateByActorAsync(this.GetItem(5).GetOwner())),
+      e =
+        ((this.pPi = new XboxGamepadItem_1.XboxGamepadItem()),
+        this.pPi.CreateByResourceIdAsync(
+          "UiItem_HandleSetXBox",
+          this.GetItem(10),
+        )),
+      s =
+        ((this.vPi = new PsGamepadItem_1.PsGamepadItem()),
+        this.vPi.CreateByResourceIdAsync(
+          "UiItem_HandleSetPs",
+          this.GetItem(10),
+        ));
     (this.Zbn = new LevelSequencePlayer_1.LevelSequencePlayer(this.GetItem(7))),
       await Promise.all([t, i, e, s]);
   }
   OnStart() {
-    const t =
-      ConfigManager_1.ConfigManager.MenuBaseConfig.GetAllKeyTypeConfig();
+    var t = ConfigManager_1.ConfigManager.MenuBaseConfig.GetAllKeyTypeConfig();
     t &&
       (this.zGn.clear(),
       this.GPi(),
@@ -352,18 +354,18 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
     );
   }
   eOn(t, i) {
-    const e = [];
+    var e = [];
     let s = t.ConnectedKeySettingId;
-    for (; s !== 0; ) {
-      const r = this.tOn(s);
+    for (; 0 !== s; ) {
+      var r = this.tOn(s);
       if (!r) return e;
       r.SetKey(i, this.oPi), e.push(r), (s = r.ConnectedKeySettingId);
     }
     return e;
   }
   ZGn(t, i) {
-    var t = this.eOn(t, i);
-    const e = this.bPi();
+    var t = this.eOn(t, i),
+      e = this.bPi();
     for (const s of t) e?.RefreshRow(s);
   }
   GPi() {
@@ -372,19 +374,17 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
   }
   NPi(t) {
     this.lPi.length = 0;
-    const i = ConfigManager_1.ConfigManager.MenuBaseConfig;
+    var i = ConfigManager_1.ConfigManager.MenuBaseConfig;
     for (const h of t) {
-      var e = h.TypeId;
-      var s =
-        i.GetKeySettingConfigListByTypeIdAndInputControllerType(e, 1) ?? [];
-      var e =
-        i.GetKeySettingConfigListByTypeIdAndInputControllerType(e, 0) ?? [];
-      var s = s.concat(e);
+      var e = h.TypeId,
+        s = i.GetKeySettingConfigListByTypeIdAndInputControllerType(e, 1) ?? [],
+        e = i.GetKeySettingConfigListByTypeIdAndInputControllerType(e, 0) ?? [],
+        s = s.concat(e);
       if (!(s.length <= 0)) {
         e = new KeySettingRowData_1.KeySettingRowData();
         e.InitializeKeyType(h), this.lPi.push(e), s.sort((t, i) => t.Id - i.Id);
         for (const n of s) {
-          const r = new KeySettingRowData_1.KeySettingRowData();
+          var r = new KeySettingRowData_1.KeySettingRowData();
           r.InitializeKeySetting(n), this.lPi.push(r), this.zGn.set(n.Id, r);
         }
       }
@@ -392,19 +392,17 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
   }
   OPi(t) {
     this.gRn.length = 0;
-    const i = ConfigManager_1.ConfigManager.MenuBaseConfig;
+    var i = ConfigManager_1.ConfigManager.MenuBaseConfig;
     for (const h of t) {
-      var e = h.TypeId;
-      var s =
-        i.GetKeySettingConfigListByTypeIdAndInputControllerType(e, 2) ?? [];
-      var e =
-        i.GetKeySettingConfigListByTypeIdAndInputControllerType(e, 0) ?? [];
-      var s = s.concat(e);
+      var e = h.TypeId,
+        s = i.GetKeySettingConfigListByTypeIdAndInputControllerType(e, 2) ?? [],
+        e = i.GetKeySettingConfigListByTypeIdAndInputControllerType(e, 0) ?? [],
+        s = s.concat(e);
       if (!(s.length <= 0)) {
         e = new KeySettingRowData_1.KeySettingRowData();
         e.InitializeKeyType(h), this.gRn.push(e), s.sort((t, i) => t.Id - i.Id);
         for (const n of s) {
-          const r = new KeySettingRowData_1.KeySettingRowData();
+          var r = new KeySettingRowData_1.KeySettingRowData();
           r.InitializeKeySetting(n), this.gRn.push(r), this.zGn.set(n.Id, r);
         }
       }
@@ -412,7 +410,7 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
   }
   Refresh(t) {
     this.oPi = t;
-    const i = this.HPi(t);
+    var i = this.HPi(t);
     this.jPi(i), this.WPi(t), this.KPi(t);
   }
   jPi(t) {
@@ -421,7 +419,7 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
     t &&
       ((t = t.NameTextId),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), t),
-      this.gPi === 1
+      1 === this.gPi
         ? (this.GetButton(0)?.SetSelfInteractive(!1),
           this.GetButton(1)?.SetSelfInteractive(!0))
         : (this.GetButton(0)?.SetSelfInteractive(!0),
@@ -445,8 +443,8 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
     }
   }
   KPi(t) {
-    (t === 2
-      ? ModelManager_1.ModelManager.PlatformModel.PlatformType === 7
+    (2 === t
+      ? 7 === ModelManager_1.ModelManager.PlatformModel.PlatformType
         ? ((this.GamepadItem = this.vPi), this.vPi?.SetActive(!0), this.pPi)
         : ((this.GamepadItem = this.pPi), this.pPi?.SetActive(!0), this.vPi)
       : ((this.GamepadItem = void 0), this.vPi?.SetActive(!1), this.pPi)
@@ -462,7 +460,7 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
     return 0;
   }
   EPi(t) {
-    return t === 1 ? 1 : 2;
+    return 1 === t ? 1 : 2;
   }
   BPi(t, i, e) {
     if (!(i.length <= 0))
@@ -537,4 +535,4 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.PcAndGamepadKeySettingPanel = PcAndGamepadKeySettingPanel;
-// # sourceMappingURL=PcAndGamepadKeySettingPanel.js.map
+//# sourceMappingURL=PcAndGamepadKeySettingPanel.js.map

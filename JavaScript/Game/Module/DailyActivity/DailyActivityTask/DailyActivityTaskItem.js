@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DailyActivityTaskItem = exports.DailyActiveTaskData = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const DailyActivityController_1 = require("../DailyActivityController");
-const DailyActivityTaskController_1 = require("./DailyActivityTaskController");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  DailyActivityController_1 = require("../DailyActivityController"),
+  DailyActivityTaskController_1 = require("./DailyActivityTaskController");
 class DailyActiveTaskData {
   constructor() {
     (this.RewardItemList = []),
@@ -76,7 +76,7 @@ class DailyActivityTaskItem extends GridProxyAbstract_1.GridProxyAbstract {
   OnStart() {}
   OnBeforeDestroy() {}
   IsNormalTaskJumpType() {
-    return this.jOt === 1;
+    return 1 === this.jOt;
   }
   Refresh(t, i, s) {
     (this.BOe = t.TaskId),
@@ -84,28 +84,30 @@ class DailyActivityTaskItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.GetText(1).SetText(
         t.CurrentProgress.toString() + "/" + t.TargetProgress.toString(),
       );
-    const e =
-      ConfigManager_1.ConfigManager.DailyActivityConfig.GetActivityTaskConfigById(
-        this.BOe,
-      );
-    var r = e.TaskName;
-    const a = [];
-    var h =
-      (e.UpdateType !== 2 ||
-        (h = ModelManager_1.ModelManager.DailyActivityModel.AreaId) <= 0 ||
-        ((h = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(h)) &&
-          (h = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(h.Title)) &&
-          a.push(h)),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), r, ...a),
-      e.TaskFunc);
-    var r =
-      (h.length >= 1 && (this.jOt = Number(h[0])),
-      h.length >= 2 && (this.WOt = h.slice(1)),
-      this.jOt === 6 &&
-        (this.WOt = [
-          ModelManager_1.ModelManager.DailyActivityModel.AreaId.toString(),
-        ]),
-      t.RewardItemList[0]);
+    var e =
+        ConfigManager_1.ConfigManager.DailyActivityConfig.GetActivityTaskConfigById(
+          this.BOe,
+        ),
+      r = e.TaskName,
+      a = [],
+      h =
+        (2 !== e.UpdateType ||
+          (h = ModelManager_1.ModelManager.DailyActivityModel.AreaId) <= 0 ||
+          ((h = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(h)) &&
+            (h = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+              h.Title,
+            )) &&
+            a.push(h)),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), r, ...a),
+        e.TaskFunc),
+      r =
+        (1 <= h.length && (this.jOt = Number(h[0])),
+        2 <= h.length && (this.WOt = h.slice(1)),
+        6 === this.jOt &&
+          (this.WOt = [
+            ModelManager_1.ModelManager.DailyActivityModel.AreaId.toString(),
+          ]),
+        t.RewardItemList[0]);
     switch (
       ((this.QOt = r[0].ItemId),
       this.GetText(8).SetText("+" + r[1].toString()),
@@ -136,4 +138,4 @@ class DailyActivityTaskItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.DailyActivityTaskItem = DailyActivityTaskItem;
-// # sourceMappingURL=DailyActivityTaskItem.js.map
+//# sourceMappingURL=DailyActivityTaskItem.js.map

@@ -49,4 +49,4 @@ class BuffDefinition {
   }
 }
 exports.BuffDefinition = BuffDefinition;
-// # sourceMappingURL=BuffTypes.js.map
+//# sourceMappingURL=BuffTypes.js.map

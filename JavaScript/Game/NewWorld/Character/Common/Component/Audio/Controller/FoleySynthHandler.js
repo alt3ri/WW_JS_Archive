@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FoleySynthModel2Handler = exports.FoleySynthModel1Handler = void 0);
-const AudioController_1 = require("../../../../../../../Core/Audio/AudioController");
-const Log_1 = require("../../../../../../../Core/Common/Log");
-const FoleySynthHandlerBase_1 = require("./FoleySynthHandlerBase");
+const AudioController_1 = require("../../../../../../../Core/Audio/AudioController"),
+  Log_1 = require("../../../../../../../Core/Common/Log"),
+  FoleySynthHandlerBase_1 = require("./FoleySynthHandlerBase");
 class FoleySynthModel1Handler extends FoleySynthHandlerBase_1.FoleySynthHandlerBase {
   OnInit(e) {
     for (const o of e) this.FoleySynthModelConfigs.push(o);
   }
   OnParseBoneSpeedForAudio() {
-    let o = 0;
-    let t = 0;
+    let o = 0,
+      t = 0;
     for (let e = 0; e < this.FoleySynthModelConfigs.length; ++e) {
-      const i = this.FoleySynthRecordsModel[this.RecordIndex][e].Speed;
-      const s = this.FoleySynthModelDynamicConfigs[e].State;
-      const r = this.FoleySynthModelConfigs[e];
+      var i = this.FoleySynthRecordsModel[this.RecordIndex][e].Speed,
+        s = this.FoleySynthModelDynamicConfigs[e].State,
+        r = this.FoleySynthModelConfigs[e];
       switch (s) {
         case -1:
           i > r.Ceil
@@ -124,12 +124,12 @@ class FoleySynthModel2Handler extends FoleySynthHandlerBase_1.FoleySynthHandlerB
     for (const o of e) this.FoleySynthModelConfigs.push(o), this.y$o.push(-1);
   }
   OnParseBoneSpeedForAudio() {
-    const t = [];
-    const i = [];
+    var t = [],
+      i = [];
     for (let e = 0; e < this.FoleySynthModelConfigs.length; ++e)
       t.push(0), i.push(0);
     for (let o = 0; o < this.FoleySynthModelConfigs.length; ++o)
-      if (this.y$o[o] === -1) {
+      if (-1 === this.y$o[o]) {
         var e = this.FoleySynthModelConfigs[o];
         if (this.GetCurrentRecord(o).Speed > e.Ceil) {
           AudioController_1.AudioController.PostEventByComponent(
@@ -147,12 +147,12 @@ class FoleySynthModel2Handler extends FoleySynthHandlerBase_1.FoleySynthHandlerB
                 ["Event", e.CeilEvent],
               );
           for (let e = 0; e < this.RecordCount; ++e) {
-            const s = this.FoleySynthRecordsModel[e][o].Acceleration;
+            var s = this.FoleySynthRecordsModel[e][o].Acceleration;
             s > i[o] && (i[o] = s);
           }
           for (let e = 0; e < this.VelocityMaxCount; ++e) {
-            var r = this.GetPreRecordIndex(e);
-            var r = this.FoleySynthRecordsModel[r][o].Speed;
+            var r = this.GetPreRecordIndex(e),
+              r = this.FoleySynthRecordsModel[r][o].Speed;
             r > t[o] && (t[o] = r);
           }
           this.UeAkComp.SetRTPCValue(e.RtpcVelMax, t[o], 0, ""),
@@ -160,8 +160,8 @@ class FoleySynthModel2Handler extends FoleySynthHandlerBase_1.FoleySynthHandlerB
             (this.y$o[o] = t[o]);
         }
       } else {
-        var e = this.FoleySynthModelConfigs[o];
-        const h = this.GetCurrentRecord(o).Speed;
+        var e = this.FoleySynthModelConfigs[o],
+          h = this.GetCurrentRecord(o).Speed;
         h < e.Floor || h < this.y$o[o] * e.FloorPrecent
           ? (AudioController_1.AudioController.PostEventByComponent(
               e.FloorEvent,
@@ -194,4 +194,4 @@ class FoleySynthModel2Handler extends FoleySynthHandlerBase_1.FoleySynthHandlerB
   }
 }
 exports.FoleySynthModel2Handler = FoleySynthModel2Handler;
-// # sourceMappingURL=FoleySynthHandler.js.map
+//# sourceMappingURL=FoleySynthHandler.js.map

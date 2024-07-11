@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayAbilityVisionExplore = void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../../Common/Event/EventSystem");
-const PhantomUtil_1 = require("../../../../../../Module/Phantom/PhantomUtil");
-const GameplayAbilityVisionBase_1 = require("./GameplayAbilityVisionBase");
-const GameplayAbilityVisionMisc_1 = require("./GameplayAbilityVisionMisc");
+const UE = require("ue"),
+  Protocol_1 = require("../../../../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../../Common/Event/EventSystem"),
+  PhantomUtil_1 = require("../../../../../../Module/Phantom/PhantomUtil"),
+  GameplayAbilityVisionBase_1 = require("./GameplayAbilityVisionBase"),
+  GameplayAbilityVisionMisc_1 = require("./GameplayAbilityVisionMisc");
 class GameplayAbilityVisionExplore extends GameplayAbilityVisionBase_1.GameplayAbilityVisionBase {
   constructor() {
     super(...arguments),
@@ -15,8 +15,9 @@ class GameplayAbilityVisionExplore extends GameplayAbilityVisionBase_1.GameplayA
       (this.Vzo = void 0),
       (this.Hzo = void 0),
       (this.jzo = (i) => {
-        i.BulletDataMain.Execution.SendGameplayEventTagToAttackerOnEnd.TagId ===
-          -1140906579 && this.Wzo(i.MoveInfo.LastFramePosition.ToUeVector());
+        -1140906579 ===
+          i.BulletDataMain.Execution.SendGameplayEventTagToAttackerOnEnd
+            .TagId && this.Wzo(i.MoveInfo.LastFramePosition.ToUeVector());
       });
   }
   OnCreate() {
@@ -59,7 +60,7 @@ class GameplayAbilityVisionExplore extends GameplayAbilityVisionBase_1.GameplayA
     );
   }
   Wzo(i) {
-    const t = new UE.Vector(0, 0, this.Vzo.ScaledHalfHeight);
+    var t = new UE.Vector(0, 0, this.Vzo.ScaledHalfHeight);
     this.Vzo.SetActorLocationAndRotation(
       i.op_Addition(t),
       this.ActorComponent.ActorRotation,
@@ -86,4 +87,4 @@ class GameplayAbilityVisionExplore extends GameplayAbilityVisionBase_1.GameplayA
   }
 }
 exports.GameplayAbilityVisionExplore = GameplayAbilityVisionExplore;
-// # sourceMappingURL=GameplayAbilityVisionExplore.js.map
+//# sourceMappingURL=GameplayAbilityVisionExplore.js.map

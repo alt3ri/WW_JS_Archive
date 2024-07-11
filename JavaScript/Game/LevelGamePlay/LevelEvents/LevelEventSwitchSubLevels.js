@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventSwitchLevels = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventSwitchLevels extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -17,7 +17,7 @@ class LevelEventSwitchLevels extends LevelGeneralBase_1.LevelEventBase {
   }
   ExecuteNew(e, r) {
     if (e) {
-      const t = e;
+      var t = e;
       switch (t.Type) {
         case IAction_1.ESwitchSubLevelsType.Directly:
           this.KRe(t);
@@ -37,10 +37,10 @@ class LevelEventSwitchLevels extends LevelGeneralBase_1.LevelEventBase {
         });
   }
   KRe(e) {
-    let r = void 0;
-    let t = void 0;
+    let r = void 0,
+      t = void 0;
     if (e.TeleportEntityId) {
-      const o = ModelManager_1.ModelManager.CreatureModel.GetEntityData(
+      var o = ModelManager_1.ModelManager.CreatureModel.GetEntityData(
         e.TeleportEntityId,
       );
       if (!o)
@@ -53,10 +53,10 @@ class LevelEventSwitchLevels extends LevelGeneralBase_1.LevelEventBase {
             ["TeleportEntityId", e.TeleportEntityId],
           )
         );
-      var i = o.Transform.Pos;
-      var i =
-        (i && (r = Vector_1.Vector.Create(i.X ?? 0, i.Y ?? 0, i.Z ?? 0)),
-        o.Transform.Rot);
+      var i = o.Transform.Pos,
+        i =
+          (i && (r = Vector_1.Vector.Create(i.X ?? 0, i.Y ?? 0, i.Z ?? 0)),
+          o.Transform.Rot);
       i && (t = Rotator_1.Rotator.Create(i.Y ?? 0, i.Z ?? 0, i.X ?? 0));
     }
     if (ModelManager_1.ModelManager.AutoRunModel.IsInLogicTreeGmMode()) {
@@ -75,4 +75,4 @@ class LevelEventSwitchLevels extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventSwitchLevels = LevelEventSwitchLevels;
-// # sourceMappingURL=LevelEventSwitchSubLevels.js.map
+//# sourceMappingURL=LevelEventSwitchSubLevels.js.map

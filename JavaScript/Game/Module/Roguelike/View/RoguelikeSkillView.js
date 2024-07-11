@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoguelikeSkillView = void 0);
-const UE = require("ue");
-const ConfigCommon_1 = require("../../../../Core/Config/ConfigCommon");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem");
-const UiManager_1 = require("../../../Ui/UiManager");
-const GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew");
-const RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
-const RoguelikeSkillDetail_1 = require("./RoguelikeSkillDetail");
-const RoguelikeSkillGridPanel_1 = require("./RoguelikeSkillGridPanel");
+const UE = require("ue"),
+  ConfigCommon_1 = require("../../../../Core/Config/ConfigCommon"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
+  RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
+  RoguelikeSkillDetail_1 = require("./RoguelikeSkillDetail"),
+  RoguelikeSkillGridPanel_1 = require("./RoguelikeSkillGridPanel");
 class RoguelikeSkillView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -55,7 +55,7 @@ class RoguelikeSkillView extends UiViewBase_1.UiViewBase {
             e.Data.Id),
           (this.CurSelectNode = e),
           this.CurSelectNode.SetToggleState(1),
-          this.SelectColumn === -1 &&
+          -1 === this.SelectColumn &&
             this.ScrollView?.ScrollTo(e.GridPanelItem),
           this.SkillDetailPanel.Refresh(e.Data),
           this.SkillDetailPanel.SetActive(!0);
@@ -97,9 +97,9 @@ class RoguelikeSkillView extends UiViewBase_1.UiViewBase {
         UiManager_1.UiManager.CloseView(this.Info.Name);
       }),
       this.ScrollView.BindLateUpdate((e) => {
-        let i;
-        this.SelectColumn > 0 &&
-          this.ExecuteCount === 2 &&
+        var i;
+        0 < this.SelectColumn &&
+          2 === this.ExecuteCount &&
           ((i = this.ScrollView.GetItemByIndex(this.SelectColumn)),
           this.ScrollView?.ScrollTo(i),
           (this.SelectColumn = -1),
@@ -142,9 +142,10 @@ class RoguelikeSkillView extends UiViewBase_1.UiViewBase {
     for (const t of e)
       this.SkillTreeConfigList[t.Column] ||
         (this.SkillTreeConfigList[t.Column] = new Array()),
-        ModelManager_1.ModelManager.RoguelikeModel.RoguelikeSkillDataMap.get(
-          t.Id,
-        ) === 0 &&
+        0 ===
+          ModelManager_1.ModelManager.RoguelikeModel.RoguelikeSkillDataMap.get(
+            t.Id,
+          ) &&
           t.Column > this.SelectColumn &&
           (this.SelectColumn = t.Column),
         this.SkillTreeConfigList[t.Column].push(t);
@@ -154,4 +155,4 @@ class RoguelikeSkillView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RoguelikeSkillView = RoguelikeSkillView;
-// # sourceMappingURL=RoguelikeSkillView.js.map
+//# sourceMappingURL=RoguelikeSkillView.js.map

@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FormationRoleView = void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const MiniElementItem_1 = require("../../Common/MiniElementItem");
-const TowerCostItem_1 = require("../../TowerDetailUi/View/TowerCostItem");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const EditFormationDefine_1 = require("../EditFormationDefine");
+const UE = require("ue"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  MiniElementItem_1 = require("../../Common/MiniElementItem"),
+  TowerCostItem_1 = require("../../TowerDetailUi/View/TowerCostItem"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  EditFormationDefine_1 = require("../EditFormationDefine");
 class FormationRoleView extends UiPanelBase_1.UiPanelBase {
   constructor(i, t) {
     super(),
@@ -97,10 +97,10 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
   }
   U4t(t, e, s, h) {
     this.Mne = t;
-    const o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(t);
+    var o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(t);
     if (o) {
-      var r = this.GetText(7);
-      var r = (r && s && r.SetText(s), o.ElementId);
+      var r = this.GetText(7),
+        r = (r && s && r.SetText(s), o.ElementId);
       this.N4t ||
         ((s = this.GetItem(9)) &&
           (this.N4t = new MiniElementItem_1.MiniElementItem(
@@ -140,7 +140,7 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
     }
   }
   EEt(t, e) {
-    let s = t > 0;
+    var s = 0 < t;
     if (
       (this.GetItem(11).SetUIActive(s), this.GetSprite(13).SetUIActive(!1), s)
     ) {
@@ -205,8 +205,8 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
       case Protocol_1.Aki.Protocol.oFs.Proto_POOR:
         t = "SP_SignalPoor";
     }
-    let e;
-    var i = this.GetSprite(13);
+    var e,
+      i = this.GetSprite(13);
     t
       ? ((e =
           ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(t)),
@@ -218,11 +218,11 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
     this.GetItem(3).SetUIActive(i), this.GetItem(4).SetUIActive(!i);
   }
   RefreshPrepareState() {
-    const i =
-      ModelManager_1.ModelManager.EditBattleTeamModel.IsMultiInstanceDungeon;
-    const t = this.GetItem(14);
-    const e = this.GetItem(16);
-    const s = this.GetItem(23);
+    var i =
+        ModelManager_1.ModelManager.EditBattleTeamModel.IsMultiInstanceDungeon,
+      t = this.GetItem(14),
+      e = this.GetItem(16),
+      s = this.GetItem(23);
     if ((e.SetUIActive(!1), t.SetUIActive(!1), i))
       if (
         ModelManager_1.ModelManager.EditBattleTeamModel.IsRoleConflict(
@@ -233,10 +233,10 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
         s.SetUIActive(!1), e.SetUIActive(!0);
       else {
         s.SetUIActive(this.j4t);
-        const h =
-          ModelManager_1.ModelManager.InstanceDungeonModel.GetMatchTeamInfo()
-            .Q4n;
-        const o = this.q4t ?? h;
+        var h =
+            ModelManager_1.ModelManager.InstanceDungeonModel.GetMatchTeamInfo()
+              .Q4n,
+          o = this.q4t ?? h;
         switch (
           ModelManager_1.ModelManager.InstanceDungeonModel.GetPlayerUiState(o)
         ) {
@@ -287,18 +287,18 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
   }
   RefreshTowerCost(i) {
     if (ModelManager_1.ModelManager.TowerModel.IsOpenFloorFormation()) {
-      const t = ModelManager_1.ModelManager.TowerModel.GetRoleRemainCost(
-        i,
-        ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties,
-      );
-      const e = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(
-        ModelManager_1.ModelManager.TowerModel.CurrentSelectFloor,
-      )?.Cost;
-      const s = t < e;
-      const h = ModelManager_1.ModelManager.TowerModel.GetFloorIncludeRole(
-        i,
-        ModelManager_1.ModelManager.TowerModel.CurrentSelectFloor,
-      );
+      var t = ModelManager_1.ModelManager.TowerModel.GetRoleRemainCost(
+          i,
+          ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties,
+        ),
+        e = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(
+          ModelManager_1.ModelManager.TowerModel.CurrentSelectFloor,
+        )?.Cost;
+      const s = t < e,
+        h = ModelManager_1.ModelManager.TowerModel.GetFloorIncludeRole(
+          i,
+          ModelManager_1.ModelManager.TowerModel.CurrentSelectFloor,
+        );
       i = s && !h;
       this.GetItem(17).SetUIActive(!0),
         this.O4t ||
@@ -326,4 +326,4 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.FormationRoleView = FormationRoleView;
-// # sourceMappingURL=FormationRoleView.js.map
+//# sourceMappingURL=FormationRoleView.js.map

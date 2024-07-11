@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VoiceLanguageSelectToggle = exports.VoiceLanguageSelectView =
     void 0);
-const LanguageUpdateManager_1 = require("../../../../Launcher/Update/LanguageUpdateManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const MenuController_1 = require("../MenuController");
-const MenuTool_1 = require("../MenuTool");
-const LanguageSettingViewBase_1 = require("./LanguageSettingViewBase");
+const LanguageUpdateManager_1 = require("../../../../Launcher/Update/LanguageUpdateManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  MenuController_1 = require("../MenuController"),
+  MenuTool_1 = require("../MenuTool"),
+  LanguageSettingViewBase_1 = require("./LanguageSettingViewBase");
 class VoiceLanguageSelectView extends LanguageSettingViewBase_1.LanguageSettingViewBase {
   constructor() {
     super(...arguments),
@@ -30,7 +30,7 @@ class VoiceLanguageSelectView extends LanguageSettingViewBase_1.LanguageSettingV
       });
   }
   InitScrollViewData() {
-    const e =
+    var e =
       LanguageUpdateManager_1.LanguageUpdateManager.GetAllLanguageTypeForAudio();
     this.ScrollView.RefreshByData(e.sort((e, t) => e - t)),
       this.CancelButton.SetFunction(this.bwi),
@@ -38,15 +38,15 @@ class VoiceLanguageSelectView extends LanguageSettingViewBase_1.LanguageSettingV
       this.ConfirmButton.SetLocalText("PowerConfirm");
   }
   CreateToggle(e, t, a) {
-    const i = new VoiceLanguageSelectToggle();
+    var i = new VoiceLanguageSelectToggle();
     return i.Initialize(e, t, a), i;
   }
   OnRefreshView(e) {
-    const t = this.MenuDataIns.MenuDataOptionsNameList[e.GetIndex()];
+    var t = this.MenuDataIns.MenuDataOptionsNameList[e.GetIndex()];
     e.SetMainText(t);
   }
   OnSelected(e, t) {
-    e.Updater.Status === 2
+    2 === e.Updater.Status
       ? this.ConfirmButton.SetLocalText("PowerConfirm")
       : this.ConfirmButton.SetLocalText("GoToDownload");
   }
@@ -61,19 +61,19 @@ class VoiceLanguageSelectToggle extends LanguageSettingViewBase_1.LanguageToggle
   }
   OnStart() {
     super.OnStart();
-    var e = MenuTool_1.MenuTool.GetAudioCodeById(this.Index);
-    var e =
-      ((this.Updater =
-        LanguageUpdateManager_1.LanguageUpdateManager.GetUpdater(e)),
-      this.GetText(2));
+    var e = MenuTool_1.MenuTool.GetAudioCodeById(this.Index),
+      e =
+        ((this.Updater =
+          LanguageUpdateManager_1.LanguageUpdateManager.GetUpdater(e)),
+        this.GetText(2));
     e.SetUIActive(!0),
       this.PreToggled
         ? LguiUtil_1.LguiUtil.SetLocalText(e, "InUse")
-        : this.Updater.Status !== 2
+        : 2 !== this.Updater.Status
           ? LguiUtil_1.LguiUtil.SetLocalText(e, "NotDownloaded")
           : e.SetText(""),
       this.Updater.CalculateDownloadStatus();
   }
 }
 exports.VoiceLanguageSelectToggle = VoiceLanguageSelectToggle;
-// # sourceMappingURL=VoiceLanguageSelectView.js.map
+//# sourceMappingURL=VoiceLanguageSelectView.js.map

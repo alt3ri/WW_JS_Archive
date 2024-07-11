@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TrackModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager");
 class TrackModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -45,8 +45,8 @@ class TrackModel extends ModelBase_1.ModelBase {
       this.IDo(e);
   }
   RemoveTrackData(e, t) {
-    let i;
-    var e = this.GetTracksByType(e);
+    var i,
+      e = this.GetTracksByType(e);
     e && ((i = e.get(t)), e.delete(t), this.TDo(i));
   }
   ClearTrackData() {
@@ -61,17 +61,17 @@ class TrackModel extends ModelBase_1.ModelBase {
     }
   }
   TDo(e) {
-    let t;
+    var t;
     e &&
       void 0 !== e.ShowGroupId &&
       (t = this.EDo.get(e.ShowGroupId)) &&
       t.delete(e.Id);
   }
   IsTargetTracking(e) {
-    let t = void 0;
-    let i = void 0;
-    for (const [r, s] of this.SDo)
-      for (const [, a] of s)
+    let t = void 0,
+      i = void 0;
+    for (var [r, s] of this.SDo)
+      for (var [, a] of s)
         a.TrackTarget === e &&
           (t || ((t = r), (i = a)), r > t) &&
           ((i = a), (t = r));
@@ -82,7 +82,7 @@ class TrackModel extends ModelBase_1.ModelBase {
     if (e) return e.get(t);
   }
   UpdateTrackData(e, t, i) {
-    const r = this.GetTrackData(e, t);
+    var r = this.GetTrackData(e, t);
     r &&
       ((r.TrackTarget = i),
       EventSystem_1.EventSystem.Emit(
@@ -104,7 +104,7 @@ class TrackModel extends ModelBase_1.ModelBase {
     );
   }
   UpdateGroupMinDistance(e, t) {
-    let i;
+    var i;
     this.yDo && e && (!(i = this.yDo.get(e)) || t <= i) && this.yDo.set(e, t);
   }
   CanShowInGroup(e, t) {
@@ -115,4 +115,4 @@ class TrackModel extends ModelBase_1.ModelBase {
   }
 }
 exports.TrackModel = TrackModel;
-// # sourceMappingURL=TrackModel.js.map
+//# sourceMappingURL=TrackModel.js.map

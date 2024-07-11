@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MultiHotKeyType = void 0);
-const UE = require("ue");
-const GenericLayoutNew_1 = require("../../../Util/Layout/GenericLayoutNew");
-const HotKeyItemFactory_1 = require("../HotKeyItemFactory");
-const HotKeyTypeBase_1 = require("./HotKeyTypeBase");
+const UE = require("ue"),
+  GenericLayoutNew_1 = require("../../../Util/Layout/GenericLayoutNew"),
+  HotKeyItemFactory_1 = require("../HotKeyItemFactory"),
+  HotKeyTypeBase_1 = require("./HotKeyTypeBase");
 class MultiHotKeyType extends HotKeyTypeBase_1.HotKeyTypeBase {
   constructor() {
     super(...arguments),
@@ -33,7 +33,7 @@ class MultiHotKeyType extends HotKeyTypeBase_1.HotKeyTypeBase {
       this.qbo,
       this.GetItem(0),
     );
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     this.Layout.RebuildLayoutByDataNew(e),
       (this.bbo = await Promise.all(this.Layout.GetLayoutItemList()));
   }
@@ -54,4 +54,4 @@ class MultiHotKeyType extends HotKeyTypeBase_1.HotKeyTypeBase {
   }
 }
 exports.MultiHotKeyType = MultiHotKeyType;
-// # sourceMappingURL=MultiHotKeyType.js.map
+//# sourceMappingURL=MultiHotKeyType.js.map

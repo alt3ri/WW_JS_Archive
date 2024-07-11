@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventSetBattleState = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const Net_1 = require("../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class NotifyData {
   constructor() {
     (this.Entities = void 0), (this.Target = void 0);
@@ -37,11 +37,11 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
     if (t)
       switch (((this.aDe = t.StateOption), this.aDe.Type)) {
         case IAction_1.ESetBattleStateType.SetBattleTag:
-          if (this.aDe.SetTags && this.aDe.SetTags.length !== 0) {
-            const i = [];
+          if (this.aDe.SetTags && 0 !== this.aDe.SetTags.length) {
+            var i = [];
             for (const a of this.aDe.SetTags) {
               i.push(a.EntityId);
-              const o =
+              var o =
                 ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
                   a.EntityId,
                 );
@@ -85,7 +85,7 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
     }
   }
   DRe() {
-    const t = this.aDe;
+    var t = this.aDe;
     this.SRe = t.SetTags.length;
     for (const i of t.SetTags) {
       const o = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
@@ -93,10 +93,10 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
       );
       if (o?.IsInit) {
         const a = i.GameplayTag;
-        const e = i.DelayTime;
+        var e = i.DelayTime;
         switch (i.SetType) {
           case IAction_1.ESetEntityTagType.Add:
-            e && e > 0
+            e && 0 < e
               ? this.MRe.push(
                   TimerSystem_1.TimerSystem.Delay(() => {
                     this.URe(i.EntityId, o, a);
@@ -105,7 +105,7 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
               : this.URe(i.EntityId, o, a);
             break;
           case IAction_1.ESetEntityTagType.Remove:
-            e && e > 0
+            e && 0 < e
               ? this.MRe.push(
                   TimerSystem_1.TimerSystem.Delay(() => {
                     this.ARe(i.EntityId, o, a);
@@ -166,10 +166,10 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
       : this.FinishExecute(!1);
   }
   TRe(t) {
-    const e = [];
-    const i = [];
+    var e = [],
+      i = [];
     for (const s of t.EntityIds) {
-      let o = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(s);
+      var o = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(s);
       if (!o?.Valid)
         return (
           Log_1.Log.CheckError() &&
@@ -225,7 +225,7 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
   }
   RRe(t) {
     for (const a of t.Entities) if (!a.CharActorComp.Entity.IsInit) return;
-    const e = CommonParamById_1.configCommonParamById.GetIntConfig(
+    var e = CommonParamById_1.configCommonParamById.GetIntConfig(
       "qianxing_notify_interval",
     );
     const i = Global_1.Global.BaseCharacter.CharacterActorComponent;
@@ -260,14 +260,14 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
     );
   }
   LRe(t, e) {
-    if (t.StandbyTags.length !== 0 && e.Type === 1) {
+    if (0 !== t.StandbyTags.length && 1 === e.Type) {
       e = EntitySystem_1.EntitySystem.Get(e.EntityId);
       if (e && e.GetComponent(38)?.AiController?.AiPatrol) {
         const o = e.GetComponent(1);
-        var e = e.GetComponent(39);
-        const i = Math.floor(
-          MathUtils_1.MathUtils.GetRandomFloatNumber(0, t.StandbyTags.length),
-        );
+        var e = e.GetComponent(39),
+          i = Math.floor(
+            MathUtils_1.MathUtils.GetRandomFloatNumber(0, t.StandbyTags.length),
+          );
         const a = Protocol_1.Aki.Protocol.vds.create();
         (a.rkn = MathUtils_1.MathUtils.NumberToLong(
           o.CreatureData.GetCreatureDataId(),
@@ -307,4 +307,4 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventSetBattleState = LevelEventSetBattleState;
-// # sourceMappingURL=LevelEventSetBattleState.js.map
+//# sourceMappingURL=LevelEventSetBattleState.js.map

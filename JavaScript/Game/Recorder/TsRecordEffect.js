@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Info_1 = require("../../Core/Common/Info");
-const Log_1 = require("../../Core/Common/Log");
-const EffectSystem_1 = require("../Effect/EffectSystem");
-const RecorderBlueprintFunctionLibrary_1 = require("./RecorderBlueprintFunctionLibrary");
-const EffectContext_1 = require("../Effect/EffectContext/EffectContext");
+const UE = require("ue"),
+  Info_1 = require("../../Core/Common/Info"),
+  Log_1 = require("../../Core/Common/Log"),
+  EffectSystem_1 = require("../Effect/EffectSystem"),
+  RecorderBlueprintFunctionLibrary_1 = require("./RecorderBlueprintFunctionLibrary"),
+  EffectContext_1 = require("../Effect/EffectContext/EffectContext");
 class TsRecordEffect extends UE.KuroRecordEffect {
   constructor() {
     super(...arguments),
@@ -68,7 +68,7 @@ class TsRecordEffect extends UE.KuroRecordEffect {
         ),
         (this.EffectModelData = UE.Object.Load(this.EffectModelDataPath));
     }
-    let t;
+    var t;
     this.EffectHandle ||
       ((t = UE.KismetSystemLibrary.GetPathName(this.EffectModelData)),
       (this.EffectHandle = EffectSystem_1.EffectSystem.SpawnEffect(
@@ -79,7 +79,7 @@ class TsRecordEffect extends UE.KuroRecordEffect {
         new EffectContext_1.EffectContext(void 0, this),
         0,
         (t) => {
-          this.LifeTimeType === 3 &&
+          3 === this.LifeTimeType &&
             EffectSystem_1.EffectSystem.FreezeHandle(t, !0);
         },
       )),
@@ -90,4 +90,4 @@ class TsRecordEffect extends UE.KuroRecordEffect {
   }
 }
 exports.default = TsRecordEffect;
-// # sourceMappingURL=TsRecordEffect.js.map
+//# sourceMappingURL=TsRecordEffect.js.map

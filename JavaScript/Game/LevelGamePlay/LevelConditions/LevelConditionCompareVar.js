@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCompareVar = void 0);
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const IVar_1 = require("../../../UniverseEditor/Interface/IVar");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  IVar_1 = require("../../../UniverseEditor/Interface/IVar"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionCompareVar extends LevelGeneralBase_1.LevelConditionBase {
   CheckNew(e, r, a) {
     if (!e) return !1;
-    const t = e.Var1;
-    const n = e.Var2;
+    var t = e.Var1,
+      n = e.Var2;
     if (t.Type !== n.Type) return !1;
-    const s = this.VTn(t, a);
-    const u = this.VTn(n, a);
+    var s = this.VTn(t, a),
+      u = this.VTn(n, a);
     if (void 0 === s || void 0 === u) return !1;
     switch (e.Compare) {
       case "Eq":
@@ -45,6 +45,7 @@ class LevelConditionCompareVar extends LevelGeneralBase_1.LevelConditionBase {
       case "Self":
         return r ? ((a = this.jTn(e.Name, r)), this.E$(a)) : void 0;
       default:
+        return;
     }
   }
   jTn(e, r) {
@@ -66,6 +67,7 @@ class LevelConditionCompareVar extends LevelGeneralBase_1.LevelConditionBase {
         if (a) return a.Entity?.GetComponent(0)?.GetEntityVar(e);
         break;
       default:
+        return;
     }
   }
   HTn(e, r, a) {
@@ -84,6 +86,7 @@ class LevelConditionCompareVar extends LevelGeneralBase_1.LevelConditionBase {
           r,
         )?.Tree?.GetTreeVarByKey(e);
       default:
+        return;
     }
   }
   E$(e) {
@@ -98,8 +101,9 @@ class LevelConditionCompareVar extends LevelGeneralBase_1.LevelConditionBase {
         case "String":
           return e.qMs;
         default:
+          return;
       }
   }
 }
 exports.LevelConditionCompareVar = LevelConditionCompareVar;
-// # sourceMappingURL=LevelConditionCompareVar.js.map
+//# sourceMappingURL=LevelConditionCompareVar.js.map

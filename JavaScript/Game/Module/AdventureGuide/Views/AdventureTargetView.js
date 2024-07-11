@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdventureTargetView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew");
-const AdventureGuideController_1 = require("../AdventureGuideController");
-const AdventureTargetItem_1 = require("./AdventureTargetItem");
-const AdventureTargetRewardItem_1 = require("./AdventureTargetRewardItem");
-const REWARD_RECEIVED = "ChapterRewardGet";
-const NOT_FINISH_TIP = "NotFinishedTip";
-const GET_REWARD = "GetReward";
-const FRONT_ADD_FRAME = 0.01;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
+  AdventureGuideController_1 = require("../AdventureGuideController"),
+  AdventureTargetItem_1 = require("./AdventureTargetItem"),
+  AdventureTargetRewardItem_1 = require("./AdventureTargetRewardItem"),
+  REWARD_RECEIVED = "ChapterRewardGet",
+  NOT_FINISH_TIP = "NotFinishedTip",
+  GET_REWARD = "GetReward",
+  FRONT_ADD_FRAME = 0.01;
 class AdventureTargetView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -33,7 +33,7 @@ class AdventureTargetView extends UiTabViewBase_1.UiTabViewBase {
       (this.Y5e = !1),
       (this.EPe = void 0),
       (this.q5e = () => {
-        const e = new AdventureTargetRewardItem_1.AdventureTargetRewardItem();
+        var e = new AdventureTargetRewardItem_1.AdventureTargetRewardItem();
         return (
           e.BindOnExtendToggleClicked(this.J5e),
           e.BindOnCanExecuteChange(this.z5e),
@@ -50,8 +50,8 @@ class AdventureTargetView extends UiTabViewBase_1.UiTabViewBase {
         return new AdventureTargetItem_1.AdventureTargetItem();
       }),
       (this.eVe = () => {
-        let e;
-        this.W5e > 1 &&
+        var e;
+        1 < this.W5e &&
           (this.X5e?.SetFillAmount(0),
           (e = this.W5e - 1),
           this.SetAdventureTargetInfoByChapter(
@@ -63,7 +63,7 @@ class AdventureTargetView extends UiTabViewBase_1.UiTabViewBase {
           this.EPe?.PlayLevelSequenceByName("Switch");
       }),
       (this.tVe = () => {
-        let e;
+        var e;
         this.W5e <
           ConfigManager_1.ConfigManager.AdventureModuleConfig.GetMaxChapter() &&
           (this.X5e?.SetFillAmount(0),
@@ -77,7 +77,7 @@ class AdventureTargetView extends UiTabViewBase_1.UiTabViewBase {
           this.EPe?.PlayLevelSequenceByName("Switch");
       }),
       (this.iVe = () => {
-        let e =
+        var e =
           ModelManager_1.ModelManager.AdventureGuideModel.GetChapterProgress(
             this.W5e,
           );
@@ -173,7 +173,7 @@ class AdventureTargetView extends UiTabViewBase_1.UiTabViewBase {
       );
   }
   OnTickUiTabViewBase(e) {
-    let t;
+    var t;
     this.Y5e ||
       ((t = this.X5e.fillAmount) < this.$5e &&
         this.X5e.SetFillAmount(t + FRONT_ADD_FRAME));
@@ -202,19 +202,18 @@ class AdventureTargetView extends UiTabViewBase_1.UiTabViewBase {
       (this.EPe = void 0);
   }
   sVe(e) {
-    const t = this.GetButton(3);
-    const i = this.GetButton(4);
+    var t = this.GetButton(3),
+      i = this.GetButton(4);
     t?.SetSelfInteractive(!0),
       i?.SetSelfInteractive(!0),
-      e === 1 && t?.SetSelfInteractive(!1),
+      1 === e && t?.SetSelfInteractive(!1),
       e ===
         ConfigManager_1.ConfigManager.AdventureModuleConfig.GetMaxChapter() &&
         i?.SetSelfInteractive(!1);
   }
   OnBeforeShow() {
     let e = ModelManager_1.ModelManager.AdventureGuideModel.GetNowChapter();
-    const t =
-      ConfigManager_1.ConfigManager.AdventureModuleConfig.GetMaxChapter();
+    var t = ConfigManager_1.ConfigManager.AdventureModuleConfig.GetMaxChapter();
     e > t && (e = t),
       this.SetAdventureTargetInfoByChapter(e),
       this.EPe?.StopCurrentSequence(),
@@ -236,23 +235,21 @@ class AdventureTargetView extends UiTabViewBase_1.UiTabViewBase {
   }
   SetChapterInfo(e) {
     var t =
-      ConfigManager_1.ConfigManager.AdventureModuleConfig.GetChapterAdventureConfig(
-        e,
-      );
-    const i =
-      ConfigManager_1.ConfigManager.AdventureModuleConfig.GetDropShowInfo(
+        ConfigManager_1.ConfigManager.AdventureModuleConfig.GetChapterAdventureConfig(
+          e,
+        ),
+      i = ConfigManager_1.ConfigManager.AdventureModuleConfig.GetDropShowInfo(
         t.DropIds,
-      );
-    const r = new Array();
-    var t =
-      ModelManager_1.ModelManager.AdventureGuideModel.GetReceivedChapter();
-    let s = ModelManager_1.ModelManager.AdventureGuideModel.GetNowChapter();
-    const n = this.GetItem(11);
-    const h = this.GetScrollViewWithScrollbar(12).GetRootComponent();
-    const a = this.GetItem(13);
-    const o = this.GetText(10);
+      ),
+      r = new Array(),
+      t = ModelManager_1.ModelManager.AdventureGuideModel.GetReceivedChapter(),
+      s = ModelManager_1.ModelManager.AdventureGuideModel.GetNowChapter(),
+      n = this.GetItem(11),
+      h = this.GetScrollViewWithScrollbar(12).GetRootComponent(),
+      a = this.GetItem(13),
+      o = this.GetText(10);
     for (const l of i.keys()) {
-      const _ = [{ IncId: 0, ItemId: l }, i.get(l)];
+      var _ = [{ IncId: 0, ItemId: l }, i.get(l)];
       r.push(_);
     }
     this.DFe.RefreshByData(r),
@@ -282,7 +279,7 @@ class AdventureTargetView extends UiTabViewBase_1.UiTabViewBase {
     this.Q5e?.RefreshByData(e);
   }
   hVe(e) {
-    const t =
+    var t =
       ModelManager_1.ModelManager.AdventureGuideModel.GetChapterProgress(e);
     this.GetText(6).SetText(t.Received + "/" + t.Total),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -302,8 +299,8 @@ class AdventureTargetView extends UiTabViewBase_1.UiTabViewBase {
       );
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
-    var t = Number(e[0]);
-    var t = this.DFe.GetGridByDisplayIndex(t);
+    var t = Number(e[0]),
+      t = this.DFe.GetGridByDisplayIndex(t);
     if (t) return [t, t];
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("Guide", 54, "聚焦引导extraParam项配置有误", [
@@ -313,4 +310,4 @@ class AdventureTargetView extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.AdventureTargetView = AdventureTargetView;
-// # sourceMappingURL=AdventureTargetView.js.map
+//# sourceMappingURL=AdventureTargetView.js.map

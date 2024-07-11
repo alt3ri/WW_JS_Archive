@@ -7,4 +7,4 @@ class LogicDataShowMesh extends LogicDataBase_1.default {
   }
 }
 exports.default = LogicDataShowMesh;
-// # sourceMappingURL=LogicDataShowMesh.js.map
+//# sourceMappingURL=LogicDataShowMesh.js.map

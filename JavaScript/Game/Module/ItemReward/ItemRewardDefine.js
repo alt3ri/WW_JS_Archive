@@ -39,4 +39,4 @@ class ReachTargetData {
   (exports.ROLE_TRIAL_ERROR_RESULT = 3014),
   (exports.BOSS_RUSH_SUCCESS = 3016),
   (exports.BOSS_RUSH_FAIL = 3015);
-// # sourceMappingURL=ItemRewardDefine.js.map
+//# sourceMappingURL=ItemRewardDefine.js.map

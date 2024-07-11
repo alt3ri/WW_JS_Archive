@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExploreLevelView = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid");
-const ExploreProgressController_1 = require("../../ExploreProgress/ExploreProgressController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const ExploreLevelController_1 = require("../ExploreLevelController");
-const ExploreLevelItem_1 = require("./ExploreLevelItem");
-const PLAY_PROGRESS_BAR_TIME = 300;
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  ExploreProgressController_1 = require("../../ExploreProgress/ExploreProgressController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  ExploreLevelController_1 = require("../ExploreLevelController"),
+  ExploreLevelItem_1 = require("./ExploreLevelItem"),
+  PLAY_PROGRESS_BAR_TIME = 300;
 class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -38,26 +38,26 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
       (this.A5t = () => {}),
       (this.P5t = () => {
         this.w5t();
-        const e = this.f5t.GetExploreScore();
-        const t = this.R5t.GetMaxExploreScore();
+        var e = this.f5t.GetExploreScore(),
+          t = this.R5t.GetMaxExploreScore();
         t < 0 ? this.x5t() : this.STn(this.mTn, this.CTn, e, t);
       }),
       (this.B5t = () => {
         (this.f5t =
           ModelManager_1.ModelManager.ExploreLevelModel.GetCurrentCountryExploreLevelData()),
           (this.R5t = this.f5t.GetCurrentExploreLevelRewardData());
-        const e = this.f5t.GetExploreScore();
-        const t = this.R5t.GetMaxExploreScore();
+        var e = this.f5t.GetExploreScore(),
+          t = this.R5t.GetMaxExploreScore();
         t < 0 ? this.x5t() : this.STn(this.mTn, this.CTn, e, t);
       }),
       (this.UKe = (e, t) => {
-        e === "ExploreLevelRewardView" && this.hRn(!0);
+        "ExploreLevelRewardView" === e && this.hRn(!0);
       }),
       (this.$Ge = (e, t) => {
-        e === "ExploreLevelRewardView" && this.hRn(!1);
+        "ExploreLevelRewardView" === e && this.hRn(!1);
       }),
       (this.g5t = (e, t, i) => {
-        const s = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
+        var s = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
         return (
           s.Initialize(t.GetOwner()),
           s.RefreshByConfigId(e[0], e[1]),
@@ -65,12 +65,12 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
         );
       }),
       (this.q5t = () => {
-        const e = new ExploreLevelItem_1.ExploreLevelItem();
+        var e = new ExploreLevelItem_1.ExploreLevelItem();
         return e.BindOnClickedReceiveButton(this.C5t), e;
       }),
       (this.C5t = (e) => {
-        const t = e.AreaId;
-        const i = e.Progress;
+        var t = e.AreaId,
+          i = e.Progress;
         ExploreLevelController_1.ExploreLevelController.ExploreScoreRewardRequest(
           t,
           i,
@@ -232,24 +232,24 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
     (this.ETn = !1), (this.MTn = 0);
   }
   lRn() {
-    const e = this.GetUiNiagara(14);
+    var e = this.GetUiNiagara(14);
     e.IsUIActiveSelf() ? e.ActivateSystem(!0) : e.SetUIActive(!0);
   }
   b5t() {
     this.Lht(), this.k5t(), this.F5t();
   }
   Lht() {
-    const e = this.R5t.GetScoreNameId();
+    var e = this.R5t.GetScoreNameId();
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(12), e);
   }
   k5t() {
-    const e = this.R5t.GetScoreTexturePath();
-    const t = this.GetTexture(1);
+    var e = this.R5t.GetScoreTexturePath(),
+      t = this.GetTexture(1);
     this.SetTextureByPath(e, t);
   }
   x5t() {
-    let e;
-    const t = this.R5t.GetMaxExploreScore();
+    var e,
+      t = this.R5t.GetMaxExploreScore();
     t <= 0
       ? this.GetItem(11)?.SetUIActive(!1)
       : ((e = this.f5t.GetExploreScore()),
@@ -269,9 +269,9 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
   F5t() {
     var e = this.f5t.GetExploreLevelRewardData(this.R5t.GetExploreLevel() + 1);
     if (e) {
-      var e = e.GetDropItemNumMap();
-      const t = [];
-      if (e) for (const [i, s] of e) t.push([i, s]);
+      var e = e.GetDropItemNumMap(),
+        t = [];
+      if (e) for (var [i, s] of e) t.push([i, s]);
       this.bOe.RefreshByData(t), this.GetItem(13).SetUIActive(!1);
     } else
       this.bOe.ClearChildren(),
@@ -279,10 +279,10 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
         this.GetItem(13).SetUIActive(!0);
   }
   w5t() {
-    const e = this.f5t.GetVisibleExploreScoreDataList();
+    var e = this.f5t.GetVisibleExploreScoreDataList();
     e.sort((e, t) => {
-      let i = e.GetIsReceived() ? 1 : 0;
-      let s = t.GetIsReceived() ? 1 : 0;
+      var i = e.GetIsReceived() ? 1 : 0,
+        s = t.GetIsReceived() ? 1 : 0;
       return i != s ||
         (i = e.CanReceive() ? -1 : 0) != (s = t.CanReceive() ? -1 : 0)
         ? i - s
@@ -296,4 +296,4 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.ExploreLevelView = ExploreLevelView;
-// # sourceMappingURL=ExploreLevelView.js.map
+//# sourceMappingURL=ExploreLevelView.js.map

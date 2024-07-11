@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InfluenceConfig = void 0);
-const CountryAll_1 = require("../../../../Core/Define/ConfigQuery/CountryAll");
-const CountryById_1 = require("../../../../Core/Define/ConfigQuery/CountryById");
-const InfluenceAll_1 = require("../../../../Core/Define/ConfigQuery/InfluenceAll");
-const InfluenceById_1 = require("../../../../Core/Define/ConfigQuery/InfluenceById");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
-const InfluenceReputationDefine_1 = require("../InfluenceReputationDefine");
+const CountryAll_1 = require("../../../../Core/Define/ConfigQuery/CountryAll"),
+  CountryById_1 = require("../../../../Core/Define/ConfigQuery/CountryById"),
+  InfluenceAll_1 = require("../../../../Core/Define/ConfigQuery/InfluenceAll"),
+  InfluenceById_1 = require("../../../../Core/Define/ConfigQuery/InfluenceById"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigBase_1 = require("../../../../Core/Framework/ConfigBase"),
+  InfluenceReputationDefine_1 = require("../InfluenceReputationDefine");
 class InfluenceConfig extends ConfigBase_1.ConfigBase {
   GetCountriesByIds(r) {
-    if (r.length > 0) {
-      const t = new Array();
+    if (0 < r.length) {
+      var t = new Array();
       for (let e = 0, n = r.length; e < n; ++e) {
-        const u = CountryById_1.configCountryById.GetConfig(r[e]);
+        var u = CountryById_1.configCountryById.GetConfig(r[e]);
         t.push(u);
       }
       return t.sort((e, n) => e.Id - n.Id), t;
@@ -34,18 +34,18 @@ class InfluenceConfig extends ConfigBase_1.ConfigBase {
     if (e) return e;
   }
   GetCountryInfluence(e) {
-    const n = new Array();
-    if (e === 0) {
-      const r = this.GetInfluenceConfig(0);
+    var n = new Array();
+    if (0 === e) {
+      var r = this.GetInfluenceConfig(0);
       n.push(r);
     } else {
-      const t = this.GetCountryConfig(e);
-      if (t.Influences.length === 0) {
-        const u = InfluenceAll_1.configInfluenceAll.GetConfigList();
+      var t = this.GetCountryConfig(e);
+      if (0 === t.Influences.length) {
+        var u = InfluenceAll_1.configInfluenceAll.GetConfigList();
         for (let e = 0; e < u.length; e++) n.push(u[e]);
       } else
         for (let e = 0; e < t.Influences.length; e++) {
-          const i = this.GetInfluenceConfig(t.Influences[e]);
+          var i = this.GetInfluenceConfig(t.Influences[e]);
           n.push(i);
         }
     }
@@ -69,12 +69,12 @@ class InfluenceConfig extends ConfigBase_1.ConfigBase {
   }
   GetInfluenceIfShowInDailyTask(e) {
     e = this.GetInfluenceConfig(e);
-    return !!e && e.DailyTaskShow === 1;
+    return !!e && 1 === e.DailyTaskShow;
   }
   GetCountryIfShowInDailyTask(e) {
     e = this.GetCountryConfig(e);
-    return !!e && e.DailyTaskShow === 1;
+    return !!e && 1 === e.DailyTaskShow;
   }
 }
 exports.InfluenceConfig = InfluenceConfig;
-// # sourceMappingURL=InfluenceConfig.js.map
+//# sourceMappingURL=InfluenceConfig.js.map

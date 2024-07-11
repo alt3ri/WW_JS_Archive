@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PanelQteModel = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const PanelQteController_1 = require("./PanelQteController");
-const PanelQteResultHandler_1 = require("./PanelQteResultHandler");
-const PanelQteTimeDilation_1 = require("./PanelQteTimeDilation");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  PanelQteController_1 = require("./PanelQteController"),
+  PanelQteResultHandler_1 = require("./PanelQteResultHandler"),
+  PanelQteTimeDilation_1 = require("./PanelQteTimeDilation");
 class PanelQteModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -53,10 +53,10 @@ class PanelQteModel extends ModelBase_1.ModelBase {
       (this.IsInQte = !0),
       ((this.nx = e).QteHandleId = this.hJ),
       this.Qht.Start(e),
-      e.Config.Duration > 0
+      0 < e.Config.Duration
         ? ((this.SNi =
             e.Config.Duration * TimeUtil_1.TimeUtil.InverseMillisecond),
-          (e = this.Qht.GetWorldTimeDilation()) !== 0 &&
+          0 !== (e = this.Qht.GetWorldTimeDilation()) &&
             (this.ENi = Time_1.Time.WorldTime + this.SNi * e))
         : ((this.SNi = 0), (this.ENi = 0)),
       this.hJ
@@ -83,15 +83,15 @@ class PanelQteModel extends ModelBase_1.ModelBase {
   }
   ResetLeftTime(e) {
     this.hJ === e &&
-      (this.SNi > 0
-        ? (e = this.Qht.GetWorldTimeDilation()) !== 0 &&
+      (0 < this.SNi
+        ? 0 !== (e = this.Qht.GetWorldTimeDilation()) &&
           (this.ENi = Time_1.Time.WorldTime + this.SNi * e)
         : (this.ENi = 0));
   }
   UpdateTime(e) {
     this.SNi <= 0 ||
       (this.IsInQte &&
-        (this.Qht.GetWorldTimeDilation() === 0
+        (0 === this.Qht.GetWorldTimeDilation()
           ? (this.SNi -= e)
           : (this.SNi = this.ENi - Time_1.Time.WorldTime),
         this.SNi <= 0) &&
@@ -103,7 +103,7 @@ class PanelQteModel extends ModelBase_1.ModelBase {
         "/Game/Aki/Data/Fight/UI/DT_PanelQte.DT_PanelQte",
         UE.DataTable,
       ));
-    const t = DataTableUtil_1.DataTableUtil.GetDataTableRow(
+    var t = DataTableUtil_1.DataTableUtil.GetDataTableRow(
       this.yNi,
       e.toString(),
     );
@@ -125,4 +125,4 @@ class PanelQteModel extends ModelBase_1.ModelBase {
   }
 }
 exports.PanelQteModel = PanelQteModel;
-// # sourceMappingURL=PanelQteModel.js.map
+//# sourceMappingURL=PanelQteModel.js.map

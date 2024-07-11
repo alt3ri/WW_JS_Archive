@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventRemoveCreatureTag = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventRemoveCreatureTag extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, r) {
-    let a;
+    var a;
     e &&
       ((a = e.get("Tag")), (e = e.get("CreatureGen"))) &&
       a &&
@@ -16,4 +16,4 @@ class LevelEventRemoveCreatureTag extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventRemoveCreatureTag = LevelEventRemoveCreatureTag;
-// # sourceMappingURL=LevelEventRemoveCreatureTag.js.map
+//# sourceMappingURL=LevelEventRemoveCreatureTag.js.map

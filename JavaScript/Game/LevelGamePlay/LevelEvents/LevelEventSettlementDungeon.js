@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventSettlementDungeon = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ActivityDoubleRewardController_1 = require("../../Module/Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController");
-const ConfirmBoxDefine_1 = require("../../Module/ConfirmBox/ConfirmBoxDefine");
-const InstanceDungeonController_1 = require("../../Module/InstanceDungeon/InstanceDungeonController");
-const PowerController_1 = require("../../Module/Power/PowerController");
-const ScrollingTipsController_1 = require("../../Module/ScrollingTips/ScrollingTipsController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ActivityDoubleRewardController_1 = require("../../Module/Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController"),
+  ConfirmBoxDefine_1 = require("../../Module/ConfirmBox/ConfirmBoxDefine"),
+  InstanceDungeonController_1 = require("../../Module/InstanceDungeon/InstanceDungeonController"),
+  PowerController_1 = require("../../Module/Power/PowerController"),
+  ScrollingTipsController_1 = require("../../Module/ScrollingTips/ScrollingTipsController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventSettlementDungeon extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, o) {
     if (
-      ModelManager_1.ModelManager.InstanceDungeonModel.InstanceFinishSuccess !==
-      1
+      1 !==
+      ModelManager_1.ModelManager.InstanceDungeonModel.InstanceFinishSuccess
     )
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("InstanceDungeon", 5, "副本结算行为触发时，副本未成功"),
@@ -32,7 +32,7 @@ class LevelEventSettlementDungeon extends LevelGeneralBase_1.LevelEventBase {
     )
       this.FinishExecute(!0);
     else {
-      let r =
+      var r =
         ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId;
       if (
         ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceCanReward(
@@ -45,19 +45,19 @@ class LevelEventSettlementDungeon extends LevelGeneralBase_1.LevelEventBase {
           )
         ) {
           var n =
-            !!ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetInstanceFirstRewardId(
-              r,
-            );
-          let l =
-            ModelManager_1.ModelManager.InstanceDungeonModel
-              .CurrentInstanceIsFinish;
+              !!ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetInstanceFirstRewardId(
+                r,
+              ),
+            l =
+              ModelManager_1.ModelManager.InstanceDungeonModel
+                .CurrentInstanceIsFinish;
           if (n && !l) this.FinishExecute(!0);
           else {
             var n =
               ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetInstancePowerCost(
                 r,
               );
-            if (n === 0) this.FinishExecute(!0);
+            if (0 === n) this.FinishExecute(!0);
             else {
               const i = ModelManager_1.ModelManager.PowerModel.IsPowerEnough(n);
               i
@@ -67,7 +67,7 @@ class LevelEventSettlementDungeon extends LevelGeneralBase_1.LevelEventBase {
                   l.SetTextArgs(n.toString()),
                   l.FunctionMap.set(1, () => {}),
                   l.FunctionMap.set(2, () => {
-                    let e;
+                    var e;
                     i
                       ? InstanceDungeonController_1.InstanceDungeonController.GetInstExchangeRewardRequest()
                       : ((e =
@@ -85,7 +85,7 @@ class LevelEventSettlementDungeon extends LevelGeneralBase_1.LevelEventBase {
                         r,
                       ).CustomTypes,
                     )) &&
-                    n.LeftUpCount > 0 &&
+                    0 < n.LeftUpCount &&
                     (l.Tip = n.GetFullTip()),
                   this.FinishExecute(!0),
                   ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
@@ -115,4 +115,4 @@ class LevelEventSettlementDungeon extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventSettlementDungeon = LevelEventSettlementDungeon;
-// # sourceMappingURL=LevelEventSettlementDungeon.js.map
+//# sourceMappingURL=LevelEventSettlementDungeon.js.map

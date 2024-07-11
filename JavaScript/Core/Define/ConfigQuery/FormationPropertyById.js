@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configFormationPropertyById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const FormationProperty_1 = require("../Config/FormationProperty");
-const DB = "db_formationproperty.db";
-const FILE = "d.队伍属性表.xlsx";
-const TABLE = "FormationProperty";
-const COMMAND = "select BinData from `FormationProperty` where Id=?";
-const KEY_PREFIX = "FormationPropertyById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  FormationProperty_1 = require("../Config/FormationProperty"),
+  DB = "db_formationproperty.db",
+  FILE = "d.队伍属性表.xlsx",
+  TABLE = "FormationProperty",
+  COMMAND = "select BinData from `FormationProperty` where Id=?",
+  KEY_PREFIX = "FormationPropertyById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configFormationPropertyById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configFormationPropertyById.GetConfig(";
 exports.configFormationPropertyById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configFormationPropertyById = {
       if (
         (e =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var e;
-        var r = void 0;
+        var e,
+          r = void 0;
         if (
           (([e, r] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configFormationPropertyById = {
     }
   },
 };
-// # sourceMappingURL=FormationPropertyById.js.map
+//# sourceMappingURL=FormationPropertyById.js.map

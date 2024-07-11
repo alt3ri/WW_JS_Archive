@@ -90,105 +90,105 @@ class ElementInfo {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   describe(t) {
-    const e = this.J7.__offset(this.z7, 6);
+    var e = this.J7.__offset(this.z7, 6);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   name(t) {
-    const e = this.J7.__offset(this.z7, 8);
+    var e = this.J7.__offset(this.z7, 8);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   icon(t) {
-    const e = this.J7.__offset(this.z7, 10);
+    var e = this.J7.__offset(this.z7, 10);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   icon2(t) {
-    const e = this.J7.__offset(this.z7, 12);
+    var e = this.J7.__offset(this.z7, 12);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   icon3(t) {
-    const e = this.J7.__offset(this.z7, 14);
+    var e = this.J7.__offset(this.z7, 14);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   icon4(t) {
-    const e = this.J7.__offset(this.z7, 16);
+    var e = this.J7.__offset(this.z7, 16);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   icon4pure(t) {
-    const e = this.J7.__offset(this.z7, 18);
+    var e = this.J7.__offset(this.z7, 18);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   icon5(t) {
-    const e = this.J7.__offset(this.z7, 20);
+    var e = this.J7.__offset(this.z7, 20);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   icon6(t) {
-    const e = this.J7.__offset(this.z7, 22);
+    var e = this.J7.__offset(this.z7, 22);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   icon7(t) {
-    const e = this.J7.__offset(this.z7, 24);
+    var e = this.J7.__offset(this.z7, 24);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   elementchangetexture(t) {
-    const e = this.J7.__offset(this.z7, 26);
+    var e = this.J7.__offset(this.z7, 26);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   elementeffectcolor(t) {
-    const e = this.J7.__offset(this.z7, 28);
+    var e = this.J7.__offset(this.z7, 28);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   elementcolor(t) {
-    const e = this.J7.__offset(this.z7, 30);
+    var e = this.J7.__offset(this.z7, 30);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   skilltreeeffectcolor(t) {
-    const e = this.J7.__offset(this.z7, 32);
+    var e = this.J7.__offset(this.z7, 32);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   skilltreeiconcolor(t) {
-    const e = this.J7.__offset(this.z7, 34);
+    var e = this.J7.__offset(this.z7, 34);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   skilltreelinecolor(t) {
-    const e = this.J7.__offset(this.z7, 36);
+    var e = this.J7.__offset(this.z7, 36);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   effect(t) {
-    const e = this.J7.__offset(this.z7, 38);
+    var e = this.J7.__offset(this.z7, 38);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   effecttexturepath(t) {
-    const e = this.J7.__offset(this.z7, 40);
+    var e = this.J7.__offset(this.z7, 40);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   gachaelementbgspritepath(t) {
-    const e = this.J7.__offset(this.z7, 42);
+    var e = this.J7.__offset(this.z7, 42);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   gachaspritepath(t) {
-    const e = this.J7.__offset(this.z7, 44);
+    var e = this.J7.__offset(this.z7, 44);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   ultimateskillcolor(t) {
-    const e = this.J7.__offset(this.z7, 46);
+    var e = this.J7.__offset(this.z7, 46);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   skilleffectcolor(t) {
-    const e = this.J7.__offset(this.z7, 48);
+    var e = this.J7.__offset(this.z7, 48);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   skillbuttoneffectpath(t) {
-    const e = this.J7.__offset(this.z7, 50);
+    var e = this.J7.__offset(this.z7, 50);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   elementballeffectpath(t) {
-    const e = this.J7.__offset(this.z7, 52);
+    var e = this.J7.__offset(this.z7, 52);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
 }
 exports.ElementInfo = ElementInfo;
-// # sourceMappingURL=ElementInfo.js.map
+//# sourceMappingURL=ElementInfo.js.map

@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SplashUiView = void 0);
-const UE = require("ue");
-const BaseConfigController_1 = require("../../BaseConfig/BaseConfigController");
-const LauncherConfigLib_1 = require("../../Define/LauncherConfigLib");
-const LauncherLanguageLib_1 = require("../../Util/LauncherLanguageLib");
-const LauncherLog_1 = require("../../Util/LauncherLog");
-const LauncherResourceLib_1 = require("../../Util/LauncherResourceLib");
-const LaunchComponentsAction_1 = require("../LaunchComponentsAction");
-const LaunchUtil_1 = require("../LaunchUtil");
-const ENCOMPANYNAME = "Company_en";
+const UE = require("ue"),
+  BaseConfigController_1 = require("../../BaseConfig/BaseConfigController"),
+  LauncherConfigLib_1 = require("../../Define/LauncherConfigLib"),
+  LauncherLanguageLib_1 = require("../../Util/LauncherLanguageLib"),
+  LauncherLog_1 = require("../../Util/LauncherLog"),
+  LauncherResourceLib_1 = require("../../Util/LauncherResourceLib"),
+  LaunchComponentsAction_1 = require("../LaunchComponentsAction"),
+  LaunchUtil_1 = require("../LaunchUtil"),
+  ENCOMPANYNAME = "Company_en";
 class SplashUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
   constructor() {
     super(...arguments),
@@ -34,8 +34,8 @@ class SplashUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       });
   }
   async InitAsync(i) {
-    let t;
-    UE.GameplayStatics.GetPlatformName() !== "Windows" &&
+    var t;
+    "Windows" !== UE.GameplayStatics.GetPlatformName() &&
       ((t = UE.GameUserSettings.GetGameUserSettings()).SetFrameRateLimit(30),
       t.ApplySettings(!0),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
@@ -89,37 +89,38 @@ class SplashUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
   }
   H8s() {
     return (
-      BaseConfigController_1.BaseConfigController.GetPublicValue("SdkArea") !==
-      "CN"
+      "CN" !==
+      BaseConfigController_1.BaseConfigController.GetPublicValue("SdkArea")
     );
   }
   ryr() {
-    const i = this.H8s();
+    var i = this.H8s();
     LauncherLog_1.LauncherLog.Info("TsSplash", ["ifglobal", i]);
-    let t = this.nyr(this.$Er, "SplashCautionTitle");
-    let s =
-      ((t !== "" && void 0 !== t) ||
-        (t = this.nyr(this.YEr, "SplashCautionTitle")),
-      this.GetText(7).SetText(t),
-      this.nyr(this.$Er, "SplashCautionContent"));
-    let h =
-      ((s !== "" && void 0 !== s) ||
-        (s = this.nyr(this.YEr, "SplashCautionContent")),
-      this.GetText(8).SetText(s),
-      this.nyr(this.$Er, "SplashLoading"));
-    let e =
-      ((h !== "" && void 0 !== h) || (h = this.nyr(this.YEr, "SplashLoading")),
-      this.GetText(9).SetText(h),
-      "");
-    let a =
-      (i ||
-        ((e = this.nyr(this.$Er, "SplashHealthyGamingAdvisory")) !== "" &&
-          void 0 !== e) ||
-        (e = this.nyr(this.YEr, "SplashHealthyGamingAdvisory")),
-      this.GetText(2).SetText(e),
-      "");
+    let t = this.nyr(this.$Er, "SplashCautionTitle"),
+      s =
+        (("" !== t && void 0 !== t) ||
+          (t = this.nyr(this.YEr, "SplashCautionTitle")),
+        this.GetText(7).SetText(t),
+        this.nyr(this.$Er, "SplashCautionContent")),
+      h =
+        (("" !== s && void 0 !== s) ||
+          (s = this.nyr(this.YEr, "SplashCautionContent")),
+        this.GetText(8).SetText(s),
+        this.nyr(this.$Er, "SplashLoading")),
+      e =
+        (("" !== h && void 0 !== h) ||
+          (h = this.nyr(this.YEr, "SplashLoading")),
+        this.GetText(9).SetText(h),
+        ""),
+      a =
+        (i ||
+          ("" !== (e = this.nyr(this.$Er, "SplashHealthyGamingAdvisory")) &&
+            void 0 !== e) ||
+          (e = this.nyr(this.YEr, "SplashHealthyGamingAdvisory")),
+        this.GetText(2).SetText(e),
+        "");
     i ||
-      ((a = this.nyr(this.$Er, "SplashCopyrightInformation")) !== "" &&
+      ("" !== (a = this.nyr(this.$Er, "SplashCopyrightInformation")) &&
         void 0 !== a) ||
       (a = this.nyr(this.YEr, "SplashCopyrightInformation")),
       this.GetText(3).SetText(a);
@@ -152,7 +153,7 @@ class SplashUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
   }
   syr(i, t) {
     this.ayr();
-    const s = this.XEr.GetSequencePlayContextOfKey(i);
+    var s = this.XEr.GetSequencePlayContextOfKey(i);
     void 0 !== s &&
       (s.OnFinish.Bind(() => {
         (this.QPt = void 0), t?.();
@@ -161,7 +162,7 @@ class SplashUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       s.ExecutePlay());
   }
   ayr() {
-    let i;
+    var i;
     void 0 !== this.QPt &&
       ((i = this.XEr.GetSequencePlayerByKey(this.QPt)) &&
         (this.XEr.SequenceJumpToSecondByKey(
@@ -209,4 +210,4 @@ class SplashUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
   }
 }
 exports.SplashUiView = SplashUiView;
-// # sourceMappingURL=SplashUiView.js.map
+//# sourceMappingURL=SplashUiView.js.map

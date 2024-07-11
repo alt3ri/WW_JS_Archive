@@ -11,7 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EXIT_TAG = "tag1"),
   (exports.ID_SEGMENT = 1e4),
   (exports.logicModeLogString = {
-    0: "None",
+    [0]: "None",
     1: "自身显隐状态",
     2: "监听组件控制显隐",
     4: "界面阻挡/切换",
@@ -21,4 +21,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     64: "表格配置操作类型屏蔽",
     65: "None",
   });
-// # sourceMappingURL=HotKeyViewDefine.js.map
+//# sourceMappingURL=HotKeyViewDefine.js.map

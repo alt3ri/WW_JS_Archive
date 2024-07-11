@@ -39,37 +39,37 @@ class RoleBattleViewInfo {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   minimapvisible() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   topbuttonvisible() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   homebuttonvisible() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   rolestatevisible() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   chatvisible() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   formationvisible() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   joysticktype() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.RoleBattleViewInfo = RoleBattleViewInfo;
-// # sourceMappingURL=RoleBattleViewInfo.js.map
+//# sourceMappingURL=RoleBattleViewInfo.js.map

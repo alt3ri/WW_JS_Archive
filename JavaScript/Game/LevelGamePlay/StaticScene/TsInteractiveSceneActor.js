@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../GlobalData");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const SimpleLevelSequenceActor_1 = require("./SimpleLevelSequenceActor");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../GlobalData"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  SimpleLevelSequenceActor_1 = require("./SimpleLevelSequenceActor");
 class TsInteractiveSceneActor extends UE.Actor {
   constructor() {
     super(...arguments),
@@ -54,7 +54,7 @@ class TsInteractiveSceneActor extends UE.Actor {
   ReceiveEndPlay() {
     this.LevelSequenceActor &&
       (this.LevelSequenceActor.Clear(), (this.LevelSequenceActor = void 0));
-    const e = ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(
+    var e = ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(
       this.EntityConfigId,
     );
     e?.Valid && this.SafeRemoveEntityGameplayTagEvent(e),
@@ -91,7 +91,7 @@ class TsInteractiveSceneActor extends UE.Actor {
       ));
   }
   OnWorldDone() {
-    let e;
+    var e;
     this.Configs?.Num() &&
       ((e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
         this.EntityConfigId,
@@ -120,13 +120,13 @@ class TsInteractiveSceneActor extends UE.Actor {
       this.SafeAddEntityGameplayTagEvent(e));
   }
   ApplyInteractionConfig(t) {
-    const i = EntitySystem_1.EntitySystem.Get(this.EntityId);
+    var i = EntitySystem_1.EntitySystem.Get(this.EntityId);
     if (i?.Valid) {
-      const s = i.GetComponent(177);
+      var s = i.GetComponent(177);
       if (s?.Valid) {
         for (let e = 0; e <= this.Configs.Num(); e++)
           if (this.Configs?.IsValidIndex(e)) {
-            const n = this.Configs.GetKey(e);
+            var n = this.Configs.GetKey(e);
             if (s.ContainsTag(n)) {
               if (this.CurrentTag === n)
                 return void (
@@ -144,7 +144,7 @@ class TsInteractiveSceneActor extends UE.Actor {
               switch (this.InteractiveType) {
                 case 0:
                   var a = r.MaterialData.ToAssetPathName();
-                  a && a !== "None"
+                  a && "None" !== a
                     ? ResourceSystem_1.ResourceSystem.LoadAsync(
                         r.MaterialData.ToAssetPathName(),
                         UE.ItemMaterialControllerActorData_C,
@@ -165,8 +165,8 @@ class TsInteractiveSceneActor extends UE.Actor {
                       );
                   break;
                 case 1:
-                  var a = this.WuYinQuName;
-                  var o = r.WuYinQuState;
+                  var a = this.WuYinQuName,
+                    o = r.WuYinQuState;
                   ModelManager_1.ModelManager.RenderModuleModel.SetBattleState(
                     a,
                     o,
@@ -256,7 +256,7 @@ class TsInteractiveSceneActor extends UE.Actor {
     this.ApplyInteractionConfig(!1);
   }
   HandleEntityCreate(e) {
-    let t;
+    var t;
     e?.Valid &&
       (t = e.Entity.GetComponent(0))?.Valid &&
       t.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_SceneItem &&
@@ -266,7 +266,7 @@ class TsInteractiveSceneActor extends UE.Actor {
       this.SafeAddEntityGameplayTagEvent(e));
   }
   HandleEntityRemove(e) {
-    let t;
+    var t;
     e?.Valid &&
       (t = e.Entity.GetComponent(0))?.Valid &&
       t.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_SceneItem &&
@@ -299,4 +299,4 @@ class TsInteractiveSceneActor extends UE.Actor {
   }
 }
 exports.default = TsInteractiveSceneActor;
-// # sourceMappingURL=TsInteractiveSceneActor.js.map
+//# sourceMappingURL=TsInteractiveSceneActor.js.map

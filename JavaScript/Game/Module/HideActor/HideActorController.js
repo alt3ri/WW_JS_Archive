@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HideActorController = void 0);
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CampUtils_1 = require("../../NewWorld/Character/Common/Blueprint/Utils/CampUtils");
+const ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CampUtils_1 = require("../../NewWorld/Character/Common/Blueprint/Utils/CampUtils");
 class HideActorController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -34,10 +34,11 @@ class HideActorController extends ControllerBase_1.ControllerBase {
           s.Entity.Active &&
           (r = (i = s.Entity.GetComponent(3))?.Actor) &&
           r !== Global_1.Global.BaseCharacter &&
-          CampUtils_1.CampUtils.GetCampRelationship(
-            r.Camp,
-            Global_1.Global.BaseCharacter.Camp,
-          ) !== 1 &&
+          1 !==
+            CampUtils_1.CampUtils.GetCampRelationship(
+              r.Camp,
+              Global_1.Global.BaseCharacter.Camp,
+            ) &&
           (t &&
             ((r = i.DisableActor("[HideActorController] 隐藏Mesh")),
             this.uRn.set(s, r)),
@@ -47,7 +48,7 @@ class HideActorController extends ControllerBase_1.ControllerBase {
   }
   static vei(t, e) {
     if (t) {
-      for (const [i, r] of this.uRn)
+      for (var [i, r] of this.uRn)
         i.Valid && i.Entity.GetComponent(3).EnableActor(r);
       this.uRn.clear();
     }
@@ -68,4 +69,4 @@ class HideActorController extends ControllerBase_1.ControllerBase {
   (HideActorController.Cei = !1),
   (HideActorController._Rn = new Set()),
   (HideActorController.uRn = new Map());
-// # sourceMappingURL=HideActorController.js.map
+//# sourceMappingURL=HideActorController.js.map

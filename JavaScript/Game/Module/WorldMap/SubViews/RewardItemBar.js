@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RewardItemBar = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
 class RewardItemBar extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.DFe = void 0),
       (this.JGe = (e, t, r) => {
-        const i = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
+        var i = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
         return i.Initialize(t.GetOwner()), i.Refresh(e), { Key: r, Value: i };
       });
   }
@@ -36,4 +36,4 @@ class RewardItemBar extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RewardItemBar = RewardItemBar;
-// # sourceMappingURL=RewardItemBar.js.map
+//# sourceMappingURL=RewardItemBar.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NumberSelectComponent = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const LongPressButtonItem_1 = require("../Button/LongPressButtonItem");
-const MAX_VALUE = 9999;
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  LongPressButtonItem_1 = require("../Button/LongPressButtonItem"),
+  MAX_VALUE = 9999;
 class NumberSelectComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -27,7 +27,7 @@ class NumberSelectComponent extends UiPanelBase_1.UiPanelBase {
           this.Oxt.SetInteractive(t !== this.kxt.MaxValue),
           this.Nxt.SetInteractive(t !== this.kxt.MinValue),
           this.GetButton(7).SetSelfInteractive(t !== this.kxt.MaxValue);
-        const i = this.Pe.GetExchangeTableText?.(t);
+        var i = this.Pe.GetExchangeTableText?.(t);
         i &&
           LguiUtil_1.LguiUtil.SetLocalTextNew(this.Fxt, i.TextKey, ...i.Params),
           this.Pe.ValueChangeFunction?.(t);
@@ -73,10 +73,10 @@ class NumberSelectComponent extends UiPanelBase_1.UiPanelBase {
     this.kxt.OnValueChangeCb.Unbind(), this.Nxt.Clear(), this.Oxt.Clear();
   }
   Xxt() {
-    const t = this.GetText(2);
-    const i = this.GetText(3);
-    const s = this.GetIfLimit();
-    const e = s ? 0 : 1;
+    var t = this.GetText(2),
+      i = this.GetText(3),
+      s = this.GetIfLimit(),
+      e = s ? 0 : 1;
     t.SetText(e.toString()),
       i.SetText(this.BY.toString()),
       this.kxt.SetMaxValue(this.BY, !1),
@@ -147,4 +147,4 @@ class NumberSelectComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.NumberSelectComponent = NumberSelectComponent;
-// # sourceMappingURL=NumberSelectComponent.js.map
+//# sourceMappingURL=NumberSelectComponent.js.map

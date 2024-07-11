@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const CameraController_1 = require("../Camera/CameraController");
-const CameraUtility_1 = require("../Camera/CameraUtility");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const ModelManager_1 = require("../Manager/ModelManager");
+const UE = require("ue"),
+  CameraController_1 = require("../Camera/CameraController"),
+  CameraUtility_1 = require("../Camera/CameraUtility"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  ModelManager_1 = require("../Manager/ModelManager");
 class TsAnimNotifyCameraModify extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments),
@@ -21,11 +21,9 @@ class TsAnimNotifyCameraModify extends UE.KuroAnimNotify {
   K2_Notify(e, t) {
     e = e.GetOwner();
     if (!(e instanceof TsBaseCharacter_1.default)) return !1;
-    const i = ModelManager_1.ModelManager.CreatureModel.GetEntityById(
-      e.EntityId,
-    );
+    var i = ModelManager_1.ModelManager.CreatureModel.GetEntityById(e.EntityId);
     if (!i?.Valid) return !1;
-    const r = CameraController_1.CameraController.FightCamera.LogicComponent;
+    var r = CameraController_1.CameraController.FightCamera.LogicComponent;
     if (!r?.Valid) return !1;
     let a = void 0;
     if (
@@ -38,9 +36,9 @@ class TsAnimNotifyCameraModify extends UE.KuroAnimNotify {
       ))
     ) {
       let t = void 0;
-      this.生效客户端类型 !== 0 &&
-        this.生效客户端类型 !== 1 &&
-        this.生效客户端类型 !== 6 &&
+      0 !== this.生效客户端类型 &&
+        1 !== this.生效客户端类型 &&
+        6 !== this.生效客户端类型 &&
         ((t = e),
         (this.相机修改配置.IsLockInput = !0),
         (this.相机修改配置.OverrideCameraInput = !0)),
@@ -66,4 +64,4 @@ class TsAnimNotifyCameraModify extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifyCameraModify;
-// # sourceMappingURL=TsAnimNotifyCameraModify.js.map
+//# sourceMappingURL=TsAnimNotifyCameraModify.js.map

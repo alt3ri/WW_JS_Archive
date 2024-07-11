@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InteractSystemViewItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const HelpController_1 = require("../../Module/Help/HelpController");
-const LguiUtil_1 = require("../../Module/Util/LguiUtil");
-const UiManager_1 = require("../UiManager");
-const CommonPopViewBehaviourBase_1 = require("./CommonPopViewBehaviourBase");
-const PopupCaptionItem_1 = require("./PopupCaptionItem");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  HelpController_1 = require("../../Module/Help/HelpController"),
+  LguiUtil_1 = require("../../Module/Util/LguiUtil"),
+  UiManager_1 = require("../UiManager"),
+  CommonPopViewBehaviourBase_1 = require("./CommonPopViewBehaviourBase"),
+  PopupCaptionItem_1 = require("./PopupCaptionItem");
 class InteractSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase {
   constructor() {
     super(...arguments),
       (this.nVt = void 0),
       (this.vur = void 0),
       (this.YZe = () => {
-        const t = this.vur.HelpGroupId;
+        var t = this.vur.HelpGroupId;
         HelpController_1.HelpController.OpenHelpById(t);
       }),
       (this.ACt = () => {
@@ -42,19 +42,19 @@ class InteractSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewB
   }
   OnStart() {
     this.nVt = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(3));
-    let t;
-    let i;
-    let e;
-    let s;
-    let o;
-    let r;
-    let n;
-    let h;
-    const a = this.ViewInfo.CommonPopBgKey;
-    const l =
-      ConfigManager_1.ConfigManager.UiCommonConfig.GetInteractBackgroundByViewName(
-        a,
-      );
+    var t,
+      i,
+      e,
+      s,
+      o,
+      r,
+      n,
+      h,
+      a = this.ViewInfo.CommonPopBgKey,
+      l =
+        ConfigManager_1.ConfigManager.UiCommonConfig.GetInteractBackgroundByViewName(
+          a,
+        );
     l
       ? ((t = (this.vur = l).Title),
         (i = l.TitleSpritePath),
@@ -63,7 +63,7 @@ class InteractSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewB
         (o = !StringUtils_1.StringUtils.IsEmpty(t)),
         (r = !StringUtils_1.StringUtils.IsEmpty(i)),
         (n = !StringUtils_1.StringUtils.IsEmpty(e)),
-        (h = s?.length > 0),
+        (h = 0 < s?.length),
         this.SetTitleVisible(o),
         o && this.SetTitleText(t),
         this.SetTitleSpriteVisible(r),
@@ -92,7 +92,7 @@ class InteractSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewB
     this.GetText(1).SetUIActive(t);
   }
   SetTitleText(t) {
-    const i = this.GetText(1);
+    var i = this.GetText(1);
     LguiUtil_1.LguiUtil.SetLocalTextNew(i, t);
   }
   SetTitleSpriteVisible(t) {
@@ -135,4 +135,4 @@ class InteractSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewB
   }
 }
 exports.InteractSystemViewItem = InteractSystemViewItem;
-// # sourceMappingURL=InteractSystemViewItem.js.map
+//# sourceMappingURL=InteractSystemViewItem.js.map

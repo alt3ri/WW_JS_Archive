@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MarkSelectComponent = void 0);
-const UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../../../Common/LevelSequencePlayer");
+const UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../../../Common/LevelSequencePlayer");
 class MarkSelectComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments), (this.EPe = void 0), (this.mDi = !1);
@@ -17,4 +17,4 @@ class MarkSelectComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.MarkSelectComponent = MarkSelectComponent;
-// # sourceMappingURL=MarkSelectComponent.js.map
+//# sourceMappingURL=MarkSelectComponent.js.map

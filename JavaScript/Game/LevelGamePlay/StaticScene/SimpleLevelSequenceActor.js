@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const CameraController_1 = require("../../Camera/CameraController");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const TsInteractionUtils_1 = require("../../Module/Interaction/TsInteractionUtils");
-const LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController");
-const UiManager_1 = require("../../Ui/UiManager");
-const TimeTrackController_1 = require("../TimeTrackControl/TimeTrackController");
-const CAMERA_TAG = new UE.FName("SequenceCamera");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  TsInteractionUtils_1 = require("../../Module/Interaction/TsInteractionUtils"),
+  LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  TimeTrackController_1 = require("../TimeTrackControl/TimeTrackController"),
+  CAMERA_TAG = new UE.FName("SequenceCamera");
 class SimpleLevelSequenceActor {
   constructor(e) {
     (this.bPe = void 0),
@@ -75,7 +75,7 @@ class SimpleLevelSequenceActor {
                       "CameraMode",
                       ModelManager_1.ModelManager.CameraModel?.CameraMode,
                     ]),
-                this.jPe === 1
+                1 === this.jPe
                   ? this.lxe(
                       this.ixe,
                       this.VPe,
@@ -112,44 +112,32 @@ class SimpleLevelSequenceActor {
     this.JPe = e ?? !1;
   }
   ForceSwitchSceneCamera(e) {
-    return this.qPe?.IsValid()
-      ? this.hxe
-        ? ((this.sxe = !0),
-          e
-            ? ((this.txe = !0),
-              this._xe(() => {
-                UiManager_1.UiManager.OpenView(
-                  "TimeTrackControlView",
-                  void 0,
-                  (e) => {
-                    e
-                      ? CameraController_1.CameraController.Model.IsToSceneCameraMode() ||
-                        (TsInteractionUtils_1.TsInteractionUtils.ClearCurrentOpenViewName(),
-                        TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose(),
-                        UiManager_1.UiManager.GetViewByName(
-                          "TimeTrackControlView",
-                        )?.CloseMe())
-                      : (TsInteractionUtils_1.TsInteractionUtils.ClearCurrentOpenViewName(),
-                        TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose());
-                  },
-                );
-              }))
-            : ((this.txe = !1), this.dxe()),
-          !0)
-        : (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "SceneGameplay",
-              46,
-              "时间控制装置启动请求:失败，!this.HasCameraTrack",
-            ),
-          !1)
-      : (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "SceneGameplay",
-            46,
-            "时间控制装置启动请求:失败，!this.Director?.IsValid()",
-          ),
-        !1);
+    return (
+      !!this.qPe?.IsValid() &&
+      !!this.hxe &&
+      ((this.sxe = !0),
+      e
+        ? ((this.txe = !0),
+          this._xe(() => {
+            UiManager_1.UiManager.OpenView(
+              "TimeTrackControlView",
+              void 0,
+              (e) => {
+                e
+                  ? CameraController_1.CameraController.Model.IsToSceneCameraMode() ||
+                    (TsInteractionUtils_1.TsInteractionUtils.ClearCurrentOpenViewName(),
+                    TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose(),
+                    UiManager_1.UiManager.GetViewByName(
+                      "TimeTrackControlView",
+                    )?.CloseMe())
+                  : (TsInteractionUtils_1.TsInteractionUtils.ClearCurrentOpenViewName(),
+                    TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose());
+              },
+            );
+          }))
+        : ((this.txe = !1), this.dxe()),
+      !0)
+    );
   }
   PlayToMarkOld(e, t, i, s) {
     this.Cxe(e) &&
@@ -205,7 +193,7 @@ class SimpleLevelSequenceActor {
   }
   PlayLevelsequence(e, t) {
     if (this.qPe?.IsValid()) {
-      const i = this.qPe.SequencePlayer;
+      var i = this.qPe.SequencePlayer;
       if (i?.IsValid()) {
         if (t)
           i.Play(),
@@ -256,19 +244,19 @@ class SimpleLevelSequenceActor {
     }
   }
   mxe() {
-    var e = new UE.MovieSceneSequencePlaybackSettings();
-    var e =
-      ((e.bDisableMovementInput = !1),
-      (e.bDisableLookAtInput = !1),
-      (this.qPe = ActorSystem_1.ActorSystem.Get(
-        UE.LevelSequenceActor.StaticClass(),
-        new UE.Transform(),
-        void 0,
-        !1,
-      )),
-      (this.qPe.PlaybackSettings = e),
-      this.qPe.SetSequence(this.bPe),
-      this.qPe.SequencePlayer);
+    var e = new UE.MovieSceneSequencePlaybackSettings(),
+      e =
+        ((e.bDisableMovementInput = !1),
+        (e.bDisableLookAtInput = !1),
+        (this.qPe = ActorSystem_1.ActorSystem.Get(
+          UE.LevelSequenceActor.StaticClass(),
+          new UE.Transform(),
+          void 0,
+          !1,
+        )),
+        (this.qPe.PlaybackSettings = e),
+        this.qPe.SetSequence(this.bPe),
+        this.qPe.SequencePlayer);
     e?.IsValid()
       ? (e.OnPause.Add(this.pxe.bind(this)),
         e.OnStop.Add(this.vxe.bind(this)),
@@ -290,7 +278,7 @@ class SimpleLevelSequenceActor {
         this.bPe.GetName(),
       ]),
       this.XPe ||
-        (this.WPe !== 1 || this.sxe
+        (1 !== this.WPe || this.sxe
           ? this.Sxe()
           : this.lxe(
               this.oxe,
@@ -318,7 +306,7 @@ class SimpleLevelSequenceActor {
         ["levelSequence", this.bPe.GetName()],
       ),
       this.XPe ||
-        (this.WPe !== 1 || this.sxe
+        (1 !== this.WPe || this.sxe
           ? this.Sxe()
           : this.lxe(
               this.oxe,
@@ -347,7 +335,7 @@ class SimpleLevelSequenceActor {
         this.dxe();
   }
   Cxe(t) {
-    const i = this.bPe.GetMovieScene();
+    var i = this.bPe.GetMovieScene();
     let s = !1;
     if (i)
       for (let e = 0; e < i.MarkedFrames.Num(); e++)
@@ -369,15 +357,11 @@ class SimpleLevelSequenceActor {
     );
   }
   _xe(e = () => {}) {
-    let t;
+    var t;
     this.qPe?.IsValid()
       ? ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot()
         ? (Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn(
-              "Camera",
-              46,
-              "SimpleLevelSeqeunce:演出中触发了场景镜头切换 请检查配置",
-            ),
+            Log_1.Log.Warn("Camera", 7, "演出中触发了场景镜头切换 请检查配置"),
           e())
         : ((t = this.qPe.SequencePlayer.IsPlaying()),
           this.JPe ||
@@ -393,15 +377,15 @@ class SimpleLevelSequenceActor {
               )),
             (this.exe.IsKeepUi = this.JPe),
             this.KPe
-              ? (this.exe.FadeIn = this.NPe !== 0 ? this.NPe : this.VPe)
+              ? (this.exe.FadeIn = 0 !== this.NPe ? this.NPe : this.VPe)
               : (this.exe.FadeIn = 0),
             this.QPe
-              ? (this.exe.FadeOut = this.FPe !== 0 ? this.FPe : this.HPe)
+              ? (this.exe.FadeOut = 0 !== this.FPe ? this.FPe : this.HPe)
               : (this.exe.FadeOut = 0)),
           this.GPe.Empty(),
           this.GPe.Add(this.exe.Camera),
           this.qPe.SetBindingByTag(CAMERA_TAG, this.GPe, !0),
-          ModelManager_1.ModelManager.CameraModel.CameraMode === 3
+          3 === ModelManager_1.ModelManager.CameraModel.CameraMode
             ? ((this.YPe = !0),
               (this.exe.IsBinding = !0),
               CameraController_1.CameraController.SceneCamera.PlayerComponent.EnterSceneSubCamera(
@@ -409,20 +393,14 @@ class SimpleLevelSequenceActor {
               ),
               e())
             : this.sxe
-              ? this.jPe === 1
+              ? 1 === this.jPe
                 ? this.lxe(this.ixe, this.VPe, this.NPe, this.OPe, () => {
                     CameraController_1.CameraController.EnterCameraMode(
                       3,
                       0,
                       0,
                       0,
-                      () => {
-                        CameraController_1.CameraController.Model.IsToSceneCameraMode()
-                          ? e()
-                          : (TsInteractionUtils_1.TsInteractionUtils.ClearCurrentOpenViewName(),
-                            TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose());
-                      },
-                      !0,
+                      e,
                     );
                   })
                 : CameraController_1.CameraController.EnterCameraMode(
@@ -430,13 +408,7 @@ class SimpleLevelSequenceActor {
                     this.NPe ?? 1,
                     0,
                     0,
-                    () => {
-                      CameraController_1.CameraController.Model.IsToSceneCameraMode()
-                        ? e()
-                        : (TsInteractionUtils_1.TsInteractionUtils.ClearCurrentOpenViewName(),
-                          TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose());
-                    },
-                    !0,
+                    e,
                   )
               : (this.YPe
                   ? Log_1.Log.CheckInfo() &&
@@ -462,20 +434,15 @@ class SimpleLevelSequenceActor {
                 ) || e(),
                 (this.YPe = !0),
                 (this.exe.IsBinding = !0)))
-      : (Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn(
-            "UiCore",
-            46,
-            "SimpleLevelSeqeunce:EnterSceneCamera Director为空",
-          ),
-        e());
+      : Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn("UiCore", 46, "EnterSceneCamera Director为空");
   }
   dxe() {
     this.qPe.ResetBindings(),
       (this.YPe = !1),
       this.exe?.IsBinding
         ? this.sxe
-          ? this.WPe === 1
+          ? 1 === this.WPe
             ? this.lxe(this.ixe, this.VPe, this.NPe, this.OPe, () => {
                 (this.exe.FadeOut = 0),
                   CameraController_1.CameraController.SceneCamera.PlayerComponent.ExitSceneSubCamera(
@@ -484,13 +451,13 @@ class SimpleLevelSequenceActor {
                     this.WPe,
                   );
               })
-            : ((this.exe.FadeOut = this.FPe !== 0 ? this.FPe : this.HPe),
+            : ((this.exe.FadeOut = 0 !== this.FPe ? this.FPe : this.HPe),
               CameraController_1.CameraController.SceneCamera.PlayerComponent.ExitSceneSubCamera(
                 this.exe,
                 this.B_e,
                 this.WPe,
               ))
-          : this.WPe === 1
+          : 1 === this.WPe
             ? this.B_e()
             : CameraController_1.CameraController.SceneCamera.PlayerComponent.ExitSceneSubCamera(
                 this.exe,
@@ -531,7 +498,7 @@ class SimpleLevelSequenceActor {
                 );
         },
         i ?? 0,
-        e === 0
+        0 === e
           ? IAction_1.EFadeInScreenShowType.Black
           : IAction_1.EFadeInScreenShowType.White,
       );
@@ -614,13 +581,13 @@ class SimpleLevelSequenceActor {
     }
   }
   GetMarkValue(t) {
-    const i = this.bPe.GetMovieScene();
+    var i = this.bPe.GetMovieScene();
     for (let e = 0; e < i.MarkedFrames.Num(); e++)
       if (i.MarkedFrames.Get(e).Label === t)
         return this.Exe(i.MarkedFrames.Get(e).FrameNumber.Value);
   }
   CheckLatestWay() {
-    let e, t, i, s;
+    var e, t, i, s;
     this.bPe.GetMovieScene()
       ? ((s = this.qPe.SequencePlayer),
         (e = this.GetMarkValue(this.$Pe)),
@@ -634,16 +601,16 @@ class SimpleLevelSequenceActor {
         Log_1.Log.Debug("Interaction", 46, "检查最短路径，但movieScene为空");
   }
   Exe(e) {
-    const t = this.bPe.GetMovieScene();
+    var t = this.bPe.GetMovieScene();
     return (e * t.DisplayRate.Numerator) / t.TickResolution.Numerator;
   }
   SetTimeDilation(e) {
     this.nxe !== e && ((this.nxe = e), this.yxe());
   }
   yxe() {
-    const e = this.nxe;
+    var e = this.nxe;
     this.qPe.SequencePlayer.SetPlayRate(e);
   }
 }
 exports.default = SimpleLevelSequenceActor;
-// # sourceMappingURL=SimpleLevelSequenceActor.js.map
+//# sourceMappingURL=SimpleLevelSequenceActor.js.map

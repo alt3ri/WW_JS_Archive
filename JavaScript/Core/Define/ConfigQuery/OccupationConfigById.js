@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configOccupationConfigById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const OccupationConfig_1 = require("../Config/OccupationConfig");
-const DB = "db_occupation.db";
-const FILE = "k.可视化编辑/c.Csv/z.占用组配置/*.csv*";
-const TABLE = "OccupationConfig";
-const COMMAND = "select BinData from `OccupationConfig` where Id=?";
-const KEY_PREFIX = "OccupationConfigById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  OccupationConfig_1 = require("../Config/OccupationConfig"),
+  DB = "db_occupation.db",
+  FILE = "k.可视化编辑/c.Csv/z.占用组配置/*.csv*",
+  TABLE = "OccupationConfig",
+  COMMAND = "select BinData from `OccupationConfig` where Id=?",
+  KEY_PREFIX = "OccupationConfigById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configOccupationConfigById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configOccupationConfigById.GetConfig(";
 exports.configOccupationConfigById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configOccupationConfigById = {
       if (
         (e =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var e;
-        var i = void 0;
+        var e,
+          i = void 0;
         if (
           (([e, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configOccupationConfigById = {
     }
   },
 };
-// # sourceMappingURL=OccupationConfigById.js.map
+//# sourceMappingURL=OccupationConfigById.js.map

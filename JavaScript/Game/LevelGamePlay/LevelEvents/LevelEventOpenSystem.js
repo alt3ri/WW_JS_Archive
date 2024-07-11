@@ -1,37 +1,37 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventOpenSystem = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const TsInteractionUtils_1 = require("../../Module/Interaction/TsInteractionUtils");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const OpenSystemConfrimBox_1 = require("./OpenSystem/OpenSystemConfrimBox");
-const OpenSystemContributionLevel_1 = require("./OpenSystem/OpenSystemContributionLevel");
-const OpenSystemCook_1 = require("./OpenSystem/OpenSystemCook");
-const OpenSystemExploreLevel_1 = require("./OpenSystem/OpenSystemExploreLevel");
-const OpenSystemExpostulation_1 = require("./OpenSystem/OpenSystemExpostulation");
-const OpenSystemFeed_1 = require("./OpenSystem/OpenSystemFeed");
-const OpenSystemFixCook_1 = require("./OpenSystem/OpenSystemFixCook");
-const OpenSystemForging_1 = require("./OpenSystem/OpenSystemForging");
-const OpenSystemGameSysOpen_1 = require("./OpenSystem/OpenSystemGameSysOpen");
-const OpenSystemInformationView_1 = require("./OpenSystem/OpenSystemInformationView");
-const OpenSystemInstanceEntrance_1 = require("./OpenSystem/OpenSystemInstanceEntrance");
-const OpenSystemInstanceFailure_1 = require("./OpenSystem/OpenSystemInstanceFailure");
-const OpenSystemLordGym_1 = require("./OpenSystem/OpenSystemLordGym");
-const OpenSystemMingSuTi_1 = require("./OpenSystem/OpenSystemMingSuTi");
-const OpenSystemRegionQuest_1 = require("./OpenSystem/OpenSystemRegionQuest");
-const OpenSystemRogueAbilitySelect_1 = require("./OpenSystem/OpenSystemRogueAbilitySelect");
-const OpenSystemRoguelikeActivity_1 = require("./OpenSystem/OpenSystemRoguelikeActivity");
-const OpenSystemRogueShop_1 = require("./OpenSystem/OpenSystemRogueShop");
-const OpenSystemRoleDescription_1 = require("./OpenSystem/OpenSystemRoleDescription");
-const OpenSystemShopView_1 = require("./OpenSystem/OpenSystemShopView");
-const OpenSystemSoundAreaPlayInfo_1 = require("./OpenSystem/OpenSystemSoundAreaPlayInfo");
-const OpenSystemSynthetic_1 = require("./OpenSystem/OpenSystemSynthetic");
-const OpenSystemTrialRoleDescription_1 = require("./OpenSystem/OpenSystemTrialRoleDescription");
-const OpenSystemTurntableControl_1 = require("./OpenSystem/OpenSystemTurntableControl");
+const Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  TsInteractionUtils_1 = require("../../Module/Interaction/TsInteractionUtils"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  OpenSystemConfrimBox_1 = require("./OpenSystem/OpenSystemConfrimBox"),
+  OpenSystemContributionLevel_1 = require("./OpenSystem/OpenSystemContributionLevel"),
+  OpenSystemCook_1 = require("./OpenSystem/OpenSystemCook"),
+  OpenSystemExploreLevel_1 = require("./OpenSystem/OpenSystemExploreLevel"),
+  OpenSystemExpostulation_1 = require("./OpenSystem/OpenSystemExpostulation"),
+  OpenSystemFeed_1 = require("./OpenSystem/OpenSystemFeed"),
+  OpenSystemFixCook_1 = require("./OpenSystem/OpenSystemFixCook"),
+  OpenSystemForging_1 = require("./OpenSystem/OpenSystemForging"),
+  OpenSystemGameSysOpen_1 = require("./OpenSystem/OpenSystemGameSysOpen"),
+  OpenSystemInformationView_1 = require("./OpenSystem/OpenSystemInformationView"),
+  OpenSystemInstanceEntrance_1 = require("./OpenSystem/OpenSystemInstanceEntrance"),
+  OpenSystemInstanceFailure_1 = require("./OpenSystem/OpenSystemInstanceFailure"),
+  OpenSystemLordGym_1 = require("./OpenSystem/OpenSystemLordGym"),
+  OpenSystemMingSuTi_1 = require("./OpenSystem/OpenSystemMingSuTi"),
+  OpenSystemRegionQuest_1 = require("./OpenSystem/OpenSystemRegionQuest"),
+  OpenSystemRogueAbilitySelect_1 = require("./OpenSystem/OpenSystemRogueAbilitySelect"),
+  OpenSystemRoguelikeActivity_1 = require("./OpenSystem/OpenSystemRoguelikeActivity"),
+  OpenSystemRogueShop_1 = require("./OpenSystem/OpenSystemRogueShop"),
+  OpenSystemRoleDescription_1 = require("./OpenSystem/OpenSystemRoleDescription"),
+  OpenSystemShopView_1 = require("./OpenSystem/OpenSystemShopView"),
+  OpenSystemSoundAreaPlayInfo_1 = require("./OpenSystem/OpenSystemSoundAreaPlayInfo"),
+  OpenSystemSynthetic_1 = require("./OpenSystem/OpenSystemSynthetic"),
+  OpenSystemTrialRoleDescription_1 = require("./OpenSystem/OpenSystemTrialRoleDescription"),
+  OpenSystemTurntableControl_1 = require("./OpenSystem/OpenSystemTurntableControl");
 class LevelEventOpenSystem extends LevelGeneralBase_1.LevelEventBase {
   constructor(e) {
     super(e),
@@ -145,12 +145,12 @@ class LevelEventOpenSystem extends LevelGeneralBase_1.LevelEventBase {
       );
   }
   async Bbn(t, n) {
-    const s = this.KDe.get(t.SystemType);
+    var s = this.KDe.get(t.SystemType);
     if (s)
       if (ModelManager_1.ModelManager.GameModeModel.WorldDoneAndLoadingClosed) {
-        const i = s.GetViewName(t, n);
+        var i = s.GetViewName(t, n);
         let e = !1;
-        let o = n;
+        var o = n;
         if (
           (o?.EntityId &&
             i &&
@@ -250,7 +250,7 @@ class LevelEventOpenSystem extends LevelGeneralBase_1.LevelEventBase {
         Log_1.Log.Error("LevelEvent", 37, "[LevelEventOpenSystem]参数类型出错");
   }
   XDe(e, t, n) {
-    let s = n?.EntityId;
+    var s = n?.EntityId;
     s &&
       (s = EntitySystem_1.EntitySystem.Get(s)?.GetComponent(168)) &&
       (t = t.GetViewName(e, n)) &&
@@ -259,4 +259,4 @@ class LevelEventOpenSystem extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventOpenSystem = LevelEventOpenSystem;
-// # sourceMappingURL=LevelEventOpenSystem.js.map
+//# sourceMappingURL=LevelEventOpenSystem.js.map

@@ -13,4 +13,4 @@ class ParkourExtraInfo extends (exports.GeneralLogicTreeNodeExtraInfo =
   }
 }
 exports.ParkourExtraInfo = ParkourExtraInfo;
-// # sourceMappingURL=GeneralLogicTreeNodeExtraInfo.js.map
+//# sourceMappingURL=GeneralLogicTreeNodeExtraInfo.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TrialRoleInfo = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const IntPair_1 = require("./SubType/IntPair");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  IntPair_1 = require("./SubType/IntPair");
 class TrialRoleInfo {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -59,54 +59,54 @@ class TrialRoleInfo {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   groupid() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   worldlevel() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   onlytrial() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   hidetriallabel() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   parentid() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   level() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   resonancelevel() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   unlockskilllevel() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   GetUnlockskillnodelistAt(t) {
     return this.unlockskillnodelist(t);
   }
   unlockskillnodelist(t) {
-    const i = this.J7.__offset(this.z7, 22);
+    var i = this.J7.__offset(this.z7, 22);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   unlockskillnodelistLength() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   unlockskillnodelistArray() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -116,14 +116,14 @@ class TrialRoleInfo {
       : null;
   }
   trailweapon() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetPhantomequiplistAt(t, i) {
     return this.phantomequiplist(t);
   }
   phantomequiplist(t, i) {
-    const s = this.J7.__offset(this.z7, 26);
+    var s = this.J7.__offset(this.z7, 26);
     return s
       ? (i || new IntPair_1.IntPair()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -132,9 +132,9 @@ class TrialRoleInfo {
       : null;
   }
   phantomequiplistLength() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.TrialRoleInfo = TrialRoleInfo;
-// # sourceMappingURL=TrialRoleInfo.js.map
+//# sourceMappingURL=TrialRoleInfo.js.map

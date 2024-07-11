@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RewardProgressBar = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const ANIMATION_LENGTH = 500;
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ANIMATION_LENGTH = 500;
 class RewardProgressBar extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -30,10 +30,10 @@ class RewardProgressBar extends UiPanelBase_1.UiPanelBase {
     (this.q0i = 0), (this.G0i.length = 0);
   }
   Refresh(t, i, s = ANIMATION_LENGTH) {
-    let e;
+    var e;
     this.LBt(t),
       i &&
-        i.length !== 0 &&
+        0 !== i.length &&
         (s <= 0
           ? (t = i[i.length - 1]) &&
             ((e = t.ToProgress),
@@ -44,9 +44,9 @@ class RewardProgressBar extends UiPanelBase_1.UiPanelBase {
   }
   PlayProgressAnimation(t, i = ANIMATION_LENGTH) {
     this.G0i = t;
-    let s;
-    let e;
-    var t = this.G0i.shift();
+    var s,
+      e,
+      t = this.G0i.shift();
     t &&
       ((s = t.FromProgress),
       (e = t.ToProgress),
@@ -65,7 +65,7 @@ class RewardProgressBar extends UiPanelBase_1.UiPanelBase {
         (this.B0i = s));
   }
   Tick(t) {
-    let i;
+    var i;
     void 0 !== this.q0i &&
       ((i = 1 - this.q0i / this.b0i),
       (i = MathUtils_1.MathUtils.Lerp(this.x0i, this.w0i, i)),
@@ -75,10 +75,10 @@ class RewardProgressBar extends UiPanelBase_1.UiPanelBase {
   }
   k0i() {
     (this.q0i = void 0),
-      this.G0i.length > 0 && this.PlayProgressAnimation(this.G0i, this.b0i);
+      0 < this.G0i.length && this.PlayProgressAnimation(this.G0i, this.b0i);
   }
   LBt(t) {
-    const i = this.GetText(0);
+    var i = this.GetText(0);
     StringUtils_1.StringUtils.IsEmpty(t)
       ? i.SetUIActive(!1)
       : (LguiUtil_1.LguiUtil.SetLocalTextNew(i, t), i.SetUIActive(!0));
@@ -91,4 +91,4 @@ class RewardProgressBar extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RewardProgressBar = RewardProgressBar;
-// # sourceMappingURL=RewardProgressBar.js.map
+//# sourceMappingURL=RewardProgressBar.js.map

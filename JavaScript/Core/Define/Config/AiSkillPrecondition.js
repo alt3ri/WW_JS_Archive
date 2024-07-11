@@ -37,11 +37,11 @@ class AiSkillPrecondition {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   distancerange(t) {
-    const e = this.J7.__offset(this.z7, 6);
+    var e = this.J7.__offset(this.z7, 6);
     return e
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + e),
@@ -50,7 +50,7 @@ class AiSkillPrecondition {
       : null;
   }
   anglerange(t) {
-    const e = this.J7.__offset(this.z7, 8);
+    var e = this.J7.__offset(this.z7, 8);
     return e
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + e),
@@ -59,7 +59,7 @@ class AiSkillPrecondition {
       : null;
   }
   targetanglerange(t) {
-    const e = this.J7.__offset(this.z7, 10);
+    var e = this.J7.__offset(this.z7, 10);
     return e
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + e),
@@ -68,7 +68,7 @@ class AiSkillPrecondition {
       : null;
   }
   heightrange(t) {
-    const e = this.J7.__offset(this.z7, 12);
+    var e = this.J7.__offset(this.z7, 12);
     return e
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + e),
@@ -77,13 +77,13 @@ class AiSkillPrecondition {
       : null;
   }
   needtag(t) {
-    const e = this.J7.__offset(this.z7, 14);
+    var e = this.J7.__offset(this.z7, 14);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   needtarget() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
 }
 exports.AiSkillPrecondition = AiSkillPrecondition;
-// # sourceMappingURL=AiSkillPrecondition.js.map
+//# sourceMappingURL=AiSkillPrecondition.js.map

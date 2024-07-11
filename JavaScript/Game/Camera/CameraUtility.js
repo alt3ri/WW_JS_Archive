@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraUtility = void 0);
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const CommonParamById_1 = require("../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../Core/Define/Net/Protocol");
-const GameplayTagUtils_1 = require("../../Core/Utils/GameplayTagUtils");
-const Rotator_1 = require("../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const TsAiController_1 = require("../AI/Controller/TsAiController");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const Global_1 = require("../Global");
-const ModelManager_1 = require("../Manager/ModelManager");
-const CharacterNameDefines_1 = require("../NewWorld/Character/Common/CharacterNameDefines");
-const ActorUtils_1 = require("../Utils/ActorUtils");
-const CameraController_1 = require("./CameraController");
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  CommonParamById_1 = require("../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../Core/Define/Net/Protocol"),
+  GameplayTagUtils_1 = require("../../Core/Utils/GameplayTagUtils"),
+  Rotator_1 = require("../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  TsAiController_1 = require("../AI/Controller/TsAiController"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  Global_1 = require("../Global"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  CharacterNameDefines_1 = require("../NewWorld/Character/Common/CharacterNameDefines"),
+  ActorUtils_1 = require("../Utils/ActorUtils"),
+  CameraController_1 = require("./CameraController");
 class CameraUtility {
   static GetSocketLocation(e, t, r, a = void 0) {
-    let i = void 0;
-    let o = void 0;
+    let i = void 0,
+      o = void 0;
     if (e) (i = e), (o = a || ActorUtils_1.ActorUtils.GetEntityByActor(e));
     else {
       if (!a) return void r.Reset();
@@ -54,7 +54,7 @@ class CameraUtility {
     );
   }
   static GetCameraTargetEntityHandle() {
-    let e = ModelManager_1.ModelManager.CameraModel.FightCamera.LogicComponent;
+    var e = ModelManager_1.ModelManager.CameraModel.FightCamera.LogicComponent;
     if (e.Valid) {
       e = e.TargetEntity;
       if (e?.Valid) return e;
@@ -73,17 +73,16 @@ class CameraUtility {
       this.cz.SubtractionEqual(
         e.Character.CharacterActorComponent.ActorLocationProxy,
       );
-    var e = this.cz.HeadingAngle() * MathUtils_1.MathUtils.RadToDeg;
-    const t = Global_1.Global.CharacterCameraManager.GetCameraRotation().Yaw;
+    var e = this.cz.HeadingAngle() * MathUtils_1.MathUtils.RadToDeg,
+      t = Global_1.Global.CharacterCameraManager.GetCameraRotation().Yaw;
     return MathUtils_1.MathUtils.WrapAngle(e - t);
   }
   static GetCameraDefaultFocusRotator() {
-    const e =
-      CommonParamById_1.configCommonParamById.GetFloatConfig(
-        "InitialCameraPitch",
-      );
-    let t =
-      ModelManager_1.ModelManager.CameraModel?.FightCamera?.LogicComponent;
+    var e =
+        CommonParamById_1.configCommonParamById.GetFloatConfig(
+          "InitialCameraPitch",
+        ),
+      t = ModelManager_1.ModelManager.CameraModel?.FightCamera?.LogicComponent;
     return (
       t?.Valid &&
       t?.Character?.IsValid() &&
@@ -179,7 +178,7 @@ class CameraUtility {
   }
   static Fhe(e, t = !1, r = !1) {
     if (!e?.Valid) return !1;
-    let a = e.Entity.GetComponent(0);
+    var a = e.Entity.GetComponent(0);
     if (a?.Valid) {
       (a =
         a.IsVision() || a.IsMonster()
@@ -196,8 +195,8 @@ class CameraUtility {
   }
   static Vhe(e, t) {
     if (!e?.Valid) return !1;
-    let r;
-    const a = e.Entity.GetComponent(0);
+    var r,
+      a = e.Entity.GetComponent(0);
     if (!a?.Valid) return !1;
     switch (t) {
       case 0:
@@ -249,12 +248,12 @@ class CameraUtility {
     }
   }
   static Hhe(e, t = void 0) {
-    return !t || e !== 0 || this.jhe(t);
+    return !t || 0 !== e || this.jhe(t);
   }
   static jhe(t) {
-    const r = t.Num();
+    var r = t.Num();
     for (let e = 0; e < r; ++e) {
-      const a = t.Get(e);
+      var a = t.Get(e);
       switch (a.ConditionType) {
         case 0:
           if (this.Whe(a)) break;
@@ -297,23 +296,23 @@ class CameraUtility {
   }
   static Whe(e) {
     var t =
-      Global_1.Global.BaseCharacter.GetEntityNoBlueprint().GetComponent(185);
-    var t = e.AnyTag
-      ? t.HasAnyTag(
-          GameplayTagUtils_1.GameplayTagUtils.ConvertFromUeContainer(
-            e.TagToCheck,
-          ),
-        )
-      : t.HasAllTag(
-          GameplayTagUtils_1.GameplayTagUtils.ConvertFromUeContainer(
-            e.TagToCheck,
-          ),
-        );
+        Global_1.Global.BaseCharacter.GetEntityNoBlueprint().GetComponent(185),
+      t = e.AnyTag
+        ? t.HasAnyTag(
+            GameplayTagUtils_1.GameplayTagUtils.ConvertFromUeContainer(
+              e.TagToCheck,
+            ),
+          )
+        : t.HasAllTag(
+            GameplayTagUtils_1.GameplayTagUtils.ConvertFromUeContainer(
+              e.TagToCheck,
+            ),
+          );
     return e.Reverse ? !t : t;
   }
   static Khe(e) {
     let t = !1;
-    let r = this.GetCameraTargetEntityHandle();
+    var r = this.GetCameraTargetEntityHandle();
     return (
       r &&
         ((r = r.Entity.GetComponent(185)),
@@ -333,16 +332,16 @@ class CameraUtility {
   }
   static Qhe(e) {
     let t = !1;
-    const r = ModelManager_1.ModelManager.CameraModel.FightCameraFinalDistance;
+    var r = ModelManager_1.ModelManager.CameraModel.FightCameraFinalDistance;
     return (
       r >= e.ArmLengthMin && r <= e.ArmLengthMax && (t = !0), e.Reverse ? !t : t
     );
   }
   static Xhe(e) {
     let t = !1;
-    let r;
-    let a;
-    const i = this.GetCameraTargetEntityHandle();
+    var r,
+      a,
+      i = this.GetCameraTargetEntityHandle();
     return (
       i &&
         ((r =
@@ -360,8 +359,8 @@ class CameraUtility {
   }
   static $he(e) {
     let t = !1;
-    let r;
-    let a = this.GetCameraTargetEntityHandle();
+    var r,
+      a = this.GetCameraTargetEntityHandle();
     return (
       a &&
         ((r =
@@ -377,7 +376,7 @@ class CameraUtility {
   }
   static Yhe(e) {
     let t = !1;
-    let r;
+    var r;
     return (
       this.GetCameraTargetEntityHandle() &&
         (r = Math.abs(this.GetPlayerTargetAndCameraYawOffset())) >=
@@ -389,7 +388,7 @@ class CameraUtility {
   }
   static Jhe(e) {
     let t = !1;
-    const r = Global_1.Global.CharacterCameraManager.GetCameraRotation().Pitch;
+    var r = Global_1.Global.CharacterCameraManager.GetCameraRotation().Pitch;
     return (
       r >= e.LockTargetDeltaPitchMin &&
         r <= e.LockTargetDeltaPitchMax &&
@@ -399,9 +398,9 @@ class CameraUtility {
   }
   static zhe(e) {
     let t = !1;
-    let r;
-    let a;
-    let i = this.GetCameraTargetEntityHandle();
+    var r,
+      a,
+      i = this.GetCameraTargetEntityHandle();
     return (
       i &&
         ((r =
@@ -418,12 +417,12 @@ class CameraUtility {
     );
   }
   static CharacterMovementBaseIsMoving() {
-    let e =
+    var e =
       CameraController_1.CameraController.FightCamera?.LogicComponent?.Character
         ?.BasedMovement?.MovementBase;
     return !(
       !e ||
-      e.Mobility !== 2 ||
+      2 !== e.Mobility ||
       (e
         .GetComponentVelocity()
         .IsNearlyZero(MathUtils_1.MathUtils.KindaSmallNumber) &&
@@ -443,4 +442,4 @@ class CameraUtility {
   (CameraUtility.cz = Vector_1.Vector.Create()),
   (CameraUtility.cie = Rotator_1.Rotator.Create()),
   (CameraUtility.CapsuleHeightRatio = 0.67);
-// # sourceMappingURL=CameraUtility.js.map
+//# sourceMappingURL=CameraUtility.js.map

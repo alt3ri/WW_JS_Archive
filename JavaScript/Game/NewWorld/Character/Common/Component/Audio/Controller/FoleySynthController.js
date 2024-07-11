@@ -28,9 +28,9 @@ class FoleySynthController {
     for (const i of s) i < this.E$o.length && this.E$o[i].SetDebug(t);
   }
   Vi(t) {
-    let s;
+    var s;
     t.FoleySynthModel1Configs &&
-      t.FoleySynthModel1Configs.length > 0 &&
+      0 < t.FoleySynthModel1Configs.length &&
       ((s = new FoleySynthHandler_1.FoleySynthModel1Handler(
         this.ActorComp,
         this.AkComp,
@@ -38,7 +38,7 @@ class FoleySynthController {
       )).Init(t.FoleySynthModel1Configs),
       this.E$o.push(s)),
       t.FoleySynthModel2Configs &&
-        t.FoleySynthModel2Configs.length > 0 &&
+        0 < t.FoleySynthModel2Configs.length &&
         ((s = new FoleySynthHandler_1.FoleySynthModel2Handler(
           this.ActorComp,
           this.AkComp,
@@ -49,4 +49,4 @@ class FoleySynthController {
   }
 }
 exports.FoleySynthController = FoleySynthController;
-// # sourceMappingURL=FoleySynthController.js.map
+//# sourceMappingURL=FoleySynthController.js.map

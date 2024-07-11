@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configInteractAudioMaterialByCollisionMaterial = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const InteractAudioMaterial_1 = require("../Config/InteractAudioMaterial");
-const DB = "db_interactaudiomaterial.db";
-const FILE = "k.可视化编辑/c.Csv/y.音频/j.交互材质音频/*.csv*";
-const TABLE = "InteractAudioMaterial";
-const COMMAND =
-  "select BinData from `InteractAudioMaterial` where CollisionMaterial=?";
-const KEY_PREFIX = "InteractAudioMaterialByCollisionMaterial";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  InteractAudioMaterial_1 = require("../Config/InteractAudioMaterial"),
+  DB = "db_interactaudiomaterial.db",
+  FILE = "k.可视化编辑/c.Csv/y.音频/j.交互材质音频/*.csv*",
+  TABLE = "InteractAudioMaterial",
+  COMMAND =
+    "select BinData from `InteractAudioMaterial` where CollisionMaterial=?",
+  KEY_PREFIX = "InteractAudioMaterialByCollisionMaterial",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX =
-  "configInteractAudioMaterialByCollisionMaterial.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX =
+    "configInteractAudioMaterialByCollisionMaterial.GetConfig(";
 exports.configInteractAudioMaterialByCollisionMaterial = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -42,13 +42,14 @@ exports.configInteractAudioMaterialByCollisionMaterial = {
       if (
         (n =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "CollisionMaterial",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "CollisionMaterial",
+              o,
+            ]))
       ) {
-        var n;
-        var e = void 0;
+        var n,
+          e = void 0;
         if (
           (([n, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -75,4 +76,4 @@ exports.configInteractAudioMaterialByCollisionMaterial = {
     }
   },
 };
-// # sourceMappingURL=InteractAudioMaterialByCollisionMaterial.js.map
+//# sourceMappingURL=InteractAudioMaterialByCollisionMaterial.js.map

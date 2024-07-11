@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiAssistant = exports.ESequenceEventName = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const Queue_1 = require("../../../../../Core/Container/Queue");
-const Event_1 = require("../../../../../Core/Event/Event");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const GlobalData_1 = require("../../../../GlobalData");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const SequenceController_1 = require("../SequenceController");
-const SequenceDefine_1 = require("../SequenceDefine");
-const SeqBaseAssistant_1 = require("./SeqBaseAssistant");
-let ESequenceEventName;
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  Queue_1 = require("../../../../../Core/Container/Queue"),
+  Event_1 = require("../../../../../Core/Event/Event"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  SequenceController_1 = require("../SequenceController"),
+  SequenceDefine_1 = require("../SequenceDefine"),
+  SeqBaseAssistant_1 = require("./SeqBaseAssistant");
+var ESequenceEventName;
 !(function (e) {
   (e[(e.UpdateSeqSubtitle = 0)] = "UpdateSeqSubtitle"),
     (e[(e.HandlePlotOptionSelected = 1)] = "HandlePlotOptionSelected"),
@@ -45,7 +45,7 @@ class UiAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
         this.Promise?.SetResult(e), (this.Promise = void 0);
       }),
       (this.OnShowDialogue = (e, t, i, r, n) => {
-        this.Model.State === 3 &&
+        3 === this.Model.State &&
           ((i = i / SequenceDefine_1.FRAME_PER_MILLISECOND),
           this.kto.Push(new CacheDialogueData(e, t, i, r, n)));
       });
@@ -90,7 +90,7 @@ class UiAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       this.Promise && (this.Promise.SetResult(!1), (this.Promise = void 0));
   }
   Vto() {
-    let e;
+    var e;
     !this.Fto &&
       ((this.Fto = !0),
       (e = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
@@ -100,7 +100,7 @@ class UiAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       e.OnShowDialogue.Add(this.OnShowDialogue);
   }
   Hto() {
-    let e;
+    var e;
     this.Fto &&
       ((this.Fto = !1),
       (e = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
@@ -110,8 +110,8 @@ class UiAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       e.OnShowDialogue.Remove(this.OnShowDialogue);
   }
   TriggerAllSubtitle() {
-    for (; this.kto.Size > 0; ) {
-      const e = this.kto.Pop();
+    for (; 0 < this.kto.Size; ) {
+      var e = this.kto.Pop();
       e &&
         this.jto(
           e?.Show,
@@ -126,7 +126,7 @@ class UiAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
     e ? this.Wto(t, i, r, n) : this.Kto(t);
   }
   Wto(e, t, i, r) {
-    e !== "None" &&
+    "None" !== e &&
       ((e = parseInt(e)),
       (e =
         ControllerHolder_1.ControllerHolder.FlowController.FlowSequence.CreateSubtitleFromTalkItem(
@@ -138,7 +138,7 @@ class UiAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       this.HandlePlotSubtitle(e, t, i, r));
   }
   Kto(e) {
-    e !== "None" &&
+    "None" !== e &&
       ((e = parseInt(e)),
       ControllerHolder_1.ControllerHolder.FlowController.FlowSequence.OnSubtitleEnd(
         e,
@@ -161,21 +161,21 @@ class UiAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       (this.Model.CurSubtitle.GuardTime =
         t < 0
           ? 0
-          : t === 0
+          : 0 === t
             ? this.Model.DefaultGuardTime *
               TimeUtil_1.TimeUtil.InverseMillisecond
             : t),
       (this.Model.CurSubtitle.AudioDelay =
         i < 0
           ? 0
-          : i === 0
+          : 0 === i
             ? this.Model.DefaultAudioDelay *
               TimeUtil_1.TimeUtil.InverseMillisecond
             : i),
       (this.Model.CurSubtitle.AudioTransitionDuration =
         r < 0
           ? 0
-          : r === 0
+          : 0 === r
             ? this.Model.DefaultAudioTransitionDuration *
               TimeUtil_1.TimeUtil.InverseMillisecond
             : r);
@@ -183,7 +183,7 @@ class UiAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
     e &&
       (this.Event.Emit(ESequenceEventName.UpdateSeqSubtitle, e),
       e.Subtitles?.PlayVoice) &&
-      e.Subtitles.Style?.Type !== "InnerVoice" &&
+      "InnerVoice" !== e.Subtitles.Style?.Type &&
       SequenceController_1.SequenceController.TryApplyMouthAnim(
         e.Subtitles.PlotLineKey,
         e.Subtitles.WhoId,
@@ -200,4 +200,4 @@ class UiAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   }
 }
 exports.UiAssistant = UiAssistant;
-// # sourceMappingURL=UiAssistant.js.map
+//# sourceMappingURL=UiAssistant.js.map

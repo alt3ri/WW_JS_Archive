@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ScreenShotManager = void 0);
-const UE = require("ue");
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const Vector2D_1 = require("../../../Core/Utils/Math/Vector2D");
-const GlobalData_1 = require("../../GlobalData");
+const UE = require("ue"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  Vector2D_1 = require("../../../Core/Utils/Math/Vector2D"),
+  GlobalData_1 = require("../../GlobalData");
 class ScreenShotManager {
   static Clear() {
     this.ResetScreenShot(), this.vT.clear();
   }
   static GetScreenShotTexture(e, t) {
-    const r = e + "x" + t;
+    var r = e + "x" + t;
     let a = this.vT.get(r);
     return (
       a?.IsValid() ||
@@ -50,4 +50,4 @@ class ScreenShotManager {
 }
 ((exports.ScreenShotManager = ScreenShotManager).vT = new Map()),
   (ScreenShotManager.hpo = void 0);
-// # sourceMappingURL=ScreenShotManager.js.map
+//# sourceMappingURL=ScreenShotManager.js.map

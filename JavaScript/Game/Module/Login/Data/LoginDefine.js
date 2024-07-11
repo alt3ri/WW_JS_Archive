@@ -1,5 +1,5 @@
 "use strict";
-let ELoginStatus, ELoginSex, ECleanFailCountWay;
+var ELoginStatus, ELoginSex, ECleanFailCountWay;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoginQueueConfig =
     exports.DEFAULTPORT =
@@ -44,4 +44,4 @@ class LoginQueueConfig {
   }
 }
 exports.LoginQueueConfig = LoginQueueConfig;
-// # sourceMappingURL=LoginDefine.js.map
+//# sourceMappingURL=LoginDefine.js.map

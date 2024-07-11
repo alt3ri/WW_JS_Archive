@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayItemModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const PayItemDefine_1 = require("./PayItemDefine");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  PayItemDefine_1 = require("./PayItemDefine");
 class PayItemModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -34,14 +34,14 @@ class PayItemModel extends ModelBase_1.ModelBase {
   }
   ResetSpecialBonus(e) {
     for (const a of e) {
-      const t = this.JNi.get(a);
+      var t = this.JNi.get(a);
       t && (t.CanSpecialBonus = !0);
     }
   }
   InitDataListByServer(e) {
-    this.YNi.length !== 0 && e.length !== 0 && (this.YNi.length = 0);
+    0 !== this.YNi.length && 0 !== e.length && (this.YNi.length = 0);
     for (const a of e) {
-      const t = new PayItemDefine_1.PayItemData();
+      var t = new PayItemDefine_1.PayItemData();
       t.Phrase(a), this.YNi.push(t), this.JNi.set(a.Ekn, t);
     }
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.RefreshPayItemList);
@@ -56,11 +56,11 @@ class PayItemModel extends ModelBase_1.ModelBase {
     );
   }
   CreateSdkPayment(e, t, a) {
-    var e = ConfigManager_1.ConfigManager.PayItemConfig.GetPayItem(e);
-    const r = ConfigManager_1.ConfigManager.ItemConfig.GetItemName(e.ItemId);
-    const n = ConfigManager_1.ConfigManager.ItemConfig.GetItemDesc(e.ItemId);
-    const i = e.PayId;
-    const o = ModelManager_1.ModelManager.RechargeModel.GetPayIdAmount(i);
+    var e = ConfigManager_1.ConfigManager.PayItemConfig.GetPayItem(e),
+      r = ConfigManager_1.ConfigManager.ItemConfig.GetItemName(e.ItemId),
+      n = ConfigManager_1.ConfigManager.ItemConfig.GetItemDesc(e.ItemId),
+      i = e.PayId,
+      o = ModelManager_1.ModelManager.RechargeModel.GetPayIdAmount(i);
     return {
       product_id:
         ModelManager_1.ModelManager.RechargeModel.GetPayIdProductId(i),
@@ -75,4 +75,4 @@ class PayItemModel extends ModelBase_1.ModelBase {
   }
 }
 exports.PayItemModel = PayItemModel;
-// # sourceMappingURL=PayItemModel.js.map
+//# sourceMappingURL=PayItemModel.js.map

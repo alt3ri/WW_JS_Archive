@@ -59,4 +59,4 @@ class GameQualityData {
   }
 }
 exports.GameQualityData = GameQualityData;
-// # sourceMappingURL=GameQualityData.js.map
+//# sourceMappingURL=GameQualityData.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController");
 class TsDecoratorNearChainEdge extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -20,9 +20,9 @@ class TsDecoratorNearChainEdge extends UE.BTDecorator_BlueprintBase {
   }
   PerformConditionCheckAI(r, e) {
     this.InitTsVariables();
-    let o;
-    let t;
-    const a = r.AiController;
+    var o,
+      t,
+      a = r.AiController;
     return a
       ? !(void 0 === (o = a.AiHateList.AiHate?.MaxMoveFromBorn) || o < 0) &&
           (o < this.TsDistToChainEdgeLessThan
@@ -59,4 +59,4 @@ class TsDecoratorNearChainEdge extends UE.BTDecorator_BlueprintBase {
 }
 (TsDecoratorNearChainEdge.TmpVector = Vector_1.Vector.Create()),
   (exports.default = TsDecoratorNearChainEdge);
-// # sourceMappingURL=TsDecoratorNearChainEdge.js.map
+//# sourceMappingURL=TsDecoratorNearChainEdge.js.map

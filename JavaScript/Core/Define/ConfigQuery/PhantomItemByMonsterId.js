@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configPhantomItemByMonsterId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const PhantomItem_1 = require("../Config/PhantomItem");
-const DB = "db_phantom.db";
-const FILE = "h.幻象.xlsx";
-const TABLE = "PhantomItem";
-const COMMAND = "select BinData from `PhantomItem` where MonsterId=?";
-const KEY_PREFIX = "PhantomItemByMonsterId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  PhantomItem_1 = require("../Config/PhantomItem"),
+  DB = "db_phantom.db",
+  FILE = "h.幻象.xlsx",
+  TABLE = "PhantomItem",
+  COMMAND = "select BinData from `PhantomItem` where MonsterId=?",
+  KEY_PREFIX = "PhantomItemByMonsterId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX = "configPhantomItemByMonsterId.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configPhantomItemByMonsterId.GetConfigList(";
 exports.configPhantomItemByMonsterId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -29,7 +29,7 @@ exports.configPhantomItemByMonsterId = {
     );
   },
   GetConfigList: (o, n = !0) => {
-    let e;
+    var e;
     if (
       (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -44,13 +44,14 @@ exports.configPhantomItemByMonsterId = {
         const r = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "MonsterId",
               o,
-            ]) !== 1
+            ])
           )
             break;
-          let i = void 0;
+          var i = void 0;
           if (
             (([e, i] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -78,4 +79,4 @@ exports.configPhantomItemByMonsterId = {
     }
   },
 };
-// # sourceMappingURL=PhantomItemByMonsterId.js.map
+//# sourceMappingURL=PhantomItemByMonsterId.js.map

@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RewardController = void 0);
-const AudioSystem_1 = require("../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const RewardModel_1 = require("./RewardModel");
+const AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  RewardModel_1 = require("./RewardModel");
 class RewardController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
@@ -32,7 +32,7 @@ class RewardController extends UiControllerBase_1.UiControllerBase {
     Net_1.Net.UnRegister(7421);
   }
   static PickUpFightDrop(o, t, n) {
-    let e;
+    var e;
     return RewardController.Eso.has(o)
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Interaction", 37, "Pick up drop has locked", [
@@ -73,7 +73,7 @@ class RewardController extends UiControllerBase_1.UiControllerBase {
                       ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(
                         e,
                       ).DropPreview);
-                  if (e.size > 0)
+                  if (0 < e.size)
                     for (const r of e.keys())
                       EventSystem_1.EventSystem.Emit(
                         EventDefine_1.EEventName.OnDropItemSuccess,
@@ -110,4 +110,4 @@ class RewardController extends UiControllerBase_1.UiControllerBase {
     RewardController.HandleDropInBagInfo(e.oLs, e.$Fn);
   }),
   (RewardController.HandleDropInBagInfo = (e, r) => {});
-// # sourceMappingURL=RewardController.js.map
+//# sourceMappingURL=RewardController.js.map

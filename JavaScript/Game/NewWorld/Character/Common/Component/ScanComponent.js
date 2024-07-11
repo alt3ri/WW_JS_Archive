@@ -1,44 +1,49 @@
 "use strict";
-let ScanComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, n) {
-    let s;
-    const o = arguments.length;
-    let a =
-      o < 3 ? e : n === null ? (n = Object.getOwnPropertyDescriptor(e, i)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      a = Reflect.decorate(t, e, i, n);
-    else
-      for (let r = t.length - 1; r >= 0; r--)
-        (s = t[r]) && (a = (o < 3 ? s(a) : o > 3 ? s(e, i, a) : s(e, i)) || a);
-    return o > 3 && a && Object.defineProperty(e, i, a), a;
-  };
+var ScanComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, n) {
+      var s,
+        o = arguments.length,
+        a =
+          o < 3
+            ? e
+            : null === n
+              ? (n = Object.getOwnPropertyDescriptor(e, i))
+              : n;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        a = Reflect.decorate(t, e, i, n);
+      else
+        for (var r = t.length - 1; 0 <= r; r--)
+          (s = t[r]) &&
+            (a = (o < 3 ? s(a) : 3 < o ? s(e, i, a) : s(e, i)) || a);
+      return 3 < o && a && Object.defineProperty(e, i, a), a;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ScanComponent = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const EffectContext_1 = require("../../../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../../../Effect/EffectSystem");
-const Global_1 = require("../../../../Global");
-const GlobalData_1 = require("../../../../GlobalData");
-const LevelGamePlayUtils_1 = require("../../../../LevelGamePlay/LevelGamePlayUtils");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ItemMaterialControllerActorData_1 = require("../../../../Render/Scene/Item/MaterialController/ItemMaterialControllerActorData");
-const M_TO_CM = 100;
-const SECONDS_TO_MILLISECONDS = 1e3;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  AudioSystem_1 = require("../../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  EffectContext_1 = require("../../../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../../../Effect/EffectSystem"),
+  Global_1 = require("../../../../Global"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  LevelGamePlayUtils_1 = require("../../../../LevelGamePlay/LevelGamePlayUtils"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ItemMaterialControllerActorData_1 = require("../../../../Render/Scene/Item/MaterialController/ItemMaterialControllerActorData"),
+  M_TO_CM = 100,
+  SECONDS_TO_MILLISECONDS = 1e3;
 class TimerManageContainer {
   constructor(t) {
     (this.vJo = void 0),
@@ -103,16 +108,16 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
       });
   }
   pie() {
-    let t;
-    ScanComponent_1.Fzr === -1 &&
+    var t;
+    -1 === ScanComponent_1.Fzr &&
       ((t = ConfigManager_1.ConfigManager.LevelGamePlayConfig.ScanMaxDistance),
       (ScanComponent_1.Fzr = t * M_TO_CM * t * M_TO_CM)),
-      ScanComponent_1.Vzr === -1 &&
+      -1 === ScanComponent_1.Vzr &&
         ((t =
           ConfigManager_1.ConfigManager.LevelGamePlayConfig
             .ScanShowInteractionEffectMaxDistance),
         (ScanComponent_1.Vzr = t * M_TO_CM * t * M_TO_CM)),
-      ScanComponent_1.Hzr === -1 &&
+      -1 === ScanComponent_1.Hzr &&
         ((t =
           ConfigManager_1.ConfigManager.LevelGamePlayConfig
             .ScanDetectConcealedDistance),
@@ -135,22 +140,22 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
         )),
       (this.xzr = this.Pzr?.ScanCompositeConfig),
       (this.xC = !1),
-      (this.Uzr = !!this.Pzr?.ScanInfos && this.Pzr.ScanInfos.length > 0),
+      (this.Uzr = !!this.Pzr?.ScanInfos && 0 < this.Pzr.ScanInfos.length),
       this.Uzr)
     ) {
       for (const e of this.Pzr.ScanInfos)
         if (
-          (e.ResourcePath?.length > 0 && (this.Lzr = !0),
-          e.IconPath?.length > 0 && (this.Tzr = !0),
+          (0 < e.ResourcePath?.length && (this.Lzr = !0),
+          0 < e.IconPath?.length && (this.Tzr = !0),
           this.Lzr && this.Tzr)
         )
           break;
-      var t = this.Vpr.GetPbEntityInitData();
-      var t = (0, IComponent_1.getComponent)(
-        t.ComponentsData,
-        "RefreshGroupComponent",
-      );
-      t && t.EntityIds.length > 0 && (this.Gzr = t.EntityIds);
+      var t = this.Vpr.GetPbEntityInitData(),
+        t = (0, IComponent_1.getComponent)(
+          t.ComponentsData,
+          "RefreshGroupComponent",
+        );
+      t && 0 < t.EntityIds.length && (this.Gzr = t.EntityIds);
     }
     return (
       this.Vpr.IsConcealed &&
@@ -167,8 +172,8 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
     );
   }
   OnEnd() {
-    for (const [t, e] of this.qzr)
-      t === "InteractionEffect" ? e.Remove() : e.Stop();
+    for (var [t, e] of this.qzr)
+      "InteractionEffect" === t ? e.Remove() : e.Stop();
     return (
       this.qzr.clear(),
       EffectSystem_1.EffectSystem.IsValid(this.Azr) &&
@@ -189,7 +194,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
     );
   }
   OnTick(t) {
-    let e;
+    var e;
     this.Vpr.IsConcealed &&
       !this.xC &&
       this.Uzr &&
@@ -201,8 +206,8 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
   }
   Qio() {
     if (this.nXt && Global_1.Global.BaseCharacter) {
-      let t;
-      let e = Global_1.Global.BaseCharacter.CharacterActorComponent;
+      var t,
+        e = Global_1.Global.BaseCharacter.CharacterActorComponent;
       if (e)
         return (
           (t = this.nXt.ActorLocationProxy),
@@ -212,7 +217,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
     }
   }
   kzr() {
-    let t, e;
+    var t, e;
     this.Vpr.IsConcealed &&
       (EffectSystem_1.EffectSystem.IsValid(this.Azr) &&
         (EffectSystem_1.EffectSystem.StopEffectById(
@@ -263,7 +268,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
             ["ScanDetectConcealedDistanceSquaredCm", ScanComponent_1.Hzr],
           )
         : (this.Gzr &&
-            this.Gzr?.length > 0 &&
+            0 < this.Gzr?.length &&
             (this.Wzr(), this.Nzr.length <= 0)) ||
           ((this.xC = !0),
           this.Kzr(),
@@ -308,7 +313,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
             EventDefine_1.EEventName.OnScanStart,
             this.Pzr.Interval,
           ),
-          this.Nzr && this.Nzr?.length > 0 && this.Jzr(),
+          this.Nzr && 0 < this.Nzr?.length && this.Jzr(),
           this.Vpr.GetBaseInfo()?.ScanFunction?.TraceEffect && this.zzr()));
   }
   Kzr() {
@@ -334,16 +339,16 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
         "[ScanComponent.CancelEntityConcealState]",
         new EffectContext_1.EffectContext(this.Entity.Id),
       ));
-    const t = this.Entity.GetComponent(177);
+    var t = this.Entity.GetComponent(177);
     t?.HasTag(1227933697) && t.RemoveTag(1227933697);
   }
   Zzr(e, t = !1) {
     let i = !1;
-    let n = (0, puerts_1.$ref)(void 0);
-    const s = (e.GetAttachedActors(n, !0), (0, puerts_1.$unref)(n));
-    if (s && s.Num() > 0)
+    var n = (0, puerts_1.$ref)(void 0),
+      s = (e.GetAttachedActors(n, !0), (0, puerts_1.$unref)(n));
+    if (s && 0 < s.Num())
       for (let t = 0; t < s.Num(); t++) {
-        const o = s.Get(t);
+        var o = s.Get(t);
         o && (i = this.Zzr(o));
       }
     if (
@@ -357,11 +362,12 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
           ItemMaterialControllerActorData_1.default,
           (t) => {
             this.xC
-              ? (t =
-                  ModelManager_1.ModelManager.RenderModuleModel.EnableActorData(
-                    t,
-                    e,
-                  )) !== -1 && this.Dzr.push(t)
+              ? -1 !==
+                  (t =
+                    ModelManager_1.ModelManager.RenderModuleModel.EnableActorData(
+                      t,
+                      e,
+                    )) && this.Dzr.push(t)
               : ScanComponent_1.EnableLog &&
                 Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
@@ -390,18 +396,18 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
     );
   }
   Qzr() {
-    const e = this.Entity?.GetComponent(1)?.Owner;
+    var e = this.Entity?.GetComponent(1)?.Owner;
     if (e) {
       const i = "InteractionEffect";
       let t = this.qzr.get(i);
-      t && this.Dzr.length > 0
+      t && 0 < this.Dzr.length
         ? t.Delay(
             this.xzr.InteractionEffectInterval * SECONDS_TO_MILLISECONDS,
             !0,
           )
         : ((this.Rzr = 0),
           this.Zzr(e, !0),
-          this.Rzr > 0 &&
+          0 < this.Rzr &&
             (t && t.Remove(),
             (t = new TimerManageContainer(() => {
               ScanComponent_1.EnableLog &&
@@ -430,7 +436,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
   }
   $zr() {
     for (const e of this.Pzr.ScanInfos)
-      if (e.IconPath.length !== 0) {
+      if (0 !== e.IconPath.length) {
         const i = "Icon";
         let t = this.qzr.get(i);
         if (!t) {
@@ -462,19 +468,19 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
       }
   }
   Yzr() {
-    const t = this.xzr?.ScanAudioEvent;
-    const e = this.nXt?.Owner;
+    var t = this.xzr?.ScanAudioEvent,
+      e = this.nXt?.Owner;
     t && e && AudioSystem_1.AudioSystem.PostEvent(t, e);
   }
   Xzr() {
     if (this.nXt) {
-      const i = this.nXt.Owner;
+      var i = this.nXt.Owner;
       if (i)
         for (const o of this.Pzr.ScanInfos)
-          if (o.ResourcePath.length !== 0) {
+          if (0 !== o.ResourcePath.length) {
             let t = o.ResourcePath;
-            let n = t.indexOf("'");
-            n !== -1 && (t = t.substring(n + 1, t.length - 2));
+            var n = t.indexOf("'");
+            -1 !== n && (t = t.substring(n + 1, t.length - 2));
             const a = "Effect_" + o.UId.toString();
             let e = this.qzr.get(a);
             if (e) e.Delay(o.Interval * SECONDS_TO_MILLISECONDS, !0);
@@ -495,7 +501,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
                     void 0,
                     !1,
                   );
-                  const s = this.nXt.ActorRotationProxy;
+                  var s = this.nXt.ActorRotationProxy;
                   s.Set(0, s.Yaw, 0),
                     n.RootComponent.K2_SetWorldRotation(
                       s.ToUeRotator(),
@@ -530,23 +536,26 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
   }
   zzr() {
     if (this.nXt) {
-      const e = this.nXt.Owner;
+      var e = this.nXt.Owner;
       if (e) {
-        const i = this.Vpr.GetBaseInfo()?.ScanFunction?.TraceEffect;
-        var n = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
-          i.Target,
-        );
+        var i = this.Vpr.GetBaseInfo()?.ScanFunction?.TraceEffect,
+          n = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
+            i.Target,
+          );
         if (n) {
           const o = "TrackEffect";
           let t = this.qzr.get(o);
           if (t) t.Delay(this.Pzr.Interval * SECONDS_TO_MILLISECONDS, !0);
           else {
-            var n = n.Entity.GetComponent(1);
-            const s = Vector_1.Vector.Create();
-            var n =
-              (n.ActorLocationProxy.Subtraction(this.nXt.ActorLocationProxy, s),
-              s.Normalize(),
-              new UE.Rotator());
+            var n = n.Entity.GetComponent(1),
+              s = Vector_1.Vector.Create(),
+              n =
+                (n.ActorLocationProxy.Subtraction(
+                  this.nXt.ActorLocationProxy,
+                  s,
+                ),
+                s.Normalize(),
+                new UE.Rotator());
             s.ToOrientationRotator(n);
             const a = EffectSystem_1.EffectSystem.SpawnEffect(
               GlobalData_1.GlobalData.World,
@@ -593,8 +602,8 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
     }
   }
   jzr() {
-    const t = this.Entity.GetComponent(1)?.Owner;
-    const e = t?.GetComponentByClass(UE.StaticMeshComponent.StaticClass());
+    var t = this.Entity.GetComponent(1)?.Owner,
+      e = t?.GetComponentByClass(UE.StaticMeshComponent.StaticClass());
     return e || t?.GetComponentByClass(UE.SkeletalMeshComponent.StaticClass());
   }
   Wzr() {
@@ -612,8 +621,8 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
         EventDefine_1.EEventName.RemoveEntity,
         this.zpe,
       );
-    const t = "GroupEntityListen";
-    const e = this.xzr.InteractionEffectInterval * SECONDS_TO_MILLISECONDS;
+    const t = "GroupEntityListen",
+      e = this.xzr.InteractionEffectInterval * SECONDS_TO_MILLISECONDS;
     let i = this.qzr.get(t);
     i
       ? i.Delay(e, !0)
@@ -646,4 +655,4 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
       ScanComponent,
     )),
   (exports.ScanComponent = ScanComponent);
-// # sourceMappingURL=ScanComponent.js.map
+//# sourceMappingURL=ScanComponent.js.map

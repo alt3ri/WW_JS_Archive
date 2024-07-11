@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RedDotBattlePassPayButton = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const RedDotBase_1 = require("../../RedDotBase");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  RedDotBase_1 = require("../../RedDotBase");
 class RedDotBattlePassPayButton extends RedDotBase_1.RedDotBase {
   OnCheck() {
     return ModelManager_1.ModelManager.BattlePassModel.PayButtonRedDotState;
@@ -19,4 +19,4 @@ class RedDotBattlePassPayButton extends RedDotBase_1.RedDotBase {
   }
 }
 exports.RedDotBattlePassPayButton = RedDotBattlePassPayButton;
-// # sourceMappingURL=RedDotBattlePassPayButton.js.map
+//# sourceMappingURL=RedDotBattlePassPayButton.js.map

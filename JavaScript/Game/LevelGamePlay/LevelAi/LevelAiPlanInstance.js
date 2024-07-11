@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelAiPlanInstance = exports.GetNextStepsContext = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const LevelAiDefines_1 = require("./LevelAiDefines");
-const LevelAiPlan_1 = require("./LevelAiPlan");
-const LevelAiPlanner_1 = require("./LevelAiPlanner");
+const Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  LevelAiDefines_1 = require("./LevelAiDefines"),
+  LevelAiPlan_1 = require("./LevelAiPlan"),
+  LevelAiPlanner_1 = require("./LevelAiPlanner");
 class GetNextStepsContext {
   constructor(t, i, e) {
     (this.IIe = t), (this.IsExecutingPlan = i), (this.TIe = e), (this.LIe = 0);
@@ -15,12 +15,12 @@ class GetNextStepsContext {
   }
   AddNextStepsAfter(i) {
     if (!this.IIe.HasLevel(i.LevelIndex)) return 0;
-    const e = this.LIe;
-    const s = this.IIe.Levels[i.LevelIndex];
+    var e = this.LIe,
+      s = this.IIe.Levels[i.LevelIndex];
     for (let t = i.StepIndex + 1; t < s.Steps.length; ++t) {
-      const r = s.Steps[t];
-      const h = new LevelAiPlan_1.LevelAiPlanStepId(i.LevelIndex, t);
-      if ((r.Node.GetNextSteps(this, h), this.LIe - e > 0)) return this.LIe - e;
+      var r = s.Steps[t],
+        h = new LevelAiPlan_1.LevelAiPlanStepId(i.LevelIndex, t);
+      if ((r.Node.GetNextSteps(this, h), 0 < this.LIe - e)) return this.LIe - e;
     }
     return s.ParentStepId.Equal(LevelAiPlan_1.LevelAiPlanStepId.None)
       ? this.LIe - e
@@ -47,7 +47,7 @@ class LevelAiPlanInstance {
       (this.kC = !0),
       (this.bIe = void 0),
       (this.qIe = (t, i) => {
-        let e;
+        var e;
         this.RIe &&
           t === this.wIe &&
           ((e = t.WasCanceled),
@@ -55,7 +55,7 @@ class LevelAiPlanInstance {
           (this.wIe = void 0),
           e
             ? this.Stop()
-            : this.DIe === 1 &&
+            : 1 === this.DIe &&
               (i
                 ? this.GIe(i) ||
                   (Log_1.Log.CheckDebug() &&
@@ -84,7 +84,7 @@ class LevelAiPlanInstance {
     return void 0 !== this.xIe && this.BIe;
   }
   HasActiveTasks() {
-    return this.UIe.length > 0 || this.AIe.length > 0 || this.PIe.length > 0;
+    return 0 < this.UIe.length || 0 < this.AIe.length || 0 < this.PIe.length;
   }
   HasActivePlan() {
     return this.HasPlan() && this.HasActiveTasks();
@@ -93,7 +93,7 @@ class LevelAiPlanInstance {
     return this.kC && !this.RIe.Paused;
   }
   Start() {
-    this.DIe === 1
+    1 === this.DIe
       ? Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("LevelAi", 30, "[Start] 执行中，忽略开始调用")
       : ((this.DIe = 1),
@@ -103,21 +103,21 @@ class LevelAiPlanInstance {
         this.OIe());
   }
   Tick(t) {
-    this.DIe !== 1 || this.HasActivePlan() || this.IsPlanning() || this.OIe(),
-      this.DIe === 1 &&
+    1 !== this.DIe || this.HasActivePlan() || this.IsPlanning() || this.OIe(),
+      1 === this.DIe &&
         !this.HasActivePlan() &&
         this.IsPlanning() &&
         this.wIe.DoPlanning(),
       this.HasActivePlan() && this.kIe(t);
   }
   Stop() {
-    this.DIe !== 1
+    1 !== this.DIe
       ? Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("LevelAi", 30, "[Stop] 未执行，忽略停止调用")
       : (this.CancelActivePlanning(), this.AbortCurrentPlan());
   }
   Pause() {
-    this.DIe !== 1
+    1 !== this.DIe
       ? Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("LevelAi", 30, "[Pause] 未执行，忽略Pause调用")
       : (!this.IsPlanning() && this.HasActiveTasks() && (this.bIe = this.xIe),
@@ -125,7 +125,7 @@ class LevelAiPlanInstance {
         this.AbortCurrentPlan());
   }
   Resume() {
-    this.DIe === 1
+    1 === this.DIe
       ? Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("LevelAi", 30, "[Resume] 执行中，忽略Resume调用")
       : ((this.DIe = 1),
@@ -141,28 +141,28 @@ class LevelAiPlanInstance {
         ? (t = this.UIe.concat())
         : ((t = new Array()),
           this.VIe(t, new LevelAiPlan_1.LevelAiPlanStepId(0), !1));
-      t.length > 0;
+      0 < t.length;
 
     ) {
-      const i = t.pop();
+      var i = t.pop();
       if (!this.HIe(i, !1, !0)) return !1;
     }
     return !0;
   }
   RePlan() {
-    this.DIe !== 1
+    1 !== this.DIe
       ? Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("LevelAi", 30, "[RePlan] 未执行，忽略RePlan调用")
       : (this.AbortCurrentPlan(), this.IsPlanning() || this.OIe());
   }
   AbortCurrentPlan() {
     if (this.HasPlan()) {
-      for (let t = this.AIe.length - 1; t >= 0; --t) {
-        const i = this.AIe[t];
+      for (let t = this.AIe.length - 1; 0 <= t; --t) {
+        var i = this.AIe[t];
         this.AIe.splice(t, 1), this.jIe(i, 2);
       }
-      if (this.UIe.length > 0)
-        for (let t = this.UIe.length - 1; t >= 0; --t) this.WIe(this.UIe[t]);
+      if (0 < this.UIe.length)
+        for (let t = this.UIe.length - 1; 0 <= t; --t) this.WIe(this.UIe[t]);
       else this.KIe();
     }
   }
@@ -194,7 +194,7 @@ class LevelAiPlanInstance {
         this.QIe(t),
         this.RecheckCurrentPlan()
           ? ((t =
-              this.VIe(this.AIe, new LevelAiPlan_1.LevelAiPlanStepId(0)) > 0),
+              0 < this.VIe(this.AIe, new LevelAiPlan_1.LevelAiPlanStepId(0))),
             (this.BIe = !0),
             t ? this.XIe() : this.$Ie(),
             0)
@@ -203,7 +203,7 @@ class LevelAiPlanInstance {
     );
   }
   XIe() {
-    const t = this.AIe[0];
+    var t = this.AIe[0];
     void 0 !== t && (this.AIe.splice(0, 1), this.YIe(t));
   }
   YIe(i) {
@@ -213,7 +213,7 @@ class LevelAiPlanInstance {
           Log_1.Log.Error("LevelAi", 30, "[StartExecuteTask] 当前没有规划"),
         1
       );
-    const t = this.xIe.GetStep(i).Node;
+    var t = this.xIe.GetStep(i).Node;
     if (!t)
       return (
         Log_1.Log.CheckError() &&
@@ -223,20 +223,20 @@ class LevelAiPlanInstance {
     LevelAiDefines_1.LEVEL_AI_DEBUG_MODE &&
       Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("LevelAi", 30, "Start Execute Task");
-    const e = new Array();
+    var e = new Array();
     this.JIe(e, i);
-    for (let t = e.length - 1; t >= 0; --t) {
-      const s = e[t];
+    for (let t = e.length - 1; 0 <= t; --t) {
+      var s = e[t];
       if (!this.zIe(s, 2)) return this.jIe(i, 2), this.AbortCurrentPlan(), 1;
       this.ZIe(s);
     }
     this.UIe.push(i);
-    const r = t.WrappedExecuteTask();
-    return r !== 3 && this.OnTaskFinished(t, i, r), r;
+    var r = t.WrappedExecuteTask();
+    return 3 !== r && this.OnTaskFinished(t, i, r), r;
   }
   kIe(i) {
     this.XIe();
-    const t = (t) => {
+    var t = (t) => {
       return this.HIe(t, !0, !1)
         ? (this.eTe(t).WrappedTickTask(i), !0)
         : (this.AbortCurrentPlan(), !1);
@@ -245,36 +245,36 @@ class LevelAiPlanInstance {
       if (this.UIe.includes(e) && !t(e)) return;
   }
   HIe(t, i, e) {
-    const s = i || e;
-    const r = new Array();
+    var s = i || e,
+      r = new Array();
     this.tTe(r, t);
-    for (let t = r.length - 1; t >= 0; --t) {
-      const h = r[t];
+    for (let t = r.length - 1; 0 <= t; --t) {
+      var h = r[t];
       if (s) if (!this.zIe(h, e ? 1 : 2)) return !1;
     }
     return !0;
   }
   WIe(t) {
-    const i = this.eTe(t);
-    var e = this.UIe.indexOf(t);
-    var e = (this.UIe.splice(e, 1), this.UIe.push(t), i.WrappedAbortTask());
-    e !== 2
+    var i = this.eTe(t),
+      e = this.UIe.indexOf(t),
+      e = (this.UIe.splice(e, 1), this.UIe.push(t), i.WrappedAbortTask());
+    2 !== e
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("LevelAi", 30, "[AbortExecutingPlanStep] 失败")
-      : e === 2 && this.OnTaskFinished(i, t, e);
+      : 2 === e && this.OnTaskFinished(i, t, e);
   }
   OnTaskFinished(t, i, e) {
     t
       ? this.HasPlan()
         ? (t.WrappedOnTaskFinished(e),
           this.iTe(i, e),
-          e === 0 && this.VIe(this.AIe, i),
+          0 === e && this.VIe(this.AIe, i),
           this.jIe(i, e),
           (t = this.UIe.indexOf(i)),
           this.UIe.splice(t, 1),
-          e === 0
+          0 === e
             ? this.HasActiveTasks() || this.$Ie()
-            : e === 2
+            : 2 === e
               ? ((t = this.UIe.indexOf(i)),
                 this.PIe.splice(t, 1),
                 this.HasActiveTasks() || this.KIe())
@@ -296,10 +296,10 @@ class LevelAiPlanInstance {
     );
   }
   iTe(t, i) {
-    let e, s, r;
-    this.UIe.length === 0 ||
+    var e, s, r;
+    0 === this.UIe.length ||
       ((e = (s = this.xIe.Levels[t.LevelIndex]).ParentStepId),
-      (s = i === 0 && t.StepIndex === s.Steps.length - 1),
+      (s = 0 === i && t.StepIndex === s.Steps.length - 1),
       e.Equal(LevelAiPlan_1.LevelAiPlanStepId.None)) ||
       ((r = this.xIe.GetStep(e)).Node &&
         r.Node.OnSubLevelStepFinished(this, e, t, i, s) &&
@@ -351,11 +351,11 @@ class LevelAiPlanInstance {
     if (this.xIe && this.xIe.HasStep(e)) {
       let t = e;
       for (;;) {
-        const s = this.xIe.Levels[t.LevelIndex];
-        const r = s.Steps[t.StepIndex];
+        var s = this.xIe.Levels[t.LevelIndex],
+          r = s.Steps[t.StepIndex];
         if (
           r.SubNodesInfo.SubNodesExecuting ||
-          (i.push(r.SubNodesInfo), !(t.LevelIndex > 0))
+          (i.push(r.SubNodesInfo), !(0 < t.LevelIndex))
         )
           break;
         t = s.ParentStepId;
@@ -366,12 +366,12 @@ class LevelAiPlanInstance {
     if (this.xIe && this.xIe.HasStep(e)) {
       let t = e;
       for (;;) {
-        const s = this.xIe.Levels[t.LevelIndex];
-        const r = s.Steps[t.StepIndex];
+        var s = this.xIe.Levels[t.LevelIndex],
+          r = s.Steps[t.StepIndex];
         if (
           !(
             r.SubNodesInfo.LastFrameSubNodesTicked !== Time_1.Time.Frame &&
-            (i.push(r.SubNodesInfo), t.LevelIndex > 0)
+            (i.push(r.SubNodesInfo), 0 < t.LevelIndex)
           )
         )
           break;
@@ -383,15 +383,15 @@ class LevelAiPlanInstance {
     if (this.xIe && this.xIe.HasStep(t)) {
       let i = t;
       for (;;) {
-        const s = this.xIe.Levels[i.LevelIndex];
-        const r = s.Steps[i.StepIndex];
+        var s = this.xIe.Levels[i.LevelIndex],
+          r = s.Steps[i.StepIndex];
         if (r.SubNodesInfo.SubNodesExecuting) {
           e.push(r.SubNodesInfo);
           let t = !0;
           for (const h of this.AIe)
             (h.LevelIndex === i.LevelIndex && h.StepIndex <= i.StepIndex) ||
               (this.xIe.HasStep(h, i.LevelIndex) && (t = !1));
-          if (t && i.LevelIndex > 0) {
+          if (t && 0 < i.LevelIndex) {
             i = s.ParentStepId;
             continue;
           }
@@ -404,12 +404,12 @@ class LevelAiPlanInstance {
     if (this.xIe && this.xIe.HasStep(e)) {
       let t = e;
       for (;;) {
-        const s = this.xIe.Levels[t.LevelIndex];
-        const r = s.Steps[t.StepIndex];
+        var s = this.xIe.Levels[t.LevelIndex],
+          r = s.Steps[t.StepIndex];
         if (
           !(
             r.SubNodesInfo.SubNodesExecuting &&
-            (i.push(r.SubNodesInfo), t.LevelIndex > 0)
+            (i.push(r.SubNodesInfo), 0 < t.LevelIndex)
           )
         )
           break;
@@ -420,11 +420,11 @@ class LevelAiPlanInstance {
   zIe(t, i) {
     if (!this.xIe) return !1;
     for (const e of t.SubDecorators)
-      if (e.WrappedCheckCondition(i) === 0) return !1;
+      if (0 === e.WrappedCheckCondition(i)) return !1;
     return !0;
   }
   ZIe(t) {
-    let i;
+    var i;
     if (t.SubNodesExecuting)
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -438,7 +438,7 @@ class LevelAiPlanInstance {
     }
   }
   jIe(t, i) {
-    const e = new Array();
+    var e = new Array();
     switch (i) {
       case 0:
         this.oTe(e, t);
@@ -460,9 +460,9 @@ class LevelAiPlanInstance {
   nTe(t, i) {
     if (t.SubNodesExecuting) {
       t.SubNodesExecuting = !1;
-      let e;
-      const s = t.SubDecorators;
-      for (let t = s.length - 1; t >= 0; --t)
+      var e,
+        s = t.SubDecorators;
+      for (let t = s.length - 1; 0 <= t; --t)
         (e = s[t]) && e.WrappedExecutionFinish(i);
     } else
       Log_1.Log.CheckError() &&
@@ -473,7 +473,7 @@ class LevelAiPlanInstance {
         );
   }
   FindActiveTaskInfo(i) {
-    let t;
+    var t;
     if (this.HasActivePlan())
       return (
         (t = void 0),
@@ -487,12 +487,12 @@ class LevelAiPlanInstance {
   FindActiveDecoratorInfo(s) {
     if (this.HasActivePlan()) {
       const r = new Array();
-      let t;
-      const i = (t) => {
-        (r.length = 0), this.xIe.GetSubNodesAtPlanStep(t, r);
-        for (const i of r) for (const e of i.SubDecorators) return e === s;
-        return !1;
-      };
+      var t,
+        i = (t) => {
+          (r.length = 0), this.xIe.GetSubNodesAtPlanStep(t, r);
+          for (const i of r) for (const e of i.SubDecorators) return e === s;
+          return !1;
+        };
       return (t = this.UIe.find(i))
         ? { PlanInstance: this, PlanStepId: t }
         : (t = this.PIe.find(i))
@@ -505,4 +505,4 @@ class LevelAiPlanInstance {
   }
 }
 exports.LevelAiPlanInstance = LevelAiPlanInstance;
-// # sourceMappingURL=LevelAiPlanInstance.js.map
+//# sourceMappingURL=LevelAiPlanInstance.js.map

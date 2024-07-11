@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventTriggerCameraShake = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../Core/Define/CommonDefine");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const CameraController_1 = require("../../Camera/CameraController");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterController_1 = require("../../NewWorld/Character/CharacterController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const MAX_SHAKE_DURATION = CommonDefine_1.SECOND_PER_MINUTE;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterController_1 = require("../../NewWorld/Character/CharacterController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  MAX_SHAKE_DURATION = CommonDefine_1.SECOND_PER_MINUTE;
 class LevelEventTriggerCameraShake extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, r, a) {
     if (e) {
@@ -19,11 +19,11 @@ class LevelEventTriggerCameraShake extends LevelGeneralBase_1.LevelEventBase {
         e.CameraShakeBp + "_C",
         UE.Class,
         (e) => {
-          let r, a;
+          var r, a;
           e?.IsValid() &&
             ((r = (0, puerts_1.$ref)(void 0)),
             UE.KuroStaticLibrary.GetCameraShakeInfo(e, r)
-              ? (r = (0, puerts_1.$unref)(r)).Duration.Type === 1 ||
+              ? 1 === (r = (0, puerts_1.$unref)(r)).Duration.Type ||
                 r.Duration.Duration > MAX_SHAKE_DURATION
                 ? Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
@@ -34,12 +34,12 @@ class LevelEventTriggerCameraShake extends LevelGeneralBase_1.LevelEventBase {
                     ["时长", r.Duration.Duration],
                     ["限制最大时长", MAX_SHAKE_DURATION],
                   )
-                : o.Type === "Constant"
+                : "Constant" === o.Type
                   ? CameraController_1.CameraController.PlayCameraShake(
                       e,
                       CameraController_1.CameraController.Model.ShakeModify,
                     )
-                  : o.Type === "LinearOverRange" &&
+                  : "LinearOverRange" === o.Type &&
                     (r =
                       ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
                         o.CenterEntityId,
@@ -71,4 +71,4 @@ class LevelEventTriggerCameraShake extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventTriggerCameraShake = LevelEventTriggerCameraShake;
-// # sourceMappingURL=LevelEventTriggerCameraShake.js.map
+//# sourceMappingURL=LevelEventTriggerCameraShake.js.map

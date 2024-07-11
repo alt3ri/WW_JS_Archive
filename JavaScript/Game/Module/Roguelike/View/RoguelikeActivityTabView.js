@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoguelikeActivityTabView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiComponentsAction_1 = require("../../../Ui/Base/UiComponentsAction");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiComponentsAction_1 = require("../../../Ui/Base/UiComponentsAction"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
 class RoguelikeActivityTabInstanceItem extends UiComponentsAction_1.UiComponentsAction {
   constructor(e) {
     super(),
@@ -33,28 +33,28 @@ class RoguelikeActivityTabInstanceItem extends UiComponentsAction_1.UiComponents
     this.Update(this.InstanceId);
   }
   Update(e) {
-    var t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e);
-    var t =
-      (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), t.MapName),
-      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetInstanceRewardId(
-        e,
-      ));
-    var t =
-      ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardPreviewRewardList(
-        t,
-      );
-    const i =
-      ((this.RewardItemList = t),
-      (this.IsShowReward =
-        this.RewardItemList && this.RewardItemList.length > 0),
-      this.GetItem(3).GetOwner());
-    const s = this.GetItem(2);
-    const n =
-      !ModelManager_1.ModelManager.ExchangeRewardModel.GetInstanceDungeonIfCanExchange(
-        e,
-      );
+    var t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e),
+      t =
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), t.MapName),
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetInstanceRewardId(
+          e,
+        )),
+      t =
+        ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardPreviewRewardList(
+          t,
+        ),
+      i =
+        ((this.RewardItemList = t),
+        (this.IsShowReward =
+          this.RewardItemList && 0 < this.RewardItemList.length),
+        this.GetItem(3).GetOwner()),
+      s = this.GetItem(2),
+      n =
+        !ModelManager_1.ModelManager.ExchangeRewardModel.GetInstanceDungeonIfCanExchange(
+          e,
+        );
     for (let t = 0; t < this.RewardItemList.length; t++) {
-      const r = this.RewardItemList[t];
+      var r = this.RewardItemList[t];
       let e = this.ItemGridList[t];
       e ||
         ((e =
@@ -119,31 +119,30 @@ class RoguelikeActivityTabView extends UiTabViewBase_1.UiTabViewBase {
         return e.SetRootActor(t.GetOwner(), !0), { Key: i, Value: e };
       }),
       (this.OnSelectSeason = (e, t) => {
-        var i = this.TabList[this.SelectIndex];
-        var i =
-          (i && i.SetToggleState(0),
-          (this.SelectIndex = t),
-          ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
-            e,
-          ));
-        var t =
-          ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+        var i = this.TabList[this.SelectIndex],
+          i =
+            (i && i.SetToggleState(0),
+            (this.SelectIndex = t),
+            ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
+              e,
+            )),
+          t = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
             i.PointItem,
-          );
-        var e =
-          ModelManager_1.ModelManager.RoguelikeModel.GetParamConfigBySeasonId(
-            e,
-          );
-        var t =
-          (LguiUtil_1.LguiUtil.SetLocalTextNew(
-            this.GetText(2),
-            "Roguelike_ActivityTab_Currency",
-            t,
-            e.PointItemMaxCount,
           ),
-          ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.GetConfig(
-            i.InstanceDungeonEntrance,
-          ));
+          e =
+            ModelManager_1.ModelManager.RoguelikeModel.GetParamConfigBySeasonId(
+              e,
+            ),
+          t =
+            (LguiUtil_1.LguiUtil.SetLocalTextNew(
+              this.GetText(2),
+              "Roguelike_ActivityTab_Currency",
+              t,
+              e.PointItemMaxCount,
+            ),
+            ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.GetConfig(
+              i.InstanceDungeonEntrance,
+            ));
         this.ScrollView.RefreshByData(
           t.InstanceDungeonList,
           t.InstanceDungeonList.length,
@@ -165,15 +164,15 @@ class RoguelikeActivityTabView extends UiTabViewBase_1.UiTabViewBase {
       this.GetScrollViewWithScrollbar(0),
       this.Bqe,
     );
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigList();
     for (let e = 0; e < t.length; e++) {
-      var i = t[e];
-      var i = new RoguelikeActivityTabItem(i.Id, e);
-      const s = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(5), this.GetItem(4));
+      var i = t[e],
+        i = new RoguelikeActivityTabItem(i.Id, e),
+        s = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(5), this.GetItem(4));
       i.SetRootActor(s.GetOwner(), !0),
         this.TabList.push(i),
-        e === 0 && (i.SetToggleState(1), this.OnSelectSeason(t[e].Id, e));
+        0 === e && (i.SetToggleState(1), this.OnSelectSeason(t[e].Id, e));
     }
     this.GetItem(5).SetUIActive(!1);
   }
@@ -197,4 +196,4 @@ class RoguelikeActivityTabView extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.RoguelikeActivityTabView = RoguelikeActivityTabView;
-// # sourceMappingURL=RoguelikeActivityTabView.js.map
+//# sourceMappingURL=RoguelikeActivityTabView.js.map

@@ -9,4 +9,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.COMPOSITE_ENTER_SEQUENCE_TIME_LENGTH = 3e3),
   (exports.COMPOSITE_WORKING_SEQUENCE_TIME_LENGTH = 2e3),
   (exports.COMPOSITE_FAIL_SEQUENCE_TIME_LENGTH = 2e3);
-// # sourceMappingURL=ComposeDefine.js.map
+//# sourceMappingURL=ComposeDefine.js.map

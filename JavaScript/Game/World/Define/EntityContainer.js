@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EntityContainer = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const CustomMap_1 = require("./CustomMap");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  CustomMap_1 = require("./CustomMap");
 class EntityContainer {
   constructor() {
     (this.EntityMap = new CustomMap_1.CustomMap()),
@@ -16,7 +16,7 @@ class EntityContainer {
     );
   }
   RemoveEntity(t) {
-    const i = this.EntityMap.Get(t);
+    var i = this.EntityMap.Get(t);
     return (
       !!i &&
       (this.EntityMap.Remove(t),
@@ -49,7 +49,7 @@ class EntityContainer {
     return this.PbDataIdMap.get(t);
   }
   PopEntity() {
-    const t = this.EntityMap.GetByIndex(0);
+    var t = this.EntityMap.GetByIndex(0);
     if (t) return this.RemoveEntity(t.CreatureDataId), t;
   }
   GetAllEntities() {
@@ -63,4 +63,4 @@ class EntityContainer {
   }
 }
 exports.EntityContainer = EntityContainer;
-// # sourceMappingURL=EntityContainer.js.map
+//# sourceMappingURL=EntityContainer.js.map

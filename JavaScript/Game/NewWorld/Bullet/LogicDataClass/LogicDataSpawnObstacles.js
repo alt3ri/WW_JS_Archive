@@ -14,4 +14,4 @@ class LogicDataSpawnObstacles extends LogicDataBase_1.default {
   }
 }
 exports.default = LogicDataSpawnObstacles;
-// # sourceMappingURL=LogicDataSpawnObstacles.js.map
+//# sourceMappingURL=LogicDataSpawnObstacles.js.map

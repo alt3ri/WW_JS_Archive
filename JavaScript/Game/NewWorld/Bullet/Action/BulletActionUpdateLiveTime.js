@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletActionUpdateLiveTime = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const BulletController_1 = require("../BulletController");
-const BulletActionBase_1 = require("./BulletActionBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  BulletController_1 = require("../BulletController"),
+  BulletActionBase_1 = require("./BulletActionBase");
 class BulletActionUpdateLiveTime extends BulletActionBase_1.BulletActionBase {
   OnExecute() {
     this.BulletInfo.LiveTime = 0;
   }
   AfterTick(t) {
-    const e = this.BulletInfo.Actor;
-    const i = this.BulletInfo.Entity.TimeDilation;
-    const l = this.BulletInfo.BulletDataMain;
+    var e = this.BulletInfo.Actor,
+      i = this.BulletInfo.Entity.TimeDilation,
+      l = this.BulletInfo.BulletDataMain;
     e?.IsValid()
       ? ((this.BulletInfo.LiveTime += t * e.CustomTimeDilation * i),
         e.IsActorBeingDestroyed()
@@ -46,4 +46,4 @@ class BulletActionUpdateLiveTime extends BulletActionBase_1.BulletActionBase {
   }
 }
 exports.BulletActionUpdateLiveTime = BulletActionUpdateLiveTime;
-// # sourceMappingURL=BulletActionUpdateLiveTime.js.map
+//# sourceMappingURL=BulletActionUpdateLiveTime.js.map

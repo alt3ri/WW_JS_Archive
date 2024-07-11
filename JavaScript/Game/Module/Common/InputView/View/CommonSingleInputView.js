@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonSingleInputView = void 0);
-const CommonInputViewDefine_1 = require("../Model/CommonInputViewDefine");
-const CommonInputViewBase_1 = require("./CommonInputViewBase");
+const CommonInputViewDefine_1 = require("../Model/CommonInputViewDefine"),
+  CommonInputViewBase_1 = require("./CommonInputViewBase");
 class CommonSingleInputView extends CommonInputViewBase_1.CommonInputViewBase {
   GetMaxLimit() {
     return CommonInputViewDefine_1.MAX_SINGLE_LENGTH;
@@ -12,4 +12,4 @@ class CommonSingleInputView extends CommonInputViewBase_1.CommonInputViewBase {
   }
 }
 exports.CommonSingleInputView = CommonSingleInputView;
-// # sourceMappingURL=CommonSingleInputView.js.map
+//# sourceMappingURL=CommonSingleInputView.js.map

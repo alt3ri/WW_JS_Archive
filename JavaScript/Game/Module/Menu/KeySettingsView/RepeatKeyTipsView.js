@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RepeatKeyTipsView = void 0);
-const UE = require("ue");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class RepeatKeyTipsView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -36,16 +36,16 @@ class RepeatKeyTipsView extends UiViewBase_1.UiViewBase {
       ]);
   }
   OnStart() {
-    let i;
-    let t;
-    let s;
-    var h = this.OpenParam;
-    var h =
-      ((this.QPi = h.CurrentKeySettingRowData),
-      (this.XPi = h.RepeatKeySettingRowData),
-      (this.oPi = h.InputControllerType),
-      (this.$Pi = h.OnCloseCallback),
-      this.QPi.GetCurrentKeyName(this.oPi));
+    var i,
+      t,
+      s,
+      h = this.OpenParam,
+      h =
+        ((this.QPi = h.CurrentKeySettingRowData),
+        (this.XPi = h.RepeatKeySettingRowData),
+        (this.oPi = h.InputControllerType),
+        (this.$Pi = h.OnCloseCallback),
+        this.QPi.GetCurrentKeyName(this.oPi));
     h &&
       ((h = this.QPi.GetSettingName()),
       (i = this.QPi.GetCurrentKeyNameRichText(this.oPi)),
@@ -67,4 +67,4 @@ class RepeatKeyTipsView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RepeatKeyTipsView = RepeatKeyTipsView;
-// # sourceMappingURL=RepeatKeyTipsView.js.map
+//# sourceMappingURL=RepeatKeyTipsView.js.map

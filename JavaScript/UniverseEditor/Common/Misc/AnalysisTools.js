@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExecuteTimeRecorder = exports.measureTime = void 0);
-const Platform_1 = require("../Platform/Platform");
-const LOG_HEADER = "Analysis Tools-----";
+const Platform_1 = require("../Platform/Platform"),
+  LOG_HEADER = "Analysis Tools-----";
 function myLog(e, t = 0) {
   (0, Platform_1.getPlatform)().Log(t, LOG_HEADER + " " + e);
 }
@@ -10,9 +10,9 @@ function measureTime(e, o, t) {
   const s = t.value;
   return (
     (t.value = function (...e) {
-      const t = Date.now();
-      var e = s.apply(this, e);
-      const r = Date.now();
+      var t = Date.now(),
+        e = s.apply(this, e),
+        r = Date.now();
       return myLog(`Execution time for "${o}": ${r - t} ms`), e;
     }),
     t
@@ -34,4 +34,4 @@ class ExecuteTimeRecorder {
   }
 }
 exports.ExecuteTimeRecorder = ExecuteTimeRecorder;
-// # sourceMappingURL=AnalysisTools.js.map
+//# sourceMappingURL=AnalysisTools.js.map

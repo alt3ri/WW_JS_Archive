@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PersonalEditView = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const PersonalCardComponent_1 = require("./PersonalCardComponent");
-const PersonalHeadPhotoComponent_1 = require("./PersonalHeadPhotoComponent");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  PersonalCardComponent_1 = require("./PersonalCardComponent"),
+  PersonalHeadPhotoComponent_1 = require("./PersonalHeadPhotoComponent");
 class PersonalEditView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -45,14 +45,14 @@ class PersonalEditView extends UiViewBase_1.UiViewBase {
       (this.e5i =
         new PersonalHeadPhotoComponent_1.PersonalHeadPhotoComponent()),
       await this.e5i.CreateThenShowByActorAsync(this.g6t.GetOwner());
-    const s = ModelManager_1.ModelManager.FunctionModel.IsOpen(10061);
+    var s = ModelManager_1.ModelManager.FunctionModel.IsOpen(10061);
     this.GetExtendToggle(3).RootUIComp.SetUIActive(s),
       (this.i5i = s ? this.i5i : 0),
-      this.i5i === 1
+      1 === this.i5i
         ? (this.GetExtendToggle(3).SetToggleState(1),
           this.GetExtendToggle(2).SetToggleState(0),
           this.r5i())
-        : this.i5i === 0 &&
+        : 0 === this.i5i &&
           (this.GetExtendToggle(3).SetToggleState(0),
           this.GetExtendToggle(2).SetToggleState(1),
           this.o5i());
@@ -65,4 +65,4 @@ class PersonalEditView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.PersonalEditView = PersonalEditView;
-// # sourceMappingURL=PersonalEditView.js.map
+//# sourceMappingURL=PersonalEditView.js.map

@@ -13,4 +13,4 @@ class EffectGlobal {}
   (EffectGlobal.AllowEffectInPool = !0),
   (EffectGlobal.SceneObjectWaterEffectShowDebugTrace = !1),
   (EffectGlobal.CgMode = !1);
-// # sourceMappingURL=EffectGlobal.js.map
+//# sourceMappingURL=EffectGlobal.js.map

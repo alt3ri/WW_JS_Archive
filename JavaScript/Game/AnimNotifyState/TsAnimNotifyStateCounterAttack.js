@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const FNameUtil_1 = require("../../Core/Utils/FNameUtil");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const BulletUtil_1 = require("../NewWorld/Bullet/BulletUtil");
+const UE = require("ue"),
+  FNameUtil_1 = require("../../Core/Utils/FNameUtil"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  BulletUtil_1 = require("../NewWorld/Bullet/BulletUtil");
 class TsAnimNotifyStateCounterAttack extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -17,8 +17,8 @@ class TsAnimNotifyStateCounterAttack extends UE.KuroAnimNotifyState {
     if (t instanceof TsBaseCharacter_1.default) {
       t = t.CharacterActorComponent?.Entity;
       if (!t?.Valid) return !1;
-      let e = t.GetComponent(33);
-      var t = t.GetComponent(51);
+      var e = t.GetComponent(33),
+        t = t.GetComponent(51);
       if (!e?.Valid || !t?.Valid) return !1;
       if (!this.弹反设置) return !1;
       if (
@@ -68,12 +68,12 @@ class TsAnimNotifyStateCounterAttack extends UE.KuroAnimNotifyState {
     return !0;
   }
   K2_NotifyEnd(t, i) {
-    const s = t.GetOwner();
+    var s = t.GetOwner();
     if (s instanceof TsBaseCharacter_1.default) {
       var e = s.CharacterActorComponent?.Entity;
       if (!e?.Valid) return !1;
-      var r = e.GetComponent(33);
-      var e = e.GetComponent(51);
+      var r = e.GetComponent(33),
+        e = e.GetComponent(51);
       if (!r?.Valid || !e?.Valid) return !1;
       var h = e.IsTriggerCounterAttack;
       if ((e.CounterAttackEnd(), !h)) {
@@ -92,10 +92,11 @@ class TsAnimNotifyStateCounterAttack extends UE.KuroAnimNotifyState {
     }
     return (
       FNameUtil_1.FNameUtil.IsNothing(this.生成子弹ID) ||
-        ((e = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(
-          s.GetWorld(),
-        )) !== 2 &&
-          e !== 4) ||
+        (2 !==
+          (e = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(
+            s.GetWorld(),
+          )) &&
+          4 !== e) ||
         ((h = UE.KismetSystemLibrary.GetOuterObject(this)),
         (r = UE.KismetSystemLibrary.GetPathName(h)),
         UE.BPL_BulletPreview_C.ShowBulletPreview(
@@ -114,4 +115,4 @@ class TsAnimNotifyStateCounterAttack extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateCounterAttack;
-// # sourceMappingURL=TsAnimNotifyStateCounterAttack.js.map
+//# sourceMappingURL=TsAnimNotifyStateCounterAttack.js.map

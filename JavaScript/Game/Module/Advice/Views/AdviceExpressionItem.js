@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceExpressionItem = void 0);
-const UE = require("ue");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
 class AdviceExpressionItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -39,24 +39,25 @@ class AdviceExpressionItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(e, t, s) {
     this.C8e = e.Id;
-    var r = e.ExpressionTexturePath;
-    var r =
-      (ResourceSystem_1.ResourceSystem.LoadAsync(r, UE.Texture, (e, t) => {
-        this.GetRootActor()?.IsValid() && this.GetTexture(2).SetTexture(e);
-      }),
-      e.Name);
+    var r = e.ExpressionTexturePath,
+      r =
+        (ResourceSystem_1.ResourceSystem.LoadAsync(r, UE.Texture, (e, t) => {
+          this.GetRootActor()?.IsValid() && this.GetTexture(2).SetTexture(e);
+        }),
+        e.Name);
     this.GetText(1).ShowTextNew(r), this.j9e(), this.W9e();
   }
   W9e() {
-    const e = this.GetExtendToggle(0).ToggleState;
-    const t =
-      ModelManager_1.ModelManager.AdviceModel.PreSelectExpressionId === this.C8e
-        ? 1
-        : 0;
+    var e = this.GetExtendToggle(0).ToggleState,
+      t =
+        ModelManager_1.ModelManager.AdviceModel.PreSelectExpressionId ===
+        this.C8e
+          ? 1
+          : 0;
     e !== t && this.GetExtendToggle(0).SetToggleStateForce(t, !1);
   }
   j9e() {
-    const e = ModelManager_1.ModelManager.AdviceModel.CurrentExpressionId;
+    var e = ModelManager_1.ModelManager.AdviceModel.CurrentExpressionId;
     this.GetItem(3).SetUIActive(e === this.C8e);
   }
   OnBeforeDestroy() {
@@ -67,4 +68,4 @@ class AdviceExpressionItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.AdviceExpressionItem = AdviceExpressionItem;
-// # sourceMappingURL=AdviceExpressionItem.js.map
+//# sourceMappingURL=AdviceExpressionItem.js.map

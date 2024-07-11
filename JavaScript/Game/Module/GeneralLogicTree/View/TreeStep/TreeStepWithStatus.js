@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TreeStepWithStatus = void 0);
-const ue_1 = require("ue");
-const IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest");
-const LevelGeneralContextDefine_1 = require("../../../../LevelGamePlay/LevelGeneralContextDefine");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const GeneralLogicTreeController_1 = require("../../GeneralLogicTreeController");
-const TreeStepBase_1 = require("./TreeStepBase");
+const ue_1 = require("ue"),
+  IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest"),
+  LevelGeneralContextDefine_1 = require("../../../../LevelGamePlay/LevelGeneralContextDefine"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  GeneralLogicTreeController_1 = require("../../GeneralLogicTreeController"),
+  TreeStepBase_1 = require("./TreeStepBase");
 class TreeStepWithStatus extends TreeStepBase_1.TreeStepBase {
   constructor() {
     super(...arguments),
@@ -39,18 +39,18 @@ class TreeStepWithStatus extends TreeStepBase_1.TreeStepBase {
     );
   }
   UpdateStepStatusNode() {
-    const e = this.IsShowNodeStatus();
+    var e = this.IsShowNodeStatus();
     return this.Config && e
       ? (this.StepStatusNode.SetUIActive(!0),
         !!this.k$t() || (this.F$t(!1), this.V$t(!1), !1))
       : (this.StepStatusNode.SetUIActive(!1), !1);
   }
   k$t() {
-    const e = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
+    var e = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
       this.TreeIncId,
     );
     if (!e) return !1;
-    const t = this.Config.QuestScheduleType;
+    var t = this.Config.QuestScheduleType;
     switch (t.Type) {
       case IQuest_1.EQuestScheduleType.ChildQuestCompleted:
         var r = e.GetNode(t.ChildQuestId);
@@ -84,7 +84,7 @@ class TreeStepWithStatus extends TreeStepBase_1.TreeStepBase {
     return !0;
   }
   F$t(e) {
-    (this.StepSuccess.IsUIActiveSelf() && this.StepSuccess.Alpha === 1) !== e &&
+    (this.StepSuccess.IsUIActiveSelf() && 1 === this.StepSuccess.Alpha) !== e &&
       (this.StepSuccess.SetUIActive(e), this.OnSuccessNodeActive(e));
   }
   V$t(e) {
@@ -100,4 +100,4 @@ class TreeStepWithStatus extends TreeStepBase_1.TreeStepBase {
   OnLoseNodeActive(e) {}
 }
 exports.TreeStepWithStatus = TreeStepWithStatus;
-// # sourceMappingURL=TreeStepWithStatus.js.map
+//# sourceMappingURL=TreeStepWithStatus.js.map

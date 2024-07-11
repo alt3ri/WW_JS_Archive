@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConfigCurveUtils = void 0);
-const UE = require("ue");
-const CurveUtils_1 = require("../../Core/Utils/Curve/CurveUtils");
+const UE = require("ue"),
+  CurveUtils_1 = require("../../Core/Utils/Curve/CurveUtils");
 class ConfigCurveUtils {
   static CreateCurveByBaseCurve(e) {
     return CurveUtils_1.CurveUtils.CreateCurveByStruct(this.SCr(e));
@@ -36,4 +36,4 @@ class ConfigCurveUtils {
   }
 }
 (exports.ConfigCurveUtils = ConfigCurveUtils).BaseCurve = void 0;
-// # sourceMappingURL=ConfigCurveUtils.js.map
+//# sourceMappingURL=ConfigCurveUtils.js.map

@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiLoginSceneManager = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const CameraController_1 = require("../../Camera/CameraController");
-const GlobalData_1 = require("../../GlobalData");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const LoginDefine_1 = require("../Login/Data/LoginDefine");
-const UiModelUtil_1 = require("../UiModel/UiModelUtil");
-const UiSceneRoleActorManager_1 = require("./UiSceneRoleActorManager");
-const SEQUENCE_CAMERA_TAG = new UE.FName("SequenceCamera");
-const CINEMATIC_TICK_TAG = new UE.FName("CinematicTick");
-const SPOT_LIGHT1_TAG = new UE.FName("SpotLight1");
-const SPOT_LIGHT2_TAG = new UE.FName("SpotLight2");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  GlobalData_1 = require("../../GlobalData"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  LoginDefine_1 = require("../Login/Data/LoginDefine"),
+  UiModelUtil_1 = require("../UiModel/UiModelUtil"),
+  UiSceneRoleActorManager_1 = require("./UiSceneRoleActorManager"),
+  SEQUENCE_CAMERA_TAG = new UE.FName("SequenceCamera"),
+  CINEMATIC_TICK_TAG = new UE.FName("CinematicTick"),
+  SPOT_LIGHT1_TAG = new UE.FName("SpotLight1"),
+  SPOT_LIGHT2_TAG = new UE.FName("SpotLight2");
 class UiLoginSceneManager {
   static GetRoleObserver(e) {
     let n = UiLoginSceneManager.iPo.get(e);
@@ -31,7 +31,7 @@ class UiLoginSceneManager {
     );
   }
   static oPo() {
-    for (let [, e] of UiLoginSceneManager.iPo) {
+    for (var [, e] of UiLoginSceneManager.iPo) {
       e = e.GetRoleActorIndex();
       UiSceneRoleActorManager_1.UiSceneRoleActorManager.DestroyUiSceneRoleActor(
         e,
@@ -55,9 +55,9 @@ class UiLoginSceneManager {
   }
   static hPo() {
     var e =
-      ConfigManager_1.ConfigManager.CreateCharacterConfig.GetInitialRoles();
-    const n = e[LoginDefine_1.ELoginSex.Girl];
-    var e = e[LoginDefine_1.ELoginSex.Boy];
+        ConfigManager_1.ConfigManager.CreateCharacterConfig.GetInitialRoles(),
+      n = e[LoginDefine_1.ELoginSex.Girl],
+      e = e[LoginDefine_1.ELoginSex.Boy];
     (UiLoginSceneManager.nPo.UISceneRole_2 = this.lPo(e)),
       (UiLoginSceneManager.nPo.UISceneRole = this.lPo(n)),
       (UiLoginSceneManager.nPo.Is_Tick = 1);
@@ -79,23 +79,24 @@ class UiLoginSceneManager {
   }
   static InitRoleObservers() {
     UiLoginSceneManager.oPo();
-    const e =
-      ConfigManager_1.ConfigManager.CreateCharacterConfig.GetInitialRoles();
-    var n = e[LoginDefine_1.ELoginSex.Girl];
-    var n =
-      (UiLoginSceneManager.uPo(n, "GirlCase"), e[LoginDefine_1.ELoginSex.Boy]);
+    var e =
+        ConfigManager_1.ConfigManager.CreateCharacterConfig.GetInitialRoles(),
+      n = e[LoginDefine_1.ELoginSex.Girl],
+      n =
+        (UiLoginSceneManager.uPo(n, "GirlCase"),
+        e[LoginDefine_1.ELoginSex.Boy]);
     UiLoginSceneManager.uPo(n, "BoyCase");
   }
   static uPo(e, n) {
-    const i = UiLoginSceneManager.GetRoleObserver(e);
-    const a = i.Model;
+    const i = UiLoginSceneManager.GetRoleObserver(e),
+      a = i.Model;
     a.CheckGetComponent(12)?.LoadModelByRoleConfigId(e, !1, () => {
       UiModelUtil_1.UiModelUtil.SetVisible(a, !0),
         a.CheckGetComponent(15).SetActive(!0),
         a.CheckGetComponent(13)?.SetState(11),
         i.Model?.CheckGetComponent(1)?.SetTransformByTag(n),
         UiLoginSceneManager.rPo.push(e),
-        UiLoginSceneManager.rPo.length >= 2 && UiLoginSceneManager.hPo();
+        2 <= UiLoginSceneManager.rPo.length && UiLoginSceneManager.hPo();
     });
   }
   static PlayRoleMontage(e, n) {
@@ -138,7 +139,7 @@ class UiLoginSceneManager {
   static LoadSequenceAsync(e, a = void 0, r = !1, o = void 0) {
     const g = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(e);
     ResourceSystem_1.ResourceSystem.LoadAsync(g, UE.LevelSequence, (e) => {
-      let n, i;
+      var n, i;
       e?.IsValid()
         ? (o && o?.(),
           (n = (0, puerts_1.$ref)(void 0)),
@@ -183,7 +184,7 @@ class UiLoginSceneManager {
       "LevelSequence_Login",
     );
     ResourceSystem_1.ResourceSystem.LoadAsync(i, UE.LevelSequence, (e) => {
-      let n;
+      var n;
       e?.IsValid()
         ? ((n = (0, puerts_1.$ref)(void 0)),
           UE.LevelSequencePlayer.CreateLevelSequencePlayer(
@@ -213,11 +214,11 @@ class UiLoginSceneManager {
     });
   }
   static dPo() {
-    let e;
-    const n = UE.GameplayStatics.GetPlayerController(
-      GlobalData_1.GlobalData.World,
-      0,
-    );
+    var e,
+      n = UE.GameplayStatics.GetPlayerController(
+        GlobalData_1.GlobalData.World,
+        0,
+      );
     n
       ? ((e =
           CameraController_1.CameraController.WidgetCamera.GetComponent(
@@ -246,4 +247,4 @@ class UiLoginSceneManager {
   (UiLoginSceneManager.cPo = 0),
   (UiLoginSceneManager.rPo = []),
   (UiLoginSceneManager.mPo = void 0);
-// # sourceMappingURL=UiLoginSceneManager.js.map
+//# sourceMappingURL=UiLoginSceneManager.js.map

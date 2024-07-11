@@ -67,16 +67,16 @@ class EntryJson {
   }
 }
 function parseClientEntryJson(t, i) {
-  let o = void 0;
-  let e = void 0;
+  let o = void 0,
+    e = void 0;
   Object.entries(i).forEach((i) => {
-    const s = i[0];
-    var i = i[1];
-    s === "default" ? (o = i) : s === t && (e = i);
+    var s = i[0],
+      i = i[1];
+    "default" === s ? (o = i) : s === t && (e = i);
   });
   i = new EntryJson(o, e);
   BaseConfigModel.EntryJson = i;
 }
 (exports.EntryJson = EntryJson),
   (exports.parseClientEntryJson = parseClientEntryJson);
-// # sourceMappingURL=BaseConfigModel.js.map
+//# sourceMappingURL=BaseConfigModel.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleSkillCombineItem = void 0);
-const UE = require("ue");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const CommonKeyItem_1 = require("./KeyItem/CommonKeyItem");
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  CommonKeyItem_1 = require("./KeyItem/CommonKeyItem");
 class BattleSkillCombineItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -22,7 +22,7 @@ class BattleSkillCombineItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    const e = this.GetItem(0);
+    var e = this.GetItem(0);
     (this.xet = new CommonKeyItem_1.CommonKeyItem()),
       await this.xet.CreateThenShowByActorAsync(e.GetOwner()),
       this.xet.RefreshAction(InputMappingsDefine_1.actionMappings.组合主键);
@@ -51,7 +51,7 @@ class BattleSkillCombineItem extends UiPanelBase_1.UiPanelBase {
               this.Aet,
               UE.NiagaraSystem,
               (e) => {
-                let t;
+                var t;
                 e?.IsValid() &&
                   (t = this.GetUiNiagara(1)) &&
                   (t.SetNiagaraSystem(e), this.Aet === this.Uet) &&
@@ -75,7 +75,7 @@ class BattleSkillCombineItem extends UiPanelBase_1.UiPanelBase {
     }
   }
   bet(e) {
-    const t = this.GetUiNiagara(1);
+    var t = this.GetUiNiagara(1);
     t &&
       (e
         ? (t.bIsUIActive || t.SetUIActive(!0), t.ActivateSystem(!0))
@@ -83,4 +83,4 @@ class BattleSkillCombineItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.BattleSkillCombineItem = BattleSkillCombineItem;
-// # sourceMappingURL=BattleSkillCombineItem.js.map
+//# sourceMappingURL=BattleSkillCombineItem.js.map

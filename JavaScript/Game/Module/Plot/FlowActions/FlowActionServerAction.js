@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionServerAction = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const FlowNetworks_1 = require("../Flow/FlowNetworks");
-const FlowActionBase_1 = require("./FlowActionBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  FlowNetworks_1 = require("../Flow/FlowNetworks"),
+  FlowActionBase_1 = require("./FlowActionBase");
 class FlowActionServerAction extends FlowActionBase_1.FlowActionBase {
   constructor() {
     super(...arguments), (this.YXi = !1);
@@ -48,4 +48,4 @@ class FlowActionServerAction extends FlowActionBase_1.FlowActionBase {
   }
 }
 exports.FlowActionServerAction = FlowActionServerAction;
-// # sourceMappingURL=FlowActionServerAction.js.map
+//# sourceMappingURL=FlowActionServerAction.js.map

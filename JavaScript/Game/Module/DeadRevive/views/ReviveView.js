@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ReviveView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ReviveById_1 = require("../../../../Core/Define/ConfigQuery/ReviveById");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const TrainingView_1 = require("../../TrainingDegree/TrainingView");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const DeadReviveController_1 = require("../DeadReviveController");
-const TIME_SECOND = 1e3;
-const AUTO_REVIVE_TIME = 60;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ReviveById_1 = require("../../../../Core/Define/ConfigQuery/ReviveById"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  TrainingView_1 = require("../../TrainingDegree/TrainingView"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  DeadReviveController_1 = require("../DeadReviveController"),
+  TIME_SECOND = 1e3,
+  AUTO_REVIVE_TIME = 60;
 class ReviveView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -34,7 +34,7 @@ class ReviveView extends UiTickViewBase_1.UiTickViewBase {
       (this.Z2t = void 0),
       (this.eFt = !1),
       (this.tFt = () => {
-        this.j2t === 0
+        0 === this.j2t
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "CannotRevive",
             )
@@ -53,7 +53,7 @@ class ReviveView extends UiTickViewBase_1.UiTickViewBase {
           InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeon();
       }),
       (this.oFt = () => {
-        const i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(98);
+        var i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(98);
         i.SetTextArgs(this.Y2t, this.J2t),
           i.FunctionMap.set(2, () => {
             this.z2t
@@ -95,39 +95,39 @@ class ReviveView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnStart() {
     (this.Q2t = this.GetText(4)), (this.X2t = this.GetText(9));
-    const i = this.GetItem(0);
-    const e = this.GetItem(1);
-    var t = this.GetButton(3);
-    var s = this.GetButton(2);
-    var s =
-      ((this.$2t = s
-        .GetOwner()
-        .GetComponentByClass(UE.UIInteractionGroup.StaticClass())),
-      (this.eFt =
-        ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()),
-      this.eFt
-        ? ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-          (this.GetButton(2).GetRootComponent().SetUIActive(!1),
-          LguiUtil_1.LguiUtil.SetLocalText(this.GetText(12), "ExitInstance"),
-          LguiUtil_1.LguiUtil.SetLocalText(
-            this.GetText(6),
-            "MatchInstanceDead",
-          ))
-        : (s
-            .GetRootComponent()
-            .SetAnchorOffset(t.GetRootComponent().GetAnchorOffset()),
-          t.GetRootComponent().SetUIActive(!1),
-          this.rFt()),
-      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-        ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
-      ).ReviveId);
-    var t = ReviveById_1.configReviveById.GetConfig(s);
+    var i = this.GetItem(0),
+      e = this.GetItem(1),
+      t = this.GetButton(3),
+      s = this.GetButton(2),
+      s =
+        ((this.$2t = s
+          .GetOwner()
+          .GetComponentByClass(UE.UIInteractionGroup.StaticClass())),
+        (this.eFt =
+          ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()),
+        this.eFt
+          ? ModelManager_1.ModelManager.GameModeModel.IsMulti &&
+            (this.GetButton(2).GetRootComponent().SetUIActive(!1),
+            LguiUtil_1.LguiUtil.SetLocalText(this.GetText(12), "ExitInstance"),
+            LguiUtil_1.LguiUtil.SetLocalText(
+              this.GetText(6),
+              "MatchInstanceDead",
+            ))
+          : (s
+              .GetRootComponent()
+              .SetAnchorOffset(t.GetRootComponent().GetAnchorOffset()),
+            t.GetRootComponent().SetUIActive(!1),
+            this.rFt()),
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+          ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
+        ).ReviveId),
+      t = ReviveById_1.configReviveById.GetConfig(s);
     t && (this.j2t = t.ReviveTimes),
       e.SetUIActive(!0),
       i.SetUIActive(!1),
       (this.H2t = ModelManager_1.ModelManager.DeadReviveModel.ReviveLimitTime);
     let r = !(this.z2t = !1);
-    this.H2t > 0
+    0 < this.H2t
       ? (this.Q2t.SetText(this.H2t.toString() + "s"),
         this.$2t.SetInteractable(!1))
       : this.H2t <= 0
@@ -160,15 +160,15 @@ class ReviveView extends UiTickViewBase_1.UiTickViewBase {
   }
   rFt() {
     let i = -1;
-    let e;
-    let t;
-    let s;
-    let r;
-    var o = ModelManager_1.ModelManager.GameModeModel.InstanceDungeon;
-    var o = ReviveById_1.configReviveById.GetConfig(o.ReviveId);
-    var o =
-      (o && (i = o.UseItemId),
-      ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(i));
+    var e,
+      t,
+      s,
+      r,
+      o = ModelManager_1.ModelManager.GameModeModel.InstanceDungeon,
+      o = ReviveById_1.configReviveById.GetConfig(o.ReviveId),
+      o =
+        (o && (i = o.UseItemId),
+        ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(i));
     o <= 0 ||
       ((e = this.GetButton(8)).GetRootComponent().SetUIActive(!0),
       (r = this.GetTexture(10)),
@@ -185,11 +185,11 @@ class ReviveView extends UiTickViewBase_1.UiTickViewBase {
         : ((this.J2t =
             Math.floor(r / TimeUtil_1.TimeUtil.Minute) +
             ConfigManager_1.ConfigManager.TextConfig.GetTextById("MinuteText")),
-          (r = r % TimeUtil_1.TimeUtil.Minute) > 0 &&
+          0 < (r = r % TimeUtil_1.TimeUtil.Minute) &&
             (this.J2t +=
               r +
               ConfigManager_1.ConfigManager.TextConfig.GetTextById("Second"))),
-      s.GetBuffItemRemainCdTime(i) > 0
+      0 < s.GetBuffItemRemainCdTime(i)
         ? (LguiUtil_1.LguiUtil.SetLocalText(t, "ReviveItemCd"),
           e
             .GetOwner()
@@ -241,4 +241,4 @@ class ReviveView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.ReviveView = ReviveView;
-// # sourceMappingURL=ReviveView.js.map
+//# sourceMappingURL=ReviveView.js.map

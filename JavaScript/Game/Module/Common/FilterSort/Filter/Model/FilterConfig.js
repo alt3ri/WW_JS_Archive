@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FilterConfig = void 0);
-const FilterById_1 = require("../../../../../../Core/Define/ConfigQuery/FilterById");
-const FilterRuleById_1 = require("../../../../../../Core/Define/ConfigQuery/FilterRuleById");
-const FilterSortGroupById_1 = require("../../../../../../Core/Define/ConfigQuery/FilterSortGroupById");
-const ConfigBase_1 = require("../../../../../../Core/Framework/ConfigBase");
+const FilterById_1 = require("../../../../../../Core/Define/ConfigQuery/FilterById"),
+  FilterRuleById_1 = require("../../../../../../Core/Define/ConfigQuery/FilterRuleById"),
+  FilterSortGroupById_1 = require("../../../../../../Core/Define/ConfigQuery/FilterSortGroupById"),
+  ConfigBase_1 = require("../../../../../../Core/Framework/ConfigBase");
 class FilterConfig extends ConfigBase_1.ConfigBase {
   GetFilterConfig(e) {
     return FilterById_1.configFilterById.GetConfig(e);
@@ -18,4 +18,4 @@ class FilterConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.FilterConfig = FilterConfig;
-// # sourceMappingURL=FilterConfig.js.map
+//# sourceMappingURL=FilterConfig.js.map

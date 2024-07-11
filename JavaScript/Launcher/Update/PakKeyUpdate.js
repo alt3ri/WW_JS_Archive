@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PakKeyUpdate = void 0);
-const cpp_1 = require("cpp");
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const BaseConfigController_1 = require("../BaseConfig/BaseConfigController");
-const UrlPrefixDownload_1 = require("../Download/UrlPrefixDownload");
-const UrlPrefixHttpRequest_1 = require("../Download/UrlPrefixHttpRequest");
-const HotPatchLogReport_1 = require("../HotPatchLogReport");
-const RemoteConfig_1 = require("../RemoteConfig");
-const LauncherLog_1 = require("../Util/LauncherLog");
-const PakKeyLogReport_1 = require("./PakKeyLogReport");
-const DOWNLOAD_TRY_COUNT = 3;
-const KEYLIST_TRY_COUNT = 3;
-const MIN_UPDATE_INTERVAL = 60;
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
+  UE = require("ue"),
+  BaseConfigController_1 = require("../BaseConfig/BaseConfigController"),
+  UrlPrefixDownload_1 = require("../Download/UrlPrefixDownload"),
+  UrlPrefixHttpRequest_1 = require("../Download/UrlPrefixHttpRequest"),
+  HotPatchLogReport_1 = require("../HotPatchLogReport"),
+  RemoteConfig_1 = require("../RemoteConfig"),
+  LauncherLog_1 = require("../Util/LauncherLog"),
+  PakKeyLogReport_1 = require("./PakKeyLogReport"),
+  DOWNLOAD_TRY_COUNT = 3,
+  KEYLIST_TRY_COUNT = 3,
+  MIN_UPDATE_INTERVAL = 60;
 class PakKeyUpdate {
   static Init(e) {
     (PakKeyUpdate.NeedExtPakKeys = UE.KuroPakKeyLibrary.NeedExtPakKeys()),
@@ -30,11 +30,11 @@ class PakKeyUpdate {
         (PakKeyUpdate.Eyr(), (PakKeyUpdate.Eyr = void 0));
   }
   static async CheckPakKey(e, a) {
-    let t, o;
+    var t, o;
     return PakKeyUpdate.NeedExtPakKeys
       ? ((o =
           (t = 0.001 * cpp_1.KuroTime.GetMilliseconds64()) - PakKeyUpdate.pk),
-        PakKeyUpdate.pk > 0 && o < MIN_UPDATE_INTERVAL
+        0 < PakKeyUpdate.pk && o < MIN_UPDATE_INTERVAL
           ? (LauncherLog_1.LauncherLog.Info("尝试更新过于频繁..."), !1)
           : ((PakKeyUpdate.pk = t),
             PakKeyUpdate.Myr
@@ -47,11 +47,11 @@ class PakKeyUpdate {
       : (void 0 !== e && e(), !0);
   }
   static async yyr(e = 0) {
-    var a = UE.KuroLauncherLibrary.GetPlatform();
-    var t = RemoteConfig_1.RemoteInfo.Config.PackageVersion;
-    var a =
-      BaseConfigController_1.BaseConfigController.GetMixUri() +
-      `/${a}/KeyList_${t}.json`;
+    var a = UE.KuroLauncherLibrary.GetPlatform(),
+      t = RemoteConfig_1.RemoteInfo.Config.PackageVersion,
+      a =
+        BaseConfigController_1.BaseConfigController.GetMixUri() +
+        `/${a}/KeyList_${t}.json`;
     PakKeyUpdate.Syr++;
     let o = e;
     PakKeyUpdate.Syr > KEYLIST_TRY_COUNT && (o++, (PakKeyUpdate.Syr = 1));
@@ -69,25 +69,25 @@ class PakKeyUpdate {
         HotPatchLogReport_1.HotPatchLogReport.Report(d),
         !1
       );
-    var r = t[e];
-    var d = r + a;
-    var t =
-      (LauncherLog_1.LauncherLog.Info(
-        "开始获取KeyList配置文件",
-        ["fullUrl", d],
-        ["tryCount", PakKeyUpdate.Syr],
-      ),
-      new PakKeyLogReport_1.PakKeyLog());
-    var e = new Date();
-    var e =
-      ((t.event_time = e.getTime().toString()),
-      (t.s_url_prefix = r),
-      (t.s_step_id = "start_download_pak_key_list"),
-      (t.i_try_count = PakKeyUpdate.Syr.toString()),
-      (t.s_file_name = a),
-      HotPatchLogReport_1.HotPatchLogReport.Report(t),
-      await (0, UrlPrefixHttpRequest_1.httpRequest)(d));
-    if (e.Code < 200 || e.Code > 206)
+    var r = t[e],
+      d = r + a,
+      t =
+        (LauncherLog_1.LauncherLog.Info(
+          "开始获取KeyList配置文件",
+          ["fullUrl", d],
+          ["tryCount", PakKeyUpdate.Syr],
+        ),
+        new PakKeyLogReport_1.PakKeyLog()),
+      e = new Date(),
+      e =
+        ((t.event_time = e.getTime().toString()),
+        (t.s_url_prefix = r),
+        (t.s_step_id = "start_download_pak_key_list"),
+        (t.i_try_count = PakKeyUpdate.Syr.toString()),
+        (t.s_file_name = a),
+        HotPatchLogReport_1.HotPatchLogReport.Report(t),
+        await (0, UrlPrefixHttpRequest_1.httpRequest)(d));
+    if (e.Code < 200 || 206 < e.Code)
       return (
         LauncherLog_1.LauncherLog.Error(
           "获取KeyList配置失败",
@@ -120,16 +120,16 @@ class PakKeyUpdate {
   }
   static async TryDownloadFile(e, a) {
     if (void 0 !== PakKeyUpdate.Lo) {
-      let t = UrlPrefixDownload_1.UrlPrefixSelector.GetAllPrefixList();
+      var t = UrlPrefixDownload_1.UrlPrefixSelector.GetAllPrefixList();
       const _ = PakKeyUpdate.Lo.Hash;
-      let o = PakKeyUpdate.Lo.Random;
-      const r = PakKeyUpdate.Lo.Key;
-      var d = UE.KuroLauncherLibrary.GetPlatform();
-      let p = RemoteConfig_1.RemoteInfo.Config.PackageVersion;
-      var d =
-        BaseConfigController_1.BaseConfigController.GetMixUri() +
-        `/${d}/client_key/${p}/${o}/PakData`;
-      if (_ === "" && r === "") return !0;
+      var o = PakKeyUpdate.Lo.Random,
+        r = PakKeyUpdate.Lo.Key,
+        d = UE.KuroLauncherLibrary.GetPlatform(),
+        p = RemoteConfig_1.RemoteInfo.Config.PackageVersion,
+        d =
+          BaseConfigController_1.BaseConfigController.GetMixUri() +
+          `/${d}/client_key/${p}/${o}/PakData`;
+      if ("" === _ && "" === r) return !0;
       if (_ === PakKeyUpdate.Iyr)
         return (
           LauncherLog_1.LauncherLog.Info("无需更新PakData", ["hash", _]), !0
@@ -162,8 +162,8 @@ class PakKeyUpdate {
             UE.BlueprintPathsLibrary.FileExists(PakKeyUpdate.Pt) &&
               UE.KuroLauncherLibrary.DeleteFile(PakKeyUpdate.Pt),
             LauncherLog_1.LauncherLog.Info("PakData文件数据读取结束~");
-          const a = new PakKeyLogReport_1.PakKeyLog();
-          const t = new Date();
+          var a = new PakKeyLogReport_1.PakKeyLog(),
+            t = new Date();
           (a.event_time = t.getTime().toString()),
             (a.s_step_id = "end_apply_pak_data"),
             (a.s_step_result = e ? "success" : "failed"),
@@ -204,4 +204,4 @@ class PakKeyUpdate {
   (PakKeyUpdate.Pt = ""),
   (PakKeyUpdate.Lo = void 0),
   (PakKeyUpdate.Eyr = void 0);
-// # sourceMappingURL=PakKeyUpdate.js.map
+//# sourceMappingURL=PakKeyUpdate.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExploreCountryItem = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class ExploreCountryItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -39,10 +39,10 @@ class ExploreCountryItem extends UiPanelBase_1.UiPanelBase {
   }
   Refresh(e) {
     this.Pe = e;
-    const i =
-      ModelManager_1.ModelManager.AreaModel.GetAreaCountryId() === e.CountryId;
-    const t =
-      ModelManager_1.ModelManager.ExploreProgressModel.SelectedCountryId;
+    var i =
+        ModelManager_1.ModelManager.AreaModel.GetAreaCountryId() ===
+        e.CountryId,
+      t = ModelManager_1.ModelManager.ExploreProgressModel.SelectedCountryId;
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), e.NameId),
       this.GetSprite(1).SetUIActive(e.IsLock),
       this.GetItem(2).SetUIActive(!1),
@@ -62,4 +62,4 @@ class ExploreCountryItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ExploreCountryItem = ExploreCountryItem;
-// # sourceMappingURL=ExploreCountryItem.js.map
+//# sourceMappingURL=ExploreCountryItem.js.map

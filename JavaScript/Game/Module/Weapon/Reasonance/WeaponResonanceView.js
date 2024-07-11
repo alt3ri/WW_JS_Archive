@@ -1,26 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponResonanceView = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ButtonItem_1 = require("../../Common/Button/ButtonItem");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const ItemDefines_1 = require("../../Item/Data/ItemDefines");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const UiSceneManager_1 = require("../../UiComponent/UiSceneManager");
-const UiModelUtil_1 = require("../../UiModel/UiModelUtil");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const WeaponController_1 = require("../WeaponController");
-const SingleItemSelect_1 = require("./SingleItemSelect");
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ButtonItem_1 = require("../../Common/Button/ButtonItem"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  ItemDefines_1 = require("../../Item/Data/ItemDefines"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  UiSceneManager_1 = require("../../UiComponent/UiSceneManager"),
+  UiModelUtil_1 = require("../../UiModel/UiModelUtil"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  WeaponController_1 = require("../WeaponController"),
+  SingleItemSelect_1 = require("./SingleItemSelect");
 class WeaponResonanceView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -31,7 +31,7 @@ class WeaponResonanceView extends UiTabViewBase_1.UiTabViewBase {
       (this.Nki = void 0),
       (this.Oki = void 0),
       (this.iOo = (e, i) => {
-        let t;
+        var t;
         e === this.ANo &&
           ((this.Nki = UiSceneManager_1.UiSceneManager.GetWeaponObserver()),
           (this.Oki =
@@ -62,43 +62,46 @@ class WeaponResonanceView extends UiTabViewBase_1.UiTabViewBase {
         const t = this.tOo.GetCurrentSelectedData();
         if (t)
           if (this.Nlo) {
-            let i =
+            var i =
               ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
                 this.ANo,
               );
             let e = 21;
-            var n = t.IncId;
-            var r =
-              (n > 0 &&
-                ((r =
-                  ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-                    n,
-                  )),
-                (o =
-                  ModelManager_1.ModelManager.WeaponModel.IsWeaponHighLevel(r)),
-                (r =
-                  ModelManager_1.ModelManager.WeaponModel.HasWeaponResonance(
-                    r,
-                  )),
-                o && r ? (e = 27) : r ? (e = 25) : o && (e = 26)),
-              ConfigManager_1.ConfigManager.WeaponConfig);
-            var o =
-              n > 0
-                ? r.GetWeaponName(
-                    r.GetWeaponConfigByItemId(t.ItemId).WeaponName,
-                  )
-                : MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-                    ConfigManager_1.ConfigManager.ItemConfig.GetConfig(t.ItemId)
-                      .Name,
-                  );
-            var n = r.GetWeaponName(i.GetWeaponConfig().WeaponName);
-            var r = this.rOo();
+            var n = t.IncId,
+              r =
+                (0 < n &&
+                  ((r =
+                    ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
+                      n,
+                    )),
+                  (o =
+                    ModelManager_1.ModelManager.WeaponModel.IsWeaponHighLevel(
+                      r,
+                    )),
+                  (r =
+                    ModelManager_1.ModelManager.WeaponModel.HasWeaponResonance(
+                      r,
+                    )),
+                  o && r ? (e = 27) : r ? (e = 25) : o && (e = 26)),
+                ConfigManager_1.ConfigManager.WeaponConfig),
+              o =
+                0 < n
+                  ? r.GetWeaponName(
+                      r.GetWeaponConfigByItemId(t.ItemId).WeaponName,
+                    )
+                  : MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+                      ConfigManager_1.ConfigManager.ItemConfig.GetConfig(
+                        t.ItemId,
+                      ).Name,
+                    ),
+              n = r.GetWeaponName(i.GetWeaponConfig().WeaponName),
+              r = this.rOo();
             const a = i.GetIncId();
             i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(e);
             i.SetTextArgs(o, n, r.toString()),
               i.FunctionMap.set(2, () => {
-                const e = [];
-                const i = { Ykn: t.IncId, I5n: 1, G3n: t.ItemId };
+                var e = [],
+                  i = { Ykn: t.IncId, I5n: 1, G3n: t.ItemId };
                 e.push(i),
                   WeaponController_1.WeaponController.SendPbResonUpRequest(
                     a,
@@ -186,25 +189,28 @@ class WeaponResonanceView extends UiTabViewBase_1.UiTabViewBase {
   }
   sct() {
     var e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-      this.ANo,
-    );
-    const i = e.GetWeaponConfig();
-    var e = e.GetResonanceLevel();
-    const t = this.rOo();
-    const n = e === i.ResonLevelLimit;
-    const r =
-      (this.GetItem(3).SetUIActive(!n),
-      this.GetText(1).SetUIActive(!n),
-      this.GetItem(10).SetUIActive(!n),
-      this.GetItem(4).SetUIActive(!n),
-      this.p8t.GetRootItem().SetUIActive(!n),
-      this.GetItem(9).SetUIActive(n),
-      LguiUtil_1.LguiUtil.SetLocalText(
-        this.GetText(0),
-        "WeaponResonanceLevelText",
-        e,
+        this.ANo,
       ),
-      ModelManager_1.ModelManager.WeaponModel.GetWeaponConfigDescParams(i, e));
+      i = e.GetWeaponConfig(),
+      e = e.GetResonanceLevel(),
+      t = this.rOo(),
+      n = e === i.ResonLevelLimit,
+      r =
+        (this.GetItem(3).SetUIActive(!n),
+        this.GetText(1).SetUIActive(!n),
+        this.GetItem(10).SetUIActive(!n),
+        this.GetItem(4).SetUIActive(!n),
+        this.p8t.GetRootItem().SetUIActive(!n),
+        this.GetItem(9).SetUIActive(n),
+        LguiUtil_1.LguiUtil.SetLocalText(
+          this.GetText(0),
+          "WeaponResonanceLevelText",
+          e,
+        ),
+        ModelManager_1.ModelManager.WeaponModel.GetWeaponConfigDescParams(
+          i,
+          e,
+        ));
     let o = void 0;
     if (!n) {
       LguiUtil_1.LguiUtil.SetLocalText(
@@ -213,16 +219,18 @@ class WeaponResonanceView extends UiTabViewBase_1.UiTabViewBase {
         t,
       ),
         this.aOo(e, t);
-      const a =
-        ModelManager_1.ModelManager.WeaponModel.GetWeaponConfigDescParams(i, t);
-      const s =
-        ((o = []),
-        CommonParamById_1.configCommonParamById.GetStringConfig(
-          "HighlightColor",
-        ));
+      var a = ModelManager_1.ModelManager.WeaponModel.GetWeaponConfigDescParams(
+          i,
+          t,
+        ),
+        s =
+          ((o = []),
+          CommonParamById_1.configCommonParamById.GetStringConfig(
+            "HighlightColor",
+          ));
       for (let i = 0; i < r.length; i++) {
-        const l = r[i];
-        const h = a[i];
+        var l = r[i],
+          h = a[i];
         let e = void 0;
         (e =
           l === h
@@ -247,23 +255,23 @@ class WeaponResonanceView extends UiTabViewBase_1.UiTabViewBase {
     this.RefreshName(), this.sct();
   }
   RefreshName() {
-    const e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-      this.ANo,
-    );
-    const i = e.GetWeaponConfig();
-    var t = i.WeaponName;
-    var n = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(
-      i.QualityId,
-    );
-    var n = UE.Color.FromHex(n.DropColor);
-    var n =
-      (this.GetText(12).SetColor(n),
-      this.GetText(12).ShowTextNew(t),
-      e.GetResonanceLevel());
-    var t = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponResonanceConfig(
-      i.ResonId,
-      n,
-    );
+    var e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
+        this.ANo,
+      ),
+      i = e.GetWeaponConfig(),
+      t = i.WeaponName,
+      n = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(
+        i.QualityId,
+      ),
+      n = UE.Color.FromHex(n.DropColor),
+      n =
+        (this.GetText(12).SetColor(n),
+        this.GetText(12).ShowTextNew(t),
+        e.GetResonanceLevel()),
+      t = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponResonanceConfig(
+        i.ResonId,
+        n,
+      );
     t &&
       this.GetText(13).SetText(
         ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponResonanceDesc(
@@ -272,12 +280,12 @@ class WeaponResonanceView extends UiTabViewBase_1.UiTabViewBase {
       );
   }
   rOo() {
-    let e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-      this.ANo,
-    );
-    const i = e.GetResonanceLevel();
-    let t = this.tOo.GetCurrentSelectedData();
-    return t && t.IncId !== 0
+    var e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
+        this.ANo,
+      ),
+      i = e.GetResonanceLevel(),
+      t = this.tOo.GetCurrentSelectedData();
+    return t && 0 !== t.IncId
       ? ((t =
           ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
             t.IncId,
@@ -287,4 +295,4 @@ class WeaponResonanceView extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.WeaponResonanceView = WeaponResonanceView;
-// # sourceMappingURL=WeaponResonanceView.js.map
+//# sourceMappingURL=WeaponResonanceView.js.map

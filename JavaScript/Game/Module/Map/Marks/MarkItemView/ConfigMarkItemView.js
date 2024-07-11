@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConfigMarkItemView = void 0);
-const UE = require("ue");
-const Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const MarkItemView_1 = require("./MarkItemView");
+const UE = require("ue"),
+  Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  MarkItemView_1 = require("./MarkItemView");
 class ConfigMarkItemView extends MarkItemView_1.MarkItemView {
   constructor(e) {
     super(e), (this.dDi = void 0), (this.CDi = void 0);
@@ -21,12 +21,12 @@ class ConfigMarkItemView extends MarkItemView_1.MarkItemView {
       (this.CDi = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
   OnIconPathChanged(e) {
-    const t = this.GetSprite(1);
+    var t = this.GetSprite(1);
     this.GetSprite(1).SetUIActive(!0), this.LoadIcon(t, e);
   }
   async PlayUnlockSequence() {
     if ((await this.LoadingPromise, !this.dDi)) {
-      const t = await this.LoadPrefabAsync(
+      var t = await this.LoadPrefabAsync(
         ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
           "UiItem_Mark_Prefab_Effect",
         ),
@@ -40,7 +40,7 @@ class ConfigMarkItemView extends MarkItemView_1.MarkItemView {
           .GetAttachUIChild(0)
           ?.GetOwner()
           ?.GetComponentByClass(UE.UINiagara.StaticClass())) &&
-        (this.Holder?.MapType === 2
+        (2 === this.Holder?.MapType
           ? (e.bAdaptPosAndSizeChanged = !1)
           : (e.bAdaptPosAndSizeChanged = !0));
     }
@@ -53,4 +53,4 @@ class ConfigMarkItemView extends MarkItemView_1.MarkItemView {
   }
 }
 exports.ConfigMarkItemView = ConfigMarkItemView;
-// # sourceMappingURL=ConfigMarkItemView.js.map
+//# sourceMappingURL=ConfigMarkItemView.js.map

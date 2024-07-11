@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RechargeModel = exports.RechargeInfo = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase");
 class RechargeInfo {
   constructor() {
     (this.PayId = 0), (this.Amount = ""), (this.ProductId = "");
@@ -21,7 +21,7 @@ class RechargeModel extends ModelBase_1.ModelBase {
     (o = o || new RechargeInfo()).Init(e, this.iso(r), t), this.tso.set(e, o);
   }
   GetPayIdAmount(e) {
-    const r = this.tso.get(e);
+    var r = this.tso.get(e);
     return r
       ? r.Amount
       : (Log_1.Log.CheckInfo() &&
@@ -29,16 +29,16 @@ class RechargeModel extends ModelBase_1.ModelBase {
         "0");
   }
   iso(e) {
-    let r;
-    const t = parseFloat(e);
+    var r,
+      t = parseFloat(e);
     return !isNaN(t) &&
-      ((r = (e = t.toString()).indexOf(".")) === -1 ||
-        (r !== -1 && e.length - r - 1 == 1))
+      (-1 === (r = (e = t.toString()).indexOf(".")) ||
+        (-1 !== r && e.length - r - 1 == 1))
       ? t.toFixed(2)
       : e;
   }
   GetPayIdProductId(e) {
-    const r = this.tso.get(e);
+    var r = this.tso.get(e);
     return r
       ? r.ProductId
       : (Log_1.Log.CheckInfo() &&
@@ -47,4 +47,4 @@ class RechargeModel extends ModelBase_1.ModelBase {
   }
 }
 exports.RechargeModel = RechargeModel;
-// # sourceMappingURL=RechargeModel.js.map
+//# sourceMappingURL=RechargeModel.js.map

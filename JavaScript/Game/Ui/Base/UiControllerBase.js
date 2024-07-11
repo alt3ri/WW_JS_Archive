@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
 class UiControllerBase extends ControllerBase_1.ControllerBase {
   static Init() {
-    const e = super.Init();
+    var e = super.Init();
     return (
       this.OnRegisterNetEvent(),
       this.OnAddEvents(),
@@ -28,4 +28,4 @@ class UiControllerBase extends ControllerBase_1.ControllerBase {
   static OnRemoveOpenViewCheckFunction() {}
 }
 exports.UiControllerBase = UiControllerBase;
-// # sourceMappingURL=UiControllerBase.js.map
+//# sourceMappingURL=UiControllerBase.js.map

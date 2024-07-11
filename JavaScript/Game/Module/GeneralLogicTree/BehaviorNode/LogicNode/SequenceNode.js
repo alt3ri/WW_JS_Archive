@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SequenceNode = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const GameBudgetInterfaceController_1 = require("../../../../../Core/GameBudgetAllocator/GameBudgetInterfaceController");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const LogicNodeBase_1 = require("./LogicNodeBase");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  GameBudgetInterfaceController_1 = require("../../../../../Core/GameBudgetAllocator/GameBudgetInterfaceController"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LogicNodeBase_1 = require("./LogicNodeBase");
 class SequenceNode extends LogicNodeBase_1.LogicNodeBase {
   constructor(e) {
     super(e), (this.NodeType = "Sequence");
   }
   OnNodeActive() {
     super.OnNodeActive();
-    let e = this.Config;
+    var e = this.Config;
     e &&
       e.PerformanceSetting?.EnableOptimize &&
       EventSystem_1.EventSystem.Emit(
@@ -21,7 +21,7 @@ class SequenceNode extends LogicNodeBase_1.LogicNodeBase {
         !0,
         !1,
       ),
-      this.Config.BudgetCameraType === "Role" &&
+      "Role" === this.Config.BudgetCameraType &&
         ((e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity)
           ? (e = e.Entity.GetComponent(1)?.Owner)?.IsValid()
             ? GameBudgetInterfaceController_1.GameBudgetInterfaceController.SetCenterRole(
@@ -53,4 +53,4 @@ class SequenceNode extends LogicNodeBase_1.LogicNodeBase {
   }
 }
 exports.SequenceNode = SequenceNode;
-// # sourceMappingURL=SequenceNode.js.map
+//# sourceMappingURL=SequenceNode.js.map

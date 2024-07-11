@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MovingShotManager = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const Quat_1 = require("../../../Core/Utils/Math/Quat");
-const Transform_1 = require("../../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const PublicUtil_1 = require("../../Common/PublicUtil");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const Global_1 = require("../../Global");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const SequenceDefine_1 = require("./Sequence/SequenceDefine");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  Quat_1 = require("../../../Core/Utils/Math/Quat"),
+  Transform_1 = require("../../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  PublicUtil_1 = require("../../Common/PublicUtil"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  Global_1 = require("../../Global"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  SequenceDefine_1 = require("./Sequence/SequenceDefine");
 class CameraSequencePlayer {
   constructor() {
     (this.u$i = void 0),
@@ -25,7 +25,7 @@ class CameraSequencePlayer {
       (this.sye = !1),
       (this.m$i = !1),
       (this.d$i = (t) => {
-        let e, i;
+        var e, i;
         (this.c$i = ResourceSystem_1.ResourceSystem.InvalidId),
           t &&
             ObjectUtils_1.ObjectUtils.IsValid(t) &&
@@ -120,7 +120,7 @@ class CameraCurvePlayer {
       (this.sye = !1));
   }
   OnTick(t) {
-    let e, i, s;
+    var e, i, s;
     this.sye &&
       ((e =
         ControllerHolder_1.ControllerHolder.CameraController.SequenceCamera
@@ -222,4 +222,4 @@ class MovingShotManager {
   }
 }
 exports.MovingShotManager = MovingShotManager;
-// # sourceMappingURL=MovingShotManager.js.map
+//# sourceMappingURL=MovingShotManager.js.map

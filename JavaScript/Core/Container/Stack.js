@@ -12,7 +12,7 @@ class Stack {
     return this.K7.length;
   }
   get Empty() {
-    return this.Size === 0;
+    return 0 === this.Size;
   }
   Clear() {
     this.K7.length = 0;
@@ -21,15 +21,15 @@ class Stack {
     this.K7.push(t);
   }
   Peek() {
-    return this.Size > 0 ? this.K7[this.K7.length - 1] : void 0;
+    return 0 < this.Size ? this.K7[this.K7.length - 1] : void 0;
   }
   Pop() {
     return this.K7.pop();
   }
   Delete(t) {
     t = this.K7.indexOf(t);
-    return t >= 0 && (this.K7.splice(t, 1), !0);
+    return 0 <= t && (this.K7.splice(t, 1), !0);
   }
 }
 exports.Stack = Stack;
-// # sourceMappingURL=Stack.js.map
+//# sourceMappingURL=Stack.js.map

@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configTakeWeedsDifficultyById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const TakeWeedsDifficulty_1 = require("../Config/TakeWeedsDifficulty");
-const DB = "db_activity.db";
-const FILE = "g.割草活动.xlsx";
-const TABLE = "TakeWeedsDifficulty";
-const COMMAND = "select BinData from `TakeWeedsDifficulty` where Id=?";
-const KEY_PREFIX = "TakeWeedsDifficultyById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  TakeWeedsDifficulty_1 = require("../Config/TakeWeedsDifficulty"),
+  DB = "db_activity.db",
+  FILE = "g.割草活动.xlsx",
+  TABLE = "TakeWeedsDifficulty",
+  COMMAND = "select BinData from `TakeWeedsDifficulty` where Id=?",
+  KEY_PREFIX = "TakeWeedsDifficultyById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configTakeWeedsDifficultyById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configTakeWeedsDifficultyById.GetConfig(";
 exports.configTakeWeedsDifficultyById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configTakeWeedsDifficultyById = {
       if (
         (n =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            e,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              e,
+            ]))
       ) {
-        var n;
-        var o = void 0;
+        var n,
+          o = void 0;
         if (
           (([n, o] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configTakeWeedsDifficultyById = {
     }
   },
 };
-// # sourceMappingURL=TakeWeedsDifficultyById.js.map
+//# sourceMappingURL=TakeWeedsDifficultyById.js.map

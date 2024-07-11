@@ -7,8 +7,8 @@ class ConfigBase {
   }
 }
 function createTypeInfo(e, r, o, t, s) {
-  const a = new Array();
-  const n = new Array();
+  const a = new Array(),
+    n = new Array();
   return (
     t.forEach((e) => {
       e = { Name: e[0], Type: e[1] };
@@ -22,4 +22,4 @@ function createTypeInfo(e, r, o, t, s) {
   );
 }
 (exports.ConfigBase = ConfigBase), (exports.createTypeInfo = createTypeInfo);
-// # sourceMappingURL=ConfigDefineBase.js.map
+//# sourceMappingURL=ConfigDefineBase.js.map

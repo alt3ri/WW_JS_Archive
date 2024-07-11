@@ -1,27 +1,31 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, n, i) {
-    let r;
-    const s = arguments.length;
-    let o =
-      s < 3 ? t : i === null ? (i = Object.getOwnPropertyDescriptor(t, n)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      s = arguments.length,
+      o =
+        s < 3
+          ? t
+          : null === i
+            ? (i = Object.getOwnPropertyDescriptor(t, n))
+            : i;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       o = Reflect.decorate(e, t, n, i);
     else
-      for (let h = e.length - 1; h >= 0; h--)
-        (r = e[h]) && (o = (s < 3 ? r(o) : s > 3 ? r(t, n, o) : r(t, n)) || o);
-    return s > 3 && o && Object.defineProperty(t, n, o), o;
+      for (var h = e.length - 1; 0 <= h; h--)
+        (r = e[h]) && (o = (s < 3 ? r(o) : 3 < s ? r(t, n, o) : r(t, n)) || o);
+    return 3 < s && o && Object.defineProperty(t, n, o), o;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemAiInteractionComponent = void 0);
-const Time_1 = require("../../../Core/Common/Time");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const AiInteractionItemQueryManager_1 = require("./AiInteraction/AiInteractionItemQueryManager");
-const AI_USED_COLD_DOWN = 2e3;
+const Time_1 = require("../../../Core/Common/Time"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  AiInteractionItemQueryManager_1 = require("./AiInteraction/AiInteractionItemQueryManager"),
+  AI_USED_COLD_DOWN = 2e3;
 let SceneItemAiInteractionComponent = class SceneItemAiInteractionComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -43,7 +47,7 @@ let SceneItemAiInteractionComponent = class SceneItemAiInteractionComponent exte
       (this.OnEntityDeadEvent = () => {
         this.OnEntityDead();
       });
-    const e = this.Entity.GetComponent(0).GetVisible();
+    var e = this.Entity.GetComponent(0).GetVisible();
     return (
       (this.EnableHandler = e
         ? -1
@@ -99,7 +103,7 @@ let SceneItemAiInteractionComponent = class SceneItemAiInteractionComponent exte
   }
   HiddenItem(e) {
     return (
-      e !== (this.EnableHandler !== -1) &&
+      e !== (-1 !== this.EnableHandler) &&
       (e
         ? (this.EnableHandler = this.Entity.Disable(
             "[SceneItemAiInteractionComponent.HiddenItem] bHidden为true",
@@ -122,4 +126,4 @@ let SceneItemAiInteractionComponent = class SceneItemAiInteractionComponent exte
   SceneItemAiInteractionComponent,
 )),
   (exports.SceneItemAiInteractionComponent = SceneItemAiInteractionComponent);
-// # sourceMappingURL=SceneItemAiInteractionComponent.js.map
+//# sourceMappingURL=SceneItemAiInteractionComponent.js.map

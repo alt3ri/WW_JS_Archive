@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CookTipsView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const CookController_1 = require("../CookController");
-const CookItemView_1 = require("./CookItemView");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  CookController_1 = require("../CookController"),
+  CookItemView_1 = require("./CookItemView"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class CookTipsView extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -38,8 +38,8 @@ class CookTipsView extends UiPanelBase_1.UiPanelBase {
         return i.Update(e.IsUnlock, e.ContentText), { Key: t, Value: i };
       }),
       (this.nNt = () => {
-        if (ModelManager_1.ModelManager.CookModel.CurrentCookListType === 0) {
-          const e = this.dqt;
+        if (0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType) {
+          var e = this.dqt;
           switch (e.SubType) {
             case 6e4:
               var i =
@@ -55,7 +55,7 @@ class CookTipsView extends UiPanelBase_1.UiPanelBase {
               );
           }
         } else {
-          const t = this.dqt;
+          var t = this.dqt;
           t.IsUnLock
             ? EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.OpenCook,
@@ -124,7 +124,7 @@ class CookTipsView extends UiPanelBase_1.UiPanelBase {
     }
   }
   aNt() {
-    const e = this.dqt;
+    var e = this.dqt;
     switch (e.SubType) {
       case 6e4:
         this.lNt(), this._Nt(e);
@@ -134,61 +134,63 @@ class CookTipsView extends UiPanelBase_1.UiPanelBase {
     }
   }
   _Nt(e) {
-    const i =
-      ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaByFormulaItemId(
-        e.ItemId,
-      );
-    var t =
-      (this.mNt(1),
-      ConfigManager_1.ConfigManager.TextConfig.GetTextById("Recipe"));
-    var t =
-      (this.dNt(t),
-      ConfigManager_1.ConfigManager.CookConfig.GetLocalText(i.Name));
-    var t =
-      (this.CNt(t),
-      ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e.ItemId));
-    var e =
-      (this.gNt(t.Icon),
-      ConfigManager_1.ConfigManager.CookConfig.GetLocalText(i.FoodContent));
-    var t =
-      (this.fNt(e),
-      ConfigManager_1.ConfigManager.CookConfig.GetLocalText(i.FoodBackground));
-    var e =
-      (this.pNt(t),
-      this.vNt(!0),
-      ConfigManager_1.ConfigManager.TextConfig.GetTextById("Study"));
+    var i =
+        ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaByFormulaItemId(
+          e.ItemId,
+        ),
+      t =
+        (this.mNt(1),
+        ConfigManager_1.ConfigManager.TextConfig.GetTextById("Recipe")),
+      t =
+        (this.dNt(t),
+        ConfigManager_1.ConfigManager.CookConfig.GetLocalText(i.Name)),
+      t =
+        (this.CNt(t),
+        ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e.ItemId)),
+      e =
+        (this.gNt(t.Icon),
+        ConfigManager_1.ConfigManager.CookConfig.GetLocalText(i.FoodContent)),
+      t =
+        (this.fNt(e),
+        ConfigManager_1.ConfigManager.CookConfig.GetLocalText(
+          i.FoodBackground,
+        )),
+      e =
+        (this.pNt(t),
+        this.vNt(!0),
+        ConfigManager_1.ConfigManager.TextConfig.GetTextById("Study"));
     this.rFe(e, !0);
   }
   cNt(e) {
     var i = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
-      e.ItemId,
-    );
-    var t = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
-      i.FoodItemId,
-    );
-    var t =
-      (this.mNt(t),
-      ConfigManager_1.ConfigManager.TextConfig.GetTextById("Dishes"));
-    var t =
-      (this.dNt(t),
-      ConfigManager_1.ConfigManager.CookConfig.GetLocalText(i.Name));
-    var t =
-      (this.CNt(t),
-      ConfigManager_1.ConfigManager.ItemConfig.GetConfig(i.FoodItemId));
-    var s =
-      (this.gNt(t.Icon),
-      ConfigManager_1.ConfigManager.CookConfig.GetLocalText(
-        t.AttributesDescription,
-      ));
-    var s =
-      (this.fNt(s),
-      ConfigManager_1.ConfigManager.CookConfig.GetLocalText(t.BgDescription));
-    var t = (this.pNt(s), i.Proficiency);
-    var s = i.MaxProficiencyCount;
-    var i =
-      (this.MNt(e.CookCount, t, s),
-      ConfigManager_1.ConfigManager.TextConfig.GetTextById("Cooking"));
-    var t = CookController_1.CookController.CheckCanCook(e.ItemId);
+        e.ItemId,
+      ),
+      t = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
+        i.FoodItemId,
+      ),
+      t =
+        (this.mNt(t),
+        ConfigManager_1.ConfigManager.TextConfig.GetTextById("Dishes")),
+      t =
+        (this.dNt(t),
+        ConfigManager_1.ConfigManager.CookConfig.GetLocalText(i.Name)),
+      t =
+        (this.CNt(t),
+        ConfigManager_1.ConfigManager.ItemConfig.GetConfig(i.FoodItemId)),
+      s =
+        (this.gNt(t.Icon),
+        ConfigManager_1.ConfigManager.CookConfig.GetLocalText(
+          t.AttributesDescription,
+        )),
+      s =
+        (this.fNt(s),
+        ConfigManager_1.ConfigManager.CookConfig.GetLocalText(t.BgDescription)),
+      t = (this.pNt(s), i.Proficiency),
+      s = i.MaxProficiencyCount,
+      i =
+        (this.MNt(e.CookCount, t, s),
+        ConfigManager_1.ConfigManager.TextConfig.GetTextById("Cooking")),
+      t = CookController_1.CookController.CheckCanCook(e.ItemId);
     this.rFe(i, t), this.vNt(t), this.SNt(e.ItemId, 0);
   }
   lNt() {
@@ -211,29 +213,29 @@ class CookTipsView extends UiPanelBase_1.UiPanelBase {
   }
   hNt() {
     this.ENt();
-    const e = this.dqt;
-    var i = ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
-      e.ItemId,
-    );
-    var t = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
-      i.FinalItemId,
-    );
-    var t =
-      (this.mNt(t),
-      ConfigManager_1.ConfigManager.TextConfig.GetTextById("Accessory"));
-    var t =
-      (this.dNt(t),
-      ConfigManager_1.ConfigManager.CookConfig.GetLocalText(i.Name));
-    var t =
-      (this.CNt(t),
-      ConfigManager_1.ConfigManager.ItemConfig.GetConfig(i.FinalItemId));
-    var i =
-      (this.gNt(t.Icon),
-      this.yNt(),
-      ConfigManager_1.ConfigManager.CookConfig.GetLocalText(t.BgDescription));
+    var e = this.dqt,
+      i = ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
+        e.ItemId,
+      ),
+      t = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
+        i.FinalItemId,
+      ),
+      t =
+        (this.mNt(t),
+        ConfigManager_1.ConfigManager.TextConfig.GetTextById("Accessory")),
+      t =
+        (this.dNt(t),
+        ConfigManager_1.ConfigManager.CookConfig.GetLocalText(i.Name)),
+      t =
+        (this.CNt(t),
+        ConfigManager_1.ConfigManager.ItemConfig.GetConfig(i.FinalItemId)),
+      i =
+        (this.gNt(t.Icon),
+        this.yNt(),
+        ConfigManager_1.ConfigManager.CookConfig.GetLocalText(t.BgDescription));
     this.INt(i);
-    let s = void 0;
-    let r = !0;
+    let s = void 0,
+      r = !0;
     e.IsUnLock
       ? ((s = ConfigManager_1.ConfigManager.TextConfig.GetTextById("Cooking")),
         (r = CookController_1.CookController.CheckCanProcessed(e.ItemId)))
@@ -299,15 +301,14 @@ class CookTipsView extends UiPanelBase_1.UiPanelBase {
     this.iNt.RebuildLayoutByDataNew(e);
   }
   yNt() {
-    const e = this.dqt;
-    const i = ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
-      e.ItemId,
-    );
-    const t = new Array();
+    var e = this.dqt,
+      i = ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
+        e.ItemId,
+      ),
+      t = new Array();
     for (const n of i.InterationId) {
-      var s;
-      const r =
-        ConfigManager_1.ConfigManager.CookConfig.GetCookProcessMsgById(n);
+      var s,
+        r = ConfigManager_1.ConfigManager.CookConfig.GetCookProcessMsgById(n);
       e.InteractiveList.includes(n)
         ? ((s = ConfigManager_1.ConfigManager.CookConfig.GetLocalText(
             r.Introduce,
@@ -322,4 +323,4 @@ class CookTipsView extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.CookTipsView = CookTipsView;
-// # sourceMappingURL=CookTipsView.js.map
+//# sourceMappingURL=CookTipsView.js.map

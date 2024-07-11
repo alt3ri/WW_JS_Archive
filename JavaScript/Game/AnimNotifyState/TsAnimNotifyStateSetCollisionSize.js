@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const saveId = new Map();
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  saveId = new Map();
 class TsAnimNotifyStateSetCollisionSize extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -24,8 +24,8 @@ class TsAnimNotifyStateSetCollisionSize extends UE.KuroAnimNotifyState {
         ["HalfHeight", this.HalfHeight],
         ["Radius", this.Radius],
       );
-    var e = e.CharacterActorComponent;
-    const s = e.Entity.Id;
+    var e = e.CharacterActorComponent,
+      s = e.Entity.Id;
     return (
       saveId.set(s, this.Id),
       e.SetRadiusAndHalfHeight(this.Radius, this.HalfHeight, !1),
@@ -33,8 +33,8 @@ class TsAnimNotifyStateSetCollisionSize extends UE.KuroAnimNotifyState {
     );
   }
   K2_NotifyEnd(e, t) {
-    let s;
-    var e = e.GetOwner();
+    var s,
+      e = e.GetOwner();
     return (
       e instanceof TsBaseCharacter_1.default &&
       ((s = (e = e.CharacterActorComponent).Entity.Id),
@@ -48,4 +48,4 @@ class TsAnimNotifyStateSetCollisionSize extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateSetCollisionSize;
-// # sourceMappingURL=TsAnimNotifyStateSetCollisionSize.js.map
+//# sourceMappingURL=TsAnimNotifyStateSetCollisionSize.js.map

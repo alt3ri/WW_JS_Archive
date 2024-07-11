@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelGroupSpec = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const Stats_1 = require("../../../Core/Common/Stats");
-const EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper");
-const EffectSystem_1 = require("../EffectSystem");
-const EffectSpec_1 = require("./EffectSpec");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper"),
+  EffectSystem_1 = require("../EffectSystem"),
+  EffectSpec_1 = require("./EffectSpec");
 class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
   constructor() {
     super(...arguments),
@@ -31,7 +31,7 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
       s.GetEffectSpec().SetEffectType(t);
   }
   SetEffectParameterNiagara(t) {
-    for (const [, s] of this.EffectSpecMap) s.SetEffectParameterNiagara(t);
+    for (var [, s] of this.EffectSpecMap) s.SetEffectParameterNiagara(t);
   }
   SetTimeScale(t, s = !1) {
     super.SetTimeScale(t, s);
@@ -50,21 +50,21 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
       (this.InitPromise = new CustomPromise_1.CustomPromise());
     const s = this.Handle.GetSureEffectActor();
     if (s?.IsValid()) {
-      var t = this.Handle.Parent;
-      var t = t ? t.GetEffectSpec()?.GetSceneComponent() : void 0;
-      var t = EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
-        s,
-        UE.SceneComponent.StaticClass(),
-        t,
-        void 0,
-        !1,
-        this.EffectModel,
-      );
-      const i =
-        ((this.GroupComponent = t),
-        this.GroupComponent.SetComponentTickEnabled(!1),
-        (this.SceneComponent = t),
-        this.EffectModel.EffectData.Num());
+      var t = this.Handle.Parent,
+        t = t ? t.GetEffectSpec()?.GetSceneComponent() : void 0,
+        t = EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
+          s,
+          UE.SceneComponent.StaticClass(),
+          t,
+          void 0,
+          !1,
+          this.EffectModel,
+        ),
+        i =
+          ((this.GroupComponent = t),
+          this.GroupComponent.SetComponentTickEnabled(!1),
+          (this.SceneComponent = t),
+          this.EffectModel.EffectData.Num());
       const f = this.EffectModel.EffectData;
       let o = i;
       for (let t = 0; t < i; ++t) {
@@ -83,8 +83,8 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
             !1
           );
         const s = this.Handle.GetSureEffectActor();
-        let r = s.GetOuter();
-        const h = UE.KismetSystemLibrary.GetPathName(n);
+        var r = s.GetOuter(),
+          h = UE.KismetSystemLibrary.GetPathName(n);
         let e = !1;
         r = EffectSystem_1.EffectSystem.SpawnChildEffect(
           r,
@@ -106,7 +106,7 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
                 break;
               case 5:
                 var i = f.Get(n);
-                i > 0 && (this.C0e.push([s, i]), this.d0e.add(s));
+                0 < i && (this.C0e.push([s, i]), this.d0e.add(s));
             }
             o ||
               (e
@@ -178,10 +178,10 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
     for (const s of this.EffectSpecMap.values()) s.Tick(t);
   }
   OnTick(s) {
-    if (this.g0e.length > 0)
+    if (0 < this.g0e.length)
       for (let t = 0; t < this.g0e.length; ++t) {
-        const i = this.g0e[t];
-        let e = i[1] - s;
+        var i = this.g0e[t],
+          e = i[1] - s;
         (i[1] = e) <= 0 &&
           ((e = i[0]),
           this.g0e.splice(t, 1),
@@ -217,7 +217,7 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
       s.GetEffectSpec().SetStopping(t);
   }
   OnPlay(t) {
-    for (const [s, i] of this.EffectSpecMap) this.d0e.has(s) || i.Play(t);
+    for (var [s, i] of this.EffectSpecMap) this.d0e.has(s) || i.Play(t);
     if (this.C0e.length) {
       this.g0e.length = 0;
       for (const e of this.C0e) this.g0e.push([e[0], e[1]]);
@@ -306,4 +306,4 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
   }
 }
 exports.EffectModelGroupSpec = EffectModelGroupSpec;
-// # sourceMappingURL=EffectModelGroupSpec.js.map
+//# sourceMappingURL=EffectModelGroupSpec.js.map

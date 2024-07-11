@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configInstanceDungeonEntranceById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const InstanceDungeonEntrance_1 = require("../Config/InstanceDungeonEntrance");
-const DB = "db_instance_dungeon.db";
-const FILE = "f.副本.xlsx";
-const TABLE = "InstanceDungeonEntrance";
-const COMMAND = "select BinData from `InstanceDungeonEntrance` where Id=?";
-const KEY_PREFIX = "InstanceDungeonEntranceById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  InstanceDungeonEntrance_1 = require("../Config/InstanceDungeonEntrance"),
+  DB = "db_instance_dungeon.db",
+  FILE = "f.副本.xlsx",
+  TABLE = "InstanceDungeonEntrance",
+  COMMAND = "select BinData from `InstanceDungeonEntrance` where Id=?",
+  KEY_PREFIX = "InstanceDungeonEntranceById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configInstanceDungeonEntranceById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configInstanceDungeonEntranceById.GetConfig(";
 exports.configInstanceDungeonEntranceById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configInstanceDungeonEntranceById = {
       if (
         (t =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, n, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            n,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              n,
+            ]))
       ) {
-        var t;
-        var e = void 0;
+        var t,
+          e = void 0;
         if (
           (([t, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configInstanceDungeonEntranceById = {
     }
   },
 };
-// # sourceMappingURL=InstanceDungeonEntranceById.js.map
+//# sourceMappingURL=InstanceDungeonEntranceById.js.map

@@ -1,31 +1,35 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, a) {
-    let s;
-    const r = arguments.length;
-    let h =
-      r < 3 ? e : a === null ? (a = Object.getOwnPropertyDescriptor(e, i)) : a;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var s,
+      r = arguments.length,
+      h =
+        r < 3
+          ? e
+          : null === a
+            ? (a = Object.getOwnPropertyDescriptor(e, i))
+            : a;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       h = Reflect.decorate(t, e, i, a);
     else
-      for (let n = t.length - 1; n >= 0; n--)
-        (s = t[n]) && (h = (r < 3 ? s(h) : r > 3 ? s(e, i, h) : s(e, i)) || h);
-    return r > 3 && h && Object.defineProperty(e, i, h), h;
+      for (var n = t.length - 1; 0 <= n; n--)
+        (s = t[n]) && (h = (r < 3 ? s(h) : 3 < r ? s(e, i, h) : s(e, i)) || h);
+    return 3 < r && h && Object.defineProperty(e, i, h), h;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleGaitComponent = void 0);
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const TsBaseRoleConfig_1 = require("../../../../Character/TsBaseRoleConfig");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const FormationAttributeController_1 = require("../../../../Module/Abilities/FormationAttributeController");
-const CharacterUnifiedStateTypes_1 = require("../../Common/Component/Abilities/CharacterUnifiedStateTypes");
-const RoleGaitStatic_1 = require("./Define/RoleGaitStatic");
-const RoleForbidMovementHelper_1 = require("./Helper/RoleForbidMovementHelper");
-const RoleStrengthComponent_1 = require("./RoleStrengthComponent");
-const STOP_SPEED = 5;
+const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  TsBaseRoleConfig_1 = require("../../../../Character/TsBaseRoleConfig"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  FormationAttributeController_1 = require("../../../../Module/Abilities/FormationAttributeController"),
+  CharacterUnifiedStateTypes_1 = require("../../Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  RoleGaitStatic_1 = require("./Define/RoleGaitStatic"),
+  RoleForbidMovementHelper_1 = require("./Helper/RoleForbidMovementHelper"),
+  RoleStrengthComponent_1 = require("./RoleStrengthComponent"),
+  STOP_SPEED = 5;
 let RoleGaitComponent = class RoleGaitComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -115,7 +119,7 @@ let RoleGaitComponent = class RoleGaitComponent extends EntityComponent_1.Entity
     this.Con();
   }
   Con() {
-    let t, e, i, a;
+    var t, e, i, a;
     this.Hte.IsAutonomousProxy &&
       (this.von(),
       (t = this.mbr.MoveState),
@@ -127,13 +131,13 @@ let RoleGaitComponent = class RoleGaitComponent extends EntityComponent_1.Entity
         : this.UpdateMoveReleasing(i, e, t, a));
   }
   EnableRoleGaitState(t) {
-    return this.RoleGaitUnEnableState.get(t).size === 0;
+    return 0 === this.RoleGaitUnEnableState.get(t).size;
   }
   FindEnableGaitState() {
-    for (const [t, e] of this.RoleGaitUnEnableState) if (e.size === 0) return t;
+    for (var [t, e] of this.RoleGaitUnEnableState) if (0 === e.size) return t;
   }
   FindEnableCharMoveState() {
-    const t = this.FindEnableGaitState();
+    var t = this.FindEnableGaitState();
     if (t)
       switch (t) {
         case 1:
@@ -147,7 +151,7 @@ let RoleGaitComponent = class RoleGaitComponent extends EntityComponent_1.Entity
     switch (e) {
       case CharacterUnifiedStateTypes_1.ECharPositionState.Ground:
         if (t && this.EnableRoleGaitState(3)) {
-          const s =
+          var s =
             FormationAttributeController_1.FormationAttributeController.GetValue(
               1,
             );
@@ -158,7 +162,7 @@ let RoleGaitComponent = class RoleGaitComponent extends EntityComponent_1.Entity
               );
               break;
             }
-          } else if (s > 0) break;
+          } else if (0 < s) break;
         }
         this.mbr.IsWalkBaseMode
           ? !this.EnableRoleGaitState(1) && this.EnableRoleGaitState(2)
@@ -294,4 +298,4 @@ let RoleGaitComponent = class RoleGaitComponent extends EntityComponent_1.Entity
   RoleGaitComponent,
 )),
   (exports.RoleGaitComponent = RoleGaitComponent);
-// # sourceMappingURL=RoleGaitComponent.js.map
+//# sourceMappingURL=RoleGaitComponent.js.map

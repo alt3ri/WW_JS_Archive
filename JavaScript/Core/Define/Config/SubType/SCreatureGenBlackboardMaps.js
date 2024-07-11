@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SCreatureGenBlackboardMaps = void 0);
-const GameUtils_1 = require("../../../../Game/GameUtils");
-const DicStringBool_1 = require("./DicStringBool");
-const DicStringInt_1 = require("./DicStringInt");
-const DicStringString_1 = require("./DicStringString");
+const GameUtils_1 = require("../../../../Game/GameUtils"),
+  DicStringBool_1 = require("./DicStringBool"),
+  DicStringInt_1 = require("./DicStringInt"),
+  DicStringString_1 = require("./DicStringString");
 class SCreatureGenBlackboardMaps {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -43,7 +43,7 @@ class SCreatureGenBlackboardMaps {
     return this.mapstring(t);
   }
   mapstring(t, i) {
-    const r = this.J7.__offset(this.z7, 4);
+    var r = this.J7.__offset(this.z7, 4);
     return r
       ? (i || new DicStringString_1.DicStringString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -52,14 +52,14 @@ class SCreatureGenBlackboardMaps {
       : null;
   }
   mapstringLength() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetMapintAt(t, i) {
     return this.mapint(t);
   }
   mapint(t, i) {
-    const r = this.J7.__offset(this.z7, 6);
+    var r = this.J7.__offset(this.z7, 6);
     return r
       ? (i || new DicStringInt_1.DicStringInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -68,14 +68,14 @@ class SCreatureGenBlackboardMaps {
       : null;
   }
   mapintLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetMapboolAt(t, i) {
     return this.mapbool(t);
   }
   mapbool(t, i) {
-    const r = this.J7.__offset(this.z7, 8);
+    var r = this.J7.__offset(this.z7, 8);
     return r
       ? (i || new DicStringBool_1.DicStringBool()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -84,9 +84,9 @@ class SCreatureGenBlackboardMaps {
       : null;
   }
   mapboolLength() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.SCreatureGenBlackboardMaps = SCreatureGenBlackboardMaps;
-// # sourceMappingURL=SCreatureGenBlackboardMaps.js.map
+//# sourceMappingURL=SCreatureGenBlackboardMaps.js.map

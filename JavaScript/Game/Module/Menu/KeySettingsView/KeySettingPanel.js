@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.KeySettingPanel = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const DynScrollView_1 = require("../../Util/ScrollView/DynScrollView");
-const KeySettingRowBaseItem_1 = require("./KeySettingRowBaseItem");
-const KeySettingRowContainerItem_1 = require("./KeySettingRowContainerItem");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  DynScrollView_1 = require("../../Util/ScrollView/DynScrollView"),
+  KeySettingRowBaseItem_1 = require("./KeySettingRowBaseItem"),
+  KeySettingRowContainerItem_1 = require("./KeySettingRowContainerItem");
 class KeySettingPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -19,7 +19,7 @@ class KeySettingPanel extends UiPanelBase_1.UiPanelBase {
       (this.IAi = void 0),
       (this.TAi = []),
       (this.LSi = (t, i, e) => {
-        const s = new KeySettingRowContainerItem_1.KeySettingRowContainerItem();
+        var s = new KeySettingRowContainerItem_1.KeySettingRowContainerItem();
         return (
           s.BindOnToggleStateChanged(this.s_i),
           s.BindOnHover(this.__i),
@@ -29,7 +29,7 @@ class KeySettingPanel extends UiPanelBase_1.UiPanelBase {
         );
       }),
       (this.s_i = (t, i) => {
-        i === 0
+        0 === i
           ? (t.SetDetailItemVisible(!1), (this.yAi = void 0))
           : (this.yAi?.SetDetailItemVisible(!1),
             (this.yAi = t),
@@ -88,7 +88,7 @@ class KeySettingPanel extends UiPanelBase_1.UiPanelBase {
       (this.yAi = void 0);
   }
   RefreshRow(t) {
-    const i = this.TAi.indexOf(t);
+    var i = this.TAi.indexOf(t);
     this.MAi?.GetScrollItemFromIndex(i)?.Update(t, i);
   }
   StopScroll() {
@@ -96,4 +96,4 @@ class KeySettingPanel extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.KeySettingPanel = KeySettingPanel;
-// # sourceMappingURL=KeySettingPanel.js.map
+//# sourceMappingURL=KeySettingPanel.js.map

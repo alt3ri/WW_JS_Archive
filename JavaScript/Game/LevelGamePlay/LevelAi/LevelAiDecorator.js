@@ -18,7 +18,7 @@ class LevelAiDecorator extends LevelAiNode_1.LevelAiNode {
     super.Serialize(t, e, i), (this.Params = s);
   }
   GetWorldStateProxy(t) {
-    return t === 0
+    return 0 === t
       ? this.CharacterPlanComponent.WorldStateProxy
       : this.CharacterPlanComponent.WorldState;
   }
@@ -30,7 +30,7 @@ class LevelAiDecorator extends LevelAiNode_1.LevelAiNode {
   }
   WrappedCheckCondition(t) {
     let e = 1;
-    let i;
+    var i;
     return (
       this.vIe(t)
         ? ((i = this.CheckCondition(t)),
@@ -38,7 +38,7 @@ class LevelAiDecorator extends LevelAiNode_1.LevelAiNode {
           (e = i ? 1 : 0),
           (this.pIe = e),
           this.PrintDescription("Check Condition", ["CheckResult", e]))
-        : t === 2 && (e = this.pIe),
+        : 2 === t && (e = this.pIe),
       e
     );
   }
@@ -55,10 +55,10 @@ class LevelAiDecorator extends LevelAiNode_1.LevelAiNode {
     }
   }
   NotifyEventBasedCondition(t) {
-    var t = this.InverseCondition ? !t : t;
-    const e =
-      ((this.pIe = t ? 1 : 0),
-      this.CharacterPlanComponent.FindActiveDecoratorInfo(this));
+    var t = this.InverseCondition ? !t : t,
+      e =
+        ((this.pIe = t ? 1 : 0),
+        this.CharacterPlanComponent.FindActiveDecoratorInfo(this));
     return !!e && e.PlanInstance.NotifyEventBasedDecoratorCondition(this, t);
   }
   OnExecutionStart() {}
@@ -68,4 +68,4 @@ class LevelAiDecorator extends LevelAiNode_1.LevelAiNode {
   }
 }
 exports.LevelAiDecorator = LevelAiDecorator;
-// # sourceMappingURL=LevelAiDecorator.js.map
+//# sourceMappingURL=LevelAiDecorator.js.map

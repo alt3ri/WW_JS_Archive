@@ -28,16 +28,16 @@ class ItemDataBase {
     return this.ItemDataType;
   }
   GetItemTypeConfig() {
-    const t = this.GetType();
+    var t = this.GetType();
     if (t)
       return ConfigManager_1.ConfigManager.InventoryConfig.GetItemTypeConfig(t);
   }
   CanLock() {
-    const t = this.GetItemTypeConfig();
+    var t = this.GetItemTypeConfig();
     return !!t && t.Lock;
   }
   GetQualityConfig() {
-    const t = this.GetQuality();
+    var t = this.GetQuality();
     return ConfigManager_1.ConfigManager.InventoryConfig.GetItemQualityConfig(
       t,
     );
@@ -47,4 +47,4 @@ class ItemDataBase {
   }
 }
 exports.ItemDataBase = ItemDataBase;
-// # sourceMappingURL=ItemDataBase.js.map
+//# sourceMappingURL=ItemDataBase.js.map

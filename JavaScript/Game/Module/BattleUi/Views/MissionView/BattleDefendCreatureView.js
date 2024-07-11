@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleDefendCreatureView = void 0);
-const UE = require("ue");
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const BattleEntityChildView_1 = require("../BattleChildView/BattleEntityChildView");
-const EAttributeId = Protocol_1.Aki.Protocol.KBs;
+const UE = require("ue"),
+  CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  BattleEntityChildView_1 = require("../BattleChildView/BattleEntityChildView");
+var EAttributeId = Protocol_1.Aki.Protocol.KBs;
 class BattleDefendCreatureView extends BattleEntityChildView_1.BattleEntityChildView {
   constructor() {
     super(...arguments),
       (this.A_t = (e, t, i) => {
-        let r, n;
+        var r, n;
         this.IsValid() &&
           ((r = (n = this.GetEntity().GetComponent(156)).GetCurrentValue(
             EAttributeId.Proto_Life,
           )),
           (n = n.GetCurrentValue(EAttributeId.Tkn)),
-          this.P_t(n > 0 ? r / n : 0));
+          this.P_t(0 < n ? r / n : 0));
       });
   }
   OnRegisterComponent() {
@@ -56,4 +56,4 @@ class BattleDefendCreatureView extends BattleEntityChildView_1.BattleEntityChild
   }
 }
 exports.BattleDefendCreatureView = BattleDefendCreatureView;
-// # sourceMappingURL=BattleDefendCreatureView.js.map
+//# sourceMappingURL=BattleDefendCreatureView.js.map

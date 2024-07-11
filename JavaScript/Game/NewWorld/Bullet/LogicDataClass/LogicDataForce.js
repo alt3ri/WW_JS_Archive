@@ -22,4 +22,4 @@ class LogicDataForce extends LogicDataBase_1.default {
   }
 }
 exports.default = LogicDataForce;
-// # sourceMappingURL=LogicDataForce.js.map
+//# sourceMappingURL=LogicDataForce.js.map

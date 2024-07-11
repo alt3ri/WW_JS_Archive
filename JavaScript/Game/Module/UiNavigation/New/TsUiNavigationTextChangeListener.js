@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TsUiNavigationTextChangeListener = void 0);
-const UE = require("ue");
-const GlobalData_1 = require("../../../GlobalData");
+const UE = require("ue"),
+  GlobalData_1 = require("../../../GlobalData");
 class TsUiNavigationTextChangeListener extends UE.UINavigationTextChangeListener {
   constructor() {
     super(...arguments), (this.Listener = void 0), (this.Text = void 0);
@@ -33,4 +33,4 @@ class TsUiNavigationTextChangeListener extends UE.UINavigationTextChangeListener
 }
 (exports.TsUiNavigationTextChangeListener = TsUiNavigationTextChangeListener),
   (exports.default = TsUiNavigationTextChangeListener);
-// # sourceMappingURL=TsUiNavigationTextChangeListener.js.map
+//# sourceMappingURL=TsUiNavigationTextChangeListener.js.map

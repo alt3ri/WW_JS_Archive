@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckAiState = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ICondition_1 = require("../../../UniverseEditor/Interface/ICondition");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  ICondition_1 = require("../../../UniverseEditor/Interface/ICondition"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionCheckAiState extends LevelGeneralBase_1.LevelConditionBase {
   CheckNew(e, o, n) {
     if (!e)
@@ -26,7 +26,7 @@ class LevelConditionCheckAiState extends LevelGeneralBase_1.LevelConditionBase {
           Log_1.Log.Error("LevelCondition", 30, "对象Entity不合法"),
         !1
       );
-    const i = n.Entity.GetComponent(185);
+    var i = n.Entity.GetComponent(185);
     let r = !1;
     switch (e.StateType) {
       case ICondition_1.EAiStateType.AnimalRandomAction:
@@ -38,8 +38,8 @@ class LevelConditionCheckAiState extends LevelGeneralBase_1.LevelConditionBase {
       case ICondition_1.EAiStateType.AnimalSitDown:
         r = i?.HasTag(393622611) || i?.HasTag(276015887) || !1;
     }
-    return e.Compare === "Eq" ? r : !r;
+    return "Eq" === e.Compare ? r : !r;
   }
 }
 exports.LevelConditionCheckAiState = LevelConditionCheckAiState;
-// # sourceMappingURL=LevelConditionCheckAiState.js.map
+//# sourceMappingURL=LevelConditionCheckAiState.js.map

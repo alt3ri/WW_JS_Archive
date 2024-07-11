@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraSplineMoveController = void 0);
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CameraControllerBase_1 = require("./CameraControllerBase");
+const Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CameraControllerBase_1 = require("./CameraControllerBase");
 class CameraSplineMoveController extends CameraControllerBase_1.CameraControllerBase {
   constructor() {
     super(...arguments),
@@ -27,7 +27,7 @@ class CameraSplineMoveController extends CameraControllerBase_1.CameraController
     this.Lock(this);
   }
   ApplyCameraSpline(t, i, s, h) {
-    let e;
+    var e;
     this.SplineId === t
       ? this.ApplyCameraSplineInternal(t, this.Spline, i, s, h)
       : (this.SplineId &&
@@ -80,7 +80,7 @@ class CameraSplineMoveController extends CameraControllerBase_1.CameraController
       this.Camera.CameraModifyController.Unlock(this);
   }
   UpdateInternal(t) {
-    let i;
+    var i;
     this.Spline &&
       Global_1.Global.BaseCharacter &&
       ((i = this.Spline.FindInputKeyClosestToWorldLocation(
@@ -107,4 +107,4 @@ class CameraSplineMoveController extends CameraControllerBase_1.CameraController
   }
 }
 exports.CameraSplineMoveController = CameraSplineMoveController;
-// # sourceMappingURL=CameraSplineMoveController.js.map
+//# sourceMappingURL=CameraSplineMoveController.js.map

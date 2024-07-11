@@ -1,31 +1,36 @@
 "use strict";
-let BaseAttributeComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, r, i) {
-    let s;
-    const a = arguments.length;
-    let o =
-      a < 3 ? e : i === null ? (i = Object.getOwnPropertyDescriptor(e, r)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      o = Reflect.decorate(t, e, r, i);
-    else
-      for (let n = t.length - 1; n >= 0; n--)
-        (s = t[n]) && (o = (a < 3 ? s(o) : a > 3 ? s(e, r, o) : s(e, r)) || o);
-    return a > 3 && o && Object.defineProperty(e, r, o), o;
-  };
+var BaseAttributeComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, r, i) {
+      var s,
+        a = arguments.length,
+        o =
+          a < 3
+            ? e
+            : null === i
+              ? (i = Object.getOwnPropertyDescriptor(e, r))
+              : i;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        o = Reflect.decorate(t, e, r, i);
+      else
+        for (var n = t.length - 1; 0 <= n; n--)
+          (s = t[n]) &&
+            (o = (a < 3 ? s(o) : 3 < a ? s(e, r, o) : s(e, r)) || o);
+      return 3 < a && o && Object.defineProperty(e, r, o), o;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BaseAttributeComponent = exports.AttributeSnapshot = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Stats_1 = require("../../../../../../Core/Common/Stats");
-const CommonDefine_1 = require("../../../../../../Core/Define/CommonDefine");
-const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const StatDefine_1 = require("../../../../../Common/StatDefine");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const CombatDebugController_1 = require("../../../../../Utils/CombatDebugController");
-const AbilityUtils_1 = require("./AbilityUtils");
-const CharacterAttributeTypes_1 = require("./CharacterAttributeTypes");
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../../../Core/Common/Stats"),
+  CommonDefine_1 = require("../../../../../../Core/Define/CommonDefine"),
+  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  StatDefine_1 = require("../../../../../Common/StatDefine"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  CombatDebugController_1 = require("../../../../../Utils/CombatDebugController"),
+  AbilityUtils_1 = require("./AbilityUtils"),
+  CharacterAttributeTypes_1 = require("./CharacterAttributeTypes");
 class AttributeSnapshot {
   constructor() {
     (this.BaseValues = {}), (this.CurrentValues = {});
@@ -74,15 +79,15 @@ let BaseAttributeComponent =
     }
     SetBaseValue(t, e) {
       let r = e;
-      let i;
-      let s;
-      var e = this.Gbr(t);
-      var e =
-        (void 0 !== e && (r = this.Nbr(t, r, e)),
-        CharacterAttributeTypes_1.attrsNotClampZero.includes(t) ||
-          (r = Math.max(r, 0)),
-        (r = Math.floor(r)),
-        this.BaseValues[t]);
+      var i,
+        s,
+        e = this.Gbr(t),
+        e =
+          (void 0 !== e && (r = this.Nbr(t, r, e)),
+          CharacterAttributeTypes_1.attrsNotClampZero.includes(t) ||
+            (r = Math.max(r, 0)),
+          (r = Math.floor(r)),
+          this.BaseValues[t]);
       e !== r &&
         ((this.BaseValues[t] = r),
         (i = this.CurrentValues[t]),
@@ -101,7 +106,7 @@ let BaseAttributeComponent =
       return this.CurrentValues[t];
     }
     Gbr(t) {
-      let e = CharacterAttributeTypes_1.attrsBaseValueClamp.get(t);
+      var e = CharacterAttributeTypes_1.attrsBaseValueClamp.get(t);
       return (
         e ||
         ((e = CharacterAttributeTypes_1.attrsBaseValueClampMax.get(t))
@@ -113,26 +118,26 @@ let BaseAttributeComponent =
       (this.BaseValues[t] = e), (this.CurrentValues[t] = r);
     }
     SyncValueFromServer(t, e, r) {
-      const i = this.BaseValues[t];
-      const s = (i !== e && (this.BaseValues[t] = e), this.CurrentValues[t]);
+      var i = this.BaseValues[t],
+        s = (i !== e && (this.BaseValues[t] = e), this.CurrentValues[t]);
       (this.CurrentValues[t] = r),
         this.DispatchBaseValueEvent(t, e, i),
         this.DispatchCurrentValueEvent(t, r, s);
     }
     UpdateCurrentValue(t) {
       let e = this.Obr(t);
-      var r = CharacterAttributeTypes_1.attrsCurrentValueClamp.get(t);
-      var r =
-        (r && (e = Math.min(e, r)),
-        CharacterAttributeTypes_1.attrsNotClampZero.includes(t) ||
-          (e = Math.max(e, 0)),
-        this.CurrentValues[t]);
+      var r = CharacterAttributeTypes_1.attrsCurrentValueClamp.get(t),
+        r =
+          (r && (e = Math.min(e, r)),
+          CharacterAttributeTypes_1.attrsNotClampZero.includes(t) ||
+            (e = Math.max(e, 0)),
+          this.CurrentValues[t]);
       r !== e && (this.CurrentValues[t] = e);
     }
     TakeSnapshot() {
-      const e = new AttributeSnapshot();
+      var e = new AttributeSnapshot();
       for (let t = 1; t < CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX; t++) {
-        const r = CharacterAttributeTypes_1.EAttributeId[t];
+        var r = CharacterAttributeTypes_1.EAttributeId[t];
         r &&
           ((e.BaseValues[r] = this.BaseValues[t] ?? 0),
           (e.CurrentValues[r] = this.CurrentValues[t] ?? 0));
@@ -140,7 +145,7 @@ let BaseAttributeComponent =
       return e;
     }
     AddModifier(t, e) {
-      let r, i;
+      var r, i;
       return t <=
         CharacterAttributeTypes_1.EAttributeId.Proto_EAttributeType_None ||
         t >= CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX
@@ -155,7 +160,7 @@ let BaseAttributeComponent =
           r);
     }
     RemoveModifier(t, e) {
-      let r;
+      var r;
       this.ModifierLists[t]?.delete(e) &&
         ((e = this.CurrentValues[t]),
         this.UpdateCurrentValue(t),
@@ -167,12 +172,12 @@ let BaseAttributeComponent =
         for (const e of this.ModifierLists[t].values()) yield e;
     }
     Obr(t) {
-      const e = this.BaseValues[t];
+      var e = this.BaseValues[t];
       if (!this.ModifierLists[t]) return e;
-      let r = 0;
-      let i = 0;
-      let s = 1;
-      const a = this.CheckIfNeedAdvanceMultiply(t);
+      let r = 0,
+        i = 0,
+        s = 1;
+      var a = this.CheckIfNeedAdvanceMultiply(t);
       for (const n of this.GetAllModifiers(t)) {
         let e = 0;
         switch (n.Type) {
@@ -187,7 +192,7 @@ let BaseAttributeComponent =
             let t = n.SnapshotSource;
             void 0 === t &&
               (t = AbilityUtils_1.AbilityUtils.GetAttrValue(
-                n.SourceEntity === 0
+                0 === n.SourceEntity
                   ? this
                   : ModelManager_1.ModelManager.CreatureModel.GetEntity(
                       n.SourceEntity,
@@ -195,7 +200,7 @@ let BaseAttributeComponent =
                 n.SourceAttributeId,
                 n.SourceCalculationType,
               ));
-            let o = n.Min;
+            var o = n.Min;
             if (o && (t -= o) <= 0) break;
             (o = n.Ratio),
               (o =
@@ -206,7 +211,7 @@ let BaseAttributeComponent =
                     CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND +
                   n.Value2),
                 n.Max));
-            if ((o && e > o && (e = o), n.Type === 4)) return e;
+            if ((o && e > o && (e = o), 4 === n.Type)) return e;
             break;
           }
           case 3:
@@ -214,7 +219,7 @@ let BaseAttributeComponent =
           case 9:
             s *= n.Value1 * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
         }
-        e !== 0 &&
+        0 !== e &&
           (a
             ? (s *= e * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND + 1)
             : (r += e));
@@ -224,8 +229,8 @@ let BaseAttributeComponent =
       );
     }
     SyncRecoverPropFromServer(t, e, r, i, s) {
-      let a = CharacterAttributeTypes_1.attrsAutoRecoverSpeedMap.get(t);
-      const o = CharacterAttributeTypes_1.attrsAutoRecoverMaxMap.get(t);
+      var a = CharacterAttributeTypes_1.attrsAutoRecoverSpeedMap.get(t),
+        o = CharacterAttributeTypes_1.attrsAutoRecoverMaxMap.get(t);
       a && o
         ? (this.SyncValueFromServer(a, i, i),
           this.SyncValueFromServer(o, r, r),
@@ -235,12 +240,12 @@ let BaseAttributeComponent =
           Log_1.Log.Error("Battle", 36, "自动属性未注册", ["属性", t]);
     }
     AutoRecoverAttr(t) {
-      for (let [
+      for (var [
         e,
         r,
       ] of CharacterAttributeTypes_1.attrsAutoRecoverSpeedMap.entries()) {
         r = this.GetCurrentValue(r);
-        r !== 0 &&
+        0 !== r &&
           this.AddBaseValue(e, r * t * CommonDefine_1.SECOND_PER_MILLIONSECOND);
       }
     }
@@ -262,7 +267,7 @@ let BaseAttributeComponent =
       );
     }
     RemoveBoundsLocker(t, e) {
-      const r = this.BoundsLockerMap.get(t);
+      var r = this.BoundsLockerMap.get(t);
       return (
         !!r && !!r.delete(e) && (this.SetBaseValue(t, this.BaseValues[t]), !0)
       );
@@ -272,9 +277,9 @@ let BaseAttributeComponent =
       if (t) for (const e of t.values()) yield e;
     }
     Nbr(t, e, r) {
-      let i = e;
-      let s = void 0;
-      let a = r;
+      let i = e,
+        s = void 0,
+        a = r;
       for (const n of this.GetAllBoundsLocker(t)) {
         var o;
         n.LockLowerBounds &&
@@ -289,7 +294,7 @@ let BaseAttributeComponent =
       );
     }
     AddIntervalLock(t, e, r, i, s) {
-      let a;
+      var a;
       r !== CharacterAttributeTypes_1.EAttributeId.Proto_Life &&
         ((i = {
           LockUpperBounds: !(a = {
@@ -306,7 +311,7 @@ let BaseAttributeComponent =
           LowerPercent: i * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
           LowerOffset: s,
         }),
-        this.AddBoundsLocker(r, t === 0 ? a : i, e));
+        this.AddBoundsLocker(r, 0 === t ? a : i, e));
     }
     RemoveIntervalLock(t, e, r) {
       this.RemoveBoundsLocker(r, e);
@@ -326,7 +331,7 @@ let BaseAttributeComponent =
       this.RemoveBoundsLocker(e, t);
     }
     AddListener(t, e, r) {
-      let i = this.CurrentValueListenerMap.get(t);
+      var i = this.CurrentValueListenerMap.get(t);
       i
         ? i.add(e)
         : ((i = new Set()).add(e), this.CurrentValueListenerMap.set(t, i));
@@ -353,7 +358,7 @@ let BaseAttributeComponent =
     }
     DispatchBaseValueEvent(e, t, r) {
       if (r !== t) {
-        const i = this.BaseValueListenerMap.get(e);
+        var i = this.BaseValueListenerMap.get(e);
         if (i) {
           BaseAttributeComponent_1.kbr.get(e) ||
             BaseAttributeComponent_1.kbr.set(e, void 0);
@@ -386,7 +391,7 @@ let BaseAttributeComponent =
     }
     DispatchCurrentValueEvent(e, t, r) {
       if (r !== t) {
-        const i = this.CurrentValueListenerMap.get(e);
+        var i = this.CurrentValueListenerMap.get(e);
         if (i) {
           BaseAttributeComponent_1.Vbr.get(e) ||
             BaseAttributeComponent_1.Vbr.set(e, void 0);
@@ -458,4 +463,4 @@ let BaseAttributeComponent =
       BaseAttributeComponent,
     )),
   (exports.BaseAttributeComponent = BaseAttributeComponent);
-// # sourceMappingURL=BaseAttributeComponent.js.map
+//# sourceMappingURL=BaseAttributeComponent.js.map

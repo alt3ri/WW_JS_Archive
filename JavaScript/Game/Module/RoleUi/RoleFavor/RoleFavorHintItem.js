@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleFavorHintItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class RoleFavorHintItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, i) {
     super(),
       (this.q1o = void 0),
       (this.EPe = void 0),
       (this.G1o = (e) => {
-        e === "Start"
+        "Start" === e
           ? this.PlayHalfway()
-          : e === "Move"
+          : "Move" === e
             ? this.PlayEnd()
-            : e === "Close" && this.OnSequenceFinish();
+            : "Close" === e && this.OnSequenceFinish();
       }),
       (this.PlayStart = () => {
         this.EPe.PlayLevelSequenceByName("Start");
@@ -45,7 +45,7 @@ class RoleFavorHintItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    let e, i;
+    var e, i;
     this.N1o &&
       ((e = this.N1o.Exp),
       (i =
@@ -65,4 +65,4 @@ class RoleFavorHintItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleFavorHintItem = RoleFavorHintItem;
-// # sourceMappingURL=RoleFavorHintItem.js.map
+//# sourceMappingURL=RoleFavorHintItem.js.map

@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InventoryController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const SpecialItemController_1 = require("../Item/SpecialItem/SpecialItemController");
-const ItemHintController_1 = require("../ItemHint/ItemHintController");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const ItemUseLogic_1 = require("./ItemUseLogic");
-const VISION_CATCH_REASON = 19e3;
-const GACHA_REASON = 14e3;
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  SpecialItemController_1 = require("../Item/SpecialItem/SpecialItemController"),
+  ItemHintController_1 = require("../ItemHint/ItemHintController"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  ItemUseLogic_1 = require("./ItemUseLogic"),
+  VISION_CATCH_REASON = 19e3,
+  GACHA_REASON = 14e3;
 class InventoryController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -82,7 +82,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static ItemLockRequest(t, n) {
-    let e, o;
+    var e, o;
     t <= 0 ||
       ((e =
         ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(t)) &&
@@ -114,7 +114,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
   }
   static RequestItemUse(t, n) {
     const o = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(t);
-    let e;
+    var e;
     o.SpecialItem &&
     !SpecialItemController_1.SpecialItemController.AllowReqUseSpecialItem(t)
       ? (Log_1.Log.CheckWarn() &&
@@ -145,7 +145,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
                   e.X5n,
                   25612,
                 )
-              : o.SpecialItem && o && o.Parameters.size === 0
+              : o.SpecialItem && o && 0 === o.Parameters.size
                 ? EventSystem_1.EventSystem.Emit(
                     EventDefine_1.EEventName.OnSpecialItemUse,
                     t,
@@ -159,13 +159,13 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
         }));
   }
   static NormalItemRequest() {
-    const e = new Protocol_1.Aki.Protocol.dts();
+    var e = new Protocol_1.Aki.Protocol.dts();
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Inventory", 8, "NormalItemRequest 获取所有普通道具请求"),
       Net_1.Net.Call(18145, Protocol_1.Aki.Protocol.dts.create(e), this.Gui);
   }
   static ValidTimeItemRequest() {
-    const e = new Protocol_1.Aki.Protocol.xts();
+    var e = new Protocol_1.Aki.Protocol.xts();
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Inventory",
@@ -175,19 +175,19 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
       Net_1.Net.Call(2513, Protocol_1.Aki.Protocol.dts.create(e), this.Nui);
   }
   static WeaponItemRequest() {
-    const e = new Protocol_1.Aki.Protocol.vts();
+    var e = new Protocol_1.Aki.Protocol.vts();
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Inventory", 8, "WeaponItemRequest 获取所有武器道具请求"),
       Net_1.Net.Call(19274, Protocol_1.Aki.Protocol.vts.create(e), this.Oui);
   }
   static PhantomItemRequest() {
-    const e = new Protocol_1.Aki.Protocol.Ets();
+    var e = new Protocol_1.Aki.Protocol.Ets();
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Inventory", 8, "PhantomItemRequest 获取所有幻象道具请求"),
       Net_1.Net.Call(19690, Protocol_1.Aki.Protocol.Ets.create(e), this.kui);
   }
   static ItemDestructPreviewRequest(a) {
-    const e = new Protocol_1.Aki.Protocol.rts();
+    var e = new Protocol_1.Aki.Protocol.rts();
     (e.Y5n = a),
       Net_1.Net.Call(12096, e, (e) => {
         if (e)
@@ -197,24 +197,24 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
               28783,
             );
           else {
-            const t = [];
+            var t = [];
             for (const v of a) {
-              const n = [{ IncId: v.Q5n, ItemId: v.G3n }, v.I5n];
+              var n = [{ IncId: v.Q5n, ItemId: v.G3n }, v.I5n];
               t.push(n);
             }
-            const o = [];
+            var o = [];
             for (const i of Object.keys(e.Vms)) {
-              const r = [{ IncId: 0, ItemId: Number.parseInt(i) }, e.Vms[i]];
+              var r = [{ IncId: 0, ItemId: Number.parseInt(i) }, e.Vms[i]];
               o.push(r);
             }
             o.sort((e, t) => e[0].ItemId - t[0].ItemId);
-            const _ = { OriginList: t, ResultList: o };
+            var _ = { OriginList: t, ResultList: o };
             UiManager_1.UiManager.OpenView("DestroyPreviewView", _);
           }
       });
   }
   static ItemDestructRequest(t) {
-    const e = new Protocol_1.Aki.Protocol.tts();
+    var e = new Protocol_1.Aki.Protocol.tts();
     (e.Y5n = t),
       Net_1.Net.Call(16868, e, (e) => {
         e &&
@@ -231,7 +231,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static InvalidItemRemoveRequest() {
-    let e;
+    var e;
     this.Fui ||
       ((this.Fui = !0),
       (e = new Protocol_1.Aki.Protocol.Ats()),
@@ -244,23 +244,23 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
       }));
   }
   static InvalidItemCheckRequest() {
-    const e = new Protocol_1.Aki.Protocol.Uts();
+    var e = new Protocol_1.Aki.Protocol.Uts();
     Net_1.Net.Call(18908, e, (e) => {
-      if (e && e.RDs.length !== 0) {
-        const t = new Map();
+      if (e && 0 !== e.RDs.length) {
+        var t = new Map();
         for (const a of e.RDs) {
-          const n = t.get(a.G3n) ?? 0;
+          var n = t.get(a.G3n) ?? 0;
           t.set(a.G3n, n + a.I5n);
         }
-        let o;
-        let r;
-        const _ = [];
+        var o,
+          r,
+          _ = [];
         for ([o, r] of t.entries()) {
-          const v = [{ IncId: 0, ItemId: o }, r];
+          var v = [{ IncId: 0, ItemId: o }, r];
           _.push(v);
         }
         _.sort((e, t) => e[0].ItemId - t[0].ItemId);
-        const i = new Map();
+        var i = new Map();
         for (const l of _) i.set(l[0].ItemId, l[1]);
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.NotifyInvalidItem,
@@ -294,13 +294,13 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
         "NormalItemResponse 获取所有普通道具返回",
         ["response", e],
       );
-    const t = ModelManager_1.ModelManager.InventoryModel;
-    var e = (t.ClearCommonItemData(), e.iDs);
-    if (e && e.length !== 0)
+    var t = ModelManager_1.ModelManager.InventoryModel,
+      e = (t.ClearCommonItemData(), e.iDs);
+    if (e && 0 !== e.length)
       for (const _ of e) {
-        const n = _.Ekn;
-        const o = _.I5n;
-        const r = Number(MathUtils_1.MathUtils.LongToBigInt(_.yDs));
+        var n = _.Ekn,
+          o = _.I5n,
+          r = Number(MathUtils_1.MathUtils.LongToBigInt(_.yDs));
         t.NewCommonItemData(n, o, 0, r),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnResponseCommonItem,
@@ -316,14 +316,14 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
         "NormalItemUpdateNotify 普通道具更新通知",
         ["notify", e],
       );
-    const t = e.iDs;
-    if (t && t.length !== 0) {
-      const n = ModelManager_1.ModelManager.InventoryModel;
+    var t = e.iDs;
+    if (t && 0 !== t.length) {
+      var n = ModelManager_1.ModelManager.InventoryModel;
       for (const i of t) {
-        var o;
-        const r = i.Ekn;
-        const _ = i.I5n;
-        const v = n.GetCommonItemData(r);
+        var o,
+          r = i.Ekn,
+          _ = i.I5n,
+          v = n.GetCommonItemData(r);
         v &&
           ((o = v.GetCount()),
           v.SetCount(_),
@@ -364,10 +364,10 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
         ["notify", e],
       );
     e = e.oDs;
-    if (e && e.length !== 0) {
-      const t = [];
+    if (e && 0 !== e.length) {
+      var t = [];
       for (const o of e) {
-        const n = { ItemId: o, IncId: 0 };
+        var n = { ItemId: o, IncId: 0 };
         t.push(n);
       }
       ModelManager_1.ModelManager.InventoryModel.RemoveCommonItemDataAndSaveNewList(
@@ -391,14 +391,14 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
         "notify",
         e,
       ]);
-    const t = e.iDs;
-    if (t && t.length !== 0) {
-      const n = ModelManager_1.ModelManager.InventoryModel;
-      const o = e.V5n !== GACHA_REASON;
+    var t = e.iDs;
+    if (t && 0 !== t.length) {
+      var n = ModelManager_1.ModelManager.InventoryModel,
+        o = e.V5n !== GACHA_REASON;
       for (const i of t) {
-        const r = i.Ekn;
-        const _ = i.I5n;
-        const v = Number(MathUtils_1.MathUtils.LongToBigInt(i.yDs));
+        var r = i.Ekn,
+          _ = i.I5n,
+          v = Number(MathUtils_1.MathUtils.LongToBigInt(i.yDs));
         n.NewCommonItemData(r, _, 0, v),
           n.TryAddNewCommonItem(r),
           n.TryAddRedDotCommonItem(r),
@@ -443,12 +443,12 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
       e)
     ) {
       e = e.Y5n;
-      if (e && e.length !== 0)
+      if (e && 0 !== e.length)
         for (const _ of e) {
-          const t = _.Ekn;
-          const n = _.I5n;
-          const o = _.Q5n;
-          const r = Number(MathUtils_1.MathUtils.LongToBigInt(_.yDs));
+          var t = _.Ekn,
+            n = _.I5n,
+            o = _.Q5n,
+            r = Number(MathUtils_1.MathUtils.LongToBigInt(_.yDs));
           ModelManager_1.ModelManager.InventoryModel.NewCommonItemData(
             t,
             n,
@@ -471,14 +471,14 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
         ["notify", e],
       );
     e = e.Y5n;
-    if (e && e.length !== 0) {
-      const t = ModelManager_1.ModelManager.InventoryModel;
+    if (e && 0 !== e.length) {
+      var t = ModelManager_1.ModelManager.InventoryModel;
       for (const v of e) {
-        const n = v.Ekn;
-        const o = v.I5n;
-        var r = v.Q5n;
-        const _ = Number(MathUtils_1.MathUtils.LongToBigInt(v.yDs));
-        var r = t.GetCommonItemData(n, r);
+        var n = v.Ekn,
+          o = v.I5n,
+          r = v.Q5n,
+          _ = Number(MathUtils_1.MathUtils.LongToBigInt(v.yDs)),
+          r = t.GetCommonItemData(n, r);
         r &&
           (r.SetCount(o),
           r.SetEndTime(_),
@@ -512,11 +512,11 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
         ["notify", e],
       );
     e = e.Y5n;
-    if (e && e.length !== 0) {
-      const t = [];
-      const n = [];
+    if (e && 0 !== e.length) {
+      var t = [],
+        n = [];
       for (const r of e) {
-        const o = { ItemId: r.G3n, IncId: r.Q5n };
+        var o = { ItemId: r.G3n, IncId: r.Q5n };
         t.push(o), n.push(r.G3n);
       }
       ModelManager_1.ModelManager.InventoryModel.RemoveCommonItemDataAndSaveNewList(
@@ -543,13 +543,13 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
         ["notify", e],
       );
     e = e.Y5n;
-    if (e && e.length !== 0) {
-      const t = ModelManager_1.ModelManager.InventoryModel;
+    if (e && 0 !== e.length) {
+      var t = ModelManager_1.ModelManager.InventoryModel;
       for (const v of e) {
-        const n = v.Ekn;
-        const o = v.I5n;
-        const r = v.Q5n;
-        const _ = Number(MathUtils_1.MathUtils.LongToBigInt(v.yDs));
+        var n = v.Ekn,
+          o = v.I5n,
+          r = v.Q5n,
+          _ = Number(MathUtils_1.MathUtils.LongToBigInt(v.yDs));
         t.NewCommonItemData(n, o, r, _),
           t.TryAddNewCommonItem(n),
           t.TryAddRedDotCommonItem(n),
@@ -583,13 +583,13 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
         "WeaponItemResponse 获取所有武器道具返回",
         ["response", e],
       );
-    const t = ModelManager_1.ModelManager.InventoryModel;
-    var e = (t.ClearWeaponItemData(), e.nDs);
-    if (e && e.length !== 0) {
+    var t = ModelManager_1.ModelManager.InventoryModel,
+      e = (t.ClearWeaponItemData(), e.nDs);
+    if (e && 0 !== e.length) {
       for (const _ of e) {
-        const n = _.Ekn;
-        const o = _.Q5n;
-        const r = _.gDs;
+        var n = _.Ekn,
+          o = _.Q5n,
+          r = _.gDs;
         t.NewWeaponItemData(n, o, r),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnResponseWeaponItem,
@@ -607,14 +607,14 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
         "notify",
         e,
       ]);
-    const t = ModelManager_1.ModelManager.InventoryModel;
-    const n = e.nDs;
-    if (n && n.length !== 0) {
-      const o = e.V5n !== GACHA_REASON;
+    var t = ModelManager_1.ModelManager.InventoryModel,
+      n = e.nDs;
+    if (n && 0 !== n.length) {
+      var o = e.V5n !== GACHA_REASON;
       for (const i of n) {
-        const r = i.Ekn;
-        const _ = i.Q5n;
-        const v = i.gDs;
+        var r = i.Ekn,
+          _ = i.Q5n,
+          v = i.gDs;
         t.NewWeaponItemData(r, _, v),
           t.TryAddNewAttributeItem(_),
           t.TryAddRedDotAttributeItem(_),
@@ -648,7 +648,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
       );
     e = e.aDs;
     e &&
-      e.length !== 0 &&
+      0 !== e.length &&
       (ModelManager_1.ModelManager.InventoryModel.RemoveWeaponItemDataAndSaveNewList(
         e,
       ),
@@ -666,16 +666,17 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
         ["response", e],
       ),
       ModelManager_1.ModelManager.PhantomBattleModel.SetMaxCost(e.dDs);
-    var t = e?.mDs;
-    const n =
-      (t && ModelManager_1.ModelManager.PhantomBattleModel.SetUnlockSkinList(t),
-      ModelManager_1.ModelManager.InventoryModel);
-    var t = (n.ClearPhantomItemData(), e._Ds);
-    if (t && t.length !== 0) {
+    var t = e?.mDs,
+      n =
+        (t &&
+          ModelManager_1.ModelManager.PhantomBattleModel.SetUnlockSkinList(t),
+        ModelManager_1.ModelManager.InventoryModel),
+      t = (n.ClearPhantomItemData(), e._Ds);
+    if (t && 0 !== t.length) {
       for (const v of t) {
-        const o = v.Ekn;
-        const r = v.Q5n;
-        const _ = v.gDs;
+        var o = v.Ekn,
+          r = v.Q5n,
+          _ = v.gDs;
         n.NewPhantomItemData(o, r, _),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnResponsePhantomItem,
@@ -695,12 +696,12 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
         e,
       ]);
     const t = e._Ds;
-    if (t && t.length !== 0) {
-      const n = ModelManager_1.ModelManager.InventoryModel;
+    if (t && 0 !== t.length) {
+      var n = ModelManager_1.ModelManager.InventoryModel;
       for (const v of t) {
-        const o = v.Ekn;
-        const r = v.Q5n;
-        const _ = v.gDs;
+        var o = v.Ekn,
+          r = v.Q5n,
+          _ = v.gDs;
         n.NewPhantomItemData(o, r, _),
           n.TryAddNewAttributeItem(r),
           n.TryAddRedDotAttributeItem(r),
@@ -737,7 +738,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
       );
     e = e.CDs;
     e &&
-      e.length !== 0 &&
+      0 !== e.length &&
       (ModelManager_1.ModelManager.InventoryModel.RemovePhantomItemDataAndSaveNewList(
         e,
       ),
@@ -754,8 +755,8 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
         "ItemFuncValueUpdateNotify 物品FunctionValue改变通知",
         ["notify", e],
       );
-    var t = e.Q5n;
-    var t = ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(t);
+    var t = e.Q5n,
+      t = ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(t);
     t && ((e = e.gDs), t.SetFunctionValue(e));
   }),
   (InventoryController.qui = (e) => {
@@ -785,4 +786,4 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     ItemUseLogic_1.ItemUseLogic.TryUseBattlePassItem,
     ItemUseLogic_1.ItemUseLogic.TryUseParameterItem,
   ]);
-// # sourceMappingURL=InventoryController.js.map
+//# sourceMappingURL=InventoryController.js.map

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhotographExpressionItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const LOCK_ALPHA = 0.3;
-const UNLOCK_ALPHA = 1;
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  LOCK_ALPHA = 0.3,
+  UNLOCK_ALPHA = 1;
 class PhotographExpressionItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -16,11 +16,11 @@ class PhotographExpressionItem extends UiPanelBase_1.UiPanelBase {
       (this.DWi = void 0),
       (this.RWi = void 0),
       (this.DTt = () => {
-        const t = this.UWi();
+        var t = this.UWi();
         return t && this.DWi ? this.DWi(this) : t;
       }),
       (this.x$e = (t) => {
-        this.UWi() && this.fAi && this.fAi(this, t === 1);
+        this.UWi() && this.fAi && this.fAi(this, 1 === t);
       });
   }
   OnRegisterComponent() {
@@ -40,8 +40,8 @@ class PhotographExpressionItem extends UiPanelBase_1.UiPanelBase {
     this.GetExtendToggle(0).CanExecuteChange.Unbind();
   }
   Refresh(t) {
-    let i, e;
-    (this.LWi = t) !== 0 &&
+    var i, e;
+    0 !== (this.LWi = t) &&
       ((this.RWi =
         ConfigManager_1.ConfigManager.PhotographConfig.GetPhotoMontageConfig(
           t,
@@ -66,10 +66,10 @@ class PhotographExpressionItem extends UiPanelBase_1.UiPanelBase {
       this.GetItem(4).SetUIActive(!t));
   }
   UWi() {
-    let t;
+    var t;
     return (
-      this.LWi === 0 ||
-      (t = this.RWi.UnLockConditionGroup) === 0 ||
+      0 === this.LWi ||
+      0 === (t = this.RWi.UnLockConditionGroup) ||
       ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckCondition(
         t.toString(),
         void 0,
@@ -84,7 +84,7 @@ class PhotographExpressionItem extends UiPanelBase_1.UiPanelBase {
     this.DWi = t;
   }
   SetSelected(t, i = !1) {
-    const e = this.GetExtendToggle(0);
+    var e = this.GetExtendToggle(0);
     t ? e.SetToggleStateForce(1, i) : e.SetToggleStateForce(0, i);
   }
   GetPhotoMontageId() {
@@ -95,4 +95,4 @@ class PhotographExpressionItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.PhotographExpressionItem = PhotographExpressionItem;
-// # sourceMappingURL=PhotographExpressionItem.js.map
+//# sourceMappingURL=PhotographExpressionItem.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivitySevenDaySignData = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ActivityData_1 = require("../../ActivityData");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ActivityData_1 = require("../../ActivityData");
 class ActivitySevenDaySignData extends ActivityData_1.ActivityBaseData {
   constructor() {
     super(...arguments), (this.pFe = void 0);
@@ -58,14 +58,14 @@ class ActivitySevenDaySignData extends ActivityData_1.ActivityBaseData {
     return this.pFe[t];
   }
   GetImportantItemIndex() {
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.ActivitySevenDaySignConfig?.GetActivitySignById(
         this.Id,
       );
     return t ? t.ImportantRewardIndex : 0;
   }
   GetImportantRewardType() {
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.ActivitySevenDaySignConfig?.GetActivitySignById(
         this.Id,
       );
@@ -73,4 +73,4 @@ class ActivitySevenDaySignData extends ActivityData_1.ActivityBaseData {
   }
 }
 exports.ActivitySevenDaySignData = ActivitySevenDaySignData;
-// # sourceMappingURL=ActivitySevenDaySignData.js.map
+//# sourceMappingURL=ActivitySevenDaySignData.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleSkillInnerSkillItem = void 0);
-const UE = require("ue");
-const RoleSkillTreeSkillItemBase_1 = require("./RoleSkillTreeSkillItemBase");
+const UE = require("ue"),
+  RoleSkillTreeSkillItemBase_1 = require("./RoleSkillTreeSkillItemBase");
 class RoleSkillInnerSkillItem extends RoleSkillTreeSkillItemBase_1.RoleSkillTreeSkillItemBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -29,4 +29,4 @@ class RoleSkillInnerSkillItem extends RoleSkillTreeSkillItemBase_1.RoleSkillTree
   }
 }
 exports.RoleSkillInnerSkillItem = RoleSkillInnerSkillItem;
-// # sourceMappingURL=RoleSkillInnerSkillItem.js.map
+//# sourceMappingURL=RoleSkillInnerSkillItem.js.map

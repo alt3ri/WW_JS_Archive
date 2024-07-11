@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TsSkeletalObserver = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const UiModelSystem_1 = require("../UiModel/UiModel/UiModelSystem");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  UiModelSystem_1 = require("../UiModel/UiModel/UiModelSystem");
 class TsSkeletalObserver extends UE.Actor {
   constructor() {
     super(...arguments), (this.Model = void 0);
@@ -33,4 +33,4 @@ class TsSkeletalObserver extends UE.Actor {
 }
 (exports.TsSkeletalObserver = TsSkeletalObserver),
   (exports.default = TsSkeletalObserver);
-// # sourceMappingURL=TsSkeletalObserver.js.map
+//# sourceMappingURL=TsSkeletalObserver.js.map

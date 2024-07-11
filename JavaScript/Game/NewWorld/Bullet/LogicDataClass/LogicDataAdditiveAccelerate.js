@@ -9,4 +9,4 @@ class LogicDataAdditiveAccelerate extends LogicDataBase_1.default {
   }
 }
 exports.default = LogicDataAdditiveAccelerate;
-// # sourceMappingURL=LogicDataAdditiveAccelerate.js.map
+//# sourceMappingURL=LogicDataAdditiveAccelerate.js.map

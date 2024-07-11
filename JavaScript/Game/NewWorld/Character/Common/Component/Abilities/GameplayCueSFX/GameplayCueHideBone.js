@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayCueHideBone = void 0);
-const FNameUtil_1 = require("../../../../../../../Core/Utils/FNameUtil");
-const GameplayCueBase_1 = require("./GameplayCueBase");
+const FNameUtil_1 = require("../../../../../../../Core/Utils/FNameUtil"),
+  GameplayCueBase_1 = require("./GameplayCueBase");
 class GameplayCueHideBone extends GameplayCueBase_1.GameplayCueBase {
   OnCreate() {
     this.YXo(!0);
@@ -11,10 +11,8 @@ class GameplayCueHideBone extends GameplayCueBase_1.GameplayCueBase {
     this.YXo(!1);
   }
   YXo(e) {
-    const t = FNameUtil_1.FNameUtil.GetDynamicFName(
-      this.CueConfig.Parameters[0],
-    );
-    let s = (this.CueConfig.Parameters[1] ?? "1") === "1";
+    var t = FNameUtil_1.FNameUtil.GetDynamicFName(this.CueConfig.Parameters[0]);
+    let s = "1" === (this.CueConfig.Parameters[1] ?? "1");
     e || (s = !s),
       this.ActorInternal.Mesh.IsBoneHiddenByName(t) !== s &&
         (s
@@ -26,4 +24,4 @@ class GameplayCueHideBone extends GameplayCueBase_1.GameplayCueBase {
   }
 }
 exports.GameplayCueHideBone = GameplayCueHideBone;
-// # sourceMappingURL=GameplayCueHideBone.js.map
+//# sourceMappingURL=GameplayCueHideBone.js.map

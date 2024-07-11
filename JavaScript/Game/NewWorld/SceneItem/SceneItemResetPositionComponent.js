@@ -1,35 +1,40 @@
 "use strict";
-let SceneItemResetPositionComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, o) {
-    let s;
-    const n = arguments.length;
-    let r =
-      n < 3 ? e : o === null ? (o = Object.getOwnPropertyDescriptor(e, i)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(t, e, i, o);
-    else
-      for (let h = t.length - 1; h >= 0; h--)
-        (s = t[h]) && (r = (n < 3 ? s(r) : n > 3 ? s(e, i, r) : s(e, i)) || r);
-    return n > 3 && r && Object.defineProperty(e, i, r), r;
-  };
+var SceneItemResetPositionComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, o) {
+      var s,
+        n = arguments.length,
+        r =
+          n < 3
+            ? e
+            : null === o
+              ? (o = Object.getOwnPropertyDescriptor(e, i))
+              : o;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        r = Reflect.decorate(t, e, i, o);
+      else
+        for (var h = t.length - 1; 0 <= h; h--)
+          (s = t[h]) &&
+            (r = (n < 3 ? s(r) : 3 < n ? s(e, i, r) : s(e, i)) || r);
+      return 3 < n && r && Object.defineProperty(e, i, r), r;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemResetPositionComponent = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../GlobalData");
-const LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController");
-const ActorUtils_1 = require("../../Utils/ActorUtils");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const TRIGGER_COMPONENT_TAG = new UE.FName("TriggerComponent");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../GlobalData"),
+  LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
+  ActorUtils_1 = require("../../Utils/ActorUtils"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  TRIGGER_COMPONENT_TAG = new UE.FName("TriggerComponent");
 let SceneItemResetPositionComponent =
   (SceneItemResetPositionComponent_1 = class SceneItemResetPositionComponent extends (
     EntityComponent_1.EntityComponent
@@ -56,7 +61,7 @@ let SceneItemResetPositionComponent =
             ((e = this.FMn.indexOf(e)), this.FMn.splice(e, 1));
         }),
         (this.Itn = (t, e) => {
-          let i;
+          var i;
           this.VMn ||
             ((e = this.Ntn(e))?.Valid &&
               this.wS &&
@@ -71,7 +76,7 @@ let SceneItemResetPositionComponent =
               ));
         }),
         (this.Etn = (t, e, i, o) => {
-          let s;
+          var s;
           this.VMn ||
             ((e = this.Ntn(e))?.Valid &&
               this.wS &&
@@ -91,19 +96,19 @@ let SceneItemResetPositionComponent =
       return (this.wS = t.EntityIds), (this.Lo = t), (this.FMn = []), !0;
     }
     OnStart() {
-      var t = this.Entity.GetComponent(1);
-      var t =
-        (t && (this.OMn = t.Owner),
-        (this.SIe = this.Entity.GetComponent(0)),
-        (this.kMn = this.SIe.GetTransform()),
-        this.Lo);
-      var t = t.Range;
+      var t = this.Entity.GetComponent(1),
+        t =
+          (t && (this.OMn = t.Owner),
+          (this.SIe = this.Entity.GetComponent(0)),
+          (this.kMn = this.SIe.GetTransform()),
+          this.Lo),
+        t = t.Range;
       if (
-        (t.Type === "Box"
+        ("Box" === t.Type
           ? this.Utn(t)
-          : t.Type === "Sphere"
+          : "Sphere" === t.Type
             ? this.Ptn(t)
-            : t.Type === "Volume" && this.wtn(t),
+            : "Volume" === t.Type && this.wtn(t),
         !this.OMn)
       )
         return (
@@ -117,7 +122,7 @@ let SceneItemResetPositionComponent =
             ),
           !1
         );
-      if (t.Type === "Volume") this.OMn.OnActorEndOverlap.Add(this.Itn);
+      if ("Volume" === t.Type) this.OMn.OnActorEndOverlap.Add(this.Itn);
       else {
         if (!this.Wen)
           return (
@@ -159,7 +164,7 @@ let SceneItemResetPositionComponent =
         );
     }
     Utn(t) {
-      let e, i;
+      var e, i;
       this.OMn ||
         (this.OMn = ActorSystem_1.ActorSystem.Get(
           UE.Actor.StaticClass(),
@@ -188,7 +193,7 @@ let SceneItemResetPositionComponent =
           this.Wen.K2_SetRelativeRotation(e.ToUeRotator(), !1, void 0, !1));
     }
     Ptn(t) {
-      let e;
+      var e;
       this.OMn ||
         (this.OMn = ActorSystem_1.ActorSystem.Get(
           UE.Actor.StaticClass(),
@@ -233,4 +238,4 @@ let SceneItemResetPositionComponent =
     SceneItemResetPositionComponent,
   )),
   (exports.SceneItemResetPositionComponent = SceneItemResetPositionComponent);
-// # sourceMappingURL=SceneItemResetPositionComponent.js.map
+//# sourceMappingURL=SceneItemResetPositionComponent.js.map

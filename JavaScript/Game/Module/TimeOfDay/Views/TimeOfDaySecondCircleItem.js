@@ -1,30 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TimeOfDaySecondCircleItem = void 0);
-const UE = require("ue");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const AutoAttachExhibitionItem_1 = require("../../CircleExhibition/AutoAttachExhibitionItem");
-const TimeOfDayDefine_1 = require("../TimeOfDayDefine");
-const TimeOfDayModel_1 = require("../TimeOfDayModel");
-const ANIMAL_SCALE = 0.9;
-const MIDDLE_TIME = 12;
-const FULL_ANGLE = 360;
-const ONE_HOUR_ANGLE = 30;
-const LEFT_RANGE = 0.4;
-const MIDDLE_RANGE = 0.5;
-const RIGHT_RANGE = 0.6;
-const BORDER_ALPHA = 0.65;
-const BORDER_RIGHT = 0.9;
-const BORDER_LEFT = 0.1;
-const BORDER_LEFT_HIDE = 0.04;
-const BORDER_RIGHT_HIDE = 0.96;
-const BORDER_MIDDLE = 0.5;
-const STONE2_BORDER_LEFT = 0.3;
-const STONE2_BORDER_RIGHT = 0.7;
+const UE = require("ue"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  AutoAttachExhibitionItem_1 = require("../../CircleExhibition/AutoAttachExhibitionItem"),
+  TimeOfDayDefine_1 = require("../TimeOfDayDefine"),
+  TimeOfDayModel_1 = require("../TimeOfDayModel"),
+  ANIMAL_SCALE = 0.9,
+  MIDDLE_TIME = 12,
+  FULL_ANGLE = 360,
+  ONE_HOUR_ANGLE = 30,
+  LEFT_RANGE = 0.4,
+  MIDDLE_RANGE = 0.5,
+  RIGHT_RANGE = 0.6,
+  BORDER_ALPHA = 0.65,
+  BORDER_RIGHT = 0.9,
+  BORDER_LEFT = 0.1,
+  BORDER_LEFT_HIDE = 0.04,
+  BORDER_RIGHT_HIDE = 0.96,
+  BORDER_MIDDLE = 0.5,
+  STONE2_BORDER_LEFT = 0.3,
+  STONE2_BORDER_RIGHT = 0.7;
 class TimeOfDaySecondCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExhibitionItemAbstract {
   constructor() {
     super(...arguments),
@@ -59,7 +59,7 @@ class TimeOfDaySecondCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExh
       this.Cni();
   }
   $8e() {
-    let E;
+    var E;
     this.osi &&
       (this.GetText(2).SetText(this.osi.ShowName),
       (E = TimeOfDayModel_1.TodDayTime.ConvertToHourMinuteString(
@@ -71,8 +71,8 @@ class TimeOfDaySecondCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExh
     if (this.osi) {
       let E = this.osi.SetTime / TimeOfDayDefine_1.TOD_SECOND_PER_HOUR;
       E > MIDDLE_TIME && (E -= MIDDLE_TIME);
-      const R = FULL_ANGLE - ONE_HOUR_ANGLE * E;
-      const _ = this.GetItem(0);
+      var R = FULL_ANGLE - ONE_HOUR_ANGLE * E,
+        _ = this.GetItem(0);
       (this._it.Yaw = R), _.SetUIRelativeRotation(this._it.ToUeRotator());
     }
   }
@@ -80,13 +80,13 @@ class TimeOfDaySecondCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExh
     this.Pe = E;
   }
   OnMoveItem(E) {
-    let R;
-    var _ = this.GetAttachItem().ExhibitionView.ItemActor.GetWidth();
-    const t = this.GetRootItem();
-    var _ = (t.GetAnchorOffsetX() + _ / 2) / _;
-    const e = t.RelativeScale3D;
-    let D = 0;
-    let i = 0;
+    var R,
+      _ = this.GetAttachItem().ExhibitionView.ItemActor.GetWidth(),
+      t = this.GetRootItem(),
+      _ = (t.GetAnchorOffsetX() + _ / 2) / _,
+      e = t.RelativeScale3D;
+    let D = 0,
+      i = 0;
     _ > BORDER_LEFT && _ < BORDER_MIDDLE
       ? ((D = (_ - BORDER_LEFT) / (BORDER_MIDDLE - BORDER_LEFT)),
         (i = MathUtils_1.MathUtils.Lerp(BORDER_ALPHA, 1, D)))
@@ -133,4 +133,4 @@ class TimeOfDaySecondCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExh
   }
 }
 exports.TimeOfDaySecondCircleItem = TimeOfDaySecondCircleItem;
-// # sourceMappingURL=TimeOfDaySecondCircleItem.js.map
+//# sourceMappingURL=TimeOfDaySecondCircleItem.js.map

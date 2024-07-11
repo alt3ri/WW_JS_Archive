@@ -14,4 +14,4 @@ class ItemTipsModel extends ModelBase_1.ModelBase {
   }
 }
 exports.ItemTipsModel = ItemTipsModel;
-// # sourceMappingURL=ItemTipsModel.js.map
+//# sourceMappingURL=ItemTipsModel.js.map

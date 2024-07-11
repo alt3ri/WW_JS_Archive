@@ -10,4 +10,4 @@ class EffectContext {
   }
 }
 exports.EffectContext = EffectContext;
-// # sourceMappingURL=EffectContext.js.map
+//# sourceMappingURL=EffectContext.js.map

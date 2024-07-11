@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcPerformMonsterNearbyState = void 0);
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const StateBase_1 = require("../../../../../Core/Utils/StateMachine/StateBase");
-const BasePerformComponent_1 = require("../../Common/Component/BasePerformComponent");
-const NpcPerceptionReactionUtil_1 = require("./Common/NpcPerceptionReactionUtil");
-const BUBBLE_TIME = 3;
+const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  StateBase_1 = require("../../../../../Core/Utils/StateMachine/StateBase"),
+  BasePerformComponent_1 = require("../../Common/Component/BasePerformComponent"),
+  NpcPerceptionReactionUtil_1 = require("./Common/NpcPerceptionReactionUtil"),
+  BUBBLE_TIME = 3;
 class NpcPerformMonsterNearbyState extends StateBase_1.StateBase {
   constructor() {
     super(...arguments),
@@ -25,8 +25,8 @@ class NpcPerformMonsterNearbyState extends StateBase_1.StateBase {
     this.ser = e;
   }
   CanChangeFrom(e) {
-    const t = this.Owner.Entity.GetComponent(168);
-    return this.ber && e === 1 && !t.IsInPlot;
+    var t = this.Owner.Entity.GetComponent(168);
+    return this.ber && 1 === e && !t.IsInPlot;
   }
   OnCreate(e) {
     e?.NpcMonsterClosePerform
@@ -38,10 +38,10 @@ class NpcPerformMonsterNearbyState extends StateBase_1.StateBase {
   }
   OnEnter(e) {
     this.Oer = e;
-    var e = this.Owner.Entity.GetComponent(168);
-    const t =
-      (e?.HasBrain && this.Owner.Entity.GetComponent(36)?.StopMove(!1),
-      new BasePerformComponent_1.PlayMontageConfig(0, 0, !0, !0));
+    var e = this.Owner.Entity.GetComponent(168),
+      t =
+        (e?.HasBrain && this.Owner.Entity.GetComponent(36)?.StopMove(!1),
+        new BasePerformComponent_1.PlayMontageConfig(0, 0, !0, !0));
     (this.bTe = e?.LoadAndPlayMontageById(this.qer, t) ?? 0),
       this.bTe < 0 &&
         TimerSystem_1.TimerSystem.Delay(() => {
@@ -61,4 +61,4 @@ class NpcPerformMonsterNearbyState extends StateBase_1.StateBase {
   }
 }
 exports.NpcPerformMonsterNearbyState = NpcPerformMonsterNearbyState;
-// # sourceMappingURL=NpcPerformMonsterNearbyState.js.map
+//# sourceMappingURL=NpcPerformMonsterNearbyState.js.map

@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckBattleRoleIsNot = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const LevelGeneralDefine_1 = require("../LevelGeneralDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  LevelGeneralDefine_1 = require("../LevelGeneralDefine");
 class LevelConditionCheckBattleRoleIsNot extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, o) {
-    let n;
-    return e.LimitParams.size === 0
+    var n;
+    return 0 === e.LimitParams.size
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
@@ -29,4 +29,4 @@ class LevelConditionCheckBattleRoleIsNot extends LevelGeneralBase_1.LevelConditi
   }
 }
 exports.LevelConditionCheckBattleRoleIsNot = LevelConditionCheckBattleRoleIsNot;
-// # sourceMappingURL=LevelConditionCheckBattleRoleIsNot.js.map
+//# sourceMappingURL=LevelConditionCheckBattleRoleIsNot.js.map

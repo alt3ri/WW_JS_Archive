@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerDetailItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class TowerDetailItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(),
@@ -24,7 +24,7 @@ class TowerDetailItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(e, t, i) {
     this.RLo = e;
-    const r = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(e);
+    var r = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(e);
     LguiUtil_1.LguiUtil.SetLocalTextNew(
       this.GetText(1),
       "Text_TowerOnlyFloor_Text",
@@ -38,11 +38,11 @@ class TowerDetailItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.DLo = e;
   }
   SetToggleState(e) {
-    this.GetExtendToggle(0).SetToggleState(e), e === 1 && this.kqe();
+    this.GetExtendToggle(0).SetToggleState(e), 1 === e && this.kqe();
   }
   OnBeforeDestroy() {
     this.DLo = void 0;
   }
 }
 exports.TowerDetailItem = TowerDetailItem;
-// # sourceMappingURL=TowerDetailItem.js.map
+//# sourceMappingURL=TowerDetailItem.js.map

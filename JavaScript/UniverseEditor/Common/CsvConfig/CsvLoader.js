@@ -6,11 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.parseCsvValue =
     exports.csvCellTypeConfig =
       void 0);
-const BranchDefine_1 = require("../BranchDefine");
-const CsvParser_1 = require("../Misc/CsvParser");
-const File_1 = require("../Misc/File");
-const Log_1 = require("../Misc/Log");
-const Util_1 = require("../Misc/Util");
+const BranchDefine_1 = require("../BranchDefine"),
+  CsvParser_1 = require("../Misc/CsvParser"),
+  File_1 = require("../Misc/File"),
+  Log_1 = require("../Misc/Log"),
+  Util_1 = require("../Misc/Util");
 function parseCsvValue(e, r) {
   return exports.csvCellTypeConfig[r].Parse(e);
 }
@@ -22,91 +22,91 @@ function parseCsvValue(e, r) {
   UiResource: { Default: "", Parse: (e) => e, Desc: "UI资源" },
 }),
   (exports.parseCsvValue = parseCsvValue);
-const customExportType = ["C", "S", "CS", "", "@Tag"];
-const customValueType = [
-  "Int",
-  "String",
-  "Long",
-  "Bool",
-  "Float",
-  "Array<Int>",
-  "Array<String>",
-  "",
-];
-const customBoolType = ["1", "0", ""];
-const valueTypeByRenderType = {
-  0: "String",
-  1: "Bool",
-  2: "String",
-  3: "String",
-  4: "String",
-  8: "String",
-  12: "String",
-  6: "String",
-  9: "String",
-  10: "Float",
-  11: "String",
-  13: "String",
-  14: "String",
-  15: "String",
-  16: "String",
-  17: "String",
-  18: "Int",
-  19: "Long",
-  20: "String",
-  21: "String",
-  5: "String",
-  22: "String",
-  23: "String",
-  24: "String",
-  25: "String",
-  26: "String",
-  27: "String",
-  28: "String",
-  30: "String",
-  31: "Int",
-  32: "String",
-  33: "String",
-  34: "Array<Int>",
-  35: "Array<String>",
-  36: "String",
-  37: "String",
-  38: "Int",
-  39: "String",
-  40: "Int",
-  41: "Int",
-  42: "Int",
-  43: "String",
-  44: "Int",
-  45: "String",
-  46: "Int",
-  47: "Int",
-  29: "String",
-  48: "Int",
-  49: "Int",
-  50: "String",
-  51: "String",
-  7: "String",
-  52: "Int",
-  53: "Array<String>",
-  54: "Array<String>",
-  55: "String",
-  56: "String",
-  57: "String",
-  58: "String",
-};
-const csvFieldValidValues = {
-  ExportType: { CnName: "客户端/服务端 使用", Range: customExportType },
-  Name: { CnName: "字段名" },
-  Type: { CnName: "字段数据类型", Range: customValueType },
-  Filter: { CnName: "该字段是否用于条件筛选", Range: customBoolType },
-  Localization: { CnName: "是否导出多语言", Range: customBoolType },
-  Condition: { CnName: "条件检查" },
-  Default: { CnName: "默认值" },
-  CnName: { CnName: "#" },
-  RenderType: { CnName: "", IgnoreSerialize: !0 },
-};
-const depotCsvCache = new Map();
+const customExportType = ["C", "S", "CS", "", "@Tag"],
+  customValueType = [
+    "Int",
+    "String",
+    "Long",
+    "Bool",
+    "Float",
+    "Array<Int>",
+    "Array<String>",
+    "",
+  ],
+  customBoolType = ["1", "0", ""],
+  valueTypeByRenderType = {
+    [0]: "String",
+    1: "Bool",
+    2: "String",
+    3: "String",
+    4: "String",
+    8: "String",
+    12: "String",
+    6: "String",
+    9: "String",
+    10: "Float",
+    11: "String",
+    13: "String",
+    14: "String",
+    15: "String",
+    16: "String",
+    17: "String",
+    18: "Int",
+    19: "Long",
+    20: "String",
+    21: "String",
+    5: "String",
+    22: "String",
+    23: "String",
+    24: "String",
+    25: "String",
+    26: "String",
+    27: "String",
+    28: "String",
+    30: "String",
+    31: "Int",
+    32: "String",
+    33: "String",
+    34: "Array<Int>",
+    35: "Array<String>",
+    36: "String",
+    37: "String",
+    38: "Int",
+    39: "String",
+    40: "Int",
+    41: "Int",
+    42: "Int",
+    43: "String",
+    44: "Int",
+    45: "String",
+    46: "Int",
+    47: "Int",
+    29: "String",
+    48: "Int",
+    49: "Int",
+    50: "String",
+    51: "String",
+    7: "String",
+    52: "Int",
+    53: "Array<String>",
+    54: "Array<String>",
+    55: "String",
+    56: "String",
+    57: "String",
+    58: "String",
+  },
+  csvFieldValidValues = {
+    ExportType: { CnName: "客户端/服务端 使用", Range: customExportType },
+    Name: { CnName: "字段名" },
+    Type: { CnName: "字段数据类型", Range: customValueType },
+    Filter: { CnName: "该字段是否用于条件筛选", Range: customBoolType },
+    Localization: { CnName: "是否导出多语言", Range: customBoolType },
+    Condition: { CnName: "条件检查" },
+    Default: { CnName: "默认值" },
+    CnName: { CnName: "#" },
+    RenderType: { CnName: "", IgnoreSerialize: !0 },
+  },
+  depotCsvCache = new Map();
 function createDefaultCsvFiledEx() {
   return {
     ExportType: "C",
@@ -123,7 +123,7 @@ function createDefaultCsvFiledEx() {
   };
 }
 function createCsvField(e) {
-  const r = createDefaultCsvFiledEx();
+  var r = createDefaultCsvFiledEx();
   return Object.assign(r, e), r;
 }
 exports.createCsvField = createCsvField;
@@ -163,7 +163,7 @@ class CsvLoader {
     let r = 0;
     if (
       (this.FiledTypes.forEach((e) => {
-        e.Filter === "1" && r++;
+        "1" === e.Filter && r++;
       }),
       r <= 0)
     )
@@ -171,7 +171,7 @@ class CsvLoader {
   }
   g() {
     this.FiledTypes.forEach((e) => {
-      const r = valueTypeByRenderType[e.RenderType];
+      var r = valueTypeByRenderType[e.RenderType];
       if (r !== e.Type)
         throw new Error(
           `[${this.Name}]: [${e.Name}] Type [${e.Type}] not match renderType [${e.RenderType}][${r}]`,
@@ -179,15 +179,15 @@ class CsvLoader {
     });
   }
   I(r, e) {
-    const t = csvFieldValidValues[e];
+    var t = csvFieldValidValues[e];
     if (r[0] !== t.CnName)
       throw new Error(
         `CSV file [${this.Name}] first column invalid, expect[${t.CnName}] actual:[${r[0]}]`,
       );
-    e === "Name" && (this.aOn = r);
+    "Name" === e && (this.aOn = r);
     for (let e = 1; e < r.length; e++)
       if (t.Range) {
-        const i = r[e];
+        var i = r[e];
         if (!t.Range.includes(i))
           throw new Error(
             `CSV file [${this.Name}] head field invalid, [${t.CnName}], expect of [${t.Range.join(",")}], actual[${i}]`,
@@ -196,7 +196,7 @@ class CsvLoader {
   }
   L(e, r) {
     const t = [];
-    const i = csvFieldValidValues[r];
+    var i = csvFieldValidValues[r];
     t.push(i.CnName),
       this.FiledTypes.forEach((e) => {
         t.push(e[r]);
@@ -205,7 +205,7 @@ class CsvLoader {
   }
   M(e) {
     for (const t in csvFieldValidValues) {
-      let r = csvFieldValidValues[t];
+      var r = csvFieldValidValues[t];
       if (!r.IgnoreSerialize) {
         r = e.ReadNext();
         if (!r)
@@ -220,20 +220,20 @@ class CsvLoader {
     return this.T.get(e);
   }
   F(e) {
-    const r = e.ReadNext();
+    var r = e.ReadNext();
     if (!r)
       throw new Error(
         `CSV [${this.Name}] row count [${e.TotalLine}] not enough`,
       );
-    const t = {};
+    var t = {};
     for (let e = 1; e < r.length; e++) {
-      const i = this.aOn[e];
-      const a = this.T.get(i);
+      var i = this.aOn[e],
+        a = this.T.get(i);
       if (a) {
-        const n = r[e];
+        var n = r[e];
         switch (a.Type) {
           case "Int":
-            r[e] === "" ? (t[a.Name] = void 0) : (t[a.Name] = parseInt(n, 10));
+            "" === r[e] ? (t[a.Name] = void 0) : (t[a.Name] = parseInt(n, 10));
             break;
           case "Long":
             t[a.Name] = BigInt(n);
@@ -269,12 +269,12 @@ class CsvLoader {
     const i = [];
     i.push(""),
       this.FiledTypes.forEach((e) => {
-        const r = t[e.Name];
+        var r = t[e.Name];
         void 0 === r
           ? i.push("")
-          : e.Type === "Array<String>" || e.Type === "Array<Int>"
+          : "Array<String>" === e.Type || "Array<Int>" === e.Type
             ? i.push(`[${r}]`)
-            : typeof r === "string"
+            : "string" == typeof r
               ? i.push(r)
               : i.push(r.toString());
       }),
@@ -294,15 +294,15 @@ class CsvLoader {
     if (e.IsValid) return this.M(e), this.F(e);
   }
   Stringify(e) {
-    const r = new CsvParser_1.LineWriter();
+    var r = new CsvParser_1.LineWriter();
     return this.O(r), this.q(r, e), r.Gen();
   }
   StringifyOne(e) {
-    const r = new CsvParser_1.LineWriter();
+    var r = new CsvParser_1.LineWriter();
     return this.O(r), this.k(r, e), r.Gen();
   }
   Load(e) {
-    const r = (0, File_1.readFile)(e);
+    var r = (0, File_1.readFile)(e);
     return r ? ((0, Log_1.log)(`Load csv: [${e}]`), this.Parse(r)) : [];
   }
   TryLoad(e) {
@@ -320,7 +320,7 @@ class CsvLoader {
     (0, File_1.writeFile)(r, this.StringifyOne(e));
   }
   RequestDepotCsv(e, r) {
-    let t, i;
+    var t, i;
     return (0, Util_1.isUePlatform)()
       ? depotCsvCache.has(r)
         ? depotCsvCache.get(r)
@@ -344,14 +344,14 @@ class CsvLoader {
     });
   }
   j(e) {
-    const r = this.V(e);
-    const t = (0, File_1.getDir)(e);
-    var e = (0, BranchDefine_1.getAllBranches)();
+    var r = this.V(e),
+      t = (0, File_1.getDir)(e),
+      e = (0, BranchDefine_1.getAllBranches)();
     if (!e) return [];
-    const i = [];
+    var i = [];
     for (const n of e)
       if (n !== r) {
-        let a = `${t}/${n}.csv`;
+        var a = `${t}/${n}.csv`;
         let e = a;
         (0, File_1.existFile)(a) ||
           (0, BranchDefine_1.isReachBranch)(n) ||
@@ -371,8 +371,8 @@ class CsvLoader {
     return i;
   }
   LoadCsv(e) {
-    const r = this.V(e);
-    const t = this.Load(e);
+    var r = this.V(e),
+      t = this.Load(e);
     return (
       this.hOn(t, r),
       {
@@ -390,4 +390,4 @@ class CsvLoader {
   }
 }
 exports.CsvLoader = CsvLoader;
-// # sourceMappingURL=CsvLoader.js.map
+//# sourceMappingURL=CsvLoader.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TalkIconOp = void 0);
-const CsvRegistry_1 = require("../CsvConfig/CsvRegistry");
-const TalkIconCsv_1 = require("../CsvConfig/TalkIconCsv");
+const CsvRegistry_1 = require("../CsvConfig/CsvRegistry"),
+  TalkIconCsv_1 = require("../CsvConfig/TalkIconCsv");
 class TalkIconOp {
   static get Instance() {
     return void 0 === this.m && (this.m = new TalkIconOp()), this.m;
@@ -19,4 +19,4 @@ class TalkIconOp {
   }
 }
 exports.TalkIconOp = TalkIconOp;
-// # sourceMappingURL=TalkIcon.js.map
+//# sourceMappingURL=TalkIcon.js.map

@@ -52,14 +52,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.isValidActor =
       void 0),
   (exports.endActorPickerMode = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const ue_1 = require("ue");
-const Config_1 = require("../Config");
-const File_1 = require("../Misc/File");
-const Log_1 = require("../Misc/Log");
-const Util_1 = require("../Misc/Util");
-const Action_1 = require("../Operation/Action");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  ue_1 = require("ue"),
+  Config_1 = require("../Config"),
+  File_1 = require("../Misc/File"),
+  Log_1 = require("../Misc/Log"),
+  Util_1 = require("../Misc/Util"),
+  Action_1 = require("../Operation/Action");
 function isValidActor(t) {
   let o = !1;
   try {
@@ -77,7 +77,7 @@ function sendMessageToCommandService(t, o) {
 }
 function sendTextObjToCommandService(t, o) {
   try {
-    const e = JSON.parse(t);
+    var e = JSON.parse(t);
     sendMessageToCommandService(JSON.stringify(e), o);
   } catch (t) {}
 }
@@ -119,10 +119,10 @@ function toUeSet(t, o) {
   );
 }
 function getTotalSecond() {
-  const t = ue_1.KismetMathLibrary.UtcNow();
-  const o = ue_1.KismetMathLibrary.GetDayOfYear(t);
-  const e = ue_1.KismetMathLibrary.GetHour(t);
-  const r = ue_1.KismetMathLibrary.GetMinute(t);
+  var t = ue_1.KismetMathLibrary.UtcNow(),
+    o = ue_1.KismetMathLibrary.GetDayOfYear(t),
+    e = ue_1.KismetMathLibrary.GetHour(t),
+    r = ue_1.KismetMathLibrary.GetMinute(t);
   return ue_1.KismetMathLibrary.GetSecond(t) + 60 * r + 3600 * e + 86400 * o;
 }
 function calUpRotatorByPoints(t, o) {
@@ -130,39 +130,39 @@ function calUpRotatorByPoints(t, o) {
   return (o.Z = 0), o.Rotation();
 }
 function toTsArray(o) {
-  const e = [];
+  var e = [];
   for (let t = 0; t < o.Num(); t++) e.push(o.Get(t));
   return e;
 }
 function toTsMap(o) {
-  const e = new Map();
+  var e = new Map();
   for (let t = 0; t < o.Num(); t++) {
-    const r = o.GetKey(t);
-    const n = o.Get(r);
+    var r = o.GetKey(t),
+      n = o.Get(r);
     e.set(r, n);
   }
   return e;
 }
 function toVectorInfo(t, o) {
   o = o ?? Action_1.defaultVec;
-  const e = (0, Action_1.eqn)(t.X, o.X) ? void 0 : (0, Action_1.toFloat2)(t.X);
-  const r = (0, Action_1.eqn)(t.Y, o.Y) ? void 0 : (0, Action_1.toFloat2)(t.Y);
-  var o = (0, Action_1.eqn)(t.Z, o.Z) ? void 0 : (0, Action_1.toFloat2)(t.Z);
+  var e = (0, Action_1.eqn)(t.X, o.X) ? void 0 : (0, Action_1.toFloat2)(t.X),
+    r = (0, Action_1.eqn)(t.Y, o.Y) ? void 0 : (0, Action_1.toFloat2)(t.Y),
+    o = (0, Action_1.eqn)(t.Z, o.Z) ? void 0 : (0, Action_1.toFloat2)(t.Z);
   return void 0 === e && void 0 === r && void 0 === o
     ? {}
     : { X: e, Y: r, Z: o };
 }
 function toVectorInfo2(t, o) {
   o = o ?? Action_1.defaultVec;
-  const e = (0, Action_1.eqn)(t.X || 0, o.X)
-    ? void 0
-    : (0, Action_1.toFloat2)(t.X ?? 0);
-  const r = (0, Action_1.eqn)(t.Y || 0, o.Y)
-    ? void 0
-    : (0, Action_1.toFloat2)(t.Y ?? 0);
-  var o = (0, Action_1.eqn)(t.Z || 0, o.Z)
-    ? void 0
-    : (0, Action_1.toFloat2)(t.Z ?? 0);
+  var e = (0, Action_1.eqn)(t.X || 0, o.X)
+      ? void 0
+      : (0, Action_1.toFloat2)(t.X ?? 0),
+    r = (0, Action_1.eqn)(t.Y || 0, o.Y)
+      ? void 0
+      : (0, Action_1.toFloat2)(t.Y ?? 0),
+    o = (0, Action_1.eqn)(t.Z || 0, o.Z)
+      ? void 0
+      : (0, Action_1.toFloat2)(t.Z ?? 0);
   return void 0 === e && void 0 === r && void 0 === o
     ? {}
     : { X: e, Y: r, Z: o };
@@ -237,16 +237,16 @@ function posaToTransform(t) {
   );
 }
 function findWpActorGuidByLabels(t) {
-  var t = toUeSet(t, ue_1.BuiltinString);
-  var o = (0, ue_1.NewMap)(ue_1.BuiltinString, ue_1.BuiltinString);
-  var o = (0, puerts_1.$ref)(o);
+  var t = toUeSet(t, ue_1.BuiltinString),
+    o = (0, ue_1.NewMap)(ue_1.BuiltinString, ue_1.BuiltinString),
+    o = (0, puerts_1.$ref)(o);
   return (
     ue_1.EditorOperations.FindWpEditorActorGuidsByLabel(t, o),
     toTsMap((0, puerts_1.$unref)(o))
   );
 }
 function getWpActorsByGuids(t) {
-  const o = (0, puerts_1.$ref)(void 0);
+  var o = (0, puerts_1.$ref)(void 0);
   return (
     ue_1.EditorOperations.GetWpEditorActorsByGuids(
       toUeArray(t, ue_1.BuiltinString),
@@ -256,12 +256,12 @@ function getWpActorsByGuids(t) {
   );
 }
 function getWpActorsByPathNames(t) {
-  const o = [];
+  var o = [];
   for (const r of t) {
-    const e = ue_1.EditorOperations.GetWpEditorActorGuidByPathName(r);
+    var e = ue_1.EditorOperations.GetWpEditorActorGuidByPathName(r);
     e && o.push(e);
   }
-  return o.length > 0 ? getWpActorsByGuids(o) : [];
+  return 0 < o.length ? getWpActorsByGuids(o) : [];
 }
 function getWpActorsByLabels(t) {
   t = findWpActorGuidByLabels(t);
@@ -276,12 +276,12 @@ function loadWpActorsByGuids(t, o) {
   );
 }
 function loadWpActorsByPathNames(t, o) {
-  const e = [];
+  var e = [];
   for (const n of t) {
-    const r = ue_1.EditorOperations.GetWpEditorActorGuidByPathName(n);
+    var r = ue_1.EditorOperations.GetWpEditorActorGuidByPathName(n);
     r && e.push(r);
   }
-  e.length > 0 && loadWpActorsByGuids(e, o);
+  0 < e.length && loadWpActorsByGuids(e, o);
 }
 function loadWpActorsByLabels(t, o) {
   t = findWpActorGuidByLabels(t);
@@ -293,8 +293,8 @@ function execPythonCommand(t, o, e) {
 function getFileMd5(t) {
   if (!(0, File_1.existFile)(t))
     return (0, Log_1.error)(`get file md5 failed: file not found. (${t})`), "";
-  const o = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry));
-  const e = (0, puerts_1.$ref)("");
+  var o = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry)),
+    e = (0, puerts_1.$ref)("");
   if (
     !execPythonCommand(
       [
@@ -314,28 +314,28 @@ function getFileMd5(t) {
     return (0, Log_1.error)("get file md5 failed: " + t), "";
   t = (0, puerts_1.$unref)(o);
   let r = (0, puerts_1.$unref)(e);
-  return (r = (!r || r === "None") && t.Num() > 0 ? t.Get(0).Output : r);
+  return (r = (!r || "None" === r) && 0 < t.Num() ? t.Get(0).Output : r);
 }
 function getStringMd5(t) {
   if (!t)
     return (0, Log_1.error)("get string md5 failed: input is undefined."), "";
-  const o = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry));
-  const e = (0, puerts_1.$ref)("");
-  var t = [
-    "import hashlib",
-    `text = '''${t}'''`,
-    "print(hashlib.md5(text.encode('utf-8')).hexdigest())",
-  ].join("\n");
+  var o = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry)),
+    e = (0, puerts_1.$ref)(""),
+    t = [
+      "import hashlib",
+      `text = '''${t}'''`,
+      "print(hashlib.md5(text.encode('utf-8')).hexdigest())",
+    ].join("\n");
   if (!execPythonCommand(t, e, o))
     return (0, Log_1.error)("get file md5 failed. pyLogic=" + t), "";
   t = (0, puerts_1.$unref)(o);
   let r = (0, puerts_1.$unref)(e);
-  return (r = (!r || r === "None") && t.Num() > 0 ? t.Get(0).Output : r);
+  return (r = (!r || "None" === r) && 0 < t.Num() ? t.Get(0).Output : r);
 }
 function isTextFile(t) {
   if (!(0, File_1.existFile)(t)) return !1;
-  const o = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry));
-  const e = (0, puerts_1.$ref)("");
+  var o = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry)),
+    e = (0, puerts_1.$ref)("");
   if (
     !execPythonCommand(
       [
@@ -354,12 +354,12 @@ function isTextFile(t) {
   t = (0, puerts_1.$unref)(o);
   let r = (0, puerts_1.$unref)(e);
   return (
-    (r = (!r || r === "None") && t.Num() > 0 ? t.Get(0).Output : r) === "True"
+    "True" === (r = (!r || "None" === r) && 0 < t.Num() ? t.Get(0).Output : r)
   );
 }
 function sendHttpRequest(t, o, e, r, n) {
-  var e = e ?? { "Content-Type": "application/json" };
-  const i = (0, ue_1.NewMap)(ue_1.BuiltinString, ue_1.BuiltinString);
+  var e = e ?? { "Content-Type": "application/json" },
+    i = (0, ue_1.NewMap)(ue_1.BuiltinString, ue_1.BuiltinString);
   for (const u of Object.entries(e)) i.Add(u[0], u[1]);
   const s = (t, o, e) => {
     n && n(t, o, e), (0, puerts_1.releaseManualReleaseDelegate)(s);
@@ -410,11 +410,11 @@ const actorPathNameCache = new Map();
 function findActorInEditorWorld(o) {
   let e = actorPathNameCache.get(o);
   if (!e || !e.IsValid()) {
-    const r = ue_1.EditorOperations.GetAllLevelActors();
+    var r = ue_1.EditorOperations.GetAllLevelActors();
     for (let t = 0; t < r.Num(); t++) {
-      const n = r.Get(t);
-      const i = UE.KismetSystemLibrary.GetPathName(n);
-      const s = actorPathNameCache.get(i);
+      var n = r.Get(t),
+        i = UE.KismetSystemLibrary.GetPathName(n),
+        s = actorPathNameCache.get(i);
       (s && s.IsValid()) ||
         (ue_1.EditorOperations.IsActorLoaded(n) &&
           (actorPathNameCache.set(i, n), i === o) &&
@@ -427,16 +427,16 @@ function isInPieOrPkg() {
   return (0, Util_1.isInPie)() || Config_1.Config.IsPkgRunning;
 }
 function getVectorInfoFromTransformInUeClipboard(t = !1) {
-  var o = (0, puerts_1.$ref)("");
-  var o = (ue_1.EditorOperations.ClipboardPaste(o), (0, puerts_1.$unref)(o));
-  var o =
-    /\((?:Pitch=(?<Pitch>-?\d+\.?\d*),Yaw=(?<Yaw>-?\d+\.?\d*),Roll=(?<Roll>-?\d+\.?\d*),)?X=(?<X>-?\d+\.?\d*),Y=(?<Y>-?\d+\.?\d*),Z=(?<Z>-?\d+\.?\d*)\)/.exec(
-      o,
-    );
-  let e = o?.groups?.X;
-  const r = o?.groups?.Y;
-  const n = o?.groups?.Z;
-  var o = o?.groups?.Yaw;
+  var o = (0, puerts_1.$ref)(""),
+    o = (ue_1.EditorOperations.ClipboardPaste(o), (0, puerts_1.$unref)(o)),
+    o =
+      /\((?:Pitch=(?<Pitch>-?\d+\.?\d*),Yaw=(?<Yaw>-?\d+\.?\d*),Roll=(?<Roll>-?\d+\.?\d*),)?X=(?<X>-?\d+\.?\d*),Y=(?<Y>-?\d+\.?\d*),Z=(?<Z>-?\d+\.?\d*)\)/.exec(
+        o,
+      ),
+    e = o?.groups?.X,
+    r = o?.groups?.Y,
+    n = o?.groups?.Z,
+    o = o?.groups?.Yaw;
   if (e && r && n)
     return (
       (e = {
@@ -449,15 +449,15 @@ function getVectorInfoFromTransformInUeClipboard(t = !1) {
     );
 }
 function getRotatorFromTransformInUeClipboard() {
-  var t = (0, puerts_1.$ref)("");
-  var t = (ue_1.EditorOperations.ClipboardPaste(t), (0, puerts_1.$unref)(t));
-  var t =
-    /\(Pitch=(?<Pitch>-?\d+\.?\d*),Yaw=(?<Yaw>-?\d+\.?\d*),Roll=(?<Roll>-?\d+\.?\d*)\)/.exec(
-      t,
-    );
-  const o = t?.groups?.Roll;
-  const e = t?.groups?.Pitch;
-  var t = t?.groups?.Yaw;
+  var t = (0, puerts_1.$ref)(""),
+    t = (ue_1.EditorOperations.ClipboardPaste(t), (0, puerts_1.$unref)(t)),
+    t =
+      /\(Pitch=(?<Pitch>-?\d+\.?\d*),Yaw=(?<Yaw>-?\d+\.?\d*),Roll=(?<Roll>-?\d+\.?\d*)\)/.exec(
+        t,
+      ),
+    o = t?.groups?.Roll,
+    e = t?.groups?.Pitch,
+    t = t?.groups?.Yaw;
   if (o && e && t)
     return {
       X: (0, Util_1.parseFloatSafe)(o),
@@ -466,7 +466,7 @@ function getRotatorFromTransformInUeClipboard() {
     };
 }
 function getVectorInfoFromTransformInClipboard() {
-  let t = (0, puerts_1.$ref)("");
+  var t = (0, puerts_1.$ref)("");
   ue_1.EditorOperations.ClipboardPaste(t);
   t = (0, puerts_1.$unref)(t).split(",");
   if (t.length < 2) throw new Error();
@@ -477,15 +477,15 @@ function getVectorInfoFromTransformInClipboard() {
   };
 }
 function copyVectorInfoToTransformInUeClipboard(t) {
-  const o = t.X ?? 0;
-  const e = t.Y ?? 0;
-  const r = t.Z ?? 0;
-  var t = `(${void 0 === t.A ? "" : `Pitch=0,Yaw=${t.A},Roll=0,`}X=${o},Y=${e},Z=${r})`;
+  var o = t.X ?? 0,
+    e = t.Y ?? 0,
+    r = t.Z ?? 0,
+    t = `(${void 0 === t.A ? "" : `Pitch=0,Yaw=${t.A},Roll=0,`}X=${o},Y=${e},Z=${r})`;
   ue_1.EditorOperations.ClipboardCopy(t);
 }
 function copyRotatorToTransformInUeClipboard(t) {
-  const o = t.X ?? 0;
-  var t = `(Pitch=${t.Y ?? 0},Yaw=${t.Z ?? 0},Roll=${o})`;
+  var o = t.X ?? 0,
+    t = `(Pitch=${t.Y ?? 0},Yaw=${t.Z ?? 0},Roll=${o})`;
   ue_1.EditorOperations.ClipboardCopy(t);
 }
 function isInActorPickerMode() {
@@ -518,4 +518,4 @@ function endActorPickerMode() {
   (exports.isInActorPickerMode = isInActorPickerMode),
   (exports.beginActorPickerMode = beginActorPickerMode),
   (exports.endActorPickerMode = endActorPickerMode);
-// # sourceMappingURL=Util.js.map
+//# sourceMappingURL=Util.js.map

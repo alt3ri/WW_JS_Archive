@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LordGymModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  ConfigManager_1 = require("../../Manager/ConfigManager");
 class LordGymModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -33,7 +33,7 @@ class LordGymModel extends ModelBase_1.ModelBase {
     );
   }
   GetLastGymFinish(r) {
-    const t = ConfigManager_1.ConfigManager.LordGymConfig.GetLordGymConfig(r);
+    var t = ConfigManager_1.ConfigManager.LordGymConfig.GetLordGymConfig(r);
     if (t.Difficulty <= 1) return !0;
     for (const n of ConfigManager_1.ConfigManager.LordGymConfig.GetLordGymAllConfigByDifficulty(
       t.Difficulty - 1,
@@ -57,7 +57,7 @@ class LordGymModel extends ModelBase_1.ModelBase {
     )?.MarkId;
   }
   GetLordGymEntranceFinish(r) {
-    const t = this.GetGymCanFightMaxLevelWithoutLockCondition(r);
+    var t = this.GetGymCanFightMaxLevelWithoutLockCondition(r);
     return this.GetHasFinishLord(r) + "/" + t;
   }
   GetHasFinishLord(r) {
@@ -74,7 +74,7 @@ class LordGymModel extends ModelBase_1.ModelBase {
     if (t) {
       let r = 0;
       for (const e of t.LordGymList) {
-        const n =
+        var n =
           ConfigManager_1.ConfigManager.LordGymConfig?.GetLordGymConfig(e);
         this.GetLordGymIsUnLock(e) && n.Difficulty > r && (r = n.Difficulty);
       }
@@ -87,9 +87,9 @@ class LordGymModel extends ModelBase_1.ModelBase {
     if (t) {
       let r = 1;
       for (const e of t.LordGymList) {
-        const n =
+        var n =
           ConfigManager_1.ConfigManager.LordGymConfig?.GetLordGymConfig(e);
-        n.Difficulty > 1 &&
+        1 < n.Difficulty &&
           this.GetLordGymIsUnLock(e) &&
           this.GetLordGymIsFinish(e - 1) &&
           n.Difficulty > r &&
@@ -100,10 +100,10 @@ class LordGymModel extends ModelBase_1.ModelBase {
   }
   GetCanFightLordGym() {
     for (const e of this.UnLockLordGym) {
-      var r = ConfigManager_1.ConfigManager.LordGymConfig?.GetLordGymConfig(e);
-      const t = this.GetLordGymIsUnLock(e);
-      var r = r.Difficulty === 1 || this.GetLordGymIsFinish(e - 1);
-      const n = this.GetLordGymIsFinish(e);
+      var r = ConfigManager_1.ConfigManager.LordGymConfig?.GetLordGymConfig(e),
+        t = this.GetLordGymIsUnLock(e),
+        r = 1 === r.Difficulty || this.GetLordGymIsFinish(e - 1),
+        n = this.GetLordGymIsFinish(e);
       if (t && r && !n) return e;
     }
     return 0;
@@ -121,9 +121,9 @@ class LordGymModel extends ModelBase_1.ModelBase {
     if (t) {
       let r = 1;
       for (const e of t.LordGymList) {
-        const n =
+        var n =
           ConfigManager_1.ConfigManager.LordGymConfig?.GetLordGymConfig(e);
-        n.Difficulty > 1 &&
+        1 < n.Difficulty &&
           this.GetLordGymIsUnLock(e) &&
           n.Difficulty > r &&
           (r = n.Difficulty);
@@ -133,4 +133,4 @@ class LordGymModel extends ModelBase_1.ModelBase {
   }
 }
 exports.LordGymModel = LordGymModel;
-// # sourceMappingURL=LordGymModel.js.map
+//# sourceMappingURL=LordGymModel.js.map

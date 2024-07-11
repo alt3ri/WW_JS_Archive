@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletDataBase = void 0);
-const UE = require("ue");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils");
 class BulletDataBase {
   constructor(t) {
     (this.z5o = void 0),
@@ -119,7 +119,7 @@ class BulletDataBase {
     return this.HVo(), this.lVo;
   }
   HVo() {
-    let t;
+    var t;
     this._Vo ||
       ((this._Vo = !0),
       (t = this.Pe.命中判定Tag)?.TagName !== StringUtils_1.NONE_STRING
@@ -133,11 +133,11 @@ class BulletDataBase {
     return this.jVo(), this.mVo;
   }
   jVo() {
-    let t;
+    var t;
     this.cVo ||
       ((this.cVo = !0),
       (this.mVo = this.Pe.命中判定类型预设.ToAssetPathName()),
-      this.mVo?.length > 0 &&
+      0 < this.mVo?.length &&
         ((t = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
           this.mVo,
           UE.BulletCampType_C,
@@ -160,7 +160,7 @@ class BulletDataBase {
     return this.WVo(), this.fVo;
   }
   WVo() {
-    let t;
+    var t;
     this.pVo ||
       ((this.pVo = !0),
       (t = this.Pe.子弹标签)?.TagName !== StringUtils_1.NONE_STRING
@@ -176,26 +176,26 @@ class BulletDataBase {
   KVo() {
     if (!this.SVo) {
       this.SVo = !0;
-      let t = this.Pe.子弹禁止生成Tag;
+      var t = this.Pe.子弹禁止生成Tag;
       if (t) {
-        const i = t.GameplayTags;
-        const s = i.Num();
-        if (s > 0) {
+        var i = t.GameplayTags,
+          s = i.Num();
+        if (0 < s) {
           this.MVo = [];
           for (let t = 0; t < s; t++) {
-            const h = i.Get(t);
+            var h = i.Get(t);
             h?.TagId && this.MVo.push(h.TagId);
           }
         }
       }
       t = this.Pe.子弹允许生成Tag;
       if (t) {
-        const e = t.GameplayTags;
-        const r = e.Num();
-        if (r > 0) {
+        var e = t.GameplayTags,
+          r = e.Num();
+        if (0 < r) {
           this.vVo = [];
           for (let t = 0; t < r; t++) {
-            const o = e.Get(t);
+            var o = e.Get(t);
             o?.TagId && this.vVo.push(o.TagId);
           }
         }
@@ -241,9 +241,9 @@ class BulletDataBase {
   get SpecialParams() {
     if (!this.wVo) {
       this.wVo = new Map();
-      const i = this.Pe.特殊参数;
+      var i = this.Pe.特殊参数;
       for (let t = 0; t < i.Num(); t++) {
-        const s = i.GetKey(t);
+        var s = i.GetKey(t);
         this.wVo.set(s, i.Get(s));
       }
     }
@@ -273,7 +273,7 @@ class BulletDataBase {
     return this.QVo(), this.kVo;
   }
   QVo() {
-    let t;
+    var t;
     this.FVo ||
       ((this.FVo = !0),
       (t = this.Pe.禁止命中Tag)?.TagName !== StringUtils_1.NONE_STRING
@@ -309,4 +309,4 @@ class BulletDataBase {
   }
 }
 exports.BulletDataBase = BulletDataBase;
-// # sourceMappingURL=BulletDataBase.js.map
+//# sourceMappingURL=BulletDataBase.js.map

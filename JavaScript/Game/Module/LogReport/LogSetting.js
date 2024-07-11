@@ -7,4 +7,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EXIT_WAIT_TIME = 1),
   (exports.MAX_PENDING_LOG = 100),
   (exports.SEND_HTTP_TIMEOUT = 1e4);
-// # sourceMappingURL=LogSetting.js.map
+//# sourceMappingURL=LogSetting.js.map

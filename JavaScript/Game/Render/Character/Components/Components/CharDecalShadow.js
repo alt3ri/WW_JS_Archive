@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharDecalShadow = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem");
-const Info_1 = require("../../../../../Core/Common/Info");
-const Log_1 = require("../../../../../Core/Common/Log");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const RenderConfig_1 = require("../../../Config/RenderConfig");
-const RenderDataManager_1 = require("../../../Data/RenderDataManager");
-const CharRenderBase_1 = require("../../Manager/CharRenderBase");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem"),
+  Info_1 = require("../../../../../Core/Common/Info"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  RenderConfig_1 = require("../../../Config/RenderConfig"),
+  RenderDataManager_1 = require("../../../Data/RenderDataManager"),
+  CharRenderBase_1 = require("../../Manager/CharRenderBase");
 class CharDecalShadow extends CharRenderBase_1.CharRenderBase {
   constructor() {
     super(...arguments),
@@ -27,7 +27,7 @@ class CharDecalShadow extends CharRenderBase_1.CharRenderBase {
       (this.aar = new UE.FName("Opacity"));
   }
   static OnSetDecalShadowEnabled(t) {
-    if (t > 0) for (const e of CharDecalShadow.har) e.EnableDecalShadow();
+    if (0 < t) for (const e of CharDecalShadow.har) e.EnableDecalShadow();
     else for (const i of CharDecalShadow.har) i.DisableDecalShadow();
   }
   Start() {
@@ -51,12 +51,12 @@ class CharDecalShadow extends CharRenderBase_1.CharRenderBase {
     this.oar?.K2_DestroyActor(), CharDecalShadow.har.delete(this);
   }
   lar() {
-    const e = this.tar.K2_GetComponentsByClass(
-      UE.PrimitiveComponent.StaticClass(),
-    );
-    const i = e.Num();
+    var e = this.tar.K2_GetComponentsByClass(
+        UE.PrimitiveComponent.StaticClass(),
+      ),
+      i = e.Num();
     for (let t = 0; t < i; t++) {
-      const h = e.Get(t);
+      var h = e.Get(t);
       h.CastShadow && this.iar.set(h.GetName(), h);
     }
   }
@@ -67,11 +67,11 @@ class CharDecalShadow extends CharRenderBase_1.CharRenderBase {
       this.RealtimeShadowEnabled || (e.CastShadow = !1));
   }
   RemovePrimitiveComponent(t) {
-    const e = this.iar.get(t);
+    var e = this.iar.get(t);
     e && ((e.CastShadow = !0), this.iar.delete(t));
   }
   EnableDecalShadow() {
-    let t, e, i;
+    var t, e, i;
     this.DecalShadowEnabled ||
       ((t = this.Lo) &&
         ((i = (e = this.tar).GetComponentByClass(
@@ -157,9 +157,9 @@ class CharDecalShadow extends CharRenderBase_1.CharRenderBase {
     if (
       ((this.sar = t),
       this.RealtimeShadowEnabled &&
-        this.GetRenderingComponent().RenderType == 3)
+        3 == this.GetRenderingComponent().RenderType)
     ) {
-      const e = t > CharDecalShadow.car;
+      var e = t > CharDecalShadow.car;
       for (const i of this.iar.values()) i.SetCastShadow(e);
     }
   }
@@ -184,4 +184,4 @@ class CharDecalShadow extends CharRenderBase_1.CharRenderBase {
 ((exports.CharDecalShadow = CharDecalShadow)._ar = !1),
   (CharDecalShadow.har = new Set()),
   (CharDecalShadow.car = 0.2);
-// # sourceMappingURL=CharDecalShadow.js.map
+//# sourceMappingURL=CharDecalShadow.js.map

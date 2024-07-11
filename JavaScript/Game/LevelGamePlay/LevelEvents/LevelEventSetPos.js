@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventSetPos = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Global_1 = require("../../Global");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Global_1 = require("../../Global"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventSetPos extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -13,17 +13,17 @@ class LevelEventSetPos extends LevelGeneralBase_1.LevelEventBase {
   }
   Execute(e, s) {
     if (e) {
-      let t;
-      const o = e.get("xPos");
-      const r = e.get("yPos");
-      const l = e.get("zPos");
-      const a = e.get("Target");
-      var e = e.get("zRotate");
+      var t,
+        o = e.get("xPos"),
+        r = e.get("yPos"),
+        l = e.get("zPos"),
+        a = e.get("Target"),
+        e = e.get("zRotate");
       if (o && r && l && a) {
         if (
           (this.kRe.Set(parseFloat(o), parseFloat(r), parseFloat(l)),
           e && (this.cie.Roll = parseFloat(e)),
-          a === "Player")
+          "Player" === a)
         )
           return (t = Global_1.Global.BaseCharacter)
             ? ((t = t.CharacterActorComponent),
@@ -40,7 +40,7 @@ class LevelEventSetPos extends LevelGeneralBase_1.LevelEventBase {
                     !1,
                   )))
             : void 0;
-        a === "Trigger" &&
+        "Trigger" === a &&
           s &&
           (e
             ? s.K2_SetActorLocationAndRotation(
@@ -66,4 +66,4 @@ class LevelEventSetPos extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventSetPos = LevelEventSetPos;
-// # sourceMappingURL=LevelEventSetPos.js.map
+//# sourceMappingURL=LevelEventSetPos.js.map

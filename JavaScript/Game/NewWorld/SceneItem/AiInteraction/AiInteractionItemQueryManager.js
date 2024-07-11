@@ -4,11 +4,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.ItemQueryResult =
     exports.AiInteractionSearchFilter =
       void 0);
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const AiContollerLibrary_1 = require("../../../AI/Controller/AiContollerLibrary");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const SceneItemUtility_1 = require("../Util/SceneItemUtility");
+const Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  AiContollerLibrary_1 = require("../../../AI/Controller/AiContollerLibrary"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  SceneItemUtility_1 = require("../Util/SceneItemUtility");
 class AiInteractionSearchFilter {
   constructor() {
     (this.IsSearchedMarkByAi = void 0),
@@ -44,7 +44,7 @@ class AiInteractionItemQueryManager {
     return !!this.orr.has(t) && (this.orr.delete(t), !0);
   }
   GetCloseActor(t, e = 0, r = void 0, i = void 0) {
-    if (this.orr.size !== 0)
+    if (0 !== this.orr.size)
       switch (e) {
         case 0:
           return this.rrr(t, r);
@@ -53,7 +53,7 @@ class AiInteractionItemQueryManager {
       }
   }
   GetCloseActorsByRange(t, e, r = 0, i = void 0, s = void 0) {
-    if (e !== 0 && this.orr.size !== 0)
+    if (0 !== e && 0 !== this.orr.size)
       switch (r) {
         case 0:
           return this.srr(t, e, i);
@@ -63,10 +63,10 @@ class AiInteractionItemQueryManager {
     return [];
   }
   srr(t, e, r) {
-    let i;
-    let s;
-    const o = new Array();
-    const n = e * e;
+    var i,
+      s,
+      o = new Array(),
+      n = e * e;
     for (const a of this.orr)
       this.hrr(a, r) ||
         ((i = this.lrr(t, a)) <= n &&
@@ -76,9 +76,9 @@ class AiInteractionItemQueryManager {
     return o;
   }
   arr(t, e, r, i) {
-    let s;
-    let o;
-    const n = new Array();
+    var s,
+      o,
+      n = new Array();
     for (const a of this.orr)
       this.hrr(a, i) ||
         ((s = this._rr(t, a, r))[1] &&
@@ -89,8 +89,8 @@ class AiInteractionItemQueryManager {
     return n;
   }
   rrr(t, e) {
-    let r;
-    const i = new ItemQueryResult();
+    var r,
+      i = new ItemQueryResult();
     i.Length = MathUtils_1.MathUtils.MaxFloat;
     let s = i.Length;
     for (const o of this.orr)
@@ -99,8 +99,8 @@ class AiInteractionItemQueryManager {
     return (i.Length = Math.sqrt(s)), i;
   }
   nrr(t, e, r) {
-    let i;
-    const s = new ItemQueryResult();
+    var i,
+      s = new ItemQueryResult();
     s.Length = MathUtils_1.MathUtils.MaxFloat;
     for (const o of this.orr)
       this.hrr(o, r) ||
@@ -110,14 +110,14 @@ class AiInteractionItemQueryManager {
     return s;
   }
   lrr(t, e) {
-    const r = this.cz;
-    var t = (r.FromUeVector(t), e.GetComponent(182).ActorLocation);
-    var e = (r.Subtraction(Vector_1.Vector.Create(t), r), r.SizeSquared());
+    var r = this.cz,
+      t = (r.FromUeVector(t), e.GetComponent(182).ActorLocation),
+      e = (r.Subtraction(Vector_1.Vector.Create(t), r), r.SizeSquared());
     return e;
   }
   _rr(t, e, r) {
-    const i = new Array();
-    var e = e.GetComponent(182).ActorLocation;
+    var i = new Array(),
+      e = e.GetComponent(182).ActorLocation;
     return AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(
       r,
       t,
@@ -128,7 +128,7 @@ class AiInteractionItemQueryManager {
       : [-1, !1];
   }
   hrr(e, r) {
-    const t = e.GetComponent(128);
+    var t = e.GetComponent(128);
     if (!SceneItemUtility_1.SceneItemUtility.GetBaseItemActor(e) || !e.Active)
       return !0;
     if (r) {
@@ -137,7 +137,7 @@ class AiInteractionItemQueryManager {
       if (r) {
         let t = !1;
         for (const i of r.Tag)
-          (i !== "Weapon" ||
+          ("Weapon" !== i ||
             ModelManager_1.ModelManager.AiWeaponModel.HasWeaponConfig(
               e,
               r.Entity,
@@ -151,4 +151,4 @@ class AiInteractionItemQueryManager {
 }
 (exports.AiInteractionItemQueryManager = AiInteractionItemQueryManager).za =
   void 0;
-// # sourceMappingURL=AiInteractionItemQueryManager.js.map
+//# sourceMappingURL=AiInteractionItemQueryManager.js.map

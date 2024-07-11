@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterWeaponMesh = exports.CharacterWeapon = void 0);
-const UE = require("ue");
-const FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil");
-const SkeletalMeshEffectContext_1 = require("../../../../../Effect/EffectContext/SkeletalMeshEffectContext");
-const EffectSystem_1 = require("../../../../../Effect/EffectSystem");
-const SkeletalMeshComponentPool_1 = require("../MeshHelper/SkeletalMeshComponentPool");
-const WeaponMeshVisibleHelper_1 = require("./WeaponMeshVisibleHelper");
-const WEAPON_HIDDEN_EFFECT =
-  "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_WeaponEnd.DA_Fx_Group_WeaponEnd";
+const UE = require("ue"),
+  FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil"),
+  SkeletalMeshEffectContext_1 = require("../../../../../Effect/EffectContext/SkeletalMeshEffectContext"),
+  EffectSystem_1 = require("../../../../../Effect/EffectSystem"),
+  SkeletalMeshComponentPool_1 = require("../MeshHelper/SkeletalMeshComponentPool"),
+  WeaponMeshVisibleHelper_1 = require("./WeaponMeshVisibleHelper"),
+  WEAPON_HIDDEN_EFFECT =
+    "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_WeaponEnd.DA_Fx_Group_WeaponEnd";
 class CharacterWeapon {
   constructor(e, t, s, i = void 0) {
     (this.Index = e),
@@ -39,8 +39,8 @@ class CharacterWeapon {
       (this.WeaponHideEffect = 0));
   }
   ShowHideEffect() {
-    let e;
-    const t = this.Mesh.GetSocketTransform(FNameUtil_1.FNameUtil.EMPTY, 0);
+    var e,
+      t = this.Mesh.GetSocketTransform(FNameUtil_1.FNameUtil.EMPTY, 0);
     EffectSystem_1.EffectSystem.IsValid(this.WeaponHideEffect) ||
       (((e = new SkeletalMeshEffectContext_1.SkeletalMeshEffectContext(
         this.EntityId,
@@ -99,7 +99,7 @@ class CharacterWeaponMesh {
       ((this.mZo = new SkeletalMeshComponentPool_1.SkeletalMeshComponentPool()),
       this.mZo.Init(WEAPON_POOL_MAX_SIZE, e, s, t, i),
       (this.OC = s),
-      t.length !== 0)
+      0 !== t.length)
     ) {
       let e = 0;
       for (const h of t)
@@ -115,15 +115,15 @@ class CharacterWeaponMesh {
     this.cZo.splice(0, this.cZo.length), (this.mZo = void 0);
   }
   ChangeCharacterWeapons(t) {
-    const s = this.cZo.length;
+    var s = this.cZo.length;
     if (t > WEAPON_POOL_MAX_SIZE) return [];
-    const i = this.mZo?.GetComponents(t);
+    var i = this.mZo?.GetComponents(t);
     if (!i) return [];
     if (t < s) {
       this.cZo.splice(t, s - t);
       for (let e = 0; e < t; ++e) this.cZo[e].Mesh = i[e];
     } else if (s < t) {
-      const h = t - s;
+      var h = t - s;
       for (let e = 0; e < s; ++e) this.cZo[e].Mesh = i[e];
       for (let e = 0; e < h; ++e)
         this.cZo.push(
@@ -151,4 +151,4 @@ class CharacterWeaponMesh {
   }
 }
 exports.CharacterWeaponMesh = CharacterWeaponMesh;
-// # sourceMappingURL=CharacterWeaponMesh.js.map
+//# sourceMappingURL=CharacterWeaponMesh.js.map

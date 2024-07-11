@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotPhotoView = void 0);
-const UE = require("ue");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager");
 class PlotPhotoView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -43,10 +43,10 @@ class PlotPhotoView extends UiViewBase_1.UiViewBase {
       this.GetText(8).SetUIActive(!1),
       this.GetTexture(3).SetUIActive(!1);
     this.GetText(5).SetText("test/残鸣初奏");
-    var e = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
-    var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-      e === 1 ? "PlotPhoto_Male" : "PlotPhoto_Female",
-    );
+    var e = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender(),
+      e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+        1 === e ? "PlotPhoto_Male" : "PlotPhoto_Female",
+      );
     ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.Texture, (e) => {
       e?.IsValid() &&
         (this.GetTexture(3).SetTexture(e), this.GetTexture(3).SetUIActive(!0));
@@ -57,4 +57,4 @@ class PlotPhotoView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.PlotPhotoView = PlotPhotoView;
-// # sourceMappingURL=PlotPhotoView.js.map
+//# sourceMappingURL=PlotPhotoView.js.map

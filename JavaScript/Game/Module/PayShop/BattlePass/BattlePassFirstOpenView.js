@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattlePassFirstOpenView = void 0);
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const BattlePassController_1 = require("./BattlePassController");
+const UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  BattlePassController_1 = require("./BattlePassController");
 class BattlePassFirstOpenView extends UiViewBase_1.UiViewBase {
   OnBeforeShow() {
     BattlePassController_1.BattlePassController.SetBattlePassEnter(),
@@ -17,4 +17,4 @@ class BattlePassFirstOpenView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.BattlePassFirstOpenView = BattlePassFirstOpenView;
-// # sourceMappingURL=BattlePassFirstOpenView.js.map
+//# sourceMappingURL=BattlePassFirstOpenView.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ReferenceTriggerVolumeLogic = void 0);
-const puerts_1 = require("puerts");
-const RoleTriggerController_1 = require("../Character/Role/RoleTriggerController");
-const VALID_LEN = 3;
+const puerts_1 = require("puerts"),
+  RoleTriggerController_1 = require("../Character/Role/RoleTriggerController"),
+  VALID_LEN = 3;
 class ReferenceTriggerVolumeLogic {
   constructor(i) {
     (this.$nr = void 0),
@@ -12,7 +12,7 @@ class ReferenceTriggerVolumeLogic {
       (this.znr = void 0),
       (this.Ynr = new Set());
     for (const e of i) {
-      const t = e.PathName.split(".");
+      var t = e.PathName.split(".");
       t?.length === VALID_LEN && this.Ynr.add(t[1] + "." + t[2]);
     }
     (this.$nr = new Map()), (this.znr = []);
@@ -25,7 +25,7 @@ class ReferenceTriggerVolumeLogic {
   }
   Clear() {
     for (const i of this.$nr.values()) this.kre(i);
-    this.Jnr > 0 && this.Znr(!1),
+    0 < this.Jnr && this.Znr(!1),
       (this.Jnr = 0),
       this.Ynr.clear(),
       this.$nr.clear();
@@ -54,11 +54,11 @@ class ReferenceTriggerVolumeLogic {
   }
   Vr(i) {
     if (i?.IsValid()) {
-      const t = (0, puerts_1.$ref)(void 0);
-      const e = (i.GetOverlappingActors(t), (0, puerts_1.$unref)(t));
-      if (e?.Num() > 0)
+      var t = (0, puerts_1.$ref)(void 0),
+        e = (i.GetOverlappingActors(t), (0, puerts_1.$unref)(t));
+      if (0 < e?.Num())
         for (let i = 0, t = e.Num(); i < t; i++) {
-          const s = e.Get(i);
+          var s = e.Get(i);
           this.OnCollisionEnterFunc(s);
         }
       i.OnActorBeginOverlap.Add((i, t) => {
@@ -75,8 +75,8 @@ class ReferenceTriggerVolumeLogic {
   }
   Znr(t) {
     if (this.znr?.length)
-      for (let i = this.znr.length - 1; i >= 0; i--) (0, this.znr[i])(t);
+      for (let i = this.znr.length - 1; 0 <= i; i--) (0, this.znr[i])(t);
   }
 }
 exports.ReferenceTriggerVolumeLogic = ReferenceTriggerVolumeLogic;
-// # sourceMappingURL=ReferenceTriggerVolumeLogic.js.map
+//# sourceMappingURL=ReferenceTriggerVolumeLogic.js.map

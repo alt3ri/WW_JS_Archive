@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemInteractionMediumItemGrid = void 0);
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const LoopScrollMediumItemGrid_1 = require("../../MediumItemGrid/LoopScrollMediumItemGrid");
+const ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LoopScrollMediumItemGrid_1 = require("../../MediumItemGrid/LoopScrollMediumItemGrid");
 class ItemInteractionMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   constructor() {
     super(...arguments), (this.rAt = 0), (this.VAt = void 0);
   }
   OnRefresh(e, t, i) {
-    var s = (this.VAt = e).ItemConfigId;
-    const r =
-      ((this.rAt =
-        ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(s)),
-      e.GetCurrentCount());
-    const o = e.NeedCount;
-    var s = { Data: e, Type: 4, ItemConfigId: s, IsDisable: !e.IsEnable() };
-    r > 0
+    var s = (this.VAt = e).ItemConfigId,
+      r =
+        ((this.rAt =
+          ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(s)),
+        e.GetCurrentCount()),
+      o = e.NeedCount,
+      s = { Data: e, Type: 4, ItemConfigId: s, IsDisable: !e.IsEnable() };
+    0 < r
       ? ((s.BottomTextId = "ItemCountSelected"),
         (s.BottomTextParameter = [r, this.rAt]),
         (s.ReduceButtonInfo = { IsVisible: !0, LongPressConfigId: 1 }))
@@ -37,4 +37,4 @@ class ItemInteractionMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrol
   }
 }
 exports.ItemInteractionMediumItemGrid = ItemInteractionMediumItemGrid;
-// # sourceMappingURL=ItemInteractionMediumItemGrid.js.map
+//# sourceMappingURL=ItemInteractionMediumItemGrid.js.map

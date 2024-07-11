@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FormationOnlineItem = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
 class FormationOnlineItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -33,7 +33,7 @@ class FormationOnlineItem extends UiPanelBase_1.UiPanelBase {
     this.lat.Clear(), (this.lat = void 0);
   }
   SetNameText(t) {
-    let i;
+    var i;
     this.InAsyncLoading()
       ? (this.rat = t)
       : ((i = this.GetText(3)),
@@ -42,7 +42,7 @@ class FormationOnlineItem extends UiPanelBase_1.UiPanelBase {
           : (i.SetUIActive(!0), i.SetText(t)));
   }
   SetOnlineNumber(t) {
-    let i;
+    var i;
     this.InAsyncLoading()
       ? (this.nat = t)
       : ((i = this.GetTexture(2)),
@@ -55,7 +55,7 @@ class FormationOnlineItem extends UiPanelBase_1.UiPanelBase {
             this.SetTextureByPath(t, i)));
   }
   SetIsGrayByOtherControl(t) {
-    let i;
+    var i;
     this.InAsyncLoading()
       ? (this.sat = t)
       : ((i = this.GetTexture(2)).SetChangeColor(t, i.changeColor),
@@ -81,4 +81,4 @@ class FormationOnlineItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.FormationOnlineItem = FormationOnlineItem;
-// # sourceMappingURL=FormationOnlineItem.js.map
+//# sourceMappingURL=FormationOnlineItem.js.map

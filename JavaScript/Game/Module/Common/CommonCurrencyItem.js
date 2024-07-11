@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonCurrencyItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../Util/LguiUtil");
+const UE = require("ue"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../Util/LguiUtil");
 class CommonCurrencyItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -117,7 +117,7 @@ class CommonCurrencyItem extends UiPanelBase_1.UiPanelBase {
       });
   }
   TIt() {
-    const e = this.GetUiTextureTransitionComponent(4);
+    var e = this.GetUiTextureTransitionComponent(4);
     e && e.SetAllStateTexture(this.GetTexture(0).GetTexture());
   }
   RefreshTemp(e, t) {
@@ -127,12 +127,12 @@ class CommonCurrencyItem extends UiPanelBase_1.UiPanelBase {
     (this.gIt = e), this.IIt();
   }
   RefreshCountText(e) {
-    const t = this.GetText(1);
-    var e =
-      e ??
-      ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-        this.gIt,
-      );
+    var t = this.GetText(1),
+      e =
+        e ??
+        ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+          this.gIt,
+        );
     t?.SetText(e.toString());
   }
   SetCountText(e, ...t) {
@@ -151,13 +151,13 @@ class CommonCurrencyItem extends UiPanelBase_1.UiPanelBase {
     this.Qyt = this.yIt;
   }
   SetPayShopButtonActive() {
-    const e = ConfigManager_1.ConfigManager.GachaConfig.PrimaryCurrency();
-    const t = ConfigManager_1.ConfigManager.GachaConfig.SecondCurrency();
-    const i = this.GetButton(2);
+    var e = ConfigManager_1.ConfigManager.GachaConfig.PrimaryCurrency(),
+      t = ConfigManager_1.ConfigManager.GachaConfig.SecondCurrency(),
+      i = this.GetButton(2);
     this.gIt !== e && this.gIt !== t
       ? i.RootUIComp.SetUIActive(!1)
       : i.RootUIComp.SetUIActive(!0);
   }
 }
 exports.CommonCurrencyItem = CommonCurrencyItem;
-// # sourceMappingURL=CommonCurrencyItem.js.map
+//# sourceMappingURL=CommonCurrencyItem.js.map

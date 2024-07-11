@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoadingModel = void 0);
-const Queue_1 = require("../../../Core/Container/Queue");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const LoadingController_1 = require("./LoadingController");
+const Queue_1 = require("../../../Core/Container/Queue"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  LoadingController_1 = require("./LoadingController");
 class LoadingModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -69,7 +69,7 @@ class LoadingModel extends ModelBase_1.ModelBase {
     this.Rpi = e;
   }
   GetIsLoginToWorld() {
-    const e = this.Rpi;
+    var e = this.Rpi;
     return (this.Rpi = !1), e;
   }
   OnClear() {
@@ -77,4 +77,4 @@ class LoadingModel extends ModelBase_1.ModelBase {
   }
 }
 exports.LoadingModel = LoadingModel;
-// # sourceMappingURL=LoadingModel.js.map
+//# sourceMappingURL=LoadingModel.js.map

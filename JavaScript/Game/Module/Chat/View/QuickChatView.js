@@ -1,31 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuickChatView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const ChatController_1 = require("../ChatController");
-const PrivateChatRoom_1 = require("../PrivateChatRoom");
-const TeamChatRoom_1 = require("../TeamChatRoom");
-const WorldTeamChatRoom_1 = require("../WorldTeamChatRoom");
-const QuickChatText_1 = require("./QuickChatText");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ChatController_1 = require("../ChatController"),
+  PrivateChatRoom_1 = require("../PrivateChatRoom"),
+  TeamChatRoom_1 = require("../TeamChatRoom"),
+  WorldTeamChatRoom_1 = require("../WorldTeamChatRoom"),
+  QuickChatText_1 = require("./QuickChatText");
 class QuickChatView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.ChatInputMaxNum = 0),
       (this.mEt = []),
       (this.dEt = (e) => {
-        let t = ModelManager_1.ModelManager.ChatModel.GetJoinedChatRoom();
+        var t = ModelManager_1.ModelManager.ChatModel.GetJoinedChatRoom();
         if (t) {
           if (t instanceof PrivateChatRoom_1.PrivateChatRoom) {
             t = t.GetTargetPlayerId();
@@ -63,18 +63,18 @@ class QuickChatView extends UiViewBase_1.UiViewBase {
       this.gEt();
   }
   gEt() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.ChatConfig.GetAllQuickChatConfigList();
     if (e) {
-      const t = this.GetItem(3);
-      const r = this.GetItem(2);
-      const o = t.GetOwner();
+      var t = this.GetItem(3),
+        r = this.GetItem(2),
+        o = t.GetOwner();
       for (const l of e) {
-        var i = LguiUtil_1.LguiUtil.DuplicateActor(o, r);
-        var i = new QuickChatText_1.QuickChatText(i);
-        const a = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-          l.QuickChatContent,
-        );
+        var i = LguiUtil_1.LguiUtil.DuplicateActor(o, r),
+          i = new QuickChatText_1.QuickChatText(i),
+          a = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+            l.QuickChatContent,
+          );
         i.Refresh(a),
           i.BindOnClicked(this.dEt),
           i.SetActive(!0),
@@ -84,7 +84,7 @@ class QuickChatView extends UiViewBase_1.UiViewBase {
     }
   }
   ISt(e, t) {
-    let r, o;
+    var r, o;
     StringUtils_1.StringUtils.IsEmpty(e)
       ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
           "InputChatContent",
@@ -140,4 +140,4 @@ class QuickChatView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.QuickChatView = QuickChatView;
-// # sourceMappingURL=QuickChatView.js.map
+//# sourceMappingURL=QuickChatView.js.map

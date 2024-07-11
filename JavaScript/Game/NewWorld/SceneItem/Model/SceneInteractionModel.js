@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneInteractionModel = void 0);
-const UE = require("ue");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const ModelBase_1 = require("../../../../Core/Framework/ModelBase");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ActorUtils_1 = require("../../../Utils/ActorUtils");
-const CharacterNameDefines_1 = require("../../Character/Common/CharacterNameDefines");
+const UE = require("ue"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ActorUtils_1 = require("../../../Utils/ActorUtils"),
+  CharacterNameDefines_1 = require("../../Character/Common/CharacterNameDefines");
 class SceneInteractionModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments), (this.jnr = !1);
@@ -61,4 +61,4 @@ class SceneInteractionModel extends ModelBase_1.ModelBase {
   }
 }
 exports.SceneInteractionModel = SceneInteractionModel;
-// # sourceMappingURL=SceneInteractionModel.js.map
+//# sourceMappingURL=SceneInteractionModel.js.map

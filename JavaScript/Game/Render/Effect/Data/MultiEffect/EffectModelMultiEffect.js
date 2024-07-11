@@ -12,4 +12,4 @@ class EffectModelMultiEffect extends UE.EffectModelBase {
   }
 }
 exports.default = EffectModelMultiEffect;
-// # sourceMappingURL=EffectModelMultiEffect.js.map
+//# sourceMappingURL=EffectModelMultiEffect.js.map

@@ -1,52 +1,55 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, s) {
-    let r;
-    const h = arguments.length;
-    let a =
-      h < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      h = arguments.length,
+      a =
+        h < 3
+          ? e
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(e, i))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       a = Reflect.decorate(t, e, i, s);
     else
-      for (let o = t.length - 1; o >= 0; o--)
-        (r = t[o]) && (a = (h < 3 ? r(a) : h > 3 ? r(e, i, a) : r(e, i)) || a);
-    return h > 3 && a && Object.defineProperty(e, i, a), a;
+      for (var o = t.length - 1; 0 <= o; o--)
+        (r = t[o]) && (a = (h < 3 ? r(a) : 3 < h ? r(e, i, a) : r(e, i)) || a);
+    return 3 < h && a && Object.defineProperty(e, i, a), a;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SequenceCameraPlayerComponent = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../Core/Actor/ActorSystem");
-const Log_1 = require("../../Core/Common/Log");
-const QueryTypeDefine_1 = require("../../Core/Define/QueryTypeDefine");
-const EntityComponent_1 = require("../../Core/Entity/EntityComponent");
-const EntitySystem_1 = require("../../Core/Entity/EntitySystem");
-const RegisterComponent_1 = require("../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../Core/Timer/TimerSystem");
-const FNameUtil_1 = require("../../Core/Utils/FNameUtil");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../Core/Utils/TraceElementCommon");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const GameQualitySettingsManager_1 = require("../GameQualitySettings/GameQualitySettingsManager");
-const GlobalData_1 = require("../GlobalData");
-const ModelManager_1 = require("../Manager/ModelManager");
-const CharacterNameDefines_1 = require("../NewWorld/Character/Common/CharacterNameDefines");
-const UiLayerType_1 = require("../Ui/Define/UiLayerType");
-const UiLayer_1 = require("../Ui/UiLayer");
-const ActorUtils_1 = require("../Utils/ActorUtils");
-const CameraController_1 = require("./CameraController");
-const CameraModel_1 = require("./CameraModel");
-const CameraUtility_1 = require("./CameraUtility");
-const PROFILE_KEY1 = "SequenceCameraPlayerComponent_CheckCameraLocation";
-const PROFILE_KEY2 =
-  "SequenceCameraPlayerComponent_ProcessHideShelterCharacter";
-const SEQUENCE_CAMERA = new UE.FName("SequenceCamera");
-const ROLE_TAG = new UE.FName("Role");
-const RELATIVE_LENGTH = 1e4;
-const LIMIT_DISTANCE = 200;
+const UE = require("ue"),
+  ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../Core/Common/Log"),
+  QueryTypeDefine_1 = require("../../Core/Define/QueryTypeDefine"),
+  EntityComponent_1 = require("../../Core/Entity/EntityComponent"),
+  EntitySystem_1 = require("../../Core/Entity/EntitySystem"),
+  RegisterComponent_1 = require("../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../Core/Utils/FNameUtil"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../Core/Utils/TraceElementCommon"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  GameQualitySettingsManager_1 = require("../GameQualitySettings/GameQualitySettingsManager"),
+  GlobalData_1 = require("../GlobalData"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  CharacterNameDefines_1 = require("../NewWorld/Character/Common/CharacterNameDefines"),
+  UiLayerType_1 = require("../Ui/Define/UiLayerType"),
+  UiLayer_1 = require("../Ui/UiLayer"),
+  ActorUtils_1 = require("../Utils/ActorUtils"),
+  CameraController_1 = require("./CameraController"),
+  CameraModel_1 = require("./CameraModel"),
+  CameraUtility_1 = require("./CameraUtility"),
+  PROFILE_KEY1 = "SequenceCameraPlayerComponent_CheckCameraLocation",
+  PROFILE_KEY2 = "SequenceCameraPlayerComponent_ProcessHideShelterCharacter",
+  SEQUENCE_CAMERA = new UE.FName("SequenceCamera"),
+  ROLE_TAG = new UE.FName("Role"),
+  RELATIVE_LENGTH = 1e4,
+  LIMIT_DISTANCE = 200;
 let SequenceCameraPlayerComponent = class SequenceCameraPlayerComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -197,8 +200,8 @@ let SequenceCameraPlayerComponent = class SequenceCameraPlayerComponent extends 
     return this.Jxr;
   }
   ResetCameraRatioSetting() {
-    let t;
-    const e = this.yxr?.CineCamera?.GetCineCameraComponent();
+    var t,
+      e = this.yxr?.CineCamera?.GetCineCameraComponent();
     e &&
       ((t = e.GetDefaultFilmbackPresetName()) && e.SetFilmbackPresetByName(t),
       (e.bConstrainAspectRatio = !1));
@@ -269,7 +272,7 @@ let SequenceCameraPlayerComponent = class SequenceCameraPlayerComponent extends 
   OnAfterTick(t) {
     if (this.Ixr) {
       if (!this.Tae?.IsValid()) return void this.StopSequence();
-      const e = this.Tae.GetEntityIdNoBlueprint();
+      var e = this.Tae.GetEntityIdNoBlueprint();
       if (!e || !EntitySystem_1.EntitySystem.Get(e))
         return void this.StopSequence();
     }
@@ -284,7 +287,7 @@ let SequenceCameraPlayerComponent = class SequenceCameraPlayerComponent extends 
         this.Hxr >= this.dUo
           ? this.ywr()
           : this.zxr &&
-            this.Zxr > 0 &&
+            0 < this.Zxr &&
             this.Hxr >= this.Zxr &&
             (ModelManager_1.ModelManager.BattleUiModel.ChildViewData.ShowBattleView(
               2,
@@ -324,24 +327,25 @@ let SequenceCameraPlayerComponent = class SequenceCameraPlayerComponent extends 
     ) {
       this.ResetCameraRatioSetting(),
         this.yxr?.CineCamera?.ResetSeqCineCamSetting();
-      const s = new UE.MovieSceneSequencePlaybackSettings();
-      var e =
-        ((s.bDisableMovementInput = e),
-        (s.bDisableLookAtInput = i),
-        (this.Ixr = ActorSystem_1.ActorSystem.Get(
-          UE.LevelSequenceActor.StaticClass(),
-          new UE.Transform(),
-          void 0,
-          !1,
-        )),
-        (this.Ixr.PlaybackSettings = s),
-        this.Ixr.SetSequence(this.hzo),
-        this.Ixr.SequencePlayer.GetStartTime());
-      var i =
-        ((this.Hxr =
-          ((e.Time.FrameNumber.Value + e.Time.SubFrame) * e.Rate.Denominator) /
-          e.Rate.Numerator),
-        this.Ixr.SequencePlayer.GetEndTime());
+      var s = new UE.MovieSceneSequencePlaybackSettings(),
+        e =
+          ((s.bDisableMovementInput = e),
+          (s.bDisableLookAtInput = i),
+          (this.Ixr = ActorSystem_1.ActorSystem.Get(
+            UE.LevelSequenceActor.StaticClass(),
+            new UE.Transform(),
+            void 0,
+            !1,
+          )),
+          (this.Ixr.PlaybackSettings = s),
+          this.Ixr.SetSequence(this.hzo),
+          this.Ixr.SequencePlayer.GetStartTime()),
+        i =
+          ((this.Hxr =
+            ((e.Time.FrameNumber.Value + e.Time.SubFrame) *
+              e.Rate.Denominator) /
+            e.Rate.Numerator),
+          this.Ixr.SequencePlayer.GetEndTime());
       if (
         ((this.dUo =
           ((i.Time.FrameNumber.Value + i.Time.SubFrame) * i.Rate.Denominator) /
@@ -354,14 +358,14 @@ let SequenceCameraPlayerComponent = class SequenceCameraPlayerComponent extends 
         this.zxr)
       ) {
         this.Zxr = t.HideHudTime;
-        const r = t.VisibleChild;
-        const h = r.Num();
+        var r = t.VisibleChild,
+          h = r.Num();
         if (h <= 0)
           ModelManager_1.ModelManager.BattleUiModel.ChildViewData.HideBattleView(
             2,
           );
         else {
-          const a = [];
+          var a = [];
           for (let t = 0; t < h; t++) a.push(r.Get(t));
           ModelManager_1.ModelManager.BattleUiModel.ChildViewData.HideBattleView(
             2,
@@ -399,32 +403,32 @@ let SequenceCameraPlayerComponent = class SequenceCameraPlayerComponent extends 
   }
   Pwr(t) {
     var e = UE.KuroStaticLibrary.GetSequenceTracksForObjectBindingID(
-      this.Ixr,
-      SEQUENCE_CAMERA,
-    );
-    var e = UE.KuroStaticLibrary.GetTrackByClass(
-      e,
-      UE.MovieScene3DTransformTrack.StaticClass(),
-    );
+        this.Ixr,
+        SEQUENCE_CAMERA,
+      ),
+      e = UE.KuroStaticLibrary.GetTrackByClass(
+        e,
+        UE.MovieScene3DTransformTrack.StaticClass(),
+      );
     if (!e) return !1;
-    var e = UE.KuroStaticLibrary.GetFirstLocationFromSeqTrack(e);
-    const i = this.Awr();
-    var e =
-      CameraUtility_1.CameraUtility.GetRootTransform(i).TransformPosition(e);
-    var t =
-      ((this.swr.Radius =
-        CameraController_1.CameraController.FightCamera.LogicComponent.CollisionProbeSize),
-      this.swr.ActorsToIgnore.Empty(),
-      t &&
-        this.swr.ActorsToIgnore.Add(
-          CameraController_1.CameraController.GetCharacter(),
-        ),
-      TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.swr, e),
-      TraceElementCommon_1.TraceElementCommon.SetEndLocation(this.swr, e),
-      TraceElementCommon_1.TraceElementCommon.SphereTrace(
-        this.swr,
-        PROFILE_KEY1,
-      ));
+    var e = UE.KuroStaticLibrary.GetFirstLocationFromSeqTrack(e),
+      i = this.Awr(),
+      e =
+        CameraUtility_1.CameraUtility.GetRootTransform(i).TransformPosition(e),
+      t =
+        ((this.swr.Radius =
+          CameraController_1.CameraController.FightCamera.LogicComponent.CollisionProbeSize),
+        this.swr.ActorsToIgnore.Empty(),
+        t &&
+          this.swr.ActorsToIgnore.Add(
+            CameraController_1.CameraController.GetCharacter(),
+          ),
+        TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.swr, e),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(this.swr, e),
+        TraceElementCommon_1.TraceElementCommon.SphereTrace(
+          this.swr,
+          PROFILE_KEY1,
+        ));
     if (t && this.swr.HitResult?.Actors?.Get(0) === i)
       return (
         Log_1.Log.CheckWarn() &&
@@ -439,14 +443,14 @@ let SequenceCameraPlayerComponent = class SequenceCameraPlayerComponent extends 
   }
   xwr() {
     if (!this.hzo) return !1;
-    let t = this.Awr();
+    var t = this.Awr();
     if (!t) return !1;
     if (!this.Ixr) return !1;
-    const e = t.CharacterActorComponent.Entity.GetComponent(160);
-    let i =
-      (e.Valid && e.StopModelBuffer(),
-      (this.Ixr.bOverrideInstanceData = !0),
-      this.Ixr.DefaultInstanceData);
+    var e = t.CharacterActorComponent.Entity.GetComponent(160),
+      i =
+        (e.Valid && e.StopModelBuffer(),
+        (this.Ixr.bOverrideInstanceData = !0),
+        this.Ixr.DefaultInstanceData);
     if (!i) return !1;
     (this.Xxr = i),
       (this.$xr = CameraUtility_1.CameraUtility.GetRootTransform(t)),
@@ -509,7 +513,7 @@ let SequenceCameraPlayerComponent = class SequenceCameraPlayerComponent extends 
       (this.rRe = void 0),
       (this.$xr = void 0),
       (this.sir = void 0);
-    for (const [t, e] of this.twr)
+    for (var [t, e] of this.twr)
       t.IsValid() && t.CharacterActorComponent?.EnableActor(e);
     FNameUtil_1.FNameUtil.IsEmpty(this.olt) ||
       (this.lwr?.IsValid() && this.lwr.K2_DetachFromActor(1, 1, 1)),
@@ -553,23 +557,23 @@ let SequenceCameraPlayerComponent = class SequenceCameraPlayerComponent extends 
       (this.awr.Radius =
         CameraController_1.CameraController.FightCamera.LogicComponent.CollisionProbeSize),
       this.iwr.clear();
-    let t;
-    let e;
-    const i = TraceElementCommon_1.TraceElementCommon.SphereTrace(
-      this.awr,
-      PROFILE_KEY2,
-    );
-    const s = this.awr.HitResult;
+    var t,
+      e,
+      i = TraceElementCommon_1.TraceElementCommon.SphereTrace(
+        this.awr,
+        PROFILE_KEY2,
+      ),
+      s = this.awr.HitResult;
     let r = void 0;
     if (i && s.bBlockingHit) {
-      const h = s.GetHitCount();
+      var h = s.GetHitCount();
       TraceElementCommon_1.TraceElementCommon.GetHitLocation(
         this.awr.HitResult,
         0,
         this.Wse,
       );
       for (let t = 0; t < h; t++) {
-        const a = s.Actors.Get(t);
+        var a = s.Actors.Get(t);
         a instanceof TsBaseCharacter_1.default &&
           ((r = ActorUtils_1.ActorUtils.GetEntityByActor(a)?.Entity)
             ?.GetComponent(185)
@@ -598,7 +602,7 @@ let SequenceCameraPlayerComponent = class SequenceCameraPlayerComponent extends 
           ));
   }
   Dwr() {
-    let t;
+    var t;
     FNameUtil_1.FNameUtil.IsEmpty(this.olt)
       ? ((t = this.Bwr(this.$xr)), (this.Xxr.TransformOrigin = t))
       : this.lwr?.IsValid() &&
@@ -636,7 +640,7 @@ let SequenceCameraPlayerComponent = class SequenceCameraPlayerComponent extends 
   }
   OnChangeTimeDilation(t) {}
   CheckCollision() {
-    let t;
+    var t;
     this.Tae?.IsValid() &&
       ((this.Fse.WorldContextObject = GlobalData_1.GlobalData.World),
       FNameUtil_1.FNameUtil.IsEmpty(this.hwr)
@@ -681,9 +685,9 @@ let SequenceCameraPlayerComponent = class SequenceCameraPlayerComponent extends 
           ));
   }
   CheckSphereCollision() {
-    if (this.cwr === 0) return !1;
+    if (0 === this.cwr) return !1;
     this.dwr.WorldContextObject = GlobalData_1.GlobalData.World;
-    const t = this.Tae.GetEntityNoBlueprint().GetComponent(160);
+    var t = this.Tae.GetEntityNoBlueprint().GetComponent(160);
     return (
       (this.fwr = t.GetCameraTransform()),
       t.GetCameraPosition(this.pwr),
@@ -715,12 +719,12 @@ let SequenceCameraPlayerComponent = class SequenceCameraPlayerComponent extends 
     );
   }
   GetBoneTransform(t) {
-    const e = this.Tae;
-    if (e.Mesh.GetAllSocketNames().FindIndex(t) !== -1)
+    var e = this.Tae;
+    if (-1 !== e.Mesh.GetAllSocketNames().FindIndex(t))
       return e.Mesh.GetSocketTransform(t, 0);
   }
   DrawCube(t, e, i) {
-    let s, r, h;
+    var s, r, h;
     t &&
       ((i = new UE.LinearColor(i, i, i, i)),
       (h = t.GetLocation()),
@@ -770,7 +774,7 @@ let SequenceCameraPlayerComponent = class SequenceCameraPlayerComponent extends 
       ));
   }
   SaveSeqCamera() {
-    const t = new CameraModel_1.SeqCameraThings();
+    var t = new CameraModel_1.SeqCameraThings();
     return (
       (t.CameraLocation = this.yxr.CineCamera.K2_GetActorLocation()),
       (t.CameraRotation = this.yxr.CineCamera.K2_GetActorRotation()),
@@ -791,4 +795,4 @@ let SequenceCameraPlayerComponent = class SequenceCameraPlayerComponent extends 
   SequenceCameraPlayerComponent,
 )),
   (exports.SequenceCameraPlayerComponent = SequenceCameraPlayerComponent);
-// # sourceMappingURL=SequenceCameraPlayerComponent.js.map
+//# sourceMappingURL=SequenceCameraPlayerComponent.js.map

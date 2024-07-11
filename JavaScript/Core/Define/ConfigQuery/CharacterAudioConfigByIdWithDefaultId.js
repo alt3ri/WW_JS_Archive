@@ -1,27 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configCharacterAudioConfigByIdWithDefaultId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const CharacterAudioConfig_1 = require("../Config/CharacterAudioConfig");
-const DB = "db_entity_audio.db";
-const FILE = "y.音频组件配置.xlsx";
-const TABLE = "CharacterAudioConfig";
-const COMMAND =
-  "select BinData from `CharacterAudioConfig` where id = ? AND (SELECT count(0) from `CharacterAudioConfig` WHERE id = ?) <= 0 OR id = ? AND (SELECT count(0) from `CharacterAudioConfig` WHERE id = ?) >0;";
-const KEY_PREFIX = "CharacterAudioConfigByIdWithDefaultId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  CharacterAudioConfig_1 = require("../Config/CharacterAudioConfig"),
+  DB = "db_entity_audio.db",
+  FILE = "y.音频组件配置.xlsx",
+  TABLE = "CharacterAudioConfig",
+  COMMAND =
+    "select BinData from `CharacterAudioConfig` where id = ? AND (SELECT count(0) from `CharacterAudioConfig` WHERE id = ?) <= 0 OR id = ? AND (SELECT count(0) from `CharacterAudioConfig` WHERE id = ?) >0;",
+  KEY_PREFIX = "CharacterAudioConfigByIdWithDefaultId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX =
-  "configCharacterAudioConfigByIdWithDefaultId.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configCharacterAudioConfigByIdWithDefaultId.GetConfig(";
 exports.configCharacterAudioConfigByIdWithDefaultId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -45,18 +44,19 @@ exports.configCharacterAudioConfigByIdWithDefaultId = {
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, i, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 3, n, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 4, e, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(
-            handleId,
-            !0,
-            ...logPair,
-            ["Id", o],
-            ["Id", i],
-            ["Id", n],
-            ["Id", e],
-          ) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(
+              handleId,
+              !0,
+              ...logPair,
+              ["Id", o],
+              ["Id", i],
+              ["Id", n],
+              ["Id", e],
+            ))
       ) {
-        var r;
-        var d = void 0;
+        var r,
+          d = void 0;
         if (
           (([r, d] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -86,4 +86,4 @@ exports.configCharacterAudioConfigByIdWithDefaultId = {
     }
   },
 };
-// # sourceMappingURL=CharacterAudioConfigByIdWithDefaultId.js.map
+//# sourceMappingURL=CharacterAudioConfigByIdWithDefaultId.js.map

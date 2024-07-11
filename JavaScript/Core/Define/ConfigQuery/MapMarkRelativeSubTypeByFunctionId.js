@@ -1,27 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configMapMarkRelativeSubTypeByFunctionId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const MapMarkRelativeSubType_1 = require("../Config/MapMarkRelativeSubType");
-const DB = "db_map_mark.db";
-const FILE = "d.地图标记.xlsx";
-const TABLE = "MapMarkRelativeSubType";
-const COMMAND =
-  "select BinData from `MapMarkRelativeSubType` where FunctionId=?";
-const KEY_PREFIX = "MapMarkRelativeSubTypeByFunctionId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  MapMarkRelativeSubType_1 = require("../Config/MapMarkRelativeSubType"),
+  DB = "db_map_mark.db",
+  FILE = "d.地图标记.xlsx",
+  TABLE = "MapMarkRelativeSubType",
+  COMMAND = "select BinData from `MapMarkRelativeSubType` where FunctionId=?",
+  KEY_PREFIX = "MapMarkRelativeSubTypeByFunctionId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX =
-  "configMapMarkRelativeSubTypeByFunctionId.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configMapMarkRelativeSubTypeByFunctionId.GetConfig(";
 exports.configMapMarkRelativeSubTypeByFunctionId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -42,13 +40,14 @@ exports.configMapMarkRelativeSubTypeByFunctionId = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, e, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "FunctionId",
-            e,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "FunctionId",
+              e,
+            ]))
       ) {
-        var i;
-        var n = void 0;
+        var i,
+          n = void 0;
         if (
           (([i, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -75,4 +74,4 @@ exports.configMapMarkRelativeSubTypeByFunctionId = {
     }
   },
 };
-// # sourceMappingURL=MapMarkRelativeSubTypeByFunctionId.js.map
+//# sourceMappingURL=MapMarkRelativeSubTypeByFunctionId.js.map

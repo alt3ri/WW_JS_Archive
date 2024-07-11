@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RbTree = void 0);
-const Json_1 = require("../Common/Json");
-const Log_1 = require("../Common/Log");
-const Queue_1 = require("./Queue");
+const Json_1 = require("../Common/Json"),
+  Log_1 = require("../Common/Log"),
+  Queue_1 = require("./Queue");
 class RbNode {
   constructor() {
     (this.Parent = void 0),
@@ -38,7 +38,7 @@ class RbTree {
       (this.N7 = void 0);
   }
   Clear() {
-    for (const [, i] of this.G7) i.Clear(), this.q7.push(i);
+    for (var [, i] of this.G7) i.Clear(), this.q7.push(i);
     this.G7.clear(), (this.t6 = 0), (this.gc = void 0), (this.N7 = void 0);
   }
   get IsEmpty() {
@@ -63,7 +63,7 @@ class RbTree {
     }
   }
   Remove(i) {
-    const t = this.G7.get(i);
+    var t = this.G7.get(i);
     void 0 === t
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("Core", 6, "Item不在RbTree里面", ["Item", i])
@@ -93,19 +93,19 @@ class RbTree {
     --this.t6, this.G7.delete(i.Item);
     let r = i;
     for (; r.Left || r.Right; ) {
-      let i = 0;
-      let t = r.Left;
+      let i = 0,
+        t = r.Left;
       if (t) for (i = 1; t.Right; ) i++, (t = t.Right);
-      let e = 0;
-      let s = r.Right;
+      let e = 0,
+        s = r.Right;
       if (s) for (e = 1; s.Left; ) ++e, (s = s.Left);
       r =
         i >= e
           ? ((r.Item = t.Item), this.G7.set(r.Item, r), t)
           : ((r.Item = s.Item), this.G7.set(r.Item, r), s);
     }
-    let t;
-    var i = r.Parent;
+    var t,
+      i = r.Parent;
     i
       ? (this.N7 === r && (this.N7 = i),
         r.IsRed
@@ -122,7 +122,7 @@ class RbTree {
     this.gc.IsRed = !1;
     let t = i;
     for (; t.IsRed && t.Parent; ) {
-      const e = t.Parent;
+      var e = t.Parent;
       if (!e.IsRed) {
         if (e.Left?.IsRed && e.Right?.IsRed) {
           (e.Left.IsRed = !1), (e.Right.IsRed = !1), (e.IsRed = !0), (t = e);
@@ -130,7 +130,7 @@ class RbTree {
         }
         break;
       }
-      const s = e.Parent;
+      var s = e.Parent;
       s.Left?.IsRed && s.Right?.IsRed
         ? ((s.Left.IsRed = !1), (s.Right.IsRed = !1), (s.IsRed = !0), (t = s))
         : t === e.Left
@@ -143,8 +143,8 @@ class RbTree {
     }
   }
   H7(i, t) {
-    let e = t;
-    let s = i;
+    let e = t,
+      s = i;
     for (; s; ) {
       if (s.IsRed) {
         e
@@ -212,18 +212,18 @@ class RbTree {
     for (; this.N7.Left; ) this.N7 = this.N7.Left;
   }
   j7(i) {
-    const t = i.Parent;
-    const e = i.Left;
-    const s = e.Right;
+    var t = i.Parent,
+      e = i.Left,
+      s = e.Right;
     (e.Parent = t),
       ((e.Right = i).Parent = e),
       (i.Left = s) && (s.Parent = i),
       t && (t.Left === i ? (t.Left = e) : (t.Right = e));
   }
   W7(i) {
-    const t = i.Parent;
-    const e = i.Right;
-    const s = e.Left;
+    var t = i.Parent,
+      e = i.Right,
+      s = e.Left;
     (e.Parent = t),
       ((e.Left = i).Parent = e),
       (i.Right = s) && (s.Parent = i),
@@ -259,13 +259,13 @@ class RbTree {
             Log_1.Log.Error("Core", 6, "Extremely Left Error."),
           !1
         );
-      const e = new Queue_1.Queue();
-      const s = (e.Push(this.gc), new Queue_1.Queue());
+      var e = new Queue_1.Queue(),
+        s = (e.Push(this.gc), new Queue_1.Queue());
       s.Push(1);
       let t = -1;
       for (; !e.Empty; ) {
-        const r = e.Pop();
-        const h = s.Pop();
+        var r = e.Pop(),
+          h = s.Pop();
         if (!r.Left || !r.Right)
           if (t < 0) t = h;
           else if (t !== h) return !1;
@@ -283,18 +283,18 @@ class RbTree {
   }
   PrintRbTree() {
     if (this.gc) {
-      let t = new Queue_1.Queue();
-      let e = (t.Push(this.gc), 1);
-      let s = new Queue_1.Queue();
-      for (; e > 0; ) {
+      let t = new Queue_1.Queue(),
+        e = (t.Push(this.gc), 1),
+        s = new Queue_1.Queue();
+      for (; 0 < e; ) {
         e = 0;
         let i = "";
         for (; !t.Empty; ) {
-          const r = t.Pop();
+          var r = t.Pop();
           r
             ? (r.IsRed
                 ? (i += `		(${Json_1.Json.Encode(r.Item)})`)
-                : (i += "		" + Json_1.Json.Encode(r.Item)),
+                : (i += `		` + Json_1.Json.Encode(r.Item)),
               s.Push(r.Left),
               s.Push(r.Right),
               r.Left && e++,
@@ -302,11 +302,11 @@ class RbTree {
             : ((i += "\t\tNA"), s.Push(void 0), s.Push(void 0));
         }
         Log_1.Log.CheckDebug() && Log_1.Log.Debug("Core", 6, i);
-        const h = t;
+        var h = t;
         (t = s), (s = h);
       }
     } else Log_1.Log.CheckDebug() && Log_1.Log.Debug("Core", 6, "EmptyTree");
   }
 }
 exports.RbTree = RbTree;
-// # sourceMappingURL=RbTree.js.map
+//# sourceMappingURL=RbTree.js.map

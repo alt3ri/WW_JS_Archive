@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MultiMapAreaConfig = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const IntArray_1 = require("./SubType/IntArray");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  IntArray_1 = require("./SubType/IntArray");
 class MultiMapAreaConfig {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -32,22 +32,22 @@ class MultiMapAreaConfig {
     );
   }
   block(t) {
-    const i = this.J7.__offset(this.z7, 4);
+    var i = this.J7.__offset(this.z7, 4);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetMultimaplistAt(t) {
     return this.multimaplist(t);
   }
   multimaplist(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   multimaplistLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   multimaplistArray() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -60,7 +60,7 @@ class MultiMapAreaConfig {
     return this.multimaprangelist(t);
   }
   multimaprangelist(t, i) {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s
       ? (i || new IntArray_1.IntArray()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -69,9 +69,9 @@ class MultiMapAreaConfig {
       : null;
   }
   multimaprangelistLength() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.MultiMapAreaConfig = MultiMapAreaConfig;
-// # sourceMappingURL=MultiMapAreaConfig.js.map
+//# sourceMappingURL=MultiMapAreaConfig.js.map

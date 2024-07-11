@@ -22,7 +22,7 @@ class MaterialData {
     --this.UseCount;
   }
   CheckEmpty() {
-    return this.UseCount === 0;
+    return 0 === this.UseCount;
   }
 }
 exports.MaterialData = MaterialData;
@@ -48,8 +48,8 @@ class LevelUpConditionData {
     return this.HasHighQuality && this.HasBeStrength && this.HasResonance;
   }
   GetConditionTextList() {
-    let t;
-    const e = [];
+    var t,
+      e = [];
     return (
       this.HasHighQuality &&
         ((t =
@@ -86,4 +86,4 @@ class WeaponSkeletalObserverHandles {
   }
 }
 exports.WeaponSkeletalObserverHandles = WeaponSkeletalObserverHandles;
-// # sourceMappingURL=WeaponDefine.js.map
+//# sourceMappingURL=WeaponDefine.js.map

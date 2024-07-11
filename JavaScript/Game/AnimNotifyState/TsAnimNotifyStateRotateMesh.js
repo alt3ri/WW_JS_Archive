@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Transform_1 = require("../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  Transform_1 = require("../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyStateRotateMesh extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -25,8 +25,8 @@ class TsAnimNotifyStateRotateMesh extends UE.KuroAnimNotifyState {
     if (this.BaseChar?.IsValid()) {
       var e = this.BaseChar.CharacterActorComponent?.Entity;
       if (!e?.Valid) return !1;
-      let r = e.GetComponent(33);
-      var e = e.GetComponent(36);
+      var r = e.GetComponent(33),
+        e = e.GetComponent(36);
       if (!r?.Valid || !e?.Valid) return !1;
       let t = 0;
       r = r.SkillTarget?.Entity?.GetComponent(1)?.Owner;
@@ -51,13 +51,13 @@ class TsAnimNotifyStateRotateMesh extends UE.KuroAnimNotifyState {
         (t =
           UE.KismetMathLibrary.MakeRotFromX(this.TmpVector.ToUeVector()).Yaw -
           90);
-      for (var h = this.BaseChar.Mesh.RelativeRotation.Yaw; t - h > 180; )
+      for (var h = this.BaseChar.Mesh.RelativeRotation.Yaw; 180 < t - h; )
         t -= 360;
-      for (; h - t > 180; ) t += 360;
+      for (; 180 < h - t; ) t += 360;
       r = t - h;
       return (
-        r != 0 &&
-          (this.旋转速度 > 0 &&
+        0 != r &&
+          (0 < this.旋转速度 &&
             ((e = MathUtils_1.MathUtils.Clamp(
               (this.旋转速度 * s) / Math.abs(r),
               0,
@@ -103,4 +103,4 @@ class TsAnimNotifyStateRotateMesh extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateRotateMesh;
-// # sourceMappingURL=TsAnimNotifyStateRotateMesh.js.map
+//# sourceMappingURL=TsAnimNotifyStateRotateMesh.js.map

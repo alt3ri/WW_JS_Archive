@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Global_1 = require("../Global");
-const ModelManager_1 = require("../Manager/ModelManager");
-const InputDistributeDefine_1 = require("../Ui/InputDistribute/InputDistributeDefine");
-const InputController_1 = require("./InputController");
-const InputEnums_1 = require("./InputEnums");
-const ControllerHolder_1 = require("../Manager/ControllerHolder");
+const UE = require("ue"),
+  Global_1 = require("../Global"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  InputDistributeDefine_1 = require("../Ui/InputDistribute/InputDistributeDefine"),
+  InputController_1 = require("./InputController"),
+  InputEnums_1 = require("./InputEnums"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder");
 class InputBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static PreProcessInput(t, e) {
     InputController_1.InputController.PreProcessInput(t, e);
@@ -27,24 +27,24 @@ class InputBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return InputDistributeDefine_1.axisTagMap.get(t);
   }
   static GetAllInputDistributeTag() {
-    const t = UE.NewArray(UE.BuiltinString);
+    var t = UE.NewArray(UE.BuiltinString);
     for (const e of InputDistributeDefine_1.initializeInputDistributeTagDefine)
       t.Add(e.Tag);
     return t;
   }
   static HasMoveAxisInput() {
-    let t, e;
+    var t, e;
     return (
       !(
-        ModelManager_1.ModelManager.PlatformModel?.OperationType !== 1 ||
+        1 !== ModelManager_1.ModelManager.PlatformModel?.OperationType ||
         !ModelManager_1.ModelManager.BattleUiModel?.IsPressJoyStick
       ) ||
       !!(
         (t = ModelManager_1.ModelManager.InputModel?.GetAxisValues()) &&
         ((e = t.get(InputEnums_1.EInputAxis.MoveForward)) ||
           (t = t.get(InputEnums_1.EInputAxis.MoveRight)) ||
-          (e !== 0 &&
-            t !== 0 &&
+          (0 !== e &&
+            0 !== t &&
             (e =
               Global_1.Global.BaseCharacter?.GetEntityNoBlueprint()?.GetComponent(
                 52,
@@ -56,4 +56,4 @@ class InputBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
 }
 exports.default = InputBlueprintFunctionLibrary;
-// # sourceMappingURL=InputBlueprintFunctionLibrary.js.map
+//# sourceMappingURL=InputBlueprintFunctionLibrary.js.map

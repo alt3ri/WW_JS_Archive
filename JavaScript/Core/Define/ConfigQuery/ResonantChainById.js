@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configResonantChainById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const ResonantChain_1 = require("../Config/ResonantChain");
-const DB = "db_resonate_chain.db";
-const FILE = "g.共鸣链.xlsx";
-const TABLE = "ResonantChain";
-const COMMAND = "select BinData from `ResonantChain` where Id=?";
-const KEY_PREFIX = "ResonantChainById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  ResonantChain_1 = require("../Config/ResonantChain"),
+  DB = "db_resonate_chain.db",
+  FILE = "g.共鸣链.xlsx",
+  TABLE = "ResonantChain",
+  COMMAND = "select BinData from `ResonantChain` where Id=?",
+  KEY_PREFIX = "ResonantChainById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configResonantChainById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configResonantChainById.GetConfig(";
 exports.configResonantChainById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configResonantChainById = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, n, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            n,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              n,
+            ]))
       ) {
-        var i;
-        var e = void 0;
+        var i,
+          e = void 0;
         if (
           (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configResonantChainById = {
     }
   },
 };
-// # sourceMappingURL=ResonantChainById.js.map
+//# sourceMappingURL=ResonantChainById.js.map

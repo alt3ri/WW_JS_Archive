@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionTakePlotPhoto = void 0);
-const UiManager_1 = require("../../../Ui/UiManager");
-const FlowActionBase_1 = require("./FlowActionBase");
+const UiManager_1 = require("../../../Ui/UiManager"),
+  FlowActionBase_1 = require("./FlowActionBase");
 class FlowActionTakePlotPhoto extends FlowActionBase_1.FlowActionBase {
   constructor() {
     super(...arguments),
@@ -18,4 +18,4 @@ class FlowActionTakePlotPhoto extends FlowActionBase_1.FlowActionBase {
   }
 }
 exports.FlowActionTakePlotPhoto = FlowActionTakePlotPhoto;
-// # sourceMappingURL=FlowActionTakePlotPhoto.js.map
+//# sourceMappingURL=FlowActionTakePlotPhoto.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SmallItemGridDisableComponent = void 0);
-const UE = require("ue");
-const SmallItemGridComponent_1 = require("./SmallItemGridComponent");
+const UE = require("ue"),
+  SmallItemGridComponent_1 = require("./SmallItemGridComponent");
 class SmallItemGridDisableComponent extends SmallItemGridComponent_1.SmallItemGridComponent {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UISprite]];
@@ -22,4 +22,4 @@ class SmallItemGridDisableComponent extends SmallItemGridComponent_1.SmallItemGr
   }
 }
 exports.SmallItemGridDisableComponent = SmallItemGridDisableComponent;
-// # sourceMappingURL=SmallItemGridDisableComponent.js.map
+//# sourceMappingURL=SmallItemGridDisableComponent.js.map

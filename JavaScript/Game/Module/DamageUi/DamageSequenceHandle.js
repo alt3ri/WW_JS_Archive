@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DamageSequenceHandle = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils");
 class DamageSequenceHandle {
   constructor() {
     (this.Bkt = void 0),
@@ -83,4 +83,4 @@ class DamageSequenceHandle {
   }
 }
 exports.DamageSequenceHandle = DamageSequenceHandle;
-// # sourceMappingURL=DamageSequenceHandle.js.map
+//# sourceMappingURL=DamageSequenceHandle.js.map

@@ -1,26 +1,30 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, o, n) {
-    let r;
-    const c = arguments.length;
-    let i =
-      c < 3 ? e : n === null ? (n = Object.getOwnPropertyDescriptor(e, o)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      c = arguments.length,
+      i =
+        c < 3
+          ? e
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(e, o))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       i = Reflect.decorate(t, e, o, n);
     else
-      for (let s = t.length - 1; s >= 0; s--)
-        (r = t[s]) && (i = (c < 3 ? r(i) : c > 3 ? r(e, o, i) : r(e, o)) || i);
-    return c > 3 && i && Object.defineProperty(e, o, i), i;
+      for (var s = t.length - 1; 0 <= s; s--)
+        (r = t[s]) && (i = (c < 3 ? r(i) : 3 < c ? r(e, o, i) : r(e, o)) || i);
+    return 3 < c && i && Object.defineProperty(e, o, i), i;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterPartScanComponent = void 0);
-const UE = require("ue");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const EffectContext_1 = require("../../../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../../../Effect/EffectSystem");
-const GlobalData_1 = require("../../../../GlobalData");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
+const UE = require("ue"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  EffectContext_1 = require("../../../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../../../Effect/EffectSystem"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
 let CharacterPartScanComponent = class CharacterPartScanComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -41,7 +45,7 @@ let CharacterPartScanComponent = class CharacterPartScanComponent extends Entity
       for (const e of this.Ajr.Parts) {
         var t;
         e?.ScanEffect &&
-          e?.ScanEffect !== "None" &&
+          "None" !== e?.ScanEffect &&
           ((t = EffectSystem_1.EffectSystem.SpawnEffect(
             GlobalData_1.GlobalData.GameInstance,
             new UE.Transform(),
@@ -71,4 +75,4 @@ let CharacterPartScanComponent = class CharacterPartScanComponent extends Entity
   CharacterPartScanComponent,
 )),
   (exports.CharacterPartScanComponent = CharacterPartScanComponent);
-// # sourceMappingURL=CharacterPartScanComponent.js.map
+//# sourceMappingURL=CharacterPartScanComponent.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const GlobalData_1 = require("../../../GlobalData");
-const SceneItemUtility_1 = require("../../../NewWorld/SceneItem/Util/SceneItemUtility");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  SceneItemUtility_1 = require("../../../NewWorld/SceneItem/Util/SceneItemUtility"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController");
 class TsDecoratorItemIsValid extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -19,7 +19,7 @@ class TsDecoratorItemIsValid extends UE.BTDecorator_BlueprintBase {
       (this.TsItemBlackboardKey = this.ItemBlackboardKey));
   }
   PerformConditionCheckAI(e, t) {
-    let r = e.AiController;
+    var r = e.AiController;
     if (!r)
       return (
         Log_1.Log.CheckError() &&
@@ -45,4 +45,4 @@ class TsDecoratorItemIsValid extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorItemIsValid;
-// # sourceMappingURL=TsDecoratorItemIsValid.js.map
+//# sourceMappingURL=TsDecoratorItemIsValid.js.map

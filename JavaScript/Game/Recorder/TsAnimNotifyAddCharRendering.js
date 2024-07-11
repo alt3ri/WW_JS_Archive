@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const FNameUtil_1 = require("../../Core/Utils/FNameUtil");
+const UE = require("ue"),
+  FNameUtil_1 = require("../../Core/Utils/FNameUtil");
 class TsAnimNotifyAddCharRendering extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.RenderType = 7);
@@ -24,4 +24,4 @@ class TsAnimNotifyAddCharRendering extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifyAddCharRendering;
-// # sourceMappingURL=TsAnimNotifyAddCharRendering.js.map
+//# sourceMappingURL=TsAnimNotifyAddCharRendering.js.map

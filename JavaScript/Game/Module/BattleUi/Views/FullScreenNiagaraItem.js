@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FullScreenNiagaraItem = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const BattleChildView_1 = require("./BattleChildView/BattleChildView");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  BattleChildView_1 = require("./BattleChildView/BattleChildView");
 class FullScreenNiagaraItem extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments), (this.cat = void 0), (this.mat = void 0);
@@ -40,7 +40,7 @@ class FullScreenNiagaraItem extends BattleChildView_1.BattleChildView {
     this.mat && this.mat.SetNiagaraVarFloat(e, t);
   }
   SetVisible(e) {
-    const t = this.GetUiNiagara(0);
+    var t = this.GetUiNiagara(0);
     e
       ? t.ActivateSystem(!0)
       : (this.mat.SetNiagaraSystem(void 0), this.mat.DeactivateSystem()),
@@ -48,4 +48,4 @@ class FullScreenNiagaraItem extends BattleChildView_1.BattleChildView {
   }
 }
 exports.FullScreenNiagaraItem = FullScreenNiagaraItem;
-// # sourceMappingURL=FullScreenNiagaraItem.js.map
+//# sourceMappingURL=FullScreenNiagaraItem.js.map

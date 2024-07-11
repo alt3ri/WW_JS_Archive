@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configAiStateMachineConfigById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const AiStateMachineConfig_1 = require("../Config/AiStateMachineConfig");
-const DB = "db_aistatemachineconfig.db";
-const FILE = "z.战斗/a.AI/a.AI状态机.csv";
-const TABLE = "AiStateMachineConfig";
-const COMMAND = "select BinData from `AiStateMachineConfig` where Id=?";
-const KEY_PREFIX = "AiStateMachineConfigById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  AiStateMachineConfig_1 = require("../Config/AiStateMachineConfig"),
+  DB = "db_aistatemachineconfig.db",
+  FILE = "z.战斗/a.AI/a.AI状态机.csv",
+  TABLE = "AiStateMachineConfig",
+  COMMAND = "select BinData from `AiStateMachineConfig` where Id=?",
+  KEY_PREFIX = "AiStateMachineConfigById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configAiStateMachineConfigById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configAiStateMachineConfigById.GetConfig(";
 exports.configAiStateMachineConfigById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configAiStateMachineConfigById = {
       if (
         (e =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, i, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            i,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              i,
+            ]))
       ) {
-        var e;
-        var n = void 0;
+        var e,
+          n = void 0;
         if (
           (([e, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configAiStateMachineConfigById = {
     }
   },
 };
-// # sourceMappingURL=AiStateMachineConfigById.js.map
+//# sourceMappingURL=AiStateMachineConfigById.js.map

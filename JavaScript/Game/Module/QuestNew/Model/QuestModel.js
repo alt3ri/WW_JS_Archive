@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestNewModel = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const ModelBase_1 = require("../../../../Core/Framework/ModelBase");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const IGlobal_1 = require("../../../../UniverseEditor/Interface/IGlobal");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const PublicUtil_1 = require("../../../Common/PublicUtil");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GeneralLogicTreeConfigUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeConfigUtil");
-const QuestDefine_1 = require("../QuestDefine");
-const QuestTypeDefine_1 = require("./Quest/QuestTypeDefine");
+const Log_1 = require("../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  IGlobal_1 = require("../../../../UniverseEditor/Interface/IGlobal"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../../Common/PublicUtil"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GeneralLogicTreeConfigUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeConfigUtil"),
+  QuestDefine_1 = require("../QuestDefine"),
+  QuestTypeDefine_1 = require("./Quest/QuestTypeDefine");
 class QuestNewModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -56,7 +56,7 @@ class QuestNewModel extends ModelBase_1.ModelBase {
   }
   OnClear() {
     if (this.rro) {
-      for (const [, e] of this.rro) e.Destroy();
+      for (var [, e] of this.rro) e.Destroy();
       this.rro.clear(), (this.rro = void 0);
     }
     return (
@@ -77,7 +77,7 @@ class QuestNewModel extends ModelBase_1.ModelBase {
     return !0;
   }
   InitQuestConfig() {
-    let e;
+    var e;
     PublicUtil_1.PublicUtil.UseDbConfig() ||
       (this.aro.clear(),
       this.hro.clear(),
@@ -90,8 +90,8 @@ class QuestNewModel extends ModelBase_1.ModelBase {
       ));
   }
   AddQuest(e) {
-    let t;
-    const i = this.GetQuestConfig(e);
+    var t,
+      i = this.GetQuestConfig(e);
     if (i)
       return (
         (t = this.rro.get(e)) ||
@@ -113,7 +113,7 @@ class QuestNewModel extends ModelBase_1.ModelBase {
       );
   }
   RemoveQuest(e) {
-    const t = this.rro.get(e);
+    var t = this.rro.get(e);
     t && (t.Destroy(), this.rro.delete(e));
   }
   AddFinishedQuest(e) {
@@ -159,21 +159,21 @@ class QuestNewModel extends ModelBase_1.ModelBase {
         ));
   }
   GetCurQuestTrackPosition(e = 0, t) {
-    const i = this.GetCurTrackedQuest();
+    var i = this.GetCurTrackedQuest();
     if (i) {
-      const r = i.GetActiveChildQuestNodesId();
-      if (!(r.length === 0 || e > r.length - 1))
+      var r = i.GetActiveChildQuestNodesId();
+      if (!(0 === r.length || e > r.length - 1))
         return i.GetNodeTrackPosition(r[e]);
     }
   }
   TryGetMapMarkIdByQuestId(e) {
     e = this.GetQuest(e);
     if (e) {
-      const t = e.TreeId;
-      var e = ModelManager_1.ModelManager.MapModel.GetAllDynamicMarks().get(12);
+      var t = e.TreeId,
+        e = ModelManager_1.ModelManager.MapModel.GetAllDynamicMarks().get(12);
       if (e)
         for (const r of e.values()) {
-          const i = r;
+          var i = r;
           if (i.TreeId === t) return i.MarkId;
         }
     }
@@ -182,7 +182,7 @@ class QuestNewModel extends ModelBase_1.ModelBase {
     if (!PublicUtil_1.PublicUtil.UseDbConfig()) return this.aro.get(e);
     let t = this.aro.get(e);
     if (!t) {
-      const i = ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestConfig(e);
+      var i = ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestConfig(e);
       if (!i) return;
       (t = JSON.parse(i.Data)), this.aro.set(e, t);
     }
@@ -190,8 +190,8 @@ class QuestNewModel extends ModelBase_1.ModelBase {
   }
   GetQuestNodeConfig(e, t) {
     if (!PublicUtil_1.PublicUtil.UseDbConfig()) return this.hro.get(e)?.get(t);
-    let i = this.hro.get(e);
-    let r = (i = i || new Map()).get(t);
+    let i = this.hro.get(e),
+      r = (i = i || new Map()).get(t);
     if (!r) {
       e = ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestNodeConfig(e, t);
       if (!e) return;
@@ -209,15 +209,15 @@ class QuestNewModel extends ModelBase_1.ModelBase {
     return this.rro.get(e);
   }
   GetQuestState(e) {
-    const t = this.GetQuest(e);
+    var t = this.GetQuest(e);
     return t ? t.Status : this.sro.get(e) ? 3 : this.nro.get(e) ? 1 : 0;
   }
   CheckQuestFinished(e) {
-    return this.GetQuestState(e) === 3;
+    return 3 === this.GetQuestState(e);
   }
   GetQuestsByType(e) {
-    let t;
-    const i = [];
+    var t,
+      i = [];
     for ([, t] of this.rro) t.Type === e && i.push(t);
     return i;
   }
@@ -270,13 +270,15 @@ class QuestNewModel extends ModelBase_1.ModelBase {
       const n = ConfigManager_1.ConfigManager.QuestNewConfig.GetDropConfig(
         e.RewardId,
       );
-      if (n && n.DropPreview.size !== 0) {
-        let t;
-        const i = [];
+      if (n && 0 !== n.DropPreview.size) {
+        var t,
+          i = [];
         for ([t] of n.DropPreview) {
-          const r =
-            ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t);
-          const s = n.DropPreview.get(t);
+          var r =
+              ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+                t,
+              ),
+            s = n.DropPreview.get(t);
           if (r) {
             const n = new QuestDefine_1.QuestRewardInfo(t, s);
             i.push(n);
@@ -289,16 +291,16 @@ class QuestNewModel extends ModelBase_1.ModelBase {
   GetDisplayRewardCommonInfo(e) {
     e = this.GetQuest(e);
     if (e) {
-      const t = ConfigManager_1.ConfigManager.QuestNewConfig.GetDropConfig(
+      var t = ConfigManager_1.ConfigManager.QuestNewConfig.GetDropConfig(
         e.RewardId,
       );
-      if (t && t.DropPreview.size !== 0) {
-        let i;
-        const r = [];
+      if (t && 0 !== t.DropPreview.size) {
+        var i,
+          r = [];
         for ([i] of t.DropPreview) {
-          const s =
-            ConfigManager_1.ConfigManager.QuestNewConfig.GetItemInfoConfig(i);
-          const n = t.DropPreview.get(i);
+          var s =
+              ConfigManager_1.ConfigManager.QuestNewConfig.GetItemInfoConfig(i),
+            n = t.DropPreview.get(i);
           s && r.push([{ IncId: 0, ItemId: s.Id }, n]);
         }
         return r;
@@ -348,7 +350,7 @@ class QuestNewModel extends ModelBase_1.ModelBase {
     return this.uro;
   }
   GetCurWorldLevelBreakQuest() {
-    const e = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
+    var e = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
       "WorldLevelBreakthroughTask",
     );
     if (void 0 === e) return -1;
@@ -361,18 +363,18 @@ class QuestNewModel extends ModelBase_1.ModelBase {
     );
   }
   SetActivityQuestData(e, t) {
-    if (t && t.length !== 0)
+    if (t && 0 !== t.length)
       for (const i of t) this.ActivityIdsByQuestId.set(i, e);
   }
   GetQuestBindingActivityId(e) {
     return this.ActivityIdsByQuestId.get(e) ?? 0;
   }
   GetActivityGuideQuestRemainTimeText(e, t) {
-    var e = Math.max(e, 1);
-    const i = this.FOe(e);
-    var e =
-      TimeUtil_1.TimeUtil.GetCountDownDataFormat2(e, i[0], i[1])
-        .CountDownText ?? "";
+    var e = Math.max(e, 1),
+      i = this.FOe(e),
+      e =
+        TimeUtil_1.TimeUtil.GetCountDownDataFormat2(e, i[0], i[1])
+          .CountDownText ?? "";
     return StringUtils_1.StringUtils.Format(t, e);
   }
   FOe(e) {
@@ -386,4 +388,4 @@ class QuestNewModel extends ModelBase_1.ModelBase {
   }
 }
 exports.QuestNewModel = QuestNewModel;
-// # sourceMappingURL=QuestModel.js.map
+//# sourceMappingURL=QuestModel.js.map

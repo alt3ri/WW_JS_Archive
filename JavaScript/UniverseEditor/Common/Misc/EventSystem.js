@@ -17,7 +17,7 @@ class EventDispatcher {
     s || ((s = new Set()), this.me.set(e, s)), s.add(t);
   }
   UnReg(e, t) {
-    const s = this.me.get(e);
+    var s = this.me.get(e);
     s && s.has(t) ? s.delete(t) : (0, Log_1.error)(`UnReg for type ${e} error`);
   }
   SetReg(e, t, s) {
@@ -66,4 +66,4 @@ class ClientEventDispatcher extends EventDispatcher {}
 (exports.ClientEventDispatcher = ClientEventDispatcher),
   (exports.clientEventDispatcher = new ClientEventDispatcher()),
   (exports.editorEventDispatcher = new EditorEventDispatcher());
-// # sourceMappingURL=EventSystem.js.map
+//# sourceMappingURL=EventSystem.js.map

@@ -32,9 +32,9 @@ class AiStateMachineTransition {
   CheckPredictionCondition() {
     return (
       !!(
-        (this.TransitionPredictionType === 1 &&
+        (1 === this.TransitionPredictionType &&
           this.Node.ActorComponent.IsAutonomousProxy) ||
-        this.TransitionPredictionType === 2
+        2 === this.TransitionPredictionType
       ) && this.Condition.Result
     );
   }
@@ -50,4 +50,4 @@ class AiStateMachineTransition {
   }
 }
 exports.AiStateMachineTransition = AiStateMachineTransition;
-// # sourceMappingURL=AiStateMachineTransition.js.map
+//# sourceMappingURL=AiStateMachineTransition.js.map

@@ -8,4 +8,4 @@ class NavigationDragComponent extends NavigationSelectableBase_1.NavigationSelec
   }
 }
 exports.NavigationDragComponent = NavigationDragComponent;
-// # sourceMappingURL=NavigationDragComponent.js.map
+//# sourceMappingURL=NavigationDragComponent.js.map

@@ -1,36 +1,36 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InventoryMediumItemGrid = void 0);
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid");
-const RED_TICK_HEX = "bf5c5c";
-const TICK_COLOR_HEX = "663738";
-const RED_TICK_ALPHA = 0.9;
+const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid"),
+  RED_TICK_HEX = "bf5c5c",
+  TICK_COLOR_HEX = "663738",
+  RED_TICK_ALPHA = 0.9;
 class InventoryMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   constructor() {
     super(...arguments), (this.rmi = void 0), (this.nmi = void 0);
   }
   OnRefresh(e, t, i) {
-    const r = (this.rmi = e).GetItemViewInfo();
-    const o = r.ItemDataType;
-    const s = r.QualityId;
-    const l = e.GetItemOperationType() === 1;
-    const a = {
-      Type: 4,
-      Data: e,
-      ItemConfigId: e.GetConfigId(),
-      StarLevel: s,
-      IsNewVisible: r.IsNewItem,
-      IsLockVisible: r.IsLock,
-      CoolDown: this.GetRemainingCoolDownTime(),
-      TotalCoolDown: this.GetTotalCoolDownTime(),
-      IsRedDotVisible: r.HasRedDot,
-      IsDisable: l && !e.IsItemCanDestroy(),
-      IsCheckTick: r.IsSelectOn,
-    };
+    var r = (this.rmi = e).GetItemViewInfo(),
+      o = r.ItemDataType,
+      s = r.QualityId,
+      l = 1 === e.GetItemOperationType(),
+      a = {
+        Type: 4,
+        Data: e,
+        ItemConfigId: e.GetConfigId(),
+        StarLevel: s,
+        IsNewVisible: r.IsNewItem,
+        IsLockVisible: r.IsLock,
+        CoolDown: this.GetRemainingCoolDownTime(),
+        TotalCoolDown: this.GetTotalCoolDownTime(),
+        IsRedDotVisible: r.HasRedDot,
+        IsDisable: l && !e.IsItemCanDestroy(),
+        IsCheckTick: r.IsSelectOn,
+      };
     switch (o) {
       case 0:
         var n = this.rmi.GetItemDataBase();
@@ -50,31 +50,31 @@ class InventoryMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediu
           (a.IsOmitBottomText = !1);
         break;
       case 2:
-        var d = this.rmi.GetItemDataBase().GetUniqueId();
-        var n = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(d);
+        var d = this.rmi.GetItemDataBase().GetUniqueId(),
+          n = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(d);
         (a.BottomTextId = "Text_LevelShow_Text"),
           (a.BottomTextParameter = [n.GetLevel()]),
           (a.Level = n.GetResonanceLevel()),
           (a.RoleHeadInfo = { RoleConfigId: n.GetRoleId() });
         break;
       case 3:
-        var _;
-        var d = this.rmi.GetItemDataBase().GetUniqueId();
-        var n =
-          ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-            d,
-          );
-        var h = n.GetCurrentSlotData();
+        var _,
+          d = this.rmi.GetItemDataBase().GetUniqueId(),
+          n =
+            ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
+              d,
+            ),
+          h = n.GetCurrentSlotData();
         if (
           ((a.Level = n.GetCost()),
           (a.IsLevelTextUseChangeColor = !0),
           (a.BottomText = "+" + n.GetPhantomLevel().toString()),
           (a.IsOmitBottomText = !0),
-          h.length > 0)
+          0 < h.length)
         ) {
-          const C = h[0]?.SlotState ?? 0;
-          const c = h[1]?.SlotState ?? 0;
-          const I = h[2]?.SlotState ?? 0;
+          var C = h[0]?.SlotState ?? 0,
+            c = h[1]?.SlotState ?? 0,
+            I = h[2]?.SlotState ?? 0;
           switch (s) {
             case 3:
               a.VisionSlotStateList = [C];
@@ -121,16 +121,16 @@ class InventoryMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediu
     this.SetSelected(!1);
   }
   GetRemainingCoolDownTime() {
-    const e = this.rmi.GetConfigId();
+    var e = this.rmi.GetConfigId();
     return ModelManager_1.ModelManager.BuffItemModel.GetBuffItemRemainCdTime(e);
   }
   GetTotalCoolDownTime() {
-    const e = this.rmi.GetConfigId();
+    var e = this.rmi.GetConfigId();
     return ModelManager_1.ModelManager.BuffItemModel.GetBuffItemTotalCdTime(e);
   }
   RefreshCoolDown() {
-    const e = this.GetRemainingCoolDownTime();
-    const t = this.GetTotalCoolDownTime();
+    var e = this.GetRemainingCoolDownTime(),
+      t = this.GetTotalCoolDownTime();
     this.SetCoolDown(e, t);
   }
   BindOnItemButtonClickedCallback(e) {
@@ -141,4 +141,4 @@ class InventoryMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediu
   }
 }
 exports.InventoryMediumItemGrid = InventoryMediumItemGrid;
-// # sourceMappingURL=InventoryMediumItemGrid.js.map
+//# sourceMappingURL=InventoryMediumItemGrid.js.map

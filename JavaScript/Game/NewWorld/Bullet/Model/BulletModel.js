@@ -4,28 +4,28 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.BulletModel =
     exports.BulletInitParams =
       void 0);
-const UE = require("ue");
-const Info_1 = require("../../../../Core/Common/Info");
-const Log_1 = require("../../../../Core/Common/Log");
-const Stats_1 = require("../../../../Core/Common/Stats");
-const Time_1 = require("../../../../Core/Common/Time");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const ModelBase_1 = require("../../../../Core/Framework/ModelBase");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const StatDefine_1 = require("../../../Common/StatDefine");
-const GlobalData_1 = require("../../../GlobalData");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const CombatMessage_1 = require("../../../Module/CombatMessage/CombatMessage");
-const BulletActorPool_1 = require("../BulletActorPool");
-const BulletConstant_1 = require("../BulletConstant");
-const BulletController_1 = require("../BulletController");
-const BulletUtil_1 = require("../BulletUtil");
-const BulletMoveInfo_1 = require("./BulletMoveInfo");
-const BulletPool_1 = require("./BulletPool");
-const BulletTraceElementPool_1 = require("./BulletTraceElementPool");
+const UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  StatDefine_1 = require("../../../Common/StatDefine"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  CombatMessage_1 = require("../../../Module/CombatMessage/CombatMessage"),
+  BulletActorPool_1 = require("../BulletActorPool"),
+  BulletConstant_1 = require("../BulletConstant"),
+  BulletController_1 = require("../BulletController"),
+  BulletUtil_1 = require("../BulletUtil"),
+  BulletMoveInfo_1 = require("./BulletMoveInfo"),
+  BulletPool_1 = require("./BulletPool"),
+  BulletTraceElementPool_1 = require("./BulletTraceElementPool");
 class BulletInitParams {
   constructor(
     t,
@@ -216,7 +216,7 @@ class BulletModel extends ModelBase_1.ModelBase {
     y = void 0,
     g = void 0,
   ) {
-    const M = this.EHo(l);
+    var M = this.EHo(l);
     if (!this.gHo || !M)
       if (e?.Valid) {
         B =
@@ -224,8 +224,8 @@ class BulletModel extends ModelBase_1.ModelBase {
           ConfigManager_1.ConfigManager.BulletConfig.GetBulletData(e, l, !0, f);
         if (B) {
           if (!n) {
-            const C = e.GetComponent(185);
-            var S = B.Base.BornForbidTagIds;
+            var C = e.GetComponent(185),
+              S = B.Base.BornForbidTagIds;
             if (S)
               for (const E of S)
                 if (C.HasTag(E))
@@ -253,7 +253,7 @@ class BulletModel extends ModelBase_1.ModelBase {
                   );
           }
           let t = s;
-          t === 0 &&
+          0 === t &&
             ((S = e.GetComponent(33)), (t = S.CurrentSkill?.SkillId ?? 0));
           (s = new BulletInitParams(
             e,
@@ -263,8 +263,8 @@ class BulletModel extends ModelBase_1.ModelBase {
             t,
             r,
             u,
-            B.Base.BornPositionStandard !== 3 &&
-            B.Base.BornPositionStandard !== 2
+            3 !== B.Base.BornPositionStandard &&
+            2 !== B.Base.BornPositionStandard
               ? h
               : 0,
             a,
@@ -325,11 +325,11 @@ class BulletModel extends ModelBase_1.ModelBase {
           );
   }
   DestroyBullet(t, e, l = 0) {
-    let i;
-    let o = this.iHo.get(t);
+    var i,
+      o = this.iHo.get(t);
     o &&
       ((o = o.GetBulletInfo()),
-      (l === 2 && o.BulletDataMain?.Base.SyncType !== 1) ||
+      (2 === l && 1 !== o.BulletDataMain?.Base.SyncType) ||
         o.NeedDestroy ||
         ((o.NeedDestroy = !0),
         BulletConstant_1.BulletConstant.OpenCreateLog &&
@@ -353,14 +353,14 @@ class BulletModel extends ModelBase_1.ModelBase {
         StatDefine_1.BATTLESTAT_ENABLED));
   }
   DestroyAllBullet(t = !1) {
-    for (const [e] of this.iHo) this.DestroyBullet(e, t, 0);
+    for (var [e] of this.iHo) this.DestroyBullet(e, t, 0);
   }
   ClearDestroyedBullets() {
     for (const o of this.nHo) {
-      var t;
-      var e;
-      var l;
-      const i = this.iHo.get(o);
+      var t,
+        e,
+        l,
+        i = this.iHo.get(o);
       i &&
         ((l = (t = i.GetBulletInfo()).AttackerId),
         (e = this.rHo.get(l))
@@ -433,7 +433,7 @@ class BulletModel extends ModelBase_1.ModelBase {
     return this.sHo.HitPoint;
   }
   RegisterBullet(t, e) {
-    let l, i;
+    var l, i;
     t &&
       (({ aFn: l, y4n: i } = t),
       this.uHo.set(e, t),
@@ -441,7 +441,7 @@ class BulletModel extends ModelBase_1.ModelBase {
       this._Ho.get(l)?.set(i, e));
   }
   DeregisterBullet(t) {
-    let e, l;
+    var e, l;
     t &&
       ((e = this.GetIdByBulletHandle(t)),
       this._Ho.has(e) && this.uHo.delete(e),
@@ -452,24 +452,24 @@ class BulletModel extends ModelBase_1.ModelBase {
       this._Ho.delete(e);
   }
   GetIdByBulletHandle(t) {
-    let e;
+    var e;
     return t ? (({ aFn: t, y4n: e } = t), this._Ho.get(t)?.get(e) ?? 0) : 0;
   }
   GetBulletHandleById(t) {
     return this.uHo.get(t);
   }
   DestroyBulletRemote(t, e) {
-    let l;
+    var l;
     t &&
       this._Ho.has(t.aFn) &&
-      (l = this.GetIdByBulletHandle(t)) !== 0 &&
+      0 !== (l = this.GetIdByBulletHandle(t)) &&
       (this.DeregisterBullet(t), this.DestroyBullet(l, e, 2));
   }
   NewTraceElement(t, e, l, i = 0) {
-    const o = UE.NewObject(t);
+    var o = UE.NewObject(t);
     if (((o.WorldContextObject = GlobalData_1.GlobalData.World), e))
       for (let t = 0; t < e.Num(); t++) {
-        const s = e.Get(t);
+        var s = e.Get(t);
         l?.has(s) || o.AddObjectTypeQuery(s);
       }
     return (o.bTraceComplex = !1), (o.bIgnoreSelf = !0), o;
@@ -515,20 +515,20 @@ class BulletModel extends ModelBase_1.ModelBase {
       (this.Index2HeavyHitAnimMap = void 0);
   }
   EHo(t) {
-    return t === "310000001";
+    return "310000001" === t;
   }
   SetAllBulletTimeScale(t, e, l, i, o, s, r) {
     this.PersistentTimeScaleId--;
-    const n = this.PersistentTimeScaleId;
+    var n = this.PersistentTimeScaleId;
     for (const a of this.GetBulletEntityMap().values()) {
-      const u = a.GetBulletInfo();
+      var u = a.GetBulletInfo();
       if (
         u.IsInit &&
         !u.NeedDestroy &&
         !u.BulletDataMain.TimeScale.TimeScaleWithAttacker
       ) {
         if (t) {
-          const h = u.CollisionInfo.LastFramePosition;
+          var h = u.CollisionInfo.LastFramePosition;
           if (!h) continue;
           if (
             Math.abs(h.X - t.X) > e ||
@@ -561,7 +561,7 @@ class BulletModel extends ModelBase_1.ModelBase {
   }
   RemoveAllBulletTimeScale(t, e) {
     for (const i of this.GetBulletEntityMap().values()) {
-      const l = i.GetBulletInfo();
+      var l = i.GetBulletInfo();
       l.IsInit && BulletUtil_1.BulletUtil.RemoveTimeScale(l, t);
     }
     e && this.PersistentTimeScaleMap.delete(t);
@@ -589,4 +589,4 @@ class BulletPersistentTimeScale {
   }
 }
 exports.BulletPersistentTimeScale = BulletPersistentTimeScale;
-// # sourceMappingURL=BulletModel.js.map
+//# sourceMappingURL=BulletModel.js.map

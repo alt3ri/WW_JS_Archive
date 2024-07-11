@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdventureGuideModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const MonsterDetectionFilterAll_1 = require("../../../Core/Define/ConfigQuery/MonsterDetectionFilterAll");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const IEntity_1 = require("../../../UniverseEditor/Interface/IEntity");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const AdventureDefine_1 = require("./AdventureDefine");
-const AdventureGuideController_1 = require("./AdventureGuideController");
-const ENERGYCOST_ID = 5;
+const Log_1 = require("../../../Core/Common/Log"),
+  MonsterDetectionFilterAll_1 = require("../../../Core/Define/ConfigQuery/MonsterDetectionFilterAll"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  IEntity_1 = require("../../../UniverseEditor/Interface/IEntity"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  AdventureDefine_1 = require("./AdventureDefine"),
+  AdventureGuideController_1 = require("./AdventureGuideController"),
+  ENERGYCOST_ID = 5;
 class AdventureGuideModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -81,7 +81,7 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
   }
   CheckCanGetFirstAwardByTypeId(e) {
     for (const r of this.a5e) {
-      const t = this.GetSilentAreaDetectData(r[0]);
+      var t = this.GetSilentAreaDetectData(r[0]);
       if (
         t.Conf.Secondary === e &&
         r[1] === Protocol_1.Aki.Protocol.GBs.Proto_IsFinish
@@ -91,23 +91,23 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
     return !1;
   }
   GetAdventureGuideTabList() {
-    const t =
-      ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTabList(
-        "AdventureGuideView",
-      );
-    const r = t.length;
-    const i = [];
+    var t =
+        ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTabList(
+          "AdventureGuideView",
+        ),
+      r = t.length,
+      i = [];
     let n = -1;
-    const o = this.GetAllTaskFinish();
+    var o = this.GetAllTaskFinish();
     for (let e = 0; e < r; e++) {
-      const s = t[e];
-      o && s.ChildViewName === "AdventureTargetView"
+      var s = t[e];
+      o && "AdventureTargetView" === s.ChildViewName
         ? (n = e)
         : this.GetIsTabViewHaveData(s.ChildViewName) &&
           ModelManager_1.ModelManager.FunctionModel.IsOpen(s.FunctionId) &&
           i.push(s);
     }
-    return n !== -1 && i.push(t[n]), i;
+    return -1 !== n && i.push(t[n]), i;
   }
   GetReceivedChapter() {
     return this.D5e;
@@ -128,7 +128,7 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
     this.D5e = e;
   }
   SetTaskById(e, t, r) {
-    const i = this.GetTaskRecordById(e);
+    var i = this.GetTaskRecordById(e);
     i
       ? ((i.Status = t), (i.Progress = r))
       : Log_1.Log.CheckError() &&
@@ -186,8 +186,8 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
     return this.S5e;
   }
   GetChapterProgress(e) {
-    var e = this.h5e.get(e);
-    const t = { Received: 0, Total: e.length };
+    var e = this.h5e.get(e),
+      t = { Received: 0, Total: e.length };
     for (const r of e)
       r.Status >= Protocol_1.Aki.Protocol.bBs.Proto_Received && t.Received++;
     return t;
@@ -198,8 +198,8 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
     let t = 0;
     if (e.ReferenceAllEntity)
       for (const n of e.ReferenceAllEntity) {
-        var r;
-        let i = ModelManager_1.ModelManager.CreatureModel.GetEntityData(n);
+        var r,
+          i = ModelManager_1.ModelManager.CreatureModel.GetEntityData(n);
         void 0 === i
           ? Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("AdventureGuide", 10, "玩法关联实体丢失", [
@@ -220,8 +220,8 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
   GetCostOfLevelPlay(e) {
     var e = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayConfig(e);
     return void 0 === e ||
-      (e = e.LevelPlayRewardConfig).Type === "None" ||
-      e.Type === "Variable"
+      "None" === (e = e.LevelPlayRewardConfig).Type ||
+      "Variable" === e.Type
       ? 0
       : ConfigManager_1.ConfigManager.LevelPlayConfig.GetExchangeRewardInfo(
           e.RewardId,
@@ -251,8 +251,8 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
     return this.AllDungeonDetectionRecord;
   }
   GetCanShowDungeonRecordsByType(e, t) {
-    const r = new Array();
-    var e = this.R5e.get(e);
+    var r = new Array(),
+      e = this.R5e.get(e);
     if (e)
       for (const i of e)
         (t && i.DungeonDetectionRecord.Conf.MatType !== t) ||
@@ -265,29 +265,29 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
   }
   GetDungeonDetectRecordByEntryId(e) {
     for (const r of this.AllDungeonDetectionRecord.keys()) {
-      const t = this.AllDungeonDetectionRecord.get(r);
+      var t = this.AllDungeonDetectionRecord.get(r);
       if (t.Conf.DungeonId === e) return t;
     }
   }
   GetAllTaskFinish() {
-    for (const [, e] of this.h5e)
+    for (var [, e] of this.h5e)
       for (const t of e)
         if (t.Status !== Protocol_1.Aki.Protocol.bBs.Proto_Received) return !1;
     return !0;
   }
   SetCurDetectingMonsterConfId(e) {
-    this.l5e !== 0 &&
+    0 !== this.l5e &&
       (this.AllMonsterDetectionRecord.get(this.l5e).IsTargeting = !1);
-    const t = this.AllMonsterDetectionRecord.get(e);
+    var t = this.AllMonsterDetectionRecord.get(e);
     void 0 !== t && (t.IsTargeting = !0), (this.l5e = e);
   }
   SetDetectingMonsterRefreshTime(e, t) {
     this.AllMonsterDetectionRecord.get(e).RefreshTime = t;
   }
   SetCurDetectingDungeonConfId(e) {
-    this._5e !== 0 &&
+    0 !== this._5e &&
       (this.AllDungeonDetectionRecord.get(this._5e).IsTargeting = !1);
-    const t = this.AllDungeonDetectionRecord.get(e);
+    var t = this.AllDungeonDetectionRecord.get(e);
     void 0 !== t && (t.IsTargeting = !0), (this._5e = e);
   }
   SetCurDetectingMonsterMarkId(e) {
@@ -300,10 +300,10 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
     (this.d5e = e), (this.C5e = t);
   }
   SetCurDetectingSilentAreaConfId(e) {
-    var t = this.AllSilentAreaDetectionRecord.get(this.u5e);
-    var t =
-      (this.u5e !== 0 && t && (t.IsTargeting = !1),
-      this.AllSilentAreaDetectionRecord.get(e));
+    var t = this.AllSilentAreaDetectionRecord.get(this.u5e),
+      t =
+        (0 !== this.u5e && t && (t.IsTargeting = !1),
+        this.AllSilentAreaDetectionRecord.get(e));
     t && (t.IsTargeting = !0), (this.u5e = e);
   }
   GetSilentAreaConfVaild(e) {
@@ -313,16 +313,16 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
     return this.InitAdventureTaskConfig(), !0;
   }
   InitDetectionData() {
-    let e;
+    var e;
     for (const i of ConfigManager_1.ConfigManager.AdventureModuleConfig.GetAllMonsterDetection())
       this.AllMonsterDetectionRecord.set(
         i.Id,
-        new AdventureDefine_1.MonsterDetectionRecord(i, i.LockCon !== 0, 0),
+        new AdventureDefine_1.MonsterDetectionRecord(i, 0 !== i.LockCon, 0),
       );
     for (const n of ConfigManager_1.ConfigManager.AdventureModuleConfig.GetAllDungeonDetection()) {
-      let t = new AdventureDefine_1.DungeonDetectionRecord(
+      var t = new AdventureDefine_1.DungeonDetectionRecord(
         n,
-        n.LockCon !== 0,
+        0 !== n.LockCon,
         0,
       );
       this.AllDungeonDetectionRecord.set(n.Id, t);
@@ -332,9 +332,9 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
       e.push(t);
     }
     for (const o of ConfigManager_1.ConfigManager.AdventureModuleConfig.GetAllSilentAreaDetection()) {
-      let r = new AdventureDefine_1.SilentAreaDetectionRecord(
+      var r = new AdventureDefine_1.SilentAreaDetectionRecord(
         o,
-        o.LockCon !== 0,
+        0 !== o.LockCon,
         0,
       );
       this.AllSilentAreaDetectionRecord.set(o.Id, r);
@@ -362,11 +362,11 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
       if (
         (this.HandleMonsterDetectLockStatus(e.pgs),
         this.a5e.clear(),
-        e.Sgs.size !== 0)
+        0 !== e.Sgs.size)
       )
         for (const o of Object.keys(e.Sgs)) {
-          const t = e.Sgs[o];
-          const r = Number(o);
+          var t = e.Sgs[o],
+            r = Number(o);
           this.a5e.set(r, t),
             t === Protocol_1.Aki.Protocol.GBs.Proto_IsFinish &&
               ControllerHolder_1.ControllerHolder.AdventureGuideController.EmitRedDotFirstAwardEvent(
@@ -377,26 +377,26 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
   }
   HandleMonsterDetectLockStatus(e) {
     for (const n of e.dgs) {
-      const t = this.GetMonsterDetectData(n);
+      var t = this.GetMonsterDetectData(n);
       void 0 !== t && (t.IsLock = !1);
     }
     for (const o of e.mgs) {
-      const r = this.GetSoundAreaDetectData(o);
+      var r = this.GetSoundAreaDetectData(o);
       void 0 !== r && (r.IsLock = !1);
     }
     for (const s of e.Cgs) {
-      const i = this.GetSilentAreaDetectData(s);
+      var i = this.GetSilentAreaDetectData(s);
       void 0 !== i && (i.IsLock = !1);
     }
   }
   P5e(t) {
-    const r =
+    var r =
       ConfigManager_1.ConfigManager.AdventureModuleConfig.GetAdventureTaskConfig(
         t.Ekn,
       );
     if (r) {
-      let i = r.ChapterId;
-      const n = this.h5e.get(i);
+      var i = r.ChapterId,
+        n = this.h5e.get(i);
       let e = void 0;
       void 0 === n ? ((e = new Array()), this.h5e.set(i, e)) : (e = n);
       i = e.find((e) => e.AdventureTaskBase.Id === t.Ekn);
@@ -424,7 +424,7 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
               t.C3n,
               new AdventureDefine_1.MonsterDetectionRecord(
                 r,
-                r.LockCon === 0,
+                0 === r.LockCon,
                 t.cgs,
               ),
             ));
@@ -434,14 +434,14 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
         if (void 0 !== r) r.RefreshTime > t.cgs && (r.RefreshTime = t.cgs);
         else {
           var r =
-            ConfigManager_1.ConfigManager.AdventureModuleConfig.GetDungeonDetectionConfById(
-              t.C3n,
+              ConfigManager_1.ConfigManager.AdventureModuleConfig.GetDungeonDetectionConfById(
+                t.C3n,
+              ),
+            i = new AdventureDefine_1.DungeonDetectionRecord(
+              r,
+              0 === r.LockCon,
+              t.cgs,
             );
-          var i = new AdventureDefine_1.DungeonDetectionRecord(
-            r,
-            r.LockCon === 0,
-            t.cgs,
-          );
           this.AllDungeonDetectionRecord.set(t.C3n, i);
           let e = this.R5e.get(r.Secondary);
           e || ((e = []), this.R5e.set(r.Secondary, e));
@@ -459,7 +459,7 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
             )),
             (i = new AdventureDefine_1.SilentAreaDetectionRecord(
               r,
-              r.LockCon === 0,
+              0 === r.LockCon,
               t.cgs,
             ));
           this.AllSilentAreaDetectionRecord.set(t.C3n, i),
@@ -475,17 +475,17 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
     return this.h5e.get(e);
   }
   SortChapterTasks(e) {
-    const t = this.h5e.get(e);
+    var t = this.h5e.get(e);
     return (
       t.sort((e, t) => {
-        const r =
-          e.Status < Protocol_1.Aki.Protocol.bBs.Proto_Received
-            ? e.Status
-            : -e.Status;
-        const i =
-          t.Status < Protocol_1.Aki.Protocol.bBs.Proto_Received
-            ? t.Status
-            : -t.Status;
+        var r =
+            e.Status < Protocol_1.Aki.Protocol.bBs.Proto_Received
+              ? e.Status
+              : -e.Status,
+          i =
+            t.Status < Protocol_1.Aki.Protocol.bBs.Proto_Received
+              ? t.Status
+              : -t.Status;
         return r !== i
           ? i - r
           : e.AdventureTaskBase.Id - t.AdventureTaskBase.Id;
@@ -496,7 +496,7 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
   }
   GetTaskRecordById(e, t) {
     let r = void 0;
-    if (t !== 0 && void 0 !== t) {
+    if (0 !== t && void 0 !== t) {
       for (const i of (r = this.h5e.get(t)))
         if (i.AdventureTaskBase.Id === e) return i;
     } else
@@ -506,7 +506,7 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
   }
   InitAdventureTaskConfig() {
     for (const r of ConfigManager_1.ConfigManager.AdventureModuleConfig.GetAllAdventureTaskConfig()) {
-      const t = r.ChapterId;
+      var t = r.ChapterId;
       let e = void 0;
       void 0 === this.h5e.get(t)
         ? ((e = new Array()), this.h5e.set(t, e))
@@ -520,16 +520,16 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
     }
   }
   GetMaxLevelOfBlueprintType(e) {
-    const t =
+    var t =
       ModelManager_1.ModelManager.CreatureModel.GetAllEntityIdOfBlueprintType(
         e,
       );
     let r = 0;
-    t.length === 0 &&
+    0 === t.length &&
       Log_1.Log.CheckWarn() &&
       Log_1.Log.Warn("AdventureGuide", 10, "未找到实体配置", ["type ", e]);
     for (const n of t) {
-      let i = ModelManager_1.ModelManager.CreatureModel.GetEntityData(n);
+      var i = ModelManager_1.ModelManager.CreatureModel.GetEntityData(n);
       void 0 !== i?.ComponentsData &&
         (i = (0, IComponent_1.getComponent)(
           i.ComponentsData,
@@ -548,7 +548,7 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
       ).Level;
   }
   UpdatePendingMonsterList(e, t) {
-    if (e.length !== 0) {
+    if (0 !== e.length) {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "AdventureGuide",
@@ -562,14 +562,14 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
           (this.y5e.clear(), (this.v5e = t));
       for (const i of e) {
         var r = ModelManager_1.ModelManager.CreatureModel.GetEntityData(i.Ekn)
-          .Transform.Pos;
-        var r = {
-          Id: i.Ekn,
-          RefreshTime: i.cgs,
-          PositionX: r.X,
-          PositionY: r.Y,
-          PositionZ: r.Z,
-        };
+            .Transform.Pos,
+          r = {
+            Id: i.Ekn,
+            RefreshTime: i.cgs,
+            PositionX: r.X,
+            PositionY: r.Y,
+            PositionZ: r.Z,
+          };
         this.y5e.set(i.Ekn, r);
       }
     }
@@ -635,28 +635,28 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
     return this.GetTaskRecordById(e).AdventureTaskBase.ChapterId === t;
   }
   CleanCurTrackingMonster() {
-    const e = this.GetMonsterDetectData(this.l5e);
+    var e = this.GetMonsterDetectData(this.l5e);
     e && (e.IsTargeting = !1),
       this.SetCurDetectingMonsterConfId(0),
       this.SetCurDetectingMonsterMarkId(0),
       this.SetDetectingMonsterId(0);
   }
   CleanCurTrackingDungeon() {
-    const e = this.GetSoundAreaDetectData(this._5e);
+    var e = this.GetSoundAreaDetectData(this._5e);
     e && (e.IsTargeting = !1),
       this.SetCurDetectingDungeonConfId(0),
       this.SetDetectingDungeonMarkId(0),
       this.SetDetectingDungeonId(0);
   }
   CleanCurTrackingSilentArea() {
-    const e = this.GetSilentAreaDetectData(this.u5e);
+    var e = this.GetSilentAreaDetectData(this.u5e);
     e && (e.IsTargeting = !1),
       this.SetCurDetectingSilentAreaConfId(0),
       this.SetDetectingSilentAreaMarkId(0),
       this.SetDetectingSilentAreaId(0);
   }
   GetAllCulledMonsters() {
-    let e;
+    var e;
     return (
       this.U5e ||
         ((e =
@@ -670,14 +670,14 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
   }
   GetAllCanShowDungeonTypeList() {
     let e = void 0;
-    e = this.CurrentGuideTabName === "NewSoundAreaView" ? 3 : 2;
-    let t;
-    let r;
-    const i = new Array();
+    e = "NewSoundAreaView" === this.CurrentGuideTabName ? 3 : 2;
+    var t,
+      r,
+      i = new Array();
     for ([t, r] of this.R5e) {
-      const n = r[0];
-      (n.Type === 0 && n.DungeonDetectionRecord.Conf.GuideId !== e) ||
-        (n.Type === 1 && n.SilentAreaDetectionRecord.Conf.GuideId !== e) ||
+      var n = r[0];
+      (0 === n.Type && n.DungeonDetectionRecord.Conf.GuideId !== e) ||
+        (1 === n.Type && n.SilentAreaDetectionRecord.Conf.GuideId !== e) ||
         (this.CheckTargetDungeonTypeCanShow(t) && i.push(t));
     }
     return i.sort(
@@ -693,18 +693,18 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
   GetIsTabViewHaveData(e) {
     let t = void 0;
     if (
-      (e === "NewSoundAreaView"
+      ("NewSoundAreaView" === e
         ? (t = 3)
-        : e === "DisposableChallengeView" && (t = 2),
+        : "DisposableChallengeView" === e && (t = 2),
       !t)
     )
       return !0;
-    for (let [r, i] of this.R5e) {
+    for (var [r, i] of this.R5e) {
       i = i[0];
       if (
         !(
-          (i.Type === 0 && i.DungeonDetectionRecord.Conf.GuideId !== t) ||
-          (i.Type === 1 && i.SilentAreaDetectionRecord.Conf.GuideId !== t)
+          (0 === i.Type && i.DungeonDetectionRecord.Conf.GuideId !== t) ||
+          (1 === i.Type && i.SilentAreaDetectionRecord.Conf.GuideId !== t)
         ) &&
         this.CheckTargetDungeonTypeCanShow(r)
       )
@@ -716,17 +716,17 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
     return this.A5e;
   }
   InitAllDetectSilentAreasList() {
-    const e = new Map();
+    var e = new Map();
     for (const n of this.AllSilentAreaDetectionRecord.values()) {
-      let t = e.get(n.Conf.Secondary);
+      var t = e.get(n.Conf.Secondary);
       t ? t.push(n) : ((t = new Array()).push(n), e.set(n.Conf.Secondary, t));
     }
     for (const o of e.values())
       o.sort(AdventureGuideController_1.silentAreasSortFunc);
     for (const s of Array.from(e.keys()).sort((e, t) => t - e)) {
-      const r = e.get(s);
-      if (r.length !== 0) {
-        const i = r[0].Conf.DangerType;
+      var r = e.get(s);
+      if (0 !== r.length) {
+        var i = r[0].Conf.DangerType;
         for (const a of r)
           this.A5e.push({
             IsShow: !1,
@@ -749,10 +749,10 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
   }
   GetShowSilentAreasList(e, t, r) {
     if (void 0 !== t) {
-      const i = t;
+      var i = t;
       for (const o of this.A5e) this.B5e(e, o, i);
     } else if (void 0 !== r) {
-      const n = this.GetSilentAreaDetectData(r);
+      var n = this.GetSilentAreaDetectData(r);
       if (n) for (const s of this.A5e) this.B5e(e, s, n.Conf.Secondary);
     } else for (const a of this.A5e) this.B5e(e, a, void 0);
   }
@@ -761,4 +761,4 @@ class AdventureGuideModel extends ModelBase_1.ModelBase {
   }
 }
 exports.AdventureGuideModel = AdventureGuideModel;
-// # sourceMappingURL=AdventureGuideModel.js.map
+//# sourceMappingURL=AdventureGuideModel.js.map

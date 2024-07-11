@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExploreRewardView = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const ItemRewardController_1 = require("../ItemRewardController");
-const RewardExploreBarList_1 = require("./RewardExploreBarList");
-const RewardExploreConfirmButton_1 = require("./RewardExploreConfirmButton");
-const RewardExploreDescription_1 = require("./RewardExploreDescription");
-const RewardExploreRecord_1 = require("./RewardExploreRecord");
-const RewardExploreScore_1 = require("./RewardExploreScore");
-const RewardExploreTargetReachedList_1 = require("./RewardExploreTargetReachedList");
-const RewardExploreToggle_1 = require("./RewardExploreToggle");
-const RewardItemList_1 = require("./RewardItemList");
-const SUCCESS_OUTLINE_COLOR = "C48B29FF";
-const FAIL_OUTLINE_COLOR = "B33100FF";
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ItemRewardController_1 = require("../ItemRewardController"),
+  RewardExploreBarList_1 = require("./RewardExploreBarList"),
+  RewardExploreConfirmButton_1 = require("./RewardExploreConfirmButton"),
+  RewardExploreDescription_1 = require("./RewardExploreDescription"),
+  RewardExploreRecord_1 = require("./RewardExploreRecord"),
+  RewardExploreScore_1 = require("./RewardExploreScore"),
+  RewardExploreTargetReachedList_1 = require("./RewardExploreTargetReachedList"),
+  RewardExploreToggle_1 = require("./RewardExploreToggle"),
+  RewardItemList_1 = require("./RewardItemList"),
+  SUCCESS_OUTLINE_COLOR = "C48B29FF",
+  FAIL_OUTLINE_COLOR = "B33100FF";
 class ExploreRewardView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -34,8 +34,8 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       (this.SPr = void 0),
       (this.LZe = []),
       (this.e0i = () => {
-        const i = this.Ngi.ButtonInfoList;
-        if (i && i?.length > 0) {
+        var i = this.Ngi.ButtonInfoList;
+        if (i && 0 < i?.length) {
           let t = 0;
           for (const e of i) this.LZe[t].Refresh(e), t++;
         }
@@ -92,18 +92,18 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
         (await this.i0i()),
       this.Ggi.IsItemVisible &&
         this.Ngi.ItemList &&
-        this.Ngi.ItemList?.length > 0 &&
+        0 < this.Ngi.ItemList?.length &&
         (await this.o0i()),
       this.Ggi.IsExploreProgressVisible &&
         this.Ngi.ExploreBarDataList &&
         (await this.r0i()),
       this.Ngi.TargetReached &&
-        this.Ngi.TargetReached?.length > 0 &&
+        0 < this.Ngi.TargetReached?.length &&
         (await this.n0i()),
       this.Ngi.StateToggle && (await this.s0i()),
       this.Ngi.ScoreReached && (await this.EPr());
-    let i = this.Ngi.ButtonInfoList;
-    if (i && i?.length > 0) {
+    var i = this.Ngi.ButtonInfoList;
+    if (i && 0 < i?.length) {
       let t = 0;
       for (const e of i) this.a0i(e, t), t++;
     }
@@ -141,14 +141,14 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       ModelManager_1.ModelManager.ItemRewardModel.ClearCurrentRewardData();
   }
   G$t() {
-    const t = this.GetItem(0);
-    var i = this.Ggi.Title;
-    var i = !StringUtils_1.StringUtils.IsEmpty(i);
+    var t = this.GetItem(0),
+      i = this.Ggi.Title,
+      i = !StringUtils_1.StringUtils.IsEmpty(i);
     return t.SetUIActive(i), i;
   }
   L0t() {
-    const t = this.GetText(1);
-    const i = this.Ggi.Title;
+    var t = this.GetText(1),
+      i = this.Ggi.Title;
     StringUtils_1.StringUtils.IsEmpty(i) ||
       LguiUtil_1.LguiUtil.SetLocalTextNew(t, i);
   }
@@ -157,26 +157,24 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       this.Ggi.Tip && this.GetText(19).SetText(this.Ggi.Tip);
   }
   l0i() {
-    const t = this.GetText(1);
-    const i = t
-      .GetOwner()
-      .GetComponentByClass(UE.UIEffectOutline.StaticClass());
-    const e = this.Ggi.TitleHexColor;
+    var t = this.GetText(1),
+      i = t.GetOwner().GetComponentByClass(UE.UIEffectOutline.StaticClass()),
+      e = this.Ggi.TitleHexColor;
     StringUtils_1.StringUtils.IsEmpty(e) || t.SetColor(UE.Color.FromHex(e)),
       this.Ggi.IsSuccess
         ? i.SetOutlineColor(UE.Color.FromHex(SUCCESS_OUTLINE_COLOR))
         : i.SetOutlineColor(UE.Color.FromHex(FAIL_OUTLINE_COLOR));
   }
   Qgi() {
-    const t = this.GetTexture(2);
-    var i = this.Ggi.TitleIconPath;
-    var i = !StringUtils_1.StringUtils.IsEmpty(i);
+    var t = this.GetTexture(2),
+      i = this.Ggi.TitleIconPath,
+      i = !StringUtils_1.StringUtils.IsEmpty(i);
     return t.SetUIActive(i), i;
   }
   Xgi() {
     const t = this.GetTexture(2);
-    const i = this.Ggi.TitleIconPath;
-    const e = this.Ggi.TitleIconHexColor;
+    var i = this.Ggi.TitleIconPath,
+      e = this.Ggi.TitleIconHexColor;
     StringUtils_1.StringUtils.IsEmpty(i) ||
       (t.SetUIActive(!1),
       this.SetTextureByPath(i, t, void 0, () => {
@@ -185,8 +183,8 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       StringUtils_1.StringUtils.IsEmpty(e) || t.SetColor(UE.Color.FromHex(e));
   }
   async t0i() {
-    let t;
-    const i = this.Ngi.ExploreRecordInfo;
+    var t,
+      i = this.Ngi.ExploreRecordInfo;
     i &&
       ((t = this.GetItem(3)),
       (this.$gi = new RewardExploreRecord_1.RewardExploreRecord()),
@@ -194,8 +192,8 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       this.$gi.Refresh(i));
   }
   async o0i() {
-    let t;
-    const i = this.jIt.GetItemList();
+    var t,
+      i = this.jIt.GetItemList();
     !i ||
       i.length < 1 ||
       ((t = this.GetItem(3)),
@@ -204,8 +202,8 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       this.sOe.Refresh(i));
   }
   async r0i() {
-    let t;
-    const i = this.Ngi.ExploreBarDataList;
+    var t,
+      i = this.Ngi.ExploreBarDataList;
     !i ||
       i.length < 1 ||
       ((t = this.GetItem(3)),
@@ -214,8 +212,8 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       this.Ygi.Refresh(this.Ggi.ExploreBarTipsTextId, i));
   }
   async i0i() {
-    let t;
-    const i = this.Ggi.Description;
+    var t,
+      i = this.Ggi.Description;
     StringUtils_1.StringUtils.IsEmpty(i) ||
       ((t = this.GetItem(3)),
       (this.Jgi = new RewardExploreDescription_1.RewardExploreDescription()),
@@ -223,8 +221,8 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       this.Jgi.Refresh(i));
   }
   async n0i() {
-    let t;
-    const i = this.Ngi.TargetReached;
+    var t,
+      i = this.Ngi.TargetReached;
     !i ||
       i.length < 1 ||
       ((t = this.GetItem(3)),
@@ -234,8 +232,8 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       this.zgi.SetBarList(i));
   }
   async s0i() {
-    let t;
-    const i = this.Ngi.StateToggle;
+    var t,
+      i = this.Ngi.StateToggle;
     i &&
       ((t = this.GetItem(6)),
       (this.Zgi = new RewardExploreToggle_1.RewardExploreToggle()),
@@ -246,8 +244,8 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       this.Zgi.Refresh(i));
   }
   async EPr() {
-    let t;
-    const i = this.Ngi.ScoreReached;
+    var t,
+      i = this.Ngi.ScoreReached;
     i &&
       ((t = this.GetItem(20)),
       (this.SPr = new RewardExploreScore_1.RewardExploreScore()),
@@ -255,12 +253,12 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       this.SPr.Refresh(i));
   }
   a0i(t, i) {
-    var e = this.GetItem(5);
-    var s = this.GetItem(4);
-    var e = LguiUtil_1.LguiUtil.DuplicateActor(e.GetOwner(), s);
-    var s = new RewardExploreConfirmButton_1.RewardExploreConfirmButton(e, i);
+    var e = this.GetItem(5),
+      s = this.GetItem(4),
+      e = LguiUtil_1.LguiUtil.DuplicateActor(e.GetOwner(), s),
+      s = new RewardExploreConfirmButton_1.RewardExploreConfirmButton(e, i);
     return s.Refresh(t), s.SetActive(!0), this.LZe.push(s), s;
   }
 }
 exports.ExploreRewardView = ExploreRewardView;
-// # sourceMappingURL=ExploreRewardView.js.map
+//# sourceMappingURL=ExploreRewardView.js.map

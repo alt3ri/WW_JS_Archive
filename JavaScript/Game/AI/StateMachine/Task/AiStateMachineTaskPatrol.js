@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineTaskPatrol = void 0);
-const GlobalData_1 = require("../../../GlobalData");
-const TsAiController_1 = require("../../Controller/TsAiController");
-const AiStateMachineTask_1 = require("./AiStateMachineTask");
+const GlobalData_1 = require("../../../GlobalData"),
+  TsAiController_1 = require("../../Controller/TsAiController"),
+  AiStateMachineTask_1 = require("./AiStateMachineTask");
 class AiStateMachineTaskPatrol extends AiStateMachineTask_1.AiStateMachineTask {
   constructor() {
     super(...arguments),
@@ -26,7 +26,7 @@ class AiStateMachineTaskPatrol extends AiStateMachineTask_1.AiStateMachineTask {
     );
   }
   OnEnter(t) {
-    const i = this.Node.AiComponent.TsAiController;
+    var i = this.Node.AiComponent.TsAiController;
     i instanceof TsAiController_1.default &&
     ((this.Bte = i.AiController),
     (this.mLn = this.Bte.AiPatrol),
@@ -56,7 +56,7 @@ class AiStateMachineTaskPatrol extends AiStateMachineTask_1.AiStateMachineTask {
       this.mLn.ResetBaseInfoByMainPoint(this.Gce, this.mBe, this.MoveState);
   }
   pLn() {
-    let t;
+    var t;
     GlobalData_1.GlobalData.BpEventManager &&
       (t = this.mLn?.PatrolPoint) &&
       t.IsMain &&
@@ -67,7 +67,7 @@ class AiStateMachineTaskPatrol extends AiStateMachineTask_1.AiStateMachineTask {
   }
   vLn() {
     const i = this.mLn?.PatrolPoint;
-    let t;
+    var t;
     i &&
       (this.dLn.HasPatrolRecord()
         ? this.dLn.ResumePatrol("AiStateMachineTaskPatrol")
@@ -76,11 +76,11 @@ class AiStateMachineTaskPatrol extends AiStateMachineTask_1.AiStateMachineTask {
             UseNearestPoint: !0,
             ReturnFalseWhenNavigationFailed: !1,
             OnArrivePointHandle: () => {
-              const t = this.dLn.GetLastPointRawIndex();
-              t !== -1 && this.mLn.SetPatrolIndex(t), i.IsMain && this.pLn();
+              var t = this.dLn.GetLastPointRawIndex();
+              -1 !== t && this.mLn.SetPatrolIndex(t), i.IsMain && this.pLn();
             },
             OnPatrolEndHandle: (t) => {
-              t === 1 && this.gLn(), this.$ne();
+              1 === t && this.gLn(), this.$ne();
             },
           }),
           this.dLn.StartPatrol(this.$ie.SplineEntityId, t)));
@@ -101,4 +101,4 @@ class AiStateMachineTaskPatrol extends AiStateMachineTask_1.AiStateMachineTask {
   }
 }
 exports.AiStateMachineTaskPatrol = AiStateMachineTaskPatrol;
-// # sourceMappingURL=AiStateMachineTaskPatrol.js.map
+//# sourceMappingURL=AiStateMachineTaskPatrol.js.map

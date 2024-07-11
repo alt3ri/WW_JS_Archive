@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GiftPackageItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const CommonItemSmallItemGrid_1 = require("../../../Common/ItemGrid/CommonItemSmallItemGrid");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  CommonItemSmallItemGrid_1 = require("../../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  LguiUtil_1 = require("../../../Util/LguiUtil");
 class GiftPackageItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -37,4 +37,4 @@ class GiftPackageItem extends UiPanelBase_1.UiPanelBase {
   OnBeforeDestroy() {}
 }
 exports.GiftPackageItem = GiftPackageItem;
-// # sourceMappingURL=GiftPackageItem.js.map
+//# sourceMappingURL=GiftPackageItem.js.map

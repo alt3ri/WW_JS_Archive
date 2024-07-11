@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MenuController = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager");
-const InputSettings_1 = require("../../InputSettings/InputSettings");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const AdviceController_1 = require("../Advice/AdviceController");
-const CommonInputViewController_1 = require("../Common/InputView/Controller/CommonInputViewController");
-const LogReportController_1 = require("../LogReport/LogReportController");
-const LogReportDefine_1 = require("../LogReport/LogReportDefine");
-const MenuDefine_1 = require("./MenuDefine");
-const MenuFunction_1 = require("./MenuFunction");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
+  InputSettings_1 = require("../../InputSettings/InputSettings"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  AdviceController_1 = require("../Advice/AdviceController"),
+  CommonInputViewController_1 = require("../Common/InputView/Controller/CommonInputViewController"),
+  LogReportController_1 = require("../LogReport/LogReportController"),
+  LogReportDefine_1 = require("../LogReport/LogReportDefine"),
+  MenuDefine_1 = require("./MenuDefine"),
+  MenuFunction_1 = require("./MenuFunction");
 class MenuController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
@@ -33,15 +33,15 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
     MenuController.JPi();
   }
   static JPi() {
-    const e = ModelManager_1.ModelManager.MenuModel;
+    var e = ModelManager_1.ModelManager.MenuModel;
     if (e) {
-      const n = UE.GameUserSettings.GetGameUserSettings().GetFullscreenMode();
-      let t = GameQualitySettingsManager_1.GameQualitySettingsManager.Get();
-      const a = t.GetCurrentQualityInfo();
+      var n = UE.GameUserSettings.GetGameUserSettings().GetFullscreenMode(),
+        t = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
+        a = t.GetCurrentQualityInfo();
       if (
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Menu", 8, "刷新当前全屏模式", ["fullscreenMode", n]),
-        UE.KismetSystemLibrary.GetCommandLine().search("-windowed") >= 0)
+        0 <= UE.KismetSystemLibrary.GetCommandLine().search("-windowed"))
       )
         (t = t.GetResolutionByList(MenuDefine_1.WINDOWS_RESOLUTION_INDEX)),
           Log_1.Log.CheckInfo() &&
@@ -93,8 +93,8 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
         this.IOn(e, n));
   }
   static yOn(e, n) {
-    const t = this.TOn(e, n);
-    const a = this.LOn(e, n);
+    var t = this.TOn(e, n),
+      a = this.LOn(e, n);
     return this.DOn(e, n), t || a;
   }
   static IOn(e, n) {
@@ -128,21 +128,21 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
     return ModelManager_1.ModelManager.MenuModel.GetTargetMenuData(e);
   }
   static GetServerConfigValue(e) {
-    return e !== 59 ||
+    return 59 !== e ||
       ModelManager_1.ModelManager.AdviceModel.GetAdviceShowSetting()
       ? 0
       : 1;
   }
   static CheckIfServerConfig(e) {
-    return e === 59;
+    return 59 === e;
   }
   static zPi() {
-    const e = GameQualitySettingsManager_1.GameQualitySettingsManager.Get();
-    const n = this.GetTargetConfig(6);
+    var e = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
+      n = this.GetTargetConfig(6);
     return e.GetResolutionByList(n).ToString();
   }
   static ReportSettingMenuLogEvent() {
-    const e = new LogReportDefine_1.SettingMenuLogEvent();
+    var e = new LogReportDefine_1.SettingMenuLogEvent();
     (e.i_image_quality = this.GetTargetConfig(10)),
       (e.i_display_mode = this.GetTargetConfig(5)),
       (e.s_resolution = this.zPi()),
@@ -175,7 +175,7 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
       LogReportController_1.LogReportController.LogReport(e);
   }
   static DoSetServerConfigFunction(e) {
-    e === 59 &&
+    59 === e &&
       ((e = !ModelManager_1.ModelManager.AdviceModel.GetAdviceShowSetting()),
       AdviceController_1.AdviceController.RequestSetAdviceShowState(e));
   }
@@ -353,7 +353,7 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
     }
   }
   static AutoDoConfigFunction() {
-    const e = ModelManager_1.ModelManager.MenuModel.GetMenuDataKeys();
+    var e = ModelManager_1.ModelManager.MenuModel.GetMenuDataKeys();
     if (e)
       for (const n of e)
         switch (n) {
@@ -368,7 +368,7 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
   }
   static NoticeChange(e) {
     switch (
-      (e === 10 && MenuFunction_1.MenuNoticeFunction.ImageQuality(e), e)
+      (10 === e && MenuFunction_1.MenuNoticeFunction.ImageQuality(e), e)
     ) {
       case MenuDefine_1.EImageConfig.IMAGEQUALITY:
       case MenuDefine_1.EImageConfig.HIGHESTFPS:
@@ -407,7 +407,7 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
     if (!e) return !1;
     if (!e.CanAffectedFunction(n)) return !1;
     let t = !1;
-    const a = e.AffectedFunction;
+    var a = e.AffectedFunction;
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Menu",
@@ -418,7 +418,7 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
         ["affectedFunction", a],
       );
     for (const [r, n] of a) {
-      const i = this.GetTargetMenuData(r);
+      var i = this.GetTargetMenuData(r);
       i &&
         (this.yOn(i, n) && (t = !0),
         EventSystem_1.EventSystem.Emit(
@@ -452,8 +452,8 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
   }
   static DOn(e, n) {
     if (e && e.HasDisableFunction()) {
-      const t = !e.IsAffectedDisable(n);
-      const a = e.DisableFunction;
+      var t = !e.IsAffectedDisable(n),
+        a = e.DisableFunction;
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Menu",
@@ -464,7 +464,7 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
           ["disableFunction", a],
         );
       for (const r of a) {
-        const i = this.GetTargetMenuData(r);
+        var i = this.GetTargetMenuData(r);
         i &&
           ((i.IsEnable = t),
           EventSystem_1.EventSystem.Emit(
@@ -476,8 +476,8 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
     }
   }
   static GetTargetConfigOptionString(e) {
-    const n = this.GetTargetConfig(e);
-    var e = this.GetTargetMenuData(e);
+    var n = this.GetTargetConfig(e),
+      e = this.GetTargetMenuData(e);
     if (e)
       return (
         (e = e.MenuDataOptionsNameList[n]),
@@ -488,13 +488,13 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
     MenuFunction_1.MenuFunction.ApplyNvidiaSuperSamplingMode();
   }
   static GetResolutionList(e) {
-    const n = MenuController.ZPi(e);
-    const t =
-      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetResolutionList();
-    const a = [];
+    var n = MenuController.ZPi(e),
+      t =
+        GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetResolutionList(),
+      a = [];
     for (let e = 0; e < t.length; ++e) {
-      var i = t[e];
-      var i = i.X + "*" + i.Y;
+      var i = t[e],
+        i = i.X + "*" + i.Y;
       n.includes(i) && a.push(e);
     }
     return (
@@ -512,9 +512,9 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static ZPi(e) {
-    const n = [];
+    var n = [];
     for (const a of e) {
-      const t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(a);
+      var t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(a);
       n.push(t);
     }
     return n;
@@ -544,4 +544,4 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
   (MenuController.txi = () => {
     CommonInputViewController_1.CommonInputViewController.OpenCdKeyInputView();
   });
-// # sourceMappingURL=MenuController.js.map
+//# sourceMappingURL=MenuController.js.map

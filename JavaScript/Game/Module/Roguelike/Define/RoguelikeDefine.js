@@ -100,4 +100,4 @@ class ElementInfo {
   (exports.T_ROGUELIKETOTALELEMENT = "T_RoguelikeTotalElement"),
   (exports.ROGUELIKE_SPECIAL_ITEM_UNLOCK_ALPHA = 1),
   (exports.ROGUELIKE_SPECIAL_ITEM_LOCK_ALPHA = 0.6);
-// # sourceMappingURL=RoguelikeDefine.js.map
+//# sourceMappingURL=RoguelikeDefine.js.map

@@ -18,7 +18,7 @@ class AssemblyGridSort extends CommonSort_1.CommonSort {
       (this.VLt = (t, s, r) => {
         let e = 0;
         return (
-          t.GridType === 2 &&
+          2 === t.GridType &&
             ((t = t.QualityId), (s = s.QualityId), (e = s - t)),
           e * (r ? -1 : 1)
         );
@@ -26,7 +26,7 @@ class AssemblyGridSort extends CommonSort_1.CommonSort {
       (this.HLt = (t, s, r) => {
         let e = 0;
         return (
-          t.GridType === 2 && ((t = t.ItemNum), (s = s.ItemNum), (e = t - s)),
+          2 === t.GridType && ((t = t.ItemNum), (s = s.ItemNum), (e = t - s)),
           e * (r ? -1 : 1)
         );
       });
@@ -40,4 +40,4 @@ class AssemblyGridSort extends CommonSort_1.CommonSort {
   }
 }
 exports.AssemblyGridSort = AssemblyGridSort;
-// # sourceMappingURL=AssemblyGridSort.js.map
+//# sourceMappingURL=AssemblyGridSort.js.map

@@ -7,12 +7,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const LauncherLog_1 = require("./LauncherLog");
 async function whetherRepeatDoOnFailedAsync(e, r) {
   let t = await e().catch((e) => {
-    LauncherLog_1.LauncherLog.ErrorWithStack(
-      e instanceof Error ? e.message : e,
-      e,
-    );
-  });
-  let a = !t || !t.Success;
+      LauncherLog_1.LauncherLog.ErrorWithStack(
+        e instanceof Error ? e.message : e,
+        e,
+      );
+    }),
+    a = !t || !t.Success;
   for (; a; )
     try {
       t = await r(t ? t.Others : void 0, e);
@@ -50,9 +50,9 @@ async function whetherRepeatDoOnFailed(r, t) {
   }
 }
 function randomArray(r) {
-  for (let e = r.length - 1; e >= 0; e--) {
+  for (let e = r.length - 1; 0 <= e; e--) {
     var t, a;
-    e > 0 &&
+    0 < e &&
       (t = Math.floor(Math.random() * (e + 1))) !== e &&
       ((a = r[t]), (r[t] = r[e]), (r[e] = a));
   }
@@ -60,4 +60,4 @@ function randomArray(r) {
 (exports.whetherRepeatDoOnFailedAsync = whetherRepeatDoOnFailedAsync),
   (exports.whetherRepeatDoOnFailed = whetherRepeatDoOnFailed),
   (exports.randomArray = randomArray);
-// # sourceMappingURL=ProcedureUtil.js.map
+//# sourceMappingURL=ProcedureUtil.js.map

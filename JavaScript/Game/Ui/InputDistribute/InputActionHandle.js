@@ -14,4 +14,4 @@ class InputActionHandle extends InputDistributeHandle_1.InputDistributeHandle {
   }
 }
 exports.InputActionHandle = InputActionHandle;
-// # sourceMappingURL=InputActionHandle.js.map
+//# sourceMappingURL=InputActionHandle.js.map

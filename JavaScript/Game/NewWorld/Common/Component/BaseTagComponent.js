@@ -1,28 +1,32 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, a, i) {
-    let s;
-    const r = arguments.length;
-    let n =
-      r < 3 ? e : i === null ? (i = Object.getOwnPropertyDescriptor(e, a)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var s,
+      r = arguments.length,
+      n =
+        r < 3
+          ? e
+          : null === i
+            ? (i = Object.getOwnPropertyDescriptor(e, a))
+            : i;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(t, e, a, i);
     else
-      for (let o = t.length - 1; o >= 0; o--)
-        (s = t[o]) && (n = (r < 3 ? s(n) : r > 3 ? s(e, a, n) : s(e, a)) || n);
-    return r > 3 && n && Object.defineProperty(e, a, n), n;
+      for (var o = t.length - 1; 0 <= o; o--)
+        (s = t[o]) && (n = (r < 3 ? s(n) : 3 < r ? s(e, a, n) : s(e, a)) || n);
+    return 3 < r && n && Object.defineProperty(e, a, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BaseTagComponent = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Stats_1 = require("../../../../Core/Common/Stats");
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const CharacterTagContainer_1 = require("../../Character/Common/Component/Abilities/CharacterTagContainer");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
+  EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  CharacterTagContainer_1 = require("../../Character/Common/Component/Abilities/CharacterTagContainer");
 class TagSwitchedTask {
   constructor() {
     (this.Xir = 0), (this.B7 = void 0), (this.Xte = void 0);
@@ -71,7 +75,7 @@ let BaseTagComponent = class BaseTagComponent extends EntityComponent_1.EntityCo
     );
   }
   OnStart() {
-    const t = this.Entity.GetComponent(3)?.Actor?.AbilitySystemComponent;
+    var t = this.Entity.GetComponent(3)?.Actor?.AbilitySystemComponent;
     return t?.IsValid() && this.TagContainer.BindTsTagContainer(t), !0;
   }
   OnEnd() {
@@ -79,7 +83,7 @@ let BaseTagComponent = class BaseTagComponent extends EntityComponent_1.EntityCo
   }
   Emit(t, e, ...a) {
     if (void 0 !== t && void 0 !== e) {
-      const i = GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(t);
+      var i = GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(t);
       for (const s of [...e])
         try {
           s(...a);
@@ -144,7 +148,7 @@ let BaseTagComponent = class BaseTagComponent extends EntityComponent_1.EntityCo
     return void 0 === t ? 0 : this.TagContainer.GetTagCount(t);
   }
   ListenForTagAddOrRemove(t, e, a) {
-    let i;
+    var i;
     if (void 0 !== t && e)
       return (i = new TagSwitchedTask()).StartTask(t, e, this, a), i;
     Log_1.Log.CheckError() &&
@@ -182,7 +186,7 @@ let BaseTagComponent = class BaseTagComponent extends EntityComponent_1.EntityCo
     t && t.delete(e);
   }
   ListenForTagAnyCountChanged(t, e) {
-    let a;
+    var a;
     if (void 0 !== t && e)
       return (a = new TagChangedTask()).StartTask(t, e, this), a;
     Log_1.Log.CheckError() &&
@@ -220,11 +224,11 @@ let BaseTagComponent = class BaseTagComponent extends EntityComponent_1.EntityCo
     return this.TagContainer?.GetDebugString() ?? "";
   }
   OnAnyTagChanged(t, e, a) {
-    let i;
+    var i;
     void 0 !== t &&
       a !== e &&
-      ((i = e > 0),
-      (a === 0) != (e === 0) &&
+      ((i = 0 < e),
+      (0 === a) != (0 === e) &&
         this.Emit(t, this.TagSwitchedCallbacks.get(t), t, i),
       this.Emit(t, this.TagChangedCallbacks.get(t), e),
       EventSystem_1.EventSystem.EmitWithTarget(
@@ -251,4 +255,4 @@ let BaseTagComponent = class BaseTagComponent extends EntityComponent_1.EntityCo
   BaseTagComponent,
 )),
   (exports.BaseTagComponent = BaseTagComponent);
-// # sourceMappingURL=BaseTagComponent.js.map
+//# sourceMappingURL=BaseTagComponent.js.map

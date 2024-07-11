@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../GlobalData");
-const CharacterController_1 = require("../../../NewWorld/Character/CharacterController");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../GlobalData"),
+  CharacterController_1 = require("../../../NewWorld/Character/CharacterController"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController");
 class TsDecoratorActorsLocation extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -37,7 +37,7 @@ class TsDecoratorActorsLocation extends UE.BTDecorator_BlueprintBase {
       )));
   }
   PerformConditionCheckAI(t, r) {
-    const e = t.AiController;
+    var e = t.AiController;
     if (!e)
       return (
         Log_1.Log.CheckError() &&
@@ -48,8 +48,8 @@ class TsDecoratorActorsLocation extends UE.BTDecorator_BlueprintBase {
         !1
       );
     this.InitTsVariables();
-    let i = e.CharActorComp;
-    const o = i.Entity.Id;
+    var i = e.CharActorComp,
+      o = i.Entity.Id;
     let s = i;
     if (this.TsKeyActorA) {
       i = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
@@ -126,4 +126,4 @@ class TsDecoratorActorsLocation extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorActorsLocation;
-// # sourceMappingURL=TsDecoratorActorsLocation.js.map
+//# sourceMappingURL=TsDecoratorActorsLocation.js.map

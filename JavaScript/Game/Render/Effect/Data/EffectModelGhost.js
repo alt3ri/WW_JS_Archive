@@ -12,4 +12,4 @@ class EffectModelGhost extends UE.EffectModelBase {
   }
 }
 exports.default = EffectModelGhost;
-// # sourceMappingURL=EffectModelGhost.js.map
+//# sourceMappingURL=EffectModelGhost.js.map

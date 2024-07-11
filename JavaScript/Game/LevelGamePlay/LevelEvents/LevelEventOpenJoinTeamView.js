@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventOpenJoinTeamView = void 0);
-const JoinTeamController_1 = require("../../Module/JoinTeam/JoinTeamController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const JoinTeamController_1 = require("../../Module/JoinTeam/JoinTeamController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventOpenJoinTeamView extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, n) {
     e &&
@@ -11,4 +11,4 @@ class LevelEventOpenJoinTeamView extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventOpenJoinTeamView = LevelEventOpenJoinTeamView;
-// # sourceMappingURL=LevelEventOpenJoinTeamView.js.map
+//# sourceMappingURL=LevelEventOpenJoinTeamView.js.map

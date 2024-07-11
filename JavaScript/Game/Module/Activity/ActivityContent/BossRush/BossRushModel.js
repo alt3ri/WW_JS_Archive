@@ -5,10 +5,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.BossRushBuffInfo =
     exports.BossRushRoleInfo =
       void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../../../Core/Framework/ModelBase");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../../../Core/Framework/ModelBase"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager");
 class BossRushRoleInfo {
   constructor() {
     (this.RoleId = 0), (this.Slot = 0);
@@ -59,19 +59,19 @@ class BossRushTeamInfo {
         (e.State = o.State),
         this.zAr.push(e);
     }
-    for (const r of e) r.BuffId > 0 && this.lPr.push(r);
-    for (const i of t) i.BuffId > 0 && this.lPr.push(i);
-    for (const n of s) n.BuffId > 0 && this.lPr.push(n);
+    for (const r of e) 0 < r.BuffId && this.lPr.push(r);
+    for (const i of t) 0 < i.BuffId && this.lPr.push(i);
+    for (const n of s) 0 < n.BuffId && this.lPr.push(n);
   }
   GetIndexBuff(e) {
     if (!(e >= this.zAr.length)) return this.zAr[e];
   }
   GetOptionBuff() {
-    const e = [];
+    var e = [];
     for (const t of this.lPr)
-      ((t.BuffId > 0 && t.State === Protocol_1.Aki.Protocol.ABs.KPs) ||
+      ((0 < t.BuffId && t.State === Protocol_1.Aki.Protocol.ABs.KPs) ||
         t.Slot < 0) &&
-        e.findIndex((e) => e.BuffId === t.BuffId) === -1 &&
+        -1 === e.findIndex((e) => e.BuffId === t.BuffId) &&
         e.push(t);
     return e;
   }
@@ -96,8 +96,8 @@ class BossRushTeamInfo {
     this.uPr.length <= e ? this.uPr.push(t) : (this.uPr[e] = t);
   }
   ReSortTeamMembers() {
-    const t = [];
-    for (const e of this.uPr) e > 0 && t.push(e);
+    var t = [];
+    for (const e of this.uPr) 0 < e && t.push(e);
     for (let e = t.length; e < this.uPr.length; e++) t.push(0);
     this.uPr = t;
   }
@@ -111,16 +111,16 @@ class BossRushTeamInfo {
     );
   }
   GetIfLevelTooLow() {
-    let e = 0;
-    let t = 0;
+    let e = 0,
+      t = 0;
     for (const o of this.uPr) {
-      var s = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(o);
-      var s =
-        (s && ((e += s.GetLevelData().GetLevel()), t++),
-        ModelManager_1.ModelManager.RoleModel.GetRoleDataById(o));
+      var s = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(o),
+        s =
+          (s && ((e += s.GetLevelData().GetLevel()), t++),
+          ModelManager_1.ModelManager.RoleModel.GetRoleDataById(o));
       s && ((e += s.GetLevelData().GetLevel()), t++);
     }
-    return e / t < this.GetRecommendLevel() || t === 0;
+    return e / t < this.GetRecommendLevel() || 0 === t;
   }
   Clear() {
     (this.zAr = []), (this.uPr = []);
@@ -152,11 +152,11 @@ class BossRushModel extends ModelBase_1.ModelBase {
     return t || ((t = new BossRushTeamInfo()), this.mPr.set(e, t)), t;
   }
   GetHaveUnTakeRewardIds(e) {
-    const t = this.GetFullScore(e);
-    const s = [];
+    var t = this.GetFullScore(e),
+      s = [];
     for (const r of []) {
       var o;
-      t >= 0 && (o = this.dPr.get(e)) && !o.includes(r) && s.push(r);
+      0 <= t && (o = this.dPr.get(e)) && !o.includes(r) && s.push(r);
     }
     return s;
   }
@@ -165,4 +165,4 @@ class BossRushModel extends ModelBase_1.ModelBase {
   }
 }
 exports.BossRushModel = BossRushModel;
-// # sourceMappingURL=BossRushModel.js.map
+//# sourceMappingURL=BossRushModel.js.map

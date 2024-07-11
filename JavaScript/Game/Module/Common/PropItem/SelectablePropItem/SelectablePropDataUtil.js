@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SelectablePropDataUtil = void 0);
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const SelectablePropItemDefine_1 = require("./SelectablePropItemDefine");
+const ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  SelectablePropItemDefine_1 = require("./SelectablePropItemDefine");
 class SelectablePropDataUtil {
   static get TickMaxTime() {
     return (
@@ -30,16 +30,16 @@ class SelectablePropDataUtil {
     );
   }
   static GetSelectablePropData(e) {
-    const t = e.GetItemDataType();
-    return t === 2
+    var t = e.GetItemDataType();
+    return 2 === t
       ? this.WeaponPropData(e.GetUniqueId())
-      : t === 3
+      : 3 === t
         ? this.PhantomPropData(e.GetUniqueId(), e.GetCount())
         : this.MaterialPropData(e.GetConfigId(), e.GetCount());
   }
   static WeaponPropData(e) {
-    const t = new SelectablePropItemDefine_1.SelectablePropData();
-    const a = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(e);
+    var t = new SelectablePropItemDefine_1.SelectablePropData(),
+      a = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(e);
     return (
       (t.IncId = e),
       (t.ItemId = a.GetItemId()),
@@ -53,9 +53,9 @@ class SelectablePropDataUtil {
     );
   }
   static PhantomPropData(e, t) {
-    let a;
-    const r =
-      ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(e);
+    var a,
+      r =
+        ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(e);
     if (r)
       return (
         ((a = new SelectablePropItemDefine_1.SelectablePropData()).IncId = e),
@@ -69,7 +69,7 @@ class SelectablePropDataUtil {
       );
   }
   static MaterialPropData(e, t) {
-    const a = new SelectablePropItemDefine_1.SelectablePropData();
+    var a = new SelectablePropItemDefine_1.SelectablePropData();
     return (
       (a.IncId = 0),
       (a.LevelText = t.toString()),
@@ -81,4 +81,4 @@ class SelectablePropDataUtil {
   }
 }
 exports.SelectablePropDataUtil = SelectablePropDataUtil;
-// # sourceMappingURL=SelectablePropDataUtil.js.map
+//# sourceMappingURL=SelectablePropDataUtil.js.map

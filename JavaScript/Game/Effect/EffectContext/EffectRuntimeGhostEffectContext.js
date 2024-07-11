@@ -12,4 +12,4 @@ class EffectRuntimeGhostEffectContext extends SkeletalMeshEffectContext_1.Skelet
   }
 }
 exports.EffectRuntimeGhostEffectContext = EffectRuntimeGhostEffectContext;
-// # sourceMappingURL=EffectRuntimeGhostEffectContext.js.map
+//# sourceMappingURL=EffectRuntimeGhostEffectContext.js.map

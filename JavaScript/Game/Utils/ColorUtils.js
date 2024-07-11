@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ColorUtils = void 0);
-const UE = require("ue");
-const MAX_BYTE = 255;
+const UE = require("ue"),
+  MAX_BYTE = 255;
 class ColorUtils {}
 ((exports.ColorUtils = ColorUtils).LinearYellow = new UE.LinearColor(
   1,
@@ -25,4 +25,4 @@ class ColorUtils {}
   (ColorUtils.ColorBlack = new UE.Color(0, 0, 0, MAX_BYTE)),
   (ColorUtils.ColorYellow = new UE.Color(MAX_BYTE, MAX_BYTE, 0, 0)),
   (ColorUtils.ColorRed = new UE.Color(MAX_BYTE, 0, 0, 0));
-// # sourceMappingURL=ColorUtils.js.map
+//# sourceMappingURL=ColorUtils.js.map

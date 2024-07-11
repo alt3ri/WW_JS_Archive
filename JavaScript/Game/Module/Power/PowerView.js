@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PowerView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const CommonCurrencyItem_1 = require("../Common/CommonCurrencyItem");
-const MediumItemGrid_1 = require("../Common/MediumItemGrid/MediumItemGrid");
-const ItemDefines_1 = require("../Item/Data/ItemDefines");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const GenericScrollView_1 = require("../Util/ScrollView/GenericScrollView");
-const PowerController_1 = require("./PowerController");
-const COUN_NOT_ENOUGH_COLOR = "9D2437FF";
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  CommonCurrencyItem_1 = require("../Common/CommonCurrencyItem"),
+  MediumItemGrid_1 = require("../Common/MediumItemGrid/MediumItemGrid"),
+  ItemDefines_1 = require("../Item/Data/ItemDefines"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  GenericScrollView_1 = require("../Util/ScrollView/GenericScrollView"),
+  PowerController_1 = require("./PowerController"),
+  COUN_NOT_ENOUGH_COLOR = "9D2437FF";
 class PowerView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -45,10 +45,10 @@ class PowerView extends UiViewBase_1.UiViewBase {
         this.CloseMe();
       }),
       (this.xUt = () => {
-        this.Rio.Type === 1
+        1 === this.Rio.Type
           ? (this.CloseMe(), PowerController_1.PowerController.OpenPowerView())
-          : this.Rio.Type === 2
-            ? this.Uio.RemainCount === 0
+          : 2 === this.Rio.Type
+            ? 0 === this.Uio.RemainCount
               ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                   "PowerRamainCountFail",
                 )
@@ -66,8 +66,8 @@ class PowerView extends UiViewBase_1.UiViewBase {
             : this.CloseMe();
       }),
       (this.qio = (e) => {
-        const i = e.Data;
-        var e = e.MediumItemGrid;
+        var i = e.Data,
+          e = e.MediumItemGrid;
         this.N2t?.SetSelected(!1), (this.N2t = e), (this.Uio = i), this.Gio(i);
       }),
       (this.Cbt = () => {
@@ -77,7 +77,7 @@ class PowerView extends UiViewBase_1.UiViewBase {
             ModelManager_1.ModelManager.PowerModel.PowerCount,
             this.Pio,
           );
-        const e = ModelManager_1.ModelManager.PowerModel.PowerCount / this.Pio;
+        var e = ModelManager_1.ModelManager.PowerModel.PowerCount / this.Pio;
         this.GetSlider(17).SetValue(e),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -113,16 +113,16 @@ class PowerView extends UiViewBase_1.UiViewBase {
       }),
       (this.Mni = (e, i, t) => {
         if (this.Fio(e)) return { Key: t, Value: void 0 };
-        this.Bio === -1 && (this.Bio = t);
-        const s = new MediumItemGrid_1.MediumItemGrid();
-        var i =
-          (s.Initialize(i.GetOwner()),
-          {
-            Data: e,
-            Type: 4,
-            ItemConfigId: e.ItemId,
-            BottomText: e.StackValue.toString(),
-          });
+        -1 === this.Bio && (this.Bio = t);
+        var s = new MediumItemGrid_1.MediumItemGrid(),
+          i =
+            (s.Initialize(i.GetOwner()),
+            {
+              Data: e,
+              Type: 4,
+              ItemConfigId: e.ItemId,
+              BottomText: e.StackValue.toString(),
+            });
         return (
           s.Apply(i),
           s.BindOnExtendToggleClicked(this.qio),
@@ -217,7 +217,7 @@ class PowerView extends UiViewBase_1.UiViewBase {
         .finally(() => {
           this.dbt.ShowWithoutText(ItemDefines_1.EItemId.Power),
             this.dbt.SetButtonActive(!1);
-          const e = ModelManager_1.ModelManager.PowerModel.PowerCount;
+          var e = ModelManager_1.ModelManager.PowerModel.PowerCount;
           this.dbt.RefreshTemp(ItemDefines_1.EItemId.Power, e + "/" + this.Pio);
         })),
       this.wio ||
@@ -228,28 +228,27 @@ class PowerView extends UiViewBase_1.UiViewBase {
             this.ChildPopView?.PopItem?.GetCostParent(),
           )
           .finally(() => {
-            const e =
-              ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerMoney(
-                ItemDefines_1.EItemId.BlackCard,
-              );
+            var e = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerMoney(
+              ItemDefines_1.EItemId.BlackCard,
+            );
             this.wio.RefreshTemp(ItemDefines_1.EItemId.BlackCard, e.toString()),
               this.wio.SetToPayShopFunction();
           }));
   }
   P$t() {
-    let e = ModelManager_1.ModelManager.PowerModel.RestTime;
-    var i = e / TimeUtil_1.TimeUtil.Hour;
-    var t = (e % TimeUtil_1.TimeUtil.Hour) / TimeUtil_1.TimeUtil.Minute;
-    let s = e % TimeUtil_1.TimeUtil.Minute;
-    var r = (i = Math.trunc(i)) < 10 ? "0" : "";
-    var h = (t = Math.trunc(t)) < 10 ? "0" : "";
-    const n = (s = Math.trunc(s)) < 10 ? "0" : "";
-    var r =
-      (this.GetText(5).SetText(r + i + `:${h}${t}:` + n + s),
-      (e %= this.Aio) / TimeUtil_1.TimeUtil.Minute);
-    var i = e % TimeUtil_1.TimeUtil.Minute;
-    var h = (r = Math.trunc(r)) < 10 ? "0" : "";
-    var t = (i = Math.trunc(i)) < 10 ? "0" : "";
+    var e = ModelManager_1.ModelManager.PowerModel.RestTime,
+      i = e / TimeUtil_1.TimeUtil.Hour,
+      t = (e % TimeUtil_1.TimeUtil.Hour) / TimeUtil_1.TimeUtil.Minute,
+      s = e % TimeUtil_1.TimeUtil.Minute,
+      r = (i = Math.trunc(i)) < 10 ? "0" : "",
+      h = (t = Math.trunc(t)) < 10 ? "0" : "",
+      n = (s = Math.trunc(s)) < 10 ? "0" : "",
+      r =
+        (this.GetText(5).SetText(r + i + `:${h}${t}:` + n + s),
+        (e %= this.Aio) / TimeUtil_1.TimeUtil.Minute),
+      i = e % TimeUtil_1.TimeUtil.Minute,
+      h = (r = Math.trunc(r)) < 10 ? "0" : "",
+      t = (i = Math.trunc(i)) < 10 ? "0" : "";
     this.GetText(4).SetText(h + r + ":" + t + i);
   }
   Vio() {
@@ -292,18 +291,18 @@ class PowerView extends UiViewBase_1.UiViewBase {
     this.GetButton(2)
       .GetOwner()
       .GetComponentByClass(UE.UIInteractionGroup.StaticClass())
-      .SetInteractable(e.RemainCount !== 0),
-      this.GetButton(16).RootUIComp.SetUIActive(e.RemainCount === 0);
-    var i = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.ItemName);
-    var i =
-      (LguiUtil_1.LguiUtil.SetLocalText(
-        this.GetText(10),
-        "PowerDescribe",
-        e.CostValue,
-        i,
-        e.RenewValue,
-      ),
-      this.GetText(9));
+      .SetInteractable(0 !== e.RemainCount),
+      this.GetButton(16).RootUIComp.SetUIActive(0 === e.RemainCount);
+    var i = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.ItemName),
+      i =
+        (LguiUtil_1.LguiUtil.SetLocalText(
+          this.GetText(10),
+          "PowerDescribe",
+          e.CostValue,
+          i,
+          e.RenewValue,
+        ),
+        this.GetText(9));
     e.RemainCount < 0
       ? (this.GetSprite(8).SetUIActive(!1), i.SetUIActive(!1))
       : (this.GetSprite(8).SetUIActive(!0),
@@ -316,11 +315,11 @@ class PowerView extends UiViewBase_1.UiViewBase {
   }
   Oio() {
     if (this.Lio) {
-      const i = this.hio.length;
+      var i = this.hio.length;
       for (let e = 0; e < i; ++e) {
-        var t;
-        var s;
-        const r = this.hio[e];
+        var t,
+          s,
+          r = this.hio[e];
         this.Fio(r, e) ||
           ((t = this.Lio.GetScrollItemByKey(e)),
           (s = {
@@ -335,11 +334,11 @@ class PowerView extends UiViewBase_1.UiViewBase {
           r.GoodsId === this.Uio.GoodsId && this.Gio(r));
       }
       if ((this.Uio?.StackValue ?? 0) <= 0) {
-        let i = !1;
-        let t = 0;
+        let i = !1,
+          t = 0;
         for (let e = 0; e < this.hio.length; e++) {
-          const h = this.hio[e];
-          if (h?.StackValue > 0) {
+          var h = this.hio[e];
+          if (0 < h?.StackValue) {
             this.ylo(e, h), (i = !0);
             break;
           }
@@ -394,4 +393,4 @@ class PowerView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.PowerView = PowerView;
-// # sourceMappingURL=PowerView.js.map
+//# sourceMappingURL=PowerView.js.map

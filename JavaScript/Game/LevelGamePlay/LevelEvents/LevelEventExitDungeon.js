@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventExitDungeon = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const InstanceDungeonController_1 = require("../../Module/InstanceDungeon/InstanceDungeonController");
-const ScrollingTipsController_1 = require("../../Module/ScrollingTips/ScrollingTipsController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  InstanceDungeonController_1 = require("../../Module/InstanceDungeon/InstanceDungeonController"),
+  ScrollingTipsController_1 = require("../../Module/ScrollingTips/ScrollingTipsController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventExitDungeon extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -30,4 +30,4 @@ class LevelEventExitDungeon extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventExitDungeon = LevelEventExitDungeon;
-// # sourceMappingURL=LevelEventExitDungeon.js.map
+//# sourceMappingURL=LevelEventExitDungeon.js.map

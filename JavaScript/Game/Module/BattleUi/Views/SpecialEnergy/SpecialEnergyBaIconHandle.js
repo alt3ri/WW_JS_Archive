@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SpecialEnergyBaIconHandle = void 0);
-const UE = require("ue");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
 class SpecialEnergyBaIconHandle {
   constructor() {
     (this.imt = void 0),
@@ -38,7 +38,7 @@ class SpecialEnergyBaIconHandle {
     if (!this.nmt) {
       this.nmt = [];
       for (const e of this.imt) {
-        const s = e
+        var s = e
           .GetOwner()
           .GetComponentByClass(UE.LGUIPlayTweenComponent.StaticClass());
         this.nmt.push(s);
@@ -53,4 +53,4 @@ class SpecialEnergyBaIconHandle {
   }
 }
 exports.SpecialEnergyBaIconHandle = SpecialEnergyBaIconHandle;
-// # sourceMappingURL=SpecialEnergyBaIconHandle.js.map
+//# sourceMappingURL=SpecialEnergyBaIconHandle.js.map

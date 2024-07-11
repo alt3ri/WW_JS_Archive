@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configPrefabTextItemByItemId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const PrefabTextItem_1 = require("../Config/PrefabTextItem");
-const DB = "db_ui_prefabtextitem.db";
-const FILE = "u.UiTextCollect/u.预制体文本收集.csv";
-const TABLE = "PrefabTextItem";
-const COMMAND = "select BinData from `PrefabTextItem` where ItemId = ?";
-const KEY_PREFIX = "PrefabTextItemByItemId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  PrefabTextItem_1 = require("../Config/PrefabTextItem"),
+  DB = "db_ui_prefabtextitem.db",
+  FILE = "u.UiTextCollect/u.预制体文本收集.csv",
+  TABLE = "PrefabTextItem",
+  COMMAND = "select BinData from `PrefabTextItem` where ItemId = ?",
+  KEY_PREFIX = "PrefabTextItemByItemId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configPrefabTextItemByItemId.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configPrefabTextItemByItemId.GetConfig(";
 exports.configPrefabTextItemByItemId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configPrefabTextItemByItemId = {
       if (
         (n =
           ConfigCommon_1.ConfigCommon.BindBigInt(handleId, 1, e, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "ItemId",
-            e,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "ItemId",
+              e,
+            ]))
       ) {
-        var n;
-        var t = void 0;
+        var n,
+          t = void 0;
         if (
           (([n, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configPrefabTextItemByItemId = {
     }
   },
 };
-// # sourceMappingURL=PrefabTextItemByItemId.js.map
+//# sourceMappingURL=PrefabTextItemByItemId.js.map

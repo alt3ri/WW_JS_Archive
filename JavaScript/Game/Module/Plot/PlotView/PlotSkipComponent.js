@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotSkipComponent = void 0);
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
+const StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
 class PlotSkipComponent {
   constructor(e, t, i, o) {
     (this.dce = !1),
@@ -22,7 +22,7 @@ class PlotSkipComponent {
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView();
       }),
       (this.szi = () => {
-        let e;
+        var e;
         this.dce &&
           (this.wIt?.(),
           ModelManager_1.ModelManager.PlotModel.PlotConfig.IsSkipConfirmBoxShow
@@ -87,4 +87,4 @@ class PlotSkipComponent {
   }
 }
 exports.PlotSkipComponent = PlotSkipComponent;
-// # sourceMappingURL=PlotSkipComponent.js.map
+//# sourceMappingURL=PlotSkipComponent.js.map

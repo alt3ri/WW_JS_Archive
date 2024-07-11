@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayShopGoodsData = void 0);
-const LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const LevelGeneralCommons_1 = require("../../../LevelGamePlay/LevelGeneralCommons");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ItemDefines_1 = require("../../Item/Data/ItemDefines");
-const PayShopDefine_1 = require("../PayShopDefine");
-const PayShopGoodsPrice_1 = require("./PayShopGoodsPrice");
+const LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  LevelGeneralCommons_1 = require("../../../LevelGamePlay/LevelGeneralCommons"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ItemDefines_1 = require("../../Item/Data/ItemDefines"),
+  PayShopDefine_1 = require("../PayShopDefine"),
+  PayShopGoodsPrice_1 = require("./PayShopGoodsPrice");
 class PayShopGoodsData {
   constructor() {
     (this.Id = 0),
@@ -44,7 +44,7 @@ class PayShopGoodsData {
   }
   Phrase(t) {
     this.Id = t.Ekn;
-    const i = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
+    var i = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
       t.Ekn,
     );
     (this.TabId = i.TabId),
@@ -83,7 +83,7 @@ class PayShopGoodsData {
   }
   IfHaveRoleCallBackItemNeedRole() {
     if (this.IfRoleCallBackItem()) {
-      const t = ModelManager_1.ModelManager.RoleModel.GetResonantItemRoleId(
+      var t = ModelManager_1.ModelManager.RoleModel.GetResonantItemRoleId(
         this.ItemId,
       )[0];
       if (
@@ -95,7 +95,7 @@ class PayShopGoodsData {
   }
   IfCanResonant() {
     if (this.IfRoleCallBackItem()) {
-      const t = ModelManager_1.ModelManager.RoleModel.GetResonantItemRoleId(
+      var t = ModelManager_1.ModelManager.RoleModel.GetResonantItemRoleId(
         this.ItemId,
       )[0];
       if (
@@ -118,10 +118,10 @@ class PayShopGoodsData {
           "RoleBrenchItemMax",
         );
     }
-    let t = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
+    var t = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
       this.Id,
     ).BuyConditionId;
-    return t !== 0
+    return 0 !== t
       ? ((t =
           LevelGeneralCommons_1.LevelGeneralCommons.GetConditionGroupHintText(
             t,
@@ -131,14 +131,14 @@ class PayShopGoodsData {
   }
   M2i() {
     let t = "";
-    let i;
-    t === "" &&
+    var i;
+    "" === t &&
       (t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
           this.ItemId,
         ).Name,
       )),
-      this.ItemCount > 1 &&
+      1 < this.ItemCount &&
         ((i =
           ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
             "GoodsName",
@@ -215,8 +215,8 @@ class PayShopGoodsData {
     );
   }
   IfMayReSell() {
-    if (this.UpdateType !== 0 && this.UpdateType !== 4) {
-      if (Number(this.EndTime) === 0) return !0;
+    if (0 !== this.UpdateType && 4 !== this.UpdateType) {
+      if (0 === Number(this.EndTime)) return !0;
       if (Number(this.UpdateTime) < Number(this.EndTime)) return !0;
     }
     return !1;
@@ -234,19 +234,19 @@ class PayShopGoodsData {
     );
   }
   InLabelShowTime() {
-    const t = TimeUtil_1.TimeUtil.GetServerTime();
+    var t = TimeUtil_1.TimeUtil.GetServerTime();
     return (
-      this.LabelId !== 0 &&
-      ((this.LabelBeginTime > 0 &&
+      0 !== this.LabelId &&
+      ((0 < this.LabelBeginTime &&
         t >= Number(this.LabelBeginTime) &&
-        this.LabelEndTime === 0) ||
-        (this.LabelBeginTime === 0 && this.LabelEndTime === 0) ||
+        0 === this.LabelEndTime) ||
+        (0 === this.LabelBeginTime && 0 === this.LabelEndTime) ||
         (Number(this.LabelEndTime) > t && t >= Number(this.LabelBeginTime)))
     );
   }
   GetSortValue() {
     return (
-      this.Sort === 0
+      0 === this.Sort
         ? ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
             this.Id,
           )
@@ -259,23 +259,23 @@ class PayShopGoodsData {
     ).ShopId;
   }
   GetUpdateTime() {
-    if (this.UpdateTime === 0 && this.IsWeeklyRefresh())
+    if (0 === this.UpdateTime && this.IsWeeklyRefresh())
       return ModelManager_1.ModelManager.PayShopModel.GetPayShopUpdateTime(
         this.ShopId(),
       );
     return this.UpdateTime;
   }
   IsWeeklyRefresh() {
-    return this.UpdateType !== 0 && this.UpdateType !== 4;
+    return 0 !== this.UpdateType && 4 !== this.UpdateType;
   }
   HasDiscount() {
-    let t, i;
+    var t, i;
     return (
       !(this.Price.PromotionCount <= 0) &&
       ((i = TimeUtil_1.TimeUtil.GetServerTime()),
-      (this.EndPromotionTime === 0 && this.BeginPromotionTime === 0) ||
-        (this.EndPromotionTime === 0 &&
-          this.BeginPromotionTime > 0 &&
+      (0 === this.EndPromotionTime && 0 === this.BeginPromotionTime) ||
+        (0 === this.EndPromotionTime &&
+          0 < this.BeginPromotionTime &&
           i >= Number(this.BeginPromotionTime)) ||
         ((t = TimeUtil_1.TimeUtil.IsExceededServerTime(this.EndPromotionTime)),
         (i =
@@ -297,47 +297,48 @@ class PayShopGoodsData {
     return PayShopDefine_1.payShopUpdateTypeTextId[this.UpdateType];
   }
   HasBuyLimit() {
-    return this.BuyLimit > 0;
+    return 0 < this.BuyLimit;
   }
   SetUnLock() {
     this.Locked = !1;
   }
   IsDirect() {
-    return this.ShopItemType === 1;
+    return 1 === this.ShopItemType;
   }
   GetNowPrice() {
     return this.HasDiscount() ? this.Price.PromotionCount : this.Price.Count;
   }
   GetConditionTextId() {
-    let t;
-    return this.I2i === 0 &&
-      (t = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
-        this.Id,
-      ).BuyConditionId) !== 0
+    var t;
+    return 0 === this.I2i &&
+      0 !==
+        (t = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
+          this.Id,
+        ).BuyConditionId)
       ? LevelGeneralCommons_1.LevelGeneralCommons.GetConditionGroupHintText(
           t,
         ) ?? ""
       : "";
   }
   Discount() {
-    let t;
-    return this.I2i === 0
-      ? this.PromotionShow !== 0
+    var t;
+    return 0 === this.I2i
+      ? 0 !== this.PromotionShow
         ? Math.ceil(this.PromotionShow / PayShopDefine_1.DISCOUNT_PERCENT)
-        : (t =
+        : 0 !==
+            (t =
               ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
                 this.Id,
-              )).PromotionShow !== 0
+              )).PromotionShow
           ? Math.ceil(t.PromotionShow / PayShopDefine_1.DISCOUNT_PERCENT)
           : Math.ceil(this.GetDiscount())
       : Math.ceil(this.GetDiscount());
   }
   GetPromotionText() {
-    if (this.I2i === 0) {
-      const t =
-        ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
-          this.Id,
-        );
+    if (0 === this.I2i) {
+      var t = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
+        this.Id,
+      );
       if (t.PromotionTimeText)
         return ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsLocalText(
           t.PromotionTimeText,
@@ -346,11 +347,10 @@ class PayShopGoodsData {
     return "";
   }
   GetSellTimeText() {
-    if (this.I2i === 0) {
-      const t =
-        ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
-          this.Id,
-        );
+    if (0 === this.I2i) {
+      var t = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
+        this.Id,
+      );
       if (t.SellTimeText)
         return ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsLocalText(
           t.SellTimeText,
@@ -359,25 +359,24 @@ class PayShopGoodsData {
     return "";
   }
   IsShowInShop() {
-    if (this.I2i === 0) {
-      const t =
-        ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
-          this.Id,
-        );
+    if (0 === this.I2i) {
+      var t = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
+        this.Id,
+      );
       if (t) return t.Show && !this.Locked;
     }
     return !0;
   }
   IfPayGift() {
-    return this.I2i === 1;
+    return 1 === this.I2i;
   }
   GetGiftId() {
     let t = void 0;
-    const i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+    var i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
       this.ItemId,
     );
     return (t =
-      i.ItemType === 11
+      11 === i.ItemType
         ? (t = i.Parameters.get(
             ItemDefines_1.EItemFunctionType.ManualOpenGift,
           )) || i.Parameters.get(ItemDefines_1.EItemFunctionType.AutoOpenGift)
@@ -390,4 +389,4 @@ class PayShopGoodsData {
   }
 }
 exports.PayShopGoodsData = PayShopGoodsData;
-// # sourceMappingURL=PayShopGoodsData.js.map
+//# sourceMappingURL=PayShopGoodsData.js.map

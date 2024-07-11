@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemController = void 0);
-const AudioSystem_1 = require("../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const ItemDefine_1 = require("./ItemDefine");
+const AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  ItemDefine_1 = require("./ItemDefine");
 class ItemController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -52,11 +52,11 @@ class ItemController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static OpenItemTipsByItemId(e, t = void 0) {
-    const n = new ItemDefine_1.ItemTipsData();
+    var n = new ItemDefine_1.ItemTipsData();
     (n.ItemId = e), UiManager_1.UiManager.OpenView("ItemTipsView", n, t);
   }
   static OpenItemTipsByItemUid(e, t, n = void 0) {
-    const o = new ItemDefine_1.ItemTipsData();
+    var o = new ItemDefine_1.ItemTipsData();
     (o.ItemUid = e),
       (o.ItemId = t),
       UiManager_1.UiManager.OpenView("ItemTipsView", o, n);
@@ -65,7 +65,7 @@ class ItemController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.ItemModel.PushWaitItemList(e);
   }
   static CheckNewItemTips() {
-    let e;
+    var e;
     ModelManager_1.ModelManager.ItemModel.IsWaitItemListEmpty()
       ? this.IsPrintNoRewardReason &&
         Log_1.Log.CheckDebug() &&
@@ -122,16 +122,16 @@ class ItemController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.ItemModel.LoadGetItemConfigIdList();
   }),
   (ItemController.Kdi = (e, t) => {
-    const n = ModelManager_1.ModelManager.ItemModel;
-    var e = e.Ekn;
+    var n = ModelManager_1.ModelManager.ItemModel,
+      e = e.Ekn;
     n.IsGotItem(e) ||
-      (ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e)?.ObtainedShow !==
-        0 &&
+      (0 !==
+        ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e)?.ObtainedShow &&
         (t && ItemController.AddNewItemTip(e), n.AddGetItemConfigIdList(e)));
   }),
   (ItemController.Qdi = (e, t, n) => {
-    var e = e.Ekn;
-    const o = ModelManager_1.ModelManager.ItemModel;
+    var e = e.Ekn,
+      o = ModelManager_1.ModelManager.ItemModel;
     o.IsGotItem(e) ||
       (n && ItemController.AddNewItemTip(e), o.AddGetItemConfigIdList(e));
   }),
@@ -144,4 +144,4 @@ class ItemController extends UiControllerBase_1.UiControllerBase {
           "ItemUnlockSuccess",
         );
   });
-// # sourceMappingURL=ItemController.js.map
+//# sourceMappingURL=ItemController.js.map

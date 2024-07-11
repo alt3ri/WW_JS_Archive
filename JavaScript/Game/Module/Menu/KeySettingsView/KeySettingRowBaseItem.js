@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.KeySettingRowBaseItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D");
 class KeySettingRowBaseItem extends UiPanelBase_1.UiPanelBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -17,7 +17,7 @@ class KeySettingRowBaseItem extends UiPanelBase_1.UiPanelBase {
   }
   ClearItem() {}
   GetItemSize(e) {
-    const t = Vector2D_1.Vector2D.Create();
+    var t = Vector2D_1.Vector2D.Create();
     let s = void 0;
     switch (e.GetRowType()) {
       case 1:
@@ -30,4 +30,4 @@ class KeySettingRowBaseItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.KeySettingRowBaseItem = KeySettingRowBaseItem;
-// # sourceMappingURL=KeySettingRowBaseItem.js.map
+//# sourceMappingURL=KeySettingRowBaseItem.js.map

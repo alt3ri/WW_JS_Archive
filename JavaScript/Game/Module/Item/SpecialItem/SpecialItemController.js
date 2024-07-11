@@ -1,18 +1,18 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SpecialItemController = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase");
-const RouletteController_1 = require("../../Roulette/RouletteController");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const ItemDefines_1 = require("../Data/ItemDefines");
+const Log_1 = require("../../../../Core/Common/Log"),
+  GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase"),
+  RouletteController_1 = require("../../Roulette/RouletteController"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  ItemDefines_1 = require("../Data/ItemDefines");
 class SpecialItemController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.OnItemUse, this.k6e),
@@ -83,29 +83,29 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
       ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
     )
       return !1;
-    const t =
+    var t =
       ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity.GetComponent(
         185,
       );
-    if (!t) return e.AllowTags.length === 0;
+    if (!t) return 0 === e.AllowTags.length;
     for (const o of e.AllowTags) {
-      const r = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(o);
+      var r = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(o);
       if (!r || !t.HasTag(r)) return !1;
     }
     for (const n of e.BanTags) {
-      const l = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(n);
+      var l = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(n);
       if (l && t.HasTag(l)) return !1;
     }
     return !0;
   }
   static ListenSpecialItemRelatedTags(e, t) {
     if (SpecialItemController.IsSpecialItem(e)) {
-      const r = ConfigManager_1.ConfigManager.SpecialItemConfig.GetConfig(e);
+      var r = ConfigManager_1.ConfigManager.SpecialItemConfig.GetConfig(e);
       if (r) {
-        const l = t?.Entity?.GetComponent(185);
+        var l = t?.Entity?.GetComponent(185);
         SpecialItemController.StopListenSpecialItemRelatedTags();
         for (const a of r.AllowTags) {
-          const o = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(a);
+          var o = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(a);
           o &&
             (l?.AddTagAddOrRemoveListener(o, SpecialItemController.eCi),
             ModelManager_1.ModelManager.SpecialItemModel.WatchedAllowTagIds.add(
@@ -113,7 +113,7 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
             ));
         }
         for (const i of r.BanTags) {
-          const n = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(i);
+          var n = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(i);
           n &&
             (l?.AddTagAddOrRemoveListener(n, SpecialItemController.eCi),
             ModelManager_1.ModelManager.SpecialItemModel.WatchedBanTagIds.add(
@@ -127,7 +127,7 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
     }
   }
   static StopListenSpecialItemRelatedTags() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.SpecialItemModel?.TagWatchedEntityHandle?.Entity?.GetComponent(
         185,
       );
@@ -148,10 +148,10 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
         void 0);
   }
   static EquipSpecialItem(t, r = !0, l = !0) {
-    let e;
+    var e;
     ModelManager_1.ModelManager.RouletteModel.IsExploreRouletteOpen() &&
       ((e = ConfigManager_1.ConfigManager.SpecialItemConfig.GetConfig(t))
-        ? e.SpecialItemType !== 0
+        ? 0 !== e.SpecialItemType
           ? Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Item",
@@ -207,7 +207,7 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static AutoEquipOrUnEquipSpecialItem(e) {
-    const t =
+    var t =
       e ===
       ModelManager_1.ModelManager.SpecialItemModel.GetEquipSpecialItemId();
     return (
@@ -218,7 +218,7 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static tCi(e, t, r) {
-    let l = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity;
+    var l = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity;
     l?.Valid &&
       (l = l.GetComponent(33)).Valid &&
       l.BeginSkill(r, { Context: "Explore skill item: UseSkill" });
@@ -226,14 +226,14 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
 }
 (exports.SpecialItemController = SpecialItemController),
   ((_a = SpecialItemController).$mi = (e) => {
-    let t;
+    var t;
     void 0 === e
       ? SpecialItemController.StopListenSpecialItemRelatedTags()
       : ((t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity),
         SpecialItemController.ListenSpecialItemRelatedTags(e, t));
   }),
   (SpecialItemController.xie = (e, t) => {
-    const r = ModelManager_1.ModelManager.SpecialItemModel.TagWatchedItemId;
+    var r = ModelManager_1.ModelManager.SpecialItemModel.TagWatchedItemId;
     r &&
       (SpecialItemController.StopListenSpecialItemRelatedTags(),
       SpecialItemController.ListenSpecialItemRelatedTags(r, e),
@@ -244,9 +244,8 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
       ));
   }),
   (SpecialItemController.eCi = (e, t) => {
-    const r = ModelManager_1.ModelManager.SpecialItemModel.TagWatchedItemId;
-    const l =
-      ModelManager_1.ModelManager.SpecialItemModel.TagWatchedEntityHandle;
+    var r = ModelManager_1.ModelManager.SpecialItemModel.TagWatchedItemId,
+      l = ModelManager_1.ModelManager.SpecialItemModel.TagWatchedEntityHandle;
     r &&
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnRefreshSpecialItemAllowReqUse,
@@ -260,7 +259,7 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
         SpecialItemController.EquipSpecialItem(t.Ekn);
   }),
   (SpecialItemController.Ydi = (e, t) => {
-    let r;
+    var r;
     SpecialItemController.IsSpecialItem(e)
       ? ((r = e),
         (r =
@@ -280,10 +279,10 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
     SpecialItemController.UnEquipSpecialItem(e);
   }),
   (SpecialItemController.k6e = (e, t) => {
-    let r = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(e);
+    var r = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(e);
     r.Parameters.size &&
       SpecialItemController.IsSpecialItem(e) &&
       (r = r.Parameters.get(ItemDefines_1.EItemFunctionType.UseExploreSkill)) &&
       _a.tCi(e, t, r);
   });
-// # sourceMappingURL=SpecialItemController.js.map
+//# sourceMappingURL=SpecialItemController.js.map

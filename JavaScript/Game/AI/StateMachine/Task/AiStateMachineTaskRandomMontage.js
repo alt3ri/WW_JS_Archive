@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineTaskRandomMontage = void 0);
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const CombatDebugController_1 = require("../../../Utils/CombatDebugController");
-const AiStateMachine_1 = require("../AiStateMachine");
-const AiStateMachineTask_1 = require("./AiStateMachineTask");
+const Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  CombatDebugController_1 = require("../../../Utils/CombatDebugController"),
+  AiStateMachine_1 = require("../AiStateMachine"),
+  AiStateMachineTask_1 = require("./AiStateMachineTask");
 class AiStateMachineTaskRandomMontage extends AiStateMachineTask_1.AiStateMachineTask {
   constructor() {
     super(...arguments),
@@ -71,7 +71,7 @@ class AiStateMachineTaskRandomMontage extends AiStateMachineTask_1.AiStateMachin
     let i = "";
     if (!this.rse)
       for (let t = 0; t < this.MontageNames.length; t++) {
-        const s = (this.MontageIndex + t) % this.MontageNames.length;
+        var s = (this.MontageIndex + t) % this.MontageNames.length;
         if (
           ((i = this.MontageNames[s]),
           (this.rse = this.Node.MontageComponent.PlayMontageAsync(
@@ -119,4 +119,4 @@ class AiStateMachineTaskRandomMontage extends AiStateMachineTask_1.AiStateMachin
   }
 }
 exports.AiStateMachineTaskRandomMontage = AiStateMachineTaskRandomMontage;
-// # sourceMappingURL=AiStateMachineTaskRandomMontage.js.map
+//# sourceMappingURL=AiStateMachineTaskRandomMontage.js.map

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AudioController = exports.PlayResult = void 0);
-const UE = require("ue");
-const Log_1 = require("../Common/Log");
-const Stats_1 = require("../Common/Stats");
-const ResourceSystem_1 = require("../Resource/ResourceSystem");
-const StringBuilder_1 = require("../Utils/StringBuilder");
-const StringUtils_1 = require("../Utils/StringUtils");
-const AudioPool_1 = require("./AudioPool");
+const UE = require("ue"),
+  Log_1 = require("../Common/Log"),
+  Stats_1 = require("../Common/Stats"),
+  ResourceSystem_1 = require("../Resource/ResourceSystem"),
+  StringBuilder_1 = require("../Utils/StringBuilder"),
+  StringUtils_1 = require("../Utils/StringUtils"),
+  AudioPool_1 = require("./AudioPool");
 class PlayResult {
   constructor() {
     (this.EventPath = ""), (this.PlayingIds = []), (this.CallbackIds = []);
@@ -23,7 +23,7 @@ class PlayResult {
   }
   RemoveCallbackId(t) {
     t = this.CallbackIds.indexOf(t, 0);
-    t > -1 && this.CallbackIds.splice(t, 1);
+    -1 < t && this.CallbackIds.splice(t, 1);
   }
 }
 exports.PlayResult = PlayResult;
@@ -85,11 +85,11 @@ class AudioController {
           );
   }
   static StopEvent(t, o = !0, e) {
-    if (o && t.PlayingIds.length > 0) {
+    if (o && 0 < t.PlayingIds.length) {
       for (const i of t.PlayingIds) AudioController.StopAudioByPlayId(i, e);
       t.PlayingIds = [];
     }
-    if (t.CallbackIds.length > 0) {
+    if (0 < t.CallbackIds.length) {
       for (const r of t.CallbackIds)
         AudioController.x6(t.EventPath, r),
           Log_1.Log.CheckInfo() &&
@@ -104,7 +104,7 @@ class AudioController {
     }
   }
   static LoadAudioEvent(t) {
-    return t && t.length !== 0
+    return t && 0 !== t.length
       ? void 0 !== AudioController.w6.GetAudioPool(t)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Audio", 22, "没有传入音频事件资源路径"),
@@ -120,7 +120,7 @@ class AudioController {
     AudioController.w6.DeleteCallback(t, o);
   }
   static PlayAudioByEventPath(o, e, i, r, l, s = !0, a = "") {
-    const n = AudioController.GetAudioEvent(o, !1);
+    var n = AudioController.GetAudioEvent(o, !1);
     if (o && n) {
       AudioController.w6.SetPlayFlag(o);
       let t = 0;
@@ -145,7 +145,7 @@ class AudioController {
       );
   }
   static P6(t, o, e, i, r = !0) {
-    const l = AudioController.GetAudioEvent(t, !1);
+    var l = AudioController.GetAudioEvent(t, !1);
     if (l)
       return (
         AudioController.w6.SetPlayFlag(t),
@@ -203,7 +203,7 @@ class AudioController {
     UE.AkGameplayStatics.GetRTPCValue(e, r, 3, t, void 0, i, new UE.FName(o));
   }
   static GetAudioEvent(t, o = !0) {
-    if (t && t.length !== 0) return AudioController.w6.GetAudioPool(t, o);
+    if (t && 0 !== t.length) return AudioController.w6.GetAudioPool(t, o);
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("Audio", 22, "没有传入音频事件资源路径");
   }
@@ -276,7 +276,7 @@ class AudioController {
   }
   static N6(t) {
     for (const e of t) {
-      const o = this.O6(e);
+      var o = this.O6(e);
       o && AudioController.StopEvent(o, !1);
     }
   }
@@ -291,7 +291,7 @@ class AudioController {
     this.V6.clear(), this.k6.clear();
   }
   static O6(t) {
-    const o = this.k6.get(t);
+    var o = this.k6.get(t);
     return o && this.k6.delete(t), o;
   }
   static b6(t, o) {
@@ -311,4 +311,4 @@ class AudioController {
   (AudioController.V6 = new Map()),
   (AudioController.k6 = new Map()),
   (AudioController.B6 = void 0);
-// # sourceMappingURL=AudioController.js.map
+//# sourceMappingURL=AudioController.js.map

@@ -27,4 +27,4 @@ class BlackScreenGlobalData {
 }
 ((exports.BlackScreenGlobalData = BlackScreenGlobalData).dgt = void 0),
   (BlackScreenGlobalData.Cgt = void 0);
-// # sourceMappingURL=BlackScreenGlobalData.js.map
+//# sourceMappingURL=BlackScreenGlobalData.js.map

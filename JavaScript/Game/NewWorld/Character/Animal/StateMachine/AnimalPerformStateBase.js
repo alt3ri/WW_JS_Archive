@@ -25,4 +25,4 @@ class AnimalPerformStateBase extends StateBase_1.StateBase {
   }
 }
 exports.AnimalPerformStateBase = AnimalPerformStateBase;
-// # sourceMappingURL=AnimalPerformStateBase.js.map
+//# sourceMappingURL=AnimalPerformStateBase.js.map

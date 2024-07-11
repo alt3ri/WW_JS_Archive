@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotLogoView = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
 class PlotLogoView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments), (this.wk = void 0);
@@ -16,7 +16,7 @@ class PlotLogoView extends UiViewBase_1.UiViewBase {
   }
   async OnCreateAsync() {
     const s = new CustomPromise_1.CustomPromise();
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.UiResourceConfig.GetLogoPathByLanguage(
         "PlotLogo",
       );
@@ -32,4 +32,4 @@ class PlotLogoView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.PlotLogoView = PlotLogoView;
-// # sourceMappingURL=PlotLogoView.js.map
+//# sourceMappingURL=PlotLogoView.js.map

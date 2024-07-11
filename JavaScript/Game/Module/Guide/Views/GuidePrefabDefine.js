@@ -1,35 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.setPrefabText = exports.predefPrefabSetting = void 0);
-const UE = require("ue");
-const StringBuilder_1 = require("../../../../Core/Utils/StringBuilder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ConcertoResponseItem_1 = require("../../BattleUi/Views/ConcertoResponseItem");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  StringBuilder_1 = require("../../../../Core/Utils/StringBuilder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ConcertoResponseItem_1 = require("../../BattleUi/Views/ConcertoResponseItem"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 function setPrefabText(e, t) {
-  const r = new StringBuilder_1.StringBuilder();
+  var r = new StringBuilder_1.StringBuilder();
   const o = [];
   let i = [];
   const n = [];
   let a = 0;
   for (let e = 0; e < t.length; ) {
-    let s = t.indexOf("[", e);
-    if (s === -1) {
+    var s = t.indexOf("[", e);
+    if (-1 === s) {
       r.Append(t.substring(e, t.length));
       break;
     }
     r.Append(t.substring(e, s));
-    const l = t.indexOf("]", s);
+    var l = t.indexOf("]", s);
     if (!(s < l)) {
       r.Append(t.substring(s + 1, t.length));
       break;
     }
     s = t.substring(s + 1, l).split(",");
-    if (s.length > 0) {
+    if (0 < s.length) {
       o.push({ PrefabKey: s[0], Args: s });
-      const u = exports.predefPrefabSetting.get(s[0]);
+      var u = exports.predefPrefabSetting.get(s[0]);
       if (u) {
-        const c = u.GetPrefabPathFunc(s);
+        var c = u.GetPrefabPathFunc(s);
         n.push(c.length), (i = i.concat(c)), (e = l + 1);
         for (let e = 0; e < c.length; e++)
           r.Append("<snidx="), r.Append(a), r.Append("/>"), a++;
@@ -39,7 +39,7 @@ function setPrefabText(e, t) {
   LguiUtil_1.LguiUtil.LoadAndSetText(e, r.ToString(), i, (i) => {
     let a = 0;
     o.forEach((e, t, r) => {
-      const o = exports.predefPrefabSetting.get(e.PrefabKey);
+      var o = exports.predefPrefabSetting.get(e.PrefabKey);
       o?.Callback && o.Callback(i.slice(a, a + n[t]), e.Args), (a += n[t]);
     });
   });
@@ -82,4 +82,4 @@ function setPrefabText(e, t) {
   ],
 ])),
   (exports.setPrefabText = setPrefabText);
-// # sourceMappingURL=GuidePrefabDefine.js.map
+//# sourceMappingURL=GuidePrefabDefine.js.map

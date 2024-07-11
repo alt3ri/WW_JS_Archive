@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OnlineTeamItem = void 0);
-const UE = require("ue");
-const BackgroundCardById_1 = require("../../../../Core/Define/ConfigQuery/BackgroundCardById");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const FriendController_1 = require("../../Friend/FriendController");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const OnlineController_1 = require("../OnlineController");
+const UE = require("ue"),
+  BackgroundCardById_1 = require("../../../../Core/Define/ConfigQuery/BackgroundCardById"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  FriendController_1 = require("../../Friend/FriendController"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  OnlineController_1 = require("../OnlineController");
 class OnlineTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -42,14 +42,14 @@ class OnlineTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
             Protocol_1.Aki.Protocol.wks.Proto_RecentlyTeam,
           ),
             (this.CNi = !0);
-          const e = this.GetText(19);
-          const i = this.GetInteractionGroup(15);
+          var e = this.GetText(19),
+            i = this.GetInteractionGroup(15);
           LguiUtil_1.LguiUtil.SetLocalText(e, "HaveApplyFriend"),
             i.SetInteractable(!1);
         }
       }),
       (this.fNi = () => {
-        const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(79);
+        var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(79);
         e.FunctionMap.set(2, () => {
           OnlineController_1.OnlineController.KickWorldTeamRequest(
             this.dNi.PlayerId,
@@ -117,9 +117,9 @@ class OnlineTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
       e.PlayerId !== ModelManager_1.ModelManager.FunctionModel.PlayerId,
     ),
       (this.dNi = e);
-    let n = !1;
-    let t = void 0;
-    let o = !1;
+    let n = !1,
+      t = void 0,
+      o = !1;
     (o = e.IsSelf
       ? ((n = !1), (t = "ExitWorld"), !0)
       : ModelManager_1.ModelManager.FriendModel.IsMyFriend(e.PlayerId)
@@ -135,64 +135,64 @@ class OnlineTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.GetButton(16).RootUIComp.SetUIActive(n),
       this.GetButton(14).RootUIComp.SetUIActive(o),
       this.GetText(1).SetUIActive(!o);
-    var a = o ? 19 : 1;
-    var a =
-      (LguiUtil_1.LguiUtil.SetLocalText(this.GetText(a), t),
-      ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e.HeadId)
-        ?.RoleHeadIconBig);
-    var a =
-      (a && this.SetTextureByPath(a, this.GetTexture(3)),
-      ModelManager_1.ModelManager.FriendModel.IsMyFriend(e.PlayerId));
-    var s = this.GetText(0);
-    var a =
-      (a &&
-      void 0 !==
-        (a = ModelManager_1.ModelManager.FriendModel.GetFriendById(
-          e.PlayerId,
-        )?.FriendRemark) &&
-      a !== ""
-        ? LguiUtil_1.LguiUtil.SetLocalText(s, "NameMark", a)
-        : s.SetText(e.Name),
-      this.GetText(2).SetText("Lv." + e.Level),
-      this.GetText(7));
-    var s =
-      (e.Signature && e.Signature !== ""
-        ? a.SetText(e.Signature)
-        : LguiUtil_1.LguiUtil.SetLocalText(a, "DefaultSign"),
-      this.GetItem(21).SetUIActive(!0),
-      this.GetSprite(17));
-    var a =
-      (this.dNi.PlayerNumber === 1
-        ? (s.SetUIActive(!0),
-          (a =
-            ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
-              "SP_Online1PIcon",
-            )),
-          this.SetSpriteByPath(a, s, !1))
-        : this.dNi.PlayerNumber === 2
+    var a = o ? 19 : 1,
+      a =
+        (LguiUtil_1.LguiUtil.SetLocalText(this.GetText(a), t),
+        ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e.HeadId)
+          ?.RoleHeadIconBig),
+      a =
+        (a && this.SetTextureByPath(a, this.GetTexture(3)),
+        ModelManager_1.ModelManager.FriendModel.IsMyFriend(e.PlayerId)),
+      s = this.GetText(0),
+      a =
+        (a &&
+        void 0 !==
+          (a = ModelManager_1.ModelManager.FriendModel.GetFriendById(
+            e.PlayerId,
+          )?.FriendRemark) &&
+        "" !== a
+          ? LguiUtil_1.LguiUtil.SetLocalText(s, "NameMark", a)
+          : s.SetText(e.Name),
+        this.GetText(2).SetText("Lv." + e.Level),
+        this.GetText(7)),
+      s =
+        (e.Signature && "" !== e.Signature
+          ? a.SetText(e.Signature)
+          : LguiUtil_1.LguiUtil.SetLocalText(a, "DefaultSign"),
+        this.GetItem(21).SetUIActive(!0),
+        this.GetSprite(17)),
+      a =
+        (1 === this.dNi.PlayerNumber
           ? (s.SetUIActive(!0),
             (a =
               ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
-                "SP_Online2PIcon",
+                "SP_Online1PIcon",
               )),
             this.SetSpriteByPath(a, s, !1))
-          : this.dNi.PlayerNumber === 3
+          : 2 === this.dNi.PlayerNumber
             ? (s.SetUIActive(!0),
               (a =
                 ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
-                  "SP_Online3PIcon",
+                  "SP_Online2PIcon",
                 )),
               this.SetSpriteByPath(a, s, !1))
-            : s.SetUIActive(!1),
-      this.pNi(e.PingState),
-      e.PlayerDetails.zgs);
-    a > 0 &&
+            : 3 === this.dNi.PlayerNumber
+              ? (s.SetUIActive(!0),
+                (a =
+                  ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
+                    "SP_Online3PIcon",
+                  )),
+                this.SetSpriteByPath(a, s, !1))
+              : s.SetUIActive(!1),
+        this.pNi(e.PingState),
+        e.PlayerDetails.zgs);
+    0 < a &&
       ((s = BackgroundCardById_1.configBackgroundCardById.GetConfig(a)),
       this.SetTextureByPath(s.LongCardPath, this.GetTexture(22)));
   }
   pNi(e) {
-    let i;
-    const r = this.GetSprite(20);
+    var i,
+      r = this.GetSprite(20);
     r.SetUIActive(!0),
       e === Protocol_1.Aki.Protocol.oFs.Proto_UNKNOWN
         ? ((i =
@@ -221,4 +221,4 @@ class OnlineTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.OnlineTeamItem = OnlineTeamItem;
-// # sourceMappingURL=OnlineTeamItem.js.map
+//# sourceMappingURL=OnlineTeamItem.js.map

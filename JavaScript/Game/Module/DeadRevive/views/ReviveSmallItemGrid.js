@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ReviveSmallItemGrid = void 0);
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const SmallItemGrid_1 = require("../../Common/SmallItemGrid/SmallItemGrid");
+const CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  SmallItemGrid_1 = require("../../Common/SmallItemGrid/SmallItemGrid");
 class ReviveSmallItemGrid extends SmallItemGrid_1.SmallItemGrid {
   constructor() {
     super(...arguments),
@@ -24,13 +24,13 @@ class ReviveSmallItemGrid extends SmallItemGrid_1.SmallItemGrid {
   }
   Refresh(e, i) {
     this.ItemId = e;
-    const t =
+    var t =
       ModelManager_1.ModelManager.BuffItemModel.GetBuffItemRemainCdTime(e);
     this.Apply({
       Data: e,
       Type: 4,
       ItemConfigId: e,
-      BottomText: i > 0 ? "" + i : "",
+      BottomText: 0 < i ? "" + i : "",
       CoolDownTime: t,
     }),
       (this.q2t = t),
@@ -45,7 +45,7 @@ class ReviveSmallItemGrid extends SmallItemGrid_1.SmallItemGrid {
       ));
   }
   RefreshCoolDown() {
-    const e = ModelManager_1.ModelManager.BuffItemModel.GetBuffItemRemainCdTime(
+    var e = ModelManager_1.ModelManager.BuffItemModel.GetBuffItemRemainCdTime(
       this.ItemId,
     );
     this.SetCoolDown(e, this.Rgt);
@@ -59,4 +59,4 @@ class ReviveSmallItemGrid extends SmallItemGrid_1.SmallItemGrid {
   }
 }
 exports.ReviveSmallItemGrid = ReviveSmallItemGrid;
-// # sourceMappingURL=ReviveSmallItemGrid.js.map
+//# sourceMappingURL=ReviveSmallItemGrid.js.map

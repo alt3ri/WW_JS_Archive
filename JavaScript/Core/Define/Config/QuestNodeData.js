@@ -21,13 +21,13 @@ class QuestNodeData {
     );
   }
   key(t) {
-    const s = this.J7.__offset(this.z7, 4);
+    var s = this.J7.__offset(this.z7, 4);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   data(t) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
 }
 exports.QuestNodeData = QuestNodeData;
-// # sourceMappingURL=QuestNodeData.js.map
+//# sourceMappingURL=QuestNodeData.js.map

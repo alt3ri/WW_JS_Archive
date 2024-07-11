@@ -1,15 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionQuestState = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionQuestState extends LevelGeneralBase_1.LevelConditionBase {
   CheckNew(e, a) {
-    const r = e;
+    var r = e;
     if (!r) return !1;
-    const s = ModelManager_1.ModelManager.QuestNewModel.GetQuestState(
-      r.QuestId,
-    );
+    var s = ModelManager_1.ModelManager.QuestNewModel.GetQuestState(r.QuestId);
     let t = !1;
     switch (r.Compare) {
       case "Eq":
@@ -34,4 +32,4 @@ class LevelConditionQuestState extends LevelGeneralBase_1.LevelConditionBase {
   }
 }
 exports.LevelConditionQuestState = LevelConditionQuestState;
-// # sourceMappingURL=LevelConditionQuestState.js.map
+//# sourceMappingURL=LevelConditionQuestState.js.map

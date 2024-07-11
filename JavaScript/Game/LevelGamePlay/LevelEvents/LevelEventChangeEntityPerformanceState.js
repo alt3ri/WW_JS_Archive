@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventChangeEntityPerformanceState = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const WaitEntityTask_1 = require("../../World/Define/WaitEntityTask");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  WaitEntityTask_1 = require("../../World/Define/WaitEntityTask"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventChangeEntityPerformanceState extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, t, a) {
     const r = e;
     if (r) {
-      let a = void 0;
-      let n = void 0;
+      let a = void 0,
+        n = void 0;
       switch (r.Type) {
         case IAction_1.EChangeEntityPrefabPerformanceType.Target:
           (a = r.EntityId),
@@ -26,7 +26,7 @@ class LevelEventChangeEntityPerformanceState extends LevelGeneralBase_1.LevelEve
       }
       a &&
         WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(a, (e) => {
-          let t;
+          var t;
           e
             ? (e = n?.Entity?.GetComponent(117))
               ? (t = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
@@ -62,4 +62,4 @@ class LevelEventChangeEntityPerformanceState extends LevelGeneralBase_1.LevelEve
 }
 exports.LevelEventChangeEntityPerformanceState =
   LevelEventChangeEntityPerformanceState;
-// # sourceMappingURL=LevelEventChangeEntityPerformanceState.js.map
+//# sourceMappingURL=LevelEventChangeEntityPerformanceState.js.map

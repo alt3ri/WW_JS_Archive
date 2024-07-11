@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleGenderChangeView = void 0);
-const UE = require("ue");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const Global_1 = require("../../../Global");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const LoginDefine_1 = require("../../Login/Data/LoginDefine");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const MainRoleController_1 = require("../MainRoleController");
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../Global"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  LoginDefine_1 = require("../../Login/Data/LoginDefine"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  MainRoleController_1 = require("../MainRoleController");
 class RoleGenderChangeView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -29,7 +29,7 @@ class RoleGenderChangeView extends UiViewBase_1.UiViewBase {
         this.CloseMe();
       }),
       (this.OnClickConfirm = () => {
-        let e;
+        var e;
         Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity.GetComponent(
           185,
         )?.HasTag(1996802261)
@@ -68,24 +68,24 @@ class RoleGenderChangeView extends UiViewBase_1.UiViewBase {
       ]);
   }
   OnStart() {
-    const e = ModelManager_1.ModelManager.RoleModel.GetCurSelectMainRoleId();
+    var e = ModelManager_1.ModelManager.RoleModel.GetCurSelectMainRoleId();
     if (e) {
       (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
         this.StopArrowSequence();
-      const n = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e);
-      var t = ModelManager_1.ModelManager.WorldLevelModel.Sex;
-      const o = n.ElementId;
-      var t =
-        t === LoginDefine_1.ELoginSex.Boy
-          ? LoginDefine_1.ELoginSex.Girl
-          : LoginDefine_1.ELoginSex.Boy;
-      const s = ConfigManager_1.ConfigManager.RoleConfig.GetMainRoleByGender(t);
-      const a = s.length;
-      let i = void 0;
-      let r = void 0;
+      var n = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e),
+        t = ModelManager_1.ModelManager.WorldLevelModel.Sex,
+        o = n.ElementId,
+        t =
+          t === LoginDefine_1.ELoginSex.Boy
+            ? LoginDefine_1.ELoginSex.Girl
+            : LoginDefine_1.ELoginSex.Boy,
+        s = ConfigManager_1.ConfigManager.RoleConfig.GetMainRoleByGender(t),
+        a = s.length;
+      let i = void 0,
+        r = void 0;
       for (let e = 0; e < a; e++) {
-        const l = s[e];
-        const _ = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(l.Id);
+        var l = s[e],
+          _ = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(l.Id);
         if (o === _.ElementId) {
           (r = l.Id), (i = _);
           break;
@@ -120,7 +120,7 @@ class RoleGenderChangeView extends UiViewBase_1.UiViewBase {
     this.EPe && this.EPe.StopSequenceByKey("Arrow");
   }
   xlo() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.WorldLevelModel.Sex ===
       LoginDefine_1.ELoginSex.Boy
         ? LoginDefine_1.ELoginSex.Girl
@@ -135,4 +135,4 @@ class RoleGenderChangeView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RoleGenderChangeView = RoleGenderChangeView;
-// # sourceMappingURL=RoleGenderChangeView.js.map
+//# sourceMappingURL=RoleGenderChangeView.js.map

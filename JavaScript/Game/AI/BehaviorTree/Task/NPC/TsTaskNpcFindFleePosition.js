@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine");
-const EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon");
-const GlobalData_1 = require("../../../../GlobalData");
-const BlackboardController_1 = require("../../../../World/Controller/BlackboardController");
-const TsAiController_1 = require("../../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase");
-const PROFILE_KEY = "TsTaskNpcFindFleePosition_GetNoTargetDirectionList";
-const CHECK_DEGREE_ADDITION = 15;
+const UE = require("ue"),
+  QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine"),
+  EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  BlackboardController_1 = require("../../../../World/Controller/BlackboardController"),
+  TsAiController_1 = require("../../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase"),
+  PROFILE_KEY = "TsTaskNpcFindFleePosition_GetNoTargetDirectionList",
+  CHECK_DEGREE_ADDITION = 15;
 class TsTaskNpcFindFleePosition extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -35,17 +35,17 @@ class TsTaskNpcFindFleePosition extends TsTaskAbortImmediatelyBase_1.default {
         (this.TempEnemyList.length = 0);
       t = t.AiController;
       const o = t.CharActorComp;
-      const i = o.Entity.Id;
-      const r = o.ActorLocationProxy;
-      var t =
-        (this.InitTraceElement(),
-        t.AiPerception && this.FindEnemies(t.AiPerception),
-        MathUtils_1.MathUtils.GetRandomFloatNumber(
-          this.TsSearchRange / 2,
-          this.TsSearchRange,
-        ));
-      let s = this.GetNoTargetDirectionList(r, o);
-      if (s.length > 0) {
+      var i = o.Entity.Id,
+        r = o.ActorLocationProxy,
+        t =
+          (this.InitTraceElement(),
+          t.AiPerception && this.FindEnemies(t.AiPerception),
+          MathUtils_1.MathUtils.GetRandomFloatNumber(
+            this.TsSearchRange / 2,
+            this.TsSearchRange,
+          )),
+        s = this.GetNoTargetDirectionList(r, o);
+      if (0 < s.length) {
         s = this.GetOptimalDirection(r, s).MultiplyEqual(t).AdditionEqual(r);
         BlackboardController_1.BlackboardController.SetVectorValueByEntity(
           i,
@@ -56,7 +56,7 @@ class TsTaskNpcFindFleePosition extends TsTaskAbortImmediatelyBase_1.default {
         );
       } else {
         s = this.TempEnemyList.length;
-        if (!(s > 0)) return void this.FinishExecute(!1);
+        if (!(0 < s)) return void this.FinishExecute(!1);
         {
           s = Math.floor(MathUtils_1.MathUtils.GetRandomFloatNumber(0, s));
           const o = this.TempEnemyList[s]?.GetComponent(1);
@@ -88,57 +88,57 @@ class TsTaskNpcFindFleePosition extends TsTaskAbortImmediatelyBase_1.default {
   }
   FindEnemies(t) {
     for (const i of t.AllEnemies) {
-      const e = EntitySystem_1.EntitySystem.Get(i);
+      var e = EntitySystem_1.EntitySystem.Get(i);
       e && this.TempEnemyList.push(e);
     }
   }
   GetNoTargetDirectionList(e, t) {
-    const i = new Array();
-    const r = t.ActorForwardProxy;
-    const s =
-      (TraceElementCommon_1.TraceElementCommon.SetStartLocation(
-        this.TraceElement,
-        e,
-      ),
-      MathUtils_1.PI_DEG_DOUBLE / CHECK_DEGREE_ADDITION);
-    for (let t = 0; t < s; t++) {
-      var o = t * CHECK_DEGREE_ADDITION;
-      const l = Vector_1.Vector.Create();
-      var o =
-        (r.RotateAngleAxis(o, Vector_1.Vector.UpVectorProxy, l),
-        Vector_1.Vector.Create());
-      var o =
-        (l.Multiply(this.TsSearchRange, o),
-        o.AdditionEqual(e),
-        TraceElementCommon_1.TraceElementCommon.SetEndLocation(
+    var i = new Array(),
+      r = t.ActorForwardProxy,
+      s =
+        (TraceElementCommon_1.TraceElementCommon.SetStartLocation(
           this.TraceElement,
-          o,
+          e,
         ),
-        TraceElementCommon_1.TraceElementCommon.LineTrace(
-          this.TraceElement,
-          PROFILE_KEY,
-        ));
+        MathUtils_1.PI_DEG_DOUBLE / CHECK_DEGREE_ADDITION);
+    for (let t = 0; t < s; t++) {
+      var o = t * CHECK_DEGREE_ADDITION,
+        l = Vector_1.Vector.Create(),
+        o =
+          (r.RotateAngleAxis(o, Vector_1.Vector.UpVectorProxy, l),
+          Vector_1.Vector.Create()),
+        o =
+          (l.Multiply(this.TsSearchRange, o),
+          o.AdditionEqual(e),
+          TraceElementCommon_1.TraceElementCommon.SetEndLocation(
+            this.TraceElement,
+            o,
+          ),
+          TraceElementCommon_1.TraceElementCommon.LineTrace(
+            this.TraceElement,
+            PROFILE_KEY,
+          ));
       (o && this.TraceElement.HitResult.bBlockingHit) || i.push(l);
     }
     return i;
   }
   GetOptimalDirection(i, r) {
-    const s = this.TempEnemyList.length;
-    if (s === 0) {
+    var s = this.TempEnemyList.length;
+    if (0 === s) {
       const o = Math.floor(
         MathUtils_1.MathUtils.GetRandomFloatNumber(0, r.length),
       );
       return r[o];
     }
-    let o = 0;
-    let l = 0;
+    let o = 0,
+      l = 0;
     for (let t = 0, e = r.length; t < e; t++) {
-      const a = Vector_1.Vector.Create(r[t]).MultiplyEqual(this.TsSearchRange);
+      var a = Vector_1.Vector.Create(r[t]).MultiplyEqual(this.TsSearchRange);
       a.AdditionEqual(i);
       let e = 0;
       for (let t = 0; t < s; t++) {
-        var n = this.TempEnemyList[t]?.GetComponent(1);
-        var n = Vector_1.Vector.Dist(n.ActorLocationProxy, a);
+        var n = this.TempEnemyList[t]?.GetComponent(1),
+          n = Vector_1.Vector.Dist(n.ActorLocationProxy, a);
         e < n && (e = n);
       }
       e > l && ((l = e), (o = t));
@@ -147,4 +147,4 @@ class TsTaskNpcFindFleePosition extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskNpcFindFleePosition;
-// # sourceMappingURL=TsTaskNpcFindFleePosition.js.map
+//# sourceMappingURL=TsTaskNpcFindFleePosition.js.map

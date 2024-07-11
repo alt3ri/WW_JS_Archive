@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RedDotAdventureManual = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const RedDotBase_1 = require("../../RedDotBase");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  RedDotBase_1 = require("../../RedDotBase"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class RedDotAdventureManual extends RedDotBase_1.RedDotBase {
   OnGetParentName() {
     return "FunctionAdventure";
@@ -19,4 +19,4 @@ class RedDotAdventureManual extends RedDotBase_1.RedDotBase {
   }
 }
 exports.RedDotAdventureManual = RedDotAdventureManual;
-// # sourceMappingURL=RedDotAdventureManual.js.map
+//# sourceMappingURL=RedDotAdventureManual.js.map

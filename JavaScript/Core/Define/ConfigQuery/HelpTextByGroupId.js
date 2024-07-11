@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configHelpTextByGroupId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const HelpText_1 = require("../Config/HelpText");
-const DB = "db_help.db";
-const FILE = "b.帮助.xlsx";
-const TABLE = "HelpText";
-const COMMAND = "select BinData from `HelpText` where GroupId=? Order By Id";
-const KEY_PREFIX = "HelpTextByGroupId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  HelpText_1 = require("../Config/HelpText"),
+  DB = "db_help.db",
+  FILE = "b.帮助.xlsx",
+  TABLE = "HelpText",
+  COMMAND = "select BinData from `HelpText` where GroupId=? Order By Id",
+  KEY_PREFIX = "HelpTextByGroupId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX = "configHelpTextByGroupId.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configHelpTextByGroupId.GetConfigList(";
 exports.configHelpTextByGroupId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -29,7 +29,7 @@ exports.configHelpTextByGroupId = {
     );
   },
   GetConfigList: (o, e = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -44,13 +44,14 @@ exports.configHelpTextByGroupId = {
         const t = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "GroupId",
               o,
-            ]) !== 1
+            ])
           )
             break;
-          let r = void 0;
+          var r = void 0;
           if (
             (([n, r] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -78,4 +79,4 @@ exports.configHelpTextByGroupId = {
     }
   },
 };
-// # sourceMappingURL=HelpTextByGroupId.js.map
+//# sourceMappingURL=HelpTextByGroupId.js.map

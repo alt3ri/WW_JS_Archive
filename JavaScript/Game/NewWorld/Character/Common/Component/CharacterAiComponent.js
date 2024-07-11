@@ -1,45 +1,50 @@
 "use strict";
-let CharacterAiComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, o) {
-    let r;
-    const s = arguments.length;
-    let n =
-      s < 3 ? e : o === null ? (o = Object.getOwnPropertyDescriptor(e, i)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      n = Reflect.decorate(t, e, i, o);
-    else
-      for (let h = t.length - 1; h >= 0; h--)
-        (r = t[h]) && (n = (s < 3 ? r(n) : s > 3 ? r(e, i, n) : r(e, i)) || n);
-    return s > 3 && n && Object.defineProperty(e, i, n), n;
-  };
+var CharacterAiComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, o) {
+      var r,
+        s = arguments.length,
+        n =
+          s < 3
+            ? e
+            : null === o
+              ? (o = Object.getOwnPropertyDescriptor(e, i))
+              : o;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        n = Reflect.decorate(t, e, i, o);
+      else
+        for (var h = t.length - 1; 0 <= h; h--)
+          (r = t[h]) &&
+            (n = (s < 3 ? r(n) : 3 < s ? r(e, i, n) : r(e, i)) || n);
+      return 3 < s && n && Object.defineProperty(e, i, n), n;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterAiComponent = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Stats_1 = require("../../../../../Core/Common/Stats");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils");
-const IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent");
-const AiController_1 = require("../../../../AI/Controller/AiController");
-const TsAiController_1 = require("../../../../AI/Controller/TsAiController");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../../../GlobalData");
-const BehaviorTreeDefines_1 = require("../../../../LevelGamePlay/LevelAi/BehaviorTree/BehaviorTreeDefines");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage");
-const CombatDebugController_1 = require("../../../../Utils/CombatDebugController");
-const BaseActorComponent_1 = require("../../../Common/Component/BaseActorComponent");
-const DEFAULT_LEVELAI_AIC_PATH =
-  "/Game/Aki/AI/AINPC/Common/AIC_CommonNPC.AIC_CommonNPC_C";
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../../Core/Common/Stats"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils"),
+  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  AiController_1 = require("../../../../AI/Controller/AiController"),
+  TsAiController_1 = require("../../../../AI/Controller/TsAiController"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  BehaviorTreeDefines_1 = require("../../../../LevelGamePlay/LevelAi/BehaviorTree/BehaviorTreeDefines"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
+  CombatDebugController_1 = require("../../../../Utils/CombatDebugController"),
+  BaseActorComponent_1 = require("../../../Common/Component/BaseActorComponent"),
+  DEFAULT_LEVELAI_AIC_PATH =
+    "/Game/Aki/AI/AINPC/Common/AIC_CommonNPC.AIC_CommonNPC_C";
 let CharacterAiComponent =
   (CharacterAiComponent_1 = class CharacterAiComponent extends (
     EntityComponent_1.EntityComponent
@@ -86,8 +91,8 @@ let CharacterAiComponent =
       );
     }
     CheckAndInitTsAiController() {
-      let t;
-      const e = this.Entity.GetComponent(3);
+      var t,
+        e = this.Entity.GetComponent(3);
       this.kFr
         ? this.kFr.Possess(e.Actor)
         : ((t = this.JFr(e.ActorTransform)).Possess(e.Actor),
@@ -97,7 +102,7 @@ let CharacterAiComponent =
       (this.Mne = this.Entity.GetComponent(0)?.GetPbDataId() ?? 0),
         (this.Hte = this.Entity.GetComponent(3)),
         (this.HFr = this.Entity.GetComponent(65));
-      const t = this.Hte.Actor.GetController();
+      var t = this.Hte.Actor.GetController();
       return (
         t &&
           (t.SetActorTickEnabled(!1), Log_1.Log.CheckWarn()) &&
@@ -113,7 +118,7 @@ let CharacterAiComponent =
       );
     }
     OnStart() {
-      let t;
+      var t;
       return (
         this.FFr.SetAiDesignComp(this),
         EventSystem_1.EventSystem.AddWithTarget(
@@ -142,13 +147,13 @@ let CharacterAiComponent =
     }
     JFr(t) {
       var t = ActorSystem_1.ActorSystem.Get(
-        UE.TsAiController_C.StaticClass(),
-        t,
-        void 0,
-      );
-      const e =
-        (t.SetActorTickEnabled(!1),
-        t.K2_GetComponentsByClass(UE.ActorComponent.StaticClass()));
+          UE.TsAiController_C.StaticClass(),
+          t,
+          void 0,
+        ),
+        e =
+          (t.SetActorTickEnabled(!1),
+          t.K2_GetComponentsByClass(UE.ActorComponent.StaticClass()));
       for (let t = 0; t < e.Num(); t++) e.Get(t).SetComponentTickEnabled(!1);
       return t;
     }
@@ -177,7 +182,7 @@ let CharacterAiComponent =
     }
     ZFr() {
       let t = 0;
-      let e = this.Hte.CreatureData.GetPbEntityInitData();
+      var e = this.Hte.CreatureData.GetPbEntityInitData();
       (t =
         e?.ComponentsData &&
         (e = (0, IComponent_1.getComponent)(e.ComponentsData, "AiComponent"))
@@ -198,7 +203,7 @@ let CharacterAiComponent =
         !this.WFr
       ) {
         this.FFr && this.FFr.Tick(t);
-        const e = t * MathUtils_1.MathUtils.MillisecondToSecond;
+        var e = t * MathUtils_1.MathUtils.MillisecondToSecond;
         GlobalData_1.GlobalData.IsPlayInEditor &&
           this.kFr.IsDebugDraw &&
           this.kFr.DrawDebugLines(e),
@@ -207,7 +212,7 @@ let CharacterAiComponent =
       }
     }
     LoadAiConfigs(t) {
-      let e;
+      var e;
       t
         ? this.FFr.AiBase?.Id !== t &&
           ((e =
@@ -236,13 +241,13 @@ let CharacterAiComponent =
                 )
               ) {
                 var t = ActorSystem_1.ActorSystem.Get(
-                  t,
-                  this.Hte.ActorTransform,
-                  void 0,
-                );
-                const e =
-                  (t.SetActorTickEnabled(!1),
-                  t.K2_GetComponentsByClass(UE.ActorComponent.StaticClass()));
+                    t,
+                    this.Hte.ActorTransform,
+                    void 0,
+                  ),
+                  e =
+                    (t.SetActorTickEnabled(!1),
+                    t.K2_GetComponentsByClass(UE.ActorComponent.StaticClass()));
                 for (let t = 0; t < e.Num(); t++)
                   e.Get(t).SetComponentTickEnabled(!1);
                 ControllerHolder_1.ControllerHolder.AttachToActorController.AttachToActor(
@@ -306,7 +311,7 @@ let CharacterAiComponent =
             );
     }
     i3r() {
-      let t;
+      var t;
       return (
         !!BehaviorTreeDefines_1.BehaviorTreeDefines.UseLevelAiBehaviorTree &&
         !!(t = this.Hte.CreatureData.GetPbEntityInitData())?.ComponentsData &&
@@ -314,7 +319,7 @@ let CharacterAiComponent =
       );
     }
     t3r() {
-      let t, e;
+      var t, e;
       CombatDebugController_1.CombatDebugController.CombatInfo(
         "Ai",
         this.Entity,
@@ -337,13 +342,13 @@ let CharacterAiComponent =
         (this.QFr.length = 0);
     }
     RestartBehaviorTree() {
-      let t;
+      var t;
       this.IsAiDriver &&
         (t = this.TsAiController.BrainComponent) &&
         t.RestartLogic();
     }
     EnableAi(t) {
-      let e = this.VFr.get(t);
+      var e = this.VFr.get(t);
       return this.VFr.delete(t)
         ? !!this.DisableAiHandle.Enable(e, this.constructor.name) &&
             (this.DisableAiHandle.Empty &&
@@ -376,7 +381,7 @@ let CharacterAiComponent =
           !1);
     }
     DisableAi(t) {
-      let e;
+      var e;
       this.VFr.has(t)
         ? Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -457,7 +462,7 @@ let CharacterAiComponent =
             ["Path", i],
           ),
         ResourceSystem_1.ResourceSystem.LoadAsync(i, UE.BehaviorTree, (t) => {
-          let e;
+          var e;
           this.kFr &&
             (t?.IsValid()
               ? this.kFr.SetupBehaviorTree(t) &&
@@ -498,7 +503,7 @@ let CharacterAiComponent =
       this.$Fr || (this.kFr && (this.$Fr = !0));
     }
     OnSyncAiInformation(t) {
-      let e;
+      var e;
       this.Entity.IsInit
         ? this.h3r(t)
         : ((e =
@@ -512,20 +517,19 @@ let CharacterAiComponent =
           (this.YFr = t));
     }
     h3r(e) {
-      const i =
-        e.aFn === ModelManager_1.ModelManager.CreatureModel.GetPlayerId();
-      const t =
-        (CombatDebugController_1.CombatDebugController.CombatInfo(
-          "Ai",
-          this.Entity,
-          "切换控制权",
-          ["v", i],
-        ),
-        this.Hte.CreatureData.SetBlackboardsByProtocol(e.c4n.u4n),
-        this.FFr.AiHateList);
+      var i = e.aFn === ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
+        t =
+          (CombatDebugController_1.CombatDebugController.CombatInfo(
+            "Ai",
+            this.Entity,
+            "切换控制权",
+            ["v", i],
+          ),
+          this.Hte.CreatureData.SetBlackboardsByProtocol(e.c4n.u4n),
+          this.FFr.AiHateList);
       for (const n of e.c4n.efs) {
-        var o = MathUtils_1.MathUtils.LongToNumber(n.rkn);
-        var o = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
+        var o = MathUtils_1.MathUtils.LongToNumber(n.rkn),
+          o = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
         o && t.ChangeHatred(o.Id, 0, n._4n);
       }
       for (const h of e.c4n.tfs)
@@ -535,13 +539,13 @@ let CharacterAiComponent =
           !1,
           "切换控制权",
         );
-      const r = this.Entity.GetComponent(3);
+      var r = this.Entity.GetComponent(3);
       if (r.IsAutonomousProxy !== i) {
         let t = i;
-        const s = this.Entity.GetComponent(46);
+        var s = this.Entity.GetComponent(46);
         s &&
           s.IsLocal &&
-          (s.CurrentState === 2 || s.CurrentState === 4) &&
+          (2 === s.CurrentState || 4 === s.CurrentState) &&
           (t = !0),
           r.SetAutonomous(i, t),
           i && this.TsAiController?.获取控制权时(),
@@ -568,10 +572,10 @@ let CharacterAiComponent =
         );
     }
     static AiHateNotify(t, e) {
-      const i = t.GetComponent(38).FFr.AiHateList;
+      var i = t.GetComponent(38).FFr.AiHateList;
       for (const r of e.efs) {
-        var o = MathUtils_1.MathUtils.LongToNumber(r.rkn);
-        var o = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
+        var o = MathUtils_1.MathUtils.LongToNumber(r.rkn),
+          o = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
         o && i.ChangeHatred(o.Id, 0, r._4n);
       }
     }
@@ -590,13 +594,13 @@ let CharacterAiComponent =
                 )
               ) {
                 var t = ActorSystem_1.ActorSystem.Get(
-                  t,
-                  this.Hte.ActorTransform,
-                  void 0,
-                );
-                const e =
-                  (t.SetActorTickEnabled(!1),
-                  t.K2_GetComponentsByClass(UE.ActorComponent.StaticClass()));
+                    t,
+                    this.Hte.ActorTransform,
+                    void 0,
+                  ),
+                  e =
+                    (t.SetActorTickEnabled(!1),
+                    t.K2_GetComponentsByClass(UE.ActorComponent.StaticClass()));
                 for (let t = 0; t < e.Num(); t++)
                   e.Get(t).SetComponentTickEnabled(!1);
                 ControllerHolder_1.ControllerHolder.AttachToActorController.AttachToActor(
@@ -638,4 +642,4 @@ let CharacterAiComponent =
       CharacterAiComponent,
     )),
   (exports.CharacterAiComponent = CharacterAiComponent);
-// # sourceMappingURL=CharacterAiComponent.js.map
+//# sourceMappingURL=CharacterAiComponent.js.map

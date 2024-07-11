@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const CameraController_1 = require("../Camera/CameraController");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const Global_1 = require("../Global");
+const UE = require("ue"),
+  CameraController_1 = require("../Camera/CameraController"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  Global_1 = require("../Global");
 class TsAnimNotifyStateCameraStateChange extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.是否为单客户端 = !1), (this.是否跟随 = !1);
@@ -34,4 +34,4 @@ class TsAnimNotifyStateCameraStateChange extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateCameraStateChange;
-// # sourceMappingURL=TsAnimNotifyStateCameraStateChange.js.map
+//# sourceMappingURL=TsAnimNotifyStateCameraStateChange.js.map

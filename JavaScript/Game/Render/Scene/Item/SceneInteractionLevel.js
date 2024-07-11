@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneInteractionLevel = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class SceneInteractionLevel {
   constructor() {
     (this.LevelStreamingDynamic = void 0),
@@ -58,7 +58,7 @@ class SceneInteractionLevel {
     return this.InteractionActor;
   }
   GetAllActorsInLevel() {
-    let t;
+    var t;
     if (this.LevelStreamingDynamic)
       return (t = this.LevelStreamingDynamic.GetLoadedLevel())
         ? UE.KuroRenderingRuntimeBPPluginBPLibrary.GetLevelActors(t)
@@ -103,7 +103,7 @@ class SceneInteractionLevel {
       return this.InteractionActor.GetAllActor();
   }
   GetActorByKey(t) {
-    let i;
+    var i;
     if (this.LoadingLevelComplete && this.InteractionActor?.IsValid())
       return (
         (i = void 0),
@@ -160,7 +160,7 @@ class SceneInteractionLevel {
     this.InteractionActor && this.InteractionActor.PlayIndependentEndEffect(t);
   }
   n1r() {
-    let t;
+    var t;
     this.LevelStreamingDynamic
       ? ((this.LoadingLevelComplete = !0),
         (t = this.LevelStreamingDynamic.GetLoadedLevel()),
@@ -203,7 +203,7 @@ class SceneInteractionLevel {
   AttachToActor(t) {
     this.InteractionActor?.IsValid() &&
       this.InteractionActor.RootComponent?.IsValid() &&
-      (this.InteractionActor.RootComponent.Mobility === 0 &&
+      (0 === this.InteractionActor.RootComponent.Mobility &&
         (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "RenderScene",
@@ -239,17 +239,17 @@ class SceneInteractionLevel {
   SetCollisionActorsOwner(i) {
     if (this.InteractionActor?.IsValid()) {
       if (this.InteractionActor.CollisionActors) {
-        const e = this.InteractionActor.CollisionActors.Num();
+        var e = this.InteractionActor.CollisionActors.Num();
         for (let t = 0; t < e; t++) {
-          const s = this.InteractionActor.CollisionActors.Get(t);
+          var s = this.InteractionActor.CollisionActors.Get(t);
           ObjectUtils_1.ObjectUtils.IsValid(s) && s.SetOwner(i);
         }
       }
       if (this.InteractionActor.PartCollisionActorsAndCorrespondingTags) {
-        const h =
+        var h =
           this.InteractionActor.PartCollisionActorsAndCorrespondingTags.Num();
         for (let t = 0; t < h; t++) {
-          const r =
+          var r =
             this.InteractionActor.PartCollisionActorsAndCorrespondingTags.GetKey(
               t,
             );
@@ -261,7 +261,7 @@ class SceneInteractionLevel {
   GetMainCollisionActor() {
     return this.InteractionActor?.IsValid() &&
       this.InteractionActor.CollisionActors &&
-      this.InteractionActor.CollisionActors?.Num() > 0
+      0 < this.InteractionActor.CollisionActors?.Num()
       ? this.InteractionActor.CollisionActors.Get(0)
       : void 0;
   }
@@ -321,4 +321,4 @@ class SceneInteractionLevel {
   }
 }
 exports.SceneInteractionLevel = SceneInteractionLevel;
-// # sourceMappingURL=SceneInteractionLevel.js.map
+//# sourceMappingURL=SceneInteractionLevel.js.map

@@ -1,28 +1,28 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Net = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../Common/Log");
-const Stats_1 = require("../Common/Stats");
-const Time_1 = require("../Common/Time");
-const List_1 = require("../Container/List");
-const Queue_1 = require("../Container/Queue");
-const Long = require("../Define/Net/long");
-const NetDefine_1 = require("../Define/Net/NetDefine");
-const GameBudgetInterfaceController_1 = require("../GameBudgetAllocator/GameBudgetInterfaceController");
-const Http_1 = require("../Http/Http");
-const TimerSystem_1 = require("../Timer/TimerSystem");
-const MathUtils_1 = require("../Utils/MathUtils");
-const StringUtils_1 = require("../Utils/StringUtils");
-const NetInfo_1 = require("./NetInfo");
-const ENABLE_NET_STAT = !0;
-const ENABLE_NET_LOG = !0;
-const ENABLE_HEARTBEAT_LOG = !0;
-const ENABLE_SYNC_LOG = !0;
-const ENABLE_MESSAGE_LOG = !1;
-const s2cEncryptType = { 0: 1, 2: 0 };
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../Common/Log"),
+  Stats_1 = require("../Common/Stats"),
+  Time_1 = require("../Common/Time"),
+  List_1 = require("../Container/List"),
+  Queue_1 = require("../Container/Queue"),
+  Long = require("../Define/Net/long"),
+  NetDefine_1 = require("../Define/Net/NetDefine"),
+  GameBudgetInterfaceController_1 = require("../GameBudgetAllocator/GameBudgetInterfaceController"),
+  Http_1 = require("../Http/Http"),
+  TimerSystem_1 = require("../Timer/TimerSystem"),
+  MathUtils_1 = require("../Utils/MathUtils"),
+  StringUtils_1 = require("../Utils/StringUtils"),
+  NetInfo_1 = require("./NetInfo"),
+  ENABLE_NET_STAT = !0,
+  ENABLE_NET_LOG = !0,
+  ENABLE_HEARTBEAT_LOG = !0,
+  ENABLE_SYNC_LOG = !0,
+  ENABLE_MESSAGE_LOG = !1,
+  s2cEncryptType = { [0]: 1, 2: 0 };
 class SendMessageCache {
   constructor(e, t, N, i, s) {
     (this.RpcId = 0),
@@ -59,10 +59,10 @@ class Net {
     return Net.QK;
   }
   static IsServerConnected() {
-    return Net.XK === 2 || Net.XK === 3;
+    return 2 === Net.XK || 3 === Net.XK;
   }
   static IsFinishLogin() {
-    return Net.XK === 2;
+    return 2 === Net.XK;
   }
   static SetDoingLogin() {
     Net.XK = 1;
@@ -90,41 +90,41 @@ class Net {
   }
   static Initialize() {
     Net._X(0);
-    var e = new UE.KuroKcpClient();
-    var e =
-      ((e.IsTickDrivenOutside = !0),
-      e.OnConnectSuccess.Add(Net.M9s),
-      e.OnRecResp.Bind(Net.iX),
-      e.OnRecException.Bind(Net.oX),
-      e.OnRecPush.Bind(Net.rX),
-      e.OnError.Bind(Net.nX),
-      e.SetEnType(2, 111),
-      e.SetEnType(2, 112),
-      Net.sX.clear(),
-      (Net.aX = 0),
-      (Net.hX = 0),
-      (Net.lX = 0),
-      UE.KuroStaticLibrary.IsBuildShipping() ||
-        ((Net.uX = ENABLE_NET_LOG),
-        (Net.cX = ENABLE_NET_STAT),
-        (Net.mX = ENABLE_HEARTBEAT_LOG),
-        (Net.dX = ENABLE_SYNC_LOG)),
-      Net.CX(NetDefine_1.PushMessageIds, "Net.Push", !0),
-      Net.CX(NetDefine_1.RequestMessageIds, "Net.Request", !1),
-      Net.CX(NetDefine_1.ResponseMessageIds, "Net.Response", !0),
-      Net.CX(NetDefine_1.NotifyMessageIds, "Net.Notify", !0),
-      e.SetKcpMtu(1e3),
-      e.SetKcpSegmentSize(123952),
-      e.SetKcpWndSize(256, 256),
-      e.SetKcpNoDelay(1, 10, 2, 1),
-      e.SetKcpStream(!0),
-      (Net.gX = e),
-      {
-        GroupId: new UE.FName("NetOnceTaskGroup"),
-        Priority: 100,
-        IsEmpty: this.fX,
-        Consume: this.pX,
-      });
+    var e = new UE.KuroKcpClient(),
+      e =
+        ((e.IsTickDrivenOutside = !0),
+        e.OnConnectSuccess.Add(Net.M9s),
+        e.OnRecResp.Bind(Net.iX),
+        e.OnRecException.Bind(Net.oX),
+        e.OnRecPush.Bind(Net.rX),
+        e.OnError.Bind(Net.nX),
+        e.SetEnType(2, 111),
+        e.SetEnType(2, 112),
+        Net.sX.clear(),
+        (Net.aX = 0),
+        (Net.hX = 0),
+        (Net.lX = 0),
+        UE.KuroStaticLibrary.IsBuildShipping() ||
+          ((Net.uX = ENABLE_NET_LOG),
+          (Net.cX = ENABLE_NET_STAT),
+          (Net.mX = ENABLE_HEARTBEAT_LOG),
+          (Net.dX = ENABLE_SYNC_LOG)),
+        Net.CX(NetDefine_1.PushMessageIds, "Net.Push", !0),
+        Net.CX(NetDefine_1.RequestMessageIds, "Net.Request", !1),
+        Net.CX(NetDefine_1.ResponseMessageIds, "Net.Response", !0),
+        Net.CX(NetDefine_1.NotifyMessageIds, "Net.Notify", !0),
+        e.SetKcpMtu(1e3),
+        e.SetKcpSegmentSize(123952),
+        e.SetKcpWndSize(256, 256),
+        e.SetKcpNoDelay(1, 10, 2, 1),
+        e.SetKcpStream(!0),
+        (Net.gX = e),
+        {
+          GroupId: new UE.FName("NetOnceTaskGroup"),
+          Priority: 100,
+          IsEmpty: this.fX,
+          Consume: this.pX,
+        });
     GameBudgetInterfaceController_1.GameBudgetInterfaceController.RegisterOnceTaskCustomGroup(
       e,
     );
@@ -171,8 +171,8 @@ class Net {
       Log_1.Log.Info("Net", 31, "断开连接", ["Reason", e]),
       Net._X(0),
       Net.S9s && Net.A9s(2),
-      e !== 1
-        ? ((Net.XK = e === 0 ? 4 : 0), Net.LX(), (Net.aX = 0), (Net.hX = 0))
+      1 !== e
+        ? ((Net.XK = 0 === e ? 4 : 0), Net.LX(), (Net.aX = 0), (Net.hX = 0))
         : (Net.XK = 3);
   }
   static ResetProtoKey() {
@@ -188,8 +188,8 @@ class Net {
     return Net.lX;
   }
   static GetCachedMessageData(e) {
-    let t = Net.RX.GetHeadNextNode();
-    let N = void 0;
+    let t = Net.RX.GetHeadNextNode(),
+      N = void 0;
     for (; t; ) {
       if (t.Element?.SeqNo === e) {
         N = t.Element;
@@ -197,7 +197,7 @@ class Net {
       }
       t = t.Next;
     }
-    let i, s, o;
+    var i, s, o;
     return N
       ? (([i, s, , o] = Net.gX
           .GetDebugString(N.EncodeMessage, ";", N.MessageId, N.SeqNo)
@@ -211,12 +211,12 @@ class Net {
   static ReconnectSuccessAndReSend(N) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Net", 31, "重连流程,", ["lastReceived", N]);
-    const i = Net.RX.Count;
-    if (i > 0) {
-      let e = Net.RX.GetHeadNextNode();
-      let t = !1;
+    var i = Net.RX.Count;
+    if (0 < i) {
+      let e = Net.RX.GetHeadNextNode(),
+        t = !1;
       for (; e; ) {
-        const s = e.Element.SeqNo;
+        var s = e.Element.SeqNo;
         if (N <= s) {
           t = s === N;
           break;
@@ -234,18 +234,18 @@ class Net {
           ["find SeqNo", e.Element.SeqNo],
         );
     }
-    if (Net.RX.Count > 0) {
-      let e = 0;
-      let t = 0;
-      let N = 0;
-      let i = Net.RX.GetHeadNextNode();
+    if (0 < Net.RX.Count) {
+      let e = 0,
+        t = 0,
+        N = 0,
+        i = Net.RX.GetHeadNextNode();
       for (; i; ) {
-        var o;
-        var r;
-        const a = i.Element;
-        const n = a.MessageId;
-        (3 & NetDefine_1.protoConfig[n]) == 0 ||
-          ((r = void 0 !== (o = a.RpcId) ? 1 : 4) != 4 && !a.Handle) ||
+        var o,
+          r,
+          a = i.Element,
+          n = a.MessageId;
+        0 == (3 & NetDefine_1.protoConfig[n]) ||
+          (4 != (r = void 0 !== (o = a.RpcId) ? 1 : 4) && !a.Handle) ||
           (e++,
           (t = a.SeqNo),
           (N = n),
@@ -286,13 +286,13 @@ class Net {
     Net.AX(e) && Net.PX(4, e, t, void 0, void 0);
   }
   static Call(e, t, N, i = 0) {
-    let s;
+    var s;
     !Net.xX(e) && Net.AX(e)
       ? ((s = Net.BX()),
         (t = Net.PX(1, e, t, s, N)),
         Net.bX(e, t),
-        i > 0 && Net.qX(i, t.Element),
-        (4 & NetDefine_1.protoConfig[e]) == 4 && Net.JK?.(s))
+        0 < i && Net.qX(i, t.Element),
+        4 == (4 & NetDefine_1.protoConfig[e]) && Net.JK?.(s))
       : N(void 0);
   }
   static async CallAsync(e, N, i = 0) {
@@ -308,15 +308,15 @@ class Net {
     });
   }
   static PX(e, t, N, i, s) {
-    const o = Net.OX();
-    const r = NetDefine_1.messageDefine[t].encode(N).finish();
-    var s = new SendMessageCache(i, o, t, r, s);
-    var s = Net.FX(s);
+    var o = Net.OX(),
+      r = NetDefine_1.messageDefine[t].encode(N).finish(),
+      s = new SendMessageCache(i, o, t, r, s),
+      s = Net.FX(s);
     return Net.VX(t) || Net.UX(e, o, i, t, r, N), s;
   }
   static qX(t, N) {
     const i = N.MessageId;
-    let e;
+    var e;
     Net.MX.has(i)
       ? ((e = TimerSystem_1.TimerSystem.Delay(() => {
           Log_1.Log.CheckInfo() &&
@@ -327,7 +327,7 @@ class Net {
               ["message", i],
               ["timeout", t],
             );
-          const e = N.Handle;
+          var e = N.Handle;
           N.ResetHandle(void 0),
             (N.TimeoutHandle = void 0),
             e && (Net.cX && Net.HX.get(i), e(void 0));
@@ -339,8 +339,8 @@ class Net {
   static CX(e, t, N) {
     if (Net.uX || Net.cX)
       for (const o of e) {
-        const i = o;
-        const s = t + `.(${i})`;
+        var i = o,
+          s = t + `.(${i})`;
         Net.uX && Net.jX.set(i, s), N && Net.cX && Net.HX.set(i, void 0);
       }
   }
@@ -362,12 +362,12 @@ class Net {
           ["Before", Net.KX],
           ["After", e],
         ),
-      (Net.KX = e) === 0) &&
+      0 === (Net.KX = e)) &&
       Net.gX &&
       Net.gX.Disconnect();
   }
   static SX() {
-    return Net.KX === 0;
+    return 0 === Net.KX;
   }
   static D9s() {
     (Net.IX = TimerSystem_1.TimerSystem.Delay((e) => {
@@ -377,11 +377,11 @@ class Net {
       Net.gX.Connect(Net.I9s, Net.T9s);
   }
   static VX(e) {
-    return Net.XK === 3 && !Net.vX.has(e);
+    return 3 === Net.XK && !Net.vX.has(e);
   }
   static AX(e) {
-    if (Net.XK === 4) return !1;
-    if (Net.XK === 0 && !((3 & NetDefine_1.protoConfig[e]) == 0))
+    if (4 === Net.XK) return !1;
+    if (0 === Net.XK && !(0 == (3 & NetDefine_1.protoConfig[e])))
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -393,8 +393,8 @@ class Net {
         !1
       );
     return (
-      Net.XK !== 2 &&
-        (3 & NetDefine_1.protoConfig[e]) == 2 &&
+      2 !== Net.XK &&
+        2 == (3 & NetDefine_1.protoConfig[e]) &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Net",
@@ -417,17 +417,18 @@ class Net {
       : ((Net.hX = 1), Net.hX);
   }
   static QX(e) {
-    if (e === 0) return !0;
-    const t = Net.lX;
+    if (0 === e) return !0;
+    var t = Net.lX;
     let N = t + 1;
     if ((Net.lX = e) === (N = t === MathUtils_1.MathUtils.Int32Max ? 1 : N))
       return !0;
-    const i = (0, puerts_1.$ref)(UE.NewArray(UE.BuiltinString));
-    const s =
-      (UE.KuroStaticLibrary.GetLocalHostAddresses(i), (0, puerts_1.$unref)(i));
-    const o = new Array();
+    var i = (0, puerts_1.$ref)(UE.NewArray(UE.BuiltinString)),
+      s =
+        (UE.KuroStaticLibrary.GetLocalHostAddresses(i),
+        (0, puerts_1.$unref)(i)),
+      o = new Array();
     for (let e = 0; e < s.Num(); e++) {
-      const r = s.Get(e);
+      var r = s.Get(e);
       o.push(r);
     }
     return (
@@ -459,15 +460,15 @@ class Net {
   }
   static bX(e, t) {
     Net.XX.set(t.Element.RpcId, t),
-      (8 & NetDefine_1.protoConfig[e]) == 8 && Net.WX.add(e);
+      8 == (8 & NetDefine_1.protoConfig[e]) && Net.WX.add(e);
   }
   static $X(e) {
-    const t = e.Element;
-    const N = t.MessageId;
+    var t = e.Element,
+      N = t.MessageId;
     Net.XX.delete(t.RpcId),
-      (8 & NetDefine_1.protoConfig[N]) == 8 && Net.WX.delete(N),
-      N !== 111 &&
-        N !== 107 &&
+      8 == (8 & NetDefine_1.protoConfig[N]) && Net.WX.delete(N),
+      111 !== N &&
+        107 !== N &&
         (Net.RX.RemoveNodesBeforeThis(e, !0), Net.uX) &&
         ENABLE_MESSAGE_LOG &&
         Log_1.Log.CheckDebug() &&
@@ -481,19 +482,19 @@ class Net {
         );
   }
   static YX(e) {
-    return e === 111 || e === 112;
+    return 111 === e || 112 === e;
   }
   static JX(e, t, N, i, s = void 0) {
-    let o;
-    var i = new Uint8Array(i);
-    var i = new Uint8Array(i);
+    var o,
+      i = new Uint8Array(i),
+      i = new Uint8Array(i);
     Net.QX(t), Net.ZK?.();
-    let r = void 0;
-    let a = void 0;
-    let n = void 0;
+    let r = void 0,
+      a = void 0,
+      n = void 0;
     const _ = N;
-    let c = void 0;
-    let g = !1;
+    let c = void 0,
+      g = !1;
     const d = Date.now();
     if (
       ((Net.QK = d),
@@ -503,7 +504,7 @@ class Net {
             (v = d - o.SendTimeMs),
             (c = o.MessageId),
             NetInfo_1.NetInfo.SetRttMs(v),
-            v > 300 &&
+            300 < v &&
               Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Net",
@@ -539,10 +540,10 @@ class Net {
                 ["Name", Net.jX.get(_)],
               )),
           (g = this.zX.has(_))),
-      e === 3)
+      3 === e)
     ) {
-      const u = `[异常信息:${StringUtils_1.StringUtils.Uint8ArrayToString(i)}]`;
-      const L = n;
+      const u = `[异常信息:${StringUtils_1.StringUtils.Uint8ArrayToString(i)}]`,
+        L = n;
       n = () => {
         Net.YK?.(
           s,
@@ -561,10 +562,10 @@ class Net {
           Log_1.Log.Error("Net", 1, "协议解析异常", ["messageId", _]));
     a && Net.uX && Net.ZX(_, t, s, a);
     var v = () => {
-      let e;
+      var e;
       Net.cX && Net.HX.get(_),
         Net.uX &&
-          (e = Date.now() - d) > 67 &&
+          67 < (e = Date.now() - d) &&
           Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Net",
@@ -574,7 +575,7 @@ class Net {
             ["messageId", _],
             ["msg", Net.jX.get(_)],
           ),
-        s && c && (4 & NetDefine_1.protoConfig[c]) == 4 && Net.zK?.(s),
+        s && c && 4 == (4 & NetDefine_1.protoConfig[c]) && Net.zK?.(s),
         n?.(a),
         r && Net.$X(r),
         a && Net.eX?.(_, a);
@@ -586,7 +587,7 @@ class Net {
       ? (Net.uX &&
           ((o = o || NetDefine_1.messageDefine[i].decode(s)),
           Net.ZX(i, t, N, o)),
-        Net.gX.SendM(e, t, N, i, s, (32 & NetDefine_1.protoConfig[i]) == 0))
+        Net.gX.SendM(e, t, N, i, s, 0 == (32 & NetDefine_1.protoConfig[i])))
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Net", 22, "上行协议时机不对", ["messageId", i]),
         !1);
@@ -595,28 +596,28 @@ class Net {
     Net.WX.clear(), Net.XX.clear(), Net.RX.RemoveAllNodeWithoutHead();
   }
   static ZX(e, t, N, i) {
-    let s;
-    (Net.mX || (e !== 21988 && e !== 20387 && e !== 4988)) &&
-      e !== 29494 &&
-      e !== 3991 &&
-      e !== 17208 &&
-      e !== 6482 &&
-      e !== 27795 &&
-      e !== 12552 &&
-      e !== 21928 &&
-      e !== 15985 &&
-      e !== 7876 &&
+    var s;
+    (Net.mX || (21988 !== e && 20387 !== e && 4988 !== e)) &&
+      29494 !== e &&
+      3991 !== e &&
+      17208 !== e &&
+      6482 !== e &&
+      27795 !== e &&
+      12552 !== e &&
+      21928 !== e &&
+      15985 !== e &&
+      7876 !== e &&
       (Net.dX ||
-        (e !== 26094 &&
-          e !== 18388 &&
-          e !== 10387 &&
-          e !== 9469 &&
-          e !== 12325 &&
-          e !== 10026 &&
-          e !== 27030 &&
-          e !== 14957 &&
-          e !== 21012)) &&
-      ((s = Object.keys(i).length > 0), Net.uX) &&
+        (26094 !== e &&
+          18388 !== e &&
+          10387 !== e &&
+          9469 !== e &&
+          12325 !== e &&
+          10026 !== e &&
+          27030 !== e &&
+          14957 !== e &&
+          21012 !== e)) &&
+      ((s = 0 < Object.keys(i).length), Net.uX) &&
       Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Net",
@@ -675,7 +676,7 @@ class Net {
   (Net.eY = new Queue_1.Queue(256)),
   (Net.IsConsumeNotifyPaused = !1),
   (Net.zX = new Set([21988, 12864, 9653])),
-  (Net.fX = () => _a.IsConsumeNotifyPaused || _a.eY.Size === 0),
+  (Net.fX = () => _a.IsConsumeNotifyPaused || 0 === _a.eY.Size),
   (Net.pX = () => {
     Net.eY.Pop()();
   }),
@@ -689,10 +690,10 @@ class Net {
       Log_1.Log.Info("Net", 31, "Kcp连接结果:", ["result", e]),
       TimerSystem_1.TimerSystem.Remove(Net.IX),
       (Net.IX = void 0),
-      e === 1 && Net.y9s < Net.E9s
+      1 === e && Net.y9s < Net.E9s
         ? (Net.y9s++, Net._X(0), Net.D9s())
         : (Net.S9s && (Net.S9s(e), (Net.S9s = void 0)),
-          Net._X(e === 0 ? 2 : 0));
+          Net._X(0 === e ? 2 : 0));
   }),
   (Net.nX = (e, t, N, i, s) => {
     switch (e) {
@@ -706,7 +707,7 @@ class Net {
             ["Size", N],
             ["Read", i],
           ),
-          t !== 0 && Net.$K?.(t);
+          0 !== t && Net.$K?.(t);
         break;
       case 3:
         Log_1.Log.CheckInfo() &&
@@ -730,4 +731,4 @@ class Net {
   (Net.rX = (e, t, N) => {
     Net.JX(4, e, t, N);
   });
-// # sourceMappingURL=Net.js.map
+//# sourceMappingURL=Net.js.map

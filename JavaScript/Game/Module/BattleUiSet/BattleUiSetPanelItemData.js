@@ -45,10 +45,10 @@ class BattleUiSetPanelItemData {
   }
   IsInitialized() {
     return (
-      this.Size !== 0 ||
-      this.Alpha !== 0 ||
-      this.OffsetX !== 0 ||
-      this.OffsetY !== 0
+      0 !== this.Size ||
+      0 !== this.Alpha ||
+      0 !== this.OffsetX ||
+      0 !== this.OffsetY
     );
   }
   GetDebugString() {
@@ -59,4 +59,4 @@ class BattleUiSetPanelItemData {
   }
 }
 exports.BattleUiSetPanelItemData = BattleUiSetPanelItemData;
-// # sourceMappingURL=BattleUiSetPanelItemData.js.map
+//# sourceMappingURL=BattleUiSetPanelItemData.js.map

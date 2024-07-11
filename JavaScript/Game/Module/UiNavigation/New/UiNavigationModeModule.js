@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiNavigationModeModule = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Transform_1 = require("../../../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Transform_1 = require("../../../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager");
 class UiNavigationModeModule {
   constructor(i) {
     (this.FPo = void 0),
@@ -17,9 +17,9 @@ class UiNavigationModeModule {
         ConfigManager_1.ConfigManager.UiNavigationConfig.GetNavigateTolerance());
   }
   bwo(i, t, e) {
-    const a = e.GetRootComponent().GetLocalSpaceCenter();
-    const o = e.GetRootComponent().GetLocalSpaceLeftBottomPoint();
-    var e = e.GetRootComponent().GetLocalSpaceRightTopPoint();
+    var a = e.GetRootComponent().GetLocalSpaceCenter(),
+      o = e.GetRootComponent().GetLocalSpaceLeftBottomPoint(),
+      e = e.GetRootComponent().GetLocalSpaceRightTopPoint();
     if (t) {
       t = a.X - i.X;
       if (t < o.X || t > e.X) return !1;
@@ -33,31 +33,31 @@ class UiNavigationModeModule {
     return (
       (Math.abs(i - t) < MathUtils_1.MathUtils.KindaSmallNumber &&
         (UiNavigationModeModule.Gwo.X < 0 ||
-          UiNavigationModeModule.Gwo.Z > 0)) ||
+          0 < UiNavigationModeModule.Gwo.Z)) ||
       t - i >= MathUtils_1.MathUtils.KindaSmallNumber
     );
   }
   Nwo(e, i, a, o) {
-    const r = this.Owo(this.FPo);
-    let s = 0;
-    let n = Number.MAX_VALUE;
-    let h = Number.MAX_VALUE;
-    let v = !1;
-    let M = void 0;
-    let d = 0;
-    let l = Number.MIN_VALUE;
-    let u = void 0;
-    const _ = Vector_1.Vector.Create();
-    const g = Vector_1.Vector.Create();
+    var r = this.Owo(this.FPo);
+    let s = 0,
+      n = Number.MAX_VALUE,
+      h = Number.MAX_VALUE,
+      v = !1,
+      M = void 0,
+      d = 0,
+      l = Number.MIN_VALUE,
+      u = void 0;
+    var _ = Vector_1.Vector.Create(),
+      g = Vector_1.Vector.Create();
     for (let i = 0, t = e.Num(); i < t; ++i) {
-      const U = e.Get(i);
+      var U = e.Get(i);
       if (U.GetNavigationComponent().CheckFindOpposite(this.FPo)) {
         this.Owo(U).Subtraction(r, _);
-        const N = _.Size();
-        const f =
-          (g.DeepCopy(_),
-          g.Normalize(),
-          Vector_1.Vector.DotProduct(UiNavigationModeModule.Gwo, g));
+        var N = _.Size(),
+          f =
+            (g.DeepCopy(_),
+            g.Normalize(),
+            Vector_1.Vector.DotProduct(UiNavigationModeModule.Gwo, g));
         if (
           !MathUtils_1.MathUtils.IsNearlyEqual(
             f,
@@ -65,12 +65,12 @@ class UiNavigationModeModule {
             MathUtils_1.MathUtils.KindaSmallNumber,
           )
         )
-          if (f > 0) {
-            const c = o ? Math.abs(_.Z) : Math.abs(_.X);
-            const p = MathUtils_1.MathUtils.IsNearlyEqual(f, 1, this.Bwo);
-            const m = MathUtils_1.MathUtils.IsNearlyEqual(s, 1, this.Bwo);
-            let i = !1;
-            let t = !1;
+          if (0 < f) {
+            var c = o ? Math.abs(_.Z) : Math.abs(_.X),
+              p = MathUtils_1.MathUtils.IsNearlyEqual(f, 1, this.Bwo),
+              m = MathUtils_1.MathUtils.IsNearlyEqual(s, 1, this.Bwo);
+            let i = !1,
+              t = !1;
             switch (a) {
               case 1:
                 p && N < n && (i = !0);
@@ -87,8 +87,8 @@ class UiNavigationModeModule {
             }
             i && ((s = f), (n = N), (M = U), (h = c), (v = t));
           } else {
-            let C = MathUtils_1.MathUtils.IsNearlyEqual(f, -1);
-            const V = MathUtils_1.MathUtils.IsNearlyEqual(d, -1);
+            var C = MathUtils_1.MathUtils.IsNearlyEqual(f, -1),
+              V = MathUtils_1.MathUtils.IsNearlyEqual(d, -1);
             C
               ? (!V || N > l) && ((d = f), (l = N), (u = U))
               : !V &&
@@ -99,14 +99,14 @@ class UiNavigationModeModule {
       }
     }
     return MathUtils_1.MathUtils.IsNearlyEqual(s, 0)
-      ? !this.FPo.HasDynamicScrollView() && i === 1
+      ? !this.FPo.HasDynamicScrollView() && 1 === i
         ? u?.GetSelectableComponent()
         : void 0
       : M?.GetSelectableComponent();
   }
   kwo(i, t, e) {
     let a = void 0;
-    let o;
+    var o;
     return (
       (a = this.FPo.HasLoopScrollView()
         ? this.FPo.ScrollView.FindNavigationComponent(
@@ -126,31 +126,31 @@ class UiNavigationModeModule {
     i.Vertical === t &&
       (t
         ? ((t = UiNavigationModeModule.Gwo.Z < 0), i.ScrollItemIndex(!t))
-        : ((t = UiNavigationModeModule.Gwo.X > 0), i.ScrollItemIndex(!t)),
+        : ((t = 0 < UiNavigationModeModule.Gwo.X), i.ScrollItemIndex(!t)),
       ModelManager_1.ModelManager.UiNavigationModel?.RepeatMove());
   }
   Fwo() {
     if (this.FPo.HasLoopScrollView()) {
       UiNavigationModeModule.Gwo.Set(1, 0, 0);
-      const i = this.FPo.ScrollView.FindNavigationComponent(
+      var i = this.FPo.ScrollView.FindNavigationComponent(
         this.FPo.GetSelectableComponent(),
         UiNavigationModeModule.Gwo.ToUeVector(),
         2,
       );
       if (i) return i;
     }
-    const t = this.FPo.GetNavigationGroup()?.ListenerList;
-    const e = t.Num();
+    var t = this.FPo.GetNavigationGroup()?.ListenerList,
+      e = t.Num();
     if (e <= 0) return this.FPo.GetSelectableComponent();
-    const a = t.FindIndex(this.FPo);
-    if (a !== -1) {
+    var a = t.FindIndex(this.FPo);
+    if (-1 !== a) {
       for (let i = a + 1; i < e; i++) {
-        const o = t.Get(i);
+        var o = t.Get(i);
         if (o.IsCanFocus()) return o.GetSelectableComponent();
       }
       if (!this.FPo?.HasDynamicScrollView())
         for (let i = 0; i < a; i++) {
-          const r = t.Get(i);
+          var r = t.Get(i);
           if (r.IsCanFocus()) return r.GetSelectableComponent();
         }
     }
@@ -165,18 +165,18 @@ class UiNavigationModeModule {
       );
       if (t) return t;
     }
-    const e = this.FPo.GetNavigationGroup()?.ListenerList;
-    var t = e.Num();
+    var e = this.FPo.GetNavigationGroup()?.ListenerList,
+      t = e.Num();
     if (t <= 0) return this.FPo.GetSelectableComponent();
-    const a = e.FindIndex(this.FPo);
-    if (a !== -1) {
-      for (let i = a - 1; i >= 0; i--) {
-        const o = e.Get(i);
+    var a = e.FindIndex(this.FPo);
+    if (-1 !== a) {
+      for (let i = a - 1; 0 <= i; i--) {
+        var o = e.Get(i);
         if (o.IsCanFocus()) return o.GetSelectableComponent();
       }
       if (!this.FPo?.HasDynamicScrollView())
         for (let i = t - 1; i > a; i--) {
-          const r = e.Get(i);
+          var r = e.Get(i);
           if (r.IsCanFocus()) return r.GetSelectableComponent();
         }
     }
@@ -188,7 +188,7 @@ class UiNavigationModeModule {
     )
       switch (i.HorizontalWrapMode) {
         case 2:
-          return UiNavigationModeModule.Gwo.X > 0 ? this.Fwo() : this.Vwo();
+          return 0 < UiNavigationModeModule.Gwo.X ? this.Fwo() : this.Vwo();
         case 0:
         case 1:
           return (
@@ -200,6 +200,7 @@ class UiNavigationModeModule {
             this.kwo(i.HorizontalWrapMode, i.HorizontalPriorityMode, !1)
           );
         default:
+          return;
       }
     else
       switch (i.VerticalWrapMode) {
@@ -216,49 +217,50 @@ class UiNavigationModeModule {
             this.kwo(i.VerticalWrapMode, i.VerticalPriorityMode, !0)
           );
         default:
+          return;
       }
   }
   jwo(i) {
-    return i === 3
+    return 3 === i
       ? this.FPo.NavigationMode.TopActor
-      : i === 4
+      : 4 === i
         ? this.FPo.NavigationMode.DownActor
-        : i === 1
+        : 1 === i
           ? this.FPo.NavigationMode.LeftActor
-          : i === 2
+          : 2 === i
             ? this.FPo.NavigationMode.RightActor
             : void 0;
   }
   Wwo(i) {
-    return i === 3
+    return 3 === i
       ? this.FPo.NavigationMode.TopMode
-      : i === 4
+      : 4 === i
         ? this.FPo.NavigationMode.DownMode
-        : i === 1
+        : 1 === i
           ? this.FPo.NavigationMode.LeftMode
-          : i === 2
+          : 2 === i
             ? this.FPo.NavigationMode.RightMode
             : void 0;
   }
   Kwo(i) {
-    let t;
-    i === 3 &&
+    var t;
+    3 === i &&
       ((t = this.FPo.GetRootComponent().GetRightVector()),
       UiNavigationModeModule.Gwo.Set(t.X, t.Y, t.Z)),
-      i === 4 &&
+      4 === i &&
         ((t = this.FPo.GetRootComponent().GetRightVector()),
         UiNavigationModeModule.Gwo.Set(-t.X, -t.Y, -t.Z)),
-      i === 1 &&
+      1 === i &&
         ((t = this.FPo.GetRootComponent().GetForwardVector()),
         UiNavigationModeModule.Gwo.Set(-t.X, -t.Y, -t.Z)),
-      i === 2 &&
+      2 === i &&
         ((t = this.FPo.GetRootComponent().GetForwardVector()),
         UiNavigationModeModule.Gwo.Set(t.X, t.Y, t.Z));
   }
   Qwo() {
-    const i = this.FPo.RootUIComp;
+    var i = this.FPo.RootUIComp;
     if (i) {
-      let t = i.GetRenderCanvas();
+      var t = i.GetRenderCanvas();
       if (void 0 !== t && void 0 !== t.GetRootCanvas())
         return i.IsScreenSpaceOverlayUI()
           ? ((t = i.GetRootCanvas().GetOwner().RootComponent), this.Xwo(t))
@@ -267,20 +269,20 @@ class UiNavigationModeModule {
   }
   Xwo(i) {
     UiNavigationModeModule.Gwo.Normalize(0);
-    const t = this.FPo.GetNavigationGroup();
+    var t = this.FPo.GetNavigationGroup();
     if (t) return this.Hwo(t);
-    const e = this.Owo(this.FPo);
-    let a = Number.MIN_VALUE;
-    let o = this.FPo.GetSelectableComponent();
-    const r = UE.LGUIBPLibrary.GetComponentsInChildren(
+    var e = this.Owo(this.FPo);
+    let a = Number.MIN_VALUE,
+      o = this.FPo.GetSelectableComponent();
+    var r = UE.LGUIBPLibrary.GetComponentsInChildren(
       i.GetOwner(),
       UE.TsUiNavigationBehaviorListener_C.StaticClass(),
       !1,
     );
     for (let i = 0, t = r.Num(); i < t; ++i) {
-      var s;
-      var n;
-      const h = r.Get(i);
+      var s,
+        n,
+        h = r.Get(i);
       h.GroupName === this.FPo.GroupName &&
         h.IsCanFocus() &&
         ((s = this.Owo(h)).Subtraction(e, s),
@@ -292,8 +294,8 @@ class UiNavigationModeModule {
     return o;
   }
   Owo(i) {
-    var t = i.GetRootComponent().GetLocalSpaceCenter();
-    var t = Vector_1.Vector.Create(t.X, t.Y, 0);
+    var t = i.GetRootComponent().GetLocalSpaceCenter(),
+      t = Vector_1.Vector.Create(t.X, t.Y, 0);
     return (
       Transform_1.Transform.Create(
         i.GetRootSceneComponent().K2_GetComponentToWorld(),
@@ -302,9 +304,9 @@ class UiNavigationModeModule {
     );
   }
   FindActorByDirection(i, t = !0) {
-    let e;
-    const a = this.Wwo(i);
-    return a === 2
+    var e,
+      a = this.Wwo(i);
+    return 2 === a
       ? ((e = this.FPo.RootUIComp),
         t && !e.IsUIActiveInHierarchy()
           ? void (
@@ -321,11 +323,11 @@ class UiNavigationModeModule {
               )) && !t.IsCanFocus()
             ? t.ModeModule?.FindActorByDirection(i, !1)
             : t.GetBehaviorComponent().GetRootSceneComponent())
-      : a === 1
+      : 1 === a
         ? (this.Kwo(i), this.Qwo()?.GetRootSceneComponent())
         : void 0;
   }
 }
 (exports.UiNavigationModeModule = UiNavigationModeModule).Gwo =
   Vector_1.Vector.Create();
-// # sourceMappingURL=UiNavigationModeModule.js.map
+//# sourceMappingURL=UiNavigationModeModule.js.map

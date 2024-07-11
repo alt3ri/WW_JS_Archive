@@ -14,4 +14,4 @@ class CommonAttributeData extends ScrollViewDataBase_1.ScrollViewDataBase {
   }
 }
 exports.CommonAttributeData = CommonAttributeData;
-// # sourceMappingURL=CommonAttributeData.js.map
+//# sourceMappingURL=CommonAttributeData.js.map

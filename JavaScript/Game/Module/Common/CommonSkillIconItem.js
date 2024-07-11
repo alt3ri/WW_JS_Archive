@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonSkillIconItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
 class CommonSkillIconItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(), this.CreateThenShowByActor(e.GetOwner());
@@ -11,9 +11,9 @@ class CommonSkillIconItem extends UiPanelBase_1.UiPanelBase {
     this.ComponentRegisterInfos = [[0, UE.UITexture]];
   }
   UpdateItem(e) {
-    const s = this.GetTexture(0);
+    var s = this.GetTexture(0);
     e ? (this.SetTextureByPath(e, s), this.SetActive(!0)) : this.SetActive(!1);
   }
 }
 exports.CommonSkillIconItem = CommonSkillIconItem;
-// # sourceMappingURL=CommonSkillIconItem.js.map
+//# sourceMappingURL=CommonSkillIconItem.js.map

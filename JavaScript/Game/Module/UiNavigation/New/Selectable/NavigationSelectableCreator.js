@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NavigationSelectableCreator = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
 class NavigationSelectableCreator {
   static Cwo(e) {
     let t = void 0;
@@ -46,8 +46,8 @@ class NavigationSelectableCreator {
   }
   static CreateNavigationBehavior(e, t) {
     e = this.fwo(e);
-    let a = void 0;
-    let i = t;
+    let a = void 0,
+      i = t;
     return (
       StringUtils_1.StringUtils.IsBlank(t) ||
         ((a = NavigationSelectableCreator.gwo.get(t)), (i = t)),
@@ -58,4 +58,4 @@ class NavigationSelectableCreator {
 }
 (exports.NavigationSelectableCreator = NavigationSelectableCreator).gwo =
   new Map();
-// # sourceMappingURL=NavigationSelectableCreator.js.map
+//# sourceMappingURL=NavigationSelectableCreator.js.map

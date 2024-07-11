@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RenderModuleModel = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const TickSystem_1 = require("../../../Core/Tick/TickSystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../GlobalData");
-const WorldGlobal_1 = require("../../World/WorldGlobal");
-const CharRenderShell_1 = require("../Character/Manager/CharRenderShell");
-const RenderDataManager_1 = require("../Data/RenderDataManager");
-const DebugDrawManager_1 = require("../DebugDraw/DebugDrawManager");
-const EffectManagerBusinessProxy_1 = require("../Effect/EffectManagerBusinessProxy");
-const LensFlareManager_1 = require("../Effect/LensFlare/LensFlareManager");
-const SceneInteractionManager_1 = require("../Scene/Interaction/SceneInteractionManager");
-const ItemMaterialManager_1 = require("../Scene/Item/MaterialController/ItemMaterialManager");
-const ItemMaterialParameterCollectionController_1 = require("../Scene/Item/MaterialController/ItemMaterialParameterCollectionController");
-const RenderModuleConfig_1 = require("./RenderModuleConfig");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  TickSystem_1 = require("../../../Core/Tick/TickSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../GlobalData"),
+  WorldGlobal_1 = require("../../World/WorldGlobal"),
+  CharRenderShell_1 = require("../Character/Manager/CharRenderShell"),
+  RenderDataManager_1 = require("../Data/RenderDataManager"),
+  DebugDrawManager_1 = require("../DebugDraw/DebugDrawManager"),
+  EffectManagerBusinessProxy_1 = require("../Effect/EffectManagerBusinessProxy"),
+  LensFlareManager_1 = require("../Effect/LensFlare/LensFlareManager"),
+  SceneInteractionManager_1 = require("../Scene/Interaction/SceneInteractionManager"),
+  ItemMaterialManager_1 = require("../Scene/Item/MaterialController/ItemMaterialManager"),
+  ItemMaterialParameterCollectionController_1 = require("../Scene/Item/MaterialController/ItemMaterialParameterCollectionController"),
+  RenderModuleConfig_1 = require("./RenderModuleConfig");
 class RenderModuleModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -41,7 +41,7 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
     (this.Qlr = e),
       (this.Xlr = t),
       (this.$lr = t),
-      this.Xlr === 4 ? ((this.Ylr = !0), (this.Xlr = 0)) : (this.Ylr = !1),
+      4 === this.Xlr ? ((this.Ylr = !0), (this.Xlr = 0)) : (this.Ylr = !1),
       (this.Jlr = r),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -56,20 +56,20 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
     return this.Jlr;
   }
   Zlr(e) {
-    return e === 4
+    return 4 === e
       ? "无状态"
-      : e === 0
+      : 0 === e
         ? "静止状态"
-        : e === 1
+        : 1 === e
           ? "战斗1阶段"
-          : e === 2
+          : 2 === e
             ? "战斗2阶段"
-            : e === 3
+            : 3 === e
               ? "战斗3阶段"
               : "错误";
   }
   GetWuYinQuBattleDebugInfo() {
-    const e = UE.NewArray(UE.BuiltinString);
+    var e = UE.NewArray(UE.BuiltinString);
     const t = new Array();
     return (
       t.push(this.GetCurrentBattleKey() + "," + this.Zlr(this.$lr)),
@@ -89,7 +89,7 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
     return this.Qlr;
   }
   AddBattleReference(e) {
-    this.zlr++, this.zlr > 0 && this.SetStreamingSourceState(e, !0);
+    this.zlr++, 0 < this.zlr && this.SetStreamingSourceState(e, !0);
   }
   GetSnowIntensity() {
     return RenderDataManager_1.RenderDataManager.Get()?.GetSnowIntensity();
@@ -106,7 +106,7 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
     if (this.Klr.has(e)) return this.Klr.get(e);
   }
   AddWuYinQuBattleActor(e) {
-    let t;
+    var t;
     return UE.KismetSystemLibrary.IsValid(e)
       ? ((t = e.GetKey()),
         !e.IsInitialize() &&
@@ -135,7 +135,7 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
         : ((this.jlr[e] = this.jlr[this.jlr.length - 1]), this.jlr.pop()));
   }
   AddCharRenderShell(e) {
-    const t = new CharRenderShell_1.CharRenderShell();
+    var t = new CharRenderShell_1.CharRenderShell();
     t.Init(e), this.Wlr.set(e, t);
   }
   RemoveCharRenderShell(e) {
@@ -177,13 +177,13 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
       TickSystem_1.TickSystem.IsPaused ||
         this.Klr.forEach((t) => {
           try {
-            let e;
+            var e;
             UE.KismetSystemLibrary.IsValid(t) &&
               ((e = t.Key?.toString()),
               this.Qlr === e
                 ? this.Xlr !== t.GetCurrentBattleState() &&
                   t.ChangeState(this.Xlr, this.IsStateInstantTransition())
-                : t.GetCurrentBattleState() !== 0 &&
+                : 0 !== t.GetCurrentBattleState() &&
                   t.ChangeState(0, this.IsStateInstantTransition()),
               t.Tick(r));
           } catch (e) {
@@ -356,4 +356,4 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
   }
 }
 exports.RenderModuleModel = RenderModuleModel;
-// # sourceMappingURL=RenderModuleModel.js.map
+//# sourceMappingURL=RenderModuleModel.js.map

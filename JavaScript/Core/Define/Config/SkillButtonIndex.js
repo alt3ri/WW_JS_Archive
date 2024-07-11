@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkillButtonIndex = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const DicStringIntArray_1 = require("./SubType/DicStringIntArray");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  DicStringIntArray_1 = require("./SubType/DicStringIntArray");
 class SkillButtonIndex {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -46,22 +46,22 @@ class SkillButtonIndex {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetDesktopbuttontypelistAt(t) {
     return this.desktopbuttontypelist(t);
   }
   desktopbuttontypelist(t) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   desktopbuttontypelistLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   desktopbuttontypelistArray() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -74,15 +74,15 @@ class SkillButtonIndex {
     return this.padbuttontypelist(t);
   }
   padbuttontypelist(t) {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   padbuttontypelistLength() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   padbuttontypelistArray() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -95,7 +95,7 @@ class SkillButtonIndex {
     return this.desktopbuttontypemap(t);
   }
   desktopbuttontypemap(t, s) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i
       ? (s || new DicStringIntArray_1.DicStringIntArray()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
@@ -104,14 +104,14 @@ class SkillButtonIndex {
       : null;
   }
   desktopbuttontypemapLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetPadbuttontypemapAt(t, s) {
     return this.padbuttontypemap(t);
   }
   padbuttontypemap(t, s) {
-    const i = this.J7.__offset(this.z7, 12);
+    var i = this.J7.__offset(this.z7, 12);
     return i
       ? (s || new DicStringIntArray_1.DicStringIntArray()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
@@ -120,9 +120,9 @@ class SkillButtonIndex {
       : null;
   }
   padbuttontypemapLength() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.SkillButtonIndex = SkillButtonIndex;
-// # sourceMappingURL=SkillButtonIndex.js.map
+//# sourceMappingURL=SkillButtonIndex.js.map

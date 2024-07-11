@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const CameraController_1 = require("../../Camera/CameraController");
-const TsBaseCharacter_1 = require("../../Character/TsBaseCharacter");
-const Global_1 = require("../../Global");
-const TsTriggerVolume_1 = require("./TsTriggerVolume");
+const UE = require("ue"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  TsBaseCharacter_1 = require("../../Character/TsBaseCharacter"),
+  Global_1 = require("../../Global"),
+  TsTriggerVolume_1 = require("./TsTriggerVolume");
 class TsExploreCameraTriggerVolume extends TsTriggerVolume_1.default {
   constructor() {
     super(...arguments),
@@ -17,7 +17,7 @@ class TsExploreCameraTriggerVolume extends TsTriggerVolume_1.default {
       (this.ArmLengthMax = -0);
   }
   OnCollisionEnterFunc(e) {
-    let r;
+    var r;
     e instanceof TsBaseCharacter_1.default &&
       Global_1.Global.BaseCharacter === e &&
       (UE.KismetSystemLibrary.IsValid(this.LookAtActor1) &&
@@ -50,4 +50,4 @@ class TsExploreCameraTriggerVolume extends TsTriggerVolume_1.default {
   }
 }
 exports.default = TsExploreCameraTriggerVolume;
-// # sourceMappingURL=TsExploreCameraTriggerVolume.js.map
+//# sourceMappingURL=TsExploreCameraTriggerVolume.js.map

@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configNpcSystemBackgroundById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const NpcSystemBackground_1 = require("../Config/NpcSystemBackground");
-const DB = "db_commonbackground.db";
-const FILE = "t.通用背景.xlsx";
-const TABLE = "NpcSystemBackground";
-const COMMAND = "select BinData from `NpcSystemBackground` where Id=?";
-const KEY_PREFIX = "NpcSystemBackgroundById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  NpcSystemBackground_1 = require("../Config/NpcSystemBackground"),
+  DB = "db_commonbackground.db",
+  FILE = "t.通用背景.xlsx",
+  TABLE = "NpcSystemBackground",
+  COMMAND = "select BinData from `NpcSystemBackground` where Id=?",
+  KEY_PREFIX = "NpcSystemBackgroundById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configNpcSystemBackgroundById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configNpcSystemBackgroundById.GetConfig(";
 exports.configNpcSystemBackgroundById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configNpcSystemBackgroundById = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var i;
-        var e = void 0;
+        var i,
+          e = void 0;
         if (
           (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configNpcSystemBackgroundById = {
     }
   },
 };
-// # sourceMappingURL=NpcSystemBackgroundById.js.map
+//# sourceMappingURL=NpcSystemBackgroundById.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameModePromise = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Net_1 = require("../../../Core/Net/Net");
-const GlobalData_1 = require("../../GlobalData");
+const Log_1 = require("../../../Core/Common/Log"),
+  Net_1 = require("../../../Core/Net/Net"),
+  GlobalData_1 = require("../../GlobalData");
 class GameModePromise {
   constructor() {
     (this.g8 = void 0),
@@ -17,7 +17,7 @@ class GameModePromise {
     return this.g8;
   }
   SetResult(e) {
-    let o;
+    var o;
     GlobalData_1.GlobalData.Networking() && !Net_1.Net.IsServerConnected()
       ? ((o = "账号已经登出"),
         Log_1.Log.CheckError() && Log_1.Log.Error("World", 3, o),
@@ -26,4 +26,4 @@ class GameModePromise {
   }
 }
 exports.GameModePromise = GameModePromise;
-// # sourceMappingURL=GameModePromise.js.map
+//# sourceMappingURL=GameModePromise.js.map

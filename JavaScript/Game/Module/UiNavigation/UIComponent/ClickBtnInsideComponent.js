@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ClickBtnInsideComponent = void 0);
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const UiNavigationJoystickInput_1 = require("../Module/UiNavigationJoystickInput");
-const UiNavigationNewController_1 = require("../New/UiNavigationNewController");
-const HotKeyComponent_1 = require("./HotKeyComponent");
+const StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  UiNavigationJoystickInput_1 = require("../Module/UiNavigationJoystickInput"),
+  UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
+  HotKeyComponent_1 = require("./HotKeyComponent");
 class ClickBtnInsideComponent extends HotKeyComponent_1.HotKeyComponent {
   constructor() {
     super(...arguments),
       (this.Q4s = (t) => {
         (this.IsAxisAllDirection() ||
-          (t === 2 && this.IsAxisReverse()) ||
-          (t === 3 && this.IsAxisPositive())) &&
+          (2 === t && this.IsAxisReverse()) ||
+          (3 === t && this.IsAxisPositive())) &&
           UiNavigationNewController_1.UiNavigationNewController.ClickButtonInside(
             this.GetBindButtonTag(),
           );
@@ -33,7 +33,7 @@ class ClickBtnInsideComponent extends HotKeyComponent_1.HotKeyComponent {
     );
   }
   OnRefreshHotKeyText(i) {
-    const e = this.GetBindButtonTag();
+    var e = this.GetBindButtonTag();
     if (!StringUtils_1.StringUtils.IsEmpty(e)) {
       i = i.GetFocusListener();
       if (i) {
@@ -50,7 +50,7 @@ class ClickBtnInsideComponent extends HotKeyComponent_1.HotKeyComponent {
     }
   }
   OnRefreshSelfHotKeyState(i) {
-    const e = this.GetBindButtonTag();
+    var e = this.GetBindButtonTag();
     if (!StringUtils_1.StringUtils.IsEmpty(e)) {
       i = i.GetFocusListener();
       if (i) {
@@ -66,4 +66,4 @@ class ClickBtnInsideComponent extends HotKeyComponent_1.HotKeyComponent {
   }
 }
 exports.ClickBtnInsideComponent = ClickBtnInsideComponent;
-// # sourceMappingURL=ClickBtnInsideComponent.js.map
+//# sourceMappingURL=ClickBtnInsideComponent.js.map

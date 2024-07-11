@@ -1,31 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Stats_1 = require("../../../Core/Common/Stats");
-const Time_1 = require("../../../Core/Common/Time");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterController_1 = require("../../NewWorld/Character/CharacterController");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const DRAW_ARROW_SIZE = 100;
-const DRAW_LINE_THICKNESS = 3;
-const ARROW_LENGTH_SUB = 20;
-const targetLinkColor = new UE.LinearColor(1, 0, 0, 1);
-const teamMemberLinkColor = new UE.LinearColor(0, 1, 0, 1);
-const allyLinkColor = new UE.LinearColor(0.6, 1, 0.6, 1);
-const neutralLinkColor = new UE.LinearColor(1, 1, 0, 1);
-const enemyLinkColor = new UE.LinearColor(1, 0, 1, 1);
-const areaCenterColor = new UE.LinearColor(0, 1, 1, 1);
-const DEFAULT_SEGMENTS = 24;
-const minHateAreaColor = new UE.LinearColor(1, 0, 1, 1);
-const maxHateAreaColor = new UE.LinearColor(0, 1, 1, 1);
-const minHateInitAreaColor = new UE.LinearColor(1, 0, 0, 1);
-const maxHateInitAreaColor = new UE.LinearColor(0, 1, 0, 1);
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  Time_1 = require("../../../Core/Common/Time"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterController_1 = require("../../NewWorld/Character/CharacterController"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  DRAW_ARROW_SIZE = 100,
+  DRAW_LINE_THICKNESS = 3,
+  ARROW_LENGTH_SUB = 20,
+  targetLinkColor = new UE.LinearColor(1, 0, 0, 1),
+  teamMemberLinkColor = new UE.LinearColor(0, 1, 0, 1),
+  allyLinkColor = new UE.LinearColor(0.6, 1, 0.6, 1),
+  neutralLinkColor = new UE.LinearColor(1, 1, 0, 1),
+  enemyLinkColor = new UE.LinearColor(1, 0, 1, 1),
+  areaCenterColor = new UE.LinearColor(0, 1, 1, 1),
+  DEFAULT_SEGMENTS = 24,
+  minHateAreaColor = new UE.LinearColor(1, 0, 1, 1),
+  maxHateAreaColor = new UE.LinearColor(0, 1, 1, 1),
+  minHateInitAreaColor = new UE.LinearColor(1, 0, 0, 1),
+  maxHateInitAreaColor = new UE.LinearColor(0, 1, 0, 1);
 class TsAiController extends UE.KuroAIController {
   constructor() {
     super(...arguments),
@@ -66,7 +66,7 @@ class TsAiController extends UE.KuroAIController {
       (this.CharStateMachineComp = t.Entity.GetComponent(65));
   }
   DrawDebugLines(t) {
-    let e, i, r;
+    var e, i, r;
     this.CharAiDesignComp?.Valid &&
       ((r = this.AiController.CharActorComp.ActorLocationProxy),
       (e = this.AiController.AiHateList.GetCurrentTarget()),
@@ -91,7 +91,7 @@ class TsAiController extends UE.KuroAIController {
           DRAW_LINE_THICKNESS,
         )),
       e) &&
-      e.AreaIndex >= 0 &&
+      0 <= e.AreaIndex &&
       ((i = Vector_1.Vector.Create(
         r.X,
         r.Y,
@@ -108,12 +108,12 @@ class TsAiController extends UE.KuroAIController {
       this.DrawArrow(i, r, areaCenterColor));
   }
   DrawPerception(t, e) {
-    let i;
-    let r;
-    const o = this.AiController.AiPerception;
+    var i,
+      r,
+      o = this.AiController.AiPerception;
     if (o) {
       for (const C of o.ShareAllyLink) {
-        const s =
+        var s =
           CharacterController_1.CharacterController.GetCharacterActorComponentById(
             C,
           );
@@ -134,19 +134,19 @@ class TsAiController extends UE.KuroAIController {
             )) &&
             this.DrawArrow(t, r.ActorLocationProxy, enemyLinkColor));
       for (const _ of o.Neutrals) {
-        const n =
+        var n =
           CharacterController_1.CharacterController.GetCharacterActorComponentById(
             _,
           );
         n && this.DrawArrow(t, n.ActorLocationProxy, neutralLinkColor);
       }
     }
-    var h = this.AiController.CharActorComp;
-    const a =
-      (TsAiController.TmpVector.FromUeVector(h.GetInitLocation()),
-      TsAiController.TmpVector);
-    const l = ((a.Z -= h.HalfHeight), this.AiController.AiHateList.AiHate);
-    var h = h.FloorLocation;
+    var h = this.AiController.CharActorComp,
+      a =
+        (TsAiController.TmpVector.FromUeVector(h.GetInitLocation()),
+        TsAiController.TmpVector),
+      l = ((a.Z -= h.HalfHeight), this.AiController.AiHateList.AiHate),
+      h = h.FloorLocation;
     UE.KismetSystemLibrary.DrawDebugSphere(
       this,
       h.ToUeVector(),
@@ -338,13 +338,13 @@ class TsAiController extends UE.KuroAIController {
   }
   切换状态机状态(t) {}
   GetCoolDownDone(t) {
-    return this.AiController.GetCoolDownRemainTime(t) === 0;
+    return 0 === this.AiController.GetCoolDownRemainTime(t);
   }
   GetCoolDownRemainTime(t) {
     return this.AiController.GetCoolDownRemainTime(t);
   }
   SetCoolDown(t, e) {
-    const i = ModelManager_1.ModelManager.GameModeModel.IsMulti
+    var i = ModelManager_1.ModelManager.GameModeModel.IsMulti
       ? Time_1.Time.ServerTimeStamp
       : Time_1.Time.WorldTime;
     this.AiController.SetCoolDownTime(t, i + e, !0, "蓝图");
@@ -353,15 +353,15 @@ class TsAiController extends UE.KuroAIController {
     this.AiController.InitCooldownTimer(t, e);
   }
   StartCooldownTimer(t, e) {
-    const i = ModelManager_1.ModelManager.GameModeModel.IsMulti
+    var i = ModelManager_1.ModelManager.GameModeModel.IsMulti
       ? Time_1.Time.ServerTimeStamp
       : Time_1.Time.WorldTime;
     this.AiController.SetCoolDownTime(t, i + e, !0, "蓝图AIC延迟节点");
   }
   GetDebugStateMachine(t) {
     this.CharStateMachineComp?.StateMachineGroup?.RequestServerDebugInfo();
-    const e = this.CharStateMachineComp?.StateMachineGroup?.ToString();
-    const i = (0, puerts_1.$unref)(t);
+    var e = this.CharStateMachineComp?.StateMachineGroup?.ToString(),
+      i = (0, puerts_1.$unref)(t);
     if (e) for (const r of e) i.Add(r);
   }
   GetDebugText() {
@@ -381,7 +381,6 @@ ${this.AiController.AiHateList.GetHatredMapDebugText()}
 集群Id：${this.AiController.GetTeamLevelId()}
 `;
   }
-
   ReceiveDestroyed() {
     ObjectUtils_1.ObjectUtils.IsValid(this) &&
       (this.Clear(), super.ReceiveDestroyed());
@@ -413,4 +412,4 @@ ${this.AiController.AiHateList.GetHatredMapDebugText()}
 (TsAiController.TmpVector = Vector_1.Vector.Create()),
   (TsAiController.StatSetAiHateConfig = void 0),
   (exports.default = TsAiController);
-// # sourceMappingURL=TsAiController.js.map
+//# sourceMappingURL=TsAiController.js.map

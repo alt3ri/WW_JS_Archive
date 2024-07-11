@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerDetailInformationBuffItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const TowerDetailInformationBuffSubItem_1 = require("./TowerDetailInformationBuffSubItem");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  TowerDetailInformationBuffSubItem_1 = require("./TowerDetailInformationBuffSubItem");
 class TowerDetailInformationBuffItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -42,4 +42,4 @@ class TowerDetailInformationBuffItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.TowerDetailInformationBuffItem = TowerDetailInformationBuffItem;
-// # sourceMappingURL=TowerDetailInformationBuffItem.js.map
+//# sourceMappingURL=TowerDetailInformationBuffItem.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameBudgetTimeEstimationFramesOffset = void 0);
-const cpp_1 = require("cpp");
-const Info_1 = require("../Common/Info");
-const Log_1 = require("../Common/Log");
-const MathCommon_1 = require("../Utils/Math/MathCommon");
+const cpp_1 = require("cpp"),
+  Info_1 = require("../Common/Info"),
+  Log_1 = require("../Common/Log"),
+  MathCommon_1 = require("../Utils/Math/MathCommon");
 class GameBudgetTimeEstimationFramesOffset {
   constructor() {
     (this.GK = 16.6),
@@ -45,8 +45,8 @@ class GameBudgetTimeEstimationFramesOffset {
       }
     } else {
       this.jK++, this.jK >= this.kK && (this.jK = 0);
-      let s = this.WK[this.jK];
-      var i = i - this.GK;
+      var s = this.WK[this.jK],
+        i = i - this.GK;
       (this.WK[this.jK] = i),
         (this.FK += (i - s) / this.kK),
         this.FK < -this.HK
@@ -78,4 +78,4 @@ class GameBudgetTimeEstimationFramesOffset {
 }
 exports.GameBudgetTimeEstimationFramesOffset =
   GameBudgetTimeEstimationFramesOffset;
-// # sourceMappingURL=GameBudgetTimeEstimationFramesOffset.js.map
+//# sourceMappingURL=GameBudgetTimeEstimationFramesOffset.js.map

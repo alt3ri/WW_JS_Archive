@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventCameraShake = void 0);
-const UE = require("ue");
-const CommonDefine_1 = require("../../../Core/Define/CommonDefine");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const CameraController_1 = require("../../Camera/CameraController");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const UE = require("ue"),
+  CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventCameraShake extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -34,7 +34,7 @@ class LevelEventCameraShake extends LevelGeneralBase_1.LevelEventBase {
         (this.PLe = parseFloat(e.get("OuterRadius"))),
         (this.xLe = parseFloat(e.get("Falloff"))),
         (this.wLe =
-          e.get("OrientShakeTowardsEpicenter").toLowerCase() === "true"),
+          "true" === e.get("OrientShakeTowardsEpicenter").toLowerCase()),
         this.qLe(),
         (t = e.get("MatineeCameraShake") + "_C"),
         ResourceSystem_1.ResourceSystem.LoadAsync(t, UE.Class, (e) => {
@@ -49,7 +49,7 @@ class LevelEventCameraShake extends LevelGeneralBase_1.LevelEventBase {
     (this.ULe -= e), this.BLe && this.ULe < 0 && (this.GLe(), this.qLe());
   }
   GLe() {
-    let e;
+    var e;
     CameraController_1.CameraController.Model.IsModeEnabled(2) ||
       CameraController_1.CameraController.Model.IsModeEnabled(1) ||
       ((e = Global_1.Global.CharacterCameraManager.GetCameraLocation()),
@@ -86,4 +86,4 @@ class LevelEventCameraShake extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventCameraShake = LevelEventCameraShake;
-// # sourceMappingURL=LevelEventCameraShake.js.map
+//# sourceMappingURL=LevelEventCameraShake.js.map

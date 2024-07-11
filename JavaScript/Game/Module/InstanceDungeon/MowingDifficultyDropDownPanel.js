@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MowingDifficultyDropDownPanel = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const KillMonstersScoresByInstanceID_1 = require("../../../Core/Define/ConfigQuery/KillMonstersScoresByInstanceID");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const TakeWeedsDifficultyById_1 = require("../../../Core/Define/ConfigQuery/TakeWeedsDifficultyById");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const ActivityMowingController_1 = require("../Activity/ActivityContent/Mowing/ActivityMowingController");
-const CommonDropDown_1 = require("../Common/DropDown/CommonDropDown");
-const DropDownItemBase_1 = require("../Common/DropDown/Item/DropDownItemBase");
-const TitleItemBase_1 = require("../Common/DropDown/Item/TitleItemBase");
-const LguiUtil_1 = require("../Util/LguiUtil");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  KillMonstersScoresByInstanceID_1 = require("../../../Core/Define/ConfigQuery/KillMonstersScoresByInstanceID"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  TakeWeedsDifficultyById_1 = require("../../../Core/Define/ConfigQuery/TakeWeedsDifficultyById"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  ActivityMowingController_1 = require("../Activity/ActivityContent/Mowing/ActivityMowingController"),
+  CommonDropDown_1 = require("../Common/DropDown/CommonDropDown"),
+  DropDownItemBase_1 = require("../Common/DropDown/Item/DropDownItemBase"),
+  TitleItemBase_1 = require("../Common/DropDown/Item/TitleItemBase"),
+  LguiUtil_1 = require("../Util/LguiUtil");
 class DropDownItem extends DropDownItemBase_1.DropDownItemBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -21,13 +21,13 @@ class DropDownItem extends DropDownItemBase_1.DropDownItemBase {
     ];
   }
   OnShowDropDownItemBase(t) {
-    const e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.Desc) ?? "";
-    var t = StringUtils_1.StringUtils.Format(
-      MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-        "MowingPointMultiply",
-      ) ?? "",
-      (t.Magnification / 100).toString(),
-    );
+    var e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.Desc) ?? "",
+      t = StringUtils_1.StringUtils.Format(
+        MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+          "MowingPointMultiply",
+        ) ?? "",
+        (t.Magnification / 100).toString(),
+      );
     this.GetText(1).SetText(e + "•" + t);
   }
   GetDropDownToggle() {
@@ -39,13 +39,13 @@ class DropDownTitle extends TitleItemBase_1.TitleItemBase {
     this.ComponentRegisterInfos = [[0, UE.UIText]];
   }
   ShowTemp(t, e) {
-    const i = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.Desc);
-    var t = StringUtils_1.StringUtils.Format(
-      MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-        "MowingPointMultiply",
-      ) ?? "",
-      (t.Magnification / 100).toString(),
-    );
+    var i = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.Desc),
+      t = StringUtils_1.StringUtils.Format(
+        MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+          "MowingPointMultiply",
+        ) ?? "",
+        (t.Magnification / 100).toString(),
+      );
     this.GetText(0).SetText(i + "•" + t);
   }
 }
@@ -60,9 +60,9 @@ class MowingDifficultyDropDownPanel extends UiPanelBase_1.UiPanelBase {
       (this.C1i = (t) => new DropDownTitle(t)),
       (this.g1i = (t) => t),
       (this.f1i = (t, e) => {
-        let i;
-        const o =
-          ActivityMowingController_1.ActivityMowingController.GetMowingActivityData();
+        var i,
+          o =
+            ActivityMowingController_1.ActivityMowingController.GetMowingActivityData();
         o
           ? this.m1i
             ? ((i = TakeWeedsDifficultyById_1.configTakeWeedsDifficultyById
@@ -108,12 +108,12 @@ class MowingDifficultyDropDownPanel extends UiPanelBase_1.UiPanelBase {
     this.GetItem(1).SetUIActive(!1), this.AddChild(this.c1i);
   }
   v1i() {
-    const t =
+    var t =
       KillMonstersScoresByInstanceID_1.configKillMonstersScoresByInstanceID.GetConfig(
         this.NUe,
       );
-    if (!t || t.DifficultyOptions.length === 0) return this.u1i;
-    const e = [];
+    if (!t || 0 === t.DifficultyOptions.length) return this.u1i;
+    var e = [];
     for (const i of t.DifficultyOptions)
       e.push(
         TakeWeedsDifficultyById_1.configTakeWeedsDifficultyById.GetConfig(i),
@@ -139,4 +139,4 @@ class MowingDifficultyDropDownPanel extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.MowingDifficultyDropDownPanel = MowingDifficultyDropDownPanel;
-// # sourceMappingURL=MowingDifficultyDropDownPanel.js.map
+//# sourceMappingURL=MowingDifficultyDropDownPanel.js.map

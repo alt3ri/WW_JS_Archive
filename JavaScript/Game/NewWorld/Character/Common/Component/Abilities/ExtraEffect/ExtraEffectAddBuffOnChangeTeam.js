@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AddBuffOnChangeTeam = void 0);
-const EventDefine_1 = require("../../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../../../Manager/ModelManager");
-const ExtraEffectBase_1 = require("./ExtraEffectBase");
+const EventDefine_1 = require("../../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../../../Manager/ModelManager"),
+  ExtraEffectBase_1 = require("./ExtraEffectBase");
 class AddBuffOnChangeTeam extends ExtraEffectBase_1.BuffEffect {
   constructor() {
     super(...arguments),
@@ -12,13 +12,13 @@ class AddBuffOnChangeTeam extends ExtraEffectBase_1.BuffEffect {
       (this.XKo = void 0),
       (this.ypi = () => {
         const n = this.OwnerBuffComponent.GetBuffByHandle(this.ActiveHandleId);
-        let e;
+        var e;
         n?.IsValid() &&
           ((e =
             ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities()).forEach(
             (e) => {
               if (!this.XKo.includes(e.Id)) {
-                const t = e.Entity.GetComponent(157);
+                var t = e.Entity.GetComponent(157);
                 for (const s of this.QKo)
                   t?.AddIterativeBuff(
                     s,
@@ -58,4 +58,4 @@ class AddBuffOnChangeTeam extends ExtraEffectBase_1.BuffEffect {
   OnExecute() {}
 }
 exports.AddBuffOnChangeTeam = AddBuffOnChangeTeam;
-// # sourceMappingURL=ExtraEffectAddBuffOnChangeTeam.js.map
+//# sourceMappingURL=ExtraEffectAddBuffOnChangeTeam.js.map

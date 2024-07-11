@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DynamicFlowController = exports.CharacterDynamicFlowData = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const ControllerBase_1 = require("../../../../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../../../../Core/Net/Net");
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const DEFAULT_TYPE_PRIORITY = 1;
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  ControllerBase_1 = require("../../../../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../../../../Core/Net/Net"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  DEFAULT_TYPE_PRIORITY = 1;
 class CharacterDynamicFlowData {
   constructor() {
     (this.BubbleData = void 0), (this.Type = void 0), (this.Callback = void 0);
@@ -32,15 +32,15 @@ class DynamicFlowController extends ControllerBase_1.ControllerBase {
       this.Y$o.set(4, 20);
   }
   static CreateCharacterFlowData(r) {
-    const t = new CharacterDynamicFlowData();
+    var t = new CharacterDynamicFlowData();
     return (t.BubbleData = r), (t.Type = 3), t;
   }
   static AddDynamicFlow(r) {
     if (!r?.BubbleData?.EntityIds.length) return !1;
-    const t = this.GetDynamicFlowPriority(r.Type);
+    var t = this.GetDynamicFlowPriority(r.Type);
     for (const i of r.BubbleData.EntityIds)
       if (this.J$o.has(i)) {
-        const e = this.GetDynamicFlowByActor(i);
+        var e = this.GetDynamicFlowByActor(i);
         if (t <= this.GetDynamicFlowPriority(e.Type))
           return (
             Log_1.Log.CheckWarn() &&
@@ -57,8 +57,8 @@ class DynamicFlowController extends ControllerBase_1.ControllerBase {
             !1
           );
       }
-    const o = r.BubbleData.EntityIds[0];
-    const a = ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(o);
+    var o = r.BubbleData.EntityIds[0],
+      a = ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(o);
     a?.Entity?.IsInit && a.Entity?.GetComponent(28)?.PlayDynamicFlowBegin(r),
       this.z$o.set(o, r);
     for (const n of r.BubbleData.EntityIds) this.J$o.set(n, o);
@@ -78,9 +78,9 @@ class DynamicFlowController extends ControllerBase_1.ControllerBase {
   static RemoveDynamicFlow(r) {
     r = this.J$o.get(r);
     if (!r) return !1;
-    const t = this.z$o.get(r);
+    var t = this.z$o.get(r);
     if (!t) return !1;
-    const e = ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(r);
+    var e = ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(r);
     e?.Entity?.IsInit && e.Entity?.GetComponent(28)?.PlayDynamicFlowEnd();
     for (const o of t.BubbleData.EntityIds) this.J$o.delete(o);
     return (
@@ -124,4 +124,4 @@ class DynamicFlowController extends ControllerBase_1.ControllerBase {
       r.EntityIds.length &&
       ((r = r.EntityIds[0]), DynamicFlowController.RemoveDynamicFlow(r));
   });
-// # sourceMappingURL=DynamicFlowController.js.map
+//# sourceMappingURL=DynamicFlowController.js.map

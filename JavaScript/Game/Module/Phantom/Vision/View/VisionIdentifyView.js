@@ -1,28 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionIdentifyView = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiComponentsAction_1 = require("../../../../Ui/Base/UiComponentsAction");
-const UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase");
-const UiLayer_1 = require("../../../../Ui/UiLayer");
-const ButtonItem_1 = require("../../../Common/Button/ButtonItem");
-const MediumItemGrid_1 = require("../../../Common/MediumItemGrid/MediumItemGrid");
-const NumberSelectComponent_1 = require("../../../Common/NumberSelect/NumberSelectComponent");
-const RoleLevelUpSuccessController_1 = require("../../../RoleUi/RoleLevel/RoleLevelUpSuccessController");
-const UiSceneManager_1 = require("../../../UiComponent/UiSceneManager");
-const UiModelUtil_1 = require("../../../UiModel/UiModelUtil");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const VisionIdentifyComponent_1 = require("./VisionIdentifyComponent");
-const VisionMainAttributeComponent_1 = require("./VisionMainAttributeComponent");
-const VisionNameText_1 = require("./VisionNameText");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiComponentsAction_1 = require("../../../../Ui/Base/UiComponentsAction"),
+  UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase"),
+  UiLayer_1 = require("../../../../Ui/UiLayer"),
+  ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
+  MediumItemGrid_1 = require("../../../Common/MediumItemGrid/MediumItemGrid"),
+  NumberSelectComponent_1 = require("../../../Common/NumberSelect/NumberSelectComponent"),
+  RoleLevelUpSuccessController_1 = require("../../../RoleUi/RoleLevel/RoleLevelUpSuccessController"),
+  UiSceneManager_1 = require("../../../UiComponent/UiSceneManager"),
+  UiModelUtil_1 = require("../../../UiModel/UiModelUtil"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  VisionIdentifyComponent_1 = require("./VisionIdentifyComponent"),
+  VisionMainAttributeComponent_1 = require("./VisionMainAttributeComponent"),
+  VisionNameText_1 = require("./VisionNameText");
 class VisionIdentifyView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -97,7 +97,7 @@ class VisionIdentifyView extends UiTabViewBase_1.UiTabViewBase {
     this.Q7i(), this.sbi(), this.C4e();
   }
   C4e() {
-    const e =
+    var e =
       ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
         this.G7i,
       );
@@ -106,7 +106,7 @@ class VisionIdentifyView extends UiTabViewBase_1.UiTabViewBase {
   async j7i(e, t) {
     UiLayer_1.UiLayer.SetShowMaskLayer("PhantomLevelUp", !0),
       this.X7i(),
-      this.F7i?.length > 0 && (await this.b7i.PlayUpdateAnimation(this.F7i));
+      0 < this.F7i?.length && (await this.b7i.PlayUpdateAnimation(this.F7i));
     const i =
       ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
         e,
@@ -118,7 +118,7 @@ class VisionIdentifyView extends UiTabViewBase_1.UiTabViewBase {
     e =
       ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionIdentifyDelay();
     TimerSystem_1.TimerSystem.Delay(() => {
-      const e = i.GetNewSubPropSuccessData(t);
+      var e = i.GetNewSubPropSuccessData(t);
       RoleLevelUpSuccessController_1.RoleLevelUpSuccessController.OpenSuccessAttributeView(
         e,
       ),
@@ -127,45 +127,46 @@ class VisionIdentifyView extends UiTabViewBase_1.UiTabViewBase {
       this.Og();
   }
   X7i() {
-    let e, t;
-    this.F7i.length > 0 &&
+    var e, t;
+    0 < this.F7i.length &&
       ((e = (t =
         ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
           this.G7i,
         )).GetCurrentCanIdentifyCount()),
-      (t = t.GetSubPropIdentifyPreviewData(
-        t.GetPhantomLevel(),
-        e === 0 ? 0 : this.N7i.CurrentConsumeSelectNum(),
-      )).length > 0) &&
+      0 <
+        (t = t.GetSubPropIdentifyPreviewData(
+          t.GetPhantomLevel(),
+          0 === e ? 0 : this.N7i.CurrentConsumeSelectNum(),
+        )).length) &&
       this.b7i.Update(t, !0);
   }
   K7i() {
     this.F7i = [];
-    const e =
-      ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
-        this.G7i,
-      );
-    const t = e.GetCurrentCanIdentifyCount();
-    const i = e.GetSubPropIdentifyPreviewData(
-      e.GetPhantomLevel(),
-      t === 0 ? 0 : this.N7i.CurrentConsumeSelectNum(),
-    );
-    const s = i.length;
-    if (s > 0)
+    var e =
+        ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
+          this.G7i,
+        ),
+      t = e.GetCurrentCanIdentifyCount(),
+      i = e.GetSubPropIdentifyPreviewData(
+        e.GetPhantomLevel(),
+        0 === t ? 0 : this.N7i.CurrentConsumeSelectNum(),
+      ),
+      s = i.length;
+    if (0 < s)
       for (let e = 0; e < s; e++) {
-        const r = this.k7i.get(e);
-        (r !== 5 && r !== 1) ||
+        var r = this.k7i.get(e);
+        (5 !== r && 1 !== r) ||
           r === i[e].SlotState ||
-          i[e].SlotState !== 3 ||
+          3 !== i[e].SlotState ||
           this.F7i.push(e);
       }
     for (let e = 0; e < s; e++) {
-      const n = i[e].SlotState;
+      var n = i[e].SlotState;
       this.k7i.set(e, n);
     }
   }
   sbi() {
-    const e =
+    var e =
       ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
         this.G7i,
       );
@@ -173,23 +174,23 @@ class VisionIdentifyView extends UiTabViewBase_1.UiTabViewBase {
   }
   Q7i() {
     var e =
-      ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
-        this.G7i,
-      );
-    var e = e.GetLevelUpPreviewData(e.GetPhantomLevel());
+        ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
+          this.G7i,
+        ),
+      e = e.GetLevelUpPreviewData(e.GetPhantomLevel());
     this.q7i.Update(e);
   }
   g0t() {
     var e =
-      ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
-        this.G7i,
-      );
-    var t = e.GetCurrentCanIdentifyCount();
-    var e = e.GetSubPropIdentifyPreviewData(
-      e.GetPhantomLevel(),
-      t === 0 ? 0 : this.N7i.CurrentConsumeSelectNum(),
-    );
-    var t = e.length > 0;
+        ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
+          this.G7i,
+        ),
+      t = e.GetCurrentCanIdentifyCount(),
+      e = e.GetSubPropIdentifyPreviewData(
+        e.GetPhantomLevel(),
+        0 === t ? 0 : this.N7i.CurrentConsumeSelectNum(),
+      ),
+      t = 0 < e.length;
     t && this.b7i.Update(e, !1), this.b7i.SetActive(t);
   }
   OnBeforeHide() {
@@ -211,13 +212,13 @@ class VisionIdentifyCostItem extends UiComponentsAction_1.UiComponentsAction {
       (this.Jwt = void 0),
       (this.w$t = (e) => {
         this.Jwt?.SetSelected(!1, !0);
-        const t = this.Pe.GetCurrentIdentifyCostId();
-        const i =
-          ModelManager_1.ModelManager.InventoryModel.GetItemDataBaseByConfigId(
-            t,
-          );
+        var t = this.Pe.GetCurrentIdentifyCostId(),
+          i =
+            ModelManager_1.ModelManager.InventoryModel.GetItemDataBaseByConfigId(
+              t,
+            );
         let s = 0;
-        void 0 !== (s = i.length > 0 ? i[0].GetUniqueId() : s) && s > 0
+        void 0 !== (s = 0 < i.length ? i[0].GetUniqueId() : s) && 0 < s
           ? ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemUid(
               s,
               t,
@@ -238,7 +239,7 @@ class VisionIdentifyCostItem extends UiComponentsAction_1.UiComponentsAction {
             );
       }),
       (this.KGe = (e) => {
-        const t =
+        var t =
           ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
             "IdentifyCount",
           );
@@ -290,20 +291,20 @@ class VisionIdentifyCostItem extends UiComponentsAction_1.UiComponentsAction {
   }
   eHi() {}
   tHi(e) {
-    var t = e.GetCurrentIdentifyCostId();
-    const i = {
-      Type: 4,
-      ItemConfigId: t,
-      StarLevel:
-        ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(t)
-          .QualityId,
-    };
-    var e = e.GetCurrentIdentifyCostValue();
-    var t =
-      ModelManager_1.ModelManager.InventoryModel.GetItemDataBaseByConfigId(t);
-    let s = 0;
-    let r = (t.length > 0 && (s = t[0].GetCount()), 0);
-    this.CurrentConsumeSelectNum() > 0 &&
+    var t = e.GetCurrentIdentifyCostId(),
+      i = {
+        Type: 4,
+        ItemConfigId: t,
+        StarLevel:
+          ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(t)
+            .QualityId,
+      },
+      e = e.GetCurrentIdentifyCostValue(),
+      t =
+        ModelManager_1.ModelManager.InventoryModel.GetItemDataBaseByConfigId(t);
+    let s = 0,
+      r = (0 < t.length && (s = t[0].GetCount()), 0);
+    0 < this.CurrentConsumeSelectNum() &&
       (r = e * this.CurrentConsumeSelectNum()),
       s >= e
         ? (i.BottomText = StringUtils_1.StringUtils.Format(
@@ -323,22 +324,22 @@ class VisionIdentifyCostItem extends UiComponentsAction_1.UiComponentsAction {
       this.Jwt.Apply(i);
   }
   iHi(e) {
-    var e = e.GetCurrentCanIdentifyCount();
-    const t = {
-      MaxNumber: e,
-      GetExchangeTableText: this.KGe,
-      ValueChangeFunction: this.QGe,
-    };
+    var e = e.GetCurrentCanIdentifyCount(),
+      t = {
+        MaxNumber: e,
+        GetExchangeTableText: this.KGe,
+        ValueChangeFunction: this.QGe,
+      };
     this.WGe.SetMinValue(0),
       this.WGe.Init(t),
       this.WGe.SetAddReduceButtonActive(!0),
       this.WGe.SetMinTextShowState(!0),
-      this.WGe.SetAddReduceButtonInteractive(e > 1),
-      this.WGe.SetReduceButtonInteractive(this.CurrentConsumeSelectNum() > 1);
+      this.WGe.SetAddReduceButtonInteractive(1 < e),
+      this.WGe.SetReduceButtonInteractive(1 < this.CurrentConsumeSelectNum());
   }
   oHi(e) {
-    var t = e.GetIdentifyCostItemId();
-    var t = (this.SetItemIcon(this.GetTexture(9), t), this.GetText(10));
+    var t = e.GetIdentifyCostItemId(),
+      t = (this.SetItemIcon(this.GetTexture(9), t), this.GetText(10));
     t.SetText(
       (
         e.GetIdentifyCostItemValue() * this.CurrentConsumeSelectNum()
@@ -356,14 +357,14 @@ class VisionIdentifyCostItem extends UiComponentsAction_1.UiComponentsAction {
   nHi(e) {
     let t = !0;
     for (const i of e.GetLevelSubPropData(e.GetPhantomLevel()))
-      if (i.SlotState !== 3) {
+      if (3 !== i.SlotState) {
         t = !1;
         break;
       }
     return t;
   }
   H5e(e) {
-    const t = this.sHi(e);
+    var t = this.sHi(e);
     this.GetItem(4).SetUIActive(t),
       t &&
         (e.GetIfHaveEnoughIdentifyConsumeItem(this.CurrentConsumeSelectNum())
@@ -382,16 +383,16 @@ class VisionIdentifyCostItem extends UiComponentsAction_1.UiComponentsAction {
     return e.GetIfHaveEnoughIdentifyConsumeItem(this.CurrentConsumeSelectNum());
   }
   sHi(e) {
-    const t = e.GetIfHaveEnoughIdentifyConsumeItem(
-      this.CurrentConsumeSelectNum(),
-    );
-    const i = e.GetIfHaveUnIdentifySubProp();
+    var t = e.GetIfHaveEnoughIdentifyConsumeItem(
+        this.CurrentConsumeSelectNum(),
+      ),
+      i = e.GetIfHaveUnIdentifySubProp();
     return !(this.nHi(e) || (i && t));
   }
   aHi(e) {
-    const t = this.nHi(e);
-    const i = this.sHi(e);
-    let s = t || i;
+    var t = this.nHi(e),
+      i = this.sHi(e),
+      s = t || i;
     this.GetItem(7).SetUIActive(!s),
       this.GetItem(11).SetUIActive(!s),
       i &&
@@ -413,7 +414,7 @@ class VisionIdentifyCostItem extends UiComponentsAction_1.UiComponentsAction {
   }
   hHi(e) {
     e.GetIfHaveEnoughIdentifyConsumeItem(this.CurrentConsumeSelectNum()) ||
-      this.CurrentConsumeSelectNum() !== 1 ||
+      1 !== this.CurrentConsumeSelectNum() ||
       ((e =
         ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
           "IdentifyCount",
@@ -434,4 +435,4 @@ class VisionIdentifyCostItem extends UiComponentsAction_1.UiComponentsAction {
       this.hHi(this.Pe);
   }
 }
-// # sourceMappingURL=VisionIdentifyView.js.map
+//# sourceMappingURL=VisionIdentifyView.js.map

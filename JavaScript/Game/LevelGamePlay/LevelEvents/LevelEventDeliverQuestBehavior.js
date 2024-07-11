@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventDeliverQuestBehavior = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ItemDeliverController_1 = require("../../Module/ItemDeliver/ItemDeliverController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  ItemDeliverController_1 = require("../../Module/ItemDeliver/ItemDeliverController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventDeliverQuestBehavior extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(r, e) {
     if (r) {
-      const l = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
+      var l = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
         r.EntityId,
       );
       let e = "";
@@ -22,4 +22,4 @@ class LevelEventDeliverQuestBehavior extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventDeliverQuestBehavior = LevelEventDeliverQuestBehavior;
-// # sourceMappingURL=LevelEventDeliverQuestBehavior.js.map
+//# sourceMappingURL=LevelEventDeliverQuestBehavior.js.map

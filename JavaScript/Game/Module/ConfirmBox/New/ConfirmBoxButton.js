@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConfirmBoxButton = void 0);
-const UE = require("ue");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const ConfirmBoxDefine_1 = require("../ConfirmBoxDefine");
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ConfirmBoxDefine_1 = require("../ConfirmBoxDefine");
 class ConfirmBoxButton extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -33,7 +33,7 @@ class ConfirmBoxButton extends UiPanelBase_1.UiPanelBase {
     );
   }
   SetBtnCanClick(i) {
-    const e = this.RootActor.GetComponentByClass(
+    var e = this.RootActor.GetComponentByClass(
       UE.UIInteractionGroup.StaticClass(),
     );
     e && e.SetInteractable(i);
@@ -53,7 +53,7 @@ class ConfirmBoxButton extends UiPanelBase_1.UiPanelBase {
     LguiUtil_1.LguiUtil.SetLocalTextNew(
       this.GetText(1),
       i,
-      this.DelayTime > 0 ? this.DelayTime : "",
+      0 < this.DelayTime ? this.DelayTime : "",
     );
   }
   SetClickFunction(i) {
@@ -65,4 +65,4 @@ class ConfirmBoxButton extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ConfirmBoxButton = ConfirmBoxButton;
-// # sourceMappingURL=ConfirmBoxButton.js.map
+//# sourceMappingURL=ConfirmBoxButton.js.map

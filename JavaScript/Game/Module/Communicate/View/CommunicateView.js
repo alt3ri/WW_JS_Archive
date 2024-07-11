@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommunicateView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const CommunicateById_1 = require("../../../../Core/Define/ConfigQuery/CommunicateById");
-const SpeakerById_1 = require("../../../../Core/Define/ConfigQuery/SpeakerById");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const PublicUtil_1 = require("../../../Common/PublicUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const GuideCountDownItem_1 = require("../../Guide/Views/GuideCountDownItem");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  CommunicateById_1 = require("../../../../Core/Define/ConfigQuery/CommunicateById"),
+  SpeakerById_1 = require("../../../../Core/Define/ConfigQuery/SpeakerById"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../../Common/PublicUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  GuideCountDownItem_1 = require("../../Guide/Views/GuideCountDownItem"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class CommunicateView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -46,8 +46,8 @@ class CommunicateView extends UiTickViewBase_1.UiTickViewBase {
       (this.BtnBindInfo = [[5, this.nbt]]);
   }
   OnStart() {
-    let e;
-    let i = this.GetText(4);
+    var e,
+      i = this.GetText(4);
     i.SetRichText(!0),
       i.SetHeight(100),
       LguiUtil_1.LguiUtil.SetLocalText(i, "QuestCommunicateConnect"),
@@ -74,15 +74,15 @@ class CommunicateView extends UiTickViewBase_1.UiTickViewBase {
             ]));
   }
   hbt(e) {
-    const i = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
-      "QuestCommunicateRequest",
-    );
-    const t = this.GetText(1);
-    var e = PublicUtil_1.PublicUtil.GetConfigTextByTable(0, e.Id);
+    var i = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
+        "QuestCommunicateRequest",
+      ),
+      t = this.GetText(1),
+      e = PublicUtil_1.PublicUtil.GetConfigTextByTable(0, e.Id);
     t.SetText(`【${e}】` + i);
   }
   lbt(e) {
-    const i = this.GetTexture(2);
+    var i = this.GetTexture(2);
     this.SetTextureByPath(e.HeadIconAsset, i);
   }
   OnTick(e) {
@@ -93,4 +93,4 @@ class CommunicateView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.CommunicateView = CommunicateView;
-// # sourceMappingURL=CommunicateView.js.map
+//# sourceMappingURL=CommunicateView.js.map

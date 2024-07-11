@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowAssistant = void 0);
-const FlowSequence_1 = require("../../Flow/FlowSequence");
-const SeqBaseAssistant_1 = require("./SeqBaseAssistant");
+const FlowSequence_1 = require("../../Flow/FlowSequence"),
+  SeqBaseAssistant_1 = require("./SeqBaseAssistant");
 class FlowAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   PreAllPlay() {
     (this.Model.SubSeqLen = this.Model.SequenceData.剧情资源.Num()),
@@ -24,4 +24,4 @@ class FlowAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   }
 }
 exports.FlowAssistant = FlowAssistant;
-// # sourceMappingURL=FlowAssistant.js.map
+//# sourceMappingURL=FlowAssistant.js.map

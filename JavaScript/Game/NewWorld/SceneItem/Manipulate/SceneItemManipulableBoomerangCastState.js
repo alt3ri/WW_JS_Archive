@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulableBoomerangCastState = void 0);
-const UE = require("ue");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent");
-const SceneItemManipulableCastState_1 = require("./SceneItemManipulableCastState");
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
+  SceneItemManipulableCastState_1 = require("./SceneItemManipulableCastState");
 class SceneItemManipulableBoomerangCastState extends SceneItemManipulableCastState_1.SceneItemManipulableCastState {
   constructor(t, i) {
     super(t, i),
@@ -93,25 +93,25 @@ class SceneItemManipulableBoomerangCastState extends SceneItemManipulableCastSta
     );
   }
   GetCastPath(i, t) {
-    const s = [];
+    var s = [];
     this.qje.DeepCopy(i),
       (this.Frr = Vector_1.Vector.Create(
         this.SceneItem.ActorComp.ActorLocationProxy,
       ));
     let e = Vector_1.Vector.Create(this.Frr);
-    const h = Vector_1.Vector.Create(Vector_1.Vector.UpVectorProxy);
-    const r =
-      (h.CrossProduct(this.qje, h),
-      h.Normalize(),
-      this.brr.DeepCopy(h),
-      this.qje.CrossProduct(this.brr, this.brr),
-      this.brr.Normalize(),
-      (this.Grr = 0),
-      s.push(e),
-      t ?? this.Nrr);
+    var h = Vector_1.Vector.Create(Vector_1.Vector.UpVectorProxy),
+      r =
+        (h.CrossProduct(this.qje, h),
+        h.Normalize(),
+        this.brr.DeepCopy(h),
+        this.qje.CrossProduct(this.brr, this.brr),
+        this.brr.Normalize(),
+        (this.Grr = 0),
+        s.push(e),
+        t ?? this.Nrr);
     for (let t = 0; t < r; t += this.Orr) {
       this.Grr += this.Orr;
-      const o = this.Hrr(e, i, this.brr, this.Orr);
+      var o = this.Hrr(e, i, this.brr, this.Orr);
       (e = o), s.push(o);
     }
     return s;
@@ -119,4 +119,4 @@ class SceneItemManipulableBoomerangCastState extends SceneItemManipulableCastSta
 }
 exports.SceneItemManipulableBoomerangCastState =
   SceneItemManipulableBoomerangCastState;
-// # sourceMappingURL=SceneItemManipulableBoomerangCastState.js.map
+//# sourceMappingURL=SceneItemManipulableBoomerangCastState.js.map

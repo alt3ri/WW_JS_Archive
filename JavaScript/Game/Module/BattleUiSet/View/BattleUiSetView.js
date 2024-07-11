@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleUiSetView = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const TouchFingerDefine_1 = require("../../../Ui/TouchFinger/TouchFingerDefine");
-const TouchFingerManager_1 = require("../../../Ui/TouchFinger/TouchFingerManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const EditMobileBattleView_1 = require("./EditMobileBattleView");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  TouchFingerDefine_1 = require("../../../Ui/TouchFinger/TouchFingerDefine"),
+  TouchFingerManager_1 = require("../../../Ui/TouchFinger/TouchFingerManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  EditMobileBattleView_1 = require("./EditMobileBattleView"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -26,8 +26,8 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
       (this.sCt = void 0),
       (this.aCt = void 0),
       (this.OnTouch = (i, e) => {
-        var e = e.TouchType;
-        const t = Number(i);
+        var e = e.TouchType,
+          t = Number(i);
         switch (e) {
           case 0:
             this.hCt(!0, t);
@@ -64,15 +64,15 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
         this.nCt = 0;
       }),
       (this.pCt = (i) => {
-        const e = i.GetLocalPointInPlane();
-        let t = i.dragComponent.GetOwner().GetUIItem().GetDisplayName();
-        let s = this.GetItem(11);
+        var e = i.GetLocalPointInPlane(),
+          t = i.dragComponent.GetOwner().GetUIItem().GetDisplayName(),
+          s = this.GetItem(11);
         if (t === s.GetDisplayName()) {
           if (this.sCt) {
             (t = i.dragComponent.GetOwner().GetActorScale3D()),
               (s = e.X - this.sCt.X),
               (i = e.Y - this.sCt.Y);
-            if (s == 0 || i == 0) return;
+            if (0 == s || 0 == i) return;
             (this.aCt.X += s * t.X),
               (this.aCt.Y += i * t.Y),
               this.SetRelativeLocation(this.aCt);
@@ -88,7 +88,7 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.SCt = (i) => {
         this.SelectedPanelItem && this.SelectedPanelItem.SetSelected(!1);
-        const e = this.oCt.GetPanelItem(i);
+        var e = this.oCt.GetPanelItem(i);
         (this.SelectedPanelItem = e) && (e.SetSelected(!0), this.ECt(i)),
           this.yCt(e),
           this.rCt.add(e),
@@ -99,7 +99,7 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
         this.TCt(i);
       }),
       (this.LCt = (i) => {
-        const e =
+        var e =
           ModelManager_1.ModelManager.BattleUiSetModel.SelectedPanelItemData;
         this.SelectedPanelItem &&
           e &&
@@ -111,10 +111,10 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
           this.SelectedPanelItem.GetRootItem().SetUIItemAlpha(i));
       }),
       (this.DCt = () => {
-        const i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(105);
+        var i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(105);
         i.FunctionMap.set(2, () => {
           this.oCt.ResetAllPanelItem();
-          const i = ModelManager_1.ModelManager.BattleUiSetModel;
+          var i = ModelManager_1.ModelManager.BattleUiSetModel;
           this.RCt(i.SelectedPanelItemData), i.ResetSettings();
         }),
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
@@ -146,7 +146,7 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
           UiManager_1.UiManager.CloseView("BattleUiSetView");
       }),
       (this.ACt = () => {
-        let i;
+        var i;
         this.PCt()
           ? ((i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
               104,
@@ -196,23 +196,23 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
   OnAddEventListener() {
     this.GetSlider(2).OnValueChangeCb.Bind(this.ICt),
       this.GetSlider(1).OnValueChangeCb.Bind(this.LCt);
-    var i = this.GetButton(3);
-    var i =
-      (i.OnPointDownCallBack.Bind(this._Ct),
-      i.OnPointUpCallBack.Bind(this.uCt),
-      this.GetButton(4));
-    var i =
-      (i.OnPointDownCallBack.Bind(this.cCt),
-      i.OnPointUpCallBack.Bind(this.mCt),
-      this.GetButton(6));
-    var i =
-      (i.OnPointDownCallBack.Bind(this.dCt),
-      i.OnPointUpCallBack.Bind(this.CCt),
-      this.GetButton(5));
-    var i =
-      (i.OnPointDownCallBack.Bind(this.gCt),
-      i.OnPointUpCallBack.Bind(this.fCt),
-      this.GetDraggable(10));
+    var i = this.GetButton(3),
+      i =
+        (i.OnPointDownCallBack.Bind(this._Ct),
+        i.OnPointUpCallBack.Bind(this.uCt),
+        this.GetButton(4)),
+      i =
+        (i.OnPointDownCallBack.Bind(this.cCt),
+        i.OnPointUpCallBack.Bind(this.mCt),
+        this.GetButton(6)),
+      i =
+        (i.OnPointDownCallBack.Bind(this.dCt),
+        i.OnPointUpCallBack.Bind(this.CCt),
+        this.GetButton(5)),
+      i =
+        (i.OnPointDownCallBack.Bind(this.gCt),
+        i.OnPointUpCallBack.Bind(this.fCt),
+        this.GetDraggable(10));
     i.OnPointerBeginDragCallBack.Bind(this.vCt),
       i.OnPointerDragCallBack.Bind(this.pCt),
       i.OnPointerEndDragCallBack.Bind(this.MCt),
@@ -239,23 +239,23 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
   OnRemoveEventListener() {
     this.GetSlider(2).OnValueChangeCb.Unbind(),
       this.GetSlider(1).OnValueChangeCb.Unbind();
-    var i = this.GetButton(3);
-    var i =
-      (i.OnPointDownCallBack.Unbind(),
-      i.OnPointUpCallBack.Unbind(),
-      this.GetButton(4));
-    var i =
-      (i.OnPointDownCallBack.Unbind(),
-      i.OnPointUpCallBack.Unbind(),
-      this.GetButton(6));
-    var i =
-      (i.OnPointDownCallBack.Unbind(),
-      i.OnPointUpCallBack.Unbind(),
-      this.GetButton(5));
-    var i =
-      (i.OnPointDownCallBack.Unbind(),
-      i.OnPointUpCallBack.Unbind(),
-      this.GetDraggable(10));
+    var i = this.GetButton(3),
+      i =
+        (i.OnPointDownCallBack.Unbind(),
+        i.OnPointUpCallBack.Unbind(),
+        this.GetButton(4)),
+      i =
+        (i.OnPointDownCallBack.Unbind(),
+        i.OnPointUpCallBack.Unbind(),
+        this.GetButton(6)),
+      i =
+        (i.OnPointDownCallBack.Unbind(),
+        i.OnPointUpCallBack.Unbind(),
+        this.GetButton(5)),
+      i =
+        (i.OnPointDownCallBack.Unbind(),
+        i.OnPointUpCallBack.Unbind(),
+        this.GetDraggable(10));
     i.OnPointerBeginDragCallBack.Unbind(),
       i.OnPointerDragCallBack.Unbind(),
       i.OnPointerEndDragCallBack.Unbind(),
@@ -289,10 +289,10 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
           ));
   }
   lCt(i) {
-    let e;
-    let t;
-    let s = ModelManager_1.ModelManager.BattleUiSetModel;
-    let n = s.SelectedPanelItemData;
+    var e,
+      t,
+      s = ModelManager_1.ModelManager.BattleUiSetModel,
+      n = s.SelectedPanelItemData;
     !n ||
       s.GetTouchFingerDataCount() < 2 ||
       ((t = s.GetTouchFingerData(TouchFingerDefine_1.EFingerIndex.One)),
@@ -318,12 +318,12 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
       n.SetValue(t));
   }
   OnTick(i) {
-    if ((super.OnTick(i), this.nCt !== 0)) {
+    if ((super.OnTick(i), 0 !== this.nCt)) {
       i = ModelManager_1.ModelManager.BattleUiSetModel.SelectedPanelItemData;
       if (i && i.CanEdit) {
-        const e = this.oCt.GetPanelItem(i);
+        var e = this.oCt.GetPanelItem(i);
         if (e) {
-          const t = e.GetRelativeLocation();
+          var t = e.GetRelativeLocation();
           switch (this.nCt) {
             case 1:
               t.Y++, e.SetRelativeLocation(t);
@@ -342,25 +342,25 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   ClampBound(i) {
-    var e = this.GetItem(11);
-    const t = e.GetOwner().GetActorScale3D().X;
-    var s = e.GetPivot();
-    const n = s.Y;
-    var s = s.X;
-    var r = this.RootItem.GetRenderCanvas().GetOwner().GetUIItem();
-    const h = r.Width / 2;
-    var r = r.Height / 2;
-    const a = e.Width * t;
-    var e = e.Height * t;
+    var e = this.GetItem(11),
+      t = e.GetOwner().GetActorScale3D().X,
+      s = e.GetPivot(),
+      n = s.Y,
+      s = s.X,
+      r = this.RootItem.GetRenderCanvas().GetOwner().GetUIItem(),
+      h = r.Width / 2,
+      r = r.Height / 2,
+      a = e.Width * t,
+      e = e.Height * t;
     (i.X = MathUtils_1.MathUtils.Clamp(i.X, a * s - h, h - a * (1 - s))),
       (i.Y = MathUtils_1.MathUtils.Clamp(i.Y, e * n - r, r - e * (1 - n)));
   }
   SetRelativeLocation(i) {
-    const e = this.GetItem(11);
+    var e = this.GetItem(11);
     this.ClampBound(i), e.SetUIRelativeLocation(i);
   }
   yCt(i) {
-    let e;
+    var e;
     i &&
       ((i = i.GetRootItem()),
       (e = this.GetItem(12))
@@ -374,8 +374,7 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
       e.SetUIActive(!0));
   }
   TCt(i) {
-    const e =
-      ModelManager_1.ModelManager.BattleUiSetModel.SelectedPanelItemData;
+    var e = ModelManager_1.ModelManager.BattleUiSetModel.SelectedPanelItemData;
     this.SelectedPanelItem &&
       e &&
       e.CanEdit &&
@@ -397,7 +396,7 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
     return !1;
   }
   ECt(i) {
-    let e, t;
+    var e, t;
     i &&
       ((e = this.GetSlider(2)),
       (t = this.GetSlider(1)),
@@ -405,7 +404,7 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
       t.SetValue(i.EditAlpha));
   }
   RCt(i) {
-    let e, t;
+    var e, t;
     i &&
       ((e = this.GetSlider(2)),
       (t = this.GetSlider(1)),
@@ -414,4 +413,4 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.BattleUiSetView = BattleUiSetView;
-// # sourceMappingURL=BattleUiSetView.js.map
+//# sourceMappingURL=BattleUiSetView.js.map

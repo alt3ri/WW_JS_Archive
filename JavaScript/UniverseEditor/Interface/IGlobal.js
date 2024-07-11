@@ -221,4 +221,4 @@ function getGlobalConfig() {
     PlotHandBookPath: "Content/Aki/UniverseEditorConfig/Json/PlotHandBook.json",
     PlotPositionPath: "Content/Aki/UniverseEditorConfig/Json/PlotPosition.json",
   });
-// # sourceMappingURL=IGlobal.js.map
+//# sourceMappingURL=IGlobal.js.map

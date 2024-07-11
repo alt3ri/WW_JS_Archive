@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager");
 class TsDecoratorQuestStateCheck extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -33,7 +33,7 @@ class TsDecoratorQuestStateCheck extends UE.BTDecorator_BlueprintBase {
         !1
       );
     if ((this.InitTsVariables(), !this.TsQuestId)) return !1;
-    const r =
+    var r =
       ModelManager_1.ModelManager.QuestNewModel.GetQuestState(
         this.TsQuestId,
       ) === this.TsCheckStateId;
@@ -48,4 +48,4 @@ class TsDecoratorQuestStateCheck extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorQuestStateCheck;
-// # sourceMappingURL=TsDecoratorQuestStateCheck.js.map
+//# sourceMappingURL=TsDecoratorQuestStateCheck.js.map

@@ -11,4 +11,4 @@ class ExchangePopData extends UiPopViewData_1.UiPopViewData {
   }
 }
 exports.ExchangePopData = ExchangePopData;
-// # sourceMappingURL=ExchangePopData.js.map
+//# sourceMappingURL=ExchangePopData.js.map

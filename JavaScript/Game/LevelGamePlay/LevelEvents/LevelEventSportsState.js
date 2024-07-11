@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventSportsState = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const Global_1 = require("../../Global");
-const CharacterSlideComponent_1 = require("../../NewWorld/Character/Common/Component/Move/CharacterSlideComponent");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const LevelGeneralContextDefine_1 = require("../LevelGeneralContextDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  Global_1 = require("../../Global"),
+  CharacterSlideComponent_1 = require("../../NewWorld/Character/Common/Component/Move/CharacterSlideComponent"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  LevelGeneralContextDefine_1 = require("../LevelGeneralContextDefine");
 class LevelEventSportsState extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, t) {
     if (e) {
-      const o = e.Config;
+      var o = e.Config;
       switch (o.Type) {
         case "Slide":
           CharacterSlideComponent_1.CharacterSlideComponent.SetSlideConfig(
@@ -35,7 +35,7 @@ class LevelEventSportsState extends LevelGeneralBase_1.LevelEventBase {
     if (o instanceof LevelGeneralContextDefine_1.GeneralLogicTreeContext) {
       let e = void 0;
       (e =
-        t.Target.Type === "Player"
+        "Player" === t.Target.Type
           ? Global_1.Global.BaseCharacter?.GetEntityNoBlueprint()
           : e)
         ? e.GetComponent(32)?.EnterSkiMode(t)
@@ -61,7 +61,7 @@ class LevelEventSportsState extends LevelGeneralBase_1.LevelEventBase {
     if (o instanceof LevelGeneralContextDefine_1.GeneralLogicTreeContext) {
       let e = void 0;
       (e =
-        t.Target.Type === "Player"
+        "Player" === t.Target.Type
           ? Global_1.Global.BaseCharacter?.GetEntityNoBlueprint()
           : e)
         ? e.GetComponent(32)?.ExitSkiMode()
@@ -99,4 +99,4 @@ class LevelEventSportsState extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventSportsState = LevelEventSportsState;
-// # sourceMappingURL=LevelEventSportsState.js.map
+//# sourceMappingURL=LevelEventSportsState.js.map

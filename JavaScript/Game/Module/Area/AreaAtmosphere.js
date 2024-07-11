@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AreaAtmosphere = exports.AreaAtmosphereActorInfo = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class AreaAtmosphereActorInfo {
   constructor() {
     (this.AreaAtmosphereInfo = void 0),
@@ -46,15 +46,15 @@ class AreaAtmosphere {
         var e = ModelManager_1.ModelManager.AreaModel.AreaInfo;
         if (e) {
           let t = e.AtmosphereId;
-          if (t === 0) {
-            if (e.Father === 0) return;
+          if (0 === t) {
+            if (0 === e.Father) return;
             e = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(e.Father);
-            if (!e || e.AtmosphereId === 0) return;
+            if (!e || 0 === e.AtmosphereId) return;
             t = e.AtmosphereId;
           }
-          let i;
-          var e =
-            ConfigManager_1.ConfigManager.AreaConfig.GetAreaAtmosphereInfo(t);
+          var i,
+            e =
+              ConfigManager_1.ConfigManager.AreaConfig.GetAreaAtmosphereInfo(t);
           e &&
             (this.RHe
               ? this.RHe.AreaAtmosphereInfo.Id === e.Id
@@ -96,10 +96,10 @@ class AreaAtmosphere {
   }
   Z0e(t, e) {
     if (t && t.IsLoadCompleted && t.CurBlendWeight !== t.TargetBlendWeight) {
-      const i = t.CurBlendWeight;
-      if (t.ChangeSpeed === 0) t.CurBlendWeight = t.TargetBlendWeight;
+      var i = t.CurBlendWeight;
+      if (0 === t.ChangeSpeed) t.CurBlendWeight = t.TargetBlendWeight;
       else {
-        if (!(e > 0)) return;
+        if (!(0 < e)) return;
         t.TargetBlendWeight > t.CurBlendWeight
           ? ((t.CurBlendWeight = t.CurBlendWeight + e * t.ChangeSpeed),
             (t.CurBlendWeight = Math.min(
@@ -113,8 +113,8 @@ class AreaAtmosphere {
             )));
       }
       (t.KuroPostProcessComponent.BlendWeight = t.CurBlendWeight),
-        i === 0 &&
-          t.CurBlendWeight > 0 &&
+        0 === i &&
+          0 < t.CurBlendWeight &&
           ((t.KuroPostProcessComponent.bEnabled = !0),
           Log_1.Log.CheckDebug()) &&
           Log_1.Log.Debug(
@@ -124,8 +124,8 @@ class AreaAtmosphere {
             ["id", t.AreaAtmosphereInfo.Id],
             ["DA", t.AreaAtmosphereInfo.DAPath],
           ),
-        i > 0 &&
-          t.CurBlendWeight === 0 &&
+        0 < i &&
+          0 === t.CurBlendWeight &&
           ((t.KuroPostProcessComponent.bEnabled = !1),
           Log_1.Log.CheckDebug()) &&
           Log_1.Log.Debug(
@@ -166,7 +166,7 @@ class AreaAtmosphere {
       );
   }
   wHe(t) {
-    (this.RHe.AreaAtmosphereInfo = t).FadeTime > 0
+    0 < (this.RHe.AreaAtmosphereInfo = t).FadeTime
       ? (this.RHe.ChangeSpeed =
           1 / (t.FadeTime * TimeUtil_1.TimeUtil.InverseMillisecond))
       : (this.RHe.ChangeSpeed = 0);
@@ -187,16 +187,16 @@ class AreaAtmosphere {
     t = Global_1.Global.BaseCharacter
       ? Global_1.Global.BaseCharacter.GetTransform()
       : new UE.Transform();
-    const e = ActorSystem_1.ActorSystem.Get(UE.Actor.StaticClass(), t);
-    const i =
-      (GlobalData_1.GlobalData.IsPlayInEditor &&
-        e.SetActorLabel("AreaAtmosphere"),
-      e.AddComponentByClass(
-        UE.KuroPostProcessComponent.StaticClass(),
-        !1,
-        MathUtils_1.MathUtils.DefaultTransform,
-        !1,
-      ));
+    var e = ActorSystem_1.ActorSystem.Get(UE.Actor.StaticClass(), t),
+      i =
+        (GlobalData_1.GlobalData.IsPlayInEditor &&
+          e.SetActorLabel("AreaAtmosphere"),
+        e.AddComponentByClass(
+          UE.KuroPostProcessComponent.StaticClass(),
+          !1,
+          MathUtils_1.MathUtils.DefaultTransform,
+          !1,
+        ));
     (i.bUnbound = !0),
       (i.BlendWeight = 0),
       (i.bEnabled = !1),
@@ -208,7 +208,7 @@ class AreaAtmosphere {
       this.qHe();
   }
   BHe() {
-    const t = this.RHe.KuroPostProcessComponent;
+    var t = this.RHe.KuroPostProcessComponent;
     (this.RHe.TargetBlendWeight = 1),
       (this.RHe.CurBlendWeight = 0),
       (this.RHe.IsLoadCompleted = !1),
@@ -220,8 +220,8 @@ class AreaAtmosphere {
       this.qHe();
   }
   qHe() {
-    const e = this.RHe.AreaAtmosphereInfo;
-    const i = this.RHe.KuroPostProcessComponent;
+    const e = this.RHe.AreaAtmosphereInfo,
+      i = this.RHe.KuroPostProcessComponent;
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Area",
@@ -274,4 +274,4 @@ class AreaAtmosphere {
   }
 }
 exports.AreaAtmosphere = AreaAtmosphere;
-// # sourceMappingURL=AreaAtmosphere.js.map
+//# sourceMappingURL=AreaAtmosphere.js.map

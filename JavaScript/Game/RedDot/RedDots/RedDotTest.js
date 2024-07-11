@@ -11,4 +11,4 @@ class RedDotTest extends RedDotBase_1.RedDotBase {
   }
 }
 exports.RedDotTest = RedDotTest;
-// # sourceMappingURL=RedDotTest.js.map
+//# sourceMappingURL=RedDotTest.js.map

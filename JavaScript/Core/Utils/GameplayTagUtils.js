@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayTagUtils = void 0);
-const UE = require("ue");
-const GameplayTagDefine_1 = require("../../Game/Define/GameplayTagDefine");
-const Log_1 = require("../Common/Log");
+const UE = require("ue"),
+  GameplayTagDefine_1 = require("../../Game/Define/GameplayTagDefine"),
+  Log_1 = require("../Common/Log");
 class GameplayTagUtils {
   static GetTagIdByName(a) {
-    const e = GameplayTagDefine_1.TagIdMap.get(a);
+    var e = GameplayTagDefine_1.TagIdMap.get(a);
     if (e) return e;
     GameplayTagUtils.bJ.has(a) ||
       (GameplayTagUtils.bJ.add(a),
@@ -44,9 +44,9 @@ class GameplayTagUtils {
         ));
   }
   static CheckGameplayTagIdUniqueness() {
-    let a;
-    let e;
-    const t = new Map();
+    var a,
+      e,
+      t = new Map();
     for ([a, e] of Object.entries(GameplayTagDefine_1.TagIdMap))
       t.has(e) &&
         Log_1.Log.CheckError() &&
@@ -89,8 +89,8 @@ class GameplayTagUtils {
   }
   static ConvertFromUeContainer(e) {
     if (!e) return [];
-    const t = [];
-    const i = e.GameplayTags.Num();
+    var t = [],
+      i = e.GameplayTags.Num();
     for (let a = 0; a < i; a++) t.push(e.GameplayTags.Get(a).TagId);
     return t;
   }
@@ -98,4 +98,4 @@ class GameplayTagUtils {
 ((exports.GameplayTagUtils = GameplayTagUtils).bJ = new Set()),
   (GameplayTagUtils.GJ = new Set()),
   (GameplayTagUtils.qJ = new Map());
-// # sourceMappingURL=GameplayTagUtils.js.map
+//# sourceMappingURL=GameplayTagUtils.js.map

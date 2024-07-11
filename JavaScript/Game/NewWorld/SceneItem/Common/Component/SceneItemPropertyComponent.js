@@ -1,26 +1,30 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, s) {
-    let n;
-    const o = arguments.length;
-    let r =
-      o < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var n,
+      o = arguments.length,
+      r =
+        o < 3
+          ? e
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(e, i))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(t, e, i, s);
     else
-      for (let h = t.length - 1; h >= 0; h--)
-        (n = t[h]) && (r = (o < 3 ? n(r) : o > 3 ? n(e, i, r) : n(e, i)) || r);
-    return o > 3 && r && Object.defineProperty(e, i, r), r;
+      for (var h = t.length - 1; 0 <= h; h--)
+        (n = t[h]) && (r = (o < 3 ? n(r) : 3 < o ? n(e, i, r) : n(e, i)) || r);
+    return 3 < o && r && Object.defineProperty(e, i, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemPropertyComponent = void 0);
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
+const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem");
 let SceneItemPropertyComponent = class SceneItemPropertyComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -65,7 +69,7 @@ let SceneItemPropertyComponent = class SceneItemPropertyComponent extends Entity
     return this.Z1n;
   }
   OnStart() {
-    let t = this.Entity?.GetComponent(0);
+    var t = this.Entity?.GetComponent(0);
     return (
       t &&
         (t = t.GetPbEntityInitData()) &&
@@ -134,4 +138,4 @@ let SceneItemPropertyComponent = class SceneItemPropertyComponent extends Entity
   SceneItemPropertyComponent,
 )),
   (exports.SceneItemPropertyComponent = SceneItemPropertyComponent);
-// # sourceMappingURL=SceneItemPropertyComponent.js.map
+//# sourceMappingURL=SceneItemPropertyComponent.js.map

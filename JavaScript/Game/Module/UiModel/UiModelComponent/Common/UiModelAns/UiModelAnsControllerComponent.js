@@ -1,23 +1,27 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, o, n) {
-    let s;
-    const i = arguments.length;
-    let r =
-      i < 3 ? t : n === null ? (n = Object.getOwnPropertyDescriptor(t, o)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var s,
+      i = arguments.length,
+      r =
+        i < 3
+          ? t
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(t, o))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(e, t, o, n);
     else
-      for (let h = e.length - 1; h >= 0; h--)
-        (s = e[h]) && (r = (i < 3 ? s(r) : i > 3 ? s(t, o, r) : s(t, o)) || r);
-    return i > 3 && r && Object.defineProperty(t, o, r), r;
+      for (var h = e.length - 1; 0 <= h; h--)
+        (s = e[h]) && (r = (i < 3 ? s(r) : 3 < i ? s(t, o, r) : s(t, o)) || r);
+    return 3 < i && r && Object.defineProperty(t, o, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiModelAnsControllerComponent = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const UiModelComponentDefine_1 = require("../../../Define/UiModelComponentDefine");
-const UiModelComponentBase_1 = require("../../UiModelComponentBase");
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  UiModelComponentDefine_1 = require("../../../Define/UiModelComponentDefine"),
+  UiModelComponentBase_1 = require("../../UiModelComponentBase");
 class AnsContextSet {
   constructor() {
     this.AnsContextSet = new Set();
@@ -56,8 +60,8 @@ let UiModelAnsControllerComponent = class UiModelAnsControllerComponent extends 
     this.dBr.set(e, new AnsContextTrigger(t, o));
   }
   AddAns(e, t) {
-    let o = this.mBr.get(e);
-    let n = (o || ((o = new AnsContextSet()), this.mBr.set(e, o)), o.Has(t));
+    let o = this.mBr.get(e),
+      n = (o || ((o = new AnsContextSet()), this.mBr.set(e, o)), o.Has(t));
     n || (o.Add(t), (n = t)), this.fBr(n), n.ExistCount++;
   }
   ReduceAns(e, t) {
@@ -80,23 +84,23 @@ let UiModelAnsControllerComponent = class UiModelAnsControllerComponent extends 
     this.gBr.Has(e) || (this.gBr.Add(e), (e.CacheCount = e.ExistCount));
   }
   Tick(e) {
-    let t = this.CBr.AnsContextSet;
-    if (t.size > 0) {
+    var t = this.CBr.AnsContextSet;
+    if (0 < t.size) {
       for (const i of t) {
-        var o;
-        const n = i.CacheCount;
-        const s = i.ExistCount;
-        n === 0 && s > 0
+        var o,
+          n = i.CacheCount,
+          s = i.ExistCount;
+        0 === n && 0 < s
           ? (o = this.dBr.get(i.constructor.name)) && o.OnBegin(i)
-          : n > 0 &&
-            s === 0 &&
+          : 0 < n &&
+            0 === s &&
             (o = this.dBr.get(i.constructor.name)) &&
             o.OnEnd(i);
       }
       this.CBr.Clear();
     }
     t = this.gBr.AnsContextSet;
-    if (t.size > 0) {
+    if (0 < t.size) {
       for (const r of t) this.CBr.Add(r);
       this.gBr.Clear();
     }
@@ -107,4 +111,4 @@ let UiModelAnsControllerComponent = class UiModelAnsControllerComponent extends 
   UiModelAnsControllerComponent,
 )),
   (exports.UiModelAnsControllerComponent = UiModelAnsControllerComponent);
-// # sourceMappingURL=UiModelAnsControllerComponent.js.map
+//# sourceMappingURL=UiModelAnsControllerComponent.js.map

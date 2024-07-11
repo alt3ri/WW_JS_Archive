@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattlePassTaskView = void 0);
-const UE = require("ue");
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase");
-const ConfirmBoxDefine_1 = require("../../../ConfirmBox/ConfirmBoxDefine");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView");
-const BattlePassBackgroundPanel_1 = require("./BattlePassBackgroundPanel");
-const BattlePassTaskLoopItem_1 = require("./BattlePassTaskLoopItem");
-const BattlePassTaskTabItem_1 = require("./BattlePassTaskTabItem");
+const UE = require("ue"),
+  CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase"),
+  ConfirmBoxDefine_1 = require("../../../ConfirmBox/ConfirmBoxDefine"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView"),
+  BattlePassBackgroundPanel_1 = require("./BattlePassBackgroundPanel"),
+  BattlePassTaskLoopItem_1 = require("./BattlePassTaskLoopItem"),
+  BattlePassTaskTabItem_1 = require("./BattlePassTaskTabItem");
 class BattlePassTaskView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -28,7 +28,7 @@ class BattlePassTaskView extends UiTabViewBase_1.UiTabViewBase {
       }),
       (this.Bki = (e) => {
         this.NOe !== CommonDefine_1.INVALID_VALUE &&
-          ((this.KVe[this.NOe] === 1 || (this.KVe[this.NOe] === 2 && e)) &&
+          ((1 === this.KVe[this.NOe] || (2 === this.KVe[this.NOe] && e)) &&
             ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
               new ConfirmBoxDefine_1.ConfirmBoxDataNew(146),
             ),
@@ -36,13 +36,13 @@ class BattlePassTaskView extends UiTabViewBase_1.UiTabViewBase {
       }),
       (this.Iki = () => new BattlePassTaskLoopItem_1.BattlePassTaskLoopItem()),
       (this.hPe = () => {
-        const e = new BattlePassTaskTabItem_1.BattlePassTaskTabItem();
+        var e = new BattlePassTaskTabItem_1.BattlePassTaskTabItem();
         return (
           e.SetSelectedCallBack(this.bki), e.SetCanExecuteChange(this.DTt), e
         );
       }),
       (this.bki = (e) => {
-        let t;
+        var t;
         e !== this.NOe &&
           ((t = this.NOe),
           (this.NOe = e),
@@ -63,7 +63,7 @@ class BattlePassTaskView extends UiTabViewBase_1.UiTabViewBase {
   }
   async KLn() {
     this.vki = new BattlePassBackgroundPanel_1.BattlePassBackgroundPanel();
-    const e = { IsRewardPanel: !1, WeaponObservers: this.ExtraParams };
+    var e = { IsRewardPanel: !1, WeaponObservers: this.ExtraParams };
     await this.vki.OnlyCreateByActorAsync(this.GetItem(0).GetOwner(), e),
       this.AddChild(this.vki);
   }
@@ -129,4 +129,4 @@ class BattlePassTaskView extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.BattlePassTaskView = BattlePassTaskView;
-// # sourceMappingURL=BattlePassTaskView.js.map
+//# sourceMappingURL=BattlePassTaskView.js.map

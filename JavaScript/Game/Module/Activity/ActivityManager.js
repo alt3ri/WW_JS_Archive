@@ -1,33 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityManager = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const FragmentMemoryActivityController_1 = require("../FragmentMemory/FragmentMemoryActivityController");
-const ActivityBeginnerBookController_1 = require("./ActivityContent/BeginnerBook/ActivityBeginnerBookController");
-const BossRushController_1 = require("./ActivityContent/BossRush/BossRushController");
-const ActivityCollectionController_1 = require("./ActivityContent/Collection/ActivityCollectionController");
-const ActivityDailyAdventureController_1 = require("./ActivityContent/DailyAdventure/ActivityDailyAdventureController");
-const ActivityDoubleRewardController_1 = require("./ActivityContent/DoubleReward/ActivityDoubleRewardController");
-const ActivityLongShanController_1 = require("./ActivityContent/LongShan/ActivityLongShanController");
-const ActivityMowingController_1 = require("./ActivityContent/Mowing/ActivityMowingController");
-const ActivityNoviceJourneyController_1 = require("./ActivityContent/NoviceJourney/ActivityNoviceJourneyController");
-const ActivityPhantomCollectController_1 = require("./ActivityContent/PhantomCollect/ActivityPhantomCollectController");
-const ActivityRoleGuideController_1 = require("./ActivityContent/RoleGuide/ActivityRoleGuideController");
-const ActivityRoleTrialController_1 = require("./ActivityContent/RoleTrial/ActivityRoleTrialController");
-const ActivityRogueController_1 = require("./ActivityContent/RougeActivity/ActivityRogueController");
-const ActivityRunController_1 = require("./ActivityContent/Run/ActivityRunController");
-const ActivitySevenDaySignController_1 = require("./ActivityContent/SevenDaySign/ActivitySevenDaySignController");
-const ActivityTimePointRewardController_1 = require("./ActivityContent/TimePointReward/ActivityTimePointRewardController");
-const ActivityTowerGuideController_1 = require("./ActivityContent/TowerGuide/ActivityTowerGuideController");
-const ActivityTurntableController_1 = require("./ActivityContent/Turntable/ActivityTurntableController");
-const ActivityUniversalController_1 = require("./ActivityContent/UniversalActivity/ActivityUniversalController");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  FragmentMemoryActivityController_1 = require("../FragmentMemory/FragmentMemoryActivityController"),
+  ActivityBeginnerBookController_1 = require("./ActivityContent/BeginnerBook/ActivityBeginnerBookController"),
+  BossRushController_1 = require("./ActivityContent/BossRush/BossRushController"),
+  ActivityCollectionController_1 = require("./ActivityContent/Collection/ActivityCollectionController"),
+  ActivityDailyAdventureController_1 = require("./ActivityContent/DailyAdventure/ActivityDailyAdventureController"),
+  ActivityDoubleRewardController_1 = require("./ActivityContent/DoubleReward/ActivityDoubleRewardController"),
+  ActivityLongShanController_1 = require("./ActivityContent/LongShan/ActivityLongShanController"),
+  ActivityMowingController_1 = require("./ActivityContent/Mowing/ActivityMowingController"),
+  ActivityNoviceJourneyController_1 = require("./ActivityContent/NoviceJourney/ActivityNoviceJourneyController"),
+  ActivityPhantomCollectController_1 = require("./ActivityContent/PhantomCollect/ActivityPhantomCollectController"),
+  ActivityRoleGuideController_1 = require("./ActivityContent/RoleGuide/ActivityRoleGuideController"),
+  ActivityRoleTrialController_1 = require("./ActivityContent/RoleTrial/ActivityRoleTrialController"),
+  ActivityRogueController_1 = require("./ActivityContent/RougeActivity/ActivityRogueController"),
+  ActivityRunController_1 = require("./ActivityContent/Run/ActivityRunController"),
+  ActivitySevenDaySignController_1 = require("./ActivityContent/SevenDaySign/ActivitySevenDaySignController"),
+  ActivityTimePointRewardController_1 = require("./ActivityContent/TimePointReward/ActivityTimePointRewardController"),
+  ActivityTowerGuideController_1 = require("./ActivityContent/TowerGuide/ActivityTowerGuideController"),
+  ActivityTurntableController_1 = require("./ActivityContent/Turntable/ActivityTurntableController"),
+  ActivityUniversalController_1 = require("./ActivityContent/UniversalActivity/ActivityUniversalController");
 class ActivityManager {
   constructor() {}
   static Init() {
     this.S3e();
     for (const o in Protocol_1.Aki.Protocol.gBs) {
-      let t = Number(o);
+      var t = Number(o);
       isNaN(t) ||
         (t = this.E3e.get(t)) ||
         (Log_1.Log.CheckWarn() &&
@@ -123,8 +123,8 @@ class ActivityManager {
   }
   static IsOpeningActivityView() {
     let o = !1;
-    const i = Array.from(this.E3e.values());
-    const e = i.length;
+    var i = Array.from(this.E3e.values()),
+      e = i.length;
     for (let t = 0; t < e; t++)
       if (i[t].GetIsOpeningActivityRelativeView()) {
         o = !0;
@@ -140,4 +140,4 @@ class ActivityManager {
   }
 }
 (exports.ActivityManager = ActivityManager).E3e = new Map();
-// # sourceMappingURL=ActivityManager.js.map
+//# sourceMappingURL=ActivityManager.js.map

@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RedDotBase = exports.RedDotData = void 0);
-const Log_1 = require("../../Core/Common/Log");
-const Stats_1 = require("../../Core/Common/Stats");
-const StringBuilder_1 = require("../../Core/Utils/StringBuilder");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const ModelManager_1 = require("../Manager/ModelManager");
-const RedDotSystem_1 = require("./RedDotSystem");
-const DEBUG_MODE = !1;
-const STAT_MODE = !0;
+const Log_1 = require("../../Core/Common/Log"),
+  Stats_1 = require("../../Core/Common/Stats"),
+  StringBuilder_1 = require("../../Core/Utils/StringBuilder"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  RedDotSystem_1 = require("./RedDotSystem"),
+  DEBUG_MODE = !1,
+  STAT_MODE = !0;
 class RedDotData {
   constructor() {
     (this.Dsr = 0), (this.Rsr = new Set());
   }
   get State() {
-    return this.Dsr > 0;
+    return 0 < this.Dsr;
   }
   get StateCount() {
     return this.Dsr;
@@ -47,7 +47,7 @@ class RedDotData {
     for (const e of this.Rsr) e.IsValid() && e.SetUIActive(t);
   }
   OnChildrenStateChange(t) {
-    const e = this.State;
+    var e = this.State;
     return (
       (this.StateCount += t ? 1 : -1),
       e !== this.State && (this.UpdateRedDotUIActive(), !0)
@@ -69,7 +69,7 @@ class RedDotBase {
       }),
       (this.wsr = (...t) => {
         let e = 0;
-        t && typeof t[0] === "number" && this.IsAllEventParamAsUId()
+        t && "number" == typeof t[0] && this.IsAllEventParamAsUId()
           ? ((e = t[0]),
             this.Bsr(e),
             RedDotSystem_1.RedDotSystem.PushToEventQueue(this.bsr, e))
@@ -82,8 +82,8 @@ class RedDotBase {
       }),
       (this.bsr = (t = 0) => {
         STAT_MODE;
-        const e = this.OnCheck(t);
-        const i = this.wGo(t);
+        var e = this.OnCheck(t),
+          i = this.wGo(t);
         i
           ? (i.TryChangeState(e) &&
               (this.Usr && this.Usr(i.State, t), this.qsr(e, t)),
@@ -108,7 +108,7 @@ class RedDotBase {
             );
       }),
       this.Gsr();
-    let t = this.GetActiveEvents();
+    var t = this.GetActiveEvents();
     if (t) for (const e of t) EventSystem_1.EventSystem.Add(e, this.Asr);
     t = this.GetDisActiveEvents();
     if (t) for (const i of t) EventSystem_1.EventSystem.Add(i, this.xsr);
@@ -122,11 +122,11 @@ class RedDotBase {
   ksr(t) {
     if ((this.dce = t)) this.Gsr();
     else {
-      let e;
+      var e;
       for (const s of this.Osr()) EventSystem_1.EventSystem.Remove(s, this.wsr);
       for ([, e] of this.NQ) e.SetUIItemActive(!1);
     }
-    let i;
+    var i;
     for ([i] of this.Nsr.ChildMap) i.ksr(t);
   }
   Fsr(t) {
@@ -141,7 +141,7 @@ class RedDotBase {
       this.Nsr.Parent.Element.Hsr(this, t);
   }
   Hsr(t, e) {
-    for (let [i, s] of t.NQ) {
+    for (var [i, s] of t.NQ) {
       i = this.NQ.get(i);
       i &&
         (e ? (i.StateCount += s.StateCount) : (i.StateCount -= s.StateCount)),
@@ -150,16 +150,16 @@ class RedDotBase {
     void 0 !== this.Nsr.Parent && this.Nsr.Parent.Element.Hsr(t, e);
   }
   Vsr() {
-    for (const [t, e] of this.NQ) {
-      const i = this.OnCheck(t);
+    for (var [t, e] of this.NQ) {
+      var i = this.OnCheck(t);
       (e.StateCount = i ? 1 : 0), i && (e.SetUIItemActive(!0), this.qsr(i, t));
     }
-    let s;
+    var s;
     for ([s] of this.Nsr.ChildMap) s.Vsr();
   }
   qsr(t, e = 0) {
-    let i;
-    const s = this.Nsr.Parent?.Element;
+    var i,
+      s = this.Nsr.Parent?.Element;
     s &&
       ((e = s.IsMultiple() ? e : 0),
       s.Bsr(e),
@@ -190,7 +190,7 @@ class RedDotBase {
       (this.Usr = void 0);
   }
   UpdateState(t = 0) {
-    const e = this.wGo(t);
+    var e = this.wGo(t);
     e.UpdateRedDotUIActive(), this.Usr && this.Usr(e.State, t);
   }
   IsRedDotActive() {
@@ -214,11 +214,11 @@ class RedDotBase {
     return !0;
   }
   ToRedDotString() {
-    let t;
-    let e;
-    const i = new StringBuilder_1.StringBuilder();
-    const s = new StringBuilder_1.StringBuilder();
-    const r = new StringBuilder_1.StringBuilder();
+    var t,
+      e,
+      i = new StringBuilder_1.StringBuilder(),
+      s = new StringBuilder_1.StringBuilder(),
+      r = new StringBuilder_1.StringBuilder();
     for ([t, e] of this.NQ) {
       r.Clear();
       for (const n of e.GetUiItemSet()) r.Append(n.GetDisplayName() + ", ");
@@ -226,8 +226,8 @@ class RedDotBase {
         `{uid:${t}, stateCount:${e.StateCount} uiItem:[${r.ToString()}] }`,
       );
     }
-    let h;
-    const o = new StringBuilder_1.StringBuilder();
+    var h,
+      o = new StringBuilder_1.StringBuilder();
     for ([h] of this.Nsr.ChildMap) o.Append(h.Name + ", ");
     return (
       i.Append(`[红点:${this.Name} 父红点:${this.Nsr.Parent?.Element.Name} 子红点:{${o.ToString()}}  数据:{ ${s.ToString()} }]
@@ -235,15 +235,14 @@ class RedDotBase {
       i.ToString()
     );
   }
-
   PrintStateDebugString() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("RedDot", 8, "=======子红点状态打印开始=======：", [
         "Name",
         this.Name,
       ]);
-    for (const [t, e] of this.NQ) {
-      const i = e.GetUiItemSet();
+    for (var [t, e] of this.NQ) {
+      var i = e.GetUiItemSet();
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "RedDot",
@@ -269,4 +268,4 @@ class RedDotBase {
   }
 }
 (exports.RedDotBase = RedDotBase).MBo = void 0;
-// # sourceMappingURL=RedDotBase.js.map
+//# sourceMappingURL=RedDotBase.js.map

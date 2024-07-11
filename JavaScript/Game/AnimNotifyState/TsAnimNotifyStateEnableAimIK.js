@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const CharacterNameDefines_1 = require("../NewWorld/Character/Common/CharacterNameDefines");
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  CharacterNameDefines_1 = require("../NewWorld/Character/Common/CharacterNameDefines");
 class TsAnimNotifyStateEnableAimIK extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -93,4 +93,4 @@ class TsAnimNotifyStateEnableAimIK extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateEnableAimIK;
-// # sourceMappingURL=TsAnimNotifyStateEnableAimIK.js.map
+//# sourceMappingURL=TsAnimNotifyStateEnableAimIK.js.map

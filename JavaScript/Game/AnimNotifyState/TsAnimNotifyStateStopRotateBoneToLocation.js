@@ -23,4 +23,4 @@ class TsAnimNotifyStateStopRotateBoneToLocation extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateStopRotateBoneToLocation;
-// # sourceMappingURL=TsAnimNotifyStateStopRotateBoneToLocation.js.map
+//# sourceMappingURL=TsAnimNotifyStateStopRotateBoneToLocation.js.map

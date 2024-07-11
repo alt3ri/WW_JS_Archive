@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionLevelSyncAction = void 0);
-const LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine");
-const FlowActionBase_1 = require("./FlowActionBase");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine"),
+  FlowActionBase_1 = require("./FlowActionBase"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class FlowActionLevelSyncAction extends FlowActionBase_1.FlowActionBase {
   OnExecute() {
     ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsNew(
@@ -16,4 +16,4 @@ class FlowActionLevelSyncAction extends FlowActionBase_1.FlowActionBase {
   }
 }
 exports.FlowActionLevelSyncAction = FlowActionLevelSyncAction;
-// # sourceMappingURL=FlowActionLevelSyncAction.js.map
+//# sourceMappingURL=FlowActionLevelSyncAction.js.map

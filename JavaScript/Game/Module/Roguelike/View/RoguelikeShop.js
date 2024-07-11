@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoguelikeShop = void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
-const RogueSelectResult_1 = require("../Define/RogueSelectResult");
-const RoguelikeController_1 = require("../RoguelikeController");
-const ElementPanel_1 = require("./ElementPanel");
-const RogueInfoViewTokenDetail_1 = require("./RogueInfoViewTokenDetail");
-const RoguelikeShopDetail_1 = require("./RoguelikeShopDetail");
+const UE = require("ue"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
+  RogueSelectResult_1 = require("../Define/RogueSelectResult"),
+  RoguelikeController_1 = require("../RoguelikeController"),
+  ElementPanel_1 = require("./ElementPanel"),
+  RogueInfoViewTokenDetail_1 = require("./RogueInfoViewTokenDetail"),
+  RoguelikeShopDetail_1 = require("./RoguelikeShopDetail");
 class RoguelikeShop extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -128,7 +128,7 @@ class RoguelikeShop extends UiViewBase_1.UiViewBase {
       this.GLn();
   }
   UpdateItemList() {
-    const e = this.Data.RogueGainEntryList;
+    var e = this.Data.RogueGainEntryList;
     e.sort((e, i) =>
       e.IsSell !== i.IsSell
         ? e.IsSell
@@ -145,31 +145,31 @@ class RoguelikeShop extends UiViewBase_1.UiViewBase {
               : e.OriginalPrice - i.OriginalPrice,
     ),
       this.LoopScrollView.RefreshByData(e),
-      this.Data.RogueGainEntryList.length > 0 &&
+      0 < this.Data.RogueGainEntryList.length &&
         ((ModelManager_1.ModelManager.RoguelikeModel.CurrentRogueGainEntry =
           this.Data.RogueGainEntryList[0]),
         this.LoopScrollView.SelectGridProxy(0, !1),
         this.ShopDetailPanel.Refresh(this.Data.RogueGainEntryList[0]));
   }
   GLn() {
-    var e = this.Data.UseTime;
-    var i = this.Data.MaxTime;
-    let t = this.GetButton(3);
-    var e = (t.RootUIComp.SetUIActive(i > 0), i - e);
+    var e = this.Data.UseTime,
+      i = this.Data.MaxTime,
+      t = this.GetButton(3),
+      e = (t.RootUIComp.SetUIActive(0 < i), i - e);
     const s = this.GetText(4);
     e <= 0
       ? LguiUtil_1.LguiUtil.SetLocalTextNew(s, "RoguelikeView_29_Text", e, i)
       : LguiUtil_1.LguiUtil.SetLocalTextNew(s, "RoguelikeView_28_Text", e, i);
     i = this.Data.CostCurrency;
-    if (i.length > 0) {
-      var i = i[0];
-      const o =
-        ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-          i.Ekn,
-        ) >= i.I5n;
+    if (0 < i.length) {
+      var i = i[0],
+        o =
+          ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+            i.Ekn,
+          ) >= i.I5n;
       const s = o ? "RogueSpecialRefreshCost" : "RogueSpecialRefreshCost_Not";
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), s, i.I5n),
-        t.SetSelfInteractive(e > 0 && o);
+        t.SetSelfInteractive(0 < e && o);
       t = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCurrencyConfig(
         i.Ekn,
       );
@@ -209,4 +209,4 @@ class RoguelikeShop extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RoguelikeShop = RoguelikeShop;
-// # sourceMappingURL=RoguelikeShop.js.map
+//# sourceMappingURL=RoguelikeShop.js.map

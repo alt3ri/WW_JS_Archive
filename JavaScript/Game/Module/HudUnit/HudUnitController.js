@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HudUnitController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiLayer_1 = require("../../Ui/UiLayer");
-const HudUnitManager_1 = require("./HudUnitManager");
+const Log_1 = require("../../../Core/Common/Log"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
+  HudUnitManager_1 = require("./HudUnitManager");
 class HudUnitController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return !0;
@@ -62,11 +62,11 @@ class HudUnitController extends UiControllerBase_1.UiControllerBase {
     t?.Valid && HudUnitController.zti(t), e?.Valid && HudUnitController.Jti(e);
   }),
   (HudUnitController.j$e = () => {
-    const e = UiLayer_1.UiLayer.GetBattleViewUnit(1);
-    const t =
-      ModelManager_1.ModelManager.BattleUiModel.ChildViewData.GetChildVisible(
-        17,
-      );
+    var e = UiLayer_1.UiLayer.GetBattleViewUnit(1),
+      t =
+        ModelManager_1.ModelManager.BattleUiModel.ChildViewData.GetChildVisible(
+          17,
+        );
     e.SetUIActive(t),
       t
         ? ModelManager_1.ModelManager.GameModeModel.WorldDone
@@ -75,4 +75,4 @@ class HudUnitController extends UiControllerBase_1.UiControllerBase {
             Log_1.Log.Info("Battle", 18, "WorldDone前不允许打开hud")
         : HudUnitManager_1.HudUnitManager.HideHud();
   });
-// # sourceMappingURL=HudUnitController.js.map
+//# sourceMappingURL=HudUnitController.js.map

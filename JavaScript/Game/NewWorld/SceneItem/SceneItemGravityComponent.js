@@ -1,32 +1,37 @@
 "use strict";
-let SceneItemGravityComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, s) {
-    let h;
-    const n = arguments.length;
-    let a =
-      n < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      a = Reflect.decorate(t, e, i, s);
-    else
-      for (let r = t.length - 1; r >= 0; r--)
-        (h = t[r]) && (a = (n < 3 ? h(a) : n > 3 ? h(e, i, a) : h(e, i)) || a);
-    return n > 3 && a && Object.defineProperty(e, i, a), a;
-  };
+var SceneItemGravityComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, s) {
+      var h,
+        n = arguments.length,
+        a =
+          n < 3
+            ? e
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        a = Reflect.decorate(t, e, i, s);
+      else
+        for (var r = t.length - 1; 0 <= r; r--)
+          (h = t[r]) &&
+            (a = (n < 3 ? h(a) : 3 < n ? h(e, i, a) : h(e, i)) || a);
+      return 3 < n && a && Object.defineProperty(e, i, a), a;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemGravityComponent = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CHECK_DISTANCE_INTERVAL = 100;
+const Log_1 = require("../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CHECK_DISTANCE_INTERVAL = 100;
 let SceneItemGravityComponent =
   (SceneItemGravityComponent_1 = class SceneItemGravityComponent extends (
     EntityComponent_1.EntityComponent
@@ -66,7 +71,7 @@ let SceneItemGravityComponent =
               t.ForceStopDropping());
         }),
         (this.ufn = () => {
-          let t = Global_1.Global.BaseCharacter;
+          var t = Global_1.Global.BaseCharacter;
           t &&
             ((t = t.GetDistanceTo(this.Hte?.Owner)),
             this.nfn && t > this.rfn
@@ -122,7 +127,7 @@ let SceneItemGravityComponent =
           EventDefine_1.EEventName.OnSceneItemStateChange,
           this.G_n,
         ),
-        this.mBe.State !== 0 && this.G_n(),
+        0 !== this.mBe.State && this.G_n(),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemLockPropChange,
@@ -196,7 +201,7 @@ let SceneItemGravityComponent =
       this.cfn(t * this.nxe);
     }
     OnChangeTimeDilation(t) {
-      const e = this.Entity.GetComponent(107);
+      var e = this.Entity.GetComponent(107);
       this.nxe = e ? t * e.CurrentTimeScale : 1;
     }
     afn() {
@@ -283,17 +288,17 @@ let SceneItemGravityComponent =
     }
     Mfn(s) {
       if (this.Lie) {
-        let e = void 0;
-        let i = void 0;
+        let e = void 0,
+          i = void 0;
         switch (s) {
           case 3:
           case 2: {
             e =
-              s === 3
+              3 === s
                 ? ((i = -223738243), 232332034)
                 : ((i = 232332034), -223738243);
-            let h = this.Lie.HasTag(i);
-            const n = !this.Lie.HasTag(e);
+            var h = this.Lie.HasTag(i),
+              n = !this.Lie.HasTag(e);
             if (!h && !n) break;
             let t = void 0;
             h &&
@@ -318,7 +323,7 @@ let SceneItemGravityComponent =
           }
           case 0:
           case 1:
-            if (((i = s === 0 ? -223738243 : 232332034), !this.Lie.HasTag(i))) {
+            if (((i = 0 === s ? -223738243 : 232332034), !this.Lie.HasTag(i))) {
               for (const t of [-223738243, 232332034])
                 this.Lie.HasTag(t) && this.Lie.RemoveTag(t);
               this.Lie.AddTag(i);
@@ -333,20 +338,20 @@ let SceneItemGravityComponent =
     }
     iTn(i, s) {
       if (this.Lie) {
-        let t = void 0;
-        let e = void 0;
+        let t = void 0,
+          e = void 0;
         switch (i) {
           case 3:
-            (e = -724436488), s === 1 && (t = -1498653671);
+            (e = -724436488), 1 === s && (t = -1498653671);
             break;
           case 2:
-            (e = 1750799296), s === 0 && (t = -741524141);
+            (e = 1750799296), 0 === s && (t = -741524141);
             break;
           case 0:
-            (e = -741524141), s === 3 && (t = -724436488);
+            (e = -741524141), 3 === s && (t = -724436488);
             break;
           case 1:
-            (e = -1498653671), s === 2 && (t = 1750799296);
+            (e = -1498653671), 2 === s && (t = 1750799296);
         }
         e && this.Lie.HasTag(e) && this.Lie.RemoveTag(e),
           t && !this.Lie.HasTag(t) && this.Lie.AddTag(t);
@@ -379,4 +384,4 @@ let SceneItemGravityComponent =
     SceneItemGravityComponent,
   )),
   (exports.SceneItemGravityComponent = SceneItemGravityComponent);
-// # sourceMappingURL=SceneItemGravityComponent.js.map
+//# sourceMappingURL=SceneItemGravityComponent.js.map

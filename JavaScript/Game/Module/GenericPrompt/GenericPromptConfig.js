@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GenericPromptConfig = void 0);
-const UE = require("ue");
-const GenericPromptByTipsId_1 = require("../../../Core/Define/ConfigQuery/GenericPromptByTipsId");
-const GenericPromptTypesByTypeId_1 = require("../../../Core/Define/ConfigQuery/GenericPromptTypesByTypeId");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const LguiUtil_1 = require("../Util/LguiUtil");
+const UE = require("ue"),
+  GenericPromptByTipsId_1 = require("../../../Core/Define/ConfigQuery/GenericPromptByTipsId"),
+  GenericPromptTypesByTypeId_1 = require("../../../Core/Define/ConfigQuery/GenericPromptTypesByTypeId"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  LguiUtil_1 = require("../Util/LguiUtil");
 class GenericPromptConfig extends ConfigBase_1.ConfigBase {
   GetPromptTypeMainTextObj(e) {
     return new LguiUtil_1.TableTextArgNew(
@@ -46,11 +46,11 @@ class GenericPromptConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetPriority(e) {
-    let r;
-    return !e.PromptId || (r = this.GetPromptInfo(e.PromptId).Priority) === 0
+    var r;
+    return !e.PromptId || 0 === (r = this.GetPromptInfo(e.PromptId).Priority)
       ? this.GetPromptTypeInfo(e.TypeId).Priority
       : r;
   }
 }
 exports.GenericPromptConfig = GenericPromptConfig;
-// # sourceMappingURL=GenericPromptConfig.js.map
+//# sourceMappingURL=GenericPromptConfig.js.map

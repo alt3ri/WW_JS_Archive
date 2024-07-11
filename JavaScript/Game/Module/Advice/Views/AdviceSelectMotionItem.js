@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceSelectMotionItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
 class AdviceSelectMotionItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -44,8 +44,8 @@ class AdviceSelectMotionItem extends UiPanelBase_1.UiPanelBase {
     this.F7e.RefreshByData(e), this.H7e();
   }
   H7e() {
-    let e;
-    ModelManager_1.ModelManager.AdviceModel.PreSelectRoleId > 0
+    var e;
+    0 < ModelManager_1.ModelManager.AdviceModel.PreSelectRoleId
       ? ((e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(
           ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
             ModelManager_1.ModelManager.AdviceModel.PreSelectRoleId,
@@ -64,16 +64,16 @@ class AdviceSelectMotionContent extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.Pe = void 0),
       (this.r7e = () => {
-        const e = this.Pe;
-        var t = ConfigManager_1.ConfigManager.MotionConfig.GetMotionRoleId(
-          e.GetIndex(),
-        );
-        var t = ModelManager_1.ModelManager.MotionModel.GetRoleMotionState(
-          t,
-          e.GetIndex(),
-        );
-        var t = t === 0 || t === 1;
-        if (!t || e.GetIndex() === -1) {
+        var e = this.Pe,
+          t = ConfigManager_1.ConfigManager.MotionConfig.GetMotionRoleId(
+            e.GetIndex(),
+          ),
+          t = ModelManager_1.ModelManager.MotionModel.GetRoleMotionState(
+            t,
+            e.GetIndex(),
+          ),
+          t = 0 === t || 1 === t;
+        if (!t || -1 === e.GetIndex()) {
           if (
             ModelManager_1.ModelManager.AdviceModel.PreSelectMotionId !==
             this.Pe.GetIndex()
@@ -112,7 +112,7 @@ class AdviceSelectMotionContent extends UiPanelBase_1.UiPanelBase {
       EventDefine_1.EEventName.OnClickAdviceMotion,
       this.p9e,
     );
-    const e = this.GetExtendToggle(0);
+    var e = this.GetExtendToggle(0);
     e.CanExecuteChange.Unbind(), e.CanExecuteChange.Bind(this.r7e);
   }
   RefreshView(e) {
@@ -132,17 +132,17 @@ class AdviceSelectMotionContent extends UiPanelBase_1.UiPanelBase {
       this.Oqe();
   }
   Oqe() {
-    const e = this.GetExtendToggle(0).ToggleState;
-    const t =
-      ModelManager_1.ModelManager.AdviceModel.PreSelectMotionId ===
-      this.Pe.GetIndex()
-        ? 1
-        : 0;
+    var e = this.GetExtendToggle(0).ToggleState,
+      t =
+        ModelManager_1.ModelManager.AdviceModel.PreSelectMotionId ===
+        this.Pe.GetIndex()
+          ? 1
+          : 0;
     e !== t && this.GetExtendToggle(0).SetToggleStateForce(t, !1);
   }
   W7e() {
-    let e;
-    let t = this.Pe;
+    var e,
+      t = this.Pe;
     t.GetIndex() ===
     ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceMotionDefaultConfigId()
       ? this.GetSprite(1).SetUIActive(!1)
@@ -150,10 +150,11 @@ class AdviceSelectMotionContent extends UiPanelBase_1.UiPanelBase {
           t.GetIndex(),
         )),
         (t =
-          (e = ModelManager_1.ModelManager.MotionModel.GetRoleMotionState(
-            e,
-            t.GetIndex(),
-          )) === 0 || e === 1),
+          0 ===
+            (e = ModelManager_1.ModelManager.MotionModel.GetRoleMotionState(
+              e,
+              t.GetIndex(),
+            )) || 1 === e),
         this.GetSprite(1).SetUIActive(t));
   }
   OnBeforeDestroy() {
@@ -163,4 +164,4 @@ class AdviceSelectMotionContent extends UiPanelBase_1.UiPanelBase {
     );
   }
 }
-// # sourceMappingURL=AdviceSelectMotionItem.js.map
+//# sourceMappingURL=AdviceSelectMotionItem.js.map

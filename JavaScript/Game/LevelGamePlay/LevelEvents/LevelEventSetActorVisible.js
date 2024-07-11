@@ -1,32 +1,32 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventSetActorVisible = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const GlobalData_1 = require("../../GlobalData");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const PATH_LENGTH = 3;
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  GlobalData_1 = require("../../GlobalData"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  PATH_LENGTH = 3;
 class LevelEventSetActorVisible extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, t) {
-    const o = e;
+    var o = e;
     if (o) {
       e = t;
       if (e) {
         t = EntitySystem_1.EntitySystem.Get(e.EntityId);
         if (t?.Valid)
-          if (o.Targets && o.Targets.length !== 0)
+          if (o.Targets && 0 !== o.Targets.length)
             if (t.GetComponent(182)?.Owner) {
-              const a = t.GetComponent(147);
+              var a = t.GetComponent(147);
               if (a) {
-                const s = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
-                  GlobalData_1.GlobalData.World,
-                  UE.KuroActorSubsystem.StaticClass(),
-                );
-                const n = o.SyncChildActor || !1;
+                var s = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
+                    GlobalData_1.GlobalData.World,
+                    UE.KuroActorSubsystem.StaticClass(),
+                  ),
+                  n = o.SyncChildActor || !1;
                 for (const E of o.Targets) {
-                  const r = E.PathName;
-                  var i = r.split(".");
+                  var r = E.PathName,
+                    i = r.split(".");
                   if (i.length < PATH_LENGTH)
                     Log_1.Log.CheckError() &&
                       Log_1.Log.Error(
@@ -38,8 +38,8 @@ class LevelEventSetActorVisible extends LevelGeneralBase_1.LevelEventBase {
                   else {
                     i = i[1] + "." + i[2];
                     if (a.IsValidPlatFormPath(i)) {
-                      var i = new UE.FName(i);
-                      const c = s.GetActor(i);
+                      var i = new UE.FName(i),
+                        c = s.GetActor(i);
                       if (c?.IsValid())
                         switch (
                           (c.SetActorEnableCollision(o.Enable), o.ActorType)
@@ -133,4 +133,4 @@ class LevelEventSetActorVisible extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventSetActorVisible = LevelEventSetActorVisible;
-// # sourceMappingURL=LevelEventSetActorVisible.js.map
+//# sourceMappingURL=LevelEventSetActorVisible.js.map

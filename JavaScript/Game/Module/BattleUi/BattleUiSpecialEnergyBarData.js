@@ -4,15 +4,15 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.SpecialEnergyBarInfo =
     exports.SpecialEnergyBarKeyInfo =
       void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const GlobalData_1 = require("../../GlobalData");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  GlobalData_1 = require("../../GlobalData"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class SpecialEnergyBarKeyInfo {
   constructor() {
     (this.Action = 0), (this.ActionType = 0);
@@ -79,11 +79,11 @@ class SpecialEnergyBarInfo {
       this.nXe(i.KeyInfoList);
   }
   nXe(i) {
-    if (ModelManager_1.ModelManager.PlatformModel.OperationType === 2) {
-      const e = i.Num();
+    if (2 === ModelManager_1.ModelManager.PlatformModel.OperationType) {
+      var e = i.Num();
       for (let t = 0; t < e; t++) {
-        const s = i.Get(t);
-        const r = new SpecialEnergyBarKeyInfo();
+        var s = i.Get(t),
+          r = new SpecialEnergyBarKeyInfo();
         (r.Action = s.Action),
           (r.ActionType = s.ActionType),
           this.KeyInfoList.push(r);
@@ -91,29 +91,29 @@ class SpecialEnergyBarInfo {
     }
   }
   rXe(i) {
-    const e = new Map();
-    const s = i.Num();
+    var e = new Map(),
+      s = i.Num();
     if (!(s <= 0))
       for (let t = 0; t < s; t++) {
-        const r = i.GetKey(t);
-        const a = i.Get(r);
+        var r = i.GetKey(t),
+          a = i.Get(r);
         e.set(r.TagId, a);
       }
     return e;
   }
   oXe(i, e) {
-    const s = i.Num();
+    var s = i.Num();
     if (!(s <= 0))
       for (let t = 0; t < s; t++) {
-        const r = i.Get(t);
+        var r = i.Get(t);
         e.push(r);
       }
   }
   CGn(i, e) {
-    const s = i.Num();
+    var s = i.Num();
     if (!(s <= 0))
       for (let t = 0; t < s; t++) {
-        const r = i.Get(t);
+        var r = i.Get(t);
         e.push(r.ToAssetPathName());
       }
   }
@@ -133,7 +133,7 @@ class BattleUiSpecialEnergyBarData {
   async Preload() {
     this.aXe = !0;
     const i = new CustomPromise_1.CustomPromise();
-    const t = CommonParamById_1.configCommonParamById.GetStringConfig(
+    var t = CommonParamById_1.configCommonParamById.GetStringConfig(
       "SpecialEnergyBarInfoPath",
     );
     return (
@@ -154,7 +154,7 @@ class BattleUiSpecialEnergyBarData {
   GetSpecialEnergyBarInfo(i) {
     if (this.gU) {
       let t = this.SpecialEnergyBarInfoMap.get(i);
-      let e;
+      var e;
       return (
         t ||
           ((e = DataTableUtil_1.DataTableUtil.GetDataTableRow(
@@ -170,4 +170,4 @@ class BattleUiSpecialEnergyBarData {
   }
 }
 exports.BattleUiSpecialEnergyBarData = BattleUiSpecialEnergyBarData;
-// # sourceMappingURL=BattleUiSpecialEnergyBarData.js.map
+//# sourceMappingURL=BattleUiSpecialEnergyBarData.js.map

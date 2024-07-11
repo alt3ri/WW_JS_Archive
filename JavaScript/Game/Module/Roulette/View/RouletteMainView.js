@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RouletteMainView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const InputManager_1 = require("../../../Ui/Input/InputManager");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const InputDistributeDefine_1 = require("../../../Ui/InputDistribute/InputDistributeDefine");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const RouletteComponentMain_1 = require("../RouletteComponent/RouletteComponentMain");
-const RouletteInputManager_1 = require("../RouletteInputManager");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  InputManager_1 = require("../../../Ui/Input/InputManager"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  InputDistributeDefine_1 = require("../../../Ui/InputDistribute/InputDistributeDefine"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  RouletteComponentMain_1 = require("../RouletteComponent/RouletteComponentMain"),
+  RouletteInputManager_1 = require("../RouletteInputManager");
 class RouletteMainView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -28,9 +28,9 @@ class RouletteMainView extends UiTickViewBase_1.UiTickViewBase {
         this.CloseMe();
       }),
       (this.Mfo = (t, e) => {
-        let i;
-        this.oPi === 1 &&
-          e === 1 &&
+        var i;
+        1 === this.oPi &&
+          1 === e &&
           this.gfo &&
           (([e, i] = this.S0o.GetCurrentIndexAndAngle()),
           this.Sfo(),
@@ -39,7 +39,7 @@ class RouletteMainView extends UiTickViewBase_1.UiTickViewBase {
           this.yfo());
       }),
       (this.dKe = (t, e, i) => {
-        const s = this.B0o();
+        var s = this.B0o();
         this.oPi !== s &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Phantom", 38, "检测到轮盘输入变化,关闭自身", [
@@ -97,21 +97,20 @@ class RouletteMainView extends UiTickViewBase_1.UiTickViewBase {
     (this.oPi = this.B0o()),
       (this.M0o =
         ModelManager_1.ModelManager.RouletteModel.CurrentRouletteType);
-    const t = ModelManager_1.ModelManager.RouletteModel.IsExploreRouletteOpen();
-    const e =
-      ModelManager_1.ModelManager.RouletteModel.IsFunctionRouletteOpen();
+    var t = ModelManager_1.ModelManager.RouletteModel.IsExploreRouletteOpen(),
+      e = ModelManager_1.ModelManager.RouletteModel.IsFunctionRouletteOpen();
     switch (((this.gfo = t && e), (this.ffo = this.GetItem(0)), this.oPi)) {
       case 1:
-        ((this.M0o === 1 && !e && t) || (this.M0o === 0 && e && !t)) &&
+        ((1 === this.M0o && !e && t) || (0 === this.M0o && e && !t)) &&
           this.Sfo();
         break;
       case 0:
       case 2:
-        this.M0o === 1 && this.Sfo();
+        1 === this.M0o && this.Sfo();
     }
-    if (this.v0o === 2) {
-      const s = this.oPi === 1;
-      const i = this.gfo;
+    if (2 === this.v0o) {
+      const s = 1 === this.oPi;
+      var i = this.gfo;
       this.GetItem(1).SetUIActive(s && i), s && i && this.yfo();
     }
     this.Efo(),
@@ -126,7 +125,7 @@ class RouletteMainView extends UiTickViewBase_1.UiTickViewBase {
       this.E0o.SetEndInputEvent(this.X0o),
       this.Tfo(),
       this.E0o.ActivateInput(!0);
-    const s = this.oPi === 1;
+    const s = 1 === this.oPi;
     InputManager_1.InputManager.SetShowCursor(!s, !1);
   }
   Tfo() {
@@ -190,7 +189,7 @@ class RouletteMainView extends UiTickViewBase_1.UiTickViewBase {
       );
   }
   OnTick(t) {
-    let e;
+    var e;
     super.OnTick(t),
       this.IsHideOrHiding ||
         (([t, e] = this.E0o.Tick(t)), this.S0o.Refresh(t, e));
@@ -199,7 +198,7 @@ class RouletteMainView extends UiTickViewBase_1.UiTickViewBase {
     this.S0o.EmitCurrentGridSelectOn(t);
   }
   yfo() {
-    const t = this.M0o === 0;
+    var t = 0 === this.M0o;
     this.GetExtendToggle(2).SetToggleState(t ? 1 : 0),
       this.GetExtendToggle(3).SetToggleState(t ? 0 : 1);
   }
@@ -219,11 +218,11 @@ class RouletteMainView extends UiTickViewBase_1.UiTickViewBase {
     this.S0o.RefreshRouletteInputType(this.oPi);
   }
   Sfo() {
-    let t;
-    const e = this.M0o === 0;
+    var t,
+      e = 0 === this.M0o;
     e &&
       (t = this.S0o.GetCurrentGrid()?.Data) &&
-      t.Id !== 0 &&
+      0 !== t.Id &&
       void 0 !== t.Id &&
       this.Lfo(!0),
       (this.M0o = e ? 1 : 0),
@@ -243,4 +242,4 @@ class RouletteMainView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.RouletteMainView = RouletteMainView;
-// # sourceMappingURL=RouletteMainView.js.map
+//# sourceMappingURL=RouletteMainView.js.map

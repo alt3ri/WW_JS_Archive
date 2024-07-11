@@ -1,35 +1,40 @@
 "use strict";
-let SceneItemConveyorBeltComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, o) {
-    let s;
-    const n = arguments.length;
-    let h =
-      n < 3 ? e : o === null ? (o = Object.getOwnPropertyDescriptor(e, i)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      h = Reflect.decorate(t, e, i, o);
-    else
-      for (let r = t.length - 1; r >= 0; r--)
-        (s = t[r]) && (h = (n < 3 ? s(h) : n > 3 ? s(e, i, h) : s(e, i)) || h);
-    return n > 3 && h && Object.defineProperty(e, i, h), h;
-  };
+var SceneItemConveyorBeltComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, o) {
+      var s,
+        n = arguments.length,
+        h =
+          n < 3
+            ? e
+            : null === o
+              ? (o = Object.getOwnPropertyDescriptor(e, i))
+              : o;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        h = Reflect.decorate(t, e, i, o);
+      else
+        for (var r = t.length - 1; 0 <= r; r--)
+          (s = t[r]) &&
+            (h = (n < 3 ? s(h) : 3 < n ? s(e, i, h) : s(e, i)) || h);
+      return 3 < n && h && Object.defineProperty(e, i, h), h;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemConveyorBeltComponent = void 0);
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ComponentForceTickController_1 = require("../../World/Controller/ComponentForceTickController");
-const CharacterUnifiedStateTypes_1 = require("../Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const NORMALIZE = 0.01;
-const DELTATIMECHANGEVALUE = 10;
+const Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ComponentForceTickController_1 = require("../../World/Controller/ComponentForceTickController"),
+  CharacterUnifiedStateTypes_1 = require("../Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  NORMALIZE = 0.01,
+  DELTATIMECHANGEVALUE = 10;
 let SceneItemConveyorBeltComponent =
   (SceneItemConveyorBeltComponent_1 = class SceneItemConveyorBeltComponent extends (
     EntityComponent_1.EntityComponent
@@ -55,16 +60,14 @@ let SceneItemConveyorBeltComponent =
           if (this.hCn && this.tCn) {
             (!this.Pun || Math.abs(t - this.Pun) > DELTATIMECHANGEVALUE) &&
               (this.Pun = t);
-            let e;
-            let i;
-            let o;
-            const s =
-              this.tCn.FieldType.Type ===
-              IComponent_1.EConveyorBeltFieldType.PointField;
-            const n = s
-              ? this.Entity.GetComponent(1).ActorLocationProxy
-              : void 0;
-            const h = this.Pun * MathUtils_1.MathUtils.MillisecondToSecond;
+            var e,
+              i,
+              o,
+              s =
+                this.tCn.FieldType.Type ===
+                IComponent_1.EConveyorBeltFieldType.PointField,
+              n = s ? this.Entity.GetComponent(1).ActorLocationProxy : void 0,
+              h = this.Pun * MathUtils_1.MathUtils.MillisecondToSecond;
             for (const r of this.nCn)
               s &&
                 (r.ActorLocationProxy.Subtraction(n, this.yun),
@@ -127,7 +130,7 @@ let SceneItemConveyorBeltComponent =
         (this.lCn = (t, e) => {
           e = e.Entity;
           const i = e.GetComponent(1);
-          const o = i?.CreatureData.GetEntityType();
+          var o = i?.CreatureData.GetEntityType();
           if (o === Protocol_1.Aki.Protocol.HBs.Proto_Player)
             (this.aCn = t)
               ? ((this.oCn = e.GetComponent(161)),
@@ -142,7 +145,7 @@ let SceneItemConveyorBeltComponent =
             o === Protocol_1.Aki.Protocol.HBs.Proto_Animal ||
             o === Protocol_1.Aki.Protocol.HBs.Proto_Vision
           ) {
-            const s = e.GetComponent(36);
+            var s = e.GetComponent(36);
             s &&
               ((n = this.sCn.get(s)),
               t ? n || this.sCn.set(s, -1) : n && this.sCn.delete(s));
@@ -151,19 +154,19 @@ let SceneItemConveyorBeltComponent =
               const i = e.GetComponent(1);
               var n = this.nCn.indexOf(i);
               t
-                ? n === -1 && this.nCn.push(i)
-                : n !== -1 && this.nCn.splice(n, 1);
+                ? -1 === n && this.nCn.push(i)
+                : -1 !== n && this.nCn.splice(n, 1);
             }
           this._Cn();
         }),
         (this.uCn = (t, e) => {
-          (t !== -1152559349 && t !== -3775711) || this.cCn();
+          (-1152559349 !== t && -3775711 !== t) || this.cCn();
         });
     }
     OnInitData(t) {
-      const e = t.GetParam(SceneItemConveyorBeltComponent_1)[0];
-      const i = e.StateGroups.length;
-      if (i > 2 || i < 1)
+      var e = t.GetParam(SceneItemConveyorBeltComponent_1)[0],
+        i = e.StateGroups.length;
+      if (2 < i || i < 1)
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error("SceneItem", 36, "状态组配置数量不对", ["num", i]),
@@ -171,7 +174,7 @@ let SceneItemConveyorBeltComponent =
         );
       this.iCn = e.StateGroups;
       for (let t = 0; t < i; t++) {
-        const o = e.StateGroups[t];
+        var o = e.StateGroups[t];
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Temp", 36, "s", [
             "configGroup.EntityState",
@@ -239,21 +242,21 @@ let SceneItemConveyorBeltComponent =
         );
     }
     _Cn() {
-      (this.hCn = this.nCn.length > 0 || this.aCn || this.sCn.size > 0),
+      (this.hCn = 0 < this.nCn.length || this.aCn || 0 < this.sCn.size),
         this.hCn || (this.Pun = 0);
     }
     mCn() {
       this.tCn = void 0;
-      const t = this.Entity.GetComponent(117).State;
+      var t = this.Entity.GetComponent(117).State;
       let e = "";
-      t === 1 ? (e = "常态") : t === 2 && (e = "激活");
+      1 === t ? (e = "常态") : 2 === t && (e = "激活");
       for (const i of this.iCn) i.EntityState.includes(e) && (this.tCn = i);
       this.tCn ||
         (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("SceneItem", 36, "传送带静止"));
     }
     cCn() {
-      let t, e;
+      var t, e;
       this.mCn(),
         this.tCn &&
           ((t = this.tCn.FieldType.Type) ===
@@ -279,4 +282,4 @@ let SceneItemConveyorBeltComponent =
     SceneItemConveyorBeltComponent,
   )),
   (exports.SceneItemConveyorBeltComponent = SceneItemConveyorBeltComponent);
-// # sourceMappingURL=SceneItemConveyorBeltComponent.js.map
+//# sourceMappingURL=SceneItemConveyorBeltComponent.js.map

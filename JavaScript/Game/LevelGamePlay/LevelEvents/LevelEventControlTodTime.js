@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventControlTodTime = void 0);
-const TimeOfDayController_1 = require("../../Module/TimeOfDay/TimeOfDayController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const TimeOfDayController_1 = require("../../Module/TimeOfDay/TimeOfDayController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventControlTodTime extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, r) {
     if (e) {
@@ -18,4 +18,4 @@ class LevelEventControlTodTime extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventControlTodTime = LevelEventControlTodTime;
-// # sourceMappingURL=LevelEventControlTodTime.js.map
+//# sourceMappingURL=LevelEventControlTodTime.js.map

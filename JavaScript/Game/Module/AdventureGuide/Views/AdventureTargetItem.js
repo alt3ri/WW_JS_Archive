@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdventureTargetItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid");
-const RoleController_1 = require("../../RoleUi/RoleController");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const WorldMapController_1 = require("../../WorldMap/WorldMapController");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  RoleController_1 = require("../../RoleUi/RoleController"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  WorldMapController_1 = require("../../WorldMap/WorldMapController");
 class AdventureTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -80,29 +80,28 @@ class AdventureTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(t, e, r) {
     this.G5e = !1;
-    const i = (this.Pe = t).AdventureTaskBase;
-    const o =
-      ((this.AdventureId = t.AdventureTaskBase.Id),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), i.TaskText),
-      this.GetItem(1).SetUIActive(!1),
-      t.GetTotalNum());
-    const s =
-      t.AdventureTaskBase.ChapterId <=
-      ModelManager_1.ModelManager.AdventureGuideModel.GetReceivedChapter()
-        ? o
-        : t.Progress;
-    const a = this.GetText(5);
-    const l =
-      (o !== 0
-        ? (a.SetUIActive(!0), a.SetText(`(${s}/${o})`))
-        : a.SetUIActive(!1),
-      new Array());
-    const h =
-      ConfigManager_1.ConfigManager.AdventureModuleConfig.GetDropShowInfo(
+    var i = (this.Pe = t).AdventureTaskBase,
+      o =
+        ((this.AdventureId = t.AdventureTaskBase.Id),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), i.TaskText),
+        this.GetItem(1).SetUIActive(!1),
+        t.GetTotalNum()),
+      s =
+        t.AdventureTaskBase.ChapterId <=
+        ModelManager_1.ModelManager.AdventureGuideModel.GetReceivedChapter()
+          ? o
+          : t.Progress,
+      a = this.GetText(5),
+      l =
+        (0 !== o
+          ? (a.SetUIActive(!0), a.SetText(`(${s}/${o})`))
+          : a.SetUIActive(!1),
+        new Array()),
+      h = ConfigManager_1.ConfigManager.AdventureModuleConfig.GetDropShowInfo(
         i.DropIds,
       );
     for (const _ of h.keys()) {
-      const n = [{ IncId: 0, ItemId: _ }, h.get(_)];
+      var n = [{ IncId: 0, ItemId: _ }, h.get(_)];
       l.push(n);
     }
     this.eGe.RefreshByDataAsync(l).then(() => {
@@ -116,7 +115,7 @@ class AdventureTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.O5e(
         t.Status,
         !this.Pe.AdventureTaskBase.JumpTo ||
-          t.AdventureTaskBase.JumpTo?.size !== 0,
+          0 !== t.AdventureTaskBase.JumpTo?.size,
       );
   }
   O5e(e, t) {
@@ -147,9 +146,9 @@ class AdventureTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Ju() {
     if (this.Pe?.AdventureTaskBase.JumpTo) {
-      let e = void 0;
-      let t = void 0;
-      for (const [r, i] of this.Pe.AdventureTaskBase.JumpTo) (e = r), (t = i);
+      let e = void 0,
+        t = void 0;
+      for (var [r, i] of this.Pe.AdventureTaskBase.JumpTo) (e = r), (t = i);
       if (e && t)
         switch (e - 1) {
           case 0:
@@ -176,7 +175,7 @@ class AdventureTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
                 );
             break;
           case 2:
-            t === "RoleRootView"
+            "RoleRootView" === t
               ? RoleController_1.RoleController.OpenRoleMainView(0)
               : UiManager_1.UiManager.OpenView(t);
             break;
@@ -208,4 +207,4 @@ class AdventureTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.AdventureTargetItem = AdventureTargetItem;
-// # sourceMappingURL=AdventureTargetItem.js.map
+//# sourceMappingURL=AdventureTargetItem.js.map

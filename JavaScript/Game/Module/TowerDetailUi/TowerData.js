@@ -14,8 +14,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.HIGH_RISK_DIFFICULTY =
     exports.LOW_RISK_DIFFICULTY =
       void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../Manager/ConfigManager");
 (exports.LOW_RISK_DIFFICULTY = 1),
   (exports.HIGH_RISK_DIFFICULTY = 2),
   (exports.VARIATION_RISK_DIFFICULTY = 3),
@@ -55,4 +55,4 @@ class TowerFloorInfo {
   }
 }
 exports.TowerFloorInfo = TowerFloorInfo;
-// # sourceMappingURL=TowerData.js.map
+//# sourceMappingURL=TowerData.js.map

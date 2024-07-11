@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ComposeItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
-const ComposeController_1 = require("../ComposeController");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  ComposeController_1 = require("../ComposeController");
 class ComposeItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -39,37 +39,36 @@ class ComposeItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   C4e() {
     var s = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-      this.dqt.ItemId,
-    );
-    var s = ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(s.Name);
+        this.dqt.ItemId,
+      ),
+      s = ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(s.Name);
     this.GetText(12).SetText(s);
   }
   Pqt() {
     switch (this.dqt.MainType) {
       case 1:
-        if (this.dqt.SubType === 35)
+        if (35 === this.dqt.SubType)
           return void this.SetItemQualityIcon(
             this.GetSprite(10),
             this.dqt.ItemId,
           );
         break;
       case 2:
-        if (this.dqt.SubType === 37)
+        if (37 === this.dqt.SubType)
           return void this.SetItemQualityIcon(
             this.GetSprite(10),
             this.dqt.ItemId,
           );
     }
-    const s =
-      ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-        this.dqt.ItemId,
-      );
+    var s = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
+      this.dqt.ItemId,
+    );
     this.SetItemQualityIcon(this.GetSprite(10), s.ItemId);
   }
   Kbe() {
     switch (this.dqt.MainType) {
       case 1:
-        if (this.dqt.SubType === 0)
+        if (0 === this.dqt.SubType)
           return (
             (s =
               ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
@@ -80,7 +79,7 @@ class ComposeItem extends GridProxyAbstract_1.GridProxyAbstract {
         this.SetItemIcon(this.GetTexture(11), this.dqt.ItemId);
         break;
       case 2:
-        if (this.dqt.SubType === 0)
+        if (0 === this.dqt.SubType)
           return (
             (s =
               ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
@@ -113,7 +112,7 @@ class ComposeItem extends GridProxyAbstract_1.GridProxyAbstract {
     switch (this.dqt.MainType) {
       case 1:
         var s = this.dqt;
-        s.SubType === 35
+        35 === s.SubType
           ? this.GetItem(8).SetUIActive(!1)
           : ((s =
               ComposeController_1.ComposeController.CheckCanReagentProduction(
@@ -123,7 +122,7 @@ class ComposeItem extends GridProxyAbstract_1.GridProxyAbstract {
         break;
       case 2:
         var s = this.dqt;
-        s.SubType === 37
+        37 === s.SubType
           ? this.GetItem(8).SetUIActive(!1)
           : ((s = ComposeController_1.ComposeController.CheckCanStructure(
               s.ItemId,
@@ -132,9 +131,10 @@ class ComposeItem extends GridProxyAbstract_1.GridProxyAbstract {
         break;
       case 3:
         s = this.dqt;
+        0 !==
         ModelManager_1.ModelManager.ComposeModel.GetPurificationDataById(
           s.ItemId,
-        ).IsUnlock !== 0
+        ).IsUnlock
           ? ((s = ComposeController_1.ComposeController.CheckCanPurification(
               s.ItemId,
             )),
@@ -155,9 +155,9 @@ class ComposeItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.IVe(!1);
   }
   IVe(s, i = !0) {
-    const t = this.GetExtendToggle(6);
+    var t = this.GetExtendToggle(6);
     s ? t.SetToggleState(1, i) : t.SetToggleState(0, !1);
   }
 }
 exports.ComposeItem = ComposeItem;
-// # sourceMappingURL=ComposeItem.js.map
+//# sourceMappingURL=ComposeItem.js.map

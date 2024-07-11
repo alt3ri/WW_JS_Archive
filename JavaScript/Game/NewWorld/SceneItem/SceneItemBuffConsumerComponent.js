@@ -1,38 +1,43 @@
 "use strict";
-let SceneItemBuffConsumerComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (e, t, n, o) {
-    let i;
-    const r = arguments.length;
-    let s =
-      r < 3 ? t : o === null ? (o = Object.getOwnPropertyDescriptor(t, n)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      s = Reflect.decorate(e, t, n, o);
-    else
-      for (let h = e.length - 1; h >= 0; h--)
-        (i = e[h]) && (s = (r < 3 ? i(s) : r > 3 ? i(t, n, s) : i(t, n)) || s);
-    return r > 3 && s && Object.defineProperty(t, n, s), s;
-  };
+var SceneItemBuffConsumerComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (e, t, n, o) {
+      var i,
+        r = arguments.length,
+        s =
+          r < 3
+            ? t
+            : null === o
+              ? (o = Object.getOwnPropertyDescriptor(t, n))
+              : o;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        s = Reflect.decorate(e, t, n, o);
+      else
+        for (var h = e.length - 1; 0 <= h; h--)
+          (i = e[h]) &&
+            (s = (r < 3 ? i(s) : 3 < r ? i(t, n, s) : i(t, n)) || s);
+      return 3 < r && s && Object.defineProperty(t, n, s), s;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemBuffConsumerComponent = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const BulletController_1 = require("../Bullet/BulletController");
-const SceneItemBuffController_1 = require("./Controller/SceneItemBuffController");
-const BLACKBOARD_KEY = "HeiShiSuo";
-const HIT_CONDITION_TAGID = -1968966883;
-const MAX_BULLET_HIT_TIME = 5e3;
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  BulletController_1 = require("../Bullet/BulletController"),
+  SceneItemBuffController_1 = require("./Controller/SceneItemBuffController"),
+  BLACKBOARD_KEY = "HeiShiSuo",
+  HIT_CONDITION_TAGID = -1968966883,
+  MAX_BULLET_HIT_TIME = 5e3;
 let SceneItemBuffConsumerComponent =
   (SceneItemBuffConsumerComponent_1 = class SceneItemBuffConsumerComponent extends (
     EntityComponent_1.EntityComponent
@@ -192,16 +197,16 @@ let SceneItemBuffConsumerComponent =
     wdn() {
       var e = Global_1.Global.BaseCharacter;
       if (!e) return !1;
-      var e = e.CharacterActorComponent.Entity;
-      let t = e.CheckGetComponent(157);
+      var e = e.CharacterActorComponent.Entity,
+        t = e.CheckGetComponent(157);
       if (!t) return !1;
-      let n = t.GetBuffTotalStackById(this.MHr) > 0;
+      let n = 0 < t.GetBuffTotalStackById(this.MHr);
       t = e.CheckGetComponent(171);
       return (
         t &&
           (n ||=
-            (t.GetFormationBuffComp()?.GetBuffTotalStackById(this.MHr) ?? 0) >
-            0),
+            0 <
+            (t.GetFormationBuffComp()?.GetBuffTotalStackById(this.MHr) ?? 0)),
         n
       );
     }
@@ -209,8 +214,8 @@ let SceneItemBuffConsumerComponent =
       this.Tdn ? this.szo() : this.Pdn();
     }
     szo() {
-      let e;
-      let t = Global_1.Global.BaseCharacter;
+      var e,
+        t = Global_1.Global.BaseCharacter;
       t &&
         ((e = (t = t.CharacterActorComponent).Entity),
         ModelManager_1.ModelManager.BulletModel.SetEntityIdByCustomKey(
@@ -250,4 +255,4 @@ let SceneItemBuffConsumerComponent =
     SceneItemBuffConsumerComponent,
   )),
   (exports.SceneItemBuffConsumerComponent = SceneItemBuffConsumerComponent);
-// # sourceMappingURL=SceneItemBuffConsumerComponent.js.map
+//# sourceMappingURL=SceneItemBuffConsumerComponent.js.map

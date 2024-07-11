@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TipsWeaponComponent = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const StarItem_1 = require("../../../RoleUi/View/StarItem");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const GenericLayoutNew_1 = require("../../../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const ItemTipsAttribute_1 = require("./ItemTipsAttribute");
-const ItemTipsBaseSubComponent_1 = require("./ItemTipsBaseSubComponent");
-const ItemTipsGetWay_1 = require("./ItemTipsGetWay");
-const ItemTipsLockButton_1 = require("./ItemTipsLockButton");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  StarItem_1 = require("../../../RoleUi/View/StarItem"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  GenericLayoutNew_1 = require("../../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  ItemTipsAttribute_1 = require("./ItemTipsAttribute"),
+  ItemTipsBaseSubComponent_1 = require("./ItemTipsBaseSubComponent"),
+  ItemTipsGetWay_1 = require("./ItemTipsGetWay"),
+  ItemTipsLockButton_1 = require("./ItemTipsLockButton");
 class TipsWeaponComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubComponent {
   constructor(t) {
     super(t),
@@ -53,14 +53,14 @@ class TipsWeaponComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubComponen
     ];
   }
   OnStart() {
-    var t = this.GetItem(5);
-    var t =
-      ((this.UPt = new ItemTipsLockButton_1.TipsLockButton(t)),
-      (this.APt = new GenericLayoutNew_1.GenericLayoutNew(
-        this.GetVerticalLayout(6),
-        this.tpt,
-      )),
-      this.GetItem(12));
+    var t = this.GetItem(5),
+      t =
+        ((this.UPt = new ItemTipsLockButton_1.TipsLockButton(t)),
+        (this.APt = new GenericLayoutNew_1.GenericLayoutNew(
+          this.GetVerticalLayout(6),
+          this.tpt,
+        )),
+        this.GetItem(12));
     (this.LPt = new ItemTipsGetWay_1.TipsGetWayPanel(t)),
       (this.StarLayout = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(3),
@@ -73,14 +73,14 @@ class TipsWeaponComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubComponen
       ModelManager_1.ModelManager.ItemTipsModel.SetCurrentItemTipsData(void 0));
   }
   Refresh(t) {
-    const e = () => {
-      const t = this.Pe;
+    var e = () => {
+      var t = this.Pe;
       this.GetText(0).SetText(t.WeaponType),
         this.GetText(1).SetText(t.WeaponLevel.toString() + "/"),
         this.GetText(2).SetText(t.WeaponLimitLevel.toString()),
         this.kPt(t.BreachLevel, t.BreachMaxLevel),
         t.IncId && this.UPt.Refresh(t.IncId, t.CanClickLockButton),
-        this.UPt.SetUiActive(t.IncId > 0),
+        this.UPt.SetUiActive(0 < t.IncId),
         this.APt.RebuildLayoutByDataNew(t.AttributeData),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(8),
@@ -106,9 +106,9 @@ class TipsWeaponComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubComponen
       this.InAsyncLoading() ? this.OperationMap.set("Refresh", e) : e();
   }
   kPt(e, i) {
-    const s = new Array(i);
+    var s = new Array(i);
     for (let t = 0; t < i; ++t) {
-      const r = {
+      var r = {
         StarOnActive: t < e,
         StarOffActive: t >= e,
         StarNextActive: !1,
@@ -121,7 +121,7 @@ class TipsWeaponComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubComponen
     this.StarLayout.RefreshByData(s);
   }
   DPt(t) {
-    this.GetItem(12).SetUIActive(t.length !== 0), t && this.LPt.Refresh(t);
+    this.GetItem(12).SetUIActive(0 !== t.length), t && this.LPt.Refresh(t);
   }
   RPt(t) {
     this.GetItem(13).SetUIActive(void 0 !== t),
@@ -144,11 +144,11 @@ class TipsWeaponComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubComponen
         ));
   }
   SetLockButtonShow(t) {
-    const e = () => {
+    var e = () => {
       this.GetItem(5).SetUIActive(t);
     };
     this.InAsyncLoading() ? this.OperationMap.set("SetLockButtonShow", e) : e();
   }
 }
 exports.TipsWeaponComponent = TipsWeaponComponent;
-// # sourceMappingURL=ItemTipsWeaponComponent.js.map
+//# sourceMappingURL=ItemTipsWeaponComponent.js.map

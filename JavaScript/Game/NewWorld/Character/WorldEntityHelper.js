@@ -1,192 +1,192 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldEntityHelper = exports.USE_ENTITY_POOL = void 0);
-const UE = require("ue");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const MonsterBattleConfById_1 = require("../../../Core/Define/ConfigQuery/MonsterBattleConfById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const IEntity_1 = require("../../../UniverseEditor/Interface/IEntity");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const BaseTagComponent_1 = require("../Common/Component/BaseTagComponent");
-const BaseUnifiedStateComponent_1 = require("../Common/Component/BaseUnifiedStateComponent");
-const DurablityComponent_1 = require("../Common/Component/DurablityComponent");
-const InteractItemComponent_1 = require("../Common/Component/InteractItemComponent");
-const LevelTagComponent_1 = require("../Common/Component/LevelTagComponent");
-const PerformanceComponent_1 = require("../Common/Component/PerformanceComponent");
-const PostProcessBridgeComponent_1 = require("../Common/Component/PostProcessBridgeComponent");
-const SplineMoveComponent_1 = require("../Common/Component/SplineMoveComponent");
-const UeActorTickManageComponent_1 = require("../Common/Component/UeActorTickManageComponent");
-const UeComponentTickManageComponent_1 = require("../Common/Component/UeComponentTickManageComponent");
-const UeMovementTickManageComponent_1 = require("../Common/Component/UeMovementTickManageComponent");
-const UeSkeletalTickManageComponent_1 = require("../Common/Component/UeSkeletalTickManageComponent");
-const PawnAdsorbComponent_1 = require("../Pawn/Component/PawnAdsorbComponent");
-const PawnInfoManageComponent_1 = require("../Pawn/Component/PawnInfoManageComponent");
-const PawnInteractNewComponent_1 = require("../Pawn/Component/PawnInteractNewComponent");
-const PawnPerceptionComponent_1 = require("../Pawn/Component/PawnPerceptionComponent");
-const PawnSensoryComponent_1 = require("../Pawn/Component/PawnSensoryComponent");
-const PawnSensoryInfoComponent_1 = require("../Pawn/Component/PawnSensoryInfoComponent");
-const AiWeaponMovementComponent_1 = require("../SceneItem/AiInteraction/AiWeaponMovementComponent");
-const EffectAreaComponent_1 = require("../SceneItem/Common/Component/EffectAreaComponent");
-const SceneItemAttachTargetComponent_1 = require("../SceneItem/Common/Component/SceneItemAttachTargetComponent");
-const SceneItemDebugComponent_1 = require("../SceneItem/Common/Component/SceneItemDebugComponent");
-const SceneItemDynamicAttachTargetComponent_1 = require("../SceneItem/Common/Component/SceneItemDynamicAttachTargetComponent");
-const SceneItemInteractAudioComponent_1 = require("../SceneItem/Common/Component/SceneItemInteractAudioComponent");
-const SceneItemMoveComponent_1 = require("../SceneItem/Common/Component/SceneItemMoveComponent");
-const SceneItemPhysicalAttachComponent_1 = require("../SceneItem/Common/Component/SceneItemPhysicalAttachComponent");
-const SceneItemPortalComponent_1 = require("../SceneItem/Common/Component/SceneItemPortalComponent");
-const SceneItemProgressControlComponent_1 = require("../SceneItem/Common/Component/SceneItemProgressControlComponent");
-const SceneItemPropertyComponent_1 = require("../SceneItem/Common/Component/SceneItemPropertyComponent");
-const SceneItemStateAudioComponent_1 = require("../SceneItem/Common/Component/SceneItemStateAudioComponent");
-const SceneItemStateComponent_1 = require("../SceneItem/Common/Component/SceneItemStateComponent");
-const SceneItemTimeTrackControlComponent_1 = require("../SceneItem/Common/Component/SceneItemTimeTrackControlComponent");
-const SceneItemTurntableControllerComponent_1 = require("../SceneItem/Common/Component/SceneItemTurntableControllerComponent");
-const SmartObjectComponent_1 = require("../SceneItem/Common/Component/SmartObjectComponent");
-const GamePlayElevatorComponent_1 = require("../SceneItem/GamePlayElevatorComponent");
-const GamePlayHitGearComponent_1 = require("../SceneItem/GamePlayHitGearComponent");
-const GamePlayTreasureBoxComponent_1 = require("../SceneItem/GamePlayTreasureBoxComponent");
-const SceneItemJigsawBaseComponent_1 = require("../SceneItem/Jigsaw/SceneItemJigsawBaseComponent");
-const SceneItemJigsawItemComponent_1 = require("../SceneItem/Jigsaw/SceneItemJigsawItemComponent");
-const SceneBulletComponent_1 = require("../SceneItem/SceneBulletComponent");
-const SceneItemActorComponent_1 = require("../SceneItem/SceneItemActorComponent");
-const SceneItemAdviceComponent_1 = require("../SceneItem/SceneItemAdviceComponent");
-const SceneItemAiInteractionComponent_1 = require("../SceneItem/SceneItemAiInteractionComponent");
-const SceneItemBeamCastComponent_1 = require("../SceneItem/SceneItemBeamCastComponent");
-const SceneItemBeamReceiveComponent_1 = require("../SceneItem/SceneItemBeamReceiveComponent");
-const SceneItemBuffConsumerComponent_1 = require("../SceneItem/SceneItemBuffConsumerComponent");
-const SceneItemBuffProducerComponent_1 = require("../SceneItem/SceneItemBuffProducerComponent");
-const SceneItemCaptureComponent_1 = require("../SceneItem/SceneItemCaptureComponent");
-const SceneItemConveyorBeltComponent_1 = require("../SceneItem/SceneItemConveyorBeltComponent");
-const SceneItemDamageComponent_1 = require("../SceneItem/SceneItemDamageComponent");
-const SceneItemDropItemComponent_1 = require("../SceneItem/SceneItemDropItemComponent");
-const SceneItemExploreInteractComponent_1 = require("../SceneItem/SceneItemExploreInteractComponent");
-const SceneItemFanComponent_1 = require("../SceneItem/SceneItemFanComponent");
-const SceneItemGravityComponent_1 = require("../SceneItem/SceneItemGravityComponent");
-const SceneItemGuidePathComponent_1 = require("../SceneItem/SceneItemGuidePathComponent");
-const SceneItemHitComponent_1 = require("../SceneItem/SceneItemHitComponent");
-const SceneItemLevitateMagnetComponent_1 = require("../SceneItem/SceneItemLevitateMagnetComponent");
-const SceneItemManipulatableComponent_1 = require("../SceneItem/SceneItemManipulatableComponent");
-const SceneItemMonsterGachaItemComponent_1 = require("../SceneItem/SceneItemMonsterGachaItemComponent");
-const SceneItemMovementSyncComponent_1 = require("../SceneItem/SceneItemMovementSyncComponent");
-const SceneItemMultiInteractionActorComponent_1 = require("../SceneItem/SceneItemMultiInteractionActorComponent");
-const SceneItemNearbyTrackingComponent_1 = require("../SceneItem/SceneItemNearbyTrackingComponent");
-const SceneItemOutletComponent_1 = require("../SceneItem/SceneItemOutletComponent");
-const SceneItemReboundComponent_1 = require("../SceneItem/SceneItemReboundComponent");
-const SceneItemReferenceComponent_1 = require("../SceneItem/SceneItemReferenceComponent");
-const SceneItemResetPositionComponent_1 = require("../SceneItem/SceneItemResetPositionComponent");
-const SceneItemResetSelfPositionComponent_1 = require("../SceneItem/SceneItemResetSelfPositionComponent");
-const SceneItemRotatorComponent_1 = require("../SceneItem/SceneItemRotatorComponent");
-const SceneItemTimeScaleComponent_1 = require("../SceneItem/SceneItemTimeScaleComponent");
-const SceneItemTimeStopMachineComponent_1 = require("../SceneItem/SceneItemTimeStopMachineComponent");
-const SceneItemTrackGuideComponent_1 = require("../SceneItem/SceneItemTrackGuideComponent");
-const AnimalDeathSyncComponent_1 = require("./Animal/Component/AnimalDeathSyncComponent");
-const AnimalPerformComponent_1 = require("./Animal/Component/AnimalPerformComponent");
-const AnimalStateMachineComponent_1 = require("./Animal/Component/AnimalStateMachineComponent");
-const CharacterController_1 = require("./CharacterController");
-const CharacterComponentPriorityDefine_1 = require("./Common/CharacterComponentPriorityDefine");
-const CharacterAbilityComponent_1 = require("./Common/Component/Abilities/CharacterAbilityComponent");
-const CharacterAttributeComponent_1 = require("./Common/Component/Abilities/CharacterAttributeComponent");
-const CharacterBuffComponent_1 = require("./Common/Component/Abilities/CharacterBuffComponent");
-const CharacterDamageComponent_1 = require("./Common/Component/Abilities/CharacterDamageComponent");
-const CharacterGameplayCueComponent_1 = require("./Common/Component/Abilities/CharacterGameplayCueComponent");
-const CharacterGasDebugComponent_1 = require("./Common/Component/Abilities/CharacterGasDebugComponent");
-const CharacterMontageComponent_1 = require("./Common/Component/Abilities/CharacterMontageComponent");
-const CharacterPassiveSkillComponent_1 = require("./Common/Component/Abilities/CharacterPassiveSkillComponent");
-const CharacterStatisticsComponent_1 = require("./Common/Component/Abilities/CharacterStatisticsComponent");
-const CharacterTriggerComponent_1 = require("./Common/Component/Abilities/CharacterTriggerComponent");
-const CharacterUnifiedStateComponent_1 = require("./Common/Component/Abilities/CharacterUnifiedStateComponent");
-const VisionBuffComponent_1 = require("./Common/Component/Abilities/VisionBuffComponent");
-const CharacterActionComponent_1 = require("./Common/Component/Action/CharacterActionComponent");
-const CharacterActorComponent_1 = require("./Common/Component/CharacterActorComponent");
-const CharacterAiComponent_1 = require("./Common/Component/CharacterAiComponent");
-const CharacterAnimationComponent_1 = require("./Common/Component/CharacterAnimationComponent");
-const CharacterAnimationSyncComponent_1 = require("./Common/Component/CharacterAnimationSyncComponent");
-const CharacterAudioComponent_1 = require("./Common/Component/CharacterAudioComponent");
-const CharacterCaughtNewComponent_1 = require("./Common/Component/CharacterCaughtNewComponent");
-const CharacterCombatMessageComponent_1 = require("./Common/Component/CharacterCombatMessageComponent");
-const CharacterExploreComponent_1 = require("./Common/Component/CharacterExploreComponent");
-const CharacterFightStateComponent_1 = require("./Common/Component/CharacterFightStateComponent");
-const CharacterFollowComponent_1 = require("./Common/Component/CharacterFollowComponent");
-const CharacterFootEffectComponent_1 = require("./Common/Component/CharacterFootEffectComponent");
-const CharacterGaitComponent_1 = require("./Common/Component/CharacterGaitComponent");
-const CharacterGlideComponent_1 = require("./Common/Component/CharacterGlideComponent");
-const CharacterHitComponent_1 = require("./Common/Component/CharacterHitComponent");
-const CharacterInputComponent_1 = require("./Common/Component/CharacterInputComponent");
-const CharacterLevelShootComponent_1 = require("./Common/Component/CharacterLevelShootComponent");
-const CharacterLogicStateSyncComponent_1 = require("./Common/Component/CharacterLogicStateSyncComponent");
-const CharacterManipulateComponent_1 = require("./Common/Component/CharacterManipulateComponent");
-const CharacterManipulateInteractComponent_1 = require("./Common/Component/CharacterManipulateInteractComponent");
-const CharacterMoveComponent_1 = require("./Common/Component/CharacterMoveComponent");
-const CharacterMovementSyncComponent_1 = require("./Common/Component/CharacterMovementSyncComponent");
-const CharacterPartComponent_1 = require("./Common/Component/CharacterPartComponent");
-const CharacterPartScanComponent_1 = require("./Common/Component/CharacterPartScanComponent");
-const CharacterPendulumComponent_1 = require("./Common/Component/CharacterPendulumComponent");
-const CharacterPhysicsAssetComponent_1 = require("./Common/Component/CharacterPhysicsAssetComponent");
-const CharacterPlanComponent_1 = require("./Common/Component/CharacterPlanComponent");
-const CharacterRoleTransitionComponent_1 = require("./Common/Component/CharacterRoleTransitionComponent");
-const CharacterShieldComponent_1 = require("./Common/Component/CharacterShieldComponent");
-const CharacterSkinDamageComponent_1 = require("./Common/Component/CharacterSkinDamageComponent");
-const CharacterStateMachineNewComponent_1 = require("./Common/Component/CharacterStateMachineNewComponent");
-const CharacterSwimComponent_1 = require("./Common/Component/CharacterSwimComponent");
-const CharacterThrowComponent_1 = require("./Common/Component/CharacterThrowComponent");
-const CharacterTimeScaleComponent_1 = require("./Common/Component/CharacterTimeScaleComponent");
-const CharacterWalkOnWaterComponent_1 = require("./Common/Component/CharacterWalkOnWaterComponent");
-const CharacterWeaponComponent_1 = require("./Common/Component/CharacterWeaponComponent");
-const CreatureDataComponent_1 = require("./Common/Component/CreatureDataComponent");
-const ActorDebugMovementComponent_1 = require("./Common/Component/Debug/ActorDebugMovementComponent");
-const CharacterFlowComponent_1 = require("./Common/Component/Flow/CharacterFlowComponent");
-const CharacterLockOnComponent_1 = require("./Common/Component/LockOn/CharacterLockOnComponent");
-const CharacterCatapultComponent_1 = require("./Common/Component/Move/CharacterCatapultComponent");
-const CharacterClimbComponent_1 = require("./Common/Component/Move/CharacterClimbComponent");
-const CharacterPatrolComponent_1 = require("./Common/Component/Move/CharacterPatrolComponent");
-const CharacterSlideComponent_1 = require("./Common/Component/Move/CharacterSlideComponent");
-const NpcMoveComponent_1 = require("./Common/Component/NpcMoveComponent");
-const PawnHeadInfoComponent_1 = require("./Common/Component/PawnHeadInfoComponent");
-const RolePreloadComponent_1 = require("./Common/Component/RolePreloadComponent");
-const ScanComponent_1 = require("./Common/Component/ScanComponent");
-const CharacterSkillCdComponent_1 = require("./Common/Component/Skill/CharacterSkillCdComponent");
-const CharacterSkillComponent_1 = require("./Common/Component/Skill/CharacterSkillComponent");
-const CharacterVisionComponent_1 = require("./Common/Component/Vision/CharacterVisionComponent");
-const CreateEntityData_1 = require("./CreateEntityData");
-const DungeonEntranceComponent_1 = require("./Custom/Components/DungeonEntranceComponent");
-const GrapplingHookPointComponent_1 = require("./Custom/Components/GrapplingHookPointComponent");
-const RangeComponent_1 = require("./Custom/Components/RangeComponent");
-const TriggerComponent_1 = require("./Custom/Components/TriggerComponent");
-const MonsterFlowComponent_1 = require("./Monster/Component/MonsterFlowComponent");
-const ExecutionComponent_1 = require("./Monster/Entity/Component/ExecutionComponent");
-const MonsterBehaviorComponent_1 = require("./Monster/Entity/Component/MonsterBehaviorComponent");
-const MonsterDeathComponent_1 = require("./Monster/Entity/Component/MonsterDeathComponent");
-const MonsterFrozenComponent_1 = require("./Monster/Entity/Component/MonsterFrozenComponent");
-const NpcFlowComponent_1 = require("./Npc/Component/NpcFlowComponent");
-const NpcPasserbyComponent_1 = require("./Npc/Component/NpcPasserbyComponent");
-const NpcPerformComponent_1 = require("./Npc/Component/NpcPerformComponent");
-const PasserbyGeneratorComponent_1 = require("./Npc/Component/PasserbyGeneratorComponent");
-const RoleAttributeComponent_1 = require("./Role/Component/RoleAttributeComponent");
-const RoleAudioComponent_1 = require("./Role/Component/RoleAudioComponent");
-const RoleBuffComponent_1 = require("./Role/Component/RoleBuffComponent");
-const RoleDeathComponent_1 = require("./Role/Component/RoleDeathComponent");
-const RoleElementComponent_1 = require("./Role/Component/RoleElementComponent");
-const RoleEnergyComponent_1 = require("./Role/Component/RoleEnergyComponent");
-const RoleFrozenComponent_1 = require("./Role/Component/RoleFrozenComponent");
-const RoleGaitComponent_1 = require("./Role/Component/RoleGaitComponent");
-const RoleGrowComponent_1 = require("./Role/Component/RoleGrowComponent");
-const RoleInheritComponent_1 = require("./Role/Component/RoleInheritComponent");
-const RoleLocationSafetyComponent_1 = require("./Role/Component/RoleLocationSafetyComponent");
-const RoleQteComponent_1 = require("./Role/Component/RoleQteComponent");
-const RoleSceneInteractComponent_1 = require("./Role/Component/RoleSceneInteractComponent");
-const RoleStrengthComponent_1 = require("./Role/Component/RoleStrengthComponent");
-const RoleTagComponent_1 = require("./Role/Component/RoleTagComponent");
-const RoleTeamComponent_1 = require("./Role/Component/RoleTeamComponent");
-const SimpleNpcActorComponent_1 = require("./SimpleNpc/Component/SimpleNpcActorComponent");
-const SimpleNpcAnimationComponent_1 = require("./SimpleNpc/Component/SimpleNpcAnimationComponent");
-const ROLE_PRIORITY = 7;
-const VISION_PRIORITY = 11;
-const MONSTER_PRIORITY = 10;
-const NPC_PRIORITY = 9;
-const OTHER_PRIORITY = 8;
+const UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  MonsterBattleConfById_1 = require("../../../Core/Define/ConfigQuery/MonsterBattleConfById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  IEntity_1 = require("../../../UniverseEditor/Interface/IEntity"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  BaseTagComponent_1 = require("../Common/Component/BaseTagComponent"),
+  BaseUnifiedStateComponent_1 = require("../Common/Component/BaseUnifiedStateComponent"),
+  DurablityComponent_1 = require("../Common/Component/DurablityComponent"),
+  InteractItemComponent_1 = require("../Common/Component/InteractItemComponent"),
+  LevelTagComponent_1 = require("../Common/Component/LevelTagComponent"),
+  PerformanceComponent_1 = require("../Common/Component/PerformanceComponent"),
+  PostProcessBridgeComponent_1 = require("../Common/Component/PostProcessBridgeComponent"),
+  SplineMoveComponent_1 = require("../Common/Component/SplineMoveComponent"),
+  UeActorTickManageComponent_1 = require("../Common/Component/UeActorTickManageComponent"),
+  UeComponentTickManageComponent_1 = require("../Common/Component/UeComponentTickManageComponent"),
+  UeMovementTickManageComponent_1 = require("../Common/Component/UeMovementTickManageComponent"),
+  UeSkeletalTickManageComponent_1 = require("../Common/Component/UeSkeletalTickManageComponent"),
+  PawnAdsorbComponent_1 = require("../Pawn/Component/PawnAdsorbComponent"),
+  PawnInfoManageComponent_1 = require("../Pawn/Component/PawnInfoManageComponent"),
+  PawnInteractNewComponent_1 = require("../Pawn/Component/PawnInteractNewComponent"),
+  PawnPerceptionComponent_1 = require("../Pawn/Component/PawnPerceptionComponent"),
+  PawnSensoryComponent_1 = require("../Pawn/Component/PawnSensoryComponent"),
+  PawnSensoryInfoComponent_1 = require("../Pawn/Component/PawnSensoryInfoComponent"),
+  AiWeaponMovementComponent_1 = require("../SceneItem/AiInteraction/AiWeaponMovementComponent"),
+  EffectAreaComponent_1 = require("../SceneItem/Common/Component/EffectAreaComponent"),
+  SceneItemAttachTargetComponent_1 = require("../SceneItem/Common/Component/SceneItemAttachTargetComponent"),
+  SceneItemDebugComponent_1 = require("../SceneItem/Common/Component/SceneItemDebugComponent"),
+  SceneItemDynamicAttachTargetComponent_1 = require("../SceneItem/Common/Component/SceneItemDynamicAttachTargetComponent"),
+  SceneItemInteractAudioComponent_1 = require("../SceneItem/Common/Component/SceneItemInteractAudioComponent"),
+  SceneItemMoveComponent_1 = require("../SceneItem/Common/Component/SceneItemMoveComponent"),
+  SceneItemPhysicalAttachComponent_1 = require("../SceneItem/Common/Component/SceneItemPhysicalAttachComponent"),
+  SceneItemPortalComponent_1 = require("../SceneItem/Common/Component/SceneItemPortalComponent"),
+  SceneItemProgressControlComponent_1 = require("../SceneItem/Common/Component/SceneItemProgressControlComponent"),
+  SceneItemPropertyComponent_1 = require("../SceneItem/Common/Component/SceneItemPropertyComponent"),
+  SceneItemStateAudioComponent_1 = require("../SceneItem/Common/Component/SceneItemStateAudioComponent"),
+  SceneItemStateComponent_1 = require("../SceneItem/Common/Component/SceneItemStateComponent"),
+  SceneItemTimeTrackControlComponent_1 = require("../SceneItem/Common/Component/SceneItemTimeTrackControlComponent"),
+  SceneItemTurntableControllerComponent_1 = require("../SceneItem/Common/Component/SceneItemTurntableControllerComponent"),
+  SmartObjectComponent_1 = require("../SceneItem/Common/Component/SmartObjectComponent"),
+  GamePlayElevatorComponent_1 = require("../SceneItem/GamePlayElevatorComponent"),
+  GamePlayHitGearComponent_1 = require("../SceneItem/GamePlayHitGearComponent"),
+  GamePlayTreasureBoxComponent_1 = require("../SceneItem/GamePlayTreasureBoxComponent"),
+  SceneItemJigsawBaseComponent_1 = require("../SceneItem/Jigsaw/SceneItemJigsawBaseComponent"),
+  SceneItemJigsawItemComponent_1 = require("../SceneItem/Jigsaw/SceneItemJigsawItemComponent"),
+  SceneBulletComponent_1 = require("../SceneItem/SceneBulletComponent"),
+  SceneItemActorComponent_1 = require("../SceneItem/SceneItemActorComponent"),
+  SceneItemAdviceComponent_1 = require("../SceneItem/SceneItemAdviceComponent"),
+  SceneItemAiInteractionComponent_1 = require("../SceneItem/SceneItemAiInteractionComponent"),
+  SceneItemBeamCastComponent_1 = require("../SceneItem/SceneItemBeamCastComponent"),
+  SceneItemBeamReceiveComponent_1 = require("../SceneItem/SceneItemBeamReceiveComponent"),
+  SceneItemBuffConsumerComponent_1 = require("../SceneItem/SceneItemBuffConsumerComponent"),
+  SceneItemBuffProducerComponent_1 = require("../SceneItem/SceneItemBuffProducerComponent"),
+  SceneItemCaptureComponent_1 = require("../SceneItem/SceneItemCaptureComponent"),
+  SceneItemConveyorBeltComponent_1 = require("../SceneItem/SceneItemConveyorBeltComponent"),
+  SceneItemDamageComponent_1 = require("../SceneItem/SceneItemDamageComponent"),
+  SceneItemDropItemComponent_1 = require("../SceneItem/SceneItemDropItemComponent"),
+  SceneItemExploreInteractComponent_1 = require("../SceneItem/SceneItemExploreInteractComponent"),
+  SceneItemFanComponent_1 = require("../SceneItem/SceneItemFanComponent"),
+  SceneItemGravityComponent_1 = require("../SceneItem/SceneItemGravityComponent"),
+  SceneItemGuidePathComponent_1 = require("../SceneItem/SceneItemGuidePathComponent"),
+  SceneItemHitComponent_1 = require("../SceneItem/SceneItemHitComponent"),
+  SceneItemLevitateMagnetComponent_1 = require("../SceneItem/SceneItemLevitateMagnetComponent"),
+  SceneItemManipulatableComponent_1 = require("../SceneItem/SceneItemManipulatableComponent"),
+  SceneItemMonsterGachaItemComponent_1 = require("../SceneItem/SceneItemMonsterGachaItemComponent"),
+  SceneItemMovementSyncComponent_1 = require("../SceneItem/SceneItemMovementSyncComponent"),
+  SceneItemMultiInteractionActorComponent_1 = require("../SceneItem/SceneItemMultiInteractionActorComponent"),
+  SceneItemNearbyTrackingComponent_1 = require("../SceneItem/SceneItemNearbyTrackingComponent"),
+  SceneItemOutletComponent_1 = require("../SceneItem/SceneItemOutletComponent"),
+  SceneItemReboundComponent_1 = require("../SceneItem/SceneItemReboundComponent"),
+  SceneItemReferenceComponent_1 = require("../SceneItem/SceneItemReferenceComponent"),
+  SceneItemResetPositionComponent_1 = require("../SceneItem/SceneItemResetPositionComponent"),
+  SceneItemResetSelfPositionComponent_1 = require("../SceneItem/SceneItemResetSelfPositionComponent"),
+  SceneItemRotatorComponent_1 = require("../SceneItem/SceneItemRotatorComponent"),
+  SceneItemTimeScaleComponent_1 = require("../SceneItem/SceneItemTimeScaleComponent"),
+  SceneItemTimeStopMachineComponent_1 = require("../SceneItem/SceneItemTimeStopMachineComponent"),
+  SceneItemTrackGuideComponent_1 = require("../SceneItem/SceneItemTrackGuideComponent"),
+  AnimalDeathSyncComponent_1 = require("./Animal/Component/AnimalDeathSyncComponent"),
+  AnimalPerformComponent_1 = require("./Animal/Component/AnimalPerformComponent"),
+  AnimalStateMachineComponent_1 = require("./Animal/Component/AnimalStateMachineComponent"),
+  CharacterController_1 = require("./CharacterController"),
+  CharacterComponentPriorityDefine_1 = require("./Common/CharacterComponentPriorityDefine"),
+  CharacterAbilityComponent_1 = require("./Common/Component/Abilities/CharacterAbilityComponent"),
+  CharacterAttributeComponent_1 = require("./Common/Component/Abilities/CharacterAttributeComponent"),
+  CharacterBuffComponent_1 = require("./Common/Component/Abilities/CharacterBuffComponent"),
+  CharacterDamageComponent_1 = require("./Common/Component/Abilities/CharacterDamageComponent"),
+  CharacterGameplayCueComponent_1 = require("./Common/Component/Abilities/CharacterGameplayCueComponent"),
+  CharacterGasDebugComponent_1 = require("./Common/Component/Abilities/CharacterGasDebugComponent"),
+  CharacterMontageComponent_1 = require("./Common/Component/Abilities/CharacterMontageComponent"),
+  CharacterPassiveSkillComponent_1 = require("./Common/Component/Abilities/CharacterPassiveSkillComponent"),
+  CharacterStatisticsComponent_1 = require("./Common/Component/Abilities/CharacterStatisticsComponent"),
+  CharacterTriggerComponent_1 = require("./Common/Component/Abilities/CharacterTriggerComponent"),
+  CharacterUnifiedStateComponent_1 = require("./Common/Component/Abilities/CharacterUnifiedStateComponent"),
+  VisionBuffComponent_1 = require("./Common/Component/Abilities/VisionBuffComponent"),
+  CharacterActionComponent_1 = require("./Common/Component/Action/CharacterActionComponent"),
+  CharacterActorComponent_1 = require("./Common/Component/CharacterActorComponent"),
+  CharacterAiComponent_1 = require("./Common/Component/CharacterAiComponent"),
+  CharacterAnimationComponent_1 = require("./Common/Component/CharacterAnimationComponent"),
+  CharacterAnimationSyncComponent_1 = require("./Common/Component/CharacterAnimationSyncComponent"),
+  CharacterAudioComponent_1 = require("./Common/Component/CharacterAudioComponent"),
+  CharacterCaughtNewComponent_1 = require("./Common/Component/CharacterCaughtNewComponent"),
+  CharacterCombatMessageComponent_1 = require("./Common/Component/CharacterCombatMessageComponent"),
+  CharacterExploreComponent_1 = require("./Common/Component/CharacterExploreComponent"),
+  CharacterFightStateComponent_1 = require("./Common/Component/CharacterFightStateComponent"),
+  CharacterFollowComponent_1 = require("./Common/Component/CharacterFollowComponent"),
+  CharacterFootEffectComponent_1 = require("./Common/Component/CharacterFootEffectComponent"),
+  CharacterGaitComponent_1 = require("./Common/Component/CharacterGaitComponent"),
+  CharacterGlideComponent_1 = require("./Common/Component/CharacterGlideComponent"),
+  CharacterHitComponent_1 = require("./Common/Component/CharacterHitComponent"),
+  CharacterInputComponent_1 = require("./Common/Component/CharacterInputComponent"),
+  CharacterLevelShootComponent_1 = require("./Common/Component/CharacterLevelShootComponent"),
+  CharacterLogicStateSyncComponent_1 = require("./Common/Component/CharacterLogicStateSyncComponent"),
+  CharacterManipulateComponent_1 = require("./Common/Component/CharacterManipulateComponent"),
+  CharacterManipulateInteractComponent_1 = require("./Common/Component/CharacterManipulateInteractComponent"),
+  CharacterMoveComponent_1 = require("./Common/Component/CharacterMoveComponent"),
+  CharacterMovementSyncComponent_1 = require("./Common/Component/CharacterMovementSyncComponent"),
+  CharacterPartComponent_1 = require("./Common/Component/CharacterPartComponent"),
+  CharacterPartScanComponent_1 = require("./Common/Component/CharacterPartScanComponent"),
+  CharacterPendulumComponent_1 = require("./Common/Component/CharacterPendulumComponent"),
+  CharacterPhysicsAssetComponent_1 = require("./Common/Component/CharacterPhysicsAssetComponent"),
+  CharacterPlanComponent_1 = require("./Common/Component/CharacterPlanComponent"),
+  CharacterRoleTransitionComponent_1 = require("./Common/Component/CharacterRoleTransitionComponent"),
+  CharacterShieldComponent_1 = require("./Common/Component/CharacterShieldComponent"),
+  CharacterSkinDamageComponent_1 = require("./Common/Component/CharacterSkinDamageComponent"),
+  CharacterStateMachineNewComponent_1 = require("./Common/Component/CharacterStateMachineNewComponent"),
+  CharacterSwimComponent_1 = require("./Common/Component/CharacterSwimComponent"),
+  CharacterThrowComponent_1 = require("./Common/Component/CharacterThrowComponent"),
+  CharacterTimeScaleComponent_1 = require("./Common/Component/CharacterTimeScaleComponent"),
+  CharacterWalkOnWaterComponent_1 = require("./Common/Component/CharacterWalkOnWaterComponent"),
+  CharacterWeaponComponent_1 = require("./Common/Component/CharacterWeaponComponent"),
+  CreatureDataComponent_1 = require("./Common/Component/CreatureDataComponent"),
+  ActorDebugMovementComponent_1 = require("./Common/Component/Debug/ActorDebugMovementComponent"),
+  CharacterFlowComponent_1 = require("./Common/Component/Flow/CharacterFlowComponent"),
+  CharacterLockOnComponent_1 = require("./Common/Component/LockOn/CharacterLockOnComponent"),
+  CharacterCatapultComponent_1 = require("./Common/Component/Move/CharacterCatapultComponent"),
+  CharacterClimbComponent_1 = require("./Common/Component/Move/CharacterClimbComponent"),
+  CharacterPatrolComponent_1 = require("./Common/Component/Move/CharacterPatrolComponent"),
+  CharacterSlideComponent_1 = require("./Common/Component/Move/CharacterSlideComponent"),
+  NpcMoveComponent_1 = require("./Common/Component/NpcMoveComponent"),
+  PawnHeadInfoComponent_1 = require("./Common/Component/PawnHeadInfoComponent"),
+  RolePreloadComponent_1 = require("./Common/Component/RolePreloadComponent"),
+  ScanComponent_1 = require("./Common/Component/ScanComponent"),
+  CharacterSkillCdComponent_1 = require("./Common/Component/Skill/CharacterSkillCdComponent"),
+  CharacterSkillComponent_1 = require("./Common/Component/Skill/CharacterSkillComponent"),
+  CharacterVisionComponent_1 = require("./Common/Component/Vision/CharacterVisionComponent"),
+  CreateEntityData_1 = require("./CreateEntityData"),
+  DungeonEntranceComponent_1 = require("./Custom/Components/DungeonEntranceComponent"),
+  GrapplingHookPointComponent_1 = require("./Custom/Components/GrapplingHookPointComponent"),
+  RangeComponent_1 = require("./Custom/Components/RangeComponent"),
+  TriggerComponent_1 = require("./Custom/Components/TriggerComponent"),
+  MonsterFlowComponent_1 = require("./Monster/Component/MonsterFlowComponent"),
+  ExecutionComponent_1 = require("./Monster/Entity/Component/ExecutionComponent"),
+  MonsterBehaviorComponent_1 = require("./Monster/Entity/Component/MonsterBehaviorComponent"),
+  MonsterDeathComponent_1 = require("./Monster/Entity/Component/MonsterDeathComponent"),
+  MonsterFrozenComponent_1 = require("./Monster/Entity/Component/MonsterFrozenComponent"),
+  NpcFlowComponent_1 = require("./Npc/Component/NpcFlowComponent"),
+  NpcPasserbyComponent_1 = require("./Npc/Component/NpcPasserbyComponent"),
+  NpcPerformComponent_1 = require("./Npc/Component/NpcPerformComponent"),
+  PasserbyGeneratorComponent_1 = require("./Npc/Component/PasserbyGeneratorComponent"),
+  RoleAttributeComponent_1 = require("./Role/Component/RoleAttributeComponent"),
+  RoleAudioComponent_1 = require("./Role/Component/RoleAudioComponent"),
+  RoleBuffComponent_1 = require("./Role/Component/RoleBuffComponent"),
+  RoleDeathComponent_1 = require("./Role/Component/RoleDeathComponent"),
+  RoleElementComponent_1 = require("./Role/Component/RoleElementComponent"),
+  RoleEnergyComponent_1 = require("./Role/Component/RoleEnergyComponent"),
+  RoleFrozenComponent_1 = require("./Role/Component/RoleFrozenComponent"),
+  RoleGaitComponent_1 = require("./Role/Component/RoleGaitComponent"),
+  RoleGrowComponent_1 = require("./Role/Component/RoleGrowComponent"),
+  RoleInheritComponent_1 = require("./Role/Component/RoleInheritComponent"),
+  RoleLocationSafetyComponent_1 = require("./Role/Component/RoleLocationSafetyComponent"),
+  RoleQteComponent_1 = require("./Role/Component/RoleQteComponent"),
+  RoleSceneInteractComponent_1 = require("./Role/Component/RoleSceneInteractComponent"),
+  RoleStrengthComponent_1 = require("./Role/Component/RoleStrengthComponent"),
+  RoleTagComponent_1 = require("./Role/Component/RoleTagComponent"),
+  RoleTeamComponent_1 = require("./Role/Component/RoleTeamComponent"),
+  SimpleNpcActorComponent_1 = require("./SimpleNpc/Component/SimpleNpcActorComponent"),
+  SimpleNpcAnimationComponent_1 = require("./SimpleNpc/Component/SimpleNpcAnimationComponent"),
+  ROLE_PRIORITY = 7,
+  VISION_PRIORITY = 11,
+  MONSTER_PRIORITY = 10,
+  NPC_PRIORITY = 9,
+  OTHER_PRIORITY = 8;
 exports.USE_ENTITY_POOL = !0;
 class WorldEntityHelper {
   static Initialize() {
@@ -198,9 +198,9 @@ class WorldEntityHelper {
     );
   }
   static CreateWorldEntity(e) {
-    const n = e.EntityData;
-    let o = -1n;
-    let t = void 0;
+    var n = e.EntityData;
+    let o = -1n,
+      t = void 0;
     switch (n.cVn) {
       case Protocol_1.Aki.Protocol.HBs.Proto_Monster:
         if (
@@ -278,7 +278,7 @@ class WorldEntityHelper {
   }
   static Destroy(e) {
     if (exports.USE_ENTITY_POOL) {
-      const n = e.Entity.GetComponent(0);
+      var n = e.Entity.GetComponent(0);
       if (n.IsNpc())
         switch (n.GetSubEntityType()) {
           case 1:
@@ -464,7 +464,7 @@ class WorldEntityHelper {
       return !1;
     if (!e.AddComponent(CharacterSwimComponent_1.CharacterSwimComponent))
       return !1;
-    const n = CreateEntityData_1.CreateEntityData.GetAnimalComponentConfig(e);
+    var n = CreateEntityData_1.CreateEntityData.GetAnimalComponentConfig(e);
     if (n) {
       if (
         !e.AddComponent(
@@ -480,13 +480,13 @@ class WorldEntityHelper {
       return !1;
     do {
       if (ModelManager_1.ModelManager.GameModeModel.IsMulti) break;
-      let o =
+      var o =
         CreateEntityData_1.CreateEntityData.GetMonsterComponent(
           e,
         )?.FightConfigId;
       if (!o) break;
       o = MonsterBattleConfById_1.configMonsterBattleConfById.GetConfig(o);
-      if (!o || o.ExecutionId.length === 0) break;
+      if (!o || 0 === o.ExecutionId.length) break;
       if (!e.AddComponent(ExecutionComponent_1.ExecutionComponent)) return !1;
     } while (0);
     return !(
@@ -499,8 +499,9 @@ class WorldEntityHelper {
       !e.AddComponent(
         CharacterCombatMessageComponent_1.CharacterCombatMessageComponent,
       ) ||
-      (CreateEntityData_1.CreateEntityData.GetBaseInfo(e)?.Category
-        .MonsterMatchType === 4 &&
+      (4 ===
+        CreateEntityData_1.CreateEntityData.GetBaseInfo(e)?.Category
+          .MonsterMatchType &&
         !e.AddComponent(CharacterGaitComponent_1.CharacterGaitComponent)) ||
       !e.AddComponent(RolePreloadComponent_1.RolePreloadComponent)
     );
@@ -898,7 +899,7 @@ class WorldEntityHelper {
       return !1;
     if (!e.AddComponent(PawnPerceptionComponent_1.PawnPerceptionComponent))
       return !1;
-    let n = e.PbEntityInitData;
+    var n = e.PbEntityInitData;
     if (
       n &&
       !e.AddComponent(PawnInteractNewComponent_1.PawnInteractNewComponent)
@@ -952,10 +953,10 @@ class WorldEntityHelper {
     );
   }
   static GetCustomComponentRecord(e) {
-    const n = e.PbEntityInitData?.ComponentsData;
+    var n = e.PbEntityInitData?.ComponentsData;
     if (!n) return !1;
-    var o = e.GetPbModelConfig();
-    var o = IEntity_1.componentsByEntityAki[o.EntityType];
+    var o = e.GetPbModelConfig(),
+      o = IEntity_1.componentsByEntityAki[o.EntityType];
     if (!o) return !1;
     if (!e.AddComponent(CreatureDataComponent_1.CreatureDataComponent))
       return !1;
@@ -988,9 +989,9 @@ class WorldEntityHelper {
         n = e.PbEntityInitData;
         if (n)
           if (n.ComponentsData) {
-            var n = e.EntityData;
-            var n = n.bvs || 0;
-            const o = this.Vir.get(n);
+            var n = e.EntityData,
+              n = n.bvs || 0,
+              o = this.Vir.get(n);
             if (!o)
               return (
                 Log_1.Log.CheckError() &&
@@ -1023,7 +1024,7 @@ class WorldEntityHelper {
     return !0;
   }
   static GetSceneItemComponentRecord(n) {
-    const o = n.PbEntityInitData;
+    var o = n.PbEntityInitData;
     if (
       ((n.EnableMovement = !1),
       !n.AddComponent(CreatureDataComponent_1.CreatureDataComponent))
@@ -1053,15 +1054,15 @@ class WorldEntityHelper {
     )
       return !1;
     do {
-      const e = o?.ComponentsData;
+      var e = o?.ComponentsData;
       if (!o) break;
       if (!e) break;
-      let t = n.GetPbModelConfig();
+      var t = n.GetPbModelConfig();
       if (!t) break;
       (t = t.EntityType), (t = IEntity_1.componentsByEntityAki[t]);
       if (!t) break;
       for (const C of t) {
-        const r = e[C];
+        var r = e[C];
         if (!r)
           return (
             Log_1.Log.CheckError() &&
@@ -1076,7 +1077,7 @@ class WorldEntityHelper {
             !1
           );
         if (!r.Disabled) {
-          const m = this.Hir.get(C);
+          var m = this.Hir.get(C);
           if (m) {
             for (const i of m)
               if (!n.HasComponent(i)) {
@@ -1445,4 +1446,4 @@ class WorldEntityHelper {
   (WorldEntityHelper.ComponentPriority = new Map()),
   (WorldEntityHelper.Hir = new Map()),
   (Global_1.Global.WorldEntityHelper = WorldEntityHelper);
-// # sourceMappingURL=WorldEntityHelper.js.map
+//# sourceMappingURL=WorldEntityHelper.js.map

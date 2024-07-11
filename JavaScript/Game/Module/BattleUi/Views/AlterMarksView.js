@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AlterMarksView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Stats_1 = require("../../../../Core/Common/Stats");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiLayerType_1 = require("../../../Ui/Define/UiLayerType");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const SneakController_1 = require("../../../World/Controller/SneakController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const AlterMark_1 = require("./AlterMark");
-const AlterTime_1 = require("./AlterTime");
-const AlterTipMark_1 = require("./AlterTipMark");
-const BattleChildView_1 = require("./BattleChildView/BattleChildView");
-const EavesdropMark_1 = require("./EavesdropMark");
-const StalkAlertMark_1 = require("./StalkAlertMark");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiLayerType_1 = require("../../../Ui/Define/UiLayerType"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  SneakController_1 = require("../../../World/Controller/SneakController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  AlterMark_1 = require("./AlterMark"),
+  AlterTime_1 = require("./AlterTime"),
+  AlterTipMark_1 = require("./AlterTipMark"),
+  BattleChildView_1 = require("./BattleChildView/BattleChildView"),
+  EavesdropMark_1 = require("./EavesdropMark"),
+  StalkAlertMark_1 = require("./StalkAlertMark");
 class AlterMarksView extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
@@ -40,12 +40,12 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
       (this.XXe = (t, e, i) => {
         this.bXe.has(t) ||
           (this.NXe.has(t)
-            ? this.NXe.get(t).Type === 1 && this.NXe.delete(t)
+            ? 1 === this.NXe.get(t).Type && this.NXe.delete(t)
             : this.NXe.set(t, { Type: 0, OriginPosition: e, TrackActor: i }));
       }),
       (this.$Xe = (t) => {
-        const e = this.bXe.get(t);
-        const i = this.NXe.has(t);
+        var e = this.bXe.get(t),
+          i = this.NXe.has(t);
         (e || i) &&
           (i
             ? this.NXe.delete(t)
@@ -65,7 +65,7 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
           this.GXe.set(t, e));
       }),
       (this.JXe = (t) => {
-        const e = this.GXe.get(t);
+        var e = this.GXe.get(t);
         e && (e.Destroy(), this.GXe.delete(t));
       }),
       (this._qn = (t, e) => {
@@ -76,18 +76,18 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
           this.lqn.set(t, e));
       }),
       (this.uqn = (t) => {
-        const e = this.lqn.get(t);
+        var e = this.lqn.get(t);
         e && (e.Destroy(), this.lqn.delete(t));
       }),
       (this.cqn = (t) => {
-        for (const [e, i] of this.lqn)
+        for (var [e, i] of this.lqn)
           e === t ? i.PlayFoundSeq() : i.PlayEndSeq();
       }),
       (this.zXe = (t, e) => {
         if (t) {
           this.OXe || this.ZXe();
-          for (const [, i] of this.bXe) i.Destroy();
-          for (const [, s] of this.GXe) s.Destroy();
+          for (var [, i] of this.bXe) i.Destroy();
+          for (var [, s] of this.GXe) s.Destroy();
           this.bXe.clear(),
             this.GXe.clear(),
             (this.OXe = !0),
@@ -110,7 +110,7 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
         this.HXe?.SetUIActive(e);
       }),
       (this.xie = () => {
-        const t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
+        var t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
         this.i$e(t), this.KXe && this.o$e(t.EntityHandle);
       }),
       (this.r$e = () => {
@@ -120,7 +120,7 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
         this.SetActive(!1);
       }),
       (this.Zpe = (t) => {
-        for (const [, e] of this.qXe) e.Destroy();
+        for (var [, e] of this.qXe) e.Destroy();
         if ((this.qXe.clear(), t)) {
           if (this.OXe) {
             this.KXe
@@ -137,7 +137,7 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
             for (const s of this.KXe.Entity.CheckGetComponent(
               158,
             ).GetAggroSet()) {
-              let i =
+              var i =
                 ModelManager_1.ModelManager.CreatureModel.GetEntityById(
                   s,
                 ).Entity.CheckGetComponent(1).Owner;
@@ -157,8 +157,8 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
             (this.KXe = void 0));
       }),
       (this.s$e = (t, e) => {
-        const i = e.CharActorComp.Owner;
-        var e = e.CharActorComp.Entity.Id;
+        var i = e.CharActorComp.Owner,
+          e = e.CharActorComp.Entity.Id;
         !this.qXe.has(e) &&
           t &&
           this.OXe &&
@@ -176,7 +176,7 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
           t.ActivateAlertEffect());
       }),
       (this.h$e = () => {
-        for (const [, t] of this.GXe) t.Destroy();
+        for (var [, t] of this.GXe) t.Destroy();
         this.GXe.clear();
       });
   }
@@ -269,17 +269,17 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
           this.s$e,
         ),
         (this.KXe = void 0));
-    for (const [, t] of this.bXe) t.Destroy();
+    for (var [, t] of this.bXe) t.Destroy();
     this.bXe.clear();
-    for (const [, e] of this.GXe) e.Destroy();
+    for (var [, e] of this.GXe) e.Destroy();
     this.GXe.clear();
   }
   Update(t) {
     this.c$e();
-    for (const [, e] of this.bXe) e.Update();
-    for (const [, i] of this.qXe) i.Update();
-    for (const [, s] of this.lqn) s.Update();
-    for (const [, n] of this.GXe) n.CheckShowUiCondition() && n.Update();
+    for (var [, e] of this.bXe) e.Update();
+    for (var [, i] of this.qXe) i.Update();
+    for (var [, s] of this.lqn) s.Update();
+    for (var [, n] of this.GXe) n.CheckShowUiCondition() && n.Update();
     this.OXe &&
       ((this.VXe =
         TimeUtil_1.TimeUtil.GetServerTimeStamp() /
@@ -289,9 +289,9 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
       this.FXe < 0 ? this.t$e() : this.jXe.SetCountdownText(this.FXe));
   }
   c$e() {
-    for (const [t, e] of this.NXe) {
+    for (var [t, e] of this.NXe) {
       var i;
-      e.Type === 0
+      0 === e.Type
         ? ((i = new AlterMark_1.AlterMark(
             this.RootItem,
             e.OriginPosition || Vector_1.Vector.Create(),
@@ -413,9 +413,9 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
   }
   ProcessPendingMarkInfo() {
     if (
-      ModelManager_1.ModelManager.AlertMarkModel.PendingMarkInfos.size !== 0
+      0 !== ModelManager_1.ModelManager.AlertMarkModel.PendingMarkInfos.size
     ) {
-      for (const [t, [e, i]] of ModelManager_1.ModelManager.AlertMarkModel
+      for (var [t, [e, i]] of ModelManager_1.ModelManager.AlertMarkModel
         .PendingMarkInfos)
         switch (i) {
           case 2:
@@ -432,4 +432,4 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
   }
 }
 (exports.AlterMarksView = AlterMarksView)._$e = void 0;
-// # sourceMappingURL=AlterMarksView.js.map
+//# sourceMappingURL=AlterMarksView.js.map

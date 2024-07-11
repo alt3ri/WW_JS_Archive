@@ -1,25 +1,25 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.KuroPushController = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Application_1 = require("../../Core/Application/Application");
-const Info_1 = require("../../Core/Common/Info");
-const LanguageSystem_1 = require("../../Core/Common/LanguageSystem");
-const Log_1 = require("../../Core/Common/Log");
-const ControllerBase_1 = require("../../Core/Framework/ControllerBase");
-const HotPatchPushSdk_1 = require("../../Launcher/HotPatchPushSdk/HotPatchPushSdk");
-const LauncherStorageLib_1 = require("../../Launcher/Util/LauncherStorageLib");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../Manager/ControllerHolder");
-const ConfirmBoxDefine_1 = require("../Module/ConfirmBox/ConfirmBoxDefine");
-const MenuController_1 = require("../Module/Menu/MenuController");
-const SELFDEFINESN = "push";
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Application_1 = require("../../Core/Application/Application"),
+  Info_1 = require("../../Core/Common/Info"),
+  LanguageSystem_1 = require("../../Core/Common/LanguageSystem"),
+  Log_1 = require("../../Core/Common/Log"),
+  ControllerBase_1 = require("../../Core/Framework/ControllerBase"),
+  HotPatchPushSdk_1 = require("../../Launcher/HotPatchPushSdk/HotPatchPushSdk"),
+  LauncherStorageLib_1 = require("../../Launcher/Util/LauncherStorageLib"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
+  ConfirmBoxDefine_1 = require("../Module/ConfirmBox/ConfirmBoxDefine"),
+  MenuController_1 = require("../Module/Menu/MenuController"),
+  SELFDEFINESN = "push";
 class KuroPushController extends ControllerBase_1.ControllerBase {
   static IfCanUsePush() {
-    const t = Info_1.Info.IsMobile();
+    var t = Info_1.Info.IsMobile();
     return !(!UE.KuroStaticLibrary.IsModuleLoaded("KuroPushSdk") || !t);
   }
   static OnInit() {
@@ -40,7 +40,7 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
     await this.u5s(), await this.rEe();
   }
   static async u5s() {
-    let t;
+    var t;
     LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
       LauncherStorageLib_1.ELauncherStorageGlobalKey
         .AndroidNotFirstTimeOpenPush,
@@ -61,7 +61,7 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
       (t = UE.NewArray(UE.BuiltinString)).Add(
         "android.permission.POST_NOTIFICATIONS",
       ),
-      (await this.KSr(t)).length > 0
+      0 < (await this.KSr(t)).length
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Push", 28, "KuroPush:安卓推送权限获取失败"),
           this.TurnOffPush())
@@ -71,28 +71,28 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
   }
   static async KSr(e) {
     return new Promise((t) => {
-      const n = UE.AndroidPermissionFunctionLibrary.AcquirePermissions(e);
-      const u = (e, r) => {
-        n.OnPermissionsGrantedDynamicDelegate.Remove(u);
-        const o = new Array();
-        const s = e.Num();
-        for (let t = 0; t < s; t++) {
-          const i = e.Get(t);
-          r.Get(t) || o.push(i);
-        }
-        t(o);
-      };
+      const n = UE.AndroidPermissionFunctionLibrary.AcquirePermissions(e),
+        u = (e, r) => {
+          n.OnPermissionsGrantedDynamicDelegate.Remove(u);
+          var o = new Array(),
+            s = e.Num();
+          for (let t = 0; t < s; t++) {
+            var i = e.Get(t);
+            r.Get(t) || o.push(i);
+          }
+          t(o);
+        };
       n.OnPermissionsGrantedDynamicDelegate.Add(u);
     });
   }
   static BindCurrentLanguageTag() {
-    const t = LanguageSystem_1.LanguageSystem.PackageLanguage;
+    var t = LanguageSystem_1.LanguageSystem.PackageLanguage;
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Push", 28, "current push Language Tag", ["Tag", t]),
       UE.KuroPushSdkStaticLibrary.SetTag(t, SELFDEFINESN);
   }
   static nEe() {
-    const t = this.GetPushState() ? 1 : 0;
+    var t = this.GetPushState() ? 1 : 0;
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("KuroSdk", 8, "刷新推送状态", ["result", t]),
       MenuController_1.MenuController.SetTargetConfig(121, t),
@@ -184,7 +184,7 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
     HotPatchPushSdk_1.HotPatchPushSdk.TurnOffPush(), this.nEe();
   }
   static GetPushState() {
-    const t = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
+    var t = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
       LauncherStorageLib_1.ELauncherStorageGlobalKey.CachePushOpenState,
       !1,
     );
@@ -209,4 +209,4 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
           ["result", e],
         );
   });
-// # sourceMappingURL=KuroPushController.js.map
+//# sourceMappingURL=KuroPushController.js.map

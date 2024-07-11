@@ -1,48 +1,53 @@
 "use strict";
-let CharacterSlideComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, i, s, h) {
-    let e;
-    const r = arguments.length;
-    let a =
-      r < 3 ? i : h === null ? (h = Object.getOwnPropertyDescriptor(i, s)) : h;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      a = Reflect.decorate(t, i, s, h);
-    else
-      for (let o = t.length - 1; o >= 0; o--)
-        (e = t[o]) && (a = (r < 3 ? e(a) : r > 3 ? e(i, s, a) : e(i, s)) || a);
-    return r > 3 && a && Object.defineProperty(i, s, a), a;
-  };
+var CharacterSlideComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, i, s, h) {
+      var e,
+        r = arguments.length,
+        a =
+          r < 3
+            ? i
+            : null === h
+              ? (h = Object.getOwnPropertyDescriptor(i, s))
+              : h;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        a = Reflect.decorate(t, i, s, h);
+      else
+        for (var o = t.length - 1; 0 <= o; o--)
+          (e = t[o]) &&
+            (a = (r < 3 ? e(a) : 3 < r ? e(i, s, a) : e(i, s)) || a);
+      return 3 < r && a && Object.defineProperty(i, s, a), a;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterSlideComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const SlideById_1 = require("../../../../../../Core/Define/ConfigQuery/SlideById");
-const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem");
-const MathCommon_1 = require("../../../../../../Core/Utils/Math/MathCommon");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../../../Core/Utils/TraceElementCommon");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const PreloadConstants_1 = require("../../../../../World/Controller/PreloadConstants");
-const CharacterNameDefines_1 = require("../../CharacterNameDefines");
-const CharacterUnifiedStateTypes_1 = require("../Abilities/CharacterUnifiedStateTypes");
-const CustomMovementDefine_1 = require("./CustomMovementDefine");
-const LEAVE_SLIDE_TIME = 0.25;
-const LEAVE_SLIDE_MIN_HEIGHT = 5;
-const PROFILE_KEY = "slide";
-const CHANGE_FORWARD_ANGLE_THRESHOLD = 135;
-const COMBINE_NORMAL_Z_THRESHOLD = 0.707;
-const SLIDE_Z_THRESHOLD = 0.1;
-const SKI_BRAKE_ANGLE_THRESHOLD = 135;
-const SKI_MAX_INPUT_ANGLE = 135;
-const DEFAULT_SKI_MAX_TURN_ANGLE = 50;
-const DEFAULT_SKI_MAX_FALLING_SPEED = 5e3;
+const UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  SlideById_1 = require("../../../../../../Core/Define/ConfigQuery/SlideById"),
+  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem"),
+  MathCommon_1 = require("../../../../../../Core/Utils/Math/MathCommon"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../../../Core/Utils/TraceElementCommon"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  PreloadConstants_1 = require("../../../../../World/Controller/PreloadConstants"),
+  CharacterNameDefines_1 = require("../../CharacterNameDefines"),
+  CharacterUnifiedStateTypes_1 = require("../Abilities/CharacterUnifiedStateTypes"),
+  CustomMovementDefine_1 = require("./CustomMovementDefine"),
+  LEAVE_SLIDE_TIME = 0.25,
+  LEAVE_SLIDE_MIN_HEIGHT = 5,
+  PROFILE_KEY = "slide",
+  CHANGE_FORWARD_ANGLE_THRESHOLD = 135,
+  COMBINE_NORMAL_Z_THRESHOLD = 0.707,
+  SLIDE_Z_THRESHOLD = 0.1,
+  SKI_BRAKE_ANGLE_THRESHOLD = 135,
+  SKI_MAX_INPUT_ANGLE = 135,
+  DEFAULT_SKI_MAX_TURN_ANGLE = 50,
+  DEFAULT_SKI_MAX_FALLING_SPEED = 5e3;
 class SkiParams {
   constructor() {
     (this.InitSpeed = 700),
@@ -139,8 +144,8 @@ let CharacterSlideComponent =
                 : this.Gce.CharacterMovement.SetMovementMode(3));
         }),
         (this.WJr = (s) => {
-          const h = CharacterSlideComponent_1.SlideConfig;
-          const e = (this.M7o.DeepCopy(this.Hte.InputDirectProxy), this.M7o);
+          var h = CharacterSlideComponent_1.SlideConfig,
+            e = (this.M7o.DeepCopy(this.Hte.InputDirectProxy), this.M7o);
           let t = !1;
           if (e.Normalize())
             if (
@@ -169,10 +174,10 @@ let CharacterSlideComponent =
                     r + Math.sign(a) * SKI_MAX_INPUT_ANGLE,
                   ) * MathUtils_1.MathUtils.DegToRad),
                 e.Set(Math.cos(r), Math.sin(r), 0));
-              let r;
-              var a = e.DotProduct(this.AJr);
+              var r,
+                a = e.DotProduct(this.AJr);
               let i = 0;
-              a > 0
+              0 < a
                 ? ((i = a * h.SlideAccelUp),
                   (r = this.Hte.ActorVelocityProxy.DotProduct(this.AJr)),
                   h.Ski
@@ -200,10 +205,10 @@ let CharacterSlideComponent =
               "velocity",
               this.Lz,
             ]);
-          let i = 0;
-          let o = 0;
-          let _ = 0;
-          let n = 0;
+          let i = 0,
+            o = 0,
+            _ = 0,
+            n = 0;
           (n = this.qJr
             ? ((i = 0), (o = 0), (_ = this.qJr.LimitSpeed))
             : ((i = this.BJr),
@@ -234,7 +239,7 @@ let CharacterSlideComponent =
                     (this.VJr = !0)));
         }),
         (this.QJr = (t, i, s) => {
-          i !== 0 ||
+          0 !== i ||
             s ||
             ((i = t.GetComponent(32)),
             this.W5r.MoveState !==
@@ -274,22 +279,22 @@ let CharacterSlideComponent =
         this.SlideConfigInternal = SlideById_1.configSlideById.GetConfig(
           t.toString(),
         );
-        let i;
-        let s;
-        const h = new Array();
+        var i,
+          s,
+          h = new Array();
         for ([i, s] of this.SlideConfigInternal.FallingLateralFrictions) {
-          var e = Math.cos(i * MathUtils_1.MathUtils.DegToRad);
-          var e = [e * e * e, e * e, e, 1, s];
+          var e = Math.cos(i * MathUtils_1.MathUtils.DegToRad),
+            e = [e * e * e, e * e, e, 1, s];
           h.push(e);
         }
-        for (let s = h.length - 1; s >= 0; --s)
+        for (let s = h.length - 1; 0 <= s; --s)
           for (let i = 0; i < s; ++i) {
-            const r = h[i][s] / h[s][s];
+            var r = h[i][s] / h[s][s];
             for (let t = 0; t < h[s].length; ++t) h[i][t] -= h[s][t] * r;
           }
         for (let s = 0; s < h.length; ++s) {
           for (let i = s + 1; i < h.length; ++i) {
-            const a = h[i][s] / h[s][s];
+            var a = h[i][s] / h[s][s];
             for (let t = 0; t < h[s].length; ++t) h[i][t] -= h[s][t] * a;
           }
           this.SlideFallingCoefficientArray[s] = h[s][4] / h[s][s];
@@ -325,65 +330,65 @@ let CharacterSlideComponent =
       return [3, 161, 158];
     }
     Gbn(t) {
-      let i = this.NJr.BaseAccForSpeedUp;
-      let s = this.NJr.BaseTargetSpeed;
+      let i = this.NJr.BaseAccForSpeedUp,
+        s = this.NJr.BaseTargetSpeed;
       var h =
-        (Math.acos(
+          (Math.acos(
+            Vector_1.Vector.DotProduct(
+              this.SlideForward,
+              Vector_1.Vector.UpVectorProxy,
+            ),
+          ) *
+            MathUtils_1.MathUtils.RadToDeg) /
+          90,
+        e = this.NJr.SlopExtraAccel * h,
+        h = this.NJr.SlopExtraTargetSpeed * h,
+        r = Math.sign(
           Vector_1.Vector.DotProduct(
+            this.Hte.ActorForwardProxy,
             this.SlideForward,
-            Vector_1.Vector.UpVectorProxy,
           ),
-        ) *
-          MathUtils_1.MathUtils.RadToDeg) /
-        90;
-      const e = this.NJr.SlopExtraAccel * h;
-      var h = this.NJr.SlopExtraTargetSpeed * h;
-      const r = Math.sign(
-        Vector_1.Vector.DotProduct(
-          this.Hte.ActorForwardProxy,
-          this.SlideForward,
-        ),
-      );
+        );
       (i += r * e),
         (s += r * h),
         this.qJr && ((i += this.qJr.Acceleration), (s += this.qJr.LimitSpeed)),
         t.Set(i, this.NJr.BaseAccForSpeedDown, s);
     }
     qbn(t, i) {
-      var s = this.Lz;
-      const h = this.Tz;
-      const e = this.M7o;
-      var r = this.S7o;
-      const a = this.NJr.TurnSpeed;
-      let o = -DEFAULT_SKI_MAX_TURN_ANGLE;
-      let _ = DEFAULT_SKI_MAX_TURN_ANGLE;
-      var n = this.Entity.GetComponent(95);
-      var n =
-        (s.DeepCopy(this.Hte.ActorForwardProxy),
-        n?.Active &&
-          ((o = n.MinTurnAngle),
-          (_ = n.MaxTurnAngle),
-          s.DeepCopy(n.SplineDirection)),
-        this.SlideForward.CrossProduct(s, e),
-        e.Normalize() || e.DeepCopy(this.Hte.ActorRightProxy),
-        h.DeepCopy(this.Hte.InputDirectProxy),
-        h.Normalize() ? e.Multiply(e.DotProduct(h), h) : h.Reset(),
-        h.ContainsNaN() &&
-          Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Movement", 51, "滑雪输入中有NaN", ["Input", h]),
-        r.DeepCopy(this.Hte.ActorVelocityProxy),
-        r.Normalize() || r.DeepCopy(this.Hte.ActorForwardProxy),
-        r.HeadingAngle() * MathCommon_1.MathCommon.RadToDeg);
-      var r = s.HeadingAngle() * MathCommon_1.MathCommon.RadToDeg;
-      var s = this.Obn(n - r);
-      var n = h.DotProduct(e) * a * t;
-      var s = MathUtils_1.MathUtils.Clamp(s + n, o, _);
+      var s = this.Lz,
+        h = this.Tz,
+        e = this.M7o,
+        r = this.S7o,
+        a = this.NJr.TurnSpeed;
+      let o = -DEFAULT_SKI_MAX_TURN_ANGLE,
+        _ = DEFAULT_SKI_MAX_TURN_ANGLE;
+      var n = this.Entity.GetComponent(95),
+        n =
+          (s.DeepCopy(this.Hte.ActorForwardProxy),
+          n?.Active &&
+            ((o = n.MinTurnAngle),
+            (_ = n.MaxTurnAngle),
+            s.DeepCopy(n.SplineDirection)),
+          this.SlideForward.CrossProduct(s, e),
+          e.Normalize() || e.DeepCopy(this.Hte.ActorRightProxy),
+          h.DeepCopy(this.Hte.InputDirectProxy),
+          h.Normalize() ? e.Multiply(e.DotProduct(h), h) : h.Reset(),
+          h.ContainsNaN() &&
+            Log_1.Log.CheckError() &&
+            Log_1.Log.Error("Movement", 51, "滑雪输入中有NaN", ["Input", h]),
+          r.DeepCopy(this.Hte.ActorVelocityProxy),
+          r.Normalize() || r.DeepCopy(this.Hte.ActorForwardProxy),
+          r.HeadingAngle() * MathCommon_1.MathCommon.RadToDeg),
+        r = s.HeadingAngle() * MathCommon_1.MathCommon.RadToDeg,
+        s = this.Obn(n - r),
+        n = h.DotProduct(e) * a * t,
+        s = MathUtils_1.MathUtils.Clamp(s + n, o, _);
       (s = this.Obn(s + r)),
         i.FromUeVector(MathUtils_1.MathUtils.GetVector2dByAngle(s));
     }
     Obn(t) {
       let i = t;
-      for (; i > 180; ) i -= 360;
+      for (; 180 < i; ) i -= 360;
       for (; i < -180; ) i += 360;
       return i;
     }
@@ -495,7 +500,7 @@ let CharacterSlideComponent =
                 ((this.StandMode = !0), (this.SlideSwitchThisFrame = !0));
     }
     YJr(t) {
-      let i, s;
+      var i, s;
       this.NJr
         ? (this.Lz.FromUeVector(this.Gce.CharacterMovement.Velocity),
           (i =
@@ -524,31 +529,33 @@ let CharacterSlideComponent =
           ));
     }
     Moi(t, i) {
-      i === 0 ? this.PJr.delete(t) : this.PJr.add(t);
+      0 === i ? this.PJr.delete(t) : this.PJr.add(t);
     }
     KJr() {
-      var t = ModelManager_1.ModelManager.TraceElementModel.GetActorTrace();
-      var t =
-        ((t.WorldContextObject = this.Hte.Actor),
-        (t.Radius = this.Hte.ScaledRadius),
-        TraceElementCommon_1.TraceElementCommon.SetStartLocation(
-          t,
-          this.Hte.ActorLocationProxy,
-        ),
-        this.Lz.DeepCopy(this.Hte.ActorLocationProxy),
-        (this.Lz.Z -=
-          this.Hte.ScaledHalfHeight - this.Hte.Radius + LEAVE_SLIDE_MIN_HEIGHT),
-        TraceElementCommon_1.TraceElementCommon.SetEndLocation(t, this.Lz),
-        TraceElementCommon_1.TraceElementCommon.ShapeTrace(
-          this.Hte.Actor.CapsuleComponent,
-          t,
-          PROFILE_KEY,
-          PROFILE_KEY,
-        ));
+      var t = ModelManager_1.ModelManager.TraceElementModel.GetActorTrace(),
+        t =
+          ((t.WorldContextObject = this.Hte.Actor),
+          (t.Radius = this.Hte.ScaledRadius),
+          TraceElementCommon_1.TraceElementCommon.SetStartLocation(
+            t,
+            this.Hte.ActorLocationProxy,
+          ),
+          this.Lz.DeepCopy(this.Hte.ActorLocationProxy),
+          (this.Lz.Z -=
+            this.Hte.ScaledHalfHeight -
+            this.Hte.Radius +
+            LEAVE_SLIDE_MIN_HEIGHT),
+          TraceElementCommon_1.TraceElementCommon.SetEndLocation(t, this.Lz),
+          TraceElementCommon_1.TraceElementCommon.ShapeTrace(
+            this.Hte.Actor.CapsuleComponent,
+            t,
+            PROFILE_KEY,
+            PROFILE_KEY,
+          ));
       return !t;
     }
     jJr() {
-      const t = ModelManager_1.ModelManager.TraceElementModel.GetActorTrace();
+      var t = ModelManager_1.ModelManager.TraceElementModel.GetActorTrace();
       (t.WorldContextObject = this.Hte.Actor),
         (t.Radius = this.Hte.ScaledRadius),
         this.Lz.DeepCopy(this.Hte.ActorLocationProxy),
@@ -570,7 +577,7 @@ let CharacterSlideComponent =
         : void 0;
     }
     JJr() {
-      const t = ModelManager_1.ModelManager.TraceElementModel.GetActorTrace();
+      var t = ModelManager_1.ModelManager.TraceElementModel.GetActorTrace();
       (t.WorldContextObject = this.Hte.Actor),
         (t.Radius = this.Hte.ScaledRadius),
         this.Lz.DeepCopy(this.Hte.ActorLocationProxy),
@@ -636,7 +643,7 @@ let CharacterSlideComponent =
     TickSlideMode(t) {
       if (this.VJr) this.VJr = !1;
       else if (
-        this.PJr.size > 0 ||
+        0 < this.PJr.size ||
         (this.oRe?.Valid && this.oRe.HasKuroRootMotion)
       )
         this.W5r.MoveState ===
@@ -644,9 +651,9 @@ let CharacterSlideComponent =
           this.Gce.CharacterMovement.SetMovementMode(3);
       else {
         let t = !1;
-        const i = this.Gce.CharacterMovement.Kuro_GetBlockDirectWhenMove();
-        const s = this.Gce.CharacterMovement.Kuro_GetBlockActorWhenMove();
-        const h = CharacterSlideComponent_1.SlideConfig;
+        var i = this.Gce.CharacterMovement.Kuro_GetBlockDirectWhenMove(),
+          s = this.Gce.CharacterMovement.Kuro_GetBlockActorWhenMove(),
+          h = CharacterSlideComponent_1.SlideConfig;
         if (
           (this.GroundNormal.Reset(),
           this.M7o.FromUeVector(this.Gce.CharacterMovement.Velocity),
@@ -694,7 +701,7 @@ let CharacterSlideComponent =
     }
     TickSkiMode(i) {
       if (
-        (this.GJr > 0 &&
+        (0 < this.GJr &&
           ((s = this.Hte.Owner.CustomTimeDilation),
           (this.GJr -= i * MathUtils_1.MathUtils.MillisecondToSecond * s),
           this.GJr < 0) &&
@@ -711,7 +718,7 @@ let CharacterSlideComponent =
           CharacterUnifiedStateTypes_1.ECharPositionState.Ski
       )
         if (
-          this.PJr.size > 0 ||
+          0 < this.PJr.size ||
           (this.oRe?.Valid && this.oRe.HasKuroRootMotion)
         )
           this.W5r.MoveState ===
@@ -770,10 +777,7 @@ let CharacterSlideComponent =
     EnterSkiMode(t) {
       t = t.SkiConfig;
       if (!this.NJr) {
-        const i = ResourceSystem_1.ResourceSystem.SyncLoad(
-          t,
-          UE.BP_SkiConfig_C,
-        );
+        var i = ResourceSystem_1.ResourceSystem.SyncLoad(t, UE.BP_SkiConfig_C);
         if (!i?.IsValid())
           return void (
             Log_1.Log.CheckError() &&
@@ -835,4 +839,4 @@ let CharacterSlideComponent =
       CharacterSlideComponent,
     )),
   (exports.CharacterSlideComponent = CharacterSlideComponent);
-// # sourceMappingURL=CharacterSlideComponent.js.map
+//# sourceMappingURL=CharacterSlideComponent.js.map

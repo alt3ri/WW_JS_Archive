@@ -1,30 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Log = exports.levelName = void 0);
-const cpp_1 = require("cpp");
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const LogDefine_1 = require("../Define/LogDefine");
-const Info_1 = require("./Info");
-const LogCaptureController_1 = require("./LogCaptureController");
-const Time_1 = require("./Time");
-const levelTrace =
-  (UE.KuroStaticLibrary.IsBuildShipping() &&
-    (cpp_1.KuroLoggingLibrary.RegisterTerminateDelegate(),
-    cpp_1.KuroLoggingLibrary.PromoteGlobalLogVerbosity(4)),
-  { 0: !0, 1: !1, 2: !1, 3: !1 });
-const logProxy =
-  ((exports.levelName = { 0: "E", 1: "W", 2: "I", 3: "D" }),
-  {
-    0: puerts_1.logger.error,
-    1: puerts_1.logger.warn,
-    2: puerts_1.logger.info,
-    3: puerts_1.logger.log,
-  });
-const DEFAULT_SKIP_INDEX = 2;
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
+  UE = require("ue"),
+  LogDefine_1 = require("../Define/LogDefine"),
+  Info_1 = require("./Info"),
+  LogCaptureController_1 = require("./LogCaptureController"),
+  Time_1 = require("./Time"),
+  levelTrace =
+    (UE.KuroStaticLibrary.IsBuildShipping() &&
+      (cpp_1.KuroLoggingLibrary.RegisterTerminateDelegate(),
+      cpp_1.KuroLoggingLibrary.PromoteGlobalLogVerbosity(4)),
+    { [0]: !0, 1: !1, 2: !1, 3: !1 }),
+  logProxy =
+    ((exports.levelName = { [0]: "E", 1: "W", 2: "I", 3: "D" }),
+    {
+      [0]: puerts_1.logger.error,
+      1: puerts_1.logger.warn,
+      2: puerts_1.logger.info,
+      3: puerts_1.logger.log,
+    }),
+  DEFAULT_SKIP_INDEX = 2;
 class Log {
   static SetJsDebugId(r) {
-    r && r.length > 0 && (Log.U8 = `(${r})`);
+    r && 0 < r.length && (Log.U8 = `(${r})`);
   }
   static Initialize() {}
   static InitStat(r) {
@@ -37,16 +37,16 @@ class Log {
     Log.B8 = r;
   }
   static CheckError() {
-    return Log.B8 >= 0;
+    return 0 <= Log.B8;
   }
   static CheckWarn() {
-    return Log.B8 >= 1;
+    return 1 <= Log.B8;
   }
   static CheckInfo() {
-    return Log.B8 >= 2;
+    return 2 <= Log.B8;
   }
   static CheckDebug() {
-    return Log.B8 >= 3;
+    return 3 <= Log.B8;
   }
   static Error(r, e, t, ...o) {
     Log.b8(0, r, e, t, o, levelTrace[0]);
@@ -65,17 +65,17 @@ class Log {
   }
   static b8(t, o, i, n, g, a, L) {
     if (((Log.o6 += 1), !(t > Log.B8))) {
-      const [c, r] = LogDefine_1.logAuthorInfo[i];
+      var [c, r] = LogDefine_1.logAuthorInfo[i];
       if (Log.q8 || r) {
         let r =
           `[${Log.o6}][${exports.levelName[t]}][${o}][${c}][${Time_1.Time.Frame}][${Log.ke()}] ` +
           n;
-        const s = {};
-        if (g.length > 0) {
+        var s = {};
+        if (0 < g.length) {
           r += " ";
           for (const p of g) {
-            const u = p[0];
-            const l = Log.G8(p[1]);
+            var u = p[0],
+              l = Log.G8(p[1]);
             (s[u] = l), (r += `[${u}: ${l}]`);
           }
         }
@@ -97,7 +97,7 @@ class Log {
     }
   }
   static ke() {
-    const r = new Date();
+    var r = new Date();
     return (
       `${r.getHours()}.${r.getMinutes()}.${r.getSeconds()}:` +
       r.getMilliseconds()
@@ -107,22 +107,22 @@ class Log {
     try {
       return JSON.stringify(r, (r, e) => {
         if (void 0 === e) return "undefined";
-        if (e === null) return "null";
-        const t = typeof e;
-        if (t == "bigint") return e.toString() + "n";
-        if (t == "function") return e.toString();
-        if (typeof e.ToString === "function") return e.ToString();
+        if (null === e) return "null";
+        var t = typeof e;
+        if ("bigint" == t) return e.toString() + "n";
+        if ("function" == t) return e.toString();
+        if ("function" == typeof e.ToString) return e.ToString();
         if (e instanceof Set) {
           let r = "";
           for (const o of e)
-            r.length === 0 ? (r += "Set(") : (r += ","),
+            0 === r.length ? (r += "Set(") : (r += ","),
               (r += JSON.stringify(o));
           return (r += ")");
         }
         if (e instanceof Map) {
           let r = "";
           for (const i of e)
-            r.length === 0 ? (r += "Map(") : (r += ","),
+            0 === r.length ? (r += "Map(") : (r += ","),
               (r += `[${JSON.stringify(i[0])}, ${JSON.stringify(i[1])}]`);
           return (r += ")");
         }
@@ -142,16 +142,16 @@ class Log {
   static G8(r) {
     return void 0 === r
       ? "undefined"
-      : r === null
+      : null === r
         ? "null"
-        : typeof r === "string"
+        : "string" == typeof r
           ? r
-          : Log.k8 && typeof r === "object"
+          : Log.k8 && "object" == typeof r
             ? Log.O8(r) ?? ""
             : r.toString();
   }
   static N8(o, i) {
-    const r = Error.prepareStackTrace;
+    var r = Error.prepareStackTrace;
     Error.prepareStackTrace = Log.F8;
     let n = void 0;
     if (
@@ -163,14 +163,14 @@ class Log {
       (Error.prepareStackTrace = r),
       n && Array.isArray(n))
     ) {
-      let e = "";
-      let t = "";
+      let e = "",
+        t = "";
       for (let r = i; r < n.length; ++r) {
-        var g;
-        var a;
-        var L;
-        var c;
-        let s = n[r];
+        var g,
+          a,
+          L,
+          c,
+          s = n[r];
         s &&
           ((g =
             ((g = s.getTypeName()) ? g + "." : "") +
@@ -183,7 +183,7 @@ class Log {
 `),
           puerts_1.convertSourceMap) &&
           c &&
-          c.length !== 0 &&
+          0 !== c.length &&
           ((L = (0, puerts_1.convertSourceMap)(c + ".map", a, s))
             ? ((c = Log.H8(L.source, "Src", 1)),
               (t += `	${g} (${c}:${L.line}:${L.column})
@@ -194,21 +194,20 @@ class Log {
 `;
       return (
         (r += e),
-        t.length > 0 && (r = (r += "TS 堆栈:a\n") + t),
+        0 < t.length && (r = (r += "TS 堆栈:a\n") + t),
         (r =
           UE.KuroStaticLibrary.GetBlueprintCallstack &&
           (o = UE.KuroStaticLibrary.GetBlueprintCallstack()) &&
-          o.length > 0
+          0 < o.length
             ? r + "BP 堆栈:\n" + o
             : r)
       );
     }
   }
-
   static H8(r, e, t) {
-    let o;
-    return r && r.length !== 0
-      ? (o = r.indexOf(e)) > 0
+    var o;
+    return r && 0 !== r.length
+      ? 0 < (o = r.indexOf(e))
         ? r.substring(o + e.length + t)
         : r
       : "unknown";
@@ -229,4 +228,4 @@ class Log {
   (Log.U8 = ""),
   (Log.F8 = (r, e) => e),
   (Log.V8 = { stack: void 0 });
-// # sourceMappingURL=Log.js.map
+//# sourceMappingURL=Log.js.map

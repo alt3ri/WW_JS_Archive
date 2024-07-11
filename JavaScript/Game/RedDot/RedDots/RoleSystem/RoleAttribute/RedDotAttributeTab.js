@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RedDotAttributeTab = void 0);
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RedDotBase_1 = require("../../../RedDotBase");
+const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RedDotBase_1 = require("../../../RedDotBase");
 class RedDotAttributeTab extends RedDotBase_1.RedDotBase {
   IsMultiple() {
     return !0;
@@ -24,4 +24,4 @@ class RedDotAttributeTab extends RedDotBase_1.RedDotBase {
   }
 }
 exports.RedDotAttributeTab = RedDotAttributeTab;
-// # sourceMappingURL=RedDotAttributeTab.js.map
+//# sourceMappingURL=RedDotAttributeTab.js.map

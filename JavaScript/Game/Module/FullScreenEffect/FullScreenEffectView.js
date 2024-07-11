@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FullScreenEffectView = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const UiLayerType_1 = require("../../Ui/Define/UiLayerType");
-const LguiResourceManager_1 = require("../../Ui/LguiResourceManager");
-const UiLayer_1 = require("../../Ui/UiLayer");
-const DELAY_TIME = 100;
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  UiLayerType_1 = require("../../Ui/Define/UiLayerType"),
+  LguiResourceManager_1 = require("../../Ui/LguiResourceManager"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
+  DELAY_TIME = 100;
 class FullScreenEffectView {
   constructor() {
     (this.RootItem = void 0),
@@ -47,7 +47,7 @@ class FullScreenEffectView {
       this.O8t !== e && (this.RootItem.SetIsUIActive(e), (this.O8t = e));
   }
   H8t(e) {
-    const i = e.GetComponentByClass(UE.UIItem.StaticClass());
+    var i = e.GetComponentByClass(UE.UIItem.StaticClass());
     (this.RootActor = e), (this.RootItem = i);
   }
   Destroy() {
@@ -62,18 +62,18 @@ class FullScreenEffectView {
       (this.k8t = void 0);
   }
   DeActive() {
-    const i = UE.LGUIBPLibrary.GetComponentsInChildren(
+    var i = UE.LGUIBPLibrary.GetComponentsInChildren(
       this.RootActor,
       UE.UINiagara.StaticClass(),
       !1,
     );
     for (let e = 0; e < i.Num(); e++) {
-      const t = i.Get(e);
+      var t = i.Get(e);
       t && t.DeactivateSystem();
     }
   }
   IsEffectPlay() {
-    const i = UE.LGUIBPLibrary.GetComponentsInChildren(
+    var i = UE.LGUIBPLibrary.GetComponentsInChildren(
       this.RootActor,
       UE.UINiagara.StaticClass(),
       !1,
@@ -84,4 +84,4 @@ class FullScreenEffectView {
 }
 (exports.FullScreenEffectView = FullScreenEffectView).Compare = (e, i) =>
   i.Priority - e.Priority;
-// # sourceMappingURL=FullScreenEffectView.js.map
+//# sourceMappingURL=FullScreenEffectView.js.map

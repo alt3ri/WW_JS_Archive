@@ -4,13 +4,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.FragmentMemoryTopicData =
     exports.FragmentMemoryCollectData =
       void 0);
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const LevelGeneralCommons_1 = require("../../LevelGamePlay/LevelGeneralCommons");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  LevelGeneralCommons_1 = require("../../LevelGamePlay/LevelGeneralCommons"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class FragmentMemoryCollectData {
   constructor() {
     (this.xe = 0), (this.ige = 0), (this.IUn = void 0), (this._be = 0);
@@ -25,13 +25,13 @@ class FragmentMemoryCollectData {
     return this.GetIfUnlock() && !this.GetIfGetReward();
   }
   GetIfUnlock() {
-    return (1 & this.ige) == 1;
+    return 1 == (1 & this.ige);
   }
   GetTopicData() {
     return this.IUn;
   }
   GetIfGetReward() {
-    return ((this.ige >> 1) & 1) == 1;
+    return 1 == ((this.ige >> 1) & 1);
   }
   GetTraceEntityId() {
     return this.GetConfig().TraceEntityId;
@@ -58,7 +58,7 @@ class FragmentMemoryCollectData {
       );
   }
   GetTimeText() {
-    return this._be === 0 ? "" : TimeUtil_1.TimeUtil.DateFormatString(this._be);
+    return 0 === this._be ? "" : TimeUtil_1.TimeUtil.DateFormatString(this._be);
   }
   BindSourceTopic(e) {
     this.IUn = e;
@@ -94,13 +94,13 @@ class FragmentMemoryCollectData {
     return this.GetConfig().DropId;
   }
   GetPreviewReward() {
-    let e;
-    let t;
-    const r = [];
+    var e,
+      t,
+      r = [];
     for ([e, t] of ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(
       this.GetDropId(),
     ).DropPreview) {
-      const n = [{ IncId: 0, ItemId: e }, t];
+      var n = [{ IncId: 0, ItemId: e }, t];
       r.push(n);
     }
     return r;
@@ -109,8 +109,8 @@ class FragmentMemoryCollectData {
     return this.GetBgResource();
   }
   GetBgResource() {
-    const e = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
-    return e === 1 ? this.TUn() : e === 0 ? this.LUn() : "";
+    var e = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
+    return 1 === e ? this.TUn() : 0 === e ? this.LUn() : "";
   }
   TUn() {
     return this.GetConfig().BgResourceM;
@@ -130,15 +130,15 @@ class FragmentMemoryTopicData {
   Phrase(t) {
     (this.xe = t.Ekn), (this.DUn = []);
     for (const i of t.mUs) {
-      const e = new FragmentMemoryCollectData();
-      const r =
-        (e.Phrase(i),
-        ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetPhotoMemoryCollectById(
-          i.Ekn,
-        ));
+      var e = new FragmentMemoryCollectData(),
+        r =
+          (e.Phrase(i),
+          ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetPhotoMemoryCollectById(
+            i.Ekn,
+          ));
       e.PhraseFromConfig(r), e.BindSourceTopic(this), this.DUn.push(e);
     }
-    let n;
+    var n;
     for (const t of ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetPhotoMemoryCollectConfigListByTopicId(
       this.xe,
     ))
@@ -157,7 +157,7 @@ class FragmentMemoryTopicData {
     return !1;
   }
   GetClueEntrance() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetPhotoMemoryTopicById(
         this.xe,
       );
@@ -194,7 +194,7 @@ class FragmentMemoryTopicData {
     );
   }
   GetConditionDesc() {
-    const e = this.GetConfig().ConditionGroupId;
+    var e = this.GetConfig().ConditionGroupId;
     return (
       LevelGeneralCommons_1.LevelGeneralCommons.GetConditionGroupHintText(e) ??
       ""
@@ -208,4 +208,4 @@ class FragmentMemoryMainViewOpenData {
   }
 }
 exports.FragmentMemoryMainViewOpenData = FragmentMemoryMainViewOpenData;
-// # sourceMappingURL=FragmentMemoryData.js.map
+//# sourceMappingURL=FragmentMemoryData.js.map

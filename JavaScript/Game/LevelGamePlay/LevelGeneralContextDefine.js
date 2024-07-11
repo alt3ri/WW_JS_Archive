@@ -18,11 +18,11 @@ class GeneralContext {
     this.SubType = void 0;
   }
   static GetObj(t, e, n) {
-    let s = void 0;
-    let r = GeneralContext.RUe.get(t);
+    let s = void 0,
+      r = GeneralContext.RUe.get(t);
     return (
       r || ((r = []), GeneralContext.RUe.set(t, r)),
-      r.length > 0 ? ((s = r.pop()).DUe = !1) : (s = new n()),
+      0 < r.length ? ((s = r.pop()).DUe = !1) : (s = new n()),
       (s.SubType = e),
       s
     );
@@ -179,4 +179,4 @@ class GeneralLogicTreeContext extends GeneralContext {
   }
 }
 exports.GeneralLogicTreeContext = GeneralLogicTreeContext;
-// # sourceMappingURL=LevelGeneralContextDefine.js.map
+//# sourceMappingURL=LevelGeneralContextDefine.js.map

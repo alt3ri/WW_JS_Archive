@@ -1,27 +1,31 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, n, r) {
-    let o;
-    const i = arguments.length;
-    let s =
-      i < 3 ? t : r === null ? (r = Object.getOwnPropertyDescriptor(t, n)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      i = arguments.length,
+      s =
+        i < 3
+          ? t
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(t, n))
+            : r;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(e, t, n, r);
     else
-      for (let a = e.length - 1; a >= 0; a--)
-        (o = e[a]) && (s = (i < 3 ? o(s) : i > 3 ? o(t, n, s) : o(t, n)) || s);
-    return i > 3 && s && Object.defineProperty(t, n, s), s;
+      for (var a = e.length - 1; 0 <= a; a--)
+        (o = e[a]) && (s = (i < 3 ? o(s) : 3 < i ? o(t, n, s) : o(t, n)) || s);
+    return 3 < i && s && Object.defineProperty(t, n, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FightCameraDisplayComponent = void 0);
-const ActorSystem_1 = require("../../Core/Actor/ActorSystem");
-const EntityComponent_1 = require("../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../Core/Entity/RegisterComponent");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const ModelManager_1 = require("../Manager/ModelManager");
-const CameraController_1 = require("./CameraController");
+const ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
+  EntityComponent_1 = require("../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../Core/Entity/RegisterComponent"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  CameraController_1 = require("./CameraController");
 let FightCameraDisplayComponent = class FightCameraDisplayComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -31,7 +35,7 @@ let FightCameraDisplayComponent = class FightCameraDisplayComponent extends Enti
           ? CameraController_1.CameraController.ReturnLockOnCameraMode(0)
           : ((this.bPr =
               CameraController_1.CameraController.SpawnCameraActor()),
-            CameraController_1.CameraController.Model.CameraMode === 0 &&
+            0 === CameraController_1.CameraController.Model.CameraMode &&
               CameraController_1.CameraController.SetViewTarget(
                 this.bPr,
                 "FightCamera.OnWorldDone",
@@ -93,4 +97,4 @@ let FightCameraDisplayComponent = class FightCameraDisplayComponent extends Enti
   FightCameraDisplayComponent,
 )),
   (exports.FightCameraDisplayComponent = FightCameraDisplayComponent);
-// # sourceMappingURL=FightCameraDisplayComponent.js.map
+//# sourceMappingURL=FightCameraDisplayComponent.js.map

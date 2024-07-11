@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HotFixUiView = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const BaseConfigController_1 = require("../../BaseConfig/BaseConfigController");
-const LauncherLanguageLib_1 = require("../../Util/LauncherLanguageLib");
-const LauncherResourceLib_1 = require("../../Util/LauncherResourceLib");
-const LaunchComponentsAction_1 = require("../LaunchComponentsAction");
-const LaunchUtil_1 = require("../LaunchUtil");
-const HotFixManager_1 = require("./HotFixManager");
-const HotFixPopupRepairView_1 = require("./HotFixPopupRepairView");
-const HotFixPopupUiView_1 = require("./HotFixPopupUiView");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  BaseConfigController_1 = require("../../BaseConfig/BaseConfigController"),
+  LauncherLanguageLib_1 = require("../../Util/LauncherLanguageLib"),
+  LauncherResourceLib_1 = require("../../Util/LauncherResourceLib"),
+  LaunchComponentsAction_1 = require("../LaunchComponentsAction"),
+  LaunchUtil_1 = require("../LaunchUtil"),
+  HotFixManager_1 = require("./HotFixManager"),
+  HotFixPopupRepairView_1 = require("./HotFixPopupRepairView"),
+  HotFixPopupUiView_1 = require("./HotFixPopupUiView");
 class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
   constructor() {
     super(...arguments),
@@ -118,11 +118,11 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
     });
   }
   InitInputSettings() {
-    const t = UE.InputSettings.GetInputSettings();
-    var i = new UE.FName("UI左键点击");
-    var s = new UE.FName("LeftMouseButton");
-    var s = new UE.Key(s);
-    var i = new UE.InputActionKeyMapping(i, !1, !1, !1, !1, s);
+    var t = UE.InputSettings.GetInputSettings(),
+      i = new UE.FName("UI左键点击"),
+      s = new UE.FName("LeftMouseButton"),
+      s = new UE.Key(s),
+      i = new UE.InputActionKeyMapping(i, !1, !1, !1, !1, s);
     t.AddActionMapping(i);
   }
   async LoadResourceAsync() {
@@ -141,21 +141,22 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       await this.kEr();
   }
   async kEr() {
-    let s = new Map();
-    let t =
-      (await new Promise((i) => {
-        LauncherResourceLib_1.LauncherResourceLib.LoadAsync(
-          "/Game/Aki/HotPatch/Splash/SplashTable.SplashTable",
-          UE.DataTable,
-          (t) => {
-            (s = LaunchUtil_1.LaunchUtil.GetDataTableMap(t, "Path")), i(void 0);
-          },
-        );
-      }),
-      s.get(
-        this.bEr +
-          LauncherLanguageLib_1.LauncherLanguageLib.GetPackageLanguage(),
-      ));
+    let s = new Map(),
+      t =
+        (await new Promise((i) => {
+          LauncherResourceLib_1.LauncherResourceLib.LoadAsync(
+            "/Game/Aki/HotPatch/Splash/SplashTable.SplashTable",
+            UE.DataTable,
+            (t) => {
+              (s = LaunchUtil_1.LaunchUtil.GetDataTableMap(t, "Path")),
+                i(void 0);
+            },
+          );
+        }),
+        s.get(
+          this.bEr +
+            LauncherLanguageLib_1.LauncherLanguageLib.GetPackageLanguage(),
+        ));
     (t = t || s.get(this.bEr + LauncherLanguageLib_1.ENGLISH_ISO639_1)),
       await new Promise((i) => {
         LauncherResourceLib_1.LauncherResourceLib.LoadAsync(
@@ -175,11 +176,11 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       this.REr && (this.REr = void 0);
   }
   SetWindowCursorStyle() {
-    const t = new UE.Vector2D(0, 0);
-    const i = this.WorldContext;
-    let s = void 0;
-    let e = void 0;
-    let o = void 0;
+    var t = new UE.Vector2D(0, 0),
+      i = this.WorldContext;
+    let s = void 0,
+      e = void 0,
+      o = void 0;
     (o = UE.KuroStaticLibrary.IsEditor(i)
       ? ((s = new UE.FName("Aki/UI/Module/Cursor/SourceResource/CursorNor")),
         (e = new UE.FName("Aki/UI/Module/Cursor/SourceResource/CursorHi")),
@@ -241,7 +242,7 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       });
   }
   SetContainerItemActive(t) {
-    const i = this.GetItem(0);
+    var i = this.GetItem(0);
     t && t !== i.IsUIActiveSelf() && this.SequencePlayer.PlaySequence("Start"),
       this.GetItem(0).SetUIActive(t);
   }
@@ -376,4 +377,4 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
   }
 }
 exports.HotFixUiView = HotFixUiView;
-// # sourceMappingURL=HotFixUiView.js.map
+//# sourceMappingURL=HotFixUiView.js.map

@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ResolutionToggle = exports.ResolutionListView = void 0);
-const GameQualitySettingsManager_1 = require("../../../GameQualitySettings/GameQualitySettingsManager");
-const MenuController_1 = require("../MenuController");
-const LanguageSettingViewBase_1 = require("./LanguageSettingViewBase");
+const GameQualitySettingsManager_1 = require("../../../GameQualitySettings/GameQualitySettingsManager"),
+  MenuController_1 = require("../MenuController"),
+  LanguageSettingViewBase_1 = require("./LanguageSettingViewBase");
 class ResolutionListView extends LanguageSettingViewBase_1.LanguageSettingViewBase {
   constructor() {
     super(...arguments),
       (this.DoRefreshScrollView = (e, t) => {
-        const s = MenuController_1.MenuController.GetTargetConfig(6) === e;
-        var t = this.CreateToggle(t, e, s);
+        var s = MenuController_1.MenuController.GetTargetConfig(6) === e,
+          t = this.CreateToggle(t, e, s);
         t &&
           (s ? (this.SelectedToggle = t) : t.UnSelect(),
           t.SetSelectedCallBack(this.DoSelected),
@@ -17,11 +17,11 @@ class ResolutionListView extends LanguageSettingViewBase_1.LanguageSettingViewBa
       });
   }
   CreateToggle(e, t, s) {
-    const i = new ResolutionToggle();
+    var i = new ResolutionToggle();
     return i.Initialize(e, t, s), i;
   }
   OnRefreshView(e) {
-    const t =
+    var t =
       GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetResolutionList()[
         e.GetIndex()
       ];
@@ -49,4 +49,4 @@ class ResolutionToggle extends LanguageSettingViewBase_1.LanguageToggleBase {
   }
 }
 exports.ResolutionToggle = ResolutionToggle;
-// # sourceMappingURL=ResolutionListView.js.map
+//# sourceMappingURL=ResolutionListView.js.map

@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configRogueTokenBySeasonId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const RogueToken_1 = require("../Config/RogueToken");
-const DB = "db_rogue.db";
-const FILE = "r.肉鸽.xlsx";
-const TABLE = "RogueToken";
-const COMMAND = "select BinData from `RogueToken` where SeasonId=?";
-const KEY_PREFIX = "RogueTokenBySeasonId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  RogueToken_1 = require("../Config/RogueToken"),
+  DB = "db_rogue.db",
+  FILE = "r.肉鸽.xlsx",
+  TABLE = "RogueToken",
+  COMMAND = "select BinData from `RogueToken` where SeasonId=?",
+  KEY_PREFIX = "RogueTokenBySeasonId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX = "configRogueTokenBySeasonId.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configRogueTokenBySeasonId.GetConfigList(";
 exports.configRogueTokenBySeasonId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -29,7 +29,7 @@ exports.configRogueTokenBySeasonId = {
     );
   },
   GetConfigList: (o, e = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -44,13 +44,14 @@ exports.configRogueTokenBySeasonId = {
         const a = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "SeasonId",
               o,
-            ]) !== 1
+            ])
           )
             break;
-          let r = void 0;
+          var r = void 0;
           if (
             (([n, r] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -78,4 +79,4 @@ exports.configRogueTokenBySeasonId = {
     }
   },
 };
-// # sourceMappingURL=RogueTokenBySeasonId.js.map
+//# sourceMappingURL=RogueTokenBySeasonId.js.map

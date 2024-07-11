@@ -1,2 +1,2 @@
 "use strict";
-// # sourceMappingURL=NpcEntity.js.map
+//# sourceMappingURL=NpcEntity.js.map

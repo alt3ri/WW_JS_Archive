@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionRoleLevel = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionRoleLevel extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, a) {
-    let l;
+    var l;
     return (
       !!(
         e.LimitParams &&
@@ -20,4 +20,4 @@ class LevelConditionRoleLevel extends LevelGeneralBase_1.LevelConditionBase {
   }
 }
 exports.LevelConditionRoleLevel = LevelConditionRoleLevel;
-// # sourceMappingURL=LevelConditionRoleLevel.js.map
+//# sourceMappingURL=LevelConditionRoleLevel.js.map

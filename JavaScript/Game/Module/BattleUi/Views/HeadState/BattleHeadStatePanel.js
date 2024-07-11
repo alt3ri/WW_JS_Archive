@@ -1,37 +1,37 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleHeadStatePanel = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Stats_1 = require("../../../../../Core/Common/Stats");
-const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem");
-const ObjectSystem_1 = require("../../../../../Core/Object/ObjectSystem");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const CharacterController_1 = require("../../../../NewWorld/Character/CharacterController");
-const UiLayer_1 = require("../../../../Ui/UiLayer");
-const CommonHeadState_1 = require("./CommonHeadState");
-const DurabilityDamageHeadState_1 = require("./DurabilityDamageHeadState");
-const DurabilityHeadState_1 = require("./DurabilityHeadState");
-const EliteMonsterHeadStateView_1 = require("./EliteMonsterHeadStateView");
-const GuardianHeadState_1 = require("./GuardianHeadState");
-const HeadStateData_1 = require("./HeadStateData");
-const MingSuTiHeadState_1 = require("./MingSuTiHeadState");
-const ProgressControlHeadState_1 = require("./ProgressControlHeadState");
-const headStateViewMap = new Map([
-  [1, CommonHeadState_1.CommonHeadState],
-  [2, EliteMonsterHeadStateView_1.EliteMonsterHeadStateView],
-  [4, MingSuTiHeadState_1.MingSuTiHeadState],
-  [5, GuardianHeadState_1.GuardianHeadState],
-  [6, DurabilityHeadState_1.DurabilityHeadState],
-  [7, DurabilityDamageHeadState_1.DurabilityDamageHeadState],
-  [8, DurabilityDamageHeadState_1.DurabilityDamageHeadState],
-  [9, ProgressControlHeadState_1.ProgressControlHeadState],
-]);
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../../Core/Common/Stats"),
+  CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem"),
+  ObjectSystem_1 = require("../../../../../Core/Object/ObjectSystem"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  CharacterController_1 = require("../../../../NewWorld/Character/CharacterController"),
+  UiLayer_1 = require("../../../../Ui/UiLayer"),
+  CommonHeadState_1 = require("./CommonHeadState"),
+  DurabilityDamageHeadState_1 = require("./DurabilityDamageHeadState"),
+  DurabilityHeadState_1 = require("./DurabilityHeadState"),
+  EliteMonsterHeadStateView_1 = require("./EliteMonsterHeadStateView"),
+  GuardianHeadState_1 = require("./GuardianHeadState"),
+  HeadStateData_1 = require("./HeadStateData"),
+  MingSuTiHeadState_1 = require("./MingSuTiHeadState"),
+  ProgressControlHeadState_1 = require("./ProgressControlHeadState"),
+  headStateViewMap = new Map([
+    [1, CommonHeadState_1.CommonHeadState],
+    [2, EliteMonsterHeadStateView_1.EliteMonsterHeadStateView],
+    [4, MingSuTiHeadState_1.MingSuTiHeadState],
+    [5, GuardianHeadState_1.GuardianHeadState],
+    [6, DurabilityHeadState_1.DurabilityHeadState],
+    [7, DurabilityDamageHeadState_1.DurabilityDamageHeadState],
+    [8, DurabilityDamageHeadState_1.DurabilityDamageHeadState],
+    [9, ProgressControlHeadState_1.ProgressControlHeadState],
+  ]);
 class BattleHeadStatePanel {
   constructor() {
     (this.Wat = new Map()),
@@ -47,7 +47,7 @@ class BattleHeadStatePanel {
       (this.qot = 0),
       (this.tht = 0),
       (this.iht = (t, e, a) => {
-        let i = EntitySystem_1.EntitySystem.Get(t);
+        var i = EntitySystem_1.EntitySystem.Get(t);
         i?.Valid &&
           CharacterController_1.CharacterController.GetCharacter(i) &&
           !i.GetComponent(185).HasTag(1008164187) &&
@@ -55,7 +55,7 @@ class BattleHeadStatePanel {
           i.OnHealthChanged(t);
       }),
       (this.rht = (t) => {
-        this.nht(t.Id) === 8 &&
+        8 === this.nht(t.Id) &&
           this.sht(t) &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -80,7 +80,7 @@ class BattleHeadStatePanel {
               ),
             e <= 0)
           ) {
-            const i = this.oht(t.Id);
+            var i = this.oht(t.Id);
             if (i)
               switch (i.HeadStateType) {
                 case 7:
@@ -131,7 +131,7 @@ class BattleHeadStatePanel {
               this.aht(t.Entity, a));
       }),
       (this._ht = (t, e, a) => {
-        const i = t.GetComponent(0)?.GetPbDataId();
+        var i = t.GetComponent(0)?.GetPbDataId();
         if (
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -177,7 +177,7 @@ class BattleHeadStatePanel {
               ["PbDataId", i],
               ["ProgressData", a],
             ),
-          a.ProgressCtrlType === "CaptureStrategicPoint"
+          "CaptureStrategicPoint" === a.ProgressCtrlType
             ? this.aht(t, a.CurrentValue / a.MaxValue, !1)
             : Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
@@ -196,7 +196,7 @@ class BattleHeadStatePanel {
         this.ClearAllHeadState();
       }),
       (this.OnAddOrRemoveBuff = (t, e, a, i) => {
-        const r = this.oht(t);
+        var r = this.oht(t);
         r && r.AddOrRemoveBuff(t, e, a, i);
       }),
       (this.OnRoleLevelChange = (t, e, a) => {
@@ -220,12 +220,12 @@ class BattleHeadStatePanel {
       (this.Jat = CommonParamById_1.configCommonParamById.GetIntConfig(
         "GameplayStateShowDistance",
       ));
-    const t = CommonParamById_1.configCommonParamById.GetStringConfig(
-      "HeadStateScaleCurvePath",
-    );
-    const e = CommonParamById_1.configCommonParamById.GetStringConfig(
-      "DurabilityHeadStateScaleCurvePath",
-    );
+    var t = CommonParamById_1.configCommonParamById.GetStringConfig(
+        "HeadStateScaleCurvePath",
+      ),
+      e = CommonParamById_1.configCommonParamById.GetStringConfig(
+        "DurabilityHeadStateScaleCurvePath",
+      );
     (this.eht = CommonParamById_1.configCommonParamById.GetIntConfig(
       "TempHeadStateHideTime",
     )),
@@ -257,7 +257,7 @@ class BattleHeadStatePanel {
       );
   }
   InitializeEntityList() {
-    const t = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
+    var t = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
     if (t) {
       for (const e of t) e.IsInit && this.mht(e.Entity) && this.dht(e.Entity);
       this.RefreshAllHeadState(0);
@@ -359,8 +359,8 @@ class BattleHeadStatePanel {
   }
   RefreshAllHeadState(t) {
     for (const i of this.Wat.values()) {
-      var e;
-      const a = i.GetEntityId();
+      var e,
+        a = i.GetEntityId();
       this.fht(i)
         ? (e = this.oht(a))
           ? this.pht(e, i.DistanceSquared, t)
@@ -371,9 +371,9 @@ class BattleHeadStatePanel {
   fht(t) {
     if (t.IsEntityActive() && !t.HasDeadTag && !t.HasHideTag) {
       t.RefreshDistance();
-      const e = t.DistanceSquared;
-      const a = t.GetHeadStateType();
-      if (a === 1 || a === 2) {
+      var e = t.DistanceSquared,
+        a = t.GetHeadStateType();
+      if (1 === a || 2 === a) {
         if (e <= this.$at) return !1;
         if (t.HasFightTag) return !0;
         if (e <= this.Xat) return !0;
@@ -386,13 +386,13 @@ class BattleHeadStatePanel {
   }
   pht(t, e, a) {
     let i = -1;
-    t.HeadStateType === 1 || t.HeadStateType === 2
+    1 === t.HeadStateType || 2 === t.HeadStateType
       ? this.zat && (i = this.zat.GetFloatValue(e))
       : this.Zat && (i = this.Zat.GetFloatValue(e)),
       i < 0 || t.OnRefresh(e, i, a);
   }
   RefreshCurrentRole() {
-    const t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     this.Qat = t?.Id ?? 0;
   }
   OnCreateEntity(t) {
@@ -403,8 +403,8 @@ class BattleHeadStatePanel {
   }
   dht(t, e) {
     if (ObjectSystem_1.ObjectSystem.IsValid(t)) {
-      const a = t.Id;
-      let i = this.nht(a);
+      var a = t.Id,
+        i = this.nht(a);
       if (i)
         if (!this.Wat.has(a))
           return (
@@ -416,7 +416,7 @@ class BattleHeadStatePanel {
     }
   }
   aht(t, e, a = !0) {
-    let i;
+    var i;
     (a && !this.eht) ||
       ((i = this.oht(t.Id))
         ? a && i.ActivateHideTimeDown(this.eht, this.cht)
@@ -436,17 +436,17 @@ class BattleHeadStatePanel {
     t && (t.Clear(), this.Wat.delete(e));
   }
   async Iht(a) {
-    const i = a.GetHeadStateType();
-    var r = headStateViewMap.get(i);
+    var i = a.GetHeadStateType(),
+      r = headStateViewMap.get(i);
     if (r) {
-      const s = a.GetEntityId();
-      var r = new r();
+      var s = a.GetEntityId(),
+        r = new r();
       this.Kat.set(s, r);
-      let t = void 0;
-      let e = void 0;
+      let t = void 0,
+        e = void 0;
       if (
         ((e =
-          i === 1 || i === 2
+          1 === i || 2 === i
             ? ((t = this.Xat), this.$at)
             : ((t = this.Yat), this.Jat)),
         await r.InitializeHeadState(
@@ -464,12 +464,12 @@ class BattleHeadStatePanel {
     }
   }
   async Mht(t) {
-    const e = t.GetEntityId();
+    var e = t.GetEntityId();
     if (e !== this.Qat && (t.IsNormalMonster() || t.IsSceneItem()))
       return this.Iht(t);
   }
   Sht(t, e = !1) {
-    const a = this.oht(t);
+    var a = this.oht(t);
     a
       ? (e &&
           Log_1.Log.CheckInfo() &&
@@ -489,7 +489,7 @@ class BattleHeadStatePanel {
         );
   }
   yht(t, e = !1) {
-    let a;
+    var a;
     t?.Valid
       ? ((a = t.Id), this.Sht(a, e))
       : e &&
@@ -529,4 +529,4 @@ class BattleHeadStatePanel {
   (BattleHeadStatePanel.Tht = void 0),
   (BattleHeadStatePanel.vht = void 0),
   (BattleHeadStatePanel.Eht = void 0);
-// # sourceMappingURL=BattleHeadStatePanel.js.map
+//# sourceMappingURL=BattleHeadStatePanel.js.map

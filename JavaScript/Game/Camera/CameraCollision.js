@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraCollision = void 0);
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const QueryTypeDefine_1 = require("../../Core/Define/QueryTypeDefine");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../Core/Utils/TraceElementCommon");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const GlobalData_1 = require("../GlobalData");
-const ModelManager_1 = require("../Manager/ModelManager");
-const MIN_DITHER = 0.01;
-const MAX_VALUE = 9999999;
-const PROBE_RATIO = 4;
-const PLAYER_COLLISION_RADUIS = 20;
-const PROFILE_KEY1 = "FightCameraLogicComponent_CheckCollision_Camera";
-const PROFILE_KEY2 = "FightCameraLogicComponent_CheckCollision_Npc";
-const PROFILE_KEY3 =
-  "FightCameraLogicComponent_CheckCollision_Camera_Caught_PlayerLocation";
-const PROFILE_KEY4 = "FightCameraLogicComponent_CheckCollision_Player";
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  QueryTypeDefine_1 = require("../../Core/Define/QueryTypeDefine"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../Core/Utils/TraceElementCommon"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  GlobalData_1 = require("../GlobalData"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  MIN_DITHER = 0.01,
+  MAX_VALUE = 9999999,
+  PROBE_RATIO = 4,
+  PLAYER_COLLISION_RADUIS = 20,
+  PROFILE_KEY1 = "FightCameraLogicComponent_CheckCollision_Camera",
+  PROFILE_KEY2 = "FightCameraLogicComponent_CheckCollision_Npc",
+  PROFILE_KEY3 =
+    "FightCameraLogicComponent_CheckCollision_Camera_Caught_PlayerLocation",
+  PROFILE_KEY4 = "FightCameraLogicComponent_CheckCollision_Player";
 class CameraCollision {
   constructor() {
     (this.Hh = void 0),
@@ -189,7 +189,7 @@ class CameraCollision {
         PROFILE_KEY1,
       ) &&
         ((this.Nae = this.the(this._ae, this.uae, this.Fse.HitResult)),
-        this.Nae >= 0) &&
+        0 <= this.Nae) &&
         (TraceElementCommon_1.TraceElementCommon.GetHitLocation(
           this.Fse.HitResult,
           this.Nae,
@@ -198,13 +198,14 @@ class CameraCollision {
         (this.Oae = !0));
   }
   Yae() {
-    let t;
+    var t;
     (this.kae = !1),
       this.Oae &&
         (t = this.Fse.HitResult?.Components?.Get(this.Nae))?.IsValid() &&
-        t.GetCollisionResponseToChannel(
-          QueryTypeDefine_1.KuroCollisionChannel.Water,
-        ) === 2 &&
+        2 ===
+          t.GetCollisionResponseToChannel(
+            QueryTypeDefine_1.KuroCollisionChannel.Water,
+          ) &&
         ((this.Pae.Z = Math.max(
           this.Pae.Z,
           this.Pae.Z +
@@ -214,7 +215,7 @@ class CameraCollision {
         (this.kae = !0));
   }
   $ae(t, i) {
-    let s;
+    var s;
     this.Oae &&
       (t.Subtraction(i, this.Uae),
       this.Uae.Normalize(),
@@ -354,8 +355,8 @@ class CameraCollision {
   zae(t, i, s) {
     switch (this.CurrentBlendState) {
       case 1:
-        var h = this.qae - this.Hh.InSpeed * s;
-        var h = Math.max(this.Gae, h);
+        var h = this.qae - this.Hh.InSpeed * s,
+          h = Math.max(this.Gae, h);
         i.Subtraction(t, this.Uae),
           this.Uae.Normalize(),
           this.Uae.Multiply(h, this.bae),
@@ -388,14 +389,14 @@ class CameraCollision {
           this.Dae,
           this.xae,
         );
-      const i = TraceElementCommon_1.TraceElementCommon.SphereTrace(
-        this.Dae,
-        PROFILE_KEY2,
-      );
-      const s = this.Dae.HitResult.GetHitCount();
+      var i = TraceElementCommon_1.TraceElementCommon.SphereTrace(
+          this.Dae,
+          PROFILE_KEY2,
+        ),
+        s = this.Dae.HitResult.GetHitCount();
       if (i) {
         this.ahe(this.Dae.HitResult);
-        for (let [h, e] of this.Qae)
+        for (var [h, e] of this.Qae)
           this.hhe(h)
             ? (h.SetDitherEffect(1, 1),
               Log_1.Log.CheckDebug() &&
@@ -414,9 +415,9 @@ class CameraCollision {
                     h?.GetName(),
                   ])));
       }
-      const r = this.Kae.values();
+      var r = this.Kae.values();
       for (let t = 0; t < this.Kae.size - s; t++) {
-        const a = r.next();
+        var a = r.next();
         a.value &&
           a.value instanceof TsBaseCharacter_1.default &&
           a.value.IsValid() &&
@@ -429,7 +430,7 @@ class CameraCollision {
           this.Kae.delete(a.value);
       }
     } else
-      this.Kae.size > 0 &&
+      0 < this.Kae.size &&
         (this.Kae.forEach((t) => {
           t?.IsValid() &&
             (t.SetDitherEffect(1, 1), Log_1.Log.CheckDebug()) &&
@@ -467,7 +468,7 @@ class CameraCollision {
     this.Kae.clear();
   }
   pae() {
-    let t;
+    var t;
     this.Hh.NearCollisionProbeSize <= this.Hh.CollisionProbeSize
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -492,14 +493,14 @@ class CameraCollision {
           this.Hh.CurrentCollisionSize,
           this.Hh.NearCollisionProbeSize,
         )),
-        this.CurrentBlendState !== 0 &&
+        0 !== this.CurrentBlendState &&
           (this.Hh.CurrentCollisionSize = this.Hh.NearCollisionProbeSize));
   }
   ihe(t, i, s) {
     return i.Multiply(s, this.Lz), t.Addition(this.Lz, this.Lz), this.Lz;
   }
   ohe() {
-    return this.Hh.CameraDialogueController.State !== 0
+    return 0 !== this.Hh.CameraDialogueController.State
       ? ((this.CurrentBlendState = this.Oae ? 2 : 0), !0)
       : !!ModelManager_1.ModelManager.GameModeModel.IsSilentLogin &&
           !(this.CurrentBlendState = 0);
@@ -511,7 +512,7 @@ class CameraCollision {
     return !!t.GetEntityNoBlueprint()?.GetComponent(185)?.HasTag(-1151151013);
   }
   nhe() {
-    let t, i;
+    var t, i;
     (MathUtils_1.MathUtils.IsNearlyEqual(
       this.Hae,
       ModelManager_1.ModelManager.CameraModel.CameraDitherStartHideDistance,
@@ -532,11 +533,11 @@ class CameraCollision {
       this.Pae.Addition(this.Lz, this.xae);
   }
   ahe(i) {
-    const s = i.GetHitCount();
+    var s = i.GetHitCount();
     this.Qae.clear();
     for (let t = 0; t < s; ++t) {
-      var h;
-      const e = i.Actors.Get(t);
+      var h,
+        e = i.Actors.Get(t);
       e &&
         e instanceof UE.Object &&
         e.IsValid() &&
@@ -555,9 +556,9 @@ class CameraCollision {
   }
   lhe(t, i) {
     if (!t?.IsValid() || !t.CapsuleComponent) return 1;
-    let s = this.Hh.CompleteHideDistance;
-    let h = this.Hh.StartHideDistance;
-    let e = this.Hh.StartDitherValue;
+    let s = this.Hh.CompleteHideDistance,
+      h = this.Hh.StartHideDistance,
+      e = this.Hh.StartDitherValue;
     return (
       t.CapsuleComponent.GetCollisionObjectType() ===
         QueryTypeDefine_1.KuroCollisionChannel.PawnMonster &&
@@ -570,27 +571,28 @@ class CameraCollision {
   }
   the(i, t, s) {
     if (i.Z > t.Z) return 0;
-    let h = -1;
-    let e = MAX_VALUE;
-    const r = s.GetHitCount();
+    let h = -1,
+      e = MAX_VALUE;
+    var r = s.GetHitCount();
     for (let t = 0; t < r; ++t) {
-      var a;
-      const o = this.Fse.HitResult?.Components?.Get(t);
+      var a,
+        o = this.Fse.HitResult?.Components?.Get(t);
       o?.IsValid() &&
         (TraceElementCommon_1.TraceElementCommon.GetImpactPoint(s, t, this.Lz),
         (a = Vector_1.Vector.DistSquared(this.Lz, i)),
-        (o.GetCollisionResponseToChannel(
-          QueryTypeDefine_1.KuroCollisionChannel.Water,
-        ) === 2 &&
+        (2 ===
+          o.GetCollisionResponseToChannel(
+            QueryTypeDefine_1.KuroCollisionChannel.Water,
+          ) &&
           a <= this.Wae) ||
           (a < e && ((e = a), (h = t))));
     }
     return h;
   }
   _he(i) {
-    const s = i.GetHitCount();
+    var s = i.GetHitCount();
     for (let t = 0; t < s; ++t) {
-      const h = i.Actors.Get(t);
+      var h = i.Actors.Get(t);
       if (h)
         if (
           h instanceof UE.Object &&
@@ -625,4 +627,4 @@ class CameraCollision {
   }
 }
 exports.CameraCollision = CameraCollision;
-// # sourceMappingURL=CameraCollision.js.map
+//# sourceMappingURL=CameraCollision.js.map

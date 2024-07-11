@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DropDownTitle = exports.LordGymChallengeRecordView = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const CommonDropDown_1 = require("../../Common/DropDown/CommonDropDown");
-const DropDownItemBase_1 = require("../../Common/DropDown/Item/DropDownItemBase");
-const TitleItemBase_1 = require("../../Common/DropDown/Item/TitleItemBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew");
-const LordGymDefine_1 = require("../LordGymDefine");
-const LordRecordItemView_1 = require("./LordRecordItemView");
-const ConfigCommon_1 = require("../../../../Core/Config/ConfigCommon");
-const MIN_DIFFICULTY = 1;
-const MAX_DIFFICULTY = 6;
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  CommonDropDown_1 = require("../../Common/DropDown/CommonDropDown"),
+  DropDownItemBase_1 = require("../../Common/DropDown/Item/DropDownItemBase"),
+  TitleItemBase_1 = require("../../Common/DropDown/Item/TitleItemBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
+  LordGymDefine_1 = require("../LordGymDefine"),
+  LordRecordItemView_1 = require("./LordRecordItemView"),
+  ConfigCommon_1 = require("../../../../Core/Config/ConfigCommon"),
+  MIN_DIFFICULTY = 1,
+  MAX_DIFFICULTY = 6;
 class LordGymChallengeRecordView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -80,7 +80,7 @@ class LordGymChallengeRecordView extends UiViewBase_1.UiViewBase {
     this.OSi();
   }
   HSi() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.LordGymConfig.GetLordGymAllConfigByDifficulty(
         this.wSi,
       );
@@ -94,7 +94,7 @@ class LordGymChallengeRecordView extends UiViewBase_1.UiViewBase {
   OSi() {
     this.GetButton(3)?.SetSelfInteractive(this.wSi !== MIN_DIFFICULTY),
       this.GetButton(4)?.SetSelfInteractive(this.wSi !== MAX_DIFFICULTY);
-    const e = this.HSi();
+    var e = this.HSi();
     e && this.bSi.RefreshByData(e),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(6),
@@ -128,4 +128,4 @@ class DropDownTitle extends TitleItemBase_1.TitleItemBase {
   }
 }
 exports.DropDownTitle = DropDownTitle;
-// # sourceMappingURL=LordGymChallengeRecordView.js.map
+//# sourceMappingURL=LordGymChallengeRecordView.js.map

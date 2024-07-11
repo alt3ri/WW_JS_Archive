@@ -1,50 +1,55 @@
 "use strict";
-let CharacterFootEffectComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, r) {
-    let o;
-    const s = arguments.length;
-    let h =
-      s < 3 ? e : r === null ? (r = Object.getOwnPropertyDescriptor(e, i)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      h = Reflect.decorate(t, e, i, r);
-    else
-      for (let a = t.length - 1; a >= 0; a--)
-        (o = t[a]) && (h = (s < 3 ? o(h) : s > 3 ? o(e, i, h) : o(e, i)) || h);
-    return s > 3 && h && Object.defineProperty(e, i, h), h;
-  };
+var CharacterFootEffectComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, r) {
+      var o,
+        s = arguments.length,
+        h =
+          s < 3
+            ? e
+            : null === r
+              ? (r = Object.getOwnPropertyDescriptor(e, i))
+              : r;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        h = Reflect.decorate(t, e, i, r);
+      else
+        for (var a = t.length - 1; 0 <= a; a--)
+          (o = t[a]) &&
+            (h = (s < 3 ? o(h) : 3 < s ? o(e, i, h) : o(e, i)) || h);
+      return 3 < s && h && Object.defineProperty(e, i, h), h;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterFootEffectComponent = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../Core/Common/Time");
-const QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const DataTableUtil_1 = require("../../../../../Core/Utils/DataTableUtil");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const EffectSystem_1 = require("../../../../Effect/EffectSystem");
-const GameQualitySettingsManager_1 = require("../../../../GameQualitySettings/GameQualitySettingsManager");
-const GlobalData_1 = require("../../../../GlobalData");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const CharacterNameDefines_1 = require("../CharacterNameDefines");
-const CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes");
-const PROFILE_KEY = "CharacterFootEffectComponent_FootTrace";
-const FOOTPRINT_SPAWN_DURATION = 200;
-const FOOTPRINT_SPAWN_MIN_DISTANCE_SQUARED = 500;
-const SPRINT_FOOTEFFECT_DETECT_HEIGHT = 50;
-const NORMAL_FOOTEFFECT_DETECT_HEIGHT = 15;
-const MATERIAL_ID_WAT = 6;
-const MATERIAL_ID_SHR = 14;
-const FOOTPRINT_FORWARD_OFFSET = 5;
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  DataTableUtil_1 = require("../../../../../Core/Utils/DataTableUtil"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  EffectSystem_1 = require("../../../../Effect/EffectSystem"),
+  GameQualitySettingsManager_1 = require("../../../../GameQualitySettings/GameQualitySettingsManager"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  CharacterNameDefines_1 = require("../CharacterNameDefines"),
+  CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
+  PROFILE_KEY = "CharacterFootEffectComponent_FootTrace",
+  FOOTPRINT_SPAWN_DURATION = 200,
+  FOOTPRINT_SPAWN_MIN_DISTANCE_SQUARED = 500,
+  SPRINT_FOOTEFFECT_DETECT_HEIGHT = 50,
+  NORMAL_FOOTEFFECT_DETECT_HEIGHT = 15,
+  MATERIAL_ID_WAT = 6,
+  MATERIAL_ID_SHR = 14,
+  FOOTPRINT_FORWARD_OFFSET = 5;
 let CharacterFootEffectComponent =
   (CharacterFootEffectComponent_1 = class CharacterFootEffectComponent extends (
     EntityComponent_1.EntityComponent
@@ -82,14 +87,14 @@ let CharacterFootEffectComponent =
     }
     OnStart() {
       super.OnStart();
-      let t = this.Entity.GetComponent(3);
+      var t = this.Entity.GetComponent(3);
       if (!t?.Valid) return !1;
-      const e = this.Entity.GetComponent(160);
+      var e = this.Entity.GetComponent(160);
       if (!e?.Valid) return !1;
-      const i = this.Entity.GetComponent(42);
+      var i = this.Entity.GetComponent(42);
       if (!i?.Valid) return !1;
       if (!this.Entity.GetComponent(0)?.Valid) return !1;
-      const r = this.Entity.GetComponent(158);
+      var r = this.Entity.GetComponent(158);
       if (!r?.Valid) return !1;
       (this.Hte = t),
         (this.oRe = e),
@@ -128,7 +133,7 @@ let CharacterFootEffectComponent =
       this.oVr(), this.rVr(), this.nVr(), this.aVr();
     }
     oVr() {
-      let t;
+      var t;
       UE.KuroStaticLibrary.IsObjectClassByName(
         this.oRe.MainAnimInstance,
         CharacterNameDefines_1.CharacterNameDefines.ABP_BASEROLE,
@@ -140,7 +145,7 @@ let CharacterFootEffectComponent =
               ? (this.X5r = !1)
               : ((this.K5r = !0), (this.X5r = !0))
             : (this.K5r = !1),
-          t > 0.5
+          0.5 < t
             ? this.Q5r
               ? (this.X5r = !1)
               : ((this.Q5r = !0), (this.X5r = !0))
@@ -215,12 +220,12 @@ let CharacterFootEffectComponent =
     }
     hVr(i, r) {
       if (r?.IsValid()) {
-        const o = this.W5r.MoveState;
+        var o = this.W5r.MoveState;
         if (
           o === CharacterUnifiedStateTypes_1.ECharMoveState.Sprint ||
           r?.bBlockingHit
         ) {
-          let s = this.Hte?.Actor;
+          var s = this.Hte?.Actor;
           if (
             s?.IsValid() &&
             (EventSystem_1.EventSystem.Emit(
@@ -228,7 +233,7 @@ let CharacterFootEffectComponent =
             ),
             (0, RegisterComponent_1.isComponentInstance)(this.j5r, 170))
           ) {
-            const h = this.j5r?.GetAkComponent();
+            var h = this.j5r?.GetAkComponent();
             if (h?.IsValid()) {
               let t = !1;
               (t =
@@ -237,7 +242,7 @@ let CharacterFootEffectComponent =
                 (r =
                   UE.KuroRenderingRuntimeBPPluginBPLibrary.GetComponentPhysicalMaterial(
                     s,
-                  ))?.IsValid() && r.GetName() === "WaterLightLand")
+                  ))?.IsValid() && "WaterLightLand" === r.GetName())
                   ? !0
                   : t)
                 ? (this.j5r.FootstepTexture.State = "WaterSurface")
@@ -271,7 +276,7 @@ let CharacterFootEffectComponent =
         this.Q5r && this.X5r && this.J5r && this.DIn(this.$5r?.HitResult));
     }
     DIn(t) {
-      let e, i, r;
+      var e, i, r;
       !t?.bBlockingHit ||
         Time_1.Time.Now - this.tVr < FOOTPRINT_SPAWN_DURATION ||
         ((e = this.TIn),
@@ -368,4 +373,4 @@ let CharacterFootEffectComponent =
       CharacterFootEffectComponent,
     )),
   (exports.CharacterFootEffectComponent = CharacterFootEffectComponent);
-// # sourceMappingURL=CharacterFootEffectComponent.js.map
+//# sourceMappingURL=CharacterFootEffectComponent.js.map

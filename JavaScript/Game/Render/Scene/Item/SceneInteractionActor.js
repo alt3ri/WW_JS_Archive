@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../Core/Actor/ActorSystem");
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EffectSystem_1 = require("../../../Effect/EffectSystem");
-const GlobalData_1 = require("../../../GlobalData");
-const AttachToActorController_1 = require("../../../World/Controller/AttachToActorController");
-const ItemMaterialManager_1 = require("./MaterialController/ItemMaterialManager");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  ActorSystem_1 = require("../../../../Core/Actor/ActorSystem"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  AttachToActorController_1 = require("../../../World/Controller/AttachToActorController"),
+  ItemMaterialManager_1 = require("./MaterialController/ItemMaterialManager");
 class SceneInteractionActor extends UE.KuroSceneInteractionActor {
   constructor() {
     super(...arguments),
@@ -55,7 +55,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
   }
   get BasePlatform() {
     if (!this.BasePlatformInternal) {
-      let i = this.GetAttachParentActor();
+      var i = this.GetAttachParentActor();
       if (!i) return;
       (this.BasePlatformInternal = ActorSystem_1.ActorSystem.Get(
         UE.BP_BasePlatform_C.StaticClass(),
@@ -77,7 +77,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       let t = void 0;
       t =
         (t =
-          this.CollisionActors && this.CollisionActors.Num() > 0
+          this.CollisionActors && 0 < this.CollisionActors.Num()
             ? this.CollisionActors?.Get(0)
             : t) || i;
       (i = (0, puerts_1.$ref)(void 0)),
@@ -115,7 +115,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       (this.IsPlayBack = !this.IsPlayBack));
   }
   PlayIndependentEffect(t) {
-    const i = this.Effects.Get(t);
+    var i = this.Effects.Get(t);
     if (
       i &&
       (i.Effect &&
@@ -135,7 +135,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
             ));
   }
   EndIndependentEffect(t) {
-    const i = this.Effects.Get(t);
+    var i = this.Effects.Get(t);
     if (
       i &&
       (i.Effect &&
@@ -147,7 +147,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       ItemMaterialManager_1.ItemMaterialManager.AllActorControllerInfoMap)
     )
       for (let t = 0; t < i.Material.Actors.Num(); t++) {
-        const e = i.Material.TailIndex - t;
+        var e = i.Material.TailIndex - t;
         ItemMaterialManager_1.ItemMaterialManager.DisableActorData(e);
       }
   }
@@ -177,7 +177,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
   }
   UpdateTimeDilation() {
     if (this.CurrentState) {
-      const t = this.CustomTimeDilation;
+      var t = this.CustomTimeDilation;
       if (
         (this.CurrentState.AnimMontage?.SkeletalMesh &&
           this.CurrentState.AnimMontage.SkeletalMesh.SkeletalMeshComponent.SetPlayRate(
@@ -186,8 +186,8 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
         this.ActiveSequenceDirectorMap && this.DirectorConfigMap)
       )
         for (var [, i] of this.ActiveSequenceDirectorMap) {
-          const e = i.SequencePlayer;
-          var i = this.DirectorConfigMap.get(i);
+          var e = i.SequencePlayer,
+            i = this.DirectorConfigMap.get(i);
           e?.IsValid() && i && e.SetPlayRate(i.PlayRate * t);
         }
       if (this.PlayingEffectIdSet)
@@ -219,13 +219,13 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       this.SkeletalMeshActors)
     )
       for (let t = 0; t < this.SkeletalMeshActors.Num(); t++) {
-        const e = this.SkeletalMeshActors.Get(t);
-        const s = e.AddComponentByClass(
-          UE.CharRenderingComponent_C.StaticClass(),
-          !1,
-          MathUtils_1.MathUtils.DefaultTransform,
-          !1,
-        );
+        var e = this.SkeletalMeshActors.Get(t),
+          s = e.AddComponentByClass(
+            UE.CharRenderingComponent_C.StaticClass(),
+            !1,
+            MathUtils_1.MathUtils.DefaultTransform,
+            !1,
+          );
         this.CharRenderingComponents.set(s, t),
           s.Init(2),
           e.SkeletalMeshComponent &&
@@ -239,11 +239,11 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
     )
       for (let t = 0; t < this.States.Num(); t++)
         if (this.States.IsValidIndex(t)) {
-          const r = this.States.GetKey(t);
-          const h = this.States.Get(r);
+          var r = this.States.GetKey(t),
+            h = this.States.Get(r);
           if (h && h.CrossStateEffects)
             for (let t = 0; t < h.CrossStateEffects.Num(); t++) {
-              const a = h.CrossStateEffects.Get(t);
+              var a = h.CrossStateEffects.Get(t);
               a &&
                 a.Effect &&
                 (this.CrossStateEffectActors ||
@@ -254,9 +254,9 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
     if (this.ReferenceActors?.Num()) {
       this.ActorsOriginalRelTransform = new Map();
       for (let t = 0; t < this.ReferenceActors.Num(); ++t) {
-        var o;
-        var n = this.ReferenceActors.GetKey(t);
-        var n = this.ReferenceActors.Get(n);
+        var o,
+          n = this.ReferenceActors.GetKey(t),
+          n = this.ReferenceActors.Get(n);
         n &&
           ((o = n.GetTransform().GetRelativeTransform(this.GetTransform())),
           this.ActorsOriginalRelTransform.set(n, o));
@@ -265,7 +265,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
   }
   Clear() {
     if (void 0 !== this.ActiveSequenceDirectorMap)
-      for (const [t] of this.ActiveSequenceDirectorMap) this.StopSequence(t);
+      for (var [t] of this.ActiveSequenceDirectorMap) this.StopSequence(t);
   }
   GetActorByKey(t) {
     if (this.ReferenceActors) return this.ReferenceActors.Get(t);
@@ -306,7 +306,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
     void 0 === this.DirectorConfigMap && (this.DirectorConfigMap = new Map()),
       this.DirectorConfigMap.set(i, t),
       i.SetActorTickEnabled(!0);
-    let r = i?.GetComponentByClass(UE.AkComponent.StaticClass());
+    var r = i?.GetComponentByClass(UE.AkComponent.StaticClass());
     r?.IsValid() && r.SetComponentTickEnabled(!0),
       this.GetKuroSceneInteractionActorSystem().SetSequenceWithTargetLevelActor(
         i,
@@ -314,7 +314,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
         this,
       );
     for (let t = 0; t < e.Num(); t++) {
-      const h = e.Get(t);
+      var h = e.Get(t);
       h &&
         this.GetKuroSceneInteractionActorSystem().BindActorToLevelSequenceActor(
           h,
@@ -366,18 +366,18 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
             : t.ApplyDamage(t.K2_GetActorLocation(), this.HitDirection)));
   }
   GetActiveSequencePlaybackProgress(i) {
-    var i = this.GetDirectorBySequence(i);
-    let e = i?.SequencePlayer;
+    var i = this.GetDirectorBySequence(i),
+      e = i?.SequencePlayer;
     if (i && e?.IsValid()) {
       i = this.DirectorConfigMap?.get(i);
       if (i) {
-        var s = e.GetDuration().Time;
-        var s = s.FrameNumber.Value + s.SubFrame;
+        var s = e.GetDuration().Time,
+          s = s.FrameNumber.Value + s.SubFrame;
         if (!(s < 1)) {
-          var r = e.GetStartTime().Time;
-          var h = e.GetEndTime().Time;
-          var r = r.FrameNumber.Value + r.SubFrame;
-          var h = h.FrameNumber.Value + h.SubFrame;
+          var r = e.GetStartTime().Time,
+            h = e.GetEndTime().Time,
+            r = r.FrameNumber.Value + r.SubFrame,
+            h = h.FrameNumber.Value + h.SubFrame;
           if (!(h < r)) {
             (e = e.GetCurrentTime().Time),
               (e = e.FrameNumber.Value + e.SubFrame);
@@ -393,19 +393,19 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
     }
   }
   SetActiveSequencePlaybackProgress(i, e) {
-    var i = this.GetDirectorBySequence(i);
-    const s = i?.SequencePlayer;
+    var i = this.GetDirectorBySequence(i),
+      s = i?.SequencePlayer;
     if (i && s?.IsValid()) {
       i = this.DirectorConfigMap?.get(i);
       if (i) {
-        var r = s.GetDuration().Time;
-        var r = r.FrameNumber.Value + r.SubFrame;
-        var e = r * MathUtils_1.MathUtils.Clamp(e, 0, 1);
+        var r = s.GetDuration().Time,
+          r = r.FrameNumber.Value + r.SubFrame,
+          e = r * MathUtils_1.MathUtils.Clamp(e, 0, 1);
         if (!(r < 1 || r < e)) {
-          var r = s.GetStartTime().Time;
-          var h = s.GetEndTime().Time;
-          var r = r.FrameNumber.Value + r.SubFrame;
-          var h = h.FrameNumber.Value + h.SubFrame;
+          var r = s.GetStartTime().Time,
+            h = s.GetEndTime().Time,
+            r = r.FrameNumber.Value + r.SubFrame,
+            h = h.FrameNumber.Value + h.SubFrame;
           if (!(h < r)) {
             let t = 0;
             (t = i.Reverse ? h - e : r + e),
@@ -444,8 +444,8 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
     t && this.SetActiveSequencePlaybackProgress(t, i);
   }
   GetActiveSequenceDurationTime(t) {
-    var t = this.GetDirectorBySequence(t);
-    let i = t?.SequencePlayer;
+    var t = this.GetDirectorBySequence(t),
+      i = t?.SequencePlayer;
     if (t && i?.IsValid() && this.DirectorConfigMap?.get(t)) {
       (t = i.GetDuration()), (i = t.Time.FrameNumber.Value + t.Time.SubFrame);
       if (!(i < 1)) return i * (t.Rate.Denominator / t.Rate.Numerator);
@@ -456,9 +456,9 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
     if (t) return this.GetActiveSequenceDurationTime(t);
   }
   SetActiveSequenceDurationTime(t, i) {
-    let e;
-    var t = this.GetDirectorBySequence(t);
-    const s = t?.SequencePlayer;
+    var e,
+      t = this.GetDirectorBySequence(t),
+      s = t?.SequencePlayer;
     t &&
       s?.IsValid() &&
       (!this.DirectorConfigMap?.get(t) ||
@@ -475,8 +475,8 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
     t && this.SetActiveSequenceDurationTime(t, i);
   }
   PauseActiveSequence(t) {
-    var t = this.GetDirectorBySequence(t);
-    const i = t?.SequencePlayer;
+    var t = this.GetDirectorBySequence(t),
+      i = t?.SequencePlayer;
     t && i?.IsValid() && (i.IsPaused() || i.Pause());
   }
   PauseActiveTagSequence(t) {
@@ -484,8 +484,8 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
     t && this.PauseActiveSequence(t);
   }
   ResumeActiveSequence(t, i = !1) {
-    var t = this.GetDirectorBySequence(t);
-    const e = t?.SequencePlayer;
+    var t = this.GetDirectorBySequence(t),
+      e = t?.SequencePlayer;
     t &&
       e?.IsValid() &&
       (t = this.DirectorConfigMap?.get(t)) &&
@@ -528,7 +528,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       (this.CurrentState = t));
   }
   PlayStateSequence(t, i) {
-    let e;
+    var e;
     t.Sequence.Sequence &&
       (this.ActiveStateSequence &&
         this.ActiveStateSequence !== t.Sequence.Sequence &&
@@ -559,20 +559,20 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
         );
   }
   PlayStateMaterialController(t, e) {
-    let s;
-    const r = t.MaterialControllers;
+    var s,
+      r = t.MaterialControllers;
     if (r)
       for (let i = 0; i < r.Num(); i++) {
         if (r.Get(i).Materials) {
-          const h = r.Get(i).Materials;
-          const a = r.Get(i).Actors;
+          var h = r.Get(i).Materials,
+            a = r.Get(i).Actors;
           for (let t = 0; t < a.Num(); t++) {
-            const o = a
+            var o = a
               .Get(t)
               .K2_GetComponentsByClass(UE.StaticMeshComponent.StaticClass());
             for (let t = 0; t < o.Num(); t++) {
-              const n = o.Get(t);
-              const f = n.GetNumMaterials();
+              var n = o.Get(t),
+                f = n.GetNumMaterials();
               for (let t = 0; t < f; t++) n.SetMaterial(t, h);
             }
           }
@@ -605,11 +605,11 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       i.CharacterDataGroupForOrgan?.IsValid() &&
       this.CharRenderingComponents
     ) {
-      const t = this.CharRenderingComponents.keys();
-      const e = Array.from(t);
-      const s = e.length;
+      var t = this.CharRenderingComponents.keys(),
+        e = Array.from(t),
+        s = e.length;
       for (let t = 0; t < s; t++) {
-        const r = e[t].AddMaterialControllerDataGroup(
+        var r = e[t].AddMaterialControllerDataGroup(
           i.CharacterDataGroupForOrgan,
         );
         this.CharRenderingComponents.set(e[t], r);
@@ -620,10 +620,10 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
     if (i.CrossStateEffects) {
       const a = new Set();
       for (let t = 0; t < i.CrossStateEffects.Num(); t++) {
-        var e;
-        var s;
-        var r;
-        const h = i.CrossStateEffects.Get(t);
+        var e,
+          s,
+          r,
+          h = i.CrossStateEffects.Get(t);
         h &&
           h.Effect?.IsValid() &&
           ((r = h.Effect),
@@ -656,22 +656,22 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
   PlayStateDestruction(e, s) {
     if (e.DestructibleActors)
       for (let t = 0, i = e.DestructibleActors.Num(); t < i; t++) {
-        const r = e.DestructibleActors.Get(t);
+        var r = e.DestructibleActors.Get(t);
         this.PlayDestruction(r, s);
       }
   }
   PlayTagDestruction(t, e) {
     if (this.TagsAndCorrespondingEffects) {
-      const s = this.TagsAndCorrespondingEffects.Get(t)?.DestructibleActors;
+      var s = this.TagsAndCorrespondingEffects.Get(t)?.DestructibleActors;
       if (s)
         for (let t = 0, i = s.Num(); t < i; t++) {
-          const r = s.Get(t);
+          var r = s.Get(t);
           this.PlayDestruction(r, e);
         }
     }
   }
   PlayTagSequence(t, i) {
-    let e, s;
+    var e, s;
     this.TagsAndCorrespondingEffects &&
       (t = this.TagsAndCorrespondingEffects.Get(t)) &&
       (e = t.Sequence) &&
@@ -686,7 +686,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
   }
   PlayTagEffect(t) {
     if (this.TagsAndCorrespondingEffects) {
-      const i = this.TagsAndCorrespondingEffects.Get(t)?.Effects;
+      var i = this.TagsAndCorrespondingEffects.Get(t)?.Effects;
       if (i)
         for (let t = 0; t < i.Num(); t++)
           this.PlayEffect(i.Get(t), "[SceneInteractionActor.PlayTagEffect]");
@@ -694,7 +694,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
   }
   StopTagEffect(t) {
     if (this.TagsAndCorrespondingEffects) {
-      const i = this.TagsAndCorrespondingEffects.Get(t)?.Effects;
+      var i = this.TagsAndCorrespondingEffects.Get(t)?.Effects;
       if (i)
         for (let t = 0; t < i.Num(); t++)
           this.StopEffect(
@@ -702,7 +702,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
             "[SceneInteractionActor.StopTagEffect]",
             !1,
           );
-      const e = this.TagsAndCorrespondingEffects.Get(t)?.EndEffects;
+      var e = this.TagsAndCorrespondingEffects.Get(t)?.EndEffects;
       if (e)
         for (let t = 0; t < e.Num(); t++)
           this.PlayEffect(
@@ -713,34 +713,33 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
   }
   PlayTagMaterialController(t) {
     if (this.TagsAndCorrespondingEffects) {
-      const e = this.TagsAndCorrespondingEffects.Get(t)?.MaterialControllers;
+      var e = this.TagsAndCorrespondingEffects.Get(t)?.MaterialControllers;
       if (e)
         for (let i = 0; i < e.Num(); i++) {
           if (e.Get(i).Materials) {
-            const s = e.Get(i).Materials;
-            const r = e.Get(i).Actors;
+            var s = e.Get(i).Materials,
+              r = e.Get(i).Actors;
             for (let t = 0; t < r.Num(); t++) {
-              const h = (0, puerts_1.$ref)(void 0);
-              const a =
-                (r.Get(t).GetAttachedActors(h), (0, puerts_1.$unref)(h));
+              var h = (0, puerts_1.$ref)(void 0),
+                a = (r.Get(t).GetAttachedActors(h), (0, puerts_1.$unref)(h));
               for (let t = 0; t < a.Num(); t++) {
-                const o = a
+                var o = a
                   .Get(t)
                   .K2_GetComponentsByClass(
                     UE.StaticMeshComponent.StaticClass(),
                   );
                 for (let t = 0; t < o.Num(); t++) {
-                  const n = o.Get(t);
-                  const f = n.GetNumMaterials();
+                  var n = o.Get(t),
+                    f = n.GetNumMaterials();
                   for (let t = 0; t < f; t++) n.SetMaterial(t, s);
                 }
               }
-              const c = r
+              var c = r
                 .Get(t)
                 .K2_GetComponentsByClass(UE.StaticMeshComponent.StaticClass());
               for (let t = 0; t < c.Num(); t++) {
-                const l = c.Get(t);
-                const v = l.GetNumMaterials();
+                var l = c.Get(t),
+                  v = l.GetNumMaterials();
                 for (let t = 0; t < v; t++) l.SetMaterial(t, s);
               }
             }
@@ -758,13 +757,13 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
   }
   StopTagMaterialController(t) {
     if (this.TagsAndCorrespondingEffects) {
-      const i = this.TagsAndCorrespondingEffects.Get(t)?.MaterialControllers;
+      var i = this.TagsAndCorrespondingEffects.Get(t)?.MaterialControllers;
       if (i)
         for (let t = 0; t < i.Num(); t++) {
-          const e = i.Get(t);
+          var e = i.Get(t);
           if (e.Actors)
             for (let t = 0; t < e.Actors.Num(); t++) {
-              const s = e.TailIndex - t;
+              var s = e.TailIndex - t;
               ItemMaterialManager_1.ItemMaterialManager.AllActorControllerInfoMap.has(
                 s,
               ) &&
@@ -787,17 +786,17 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
   PlayStateBasedEffect(i, e) {
     if (i.StateBasedEffect)
       for (let t = 0; t < i.StateBasedEffect.Num(); t++) {
-        const s = i.StateBasedEffect.Get(t).StateBasedEffect;
+        var s = i.StateBasedEffect.Get(t).StateBasedEffect;
         s?.IsValid() &&
-          (e === 0
+          (0 === e
             ? s.SetState(0)
-            : e === 1
+            : 1 === e
               ? s.SetState(1)
-              : e === 2
+              : 2 === e
                 ? s.SetState(2)
-                : e === 3
+                : 3 === e
                   ? s.SetState(3)
-                  : e === 4 && s.SetState(4));
+                  : 4 === e && s.SetState(4));
       }
   }
   PostStateAkEvent(t, i) {
@@ -812,18 +811,18 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
           ));
   }
   SetStateActorHide(t) {
-    const e = t.HideActors;
+    var e = t.HideActors;
     if (e)
       for (let t = 0, i = e.Num(); t < i; t++) {
-        const s = e.Get(t);
+        var s = e.Get(t);
         s && (s.SetActorHiddenInGame(!0), s.SetActorEnableCollision(!1));
       }
   }
   SetStateActorShow(t) {
-    const e = t.Actors;
+    var e = t.Actors;
     if (e)
       for (let t = 0, i = e.Num(); t < i; t++) {
-        const s = e.Get(t);
+        var s = e.Get(t);
         s && (s.SetActorHiddenInGame(!1), s.SetActorEnableCollision(!0));
       }
   }
@@ -836,7 +835,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
           "当前已经在投影中，重复调用投影接口",
         );
     else {
-      const e = this.ActorsForProjection;
+      var e = this.ActorsForProjection;
       if (
         (this.ProjectionRootActor?.IsValid() ||
           ((this.ProjectionRootActor = UE.KuroActorManager.SpawnActor(
@@ -849,7 +848,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       ) {
         this.IsProjecting = !0;
         for (let t = 0; t < e.Num(); t++) {
-          const s = UE.KuroStaticLibrary.SpawnActorFromAnother(e.Get(t));
+          var s = UE.KuroStaticLibrary.SpawnActorFromAnother(e.Get(t));
           if (s?.IsValid) {
             if (
               (s.K2_AttachToActor(
@@ -862,27 +861,27 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
               ),
               this.MaterialForProjection)
             ) {
-              const r = (0, puerts_1.$ref)(void 0);
-              const h = (s.GetAttachedActors(r), (0, puerts_1.$unref)(r));
+              var r = (0, puerts_1.$ref)(void 0),
+                h = (s.GetAttachedActors(r), (0, puerts_1.$unref)(r));
               for (let t = 0; t < h.Num(); t++) {
-                const a = h
+                var a = h
                   .Get(t)
                   .K2_GetComponentsByClass(
                     UE.StaticMeshComponent.StaticClass(),
                   );
                 for (let t = 0; t < a.Num(); t++) {
-                  const o = a.Get(t);
-                  const n = o.GetNumMaterials();
+                  var o = a.Get(t),
+                    n = o.GetNumMaterials();
                   for (let t = 0; t < n; t++)
                     o.SetMaterial(t, this.MaterialForProjection);
                 }
               }
-              const f = s.K2_GetComponentsByClass(
+              var f = s.K2_GetComponentsByClass(
                 UE.StaticMeshComponent.StaticClass(),
               );
               for (let t = 0; t < f.Num(); t++) {
-                const c = f.Get(t);
-                const l = c.GetNumMaterials();
+                var c = f.Get(t),
+                  l = c.GetNumMaterials();
                 for (let t = 0; t < l; t++)
                   c.SetMaterial(t, this.MaterialForProjection);
               }
@@ -896,10 +895,10 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
   }
   AddMatrialDataForChildrenActor(t, i) {
     if (t.IsValid()) {
-      const e = (0, puerts_1.$ref)(UE.NewArray(UE.Actor));
-      const s = (t.GetAttachedActors(e), (0, puerts_1.$unref)(e));
+      var e = (0, puerts_1.$ref)(UE.NewArray(UE.Actor)),
+        s = (t.GetAttachedActors(e), (0, puerts_1.$unref)(e));
       for (let t = 0; t < s.Num(); t++) {
-        const r = s.Get(t);
+        var r = s.Get(t);
         r.IsValid() &&
           ItemMaterialManager_1.ItemMaterialManager.AddMaterialData(r, i);
       }
@@ -917,8 +916,8 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
         Log_1.Log.Warn("RenderEffect", 32, "当前不在投影中，无法移除投影");
   }
   DestroyActor(t) {
-    const i = (0, puerts_1.$ref)(UE.NewArray(UE.Actor));
-    const e = (t.GetAttachedActors(i), (0, puerts_1.$unref)(i));
+    var i = (0, puerts_1.$ref)(UE.NewArray(UE.Actor)),
+      e = (t.GetAttachedActors(i), (0, puerts_1.$unref)(i));
     for (let t = 0; t < e.Num(); t++) this.DestroyActor(e.Get(t));
     t instanceof UE.BP_EffectActor_C && (t.StopEffect(), t.RemoveHandle()),
       t.K2_DestroyActor();
@@ -928,40 +927,40 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
   }
   SetTagActorHide(t) {
     if (this.TagsAndCorrespondingEffects) {
-      const e = this.TagsAndCorrespondingEffects.Get(t)?.HideActors;
+      var e = this.TagsAndCorrespondingEffects.Get(t)?.HideActors;
       if (e)
         for (let t = 0, i = e.Num(); t < i; t++) {
-          const s = e.Get(t);
+          var s = e.Get(t);
           s && (s.SetActorHiddenInGame(!0), s.SetActorEnableCollision(!1));
         }
     }
   }
   ResetTagActorHide(t) {
     if (this.TagsAndCorrespondingEffects) {
-      const e = this.TagsAndCorrespondingEffects.Get(t)?.HideActors;
+      var e = this.TagsAndCorrespondingEffects.Get(t)?.HideActors;
       if (e)
         for (let t = 0, i = e.Num(); t < i; t++) {
-          const s = e.Get(t);
+          var s = e.Get(t);
           s && (s.SetActorHiddenInGame(!1), s.SetActorEnableCollision(!0));
         }
     }
   }
   SetTagActorShow(t) {
     if (this.TagsAndCorrespondingEffects) {
-      const e = this.TagsAndCorrespondingEffects.Get(t)?.Actors;
+      var e = this.TagsAndCorrespondingEffects.Get(t)?.Actors;
       if (e)
         for (let t = 0, i = e.Num(); t < i; t++) {
-          const s = e.Get(t);
+          var s = e.Get(t);
           s && (s.SetActorHiddenInGame(!1), s.SetActorEnableCollision(!0));
         }
     }
   }
   ResetTagActorShow(t) {
     if (this.TagsAndCorrespondingEffects) {
-      const e = this.TagsAndCorrespondingEffects.Get(t)?.Actors;
+      var e = this.TagsAndCorrespondingEffects.Get(t)?.Actors;
       if (e)
         for (let t = 0, i = e.Num(); t < i; t++) {
-          const s = e.Get(t);
+          var s = e.Get(t);
           s && (s.SetActorHiddenInGame(!0), s.SetActorEnableCollision(!1));
         }
     }
@@ -976,7 +975,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
           ["Actor", this.LevelName],
           ["HandleID", this.HandleId],
         ));
-    const s = this.States.Get(t);
+    var s = this.States.Get(t);
     if (s)
       if (this.InTransition && !s.IsForceSetState)
         Log_1.Log.CheckWarn() &&
@@ -1009,7 +1008,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
         if (i && this.CurrentState) {
           i = this.CurrentState.TransitionMap.Get(t);
           if (void 0 !== i) {
-            const r = this.States.Get(i);
+            var r = this.States.Get(i);
             if (r)
               return (
                 (this.InTransition = !0),
@@ -1029,7 +1028,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
           (this.NextStateKey = void 0);
       }
     else
-      t !== 20 &&
+      20 !== t &&
         Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "RenderScene",
@@ -1047,7 +1046,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
         e.Sequence.Sequence !== t.Sequence.Sequence &&
         this.StopSequence(this.ActiveStateSequence);
       for (let t = 0; t < e.HideActors.Num(); t++) {
-        const i = e.HideActors.Get(t);
+        var i = e.HideActors.Get(t);
         i && (i.SetActorHiddenInGame(!1), i.SetActorEnableCollision(!0));
       }
       for (let t = 0; t < e.Effects.Num(); t++)
@@ -1055,16 +1054,16 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       if (ItemMaterialManager_1.ItemMaterialManager.AllActorControllerInfoMap)
         for (let i = 0; i < e.MaterialControllers.Num(); i++)
           for (let t = 0; t < e.MaterialControllers.Get(i).Actors.Num(); t++) {
-            const s = e.MaterialControllers.Get(i).TailIndex - t;
+            var s = e.MaterialControllers.Get(i).TailIndex - t;
             ItemMaterialManager_1.ItemMaterialManager.AllActorControllerInfoMap.has(
               s,
             ) && ItemMaterialManager_1.ItemMaterialManager.DisableActorData(s);
           }
       if (this.CharRenderingComponents) {
-        let r;
-        var t = this.CharRenderingComponents.keys();
-        const h = Array.from(t);
-        const a = h.length;
+        var r,
+          t = this.CharRenderingComponents.keys(),
+          h = Array.from(t),
+          a = h.length;
         for (let t = 0; t < a; t++)
           this.CharRenderingComponents.get(h[t]) &&
             (r = this.CharRenderingComponents.get(h[t])) &&
@@ -1074,7 +1073,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
   }
   CheckPlaying(t) {
     let i = !1;
-    let e;
+    var e;
     this.ActiveStateSequence &&
       (e = this.GetDirectorBySequence(
         this.ActiveStateSequence,
@@ -1111,14 +1110,14 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       void 0,
       !1,
     );
-    const t = s.SequencePlayer;
+    var t = s.SequencePlayer;
     if (t) {
       (s.bOverrideInstanceData = !0),
         (s.DefaultInstanceData.TransformOriginActor =
           this).ActiveSequenceDirectorMap.set(e, s);
       const r = () => {
         const t = s;
-        let i;
+        var i;
         t &&
           ((i = t.SequencePlayer) &&
             (i.OnStop.Remove(r), i.OnFinished.Remove(r)),
@@ -1164,4 +1163,4 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
   }
 }
 exports.default = SceneInteractionActor;
-// # sourceMappingURL=SceneInteractionActor.js.map
+//# sourceMappingURL=SceneInteractionActor.js.map

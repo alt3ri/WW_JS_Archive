@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonInputViewBase = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const UiTickViewBase_1 = require("../../../../Ui/Base/UiTickViewBase");
-const CdKeyInputController_1 = require("../../../CdKey/CdKeyInputController");
-const ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const ButtonAndSpriteItem_1 = require("../../Button/ButtonAndSpriteItem");
-const CommonInputViewDefine_1 = require("../Model/CommonInputViewDefine");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  UiTickViewBase_1 = require("../../../../Ui/Base/UiTickViewBase"),
+  CdKeyInputController_1 = require("../../../CdKey/CdKeyInputController"),
+  ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  ButtonAndSpriteItem_1 = require("../../Button/ButtonAndSpriteItem"),
+  CommonInputViewDefine_1 = require("../Model/CommonInputViewDefine");
 class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -28,17 +28,17 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
       (this.vUt = void 0),
       (this.UUt = void 0),
       (this.AUt = (t) => {
-        t && this.DUt === 1 && this.RefreshTips(0);
+        t && 1 === this.DUt && this.RefreshTips(0);
       }),
       (this.PUt = () => {
         this.CloseMe();
       }),
       (this.xUt = () => {
-        const t = this.vUt.GetText();
-        const i = StringUtils_1.StringUtils.GetStringRealCount(t);
+        var t = this.vUt.GetText(),
+          i = StringUtils_1.StringUtils.GetStringRealCount(t);
         i > this.GetMaxLimit()
           ? (this.RefreshTips(2), (this.j3 = 0))
-          : i === 0 && this.InputData.IsCheckNone
+          : 0 === i && this.InputData.IsCheckNone
             ? (this.RefreshTips(1), (this.j3 = 0))
             : i < this.GetMinLimit()
               ? (this.RefreshTips(3), (this.j3 = 0))
@@ -73,7 +73,7 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
           this.ConfirmButton.SetSelfInteractive(!1);
       }),
       (this.FUt = () => {
-        const t =
+        var t =
           CdKeyInputController_1.CdKeyInputController.GetCdKeyUseCd().toString();
         this.bUt("CDKey_CDtime", 0, t),
           this.ConfirmButton.SetSelfInteractive(!1);
@@ -82,20 +82,20 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
         this.vUt.SetText("", !0);
       }),
       (this.HUt = () => {
-        let t = (0, puerts_1.$ref)("");
+        var t = (0, puerts_1.$ref)("");
         UE.LGUIBPLibrary.ClipBoardPaste(t),
           (t = (0, puerts_1.$unref)(t)),
           StringUtils_1.StringUtils.IsEmpty(t) || this.vUt.SetText(t, !0);
       }),
       (this.jUt = () => {
-        const t =
+        var t =
           ConfigManager_1.ConfigManager.TextConfig.GetTextById(
             "SetNameSuccess",
           );
         ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(t);
       }),
       (this.WUt = () => {
-        const t =
+        var t =
           ConfigManager_1.ConfigManager.TextConfig.GetTextById(
             "SetSignSuccess",
           );
@@ -144,7 +144,7 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
   OnBeforeCreate() {
     (this.InputData = this.OpenParam),
       (this.RUt = {
-        0: this.wUt,
+        [0]: this.wUt,
         1: this.BUt,
         2: this.qUt,
         3: this.GUt,
@@ -155,7 +155,7 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
   }
   bUt(t, i, ...e) {
     this.SetTipsVisible(!0);
-    const s = this.GetText(2);
+    var s = this.GetText(2);
     LguiUtil_1.LguiUtil.SetLocalTextNew(s, t, e), (this.j3 = i);
   }
   kUt(t, i) {
@@ -165,7 +165,7 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
     this.KUt(), this.mGe(), this.RefreshTips(0), this.InitExtraParam();
   }
   SetClearOrPaste() {
-    this.vUt.GetText() === ""
+    "" === this.vUt.GetText()
       ? (this.UUt.RefreshSprite("SP_Paste"), this.UUt.BindCallback(this.HUt))
       : (this.UUt.RefreshSprite("SP_Clear"), this.UUt.BindCallback(this.VUt));
   }
@@ -234,4 +234,4 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.CommonInputViewBase = CommonInputViewBase;
-// # sourceMappingURL=CommonInputViewBase.js.map
+//# sourceMappingURL=CommonInputViewBase.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonRewardPopup = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract");
-const GenericLayout_1 = require("../Util/Layout/GenericLayout");
-const CommonItemSmallItemGrid_1 = require("./ItemGrid/CommonItemSmallItemGrid");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../Util/Layout/GenericLayout"),
+  CommonItemSmallItemGrid_1 = require("./ItemGrid/CommonItemSmallItemGrid");
 class CommonRewardPopup extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -44,8 +44,8 @@ class CommonRewardPopup extends UiPanelBase_1.UiPanelBase {
       this.nit.clear();
   }
   Refresh(t) {
-    const e = () => {
-      if (this.VIt.RewardLists.length !== 0) {
+    var e = () => {
+      if (0 !== this.VIt.RewardLists.length) {
         let t = this.VIt.MountItem.GetLGUISpaceAbsolutePosition();
         void 0 !== this.VIt.PosBias && (t = t.op_Addition(this.VIt.PosBias)),
           this.GetItem(2).SetLGUISpaceAbsolutePosition(t),
@@ -66,7 +66,7 @@ class RewardPanelItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.ComponentRegisterInfos = [[0, UE.UIItem]];
   }
   OnStart() {
-    const t = this.GetItem(0).GetOwner();
+    var t = this.GetItem(0).GetOwner();
     (this._Ne = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid()),
       this._Ne.Initialize(t);
   }
@@ -79,4 +79,4 @@ class RewardPanelItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.jIt = void 0;
   }
 }
-// # sourceMappingURL=CommonRewardPopup.js.map
+//# sourceMappingURL=CommonRewardPopup.js.map

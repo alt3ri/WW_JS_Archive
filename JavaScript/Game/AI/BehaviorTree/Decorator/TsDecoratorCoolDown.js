@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Time_1 = require("../../../../Core/Common/Time");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
+const UE = require("ue"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager");
 class TsDecoratorCoolDown extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -27,14 +27,14 @@ class TsDecoratorCoolDown extends UE.BTDecorator_BlueprintBase {
       (this.TsReturnTrueFirstTime = this.ReturnTrueFirstTime));
   }
   PerformConditionCheckAI(t, i) {
-    var t = t.AiController;
-    const e =
-      (this.InitTsVariables(),
-      ModelManager_1.ModelManager.GameModeModel.IsMulti
-        ? TimeUtil_1.TimeUtil.GetServerTimeStamp()
-        : Time_1.Time.WorldTime);
+    var t = t.AiController,
+      e =
+        (this.InitTsVariables(),
+        ModelManager_1.ModelManager.GameModeModel.IsMulti
+          ? TimeUtil_1.TimeUtil.GetServerTimeStamp()
+          : Time_1.Time.WorldTime);
     let s = t.GetCoolDownTime(this.TsId);
-    return s === 0
+    return 0 === s
       ? ((s =
           e +
           MathUtils_1.MathUtils.GetRandomRange(
@@ -57,4 +57,4 @@ class TsDecoratorCoolDown extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorCoolDown;
-// # sourceMappingURL=TsDecoratorCoolDown.js.map
+//# sourceMappingURL=TsDecoratorCoolDown.js.map

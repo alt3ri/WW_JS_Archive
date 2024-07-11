@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckFightEnergyBar = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const Log_1 = require("../../../Core/Common/Log");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  Log_1 = require("../../../Core/Common/Log");
 class LevelConditionCheckFightEnergyBar extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, r) {
-    let t, i, o;
-    return e.LimitParams.size === 0
+    var t, i, o;
+    return 0 === e.LimitParams.size
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
@@ -16,7 +16,7 @@ class LevelConditionCheckFightEnergyBar extends LevelGeneralBase_1.LevelConditio
             ["inConditionInfo.Id", e.Id],
           ),
         !1)
-      : (t = Number(e.LimitParams.get("机制条状态"))) < 0 || t > 2
+      : (t = Number(e.LimitParams.get("机制条状态"))) < 0 || 2 < t
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
@@ -30,9 +30,9 @@ class LevelConditionCheckFightEnergyBar extends LevelGeneralBase_1.LevelConditio
               (e = e.Entity.GetComponent(156)?.GetCurrentValue(
                 i.MaxAttributeId,
               )),
-              (o === 0 && t === 0) ||
-                (o > 0 && o < e && t === 2) ||
-                (e <= o && t === 1))
+              (0 === o && 0 === t) ||
+                (0 < o && o < e && 2 === t) ||
+                (e <= o && 1 === t))
             : (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "LevelCondition",
@@ -42,7 +42,7 @@ class LevelConditionCheckFightEnergyBar extends LevelGeneralBase_1.LevelConditio
               !1));
   }
   GetCurrentSpecialEnergyAttributeId(e) {
-    const r = e.GetComponent(185);
+    var r = e.GetComponent(185);
     if (r) {
       e = this.GetRoleConfig(e);
       if (e) {
@@ -57,7 +57,7 @@ class LevelConditionCheckFightEnergyBar extends LevelGeneralBase_1.LevelConditio
               AttributeId: e.AttributeId,
               MaxAttributeId: e.MaxAttributeId,
             };
-          for (let [t, i] of e.TagEnergyBarIdMap)
+          for (var [t, i] of e.TagEnergyBarIdMap)
             if (r.HasTag(t)) {
               t =
                 ModelManager_1.ModelManager.BattleUiModel.SpecialEnergyBarData.GetSpecialEnergyBarInfo(
@@ -95,4 +95,4 @@ class LevelConditionCheckFightEnergyBar extends LevelGeneralBase_1.LevelConditio
   }
 }
 exports.LevelConditionCheckFightEnergyBar = LevelConditionCheckFightEnergyBar;
-// # sourceMappingURL=LevelConditionCheckFightEnergyBar.js.map
+//# sourceMappingURL=LevelConditionCheckFightEnergyBar.js.map

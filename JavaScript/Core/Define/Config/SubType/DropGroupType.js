@@ -1,5 +1,5 @@
 "use strict";
-let DropGroupType;
+var DropGroupType;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DropGroupType = void 0),
   (function (o) {
@@ -7,4 +7,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (o[(o.WeigthRandom = 1)] = "WeigthRandom"),
       (o[(o.PhantomWeight = 2)] = "PhantomWeight");
   })((DropGroupType = exports.DropGroupType || (exports.DropGroupType = {})));
-// # sourceMappingURL=DropGroupType.js.map
+//# sourceMappingURL=DropGroupType.js.map

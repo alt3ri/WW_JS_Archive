@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventGuideTrigger = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const GuideController_1 = require("../../Module/Guide/GuideController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  GuideController_1 = require("../../Module/Guide/GuideController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventGuideTrigger extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -104,4 +104,4 @@ class LevelEventGuideTrigger extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventGuideTrigger = LevelEventGuideTrigger;
-// # sourceMappingURL=LevelEventGuideTrigger.js.map
+//# sourceMappingURL=LevelEventGuideTrigger.js.map

@@ -23,7 +23,7 @@ class GameplayCueBase {
   OnDisable() {}
   OnChangeTimeDilation(t) {}
   static Spawn(t) {
-    const i = new this(
+    var i = new this(
       t.Entity,
       t.CueConfig,
       t.Actor,
@@ -86,4 +86,4 @@ class GameplayCueBase {
   }
 }
 exports.GameplayCueBase = GameplayCueBase;
-// # sourceMappingURL=GameplayCueBase.js.map
+//# sourceMappingURL=GameplayCueBase.js.map

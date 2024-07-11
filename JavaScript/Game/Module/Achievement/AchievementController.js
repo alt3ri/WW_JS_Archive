@@ -1,15 +1,15 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AchievementController = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiManager_1 = require("../../Ui/UiManager");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiManager_1 = require("../../Ui/UiManager");
 class AchievementController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return this.OnAddEvents(), this.OnRegisterNetEvent(), !0;
@@ -64,7 +64,7 @@ class AchievementController extends ControllerBase_1.ControllerBase {
       UiManager_1.UiManager.OpenView("AchievementDetailView");
   }
   static RequestGetAchievementReward(e, t) {
-    const r = new Protocol_1.Aki.Protocol.o$n();
+    var r = new Protocol_1.Aki.Protocol.o$n();
     (r.Ekn = t),
       (r.QFn = e),
       Net_1.Net.Call(24815, r, (e) => {
@@ -76,7 +76,7 @@ class AchievementController extends ControllerBase_1.ControllerBase {
       });
   }
   static RequestAchievementFinish(e) {
-    const t = new Protocol_1.Aki.Protocol.l$n();
+    var t = new Protocol_1.Aki.Protocol.l$n();
     (t.Ekn = e),
       Net_1.Net.Call(8348, t, (e) => {
         e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
@@ -87,19 +87,19 @@ class AchievementController extends ControllerBase_1.ControllerBase {
       });
   }
   static hbe(e) {
-    let t = ModelManager_1.ModelManager.AchievementModel.GetAchievementData(
-      e.Ekn,
-    ).GetFinishState();
-    const r =
-      (ModelManager_1.ModelManager.AchievementModel.OnAchievementProgressNotify(
-        e,
-      ),
-      ModelManager_1.ModelManager.AchievementModel.GetAchievementData(
+    var t = ModelManager_1.ModelManager.AchievementModel.GetAchievementData(
         e.Ekn,
-      ).GetFinishState());
+      ).GetFinishState(),
+      r =
+        (ModelManager_1.ModelManager.AchievementModel.OnAchievementProgressNotify(
+          e,
+        ),
+        ModelManager_1.ModelManager.AchievementModel.GetAchievementData(
+          e.Ekn,
+        ).GetFinishState());
     t !== r &&
-      r !== 2 &&
-      r !== 0 &&
+      2 !== r &&
+      0 !== r &&
       ((t = ModelManager_1.ModelManager.AchievementModel.GetAchievementData(
         e.Ekn,
       )),
@@ -117,23 +117,23 @@ class AchievementController extends ControllerBase_1.ControllerBase {
       UiManager_1.UiManager.IsViewShow("BattleView")
     )
       for (
-        let e =
+        var e =
           ModelManager_1.ModelManager.AchievementModel
             .CurrentFinishAchievementArray;
-        e.length > 0;
+        0 < e.length;
 
       ) {
-        var t = e.shift();
-        var t =
-          ModelManager_1.ModelManager.AchievementModel.GetAchievementData(t);
+        var t = e.shift(),
+          t =
+            ModelManager_1.ModelManager.AchievementModel.GetAchievementData(t);
         UiManager_1.UiManager.OpenView("AchievementCompleteTipsView", t);
       }
   }
 }
 (exports.AchievementController = AchievementController),
   ((_a = AchievementController).obe = async () => {
-    var e = new Protocol_1.Aki.Protocol.i$n();
-    var e = await Net_1.Net.CallAsync(10739, e);
+    var e = new Protocol_1.Aki.Protocol.i$n(),
+      e = await Net_1.Net.CallAsync(10739, e);
     ModelManager_1.ModelManager.AchievementModel.PhraseBaseData(e);
   }),
   (AchievementController.nbe = (e) => {
@@ -143,7 +143,7 @@ class AchievementController extends ControllerBase_1.ControllerBase {
     _a.lbe();
   }),
   (AchievementController.abe = (t) => {
-    const r = t.kms.length;
+    var r = t.kms.length;
     for (let e = 0; e < r; e++) AchievementController.hbe(t.kms[e]);
   }),
   (AchievementController.sbe = (e) => {
@@ -151,4 +151,4 @@ class AchievementController extends ControllerBase_1.ControllerBase {
       e,
     );
   });
-// # sourceMappingURL=AchievementController.js.map
+//# sourceMappingURL=AchievementController.js.map

@@ -5,11 +5,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.MOBILE_CSM_DISTANCE_OUTCAVE =
     exports.MOBILE_CSM_DISTANCE_INCAVE =
       void 0);
-const Queue_1 = require("../../../Core/Container/Queue");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const DEFAULT_ENVIRONMENTTYPE = 255;
+const Queue_1 = require("../../../Core/Container/Queue"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  DEFAULT_ENVIRONMENTTYPE = 255;
 (exports.MOBILE_CSM_DISTANCE_INCAVE = 2e4),
   (exports.MOBILE_CSM_DISTANCE_OUTCAVE = 8e3);
 class WorldEnvironmentInfo {
@@ -36,7 +36,7 @@ class WorldEnvironmentInfo {
     return this.S9 === e;
   }
   IsEnCloseEnvironment() {
-    return this.S9 === 0 || this.S9 === 1;
+    return 0 === this.S9 || 1 === this.S9;
   }
   get EnvType() {
     return this.S9;
@@ -98,8 +98,8 @@ class WorldModel extends ModelBase_1.ModelBase {
   }
   UpdateWorldState(e) {
     for (const r of Object.keys(e)) {
-      const t = e[r];
-      const s = Number(MathUtils_1.MathUtils.LongToBigInt(t.BMs));
+      var t = e[r],
+        s = Number(MathUtils_1.MathUtils.LongToBigInt(t.BMs));
       switch (r) {
         case "DefaultState":
         case "NpcWorldState":
@@ -124,7 +124,7 @@ class WorldModel extends ModelBase_1.ModelBase {
     t || ((t = new Set()), this.KMr.set(e.TypeId, t)), t.add(e);
   }
   static RemoveTsSimpleInteractItem(e) {
-    const t = this.KMr.get(e.TypeId);
+    var t = this.KMr.get(e.TypeId);
     t && t.delete(e);
   }
   static GetTsSimpleInteractItemById(e) {
@@ -134,7 +134,7 @@ class WorldModel extends ModelBase_1.ModelBase {
     s?.IsValid() && this.DestroyActorQueue.Push([e, t, s]);
   }
   PopDestroyActor() {
-    if (this.DestroyActorQueue.Size !== 0) return this.DestroyActorQueue.Pop();
+    if (0 !== this.DestroyActorQueue.Size) return this.DestroyActorQueue.Pop();
   }
   AddIgnore(e) {
     !e?.IsValid() ||
@@ -152,17 +152,17 @@ class WorldModel extends ModelBase_1.ModelBase {
     if (!this.CurEnvironmentInfo.IsEqual(e.EnvType)) {
       switch (this.CurEnvironmentInfo.EnvType) {
         case DEFAULT_ENVIRONMENTTYPE:
-          e.EnvType === 2 && (t = 1),
-            (e.EnvType !== 0 && e.EnvType !== 1) || (t = 5);
+          2 === e.EnvType && (t = 1),
+            (0 !== e.EnvType && 1 !== e.EnvType) || (t = 5);
           break;
         case 2:
           e.EnvType === DEFAULT_ENVIRONMENTTYPE && (t = 4),
-            (e.EnvType !== 0 && e.EnvType !== 1) || (t = 3);
+            (0 !== e.EnvType && 1 !== e.EnvType) || (t = 3);
           break;
         case 0:
         case 1:
           e.EnvType === DEFAULT_ENVIRONMENTTYPE && (t = 6),
-            e.EnvType === 2 && (t = 2);
+            2 === e.EnvType && (t = 2);
       }
       this.CurEnvironmentInfo.SetInfo(e);
     }
@@ -171,4 +171,4 @@ class WorldModel extends ModelBase_1.ModelBase {
 }
 ((exports.WorldModel = WorldModel).IsStandalone = !1),
   (WorldModel.KMr = new Map());
-// # sourceMappingURL=WorldModel.js.map
+//# sourceMappingURL=WorldModel.js.map

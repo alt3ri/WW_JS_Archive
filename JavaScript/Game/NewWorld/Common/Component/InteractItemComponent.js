@@ -1,25 +1,29 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, r, n) {
-    let o;
-    const i = arguments.length;
-    let s =
-      i < 3 ? e : n === null ? (n = Object.getOwnPropertyDescriptor(e, r)) : n;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      i = arguments.length,
+      s =
+        i < 3
+          ? e
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(e, r))
+            : n;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(t, e, r, n);
     else
-      for (let c = t.length - 1; c >= 0; c--)
-        (o = t[c]) && (s = (i < 3 ? o(s) : i > 3 ? o(e, r, s) : o(e, r)) || s);
-    return i > 3 && s && Object.defineProperty(e, r, s), s;
+      for (var c = t.length - 1; 0 <= c; c--)
+        (o = t[c]) && (s = (i < 3 ? o(s) : 3 < i ? o(e, r, s) : o(e, r)) || s);
+    return 3 < i && s && Object.defineProperty(e, r, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InteractItemComponent = void 0);
-const UE = require("ue");
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const WorldFunctionLibrary_1 = require("../../../World/Bridge/WorldFunctionLibrary");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const POSITION_TAG = new UE.FName("Position");
+const UE = require("ue"),
+  EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  WorldFunctionLibrary_1 = require("../../../World/Bridge/WorldFunctionLibrary"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  POSITION_TAG = new UE.FName("Position");
 let InteractItemComponent = class InteractItemComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -28,15 +32,15 @@ let InteractItemComponent = class InteractItemComponent extends EntityComponent_
       (this.IsInit = !1);
   }
   OnStart() {
-    let t;
-    const e = WorldFunctionLibrary_1.default.GetDynamicEntity(this.Entity.Id);
+    var t,
+      e = WorldFunctionLibrary_1.default.GetDynamicEntity(this.Entity.Id);
     return (
       e &&
         ((t = e.GetComponentsByTag(
           UE.ChildActorComponent.StaticClass(),
           POSITION_TAG,
         )) &&
-          t.Num() > 0 &&
+          0 < t.Num() &&
           (this.cC = t.Get(0)),
         (this.Cnn = e.GetComponentByClass(UE.ArrowComponent.StaticClass())),
         (this.IsInit = !0)),
@@ -55,4 +59,4 @@ let InteractItemComponent = class InteractItemComponent extends EntityComponent_
   InteractItemComponent,
 )),
   (exports.InteractItemComponent = InteractItemComponent);
-// # sourceMappingURL=InteractItemComponent.js.map
+//# sourceMappingURL=InteractItemComponent.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyStateBurst extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -13,7 +13,7 @@ class TsAnimNotifyStateBurst extends UE.KuroAnimNotifyState {
   K2_NotifyBegin(e, t, r) {
     e = e.GetOwner();
     if (e instanceof TsBaseCharacter_1.default) {
-      let s = e.CharacterActorComponent?.Entity;
+      var s = e.CharacterActorComponent?.Entity;
       if (s)
         return (
           (s = s.GetComponent(185)) &&
@@ -34,7 +34,7 @@ class TsAnimNotifyStateBurst extends UE.KuroAnimNotifyState {
   K2_NotifyEnd(e, t) {
     e = e.GetOwner();
     if (e instanceof TsBaseCharacter_1.default) {
-      let r = e.CharacterActorComponent?.Entity;
+      var r = e.CharacterActorComponent?.Entity;
       if (r)
         return (
           (r = r.GetComponent(185)) &&
@@ -60,4 +60,4 @@ class TsAnimNotifyStateBurst extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateBurst;
-// # sourceMappingURL=TsAnimNotifyStateBurst.js.map
+//# sourceMappingURL=TsAnimNotifyStateBurst.js.map

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OnlineMultipleApplyItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const OnlineController_1 = require("../OnlineController");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  OnlineController_1 = require("../OnlineController");
 class OnlineMultipleApplyItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(),
@@ -54,7 +54,7 @@ class OnlineMultipleApplyItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(e, t, r) {
     this.iNi = e;
-    const i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
+    var i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
       e.HeadId,
     )?.Card;
     i && this.SetTextureByPath(i, this.GetTexture(1)),
@@ -78,4 +78,4 @@ class OnlineMultipleApplyItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.OnlineMultipleApplyItem = OnlineMultipleApplyItem;
-// # sourceMappingURL=OnlineMultipleApplyItem.js.map
+//# sourceMappingURL=OnlineMultipleApplyItem.js.map

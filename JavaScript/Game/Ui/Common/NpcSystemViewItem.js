@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcSystemViewItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const HelpController_1 = require("../../Module/Help/HelpController");
-const LguiUtil_1 = require("../../Module/Util/LguiUtil");
-const UiManager_1 = require("../UiManager");
-const CommonPopViewBehaviourBase_1 = require("./CommonPopViewBehaviourBase");
-const PopupCaptionItem_1 = require("./PopupCaptionItem");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  HelpController_1 = require("../../Module/Help/HelpController"),
+  LguiUtil_1 = require("../../Module/Util/LguiUtil"),
+  UiManager_1 = require("../UiManager"),
+  CommonPopViewBehaviourBase_1 = require("./CommonPopViewBehaviourBase"),
+  PopupCaptionItem_1 = require("./PopupCaptionItem");
 class NpcSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase {
   constructor() {
     super(...arguments),
       (this.nVt = void 0),
       (this.Mur = void 0),
       (this.YZe = () => {
-        const t = this.Mur.HelpGroupId;
+        var t = this.Mur.HelpGroupId;
         HelpController_1.HelpController.OpenHelpById(t);
       }),
       (this.ACt = () => {
@@ -46,24 +46,24 @@ class NpcSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase {
   }
   OnStart() {
     this.nVt = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(5));
-    let t;
-    let i;
-    let e;
-    let s;
-    let o;
-    let r;
-    let h;
-    let l;
-    let n;
-    let a;
-    let u;
-    let g;
-    let p;
-    const S = this.ViewInfo.CommonPopBgKey;
-    const U =
-      ConfigManager_1.ConfigManager.UiCommonConfig.GetNpcSystemBackgroundByViewName(
-        S,
-      );
+    var t,
+      i,
+      e,
+      s,
+      o,
+      r,
+      h,
+      l,
+      n,
+      a,
+      u,
+      g,
+      p,
+      S = this.ViewInfo.CommonPopBgKey,
+      U =
+        ConfigManager_1.ConfigManager.UiCommonConfig.GetNpcSystemBackgroundByViewName(
+          S,
+        );
     U
       ? ((h = (this.Mur = U).Title),
         (t = U.TitleTexturePath),
@@ -78,7 +78,7 @@ class NpcSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase {
         (a = !StringUtils_1.StringUtils.IsEmpty(e)),
         (u = !StringUtils_1.StringUtils.IsEmpty(s)),
         (g = !StringUtils_1.StringUtils.IsEmpty(o)),
-        (p = r?.length > 0),
+        (p = 0 < r?.length),
         this.SetTitleVisible(h),
         h && this.SetTitleText(U.Title),
         this.SetTitleTextureVisible(l),
@@ -111,7 +111,7 @@ class NpcSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase {
     this.GetText(0).SetUIActive(t);
   }
   SetTitleText(t) {
-    const i = this.GetText(0);
+    var i = this.GetText(0);
     LguiUtil_1.LguiUtil.SetLocalTextNew(i, t);
   }
   SetTitleTextureVisible(t) {
@@ -166,4 +166,4 @@ class NpcSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase {
   }
 }
 exports.NpcSystemViewItem = NpcSystemViewItem;
-// # sourceMappingURL=NpcSystemViewItem.js.map
+//# sourceMappingURL=NpcSystemViewItem.js.map

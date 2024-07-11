@@ -18,9 +18,9 @@ class BlackboardWhiteList {
     );
   }
   key(t) {
-    const s = this.J7.__offset(this.z7, 4);
+    var s = this.J7.__offset(this.z7, 4);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
 }
 exports.BlackboardWhiteList = BlackboardWhiteList;
-// # sourceMappingURL=BlackboardWhiteList.js.map
+//# sourceMappingURL=BlackboardWhiteList.js.map

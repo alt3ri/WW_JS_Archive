@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlatformSdkAndroid = void 0);
-const UE = require("ue");
-const ue_1 = require("ue");
-const Json_1 = require("../../../Core/Common/Json");
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const KuroSdkData_1 = require("../KuroSdkData");
-const PlatformSdkBase_1 = require("./PlatformSdkBase");
-const WEBVIEWCD = 5e3;
-const GETINFODELAY = 1e4;
+const UE = require("ue"),
+  ue_1 = require("ue"),
+  Json_1 = require("../../../Core/Common/Json"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  KuroSdkData_1 = require("../KuroSdkData"),
+  PlatformSdkBase_1 = require("./PlatformSdkBase"),
+  WEBVIEWCD = 5e3,
+  GETINFODELAY = 1e4;
 class AndroidSdkRePointSt extends Json_1.JsonObjBase {
   constructor() {
     super(...arguments), (this.showRed = !1);
@@ -38,13 +38,13 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
           );
       }),
       (this.CustomerServiceResultCallBack = (e) => {
-        const r = e.split(",");
+        var r = e.split(",");
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("KuroSdk", 28, "当前客服红点数量", ["result", e]),
-          r?.length > 1 &&
+          1 < r?.length &&
             (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("KuroSdk", 28, "当前客服红点数量", ["num", r[1]]),
-            (this.CurrentCustomerShowState = Number(r[1]) > 0)),
+            (this.CurrentCustomerShowState = 0 < Number(r[1]))),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.SdkCustomerRedPointRefresh,
           );
@@ -72,7 +72,7 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
   }
   SdkOpenUrlWnd(e, r, t, o, n = !0) {
     if (
-      this.LastOpenTime !== 0 &&
+      0 !== this.LastOpenTime &&
       Time_1.Time.Now - this.LastOpenTime <= WEBVIEWCD
     )
       return void ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -82,8 +82,8 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
       ue_1.KuroSDKManager.OpenWebView(e, r, t, o, n, "");
   }
   OpenFeedback() {
-    let e;
-    const r = BaseConfigController_1.BaseConfigController.GetFeedBackUrl();
+    var e,
+      r = BaseConfigController_1.BaseConfigController.GetFeedBackUrl();
     r
       ? ((e = this.GetFeedBackOpenUrl()),
         ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
@@ -94,7 +94,7 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
   }
   OpenWebView(e, r, t, o, n) {
     if (
-      this.LastOpenTime !== 0 &&
+      0 !== this.LastOpenTime &&
       Time_1.Time.Now - this.LastOpenTime <= WEBVIEWCD
     )
       return void ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -104,12 +104,12 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
       ue_1.KuroSDKManager.OpenWebView(e, r, t, o, n, "");
   }
   BEe(e) {
-    if (this.wEe.size === 0) {
-      const r = ue_1.KuroSDKManager.GetSdkParams("").split(",");
-      const t = r.length;
+    if (0 === this.wEe.size) {
+      var r = ue_1.KuroSDKManager.GetSdkParams("").split(","),
+        t = r.length;
       for (let e = 0; e < t; e++) {
-        const o = r[e].split("=");
-        o.length === 2 && this.wEe.set(o[0], o[1]);
+        var o = r[e].split("=");
+        2 === o.length && this.wEe.set(o[0], o[1]);
       }
     }
     e = this.wEe.get(e);
@@ -140,11 +140,11 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
     return this.BEe("accessToken");
   }
   SetFont() {
-    var e = new KuroSdkData_1.SetFontParamAndroid();
-    var e =
-      ((e.fontType = "1"),
-      (e.fontPath = "H7GBKHeavy.TTF"),
-      Json_1.Json.Stringify(e));
+    var e = new KuroSdkData_1.SetFontParamAndroid(),
+      e =
+        ((e.fontType = "1"),
+        (e.fontPath = "H7GBKHeavy.TTF"),
+        Json_1.Json.Stringify(e));
     ue_1.KuroSDKManager.SetFont(e);
   }
   IEe() {
@@ -155,21 +155,21 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
         : "";
   }
   OpenCustomerService(e) {
-    const r = ModelManager_1.ModelManager.LoginModel;
-    const t = new KuroSdkData_1.OpenCustomerServiceParamAndroid();
-    var e =
-      ((t.IsLogin = r.IsSdkLoggedIn() ? "1" : "0"),
-      (t.FromLogin = e.toString()),
-      (t.RoleId = this.IEe()),
-      (t.ServerId = r.GetServerId() ?? ""),
-      (t.IsLandscape = "0"),
-      Json_1.Json.Stringify(t));
+    var r = ModelManager_1.ModelManager.LoginModel,
+      t = new KuroSdkData_1.OpenCustomerServiceParamAndroid(),
+      e =
+        ((t.IsLogin = r.IsSdkLoggedIn() ? "1" : "0"),
+        (t.FromLogin = e.toString()),
+        (t.RoleId = this.IEe()),
+        (t.ServerId = r.GetServerId() ?? ""),
+        (t.IsLandscape = "0"),
+        Json_1.Json.Stringify(t));
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("KuroSdk", 28, "AndroidCustomerService", ["json", e]),
       ue_1.KuroSDKManager.OpenCustomerService(e);
   }
   SdkPay(e) {
-    let r;
+    var r;
     ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
       ((r = this.bEe()),
       (r = this.qEe(e, r)),
@@ -184,15 +184,15 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
       ue_1.KuroSDKManager.KuroSDKEvent(8, r));
   }
   SdkCreateRole() {
-    let e;
+    var e;
     Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 28, "上报创建新角色"),
       ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
         ((e = this.GetCreateRoleInfo()),
         ue_1.KuroSDKManager.KuroSDKEvent(3, e));
   }
   GetCreateRoleInfo() {
-    const e = ModelManager_1.ModelManager.LoginModel;
-    const r = new KuroSdkData_1.RoleInfoSdk();
+    var e = ModelManager_1.ModelManager.LoginModel,
+      r = new KuroSdkData_1.RoleInfoSdk();
     return (
       (r.RoleId = this.IEe()),
       (r.RoleName = e.GetPlayerName() ? e.GetPlayerName() : ""),
@@ -220,9 +220,9 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
     );
   }
   bEe() {
-    const e = ModelManager_1.ModelManager.FunctionModel;
-    const r = ModelManager_1.ModelManager.LoginModel;
-    const t = new KuroSdkData_1.AndroidSdkPayRole();
+    var e = ModelManager_1.ModelManager.FunctionModel,
+      r = ModelManager_1.ModelManager.LoginModel,
+      t = new KuroSdkData_1.AndroidSdkPayRole();
     return (
       (t.roleId = this.IEe()),
       (t.roleName = e.GetPlayerName() ? e.GetPlayerName() : ""),
@@ -237,7 +237,7 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
     );
   }
   qEe(e, r) {
-    let t = new KuroSdkData_1.PayInfoAndroid();
+    var t = new KuroSdkData_1.PayInfoAndroid();
     (t.cpOrderId = e.cpOrderId.toString()),
       (t.callbackUrl = e.callbackUrl.toString()),
       (t.product_id = e.product_id.toString()),
@@ -284,7 +284,7 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
         ["platform", r],
         ["msg", t],
       ),
-      e === 0
+      0 === e
         ? EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnShareResult,
             !0,
@@ -296,4 +296,4 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
   }
 }
 exports.PlatformSdkAndroid = PlatformSdkAndroid;
-// # sourceMappingURL=PlatformSdkAndroid.js.map
+//# sourceMappingURL=PlatformSdkAndroid.js.map

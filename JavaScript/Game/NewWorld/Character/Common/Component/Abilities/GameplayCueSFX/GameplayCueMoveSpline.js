@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayCueMoveSpline = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../../../../Core/Actor/ActorSystem");
-const Rotator_1 = require("../../../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../../../Core/Utils/Math/Vector");
-const EffectSystem_1 = require("../../../../../../Effect/EffectSystem");
-const GlobalData_1 = require("../../../../../../GlobalData");
-const GameplayCueEffect_1 = require("./GameplayCueEffect");
-const WIDTH = 70;
-const LENGTH = 100;
-const TANGENT = 130;
-const SPLINE_MOVE_SPEED = 520;
-const SPLINE_ROTATION_SPEED = 20;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  ActorSystem_1 = require("../../../../../../../Core/Actor/ActorSystem"),
+  Rotator_1 = require("../../../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../../../Core/Utils/Math/Vector"),
+  EffectSystem_1 = require("../../../../../../Effect/EffectSystem"),
+  GlobalData_1 = require("../../../../../../GlobalData"),
+  GameplayCueEffect_1 = require("./GameplayCueEffect"),
+  WIDTH = 70,
+  LENGTH = 100,
+  TANGENT = 130,
+  SPLINE_MOVE_SPEED = 520,
+  SPLINE_ROTATION_SPEED = 20;
 class GameplayCueMoveSpline extends GameplayCueEffect_1.GameplayCueEffect {
   constructor() {
     super(...arguments),
@@ -23,7 +23,7 @@ class GameplayCueMoveSpline extends GameplayCueEffect_1.GameplayCueEffect {
       (this.g$o = (0, puerts_1.$ref)(!1));
   }
   OnTick(e) {
-    let t;
+    var t;
     EffectSystem_1.EffectSystem.IsValid(this.EffectViewHandle) &&
       (t = EffectSystem_1.EffectSystem.GetSureEffectActor(
         this.EffectViewHandle,
@@ -48,25 +48,25 @@ class GameplayCueMoveSpline extends GameplayCueEffect_1.GameplayCueEffect {
     ActorSystem_1.ActorSystem.Put(this.m$o.GetOwner()), super.OnDestroy();
   }
   AttachEffect() {
-    const t = [
-      new UE.Vector(-WIDTH, 0, 0),
-      new UE.Vector(0, LENGTH, 0),
-      new UE.Vector(WIDTH, 0, 0),
-      new UE.Vector(0, -LENGTH, 0),
-    ];
-    const r = [
-      new UE.Vector(0, TANGENT, 0),
-      new UE.Vector(TANGENT, 0, 0),
-      new UE.Vector(0, -TANGENT, 0),
-      new UE.Vector(-TANGENT, 0, 0),
-    ];
-    const s =
-      ((this.m$o = this.f$o()),
-      this.m$o.SetClosedLoop(!0),
-      this.m$o.ClearSplinePoints(),
-      UE.NewArray(UE.SplinePoint));
+    var t = [
+        new UE.Vector(-WIDTH, 0, 0),
+        new UE.Vector(0, LENGTH, 0),
+        new UE.Vector(WIDTH, 0, 0),
+        new UE.Vector(0, -LENGTH, 0),
+      ],
+      r = [
+        new UE.Vector(0, TANGENT, 0),
+        new UE.Vector(TANGENT, 0, 0),
+        new UE.Vector(0, -TANGENT, 0),
+        new UE.Vector(-TANGENT, 0, 0),
+      ],
+      s =
+        ((this.m$o = this.f$o()),
+        this.m$o.SetClosedLoop(!0),
+        this.m$o.ClearSplinePoints(),
+        UE.NewArray(UE.SplinePoint));
     for (let e = 0; e < t.length; e++) {
-      const E = new UE.SplinePoint(
+      var E = new UE.SplinePoint(
         e,
         t[e],
         r[e],
@@ -81,22 +81,24 @@ class GameplayCueMoveSpline extends GameplayCueEffect_1.GameplayCueEffect {
   }
   f$o() {
     var e = ActorSystem_1.ActorSystem.Get(
-      UE.Actor.StaticClass(),
-      this.ActorInternal.GetTransform(),
-    );
-    var e =
-      (GlobalData_1.GlobalData.IsPlayInEditor &&
-        e.SetActorLabel(
-          this.ActorInternal.GetActorLabel() + ":" + GameplayCueMoveSpline.name,
-        ),
-      e.AddComponentByClass(
-        UE.KuroMoveSplineComponent.StaticClass(),
-        !1,
+        UE.Actor.StaticClass(),
         this.ActorInternal.GetTransform(),
-        !1,
-      ));
+      ),
+      e =
+        (GlobalData_1.GlobalData.IsPlayInEditor &&
+          e.SetActorLabel(
+            this.ActorInternal.GetActorLabel() +
+              ":" +
+              GameplayCueMoveSpline.name,
+          ),
+        e.AddComponentByClass(
+          UE.KuroMoveSplineComponent.StaticClass(),
+          !1,
+          this.ActorInternal.GetTransform(),
+          !1,
+        ));
     return e;
   }
 }
 exports.GameplayCueMoveSpline = GameplayCueMoveSpline;
-// # sourceMappingURL=GameplayCueMoveSpline.js.map
+//# sourceMappingURL=GameplayCueMoveSpline.js.map

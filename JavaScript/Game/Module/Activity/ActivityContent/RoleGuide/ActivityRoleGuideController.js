@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRoleGuideController = void 0);
-const ActivityControllerBase_1 = require("../../ActivityControllerBase");
-const ActivityRoleGuideData_1 = require("./ActivityRoleGuideData");
-const ActivitySubViewRoleGuide_1 = require("./ActivitySubViewRoleGuide");
+const ActivityControllerBase_1 = require("../../ActivityControllerBase"),
+  ActivityRoleGuideData_1 = require("./ActivityRoleGuideData"),
+  ActivitySubViewRoleGuide_1 = require("./ActivitySubViewRoleGuide");
 class ActivityRoleGuideController extends ActivityControllerBase_1.ActivityControllerBase {
   OnAddEvents() {}
   OnRemoveEvents() {}
@@ -26,4 +26,4 @@ class ActivityRoleGuideController extends ActivityControllerBase_1.ActivityContr
 }
 (exports.ActivityRoleGuideController =
   ActivityRoleGuideController).CurrentActivityId = 0;
-// # sourceMappingURL=ActivityRoleGuideController.js.map
+//# sourceMappingURL=ActivityRoleGuideController.js.map

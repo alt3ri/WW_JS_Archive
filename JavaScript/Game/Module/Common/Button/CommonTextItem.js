@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonTextItem = void 0);
-const UE = require("ue");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class CommonTextItem extends GridProxyAbstract_1.GridProxyAbstract {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIText]];
@@ -16,4 +16,4 @@ class CommonTextItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.CommonTextItem = CommonTextItem;
-// # sourceMappingURL=CommonTextItem.js.map
+//# sourceMappingURL=CommonTextItem.js.map

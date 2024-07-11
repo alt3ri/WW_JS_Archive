@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonItemSimpleGridButton = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class CommonItemSimpleGridButton extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(t = void 0) {
     super(),
@@ -42,13 +42,13 @@ class CommonItemSimpleGridButton extends GridProxyAbstract_1.GridProxyAbstract {
   OnStart() {}
   OnBeforeDestroy() {}
   qIt() {
-    var t = this.GetTexture(1);
-    var t = (this.SetItemIcon(t, this.PIt, this.xIt), this.GetSprite(0));
+    var t = this.GetTexture(1),
+      t = (this.SetItemIcon(t, this.PIt, this.xIt), this.GetSprite(0));
     this.SetItemQualityIcon(t, this.PIt, this.xIt, "BackgroundSprite");
   }
   Refresh(t, i, e) {
-    const s = t[0];
-    var t = t[1];
+    var s = t[0],
+      t = t[1];
     this.RefreshItem(s.ItemId, t);
   }
   SetQualityActive(t) {
@@ -91,13 +91,13 @@ class CommonItemSimpleGridButton extends GridProxyAbstract_1.GridProxyAbstract {
     (this.PIt = t), await this.NIt(), this.SetCount(i);
   }
   async NIt() {
-    const t = new CustomPromise_1.CustomPromise();
-    const i =
-      (this.SetItemIcon(this.GetTexture(1), this.PIt, void 0, () => {
-        t.SetResult(void 0);
-      }),
-      await t.Promise,
-      new CustomPromise_1.CustomPromise());
+    const t = new CustomPromise_1.CustomPromise(),
+      i =
+        (this.SetItemIcon(this.GetTexture(1), this.PIt, void 0, () => {
+          t.SetResult(void 0);
+        }),
+        await t.Promise,
+        new CustomPromise_1.CustomPromise());
     this.SetItemQualityIcon(
       this.GetSprite(0),
       this.PIt,
@@ -111,4 +111,4 @@ class CommonItemSimpleGridButton extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.CommonItemSimpleGridButton = CommonItemSimpleGridButton;
-// # sourceMappingURL=CommonItemSimpleGridButton.js.map
+//# sourceMappingURL=CommonItemSimpleGridButton.js.map

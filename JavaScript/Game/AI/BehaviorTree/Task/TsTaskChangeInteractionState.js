@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const GlobalData_1 = require("../../../GlobalData");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../GlobalData"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskChangeInteractionState extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -17,8 +17,8 @@ class TsTaskChangeInteractionState extends TsTaskAbortImmediatelyBase_1.default 
   }
   ReceiveExecuteAI(e, t) {
     this.InitTsVariables();
-    let a;
-    const s = e.AiController;
+    var a,
+      s = e.AiController;
     s
       ? ((a = s.CharActorComp.Entity.GetComponent(178))
           ? a.SetInteractionState(
@@ -46,4 +46,4 @@ class TsTaskChangeInteractionState extends TsTaskAbortImmediatelyBase_1.default 
   }
 }
 exports.default = TsTaskChangeInteractionState;
-// # sourceMappingURL=TsTaskChangeInteractionState.js.map
+//# sourceMappingURL=TsTaskChangeInteractionState.js.map

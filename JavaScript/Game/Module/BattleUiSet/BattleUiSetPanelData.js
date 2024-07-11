@@ -5,8 +5,8 @@ class BattleUiSetPanelData {
   constructor(t, e) {
     (this.iCt = new Map()), (this.IsOnlyPanelEdit = !1), (this.PanelIndex = t);
     for (const s of e) {
-      const a = s.PanelItemIndex;
-      if (a === -1)
+      var a = s.PanelItemIndex;
+      if (-1 === a)
         return (
           (this.IsOnlyPanelEdit = !0), this.iCt.clear(), void this.iCt.set(a, s)
         );
@@ -21,4 +21,4 @@ class BattleUiSetPanelData {
   }
 }
 exports.BattleUiSetPanelData = BattleUiSetPanelData;
-// # sourceMappingURL=BattleUiSetPanelData.js.map
+//# sourceMappingURL=BattleUiSetPanelData.js.map

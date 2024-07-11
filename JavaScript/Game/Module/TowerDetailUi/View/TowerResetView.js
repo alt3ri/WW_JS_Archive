@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerResetView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const TowerController_1 = require("../TowerController");
-const TowerResetItem_1 = require("./TowerResetItem");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  TowerController_1 = require("../TowerController"),
+  TowerResetItem_1 = require("./TowerResetItem");
 class TowerResetView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -45,16 +45,16 @@ class TowerResetView extends UiViewBase_1.UiViewBase {
   }
   h7e() {
     this.RLo = this.OpenParam;
-    const e = ModelManager_1.ModelManager.TowerModel.GetFloorData(this.RLo);
+    var e = ModelManager_1.ModelManager.TowerModel.GetFloorData(this.RLo);
     if (e) {
       this.Nke = new GenericLayout_1.GenericLayout(
         this.GetVerticalLayout(0),
         this.sBi,
       );
-      const t = [];
+      var t = [];
       for (const i of e.Formation) t.push(i.l3n);
       this.Nke.RefreshByData(t);
-      const r = ModelManager_1.ModelManager.TowerModel.GetDifficultyStars(
+      var r = ModelManager_1.ModelManager.TowerModel.GetDifficultyStars(
         e.Difficulties,
       );
       this.GetText(1).SetText("" + r),
@@ -68,4 +68,4 @@ class TowerResetView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.TowerResetView = TowerResetView;
-// # sourceMappingURL=TowerResetView.js.map
+//# sourceMappingURL=TowerResetView.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RewardItemData = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager");
 class RewardItemData {
   constructor(t, e, i) {
     (this.CYt = void 0),
@@ -36,4 +36,4 @@ class RewardItemData {
   }
 }
 exports.RewardItemData = RewardItemData;
-// # sourceMappingURL=RewardItemData.js.map
+//# sourceMappingURL=RewardItemData.js.map

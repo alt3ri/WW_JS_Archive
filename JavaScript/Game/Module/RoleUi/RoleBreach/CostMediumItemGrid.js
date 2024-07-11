@@ -1,15 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CostMediumItemGrid = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid");
+const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid");
 class CostMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   OnRefresh(t, e, o) {
-    const r = t.ItemId;
-    const i =
-      ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(r);
+    var r = t.ItemId,
+      i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(r);
     if (i) {
-      const m = { Type: 4 };
+      var m = { Type: 4 };
       if (t.OnlyTextFlag)
         (m.Type = 4),
           (m.Data = t),
@@ -17,8 +16,8 @@ class CostMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItem
           (m.StarLevel = i.QualityId),
           (m.BottomText = t.Count.toString());
       else {
-        let d = t.SelectedCount;
-        const s = t.Count;
+        var d = t.SelectedCount,
+          s = t.Count;
         let e = "Text_ItemEnoughText_Text";
         d < s && (e = "Text_ItemNotEnoughText_Text");
         d = [d, s];
@@ -33,4 +32,4 @@ class CostMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItem
   }
 }
 exports.CostMediumItemGrid = CostMediumItemGrid;
-// # sourceMappingURL=CostMediumItemGrid.js.map
+//# sourceMappingURL=CostMediumItemGrid.js.map

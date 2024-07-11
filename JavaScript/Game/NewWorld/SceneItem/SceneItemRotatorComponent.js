@@ -1,31 +1,36 @@
 "use strict";
-let SceneItemRotatorComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, o, i) {
-    let s;
-    const n = arguments.length;
-    let h =
-      n < 3 ? e : i === null ? (i = Object.getOwnPropertyDescriptor(e, o)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      h = Reflect.decorate(t, e, o, i);
-    else
-      for (let r = t.length - 1; r >= 0; r--)
-        (s = t[r]) && (h = (n < 3 ? s(h) : n > 3 ? s(e, o, h) : s(e, o)) || h);
-    return n > 3 && h && Object.defineProperty(e, o, h), h;
-  };
+var SceneItemRotatorComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, o, i) {
+      var s,
+        n = arguments.length,
+        h =
+          n < 3
+            ? e
+            : null === i
+              ? (i = Object.getOwnPropertyDescriptor(e, o))
+              : i;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        h = Reflect.decorate(t, e, o, i);
+      else
+        for (var r = t.length - 1; 0 <= r; r--)
+          (s = t[r]) &&
+            (h = (n < 3 ? s(h) : 3 < n ? s(e, o, h) : s(e, o)) || h);
+      return 3 < n && h && Object.defineProperty(e, o, h), h;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemRotatorComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
 let SceneItemRotatorComponent =
   (SceneItemRotatorComponent_1 = class SceneItemRotatorComponent extends (
     EntityComponent_1.EntityComponent
@@ -48,8 +53,8 @@ let SceneItemRotatorComponent =
         (this.lSn = void 0),
         (this._Sn = (t, e) => {
           if ((this.nSn.delete(e), t)) {
-            if ((this.oSn.set(e, t), !(this.nSn.size > 0))) {
-              for (const [, o] of this.oSn) if (!o) return;
+            if ((this.oSn.set(e, t), !(0 < this.nSn.size))) {
+              for (var [, o] of this.oSn) if (!o) return;
               (this.sSn = !0), this.aSn && this.uSn();
             }
           } else
@@ -63,10 +68,10 @@ let SceneItemRotatorComponent =
               );
         }),
         (this.cSn = () => {
-          const t = this.Hte.GetInteractionMainActor();
+          var t = this.Hte.GetInteractionMainActor();
           if (t) {
-            for (const [e] of this.rSn ?? []) {
-              const o = this.Hte?.GetActorInSceneInteraction(e);
+            for (var [e] of this.rSn ?? []) {
+              var o = this.Hte?.GetActorInSceneInteraction(e);
               if (!o)
                 return void (
                   Log_1.Log.CheckError() &&
@@ -87,7 +92,7 @@ let SceneItemRotatorComponent =
                   t.RootComponent.GetRelativeTransform().Rotator(),
                 ),
               );
-            for (const [, i] of this.rSn ?? [])
+            for (var [, i] of this.rSn ?? [])
               this.lSn.set(
                 i,
                 Rotator_1.Rotator.Create(
@@ -112,7 +117,7 @@ let SceneItemRotatorComponent =
       t = t.GetParam(SceneItemRotatorComponent_1)[0];
       (this.SIe = this.Entity.GetComponent(0)), (this.iSn = new Map());
       for (const o of t.Config) {
-        const e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(o.State);
+        var e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(o.State);
         if (!e)
           return (
             Log_1.Log.CheckError() &&
@@ -211,11 +216,11 @@ let SceneItemRotatorComponent =
     }
     dSn() {
       this.sSn = !0;
-      for (const [, t] of this.iSn)
+      for (var [, t] of this.iSn)
         for (const s of t.RotationConfig) {
           var e;
           s.Curve &&
-            s.Curve !== "" &&
+            "" !== s.Curve &&
             (this.oSn || (this.oSn = new Map()),
             this.oSn.has(s.Curve) ||
               ((e = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
@@ -227,7 +232,7 @@ let SceneItemRotatorComponent =
         }
       if (!this.sSn) {
         this.nSn || (this.nSn = new Map());
-        for (let [o, i] of this.oSn)
+        for (var [o, i] of this.oSn)
           i ||
             ((i = ResourceSystem_1.ResourceSystem.LoadAsync(
               o,
@@ -239,7 +244,7 @@ let SceneItemRotatorComponent =
     }
     CSn() {
       this.aSn = !1;
-      for (const [, t] of this.iSn)
+      for (var [, t] of this.iSn)
         t.RotatePoint &&
           (this.rSn || (this.rSn = new Map()),
           this.rSn.has(t.RotatePoint) || this.rSn.set(t.RotatePoint, void 0));
@@ -280,14 +285,14 @@ let SceneItemRotatorComponent =
           ),
         this.nSn)
       )
-        for (const [, t] of this.nSn)
+        for (var [, t] of this.nSn)
           t && ResourceSystem_1.ResourceSystem.CancelAsyncLoad(t);
       return !0;
     }
     uSn() {
       if (!this.hSn && this.sSn && this.aSn) {
         let t = 0;
-        for (const [e] of this.iSn)
+        for (var [e] of this.iSn)
           if (this.Lie.HasTag(e)) {
             t = e;
             break;
@@ -314,23 +319,23 @@ let SceneItemRotatorComponent =
         this.iSn.has(s) &&
         !this.tSn.IsRotating()
       ) {
-        const n = this.iSn.get(s);
-        const t = n.RotatePoint
-          ? this.rSn.get(n.RotatePoint)
-          : this.Hte.GetInteractionMainActor();
+        var n = this.iSn.get(s),
+          t = n.RotatePoint
+            ? this.rSn.get(n.RotatePoint)
+            : this.Hte.GetInteractionMainActor();
         if (this.tSn.InitRotationData(t, n.IsLoop)) {
-          const h = this.lSn.get(t);
+          var h = this.lSn.get(t);
           let i = Rotator_1.Rotator.Create(
             t.RootComponent.GetRelativeTransform().Rotator(),
           );
           for (let o = 0; o < n.RotationConfig.length; o++) {
-            var r;
-            const a = n.RotationConfig[o];
-            const m = Vector_1.Vector.Create(a.Axis.X, a.Axis.Y, a.Axis.Z);
-            const _ = a.Curve ? this.oSn.get(a.Curve) : void 0;
-            let t = void 0;
-            let e = void 0;
-            a.Type === "Relative"
+            var r,
+              a = n.RotationConfig[o],
+              m = Vector_1.Vector.Create(a.Axis.X, a.Axis.Y, a.Axis.Z),
+              _ = a.Curve ? this.oSn.get(a.Curve) : void 0;
+            let t = void 0,
+              e = void 0;
+            "Relative" === a.Type
               ? ((t = Rotator_1.Rotator.Create(i)),
                 (r = Rotator_1.Rotator.Create(
                   UE.KismetMathLibrary.RotatorFromAxisAndAngle(
@@ -340,7 +345,7 @@ let SceneItemRotatorComponent =
                 )),
                 (e = Rotator_1.Rotator.Create(t).AdditionEqual(r)),
                 (i = e))
-              : a.Type === "Absolute" &&
+              : "Absolute" === a.Type &&
                 ((t = Rotator_1.Rotator.Create(i)),
                 (e = Rotator_1.Rotator.Create(
                   UE.KismetMathLibrary.RotatorFromAxisAndAngle(
@@ -387,4 +392,4 @@ let SceneItemRotatorComponent =
     SceneItemRotatorComponent,
   )),
   (exports.SceneItemRotatorComponent = SceneItemRotatorComponent);
-// # sourceMappingURL=SceneItemRotatorComponent.js.map
+//# sourceMappingURL=SceneItemRotatorComponent.js.map

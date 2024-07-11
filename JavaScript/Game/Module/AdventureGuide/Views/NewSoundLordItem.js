@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NewSoundLordItem = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LordGymController_1 = require("../../LordGym/LordGymController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LordGymController_1 = require("../../LordGym/LordGymController"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class NewSoundLordItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super();
@@ -22,18 +22,18 @@ class NewSoundLordItem extends UiPanelBase_1.UiPanelBase {
     this.GetText(3)?.SetUIActive(!1);
   }
   Update(e) {
-    if (e.Type !== 0) {
-      const r = e.Conf;
-      var t = this.GetText(0);
-      var t =
-        (LguiUtil_1.LguiUtil.SetLocalTextNew(t, r.Name), this.GetTexture(1));
+    if (0 !== e.Type) {
+      var r = e.Conf,
+        t = this.GetText(0),
+        t =
+          (LguiUtil_1.LguiUtil.SetLocalTextNew(t, r.Name), this.GetTexture(1));
       if (e.IsLock) this.SetTextureByPath(r.LockBigIcon, t);
       else {
         this.SetTextureByPath(r.BigIcon, t);
         const i = r.AdditionalId;
         LordGymController_1.LordGymController.LordGymInfoRequest().finally(
           () => {
-            const e =
+            var e =
               ModelManager_1.ModelManager.LordGymModel?.GetLordGymEntranceFinish(
                 i,
               );
@@ -49,4 +49,4 @@ class NewSoundLordItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.NewSoundLordItem = NewSoundLordItem;
-// # sourceMappingURL=NewSoundLordItem.js.map
+//# sourceMappingURL=NewSoundLordItem.js.map

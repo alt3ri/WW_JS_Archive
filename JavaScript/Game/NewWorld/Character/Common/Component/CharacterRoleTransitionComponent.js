@@ -1,30 +1,34 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, r, o) {
-    let i;
-    const n = arguments.length;
-    let s =
-      n < 3 ? t : o === null ? (o = Object.getOwnPropertyDescriptor(t, r)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var i,
+      n = arguments.length,
+      s =
+        n < 3
+          ? t
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(t, r))
+            : o;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(e, t, r, o);
     else
-      for (let l = e.length - 1; l >= 0; l--)
-        (i = e[l]) && (s = (n < 3 ? i(s) : n > 3 ? i(t, r, s) : i(t, r)) || s);
-    return n > 3 && s && Object.defineProperty(t, r, s), s;
+      for (var l = e.length - 1; 0 <= l; l--)
+        (i = e[l]) && (s = (n < 3 ? i(s) : 3 < n ? i(t, r, s) : i(t, r)) || s);
+    return 3 < n && s && Object.defineProperty(t, r, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterRoleTransitionComponent = void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const Global_1 = require("../../../../Global");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const CharacterController_1 = require("../../CharacterController");
-const CHECK_CHANGE_ROLE_TIME = 1e3;
+const UE = require("ue"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  Global_1 = require("../../../../Global"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  CharacterController_1 = require("../../CharacterController"),
+  CHECK_CHANGE_ROLE_TIME = 1e3;
 let CharacterRoleTransitionComponent = class CharacterRoleTransitionComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -42,10 +46,10 @@ let CharacterRoleTransitionComponent = class CharacterRoleTransitionComponent ex
     );
   }
   OnTick(e) {
-    let t;
+    var t;
     this.lWr &&
       ((this.hWr -= e),
-      this.hWr > 0 ||
+      0 < this.hWr ||
         ((this.hWr = CHECK_CHANGE_ROLE_TIME),
         Global_1.Global.BaseCharacter &&
           ((e =
@@ -79,8 +83,8 @@ let CharacterRoleTransitionComponent = class CharacterRoleTransitionComponent ex
             e.Actor !== Global_1.Global.BaseCharacter &&
             e !== this.Hte
           ) {
-            const t = this.Hte.ActorLocation;
-            var e = e.ActorLocation;
+            var t = this.Hte.ActorLocation,
+              e = e.ActorLocation;
             if (
               UE.KismetMathLibrary.Vector_DistanceSquared(t, e) <
               this.sWr * this.sWr
@@ -102,4 +106,4 @@ let CharacterRoleTransitionComponent = class CharacterRoleTransitionComponent ex
   CharacterRoleTransitionComponent,
 )),
   (exports.CharacterRoleTransitionComponent = CharacterRoleTransitionComponent);
-// # sourceMappingURL=CharacterRoleTransitionComponent.js.map
+//# sourceMappingURL=CharacterRoleTransitionComponent.js.map

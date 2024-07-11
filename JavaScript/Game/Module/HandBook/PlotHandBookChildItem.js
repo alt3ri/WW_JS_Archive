@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotHandBookChildItem = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract");
-const HandBookController_1 = require("./HandBookController");
-const HandBookDefine_1 = require("./HandBookDefine");
-const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract"),
+  HandBookController_1 = require("./HandBookController"),
+  HandBookDefine_1 = require("./HandBookDefine"),
+  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
 class PlotHandBookChildItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(e = void 0) {
     super(),
@@ -31,33 +31,35 @@ class PlotHandBookChildItem extends GridProxyAbstract_1.GridProxyAbstract {
               7,
               t.Id,
             );
-          let i = t.Type;
-          const o = ConfigCommon_1.ConfigCommon.ToList(
-            ConfigManager_1.ConfigManager.HandBookConfig.GetPlotHandBookConfigByType(
-              i,
+          var i = t.Type,
+            o = ConfigCommon_1.ConfigCommon.ToList(
+              ConfigManager_1.ConfigManager.HandBookConfig.GetPlotHandBookConfigByType(
+                i,
+              ),
             ),
-          );
-          const r =
-            (o.sort(this.aZt),
-            ConfigManager_1.ConfigManager.HandBookConfig.GetPlotTypeConfig(i));
-          const n = o.length;
-          const s = [];
-          const a = [];
-          const l = [];
-          const h = [];
-          const g = [];
-          const _ = [];
+            r =
+              (o.sort(this.aZt),
+              ConfigManager_1.ConfigManager.HandBookConfig.GetPlotTypeConfig(
+                i,
+              )),
+            n = o.length,
+            s = [],
+            a = [],
+            l = [],
+            h = [],
+            g = [],
+            _ = [];
           for (let e = 0; e < n; e++) {
             const t = o[e];
-            var u;
-            const d = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
-              7,
-              t.Id,
-            );
+            var u,
+              d = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
+                7,
+                t.Id,
+              );
             d &&
               ((u =
                 ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender()),
-              s.push(u === 1 ? t.MaleTexture : t.FemaleTexture),
+              s.push(1 === u ? t.MaleTexture : t.FemaleTexture),
               g.push(d.CreateTime),
               a.push(
                 MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
@@ -87,7 +89,7 @@ class PlotHandBookChildItem extends GridProxyAbstract_1.GridProxyAbstract {
         }
       }),
       (this.OnHandBookRead = (e, t) => {
-        e === 7 &&
+        7 === e &&
           t === this.kzt?.Config?.Id &&
           this.GetItem(2)?.SetUIActive(!1);
       }),
@@ -110,12 +112,12 @@ class PlotHandBookChildItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(e, t, i) {
     (this.kzt = e), (this.LZt = i);
-    var i = this.kzt.Config;
-    const o = e.IsNew;
-    var e = e.IsLock;
-    const r = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
+    var i = this.kzt.Config,
+      o = e.IsNew,
+      e = e.IsLock,
+      r = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
     this.SetTextureByPath(
-      r === 1 ? i.MaleTexture : i.FemaleTexture,
+      1 === r ? i.MaleTexture : i.FemaleTexture,
       this.GetTexture(0),
     ),
       this.GetText(1).ShowTextNew(i.Name),
@@ -143,4 +145,4 @@ class PlotHandBookChildItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.PlotHandBookChildItem = PlotHandBookChildItem;
-// # sourceMappingURL=PlotHandBookChildItem.js.map
+//# sourceMappingURL=PlotHandBookChildItem.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ComponentForceTickController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Stats_1 = require("../../../Core/Common/Stats");
-const Core_1 = require("../../../Core/Core");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  Core_1 = require("../../../Core/Core"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
 class ComponentForceTickController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -90,7 +90,7 @@ class ComponentForceTickController extends ControllerBase_1.ControllerBase {
     Core_1.Core.UnRegisterPreTick(o);
   }
   static OnTick(o) {
-    for (const [e, r] of this.Agr)
+    for (var [e, r] of this.Agr)
       if (e.Active)
         try {
           this.m6(
@@ -121,7 +121,7 @@ class ComponentForceTickController extends ControllerBase_1.ControllerBase {
         }
   }
   static OnAfterTick(o) {
-    for (const [e, r] of this.ZEt)
+    for (var [e, r] of this.ZEt)
       try {
         e.Active &&
           (this.m6(
@@ -185,4 +185,4 @@ class ComponentForceTickController extends ControllerBase_1.ControllerBase {
   (ComponentForceTickController.EW = 1),
   (ComponentForceTickController.Agr = new Map()),
   (ComponentForceTickController.ZEt = new Map());
-// # sourceMappingURL=ComponentForceTickController.js.map
+//# sourceMappingURL=ComponentForceTickController.js.map

@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestRewardView = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const QuestRewardItemList_1 = require("./QuestRewardItemList");
-const ItemRewardController_1 = require("../../ItemReward/ItemRewardController");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  QuestRewardItemList_1 = require("./QuestRewardItemList"),
+  ItemRewardController_1 = require("../../ItemReward/ItemRewardController");
 class QuestRewardView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -54,7 +54,7 @@ class QuestRewardView extends UiViewBase_1.UiViewBase {
       );
   }
   OnStart() {
-    let e = this.OpenParam;
+    var e = this.OpenParam;
     e &&
       ((this.jIt = e),
       (this.sOe = new QuestRewardItemList_1.QuestRewardItemList(
@@ -77,31 +77,31 @@ class QuestRewardView extends UiViewBase_1.UiViewBase {
       ModelManager_1.ModelManager.ItemRewardModel.ClearCurrentRewardData();
   }
   G$t() {
-    var e = this.jIt.GetRewardInfo().Title;
-    var e = !StringUtils_1.StringUtils.IsEmpty(e);
+    var e = this.jIt.GetRewardInfo().Title,
+      e = !StringUtils_1.StringUtils.IsEmpty(e);
     return this.GetItem(2).SetUIActive(e), e;
   }
   mGe() {
-    let e;
-    const t = this.jIt.GetRewardInfo().Title;
+    var e,
+      t = this.jIt.GetRewardInfo().Title;
     StringUtils_1.StringUtils.IsEmpty(t) ||
       ((e = this.GetText(1)), LguiUtil_1.LguiUtil.SetLocalTextNew(e, t));
   }
   N$t() {
-    var e = this.jIt.GetRewardInfo().ContinueText;
-    var e = !StringUtils_1.StringUtils.IsEmpty(e);
+    var e = this.jIt.GetRewardInfo().ContinueText,
+      e = !StringUtils_1.StringUtils.IsEmpty(e);
     return this.GetText(4).SetUIActive(e), e;
   }
   O$t() {
-    let e;
-    const t = this.jIt.GetRewardInfo().ContinueText;
+    var e,
+      t = this.jIt.GetRewardInfo().ContinueText;
     StringUtils_1.StringUtils.IsEmpty(t) ||
       ((e = this.GetText(4)), LguiUtil_1.LguiUtil.SetLocalTextNew(e, t));
   }
   b$t() {
-    var e = this.jIt.GetRewardInfo().IsItemVisible;
-    const t = this.jIt.GetItemList();
-    var e = e && void 0 !== t && t?.length > 0;
+    var e = this.jIt.GetRewardInfo().IsItemVisible,
+      t = this.jIt.GetItemList(),
+      e = e && void 0 !== t && 0 < t?.length;
     return this.sOe.GetActive() !== e && this.sOe.SetActive(e), e;
   }
   q$t() {
@@ -109,4 +109,4 @@ class QuestRewardView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.QuestRewardView = QuestRewardView;
-// # sourceMappingURL=QuestRewardView.js.map
+//# sourceMappingURL=QuestRewardView.js.map

@@ -3,17 +3,17 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoguelikeInstanceEntrySelectItem =
     exports.RoguelikeInstanceEntrySelectView =
       void 0);
-const UE = require("ue");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
-const RoguelikeController_1 = require("../RoguelikeController");
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
+  RoguelikeController_1 = require("../RoguelikeController");
 class RoguelikeInstanceEntrySelectView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -31,7 +31,7 @@ class RoguelikeInstanceEntrySelectView extends UiViewBase_1.UiViewBase {
       }),
       (this.Twn = (e) => {
         return (
-          e.GetToggleState() === 1 ||
+          1 === e.GetToggleState() ||
           ((e =
             ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguePopularEntrieArg(
               ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData.F8n,
@@ -53,7 +53,7 @@ class RoguelikeInstanceEntrySelectView extends UiViewBase_1.UiViewBase {
           this.RefreshBuffTxt();
       }),
       (this.zao = () => {
-        const e = new RoguelikeInstanceEntrySelectItem();
+        var e = new RoguelikeInstanceEntrySelectItem();
         return (
           (e.OnSelectBuff = this.Jao), (e.CheckCanExecuteChange = this.Twn), e
         );
@@ -81,11 +81,11 @@ class RoguelikeInstanceEntrySelectView extends UiViewBase_1.UiViewBase {
         this.GetVerticalLayout(1),
         this.zao,
       ));
-    const e = [];
-    const t = [];
+    var e = [],
+      t = [];
     for (const i of ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguelikePopularEntries())
       i.Insts.includes(this.OpenParam.vFn) &&
-        (i.Category === 0 ? t.push(i) : i.Category === 1 && e.push(i));
+        (0 === i.Category ? t.push(i) : 1 === i.Category && e.push(i));
     await this.LeftLayout.RefreshByDataAsync(e),
       await this.RightLayout.RefreshByDataAsync(t),
       this.RefreshBuffTxt(!0);
@@ -99,7 +99,7 @@ class RoguelikeInstanceEntrySelectView extends UiViewBase_1.UiViewBase {
     let i = RoguelikeDefine_1.DEFAULT_ROGUELIKE_ENTRY_RATE;
     const s = RoguelikeDefine_1.DEFAULT_ROGUELIKE_ENTRY_RATE / 100;
     for (const r of RoguelikeInstanceEntrySelectView.SelectIndexList) {
-      const t =
+      var t =
         ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguelikePopularEntriesById(
           r,
         );
@@ -128,7 +128,7 @@ class RoguelikeInstanceEntrySelectView extends UiViewBase_1.UiViewBase {
               ? (this.CurRate += 1)
               : this.CurRate > i && --this.CurRate,
             this.GetText(2)?.SetText(`x${this.CurRate}%`),
-            (t = t + e + 100) >= 500)
+            500 <= (t = t + e + 100))
           ) {
             let e = UE.Color.FromHex("6e6a62");
             i > s
@@ -175,12 +175,12 @@ class RoguelikeInstanceEntrySelectItem extends GridProxyAbstract_1.GridProxyAbst
       (this.DataId = 0),
       (this.OnToggleStateChange = (e) => {
         this.OnSelectBuff &&
-          this.OnSelectBuff(this.DataId, e === 1, this.GetExtendToggle(4));
+          this.OnSelectBuff(this.DataId, 1 === e, this.GetExtendToggle(4));
       });
   }
   Refresh(e, t, i) {
     this.DataId = e.Id;
-    const s = RoguelikeInstanceEntrySelectView.SelectIndexList.has(e.Id);
+    var s = RoguelikeInstanceEntrySelectView.SelectIndexList.has(e.Id);
     this.GetExtendToggle(4)?.SetToggleState(s ? 1 : 0, !1),
       this.GetExtendToggle(4)?.CanExecuteChange.IsBound() ||
         this.GetExtendToggle(4)?.CanExecuteChange.Unbind(),
@@ -190,13 +190,13 @@ class RoguelikeInstanceEntrySelectItem extends GridProxyAbstract_1.GridProxyAbst
           this.CheckCanExecuteChange(this.GetExtendToggle(4)),
       ),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e.Title),
-      e.Category === 0
+      0 === e.Category
         ? LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(2),
             "Roguelike_Instance_Entry_Buff_Number",
             Math.abs(e.Rate / 100).toString(),
           )
-        : e.Category === 1 &&
+        : 1 === e.Category &&
           LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(2),
             "Roguelike_Instance_Entry_DeBuff_Number",
@@ -222,11 +222,11 @@ class RoguelikeInstanceEntrySelectItem extends GridProxyAbstract_1.GridProxyAbst
     this.GetExtendToggle(4)?.OnStateChange.Add(this.OnToggleStateChange);
   }
   IsToggleSelected() {
-    return this.GetExtendToggle(4).GetToggleState() === 1;
+    return 1 === this.GetExtendToggle(4).GetToggleState();
   }
   SetToggleInteractive(e) {
     this.GetExtendToggle(4).SetSelfInteractive(e);
   }
 }
 exports.RoguelikeInstanceEntrySelectItem = RoguelikeInstanceEntrySelectItem;
-// # sourceMappingURL=RoguelikeInstanceEntrySelectView.js.map
+//# sourceMappingURL=RoguelikeInstanceEntrySelectView.js.map

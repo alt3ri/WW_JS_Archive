@@ -7,7 +7,7 @@ class RoleSkillPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHandleBa
     super(...arguments), (this.GroupName = "");
   }
   SetToggleSelectByGroupName(e) {
-    const s = this.GetNavigationGroup(e);
+    var s = this.GetNavigationGroup(e);
     if (s) {
       this.GroupName = e;
       for (let e = 0, l = s.ListenerList.Num(); e < l; ++e)
@@ -15,7 +15,7 @@ class RoleSkillPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHandleBa
     }
   }
   ResetToggleSelect() {
-    const s = this.GetNavigationGroup(this.GroupName);
+    var s = this.GetNavigationGroup(this.GroupName);
     if (s) {
       this.GroupName = "";
       for (let e = 0, l = s.ListenerList.Num(); e < l; ++e)
@@ -24,4 +24,4 @@ class RoleSkillPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHandleBa
   }
 }
 exports.RoleSkillPanelHandle = RoleSkillPanelHandle;
-// # sourceMappingURL=RoleSkillPanelHandle.js.map
+//# sourceMappingURL=RoleSkillPanelHandle.js.map

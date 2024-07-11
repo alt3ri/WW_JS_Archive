@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PawnChairController = exports.SubEntityInteractLogicController =
     void 0);
-const puerts_1 = require("puerts");
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const ModelManager_1 = require("../../../Manager/ModelManager");
+const puerts_1 = require("puerts"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  ModelManager_1 = require("../../../Manager/ModelManager");
 class SubEntityInteractLogicController {
   constructor(t) {
     (this.MasterEntity = void 0),
@@ -45,11 +45,11 @@ class PawnChairController extends (exports.SubEntityInteractLogicController =
     return (this.MasterEntity = t), !0;
   }
   GetInteractPoint() {
-    var t = this.Entity.GetComponent(1);
-    const e = Vector_1.Vector.Create();
-    const r = Vector_1.Vector.Create();
-    const s = Vector_1.Vector.Create(t.ActorRightProxy);
-    var t = Vector_1.Vector.Create(t.ActorLocationProxy);
+    var t = this.Entity.GetComponent(1),
+      e = Vector_1.Vector.Create(),
+      r = Vector_1.Vector.Create(),
+      s = Vector_1.Vector.Create(t.ActorRightProxy),
+      t = Vector_1.Vector.Create(t.ActorLocationProxy);
     return s.Normalize(), s.Multiply(this.mor, r), t.Addition(r, e), e;
   }
   GetForwardDirection() {
@@ -57,14 +57,14 @@ class PawnChairController extends (exports.SubEntityInteractLogicController =
   }
   Cor(e) {
     if (this.dor && this.MasterEntity) {
-      let t;
-      const r = this.MasterEntity.GetComponent(2);
-      let s =
-        (r.Actor.CapsuleComponent.SetCollisionResponseToChannel(2, e ? 0 : 2),
-        (0, puerts_1.$ref)(void 0));
-      const o = (this.dor.Owner.GetAttachedActors(s), (0, puerts_1.$unref)(s));
-      const i = o.Num();
-      i === 0 &&
+      var t,
+        r = this.MasterEntity.GetComponent(2),
+        s =
+          (r.Actor.CapsuleComponent.SetCollisionResponseToChannel(2, e ? 0 : 2),
+          (0, puerts_1.$ref)(void 0)),
+        o = (this.dor.Owner.GetAttachedActors(s), (0, puerts_1.$unref)(s)),
+        i = o.Num();
+      0 === i &&
         ((s = this.CreatureDataComp.GetPbDataId()),
         (t = this.dor.CreatureData.GetPbDataId()),
         Log_1.Log.CheckWarn()) &&
@@ -76,10 +76,10 @@ class PawnChairController extends (exports.SubEntityInteractLogicController =
           ["OwnerPbDataId", t],
         );
       for (let t = 0; t < i; ++t) {
-        const n = o.Get(t);
-        const a = (0, puerts_1.$ref)(void 0);
-        const h = (n.GetAttachedActors(a), (0, puerts_1.$unref)(a));
-        const d = h.Num();
+        var n = o.Get(t),
+          a = (0, puerts_1.$ref)(void 0),
+          h = (n.GetAttachedActors(a), (0, puerts_1.$unref)(a)),
+          d = h.Num();
         for (let t = 0; t < d; ++t)
           r.Actor.CapsuleComponent.IgnoreActorWhenMoving(h.Get(t), e);
       }
@@ -92,9 +92,9 @@ class PawnChairController extends (exports.SubEntityInteractLogicController =
     this.Entity.GetComponent(182) && this.Cor(!0);
   }
   IsSceneInteractionLoadCompleted() {
-    let t = this.Entity.GetComponent(182);
+    var t = this.Entity.GetComponent(182);
     if (!t) return !1;
-    let e = this.CreatureDataComp.GetPbDataId();
+    var e = this.CreatureDataComp.GetPbDataId();
     const r = ModelManager_1.ModelManager.CreatureModel.GetOwnerEntity(e);
     if (
       (r &&
@@ -107,7 +107,7 @@ class PawnChairController extends (exports.SubEntityInteractLogicController =
       return !1;
     e = (0, puerts_1.$ref)(void 0);
     if (
-      (this.dor.Owner.GetAttachedActors(e), (0, puerts_1.$unref)(e).Num() !== 0)
+      (this.dor.Owner.GetAttachedActors(e), 0 !== (0, puerts_1.$unref)(e).Num())
     )
       return !0;
     {
@@ -128,4 +128,4 @@ class PawnChairController extends (exports.SubEntityInteractLogicController =
   }
 }
 exports.PawnChairController = PawnChairController;
-// # sourceMappingURL=PawnChairController.js.map
+//# sourceMappingURL=PawnChairController.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.JoinTeamModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem");
 class JoinTeamModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments), (this.F0i = 0);
@@ -19,4 +19,4 @@ class JoinTeamModel extends ModelBase_1.ModelBase {
   }
 }
 exports.JoinTeamModel = JoinTeamModel;
-// # sourceMappingURL=JoinTeamModel.js.map
+//# sourceMappingURL=JoinTeamModel.js.map

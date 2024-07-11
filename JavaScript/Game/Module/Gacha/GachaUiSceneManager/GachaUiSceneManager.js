@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GachaUiSceneManager = void 0);
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const CameraController_1 = require("../../../Camera/CameraController");
-const GlobalData_1 = require("../../../GlobalData");
-const RenderModuleController_1 = require("../../../Render/Manager/RenderModuleController");
-const BlackScreenController_1 = require("../../BlackScreen/BlackScreenController");
-const UiSceneManager_1 = require("../../UiComponent/UiSceneManager");
-const GachaDefine_1 = require("../GachaDefine");
+const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  CameraController_1 = require("../../../Camera/CameraController"),
+  GlobalData_1 = require("../../../GlobalData"),
+  RenderModuleController_1 = require("../../../Render/Manager/RenderModuleController"),
+  BlackScreenController_1 = require("../../BlackScreen/BlackScreenController"),
+  UiSceneManager_1 = require("../../UiComponent/UiSceneManager"),
+  GachaDefine_1 = require("../GachaDefine");
 class GachaUiSceneManager {
   static async OpenUiScene() {
     const e = new CustomPromise_1.CustomPromise();
@@ -46,4 +46,4 @@ class GachaUiSceneManager {
   }
 }
 exports.GachaUiSceneManager = GachaUiSceneManager;
-// # sourceMappingURL=GachaUiSceneManager.js.map
+//# sourceMappingURL=GachaUiSceneManager.js.map

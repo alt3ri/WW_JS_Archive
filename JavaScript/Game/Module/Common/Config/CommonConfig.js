@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonConfig = void 0);
-const ConfigCommon_1 = require("../../../../Core/Config/ConfigCommon");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const ElementInfoById_1 = require("../../../../Core/Define/ConfigQuery/ElementInfoById");
-const LongPressConfigById_1 = require("../../../../Core/Define/ConfigQuery/LongPressConfigById");
-const QualityInfoAll_1 = require("../../../../Core/Define/ConfigQuery/QualityInfoAll");
-const QualityInfoById_1 = require("../../../../Core/Define/ConfigQuery/QualityInfoById");
-const ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
+const ConfigCommon_1 = require("../../../../Core/Config/ConfigCommon"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  ElementInfoById_1 = require("../../../../Core/Define/ConfigQuery/ElementInfoById"),
+  LongPressConfigById_1 = require("../../../../Core/Define/ConfigQuery/LongPressConfigById"),
+  QualityInfoAll_1 = require("../../../../Core/Define/ConfigQuery/QualityInfoAll"),
+  QualityInfoById_1 = require("../../../../Core/Define/ConfigQuery/QualityInfoById"),
+  ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
 class CommonConfig extends ConfigBase_1.ConfigBase {
   GetSelectablePropItemTickMaxTime() {
     return CommonParamById_1.configCommonParamById.GetIntConfig(
@@ -59,7 +59,7 @@ class CommonConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetItemQualityList() {
-    const e = ConfigCommon_1.ConfigCommon.ToList(
+    var e = ConfigCommon_1.ConfigCommon.ToList(
       QualityInfoAll_1.configQualityInfoAll.GetConfigList(),
     );
     return e.sort((e, o) => e.Id - o.Id), e;
@@ -74,9 +74,9 @@ class CommonConfig extends ConfigBase_1.ConfigBase {
     return LongPressConfigById_1.configLongPressConfigById.GetConfig(e);
   }
   GetDebugGmViewPath(e) {
-    return e === "GmView"
+    return "GmView" === e
       ? CommonParamById_1.configCommonParamById.GetStringConfig("GmViewPath")
-      : e === "LoginDebugView"
+      : "LoginDebugView" === e
         ? CommonParamById_1.configCommonParamById.GetStringConfig(
             "GmLoginViewPath",
           )
@@ -106,4 +106,4 @@ class CommonConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.CommonConfig = CommonConfig;
-// # sourceMappingURL=CommonConfig.js.map
+//# sourceMappingURL=CommonConfig.js.map

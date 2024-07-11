@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectActorPool = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../Core/Actor/ActorSystem");
-const Log_1 = require("../../Core/Common/Log");
-const Queue_1 = require("../../Core/Container/Queue");
-const TimerSystem_1 = require("../../Core/Timer/TimerSystem");
-const DEFAULT_CAPACITY = 4;
+const UE = require("ue"),
+  ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../Core/Common/Log"),
+  Queue_1 = require("../../Core/Container/Queue"),
+  TimerSystem_1 = require("../../Core/Timer/TimerSystem"),
+  DEFAULT_CAPACITY = 4;
 class CustomObjectPool {
   constructor(t = DEFAULT_CAPACITY, e = 0) {
     (this.o7 = t),
@@ -18,8 +18,8 @@ class CustomObjectPool {
   OnDeSpawn(t) {}
   OnClear() {}
   Spawn(...t) {
-    let e = void 0;
-    let i = !1;
+    let e = void 0,
+      i = !1;
     for (; this.bCe.Size; ) {
       if (((e = this.bCe.Pop()), this.OnObjectIsValid(e))) {
         i = !0;
@@ -34,11 +34,11 @@ class CustomObjectPool {
         (this.BCe &&
           (TimerSystem_1.TimerSystem.Remove(this.BCe), (this.BCe = void 0)),
         (this.BCe = TimerSystem_1.TimerSystem.Delay(() => {
-          const t = this.bCe.Size;
-          const e = Math.floor(t / 2);
+          var t = this.bCe.Size,
+            e = Math.floor(t / 2);
           if (((this.BCe = void 0), !(t <= this.o7)))
-            for (let i = Math.max(e, this.o7); this.bCe.Size >= i; ) {
-              const s = this.bCe.Pop();
+            for (var i = Math.max(e, this.o7); this.bCe.Size >= i; ) {
+              var s = this.bCe.Pop();
               this.OnDestroyObject(s);
             }
         }, this.wCe))),
@@ -54,7 +54,7 @@ class CustomObjectPool {
   }
   Clear() {
     for (; this.bCe.Size; ) {
-      const t = this.bCe.Pop();
+      var t = this.bCe.Pop();
       this.OnDestroyObject(t);
     }
     this.BCe &&
@@ -64,7 +64,7 @@ class CustomObjectPool {
 }
 class EffectActorPool extends CustomObjectPool {
   OnCreateObject(...t) {
-    let e = t[0];
+    var e = t[0];
     let i = void 0;
     e.IsA(UE.Actor.StaticClass()) && (i = e);
     e = t[1];
@@ -89,8 +89,8 @@ class EffectActorPool extends CustomObjectPool {
         void 0 === this.qCe)
       )
         return;
-      const e = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(t);
-      (e !== 3 && e !== 2) || (this.qCe.ActorLabel = "EffectActorPool");
+      var e = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(t);
+      (3 !== e && 2 !== e) || (this.qCe.ActorLabel = "EffectActorPool");
     }
     t.K2_AttachToActor(this.qCe, void 0, 2, 2, 2, !1);
   }
@@ -105,4 +105,4 @@ class EffectActorPool extends CustomObjectPool {
   }
 }
 exports.EffectActorPool = EffectActorPool;
-// # sourceMappingURL=CustomObjectPool.js.map
+//# sourceMappingURL=CustomObjectPool.js.map

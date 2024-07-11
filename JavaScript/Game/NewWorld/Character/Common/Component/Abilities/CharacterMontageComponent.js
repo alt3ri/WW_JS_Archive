@@ -1,37 +1,41 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, s) {
-    let o;
-    const h = arguments.length;
-    let r =
-      h < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      h = arguments.length,
+      r =
+        h < 3
+          ? e
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(e, i))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(t, e, i, s);
     else
-      for (let n = t.length - 1; n >= 0; n--)
-        (o = t[n]) && (r = (h < 3 ? o(r) : h > 3 ? o(e, i, r) : o(e, i)) || r);
-    return h > 3 && r && Object.defineProperty(e, i, r), r;
+      for (var n = t.length - 1; 0 <= n; n--)
+        (o = t[n]) && (r = (h < 3 ? o(r) : 3 < h ? o(e, i, r) : o(e, i)) || r);
+    return 3 < h && r && Object.defineProperty(e, i, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterMontageComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem");
-const FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil");
-const StringUtils_1 = require("../../../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
-const CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage");
-const CombatDebugController_1 = require("../../../../../Utils/CombatDebugController");
-const montagePathMap = new Map([
-  [0, "AM_Death"],
-  [1, "AM_Death_InWater"],
-  [2, "AM_Death_InAir"],
-  [3, "AM_Death_Falling"],
-]);
+const UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem"),
+  FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil"),
+  StringUtils_1 = require("../../../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage"),
+  CombatDebugController_1 = require("../../../../../Utils/CombatDebugController"),
+  montagePathMap = new Map([
+    [0, "AM_Death"],
+    [1, "AM_Death_InWater"],
+    [2, "AM_Death_InAir"],
+    [3, "AM_Death_Falling"],
+  ]);
 class MontageTask {
   constructor(t, e, i, s, o, h = !0, r = -1) {
     (this.MontageComponent = void 0),
@@ -68,13 +72,13 @@ class MontageTask {
     return this.UKo;
   }
   Play(t = 0) {
-    let e;
+    var e;
     this.UKo ||
       (this.Montage &&
         !this.lfe &&
         (this.PlayCallback?.(),
         (e = this.Montage.BlendIn.BlendTime),
-        this.BlendInTime >= 0 &&
+        0 <= this.BlendInTime &&
           (this.Montage.BlendIn.BlendTime = this.BlendInTime),
         CombatDebugController_1.CombatDebugController.CombatDebug(
           "Animation",
@@ -90,7 +94,7 @@ class MontageTask {
           t,
           FNameUtil_1.FNameUtil.NONE,
         )),
-        this.BlendInTime >= 0 && (this.Montage.BlendIn.BlendTime = e),
+        0 <= this.BlendInTime && (this.Montage.BlendIn.BlendTime = e),
         this.DKo.EndCallback.Add((t) => {
           this.EndCallback?.(t),
             this.MontageComponent.EndMontageTask(this.Handle);
@@ -139,7 +143,7 @@ let CharacterMontageComponent = class CharacterMontageComponent extends EntityCo
     this.F$.clear(), this.YOr.clear();
     for (const e of this.JOr) e.EndTask();
     this.JOr.length = 0;
-    for (const [, t] of this.ZOr) t.EndTask();
+    for (var [, t] of this.ZOr) t.EndTask();
     return this.ZOr.clear(), !0;
   }
   ezo() {
@@ -149,14 +153,11 @@ let CharacterMontageComponent = class CharacterMontageComponent extends EntityCo
       t !== Protocol_1.Aki.Protocol.HBs.Proto_Vision
     ) {
       var t = UE.KismetSystemLibrary.Conv_ClassToSoftClassReference(
-        this.ActorComponent.Actor.GetClass(),
-      );
-      const e = UE.KismetSystemLibrary.Conv_SoftClassReferenceToString(t);
+          this.ActorComponent.Actor.GetClass(),
+        ),
+        e = UE.KismetSystemLibrary.Conv_SoftClassReferenceToString(t);
       for (const [s, o] of montagePathMap.entries()) {
-        const i = ConfigManager_1.ConfigManager.WorldConfig.GetSkillMontage(
-          e,
-          o,
-        );
+        var i = ConfigManager_1.ConfigManager.WorldConfig.GetSkillMontage(e, o);
         i &&
           !StringUtils_1.StringUtils.IsNothing(i.ToAssetPathName()) &&
           ResourceSystem_1.ResourceSystem.LoadAsync(
@@ -170,22 +171,22 @@ let CharacterMontageComponent = class CharacterMontageComponent extends EntityCo
     }
   }
   PlayMontageAsync(t, e, i, s = !0, o = -1) {
-    const h = ++this.zOr;
-    var t = new MontageTask(
-      this,
-      h,
-      t,
-      () => {
-        this.UnifiedStateComponent?.ExitHitState("播放蒙太奇"), e?.();
-      },
-      i,
-      s,
-      o,
-    );
+    var h = ++this.zOr,
+      t = new MontageTask(
+        this,
+        h,
+        t,
+        () => {
+          this.UnifiedStateComponent?.ExitHitState("播放蒙太奇"), e?.();
+        },
+        i,
+        s,
+        o,
+      );
     if (!t.Invalid) return this.ZOr.set(h, t), h;
   }
   PlayMontageTaskAndRequest(t, e, i, s) {
-    const o = Protocol_1.Aki.Protocol.$Nn.create();
+    var o = Protocol_1.Aki.Protocol.$Nn.create();
     (o.pkn = i),
       (o.p4s = this.GetMontagePathHash(t)),
       (this.MontageTaskMessageId = CombatMessage_1.CombatNet.Call(
@@ -202,7 +203,7 @@ let CharacterMontageComponent = class CharacterMontageComponent extends EntityCo
     t && t.Play(e);
   }
   EndMontageTask(t) {
-    const e = this.ZOr.get(t);
+    var e = this.ZOr.get(t);
     e &&
       (e.EndTask(), this.ZOr.delete(t), (this.MontageTaskMessageId = void 0));
   }
@@ -219,8 +220,8 @@ let CharacterMontageComponent = class CharacterMontageComponent extends EntityCo
     return this.F$.has(t);
   }
   PlayMontageWithCallBack(t, e) {
-    let i = this.tkr.get(t);
-    if (i && i.size > 0) {
+    var i = this.tkr.get(t);
+    if (i && 0 < i.size) {
       i = [...i.values()][i.size - 1];
       if (i)
         return void (void 0 === this.PlayMontageAsync(i, void 0, e) && e?.(!0));
@@ -270,4 +271,4 @@ let CharacterMontageComponent = class CharacterMontageComponent extends EntityCo
   CharacterMontageComponent,
 )),
   (exports.CharacterMontageComponent = CharacterMontageComponent);
-// # sourceMappingURL=CharacterMontageComponent.js.map
+//# sourceMappingURL=CharacterMontageComponent.js.map

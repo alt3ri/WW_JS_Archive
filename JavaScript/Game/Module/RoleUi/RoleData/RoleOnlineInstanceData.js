@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleOnlineInstanceData = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const WeaponTrialData_1 = require("../../Weapon/Data/WeaponTrialData");
-const RoleDataBase_1 = require("./RoleDataBase");
+const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  WeaponTrialData_1 = require("../../Weapon/Data/WeaponTrialData"),
+  RoleDataBase_1 = require("./RoleDataBase");
 class RoleOnlineInstanceData extends RoleDataBase_1.RoleDataBase {
   constructor(e) {
     super(e), (this.WeaponTrialData = void 0), this.SetDefaultData();
   }
   SetDefaultData() {
-    const e = this.GetRoleConfig();
+    var e = this.GetRoleConfig();
     (this.WeaponTrialData = new WeaponTrialData_1.WeaponTrialData()),
       this.WeaponTrialData.SetTrialId(e.WeaponType);
   }
@@ -20,7 +20,7 @@ class RoleOnlineInstanceData extends RoleDataBase_1.RoleDataBase {
     return this.Id;
   }
   GetName(e) {
-    const a = this.GetRoleConfig();
+    var a = this.GetRoleConfig();
     return ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(a.Name);
   }
   CanChangeName() {
@@ -43,4 +43,4 @@ class RoleOnlineInstanceData extends RoleDataBase_1.RoleDataBase {
   }
 }
 exports.RoleOnlineInstanceData = RoleOnlineInstanceData;
-// # sourceMappingURL=RoleOnlineInstanceData.js.map
+//# sourceMappingURL=RoleOnlineInstanceData.js.map

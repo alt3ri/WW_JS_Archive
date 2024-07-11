@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChatContent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const PlayerHeadItem_1 = require("../../Common/PlayerHeadItem");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const ChatContentBase_1 = require("./ChatContentBase");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  PlayerHeadItem_1 = require("../../Common/PlayerHeadItem"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ChatContentBase_1 = require("./ChatContentBase");
 class ChatContent extends ChatContentBase_1.ChatContentBase {
   constructor() {
     super(...arguments),
@@ -35,7 +35,7 @@ class ChatContent extends ChatContentBase_1.ChatContentBase {
     ];
   }
   OnStart() {
-    const e = this.GetItem(0);
+    var e = this.GetItem(0);
     (this.WMt = new PlayerHeadItem_1.PlayerHeadItem(e.GetOwner())),
       (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
       this.bl(),
@@ -60,9 +60,9 @@ class ChatContent extends ChatContentBase_1.ChatContentBase {
     this.QMt(), this.L4e(), this.x9e(), this.XMt(), this.pbn();
   }
   QMt() {
-    let e = ModelManager_1.ModelManager.PersonalModel;
-    const t = this.ChatContentData.SenderPlayerId;
-    let i = e.GetPersonalInfoData();
+    var e = ModelManager_1.ModelManager.PersonalModel,
+      t = this.ChatContentData.SenderPlayerId,
+      i = e.GetPersonalInfoData();
     i && i.PlayerId === t
       ? this.WMt.RefreshByRoleIdUseCard(e.GetHeadPhotoId())
       : (i = ModelManager_1.ModelManager.ChatModel.GetChatPlayerData(t)) &&
@@ -71,10 +71,10 @@ class ChatContent extends ChatContentBase_1.ChatContentBase {
           : this.WMt.RefreshByPlayerId(t, !0));
   }
   L4e() {
-    let e;
-    let t;
-    let i;
-    const r = this.GetItem(5);
+    var e,
+      t,
+      i,
+      r = this.GetItem(5);
     const s = this.GetItem(3);
     this.ChatContentData.ContentType === Protocol_1.Aki.Protocol.U3n.nMs &&
       ((e = this.GetText(1)),
@@ -102,16 +102,16 @@ class ChatContent extends ChatContentBase_1.ChatContentBase {
         ).SetUIActive(!1));
   }
   x9e() {
-    const e = this.ChatContentData.SenderPlayerId;
-    const t = this.GetText(6);
-    let i = this.ChatContentData.ChatRoomType;
-    if (i === 2 || i === 3) {
+    var e = this.ChatContentData.SenderPlayerId,
+      t = this.GetText(6),
+      i = this.ChatContentData.ChatRoomType;
+    if (2 === i || 3 === i) {
       i = ModelManager_1.ModelManager.PersonalModel.GetPersonalInfoData();
       if (i && i.PlayerId === e) t.SetText(i.Name);
       else {
         i = ModelManager_1.ModelManager.FriendModel.GetFriendById(e);
         if (i) {
-          const r = i.FriendRemark;
+          var r = i.FriendRemark;
           StringUtils_1.StringUtils.IsEmpty(r)
             ? t.SetText(i.PlayerName)
             : t.SetText(r);
@@ -125,11 +125,11 @@ class ChatContent extends ChatContentBase_1.ChatContentBase {
     } else t.SetUIActive(!1);
   }
   XMt() {
-    const e = this.GetText(2);
-    let t = this.ChatContentData.TimeStamp;
-    let i = this.ChatContentData.LastTimeStamp;
-    const r = TimeUtil_1.TimeUtil.GetServerTime();
-    t - i < ModelManager_1.ModelManager.ChatModel.ShowTimeDifferent && i !== 0
+    var e = this.GetText(2),
+      t = this.ChatContentData.TimeStamp,
+      i = this.ChatContentData.LastTimeStamp,
+      r = TimeUtil_1.TimeUtil.GetServerTime();
+    t - i < ModelManager_1.ModelManager.ChatModel.ShowTimeDifferent && 0 !== i
       ? e.SetUIActive(!1)
       : ((i = TimeUtil_1.TimeUtil.GetDataFromTimeStamp(t)),
         (t = TimeUtil_1.TimeUtil.GetDataFromTimeStamp(r)),
@@ -164,4 +164,4 @@ class ChatContent extends ChatContentBase_1.ChatContentBase {
   }
 }
 exports.ChatContent = ChatContent;
-// # sourceMappingURL=ChatContent.js.map
+//# sourceMappingURL=ChatContent.js.map

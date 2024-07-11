@@ -1,5 +1,5 @@
 "use strict";
-let EImageConfig;
+var EImageConfig;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WINDOWS_RESOLUTION_INDEX =
     exports.EImageConfig =
@@ -38,4 +38,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (I[(I.BLOOM = 132)] = "BLOOM");
   })((EImageConfig = exports.EImageConfig || (exports.EImageConfig = {}))),
   (exports.WINDOWS_RESOLUTION_INDEX = 3);
-// # sourceMappingURL=MenuDefine.js.map
+//# sourceMappingURL=MenuDefine.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GenericPromptFloatTipsBase = void 0);
-const UE = require("ue");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class GenericPromptFloatTipsBase extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -29,12 +29,12 @@ class GenericPromptFloatTipsBase extends UiTickViewBase_1.UiTickViewBase {
         ));
   }
   OnStart() {
-    var i = this.Data.MainTextParams ?? [];
-    var i = (this.SetMainText(...i), this.Data.ExtraTextParams ?? []);
+    var i = this.Data.MainTextParams ?? [],
+      i = (this.SetMainText(...i), this.Data.ExtraTextParams ?? []);
     this.SetExtraText(...i), this.gYt(), this.nYt();
   }
   SetMainText(...i) {
-    const t = this.GetText(0);
+    var t = this.GetText(0);
     !this.Data.MainTextObj && !this.Data.PromptId && i?.length && i[0]
       ? StringUtils_1.StringUtils.IsEmpty(i[0])
         ? t.SetUIActive(!1)
@@ -52,7 +52,7 @@ class GenericPromptFloatTipsBase extends UiTickViewBase_1.UiTickViewBase {
             t.SetUIActive(!0));
   }
   SetExtraText(...i) {
-    const t = this.GetText(1);
+    var t = this.GetText(1);
     !this.Data.ExtraTextObj && !this.Data.PromptId && i?.length && i[0]
       ? (t.SetText(i[0]), t.SetUIActive(!0))
       : this.Data.ExtraTextObj
@@ -72,21 +72,23 @@ class GenericPromptFloatTipsBase extends UiTickViewBase_1.UiTickViewBase {
             t.SetUIActive(!0));
   }
   gYt() {
-    let i;
+    var i;
     this.Data.PromptId &&
       ((i = ConfigManager_1.ConfigManager.GenericPromptConfig.GetPromptInfo(
         this.Data.PromptId,
       )),
       (this.TickDuration = i.Duration)),
-      this.TickDuration === 0 && (this.TickDuration = this.CYt.Duration),
-      this.TickDuration === 0 && (this.TickTime = CommonDefine_1.INVALID_VALUE);
+      0 === this.TickDuration && (this.TickDuration = this.CYt.Duration),
+      0 === this.TickDuration && (this.TickTime = CommonDefine_1.INVALID_VALUE);
   }
   nYt() {
-    let i;
+    var i;
     this.Data.TypeId &&
-      (i = ConfigManager_1.ConfigManager.GenericPromptConfig.GetPromptTypeInfo(
-        this.Data.TypeId,
-      )).OffsetY !== 0 &&
+      0 !==
+        (i =
+          ConfigManager_1.ConfigManager.GenericPromptConfig.GetPromptTypeInfo(
+            this.Data.TypeId,
+          )).OffsetY &&
       this.RootItem.SetAnchorOffsetY(i.OffsetY);
   }
   OnTick(i) {
@@ -108,4 +110,4 @@ class GenericPromptFloatTipsBase extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.GenericPromptFloatTipsBase = GenericPromptFloatTipsBase;
-// # sourceMappingURL=GenericPromptFloatTipsBase.js.map
+//# sourceMappingURL=GenericPromptFloatTipsBase.js.map

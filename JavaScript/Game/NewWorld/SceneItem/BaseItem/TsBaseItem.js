@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const ActorUtils_1 = require("../../../Utils/ActorUtils");
+const UE = require("ue"),
+  ActorUtils_1 = require("../../../Utils/ActorUtils");
 class TsBaseItem extends UE.Actor {
   constructor() {
     super(...arguments),
@@ -17,4 +17,4 @@ class TsBaseItem extends UE.Actor {
   }
 }
 exports.default = TsBaseItem;
-// # sourceMappingURL=TsBaseItem.js.map
+//# sourceMappingURL=TsBaseItem.js.map

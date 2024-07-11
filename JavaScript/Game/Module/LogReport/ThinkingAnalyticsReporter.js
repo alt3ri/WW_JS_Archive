@@ -1,18 +1,18 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ThinkingAnalyticsReporter = void 0);
-const cpp_1 = require("cpp");
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Stats_1 = require("../../../Core/Common/Stats");
-const BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LogSetting_1 = require("./LogSetting");
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LogSetting_1 = require("./LogSetting");
 class ThinkingAnalyticsReporter {
   static Init() {
     EventSystem_1.EventSystem.Add(
@@ -35,7 +35,7 @@ class ThinkingAnalyticsReporter {
 (exports.ThinkingAnalyticsReporter = ThinkingAnalyticsReporter),
   ((_a = ThinkingAnalyticsReporter).h9 = void 0),
   (ThinkingAnalyticsReporter.Wpi = () => {
-    const e = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
+    var e = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
     UE.ThinkingAnalytics.Login(e.toString());
   }),
   (ThinkingAnalyticsReporter.Kpi = () => {
@@ -46,24 +46,24 @@ class ThinkingAnalyticsReporter {
       ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk()
     ) {
       UE.ThinkingAnalytics.DestroyInstance(0);
-      const r = ModelManager_1.ModelManager.LoginModel?.GetServerId();
+      var r = ModelManager_1.ModelManager.LoginModel?.GetServerId();
       let e = void 0;
       var n =
-        BaseConfigController_1.BaseConfigController.GetLoginServerAdditionDataById(
-          r,
-        );
-      var n =
-        (n?.TDCfg &&
-          ((e = n.TDCfg), Log_1.Log.CheckInfo()) &&
-          Log_1.Log.Info(
-            "Log",
-            3,
-            "使用AdditionData的数数配置",
-            ["ServerId", r],
-            ["AppID", e?.AppID],
-            ["URL", e?.URL],
+          BaseConfigController_1.BaseConfigController.GetLoginServerAdditionDataById(
+            r,
           ),
-        BaseConfigController_1.BaseConfigController.GetLoginServerById(r));
+        n =
+          (n?.TDCfg &&
+            ((e = n.TDCfg), Log_1.Log.CheckInfo()) &&
+            Log_1.Log.Info(
+              "Log",
+              3,
+              "使用AdditionData的数数配置",
+              ["ServerId", r],
+              ["AppID", e?.AppID],
+              ["URL", e?.URL],
+            ),
+          BaseConfigController_1.BaseConfigController.GetLoginServerById(r));
       n?.TDCfg &&
         ((e = n.TDCfg), Log_1.Log.CheckInfo()) &&
         Log_1.Log.Info(
@@ -101,4 +101,4 @@ class ThinkingAnalyticsReporter {
           "数数上报时间校准失败，可以因为以下问题导致：1.CDN数数上报配置错误；2.网络原因连接不上。",
         ));
   });
-// # sourceMappingURL=ThinkingAnalyticsReporter.js.map
+//# sourceMappingURL=ThinkingAnalyticsReporter.js.map

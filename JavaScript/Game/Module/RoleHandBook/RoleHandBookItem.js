@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleHandBookItem = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const ButtonItem_1 = require("../Common/Button/ButtonItem");
-const RoleController_1 = require("../RoleUi/RoleController");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ButtonItem_1 = require("../Common/Button/ButtonItem"),
+  RoleController_1 = require("../RoleUi/RoleController"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder");
 class RoleHandBookItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, t) {
     super(),
@@ -89,15 +89,15 @@ class RoleHandBookItem extends UiPanelBase_1.UiPanelBase {
   }
   UpdateComponent(e) {
     this.zke = e;
-    var e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(this.zke);
-    let t = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.zke);
-    const i =
-      (this.GetText(0).ShowTextNew(e.Name),
-      this.$Ut.UnBindRedDot(),
-      this.$Ut.BindRedDot("RoleHandBookActiveButton", this.zke),
-      this.GetItem(7));
-    const o = this.GetItem(8);
-    const r = this.GetItem(9);
+    var e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(this.zke),
+      t = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.zke),
+      i =
+        (this.GetText(0).ShowTextNew(e.Name),
+        this.$Ut.UnBindRedDot(),
+        this.$Ut.BindRedDot("RoleHandBookActiveButton", this.zke),
+        this.GetItem(7)),
+      o = this.GetItem(8),
+      r = this.GetItem(9);
     if (
       (this.IsRoleUnlock()
         ? (this.$Ut.SetLocalText("Detail"),
@@ -136,7 +136,7 @@ class RoleHandBookItem extends UiPanelBase_1.UiPanelBase {
       t.FinalShowSequencePath,
       UE.LevelSequence,
       (e) => {
-        let t;
+        var t;
         ObjectUtils_1.ObjectUtils.IsValid(e) &&
           ((e = e),
           ((t = new UE.MovieSceneSequencePlaybackSettings()).bRestoreState =
@@ -154,9 +154,9 @@ class RoleHandBookItem extends UiPanelBase_1.UiPanelBase {
   }
   UpdateCostInfo() {
     if (this.zke) {
-      let i, o;
-      let e = void 0;
-      let t = void 0;
+      var i, o;
+      let e = void 0,
+        t = void 0;
       for ([i, o] of ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
         this.zke,
       ).ExchangeConsume) {
@@ -165,8 +165,9 @@ class RoleHandBookItem extends UiPanelBase_1.UiPanelBase {
       }
       this.SetTextureByPath(e.Icon, this.GetTexture(1)),
         LguiUtil_1.LguiUtil.SetLocalText(this.GetText(2), "RoleFragment");
-      const r =
-        ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(e.Id);
+      var r = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+        e.Id,
+      );
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(3), "RoleExp", r, t);
     }
   }
@@ -177,12 +178,12 @@ class RoleHandBookItem extends UiPanelBase_1.UiPanelBase {
     );
   }
   IsCanRoleActive() {
-    let e;
-    let t;
-    let i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(this.zke);
-    const o = this.IsRoleUnlock();
-    let r = void 0;
-    let s = void 0;
+    var e,
+      t,
+      i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(this.zke),
+      o = this.IsRoleUnlock();
+    let r = void 0,
+      s = void 0;
     for ([e, t] of i.ExchangeConsume) {
       (r = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e)), (s = t);
       break;
@@ -206,4 +207,4 @@ class RoleHandBookItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleHandBookItem = RoleHandBookItem;
-// # sourceMappingURL=RoleHandBookItem.js.map
+//# sourceMappingURL=RoleHandBookItem.js.map

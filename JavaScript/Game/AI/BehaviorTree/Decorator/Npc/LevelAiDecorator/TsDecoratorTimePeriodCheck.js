@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const GlobalData_1 = require("../../../../../GlobalData");
-const TimeOfDayController_1 = require("../../../../../Module/TimeOfDay/TimeOfDayController");
-const TimeOfDayDefine_1 = require("../../../../../Module/TimeOfDay/TimeOfDayDefine");
-const DAYTIME_HOUR_START = 6;
-const DAYTIME_HOUR_END = 18;
-const NIGHT_HOUR_START = 18;
-const NIGHT_HOUR_END = 6;
+const UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../../../GlobalData"),
+  TimeOfDayController_1 = require("../../../../../Module/TimeOfDay/TimeOfDayController"),
+  TimeOfDayDefine_1 = require("../../../../../Module/TimeOfDay/TimeOfDayDefine"),
+  DAYTIME_HOUR_START = 6,
+  DAYTIME_HOUR_END = 18,
+  NIGHT_HOUR_START = 18,
+  NIGHT_HOUR_END = 6;
 class TsDecoratorTimePeriodCheck extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -35,15 +35,15 @@ class TsDecoratorTimePeriodCheck extends UE.BTDecorator_BlueprintBase {
         !1
       );
     this.InitTsVariables();
-    let r = 0;
-    let t = 0;
+    let r = 0,
+      t = 0;
     t =
-      this.TsTimePeriod === "DayTime"
+      "DayTime" === this.TsTimePeriod
         ? ((r = DAYTIME_HOUR_START * TimeOfDayDefine_1.TOD_MINUTE_PER_HOUR),
           DAYTIME_HOUR_END * TimeOfDayDefine_1.TOD_MINUTE_PER_HOUR)
         : ((r = NIGHT_HOUR_START * TimeOfDayDefine_1.TOD_MINUTE_PER_HOUR),
           NIGHT_HOUR_END * TimeOfDayDefine_1.TOD_MINUTE_PER_HOUR);
-    const o = TimeOfDayController_1.TimeOfDayController.CheckInMinuteSpan(r, t);
+    var o = TimeOfDayController_1.TimeOfDayController.CheckInMinuteSpan(r, t);
     switch (this.TsCheckType) {
       case 0:
         return o;
@@ -55,4 +55,4 @@ class TsDecoratorTimePeriodCheck extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorTimePeriodCheck;
-// # sourceMappingURL=TsDecoratorTimePeriodCheck.js.map
+//# sourceMappingURL=TsDecoratorTimePeriodCheck.js.map

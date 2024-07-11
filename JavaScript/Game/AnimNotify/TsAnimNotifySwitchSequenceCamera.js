@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const FNameUtil_1 = require("../../Core/Utils/FNameUtil");
-const CameraController_1 = require("../Camera/CameraController");
-const CameraUtility_1 = require("../Camera/CameraUtility");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  FNameUtil_1 = require("../../Core/Utils/FNameUtil"),
+  CameraController_1 = require("../Camera/CameraController"),
+  CameraUtility_1 = require("../Camera/CameraUtility"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifySwitchSequenceCamera extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments),
@@ -53,4 +53,4 @@ class TsAnimNotifySwitchSequenceCamera extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifySwitchSequenceCamera;
-// # sourceMappingURL=TsAnimNotifySwitchSequenceCamera.js.map
+//# sourceMappingURL=TsAnimNotifySwitchSequenceCamera.js.map

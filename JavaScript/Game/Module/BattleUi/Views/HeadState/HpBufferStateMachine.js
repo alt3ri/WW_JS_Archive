@@ -23,7 +23,7 @@ class HpBufferStateMachine {
       (this.Cce = this.C1t);
   }
   UpdateParams(t) {
-    t === 6 &&
+    6 === t &&
       ((this.m1t = CommonParamById_1.configCommonParamById.GetIntConfig(
         "DurabilityHitDelayTime",
       )),
@@ -32,15 +32,15 @@ class HpBufferStateMachine {
       )));
   }
   UpdatePercent(t) {
-    let i;
-    return this.Mke === 2
+    var i;
+    return 2 === this.Mke
       ? ((i = (this.CurrentPercent - this.TargetPercent) / this.Cce),
         (this.CurrentPercent -= t * i),
         (this.Cce -= t),
         this.Cce <= 0
           ? ((this.Mke = 0), this.TargetPercent)
           : this.CurrentPercent)
-      : this.Mke === 1
+      : 1 === this.Mke
         ? ((this.u1t += t),
           this.u1t > this.m1t && (this.Mke = 2),
           this.CurrentPercent)
@@ -48,27 +48,27 @@ class HpBufferStateMachine {
   }
   GetHit(t, i) {
     i < t ||
-      (this.Mke === 0
+      (0 === this.Mke
         ? ((this.Mke = 1),
           (this.c1t = 1),
           (this.u1t = 0),
           (this.CurrentPercent = i),
           (this.TargetPercent = t),
           (this.Cce = this.C1t))
-        : this.Mke === 1
+        : 1 === this.Mke
           ? ((this.c1t += 1),
             this.c1t > this.d1t && (this.Mke = 2),
             (this.u1t = 0),
             (this.TargetPercent = t))
-          : this.Mke === 2 &&
+          : 2 === this.Mke &&
             ((this.TargetPercent = t), (this.Cce = this.C1t)));
   }
   Reset() {
     this.Mke = 0;
   }
   IsOriginState() {
-    return this.Mke === 0;
+    return 0 === this.Mke;
   }
 }
 exports.HpBufferStateMachine = HpBufferStateMachine;
-// # sourceMappingURL=HpBufferStateMachine.js.map
+//# sourceMappingURL=HpBufferStateMachine.js.map

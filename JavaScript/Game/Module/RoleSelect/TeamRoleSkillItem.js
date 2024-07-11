@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TeamRoleSkillItem = exports.TeamRoleSkillData = void 0);
-const UE = require("ue");
-const GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract");
+const UE = require("ue"),
+  GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract");
 class TeamRoleSkillData {
   constructor() {
     (this.SkillIcon = ""),
@@ -48,4 +48,4 @@ class TeamRoleSkillItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.TeamRoleSkillItem = TeamRoleSkillItem;
-// # sourceMappingURL=TeamRoleSkillItem.js.map
+//# sourceMappingURL=TeamRoleSkillItem.js.map

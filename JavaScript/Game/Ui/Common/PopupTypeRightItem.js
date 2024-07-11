@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PopupTypeRightItem = void 0);
-const UE = require("ue");
-const CommonPopViewBehaviourBase_1 = require("./CommonPopViewBehaviourBase");
+const UE = require("ue"),
+  CommonPopViewBehaviourBase_1 = require("./CommonPopViewBehaviourBase");
 class PopupTypeRightItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase {
   constructor() {
     super();
@@ -27,4 +27,4 @@ class PopupTypeRightItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase 
   OnRefreshCost(e) {}
 }
 exports.PopupTypeRightItem = PopupTypeRightItem;
-// # sourceMappingURL=PopupTypeRightItem.js.map
+//# sourceMappingURL=PopupTypeRightItem.js.map

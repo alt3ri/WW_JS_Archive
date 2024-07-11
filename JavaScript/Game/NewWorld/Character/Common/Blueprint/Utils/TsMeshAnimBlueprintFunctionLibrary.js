@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem");
-const FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil");
-const TsBaseCharacter_1 = require("../../../../../Character/TsBaseCharacter");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../../../../GlobalData");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem"),
+  FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil"),
+  TsBaseCharacter_1 = require("../../../../../Character/TsBaseCharacter"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../../../../GlobalData"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager");
 class TsMeshAnimBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static MainAnimInstance(t) {
     return EntitySystem_1.EntitySystem.GetComponent(t, 160)?.MainAnimInstance;
@@ -93,8 +93,8 @@ class TsMeshAnimBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return EntitySystem_1.EntitySystem.GetComponent(t, 160)?.DegMovementSlope;
   }
   static GetRoleFootStepState(t) {
-    var t = EntitySystem_1.EntitySystem.GetComponent(t, 0);
-    let e = t.GetEntityType();
+    var t = EntitySystem_1.EntitySystem.GetComponent(t, 0),
+      e = t.GetEntityType();
     if (e === Protocol_1.Aki.Protocol.HBs.Proto_Player) {
       (e = t.GetPlayerId()),
         (e = ModelManager_1.ModelManager.PlayerInfoModel.GetId() === e),
@@ -115,9 +115,9 @@ class TsMeshAnimBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return t ? t.GetWeaponBreachLevel() : -1;
   }
   static UpdateAnimInfoMeshAnim(t, e) {
-    let i;
-    let n;
-    let r = EntitySystem_1.EntitySystem.GetComponent(t, 160);
+    var i,
+      n,
+      r = EntitySystem_1.EntitySystem.GetComponent(t, 160);
     r?.Valid &&
       ((e = e),
       (i = r.AnimLogicParamsSetter),
@@ -138,9 +138,9 @@ class TsMeshAnimBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       ((i.RagQuitState = r), (e.RagQuitStateRef = r));
   }
   static UpdateAnimInfoMeshAnimRoleNpc(t, e) {
-    let i;
-    let n;
-    var t = EntitySystem_1.EntitySystem.GetComponent(t, 160);
+    var i,
+      n,
+      t = EntitySystem_1.EntitySystem.GetComponent(t, 160);
     t?.Valid &&
       ((e = e),
       (i = t.AnimLogicParamsSetter),
@@ -158,18 +158,18 @@ class TsMeshAnimBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       (e.EnableBlendSpaceLookAtRef = t.EnableBlendSpaceLookAt));
   }
   static UpdateFootstepAudioEvent(e, i, n) {
-    let r = n.碰撞信息;
+    var r = n.碰撞信息;
     if (n["状态-地面-Sprint"] || r.bBlockingHit) {
       e = EntitySystem_1.EntitySystem.GetComponent(e, 3);
       if (e?.Valid) {
-        let a = e.Owner;
+        var a = e.Owner;
         if (a instanceof TsBaseCharacter_1.default) {
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnCharFootOnTheGround,
           );
           e = e.Entity.GetComponent(40);
           if (e?.Valid) {
-            const s = e.GetAkComponentBySocketName(
+            var s = e.GetAkComponentBySocketName(
               FNameUtil_1.FNameUtil.GetDynamicFName("hitcase"),
             );
             if (s?.IsValid()) {
@@ -217,7 +217,7 @@ class TsMeshAnimBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     EntitySystem_1.EntitySystem.GetComponent(t, 99).SetTakeOverTick(e);
   }
   static AnimTurnLog(t) {
-    const e = EntitySystem_1.EntitySystem.GetComponent(t, 3);
+    var e = EntitySystem_1.EntitySystem.GetComponent(t, 3);
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Test",
@@ -233,4 +233,4 @@ class TsMeshAnimBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
 }
 exports.default = TsMeshAnimBlueprintFunctionLibrary;
-// # sourceMappingURL=TsMeshAnimBlueprintFunctionLibrary.js.map
+//# sourceMappingURL=TsMeshAnimBlueprintFunctionLibrary.js.map

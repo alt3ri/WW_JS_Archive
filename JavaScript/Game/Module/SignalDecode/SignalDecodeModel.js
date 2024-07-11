@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SignalDecodeModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  ConfigManager_1 = require("../../Manager/ConfigManager");
 class SignalDecodeModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -33,4 +33,4 @@ class SignalDecodeModel extends ModelBase_1.ModelBase {
   }
 }
 exports.SignalDecodeModel = SignalDecodeModel;
-// # sourceMappingURL=SignalDecodeModel.js.map
+//# sourceMappingURL=SignalDecodeModel.js.map

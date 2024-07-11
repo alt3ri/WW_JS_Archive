@@ -1,53 +1,57 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, i, e, s) {
-    let h;
-    const o = arguments.length;
-    let r =
-      o < 3 ? i : s === null ? (s = Object.getOwnPropertyDescriptor(i, e)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var h,
+      o = arguments.length,
+      r =
+        o < 3
+          ? i
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(i, e))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(t, i, e, s);
     else
-      for (let a = t.length - 1; a >= 0; a--)
-        (h = t[a]) && (r = (o < 3 ? h(r) : o > 3 ? h(i, e, r) : h(i, e)) || r);
-    return o > 3 && r && Object.defineProperty(i, e, r), r;
+      for (var a = t.length - 1; 0 <= a; a--)
+        (h = t[a]) && (r = (o < 3 ? h(r) : 3 < o ? h(i, e, r) : h(i, e)) || r);
+    return 3 < o && r && Object.defineProperty(i, e, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterCaughtNewComponent =
     exports.CaughtBindingInfo =
     exports.CaughtTriggerInfo =
       void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../Core/Common/Time");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const DataTableUtil_1 = require("../../../../../Core/Utils/DataTableUtil");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../../../GlobalData");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage");
-const CombatDebugController_1 = require("../../../../Utils/CombatDebugController");
-const BulletController_1 = require("../../../Bullet/BulletController");
-const CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes");
-const BulletUtil_1 = require("../../../Bullet/BulletUtil");
-const DEFAULT_CAUGHT_LEVEL = 10;
-const ZOOM_PRECENTAGE = 0.1;
-const ADD_LENGTH = 5;
-const IS_DEBUG = !1;
-const PROFILE_KEY2 = "FightCameraLogicComponent_CheckCollision_Camera";
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  DataTableUtil_1 = require("../../../../../Core/Utils/DataTableUtil"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
+  CombatDebugController_1 = require("../../../../Utils/CombatDebugController"),
+  BulletController_1 = require("../../../Bullet/BulletController"),
+  CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
+  BulletUtil_1 = require("../../../Bullet/BulletUtil"),
+  DEFAULT_CAUGHT_LEVEL = 10,
+  ZOOM_PRECENTAGE = 0.1,
+  ADD_LENGTH = 5,
+  IS_DEBUG = !1,
+  PROFILE_KEY2 = "FightCameraLogicComponent_CheckCollision_Camera";
 class CaughtTriggerInfo {
   constructor(t, i, e, s, h) {
     (this.Jh = void 0),
@@ -75,7 +79,7 @@ class CaughtTriggerInfo {
       (this.BulletActorComponent = this.BulletEntity?.GetComponent(152)),
       this.BulletEntity &&
         ((this.Handle = (t) => {
-          const i = t?.Target;
+          var i = t?.Target;
           this.BulletEntity &&
             i?.Valid &&
             this.BulletEntity.Id === t.BulletEntityId &&
@@ -220,7 +224,7 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
       (this.Gce = this.Entity.GetComponent(161)),
       (this.cBe = this.Entity.GetComponent(33)),
       (this.Hte = this.Entity.GetComponent(3));
-    const t = this.Entity.GetComponent(0);
+    var t = this.Entity.GetComponent(0);
     return (
       (this.E4r = t?.GetEntityPropertyConfig()),
       this.N4r(),
@@ -238,20 +242,20 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
         this.Xte.RemoveTag(-1697149502)),
       this.y4r && this.y4r.EndTask(),
       (this.y4r = void 0);
-    for (const [, t] of this.D4r) t.Clear();
+    for (var [, t] of this.D4r) t.Clear();
     this.D4r.clear();
-    for (const [, i] of this.R4r) i.Clear();
+    for (var [, i] of this.R4r) i.Clear();
     return this.R4r.clear(), !0;
   }
   OnActivate() {
     this.A4r = ConfigManager_1.ConfigManager.WorldConfig.GetCaughtDataInfo();
   }
   OnTick(t) {
-    if (this.PendingCaughtList.size > 0) {
-      let i;
-      let e;
-      let s;
-      const h = [];
+    if (0 < this.PendingCaughtList.size) {
+      var i,
+        e,
+        s,
+        h = [];
       for ([i, [e, s]] of this.PendingCaughtList) {
         Time_1.Time.NowSeconds > s + 1 &&
           (h.push(i),
@@ -260,16 +264,16 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
             this.Entity,
             "超时移除抓取搁置",
           ));
-        const o = e?.GetComponent(43);
+        var o = e?.GetComponent(43);
         o?.BeCaught && o?.CorrectPosition();
       }
       for (const C of h) this.PendingCaughtList.delete(C);
     }
-    if (this.PendingRemoteCaughtList.size > 0) {
-      let r;
-      let a;
-      let n;
-      const _ = [];
+    if (0 < this.PendingRemoteCaughtList.size) {
+      var r,
+        a,
+        n,
+        _ = [];
       for ([r, [a, n]] of this.PendingRemoteCaughtList) {
         Time_1.Time.NowSeconds > n + 1 &&
           (_.push(r),
@@ -278,7 +282,7 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
             this.Entity,
             "超时移除远端抓取搁置",
           ));
-        const l = a?.GetComponent(43);
+        var l = a?.GetComponent(43);
         l?.BeCaught && l?.CorrectPosition();
       }
       for (const u of _) this.PendingRemoteCaughtList.delete(u);
@@ -287,7 +291,7 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
   }
   O4r() {
     for (let t = 0; t < 33; t++) {
-      const i =
+      var i =
         this.Entity.GetComponent(
           3,
         ).Actor.CapsuleComponent.GetCollisionResponseToChannel(t);
@@ -306,10 +310,10 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
   }
   F4r(i, t) {
     if (!i) return !0;
-    if (i.Num() === 0) return !0;
-    const e = t.GetComponent(185);
+    if (0 === i.Num()) return !0;
+    var e = t.GetComponent(185);
     for (let t = 0; t < i.Num(); t++) {
-      const s = i.Get(t);
+      var s = i.Get(t);
       if (s && e.HasTag(s.TagId)) return !0;
     }
     return !1;
@@ -324,23 +328,23 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
   }
   j4r(i) {
     if (i)
-      for (let t = i.Num() - 1; t >= 0; t--) {
-        const e = i.GetKey(t);
+      for (let t = i.Num() - 1; 0 <= t; t--) {
+        var e = i.GetKey(t);
         this.H4r(e, i.Get(e));
       }
   }
   W4r() {
     if (this.U4r) {
-      let t;
-      let i;
-      const e = this.Entity.GetComponent(3).Actor.CapsuleComponent;
+      var t,
+        i,
+        e = this.Entity.GetComponent(3).Actor.CapsuleComponent;
       for ([t, i] of this.U4r) e.SetCollisionResponseToChannel(t, i);
     }
   }
   K4r() {
-    let t;
+    var t;
     this.I4r
-      ? (t = this.I4r.BindingInfo.TargetMontagePath) !== "" &&
+      ? "" !== (t = this.I4r.BindingInfo.TargetMontagePath) &&
         this.Entity?.GetComponent(22).PlayMontageAsync(t)
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
@@ -351,10 +355,10 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
         );
   }
   Q4r(t, i) {
-    const e = Vector_1.Vector.Create();
-    const s = Vector_1.Vector.Create(0, 0, 0);
-    var t = (t.Subtraction(i, e), Vector_1.Vector.Create());
-    var i = this.Entity.GetComponent(3);
+    var e = Vector_1.Vector.Create(),
+      s = Vector_1.Vector.Create(0, 0, 0),
+      t = (t.Subtraction(i, e), Vector_1.Vector.Create()),
+      i = this.Entity.GetComponent(3);
     t.DeepCopy(i.ActorLocationProxy),
       t.Subtraction(e, e),
       i?.HalfHeight && s.Set(0, 0, i.HalfHeight / 2),
@@ -362,13 +366,13 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
       i.SetActorLocation(e.ToUeVector(), "抓取.计算当前对象相对位置的坐标", !0);
   }
   X4r(t) {
-    const i = Vector_1.Vector.Create();
-    if (this.S4r.RoleId !== 0) {
-      var e = this.S4r.RoleId;
-      const s = EntitySystem_1.EntitySystem.Get(e);
-      const h = Rotator_1.Rotator.Create(Rotator_1.Rotator.ZeroRotatorProxy);
-      var e = this.Entity.GetComponent(3);
-      const o = e.ActorLocationProxy;
+    var i = Vector_1.Vector.Create();
+    if (0 !== this.S4r.RoleId) {
+      var e = this.S4r.RoleId,
+        s = EntitySystem_1.EntitySystem.Get(e),
+        h = Rotator_1.Rotator.Create(Rotator_1.Rotator.ZeroRotatorProxy),
+        e = this.Entity.GetComponent(3),
+        o = e.ActorLocationProxy;
       switch (t.BindingInfo.CaughtDirectionType) {
         case 0:
           i.DeepCopy(s.GetComponent(3).ActorLocationProxy),
@@ -402,19 +406,19 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
     }
   }
   $4r(t) {
-    var t = FNameUtil_1.FNameUtil.GetDynamicFName(t);
-    const i = this.Entity.GetComponent(3).Actor.Mesh;
+    var t = FNameUtil_1.FNameUtil.GetDynamicFName(t),
+      i = this.Entity.GetComponent(3).Actor.Mesh;
     if (i?.DoesSocketExist(t)) return i.GetSocketTransform(t, 0);
   }
   ResetPosition() {
-    const t = this.Entity.GetComponent(3);
-    const i = this.I4r.BulletEntity?.GetComponent(152)?.ActorLocation;
+    var t = this.Entity.GetComponent(3),
+      i = this.I4r.BulletEntity?.GetComponent(152)?.ActorLocation;
     this.I4r.BulletEntity &&
       i &&
       (t.SetActorLocation(i, "抓取.重置抓取位置", !1), this.Y4r());
   }
   Y4r() {
-    const t = this.$4r(this.I4r.BindingInfo.TargetBoneName);
+    var t = this.$4r(this.I4r.BindingInfo.TargetBoneName);
     t &&
       this.Q4r(
         Vector_1.Vector.Create(t.GetLocation()),
@@ -431,11 +435,11 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
       i)
     )
       for (let t = 0; t < i.Num(); t++) {
-        const s = i.Get(t);
-        let h = DataTableUtil_1.DataTableUtil.GetDataTableRow(
-          this.A4r,
-          s.toString(),
-        );
+        var s = i.Get(t),
+          h = DataTableUtil_1.DataTableUtil.GetDataTableRow(
+            this.A4r,
+            s.toString(),
+          );
         if (!h)
           return void CombatDebugController_1.CombatDebugController.CombatWarn(
             "Caught",
@@ -460,12 +464,12 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
       this.Entity,
       "结束抓取触发器",
     );
-    for (const [, t] of this.D4r) t.Clear();
+    for (var [, t] of this.D4r) t.Clear();
     this.D4r.clear();
   }
   CheckCaught(t, i) {
-    const e = i.GetComponent(185);
-    const s = i.GetComponent(43);
+    var e = i.GetComponent(185),
+      s = i.GetComponent(43);
     return e.HasTag(-648310348) ||
       !this.F4r(t.TriggerInfo.CaughtTargetTag, i) ||
       !this.V4r(t.TriggerInfo.CaughtAimTarget, i.Id) ||
@@ -531,11 +535,11 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
       (this.InCaught = !0),
       this.Xte?.AddTag(665255436);
     for (let t = 0; t < i.Num(); t++) {
-      const s = i.Get(t);
-      var h = DataTableUtil_1.DataTableUtil.GetDataTableRow(
-        this.A4r,
-        s.toString(),
-      );
+      var s = i.Get(t),
+        h = DataTableUtil_1.DataTableUtil.GetDataTableRow(
+          this.A4r,
+          s.toString(),
+        );
       if (!h)
         return void CombatDebugController_1.CombatDebugController.CombatWarn(
           "Caught",
@@ -544,25 +548,25 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
           ["caughtId", s],
         );
       this.Gco = e;
-      var h = new CaughtBindingInfo(s, h, this.Hte, this.Gco);
-      var o =
-        (CombatDebugController_1.CombatDebugController.CombatInfo(
-          "Caught",
-          this.Entity,
-          "创建绑定信息",
-          ["id", s],
-        ),
-        this.R4r.set(s, h),
-        this.PendingCaughtList.get(s));
-      var o =
-        (o &&
+      var h = new CaughtBindingInfo(s, h, this.Hte, this.Gco),
+        o =
           (CombatDebugController_1.CombatDebugController.CombatInfo(
             "Caught",
             this.Entity,
-            "抓取搁置目标",
+            "创建绑定信息",
+            ["id", s],
           ),
-          this.CaughtTarget(h, o[0])),
-        this.PendingRemoteCaughtList.get(s));
+          this.R4r.set(s, h),
+          this.PendingCaughtList.get(s)),
+        o =
+          (o &&
+            (CombatDebugController_1.CombatDebugController.CombatInfo(
+              "Caught",
+              this.Entity,
+              "抓取搁置目标",
+            ),
+            this.CaughtTarget(h, o[0])),
+          this.PendingRemoteCaughtList.get(s));
       o &&
         (CombatDebugController_1.CombatDebugController.CombatInfo(
           "Caught",
@@ -578,7 +582,7 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
       this.Entity,
       "执行抓取目标",
     );
-    const e = this.Entity.GetComponent(157);
+    var e = this.Entity.GetComponent(157);
     for (let t = 0; t < i.BindingInfo.SourceBuffIds.Num(); t++)
       e.AddBuffFromAnimNotify(i.BindingInfo.SourceBuffIds.Get(t), void 0, {
         InstigatorId: e.CreatureDataId,
@@ -593,10 +597,10 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
       "结束抓取绑定器",
     ),
       (this.InCaught = !1);
-    for (const [, t] of this.R4r) {
+    for (var [, t] of this.R4r) {
       for (const e of t.Targets) e.GetComponent(43).EndBeCaught();
       var i;
-      t.BindingInfo.EndBulletId !== "" &&
+      "" !== t.BindingInfo.EndBulletId &&
         ((i = this.Entity.GetComponent(3)),
         BulletUtil_1.BulletUtil.CreateBulletFromAN(
           i.Actor,
@@ -622,21 +626,21 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
       "开始被抓取",
       ["CaughtId", i.CaughtId],
     );
-    let e = ModelManager_1.ModelManager.CharacterModel.GetHandleByEntity(t);
-    const s =
-      (EventSystem_1.EventSystem.HasWithTarget(
-        e,
-        EventDefine_1.EEventName.RemoveEntity,
-        this.OnCatcherForceRemove,
-      ) ||
-        EventSystem_1.EventSystem.AddWithTarget(
+    var e = ModelManager_1.ModelManager.CharacterModel.GetHandleByEntity(t),
+      s =
+        (EventSystem_1.EventSystem.HasWithTarget(
           e,
           EventDefine_1.EEventName.RemoveEntity,
           this.OnCatcherForceRemove,
-        ),
-      this.cBe.StopAllSkills("CharacterCaughtNewComponent.BeginBeCaught"),
-      this.z4r(i, t),
-      t.GetComponent(157));
+        ) ||
+          EventSystem_1.EventSystem.AddWithTarget(
+            e,
+            EventDefine_1.EEventName.RemoveEntity,
+            this.OnCatcherForceRemove,
+          ),
+        this.cBe.StopAllSkills("CharacterCaughtNewComponent.BeginBeCaught"),
+        this.z4r(i, t),
+        t.GetComponent(157));
     for (let t = 0; t < i.BindingInfo.TargetBuffIds.Num(); t++)
       this.elt.AddBuffFromAnimNotify(i.BindingInfo.TargetBuffIds.Get(t), s, {
         InstigatorId: this.elt.CreatureDataId,
@@ -657,8 +661,8 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
       this.Entity,
       "远端被抓取",
     );
-    const e = i.GetComponent(43);
-    const s = e.R4r.get(t);
+    var e = i.GetComponent(43),
+      s = e.R4r.get(t);
     e.InCaught && s
       ? this.z4r(s, i, !0)
       : (CombatDebugController_1.CombatDebugController.CombatInfo(
@@ -692,20 +696,20 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
       this.mbr.SetMoveState(
         CharacterUnifiedStateTypes_1.ECharMoveState.Captured,
       );
-    let s;
-    var e = this.Entity.GetComponent(3);
-    let h =
-      (e.SetEnableVoxelDetection(
-        !1,
-        "被抓取者关闭体素检测，防止因为穿地导致误检测",
-      ),
-      this.j4r(t.BindingInfo.CollisionResponseToChannel),
-      this.K4r(),
-      this.Xte.AddTag(-648310348),
-      this.Xte.AddTag(-1697149502),
-      this.$4r(t.BindingInfo.TargetBoneName));
-    const o = this.Entity.GetComponent(3);
-    const r = t.BulletEntity;
+    var s,
+      e = this.Entity.GetComponent(3),
+      h =
+        (e.SetEnableVoxelDetection(
+          !1,
+          "被抓取者关闭体素检测，防止因为穿地导致误检测",
+        ),
+        this.j4r(t.BindingInfo.CollisionResponseToChannel),
+        this.K4r(),
+        this.Xte.AddTag(-648310348),
+        this.Xte.AddTag(-1697149502),
+        this.$4r(t.BindingInfo.TargetBoneName)),
+      o = this.Entity.GetComponent(3),
+      r = t.BulletEntity;
     r?.Valid
       ? ((s = t.BulletActorComponent.Owner.K2_GetActorLocation()),
         o.SetActorLocation(s, "抓取.开始被抓取", !1),
@@ -753,7 +757,7 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
     return this.x4r && !(this.x4r = !1);
   }
   EndBeCaught() {
-    let t;
+    var t;
     CombatDebugController_1.CombatDebugController.CombatInfo(
       "Caught",
       this.Entity,
@@ -784,14 +788,14 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
       (this.BeCaught = !1),
       this.Xte.RemoveTag(-648310348),
       this.Xte.RemoveTag(-1697149502);
-    const t = this.Entity.GetComponent(3);
-    let i = (t?.ResetCapsuleRadiusAndHeight(), t?.Actor?.CapsuleComponent);
+    var t = this.Entity.GetComponent(3),
+      i = (t?.ResetCapsuleRadiusAndHeight(), t?.Actor?.CapsuleComponent);
     let e = 0;
     i && (e = i.K2_GetComponentRotation().Yaw);
     i = new UE.Rotator(0, e, 0);
     t.Actor.CapsuleComponent.K2_SetWorldRotation(i, !1, void 0, !1),
       this.S4r.RoleId &&
-        this.S4r.RoleId !== 0 &&
+        0 !== this.S4r.RoleId &&
         (this.Entity.GetComponent(3).Actor.K2_DetachFromActor(1, 1, 1),
         this.W4r()),
       this.Entity.GetComponent(161).CharacterMovement.SetMovementMode(3, 0),
@@ -802,8 +806,8 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
       this.S4r.SetRoleId(0, 0);
   }
   Z4r() {
-    const t = this.Entity.GetComponent(3);
-    const i = EntitySystem_1.EntitySystem.Get(this.S4r.RoleId);
+    var t = this.Entity.GetComponent(3),
+      i = EntitySystem_1.EntitySystem.Get(this.S4r.RoleId);
     if (i) {
       var e = ModelManager_1.ModelManager.CharacterModel.GetHandleByEntity(i);
       EventSystem_1.EventSystem.HasWithTarget(
@@ -900,7 +904,7 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
           )));
   }
   e5r(t, i) {
-    const e = t.GetComponent(160);
+    var e = t.GetComponent(160);
     e
       ? e.GetCameraPosition(i)
       : i.DeepCopy(t.GetComponent(1).ActorLocationProxy);
@@ -932,8 +936,8 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
   CorrectPosition() {
     this.Fse.HitResult?.Clear(),
       (this.Fse.WorldContextObject = GlobalData_1.GlobalData.World);
-    var t = this.Entity.GetComponent(47)?.RoleId;
-    var t = EntitySystem_1.EntitySystem.Get(t);
+    var t = this.Entity.GetComponent(47)?.RoleId,
+      t = EntitySystem_1.EntitySystem.Get(t);
     if (t && t.Valid)
       if (
         (this.e5r(t, this.pwr),
@@ -1038,12 +1042,12 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
   }
   GetBoneTransform(t, i) {
     t = t.GetComponent(3)?.Actor?.Mesh;
-    if (t.GetAllSocketNames().FindIndex(i) !== -1)
+    if (-1 !== t.GetAllSocketNames().FindIndex(i))
       return t.GetSocketTransform(i, 0);
   }
   SetAddRadiusLocation(t, i, e) {
-    const s = Vector_1.Vector.Create();
-    const h = Vector_1.Vector.Create();
+    var s = Vector_1.Vector.Create(),
+      h = Vector_1.Vector.Create();
     return (
       h.DeepCopy(i),
       s.DeepCopy(t),
@@ -1054,8 +1058,8 @@ let CharacterCaughtNewComponent = class CharacterCaughtNewComponent extends Enti
     );
   }
   static CaughtNotify(t, i) {
-    let e;
-    var t = t?.GetComponent(43);
+    var e,
+      t = t?.GetComponent(43);
     t &&
       (i.a5n.T9n
         ? t.EndBeCaughtHandle()
@@ -1079,4 +1083,4 @@ __decorate(
     CharacterCaughtNewComponent,
   )),
   (exports.CharacterCaughtNewComponent = CharacterCaughtNewComponent);
-// # sourceMappingURL=CharacterCaughtNewComponent.js.map
+//# sourceMappingURL=CharacterCaughtNewComponent.js.map

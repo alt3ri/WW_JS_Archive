@@ -13,27 +13,27 @@ class ExtraEffectSkillLimitCount extends ExtraEffectBase_1.BuffEffect {
     t = t.ExtraEffectParameters;
     (this.FQo = t[0].split("#")),
       (this.VQo = t[1].split("#").map((t) => Number(t))),
-      Number(t[2] ?? 0) === 0 ? (this.HQo = 0) : (this.HQo = 1);
+      0 === Number(t[2] ?? 0) ? (this.HQo = 0) : (this.HQo = 1);
   }
   OnCreated() {
-    const e = this.jQo().CheckGetComponent(186);
+    var e = this.jQo().CheckGetComponent(186);
     for (let t = 0; t < this.FQo.length; t++) {
-      const s = Number(this.FQo[t]);
+      var s = Number(this.FQo[t]);
       e.IsSkillInCd(s), e.SetLimitCount(s, this.VQo[t]);
     }
   }
   OnRemoved() {
-    const t = this.jQo().CheckGetComponent(186);
+    var t = this.jQo().CheckGetComponent(186);
     if (t)
       for (const s of this.FQo) {
-        const e = Number(s);
+        var e = Number(s);
         t.IsSkillInCd(e), t.SetLimitCount(e);
       }
   }
   OnExecute() {}
   jQo() {
-    return this.HQo !== 0 ? this.InstigatorEntity.Entity : this.OwnerEntity;
+    return 0 !== this.HQo ? this.InstigatorEntity.Entity : this.OwnerEntity;
   }
 }
 exports.ExtraEffectSkillLimitCount = ExtraEffectSkillLimitCount;
-// # sourceMappingURL=ExtraEffectSkillLimitCount.js.map
+//# sourceMappingURL=ExtraEffectSkillLimitCount.js.map

@@ -1,40 +1,45 @@
 "use strict";
-let PawnAdsorbComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, i, e, s) {
-    let o;
-    const n = arguments.length;
-    let h =
-      n < 3 ? i : s === null ? (s = Object.getOwnPropertyDescriptor(i, e)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      h = Reflect.decorate(t, i, e, s);
-    else
-      for (let r = t.length - 1; r >= 0; r--)
-        (o = t[r]) && (h = (n < 3 ? o(h) : n > 3 ? o(i, e, h) : o(i, e)) || h);
-    return n > 3 && h && Object.defineProperty(i, e, h), h;
-  };
+var PawnAdsorbComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, i, e, s) {
+      var o,
+        n = arguments.length,
+        h =
+          n < 3
+            ? i
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(i, e))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        h = Reflect.decorate(t, i, e, s);
+      else
+        for (var r = t.length - 1; 0 <= r; r--)
+          (o = t[r]) &&
+            (h = (n < 3 ? o(h) : 3 < n ? o(i, e, h) : o(i, e)) || h);
+      return 3 < n && h && Object.defineProperty(i, e, h), h;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PawnAdsorbComponent = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const Global_1 = require("../../../Global");
-const LevelGamePlayController_1 = require("../../../LevelGamePlay/LevelGamePlayController");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const CombatMessage_1 = require("../../../Module/CombatMessage/CombatMessage");
-const SENSORY_RANGE = 1500;
-const MAX_SPEED = 1500;
-const NORMALIZE = 0.01;
-const CONDITION_CHECK_TIME = 2e3;
+const Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  Global_1 = require("../../../Global"),
+  LevelGamePlayController_1 = require("../../../LevelGamePlay/LevelGamePlayController"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  CombatMessage_1 = require("../../../Module/CombatMessage/CombatMessage"),
+  SENSORY_RANGE = 1500,
+  MAX_SPEED = 1500,
+  NORMALIZE = 0.01,
+  CONDITION_CHECK_TIME = 2e3;
 let PawnAdsorbComponent =
   (PawnAdsorbComponent_1 = class PawnAdsorbComponent extends (
     EntityComponent_1.EntityComponent
@@ -114,8 +119,8 @@ let PawnAdsorbComponent =
             ),
           !1
         );
-      let t = this.Hte.CreatureData;
-      const i = t.GetPbEntityInitData();
+      var t = this.Hte.CreatureData,
+        i = t.GetPbEntityInitData();
       if (!i)
         return (
           Log_1.Log.CheckError() &&
@@ -174,13 +179,13 @@ let PawnAdsorbComponent =
           (this.yan(), this.Ian(), this.Tan(), this.Jsn.ForceUpdate()));
     }
     Tan() {
-      const t = Protocol_1.Aki.Protocol.els.create();
-      const i = ((t.m4n = new Array()), Protocol_1.Aki.Protocol.hOs.create());
-      const e =
-        ((i.$kn = Protocol_1.Aki.Protocol.VBs.create()),
-        (i.D3n = Protocol_1.Aki.Protocol.iws.create()),
-        this.Hte.ActorLocationProxy);
-      const s = this.Hte.ActorRotationProxy;
+      var t = Protocol_1.Aki.Protocol.els.create(),
+        i = ((t.m4n = new Array()), Protocol_1.Aki.Protocol.hOs.create()),
+        e =
+          ((i.$kn = Protocol_1.Aki.Protocol.VBs.create()),
+          (i.D3n = Protocol_1.Aki.Protocol.iws.create()),
+          this.Hte.ActorLocationProxy),
+        s = this.Hte.ActorRotationProxy;
       (i.$kn.X = e.X),
         (i.$kn.Y = e.Y),
         (i.$kn.Z = e.Z),
@@ -195,7 +200,7 @@ let PawnAdsorbComponent =
       return this.kre(), !0;
     }
     van() {
-      let t, i;
+      var t, i;
       return (
         !(!this.ran && !this.Can) ||
         (!(
@@ -238,7 +243,7 @@ let PawnAdsorbComponent =
       }
     }
     Dan() {
-      const t = TimeUtil_1.TimeUtil.GetServerTimeStamp();
+      var t = TimeUtil_1.TimeUtil.GetServerTimeStamp();
       t - this.dan > CONDITION_CHECK_TIME &&
         ((this.Can = !0),
         LevelGamePlayController_1.LevelGamePlayController.EntityAdsorbRequest(
@@ -259,7 +264,7 @@ let PawnAdsorbComponent =
           !this.Hte.Owner.IsValid() || !this.oan.Owner.IsValid())
         )
           return !1;
-        const t = this.Hte.ActorLocationProxy;
+        var t = this.Hte.ActorLocationProxy;
         this.oan.ActorLocationProxy.Subtraction(t, this.nCt),
           this.nCt.Normalize(NORMALIZE),
           (this.han = this.nCt.MultiplyEqual(this.ean)),
@@ -270,7 +275,7 @@ let PawnAdsorbComponent =
       return !0;
     }
     Ean(t) {
-      let i;
+      var i;
       this.ran &&
         !this.san &&
         Global_1.Global.BaseCharacter &&
@@ -360,4 +365,4 @@ let PawnAdsorbComponent =
     PawnAdsorbComponent,
   )),
   (exports.PawnAdsorbComponent = PawnAdsorbComponent);
-// # sourceMappingURL=PawnAdsorbComponent.js.map
+//# sourceMappingURL=PawnAdsorbComponent.js.map

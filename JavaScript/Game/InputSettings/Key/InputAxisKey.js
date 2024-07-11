@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputAxisKey = void 0);
-const UE = require("ue");
-const InputSettings_1 = require("../InputSettings");
+const UE = require("ue"),
+  InputSettings_1 = require("../InputSettings");
 class InputAxisKey {
   constructor() {
     (this.AxisName = ""), (this.Scale = -0), (this.KeyName = "");
   }
   static New(t, e, s) {
-    const n = new InputAxisKey();
+    var n = new InputAxisKey();
     return (n.AxisName = t), (n.Scale = e), (n.KeyName = s), n;
   }
   static NewByInputAxisKeyMapping(t) {
-    const e = new InputAxisKey();
+    var e = new InputAxisKey();
     return (
       (e.AxisName = t.AxisName.toString()),
       (e.Scale = t.Scale),
@@ -21,9 +21,9 @@ class InputAxisKey {
     );
   }
   ToUeInputAxisKeyMapping() {
-    const t = new UE.FName(this.AxisName);
-    var e = new UE.FName(this.KeyName);
-    var e = new UE.Key(e);
+    var t = new UE.FName(this.AxisName),
+      e = new UE.FName(this.KeyName),
+      e = new UE.Key(e);
     return new UE.InputAxisKeyMapping(t, this.Scale, e);
   }
   GetKey() {
@@ -41,4 +41,4 @@ class InputAxisKey {
   }
 }
 exports.InputAxisKey = InputAxisKey;
-// # sourceMappingURL=InputAxisKey.js.map
+//# sourceMappingURL=InputAxisKey.js.map

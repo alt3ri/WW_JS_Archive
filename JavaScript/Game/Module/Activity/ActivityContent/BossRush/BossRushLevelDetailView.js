@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BossRushTeamRoleItem = exports.BossRushLevelDetailView = void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const ConfirmBoxDefine_1 = require("../../../ConfirmBox/ConfirmBoxDefine");
-const CommonSelectItem_1 = require("../../../Roguelike/View/CommonSelectItem");
-const TeamRoleSelectView_1 = require("../../../RoleSelect/TeamRoleSelectView");
-const ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const BossRushController_1 = require("./BossRushController");
+const UE = require("ue"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  ConfirmBoxDefine_1 = require("../../../ConfirmBox/ConfirmBoxDefine"),
+  CommonSelectItem_1 = require("../../../Roguelike/View/CommonSelectItem"),
+  TeamRoleSelectView_1 = require("../../../RoleSelect/TeamRoleSelectView"),
+  ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  BossRushController_1 = require("./BossRushController");
 class BossRushLevelDetailView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -42,12 +42,12 @@ class BossRushLevelDetailView extends UiTabViewBase_1.UiTabViewBase {
       }),
       (this.HAr = () => new BossRushTeamRoleItem()),
       (this.nNt = () => {
-        let e = this.RUr.LevelInfo.GetInstanceDungeonFormationNumb();
+        var e = this.RUr.LevelInfo.GetInstanceDungeonFormationNumb();
         let t = 0;
         this.RUr?.GetCurrentTeamMembers().forEach((e) => {
-          e !== 0 && t++;
+          0 !== e && t++;
         }),
-          e === 0
+          0 === e
             ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
                 "BossRushAtlestOneRole",
               )
@@ -150,12 +150,12 @@ class BossRushLevelDetailView extends UiTabViewBase_1.UiTabViewBase {
       (ModelManager_1.ModelManager.BossRushModel.PlayBackAnimation = !1);
   }
   JAr() {
-    const e = this.RUr?.GetCurrentSelectLevel()?.GetConfig()?.BossCount;
+    var e = this.RUr?.GetCurrentSelectLevel()?.GetConfig()?.BossCount;
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), "BossRushNumTips", e);
   }
   MLn() {
-    const e =
-      this.RUr.GetCurrentSelectLevel().GetRecommendElementIdArray().length > 0
+    var e =
+      0 < this.RUr.GetCurrentSelectLevel().GetRecommendElementIdArray().length
         ? "BossRushRecommendElement"
         : "BossRushRecommendElementNone";
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(12), e);
@@ -168,20 +168,20 @@ class BossRushLevelDetailView extends UiTabViewBase_1.UiTabViewBase {
     );
   }
   KAr() {
-    const e = this.RUr.GetIfLevelTooLow();
+    var e = this.RUr.GetIfLevelTooLow();
     this.GetText(2).SetUIActive(e);
   }
   XAr() {
     this.GAr.forEach((e) => {
       e.SetActive(!1);
     });
-    const t = this.RUr.GetCurrentSelectLevel().GetRecommendElementIdArray();
+    var t = this.RUr.GetCurrentSelectLevel().GetRecommendElementIdArray();
     for (let e = 0; e < t.length; e++)
-      t[e] !== 0 &&
+      0 !== t[e] &&
         (this.GAr[e].SetActive(!0), this.GAr[e].Refresh(t[e], !1, e));
   }
   $Ar() {
-    const e = this.RUr.GetCurrentSelectLevel();
+    var e = this.RUr.GetCurrentSelectLevel();
     this.SetTextureByPath(
       e.GetBigMonsterTexturePath(),
       this.GetTexture(0),
@@ -190,12 +190,12 @@ class BossRushLevelDetailView extends UiTabViewBase_1.UiTabViewBase {
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), e.GetMonsterName());
   }
   jAr() {
-    const t = this.RUr.GetPrepareSelectBuff();
+    var t = this.RUr.GetPrepareSelectBuff();
     for (let e = 0; e < t.length; e++) this.kAr[e].Refresh(t[e]);
   }
   QAr() {
-    const e = this.RUr.GetCurrentTeamMembers();
-    const t = [];
+    var e = this.RUr.GetCurrentTeamMembers(),
+      t = [];
     for (
       t.push(
         ...e.map((e) => ({
@@ -276,38 +276,38 @@ class BuffEntry extends UiPanelBase_1.UiPanelBase {
   }
   O0o() {
     this.GetItem(7).SetUIActive(
-      this.zAr.BuffId !== 0 &&
+      0 !== this.zAr.BuffId &&
         this.zAr.State !== Protocol_1.Aki.Protocol.ABs.KPs,
     );
   }
   ePr() {
-    this.GetItem(1).SetUIActive(this.zAr.BuffId === 0),
-      this.GetItem(2).SetUIActive(this.zAr.BuffId !== 0);
+    this.GetItem(1).SetUIActive(0 === this.zAr.BuffId),
+      this.GetItem(2).SetUIActive(0 !== this.zAr.BuffId);
   }
   tPr() {
-    this.zAr.BuffId !== 0 && (this.iPr(), this.oPr(), this.GUr());
+    0 !== this.zAr.BuffId && (this.iPr(), this.oPr(), this.GUr());
   }
   GUr() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.BossRushConfig.GetBossRushBuffConfigById(
         this.zAr.BuffId,
       ).Texture;
     this.SetTextureByPath(e, this.GetTexture(4));
   }
   oPr() {
-    const e =
-      ConfigManager_1.ConfigManager.BossRushConfig.GetBossRushBuffConfigById(
-        this.zAr.BuffId,
-      );
-    const t = [];
+    var e =
+        ConfigManager_1.ConfigManager.BossRushConfig.GetBossRushBuffConfigById(
+          this.zAr.BuffId,
+        ),
+      t = [];
     for (const s of e.DescriptionParam) {
-      const i = RegExp(/\[(.*?)\]/g).exec(s);
-      i && i.length > 1 && t.push(...i[1].split(","));
+      var i = RegExp(/\[(.*?)\]/g).exec(s);
+      i && 1 < i.length && t.push(...i[1].split(","));
     }
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(6), e.Description, ...t);
   }
   iPr() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.BossRushConfig.GetBossRushBuffConfigById(
         this.zAr.BuffId,
       );
@@ -328,14 +328,14 @@ class BossRushTeamRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
           UiManager_1.UiManager.OpenView("TeamRoleSelectView", this.D4t());
       }),
       (this.K3t = (t) => {
-        let e, i;
+        var e, i;
         if (t)
           return (
             (e = this.rPr.TeamInfo.GetCurrentTeamMembers()[this.GridIndex]),
             (i = this.rPr.TeamInfo.GetCurrentTeamMembers().findIndex(
               (e) => e === t,
             )),
-            e === 0 && i === -1
+            0 === e && -1 === i
               ? "JoinText"
               : e === t
                 ? "GoDownText"
@@ -343,15 +343,15 @@ class BossRushTeamRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
           );
       }),
       (this.p3t = (t) =>
-        this.rPr.TeamInfo.GetCurrentTeamMembers().findIndex((e) => e === t) ===
-        -1),
+        -1 ===
+        this.rPr.TeamInfo.GetCurrentTeamMembers().findIndex((e) => e === t)),
       (this.SLn = (t) => {
         if (this.rPr.TeamInfo.GetCurrentTeamMembers()[this.GridIndex] === t)
           return !0;
-        let e = this.rPr.TeamInfo.GetCurrentTeamMembers().findIndex(
+        var e = this.rPr.TeamInfo.GetCurrentTeamMembers().findIndex(
           (e) => e === t,
         );
-        if (e !== -1 && e !== this.GridIndex) return !0;
+        if (-1 !== e && e !== this.GridIndex) return !0;
         (e =
           this.rPr.TeamInfo.LevelInfo?.GetInstanceDungeonConfig()
             .FightFormationId),
@@ -359,10 +359,10 @@ class BossRushTeamRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
             ConfigManager_1.ConfigManager.EditBattleTeamConfig.GetFightFormationConfig(
               e,
             ));
-        let i = t;
-        let s = !0;
+        let i = t,
+          s = !0;
         for (const n of e.TrialRole) {
-          const r =
+          var r =
             ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfigByGroupId(
               n,
             );
@@ -371,10 +371,10 @@ class BossRushTeamRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
             break;
           }
         }
-        const h = this.rPr.TeamInfo.GetCurrentTeamMembers();
+        var h = this.rPr.TeamInfo.GetCurrentTeamMembers();
         for (let e = 0; e < h.length; e++) {
-          let o = h[e];
-          if (o !== 0 && e !== this.GridIndex) {
+          var o = h[e];
+          if (0 !== o && e !== this.GridIndex) {
             let e = o;
             o =
               ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfigByGroupId(
@@ -392,11 +392,11 @@ class BossRushTeamRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
         return s;
       }),
       (this.Q3t = (t) => {
-        const e = this.rPr.TeamInfo.GetCurrentTeamMembers()[this.GridIndex];
-        const i = this.rPr.TeamInfo.GetCurrentTeamMembers().findIndex(
-          (e) => e === t,
-        );
-        e === 0 && i === -1
+        var e = this.rPr.TeamInfo.GetCurrentTeamMembers()[this.GridIndex],
+          i = this.rPr.TeamInfo.GetCurrentTeamMembers().findIndex(
+            (e) => e === t,
+          );
+        0 === e && -1 === i
           ? this.rPr.TeamInfo.SetIndexTeamMembers(this.GridIndex, t)
           : e === t
             ? this.rPr.TeamInfo.SetIndexTeamMembers(this.GridIndex, 0)
@@ -416,39 +416,42 @@ class BossRushTeamRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   D4t() {
     var e =
-      this.rPr.TeamInfo.LevelInfo?.GetInstanceDungeonConfig().FightFormationId;
-    var e =
-      ConfigManager_1.ConfigManager.EditBattleTeamConfig.GetFightFormationConfig(
-        e,
-      );
-    const t = [];
+        this.rPr.TeamInfo.LevelInfo?.GetInstanceDungeonConfig()
+          .FightFormationId,
+      e =
+        ConfigManager_1.ConfigManager.EditBattleTeamConfig.GetFightFormationConfig(
+          e,
+        ),
+      t = [];
     for (const h of ModelManager_1.ModelManager.RoleModel.GetRoleList())
-      h.GetRoleId() !== 0 && t.push(h);
+      0 !== h.GetRoleId() && t.push(h);
     for (const o of e.TrialRole) {
       var i =
-        ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfigByGroupId(o);
-      var i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(i.Id);
+          ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfigByGroupId(
+            o,
+          ),
+        i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(i.Id);
       t.push(i);
     }
     var e =
-      this.rPr.TeamInfo.GetCurrentTeamMembers().length > this.GridIndex
-        ? this.rPr.TeamInfo.GetCurrentTeamMembers()[this.GridIndex]
-        : 0;
-    var e = new TeamRoleSelectView_1.TeamRoleSelectViewData(
-      5,
-      e,
-      t,
-      this.Q3t,
-      void 0,
-      this.GridIndex + 1,
-    );
-    const s =
-      ((e.CanConfirmFunc = this.SLn),
-      (e.CanJoinTeam = this.p3t),
-      e.SetGetConfirmButtonTextFunction(this.K3t),
-      this.rPr.TeamInfo.GetCurrentTeamMembers());
-    const r = [];
-    for (const n of s) n !== 0 && r.push(n);
+        this.rPr.TeamInfo.GetCurrentTeamMembers().length > this.GridIndex
+          ? this.rPr.TeamInfo.GetCurrentTeamMembers()[this.GridIndex]
+          : 0,
+      e = new TeamRoleSelectView_1.TeamRoleSelectViewData(
+        5,
+        e,
+        t,
+        this.Q3t,
+        void 0,
+        this.GridIndex + 1,
+      ),
+      s =
+        ((e.CanConfirmFunc = this.SLn),
+        (e.CanJoinTeam = this.p3t),
+        e.SetGetConfirmButtonTextFunction(this.K3t),
+        this.rPr.TeamInfo.GetCurrentTeamMembers()),
+      r = [];
+    for (const n of s) 0 !== n && r.push(n);
     return (
       (e.FormationRoleList = r),
       ModelManager_1.ModelManager.EditBattleTeamModel.SetInstanceDungeonId(
@@ -461,8 +464,8 @@ class BossRushTeamRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
     (this.rPr = e), this.SEt();
   }
   SEt() {
-    let e;
-    this.rPr.RoleId === 0
+    var e;
+    0 === this.rPr.RoleId
       ? this.GetTexture(2).SetUIActive(!1)
       : (this.GetTexture(2).SetUIActive(!0),
         (e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
@@ -476,4 +479,4 @@ class BossRushTeamRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.BossRushTeamRoleItem = BossRushTeamRoleItem;
-// # sourceMappingURL=BossRushLevelDetailView.js.map
+//# sourceMappingURL=BossRushLevelDetailView.js.map

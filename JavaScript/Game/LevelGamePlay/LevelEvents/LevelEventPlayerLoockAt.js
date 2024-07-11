@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventPlayerLoockAt = void 0);
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const CameraBlueprintFunctionLibrary_1 = require("../../Camera/CameraBlueprintFunctionLibrary");
-const Global_1 = require("../../Global");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  CameraBlueprintFunctionLibrary_1 = require("../../Camera/CameraBlueprintFunctionLibrary"),
+  Global_1 = require("../../Global"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventPlayerLoockAt extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, t) {
-    var a = parseFloat(e.get("PosX"));
-    var r = parseFloat(e.get("PosY"));
-    let l = parseFloat(e.get("PosZ"));
-    var e = e.get("CameraMove")?.toLowerCase() !== "false";
-    var a = Vector_1.Vector.Create(a, r, l);
-    var r = Global_1.Global.BaseCharacter;
+    var a = parseFloat(e.get("PosX")),
+      r = parseFloat(e.get("PosY")),
+      l = parseFloat(e.get("PosZ")),
+      e = "false" !== e.get("CameraMove")?.toLowerCase(),
+      a = Vector_1.Vector.Create(a, r, l),
+      r = Global_1.Global.BaseCharacter;
     r &&
       ((l = r.CharacterActorComponent),
       (r = Vector_1.Vector.Create()),
@@ -27,7 +27,7 @@ class LevelEventPlayerLoockAt extends LevelGeneralBase_1.LevelEventBase {
         e && CameraBlueprintFunctionLibrary_1.default.SetCameraRotation(a)));
   }
   ExecuteNew(e, t) {
-    let a, r, l;
+    var a, r, l;
     e &&
       ((l = e.Pos.X),
       (r = e.Pos.Y),
@@ -51,4 +51,4 @@ class LevelEventPlayerLoockAt extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventPlayerLoockAt = LevelEventPlayerLoockAt;
-// # sourceMappingURL=LevelEventPlayerLoockAt.js.map
+//# sourceMappingURL=LevelEventPlayerLoockAt.js.map

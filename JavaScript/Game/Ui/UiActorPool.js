@@ -1,41 +1,41 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiActorPool = exports.UiPoolActor = void 0);
-const ActorSystem_1 = require("../../Core/Actor/ActorSystem");
-const CustomPromise_1 = require("../../Core/Common/CustomPromise");
-const Log_1 = require("../../Core/Common/Log");
-const Stats_1 = require("../../Core/Common/Stats");
-const Time_1 = require("../../Core/Common/Time");
-const Queue_1 = require("../../Core/Container/Queue");
-const CommonDefine_1 = require("../../Core/Define/CommonDefine");
-const ConfigManager_1 = require("../../Game/Manager/ConfigManager");
-const UiLayerType_1 = require("./Define/UiLayerType");
-const LguiResourceManager_1 = require("./LguiResourceManager");
-const UiLayer_1 = require("./UiLayer");
-const CACHE_TIME_SECOND = 30;
-const CACHE_TIME = CACHE_TIME_SECOND * CommonDefine_1.MILLIONSECOND_PER_SECOND;
-const TICK_GARBAGE_MAXCOUNT = 1;
-const DEFAULT_CAPACITY = 15;
-const prepareConfigList = [
-  { ResourceId: "UiItem_NPCIcon_Prefab", CacheCount: () => 30 },
-  { ResourceId: "UiItem_Mark_Prefab", CacheCount: () => 2 },
-  { ResourceId: "UiItem_MarkMapName_Prefab", CacheCount: () => 2 },
-  { ResourceId: "UiItem_MarkArea_Prefab", CacheCount: () => 2 },
-  { ResourceId: "UiItem_ProbeArea", CacheCount: () => 2 },
-  { ResourceId: "UiItem_MarkChoose_Prefab", CacheCount: () => 2 },
-  { ResourceId: "UiItem_MarkOut_Prefab", CacheCount: () => 2 },
-  { ResourceId: "UiItem_MarkTrackNia_Prefab", CacheCount: () => 2 },
-  { ResourceId: "UiItem_Map_Prefab", CacheCount: () => 0 },
-  { ResourceId: "UiItem_MiniMap_Prefab", CacheCount: () => 1 },
-  { ResourceId: "UiItem_WorldMapMark_Prefab", CacheCount: () => 1 },
-  { ResourceId: "UiView_InteractionHint_Prefab", CacheCount: () => 1 },
-  { ResourceId: "UiView_Roulette_Prefab", CacheCount: () => 1 },
-  { ResourceId: "UiItem_SuoDing", CacheCount: () => 1 },
-  { ResourceId: "UiItem_PartState_Prefab", CacheCount: () => 1 },
-  { ResourceId: "UiView_AcquireIntro_Prefab", CacheCount: () => 1 },
-  { ResourceId: "UiView_BlackScreen_Prefab", CacheCount: () => 1 },
-  { ResourceId: "UiView_BlackFadeScreen_Prefab", CacheCount: () => 1 },
-];
+const ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
+  CustomPromise_1 = require("../../Core/Common/CustomPromise"),
+  Log_1 = require("../../Core/Common/Log"),
+  Stats_1 = require("../../Core/Common/Stats"),
+  Time_1 = require("../../Core/Common/Time"),
+  Queue_1 = require("../../Core/Container/Queue"),
+  CommonDefine_1 = require("../../Core/Define/CommonDefine"),
+  ConfigManager_1 = require("../../Game/Manager/ConfigManager"),
+  UiLayerType_1 = require("./Define/UiLayerType"),
+  LguiResourceManager_1 = require("./LguiResourceManager"),
+  UiLayer_1 = require("./UiLayer"),
+  CACHE_TIME_SECOND = 30,
+  CACHE_TIME = CACHE_TIME_SECOND * CommonDefine_1.MILLIONSECOND_PER_SECOND,
+  TICK_GARBAGE_MAXCOUNT = 1,
+  DEFAULT_CAPACITY = 15,
+  prepareConfigList = [
+    { ResourceId: "UiItem_NPCIcon_Prefab", CacheCount: () => 30 },
+    { ResourceId: "UiItem_Mark_Prefab", CacheCount: () => 2 },
+    { ResourceId: "UiItem_MarkMapName_Prefab", CacheCount: () => 2 },
+    { ResourceId: "UiItem_MarkArea_Prefab", CacheCount: () => 2 },
+    { ResourceId: "UiItem_ProbeArea", CacheCount: () => 2 },
+    { ResourceId: "UiItem_MarkChoose_Prefab", CacheCount: () => 2 },
+    { ResourceId: "UiItem_MarkOut_Prefab", CacheCount: () => 2 },
+    { ResourceId: "UiItem_MarkTrackNia_Prefab", CacheCount: () => 2 },
+    { ResourceId: "UiItem_Map_Prefab", CacheCount: () => 0 },
+    { ResourceId: "UiItem_MiniMap_Prefab", CacheCount: () => 1 },
+    { ResourceId: "UiItem_WorldMapMark_Prefab", CacheCount: () => 1 },
+    { ResourceId: "UiView_InteractionHint_Prefab", CacheCount: () => 1 },
+    { ResourceId: "UiView_Roulette_Prefab", CacheCount: () => 1 },
+    { ResourceId: "UiItem_SuoDing", CacheCount: () => 1 },
+    { ResourceId: "UiItem_PartState_Prefab", CacheCount: () => 1 },
+    { ResourceId: "UiView_AcquireIntro_Prefab", CacheCount: () => 1 },
+    { ResourceId: "UiView_BlackScreen_Prefab", CacheCount: () => 1 },
+    { ResourceId: "UiView_BlackFadeScreen_Prefab", CacheCount: () => 1 },
+  ];
 class UiPoolActor {
   constructor(e) {
     (this.OCe = void 0), (this.Ymr = ""), (this.Jmr = 0), (this.Ymr = e);
@@ -85,7 +85,7 @@ class UiActorFactory {
           ));
   }
   a7() {
-    const e = new UiPoolActor(this.Ymr);
+    var e = new UiPoolActor(this.Ymr);
     return (e.EndTime = Time_1.Time.Now + CACHE_TIME), e;
   }
   h7(e) {
@@ -93,10 +93,10 @@ class UiActorFactory {
   }
   async PreloadActor(e) {
     this.Zmr = e();
-    const o = e() - this.mp.Size;
+    var o = e() - this.mp.Size;
     if (!(o <= 0))
       if (this.zmr) {
-        const t = [];
+        var t = [];
         for (let e = 0; e < o; e++) t.push(this.GetAsync(this.Ymr, this.zmr));
         (await Promise.all(t)).forEach((e) => {
           this.mp.Push(e);
@@ -142,7 +142,7 @@ class UiActorFactory {
     if (this.mp.Size <= this.Zmr) return o;
     let t = 0;
     for (let e = 0; e < o && !this.mp.Empty; ++e) {
-      const r = this.mp.Front;
+      var r = this.mp.Front;
       if (r.EndTime > Time_1.Time.Now) break;
       this.mp.Pop(),
         this.h7(r),
@@ -160,7 +160,7 @@ class UiActorFactory {
   }
   Clear() {
     for (; !this.mp.Empty; ) {
-      const e = this.mp.Pop();
+      var e = this.mp.Pop();
       this.h7(e);
     }
     this.mp.Clear(),
@@ -190,8 +190,8 @@ class UiActorFactory {
       );
   }
   async GetAsync(e, o) {
-    const t = this.mp.Empty ? this.a7() : this.mp.Pop();
-    const r = (t.IsValid || (t.Actor = await this.tdr()), t.UiItem);
+    var t = this.mp.Empty ? this.a7() : this.mp.Pop(),
+      r = (t.IsValid || (t.Actor = await this.tdr()), t.UiItem);
     if (r)
       return (
         o && r?.SetUIParent(o),
@@ -232,12 +232,12 @@ class UiActorPool {
       await UiActorPool.VQe());
   }
   static async VQe() {
-    const e = [];
+    var e = [];
     for (const t of prepareConfigList) {
       var o = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-        t.ResourceId,
-      );
-      var o = UiActorPool.idr(o);
+          t.ResourceId,
+        ),
+        o = UiActorPool.idr(o);
       e.push(o.PreloadActor(t.CacheCount));
     }
     await Promise.all(e);
@@ -248,7 +248,7 @@ class UiActorPool {
       if ((o = t.GarbageCollect(o)) <= 0) break;
   }
   static ClearPool() {
-    for (const [e, o] of UiActorPool.odr)
+    for (var [e, o] of UiActorPool.odr)
       o.IsKeepWhileCleaning || (o.Clear(), UiActorPool.odr.delete(e));
   }
   static SetKeepWhileCleaning(e, o) {
@@ -263,7 +263,7 @@ class UiActorPool {
     const r = new CustomPromise_1.CustomPromise();
     return (
       LguiResourceManager_1.LguiResourceManager.LoadPrefab(t, e, (e) => {
-        const o = new UiPoolActor(t);
+        var o = new UiPoolActor(t);
         (o.EndTime = Time_1.Time.Now + CACHE_TIME),
           (o.Actor = e),
           r.SetResult(o);
@@ -289,4 +289,4 @@ class UiActorPool {
   (UiActorPool.xW = void 0),
   (UiActorPool.rdr = void 0),
   (UiActorPool.IsOpenPool = !0);
-// # sourceMappingURL=UiActorPool.js.map
+//# sourceMappingURL=UiActorPool.js.map

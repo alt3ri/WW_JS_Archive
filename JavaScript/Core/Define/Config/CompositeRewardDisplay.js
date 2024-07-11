@@ -45,45 +45,45 @@ class CompositeRewardDisplay {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   title(t) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   continuetext(t) {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   titleiconpath(t) {
-    const s = this.J7.__offset(this.z7, 10);
+    var s = this.J7.__offset(this.z7, 10);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   isprogressvisible() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   progressbartitle(t) {
-    const s = this.J7.__offset(this.z7, 14);
+    var s = this.J7.__offset(this.z7, 14);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   progressbaranimationtime() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 500;
   }
   isitemvisible() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   issuccess() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   audioid(t) {
-    const s = this.J7.__offset(this.z7, 22);
+    var s = this.J7.__offset(this.z7, 22);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
 }
 exports.CompositeRewardDisplay = CompositeRewardDisplay;
-// # sourceMappingURL=CompositeRewardDisplay.js.map
+//# sourceMappingURL=CompositeRewardDisplay.js.map

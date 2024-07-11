@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoadAsyncPromise = void 0);
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
+const CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
 class LoadAsyncPromise {
   constructor(e, s, t = 100) {
     (this.ZAo = ResourceSystem_1.ResourceSystem.InvalidId),
@@ -34,4 +34,4 @@ class LoadAsyncPromise {
   }
 }
 exports.LoadAsyncPromise = LoadAsyncPromise;
-// # sourceMappingURL=LoadAsyncPromise.js.map
+//# sourceMappingURL=LoadAsyncPromise.js.map

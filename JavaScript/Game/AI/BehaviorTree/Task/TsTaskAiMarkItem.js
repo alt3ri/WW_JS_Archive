@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskAiMarkItem extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -21,10 +21,10 @@ class TsTaskAiMarkItem extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsSearchFilterIsMarkByAi = this.SearchFilterIsMarkByAi));
   }
   ReceiveExecuteAI(t, e) {
-    let s;
-    let r;
-    let i;
-    let o = t.AiController;
+    var s,
+      r,
+      i,
+      o = t.AiController;
     o
       ? (this.InitTsVariables(),
         (s = (o = o.CharActorComp).Entity.GetComponent(69)),
@@ -32,7 +32,7 @@ class TsTaskAiMarkItem extends TsTaskAbortImmediatelyBase_1.default {
           o.Entity.Id,
           this.TsItemBlackboardKey,
         )),
-        s.AiItemMarkId !== 0 && this.TsSearchFilterIsMarkByAi
+        0 !== s.AiItemMarkId && this.TsSearchFilterIsMarkByAi
           ? s.AiItemMarkId === r
             ? this.FinishExecute(!0)
             : this.FinishExecute(!1)
@@ -53,4 +53,4 @@ class TsTaskAiMarkItem extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskAiMarkItem;
-// # sourceMappingURL=TsTaskAiMarkItem.js.map
+//# sourceMappingURL=TsTaskAiMarkItem.js.map

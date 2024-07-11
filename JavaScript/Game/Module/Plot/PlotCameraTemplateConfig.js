@@ -1,15 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotCameraTemplateConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const FlowTemplateDataById_1 = require("../../../Core/Define/ConfigQuery/FlowTemplateDataById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  FlowTemplateDataById_1 = require("../../../Core/Define/ConfigQuery/FlowTemplateDataById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class PlotCameraTemplateConfig extends ConfigBase_1.ConfigBase {
   GetCameraTemplateConfig(e) {
-    const o = FlowTemplateDataById_1.configFlowTemplateDataById.GetConfig(
-      e,
-      !1,
-    );
+    var o = FlowTemplateDataById_1.configFlowTemplateDataById.GetConfig(e, !1);
     return (
       o ||
         (Log_1.Log.CheckError() &&
@@ -22,4 +19,4 @@ class PlotCameraTemplateConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.PlotCameraTemplateConfig = PlotCameraTemplateConfig;
-// # sourceMappingURL=PlotCameraTemplateConfig.js.map
+//# sourceMappingURL=PlotCameraTemplateConfig.js.map

@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SpecialEnergyBarBase = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const BattleUiControl_1 = require("../../BattleUiControl");
-const VisibleStateUtil_1 = require("../../VisibleStateUtil");
-const SpecialEnergyBarKeyItem_1 = require("./SpecialEnergyBarKeyItem");
-const SpecialEnergyBarNumItem_1 = require("./SpecialEnergyBarNumItem");
-const SpecialEnergyBarPercentMachine_1 = require("./SpecialEnergyBarPercentMachine");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  BattleUiControl_1 = require("../../BattleUiControl"),
+  VisibleStateUtil_1 = require("../../VisibleStateUtil"),
+  SpecialEnergyBarKeyItem_1 = require("./SpecialEnergyBarKeyItem"),
+  SpecialEnergyBarNumItem_1 = require("./SpecialEnergyBarNumItem"),
+  SpecialEnergyBarPercentMachine_1 = require("./SpecialEnergyBarPercentMachine"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
 class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -91,10 +91,10 @@ class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
       this.RefreshVisible();
   }
   RefreshVisible() {
-    let t;
+    var t;
     this.InAsyncLoading() ||
       this.IsRegister ||
-      ((t = this.VisibleState === 0)
+      ((t = 0 === this.VisibleState)
         ? this.IsShowOrShowing || this.Show()
         : this.IsShowOrShowing && this.Hide(),
       Log_1.Log.CheckDebug() &&
@@ -146,22 +146,22 @@ class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
   }
   OnBarPercentChanged() {}
   ListenForAttributeChanged(t, i) {
-    const e = this.RoleData?.AttributeComponent;
+    var e = this.RoleData?.AttributeComponent;
     e && (e.AddListener(t, i), this.T$e.set(t, i));
   }
   RemoveListenAttributeChanged(t, i) {
-    const e = this.AttributeComponent;
+    var e = this.AttributeComponent;
     e && (e.RemoveListener(t, i), this.T$e.delete(t));
   }
   R$e() {
-    const t = this.AttributeComponent;
+    var t = this.AttributeComponent;
     if (t) {
-      for (const [i, e] of this.T$e) t.RemoveListener(i, e);
+      for (var [i, e] of this.T$e) t.RemoveListener(i, e);
       this.T$e.clear();
     }
   }
   ListenForTagCountChanged(t, i) {
-    let e = this.TagComponent;
+    var e = this.TagComponent;
     e && ((e = e.ListenForTagAnyCountChanged(t, i)), this.TagTaskList.push(e));
   }
   U$e() {
@@ -171,7 +171,7 @@ class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
     }
   }
   ListenForTagAddOrRemoveChanged(t, i) {
-    let e = this.TagComponent;
+    var e = this.TagComponent;
     e && ((e = e.ListenForTagAddOrRemove(t, i)), this.TagTaskList.push(e));
   }
   GetBuffCountByBuffId(t) {
@@ -179,10 +179,10 @@ class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
   }
   async LoadEffects() {
     if (this.Config) {
-      const i = [];
-      const e = this.Config.NiagaraPathList.length;
+      var i = [],
+        e = this.Config.NiagaraPathList.length;
       for (let t = 0; t < e; t++) {
-        const s = this.Config.NiagaraPathList[t];
+        var s = this.Config.NiagaraPathList[t];
         i.push(this.wyn(s, t, this.NiagaraList));
       }
       await Promise.all(i);
@@ -221,27 +221,25 @@ class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
       ));
   }
   InitKeyEnableTag() {
-    const t = this.Config.KeyEnableTagId;
-    t !== 0 &&
+    var t = this.Config.KeyEnableTagId;
+    0 !== t &&
       ((this.HasKeyEnableTag = this.TagComponent?.HasTag(t) ?? !1),
       this.ListenForTagAddOrRemoveChanged(t, this.OnKeyEnableTagChanged));
   }
   GetTargetAttributePercent() {
-    const t = this.AttributeComponent.GetCurrentValue(this.Config.AttributeId);
-    const i = this.AttributeComponent.GetCurrentValue(
-      this.Config.MaxAttributeId,
-    );
-    const e = i > 0 ? t / i : 0;
+    var t = this.AttributeComponent.GetCurrentValue(this.Config.AttributeId),
+      i = this.AttributeComponent.GetCurrentValue(this.Config.MaxAttributeId);
+    let e = 0 < i ? t / i : 0;
     return e;
   }
   GetKeyEnable() {
     return !(
       this.PercentMachine.GetCurPercent() < this.Config.DisableKeyOnPercent ||
-      (this.Config.KeyEnableTagId !== 0 && !this.HasKeyEnableTag)
+      (0 !== this.Config.KeyEnableTagId && !this.HasKeyEnableTag)
     );
   }
   OnKeyEnableChanged() {}
   OnChangeVisibleByTagChange(t) {}
 }
 exports.SpecialEnergyBarBase = SpecialEnergyBarBase;
-// # sourceMappingURL=SpecialEnergyBarBase.js.map
+//# sourceMappingURL=SpecialEnergyBarBase.js.map

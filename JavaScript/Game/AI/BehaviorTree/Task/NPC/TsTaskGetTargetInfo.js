@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem");
-const GlobalData_1 = require("../../../../GlobalData");
-const BlackboardController_1 = require("../../../../World/Controller/BlackboardController");
-const TsAiController_1 = require("../../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase");
+const EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  BlackboardController_1 = require("../../../../World/Controller/BlackboardController"),
+  TsAiController_1 = require("../../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase");
 class TsTaskGetTargetInfo extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -54,4 +54,4 @@ class TsTaskGetTargetInfo extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskGetTargetInfo;
-// # sourceMappingURL=TsTaskGetTargetInfo.js.map
+//# sourceMappingURL=TsTaskGetTargetInfo.js.map

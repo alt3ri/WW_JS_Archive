@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemMaterialManager = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const RenderModuleConfig_1 = require("../../../Manager/RenderModuleConfig");
-const ItemMaterialController_1 = require("./ItemMaterialController");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  RenderModuleConfig_1 = require("../../../Manager/RenderModuleConfig"),
+  ItemMaterialController_1 = require("./ItemMaterialController");
 class ItemMaterialManager {
   static Initialize() {
     (this.GlobalController = void 0),
@@ -20,27 +20,27 @@ class ItemMaterialManager {
   }
   static Tick(t) {
     RenderModuleConfig_1.RenderStats.Init();
-    const e = 0.001 * t;
-    const r = [];
+    var e = 0.001 * t,
+      r = [];
     if (
       (this.IsInit || this.Initialize(),
-      this.AllGlobalControllerInfoMap.size > 0)
+      0 < this.AllGlobalControllerInfoMap.size)
     )
       for (const o of this.AllGlobalControllerInfoMap.keys()) {
-        const i = this.AllGlobalControllerInfoMap.get(o);
+        var i = this.AllGlobalControllerInfoMap.get(o);
         i?.IsValid()
           ? i.Update(e)
           : (i.Destroy(), this.AllGlobalControllerInfoMap.delete(o));
       }
-    if (this.AllActorControllerInfoMap.size > 0)
+    if (0 < this.AllActorControllerInfoMap.size)
       for (const n of this.AllActorControllerInfoMap.keys()) {
-        const a = this.AllActorControllerInfoMap.get(n);
+        var a = this.AllActorControllerInfoMap.get(n);
         a?.IsValid() && void 0 !== a.GetLifeTimeController()
           ? a.Update(e)
           : r.push(n);
       }
     for (let t = 0; t < r.length; t++) {
-      const s = r[t];
+      var s = r[t];
       this.AllActorControllerInfoMap.get(s)
         ? (this.AllActorControllerInfoMap.get(s).Destroy(),
           this.AllActorControllerInfoMap.delete(s))
@@ -55,7 +55,7 @@ class ItemMaterialManager {
     }
     if (
       this.AllMaterialSimpleControllers &&
-      this.AllMaterialSimpleControllers.size > 0
+      0 < this.AllMaterialSimpleControllers.size
     )
       for (const h of this.AllMaterialSimpleControllers.keys())
         this.AllMaterialSimpleControllers.get(h).UpdateParameters();
@@ -97,7 +97,7 @@ class ItemMaterialManager {
         UE.ItemMaterialControllerActorData_C,
       ))),
       (this.IndexCount = this.IndexCount + 1);
-    const r = this.IndexCount;
+    var r = this.IndexCount;
     return this.DataMap.Map.Get(r)?.IsValid()
       ? -1
       : (this.DataMap.Map.Add(r, e),
@@ -195,4 +195,4 @@ class ItemMaterialManager {
   (ItemMaterialManager.DataMap = void 0),
   (ItemMaterialManager.IsInit = !1),
   (ItemMaterialManager.WaitList = []);
-// # sourceMappingURL=ItemMaterialManager.js.map
+//# sourceMappingURL=ItemMaterialManager.js.map

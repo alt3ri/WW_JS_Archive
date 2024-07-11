@@ -1,73 +1,78 @@
 "use strict";
-let CharacterAnimationComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, i, s, h) {
-    let e;
-    const r = arguments.length;
-    let o =
-      r < 3 ? i : h === null ? (h = Object.getOwnPropertyDescriptor(i, s)) : h;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      o = Reflect.decorate(t, i, s, h);
-    else
-      for (let a = t.length - 1; a >= 0; a--)
-        (e = t[a]) && (o = (r < 3 ? e(o) : r > 3 ? e(i, s, o) : e(i, s)) || o);
-    return r > 3 && o && Object.defineProperty(i, s, o), o;
-  };
+var CharacterAnimationComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, i, s, h) {
+      var e,
+        r = arguments.length,
+        o =
+          r < 3
+            ? i
+            : null === h
+              ? (h = Object.getOwnPropertyDescriptor(i, s))
+              : h;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        o = Reflect.decorate(t, i, s, h);
+      else
+        for (var a = t.length - 1; 0 <= a; a--)
+          (e = t[a]) &&
+            (o = (r < 3 ? e(o) : 3 < r ? e(i, s, o) : e(i, s)) || o);
+      return 3 < r && o && Object.defineProperty(i, s, o), o;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterAnimationComponent = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Info_1 = require("../../../../../Core/Common/Info");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../Core/Common/Time");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const MathCommon_1 = require("../../../../../Core/Utils/Math/MathCommon");
-const Quat_1 = require("../../../../../Core/Utils/Math/Quat");
-const Transform_1 = require("../../../../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const Global_1 = require("../../../../Global");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const AnimController_1 = require("../../../../Module/Anim/AnimController");
-const CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage");
-const PhotographController_1 = require("../../../../Module/Photograph/PhotographController");
-const InputDistributeController_1 = require("../../../../Ui/InputDistribute/InputDistributeController");
-const CombatDebugController_1 = require("../../../../Utils/CombatDebugController");
-const PreloadConstants_1 = require("../../../../World/Controller/PreloadConstants");
-const AnimLogicParamsSetter_1 = require("../Blueprint/Utils/AnimLogicParamsSetter");
-const CharacterNameDefines_1 = require("../CharacterNameDefines");
-const CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes");
-const BaseAnimationComponent_1 = require("./BaseAnimationComponent");
-const ROTATABLE_THREADHOLD = 0.5;
-const MIN_SCLOPE_SCALE = 0.5;
-const MAX_SCLOPE_SCALE = 1;
-const CAMERA_INFEED_ME = 0.3;
-const TURN_SPEED = 0.36;
-const TURN_RATIO = 0.04;
-const WATCH_CAMERA_TIME = 1e3;
-const WATCH_CAMERA_TIME_2 = 3e3;
-const FIND_SIGHT_TARGET_ITEM_PERIOD = 1e3;
-const SIGHT_TARGET_ITEM_DISTANCE_THREAHOLD = 2e3;
-const SQUARE_SIGHT_TARGET_ITEM_DISTANCE_THREAHOLD =
-  SIGHT_TARGET_ITEM_DISTANCE_THREAHOLD * SIGHT_TARGET_ITEM_DISTANCE_THREAHOLD;
-const BATLLE_IDLE_TIME = 5e3;
-const priorityToMaxSquareDistance = [
-  [5, 25e4],
-  [10, 1e6],
-  [20, 4e6],
-];
-const WALK_RUN_MIX_LERP = 0.995;
-const DEFAULT_CAMERA_HEIGHT_RATE = 1 / 3;
-const MODEL_BUFFER_SMOOTH_FACTOR = 0.75;
-const limitBlendSpaceY = [-30, 30];
-const limitBlendSpaceX = [-90, 90];
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Info_1 = require("../../../../../Core/Common/Info"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  MathCommon_1 = require("../../../../../Core/Utils/Math/MathCommon"),
+  Quat_1 = require("../../../../../Core/Utils/Math/Quat"),
+  Transform_1 = require("../../../../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../../Global"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  AnimController_1 = require("../../../../Module/Anim/AnimController"),
+  CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
+  PhotographController_1 = require("../../../../Module/Photograph/PhotographController"),
+  InputDistributeController_1 = require("../../../../Ui/InputDistribute/InputDistributeController"),
+  CombatDebugController_1 = require("../../../../Utils/CombatDebugController"),
+  PreloadConstants_1 = require("../../../../World/Controller/PreloadConstants"),
+  AnimLogicParamsSetter_1 = require("../Blueprint/Utils/AnimLogicParamsSetter"),
+  CharacterNameDefines_1 = require("../CharacterNameDefines"),
+  CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
+  BaseAnimationComponent_1 = require("./BaseAnimationComponent"),
+  ROTATABLE_THREADHOLD = 0.5,
+  MIN_SCLOPE_SCALE = 0.5,
+  MAX_SCLOPE_SCALE = 1,
+  CAMERA_INFEED_ME = 0.3,
+  TURN_SPEED = 0.36,
+  TURN_RATIO = 0.04,
+  WATCH_CAMERA_TIME = 1e3,
+  WATCH_CAMERA_TIME_2 = 3e3,
+  FIND_SIGHT_TARGET_ITEM_PERIOD = 1e3,
+  SIGHT_TARGET_ITEM_DISTANCE_THREAHOLD = 2e3,
+  SQUARE_SIGHT_TARGET_ITEM_DISTANCE_THREAHOLD =
+    SIGHT_TARGET_ITEM_DISTANCE_THREAHOLD * SIGHT_TARGET_ITEM_DISTANCE_THREAHOLD,
+  BATLLE_IDLE_TIME = 5e3,
+  priorityToMaxSquareDistance = [
+    [5, 25e4],
+    [10, 1e6],
+    [20, 4e6],
+  ],
+  WALK_RUN_MIX_LERP = 0.995,
+  DEFAULT_CAMERA_HEIGHT_RATE = 1 / 3,
+  MODEL_BUFFER_SMOOTH_FACTOR = 0.75,
+  limitBlendSpaceY = [-30, 30],
+  limitBlendSpaceX = [-90, 90];
 let CharacterAnimationComponent =
   (CharacterAnimationComponent_1 = class CharacterAnimationComponent extends (
     BaseAnimationComponent_1.BaseAnimationComponent
@@ -121,10 +126,10 @@ let CharacterAnimationComponent =
         (this.AnimLogicParamsSetter = void 0),
         (this.Xxn = Vector_1.Vector.Create()),
         (this.W3r = (t, i, s) => {
-          let h;
+          var h;
           t?.Valid &&
             (h = t.GetComponent(160))?.Valid &&
-            (i !== 0 || s
+            (0 !== i || s
               ? this.K3r()
               : t.GetComponent(185)?.HasTag(715234113) ||
                 ((i = this.Mesh.GetAnimInstance()) !==
@@ -220,9 +225,9 @@ let CharacterAnimationComponent =
             ]));
     }
     Z3r() {
-      this.O3r > 0
+      0 < this.O3r
         ? this.O3r--
-        : this.O3r === 0 &&
+        : 0 === this.O3r &&
           (this.ActorComp.EnableActor(this.G3r),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Character", 58, "人物上场隐藏一帧 【隐藏结束】", [
@@ -248,7 +253,7 @@ let CharacterAnimationComponent =
       );
     }
     OnClear() {
-      let t, i;
+      var t, i;
       return (
         UE.KuroStaticLibrary.IsObjectClassByName(
           this.MainAnimInstanceInternal,
@@ -306,7 +311,7 @@ let CharacterAnimationComponent =
       );
     }
     OnInit() {
-      let t;
+      var t;
       return (
         super.OnInit(),
         (this.SlopeStepPeriodicCurve =
@@ -406,11 +411,11 @@ let CharacterAnimationComponent =
     }
     InitBaseInfo() {
       (this.S3r = 1), (this.x3r = 0), (this.E3r = 0), (this.IkMeshOffset = 0);
-      var t = this.Mesh;
-      var t =
-        (this.BufferOriginTransform.FromUeTransform(t.GetRelativeTransform()),
-        this.BufferShowTransform.FromUeTransform(t.GetRelativeTransform()),
-        this.ActorComp.CreatureData.GetEntityType());
+      var t = this.Mesh,
+        t =
+          (this.BufferOriginTransform.FromUeTransform(t.GetRelativeTransform()),
+          this.BufferShowTransform.FromUeTransform(t.GetRelativeTransform()),
+          this.ActorComp.CreatureData.GetEntityType());
       (this.zke = this.ActorComp.CreatureData.GetRoleId()),
         this.SightDirect.DeepCopy(Vector_1.Vector.RightVectorProxy),
         this.SightDirect2.DeepCopy(Vector_1.Vector.RightVectorProxy),
@@ -534,7 +539,7 @@ let CharacterAnimationComponent =
         this.i4r(t),
         this.IsPlayer &&
           ((this.q3r -= t),
-          this.BattleIdleEndTime > 0 &&
+          0 < this.BattleIdleEndTime &&
             this.ActorComp.InputDirectProxy.SizeSquared2D() >
               MathUtils_1.MathUtils.SmallNumber &&
             (this.q3r = 0),
@@ -548,7 +553,7 @@ let CharacterAnimationComponent =
       this.UpdateModelBuffer(t);
     }
     OnDisable() {
-      this.O3r >= 0 &&
+      0 <= this.O3r &&
         (this.ActorComp.EnableActor(this.G3r), Log_1.Log.CheckInfo()) &&
         Log_1.Log.Info(
           "Character",
@@ -589,7 +594,7 @@ let CharacterAnimationComponent =
       this.q3r = BATLLE_IDLE_TIME;
     }
     OnJump() {
-      let t;
+      var t;
       return UE.KuroStaticLibrary.IsObjectClassByName(
         this.MainAnimInstanceInternal,
         CharacterNameDefines_1.CharacterNameDefines.ABP_BASEROLE,
@@ -624,7 +629,7 @@ let CharacterAnimationComponent =
         );
     }
     AddModelQuat(t, i) {
-      let s;
+      var s;
       Info_1.Info.EnableForceTick
         ? ((s = this.BufferShowTransform.GetRotation()),
           t.Multiply(s, this.az),
@@ -754,7 +759,7 @@ let CharacterAnimationComponent =
             (this.LastRemainBufferFrame = Time_1.Time.Frame)),
           (this.M3r.BufferNowTime = 0),
           (this.M3r.BufferTimeLength = i / 1e3),
-          this.RemainBufferTime > 0 &&
+          0 < this.RemainBufferTime &&
             (this.M3r.BufferTimeLength +=
               this.RemainBufferTime * MODEL_BUFFER_SMOOTH_FACTOR),
           this.M3r?.SetComponentTickEnabled(!0)),
@@ -807,7 +812,7 @@ let CharacterAnimationComponent =
     }
     StopModelBuffer() {
       Info_1.Info.EnableForceTick
-        ? this.BufferTimeLength > 0 &&
+        ? 0 < this.BufferTimeLength &&
           ((this.BufferTimeLength = 0),
           this.Mesh.K2_SetRelativeTransform(
             this.BufferShowTransform.ToUeTransform(),
@@ -819,16 +824,16 @@ let CharacterAnimationComponent =
     }
     HasModelBuffer() {
       return Info_1.Info.EnableForceTick
-        ? this.BufferTimeLength > 0
-        : this.M3r.BufferTimeLength > 0;
+        ? 0 < this.BufferTimeLength
+        : 0 < this.M3r.BufferTimeLength;
     }
     HasLocationModelBuffer() {
       return this.HasModelBuffer() && this.BufferLocation;
     }
     ClearModelBuffer() {
       Info_1.Info.EnableForceTick
-        ? this.BufferTimeLength > 0 && (this.BufferTimeLength = 0)
-        : this.M3r.BufferTimeLength > 0 &&
+        ? 0 < this.BufferTimeLength && (this.BufferTimeLength = 0)
+        : 0 < this.M3r.BufferTimeLength &&
           ((this.M3r.BufferTimeLength = 0),
           this.M3r?.SetComponentTickEnabled(!1));
     }
@@ -852,13 +857,13 @@ let CharacterAnimationComponent =
       );
     }
     o4r() {
-      let t = this.Gce.CharacterMovement.MovementMode;
-      if (t !== 1 && t !== 2)
+      var t = this.Gce.CharacterMovement.MovementMode;
+      if (1 !== t && 2 !== t)
         (this.E3r = 0), this.I3r.FromUeVector(Vector_1.Vector.UpVectorProxy);
       else {
-        const i = this.ActorComp.ActorLocationProxy;
-        const s = this.ActorComp.ActorForwardProxy;
-        if (t === 1) {
+        var i = this.ActorComp.ActorLocationProxy,
+          s = this.ActorComp.ActorForwardProxy;
+        if (1 === t) {
           t = this.Gce.CharacterMovement.CurrentFloor;
           if (!t.bBlockingHit)
             return (
@@ -940,7 +945,7 @@ let CharacterAnimationComponent =
           )
             return this.L3r.DeepCopy(this.ActorComp.ActorForwardProxy), !0;
         }
-        this.q3r > 0 || !this.Gce.CanResponseInput()
+        0 < this.q3r || !this.Gce.CanResponseInput()
           ? ((this.x3r = Time_1.Time.WorldTime + WATCH_CAMERA_TIME_2),
             this.L3r.DeepCopy(this.ActorComp.ActorForwardProxy))
           : (this._4r(),
@@ -1017,7 +1022,7 @@ let CharacterAnimationComponent =
             ))));
     }
     l4r(t) {
-      let i;
+      var i;
       !this.bre?.Valid ||
       !(i =
         this.bre.AiController.AiHateList.GetCurrentTarget()?.Entity?.GetComponent(
@@ -1033,7 +1038,7 @@ let CharacterAnimationComponent =
         : (t.DeepCopy(this.A3r), this.u4r(t));
     }
     h4r(t) {
-      const i = this.GetSightTargetItem();
+      var i = this.GetSightTargetItem();
       (this.SightTargetPoint ?? i.ActorLocationProxy).Subtraction(
         this.ActorComp.ActorLocationProxy,
         this.A3r,
@@ -1046,7 +1051,7 @@ let CharacterAnimationComponent =
           : (t.DeepCopy(this.A3r), this.u4r(t));
     }
     _4r() {
-      let t;
+      var t;
       Time_1.Time.Now < this.T3r ||
         ((this.T3r = Time_1.Time.Now + FIND_SIGHT_TARGET_ITEM_PERIOD),
         (t = []),
@@ -1058,20 +1063,20 @@ let CharacterAnimationComponent =
         this.c4r(t));
     }
     c4r(t) {
-      const i = this.ActorComp.ActorLocationProxy;
+      var i = this.ActorComp.ActorLocationProxy;
       let s = SQUARE_SIGHT_TARGET_ITEM_DISTANCE_THREAHOLD;
       this.SetSightTargetItem(void 0);
       for (const o of t)
         if (o.Entity?.Active && o.Entity.Id !== this.Entity.Id) {
-          const h = o.Entity.GetComponent(0).GetBaseInfo()?.FocusPriority;
+          var h = o.Entity.GetComponent(0).GetBaseInfo()?.FocusPriority;
           if (h) {
-            const e = o.Entity.GetComponent(1);
+            var e = o.Entity.GetComponent(1);
             if (e?.Valid) {
               e.ActorLocationProxy.Subtraction(i, this.A3r);
-              const r = this.A3r.SizeSquared();
+              var r = this.A3r.SizeSquared();
               if (
-                (h > 0 && r < SQUARE_SIGHT_TARGET_ITEM_DISTANCE_THREAHOLD) ||
-                (h === 0 && r < s)
+                (0 < h && r < SQUARE_SIGHT_TARGET_ITEM_DISTANCE_THREAHOLD) ||
+                (0 === h && r < s)
               )
                 for (const a of priorityToMaxSquareDistance)
                   if (h <= a[0]) {
@@ -1091,10 +1096,10 @@ let CharacterAnimationComponent =
     }
     UpdateStaticRotation(t) {
       if (this.x3r < Time_1.Time.WorldTime) {
-        const i = Global_1.Global.CharacterCameraManager;
-        const s = i.GetCameraLocation();
-        const h = this.m4r(s);
-        if (h === 1)
+        var i = Global_1.Global.CharacterCameraManager,
+          s = i.GetCameraLocation(),
+          h = this.m4r(s);
+        if (1 === h)
           return (
             this.gwr.FromUeVector(s),
             this.B3r.FromUeVector(
@@ -1106,15 +1111,15 @@ let CharacterAnimationComponent =
             t.Normalize(),
             void this.u4r(t)
           );
-        if (h === 2)
+        if (2 === h)
           return t.FromUeVector(i.GetActorForwardVector()), void this.u4r(t);
       }
       t.DeepCopy(this.ActorComp.ActorForwardProxy);
     }
     a4r(t) {
-      var i = MathUtils_1.MathUtils.DegToRad * this.E3r;
-      const s = Math.sin(i);
-      var i = Math.cos(i);
+      var i = MathUtils_1.MathUtils.DegToRad * this.E3r,
+        s = Math.sin(i),
+        i = Math.cos(i);
       (t.X = this.ActorComp.InputDirectProxy.X * i),
         (t.Y = this.ActorComp.InputDirectProxy.Y * i),
         (t.Z = s),
@@ -1134,7 +1139,7 @@ let CharacterAnimationComponent =
       return this.Actor.Mesh.K2_GetComponentToWorld();
     }
     GetRandomStandActionIndex() {
-      let t, i, s;
+      var t, i, s;
       return this.ActorComp.CreatureData.GetEntityType() !==
         Protocol_1.Aki.Protocol.HBs.Proto_Player ||
         !(t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
@@ -1177,9 +1182,9 @@ let CharacterAnimationComponent =
     }
     static BoneVisibleChangeNotify(t, i) {}
     e4r(t = !0) {
-      var i = ModelManager_1.ModelManager.PlatformModel.IsMobile();
-      const s = new UE.AnimUpdateRateParameters();
-      const h = this.Mesh.LODInfo.Num();
+      var i = ModelManager_1.ModelManager.PlatformModel.IsMobile(),
+        s = new UE.AnimUpdateRateParameters(),
+        h = this.Mesh.LODInfo.Num();
       if (t)
         (s.bShouldUseDistanceMap = !0),
           s.BaseVisibleDistanceThresholds.Empty(),
@@ -1191,21 +1196,21 @@ let CharacterAnimationComponent =
       else {
         (s.bShouldUseLodMap = !0), s.LODToFrameSkipMap.Empty();
         for (let t = 0; t < h; t++) {
-          const e = t < 2 ? 0 : t - 1;
+          var e = t < 2 ? 0 : t - 1;
           s.LODToFrameSkipMap.Add(t, e);
         }
       }
       (s.BaseNonRenderedUpdateRate = i ? 15 : 8),
         (s.MaxEvalRateForInterpolation = 8);
-      const r = (0, puerts_1.$ref)(s);
-      const o = this.Actor.K2_GetComponentsByClass(
-        UE.SkeletalMeshComponent.StaticClass(),
-      );
+      var r = (0, puerts_1.$ref)(s),
+        o = this.Actor.K2_GetComponentsByClass(
+          UE.SkeletalMeshComponent.StaticClass(),
+        );
       for (let t = 0; t < o.Num(); t++) o.Get(t).SetAnimUpdateRateParameters(r);
       (0, puerts_1.$unref)(r);
-      var t = this.ActorComp.CreatureData.GetEntityType();
-      var i = this.Entity.GetComponent(0).GetSummonerId();
-      const a = void 0 !== i && i !== 0;
+      var t = this.ActorComp.CreatureData.GetEntityType(),
+        i = this.Entity.GetComponent(0).GetSummonerId(),
+        a = void 0 !== i && 0 !== i;
       switch (t) {
         case Protocol_1.Aki.Protocol.HBs.Proto_Player:
           this.DefaultVisibilityBasedAnimTickOption = 0;
@@ -1261,7 +1266,7 @@ let CharacterAnimationComponent =
     }
     ConsumeRootMotion() {
       this.Mesh?.GetAnimInstance()?.ConsumeExtractedRootMotion(1);
-      const i = this.Mesh?.LinkedInstances;
+      var i = this.Mesh?.LinkedInstances;
       if (i)
         for (let t = 0; t < i.Num(); ++t)
           i.Get(t).ConsumeExtractedRootMotion(1);
@@ -1281,4 +1286,4 @@ let CharacterAnimationComponent =
       CharacterAnimationComponent,
     )),
   (exports.CharacterAnimationComponent = CharacterAnimationComponent);
-// # sourceMappingURL=CharacterAnimationComponent.js.map
+//# sourceMappingURL=CharacterAnimationComponent.js.map

@@ -41,7 +41,7 @@
     return array.indexOf(item) !== -1;
   }
 
-  const floor = Math.floor;
+  var floor = Math.floor;
 
   /**
    * @param {*} o
@@ -61,21 +61,21 @@
     // https://heycam.github.io/webidl/#dfn-obtain-unicode
 
     // 1. Let S be the DOMString value.
-    const s = String(string);
+    var s = String(string);
 
     // 2. Let n be the length of S.
-    const n = s.length;
+    var n = s.length;
 
     // 3. Initialize i to 0.
-    let i = 0;
+    var i = 0;
 
     // 4. Initialize U to be an empty sequence of Unicode characters.
-    const u = [];
+    var u = [];
 
     // 5. While i < n:
     while (i < n) {
       // 1. Let c be the code unit in S at index i.
-      const c = s.charCodeAt(i);
+      var c = s.charCodeAt(i);
 
       // 2. Depending on the value of c:
 
@@ -86,13 +86,13 @@
       }
 
       // 0xDC00 ≤ c ≤ 0xDFFF
-      else if (c >= 0xdc00 && c <= 0xdfff) {
+      else if (0xdc00 <= c && c <= 0xdfff) {
         // Append to U a U+FFFD REPLACEMENT CHARACTER.
         u.push(0xfffd);
       }
 
       // 0xD800 ≤ c ≤ 0xDBFF
-      else if (c >= 0xd800 && c <= 0xdbff) {
+      else if (0xd800 <= c && c <= 0xdbff) {
         // 1. If i = n−1, then append to U a U+FFFD REPLACEMENT
         // CHARACTER.
         if (i === n - 1) {
@@ -101,15 +101,15 @@
         // 2. Otherwise, i < n−1:
         else {
           // 1. Let d be the code unit in S at index i+1.
-          const d = s.charCodeAt(i + 1);
+          var d = s.charCodeAt(i + 1);
 
           // 2. If 0xDC00 ≤ d ≤ 0xDFFF, then:
-          if (d >= 0xdc00 && d <= 0xdfff) {
+          if (0xdc00 <= d && d <= 0xdfff) {
             // 1. Let a be c & 0x3FF.
-            const a = c & 0x3ff;
+            var a = c & 0x3ff;
 
             // 2. Let b be d & 0x3FF.
-            const b = d & 0x3ff;
+            var b = d & 0x3ff;
 
             // 3. Append to U the Unicode character with code point
             // 2^16+2^10*a+b.
@@ -140,9 +140,9 @@
    * @return {string} string String of UTF-16 code units.
    */
   function codePointsToString(code_points) {
-    let s = "";
-    for (let i = 0; i < code_points.length; ++i) {
-      let cp = code_points[i];
+    var s = "";
+    for (var i = 0; i < code_points.length; ++i) {
+      var cp = code_points[i];
       if (cp <= 0xffff) {
         s += String.fromCharCode(cp);
       } else {
@@ -168,20 +168,20 @@
    * @return {boolean} True if a is in the range 0x00 to 0x7F, inclusive.
    */
   function isASCIIByte(a) {
-    return a >= 0x00 && a <= 0x7f;
+    return 0x00 <= a && a <= 0x7f;
   }
 
   /**
    * An ASCII code point is a code point in the range U+0000 to
    * U+007F, inclusive.
    */
-  const isASCIICodePoint = isASCIIByte;
+  var isASCIICodePoint = isASCIIByte;
 
   /**
    * End-of-stream is a special token that signifies no more tokens
    * are in the stream.
    * @const
-   */ const end_of_stream = -1;
+   */ var end_of_stream = -1;
 
   /**
    * A stream represents an ordered sequence of tokens.
@@ -214,9 +214,7 @@
      * end_of_stream.
      */
     read: function () {
-      if (!this.tokens.length) {
-        return end_of_stream;
-      }
+      if (!this.tokens.length) return end_of_stream;
       return this.tokens.pop();
     },
 
@@ -230,10 +228,8 @@
      */
     prepend: function (token) {
       if (Array.isArray(token)) {
-        const tokens = /** @type {!Array.<number>} */ (token);
-        while (tokens.length) {
-          this.tokens.push(tokens.pop());
-        }
+        var tokens = /**@type {!Array.<number>}*/ (token);
+        while (tokens.length) this.tokens.push(tokens.pop());
       } else {
         this.tokens.push(token);
       }
@@ -249,10 +245,8 @@
      */
     push: function (token) {
       if (Array.isArray(token)) {
-        const tokens = /** @type {!Array.<number>} */ (token);
-        while (tokens.length) {
-          this.tokens.unshift(tokens.shift());
-        }
+        var tokens = /**@type {!Array.<number>}*/ (token);
+        while (tokens.length) this.tokens.unshift(tokens.shift());
       } else {
         this.tokens.unshift(token);
       }
@@ -266,7 +260,7 @@
   // 5.1 Encoders and decoders
 
   /** @const */
-  const finished = -1;
+  var finished = -1;
 
   /**
    * @param {boolean} fatal If true, decoding errors raise an exception.
@@ -274,9 +268,7 @@
    * @return {number} The code point to insert on a decoding error.
    */
   function decoderError(fatal, opt_code_point) {
-    if (fatal) {
-      throw TypeError("Decoder error");
-    }
+    if (fatal) throw TypeError("Decoder error");
     return opt_code_point || 0xfffd;
   }
 
@@ -342,7 +334,7 @@
    *          encodings: Array.<{name:string,labels:Array.<string>}>
    *        }>}
    */
-  const encodings = [
+  var encodings = [
     {
       encodings: [
         {
@@ -721,9 +713,9 @@
 
   // Registry of of encoder/decoder factories, by encoding name.
   /** @type {Object.<string, function({fatal:boolean}): Encoder>} */
-  const encoders = {};
+  var encoders = {};
   /** @type {Object.<string, function({fatal:boolean}): Decoder>} */
-  const decoders = {};
+  var decoders = {};
 
   //
   // 6. Indexes
@@ -747,7 +739,7 @@
    *     |index|, or null if |code point| is not in |index|.
    */
   function indexPointerFor(code_point, index) {
-    const pointer = index.indexOf(code_point);
+    var pointer = index.indexOf(code_point);
     return pointer === -1 ? null : pointer;
   }
 
@@ -773,9 +765,7 @@
   function indexGB18030RangesCodePointFor(pointer) {
     // 1. If pointer is greater than 39419 and less than 189000, or
     // pointer is greater than 1237575, return null.
-    if ((pointer > 39419 && pointer < 189000) || pointer > 1237575) {
-      return null;
-    }
+    if ((pointer > 39419 && pointer < 189000) || pointer > 1237575) return null;
 
     // 2. If pointer is 7457, return code point U+E7C7.
     if (pointer === 7457) return 0xe7c7;
@@ -783,13 +773,13 @@
     // 3. Let offset be the last pointer in index gb18030 ranges that
     // is equal to or less than pointer and let code point offset be
     // its corresponding code point.
-    let offset = 0;
-    let code_point_offset = 0;
-    const idx = index("gb18030-ranges");
-    let i;
+    var offset = 0;
+    var code_point_offset = 0;
+    var idx = index("gb18030-ranges");
+    var i;
     for (i = 0; i < idx.length; ++i) {
       /** @type {!Array.<number>} */
-      const entry = idx[i];
+      var entry = idx[i];
       if (entry[0] <= pointer) {
         offset = entry[0];
         code_point_offset = entry[1];
@@ -815,13 +805,13 @@
     // 2. Let offset be the last code point in index gb18030 ranges
     // that is equal to or less than code point and let pointer offset
     // be its corresponding pointer.
-    let offset = 0;
-    let pointer_offset = 0;
-    const idx = index("gb18030-ranges");
-    let i;
+    var offset = 0;
+    var pointer_offset = 0;
+    var idx = index("gb18030-ranges");
+    var i;
     for (i = 0; i < idx.length; ++i) {
       /** @type {!Array.<number>} */
-      const entry = idx[i];
+      var entry = idx[i];
       if (entry[1] <= code_point) {
         offset = entry[1];
         pointer_offset = entry[0];
@@ -849,12 +839,12 @@
       index("jis0208").map(function (code_point, pointer) {
         return inRange(pointer, 8272, 8835) ? null : code_point;
       });
-    const index_ = shift_jis_index;
+    var index_ = shift_jis_index;
 
     // 2. Return the index pointer for code point in index.
     return index_.indexOf(code_point);
   }
-  let shift_jis_index;
+  var shift_jis_index;
 
   /**
    * @param {number} code_point The |code_point| to search for in the big5
@@ -869,7 +859,7 @@
       index("big5").map(function (code_point, pointer) {
         return pointer < (0xa1 - 0x81) * 157 ? null : code_point;
       });
-    const index_ = big5_index_no_hkscs;
+    var index_ = big5_index_no_hkscs;
 
     // 2. If code point is U+2550, U+255E, U+2561, U+256A, U+5341, or
     // U+5345, return the last pointer corresponding to code point in
@@ -888,13 +878,13 @@
     // 3. Return the index pointer for code point in index.
     return indexPointerFor(code_point, index_);
   }
-  let big5_index_no_hkscs;
+  var big5_index_no_hkscs;
 
   //
   // 8. API
   //
 
-  /** @const */ const DEFAULT_ENCODING = "utf-8";
+  /** @const */ var DEFAULT_ENCODING = "utf-8";
 
   // 8.1 Interface TextDecoder
 
@@ -906,9 +896,8 @@
    */
   function TextDecoder(label, options) {
     // Web IDL conventions
-    if (!(this instanceof TextDecoder)) {
+    if (!(this instanceof TextDecoder))
       throw TypeError("Called as a function. Did you forget 'new'?");
-    }
     label = label !== undefined ? String(label) : DEFAULT_ENCODING;
     options = ToDictionary(options);
 
@@ -932,12 +921,11 @@
 
     // 1. Let encoding be the result of getting an encoding from
     // label.
-    const encoding = getEncoding(label);
+    var encoding = getEncoding(label);
 
     // 2. If encoding is failure or replacement, throw a RangeError.
-    if (encoding === null || encoding.name === "replacement") {
+    if (encoding === null || encoding.name === "replacement")
       throw RangeError("Unknown encoding: " + label);
-    }
     if (!decoders[encoding.name]) {
       throw Error(
         "Decoder not present." +
@@ -946,22 +934,18 @@
     }
 
     // 3. Let dec be a new TextDecoder object.
-    const dec = this;
+    var dec = this;
 
     // 4. Set dec's encoding to encoding.
     dec._encoding = encoding;
 
     // 5. If options's fatal member is true, set dec's error mode to
     // fatal.
-    if (options.fatal) {
-      dec._error_mode = "fatal";
-    }
+    if (Boolean(options["fatal"])) dec._error_mode = "fatal";
 
     // 6. If options's ignoreBOM member is true, set dec's ignore BOM
     // flag.
-    if (options.ignoreBOM) {
-      dec._ignoreBOM = true;
-    }
+    if (Boolean(options["ignoreBOM"])) dec._ignoreBOM = true;
 
     // For pre-ES5 runtimes:
     if (!Object.defineProperty) {
@@ -1008,7 +992,7 @@
    * @return {string} The decoded string.
    */
   TextDecoder.prototype.decode = function decode(input, options) {
-    let bytes;
+    var bytes;
     if (typeof input === "object" && input instanceof ArrayBuffer) {
       bytes = new Uint8Array(input);
     } else if (
@@ -1035,29 +1019,27 @@
 
     // 2. If options's stream is true, set the do not flush flag, and
     // unset the do not flush flag otherwise.
-    this._do_not_flush = Boolean(options.stream);
+    this._do_not_flush = Boolean(options["stream"]);
 
     // 3. If input is given, push a copy of input to stream.
     // TODO: Align with spec algorithm - maintain stream on instance.
-    const input_stream = new Stream(bytes);
+    var input_stream = new Stream(bytes);
 
     // 4. Let output be a new stream.
-    const output = [];
+    var output = [];
 
     /** @type {?(number|!Array.<number>)} */
-    let result;
+    var result;
 
     // 5. While true:
     while (true) {
       // 1. Let token be the result of reading from stream.
-      const token = input_stream.read();
+      var token = input_stream.read();
 
       // 2. If token is end-of-stream and the do not flush flag is
       // set, return output, serialized.
       // TODO: Align with spec algorithm.
-      if (token === end_of_stream) {
-        break;
-      }
+      if (token === end_of_stream) break;
 
       // 3. Otherwise, run these subsubsteps:
 
@@ -1066,16 +1048,12 @@
       result = this._decoder.handler(input_stream, token);
 
       // 2. If result is finished, return output, serialized.
-      if (result === finished) {
-        break;
-      }
+      if (result === finished) break;
 
       if (result !== null) {
-        if (Array.isArray(result)) {
-          output.push.apply(output, /** @type {!Array.<number>} */ (result));
-        } else {
-          output.push(result);
-        }
+        if (Array.isArray(result))
+          output.push.apply(output, /**@type {!Array.<number>}*/ (result));
+        else output.push(result);
       }
 
       // 3. Otherwise, if result is error, throw a TypeError.
@@ -1087,17 +1065,11 @@
     if (!this._do_not_flush) {
       do {
         result = this._decoder.handler(input_stream, input_stream.read());
-        if (result === finished) {
-          break;
-        }
-        if (result === null) {
-          continue;
-        }
-        if (Array.isArray(result)) {
-          output.push.apply(output, /** @type {!Array.<number>} */ (result));
-        } else {
-          output.push(result);
-        }
+        if (result === finished) break;
+        if (result === null) continue;
+        if (Array.isArray(result))
+          output.push.apply(output, /**@type {!Array.<number>}*/ (result));
+        else output.push(result);
       } while (!input_stream.endOfStream());
       this._decoder = null;
     }
@@ -1150,9 +1122,8 @@
    */
   function TextEncoder(label, options) {
     // Web IDL conventions
-    if (!(this instanceof TextEncoder)) {
+    if (!(this instanceof TextEncoder))
       throw TypeError("Called as a function. Did you forget 'new'?");
-    }
     options = ToDictionary(options);
 
     // A TextEncoder object has an associated encoding and encoder.
@@ -1166,19 +1137,18 @@
     /** @private @type {boolean} */
     this._do_not_flush = false;
     /** @private @type {string} */
-    this._fatal = options.fatal ? "fatal" : "replacement";
+    this._fatal = Boolean(options["fatal"]) ? "fatal" : "replacement";
 
     // 1. Let enc be a new TextEncoder object.
-    const enc = this;
+    var enc = this;
 
     // 2. Set enc's encoding to UTF-8's encoder.
-    if (options.NONSTANDARD_allowLegacyEncoding) {
+    if (Boolean(options["NONSTANDARD_allowLegacyEncoding"])) {
       // NONSTANDARD behavior.
       label = label !== undefined ? String(label) : DEFAULT_ENCODING;
-      const encoding = getEncoding(label);
-      if (encoding === null || encoding.name === "replacement") {
+      var encoding = getEncoding(label);
+      if (encoding === null || encoding.name === "replacement")
         throw RangeError("Unknown encoding: " + label);
-      }
       if (!encoders[encoding.name]) {
         throw Error(
           "Encoder not present." +
@@ -1199,9 +1169,8 @@
     }
 
     // For pre-ES5 runtimes:
-    if (!Object.defineProperty) {
+    if (!Object.defineProperty)
       this.encoding = enc._encoding.name.toLowerCase();
-    }
 
     // 3. Return enc.
     return enc;
@@ -1229,52 +1198,41 @@
     // NOTE: This option is nonstandard. None of the encodings
     // permitted for encoding (i.e. UTF-8, UTF-16) are stateful when
     // the input is a USVString so streaming is not necessary.
-    if (!this._do_not_flush) {
+    if (!this._do_not_flush)
       this._encoder = encoders[this._encoding.name]({
         fatal: this._fatal === "fatal",
       });
-    }
-    this._do_not_flush = Boolean(options.stream);
+    this._do_not_flush = Boolean(options["stream"]);
 
     // 1. Convert input to a stream.
-    const input = new Stream(stringToCodePoints(opt_string));
+    var input = new Stream(stringToCodePoints(opt_string));
 
     // 2. Let output be a new stream
-    const output = [];
+    var output = [];
 
     /** @type {?(number|!Array.<number>)} */
-    let result;
+    var result;
     // 3. While true, run these substeps:
     while (true) {
       // 1. Let token be the result of reading from input.
-      const token = input.read();
-      if (token === end_of_stream) {
-        break;
-      }
+      var token = input.read();
+      if (token === end_of_stream) break;
       // 2. Let result be the result of processing token for encoder,
       // input, output.
       result = this._encoder.handler(input, token);
-      if (result === finished) {
-        break;
-      }
-      if (Array.isArray(result)) {
-        output.push.apply(output, /** @type {!Array.<number>} */ (result));
-      } else {
-        output.push(result);
-      }
+      if (result === finished) break;
+      if (Array.isArray(result))
+        output.push.apply(output, /**@type {!Array.<number>}*/ (result));
+      else output.push(result);
     }
     // TODO: Align with spec algorithm.
     if (!this._do_not_flush) {
       while (true) {
         result = this._encoder.handler(input, input.read());
-        if (result === finished) {
-          break;
-        }
-        if (Array.isArray(result)) {
-          output.push.apply(output, /** @type {!Array.<number>} */ (result));
-        } else {
-          output.push(result);
-        }
+        if (result === finished) break;
+        if (Array.isArray(result))
+          output.push.apply(output, /**@type {!Array.<number>}*/ (result));
+        else output.push(result);
       }
       this._encoder = null;
     }
@@ -1297,17 +1255,17 @@
    * @param {{fatal: boolean}} options
    */
   function UTF8Decoder(options) {
-    const fatal = options.fatal;
+    var fatal = options.fatal;
 
     // utf-8's decoder's has an associated utf-8 code point, utf-8
     // bytes seen, and utf-8 bytes needed (all initially 0), a utf-8
     // lower boundary (initially 0x80), and a utf-8 upper boundary
     // (initially 0xBF).
-    let /** @type {number} */ utf8_code_point = 0;
-    /** @type {number} */ let utf8_bytes_seen = 0;
-    /** @type {number} */ let utf8_bytes_needed = 0;
-    /** @type {number} */ let utf8_lower_boundary = 0x80;
-    /** @type {number} */ let utf8_upper_boundary = 0xbf;
+    var /** @type {number} */ utf8_code_point = 0,
+      /** @type {number} */ utf8_bytes_seen = 0,
+      /** @type {number} */ utf8_bytes_needed = 0,
+      /** @type {number} */ utf8_lower_boundary = 0x80,
+      /** @type {number} */ utf8_upper_boundary = 0xbf;
 
     /**
      * @param {Stream} stream The stream of bytes being decoded.
@@ -1325,9 +1283,7 @@
       }
 
       // 2. If byte is end-of-stream, return finished.
-      if (bite === end_of_stream) {
-        return finished;
-      }
+      if (bite === end_of_stream) return finished;
 
       // 3. If utf-8 bytes needed is 0, based on byte:
       if (utf8_bytes_needed === 0) {
@@ -1349,13 +1305,9 @@
         // 0xE0 to 0xEF
         else if (inRange(bite, 0xe0, 0xef)) {
           // 1. If byte is 0xE0, set utf-8 lower boundary to 0xA0.
-          if (bite === 0xe0) {
-            utf8_lower_boundary = 0xa0;
-          }
+          if (bite === 0xe0) utf8_lower_boundary = 0xa0;
           // 2. If byte is 0xED, set utf-8 upper boundary to 0x9F.
-          if (bite === 0xed) {
-            utf8_upper_boundary = 0x9f;
-          }
+          if (bite === 0xed) utf8_upper_boundary = 0x9f;
           // 3. Set utf-8 bytes needed to 2.
           utf8_bytes_needed = 2;
           // 4. Set UTF-8 code point to byte & 0xF.
@@ -1365,13 +1317,9 @@
         // 0xF0 to 0xF4
         else if (inRange(bite, 0xf0, 0xf4)) {
           // 1. If byte is 0xF0, set utf-8 lower boundary to 0x90.
-          if (bite === 0xf0) {
-            utf8_lower_boundary = 0x90;
-          }
+          if (bite === 0xf0) utf8_lower_boundary = 0x90;
           // 2. If byte is 0xF4, set utf-8 upper boundary to 0x8F.
-          if (bite === 0xf4) {
-            utf8_upper_boundary = 0x8f;
-          }
+          if (bite === 0xf4) utf8_upper_boundary = 0x8f;
           // 3. Set utf-8 bytes needed to 3.
           utf8_bytes_needed = 3;
           // 4. Set UTF-8 code point to byte & 0x7.
@@ -1419,12 +1367,10 @@
 
       // 8. If utf-8 bytes seen is not equal to utf-8 bytes needed,
       // continue.
-      if (utf8_bytes_seen !== utf8_bytes_needed) {
-        return null;
-      }
+      if (utf8_bytes_seen !== utf8_bytes_needed) return null;
 
       // 9. Let code point be utf-8 code point.
-      const code_point = utf8_code_point;
+      var code_point = utf8_code_point;
 
       // 10. Set utf-8 code point, utf-8 bytes needed, and utf-8 bytes
       // seen to 0.
@@ -1442,7 +1388,7 @@
    * @param {{fatal: boolean}} options
    */
   function UTF8Encoder(options) {
-    const fatal = options.fatal;
+    var fatal = options.fatal;
     /**
      * @param {Stream} stream Input stream.
      * @param {number} code_point Next code point read from the stream.
@@ -1450,18 +1396,14 @@
      */
     this.handler = function (stream, code_point) {
       // 1. If code point is end-of-stream, return finished.
-      if (code_point === end_of_stream) {
-        return finished;
-      }
+      if (code_point === end_of_stream) return finished;
 
       // 2. If code point is an ASCII code point, return a byte whose
       // value is code point.
-      if (isASCIICodePoint(code_point)) {
-        return code_point;
-      }
+      if (isASCIICodePoint(code_point)) return code_point;
 
       // 3. Set count and offset based on the range code point is in:
-      let count, offset;
+      var count, offset;
       // U+0080 to U+07FF, inclusive:
       if (inRange(code_point, 0x0080, 0x07ff)) {
         // 1 and 0xC0
@@ -1483,12 +1425,12 @@
 
       // 4. Let bytes be a byte sequence whose first byte is (code
       // point >> (6 × count)) + offset.
-      const bytes = [(code_point >> (6 * count)) + offset];
+      var bytes = [(code_point >> (6 * count)) + offset];
 
       // 5. Run these substeps while count is greater than 0:
       while (count > 0) {
         // 1. Set temp to code point >> (6 × (count − 1)).
-        const temp = code_point >> (6 * (count - 1));
+        var temp = code_point >> (6 * (count - 1));
 
         // 2. Append to bytes 0x80 | (temp & 0x3F).
         bytes.push(0x80 | (temp & 0x3f));
@@ -1523,7 +1465,7 @@
    * @param {{fatal: boolean}} options
    */
   function SingleByteDecoder(index, options) {
-    const fatal = options.fatal;
+    var fatal = options.fatal;
     /**
      * @param {Stream} stream The stream of bytes being decoded.
      * @param {number} bite The next byte read from the stream.
@@ -1533,24 +1475,18 @@
      */
     this.handler = function (stream, bite) {
       // 1. If byte is end-of-stream, return finished.
-      if (bite === end_of_stream) {
-        return finished;
-      }
+      if (bite === end_of_stream) return finished;
 
       // 2. If byte is an ASCII byte, return a code point whose value
       // is byte.
-      if (isASCIIByte(bite)) {
-        return bite;
-      }
+      if (isASCIIByte(bite)) return bite;
 
       // 3. Let code point be the index code point for byte − 0x80 in
       // index single-byte.
-      const code_point = index[bite - 0x80];
+      var code_point = index[bite - 0x80];
 
       // 4. If code point is null, return error.
-      if (code_point === null) {
-        return decoderError(fatal);
-      }
+      if (code_point === null) return decoderError(fatal);
 
       // 5. Return a code point whose value is code point.
       return code_point;
@@ -1565,7 +1501,7 @@
    * @param {{fatal: boolean}} options
    */
   function SingleByteEncoder(index, options) {
-    const fatal = options.fatal;
+    var fatal = options.fatal;
     /**
      * @param {Stream} stream Input stream.
      * @param {number} code_point Next code point read from the stream.
@@ -1573,24 +1509,18 @@
      */
     this.handler = function (stream, code_point) {
       // 1. If code point is end-of-stream, return finished.
-      if (code_point === end_of_stream) {
-        return finished;
-      }
+      if (code_point === end_of_stream) return finished;
 
       // 2. If code point is an ASCII code point, return a byte whose
       // value is code point.
-      if (isASCIICodePoint(code_point)) {
-        return code_point;
-      }
+      if (isASCIICodePoint(code_point)) return code_point;
 
       // 3. Let pointer be the index pointer for code point in index
       // single-byte.
-      const pointer = indexPointerFor(code_point, index);
+      var pointer = indexPointerFor(code_point, index);
 
       // 4. If pointer is null, return error with code point.
-      if (pointer === null) {
-        encoderError(code_point);
-      }
+      if (pointer === null) encoderError(code_point);
 
       // 5. Return a byte whose value is pointer + 0x80.
       return pointer + 0x80;
@@ -1598,16 +1528,12 @@
   }
 
   (function () {
-    if (!("encoding-indexes" in global)) {
-      return;
-    }
+    if (!("encoding-indexes" in global)) return;
     encodings.forEach(function (category) {
-      if (category.heading !== "Legacy single-byte encodings") {
-        return;
-      }
+      if (category.heading !== "Legacy single-byte encodings") return;
       category.encodings.forEach(function (encoding) {
-        const name = encoding.name;
-        const idx = index(name.toLowerCase());
+        var name = encoding.name;
+        var idx = index(name.toLowerCase());
         /** @param {{fatal: boolean}} options */
         decoders[name] = function (options) {
           return new SingleByteDecoder(idx, options);
@@ -1629,14 +1555,14 @@
   // 11.1.1 gbk decoder
   // gbk's decoder is gb18030's decoder.
   /** @param {{fatal: boolean}} options */
-  decoders.GBK = function (options) {
+  decoders["GBK"] = function (options) {
     return new GB18030Decoder(options);
   };
 
   // 11.1.2 gbk encoder
   // gbk's encoder is gb18030's encoder with its gbk flag set.
   /** @param {{fatal: boolean}} options */
-  encoders.GBK = function (options) {
+  encoders["GBK"] = function (options) {
     return new GB18030Encoder(options, true);
   };
 
@@ -1649,12 +1575,12 @@
    * @param {{fatal: boolean}} options
    */
   function GB18030Decoder(options) {
-    const fatal = options.fatal;
+    var fatal = options.fatal;
     // gb18030's decoder has an associated gb18030 first, gb18030
     // second, and gb18030 third (all initially 0x00).
-    let /** @type {number} */ gb18030_first = 0x00;
-    /** @type {number} */ let gb18030_second = 0x00;
-    /** @type {number} */ let gb18030_third = 0x00;
+    var /** @type {number} */ gb18030_first = 0x00,
+      /** @type {number} */ gb18030_second = 0x00,
+      /** @type {number} */ gb18030_third = 0x00;
     /**
      * @param {Stream} stream The stream of bytes being decoded.
      * @param {number} bite The next byte read from the stream.
@@ -1687,7 +1613,7 @@
         gb18030_third = 0x00;
         decoderError(fatal);
       }
-      let code_point;
+      var code_point;
       // 3. If gb18030 third is not 0x00, run these substeps:
       if (gb18030_third !== 0x00) {
         // 1. Let code point be null.
@@ -1709,7 +1635,7 @@
 
         // 3. Let buffer be a byte sequence consisting of gb18030
         // second, gb18030 third, and byte, in order.
-        const buffer = [gb18030_second, gb18030_third, bite];
+        var buffer = [gb18030_second, gb18030_third, bite];
 
         // 4. Set gb18030 first, gb18030 second, and gb18030 third to
         // 0x00.
@@ -1756,20 +1682,19 @@
 
         // 2. Let lead be gb18030 first, let pointer be null, and set
         // gb18030 first to 0x00.
-        const lead = gb18030_first;
-        let pointer = null;
+        var lead = gb18030_first;
+        var pointer = null;
         gb18030_first = 0x00;
 
         // 3. Let offset be 0x40 if byte is less than 0x7F and 0x41
         // otherwise.
-        const offset = bite < 0x7f ? 0x40 : 0x41;
+        var offset = bite < 0x7f ? 0x40 : 0x41;
 
         // 4. If byte is in the range 0x40 to 0x7E, inclusive, or 0x80
         // to 0xFE, inclusive, set pointer to (lead − 0x81) × 190 +
         // (byte − offset).
-        if (inRange(bite, 0x40, 0x7e) || inRange(bite, 0x80, 0xfe)) {
+        if (inRange(bite, 0x40, 0x7e) || inRange(bite, 0x80, 0xfe))
           pointer = (lead - 0x81) * 190 + (bite - offset);
-        }
 
         // 5. Let code point be null if pointer is null and the index
         // code point for pointer in index gb18030 otherwise.
@@ -1780,14 +1705,10 @@
 
         // 6. If code point is null and byte is an ASCII byte, prepend
         // byte to stream.
-        if (code_point === null && isASCIIByte(bite)) {
-          stream.prepend(bite);
-        }
+        if (code_point === null && isASCIIByte(bite)) stream.prepend(bite);
 
         // 7. If code point is null, return error.
-        if (code_point === null) {
-          return decoderError(fatal);
-        }
+        if (code_point === null) return decoderError(fatal);
 
         // 8. Return a code point whose value is code point.
         return code_point;
@@ -1795,14 +1716,10 @@
 
       // 6. If byte is an ASCII byte, return a code point whose value
       // is byte.
-      if (isASCIIByte(bite)) {
-        return bite;
-      }
+      if (isASCIIByte(bite)) return bite;
 
       // 7. If byte is 0x80, return code point U+20AC.
-      if (bite === 0x80) {
-        return 0x20ac;
-      }
+      if (bite === 0x80) return 0x20ac;
 
       // 8. If byte is in the range 0x81 to 0xFE, inclusive, set
       // gb18030 first to byte and return continue.
@@ -1824,7 +1741,7 @@
    * @param {boolean=} gbk_flag
    */
   function GB18030Encoder(options, gbk_flag) {
-    const fatal = options.fatal;
+    var fatal = options.fatal;
     // gb18030's decoder has an associated gbk flag (initially unset).
     /**
      * @param {Stream} stream Input stream.
@@ -1833,72 +1750,62 @@
      */
     this.handler = function (stream, code_point) {
       // 1. If code point is end-of-stream, return finished.
-      if (code_point === end_of_stream) {
-        return finished;
-      }
+      if (code_point === end_of_stream) return finished;
 
       // 2. If code point is an ASCII code point, return a byte whose
       // value is code point.
-      if (isASCIICodePoint(code_point)) {
-        return code_point;
-      }
+      if (isASCIICodePoint(code_point)) return code_point;
 
       // 3. If code point is U+E5E5, return error with code point.
-      if (code_point === 0xe5e5) {
-        return encoderError(code_point);
-      }
+      if (code_point === 0xe5e5) return encoderError(code_point);
 
       // 4. If the gbk flag is set and code point is U+20AC, return
       // byte 0x80.
-      if (gbk_flag && code_point === 0x20ac) {
-        return 0x80;
-      }
+      if (gbk_flag && code_point === 0x20ac) return 0x80;
 
       // 5. Let pointer be the index pointer for code point in index
       // gb18030.
-      let pointer = indexPointerFor(code_point, index("gb18030"));
+      var pointer = indexPointerFor(code_point, index("gb18030"));
 
       // 6. If pointer is not null, run these substeps:
       if (pointer !== null) {
         // 1. Let lead be floor(pointer / 190) + 0x81.
-        const lead = floor(pointer / 190) + 0x81;
+        var lead = floor(pointer / 190) + 0x81;
 
         // 2. Let trail be pointer % 190.
-        const trail = pointer % 190;
+        var trail = pointer % 190;
 
         // 3. Let offset be 0x40 if trail is less than 0x3F and 0x41 otherwise.
-        const offset = trail < 0x3f ? 0x40 : 0x41;
+        var offset = trail < 0x3f ? 0x40 : 0x41;
 
         // 4. Return two bytes whose values are lead and trail + offset.
         return [lead, trail + offset];
       }
 
       // 7. If gbk flag is set, return error with code point.
-      if (gbk_flag) {
-        return encoderError(code_point);
-      }
+      if (gbk_flag) return encoderError(code_point);
 
       // 8. Set pointer to the index gb18030 ranges pointer for code
       // point.
       pointer = indexGB18030RangesPointerFor(code_point);
 
       // 9. Let byte1 be floor(pointer / 10 / 126 / 10).
-      const byte1 = floor(pointer / 10 / 126 / 10);
+      var byte1 = floor(pointer / 10 / 126 / 10);
 
       // 10. Set pointer to pointer − byte1 × 10 × 126 × 10.
       pointer = pointer - byte1 * 10 * 126 * 10;
 
       // 11. Let byte2 be floor(pointer / 10 / 126).
-      const byte2 = floor(pointer / 10 / 126);
+      var byte2 = floor(pointer / 10 / 126);
 
       // 12. Set pointer to pointer − byte2 × 10 × 126.
       pointer = pointer - byte2 * 10 * 126;
 
       // 13. Let byte3 be floor(pointer / 10).
-      const byte3 = floor(pointer / 10);
+      var byte3 = floor(pointer / 10);
 
       // 14. Let byte4 be pointer − byte3 × 10.
-      const byte4 = pointer - byte3 * 10;
+      var byte4 = pointer - byte3 * 10;
 
       // 15. Return four bytes whose values are byte1 + 0x81, byte2 +
       // 0x30, byte3 + 0x81, byte4 + 0x30.
@@ -1907,11 +1814,11 @@
   }
 
   /** @param {{fatal: boolean}} options */
-  encoders.gb18030 = function (options) {
+  encoders["gb18030"] = function (options) {
     return new GB18030Encoder(options);
   };
   /** @param {{fatal: boolean}} options */
-  decoders.gb18030 = function (options) {
+  decoders["gb18030"] = function (options) {
     return new GB18030Decoder(options);
   };
 
@@ -1928,9 +1835,9 @@
    * @param {{fatal: boolean}} options
    */
   function Big5Decoder(options) {
-    const fatal = options.fatal;
+    var fatal = options.fatal;
     // Big5's decoder has an associated Big5 lead (initially 0x00).
-    let /** @type {number} */ Big5_lead = 0x00;
+    var /** @type {number} */ Big5_lead = 0x00;
 
     /**
      * @param {Stream} stream The stream of bytes being decoded.
@@ -1949,28 +1856,25 @@
 
       // 2. If byte is end-of-stream and Big5 lead is 0x00, return
       // finished.
-      if (bite === end_of_stream && Big5_lead === 0x00) {
-        return finished;
-      }
+      if (bite === end_of_stream && Big5_lead === 0x00) return finished;
 
       // 3. If Big5 lead is not 0x00, let lead be Big5 lead, let
       // pointer be null, set Big5 lead to 0x00, and then run these
       // substeps:
       if (Big5_lead !== 0x00) {
-        const lead = Big5_lead;
-        let pointer = null;
+        var lead = Big5_lead;
+        var pointer = null;
         Big5_lead = 0x00;
 
         // 1. Let offset be 0x40 if byte is less than 0x7F and 0x62
         // otherwise.
-        const offset = bite < 0x7f ? 0x40 : 0x62;
+        var offset = bite < 0x7f ? 0x40 : 0x62;
 
         // 2. If byte is in the range 0x40 to 0x7E, inclusive, or 0xA1
         // to 0xFE, inclusive, set pointer to (lead − 0x81) × 157 +
         // (byte − offset).
-        if (inRange(bite, 0x40, 0x7e) || inRange(bite, 0xa1, 0xfe)) {
+        if (inRange(bite, 0x40, 0x7e) || inRange(bite, 0xa1, 0xfe))
           pointer = (lead - 0x81) * 157 + (bite - offset);
-        }
 
         // 3. If there is a row in the table below whose first column
         // is pointer, return the two code points listed in its second
@@ -1994,19 +1898,15 @@
 
         // 4. Let code point be null if pointer is null and the index
         // code point for pointer in index Big5 otherwise.
-        const code_point =
+        var code_point =
           pointer === null ? null : indexCodePointFor(pointer, index("big5"));
 
         // 5. If code point is null and byte is an ASCII byte, prepend
         // byte to stream.
-        if (code_point === null && isASCIIByte(bite)) {
-          stream.prepend(bite);
-        }
+        if (code_point === null && isASCIIByte(bite)) stream.prepend(bite);
 
         // 6. If code point is null, return error.
-        if (code_point === null) {
-          return decoderError(fatal);
-        }
+        if (code_point === null) return decoderError(fatal);
 
         // 7. Return a code point whose value is code point.
         return code_point;
@@ -2014,9 +1914,7 @@
 
       // 4. If byte is an ASCII byte, return a code point whose value
       // is byte.
-      if (isASCIIByte(bite)) {
-        return bite;
-      }
+      if (isASCIIByte(bite)) return bite;
 
       // 5. If byte is in the range 0x81 to 0xFE, inclusive, set Big5
       // lead to byte and return continue.
@@ -2037,7 +1935,7 @@
    * @param {{fatal: boolean}} options
    */
   function Big5Encoder(options) {
-    const fatal = options.fatal;
+    var fatal = options.fatal;
     /**
      * @param {Stream} stream Input stream.
      * @param {number} code_point Next code point read from the stream.
@@ -2045,38 +1943,30 @@
      */
     this.handler = function (stream, code_point) {
       // 1. If code point is end-of-stream, return finished.
-      if (code_point === end_of_stream) {
-        return finished;
-      }
+      if (code_point === end_of_stream) return finished;
 
       // 2. If code point is an ASCII code point, return a byte whose
       // value is code point.
-      if (isASCIICodePoint(code_point)) {
-        return code_point;
-      }
+      if (isASCIICodePoint(code_point)) return code_point;
 
       // 3. Let pointer be the index Big5 pointer for code point.
-      const pointer = indexBig5PointerFor(code_point);
+      var pointer = indexBig5PointerFor(code_point);
 
       // 4. If pointer is null, return error with code point.
-      if (pointer === null) {
-        return encoderError(code_point);
-      }
+      if (pointer === null) return encoderError(code_point);
 
       // 5. Let lead be floor(pointer / 157) + 0x81.
-      const lead = floor(pointer / 157) + 0x81;
+      var lead = floor(pointer / 157) + 0x81;
 
       // 6. If lead is less than 0xA1, return error with code point.
-      if (lead < 0xa1) {
-        return encoderError(code_point);
-      }
+      if (lead < 0xa1) return encoderError(code_point);
 
       // 7. Let trail be pointer % 157.
-      const trail = pointer % 157;
+      var trail = pointer % 157;
 
       // 8. Let offset be 0x40 if trail is less than 0x3F and 0x62
       // otherwise.
-      const offset = trail < 0x3f ? 0x40 : 0x62;
+      var offset = trail < 0x3f ? 0x40 : 0x62;
 
       // Return two bytes whose values are lead and trail + offset.
       return [lead, trail + offset];
@@ -2084,11 +1974,11 @@
   }
 
   /** @param {{fatal: boolean}} options */
-  encoders.Big5 = function (options) {
+  encoders["Big5"] = function (options) {
     return new Big5Encoder(options);
   };
   /** @param {{fatal: boolean}} options */
-  decoders.Big5 = function (options) {
+  decoders["Big5"] = function (options) {
     return new Big5Decoder(options);
   };
 
@@ -2105,12 +1995,12 @@
    * @param {{fatal: boolean}} options
    */
   function EUCJPDecoder(options) {
-    const fatal = options.fatal;
+    var fatal = options.fatal;
 
     // euc-jp's decoder has an associated euc-jp jis0212 flag
     // (initially unset) and euc-jp lead (initially 0x00).
-    let /** @type {boolean} */ eucjp_jis0212_flag = false;
-    /** @type {number} */ let eucjp_lead = 0x00;
+    var /** @type {boolean} */ eucjp_jis0212_flag = false,
+      /** @type {number} */ eucjp_lead = 0x00;
 
     /**
      * @param {Stream} stream The stream of bytes being decoded.
@@ -2129,9 +2019,7 @@
 
       // 2. If byte is end-of-stream and euc-jp lead is 0x00, return
       // finished.
-      if (bite === end_of_stream && eucjp_lead === 0x00) {
-        return finished;
-      }
+      if (bite === end_of_stream && eucjp_lead === 0x00) return finished;
 
       // 3. If euc-jp lead is 0x8E and byte is in the range 0xA1 to
       // 0xDF, inclusive, set euc-jp lead to 0x00 and return a code
@@ -2153,11 +2041,11 @@
       // 5. If euc-jp lead is not 0x00, let lead be euc-jp lead, set
       // euc-jp lead to 0x00, and run these substeps:
       if (eucjp_lead !== 0x00) {
-        const lead = eucjp_lead;
+        var lead = eucjp_lead;
         eucjp_lead = 0x00;
 
         // 1. Let code point be null.
-        let code_point = null;
+        var code_point = null;
 
         // 2. If lead and byte are both in the range 0xA1 to 0xFE,
         // inclusive, set code point to the index code point for (lead
@@ -2175,14 +2063,10 @@
 
         // 4. If byte is not in the range 0xA1 to 0xFE, inclusive,
         // prepend byte to stream.
-        if (!inRange(bite, 0xa1, 0xfe)) {
-          stream.prepend(bite);
-        }
+        if (!inRange(bite, 0xa1, 0xfe)) stream.prepend(bite);
 
         // 5. If code point is null, return error.
-        if (code_point === null) {
-          return decoderError(fatal);
-        }
+        if (code_point === null) return decoderError(fatal);
 
         // 6. Return a code point whose value is code point.
         return code_point;
@@ -2190,9 +2074,7 @@
 
       // 6. If byte is an ASCII byte, return a code point whose value
       // is byte.
-      if (isASCIIByte(bite)) {
-        return bite;
-      }
+      if (isASCIIByte(bite)) return bite;
 
       // 7. If byte is 0x8E, 0x8F, or in the range 0xA1 to 0xFE,
       // inclusive, set euc-jp lead to byte and return continue.
@@ -2213,7 +2095,7 @@
    * @param {{fatal: boolean}} options
    */
   function EUCJPEncoder(options) {
-    const fatal = options.fatal;
+    var fatal = options.fatal;
     /**
      * @param {Stream} stream Input stream.
      * @param {number} code_point Next code point read from the stream.
@@ -2221,52 +2103,39 @@
      */
     this.handler = function (stream, code_point) {
       // 1. If code point is end-of-stream, return finished.
-      if (code_point === end_of_stream) {
-        return finished;
-      }
+      if (code_point === end_of_stream) return finished;
 
       // 2. If code point is an ASCII code point, return a byte whose
       // value is code point.
-      if (isASCIICodePoint(code_point)) {
-        return code_point;
-      }
+      if (isASCIICodePoint(code_point)) return code_point;
 
       // 3. If code point is U+00A5, return byte 0x5C.
-      if (code_point === 0x00a5) {
-        return 0x5c;
-      }
+      if (code_point === 0x00a5) return 0x5c;
 
       // 4. If code point is U+203E, return byte 0x7E.
-      if (code_point === 0x203e) {
-        return 0x7e;
-      }
+      if (code_point === 0x203e) return 0x7e;
 
       // 5. If code point is in the range U+FF61 to U+FF9F, inclusive,
       // return two bytes whose values are 0x8E and code point −
       // 0xFF61 + 0xA1.
-      if (inRange(code_point, 0xff61, 0xff9f)) {
+      if (inRange(code_point, 0xff61, 0xff9f))
         return [0x8e, code_point - 0xff61 + 0xa1];
-      }
 
       // 6. If code point is U+2212, set it to U+FF0D.
-      if (code_point === 0x2212) {
-        code_point = 0xff0d;
-      }
+      if (code_point === 0x2212) code_point = 0xff0d;
 
       // 7. Let pointer be the index pointer for code point in index
       // jis0208.
-      const pointer = indexPointerFor(code_point, index("jis0208"));
+      var pointer = indexPointerFor(code_point, index("jis0208"));
 
       // 8. If pointer is null, return error with code point.
-      if (pointer === null) {
-        return encoderError(code_point);
-      }
+      if (pointer === null) return encoderError(code_point);
 
       // 9. Let lead be floor(pointer / 94) + 0xA1.
-      const lead = floor(pointer / 94) + 0xa1;
+      var lead = floor(pointer / 94) + 0xa1;
 
       // 10. Let trail be pointer % 94 + 0xA1.
-      const trail = (pointer % 94) + 0xa1;
+      var trail = (pointer % 94) + 0xa1;
 
       // 11. Return two bytes whose values are lead and trail.
       return [lead, trail];
@@ -2291,9 +2160,9 @@
    * @param {{fatal: boolean}} options
    */
   function ISO2022JPDecoder(options) {
-    const fatal = options.fatal;
+    var fatal = options.fatal;
     /** @enum */
-    const states = {
+    var states = {
       ASCII: 0,
       Roman: 1,
       Katakana: 2,
@@ -2306,10 +2175,10 @@
     // state (initially ASCII), iso-2022-jp decoder output state
     // (initially ASCII), iso-2022-jp lead (initially 0x00), and
     // iso-2022-jp output flag (initially unset).
-    let /** @type {number} */ iso2022jp_decoder_state = states.ASCII;
-    /** @type {number} */ const iso2022jp_decoder_output_state = states.ASCII;
-    /** @type {number} */ let iso2022jp_lead = 0x00;
-    /** @type {boolean} */ let iso2022jp_output_flag = false;
+    var /** @type {number} */ iso2022jp_decoder_state = states.ASCII,
+      /** @type {number} */ iso2022jp_decoder_output_state = states.ASCII,
+      /** @type {number} */ iso2022jp_lead = 0x00,
+      /** @type {boolean} */ iso2022jp_output_flag = false;
     /**
      * @param {Stream} stream The stream of bytes being decoded.
      * @param {number} bite The next byte read from the stream.
@@ -2494,16 +2363,14 @@
             iso2022jp_decoder_state = states.LeadByte;
 
             // 2. Let pointer be (iso-2022-jp lead − 0x21) × 94 + byte − 0x21.
-            const pointer = (iso2022jp_lead - 0x21) * 94 + bite - 0x21;
+            var pointer = (iso2022jp_lead - 0x21) * 94 + bite - 0x21;
 
             // 3. Let code point be the index code point for pointer in
             // index jis0208.
-            const code_point = indexCodePointFor(pointer, index("jis0208"));
+            var code_point = indexCodePointFor(pointer, index("jis0208"));
 
             // 4. If code point is null, return error.
-            if (code_point === null) {
-              return decoderError(fatal);
-            }
+            if (code_point === null) return decoderError(fatal);
 
             // 5. Return a code point whose value is code point.
             return code_point;
@@ -2558,25 +2425,18 @@
           var state = null;
 
           // 3. If lead is 0x28 and byte is 0x42, set state to ASCII.
-          if (lead === 0x28 && bite === 0x42) {
-            state = states.ASCII;
-          }
+          if (lead === 0x28 && bite === 0x42) state = states.ASCII;
 
           // 4. If lead is 0x28 and byte is 0x4A, set state to Roman.
-          if (lead === 0x28 && bite === 0x4a) {
-            state = states.Roman;
-          }
+          if (lead === 0x28 && bite === 0x4a) state = states.Roman;
 
           // 5. If lead is 0x28 and byte is 0x49, set state to Katakana.
-          if (lead === 0x28 && bite === 0x49) {
-            state = states.Katakana;
-          }
+          if (lead === 0x28 && bite === 0x49) state = states.Katakana;
 
           // 6. If lead is 0x24 and byte is either 0x40 or 0x42, set
           // state to lead byte.
-          if (lead === 0x24 && (bite === 0x40 || bite === 0x42)) {
+          if (lead === 0x24 && (bite === 0x40 || bite === 0x42))
             state = states.LeadByte;
-          }
 
           // 7. If state is non-null, run these substeps:
           if (state !== null) {
@@ -2585,7 +2445,7 @@
             iso2022jp_decoder_state = iso2022jp_decoder_state = state;
 
             // 2. Let output flag be the iso-2022-jp output flag.
-            const output_flag = iso2022jp_output_flag;
+            var output_flag = iso2022jp_output_flag;
 
             // 3. Set the iso-2022-jp output flag.
             iso2022jp_output_flag = true;
@@ -2615,17 +2475,17 @@
    * @param {{fatal: boolean}} options
    */
   function ISO2022JPEncoder(options) {
-    const fatal = options.fatal;
+    var fatal = options.fatal;
     // iso-2022-jp's encoder has an associated iso-2022-jp encoder
     // state which is one of ASCII, Roman, and jis0208 (initially
     // ASCII).
     /** @enum */
-    const states = {
+    var states = {
       ASCII: 0,
       Roman: 1,
       jis0208: 2,
     };
-    let /** @type {number} */ iso2022jp_state = states.ASCII;
+    var /** @type {number} */ iso2022jp_state = states.ASCII;
     /**
      * @param {Stream} stream Input stream.
      * @param {number} code_point Next code point read from the stream.
@@ -2644,9 +2504,8 @@
 
       // 2. If code point is end-of-stream and iso-2022-jp encoder
       // state is ASCII, return finished.
-      if (code_point === end_of_stream && iso2022jp_state === states.ASCII) {
+      if (code_point === end_of_stream && iso2022jp_state === states.ASCII)
         return finished;
-      }
 
       // 3. If ISO-2022-JP encoder state is ASCII or Roman, and code
       // point is U+000E, U+000F, or U+001B, return error with U+FFFD.
@@ -2662,9 +2521,8 @@
 
       // 4. If iso-2022-jp encoder state is ASCII and code point is an
       // ASCII code point, return a byte whose value is code point.
-      if (iso2022jp_state === states.ASCII && isASCIICodePoint(code_point)) {
+      if (iso2022jp_state === states.ASCII && isASCIICodePoint(code_point))
         return code_point;
-      }
 
       // 5. If iso-2022-jp encoder state is Roman and code point is an
       // ASCII code point, excluding U+005C and U+007E, or is U+00A5
@@ -2679,19 +2537,13 @@
       ) {
         // 1. If code point is an ASCII code point, return a byte
         // whose value is code point.
-        if (isASCIICodePoint(code_point)) {
-          return code_point;
-        }
+        if (isASCIICodePoint(code_point)) return code_point;
 
         // 2. If code point is U+00A5, return byte 0x5C.
-        if (code_point === 0x00a5) {
-          return 0x5c;
-        }
+        if (code_point === 0x00a5) return 0x5c;
 
         // 3. If code point is U+203E, return byte 0x7E.
-        if (code_point === 0x203e) {
-          return 0x7e;
-        }
+        if (code_point === 0x203e) return 0x7e;
       }
 
       // 6. If code point is an ASCII code point, and iso-2022-jp
@@ -2718,18 +2570,14 @@
       }
 
       // 8. If code point is U+2212, set it to U+FF0D.
-      if (code_point === 0x2212) {
-        code_point = 0xff0d;
-      }
+      if (code_point === 0x2212) code_point = 0xff0d;
 
       // 9. Let pointer be the index pointer for code point in index
       // jis0208.
-      const pointer = indexPointerFor(code_point, index("jis0208"));
+      var pointer = indexPointerFor(code_point, index("jis0208"));
 
       // 10. If pointer is null, return error with code point.
-      if (pointer === null) {
-        return encoderError(code_point);
-      }
+      if (pointer === null) return encoderError(code_point);
 
       // 11. If iso-2022-jp encoder state is not jis0208, prepend code
       // point to stream, set iso-2022-jp encoder state to jis0208,
@@ -2741,10 +2589,10 @@
       }
 
       // 12. Let lead be floor(pointer / 94) + 0x21.
-      const lead = floor(pointer / 94) + 0x21;
+      var lead = floor(pointer / 94) + 0x21;
 
       // 13. Let trail be pointer % 94 + 0x21.
-      const trail = (pointer % 94) + 0x21;
+      var trail = (pointer % 94) + 0x21;
 
       // 14. Return two bytes whose values are lead and trail.
       return [lead, trail];
@@ -2769,10 +2617,10 @@
    * @param {{fatal: boolean}} options
    */
   function ShiftJISDecoder(options) {
-    const fatal = options.fatal;
+    var fatal = options.fatal;
     // Shift_JIS's decoder has an associated Shift_JIS lead (initially
     // 0x00).
-    let /** @type {number} */ Shift_JIS_lead = 0x00;
+    var /** @type {number} */ Shift_JIS_lead = 0x00;
     /**
      * @param {Stream} stream The stream of bytes being decoded.
      * @param {number} bite The next byte read from the stream.
@@ -2790,56 +2638,47 @@
 
       // 2. If byte is end-of-stream and Shift_JIS lead is 0x00,
       // return finished.
-      if (bite === end_of_stream && Shift_JIS_lead === 0x00) {
-        return finished;
-      }
+      if (bite === end_of_stream && Shift_JIS_lead === 0x00) return finished;
 
       // 3. If Shift_JIS lead is not 0x00, let lead be Shift_JIS lead,
       // let pointer be null, set Shift_JIS lead to 0x00, and then run
       // these substeps:
       if (Shift_JIS_lead !== 0x00) {
-        const lead = Shift_JIS_lead;
-        let pointer = null;
+        var lead = Shift_JIS_lead;
+        var pointer = null;
         Shift_JIS_lead = 0x00;
 
         // 1. Let offset be 0x40, if byte is less than 0x7F, and 0x41
         // otherwise.
-        const offset = bite < 0x7f ? 0x40 : 0x41;
+        var offset = bite < 0x7f ? 0x40 : 0x41;
 
         // 2. Let lead offset be 0x81, if lead is less than 0xA0, and
         // 0xC1 otherwise.
-        const lead_offset = lead < 0xa0 ? 0x81 : 0xc1;
+        var lead_offset = lead < 0xa0 ? 0x81 : 0xc1;
 
         // 3. If byte is in the range 0x40 to 0x7E, inclusive, or 0x80
         // to 0xFC, inclusive, set pointer to (lead − lead offset) ×
         // 188 + byte − offset.
-        if (inRange(bite, 0x40, 0x7e) || inRange(bite, 0x80, 0xfc)) {
+        if (inRange(bite, 0x40, 0x7e) || inRange(bite, 0x80, 0xfc))
           pointer = (lead - lead_offset) * 188 + bite - offset;
-        }
 
         // 4. If pointer is in the range 8836 to 10715, inclusive,
         // return a code point whose value is 0xE000 − 8836 + pointer.
-        if (inRange(pointer, 8836, 10715)) {
-          return 0xe000 - 8836 + pointer;
-        }
+        if (inRange(pointer, 8836, 10715)) return 0xe000 - 8836 + pointer;
 
         // 5. Let code point be null, if pointer is null, and the
         // index code point for pointer in index jis0208 otherwise.
-        const code_point =
+        var code_point =
           pointer === null
             ? null
             : indexCodePointFor(pointer, index("jis0208"));
 
         // 6. If code point is null and byte is an ASCII byte, prepend
         // byte to stream.
-        if (code_point === null && isASCIIByte(bite)) {
-          stream.prepend(bite);
-        }
+        if (code_point === null && isASCIIByte(bite)) stream.prepend(bite);
 
         // 7. If code point is null, return error.
-        if (code_point === null) {
-          return decoderError(fatal);
-        }
+        if (code_point === null) return decoderError(fatal);
 
         // 8. Return a code point whose value is code point.
         return code_point;
@@ -2847,15 +2686,11 @@
 
       // 4. If byte is an ASCII byte or 0x80, return a code point
       // whose value is byte.
-      if (isASCIIByte(bite) || bite === 0x80) {
-        return bite;
-      }
+      if (isASCIIByte(bite) || bite === 0x80) return bite;
 
       // 5. If byte is in the range 0xA1 to 0xDF, inclusive, return a
       // code point whose value is 0xFF61 − 0xA1 + byte.
-      if (inRange(bite, 0xa1, 0xdf)) {
-        return 0xff61 - 0xa1 + bite;
-      }
+      if (inRange(bite, 0xa1, 0xdf)) return 0xff61 - 0xa1 + bite;
 
       // 6. If byte is in the range 0x81 to 0x9F, inclusive, or 0xE0
       // to 0xFC, inclusive, set Shift_JIS lead to byte and return
@@ -2877,7 +2712,7 @@
    * @param {{fatal: boolean}} options
    */
   function ShiftJISEncoder(options) {
-    const fatal = options.fatal;
+    var fatal = options.fatal;
     /**
      * @param {Stream} stream Input stream.
      * @param {number} code_point Next code point read from the stream.
@@ -2885,58 +2720,46 @@
      */
     this.handler = function (stream, code_point) {
       // 1. If code point is end-of-stream, return finished.
-      if (code_point === end_of_stream) {
-        return finished;
-      }
+      if (code_point === end_of_stream) return finished;
 
       // 2. If code point is an ASCII code point or U+0080, return a
       // byte whose value is code point.
-      if (isASCIICodePoint(code_point) || code_point === 0x0080) {
+      if (isASCIICodePoint(code_point) || code_point === 0x0080)
         return code_point;
-      }
 
       // 3. If code point is U+00A5, return byte 0x5C.
-      if (code_point === 0x00a5) {
-        return 0x5c;
-      }
+      if (code_point === 0x00a5) return 0x5c;
 
       // 4. If code point is U+203E, return byte 0x7E.
-      if (code_point === 0x203e) {
-        return 0x7e;
-      }
+      if (code_point === 0x203e) return 0x7e;
 
       // 5. If code point is in the range U+FF61 to U+FF9F, inclusive,
       // return a byte whose value is code point − 0xFF61 + 0xA1.
-      if (inRange(code_point, 0xff61, 0xff9f)) {
+      if (inRange(code_point, 0xff61, 0xff9f))
         return code_point - 0xff61 + 0xa1;
-      }
 
       // 6. If code point is U+2212, set it to U+FF0D.
-      if (code_point === 0x2212) {
-        code_point = 0xff0d;
-      }
+      if (code_point === 0x2212) code_point = 0xff0d;
 
       // 7. Let pointer be the index Shift_JIS pointer for code point.
-      const pointer = indexShiftJISPointerFor(code_point);
+      var pointer = indexShiftJISPointerFor(code_point);
 
       // 8. If pointer is null, return error with code point.
-      if (pointer === null) {
-        return encoderError(code_point);
-      }
+      if (pointer === null) return encoderError(code_point);
 
       // 9. Let lead be floor(pointer / 188).
-      const lead = floor(pointer / 188);
+      var lead = floor(pointer / 188);
 
       // 10. Let lead offset be 0x81, if lead is less than 0x1F, and
       // 0xC1 otherwise.
-      const lead_offset = lead < 0x1f ? 0x81 : 0xc1;
+      var lead_offset = lead < 0x1f ? 0x81 : 0xc1;
 
       // 11. Let trail be pointer % 188.
-      const trail = pointer % 188;
+      var trail = pointer % 188;
 
       // 12. Let offset be 0x40, if trail is less than 0x3F, and 0x41
       // otherwise.
-      const offset = trail < 0x3f ? 0x40 : 0x41;
+      var offset = trail < 0x3f ? 0x40 : 0x41;
 
       // 13. Return two bytes whose values are lead + lead offset and
       // trail + offset.
@@ -2945,11 +2768,11 @@
   }
 
   /** @param {{fatal: boolean}} options */
-  encoders.Shift_JIS = function (options) {
+  encoders["Shift_JIS"] = function (options) {
     return new ShiftJISEncoder(options);
   };
   /** @param {{fatal: boolean}} options */
-  decoders.Shift_JIS = function (options) {
+  decoders["Shift_JIS"] = function (options) {
     return new ShiftJISDecoder(options);
   };
 
@@ -2966,10 +2789,10 @@
    * @param {{fatal: boolean}} options
    */
   function EUCKRDecoder(options) {
-    const fatal = options.fatal;
+    var fatal = options.fatal;
 
     // euc-kr's decoder has an associated euc-kr lead (initially 0x00).
-    let /** @type {number} */ euckr_lead = 0x00;
+    var /** @type {number} */ euckr_lead = 0x00;
     /**
      * @param {Stream} stream The stream of bytes being decoded.
      * @param {number} bite The next byte read from the stream.
@@ -2987,39 +2810,32 @@
 
       // 2. If byte is end-of-stream and euc-kr lead is 0x00, return
       // finished.
-      if (bite === end_of_stream && euckr_lead === 0) {
-        return finished;
-      }
+      if (bite === end_of_stream && euckr_lead === 0) return finished;
 
       // 3. If euc-kr lead is not 0x00, let lead be euc-kr lead, let
       // pointer be null, set euc-kr lead to 0x00, and then run these
       // substeps:
       if (euckr_lead !== 0x00) {
-        const lead = euckr_lead;
-        let pointer = null;
+        var lead = euckr_lead;
+        var pointer = null;
         euckr_lead = 0x00;
 
         // 1. If byte is in the range 0x41 to 0xFE, inclusive, set
         // pointer to (lead − 0x81) × 190 + (byte − 0x41).
-        if (inRange(bite, 0x41, 0xfe)) {
+        if (inRange(bite, 0x41, 0xfe))
           pointer = (lead - 0x81) * 190 + (bite - 0x41);
-        }
 
         // 2. Let code point be null, if pointer is null, and the
         // index code point for pointer in index euc-kr otherwise.
-        const code_point =
+        var code_point =
           pointer === null ? null : indexCodePointFor(pointer, index("euc-kr"));
 
         // 3. If code point is null and byte is an ASCII byte, prepend
         // byte to stream.
-        if (pointer === null && isASCIIByte(bite)) {
-          stream.prepend(bite);
-        }
+        if (pointer === null && isASCIIByte(bite)) stream.prepend(bite);
 
         // 4. If code point is null, return error.
-        if (code_point === null) {
-          return decoderError(fatal);
-        }
+        if (code_point === null) return decoderError(fatal);
 
         // 5. Return a code point whose value is code point.
         return code_point;
@@ -3027,9 +2843,7 @@
 
       // 4. If byte is an ASCII byte, return a code point whose value
       // is byte.
-      if (isASCIIByte(bite)) {
-        return bite;
-      }
+      if (isASCIIByte(bite)) return bite;
 
       // 5. If byte is in the range 0x81 to 0xFE, inclusive, set
       // euc-kr lead to byte and return continue.
@@ -3050,7 +2864,7 @@
    * @param {{fatal: boolean}} options
    */
   function EUCKREncoder(options) {
-    const fatal = options.fatal;
+    var fatal = options.fatal;
     /**
      * @param {Stream} stream Input stream.
      * @param {number} code_point Next code point read from the stream.
@@ -3058,30 +2872,24 @@
      */
     this.handler = function (stream, code_point) {
       // 1. If code point is end-of-stream, return finished.
-      if (code_point === end_of_stream) {
-        return finished;
-      }
+      if (code_point === end_of_stream) return finished;
 
       // 2. If code point is an ASCII code point, return a byte whose
       // value is code point.
-      if (isASCIICodePoint(code_point)) {
-        return code_point;
-      }
+      if (isASCIICodePoint(code_point)) return code_point;
 
       // 3. Let pointer be the index pointer for code point in index
       // euc-kr.
-      const pointer = indexPointerFor(code_point, index("euc-kr"));
+      var pointer = indexPointerFor(code_point, index("euc-kr"));
 
       // 4. If pointer is null, return error with code point.
-      if (pointer === null) {
-        return encoderError(code_point);
-      }
+      if (pointer === null) return encoderError(code_point);
 
       // 5. Let lead be floor(pointer / 190) + 0x81.
-      const lead = floor(pointer / 190) + 0x81;
+      var lead = floor(pointer / 190) + 0x81;
 
       // 6. Let trail be pointer % 190 + 0x41.
-      const trail = (pointer % 190) + 0x41;
+      var trail = (pointer % 190) + 0x41;
 
       // 7. Return two bytes whose values are lead and trail.
       return [lead, trail];
@@ -3114,16 +2922,14 @@
    */
   function convertCodeUnitToBytes(code_unit, utf16be) {
     // 1. Let byte1 be code unit >> 8.
-    const byte1 = code_unit >> 8;
+    var byte1 = code_unit >> 8;
 
     // 2. Let byte2 be code unit & 0x00FF.
-    const byte2 = code_unit & 0x00ff;
+    var byte2 = code_unit & 0x00ff;
 
     // 3. Then return the bytes in order:
     // utf-16be flag is set: byte1, then byte2.
-    if (utf16be) {
-      return [byte1, byte2];
-    }
+    if (utf16be) return [byte1, byte2];
     // utf-16be flag is unset: byte2, then byte1.
     return [byte2, byte1];
   }
@@ -3136,9 +2942,9 @@
    * @param {{fatal: boolean}} options
    */
   function UTF16Decoder(utf16_be, options) {
-    const fatal = options.fatal;
-    let /** @type {?number} */ utf16_lead_byte = null;
-    /** @type {?number} */ let utf16_lead_surrogate = null;
+    var fatal = options.fatal;
+    var /** @type {?number} */ utf16_lead_byte = null,
+      /** @type {?number} */ utf16_lead_surrogate = null;
     /**
      * @param {Stream} stream The stream of bytes being decoded.
      * @param {number} bite The next byte read from the stream.
@@ -3175,7 +2981,7 @@
       }
 
       // 4. Let code unit be the result of:
-      let code_unit;
+      var code_unit;
       if (utf16_be) {
         // utf-16be decoder flag is set
         //   (utf-16 lead byte << 8) + byte.
@@ -3192,7 +2998,7 @@
       // be utf-16 lead surrogate, set utf-16 lead surrogate to null,
       // and then run these substeps:
       if (utf16_lead_surrogate !== null) {
-        const lead_surrogate = utf16_lead_surrogate;
+        var lead_surrogate = utf16_lead_surrogate;
         utf16_lead_surrogate = null;
 
         // 1. If code unit is in the range U+DC00 to U+DFFF,
@@ -3220,9 +3026,7 @@
 
       // 7. If code unit is in the range U+DC00 to U+DFFF, inclusive,
       // return error.
-      if (inRange(code_unit, 0xdc00, 0xdfff)) {
-        return decoderError(fatal);
-      }
+      if (inRange(code_unit, 0xdc00, 0xdfff)) return decoderError(fatal);
 
       // 8. Return code point code unit.
       return code_unit;
@@ -3237,7 +3041,7 @@
    * @param {{fatal: boolean}} options
    */
   function UTF16Encoder(utf16_be, options) {
-    const fatal = options.fatal;
+    var fatal = options.fatal;
     /**
      * @param {Stream} stream Input stream.
      * @param {number} code_point Next code point read from the stream.
@@ -3245,27 +3049,24 @@
      */
     this.handler = function (stream, code_point) {
       // 1. If code point is end-of-stream, return finished.
-      if (code_point === end_of_stream) {
-        return finished;
-      }
+      if (code_point === end_of_stream) return finished;
 
       // 2. If code point is in the range U+0000 to U+FFFF, inclusive,
       // return the sequence resulting of converting code point to
       // bytes using utf-16be encoder flag.
-      if (inRange(code_point, 0x0000, 0xffff)) {
+      if (inRange(code_point, 0x0000, 0xffff))
         return convertCodeUnitToBytes(code_point, utf16_be);
-      }
 
       // 3. Let lead be ((code point − 0x10000) >> 10) + 0xD800,
       // converted to bytes using utf-16be encoder flag.
-      const lead = convertCodeUnitToBytes(
+      var lead = convertCodeUnitToBytes(
         ((code_point - 0x10000) >> 10) + 0xd800,
         utf16_be,
       );
 
       // 4. Let trail be ((code point − 0x10000) & 0x3FF) + 0xDC00,
       // converted to bytes using utf-16be encoder flag.
-      const trail = convertCodeUnitToBytes(
+      var trail = convertCodeUnitToBytes(
         ((code_point - 0x10000) & 0x3ff) + 0xdc00,
         utf16_be,
       );
@@ -3308,7 +3109,7 @@
    * @param {{fatal: boolean}} options
    */
   function XUserDefinedDecoder(options) {
-    const fatal = options.fatal;
+    var fatal = options.fatal;
     /**
      * @param {Stream} stream The stream of bytes being decoded.
      * @param {number} bite The next byte read from the stream.
@@ -3318,15 +3119,11 @@
      */
     this.handler = function (stream, bite) {
       // 1. If byte is end-of-stream, return finished.
-      if (bite === end_of_stream) {
-        return finished;
-      }
+      if (bite === end_of_stream) return finished;
 
       // 2. If byte is an ASCII byte, return a code point whose value
       // is byte.
-      if (isASCIIByte(bite)) {
-        return bite;
-      }
+      if (isASCIIByte(bite)) return bite;
 
       // 3. Return a code point whose value is 0xF780 + byte − 0x80.
       return 0xf780 + bite - 0x80;
@@ -3340,7 +3137,7 @@
    * @param {{fatal: boolean}} options
    */
   function XUserDefinedEncoder(options) {
-    const fatal = options.fatal;
+    var fatal = options.fatal;
     /**
      * @param {Stream} stream Input stream.
      * @param {number} code_point Next code point read from the stream.
@@ -3348,21 +3145,16 @@
      */
     this.handler = function (stream, code_point) {
       // 1.If code point is end-of-stream, return finished.
-      if (code_point === end_of_stream) {
-        return finished;
-      }
+      if (code_point === end_of_stream) return finished;
 
       // 2. If code point is an ASCII code point, return a byte whose
       // value is code point.
-      if (isASCIICodePoint(code_point)) {
-        return code_point;
-      }
+      if (isASCIICodePoint(code_point)) return code_point;
 
       // 3. If code point is in the range U+F780 to U+F7FF, inclusive,
       // return a byte whose value is code point − 0xF780 + 0x80.
-      if (inRange(code_point, 0xf780, 0xf7ff)) {
+      if (inRange(code_point, 0xf780, 0xf7ff))
         return code_point - 0xf780 + 0x80;
-      }
 
       // 4. Return error with code point.
       return encoderError(code_point);
@@ -3378,17 +3170,13 @@
     return new XUserDefinedDecoder(options);
   };
 
-  if (!global.TextEncoder) {
-    global.TextEncoder = TextEncoder;
-  }
-  if (!global.TextDecoder) {
-    global.TextDecoder = TextDecoder;
-  }
+  if (!global["TextEncoder"]) global["TextEncoder"] = TextEncoder;
+  if (!global["TextDecoder"]) global["TextDecoder"] = TextDecoder;
 
   if (typeof module !== "undefined" && module.exports) {
     module.exports = {
-      TextEncoder: global.TextEncoder,
-      TextDecoder: global.TextDecoder,
+      TextEncoder: global["TextEncoder"],
+      TextDecoder: global["TextDecoder"],
       EncodingIndexes: global["encoding-indexes"],
     };
   }

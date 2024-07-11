@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConfirmBoxView = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const CommonCurrencyItem_1 = require("../../Common/CommonCurrencyItem");
-const CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid");
-const ItemDefines_1 = require("../../Item/Data/ItemDefines");
-const PowerController_1 = require("../../Power/PowerController");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
-const ConfirmBoxButton_1 = require("./ConfirmBoxButton");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  CommonCurrencyItem_1 = require("../../Common/CommonCurrencyItem"),
+  CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  ItemDefines_1 = require("../../Item/Data/ItemDefines"),
+  PowerController_1 = require("../../Power/PowerController"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  ConfirmBoxButton_1 = require("./ConfirmBoxButton");
 class ConfirmBoxView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -25,7 +25,7 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
       (this.ButtonComponentList = new Array()),
       (this.dbt = void 0),
       (this.Cbt = () => {
-        let t, i;
+        var t, i;
         this.dbt &&
           ((t = ModelManager_1.ModelManager.PowerModel.PowerCount),
           (i =
@@ -36,7 +36,7 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
         this.ConfirmBoxButtonClick();
       }),
       (this.JGe = (t, i, e) => {
-        const s = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
+        var s = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
         return (
           s.Initialize(i.GetOwner()),
           s.RefreshByConfigId(t[0], t[1]),
@@ -79,8 +79,8 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
     this.CloseMe(this.ConfirmBoxData.GetCloseFunction());
   }
   gbt() {
-    this.SelectedIndex === -1 &&
-      (this.Config.ButtonText.length === 1 ||
+    -1 === this.SelectedIndex &&
+      (1 === this.Config.ButtonText.length ||
       this.ConfirmBoxData.IsEscViewTriggerCallBack
         ? (this.SelectedIndex = 1)
         : (this.SelectedIndex = 0));
@@ -92,18 +92,18 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
         this.GetScrollViewWithScrollbar(3),
         this.JGe,
       ));
-    const t = this.OpenParam;
-    const i =
-      ((this.ConfirmBoxData = t),
-      (this.Config =
-        ConfigManager_1.ConfigManager.ConfirmBoxConfig.GetConfirmBoxConfig(
-          t.ConfigId,
-        )),
-      StringUtils_1.StringUtils.IsBlank(t.GetTitle())
-        ? ConfigManager_1.ConfigManager.ConfirmBoxConfig.GetTitle(
-            this.Config.Title,
-          )
-        : t.GetTitle());
+    var t = this.OpenParam,
+      i =
+        ((this.ConfirmBoxData = t),
+        (this.Config =
+          ConfigManager_1.ConfigManager.ConfirmBoxConfig.GetConfirmBoxConfig(
+            t.ConfigId,
+          )),
+        StringUtils_1.StringUtils.IsBlank(t.GetTitle())
+          ? ConfigManager_1.ConfigManager.ConfirmBoxConfig.GetTitle(
+              this.Config.Title,
+            )
+          : t.GetTitle());
     this.GetText(0).SetText(i);
     let e = ConfigManager_1.ConfigManager.ConfirmBoxConfig.GetContent(
       this.Config.Content,
@@ -122,14 +122,14 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
         ));
   }
   OnStart() {
-    const t = this.OpenParam.AttachView?.GetRootItem();
+    var t = this.OpenParam.AttachView?.GetRootItem();
     t &&
       this.ChildPopView.GetPopViewOriginalActor()
         .GetComponentByClass(UE.UIItem.StaticClass())
         .SetUIParent(t);
   }
   OnBeforeShow() {
-    let t, i;
+    var t, i;
     this.ChildPopView?.SetBackBtnShowState(this.Config.NeedClose),
       this.ChildPopView?.PopItem.SetMaskResponsibleState(
         this.Config.NeedMaskClose,
@@ -153,12 +153,12 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
     this.ConfirmBoxData?.BeforePlayCloseFunction?.();
   }
   async InitButton() {
-    const t = this.GetItem(2);
-    const i = this.Config.ButtonText.length;
-    if ((t.SetUIActive(i > 0), i !== 0)) {
-      const e = [];
+    var t = this.GetItem(2),
+      i = this.Config.ButtonText.length;
+    if ((t.SetUIActive(0 < i), 0 !== i)) {
+      var e = [];
       for (let t = 0, i = this.ButtonComponentList.length; t < i; ++t) {
-        const s = this.ButtonComponentList[t];
+        var s = this.ButtonComponentList[t];
         e.push(
           this.k2e(s.RootUIComp, t, () => {
             (this.SelectedIndex = t + 1), this.ConfirmBoxButtonClick();
@@ -169,12 +169,12 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
     }
   }
   async k2e(t, i, e) {
-    const s = new ConfirmBoxButton_1.ConfirmBoxButton();
+    var s = new ConfirmBoxButton_1.ConfirmBoxButton();
     return (
       await s.CreateByActorAsync(t.GetOwner()),
       this.Config.ButtonText.length > i &&
         (s.SetClickFunction(e),
-        i + 1 === this.Config.DelayButtonIndex && this.Config.DelayTime > 0
+        i + 1 === this.Config.DelayButtonIndex && 0 < this.Config.DelayTime
           ? s.SetTimer(
               this.Config.ButtonText[i],
               this.Config.DelayTime,
@@ -193,9 +193,9 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
     this.ButtonList = [];
   }
   InitPropItem() {
-    const t = this.GetScrollViewWithScrollbar(3);
-    const i = this.ConfirmBoxData.ItemIdMap.size;
-    if ((t.RootUIComp.SetUIActive(i > 0), i !== 0)) {
+    var t = this.GetScrollViewWithScrollbar(3),
+      i = this.ConfirmBoxData.ItemIdMap.size;
+    if ((t.RootUIComp.SetUIActive(0 < i), 0 !== i)) {
       const e = [];
       this.ConfirmBoxData.ItemIdMap.forEach((t, i) => {
         e.push([i, t]);
@@ -204,7 +204,7 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
     }
   }
   fbt() {
-    const t = this.OpenParam;
+    var t = this.OpenParam;
     this.GetExtendToggle(6).RootUIComp.SetUIActive(t.HasToggle),
       (this.ToggleFunction = void 0),
       t.HasToggle &&
@@ -213,9 +213,9 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
   }
   OnBeforeDestroy() {
     this.uBt(), this.PropScrollView?.ClearChildren(), this.gbt();
-    const t = this.ConfirmBoxData?.FunctionMap.get(this.SelectedIndex);
+    var t = this.ConfirmBoxData?.FunctionMap.get(this.SelectedIndex);
     t && t(), this.ConfirmBoxData?.DestroyFunction?.();
   }
 }
 exports.ConfirmBoxView = ConfirmBoxView;
-// # sourceMappingURL=ConfirmBoxView.js.map
+//# sourceMappingURL=ConfirmBoxView.js.map

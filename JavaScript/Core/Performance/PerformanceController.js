@@ -4,10 +4,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.EffectPerformanceRecords =
     exports.EffectPerformanceStatistics =
       void 0);
-const UE = require("ue");
-const Log_1 = require("../Common/Log");
-const StringUtils_1 = require("../Utils/StringUtils");
-const PerformanceModel_1 = require("./PerformanceModel");
+const UE = require("ue"),
+  Log_1 = require("../Common/Log"),
+  StringUtils_1 = require("../Utils/StringUtils"),
+  PerformanceModel_1 = require("./PerformanceModel");
 class EffectPerformanceStatistics {
   constructor() {
     (this.Frame = void 0),
@@ -56,22 +56,22 @@ class PerformanceController {
   }
   static CollectionEngineInfo() {
     if (PerformanceController.IsOpenInternal) {
-      const t = UE.KuroStaticLibrary.GetStatUnitInfo();
+      var t = UE.KuroStaticLibrary.GetStatUnitInfo();
       if (!StringUtils_1.StringUtils.IsEmpty(t))
         for (const o of t.split("_")) {
-          const e = o.split(":");
-          const r = e[1];
+          var e = o.split(":"),
+            r = e[1];
           PerformanceController.AddMonitorData(e[0], Number(r));
         }
     }
   }
   static CollectionLLMInfo() {
     if (PerformanceController.IsOpenInternal) {
-      const t = UE.KuroStaticLibrary.GetLLMInfo();
+      var t = UE.KuroStaticLibrary.GetLLMInfo();
       if (!StringUtils_1.StringUtils.IsEmpty(t))
         for (const o of t.split("_")) {
-          const e = o.split(":");
-          const r = e[1];
+          var e = o.split(":"),
+            r = e[1];
           r.trim(),
             PerformanceController.AddMonitorData("LLM." + e[0], Number(r));
         }
@@ -116,13 +116,13 @@ class PerformanceController {
       ) {
         if (t.includes("EntityTick")) {
           e = Number(t.slice(10));
-          if (this.LY !== -1 && this.LY !== e) return;
+          if (-1 !== this.LY && this.LY !== e) return;
         }
         this.DY || (this.DY = new Map());
-        let n;
-        var i = t.replace(/\d/g, "");
-        var e = UE.KismetSystemLibrary.GetFrameCount();
-        o === 0
+        var n,
+          i = t.replace(/\d/g, ""),
+          e = UE.KismetSystemLibrary.GetFrameCount();
+        0 === o
           ? this.RY(i + "." + this.UY.get(o), o, r, e)
           : (t = this.DY.get(i))
             ? e === t[0]
@@ -136,13 +136,13 @@ class PerformanceController {
     }
   }
   static ConsumeTickTime(t) {
-    let e;
-    let r;
-    let o = PerformanceController.SY.get(t);
+    var e,
+      r,
+      o = PerformanceController.SY.get(t);
     return o
       ? ((e = o[0]),
         (o = o[1]),
-        (r = e === 0 ? 0 : o / e),
+        (r = 0 === e ? 0 : o / e),
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Temp",
@@ -157,15 +157,15 @@ class PerformanceController {
   }
   static CollectComponentTickPerformanceInfo(t, e, r, o) {
     this.yY || (this.yY = new Map());
-    let i;
-    let n = this.yY.get(t);
+    var i,
+      n = this.yY.get(t);
     n
       ? (i = n.get(e))
         ? ((i[0] = i[0] + (r ? 1 : 0)), (i[1] = i[1] + o))
         : n.set(e, [1, o])
       : ((r = new Map()).set(e, [1, o]), this.yY.set(t, r)),
       !this.TY ||
-        (this.LY !== -1 && this.LY !== t) ||
+        (-1 !== this.LY && this.LY !== t) ||
         (this.DY || (this.DY = new Map()),
         (n = this.DY.get((i = "Entity.Tick." + e))),
         (r = UE.KismetSystemLibrary.GetFrameCount()),
@@ -176,13 +176,13 @@ class PerformanceController {
           : this.DY.set(i, [r, o, 1, !0]));
   }
   static ConsumeComponentTickTime(t) {
-    const e = this.yY.get(t);
+    var e = this.yY.get(t);
     if (e) {
       this.AY || (this.AY = new Map()), this.AY.clear();
       let t = 0;
       for (const i of e.keys()) {
-        const r = e.get(i);
-        const o = r[0] === 0 ? 0 : r[1] / r[0];
+        var r = e.get(i),
+          o = 0 === r[0] ? 0 : r[1] / r[0];
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Temp",
@@ -204,7 +204,7 @@ class PerformanceController {
     }
   }
   static CollectEffectTickPerformanceInfo(t, e, r, o, i, n, s, c) {
-    let a, l;
+    var a, l;
     n < this.IY ||
       !this.UY ||
       (this.EY || (this.EY = new Map()),
@@ -233,9 +233,9 @@ class PerformanceController {
     if (this.EY) {
       this.PY || (this.PY = new Map()), this.PY.clear();
       for (const i of this.EY.keys()) {
-        const e = this.EY.get(i);
-        const r = e.TickCount === 0 ? 0 : e.Duration / e.TickCount;
-        const o = [];
+        var e = this.EY.get(i),
+          r = 0 === e.TickCount ? 0 : e.Duration / e.TickCount,
+          o = [];
         o.push(["Score", r.toFixed(3)]),
           o.push(["TickCount", e.TickCount.toString()]),
           o.push(["Duration", e.Duration.toFixed(3)]);
@@ -267,8 +267,8 @@ class PerformanceController {
     else {
       if (this.DY) {
         for (const n of this.DY.keys()) {
-          const o = this.DY.get(n);
-          const i = this.UY.get(o[2]);
+          var o = this.DY.get(n),
+            i = this.UY.get(o[2]);
           this.RY(o[3] ? "" + n : n + "." + i, o[2], o[1], o[0]);
         }
         this.DY.clear(), (this.DY = void 0);
@@ -277,7 +277,7 @@ class PerformanceController {
     }
   }
   static RY(t, e, r, o) {
-    let i;
+    var i;
     this.xY &&
       ((i = UE.KismetSystemLibrary.GetFrameCount()) !== this.wY &&
         (this.wY = i),
@@ -318,4 +318,4 @@ class PerformanceController {
   (PerformanceController.DY = void 0),
   (PerformanceController.UY = void 0),
   (PerformanceController.IY = void 0);
-// # sourceMappingURL=PerformanceController.js.map
+//# sourceMappingURL=PerformanceController.js.map

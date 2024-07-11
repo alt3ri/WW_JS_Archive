@@ -10,4 +10,4 @@ class LogicDataSuiGuang extends LogicDataBase_1.default {
   }
 }
 exports.default = LogicDataSuiGuang;
-// # sourceMappingURL=LogicDataSuiGuang.js.map
+//# sourceMappingURL=LogicDataSuiGuang.js.map

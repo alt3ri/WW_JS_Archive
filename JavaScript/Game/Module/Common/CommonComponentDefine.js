@@ -40,4 +40,4 @@ class NurturePropItemData {
 (exports.NurturePropItemData = NurturePropItemData),
   (exports.RATIO = 2),
   (exports.FIXED = 1);
-// # sourceMappingURL=CommonComponentDefine.js.map
+//# sourceMappingURL=CommonComponentDefine.js.map

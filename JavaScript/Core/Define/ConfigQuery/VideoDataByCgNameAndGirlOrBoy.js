@@ -1,26 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configVideoDataByCgNameAndGirlOrBoy = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const VideoData_1 = require("../Config/VideoData");
-const DB = "db_cgvedio.db";
-const FILE = "g.过场cg.xlsx";
-const TABLE = "VideoData";
-const COMMAND =
-  "select BinData from `VideoData` where CgName=? AND GirlOrBoy=?";
-const KEY_PREFIX = "VideoDataByCgNameAndGirlOrBoy";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  VideoData_1 = require("../Config/VideoData"),
+  DB = "db_cgvedio.db",
+  FILE = "g.过场cg.xlsx",
+  TABLE = "VideoData",
+  COMMAND = "select BinData from `VideoData` where CgName=? AND GirlOrBoy=?",
+  KEY_PREFIX = "VideoDataByCgNameAndGirlOrBoy",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configVideoDataByCgNameAndGirlOrBoy.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configVideoDataByCgNameAndGirlOrBoy.GetConfig(";
 exports.configVideoDataByCgNameAndGirlOrBoy = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -42,16 +41,17 @@ exports.configVideoDataByCgNameAndGirlOrBoy = {
         (a =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 2, i, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(
-            handleId,
-            !0,
-            ...logPair,
-            ["CgName", o],
-            ["GirlOrBoy", i],
-          ) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(
+              handleId,
+              !0,
+              ...logPair,
+              ["CgName", o],
+              ["GirlOrBoy", i],
+            ))
       ) {
-        var a;
-        var n = void 0;
+        var a,
+          n = void 0;
         if (
           (([a, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -78,4 +78,4 @@ exports.configVideoDataByCgNameAndGirlOrBoy = {
     }
   },
 };
-// # sourceMappingURL=VideoDataByCgNameAndGirlOrBoy.js.map
+//# sourceMappingURL=VideoDataByCgNameAndGirlOrBoy.js.map

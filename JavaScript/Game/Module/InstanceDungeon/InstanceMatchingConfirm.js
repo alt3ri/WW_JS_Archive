@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceMatchingConfirm = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const InstanceDungeonEntranceController_1 = require("./InstanceDungeonEntranceController");
-const ONE_SECONDS = 1e3;
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  InstanceDungeonEntranceController_1 = require("./InstanceDungeonEntranceController"),
+  ONE_SECONDS = 1e3;
 class InstanceMatchingConfirm extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -33,8 +33,9 @@ class InstanceMatchingConfirm extends UiViewBase_1.UiViewBase {
         }
       }),
       (this.TDe = () => {
-        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() !==
-          2 && void 0 !== this.j3
+        2 !==
+          ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() &&
+        void 0 !== this.j3
           ? (TimerSystem_1.TimerSystem.Remove(this.j3), (this.j3 = void 0))
           : LguiUtil_1.LguiUtil.SetLocalText(
               this.GetText(0),
@@ -129,4 +130,4 @@ class InstanceMatchingConfirm extends UiViewBase_1.UiViewBase {
   }
 }
 exports.InstanceMatchingConfirm = InstanceMatchingConfirm;
-// # sourceMappingURL=InstanceMatchingConfirm.js.map
+//# sourceMappingURL=InstanceMatchingConfirm.js.map

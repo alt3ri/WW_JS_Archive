@@ -1,12 +1,12 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HelpController = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager");
 class HelpController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
@@ -17,9 +17,9 @@ class HelpController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static OpenHelpById(e) {
-    const r =
+    var r =
       ConfigManager_1.ConfigManager.HelpConfig.GetHelpContentInfoByGroupId(e);
-    if (void 0 !== r && r.length !== 0)
+    if (void 0 !== r && 0 !== r.length)
       switch (((this.HelpGroupId = e), r[0].Type)) {
         case 0:
           UiManager_1.UiManager.OpenView(
@@ -48,4 +48,4 @@ class HelpController extends UiControllerBase_1.UiControllerBase {
   (HelpController.uei = (e) => {
     e && (_a.HelpGroupId = void 0);
   });
-// # sourceMappingURL=HelpController.js.map
+//# sourceMappingURL=HelpController.js.map

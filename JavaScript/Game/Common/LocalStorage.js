@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LocalStorage = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const Stats_1 = require("../../Core/Common/Stats");
-const GlobalData_1 = require("../GlobalData");
-const EventDefine_1 = require("./Event/EventDefine");
-const EventSystem_1 = require("./Event/EventSystem");
-const LocalStorageDefine_1 = require("./LocalStorageDefine");
-const DBPATH = "LocalStorage/LocalStorage";
-const DBSUFFIX = ".db";
-const TABLENAME = "LocalStorage";
-const DBNUM = 10;
-const ISUSEDB = !0;
-const USE_THREAD = !0;
-const SQLITE_ERR = -1;
-const SQLITE_NO_DATA = 1;
-const USE_JOURNAL_MODE = 2;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  Stats_1 = require("../../Core/Common/Stats"),
+  GlobalData_1 = require("../GlobalData"),
+  EventDefine_1 = require("./Event/EventDefine"),
+  EventSystem_1 = require("./Event/EventSystem"),
+  LocalStorageDefine_1 = require("./LocalStorageDefine"),
+  DBPATH = "LocalStorage/LocalStorage",
+  DBSUFFIX = ".db",
+  TABLENAME = "LocalStorage",
+  DBNUM = 10,
+  ISUSEDB = !0,
+  USE_THREAD = !0,
+  SQLITE_ERR = -1,
+  SQLITE_NO_DATA = 1,
+  USE_JOURNAL_MODE = 2;
 function getJournalMode(e) {
   switch (e) {
     case 0:
@@ -50,7 +50,7 @@ class LocalStorage {
     e = LocalStorage.gde(e);
     return (
       !!e &&
-      (t == null
+      (null == t
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LocalStorage",
@@ -78,7 +78,7 @@ class LocalStorage {
     e = LocalStorage.Sde(e);
     return (
       !!e &&
-      (t == null
+      (null == t
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LocalStorage",
@@ -96,19 +96,19 @@ class LocalStorage {
     return !!e && LocalStorage.Mde(e);
   }
   static cde() {
-    let e;
+    var e;
     LocalStorage.Ede ||
       ((e = UE.KismetSystemLibrary.GetProjectSavedDirectory()),
       (LocalStorage.Ede = e + DBPATH + DBSUFFIX));
   }
   static mde() {
-    let t = LocalStorage.Ede;
-    let a = UE.KuroSqliteLibrary.OpenCreateDB(t, USE_THREAD);
+    let t = LocalStorage.Ede,
+      a = UE.KuroSqliteLibrary.OpenCreateDB(t, USE_THREAD);
     if (!a) {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("LocalStorage", 31, "打开DB失败！", ["dbFilePath", t]);
       for (let e = 2; e <= DBNUM; e++) {
-        const r = UE.KismetSystemLibrary.GetProjectSavedDirectory();
+        var r = UE.KismetSystemLibrary.GetProjectSavedDirectory();
         if (
           ((t = r + DBPATH + e + DBSUFFIX),
           (a = UE.KuroSqliteLibrary.OpenCreateDB(t, USE_THREAD)))
@@ -133,9 +133,9 @@ class LocalStorage {
     );
   }
   static Ide() {
-    var e = LocalStorage.Ede;
-    const t = `create table if not exists ${TABLENAME}(key text primary key not null , value text not null)`;
-    var e = UE.KuroSqliteLibrary.Execute(e, t);
+    var e = LocalStorage.Ede,
+      t = `create table if not exists ${TABLENAME}(key text primary key not null , value text not null)`,
+      e = UE.KuroSqliteLibrary.Execute(e, t);
     return (
       e ||
         (Log_1.Log.CheckError() &&
@@ -155,17 +155,17 @@ class LocalStorage {
       );
       return [!0, r];
     }
-    var t = LocalStorage.Ede;
-    var e = `SELECT value FROM ${TABLENAME} WHERE key ='${e}'`;
-    const a = (0, puerts_1.$ref)(void 0);
-    var t = UE.KuroSqliteLibrary.QueryValue(t, e, a);
+    var t = LocalStorage.Ede,
+      e = `SELECT value FROM ${TABLENAME} WHERE key ='${e}'`,
+      a = (0, puerts_1.$ref)(void 0),
+      t = UE.KuroSqliteLibrary.QueryValue(t, e, a);
     if (t === SQLITE_ERR) return [!1, void 0];
     if (t === SQLITE_NO_DATA) return [!0, void 0];
     const r = (0, puerts_1.$unref)(a);
     return [!0, r];
   }
   static vde(e, t) {
-    let a, r;
+    var a, r;
     return ISUSEDB
       ? ((a = LocalStorage.Ede),
         (r = `insert into ${TABLENAME} (key,value) values('${e}' , '${t}') on CONFLICT(key) do update set value = '${t}'`),
@@ -183,7 +183,7 @@ class LocalStorage {
         !0);
   }
   static Mde(e) {
-    let t;
+    var t;
     return (
       !ISUSEDB ||
       ((t = LocalStorage.Ede),
@@ -206,22 +206,22 @@ class LocalStorage {
     );
   }
   static gde(e) {
-    if (e == null)
+    if (null == e)
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("LocalStorage", 31, "key值非法", ["key", e]);
     else {
-      const t = LocalStorageDefine_1.ELocalStorageGlobalKey[e];
+      var t = LocalStorageDefine_1.ELocalStorageGlobalKey[e];
       if (t) return t;
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("LocalStorage", 31, "keyName值非法", ["key", e]);
     }
   }
   static Sde(e) {
-    if (e == null)
+    if (null == e)
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("LocalStorage", 31, "key值非法", ["key", e]);
     else {
-      const t = LocalStorageDefine_1.ELocalStoragePlayerKey[e];
+      var t = LocalStorageDefine_1.ELocalStoragePlayerKey[e];
       if (t) {
         if (LocalStorage.j8) return t + "_" + LocalStorage.j8;
         Log_1.Log.CheckError() &&
@@ -306,7 +306,7 @@ class LocalStorage {
     if (Number.isNaN(t)) return "___NaN___";
     if (t === 1 / 0) return "___Infinity___";
     if (t === -1 / 0) return "___-Infinity___";
-    if (t === null) return null;
+    if (null === t) return null;
     switch (typeof t) {
       case "boolean":
         return t ? "___1B___" : "___0B___";
@@ -323,7 +323,7 @@ class LocalStorage {
     }
   }),
   (LocalStorage.Rde = (e, t) => {
-    if (t == null) return t;
+    if (null == t) return t;
     switch (typeof t) {
       case "string":
         switch (t) {
@@ -338,8 +338,8 @@ class LocalStorage {
           default:
             {
               let e = t;
-              if (e === "___1B___") return !0;
-              if (e === "___0B___") return !1;
+              if ("___1B___" === e) return !0;
+              if ("___0B___" === e) return !1;
               if (e.endsWith("___BI___"))
                 return (e = e.replace("___BI___", "")), BigInt(e);
             }
@@ -348,12 +348,12 @@ class LocalStorage {
       case "object":
         var a = t;
         if (a?.___MetaType___) {
-          if (a.___MetaType___ === "___Map___") return new Map(a.Content);
-          if (a.___MetaType___ === "___Set___") return new Set(a.Content);
+          if ("___Map___" === a.___MetaType___) return new Map(a.Content);
+          if ("___Set___" === a.___MetaType___) return new Set(a.Content);
         }
         return t;
       default:
         return t;
     }
   });
-// # sourceMappingURL=LocalStorage.js.map
+//# sourceMappingURL=LocalStorage.js.map

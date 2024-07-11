@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AxisRevert = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const DicStringInt_1 = require("./SubType/DicStringInt");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  DicStringInt_1 = require("./SubType/DicStringInt");
 class AxisRevert {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -33,22 +33,22 @@ class AxisRevert {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   reverttype() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   axisname(t) {
-    const e = this.J7.__offset(this.z7, 8);
+    var e = this.J7.__offset(this.z7, 8);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   GetRevertinfoAt(t, e) {
     return this.revertinfo(t);
   }
   revertinfo(t, e) {
-    const i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 10);
     return i
       ? (e || new DicStringInt_1.DicStringInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
@@ -57,9 +57,9 @@ class AxisRevert {
       : null;
   }
   revertinfoLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.AxisRevert = AxisRevert;
-// # sourceMappingURL=AxisRevert.js.map
+//# sourceMappingURL=AxisRevert.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FragmentMemoryShareView = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../Util/LguiUtil");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../Util/LguiUtil");
 class FragmentMemoryShareView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments), (this.Y6i = void 0);
@@ -40,4 +40,4 @@ class FragmentMemoryShareView extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.FragmentMemoryShareView = FragmentMemoryShareView;
-// # sourceMappingURL=FragmentMemoryShareView.js.map
+//# sourceMappingURL=FragmentMemoryShareView.js.map

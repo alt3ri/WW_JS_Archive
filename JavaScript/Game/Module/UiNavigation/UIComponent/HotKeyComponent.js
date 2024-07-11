@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HotKeyComponent = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const InputSettingsManager_1 = require("../../../InputSettings/InputSettingsManager");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const HotKeyViewDefine_1 = require("../HotKeyViewDefine");
-const IconKeyComponent_1 = require("../KeyComponent/IconKeyComponent");
-const UiNavigationUtil_1 = require("../UiNavigationUtil");
+const Log_1 = require("../../../../Core/Common/Log"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  InputSettingsManager_1 = require("../../../InputSettings/InputSettingsManager"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  HotKeyViewDefine_1 = require("../HotKeyViewDefine"),
+  IconKeyComponent_1 = require("../KeyComponent/IconKeyComponent"),
+  UiNavigationUtil_1 = require("../UiNavigationUtil");
 class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -26,7 +26,7 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
       (this.w9t = void 0),
       (this._bo = void 0),
       (this.c_t = (t) => {
-        const e = this.GetActionName();
+        var e = this.GetActionName();
         StringUtils_1.StringUtils.IsEmpty(e) || e !== t || this.ubo();
       }),
       (this.cbo = !1),
@@ -41,7 +41,7 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
     this.OnInit();
   }
   async OnBeforeStartAsync() {
-    (this.mbo = this.w9t === "LongTimeToTrigger"),
+    (this.mbo = "LongTimeToTrigger" === this.w9t),
       (this.CurComponent = new IconKeyComponent_1.IconKeyComponent()),
       this.CurComponent.SetIsNeedLongPress(this.mbo),
       this.CurComponent.SetKeyName(this.dbo()),
@@ -51,13 +51,13 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
       ));
   }
   dbo() {
-    const t = this.GetHotKeyConfig();
-    return !t || ModelManager_1.ModelManager.PlatformModel.InputController === 2
+    var t = this.GetHotKeyConfig();
+    return !t || 2 === ModelManager_1.ModelManager.PlatformModel.InputController
       ? ""
       : this.uot(t);
   }
   Cbo() {
-    return this.lbo === 0;
+    return 0 === this.lbo;
   }
   gbo(t) {
     t ? this.OnRefreshMode() : this.IsPress && this.ReleaseWithoutCheck(),
@@ -67,26 +67,26 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
     this.fbo(), this.RefreshHotKeyNameText();
   }
   fbo() {
-    let t = this.GetHotKeyConfig();
+    var t = this.GetHotKeyConfig();
     t &&
-      (ModelManager_1.ModelManager.PlatformModel.InputController === 2
+      (2 === ModelManager_1.ModelManager.PlatformModel.InputController
         ? this.CurComponent.SetActive(!1)
         : ((t = this.uot(t)),
           this.CurComponent.RefreshKeyIcon(t),
           this.CurComponent.SetActive(!0)));
   }
   ubo() {
-    let t = this.GetHotKeyConfig();
+    var t = this.GetHotKeyConfig();
     t &&
-      ModelManager_1.ModelManager.PlatformModel.InputController !== 2 &&
+      2 !== ModelManager_1.ModelManager.PlatformModel.InputController &&
       ((t = this.uot(t)), this.CurComponent.RefreshKeyIcon(t));
   }
   GetHotKeyConfig() {
     return this.hbo;
   }
   uot(t) {
-    const e = t.ActionName;
-    var t = t.AxisName;
+    var e = t.ActionName,
+      t = t.AxisName;
     return !StringUtils_1.StringUtils.IsEmpty(e) && this.IsAction
       ? InputSettingsManager_1.InputSettingsManager.GetActionBinding(
           e,
@@ -112,17 +112,17 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
       e ? this.lbo & t && (this.lbo = this.lbo ^ t) : (this.lbo = this.lbo | t);
   }
   RefreshHotKeyNameText() {
-    const t = this.HotKeyTextId ?? this.GetHotKeyConfig().TextId;
+    var t = this.HotKeyTextId ?? this.GetHotKeyConfig().TextId;
     this.CurComponent.RefreshNameText(t);
   }
   OnRefreshSelfHotKeyState(t) {
-    const e = this.GetBindButtonTag();
+    var e = this.GetBindButtonTag();
     StringUtils_1.StringUtils.IsEmpty(e) ||
       ((t = t.GetActiveListenerByTag(e)), this.SetVisibleMode(2, void 0 !== t));
   }
   OnRefreshHotKeyText(t) {}
   OnRefreshHotKeyTextId(t) {
-    let e;
+    var e;
     this.CurComponent.GetIsForceSetText() ||
       ((e = this.GetBindButtonTag()), StringUtils_1.StringUtils.IsEmpty(e)) ||
       ((t = t.GetActiveListenerByTag(e)?.GetTipsTextIdByState()),
@@ -137,23 +137,23 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
     );
   }
   vbo(t = !1) {
-    let e;
-    const i = this.hbo.ApplicableType;
-    i === 0
+    var e,
+      i = this.hbo.ApplicableType;
+    0 === i
       ? this.SetVisibleMode(64, !0, !0)
-      : i === 1
+      : 1 === i
         ? this.SetVisibleMode(
             64,
             ModelManager_1.ModelManager.PlatformModel.IsPc(),
             t,
           )
-        : i === 2
+        : 2 === i
           ? this.SetVisibleMode(
               64,
               ModelManager_1.ModelManager.PlatformModel.IsGamepad(),
               t,
             )
-          : i === 3
+          : 3 === i
             ? ((e = ModelManager_1.ModelManager.PlatformModel.IsPc()),
               this.RootItem.SetAlpha(e ? 0 : 1),
               this.SetVisibleMode(64, !0, t),
@@ -166,7 +166,7 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
                   ["配置id", this.HotKeyMapIndex],
                   ["Tag", this.GetBindButtonTag()],
                 ))
-            : i === 4
+            : 4 === i
               ? ((e = ModelManager_1.ModelManager.PlatformModel.IsGamepad()),
                 this.RootItem.SetAlpha(e ? 0 : 1),
                 this.SetVisibleMode(64, !0, t),
@@ -179,7 +179,7 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
                     ["配置id", this.HotKeyMapIndex],
                     ["Tag", this.GetBindButtonTag()],
                   ))
-              : i === 5 &&
+              : 5 === i &&
                 ((e = ModelManager_1.ModelManager.PlatformModel.IsPc()),
                 (t = ModelManager_1.ModelManager.PlatformModel.IsGamepad()),
                 this.RootItem.SetAlpha(e || t ? 0 : 1),
@@ -195,8 +195,8 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
                 );
   }
   InitHotKeyLogicMode() {
-    const t = ModelManager_1.ModelManager.PlatformModel.InputController;
-    this.SetVisibleMode(16, t !== 2),
+    var t = ModelManager_1.ModelManager.PlatformModel.InputController;
+    this.SetVisibleMode(16, 2 !== t),
       this.SetVisibleMode(2, !1, !0),
       this.vbo();
   }
@@ -221,7 +221,7 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
     );
   }
   SetVisibleMode(t, e, i = !1) {
-    const s = this.lbo;
+    var s = this.lbo;
     this.pbo(t, e),
       (this.lbo === s && !i) ||
         (Log_1.Log.CheckInfo() &&
@@ -249,10 +249,10 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
       : (this.HotKeyTextId = t);
   }
   IsHotKeyActive() {
-    return this.lbo === 0;
+    return 0 === this.lbo;
   }
   IsAllowTickContinue() {
-    return this.lbo === 0 || this.cbo;
+    return 0 === this.lbo || this.cbo;
   }
   RefreshMode() {
     Log_1.Log.CheckInfo() &&
@@ -267,7 +267,7 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
   }
   ReleaseWithoutCheck() {
     this.IsPress = !1;
-    const t = this.GetHotKeyConfig();
+    var t = this.GetHotKeyConfig();
     this.OnRelease(t);
   }
   InputAxis(t, e) {
@@ -289,13 +289,13 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
     return this.hbo?.AxisName;
   }
   IsAxisAllDirection() {
-    return this.hbo?.AxisDirection === 0;
+    return 0 === this.hbo?.AxisDirection;
   }
   IsAxisPositive() {
-    return this.hbo?.AxisDirection !== 1;
+    return 1 !== this.hbo?.AxisDirection;
   }
   IsAxisReverse() {
-    return this.hbo?.AxisDirection !== 2;
+    return 2 !== this.hbo?.AxisDirection;
   }
   SetHotKeyFunctionType(t) {
     this.w9t = t;
@@ -328,4 +328,4 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.HotKeyComponent = HotKeyComponent;
-// # sourceMappingURL=HotKeyComponent.js.map
+//# sourceMappingURL=HotKeyComponent.js.map

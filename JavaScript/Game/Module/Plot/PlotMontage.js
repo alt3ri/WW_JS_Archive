@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotMontage = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterNameDefines_1 = require("../../NewWorld/Character/Common/CharacterNameDefines");
-const MONTAGE_BLEND_OUT_TIME = 0.5;
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterNameDefines_1 = require("../../NewWorld/Character/Common/CharacterNameDefines"),
+  MONTAGE_BLEND_OUT_TIME = 0.5;
 class PlotMontage {
   constructor() {
     (this.tYi = new Map()), (this.iYi = new Map());
   }
   StartPlayMontage(e) {
-    let t;
+    var t;
     e &&
       e.ActionMontage.Path &&
-      e.ActionMontage.Path !== "Empty" &&
+      "Empty" !== e.ActionMontage.Path &&
       (t =
-        e.EntityId === 0
+        0 === e.EntityId
           ? ModelManager_1.ModelManager.PlotModel.CurrentInteractEntity
           : ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
               e.EntityId,
@@ -27,7 +27,7 @@ class PlotMontage {
       this.oYi(t, e.ActionMontage.Path);
   }
   oYi(t, r, a = !1) {
-    let e;
+    var e;
     t &&
       !StringUtils_1.StringUtils.IsEmpty(r) &&
       ((e = this.tYi.get(r))
@@ -44,9 +44,9 @@ class PlotMontage {
           }));
   }
   Fc(e, t, r) {
-    let a;
-    let s;
-    const i = e.Entity.GetComponent(160)?.MainAnimInstance;
+    var a,
+      s,
+      i = e.Entity.GetComponent(160)?.MainAnimInstance;
     ObjectUtils_1.ObjectUtils.IsValid(i) &&
       ((s = this.iYi.get(e)),
       (a =
@@ -80,8 +80,8 @@ class PlotMontage {
       );
   }
   StopAllMontage(e = !0) {
-    for (const [t, r] of this.iYi) {
-      const a = t?.Entity?.GetComponent(160)?.MainAnimInstance;
+    for (var [t, r] of this.iYi) {
+      var a = t?.Entity?.GetComponent(160)?.MainAnimInstance;
       ObjectUtils_1.ObjectUtils.IsValid(a) &&
       ObjectUtils_1.ObjectUtils.IsValid(r) &&
       a.Montage_IsPlaying(r)
@@ -98,4 +98,4 @@ class PlotMontage {
   }
 }
 exports.PlotMontage = PlotMontage;
-// # sourceMappingURL=PlotMontage.js.map
+//# sourceMappingURL=PlotMontage.js.map

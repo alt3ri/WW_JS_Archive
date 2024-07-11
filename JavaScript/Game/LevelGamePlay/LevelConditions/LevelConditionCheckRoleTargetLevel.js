@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckRoleTargetLevel = void 0);
-const RoleController_1 = require("../../Module/RoleUi/RoleController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const RoleController_1 = require("../../Module/RoleUi/RoleController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionCheckRoleTargetLevel extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, l) {
     return (
@@ -13,4 +13,4 @@ class LevelConditionCheckRoleTargetLevel extends LevelGeneralBase_1.LevelConditi
   }
 }
 exports.LevelConditionCheckRoleTargetLevel = LevelConditionCheckRoleTargetLevel;
-// # sourceMappingURL=LevelConditionCheckRoleTargetLevel.js.map
+//# sourceMappingURL=LevelConditionCheckRoleTargetLevel.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MailScrollItemNew = void 0);
-const UE = require("ue");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const DAY_GAP = 7;
+const UE = require("ue"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  DAY_GAP = 7;
 class MailScrollItemNew extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -18,7 +18,7 @@ class MailScrollItemNew extends UiPanelBase_1.UiPanelBase {
       (this.Xy = -1),
       (this.Pe = void 0),
       (this.OnExtendToggleStateChanged = (i) => {
-        i === 1 && this?.Uyi(this.Xy, this.Pe);
+        1 === i && this?.Uyi(this.Xy, this.Pe);
       });
   }
   OnRegisterComponent() {
@@ -43,15 +43,15 @@ class MailScrollItemNew extends UiPanelBase_1.UiPanelBase {
           : this.OnDeselected(!1),
       this.GetText(1).SetText(i.Title),
       this.GetText(3).SetText(i.Sender);
-    let e;
-    var t = TimeUtil_1.TimeUtil.CalculateDayGapBetweenNow(
-      i.Time,
-      i.Time > TimeUtil_1.TimeUtil.GetServerTime(),
-    );
+    var e,
+      t = TimeUtil_1.TimeUtil.CalculateDayGapBetweenNow(
+        i.Time,
+        i.Time > TimeUtil_1.TimeUtil.GetServerTime(),
+      );
     t > DAY_GAP
       ? ((e = TimeUtil_1.TimeUtil.GetDataFromTimeStamp(i.Time)),
         this.GetText(4).SetText(`${e.Year}/${e.Month}/` + e.Day))
-      : t >= 1
+      : 1 <= t
         ? LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(4),
             "Text_FriendOfflineSomeDay_Text",
@@ -62,25 +62,25 @@ class MailScrollItemNew extends UiPanelBase_1.UiPanelBase {
             "Text_Today_Text",
           ),
       this.GetItem(5).SetUIActive(!i.GetWasScanned()),
-      this.GetItem(2).SetUIActive(i.GetMailLevel() === 2),
-      i.GetWasScanned() || i.GetAttachmentStatus() !== 2
-        ? i.GetWasScanned() && i.GetAttachmentStatus() === 2
+      this.GetItem(2).SetUIActive(2 === i.GetMailLevel()),
+      i.GetWasScanned() || 2 !== i.GetAttachmentStatus()
+        ? i.GetWasScanned() && 2 === i.GetAttachmentStatus()
           ? ((e =
               ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
                 "SP_IconRewardA",
               )),
             this.SetSpriteByPath(e, this.GetSprite(0), !1),
             this.GetItem(6).SetAlpha(1))
-          : i.GetWasScanned() && i.GetAttachmentStatus() === 1
+          : i.GetWasScanned() && 1 === i.GetAttachmentStatus()
             ? ((t =
                 ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
                   "SP_IconRewardB",
                 )),
               this.SetSpriteByPath(t, this.GetSprite(0), !1),
               this.GetItem(6).SetAlpha(0.4))
-            : i.GetWasScanned() || i.GetAttachmentStatus() !== 0
+            : i.GetWasScanned() || 0 !== i.GetAttachmentStatus()
               ? i.GetWasScanned() &&
-                i.GetAttachmentStatus() === 0 &&
+                0 === i.GetAttachmentStatus() &&
                 ((e =
                   ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
                     "SP_IconMailB",
@@ -133,4 +133,4 @@ class MailScrollItemNew extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.MailScrollItemNew = MailScrollItemNew;
-// # sourceMappingURL=MailScrollItemNew.js.map
+//# sourceMappingURL=MailScrollItemNew.js.map

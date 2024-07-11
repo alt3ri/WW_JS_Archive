@@ -6,12 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.InsideInterfaceData =
     exports.InterfaceDataUnit =
       void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ItemHintDefines_1 = require("./Data/ItemHintDefines");
-const HIGH_QUALITY = 4;
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ItemHintDefines_1 = require("./Data/ItemHintDefines"),
+  HIGH_QUALITY = 4;
 class InterfaceDataUnit {
   constructor(t) {
     (this.Index = 0),
@@ -22,9 +22,9 @@ class InterfaceDataUnit {
   GetMaxCount() {
     let t = 1;
     return (
-      this.Mode === 0
+      0 === this.Mode
         ? (t = ConfigManager_1.ConfigManager.RewardConfig.GetLowModeCount())
-        : this.Mode === 1 &&
+        : 1 === this.Mode &&
           (t = ConfigManager_1.ConfigManager.RewardConfig.GetFastModeCount()),
       t
     );
@@ -32,10 +32,10 @@ class InterfaceDataUnit {
   GetAddItemTime() {
     let t = 0;
     return (
-      this.Mode === 0
+      0 === this.Mode
         ? (t =
             ConfigManager_1.ConfigManager.RewardConfig.GetLowModeNextAddItemTime())
-        : this.Mode === 1 &&
+        : 1 === this.Mode &&
           (t =
             ConfigManager_1.ConfigManager.RewardConfig.GetFastModeNextAddItemTime()),
       t
@@ -81,7 +81,7 @@ class InsideInterfaceData {
   }
   ShiftFirstUnit() {
     this.FCi
-      ? (this.FCi.WaitList.length > 0 &&
+      ? (0 < this.FCi.WaitList.length &&
           Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "ItemHint",
@@ -95,12 +95,12 @@ class InsideInterfaceData {
         Log_1.Log.Info("ItemHint", 11, "里列表关闭时没有数据可以拿");
   }
   InsertItemRewardInfo(t) {
-    const e = this.KCi();
+    var e = this.KCi();
     for (const s of t) {
-      var r;
-      const i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-        s.Ekn,
-      );
+      var r,
+        i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+          s.Ekn,
+        );
       i &&
         i.ShowInBag &&
         (((r = new ItemHintDefines_1.ItemRewardInfo()).ItemCount = s.I5n),
@@ -111,7 +111,7 @@ class InsideInterfaceData {
     this.WCi();
   }
   WCi() {
-    !this.FCi && this.VCi.length > 0 && (this.FCi = this.VCi[0]);
+    !this.FCi && 0 < this.VCi.length && (this.FCi = this.VCi[0]);
   }
   KCi() {
     for (const t of this.VCi) if (t.Index === this.KZt) return t;
@@ -126,10 +126,10 @@ class MainInterfaceData {
   }
   InsertItemRewardInfo(t) {
     for (const i of t) {
-      var e;
-      const r = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-        i.Ekn,
-      );
+      var e,
+        r = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+          i.Ekn,
+        );
       r &&
         r.ShowInBag &&
         (((e = new ItemHintDefines_1.ItemRewardInfo()).ItemCount = i.I5n),
@@ -176,22 +176,22 @@ class ItemHintModel extends ModelBase_1.ModelBase {
     return this.QCi.Clear(), this.XCi.Clear(), (this.$Ci = new Array()), !0;
   }
   AddItemRewardList(t) {
-    const e = new ItemRewardData();
+    var e = new ItemRewardData();
     (e.ItemReward = t), this.$Ci.push(e);
   }
   AddAchievementItemRewardList(t) {
-    const e = new ItemRewardData();
+    var e = new ItemRewardData();
     (e.ItemReward = t), this.YCi.push(e);
   }
   AddItemRewardTest() {
-    const t = Protocol_1.Aki.Protocol.lts.create();
-    var e = Protocol_1.Aki.Protocol.Zks.create();
-    var e =
-      ((e.I5n = 1),
-      (e.G3n = 21010014),
-      (e.r6n = 3),
-      t.Y5n.push(e),
-      new ItemRewardData());
+    var t = Protocol_1.Aki.Protocol.lts.create(),
+      e = Protocol_1.Aki.Protocol.Zks.create(),
+      e =
+        ((e.I5n = 1),
+        (e.G3n = 21010014),
+        (e.r6n = 3),
+        t.Y5n.push(e),
+        new ItemRewardData());
     (e.ItemReward = t), this.$Ci.push(e);
   }
   ShiftItemRewardListFirst() {
@@ -214,16 +214,16 @@ class ItemHintModel extends ModelBase_1.ModelBase {
   }
   MainInterfaceInsertItemRewardInfo(t) {
     for (const i of t) {
-      var e;
-      const r = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-        i.Ekn,
-      );
+      var e,
+        r = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+          i.Ekn,
+        );
       r &&
         r.ShowInBag &&
         (((e = new ItemHintDefines_1.ItemRewardInfo()).ItemCount = i.I5n),
         (e.ItemId = i.Ekn),
         (e.Quality = r.QualityId),
-        (r.ItemType === 9 || e.Quality >= HIGH_QUALITY
+        (9 === r.ItemType || e.Quality >= HIGH_QUALITY
           ? this.XCi
           : this.QCi
         ).AddItemRewardInfo(e));
@@ -244,4 +244,4 @@ class ItemHintModel extends ModelBase_1.ModelBase {
   }
 }
 exports.ItemHintModel = ItemHintModel;
-// # sourceMappingURL=ItemHintModel.js.map
+//# sourceMappingURL=ItemHintModel.js.map

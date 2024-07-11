@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RedDotController = void 0);
-const ControllerBase_1 = require("../../Core/Framework/ControllerBase");
-const ModelManager_1 = require("../Manager/ModelManager");
+const ControllerBase_1 = require("../../Core/Framework/ControllerBase"),
+  ModelManager_1 = require("../Manager/ModelManager");
 class RedDotController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return !0;
@@ -21,4 +21,4 @@ class RedDotController extends ControllerBase_1.ControllerBase {
   }
 }
 exports.RedDotController = RedDotController;
-// # sourceMappingURL=RedDotController.js.map
+//# sourceMappingURL=RedDotController.js.map

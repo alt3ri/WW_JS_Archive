@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerClimbConfig = void 0);
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const TowerBuffById_1 = require("../../../Core/Define/ConfigQuery/TowerBuffById");
-const TowerConfigById_1 = require("../../../Core/Define/ConfigQuery/TowerConfigById");
-const TowerConfigBySeason_1 = require("../../../Core/Define/ConfigQuery/TowerConfigBySeason");
-const TowerDifficultyByDifficulty_1 = require("../../../Core/Define/ConfigQuery/TowerDifficultyByDifficulty");
-const TowerTargetById_1 = require("../../../Core/Define/ConfigQuery/TowerTargetById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  TowerBuffById_1 = require("../../../Core/Define/ConfigQuery/TowerBuffById"),
+  TowerConfigById_1 = require("../../../Core/Define/ConfigQuery/TowerConfigById"),
+  TowerConfigBySeason_1 = require("../../../Core/Define/ConfigQuery/TowerConfigBySeason"),
+  TowerDifficultyByDifficulty_1 = require("../../../Core/Define/ConfigQuery/TowerDifficultyByDifficulty"),
+  TowerTargetById_1 = require("../../../Core/Define/ConfigQuery/TowerTargetById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class TowerClimbConfig extends ConfigBase_1.ConfigBase {
   GetAreaFloorNumber(e, r, o) {
     let t = 0;
@@ -26,9 +26,9 @@ class TowerClimbConfig extends ConfigBase_1.ConfigBase {
     return o;
   }
   GetDifficultyLastFloor(e, r) {
-    let o = -1;
-    let t = -1;
-    let f = -1;
+    let o = -1,
+      t = -1,
+      f = -1;
     for (const i of TowerConfigBySeason_1.configTowerConfigBySeason.GetConfigList(
       r <= 2 ? 0 : e,
     ))
@@ -38,7 +38,7 @@ class TowerClimbConfig extends ConfigBase_1.ConfigBase {
     return f;
   }
   GetDifficultyAllFloor(e, r) {
-    const o = [];
+    var o = [];
     for (const t of TowerConfigBySeason_1.configTowerConfigBySeason.GetConfigList(
       r <= 2 ? 0 : e,
     ))
@@ -47,7 +47,7 @@ class TowerClimbConfig extends ConfigBase_1.ConfigBase {
   }
   GetDifficultyAllAreaFirstFloor(e, r) {
     let o = -1;
-    const t = [];
+    var t = [];
     for (const f of TowerConfigBySeason_1.configTowerConfigBySeason.GetConfigList(
       r <= 2 ? 0 : e,
     ))
@@ -55,7 +55,7 @@ class TowerClimbConfig extends ConfigBase_1.ConfigBase {
     return t;
   }
   GetDifficultyAreaAllFloor(e, r, o) {
-    const t = [];
+    var t = [];
     for (const f of TowerConfigBySeason_1.configTowerConfigBySeason.GetConfigList(
       r <= 2 ? 0 : e,
     ))
@@ -89,7 +89,7 @@ class TowerClimbConfig extends ConfigBase_1.ConfigBase {
     return TowerTargetById_1.configTowerTargetById.GetConfig(e);
   }
   GetNextFloorInArea(e) {
-    const r = TowerConfigById_1.configTowerConfigById.GetConfig(e);
+    var r = TowerConfigById_1.configTowerConfigById.GetConfig(e);
     for (const o of TowerConfigBySeason_1.configTowerConfigBySeason.GetConfigList(
       r.Season,
     ))
@@ -102,8 +102,8 @@ class TowerClimbConfig extends ConfigBase_1.ConfigBase {
     return 0;
   }
   GetLastFloorInArea(e) {
-    const r = TowerConfigById_1.configTowerConfigById.GetConfig(e);
-    if (r.Floor === 1) return 0;
+    var r = TowerConfigById_1.configTowerConfigById.GetConfig(e);
+    if (1 === r.Floor) return 0;
     let o = 0;
     for (const t of TowerConfigBySeason_1.configTowerConfigBySeason.GetConfigList(
       r.Season,
@@ -151,4 +151,4 @@ class TowerClimbConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.TowerClimbConfig = TowerClimbConfig;
-// # sourceMappingURL=TowerClimbConfig.js.map
+//# sourceMappingURL=TowerClimbConfig.js.map

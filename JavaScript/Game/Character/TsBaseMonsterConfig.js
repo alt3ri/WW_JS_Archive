@@ -5,4 +5,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     MaxDistance: 12e3,
     InSphereRadiusRate: 100,
   });
-// # sourceMappingURL=TsBaseMonsterConfig.js.map
+//# sourceMappingURL=TsBaseMonsterConfig.js.map

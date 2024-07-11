@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CookView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiLayerType_1 = require("../../../Ui/Define/UiLayerType");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const UiManager_1 = require("../../../Ui/UiManager");
-const CommonCountPanel_1 = require("../../Common/CommonCountPanel");
-const UiNavigationView_1 = require("../../UiNavigation/UiNavigationView");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const CookController_1 = require("../CookController");
-const CookModel_1 = require("../CookModel");
-const CookItemView_1 = require("./CookItemView");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiLayerType_1 = require("../../../Ui/Define/UiLayerType"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  CommonCountPanel_1 = require("../../Common/CommonCountPanel"),
+  UiNavigationView_1 = require("../../UiNavigation/UiNavigationView"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  CookController_1 = require("../CookController"),
+  CookModel_1 = require("../CookModel"),
+  CookItemView_1 = require("./CookItemView");
 class CookView extends UiNavigationView_1.UiNavigationView {
   constructor() {
     super(...arguments),
@@ -48,7 +48,7 @@ class CookView extends UiNavigationView_1.UiNavigationView {
       }),
       (this.bl = () => {
         this.GetActive() &&
-          (ModelManager_1.ModelManager.CookModel.CurrentCookListType === 0
+          (0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType
             ? ((this.zke = ModelManager_1.ModelManager.CookModel.GetCookRoleId(
                 this.gIt,
               )),
@@ -81,7 +81,7 @@ class CookView extends UiNavigationView_1.UiNavigationView {
         );
       }),
       (this.dIt = () => {
-        ModelManager_1.ModelManager.CookModel.CurrentCookListType === 0
+        0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType
           ? (ModelManager_1.ModelManager.CookModel.CleanAddExp(),
             CookController_1.CookController.SendCookFoodRequest(
               this.gIt,
@@ -108,7 +108,7 @@ class CookView extends UiNavigationView_1.UiNavigationView {
         this.bl();
       }),
       (this.kNt = () => {
-        let t;
+        var t;
         this.GetActive() &&
           (((t = new CookModel_1.CookRewardPopData()).CookRewardPopType = 2),
           UiManager_1.UiManager.OpenView("CookSuccessView", t));
@@ -198,7 +198,7 @@ class CookView extends UiNavigationView_1.UiNavigationView {
   hke() {
     let t = void 0;
     (t = (
-      ModelManager_1.ModelManager.CookModel.CurrentCookListType === 0
+      0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType
         ? this.UNt
         : this.ANt
     ).Name),
@@ -207,21 +207,21 @@ class CookView extends UiNavigationView_1.UiNavigationView {
   wNt() {
     let t = void 0;
     (t =
-      ModelManager_1.ModelManager.CookModel.CurrentCookListType === 0
+      0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType
         ? this.UNt.FoodItemId
         : this.ANt.FinalItemId),
       this.LNt.SetIcon(t),
       this.LNt.SetQuality(t);
   }
   BNt() {
-    ModelManager_1.ModelManager.CookModel.CurrentCookListType === 0
+    0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType
       ? (this.TNt.SetActive(!0),
         this.TNt.RefreshIcon(this.zke),
         this.TNt.RefreshRedDot(this.zke, this.gIt))
       : this.TNt.SetActive(!1);
   }
   bNt() {
-    const t = ModelManager_1.ModelManager.CookModel.GetCookMaterialList(
+    var t = ModelManager_1.ModelManager.CookModel.GetCookMaterialList(
       this.gIt,
       ModelManager_1.ModelManager.CookModel.CurrentCookListType,
     );
@@ -232,12 +232,12 @@ class CookView extends UiNavigationView_1.UiNavigationView {
       t.RefreshNeed(this.t6);
   }
   rFe() {
-    let t;
-    const e = this.GetButton(3)
-      .GetOwner()
-      .GetComponentByClass(UE.UIInteractionGroup.StaticClass());
-    const i = this.GetButton(6).GetOwner();
-    ModelManager_1.ModelManager.CookModel.CurrentCookListType === 0
+    var t,
+      e = this.GetButton(3)
+        .GetOwner()
+        .GetComponentByClass(UE.UIInteractionGroup.StaticClass()),
+      i = this.GetButton(6).GetOwner();
+    0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType
       ? ((t = CookController_1.CookController.CheckCanCook(this.gIt)),
         e.SetInteractable(t),
         i.GetUIItem().SetUIActive(!t))
@@ -272,7 +272,7 @@ class OpenCookRoleButton extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.FNt]]);
   }
   RefreshIcon(t) {
-    const e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(t);
+    var e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(t);
     this.SetRoleIcon(e.GetRoleConfig().RoleHeadIcon, this.GetTexture(1), t);
   }
   RefreshRedDot(t, e) {
@@ -292,7 +292,7 @@ class AmountItem extends UiPanelBase_1.UiPanelBase {
       (this.jNt = void 0),
       (this.WNt = void 0),
       (this.KNt = (t) => {
-        const e = this.QNt();
+        var e = this.QNt();
         (this.VNt = e < t ? e : t),
           this.VNt < 1 && (this.VNt = 1),
           this.jNt && this.jNt(this.VNt),
@@ -347,7 +347,7 @@ class AmountItem extends UiPanelBase_1.UiPanelBase {
     this.GetButton(1)
       .GetOwner()
       .GetComponentByClass(UE.UIInteractionGroup.StaticClass())
-      .SetInteractable(this.VNt !== 1),
+      .SetInteractable(1 !== this.VNt),
       this.GetButton(0)
         .GetOwner()
         .GetComponentByClass(UE.UIInteractionGroup.StaticClass())
@@ -361,16 +361,16 @@ class AmountItem extends UiPanelBase_1.UiPanelBase {
   }
   QNt() {
     if (this.HNt) {
-      const t = this.HNt();
-      if (t !== 0) return t;
+      var t = this.HNt();
+      if (0 !== t) return t;
     }
     return 1;
   }
   async $Nt() {
     this.WNt || (await this.YNt()), this.WNt.PlayStartSequence(this.VNt);
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.TextConfig.GetTextById("CookInputCount");
     this.WNt.SetTitleText(t);
   }
 }
-// # sourceMappingURL=CookView.js.map
+//# sourceMappingURL=CookView.js.map

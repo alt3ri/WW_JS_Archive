@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleUiRoleData = void 0);
-const UE = require("ue");
-const RoleBattleViewInfoById_1 = require("../../../Core/Define/ConfigQuery/RoleBattleViewInfoById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const EAttributeId = Protocol_1.Aki.Protocol.KBs;
+const UE = require("ue"),
+  RoleBattleViewInfoById_1 = require("../../../Core/Define/ConfigQuery/RoleBattleViewInfoById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager");
+var EAttributeId = Protocol_1.Aki.Protocol.KBs;
 const elementAttributeIds = [
   void 0,
   EAttributeId.Proto_ElementPower1,
@@ -142,7 +142,7 @@ class BattleUiRoleData {
     (this.CreatureRoleId = i?.GetRoleId()),
       (this.RoleConfig = i?.GetRoleConfig()),
       this.RoleConfig &&
-        this.RoleConfig.RoleType === 2 &&
+        2 === this.RoleConfig.RoleType &&
         (this.RoleBattleViewInfo =
           RoleBattleViewInfoById_1.configRoleBattleViewInfoById.GetConfig(
             this.RoleConfig.Id,
@@ -190,7 +190,7 @@ class BattleUiRoleData {
         EventDefine_1.EEventName.CharShieldChange,
         this.ZQe,
       );
-    const t = this.AttributeComponent;
+    var t = this.AttributeComponent;
     t.AddListener(EAttributeId.Proto_Life, this.YKe),
       t.AddListener(EAttributeId.Tkn, this.YKe),
       t.AddListener(EAttributeId.Proto_Lv, this.m2);
@@ -213,7 +213,7 @@ class BattleUiRoleData {
         EventDefine_1.EEventName.CharShieldChange,
         this.ZQe,
       );
-    const t = this.AttributeComponent;
+    var t = this.AttributeComponent;
     t.RemoveListener(EAttributeId.Proto_Life, this.YKe),
       t.RemoveListener(EAttributeId.Tkn, this.YKe),
       t.RemoveListener(EAttributeId.Proto_Lv, this.m2);
@@ -229,10 +229,10 @@ class BattleUiRoleData {
     return elementAttributeIds[this.ElementType ?? 0];
   }
   IsPhantom() {
-    return this.RoleConfig?.RoleType === 2;
+    return 2 === this.RoleConfig?.RoleType;
   }
 }
 (exports.BattleUiRoleData = BattleUiRoleData).HideElementTagList = [
   -1623647531, 666997186, -1987078323, -1751370752, 1522720219, 33752370,
 ];
-// # sourceMappingURL=BattleUiRoleData.js.map
+//# sourceMappingURL=BattleUiRoleData.js.map

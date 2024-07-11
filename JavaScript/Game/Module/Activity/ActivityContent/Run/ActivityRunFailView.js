@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRunFailView = void 0);
-const UE = require("ue");
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const ActivityParkourButton_1 = require("./ActivityParkourButton");
-const ActivityRunController_1 = require("./ActivityRunController");
-const LEAVETIME = 30;
-const FAIL_OUTLINE_COLOR = "63323AFF";
-const TARGET_ICON_PATH =
-  "/Game/Aki/UI/UIResources/Common/Image/IconForceLogo/T_Logo_10_UI.T_Logo_10_UI";
+const UE = require("ue"),
+  CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  ActivityParkourButton_1 = require("./ActivityParkourButton"),
+  ActivityRunController_1 = require("./ActivityRunController"),
+  LEAVETIME = 30,
+  FAIL_OUTLINE_COLOR = "63323AFF",
+  TARGET_ICON_PATH =
+    "/Game/Aki/UI/UIResources/Common/Image/IconForceLogo/T_Logo_10_UI.T_Logo_10_UI";
 class ActivityRunFailView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -61,17 +61,17 @@ class ActivityRunFailView extends UiViewBase_1.UiViewBase {
       this.O2e();
   }
   O2e() {
-    const t = this.GetTexture(2);
+    var t = this.GetTexture(2);
     t.SetColor(UE.Color.FromHex(FAIL_OUTLINE_COLOR)),
       this.SetTextureByPath(TARGET_ICON_PATH, t),
       this.GetText(1).ShowTextNew("GenericPromptTypes_4_GeneralText");
   }
   async G2e() {
     this.GetItem(5)?.SetUIActive(!1);
-    var t = this.k2e(this.GetItem(5), 0, this.q2e);
-    var i = this.k2e(this.GetItem(5), 1, this.b2e);
-    var t = (await Promise.all([t, i]), this.ButtonMap.get(0));
-    var i = this.ButtonMap.get(1);
+    var t = this.k2e(this.GetItem(5), 0, this.q2e),
+      i = this.k2e(this.GetItem(5), 1, this.b2e),
+      t = (await Promise.all([t, i]), this.ButtonMap.get(0)),
+      i = this.ButtonMap.get(1);
     t.SetBtnText("Leave"),
       t.SetFloatText(
         "InstanceDungeonLeftTimeToAutoLeave",
@@ -102,12 +102,12 @@ class ActivityRunFailView extends UiViewBase_1.UiViewBase {
       this.F2e();
   }
   async k2e(t, i, e) {
-    var s = this.GetItem(5);
-    var r = this.GetItem(4);
-    var s = LguiUtil_1.LguiUtil.DuplicateActor(s.GetOwner(), r);
-    var r = new ActivityParkourButton_1.ActivityParkourButton();
+    var s = this.GetItem(5),
+      r = this.GetItem(4),
+      s = LguiUtil_1.LguiUtil.DuplicateActor(s.GetOwner(), r),
+      r = new ActivityParkourButton_1.ActivityParkourButton();
     this.ButtonMap.set(i, r), await r.InitializeAsync(s, e), r.SetActive(!0);
   }
 }
 exports.ActivityRunFailView = ActivityRunFailView;
-// # sourceMappingURL=ActivityRunFailView.js.map
+//# sourceMappingURL=ActivityRunFailView.js.map

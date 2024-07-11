@@ -73,4 +73,4 @@ class Time {
   (Time.P9 = 0),
   (Time.R9 = 1),
   (Time.OriginTimeDilation = 1);
-// # sourceMappingURL=Time.js.map
+//# sourceMappingURL=Time.js.map

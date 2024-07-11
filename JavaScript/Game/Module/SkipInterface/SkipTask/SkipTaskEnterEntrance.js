@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkipTaskEnterEntrance = void 0);
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController");
-const WorldMapController_1 = require("../../WorldMap/WorldMapController");
-const SkipTask_1 = require("./SkipTask");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController"),
+  WorldMapController_1 = require("../../WorldMap/WorldMapController"),
+  SkipTask_1 = require("./SkipTask"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class SkipTaskEnterEntrance extends SkipTask_1.SkipTask {
   OnRun(e, o, a) {
     e = Number(e);
@@ -21,9 +21,9 @@ class SkipTaskEnterEntrance extends SkipTask_1.SkipTask {
               "InstanceTime",
             ),
             this.Finish());
-        let r;
-        var e = Number(o);
-        const n = Number(a);
+        var r,
+          e = Number(o),
+          n = Number(a);
         UiManager_1.UiManager.IsViewShow("WorldMapView") &&
         (r = ModelManager_1.ModelManager.WorldMapModel).CurrentFocalMarkType ===
           e &&
@@ -39,4 +39,4 @@ class SkipTaskEnterEntrance extends SkipTask_1.SkipTask {
   }
 }
 exports.SkipTaskEnterEntrance = SkipTaskEnterEntrance;
-// # sourceMappingURL=SkipTaskEnterEntrance.js.map
+//# sourceMappingURL=SkipTaskEnterEntrance.js.map

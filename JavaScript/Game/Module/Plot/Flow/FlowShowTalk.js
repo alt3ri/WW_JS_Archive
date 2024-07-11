@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowShowTalk = void 0);
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LevelLoadingController_1 = require("../../LevelLoading/LevelLoadingController");
-const PlotController_1 = require("../PlotController");
+const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LevelLoadingController_1 = require("../../LevelLoading/LevelLoadingController"),
+  PlotController_1 = require("../PlotController");
 class FlowShowTalk {
   constructor() {
     (this.CurShowTalk = void 0),
@@ -23,9 +23,9 @@ class FlowShowTalk {
       (this.W4s = !1),
       (this.K4s = !1),
       (this.HXi = () => {
-        let t;
-        let i = this.CurShowTalk.TalkItems[this.CurTalkItemIndex];
-        i.Options && i.Options.length > 0
+        var t,
+          i = this.CurShowTalk.TalkItems[this.CurTalkItemIndex];
+        i.Options && 0 < i.Options.length
           ? ((this.Context.CurOptionId = -1),
             (this.K4s = !0),
             this.Context.IsBackground
@@ -75,7 +75,7 @@ class FlowShowTalk {
       (this.Context = i),
       (this.CurTalkItemIndex = -1),
       (this.B8 = ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel),
-      this.B8 === "LevelC" &&
+      "LevelC" === this.B8 &&
         LevelLoadingController_1.LevelLoadingController.CloseLoading(
           0,
           void 0,
@@ -86,7 +86,7 @@ class FlowShowTalk {
         this.CurShowTalk,
       ),
       (ModelManager_1.ModelManager.PlotModel.CurShowTalk = t),
-      this.B8 === "Prompt" || this.Context.IsBackground
+      "Prompt" === this.B8 || this.Context.IsBackground
         ? this.jXi()
         : ControllerHolder_1.ControllerHolder.PlotController.WaitViewCallback(
             (t) => {
@@ -95,7 +95,7 @@ class FlowShowTalk {
           );
   }
   jXi() {
-    let t;
+    var t;
     this.CurShowTalk
       ? (this.CurTalkItemIndex++,
         !this.CurShowTalk.TalkItems ||
@@ -108,9 +108,9 @@ class FlowShowTalk {
         );
   }
   SwitchTalkItem(i) {
-    const e = this.CurShowTalk.TalkItems.length;
+    var e = this.CurShowTalk.TalkItems.length;
     for (let t = 0; t < e; t++) {
-      const s = this.CurShowTalk.TalkItems[t];
+      var s = this.CurShowTalk.TalkItems[t];
       if (s.Id === i) return (this.CurTalkItemIndex = t), void this.KXi(s);
     }
     this.FinishShowTalk();
@@ -155,7 +155,7 @@ class FlowShowTalk {
   }
   HandleShowTalkItemOption(t, i) {
     this.Context?.CurShowTalk &&
-      this.Context.CurOptionId === -1 &&
+      -1 === this.Context.CurOptionId &&
       this.K4s &&
       ((this.FXi = !0),
       Log_1.Log.CheckInfo() &&
@@ -175,8 +175,8 @@ class FlowShowTalk {
       ));
   }
   Skip() {
-    let t, i;
-    this.CurTalkItemIndex === -1
+    var t, i;
+    -1 === this.CurTalkItemIndex
       ? this.jXi()
       : this.CurTalkItemIndex < this.CurShowTalk.TalkItems.length
         ? this.K4s
@@ -202,7 +202,7 @@ class FlowShowTalk {
         this.CurTalkItemIndex >= this.CurShowTalk.TalkItems.length ||
         ((this.xXi =
           !!this.CurShowTalk.TalkItems[this.CurTalkItemIndex].Options &&
-          this.CurShowTalk.TalkItems[this.CurTalkItemIndex].Options.length > 0),
+          0 < this.CurShowTalk.TalkItems[this.CurTalkItemIndex].Options.length),
         (this.PXi = this.CurShowTalk.TalkItems[this.CurTalkItemIndex].Id));
   }
   Fc() {
@@ -210,10 +210,10 @@ class FlowShowTalk {
       ModelManager_1.ModelManager.PlotModel.HandlePlayMontage(this.IXi.Montage);
   }
   async DPn() {
-    const t = this.IXi?.BackgroundConfig;
-    if (t && this.B8 === "LevelC" && !this.Context.IsBackground) {
+    var t = this.IXi?.BackgroundConfig;
+    if (t && "LevelC" === this.B8 && !this.Context.IsBackground) {
       const s = new CustomPromise_1.CustomPromise();
-      const i = () => {
+      var i = () => {
         s.SetResult();
       };
       switch (t.Type) {
@@ -253,15 +253,15 @@ class FlowShowTalk {
     }
   }
   async APn(t) {
-    this.B8 === "LevelC" &&
+    "LevelC" === this.B8 &&
       (await ModelManager_1.ModelManager.PlotModel.PlotTemplate.HandleTemplateShowTalk(
         t,
       ));
   }
   async UPn() {
-    if (this.B8 === "LevelC" && !this.Context.IsBackground) {
-      const t = new CustomPromise_1.CustomPromise();
-      const i = this.IXi.Type === "CenterText";
+    if ("LevelC" === this.B8 && !this.Context.IsBackground) {
+      const t = new CustomPromise_1.CustomPromise(),
+        i = "CenterText" === this.IXi.Type;
       ControllerHolder_1.ControllerHolder.FlowController.EnableSkip(!1),
         ModelManager_1.ModelManager.PlotModel.CenterTextTransition(i, () => {
           i ||
@@ -273,12 +273,12 @@ class FlowShowTalk {
   }
   RPn() {
     this.Context.IsBackground ||
-      (this.B8 === "Prompt" &&
+      ("Prompt" === this.B8 &&
         ControllerHolder_1.ControllerHolder.PlotController.ShowTipsView(
           this.IXi,
           this.Context.UiParam,
         )) ||
-      (this.B8 === "LevelC" && this.IXi?.Type === "CenterText"
+      ("LevelC" === this.B8 && "CenterText" === this.IXi?.Type
         ? ModelManager_1.ModelManager.PlotModel.ShowTalkCenterText(
             this.IXi,
             this.SubmitSubtitle,
@@ -295,4 +295,4 @@ class FlowShowTalk {
   }
 }
 exports.FlowShowTalk = FlowShowTalk;
-// # sourceMappingURL=FlowShowTalk.js.map
+//# sourceMappingURL=FlowShowTalk.js.map

@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonPropTipsButtonData = exports.CommonPropTipsComponent = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../Core/Actor/ActorSystem");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const GlobalData_1 = require("../../../GlobalData");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiResourceManager_1 = require("../../../Ui/LguiResourceManager");
-const SkipTaskManager_1 = require("../../SkipInterface/SkipTaskManager");
-const GenericLayoutAdd_1 = require("../../Util/GenericLayoutAdd");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const ButtonItem_1 = require("../Button/ButtonItem");
-const LevelSequencePlayer_1 = require("../LevelSequencePlayer");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../Core/Actor/ActorSystem"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiResourceManager_1 = require("../../../Ui/LguiResourceManager"),
+  SkipTaskManager_1 = require("../../SkipInterface/SkipTaskManager"),
+  GenericLayoutAdd_1 = require("../../Util/GenericLayoutAdd"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ButtonItem_1 = require("../Button/ButtonItem"),
+  LevelSequencePlayer_1 = require("../LevelSequencePlayer");
 class CommonPropTipsComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -32,12 +32,12 @@ class CommonPropTipsComponent extends UiPanelBase_1.UiPanelBase {
       }),
       (this.sGe = (t, e, i) => {
         const s = t;
-        var t = new ButtonItem_1.ButtonItem(e);
-        var e = ConfigManager_1.ConfigManager.GetWayConfig.GetConfigById(s);
+        var t = new ButtonItem_1.ButtonItem(e),
+          e = ConfigManager_1.ConfigManager.GetWayConfig.GetConfigById(s);
         return (
           e &&
             (t.SetData(s),
-            t.SetEnableClick(e.Type === 2),
+            t.SetEnableClick(2 === e.Type),
             t.SetFunction((t) => {
               SkipTaskManager_1.SkipTaskManager.RunByConfigId(s);
             }),
@@ -84,9 +84,9 @@ class CommonPropTipsComponent extends UiPanelBase_1.UiPanelBase {
       this.YBt(!1),
       this.SetBottomState(!1, !1),
       (this.OneButtonItem = new ButtonItem_1.ButtonItem(this.GetItem(8)));
-    const i = this.GetItem(7).GetAttachUIChildren();
+    var i = this.GetItem(7).GetAttachUIChildren();
     for (let t = 0, e = i.Num(); t < e; ++t) {
-      const s = new ButtonItem_1.ButtonItem(i.Get(t));
+      var s = new ButtonItem_1.ButtonItem(i.Get(t));
       this.DoubleButtonItemList.push(s);
     }
     this.SetOwnTextState(!1);
@@ -141,11 +141,11 @@ class CommonPropTipsComponent extends UiPanelBase_1.UiPanelBase {
   }
   UpdateComponent(t, e = !1) {
     this.ConfigId = t;
-    var t = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t);
-    const i =
-      (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), t.Name),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), t.TypeDescription),
-      this.GetText(3));
+    var t = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t),
+      i =
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), t.Name),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), t.TypeDescription),
+        this.GetText(3));
     t.AttributesDescription
       ? (i.SetUIActive(!0),
         LguiUtil_1.LguiUtil.SetLocalTextNew(i, t.AttributesDescription))
@@ -159,13 +159,13 @@ class CommonPropTipsComponent extends UiPanelBase_1.UiPanelBase {
         "TipsSprite",
       ),
       this.LoadDebugText(),
-      e && (this.GetWayLayout.ClearChildren(), t.ItemAccess.length > 0)
+      e && (this.GetWayLayout.ClearChildren(), 0 < t.ItemAccess.length)
         ? (this.JBt(t.ItemAccess), this.YBt(!0))
         : this.YBt(!1);
   }
   SetBottomState(t, e) {
-    let i;
-    const s = this.GetItem(6);
+    var i,
+      s = this.GetItem(6);
     t
       ? (s.SetUIActive(!0),
         (t = this.GetItem(8)),
@@ -175,7 +175,7 @@ class CommonPropTipsComponent extends UiPanelBase_1.UiPanelBase {
       : s.SetUIActive(!1);
   }
   SetOwnTextState(t) {
-    const e = this.GetText(14);
+    var e = this.GetText(14);
     t
       ? ((t = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
           this.ConfigId,
@@ -215,4 +215,4 @@ class CommonPropTipsButtonData {
   }
 }
 exports.CommonPropTipsButtonData = CommonPropTipsButtonData;
-// # sourceMappingURL=CommonPropTipsComponent.js.map
+//# sourceMappingURL=CommonPropTipsComponent.js.map

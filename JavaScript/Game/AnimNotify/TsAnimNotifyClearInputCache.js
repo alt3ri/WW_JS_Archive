@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyClearInputCache extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.InputAction = 0), (this.InputState = 0);
@@ -20,4 +20,4 @@ class TsAnimNotifyClearInputCache extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifyClearInputCache;
-// # sourceMappingURL=TsAnimNotifyClearInputCache.js.map
+//# sourceMappingURL=TsAnimNotifyClearInputCache.js.map

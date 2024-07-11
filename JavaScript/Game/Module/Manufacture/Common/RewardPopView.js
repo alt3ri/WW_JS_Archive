@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RewardPopView = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
-const CommonManager_1 = require("./CommonManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  CommonManager_1 = require("./CommonManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class RewardPopView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -63,22 +63,22 @@ class RewardPopView extends UiViewBase_1.UiViewBase {
       ]);
   }
   OnStart() {
-    var e = this.OpenParam;
-    var e =
-      ((this.S9 = e.RewardPopType),
-      (this.Kyi = new GenericScrollView_1.GenericScrollView(
-        this.GetScrollViewWithScrollbar(1),
-        this.InitCommonPopItem,
-      )),
-      this.GetItem(2).SetUIActive(this.S9 === 0 || this.S9 === 3),
-      this.GetItem(4).SetUIActive(this.S9 === 0),
-      this.S9 === 1 || CommonManager_1.CommonManager.CheckCanShowExpItem());
+    var e = this.OpenParam,
+      e =
+        ((this.S9 = e.RewardPopType),
+        (this.Kyi = new GenericScrollView_1.GenericScrollView(
+          this.GetScrollViewWithScrollbar(1),
+          this.InitCommonPopItem,
+        )),
+        this.GetItem(2).SetUIActive(0 === this.S9 || 3 === this.S9),
+        this.GetItem(4).SetUIActive(0 === this.S9),
+        1 === this.S9 || CommonManager_1.CommonManager.CheckCanShowExpItem());
     this.GetItem(7).SetUIActive(e),
       e && (this.Yqt = new ExpItem(this.GetItem(7))),
       this.GetButton(8)
         .GetOwner()
         .GetUIItem()
-        .SetUIActive(this.S9 !== 0);
+        .SetUIActive(0 !== this.S9);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -133,12 +133,12 @@ class RewardPopView extends UiViewBase_1.UiViewBase {
     }
   }
   tGt() {
-    if (this.S9 === 0) {
-      const e = new Array();
+    if (0 === this.S9) {
+      var e = new Array();
       for (const i of ConfigManager_1.ConfigManager.CookConfig.GetCookFixToolById(
         CommonManager_1.CommonManager.GetCurrentFixId(),
       ).Items) {
-        const t =
+        var t =
           ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
             i[0],
           );
@@ -149,18 +149,18 @@ class RewardPopView extends UiViewBase_1.UiViewBase {
       this.Kyi.RefreshByData(CommonManager_1.CommonManager.GetCommonItemList());
   }
   iGt() {
-    if (this.S9 === 0) {
-      const i = ConfigManager_1.ConfigManager.CookConfig.GetCookFixToolById(
-        CommonManager_1.CommonManager.GetCurrentFixId(),
-      );
-      const s = ConfigManager_1.ConfigManager.CookConfig.GetLocalText(
-        i.Description,
-      );
-      let e = 0;
-      let t = "";
+    if (0 === this.S9) {
+      var i = ConfigManager_1.ConfigManager.CookConfig.GetCookFixToolById(
+          CommonManager_1.CommonManager.GetCurrentFixId(),
+        ),
+        s = ConfigManager_1.ConfigManager.CookConfig.GetLocalText(
+          i.Description,
+        );
+      let e = 0,
+        t = "";
       for (const a of i.Items) {
         e = a[1];
-        const r = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(a[0]);
+        var r = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(a[0]);
         t = ConfigManager_1.ConfigManager.CookConfig.GetLocalText(r.Name);
       }
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(3), "FixText", e, t, s);
@@ -168,10 +168,10 @@ class RewardPopView extends UiViewBase_1.UiViewBase {
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(3), "MaciningStudyFail");
   }
   rGt() {
-    const e = CommonManager_1.CommonManager.GetSumExpByLevel(
-      CommonManager_1.CommonManager.GetCurrentRewardLevel(),
-    );
-    const t = CommonManager_1.CommonManager.GetCurrentRewardTotalProficiency();
+    var e = CommonManager_1.CommonManager.GetSumExpByLevel(
+        CommonManager_1.CommonManager.GetCurrentRewardLevel(),
+      ),
+      t = CommonManager_1.CommonManager.GetCurrentRewardTotalProficiency();
     this.Yqt.SetExpSprite(t, e),
       this.Yqt.SetAddText(
         CommonManager_1.CommonManager.GetCurrentRewardAddExp(),
@@ -180,10 +180,10 @@ class RewardPopView extends UiViewBase_1.UiViewBase {
       this.Yqt.SetSumText(e);
   }
   oGt() {
-    const e = this.GetButton(6)
-      .GetOwner()
-      .GetComponentByClass(UE.UIInteractionGroup.StaticClass());
-    const t = CommonManager_1.CommonManager.CheckCanFix();
+    var e = this.GetButton(6)
+        .GetOwner()
+        .GetComponentByClass(UE.UIInteractionGroup.StaticClass()),
+      t = CommonManager_1.CommonManager.CheckCanFix();
     e.SetInteractable(t),
       this.GetButton(9).GetOwner().GetUIItem().SetUIActive(!t);
   }
@@ -248,7 +248,7 @@ class ExpItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   SetExpSprite(e, t) {
-    e = (e = MathUtils_1.MathUtils.GetFloatPointFloor(e / t, 3)) > 1 ? 1 : e;
+    e = 1 < (e = MathUtils_1.MathUtils.GetFloatPointFloor(e / t, 3)) ? 1 : e;
     this.GetSprite(0).SetFillAmount(e);
   }
   SetAddText(e) {
@@ -261,4 +261,4 @@ class ExpItem extends UiPanelBase_1.UiPanelBase {
     this.GetText(3).SetText(e.toString());
   }
 }
-// # sourceMappingURL=RewardPopView.js.map
+//# sourceMappingURL=RewardPopView.js.map

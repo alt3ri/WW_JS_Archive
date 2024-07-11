@@ -1,5 +1,5 @@
 "use strict";
-let EFingerIndex, EFingerExpandCloseType;
+var EFingerIndex, EFingerExpandCloseType;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FINGER_TOUCHDEAD_ZONE =
     exports.EFingerExpandCloseType =
@@ -27,4 +27,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       exports.EFingerExpandCloseType || (exports.EFingerExpandCloseType = {})),
   ),
   (exports.FINGER_TOUCHDEAD_ZONE = 0.001);
-// # sourceMappingURL=TouchFingerDefine.js.map
+//# sourceMappingURL=TouchFingerDefine.js.map

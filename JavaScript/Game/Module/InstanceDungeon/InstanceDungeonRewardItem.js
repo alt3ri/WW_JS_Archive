@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonRewardItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const CommonItemSmallItemGrid_1 = require("../Common/ItemGrid/CommonItemSmallItemGrid");
-const GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract");
-const GenericLayout_1 = require("../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../Util/LguiUtil");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  CommonItemSmallItemGrid_1 = require("../Common/ItemGrid/CommonItemSmallItemGrid"),
+  GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../Util/LguiUtil");
 class InstanceDungeonRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -30,11 +30,12 @@ class InstanceDungeonRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
     );
   }
   Refresh(e, t, r) {
-    const i =
-      ConfigManager_1.ConfigManager.AdventureModuleConfig.GetDropShowInfo(e[1]);
-    const n = new Array();
+    var i = ConfigManager_1.ConfigManager.AdventureModuleConfig.GetDropShowInfo(
+        e[1],
+      ),
+      n = new Array();
     for (const s of i.keys()) {
-      const o = [{ IncId: 0, ItemId: s }, i.get(s)];
+      var o = [{ IncId: 0, ItemId: s }, i.get(s)];
       n.push(o);
     }
     this.eGe.RefreshByData(n),
@@ -50,4 +51,4 @@ class InstanceDungeonRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.InstanceDungeonRewardItem = InstanceDungeonRewardItem;
-// # sourceMappingURL=InstanceDungeonRewardItem.js.map
+//# sourceMappingURL=InstanceDungeonRewardItem.js.map

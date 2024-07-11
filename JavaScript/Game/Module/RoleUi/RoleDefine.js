@@ -51,4 +51,4 @@ class SkillEffect {}
   (exports.UI_SCENE_ROLE_TAG = new UE.FName("TsUiSceneRoleActor")),
   (exports.UI_SKELETAL_OBSERVER_TAG = new UE.FName("TsSkeletalObserver")),
   (exports.UI_CAMERA_TAG = new UE.FName("UICineCamera"));
-// # sourceMappingURL=RoleDefine.js.map
+//# sourceMappingURL=RoleDefine.js.map

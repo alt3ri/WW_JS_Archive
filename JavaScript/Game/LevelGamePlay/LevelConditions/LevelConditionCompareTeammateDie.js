@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCompareTeammateDie = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionCompareTeammateDie extends LevelGeneralBase_1.LevelConditionBase {
   CheckNew(e) {
     if (!e) return !1;
-    const r = e;
+    var r = e;
     let a = 0;
     for (const t of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems())
       t.IsDead() && a++;
@@ -29,4 +29,4 @@ class LevelConditionCompareTeammateDie extends LevelGeneralBase_1.LevelCondition
   }
 }
 exports.LevelConditionCompareTeammateDie = LevelConditionCompareTeammateDie;
-// # sourceMappingURL=LevelConditionCompareTeammateDie.js.map
+//# sourceMappingURL=LevelConditionCompareTeammateDie.js.map

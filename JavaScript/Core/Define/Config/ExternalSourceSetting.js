@@ -24,17 +24,17 @@ class ExternalSourceSetting {
     );
   }
   id(t) {
-    const e = this.J7.__offset(this.z7, 4);
+    var e = this.J7.__offset(this.z7, 4);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   audioeventpath(t) {
-    const e = this.J7.__offset(this.z7, 6);
+    var e = this.J7.__offset(this.z7, 6);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   externalsrcname(t) {
-    const e = this.J7.__offset(this.z7, 8);
+    var e = this.J7.__offset(this.z7, 8);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
 }
 exports.ExternalSourceSetting = ExternalSourceSetting;
-// # sourceMappingURL=ExternalSourceSetting.js.map
+//# sourceMappingURL=ExternalSourceSetting.js.map

@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const PerformanceController_1 = require("../../../../Core/Performance/PerformanceController");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const Global_1 = require("../../../Global");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsAiController_1 = require("../../Controller/TsAiController");
+const UE = require("ue"),
+  PerformanceController_1 = require("../../../../Core/Performance/PerformanceController"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  Global_1 = require("../../../Global"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsAiController_1 = require("../../Controller/TsAiController");
 class TsServiceAnimalPerception extends UE.BTService_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -21,7 +21,7 @@ class TsServiceAnimalPerception extends UE.BTService_BlueprintBase {
       (this.IsSetNearerPlayerId = !1);
   }
   InitTsVariables() {
-    let e, r;
+    var e, r;
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((e = this.SenseRadius.LowerBound.Value),
       (r = this.SenseRadius.UpperBound.Value),
@@ -41,9 +41,9 @@ class TsServiceAnimalPerception extends UE.BTService_BlueprintBase {
       ((e = e.CharActorComp), this.HandlePerception(e));
   }
   HandlePerception(r) {
-    const t = r.Entity;
-    let i = void 0;
-    let o = MathUtils_1.MathUtils.MaxFloat;
+    var t = r.Entity;
+    let i = void 0,
+      o = MathUtils_1.MathUtils.MaxFloat;
     if (ModelManager_1.ModelManager.GameModeModel.IsMulti) {
       var l = this.GetMinPlayerDistSquared(r.ActorLocationProxy);
       (i = l.PlayerEntity), (o = l.MinDistSquared);
@@ -73,7 +73,7 @@ class TsServiceAnimalPerception extends UE.BTService_BlueprintBase {
         : r > this.MinRangeSquared
           ? (e = this.IsEnter ? l : 0)
           : ((e = l), this.IsEnter || (this.IsEnter = !0)),
-        e === 0
+        0 === e
           ? this.IsSetNearerPlayerId &&
             ((this.IsSetNearerPlayerId = !1),
             BlackboardController_1.BlackboardController.RemoveValueByEntity(
@@ -97,16 +97,13 @@ class TsServiceAnimalPerception extends UE.BTService_BlueprintBase {
         ));
   }
   GetMinPlayerDistSquared(e) {
-    const r = ModelManager_1.ModelManager.CreatureModel.ScenePlayerDataMap;
-    const t = ModelManager_1.ModelManager.SceneTeamModel;
-    let i = void 0;
-    let o = MathUtils_1.MathUtils.MaxFloat;
+    var r = ModelManager_1.ModelManager.CreatureModel.ScenePlayerDataMap,
+      t = ModelManager_1.ModelManager.SceneTeamModel;
+    let i = void 0,
+      o = MathUtils_1.MathUtils.MaxFloat;
     for (const s of r) {
-      var l;
-      const a = t.GetTeamItem(s[0], {
-        ParamType: 2,
-        IsControl: !0,
-      })?.EntityHandle;
+      var l,
+        a = t.GetTeamItem(s[0], { ParamType: 2, IsControl: !0 })?.EntityHandle;
       a &&
         (a.Entity.GetComponent(3).ActorLocationProxy.Subtraction(
           e,
@@ -119,4 +116,4 @@ class TsServiceAnimalPerception extends UE.BTService_BlueprintBase {
   }
 }
 exports.default = TsServiceAnimalPerception;
-// # sourceMappingURL=TsServiceAnimalPerception.js.map
+//# sourceMappingURL=TsServiceAnimalPerception.js.map

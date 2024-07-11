@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulableCastState = void 0);
-const UE = require("ue");
-const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil");
-const MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent");
-const LevelGamePlayController_1 = require("../../../LevelGamePlay/LevelGamePlayController");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const SceneItemManipulableBaseState_1 = require("./SceneItemManipulableBaseState");
+const UE = require("ue"),
+  FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
+  LevelGamePlayController_1 = require("../../../LevelGamePlay/LevelGamePlayController"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  SceneItemManipulableBaseState_1 = require("./SceneItemManipulableBaseState");
 class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.SceneItemManipulableBaseState {
   constructor(t, i) {
     super(t),
@@ -72,12 +72,12 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
       (this.NeedResetPhysicsMode = !0);
   }
   StartCast() {
-    const t = Vector_1.Vector.Dist(
+    var t = Vector_1.Vector.Dist(
       this.SceneItem.ActorComp.ActorLocationProxy,
       this.SceneItem.TargetActorComponent.ActorLocationProxy,
     );
     let i = 1;
-    const e = this.SceneItem.Config.ThrowCfg.MotionConfig;
+    var e = this.SceneItem.Config.ThrowCfg.MotionConfig;
     e.Type === IComponent_1.EThrowMotion.Projectile && (i = e.Velocity),
       (this.CastDuration = t / i),
       (this.CastRotAxis = Vector_1.Vector.Create(
@@ -93,17 +93,17 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
   }
   CalcDirection() {
     this.SceneItem.CalcCastTargetPoint();
-    var t = Vector_1.Vector.Create(this.SceneItem.CastTargetLocation);
-    var t =
-      (t.SubtractionEqual(this.StartLoc),
-      this.SceneItem.ManipulateBaseConfig.投掷运动轨迹曲线?.IsValid() &&
-        (this.IsUsePath =
-          t.Size() >
-          ConfigManager_1.ConfigManager.ManipulateConfig.DontUseLineDistance),
-      (this.PathScaleFactor = t.Size()),
-      t.Normalize(),
-      (this.CastDirection = Vector_1.Vector.Create(t)),
-      Vector_1.Vector.Create());
+    var t = Vector_1.Vector.Create(this.SceneItem.CastTargetLocation),
+      t =
+        (t.SubtractionEqual(this.StartLoc),
+        this.SceneItem.ManipulateBaseConfig.投掷运动轨迹曲线?.IsValid() &&
+          (this.IsUsePath =
+            t.Size() >
+            ConfigManager_1.ConfigManager.ManipulateConfig.DontUseLineDistance),
+        (this.PathScaleFactor = t.Size()),
+        t.Normalize(),
+        (this.CastDirection = Vector_1.Vector.Create(t)),
+        Vector_1.Vector.Create());
     this.CastDirection.CrossProduct(Vector_1.Vector.UpVectorProxy, t),
       t.CrossProduct(this.CastDirection, this.zrr),
       this.zrr.Normalize(),
@@ -111,7 +111,7 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
       this.Jrr.Normalize();
   }
   UpdateRotationAccordingToVelocity() {
-    let t;
+    var t;
     this.SceneItem.ManipulateBaseConfig.随速度调整朝向 &&
       !this.AfterHit &&
       ((t =
@@ -129,7 +129,7 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
       ));
   }
   UpdateLocation(t) {
-    let i, e, s, h, a;
+    var i, e, s, h, a;
     this.SceneItem.PlayingMatchSequence ||
       ((i = Vector_1.Vector.Create()),
       this.IsUsePath
@@ -161,4 +161,4 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
   }
 }
 exports.SceneItemManipulableCastState = SceneItemManipulableCastState;
-// # sourceMappingURL=SceneItemManipulableCastState.js.map
+//# sourceMappingURL=SceneItemManipulableCastState.js.map

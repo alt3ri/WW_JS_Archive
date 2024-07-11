@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TimeTrackControlPoint = void 0);
-const UE = require("ue");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const LevelSequencePlayer_1 = require("../../Module/Common/LevelSequencePlayer");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const SHOW = "Show";
-const HIDE = "Hide";
+const UE = require("ue"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  LevelSequencePlayer_1 = require("../../Module/Common/LevelSequencePlayer"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  SHOW = "Show",
+  HIDE = "Hide";
 class TimeTrackControlPoint extends UiPanelBase_1.UiPanelBase {
   constructor(e, t, s) {
     super(),
@@ -54,4 +54,4 @@ class TimeTrackControlPoint extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.TimeTrackControlPoint = TimeTrackControlPoint;
-// # sourceMappingURL=TimeTrackControlPoint.js.map
+//# sourceMappingURL=TimeTrackControlPoint.js.map

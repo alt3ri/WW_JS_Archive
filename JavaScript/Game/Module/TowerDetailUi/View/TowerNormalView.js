@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerNormalView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../RedDot/RedDotController");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const TowerController_1 = require("../TowerController");
-const TowerData_1 = require("../TowerData");
-const TowerAreaItem_1 = require("./TowerAreaItem");
-const TowerTitleItem_1 = require("./TowerTitleItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../RedDot/RedDotController"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  TowerController_1 = require("../TowerController"),
+  TowerData_1 = require("../TowerData"),
+  TowerAreaItem_1 = require("./TowerAreaItem"),
+  TowerTitleItem_1 = require("./TowerTitleItem");
 class TowerNormalView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -32,7 +32,7 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
         return new TowerAreaItem_1.TowerAreaItem();
       }),
       (this.YLo = (e) => {
-        e === 1 &&
+        1 === e &&
           (this.EPe.StopCurrentSequence(),
           this.EPe.PlaySequencePurely("Switch"),
           (this.XLo = !0),
@@ -40,7 +40,7 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
           this.JLo(TowerData_1.LOW_RISK_DIFFICULTY));
       }),
       (this.zLo = (e) => {
-        e === 1 &&
+        1 === e &&
           (this.EPe.StopCurrentSequence(),
           this.EPe.PlaySequencePurely("Switch"),
           (this.XLo = !1),
@@ -48,9 +48,10 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
           this.JLo(TowerData_1.HIGH_RISK_DIFFICULTY));
       }),
       (this.ZLo = () => {
-        ModelManager_1.ModelManager.TowerModel?.GetDifficultyRewardProgress(
-          ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties,
-        ) === 1 &&
+        1 ===
+          ModelManager_1.ModelManager.TowerModel?.GetDifficultyRewardProgress(
+            ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties,
+          ) &&
           ControllerHolder_1.ControllerHolder.ScrollingTipsController.ShowTipsById(
             "HaveAllReward",
           ),
@@ -70,12 +71,12 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
         );
       }),
       (this.iDo = () => {
-        const e =
+        var e =
           ModelManager_1.ModelManager.TowerModel?.GetDifficultyRewardProgress(
             ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties,
           );
         this.GetSprite(9)?.SetFillAmount(e),
-          e === 1
+          1 === e
             ? (this.GetItem(15)?.SetUIActive(!0),
               this.GetItem(16)?.SetUIActive(!0))
             : (this.GetItem(15)?.SetUIActive(!1),
@@ -151,7 +152,7 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
         ),
       ),
       (this.uTt = new TowerTitleItem_1.TowerTitleItem(this.GetItem(0), () => {
-        let e;
+        var e;
         ModelManager_1.ModelManager.TowerModel.CheckInTower()
           ? ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
               137,
@@ -261,4 +262,4 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.TowerNormalView = TowerNormalView;
-// # sourceMappingURL=TowerNormalView.js.map
+//# sourceMappingURL=TowerNormalView.js.map

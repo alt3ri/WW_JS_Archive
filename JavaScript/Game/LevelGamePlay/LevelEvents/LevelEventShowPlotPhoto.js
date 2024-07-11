@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventShowPlotPhoto = void 0);
-const TsInteractionUtils_1 = require("../../Module/Interaction/TsInteractionUtils");
-const PhotographController_1 = require("../../Module/Photograph/PhotographController");
-const UiManager_1 = require("../../Ui/UiManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const TsInteractionUtils_1 = require("../../Module/Interaction/TsInteractionUtils"),
+  PhotographController_1 = require("../../Module/Photograph/PhotographController"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventShowPlotPhoto extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, o) {
     e &&
@@ -18,4 +18,4 @@ class LevelEventShowPlotPhoto extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventShowPlotPhoto = LevelEventShowPlotPhoto;
-// # sourceMappingURL=LevelEventShowPlotPhoto.js.map
+//# sourceMappingURL=LevelEventShowPlotPhoto.js.map

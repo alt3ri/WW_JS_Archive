@@ -1,35 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleView = void 0);
-const UE = require("ue");
-const AudioController_1 = require("../../../../Core/Audio/AudioController");
-const AudioDefine_1 = require("../../../../Core/Audio/AudioDefine");
-const Info_1 = require("../../../../Core/Common/Info");
-const Log_1 = require("../../../../Core/Common/Log");
-const Stats_1 = require("../../../../Core/Common/Stats");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const OnlineInstanceDungeonDeathPanel_1 = require("../../Online/View/OnlineInstanceDungeonDeathPanel");
-const BottomPanel_1 = require("./BattleChildViewPanel/BottomPanel");
-const CenterPanel_1 = require("./BattleChildViewPanel/CenterPanel");
-const ChatPanel_1 = require("./BattleChildViewPanel/ChatPanel");
-const FormationPanel_1 = require("./BattleChildViewPanel/FormationPanel");
-const GamepadSkillButtonPanel_1 = require("./BattleChildViewPanel/GamepadSkillButtonPanel");
-const MissionPanel_1 = require("./BattleChildViewPanel/MissionPanel");
-const PositionPanel_1 = require("./BattleChildViewPanel/PositionPanel");
-const SkillButtonPanel_1 = require("./BattleChildViewPanel/SkillButtonPanel");
-const TopPanel_1 = require("./BattleChildViewPanel/TopPanel");
-const BossStatePanel_1 = require("./BossState/BossStatePanel");
-const FullScreenPanel_1 = require("./FullScreenPanel");
-const BattleHeadStatePanel_1 = require("./HeadState/BattleHeadStatePanel");
-const PartStatePanel_1 = require("./PartStatePanel");
-const CHECK_DESTROY_TIME = 5e3;
-const battleUiChildren = [0, 14, 15, 16, 17, 18, 19, 20];
+const UE = require("ue"),
+  AudioController_1 = require("../../../../Core/Audio/AudioController"),
+  AudioDefine_1 = require("../../../../Core/Audio/AudioDefine"),
+  Info_1 = require("../../../../Core/Common/Info"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  OnlineInstanceDungeonDeathPanel_1 = require("../../Online/View/OnlineInstanceDungeonDeathPanel"),
+  BottomPanel_1 = require("./BattleChildViewPanel/BottomPanel"),
+  CenterPanel_1 = require("./BattleChildViewPanel/CenterPanel"),
+  ChatPanel_1 = require("./BattleChildViewPanel/ChatPanel"),
+  FormationPanel_1 = require("./BattleChildViewPanel/FormationPanel"),
+  GamepadSkillButtonPanel_1 = require("./BattleChildViewPanel/GamepadSkillButtonPanel"),
+  MissionPanel_1 = require("./BattleChildViewPanel/MissionPanel"),
+  PositionPanel_1 = require("./BattleChildViewPanel/PositionPanel"),
+  SkillButtonPanel_1 = require("./BattleChildViewPanel/SkillButtonPanel"),
+  TopPanel_1 = require("./BattleChildViewPanel/TopPanel"),
+  BossStatePanel_1 = require("./BossState/BossStatePanel"),
+  FullScreenPanel_1 = require("./FullScreenPanel"),
+  BattleHeadStatePanel_1 = require("./HeadState/BattleHeadStatePanel"),
+  PartStatePanel_1 = require("./PartStatePanel"),
+  CHECK_DESTROY_TIME = 5e3,
+  battleUiChildren = [0, 14, 15, 16, 17, 18, 19, 20];
 class BattleView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -49,8 +49,8 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
         this.Lit.RefreshCurrentRole();
       }),
       (this.Oit = () => {
-        const e = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
-        e?.RoleConfig && this.kit(e.RoleConfig.RoleType === 2);
+        var e = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
+        e?.RoleConfig && this.kit(2 === e.RoleConfig.RoleType);
       }),
       (this.o7e = () => {
         this.Lit.RefreshCurrentRole();
@@ -69,10 +69,10 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
           this.Dit.DestroyPartStateFromRole(t.Entity));
       }),
       (this.UYe = (e) => {
-        const t = this.Vit(6).GetRootItem();
-        var i = this.Vit(7).GetRootItem();
-        let n = t.GetHierarchyIndex();
-        var i = i.GetHierarchyIndex();
+        var t = this.Vit(6).GetRootItem(),
+          i = this.Vit(7).GetRootItem(),
+          n = t.GetHierarchyIndex(),
+          i = i.GetHierarchyIndex();
         (e && i <= n) ||
           (void 0 !== (n = e ? i : this.bit) && t.SetHierarchyIndex(n),
           Log_1.Log.CheckInfo() &&
@@ -85,8 +85,8 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
             ));
       }),
       (this.jit = (e) => {
-        const t = ConfigManager_1.ConfigManager.AudioConfig.GetAudioPath(e);
-        t && t.Path !== ""
+        var t = ConfigManager_1.ConfigManager.AudioConfig.GetAudioPath(e);
+        t && "" !== t.Path
           ? AudioController_1.AudioController.PostEventByUi(
               t.Path,
               this.PlayEventResult,
@@ -116,15 +116,15 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
           });
       }),
       (this.NZe = (e) => {
-        for (const [t, i] of this.Pit)
-          t !== 5 &&
+        for (var [t, i] of this.Pit)
+          5 !== t &&
             (e
               ? i.GetVisible() && i.GetRootItem().SetUIActive(!0)
               : i.GetRootItem().SetUIActive(!1));
       }),
       (this.PYe = (e) => {
-        for (const [t, i] of this.Pit)
-          t !== 6 &&
+        for (var [t, i] of this.Pit)
+          6 !== t &&
             (e
               ? i.GetVisible() && i.GetRootItem().SetUIActive(!0)
               : i.GetRootItem().SetUIActive(!1));
@@ -209,7 +209,7 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   OnAfterShow() {
-    let e;
+    var e;
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Battle", 18, "[battleView]OnAfterShow"),
       this.IsDestroyOrDestroying
@@ -226,8 +226,8 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
           ),
           (!ModelManager_1.ModelManager.PlotModel.IsInPlot ||
             (ModelManager_1.ModelManager.PlotModel.IsInPlot &&
-              ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel ===
-                "LevelD")) &&
+              "LevelD" ===
+                ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel)) &&
             AudioController_1.AudioController.SetState(
               AudioDefine_1.STATEGROUP,
               AudioDefine_1.STATENORMAL,
@@ -421,8 +421,8 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
     this.Bit && (this.Bit.ResetData(), (this.Bit = void 0));
   }
   async Xit(e, t, i = !1, n = 0) {
-    const s = this.GetItem(e);
-    var t = new t();
+    var s = this.GetItem(e),
+      t = new t();
     return (
       await t.CreateThenShowByActorAsync(s.GetOwner(), n),
       this.Pit.set(e, t),
@@ -434,7 +434,7 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
     return this.Pit.get(e);
   }
   Jit() {
-    const e = this.Vit(6).GetRootItem();
+    var e = this.Vit(6).GetRootItem();
     this.bit = e.GetHierarchyIndex();
   }
   Zit() {
@@ -443,21 +443,21 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
   }
   zit() {
     if (ModelManager_1.ModelManager.PlatformModel.IsMobile()) {
-      const e = ModelManager_1.ModelManager.BattleUiSetModel.GetPanelDataMap();
+      var e = ModelManager_1.ModelManager.BattleUiSetModel.GetPanelDataMap();
       if (e)
         for (var [t, i] of e) {
-          const n = this.Vit(t);
+          var n = this.Vit(t);
           if (n) {
-            var s;
-            var a;
-            var o;
-            var r;
-            var i = i.GetPanelItemDataMap();
+            var s,
+              a,
+              o,
+              r,
+              i = i.GetPanelItemDataMap();
             if (i)
-              for (let [_, l] of i)
+              for (var [_, l] of i)
                 if (l.IsInitialized()) {
                   let e = n.GetItem(_);
-                  (e = _ === -1 ? n.GetRootItem() : e)
+                  (e = -1 === _ ? n.GetRootItem() : e)
                     ? ((s = l.Size),
                       (a = l.Alpha),
                       (o = l.OffsetX),
@@ -485,11 +485,11 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   GetGuideUiItemAndUiItemForShowEx(t) {
-    if (t[0] === "Execution")
+    if ("Execution" === t[0])
       return (i = this.Pit.get(6)) && (i = i.GetExecutionItem())
         ? [i, i]
         : void 0;
-    if (t[0] === "Skill")
+    if ("Skill" === t[0])
       return (i = this.Pit.get(3))
         ? i.GetBattleSkillItemByButtonType(Number(t[1]))?.GetGuideItem()
         : void 0;
@@ -497,17 +497,17 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
       ?.GetUiActorForGuide()
       ?.GetComponentByClass(UE.GuideHookRegistry.StaticClass());
     if (i) {
-      let n = t[2];
-      var s = i.GuideHookComponents.Get(n);
-      var s =
-        (s ||
-          (Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "Guide",
-              17,
-              "战斗界面挂接组件(GuideHookRegistry)不存在该挂接点名称，请检查聚焦引导配置或挂接组件",
-            )),
-        s.GetUIItem());
+      var n = t[2],
+        s = i.GuideHookComponents.Get(n),
+        s =
+          (s ||
+            (Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Guide",
+                17,
+                "战斗界面挂接组件(GuideHookRegistry)不存在该挂接点名称，请检查聚焦引导配置或挂接组件",
+              )),
+          s.GetUIItem());
       let e = t[1];
       StringUtils_1.StringUtils.IsEmpty(e) && (e = n);
       (t = i.GuideHookComponents.Get(e)),
@@ -527,4 +527,4 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 (exports.BattleView = BattleView).aYe = void 0;
-// # sourceMappingURL=BattleView.js.map
+//# sourceMappingURL=BattleView.js.map

@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PersonalRootView = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const CommonTabComponentData_1 = require("../../Common/TabComponent/CommonTabComponentData");
-const CommonTabData_1 = require("../../Common/TabComponent/CommonTabData");
-const CommonTabTitleData_1 = require("../../Common/TabComponent/CommonTabTitleData");
-const TabComponentWithCaptionItem_1 = require("../../Common/TabComponent/TabComponentWithCaptionItem");
-const PersonalTabItem_1 = require("../../Common/TabComponent/TabItem/PersonalTabItem");
-const TabViewComponent_1 = require("../../Common/TabComponent/TabViewComponent");
-const UiSceneManager_1 = require("../../UiComponent/UiSceneManager");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  CommonTabComponentData_1 = require("../../Common/TabComponent/CommonTabComponentData"),
+  CommonTabData_1 = require("../../Common/TabComponent/CommonTabData"),
+  CommonTabTitleData_1 = require("../../Common/TabComponent/CommonTabTitleData"),
+  TabComponentWithCaptionItem_1 = require("../../Common/TabComponent/TabComponentWithCaptionItem"),
+  PersonalTabItem_1 = require("../../Common/TabComponent/TabItem/PersonalTabItem"),
+  TabViewComponent_1 = require("../../Common/TabComponent/TabViewComponent"),
+  UiSceneManager_1 = require("../../UiComponent/UiSceneManager");
 class PersonalRootView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -21,9 +21,9 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
       (this.TabComponent = void 0),
       (this.v4i = void 0),
       (this.pqe = (e) => {
-        const t = this.TabDataList[e];
-        const o = t.ChildViewName;
-        var e = this.TabComponent.GetTabItemByIndex(e);
+        var t = this.TabDataList[e],
+          o = t.ChildViewName,
+          e = this.TabComponent.GetTabItemByIndex(e);
         this.TabViewComponent.ToggleCallBack(t, o, e, this.v4i);
       }),
       (this.dVe = (e, t) => {
@@ -56,7 +56,7 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
       await this.RebuildTabItem();
   }
   InitTabComponent() {
-    const e = new CommonTabComponentData_1.CommonTabComponentData(
+    var e = new CommonTabComponentData_1.CommonTabComponentData(
       this.dVe,
       this.pqe,
       this.yqe,
@@ -76,7 +76,7 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
       ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTabList(
         "PersonalRootView",
       );
-    const e = this.TabDataList.length;
+    var e = this.TabDataList.length;
     await this.TabComponent.RefreshTabItemByLengthAsync(e);
   }
   OnAfterShow() {
@@ -98,4 +98,4 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.PersonalRootView = PersonalRootView;
-// # sourceMappingURL=PersonalRootView.js.map
+//# sourceMappingURL=PersonalRootView.js.map

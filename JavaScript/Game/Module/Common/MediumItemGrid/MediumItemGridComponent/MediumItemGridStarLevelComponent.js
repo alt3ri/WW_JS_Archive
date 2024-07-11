@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MediumItemGridStarLevelComponent = void 0);
-const UE = require("ue");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const MediumItemGridComponent_1 = require("./MediumItemGridComponent");
+const UE = require("ue"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  MediumItemGridComponent_1 = require("./MediumItemGridComponent");
 class MediumItemGridStarLevelComponent extends MediumItemGridComponent_1.MediumItemGridComponent {
   constructor() {
     super(...arguments), (this.Uxt = void 0), (this.Axt = []), (this.Pxt = 0);
@@ -26,7 +26,7 @@ class MediumItemGridStarLevelComponent extends MediumItemGridComponent_1.MediumI
   OnRefresh(t) {
     if (this.Pxt !== t) {
       this.Pxt = t;
-      const i = this.GetSprite(1).GetOwner();
+      var i = this.GetSprite(1).GetOwner();
       this.xxt();
       for (let e = 0; e < t; e++) {
         let t = this.Axt[e];
@@ -43,4 +43,4 @@ class MediumItemGridStarLevelComponent extends MediumItemGridComponent_1.MediumI
   }
 }
 exports.MediumItemGridStarLevelComponent = MediumItemGridStarLevelComponent;
-// # sourceMappingURL=MediumItemGridStarLevelComponent.js.map
+//# sourceMappingURL=MediumItemGridStarLevelComponent.js.map

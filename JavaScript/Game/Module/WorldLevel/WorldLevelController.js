@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldLevelController = void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
+const UE = require("ue"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder");
 class WorldLevelController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -64,7 +64,7 @@ class WorldLevelController extends UiControllerBase_1.UiControllerBase {
           ModelManager_1.ModelManager.PersonalModel.SetSignature(o.t4n);
   }
   static SendWorldLevelDownRequest() {
-    const e = Protocol_1.Aki.Protocol.bcs.create();
+    var e = Protocol_1.Aki.Protocol.bcs.create();
     Net_1.Net.Call(3657, e, (e) => {
       e &&
         (e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
@@ -86,7 +86,7 @@ class WorldLevelController extends UiControllerBase_1.UiControllerBase {
     });
   }
   static SendWorldLevelRegainRequest() {
-    const e = Protocol_1.Aki.Protocol.qcs.create();
+    var e = Protocol_1.Aki.Protocol.qcs.create();
     Net_1.Net.Call(2780, e, (e) => {
       e &&
         (e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
@@ -108,8 +108,8 @@ class WorldLevelController extends UiControllerBase_1.UiControllerBase {
     });
   }
   static GetLocalText(e, o) {
-    var e = ConfigManager_1.ConfigManager.TextConfig.GetTextById(e);
-    const r = UE.NewArray(UE.BuiltinString);
+    var e = ConfigManager_1.ConfigManager.TextConfig.GetTextById(e),
+      r = UE.NewArray(UE.BuiltinString);
     return r.Add(o), UE.KuroStaticLibrary.KuroFormatText(e ?? "", r);
   }
 }
@@ -126,7 +126,7 @@ class WorldLevelController extends UiControllerBase_1.UiControllerBase {
       UiManager_1.UiManager.OpenView("WorldLevelInfoView");
   }),
   (WorldLevelController.$Ge = (e) => {
-    e === "FunctionView" &&
+    "FunctionView" === e &&
       UiManager_1.UiManager.IsViewShow("WorldLevelInfoView") &&
       UiManager_1.UiManager.CloseView("WorldLevelInfoView");
   }),
@@ -134,4 +134,4 @@ class WorldLevelController extends UiControllerBase_1.UiControllerBase {
     UiManager_1.UiManager.IsViewShow("WorldLevelInfoView") &&
       UiManager_1.UiManager.CloseView("WorldLevelInfoView");
   });
-// # sourceMappingURL=WorldLevelController.js.map
+//# sourceMappingURL=WorldLevelController.js.map

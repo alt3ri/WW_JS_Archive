@@ -11,4 +11,4 @@ class AsyncTask extends TaskBase_1.TaskBase {
   }
 }
 exports.AsyncTask = AsyncTask;
-// # sourceMappingURL=AsyncTask.js.map
+//# sourceMappingURL=AsyncTask.js.map

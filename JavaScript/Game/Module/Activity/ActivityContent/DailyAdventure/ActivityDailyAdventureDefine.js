@@ -25,4 +25,4 @@ class DailyAdventureRewardData {
 }
 (exports.DailyAdventureRewardData = DailyAdventureRewardData),
   (exports.DAILY_ADVENTURE_PT_CONFIGID = 13);
-// # sourceMappingURL=ActivityDailyAdventureDefine.js.map
+//# sourceMappingURL=ActivityDailyAdventureDefine.js.map

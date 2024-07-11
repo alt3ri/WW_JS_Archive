@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityMowingSubView = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const CommonItemSmallItemGrid_1 = require("../../../Common/ItemGrid/CommonItemSmallItemGrid");
-const ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController");
-const GenericScrollViewNew_1 = require("../../../Util/ScrollView/GenericScrollViewNew");
-const WorldMapController_1 = require("../../../WorldMap/WorldMapController");
-const ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase");
-const ActivityFunctionalArea_1 = require("../UniversalComponents/Functional/ActivityFunctionalArea");
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  CommonItemSmallItemGrid_1 = require("../../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
+  GenericScrollViewNew_1 = require("../../../Util/ScrollView/GenericScrollViewNew"),
+  WorldMapController_1 = require("../../../WorldMap/WorldMapController"),
+  ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase"),
+  ActivityFunctionalArea_1 = require("../UniversalComponents/Functional/ActivityFunctionalArea");
 class ActivityMowingSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
   constructor() {
     super(...arguments),
@@ -27,7 +27,7 @@ class ActivityMowingSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
         );
       }),
       (this.cke = () => {
-        let i;
+        var i;
         this._ke.GetPreGuideQuestFinishState()
           ? ((i = {
               MarkId:
@@ -69,12 +69,12 @@ class ActivityMowingSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
     ];
   }
   async OnBeforeStartAsync() {
-    const i = this.GetItem(6);
+    var i = this.GetItem(6);
     (this.ANe = new ActivityFunctionalArea_1.ActivityFunctionalArea()),
       await this.ANe.CreateThenShowByActorAsync(i.GetOwner());
   }
   OnStart() {
-    const i = this.GetScrollViewWithScrollbar(5);
+    var i = this.GetScrollViewWithScrollbar(5);
     (this.bOe = new GenericScrollViewNew_1.GenericScrollViewNew(i, this.JGe)),
       this.ANe.SetRewardButtonFunction(this.uke),
       this.ANe.FunctionButton.SetFunction(this.cke);
@@ -88,8 +88,8 @@ class ActivityMowingSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
     this.hke(), this.mke(), this._Oe(), this.BNe(), this.dke();
   }
   dke() {
-    let i = this._ke.IsNewInstanceOpen();
-    const e = this._ke.GetPreGuideQuestFinishState();
+    var i = this._ke.IsNewInstanceOpen(),
+      e = this._ke.GetPreGuideQuestFinishState();
     i &&
       e &&
       ((i = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
@@ -98,31 +98,31 @@ class ActivityMowingSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
       ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(i));
   }
   OnTimer(i) {
-    const [e, t] = this.GetTimeVisibleAndRemainTime();
+    var [e, t] = this.GetTimeVisibleAndRemainTime();
     this.GetText(10).SetUIActive(e), e && this.GetText(10).SetText(t);
   }
   hke() {
-    var i = this._ke.GetTitle();
-    var i = (this.GetText(1)?.SetText(i), this._ke.GetDesc());
+    var i = this._ke.GetTitle(),
+      i = (this.GetText(1)?.SetText(i), this._ke.GetDesc());
     this.GetText(3)?.SetText(i),
       this.GetText(14)?.ShowTextNew("CollectActivity_Button_ahead");
   }
   mke() {
-    const i = this.ActivityBaseData.GetPreviewReward();
+    var i = this.ActivityBaseData.GetPreviewReward();
     this.bOe.RefreshByData(i);
   }
   _Oe() {
-    const i = this.ActivityBaseData.IsUnLock();
+    var i = this.ActivityBaseData.IsUnLock();
     this.ANe.SetPanelConditionVisible(!i),
       i || this.ANe.SetLockTextByText(this.GetCurrentLockConditionText()),
       this.GetItem(11)?.SetUIActive(i);
   }
   BNe() {
-    var i = this._ke.IsHaveRewardToGet();
-    var i = (this.ANe.SetRewardRedDotVisible(i), this._ke.IsNewInstanceOpen());
-    const e = this._ke.GetPreGuideQuestFinishState();
+    var i = this._ke.IsHaveRewardToGet(),
+      i = (this.ANe.SetRewardRedDotVisible(i), this._ke.IsNewInstanceOpen()),
+      e = this._ke.GetPreGuideQuestFinishState();
     this.ANe.FunctionButton.SetRedDotVisible(e && i);
   }
 }
 exports.ActivityMowingSubView = ActivityMowingSubView;
-// # sourceMappingURL=ActivityMowingSubView.js.map
+//# sourceMappingURL=ActivityMowingSubView.js.map

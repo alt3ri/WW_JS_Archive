@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SpecialItemLogicEntityCamera = void 0);
-const UiManager_1 = require("../../../../Ui/UiManager");
-const TsInteractionUtils_1 = require("../../../Interaction/TsInteractionUtils");
-const PhotographController_1 = require("../../../Photograph/PhotographController");
-const SpecialItemLogicBase_1 = require("./SpecialItemLogicBase");
+const UiManager_1 = require("../../../../Ui/UiManager"),
+  TsInteractionUtils_1 = require("../../../Interaction/TsInteractionUtils"),
+  PhotographController_1 = require("../../../Photograph/PhotographController"),
+  SpecialItemLogicBase_1 = require("./SpecialItemLogicBase");
 class SpecialItemLogicEntityCamera extends SpecialItemLogicBase_1.SpecialItemLogicBase {
   CheckUseCondition() {
     return !0;
@@ -18,4 +18,4 @@ class SpecialItemLogicEntityCamera extends SpecialItemLogicBase_1.SpecialItemLog
   }
 }
 exports.SpecialItemLogicEntityCamera = SpecialItemLogicEntityCamera;
-// # sourceMappingURL=SpecialItemLogicEntityCamera.js.map
+//# sourceMappingURL=SpecialItemLogicEntityCamera.js.map

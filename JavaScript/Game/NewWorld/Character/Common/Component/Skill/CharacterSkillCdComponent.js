@@ -1,28 +1,32 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, i, e, r) {
-    let o;
-    const s = arguments.length;
-    let l =
-      s < 3 ? i : r === null ? (r = Object.getOwnPropertyDescriptor(i, e)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      s = arguments.length,
+      l =
+        s < 3
+          ? i
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(i, e))
+            : r;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       l = Reflect.decorate(t, i, e, r);
     else
-      for (let n = t.length - 1; n >= 0; n--)
-        (o = t[n]) && (l = (s < 3 ? o(l) : s > 3 ? o(i, e, l) : o(i, e)) || l);
-    return s > 3 && l && Object.defineProperty(i, e, l), l;
+      for (var n = t.length - 1; 0 <= n; n--)
+        (o = t[n]) && (l = (s < 3 ? o(l) : 3 < s ? o(i, e, l) : o(i, e)) || l);
+    return 3 < s && l && Object.defineProperty(i, e, l), l;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterSkillCdComponent = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const GlobalData_1 = require("../../../../../GlobalData");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage");
-const CombatDebugController_1 = require("../../../../../Utils/CombatDebugController");
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  GlobalData_1 = require("../../../../../GlobalData"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage"),
+  CombatDebugController_1 = require("../../../../../Utils/CombatDebugController");
 let CharacterSkillCdComponent = class CharacterSkillCdComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -66,7 +70,7 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends EntityCo
   }
   GetNextMultiSkillId(t) {
     if (GlobalData_1.GlobalData.IsPlayInEditor)
-      for (const [i, e] of this.FBn)
+      for (var [i, e] of this.FBn)
         if (i === t) {
           this.IsMultiSkill(e) ||
             (Log_1.Log.CheckError() &&
@@ -96,12 +100,12 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends EntityCo
     this.Izo.ResetOnChangeRole();
   }
   InitSkillCd(t) {
-    let i;
-    const e = t.SkillId;
-    let r = this.iZr.get(e);
+    var i,
+      e = t.SkillId,
+      r = this.iZr.get(e);
     return (
       r ||
-      ((i = t.SkillInfo.CooldownConfig).SectionCount - i.SectionRemaining > 1
+      (1 < (i = t.SkillInfo.CooldownConfig).SectionCount - i.SectionRemaining
         ? void 0
         : ((r = this.Mzo.InitSkillCd(this.Entity, t.SkillId, t.SkillInfo)),
           this.iZr.set(e, r),
@@ -110,7 +114,7 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends EntityCo
     );
   }
   InitSkillCdBySkillInfo(i, e) {
-    let t = this.iZr.get(i);
+    var t = this.iZr.get(i);
     if (t)
       return (
         Log_1.Log.CheckError() &&
@@ -118,8 +122,8 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends EntityCo
         t
       );
     try {
-      const r = e.CooldownConfig;
-      return r.SectionCount - r.SectionRemaining > 1
+      var r = e.CooldownConfig;
+      return 1 < r.SectionCount - r.SectionRemaining
         ? void 0
         : ((t = this.Mzo.InitSkillCd(this.Entity, i, e)),
           this.iZr.set(i, t),
@@ -154,7 +158,7 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends EntityCo
     return !!t && (i ? !t.HasRemainingCount() : t.IsInCd());
   }
   ModifyCdInfo(t, i) {
-    let e;
+    var e;
     return this.iZr
       ? !!(e = this.iZr.get(t)) && ((e.SkillCdInfoMap.get(t).SkillCd = i), !0)
       : (Log_1.Log.CheckWarn() &&
@@ -166,36 +170,36 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends EntityCo
         !1);
   }
   ModifyCdTime(t, i, e) {
-    let r;
-    if (t && t.length !== 0)
-      if (t.length === 1)
+    var r;
+    if (t && 0 !== t.length)
+      if (1 === t.length)
         (r = this.iZr.get(Number(t[0]))) && r.ModifyRemainingCd(i, e);
       else {
-        const o = new Set();
+        var o = new Set();
         for (const l of t) {
-          const s = this.iZr.get(Number(l));
+          var s = this.iZr.get(Number(l));
           s && o.add(s);
         }
         for (const n of o) n.ModifyRemainingCd(i, e);
       }
   }
   ModifyCdTimeBySkillGenres(t, i, e) {
-    const r = new Array();
+    var r = new Array();
     for (const a of t) r.push(Number(a));
-    let o;
-    let s;
-    let l;
-    const n = new Set();
+    var o,
+      s,
+      l,
+      n = new Set();
     for ([o, s] of this.FBn)
       r.includes(s.SkillGenre) && (l = this.iZr.get(o)) && n.add(l);
     for (const h of n) h.ModifyRemainingCd(i, e);
   }
   StartCd(t, i = -1) {
-    const e = this.iZr.get(t);
+    var e = this.iZr.get(t);
     return !!e && (e.StartCd(t, this.eZr, i), !0);
   }
   SetLimitCount(t, i) {
-    const e = this.iZr.get(t);
+    var e = this.iZr.get(t);
     return e
       ? (e.SetLimitCount(i), !0)
       : (Log_1.Log.CheckError() &&
@@ -210,7 +214,7 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends EntityCo
         !1);
   }
   ResetCdDelayTime(t) {
-    let i = this.iZr.get(t);
+    var i = this.iZr.get(t);
     return i
       ? (i.ResetDelayCd() &&
           (((i = Protocol_1.Aki.Protocol.BNn.create()).vkn = t),
@@ -228,8 +232,8 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends EntityCo
         !1);
   }
   InitPassiveSkill(t) {
-    const i = t.Id;
-    let e = this.oZr.get(i);
+    var i = t.Id,
+      e = this.oZr.get(i);
     return (
       e ||
         ((e = this.tZr.InitPassiveSkillCd(this.Entity, t)), this.oZr.set(i, e)),
@@ -241,7 +245,7 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends EntityCo
     return !!t && t.IsInCd();
   }
   StartPassiveCd(t, i = -1) {
-    const e = this.oZr.get(t);
+    var e = this.oZr.get(t);
     return !!e && (e.StartCd(t, i), !0);
   }
   GetPassiveSkillCdInfo(t) {
@@ -253,4 +257,4 @@ let CharacterSkillCdComponent = class CharacterSkillCdComponent extends EntityCo
   CharacterSkillCdComponent,
 )),
   (exports.CharacterSkillCdComponent = CharacterSkillCdComponent);
-// # sourceMappingURL=CharacterSkillCdComponent.js.map
+//# sourceMappingURL=CharacterSkillCdComponent.js.map

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsAiController_1 = require("../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
-const START_POSITION_KEY = "StartPosition";
+const Log_1 = require("../../../../Core/Common/Log"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsAiController_1 = require("../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
+  START_POSITION_KEY = "StartPosition";
 class TsTaskGetStartPosition extends TsTaskAbortImmediatelyBase_1.default {
   ReceiveExecuteAI(e, o) {
-    let r, t;
+    var r, t;
     e instanceof TsAiController_1.default
       ? ((t = (r = e.AiController.CharActorComp).Entity),
         r?.Valid
@@ -31,4 +31,4 @@ class TsTaskGetStartPosition extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskGetStartPosition;
-// # sourceMappingURL=TsTaskGetStartPosition.js.map
+//# sourceMappingURL=TsTaskGetStartPosition.js.map

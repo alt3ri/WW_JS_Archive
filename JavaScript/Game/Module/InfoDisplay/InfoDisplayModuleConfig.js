@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InfoDisplayModuleConfig = void 0);
-const InfoDisplayById_1 = require("../../../Core/Define/ConfigQuery/InfoDisplayById");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const InfoDisplayById_1 = require("../../../Core/Define/ConfigQuery/InfoDisplayById"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class InfoDisplayModuleConfig extends ConfigBase_1.ConfigBase {
   Vni(e) {
     e = InfoDisplayById_1.configInfoDisplayById.GetConfig(e);
@@ -34,8 +34,8 @@ class InfoDisplayModuleConfig extends ConfigBase_1.ConfigBase {
   GetInfoDisplayPictures(e) {
     e = this.Vni(e);
     let i = new Array();
-    return e && e.Picture !== "" ? (i = e.Picture.split(",")) : i;
+    return e && "" !== e.Picture ? (i = e.Picture.split(",")) : i;
   }
 }
 exports.InfoDisplayModuleConfig = InfoDisplayModuleConfig;
-// # sourceMappingURL=InfoDisplayModuleConfig.js.map
+//# sourceMappingURL=InfoDisplayModuleConfig.js.map

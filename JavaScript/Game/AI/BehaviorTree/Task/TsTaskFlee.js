@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../GlobalData");
-const CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary");
-const TsAiController_1 = require("../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
-const NEAR_ZERO = 1e-6;
-const NAVIGATION_COMPLETE_DISTANCE = 50;
-const EDGE_Z = 100;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../GlobalData"),
+  CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
+  TsAiController_1 = require("../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
+  NEAR_ZERO = 1e-6,
+  NAVIGATION_COMPLETE_DISTANCE = 50,
+  EDGE_Z = 100;
 class TsTaskFlee extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -52,7 +52,7 @@ class TsTaskFlee extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveExecuteAI(e, t) {
     this.InitTsVariables();
-    const s = e.AiController;
+    var s = e.AiController;
     if (s)
       if (s.AiFlee) {
         let i = void 0;
@@ -76,26 +76,26 @@ class TsTaskFlee extends TsTaskAbortImmediatelyBase_1.default {
             const n = r.Entity;
             if (n)
               if (((this.MoveComp = n.GetComponent(161)), this.MoveComp)) {
-                this.MoveComp.CharacterMovement.MovementMode === 5 &&
+                5 === this.MoveComp.CharacterMovement.MovementMode &&
                   (this.IsFlying = !0);
-                var r = r.ActorLocationProxy;
-                let h = Vector_1.Vector.Create();
-                let o =
-                  (r.Subtraction(i.ActorLocationProxy, h),
-                  (h.Z = 0),
-                  h.Normalize(NEAR_ZERO),
-                  new UE.Vector(-h.Y, h.X, 0));
-                var a =
-                  MathUtils_1.MathUtils.GetRandomRange(
-                    s.AiFlee.FleeAngle.Min,
-                    s.AiFlee.FleeAngle.Max,
-                  ) * MathUtils_1.MathUtils.DegToRad;
-                let l = Math.cos(a);
-                var a = Math.sin(a);
-                const _ = MathUtils_1.MathUtils.GetRandomRange(
-                  s.AiFlee.FleeDistance.Min,
-                  s.AiFlee.FleeDistance.Max,
-                );
+                var r = r.ActorLocationProxy,
+                  h = Vector_1.Vector.Create(),
+                  o =
+                    (r.Subtraction(i.ActorLocationProxy, h),
+                    (h.Z = 0),
+                    h.Normalize(NEAR_ZERO),
+                    new UE.Vector(-h.Y, h.X, 0)),
+                  a =
+                    MathUtils_1.MathUtils.GetRandomRange(
+                      s.AiFlee.FleeAngle.Min,
+                      s.AiFlee.FleeAngle.Max,
+                    ) * MathUtils_1.MathUtils.DegToRad,
+                  l = Math.cos(a),
+                  a = Math.sin(a),
+                  _ = MathUtils_1.MathUtils.GetRandomRange(
+                    s.AiFlee.FleeDistance.Min,
+                    s.AiFlee.FleeDistance.Max,
+                  );
                 let t = 0;
                 this.IsFlying && (t = s.AiFlee.FleeHeight);
                 h = new UE.Vector(
@@ -187,14 +187,14 @@ class TsTaskFlee extends TsTaskAbortImmediatelyBase_1.default {
         ]);
   }
   ReceiveTickAI(t, i, e) {
-    let s;
-    let r;
-    let h;
-    var t = t.AiController;
+    var s,
+      r,
+      h,
+      t = t.AiController;
     t
       ? Time_1.Time.WorldTime > this.NavigationEndTime ||
         ((s = t.CharActorComp),
-        this.MoveComp.CharacterMovement.MovementMode === 5
+        5 === this.MoveComp.CharacterMovement.MovementMode
           ? (this.IsFlying = !0)
           : (this.IsFlying = !1),
         (r = Vector_1.Vector.Create(
@@ -237,4 +237,4 @@ class TsTaskFlee extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskFlee;
-// # sourceMappingURL=TsTaskFlee.js.map
+//# sourceMappingURL=TsTaskFlee.js.map

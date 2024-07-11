@@ -1,5 +1,5 @@
 "use strict";
-let EMatchRoleType, EBulletPenetrationType;
+var EMatchRoleType, EBulletPenetrationType;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.sceneInteractionEffectConfig =
     exports.sceneInteractionStateConfig =
@@ -60,7 +60,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       exports.EBulletPenetrationType || (exports.EBulletPenetrationType = {})),
   ),
   (exports.sceneInteractionStateConfig = {
-    0: "State1",
+    [0]: "State1",
     1: "State2",
     2: "State3",
     3: "State4",
@@ -85,7 +85,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     22: "MAX",
   }),
   (exports.sceneInteractionEffectConfig = {
-    0: "Effect0",
+    [0]: "Effect0",
     1: "Effect1",
     2: "Effect2",
     3: "Effect3",
@@ -98,4 +98,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     10: "Error",
     11: "MAX",
   });
-// # sourceMappingURL=IMatch.js.map
+//# sourceMappingURL=IMatch.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../../GlobalData");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../../GlobalData");
 class TsUiGlass extends UE.LGUIBehaviour {
   constructor() {
     super(...arguments),
@@ -25,17 +25,15 @@ class TsUiGlass extends UE.LGUIBehaviour {
       this.ListenEvent();
   }
   CheckItemRecursively(s, t) {
-    const i = s.GetAttachUIChildren();
+    var i = s.GetAttachUIChildren();
     for (let s = 0, e = i.Num(); s < e; ++s) {
-      const a = i.Get(s);
-      const l = a
-        .GetOwner()
-        .GetComponentByClass(UE.UIBaseRenderable.StaticClass());
+      var a = i.Get(s),
+        l = a.GetOwner().GetComponentByClass(UE.UIBaseRenderable.StaticClass());
       l && this.TrySetItemState(l, t), this.CheckItemRecursively(a, t);
     }
   }
   SetUnderItemGlassState(s) {
-    let e;
+    var e;
     this.SetState !== s &&
       ((this.SetState = s),
       (e = this.GetOwner().GetComponentByClass(UE.UIItem.StaticClass())),
@@ -69,9 +67,9 @@ class TsUiGlass extends UE.LGUIBehaviour {
   }
   RefreshGlassShowState() {
     !(
-      UE.LGUIManagerActor.GetGlobalUiBlurIndex(GlobalData_1.GlobalData.World) >
-      0
-    ) && TsUiGlass.CurrentGlassItemSet.size > 0
+      0 <
+      UE.LGUIManagerActor.GetGlobalUiBlurIndex(GlobalData_1.GlobalData.World)
+    ) && 0 < TsUiGlass.CurrentGlassItemSet.size
       ? this.OpenPartialBlur()
       : this.ClosePartialBlur();
   }
@@ -102,9 +100,9 @@ class TsUiGlass extends UE.LGUIBehaviour {
       this.SetUnderItemGlassState(!1),
       this.RefreshGlassShowState(),
       this.RemoveEvent(),
-      TsUiGlass.CurrentGlassItemSet.size === 0 &&
+      0 === TsUiGlass.CurrentGlassItemSet.size &&
         UE.LGUIBPLibrary.FreeUnusedResourcesInRenderTargetPool();
   }
 }
 (TsUiGlass.GlassShowState = !1), (exports.default = TsUiGlass);
-// # sourceMappingURL=TsUiGlass.js.map
+//# sourceMappingURL=TsUiGlass.js.map

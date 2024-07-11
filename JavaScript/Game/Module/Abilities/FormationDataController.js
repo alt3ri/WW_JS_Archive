@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FormationDataController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const PlayerEntity_1 = require("../../NewWorld/Player/PlayerEntity");
+const Log_1 = require("../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  PlayerEntity_1 = require("../../NewWorld/Player/PlayerEntity");
 class FormationDataController extends ControllerBase_1.ControllerBase {
   static get Model() {
     return ModelManager_1.ModelManager.FormationDataModel;
@@ -31,7 +31,7 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
     for (const e of this.ebe.values()) e.IsInit && e.SetTimeDilation(t);
   }
   static CreatePlayerEntity(t) {
-    const e = EntitySystem_1.EntitySystem.Create(
+    var e = EntitySystem_1.EntitySystem.Create(
       PlayerEntity_1.PlayerEntity,
       void 0,
       { PlayerId: t },
@@ -68,7 +68,7 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
   static ZBe() {
     if (this.tbe) {
       this.tbe = !1;
-      const t =
+      var t =
         ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
           158,
         )?.GetAggroSet();
@@ -83,11 +83,11 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
       for (const o of this.bie) this.Model.PlayerAggroSet.delete(o);
       for (const n of this.ibe) {
         EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnAggroAdd, n);
-        let e = EntitySystem_1.EntitySystem.Get(n)
+        var e = EntitySystem_1.EntitySystem.Get(n)
           ?.GetComponent(0)
           ?.GetBaseInfo();
         !e ||
-          ((e = e.Category.MonsterMatchType) !== 3 && e !== 2) ||
+          (3 !== (e = e.Category.MonsterMatchType) && 2 !== e) ||
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnBossFight,
             n,
@@ -111,7 +111,7 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
         ));
   }
   static AddPlayerTag(t, e) {
-    const r = this.GetPlayerEntity(t)?.GetComponent(181);
+    var r = this.GetPlayerEntity(t)?.GetComponent(181);
     r
       ? r?.AddTag(e)
       : Log_1.Log.CheckError() &&
@@ -121,7 +121,7 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
         ]);
   }
   static RemovePlayerTag(t, e) {
-    const r = this.GetPlayerEntity(t)?.GetComponent(181);
+    var r = this.GetPlayerEntity(t)?.GetComponent(181);
     r
       ? r?.RemoveTag(e)
       : Log_1.Log.CheckError() &&
@@ -131,7 +131,7 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
         ]);
   }
   static GetPlayerTagCount(t, e) {
-    const r = this.GetPlayerEntity(t)?.GetComponent(181);
+    var r = this.GetPlayerEntity(t)?.GetComponent(181);
     return r
       ? r?.GetTagCountById(e) ?? 0
       : (Log_1.Log.CheckError() &&
@@ -142,7 +142,7 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
         0);
   }
   static HasPlayerTag(t, e) {
-    const r = this.GetPlayerEntity(t)?.GetComponent(181);
+    var r = this.GetPlayerEntity(t)?.GetComponent(181);
     return r
       ? r?.HasTag(e) ?? !1
       : (Log_1.Log.CheckError() &&
@@ -153,7 +153,7 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
         !1);
   }
   static W6s() {
-    let t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity;
+    var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity;
     t &&
       t.GetComponent(158)?.PositionState ===
         CharacterUnifiedStateTypes_1.ECharPositionState.Ground &&
@@ -166,4 +166,4 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
   (FormationDataController.bie = []),
   (FormationDataController.tbe = !1),
   (FormationDataController.wK = !1);
-// # sourceMappingURL=FormationDataController.js.map
+//# sourceMappingURL=FormationDataController.js.map

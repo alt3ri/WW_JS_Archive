@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BehaviorButton = void 0);
-const UE = require("ue");
-const GamepadKeyByKeyName_1 = require("../../../../Core/Define/ConfigQuery/GamepadKeyByKeyName");
-const PcKeyByKeyName_1 = require("../../../../Core/Define/ConfigQuery/PcKeyByKeyName");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const InputController_1 = require("../../../Input/InputController");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const KeyUtil_1 = require("../../Util/KeyUtil");
-const BattleChildView_1 = require("./BattleChildView/BattleChildView");
-const BattleUiNiagaraItem_1 = require("./BattleUiNiagaraItem");
-const CommonKeyItem_1 = require("./KeyItem/CommonKeyItem");
+const UE = require("ue"),
+  GamepadKeyByKeyName_1 = require("../../../../Core/Define/ConfigQuery/GamepadKeyByKeyName"),
+  PcKeyByKeyName_1 = require("../../../../Core/Define/ConfigQuery/PcKeyByKeyName"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  InputController_1 = require("../../../Input/InputController"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  KeyUtil_1 = require("../../Util/KeyUtil"),
+  BattleChildView_1 = require("./BattleChildView/BattleChildView"),
+  BattleUiNiagaraItem_1 = require("./BattleUiNiagaraItem"),
+  CommonKeyItem_1 = require("./KeyItem/CommonKeyItem");
 class BehaviorButton extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
@@ -29,8 +29,8 @@ class BehaviorButton extends BattleChildView_1.BattleChildView {
       (this.ytt = 1),
       (this.Itt = 1),
       (this.aot = () => {
-        let t;
-        this.ytt !== 0 &&
+        var t;
+        0 !== this.ytt &&
           ((t = this.Vet?.InputAction) && this.hot(t, 1),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnPressOrReleaseBehaviorButton,
@@ -39,7 +39,7 @@ class BehaviorButton extends BattleChildView_1.BattleChildView {
           ));
       }),
       (this.lot = () => {
-        const t = this.Vet?.InputAction;
+        var t = this.Vet?.InputAction;
         t && this.hot(t, 2),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnPressOrReleaseBehaviorButton,
@@ -59,7 +59,7 @@ class BehaviorButton extends BattleChildView_1.BattleChildView {
   }
   Initialize(t) {
     super.Initialize(), this.Ore();
-    const e = this.GetSprite(1);
+    var e = this.GetSprite(1);
     (this.rot = e
       .GetOwner()
       .GetComponentByClass(UE.UISpriteTransition.StaticClass())),
@@ -68,7 +68,7 @@ class BehaviorButton extends BattleChildView_1.BattleChildView {
       ));
   }
   async InitializeAsync(t) {
-    let e;
+    var e;
     ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
       ((e = this.GetItem(3)),
       (this.xet = new CommonKeyItem_1.CommonKeyItem()),
@@ -87,11 +87,11 @@ class BehaviorButton extends BattleChildView_1.BattleChildView {
       (this.sot = void 0);
   }
   Ore() {
-    const t = this.GetButton(0);
+    var t = this.GetButton(0);
     t.OnPointDownCallBack.Bind(this.aot), t.OnPointUpCallBack.Bind(this.lot);
   }
   kre() {
-    const t = this.GetButton(0);
+    var t = this.GetButton(0);
     t.OnPointDownCallBack.Unbind(), t.OnPointUpCallBack.Unbind();
   }
   UpdateAlpha() {
@@ -110,7 +110,7 @@ class BehaviorButton extends BattleChildView_1.BattleChildView {
     this.OnInputAction(), InputController_1.InputController.InputAction(t, e);
   }
   OnInputAction() {
-    this.ytt !== 0 && this.not?.Play();
+    0 !== this.ytt && this.not?.Play();
   }
   SetBehaviorToggleState(t) {
     this.Vet &&
@@ -140,7 +140,7 @@ class BehaviorButton extends BattleChildView_1.BattleChildView {
     }
   }
   uot() {
-    let t;
+    var t;
     if (this.ZMe)
       return (
         (t = ModelManager_1.ModelManager.PlatformModel),
@@ -148,9 +148,9 @@ class BehaviorButton extends BattleChildView_1.BattleChildView {
       );
   }
   GetKeySpritePath() {
-    let t;
-    let e;
-    const i = this.uot();
+    var t,
+      e,
+      i = this.uot();
     if (i)
       return (t = ModelManager_1.ModelManager.PlatformModel).IsPc()
         ? (e = PcKeyByKeyName_1.configPcKeyByKeyName.GetConfig(i))
@@ -162,7 +162,7 @@ class BehaviorButton extends BattleChildView_1.BattleChildView {
           : void 0;
   }
   RefreshVisible() {
-    let t;
+    var t;
     this.RootItem?.IsValid() &&
       (t = this.cot()) !== this.RootItem.bIsUIActive &&
       (t ? (this.Show(), this.RefreshEnable(!0)) : this.Hide());
@@ -171,7 +171,7 @@ class BehaviorButton extends BattleChildView_1.BattleChildView {
     return (
       !(
         !this.Vet ||
-        (this.BehaviorType === 102 &&
+        (102 === this.BehaviorType &&
           !ModelManager_1.ModelManager.FunctionModel.IsOpen(10031))
       ) && this.Vet.IsVisible
     );
@@ -195,4 +195,4 @@ class BehaviorButton extends BattleChildView_1.BattleChildView {
   }
 }
 exports.BehaviorButton = BehaviorButton;
-// # sourceMappingURL=BehaviorButton.js.map
+//# sourceMappingURL=BehaviorButton.js.map

@@ -13,12 +13,12 @@ class ExploreAreaMissionData {
       (this.AreaId = s.Area),
       (this.QuestId = s.Id),
       (this.SortIndex = s.SortIndex);
-    var s = ModelManager_1.ModelManager.QuestNewModel;
-    const t = s.GetQuestConfig(this.QuestId);
+    var s = ModelManager_1.ModelManager.QuestNewModel,
+      t = s.GetQuestConfig(this.QuestId);
     (this.QuestStatus = s.GetQuestState(this.QuestId)),
       (this.QuestNameId = t?.TidName),
       (this.QuestType = t?.Type);
   }
 }
 exports.ExploreAreaMissionData = ExploreAreaMissionData;
-// # sourceMappingURL=ExploreAreaMissionData.js.map
+//# sourceMappingURL=ExploreAreaMissionData.js.map

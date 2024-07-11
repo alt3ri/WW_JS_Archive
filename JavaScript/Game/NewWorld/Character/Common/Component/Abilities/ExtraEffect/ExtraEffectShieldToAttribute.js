@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConvertShieldAttribute = void 0);
-const EventDefine_1 = require("../../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../../Common/Event/EventSystem");
-const AbilityUtils_1 = require("../AbilityUtils");
-const CharacterAttributeTypes_1 = require("../CharacterAttributeTypes");
-const ExtraEffectBase_1 = require("./ExtraEffectBase");
+const EventDefine_1 = require("../../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../../Common/Event/EventSystem"),
+  AbilityUtils_1 = require("../AbilityUtils"),
+  CharacterAttributeTypes_1 = require("../CharacterAttributeTypes"),
+  ExtraEffectBase_1 = require("./ExtraEffectBase");
 class ConvertShieldAttribute extends ExtraEffectBase_1.BuffEffect {
   constructor() {
     super(...arguments),
@@ -24,7 +24,7 @@ class ConvertShieldAttribute extends ExtraEffectBase_1.BuffEffect {
       });
   }
   InitParameters(t) {
-    const i = t.ExtraEffectParameters;
+    var i = t.ExtraEffectParameters;
     (this.xQo = Number(i[0])),
       (this.wQo = Number(i[1])),
       (this.ine = Number(i[2])),
@@ -54,20 +54,20 @@ class ConvertShieldAttribute extends ExtraEffectBase_1.BuffEffect {
   kQo() {
     var e = this.xQo ? this.InstigatorEntity?.Entity : this.OwnerEntity;
     if (e) {
-      let s;
-      var e = e.CheckGetComponent(64);
-      const h = this.OwnerEntity?.CheckGetComponent(156);
-      var e = e?.GetShieldValue(this.wQo) ?? 0;
-      let t = e >= this.bQo;
-      let i = e;
-      this.qQo > 0 && (i = Math.min(i, this.qQo));
+      var s,
+        e = e.CheckGetComponent(64),
+        h = this.OwnerEntity?.CheckGetComponent(156),
+        e = e?.GetShieldValue(this.wQo) ?? 0;
+      let t = e >= this.bQo,
+        i = e;
+      0 < this.qQo && (i = Math.min(i, this.qQo));
       e =
         (i =
-          this.BQo > 0 &&
+          0 < this.BQo &&
           ((s = h?.GetCurrentValue(this.BQo) ?? 0),
           (t =
             e >= s * this.bQo * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND),
-          this.qQo > 0)
+          0 < this.qQo)
             ? Math.min(
                 e,
                 s * this.qQo * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
@@ -77,7 +77,7 @@ class ConvertShieldAttribute extends ExtraEffectBase_1.BuffEffect {
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND +
         this.GQo;
       t &&
-        e !== 0 &&
+        0 !== e &&
         (this.VKo = h?.AddModifier(this.ine ?? 0, { Type: 0, Value1: e }));
     }
   }
@@ -101,4 +101,4 @@ class ConvertShieldAttribute extends ExtraEffectBase_1.BuffEffect {
   }
 }
 exports.ConvertShieldAttribute = ConvertShieldAttribute;
-// # sourceMappingURL=ExtraEffectShieldToAttribute.js.map
+//# sourceMappingURL=ExtraEffectShieldToAttribute.js.map

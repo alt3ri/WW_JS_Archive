@@ -7,4 +7,4 @@ class ItemMaterialDataMap extends UE.Actor {
   }
 }
 exports.default = ItemMaterialDataMap;
-// # sourceMappingURL=ItemMaterialDataMap.js.map
+//# sourceMappingURL=ItemMaterialDataMap.js.map

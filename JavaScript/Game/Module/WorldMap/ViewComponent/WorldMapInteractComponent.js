@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldMapInteractComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon");
-const Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D");
-const ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const LguiEventSystemManager_1 = require("../../../Ui/LguiEventSystem/LguiEventSystemManager");
-const TouchFingerDefine_1 = require("../../../Ui/TouchFinger/TouchFingerDefine");
-const TouchFingerManager_1 = require("../../../Ui/TouchFinger/TouchFingerManager");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const WorldMapUtil_1 = require("../WorldMapUtil");
-const WorldMapComponentBase_1 = require("./WorldMapComponentBase");
-const MULTI_TOUCH_DELAY_TIME = 0.5;
-const SCALE_STEP = 0.05;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
+  Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
+  ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  LguiEventSystemManager_1 = require("../../../Ui/LguiEventSystem/LguiEventSystemManager"),
+  TouchFingerDefine_1 = require("../../../Ui/TouchFinger/TouchFingerDefine"),
+  TouchFingerManager_1 = require("../../../Ui/TouchFinger/TouchFingerManager"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  WorldMapUtil_1 = require("../WorldMapUtil"),
+  WorldMapComponentBase_1 = require("./WorldMapComponentBase"),
+  MULTI_TOUCH_DELAY_TIME = 0.5,
+  SCALE_STEP = 0.05;
 class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponentBase {
   constructor(t, e) {
     super(t),
@@ -48,15 +48,16 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
             ));
       }),
       (this.aWe = (t) => {
-        let e;
-        !t || this.IsMultiFingerControl || this.q2o.size > 1
+        var e;
+        !t || this.IsMultiFingerControl || 1 < this.q2o.size
           ? ((this.T2o = !1), this.B2o.Reset())
           : ((this.T2o = !0),
             (t = this.O2o(t.pointerPosition.X, t.pointerPosition.Y)),
-            ((e = Vector2D_1.Vector2D.Create(t.X, t.Y).SubtractionEqual(
-              this.w2o,
-            )).X === 0 &&
-              e.Y === 0) ||
+            (0 ===
+              (e = Vector2D_1.Vector2D.Create(t.X, t.Y).SubtractionEqual(
+                this.w2o,
+              )).X &&
+              0 === e.Y) ||
               (this.B2o.DeepCopy(e),
               this.w2o.DeepCopy(t),
               EventSystem_1.EventSystem.Emit(
@@ -65,7 +66,7 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
               )));
       }),
       (this.k2o = (t) => {
-        const e = Time_1.Time.NowSeconds;
+        var e = Time_1.Time.NowSeconds;
         this.IsMultiFingerControl || e - this.D2o < MULTI_TOUCH_DELAY_TIME
           ? Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Map", 19, "正在进行双指缩放")
@@ -79,8 +80,8 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
             : (this.T2o = !1);
       }),
       (this.pbt = (t, e) => {
-        const i = e.TouchType;
-        const s = Number(t);
+        var i = e.TouchType,
+          s = Number(t);
         switch (i) {
           case 0:
             this.hCt(!0, s, e);
@@ -117,7 +118,7 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
           : (this.R2o = !1);
       }),
       (this.W2o = (t, e) => {
-        e === 0
+        0 === e
           ? this.P2o === t && (this.P2o = "")
           : ((this.P2o = t),
             EventSystem_1.EventSystem.Emit(
@@ -149,7 +150,7 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
     this.A2o = t;
   }
   get IsJoystickZoom() {
-    return this.P2o !== "";
+    return "" !== this.P2o;
   }
   get MultiTouchOriginCenter() {
     return this.x2o;
@@ -162,7 +163,7 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
   }
   set IsMultiFingerControl(t) {
     t === this.L2o ||
-      (!t && this.q2o.size > 0) ||
+      (!t && 0 < this.q2o.size) ||
       ((this.L2o = t), this.L2o) ||
       (this.D2o = Time_1.Time.NowSeconds);
   }
@@ -212,8 +213,8 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
     super.OnDestroy(), (this.w2o = void 0), (this.B2o = void 0);
   }
   CheckTouch() {
-    var t = this.q2o.get(TouchFingerDefine_1.EFingerIndex.One);
-    const e = this.q2o.get(TouchFingerDefine_1.EFingerIndex.Two);
+    var t = this.q2o.get(TouchFingerDefine_1.EFingerIndex.One),
+      e = this.q2o.get(TouchFingerDefine_1.EFingerIndex.Two);
     if (
       ((this.IsMultiFingerControl = void 0 !== t && void 0 !== e),
       this.IsMultiFingerControl)
@@ -235,14 +236,14 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
     }
   }
   F2o() {
-    if (this.B2o.X !== 0 || this.B2o.Y !== 0) {
+    if (0 !== this.B2o.X || 0 !== this.B2o.Y) {
       var e = Time_1.Time.NowSeconds - this.b2o;
       let t = ((2 * this.B2o.Size()) / (e * e)) * e;
-      var e = WorldMapUtil_1.WorldMapUtil.GetViewportSizeByPool();
-      var e =
-        (e.IsNearlyZero() ||
-          (t = MathCommon_1.MathCommon.Clamp(t, 0, e.Size())),
-        this.B2o.Normalize(0));
+      var e = WorldMapUtil_1.WorldMapUtil.GetViewportSizeByPool(),
+        e =
+          (e.IsNearlyZero() ||
+            (t = MathCommon_1.MathCommon.Clamp(t, 0, e.Size())),
+          this.B2o.Normalize(0));
       e &&
         ((e = Vector2D_1.Vector2D.Create()),
         this.B2o.Multiply(t, e),
@@ -264,7 +265,7 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
         t = Vector2D_1.Vector2D.Create(t.TouchPosition.X, t.TouchPosition.Y);
         this.x2o.AdditionEqual(t);
       }),
-      this.q2o.size > 0 && this.x2o.DivisionEqual(this.q2o.size);
+      0 < this.q2o.size && this.x2o.DivisionEqual(this.q2o.size);
   }
   N2o(t) {
     t = this.O2o(t.X, t.Y);
@@ -290,4 +291,4 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
   }
 }
 exports.WorldMapInteractComponent = WorldMapInteractComponent;
-// # sourceMappingURL=WorldMapInteractComponent.js.map
+//# sourceMappingURL=WorldMapInteractComponent.js.map

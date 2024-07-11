@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineBase = exports.appendDepthSpace = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const StateMachineCommon_1 = require("../../../Core/Utils/StateMachine/StateMachineCommon");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CombatMessage_1 = require("../../Module/CombatMessage/CombatMessage");
-const CombatDebugController_1 = require("../../Utils/CombatDebugController");
-const AiStateMachineTransition_1 = require("./AiStateMachineTransition");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  StateMachineCommon_1 = require("../../../Core/Utils/StateMachine/StateMachineCommon"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CombatMessage_1 = require("../../Module/CombatMessage/CombatMessage"),
+  CombatDebugController_1 = require("../../Utils/CombatDebugController"),
+  AiStateMachineTransition_1 = require("./AiStateMachineTransition");
 function appendDepthSpace(i, s) {
   for (let t = 0; t < s; t++) i.Append("    ");
 }
@@ -103,7 +103,7 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
         h.BindStates?.length)
       )
         for (const f of h.BindStates) {
-          const t =
+          var t =
             ModelManager_1.ModelManager.AiStateMachineModel.AiStateMachineFactory.CreateState(
               this,
               f,
@@ -112,7 +112,7 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
         }
       if (h.OnEnterActions?.length)
         for (const c of h.OnEnterActions) {
-          const o =
+          var o =
             ModelManager_1.ModelManager.AiStateMachineModel.AiStateMachineFactory.CreateAction(
               this,
               c,
@@ -121,7 +121,7 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
         }
       if (h.OnExitActions?.length)
         for (const l of h.OnExitActions) {
-          const e =
+          var e =
             ModelManager_1.ModelManager.AiStateMachineModel.AiStateMachineFactory.CreateAction(
               this,
               l,
@@ -130,9 +130,9 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
         }
       if (h.Children?.length) {
         (this.Children = []), (this.ChildrenMap = new Map());
-        const r = h.Children.length;
+        var r = h.Children.length;
         for (let t = 0; t < r; t++) {
-          const a = new AiStateMachineBase(
+          var a = new AiStateMachineBase(
             i,
             this,
             this.Owner.GetNodeData(h.Children[t]),
@@ -144,9 +144,9 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
       }
       if (h.Transitions)
         for (const C of h.Transitions) {
-          var n;
-          var d;
-          const v = this.Owner.GetNodeByUuid(C.From);
+          var n,
+            d,
+            v = this.Owner.GetNodeByUuid(C.From);
           v
             ? (n = this.Owner.GetNodeByUuid(C.To))
               ? (d = new AiStateMachineTransition_1.AiStateMachineTransition(
@@ -183,7 +183,7 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
     }
   }
   get MappingNode() {
-    let t;
+    var t;
     return (
       this.MBn ||
         ((t = this.Owner.NodeReferenceMap.get(this.Uuid)),
@@ -209,13 +209,13 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
     );
   }
   OnClear() {
-    if (this.TransitionMap && this.TransitionMap.size > 0)
-      for (const [, t] of this.TransitionMap) t.Clear();
-    if (this.BindStates && this.BindStates.length > 0)
+    if (this.TransitionMap && 0 < this.TransitionMap.size)
+      for (var [, t] of this.TransitionMap) t.Clear();
+    if (this.BindStates && 0 < this.BindStates.length)
       for (const i of this.BindStates) i.Clear();
-    if (this.OnEnterActions && this.OnEnterActions.length > 0)
+    if (this.OnEnterActions && 0 < this.OnEnterActions.length)
       for (const s of this.OnEnterActions) s.Clear();
-    if (this.OnExitActions && this.OnExitActions.length > 0)
+    if (this.OnExitActions && 0 < this.OnExitActions.length)
       for (const h of this.OnExitActions) h.Clear();
     this.Task?.Clear(),
       (this.Task = void 0),
@@ -250,7 +250,7 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
         (this.jre = !1),
         this.TransitionMap)
       )
-        for (const [, h] of this.TransitionMap) h.Enter();
+        for (var [, h] of this.TransitionMap) h.Enter();
       this.HasTaskFinishCondition &&
         this.Owner.ForceDisableAnimOptimization &&
         this.AnimationComponent.StartForceDisableAnimOptimization(2),
@@ -277,7 +277,7 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
         (this.ExecutedAction = !1),
         this.TransitionMap)
       )
-        for (const [, i] of this.TransitionMap) i.Exit();
+        for (var [, i] of this.TransitionMap) i.Exit();
       this.HasTaskFinishCondition &&
         (this.AnimationComponent.CancelForceDisableAnimOptimization(2),
         (this.Owner.ForceDisableAnimOptimization = !1)),
@@ -298,8 +298,8 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
   }
   OnEnter(t) {
     if (!this.IsReferenceNode) {
-      let i;
-      let s = this.RootNode.Uuid;
+      var i,
+        s = this.RootNode.Uuid;
       this.Task &&
         (((i = Protocol_1.Aki.Protocol.QNn.create())._kn =
           Protocol_1.Aki.Protocol.DGs.Proto_BT_Task),
@@ -342,9 +342,9 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
       if (((this.ElapseTime += t), this.BindStates))
         for (const h of this.BindStates) h.Tick(t);
       if ((this.Task?.Tick(t), this.TransitionMap)) {
-        for (const [, i] of this.TransitionMap) i.Tick();
+        for (var [, i] of this.TransitionMap) i.Tick();
         if (!this.jre)
-          for (const [, s] of this.TransitionMap)
+          for (var [, s] of this.TransitionMap)
             !this.RootNode.WaitSwitchState &&
               s.CheckPredictionCondition() &&
               this.TrySwitch(s.To);
@@ -352,7 +352,7 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
     }
   }
   OnControl() {
-    this.TakeControlType === 1
+    1 === this.TakeControlType
       ? (this.OnEnter(),
         CombatDebugController_1.CombatDebugController.CombatInfo(
           "StateMachineNew",
@@ -384,10 +384,10 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
       this.Activated || this.Enter();
   }
   DeactiveByReferenceNode(t) {
-    this.SBn.delete(t), this.SBn && this.SBn.size === 0 && this.Exit();
+    this.SBn.delete(t), this.SBn && 0 === this.SBn.size && this.Exit();
   }
   ForceActive(t = !0) {
-    let i;
+    var i;
     this.Parent
       ? ((i = this.Parent).Activated || i.ForceActive(t),
         i.Switch(this.Name, t, !0, !1))
@@ -395,7 +395,7 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
   }
   TrySwitch(i) {
     const s = this.Owner.GetNodeByUuid(i);
-    const t = Protocol_1.Aki.Protocol.INn.create();
+    var t = Protocol_1.Aki.Protocol.INn.create();
     (t.ukn = this.RootNode.Uuid),
       (t.mkn = this.Uuid),
       (t.dkn = s.Uuid),
@@ -492,7 +492,7 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
       (this.WaitSwitchState && i.Append(">>> 等待服务器确认切换状态 <<<\n"),
       appendDepthSpace(i, h),
       i.Append(`${this.Name}|${this.Uuid}${this.Activated ? " <<<" : ""}\n`),
-      this.TransitionMap && this.TransitionMap.size > 0 && this.Activated)
+      this.TransitionMap && 0 < this.TransitionMap.size && this.Activated)
     ) {
       s.Append(
         "-------------------------------------------------------------\n",
@@ -500,9 +500,9 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
         s.Append(
           `${this.Name} [持续时长:${(this.ElapseTime / 1e3).toFixed(1)}]\n`,
         );
-      for (const [t, r] of this.TransitionMap) {
+      for (var [t, r] of this.TransitionMap) {
         appendDepthSpace(s, 1);
-        const a = this.Owner.GetNodeByUuid(t);
+        var a = this.Owner.GetNodeByUuid(t);
         a
           ? (s.Append(`目标：${a.Name} | ${a.Uuid}
 `),
@@ -514,15 +514,14 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
         "-------------------------------------------------------------\n",
       );
     }
-    const n = this.Children?.length;
-    if (this.Children && n && n > 0)
+    var n = this.Children?.length;
+    if (this.Children && n && 0 < n)
       for (let t = 0; t < n; t++) this.Children[t].ToString(i, s, h + 1, o, e);
   }
-
   GetCurrentStateString() {
     let i = this.Name;
     this.WaitSwitchState && (i = "[先行]" + i);
-    const s = this.Children?.length ?? 0;
+    var s = this.Children?.length ?? 0;
     for (let t = 0; t < s; t++)
       this.Children[t].Activated &&
         (i += "->" + this.Children[t].GetCurrentStateString());
@@ -530,4 +529,4 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
   }
 }
 exports.AiStateMachineBase = AiStateMachineBase;
-// # sourceMappingURL=AiStateMachine.js.map
+//# sourceMappingURL=AiStateMachine.js.map

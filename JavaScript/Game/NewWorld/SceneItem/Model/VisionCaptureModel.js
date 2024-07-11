@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionCaptureModel = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ModelBase_1 = require("../../../../Core/Framework/ModelBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../../Core/Framework/ModelBase");
 class VisionCaptureModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments), (this.Qnr = void 0);
@@ -32,4 +32,4 @@ class VisionCaptureModel extends ModelBase_1.ModelBase {
   }
 }
 exports.VisionCaptureModel = VisionCaptureModel;
-// # sourceMappingURL=VisionCaptureModel.js.map
+//# sourceMappingURL=VisionCaptureModel.js.map

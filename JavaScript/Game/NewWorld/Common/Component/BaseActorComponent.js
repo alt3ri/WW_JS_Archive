@@ -1,41 +1,45 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, i, e, s) {
-    let o;
-    const h = arguments.length;
-    let r =
-      h < 3 ? i : s === null ? (s = Object.getOwnPropertyDescriptor(i, e)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      h = arguments.length,
+      r =
+        h < 3
+          ? i
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(i, e))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(t, i, e, s);
     else
-      for (let n = t.length - 1; n >= 0; n--)
-        (o = t[n]) && (r = (h < 3 ? o(r) : h > 3 ? o(i, e, r) : o(i, e)) || r);
-    return h > 3 && r && Object.defineProperty(i, e, r), r;
+      for (var n = t.length - 1; 0 <= n; n--)
+        (o = t[n]) && (r = (h < 3 ? o(r) : 3 < h ? o(i, e, r) : o(i, e)) || r);
+    return 3 < h && r && Object.defineProperty(i, e, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BaseActorComponent = exports.DisableEntityHandle = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const Entity_1 = require("../../../../Core/Entity/Entity");
-const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
-const CycleCounter_1 = require("../../../../Core/Performance/CycleCounter");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const Quat_1 = require("../../../../Core/Utils/Math/Quat");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  Entity_1 = require("../../../../Core/Entity/Entity"),
+  EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  CycleCounter_1 = require("../../../../Core/Performance/CycleCounter"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  Quat_1 = require("../../../../Core/Utils/Math/Quat"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager");
 class DisableEntityHandle {
   constructor(t) {
     (this.S9 = t), (this.vW = 0), (this.DW = new Map());
   }
   get Empty() {
-    return this.DW.size === 0;
+    return 0 === this.DW.size;
   }
   Disable(t, i) {
     t
@@ -75,9 +79,9 @@ class DisableEntityHandle {
     this.DW.clear();
   }
   DumpDisableInfo() {
-    let t;
-    let i;
-    const e = new Array();
+    var t,
+      i,
+      e = new Array();
     let s = "";
     for ([t, i] of this.DW)
       e.push(`${s}{Type:${this.S9},Handle:${t},Reason:${i}}`), (s = " ");
@@ -427,7 +431,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
       (this.CachedForwardTime = 0);
   }
   SetActorLocationAndRotation(t, i, e = "unknown", s = !1) {
-    let o;
+    var o;
     return (
       CycleCounter_1.CycleCounter.Start("TS_SetActorLocationAndRotation"),
       MathUtils_1.MathUtils.IsValidVector(t)
@@ -474,7 +478,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
   }
   SetActorTransform(t, i = "unknown", e = !0) {
     let s = !1;
-    const o = t.GetLocation();
+    var o = t.GetLocation();
     return MathUtils_1.MathUtils.IsValidVector(o)
       ? (this.CachedDesiredActorLocation.FromUeVector(t.GetLocation()),
         this.ActorLocationProxy.Equals(this.CachedDesiredActorLocation)
@@ -557,7 +561,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
     return this.IsInSequenceBinding;
   }
   DisableActor(t) {
-    const i = this.DisableActorHandle.Disable(t, this.constructor.name);
+    var i = this.DisableActorHandle.Disable(t, this.constructor.name);
     return (
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -581,7 +585,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
     );
   }
   DisableCollision(t) {
-    const i = this.DisableCollisionHandle.Disable(t, this.constructor.name);
+    var i = this.DisableCollisionHandle.Disable(t, this.constructor.name);
     return (
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -625,7 +629,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
       this.ActorInternal.bHidden !== !this.DisableActorHandle.Empty
     ) {
       const i = () => {
-        const t = this.DisableActorHandle.Empty;
+        var t = this.DisableActorHandle.Empty;
         this.ActorInternal.SetActorHiddenInGame(!t),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnSetActorHidden,
@@ -723,4 +727,4 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
   BaseActorComponent,
 )),
   (exports.BaseActorComponent = BaseActorComponent);
-// # sourceMappingURL=BaseActorComponent.js.map
+//# sourceMappingURL=BaseActorComponent.js.map

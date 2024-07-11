@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SmallItemGridElementComponent = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const SmallItemGridComponent_1 = require("./SmallItemGridComponent");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  SmallItemGridComponent_1 = require("./SmallItemGridComponent");
 class SmallItemGridElementComponent extends SmallItemGridComponent_1.SmallItemGridComponent {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UITexture]];
@@ -12,11 +12,11 @@ class SmallItemGridElementComponent extends SmallItemGridComponent_1.SmallItemGr
     return "UiItem_ItemElement";
   }
   OnRefresh(e) {
-    let t, n, r;
+    var t, n, r;
     void 0 === e ||
     !(t = ConfigManager_1.ConfigManager.CommonConfig.GetElementConfig(e)) ||
-    (n = t.Icon5) === "" ||
-    n.length === 0
+    "" === (n = t.Icon5) ||
+    0 === n.length
       ? this.SetActive(!1)
       : ((r = this.GetTexture(0)),
         this.SetElementIcon(n, r, e),
@@ -25,4 +25,4 @@ class SmallItemGridElementComponent extends SmallItemGridComponent_1.SmallItemGr
   }
 }
 exports.SmallItemGridElementComponent = SmallItemGridElementComponent;
-// # sourceMappingURL=SmallItemGridElementComponent.js.map
+//# sourceMappingURL=SmallItemGridElementComponent.js.map

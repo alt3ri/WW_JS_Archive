@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelStaticMeshSpec = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper");
-const EffectMaterialParameter_1 = require("../../Render/Effect/Data/Parameters/EffectMaterialParameter");
-const EffectSpec_1 = require("./EffectSpec");
+const UE = require("ue"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper"),
+  EffectMaterialParameter_1 = require("../../Render/Effect/Data/Parameters/EffectMaterialParameter"),
+  EffectSpec_1 = require("./EffectSpec");
 class EffectModelStaticMeshSpec extends EffectSpec_1.EffectSpec {
   constructor() {
     super(...arguments),
@@ -28,7 +28,7 @@ class EffectModelStaticMeshSpec extends EffectSpec_1.EffectSpec {
       (this.rfe = []),
       this.EffectModel.UseMultipleMaterialSlots)
     ) {
-      const i = this.EffectModel.MaterialOverrideArrayRef.Num();
+      var i = this.EffectModel.MaterialOverrideArrayRef.Num();
       for (let t = 0; t < i; t++)
         this.rfe.push(this.EffectModel.MaterialOverrideArrayRef.Get(t));
     } else
@@ -36,8 +36,8 @@ class EffectModelStaticMeshSpec extends EffectSpec_1.EffectSpec {
         this.rfe.push(this.EffectModel.MaterialOverrideRef);
     if (
       ((this.nfe =
-        this.EffectModel.MaterialFloatParameters.Num() > 0 ||
-        this.EffectModel.MaterialColorParameters.Num() > 0),
+        0 < this.EffectModel.MaterialFloatParameters.Num() ||
+        0 < this.EffectModel.MaterialColorParameters.Num()),
       this.nfe)
     ) {
       this.sfe = [];
@@ -49,11 +49,9 @@ class EffectModelStaticMeshSpec extends EffectSpec_1.EffectSpec {
           ),
         );
     }
-    const t = this.Handle.GetSureEffectActor();
-    var s = this.Handle.Parent;
-    var s = s
-      ? s.GetEffectSpec()?.GetSceneComponent()
-      : t.K2_GetRootComponent();
+    var t = this.Handle.GetSureEffectActor(),
+      s = this.Handle.Parent,
+      s = s ? s.GetEffectSpec()?.GetSceneComponent() : t.K2_GetRootComponent();
     if (
       ((this.StaticMeshComponent =
         EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
@@ -68,7 +66,7 @@ class EffectModelStaticMeshSpec extends EffectSpec_1.EffectSpec {
       this.StaticMeshComponent.SetComponentTickEnabled(!1),
       (this.SceneComponent = this.StaticMeshComponent),
       this.StaticMeshComponent.SetIsUIScenePrimitive(
-        this.GetEffectType() === 1,
+        1 === this.GetEffectType(),
       ),
       this.StaticMeshComponent.SetStaticMesh(this.ofe),
       (this.StaticMeshComponent.bReceivesDecals =
@@ -154,9 +152,9 @@ class EffectModelStaticMeshSpec extends EffectSpec_1.EffectSpec {
   OnEffectTypeChange() {
     this.StaticMeshComponent?.IsValid() &&
       this.StaticMeshComponent.SetIsUIScenePrimitive(
-        this.GetEffectType() === 1,
+        1 === this.GetEffectType(),
       );
   }
 }
 exports.EffectModelStaticMeshSpec = EffectModelStaticMeshSpec;
-// # sourceMappingURL=EffectModelStaticMeshSpec.js.map
+//# sourceMappingURL=EffectModelStaticMeshSpec.js.map

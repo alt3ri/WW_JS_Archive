@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerDetailSwitchItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class TowerDetailSwitchItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -30,7 +30,7 @@ class TowerDetailSwitchItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.ALo]]);
   }
   OnStart() {
-    const e = this.GetExtendToggle(0);
+    var e = this.GetExtendToggle(0);
     e.SetToggleGroup(void 0),
       e.CanExecuteChange.Unbind(),
       e.CanExecuteChange.Bind(this.T7e);
@@ -47,4 +47,4 @@ class TowerDetailSwitchItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.TowerDetailSwitchItem = TowerDetailSwitchItem;
-// # sourceMappingURL=TowerDetailSwitchItem.js.map
+//# sourceMappingURL=TowerDetailSwitchItem.js.map

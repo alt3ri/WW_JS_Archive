@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AchievementProgressItem = void 0);
-const UE = require("ue");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class AchievementProgressItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(), this.CreateThenShowByActor(e.GetOwner());
@@ -19,7 +19,7 @@ class AchievementProgressItem extends UiPanelBase_1.UiPanelBase {
     this.GetItem(0).SetUIActive(!1),
       this.GetItem(1).SetUIActive(!1),
       this.GetText(2).SetUIActive(!1),
-      e.GetFinishState() === 2
+      2 === e.GetFinishState()
         ? (this.GetItem(0).SetUIActive(!0),
           this.GetText(2).SetUIActive(!0),
           this.GetText(2).SetText(
@@ -29,16 +29,16 @@ class AchievementProgressItem extends UiPanelBase_1.UiPanelBase {
               ),
             ),
           ))
-        : e.GetFinishState() === 0 && this.GetItem(1).SetUIActive(!0);
+        : 0 === e.GetFinishState() && this.GetItem(1).SetUIActive(!0);
   }
   RefreshState(e) {
     this.GetItem(0).SetUIActive(!1),
       this.GetItem(1).SetUIActive(!1),
       this.GetText(2).SetUIActive(!1),
-      e.GetFinishState() === 2
+      2 === e.GetFinishState()
         ? (this.GetItem(0).SetUIActive(!0), this.GetText(2).SetUIActive(!0))
-        : e.GetFinishState() === 0 && this.GetItem(1).SetUIActive(!0);
+        : 0 === e.GetFinishState() && this.GetItem(1).SetUIActive(!0);
   }
 }
 exports.AchievementProgressItem = AchievementProgressItem;
-// # sourceMappingURL=AchievementProgressItem.js.map
+//# sourceMappingURL=AchievementProgressItem.js.map

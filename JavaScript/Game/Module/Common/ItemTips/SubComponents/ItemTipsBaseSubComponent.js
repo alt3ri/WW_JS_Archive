@@ -15,7 +15,7 @@ class TipsBaseSubComponent extends UiPanelBase_1.UiPanelBase {
   }
   Refresh(e) {}
   SetVisible(e) {
-    const s = () => {
+    var s = () => {
       this.SetActive(e);
     };
     this.InAsyncLoading() ? this.OperationMap.set("SetVisible", s) : s();
@@ -24,4 +24,4 @@ class TipsBaseSubComponent extends UiPanelBase_1.UiPanelBase {
   SetPanelNumVisible(e) {}
 }
 exports.TipsBaseSubComponent = TipsBaseSubComponent;
-// # sourceMappingURL=ItemTipsBaseSubComponent.js.map
+//# sourceMappingURL=ItemTipsBaseSubComponent.js.map

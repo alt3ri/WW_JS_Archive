@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const LauncherConfigLib_1 = require("./Define/LauncherConfigLib");
-const SplashUiView_1 = require("./Ui/Splash/SplashUiView");
-const AppUtil_1 = require("./Update/AppUtil");
-const LauncherGameSettingLib_1 = require("./Util/LauncherGameSettingLib");
-const LauncherLanguageLib_1 = require("./Util/LauncherLanguageLib");
-const LauncherResourceLib_1 = require("./Util/LauncherResourceLib");
-const LauncherStorageLib_1 = require("./Util/LauncherStorageLib");
+const UE = require("ue"),
+  LauncherConfigLib_1 = require("./Define/LauncherConfigLib"),
+  SplashUiView_1 = require("./Ui/Splash/SplashUiView"),
+  AppUtil_1 = require("./Update/AppUtil"),
+  LauncherGameSettingLib_1 = require("./Util/LauncherGameSettingLib"),
+  LauncherLanguageLib_1 = require("./Util/LauncherLanguageLib"),
+  LauncherResourceLib_1 = require("./Util/LauncherResourceLib"),
+  LauncherStorageLib_1 = require("./Util/LauncherStorageLib");
 class TsSplash extends UE.Object {
   Init(e) {
     UE.KismetSystemLibrary.GetCommandLine().includes("-SkipSplash")
@@ -80,4 +80,4 @@ class TsSplash extends UE.Object {
   (TsSplash.WorldContext = void 0),
   (TsSplash.KuroSplashVideo = void 0),
   (exports.default = TsSplash);
-// # sourceMappingURL=TsSplash.js.map
+//# sourceMappingURL=TsSplash.js.map

@@ -62,4 +62,4 @@ class ExtraEffectParameters {
   }
 }
 exports.ExtraEffectParameters = ExtraEffectParameters;
-// # sourceMappingURL=ExtraEffectBaseTypes.js.map
+//# sourceMappingURL=ExtraEffectBaseTypes.js.map

@@ -1,44 +1,44 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SundialControlController = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../GlobalData");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const SceneInteractionLevel_1 = require("../../Render/Scene/Item/SceneInteractionLevel");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const SEQ_PATH =
-  "/Game/Aki/Scene/InteractionLevel/Animation/Sundial/TPrefab_SM_Sundial_Finish.TPrefab_SM_Sundial_Finish";
-const leftTag = new UE.FName("Left");
-const rightTag = new UE.FName("Right");
-const rollTag = new UE.FName("Roll");
-const decalTag = new UE.FName("Decal");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../GlobalData"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  SceneInteractionLevel_1 = require("../../Render/Scene/Item/SceneInteractionLevel"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  SEQ_PATH =
+    "/Game/Aki/Scene/InteractionLevel/Animation/Sundial/TPrefab_SM_Sundial_Finish.TPrefab_SM_Sundial_Finish",
+  leftTag = new UE.FName("Left"),
+  rightTag = new UE.FName("Right"),
+  rollTag = new UE.FName("Roll"),
+  decalTag = new UE.FName("Decal");
 class SundialControlController extends UiControllerBase_1.UiControllerBase {
   static GenerateModel(e) {
     var t = GlobalData_1.GlobalData.World;
     let r =
       ModelManager_1.ModelManager.SundialControlModel.ModelConfig.场景交互物.AssetPathName?.toString();
     r.includes(".") && (r = r.split(".")[0]);
-    const o = (0, puerts_1.$ref)(!1);
-    var t = UE.LevelStreamingDynamic.LoadLevelInstance(
-      t,
-      r,
-      Vector_1.Vector.ZeroVector,
-      Rotator_1.Rotator.ZeroRotator,
-      o,
-    );
+    var o = (0, puerts_1.$ref)(!1),
+      t = UE.LevelStreamingDynamic.LoadLevelInstance(
+        t,
+        r,
+        Vector_1.Vector.ZeroVector,
+        Rotator_1.Rotator.ZeroRotator,
+        o,
+      );
     (0, puerts_1.$unref)(o) &&
       t &&
       ((this.Ixe = new SceneInteractionLevel_1.SceneInteractionLevel()),
@@ -159,7 +159,7 @@ class SundialControlController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static SDe(e = "MainQuest") {
-    const t = Protocol_1.Aki.Protocol.UKn.create();
+    var t = Protocol_1.Aki.Protocol.UKn.create();
     (t.ykn = e),
       (t.Ikn = Protocol_1.Aki.Protocol.dqs.Proto_SundialPuzzle),
       Net_1.Net.Call(19172, t, (e) => {
@@ -191,7 +191,7 @@ class SundialControlController extends UiControllerBase_1.UiControllerBase {
     void 0 !== r && (t ? _a.Ixe.PlaySceneEffect(r) : _a.Ixe.EndSceneEffect(r));
   }),
   (SundialControlController.Dxe = (e) => {
-    _a.Ixe.EndSceneEffect(e === 0 ? 4 : 3),
-      _a.Ixe.PlaySceneEffect(e === 0 ? 3 : 4);
+    _a.Ixe.EndSceneEffect(0 === e ? 4 : 3),
+      _a.Ixe.PlaySceneEffect(0 === e ? 3 : 4);
   });
-// # sourceMappingURL=SundialControlController.js.map
+//# sourceMappingURL=SundialControlController.js.map

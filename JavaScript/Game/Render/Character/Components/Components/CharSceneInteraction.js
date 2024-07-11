@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharSceneInteraction = void 0);
-const RenderConfig_1 = require("../../../Config/RenderConfig");
-const SceneCharacterInteraction_1 = require("../../../Scene/Interaction/SceneCharacterInteraction");
-const CharRenderBase_1 = require("../../Manager/CharRenderBase");
+const RenderConfig_1 = require("../../../Config/RenderConfig"),
+  SceneCharacterInteraction_1 = require("../../../Scene/Interaction/SceneCharacterInteraction"),
+  CharRenderBase_1 = require("../../Manager/CharRenderBase");
 class CharSceneInteraction extends CharRenderBase_1.CharRenderBase {
   constructor() {
     super(...arguments),
@@ -53,4 +53,4 @@ class CharSceneInteraction extends CharRenderBase_1.CharRenderBase {
   }
 }
 exports.CharSceneInteraction = CharSceneInteraction;
-// # sourceMappingURL=CharSceneInteraction.js.map
+//# sourceMappingURL=CharSceneInteraction.js.map

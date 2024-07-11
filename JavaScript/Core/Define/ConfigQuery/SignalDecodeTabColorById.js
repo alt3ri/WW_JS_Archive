@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configSignalDecodeTabColorById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const SignalDecodeTabColor_1 = require("../Config/SignalDecodeTabColor");
-const DB = "db_signaldecodetabcolor.db";
-const FILE = "x.信号破译页签颜色.csv";
-const TABLE = "SignalDecodeTabColor";
-const COMMAND = "select BinData from `SignalDecodeTabColor` where Id=?";
-const KEY_PREFIX = "SignalDecodeTabColorById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  SignalDecodeTabColor_1 = require("../Config/SignalDecodeTabColor"),
+  DB = "db_signaldecodetabcolor.db",
+  FILE = "x.信号破译页签颜色.csv",
+  TABLE = "SignalDecodeTabColor",
+  COMMAND = "select BinData from `SignalDecodeTabColor` where Id=?",
+  KEY_PREFIX = "SignalDecodeTabColorById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configSignalDecodeTabColorById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configSignalDecodeTabColorById.GetConfig(";
 exports.configSignalDecodeTabColorById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configSignalDecodeTabColorById = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var i;
-        var n = void 0;
+        var i,
+          n = void 0;
         if (
           (([i, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configSignalDecodeTabColorById = {
     }
   },
 };
-// # sourceMappingURL=SignalDecodeTabColorById.js.map
+//# sourceMappingURL=SignalDecodeTabColorById.js.map

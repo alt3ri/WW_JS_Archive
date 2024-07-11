@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuideController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LevelConditionRegistry_1 = require("../../LevelGamePlay/LevelConditions/LevelConditionRegistry");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LevelConditionRegistry_1 = require("../../LevelGamePlay/LevelConditions/LevelConditionRegistry"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager");
 class GuideController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
     Net_1.Net.Register(13151, this.vYt);
@@ -21,9 +21,9 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
   }
   static MYt() {
     for (const i of ConfigManager_1.ConfigManager.GuideConfig.GetAllGroup()) {
-      var e;
-      var o;
-      const t = i.AutoOpenCondition;
+      var e,
+        o,
+        t = i.AutoOpenCondition;
       t &&
         ((e = i.Id),
         ModelManager_1.ModelManager.GuideModel.CanGroupInvoke(e)) &&
@@ -41,9 +41,9 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
   }
   static yYt() {
     for (const i of ConfigManager_1.ConfigManager.GuideConfig.GetAllGroup()) {
-      var e;
-      var o;
-      const t = i.AutoOpenCondition;
+      var e,
+        o,
+        t = i.AutoOpenCondition;
       t &&
         ((e = i.Id), (o = this.SYt.get(e))) &&
         (LevelConditionRegistry_1.LevelConditionRegistry.UnRegisterConditionGroup(
@@ -139,11 +139,11 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
         ["是否触发服务端完成", !o],
       ),
       (ModelManager_1.ModelManager.GuideModel.IsGmInvoke = !0);
-    const t = ModelManager_1.ModelManager.GuideModel.TryGetGuideGroup(e);
+    var t = ModelManager_1.ModelManager.GuideModel.TryGetGuideGroup(e);
     (ModelManager_1.ModelManager.GuideModel.IsGmInvoke = !1),
       t
         ? (t.IsFake = o)
-          ? t.StateMachine.CurrentState !== 0
+          ? 0 !== t.StateMachine.CurrentState
             ? Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Guide",
@@ -160,7 +160,7 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
           ]);
   }
   static FinishGuide(o) {
-    const e = Protocol_1.Aki.Protocol._es.create();
+    var e = Protocol_1.Aki.Protocol._es.create();
     (e.P5n = o),
       Net_1.Net.Call(19247, e, (e) => {
         e?.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
@@ -217,7 +217,7 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
       GuideController.AYt(e));
   }
   static AYt(e) {
-    let o, t;
+    var o, t;
     GuideController.SYt.has(e) ||
       (ModelManager_1.ModelManager.GuideModel.CanGroupInvoke(e) &&
         (o =
@@ -235,8 +235,8 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
         GuideController.SYt.set(e, t)));
   }
   static UYt(e) {
-    let o;
-    const t = GuideController.SYt.get(e);
+    var o,
+      t = GuideController.SYt.get(e);
     t &&
       !ModelManager_1.ModelManager.GuideModel.CanGroupInvoke(e) &&
       (o =
@@ -271,7 +271,7 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
   (GuideController.DYt = () =>
     !ModelManager_1.ModelManager.BattleUiModel.IsInBattleSettlement),
   (GuideController.IYt = (o, t) => {
-    const e = Protocol_1.Aki.Protocol.hes.create();
+    var e = Protocol_1.Aki.Protocol.hes.create();
     (e.P5n = o),
       Net_1.Net.Call(20570, e, (e) => {
         e?.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
@@ -295,10 +295,10 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
   }),
   (GuideController.K8s = [20013]),
   (GuideController.Uje = () => {
-    const e = ModelManager_1.ModelManager.GuideModel.CurrentGroupMap;
+    var e = ModelManager_1.ModelManager.GuideModel.CurrentGroupMap;
     if (e)
       for (const t of GuideController.K8s) {
-        const o = e.get(t);
+        var o = e.get(t);
         o &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -312,7 +312,7 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
       }
   }),
   (GuideController.TYt = () => {
-    const e = Protocol_1.Aki.Protocol.ses.create();
+    var e = Protocol_1.Aki.Protocol.ses.create();
     Net_1.Net.Call(18828, e, (e) => {
       if (e) {
         Log_1.Log.CheckDebug() &&
@@ -333,4 +333,4 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.Debug("Guide", 17, "控制器类型发生变更，引导组数据重置"),
       ModelManager_1.ModelManager.GuideModel.ClearAllGroup();
   });
-// # sourceMappingURL=GuideController.js.map
+//# sourceMappingURL=GuideController.js.map

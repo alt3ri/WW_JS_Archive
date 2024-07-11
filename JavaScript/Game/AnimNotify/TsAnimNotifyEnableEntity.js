@@ -13,4 +13,4 @@ class TsAnimNotifyEnableEntity extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifyEnableEntity;
-// # sourceMappingURL=TsAnimNotifyEnableEntity.js.map
+//# sourceMappingURL=TsAnimNotifyEnableEntity.js.map

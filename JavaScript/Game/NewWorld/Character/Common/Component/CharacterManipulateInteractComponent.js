@@ -1,46 +1,51 @@
 "use strict";
-let CharacterManipulateInteractComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, r) {
-    let a;
-    const o = arguments.length;
-    let s =
-      o < 3 ? e : r === null ? (r = Object.getOwnPropertyDescriptor(e, i)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      s = Reflect.decorate(t, e, i, r);
-    else
-      for (let n = t.length - 1; n >= 0; n--)
-        (a = t[n]) && (s = (o < 3 ? a(s) : o > 3 ? a(e, i, s) : a(e, i)) || s);
-    return o > 3 && s && Object.defineProperty(e, i, s), s;
-  };
+var CharacterManipulateInteractComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, r) {
+      var a,
+        o = arguments.length,
+        s =
+          o < 3
+            ? e
+            : null === r
+              ? (r = Object.getOwnPropertyDescriptor(e, i))
+              : r;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        s = Reflect.decorate(t, e, i, r);
+      else
+        for (var n = t.length - 1; 0 <= n; n--)
+          (a = t[n]) &&
+            (s = (o < 3 ? a(s) : 3 < o ? a(e, i, s) : a(e, i)) || s);
+      return 3 < o && s && Object.defineProperty(e, i, s), s;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterManipulateInteractComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const Net_1 = require("../../../../../Core/Net/Net");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon");
-const CameraController_1 = require("../../../../Camera/CameraController");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const EffectContext_1 = require("../../../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../../../Effect/EffectSystem");
-const Global_1 = require("../../../../Global");
-const GlobalData_1 = require("../../../../GlobalData");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const CharacterBuffIds_1 = require("./Abilities/CharacterBuffIds");
-const PROFILE_KEY = "CharacterManipulateInteractComponent_RefreshTarget";
-const MANIPULATE_VISION_ID = 1003;
-const SPHERE_TRACE_RADIUS = 1;
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon"),
+  CameraController_1 = require("../../../../Camera/CameraController"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  EffectContext_1 = require("../../../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../../../Effect/EffectSystem"),
+  Global_1 = require("../../../../Global"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  CharacterBuffIds_1 = require("./Abilities/CharacterBuffIds"),
+  PROFILE_KEY = "CharacterManipulateInteractComponent_RefreshTarget",
+  MANIPULATE_VISION_ID = 1003,
+  SPHERE_TRACE_RADIUS = 1;
 let CharacterManipulateInteractComponent =
   (CharacterManipulateInteractComponent_1 = class CharacterManipulateInteractComponent extends (
     EntityComponent_1.EntityComponent
@@ -104,7 +109,7 @@ let CharacterManipulateInteractComponent =
       );
     }
     OnTick(t) {
-      this.UHr(-581520176, this.hwn.InRangePoints.size > 0),
+      this.UHr(-581520176, 0 < this.hwn.InRangePoints.size),
         this.PHr()
           ? this.xHr()
           : (this.wHr(),
@@ -124,10 +129,10 @@ let CharacterManipulateInteractComponent =
             (r.CheckCondition()
               ? this.CHr.add(r)
               : this.RHr === r && this.wHr());
-        let t = MathUtils_1.MathUtils.MaxFloat;
-        let e = void 0;
+        let t = MathUtils_1.MathUtils.MaxFloat,
+          e = void 0;
         for (const a of this.CHr) {
-          const i = Vector_1.Vector.DistSquared(
+          var i = Vector_1.Vector.DistSquared(
             a.Location,
             this.Hte.ActorLocationProxy,
           );
@@ -227,10 +232,10 @@ let CharacterManipulateInteractComponent =
         this.Lie.AddTag(-1408007765),
         (this.fHr = this.THr ?? this.gHr),
         this.fHr?.ChangeManipulateInteractPointState(3);
-      const t = this.Hte.CreatureData.GetRoleConfig().RoleBody;
+      var t = this.Hte.CreatureData.GetRoleConfig().RoleBody;
       return (
         (this.EHr =
-          t === "MaleXL"
+          "MaleXL" === t
             ? CharacterBuffIds_1.buffId.ManipulateInteractBuffIdMaleX
             : CharacterBuffIds_1.buffId.ManipulateInteractBuffId),
         this.zJo.AddBuff(this.EHr, {
@@ -260,8 +265,8 @@ let CharacterManipulateInteractComponent =
         this.bHr();
     }
     NKt() {
-      let t;
-      const e = this.fHr?.Entity.GetComponent(1)?.ActorTransform;
+      var t,
+        e = this.fHr?.Entity.GetComponent(1)?.ActorTransform;
       e &&
         (t = this.Hte?.ActorLocation) &&
         (e.SetRotation(
@@ -278,8 +283,8 @@ let CharacterManipulateInteractComponent =
         ));
     }
     bHr() {
-      let t;
-      const e = this.fHr?.CreatureDataId;
+      var t,
+        e = this.fHr?.CreatureDataId;
       void 0 !== e &&
         (((t = Protocol_1.Aki.Protocol.pJn.create()).rkn =
           MathUtils_1.MathUtils.NumberToLong(e)),
@@ -313,4 +318,4 @@ let CharacterManipulateInteractComponent =
       )),
   (exports.CharacterManipulateInteractComponent =
     CharacterManipulateInteractComponent);
-// # sourceMappingURL=CharacterManipulateInteractComponent.js.map
+//# sourceMappingURL=CharacterManipulateInteractComponent.js.map

@@ -2,11 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonItemSelectView = exports.CommonItemSelectViewOpenViewData =
     void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const UiPopViewData_1 = require("../../Ui/Define/UiPopViewData");
-const SelectableComponent_1 = require("./PropItem/SelectablePropItem/SelectableComponent");
-const VisionRecoverySelectableComponent_1 = require("./PropItem/SelectablePropItem/VisionRecoverySelectableComponent");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  UiPopViewData_1 = require("../../Ui/Define/UiPopViewData"),
+  SelectableComponent_1 = require("./PropItem/SelectablePropItem/SelectableComponent"),
+  VisionRecoverySelectableComponent_1 = require("./PropItem/SelectablePropItem/VisionRecoverySelectableComponent");
 class CommonItemSelectViewOpenViewData extends UiPopViewData_1.UiPopViewData {
   constructor() {
     super(...arguments),
@@ -38,7 +38,7 @@ class CommonItemSelectView extends UiPanelBase_1.UiPanelBase {
   UpdateSelectableComponent(e, t, i, o, s = void 0) {
     this.OIt ||
       ((this.OIt = new (
-        e === 0
+        0 === e
           ? SelectableComponent_1.SelectableComponent
           : VisionRecoverySelectableComponent_1.VisionRecoverySelectableComponent
       )()),
@@ -65,4 +65,4 @@ class CommonItemSelectView extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.CommonItemSelectView = CommonItemSelectView;
-// # sourceMappingURL=CommonItemSelectView.js.map
+//# sourceMappingURL=CommonItemSelectView.js.map

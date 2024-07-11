@@ -26,7 +26,7 @@ class PrewarFormationData {
     this.Mne = e;
   }
   IsEmpty() {
-    return this.Mne === 0;
+    return 0 === this.Mne;
   }
   IsLeader() {
     return (
@@ -82,4 +82,4 @@ class PrewarFormationData {
   }
 }
 exports.PrewarFormationData = PrewarFormationData;
-// # sourceMappingURL=PrewarFormationData.js.map
+//# sourceMappingURL=PrewarFormationData.js.map

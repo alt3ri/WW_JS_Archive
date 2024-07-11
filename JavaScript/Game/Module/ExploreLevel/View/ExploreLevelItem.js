@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExploreLevelItem = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const SkipTaskManager_1 = require("../../SkipInterface/SkipTaskManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  SkipTaskManager_1 = require("../../SkipInterface/SkipTaskManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class ExploreLevelItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -16,10 +16,10 @@ class ExploreLevelItem extends UiPanelBase_1.UiPanelBase {
       (this.c5t = void 0),
       (this.m5t = void 0),
       (this.d5t = () => {
-        var e = this.c5t.GetAreaConfig();
-        const i = e.DeliveryMarkType;
-        var e = e.DeliveryMarkId;
-        i !== 1 ||
+        var e = this.c5t.GetAreaConfig(),
+          i = e.DeliveryMarkType,
+          e = e.DeliveryMarkId;
+        1 !== i ||
           e <= 0 ||
           SkipTaskManager_1.SkipTaskManager.Run(0, i.toString(), e.toString());
       }),
@@ -55,19 +55,19 @@ class ExploreLevelItem extends UiPanelBase_1.UiPanelBase {
           .ExploreScoreItemTexturePath,
         this.GetTexture(0),
       );
-    var s = e.GetAreaNameTextId();
-    var s = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(s);
-    let r = e.Progress;
-    var s =
-      (LguiUtil_1.LguiUtil.SetLocalTextNew(
-        this.GetText(1),
-        "AreaExploreProgress",
-        s,
-        r,
-      ),
-      ModelManager_1.ModelManager.ExploreProgressModel.GetExploreAreaData(
-        e.AreaId,
-      ));
+    var s = e.GetAreaNameTextId(),
+      s = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(s),
+      r = e.Progress,
+      s =
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(
+          this.GetText(1),
+          "AreaExploreProgress",
+          s,
+          r,
+        ),
+        ModelManager_1.ModelManager.ExploreProgressModel.GetExploreAreaData(
+          e.AreaId,
+        ));
     s &&
       ((r = s.GetProgress()),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -98,4 +98,4 @@ class ExploreLevelItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ExploreLevelItem = ExploreLevelItem;
-// # sourceMappingURL=ExploreLevelItem.js.map
+//# sourceMappingURL=ExploreLevelItem.js.map

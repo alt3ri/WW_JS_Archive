@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskSetNowTime extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -18,8 +18,8 @@ class TsTaskSetNowTime extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsBlackboardKey = this.BlackboardKey));
   }
   ReceiveTickAI(e, o, r) {
-    let s;
-    let t = e.AiController;
+    var s,
+      t = e.AiController;
     t
       ? (this.InitTsVariables(),
         this.TsBlackboardKey &&
@@ -40,4 +40,4 @@ class TsTaskSetNowTime extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskSetNowTime;
-// # sourceMappingURL=TsTaskSetNowTime.js.map
+//# sourceMappingURL=TsTaskSetNowTime.js.map

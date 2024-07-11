@@ -61,35 +61,35 @@ class AiHate {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   basehatred() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readFloat32(this.z7 + t) : 1;
   }
   decreaserate() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readFloat32(this.z7 + t) : 0.8;
   }
   decreasetimelength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readFloat32(this.z7 + t) : 5e3;
   }
   decreasetimecd() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readFloat32(this.z7 + t) : 1e4;
   }
   increaseratewhendecreasing() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readFloat32(this.z7 + t) : 1;
   }
   mincleartime() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readFloat32(this.z7 + t) : 1e3;
   }
   disengagedistancerange(t) {
-    const e = this.J7.__offset(this.z7, 18);
+    var e = this.J7.__offset(this.z7, 18);
     return e
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + e),
@@ -98,7 +98,7 @@ class AiHate {
       : null;
   }
   disengagetimerange(t) {
-    const e = this.J7.__offset(this.z7, 20);
+    var e = this.J7.__offset(this.z7, 20);
     return e
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + e),
@@ -107,7 +107,7 @@ class AiHate {
       : null;
   }
   disengageheightrange(t) {
-    const e = this.J7.__offset(this.z7, 22);
+    var e = this.J7.__offset(this.z7, 22);
     return e
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + e),
@@ -116,7 +116,7 @@ class AiHate {
       : null;
   }
   disengageheightrangemax(t) {
-    const e = this.J7.__offset(this.z7, 24);
+    var e = this.J7.__offset(this.z7, 24);
     return e
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + e),
@@ -125,7 +125,7 @@ class AiHate {
       : null;
   }
   disengageborndistance(t) {
-    const e = this.J7.__offset(this.z7, 26);
+    var e = this.J7.__offset(this.z7, 26);
     return e
       ? (t || new FloatRange_1.FloatRange()).__init(
           this.J7.__indirect(this.z7 + e),
@@ -134,17 +134,17 @@ class AiHate {
       : null;
   }
   maxmovefromborn() {
-    const t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.readFloat32(this.z7 + t) : -1;
   }
   excludetag(t) {
-    const e = this.J7.__offset(this.z7, 30);
+    var e = this.J7.__offset(this.z7, 30);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
   swornhatredtag(t) {
-    const e = this.J7.__offset(this.z7, 32);
+    var e = this.J7.__offset(this.z7, 32);
     return e ? this.J7.__string(this.z7 + e, t) : null;
   }
 }
 exports.AiHate = AiHate;
-// # sourceMappingURL=AiHate.js.map
+//# sourceMappingURL=AiHate.js.map

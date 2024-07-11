@@ -16,4 +16,4 @@ class AdventureGuideSort extends CommonSort_1.CommonSort {
   }
 }
 exports.AdventureGuideSort = AdventureGuideSort;
-// # sourceMappingURL=AdventureGuideSort.js.map
+//# sourceMappingURL=AdventureGuideSort.js.map

@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BlackScreenFadeView = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const TickSystem_1 = require("../../../Core/Tick/TickSystem");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const IAction_1 = require("../../../UniverseEditor/Interface/IAction");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const UiManager_1 = require("../../Ui/UiManager");
-const ColorUtils_1 = require("../../Utils/ColorUtils");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const BlackScreenFadeController_1 = require("./BlackScreenFadeController");
-const BlackScreenViewData_1 = require("./BlackScreenViewData");
-const GUARANTEED_TIME = 1e4;
-const MAX_FADE_VALUE = 0.9;
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  TickSystem_1 = require("../../../Core/Tick/TickSystem"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ColorUtils_1 = require("../../Utils/ColorUtils"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  BlackScreenFadeController_1 = require("./BlackScreenFadeController"),
+  BlackScreenViewData_1 = require("./BlackScreenViewData"),
+  GUARANTEED_TIME = 1e4,
+  MAX_FADE_VALUE = 0.9;
 class BlackScreenFadeView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(),
@@ -74,7 +74,7 @@ class BlackScreenFadeView extends UiPanelBase_1.UiPanelBase {
           this.agt(this.tgt);
       }),
       (this.lgt = (e) => {
-        this.ZCt > 0 && (this.ZCt -= e),
+        0 < this.ZCt && (this.ZCt -= e),
           this.ZCt <= 0 &&
             ((this.ZCt = 0),
             this.a1e && (Global_1.Global.CharacterCameraManager.FadeAmount = 0),
@@ -145,7 +145,7 @@ class BlackScreenFadeView extends UiPanelBase_1.UiPanelBase {
     this.ogt.SwitchState(2);
   }
   HideItem() {
-    const e = this.ogt.SwitchState(4);
+    var e = this.ogt.SwitchState(4);
     (ModelManager_1.ModelManager.LevelLoadingModel.CameraFadeHidePromise =
       new CustomPromise_1.CustomPromise()),
       e ||
@@ -166,16 +166,16 @@ class BlackScreenFadeView extends UiPanelBase_1.UiPanelBase {
     }
   }
   ugt() {
-    const e = this.mgt();
+    var e = this.mgt();
     this.rgt?.SetAlpha(e);
   }
   mgt() {
     return this.a1e
       ? Global_1.Global.CharacterCameraManager.FadeAmount >= MAX_FADE_VALUE ||
-        this.egt === 0
+        0 === this.egt
         ? 1
         : 1 - MathUtils_1.MathUtils.GetRangePct(0, this.egt, this.ZCt)
-      : this.egt === 0
+      : 0 === this.egt
         ? 0
         : MathUtils_1.MathUtils.GetRangePct(0, this.egt, this.ZCt);
   }
@@ -196,4 +196,4 @@ class BlackScreenFadeView extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.BlackScreenFadeView = BlackScreenFadeView;
-// # sourceMappingURL=BlackScreenFadeView.js.map
+//# sourceMappingURL=BlackScreenFadeView.js.map

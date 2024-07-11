@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FullScreenViewItem = void 0);
-const UE = require("ue");
-const CommonPopViewBehaviourBase_1 = require("./CommonPopViewBehaviourBase");
-const PopupCaptionItem_1 = require("./PopupCaptionItem");
+const UE = require("ue"),
+  CommonPopViewBehaviourBase_1 = require("./CommonPopViewBehaviourBase"),
+  PopupCaptionItem_1 = require("./PopupCaptionItem");
 class FullScreenViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase {
   constructor() {
     super(...arguments), (this.nVt = void 0);
@@ -34,4 +34,4 @@ class FullScreenViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase 
   }
 }
 exports.FullScreenViewItem = FullScreenViewItem;
-// # sourceMappingURL=FullScreenViewItem.js.map
+//# sourceMappingURL=FullScreenViewItem.js.map

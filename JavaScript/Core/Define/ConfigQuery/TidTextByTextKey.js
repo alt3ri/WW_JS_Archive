@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configTidTextByTextKey = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const TidText_1 = require("../Config/TidText");
-const DB = "db_tid_text.db";
-const FILE = "k.可视化编辑/w.文本.csv";
-const TABLE = "TidText";
-const COMMAND = "select BinData from `TidText` where TextKey=?";
-const KEY_PREFIX = "TidTextByTextKey";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  TidText_1 = require("../Config/TidText"),
+  DB = "db_tid_text.db",
+  FILE = "k.可视化编辑/w.文本.csv",
+  TABLE = "TidText",
+  COMMAND = "select BinData from `TidText` where TextKey=?",
+  KEY_PREFIX = "TidTextByTextKey",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configTidTextByTextKey.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configTidTextByTextKey.GetConfig(";
 exports.configTidTextByTextKey = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configTidTextByTextKey = {
       if (
         (n =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, e, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "TextKey",
-            e,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "TextKey",
+              e,
+            ]))
       ) {
-        var n;
-        var i = void 0;
+        var n,
+          i = void 0;
         if (
           (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configTidTextByTextKey = {
     }
   },
 };
-// # sourceMappingURL=TidTextByTextKey.js.map
+//# sourceMappingURL=TidTextByTextKey.js.map

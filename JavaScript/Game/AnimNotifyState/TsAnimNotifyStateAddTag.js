@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const TsUiSceneRoleActor_1 = require("../Module/UiComponent/TsUiSceneRoleActor");
-const UiTagAnsContext_1 = require("../Module/UiModel/UiModelComponent/Common/UiModelAns/UiAnimNotifyStateContext/UiTagAnsContext");
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  TsUiSceneRoleActor_1 = require("../Module/UiComponent/TsUiSceneRoleActor"),
+  UiTagAnsContext_1 = require("../Module/UiModel/UiModelComponent/Common/UiModelAns/UiAnimNotifyStateContext/UiTagAnsContext");
 class TsAnimNotifyStateAddTag extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.Tag = void 0), (this.UiTagAnsContext = void 0);
   }
   K2_NotifyBegin(e, t, o) {
-    var e = e.GetOwner();
-    const i = this.Tag?.TagId;
+    var e = e.GetOwner(),
+      i = this.Tag?.TagId;
     if (e instanceof TsBaseCharacter_1.default && i) {
-      let s = e.CharacterActorComponent?.Entity;
+      var s = e.CharacterActorComponent?.Entity;
       if (s) {
         s = s.GetComponent(185);
         if (s) return s.TagContainer.UpdateExactTag(4, i, 1), !0;
@@ -37,10 +37,10 @@ class TsAnimNotifyStateAddTag extends UE.KuroAnimNotifyState {
     return !1;
   }
   K2_NotifyEnd(e, t) {
-    var e = e.GetOwner();
-    const o = this.Tag?.TagId;
+    var e = e.GetOwner(),
+      o = this.Tag?.TagId;
     if (e instanceof TsBaseCharacter_1.default && o) {
-      let i = e.CharacterActorComponent?.Entity;
+      var i = e.CharacterActorComponent?.Entity;
       if (i) {
         i = i.GetComponent(185);
         if (i) return i.TagContainer.UpdateExactTag(4, o, -1), !0;
@@ -67,4 +67,4 @@ class TsAnimNotifyStateAddTag extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateAddTag;
-// # sourceMappingURL=TsAnimNotifyStateAddTag.js.map
+//# sourceMappingURL=TsAnimNotifyStateAddTag.js.map

@@ -14,4 +14,4 @@ class PlayerMarkItemView extends MarkItemView_1.MarkItemView {
   }
 }
 exports.PlayerMarkItemView = PlayerMarkItemView;
-// # sourceMappingURL=PlayerMarkItemView.js.map
+//# sourceMappingURL=PlayerMarkItemView.js.map

@@ -1,48 +1,48 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TrackedMark = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const Global_1 = require("../../../Global");
-const GlobalData_1 = require("../../../GlobalData");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiLayer_1 = require("../../../Ui/UiLayer");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const GeneralLogicTreeUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeUtil");
-const MapDefine_1 = require("../../Map/MapDefine");
-const MapUtil_1 = require("../../Map/MapUtil");
-const PlatformController_1 = require("../../Platform/PlatformController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const BattleUiControl_1 = require("../BattleUiControl");
-const CENTER_Y = 62.5;
-const MAX_A = 1176;
-const MARGIN_A = 1008;
-const MAX_B = 712.5;
-const MARGIN_B = 495;
-const center = Vector2D_1.Vector2D.Create(0, CENTER_Y);
-const RAD_2_DEG = 180 / Math.PI;
-const WAVE_COLOR_NEAR = "86FF83";
-const WAVE_COLOR_MIDDLE = "FFE683";
-const WAVE_COLOR_FAR = "FFFFFF";
-const VARNAME_WAVE_CYCLE_TIME = "LifeTime";
-const VARNAME_WAVE_NUM_SCALE = "Scale";
-const VARNAME_WAVE_COLOR = "Color";
-const VARNAME_WAVE_ROTATION = "Rotation";
-const DELAY_TIME = 500;
-const SUB_SCALE = 0.8;
-const QUEST_TRACK_MARK_INDEX = 999;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../Global"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  GeneralLogicTreeUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeUtil"),
+  MapDefine_1 = require("../../Map/MapDefine"),
+  MapUtil_1 = require("../../Map/MapUtil"),
+  PlatformController_1 = require("../../Platform/PlatformController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  BattleUiControl_1 = require("../BattleUiControl"),
+  CENTER_Y = 62.5,
+  MAX_A = 1176,
+  MARGIN_A = 1008,
+  MAX_B = 712.5,
+  MARGIN_B = 495,
+  center = Vector2D_1.Vector2D.Create(0, CENTER_Y),
+  RAD_2_DEG = 180 / Math.PI,
+  WAVE_COLOR_NEAR = "86FF83",
+  WAVE_COLOR_MIDDLE = "FFE683",
+  WAVE_COLOR_FAR = "FFFFFF",
+  VARNAME_WAVE_CYCLE_TIME = "LifeTime",
+  VARNAME_WAVE_NUM_SCALE = "Scale",
+  VARNAME_WAVE_COLOR = "Color",
+  VARNAME_WAVE_ROTATION = "Rotation",
+  DELAY_TIME = 500,
+  SUB_SCALE = 0.8,
+  QUEST_TRACK_MARK_INDEX = 999;
 class TrackedMark extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -90,14 +90,14 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
       (this.bdt = 0),
       (this.qdt = 0),
       (this.jat = () => {
-        const t = MapUtil_1.MapUtil.GetTrackPositionByTrackTarget(
+        var t = MapUtil_1.MapUtil.GetTrackPositionByTrackTarget(
           this.TrackTarget,
           !0,
         );
         t && BattleUiControl_1.BattleUiControl.FocusToTargetLocation(t);
       }),
       (this.lut = (t) => {
-        t === "Start" && (this.vdt = !1);
+        "Start" === t && (this.vdt = !1);
       }),
       (this.Gdt = (t) => {
         t !== Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest ||
@@ -105,7 +105,7 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
           this.Ndt();
       }),
       (this.Odt = (t, i, e) => {
-        t.Type === 6 &&
+        6 === t.Type &&
           t.BtType === Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest &&
           this.Ndt();
       }),
@@ -120,7 +120,7 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
             ["TrackType", this.wdt],
             ["UIActiveSelf", this.RootItem?.IsUIActiveSelf()],
           ),
-          this.wdt !== 1 ||
+          1 !== this.wdt ||
             t <= 0 ||
             (this.RootItem.IsUIActiveSelf() &&
               (this.Fdt(),
@@ -129,13 +129,13 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
               (this.Idt = !0)));
       }),
       (this.Ndt = () => {
-        let t;
+        var t;
         this.gdt &&
           ((t = this.gdt.GetCurrentSequence()),
           this.xdt
-            ? (t !== "Start" && this.gdt.PlayLevelSequenceByName("Start"),
+            ? ("Start" !== t && this.gdt.PlayLevelSequenceByName("Start"),
               this.gdt.StopCurrentSequence(!0, !0))
-            : t !== "Start" &&
+            : "Start" !== t &&
               this.Edt.bIsUIActive &&
               ((this.Ddt = 0), this.gdt.PlayLevelSequenceByName("Start")));
       }),
@@ -163,7 +163,7 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
         (this.Idt = !1),
         (this.ndt = t.IsSubTrack ?? !1),
         (this.wdt = t.TrackType ?? 0),
-        this.wdt === 1
+        1 === this.wdt
           ? ((this.Udt = !0),
             (this.Adt = !0),
             (this.xdt = !0),
@@ -223,7 +223,7 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
       this.ydt.SetUIActive(!1),
       this.vnt && this.SetSpriteByPath(this.vnt, this.GetSprite(0), !1),
       this.Edt.SetUIActive(!this.udt && !this.Pdt),
-      this.ldt === 5 &&
+      5 === this.ldt &&
         this.RootItem?.SetHierarchyIndex(QUEST_TRACK_MARK_INDEX),
       this.CreateMark(),
       this.OnUiShow();
@@ -261,8 +261,8 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
         );
   }
   OnUiShow() {
-    let t;
-    this.wdt === 1 &&
+    var t;
+    1 === this.wdt &&
       (t = ModelManager_1.ModelManager.CreatureModel.GetEntityById(this.hdt)) &&
       !EventSystem_1.EventSystem.HasWithTarget(
         t.Entity,
@@ -298,8 +298,8 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
         : this.RootItem?.SetRelativeScale3D(new UE.Vector(1, 1, 1));
   }
   OnUiHide() {
-    let t;
-    this.wdt === 1 &&
+    var t;
+    1 === this.wdt &&
       (t = ModelManager_1.ModelManager.CreatureModel.GetEntityById(this.hdt)) &&
       EventSystem_1.EventSystem.HasWithTarget(
         t.Entity,
@@ -335,7 +335,7 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
     this.sdt = t;
   }
   UpdateTrackDistance() {
-    let t = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
+    var t = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
     t &&
       (MapUtil_1.MapUtil.GetTrackPositionByTrackTarget(
         this.TrackTarget,
@@ -351,14 +351,14 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
       ));
   }
   Update(t) {
-    let i;
+    var i;
     GlobalData_1.GlobalData.World
       ? UiLayer_1.UiLayer.UiRootItem
         ? this.RootItem &&
           ((this.Ddt += t / CommonDefine_1.MILLIONSECOND_PER_SECOND),
           this.Hdt()
             ? (i = this.ddt) < this._ct && !this.vdt
-              ? (this.RootItem.SetUIActive(!1), this.wdt === 1 && this.Fdt())
+              ? (this.RootItem.SetUIActive(!1), 1 === this.wdt && this.Fdt())
               : (this.RootItem.SetUIActive(!0),
                 this.jdt(t),
                 !this.mdt || this.udt || this.Udt
@@ -372,7 +372,7 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
                         this.Cdt.toString(),
                       )),
                     this.Mdt.SetUIActive(!0)),
-                this.wdt === 1 && this.Wdt(t),
+                1 === this.wdt && this.Wdt(t),
                 this.Edt.SetUIActive(!this.udt && !this.Pdt))
             : this.RootItem.SetUIActive(!1))
         : Log_1.Log.CheckError() &&
@@ -389,18 +389,18 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
         );
   }
   jdt(t) {
-    let i;
-    let e = Global_1.Global.CharacterController;
-    var s = this.mXe.ToUeVector();
-    const h = UE.GameplayStatics.ProjectWorldToScreen(e, s, this._Xe);
-    var s =
-      (h ||
-        (((s = (i =
-          ModelManager_1.ModelManager.CameraModel
-            .CameraTransform).InverseTransformPositionNoScale(s)).X = -s.X),
-        (i = i.TransformPositionNoScale(s)),
-        UE.GameplayStatics.ProjectWorldToScreen(e, i, this._Xe)),
-      (0, puerts_1.$unref)(this._Xe));
+    var i,
+      e = Global_1.Global.CharacterController,
+      s = this.mXe.ToUeVector(),
+      h = UE.GameplayStatics.ProjectWorldToScreen(e, s, this._Xe),
+      s =
+        (h ||
+          (((s = (i =
+            ModelManager_1.ModelManager.CameraModel
+              .CameraTransform).InverseTransformPositionNoScale(s)).X = -s.X),
+          (i = i.TransformPositionNoScale(s)),
+          UE.GameplayStatics.ProjectWorldToScreen(e, i, this._Xe)),
+        (0, puerts_1.$unref)(this._Xe));
     this.p$e.Set(s.X, s.Y),
       (this.cdt.Equals(this.p$e, 1) && !this.Idt) ||
         (this.cdt.DeepCopy(this.p$e),
@@ -420,17 +420,17 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
             (this.cie.Yaw = Math.atan2(this.p$e.Y, this.p$e.X) * RAD_2_DEG),
             this.Sdt.SetUIRelativeRotation(this.cie.ToUeRotator()),
             this.Sdt.SetUIActive(!0)),
-        this.mdt || this.wdt !== 1
+        this.mdt || 1 !== this.wdt
           ? this.ydt.SetNiagaraVarFloat(VARNAME_WAVE_ROTATION, 0.25)
           : ((s = Math.atan2(this.p$e.Y, this.p$e.X) / (2 * Math.PI)),
             this.ydt.SetNiagaraVarFloat(VARNAME_WAVE_ROTATION, s)));
   }
   MoveTowards(t, i, e) {
-    var s = i.X - t.X;
-    var i = i.Y - t.Y;
-    const h = Math.sqrt(s * s + i * i);
-    var i = Math.atan2(i, s);
-    var s = (e * Math.abs(h)) / (h + 1);
+    var s = i.X - t.X,
+      i = i.Y - t.Y,
+      h = Math.sqrt(s * s + i * i),
+      i = Math.atan2(i, s),
+      s = (e * Math.abs(h)) / (h + 1);
     return new Vector2D_1.Vector2D(
       t.X + s * Math.cos(i),
       t.Y + s * Math.sin(i),
@@ -448,7 +448,7 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
     )
       return !1;
     if (
-      typeof this.TrackTarget === "number" &&
+      "number" == typeof this.TrackTarget &&
       !ModelManager_1.ModelManager.CreatureModel.CheckEntityVisible(
         this.TrackTarget,
       )
@@ -461,10 +461,10 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
       : ModelManager_1.ModelManager.TrackModel.IsTracking(this.ldt, this.hdt);
   }
   PXe(t, i) {
-    const e = t.X;
-    const s = t.Y;
-    const h = this.uXe;
-    const r = this.cXe;
+    var e = t.X,
+      s = t.Y,
+      h = this.uXe,
+      r = this.cXe;
     return (
       !!(i && (e * e) / (h * h) + (s * s) / (r * r) <= 1) ||
       ((i = (h * r) / Math.sqrt(r * r * e * e + h * h * s * s)),
@@ -473,7 +473,7 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
     );
   }
   Wdt(t) {
-    this.wdt === 1 &&
+    1 === this.wdt &&
       (this.ydt.IsUIActiveSelf() || this.Idt) &&
       (this.Idt &&
         ((this.Idt = !1),
@@ -512,4 +512,4 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.TrackedMark = TrackedMark;
-// # sourceMappingURL=TrackedMark.js.map
+//# sourceMappingURL=TrackedMark.js.map

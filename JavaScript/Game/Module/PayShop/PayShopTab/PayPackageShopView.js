@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayPackageShopView = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const PayItemController_1 = require("../../PayItem/PayItemController");
-const DiscountShopView_1 = require("./DiscountShopView");
+const Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  PayItemController_1 = require("../../PayItem/PayItemController"),
+  DiscountShopView_1 = require("./DiscountShopView");
 class PayPackageShopView extends DiscountShopView_1.DiscountShopView {
   constructor() {
     super(...arguments),
@@ -17,7 +17,7 @@ class PayPackageShopView extends DiscountShopView_1.DiscountShopView {
         this.RefreshLoopScroll(this.CurrentSelectTabId);
       }),
       (this.nFi = () => {
-        let e;
+        var e;
         this.rFi
           ? this.RefreshLoopScroll(this.CurrentSelectTabId)
           : ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
@@ -62,7 +62,7 @@ class PayPackageShopView extends DiscountShopView_1.DiscountShopView {
         !1,
       ),
       this.GetLoopScrollViewComponent(1).RootUIComp.SetUIActive(
-        this.PayShopGoodsList.length > 0,
+        0 < this.PayShopGoodsList.length,
       ),
       this.GetItem(8).SetUIActive(this.PayShopGoodsList.length <= 0);
   }
@@ -76,10 +76,10 @@ class PayPackageShopView extends DiscountShopView_1.DiscountShopView {
         ["ViewName", this.GetViewName()],
         ["Data", i],
       );
-    const e = i.length;
+    var e = i.length;
     this.TabGroup.ResetLastSelectTab();
     this.TabGroup.RefreshTabItemByLength(e, () => {
-      let e, t;
+      var e, t;
       for ([e, t] of this.TabGroup.GetTabItemMap())
         t.UpdateView(this.CurrentShopId, i[e]),
           t.BindRedDot("PayShopTab", i[e]);
@@ -100,4 +100,4 @@ class PayPackageShopView extends DiscountShopView_1.DiscountShopView {
   }
 }
 exports.PayPackageShopView = PayPackageShopView;
-// # sourceMappingURL=PayPackageShopView.js.map
+//# sourceMappingURL=PayPackageShopView.js.map

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RouletteConfig = void 0);
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const ExploreToolsAll_1 = require("../../../../Core/Define/ConfigQuery/ExploreToolsAll");
-const ExploreToolsByPhantomSkillId_1 = require("../../../../Core/Define/ConfigQuery/ExploreToolsByPhantomSkillId");
-const FuncMenuWheelAll_1 = require("../../../../Core/Define/ConfigQuery/FuncMenuWheelAll");
-const FuncMenuWheelByFuncId_1 = require("../../../../Core/Define/ConfigQuery/FuncMenuWheelByFuncId");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
+const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  ExploreToolsAll_1 = require("../../../../Core/Define/ConfigQuery/ExploreToolsAll"),
+  ExploreToolsByPhantomSkillId_1 = require("../../../../Core/Define/ConfigQuery/ExploreToolsByPhantomSkillId"),
+  FuncMenuWheelAll_1 = require("../../../../Core/Define/ConfigQuery/FuncMenuWheelAll"),
+  FuncMenuWheelByFuncId_1 = require("../../../../Core/Define/ConfigQuery/FuncMenuWheelByFuncId"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
 class RouletteConfig extends ConfigBase_1.ConfigBase {
   GetExploreConfigById(e) {
     return ExploreToolsByPhantomSkillId_1.configExploreToolsByPhantomSkillId.GetConfig(
@@ -53,4 +53,4 @@ class RouletteConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.RouletteConfig = RouletteConfig;
-// # sourceMappingURL=RouletteConfig.js.map
+//# sourceMappingURL=RouletteConfig.js.map

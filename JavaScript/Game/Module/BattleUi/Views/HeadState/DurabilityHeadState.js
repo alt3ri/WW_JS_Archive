@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DurabilityHeadState = void 0);
-const UE = require("ue");
-const HeadStateViewBase_1 = require("./HeadStateViewBase");
+const UE = require("ue"),
+  HeadStateViewBase_1 = require("./HeadStateViewBase");
 class DurabilityHeadState extends HeadStateViewBase_1.HeadStateViewBase {
   constructor() {
     super(...arguments),
@@ -34,8 +34,8 @@ class DurabilityHeadState extends HeadStateViewBase_1.HeadStateViewBase {
       this.HeadStateData.BindOnSceneItemDurabilityChange(this.Bht);
   }
   bht(t = !1) {
-    const e = this.GetHp();
-    const i = e / this.GetMaxHp();
+    var e = this.GetHp(),
+      i = e / this.GetMaxHp();
     this.int(i),
       t ? this.PlayBarAnimation(i) : this.StopBarLerpAnimation(),
       this.HeadStateData?.SetOriginalHp(e);
@@ -53,11 +53,11 @@ class DurabilityHeadState extends HeadStateViewBase_1.HeadStateViewBase {
     this.Xrt(t);
   }
   Xrt(t) {
-    var e = this.GetSprite(1);
-    var e =
-      (e.SetFillAmount(t),
-      e.IsUIActiveSelf() || e.SetUIActive(!0),
-      this.GetSprite(2));
+    var e = this.GetSprite(1),
+      e =
+        (e.SetFillAmount(t),
+        e.IsUIActiveSelf() || e.SetUIActive(!0),
+        this.GetSprite(2));
     e.SetStretchLeft(this.srt * this.CurrentBarPercent - 2),
       e.SetStretchRight(this.srt * (1 - t) - 2);
   }
@@ -69,4 +69,4 @@ class DurabilityHeadState extends HeadStateViewBase_1.HeadStateViewBase {
   }
 }
 exports.DurabilityHeadState = DurabilityHeadState;
-// # sourceMappingURL=DurabilityHeadState.js.map
+//# sourceMappingURL=DurabilityHeadState.js.map

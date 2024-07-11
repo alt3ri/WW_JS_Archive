@@ -4,20 +4,20 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const LevelAiTask_1 = require("../LevelAiTask");
 class LevelAiTaskSetVar extends LevelAiTask_1.LevelAiTask {
   CreatePlanSteps(e, t) {
-    const s = this.Params;
+    var s = this.Params;
     s.VarLeft.Type !== s.VarRight.Type ||
-    s.VarLeft.Source !== "Self" ||
-    s.VarRight.Source !== "Constant"
+    "Self" !== s.VarLeft.Source ||
+    "Constant" !== s.VarRight.Source
       ? this.PrintDescription("配置错误")
       : this.CIe(t, s.VarLeft.Name, s.VarRight)
         ? e.SubmitCandidatePlanStep(this, t, 0)
         : this.PrintDescription("配置类型错误");
   }
   ExecuteTask() {
-    const e = this.Params;
+    var e = this.Params;
     return e.VarLeft.Type === e.VarRight.Type &&
-      e.VarLeft.Source === "Self" &&
-      e.VarRight.Source === "Constant" &&
+      "Self" === e.VarLeft.Source &&
+      "Constant" === e.VarRight.Source &&
       this.CIe(
         this.CharacterPlanComponent.WorldState,
         e.VarLeft.Name,
@@ -38,4 +38,4 @@ class LevelAiTaskSetVar extends LevelAiTask_1.LevelAiTask {
   }
 }
 exports.LevelAiTaskSetVar = LevelAiTaskSetVar;
-// # sourceMappingURL=LevelAiTaskSetVar.js.map
+//# sourceMappingURL=LevelAiTaskSetVar.js.map

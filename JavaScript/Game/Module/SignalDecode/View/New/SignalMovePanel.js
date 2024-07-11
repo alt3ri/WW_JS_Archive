@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SignalMovePanel = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiComponentsAction_1 = require("../../../../Ui/Base/UiComponentsAction");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const SignalItem_1 = require("./SignalItem");
-const SignalLineItem_1 = require("./SignalLineItem");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiComponentsAction_1 = require("../../../../Ui/Base/UiComponentsAction"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  SignalItem_1 = require("./SignalItem"),
+  SignalLineItem_1 = require("./SignalLineItem");
 class SignalMovePanel extends UiComponentsAction_1.UiComponentsAction {
   constructor() {
     super(...arguments),
@@ -42,16 +42,16 @@ class SignalMovePanel extends UiComponentsAction_1.UiComponentsAction {
       this.Pxn.SetUIActive(!1);
   }
   qMo() {
-    const t = ModelManager_1.ModelManager.SignalDecodeModel;
-    const e = t.CurrentMorseCode;
-    const s = ((this.unt = t.Speed), t.StartDecisionSize);
-    const n = t.EndDecisionSize;
-    const o = t.CurrentGameplayType === 3;
+    var t = ModelManager_1.ModelManager.SignalDecodeModel,
+      e = t.CurrentMorseCode,
+      s = ((this.unt = t.Speed), t.StartDecisionSize),
+      n = t.EndDecisionSize,
+      o = 3 === t.CurrentGameplayType;
     this.xMo = [];
-    for (let i = e.length - 1; i >= 0; --i) {
-      var a;
-      let h = e[i];
-      const r = Number(h) ?? 0;
+    for (let i = e.length - 1; 0 <= i; --i) {
+      var a,
+        h = e[i],
+        r = Number(h) ?? 0;
       let t = void 0;
       switch (r) {
         case 1:
@@ -66,14 +66,14 @@ class SignalMovePanel extends UiComponentsAction_1.UiComponentsAction {
           var g = LguiUtil_1.LguiUtil.CopyItem(this.bMo, this.RootItem);
           (t = new SignalLineItem_1.SignalLineItem(0, s, n)).Init(g);
       }
-      r === 0 &&
+      0 === r &&
         o &&
         ((h = LguiUtil_1.LguiUtil.CopyItem(this.Pxn, this.RootItem)),
         (a = new SignalLineItem_1.SignalLineItem(0, s, n)).Init(h),
         this.xMo.push(a)),
         this.xMo.push(t),
-        i !== 0 &&
-          r !== 0 &&
+        0 !== i &&
+          0 !== r &&
           ((h = LguiUtil_1.LguiUtil.CopyItem(this.bMo, this.RootItem)),
           (a = new SignalLineItem_1.SignalLineItem(0, s, n)).Init(h),
           this.xMo.push(a));
@@ -89,26 +89,26 @@ class SignalMovePanel extends UiComponentsAction_1.UiComponentsAction {
     this.GMo(t), this.NMo();
   }
   GetCompleteness() {
-    let t = 0;
-    let i = 0;
+    let t = 0,
+      i = 0;
     for (const e of this.xMo)
       e instanceof SignalItem_1.SignalItem && ((i += e.GetCompleteness()), t++);
-    return t === 0 ? 1 : i / t;
+    return 0 === t ? 1 : i / t;
   }
   GetProgress() {
-    let t = 0;
-    let i = 0;
+    let t = 0,
+      i = 0;
     for (const e of this.xMo) (i += e.GetProgress()), t++;
-    return t === 0 ? 1 : i / t;
+    return 0 === t ? 1 : i / t;
   }
   GMo(t) {
     t = this.RootItem.GetAnchorOffsetX() + (t / 1e3) * this.unt;
     this.RootItem.SetAnchorOffsetX(t);
   }
   NMo() {
-    const t = this.RootItem.GetAnchorOffsetX();
+    var t = this.RootItem.GetAnchorOffsetX();
     for (const e of this.xMo) {
-      const i = t + e.GetRootItem().GetAnchorOffsetX();
+      var i = t + e.GetRootItem().GetAnchorOffsetX();
       e.Update(i);
     }
   }
@@ -120,4 +120,4 @@ class SignalMovePanel extends UiComponentsAction_1.UiComponentsAction {
   }
 }
 exports.SignalMovePanel = SignalMovePanel;
-// # sourceMappingURL=SignalMovePanel.js.map
+//# sourceMappingURL=SignalMovePanel.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ProtoGachaInfo = exports.ProtoGachaPoolInfo = void 0);
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
+const MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager");
 class ProtoGachaPoolInfo {
   constructor(t) {
     (this.Id = 0),
@@ -42,7 +42,7 @@ class ProtoGachaInfo {
       (this.ItemId = t.G3n),
       (this.GachaConsumes = t.MRs),
       (this.UsePoolId = t.SRs);
-    let i = t.ERs;
+    var i = t.ERs;
     if (i) for (const s of i) this.bWt.push(new ProtoGachaPoolInfo(s));
     (this.BeginTime = MathUtils_1.MathUtils.LongToNumber(t.HCs)),
       (this.EndTime = MathUtils_1.MathUtils.LongToNumber(t.jCs)),
@@ -53,7 +53,7 @@ class ProtoGachaInfo {
     i && ((this.Sort = i.Sort), (this.GroupId = i.RuleGroupId));
   }
   GetFirstValidPool() {
-    if (this.bWt && this.bWt.length > 0)
+    if (this.bWt && 0 < this.bWt.length)
       for (const t of this.bWt) if (this.IsPoolValid(t)) return t;
   }
   GetPoolInfo(t) {
@@ -66,21 +66,21 @@ class ProtoGachaInfo {
     return this.GetPoolEndTimeByPoolInfo(t);
   }
   GetPoolEndTimeByPoolInfo(t) {
-    const i = this.EndTime;
-    return !t || (t = t.EndTime) === 0 || (i !== 0 && i < t) ? i : t;
+    var i = this.EndTime;
+    return !t || 0 === (t = t.EndTime) || (0 !== i && i < t) ? i : t;
   }
   GetValidPoolList() {
-    const t = this.bWt;
+    var t = this.bWt;
     if (t) {
-      const i = [];
+      var i = [];
       for (const s of t) this.IsPoolValid(s) && i.push(s);
       return i;
     }
   }
   IsPoolValid(t) {
     t = this.GetPoolEndTimeByPoolInfo(t);
-    return t === 0 || t >= TimeUtil_1.TimeUtil.GetServerTime();
+    return 0 === t || t >= TimeUtil_1.TimeUtil.GetServerTime();
   }
 }
 exports.ProtoGachaInfo = ProtoGachaInfo;
-// # sourceMappingURL=ProtoGachaInfo.js.map
+//# sourceMappingURL=ProtoGachaInfo.js.map

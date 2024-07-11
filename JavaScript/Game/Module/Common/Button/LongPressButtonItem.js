@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LongPressButtonItem = void 0);
-const TickSystem_1 = require("../../../../Core/Tick/TickSystem");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const LguiEventSystemManager_1 = require("../../../Ui/LguiEventSystem/LguiEventSystemManager");
-const UiComponentUtil_1 = require("../../Util/UiComponentUtil");
-const DRAG_TOLERANCE = 200;
-const ONE_SECOND_TO_MILLISECOND = 1e3;
+const TickSystem_1 = require("../../../../Core/Tick/TickSystem"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  LguiEventSystemManager_1 = require("../../../Ui/LguiEventSystem/LguiEventSystemManager"),
+  UiComponentUtil_1 = require("../../Util/UiComponentUtil"),
+  DRAG_TOLERANCE = 200,
+  ONE_SECOND_TO_MILLISECOND = 1e3;
 class LongPressButtonItem {
   constructor(t, i, s = void 0) {
     (this.Xyt = void 0),
@@ -42,7 +42,7 @@ class LongPressButtonItem {
                       (t = this.aIt()),
                       this.e8 < t || ((this.e8 -= t), this.Yyt?.(!1)))))
             : (this.K1t = 1)
-          : (this.K1t < this.Lo.PressTime[0] && this.K1t > 0 && this.Yyt?.(!0),
+          : (this.K1t < this.Lo.PressTime[0] && 0 < this.K1t && this.Yyt?.(!0),
             (this.K1t = 0),
             (this.e8 = 0));
       }),
@@ -120,7 +120,7 @@ class LongPressButtonItem {
     );
   }
   aIt() {
-    const i = this.Lo.PressTime.length;
+    var i = this.Lo.PressTime.length;
     for (let t = 1; t < i; ++t)
       if (this.K1t < this.Lo.PressTime[t]) {
         const s = this.Lo.TriggerTime[t - 1];
@@ -153,4 +153,4 @@ class LongPressButtonItem {
   }
 }
 exports.LongPressButtonItem = LongPressButtonItem;
-// # sourceMappingURL=LongPressButtonItem.js.map
+//# sourceMappingURL=LongPressButtonItem.js.map

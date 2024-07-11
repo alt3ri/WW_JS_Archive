@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configTrialRoleInfoAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const TrialRoleInfo_1 = require("../Config/TrialRoleInfo");
-const DB = "db_trial_role.db";
-const FILE = "s.试用角色.xlsx";
-const TABLE = "TrialRoleInfo";
-const COMMAND = "select BinData from `TrialRoleInfo`";
-const KEY_PREFIX = "TrialRoleInfoAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  TrialRoleInfo_1 = require("../Config/TrialRoleInfo"),
+  DB = "db_trial_role.db",
+  FILE = "s.试用角色.xlsx",
+  TABLE = "TrialRoleInfo",
+  COMMAND = "select BinData from `TrialRoleInfo`",
+  KEY_PREFIX = "TrialRoleInfoAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configTrialRoleInfoAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configTrialRoleInfoAll = {
     );
   },
   GetConfigList: (o = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configTrialRoleInfoAll = {
       }
       const r = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let i = void 0;
+        var i = void 0;
         if (
           (([n, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configTrialRoleInfoAll = {
     }
   },
 };
-// # sourceMappingURL=TrialRoleInfoAll.js.map
+//# sourceMappingURL=TrialRoleInfoAll.js.map

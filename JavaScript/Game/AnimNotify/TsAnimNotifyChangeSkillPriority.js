@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const CharacterSkillComponent_1 = require("../NewWorld/Character/Common/Component/Skill/CharacterSkillComponent");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  CharacterSkillComponent_1 = require("../NewWorld/Character/Common/Component/Skill/CharacterSkillComponent");
 class TsAnimNotifyChangeSkillPriority extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.Priority = -0);
@@ -24,4 +24,4 @@ class TsAnimNotifyChangeSkillPriority extends UE.KuroAnimNotify {
   }
 }
 exports.default = TsAnimNotifyChangeSkillPriority;
-// # sourceMappingURL=TsAnimNotifyChangeSkillPriority.js.map
+//# sourceMappingURL=TsAnimNotifyChangeSkillPriority.js.map

@@ -10,4 +10,4 @@ class TsDecoratorCheck extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorCheck;
-// # sourceMappingURL=TsDecoratorCheck.js.map
+//# sourceMappingURL=TsDecoratorCheck.js.map

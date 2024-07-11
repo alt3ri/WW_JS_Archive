@@ -1,28 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const LevelEventLockInputState_1 = require("../../LevelGamePlay/LevelEventLockInputState");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiTimeDilation_1 = require("../../Ui/Base/UiTimeDilation");
-const InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine");
-const UiManager_1 = require("../../Ui/UiManager");
-const WorldGlobal_1 = require("../../World/WorldGlobal");
-const AdventureDefine_1 = require("../AdventureGuide/AdventureDefine");
-const BlackScreenController_1 = require("../BlackScreen/BlackScreenController");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
-const RoleController_1 = require("../RoleUi/RoleController");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const TowerController_1 = require("../TowerDetailUi/TowerController");
-const InstanceDungeonEntranceController_1 = require("./InstanceDungeonEntranceController");
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  LevelEventLockInputState_1 = require("../../LevelGamePlay/LevelEventLockInputState"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiTimeDilation_1 = require("../../Ui/Base/UiTimeDilation"),
+  InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  WorldGlobal_1 = require("../../World/WorldGlobal"),
+  AdventureDefine_1 = require("../AdventureGuide/AdventureDefine"),
+  BlackScreenController_1 = require("../BlackScreen/BlackScreenController"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  RoleController_1 = require("../RoleUi/RoleController"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  TowerController_1 = require("../TowerDetailUi/TowerController"),
+  InstanceDungeonEntranceController_1 = require("./InstanceDungeonEntranceController");
 class InstanceDungeonController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -74,7 +74,7 @@ class InstanceDungeonController extends UiControllerBase_1.UiControllerBase {
       : 0;
   }
   static GetInstExchangeRewardRequest() {
-    const e = new Protocol_1.Aki.Protocol.Hes();
+    var e = new Protocol_1.Aki.Protocol.Hes();
     Net_1.Net.Call(13229, e, (e) => {
       e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeScrollingTipsView(
@@ -123,7 +123,7 @@ class InstanceDungeonController extends UiControllerBase_1.UiControllerBase {
         (t.BeforePlayCloseFunction = () => {
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("InstanceDungeon", 5, "副本离开确认框时停结束"),
-            this.aai !== -1 &&
+            -1 !== this.aai &&
               ((this.aai = -1),
               UiTimeDilation_1.UiTimeDilation.SetGameTimeDilation({
                 ViewId: this.aai,
@@ -137,7 +137,7 @@ class InstanceDungeonController extends UiControllerBase_1.UiControllerBase {
         ),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("InstanceDungeon", 5, "副本离开确认框触发时停");
-      const r = UiManager_1.UiManager.GetViewByName("ConfirmBoxView");
+      var r = UiManager_1.UiManager.GetViewByName("ConfirmBoxView");
       r &&
         ((this.aai = r.GetViewId()),
         UiTimeDilation_1.UiTimeDilation.SetGameTimeDilation({
@@ -153,7 +153,7 @@ class InstanceDungeonController extends UiControllerBase_1.UiControllerBase {
       ModelManager_1.ModelManager.InstanceDungeonEntranceModel.SelectInstanceId;
     ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() &&
       (e = ModelManager_1.ModelManager.CreatureModel.GetInstanceId());
-    const n = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e);
+    var n = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e);
     return (
       n?.InstSubType === AdventureDefine_1.EDungeonSubType.Mowing ||
       n?.InstSubType === AdventureDefine_1.EDungeonSubType.BossRush
@@ -175,23 +175,23 @@ class InstanceDungeonController extends UiControllerBase_1.UiControllerBase {
         !1
       );
     InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.RestoreDungeonEntranceEntity();
-    const l = Protocol_1.Aki.Protocol.Bes.create();
-    var e =
-      ((l.Rkn = e),
-      (l.xkn = n),
-      (l.G5n = o),
-      (l.Pkn = r),
-      (l.Bkn = t),
-      BlackScreenController_1.BlackScreenController.AddBlackScreen(
-        "None",
-        "LeaveScene",
-      ),
-      await Net_1.Net.CallAsync(29077, l).finally(() => {
-        BlackScreenController_1.BlackScreenController.RemoveBlackScreen(
+    var l = Protocol_1.Aki.Protocol.Bes.create(),
+      e =
+        ((l.Rkn = e),
+        (l.xkn = n),
+        (l.G5n = o),
+        (l.Pkn = r),
+        (l.Bkn = t),
+        BlackScreenController_1.BlackScreenController.AddBlackScreen(
           "None",
           "LeaveScene",
-        );
-      }));
+        ),
+        await Net_1.Net.CallAsync(29077, l).finally(() => {
+          BlackScreenController_1.BlackScreenController.RemoveBlackScreen(
+            "None",
+            "LeaveScene",
+          );
+        }));
     return e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
       ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
           e.lkn,
@@ -214,8 +214,8 @@ class InstanceDungeonController extends UiControllerBase_1.UiControllerBase {
         !1
       );
     InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.RestoreDungeonEntranceEntity();
-    var n = Protocol_1.Aki.Protocol.Zes.create();
-    var n = ((n.xkn = e), await Net_1.Net.CallAsync(11734, n));
+    var n = Protocol_1.Aki.Protocol.Zes.create(),
+      n = ((n.xkn = e), await Net_1.Net.CallAsync(11734, n));
     return n.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
       ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
           n.lkn,
@@ -239,7 +239,7 @@ class InstanceDungeonController extends UiControllerBase_1.UiControllerBase {
       InstanceDungeonController.OnClickInstanceDungeonExitButton();
   }),
   (InstanceDungeonController.oai = () => {
-    let e;
+    var e;
     ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() &&
       ((e =
         ModelManager_1.ModelManager.InstanceDungeonModel.GetInstanceDungeonInfo()) ||
@@ -276,4 +276,4 @@ class InstanceDungeonController extends UiControllerBase_1.UiControllerBase {
         (ModelManager_1.ModelManager.InstanceDungeonModel.InstanceRewardHaveTake =
           e.YRs));
   });
-// # sourceMappingURL=InstanceDungeonController.js.map
+//# sourceMappingURL=InstanceDungeonController.js.map

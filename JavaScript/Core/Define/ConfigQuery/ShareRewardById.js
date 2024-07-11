@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configShareRewardById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const ShareReward_1 = require("../Config/ShareReward");
-const DB = "db_shareinfo.db";
-const FILE = "f.分享.xlsx";
-const TABLE = "ShareReward";
-const COMMAND = "select BinData from `ShareReward` where Id=?";
-const KEY_PREFIX = "ShareRewardById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  ShareReward_1 = require("../Config/ShareReward"),
+  DB = "db_shareinfo.db",
+  FILE = "f.分享.xlsx",
+  TABLE = "ShareReward",
+  COMMAND = "select BinData from `ShareReward` where Id=?",
+  KEY_PREFIX = "ShareRewardById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configShareRewardById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configShareRewardById.GetConfig(";
 exports.configShareRewardById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configShareRewardById = {
       if (
         (r =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var r;
-        var n = void 0;
+        var r,
+          n = void 0;
         if (
           (([r, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configShareRewardById = {
     }
   },
 };
-// # sourceMappingURL=ShareRewardById.js.map
+//# sourceMappingURL=ShareRewardById.js.map

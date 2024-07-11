@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionMainAttributeComponent = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const VisionIdentifyAttributeItem_1 = require("./VisionIdentifyAttributeItem");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  VisionIdentifyAttributeItem_1 = require("./VisionIdentifyAttributeItem");
 class VisionMainAttributeComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -31,4 +31,4 @@ class VisionMainAttributeComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.VisionMainAttributeComponent = VisionMainAttributeComponent;
-// # sourceMappingURL=VisionMainAttributeComponent.js.map
+//# sourceMappingURL=VisionMainAttributeComponent.js.map

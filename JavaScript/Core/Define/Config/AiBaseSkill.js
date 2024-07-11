@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiBaseSkill = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const IntArray_1 = require("./SubType/IntArray");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  IntArray_1 = require("./SubType/IntArray");
 class AiBaseSkill {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -26,14 +26,14 @@ class AiBaseSkill {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetRandomskillsAt(t, s) {
     return this.randomskills(t);
   }
   randomskills(t, s) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i
       ? (s || new IntArray_1.IntArray()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
@@ -42,9 +42,9 @@ class AiBaseSkill {
       : null;
   }
   randomskillsLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.AiBaseSkill = AiBaseSkill;
-// # sourceMappingURL=AiBaseSkill.js.map
+//# sourceMappingURL=AiBaseSkill.js.map

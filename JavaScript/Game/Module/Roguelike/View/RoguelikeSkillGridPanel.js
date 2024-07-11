@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoguelikeSkillGridPanel = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const RoguelikeSkillNode_1 = require("./RoguelikeSkillNode");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  RoguelikeSkillNode_1 = require("./RoguelikeSkillNode");
 class RoguelikeSkillGridPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(),
@@ -26,7 +26,7 @@ class RoguelikeSkillGridPanel extends UiPanelBase_1.UiPanelBase {
   OnStart() {}
   BuildNode() {
     for (const i of this.NodeDataList) {
-      const e = this.GetItem(0 + i.Row);
+      var e = this.GetItem(0 + i.Row);
       const s = new RoguelikeSkillNode_1.RoguelikeSkillNode(
         e,
         i,
@@ -48,4 +48,4 @@ class RoguelikeSkillGridPanel extends UiPanelBase_1.UiPanelBase {
   GetKey(e, i) {}
 }
 exports.RoguelikeSkillGridPanel = RoguelikeSkillGridPanel;
-// # sourceMappingURL=RoguelikeSkillGridPanel.js.map
+//# sourceMappingURL=RoguelikeSkillGridPanel.js.map

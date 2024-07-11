@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuideCountDownItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class GuideCountDownItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -45,4 +45,4 @@ class GuideCountDownItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.GuideCountDownItem = GuideCountDownItem;
-// # sourceMappingURL=GuideCountDownItem.js.map
+//# sourceMappingURL=GuideCountDownItem.js.map

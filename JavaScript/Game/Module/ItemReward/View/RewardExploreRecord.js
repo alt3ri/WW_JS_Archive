@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RewardExploreRecord = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class RewardExploreRecord extends UiPanelBase_1.UiPanelBase {
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -15,12 +15,12 @@ class RewardExploreRecord extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = []);
   }
   Refresh(e) {
-    const i = e.TitleTextId;
-    const t = !StringUtils_1.StringUtils.IsEmpty(i);
+    var i = e.TitleTextId,
+      t = !StringUtils_1.StringUtils.IsEmpty(i);
     t && this.LBt(i), this.m0i(t), this.L0i(e.Record), this.D0i(e.IsNewRecord);
   }
   LBt(e) {
-    const i = this.GetText(0);
+    var i = this.GetText(0);
     StringUtils_1.StringUtils.IsEmpty(e) ||
       LguiUtil_1.LguiUtil.SetLocalTextNew(i, e);
   }
@@ -35,4 +35,4 @@ class RewardExploreRecord extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RewardExploreRecord = RewardExploreRecord;
-// # sourceMappingURL=RewardExploreRecord.js.map
+//# sourceMappingURL=RewardExploreRecord.js.map

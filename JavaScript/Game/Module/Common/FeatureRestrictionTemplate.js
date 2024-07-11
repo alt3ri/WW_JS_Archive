@@ -46,7 +46,7 @@ class FeatureRestrictionTemplate {
     }
   }
   static get TemplateForPioneerClient() {
-    let t;
+    var t;
     return (
       FeatureRestrictionTemplate.oGn ||
       ((t = new FeatureRestrictionTemplate(0)).eGn(8),
@@ -55,4 +55,4 @@ class FeatureRestrictionTemplate {
   }
 }
 (exports.FeatureRestrictionTemplate = FeatureRestrictionTemplate).oGn = void 0;
-// # sourceMappingURL=FeatureRestrictionTemplate.js.map
+//# sourceMappingURL=FeatureRestrictionTemplate.js.map

@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuideConfig = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const GuideFocusNewByGuideId_1 = require("../../../Core/Define/ConfigQuery/GuideFocusNewByGuideId");
-const GuideGroupAll_1 = require("../../../Core/Define/ConfigQuery/GuideGroupAll");
-const GuideGroupById_1 = require("../../../Core/Define/ConfigQuery/GuideGroupById");
-const GuideStepAll_1 = require("../../../Core/Define/ConfigQuery/GuideStepAll");
-const GuideStepById_1 = require("../../../Core/Define/ConfigQuery/GuideStepById");
-const GuideTipsByGuideId_1 = require("../../../Core/Define/ConfigQuery/GuideTipsByGuideId");
-const GuideTutorialAll_1 = require("../../../Core/Define/ConfigQuery/GuideTutorialAll");
-const GuideTutorialById_1 = require("../../../Core/Define/ConfigQuery/GuideTutorialById");
-const GuideTutorialPageById_1 = require("../../../Core/Define/ConfigQuery/GuideTutorialPageById");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  GuideFocusNewByGuideId_1 = require("../../../Core/Define/ConfigQuery/GuideFocusNewByGuideId"),
+  GuideGroupAll_1 = require("../../../Core/Define/ConfigQuery/GuideGroupAll"),
+  GuideGroupById_1 = require("../../../Core/Define/ConfigQuery/GuideGroupById"),
+  GuideStepAll_1 = require("../../../Core/Define/ConfigQuery/GuideStepAll"),
+  GuideStepById_1 = require("../../../Core/Define/ConfigQuery/GuideStepById"),
+  GuideTipsByGuideId_1 = require("../../../Core/Define/ConfigQuery/GuideTipsByGuideId"),
+  GuideTutorialAll_1 = require("../../../Core/Define/ConfigQuery/GuideTutorialAll"),
+  GuideTutorialById_1 = require("../../../Core/Define/ConfigQuery/GuideTutorialById"),
+  GuideTutorialPageById_1 = require("../../../Core/Define/ConfigQuery/GuideTutorialPageById"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder");
 class GuideConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments), (this.fYt = new UE.Vector(0, 0, 0));
@@ -40,9 +40,9 @@ class GuideConfig extends ConfigBase_1.ConfigBase {
     return GuideTutorialPageById_1.configGuideTutorialPageById.GetConfig(e);
   }
   GetGuideTutorialPageIds(e) {
-    var e = this.GetGuideTutorial(e);
-    const r = e.PageReplaceConditionGroupId;
-    return r > 0 &&
+    var e = this.GetGuideTutorial(e),
+      r = e.PageReplaceConditionGroupId;
+    return 0 < r &&
       ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckCondition(
         r.toString(),
         void 0,
@@ -71,7 +71,7 @@ class GuideConfig extends ConfigBase_1.ConfigBase {
     const r = this.pYt(e);
     return GuideStepAll_1.configGuideStepAll
       .GetConfigList()
-      .filter((e) => e.Controller[r] === "T");
+      .filter((e) => "T" === e.Controller[r]);
   }
   GetAllGroup() {
     return GuideGroupAll_1.configGuideGroupAll.GetConfigList();
@@ -83,7 +83,7 @@ class GuideConfig extends ConfigBase_1.ConfigBase {
     const i = [];
     return (
       this.GetGroup(e)?.Step.forEach((e) => {
-        this.GetStep(e).Controller[r] === "T" && i.push(e);
+        "T" === this.GetStep(e).Controller[r] && i.push(e);
       }),
       i
     );
@@ -98,7 +98,7 @@ class GuideConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetGuideFocusCenterTextPos() {
-    const e = CommonParamById_1.configCommonParamById.GetIntConfig(
+    var e = CommonParamById_1.configCommonParamById.GetIntConfig(
       "GuideFocusTextOffsetY",
     );
     return (this.fYt.Z = e), this.fYt;
@@ -107,4 +107,4 @@ class GuideConfig extends ConfigBase_1.ConfigBase {
 ((exports.GuideConfig = GuideConfig).GmMuteTutorial = !1),
   (GuideConfig.TabTag = "tab"),
   (GuideConfig.SlotTag = "slot");
-// # sourceMappingURL=GuideConfig.js.map
+//# sourceMappingURL=GuideConfig.js.map

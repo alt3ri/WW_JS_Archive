@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SubLevelLoadingModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class SubLevelLoadingModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments), (this.Uyo = 0), (this.Ayo = !1);
@@ -28,4 +28,4 @@ class SubLevelLoadingModel extends ModelBase_1.ModelBase {
   }
 }
 exports.SubLevelLoadingModel = SubLevelLoadingModel;
-// # sourceMappingURL=SubLevelLoadingModel.js.map
+//# sourceMappingURL=SubLevelLoadingModel.js.map

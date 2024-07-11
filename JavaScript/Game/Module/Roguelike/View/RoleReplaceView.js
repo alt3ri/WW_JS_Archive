@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleReplaceView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiActorPool_1 = require("../../../Ui/UiActorPool");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ButtonItem_1 = require("../../Common/Button/ButtonItem");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
-const RogueSelectResult_1 = require("../Define/RogueSelectResult");
-const RoguelikeController_1 = require("../RoguelikeController");
-const ElementPanel_1 = require("./ElementPanel");
-const RogueSelectBaseView_1 = require("./RogueSelectBaseView");
-const RoleSelectItem_1 = require("./RoleSelectItem");
-const TopPanel_1 = require("./TopPanel");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiActorPool_1 = require("../../../Ui/UiActorPool"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ButtonItem_1 = require("../../Common/Button/ButtonItem"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
+  RogueSelectResult_1 = require("../Define/RogueSelectResult"),
+  RoguelikeController_1 = require("../RoguelikeController"),
+  ElementPanel_1 = require("./ElementPanel"),
+  RogueSelectBaseView_1 = require("./RogueSelectBaseView"),
+  RoleSelectItem_1 = require("./RoleSelectItem"),
+  TopPanel_1 = require("./TopPanel");
 class RoleReplaceView extends RogueSelectBaseView_1.RogueSelectBaseView {
   constructor() {
     super(...arguments),
@@ -62,7 +62,7 @@ class RoleReplaceView extends RogueSelectBaseView_1.RogueSelectBaseView {
     ];
   }
   async OnCreateAsync() {
-    const e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+    var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
       RoguelikeDefine_1.ROLE_SELECT_ITEM,
     );
     this.UiPoolActorPrivate = await UiActorPool_1.UiActorPool.GetAsync(e);
@@ -113,13 +113,11 @@ class RoleReplaceView extends RogueSelectBaseView_1.RogueSelectBaseView {
   }
   RefreshTopPanel() {
     this.TopPanel.RefreshTitle(RoguelikeDefine_1.ROGUELIKEVIEW_3_TEXT);
-    var e = this.Eao();
-    const i =
-      ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterConfig(
+    var e = this.Eao(),
+      i = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterConfig(
         e[0].ConfigId,
-      );
-    var e =
-      ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterConfig(
+      ),
+      e = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterConfig(
         e[1].ConfigId,
       );
     this.TopPanel.RefreshSelectTipsText(
@@ -133,18 +131,18 @@ class RoleReplaceView extends RogueSelectBaseView_1.RogueSelectBaseView {
     this.ElementPanel.Refresh();
   }
   RefreshPhantomSelectItemList() {
-    const e = this.Eao();
+    var e = this.Eao();
     this.RoleSelectItemLayout.RefreshByData(e);
   }
   RefreshBtnText() {
     this.ButtonItem.SetShowText(RoguelikeDefine_1.ROGUELIKEVIEW_14_TEXT);
   }
   Eao() {
-    const e = new Array();
-    const i = ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.RoleEntry;
+    var e = new Array(),
+      i = ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.RoleEntry;
     return (
       i && e.push(i),
-      this.RoguelikeChooseData.RogueGainEntryList.length > 0 &&
+      0 < this.RoguelikeChooseData.RogueGainEntryList.length &&
         e.push(this.RoguelikeChooseData.RogueGainEntryList[0]),
       e
     );
@@ -155,4 +153,4 @@ class RoleReplaceView extends RogueSelectBaseView_1.RogueSelectBaseView {
   }
 }
 exports.RoleReplaceView = RoleReplaceView;
-// # sourceMappingURL=RoleReplaceView.js.map
+//# sourceMappingURL=RoleReplaceView.js.map

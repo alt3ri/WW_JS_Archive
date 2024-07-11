@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DailyAdventureRewardItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const ActivityDailyAdventureController_1 = require("./ActivityDailyAdventureController");
-const DailyAdventureSmallGridItem_1 = require("./DailyAdventureSmallGridItem");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  ActivityDailyAdventureController_1 = require("./ActivityDailyAdventureController"),
+  DailyAdventureSmallGridItem_1 = require("./DailyAdventureSmallGridItem");
 class DailyAdventureRewardItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -14,7 +14,7 @@ class DailyAdventureRewardItem extends UiPanelBase_1.UiPanelBase {
       (this.sOe = []),
       (this.aOe = (e) => {
         this.Data &&
-          (this.Data.RewardState !== 0
+          (0 !== this.Data.RewardState
             ? ((e = e.Data),
               ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
                 e.Item[0].ItemId,
@@ -25,7 +25,7 @@ class DailyAdventureRewardItem extends UiPanelBase_1.UiPanelBase {
       }),
       (this.hOe = () => {
         this.Data &&
-          this.Data.RewardState === 0 &&
+          0 === this.Data.RewardState &&
           ActivityDailyAdventureController_1.ActivityDailyAdventureController.RequestPointReward(
             this.Data.RewardId,
           );
@@ -46,7 +46,7 @@ class DailyAdventureRewardItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.hOe]]);
   }
   async OnBeforeStartAsync() {
-    const e = [];
+    var e = [];
     for (const t of [3, 4]) e.push(this.rOe(this.GetItem(t).GetOwner()));
     await Promise.all(e);
   }
@@ -54,29 +54,29 @@ class DailyAdventureRewardItem extends UiPanelBase_1.UiPanelBase {
     this.sOe.length = 0;
   }
   async rOe(e) {
-    const t = new DailyAdventureSmallGridItem_1.DailyAdventureSmallGridItem();
+    var t = new DailyAdventureSmallGridItem_1.DailyAdventureSmallGridItem();
     t.BindOnExtendToggleClicked(this.aOe),
       await t.CreateByActorAsync(e),
       this.sOe.push(t);
   }
   Refresh(e) {
     this.Data = e;
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.ActivityDailyAdventureConfig.GetDailyAdventurePointConfig(
         e.RewardId,
       );
     if (t) {
-      const i = this.lOe(t.Drop);
+      var i = this.lOe(t.Drop);
       for (let e = 0; e < this.sOe.length; e++) {
-        var r;
-        const s = i.length > e;
-        const a = this.sOe[e];
+        var r,
+          s = i.length > e,
+          a = this.sOe[e];
         s &&
-          ((r = { Item: i[e], HasClaimed: this.Data.RewardState === 2 }),
+          ((r = { Item: i[e], HasClaimed: 2 === this.Data.RewardState }),
           a.Refresh(r)),
           a.SetActive(s),
-          a.SetReceivableVisible(this.Data.RewardState === 0),
-          a.SetLockVisible(this.Data.RewardState === 1);
+          a.SetReceivableVisible(0 === this.Data.RewardState),
+          a.SetLockVisible(1 === this.Data.RewardState);
       }
       this.GetText(2).SetText(t.NeedPt.toString()), this._Oe(e.RewardState);
     }
@@ -113,10 +113,12 @@ class DailyAdventureRewardItem extends UiPanelBase_1.UiPanelBase {
   }
   lOe(e) {
     var e =
-      ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(e)?.DropPreview;
-    const t = [];
+        ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(
+          e,
+        )?.DropPreview,
+      t = [];
     if (e)
-      for (let [i, r] of e) {
+      for (var [i, r] of e) {
         i = [{ IncId: 0, ItemId: i }, r];
         t.push(i);
       }
@@ -124,4 +126,4 @@ class DailyAdventureRewardItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.DailyAdventureRewardItem = DailyAdventureRewardItem;
-// # sourceMappingURL=DailyAdventureRewardItem.js.map
+//# sourceMappingURL=DailyAdventureRewardItem.js.map

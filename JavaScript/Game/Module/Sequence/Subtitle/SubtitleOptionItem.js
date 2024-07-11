@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SubtitleOptionItem = void 0);
-const UE = require("ue");
-const TalkOptionIconById_1 = require("../../../../Core/Define/ConfigQuery/TalkOptionIconById");
-const PublicUtil_1 = require("../../../Common/PublicUtil");
-const ToggleActionItem_1 = require("../../Common/Toggle/ToggleActionItem");
-const SequenceController_1 = require("../../Plot/Sequence/SequenceController");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
+const UE = require("ue"),
+  TalkOptionIconById_1 = require("../../../../Core/Define/ConfigQuery/TalkOptionIconById"),
+  PublicUtil_1 = require("../../../Common/PublicUtil"),
+  ToggleActionItem_1 = require("../../Common/Toggle/ToggleActionItem"),
+  SequenceController_1 = require("../../Plot/Sequence/SequenceController"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
 class SubtitleOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(t) {
     super(),
@@ -36,7 +36,7 @@ class SubtitleOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   LJi() {
     this.$1i.GetToggleItem().OnHover.Add(() => {
-      const t = this.TJi.GetOptionList()[this.TJi.HoverIndex];
+      var t = this.TJi.GetOptionList()[this.TJi.HoverIndex];
       t && t.SetFollowItemActive(!1),
         (this.TJi.HoverIndex = this.OptionIndex),
         this.SetFollowItemActive(!0);
@@ -62,12 +62,12 @@ class SubtitleOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
     return t ? t.Icon : "";
   }
   Refresh(t, i, e) {
-    var t = PublicUtil_1.PublicUtil.GetFlowConfigLocalText(t);
-    var t = this.TJi.ParseSubtitle(t);
-    const s = e < this.TJi.OsList.length ? this.TJi.OsList[e] : 1;
+    var t = PublicUtil_1.PublicUtil.GetFlowConfigLocalText(t),
+      t = this.TJi.ParseSubtitle(t),
+      s = e < this.TJi.OsList.length ? this.TJi.OsList[e] : 1;
     this.SetupSubtitleOption(t, e, s),
       this.$1i.GetToggleItem().SetToggleState(0);
   }
 }
 exports.SubtitleOptionItem = SubtitleOptionItem;
-// # sourceMappingURL=SubtitleOptionItem.js.map
+//# sourceMappingURL=SubtitleOptionItem.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DailyActivityModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const DailyActivityTaskItem_1 = require("./DailyActivityTask/DailyActivityTaskItem");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  DailyActivityTaskItem_1 = require("./DailyActivityTask/DailyActivityTaskItem");
 class DailyActivityModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -49,22 +49,22 @@ class DailyActivityModel extends ModelBase_1.ModelBase {
   }
   InitGoalData() {
     this.BOt = new Map();
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.DailyActivityConfig.GetAllActivityGoalData();
     for (const s of t) {
-      const e = [];
+      var e = [];
       for (const a of ConfigManager_1.ConfigManager.DailyActivityConfig.GetDropShowInfo(
         s.DropId,
       ).entries())
         e.push([{ IncId: 0, ItemId: a[0] }, a[1]]);
-      const i = { Id: s.Id, Goal: s.Goal, Rewards: e, Achieved: !1, State: 2 };
+      var i = { Id: s.Id, Goal: s.Goal, Rewards: e, Achieved: !1, State: 2 };
       this.BOt.set(s.Id, i);
     }
     this.wOt = t[t.length - 1].Goal;
   }
   RefreshActivityInfo(t) {
     for (const i of t) {
-      const e = this.BOt.get(i);
+      var e = this.BOt.get(i);
       e &&
         ((e.Achieved = !0), (e.State = this.GetActivityGoalState(e.Goal, !0)));
     }
@@ -92,27 +92,27 @@ class DailyActivityModel extends ModelBase_1.ModelBase {
     (this.xOt = s?.sAs ?? 0),
       (this.qOt = Number(MathUtils_1.MathUtils.LongToBigInt(s?.xfs ?? 0))),
       this.BOt.forEach((t, e) => {
-        const i = s.aAs.includes(t.Id);
+        var i = s.aAs.includes(t.Id);
         (t.Achieved = i), (t.State = this.GetActivityGoalState(t.Goal, i));
       }),
       (this.AreaId = s.wFn),
       (this.bOt = []);
     for (const r of s.V0s) {
-      const e = new DailyActivityTaskItem_1.DailyActiveTaskData();
-      const i =
-        ((e.TaskId = r.Ekn),
-        (e.CurrentProgress = r.k0s),
-        (e.TargetProgress = r.s3n),
-        (e.IsFunctionUnlock = r.hAs),
-        r.$0s
-          ? r.H0s
-            ? (e.TaskState = 3)
-            : (e.TaskState = 1)
-          : (e.TaskState = 2),
-        ConfigManager_1.ConfigManager.DailyActivityConfig.GetActivityTaskConfigById(
-          r.Ekn,
-        ));
-      const a = ((e.Sort = i.SortRank), []);
+      var e = new DailyActivityTaskItem_1.DailyActiveTaskData(),
+        i =
+          ((e.TaskId = r.Ekn),
+          (e.CurrentProgress = r.k0s),
+          (e.TargetProgress = r.s3n),
+          (e.IsFunctionUnlock = r.hAs),
+          r.$0s
+            ? r.H0s
+              ? (e.TaskState = 3)
+              : (e.TaskState = 1)
+            : (e.TaskState = 2),
+          ConfigManager_1.ConfigManager.DailyActivityConfig.GetActivityTaskConfigById(
+            r.Ekn,
+          )),
+        a = ((e.Sort = i.SortRank), []);
       for (const n of i.TaskReward.entries())
         a.push([{ ItemId: n[0], IncId: 0 }, n[1]]);
       (e.RewardItemList = a), this.bOt.push(e);
@@ -130,13 +130,13 @@ class DailyActivityModel extends ModelBase_1.ModelBase {
   UpdateDailyActivityData(t) {
     this.xOt = t?.sAs ?? 0;
     for (const s of t.aAs) {
-      const e = this.BOt.get(s);
+      var e = this.BOt.get(s);
       e &&
         ((e.Achieved = !0), (e.State = this.GetActivityGoalState(e.Goal, !0)));
     }
     this.AreaId = t.wFn;
     for (const a of t.V0s) {
-      const i = this.bOt.find((t) => t.TaskId === a.Ekn);
+      var i = this.bOt.find((t) => t.TaskId === a.Ekn);
       (i.CurrentProgress = a.k0s),
         a.$0s
           ? a.H0s
@@ -166,13 +166,13 @@ class DailyActivityModel extends ModelBase_1.ModelBase {
   NOt() {
     if (!(this.xOt >= this.wOt))
       for (const t of this.DailyActivityTaskList)
-        if (t.TaskState === 1) return !0;
+        if (1 === t.TaskState) return !0;
     return !1;
   }
   OOt() {
     let t = !1;
     for (const e of this.BOt.entries())
-      if (e[1].State === 1) {
+      if (1 === e[1].State) {
         t = !0;
         break;
       }
@@ -186,4 +186,4 @@ class DailyActivityModel extends ModelBase_1.ModelBase {
   }
 }
 exports.DailyActivityModel = DailyActivityModel;
-// # sourceMappingURL=DailyActivityModel.js.map
+//# sourceMappingURL=DailyActivityModel.js.map

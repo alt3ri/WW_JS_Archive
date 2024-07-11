@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleVisionIdentifyAttribute = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const PhantomDataBase_1 = require("../../../Phantom/PhantomBattle/Data/PhantomDataBase");
-const VisionIdentifyItem_1 = require("../../../Phantom/Vision/View/VisionIdentifyItem");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  PhantomDataBase_1 = require("../../../Phantom/PhantomBattle/Data/PhantomDataBase"),
+  VisionIdentifyItem_1 = require("../../../Phantom/Vision/View/VisionIdentifyItem"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
 class RoleVisionIdentifyAttribute extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -27,7 +27,7 @@ class RoleVisionIdentifyAttribute extends UiPanelBase_1.UiPanelBase {
   Refresh(e, i) {
     const n = new Array();
     e.forEach((e) => {
-      const t = new PhantomDataBase_1.VisionSubPropViewData();
+      var t = new PhantomDataBase_1.VisionSubPropViewData();
       (t.Data = e),
         (t.SourceView = "VisionEquipmentView"),
         (t.CurrentVisionData = i),
@@ -37,4 +37,4 @@ class RoleVisionIdentifyAttribute extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleVisionIdentifyAttribute = RoleVisionIdentifyAttribute;
-// # sourceMappingURL=RoleVisionIdentifyAttribute.js.map
+//# sourceMappingURL=RoleVisionIdentifyAttribute.js.map

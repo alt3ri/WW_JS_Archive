@@ -7,25 +7,25 @@ class SceneItemBuffModel extends ModelBase_1.ModelBase {
     super(...arguments), (this.Knr = new Map());
   }
   Add(e, t, r) {
-    let s = this.Knr.get(e);
-    let o = (s || ((s = new Map()), this.Knr.set(e, s)), s.get(t));
+    let s = this.Knr.get(e),
+      o = (s || ((s = new Map()), this.Knr.set(e, s)), s.get(t));
     return (
       o || ((o = new Array()), s.set(t, o)), !o.includes(r) && (o.push(r), !0)
     );
   }
   Remove(e, t, r, s) {
     let o = new Array();
-    let n;
-    const i = this.Knr.get(e);
+    var n,
+      i = this.Knr.get(e);
     return (
       i &&
         ((n = i.get(t)) &&
           (s
-            ? (s = n.indexOf(s)) > -1 && (o = n.splice(s, r))
-            : (o = n.splice(0, r === -1 ? n.length : r)),
-          n.length === 0) &&
+            ? -1 < (s = n.indexOf(s)) && (o = n.splice(s, r))
+            : (o = n.splice(0, -1 === r ? n.length : r)),
+          0 === n.length) &&
           i.delete(t),
-        i.size === 0) &&
+        0 === i.size) &&
         this.Knr.delete(e),
       o
     );
@@ -34,18 +34,18 @@ class SceneItemBuffModel extends ModelBase_1.ModelBase {
     return this.Knr.delete(e);
   }
   Switch(e, t) {
-    const r = this.Knr.get(e);
-    const s = this.Knr.get(t);
+    var r = this.Knr.get(e),
+      s = this.Knr.get(t);
     return !(r || !s || (this.Knr.set(e, s), this.Knr.delete(t), 0));
   }
   GetSceneItemIds(e) {
     e = this.Knr.get(e);
     if (e) {
-      const t = new Array();
+      var t = new Array();
       for (const r of e.values()) for (const s of r) t.push(s);
       return t;
     }
   }
 }
 exports.SceneItemBuffModel = SceneItemBuffModel;
-// # sourceMappingURL=SceneItemBuffModel.js.map
+//# sourceMappingURL=SceneItemBuffModel.js.map

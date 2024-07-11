@@ -54,62 +54,62 @@ class MonsterInfo {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   name(t) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   rarityid() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   icon(t) {
-    const s = this.J7.__offset(this.z7, 10);
+    var s = this.J7.__offset(this.z7, 10);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   bigicon(t) {
-    const s = this.J7.__offset(this.z7, 12);
+    var s = this.J7.__offset(this.z7, 12);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   tachine(t) {
-    const s = this.J7.__offset(this.z7, 14);
+    var s = this.J7.__offset(this.z7, 14);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   elementid() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   monsterentityid(t) {
-    const s = this.J7.__offset(this.z7, 18);
+    var s = this.J7.__offset(this.z7, 18);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   monsterpose(t) {
-    const s = this.J7.__offset(this.z7, 20);
+    var s = this.J7.__offset(this.z7, 20);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   undiscovereddes(t) {
-    const s = this.J7.__offset(this.z7, 22);
+    var s = this.J7.__offset(this.z7, 22);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   discovereddes(t) {
-    const s = this.J7.__offset(this.z7, 24);
+    var s = this.J7.__offset(this.z7, 24);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   GetPerchidAt(t) {
     return this.perchid(t);
   }
   perchid(t) {
-    const s = this.J7.__offset(this.z7, 26);
+    var s = this.J7.__offset(this.z7, 26);
     return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   perchidLength() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   perchidArray() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -120,4 +120,4 @@ class MonsterInfo {
   }
 }
 exports.MonsterInfo = MonsterInfo;
-// # sourceMappingURL=MonsterInfo.js.map
+//# sourceMappingURL=MonsterInfo.js.map

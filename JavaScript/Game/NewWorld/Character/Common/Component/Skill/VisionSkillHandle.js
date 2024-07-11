@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionSkillHandle = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const InputEnums_1 = require("../../../../../Input/InputEnums");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const PhantomUtil_1 = require("../../../../../Module/Phantom/PhantomUtil");
-const useNextSkillTagId = 718290459;
-const morphTagId = -2100129479;
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  InputEnums_1 = require("../../../../../Input/InputEnums"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  PhantomUtil_1 = require("../../../../../Module/Phantom/PhantomUtil"),
+  useNextSkillTagId = 718290459,
+  morphTagId = -2100129479;
 class VisionSkillHandle {
   constructor() {
     (this.Mzo = void 0),
@@ -24,7 +24,7 @@ class VisionSkillHandle {
       (this.Rzo = !1),
       (this.JBn = !0),
       (this.Uzo = (t, i) => {
-        let s, e;
+        var s, e;
         !(
           t === InputEnums_1.EInputAction.幻象2 ||
           (t === InputEnums_1.EInputAction.攻击 && this.JBn)
@@ -91,7 +91,7 @@ class VisionSkillHandle {
     );
   }
   BeginSkill(t, i, s = "") {
-    let e = this.cBe.GetSkill(t);
+    var e = this.cBe.GetSkill(t);
     let h = t;
     (e = this.Izo.IsMultiSkill(e.SkillInfo)),
       e && (h = this.Izo.GetNextMultiSkillId(t)),
@@ -139,7 +139,7 @@ class VisionSkillHandle {
     this.JBn = t;
   }
   CanSummonerStartNextMultiSkill() {
-    let t;
+    var t;
     return !(
       this.Tzo <= 0 ||
       this.Lzo ||
@@ -148,7 +148,7 @@ class VisionSkillHandle {
     );
   }
   Pzo() {
-    this.Tzo !== 0 && (this.Izo.ResetMultiSkills(this.Tzo, !0), (this.Tzo = 0)),
+    0 !== this.Tzo && (this.Izo.ResetMultiSkills(this.Tzo, !0), (this.Tzo = 0)),
       EventSystem_1.EventSystem.HasWithTarget(
         this.Ezo.Entity,
         EventDefine_1.EEventName.CharInputPress,
@@ -162,7 +162,7 @@ class VisionSkillHandle {
   }
   Azo() {
     PhantomUtil_1.PhantomUtil.SetVisionEnable(this.Ezo.Entity, !1);
-    const t = this.Ezo?.Entity?.CheckGetComponent(185);
+    var t = this.Ezo?.Entity?.CheckGetComponent(185);
     t && t.RemoveTag(morphTagId),
       this.cBe.CurrentSkill?.Active &&
         this.cBe.EndSkill(
@@ -172,4 +172,4 @@ class VisionSkillHandle {
   }
 }
 exports.VisionSkillHandle = VisionSkillHandle;
-// # sourceMappingURL=VisionSkillHandle.js.map
+//# sourceMappingURL=VisionSkillHandle.js.map

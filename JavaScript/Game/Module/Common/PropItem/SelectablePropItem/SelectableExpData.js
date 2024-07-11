@@ -20,7 +20,7 @@ class SelectableExpData {
       (this.Swt = !1);
   }
   static PhraseData(t) {
-    const e = new SelectableExpData();
+    var e = new SelectableExpData();
     return (
       t.MaxExpFunction && e.SetMaxExpFunction(t.MaxExpFunction),
       e.UpdateComponent(t.CurrentLevel, t.CurrentMaxLevel, t.CurrentExp),
@@ -43,7 +43,7 @@ class SelectableExpData {
     return !((this.IsInMax() && t > this.FrontExp) || (this.FPt(t), 0));
   }
   FPt(t) {
-    let e;
+    var e;
     (this.FrontExp = t),
       (this.Mwt = t),
       (this.vwt = this.CurrentExp + t >= this.CurrentMaxExp),
@@ -94,9 +94,9 @@ class SelectableExpData {
     return this.ArrivedLevel === this.CurrentMaxLevel;
   }
   GetOverExp() {
-    var t = this.GetExpDistanceToMax();
-    var t = this.Mwt - t;
-    return t > 0 ? t : 0;
+    var t = this.GetExpDistanceToMax(),
+      t = this.Mwt - t;
+    return 0 < t ? t : 0;
   }
   GetIsAddUp() {
     return this.Swt;
@@ -141,4 +141,4 @@ class SelectableExpData {
   }
 }
 exports.SelectableExpData = SelectableExpData;
-// # sourceMappingURL=SelectableExpData.js.map
+//# sourceMappingURL=SelectableExpData.js.map

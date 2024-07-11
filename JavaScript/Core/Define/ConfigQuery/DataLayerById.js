@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configDataLayerById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const DataLayer_1 = require("../Config/DataLayer");
-const DB = "db_datalayer.db";
-const FILE = "k.可视化编辑/c.Csv/d.DataLayer/*.csv*";
-const TABLE = "DataLayer";
-const COMMAND = "select BinData from `DataLayer` where Id=?";
-const KEY_PREFIX = "DataLayerById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  DataLayer_1 = require("../Config/DataLayer"),
+  DB = "db_datalayer.db",
+  FILE = "k.可视化编辑/c.Csv/d.DataLayer/*.csv*",
+  TABLE = "DataLayer",
+  COMMAND = "select BinData from `DataLayer` where Id=?",
+  KEY_PREFIX = "DataLayerById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configDataLayerById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configDataLayerById.GetConfig(";
 exports.configDataLayerById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configDataLayerById = {
       if (
         (n =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var n;
-        var e = void 0;
+        var n,
+          e = void 0;
         if (
           (([n, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configDataLayerById = {
     }
   },
 };
-// # sourceMappingURL=DataLayerById.js.map
+//# sourceMappingURL=DataLayerById.js.map

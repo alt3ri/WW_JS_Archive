@@ -2,18 +2,18 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HandBookQuestPlotTalkAudioUtil = exports.HandBookQuestPlotList =
     void 0);
-const UE = require("ue");
-const AudioController_1 = require("../../../Core/Audio/AudioController");
-const Log_1 = require("../../../Core/Common/Log");
-const ExternalSourceSettingById_1 = require("../../../Core/Define/ConfigQuery/ExternalSourceSettingById");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const PublicUtil_1 = require("../../Common/PublicUtil");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const PlotAudioModel_1 = require("../Plot/PlotAudioModel");
-const PlotTextLogic_1 = require("../Plot/PlotView/PlotTextLogic");
-const HandBookDefine_1 = require("./HandBookDefine");
+const UE = require("ue"),
+  AudioController_1 = require("../../../Core/Audio/AudioController"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ExternalSourceSettingById_1 = require("../../../Core/Define/ConfigQuery/ExternalSourceSettingById"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  PublicUtil_1 = require("../../Common/PublicUtil"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  PlotAudioModel_1 = require("../Plot/PlotAudioModel"),
+  PlotTextLogic_1 = require("../Plot/PlotView/PlotTextLogic"),
+  HandBookDefine_1 = require("./HandBookDefine");
 class HandBookQuestPlotList extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -43,10 +43,10 @@ class HandBookQuestPlotList extends UiPanelBase_1.UiPanelBase {
       (this.cFs = new HandBookQuestPlotOptionTalker()),
       this.AddChild(this.NAn),
       this.AddChild(this.kAn);
-    const t = this.GetItem(0);
-    const i = (t.SetUIActive(!1), this.GetItem(1));
-    const s = (i.SetUIActive(!1), this.GetItem(2));
-    const e = (s.SetUIActive(!1), this.GetItem(3));
+    var t = this.GetItem(0),
+      i = (t.SetUIActive(!1), this.GetItem(1)),
+      s = (i.SetUIActive(!1), this.GetItem(2)),
+      e = (s.SetUIActive(!1), this.GetItem(3));
     e.SetUIActive(!1),
       await Promise.all([
         this.NAn.CreateByActorAsync(t.GetOwner()),
@@ -68,7 +68,7 @@ class HandBookQuestPlotList extends UiPanelBase_1.UiPanelBase {
     ).GetOwner();
   }
   Update(t, i) {
-    let s, e;
+    var s, e;
     (this.OptionData = t),
       this.NAn?.SetUiActive(!1),
       this.kAn?.SetUiActive(!1),
@@ -92,7 +92,7 @@ class HandBookQuestPlotList extends UiPanelBase_1.UiPanelBase {
                 MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
                   "ColonTag",
                 ) ?? ""),
-              this.cFs?.RefreshByText(s !== "" ? s + e + " " : ""))
+              this.cFs?.RefreshByText("" !== s ? s + e + " " : ""))
             : (this.NAn?.SetUiActive(!0),
               this.NAn.Refresh(t.TalkOwnerName, t.TalkText, t.PlotAudio)),
       this.nPn && this.nPn(t.BelongToNode);
@@ -160,7 +160,7 @@ class HandBookQuestPlotOption extends UiPanelBase_1.UiPanelBase {
       (this.$An = void 0),
       (this.I6e = (t) => {
         this.$An &&
-          t === 1 &&
+          1 === t &&
           this.$An(this.QAn, this.yJi, this.XAn, this.Toggle);
       });
   }
@@ -219,8 +219,8 @@ class HandBookQuestPlotOptionTalker extends UiPanelBase_1.UiPanelBase {
     this.GetText(0)?.SetText(t);
   }
 }
-const BREAK_TIME = 1e3;
-const MAX_LOAD_AUDIO_TIME = 3e3;
+const BREAK_TIME = 1e3,
+  MAX_LOAD_AUDIO_TIME = 3e3;
 class HandBookQuestPlotTalkAudioUtil {
   static PlayAudio(t, i) {
     this.Yzt.Init((t) => {
@@ -232,14 +232,14 @@ class HandBookQuestPlotTalkAudioUtil {
         }, t));
     }),
       this.Yzt.Enable();
-    const s =
-      ExternalSourceSettingById_1.configExternalSourceSettingById.GetConfig(
-        t.ExternalSourceSetting,
-      );
-    const e = PlotAudioModel_1.PlotAudioModel.GetExternalSourcesMediaName([
-      t.IsCheckSex,
-      t.FileName,
-    ]);
+    var s =
+        ExternalSourceSettingById_1.configExternalSourceSettingById.GetConfig(
+          t.ExternalSourceSetting,
+        ),
+      e = PlotAudioModel_1.PlotAudioModel.GetExternalSourcesMediaName([
+        t.IsCheckSex,
+        t.FileName,
+      ]);
     AudioController_1.AudioController.PostEventByExternalSourcesByUi(
       s.AudioEventPath,
       e,
@@ -289,4 +289,4 @@ class HandBookQuestPlotTalkAudioUtil {
   (HandBookQuestPlotTalkAudioUtil.YAn = void 0),
   (HandBookQuestPlotTalkAudioUtil.sPn = ""),
   (HandBookQuestPlotTalkAudioUtil.zAn = void 0);
-// # sourceMappingURL=HandBookQuestPlotList.js.map
+//# sourceMappingURL=HandBookQuestPlotList.js.map

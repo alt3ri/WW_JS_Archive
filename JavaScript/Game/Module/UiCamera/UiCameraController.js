@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiCameraController = void 0);
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const UiCameraManager_1 = require("./UiCameraManager");
+const ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  UiCameraManager_1 = require("./UiCameraManager");
 class UiCameraController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return UiCameraManager_1.UiCameraManager.Initialize(), !0;
@@ -15,4 +15,4 @@ class UiCameraController extends ControllerBase_1.ControllerBase {
   }
 }
 exports.UiCameraController = UiCameraController;
-// # sourceMappingURL=UiCameraController.js.map
+//# sourceMappingURL=UiCameraController.js.map

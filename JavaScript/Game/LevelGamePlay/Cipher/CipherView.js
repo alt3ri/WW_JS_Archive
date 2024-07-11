@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CipherView = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../Core/Audio/AudioSystem");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const GenericLayoutNew_1 = require("../../Module/Util/Layout/GenericLayoutNew");
-const UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase");
-const UiLayer_1 = require("../../Ui/UiLayer");
-const UiManager_1 = require("../../Ui/UiManager");
-const CipherController_1 = require("./CipherController");
-const CipherKey_1 = require("./CipherKey");
-const WRONG_COLOR = -1;
-const RIGHT_COLOR = 1;
-const NORMAL_COLOR = 0;
-const WPO = "WPO";
-const COLOR = "TargetTime";
-const FLAG = "Flag";
-const LEN = 4;
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  GenericLayoutNew_1 = require("../../Module/Util/Layout/GenericLayoutNew"),
+  UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  CipherController_1 = require("./CipherController"),
+  CipherKey_1 = require("./CipherKey"),
+  WRONG_COLOR = -1,
+  RIGHT_COLOR = 1,
+  NORMAL_COLOR = 0,
+  WPO = "WPO",
+  COLOR = "TargetTime",
+  FLAG = "Flag",
+  LEN = 4;
 class CipherView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -44,11 +44,11 @@ class CipherView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.OnConfirmClick = () => {
         if (this.Oye) {
-          const e = ModelManager_1.ModelManager.CipherModel.IsPasswordCorrect();
+          var e = ModelManager_1.ModelManager.CipherModel.IsPasswordCorrect();
           let t = 0;
           UiLayer_1.UiLayer.SetShowMaskLayer("CipherConfirmClick", !0);
           for (const r of this.qye) {
-            const i =
+            var i =
               ModelManager_1.ModelManager.CipherModel.GetCheckResultByIndex(t);
             r.HandleConfirm(i), this.Fye(t, i, !1), t++;
           }
@@ -69,7 +69,7 @@ class CipherView extends UiTickViewBase_1.UiTickViewBase {
               : ((this.Nye = TimerSystem_1.TimerSystem.Delay(() => {
                   this.GetButton(1).SetEnable(!0), (t = 0);
                   for (const i of this.qye) {
-                    const e =
+                    var e =
                       ModelManager_1.ModelManager.CipherModel.GetCheckResultByIndex(
                         t,
                       );
@@ -138,8 +138,8 @@ class CipherView extends UiTickViewBase_1.UiTickViewBase {
     CipherController_1.CipherController.RequestCipherComplete();
   }
   Fye(e, i, t) {
-    let r = WRONG_COLOR;
-    let s = 0;
+    let r = WRONG_COLOR,
+      s = 0;
     if ((i && ((r = RIGHT_COLOR), (s = 1)), !i || !t))
       switch ((t && (r = NORMAL_COLOR), e)) {
         case 0:
@@ -160,7 +160,7 @@ class CipherView extends UiTickViewBase_1.UiTickViewBase {
       }
   }
   Vye(e, i) {
-    const t = MathUtils_1.MathUtils.RangeClamp(i, 0, 9, 0.1, 1.5);
+    var t = MathUtils_1.MathUtils.RangeClamp(i, 0, 9, 0.1, 1.5);
     switch (e) {
       case 0:
         this.GetUiNiagara(3).SetNiagaraVarFloat(WPO, t);
@@ -178,4 +178,4 @@ class CipherView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.CipherView = CipherView;
-// # sourceMappingURL=CipherView.js.map
+//# sourceMappingURL=CipherView.js.map

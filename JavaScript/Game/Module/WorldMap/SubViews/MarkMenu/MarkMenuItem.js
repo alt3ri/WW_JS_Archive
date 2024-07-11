@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MarkMenuItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
 class MarkMenuItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments), (this.$ji = void 0);
@@ -32,4 +32,4 @@ class MarkMenuItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.MarkMenuItem = MarkMenuItem;
-// # sourceMappingURL=MarkMenuItem.js.map
+//# sourceMappingURL=MarkMenuItem.js.map

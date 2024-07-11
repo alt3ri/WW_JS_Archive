@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventPlotInterludeAction = void 0);
-const UE = require("ue");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils");
-const Global_1 = require("../../Global");
-const BattleUiDefine_1 = require("../../Module/BattleUi/BattleUiDefine");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const LevelGeneralContextDefine_1 = require("../LevelGeneralContextDefine");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const INTERLUDE_DELAY_MILLISECOND = 2e3;
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
+  Global_1 = require("../../Global"),
+  BattleUiDefine_1 = require("../../Module/BattleUi/BattleUiDefine"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  LevelGeneralContextDefine_1 = require("../LevelGeneralContextDefine"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  INTERLUDE_DELAY_MILLISECOND = 2e3;
 class LevelEventPlotInterludeAction extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -68,4 +68,4 @@ class LevelEventPlotInterludeAction extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventPlotInterludeAction = LevelEventPlotInterludeAction;
-// # sourceMappingURL=LevelEventPlotInterludeAction.js.map
+//# sourceMappingURL=LevelEventPlotInterludeAction.js.map

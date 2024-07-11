@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineStatePalsy = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const CameraController_1 = require("../../../Camera/CameraController");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const CharacterHitComponent_1 = require("../../../NewWorld/Character/Common/Component/CharacterHitComponent");
-const AiStateMachine_1 = require("../AiStateMachine");
-const AiStateMachineState_1 = require("./AiStateMachineState");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  CameraController_1 = require("../../../Camera/CameraController"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  CharacterHitComponent_1 = require("../../../NewWorld/Character/Common/Component/CharacterHitComponent"),
+  AiStateMachine_1 = require("../AiStateMachine"),
+  AiStateMachineState_1 = require("./AiStateMachineState");
 class AiStateMachineStatePalsy extends AiStateMachineState_1.AiStateMachineState {
   constructor() {
     super(...arguments), (this.wne = ""), (this.Bne = "");
   }
   OnActivate() {
-    let e, t;
+    var e, t;
     Log_1.Log.CheckDebug() && Log_1.Log.Debug("Battle", 4, "TestOnActivate"),
       this.Bne &&
         (e = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
@@ -89,4 +89,4 @@ class AiStateMachineStatePalsy extends AiStateMachineState_1.AiStateMachineState
   }
 }
 exports.AiStateMachineStatePalsy = AiStateMachineStatePalsy;
-// # sourceMappingURL=AiStateMachineStatePalsy.js.map
+//# sourceMappingURL=AiStateMachineStatePalsy.js.map

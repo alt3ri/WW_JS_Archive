@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FaceExpressionConfig = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const FaceExpressionDataById_1 = require("../../../../../Core/Define/ConfigQuery/FaceExpressionDataById");
-const ConfigBase_1 = require("../../../../../Core/Framework/ConfigBase");
-const IGlobal_1 = require("../../../../../UniverseEditor/Interface/IGlobal");
-const PublicUtil_1 = require("../../../../Common/PublicUtil");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  FaceExpressionDataById_1 = require("../../../../../Core/Define/ConfigQuery/FaceExpressionDataById"),
+  ConfigBase_1 = require("../../../../../Core/Framework/ConfigBase"),
+  IGlobal_1 = require("../../../../../UniverseEditor/Interface/IGlobal"),
+  PublicUtil_1 = require("../../../../Common/PublicUtil");
 class FaceExpressionConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments), (this.MZo = void 0), (this.SZo = !1);
@@ -20,7 +20,7 @@ class FaceExpressionConfig extends ConfigBase_1.ConfigBase {
   }
   GetFaceExpressionConfig(i) {
     if (PublicUtil_1.PublicUtil.UseDbConfig()) {
-      const r = FaceExpressionDataById_1.configFaceExpressionDataById.GetConfig(
+      var r = FaceExpressionDataById_1.configFaceExpressionDataById.GetConfig(
         i,
         !1,
       );
@@ -50,11 +50,11 @@ class FaceExpressionConfig extends ConfigBase_1.ConfigBase {
           )),
         UE.BlueprintPathsLibrary.FileExists(e))
       ) {
-        var i = (0, puerts_1.$ref)("");
-        var i =
-          (UE.KuroStaticLibrary.LoadFileToString(i, e),
-          (i = (0, puerts_1.$unref)(i)),
-          JSON.parse(i));
+        var i = (0, puerts_1.$ref)(""),
+          i =
+            (UE.KuroStaticLibrary.LoadFileToString(i, e),
+            (i = (0, puerts_1.$unref)(i)),
+            JSON.parse(i));
         for (const r of i) r && !this.MZo.has(r.Id) && this.MZo.set(r.Id, r);
       } else
         Log_1.Log.CheckError() &&
@@ -68,4 +68,4 @@ class FaceExpressionConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.FaceExpressionConfig = FaceExpressionConfig;
-// # sourceMappingURL=FaceExpressionConfig.js.map
+//# sourceMappingURL=FaceExpressionConfig.js.map

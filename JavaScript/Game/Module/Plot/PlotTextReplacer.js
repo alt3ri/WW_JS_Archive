@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotTextReplacer = void 0);
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const TA = "{TA}";
-const PLAYER_NAME = "{PlayerName}";
+const ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  TA = "{TA}",
+  PLAYER_NAME = "{PlayerName}";
 class PlotTextReplacer {
   constructor() {
     (this.gU = !1),
@@ -26,7 +26,7 @@ class PlotTextReplacer {
   Init() {
     this.gU ||
       ((this.lJi =
-        ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender() === 1),
+        1 === ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender()),
       (this.M8e = ModelManager_1.ModelManager.FunctionModel.GetPlayerName()),
       (this._Ji = this.lJi
         ? ConfigManager_1.ConfigManager.TextConfig.GetTextById("He")
@@ -42,4 +42,4 @@ class PlotTextReplacer {
   }
 }
 exports.PlotTextReplacer = PlotTextReplacer;
-// # sourceMappingURL=PlotTextReplacer.js.map
+//# sourceMappingURL=PlotTextReplacer.js.map

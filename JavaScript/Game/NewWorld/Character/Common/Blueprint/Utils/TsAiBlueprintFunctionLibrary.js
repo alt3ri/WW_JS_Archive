@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const Global_1 = require("../../../../../Global");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  Global_1 = require("../../../../../Global"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager");
 class TsAiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static GetQuestState(t, e) {
     e = ModelManager_1.ModelManager.QuestNewModel.GetQuest(e);
     return e ? e.Status : 4;
   }
   static GetDistanceByPlayer(t) {
-    let e = Global_1.Global.BaseCharacter;
+    var e = Global_1.Global.BaseCharacter;
     return e && (t = EntitySystem_1.EntitySystem.GetComponent(t, 3))?.Valid
       ? ((t = t.ActorLocationProxy),
         (e = e.CharacterActorComponent.ActorLocationProxy),
@@ -21,7 +21,7 @@ class TsAiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       : Number.MAX_VALUE;
   }
   static CheckPlayerGameplayTag(t, e) {
-    let r = Global_1.Global.BaseCharacter;
+    var r = Global_1.Global.BaseCharacter;
     return (
       !!r &&
       !!(r = r.CharacterActorComponent.Entity.GetComponent(185)) &&
@@ -118,4 +118,4 @@ class TsAiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
 }
 exports.default = TsAiBlueprintFunctionLibrary;
-// # sourceMappingURL=TsAiBlueprintFunctionLibrary.js.map
+//# sourceMappingURL=TsAiBlueprintFunctionLibrary.js.map

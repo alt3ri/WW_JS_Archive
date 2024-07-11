@@ -35,14 +35,14 @@ class ScrollViewDelegate {
           `参数值非法 gridIndex: ${i} displayIndex: ${t} Data.length: ${this.gWe} Proxies.length: ` +
             this.DGo.length,
         )
-      : (this.PGo !== -1 &&
+      : (-1 !== this.PGo &&
           (this.PGo < s || this.PGo > e) &&
           (this.xGo = void 0),
         (this.RGo[t] = !0),
         this.RefreshGridProxy(i, t));
   }
   RefreshGridProxy(i, t) {
-    let s, e, h;
+    var s, e, h;
     i >= this.gWe || t >= this.DGo.length
       ? Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
@@ -52,7 +52,7 @@ class ScrollViewDelegate {
             this.DGo.length,
         )
       : (s = this.GetGridProxy(t))
-        ? ((e = i !== -1 && i === this.PGo) && !this.xGo && (this.xGo = s),
+        ? ((e = -1 !== i && i === this.PGo) && !this.xGo && (this.xGo = s),
           (h = this.wGo(i, t)),
           (s.GridIndex = i),
           (s.DisplayIndex = t),
@@ -85,7 +85,7 @@ class ScrollViewDelegate {
         25,
         `CreateProxy displayIndex: ${i}, Proxies.length: ` + this.DGo.length,
       );
-    let s = this.DGo[i];
+    var s = this.DGo[i];
     return (
       s
         ? Log_1.Log.CheckError() &&
@@ -107,7 +107,7 @@ class ScrollViewDelegate {
         44,
         `CreateProxy displayIndex: ${i}, Proxies.length: ` + this.DGo.length,
       );
-    let s = this.DGo[i];
+    var s = this.DGo[i];
     return (
       s
         ? Log_1.Log.CheckError() &&
@@ -133,7 +133,7 @@ class ScrollViewDelegate {
           "获取Proxy非法，请检查初始动画是否尚未播放完成。displayIndex: " + i,
         );
     else {
-      const t = this.DGo[i];
+      var t = this.DGo[i];
       if (t) return t;
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("ScrollViewGrid", 25, "无法获取Proxy", [
@@ -172,7 +172,7 @@ class ScrollViewDelegate {
     return i < this.RGo.length && this.RGo[i];
   }
   ClearData() {
-    this.Pe.length > 0 && (this.Pe.length = 0), (this.gWe = 0);
+    0 < this.Pe.length && (this.Pe.length = 0), (this.gWe = 0);
   }
   Destroy() {
     this.ClearData(),
@@ -186,4 +186,4 @@ class ScrollViewDelegate {
   }
 }
 exports.ScrollViewDelegate = ScrollViewDelegate;
-// # sourceMappingURL=ScrollViewDelegate.js.map
+//# sourceMappingURL=ScrollViewDelegate.js.map

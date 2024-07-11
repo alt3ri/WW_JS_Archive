@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputKey = void 0);
-const UE = require("ue");
-const Global_1 = require("../../Global");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const UE = require("ue"),
+  Global_1 = require("../../Global"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class InputKey {
   constructor(t) {
     (this.HSe = ""),
@@ -50,7 +50,7 @@ class InputKey {
         : void 0;
   }
   GetKeyIconPath() {
-    let t, i;
+    var t, i;
     return this.IsKeyboardKey || this.IsMouseButton
       ? ConfigManager_1.ConfigManager.InputSettingsConfig.GetPcKeyConfig(
           this.HSe,
@@ -61,7 +61,7 @@ class InputKey {
             ConfigManager_1.ConfigManager.InputSettingsConfig.GetGamepadKeyConfig(
               this.HSe,
             )))
-        ? t === 7
+        ? 7 === t
           ? i.PsKeyIconPath
           : i.KeyIconPath
         : "";
@@ -76,4 +76,4 @@ class InputKey {
   }
 }
 exports.InputKey = InputKey;
-// # sourceMappingURL=InputKey.js.map
+//# sourceMappingURL=InputKey.js.map

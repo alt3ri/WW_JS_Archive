@@ -10,4 +10,4 @@ class LogicDataDestroyBullet extends LogicDataBase_1.default {
   }
 }
 exports.default = LogicDataDestroyBullet;
-// # sourceMappingURL=LogicDataDestroyBullet.js.map
+//# sourceMappingURL=LogicDataDestroyBullet.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OpenSystemMingSuTi = void 0);
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const MingSuController_1 = require("../../../Module/MingSu/MingSuController");
-const MingSuDefine_1 = require("../../../Module/MingSu/MingSuDefine");
-const OpenSystemBase_1 = require("./OpenSystemBase");
+const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  MingSuController_1 = require("../../../Module/MingSu/MingSuController"),
+  MingSuDefine_1 = require("../../../Module/MingSu/MingSuDefine"),
+  OpenSystemBase_1 = require("./OpenSystemBase");
 class OpenSystemMingSuTi extends OpenSystemBase_1.OpenSystemBase {
   async ExecuteOpenView(e, n) {
     e = e.BoardId;
@@ -28,4 +28,4 @@ class OpenSystemMingSuTi extends OpenSystemBase_1.OpenSystemBase {
   }
 }
 exports.OpenSystemMingSuTi = OpenSystemMingSuTi;
-// # sourceMappingURL=OpenSystemMingSuTi.js.map
+//# sourceMappingURL=OpenSystemMingSuTi.js.map

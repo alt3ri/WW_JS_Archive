@@ -26,11 +26,11 @@ class LevelAiWorldState {
     return this.IntWorldState.get(t);
   }
   MakeCopy() {
-    const t = new LevelAiWorldState();
+    var t = new LevelAiWorldState();
     for (const e of this.BooleanWorldState) t.BooleanWorldState.set(e[0], e[1]);
     for (const o of this.IntWorldState) t.IntWorldState.set(o[0], o[1]);
     return t;
   }
 }
 (exports.LevelAiWorldState = LevelAiWorldState).MIe = 0;
-// # sourceMappingURL=LevelAiWorldState.js.map
+//# sourceMappingURL=LevelAiWorldState.js.map

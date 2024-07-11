@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RedDotBattleViewShopButton = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const LocalStorage_1 = require("../../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine");
-const RedDotBase_1 = require("../../RedDotBase");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  LocalStorage_1 = require("../../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine"),
+  RedDotBase_1 = require("../../RedDotBase");
 class RedDotBattleViewShopButton extends RedDotBase_1.RedDotBase {
   OnCheck() {
     return (
@@ -19,4 +19,4 @@ class RedDotBattleViewShopButton extends RedDotBase_1.RedDotBase {
   }
 }
 exports.RedDotBattleViewShopButton = RedDotBattleViewShopButton;
-// # sourceMappingURL=RedDotBattleViewShopButton.js.map
+//# sourceMappingURL=RedDotBattleViewShopButton.js.map

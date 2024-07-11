@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QteAnimItem = void 0);
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const START_ANIM_TIME = 400;
-const ANIM_START = "Start";
-const ANIM_LOOP = "Loop";
-const ANIM_CLOSE = "Close";
-const ANIM_PRESS = "Press";
+const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  START_ANIM_TIME = 400,
+  ANIM_START = "Start",
+  ANIM_LOOP = "Loop",
+  ANIM_CLOSE = "Close",
+  ANIM_PRESS = "Press";
 class QteAnimItem {
   constructor() {
     (this.HNi = void 0),
@@ -52,4 +52,4 @@ class QteAnimItem {
   }
 }
 exports.QteAnimItem = QteAnimItem;
-// # sourceMappingURL=QteAnimItem.js.map
+//# sourceMappingURL=QteAnimItem.js.map

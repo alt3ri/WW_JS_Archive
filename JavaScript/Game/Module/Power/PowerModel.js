@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PowerModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const PowerDefines_1 = require("./PowerDefines");
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  PowerDefines_1 = require("./PowerDefines");
 class PowerModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -45,7 +45,7 @@ class PowerModel extends ModelBase_1.ModelBase {
     return !0;
   }
   UpdatePowerRenewTimer() {
-    let e;
+    var e;
     this.vio &&
       ((this.Cce = TimeUtil_1.TimeUtil.GetServerTimeStamp()),
       (e = this.pio - this.Cce),
@@ -86,7 +86,7 @@ class PowerModel extends ModelBase_1.ModelBase {
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnPowerChanged);
   }
   AddOnePowerShopCount(e) {
-    const t = ConfigManager_1.ConfigManager.PowerConfig.GetPowerShopIds();
+    var t = ConfigManager_1.ConfigManager.PowerConfig.GetPowerShopIds();
     this.yio >= t.size ||
       (t.has(e) &&
         ((this.yio += 1), this.yio >= t.size) &&
@@ -103,10 +103,11 @@ class PowerModel extends ModelBase_1.ModelBase {
       let e = 0;
       r.ItemId <= PowerDefines_1.PowerConst.MaxVirtualItemId
         ? (e = ModelManager_1.ModelManager.PlayerInfoModel.GetNumberPropById(3))
-        : (e =
+        : 0 ===
+            (e =
               ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
                 r.ItemId,
-              )) === 0
+              ))
           ? EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnRemoveItem,
               r.ItemId,
@@ -118,9 +119,9 @@ class PowerModel extends ModelBase_1.ModelBase {
               !1,
             ),
         (r.StackValue = e || 0);
-      let t = this.Tio(r.ShopId);
-      t.findIndex((e, t, i) => !e.IsSoldOut() && e.Price.has(r.ItemId)) ===
-        -1 &&
+      var t = this.Tio(r.ShopId);
+      -1 ===
+        t.findIndex((e, t, i) => !e.IsSoldOut() && e.Price.has(r.ItemId)) &&
         ((t = t[t.length - 1]),
         (r.RenewValue = t.StackSize ?? 0),
         (r.CostValue = t.GetPrice(r.ItemId)),
@@ -130,7 +131,7 @@ class PowerModel extends ModelBase_1.ModelBase {
   }
   Tio(e) {
     e = ModelManager_1.ModelManager.ShopModel.GetShopItemList(e);
-    return e && e.length !== 0
+    return e && 0 !== e.length
       ? (e.sort((e, t) => e.Id - t.Id), e)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("PowerModule", 50, "体力系统获取商店数据失败"),
@@ -139,11 +140,12 @@ class PowerModel extends ModelBase_1.ModelBase {
   UpdatePowerItemWhenGoodUnlock() {
     for (const r of ConfigManager_1.ConfigManager.PowerConfig
       .PowerItemInfoList) {
-      const e = this.Tio(r.ShopId);
-      const t = e.findIndex(
-        (e, t, i) => e.IsUnlocked() && !e.IsSoldOut() && e.Price.has(r.ItemId),
-      );
-      let i = e[t];
+      var e = this.Tio(r.ShopId),
+        t = e.findIndex(
+          (e, t, i) =>
+            e.IsUnlocked() && !e.IsSoldOut() && e.Price.has(r.ItemId),
+        ),
+        i = e[t];
       i &&
         ((r.RenewValue = i.StackSize ?? 0),
         (r.CostValue = i.GetPrice(r.ItemId)),
@@ -157,4 +159,4 @@ class PowerModel extends ModelBase_1.ModelBase {
   }
 }
 exports.PowerModel = PowerModel;
-// # sourceMappingURL=PowerModel.js.map
+//# sourceMappingURL=PowerModel.js.map

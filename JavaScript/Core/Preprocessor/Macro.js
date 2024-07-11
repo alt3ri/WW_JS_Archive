@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       void 0);
 const puerts_1 = require("puerts");
 function MethodPruner(e, t, r) {
-  typeof e.constructor !== "function" || typeof r.value !== "function"
+  "function" != typeof e.constructor || "function" != typeof r.value
     ? puerts_1.logger.error(
         `该装饰器只能用在类成员方法上 target: ${e.constructor.name} property: ` +
           t,
@@ -18,4 +18,4 @@ function MethodPruner(e, t, r) {
 (exports.NOT_SHIPPING_PRUNER = !1),
   (exports.NOT_EDITOR_PRUNER = !1),
   (exports.MethodPruner = MethodPruner);
-// # sourceMappingURL=Macro.js.map
+//# sourceMappingURL=Macro.js.map

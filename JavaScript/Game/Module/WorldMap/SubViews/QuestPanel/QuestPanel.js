@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestPanel = void 0);
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ButtonItem_1 = require("../../../Common/Button/ButtonItem");
-const GeneralLogicTreeController_1 = require("../../../GeneralLogicTree/GeneralLogicTreeController");
-const MapController_1 = require("../../../Map/Controller/MapController");
-const QuestController_1 = require("../../../QuestNew/Controller/QuestController");
-const WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi");
-const WorldMapDefine_1 = require("../../WorldMapDefine");
-const RewardItemBar_1 = require("../RewardItemBar");
-const TipsListView_1 = require("../TipsListView");
-const QUEST_CONDIGION_KEY = "questCondition";
+const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
+  GeneralLogicTreeController_1 = require("../../../GeneralLogicTree/GeneralLogicTreeController"),
+  MapController_1 = require("../../../Map/Controller/MapController"),
+  QuestController_1 = require("../../../QuestNew/Controller/QuestController"),
+  WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
+  WorldMapDefine_1 = require("../../WorldMapDefine"),
+  RewardItemBar_1 = require("../RewardItemBar"),
+  TipsListView_1 = require("../TipsListView"),
+  QUEST_CONDIGION_KEY = "questCondition";
 class QuestPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
@@ -25,7 +25,7 @@ class QuestPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       (this.o2o = void 0),
       (this.r2o = void 0),
       (this.$_t = () => {
-        this.i2o !== 0
+        0 !== this.i2o
           ? QuestController_1.QuestNewController.RequestTrackQuest(
               this.FRe,
               !this.Wro,
@@ -88,10 +88,10 @@ class QuestPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
     this.r2o.Clear();
   }
   n2o() {
-    const t = ModelManager_1.ModelManager.QuestNewModel;
+    var t = ModelManager_1.ModelManager.QuestNewModel;
     this.GetText(1).SetText(t.GetQuestName(this.FRe)),
       this.GetText(4).SetText(t.GetQuestDetails(this.FRe)),
-      this.i2o === 0
+      0 === this.i2o
         ? this.o2o.SetActive(!1)
         : (this.o2o.SetActive(!0), this.s2o(this.FRe, this.i2o), this.hno());
   }
@@ -112,7 +112,7 @@ class QuestPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
   hno() {
     this.$ro.length = 0;
-    const t =
+    var t =
       ModelManager_1.ModelManager.QuestNewModel.GetDisplayRewardCommonInfo(
         this.FRe,
       );
@@ -123,8 +123,8 @@ class QuestPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       : this.GetVerticalLayout(7).RootUIComp.SetUIActive(!1);
   }
   ono() {
-    let t, e;
-    this.i2o !== 0
+    var t, e;
+    0 !== this.i2o
       ? (this.Wro = ModelManager_1.ModelManager.QuestNewModel.IsTrackingQuest(
           this.FRe,
         ))
@@ -139,4 +139,4 @@ class QuestPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
 }
 exports.QuestPanel = QuestPanel;
-// # sourceMappingURL=QuestPanel.js.map
+//# sourceMappingURL=QuestPanel.js.map

@@ -1,37 +1,42 @@
 "use strict";
-let SceneItemStateAudioComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, i, e, o) {
-    let s;
-    const n = arguments.length;
-    let h =
-      n < 3 ? i : o === null ? (o = Object.getOwnPropertyDescriptor(i, e)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      h = Reflect.decorate(t, i, e, o);
-    else
-      for (let r = t.length - 1; r >= 0; r--)
-        (s = t[r]) && (h = (n < 3 ? s(h) : n > 3 ? s(i, e, h) : s(i, e)) || h);
-    return n > 3 && h && Object.defineProperty(i, e, h), h;
-  };
+var SceneItemStateAudioComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, i, e, o) {
+      var s,
+        n = arguments.length,
+        h =
+          n < 3
+            ? i
+            : null === o
+              ? (o = Object.getOwnPropertyDescriptor(i, e))
+              : o;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        h = Reflect.decorate(t, i, e, o);
+      else
+        for (var r = t.length - 1; 0 <= r; r--)
+          (s = t[r]) &&
+            (h = (n < 3 ? s(h) : 3 < n ? s(i, e, h) : s(i, e)) || h);
+      return 3 < n && h && Object.defineProperty(i, e, h), h;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemStateAudioComponent = void 0);
-const UE = require("ue");
-const AudioController_1 = require("../../../../../Core/Audio/AudioController");
-const AudioModel_1 = require("../../../../../Core/Audio/AudioModel");
-const AudioSystem_1 = require("../../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils");
-const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const AudioUtils_1 = require("../../../../Utils/AudioUtils");
+const UE = require("ue"),
+  AudioController_1 = require("../../../../../Core/Audio/AudioController"),
+  AudioModel_1 = require("../../../../../Core/Audio/AudioModel"),
+  AudioSystem_1 = require("../../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils"),
+  Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  AudioUtils_1 = require("../../../../Utils/AudioUtils");
 let SceneItemStateAudioComponent =
   (SceneItemStateAudioComponent_1 = class SceneItemStateAudioComponent extends (
     EntityComponent_1.EntityComponent
@@ -73,8 +78,8 @@ let SceneItemStateAudioComponent =
         }),
         (this.Rni = (t, i) => {
           if (this.c_n !== t) {
-            const e = this.s_n.get(t);
-            const o = this.h_n.get(this.c_n);
+            var e = this.s_n.get(t),
+              o = this.h_n.get(this.c_n);
             if ((o && this.g_n(o), (this.c_n = t), e))
               switch (this.r_n) {
                 case IComponent_1.EAudioRangeType.AOI:
@@ -96,7 +101,7 @@ let SceneItemStateAudioComponent =
                 ["PbDataId", this.SIe?.GetPbDataId()],
                 ["CallbackType", i],
               ),
-            i === 2)
+            2 === i)
           ) {
             i = t;
             if (i?.Label) {
@@ -123,8 +128,8 @@ let SceneItemStateAudioComponent =
                   )
                 );
               }
-              t?.MarkerType === "SoundTrackingEffectNotify" &&
-                t.Action === "Start" &&
+              "SoundTrackingEffectNotify" === t?.MarkerType &&
+                "Start" === t.Action &&
                 EventSystem_1.EventSystem.EmitWithTarget(
                   this.Entity,
                   EventDefine_1.EEventName.PlaySoundTrackEffect,
@@ -152,7 +157,7 @@ let SceneItemStateAudioComponent =
       );
     }
     OnStart() {
-      let t;
+      var t;
       if (((this.Ben = this.Entity.GetComponent(117)), !this.Ben))
         return (
           (t = this.SIe.GetPbDataId()),
@@ -246,7 +251,7 @@ let SceneItemStateAudioComponent =
     v_n() {
       (this.s_n = new Map()), (this.a_n = new Map()), (this.h_n = new Map());
       for (const i of this.o_n.Config ?? []) {
-        const t = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(i.State);
+        var t = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(i.State);
         t &&
           (i.AkEvent && this.s_n.set(t, i.AkEvent),
           i.LeaveAkEvent && this.a_n.set(t, i.LeaveAkEvent),
@@ -255,7 +260,7 @@ let SceneItemStateAudioComponent =
       }
     }
     S_n() {
-      let t;
+      var t;
       this.l_n?.IsValid() ||
         ((t = this.Entity?.GetComponent(182)?.Owner)?.IsValid()
           ? (this.l_n = t.AddComponentByClass(
@@ -285,7 +290,7 @@ let SceneItemStateAudioComponent =
           this.I_n(t, i);
     }
     I_n(t, i) {
-      let e;
+      var e;
       this.n_n.Type === IComponent_1.EAkEventType.Default && t
         ? (e = this.Entity?.GetComponent(182)?.Owner)?.IsValid()
           ? ((t = (0, AudioSystem_1.parseAudioEventPath)(t)),
@@ -304,7 +309,7 @@ let SceneItemStateAudioComponent =
           ]);
     }
     y_n(t) {
-      let i = this.n_n;
+      var i = this.n_n;
       this.n_n.Type !== IComponent_1.EAkEventType.Point ||
         i.PointIds?.length ||
         ((i = this.Entity?.GetComponent(182)?.Owner)?.IsValid() &&
@@ -316,7 +321,7 @@ let SceneItemStateAudioComponent =
           }))));
     }
     E_n(t) {
-      const i = this.n_n;
+      var i = this.n_n;
       if (
         this.n_n.Type === IComponent_1.EAkEventType.Point &&
         i.PointIds?.length
@@ -333,7 +338,7 @@ let SceneItemStateAudioComponent =
                 ])
               )
             );
-        const e = UE.NewArray(UE.Transform);
+        var e = UE.NewArray(UE.Transform);
         for (const r of i.PointIds) {
           var o =
             ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(r);
@@ -352,9 +357,9 @@ let SceneItemStateAudioComponent =
                   r,
                 ])
               );
-            var s;
-            var n;
-            var o = o.Transform;
+            var s,
+              n,
+              o = o.Transform;
             o &&
               ((s = Vector_1.Vector.Create(
                 o.Pos?.X ?? 0,
@@ -412,7 +417,7 @@ let SceneItemStateAudioComponent =
       }
     }
     g_n(t) {
-      let i;
+      var i;
       this.m_n &&
         t.FadeCurve &&
         t.FadeDuration &&
@@ -423,9 +428,9 @@ let SceneItemStateAudioComponent =
         }));
     }
     p_n(t) {
-      const i = t.Priority;
+      var i = t.Priority;
       let e = void 0;
-      const o = this.SIe?.GetPbDataId();
+      var o = this.SIe?.GetPbDataId();
       switch (t.AudioType) {
         case IComponent_1.EAudioType.AudioAMB:
           e = "AudioAMB";
@@ -477,4 +482,4 @@ let SceneItemStateAudioComponent =
     SceneItemStateAudioComponent,
   )),
   (exports.SceneItemStateAudioComponent = SceneItemStateAudioComponent);
-// # sourceMappingURL=SceneItemStateAudioComponent.js.map
+//# sourceMappingURL=SceneItemStateAudioComponent.js.map

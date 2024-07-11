@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CombineKeyItem = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const InputSettings_1 = require("../../../../InputSettings/InputSettings");
-const InputSettingsManager_1 = require("../../../../InputSettings/InputSettingsManager");
-const KeyItemBase_1 = require("./KeyItemBase");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  InputSettings_1 = require("../../../../InputSettings/InputSettings"),
+  InputSettingsManager_1 = require("../../../../InputSettings/InputSettingsManager"),
+  KeyItemBase_1 = require("./KeyItemBase");
 class CombineKeyItem extends KeyItemBase_1.KeyItemBase {
   constructor() {
     super(...arguments), (this.__t = "");
@@ -28,14 +28,14 @@ class CombineKeyItem extends KeyItemBase_1.KeyItemBase {
         (this.ActionName = t),
         (this.AxisName = void 0),
         this.BindAction());
-    const e =
+    var e =
       InputSettingsManager_1.InputSettingsManager.GetCombinationActionBindingByActionName(
         this.ActionName,
       );
     if (e) {
-      const i = new Map();
+      var i = new Map();
       if ((e.GetCurrentPlatformKeyNameMap(i), i))
-        for (const [s, r] of i)
+        for (var [s, r] of i)
           return (
             this.RefreshKey(InputSettings_1.InputSettings.GetKey(s)),
             this.RefreshSubKey(InputSettings_1.InputSettings.GetKey(r)),
@@ -50,7 +50,7 @@ class CombineKeyItem extends KeyItemBase_1.KeyItemBase {
       ) && super.RefreshAction(t);
   }
   RefreshSubKey(t) {
-    const e = t.GetKeyName();
+    var e = t.GetKeyName();
     if (this.__t !== e) {
       t = t.GetKeyIconPath();
       if (!StringUtils_1.StringUtils.IsEmpty(t)) {
@@ -64,10 +64,10 @@ class CombineKeyItem extends KeyItemBase_1.KeyItemBase {
     }
   }
   OnSetGray() {
-    var t = this.GetTexture(0);
-    var t = (t.SetChangeColor(this.IsGray, t.changeColor), this.GetTexture(2));
+    var t = this.GetTexture(0),
+      t = (t.SetChangeColor(this.IsGray, t.changeColor), this.GetTexture(2));
     t.SetChangeColor(this.IsGray, t.changeColor);
   }
 }
 exports.CombineKeyItem = CombineKeyItem;
-// # sourceMappingURL=CombineKeyItem.js.map
+//# sourceMappingURL=CombineKeyItem.js.map

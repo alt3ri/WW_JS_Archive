@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomFettersObtainItem = exports.PhantomFettersItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
-const VisionFetterSuitItem_1 = require("../../Vision/View/VisionFetterSuitItem");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  VisionFetterSuitItem_1 = require("../../Vision/View/VisionFetterSuitItem");
 class PhantomFettersItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -49,15 +49,15 @@ class PhantomFettersItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetText(1).ShowTextNew(this.dqt.FetterGroupName);
   }
   RefreshUnlockText() {
-    var t = this.dqt.Id;
-    var t =
-      ModelManager_1.ModelManager.PhantomBattleModel.GetFetterGroupMonsterIdArray(
-        t,
-      );
-    const e =
-      ModelManager_1.ModelManager.PhantomBattleModel.GetMonsterFindCountByMonsterIdArray(
-        t,
-      );
+    var t = this.dqt.Id,
+      t =
+        ModelManager_1.ModelManager.PhantomBattleModel.GetFetterGroupMonsterIdArray(
+          t,
+        ),
+      e =
+        ModelManager_1.ModelManager.PhantomBattleModel.GetMonsterFindCountByMonsterIdArray(
+          t,
+        );
     this.GetText(4).SetText(e + "/" + t.length);
   }
   BindOnItemButtonClickedCallback(t) {
@@ -73,7 +73,7 @@ class PhantomFettersItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.PPt.Update(this.dqt);
   }
   IVe(t, e = !0) {
-    const i = this.GetExtendToggle(0);
+    var i = this.GetExtendToggle(0);
     t ? i.SetToggleState(1, e) : i.SetToggleState(0, !1);
   }
 }
@@ -120,4 +120,4 @@ class PhantomFettersObtainItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.PhantomFettersObtainItem = PhantomFettersObtainItem;
-// # sourceMappingURL=PhantomBattleItemView.js.map
+//# sourceMappingURL=PhantomBattleItemView.js.map

@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiPanelBase = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const LguiUtil_1 = require("../../Module/Util/LguiUtil");
-const UiActorPool_1 = require("../UiActorPool");
-const UiImageSettingModule_1 = require("../UiImageSettingModule");
-const UiNiagaraSettingModule_1 = require("../UiNiagaraSettingModule");
-const UiPrefabLoadModule_1 = require("../UiPrefabLoadModule");
-const ComponentAction_1 = require("./ComponentAction");
-const UiBehaviorBase_1 = require("./UiBehaviorBase");
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  LguiUtil_1 = require("../../Module/Util/LguiUtil"),
+  UiActorPool_1 = require("../UiActorPool"),
+  UiImageSettingModule_1 = require("../UiImageSettingModule"),
+  UiNiagaraSettingModule_1 = require("../UiNiagaraSettingModule"),
+  UiPrefabLoadModule_1 = require("../UiPrefabLoadModule"),
+  ComponentAction_1 = require("./ComponentAction"),
+  UiBehaviorBase_1 = require("./UiBehaviorBase");
 class UiPanelBase extends ComponentAction_1.ComponentAction {
   constructor() {
     super(),
@@ -273,7 +273,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
     return this.IsCreating;
   }
   async $1r() {
-    const i = this.V1r;
+    var i = this.V1r;
     if (i) {
       let t = void 0;
       (t = this.UsePool
@@ -323,9 +323,9 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
       ));
   }
   Z1r() {
-    const t = this.k1r;
-    let i = LguiUtil_1.LguiUtil.GetComponentsRegistry(t);
-    let e = t;
+    var t = this.k1r;
+    let i = LguiUtil_1.LguiUtil.GetComponentsRegistry(t),
+      e = t;
     if (
       (i ||
         !(e = LguiUtil_1.LguiUtil.GetChildActorByHierarchyIndex(t)) ||
@@ -335,7 +335,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
       i)
     ) {
       i.TsClassName = this.constructor.name;
-      const s = i.Components.Num();
+      var s = i.Components.Num();
       s !== this.ComponentRegisterInfos.length &&
         Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
@@ -348,7 +348,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
           ["ComponentRegisterInfos length", this.ComponentRegisterInfos.length],
         );
       for (const o of this.ComponentRegisterInfos) {
-        let n = o[0];
+        var n = o[0];
         s <= n
           ? Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
@@ -420,7 +420,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
       (this.UiPoolActorNew = void 0);
   }
   e_r(t, i) {
-    let e;
+    var e;
     t === UE.UIButtonComponent
       ? ((e = i).OnPostAudioEvent.Bind((t) => {
           this.PostClickAudioEvent(t);
@@ -437,7 +437,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
         }));
   }
   t_r() {
-    for (const [t, i] of this.j1r.values()) {
+    for (var [t, i] of this.j1r.values()) {
       var e;
       t === UE.UIButtonComponent
         ? ((e = i).OnPostAudioEvent.Unbind(), e.OnPostAudioStateEvent.Unbind())
@@ -474,8 +474,8 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
     for (const t of this.BtnBindInfo) this.UnBindOnClickEvent(t[0]);
   }
   UnBindOnClickEvent(t) {
-    let i;
-    var t = this.j1r.get(t);
+    var i,
+      t = this.j1r.get(t);
     t &&
       (t[0] === UE.UIButtonComponent
         ? t[1].OnClickCallBack.Unbind()
@@ -707,14 +707,14 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
     this.u9.push(t), (t.Parent = this);
   }
   o_r() {
-    let t;
+    var t;
     !this.Parent ||
       (t = this.Parent?.u9.indexOf(this)) < 0 ||
       (this.Parent.u9.splice(t, 1), (this.Parent = void 0));
   }
   GetLastChild() {
-    const t = this.u9.length;
-    if (t !== 0) return this.u9[t - 1];
+    var t = this.u9.length;
+    if (0 !== t) return this.u9[t - 1];
   }
   Register() {}
   Begin() {}
@@ -772,4 +772,4 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
   }
 }
 exports.UiPanelBase = UiPanelBase;
-// # sourceMappingURL=UiPanelBase.js.map
+//# sourceMappingURL=UiPanelBase.js.map

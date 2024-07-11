@@ -8,4 +8,4 @@ class SelectablePropItemProxy extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.SelectablePropItemProxy = SelectablePropItemProxy;
-// # sourceMappingURL=SelectablePropItemProxy.js.map
+//# sourceMappingURL=SelectablePropItemProxy.js.map

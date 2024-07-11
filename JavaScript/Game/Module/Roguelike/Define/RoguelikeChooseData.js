@@ -21,4 +21,4 @@ class RoguelikeChooseData {
   }
 }
 exports.RoguelikeChooseData = RoguelikeChooseData;
-// # sourceMappingURL=RoguelikeChooseData.js.map
+//# sourceMappingURL=RoguelikeChooseData.js.map

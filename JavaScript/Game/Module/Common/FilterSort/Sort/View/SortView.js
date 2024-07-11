@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SortView = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../../../Ui/Base/UiViewBase");
-const AttributeSortGroup_1 = require("./AttributeSortGroup");
-const BaseSortGroup_1 = require("./BaseSortGroup");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../../../Ui/Base/UiViewBase"),
+  AttributeSortGroup_1 = require("./AttributeSortGroup"),
+  BaseSortGroup_1 = require("./BaseSortGroup");
 class SortView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -16,7 +16,7 @@ class SortView extends UiViewBase_1.UiViewBase {
         this.VRt.Reset(), this.HRt.Reset();
       }),
       (this.RLt = () => {
-        const t = ModelManager_1.ModelManager.SortModel.GetSortResultData(
+        var t = ModelManager_1.ModelManager.SortModel.GetSortResultData(
           this.ogt.ConfigId,
         );
         t.SetSelectBaseSort(this.VRt.GetTempSelect()),
@@ -51,4 +51,4 @@ class SortView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.SortView = SortView;
-// # sourceMappingURL=SortView.js.map
+//# sourceMappingURL=SortView.js.map

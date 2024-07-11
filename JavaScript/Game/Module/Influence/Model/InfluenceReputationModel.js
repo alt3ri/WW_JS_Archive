@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InfluenceReputationModel = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ModelBase_1 = require("../../../../Core/Framework/ModelBase");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const InfluenceReputationDefine_1 = require("../InfluenceReputationDefine");
-const InfluenceInstance_1 = require("./InfluenceInstance");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  InfluenceReputationDefine_1 = require("../InfluenceReputationDefine"),
+  InfluenceInstance_1 = require("./InfluenceInstance");
 class InfluenceReputationModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments), (this.Xri = new Map()), (this.$ri = new Set());
   }
   SetInfluenceInfoList(e) {
     for (const t of e) {
-      const n = this.Xri.get(t.w5n);
+      var n = this.Xri.get(t.w5n);
       n
         ? (n.SetRelation(t.$Rs), n.SetReceiveReward(t.b5n))
         : this.Xri.set(
@@ -30,7 +30,7 @@ class InfluenceReputationModel extends ModelBase_1.ModelBase {
     }
   }
   UpdateInfluenceRewardIndex(e, n) {
-    const t = this.Xri.get(e);
+    var t = this.Xri.get(e);
     return t
       ? (t.SetReceiveReward(n), !0)
       : (Log_1.Log.CheckError() &&
@@ -47,12 +47,12 @@ class InfluenceReputationModel extends ModelBase_1.ModelBase {
   }
   GetCanReceiveReward(e) {
     if (e !== InfluenceReputationDefine_1.RAMDOM_INFLUENCE_ID) {
-      const n =
-        ConfigManager_1.ConfigManager.InfluenceConfig.GetInfluenceConfig(e);
-      var e =
-        ModelManager_1.ModelManager.InfluenceReputationModel.GetInfluenceInstance(
-          e,
-        );
+      var n =
+          ConfigManager_1.ConfigManager.InfluenceConfig.GetInfluenceConfig(e),
+        e =
+          ModelManager_1.ModelManager.InfluenceReputationModel.GetInfluenceInstance(
+            e,
+          );
       if (e)
         return n.ReputationReward.length === e.RewardIndex + 1
           ? { IsAllReceived: !0, Reward: n.ReputationReward[e.RewardIndex] }
@@ -67,16 +67,15 @@ class InfluenceReputationModel extends ModelBase_1.ModelBase {
     return Array.from(e.DropPreview);
   }
   GetReputationProgress(e) {
-    let n = 0;
-    let t = 0;
+    let n = 0,
+      t = 0;
     for (const o of ConfigManager_1.ConfigManager.InfluenceConfig.GetInfluenceConfig(
       e,
     ).ReputationItem) {
       n += o.Item2;
-      const r =
-        ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-          o.Item1,
-        );
+      var r = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+        o.Item1,
+      );
       t += MathUtils_1.MathUtils.Clamp(r, 0, o.Item2);
     }
     return { Current: t, Max: n };
@@ -91,11 +90,11 @@ class InfluenceReputationModel extends ModelBase_1.ModelBase {
     return this.$ri.has(e);
   }
   FilterUnLockInfluence(t, r) {
-    const o = [];
+    var o = [];
     for (let e = 0, n = t.length; e < n; ++e) {
-      var a;
-      var i;
-      const u = t[e];
+      var a,
+        i,
+        u = t[e];
       u !== InfluenceReputationDefine_1.RAMDOM_INFLUENCE_ID &&
         this.Xri.has(u) &&
         ((a =
@@ -106,19 +105,19 @@ class InfluenceReputationModel extends ModelBase_1.ModelBase {
     return o;
   }
   FilterUnLockInfluenceList(e, n) {
-    let t;
-    const r = { HasResult: !1, InfluenceList: [] };
+    var t,
+      r = { HasResult: !1, InfluenceList: [] };
     for (const o of e)
       o !== InfluenceReputationDefine_1.RAMDOM_COUNTRY_ID &&
         ((t =
           ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryConfig(o)),
         (t = this.FilterUnLockInfluence(t.Influences, n)),
         r.InfluenceList.push([o, t]),
-        (r.HasResult = r.HasResult || t.length > 0));
+        (r.HasResult = r.HasResult || 0 < t.length));
     return r;
   }
   RedDotInfluenceRewardCondition(e) {
-    const n = this.GetCanReceiveReward(e);
+    var n = this.GetCanReceiveReward(e);
     return (
       !!n &&
       !n.IsAllReceived &&
@@ -139,4 +138,4 @@ class InfluenceReputationModel extends ModelBase_1.ModelBase {
   }
 }
 exports.InfluenceReputationModel = InfluenceReputationModel;
-// # sourceMappingURL=InfluenceReputationModel.js.map
+//# sourceMappingURL=InfluenceReputationModel.js.map

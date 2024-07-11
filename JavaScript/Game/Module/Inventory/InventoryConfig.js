@@ -1,28 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InventoryConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Stats_1 = require("../../../Core/Common/Stats");
-const AccessPathById_1 = require("../../../Core/Define/ConfigQuery/AccessPathById");
-const BackgroundCardById_1 = require("../../../Core/Define/ConfigQuery/BackgroundCardById");
-const ItemInfoById_1 = require("../../../Core/Define/ConfigQuery/ItemInfoById");
-const ItemMainTypeAll_1 = require("../../../Core/Define/ConfigQuery/ItemMainTypeAll");
-const ItemMainTypeById_1 = require("../../../Core/Define/ConfigQuery/ItemMainTypeById");
-const ItemShowTypeById_1 = require("../../../Core/Define/ConfigQuery/ItemShowTypeById");
-const PackageCapacityAll_1 = require("../../../Core/Define/ConfigQuery/PackageCapacityAll");
-const PackageCapacityByPackageId_1 = require("../../../Core/Define/ConfigQuery/PackageCapacityByPackageId");
-const PhantomCustomizeItemByItemId_1 = require("../../../Core/Define/ConfigQuery/PhantomCustomizeItemByItemId");
-const PhantomItemByItemId_1 = require("../../../Core/Define/ConfigQuery/PhantomItemByItemId");
-const PhantomItemByMonsterId_1 = require("../../../Core/Define/ConfigQuery/PhantomItemByMonsterId");
-const PreviewItemById_1 = require("../../../Core/Define/ConfigQuery/PreviewItemById");
-const QualityInfoById_1 = require("../../../Core/Define/ConfigQuery/QualityInfoById");
-const RogueCurrencyById_1 = require("../../../Core/Define/ConfigQuery/RogueCurrencyById");
-const TypeInfoById_1 = require("../../../Core/Define/ConfigQuery/TypeInfoById");
-const WeaponConfByItemId_1 = require("../../../Core/Define/ConfigQuery/WeaponConfByItemId");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const InventoryDefine_1 = require("./InventoryDefine");
-const ItemConfig_1 = require("./ItemConfig");
+const Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  AccessPathById_1 = require("../../../Core/Define/ConfigQuery/AccessPathById"),
+  BackgroundCardById_1 = require("../../../Core/Define/ConfigQuery/BackgroundCardById"),
+  ItemInfoById_1 = require("../../../Core/Define/ConfigQuery/ItemInfoById"),
+  ItemMainTypeAll_1 = require("../../../Core/Define/ConfigQuery/ItemMainTypeAll"),
+  ItemMainTypeById_1 = require("../../../Core/Define/ConfigQuery/ItemMainTypeById"),
+  ItemShowTypeById_1 = require("../../../Core/Define/ConfigQuery/ItemShowTypeById"),
+  PackageCapacityAll_1 = require("../../../Core/Define/ConfigQuery/PackageCapacityAll"),
+  PackageCapacityByPackageId_1 = require("../../../Core/Define/ConfigQuery/PackageCapacityByPackageId"),
+  PhantomCustomizeItemByItemId_1 = require("../../../Core/Define/ConfigQuery/PhantomCustomizeItemByItemId"),
+  PhantomItemByItemId_1 = require("../../../Core/Define/ConfigQuery/PhantomItemByItemId"),
+  PhantomItemByMonsterId_1 = require("../../../Core/Define/ConfigQuery/PhantomItemByMonsterId"),
+  PreviewItemById_1 = require("../../../Core/Define/ConfigQuery/PreviewItemById"),
+  QualityInfoById_1 = require("../../../Core/Define/ConfigQuery/QualityInfoById"),
+  RogueCurrencyById_1 = require("../../../Core/Define/ConfigQuery/RogueCurrencyById"),
+  TypeInfoById_1 = require("../../../Core/Define/ConfigQuery/TypeInfoById"),
+  WeaponConfByItemId_1 = require("../../../Core/Define/ConfigQuery/WeaponConfByItemId"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  InventoryDefine_1 = require("./InventoryDefine"),
+  ItemConfig_1 = require("./ItemConfig");
 class InventoryConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments),
@@ -131,7 +131,7 @@ class InventoryConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetPhantomItemConfigListByMonsterId(e) {
-    const n =
+    var n =
       PhantomItemByMonsterId_1.configPhantomItemByMonsterId.GetConfigList(e);
     return (
       n ||
@@ -162,4 +162,4 @@ class InventoryConfig extends ConfigBase_1.ConfigBase {
   }
 }
 (exports.InventoryConfig = InventoryConfig).Iui = void 0;
-// # sourceMappingURL=InventoryConfig.js.map
+//# sourceMappingURL=InventoryConfig.js.map

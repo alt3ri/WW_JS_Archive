@@ -21,7 +21,7 @@ class DeliverData {
       (this.DescriptionTextId = "");
   }
   AddSlotData(t, i, s) {
-    let e;
+    var e;
     if (t && !(t.length <= 0))
       return (
         (e = new DeliverSlotData_1.DeliverSlotData()).Initialize(t, i, s),
@@ -40,4 +40,4 @@ class DeliverData {
   }
 }
 exports.DeliverData = DeliverData;
-// # sourceMappingURL=DeliverData.js.map
+//# sourceMappingURL=DeliverData.js.map

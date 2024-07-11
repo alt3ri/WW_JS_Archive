@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskBlackBoardSetValues extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -29,35 +29,35 @@ class TsTaskBlackBoardSetValues extends TsTaskAbortImmediatelyBase_1.default {
         (this.TsBooleanMap = new Map()),
         (this.TsVectorMap = new Map());
       for (let t = 0, o = this.StringMap.Num(); t < o; t++) {
-        const s = this.StringMap.GetKey(t);
-        const e = this.StringMap.Get(s);
+        var s = this.StringMap.GetKey(t),
+          e = this.StringMap.Get(s);
         this.TsStringMap.set(s, e);
       }
       for (let t = 0, o = this.FloatMap.Num(); t < o; t++) {
-        const r = this.FloatMap.GetKey(t);
-        const i = this.FloatMap.Get(r);
+        var r = this.FloatMap.GetKey(t),
+          i = this.FloatMap.Get(r);
         this.TsFloatMap.set(r, i);
       }
       for (let t = 0, o = this.IntMap.Num(); t < o; t++) {
-        const a = this.IntMap.GetKey(t);
-        const h = this.IntMap.Get(a);
+        var a = this.IntMap.GetKey(t),
+          h = this.IntMap.Get(a);
         this.TsIntMap.set(a, h);
       }
       for (let t = 0, o = this.BooleanMap.Num(); t < o; t++) {
-        const l = this.BooleanMap.GetKey(t);
-        const c = this.BooleanMap.Get(l);
+        var l = this.BooleanMap.GetKey(t),
+          c = this.BooleanMap.Get(l);
         this.TsBooleanMap.set(l, c);
       }
       for (let t = 0, o = this.VectorMap.Num(); t < o; t++) {
-        const d = this.VectorMap.GetKey(t);
-        var v = this.VectorMap.Get(d);
-        var v = Vector_1.Vector.Create(v);
+        var d = this.VectorMap.GetKey(t),
+          v = this.VectorMap.Get(d),
+          v = Vector_1.Vector.Create(v);
         this.TsVectorMap.set(d, v);
       }
     }
   }
   ReceiveExecuteAI(t, o) {
-    let s = t.AiController;
+    var s = t.AiController;
     s
       ? (this.InitTsVariables(),
         (s = s.CharActorComp.Entity.Id),
@@ -75,7 +75,7 @@ class TsTaskBlackBoardSetValues extends TsTaskAbortImmediatelyBase_1.default {
         this.FinishExecute(!1));
   }
   ExecuteStringMap(t) {
-    for (const [o, s] of this.TsStringMap)
+    for (var [o, s] of this.TsStringMap)
       BlackboardController_1.BlackboardController.SetStringValueByEntity(
         t,
         o,
@@ -83,7 +83,7 @@ class TsTaskBlackBoardSetValues extends TsTaskAbortImmediatelyBase_1.default {
       );
   }
   ExecuteFloatMap(t) {
-    for (const [o, s] of this.TsFloatMap)
+    for (var [o, s] of this.TsFloatMap)
       BlackboardController_1.BlackboardController.SetFloatValueByEntity(
         t,
         o,
@@ -91,11 +91,11 @@ class TsTaskBlackBoardSetValues extends TsTaskAbortImmediatelyBase_1.default {
       );
   }
   ExecuteIntMap(t) {
-    for (const [o, s] of this.TsIntMap)
+    for (var [o, s] of this.TsIntMap)
       BlackboardController_1.BlackboardController.SetIntValueByEntity(t, o, s);
   }
   ExecuteBooleanMap(t) {
-    for (const [o, s] of this.TsBooleanMap)
+    for (var [o, s] of this.TsBooleanMap)
       BlackboardController_1.BlackboardController.SetBooleanValueByEntity(
         t,
         o,
@@ -103,7 +103,7 @@ class TsTaskBlackBoardSetValues extends TsTaskAbortImmediatelyBase_1.default {
       );
   }
   ExecuteVectorMap(t) {
-    for (const [o, s] of this.TsVectorMap)
+    for (var [o, s] of this.TsVectorMap)
       BlackboardController_1.BlackboardController.SetVectorValueByEntity(
         t,
         o,
@@ -114,4 +114,4 @@ class TsTaskBlackBoardSetValues extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskBlackBoardSetValues;
-// # sourceMappingURL=TsTaskBlackBoardSetValues.js.map
+//# sourceMappingURL=TsTaskBlackBoardSetValues.js.map

@@ -71,30 +71,30 @@ class RogueEffect {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   maineffecttype() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   condition() {
-    const t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetConditionargsAt(t) {
     return this.conditionargs(t);
   }
   conditionargs(t) {
-    const r = this.J7.__offset(this.z7, 10);
+    var r = this.J7.__offset(this.z7, 10);
     return r ? this.J7.readInt32(this.J7.__vector(this.z7 + r) + 4 * t) : 0;
   }
   conditionargsLength() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   conditionargsArray() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -104,91 +104,91 @@ class RogueEffect {
       : null;
   }
   count() {
-    const t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   roomcount() {
-    const t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetBuffarray1At(t) {
     return this.buffarray1(t);
   }
   buffarray1(t) {
-    const r = this.J7.__offset(this.z7, 16);
+    var r = this.J7.__offset(this.z7, 16);
     return r
       ? this.J7.readInt64(this.J7.__vector(this.z7 + r) + 8 * t)
       : BigInt(0);
   }
   buffarray1Length() {
-    const t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetExtraeffecttypearray1At(t) {
     return this.extraeffecttypearray1(t);
   }
   extraeffecttypearray1(t, r) {
-    const i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 18);
     return i
       ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, r)
       : null;
   }
   extraeffecttypearray1Length() {
-    const t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetExtraeffecttypeargsarray1At(t) {
     return this.extraeffecttypeargsarray1(t);
   }
   extraeffecttypeargsarray1(t, r) {
-    const i = this.J7.__offset(this.z7, 20);
+    var i = this.J7.__offset(this.z7, 20);
     return i
       ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, r)
       : null;
   }
   extraeffecttypeargsarray1Length() {
-    const t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetBuffarray2At(t) {
     return this.buffarray2(t);
   }
   buffarray2(t) {
-    const r = this.J7.__offset(this.z7, 22);
+    var r = this.J7.__offset(this.z7, 22);
     return r
       ? this.J7.readInt64(this.J7.__vector(this.z7 + r) + 8 * t)
       : BigInt(0);
   }
   buffarray2Length() {
-    const t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetExtraeffecttypearray2At(t) {
     return this.extraeffecttypearray2(t);
   }
   extraeffecttypearray2(t, r) {
-    const i = this.J7.__offset(this.z7, 24);
+    var i = this.J7.__offset(this.z7, 24);
     return i
       ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, r)
       : null;
   }
   extraeffecttypearray2Length() {
-    const t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetExtraeffecttypeargsarray2At(t) {
     return this.extraeffecttypeargsarray2(t);
   }
   extraeffecttypeargsarray2(t, r) {
-    const i = this.J7.__offset(this.z7, 26);
+    var i = this.J7.__offset(this.z7, 26);
     return i
       ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, r)
       : null;
   }
   extraeffecttypeargsarray2Length() {
-    const t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.RogueEffect = RogueEffect;
-// # sourceMappingURL=RogueEffect.js.map
+//# sourceMappingURL=RogueEffect.js.map

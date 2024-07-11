@@ -1,29 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Time_1 = require("../../../../../Core/Common/Time");
-const EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem");
-const Quat_1 = require("../../../../../Core/Utils/Math/Quat");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../../GlobalData");
-const ColorUtils_1 = require("../../../../Utils/ColorUtils");
-const BlackboardController_1 = require("../../../../World/Controller/BlackboardController");
-const AiContollerLibrary_1 = require("../../../Controller/AiContollerLibrary");
-const TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase");
-const BLACKBOARD_KEY_FLEE_LOCATION = "FleeLocation";
-const ANGLE_INTERVAL = 30;
-const RADIUS = 300;
-const TURN_COST_WEIGHT = 0.25;
-const TURN_COST_WEIGHT_2 = 0.75;
-const TURN_COST_WEIGHT_3 = 1;
-const TURN_COST_DIVIDING_LINE_2 = 0;
-const TURN_COST_DIVIDING_LINE_3 = 0.707;
-const TEST_MODE = !1;
-const QUERY_LOCATION_CD = 0.5;
-const Z_ALLOWABLE_DIFFERENCE = 45;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../Core/Common/Time"),
+  EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem"),
+  Quat_1 = require("../../../../../Core/Utils/Math/Quat"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  ColorUtils_1 = require("../../../../Utils/ColorUtils"),
+  BlackboardController_1 = require("../../../../World/Controller/BlackboardController"),
+  AiContollerLibrary_1 = require("../../../Controller/AiContollerLibrary"),
+  TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase"),
+  BLACKBOARD_KEY_FLEE_LOCATION = "FleeLocation",
+  ANGLE_INTERVAL = 30,
+  RADIUS = 300,
+  TURN_COST_WEIGHT = 0.25,
+  TURN_COST_WEIGHT_2 = 0.75,
+  TURN_COST_WEIGHT_3 = 1,
+  TURN_COST_DIVIDING_LINE_2 = 0,
+  TURN_COST_DIVIDING_LINE_3 = 0.707,
+  TEST_MODE = !1,
+  QUERY_LOCATION_CD = 0.5,
+  Z_ALLOWABLE_DIFFERENCE = 45;
 class QuatNode {
   constructor(t, i) {
     (this.Quaternion = Quat_1.Quat.Create(t)),
@@ -54,13 +54,13 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
       TsTaskQueryFleeLocation.QuaternionQueue.push(
         Quat_1.Quat.Create(0, 0, 0, 1),
       );
-    const i = MathUtils_1.PI_DEG / ANGLE_INTERVAL;
+    var i = MathUtils_1.PI_DEG / ANGLE_INTERVAL;
     for (let t = 1; t < i; ++t) {
-      const s = t * ANGLE_INTERVAL * 0.5 * MathUtils_1.MathUtils.DegToRad;
-      var e = Quat_1.Quat.Create(0, 0, Math.sin(s), Math.cos(s));
-      var e =
-        (TsTaskQueryFleeLocation.QuaternionQueue.push(e),
-        Quat_1.Quat.Create(0, 0, Math.sin(-s), Math.cos(-s)));
+      var s = t * ANGLE_INTERVAL * 0.5 * MathUtils_1.MathUtils.DegToRad,
+        e = Quat_1.Quat.Create(0, 0, Math.sin(s), Math.cos(s)),
+        e =
+          (TsTaskQueryFleeLocation.QuaternionQueue.push(e),
+          Quat_1.Quat.Create(0, 0, Math.sin(-s), Math.cos(-s)));
       TsTaskQueryFleeLocation.QuaternionQueue.push(e);
     }
   }
@@ -72,7 +72,7 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
         (this.VectorCache3 = Vector_1.Vector.Create()),
         (this.QuatNodeQueue = new Array());
       for (const s of TsTaskQueryFleeLocation.QuaternionQueue) {
-        const i = new QuatNode(s, Math.abs(s.Z));
+        var i = new QuatNode(s, Math.abs(s.Z));
         this.QuatNodeQueue.push(i);
       }
       (this.NavigationPath = new Array()),
@@ -84,7 +84,7 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
     TsTaskQueryFleeLocation.StaticVariablesInited ||
       (TsTaskQueryFleeLocation.InitStaticVariables(),
       (TsTaskQueryFleeLocation.StaticVariablesInited = !0));
-    let s = t.AiController;
+    var s = t.AiController;
     s
       ? (this.InitTsVariables(s),
         !(Time_1.Time.WorldTimeSeconds < this.CdInternal) &&
@@ -112,7 +112,7 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
   }
   FindTarget() {
     if (this.TsTargetKey) {
-      let t = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
+      var t = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
         this.Character.Entity.Id,
         this.TsTargetKey,
       );
@@ -124,18 +124,18 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
     return !1;
   }
   QueryFleeLocation() {
-    const t = this.Character.ActorLocationProxy;
-    const i =
-      (t.Subtraction(
-        this.TargetCharacter.ActorLocationProxy,
-        this.VectorCache1,
-      ),
-      (this.VectorCache1.Z = 0),
-      this.VectorCache1.Normalize(),
-      this.VectorCache3.DeepCopy(this.VectorCache1),
-      this.VectorCache1.MultiplyEqual(RADIUS),
-      (this.FoundPath = !1),
-      this.Character.ActorForwardProxy);
+    var t = this.Character.ActorLocationProxy,
+      i =
+        (t.Subtraction(
+          this.TargetCharacter.ActorLocationProxy,
+          this.VectorCache1,
+        ),
+        (this.VectorCache1.Z = 0),
+        this.VectorCache1.Normalize(),
+        this.VectorCache3.DeepCopy(this.VectorCache1),
+        this.VectorCache1.MultiplyEqual(RADIUS),
+        (this.FoundPath = !1),
+        this.Character.ActorForwardProxy);
     for (const h of this.QuatNodeQueue)
       h.Quaternion.RotateVector(this.VectorCache1, this.VectorCache2),
         h.VectorCache.DeepCopy(this.VectorCache2),
@@ -144,7 +144,7 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
         (h.Cost = 0.5 * (1 - i.DotProduct(this.VectorCache2))),
         h.VectorCache.AdditionEqual(t);
     let s = TURN_COST_WEIGHT;
-    const e = this.VectorCache3.DotProduct(i);
+    var e = this.VectorCache3.DotProduct(i);
     e > TURN_COST_DIVIDING_LINE_3
       ? (s = TURN_COST_WEIGHT_3)
       : e > TURN_COST_DIVIDING_LINE_2 && (s = TURN_COST_WEIGHT_2),
@@ -163,14 +163,14 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
           void 0,
         )
       ) {
-        var o;
-        var r = Vector_1.Vector.Create((0, puerts_1.$unref)(r));
-        const a = AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(
-          GlobalData_1.GlobalData.World,
-          t.ToUeVector(),
-          r.ToUeVector(),
-          this.NavigationPath,
-        );
+        var o,
+          r = Vector_1.Vector.Create((0, puerts_1.$unref)(r)),
+          a = AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(
+            GlobalData_1.GlobalData.World,
+            t.ToUeVector(),
+            r.ToUeVector(),
+            this.NavigationPath,
+          );
         if (
           (a &&
             ((o = this.CheckLegalZ(r, this.Character.FloorLocation)),
@@ -200,9 +200,9 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
   }
   DebugDraw2() {
     if (GlobalData_1.GlobalData.IsPlayInEditor && TEST_MODE) {
-      const i = 0.02;
-      const s = 10;
-      const e = 30;
+      var i = 0.02,
+        s = 10,
+        e = 30;
       let t = 0;
       for (const r of this.QuatNodeQueue) {
         switch (t) {
@@ -282,4 +282,4 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
 (TsTaskQueryFleeLocation.StaticVariablesInited = !1),
   (TsTaskQueryFleeLocation.QuaternionQueue = void 0),
   (exports.default = TsTaskQueryFleeLocation);
-// # sourceMappingURL=TsTaskQueryFleeLocation.js.map
+//# sourceMappingURL=TsTaskQueryFleeLocation.js.map

@@ -4,14 +4,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.RouletteComponentAssemblyExplore =
     exports.RouletteComponentAssembly =
       void 0);
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const RouletteComponent_1 = require("./RouletteComponent");
+const ModelManager_1 = require("../../../Manager/ModelManager"),
+  RouletteComponent_1 = require("./RouletteComponent");
 class RouletteComponentAssembly extends RouletteComponent_1.RouletteComponentBase {
   IsCurrentEquippedId(e) {
     return !1;
   }
   JudgeGridStateByData(e, t) {
-    return void 0 !== e && e !== 0 ? 1 : 2;
+    return void 0 !== e && 0 !== e ? 1 : 2;
   }
   SetCurrentToggleState(e) {
     this.GetCurrentGrid()?.SetGridToggleNavigation(e);
@@ -37,20 +37,21 @@ class RouletteComponentAssembly extends RouletteComponent_1.RouletteComponentBas
           ModelManager_1.ModelManager.RouletteModel.GetDefaultFunctionIdList();
         return e > o.length ? void 0 : o[e];
       case 2:
+        return;
     }
   }
   ResetAllGridDefault() {
     for (const o of this.RouletteGridList) {
       o.SetGridEquipped(!1), o.SetGridToggleState(!1);
-      const e = o.Data;
-      const t = ((e.Name = void 0), this.Lgo(e.DataIndex, e.GridType));
+      var e = o.Data,
+        t = ((e.Name = void 0), this.Lgo(e.DataIndex, e.GridType));
       (e.Id = t ?? e.Id),
         (e.State = this.JudgeGridStateByData(e.Id, e.GridType)),
         o.RefreshGrid(e);
     }
   }
   GetGridByValidId(e) {
-    if (e !== 0 && void 0 !== e)
+    if (0 !== e && void 0 !== e)
       for (const t of this.RouletteGridList) if (t.Data.Id === e) return t;
   }
   SetCurrentGridByData(e) {
@@ -90,4 +91,4 @@ class RouletteComponentAssemblyFunction extends RouletteComponentAssembly {
   }
 }
 exports.RouletteComponentAssemblyFunction = RouletteComponentAssemblyFunction;
-// # sourceMappingURL=RouletteComponentAssembly.js.map
+//# sourceMappingURL=RouletteComponentAssembly.js.map

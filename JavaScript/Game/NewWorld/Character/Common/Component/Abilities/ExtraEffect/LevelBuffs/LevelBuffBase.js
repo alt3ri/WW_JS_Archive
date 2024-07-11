@@ -14,4 +14,4 @@ class LevelBuffBase {
   OnStackChanged(e, s, t) {}
 }
 exports.LevelBuffBase = LevelBuffBase;
-// # sourceMappingURL=LevelBuffBase.js.map
+//# sourceMappingURL=LevelBuffBase.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayShopTabItem = void 0);
-const UE = require("ue");
-const UiTabSequence_1 = require("../../../DynamicTab/UiTabViewBehavior/UiTabSequence");
-const CommonTabItem_1 = require("./CommonTabItem");
+const UE = require("ue"),
+  UiTabSequence_1 = require("../../../DynamicTab/UiTabViewBehavior/UiTabSequence"),
+  CommonTabItem_1 = require("./CommonTabItem");
 class PayShopTabItem extends CommonTabItem_1.CommonTabItem {
   OnRegisterComponent() {
     super.OnRegisterComponent(),
@@ -22,4 +22,4 @@ class PayShopTabItem extends CommonTabItem_1.CommonTabItem {
   }
 }
 exports.PayShopTabItem = PayShopTabItem;
-// # sourceMappingURL=PayShopTabItem.js.map
+//# sourceMappingURL=PayShopTabItem.js.map

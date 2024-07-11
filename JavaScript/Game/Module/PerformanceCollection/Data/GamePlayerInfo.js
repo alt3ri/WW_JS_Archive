@@ -13,4 +13,4 @@ class GamePlayerInfo {
   }
 }
 exports.GamePlayerInfo = GamePlayerInfo;
-// # sourceMappingURL=GamePlayerInfo.js.map
+//# sourceMappingURL=GamePlayerInfo.js.map

@@ -1,53 +1,57 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, o, e, r) {
-    let i;
-    const n = arguments.length;
-    let _ =
-      n < 3 ? o : r === null ? (r = Object.getOwnPropertyDescriptor(o, e)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var i,
+      n = arguments.length,
+      _ =
+        n < 3
+          ? o
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(o, e))
+            : r;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       _ = Reflect.decorate(t, o, e, r);
     else
-      for (let c = t.length - 1; c >= 0; c--)
-        (i = t[c]) && (_ = (n < 3 ? i(_) : n > 3 ? i(o, e, _) : i(o, e)) || _);
-    return n > 3 && _ && Object.defineProperty(o, e, _), _;
+      for (var c = t.length - 1; 0 <= c; c--)
+        (i = t[c]) && (_ = (n < 3 ? i(_) : 3 < n ? i(o, e, _) : i(o, e)) || _);
+    return 3 < n && _ && Object.defineProperty(o, e, _), _;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterAudioComponent = void 0);
-const AudioSystem_1 = require("../../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const SwitchRef_1 = require("../../../../../Core/Utils/Audio/SwitchRef");
-const ENTITY_TYPE_VOLUME_CONTROLS = [
-  [
-    Protocol_1.Aki.Protocol.HBs.Proto_Animal,
-    "entity_type_volume_control_animal",
-  ],
-  [
-    Protocol_1.Aki.Protocol.HBs.Proto_Custom,
-    "entity_type_volume_control_custom_other",
-  ],
-  [
-    Protocol_1.Aki.Protocol.HBs.Proto_Monster,
-    "entity_type_volume_control_monster",
-  ],
-  [Protocol_1.Aki.Protocol.HBs.Proto_Npc, "entity_type_volume_control_npc"],
-  [
-    Protocol_1.Aki.Protocol.HBs.Proto_Player,
-    "entity_type_volume_control_player_role",
-  ],
-  [
-    Protocol_1.Aki.Protocol.HBs.Proto_SceneItem,
-    "entity_type_volume_control_scene_item",
-  ],
-  [
-    Protocol_1.Aki.Protocol.HBs.Proto_Vision,
-    "entity_type_volume_control_vision",
-  ],
-];
+const AudioSystem_1 = require("../../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  SwitchRef_1 = require("../../../../../Core/Utils/Audio/SwitchRef"),
+  ENTITY_TYPE_VOLUME_CONTROLS = [
+    [
+      Protocol_1.Aki.Protocol.HBs.Proto_Animal,
+      "entity_type_volume_control_animal",
+    ],
+    [
+      Protocol_1.Aki.Protocol.HBs.Proto_Custom,
+      "entity_type_volume_control_custom_other",
+    ],
+    [
+      Protocol_1.Aki.Protocol.HBs.Proto_Monster,
+      "entity_type_volume_control_monster",
+    ],
+    [Protocol_1.Aki.Protocol.HBs.Proto_Npc, "entity_type_volume_control_npc"],
+    [
+      Protocol_1.Aki.Protocol.HBs.Proto_Player,
+      "entity_type_volume_control_player_role",
+    ],
+    [
+      Protocol_1.Aki.Protocol.HBs.Proto_SceneItem,
+      "entity_type_volume_control_scene_item",
+    ],
+    [
+      Protocol_1.Aki.Protocol.HBs.Proto_Vision,
+      "entity_type_volume_control_vision",
+    ],
+  ];
 let CharacterAudioComponent = class CharacterAudioComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -82,12 +86,12 @@ let CharacterAudioComponent = class CharacterAudioComponent extends EntityCompon
     );
   }
   GetAkComponent(t) {
-    const o = this.ActorComponent?.Owner;
+    var o = this.ActorComponent?.Owner;
     if (o?.IsValid())
       return AudioSystem_1.AudioSystem.GetAkComponent(o, {
         SocketName: t,
         OnCreated: (t, o) => {
-          const e = this.CreatureData?.GetEntityType();
+          var e = this.CreatureData?.GetEntityType();
           (e !== Protocol_1.Aki.Protocol.HBs.Proto_Npc &&
             e !== Protocol_1.Aki.Protocol.HBs.Proto_Monster) ||
             (o.bEnableOcclusion = !0),
@@ -100,8 +104,8 @@ let CharacterAudioComponent = class CharacterAudioComponent extends EntityCompon
     this.Priority.Bind(t);
   }
   M4r() {
-    const e = this.ActorComponent?.Owner;
-    const r = this.CreatureData?.GetEntityType();
+    const e = this.ActorComponent?.Owner,
+      r = this.CreatureData?.GetEntityType();
     e
       ? (ENTITY_TYPE_VOLUME_CONTROLS.forEach(([t, o]) => {
           t = r === t ? 1 : 0;
@@ -124,4 +128,4 @@ let CharacterAudioComponent = class CharacterAudioComponent extends EntityCompon
   CharacterAudioComponent,
 )),
   (exports.CharacterAudioComponent = CharacterAudioComponent);
-// # sourceMappingURL=CharacterAudioComponent.js.map
+//# sourceMappingURL=CharacterAudioComponent.js.map

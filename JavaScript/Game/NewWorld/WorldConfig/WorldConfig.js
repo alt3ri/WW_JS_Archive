@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldConfig = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const LockOnConfigById_1 = require("../../../Core/Define/ConfigQuery/LockOnConfigById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
-const DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil");
-const GlobalData_1 = require("../../GlobalData");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ROLE_COMMON_SKILLINFO_PATH =
-  "/Game/Aki/Data/Fight/DT_Common_Role_SkillInfo.DT_Common_Role_SkillInfo";
-const MOMSTER_COMMON_SKILLINFO_PATH =
-  "/Game/Aki/Data/Fight/DT_Common_Monster_SkillInfo.DT_Common_Monster_SkillInfo";
-const VISION_COMMON_SKILLINFO_PATH =
-  "/Game/Aki/Data/Fight/DT_Common_Vision_SkillInfo.DT_Common_Vision_SkillInfo";
-const COMMON_BULLET_PATH =
-  "/Game/Aki/Data/Fight/DT_CommonNewBulletDataMain.DT_CommonNewBulletDataMain";
-const COMMON_HIT_EFFECT_PATH =
-  "/Game/Aki/Data/Fight/DT_CommonHitEffect.DT_CommonHitEffect";
-const CAUGHT_DATA_PATH = "/Game/Aki/Data/Fight/DT_CaughtInfo.DT_CaughtInfo";
-const CHARACTERFIGHTINFO_DATA_PATH =
-  "/Game/Aki/Data/Fight/DT_CharacterFightInfo.DT_CharacterFightInfo";
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  LockOnConfigById_1 = require("../../../Core/Define/ConfigQuery/LockOnConfigById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil"),
+  GlobalData_1 = require("../../GlobalData"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ROLE_COMMON_SKILLINFO_PATH =
+    "/Game/Aki/Data/Fight/DT_Common_Role_SkillInfo.DT_Common_Role_SkillInfo",
+  MOMSTER_COMMON_SKILLINFO_PATH =
+    "/Game/Aki/Data/Fight/DT_Common_Monster_SkillInfo.DT_Common_Monster_SkillInfo",
+  VISION_COMMON_SKILLINFO_PATH =
+    "/Game/Aki/Data/Fight/DT_Common_Vision_SkillInfo.DT_Common_Vision_SkillInfo",
+  COMMON_BULLET_PATH =
+    "/Game/Aki/Data/Fight/DT_CommonNewBulletDataMain.DT_CommonNewBulletDataMain",
+  COMMON_HIT_EFFECT_PATH =
+    "/Game/Aki/Data/Fight/DT_CommonHitEffect.DT_CommonHitEffect",
+  CAUGHT_DATA_PATH = "/Game/Aki/Data/Fight/DT_CaughtInfo.DT_CaughtInfo",
+  CHARACTERFIGHTINFO_DATA_PATH =
+    "/Game/Aki/Data/Fight/DT_CharacterFightInfo.DT_CharacterFightInfo";
 class WorldConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments),
@@ -38,19 +38,19 @@ class WorldConfig extends ConfigBase_1.ConfigBase {
   }
   OnInit() {
     this.usr = new Map();
-    const i = UE.DataTableUtil_C.LoadAllSkillMontages(
+    var i = UE.DataTableUtil_C.LoadAllSkillMontages(
       GlobalData_1.GlobalData.World,
     );
     for (let t = 0; t < i.Num(); ++t) {
-      const e = i.Get(t);
-      if (e.CharacterPath.length !== 0) {
+      var e = i.Get(t);
+      if (0 !== e.CharacterPath.length) {
         let t = this.usr.get(e.CharacterPath);
         t || ((t = new Map()), this.usr.set(e.CharacterPath, t)),
-          e.CommonAnim.ToAssetPathName().length > 0 &&
-          e.CommonAnim.ToAssetPathName() !== "None"
+          0 < e.CommonAnim.ToAssetPathName().length &&
+          "None" !== e.CommonAnim.ToAssetPathName()
             ? t.set(e.MontageName, e.CommonAnim)
-            : e.BaseAnim.ToAssetPathName().length > 0 &&
-              e.BaseAnim.ToAssetPathName() !== "None" &&
+            : 0 < e.BaseAnim.ToAssetPathName().length &&
+              "None" !== e.BaseAnim.ToAssetPathName() &&
               t.set(e.MontageName, e.BaseAnim);
       }
     }
@@ -65,13 +65,13 @@ class WorldConfig extends ConfigBase_1.ConfigBase {
         ROLE_COMMON_SKILLINFO_PATH,
         UE.DataTable,
       );
-      const t = (0, puerts_1.$ref)(void 0);
-      const i =
-        (UE.DataTableFunctionLibrary.GetDataTableRowNames(this.tsr, t),
-        (0, puerts_1.$unref)(t));
+      var t = (0, puerts_1.$ref)(void 0),
+        i =
+          (UE.DataTableFunctionLibrary.GetDataTableRowNames(this.tsr, t),
+          (0, puerts_1.$unref)(t));
       this.isr = new Array();
       for (let t = 0; t < i.Num(); t++) {
-        const e = i.Get(t);
+        var e = i.Get(t);
         this.isr.push(e.toString());
       }
     }
@@ -86,13 +86,13 @@ class WorldConfig extends ConfigBase_1.ConfigBase {
         MOMSTER_COMMON_SKILLINFO_PATH,
         UE.DataTable,
       );
-      const t = (0, puerts_1.$ref)(void 0);
-      const i =
-        (UE.DataTableFunctionLibrary.GetDataTableRowNames(this.osr, t),
-        (0, puerts_1.$unref)(t));
+      var t = (0, puerts_1.$ref)(void 0),
+        i =
+          (UE.DataTableFunctionLibrary.GetDataTableRowNames(this.osr, t),
+          (0, puerts_1.$unref)(t));
       this.rsr = new Array();
       for (let t = 0; t < i.Num(); t++) {
-        const e = i.Get(t);
+        var e = i.Get(t);
         this.rsr.push(e.toString());
       }
     }
@@ -107,13 +107,13 @@ class WorldConfig extends ConfigBase_1.ConfigBase {
         VISION_COMMON_SKILLINFO_PATH,
         UE.DataTable,
       );
-      const t = (0, puerts_1.$ref)(void 0);
-      const i =
-        (UE.DataTableFunctionLibrary.GetDataTableRowNames(this.nsr, t),
-        (0, puerts_1.$unref)(t));
+      var t = (0, puerts_1.$ref)(void 0),
+        i =
+          (UE.DataTableFunctionLibrary.GetDataTableRowNames(this.nsr, t),
+          (0, puerts_1.$unref)(t));
       this.ssr = new Array();
       for (let t = 0; t < i.Num(); t++) {
-        const e = i.Get(t);
+        var e = i.Get(t);
         this.ssr.push(e.toString());
       }
     }
@@ -187,4 +187,4 @@ class WorldConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.WorldConfig = WorldConfig;
-// # sourceMappingURL=WorldConfig.js.map
+//# sourceMappingURL=WorldConfig.js.map

@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExploreProgressView = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
 class ExploreProgressView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -41,17 +41,17 @@ class ExploreProgressView extends UiViewBase_1.UiViewBase {
     this.Ako && (this.Ako.ClearChildren(), (this.Ako = void 0));
   }
   OnAfterShow() {
-    const e = ModelManager_1.ModelManager.WorldMapModel.GetAreaExploreInfo();
-    var i = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(e.AreaId);
-    var i = ConfigManager_1.ConfigManager.AreaConfig.GetAreaLocalName(i.Title);
-    var i =
-      (this.GetText(1).SetText(i),
-      LguiUtil_1.LguiUtil.SetLocalText(
-        this.GetText(2),
-        "ExplorationDegree",
-        e.ExplorePercent,
-      ),
-      ModelManager_1.ModelManager.WorldMapModel.GetAreaExploreInfo());
+    var e = ModelManager_1.ModelManager.WorldMapModel.GetAreaExploreInfo(),
+      i = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(e.AreaId),
+      i = ConfigManager_1.ConfigManager.AreaConfig.GetAreaLocalName(i.Title),
+      i =
+        (this.GetText(1).SetText(i),
+        LguiUtil_1.LguiUtil.SetLocalText(
+          this.GetText(2),
+          "ExplorationDegree",
+          e.ExplorePercent,
+        ),
+        ModelManager_1.ModelManager.WorldMapModel.GetAreaExploreInfo());
     this.Ako.RefreshByData(i.ExploreProgress);
   }
 }
@@ -69,7 +69,7 @@ class ExploreProgressItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   Update(e) {
-    let i =
+    var i =
       ConfigManager_1.ConfigManager.WorldMapConfig.GetExploreProgressInfoById(
         e.ExploreProgressId,
       );
@@ -84,4 +84,4 @@ class ExploreProgressItem extends UiPanelBase_1.UiPanelBase {
     this.GetSprite(2).SetFillAmount(i);
   }
 }
-// # sourceMappingURL=ExploreInfoView.js.map
+//# sourceMappingURL=ExploreInfoView.js.map

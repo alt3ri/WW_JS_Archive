@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckCurWorldLevel = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionCheckCurWorldLevel extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, r) {
-    let l;
+    var l;
     return (
       !!e.LimitParams &&
       !!(e = e.LimitParams.get("Level")) &&
@@ -15,4 +15,4 @@ class LevelConditionCheckCurWorldLevel extends LevelGeneralBase_1.LevelCondition
   }
 }
 exports.LevelConditionCheckCurWorldLevel = LevelConditionCheckCurWorldLevel;
-// # sourceMappingURL=LevelConditionCheckCurWorldLevel.js.map
+//# sourceMappingURL=LevelConditionCheckCurWorldLevel.js.map

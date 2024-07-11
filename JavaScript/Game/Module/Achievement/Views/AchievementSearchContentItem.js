@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AchievementSearchContentItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const AchievementController_1 = require("../AchievementController");
-const AchievementProgressConfirmItem_1 = require("./AchievementProgressConfirmItem");
-const AchievementProgressItem_1 = require("./AchievementProgressItem");
-const AchievementStarItem_1 = require("./AchievementStarItem");
-const AchievementGridItem_1 = require("./AchievementGridItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  AchievementController_1 = require("../AchievementController"),
+  AchievementProgressConfirmItem_1 = require("./AchievementProgressConfirmItem"),
+  AchievementProgressItem_1 = require("./AchievementProgressItem"),
+  AchievementStarItem_1 = require("./AchievementStarItem"),
+  AchievementGridItem_1 = require("./AchievementGridItem");
 class AchievementSearchContentItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -26,7 +26,7 @@ class AchievementSearchContentItem extends UiPanelBase_1.UiPanelBase {
           (e === this.iqe?.GetId() &&
             (this.iqe?.IfSingleAchievement() ||
               (!this.iqe?.IfSingleAchievement() &&
-                this.iqe.GetNextLink() === 0)) &&
+                0 === this.iqe.GetNextLink())) &&
             (this.Pqe(),
             this.Nqe(),
             this.aqe(),
@@ -47,7 +47,7 @@ class AchievementSearchContentItem extends UiPanelBase_1.UiPanelBase {
     await this.CreateByActorAsync(this.wqe.GetOwner());
   }
   GetItemSize(e) {
-    const t = this.GetRootItem();
+    var t = this.GetRootItem();
     return e.Set(t.GetWidth(), t.GetHeight()), e.ToUeVector2D(!0);
   }
   ClearItem() {
@@ -123,13 +123,13 @@ class AchievementSearchContentItem extends UiPanelBase_1.UiPanelBase {
       : this.GetText(4).SetText(this.iqe.GetDesc());
   }
   Nqe() {
-    const e = this.iqe.GetCurrentProgress();
-    const t = this.iqe.GetMaxProgress();
+    var e = this.iqe.GetCurrentProgress(),
+      t = this.iqe.GetMaxProgress();
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(3), "CollectProgress", e, t);
   }
   aqe() {
     void 0 !== this.tqe && (this.tqe.Destroy(), (this.tqe = void 0));
-    const e = this.iqe.IfSingleAchievement()
+    var e = this.iqe.IfSingleAchievement()
       ? this.iqe.GetAchievementShowStar()
       : AchievementSearchContentItem.hqe;
     this.tqe = new AchievementStarItem_1.AchievementStarItem(
@@ -142,19 +142,19 @@ class AchievementSearchContentItem extends UiPanelBase_1.UiPanelBase {
     this.lGe.RefreshRedPoint(this.iqe.RedPoint());
   }
   uGe() {
-    this.lGe.SetActive(this.iqe.GetFinishState() === 1);
+    this.lGe.SetActive(1 === this.iqe.GetFinishState());
   }
   cGe() {
     this.hGe.RefreshState(this.iqe);
   }
   jqe() {
-    const e = this.iqe.GetRewards();
-    e.length > 0 && this.sqe(e[0]);
+    var e = this.iqe.GetRewards();
+    0 < e.length && this.sqe(e[0]);
   }
   sqe(e) {
-    const t = new AchievementGridItem_1.AchievementGridItemData();
+    var t = new AchievementGridItem_1.AchievementGridItemData();
     (t.Data = e),
-      (t.GetRewardState = this.iqe.GetFinishState() === 2),
+      (t.GetRewardState = 2 === this.iqe.GetFinishState()),
       this.oqe.Refresh(t);
   }
   OnBeforeDestroy() {
@@ -163,4 +163,4 @@ class AchievementSearchContentItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 (exports.AchievementSearchContentItem = AchievementSearchContentItem).hqe = 3;
-// # sourceMappingURL=AchievementSearchContentItem.js.map
+//# sourceMappingURL=AchievementSearchContentItem.js.map

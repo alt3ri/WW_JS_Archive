@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelSkeletalMeshSpec = void 0);
-const UE = require("ue");
-const Info_1 = require("../../../Core/Common/Info");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../GlobalData");
-const RenderConfig_1 = require("../../Render/Config/RenderConfig");
-const EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper");
-const EffectSpec_1 = require("./EffectSpec");
+const UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../GlobalData"),
+  RenderConfig_1 = require("../../Render/Config/RenderConfig"),
+  EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper"),
+  EffectSpec_1 = require("./EffectSpec");
 class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
   constructor() {
     super(...arguments),
@@ -24,7 +24,7 @@ class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
       (this.HideCounter = 0);
   }
   OnBodyEffectChanged(t) {
-    let i;
+    var i;
     this.SkeletalMeshComponent &&
       (this.CharRenderingComponent ||
         ((i = this.Handle.GetSureEffectActor()),
@@ -55,10 +55,10 @@ class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
       !this.ife &&
         this.EffectModel.AnimationRef &&
         (this.ife = this.EffectModel.AnimationRef);
-    let t;
-    let i;
-    const s = this.tfe;
-    let h = this.ife;
+    var t,
+      i,
+      s = this.tfe,
+      h = this.ife;
     return !(
       !s ||
       !h ||
@@ -75,8 +75,8 @@ class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
         this.EffectModel,
       )),
       (this.SceneComponent = i),
-      this.GetEffectType() === 1 && i.SetTickableWhenPaused(!0),
-      i.SetIsUIScenePrimitive(this.GetEffectType() === 1),
+      1 === this.GetEffectType() && i.SetTickableWhenPaused(!0),
+      i.SetIsUIScenePrimitive(1 === this.GetEffectType()),
       i.SetSkeletalMesh(s, !0),
       i.SetUpdateAnimationInEditor(!0),
       this.EffectModel.EnableCollision
@@ -113,9 +113,9 @@ class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
   OnEffectTypeChange() {
     this.SkeletalMeshComponent?.IsValid() &&
       (this.SkeletalMeshComponent.SetIsUIScenePrimitive(
-        this.GetEffectType() === 1,
+        1 === this.GetEffectType(),
       ),
-      this.GetEffectType() === 1) &&
+      1 === this.GetEffectType()) &&
       this.SkeletalMeshComponent.SetTickableWhenPaused(!0);
   }
   r0e(t) {
@@ -164,7 +164,7 @@ class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
   TickHideState() {
     this.Handle.IsPlaying() &&
       (this.HideCounter--,
-      this.HideCounter === 0
+      0 === this.HideCounter
         ? this.SkeletalMeshComponent?.SetVisibility(!0)
         : (this.SkeletalMeshComponent?.SetVisibility(!1),
           TimerSystem_1.TimerSystem.Next(() => {
@@ -173,4 +173,4 @@ class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
   }
 }
 exports.EffectModelSkeletalMeshSpec = EffectModelSkeletalMeshSpec;
-// # sourceMappingURL=EffectModelSkeletalMeshSpec.js.map
+//# sourceMappingURL=EffectModelSkeletalMeshSpec.js.map

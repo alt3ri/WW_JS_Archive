@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PersonalCardComponent = void 0);
-const UE = require("ue");
-const BackgroundCardAll_1 = require("../../../../Core/Define/ConfigQuery/BackgroundCardAll");
-const BackgroundCardById_1 = require("../../../../Core/Define/ConfigQuery/BackgroundCardById");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
-const PersonalController_1 = require("../Controller/PersonalController");
-const PersonalCardBaseItem_1 = require("./PersonalCardBaseItem");
-const PersonalCardItem_1 = require("./PersonalCardItem");
-const ConfigCommon_1 = require("../../../../Core/Config/ConfigCommon");
-const UiManager_1 = require("../../../Ui/UiManager");
+const UE = require("ue"),
+  BackgroundCardAll_1 = require("../../../../Core/Define/ConfigQuery/BackgroundCardAll"),
+  BackgroundCardById_1 = require("../../../../Core/Define/ConfigQuery/BackgroundCardById"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  PersonalController_1 = require("../Controller/PersonalController"),
+  PersonalCardBaseItem_1 = require("./PersonalCardBaseItem"),
+  PersonalCardItem_1 = require("./PersonalCardItem"),
+  ConfigCommon_1 = require("../../../../Core/Config/ConfigCommon"),
+  UiManager_1 = require("../../../Ui/UiManager");
 class PersonalCardComponent extends UiPanelBase_1.UiPanelBase {
   constructor(e, i, t) {
     super(),
@@ -29,7 +29,7 @@ class PersonalCardComponent extends UiPanelBase_1.UiPanelBase {
           }
       }),
       (this.u7t = () => {
-        let e, i;
+        var e, i;
         this.L0 ||
           ((e = this.v4i.CurCardId),
           (i = PersonalController_1.PersonalController.CheckCardIsUnLock(
@@ -59,11 +59,11 @@ class PersonalCardComponent extends UiPanelBase_1.UiPanelBase {
       }),
       (this.z4i = (i) => {
         this.$4i && this.$4i.SetToggleState(0), (this.X4i = i.Id);
-        let e;
-        const t = this.v4i.CardUnlockList;
-        const r = t.length;
+        var e,
+          t = this.v4i.CardUnlockList,
+          r = t.length;
         for (let e = 0; e < r; e++) {
-          const s = t[e];
+          var s = t[e];
           if (s.CardId === i.Id && !s.IsRead) {
             PersonalController_1.PersonalController.SendReadCardRequest(i.Id);
             break;
@@ -100,13 +100,11 @@ class PersonalCardComponent extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     let i = [];
     if (this.L0) {
-      const t = this.v4i.CardUnlockList;
-      const r = t.length;
+      var t = this.v4i.CardUnlockList,
+        r = t.length;
       for (let e = 0; e < r; e++) {
-        var s = t[e];
-        var s = BackgroundCardById_1.configBackgroundCardById.GetConfig(
-          s.CardId,
-        );
+        var s = t[e],
+          s = BackgroundCardById_1.configBackgroundCardById.GetConfig(s.CardId);
         i.push(s);
       }
     } else
@@ -124,20 +122,20 @@ class PersonalCardComponent extends UiPanelBase_1.UiPanelBase {
             : 1
           : 0;
       });
-    let e;
+    var e;
     this.xqe ||
       (this.xqe = new GenericScrollView_1.GenericScrollView(
         this.GetScrollViewWithScrollbar(0),
         this.J4i,
       )),
-      i.length > 0 &&
+      0 < i.length &&
         ((e = this.v4i.CurCardId),
-        (this.X4i = void 0 !== e && e !== 0 ? e : i[0].Id),
+        (this.X4i = void 0 !== e && 0 !== e ? e : i[0].Id),
         (e = BackgroundCardById_1.configBackgroundCardById.GetConfig(this.X4i)),
         this.RefreshCardInfo(e)),
       this.xqe.ClearChildren(),
       this.xqe.RefreshByData(i),
-      this.GetItem(5).SetUIActive(i.length > 0),
+      this.GetItem(5).SetUIActive(0 < i.length),
       this.L0 ||
         ((e = this.v4i.CardUnlockList),
         LguiUtil_1.LguiUtil.SetLocalText(
@@ -180,4 +178,4 @@ class PersonalCardComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.PersonalCardComponent = PersonalCardComponent;
-// # sourceMappingURL=PersonalCardComponent.js.map
+//# sourceMappingURL=PersonalCardComponent.js.map

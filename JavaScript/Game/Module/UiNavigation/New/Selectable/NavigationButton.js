@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NavigationButton = void 0);
-const puerts_1 = require("puerts");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const UiNavigationNewController_1 = require("../UiNavigationNewController");
-const NavigationSelectableBase_1 = require("./NavigationSelectableBase");
+const puerts_1 = require("puerts"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  UiNavigationNewController_1 = require("../UiNavigationNewController"),
+  NavigationSelectableBase_1 = require("./NavigationSelectableBase");
 class NavigationButton extends NavigationSelectableBase_1.NavigationSelectableBase {
   constructor() {
     super(...arguments),
@@ -20,7 +20,7 @@ class NavigationButton extends NavigationSelectableBase_1.NavigationSelectableBa
     this.mwo();
   }
   cwo() {
-    let t, i;
+    var t, i;
     this.NeedAddButtonClick() &&
       ((t = this.Selectable),
       (i = (0, puerts_1.toManualReleaseDelegate)(this.j7e)),
@@ -34,13 +34,13 @@ class NavigationButton extends NavigationSelectableBase_1.NavigationSelectableBa
   }
   OnButtonClick() {}
   NeedAddButtonClick() {
-    return this.GetType() !== "Button";
+    return "Button" !== this.GetType();
   }
   OnHandlePointerSelect(t) {
     this.Listener.ScrollView &&
       this.Listener.ScrollView.ScrollToSelectableComponent(this.Selectable);
-    var i = this.Listener.GetNavigationGroup();
-    var i = i ? i.InsideGroupName : "";
+    var i = this.Listener.GetNavigationGroup(),
+      i = i ? i.InsideGroupName : "";
     return (
       !StringUtils_1.StringUtils.IsBlank(i) &&
       ((i =
@@ -53,4 +53,4 @@ class NavigationButton extends NavigationSelectableBase_1.NavigationSelectableBa
   }
 }
 exports.NavigationButton = NavigationButton;
-// # sourceMappingURL=NavigationButton.js.map
+//# sourceMappingURL=NavigationButton.js.map

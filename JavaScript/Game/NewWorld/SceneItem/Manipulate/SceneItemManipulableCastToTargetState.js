@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulableCastToTargetState = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent");
-const SceneItemManipulableCastState_1 = require("./SceneItemManipulableCastState");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
+  SceneItemManipulableCastState_1 = require("./SceneItemManipulableCastState");
 class SceneItemManipulableCastToTargetState extends SceneItemManipulableCastState_1.SceneItemManipulableCastState {
   constructor(t, e) {
     super(t, e),
@@ -21,7 +21,7 @@ class SceneItemManipulableCastToTargetState extends SceneItemManipulableCastStat
     this.EnterCallback = t;
   }
   OnEnter() {
-    let t;
+    var t;
     this.F7o?.Valid
       ? (super.OnEnter(),
         (this.SceneItem.IsCanBeHeld = !1),
@@ -57,16 +57,16 @@ class SceneItemManipulableCastToTargetState extends SceneItemManipulableCastStat
   }
   UpdateRotation() {
     let t = 0;
-    var e = this.SceneItem.Config.ThrowCfg.MotionConfig;
-    var e =
-      (t =
-        e.Type === IComponent_1.EThrowMotion.Projectile
-          ? e.AngularVelocity
-          : t) * this.Timer;
-    var e = UE.KismetMathLibrary.RotatorFromAxisAndAngle(
-      this.CastRotAxis.ToUeVector(),
-      e,
-    );
+    var e = this.SceneItem.Config.ThrowCfg.MotionConfig,
+      e =
+        (t =
+          e.Type === IComponent_1.EThrowMotion.Projectile
+            ? e.AngularVelocity
+            : t) * this.Timer,
+      e = UE.KismetMathLibrary.RotatorFromAxisAndAngle(
+        this.CastRotAxis.ToUeVector(),
+        e,
+      );
     this.SceneItem.ActorComp.SetActorRotation(
       e,
       "[SceneItemManipulableCastToTargetState.UpdateLocation]",
@@ -74,7 +74,7 @@ class SceneItemManipulableCastToTargetState extends SceneItemManipulableCastStat
     );
   }
   UpdateRotationAccordingToVelocity() {
-    let t;
+    var t;
     this.SceneItem.ManipulateBaseConfig.随速度调整朝向 &&
       !this.AfterHit &&
       ((t = Vector_1.Vector.Create()),
@@ -91,9 +91,9 @@ class SceneItemManipulableCastToTargetState extends SceneItemManipulableCastStat
       ));
   }
   kxe() {
-    let t;
+    var t;
     this.Timer >= this.CastDuration &&
-      this.CastDuration > 0 &&
+      0 < this.CastDuration &&
       ((this.SceneItem.ActorComp.PhysicsMode = 3),
       (t = Vector_1.Vector.Create(
         this.SceneItem.ActorComp.ActorLocation,
@@ -108,4 +108,4 @@ class SceneItemManipulableCastToTargetState extends SceneItemManipulableCastStat
 }
 exports.SceneItemManipulableCastToTargetState =
   SceneItemManipulableCastToTargetState;
-// # sourceMappingURL=SceneItemManipulableCastToTargetState.js.map
+//# sourceMappingURL=SceneItemManipulableCastToTargetState.js.map

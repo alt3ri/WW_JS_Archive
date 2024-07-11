@@ -4,20 +4,20 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.checkVersionIsLatest =
     exports.EDITOR_VERSION =
       void 0);
-const IEditor_1 = require("../Interface/IEditor");
-const Init_1 = require("../Interface/Init");
-const BranchDefine_1 = require("./BranchDefine");
-const EventSystem_1 = require("./Misc/EventSystem");
-const File_1 = require("./Misc/File");
-const JsonConfig_1 = require("./Misc/JsonConfig");
-const Log_1 = require("./Misc/Log");
-const Util_1 = require("./Misc/Util");
+const IEditor_1 = require("../Interface/IEditor"),
+  Init_1 = require("../Interface/Init"),
+  BranchDefine_1 = require("./BranchDefine"),
+  EventSystem_1 = require("./Misc/EventSystem"),
+  File_1 = require("./Misc/File"),
+  JsonConfig_1 = require("./Misc/JsonConfig"),
+  Log_1 = require("./Misc/Log"),
+  Util_1 = require("./Misc/Util");
 function checkVersionIsLatest(e, t = exports.EDITOR_VERSION) {
   if (e) {
-    const r = e.split(".");
-    const i = t.split(".");
+    var r = e.split("."),
+      i = t.split(".");
     for (let e = 0; e < r.length; e++) {
-      const o = parseInt(r[e]);
+      var o = parseInt(r[e]);
       if (parseInt(i[e]) < o) return !0;
     }
   }
@@ -25,39 +25,39 @@ function checkVersionIsLatest(e, t = exports.EDITOR_VERSION) {
 }
 (exports.EDITOR_VERSION = "2024.01.18"),
   (exports.checkVersionIsLatest = checkVersionIsLatest);
-const GAME_CLIENT_GM_PORT_OFFSET = 11;
-const config = {
-  IsSaveWhileExitPie: !1,
-  IsTestMode: !1,
-  MaxErrorReportCount: 4,
-  IsNewLevelLoadMode: !0,
-  IsNewJsonNameMode: !0,
-  IsFullDataMode: !1,
-  ReportErrorToSentry: !0,
-  IsLockedComponentEditable: !1,
-  IsEntityExportIncludeTemplate: !1,
-  DelDelegateEntityUid: [],
-  IsDisableAutoMoveAddedActorToSelectedFolder: !1,
-  IsEnableRandomlyRotateNewEntityZaxis: !1,
-  LastWorkSpaceCheckTimestamp: 0,
-  IsLoadingArchive: !1,
-  FixLevelPlayAoiProxy: [],
-  IsSimulateGameCommandService: !1,
-  EditorLaunchMode: IEditor_1.EEditorLaunchMode.PIE,
-  IsEnableAutoJump: !1,
-  IsShowFilterPreset: !0,
-  IsShowFormalText: !1,
-  TidTextExportType: "Formal",
-  PlannedBranch: "development",
-  AutoCaptureTree: [],
-  IsShowFullDateCheckError: !1,
-  IsEnableBtStateConflictCheck: !1,
-  IsEnableSetPlotModeCheck: !0,
-  IsEnableOnlineChainCheck: !1,
-};
+const GAME_CLIENT_GM_PORT_OFFSET = 11,
+  config = {
+    IsSaveWhileExitPie: !1,
+    IsTestMode: !1,
+    MaxErrorReportCount: 4,
+    IsNewLevelLoadMode: !0,
+    IsNewJsonNameMode: !0,
+    IsFullDataMode: !1,
+    ReportErrorToSentry: !0,
+    IsLockedComponentEditable: !1,
+    IsEntityExportIncludeTemplate: !1,
+    DelDelegateEntityUid: [],
+    IsDisableAutoMoveAddedActorToSelectedFolder: !1,
+    IsEnableRandomlyRotateNewEntityZaxis: !1,
+    LastWorkSpaceCheckTimestamp: 0,
+    IsLoadingArchive: !1,
+    FixLevelPlayAoiProxy: [],
+    IsSimulateGameCommandService: !1,
+    EditorLaunchMode: IEditor_1.EEditorLaunchMode.PIE,
+    IsEnableAutoJump: !1,
+    IsShowFilterPreset: !0,
+    IsShowFormalText: !1,
+    TidTextExportType: "Formal",
+    PlannedBranch: "development",
+    AutoCaptureTree: [],
+    IsShowFullDateCheckError: !1,
+    IsEnableBtStateConflictCheck: !1,
+    IsEnableSetPlotModeCheck: !0,
+    IsEnableOnlineChainCheck: !1,
+  };
 let clusterRecords = void 0;
 function getClusterTimestamp() {
-  let e;
+  var e;
   return (
     clusterRecords ||
       ((e = (0, File_1.getSavePath)("Editor/ClusterRecord.json")),
@@ -102,9 +102,9 @@ class Config extends JsonConfig_1.JsonConfig {
     return (0, File_1.getSavePath)("Map") + `/${e}.json`;
   }
   i() {
-    let t;
-    let r;
-    const i = (0, Util_1.getEditorCommandArgs)();
+    var t,
+      r,
+      i = (0, Util_1.getEditorCommandArgs)();
     if (i) {
       let e = void 0;
       return (
@@ -139,9 +139,8 @@ class Config extends JsonConfig_1.JsonConfig {
       );
     }
   }
-
   l() {
-    const e = (0, File_1.getProjectPath)(
+    var e = (0, File_1.getProjectPath)(
       (0, Init_1.isUe5)()
         ? "Content/Editor/Config/EditorConnectionConfig.json"
         : "Content/Aki/UniverseEditor/Config/EditorConnectionConfig.json",
@@ -153,7 +152,7 @@ class Config extends JsonConfig_1.JsonConfig {
     e.PlannedBranch = (0, BranchDefine_1.getDefaultPlannedBranch)();
   }
   static t() {
-    const e = (0, Util_1.deepCopyData)(config);
+    var e = (0, Util_1.deepCopyData)(config);
     return Config.sOn(e), e;
   }
   get NetworkAddress() {
@@ -212,4 +211,4 @@ class Config extends JsonConfig_1.JsonConfig {
   (Config.GameCommandRuntimePort = 9021),
   (Config.DefaultServerPort = 9500),
   (Config.PackageServerPort = 9600);
-// # sourceMappingURL=Config.js.map
+//# sourceMappingURL=Config.js.map

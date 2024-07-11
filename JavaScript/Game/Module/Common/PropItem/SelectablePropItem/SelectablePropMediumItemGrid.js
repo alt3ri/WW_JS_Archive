@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SelectablePropMediumItemGrid = void 0);
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const LoopScrollMediumItemGrid_1 = require("../../MediumItemGrid/LoopScrollMediumItemGrid");
+const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LoopScrollMediumItemGrid_1 = require("../../MediumItemGrid/LoopScrollMediumItemGrid");
 class SelectablePropMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   constructor() {
     super(...arguments),
@@ -40,41 +40,40 @@ class SelectablePropMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScroll
   }
   OnRefresh(e, t, i) {
     (this.SelectablePropData = e),
-      this.SetSelected(e.SelectedCount > 0, !0),
+      this.SetSelected(0 < e.SelectedCount, !0),
       this.$wt && this.$wt(this);
   }
   RefreshUi(e) {
     this.SelectablePropData = e;
-    const t = ModelManager_1.ModelManager.InventoryModel;
-    const i = e.IncId;
-    const s = e.ItemId;
-    const r = e.ItemDataType;
-    const o =
-      ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(s);
+    var t = ModelManager_1.ModelManager.InventoryModel,
+      i = e.IncId,
+      s = e.ItemId,
+      r = e.ItemDataType,
+      o = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(s);
     let n = void 0;
-    if ((n = i > 0 ? t.GetAttributeItemData(i) : t.GetCommonItemData(s))) {
-      const a = this.SelectablePropData.SelectedCount;
-      const h = this.SelectablePropData.Count;
-      const d = {
-        Type: 4,
-        Data: e,
-        ItemConfigId: s,
-        StarLevel: o.QualityId,
-        ReduceButtonInfo: { IsVisible: a > 0, LongPressConfigId: 1 },
-      };
+    if ((n = 0 < i ? t.GetAttributeItemData(i) : t.GetCommonItemData(s))) {
+      var a = this.SelectablePropData.SelectedCount,
+        h = this.SelectablePropData.Count,
+        d = {
+          Type: 4,
+          Data: e,
+          ItemConfigId: s,
+          StarLevel: o.QualityId,
+          ReduceButtonInfo: { IsVisible: 0 < a, LongPressConfigId: 1 },
+        };
       switch (r) {
         case 0:
           (d.BuffIconType = o.ItemBuffType),
             (d.IsOmitBottomText = !1),
-            a > 0
+            0 < a
               ? ((d.BottomTextId = "Text_ItemEnoughText_Text"),
                 (d.BottomTextParameter = [a, h]))
               : (d.BottomText = h.toString());
           break;
         case 2:
           var l =
-            ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(i);
-          var u = l.GetResonanceLevel();
+              ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(i),
+            u = l.GetResonanceLevel();
           (d.Level = u),
             (d.BottomTextId = "Text_LevelShow_Text"),
             (d.BottomTextParameter = [l.GetLevel()]);
@@ -92,7 +91,7 @@ class SelectablePropMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScroll
             (d.IsOmitBottomText = !0);
           break;
         default:
-          a > 0
+          0 < a
             ? ((d.BottomTextId = "Text_ItemEnoughText_Text"),
               (d.BottomTextParameter = [a, h]))
             : (d.BottomText = h.toString());
@@ -102,12 +101,12 @@ class SelectablePropMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScroll
   }
   RefreshCostCount() {
     if (this.SelectablePropData) {
-      const e = this.SelectablePropData.ItemDataType;
-      const t = this.SelectablePropData.SelectedCount;
-      const i = this.SelectablePropData.Count;
+      var e = this.SelectablePropData.ItemDataType,
+        t = this.SelectablePropData.SelectedCount,
+        i = this.SelectablePropData.Count;
       switch (e) {
         case 0:
-          t > 0
+          0 < t
             ? this.SetBottomTextId("Text_ItemEnoughText_Text", [t, i])
             : this.SetBottomText(this.SelectablePropData.Count.toString());
           break;
@@ -115,7 +114,7 @@ class SelectablePropMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScroll
         case 3:
           break;
         default:
-          t > 0
+          0 < t
             ? this.SetBottomTextId("Text_ItemEnoughText_Text", [t, i])
             : this.SetBottomText(this.SelectablePropData.Count.toString());
       }
@@ -126,4 +125,4 @@ class SelectablePropMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScroll
   }
 }
 exports.SelectablePropMediumItemGrid = SelectablePropMediumItemGrid;
-// # sourceMappingURL=SelectablePropMediumItemGrid.js.map
+//# sourceMappingURL=SelectablePropMediumItemGrid.js.map

@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelPlayController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const LevelGeneralContextDefine_1 = require("../../LevelGamePlay/LevelGeneralContextDefine");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ActivityDoubleRewardController_1 = require("../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
-const GeneralLogicTreeUtil_1 = require("../GeneralLogicTree/GeneralLogicTreeUtil");
-const MapController_1 = require("../Map/Controller/MapController");
-const PowerController_1 = require("../Power/PowerController");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const LevelPlayDefine_1 = require("./LevelPlayDefine");
-const INTERVAL_TIME = 1e3;
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  LevelGeneralContextDefine_1 = require("../../LevelGamePlay/LevelGeneralContextDefine"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ActivityDoubleRewardController_1 = require("../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  GeneralLogicTreeUtil_1 = require("../GeneralLogicTree/GeneralLogicTreeUtil"),
+  MapController_1 = require("../Map/Controller/MapController"),
+  PowerController_1 = require("../Power/PowerController"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  LevelPlayDefine_1 = require("./LevelPlayDefine"),
+  INTERVAL_TIME = 1e3;
 class LevelPlayController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return this.qfi(), !0;
@@ -44,9 +44,9 @@ class LevelPlayController extends ControllerBase_1.ControllerBase {
   static jfi() {
     const o = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
     if (o) {
-      const e = ModelManager_1.ModelManager.LevelPlayModel;
-      let l = e.GetProcessingLevelPlayInfos();
-      if (l.size === 0)
+      var e = ModelManager_1.ModelManager.LevelPlayModel,
+        l = e.GetProcessingLevelPlayInfos();
+      if (0 === l.size)
         e.SetTrackLevelPlayId(LevelPlayDefine_1.INVALID_LEVELPLAYID);
       else {
         let r = e.GetTrackLevelPlayInfo();
@@ -78,7 +78,7 @@ class LevelPlayController extends ControllerBase_1.ControllerBase {
   }
   static ReceiveReward(e, l) {
     if (!ModelManager_1.ModelManager.LevelPlayModel.IsInReceiveReward) {
-      let r = ModelManager_1.ModelManager.CreatureModel.GetEntity(e);
+      var r = ModelManager_1.ModelManager.CreatureModel.GetEntity(e);
       if (r) {
         r = r.Entity.GetComponent(0).GetPbDataId();
         const o =
@@ -104,20 +104,20 @@ class LevelPlayController extends ControllerBase_1.ControllerBase {
                   ModelManager_1.ModelManager.LevelPlayModel.IsInReceiveReward =
                     !1;
                 }),
-                l > 0)
+                0 < l)
               ) {
                 const o =
                   ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(
                     l,
                   );
                 o &&
-                  o.LevelPlayType === "SilentArea" &&
+                  "SilentArea" === o.LevelPlayType &&
                   (l =
                     ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetDungeonUpActivity(
                       [3],
                       !1,
                     )) &&
-                  l.LeftUpCount > 0 &&
+                  0 < l.LeftUpCount &&
                   (r.Tip = l.GetFullTip());
               }
               (ModelManager_1.ModelManager.LevelPlayModel.IsInReceiveReward =
@@ -164,7 +164,7 @@ class LevelPlayController extends ControllerBase_1.ControllerBase {
   }),
   (LevelPlayController.Nfi = (e) => {
     for (const r of e.iAs) {
-      const l =
+      var l =
         ModelManager_1.ModelManager.LevelPlayModel.SafeCreateLevelPlayInfo(
           r.Ekn,
         );
@@ -173,7 +173,7 @@ class LevelPlayController extends ControllerBase_1.ControllerBase {
         l.UpdateRefreshTime(r.eAs),
         l.IsClose &&
           void 0 !== l.MarkConfig &&
-          l.MarkConfig.MarkId > 0 &&
+          0 < l.MarkConfig.MarkId &&
           LevelPlayController.Wfi(l.MarkConfig.MarkId),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -188,10 +188,12 @@ class LevelPlayController extends ControllerBase_1.ControllerBase {
     }
   }),
   (LevelPlayController.Ofi = (e) => {
-    let l;
-    var e = e.Ekn;
-    const r =
-      ModelManager_1.ModelManager.LevelPlayModel.GetProcessingLevelPlayInfo(e);
+    var l,
+      e = e.Ekn,
+      r =
+        ModelManager_1.ModelManager.LevelPlayModel.GetProcessingLevelPlayInfo(
+          e,
+        );
     r
       ? (r.UpdateFirstPass(!0),
         void 0 !== r.FirstRewardId &&
@@ -207,7 +209,7 @@ class LevelPlayController extends ControllerBase_1.ControllerBase {
             LevelPlayDefine_1.GAMEPLAY_FIRST_PROMPT_TYPE_ID,
           )),
         (l = r.LevelPlayFirstPassAction) &&
-          l.length > 0 &&
+          0 < l.length &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("SceneGameplay", 34, "开始执行玩法首通动作"),
           ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsNew(
@@ -223,7 +225,7 @@ class LevelPlayController extends ControllerBase_1.ControllerBase {
         ]);
   }),
   (LevelPlayController.kfi = (e) => {
-    const l = e.Ekn;
+    var l = e.Ekn;
     switch (e.ckn) {
       case 1:
       case 2:
@@ -236,7 +238,7 @@ class LevelPlayController extends ControllerBase_1.ControllerBase {
         r &&
           (ModelManager_1.ModelManager.LevelPlayModel.LevelPlayClose(r),
           r.MarkConfig) &&
-          r.MarkConfig.MarkId > 0 &&
+          0 < r.MarkConfig.MarkId &&
           LevelPlayController.Wfi(r.MarkConfig.MarkId);
         break;
       case 3:
@@ -252,7 +254,7 @@ class LevelPlayController extends ControllerBase_1.ControllerBase {
       );
   }),
   (LevelPlayController.Vfi = (e) => {
-    const l = e.Ekn;
+    var l = e.Ekn;
     let r =
       ModelManager_1.ModelManager.LevelPlayModel.GetProcessingLevelPlayInfo(l);
     (r =
@@ -264,7 +266,7 @@ class LevelPlayController extends ControllerBase_1.ControllerBase {
     e = r.LevelPlayEnterAction;
     r.CanExecOpenAction &&
       e &&
-      e.length > 0 &&
+      0 < e.length &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "SceneGameplay",
@@ -285,7 +287,7 @@ class LevelPlayController extends ControllerBase_1.ControllerBase {
         Log_1.Log.Info("SceneGameplay", 19, "玩法离开", ["id", e]);
   }),
   (LevelPlayController.Ffi = (e) => {
-    const l = e.Ekn;
+    var l = e.Ekn;
     ModelManager_1.ModelManager.LevelPlayModel.SafeCreateLevelPlayInfo(
       l,
     ).UpdateRefreshTime(e.Kys),
@@ -298,4 +300,4 @@ class LevelPlayController extends ControllerBase_1.ControllerBase {
           ["OpenTime", e.Kys],
         );
   });
-// # sourceMappingURL=LevelPlayController.js.map
+//# sourceMappingURL=LevelPlayController.js.map

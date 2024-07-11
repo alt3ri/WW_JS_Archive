@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ShopMediumItemGrid = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid");
+const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid");
 class ShopMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   constructor() {
     super(...arguments), (this.ItemInfo = void 0);
@@ -34,4 +34,4 @@ class ShopMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItem
   }
 }
 exports.ShopMediumItemGrid = ShopMediumItemGrid;
-// # sourceMappingURL=ShopMediumItemGrid.js.map
+//# sourceMappingURL=ShopMediumItemGrid.js.map

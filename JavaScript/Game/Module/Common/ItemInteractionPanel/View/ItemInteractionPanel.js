@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemInteractionPanel = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView");
-const ItemInteractionPanelItemData_1 = require("../ItemInteractionPanelItemData");
-const ItemInteractionMediumItemGrid_1 = require("./ItemInteractionMediumItemGrid");
-const ItemInteractionPanelMainTypeItem_1 = require("./ItemInteractionPanelMainTypeItem");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView"),
+  ItemInteractionPanelItemData_1 = require("../ItemInteractionPanelItemData"),
+  ItemInteractionMediumItemGrid_1 = require("./ItemInteractionMediumItemGrid"),
+  ItemInteractionPanelMainTypeItem_1 = require("./ItemInteractionPanelMainTypeItem");
 class ItemInteractionPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -23,7 +23,7 @@ class ItemInteractionPanel extends UiPanelBase_1.UiPanelBase {
       (this.YAt = void 0),
       (this.JAt = void 0),
       (this.z9e = () => {
-        const t =
+        var t =
           new ItemInteractionMediumItemGrid_1.ItemInteractionMediumItemGrid();
         return (
           t.BindOnExtendToggleStateChanged(this.zAt),
@@ -92,12 +92,12 @@ class ItemInteractionPanel extends UiPanelBase_1.UiPanelBase {
       this.iCt.clear(),
       (this.WAt.length = 0),
       (this.KAt.length = 0);
-    const t = ConfigManager_1.ConfigManager.InventoryConfig;
+    var t = ConfigManager_1.ConfigManager.InventoryConfig;
     for (const h of this.HAt.ItemInfoList) {
-      var e;
-      var i;
-      const s = h.ItemConfigId;
-      let r = t.GetItemConfig(s);
+      var e,
+        i,
+        s = h.ItemConfigId,
+        r = t.GetItemConfig(s);
       r &&
         ((e = r.MainTypeId),
         (r = new ItemInteractionPanelItemData_1.ItemInteractionPanelItemData(
@@ -111,8 +111,8 @@ class ItemInteractionPanel extends UiPanelBase_1.UiPanelBase {
     }
     for (const n of this.jAt.values())
       n.sort((t, e) => {
-        let i = t.GetQualityId();
-        let s = e.GetQualityId();
+        var i = t.GetQualityId(),
+          s = e.GetQualityId();
         return i !== s
           ? i - s
           : (i = t.GetItemCount()) !== (s = e.GetItemCount())
@@ -122,13 +122,13 @@ class ItemInteractionPanel extends UiPanelBase_1.UiPanelBase {
   }
   async iPt() {
     this.oPt();
-    const t = this.GetItem(4);
-    const e = t.GetOwner();
-    const i = (t.SetUIActive(!0), []);
+    var t = this.GetItem(4),
+      e = t.GetOwner(),
+      i = (t.SetUIActive(!0), []);
     for (const h of this.WAt) {
-      const s = LguiUtil_1.LguiUtil.DuplicateActor(e, this.GetItem(3));
-      const r =
-        new ItemInteractionPanelMainTypeItem_1.ItemInteractionPanelMainTypeItem();
+      var s = LguiUtil_1.LguiUtil.DuplicateActor(e, this.GetItem(3)),
+        r =
+          new ItemInteractionPanelMainTypeItem_1.ItemInteractionPanelMainTypeItem();
       r.BindOnExtendToggleStateChanged(this.ePt),
         i.push(r.CreateByActorAsync(s, h)),
         this.QAt.set(h, r);
@@ -155,7 +155,7 @@ class ItemInteractionPanel extends UiPanelBase_1.UiPanelBase {
     t < 0 || this.XAt?.RefreshGridProxy(t);
   }
   SetItemGridSelected(t, e) {
-    const i = this.KAt.indexOf(e);
+    var i = this.KAt.indexOf(e);
     i < 0 || ((e.IsSelected = t), this.XAt?.RefreshGridProxy(i));
   }
   GetCurrentItemDataList() {
@@ -172,4 +172,4 @@ class ItemInteractionPanel extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ItemInteractionPanel = ItemInteractionPanel;
-// # sourceMappingURL=ItemInteractionPanel.js.map
+//# sourceMappingURL=ItemInteractionPanel.js.map

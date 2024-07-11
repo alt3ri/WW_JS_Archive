@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const GlobalData_1 = require("../../../../../GlobalData");
-const BlackboardController_1 = require("../../../../../World/Controller/BlackboardController");
+const UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  GlobalData_1 = require("../../../../../GlobalData"),
+  BlackboardController_1 = require("../../../../../World/Controller/BlackboardController");
 class TsDecoratorBlackboardValuesCompare extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -32,35 +32,35 @@ class TsDecoratorBlackboardValuesCompare extends UE.BTDecorator_BlueprintBase {
         (this.TsVectorMap = new Map()),
         (this.TmpVector = Vector_1.Vector.Create());
       for (let t = 0, r = this.StringMap.Num(); t < r; t++) {
-        const o = this.StringMap.GetKey(t);
-        const i = this.StringMap.Get(o);
+        var o = this.StringMap.GetKey(t),
+          i = this.StringMap.Get(o);
         this.TsStringMap.set(o, i);
       }
       for (let t = 0, r = this.FloatMap.Num(); t < r; t++) {
-        const e = this.FloatMap.GetKey(t);
-        const s = this.FloatMap.Get(e);
+        var e = this.FloatMap.GetKey(t),
+          s = this.FloatMap.Get(e);
         this.TsFloatMap.set(e, s);
       }
       for (let t = 0, r = this.IntMap.Num(); t < r; t++) {
-        const a = this.IntMap.GetKey(t);
-        const h = this.IntMap.Get(a);
+        var a = this.IntMap.GetKey(t),
+          h = this.IntMap.Get(a);
         this.TsIntMap.set(a, h);
       }
       for (let t = 0, r = this.BooleanMap.Num(); t < r; t++) {
-        const l = this.BooleanMap.GetKey(t);
-        const n = this.BooleanMap.Get(l);
+        var l = this.BooleanMap.GetKey(t),
+          n = this.BooleanMap.Get(l);
         this.TsBooleanMap.set(l, n);
       }
       for (let t = 0, r = this.VectorMap.Num(); t < r; t++) {
-        const u = this.VectorMap.GetKey(t);
-        var c = this.VectorMap.Get(u);
-        var c = Vector_1.Vector.Create(c);
+        var u = this.VectorMap.GetKey(t),
+          c = this.VectorMap.Get(u),
+          c = Vector_1.Vector.Create(c);
         this.TsVectorMap.set(u, c);
       }
     }
   }
   ExecuteStringMapCompare() {
-    for (const [t, r] of this.TsStringMap)
+    for (var [t, r] of this.TsStringMap)
       if (
         BlackboardController_1.BlackboardController.GetStringValueByEntity(
           this.EntityId,
@@ -71,7 +71,7 @@ class TsDecoratorBlackboardValuesCompare extends UE.BTDecorator_BlueprintBase {
     return !0;
   }
   ExecuteFloatMapCompare() {
-    for (const [t, r] of this.TsFloatMap)
+    for (var [t, r] of this.TsFloatMap)
       if (
         BlackboardController_1.BlackboardController.GetFloatValueByEntity(
           this.EntityId,
@@ -82,7 +82,7 @@ class TsDecoratorBlackboardValuesCompare extends UE.BTDecorator_BlueprintBase {
     return !0;
   }
   ExecuteIntMapCompare() {
-    for (const [t, r] of this.TsIntMap)
+    for (var [t, r] of this.TsIntMap)
       if (
         BlackboardController_1.BlackboardController.GetIntValueByEntity(
           this.EntityId,
@@ -93,7 +93,7 @@ class TsDecoratorBlackboardValuesCompare extends UE.BTDecorator_BlueprintBase {
     return !0;
   }
   ExecuteBooleanMapCompare() {
-    for (const [t, r] of this.TsBooleanMap)
+    for (var [t, r] of this.TsBooleanMap)
       if (
         BlackboardController_1.BlackboardController.GetBooleanValueByEntity(
           this.EntityId,
@@ -104,7 +104,7 @@ class TsDecoratorBlackboardValuesCompare extends UE.BTDecorator_BlueprintBase {
     return !0;
   }
   ExecuteVectorMapCompare() {
-    for (let [t, r] of this.TsVectorMap) {
+    for (var [t, r] of this.TsVectorMap) {
       t = BlackboardController_1.BlackboardController.GetVectorValueByEntity(
         this.EntityId,
         t,
@@ -116,7 +116,7 @@ class TsDecoratorBlackboardValuesCompare extends UE.BTDecorator_BlueprintBase {
     return !0;
   }
   PerformConditionCheckAI(t, r) {
-    const o = t.AiController;
+    var o = t.AiController;
     return o
       ? (this.InitTsVariables(),
         (this.EntityId = o.CharActorComp.Entity.Id),
@@ -134,4 +134,4 @@ class TsDecoratorBlackboardValuesCompare extends UE.BTDecorator_BlueprintBase {
   }
 }
 exports.default = TsDecoratorBlackboardValuesCompare;
-// # sourceMappingURL=TsDecoratorBlackboardValuesCompare.js.map
+//# sourceMappingURL=TsDecoratorBlackboardValuesCompare.js.map

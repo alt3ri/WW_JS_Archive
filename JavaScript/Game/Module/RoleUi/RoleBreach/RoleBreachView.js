@@ -1,31 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleBreachView = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const LevelGeneralCommons_1 = require("../../../LevelGamePlay/LevelGeneralCommons");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem");
-const UiManager_1 = require("../../../Ui/UiManager");
-const AttributeItem_1 = require("../../Common/AttributeItem");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const ItemDefines_1 = require("../../Item/Data/ItemDefines");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const UiRoleUtils_1 = require("../../UiComponent/UiRoleUtils");
-const UiSceneManager_1 = require("../../UiComponent/UiSceneManager");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RoleController_1 = require("../RoleController");
-const StarItem_1 = require("../View/StarItem");
-const CostItemGridComponent_1 = require("./CostItemGridComponent");
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  LevelGeneralCommons_1 = require("../../../LevelGamePlay/LevelGeneralCommons"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  AttributeItem_1 = require("../../Common/AttributeItem"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  ItemDefines_1 = require("../../Item/Data/ItemDefines"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  UiRoleUtils_1 = require("../../UiComponent/UiRoleUtils"),
+  UiSceneManager_1 = require("../../UiComponent/UiSceneManager"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RoleController_1 = require("../RoleController"),
+  StarItem_1 = require("../View/StarItem"),
+  CostItemGridComponent_1 = require("./CostItemGridComponent");
 class RoleBreachView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -40,12 +40,12 @@ class RoleBreachView extends UiViewBase_1.UiViewBase {
         UiManager_1.UiManager.CloseView("RoleLevelUpView"), this.CloseMe();
       }),
       (this.LevelUpClick = () => {
-        let e;
-        this.klo === 0
+        var e;
+        0 === this.klo
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "RoleNoMaterial",
             )
-          : this.klo === 1
+          : 1 === this.klo
             ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                 "RoleNoMoney",
               )
@@ -57,7 +57,7 @@ class RoleBreachView extends UiViewBase_1.UiViewBase {
               ));
       }),
       (this.LevelUpLockTipClick = () => {
-        const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(175);
+        var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(175);
         const t =
           ModelManager_1.ModelManager.QuestNewModel.GetCurWorldLevelBreakQuest();
         t < 0
@@ -71,7 +71,7 @@ class RoleBreachView extends UiViewBase_1.UiViewBase {
           );
       }),
       (this.OnRoleBreachQuitSequenceFinish = () => {
-        const e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
+        var e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
           this.zke,
         );
         RoleController_1.RoleController.SendRoleLevelUpViewRequestWithOpenView(
@@ -89,13 +89,13 @@ class RoleBreachView extends UiViewBase_1.UiViewBase {
           this.lqe.GetRootItem().SetUIActive(!1),
           UiRoleUtils_1.UiRoleUtils.PlayRoleBreachFinishEffect(this.C5i);
         var i =
-          ConfigManager_1.ConfigManager.RoleConfig.GetRoleBreachSuccessDelayTime();
-        var i =
-          (TimerSystem_1.TimerSystem.Delay(() => {
-            RoleController_1.RoleController.PlayRoleMontage(3), this.Hlo();
-          }, i),
-          ConfigManager_1.ConfigManager.AudioConfig?.GetRoleConfig(e)
-            ?.BreakUpEventList[t]);
+            ConfigManager_1.ConfigManager.RoleConfig.GetRoleBreachSuccessDelayTime(),
+          i =
+            (TimerSystem_1.TimerSystem.Delay(() => {
+              RoleController_1.RoleController.PlayRoleMontage(3), this.Hlo();
+            }, i),
+            ConfigManager_1.ConfigManager.AudioConfig?.GetRoleConfig(e)
+              ?.BreakUpEventList[t]);
         i &&
           (AudioSystem_1.AudioSystem.PostEvent(i), Log_1.Log.CheckInfo()) &&
           Log_1.Log.Info("Audio", 57, "[Game.RoleBreachView] PostEvent", [
@@ -146,7 +146,7 @@ class RoleBreachView extends UiViewBase_1.UiViewBase {
   }
   OnHandleLoadScene() {
     UiSceneManager_1.UiSceneManager.ShowRoleSystemRoleActor();
-    const e = UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor();
+    var e = UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor();
     e && e.Model?.CheckGetComponent(1)?.SetTransformByTag("RoleCase"),
       RoleController_1.RoleController.PlayRoleMontage(3, !0);
   }
@@ -169,23 +169,23 @@ class RoleBreachView extends UiViewBase_1.UiViewBase {
     UiSceneManager_1.UiSceneManager.HideRoleSystemRoleActor();
   }
   qIt() {
-    const e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-      this.zke,
-    ).GetLevelData();
-    const t = e.GetBreachLevel();
-    let i =
-      (LguiUtil_1.LguiUtil.SetLocalText(
-        this.GetText(4),
-        "RoleBreakUpLevel",
-        t + 1,
-      ),
-      e.GetBreachConfig(t + 1));
+    var e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
+        this.zke,
+      ).GetLevelData(),
+      t = e.GetBreachLevel(),
+      i =
+        (LguiUtil_1.LguiUtil.SetLocalText(
+          this.GetText(4),
+          "RoleBreakUpLevel",
+          t + 1,
+        ),
+        e.GetBreachConfig(t + 1));
     this.GetText(0).SetText(i.MaxLevel.toString());
     let r = 0;
-    const o = [];
-    let n = i.BreachConsume;
+    var o = [],
+      n = i.BreachConsume;
     if (n)
-      for (let [a, s] of n)
+      for (var [a, s] of n)
         a === ItemDefines_1.EItemId.Gold
           ? (r = s)
           : ((a = {
@@ -201,7 +201,7 @@ class RoleBreachView extends UiViewBase_1.UiViewBase {
     (this.klo = ModelManager_1.ModelManager.RoleModel.GetRoleBreachState(
       this.zke,
     )),
-      this.klo === 4
+      4 === this.klo
         ? ((n =
             LevelGeneralCommons_1.LevelGeneralCommons.GetConditionGroupHintText(
               i.ConditionId,
@@ -213,8 +213,8 @@ class RoleBreachView extends UiViewBase_1.UiViewBase {
       this.Olo.Update(o, ItemDefines_1.EItemId.Gold, r);
     i =
       ModelManager_1.ModelManager.RoleModel.RoleBreachResponseData.GetUnLockSkillId();
-    this.GetItem(1).SetUIActive(i !== 0),
-      i !== 0 &&
+    this.GetItem(1).SetUIActive(0 !== i),
+      0 !== i &&
         ((n =
           ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(i)),
         this.SetTextureByPath(n.Icon, this.GetTexture(2))),
@@ -222,18 +222,18 @@ class RoleBreachView extends UiViewBase_1.UiViewBase {
       this.jlo();
   }
   jlo() {
-    const e = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
-      "RoleAttributeDisplay3",
-    );
-    const t = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-      this.zke,
-    ).GetLevelData();
-    const i = t.GetLevel();
-    const r = t.GetBreachLevel();
-    const o = t.GetMaxBreachLevel();
-    const n = [];
+    var e = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
+        "RoleAttributeDisplay3",
+      ),
+      t = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
+        this.zke,
+      ).GetLevelData(),
+      i = t.GetLevel(),
+      r = t.GetBreachLevel(),
+      o = t.GetMaxBreachLevel(),
+      n = [];
     for (const l of e) {
-      const a = ModelManager_1.ModelManager.RoleModel.GetAttributeByLevel(
+      var a = ModelManager_1.ModelManager.RoleModel.GetAttributeByLevel(
         this.zke,
         l,
         i,
@@ -241,14 +241,15 @@ class RoleBreachView extends UiViewBase_1.UiViewBase {
       );
       let e = 0;
       r < o &&
-        (s = ModelManager_1.ModelManager.RoleModel.GetAddAttrLevelUp(
-          this.zke,
-          i,
-          r,
-          i,
-          r + 1,
-          l,
-        )) > 0 &&
+        0 <
+          (s = ModelManager_1.ModelManager.RoleModel.GetAddAttrLevelUp(
+            this.zke,
+            i,
+            r,
+            i,
+            r + 1,
+            l,
+          )) &&
         (e = a + s);
       var s = {
         Id: l,
@@ -264,9 +265,9 @@ class RoleBreachView extends UiViewBase_1.UiViewBase {
     this.AttributeLayout.RefreshByData(n);
   }
   kPt(t, i) {
-    const r = new Array(i);
+    var r = new Array(i);
     for (let e = 0; e < i; ++e) {
-      const o = {
+      var o = {
         StarOnActive: e < t,
         StarOffActive: e > t,
         StarNextActive: e === t,
@@ -283,4 +284,4 @@ class RoleBreachView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RoleBreachView = RoleBreachView;
-// # sourceMappingURL=RoleBreachView.js.map
+//# sourceMappingURL=RoleBreachView.js.map

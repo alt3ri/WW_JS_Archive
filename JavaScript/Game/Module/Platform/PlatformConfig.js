@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlatformConfig = void 0);
-const DevicePlatformByPidAndVid_1 = require("../../../Core/Define/ConfigQuery/DevicePlatformByPidAndVid");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const DevicePlatformByPidAndVid_1 = require("../../../Core/Define/ConfigQuery/DevicePlatformByPidAndVid"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class PlatformConfig extends ConfigBase_1.ConfigBase {
   GetDeviceConfigByProductIdAndVendorId(e) {
     return DevicePlatformByPidAndVid_1.configDevicePlatformByPidAndVid.GetConfig(
@@ -11,4 +11,4 @@ class PlatformConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.PlatformConfig = PlatformConfig;
-// # sourceMappingURL=PlatformConfig.js.map
+//# sourceMappingURL=PlatformConfig.js.map

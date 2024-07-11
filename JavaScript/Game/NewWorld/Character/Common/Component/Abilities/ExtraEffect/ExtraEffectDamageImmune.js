@@ -8,7 +8,7 @@ class DamageImmune extends ExtraEffectBase_1.BuffEffect {
   }
   InitParameters(e) {
     for (const r of e.ExtraEffectParameters) {
-      const t = Number(r);
+      var t = Number(r);
       this.yQo[t] = !0;
     }
   }
@@ -16,7 +16,7 @@ class DamageImmune extends ExtraEffectBase_1.BuffEffect {
     return this.yQo[e.DamageData.Element];
   }
   static ApplyEffects(e, t, r) {
-    const s = r.Attacker.OwnerBuffComponent;
+    var s = r.Attacker.OwnerBuffComponent;
     for (const a of r.Target.OwnerBuffComponent.BuffEffectManager.FilterById(
       20,
     ))
@@ -25,4 +25,4 @@ class DamageImmune extends ExtraEffectBase_1.BuffEffect {
   }
 }
 exports.DamageImmune = DamageImmune;
-// # sourceMappingURL=ExtraEffectDamageImmune.js.map
+//# sourceMappingURL=ExtraEffectDamageImmune.js.map

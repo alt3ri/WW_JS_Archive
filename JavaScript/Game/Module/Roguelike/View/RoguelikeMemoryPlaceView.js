@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoguelikeMemoryPlaceView = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem");
-const UiManager_1 = require("../../../Ui/UiManager");
-const CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
-const RoguelikeController_1 = require("../RoguelikeController");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
+  RoguelikeController_1 = require("../RoguelikeController");
 class RoguelikeMemoryRewardItemData {
   constructor() {
     (this.SeasonReward = void 0), (this.Config = void 0);
@@ -51,25 +51,25 @@ class RoguelikeMemoryRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(e, i, t) {
     this.Data = e;
-    const r =
-      ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-        RoguelikeDefine_1.COLLECT_SCORE_ID,
-      ) >= e.Config.Point;
-    var o =
-      (r && !e.SeasonReward?.qms
-        ? this.GetButton(4).SetActive(!0)
-        : this.GetButton(4).SetActive(!1),
-      this.GridItem.SetActive(!0),
-      ConfigManager_1.ConfigManager.RewardConfig.GetDropPackagePreview(
-        e.Config.DropId,
-      ));
-    var o = Array.from(o);
-    var o = [{ IncId: 0, ItemId: o[0][0] }, o[0][1]];
+    var r =
+        ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+          RoguelikeDefine_1.COLLECT_SCORE_ID,
+        ) >= e.Config.Point,
+      o =
+        (r && !e.SeasonReward?.qms
+          ? this.GetButton(4).SetActive(!0)
+          : this.GetButton(4).SetActive(!1),
+        this.GridItem.SetActive(!0),
+        ConfigManager_1.ConfigManager.RewardConfig.GetDropPackagePreview(
+          e.Config.DropId,
+        )),
+      o = Array.from(o),
+      o = [{ IncId: 0, ItemId: o[0][0] }, o[0][1]];
     this.GridItem.Refresh(o),
       this.GetText(1).SetText(e.Config.Index.toString()),
       (this.GetSprite(2).useChangeColor = r),
       (this.GetSprite(3).useChangeColor = r),
-      this.GetSprite(3).SetUIActive(t !== 0);
+      this.GetSprite(3).SetUIActive(0 !== t);
   }
 }
 class RoguelikeMemoryPlaceView extends UiViewBase_1.UiViewBase {
@@ -123,42 +123,40 @@ class RoguelikeMemoryPlaceView extends UiViewBase_1.UiViewBase {
         .SetUIActive(!1),
       this.CaptionItem.SetHelpBtnActive(!1),
       (this.SeasonData = this.OpenParam);
-    const i =
-      ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonReward(
+    var i = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonReward(
         this.SeasonData.F8n,
-      );
-    const t = [];
+      ),
+      t = [];
     for (let e = 0; e < i.length; e++) {
-      const r = i[e];
-      const o = new RoguelikeMemoryRewardItemData();
+      var r = i[e],
+        o = new RoguelikeMemoryRewardItemData();
       (o.SeasonReward = this.SeasonData.Yws[e]), (o.Config = r), t.push(o);
     }
     this.LoopScrollView.ReloadData(t), this.UpdateView();
   }
   UpdateView() {
-    var e = this.SeasonData.Yws.length;
-    let i = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-      RoguelikeDefine_1.COLLECT_SCORE_ID,
-    );
-    let t =
-      ModelManager_1.ModelManager.RoguelikeModel.GetParamConfigBySeasonId();
-    var e =
-      (LguiUtil_1.LguiUtil.SetLocalTextNew(
-        this.GetText(3),
-        "Roguelike_MemoryPlace_Level",
-        e.toString(),
+    var e = this.SeasonData.Yws.length,
+      i = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+        RoguelikeDefine_1.COLLECT_SCORE_ID,
       ),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(
-        this.GetText(4),
-        "Roguelike_MemoryPlace_Exp",
-        i,
-        t.PointItemMaxCount,
-      ),
-      ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
-        this.SeasonData.F8n,
-      ));
-    let r = 0;
-    let o = 0;
+      t = ModelManager_1.ModelManager.RoguelikeModel.GetParamConfigBySeasonId(),
+      e =
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(
+          this.GetText(3),
+          "Roguelike_MemoryPlace_Level",
+          e.toString(),
+        ),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(
+          this.GetText(4),
+          "Roguelike_MemoryPlace_Exp",
+          i,
+          t.PointItemMaxCount,
+        ),
+        ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
+          this.SeasonData.F8n,
+        ));
+    let r = 0,
+      o = 0;
     for (const s of ModelManager_1.ModelManager.AchievementModel.GetAchievementCategoryGroups(
       e.Achievement,
     ))
@@ -182,4 +180,4 @@ class RoguelikeMemoryPlaceView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RoguelikeMemoryPlaceView = RoguelikeMemoryPlaceView;
-// # sourceMappingURL=RoguelikeMemoryPlaceView.js.map
+//# sourceMappingURL=RoguelikeMemoryPlaceView.js.map

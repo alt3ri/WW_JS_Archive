@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MediumItemGridVisionRoleHeadComponent = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const MediumItemGridComponent_1 = require("./MediumItemGridComponent");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  MediumItemGridComponent_1 = require("./MediumItemGridComponent");
 class MediumItemGridVisionRoleHeadComponent extends MediumItemGridComponent_1.MediumItemGridComponent {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -17,10 +17,10 @@ class MediumItemGridVisionRoleHeadComponent extends MediumItemGridComponent_1.Me
     return "UiItem_ItemRole";
   }
   OnRefresh(e) {
-    const i = e.RoleConfigId;
+    var i = e.RoleConfigId;
     if (i) {
       const r = this.GetTexture(0);
-      const t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i)?.Card;
+      var t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i)?.Card;
       t
         ? (r.SetUIActive(!1),
           this.SetRoleIcon(t, r, i, void 0, () => {
@@ -63,4 +63,4 @@ class MediumItemGridVisionRoleHeadComponent extends MediumItemGridComponent_1.Me
 }
 exports.MediumItemGridVisionRoleHeadComponent =
   MediumItemGridVisionRoleHeadComponent;
-// # sourceMappingURL=MediumItemGridVisionRoleHeadComponent.js.map
+//# sourceMappingURL=MediumItemGridVisionRoleHeadComponent.js.map

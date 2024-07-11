@@ -1,94 +1,94 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RedDotModel = void 0);
-const Log_1 = require("../../Core/Common/Log");
-const Tree_1 = require("../../Core/Container/Tree");
-const ModelBase_1 = require("../../Core/Framework/ModelBase");
-const StringBuilder_1 = require("../../Core/Utils/StringBuilder");
-const StringUtils_1 = require("../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../Manager/ConfigManager");
-const RedDotAchievement_1 = require("../Module/Achievement/RedDotAchievement");
-const RedDotAchievementCategory_1 = require("../Module/Achievement/RedDotAchievementCategory");
-const RedDotActivityRun_1 = require("../Module/Activity/ActivityContent/Run/RedDotActivityRun");
-const RedDotActivityEntrance_1 = require("../Module/Activity/RedDotActivityEntrance");
-const RedDotCommonActivityPage_1 = require("../Module/Activity/RedDotCommonActivityPage");
-const RedDotItemHandBook_1 = require("../Module/HandBook/RedDotItemHandBook");
-const RedDotPhantomHandBook_1 = require("../Module/HandBook/RedDotPhantomHandBook");
-const RedDotAdventureBattleButton_1 = require("./RedDots/AdventureGuideSystem/RedDotAdventureBattleButton");
-const RedDotAdventureDailyActivityTab_1 = require("./RedDots/AdventureGuideSystem/RedDotAdventureDailyActivityTab");
-const RedDotAdventureFirstAward_1 = require("./RedDots/AdventureGuideSystem/RedDotAdventureFirstAward");
-const RedDotAdventureFirstAwardCategory_1 = require("./RedDots/AdventureGuideSystem/RedDotAdventureFirstAwardCategory");
-const RedDotAdventureFirstAwardResult_1 = require("./RedDots/AdventureGuideSystem/RedDotAdventureFirstAwardResult");
-const RedDotAdventureManual_1 = require("./RedDots/AdventureGuideSystem/RedDotAdventureManual");
-const RedDotBattlePass_1 = require("./RedDots/BattlePass/RedDotBattlePass");
-const RedDotBattlePassAlwaysTaskTab_1 = require("./RedDots/BattlePass/RedDotBattlePassAlwaysTaskTab");
-const RedDotBattlePassDayTaskTab_1 = require("./RedDots/BattlePass/RedDotBattlePassDayTaskTab");
-const RedDotBattlePassPayButton_1 = require("./RedDots/BattlePass/RedDotBattlePassPayButton");
-const RedDotBattlePassReward_1 = require("./RedDots/BattlePass/RedDotBattlePassReward");
-const RedDotBattlePassTask_1 = require("./RedDots/BattlePass/RedDotBattlePassTask");
-const RedDotBattlePassWeekTaskTab_1 = require("./RedDots/BattlePass/RedDotBattlePassWeekTaskTab");
-const RedDotBattleViewGachaButton_1 = require("./RedDots/BattleUiSystem/RedDotBattleViewGachaButton");
-const RedDotBattleViewResonanceButton_1 = require("./RedDots/BattleUiSystem/RedDotBattleViewResonanceButton");
-const RedDotBattleViewShopButton_1 = require("./RedDots/BattleUiSystem/RedDotBattleViewShopButton");
-const BossRushRewardRedDot_1 = require("./RedDots/BossRush/BossRushRewardRedDot");
-const RedDotCalabash_1 = require("./RedDots/CalabashSystem/RedDotCalabash");
-const RedDotCalabashTab_1 = require("./RedDots/CalabashSystem/RedDotCalabashTab");
-const RedDotChatRoom_1 = require("./RedDots/Chat/RedDotChatRoom");
-const RedDotChatView_1 = require("./RedDots/Chat/RedDotChatView");
-const RedDotComposeLevel_1 = require("./RedDots/ComposeSystem/RedDotComposeLevel");
-const RedDotCookerLevel_1 = require("./RedDots/CookSystem/RedDotCookerLevel");
-const FragmentMemoryCollectRewardRedDot_1 = require("./RedDots/FragmentMemory/FragmentMemoryCollectRewardRedDot");
-const FragmentMemoryEntranceRedDot_1 = require("./RedDots/FragmentMemory/FragmentMemoryEntranceRedDot");
-const FragmentMemoryTopicRedDot_1 = require("./RedDots/FragmentMemory/FragmentMemoryTopicRedDot");
-const RedDotFriendNewApplication_1 = require("./RedDots/FriendSystem/RedDotFriendNewApplication");
-const RedDotFunctionAdventureGuide_1 = require("./RedDots/FunctionMenu/RedDotFunctionAdventureGuide");
-const RedDotFunctionFriend_1 = require("./RedDots/FunctionMenu/RedDotFunctionFriend");
-const RedDotFunctionInventory_1 = require("./RedDots/FunctionMenu/RedDotFunctionInventory");
-const RedDotFunctionMail_1 = require("./RedDots/FunctionMenu/RedDotFunctionMail");
-const RedDotFunctionNotice_1 = require("./RedDots/FunctionMenu/RedDotFunctionNotice");
-const RedDotFunctionPayShop_1 = require("./RedDots/FunctionMenu/RedDotFunctionPayShop");
-const RedDotFunctionPhantom_1 = require("./RedDots/FunctionMenu/RedDotFunctionPhantom");
-const RedDotFunctionRole_1 = require("./RedDots/FunctionMenu/RedDotFunctionRole");
-const RedDotFunctionTutorial_1 = require("./RedDots/FunctionMenu/RedDotFunctionTutorial");
-const RedDotInfluenceReputation_1 = require("./RedDots/Influence/RedDotInfluenceReputation");
-const RedDotInfluenceReward_1 = require("./RedDots/Influence/RedDotInfluenceReward");
-const RedDotInventoryCard_1 = require("./RedDots/Inventory/RedDotInventoryCard");
-const RedDotInventoryCollection_1 = require("./RedDots/Inventory/RedDotInventoryCollection");
-const RedDotInventoryCommon_1 = require("./RedDots/Inventory/RedDotInventoryCommon");
-const RedDotInventoryMaterial_1 = require("./RedDots/Inventory/RedDotInventoryMaterial");
-const RedDotInventoryMissionItem_1 = require("./RedDots/Inventory/RedDotInventoryMissionItem");
-const RedDotInventoryPhantom_1 = require("./RedDots/Inventory/RedDotInventoryPhantom");
-const RedDotInventorySpecialItem_1 = require("./RedDots/Inventory/RedDotInventorySpecialItem");
-const RedDotInventoryVirtual_1 = require("./RedDots/Inventory/RedDotInventoryVirtual");
-const RedDotInventoryWeapon_1 = require("./RedDots/Inventory/RedDotInventoryWeapon");
-const RedDotMailBoxFilter_1 = require("./RedDots/Mail/RedDotMailBoxFilter");
-const RedDotMailBoxImportantFilter_1 = require("./RedDots/Mail/RedDotMailBoxImportantFilter");
-const RedDotMailBoxUnScannedFilter_1 = require("./RedDots/Mail/RedDotMailBoxUnScannedFilter");
-const RedDotBattleViewQuestBtn_1 = require("./RedDots/Quest/RedDotBattleViewQuestBtn");
-const RedDotFunctionViewQuestBtn_1 = require("./RedDots/Quest/RedDotFunctionViewQuestBtn");
-const RedDotQuestViewItem_1 = require("./RedDots/Quest/RedDotQuestViewItem");
-const RedDotQuestViewTab_1 = require("./RedDots/Quest/RedDotQuestViewTab");
-const RedDotBattleViewMenu_1 = require("./RedDots/RedDotBattleViewMenu");
-const RedDotTest_1 = require("./RedDots/RedDotTest");
-const RedDotRoguelikeAchievement_1 = require("./RedDots/Roguelike/RedDotRoguelikeAchievement");
-const RedDotRoguelikeAchievementGroup_1 = require("./RedDots/Roguelike/RedDotRoguelikeAchievementGroup");
-const RedDotRoguelikeShop_1 = require("./RedDots/Roguelike/RedDotRoguelikeShop");
-const RedDotRoguelikeSkillCanUnlock_1 = require("./RedDots/Roguelike/RedDotRoguelikeSkillCanUnlock");
-const RedDotRoleHandBook_1 = require("./RedDots/RoleHandBook/RedDotRoleHandBook");
-const RedDotRoleSelectionList_1 = require("./RedDots/RoleSystem/RedDotRoleSelectionList");
-const RedDotRoleSystemRoleList_1 = require("./RedDots/RoleSystem/RedDotRoleSystemRoleList");
-const RedDotAttributeTab_1 = require("./RedDots/RoleSystem/RoleAttribute/RedDotAttributeTab");
-const RedDotRoleBreakUp_1 = require("./RedDots/RoleSystem/RoleAttribute/RedDotRoleBreakUp");
-const RedDotRoleLevelUp_1 = require("./RedDots/RoleSystem/RoleAttribute/RedDotRoleLevelUp");
-const RedDotResonanceTab_1 = require("./RedDots/RoleSystem/RoleResonance/RedDotResonanceTab");
-const CustomerServerRedDot_1 = require("./RedDots/Sdk/CustomerServerRedDot");
-const PayShopInstanceRedDot_1 = require("./RedDots/Shop/PayShopInstanceRedDot");
-const PayShopTabRedDot_1 = require("./RedDots/Shop/PayShopTabRedDot");
-const RedDotTowerReward_1 = require("./RedDots/TowerRewrad/RedDotTowerReward");
-const RedDotTowerRewardByDifficulties_1 = require("./RedDots/TowerRewrad/RedDotTowerRewardByDifficulties");
-const RedDotTutorialType_1 = require("./RedDots/Tutorial/RedDotTutorialType");
-const VisionIdentifyRedDot_1 = require("./RedDots/Vision/VisionIdentifyRedDot");
-const VisionOneKeyEquipRedDot_1 = require("./RedDots/Vision/VisionOneKeyEquipRedDot");
+const Log_1 = require("../../Core/Common/Log"),
+  Tree_1 = require("../../Core/Container/Tree"),
+  ModelBase_1 = require("../../Core/Framework/ModelBase"),
+  StringBuilder_1 = require("../../Core/Utils/StringBuilder"),
+  StringUtils_1 = require("../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../Manager/ConfigManager"),
+  RedDotAchievement_1 = require("../Module/Achievement/RedDotAchievement"),
+  RedDotAchievementCategory_1 = require("../Module/Achievement/RedDotAchievementCategory"),
+  RedDotActivityRun_1 = require("../Module/Activity/ActivityContent/Run/RedDotActivityRun"),
+  RedDotActivityEntrance_1 = require("../Module/Activity/RedDotActivityEntrance"),
+  RedDotCommonActivityPage_1 = require("../Module/Activity/RedDotCommonActivityPage"),
+  RedDotItemHandBook_1 = require("../Module/HandBook/RedDotItemHandBook"),
+  RedDotPhantomHandBook_1 = require("../Module/HandBook/RedDotPhantomHandBook"),
+  RedDotAdventureBattleButton_1 = require("./RedDots/AdventureGuideSystem/RedDotAdventureBattleButton"),
+  RedDotAdventureDailyActivityTab_1 = require("./RedDots/AdventureGuideSystem/RedDotAdventureDailyActivityTab"),
+  RedDotAdventureFirstAward_1 = require("./RedDots/AdventureGuideSystem/RedDotAdventureFirstAward"),
+  RedDotAdventureFirstAwardCategory_1 = require("./RedDots/AdventureGuideSystem/RedDotAdventureFirstAwardCategory"),
+  RedDotAdventureFirstAwardResult_1 = require("./RedDots/AdventureGuideSystem/RedDotAdventureFirstAwardResult"),
+  RedDotAdventureManual_1 = require("./RedDots/AdventureGuideSystem/RedDotAdventureManual"),
+  RedDotBattlePass_1 = require("./RedDots/BattlePass/RedDotBattlePass"),
+  RedDotBattlePassAlwaysTaskTab_1 = require("./RedDots/BattlePass/RedDotBattlePassAlwaysTaskTab"),
+  RedDotBattlePassDayTaskTab_1 = require("./RedDots/BattlePass/RedDotBattlePassDayTaskTab"),
+  RedDotBattlePassPayButton_1 = require("./RedDots/BattlePass/RedDotBattlePassPayButton"),
+  RedDotBattlePassReward_1 = require("./RedDots/BattlePass/RedDotBattlePassReward"),
+  RedDotBattlePassTask_1 = require("./RedDots/BattlePass/RedDotBattlePassTask"),
+  RedDotBattlePassWeekTaskTab_1 = require("./RedDots/BattlePass/RedDotBattlePassWeekTaskTab"),
+  RedDotBattleViewGachaButton_1 = require("./RedDots/BattleUiSystem/RedDotBattleViewGachaButton"),
+  RedDotBattleViewResonanceButton_1 = require("./RedDots/BattleUiSystem/RedDotBattleViewResonanceButton"),
+  RedDotBattleViewShopButton_1 = require("./RedDots/BattleUiSystem/RedDotBattleViewShopButton"),
+  BossRushRewardRedDot_1 = require("./RedDots/BossRush/BossRushRewardRedDot"),
+  RedDotCalabash_1 = require("./RedDots/CalabashSystem/RedDotCalabash"),
+  RedDotCalabashTab_1 = require("./RedDots/CalabashSystem/RedDotCalabashTab"),
+  RedDotChatRoom_1 = require("./RedDots/Chat/RedDotChatRoom"),
+  RedDotChatView_1 = require("./RedDots/Chat/RedDotChatView"),
+  RedDotComposeLevel_1 = require("./RedDots/ComposeSystem/RedDotComposeLevel"),
+  RedDotCookerLevel_1 = require("./RedDots/CookSystem/RedDotCookerLevel"),
+  FragmentMemoryCollectRewardRedDot_1 = require("./RedDots/FragmentMemory/FragmentMemoryCollectRewardRedDot"),
+  FragmentMemoryEntranceRedDot_1 = require("./RedDots/FragmentMemory/FragmentMemoryEntranceRedDot"),
+  FragmentMemoryTopicRedDot_1 = require("./RedDots/FragmentMemory/FragmentMemoryTopicRedDot"),
+  RedDotFriendNewApplication_1 = require("./RedDots/FriendSystem/RedDotFriendNewApplication"),
+  RedDotFunctionAdventureGuide_1 = require("./RedDots/FunctionMenu/RedDotFunctionAdventureGuide"),
+  RedDotFunctionFriend_1 = require("./RedDots/FunctionMenu/RedDotFunctionFriend"),
+  RedDotFunctionInventory_1 = require("./RedDots/FunctionMenu/RedDotFunctionInventory"),
+  RedDotFunctionMail_1 = require("./RedDots/FunctionMenu/RedDotFunctionMail"),
+  RedDotFunctionNotice_1 = require("./RedDots/FunctionMenu/RedDotFunctionNotice"),
+  RedDotFunctionPayShop_1 = require("./RedDots/FunctionMenu/RedDotFunctionPayShop"),
+  RedDotFunctionPhantom_1 = require("./RedDots/FunctionMenu/RedDotFunctionPhantom"),
+  RedDotFunctionRole_1 = require("./RedDots/FunctionMenu/RedDotFunctionRole"),
+  RedDotFunctionTutorial_1 = require("./RedDots/FunctionMenu/RedDotFunctionTutorial"),
+  RedDotInfluenceReputation_1 = require("./RedDots/Influence/RedDotInfluenceReputation"),
+  RedDotInfluenceReward_1 = require("./RedDots/Influence/RedDotInfluenceReward"),
+  RedDotInventoryCard_1 = require("./RedDots/Inventory/RedDotInventoryCard"),
+  RedDotInventoryCollection_1 = require("./RedDots/Inventory/RedDotInventoryCollection"),
+  RedDotInventoryCommon_1 = require("./RedDots/Inventory/RedDotInventoryCommon"),
+  RedDotInventoryMaterial_1 = require("./RedDots/Inventory/RedDotInventoryMaterial"),
+  RedDotInventoryMissionItem_1 = require("./RedDots/Inventory/RedDotInventoryMissionItem"),
+  RedDotInventoryPhantom_1 = require("./RedDots/Inventory/RedDotInventoryPhantom"),
+  RedDotInventorySpecialItem_1 = require("./RedDots/Inventory/RedDotInventorySpecialItem"),
+  RedDotInventoryVirtual_1 = require("./RedDots/Inventory/RedDotInventoryVirtual"),
+  RedDotInventoryWeapon_1 = require("./RedDots/Inventory/RedDotInventoryWeapon"),
+  RedDotMailBoxFilter_1 = require("./RedDots/Mail/RedDotMailBoxFilter"),
+  RedDotMailBoxImportantFilter_1 = require("./RedDots/Mail/RedDotMailBoxImportantFilter"),
+  RedDotMailBoxUnScannedFilter_1 = require("./RedDots/Mail/RedDotMailBoxUnScannedFilter"),
+  RedDotBattleViewQuestBtn_1 = require("./RedDots/Quest/RedDotBattleViewQuestBtn"),
+  RedDotFunctionViewQuestBtn_1 = require("./RedDots/Quest/RedDotFunctionViewQuestBtn"),
+  RedDotQuestViewItem_1 = require("./RedDots/Quest/RedDotQuestViewItem"),
+  RedDotQuestViewTab_1 = require("./RedDots/Quest/RedDotQuestViewTab"),
+  RedDotBattleViewMenu_1 = require("./RedDots/RedDotBattleViewMenu"),
+  RedDotTest_1 = require("./RedDots/RedDotTest"),
+  RedDotRoguelikeAchievement_1 = require("./RedDots/Roguelike/RedDotRoguelikeAchievement"),
+  RedDotRoguelikeAchievementGroup_1 = require("./RedDots/Roguelike/RedDotRoguelikeAchievementGroup"),
+  RedDotRoguelikeShop_1 = require("./RedDots/Roguelike/RedDotRoguelikeShop"),
+  RedDotRoguelikeSkillCanUnlock_1 = require("./RedDots/Roguelike/RedDotRoguelikeSkillCanUnlock"),
+  RedDotRoleHandBook_1 = require("./RedDots/RoleHandBook/RedDotRoleHandBook"),
+  RedDotRoleSelectionList_1 = require("./RedDots/RoleSystem/RedDotRoleSelectionList"),
+  RedDotRoleSystemRoleList_1 = require("./RedDots/RoleSystem/RedDotRoleSystemRoleList"),
+  RedDotAttributeTab_1 = require("./RedDots/RoleSystem/RoleAttribute/RedDotAttributeTab"),
+  RedDotRoleBreakUp_1 = require("./RedDots/RoleSystem/RoleAttribute/RedDotRoleBreakUp"),
+  RedDotRoleLevelUp_1 = require("./RedDots/RoleSystem/RoleAttribute/RedDotRoleLevelUp"),
+  RedDotResonanceTab_1 = require("./RedDots/RoleSystem/RoleResonance/RedDotResonanceTab"),
+  CustomerServerRedDot_1 = require("./RedDots/Sdk/CustomerServerRedDot"),
+  PayShopInstanceRedDot_1 = require("./RedDots/Shop/PayShopInstanceRedDot"),
+  PayShopTabRedDot_1 = require("./RedDots/Shop/PayShopTabRedDot"),
+  RedDotTowerReward_1 = require("./RedDots/TowerRewrad/RedDotTowerReward"),
+  RedDotTowerRewardByDifficulties_1 = require("./RedDots/TowerRewrad/RedDotTowerRewardByDifficulties"),
+  RedDotTutorialType_1 = require("./RedDots/Tutorial/RedDotTutorialType"),
+  VisionIdentifyRedDot_1 = require("./RedDots/Vision/VisionIdentifyRedDot"),
+  VisionOneKeyEquipRedDot_1 = require("./RedDots/Vision/VisionOneKeyEquipRedDot");
 class RedDotModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments), (this.jsr = new Map());
@@ -370,11 +370,11 @@ class RedDotModel extends ModelBase_1.ModelBase {
     (t.Name = e), this.Ksr(e, t);
   }
   Wsr() {
-    let e;
-    let t;
-    const o = ConfigManager_1.ConfigManager.RedDotConfig.GetRelativeNameMap();
+    var e,
+      t,
+      o = ConfigManager_1.ConfigManager.RedDotConfig.GetRelativeNameMap();
     for ([e, t] of this.jsr) {
-      let n = t.Element.GetParentName() ?? o.get(e);
+      var n = t.Element.GetParentName() ?? o.get(e);
       void 0 === n ||
         StringUtils_1.StringUtils.IsEmpty(n) ||
         ((n = this.jsr.get(n)) && n.AddChild(t));
@@ -385,7 +385,7 @@ class RedDotModel extends ModelBase_1.ModelBase {
     return o || ((o = new Tree_1.Tree(t)), this.jsr.set(e, o)), o;
   }
   GetRedDotTree(e) {
-    const t = this.jsr.get(e);
+    var t = this.jsr.get(e);
     if (t) return t;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("RedDot", 17, "获取红点树失败，当前红点未注册！", [
@@ -394,7 +394,7 @@ class RedDotModel extends ModelBase_1.ModelBase {
       ]);
   }
   GetRedDot(e) {
-    const t = this.jsr.get(e)?.Element;
+    var t = this.jsr.get(e)?.Element;
     if (t) return t;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("RedDot", 17, "获取红点失败，当前红点未注册！", [
@@ -403,23 +403,23 @@ class RedDotModel extends ModelBase_1.ModelBase {
       ]);
   }
   Qsr(e, t) {
-    let o;
+    var o;
     t.add(e);
     for ([o] of this.GetRedDotTree(e.Name).ChildMap) this.Qsr(o, t);
   }
   LogAllRedDotTree(e) {
     e = this.GetRedDot(e);
     if (e) {
-      const t = new Set();
-      const o = (this.Qsr(e, t), new StringBuilder_1.StringBuilder());
+      var t = new Set(),
+        o = (this.Qsr(e, t), new StringBuilder_1.StringBuilder());
       for (const n of t) o.Append(n.ToRedDotString());
       Log_1.Log.CheckInfo() && Log_1.Log.Info("RedDot", 11, o.ToString());
     }
   }
   LogAllRedDotState(e) {
-    const t = this.GetRedDot(e);
+    var t = this.GetRedDot(e);
     if (t) {
-      const o = new Set();
+      var o = new Set();
       this.Qsr(t, o),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -438,4 +438,4 @@ class RedDotModel extends ModelBase_1.ModelBase {
   }
 }
 exports.RedDotModel = RedDotModel;
-// # sourceMappingURL=RedDotModel.js.map
+//# sourceMappingURL=RedDotModel.js.map

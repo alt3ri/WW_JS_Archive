@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventEntityLookAt = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils");
-const AiContollerLibrary_1 = require("../../AI/Controller/AiContollerLibrary");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const TURN_SPEED = 200;
-const TOLERANCE = 10;
+const Log_1 = require("../../../Core/Common/Log"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
+  AiContollerLibrary_1 = require("../../AI/Controller/AiContollerLibrary"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  TURN_SPEED = 200,
+  TOLERANCE = 10;
 class LevelEventEntityLookAt extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -28,10 +28,10 @@ class LevelEventEntityLookAt extends LevelGeneralBase_1.LevelEventBase {
     this.FinishExecute(!0);
   }
   ExecuteWhenEntitiesReady() {
-    let e;
-    let t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
-      this.pDe.EntityId,
-    );
+    var e,
+      t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
+        this.pDe.EntityId,
+      );
     t
       ? ((e = (this.sDe = t).Entity.GetComponent(3)),
         (t = t.Entity.GetComponent(36)?.CharacterMovement),
@@ -58,7 +58,7 @@ class LevelEventEntityLookAt extends LevelGeneralBase_1.LevelEventBase {
         this.FinishExecute(!0));
   }
   OnTick(e) {
-    let t;
+    var t;
     this.vDe &&
       (this.sDe?.IsInit
         ? (t = this.sDe.Entity?.GetComponent(3)).InputRotatorProxy.Equals(
@@ -75,4 +75,4 @@ class LevelEventEntityLookAt extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventEntityLookAt = LevelEventEntityLookAt;
-// # sourceMappingURL=LevelEventEntityLookAt.js.map
+//# sourceMappingURL=LevelEventEntityLookAt.js.map

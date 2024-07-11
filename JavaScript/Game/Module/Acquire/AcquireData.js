@@ -85,4 +85,4 @@ class AcquireData extends UiPopViewData_1.UiPopViewData {
   }
 }
 exports.AcquireData = AcquireData;
-// # sourceMappingURL=AcquireData.js.map
+//# sourceMappingURL=AcquireData.js.map

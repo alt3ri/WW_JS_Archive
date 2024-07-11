@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AttributeItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract");
 class AttributeItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -27,11 +27,11 @@ class AttributeItem extends GridProxyAbstract_1.GridProxyAbstract {
     (this.NextItem = this.GetItem(2)), this.NextItem?.SetUIActive(!1);
   }
   InitCommon() {
-    const t =
-      ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
-        this.xe,
-      );
-    const e = (this.GetText(0)?.ShowTextNew(t.Name), this.GetTexture(4));
+    var t =
+        ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
+          this.xe,
+        ),
+      e = (this.GetText(0)?.ShowTextNew(t.Name), this.GetTexture(4));
     e && this.SetTextureByPath(t.Icon, e);
   }
   UpdateParam(t, e) {
@@ -64,11 +64,11 @@ class AttributeItem extends GridProxyAbstract_1.GridProxyAbstract {
     return this.xe;
   }
   SetBgActive(t) {
-    const e = this.GetItem(5);
+    var e = this.GetItem(5);
     e && e.SetUIActive(t);
   }
   RefreshNameByAnotherName() {
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
         this.xe,
       );
@@ -84,4 +84,4 @@ class AttributeItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.AttributeItem = AttributeItem;
-// # sourceMappingURL=AttributeItem.js.map
+//# sourceMappingURL=AttributeItem.js.map

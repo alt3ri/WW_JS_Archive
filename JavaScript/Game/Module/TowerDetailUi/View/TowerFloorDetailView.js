@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerFloorDetailView = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const TowerModel_1 = require("../TowerModel");
-const TowerBuffShowItem_1 = require("./TowerBuffShowItem");
-const TowerDetailItem_1 = require("./TowerDetailItem");
-const TowerMonsterItem_1 = require("./TowerMonsterItem");
-const TowerStarsComplexItem_1 = require("./TowerStarsComplexItem");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  TowerModel_1 = require("../TowerModel"),
+  TowerBuffShowItem_1 = require("./TowerBuffShowItem"),
+  TowerDetailItem_1 = require("./TowerDetailItem"),
+  TowerMonsterItem_1 = require("./TowerMonsterItem"),
+  TowerStarsComplexItem_1 = require("./TowerStarsComplexItem");
 class TowerFloorDetailView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -19,7 +19,7 @@ class TowerFloorDetailView extends UiViewBase_1.UiViewBase {
       (this.wLo = void 0),
       (this.Hli = void 0),
       (this.BLo = () => {
-        const e = new TowerDetailItem_1.TowerDetailItem();
+        var e = new TowerDetailItem_1.TowerDetailItem();
         return (
           e.BindOnClickToggle((e) => {
             this.Og(e);
@@ -46,31 +46,31 @@ class TowerFloorDetailView extends UiViewBase_1.UiViewBase {
     ];
   }
   OnStart() {
-    var e = ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties;
-    const r =
-      ((this.PLo = new GenericLayout_1.GenericLayout(
-        this.GetHorizontalLayout(0),
-        this.BLo,
-      )),
-      (this.xLo = new GenericLayout_1.GenericLayout(
-        this.GetVerticalLayout(1),
-        this.bLo,
-      )),
-      (this.wLo = new GenericLayout_1.GenericLayout(
-        this.GetVerticalLayout(2),
-        this.qLo,
-      )),
-      (this.Hli = new GenericLayout_1.GenericLayout(
-        this.GetGridLayout(3),
-        this.s6i,
-      )),
-      ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(
-        ModelManager_1.ModelManager.TowerModel.CurrentSelectFloor,
-      ));
-    var e = ModelManager_1.ModelManager.TowerModel.GetDifficultyAreaAllFloor(
-      e,
-      r.AreaNum,
-    );
+    var e = ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties,
+      r =
+        ((this.PLo = new GenericLayout_1.GenericLayout(
+          this.GetHorizontalLayout(0),
+          this.BLo,
+        )),
+        (this.xLo = new GenericLayout_1.GenericLayout(
+          this.GetVerticalLayout(1),
+          this.bLo,
+        )),
+        (this.wLo = new GenericLayout_1.GenericLayout(
+          this.GetVerticalLayout(2),
+          this.qLo,
+        )),
+        (this.Hli = new GenericLayout_1.GenericLayout(
+          this.GetGridLayout(3),
+          this.s6i,
+        )),
+        ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(
+          ModelManager_1.ModelManager.TowerModel.CurrentSelectFloor,
+        )),
+      e = ModelManager_1.ModelManager.TowerModel.GetDifficultyAreaAllFloor(
+        e,
+        r.AreaNum,
+      );
     this.PLo.RefreshByData(e);
   }
   OnBeforeDestroy() {
@@ -84,8 +84,8 @@ class TowerFloorDetailView extends UiViewBase_1.UiViewBase {
       (this.Hli = void 0);
   }
   Og(e) {
-    const r = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(e);
-    const t = (this.xLo.RefreshByData(r.ShowBuffs), r.InstanceId);
+    var r = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(e),
+      t = (this.xLo.RefreshByData(r.ShowBuffs), r.InstanceId);
     const i =
       ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
         t,
@@ -94,17 +94,17 @@ class TowerFloorDetailView extends UiViewBase_1.UiViewBase {
     this.Hli.RefreshByData(r.ShowMonsters, () => {
       for (const e of this.Hli.GetLayoutItemList()) e.SetLevelText(i);
     });
-    const o = [];
-    const s = ModelManager_1.ModelManager.TowerModel.GetFloorStarsIndex(e);
+    var o = [],
+      s = ModelManager_1.ModelManager.TowerModel.GetFloorStarsIndex(e);
     for (let e = 0; e < TowerModel_1.FLOOR_STAR; e++) {
       var a = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTargetConfig(
-        r.TargetConfig[e],
-      );
-      var a = [!(!s || !s.includes(e)), a];
+          r.TargetConfig[e],
+        ),
+        a = [!(!s || !s.includes(e)), a];
       o.push(a);
     }
     this.wLo.RefreshByData(o);
   }
 }
 exports.TowerFloorDetailView = TowerFloorDetailView;
-// # sourceMappingURL=TowerFloorDetailView.js.map
+//# sourceMappingURL=TowerFloorDetailView.js.map

@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleViewCameraComponent = void 0);
-const Global_1 = require("../../../Global");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine");
-const HotKeyComponent_1 = require("./HotKeyComponent");
+const Global_1 = require("../../../Global"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
+  HotKeyComponent_1 = require("./HotKeyComponent");
 class BattleViewCameraComponent extends HotKeyComponent_1.HotKeyComponent {
   constructor(t) {
     super(t),
       (this.sbo = !1),
       (this.abo = void 0),
       (this.gze = (t, e) => {
-        this.sbo = e === 0;
+        this.sbo = 0 === e;
         e = Global_1.Global.BaseCharacter;
         if (e) {
           e = e.CharacterActorComponent.Entity;
@@ -50,4 +50,4 @@ class BattleViewCameraComponent extends HotKeyComponent_1.HotKeyComponent {
   }
 }
 exports.BattleViewCameraComponent = BattleViewCameraComponent;
-// # sourceMappingURL=BattleViewCameraComponent.js.map
+//# sourceMappingURL=BattleViewCameraComponent.js.map

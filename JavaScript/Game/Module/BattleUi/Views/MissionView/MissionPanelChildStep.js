@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MissionPanelChildStep = void 0);
-const ue_1 = require("ue");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const TreeStepWithStatus_1 = require("../../../GeneralLogicTree/View/TreeStep/TreeStepWithStatus");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
+const ue_1 = require("ue"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  TreeStepWithStatus_1 = require("../../../GeneralLogicTree/View/TreeStep/TreeStepWithStatus"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem");
 class MissionPanelChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
   constructor() {
     super(),
@@ -23,7 +23,7 @@ class MissionPanelChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
       (this.G_t = 0),
       (this.gAn = void 0),
       (this.ZPt = (e) => {
-        e === "Start" && this.SetActive(!0);
+        "Start" === e && this.SetActive(!0);
       }),
       (this.aut = (e) => {
         switch (e) {
@@ -61,23 +61,23 @@ class MissionPanelChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
     this.SetUiActive(e), e || this.GetItem(5)?.SetAlpha(0);
   }
   wut() {
-    const t = this.Config.QuestScheduleType;
+    var t = this.Config.QuestScheduleType;
     if (this.xut !== t.Type)
       switch (((this.xut = t.Type), t.Type)) {
         case IQuest_1.EQuestScheduleType.ChildQuestCompleted:
           (this.Uut = this.Rut), (this.Aut = this.Dut);
           var s =
-            ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-              "SP_MissionState",
-            );
-          var i =
-            ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-              "SP_MissionComplete",
-            );
-          var h =
-            ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-              "SP_MissionLose",
-            );
+              ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+                "SP_MissionState",
+              ),
+            i =
+              ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+                "SP_MissionComplete",
+              ),
+            h =
+              ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+                "SP_MissionLose",
+              );
           this.SetSpriteByPath(s, this.StepStatusNode, !0),
             this.SetSpriteByPath(i, this.StepSuccess, !0),
             this.SetSpriteByPath(h, this.StepLose, !0);
@@ -88,14 +88,14 @@ class MissionPanelChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
           (e = (t.Type, IQuest_1.EQuestScheduleType.Condition, t)),
             (this.Uut = this.Lut),
             (this.Aut = this.Dut);
-          (s = e.IconType === 1 ? "SP_DailyTowerStarBg" : "SP_ComStateOffline"),
+          (s = 1 === e.IconType ? "SP_DailyTowerStarBg" : "SP_ComStateOffline"),
             (i =
               ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
                 s,
               )),
             (h =
               (this.SetSpriteByPath(i, this.StepStatusNode, !0),
-              e.IconType === 1 ? "SP_DailyTowerStar" : "SP_ComStateOnline")),
+              1 === e.IconType ? "SP_DailyTowerStar" : "SP_ComStateOnline")),
             (s =
               ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
                 h,
@@ -108,7 +108,7 @@ class MissionPanelChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
   }
   UpdateStepInfo() {
     this.wut();
-    const e = super.UpdateStepInfo();
+    var e = super.UpdateStepInfo();
     return (
       this.StepSuccess?.IsUIActiveInHierarchy()
         ? this.DescribeTextComp.SetColor(this.Uut)
@@ -149,8 +149,9 @@ class MissionPanelChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
       this.LevelSequencePlayer.StopCurrentSequence(!0, !0),
       this.LevelSequencePlayer?.PlayLevelSequenceByName("Start");
     var e =
-      ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode() !== "Disabled";
-    const t = this.fAn();
+        "Disabled" !==
+        ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode(),
+      t = this.fAn();
     (!e && t) || this.LevelSequencePlayer.StopCurrentSequence(!0, !0);
   }
   PlayCloseSequence(e, t) {
@@ -159,7 +160,7 @@ class MissionPanelChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
       this.LevelSequencePlayer?.PlayLevelSequenceByName("Close"),
       (this.gAn = t);
     (e =
-      ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode() !== "Disabled"),
+      "Disabled" !== ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode()),
       (t = this.fAn());
     return !(
       (!e && t) ||
@@ -179,4 +180,4 @@ class MissionPanelChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
   }
 }
 exports.MissionPanelChildStep = MissionPanelChildStep;
-// # sourceMappingURL=MissionPanelChildStep.js.map
+//# sourceMappingURL=MissionPanelChildStep.js.map

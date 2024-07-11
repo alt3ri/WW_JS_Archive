@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiResourceConfig = void 0);
-const LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const LangOfLogoByName_1 = require("../../../../Core/Define/ConfigQuery/LangOfLogoByName");
-const UiResourceById_1 = require("../../../../Core/Define/ConfigQuery/UiResourceById");
-const ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
-const ModelManager_1 = require("../../../Manager/ModelManager");
+const LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  LangOfLogoByName_1 = require("../../../../Core/Define/ConfigQuery/LangOfLogoByName"),
+  UiResourceById_1 = require("../../../../Core/Define/ConfigQuery/UiResourceById"),
+  ConfigBase_1 = require("../../../../Core/Framework/ConfigBase"),
+  ModelManager_1 = require("../../../Manager/ModelManager");
 class UiResourceConfig extends ConfigBase_1.ConfigBase {
   GetResourcePath(e) {
     e = UiResourceById_1.configUiResourceById.GetConfig(e);
@@ -16,7 +16,7 @@ class UiResourceConfig extends ConfigBase_1.ConfigBase {
     return UiResourceById_1.configUiResourceById.GetConfig(e);
   }
   GetLogoPathByLanguage(e) {
-    const o = LangOfLogoByName_1.configLangOfLogoByName.GetConfig(e);
+    var o = LangOfLogoByName_1.configLangOfLogoByName.GetConfig(e);
     switch (LanguageSystem_1.LanguageSystem.PackageLanguage) {
       case CommonDefine_1.ENGLISH_ISO639_1:
         return o.EnLogo;
@@ -38,4 +38,4 @@ class UiResourceConfig extends ConfigBase_1.ConfigBase {
     !ModelManager_1.ModelManager.PlatformModel.IsMobile() && e.PcPath
       ? e.PcPath
       : e.Path);
-// # sourceMappingURL=UiResourceConfig.js.map
+//# sourceMappingURL=UiResourceConfig.js.map

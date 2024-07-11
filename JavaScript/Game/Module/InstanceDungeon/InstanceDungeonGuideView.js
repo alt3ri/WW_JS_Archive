@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonGuideView = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../Util/LguiUtil");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../Util/LguiUtil");
 class InstanceDungeonGuideView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -36,7 +36,7 @@ class InstanceDungeonGuideView extends UiViewBase_1.UiViewBase {
       this._li();
   }
   _li() {
-    let e =
+    var e =
       ModelManager_1.ModelManager.InstanceDungeonGuideModel.GetCurrentInstanceDungeonGuideValue();
     !e ||
       !(e =
@@ -46,11 +46,11 @@ class InstanceDungeonGuideView extends UiViewBase_1.UiViewBase {
       e.length < 1 ||
       (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), e[0].Title),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), e[0].Content),
-      (e = e[0].Picture) && e !== ""
+      (e = e[0].Picture) && "" !== e
         ? (this.GetTexture(1).SetUIActive(!0),
           this.SetTextureByPath(e, this.GetTexture(1)))
         : this.GetTexture(1).SetUIActive(!1));
   }
 }
 exports.InstanceDungeonGuideView = InstanceDungeonGuideView;
-// # sourceMappingURL=InstanceDungeonGuideView.js.map
+//# sourceMappingURL=InstanceDungeonGuideView.js.map

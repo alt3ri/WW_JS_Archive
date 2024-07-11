@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayShopRechargeItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const PayItemController_1 = require("../../../PayItem/PayItemController");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const PayShopGoods_1 = require("../../PayShopData/PayShopGoods");
-const PayShopItemBase_1 = require("./PayShopItemBase");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  PayItemController_1 = require("../../../PayItem/PayItemController"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  PayShopGoods_1 = require("../../PayShopData/PayShopGoods"),
+  PayShopItemBase_1 = require("./PayShopItemBase");
 class PayShopRechargeItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -121,9 +121,9 @@ class PayShopRechargeItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.t3i());
   }
   e3i() {
-    let t = !1;
-    let e = 0;
-    this.Pe.BonusItemCount > 0 &&
+    let t = !1,
+      e = 0;
+    0 < this.Pe.BonusItemCount &&
       !this.Pe.CanSpecialBonus &&
       ((t = !0), (e = this.Pe.BonusItemCount)),
       this.YFi !== t && ((this.YFi = t), this.GetItem(1).SetUIActive(t)),
@@ -136,8 +136,8 @@ class PayShopRechargeItem extends GridProxyAbstract_1.GridProxyAbstract {
         ));
   }
   t3i() {
-    let t = !1;
-    let e = 0;
+    let t = !1,
+      e = 0;
     this.Pe.CanSpecialBonus && ((t = !0), (e = this.Pe.SpecialBonusItemCount)),
       this.zFi !== t && ((this.zFi = t), this.GetItem(3).SetUIActive(t)),
       this.ZFi !== e &&
@@ -150,4 +150,4 @@ class PayShopRechargeItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.PayShopRechargeItem = PayShopRechargeItem;
-// # sourceMappingURL=PayShopRechargeItem.js.map
+//# sourceMappingURL=PayShopRechargeItem.js.map

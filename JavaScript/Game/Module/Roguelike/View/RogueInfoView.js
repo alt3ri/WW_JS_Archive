@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RogueInfoView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RoguelikeDefine_1 = require("../Define/RoguelikeDefine");
-const ElementPanel_1 = require("./ElementPanel");
-const RogueInfoOverview_1 = require("./RogueInfoOverview");
-const RogueInfoSpecialView_1 = require("./RogueInfoSpecialView");
-const RogueInfoViewTokenDetail_1 = require("./RogueInfoViewTokenDetail");
-const TopPanel_1 = require("./TopPanel");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
+  ElementPanel_1 = require("./ElementPanel"),
+  RogueInfoOverview_1 = require("./RogueInfoOverview"),
+  RogueInfoSpecialView_1 = require("./RogueInfoSpecialView"),
+  RogueInfoViewTokenDetail_1 = require("./RogueInfoViewTokenDetail"),
+  TopPanel_1 = require("./TopPanel");
 class RogueInfoView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -34,13 +34,13 @@ class RogueInfoView extends UiViewBase_1.UiViewBase {
         this.TokenDetailPage.OnSelected(e, i);
       }),
       (this.kao = (e) => {
-        e === 1 && this.ChangePage(0);
+        1 === e && this.ChangePage(0);
       }),
       (this.Fao = (e) => {
-        e === 1 && this.ChangePage(1);
+        1 === e && this.ChangePage(1);
       }),
       (this.Vao = (e) => {
-        e === 1 && this.ChangePage(2);
+        1 === e && this.ChangePage(2);
       });
   }
   OnRegisterComponent() {
@@ -122,29 +122,29 @@ class RogueInfoView extends UiViewBase_1.UiViewBase {
   }
   ChangePage(e) {
     void 0 !== this.xLn &&
-      (this.xLn === 0
+      (0 === this.xLn
         ? this.OverviewPage
-        : this.xLn === 1
+        : 1 === this.xLn
           ? this.TokenDetailPage
           : this.Gao
       ).UiViewSequence.PlaySequence("Close");
-    const i = ModelManager_1.ModelManager.RoguelikeModel.RogueInfo;
-    this.TokenDetailPage.SetActive(e === 1),
-      this.OverviewPage.SetActive(e === 0),
-      this.Gao.SetActive(e === 2),
+    var i = ModelManager_1.ModelManager.RoguelikeModel.RogueInfo;
+    this.TokenDetailPage.SetActive(1 === e),
+      this.OverviewPage.SetActive(0 === e),
+      this.Gao.SetActive(2 === e),
       this.TokenDetailPage.Update(i.BuffEntryList),
-      e === 0
+      0 === e
         ? (this.GetItem(8).SetUIActive(!1),
           this.OverviewPage.UiViewSequence.PlaySequence("Start"))
-        : e === 1
+        : 1 === e
           ? (this.TokenDetailPage.UiViewSequence.PlaySequence("Start"),
-            this.GetItem(8).SetUIActive(i.BuffEntryList.length === 0),
+            this.GetItem(8).SetUIActive(0 === i.BuffEntryList.length),
             LguiUtil_1.LguiUtil.SetLocalTextNew(
               this.GetText(11),
               "RogueNoTokenTips",
             ))
           : (this.Gao.UiViewSequence.PlaySequence("Start"),
-            this.GetItem(8).SetUIActive(i.SpecialEntryList.length === 0),
+            this.GetItem(8).SetUIActive(0 === i.SpecialEntryList.length),
             LguiUtil_1.LguiUtil.SetLocalTextNew(
               this.GetText(11),
               "RogueNoSpecialTips",
@@ -152,4 +152,4 @@ class RogueInfoView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.RogueInfoView = RogueInfoView;
-// # sourceMappingURL=RogueInfoView.js.map
+//# sourceMappingURL=RogueInfoView.js.map

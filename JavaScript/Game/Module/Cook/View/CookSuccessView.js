@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CookSuccessView = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const CommonItemSimpleGrid_1 = require("../../Common/ItemGrid/CommonItemSimpleGrid");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
+const UE = require("ue"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  CommonItemSimpleGrid_1 = require("../../Common/ItemGrid/CommonItemSimpleGrid"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
 class CookSuccessView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -44,7 +44,7 @@ class CookSuccessView extends UiViewBase_1.UiViewBase {
       ]);
   }
   OnStart() {
-    const e = this.OpenParam;
+    var e = this.OpenParam;
     (this.S9 = e.CookRewardPopType),
       (this.$qt = new GenericScrollView_1.GenericScrollView(
         this.GetScrollViewWithScrollbar(3),
@@ -109,17 +109,18 @@ class ExpSliderItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   Update() {
-    const e = ModelManager_1.ModelManager.CookModel.GetCookerInfo();
-    const i = ModelManager_1.ModelManager.CookModel.GetSumExpByLevel(
-      ModelManager_1.ModelManager.CookModel.GetCookerInfo().CookingLevel,
-    );
-    var t =
-      (t = MathUtils_1.MathUtils.GetFloatPointFloor(
-        e.TotalProficiencys / i,
-        3,
-      )) > 1
-        ? 1
-        : t;
+    var e = ModelManager_1.ModelManager.CookModel.GetCookerInfo(),
+      i = ModelManager_1.ModelManager.CookModel.GetSumExpByLevel(
+        ModelManager_1.ModelManager.CookModel.GetCookerInfo().CookingLevel,
+      ),
+      t =
+        1 <
+        (t = MathUtils_1.MathUtils.GetFloatPointFloor(
+          e.TotalProficiencys / i,
+          3,
+        ))
+          ? 1
+          : t;
     this.GetSprite(0).SetFillAmount(t),
       this.GetText(1).SetText(e.AddExp.toString()),
       this.GetText(2).SetText(e.AddExp.toString()),
@@ -131,4 +132,4 @@ class ExpSliderItem extends UiPanelBase_1.UiPanelBase {
       );
   }
 }
-// # sourceMappingURL=CookSuccessView.js.map
+//# sourceMappingURL=CookSuccessView.js.map

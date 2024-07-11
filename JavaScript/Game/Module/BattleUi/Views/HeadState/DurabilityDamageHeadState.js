@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DurabilityDamageHeadState = void 0);
-const UE = require("ue");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const HeadStateViewBase_1 = require("./HeadStateViewBase");
+const UE = require("ue"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  HeadStateViewBase_1 = require("./HeadStateViewBase");
 class DurabilityDamageHeadState extends HeadStateViewBase_1.HeadStateViewBase {
   constructor() {
     super(...arguments),
@@ -14,7 +14,7 @@ class DurabilityDamageHeadState extends HeadStateViewBase_1.HeadStateViewBase {
         this.bht(this.qht(), !0);
       }),
       (this.Ght = () => {
-        const t = this.GetUiNiagara(5);
+        var t = this.GetUiNiagara(5);
         this.wht &&
           t &&
           !t.NiagaraComponent?.IsActive() &&
@@ -60,9 +60,9 @@ class DurabilityDamageHeadState extends HeadStateViewBase_1.HeadStateViewBase {
       this.HeadStateData.BindOnSceneItemEntityHit(this.Ght);
   }
   bht(t, e = !1) {
-    let i;
+    var i;
     t <= 0
-      ? ((i = this.CurrentBarPercent > 0), this.Nht(t), this.Oht(i))
+      ? ((i = 0 < this.CurrentBarPercent), this.Nht(t), this.Oht(i))
       : e
         ? (this.kht(t),
           this.PlayBarAnimation(t),
@@ -83,31 +83,31 @@ class DurabilityDamageHeadState extends HeadStateViewBase_1.HeadStateViewBase {
     this.kht(t), this.Fht(t), this.StopBarLerpAnimation();
   }
   kht(t) {
-    const e = 1 - t;
-    const i = this.GetSprite(1);
-    const s = this.GetSprite(2);
+    var e = 1 - t,
+      i = this.GetSprite(1),
+      s = this.GetSprite(2);
     i.SetFillAmount(e),
       s.SetStretchRight(this.xht * t - 2),
       i.IsUIActiveSelf() || i.SetUIActive(!0);
   }
   Fht(t) {
-    var t = 1 - t;
-    const e = this.GetSprite(1);
-    const i = this.GetSprite(2);
-    const s = this.GetSprite(3);
+    var t = 1 - t,
+      e = this.GetSprite(1),
+      i = this.GetSprite(2),
+      s = this.GetSprite(3);
     i.SetStretchLeft(this.xht * t - 2),
       s.SetFillAmount(t),
       e.IsUIActiveSelf() || e.SetUIActive(!0),
       s.IsUIActiveSelf() || s.SetUIActive(!0);
   }
   Oht(t) {
-    this.HeadStateType === 7
+    7 === this.HeadStateType
       ? (t && this.GetUiNiagara(6).SetNiagaraUIActive(!0, !0),
         this.GetSprite(0).SetUIActive(!1),
         this.GetSprite(3).SetUIActive(!1),
         this.GetSprite(1).SetUIActive(!1),
         this.GetSprite(4).SetUIActive(!1))
-      : this.HeadStateType === 8 &&
+      : 8 === this.HeadStateType &&
         ((t = this.GetSprite(4)).IsUIActiveSelf() || t.SetUIActive(!0),
         (this.wht = !0));
   }
@@ -122,4 +122,4 @@ class DurabilityDamageHeadState extends HeadStateViewBase_1.HeadStateViewBase {
   }
 }
 exports.DurabilityDamageHeadState = DurabilityDamageHeadState;
-// # sourceMappingURL=DurabilityDamageHeadState.js.map
+//# sourceMappingURL=DurabilityDamageHeadState.js.map

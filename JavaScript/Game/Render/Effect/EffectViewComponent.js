@@ -8,4 +8,4 @@ class EffectViewComponent extends UE.SceneComponent {
   Stop(e = 0) {}
 }
 exports.default = EffectViewComponent;
-// # sourceMappingURL=EffectViewComponent.js.map
+//# sourceMappingURL=EffectViewComponent.js.map

@@ -16,4 +16,4 @@ class SilentAreaDetectFilter extends CommonFilter_1.CommonFilter {
   }
 }
 exports.SilentAreaDetectFilter = SilentAreaDetectFilter;
-// # sourceMappingURL=SilentAreaDetectFilter.js.map
+//# sourceMappingURL=SilentAreaDetectFilter.js.map

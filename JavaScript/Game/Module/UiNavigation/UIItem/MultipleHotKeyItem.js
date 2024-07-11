@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MultipleHotKeyItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const HotKeyItem_1 = require("./HotKeyItem");
-const HotKeyTypeCreator_1 = require("./HotKeyType/HotKeyTypeCreator");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  HotKeyItem_1 = require("./HotKeyItem"),
+  HotKeyTypeCreator_1 = require("./HotKeyType/HotKeyTypeCreator");
 class MultipleHotKeyItem extends HotKeyItem_1.HotKeyItem {
   constructor() {
     super(...arguments),
@@ -43,7 +43,7 @@ class MultipleHotKeyItem extends HotKeyItem_1.HotKeyItem {
     for (const e of this.Nbo) e.Clear();
   }
   async Obo() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.UiNavigationConfig.GetHotKeyViewConfig(
         this.Gbo,
       );
@@ -59,10 +59,10 @@ class MultipleHotKeyItem extends HotKeyItem_1.HotKeyItem {
       (this.Nbo = await Promise.all(this.eGe.GetLayoutItemList())));
   }
   GetHotKeyComponentArray() {
-    const e = [];
+    var e = [];
     for (const t of this.Nbo) e.push(...t.GetHotKeyComponents());
     return e;
   }
 }
 exports.MultipleHotKeyItem = MultipleHotKeyItem;
-// # sourceMappingURL=MultipleHotKeyItem.js.map
+//# sourceMappingURL=MultipleHotKeyItem.js.map

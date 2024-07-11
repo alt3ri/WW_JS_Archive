@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configBattleScoreConfById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const BattleScoreConf_1 = require("../Config/BattleScoreConf");
-const DB = "db_battlescore.db";
-const FILE = "z.战斗评分.xlsx";
-const TABLE = "BattleScoreConf";
-const COMMAND = "select BinData from `BattleScoreConf` where Id=?";
-const KEY_PREFIX = "BattleScoreConfById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  BattleScoreConf_1 = require("../Config/BattleScoreConf"),
+  DB = "db_battlescore.db",
+  FILE = "z.战斗评分.xlsx",
+  TABLE = "BattleScoreConf",
+  COMMAND = "select BinData from `BattleScoreConf` where Id=?",
+  KEY_PREFIX = "BattleScoreConfById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configBattleScoreConfById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configBattleScoreConfById.GetConfig(";
 exports.configBattleScoreConfById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configBattleScoreConfById = {
       if (
         (t =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var t;
-        var n = void 0;
+        var t,
+          n = void 0;
         if (
           (([t, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configBattleScoreConfById = {
     }
   },
 };
-// # sourceMappingURL=BattleScoreConfById.js.map
+//# sourceMappingURL=BattleScoreConfById.js.map

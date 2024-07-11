@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemHitUtils = void 0);
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent");
-const Global_1 = require("../../../Global");
-const DROP_ATTACK_VALID_RANGE = 28900;
+const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
+  Global_1 = require("../../../Global"),
+  DROP_ATTACK_VALID_RANGE = 28900;
 class SceneItemHitUtils {
   static CheckHitDataMatchBulletType(t, e, r) {
     switch (t.Type) {
@@ -38,7 +38,7 @@ class SceneItemHitUtils {
     return !!e.ReBulletData.Logic.PresentTagIds.includes(-1590436469);
   }
   static CheckHitDataMatchPlayerAttack(t, e, r) {
-    let a;
+    var a;
     return (
       !!e.Attacker?.Valid &&
       !!(
@@ -57,4 +57,4 @@ class SceneItemHitUtils {
   }
 }
 exports.SceneItemHitUtils = SceneItemHitUtils;
-// # sourceMappingURL=SceneItemHitUtils.js.map
+//# sourceMappingURL=SceneItemHitUtils.js.map

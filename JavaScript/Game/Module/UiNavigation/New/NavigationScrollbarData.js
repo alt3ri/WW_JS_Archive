@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NavigationScrollbarData = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const UiNavigationViewManager_1 = require("./UiNavigationViewManager");
+const Log_1 = require("../../../../Core/Common/Log"),
+  UiNavigationViewManager_1 = require("./UiNavigationViewManager");
 class NavigationScrollbarData {
   constructor() {
     (this.Qxo = []),
@@ -36,20 +36,20 @@ class NavigationScrollbarData {
   AddScrollbar(r) {
     this.Qxo = [];
     for (let i = 0, t = r.Num(); i < t; ++i) {
-      const s = r.Get(i).ListenerList;
+      var s = r.Get(i).ListenerList;
       for (let i = 0, t = s.Num(); i < t; ++i) {
-        const e = s.Get(i);
+        var e = s.Get(i);
         this.Qxo.push(e);
       }
     }
     this.Qxo.sort((i, t) => i.ScrollbarIndex - t.ScrollbarIndex), this.Jxo();
   }
   DeleteScrollbar(i) {
-    const r = i.ListenerList;
+    var r = i.ListenerList;
     if (r) {
       for (let i = 0, t = r.Num(); i < t; ++i) {
-        const s = r.Get(i);
-        const e = this.Qxo.indexOf(s);
+        var s = r.Get(i),
+          e = this.Qxo.indexOf(s);
         this.Qxo.splice(e, 1), this.Xxo === s && this.zxo(void 0);
       }
       this.Jxo();
@@ -65,13 +65,13 @@ class NavigationScrollbarData {
     return this.$xo;
   }
   HasActiveScrollbarList() {
-    return this.Qxo.filter((i) => i.IsListenerActive()).length > 1;
+    return 1 < this.Qxo.filter((i) => i.IsListenerActive()).length;
   }
   FindNextScrollbar() {
     if (this.Xxo) {
-      const t = this.Qxo.length;
-      if (t === 1) return void this.zxo(void 0);
-      const r = this.Qxo.indexOf(this.Xxo);
+      var t = this.Qxo.length;
+      if (1 === t) return void this.zxo(void 0);
+      var r = this.Qxo.indexOf(this.Xxo);
       let i = r + 1 < t ? r + 1 : 0;
       for (; r !== i; ) {
         if (this.Qxo[i].IsListenerActive()) {
@@ -85,16 +85,16 @@ class NavigationScrollbarData {
   }
   FindPrevScrollbar() {
     if (this.Xxo) {
-      const t = this.Qxo.length;
-      if (t === 1) return;
-      const r = this.Qxo.indexOf(this.Xxo);
-      let i = r - 1 >= 0 ? r - 1 : t - 1;
+      var t = this.Qxo.length;
+      if (1 === t) return;
+      var r = this.Qxo.indexOf(this.Xxo);
+      let i = 0 <= r - 1 ? r - 1 : t - 1;
       for (; r !== i; ) {
         if (this.Qxo[i].IsListenerActive()) {
           this.zxo(this.Qxo[i]);
           break;
         }
-        i = i - 1 >= 0 ? i - 1 : t - 1;
+        i = 0 <= i - 1 ? i - 1 : t - 1;
       }
     } else this.Jxo();
     UiNavigationViewManager_1.UiNavigationViewManager.RefreshCurrentHotKey();
@@ -104,4 +104,4 @@ class NavigationScrollbarData {
   }
 }
 exports.NavigationScrollbarData = NavigationScrollbarData;
-// # sourceMappingURL=NavigationScrollbarData.js.map
+//# sourceMappingURL=NavigationScrollbarData.js.map

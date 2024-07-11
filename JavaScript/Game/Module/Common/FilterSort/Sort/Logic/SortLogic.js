@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SortLogic = void 0);
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
-const AdventureGuideSort_1 = require("./Rule/AdventureGuideSort");
-const AssemblyGridSort_1 = require("./Rule/AssemblyGridSort");
-const CalabashCollectSort_1 = require("./Rule/CalabashCollectSort");
-const ComposePurificationSort_1 = require("./Rule/ComposePurificationSort");
-const ComposeSort_1 = require("./Rule/ComposeSort");
-const ComposeStructureSort_1 = require("./Rule/ComposeStructureSort");
-const CookSort_1 = require("./Rule/CookSort");
-const ForgingSort_1 = require("./Rule/ForgingSort");
-const ItemSort_1 = require("./Rule/ItemSort");
-const PhantomSort_1 = require("./Rule/PhantomSort");
-const RoleSort_1 = require("./Rule/RoleSort");
-const VisionFetterSort_1 = require("./Rule/VisionFetterSort");
-const WeaponSort_1 = require("./Rule/WeaponSort");
+const ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  AdventureGuideSort_1 = require("./Rule/AdventureGuideSort"),
+  AssemblyGridSort_1 = require("./Rule/AssemblyGridSort"),
+  CalabashCollectSort_1 = require("./Rule/CalabashCollectSort"),
+  ComposePurificationSort_1 = require("./Rule/ComposePurificationSort"),
+  ComposeSort_1 = require("./Rule/ComposeSort"),
+  ComposeStructureSort_1 = require("./Rule/ComposeStructureSort"),
+  CookSort_1 = require("./Rule/CookSort"),
+  ForgingSort_1 = require("./Rule/ForgingSort"),
+  ItemSort_1 = require("./Rule/ItemSort"),
+  PhantomSort_1 = require("./Rule/PhantomSort"),
+  RoleSort_1 = require("./Rule/RoleSort"),
+  VisionFetterSort_1 = require("./Rule/VisionFetterSort"),
+  WeaponSort_1 = require("./Rule/WeaponSort");
 class SortLogic {
   constructor() {
     this.NTt = {
-      1: new RoleSort_1.RoleSort(),
+      [1]: new RoleSort_1.RoleSort(),
       2: new WeaponSort_1.WeaponSort(),
       3: new ItemSort_1.ItemSort(),
       4: new PhantomSort_1.PhantomSort(),
@@ -34,10 +34,10 @@ class SortLogic {
     };
   }
   SortDataList(e, r, o, ...t) {
-    var r = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(r);
-    const i = o.GetAllSelectRuleSet();
-    var o = o.GetIsAscending();
-    var r = r.DataId;
+    var r = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(r),
+      i = o.GetAllSelectRuleSet(),
+      o = o.GetIsAscending(),
+      r = r.DataId;
     this.SortDataByData(e, r, i, o, ...t);
   }
   SortDataByData(e, r, i, u, ...S) {
@@ -45,7 +45,7 @@ class SortLogic {
     n.InitSortMap(),
       e.sort((e, r) => {
         for (const t of i.values()) {
-          const o = n.GetSortFunctionByRuleId(t)(e, r, u, ...S);
+          var o = n.GetSortFunctionByRuleId(t)(e, r, u, ...S);
           if (o) return o;
         }
         return 0;
@@ -53,4 +53,4 @@ class SortLogic {
   }
 }
 exports.SortLogic = SortLogic;
-// # sourceMappingURL=SortLogic.js.map
+//# sourceMappingURL=SortLogic.js.map

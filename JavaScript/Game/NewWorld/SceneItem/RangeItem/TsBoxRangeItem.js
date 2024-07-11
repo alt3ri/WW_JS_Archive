@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager");
 class TsBoxRangeItem extends UE.KuroEffectActor {
   constructor() {
     super(...arguments), (this.RangeId = ""), (this.BoxComp = void 0);
@@ -33,4 +33,4 @@ class TsBoxRangeItem extends UE.KuroEffectActor {
   }
 }
 exports.default = TsBoxRangeItem;
-// # sourceMappingURL=TsBoxRangeItem.js.map
+//# sourceMappingURL=TsBoxRangeItem.js.map

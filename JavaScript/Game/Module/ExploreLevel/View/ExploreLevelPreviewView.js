@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExploreLevelPreviewView = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const SmallItemGrid_1 = require("../../Common/SmallItemGrid/SmallItemGrid");
-const HelpController_1 = require("../../Help/HelpController");
-const ItemController_1 = require("../../Item/ItemController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const ExploreLevelPreviewItem_1 = require("./ExploreLevelPreviewItem");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  SmallItemGrid_1 = require("../../Common/SmallItemGrid/SmallItemGrid"),
+  HelpController_1 = require("../../Help/HelpController"),
+  ItemController_1 = require("../../Item/ItemController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  ExploreLevelPreviewItem_1 = require("./ExploreLevelPreviewItem");
 class ExploreLevelPreviewView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -28,12 +28,12 @@ class ExploreLevelPreviewView extends UiViewBase_1.UiViewBase {
       }),
       (this.S5t = () => {
         this.M5t = Math.max(0, this.M5t - 1);
-        const e = this.o5t[this.M5t];
+        var e = this.o5t[this.M5t];
         e && (this.E5t(e), this.dTn(e)), this.y5t();
       }),
       (this.I5t = () => {
         this.M5t = Math.min(this.M5t + 1, this.o5t.length - 1);
-        const e = this.o5t[this.M5t];
+        var e = this.o5t[this.M5t];
         e && (this.E5t(e), this.dTn(e)), this.y5t();
       }),
       (this.T5t = () => {
@@ -66,30 +66,30 @@ class ExploreLevelPreviewView extends UiViewBase_1.UiViewBase {
       await this.cTn.CreateThenShowByActorAsync(this.GetItem(9).GetOwner());
   }
   OnStart() {
-    var e = this.OpenParam;
-    var e =
-      ((this.v5t = new LoopScrollView_1.LoopScrollView(
-        this.GetLoopScrollViewComponent(6),
-        this.GetItem(7).GetOwner(),
-        this.T5t,
-      )),
-      (this.f5t = e),
-      (this.o5t = this.f5t.GetUnlockFunctionExploreLevelRewardDataList()),
-      (this.M5t = this.L5t(this.f5t.GetExploreLevel())),
-      this.o5t[this.M5t]);
+    var e = this.OpenParam,
+      e =
+        ((this.v5t = new LoopScrollView_1.LoopScrollView(
+          this.GetLoopScrollViewComponent(6),
+          this.GetItem(7).GetOwner(),
+          this.T5t,
+        )),
+        (this.f5t = e),
+        (this.o5t = this.f5t.GetUnlockFunctionExploreLevelRewardDataList()),
+        (this.M5t = this.L5t(this.f5t.GetExploreLevel())),
+        this.o5t[this.M5t]);
     e && (this.E5t(e), this.dTn(e)), this.y5t(), this.D5t();
   }
   OnBeforeDestroy() {
     (this.f5t = void 0), this.v5t.ClearGridProxies(), (this.v5t = void 0);
   }
   L5t(i) {
-    const t = this.o5t.length;
+    var t = this.o5t.length;
     for (let e = 0; e < t; e++) if (this.o5t[e].GetExploreLevel() > i) return e;
-    for (let e = t - 1; e > 0; e--)
+    for (let e = t - 1; 0 < e; e--)
       if (this.o5t[e].GetExploreLevel() < i) return e;
   }
   E5t(e) {
-    let i, t, s;
+    var i, t, s;
     (this.p5t = e).IsShowUnlockSprite() &&
       (this.SetSpriteByPath(e.GetUnlockSpritePath(), this.GetSprite(5), !1),
       (i = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
@@ -110,14 +110,14 @@ class ExploreLevelPreviewView extends UiViewBase_1.UiViewBase {
     this.cTn?.Apply({ Type: 4, Data: e, ItemConfigId: e });
   }
   y5t() {
-    const e = this.o5t.length;
+    var e = this.o5t.length;
     this.SetButtonUiActive(2, this.M5t < e - 1),
-      this.SetButtonUiActive(1, this.M5t > 0);
+      this.SetButtonUiActive(1, 0 < this.M5t);
   }
   D5t() {
-    const e = this.f5t.GetAllExploreLevelRewardData().slice(1);
+    var e = this.f5t.GetAllExploreLevelRewardData().slice(1);
     this.v5t.ReloadData(e);
   }
 }
 exports.ExploreLevelPreviewView = ExploreLevelPreviewView;
-// # sourceMappingURL=ExploreLevelPreviewView.js.map
+//# sourceMappingURL=ExploreLevelPreviewView.js.map

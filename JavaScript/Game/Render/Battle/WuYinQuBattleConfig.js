@@ -17,4 +17,4 @@ class WuYinQuBattleConfig {}
   (WuYinQuBattleConfig.MarkFightingOverStart = "FightingOverStart"),
   (WuYinQuBattleConfig.MarkFightingOverEnd = "FightingOverEnd"),
   (exports.default = WuYinQuBattleConfig);
-// # sourceMappingURL=WuYinQuBattleConfig.js.map
+//# sourceMappingURL=WuYinQuBattleConfig.js.map

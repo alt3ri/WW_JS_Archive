@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionDragonPoolState = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionDragonPoolState extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, a) {
-    let r;
+    var r;
     return !(
       !e.LimitParams ||
       ((r = e.LimitParams.get("DragonPoolId")),
@@ -19,4 +19,4 @@ class LevelConditionDragonPoolState extends LevelGeneralBase_1.LevelConditionBas
   }
 }
 exports.LevelConditionDragonPoolState = LevelConditionDragonPoolState;
-// # sourceMappingURL=LevelConditionDragonPoolState.js.map
+//# sourceMappingURL=LevelConditionDragonPoolState.js.map

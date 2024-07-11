@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NavigationVisionTabViewToggle = void 0);
-const UiNavigationGlobalData_1 = require("../../UiNavigationGlobalData");
-const NavigationDragComponent_1 = require("../NavigationDragComponent");
+const UiNavigationGlobalData_1 = require("../../UiNavigationGlobalData"),
+  NavigationDragComponent_1 = require("../NavigationDragComponent");
 class NavigationVisionTabViewToggle extends NavigationDragComponent_1.NavigationDragComponent {
   InteractClickFailHandle() {
     UiNavigationGlobalData_1.UiNavigationGlobalData.VisionReplaceViewFindDefault =
@@ -14,4 +14,4 @@ class NavigationVisionTabViewToggle extends NavigationDragComponent_1.Navigation
   }
 }
 exports.NavigationVisionTabViewToggle = NavigationVisionTabViewToggle;
-// # sourceMappingURL=NavigationVisionTabViewToggle.js.map
+//# sourceMappingURL=NavigationVisionTabViewToggle.js.map

@@ -13,7 +13,7 @@ class RoguelikeInfo {
       this.BuffEntryList.push(new RogueGainEntry_1.RogueGainEntry(o));
     this.ElementDict = new Map();
     for (const n of Object.keys(t.aws ?? {})) {
-      const e = t.aws[n] ?? 0;
+      var e = t.aws[n] ?? 0;
       e && this.ElementDict.set(Number(n), e);
     }
     this.SpecialEntryList = [];
@@ -21,10 +21,10 @@ class RoguelikeInfo {
       this.SpecialEntryList.push(new RogueGainEntry_1.RogueGainEntry(r));
   }
   GetIsUnlock(t) {
-    for (const [e, o] of t.ElementDict)
+    for (var [e, o] of t.ElementDict)
       if ((this.ElementDict.get(e) ?? 0) < o) return !1;
     return !0;
   }
 }
 exports.RoguelikeInfo = RoguelikeInfo;
-// # sourceMappingURL=RoguelikeInfo.js.map
+//# sourceMappingURL=RoguelikeInfo.js.map

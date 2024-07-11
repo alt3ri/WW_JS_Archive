@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ProxyLru = void 0);
-const Log_1 = require("../Common/Log");
-const Lru_1 = require("./Lru");
+const Log_1 = require("../Common/Log"),
+  Lru_1 = require("./Lru");
 class ProxyLru {
   constructor(t, e, r = void 0, i = void 0) {
     (this.G9 = void 0),
@@ -14,13 +14,13 @@ class ProxyLru {
         has: (t, e) => Reflect.has(t, e),
         ownKeys: (t) => Reflect.ownKeys(t),
         get: (t, e, r) => {
-          let i;
-          var e = Reflect.get(t, e);
+          var i,
+            e = Reflect.get(t, e);
           return (
             e &&
-            ((i = typeof e) == "object"
+            ("object" == (i = typeof e)
               ? this.P7(t, r, e)
-              : i == "function"
+              : "function" == i
                 ? this.x7(t, r, e)
                 : e)
           );
@@ -100,19 +100,19 @@ class ProxyLru {
     return this.U7 ? this.w7(t, this.G9.Create(t)) : this.G9.Create(t);
   }
   Get(t) {
-    const e = this.G9.Get(t);
+    var e = this.G9.Get(t);
     return this.U7 && e ? this.w7(t, e) : e;
   }
   Put(t) {
     if (this.U7) {
-      const e = this.L7.get(t);
+      var e = this.L7.get(t);
       if (!e)
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error("Core", 1, "对象不在维护列表中", ["value", t]),
           !1
         );
-      const r = this.D7.get(t);
+      var r = this.D7.get(t);
       if (!r)
         return (
           Log_1.Log.CheckError() &&
@@ -129,15 +129,15 @@ class ProxyLru {
     this.G9.Clear();
   }
   w7(t, e) {
-    const r = Proxy.revocable(e, this.A7);
-    var t = ((r.Key = t), (r.Value = e), r.proxy);
+    var r = Proxy.revocable(e, this.A7),
+      t = ((r.Key = t), (r.Value = e), r.proxy);
     return this.L7.set(t, r), this.D7.set(t, new Map()), t;
   }
   P7(t, e, r) {
     if (this.D7.has(r)) return r;
-    const i = this.D7.get(e);
+    var i = this.D7.get(e);
     if (i) {
-      let o = i.get(r);
+      var o = i.get(r);
       if (!o) {
         if (!this.R7?.(t, r)) return r;
         (o = Proxy.revocable(r, this.A7)), i.set(r, o), this.D7.set(o.proxy, i);
@@ -149,13 +149,13 @@ class ProxyLru {
   }
   x7(r, i, o) {
     return (...t) => {
-      let e;
-      var t = Reflect.apply(o, r, t);
+      var e,
+        t = Reflect.apply(o, r, t);
       return (
         t &&
-        ((e = typeof t) == "object"
+        ("object" == (e = typeof t)
           ? this.P7(r, i, t)
-          : e == "function"
+          : "function" == e
             ? this.x7(r, i, t)
             : t)
       );
@@ -166,4 +166,4 @@ class ProxyLru {
   }
 }
 (exports.ProxyLru = ProxyLru).ProxyLruEnable = !1;
-// # sourceMappingURL=ProxyLru.js.map
+//# sourceMappingURL=ProxyLru.js.map

@@ -2,15 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionAttributeItemOne = exports.VisionAttributeVariantOneData =
     void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../../Core/Common/CustomPromise");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../../Util/ScrollView/GenericScrollView");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../../Util/ScrollView/GenericScrollView");
 class VisionAttributeVariantOneData {
   constructor() {
     (this.Title = ""), (this.Desc = void 0), (this.SkillId = 0);
@@ -71,7 +71,7 @@ class VisionAttributeItemOne extends UiPanelBase_1.UiPanelBase {
     this.GetItem(0).SetUIActive(t);
   }
   M6i() {
-    const t = new VisionAttributeVariantOneData();
+    var t = new VisionAttributeVariantOneData();
     return (
       (t.Desc = this.g6i.GetNormalSkillDesc()),
       (t.SkillId = this.g6i.GetNormalSkillId()),
@@ -79,11 +79,11 @@ class VisionAttributeItemOne extends UiPanelBase_1.UiPanelBase {
     );
   }
   S6i() {
-    const t = new Array();
+    var t = new Array();
     return (
       this.g6i.GetUniqueId() < 0
         ? t.push(this.M6i())
-        : (this.g6i.GetPersonalSkillId() > 0 && 0, t.push(this.M6i())),
+        : (0 < this.g6i.GetPersonalSkillId() && 0, t.push(this.M6i())),
       t
     );
   }
@@ -91,28 +91,28 @@ class VisionAttributeItemOne extends UiPanelBase_1.UiPanelBase {
     this.g6i =
       ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(t);
     var i =
-      ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsEquip(t);
-    var i =
-      (this.RefreshButtonShowState(
-        i &&
-          t > 0 &&
-          this.g6i.GetPersonalSkillId() > 0 &&
-          ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsMain(
-            t,
-          ) &&
-          !1,
-      ),
-      this.S6i());
+        ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsEquip(t),
+      i =
+        (this.RefreshButtonShowState(
+          i &&
+            0 < t &&
+            0 < this.g6i.GetPersonalSkillId() &&
+            ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsMain(
+              t,
+            ) &&
+            !1,
+        ),
+        this.S6i());
     (this.f6i = i.length), this.kGe.RefreshByData(i), this.E6i(e), this.y6i();
   }
   y6i() {
-    this.g6i.GetPersonalSkillId() > 0 && this.p6i.Update(this.g6i);
+    0 < this.g6i.GetPersonalSkillId() && this.p6i.Update(this.g6i);
   }
   E6i(t = !0) {
-    const e = this.g6i.GetUniqueId();
+    var e = this.g6i.GetUniqueId();
     let i = !1;
     (i =
-      this.g6i.GetPersonalSkillId() > 0
+      0 < this.g6i.GetPersonalSkillId()
         ? ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsMain(e)
           ? this.g6i.GetIfActivePersonalSkill()
           : ModelManager_1.ModelManager.PhantomBattleModel.GetIfVisionSkillState(
@@ -154,7 +154,7 @@ class VisionAttributeSkillButton extends UiPanelBase_1.UiPanelBase {
     this.T6i(t), this.hke(t);
   }
   hke(t) {
-    const e = t.GetUniqueId();
+    var e = t.GetUniqueId();
     ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsMain(e)
       ? ((t = t.GetIfActivePersonalSkill()),
         LguiUtil_1.LguiUtil.SetLocalText(
@@ -198,7 +198,7 @@ class AttributeSkillStateItem extends UiPanelBase_1.UiPanelBase {
       this.D6i(t, e);
   }
   L6i(t, e) {
-    const i = t.GetUniqueId();
+    var i = t.GetUniqueId();
     ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsEquip(i)
       ? this.R6i(t, e)
         ? this.GetItem(0).SetUIActive(!0)
@@ -216,12 +216,11 @@ class AttributeSkillStateItem extends UiPanelBase_1.UiPanelBase {
     );
   }
   R6i(t, e) {
-    return e.SkillId === t.GetPersonalSkillId() && e.SkillId > 0;
+    return e.SkillId === t.GetPersonalSkillId() && 0 < e.SkillId;
   }
   D6i(t, e) {
-    const i = t.GetUniqueId();
-    const s =
-      ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsEquip(i);
+    var i = t.GetUniqueId(),
+      s = ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsEquip(i);
     s &&
     ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsMain(i) &&
     !this.R6i(t, e) &&
@@ -231,4 +230,4 @@ class AttributeSkillStateItem extends UiPanelBase_1.UiPanelBase {
       : this.GetItem(2).SetUIActive(!1);
   }
 }
-// # sourceMappingURL=VisionAttributeItemOne.js.map
+//# sourceMappingURL=VisionAttributeItemOne.js.map

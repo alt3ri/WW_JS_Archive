@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AnimalPerformAlertState = void 0);
-const puerts_1 = require("puerts");
-const AnimalPerformStateBase_1 = require("./AnimalPerformStateBase");
+const puerts_1 = require("puerts"),
+  AnimalPerformStateBase_1 = require("./AnimalPerformStateBase");
 class AnimalPerformAlertState extends AnimalPerformStateBase_1.AnimalPerformStateBase {
   OnEnter(e) {
     this.EcologicalInterface?.IsValid() &&
-      (e === 0 &&
+      (0 === e &&
         this.AnimalEcologicalInterface.StateMachineInitializationComplete(),
       this.EcologicalInterface.AlertStart(),
       (e = (0, puerts_1.$ref)(void 0)),
@@ -19,4 +19,4 @@ class AnimalPerformAlertState extends AnimalPerformStateBase_1.AnimalPerformStat
   }
 }
 exports.AnimalPerformAlertState = AnimalPerformAlertState;
-// # sourceMappingURL=AnimalPerformAlertState.js.map
+//# sourceMappingURL=AnimalPerformAlertState.js.map

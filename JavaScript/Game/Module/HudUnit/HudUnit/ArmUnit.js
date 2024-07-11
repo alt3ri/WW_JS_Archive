@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AimUnit = void 0);
-const UE = require("ue");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const HudUnitBase_1 = require("../HudUnitBase");
-const CLOSE_ANIM_TIME = 200;
-const MAX_BYTE = 255;
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  HudUnitBase_1 = require("../HudUnitBase"),
+  CLOSE_ANIM_TIME = 200,
+  MAX_BYTE = 255;
 class AimUnit extends HudUnitBase_1.HudUnitBase {
   constructor() {
     super(...arguments),
@@ -55,7 +55,7 @@ class AimUnit extends HudUnitBase_1.HudUnitBase {
   SetTargetVisible(t, i) {
     (this.Lei = t),
       this.Aei(),
-      i || t || !this.GetActive() || this.Tei === 0
+      i || t || !this.GetActive() || 0 === this.Tei
         ? (t && (this.EPe.StopCurrentSequence(), this.GetItem(0).SetAlpha(1)),
           this.SetVisible(t))
         : this.SetAimStatus(0);
@@ -84,23 +84,23 @@ class AimUnit extends HudUnitBase_1.HudUnitBase {
   xei() {
     this.bei(!1),
       this.qei(!1),
-      this.Tei === 3
+      3 === this.Tei
         ? this.Gei("Change", !0)
-        : this.Tei === 0 && this.Gei("Start1");
+        : 0 === this.Tei && this.Gei("Start1");
   }
   wei() {
     this.bei(!0),
       this.qei(!1),
-      this.Tei === 3
+      3 === this.Tei
         ? this.Gei("Change", !0)
-        : this.Tei === 0 && this.Gei("Start1");
+        : 0 === this.Tei && this.Gei("Start1");
   }
   Bei() {
     this.bei(!0),
       this.qei(!0),
-      this.Tei === 2 || this.Tei === 1
+      2 === this.Tei || 1 === this.Tei
         ? this.Gei("Change")
-        : this.Tei === 0 && this.Gei("Start2");
+        : 0 === this.Tei && this.Gei("Start2");
   }
   Pei() {
     this.Gei("close"), this.Nei();
@@ -125,7 +125,7 @@ class AimUnit extends HudUnitBase_1.HudUnitBase {
   bei(t) {
     if (void 0 === this.Rei || this.Rei !== t) {
       this.Rei = t;
-      const i = this.Rei ? AimUnit.Oei : AimUnit.kei;
+      var i = this.Rei ? AimUnit.Oei : AimUnit.kei;
       for (const s of this.Dei) s.SetColor(i);
     }
   }
@@ -143,4 +143,4 @@ class AimUnit extends HudUnitBase_1.HudUnitBase {
   MAX_BYTE,
 )),
   (AimUnit.Oei = new UE.Color(MAX_BYTE, 0, 0, MAX_BYTE));
-// # sourceMappingURL=ArmUnit.js.map
+//# sourceMappingURL=ArmUnit.js.map

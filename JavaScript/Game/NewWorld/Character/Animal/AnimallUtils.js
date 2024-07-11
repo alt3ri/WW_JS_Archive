@@ -9,4 +9,4 @@ class AnimalUtils {
   }
 }
 exports.AnimalUtils = AnimalUtils;
-// # sourceMappingURL=AnimallUtils.js.map
+//# sourceMappingURL=AnimallUtils.js.map

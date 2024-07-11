@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LandscapeMarkItemView = void 0);
-const UE = require("ue");
-const MarkEffectByMarkId_1 = require("../../../../../Core/Define/ConfigQuery/MarkEffectByMarkId");
-const ConfigMarkItemView_1 = require("./ConfigMarkItemView");
+const UE = require("ue"),
+  MarkEffectByMarkId_1 = require("../../../../../Core/Define/ConfigQuery/MarkEffectByMarkId"),
+  ConfigMarkItemView_1 = require("./ConfigMarkItemView");
 class LandscapeMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
   constructor(e) {
     super(e), (this.gDi = void 0);
@@ -15,14 +15,14 @@ class LandscapeMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
     return !1;
   }
   async fDi() {
-    let e = MarkEffectByMarkId_1.configMarkEffectByMarkId.GetConfig(
+    var e = MarkEffectByMarkId_1.configMarkEffectByMarkId.GetConfig(
       this.Holder.MarkId,
     );
     e &&
       ((e = await this.LoadPrefabAsync(e.EffectResourcePath, this.RootItem)),
       (this.gDi = e.GetComponentByClass(UE.UIItem.StaticClass())),
       (e = e.GetComponentByClass(UE.UINiagara.StaticClass())),
-      this.Holder?.MapType === 2
+      2 === this.Holder?.MapType
         ? (e.bAdaptPosAndSizeChanged = !1)
         : (e.bAdaptPosAndSizeChanged = !0));
   }
@@ -34,4 +34,4 @@ class LandscapeMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
   SetScale(e) {}
 }
 exports.LandscapeMarkItemView = LandscapeMarkItemView;
-// # sourceMappingURL=LandscapeMarkItemView.js.map
+//# sourceMappingURL=LandscapeMarkItemView.js.map

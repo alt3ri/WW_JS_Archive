@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SelectablePropItemBase = void 0);
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
-const SelectablePropTypeItemVariantSelect_1 = require("./SelectablePropTypeItemVariantSelect");
-const SelectablePropTypeOne_1 = require("./SelectablePropTypeOne");
+const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  SelectablePropTypeItemVariantSelect_1 = require("./SelectablePropTypeItemVariantSelect"),
+  SelectablePropTypeOne_1 = require("./SelectablePropTypeOne");
 class SelectablePropItemBase extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(e = 1) {
     super(),
@@ -13,11 +13,11 @@ class SelectablePropItemBase extends GridProxyAbstract_1.GridProxyAbstract {
       (this.ComponentType = e);
   }
   OnRegisterComponent() {
-    this.ComponentType === 0
+    0 === this.ComponentType
       ? (this.Wwt = new SelectablePropTypeOne_1.SelectablePropTypeOne(
           this.RootItem,
         ))
-      : this.ComponentType === 1 &&
+      : 1 === this.ComponentType &&
         (this.Wwt =
           new SelectablePropTypeItemVariantSelect_1.SelectablePropTypeItemVariantSelect(
             this.RootItem,
@@ -62,4 +62,4 @@ class SelectablePropItemBase extends GridProxyAbstract_1.GridProxyAbstract {
   Clear() {}
 }
 exports.SelectablePropItemBase = SelectablePropItemBase;
-// # sourceMappingURL=SelectablePropItemBase.js.map
+//# sourceMappingURL=SelectablePropItemBase.js.map

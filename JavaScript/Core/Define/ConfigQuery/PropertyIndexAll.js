@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configPropertyIndexAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const PropertyIndex_1 = require("../Config/PropertyIndex");
-const DB = "db_property.db";
-const FILE = "s.属性.xlsx";
-const TABLE = "PropertyIndex";
-const COMMAND = "select BinData from `PropertyIndex`";
-const KEY_PREFIX = "PropertyIndexAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  PropertyIndex_1 = require("../Config/PropertyIndex"),
+  DB = "db_property.db",
+  FILE = "s.属性.xlsx",
+  TABLE = "PropertyIndex",
+  COMMAND = "select BinData from `PropertyIndex`",
+  KEY_PREFIX = "PropertyIndexAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configPropertyIndexAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configPropertyIndexAll = {
     );
   },
   GetConfigList: (o = !0) => {
-    let e;
+    var e;
     if (
       (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configPropertyIndexAll = {
       }
       const i = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let r = void 0;
+        var r = void 0;
         if (
           (([e, r] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configPropertyIndexAll = {
     }
   },
 };
-// # sourceMappingURL=PropertyIndexAll.js.map
+//# sourceMappingURL=PropertyIndexAll.js.map

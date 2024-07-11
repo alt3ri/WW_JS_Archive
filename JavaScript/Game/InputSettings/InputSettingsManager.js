@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputSettingsManager = void 0);
-const Log_1 = require("../../Core/Common/Log");
-const StringUtils_1 = require("../../Core/Utils/StringUtils");
-const LocalStorage_1 = require("../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../Common/LocalStorageDefine");
-const ConfigManager_1 = require("../Manager/ConfigManager");
-const InputSettings_1 = require("./InputSettings");
-const InputActionMapping_1 = require("./Maping/InputActionMapping");
-const InputAxisMapping_1 = require("./Maping/InputAxisMapping");
-const InputCombinationActionMapping_1 = require("./Maping/InputCombinationActionMapping");
-const InputCombinationAxisMapping_1 = require("./Maping/InputCombinationAxisMapping");
-const InputMappingsDefine_1 = require("../Ui/InputDistribute/InputMappingsDefine");
+const Log_1 = require("../../Core/Common/Log"),
+  StringUtils_1 = require("../../Core/Utils/StringUtils"),
+  LocalStorage_1 = require("../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../Common/LocalStorageDefine"),
+  ConfigManager_1 = require("../Manager/ConfigManager"),
+  InputSettings_1 = require("./InputSettings"),
+  InputActionMapping_1 = require("./Maping/InputActionMapping"),
+  InputAxisMapping_1 = require("./Maping/InputAxisMapping"),
+  InputCombinationActionMapping_1 = require("./Maping/InputCombinationActionMapping"),
+  InputCombinationAxisMapping_1 = require("./Maping/InputCombinationAxisMapping"),
+  InputMappingsDefine_1 = require("../Ui/InputDistribute/InputMappingsDefine");
 class InputSettingsManager {
   static Initialize() {
     (this.qSe = new InputActionMapping_1.InputActionMapping()),
@@ -39,7 +39,7 @@ class InputSettingsManager {
   }
   static get SVs() {
     return (
-      InputSettings_1.InputSettings.GetKeyboardPrimaryLangId() === "French"
+      "French" === InputSettings_1.InputSettings.GetKeyboardPrimaryLangId()
     );
   }
   static P9s(t) {
@@ -50,18 +50,18 @@ class InputSettingsManager {
   }
   static RefreshAllActionKeys(i = !1) {
     for (const s of ConfigManager_1.ConfigManager.InputSettingsConfig.GetAllActionMappingConfig()) {
-      const n = s.ActionName;
+      var n = s.ActionName;
       if (!i && !InputSettingsManager.P9s(n)) {
         var e = InputSettings_1.InputSettings.GetActionMappings(n);
-        if (e.Num() > 0) {
+        if (0 < e.Num()) {
           InputSettingsManager.RefreshActionKeys(n, e);
           continue;
         }
       }
       let t = [];
       t = InputSettingsManager.SVs ? s.FrancePcKeys : s.PcKeys;
-      var e = s.GamepadKeys;
-      const a = t.concat(e);
+      var e = s.GamepadKeys,
+        a = t.concat(e);
       InputSettingsManager.SetActionKeys(n, a);
     }
   }
@@ -70,22 +70,22 @@ class InputSettingsManager {
   }
   static RefreshAllAxisKeys(i = !1) {
     for (const c of ConfigManager_1.ConfigManager.InputSettingsConfig.GetAllAxisMappingConfig()) {
-      const n = c.AxisName;
+      var n = c.AxisName;
       if (!i) {
         var e = InputSettings_1.InputSettings.GetAxisMappings(n);
-        if (e.Num() > 0) {
+        if (0 < e.Num()) {
           InputSettingsManager.RefreshAxisKeys(n, e);
           continue;
         }
       }
       let t = new Map();
       t = InputSettingsManager.SVs ? c.FrancePcKeys : c.PcKeys;
-      var a;
-      var s;
-      var o;
-      var r;
-      var e = c.GamepadKeys;
-      const g = new Map();
+      var a,
+        s,
+        o,
+        r,
+        e = c.GamepadKeys,
+        g = new Map();
       for ([a, s] of t) g.set(a, s);
       for ([o, r] of e) g.set(o, r);
       InputSettingsManager.SetAxisKeys(n, g);
@@ -98,9 +98,9 @@ class InputSettingsManager {
     return this.qSe.GetActionBindingByConfigId(t);
   }
   static CheckGetActionKeyIconPath(t) {
-    const i = t.GetCurrentPlatformKey();
+    var i = t.GetCurrentPlatformKey();
     if (i) {
-      const n = i.GetKeyIconPath();
+      var n = i.GetKeyIconPath();
       if (!StringUtils_1.StringUtils.IsEmpty(n)) return n;
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("InputSettings", 8, "此按键配置了空的图标路径", [
@@ -155,9 +155,9 @@ class InputSettingsManager {
     return this.GSe.GetAxisBindingByAxisMappingType(t);
   }
   static CheckGetAxisKeyIconPath(t) {
-    const i = t.GetCurrentPlatformKey();
+    var i = t.GetCurrentPlatformKey();
     if (i) {
-      const n = i.GetKeyIconPath();
+      var n = i.GetKeyIconPath();
       if (!StringUtils_1.StringUtils.IsEmpty(n)) return n;
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("InputSettings", 8, "此按键配置了空的图标路径", [
@@ -209,12 +209,12 @@ class InputSettingsManager {
   }
   static RefreshCombinationActionKeys(t = !1) {
     this.ClearCombinationActionKeyMap();
-    let i = LocalStorage_1.LocalStorage.GetGlobal(
+    var i = LocalStorage_1.LocalStorage.GetGlobal(
       LocalStorageDefine_1.ELocalStorageGlobalKey.CombineAction,
       void 0,
     );
-    if ((i && (this.kSe = i), this.kSe && this.kSe.size > 0 && !t))
-      for (const [n, e] of this.kSe) for (const c of e) this.FSe(n, c[0], c[1]);
+    if ((i && (this.kSe = i), this.kSe && 0 < this.kSe.size && !t))
+      for (var [n, e] of this.kSe) for (const c of e) this.FSe(n, c[0], c[1]);
     else {
       this.kSe.clear(),
         LocalStorage_1.LocalStorage.SetGlobal(
@@ -225,11 +225,11 @@ class InputSettingsManager {
         ConfigManager_1.ConfigManager.InputSettingsConfig.GetAllCombinationActionConfig();
       if (i)
         for (const p of i) {
-          var a;
-          var s;
-          var o;
-          var r;
-          const g = p.ActionName;
+          var a,
+            s,
+            o,
+            r,
+            g = p.ActionName;
           for ([a, s] of p.PcKeys) this.AddCombinationActionKeyMap(g, a, s);
           for ([o, r] of p.GamepadKeys)
             this.AddCombinationActionKeyMap(g, o, r);
@@ -241,10 +241,10 @@ class InputSettingsManager {
   }
   static AddCombinationActionKeyMap(t, i, n) {
     this.FSe(t, i, n);
-    const e = this.kSe.get(t);
-    const a = [i, n];
+    var e = this.kSe.get(t),
+      a = [i, n];
     if (e) {
-      for (const [s, o] of e) if (s === i && o === n) return;
+      for (var [s, o] of e) if (s === i && o === n) return;
       e.push(a);
     } else this.kSe.set(t, [a]);
     LocalStorage_1.LocalStorage.SetGlobal(
@@ -274,11 +274,11 @@ class InputSettingsManager {
   }
   static RemoveCombinationActionKeyMap(t, i, n) {
     this.VSe(t, i, n);
-    const e = this.kSe.get(t);
+    var e = this.kSe.get(t);
     if (e) {
-      const a = [];
+      var a = [];
       for (let t = 0; t < e.length; t++) {
-        const s = e[t];
+        var s = e[t];
         s[0] === i && s[1] === n && a.push(t);
       }
       for (const o of a) e.splice(o, 1);
@@ -310,10 +310,10 @@ class InputSettingsManager {
       ));
   }
   static PrintCurrentCombinationActionBinding(t, i = "0") {
-    const n = new Map();
-    const e = new Map();
-    const a = new Map();
-    var t = this.NSe?.GetCombinationActionBindingByActionName(t);
+    var n = new Map(),
+      e = new Map(),
+      a = new Map(),
+      t = this.NSe?.GetCombinationActionBindingByActionName(t);
     t?.GetKeyMap(n),
       t?.GetPcKeyNameMap(e),
       t?.GetGamepadKeyNameMap(a),
@@ -359,31 +359,31 @@ class InputSettingsManager {
     return !(!t || t.length <= 0);
   }
   static GetActionKeyDisplayData(t, i) {
-    let n = InputSettingsManager.GetCombinationActionBindingByActionName(i);
+    var n = InputSettingsManager.GetCombinationActionBindingByActionName(i);
     if (n) {
       var e = new Map();
-      if ((n.GetCurrentPlatformKeyNameMap(e), e && e.size > 0))
+      if ((n.GetCurrentPlatformKeyNameMap(e), e && 0 < e.size))
         return t.RefreshCombinationInput(i, e), !0;
     }
     n = InputSettingsManager.GetActionBinding(i);
     if (n) {
       e = [];
-      if ((n.GetCurrentPlatformKeyNameList(e), e.length > 0))
+      if ((n.GetCurrentPlatformKeyNameList(e), 0 < e.length))
         return t.RefreshInput(i, e), !0;
     }
     return !1;
   }
   static GetAxisKeyDisplayData(t, i) {
-    let n = InputSettingsManager.GetCombinationAxisBindingByActionName(i);
+    var n = InputSettingsManager.GetCombinationAxisBindingByActionName(i);
     if (n) {
       var e = new Map();
-      if ((n.GetCurrentPlatformKeyNameMap(e), e && e.size > 0))
+      if ((n.GetCurrentPlatformKeyNameMap(e), e && 0 < e.size))
         return t.RefreshCombinationInput(i, e), !0;
     }
     n = InputSettingsManager.GetAxisBinding(i);
     if (n) {
       e = [];
-      if ((n.GetCurrentPlatformKeyNameList(e), e.length > 0))
+      if ((n.GetCurrentPlatformKeyNameList(e), 0 < e.length))
         return t.RefreshInput(i, e), !0;
     }
     return !1;
@@ -395,4 +395,4 @@ class InputSettingsManager {
   (InputSettingsManager.OSe = void 0),
   (InputSettingsManager.kSe = new Map()),
   (InputSettingsManager.SkipGlobalSdkCheck = !1);
-// # sourceMappingURL=InputSettingsManager.js.map
+//# sourceMappingURL=InputSettingsManager.js.map

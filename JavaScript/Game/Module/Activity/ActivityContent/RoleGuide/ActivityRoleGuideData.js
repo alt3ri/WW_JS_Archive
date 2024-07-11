@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRoleGuideData = void 0);
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ActivityData_1 = require("../../ActivityData");
+const ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ActivityData_1 = require("../../ActivityData");
 class ActivityRoleGuideData extends ActivityData_1.ActivityBaseData {
   constructor() {
     super(...arguments),
@@ -24,7 +24,7 @@ class ActivityRoleGuideData extends ActivityData_1.ActivityBaseData {
         (this.ShowQuestId = this.RoleGuideConfig.ShowQuestId));
   }
   GetRoleResourcePath() {
-    const t = this.RoleGuideConfig.RoleUi;
+    var t = this.RoleGuideConfig.RoleUi;
     return (
       ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(t) ?? ""
     );
@@ -37,4 +37,4 @@ class ActivityRoleGuideData extends ActivityData_1.ActivityBaseData {
   }
 }
 exports.ActivityRoleGuideData = ActivityRoleGuideData;
-// # sourceMappingURL=ActivityRoleGuideData.js.map
+//# sourceMappingURL=ActivityRoleGuideData.js.map

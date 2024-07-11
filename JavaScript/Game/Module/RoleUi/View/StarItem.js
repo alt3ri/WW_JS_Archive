@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.StarItem = void 0);
-const UE = require("ue");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
+const UE = require("ue"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
 class StarItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments), (this.EPe = void 0);
@@ -54,4 +54,4 @@ class StarItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.StarItem = StarItem;
-// # sourceMappingURL=StarItem.js.map
+//# sourceMappingURL=StarItem.js.map

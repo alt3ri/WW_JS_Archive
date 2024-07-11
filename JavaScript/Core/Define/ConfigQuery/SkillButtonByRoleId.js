@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configSkillButtonByRoleId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const SkillButton_1 = require("../Config/SkillButton");
-const DB = "db_skillbutton.db";
-const FILE = "j.技能按钮.xlsx";
-const TABLE = "SkillButton";
-const COMMAND = "select BinData from `SkillButton` where RoleId=?";
-const KEY_PREFIX = "SkillButtonByRoleId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  SkillButton_1 = require("../Config/SkillButton"),
+  DB = "db_skillbutton.db",
+  FILE = "j.技能按钮.xlsx",
+  TABLE = "SkillButton",
+  COMMAND = "select BinData from `SkillButton` where RoleId=?",
+  KEY_PREFIX = "SkillButtonByRoleId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX = "configSkillButtonByRoleId.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configSkillButtonByRoleId.GetConfigList(";
 exports.configSkillButtonByRoleId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -29,7 +29,7 @@ exports.configSkillButtonByRoleId = {
     );
   },
   GetConfigList: (o, n = !0) => {
-    let i;
+    var i;
     if (
       (i = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -44,13 +44,14 @@ exports.configSkillButtonByRoleId = {
         const l = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "RoleId",
               o,
-            ]) !== 1
+            ])
           )
             break;
-          let t = void 0;
+          var t = void 0;
           if (
             (([i, t] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -78,4 +79,4 @@ exports.configSkillButtonByRoleId = {
     }
   },
 };
-// # sourceMappingURL=SkillButtonByRoleId.js.map
+//# sourceMappingURL=SkillButtonByRoleId.js.map

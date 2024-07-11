@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonResultView = void 0);
-const UE = require("ue");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const CommonItemSimpleGrid_1 = require("../ItemGrid/CommonItemSimpleGrid");
-const CommonResultButton_1 = require("./CommonResultButton");
-const TIMERGAP = 1e3;
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  CommonItemSimpleGrid_1 = require("../ItemGrid/CommonItemSimpleGrid"),
+  CommonResultButton_1 = require("./CommonResultButton"),
+  TIMERGAP = 1e3;
 class CommonResultView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -63,10 +63,10 @@ class CommonResultView extends UiViewBase_1.UiViewBase {
   }
   SetupButtonFormat() {}
   cBt(t) {
-    var e = this.GetItem(3);
-    var i = this.GetItem(4);
-    var e = LguiUtil_1.LguiUtil.CopyItem(e, i);
-    var i = new CommonResultButton_1.CommonResultButton(e);
+    var e = this.GetItem(3),
+      i = this.GetItem(4),
+      e = LguiUtil_1.LguiUtil.CopyItem(e, i),
+      i = new CommonResultButton_1.CommonResultButton(e);
     return i.SetData(t), i;
   }
   uBt() {
@@ -77,10 +77,10 @@ class CommonResultView extends UiViewBase_1.UiViewBase {
     this.aBt.forEach((t, e) => {
       t.ResetData(), t.SetActive(!1);
     });
-    let i;
-    const s = e.length;
-    const r = this.aBt;
-    const o = r.length;
+    var i,
+      s = e.length,
+      r = this.aBt,
+      o = r.length;
     for (let t = 0; t < s; t++)
       (t < o
         ? ((i = r[t]).SetData(e[t]), i)
@@ -108,4 +108,4 @@ class CommonResultView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.CommonResultView = CommonResultView;
-// # sourceMappingURL=CommonResultView.js.map
+//# sourceMappingURL=CommonResultView.js.map

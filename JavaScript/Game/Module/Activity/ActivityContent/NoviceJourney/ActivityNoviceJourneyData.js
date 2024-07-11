@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityNoviceJourneyData = void 0);
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ActivityData_1 = require("../../ActivityData");
+const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ActivityData_1 = require("../../ActivityData");
 class ActivityNoviceJourneyData extends ActivityData_1.ActivityBaseData {
   constructor() {
     super(...arguments), (this.fke = new Set());
@@ -19,7 +19,7 @@ class ActivityNoviceJourneyData extends ActivityData_1.ActivityBaseData {
   }
   pke() {
     for (const e of ConfigManager_1.ConfigManager.ActivityNoviceJourneyConfig.GetNoticeJourneyConfigList())
-      if (this.GetRewardStateByLevel(e.Id) === 2) return !0;
+      if (2 === this.GetRewardStateByLevel(e.Id)) return !0;
     return !1;
   }
   SetReceiveData(e) {
@@ -44,4 +44,4 @@ class ActivityNoviceJourneyData extends ActivityData_1.ActivityBaseData {
   }
 }
 exports.ActivityNoviceJourneyData = ActivityNoviceJourneyData;
-// # sourceMappingURL=ActivityNoviceJourneyData.js.map
+//# sourceMappingURL=ActivityNoviceJourneyData.js.map

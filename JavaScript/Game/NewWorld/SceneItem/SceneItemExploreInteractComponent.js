@@ -1,34 +1,39 @@
 "use strict";
-let SceneItemExploreInteractComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, n, i) {
-    let o;
-    const r = arguments.length;
-    let s =
-      r < 3 ? e : i === null ? (i = Object.getOwnPropertyDescriptor(e, n)) : i;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      s = Reflect.decorate(t, e, n, i);
-    else
-      for (let a = t.length - 1; a >= 0; a--)
-        (o = t[a]) && (s = (r < 3 ? o(s) : r > 3 ? o(e, n, s) : o(e, n)) || s);
-    return r > 3 && s && Object.defineProperty(e, n, s), s;
-  };
+var SceneItemExploreInteractComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, n, i) {
+      var o,
+        r = arguments.length,
+        s =
+          r < 3
+            ? e
+            : null === i
+              ? (i = Object.getOwnPropertyDescriptor(e, n))
+              : i;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        s = Reflect.decorate(t, e, n, i);
+      else
+        for (var a = t.length - 1; 0 <= a; a--)
+          (o = t[a]) &&
+            (s = (r < 3 ? o(s) : 3 < r ? o(e, n, s) : o(e, n)) || s);
+      return 3 < r && s && Object.defineProperty(e, n, s), s;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemExploreInteractComponent = void 0);
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LevelGeneralContextDefine_1 = require("../../LevelGamePlay/LevelGeneralContextDefine");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const manipulateInteractPointPointStateTagMap = new Map([
-  [0, -422517001],
-  [1, 1725677503],
-  [2, -1335742570],
-  [3, 968645625],
-]);
+const EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LevelGeneralContextDefine_1 = require("../../LevelGamePlay/LevelGeneralContextDefine"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  manipulateInteractPointPointStateTagMap = new Map([
+    [0, -422517001],
+    [1, 1725677503],
+    [2, -1335742570],
+    [3, 968645625],
+  ]);
 let SceneItemExploreInteractComponent =
   (SceneItemExploreInteractComponent_1 = class SceneItemExploreInteractComponent extends (
     EntityComponent_1.EntityComponent
@@ -136,4 +141,4 @@ let SceneItemExploreInteractComponent =
   )),
   (exports.SceneItemExploreInteractComponent =
     SceneItemExploreInteractComponent);
-// # sourceMappingURL=SceneItemExploreInteractComponent.js.map
+//# sourceMappingURL=SceneItemExploreInteractComponent.js.map

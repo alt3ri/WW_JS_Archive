@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Protocol_1 = require("../../Core/Define/Net/Protocol");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const TimeUtil_1 = require("../Common/TimeUtil");
-const ModelManager_1 = require("../Manager/ModelManager");
-const CombatMessage_1 = require("../Module/CombatMessage/CombatMessage");
-const BulletUtil_1 = require("../NewWorld/Bullet/BulletUtil");
+const UE = require("ue"),
+  Protocol_1 = require("../../Core/Define/Net/Protocol"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  TimeUtil_1 = require("../Common/TimeUtil"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  CombatMessage_1 = require("../Module/CombatMessage/CombatMessage"),
+  BulletUtil_1 = require("../NewWorld/Bullet/BulletUtil");
 class TsAnimNotifyStateAbsoluteTimeStop extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -15,16 +15,16 @@ class TsAnimNotifyStateAbsoluteTimeStop extends UE.KuroAnimNotifyState {
       (this.怪物战斗机制停止 = !0);
   }
   K2_NotifyBegin(e, t, r) {
-    const o = e.GetOwner();
+    var o = e.GetOwner();
     if (!(o instanceof TsBaseCharacter_1.default)) return !1;
     if (ModelManager_1.ModelManager.GameModeModel?.IsMulti) return !1;
-    var e = o.CharacterActorComponent?.Entity;
-    const a = e?.GetComponent(162);
+    var e = o.CharacterActorComponent?.Entity,
+      a = e?.GetComponent(162);
     if (!e || !a) return !1;
     a.ResetTimeScale();
-    let s;
-    let i;
-    const l = e.GetComponent(0);
+    var s,
+      i,
+      l = e.GetComponent(0);
     for (const n of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
       n.IsInit &&
         n.Entity.Active &&
@@ -73,4 +73,4 @@ class TsAnimNotifyStateAbsoluteTimeStop extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateAbsoluteTimeStop;
-// # sourceMappingURL=TsAnimNotifyStateAbsoluteTimeStop.js.map
+//# sourceMappingURL=TsAnimNotifyStateAbsoluteTimeStop.js.map

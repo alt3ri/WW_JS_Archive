@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MoveSkillItem = void 0);
-const InputController_1 = require("../../../Input/InputController");
-const InputEnums_1 = require("../../../Input/InputEnums");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const BattleSkillItem_1 = require("./BattleSkillItem");
+const InputController_1 = require("../../../Input/InputController"),
+  InputEnums_1 = require("../../../Input/InputEnums"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  BattleSkillItem_1 = require("./BattleSkillItem");
 class MoveSkillItem extends BattleSkillItem_1.BattleSkillItem {
   constructor() {
     super(...arguments),
@@ -17,8 +17,8 @@ class MoveSkillItem extends BattleSkillItem_1.BattleSkillItem {
     (this.Gut = t), (this.jce = e), this.IsShowOrShowing || this.Show();
   }
   RefreshKeyByActionName(t) {
-    const e = ModelManager_1.ModelManager.PlatformModel.OperationType;
-    e !== 2 ||
+    var e = ModelManager_1.ModelManager.PlatformModel.OperationType;
+    2 !== e ||
       (this.KeyActionName === t && this.KeyOperationType === e) ||
       (this.KeyItem &&
         (this.KeyItem.RefreshByActionOrAxis({ ActionOrAxisName: t }),
@@ -51,4 +51,4 @@ class MoveSkillItem extends BattleSkillItem_1.BattleSkillItem {
   }
 }
 exports.MoveSkillItem = MoveSkillItem;
-// # sourceMappingURL=MoveSkillItem.js.map
+//# sourceMappingURL=MoveSkillItem.js.map

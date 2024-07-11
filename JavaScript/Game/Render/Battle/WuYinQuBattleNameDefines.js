@@ -13,4 +13,4 @@ class WuYinQuBattleNameDefines {}
   (WuYinQuBattleNameDefines.GlobalLandscapeRadiusAndHardness = new UE.FName(
     "GlobalLandscapeRadiusAndHardness",
   ));
-// # sourceMappingURL=WuYinQuBattleNameDefines.js.map
+//# sourceMappingURL=WuYinQuBattleNameDefines.js.map

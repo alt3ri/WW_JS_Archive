@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponDescribeComponent = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const SimpleGenericLayout_1 = require("../../Util/Layout/SimpleGenericLayout");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  SimpleGenericLayout_1 = require("../../Util/Layout/SimpleGenericLayout");
 class WeaponDescribeComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments), (this.cjt = 0), (this.$be = void 0);
@@ -57,4 +57,4 @@ class WeaponDescribeComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.WeaponDescribeComponent = WeaponDescribeComponent;
-// # sourceMappingURL=WeaponDescribeComponent.js.map
+//# sourceMappingURL=WeaponDescribeComponent.js.map

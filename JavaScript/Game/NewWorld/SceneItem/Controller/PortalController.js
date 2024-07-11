@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PortalController = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../Core/Actor/ActorSystem");
-const ControllerBase_1 = require("../../../../Core/Framework/ControllerBase");
-const ModelManager_1 = require("../../../Manager/ModelManager");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../Core/Actor/ActorSystem"),
+  ControllerBase_1 = require("../../../../Core/Framework/ControllerBase"),
+  ModelManager_1 = require("../../../Manager/ModelManager");
 class PortalController extends ControllerBase_1.ControllerBase {
   static RegisterPair(e, r, o, t, a) {
-    let l;
+    var l;
     ModelManager_1.ModelManager.PortalModel?.GetPortal(e) ||
       ((l = new UE.Transform()).SetLocation(r.GetLocation()),
       (l = ActorSystem_1.ActorSystem.Spawn(
@@ -21,7 +21,7 @@ class PortalController extends ControllerBase_1.ControllerBase {
       ModelManager_1.ModelManager.PortalModel?.AddPortalPair(e, l));
   }
   static UnRegisterPair(e) {
-    const r = ModelManager_1.ModelManager.PortalModel?.GetPortal(e);
+    var r = ModelManager_1.ModelManager.PortalModel?.GetPortal(e);
     r &&
       (r.DisablePortal1Rendering(),
       r.DisablePortal2Rendering(),
@@ -30,4 +30,4 @@ class PortalController extends ControllerBase_1.ControllerBase {
   }
 }
 exports.PortalController = PortalController;
-// # sourceMappingURL=PortalController.js.map
+//# sourceMappingURL=PortalController.js.map

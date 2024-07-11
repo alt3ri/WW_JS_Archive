@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomFetterFilter = void 0);
-const ModelManager_1 = require("../../../../../../Manager/ModelManager");
-const CommonFilter_1 = require("./CommonFilter");
+const ModelManager_1 = require("../../../../../../Manager/ModelManager"),
+  CommonFilter_1 = require("./CommonFilter");
 class PhantomFetterFilter extends CommonFilter_1.CommonFilter {
   constructor() {
     super(...arguments),
@@ -22,4 +22,4 @@ class PhantomFetterFilter extends CommonFilter_1.CommonFilter {
   }
 }
 exports.PhantomFetterFilter = PhantomFetterFilter;
-// # sourceMappingURL=PhantomFetterFilter.js.map
+//# sourceMappingURL=PhantomFetterFilter.js.map

@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LockExecutionHandle = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const CameraController_1 = require("../../../Camera/CameraController");
-const TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LockExecutionUnit_1 = require("../HudUnit/LockExecutionUnit");
-const HudUnitHandleBase_1 = require("./HudUnitHandleBase");
-const hitCaseSocket = new UE.FName("HitCase");
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  CameraController_1 = require("../../../Camera/CameraController"),
+  TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LockExecutionUnit_1 = require("../HudUnit/LockExecutionUnit"),
+  HudUnitHandleBase_1 = require("./HudUnitHandleBase"),
+  hitCaseSocket = new UE.FName("HitCase");
 class LockExecutionHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   constructor() {
     super(...arguments),
@@ -81,7 +81,7 @@ class LockExecutionHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
           (this.jii(), this.dce ? this.Oii.TryShow() : this.Oii.TryHide(!0)));
   }
   jii() {
-    let t, e;
+    var t, e;
     this.sDe?.Valid &&
     (t = this.Wii()) &&
     ((e = CameraController_1.CameraController.CameraLocation),
@@ -121,10 +121,10 @@ class LockExecutionHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     this.Oii && this.Oii.TryHide(!0);
   }
   Wii() {
-    const t = this.sDe.Entity.GetComponent(1).Owner;
+    var t = this.sDe.Entity.GetComponent(1).Owner;
     if (t instanceof TsBaseCharacter_1.default)
       return t.Mesh.GetSocketLocation(hitCaseSocket);
   }
 }
 exports.LockExecutionHandle = LockExecutionHandle;
-// # sourceMappingURL=LockExecutionHandle.js.map
+//# sourceMappingURL=LockExecutionHandle.js.map

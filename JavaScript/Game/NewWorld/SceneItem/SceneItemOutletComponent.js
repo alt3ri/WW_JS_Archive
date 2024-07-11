@@ -1,37 +1,42 @@
 "use strict";
-let SceneItemOutletComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, n, r) {
-    let o;
-    const i = arguments.length;
-    let s =
-      i < 3 ? e : r === null ? (r = Object.getOwnPropertyDescriptor(e, n)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      s = Reflect.decorate(t, e, n, r);
-    else
-      for (let a = t.length - 1; a >= 0; a--)
-        (o = t[a]) && (s = (i < 3 ? o(s) : i > 3 ? o(e, n, s) : o(e, n)) || s);
-    return i > 3 && s && Object.defineProperty(e, n, s), s;
-  };
+var SceneItemOutletComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, n, r) {
+      var o,
+        i = arguments.length,
+        s =
+          i < 3
+            ? e
+            : null === r
+              ? (r = Object.getOwnPropertyDescriptor(e, n))
+              : r;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        s = Reflect.decorate(t, e, n, r);
+      else
+        for (var a = t.length - 1; 0 <= a; a--)
+          (o = t[a]) &&
+            (s = (i < 3 ? o(s) : 3 < i ? o(e, n, s) : o(e, n)) || s);
+      return 3 < i && s && Object.defineProperty(e, n, s), s;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemOutletComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const FNameUtil_1 = require("../../../Core/Utils/FNameUtil");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const IComponent_1 = require("../../../UniverseEditor/Interface/IComponent");
-const IUtil_1 = require("../../../UniverseEditor/Interface/IUtil");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const SCENE_ITEM_OUTLET_TAG = new UE.FName("SceneItemOutlet");
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  IUtil_1 = require("../../../UniverseEditor/Interface/IUtil"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  SCENE_ITEM_OUTLET_TAG = new UE.FName("SceneItemOutlet");
 let SceneItemOutletComponent =
   (SceneItemOutletComponent_1 = class SceneItemOutletComponent extends (
     EntityComponent_1.EntityComponent
@@ -52,7 +57,7 @@ let SceneItemOutletComponent =
               "State",
               n.GetTagNames(),
             ]),
-            t.some((t) => t === -662723379 || t === -709838471) &&
+            t.some((t) => -662723379 === t || -709838471 === t) &&
               TimerSystem_1.TimerSystem.Next(() => {
                 n.RemoveTag(-171146886),
                   void 0 !== this.EntityInSocket
@@ -70,9 +75,9 @@ let SceneItemOutletComponent =
         });
     }
     GetSocketLocation(t) {
-      const e = this.GetSocketLocationOffset(t);
-      var t = FNameUtil_1.FNameUtil.GetDynamicFName(this.GetSocketName(t));
-      var t = t ? this.nXt.GetSocketTransform(t) : this.nXt.ActorTransform;
+      var e = this.GetSocketLocationOffset(t),
+        t = FNameUtil_1.FNameUtil.GetDynamicFName(this.GetSocketName(t)),
+        t = t ? this.nXt.GetSocketTransform(t) : this.nXt.ActorTransform;
       return e.FromUeVector(t.TransformPosition(e.ToUeVector())), e;
     }
     GetSocketLocationOffset(t) {
@@ -111,6 +116,7 @@ let SceneItemOutletComponent =
             this.oMn.GetBlockLocationByIndex(this.rMn),
           );
         default:
+          return;
       }
     }
     ShowAimModel(t) {
@@ -160,9 +166,9 @@ let SceneItemOutletComponent =
       return Vector_1.Vector.Create(t?.X ?? 0, t?.Y ?? 0, t?.Z ?? 0);
     }
     GetSocketRotator(t) {
-      const e = this.GetSocketRotatorOffset(t);
-      var t = FNameUtil_1.FNameUtil.GetDynamicFName(this.GetSocketName(t));
-      var t = t ? this.nXt.GetSocketTransform(t) : this.nXt.ActorTransform;
+      var e = this.GetSocketRotatorOffset(t),
+        t = FNameUtil_1.FNameUtil.GetDynamicFName(this.GetSocketName(t)),
+        t = t ? this.nXt.GetSocketTransform(t) : this.nXt.ActorTransform;
       return Rotator_1.Rotator.Create(
         t.TransformRotation(e.Quaternion().ToUeQuat()).Rotator(),
       );
@@ -184,8 +190,8 @@ let SceneItemOutletComponent =
       if (t?.Valid) {
         let e = void 0;
         if ((e = this.sMn(this.tMn))) return e;
-        const n = t.GetComponent(177);
-        const r = t.GetComponent(0).GetBaseInfo();
+        var n = t.GetComponent(177),
+          r = t.GetComponent(0).GetBaseInfo();
         if (r) {
           let t = 0;
           for (const o of this.iMn) {
@@ -207,9 +213,9 @@ let SceneItemOutletComponent =
     }
     sMn(e) {
       if (!(void 0 === e || e < 0 || e >= this.iMn.size)) {
-        const n = this.iMn.values();
+        var n = this.iMn.values();
         let t = e;
-        for (; --t > 0; ) n.next();
+        for (; 0 < --t; ) n.next();
         return n.next().value;
       }
     }
@@ -234,7 +240,7 @@ let SceneItemOutletComponent =
           IComponent_1.EItemFoundation.CategoryMatching)
       )
         for (const n of this.Config.Config.MatchingConfigs) {
-          const e = n.Condition.EntityMatch;
+          var e = n.Condition.EntityMatch;
           this.iMn.set(e, n);
         }
       return (
@@ -253,7 +259,7 @@ let SceneItemOutletComponent =
           EventDefine_1.EEventName.OnLevelTagChanged,
           this.gIe,
         );
-      const t = this.Entity.GetComponent(177);
+      var t = this.Entity.GetComponent(177);
       return (
         t.HasTag(-662723379) || t.HasTag(-709838471)
           ? t.AddTag(-1381638598)
@@ -287,21 +293,21 @@ let SceneItemOutletComponent =
         this.Config.Config.Type === IComponent_1.EItemFoundation.PulseDevice
       )
         return !0;
-      const e = t?.GetComponent(0)?.GetBaseInfo();
+      var e = t?.GetComponent(0)?.GetBaseInfo();
       if (e)
         for (const o of this.iMn)
           if ((0, IUtil_1.isEntitiyMatch)(o[0], e.Category)) {
             if (!(n = o[1]).Condition.SelfState) return !0;
             var n = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
-              n.Condition.SelfState,
-            );
-            const r = this.Entity.GetComponent(177);
+                n.Condition.SelfState,
+              ),
+              r = this.Entity.GetComponent(177);
             if (r && r.HasTag(n)) return !0;
           }
       return !1;
     }
     ChangeSilentTag() {
-      const t = this.Entity.GetComponent(177);
+      var t = this.Entity.GetComponent(177);
       t.HasTag(-1381638598) &&
         (t.RemoveTag(-1381638598), t.AddTag(-1603486396)),
         Log_1.Log.CheckDebug() &&
@@ -315,11 +321,11 @@ let SceneItemOutletComponent =
         ?.ItemFoundation;
     }
     IsLockOrSlient() {
-      const t = this.Entity.GetComponent(177);
+      var t = this.Entity.GetComponent(177);
       return t.HasTag(-662723379) || t.HasTag(-709838471);
     }
     MultiplayerLimitTypeCheck() {
-      const t = this.Entity.GetComponent(0).GetEntityOnlineInteractType();
+      var t = this.Entity.GetComponent(0).GetEntityOnlineInteractType();
       return LevelGamePlayController_1.LevelGamePlayController.MultiplayerLimitTypeCheck(
         t,
         !1,
@@ -366,4 +372,4 @@ let SceneItemOutletComponent =
     SceneItemOutletComponent,
   )),
   (exports.SceneItemOutletComponent = SceneItemOutletComponent);
-// # sourceMappingURL=SceneItemOutletComponent.js.map
+//# sourceMappingURL=SceneItemOutletComponent.js.map

@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldMapConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const AkiMapByMapId_1 = require("../../../Core/Define/ConfigQuery/AkiMapByMapId");
-const AkiMapSourceByMapId_1 = require("../../../Core/Define/ConfigQuery/AkiMapSourceByMapId");
-const AudioById_1 = require("../../../Core/Define/ConfigQuery/AudioById");
-const CustomMarkAll_1 = require("../../../Core/Define/ConfigQuery/CustomMarkAll");
-const ExploreProgressById_1 = require("../../../Core/Define/ConfigQuery/ExploreProgressById");
-const MapNoteById_1 = require("../../../Core/Define/ConfigQuery/MapNoteById");
-const TeleporterById_1 = require("../../../Core/Define/ConfigQuery/TeleporterById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  AkiMapByMapId_1 = require("../../../Core/Define/ConfigQuery/AkiMapByMapId"),
+  AkiMapSourceByMapId_1 = require("../../../Core/Define/ConfigQuery/AkiMapSourceByMapId"),
+  AudioById_1 = require("../../../Core/Define/ConfigQuery/AudioById"),
+  CustomMarkAll_1 = require("../../../Core/Define/ConfigQuery/CustomMarkAll"),
+  ExploreProgressById_1 = require("../../../Core/Define/ConfigQuery/ExploreProgressById"),
+  MapNoteById_1 = require("../../../Core/Define/ConfigQuery/MapNoteById"),
+  TeleporterById_1 = require("../../../Core/Define/ConfigQuery/TeleporterById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class WorldMapConfig extends ConfigBase_1.ConfigBase {
   GetCommonValue(e) {
     return CommonParamById_1.configCommonParamById.GetIntConfig(e) ?? 0;
@@ -19,7 +19,7 @@ class WorldMapConfig extends ConfigBase_1.ConfigBase {
     return CustomMarkAll_1.configCustomMarkAll.GetConfigList();
   }
   GetAreaId(e) {
-    const r = TeleporterById_1.configTeleporterById.GetConfig(e);
+    var r = TeleporterById_1.configTeleporterById.GetConfig(e);
     return r
       ? r.AreaId
       : (Log_1.Log.CheckError() &&
@@ -27,7 +27,7 @@ class WorldMapConfig extends ConfigBase_1.ConfigBase {
         0);
   }
   GetTeleportEntityConfigId(e) {
-    const r = TeleporterById_1.configTeleporterById.GetConfig(e);
+    var r = TeleporterById_1.configTeleporterById.GetConfig(e);
     return r
       ? r.TeleportEntityConfigId
       : (Log_1.Log.CheckError() &&
@@ -35,7 +35,7 @@ class WorldMapConfig extends ConfigBase_1.ConfigBase {
         0);
   }
   GetAkiMapConfig(e) {
-    const r = AkiMapByMapId_1.configAkiMapByMapId.GetConfig(e);
+    var r = AkiMapByMapId_1.configAkiMapByMapId.GetConfig(e);
     return (
       r ||
         (Log_1.Log.CheckError() &&
@@ -44,7 +44,7 @@ class WorldMapConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetAkiMapSourceConfig(e) {
-    const r = AkiMapSourceByMapId_1.configAkiMapSourceByMapId.GetConfig(e);
+    var r = AkiMapSourceByMapId_1.configAkiMapSourceByMapId.GetConfig(e);
     return (
       r ||
         (Log_1.Log.CheckError() &&
@@ -53,7 +53,7 @@ class WorldMapConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetAudioConfig(e) {
-    const r = AudioById_1.configAudioById.GetConfig(e);
+    var r = AudioById_1.configAudioById.GetConfig(e);
     return (
       r ||
         (Log_1.Log.CheckError() &&
@@ -62,7 +62,7 @@ class WorldMapConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetDailyTaskMarkItem(e) {
-    const r = MapNoteById_1.configMapNoteById.GetConfig(1).MarkIdMap.get(e);
+    var r = MapNoteById_1.configMapNoteById.GetConfig(1).MarkIdMap.get(e);
     return (
       r ||
         (Log_1.Log.CheckError() &&
@@ -76,7 +76,7 @@ class WorldMapConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetExploreProgressInfoById(e) {
-    const r = ExploreProgressById_1.configExploreProgressById.GetConfig(e);
+    var r = ExploreProgressById_1.configExploreProgressById.GetConfig(e);
     return (
       r ||
         (Log_1.Log.CheckError() &&
@@ -92,4 +92,4 @@ class WorldMapConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.WorldMapConfig = WorldMapConfig;
-// # sourceMappingURL=WorldMapConfig.js.map
+//# sourceMappingURL=WorldMapConfig.js.map

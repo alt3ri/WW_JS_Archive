@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ReviveItem = void 0);
-const UE = require("ue");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../Ui/UiManager");
+const UE = require("ue"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../Ui/UiManager");
 class ReviveItem extends UiPanelBase_1.UiPanelBase {
   constructor(i) {
     super(),
@@ -23,7 +23,7 @@ class ReviveItem extends UiPanelBase_1.UiPanelBase {
       (this.q2t = -1),
       (this.Rgt = 1),
       (this.ToggleClick = (i) => {
-        this.wIt && i === 1 && this.wIt(this.gIt);
+        this.wIt && 1 === i && this.wIt(this.gIt);
       }),
       (this.TDe = () => {
         this.q2t <= 0
@@ -72,7 +72,7 @@ class ReviveItem extends UiPanelBase_1.UiPanelBase {
       (this.Rgt = 1);
   }
   G2t() {
-    const i = ModelManager_1.ModelManager.BuffItemModel.GetBuffItemRemainCdTime(
+    var i = ModelManager_1.ModelManager.BuffItemModel.GetBuffItemRemainCdTime(
       this.gIt,
     );
     i <= 0 ||
@@ -98,4 +98,4 @@ class ReviveItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ReviveItem = ReviveItem;
-// # sourceMappingURL=ReviveItem.js.map
+//# sourceMappingURL=ReviveItem.js.map

@@ -1,24 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ServerNotifyAssistant = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../Core/Net/Net");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const ActionTask_1 = require("../../../World/Task/ActionTask");
-const DelayTask_1 = require("../../../World/Task/DelayTask");
-const TaskSystem_1 = require("../../../World/Task/TaskSystem");
-const LevelLoadingController_1 = require("../../LevelLoading/LevelLoadingController");
-const GeneralLogicTreeDefine_1 = require("../Define/GeneralLogicTreeDefine");
-const ControllerAssistantBase_1 = require("./ControllerAssistantBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ActionTask_1 = require("../../../World/Task/ActionTask"),
+  DelayTask_1 = require("../../../World/Task/DelayTask"),
+  TaskSystem_1 = require("../../../World/Task/TaskSystem"),
+  LevelLoadingController_1 = require("../../LevelLoading/LevelLoadingController"),
+  GeneralLogicTreeDefine_1 = require("../Define/GeneralLogicTreeDefine"),
+  ControllerAssistantBase_1 = require("./ControllerAssistantBase");
 class ServerNotifyAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor() {
     super(...arguments),
       (this.XXt = (e) => {
-        const t = MathUtils_1.MathUtils.LongToBigInt(e.L5n);
-        const r =
-          ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(t);
+        var t = MathUtils_1.MathUtils.LongToBigInt(e.L5n),
+          r =
+            ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
+              t,
+            );
         r
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
@@ -42,9 +44,11 @@ class ServerNotifyAssistant extends ControllerAssistantBase_1.ControllerAssistan
             );
       }),
       (this.$Xt = (e) => {
-        const t = MathUtils_1.MathUtils.LongToBigInt(e.L5n);
-        const r =
-          ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(t);
+        var t = MathUtils_1.MathUtils.LongToBigInt(e.L5n),
+          r =
+            ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
+              t,
+            );
         r
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
@@ -64,9 +68,11 @@ class ServerNotifyAssistant extends ControllerAssistantBase_1.ControllerAssistan
             );
       }),
       (this.YXt = (e) => {
-        var t = MathUtils_1.MathUtils.LongToBigInt(e.L5n);
-        var t =
-          ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(t);
+        var t = MathUtils_1.MathUtils.LongToBigInt(e.L5n),
+          t =
+            ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
+              t,
+            );
         t
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
@@ -92,9 +98,11 @@ class ServerNotifyAssistant extends ControllerAssistantBase_1.ControllerAssistan
             );
       }),
       (this.JXt = (e) => {
-        var t = MathUtils_1.MathUtils.LongToBigInt(e.L5n);
-        var t =
-          ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(t);
+        var t = MathUtils_1.MathUtils.LongToBigInt(e.L5n),
+          t =
+            ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
+              t,
+            );
         t
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
@@ -126,11 +134,13 @@ class ServerNotifyAssistant extends ControllerAssistantBase_1.ControllerAssistan
           TaskSystem_1.TaskSystem.Run());
       }),
       (this.ZXt = (e) => {
-        let t;
-        let r;
-        const o = MathUtils_1.MathUtils.LongToBigInt(e.L5n);
-        const a =
-          ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(o);
+        var t,
+          r,
+          o = MathUtils_1.MathUtils.LongToBigInt(e.L5n),
+          a =
+            ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
+              o,
+            );
         a
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("GeneralLogicTree", 19, "服务器通知行为树回退", [
@@ -166,9 +176,11 @@ class ServerNotifyAssistant extends ControllerAssistantBase_1.ControllerAssistan
             LevelLoadingController_1.LevelLoadingController.CloseLoading(3));
       }),
       (this.e$t = (e) => {
-        const t = MathUtils_1.MathUtils.LongToBigInt(e.L5n);
-        const r =
-          ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(t);
+        var t = MathUtils_1.MathUtils.LongToBigInt(e.L5n),
+          r =
+            ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
+              t,
+            );
         r
           ? r.UpdateOccupations(e)
           : Log_1.Log.CheckError() &&
@@ -180,9 +192,11 @@ class ServerNotifyAssistant extends ControllerAssistantBase_1.ControllerAssistan
             );
       }),
       (this.i$t = (e) => {
-        const t = MathUtils_1.MathUtils.LongToBigInt(e.L5n);
-        const r =
-          ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(t);
+        var t = MathUtils_1.MathUtils.LongToBigInt(e.L5n),
+          r =
+            ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
+              t,
+            );
         r
           ? r.UpdateTimer(e.Mvs)
           : Log_1.Log.CheckError() &&
@@ -194,9 +208,11 @@ class ServerNotifyAssistant extends ControllerAssistantBase_1.ControllerAssistan
             );
       }),
       (this.o$t = (e) => {
-        const t = MathUtils_1.MathUtils.LongToBigInt(e.L5n);
-        const r =
-          ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(t);
+        var t = MathUtils_1.MathUtils.LongToBigInt(e.L5n),
+          r =
+            ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
+              t,
+            );
         r ||
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -209,7 +225,7 @@ class ServerNotifyAssistant extends ControllerAssistantBase_1.ControllerAssistan
       }),
       (this.r$t = (e) => {
         e = e.Vfs;
-        if (e && e.length !== 0)
+        if (e && 0 !== e.length)
           for (const t of e)
             ModelManager_1.ModelManager.GeneralLogicTreeModel.CreateBehaviorTree(
               t,
@@ -217,9 +233,9 @@ class ServerNotifyAssistant extends ControllerAssistantBase_1.ControllerAssistan
       }),
       (this.n$t = (e) => {
         e = e.$fs;
-        if (e && e.length !== 0)
+        if (e && 0 !== e.length)
           for (const r of e) {
-            const t = MathUtils_1.MathUtils.LongToBigInt(r);
+            var t = MathUtils_1.MathUtils.LongToBigInt(r);
             ModelManager_1.ModelManager.GeneralLogicTreeModel.RemoveBehaviorTree(
               t,
             );
@@ -265,4 +281,4 @@ class ServerNotifyAssistant extends ControllerAssistantBase_1.ControllerAssistan
   }
 }
 exports.ServerNotifyAssistant = ServerNotifyAssistant;
-// # sourceMappingURL=ServerNotifyAssistant.js.map
+//# sourceMappingURL=ServerNotifyAssistant.js.map

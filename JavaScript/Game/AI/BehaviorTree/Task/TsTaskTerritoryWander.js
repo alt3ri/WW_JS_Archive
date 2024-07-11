@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../GlobalData");
-const CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const ColorUtils_1 = require("../../../Utils/ColorUtils");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary");
-const TsAiController_1 = require("../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
-const PI = 3.14;
-const NAVIGATION_END_TIME = 5e3;
-const NAVIGATION_COMPLETE_DISTANCE = 20;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../GlobalData"),
+  CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  ColorUtils_1 = require("../../../Utils/ColorUtils"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
+  TsAiController_1 = require("../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
+  PI = 3.14,
+  NAVIGATION_END_TIME = 5e3,
+  NAVIGATION_COMPLETE_DISTANCE = 20;
 class TsTaskTerritoryWander extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -63,8 +63,8 @@ class TsTaskTerritoryWander extends TsTaskAbortImmediatelyBase_1.default {
     var s = t.AiController;
     if (s)
       if (((this.ActorComp = s.CharActorComp), this.ActorComp?.Valid)) {
-        var s = this.ActorComp.Entity;
-        const h = s.GetComponent(0);
+        var s = this.ActorComp.Entity,
+          h = s.GetComponent(0);
         if (
           ((this.MoveComp = s.GetComponent(161)),
           (this.UnifiedStateComp = s.GetComponent(89)),
@@ -157,13 +157,13 @@ class TsTaskTerritoryWander extends TsTaskAbortImmediatelyBase_1.default {
   }
   FindWanderLocation() {
     this.TargetLocation || (this.TargetLocation = Vector_1.Vector.Create());
-    const t = this.ActorComp.ActorLocationProxy;
-    const i = this.RandomPointInFanRing(
-      this.TsInnerDiameter,
-      this.TsOuterDiameter,
-      ((this.ActorComp.ActorRotationProxy.Yaw - this.TsAngle / 2) / 180) * PI,
-      ((this.ActorComp.ActorRotationProxy.Yaw + this.TsAngle / 2) / 180) * PI,
-    );
+    var t = this.ActorComp.ActorLocationProxy,
+      i = this.RandomPointInFanRing(
+        this.TsInnerDiameter,
+        this.TsOuterDiameter,
+        ((this.ActorComp.ActorRotationProxy.Yaw - this.TsAngle / 2) / 180) * PI,
+        ((this.ActorComp.ActorRotationProxy.Yaw + this.TsAngle / 2) / 180) * PI,
+      );
     (this.TargetLocation.X = t.X + i.X),
       (this.TargetLocation.Y = t.Y + i.Y),
       (this.TargetLocation.Z = t.Z),
@@ -240,4 +240,4 @@ class TsTaskTerritoryWander extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskTerritoryWander;
-// # sourceMappingURL=TsTaskTerritoryWander.js.map
+//# sourceMappingURL=TsTaskTerritoryWander.js.map

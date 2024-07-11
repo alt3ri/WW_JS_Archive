@@ -8,4 +8,4 @@ class RedDotBattleViewResonanceButton extends RedDotBase_1.RedDotBase {
   }
 }
 exports.RedDotBattleViewResonanceButton = RedDotBattleViewResonanceButton;
-// # sourceMappingURL=RedDotBattleViewResonanceButton.js.map
+//# sourceMappingURL=RedDotBattleViewResonanceButton.js.map

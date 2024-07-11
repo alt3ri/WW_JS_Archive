@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityTimePointRewardData = exports.TimePointRewardData = void 0);
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ActivityData_1 = require("../../ActivityData");
+const MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ActivityData_1 = require("../../ActivityData");
 class TimePointRewardData {
   constructor() {
     (this.Id = 0),
@@ -40,7 +40,7 @@ class ActivityTimePointRewardData extends ActivityData_1.ActivityBaseData {
     }
   }
   GetExDataRedPointShowState() {
-    for (const t of this.A8s.values()) if (t.RewardState === 1) return !0;
+    for (const t of this.A8s.values()) if (1 === t.RewardState) return !0;
     return !1;
   }
   SetRewardToGotState(t) {
@@ -51,7 +51,7 @@ class ActivityTimePointRewardData extends ActivityData_1.ActivityBaseData {
           EventDefine_1.EEventName.RefreshCommonActivityRedDot,
           this.Id,
         );
-      for (const e of this.A8s.values()) if (e.RewardState !== 2) return;
+      for (const e of this.A8s.values()) if (2 !== e.RewardState) return;
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshActivityTab,
         this.Id,
@@ -63,4 +63,4 @@ class ActivityTimePointRewardData extends ActivityData_1.ActivityBaseData {
   }
 }
 exports.ActivityTimePointRewardData = ActivityTimePointRewardData;
-// # sourceMappingURL=ActivityTimePointRewardData.js.map
+//# sourceMappingURL=ActivityTimePointRewardData.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FilterGroup = exports.FilterItem = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase");
-const GenericLayoutNew_1 = require("../../../../Util/Layout/GenericLayoutNew");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase"),
+  GenericLayoutNew_1 = require("../../../../Util/Layout/GenericLayoutNew");
 class FilterItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -28,14 +28,14 @@ class FilterItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.cLt]]);
   }
   mLt() {
-    const t = this.Pe.Content;
+    var t = this.Pe.Content;
     this.GetText(4).SetText(t);
   }
   Dnt() {
-    let t;
-    let i;
-    const e = this.Pe.GetIconPath();
-    let s = this.GetItem(1);
+    var t,
+      i,
+      e = this.Pe.GetIconPath(),
+      s = this.GetItem(1);
     StringUtils_1.StringUtils.IsBlank(e)
       ? s.SetUIActive(!1)
       : (s.SetUIActive(!0),
@@ -73,14 +73,14 @@ class FilterGroup extends UiPanelBase_1.UiPanelBase {
       (this.CurrentSelectedDataMap = void 0),
       (this.pLt = void 0),
       (this.vLt = (e) => {
-        if (e === 1)
+        if (1 === e)
           for (const i of this.Layout.GetLayoutItemMap().keys()) {
-            const t = i;
+            var t = i;
             this.gLt.set(t.FilterId, t.Content),
               this.fLt?.(e, t.FilterId, t.Content);
           }
         else
-          e === 0 &&
+          0 === e &&
             (this.gLt.forEach((t, i) => {
               this.fLt?.(e, i, t);
             }),
@@ -88,12 +88,12 @@ class FilterGroup extends UiPanelBase_1.UiPanelBase {
         this.RefreshGroupItem();
       }),
       (this.MLt = (t, i, e) => {
-        var i = new FilterItem(i);
-        const s = (i.SetToggleFunction(this.SLt), this.gLt.has(t.FilterId));
+        var i = new FilterItem(i),
+          s = (i.SetToggleFunction(this.SLt), this.gLt.has(t.FilterId));
         return i.ShowTemp(t, s), { Key: t, Value: i };
       }),
       (this.SLt = (t, i, e) => {
-        t === 1 ? this.gLt.set(i, e) : this.gLt.delete(i),
+        1 === t ? this.gLt.set(i, e) : this.gLt.delete(i),
           this.RefreshSelectAllToggleState(),
           this.U4e?.(t, i, e);
       }),
@@ -124,27 +124,27 @@ class FilterGroup extends UiPanelBase_1.UiPanelBase {
     this.fLt = t;
   }
   ELt() {
-    const t = ConfigManager_1.ConfigManager.FilterConfig.GetFilterRuleConfig(
+    var t = ConfigManager_1.ConfigManager.FilterConfig.GetFilterRuleConfig(
       this.dLt,
     );
     this.CLt = t.FilterType;
   }
   yLt() {
     this.gLt = new Map();
-    const t = ModelManager_1.ModelManager.FilterModel.GetFilterResultData(
+    var t = ModelManager_1.ModelManager.FilterModel.GetFilterResultData(
       this.Mne,
     ).GetSelectRuleDataById(this.CLt);
-    if (t) for (const [i, e] of t) this.gLt.set(i, e);
+    if (t) for (var [i, e] of t) this.gLt.set(i, e);
   }
   AddCurrentSelectedFilterData() {
     this.pLt.forEach((t) => {
-      var t = t.FilterId;
-      const i = this.CurrentSelectedDataMap?.get(t);
+      var t = t.FilterId,
+        i = this.CurrentSelectedDataMap?.get(t);
       i && this.gLt.set(t, i);
     });
   }
   ILt() {
-    const t = ConfigManager_1.ConfigManager.FilterConfig.GetFilterRuleConfig(
+    var t = ConfigManager_1.ConfigManager.FilterConfig.GetFilterRuleConfig(
       this.dLt,
     );
     this.GetText(0).ShowTextNew(t.Title);
@@ -153,13 +153,13 @@ class FilterGroup extends UiPanelBase_1.UiPanelBase {
     this.Layout.RebuildLayoutByDataNew(this.pLt);
   }
   LLt() {
-    const t = ConfigManager_1.ConfigManager.FilterConfig.GetFilterConfig(
+    var t = ConfigManager_1.ConfigManager.FilterConfig.GetFilterConfig(
       this.Mne,
     );
     this.GetItem(1).SetUIActive(t.IsSupportSelectAll);
   }
   RefreshSelectAllToggleState() {
-    let t;
+    var t;
     ConfigManager_1.ConfigManager.FilterConfig.GetFilterConfig(this.Mne)
       .IsSupportSelectAll &&
       ((t = ConfigManager_1.ConfigManager.FilterConfig.GetFilterRuleConfig(
@@ -189,9 +189,9 @@ class FilterGroup extends UiPanelBase_1.UiPanelBase {
       this.TLt();
   }
   RefreshGroupItem() {
-    let t, i;
+    var t, i;
     for ([t, i] of this.Layout.GetLayoutItemMap()) {
-      const e = t;
+      var e = t;
       i.SetToggleState(this.gLt.has(e.FilterId));
     }
   }
@@ -206,4 +206,4 @@ class FilterGroup extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.FilterGroup = FilterGroup;
-// # sourceMappingURL=FilterGroup.js.map
+//# sourceMappingURL=FilterGroup.js.map

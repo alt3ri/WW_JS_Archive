@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChapterDivideFloatTips = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const QuestChapterById_1 = require("../../../../Core/Define/ConfigQuery/QuestChapterById");
-const GenericPromptFloatTipsBase_1 = require("./GenericPromptFloatTipsBase");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  QuestChapterById_1 = require("../../../../Core/Define/ConfigQuery/QuestChapterById"),
+  GenericPromptFloatTipsBase_1 = require("./GenericPromptFloatTipsBase");
 class ChapterDivideFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptFloatTipsBase {
   constructor() {
     super(...arguments),
@@ -40,19 +40,19 @@ class ChapterDivideFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptF
           ]));
   }
   SetExtraText(...t) {
-    let e = t[0];
+    var e = t[0];
     this._Yt(e),
       this.aYt &&
         this.SetTextureByPath(this.aYt.ChapterIcon, this.GetTexture(3)),
       this.aYt &&
         this.ExtraText.SetText(this.CombineChapterExtraText(this.aYt)),
-      t.length > 1 && ((e = t[1]), this.GetText(2)?.SetText(e));
+      1 < t.length && ((e = t[1]), this.GetText(2)?.SetText(e));
   }
   OnBeforeShow() {
-    let t;
+    var t;
     this.GetButton(4)?.RootUIComp.SetRaycastTarget(!1),
-      (this.Info.Name !== "ChapterEndFloatTips" &&
-        this.Info.Name !== "FlowChapterEndTips") ||
+      ("ChapterEndFloatTips" !== this.Info.Name &&
+        "FlowChapterEndTips" !== this.Info.Name) ||
         (((t = this.OpenParam).StartSequenceName = "Accomplish"),
         this.UiViewSequence?.SetSequenceName(t));
   }
@@ -65,4 +65,4 @@ class ChapterDivideFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptF
   }
 }
 exports.ChapterDivideFloatTips = ChapterDivideFloatTips;
-// # sourceMappingURL=ChapterDivideFloatTips.js.map
+//# sourceMappingURL=ChapterDivideFloatTips.js.map

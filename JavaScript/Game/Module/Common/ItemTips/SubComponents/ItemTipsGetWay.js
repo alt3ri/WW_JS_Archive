@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TipsGetWayItem = exports.TipsGetWayPanel = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const GenericLayoutNew_1 = require("../../../Util/Layout/GenericLayoutNew");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  GenericLayoutNew_1 = require("../../../Util/Layout/GenericLayoutNew");
 class TipsGetWayPanel extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -31,13 +31,13 @@ class TipsGetWayPanel extends UiPanelBase_1.UiPanelBase {
   }
   Refresh(t) {
     t.sort((t, e) => {
-      const s = t.SortIndex;
-      const i = e.SortIndex;
+      var s = t.SortIndex,
+        i = e.SortIndex;
       return s === i ? e.Id - t.Id : i - s;
     }),
       (this.vPt = t),
       this.MPt.RebuildLayoutByDataNew(this.vPt),
-      this.SetActive(this.vPt.length !== 0);
+      this.SetActive(0 !== this.vPt.length);
   }
 }
 exports.TipsGetWayPanel = TipsGetWayPanel;
@@ -81,4 +81,4 @@ class TipsGetWayItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.TipsGetWayItem = TipsGetWayItem;
-// # sourceMappingURL=ItemTipsGetWay.js.map
+//# sourceMappingURL=ItemTipsGetWay.js.map

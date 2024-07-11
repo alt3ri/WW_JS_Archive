@@ -5,10 +5,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.TutorialUtils =
     exports.ETutorialType =
       void 0);
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-let ETutorialType;
+const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigManager_1 = require("../../Manager/ConfigManager");
+var ETutorialType;
 !(function (t) {
   (t[(t.All = 0)] = "All"),
     (t[(t.QteReaction = 1)] = "QteReaction"),
@@ -80,4 +80,4 @@ class TutorialSaveData {
   }
 }
 exports.TutorialSaveData = TutorialSaveData;
-// # sourceMappingURL=TutorialDefine.js.map
+//# sourceMappingURL=TutorialDefine.js.map

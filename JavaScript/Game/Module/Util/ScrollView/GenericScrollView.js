@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GenericScrollView = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const GenericLayoutNew_1 = require("../Layout/GenericLayoutNew");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  GenericLayoutNew_1 = require("../Layout/GenericLayoutNew");
 class GenericScrollView {
   constructor(t, e, i = void 0) {
     (this.CGo = void 0),
@@ -112,4 +112,4 @@ class GenericScrollView {
   }
 }
 exports.GenericScrollView = GenericScrollView;
-// # sourceMappingURL=GenericScrollView.js.map
+//# sourceMappingURL=GenericScrollView.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AddBulletTrigger = void 0);
-const BulletController_1 = require("../../../../../Bullet/BulletController");
-const ExtraEffectPassiveEffects_1 = require("./ExtraEffectPassiveEffects");
+const BulletController_1 = require("../../../../../Bullet/BulletController"),
+  ExtraEffectPassiveEffects_1 = require("./ExtraEffectPassiveEffects");
 class AddBulletTrigger extends ExtraEffectPassiveEffects_1.PassiveEffects {
   constructor() {
     super(...arguments), (this.BulletIds = []), (this.BulletDtType = -1);
@@ -15,11 +15,11 @@ class AddBulletTrigger extends ExtraEffectPassiveEffects_1.PassiveEffects {
       (this.BulletDtType = Number(t[3] ?? -1));
   }
   OnExecute() {
-    const t = this.GetEffectTarget()?.GetEntity();
-    const e = t?.CheckGetComponent(3)?.ActorTransform;
-    const s = this.InstigatorBuffComponent?.ActorComponent?.Actor;
+    var t = this.GetEffectTarget()?.GetEntity(),
+      e = t?.CheckGetComponent(3)?.ActorTransform,
+      s = this.InstigatorBuffComponent?.ActorComponent?.Actor;
     if (t && s && e) {
-      const r = this.Buff.MessageId;
+      var r = this.Buff.MessageId;
       for (const i of this.BulletIds)
         BulletController_1.BulletController.CreateBulletCustomTarget(
           s,
@@ -32,4 +32,4 @@ class AddBulletTrigger extends ExtraEffectPassiveEffects_1.PassiveEffects {
   }
 }
 exports.AddBulletTrigger = AddBulletTrigger;
-// # sourceMappingURL=ExtraEffectAddBulletTrigger.js.map
+//# sourceMappingURL=ExtraEffectAddBulletTrigger.js.map

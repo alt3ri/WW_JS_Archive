@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuideFocusView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const InputManager_1 = require("../../../Ui/Input/InputManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const GuideBaseView_1 = require("./GuideBaseView");
-const GuideFocusItem_1 = require("./GuideFocusItem");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  InputManager_1 = require("../../../Ui/Input/InputManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  GuideBaseView_1 = require("./GuideBaseView"),
+  GuideFocusItem_1 = require("./GuideFocusItem");
 class GuideFocusView extends GuideBaseView_1.GuideBaseView {
   constructor() {
     super(...arguments),
@@ -21,7 +21,7 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
       (this.nzt = void 0),
       (this.szt = void 0),
       (this.azt = () => {
-        let t;
+        var t;
         !this.hzt ||
           ((t = UiManager_1.UiManager.GetViewByName(
             "BattleView",
@@ -30,7 +30,7 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
           this.GuideStepInfo.SwitchState(3);
       }),
       (this.lzt = () => {
-        const t = this._zt();
+        var t = this._zt();
         this.SetActive(t),
           this.IsAttachItemsReady !== t &&
             (this.IsAttachItemsReady = t) &&
@@ -105,7 +105,7 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
   }
   OnGuideBaseViewAfterHide() {
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.RefreshCursor);
-    const t = this.Config.InputEnums;
+    var t = this.Config.InputEnums;
     this.UnbindInput(this.Config.InputEnums, t),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.RefreshCursor);
   }
@@ -114,9 +114,9 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
   }
   get hzt() {
     return (
-      this.Config?.ViewName === "BattleView" &&
+      "BattleView" === this.Config?.ViewName &&
       this.Config.ExtraParam &&
-      this.Config.ExtraParam[0] === "Skill"
+      "Skill" === this.Config.ExtraParam[0]
     );
   }
   OnGuideBaseViewTick(t) {
@@ -142,7 +142,7 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
     this.nzt?.OnDurationChange(t);
   }
   _zt() {
-    let t = this.GuideStepInfo.ViewData.GetAttachedView();
+    var t = this.GuideStepInfo.ViewData.GetAttachedView();
     if (
       !t ||
       !t.GetRootActor() ||
@@ -158,8 +158,8 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
     );
   }
   uzt() {
-    let t;
-    const i = this.GuideStepInfo.ViewData.GetAttachedUiItem();
+    var t,
+      i = this.GuideStepInfo.ViewData.GetAttachedUiItem();
     i?.IsValid() &&
       ((t = this.GuideStepInfo.ViewData.GetAttachedUiItemForShow()),
       (this.nzt = this.Czt(i, t)),
@@ -195,7 +195,7 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
     return this.Config;
   }
   BindInputAfterSequence() {
-    const t = this.Config.InputEnums;
+    var t = this.Config.InputEnums;
     this.BindInput(this.Config.InputEnums, t, this.mzt);
   }
   OnGuideViewCloseWhenFinish() {
@@ -204,10 +204,10 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
       this.nzt?.OnBaseViewCloseWhenFinish();
   }
   Czt(t, i) {
-    const e = this.GetItem(0);
-    var t = (e.SetActive(!1), new GuideFocusItem_1.GuideFocusItem(t, i, this));
+    var e = this.GetItem(0),
+      t = (e.SetActive(!1), new GuideFocusItem_1.GuideFocusItem(t, i, this));
     return t.Init(e), t;
   }
 }
 exports.GuideFocusView = GuideFocusView;
-// # sourceMappingURL=GuideFocusView.js.map
+//# sourceMappingURL=GuideFocusView.js.map

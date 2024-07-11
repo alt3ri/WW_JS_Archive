@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const GlobalData_1 = require("../../../GlobalData");
-const AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../GlobalData"),
+  AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskTurnToTarget extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -21,9 +21,9 @@ class TsTaskTurnToTarget extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveTickAI(e, s, t) {
     this.InitTsVariables();
-    const r = e.AiController;
+    var r = e.AiController;
     if (r) {
-      const i = r.CharActorComp;
+      var i = r.CharActorComp;
       let e = r.AiHateList.GetCurrentTarget()?.Entity?.GetComponent(3);
       (e = this.TsBlackboardKeyActor
         ? r.CharAiDesignComp.Entity.GetComponent(3)
@@ -45,4 +45,4 @@ class TsTaskTurnToTarget extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskTurnToTarget;
-// # sourceMappingURL=TsTaskTurnToTarget.js.map
+//# sourceMappingURL=TsTaskTurnToTarget.js.map

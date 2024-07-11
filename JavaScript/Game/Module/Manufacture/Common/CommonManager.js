@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RewardPopViewData = exports.CommonManager = void 0);
-const UiPopViewData_1 = require("../../../Ui/Define/UiPopViewData");
-const CookController_1 = require("../../Cook/CookController");
-const ComposeController_1 = require("../Compose/ComposeController");
-const ForgingController_1 = require("../Forging/ForgingController");
+const UiPopViewData_1 = require("../../../Ui/Define/UiPopViewData"),
+  CookController_1 = require("../../Cook/CookController"),
+  ComposeController_1 = require("../Compose/ComposeController"),
+  ForgingController_1 = require("../Forging/ForgingController");
 class CommonManager {
   static SetCurrentSystem(e) {
     CommonManager.Pyi = e;
@@ -63,48 +63,48 @@ class CommonManager {
     );
   }
   static GetSelectedLevel() {
-    if (CommonManager.Pyi === 1)
+    if (1 === CommonManager.Pyi)
       return ComposeController_1.ComposeController.GetSelectedComposeLevel();
   }
   static SetSelectedLevel(e) {
-    CommonManager.Pyi === 1 &&
+    1 === CommonManager.Pyi &&
       ComposeController_1.ComposeController.SetSelectedComposeLevel(e);
   }
   static GetCurrentRewardLevel() {
-    if (CommonManager.Pyi === 1)
+    if (1 === CommonManager.Pyi)
       return ComposeController_1.ComposeController.GetRewardLevelInfo()
         .ComposeLevel;
   }
   static GetCurrentRewardTotalProficiency() {
-    if (CommonManager.Pyi === 1)
+    if (1 === CommonManager.Pyi)
       return ComposeController_1.ComposeController.GetRewardLevelInfo()
         .TotalProficiency;
   }
   static GetCurrentRewardAddExp() {
-    if (CommonManager.Pyi === 1)
+    if (1 === CommonManager.Pyi)
       return ComposeController_1.ComposeController.GetRewardLevelInfo().AddExp;
   }
   static GetComposeLevelByLevel(e) {
-    if (CommonManager.Pyi === 1)
+    if (1 === CommonManager.Pyi)
       return ComposeController_1.ComposeController.GetComposeLevelByLevel(e);
   }
   static GetLevelUpgradeTypeTexture(e) {
-    if (CommonManager.Pyi === 1) return "T_ComposeTypeLevel" + e;
+    if (1 === CommonManager.Pyi) return "T_ComposeTypeLevel" + e;
   }
   static GetSumExpByLevel(e) {
-    if (CommonManager.Pyi === 1)
+    if (1 === CommonManager.Pyi)
       return ComposeController_1.ComposeController.GetSumExpByLevel(e);
   }
   static GetDropIdByLevel(e) {
-    if (CommonManager.Pyi === 1)
+    if (1 === CommonManager.Pyi)
       return ComposeController_1.ComposeController.GetDropIdByLevel(e);
   }
   static GetComposeMaxLevel() {
-    if (CommonManager.Pyi === 1)
+    if (1 === CommonManager.Pyi)
       return ComposeController_1.ComposeController.GetComposeMaxLevel();
   }
   static SendLevelRewardRequest() {
-    CommonManager.Pyi === 1 &&
+    1 === CommonManager.Pyi &&
       ComposeController_1.ComposeController.SendSynthesisLevelRewardRequest();
   }
   static CheckIsBuffEx(e, o) {
@@ -143,13 +143,13 @@ class CommonManager {
   }
   static GetMaxCreateCount(e) {
     return (
-      CommonManager.Pyi !== 1
+      1 !== CommonManager.Pyi
         ? ForgingController_1.ForgingController
         : ComposeController_1.ComposeController
     ).GetMaxCreateCount(e);
   }
   static CheckCanManufacture(e) {
-    if (CommonManager.Pyi === 2)
+    if (2 === CommonManager.Pyi)
       return ForgingController_1.ForgingController.CheckCanForging(e);
   }
   static SendManufacture(e, o) {
@@ -205,7 +205,7 @@ class CommonManager {
     }
   }
   static CheckCanShowExpItem() {
-    if (CommonManager.Pyi === 1)
+    if (1 === CommonManager.Pyi)
       return ComposeController_1.ComposeController.CheckCanShowExpItem();
   }
   static CheckShowAmountItem() {
@@ -224,4 +224,4 @@ class RewardPopViewData extends UiPopViewData_1.UiPopViewData {
   }
 }
 exports.RewardPopViewData = RewardPopViewData;
-// # sourceMappingURL=CommonManager.js.map
+//# sourceMappingURL=CommonManager.js.map

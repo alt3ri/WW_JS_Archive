@@ -15,13 +15,13 @@ class LogCaptureController {
       : 0;
   }
   static RemoveCaptureCallback(o) {
-    let r;
+    var r;
     LogCaptureController.l9.has(o) &&
       ((r = LogCaptureController.l9.get(o).LogLevel),
       LogCaptureController._9.get(r).delete(o),
       LogCaptureController.l9.delete(o),
       (LogCaptureController.RegisterCapture[r] =
-        LogCaptureController.l9.size !== 0));
+        0 !== LogCaptureController.l9.size));
   }
   static LogCapture(o, r, e, t, l) {
     if (
@@ -37,4 +37,4 @@ class LogCaptureController {
   (LogCaptureController.RegisterCapture = []),
   (LogCaptureController.l9 = new Map()),
   (LogCaptureController._9 = new Map());
-// # sourceMappingURL=LogCaptureController.js.map
+//# sourceMappingURL=LogCaptureController.js.map

@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SimpleNpcFlowLogic = void 0);
-const UE = require("ue");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const Global_1 = require("../../../../Global");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const NpcIconComponent_1 = require("../../../../Module/NPC/NpcIconComponent");
-const SimpleNpcMultiplyLogic_1 = require("./SimpleNpcMultiplyLogic");
-const STOP_MONTAGE_BLEND_OUT_TIME = 0.3;
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  Global_1 = require("../../../../Global"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  NpcIconComponent_1 = require("../../../../Module/NPC/NpcIconComponent"),
+  SimpleNpcMultiplyLogic_1 = require("./SimpleNpcMultiplyLogic"),
+  STOP_MONTAGE_BLEND_OUT_TIME = 0.3;
 class SimpleNpcFlowLogic {
   constructor(t) {
     (this.sir = void 0),
@@ -30,7 +30,7 @@ class SimpleNpcFlowLogic {
       UE.SimpleNpcFlowComponent_C.StaticClass(),
     )),
       this.air &&
-        this.air.FlowList?.Num() > 0 &&
+        0 < this.air.FlowList?.Num() &&
         ((this.lir = new SimpleNpcMultiplyLogic_1.SimpleNpcMultiplyLogic(
           this.air,
         )),
@@ -38,7 +38,7 @@ class SimpleNpcFlowLogic {
         this.fir());
   }
   gir() {
-    const t = this.air.CheckRange;
+    var t = this.air.CheckRange;
     (this.cir = t.LowerBound.Value * t.LowerBound.Value),
       (this.mir = t.UpperBound.Value * t.UpperBound.Value);
   }
@@ -49,7 +49,7 @@ class SimpleNpcFlowLogic {
       this.sir?.Mesh
     ) {
       let t = 1500;
-      const i = (t = this.air ? this.air.CheckRange.UpperBound.Value : t) + 500;
+      var i = (t = this.air ? this.air.CheckRange.UpperBound.Value : t) + 500;
       (this.hir = new NpcIconComponent_1.NpcIconComponent(this)),
         this.hir.SetupCheckRange(i * i),
         await this.hir.AddNpcIconAsync(void 0),
@@ -65,7 +65,7 @@ class SimpleNpcFlowLogic {
     this.hir?.HideDialogueText();
   }
   TryPlayMontage(t) {
-    if (this.sir.Mesh && this.sir.Mesh.AnimationMode !== 1) {
+    if (this.sir.Mesh && 1 !== this.sir.Mesh.AnimationMode) {
       const i = this.sir.Mesh.AnimScriptInstance;
       i &&
         (t = this.pir(t)) &&
@@ -79,7 +79,7 @@ class SimpleNpcFlowLogic {
   }
   vir() {
     if (!this.uir) {
-      let i = this.sir.Mesh.AnimScriptInstance;
+      var i = this.sir.Mesh.AnimScriptInstance;
       if (i) {
         i = UE.KismetSystemLibrary.GetPathName(i);
         if (i) {
@@ -99,21 +99,21 @@ class SimpleNpcFlowLogic {
       : (this.vir(), this.uir ? this.uir + `/${t}.` + t : void 0);
   }
   Tick(t) {
-    this._ir > 0 && ((this._ir -= t), this._ir < 0) && this.StopMontage(),
+    0 < this._ir && ((this._ir -= t), this._ir < 0) && this.StopMontage(),
       this.lir && (this.fir(), this.lir.Tick(t));
   }
   StopMontage() {
-    let t;
+    var t;
     (this._ir = 0),
       this.sir &&
         this.sir.Mesh &&
-        this.sir.Mesh.AnimationMode !== 1 &&
+        1 !== this.sir.Mesh.AnimationMode &&
         (t = this.sir.Mesh.AnimScriptInstance) &&
         t.IsAnyMontagePlaying() &&
         t.Montage_Stop(STOP_MONTAGE_BLEND_OUT_TIME);
   }
   fir() {
-    let t = Global_1.Global.BaseCharacter;
+    var t = Global_1.Global.BaseCharacter;
     t &&
       ((t = t.CharacterActorComponent.ActorLocation),
       (t = UE.Vector.DistSquared2D(t, this.Cir)) < this.cir
@@ -150,8 +150,8 @@ class SimpleNpcFlowLogic {
     return ConfigManager_1.ConfigManager.NpcIconConfig.GetNpcIconSocketName();
   }
   GetAttachToLocation(t) {
-    const i = this.sir.CapsuleCollision.CapsuleHalfHeight;
-    const s = this.sir.SelfLocationProxy;
+    var i = this.sir.CapsuleCollision.CapsuleHalfHeight,
+      s = this.sir.SelfLocationProxy;
     t.Set(s.X, s.Y, s.Z + i);
   }
   GetAddOffsetZ() {
@@ -171,4 +171,4 @@ class SimpleNpcFlowLogic {
   }
 }
 exports.SimpleNpcFlowLogic = SimpleNpcFlowLogic;
-// # sourceMappingURL=SimpleNpcFlowLogic.js.map
+//# sourceMappingURL=SimpleNpcFlowLogic.js.map

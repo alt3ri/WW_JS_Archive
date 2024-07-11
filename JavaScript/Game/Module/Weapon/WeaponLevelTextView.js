@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponLevelTextView = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../Util/LguiUtil");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../Util/LguiUtil");
 class WeaponLevelTextView extends UiPanelBase_1.UiPanelBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -26,4 +26,4 @@ class WeaponLevelTextView extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.WeaponLevelTextView = WeaponLevelTextView;
-// # sourceMappingURL=WeaponLevelTextView.js.map
+//# sourceMappingURL=WeaponLevelTextView.js.map

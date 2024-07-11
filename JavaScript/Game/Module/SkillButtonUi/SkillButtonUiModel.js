@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkillButtonUiModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const SkillButtonTextAll_1 = require("../../../Core/Define/ConfigQuery/SkillButtonTextAll");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const SkillButtonEntityData_1 = require("./SkillButtonEntityData");
-const SkillButtonUiGamepadData_1 = require("./SkillButtonUiGamepadData");
-const behaviorIconResMap = new Map([
-  [101, ["SP_IconAim", "SP_IconAimPre"]],
-  [102, ["SP_IconLock", "SP_IconLockPre"]],
-  [104, ["SP_IconXboxIcon1"]],
-]);
+const Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  SkillButtonTextAll_1 = require("../../../Core/Define/ConfigQuery/SkillButtonTextAll"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  SkillButtonEntityData_1 = require("./SkillButtonEntityData"),
+  SkillButtonUiGamepadData_1 = require("./SkillButtonUiGamepadData"),
+  behaviorIconResMap = new Map([
+    [101, ["SP_IconAim", "SP_IconAimPre"]],
+    [102, ["SP_IconLock", "SP_IconLockPre"]],
+    [104, ["SP_IconXboxIcon1"]],
+  ]);
 class SkillButtonUiModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -35,8 +35,8 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
         "SkillButtonRotationRate",
       )),
       this.BehaviorIconPathMap.clear();
-    for (const [t, e] of behaviorIconResMap) {
-      const i = [];
+    for (var [t, e] of behaviorIconResMap) {
+      var i = [];
       for (const n of e)
         i.push(
           ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(n),
@@ -70,14 +70,14 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
     return this.myo.get(t);
   }
   CreateAllSkillButtonEntityData() {
-    const t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     for (const e of ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities())
       e === t
         ? (this.dyo = this.CreateSkillButtonEntityData(e, !0))
         : this.CreateSkillButtonEntityData(e, !1);
   }
   CreateSkillButtonEntityData(t, e) {
-    const i = t.Entity.Id;
+    var i = t.Entity.Id;
     let n = this.myo.get(i);
     return (
       n
@@ -92,17 +92,17 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
     this.myo.clear(), (this.dyo = void 0);
   }
   OnRemoveEntity(t) {
-    const e = this.myo.get(t.Id);
+    var e = this.myo.get(t.Id);
     e &&
       (this.myo.delete(t.Id), e.Clear(), e === this.dyo) &&
       (this.dyo = void 0);
   }
   RefreshSkillButtonData(e, t, i) {
     if (
-      (i === 0 &&
+      (0 === i &&
         (this.ClearAllSkillButtonEntityData(),
         this.CreateAllSkillButtonEntityData()),
-      i === 1)
+      1 === i)
     ) {
       let t = !1;
       for (const n of this.myo.values())
@@ -127,9 +127,9 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
   }
   RefreshSkillButtonIndex(t, e, i) {
     if (((this.IsNormalButtonTypeList = !1), t)) {
-      let n;
-      let o;
-      const a = e.Entity.GetComponent(185);
+      var n,
+        o,
+        a = e.Entity.GetComponent(185);
       for ([n, o] of i ? t.DesktopButtonTypeMap : t.PadButtonTypeMap)
         if (a.HasTag(GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(n)))
           return void (this.Cyo = o.ArrayInt);
@@ -159,7 +159,7 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
   }
   OnSkillCdChanged(t) {
     for (const i of t.EntityIds) {
-      const e = this.myo.get(i);
+      var e = this.myo.get(i);
       if (e) for (const n of t.SkillCdInfoMap.keys()) e.RefreshSkillCd(n);
     }
   }
@@ -193,10 +193,10 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
   fyo() {
     if (!this.gyo) {
       this.gyo = new Map();
-      const t = SkillButtonTextAll_1.configSkillButtonTextAll.GetConfigList();
+      var t = SkillButtonTextAll_1.configSkillButtonTextAll.GetConfigList();
       if (t) for (const e of t) this.gyo.set(e.Id, e.Name);
     }
   }
 }
 exports.SkillButtonUiModel = SkillButtonUiModel;
-// # sourceMappingURL=SkillButtonUiModel.js.map
+//# sourceMappingURL=SkillButtonUiModel.js.map

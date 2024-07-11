@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CountDownTimer = void 0);
-const Time_1 = require("../../../../Core/Common/Time");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const GeneralLogicTreeController_1 = require("../GeneralLogicTreeController");
-const LogicTreeTimerBase_1 = require("./LogicTreeTimerBase");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const GENERAL_TIP_ID = 19;
-const ONE_HUNDRED = 100;
+const Time_1 = require("../../../../Core/Common/Time"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  GeneralLogicTreeController_1 = require("../GeneralLogicTreeController"),
+  LogicTreeTimerBase_1 = require("./LogicTreeTimerBase"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  GENERAL_TIP_ID = 19,
+  ONE_HUNDRED = 100;
 class CountDownTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
   constructor(e, t, i) {
     super(e, t, !0, i),
@@ -23,8 +23,8 @@ class CountDownTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
       (this.y$t = !1),
       (this.I$t = 0),
       (this.OnTick = (e) => {
-        let t = TimeUtil_1.TimeUtil.GetServerTimeStamp();
-        const i = t - this.I$t;
+        var t = TimeUtil_1.TimeUtil.GetServerTimeStamp(),
+          i = t - this.I$t;
         (this.I$t = t),
           ModelManager_1.ModelManager.GeneralLogicTreeModel.TimeStop ||
             ((this.E$t += i * Time_1.Time.TimeDilation),
@@ -32,7 +32,7 @@ class CountDownTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
       }),
       (this.D$t = (e, t, i, r) => {
         if (e && e === this.TreeId && this.InnerTimerType === t) {
-          const o = 1e3 * r;
+          var o = 1e3 * r;
           switch (i) {
             case Protocol_1.Aki.Protocol.uqs.Proto_Add:
               this.M$t += o;
@@ -93,21 +93,21 @@ class CountDownTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
       this.OnAddEvents());
   }
   R$t(e) {
-    const t =
-      ConfigManager_1.ConfigManager.GenericPromptConfig.GetPromptInfo(
-        GENERAL_TIP_ID,
-      );
-    const i = [];
-    var r = Math.floor(
-      (e % TimeUtil_1.TimeUtil.Hour) / TimeUtil_1.TimeUtil.Minute,
-    );
-    const o = Math.floor(e % TimeUtil_1.TimeUtil.Minute);
-    const n = Math.floor((e - Math.floor(e)) * ONE_HUNDRED);
-    var r =
-      (i.push((r < 10 ? "0" : "") + r),
-      i.push((o < 10 ? "0" : "") + o),
-      i.push((n < 10 ? "0" : "") + n),
-      UiManager_1.UiManager.GetViewByName("CountDownFloatTips"));
+    var t =
+        ConfigManager_1.ConfigManager.GenericPromptConfig.GetPromptInfo(
+          GENERAL_TIP_ID,
+        ),
+      i = [],
+      r = Math.floor(
+        (e % TimeUtil_1.TimeUtil.Hour) / TimeUtil_1.TimeUtil.Minute,
+      ),
+      o = Math.floor(e % TimeUtil_1.TimeUtil.Minute),
+      n = Math.floor((e - Math.floor(e)) * ONE_HUNDRED),
+      r =
+        (i.push((r < 10 ? "0" : "") + r),
+        i.push((o < 10 ? "0" : "") + o),
+        i.push((n < 10 ? "0" : "") + n),
+        UiManager_1.UiManager.GetViewByName("CountDownFloatTips"));
     (r &&
       !ModelManager_1.ModelManager.GeneralLogicTreeModel
         .CountDownViewClosing) ||
@@ -125,7 +125,7 @@ class CountDownTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
     this.OnRemoveEvents(), this.L$t(void 0, this.GetRemainTime() <= 0);
   }
   GetRemainTime() {
-    const e = (this.M$t - (this.S$t + this.E$t)) / 1e3;
+    var e = (this.M$t - (this.S$t + this.E$t)) / 1e3;
     return Math.max(e, 0);
   }
   L$t(e, t) {
@@ -148,4 +148,4 @@ class CountDownTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
   }
 }
 exports.CountDownTimer = CountDownTimer;
-// # sourceMappingURL=CountDownTimer.js.map
+//# sourceMappingURL=CountDownTimer.js.map

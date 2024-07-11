@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityUniversalController = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const RoguelikeController_1 = require("../../../Roguelike/RoguelikeController");
-const WorldMapController_1 = require("../../../WorldMap/WorldMapController");
-const ActivityControllerBase_1 = require("../../ActivityControllerBase");
-const ActivitySubViewUniversal_1 = require("./ActivitySubViewUniversal");
-const ActivityUniversalData_1 = require("./ActivityUniversalData");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  RoguelikeController_1 = require("../../../Roguelike/RoguelikeController"),
+  WorldMapController_1 = require("../../../WorldMap/WorldMapController"),
+  ActivityControllerBase_1 = require("../../ActivityControllerBase"),
+  ActivitySubViewUniversal_1 = require("./ActivitySubViewUniversal"),
+  ActivityUniversalData_1 = require("./ActivityUniversalData");
 class ActivityUniversalController extends ActivityControllerBase_1.ActivityControllerBase {
   OnGetIsOpeningActivityRelativeView() {
     return !1;
   }
   OnOpenView(e) {
-    this.o2e(e.Id) === 2 &&
+    2 === this.o2e(e.Id) &&
       ActivityUniversalController.ActivityFunctionExecute(e.Id);
   }
   o2e(e) {
@@ -58,20 +58,20 @@ class ActivityUniversalController extends ActivityControllerBase_1.ActivityContr
     );
   }
   static ActivityFunctionExecute(e) {
-    const r =
+    var r =
       ConfigManager_1.ConfigManager.ActivityUniversalConfig?.GetActivityUniversalConfig(
         e,
       );
     if (r) {
-      let i;
-      let t;
-      const n = r.FunctionParams;
+      var i,
+        t,
+        n = r.FunctionParams;
       switch (r.FunctionType) {
         case 0:
           break;
         case 1: {
           let e = void 0;
-          n && n.length >= 1 && (e = Number(n[0])), this.n2e(e);
+          n && 1 <= n.length && (e = Number(n[0])), this.n2e(e);
           break;
         }
         case 2:
@@ -97,7 +97,7 @@ class ActivityUniversalController extends ActivityControllerBase_1.ActivityContr
     UiManager_1.UiManager.OpenView("QuestView", e);
   }
   static s2e(e, r) {
-    const i = ActivityUniversalController.OpenViewFuncMap.get(e);
+    var i = ActivityUniversalController.OpenViewFuncMap.get(e);
     i ? i(r) : UiManager_1.UiManager.OpenView(e, r);
   }
   static r2e() {
@@ -109,7 +109,7 @@ class ActivityUniversalController extends ActivityControllerBase_1.ActivityContr
   ActivityUniversalController).UniversalActivityIdSet = new Set()),
   (ActivityUniversalController.OpenViewFuncMap = new Map()),
   (ActivityUniversalController.a2e = (e) => {
-    let r = e ? Number(e[0]) : void 0;
+    var r = e ? Number(e[0]) : void 0;
     if (
       void 0 !== r &&
       !ModelManager_1.ModelManager.MapModel.IsConfigMarkIdUnlock(r)
@@ -125,4 +125,4 @@ class ActivityUniversalController extends ActivityControllerBase_1.ActivityContr
       void 0,
     );
   });
-// # sourceMappingURL=ActivityUniversalController.js.map
+//# sourceMappingURL=ActivityUniversalController.js.map

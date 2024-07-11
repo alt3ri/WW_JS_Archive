@@ -8,4 +8,4 @@ class RedDotInfluenceReputation extends RedDotBase_1.RedDotBase {
   }
 }
 exports.RedDotInfluenceReputation = RedDotInfluenceReputation;
-// # sourceMappingURL=RedDotInfluenceReputation.js.map
+//# sourceMappingURL=RedDotInfluenceReputation.js.map

@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CombatNet = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const NetDefine_1 = require("../../../Core/Define/Net/NetDefine");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Entity_1 = require("../../../Core/Entity/Entity");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ModelManager_1 = require("../../Manager/ModelManager");
+const Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  NetDefine_1 = require("../../../Core/Define/Net/NetDefine"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Entity_1 = require("../../../Core/Entity/Entity"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class CombatNet {
   static kEt(e, t, o, a) {
-    return typeof e !== "function"
+    return "function" != typeof e
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "MultiplayerCombat",
@@ -74,15 +74,15 @@ class CombatNet {
       CombatNet.RequestMap.set(_[0], _[1]),
       ModelManager_1.ModelManager.CombatMessageModel.MessagePack.Kkn.push(_[2]),
       this.Nqn.delete(r));
-    var _ = NetDefine_1.ECombatRequestDataMessage[e];
-    var e = CombatNet.GenerateRpcId();
-    var i = i ?? ModelManager_1.ModelManager.CombatMessageModel.GenMessageId();
-    const l = Protocol_1.Aki.Protocol.CombatMessage.jGs.create();
-    var t =
-      ((l.i4n = e),
-      (l.r4n = CombatNet.CreateCombatCommon(t, s, r, i)),
-      (l[_] = o),
-      Protocol_1.Aki.Protocol.CombatMessage.WGs.create());
+    var _ = NetDefine_1.ECombatRequestDataMessage[e],
+      e = CombatNet.GenerateRpcId(),
+      i = i ?? ModelManager_1.ModelManager.CombatMessageModel.GenMessageId(),
+      l = Protocol_1.Aki.Protocol.CombatMessage.jGs.create(),
+      t =
+        ((l.i4n = e),
+        (l.r4n = CombatNet.CreateCombatCommon(t, s, r, i)),
+        (l[_] = o),
+        Protocol_1.Aki.Protocol.CombatMessage.WGs.create());
     return (
       (t.Qkn = l),
       n
@@ -95,12 +95,12 @@ class CombatNet {
     );
   }
   static Send(e, t, o, a, r, i) {
-    var e = NetDefine_1.ECombatPushDataMessage[e];
-    const s = Protocol_1.Aki.Protocol.CombatMessage.VGs.create();
-    var t =
-      ((s.r4n = CombatNet.CreateCombatCommon(t, i, a, r)),
-      (s[e] = o),
-      Protocol_1.Aki.Protocol.CombatMessage.WGs.create());
+    var e = NetDefine_1.ECombatPushDataMessage[e],
+      s = Protocol_1.Aki.Protocol.CombatMessage.VGs.create(),
+      t =
+        ((s.r4n = CombatNet.CreateCombatCommon(t, i, a, r)),
+        (s[e] = o),
+        Protocol_1.Aki.Protocol.CombatMessage.WGs.create());
     (t.o4n = s),
       ModelManager_1.ModelManager.CombatMessageModel.MessagePack.Kkn.push(t);
   }
@@ -129,4 +129,4 @@ class CombatNet {
   (CombatNet.FEt = 0),
   (CombatNet.RequestMap = new Map()),
   (CombatNet.Nqn = new Map());
-// # sourceMappingURL=CombatMessage.js.map
+//# sourceMappingURL=CombatMessage.js.map

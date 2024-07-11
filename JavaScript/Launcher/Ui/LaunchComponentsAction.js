@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LaunchComponentsAction = void 0);
-const UE = require("ue");
-const HotFixSequencePlayer_1 = require("./HotFix/HotFixSequencePlayer");
-const LaunchUtil_1 = require("./LaunchUtil");
+const UE = require("ue"),
+  HotFixSequencePlayer_1 = require("./HotFix/HotFixSequencePlayer"),
+  LaunchUtil_1 = require("./LaunchUtil");
 class LaunchComponentsAction {
   constructor() {
     (this.FEr = !1),
@@ -59,7 +59,7 @@ class LaunchComponentsAction {
     this.RootItem?.IsValid() && this.RootItem.SetUIActive(t);
   }
   AttachElement(t, e) {
-    const i = this.WEr(t);
+    var i = this.WEr(t);
     if (i)
       return (
         (e = new e()).SetRootActorLaunchComponentsAction(i),
@@ -89,7 +89,7 @@ class LaunchComponentsAction {
     );
   }
   KEr() {
-    for (const [, t] of this.ElementMap) t.Destroy();
+    for (var [, t] of this.ElementMap) t.Destroy();
     this.ElementMap.clear();
   }
   QEr() {
@@ -104,4 +104,4 @@ class LaunchComponentsAction {
   }
 }
 exports.LaunchComponentsAction = LaunchComponentsAction;
-// # sourceMappingURL=LaunchComponentsAction.js.map
+//# sourceMappingURL=LaunchComponentsAction.js.map

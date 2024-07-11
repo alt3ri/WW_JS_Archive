@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OpenSystemFeed = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const FeedingAnimalById_1 = require("../../../../Core/Define/ConfigQuery/FeedingAnimalById");
-const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem");
-const ObjectSystem_1 = require("../../../../Core/Object/ObjectSystem");
-const ItemDeliverController_1 = require("../../../Module/ItemDeliver/ItemDeliverController");
-const LevelGeneralContextDefine_1 = require("../../LevelGeneralContextDefine");
-const OpenSystemBase_1 = require("./OpenSystemBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  FeedingAnimalById_1 = require("../../../../Core/Define/ConfigQuery/FeedingAnimalById"),
+  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  ObjectSystem_1 = require("../../../../Core/Object/ObjectSystem"),
+  ItemDeliverController_1 = require("../../../Module/ItemDeliver/ItemDeliverController"),
+  LevelGeneralContextDefine_1 = require("../../LevelGeneralContextDefine"),
+  OpenSystemBase_1 = require("./OpenSystemBase");
 class OpenSystemFeed extends OpenSystemBase_1.OpenSystemBase {
   async ExecuteOpenView(e, t) {
-    let n, r, i, o;
+    var n, r, i, o;
     return (
       t instanceof LevelGeneralContextDefine_1.EntityContext &&
       ((o = EntitySystem_1.EntitySystem.Get(t.EntityId)),
@@ -58,4 +58,4 @@ class OpenSystemFeed extends OpenSystemBase_1.OpenSystemBase {
   }
 }
 exports.OpenSystemFeed = OpenSystemFeed;
-// # sourceMappingURL=OpenSystemFeed.js.map
+//# sourceMappingURL=OpenSystemFeed.js.map

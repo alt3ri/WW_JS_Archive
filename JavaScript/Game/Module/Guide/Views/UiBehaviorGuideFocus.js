@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiBehaviorGuideFocus = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
 class UiBehaviorGuideFocus {
   constructor(i) {
     (this.Rzt = void 0),
@@ -39,7 +39,7 @@ class UiBehaviorGuideFocus {
           ["引导组id", this.Rzt.OwnerGroup.Id],
           ["聚焦引导Id", this.Rzt.Id],
         ),
-      this.Rzt.StateMachine.CurrentState !== 1
+      1 !== this.Rzt.StateMachine.CurrentState
         ? this.Rzt.TryEnterExecuting()
         : this.Rzt.GuideView?.Show());
   }
@@ -59,7 +59,7 @@ class UiBehaviorGuideFocus {
     this.Rzt = void 0;
   }
   OnBeforeDestroy() {
-    let i;
+    var i;
     this.Rzt &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
@@ -72,12 +72,12 @@ class UiBehaviorGuideFocus {
       (this.Azt = void 0),
       (this.Uzt = void 0),
       (i = this.Rzt?.StateMachine?.CurrentState) &&
-        i === 1 &&
+        1 === i &&
         this.Rzt.SwitchState(3),
       (this.Rzt = void 0));
   }
   PrepareForOpenGuideFocus() {
-    let i;
+    var i;
     return (
       this.Rzt.ViewData.ResetAttachedUiItem(),
       this.Azt !== this.Uzt
@@ -136,9 +136,9 @@ class UiBehaviorGuideFocus {
           ),
         !1
       );
-    const i = this.Rzt;
-    var t = this.Pzt.ExtraParam;
-    if (t.length > 0)
+    var i = this.Rzt,
+      t = this.Pzt.ExtraParam;
+    if (0 < t.length)
       return (
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
@@ -147,7 +147,7 @@ class UiBehaviorGuideFocus {
             "聚焦引导步骤配置了额外参数, 走扩展逻辑",
             ["步骤Id", i.Id],
           ),
-        (t = this.OKt.GetGuideUiItemAndUiItemForShowEx(t))?.length !== 2
+        2 !== (t = this.OKt.GetGuideUiItemAndUiItemForShowEx(t))?.length
           ? (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn("Guide", 17, "聚焦引导  额外参数解析失败", [
                 "stepInfo!.Id",
@@ -159,8 +159,8 @@ class UiBehaviorGuideFocus {
             (t = this.OKt.GetGuideScrollViewToLock()) && s.TryLockScrollView(t),
             !0)
       );
-    var s = this.Pzt.HookName;
-    var t = this.OKt.GetGuideUiItem(s);
+    var s = this.Pzt.HookName,
+      t = this.OKt.GetGuideUiItem(s);
     if (!t)
       return (
         Log_1.Log.CheckError() &&
@@ -198,4 +198,4 @@ class UiBehaviorGuideFocus {
   }
 }
 exports.UiBehaviorGuideFocus = UiBehaviorGuideFocus;
-// # sourceMappingURL=UiBehaviorGuideFocus.js.map
+//# sourceMappingURL=UiBehaviorGuideFocus.js.map

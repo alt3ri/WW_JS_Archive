@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configDungeonDetectionByDungeonId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const DungeonDetection_1 = require("../Config/DungeonDetection");
-const DB = "db_adventure_detect.db";
-const FILE = "k.开拓探测.xlsx";
-const TABLE = "DungeonDetection";
-const COMMAND = "select BinData from `DungeonDetection` where DungeonId=?";
-const KEY_PREFIX = "DungeonDetectionByDungeonId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  DungeonDetection_1 = require("../Config/DungeonDetection"),
+  DB = "db_adventure_detect.db",
+  FILE = "k.开拓探测.xlsx",
+  TABLE = "DungeonDetection",
+  COMMAND = "select BinData from `DungeonDetection` where DungeonId=?",
+  KEY_PREFIX = "DungeonDetectionByDungeonId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configDungeonDetectionByDungeonId.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configDungeonDetectionByDungeonId.GetConfig(";
 exports.configDungeonDetectionByDungeonId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configDungeonDetectionByDungeonId = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, n, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "DungeonId",
-            n,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "DungeonId",
+              n,
+            ]))
       ) {
-        var i;
-        var e = void 0;
+        var i,
+          e = void 0;
         if (
           (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configDungeonDetectionByDungeonId = {
     }
   },
 };
-// # sourceMappingURL=DungeonDetectionByDungeonId.js.map
+//# sourceMappingURL=DungeonDetectionByDungeonId.js.map

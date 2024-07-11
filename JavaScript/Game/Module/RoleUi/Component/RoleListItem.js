@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleListItem = exports.RoleListItemData = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../RedDot/RedDotController");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../RedDot/RedDotController"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
 class RoleListItemData {
   constructor() {
     (this.RoleDataId = 0), (this.NeedShowTrial = !0), (this.NeedRedDot = !1);
@@ -41,12 +41,12 @@ class RoleListItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.BtnBindInfo = [[0, this.Yke]]);
   }
   async OnBeforeStartAsync() {
-    const t = this.GetItem(1);
+    var t = this.GetItem(1);
     (this.RoleIconItem = new RoleIconItem()),
       await this.RoleIconItem.CreateThenShowByActorAsync(t.GetOwner());
   }
   OnStart() {
-    const t = this.GetExtendToggle(0);
+    var t = this.GetExtendToggle(0);
     t &&
       (t.CanExecuteChange.Unbind(),
       t.CanExecuteChange.Bind(this.CanToggleExecuteChangeInternal));
@@ -58,14 +58,14 @@ class RoleListItem extends GridProxyAbstract_1.GridProxyAbstract {
         : this.GetItem(4).SetUIActive(!1);
   }
   ulo(e) {
-    const i = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems(!0);
-    let s = void 0;
-    let o = 1;
+    var i = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems(!0);
+    let s = void 0,
+      o = 1;
     for (let t = 0; t < i.length; t++) {
-      const r = i[t];
+      var r = i[t];
       r.GetConfigId === e && ((s = r), (o = t + 1));
     }
-    let t = void 0 !== s;
+    var t = void 0 !== s;
     this.GetItem(2).SetUIActive(t),
       this.GetItem(5).SetUIActive(t),
       t &&
@@ -79,14 +79,12 @@ class RoleListItem extends GridProxyAbstract_1.GridProxyAbstract {
     return this.GetItem(6);
   }
   SetToggleState(t, e = !1) {
-    const i = this.GetExtendToggle(0);
+    var i = this.GetExtendToggle(0);
     e ? i.SetToggleStateForce(t) : i.SetToggleState(t);
   }
   Refresh(t, e, i) {
     this.DataId = t.RoleDataId;
-    const s = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
-      this.DataId,
-    );
+    var s = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(this.DataId);
     this._lo(s, t.NeedShowTrial),
       this.ulo(this.DataId),
       t.NeedRedDot
@@ -129,23 +127,23 @@ class RoleIconItem extends UiPanelBase_1.UiPanelBase {
       this.Jke(t.GetRoleConfig().QualityId);
   }
   Jke(t) {
-    const e = this.GetSprite(1);
-    const i = this.GetSprite(2);
-    var s = this.GetSprite(3);
-    var o = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-      "SP_RoleIconBgUnCheckedUnHover" + t,
-    );
-    var o =
-      (this.SetSpriteByPath(o, s, !1),
-      ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-        "SP_RoleIconBgUnCheckedHover" + t,
-      ));
-    var s =
-      (this.SetSpriteByPath(o, i, !1),
-      ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-        "SP_RoleIconBgChecked" + t,
-      ));
+    var e = this.GetSprite(1),
+      i = this.GetSprite(2),
+      s = this.GetSprite(3),
+      o = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+        "SP_RoleIconBgUnCheckedUnHover" + t,
+      ),
+      o =
+        (this.SetSpriteByPath(o, s, !1),
+        ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+          "SP_RoleIconBgUnCheckedHover" + t,
+        )),
+      s =
+        (this.SetSpriteByPath(o, i, !1),
+        ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+          "SP_RoleIconBgChecked" + t,
+        ));
     this.SetSpriteByPath(s, e, !1);
   }
 }
-// # sourceMappingURL=RoleListItem.js.map
+//# sourceMappingURL=RoleListItem.js.map

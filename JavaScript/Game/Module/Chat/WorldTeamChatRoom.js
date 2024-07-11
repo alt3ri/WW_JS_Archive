@@ -11,4 +11,4 @@ class WorldChatRoom extends TeamChatRoomBase_1.TeamChatRoomBase {
   }
 }
 exports.WorldChatRoom = WorldChatRoom;
-// # sourceMappingURL=WorldTeamChatRoom.js.map
+//# sourceMappingURL=WorldTeamChatRoom.js.map

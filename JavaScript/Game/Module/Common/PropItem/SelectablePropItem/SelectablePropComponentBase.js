@@ -8,4 +8,4 @@ class SelectablePropComponentBase extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.SelectablePropComponentBase = SelectablePropComponentBase;
-// # sourceMappingURL=SelectablePropComponentBase.js.map
+//# sourceMappingURL=SelectablePropComponentBase.js.map

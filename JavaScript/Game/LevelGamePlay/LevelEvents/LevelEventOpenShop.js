@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventOpenShop = void 0);
-const ShopController_1 = require("../../Module/Shop/ShopController");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const ShopController_1 = require("../../Module/Shop/ShopController"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventOpenShop extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, o) {
     e &&
@@ -11,4 +11,4 @@ class LevelEventOpenShop extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventOpenShop = LevelEventOpenShop;
-// # sourceMappingURL=LevelEventOpenShop.js.map
+//# sourceMappingURL=LevelEventOpenShop.js.map

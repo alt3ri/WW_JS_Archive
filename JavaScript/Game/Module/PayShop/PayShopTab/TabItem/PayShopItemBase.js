@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayShopItemBase = exports.PayShopItemBaseSt = void 0);
-const UE = require("ue");
-const LanguageSystem_1 = require("../../../../../Core/Common/LanguageSystem");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const HelpController_1 = require("../../../Help/HelpController");
-const PayShopGoods_1 = require("../../PayShopData/PayShopGoods");
-const PayShopDefine_1 = require("../../PayShopDefine");
-const NORMALCOLOR = "000000FF";
-const REDCOLOR = "BA5C59FF";
+const UE = require("ue"),
+  LanguageSystem_1 = require("../../../../../Core/Common/LanguageSystem"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  HelpController_1 = require("../../../Help/HelpController"),
+  PayShopGoods_1 = require("../../PayShopData/PayShopGoods"),
+  PayShopDefine_1 = require("../../PayShopDefine"),
+  NORMALCOLOR = "000000FF",
+  REDCOLOR = "BA5C59FF";
 class PayShopItemBaseSt {
   constructor() {
     (this.Id = 0),
@@ -57,11 +57,11 @@ class PayShopItemBaseSt {
       (this.GetDirectPriceTextFunc = () => t.GetDirectPriceText());
     (this.RedDotExistFunc = () =>
       !(!t.IfCanBuy() || t.IsLocked() || t.IsSoldOut() || this.IsDirect) &&
-      t.GetPriceData().NowPrice === 0),
+      0 === t.GetPriceData().NowPrice),
       (this.bor = LanguageSystem_1.LanguageSystem.PackageLanguage);
   }
   PhrasePromPayItemData(t) {
-    const i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+    var i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
       t.ItemId,
     );
     (this.Quality = i.QualityId),
@@ -151,36 +151,36 @@ class PayShopItemBase extends UiPanelBase_1.UiPanelBase {
     this.XFi();
   }
   QFi() {
-    let t;
+    var t;
     this.Pe.GetTextTipsColor &&
       ((t = this.Pe.GetTextTipsColor()),
       this.GetText(10).SetColor(UE.Color.FromHex(t)));
   }
   HFi() {
-    const t = ConfigManager_1.ConfigManager.PayShopConfig.GetMonthCardShopId();
+    var t = ConfigManager_1.ConfigManager.PayShopConfig.GetMonthCardShopId();
     this.GetButton(3).RootUIComp.SetUIActive(this.Pe.Id === t);
   }
   kFi() {
-    const t = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(
+    var t = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(
       this.Pe.Quality,
     ).PayShopQualitySprite;
     this.SetSpriteByPath(t, this.GetSprite(0), !1);
   }
   Aqe() {
     let t = this.GetTexture(2);
-    let i;
-    const s =
-      ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
-        this.Pe.ItemId,
-      );
+    var i,
+      s =
+        ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
+          this.Pe.ItemId,
+        );
     this.Pe.IfRechargeItem
       ? (t.SetUIActive(!1),
         (t = this.GetTexture(12)).SetUIActive(!0),
         (i = this.Pe.StageImage),
         this.SetTextureByPath(i, t))
-      : this.Pe.StageImage !== ""
+      : "" !== this.Pe.StageImage
         ? ((i = this.Pe.StageImage), this.SetTextureByPath(i, t))
-        : (s === 1
+        : (1 === s
             ? ((i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
                 this.Pe.ItemId,
               )),
@@ -195,12 +195,12 @@ class PayShopItemBase extends UiPanelBase_1.UiPanelBase {
       (this.hJ = ResourceSystem_1.ResourceSystem.InvalidId));
   }
   $Fi() {
-    let t =
+    var t =
       ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
         this.Pe.ItemId,
       );
     const i = this.GetTexture(2);
-    t === 3
+    3 === t
       ? ((t =
           ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
             "MI_HeadYuan",
@@ -219,15 +219,15 @@ class PayShopItemBase extends UiPanelBase_1.UiPanelBase {
     this.qFi || (this.GetText(5).SetText(this.Pe.ItemName), (this.qFi = !0));
   }
   VFi() {
-    let t;
-    const i = this.GetTexture(7);
-    this.Pe.IsDirect || (t = this.Pe.PriceData).NowPrice === 0
+    var t,
+      i = this.GetTexture(7);
+    this.Pe.IsDirect || 0 === (t = this.Pe.PriceData).NowPrice
       ? i.SetUIActive(!1)
       : (i.SetUIActive(!0), this.SetItemIcon(i, t.CurrencyId));
   }
   WFi() {
-    let t;
-    const i = this.GetText(9);
+    var t,
+      i = this.GetText(9);
     !this.Pe.IsDirect &&
     (t = this.Pe.PriceData).OriginalPrice &&
     t.InDiscountTime
@@ -236,7 +236,7 @@ class PayShopItemBase extends UiPanelBase_1.UiPanelBase {
   }
   i2i() {
     let t = NORMALCOLOR;
-    let i, s;
+    var i, s;
     !this.Pe.IsDirect &&
       this.Pe.PriceData.OwnNumber() < this.Pe.PriceData.NowPrice &&
       (t = REDCOLOR),
@@ -247,15 +247,15 @@ class PayShopItemBase extends UiPanelBase_1.UiPanelBase {
         this.Pe.IsDirect
           ? (s = this.Pe.GetDirectPriceTextFunc?.()) &&
             (i.SetText(s), i.SetColor(UE.Color.FromHex(t)))
-          : ((s = this.Pe.PriceData).NowPrice === 0
+          : (0 === (s = this.Pe.PriceData).NowPrice
               ? i.ShowTextNew("ShopDiscountLabel_4")
               : i.SetText(s.NowPrice.toString()),
             (s = t),
             i.SetColor(UE.Color.FromHex(s))));
   }
   KFi() {
-    let t;
-    const i = this.Pe.GetShopTipsText?.();
+    var t,
+      i = this.Pe.GetShopTipsText?.();
     this.NFi && !StringUtils_1.StringUtils.IsEmpty(i)
       ? ((t = this.GetText(4)).SetUIActive(!0), t.SetText(i))
       : this.GetText(4).SetUIActive(!1);
@@ -284,4 +284,4 @@ class PayShopItemBase extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.PayShopItemBase = PayShopItemBase;
-// # sourceMappingURL=PayShopItemBase.js.map
+//# sourceMappingURL=PayShopItemBase.js.map

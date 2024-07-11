@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MarkChildIconComponent = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../../../Core/Utils/StringUtils");
-const UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../../../Core/Utils/StringUtils"),
+  UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase");
 class MarkChildIconComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments), (this.n8 = void 0);
@@ -26,4 +26,4 @@ class MarkChildIconComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.MarkChildIconComponent = MarkChildIconComponent;
-// # sourceMappingURL=MarkChildIconComponent.js.map
+//# sourceMappingURL=MarkChildIconComponent.js.map

@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configGlobalConfigFromCsvByName = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const GlobalConfigFromCsv_1 = require("../Config/GlobalConfigFromCsv");
-const DB = "db_global_config.db";
-const FILE = "k.可视化编辑/c.Csv/q.全局配置/*.csv*";
-const TABLE = "GlobalConfigFromCsv";
-const COMMAND = "select BinData from `GlobalConfigFromCsv` where Name=?";
-const KEY_PREFIX = "GlobalConfigFromCsvByName";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  GlobalConfigFromCsv_1 = require("../Config/GlobalConfigFromCsv"),
+  DB = "db_global_config.db",
+  FILE = "k.可视化编辑/c.Csv/q.全局配置/*.csv*",
+  TABLE = "GlobalConfigFromCsv",
+  COMMAND = "select BinData from `GlobalConfigFromCsv` where Name=?",
+  KEY_PREFIX = "GlobalConfigFromCsvByName",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configGlobalConfigFromCsvByName.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configGlobalConfigFromCsvByName.GetConfig(";
 exports.configGlobalConfigFromCsvByName = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configGlobalConfigFromCsvByName = {
       if (
         (e =
           ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Name",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Name",
+              o,
+            ]))
       ) {
-        var e;
-        var i = void 0;
+        var e,
+          i = void 0;
         if (
           (([e, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -73,4 +74,4 @@ exports.configGlobalConfigFromCsvByName = {
     }
   },
 };
-// # sourceMappingURL=GlobalConfigFromCsvByName.js.map
+//# sourceMappingURL=GlobalConfigFromCsvByName.js.map

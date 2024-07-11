@@ -35,13 +35,14 @@ class PassiveEffects extends ExtraEffectBase_1.BuffEffect {
       case 3:
         return this.GetBuffHolderSkillTarget();
       default:
+        return;
     }
   }
   GetBuffHolderSkillTarget() {
-    const t =
+    var t =
       this.OwnerBuffComponent?.GetEntity()?.CheckGetComponent(33)?.SkillTarget;
     return t ? t.Entity.CheckGetComponent(187) : this.OwnerBuffComponent;
   }
 }
 exports.PassiveEffects = PassiveEffects;
-// # sourceMappingURL=ExtraEffectPassiveEffects.js.map
+//# sourceMappingURL=ExtraEffectPassiveEffects.js.map

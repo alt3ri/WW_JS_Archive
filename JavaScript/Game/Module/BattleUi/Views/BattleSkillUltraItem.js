@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleSkillUltraItem = void 0);
-const UE = require("ue");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class BattleSkillUltraItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -43,7 +43,7 @@ class BattleSkillUltraItem extends UiPanelBase_1.UiPanelBase {
     this.InAsyncLoading() ? this.nit.set("SetActive", t) : t();
   }
   SetBarPercent(t, i) {
-    let s;
+    var s;
     this.Mit !== t &&
       ((s = () => {
         this.mit.SetFillAmount(t), (this.Mit = t);
@@ -51,13 +51,13 @@ class BattleSkillUltraItem extends UiPanelBase_1.UiPanelBase {
       this.InAsyncLoading() ? this.nit.set("SetBarPercent", s) : s());
   }
   SetBarVisible(t) {
-    const i = () => {
+    var i = () => {
       this.mit.bIsUIActive !== t && this.mit.SetUIActive(t);
     };
     this.InAsyncLoading() ? this.nit.set("SetBarVisible", i) : i();
   }
   SetFrameSprite(t) {
-    let i;
+    var i;
     !t ||
       (this.dit && this.dit.op_Equality(t)) ||
       ((i = () => {
@@ -66,24 +66,24 @@ class BattleSkillUltraItem extends UiPanelBase_1.UiPanelBase {
       this.InAsyncLoading() ? this.nit.set("SetFrameSprite", i) : i());
   }
   SetUltraEffectEnable(i) {
-    const t = () => {
-      const t = this.GetUiNiagara(1);
+    var t = () => {
+      var t = this.GetUiNiagara(1);
       t.bIsUIActive !== i &&
         (t.SetUIActive(i), i ? t.ActivateSystem(!0) : t.DeactivateSystem());
     };
     this.InAsyncLoading() ? this.nit.set("SetUltraEffectEnable", t) : t();
   }
   SetUltraTipsEffectEnable(i) {
-    const t = () => {
-      const t = this.GetUiNiagara(2);
+    var t = () => {
+      var t = this.GetUiNiagara(2);
       t.bIsUIActive !== i && t.SetUIActive(i),
         i ? t.ActivateSystem(!0) : t.DeactivateSystem();
     };
     this.InAsyncLoading() ? this.nit.set("SetUltraTipsEffectEnable", t) : t();
   }
   SetUltraUpEffectEnable(i) {
-    const t = () => {
-      const t = this.GetUiNiagara(3);
+    var t = () => {
+      var t = this.GetUiNiagara(3);
       t.bIsUIActive !== i && t.SetUIActive(i),
         i
           ? (t.SetNiagaraVarFloat("Time", this.Mit), t.ActivateSystem(!0))
@@ -92,7 +92,7 @@ class BattleSkillUltraItem extends UiPanelBase_1.UiPanelBase {
     this.InAsyncLoading() ? this.nit.set("SetUltraUpEffectEnable", t) : t();
   }
   RefreshUltraEffect(t, i) {
-    let s;
+    var s;
     StringUtils_1.StringUtils.IsEmpty(this.Cit) || this.Cit !== t
       ? ((this.git = i),
         (s = () => {
@@ -101,7 +101,7 @@ class BattleSkillUltraItem extends UiPanelBase_1.UiPanelBase {
               t,
               UE.NiagaraSystem,
               (t) => {
-                let i;
+                var i;
                 t?.IsValid() &&
                   ((i = this.GetUiNiagara(1))?.SetNiagaraSystem(t),
                   i?.SetNiagaraVarLinearColor("Color", this.git));
@@ -121,7 +121,7 @@ class BattleSkillUltraItem extends UiPanelBase_1.UiPanelBase {
       (this.pit = void 0));
   }
   RefreshUltraTipsEffect(t) {
-    let i;
+    var i;
     (!StringUtils_1.StringUtils.IsEmpty(this.fit) && this.fit === t) ||
       ((i = () => {
         this.yit(),
@@ -143,4 +143,4 @@ class BattleSkillUltraItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.BattleSkillUltraItem = BattleSkillUltraItem;
-// # sourceMappingURL=BattleSkillUltraItem.js.map
+//# sourceMappingURL=BattleSkillUltraItem.js.map

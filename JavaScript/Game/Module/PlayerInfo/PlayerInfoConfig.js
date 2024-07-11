@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlayerInfoConfig = void 0);
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const HeadIconById_1 = require("../../../Core/Define/ConfigQuery/HeadIconById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  HeadIconById_1 = require("../../../Core/Define/ConfigQuery/HeadIconById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class PlayerInfoConfig extends ConfigBase_1.ConfigBase {
   GetIsUseAccountName() {
     return (
@@ -40,4 +40,4 @@ class PlayerInfoConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.PlayerInfoConfig = PlayerInfoConfig;
-// # sourceMappingURL=PlayerInfoConfig.js.map
+//# sourceMappingURL=PlayerInfoConfig.js.map

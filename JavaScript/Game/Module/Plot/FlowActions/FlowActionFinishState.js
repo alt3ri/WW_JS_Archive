@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const FlowActionBase_1 = require("./FlowActionBase");
 class FlowActionFinishState extends FlowActionBase_1.FlowActionBase {
   OnExecute() {
-    let t;
+    var t;
     (this.Context.IsBreakdown = !0),
       this.Context.CurShowTalk
         ? ((t = this.Runner), this.FinishExecute(!0, !1), t.FinishTalk())
@@ -15,4 +15,4 @@ class FlowActionFinishState extends FlowActionBase_1.FlowActionBase {
   }
 }
 exports.FlowActionFinishState = FlowActionFinishState;
-// # sourceMappingURL=FlowActionFinishState.js.map
+//# sourceMappingURL=FlowActionFinishState.js.map

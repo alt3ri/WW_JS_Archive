@@ -1,40 +1,40 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraModel = exports.SeqCameraThings = void 0);
-const UE = require("ue");
-const Time_1 = require("../../Core/Common/Time");
-const EntitySystem_1 = require("../../Core/Entity/EntitySystem");
-const ModelBase_1 = require("../../Core/Framework/ModelBase");
-const Rotator_1 = require("../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const GameQualitySettingsManager_1 = require("../GameQualitySettings/GameQualitySettingsManager");
-const FightCamera_1 = require("./FightCamera");
-const OrbitalCamera_1 = require("./OrbitalCamera");
-const SceneCamera_1 = require("./SceneCamera");
-const SequenceCamera_1 = require("./SequenceCamera");
-const WidgetCamera_1 = require("./WidgetCamera");
-const CAMERA_TICK_PRIORITY = -100;
-const CAMERA_DEFAULT_SENSITIVITY = 50;
-const CAMERA_MAX_SENSITIVITY = 100;
-const CAMERA_MIN_SENSITIVITY = 0;
-const CAMERA_DEFAULT_SENSITIVITY_MODIFIER = 1;
-const CAMERA_MAX_SENSITIVITY_MODIFIER = 2;
-const CAMERA_MIN_SENSITIVITY_MODIFIER = 0.5;
-const MOTION_BLUR_DEFAULT_VALUE = 50;
-const MOTION_BLUR_MAX_VALUE = 100;
-const MOTION_BLUR_MIN_VALUE = 0;
-const MOTION_BLUR_DEFAULT_MODIFIER = 0.25;
-const MOTION_BLUR_MAX_MODIFIER = 0.4;
-const MOTION_BLUR_MIN_MODIFIER = 0.1;
-const CAMERA_DEFAULT_REVERSE = !1;
-const CAMERA_ADDITION_ARM_LENGTH_VALUE_MAX = 100;
-const CAMERA_ADDITION_ARM_LENGTH_VALUE_DEFAULT = 50;
-const CAMERA_ADDITION_ARM_LENGTH_VALUE_MIN = 0;
-const CAMERA_SHAKE_MODIFIER_MIN = 0;
-const CAMERA_SHAKE_MODIFIER_MAX = 2;
+const UE = require("ue"),
+  Time_1 = require("../../Core/Common/Time"),
+  EntitySystem_1 = require("../../Core/Entity/EntitySystem"),
+  ModelBase_1 = require("../../Core/Framework/ModelBase"),
+  Rotator_1 = require("../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  GameQualitySettingsManager_1 = require("../GameQualitySettings/GameQualitySettingsManager"),
+  FightCamera_1 = require("./FightCamera"),
+  OrbitalCamera_1 = require("./OrbitalCamera"),
+  SceneCamera_1 = require("./SceneCamera"),
+  SequenceCamera_1 = require("./SequenceCamera"),
+  WidgetCamera_1 = require("./WidgetCamera"),
+  CAMERA_TICK_PRIORITY = -100,
+  CAMERA_DEFAULT_SENSITIVITY = 50,
+  CAMERA_MAX_SENSITIVITY = 100,
+  CAMERA_MIN_SENSITIVITY = 0,
+  CAMERA_DEFAULT_SENSITIVITY_MODIFIER = 1,
+  CAMERA_MAX_SENSITIVITY_MODIFIER = 2,
+  CAMERA_MIN_SENSITIVITY_MODIFIER = 0.5,
+  MOTION_BLUR_DEFAULT_VALUE = 50,
+  MOTION_BLUR_MAX_VALUE = 100,
+  MOTION_BLUR_MIN_VALUE = 0,
+  MOTION_BLUR_DEFAULT_MODIFIER = 0.25,
+  MOTION_BLUR_MAX_MODIFIER = 0.4,
+  MOTION_BLUR_MIN_MODIFIER = 0.1,
+  CAMERA_DEFAULT_REVERSE = !1,
+  CAMERA_ADDITION_ARM_LENGTH_VALUE_MAX = 100,
+  CAMERA_ADDITION_ARM_LENGTH_VALUE_DEFAULT = 50,
+  CAMERA_ADDITION_ARM_LENGTH_VALUE_MIN = 0,
+  CAMERA_SHAKE_MODIFIER_MIN = 0,
+  CAMERA_SHAKE_MODIFIER_MAX = 2;
 class SeqCameraThings {
   constructor() {
     (this.CameraLocation = Vector_1.Vector.Create().ToUeVector()),
@@ -102,83 +102,83 @@ class CameraModel extends ModelBase_1.ModelBase {
       (this.Ohe = !0);
   }
   get CameraBaseYawSensitivityInputModifier() {
-    var t = this.Rhe;
-    var t =
-      t < CAMERA_DEFAULT_SENSITIVITY
-        ? MathUtils_1.MathUtils.RangeClamp(
-            t,
-            CAMERA_MIN_SENSITIVITY,
-            CAMERA_DEFAULT_SENSITIVITY,
-            CAMERA_MIN_SENSITIVITY_MODIFIER,
-            CAMERA_DEFAULT_SENSITIVITY_MODIFIER,
-          )
-        : MathUtils_1.MathUtils.RangeClamp(
-            t,
-            CAMERA_DEFAULT_SENSITIVITY,
-            CAMERA_MAX_SENSITIVITY,
-            CAMERA_DEFAULT_SENSITIVITY_MODIFIER,
-            CAMERA_MAX_SENSITIVITY_MODIFIER,
-          );
+    var t = this.Rhe,
+      t =
+        t < CAMERA_DEFAULT_SENSITIVITY
+          ? MathUtils_1.MathUtils.RangeClamp(
+              t,
+              CAMERA_MIN_SENSITIVITY,
+              CAMERA_DEFAULT_SENSITIVITY,
+              CAMERA_MIN_SENSITIVITY_MODIFIER,
+              CAMERA_DEFAULT_SENSITIVITY_MODIFIER,
+            )
+          : MathUtils_1.MathUtils.RangeClamp(
+              t,
+              CAMERA_DEFAULT_SENSITIVITY,
+              CAMERA_MAX_SENSITIVITY,
+              CAMERA_DEFAULT_SENSITIVITY_MODIFIER,
+              CAMERA_MAX_SENSITIVITY_MODIFIER,
+            );
     return this.xhe ? -t : t;
   }
   get CameraBasePitchSensitivityInputModifier() {
-    var t = this.Uhe;
-    var t =
-      t < CAMERA_DEFAULT_SENSITIVITY
-        ? MathUtils_1.MathUtils.RangeClamp(
-            t,
-            CAMERA_MIN_SENSITIVITY,
-            CAMERA_DEFAULT_SENSITIVITY,
-            CAMERA_MIN_SENSITIVITY_MODIFIER,
-            CAMERA_DEFAULT_SENSITIVITY_MODIFIER,
-          )
-        : MathUtils_1.MathUtils.RangeClamp(
-            t,
-            CAMERA_DEFAULT_SENSITIVITY,
-            CAMERA_MAX_SENSITIVITY,
-            CAMERA_DEFAULT_SENSITIVITY_MODIFIER,
-            CAMERA_MAX_SENSITIVITY_MODIFIER,
-          );
+    var t = this.Uhe,
+      t =
+        t < CAMERA_DEFAULT_SENSITIVITY
+          ? MathUtils_1.MathUtils.RangeClamp(
+              t,
+              CAMERA_MIN_SENSITIVITY,
+              CAMERA_DEFAULT_SENSITIVITY,
+              CAMERA_MIN_SENSITIVITY_MODIFIER,
+              CAMERA_DEFAULT_SENSITIVITY_MODIFIER,
+            )
+          : MathUtils_1.MathUtils.RangeClamp(
+              t,
+              CAMERA_DEFAULT_SENSITIVITY,
+              CAMERA_MAX_SENSITIVITY,
+              CAMERA_DEFAULT_SENSITIVITY_MODIFIER,
+              CAMERA_MAX_SENSITIVITY_MODIFIER,
+            );
     return this.whe ? -t : t;
   }
   get CameraAimingYawSensitivityInputModifier() {
-    var t = this.Ahe;
-    var t =
-      t < CAMERA_DEFAULT_SENSITIVITY
-        ? MathUtils_1.MathUtils.RangeClamp(
-            t,
-            CAMERA_MIN_SENSITIVITY,
-            CAMERA_DEFAULT_SENSITIVITY,
-            CAMERA_MIN_SENSITIVITY_MODIFIER,
-            CAMERA_DEFAULT_SENSITIVITY_MODIFIER,
-          )
-        : MathUtils_1.MathUtils.RangeClamp(
-            t,
-            CAMERA_DEFAULT_SENSITIVITY,
-            CAMERA_MAX_SENSITIVITY,
-            CAMERA_DEFAULT_SENSITIVITY_MODIFIER,
-            CAMERA_MAX_SENSITIVITY_MODIFIER,
-          );
+    var t = this.Ahe,
+      t =
+        t < CAMERA_DEFAULT_SENSITIVITY
+          ? MathUtils_1.MathUtils.RangeClamp(
+              t,
+              CAMERA_MIN_SENSITIVITY,
+              CAMERA_DEFAULT_SENSITIVITY,
+              CAMERA_MIN_SENSITIVITY_MODIFIER,
+              CAMERA_DEFAULT_SENSITIVITY_MODIFIER,
+            )
+          : MathUtils_1.MathUtils.RangeClamp(
+              t,
+              CAMERA_DEFAULT_SENSITIVITY,
+              CAMERA_MAX_SENSITIVITY,
+              CAMERA_DEFAULT_SENSITIVITY_MODIFIER,
+              CAMERA_MAX_SENSITIVITY_MODIFIER,
+            );
     return this.Bhe ? -t : t;
   }
   get CameraAimingPitchSensitivityInputModifier() {
-    var t = this.Phe;
-    var t =
-      t < CAMERA_DEFAULT_SENSITIVITY
-        ? MathUtils_1.MathUtils.RangeClamp(
-            t,
-            CAMERA_MIN_SENSITIVITY,
-            CAMERA_DEFAULT_SENSITIVITY,
-            CAMERA_MIN_SENSITIVITY_MODIFIER,
-            CAMERA_DEFAULT_SENSITIVITY_MODIFIER,
-          )
-        : MathUtils_1.MathUtils.RangeClamp(
-            t,
-            CAMERA_DEFAULT_SENSITIVITY,
-            CAMERA_MAX_SENSITIVITY,
-            CAMERA_DEFAULT_SENSITIVITY_MODIFIER,
-            CAMERA_MAX_SENSITIVITY_MODIFIER,
-          );
+    var t = this.Phe,
+      t =
+        t < CAMERA_DEFAULT_SENSITIVITY
+          ? MathUtils_1.MathUtils.RangeClamp(
+              t,
+              CAMERA_MIN_SENSITIVITY,
+              CAMERA_DEFAULT_SENSITIVITY,
+              CAMERA_MIN_SENSITIVITY_MODIFIER,
+              CAMERA_DEFAULT_SENSITIVITY_MODIFIER,
+            )
+          : MathUtils_1.MathUtils.RangeClamp(
+              t,
+              CAMERA_DEFAULT_SENSITIVITY,
+              CAMERA_MAX_SENSITIVITY,
+              CAMERA_DEFAULT_SENSITIVITY_MODIFIER,
+              CAMERA_MAX_SENSITIVITY_MODIFIER,
+            );
     return this.bhe ? -t : t;
   }
   get IsCameraResetPitch() {
@@ -414,7 +414,7 @@ class CameraModel extends ModelBase_1.ModelBase {
     );
   }
   OnClear() {
-    let t = EntitySystem_1.EntitySystem.Destroy(this.dhe);
+    var t = EntitySystem_1.EntitySystem.Destroy(this.dhe);
     return (
       (this.dhe = void 0),
       (t &&= EntitySystem_1.EntitySystem.Destroy(this.Che)),
@@ -437,11 +437,11 @@ class CameraModel extends ModelBase_1.ModelBase {
     return this.Nhe;
   }
   IsToLockOnCameraMode() {
-    return this.CameraMode === 0;
+    return 0 === this.CameraMode;
   }
   IsToSceneCameraMode() {
-    return this.CameraMode === 3;
+    return 3 === this.CameraMode;
   }
 }
 exports.CameraModel = CameraModel;
-// # sourceMappingURL=CameraModel.js.map
+//# sourceMappingURL=CameraModel.js.map

@@ -24,8 +24,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.CommonInteractActions =
     exports.CommonActionInfo =
       void 0);
-const IAction_1 = require("../../UniverseEditor/Interface/IAction");
-const LevelGeneralContextDefine_1 = require("./LevelGeneralContextDefine");
+const IAction_1 = require("../../UniverseEditor/Interface/IAction"),
+  LevelGeneralContextDefine_1 = require("./LevelGeneralContextDefine");
 class CommonActionInfo {
   constructor() {
     (this.Name = void 0), (this.Params = void 0), (this.ActionGuid = void 0);
@@ -39,7 +39,7 @@ class CommonInteractActions {
 }
 (exports.CommonInteractActions = CommonInteractActions),
   (exports.optionTypeLogString = {
-    0: "基础交互",
+    [0]: "基础交互",
     1: "动态交互",
     2: "随机交互",
   });
@@ -203,4 +203,4 @@ class ActionInteractFan {
   }
 }
 exports.ActionInteractFan = ActionInteractFan;
-// # sourceMappingURL=LevelGameplayActionsDefine.js.map
+//# sourceMappingURL=LevelGameplayActionsDefine.js.map

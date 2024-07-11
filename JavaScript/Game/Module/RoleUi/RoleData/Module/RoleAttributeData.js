@@ -27,14 +27,14 @@ class RoleAttributeData extends RoleModuleDataBase_1.RoleModuleDataBase {
     this.RoleAddAttr.clear();
   }
   GetOldRoleBaseAttr() {
-    let t;
-    const e = new Map();
+    var t,
+      e = new Map();
     for ([t] of this.RoleBaseAttr) e.set(t, 0);
     return e;
   }
   GetOldRoleAddAttr() {
-    let t;
-    const e = new Map();
+    var t,
+      e = new Map();
     for ([t] of this.RoleAddAttr) e.set(t, 0);
     return e;
   }
@@ -46,10 +46,10 @@ class RoleAttributeData extends RoleModuleDataBase_1.RoleModuleDataBase {
   }
   GetAttrValueById(t) {
     let e = 0;
-    var r = this.RoleBaseAttr.get(t);
-    var r = (r && (e += r), this.RoleAddAttr.get(t));
+    var r = this.RoleBaseAttr.get(t),
+      r = (r && (e += r), this.RoleAddAttr.get(t));
     return r && (e += r), e;
   }
 }
 exports.RoleAttributeData = RoleAttributeData;
-// # sourceMappingURL=RoleAttributeData.js.map
+//# sourceMappingURL=RoleAttributeData.js.map

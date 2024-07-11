@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configWeaponBreachByBreachId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const WeaponBreach_1 = require("../Config/WeaponBreach");
-const DB = "db_weapon.db";
-const FILE = "w.武器基础配置.xlsx";
-const TABLE = "WeaponBreach";
-const COMMAND = "select BinData from `WeaponBreach` where BreachId = ?";
-const KEY_PREFIX = "WeaponBreachByBreachId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  WeaponBreach_1 = require("../Config/WeaponBreach"),
+  DB = "db_weapon.db",
+  FILE = "w.武器基础配置.xlsx",
+  TABLE = "WeaponBreach",
+  COMMAND = "select BinData from `WeaponBreach` where BreachId = ?",
+  KEY_PREFIX = "WeaponBreachByBreachId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX = "configWeaponBreachByBreachId.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configWeaponBreachByBreachId.GetConfigList(";
 exports.configWeaponBreachByBreachId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -29,7 +29,7 @@ exports.configWeaponBreachByBreachId = {
     );
   },
   GetConfigList: (o, e = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -44,13 +44,14 @@ exports.configWeaponBreachByBreachId = {
         const i = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "BreachId",
               o,
-            ]) !== 1
+            ])
           )
             break;
-          let a = void 0;
+          var a = void 0;
           if (
             (([n, a] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -78,4 +79,4 @@ exports.configWeaponBreachByBreachId = {
     }
   },
 };
-// # sourceMappingURL=WeaponBreachByBreachId.js.map
+//# sourceMappingURL=WeaponBreachByBreachId.js.map

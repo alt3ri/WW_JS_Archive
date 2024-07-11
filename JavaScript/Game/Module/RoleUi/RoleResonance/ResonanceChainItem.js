@@ -4,12 +4,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.ResonanceChainActivatedItem =
     exports.ResonanceChainBaseItem =
       void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
 class ResonanceChainBaseItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -87,11 +87,11 @@ class ResonanceChainBaseItem extends UiPanelBase_1.UiPanelBase {
       this.GetItem(2).SetUIRelativeRotation(ResonanceChainBaseItem.Fuo);
   }
   Kbe() {
-    let e;
-    const t =
-      ConfigManager_1.ConfigManager.RoleResonanceConfig.GetRoleResonanceById(
-        this.ResonanceId,
-      );
+    var e,
+      t =
+        ConfigManager_1.ConfigManager.RoleResonanceConfig.GetRoleResonanceById(
+          this.ResonanceId,
+        );
     t &&
       !StringUtils_1.StringUtils.IsBlank(t.NodeIcon) &&
       ((e = this.GetUiNiagara(0)),
@@ -142,11 +142,10 @@ class ResonanceChainLockedItem extends ResonanceChainBaseItem {
   }
   RefreshRedDot() {
     var e =
-      ConfigManager_1.ConfigManager.RoleResonanceConfig.GetRoleResonanceById(
-        this.ResonanceId,
-      );
-    var e =
-      ModelManager_1.ModelManager.RoleModel.RedDotResonanceTabHoleCondition(
+        ConfigManager_1.ConfigManager.RoleResonanceConfig.GetRoleResonanceById(
+          this.ResonanceId,
+        ),
+      e = ModelManager_1.ModelManager.RoleModel.RedDotResonanceTabHoleCondition(
         this.RoleId,
         e.GroupIndex,
       );
@@ -154,4 +153,4 @@ class ResonanceChainLockedItem extends ResonanceChainBaseItem {
   }
 }
 exports.ResonanceChainLockedItem = ResonanceChainLockedItem;
-// # sourceMappingURL=ResonanceChainItem.js.map
+//# sourceMappingURL=ResonanceChainItem.js.map

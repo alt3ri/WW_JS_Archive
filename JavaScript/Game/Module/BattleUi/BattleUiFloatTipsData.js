@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleUiFloatTipsData = exports.BattleUiFloatTip = void 0);
-const Time_1 = require("../../../Core/Common/Time");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const UiManager_1 = require("../../Ui/UiManager");
-const MIN_VALID_TIME = 0.1;
+const Time_1 = require("../../../Core/Common/Time"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  MIN_VALID_TIME = 0.1;
 class BattleUiFloatTip {
   constructor() {
     (this.Type = 0),
@@ -25,20 +25,20 @@ class BattleUiFloatTipsData {
   }
   Clear() {}
   GetNextFloatTip() {
-    for (; this.QKe.length > 0; ) {
-      const t = this.QKe.pop();
+    for (; 0 < this.QKe.length; ) {
+      var t = this.QKe.pop();
       if (!this.CheckIsExpired(t)) return t;
     }
   }
   PlayNormalFloatTip(t, e) {
-    const i = new BattleUiFloatTip();
+    var i = new BattleUiFloatTip();
     (i.Type = 0),
       (i.TextKey = t),
       (i.EndTime = Time_1.Time.WorldTimeSeconds + e),
       this.AddNewFloatTip(i);
   }
   PlayCountdownFloatTip(t, e, i) {
-    const a = new BattleUiFloatTip();
+    var a = new BattleUiFloatTip();
     (a.Type = 1),
       (a.TextKey = t),
       (a.EndTime = Time_1.Time.WorldTimeSeconds + e),
@@ -59,4 +59,4 @@ class BattleUiFloatTipsData {
   }
 }
 exports.BattleUiFloatTipsData = BattleUiFloatTipsData;
-// # sourceMappingURL=BattleUiFloatTipsData.js.map
+//# sourceMappingURL=BattleUiFloatTipsData.js.map

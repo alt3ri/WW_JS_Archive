@@ -26,4 +26,4 @@ class CharRenderBase {
   }
 }
 exports.CharRenderBase = CharRenderBase;
-// # sourceMappingURL=CharRenderBase.js.map
+//# sourceMappingURL=CharRenderBase.js.map

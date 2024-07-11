@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonCostTip = exports.TipsListView = void 0);
-const UE = require("ue");
-const UiComponentsAction_1 = require("../../../Ui/Base/UiComponentsAction");
-const GenericLayoutAdd_1 = require("../../Util/GenericLayoutAdd");
+const UE = require("ue"),
+  UiComponentsAction_1 = require("../../../Ui/Base/UiComponentsAction"),
+  GenericLayoutAdd_1 = require("../../Util/GenericLayoutAdd");
 class TipsListView {
   constructor() {
     (this.xko = void 0),
       (this.OnInstanceRefresh = (t, e, i, s) => {
-        const n = new InstanceDungeonCostTip();
+        var n = new InstanceDungeonCostTip();
         return n.SetRootActor(e.GetOwner(), !0), { Key: t, Value: n };
       });
   }
@@ -19,7 +19,7 @@ class TipsListView {
     );
   }
   AddItemByKey(t) {
-    let e = this.xko.GetLayoutItemByKey(t);
+    var e = this.xko.GetLayoutItemByKey(t);
     return (
       e ||
         (this.xko.AddItemToLayout([t]),
@@ -80,4 +80,4 @@ class InstanceDungeonCostTip extends UiComponentsAction_1.UiComponentsAction {
   }
 }
 exports.InstanceDungeonCostTip = InstanceDungeonCostTip;
-// # sourceMappingURL=TipsListView.js.map
+//# sourceMappingURL=TipsListView.js.map

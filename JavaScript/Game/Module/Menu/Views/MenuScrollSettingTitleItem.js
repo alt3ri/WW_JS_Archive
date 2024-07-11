@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MenuScrollSettingTitleItem = void 0);
-const UE = require("ue");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const MenuScrollSettingBaseItem_1 = require("./MenuScrollSettingBaseItem");
+const UE = require("ue"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  MenuScrollSettingBaseItem_1 = require("./MenuScrollSettingBaseItem");
 class MenuScrollSettingTitleItem extends MenuScrollSettingBaseItem_1.MenuScrollSettingBaseItem {
   constructor() {
     super(...arguments), (this.Pe = void 0), (this.Gft = void 0);
@@ -34,4 +34,4 @@ class MenuScrollSettingTitleItem extends MenuScrollSettingBaseItem_1.MenuScrollS
   SetInteractionActive(e) {}
 }
 exports.MenuScrollSettingTitleItem = MenuScrollSettingTitleItem;
-// # sourceMappingURL=MenuScrollSettingTitleItem.js.map
+//# sourceMappingURL=MenuScrollSettingTitleItem.js.map

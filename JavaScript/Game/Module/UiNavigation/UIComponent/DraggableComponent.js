@@ -4,11 +4,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.DraggablePrevComponent =
     exports.DraggableComponent =
       void 0);
-const TickSystem_1 = require("../../../../Core/Tick/TickSystem");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const UiNavigationNewController_1 = require("../New/UiNavigationNewController");
-const HotKeyComponent_1 = require("./HotKeyComponent");
-const TRIGGER_TIME = 20;
+const TickSystem_1 = require("../../../../Core/Tick/TickSystem"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
+  HotKeyComponent_1 = require("./HotKeyComponent"),
+  TRIGGER_TIME = 20;
 class DraggableComponent extends HotKeyComponent_1.HotKeyComponent {
   constructor() {
     super(...arguments),
@@ -35,7 +35,7 @@ class DraggableComponent extends HotKeyComponent_1.HotKeyComponent {
       (this.LDe = TickSystem_1.TickSystem.InvalidId));
   }
   OnRefreshSelfHotKeyState(e) {
-    const t = this.GetBindButtonTag();
+    var t = this.GetBindButtonTag();
     StringUtils_1.StringUtils.IsEmpty(t) ||
       ((e = e.GetActiveListenerByTag(t)),
       this.SetVisibleMode(2, e?.IsListenerActive() ?? !1));
@@ -61,4 +61,4 @@ class DraggableNextComponent extends DraggableComponent {
   }
 }
 exports.DraggableNextComponent = DraggableNextComponent;
-// # sourceMappingURL=DraggableComponent.js.map
+//# sourceMappingURL=DraggableComponent.js.map

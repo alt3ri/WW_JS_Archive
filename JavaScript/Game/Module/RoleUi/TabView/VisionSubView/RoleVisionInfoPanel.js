@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleVisionInfoPanel = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../../RedDot/RedDotController");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const ConfirmBoxDefine_1 = require("../../../ConfirmBox/ConfirmBoxDefine");
-const VisionDetailDescComponent_1 = require("../../../Phantom/Vision/View/VisionDetailDescComponent");
-const AttrListScrollData_1 = require("../../View/ViewData/AttrListScrollData");
-const RoleVisionAttribute_1 = require("./RoleVisionAttribute");
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../../RedDot/RedDotController"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  ConfirmBoxDefine_1 = require("../../../ConfirmBox/ConfirmBoxDefine"),
+  VisionDetailDescComponent_1 = require("../../../Phantom/Vision/View/VisionDetailDescComponent"),
+  AttrListScrollData_1 = require("../../View/ViewData/AttrListScrollData"),
+  RoleVisionAttribute_1 = require("./RoleVisionAttribute");
 class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -25,9 +25,9 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
       (this.wqe = void 0),
       (this.qdo = !1),
       (this.Wdo = () => {
-        const e = this.plo.GetCurSelectRoleData();
-        const t = [0, 0, 0, 0, 0];
-        const i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(144);
+        const e = this.plo.GetCurSelectRoleData(),
+          t = [0, 0, 0, 0, 0];
+        var i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(144);
         i.FunctionMap.set(1, () => {
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView();
         }),
@@ -44,15 +44,15 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
           );
       }),
       (this.Kdo = () => {
-        const e = this.plo.GetCurSelectRoleId();
+        var e = this.plo.GetCurSelectRoleId();
         ControllerHolder_1.ControllerHolder.PhantomBattleController.SendPhantomRecommendRequest(
           e,
           this.Qdo,
         );
       }),
       (this.Qdo = () => {
-        let e;
-        const t = this.plo.GetCurSelectRoleData();
+        var e,
+          t = this.plo.GetCurSelectRoleData();
         ModelManager_1.ModelManager.PhantomBattleModel.GetRoleIfEquipVision(
           t.GetRoleId(),
         )
@@ -68,8 +68,8 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
             UiManager_1.UiManager.CloseView("VisionRecommendView"));
       }),
       (this.uFe = () => {
-        let e;
-        const t = this.plo.GetCurSelectRoleData();
+        var e,
+          t = this.plo.GetCurSelectRoleData();
         t &&
           ((e = []),
           (e = ModelManager_1.ModelManager.PhantomBattleModel.GetExtraAttrList(
@@ -120,7 +120,7 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
       this.AddEventListener();
   }
   x6e() {
-    let e;
+    var e;
     this.qdo ||
       ((this.qdo = !0),
       (e = this.plo.GetCurSelectRoleId()),
@@ -144,12 +144,12 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
   }
   $Hi() {
     const t = this.plo.GetCurSelectRoleData();
-    const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(96);
+    var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(96);
     e.FunctionMap.set(1, () => {
       ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView();
     }),
       e.FunctionMap.set(2, () => {
-        const e =
+        var e =
           ControllerHolder_1.ControllerHolder.PhantomBattleController.GetRecommendEquipUniqueIdList(
             t.GetRoleId(),
           );
@@ -167,7 +167,7 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
     this.jdo = e;
   }
   RefreshButtonShowState() {
-    const e = this.plo.GetCurSelectRoleData().IsTrialRole();
+    var e = this.plo.GetCurSelectRoleData().IsTrialRole();
     this.RefreshConfirmButtonState(!e), this.RefreshOneKeyButtonState(!e);
   }
   RefreshConfirmButtonState(e) {
@@ -201,7 +201,7 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
   }
   npt() {
     let i;
-    let e = this.plo.GetCurSelectRoleData();
+    var e = this.plo.GetCurSelectRoleData();
     const o = (i =
       ModelManager_1.ModelManager.PhantomBattleModel.GetShowAttrList(
         e.GetDataId(),
@@ -212,7 +212,7 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
     const r = [];
     let n = !1;
     e.forEach((t) => {
-      const e =
+      var e =
         ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
           t,
         );
@@ -237,8 +237,8 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
       this.c8i.Refresh(r, !0);
   }
   $do() {
-    const e = this.plo.GetCurSelectRoleData();
-    let t = e.GetPhantomData().GetDataByIndex(0);
+    var e = this.plo.GetCurSelectRoleData(),
+      t = e.GetPhantomData().GetDataByIndex(0);
     const i = new Array();
     t
       ? VisionDetailDescComponent_1.VisionDetailDesc.ConvertVisionSkillDescToDescData(
@@ -256,7 +256,7 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
           },
         );
     t = e.GetPhantomData().GetPhantomFettersData();
-    t.length === 0
+    0 === t.length
       ? VisionDetailDescComponent_1.VisionDetailDesc.CreateEmptyFetterDescData().forEach(
           (e) => {
             i.push(e);
@@ -274,7 +274,7 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
       this.d8i.Refresh(i);
   }
   Ydo() {
-    let e = this.plo.GetCurSelectRoleData();
+    var e = this.plo.GetCurSelectRoleData();
     if (e.IsTrialRole())
       this.RefreshOneKeyButtonState(!1),
         this.GetButton(4).RootUIComp.SetUIActive(!1);
@@ -284,7 +284,7 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
       e.forEach((e, t) => {
         e && i++;
       }),
-        this.GetButton(4).RootUIComp.SetUIActive(i >= 1);
+        this.GetButton(4).RootUIComp.SetUIActive(1 <= i);
     }
   }
   OnBeforeDestroy() {
@@ -292,4 +292,4 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RoleVisionInfoPanel = RoleVisionInfoPanel;
-// # sourceMappingURL=RoleVisionInfoPanel.js.map
+//# sourceMappingURL=RoleVisionInfoPanel.js.map

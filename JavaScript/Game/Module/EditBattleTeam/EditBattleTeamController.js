@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EditBattleTeamController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const InstanceDungeonById_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonById");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const EditBattleTeamModel_1 = require("./EditBattleTeamModel");
+const Log_1 = require("../../../Core/Common/Log"),
+  InstanceDungeonById_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonById"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  EditBattleTeamModel_1 = require("./EditBattleTeamModel");
 class EditBattleTeamController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
@@ -63,7 +63,7 @@ class EditBattleTeamController extends UiControllerBase_1.UiControllerBase {
       this.OpenEditBattleTeamView(e, t);
   }
   static OpenEditBattleTeamView(e, t = 0) {
-    const a = ModelManager_1.ModelManager.EditBattleTeamModel;
+    var a = ModelManager_1.ModelManager.EditBattleTeamModel;
     InstanceDungeonById_1.configInstanceDungeonById.GetConfig(e)
       ? (a.SetInstanceDungeonId(e),
         ModelManager_1.ModelManager.EditBattleTeamModel
@@ -91,7 +91,7 @@ class EditBattleTeamController extends UiControllerBase_1.UiControllerBase {
         UiManager_1.UiManager.CloseView("EditBattleTeamView");
   }
   static ExitEditBattleTeam(e = !0) {
-    const t = ModelManager_1.ModelManager.EditBattleTeamModel;
+    var t = ModelManager_1.ModelManager.EditBattleTeamModel;
     t.IsMultiInstanceDungeon &&
       e &&
       (Log_1.Log.CheckInfo() &&
@@ -116,13 +116,12 @@ class EditBattleTeamController extends UiControllerBase_1.UiControllerBase {
   }
   static SetEditBattleTeamByRoleId(a) {
     ModelManager_1.ModelManager.EditBattleTeamModel.ResetAllRoleSlotData();
-    const n =
-      ModelManager_1.ModelManager.EditBattleTeamModel.GetAllRoleSlotData;
+    var n = ModelManager_1.ModelManager.EditBattleTeamModel.GetAllRoleSlotData;
     for (let t = 0; t < a.length; t++) {
-      const r = a[t];
-      const i = n[t];
-      const o = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(r);
-      const l = o.GetLevelData();
+      var r = a[t],
+        i = n[t],
+        o = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(r),
+        l = o.GetLevelData();
       let e = i.GetRoleData;
       ((e =
         e ||
@@ -162,11 +161,11 @@ class EditBattleTeamController extends UiControllerBase_1.UiControllerBase {
   (EditBattleTeamController.mKe = (e, t, a) => {
     for (const r of ModelManager_1.ModelManager.EditBattleTeamModel
       .GetAllRoleSlotData) {
-      const n = r.GetRoleData;
+      var n = r.GetRoleData;
       n && n.ConfigId === e && (n.Level = a);
     }
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.OnRefreshEditBattleRoleSlotData,
     );
   });
-// # sourceMappingURL=EditBattleTeamController.js.map
+//# sourceMappingURL=EditBattleTeamController.js.map

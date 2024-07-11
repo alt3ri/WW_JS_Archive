@@ -27,21 +27,21 @@ class PlotAudio {
     );
   }
   id(t) {
-    const s = this.J7.__offset(this.z7, 4);
+    var s = this.J7.__offset(this.z7, 4);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   externalsourcesetting(t) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   filename(t) {
-    const s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 8);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
   ischecksex() {
-    const t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 10);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
 }
 exports.PlotAudio = PlotAudio;
-// # sourceMappingURL=PlotAudio.js.map
+//# sourceMappingURL=PlotAudio.js.map

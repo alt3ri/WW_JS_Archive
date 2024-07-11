@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AttachToActorModel = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const GlobalData_1 = require("../../GlobalData");
-const AttachActorDefine_1 = require("../Define/AttachActorDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  GlobalData_1 = require("../../GlobalData"),
+  AttachActorDefine_1 = require("../Define/AttachActorDefine");
 class AttachToActorModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -19,7 +19,7 @@ class AttachToActorModel extends ModelBase_1.ModelBase {
   AddEntityActor(t, e, o, r, a) {
     let c = this.yPn.get(t);
     c || ((c = new AttachActorDefine_1.AttachActorEntry()), this.yPn.set(t, c));
-    const A = ++this.tqn;
+    var A = ++this.tqn;
     return c.AddAttachActorItem(A, t, e, o, r, a)
       ? (this.ShowLog &&
           Log_1.Log.CheckInfo() &&
@@ -48,8 +48,8 @@ class AttachToActorModel extends ModelBase_1.ModelBase {
         !1);
   }
   RemoveEntityActor(t, e, o) {
-    let r;
-    const a = this.yPn.get(t);
+    var r,
+      a = this.yPn.get(t);
     return (
       !!a &&
       (this.ShowLog &&
@@ -101,7 +101,7 @@ class AttachToActorModel extends ModelBase_1.ModelBase {
     }
   }
   ClearEntityActor(t) {
-    for (const [, e] of this.yPn) {
+    for (var [, e] of this.yPn) {
       if (this.ShowLog)
         for (const o of e.GetAttachActorItems())
           Log_1.Log.CheckInfo() &&
@@ -125,4 +125,4 @@ class AttachToActorModel extends ModelBase_1.ModelBase {
   }
 }
 exports.AttachToActorModel = AttachToActorModel;
-// # sourceMappingURL=AttachToActorModel.js.map
+//# sourceMappingURL=AttachToActorModel.js.map

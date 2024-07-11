@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AchievementRewardItemView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const CommonItemDropGrid_1 = require("../../Common/CommonItemDropGrid");
-const ItemHintController_1 = require("../../ItemHint/ItemHintController");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const MAX_LENGTH = 3;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  CommonItemDropGrid_1 = require("../../Common/CommonItemDropGrid"),
+  ItemHintController_1 = require("../../ItemHint/ItemHintController"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  MAX_LENGTH = 3;
 class AchievementRewardItemView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -23,7 +23,7 @@ class AchievementRewardItemView extends UiTickViewBase_1.UiTickViewBase {
       (this.rGe = void 0),
       (this.nGe = []),
       (this.sGe = (e, i, t) => {
-        const r = new CommonItemDropGrid_1.CommonItemDropGrid();
+        var r = new CommonItemDropGrid_1.CommonItemDropGrid();
         return (
           r.Initialize(i.GetOwner()),
           this.nGe.push(r.AsyncRefreshByItemInfo(e.ItemId, e.ItemCount)),
@@ -43,7 +43,7 @@ class AchievementRewardItemView extends UiTickViewBase_1.UiTickViewBase {
     this.aGe(), this.sqe();
   }
   aGe() {
-    let e;
+    var e;
     (this.oGe = 0),
       (this.eGe = new GenericLayoutNew_1.GenericLayoutNew(
         this.GetLayoutBase(0),
@@ -71,7 +71,7 @@ class AchievementRewardItemView extends UiTickViewBase_1.UiTickViewBase {
         ));
   }
   sqe() {
-    let e;
+    var e;
     (this.nGe = []),
       this.rGe.length <= 0
         ? ((this.oGe = 0), this.CloseMe())
@@ -90,7 +90,7 @@ class AchievementRewardItemView extends UiTickViewBase_1.UiTickViewBase {
     this.SetResetTime();
   }
   SetResetTime() {
-    const e = this.iGe.ShowTime;
+    var e = this.iGe.ShowTime;
     e < TimerSystem_1.MIN_TIME
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -113,4 +113,4 @@ class AchievementRewardItemView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.AchievementRewardItemView = AchievementRewardItemView;
-// # sourceMappingURL=AchievementRewardItemView.js.map
+//# sourceMappingURL=AchievementRewardItemView.js.map

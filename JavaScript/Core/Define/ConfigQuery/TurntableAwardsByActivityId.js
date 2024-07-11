@@ -1,26 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configTurntableAwardsByActivityId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const TurntableAwards_1 = require("../Config/TurntableAwards");
-const DB = "db_activity.db";
-const FILE = "z.转盘活动.xlsx";
-const TABLE = "TurntableAwards";
-const COMMAND = "select BinData from `TurntableAwards` where ActivityId = ?";
-const KEY_PREFIX = "TurntableAwardsByActivityId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  TurntableAwards_1 = require("../Config/TurntableAwards"),
+  DB = "db_activity.db",
+  FILE = "z.转盘活动.xlsx",
+  TABLE = "TurntableAwards",
+  COMMAND = "select BinData from `TurntableAwards` where ActivityId = ?",
+  KEY_PREFIX = "TurntableAwardsByActivityId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX =
-  "configTurntableAwardsByActivityId.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configTurntableAwardsByActivityId.GetConfigList(";
 exports.configTurntableAwardsByActivityId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -30,7 +29,7 @@ exports.configTurntableAwardsByActivityId = {
     );
   },
   GetConfigList: (o, i = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -45,13 +44,14 @@ exports.configTurntableAwardsByActivityId = {
         const r = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "ActivityId",
               o,
-            ]) !== 1
+            ])
           )
             break;
-          let t = void 0;
+          var t = void 0;
           if (
             (([n, t] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -79,4 +79,4 @@ exports.configTurntableAwardsByActivityId = {
     }
   },
 };
-// # sourceMappingURL=TurntableAwardsByActivityId.js.map
+//# sourceMappingURL=TurntableAwardsByActivityId.js.map

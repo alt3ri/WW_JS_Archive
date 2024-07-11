@@ -1,27 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configPlayerExpByPlayerLevelArea = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const PlayerExp_1 = require("../Config/PlayerExp");
-const DB = "db_player_exp.db";
-const FILE = "j.经验.xlsx";
-const TABLE = "PlayerExp";
-const COMMAND =
-  "select BinData from `PlayerExp` where PlayerLevel >= ? AND PlayerLevel < ?";
-const KEY_PREFIX = "PlayerExpByPlayerLevelArea";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  PlayerExp_1 = require("../Config/PlayerExp"),
+  DB = "db_player_exp.db",
+  FILE = "j.经验.xlsx",
+  TABLE = "PlayerExp",
+  COMMAND =
+    "select BinData from `PlayerExp` where PlayerLevel >= ? AND PlayerLevel < ?",
+  KEY_PREFIX = "PlayerExpByPlayerLevelArea",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX =
-  "configPlayerExpByPlayerLevelArea.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configPlayerExpByPlayerLevelArea.GetConfigList(";
 exports.configPlayerExpByPlayerLevelArea = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -31,7 +30,7 @@ exports.configPlayerExpByPlayerLevelArea = {
     );
   },
   GetConfigList: (e, o, r = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -48,16 +47,17 @@ exports.configPlayerExpByPlayerLevelArea = {
         const l = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(
               handleId,
               !1,
               ...logPair,
               ["PlayerLevel", e],
               ["PlayerLevel", o],
-            ) !== 1
+            )
           )
             break;
-          let a = void 0;
+          var a = void 0;
           if (
             (([n, a] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -86,4 +86,4 @@ exports.configPlayerExpByPlayerLevelArea = {
     }
   },
 };
-// # sourceMappingURL=PlayerExpByPlayerLevelArea.js.map
+//# sourceMappingURL=PlayerExpByPlayerLevelArea.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomTrialBattleData = void 0);
-const AttributeDefine_1 = require("../../../Attribute/AttributeDefine");
-const PhantomBattleData_1 = require("../PhantomBattleData");
+const AttributeDefine_1 = require("../../../Attribute/AttributeDefine"),
+  PhantomBattleData_1 = require("../PhantomBattleData");
 class PhantomTrialBattleData extends PhantomBattleData_1.PhantomBattleData {
   constructor() {
     super(...arguments),
@@ -30,7 +30,7 @@ class PhantomTrialBattleData extends PhantomBattleData_1.PhantomBattleData {
     this.B5i = t;
   }
   GetIfMain() {
-    return this.B5i === 0;
+    return 0 === this.B5i;
   }
   GetUniqueId() {
     return this.GetIncrId();
@@ -49,4 +49,4 @@ class PhantomTrialBattleData extends PhantomBattleData_1.PhantomBattleData {
   }
 }
 exports.PhantomTrialBattleData = PhantomTrialBattleData;
-// # sourceMappingURL=PhantomTrialBattleData.js.map
+//# sourceMappingURL=PhantomTrialBattleData.js.map

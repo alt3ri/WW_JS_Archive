@@ -63,4 +63,4 @@ class AssemblyTipsData {
   (exports.ROULETTE_TEXT_EMPTY = "Text_ProbeToolFunctionNotice2_Text"),
   (exports.DEFAULT_ITEM_ROULETTE_GRID_INDEX = 6),
   (exports.ROULETTE_NUM = 8);
-// # sourceMappingURL=RouletteDefine.js.map
+//# sourceMappingURL=RouletteDefine.js.map

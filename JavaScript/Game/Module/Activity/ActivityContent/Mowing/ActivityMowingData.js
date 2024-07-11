@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityMowingData = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const KillMonstersScoresByInstanceID_1 = require("../../../../../Core/Define/ConfigQuery/KillMonstersScoresByInstanceID");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ScoreRewardById_1 = require("../../../../../Core/Define/ConfigQuery/ScoreRewardById");
-const TakeWeedsDifficultyById_1 = require("../../../../../Core/Define/ConfigQuery/TakeWeedsDifficultyById");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ActivityData_1 = require("../../ActivityData");
-const ActivityManager_1 = require("../../ActivityManager");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  KillMonstersScoresByInstanceID_1 = require("../../../../../Core/Define/ConfigQuery/KillMonstersScoresByInstanceID"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ScoreRewardById_1 = require("../../../../../Core/Define/ConfigQuery/ScoreRewardById"),
+  TakeWeedsDifficultyById_1 = require("../../../../../Core/Define/ConfigQuery/TakeWeedsDifficultyById"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ActivityData_1 = require("../../ActivityData"),
+  ActivityManager_1 = require("../../ActivityManager");
 class ActivityMowingData extends ActivityData_1.ActivityBaseData {
   constructor() {
     super(...arguments),
@@ -25,8 +25,8 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
       (this.oke = void 0),
       (this.MowingLevelInfoDict = void 0),
       (this.ENe = (t, e) => {
-        const [, i] = this.rke(t.RewardState);
-        const [, r] = this.rke(e.RewardState);
+        var [, i] = this.rke(t.RewardState),
+          [, r] = this.rke(e.RewardState);
         return i === r ? t.Id - e.Id : i - r;
       });
   }
@@ -45,7 +45,7 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
     let r = "";
     return [
       (r =
-        e !== ""
+        "" !== e
           ? MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e) ?? ""
           : r),
       i,
@@ -59,7 +59,7 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
         (this.ike = new Map()),
         (this.MowingLevelInfoDict = new Map());
       for (const r of t.f0s.t0s) {
-        const e =
+        var e =
           KillMonstersScoresByInstanceID_1.configKillMonstersScoresByInstanceID.GetConfig(
             r.Ekn,
           );
@@ -70,7 +70,7 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
         }
       }
       for (const n of t.f0s.e0s) {
-        const i = ScoreRewardById_1.configScoreRewardById.GetConfig(n.Ekn);
+        var i = ScoreRewardById_1.configScoreRewardById.GetConfig(n.Ekn);
         const t = this.ske(n, i);
         this.eke.push(t), this.ike.set(n.Ekn, t);
       }
@@ -80,7 +80,7 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
     const i = ActivityManager_1.ActivityManager.GetActivityController(
       this.Type,
     );
-    const [r] = this.rke(t.ckn);
+    var [r] = this.rke(t.ckn);
     return {
       Id: t.Ekn,
       NameText: MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.Desc),
@@ -96,7 +96,7 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
     const i = ActivityManager_1.ActivityManager.GetActivityController(
       this.Type,
     );
-    const [r] = this.rke(t.ckn);
+    var [r] = this.rke(t.ckn);
     return {
       Id: t.Ekn,
       NameText: MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.Desc),
@@ -109,7 +109,7 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
     };
   }
   hke(t, e) {
-    const [i] = this.rke(t.RewardState);
+    var [i] = this.rke(t.RewardState);
     (t.NameText = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e)),
       (t.RewardButtonText = i);
   }
@@ -117,14 +117,14 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
     return this.IsHaveRewardToGet() || this.IsNewInstanceOpen();
   }
   IsHaveRewardToGet() {
-    for (const t of this.eke) if (t.RewardState === 1) return !0;
-    for (const e of this.tke) if (e.RewardState === 1) return !0;
+    for (const t of this.eke) if (1 === t.RewardState) return !0;
+    for (const e of this.tke) if (1 === e.RewardState) return !0;
     return !1;
   }
   IsNewInstanceOpen() {
     if (this.IsUnLock() && this.GetPreGuideQuestFinishState())
-      for (const [, t] of this.MowingLevelInfoDict.entries()) {
-        const e = t.JCs <= TimeUtil_1.TimeUtil.GetServerTime();
+      for (var [, t] of this.MowingLevelInfoDict.entries()) {
+        var e = t.JCs <= TimeUtil_1.TimeUtil.GetServerTime();
         if (
           !ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
             this.Id,
@@ -140,7 +140,7 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
     return !1;
   }
   ReadNewInstance() {
-    for (const [, t] of this.MowingLevelInfoDict.entries())
+    for (var [, t] of this.MowingLevelInfoDict.entries())
       t.JCs <= TimeUtil_1.TimeUtil.GetServerTime() &&
         ModelManager_1.ModelManager.ActivityModel.SaveActivityData(
           this.Id,
@@ -155,9 +155,9 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
     );
   }
   ake(t) {
-    let e;
-    let i;
-    const r = [];
+    var e,
+      i,
+      r = [];
     for ([
       e,
       i,
@@ -172,14 +172,14 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
   }
   GetPointRewards() {
     for (const e of this.eke) {
-      const t = ScoreRewardById_1.configScoreRewardById.GetConfig(e.Id);
+      var t = ScoreRewardById_1.configScoreRewardById.GetConfig(e.Id);
       t && this.hke(e, t.Desc);
     }
     return this.eke.sort(this.ENe);
   }
   GetLevelRewards() {
     for (const e of this.tke) {
-      const t =
+      var t =
         KillMonstersScoresByInstanceID_1.configKillMonstersScoresByInstanceID.GetConfig(
           e.Id,
         );
@@ -188,7 +188,7 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
     return this.tke.sort(this.ENe);
   }
   GetRewardViewData() {
-    const t = StringUtils_1.StringUtils.Format(
+    var t = StringUtils_1.StringUtils.Format(
       MultiTextLang_1.configMultiTextLang.GetLocalTextNew("MowingTotalPoint"),
       this.GetTotalPoint().toString(),
     );
@@ -214,8 +214,8 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
     };
   }
   SetLevelRewardStateToGot(t) {
-    let e;
-    var t = this.oke.get(t);
+    var e,
+      t = this.oke.get(t);
     t &&
       ((t.RewardState = 2),
       ([e] = this.rke(Protocol_1.Aki.Protocol.D0s.qms)),
@@ -223,8 +223,8 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
       (t.RewardButtonText = e));
   }
   SetPointRewardState(t) {
-    let e;
-    var t = this.ike.get(t);
+    var e,
+      t = this.ike.get(t);
     t &&
       (([e] = this.rke(Protocol_1.Aki.Protocol.D0s.qms)),
       (t.RewardState = 2),
@@ -239,9 +239,9 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
   }
   UpdatePointRewards(t) {
     for (const r of t.P0s) {
-      var e = ScoreRewardById_1.configScoreRewardById.GetConfig(r.Ekn);
-      var e = this.ske(r, e);
-      const i = this.ike.get(r.Ekn);
+      var e = ScoreRewardById_1.configScoreRewardById.GetConfig(r.Ekn),
+        e = this.ske(r, e),
+        i = this.ike.get(r.Ekn);
       (i.RewardButtonText = e.RewardButtonText),
         (i.RewardState = e.RewardState);
     }
@@ -267,7 +267,7 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
     }
   }
   GetLevelDiffIndex(t) {
-    const e = this.MowingLevelInfoDict.get(t);
+    var e = this.MowingLevelInfoDict.get(t);
     return e
       ? KillMonstersScoresByInstanceID_1.configKillMonstersScoresByInstanceID
           .GetConfig(t)
@@ -289,7 +289,7 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
   }
   GetTotalPoint() {
     let t = 0;
-    for (const [, e] of this.MowingLevelInfoDict) t += e.ZCs;
+    for (var [, e] of this.MowingLevelInfoDict) t += e.ZCs;
     return t;
   }
   GetLevelMaxPoint(t) {
@@ -307,11 +307,11 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
     return t <= 0 ? "" : this.lke(t);
   }
   lke(t) {
-    var t = Math.max(t, TimeUtil_1.TimeUtil.Minute);
-    const e = this.jNe(t);
-    var t =
-      TimeUtil_1.TimeUtil.GetCountDownDataFormat2(t, e[0], e[1])
-        .CountDownText ?? "";
+    var t = Math.max(t, TimeUtil_1.TimeUtil.Minute),
+      e = this.jNe(t),
+      t =
+        TimeUtil_1.TimeUtil.GetCountDownDataFormat2(t, e[0], e[1])
+          .CountDownText ?? "";
     return StringUtils_1.StringUtils.Format(
       MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
         "ActivityMowing_UnlockCondition",
@@ -328,4 +328,4 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
   }
 }
 exports.ActivityMowingData = ActivityMowingData;
-// # sourceMappingURL=ActivityMowingData.js.map
+//# sourceMappingURL=ActivityMowingData.js.map

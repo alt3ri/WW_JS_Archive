@@ -1,31 +1,36 @@
 "use strict";
-let SceneItemTimeTrackControlComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (e, t, i, o) {
-    let r;
-    const n = arguments.length;
-    let s =
-      n < 3 ? t : o === null ? (o = Object.getOwnPropertyDescriptor(t, i)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      s = Reflect.decorate(e, t, i, o);
-    else
-      for (let m = e.length - 1; m >= 0; m--)
-        (r = e[m]) && (s = (n < 3 ? r(s) : n > 3 ? r(t, i, s) : r(t, i)) || s);
-    return n > 3 && s && Object.defineProperty(t, i, s), s;
-  };
+var SceneItemTimeTrackControlComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (e, t, i, o) {
+      var r,
+        n = arguments.length,
+        s =
+          n < 3
+            ? t
+            : null === o
+              ? (o = Object.getOwnPropertyDescriptor(t, i))
+              : o;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        s = Reflect.decorate(e, t, i, o);
+      else
+        for (var m = e.length - 1; 0 <= m; m--)
+          (r = e[m]) &&
+            (s = (n < 3 ? r(s) : 3 < n ? r(t, i, s) : r(t, i)) || s);
+      return 3 < n && s && Object.defineProperty(t, i, s), s;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemTimeTrackControlComponent = void 0);
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const LevelGameplayActionsDefine_1 = require("../../../../LevelGamePlay/LevelGameplayActionsDefine");
-const performSeqTagId = -687845e3;
+const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  LevelGameplayActionsDefine_1 = require("../../../../LevelGamePlay/LevelGameplayActionsDefine"),
+  performSeqTagId = -687845e3;
 let SceneItemTimeTrackControlComponent =
   (SceneItemTimeTrackControlComponent_1 = class SceneItemTimeTrackControlComponent extends (
     EntityComponent_1.EntityComponent
@@ -39,14 +44,14 @@ let SceneItemTimeTrackControlComponent =
         (this.b_n = void 0),
         (this.q_n = 0),
         (this.G_n = () => {
-          const e =
+          var e =
             GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(
               performSeqTagId,
             );
           this.Hte &&
             this.Lie &&
             e &&
-            (this.mBe.State === 2
+            (2 === this.mBe.State
               ? this.Lie.HasTag(performSeqTagId) ||
                 (this.Lie.AddTag(performSeqTagId),
                 this.Hte.SetActiveTagSequencePlaybackProgress(e, this.q_n),
@@ -70,9 +75,9 @@ let SceneItemTimeTrackControlComponent =
       );
     }
     OnActivate() {
-      const e = this.Entity.GetComponent(178);
+      var e = this.Entity.GetComponent(178);
       if (e) {
-        const t = e.GetInteractController();
+        var t = e.GetInteractController();
         if (t) {
           let e = 0;
           for (const i of this.B_n) this.N_n(t, e, i), e++;
@@ -86,7 +91,7 @@ let SceneItemTimeTrackControlComponent =
               EventDefine_1.EEventName.OnSceneItemStateChange,
               this.G_n,
             ),
-            this.mBe.State !== 0 && this.G_n();
+            0 !== this.mBe.State && this.G_n();
         }
       }
       return !0;
@@ -114,11 +119,11 @@ let SceneItemTimeTrackControlComponent =
       if (!(this.B_n.length < e)) return this.B_n[e];
     }
     N_n(e, t, i) {
-      const o = new LevelGameplayActionsDefine_1.ActionTimeTrackControl();
-      const r =
-        ((o.ConfigIndex = t),
-        (o.EntityId = this.Entity.GetComponent(0).GetCreatureDataId()),
-        e.GetInteractiveOption());
+      var o = new LevelGameplayActionsDefine_1.ActionTimeTrackControl(),
+        r =
+          ((o.ConfigIndex = t),
+          (o.EntityId = this.Entity.GetComponent(0).GetCreatureDataId()),
+          e.GetInteractiveOption());
       e.AddClientInteractOption(
         o,
         i.Condition,
@@ -168,8 +173,8 @@ let SceneItemTimeTrackControlComponent =
           this.Hte.PauseActiveTagSequence(i)),
         this.b_n?.Valid() &&
           (TimerSystem_1.TimerSystem.Remove(this.b_n), (this.b_n = void 0)),
-        t !== 0) &&
-        (this.Hte.ResumeActiveTagSequence(i, e), t > 0) &&
+        0 !== t) &&
+        (this.Hte.ResumeActiveTagSequence(i, e), 0 < t) &&
         (this.b_n = TimerSystem_1.TimerSystem.Delay(() => {
           this.Hte?.PauseActiveTagSequence(i), (this.b_n = void 0);
         }, t * CommonDefine_1.MILLIONSECOND_PER_SECOND));
@@ -182,4 +187,4 @@ let SceneItemTimeTrackControlComponent =
   )),
   (exports.SceneItemTimeTrackControlComponent =
     SceneItemTimeTrackControlComponent);
-// # sourceMappingURL=SceneItemTimeTrackControlComponent.js.map
+//# sourceMappingURL=SceneItemTimeTrackControlComponent.js.map

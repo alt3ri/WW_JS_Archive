@@ -10,7 +10,7 @@ class UseItemBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   OnCreate(e) {
     return (
       !!super.OnCreate(e) &&
-      e.Condition.Type === "UseItem" &&
+      "UseItem" === e.Condition.Type &&
       ((this.TrackTextRuleInner = 1), !0)
     );
   }
@@ -22,4 +22,4 @@ class UseItemBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   }
 }
 exports.UseItemBehaviorNode = UseItemBehaviorNode;
-// # sourceMappingURL=UseItemBehaviorNode.js.map
+//# sourceMappingURL=UseItemBehaviorNode.js.map

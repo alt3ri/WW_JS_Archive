@@ -14,7 +14,7 @@ class FallDownPercentMachine {
   }
   Update(t) {
     return (
-      this.unt !== 0 &&
+      0 !== this.unt &&
       ((this._nt += this.unt * t),
       this._nt >= this.lnt && ((this._nt = this.lnt), (this.unt = 0)),
       !0)
@@ -25,4 +25,4 @@ class FallDownPercentMachine {
   }
 }
 exports.FallDownPercentMachine = FallDownPercentMachine;
-// # sourceMappingURL=FallDownPercentMachine.js.map
+//# sourceMappingURL=FallDownPercentMachine.js.map

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceMotionItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class AdviceMotionItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -22,11 +22,11 @@ class AdviceMotionItem extends UiPanelBase_1.UiPanelBase {
         this.Oqe();
       }),
       (this.T7e = () => {
-        let e;
-        let t;
-        const i =
-          this.I7e ===
-          ModelManager_1.ModelManager.AdviceModel.PreSelectMotionId;
+        var e,
+          t,
+          i =
+            this.I7e ===
+            ModelManager_1.ModelManager.AdviceModel.PreSelectMotionId;
         return this.I7e ===
           ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceMotionDefaultConfigId()
           ? !i
@@ -34,10 +34,11 @@ class AdviceMotionItem extends UiPanelBase_1.UiPanelBase {
               this.I7e,
             )),
             (e =
-              (e = ModelManager_1.ModelManager.MotionModel.GetRoleMotionState(
-                e,
-                this.I7e,
-              )) === 0 || e === 1) &&
+              0 ===
+                (e = ModelManager_1.ModelManager.MotionModel.GetRoleMotionState(
+                  e,
+                  this.I7e,
+                )) || 1 === e) &&
               ((t =
                 ConfigManager_1.ConfigManager.ComposeConfig.GetConditionInfo(
                   ConfigManager_1.ConfigManager.MotionConfig.GetMotionConfig(
@@ -67,7 +68,7 @@ class AdviceMotionItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.kqe]]);
   }
   OnStart() {
-    const e = this.GetExtendToggle(0);
+    var e = this.GetExtendToggle(0);
     e.CanExecuteChange.Unbind(),
       e.CanExecuteChange.Bind(this.T7e),
       EventSystem_1.EventSystem.Add(
@@ -107,13 +108,13 @@ class AdviceMotionItem extends UiPanelBase_1.UiPanelBase {
       this.SetTextureByPath(e, this.GetTexture(2));
   }
   j9e() {
-    const e =
+    var e =
       this.I7e ===
       ModelManager_1.ModelManager.AdviceModel.CurrentSelectMotionId;
     this.GetItem(4).SetUIActive(e);
   }
   Oqe() {
-    const e =
+    var e =
       this.I7e === ModelManager_1.ModelManager.AdviceModel.PreSelectMotionId
         ? 1
         : 0;
@@ -121,7 +122,7 @@ class AdviceMotionItem extends UiPanelBase_1.UiPanelBase {
       this.GetExtendToggle(0).SetToggleStateForce(e, !1);
   }
   L7e() {
-    let e;
+    var e;
     this.I7e ===
     ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceMotionDefaultConfigId()
       ? (this.GetSprite(3).SetUIActive(!1), this.GetItem(5).SetUIActive(!1))
@@ -129,10 +130,11 @@ class AdviceMotionItem extends UiPanelBase_1.UiPanelBase {
           this.I7e,
         )),
         (e =
-          (e = ModelManager_1.ModelManager.MotionModel.GetRoleMotionState(
-            e,
-            this.I7e,
-          )) === 0 || e === 1),
+          0 ===
+            (e = ModelManager_1.ModelManager.MotionModel.GetRoleMotionState(
+              e,
+              this.I7e,
+            )) || 1 === e),
         this.GetSprite(3).SetUIActive(e),
         this.GetItem(5).SetUIActive(e));
   }
@@ -144,4 +146,4 @@ class AdviceMotionItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.AdviceMotionItem = AdviceMotionItem;
-// # sourceMappingURL=AdviceMotionItem.js.map
+//# sourceMappingURL=AdviceMotionItem.js.map

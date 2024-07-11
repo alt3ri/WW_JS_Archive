@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LockCursorUnit = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const HudUnitBase_1 = require("../HudUnitBase");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  HudUnitBase_1 = require("../HudUnitBase");
 class LockCursorUnit extends HudUnitBase_1.HudUnitBase {
   constructor() {
     super(...arguments),
@@ -33,7 +33,7 @@ class LockCursorUnit extends HudUnitBase_1.HudUnitBase {
       (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
   Tick(t) {
-    let e;
+    var e;
     this.Fei < 0 ||
       (this.Cce > this.Fei
         ? this.SetBarPercent(1)
@@ -69,7 +69,7 @@ class LockCursorUnit extends HudUnitBase_1.HudUnitBase {
     (this.Vei = t?.HasTag(-625862347) ?? !1), this.SetVisible(!this.Vei, 2);
   }
   RefreshManualLockVisible() {
-    let t =
+    var t =
       ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
         185,
       );
@@ -91,14 +91,14 @@ class LockCursorUnit extends HudUnitBase_1.HudUnitBase {
           "",
           t,
         ]),
-      this.yPt === 0
-        ? (this.Ouo(), t === 2 && this.tbn())
-        : this.yPt === 2 && this.ibn(),
+      0 === this.yPt
+        ? (this.Ouo(), 2 === t && this.tbn())
+        : 2 === this.yPt && this.ibn(),
       (this.yPt = t));
   }
   Hei(t, e) {
-    const i = this.GetItem(2);
-    const s = this.GetItem(5);
+    var i = this.GetItem(2),
+      s = this.GetItem(5);
     e
       ? (i.IsUIActiveSelf() !== t && i.SetUIActive(t),
         s.IsUIActiveSelf() && s.SetUIActive(!1))
@@ -106,7 +106,7 @@ class LockCursorUnit extends HudUnitBase_1.HudUnitBase {
         s.IsUIActiveSelf() !== t && s.SetUIActive(t));
   }
   jei(t) {
-    const e = this.GetSprite(3);
+    var e = this.GetSprite(3);
     e.IsUIActiveSelf() !== t && e.SetUIActive(t);
   }
   SetBarPercent(t) {
@@ -126,4 +126,4 @@ class LockCursorUnit extends HudUnitBase_1.HudUnitBase {
   }
 }
 exports.LockCursorUnit = LockCursorUnit;
-// # sourceMappingURL=LockCursorUnit.js.map
+//# sourceMappingURL=LockCursorUnit.js.map

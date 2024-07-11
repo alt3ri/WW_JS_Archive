@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonResultButton = void 0);
-const UE = require("ue");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class CommonResultButton extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -52,7 +52,7 @@ class CommonResultButton extends UiPanelBase_1.UiPanelBase {
     this.iBt = t;
   }
   SetBtnCanClick(t) {
-    const i = this.GetButton(0);
+    var i = this.GetButton(0);
     i.GetSelfInteractive() !== t && i.SetSelfInteractive(t);
   }
   SetBtnText(t, ...i) {
@@ -106,4 +106,4 @@ class CommonResultButton extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.CommonResultButton = CommonResultButton;
-// # sourceMappingURL=CommonResultButton.js.map
+//# sourceMappingURL=CommonResultButton.js.map

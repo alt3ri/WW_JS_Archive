@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HeadStateData = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const CameraController_1 = require("../../../../Camera/CameraController");
-const TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../../../GlobalData");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ColorUtils_1 = require("../../../../Utils/ColorUtils");
-const EAttributeId = Protocol_1.Aki.Protocol.KBs;
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const SOCKET_NAME = new UE.FName("MarkCase");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  CameraController_1 = require("../../../../Camera/CameraController"),
+  TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ColorUtils_1 = require("../../../../Utils/ColorUtils");
+var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  SOCKET_NAME = new UE.FName("MarkCase");
 class HeadStateData {
   constructor() {
     (this.CommonParam = void 0),
@@ -192,7 +192,7 @@ class HeadStateData {
       (this.ylt = void 0);
   }
   eXe() {
-    let t;
+    var t;
     this.Jh &&
       (EventSystem_1.EventSystem.HasWithTarget(
         this.Jh,
@@ -255,7 +255,7 @@ class HeadStateData {
       t.AddProgressDataChangedCallback(this.Plt);
   }
   tXe() {
-    let t;
+    var t;
     this.Jh &&
       (EventSystem_1.EventSystem.HasWithTarget(
         this.Jh,
@@ -384,13 +384,13 @@ class HeadStateData {
     return this.zht ? this.zht.GetDurabilityValue() : 0;
   }
   GetHpAndShieldPercent() {
-    const [t, i] = this.GetHpAndMaxHp();
-    const s = this.GetShield();
-    const h = s <= i ? s / i : 1;
+    var [t, i] = this.GetHpAndMaxHp(),
+      s = this.GetShield();
+    let h = s <= i ? s / i : 1;
     return [t / i, h];
   }
   GetWorldLocation() {
-    let t;
+    var t;
     return (
       this.ilt
         ? this._lt.FromUeVector(this.tfe.GetSocketLocation(this.olt))
@@ -407,7 +407,7 @@ class HeadStateData {
           3,
         ),
       (this._lt.Z += this.rlt),
-      this.nlt !== 0 &&
+      0 !== this.nlt &&
         (CameraController_1.CameraController.CameraLocation.Subtraction(
           this._lt,
           this.ult,
@@ -422,7 +422,7 @@ class HeadStateData {
     this.DistanceSquared = this.GetSquaredDistanceToMonster();
   }
   GetSquaredDistanceToMonster() {
-    const t = CameraController_1.CameraController.CameraLocation;
+    var t = CameraController_1.CameraController.CameraLocation;
     return Vector_1.Vector.DistSquared(
       t,
       this.ActorComponent.ActorLocationProxy,
@@ -454,7 +454,7 @@ class HeadStateData {
   }
   GetHardnessColor() {
     if (this.zht) {
-      let t = this.zht.GetAttributeComponent();
+      var t = this.zht.GetAttributeComponent();
       if (t)
         return (
           (t = t.PropertyId),
@@ -477,4 +477,4 @@ class HeadStateData {
   }
 }
 exports.HeadStateData = HeadStateData;
-// # sourceMappingURL=HeadStateData.js.map
+//# sourceMappingURL=HeadStateData.js.map

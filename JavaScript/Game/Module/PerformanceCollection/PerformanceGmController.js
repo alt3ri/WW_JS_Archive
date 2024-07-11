@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PerformanceGmController = void 0);
-const cpp_1 = require("cpp");
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Json_1 = require("../../../Core/Common/Json");
-const Log_1 = require("../../../Core/Common/Log");
-const PerformanceController_1 = require("../../../Core/Performance/PerformanceController");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const Global_1 = require("../../Global");
-const GlobalData_1 = require("../../GlobalData");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const OperationsPerformance_1 = require("../../Module/PerformanceCollection/OperationsPerformance");
-const CharacterBuffIds_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds");
-const WorldFunctionLibrary_1 = require("../../World/Bridge/WorldFunctionLibrary");
-const WorldGlobal_1 = require("../../World/WorldGlobal");
-const ENTITY_PERFORMANCE_TEST_NUM = 1;
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Json_1 = require("../../../Core/Common/Json"),
+  Log_1 = require("../../../Core/Common/Log"),
+  PerformanceController_1 = require("../../../Core/Performance/PerformanceController"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  OperationsPerformance_1 = require("../../Module/PerformanceCollection/OperationsPerformance"),
+  CharacterBuffIds_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds"),
+  WorldFunctionLibrary_1 = require("../../World/Bridge/WorldFunctionLibrary"),
+  WorldGlobal_1 = require("../../World/WorldGlobal"),
+  ENTITY_PERFORMANCE_TEST_NUM = 1;
 class EntityPerformanceResult extends Json_1.JsonObjBase {
   constructor() {
     super(...arguments),
@@ -30,12 +30,12 @@ class EntityPerformanceResult extends Json_1.JsonObjBase {
 }
 class PerformanceGmController {
   static a4i() {
-    let r = 0;
-    let o = 0;
-    const t = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
-    for (let e = t.length - 1; e >= 0; e--) {
-      const a = t[e];
-      let n = a.Entity.GetComponent(3)?.Owner;
+    let r = 0,
+      o = 0;
+    var t = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
+    for (let e = t.length - 1; 0 <= e; e--) {
+      var a = t[e],
+        n = a.Entity.GetComponent(3)?.Owner;
       if (n !== Global_1.Global.BaseCharacter) {
         ++o,
           (r += PerformanceController_1.PerformanceController.ConsumeTickTime(
@@ -51,12 +51,12 @@ class PerformanceGmController {
           return -1;
       }
     }
-    return o > 0 ? r / o : 0;
+    return 0 < o ? r / o : 0;
   }
   static ClearEntityButRole() {
-    const r = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
-    for (let e = r.length - 1; e >= 0; e--) {
-      let o = r[e];
+    var r = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
+    for (let e = r.length - 1; 0 <= e; e--) {
+      var o = r[e];
       o.Entity.GetComponent(3)?.Owner !== Global_1.Global.BaseCharacter &&
         ((o = o.Entity.GetComponent(0).GetCreatureDataId()),
         ControllerHolder_1.ControllerHolder.CreatureController.RemoveEntity(
@@ -105,7 +105,7 @@ class PerformanceGmController {
     return !e.includes("SimpleNPC") && !e.includes("PasserbyNPC");
   }
   static IgnoreBattle() {
-    let e = Global_1.Global.BaseCharacter;
+    var e = Global_1.Global.BaseCharacter;
     return (
       !!e &&
       !!(e = e.CharacterActorComponent.Entity.GetComponent(157)) &&
@@ -117,8 +117,8 @@ class PerformanceGmController {
     );
   }
   static async EntityPerformanceTestAll(e) {
-    var e = Number(e[0]);
-    const r = this.h4i(e);
+    var e = Number(e[0]),
+      r = this.h4i(e);
     this.IgnoreBattle() ||
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Performance", 36, "忽略战斗失效")),
@@ -128,9 +128,9 @@ class PerformanceGmController {
     OperationsPerformance_1.OperationsPerformance.StartEntityPerformanceTest(),
       OperationsPerformance_1.OperationsPerformance.NewEntityPerformanceTestPromise(),
       TimerSystem_1.TimerSystem.Delay(() => {
-        const e =
-          OperationsPerformance_1.OperationsPerformance.ConsumePerformanceData();
-        const r = e[0];
+        var e =
+            OperationsPerformance_1.OperationsPerformance.ConsumePerformanceData(),
+          r = e[0];
         (o = e[1]),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -150,7 +150,7 @@ class PerformanceGmController {
         !0,
       );
     const t = [];
-    const a = Global_1.Global.BaseCharacter.GetTransform();
+    var a = Global_1.Global.BaseCharacter.GetTransform();
     for (const l of ModelManager_1.ModelManager.CreatureModel.GetAllEntityTemplate(
       !0,
     ).values())
@@ -175,11 +175,11 @@ class PerformanceGmController {
             ["CId", l.Id],
             ["Name", l.Name],
           );
-        const n = 10 * TimeUtil_1.TimeUtil.InverseMillisecond;
+        var n = 10 * TimeUtil_1.TimeUtil.InverseMillisecond;
         TimerSystem_1.TimerSystem.Delay(() => {
-          let e;
-          const r = this.a4i();
-          r === -1
+          var e,
+            r = this.a4i();
+          -1 === r
             ? (Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
                   "Performance",
@@ -237,20 +237,20 @@ class PerformanceGmController {
   }
   static KillAllEntityButRole() {
     this.ClearEntityButRole();
-    const e = (0, puerts_1.$ref)(void 0);
-    const r =
-      (UE.GameplayStatics.GetAllActorsOfClass(
-        GlobalData_1.GlobalData.World,
-        UE.TsSimpleNpc_C.StaticClass(),
-        e,
-      ),
-      (0, puerts_1.$unref)(e));
+    var e = (0, puerts_1.$ref)(void 0),
+      r =
+        (UE.GameplayStatics.GetAllActorsOfClass(
+          GlobalData_1.GlobalData.World,
+          UE.TsSimpleNpc_C.StaticClass(),
+          e,
+        ),
+        (0, puerts_1.$unref)(e));
     for (let e = 0; e < r.Num(); e++) r.Get(e).K2_DestroyActor();
     return !0;
   }
   static OpenWorldEntityCatchMode(e) {
     (PerformanceController_1.PerformanceController.IsOpenCatchWorldEntity =
-      e[0] !== "0"),
+      "0" !== e[0]),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Performance",
@@ -264,7 +264,7 @@ class PerformanceGmController {
     this.IgnoreBattle() ||
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Performance", 36, "忽略战斗失效"));
-    const r = Global_1.Global.BaseCharacter.GetTransform();
+    var r = Global_1.Global.BaseCharacter.GetTransform();
     const o = ModelManager_1.ModelManager.CreatureModel.GetEntityTemplate(
       Number(e[0]),
     );
@@ -287,7 +287,7 @@ class PerformanceGmController {
     e = 10 * TimeUtil_1.TimeUtil.InverseMillisecond;
     return (
       TimerSystem_1.TimerSystem.Delay(() => {
-        const e = this.a4i();
+        var e = this.a4i();
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Performance",
@@ -306,8 +306,8 @@ class PerformanceGmController {
     );
   }
   static async EntityGpuPerformanceTestAll(e) {
-    var e = Number(e[0]);
-    const r = this.h4i(e);
+    var e = Number(e[0]),
+      r = this.h4i(e);
     this.IgnoreBattle() ||
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Performance", 36, "忽略战斗失效")),
@@ -315,7 +315,7 @@ class PerformanceGmController {
         !0,
       );
     let o = "";
-    const t = Global_1.Global.BaseCharacter.GetTransform();
+    var t = Global_1.Global.BaseCharacter.GetTransform();
     WorldGlobal_1.WorldGlobal.ToTsVector(t.GetLocation()).Y += 200;
     for (const a of ModelManager_1.ModelManager.CreatureModel.GetAllEntityTemplate(
       !0,
@@ -369,33 +369,33 @@ class PerformanceGmController {
     PerformanceController_1.PerformanceController.SetEntityTickPerformanceTest(
       e,
     );
-    var e = e ? 0 : 1;
-    const r =
-      (UE.KismetSystemLibrary.ExecuteConsoleCommand(
-        GlobalData_1.GlobalData.World,
-        "a.ParallelAnimEvaluation " + e,
-      ),
-      UE.KismetSystemLibrary.ExecuteConsoleCommand(
-        GlobalData_1.GlobalData.World,
-        "a.ParallelAnimUpdate " + e,
-      ),
-      UE.KismetSystemLibrary.ExecuteConsoleCommand(
-        GlobalData_1.GlobalData.World,
-        "a.ParallelAnimInterpolation " + e,
-      ),
-      UE.KismetSystemLibrary.ExecuteConsoleCommand(
-        GlobalData_1.GlobalData.World,
-        "fx.Niagara.SystemSimulation.AllowASync " + e,
-      ),
-      ModelManager_1.ModelManager.CreatureModel.GetAllEntities());
-    for (let e = r.length - 1; e >= 0; e--)
+    var e = e ? 0 : 1,
+      r =
+        (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+          GlobalData_1.GlobalData.World,
+          "a.ParallelAnimEvaluation " + e,
+        ),
+        UE.KismetSystemLibrary.ExecuteConsoleCommand(
+          GlobalData_1.GlobalData.World,
+          "a.ParallelAnimUpdate " + e,
+        ),
+        UE.KismetSystemLibrary.ExecuteConsoleCommand(
+          GlobalData_1.GlobalData.World,
+          "a.ParallelAnimInterpolation " + e,
+        ),
+        UE.KismetSystemLibrary.ExecuteConsoleCommand(
+          GlobalData_1.GlobalData.World,
+          "fx.Niagara.SystemSimulation.AllowASync " + e,
+        ),
+        ModelManager_1.ModelManager.CreatureModel.GetAllEntities());
+    for (let e = r.length - 1; 0 <= e; e--)
       r[e].Entity.GetComponent(99)?.SetTakeOverTick(!0);
     return !0;
   }
   static GetEntityTemplateList(e) {
-    var e = Number(e[0]);
-    const r = this.h4i(e);
-    const o = [];
+    var e = Number(e[0]),
+      r = this.h4i(e),
+      o = [];
     for (const t of ModelManager_1.ModelManager.CreatureModel.GetAllEntityTemplate(
       !0,
     ).values())
@@ -428,4 +428,4 @@ class PerformanceGmController {
   }
 }
 exports.PerformanceGmController = PerformanceGmController;
-// # sourceMappingURL=PerformanceGmController.js.map
+//# sourceMappingURL=PerformanceGmController.js.map

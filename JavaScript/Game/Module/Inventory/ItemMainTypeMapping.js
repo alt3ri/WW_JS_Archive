@@ -20,4 +20,4 @@ class ItemMainTypeMapping {
   }
 }
 exports.ItemMainTypeMapping = ItemMainTypeMapping;
-// # sourceMappingURL=ItemMainTypeMapping.js.map
+//# sourceMappingURL=ItemMainTypeMapping.js.map

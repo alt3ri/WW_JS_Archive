@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattlePassRewardView = void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView");
-const BattlePassBackgroundPanel_1 = require("./BattlePassBackgroundPanel");
-const BattlePassRewardGridItem_1 = require("./BattlePassRewardGridItem");
+const UE = require("ue"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView"),
+  BattlePassBackgroundPanel_1 = require("./BattlePassBackgroundPanel"),
+  BattlePassRewardGridItem_1 = require("./BattlePassRewardGridItem");
 class BattlePassRewardView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -23,7 +23,7 @@ class BattlePassRewardView extends UiTabViewBase_1.UiTabViewBase {
         UiManager_1.UiManager.OpenView("BattlePassPayView", this.ExtraParams);
       }),
       (this.yki = () => {
-        const e = {
+        var e = {
           WeaponDataList:
             ModelManager_1.ModelManager.BattlePassModel.GetWeaponDataList(),
           SelectedIndex: 0,
@@ -41,7 +41,7 @@ class BattlePassRewardView extends UiTabViewBase_1.UiTabViewBase {
         );
       }),
       (this.Lki = () => {
-        let e;
+        var e;
         this.fki &&
           ((this.fki = !1),
           (e =
@@ -59,14 +59,15 @@ class BattlePassRewardView extends UiTabViewBase_1.UiTabViewBase {
           );
       }),
       (this.Rki = () => {
-        var e = this.v5t.Ndi;
-        var e = this.v5t.TryGetCachedData(e);
+        var e = this.v5t.Ndi,
+          e = this.v5t.TryGetCachedData(e);
         e &&
           ((e = e.Level - 1),
-          (e =
-            ModelManager_1.ModelManager.BattlePassModel.GetNextStageLevel(
-              e,
-            )) !== 0) &&
+          0 !==
+            (e =
+              ModelManager_1.ModelManager.BattlePassModel.GetNextStageLevel(
+                e,
+              ))) &&
           this.Mki.Refresh(
             ModelManager_1.ModelManager.BattlePassModel.GetRewardData(e),
             !1,
@@ -92,7 +93,7 @@ class BattlePassRewardView extends UiTabViewBase_1.UiTabViewBase {
   async OnBeforeStartAsync() {
     (this.Mki = new BattlePassRewardGridItem_1.BattlePassRewardGridItem()),
       (this.vki = new BattlePassBackgroundPanel_1.BattlePassBackgroundPanel());
-    const e = { IsRewardPanel: !0, WeaponObservers: this.ExtraParams };
+    var e = { IsRewardPanel: !0, WeaponObservers: this.ExtraParams };
     await Promise.all([
       this.Mki.OnlyCreateByActorAsync(this.GetItem(4).GetOwner()),
       this.vki.OnlyCreateByActorAsync(this.GetItem(0).GetOwner(), e),
@@ -154,4 +155,4 @@ class BattlePassRewardView extends UiTabViewBase_1.UiTabViewBase {
   }
 }
 exports.BattlePassRewardView = BattlePassRewardView;
-// # sourceMappingURL=BattlePassRewardView.js.map
+//# sourceMappingURL=BattlePassRewardView.js.map

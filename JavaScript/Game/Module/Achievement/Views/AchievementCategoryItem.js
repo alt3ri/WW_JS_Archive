@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AchievementCategoryItem = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const AchievementController_1 = require("../AchievementController");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  AchievementController_1 = require("../AchievementController");
 class AchievementCategoryItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -22,11 +22,11 @@ class AchievementCategoryItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.jbe = () => {
         ModelManager_1.ModelManager.AchievementModel.CurrentSelectCategory =
           this.kbe;
-        const e =
+        var e =
           ModelManager_1.ModelManager.AchievementModel.GetAchievementCategoryGroups(
             this.kbe.GetId(),
           );
-        e.length > 0
+        0 < e.length
           ? ((ModelManager_1.ModelManager.AchievementModel.CurrentSelectGroup =
               e[0]),
             AchievementController_1.AchievementController.OpenAchievementDetailView(
@@ -101,4 +101,4 @@ class AchievementCategoryItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.AchievementCategoryItem = AchievementCategoryItem;
-// # sourceMappingURL=AchievementCategoryItem.js.map
+//# sourceMappingURL=AchievementCategoryItem.js.map

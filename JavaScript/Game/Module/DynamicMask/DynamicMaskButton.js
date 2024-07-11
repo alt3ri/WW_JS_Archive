@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DynamicMaskButton = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const UiLayerType_1 = require("../../Ui/Define/UiLayerType");
-const UiLayer_1 = require("../../Ui/UiLayer");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  UiLayerType_1 = require("../../Ui/Define/UiLayerType"),
+  UiLayer_1 = require("../../Ui/UiLayer");
 class DynamicMaskButton extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -21,7 +21,7 @@ class DynamicMaskButton extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.j7e]]);
   }
   OnAfterShow() {
-    let i, t;
+    var i, t;
     this.UPr?.IsValid() &&
       ((t = this.RootItem.K2_GetComponentToWorld().Inverse()),
       (i = this.UPr.RelativeLocation),
@@ -54,4 +54,4 @@ class DynamicMaskButton extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.DynamicMaskButton = DynamicMaskButton;
-// # sourceMappingURL=DynamicMaskButton.js.map
+//# sourceMappingURL=DynamicMaskButton.js.map

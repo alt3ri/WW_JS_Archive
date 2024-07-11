@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiCamera = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Stack_1 = require("../../../Core/Container/Stack");
-const CameraController_1 = require("../../Camera/CameraController");
-const UiCameraPostEffectComponent_1 = require("./UiCameraComponent/UiCameraPostEffectComponent");
-const UiCameraSequenceComponent_1 = require("./UiCameraComponent/UiCameraSequenceComponent");
+const Log_1 = require("../../../Core/Common/Log"),
+  Stack_1 = require("../../../Core/Container/Stack"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  UiCameraPostEffectComponent_1 = require("./UiCameraComponent/UiCameraPostEffectComponent"),
+  UiCameraSequenceComponent_1 = require("./UiCameraComponent/UiCameraSequenceComponent");
 class UiCamera {
   constructor() {
     (this.CameraActor = void 0),
@@ -15,7 +15,7 @@ class UiCamera {
       (this.eRo = !1);
   }
   Initialize() {
-    let e = CameraController_1.CameraController.WidgetCamera;
+    var e = CameraController_1.CameraController.WidgetCamera;
     return e
       ? (e = e.GetComponent(12)).Valid
         ? (e = e.CineCamera)?.IsValid()
@@ -144,7 +144,7 @@ class UiCamera {
     );
   }
   DestroyUiCameraComponent(e) {
-    const t = this.zDo.get(e);
+    var t = this.zDo.get(e);
     t && (t.Destroy(), this.zDo.delete(e));
   }
   tRo() {
@@ -165,4 +165,4 @@ class UiCamera {
   }
 }
 exports.UiCamera = UiCamera;
-// # sourceMappingURL=UiCamera.js.map
+//# sourceMappingURL=UiCamera.js.map

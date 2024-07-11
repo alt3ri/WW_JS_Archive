@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LongShanView = void 0);
-const UE = require("ue");
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const LongShanStageById_1 = require("../../../../../Core/Define/ConfigQuery/LongShanStageById");
-const LongShanTaskById_1 = require("../../../../../Core/Define/ConfigQuery/LongShanTaskById");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../../../Ui/Common/PopupCaptionItem");
-const PageDot_1 = require("../../../Common/PageDot");
-const HelpController_1 = require("../../../Help/HelpController");
-const GenericLayout_1 = require("../../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
-const GenericScrollViewNew_1 = require("../../../Util/ScrollView/GenericScrollViewNew");
-const ActivityLongShanController_1 = require("./ActivityLongShanController");
-const LongShanTaskItem_1 = require("./LongShanTaskItem");
+const UE = require("ue"),
+  CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  LongShanStageById_1 = require("../../../../../Core/Define/ConfigQuery/LongShanStageById"),
+  LongShanTaskById_1 = require("../../../../../Core/Define/ConfigQuery/LongShanTaskById"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../../../Ui/Common/PopupCaptionItem"),
+  PageDot_1 = require("../../../Common/PageDot"),
+  HelpController_1 = require("../../../Help/HelpController"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  GenericScrollViewNew_1 = require("../../../Util/ScrollView/GenericScrollViewNew"),
+  ActivityLongShanController_1 = require("./ActivityLongShanController"),
+  LongShanTaskItem_1 = require("./LongShanTaskItem");
 class LongShanView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -27,9 +27,9 @@ class LongShanView extends UiViewBase_1.UiViewBase {
       (this.tPe = void 0),
       (this.OOe = void 0),
       (this.kOe = () => {
-        let e;
-        let i =
-          ActivityLongShanController_1.ActivityLongShanController.GetActivityData();
+        var e,
+          i =
+            ActivityLongShanController_1.ActivityLongShanController.GetActivityData();
         i.CheckIfInOpenTime
           ? ((e = TimeUtil_1.TimeUtil.GetServerTime()),
             (i = Math.max(i.EndOpenTime - e, 1)),
@@ -47,7 +47,7 @@ class LongShanView extends UiViewBase_1.UiViewBase {
       (this.VOe = () => new LongShanTaskItem_1.LongShanTaskItem()),
       (this.HOe = () => new PageDot_1.PageDot()),
       (this.jOe = (e, i) => {
-        let t, n;
+        var t, n;
         return e.H0s !== i.H0s
           ? e.H0s
             ? 1
@@ -66,26 +66,26 @@ class LongShanView extends UiViewBase_1.UiViewBase {
               : e.Ekn - i.Ekn;
       }),
       (this.WOe = () => {
-        const e =
-          ActivityLongShanController_1.ActivityLongShanController.GetActivityData();
-        const i = e.StageIds[this.NOe];
-        var t = e.GetProgress(i);
-        var t =
-          (LguiUtil_1.LguiUtil.SetLocalTextNew(
-            this.GetText(2),
-            "LongShanStage_ProgressPercentage",
-            t,
-          ),
-          e.GetStageInfoById(i).V0s);
+        var e =
+            ActivityLongShanController_1.ActivityLongShanController.GetActivityData(),
+          i = e.StageIds[this.NOe],
+          t = e.GetProgress(i),
+          t =
+            (LguiUtil_1.LguiUtil.SetLocalTextNew(
+              this.GetText(2),
+              "LongShanStage_ProgressPercentage",
+              t,
+            ),
+            e.GetStageInfoById(i).V0s);
         t.sort(this.jOe), this.OOe?.RefreshByData(t, void 0, !0);
       }),
       (this.KOe = () => {
         this.RefreshView(this.NOe - 1);
       }),
       (this.QOe = () => {
-        const e =
-          ActivityLongShanController_1.ActivityLongShanController.GetActivityData();
-        const i = e.StageIds[this.NOe + 1];
+        var e =
+            ActivityLongShanController_1.ActivityLongShanController.GetActivityData(),
+          i = e.StageIds[this.NOe + 1];
         e.GetStageInfoById(i)
           ? this.RefreshView(this.NOe + 1)
           : ActivityLongShanController_1.ActivityLongShanController.ShowUnlockTip(
@@ -93,7 +93,7 @@ class LongShanView extends UiViewBase_1.UiViewBase {
             );
       }),
       (this.XOe = () => {
-        const e =
+        var e =
           ActivityLongShanController_1.ActivityLongShanController.GetActivityData().GetHelpId();
         HelpController_1.HelpController.OpenHelpById(e);
       }),
@@ -136,8 +136,8 @@ class LongShanView extends UiViewBase_1.UiViewBase {
       this.lqe.SetHelpCallBack(this.XOe),
       this.lqe.SetCloseCallBack(this.$Oe);
     var e =
-      ActivityLongShanController_1.ActivityLongShanController.GetActivityData();
-    var e = (this.lqe.SetTitle(e.GetTitle()), e.StageIds);
+        ActivityLongShanController_1.ActivityLongShanController.GetActivityData(),
+      e = (this.lqe.SetTitle(e.GetTitle()), e.StageIds);
     (this.NOe = e.indexOf(this.OpenParam)),
       (this.tPe = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(7),
@@ -175,17 +175,17 @@ class LongShanView extends UiViewBase_1.UiViewBase {
       (this.NOe = e),
       this.tPe.GetLayoutItemByIndex(this.NOe).UpdateShow(!0);
     var e =
-      ActivityLongShanController_1.ActivityLongShanController.GetActivityData();
-    var i = e.StageIds[this.NOe];
-    var i = LongShanStageById_1.configLongShanStageById.GetConfig(i);
+        ActivityLongShanController_1.ActivityLongShanController.GetActivityData(),
+      i = e.StageIds[this.NOe],
+      i = LongShanStageById_1.configLongShanStageById.GetConfig(i);
     this.SetTextureByPath(i.Picture, this.GetTexture(9)),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), i.TitleDetail),
       this.WOe(),
-      this.GetButton(5).RootUIComp.SetUIActive(this.NOe > 0),
+      this.GetButton(5).RootUIComp.SetUIActive(0 < this.NOe),
       this.GetButton(6).RootUIComp.SetUIActive(
         this.NOe < e.StageIds.length - 1,
       );
   }
 }
 exports.LongShanView = LongShanView;
-// # sourceMappingURL=LongShanView.js.map
+//# sourceMappingURL=LongShanView.js.map

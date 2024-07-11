@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayEnterView = void 0);
-const UE = require("ue");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const PublicUtil_1 = require("../../../../Game/Common/PublicUtil");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const GameplayViewDefine_1 = require("./GameplayViewDefine");
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  PublicUtil_1 = require("../../../../Game/Common/PublicUtil"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  GameplayViewDefine_1 = require("./GameplayViewDefine");
 class GameplayEnterView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -39,8 +39,8 @@ class GameplayEnterView extends UiViewBase_1.UiViewBase {
     this.Ifi();
   }
   Ifi() {
-    let e;
-    let i = this.OpenParam;
+    var e,
+      i = this.OpenParam;
     i &&
       ((e = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
         i.InfoId ?? "",
@@ -66,4 +66,4 @@ class GameplayEnterView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.GameplayEnterView = GameplayEnterView;
-// # sourceMappingURL=GameplayEnterView.js.map
+//# sourceMappingURL=GameplayEnterView.js.map

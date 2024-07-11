@@ -1,28 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MapTileMgr = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const ConfigCommon_1 = require("../../../../../../Core/Config/ConfigCommon");
-const ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem");
-const Vector2D_1 = require("../../../../../../Core/Utils/Math/Vector2D");
-const StringUtils_1 = require("../../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../../../../GlobalData");
-const LevelConditionRegistry_1 = require("../../../../../LevelGamePlay/LevelConditions/LevelConditionRegistry");
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const LguiUtil_1 = require("../../../../Util/LguiUtil");
-const MapDefine_1 = require("../../../MapDefine");
-const MapUtil_1 = require("../../../MapUtil");
-const FAKE_TILE_COUNT = 2;
-const MAP_TILE_COMMON = "T_CommonDefault_UI";
-const MAX_COLOR = 255;
-const FOG_TEXTURE_NAME = new UE.FName("FogTexture");
-const HD_TEXTURE_NAME = new UE.FName("HDTexture");
-const HD_SCALAR_NAME = new UE.FName("UseHDPicture");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  ConfigCommon_1 = require("../../../../../../Core/Config/ConfigCommon"),
+  ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem"),
+  Vector2D_1 = require("../../../../../../Core/Utils/Math/Vector2D"),
+  StringUtils_1 = require("../../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../../../../GlobalData"),
+  LevelConditionRegistry_1 = require("../../../../../LevelGamePlay/LevelConditions/LevelConditionRegistry"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  LguiUtil_1 = require("../../../../Util/LguiUtil"),
+  MapDefine_1 = require("../../../MapDefine"),
+  MapUtil_1 = require("../../../MapUtil"),
+  FAKE_TILE_COUNT = 2,
+  MAP_TILE_COMMON = "T_CommonDefault_UI",
+  MAX_COLOR = 255,
+  FOG_TEXTURE_NAME = new UE.FName("FogTexture"),
+  HD_TEXTURE_NAME = new UE.FName("HDTexture"),
+  HD_SCALAR_NAME = new UE.FName("UseHDPicture");
 class FogOpenParams {
   constructor() {
     (this.ExtraHdMapTileIndex = -1),
@@ -84,10 +84,10 @@ class MapTileMgr {
         }
       }),
       (this.nUi = (i) => {
-        if (this.zRi && this.zRi.length !== 0 && this.qRi)
+        if (this.zRi && 0 !== this.zRi.length && this.qRi)
           for (const e of this.zRi) {
-            let t = e.MapTileIndex;
-            t >= 0 &&
+            var t = e.MapTileIndex;
+            0 <= t &&
               t < this.qRi.length &&
               ((t = this.qRi[t]), this.sUi(t, e.Channel, i));
           }
@@ -160,8 +160,8 @@ class MapTileMgr {
       ),
       (this.ORi = new LevelConditionRegistry_1.ConditionPassCallback(this.tUi));
     for (const t of ConfigManager_1.ConfigManager.MapConfig.GetMapBorderConfigList()) {
-      const i = t.ConditionId;
-      i > 0 &&
+      var i = t.ConditionId;
+      0 < i &&
         LevelConditionRegistry_1.LevelConditionRegistry.RegisterConditionGroup(
           i,
           this.ORi,
@@ -178,8 +178,8 @@ class MapTileMgr {
         this.C5s,
       );
     for (const t of ConfigManager_1.ConfigManager.MapConfig.GetMapBorderConfigList()) {
-      const i = t.ConditionId;
-      i > 0 &&
+      var i = t.ConditionId;
+      0 < i &&
         LevelConditionRegistry_1.LevelConditionRegistry.UnRegisterConditionGroup(
           i,
           this.ORi,
@@ -190,7 +190,7 @@ class MapTileMgr {
     return this.qRi;
   }
   OnMapSetUp() {
-    this.PRi === 1 && this.YRi !== MapDefine_1.BIG_WORLD_MAP_ID
+    1 === this.PRi && this.YRi !== MapDefine_1.BIG_WORLD_MAP_ID
       ? (this.eUi = !1)
       : ((this.eUi = !0),
         this.hUi(),
@@ -211,29 +211,27 @@ class MapTileMgr {
         (this.QRi = Number.MAX_SAFE_INTEGER));
   }
   _Ui(i, t) {
-    return this.PRi === 1 ? t : i;
+    return 1 === this.PRi ? t : i;
   }
   hUi() {
     this.OpenArea = new Set();
-    for (const [
-      i,
-    ] of ModelManager_1.ModelManager.MapModel.GetAllUnlockedAreas())
+    for (var [i] of ModelManager_1.ModelManager.MapModel.GetAllUnlockedAreas())
       this.OpenArea.add(i);
   }
   lUi() {
-    let i = ConfigManager_1.ConfigManager.MapConfig.GetAllTileConfig();
+    var i = ConfigManager_1.ConfigManager.MapConfig.GetAllTileConfig();
     this.ARi.splice(0, this.ARi.length);
     for (const T of i)
       if (!StringUtils_1.StringUtils.IsEmpty(T.MapTilePath)) {
         var e = ModelManager_1.ModelManager.MapModel.CheckUnlockMapBlockIds(
-          T.Block,
-        );
-        var s = T.MapTilePath.split("/");
-        var s = s[s.length - 1];
-        let i = "";
-        let t = "";
+            T.Block,
+          ),
+          s = T.MapTilePath.split("/"),
+          s = s[s.length - 1];
+        let i = "",
+          t = "";
         t =
-          e !== 0
+          0 !== e
             ? ((e =
                 ConfigManager_1.ConfigManager.MapConfig.GetUnlockMapTileConfigById(
                   e,
@@ -253,16 +251,16 @@ class MapTileMgr {
                 T.MiniMapTilePath,
               ));
         var e = ConfigManager_1.ConfigManager.MapConfig.GetUiResourcePathById(
-          T.HdMapTilePath,
-        );
-        const h = this._Ui(i, t);
-        var a = ConfigManager_1.ConfigManager.MapConfig.GetUiResourcePathById(
-          T.FogTilePath,
-        );
-        const n = ConfigManager_1.ConfigManager.MapConfig.GetUiResourcePathById(
-          T.MiniFogTilePath,
-        );
-        var a = this._Ui(a, n);
+            T.HdMapTilePath,
+          ),
+          h = this._Ui(i, t),
+          a = ConfigManager_1.ConfigManager.MapConfig.GetUiResourcePathById(
+            T.FogTilePath,
+          ),
+          n = ConfigManager_1.ConfigManager.MapConfig.GetUiResourcePathById(
+            T.MiniFogTilePath,
+          ),
+          a = this._Ui(a, n);
         this.ARi.push({
           MapTilePath: h,
           HdMapTilePath: e,
@@ -270,20 +268,20 @@ class MapTileMgr {
           MapTileName: s,
         });
       }
-    let t = 0;
-    let r = 0;
-    if (this.PRi === 1) {
+    let t = 0,
+      r = 0;
+    if (1 === this.PRi) {
       (t = 4), (this.GRi.length = 0), this.GRi.push(this.jRi);
       for (let i = 1; i < t; ++i) {
-        const o = LguiUtil_1.LguiUtil.CopyItem(this.jRi, this.HRi);
+        var o = LguiUtil_1.LguiUtil.CopyItem(this.jRi, this.HRi);
         this.GRi.push(o);
       }
     } else {
       this.xRi = { MaxX: -1, MinX: 1, MaxY: -1, MinY: 1 };
       for (const c of this.ARi) {
-        var _ = this.bRi(c.MapTileName);
-        const M = _.X;
-        var _ = _.Y;
+        var _ = this.bRi(c.MapTileName),
+          M = _.X,
+          _ = _.Y;
         (this.xRi.MaxX = Math.max(M, this.xRi.MaxX)),
           (this.xRi.MinX = Math.min(M, this.xRi.MinX)),
           (this.xRi.MaxY = Math.max(_, this.xRi.MaxY)),
@@ -295,32 +293,32 @@ class MapTileMgr {
     }
     (this.qRi.length = 0), this.qRi.push(this.VRi);
     for (let i = 1; i < t; ++i) {
-      const f = LguiUtil_1.LguiUtil.CopyItem(this.VRi, this.FRi);
+      var f = LguiUtil_1.LguiUtil.CopyItem(this.VRi, this.FRi);
       this.qRi.push(f);
     }
-    const v = new Map();
+    var v = new Map();
     for (const m of this.ARi) {
-      const g = this.bRi(m.MapTileName);
+      var g = this.bRi(m.MapTileName);
       v.set(g.X + "_" + g.Y, m);
     }
-    let p;
-    let l;
-    let E;
-    let C;
-    let U;
-    const d = Vector2D_1.Vector2D.Create();
+    var p,
+      l,
+      E,
+      C,
+      U,
+      d = Vector2D_1.Vector2D.Create();
     for (let i = 0; i < this.qRi.length; i++) {
       const S = this.qRi[i];
       if (
         (S.SetWidth(MapDefine_1.DETAIL_TILE_SPACE),
         S.SetHeight(MapDefine_1.DETAIL_TILE_SPACE),
-        this.PRi === 1)
+        1 === this.PRi)
       )
         this.uUi(S);
       else {
-        var u = Math.ceil((i + 1) / r);
-        let D = i - (u - 1) * r + this.xRi.MinX - FAKE_TILE_COUNT;
-        var u = -(u - 1) + this.xRi.MaxY + FAKE_TILE_COUNT;
+        var u = Math.ceil((i + 1) / r),
+          D = i - (u - 1) * r + this.xRi.MinX - FAKE_TILE_COUNT,
+          u = -(u - 1) + this.xRi.MaxY + FAKE_TILE_COUNT;
         (d.X = (D - 0.5) * MapDefine_1.DETAIL_TILE_SPACE),
           (d.Y = (u - 0.5) * MapDefine_1.DETAIL_TILE_SPACE),
           S.SetAnchorOffset(d.ToUeVector2D());
@@ -346,7 +344,7 @@ class MapTileMgr {
                   ),
               ModelManager_1.ModelManager.PlatformModel.IsPc() &&
                 !StringUtils_1.StringUtils.IsEmpty(L.HdMapTilePath) &&
-                this.PRi === 2 &&
+                2 === this.PRi &&
                 ((u = (i) => {
                   S.SetCustomMaterialScalarParameter(HD_SCALAR_NAME, 1),
                     S.SetCustomMaterialTextureParameter(HD_TEXTURE_NAME, i);
@@ -363,7 +361,7 @@ class MapTileMgr {
       }
     }
     this.iUi(),
-      this.PRi !== 1 &&
+      1 !== this.PRi &&
         ((i = this.xRi.MaxX),
         (p = 1 - this.xRi.MinX),
         (l = Math.max(i, p)),
@@ -390,28 +388,30 @@ class MapTileMgr {
   cUi(i, t, e = !1, s) {
     const h = i;
     var i = (i) => {
-      i ? this.uUi(h, i, e) : h.SetColor(this.WRi), s && s();
-    };
-    const a = this.wRi.get(t);
+        i ? this.uUi(h, i, e) : h.SetColor(this.WRi), s && s();
+      },
+      a = this.wRi.get(t);
     a ? i(a) : ResourceSystem_1.ResourceSystem.LoadAsync(t, UE.Texture, i, 102);
   }
   async iUi() {
     this.NRi && (this.NRi.GetOwner()?.K2_DestroyActor(), (this.NRi = void 0));
-    var i = ModelManager_1.ModelManager.MapModel.GetCurMapBorderId();
-    var i =
-      ConfigManager_1.ConfigManager.MapConfig.GetMapBorderConfig(i).PrefabPath;
-    var i = await LguiUtil_1.LguiUtil.LoadPrefabByAsync(i, this.kRi);
+    var i = ModelManager_1.ModelManager.MapModel.GetCurMapBorderId(),
+      i =
+        ConfigManager_1.ConfigManager.MapConfig.GetMapBorderConfig(
+          i,
+        ).PrefabPath,
+      i = await LguiUtil_1.LguiUtil.LoadPrefabByAsync(i, this.kRi);
     (this.NRi = i.GetComponentByClass(UE.UIItem.StaticClass())),
       this.NRi.SetAnchorOffset(new UE.Vector2D(0, 0));
   }
   UpdateMinimapTiles(i) {
-    if (this.PRi === 1 && this.eUi) {
-      var t = MapUtil_1.MapUtil.GetTilePosition(i, 0.5);
-      const e = t.X;
-      var t = t.Y;
-      const s = ModelManager_1.ModelManager.AreaModel.GetCurrentAreaId();
-      const h = this.zRn.has(s) ? this.zRn.get(s) : 0;
-      const a = this.ZRn !== h;
+    if (1 === this.PRi && this.eUi) {
+      var t = MapUtil_1.MapUtil.GetTilePosition(i, 0.5),
+        e = t.X,
+        t = t.Y,
+        s = ModelManager_1.ModelManager.AreaModel.GetCurrentAreaId(),
+        h = this.zRn.has(s) ? this.zRn.get(s) : 0,
+        a = this.ZRn !== h;
       if (
         !(
           Math.abs(this.XRi - i.X) <
@@ -423,15 +423,15 @@ class MapTileMgr {
         ) ||
         a
       ) {
-        const n = [e, t, e - 1, t, e, t - 1, e - 1, t - 1];
-        const r = this.J6s(i, e, t);
-        const o = (this.z6s(this.qRi, n, r), h !== 0 && void 0 !== this.HRi);
+        var n = [e, t, e - 1, t, e, t - 1, e - 1, t - 1],
+          r = this.J6s(i, e, t),
+          o = (this.z6s(this.qRi, n, r), 0 !== h && void 0 !== this.HRi);
         if (o) {
           this.z6s(this.GRi, n, r);
           for (let i = 0; i < this.GRi.length; i++) {
-            let _ = n[2 * i];
-            let M = n[2 * i + 1];
-            if (r[i].R > 0) {
+            var _ = n[2 * i],
+              M = n[2 * i + 1];
+            if (0 < r[i].R) {
               (_ =
                 (_ - 0.5 - 0.5 + r[i].B + r[i].R / 2) *
                 MapDefine_1.DETAIL_TILE_SPACE),
@@ -446,8 +446,8 @@ class MapTileMgr {
         if ((this.HRi?.SetUIActive(o), this.KRi !== e || this.QRi !== t || a)) {
           (this.KRi = e), (this.QRi = t);
           for (let i = 0; i < this.qRi.length; i++) {
-            const f = n[2 * i];
-            const v = n[2 * i + 1];
+            var f = n[2 * i],
+              v = n[2 * i + 1];
             o && this.Z6s(this.GRi[i], f, v, h, s), this.V8s(this.qRi[i], f, v);
           }
           o
@@ -465,11 +465,11 @@ class MapTileMgr {
     }
   }
   Z6s(t, e, s, i, h) {
-    const a = ConfigManager_1.ConfigManager.MapConfig.GetTileConfig(
+    var a = ConfigManager_1.ConfigManager.MapConfig.GetTileConfig(
       e.toString() + "_" + s.toString(),
     );
     if (a && !StringUtils_1.StringUtils.IsEmpty(a.MapTilePath)) {
-      let n = ConfigManager_1.ConfigManager.MapConfig.GetSubMapConfigById(i);
+      var n = ConfigManager_1.ConfigManager.MapConfig.GetSubMapConfigById(i);
       if (n) {
         n = n.MiniMapTilePath.find((i) => i.includes(e + "_" + s));
         if (n) {
@@ -512,18 +512,18 @@ class MapTileMgr {
     );
     if (i && !StringUtils_1.StringUtils.IsEmpty(i.MapTilePath)) {
       var e = ConfigManager_1.ConfigManager.MapConfig.GetUiResourcePathById(
-        i.MapTilePath,
-      );
-      const s = ConfigManager_1.ConfigManager.MapConfig.GetUiResourcePathById(
-        i.MiniMapTilePath,
-      );
-      const h = ConfigManager_1.ConfigManager.MapConfig.GetUiResourcePathById(
-        i.FogTilePath,
-      );
-      var i = ConfigManager_1.ConfigManager.MapConfig.GetUiResourcePathById(
-        i.MiniFogTilePath,
-      );
-      var e = this._Ui(e, s);
+          i.MapTilePath,
+        ),
+        s = ConfigManager_1.ConfigManager.MapConfig.GetUiResourcePathById(
+          i.MiniMapTilePath,
+        ),
+        h = ConfigManager_1.ConfigManager.MapConfig.GetUiResourcePathById(
+          i.FogTilePath,
+        ),
+        i = ConfigManager_1.ConfigManager.MapConfig.GetUiResourcePathById(
+          i.MiniFogTilePath,
+        ),
+        e = this._Ui(e, s);
       const a = this._Ui(h, i);
       ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.Texture, (i) => {
         i?.IsValid() &&
@@ -535,33 +535,33 @@ class MapTileMgr {
     }
   }
   J6s(i, t, e) {
-    var s = Vector2D_1.Vector2D.Create(i);
-    var t =
-      (s.DivisionEqual(MapDefine_1.DETAIL_TILE_REALSIZE * MapDefine_1.UNIT),
-      s.X - t + 1);
-    var s = s.Y + e;
-    var e =
-      ((this.XRi = i.X),
-      (this.$Ri = i.Y),
-      MapDefine_1.MINI_MAP_RADIUS / MapDefine_1.DETAIL_TILE_REALSIZE);
-    var i = Math.min(t + e, 1);
-    const h = Math.max(t - e, 0);
-    var a = Math.min(s + e, 1);
-    const n = Math.max(s - e, 0);
-    var i = new UE.LinearColor(i - h, a - n, h, n);
-    var a = new UE.LinearColor(2 * e - i.R, i.G, Math.min(1 - e + t, 1), n);
-    var t = new UE.LinearColor(i.R, 2 * e - i.G, h, Math.max(s - e - 1, 0));
+    var s = Vector2D_1.Vector2D.Create(i),
+      t =
+        (s.DivisionEqual(MapDefine_1.DETAIL_TILE_REALSIZE * MapDefine_1.UNIT),
+        s.X - t + 1),
+      s = s.Y + e,
+      e =
+        ((this.XRi = i.X),
+        (this.$Ri = i.Y),
+        MapDefine_1.MINI_MAP_RADIUS / MapDefine_1.DETAIL_TILE_REALSIZE),
+      i = Math.min(t + e, 1),
+      h = Math.max(t - e, 0),
+      a = Math.min(s + e, 1),
+      n = Math.max(s - e, 0),
+      i = new UE.LinearColor(i - h, a - n, h, n),
+      a = new UE.LinearColor(2 * e - i.R, i.G, Math.min(1 - e + t, 1), n),
+      t = new UE.LinearColor(i.R, 2 * e - i.G, h, Math.max(s - e - 1, 0));
     return [i, a, t, new UE.LinearColor(a.R, t.G, a.B, t.A)];
   }
   z6s(t, e, s) {
-    const h = Vector2D_1.Vector2D.Create();
+    var h = Vector2D_1.Vector2D.Create();
     for (let i = 0; i < t.length; i++) {
-      const a = t[i];
-      const n =
-        (a.SetWidth(Math.max(s[i].R * MapDefine_1.DETAIL_TILE_REALSIZE, 0)),
-        a.SetHeight(Math.max(s[i].G * MapDefine_1.DETAIL_TILE_REALSIZE, 0)),
-        e[2 * i]);
-      const r = e[2 * i + 1];
+      var a = t[i],
+        n =
+          (a.SetWidth(Math.max(s[i].R * MapDefine_1.DETAIL_TILE_REALSIZE, 0)),
+          a.SetHeight(Math.max(s[i].G * MapDefine_1.DETAIL_TILE_REALSIZE, 0)),
+          e[2 * i]),
+        r = e[2 * i + 1];
       (h.X =
         (n - 0.5 - 0.5 + s[i].B + s[i].R / 2) * MapDefine_1.DETAIL_TILE_SPACE),
         (h.Y =
@@ -572,9 +572,9 @@ class MapTileMgr {
     }
   }
   ShowSubMapByPosition(i, t) {
-    let e;
-    this.PRi === 1 ||
-      i === 0 ||
+    var e;
+    1 === this.PRi ||
+      0 === i ||
       ((e = this.HRi?.IsUIActiveInHierarchy()),
       this.CreateSubMapTile(i, -t, e),
       this.HRi?.SetUIActive(!0),
@@ -592,7 +592,7 @@ class MapTileMgr {
       : this.HRi?.SetUIActive(!1);
   }
   N5s(i = !1, t) {
-    const e = this.b5s?.GetPlayTween();
+    var e = this.b5s?.GetPlayTween();
     e &&
       (this.O5s(),
       this.b5s.Stop(),
@@ -609,9 +609,9 @@ class MapTileMgr {
       (this.G5s = void 0));
   }
   k5s(i, t = !0) {
-    let e;
-    let s;
-    const h = this.b5s?.GetPlayTween();
+    var e,
+      s,
+      h = this.b5s?.GetPlayTween();
     h &&
       ((s = (e = i
         .GetOwner()
@@ -626,14 +626,14 @@ class MapTileMgr {
   }
   F5s(i, t = !0) {
     var i = i
-      .GetOwner()
-      .GetComponentByClass(UE.LGUIPlayTweenComponent.StaticClass());
-    const e = i?.GetPlayTween();
+        .GetOwner()
+        .GetComponentByClass(UE.LGUIPlayTweenComponent.StaticClass()),
+      e = i?.GetPlayTween();
     i.Stop();
     (e.duration = t ? 0.3 : 0.15), i.Play();
   }
   GetSubMapFloorCountByGroupId(i) {
-    return i === 0
+    return 0 === i
       ? 0
       : ConfigManager_1.ConfigManager.MapConfig.GetSubMapConfigByGroupId(i)
           .length;
@@ -644,28 +644,28 @@ class MapTileMgr {
       this.U4s,
     );
     if (i && i.enterComponent) {
-      const t = this.kRi.GetWidth();
-      const e = this.kRi.GetHeight();
-      var i = i.GetLocalPointInPlane();
-      const s =
-        i.X >= 0
-          ? Math.ceil(i.X / MapDefine_1.DETAIL_TILE_SPACE)
-          : Math.floor(i.X / MapDefine_1.DETAIL_TILE_SPACE);
-      const h =
-        i.Y >= 0
-          ? Math.floor(i.Y / MapDefine_1.DETAIL_TILE_SPACE)
-          : Math.ceil(i.Y / MapDefine_1.DETAIL_TILE_SPACE);
-      const a = (i.X + t / 2) % MapDefine_1.DETAIL_TILE_SPACE;
-      const n = (i.Y + e / 2) % MapDefine_1.DETAIL_TILE_SPACE;
-      const r = this.jRn.get(s + "_" + h);
+      var t = this.kRi.GetWidth(),
+        e = this.kRi.GetHeight(),
+        i = i.GetLocalPointInPlane(),
+        s =
+          0 <= i.X
+            ? Math.ceil(i.X / MapDefine_1.DETAIL_TILE_SPACE)
+            : Math.floor(i.X / MapDefine_1.DETAIL_TILE_SPACE),
+        h =
+          0 <= i.Y
+            ? Math.floor(i.Y / MapDefine_1.DETAIL_TILE_SPACE)
+            : Math.ceil(i.Y / MapDefine_1.DETAIL_TILE_SPACE),
+        a = (i.X + t / 2) % MapDefine_1.DETAIL_TILE_SPACE,
+        n = (i.Y + e / 2) % MapDefine_1.DETAIL_TILE_SPACE,
+        r = this.jRn.get(s + "_" + h);
       if (r)
         for (let t = 0; t < r?.MultiMapRangeList.length; t++) {
-          const o = r?.MultiMapRangeList[t];
+          var o = r?.MultiMapRangeList[t];
           for (let i = 0; i < o.ArrayInt.length; i += 4) {
-            const _ = o.ArrayInt[i];
-            const M = o.ArrayInt[i + 1];
-            const f = o.ArrayInt[i + 2];
-            const v = o.ArrayInt[i + 3];
+            var _ = o.ArrayInt[i],
+              M = o.ArrayInt[i + 1],
+              f = o.ArrayInt[i + 2],
+              v = o.ArrayInt[i + 3];
             if (_ <= a && a <= f && M <= n && n <= v) return r.MultiMapList[t];
           }
         }
@@ -693,9 +693,9 @@ class MapTileMgr {
             ((h = LguiUtil_1.LguiUtil.CopyItem(this.jRi, this.HRi)),
             this.GRi.push(h)),
             t++;
-          var h = o.split("_");
-          let a = Number(h[2]);
-          const n = Number(h[3]);
+          var h = o.split("_"),
+            a = Number(h[2]),
+            n = Number(h[3]);
           const _ = this.GRi[t - 1];
           _.SetAnchorOffsetX((a - 0.5) * MapDefine_1.DETAIL_TILE_SPACE),
             _.SetAnchorOffsetY((n - 0.5) * MapDefine_1.DETAIL_TILE_SPACE),
@@ -727,9 +727,9 @@ class MapTileMgr {
     (this.zRi = []),
       this.JRi || (this.JRi = (0, puerts_1.toManualReleaseDelegate)(this.nUi));
     for (let i = 0; i < this.qRi.length; i++) {
-      var e;
-      var s = this.qRi[i];
-      var s = this.mUi(s, t);
+      var e,
+        s = this.qRi[i],
+        s = this.mUi(s, t);
       void 0 !== s &&
         (((e = new FogOpenParams()).MapTileIndex = i),
         (e.Channel = s),
@@ -758,7 +758,7 @@ class MapTileMgr {
     }
   }
   sUi(i, t, e) {
-    const s = i.GetColor().ReinterpretAsLinear();
+    var s = i.GetColor().ReinterpretAsLinear();
     switch (t) {
       case 0:
         s.R = e;
@@ -775,7 +775,7 @@ class MapTileMgr {
     i.SetColor(s.ToFColor(!0));
   }
   HandleDelegate() {
-    let i;
+    var i;
     this.JRi &&
       ((i = ConfigManager_1.ConfigManager.MapConfig.GetMapDissolveTime()),
       this.ZRi && this.ZRi.Kill(),
@@ -794,7 +794,7 @@ class MapTileMgr {
       this.ZRi && (this.ZRi.Kill(), (this.ZRi = void 0));
   }
   uUi(i, t, e = !1) {
-    let s, h;
+    var s, h;
     i &&
       i.texture &&
       ((h = i.texture.GetName()) !== MAP_TILE_COMMON &&
@@ -814,4 +814,4 @@ class MapTileMgr {
   }
 }
 exports.MapTileMgr = MapTileMgr;
-// # sourceMappingURL=MapTileMgr.js.map
+//# sourceMappingURL=MapTileMgr.js.map

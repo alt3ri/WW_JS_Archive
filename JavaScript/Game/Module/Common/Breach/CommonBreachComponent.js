@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonBreachComponent = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const GenericLayoutAdd_1 = require("../../Util/GenericLayoutAdd");
-const UiComponentUtil_1 = require("../../Util/UiComponentUtil");
-const ButtonItem_1 = require("../Button/ButtonItem");
-const CommonCostItem_1 = require("../PropItem/CommonCostItem");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  GenericLayoutAdd_1 = require("../../Util/GenericLayoutAdd"),
+  UiComponentUtil_1 = require("../../Util/UiComponentUtil"),
+  ButtonItem_1 = require("../Button/ButtonItem"),
+  CommonCostItem_1 = require("../PropItem/CommonCostItem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class CommonBreachComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t, e = !1) {
     super(),
@@ -26,12 +26,14 @@ class CommonBreachComponent extends UiPanelBase_1.UiPanelBase {
         );
       }),
       (this.Wyt = (t, e, i) => {
-        var [t, o] = t;
-        var e = new CommonCostItem_1.CommonCostItem(e);
-        var t =
-          (e.UpdateItem(t, o),
-          this.CostItemList.push(e),
-          ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(t));
+        var [t, o] = t,
+          e = new CommonCostItem_1.CommonCostItem(e),
+          t =
+            (e.UpdateItem(t, o),
+            this.CostItemList.push(e),
+            ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+              t,
+            ));
         return t < o && (this.EnoughMaterial = !1), { Key: i, Value: e };
       }),
       (this.ClearCostItem = () => {
@@ -67,9 +69,9 @@ class CommonBreachComponent extends UiPanelBase_1.UiPanelBase {
   }
   UpdateMoneyState(t, e) {
     this.SetMoneyActive(!0), (this.MoneyId = t);
-    const i = this.GetText(2);
-    const o = this.GetText(3);
-    const s = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerMoney(t);
+    var i = this.GetText(2),
+      o = this.GetText(3),
+      s = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerMoney(t);
     (this.EnoughMoney = UiComponentUtil_1.UiComponentUtil.SetMoneyState(
       i,
       o,
@@ -134,4 +136,4 @@ class CommonBreachComponent extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.CommonBreachComponent = CommonBreachComponent;
-// # sourceMappingURL=CommonBreachComponent.js.map
+//# sourceMappingURL=CommonBreachComponent.js.map

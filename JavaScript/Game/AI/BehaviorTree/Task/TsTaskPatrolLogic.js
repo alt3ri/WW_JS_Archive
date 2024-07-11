@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../Core/Define/CommonDefine");
-const QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon");
-const GameQualitySettingsManager_1 = require("../../../GameQualitySettings/GameQualitySettingsManager");
-const GlobalData_1 = require("../../../GlobalData");
-const LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine");
-const TsAiController_1 = require("../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const PROFILE_KEY = "TsTaskNpcPatrol_GetObstacleLocation";
-const PATROL_TURN_SPEED = 540;
-const NO_FORWARD_DISTANCE = 100;
-const NO_FORWARD_TURN_SPEED = 1e4;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
+  GameQualitySettingsManager_1 = require("../../../GameQualitySettings/GameQualitySettingsManager"),
+  GlobalData_1 = require("../../../GlobalData"),
+  LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine"),
+  TsAiController_1 = require("../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  PROFILE_KEY = "TsTaskNpcPatrol_GetObstacleLocation",
+  PATROL_TURN_SPEED = 540,
+  NO_FORWARD_DISTANCE = 100,
+  NO_FORWARD_TURN_SPEED = 1e4;
 class TsTaskPatrolLogic extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -66,7 +66,7 @@ class TsTaskPatrolLogic extends TsTaskAbortImmediatelyBase_1.default {
       (this.IsInitTsVariables = !0);
   }
   InitComp(t) {
-    const i =
+    var i =
       GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
     (this.FrameRate = i.GetFrameRate()),
       (this.FrameSeconds = i.GetFrameSeconds()),
@@ -93,7 +93,7 @@ class TsTaskPatrolLogic extends TsTaskAbortImmediatelyBase_1.default {
         this.InitTsVariables(),
       !this.IsInitComp)
     ) {
-      const s = t.AiController;
+      var s = t.AiController;
       if (!s)
         return (
           Log_1.Log.CheckError() &&
@@ -136,7 +136,7 @@ class TsTaskPatrolLogic extends TsTaskAbortImmediatelyBase_1.default {
     );
   }
   CallOutside() {
-    let t;
+    var t;
     GlobalData_1.GlobalData.BpEventManager &&
       (t = this.PatrolLogic?.PatrolPoint) &&
       t.IsMain &&
@@ -146,7 +146,7 @@ class TsTaskPatrolLogic extends TsTaskAbortImmediatelyBase_1.default {
       );
   }
   InitPatrolInfo() {
-    const t = this.ActorComp.CreatureData;
+    var t = this.ActorComp.CreatureData;
     this.PatrolLogic.StartPatrol(this.TsUseLastMoveIndex, () => {
       this.CallOutside();
     }),
@@ -195,8 +195,8 @@ class TsTaskPatrolLogic extends TsTaskAbortImmediatelyBase_1.default {
       this.CacheVector.SubtractionEqual(this.ActorComp.ActorLocationProxy),
       this.IsMoveFlyingState ||
         (this.CacheVector.Z -= this.ActorComp.HalfHeight);
-    const i = [this.CacheVector.X, this.CacheVector.Y, this.CacheVector.Z];
-    const s = ((this.CacheVector.Z = 0), this.CacheVector.Size());
+    var i = [this.CacheVector.X, this.CacheVector.Y, this.CacheVector.Z],
+      s = ((this.CacheVector.Z = 0), this.CacheVector.Size());
     (this.CacheVector.Z = i[2]),
       this.TurnToDirect(this.CacheVector, s, t),
       this.CacheVector.Set(i[0], i[1], i[2]),
@@ -268,7 +268,7 @@ class TsTaskPatrolLogic extends TsTaskAbortImmediatelyBase_1.default {
         ? ((t = s / this.TsMoveSpeed), this.SetPatrolPointLocation())
         : this.MoveComp.MoveCharacter(this.CacheVector, t),
         this.AnimComp?.Valid &&
-          this.Entity.GetTickInterval() > 1 &&
+          1 < this.Entity.GetTickInterval() &&
           this.ActorComp.Owner?.WasRecentlyRenderedOnScreen() &&
           h &&
           this.AnimComp.SetModelBuffer(
@@ -291,7 +291,7 @@ class TsTaskPatrolLogic extends TsTaskAbortImmediatelyBase_1.default {
       );
   }
   ExecuteObstacle() {
-    let t, i;
+    var t, i;
     this.PatrolLogic?.PatrolPoint &&
     this.PatrolLogic.PatrolPoint.Point &&
     (this.CacheVector.FromUeVector(this.PatrolLogic.PatrolPoint.Point),
@@ -337,4 +337,4 @@ class TsTaskPatrolLogic extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskPatrolLogic;
-// # sourceMappingURL=TsTaskPatrolLogic.js.map
+//# sourceMappingURL=TsTaskPatrolLogic.js.map

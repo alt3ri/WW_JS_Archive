@@ -1,29 +1,33 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, o, r) {
-    let i;
-    const s = arguments.length;
-    let n =
-      s < 3 ? e : r === null ? (r = Object.getOwnPropertyDescriptor(e, o)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var i,
+      s = arguments.length,
+      n =
+        s < 3
+          ? e
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(e, o))
+            : r;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(t, e, o, r);
     else
-      for (let l = t.length - 1; l >= 0; l--)
-        (i = t[l]) && (n = (s < 3 ? i(n) : s > 3 ? i(e, o, n) : i(e, o)) || n);
-    return s > 3 && n && Object.defineProperty(e, o, n), n;
+      for (var l = t.length - 1; 0 <= l; l--)
+        (i = t[l]) && (n = (s < 3 ? i(n) : 3 < s ? i(e, o, n) : i(e, o)) || n);
+    return 3 < s && n && Object.defineProperty(e, o, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterFollowComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ActorUtils_1 = require("../../../../Utils/ActorUtils");
-const EProtoSummonType = Protocol_1.Aki.Protocol.Oqs;
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ActorUtils_1 = require("../../../../Utils/ActorUtils");
+var EProtoSummonType = Protocol_1.Aki.Protocol.Oqs;
 let CharacterFollowComponent = class CharacterFollowComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -53,43 +57,43 @@ let CharacterFollowComponent = class CharacterFollowComponent extends EntityComp
   SetRoleId(t, e) {
     (this.Jqi = t),
       (this.SummonTypeInternal = e),
-      this.Jqi !== 0 &&
+      0 !== this.Jqi &&
         (t = EntitySystem_1.EntitySystem.Get(this.Jqi)?.GetComponent(83)) &&
         this.Entity.GetComponent(33)?.ResetRoleGrowComponent(t);
   }
   GetRoleActor() {
-    const t = EntitySystem_1.EntitySystem.Get(this.Jqi);
+    var t = EntitySystem_1.EntitySystem.Get(this.Jqi);
     if (t?.Valid) return t.GetComponent(1).Owner;
   }
   GetFollowActor() {
-    const t = this.k5r;
-    const e = UE.NewArray(UE.Actor);
+    var t = this.k5r,
+      e = UE.NewArray(UE.Actor);
     if (t)
       for (const r of t) {
-        let o = EntitySystem_1.EntitySystem.Get(r);
+        var o = EntitySystem_1.EntitySystem.Get(r);
         o?.Valid && (o = o.GetComponent(1).Owner) && e.Add(o);
       }
     return e;
   }
   SetFollowId(t) {
-    this.k5r.indexOf(t) !== -1
+    -1 !== this.k5r.indexOf(t)
       ? Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Character", 23, "Add the Same Summon Id:", ["id", t])
       : this.k5r.push(t);
   }
   DeleteFollowEntity() {
-    const t = ModelManager_1.ModelManager.CreatureModel.GetEntity(
+    var t = ModelManager_1.ModelManager.CreatureModel.GetEntity(
       this.zht.GetSummonerId(),
     );
     t?.Valid && t.Entity.GetComponent(47).G8s(this.Entity.Id);
   }
   GetAttributeHolder() {
-    return this.RoleId !== 0 && this.SummonType === 2
+    return 0 !== this.RoleId && 2 === this.SummonType
       ? EntitySystem_1.EntitySystem.Get(this.RoleId)
       : this.Entity;
   }
   SetFollowData(t, e) {
-    let o;
+    var o;
     t?.IsValid()
       ? (o = (t =
           ActorUtils_1.ActorUtils.GetEntityByActor(t))?.Entity?.GetComponent(
@@ -109,7 +113,7 @@ let CharacterFollowComponent = class CharacterFollowComponent extends EntityComp
     this.G8s(t), (this.SummonTypeInternal = 0), (this.Jqi = 0);
   }
   GetToRoleDistance() {
-    let t;
+    var t;
     return this.RoleId &&
       (t = EntitySystem_1.EntitySystem.Get(this.RoleId)) &&
       this.Entity &&
@@ -122,10 +126,10 @@ let CharacterFollowComponent = class CharacterFollowComponent extends EntityComp
       : -1;
   }
   q8s() {
-    let t;
-    const e = ModelManager_1.ModelManager.CreatureModel.GetEntity(
-      this.zht.GetSummonerId(),
-    );
+    var t,
+      e = ModelManager_1.ModelManager.CreatureModel.GetEntity(
+        this.zht.GetSummonerId(),
+      );
     e?.Valid &&
       this.zht.SummonType ===
         EProtoSummonType.Proto_ESummonTypeConcomitantVision &&
@@ -134,8 +138,8 @@ let CharacterFollowComponent = class CharacterFollowComponent extends EntityComp
       t.SetFollowId(this.Entity.Id));
   }
   G8s(t) {
-    t !== 0
-      ? (t = this.k5r.indexOf(t)) !== -1 && this.k5r.splice(t, 1)
+    0 !== t
+      ? -1 !== (t = this.k5r.indexOf(t)) && this.k5r.splice(t, 1)
       : (this.k5r = []);
   }
 };
@@ -144,4 +148,4 @@ let CharacterFollowComponent = class CharacterFollowComponent extends EntityComp
   CharacterFollowComponent,
 )),
   (exports.CharacterFollowComponent = CharacterFollowComponent);
-// # sourceMappingURL=CharacterFollowComponent.js.map
+//# sourceMappingURL=CharacterFollowComponent.js.map

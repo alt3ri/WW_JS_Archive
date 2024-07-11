@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TalkerListOp = void 0);
-const CsvRegistry_1 = require("../CsvConfig/CsvRegistry");
-const TalkerCsv_1 = require("../CsvConfig/TalkerCsv");
+const CsvRegistry_1 = require("../CsvConfig/CsvRegistry"),
+  TalkerCsv_1 = require("../CsvConfig/TalkerCsv");
 class TalkerListOp {
   static Get() {
     return this.Me || (this.Me = this.Load()), this.Me;
@@ -24,7 +24,7 @@ class TalkerListOp {
     return t.Talkers.find((t) => t.Id === e);
   }
   static Load() {
-    const t = CsvRegistry_1.CsvRegistry.Instance.GetAllCsvRows(
+    var t = CsvRegistry_1.CsvRegistry.Instance.GetAllCsvRows(
       TalkerCsv_1.TalkerCsv,
     );
     const e = [];
@@ -44,4 +44,4 @@ class TalkerListOp {
   }
 }
 exports.TalkerListOp = TalkerListOp;
-// # sourceMappingURL=TalkerList.js.map
+//# sourceMappingURL=TalkerList.js.map

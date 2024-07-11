@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponTabItem = void 0);
-const UiTabCamera_1 = require("../../../DynamicTab/UiTabViewBehavior/UiTabCamera");
-const UiTabSequence_1 = require("../../../DynamicTab/UiTabViewBehavior/UiTabSequence");
-const CommonTabItem_1 = require("./CommonTabItem");
+const UiTabCamera_1 = require("../../../DynamicTab/UiTabViewBehavior/UiTabCamera"),
+  UiTabSequence_1 = require("../../../DynamicTab/UiTabViewBehavior/UiTabSequence"),
+  CommonTabItem_1 = require("./CommonTabItem");
 class WeaponTabItem extends CommonTabItem_1.CommonTabItem {
   RegisterViewModule(e) {
     e
@@ -13,4 +13,4 @@ class WeaponTabItem extends CommonTabItem_1.CommonTabItem {
   }
 }
 exports.WeaponTabItem = WeaponTabItem;
-// # sourceMappingURL=WeaponTabItem.js.map
+//# sourceMappingURL=WeaponTabItem.js.map

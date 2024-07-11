@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldPassiveSkillCdData = exports.PassiveSkillCdData = void 0);
-const Time_1 = require("../../../../Core/Common/Time");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const PassiveSkillCdInfo_1 = require("./PassiveSkillCdInfo");
+const Time_1 = require("../../../../Core/Common/Time"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  PassiveSkillCdInfo_1 = require("./PassiveSkillCdInfo");
 class PassiveSkillCdData {
   constructor() {
     (this.SkillCdInfoMap = new Map()), (this.ServerSkillCd = new Map());
@@ -34,7 +34,7 @@ class WorldPassiveSkillCdData {
   }
   InitSkillCdCommon(i, t, s, e) {
     let o = void 0;
-    let a, l, r;
+    var a, l, r;
     e
       ? (o = this.AllShareSkillCdData)
       : ((a = i.Id),
@@ -65,8 +65,8 @@ class WorldPassiveSkillCdData {
     );
   }
   RemoveEntity(i) {
-    const t = i.Id;
-    const s = this.EntitySkillCdMap.get(t);
+    var t = i.Id,
+      s = this.EntitySkillCdMap.get(t);
     if (s && (this.EntitySkillCdMap.delete(t), i.GetComponent(0).IsRole())) {
       i = i.GetComponent(0).GetPbDataId();
       for (const e of s.SkillCdInfoMap.values()) e.EntityIds.clear();
@@ -81,15 +81,15 @@ class WorldPassiveSkillCdData {
     for (const s of this.OffRoleSkillCdMap.values()) s.Tick(i);
   }
   HandlePassiveSkillNotify(i) {
-    const t = Time_1.Time.ServerTimeStamp;
+    var t = Time_1.Time.ServerTimeStamp;
     for (const a of i.pUs) {
       let i = this.QWe(a.l3n);
       i ||
         ((i = new PassiveSkillCdData()), this.OffRoleSkillCdMap.set(a.l3n, i));
       for (const l of a.vUs) {
-        var s;
-        var e;
-        const o = MathUtils_1.MathUtils.LongToNumber(l.fUs);
+        var s,
+          e,
+          o = MathUtils_1.MathUtils.LongToNumber(l.fUs);
         o <= t ||
           ((s = MathUtils_1.MathUtils.LongToBigInt(l.vkn)),
           (e = i.SkillCdInfoMap.get(s))
@@ -102,7 +102,7 @@ class WorldPassiveSkillCdData {
     const t = this.OffRoleSkillCdMap.get(i);
     if (t) return t;
     for (const [e, t] of this.EntitySkillCdMap) {
-      let s = ModelManager_1.ModelManager.CharacterModel?.GetHandle(e);
+      var s = ModelManager_1.ModelManager.CharacterModel?.GetHandle(e);
       if (s?.Valid) {
         s = s.Entity;
         if (!t)
@@ -113,4 +113,4 @@ class WorldPassiveSkillCdData {
   }
 }
 exports.WorldPassiveSkillCdData = WorldPassiveSkillCdData;
-// # sourceMappingURL=PassiveSkillCdData.js.map
+//# sourceMappingURL=PassiveSkillCdData.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckTypeItemPickUp = void 0);
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const ConfigManager_1 = require("../../Manager/ConfigManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionCheckTypeItemPickUp extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, r, ...n) {
     return (
@@ -15,4 +15,4 @@ class LevelConditionCheckTypeItemPickUp extends LevelGeneralBase_1.LevelConditio
   }
 }
 exports.LevelConditionCheckTypeItemPickUp = LevelConditionCheckTypeItemPickUp;
-// # sourceMappingURL=LevelConditionCheckTypeItemPickUp.js.map
+//# sourceMappingURL=LevelConditionCheckTypeItemPickUp.js.map

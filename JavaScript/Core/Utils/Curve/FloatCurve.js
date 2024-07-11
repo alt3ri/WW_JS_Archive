@@ -14,4 +14,4 @@ class FloatCurve extends CurveBase_1.CurveBase {
   }
 }
 exports.FloatCurve = FloatCurve;
-// # sourceMappingURL=FloatCurve.js.map
+//# sourceMappingURL=FloatCurve.js.map

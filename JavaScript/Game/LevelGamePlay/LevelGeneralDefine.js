@@ -1,5 +1,5 @@
 "use strict";
-let ELevelGeneralEvent, ELevelGeneralCondition;
+var ELevelGeneralEvent, ELevelGeneralCondition;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ELevelGeneralCondition = exports.ELevelGeneralEvent = void 0),
   (function (e) {
@@ -167,4 +167,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     (ELevelGeneralCondition =
       exports.ELevelGeneralCondition || (exports.ELevelGeneralCondition = {})),
   );
-// # sourceMappingURL=LevelGeneralDefine.js.map
+//# sourceMappingURL=LevelGeneralDefine.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TutorialModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TutorialDefine_1 = require("./TutorialDefine");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TutorialDefine_1 = require("./TutorialDefine");
 class TutorialModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -14,20 +14,20 @@ class TutorialModel extends ModelBase_1.ModelBase {
   }
   OnInit() {
     for (const t in TutorialDefine_1.ETutorialType) {
-      const e = Number(t);
+      var e = Number(t);
       isNaN(e) || this.NDo.set(e, new Map());
     }
     return !0;
   }
   InitTutorialTotalData() {
     for (const r of Array.from(this.ODo.values())) {
-      const e = new TutorialDefine_1.TutorialSaveData();
-      const t =
-        ((e.TimeStamp = r.TimeStamp),
-        (e.TutorialId = r.TutorialId),
-        (e.HasRedDot = r.HasRedDot),
-        e.TutorialData.TutorialType);
-      const i = e.TutorialData.Id;
+      var e = new TutorialDefine_1.TutorialSaveData(),
+        t =
+          ((e.TimeStamp = r.TimeStamp),
+          (e.TutorialId = r.TutorialId),
+          (e.HasRedDot = r.HasRedDot),
+          e.TutorialData.TutorialType),
+        i = e.TutorialData.Id;
       this.NDo.get(t).set(i, e),
         this.NDo.get(TutorialDefine_1.ETutorialType.All).set(i, e),
         this.ODo.set(i, e);
@@ -39,12 +39,12 @@ class TutorialModel extends ModelBase_1.ModelBase {
   }
   InitUnlockTutorials(e) {
     for (const r of e) {
-      const t = new TutorialDefine_1.TutorialSaveData();
-      const i =
-        ((t.TimeStamp = r.BRs),
-        (t.TutorialId = r.Ekn),
-        (t.HasRedDot = !r._bs),
-        t.TutorialData.TutorialType);
+      var t = new TutorialDefine_1.TutorialSaveData(),
+        i =
+          ((t.TimeStamp = r.BRs),
+          (t.TutorialId = r.Ekn),
+          (t.HasRedDot = !r._bs),
+          t.TutorialData.TutorialType);
       Object.values(TutorialDefine_1.ETutorialType).includes(i) &&
         (this.NDo.get(i).has(t.TutorialId) ||
           (this.NDo.get(i).set(t.TutorialId, t), this.ODo.set(t.TutorialId, t)),
@@ -52,12 +52,12 @@ class TutorialModel extends ModelBase_1.ModelBase {
     }
   }
   UpdateUnlockTutorials(e) {
-    const t = new TutorialDefine_1.TutorialSaveData();
-    var e =
-      ((t.TimeStamp = e.BRs),
-      (t.TutorialId = e.Ekn),
-      (t.HasRedDot = !e._bs),
-      t.TutorialData.TutorialType);
+    var t = new TutorialDefine_1.TutorialSaveData(),
+      e =
+        ((t.TimeStamp = e.BRs),
+        (t.TutorialId = e.Ekn),
+        (t.HasRedDot = !e._bs),
+        t.TutorialData.TutorialType);
     Object.values(TutorialDefine_1.ETutorialType).includes(e) &&
       !this.NDo.get(e).has(t.TutorialId) &&
       (this.NDo.get(e).set(t.TutorialId, t),
@@ -67,11 +67,11 @@ class TutorialModel extends ModelBase_1.ModelBase {
       this.InvokeTutorialRedDot(t));
   }
   GetUnlockedTutorialDataByType(o) {
-    let e;
-    let t;
-    const i = [];
+    var e,
+      t,
+      i = [];
     for (const n of this.NDo.get(o).values()) {
-      const r = {
+      var r = {
         IsTypeTitle: !1,
         TextId: n.TutorialData.GroupName,
         SavedData: n,
@@ -81,7 +81,7 @@ class TutorialModel extends ModelBase_1.ModelBase {
     }
     if (
       (i.sort((e, t) => {
-        let i, r;
+        var i, r;
         return e.SavedData.HasRedDot && !t.SavedData.HasRedDot
           ? -1
           : !e.SavedData.HasRedDot && t.SavedData.HasRedDot
@@ -119,7 +119,7 @@ class TutorialModel extends ModelBase_1.ModelBase {
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnTutorialUpdate);
   }
   InvokeTutorialRedDot(e) {
-    const t = e ? e.TutorialId : 0;
+    var t = e ? e.TutorialId : 0;
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.RedDotNewTutorial,
       t,
@@ -137,7 +137,7 @@ class TutorialModel extends ModelBase_1.ModelBase {
   }
   MakeSearchList(e, t) {
     let i = void 0;
-    const r = [];
+    var r = [];
     try {
       i = new RegExp(e, "i");
     } catch (e) {
@@ -146,9 +146,9 @@ class TutorialModel extends ModelBase_1.ModelBase {
     let o = !1;
     for (const s of Array.from(this.NDo.keys()).sort((e) => (e === t ? -1 : 1)))
       if (s !== TutorialDefine_1.ETutorialType.All) {
-        const a = [];
+        var a = [];
         for (const u of this.NDo.get(s).values()) {
-          let n = u.GetTutorialTitle();
+          var n = u.GetTutorialTitle();
           n.search(i) < 0 ||
             ((n = {
               IsTypeTitle: !1,
@@ -178,4 +178,4 @@ class TutorialModel extends ModelBase_1.ModelBase {
   }
 }
 exports.TutorialModel = TutorialModel;
-// # sourceMappingURL=TutorialModel.js.map
+//# sourceMappingURL=TutorialModel.js.map

@@ -7,12 +7,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.RunTestProxy =
     exports.TestManager =
       void 0);
-const ColorDefine_1 = require("../Misc/ColorDefine");
-const File_1 = require("../Misc/File");
-const Log_1 = require("../Misc/Log");
-const Util_1 = require("../Misc/Util");
-const TestOp_1 = require("./TestOp");
-const UseCaseTestEvent_1 = require("./UseCaseTestEvent");
+const ColorDefine_1 = require("../Misc/ColorDefine"),
+  File_1 = require("../Misc/File"),
+  Log_1 = require("../Misc/Log"),
+  Util_1 = require("../Misc/Util"),
+  TestOp_1 = require("./TestOp"),
+  UseCaseTestEvent_1 = require("./UseCaseTestEvent");
 function scanFiles(e) {
   return (0, File_1.listFiles)(e, ".test.js", !0);
 }
@@ -30,10 +30,10 @@ class TestManager {
     );
   }
   je() {
-    const e = scanFiles(this.Dir);
-    const t = (0, File_1.getAbsolutePath)(__dirname);
+    var e = scanFiles(this.Dir),
+      t = (0, File_1.getAbsolutePath)(__dirname);
     for (const r of e) {
-      const s = (0, File_1.getRelativePathToDir)(r, t);
+      var s = (0, File_1.getRelativePathToDir)(r, t);
       try {
         require(s), (0, Log_1.log)(`[${this.Name}] import test file: ` + s);
       } catch (e) {
@@ -42,15 +42,15 @@ class TestManager {
     }
   }
   async RunAllTests() {
-    const e = new TestOp_1.TestFilter();
+    var e = new TestOp_1.TestFilter();
     return (
       TestOp_1.TestOp.AddTestToFilter(this.Context.RootSuite, e),
       this.RunTests(e)
     );
   }
   async RunTests(e) {
-    const t = this.Context.RootSuite;
-    const s = new TestOp_1.TestResult();
+    var t = this.Context["RootSuite"],
+      s = new TestOp_1.TestResult();
     return await TestOp_1.TestOp.RunSuite(t, e, s), s;
   }
   async RunTestSuiteByName(e) {
@@ -58,16 +58,16 @@ class TestManager {
     return this.RunTests(e);
   }
   async RunTestByName(e) {
-    const t = new TestOp_1.TestFilter();
+    var t = new TestOp_1.TestFilter();
     for (const r of e) {
-      const s = this.Context.PickNode(r);
+      var s = this.Context.PickNode(r);
       s && TestOp_1.TestOp.AddTestToFilter(s, t);
     }
     return this.RunTests(t);
   }
   $e(e) {
-    let t;
-    const s = this.Context.PickSuite(e);
+    var t,
+      s = this.Context.PickSuite(e);
     if (s)
       return (
         (t = new TestOp_1.TestFilter()),
@@ -77,33 +77,33 @@ class TestManager {
     throw new Error(`[${this.Name}] cannot find test suite: ` + e);
   }
   OutputTestResults(e) {
-    var t = this.Context.RootSuite;
-    var t =
-      ((0, Log_1.log)(""),
-      TestOp_1.TestOp.Output(t, e),
-      TestOp_1.TestOp.GetSummary(t, e));
-    var e =
-      ((0, Log_1.log)(""),
-      [
-        `${(0, ColorDefine_1.cyan)("汇总")}: 总数: ${t.Total}, 成功: ${(0, ColorDefine_1.green)(t.Passed.toString())}, `,
-      ]);
-    t.Failed > 0 &&
+    var t = this.Context["RootSuite"],
+      t =
+        ((0, Log_1.log)(""),
+        TestOp_1.TestOp.Output(t, e),
+        TestOp_1.TestOp.GetSummary(t, e)),
+      e =
+        ((0, Log_1.log)(""),
+        [
+          `${(0, ColorDefine_1.cyan)("汇总")}: 总数: ${t.Total}, 成功: ${(0, ColorDefine_1.green)(t.Passed.toString())}, `,
+        ]);
+    0 < t.Failed &&
       e.push(`失败: ${(0, ColorDefine_1.red)(t.Failed.toString())}, `),
       e.push(`耗时: ${t.Time}ms`),
       (0, Log_1.log)(e.join("")),
       (0, Log_1.log)("");
   }
   GetTestReport(e) {
-    const t = this.Context.RootSuite;
+    var t = this.Context["RootSuite"];
     return TestOp_1.TestOp.GenTestReport(t, e);
   }
   GetResultSummary(e) {
-    const t = this.Context.RootSuite;
+    var t = this.Context["RootSuite"];
     return TestOp_1.TestOp.GetSummary(t, e);
   }
   OpenTestLine(e) {
-    var t = this.Context.RootSuite;
-    var t = TestOp_1.TestOp.FindNodeById(t, e);
+    var t = this.Context["RootSuite"],
+      t = TestOp_1.TestOp.FindNodeById(t, e);
     return (
       !!t &&
       !!t.FileLocation &&
@@ -133,21 +133,21 @@ class RunTestProxy {
     return this.RunTest(e.GetAllTestNames());
   }
   Qe(e, t) {
-    if (e.Type === "case") t.Add(e);
+    if ("case" === e.Type) t.Add(e);
     else for (const s of e.Cases) this.Qe(s, t);
   }
   CreateTestFilter(e) {
-    const t = new TestOp_1.TestFilter();
+    var t = new TestOp_1.TestFilter();
     return this.Qe(e, t), t;
   }
   We(e, t) {
-    if ((t(e), e.Type === "suite")) for (const s of e.Cases) this.We(s, t);
+    if ((t(e), "suite" === e.Type)) for (const s of e.Cases) this.We(s, t);
   }
   CreateTestFilterByNames(t) {
     const s = new TestOp_1.TestFilter();
     return (
       this.We(this.Manager.Context.RootSuite, (e) => {
-        e.Type === "case" && t.includes(e.Name) && s.Add(e);
+        "case" === e.Type && t.includes(e.Name) && s.Add(e);
       }),
       s
     );
@@ -157,9 +157,9 @@ class RunTestProxy {
 class UnitTestProxy extends (exports.RunTestProxy = RunTestProxy) {
   async RunTest(e) {
     this.IsRunning = !0;
-    var e = await this.Manager.RunTestByName(e);
-    const t = this.Manager.GetTestReport(e);
-    var e = this.Manager.GetResultSummary(e);
+    var e = await this.Manager.RunTestByName(e),
+      t = this.Manager.GetTestReport(e),
+      e = this.Manager.GetResultSummary(e);
     return (this.IsRunning = !1), [t, e];
   }
 }
@@ -190,4 +190,4 @@ function getUseCaseTestManager() {
     ));
 }
 exports.getUseCaseTestManager = getUseCaseTestManager;
-// # sourceMappingURL=Manager.js.map
+//# sourceMappingURL=Manager.js.map

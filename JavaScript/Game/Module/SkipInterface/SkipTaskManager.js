@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkipTaskManager = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const SkipInterfaceDefine_1 = require("./SkipInterfaceDefine");
+const Log_1 = require("../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  SkipInterfaceDefine_1 = require("./SkipInterfaceDefine");
 class SkipTaskManager {
   static CheckContainRingView(e) {
     SkipTaskManager.CheckContainLimitViewName(e) &&
@@ -16,10 +16,10 @@ class SkipTaskManager {
     return this.Iyo.has(e);
   }
   static RunByConfigId(a) {
-    const i =
+    var i =
       ConfigManager_1.ConfigManager.SkipInterfaceConfig.GetAccessPathConfig(a);
     if (i) {
-      const r = i.SkipName;
+      var r = i.SkipName;
       if (void 0 === r)
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -28,10 +28,10 @@ class SkipTaskManager {
             "开始跳转任务时,没有在ESkipName中找到对应枚举",
             ["skipTaskName", r],
           );
-      else if (r !== -1) {
-        let t;
-        let n;
-        const o = ModelManager_1.ModelManager.FunctionModel;
+      else if (-1 !== r) {
+        var t,
+          n,
+          o = ModelManager_1.ModelManager.FunctionModel;
         for ([t, n] of i.FunctionOpenCheckMap)
           if (!o.IsOpen(t))
             return (
@@ -77,7 +77,7 @@ class SkipTaskManager {
   }
   static Lyo(e) {
     if (!(e < 0)) {
-      let a = SkipInterfaceDefine_1.skipClassMap.get(e);
+      var a = SkipInterfaceDefine_1.skipClassMap.get(e);
       if (a) return (a = new a()), this.Dyo.set(e, a), a.Initialize(), a;
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -104,4 +104,4 @@ class SkipTaskManager {
 }
 ((exports.SkipTaskManager = SkipTaskManager).Dyo = new Map()),
   (SkipTaskManager.Iyo = new Set(["RoleRootView", "CalabashRootView"]));
-// # sourceMappingURL=SkipTaskManager.js.map
+//# sourceMappingURL=SkipTaskManager.js.map

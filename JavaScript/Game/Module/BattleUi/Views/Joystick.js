@@ -1,29 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Joystick = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const Time_1 = require("../../../../Core/Common/Time");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const Global_1 = require("../../../Global");
-const InputController_1 = require("../../../Input/InputController");
-const InputEnums_1 = require("../../../Input/InputEnums");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController");
-const BattleVisibleChildView_1 = require("./BattleChildView/BattleVisibleChildView");
-const WALK_TO_RUN_RATE = 0.3;
-const JOYSTICK_RADIU = 200;
-const JOYSTICK_RADIU_SQUARED = 4e4;
-const CHECK_IN_TOUCH_INTERVAL = 500;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  Global_1 = require("../../../Global"),
+  InputController_1 = require("../../../Input/InputController"),
+  InputEnums_1 = require("../../../Input/InputEnums"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  BattleVisibleChildView_1 = require("./BattleChildView/BattleVisibleChildView"),
+  WALK_TO_RUN_RATE = 0.3,
+  JOYSTICK_RADIU = 200,
+  JOYSTICK_RADIU_SQUARED = 4e4,
+  CHECK_IN_TOUCH_INTERVAL = 500;
 class Joystick extends BattleVisibleChildView_1.BattleVisibleChildView {
   constructor() {
     super(...arguments),
@@ -160,7 +160,7 @@ class Joystick extends BattleVisibleChildView_1.BattleVisibleChildView {
     ];
   }
   Ore() {
-    const t = this.P1t;
+    var t = this.P1t;
     t.OnPointerDownCallBack.Bind((t) => {
       this.e_t(t);
     }),
@@ -182,7 +182,7 @@ class Joystick extends BattleVisibleChildView_1.BattleVisibleChildView {
       );
   }
   kre() {
-    const t = this.P1t;
+    var t = this.P1t;
     t.OnPointerDownCallBack.Unbind(),
       t.OnPointerBeginDragCallBack.Unbind(),
       t.OnPointerDragCallBack.Unbind(),
@@ -257,7 +257,7 @@ class Joystick extends BattleVisibleChildView_1.BattleVisibleChildView {
     (this.K1t = TimeUtil_1.TimeUtil.GetServerTimeStamp()), (this.Q1t = t);
   }
   TryDodge(t) {
-    const i = TimeUtil_1.TimeUtil.GetServerTimeStamp();
+    var i = TimeUtil_1.TimeUtil.GetServerTimeStamp();
     i - this.K1t > this.W1t
       ? (this.K1t = i)
       : ((this.K1t = i),
@@ -282,7 +282,7 @@ class Joystick extends BattleVisibleChildView_1.BattleVisibleChildView {
       (ModelManager_1.ModelManager.BattleUiModel.IsPressJoyStick = !1);
   }
   r_t(s) {
-    let e = s.SizeSquared();
+    var e = s.SizeSquared();
     if (e <= 0)
       ModelManager_1.ModelManager.BattleUiModel.IsOpenJoystickLog &&
         Log_1.Log.CheckInfo() &&
@@ -295,14 +295,14 @@ class Joystick extends BattleVisibleChildView_1.BattleVisibleChildView {
         );
     else {
       this.G1t.DeepCopy(s), this.G1t.Normalize();
-      let t = this.G1t.X * JOYSTICK_RADIU;
-      let i = this.G1t.Y * JOYSTICK_RADIU;
+      let t = this.G1t.X * JOYSTICK_RADIU,
+        i = this.G1t.Y * JOYSTICK_RADIU;
       e < JOYSTICK_RADIU_SQUARED && ((t = s.X), (i = s.Y)),
         (t += this.O1t.X),
         (i += this.O1t.Y),
         this.b1t.Set(t, i),
         this.pQe && this.B1t.SetAnchorOffset(this.b1t.ToUeVector2D()),
-        this.G1t.Y > 0
+        0 < this.G1t.Y
           ? (this.F1t.Yaw =
               Math.atan(-this.G1t.X / this.G1t.Y) *
               MathCommon_1.MathCommon.RadToDeg)
@@ -311,7 +311,7 @@ class Joystick extends BattleVisibleChildView_1.BattleVisibleChildView {
                 Math.atan(-this.G1t.X / this.G1t.Y) *
                   MathCommon_1.MathCommon.RadToDeg +
                 180)
-            : this.G1t.X > 0
+            : 0 < this.G1t.X
               ? (this.F1t.Yaw = -90)
               : (this.F1t.Yaw = 90);
       e = this.F1t.ToUeRotator();
@@ -384,7 +384,7 @@ class Joystick extends BattleVisibleChildView_1.BattleVisibleChildView {
         ));
   }
   l_t() {
-    this.q1t !== 2 &&
+    2 !== this.q1t &&
       (ModelManager_1.ModelManager.BattleUiModel.IsOpenJoystickLog &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Battle", 8, "控制角色行走"),
@@ -393,7 +393,7 @@ class Joystick extends BattleVisibleChildView_1.BattleVisibleChildView {
       (this.q1t = 2));
   }
   h_t() {
-    this.q1t !== 3 &&
+    3 !== this.q1t &&
       (ModelManager_1.ModelManager.BattleUiModel.IsOpenJoystickLog &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Battle", 8, "控制角色奔跑"),
@@ -402,24 +402,24 @@ class Joystick extends BattleVisibleChildView_1.BattleVisibleChildView {
       (this.q1t = 3));
   }
   a_t() {
-    this.q1t !== 0 &&
+    0 !== this.q1t &&
       (ModelManager_1.ModelManager.BattleUiModel.IsOpenJoystickLog &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Battle", 8, "松开摇杆时控制角色站立"),
       this.B1t.SetUIActive(!this.pQe),
-      this.q1t !== 1 && (this.x1t.SetUIActive(!1), this.w1t.SetUIActive(!1)),
+      1 !== this.q1t && (this.x1t.SetUIActive(!1), this.w1t.SetUIActive(!1)),
       (this.q1t = 0));
   }
   s_t() {
-    this.q1t !== 1 &&
+    1 !== this.q1t &&
       (ModelManager_1.ModelManager.BattleUiModel.IsOpenJoystickLog &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Battle", 8, "按下摇杆时控制角色站立"),
       this.B1t.SetUIActive(!0),
-      this.q1t !== 0 && (this.x1t.SetUIActive(!1), this.w1t.SetUIActive(!1)),
+      0 !== this.q1t && (this.x1t.SetUIActive(!1), this.w1t.SetUIActive(!1)),
       (this.q1t = 1));
   }
   SetForbidMove(t) {}
 }
 exports.Joystick = Joystick;
-// # sourceMappingURL=Joystick.js.map
+//# sourceMappingURL=Joystick.js.map

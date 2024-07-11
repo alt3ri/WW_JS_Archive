@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configVideoCaptionByCgName = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const VideoCaption_1 = require("../Config/VideoCaption");
-const DB = "db_cgvedio.db";
-const FILE = "g.过场cg.xlsx";
-const TABLE = "VideoCaption";
-const COMMAND = "select BinData from `VideoCaption` where CgName=?";
-const KEY_PREFIX = "VideoCaptionByCgName";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  VideoCaption_1 = require("../Config/VideoCaption"),
+  DB = "db_cgvedio.db",
+  FILE = "g.过场cg.xlsx",
+  TABLE = "VideoCaption",
+  COMMAND = "select BinData from `VideoCaption` where CgName=?",
+  KEY_PREFIX = "VideoCaptionByCgName",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
-const CONFIG_LIST_STAT_PREFIX = "configVideoCaptionByCgName.GetConfigList(";
+const initStat = void 0,
+  getConfigListStat = void 0,
+  CONFIG_LIST_STAT_PREFIX = "configVideoCaptionByCgName.GetConfigList(";
 exports.configVideoCaptionByCgName = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -29,7 +29,7 @@ exports.configVideoCaptionByCgName = {
     );
   },
   GetConfigList: (o, i = !0) => {
-    let n;
+    var n;
     if (
       (n = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -44,13 +44,14 @@ exports.configVideoCaptionByCgName = {
         const a = new Array();
         for (;;) {
           if (
+            1 !==
             ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair, [
               "CgName",
               o,
-            ]) !== 1
+            ])
           )
             break;
-          let C = void 0;
+          var C = void 0;
           if (
             (([n, C] = ConfigCommon_1.ConfigCommon.GetValue(
               handleId,
@@ -78,4 +79,4 @@ exports.configVideoCaptionByCgName = {
     }
   },
 };
-// # sourceMappingURL=VideoCaptionByCgName.js.map
+//# sourceMappingURL=VideoCaptionByCgName.js.map

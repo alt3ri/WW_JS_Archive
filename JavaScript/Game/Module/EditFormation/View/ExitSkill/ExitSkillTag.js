@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExitSkillTag = void 0);
-const UE = require("ue");
-const SkillTagById_1 = require("../../../../../Core/Define/ConfigQuery/SkillTagById");
-const GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
+const UE = require("ue"),
+  SkillTagById_1 = require("../../../../../Core/Define/ConfigQuery/SkillTagById"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../../Util/LguiUtil");
 class ExitSkillTag extends GridProxyAbstract_1.GridProxyAbstract {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -21,4 +21,4 @@ class ExitSkillTag extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.ExitSkillTag = ExitSkillTag;
-// # sourceMappingURL=ExitSkillTag.js.map
+//# sourceMappingURL=ExitSkillTag.js.map

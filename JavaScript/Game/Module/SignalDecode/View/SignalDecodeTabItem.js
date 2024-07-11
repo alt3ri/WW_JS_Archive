@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SignalDecodeTabItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const BLACK_COLOR = "#000000FF";
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  BLACK_COLOR = "#000000FF";
 class SignalDecodeTabItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, s, t) {
     super(),
@@ -23,10 +23,10 @@ class SignalDecodeTabItem extends UiPanelBase_1.UiPanelBase {
     this.GetText(3).SetText(this.TabIndex.toString());
   }
   OnProcess(e) {
-    var e = this.TabIndex === e;
-    var s = this.GetSprite(0);
-    const t = this.GetSprite(1);
-    var s = (s.SetUIActive(!e), t.SetUIActive(e), this.GetText(3));
+    var e = this.TabIndex === e,
+      s = this.GetSprite(0),
+      t = this.GetSprite(1),
+      s = (s.SetUIActive(!e), t.SetUIActive(e), this.GetText(3));
     e
       ? (s.SetColor(UE.Color.FromHex(BLACK_COLOR)), s.SetAnchorOffsetY(30))
       : s.SetAnchorOffsetY(0);
@@ -43,4 +43,4 @@ class SignalDecodeTabItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.SignalDecodeTabItem = SignalDecodeTabItem;
-// # sourceMappingURL=SignalDecodeTabItem.js.map
+//# sourceMappingURL=SignalDecodeTabItem.js.map

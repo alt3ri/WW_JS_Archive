@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowContext = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Pool_1 = require("../../../../Core/Container/Pool");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const CAPACITY = 20;
+const Log_1 = require("../../../../Core/Common/Log"),
+  Pool_1 = require("../../../../Core/Container/Pool"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  CAPACITY = 20;
 class FlowContext {
   constructor() {
     (this.IsServerNotify = !1),
@@ -110,4 +110,4 @@ class FlowContext {
   CAPACITY,
   () => new FlowContext(),
 );
-// # sourceMappingURL=FlowData.js.map
+//# sourceMappingURL=FlowData.js.map

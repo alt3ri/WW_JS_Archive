@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelAiTaskTurnTo = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const AiContollerLibrary_1 = require("../../../AI/Controller/AiContollerLibrary");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LevelAiTask_1 = require("../LevelAiTask");
-const TURN_SPEED = 200;
-const TOLERANCE = 10;
+const Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  AiContollerLibrary_1 = require("../../../AI/Controller/AiContollerLibrary"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LevelAiTask_1 = require("../LevelAiTask"),
+  TURN_SPEED = 200,
+  TOLERANCE = 10;
 class LevelAiTaskTurnTo extends LevelAiTask_1.LevelAiTask {
   constructor() {
     super(...arguments), (this.Tae = void 0), (this.WTe = 0);
   }
   ExecuteTask() {
-    const e = this.Params;
+    var e = this.Params;
     if (!e) return 1;
-    let r = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
+    var r = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
       e.EntityId,
     );
     if (!r)
@@ -56,4 +56,4 @@ class LevelAiTaskTurnTo extends LevelAiTask_1.LevelAiTask {
   }
 }
 exports.LevelAiTaskTurnTo = LevelAiTaskTurnTo;
-// # sourceMappingURL=LevelAiTaskTurnTo.js.map
+//# sourceMappingURL=LevelAiTaskTurnTo.js.map

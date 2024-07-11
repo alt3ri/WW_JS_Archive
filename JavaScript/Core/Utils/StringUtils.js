@@ -16,32 +16,32 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.ONE_STRING =
     exports.ZERO_STRING =
       void 0);
-const StringBuilder_1 = require("./StringBuilder");
-const REG_PATTERN =
-  ((exports.ZERO_STRING = "0"),
-  (exports.ONE_STRING = "1"),
-  (exports.EMPTY_STRING = ""),
-  (exports.LINE_BREAK_STRING = "\n"),
-  (exports.TAB_STRING = "\t"),
-  (exports.SLASH_STRING = "/"),
-  (exports.SPEED_STRING = "/s"),
-  (exports.NONE_STRING = "None"),
-  (exports.EQUAL = "="),
-  (exports.NOT_EQUAL = "!="),
-  (exports.LESS_THAN = "<"),
-  (exports.LESS_EQUAL_THAN = "<="),
-  (exports.GRATHER_THAN = ">"),
-  (exports.GRATHER_EQUAL_THAN = ">="),
-  "{[0-9]+}");
-const REG_FLAGS = "g";
-const UTF8_BOM_HEAD = "\ufeff";
+const StringBuilder_1 = require("./StringBuilder"),
+  REG_PATTERN =
+    ((exports.ZERO_STRING = "0"),
+    (exports.ONE_STRING = "1"),
+    (exports.EMPTY_STRING = ""),
+    (exports.LINE_BREAK_STRING = "\n"),
+    (exports.TAB_STRING = "\t"),
+    (exports.SLASH_STRING = "/"),
+    (exports.SPEED_STRING = "/s"),
+    (exports.NONE_STRING = "None"),
+    (exports.EQUAL = "="),
+    (exports.NOT_EQUAL = "!="),
+    (exports.LESS_THAN = "<"),
+    (exports.LESS_EQUAL_THAN = "<="),
+    (exports.GRATHER_THAN = ">"),
+    (exports.GRATHER_EQUAL_THAN = ">="),
+    "{[0-9]+}"),
+  REG_FLAGS = "g",
+  UTF8_BOM_HEAD = "\ufeff";
 class StringUtils {
   static Format(t, ...r) {
-    let e;
-    const s = new StringBuilder_1.StringBuilder();
+    var e,
+      s = new StringBuilder_1.StringBuilder();
     let o = 0;
-    for (; (e = StringUtils.Fz.exec(t)) !== null; ) {
-      const i = parseInt(e[1]);
+    for (; null !== (e = StringUtils.Fz.exec(t)); ) {
+      var i = parseInt(e[1]);
       s.Append(t.substring(o, e.index)),
         s.Append(r[i] ?? `{${i}}`),
         (o = e.index + e[0].length);
@@ -49,19 +49,19 @@ class StringUtils {
     return s.Append(t.substring(o)), s.ToString();
   }
   static FormatStaticBuilder(t, ...e) {
-    const s = t.split(StringUtils.Vz);
-    const o = this.jz;
+    var s = t.split(StringUtils.Vz),
+      o = this.jz;
     o.Clear();
     for (let t = 0, r = s.length; t < r; ++t)
       o.Append(s[t]), t !== s.length - 1 && o.Append(e[t] ?? `{${t}}`);
     return o.ToString();
   }
   static Uint8ArrayToString(t) {
-    let r;
+    var r;
     let e = void 0;
-    let s;
-    const o = new Array();
-    const i = t.length;
+    var s,
+      o = new Array(),
+      i = t.length;
     let n = 0;
     for (; n < i; )
       switch ((r = t[n++]) >> 4) {
@@ -92,10 +92,10 @@ class StringUtils {
   }
   static GetStringRealCount(r) {
     let e = 0;
-    let s;
-    const o = r.length;
+    var s,
+      o = r.length;
     for (let t = 0; t < o; t++)
-      (s = r.charCodeAt(t)), (e += s >= 0 && s <= 128 ? 1 : 2);
+      (s = r.charCodeAt(t)), (e += 0 <= s && s <= 128 ? 1 : 2);
     return e;
   }
   static IsEmpty(t) {
@@ -109,9 +109,10 @@ class StringUtils {
   }
   static IsIpAddress(t) {
     return (
+      null !==
       t.match(
         /((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])/g,
-      ) !== null
+      )
     );
   }
   static IsBlank(t) {
@@ -121,27 +122,27 @@ class StringUtils {
     return !!StringUtils.IsEmpty(t) || t === exports.NONE_STRING;
   }
   static ParseCsvContent(t) {
-    let r = "";
-    let e = [""];
-    let s;
-    const o = [e];
-    let i = 0;
-    let n = 0;
-    let a = !0;
+    let r = "",
+      e = [""];
+    var s,
+      o = [e];
+    let i = 0,
+      n = 0,
+      a = !0;
     for (s of t.startsWith(UTF8_BOM_HEAD) ? t.replace(/^\ufeff/, "") : t)
-      s === '"'
+      '"' === s
         ? (a && s === r && (e[i] += s), (a = !a))
-        : s === "," && a
+        : "," === s && a
           ? ((e[++i] = ""), (s = ""))
-          : s === "\n" && a
-            ? (r === "\r" && (e[i] = e[i].slice(0, -1)),
+          : "\n" === s && a
+            ? ("\r" === r && (e[i] = e[i].slice(0, -1)),
               (e = [(s = "")]),
               (o[++n] = e),
               (i = 0))
             : (e[i] += s),
         (r = s);
     t = o[o.length - 1];
-    return t.length === 1 && t[0] === "" && o.splice(o.length - 1, 1), o;
+    return 1 === t.length && "" === t[0] && o.splice(o.length - 1, 1), o;
   }
   static CheckIsOnlyLettersAndNumbers(t) {
     return /^[A-Za-z0-9]*$/.test(t);
@@ -150,4 +151,4 @@ class StringUtils {
 ((exports.StringUtils = StringUtils).Vz = new RegExp(REG_PATTERN, REG_FLAGS)),
   (StringUtils.jz = new StringBuilder_1.StringBuilder()),
   (StringUtils.Fz = /\{(\d+)\}/g);
-// # sourceMappingURL=StringUtils.js.map
+//# sourceMappingURL=StringUtils.js.map

@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configLongShanTaskById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const LongShanTask_1 = require("../Config/LongShanTask");
-const DB = "db_activity.db";
-const FILE = "l.龙山主题活动.xlsx";
-const TABLE = "LongShanTask";
-const COMMAND = "select BinData from `LongShanTask` where TaskId=?";
-const KEY_PREFIX = "LongShanTaskById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  LongShanTask_1 = require("../Config/LongShanTask"),
+  DB = "db_activity.db",
+  FILE = "l.龙山主题活动.xlsx",
+  TABLE = "LongShanTask",
+  COMMAND = "select BinData from `LongShanTask` where TaskId=?",
+  KEY_PREFIX = "LongShanTaskById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configLongShanTaskById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configLongShanTaskById.GetConfig(";
 exports.configLongShanTaskById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configLongShanTaskById = {
       if (
         (a =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "TaskId",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "TaskId",
+              o,
+            ]))
       ) {
-        var a;
-        var i = void 0;
+        var a,
+          i = void 0;
         if (
           (([a, i] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configLongShanTaskById = {
     }
   },
 };
-// # sourceMappingURL=LongShanTaskById.js.map
+//# sourceMappingURL=LongShanTaskById.js.map

@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityCollectionData = void 0);
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const PublicUtil_1 = require("../../../../Common/PublicUtil");
-const TimeUtil_1 = require("../../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const ActivityData_1 = require("../../ActivityData");
-const ActivityCollectionController_1 = require("./ActivityCollectionController");
+const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../../../Common/PublicUtil"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  ActivityData_1 = require("../../ActivityData"),
+  ActivityCollectionController_1 = require("./ActivityCollectionController");
 class ActivityCollectionData extends ActivityData_1.ActivityBaseData {
   constructor() {
     super(...arguments),
@@ -20,10 +20,10 @@ class ActivityCollectionData extends ActivityData_1.ActivityBaseData {
       (this.MNe = new Map()),
       (this.SNe = -1),
       (this.ENe = (t, e) => {
-        var i = this.QuestStateMap.get(t.Id);
-        var r = this.QuestStateMap.get(e.Id);
-        var [, , i] = this.yNe(i.QuestState, i.ClaimedReward);
-        var [, , r] = this.yNe(r.QuestState, r.ClaimedReward);
+        var i = this.QuestStateMap.get(t.Id),
+          r = this.QuestStateMap.get(e.Id),
+          [, , i] = this.yNe(i.QuestState, i.ClaimedReward),
+          [, , r] = this.yNe(r.QuestState, r.ClaimedReward);
         return i === r ? t.Id - e.Id : i - r;
       });
   }
@@ -32,10 +32,10 @@ class ActivityCollectionData extends ActivityData_1.ActivityBaseData {
     t = t.M0s?.XCs;
     if (t)
       for (const o of t) {
-        var e;
-        const i = this.MNe.get(o.QCs);
-        let r = this.TaskIdToQuestIdMap.get(o.QCs);
-        const a = this.QuestStateMap.get(r);
+        var e,
+          i = this.MNe.get(o.QCs),
+          r = this.TaskIdToQuestIdMap.get(o.QCs),
+          a = this.QuestStateMap.get(r);
         a &&
           i &&
           ((e = o.ckn === Protocol_1.Aki.Protocol.vBs.Proto_GatherTakeReward),
@@ -60,11 +60,11 @@ class ActivityCollectionData extends ActivityData_1.ActivityBaseData {
   }
   IsHasRewardRedPoint() {
     for (const t of this.QuestStateMap.entries())
-      if (t[1].QuestState === 3 && !t[1].ClaimedReward) return !0;
+      if (3 === t[1].QuestState && !t[1].ClaimedReward) return !0;
     return !1;
   }
   IsHasNewQuestRedDot() {
-    for (const [t] of this.QuestStateMap.entries())
+    for (var [t] of this.QuestStateMap.entries())
       if (
         ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
           this.Id,
@@ -91,15 +91,15 @@ class ActivityCollectionData extends ActivityData_1.ActivityBaseData {
     );
   }
   GetProgressState() {
-    const [t, e] = this.GetCurrentProgress();
+    var [t, e] = this.GetCurrentProgress();
     return t === this.GetTotalProgress() ? 2 : e ? 0 : 1;
   }
   GetCurrentProgress() {
-    let i = 0;
-    let r = !0;
+    let i = 0,
+      r = !0;
     return (
       this.QuestStateMap.forEach((t, e) => {
-        t.QuestState >= 2 && (r = !1), t.QuestState === 3 && i++;
+        2 <= t.QuestState && (r = !1), 3 === t.QuestState && i++;
       }),
       [i, r]
     );
@@ -110,9 +110,9 @@ class ActivityCollectionData extends ActivityData_1.ActivityBaseData {
     return 0;
   }
   GetTotalProgress() {
-    let t;
+    var t;
     return (
-      this.SNe === -1 &&
+      -1 === this.SNe &&
         ((t =
           ConfigManager_1.ConfigManager.ActivityCollectionConfig.GetAllActivityCollectionConfig()),
         (this.SNe = t.length)),
@@ -122,11 +122,11 @@ class ActivityCollectionData extends ActivityData_1.ActivityBaseData {
   RefreshRewardData() {
     let t = 0;
     for (const s of ConfigManager_1.ConfigManager.ActivityCollectionConfig.GetAllActivityCollectionConfig()) {
-      var e;
-      var i;
-      var r;
-      var a;
-      let o = this.MNe.get(s.Id);
+      var e,
+        i,
+        r,
+        a,
+        o = this.MNe.get(s.Id);
       o
         ? ((e = ModelManager_1.ModelManager.QuestNewModel.GetQuestConfig(
             s.PlayTask,
@@ -178,9 +178,9 @@ class ActivityCollectionData extends ActivityData_1.ActivityBaseData {
     return t + e * TimeUtil_1.TimeUtil.OneDaySeconds;
   }
   yNe(t, e) {
-    let i = 0;
-    let r = "";
-    let a = 0;
+    let i = 0,
+      r = "",
+      a = 0;
     switch (t) {
       case 0:
       case 1:
@@ -200,10 +200,12 @@ class ActivityCollectionData extends ActivityData_1.ActivityBaseData {
   }
   INe(t) {
     var t =
-      ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(t)?.DropPreview;
-    const e = [];
+        ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(
+          t,
+        )?.DropPreview,
+      e = [];
     if (t)
-      for (let [i, r] of t) {
+      for (var [i, r] of t) {
         i = [{ IncId: 0, ItemId: i }, r];
         e.push(i);
       }
@@ -211,4 +213,4 @@ class ActivityCollectionData extends ActivityData_1.ActivityBaseData {
   }
 }
 exports.ActivityCollectionData = ActivityCollectionData;
-// # sourceMappingURL=ActivityCollectionData.js.map
+//# sourceMappingURL=ActivityCollectionData.js.map

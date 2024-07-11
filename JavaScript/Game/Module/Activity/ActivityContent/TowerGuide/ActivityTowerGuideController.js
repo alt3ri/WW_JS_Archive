@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityTowerGuideController = void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../../Core/Net/Net");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ActivityControllerBase_1 = require("../../ActivityControllerBase");
-const ActivitySubViewTowerGuide_1 = require("./ActivitySubViewTowerGuide");
-const ActivityTowerGuideData_1 = require("./ActivityTowerGuideData");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ActivityControllerBase_1 = require("../../ActivityControllerBase"),
+  ActivitySubViewTowerGuide_1 = require("./ActivitySubViewTowerGuide"),
+  ActivityTowerGuideData_1 = require("./ActivityTowerGuideData"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
 class ActivityTowerGuideController extends ActivityControllerBase_1.ActivityControllerBase {
   constructor() {
     super(...arguments),
       (this.NFe = (e, t) => {
-        const r = ActivityTowerGuideController.OFe();
+        var r = ActivityTowerGuideController.OFe();
         r && r.RefreshRewardState(t);
       });
   }
@@ -49,7 +49,7 @@ class ActivityTowerGuideController extends ActivityControllerBase_1.ActivityCont
     );
   }
   static RequestTowerReward(e) {
-    const t = new Protocol_1.Aki.Protocol.ucs();
+    var t = new Protocol_1.Aki.Protocol.ucs();
     (t.c3n = e),
       Net_1.Net.Call(12627, t, (e) => {
         e &&
@@ -62,10 +62,10 @@ class ActivityTowerGuideController extends ActivityControllerBase_1.ActivityCont
       });
   }
   static RequestTowerRewardInfo() {
-    const e = new Protocol_1.Aki.Protocol.dcs();
+    var e = new Protocol_1.Aki.Protocol.dcs();
     Net_1.Net.Call(6707, e, (e) => {
       if (e) {
-        const t = ActivityTowerGuideController.OFe();
+        var t = ActivityTowerGuideController.OFe();
         if (t) for (const r of e.c3n) t.SetRewardClaimed(r, !0);
       }
     });
@@ -73,4 +73,4 @@ class ActivityTowerGuideController extends ActivityControllerBase_1.ActivityCont
 }
 (exports.ActivityTowerGuideController =
   ActivityTowerGuideController).CurrentActivityId = 0;
-// # sourceMappingURL=ActivityTowerGuideController.js.map
+//# sourceMappingURL=ActivityTowerGuideController.js.map

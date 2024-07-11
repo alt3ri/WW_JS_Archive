@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BossRushMainView = void 0);
-const UE = require("ue");
-const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const CommonTabComponentData_1 = require("../../../Common/TabComponent/CommonTabComponentData");
-const CommonTabData_1 = require("../../../Common/TabComponent/CommonTabData");
-const TabComponentWithCaptionItem_1 = require("../../../Common/TabComponent/TabComponentWithCaptionItem");
-const CommonTabItem_1 = require("../../../Common/TabComponent/TabItem/CommonTabItem");
-const TabViewComponent_1 = require("../../../Common/TabComponent/TabViewComponent");
+const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  CommonTabComponentData_1 = require("../../../Common/TabComponent/CommonTabComponentData"),
+  CommonTabData_1 = require("../../../Common/TabComponent/CommonTabData"),
+  TabComponentWithCaptionItem_1 = require("../../../Common/TabComponent/TabComponentWithCaptionItem"),
+  CommonTabItem_1 = require("../../../Common/TabComponent/TabItem/CommonTabItem"),
+  TabViewComponent_1 = require("../../../Common/TabComponent/TabViewComponent");
 class BossRushMainView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -28,15 +28,15 @@ class BossRushMainView extends UiViewBase_1.UiViewBase {
       }),
       (this.pqe = (e) => {
         this.q8i = e;
-        const t = this.upt[e];
-        const i = t.ChildViewName;
-        var e = this.TabComponent.GetTabItemByIndex(e);
+        var t = this.upt[e],
+          i = t.ChildViewName,
+          e = this.TabComponent.GetTabItemByIndex(e);
         this.TabViewComponent.ToggleCallBack(t, i, e);
       }),
       (this.yqe = (e) => new CommonTabData_1.CommonTabData("", void 0)),
       (this.W9t = () => {
-        let e;
-        this.q8i !== 0
+        var e;
+        0 !== this.q8i
           ? ((e = this.upt[this.q8i - 1].ChildViewName),
             (ModelManager_1.ModelManager.BossRushModel.PlayBackAnimation = !0),
             this.nPr(e))
@@ -77,7 +77,7 @@ class BossRushMainView extends UiViewBase_1.UiViewBase {
     this.TabComponent.SelectToggleByIndex(0, !0);
   }
   async aPr() {
-    const e = new CommonTabComponentData_1.CommonTabComponentData(
+    var e = new CommonTabComponentData_1.CommonTabComponentData(
       this.fqe,
       this.pqe,
       this.yqe,
@@ -108,4 +108,4 @@ class BossRushMainView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.BossRushMainView = BossRushMainView;
-// # sourceMappingURL=BossRushMainView.js.map
+//# sourceMappingURL=BossRushMainView.js.map

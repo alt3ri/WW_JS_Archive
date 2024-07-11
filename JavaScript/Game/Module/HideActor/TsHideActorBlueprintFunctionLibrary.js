@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const HideActorController_1 = require("./HideActorController");
+const UE = require("ue"),
+  HideActorController_1 = require("./HideActorController");
 class TsHideActorBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static HideMesh() {
     HideActorController_1.HideActorController.HideMesh();
@@ -17,4 +17,4 @@ class TsHideActorBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
 }
 exports.default = TsHideActorBlueprintFunctionLibrary;
-// # sourceMappingURL=TsHideActorBlueprintFunctionLibrary.js.map
+//# sourceMappingURL=TsHideActorBlueprintFunctionLibrary.js.map

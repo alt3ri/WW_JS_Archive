@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TemporaryTeleportMarkItemView = void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController");
-const ServerMarkItemView_1 = require("./ServerMarkItemView");
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
+  ServerMarkItemView_1 = require("./ServerMarkItemView");
 class TemporaryTeleportMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
   constructor(e) {
     super(e);
@@ -27,4 +27,4 @@ class TemporaryTeleportMarkItemView extends ServerMarkItemView_1.ServerMarkItemV
   }
 }
 exports.TemporaryTeleportMarkItemView = TemporaryTeleportMarkItemView;
-// # sourceMappingURL=TemporaryTeleportMarkItemView.js.map
+//# sourceMappingURL=TemporaryTeleportMarkItemView.js.map

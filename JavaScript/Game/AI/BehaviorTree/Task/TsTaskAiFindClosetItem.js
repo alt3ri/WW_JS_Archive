@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const GlobalData_1 = require("../../../GlobalData");
-const AiInteractionItemQueryManager_1 = require("../../../NewWorld/SceneItem/AiInteraction/AiInteractionItemQueryManager");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  GlobalData_1 = require("../../../GlobalData"),
+  AiInteractionItemQueryManager_1 = require("../../../NewWorld/SceneItem/AiInteraction/AiInteractionItemQueryManager"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskAiFindClosetItem extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -36,7 +36,7 @@ class TsTaskAiFindClosetItem extends TsTaskAbortImmediatelyBase_1.default {
         (this.TsSearchFilterIsMarkByAi = this.SearchFilterIsMarkByAi),
         (this.TsFilter =
           new AiInteractionItemQueryManager_1.AiInteractionSearchFilter()),
-        this.Tag?.Num() === 0)
+        0 === this.Tag?.Num())
       )
         this.TsFilter.Tag = void 0;
       else
@@ -47,8 +47,8 @@ class TsTaskAiFindClosetItem extends TsTaskAbortImmediatelyBase_1.default {
     }
   }
   ReceiveExecuteAI(t, e) {
-    let i;
-    let s = t.AiController;
+    var i,
+      s = t.AiController;
     s
       ? (this.InitTsVariables(),
         (s = s.CharActorComp),
@@ -93,4 +93,4 @@ class TsTaskAiFindClosetItem extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskAiFindClosetItem;
-// # sourceMappingURL=TsTaskAiFindClosetItem.js.map
+//# sourceMappingURL=TsTaskAiFindClosetItem.js.map

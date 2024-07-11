@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiViewStackContainer = void 0);
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const DoublyList_1 = require("../../../Core/Container/DoublyList");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const BlackScreenController_1 = require("../../Module/BlackScreen/BlackScreenController");
-const UiCameraAnimationController_1 = require("../../Module/UiCameraAnimation/UiCameraAnimationController");
-const UiViewPending_1 = require("../Base/UiViewPending");
-const UiManager_1 = require("../UiManager");
-const UiModel_1 = require("../UiModel");
-const UiViewContainer_1 = require("./UiViewContainer");
+const CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  DoublyList_1 = require("../../../Core/Container/DoublyList"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  BlackScreenController_1 = require("../../Module/BlackScreen/BlackScreenController"),
+  UiCameraAnimationController_1 = require("../../Module/UiCameraAnimation/UiCameraAnimationController"),
+  UiViewPending_1 = require("../Base/UiViewPending"),
+  UiManager_1 = require("../UiManager"),
+  UiModel_1 = require("../UiModel"),
+  UiViewContainer_1 = require("./UiViewContainer");
 class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
   constructor(e) {
     super(),
@@ -36,14 +36,14 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
   }
   Kur(e) {
     this.v9.Push(e);
-    const i = e.Info.Name;
+    var i = e.Info.Name;
     let t = this.Fur.get(i);
     t || ((t = new Set()), this.Fur.set(i, t)), t.add(e);
   }
   Qur() {
-    let e;
-    let i;
-    const t = this.v9.Pop();
+    var e,
+      i,
+      t = this.v9.Pop();
     if (void 0 !== t)
       return (
         (e = t.Info.Name),
@@ -54,15 +54,15 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
       );
   }
   yur(e) {
-    const i = e.Info.Name;
-    const t = this.Fur.get(i);
+    var i = e.Info.Name,
+      t = this.Fur.get(i);
     return (
       t && (t.delete(e), t.size <= 0) && this.Fur.delete(i), this.v9.Delete(e)
     );
   }
   async Wur() {
     if (this.Vur.length) {
-      const e = this.Vur.shift();
+      var e = this.Vur.shift();
       switch (
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -94,7 +94,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
   async OpenViewAsync(e) {
     if (this.RHt) this.Xur(e, 1);
     else {
-      const i = this.v9.Peek();
+      var i = this.v9.Peek();
       if (e.IsQueueView) {
         if (i?.IsQueueView) return this.$ur(e), void this.Wur();
         if (UiModel_1.UiModel.InNormalQueue)
@@ -133,7 +133,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
   async OpenViewAfterPreOpenedAsync(e) {
     if (this.RHt) this.Xur(e, 0);
     else {
-      const i = this.v9.Peek();
+      var i = this.v9.Peek();
       if (e.IsQueueView) {
         if (i?.IsQueueView) return void this.$ur(e);
         if (UiModel_1.UiModel.InNormalQueue) return void this.$ur(e);
@@ -178,21 +178,23 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
         e.Info.Name,
         e.GetViewId(),
       );
-    var t = i?.Info.ScenePath;
-    var t =
-      (t &&
-        e.Info.ScenePath === t &&
-        ((e.SkipLoadScene = !0),
-        (e.SceneLoaded = !0),
-        (i.SkipReleaseScene = !0)),
-      e.WillLoadScene());
-    var t =
-      (t &&
-        (await BlackScreenController_1.BlackScreenController.AddBlackScreenAsync(
-          "Start",
+    var t = i?.Info.ScenePath,
+      t =
+        (t &&
+          e.Info.ScenePath === t &&
+          ((e.SkipLoadScene = !0),
+          (e.SceneLoaded = !0),
+          (i.SkipReleaseScene = !0)),
+        e.WillLoadScene()),
+      t =
+        (t &&
+          (await BlackScreenController_1.BlackScreenController.AddBlackScreenAsync(
+            "Start",
+            e.Info.Name,
+          )),
+        ConfigManager_1.ConfigManager.UiViewConfig.GetUiShowConfig(
           e.Info.Name,
-        )),
-      ConfigManager_1.ConfigManager.UiViewConfig.GetUiShowConfig(e.Info.Name));
+        ));
     t.StartBlackScreen &&
       !StringUtils_1.StringUtils.IsBlank(t.StartBlackScreen.ShowAnimName) &&
       (await BlackScreenController_1.BlackScreenController.AddBlackScreenAsync(
@@ -266,9 +268,9 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
           );
   }
   async Jur() {
-    let e;
+    var e;
     this.UHt(),
-      this.jur.size > 0
+      0 < this.jur.size
         ? ((e = this.Hur.GetHeadNode().Next),
           this.Kur(e.Element),
           Log_1.Log.CheckInfo() &&
@@ -307,13 +309,13 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
   async ResetToViewAsync(e) {
     if (this.RHt) this.Xur(e, 4);
     else {
-      for (const a of this.Vur) a.PendingType === 1 && a.View.Destroy();
+      for (const a of this.Vur) 1 === a.PendingType && a.View.Destroy();
       if (((this.Vur.length = 0), UiModel_1.UiModel.InNormalQueue))
         this.Xur(e, 4);
       else {
         this.UHt();
-        for (let i = e.Info.Name, t = void 0; this.v9.Size > 0; ) {
-          let o = this.v9.Peek();
+        for (var i = e.Info.Name, t = void 0; 0 < this.v9.Size; ) {
+          var o = this.v9.Peek();
           if (i === o.Info.Name) break;
           (t = o).IsShowOrShowing
             ? await this.Cfi(t)
@@ -330,7 +332,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
         }
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("UiCore", 17, "ResetToViewAsync 清栈"),
-          e.Info.Name === "BattleView" &&
+          "BattleView" === e.Info.Name &&
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ResetModuleByResetToBattleView,
             ),
@@ -345,11 +347,11 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
     }
   }
   async Cfi(i, e = !1) {
-    var t = this.jur.get(i);
-    var t =
-      (t && this.zur(t),
-      this.Vur.findIndex((e) => e.View === i && e.PendingType === 1));
-    t >= 0 && this.Vur.splice(t, 1);
+    var t = this.jur.get(i),
+      t =
+        (t && this.zur(t),
+        this.Vur.findIndex((e) => e.View === i && 1 === e.PendingType));
+    0 <= t && this.Vur.splice(t, 1);
     let o = !0;
     if (i === this.v9.Peek()) {
       this.Qur();
@@ -364,44 +366,44 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
         i.Info.ScenePath === t &&
         ((i.SkipReleaseScene = !0), (r.SkipLoadScene = !0));
       const s = ConfigManager_1.ConfigManager.UiViewConfig.GetUiShowConfig(
-        i.Info.Name,
-      );
-      const n = r?.WillLoadScene();
-      const _ = i.WillReleaseScene();
-      const h =
-        s.CloseBlackScreen &&
-        !StringUtils_1.StringUtils.IsBlank(s.CloseBlackScreen.ShowAnimName);
+          i.Info.Name,
+        ),
+        n = r?.WillLoadScene(),
+        _ = i.WillReleaseScene(),
+        h =
+          s.CloseBlackScreen &&
+          !StringUtils_1.StringUtils.IsBlank(s.CloseBlackScreen.ShowAnimName);
       const l = async () => {
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("UiCore", 17, "CloseViewImplement 界面Destroy", [
-            "ViewName",
-            i.Info?.Name,
-          ]),
-          await i.DestroyAsync();
-      };
-      const w = async () => {
-        i.IsShowOrShowing &&
-          ((i.LastHide = !0),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("UiCore", 17, "CloseViewImplement 界面Hide", [
+            Log_1.Log.Info("UiCore", 17, "CloseViewImplement 界面Destroy", [
               "ViewName",
               i.Info?.Name,
             ]),
-          await i.HideAsync());
-      };
+            await i.DestroyAsync();
+        },
+        w = async () => {
+          i.IsShowOrShowing &&
+            ((i.LastHide = !0),
+            Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info("UiCore", 17, "CloseViewImplement 界面Hide", [
+                "ViewName",
+                i.Info?.Name,
+              ]),
+            await i.HideAsync());
+        };
       var t = async () => {
-        await w(), await l();
-      };
-      const a = async () => {
-        e &&
-          r &&
-          (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("UiCore", 17, "CloseViewImplement 下个界面Show", [
-              "NextViewName",
-              r.Info?.Name,
-            ]),
-          await r.ShowAsync());
-      };
+          await w(), await l();
+        },
+        a = async () => {
+          e &&
+            r &&
+            (Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info("UiCore", 17, "CloseViewImplement 下个界面Show", [
+                "NextViewName",
+                r.Info?.Name,
+              ]),
+            await r.ShowAsync());
+        };
       n || _ || h
         ? e
           ? (await Promise.all([
@@ -557,11 +559,11 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
   }
   async CloseHistoryRingViewAsync(e) {
     if (this.Zur(e)) {
-      const i = new Array();
+      var i = new Array();
       let e = 0;
-      const t = [];
+      var t = [];
       for (const o of this.v9)
-        e === 0 || e === this.v9.Size - 1 || t.push(o), e++;
+        0 === e || e === this.v9.Size - 1 || t.push(o), e++;
       for (const a of t) i.push(this.CloseViewAsync(a));
       await Promise.all(i);
     }
@@ -570,9 +572,9 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
     return this.Fur.has(e);
   }
   ClearContainer() {
-    const e = [];
+    var e = [];
     for (const o of this.jur.values()) {
-      const i = o.Element;
+      var i = o.Element;
       (i.IsExistInLeaveLevel = !0),
         i.Info.IsPermanent ||
           (this.TryCatchViewDestroyCompatible(i),
@@ -580,8 +582,8 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
           e.push(i));
     }
     for (const a of e) this.jur.delete(a);
-    for (let e = this.Vur.length - 1; e >= 0; --e) {
-      const t = this.Vur[e].View;
+    for (let e = this.Vur.length - 1; 0 <= e; --e) {
+      var t = this.Vur[e].View;
       (t.IsExistInLeaveLevel = !0),
         t.Info.IsPermanent ||
           (this.TryCatchViewDestroyCompatible(t), this.Vur.pop());
@@ -596,9 +598,9 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
       Log_1.Log.Info("UiCore", 17, "ClearContainer 清栈");
   }
   Xur(e, i) {
-    const t = new UiViewPending_1.UiViewPending(e, i);
-    if (this.Vur.length > 0) {
-      const o = this.Vur[this.Vur.length - 1];
+    var t = new UiViewPending_1.UiViewPending(e, i);
+    if (0 < this.Vur.length) {
+      var o = this.Vur[this.Vur.length - 1];
       if (o.Equal(t))
         return void (
           Log_1.Log.CheckWarn() &&
@@ -632,7 +634,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
   }
   zur(e) {
     e &&
-      (this.Hur.Remove(e), this.jur.delete(e.Element), this.jur.size === 0) &&
+      (this.Hur.Remove(e), this.jur.delete(e.Element), 0 === this.jur.size) &&
       ((UiModel_1.UiModel.InNormalQueue = !1),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.ExitNormalQueueState,
@@ -640,7 +642,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
   }
   $ur(i) {
     let e = void 0;
-    const t = this.Hur.Find(
+    var t = this.Hur.Find(
       (e) => !e.Element || i.Info.SortIndex < e.Element.Info.SortIndex,
     );
     (e = t.Pre ? this.Hur.Insert(i, t.Pre) : this.Hur.AddTail(i)),
@@ -654,4 +656,4 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
   }
 }
 exports.UiViewStackContainer = UiViewStackContainer;
-// # sourceMappingURL=UiViewStackContainer.js.map
+//# sourceMappingURL=UiViewStackContainer.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MapResourceMgr = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../../../Core/Common/CustomPromise");
-const ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem");
-const StringUtils_1 = require("../../../../../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
-const FAKE_TILE_COUNT = 2;
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../../Core/Common/CustomPromise"),
+  ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem"),
+  StringUtils_1 = require("../../../../../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  FAKE_TILE_COUNT = 2;
 class MapResourceMgr {
   constructor() {
     (this.ARi = new Array()),
@@ -32,10 +32,10 @@ class MapResourceMgr {
     );
   }
   async PreloadMapAssets() {
-    let t;
-    let s;
-    let i;
-    let e = ConfigManager_1.ConfigManager.MapConfig.GetAllTileConfig();
+    var t,
+      s,
+      i,
+      e = ConfigManager_1.ConfigManager.MapConfig.GetAllTileConfig();
     this.ARi.splice(0, this.ARi.length);
     for (const l of e)
       StringUtils_1.StringUtils.IsEmpty(l.MapTilePath) ||
@@ -47,15 +47,15 @@ class MapResourceMgr {
           l.FogTilePath,
         )),
         this.ARi.push({ MapTilePath: s, FogTilePath: i, MapTileName: t }));
-    let r = 0;
-    let o = 0;
-    if (((this.xRi = { MaxX: -1, MinX: 1, MaxY: -1, MinY: 1 }), this.PRi === 1))
+    let r = 0,
+      o = 0;
+    if (((this.xRi = { MaxX: -1, MinX: 1, MaxY: -1, MinY: 1 }), 1 === this.PRi))
       r = 4;
     else {
       for (const c of this.ARi) {
-        var a = this.bRi(c.MapTileName);
-        const h = a.X;
-        var a = a.Y;
+        var a = this.bRi(c.MapTileName),
+          h = a.X,
+          a = a.Y;
         (this.xRi.MaxX = Math.max(h, this.xRi.MaxX)),
           (this.xRi.MinX = Math.min(h, this.xRi.MinX)),
           (this.xRi.MaxY = Math.max(a, this.xRi.MaxY)),
@@ -65,17 +65,17 @@ class MapResourceMgr {
       e = this.xRi.MaxY - this.xRi.MinY + 1 + 2 * FAKE_TILE_COUNT;
       r = o * e;
     }
-    const n = new Map();
+    var n = new Map();
     for (const C of this.ARi) {
-      const _ = this.bRi(C.MapTileName);
+      var _ = this.bRi(C.MapTileName);
       n.set(_.X + "_" + _.Y, C);
     }
-    const M = [];
+    var M = [];
     for (let t = 0; t < r; t++) {
-      var u = Math.ceil((t + 1) / o);
-      var g = t - (u - 1) * o + this.xRi.MinX - FAKE_TILE_COUNT;
-      var u = -(u - 1) + this.xRi.MaxY + FAKE_TILE_COUNT;
-      var g = n.get(g + "_" + u);
+      var u = Math.ceil((t + 1) / o),
+        g = t - (u - 1) * o + this.xRi.MinX - FAKE_TILE_COUNT,
+        u = -(u - 1) + this.xRi.MaxY + FAKE_TILE_COUNT,
+        g = n.get(g + "_" + u);
       g &&
         (StringUtils_1.StringUtils.IsEmpty(g.MapTilePath) ||
           M.push(this.BRi(g.MapTilePath)),
@@ -98,4 +98,4 @@ class MapResourceMgr {
   }
 }
 exports.MapResourceMgr = MapResourceMgr;
-// # sourceMappingURL=MapResourceMgr.js.map
+//# sourceMappingURL=MapResourceMgr.js.map

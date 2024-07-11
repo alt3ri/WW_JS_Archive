@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GenericLayoutAdd = void 0);
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const LguiUtil_1 = require("./LguiUtil");
+const ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  LguiUtil_1 = require("./LguiUtil");
 class GenericLayoutAdd {
   constructor(t, e) {
     (this.$bo = void 0),
@@ -17,9 +17,9 @@ class GenericLayoutAdd {
   }
   Zbo() {
     if (this.$bo) {
-      const i = this.eqo().GetAttachUIChildren();
+      var i = this.eqo().GetAttachUIChildren();
       for (let t = 0, e = i.Num(); t < e; ++t) {
-        const o = i.Get(t);
+        var o = i.Get(t);
         o.SetUIActive(!1), this.Jbo.set(t, o);
       }
     }
@@ -28,14 +28,14 @@ class GenericLayoutAdd {
     return this.$bo.GetRootComponent();
   }
   AddItemToLayout(o, r = 0) {
-    const s = this.Jbo.get(r);
+    var s = this.Jbo.get(r);
     if (s) {
       s.SetUIActive(!0);
       let i = this.AQ.get(r);
       i || ((i = new Map()), this.AQ.set(r, i));
       for (let t = 0, e = o.length; t < e; ++t) {
-        const h = LguiUtil_1.LguiUtil.CopyItem(s, this.eqo());
-        const a = this.Ybo(o[t], h, t, r);
+        var h = LguiUtil_1.LguiUtil.CopyItem(s, this.eqo()),
+          a = this.Ybo(o[t], h, t, r);
         i.set(a.Key, a.Value), this.zbo.push(h);
       }
       s.SetUIActive(!1);
@@ -62,4 +62,4 @@ class GenericLayoutAdd {
   }
 }
 exports.GenericLayoutAdd = GenericLayoutAdd;
-// # sourceMappingURL=GenericLayoutAdd.js.map
+//# sourceMappingURL=GenericLayoutAdd.js.map

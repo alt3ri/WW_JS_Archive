@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LinkingEmptyToggle = void 0);
-const UE = require("ue");
-const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const IAction_1 = require("../../../../UniverseEditor/Interface/IAction");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const LongPressButtonItem_1 = require("../../../Module/Common/Button/LongPressButtonItem");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const SignalDeviceController_1 = require("../SignalDeviceController");
-const SignalDeviceModel_1 = require("../SignalDeviceModel");
-const LinkingDotItem_1 = require("./LinkingDotItem");
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  IAction_1 = require("../../../../UniverseEditor/Interface/IAction"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  LongPressButtonItem_1 = require("../../../Module/Common/Button/LongPressButtonItem"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  SignalDeviceController_1 = require("../SignalDeviceController"),
+  SignalDeviceModel_1 = require("../SignalDeviceModel"),
+  LinkingDotItem_1 = require("./LinkingDotItem");
 class LinkingEmptyToggle extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -136,9 +136,9 @@ class LinkingEmptyToggle extends UiPanelBase_1.UiPanelBase {
     this.KAe.Destroy(),
       (this.KAe = i),
       this.KAe.CreateThenShowByActor(e.GetOwner()),
-      i.LineType === 3
-        ? this.KAe.InitIcon(Math.abs(this.FromIndex - t) === 2 ? 1 : 4, !1)
-        : i.LineType === 4 &&
+      3 === i.LineType
+        ? this.KAe.InitIcon(2 === Math.abs(this.FromIndex - t) ? 1 : 4, !1)
+        : 4 === i.LineType &&
           (this.FromIndex - t == 2 * -SignalDeviceModel_1.ROWNUM
             ? this.KAe.InitIcon(this.IsFromDot ? 4 : 3, !1)
             : this.FromIndex - t == 2 * SignalDeviceModel_1.ROWNUM
@@ -151,7 +151,7 @@ class LinkingEmptyToggle extends UiPanelBase_1.UiPanelBase {
     this.KAe.Destroy(), (this.KAe = void 0);
   }
   SetLineHalf() {
-    const e = ModelManager_1.ModelManager.SignalDeviceModel.NeighboringType(
+    var e = ModelManager_1.ModelManager.SignalDeviceModel.NeighboringType(
       this.FromIndex,
       this.Xy,
     );
@@ -162,7 +162,7 @@ class LinkingEmptyToggle extends UiPanelBase_1.UiPanelBase {
       (this.KAe = i),
       this.KAe.CreateThenShowByActor(e.GetOwner());
     (e = t - this.FromIndex), (s -= t);
-    i.LineType === 2 || i.LineType === 0
+    2 === i.LineType || 0 === i.LineType
       ? e * s == -SignalDeviceModel_1.ROWNUM
         ? this.KAe.InitIcon(e < s ? 1 : 2)
         : this.KAe.InitIcon(e < s ? 3 : 4)
@@ -175,4 +175,4 @@ class LinkingEmptyToggle extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.LinkingEmptyToggle = LinkingEmptyToggle;
-// # sourceMappingURL=LinkingEmptyToggle.js.map
+//# sourceMappingURL=LinkingEmptyToggle.js.map

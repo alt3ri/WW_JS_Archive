@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletMoveInfo = void 0);
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Transform_1 = require("../../../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const BulletTraceElementPool_1 = require("./BulletTraceElementPool");
+const Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Transform_1 = require("../../../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  BulletTraceElementPool_1 = require("./BulletTraceElementPool");
 class BulletMoveInfo {
   constructor() {
     (this.SocketTransform = Transform_1.Transform.Create()),
@@ -71,4 +71,4 @@ class BulletMoveInfo {
 ((exports.BulletMoveInfo = BulletMoveInfo).TempTransform1 =
   Transform_1.Transform.Create()),
   (BulletMoveInfo.StickGroundLineTrace = void 0);
-// # sourceMappingURL=BulletMoveInfo.js.map
+//# sourceMappingURL=BulletMoveInfo.js.map

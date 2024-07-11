@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SignalItem = void 0);
-const UE = require("ue");
-const MathCommon_1 = require("../../../../../Core/Utils/Math/MathCommon");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const SignalItemBase_1 = require("./SignalItemBase");
-const NIAGARA_PARAM_NAME = "Dissolve";
-const NIAGARA_YELLOW_COLOR = "FFFBE8FF";
-const NIAGARA_RED_COLOR = "FFD6D6FF";
-const NIAGARA_GREEN_COLOR = "E0FCDEFF";
-const NIAGARA_ORANGE_COLOR = "FFBCA4FF";
+const UE = require("ue"),
+  MathCommon_1 = require("../../../../../Core/Utils/Math/MathCommon"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  SignalItemBase_1 = require("./SignalItemBase"),
+  NIAGARA_PARAM_NAME = "Dissolve",
+  NIAGARA_YELLOW_COLOR = "FFFBE8FF",
+  NIAGARA_RED_COLOR = "FFD6D6FF",
+  NIAGARA_GREEN_COLOR = "E0FCDEFF",
+  NIAGARA_ORANGE_COLOR = "FFBCA4FF";
 class SignalItem extends SignalItemBase_1.SignalItemBase {
   constructor() {
     super(...arguments),
@@ -62,13 +62,13 @@ class SignalItem extends SignalItemBase_1.SignalItemBase {
       this.ngo.SetAlpha(1),
       this.ngo.SetUIActive(!0),
       this.pMo.SetFillAmount(0);
-    const t = ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType;
-    let i = t === 2 ? this.yMo : this.EMo;
-    t === 3 && ((i = this.xxn), this.ngo.SetColor(i)),
+    var t = ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType;
+    let i = 2 === t ? this.yMo : this.EMo;
+    3 === t && ((i = this.xxn), this.ngo.SetColor(i)),
       this.pMo.SetColor(i),
       this.ngo.SetAlpha(1),
       this.pMo.SetUIActive(!1),
-      this.vMo?.SetUIActive(t === 1),
+      this.vMo?.SetUIActive(1 === t),
       this.vMo.SetUIItemScale(Vector_1.Vector.OneVector),
       this.vMo.SetAlpha(1),
       this.MMo.SetNiagaraVarFloat(NIAGARA_PARAM_NAME, 1),
@@ -82,28 +82,28 @@ class SignalItem extends SignalItemBase_1.SignalItemBase {
   InitByGameplayType(t) {
     super.InitByGameplayType(t);
     let i =
-      t === 2 ? "SP_SignalNoteSolidLineGreen" : "SP_SignalNoteSolidLineYellow";
-    t === 3 && (i = "SP_SignalNoteSolidLineOrange");
+      2 === t ? "SP_SignalNoteSolidLineGreen" : "SP_SignalNoteSolidLineYellow";
+    3 === t && (i = "SP_SignalNoteSolidLineOrange");
     t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(i);
     this.SetSpriteByPath(t, this.SMo, !1), this.Reset();
   }
   TMo() {
     let t =
-      this.GameplayType === 2 ? NIAGARA_GREEN_COLOR : NIAGARA_YELLOW_COLOR;
-    this.GameplayType === 3 && (t = NIAGARA_ORANGE_COLOR),
+      2 === this.GameplayType ? NIAGARA_GREEN_COLOR : NIAGARA_YELLOW_COLOR;
+    3 === this.GameplayType && (t = NIAGARA_ORANGE_COLOR),
       this.MMo.SetColor(UE.Color.FromHex(t));
   }
   OnUpdate() {
-    super.OnUpdate(), this.UpdateState(), this.ac === 1 && this.LMo();
+    super.OnUpdate(), this.UpdateState(), 1 === this.ac && this.LMo();
   }
   UpdateState() {
-    let t = -this.StartDecisionSize / 2;
+    var t = -this.StartDecisionSize / 2;
     this.CurrentRelativeX < t
       ? this.qxt(0)
       : ((this.EndDecisionSize / 2 < this.CurrentRelativeX - this.Width &&
-          this.ac !== 2) ||
+          2 !== this.ac) ||
           ((t = this.StartDecisionSize / 2),
-          this.CurrentRelativeX > t && this.ac === 0)) &&
+          this.CurrentRelativeX > t && 0 === this.ac)) &&
         this.qxt(3);
   }
   qxt(t) {
@@ -128,7 +128,7 @@ class SignalItem extends SignalItemBase_1.SignalItemBase {
       }
   }
   LMo() {
-    const t = this.GetProgress();
+    var t = this.GetProgress();
     this.MMo.SetNiagaraVarFloat(NIAGARA_PARAM_NAME, 1 - t),
       this.pMo.SetUIActive(!0),
       this.ngo.SetFillAmount(1 - t),
@@ -144,8 +144,8 @@ class SignalItem extends SignalItemBase_1.SignalItemBase {
           this.pMo.SetColor(this.IMo),
             this.MMo.SetColor(UE.Color.FromHex(NIAGARA_RED_COLOR));
         else if (
-          ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType ===
-          2
+          2 ===
+          ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType
         ) {
           this.DMo();
           break;
@@ -162,27 +162,27 @@ class SignalItem extends SignalItemBase_1.SignalItemBase {
       this.SMo.SetAlpha(0);
   }
   OnCatchBtnDown() {
-    super.OnCatchBtnDown(), this.ac === 0 && this.RMo() && this.qxt(1);
+    super.OnCatchBtnDown(), 0 === this.ac && this.RMo() && this.qxt(1);
   }
   OnCatchBtnUp() {
-    let t;
+    var t;
     super.OnCatchBtnUp(),
-      this.ac === 1 && ((t = this.UMo()), this.qxt(t ? 2 : 3));
+      1 === this.ac && ((t = this.UMo()), this.qxt(t ? 2 : 3));
   }
   RMo() {
-    const t = -this.StartDecisionSize / 2;
-    const i = this.StartDecisionSize / 2;
+    var t = -this.StartDecisionSize / 2,
+      i = this.StartDecisionSize / 2;
     return this.RelativeXWhenCatchDown > t && this.RelativeXWhenCatchDown < i;
   }
   UMo() {
-    const t = this.EndDecisionSize / 2;
-    const i = -this.EndDecisionSize / 2;
-    const e = this.RelativeXWhenCatchUp - this.Width;
+    var t = this.EndDecisionSize / 2,
+      i = -this.EndDecisionSize / 2,
+      e = this.RelativeXWhenCatchUp - this.Width;
     return i < e && e < t;
   }
   GetProgress() {
-    var t = -this.DecisionShowSize / 2;
-    var t = this.CurrentRelativeX - t;
+    var t = -this.DecisionShowSize / 2,
+      t = this.CurrentRelativeX - t;
     return MathCommon_1.MathCommon.Clamp(t / this.Width, 0, 1);
   }
   GetCompleteness() {
@@ -208,9 +208,9 @@ class SignalItem extends SignalItemBase_1.SignalItemBase {
       this.SMo.SetAlpha(1);
   }
   TestCanBtnDown() {
-    let t, i;
+    var t, i;
     return (
-      this.ac === 0 &&
+      0 === this.ac &&
       ((t = -this.StartDecisionSize / 2),
       (i = this.StartDecisionSize / 2),
       this.CurrentRelativeX > t) &&
@@ -218,9 +218,9 @@ class SignalItem extends SignalItemBase_1.SignalItemBase {
     );
   }
   TestCanBtnUp() {
-    let t, i;
+    var t, i;
     return (
-      this.ac === 1 &&
+      1 === this.ac &&
       ((t = this.EndDecisionSize / 2),
       -this.EndDecisionSize / 2 < (i = this.CurrentRelativeX - this.Width)) &&
       i < t
@@ -228,4 +228,4 @@ class SignalItem extends SignalItemBase_1.SignalItemBase {
   }
 }
 exports.SignalItem = SignalItem;
-// # sourceMappingURL=SignalItem.js.map
+//# sourceMappingURL=SignalItem.js.map

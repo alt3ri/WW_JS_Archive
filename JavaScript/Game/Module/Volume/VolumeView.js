@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VolumeView = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const AudioController_1 = require("../../../Core/Audio/AudioController");
-const Log_1 = require("../../../Core/Common/Log");
-const Global_1 = require("../../Global");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const Vocal_Audio_Bus_Volume = new UE.FName("Vocal_Audio_Bus_Volume");
-const Music_Audio_Bus_Volume = new UE.FName("Music_Audio_Bus_Volume");
-const SFX_Audio_Bus_Volume = new UE.FName("SFX_Audio_Bus_Volume");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  AudioController_1 = require("../../../Core/Audio/AudioController"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Global_1 = require("../../Global"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  Vocal_Audio_Bus_Volume = new UE.FName("Vocal_Audio_Bus_Volume"),
+  Music_Audio_Bus_Volume = new UE.FName("Music_Audio_Bus_Volume"),
+  SFX_Audio_Bus_Volume = new UE.FName("SFX_Audio_Bus_Volume");
 class VolumeView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -122,7 +122,7 @@ class VolumeView extends UiViewBase_1.UiViewBase {
       this.GetSlider(3).SetValue(this.tNo);
   }
   pNo() {
-    let i;
+    var i;
     this.dNo < this.vNo.Num()
       ? ((i = this.vNo.Get(this.dNo)),
         (i = this.SNo(i)),
@@ -143,15 +143,15 @@ class VolumeView extends UiViewBase_1.UiViewBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Audio", 22, "当前播放音频路径", ["name", i]),
       AudioController_1.AudioController.GetAudioEvent(i, !1)
-        ? (AudioController_1.AudioController.PlayAudioByEventPath(i, t) === 0 &&
+        ? (0 === AudioController_1.AudioController.PlayAudioByEventPath(i, t) &&
             (Log_1.Log.CheckError() &&
               Log_1.Log.Error("Audio", 22, "音频播放失败!!!", ["name", i]),
             this.CNo++),
           AudioController_1.AudioController.StopAudio(t),
           this.pNo())
         : AudioController_1.AudioController.LoadAndAddCallback(i, () => {
-            AudioController_1.AudioController.PlayAudioByEventPath(i, t) ===
-              0 &&
+            0 ===
+              AudioController_1.AudioController.PlayAudioByEventPath(i, t) &&
               (Log_1.Log.CheckError() &&
                 Log_1.Log.Error("Audio", 22, "音频播放失败!!!", ["name", i]),
               this.CNo++),
@@ -163,27 +163,27 @@ class VolumeView extends UiViewBase_1.UiViewBase {
     UE.AkGameplayStatics.StopActor(this.GetRootActor());
   }
   fNo(i) {
-    const t = (0, puerts_1.$ref)(void 0);
-    const s =
-      (UE.KuroRenderingEditorBPPluginBPLibrary.FindFiles(t, i),
-      (this.vNo = (0, puerts_1.$unref)(t)),
-      new Array());
+    var t = (0, puerts_1.$ref)(void 0),
+      s =
+        (UE.KuroRenderingEditorBPPluginBPLibrary.FindFiles(t, i),
+        (this.vNo = (0, puerts_1.$unref)(t)),
+        new Array());
     for (let i = 0; i < this.vNo.Num(); i++)
       this.vNo.Get(i).includes("FOLDER") && s.push(i);
     for (const e of s.reverse()) this.vNo.RemoveAt(e);
   }
   SNo(i) {
     var t = i.indexOf(".");
-    if (t !== -1) {
+    if (-1 !== t) {
       var s = i.lastIndexOf("/");
-      if (s !== -1) {
-        var t = i.substr(s + 1, t - s - 1);
-        var s = i.replace("uasset", t);
-        var i = s.indexOf("/Aki");
-        if (i !== -1) return (t = s.substr(0, i)), s.replace(t, "/Game");
+      if (-1 !== s) {
+        var t = i.substr(s + 1, t - s - 1),
+          s = i.replace("uasset", t),
+          i = s.indexOf("/Aki");
+        if (-1 !== i) return (t = s.substr(0, i)), s.replace(t, "/Game");
       }
     }
   }
 }
 exports.VolumeView = VolumeView;
-// # sourceMappingURL=VolumeView.js.map
+//# sourceMappingURL=VolumeView.js.map

@@ -1,20 +1,20 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MailController = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const ErrorCodeById_1 = require("../../../Core/Define/ConfigQuery/ErrorCodeById");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
+const Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  ErrorCodeById_1 = require("../../../Core/Define/ConfigQuery/ErrorCodeById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager");
 class MailController extends UiControllerBase_1.UiControllerBase {
   static OnAddOpenViewCheckFunction() {
     UiManager_1.UiManager.AddOpenViewCheckFunction(
@@ -65,7 +65,7 @@ class MailController extends UiControllerBase_1.UiControllerBase {
         : this.RequestReadMail(e.Id, e.ConfigId));
   }
   static RequestReadMail(e, a) {
-    const o = new Protocol_1.Aki.Protocol.Gis();
+    var o = new Protocol_1.Aki.Protocol.Gis();
     (o.Ekn = e),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -75,7 +75,7 @@ class MailController extends UiControllerBase_1.UiControllerBase {
           ["mailId", e],
         ),
       Net_1.Net.Call(20891, Protocol_1.Aki.Protocol.Gis.create(o), (e) => {
-        let o;
+        var o;
         e &&
           (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
@@ -105,9 +105,9 @@ class MailController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static RequestPickAttachment(e, a) {
-    const o = new Protocol_1.Aki.Protocol.kis();
-    const r =
-      CommonParamById_1.configCommonParamById.GetIntConfig("mail_take_limit");
+    var o = new Protocol_1.Aki.Protocol.kis(),
+      r =
+        CommonParamById_1.configCommonParamById.GetIntConfig("mail_take_limit");
     (o.q6n = e.slice(0, r)),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -128,7 +128,7 @@ class MailController extends UiControllerBase_1.UiControllerBase {
               case 1e4:
                 e = "MailOutOfDate";
             }
-            e !== "" &&
+            "" !== e &&
               ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                 e,
               );
@@ -140,7 +140,7 @@ class MailController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static RequestDeleteMail(e) {
-    const o = new Protocol_1.Aki.Protocol.Fis();
+    var o = new Protocol_1.Aki.Protocol.Fis();
     (o.q6n = e),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -156,7 +156,7 @@ class MailController extends UiControllerBase_1.UiControllerBase {
               e.lkn,
               13564,
             );
-          else if (e.GAs.length > 0) {
+          else if (0 < e.GAs.length) {
             for (const o of e.GAs)
               ModelManager_1.ModelManager.MailModel.DeleteMail(o);
             Log_1.Log.CheckInfo() &&
@@ -191,7 +191,7 @@ class MailController extends UiControllerBase_1.UiControllerBase {
         ModelManager_1.ModelManager.MailModel.GetMailCapacity() &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error("Mail", 28, "[MailError]MailBox is fulfilled");
-      const o = new Protocol_1.Aki.Protocol.PNs(a);
+      var o = new Protocol_1.Aki.Protocol.PNs(a);
       ModelManager_1.ModelManager.MailModel.AddMail(o, !1);
     }
     ModelManager_1.ModelManager.MailModel.ReloadMailList(),
@@ -201,7 +201,7 @@ class MailController extends UiControllerBase_1.UiControllerBase {
   (MailController.gEi = (e) => {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Mail", 28, "[MailMessage]6100:MailDeleteNotify");
-    const o = e.Ekn;
+    var o = e.Ekn;
     ModelManager_1.ModelManager.MailModel.DeleteMail(o),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -225,7 +225,7 @@ class MailController extends UiControllerBase_1.UiControllerBase {
       );
   }),
   (MailController.fEi = (e) => {
-    let o;
+    var o;
     void 0 !== e.BAs &&
       void 0 !== e.BAs &&
       (ModelManager_1.ModelManager.MailModel.GetMailListLength() >=
@@ -259,7 +259,7 @@ class MailController extends UiControllerBase_1.UiControllerBase {
           )));
   }),
   (MailController.dEi = () => {
-    let e;
+    var e;
     ModelManager_1.ModelManager.GameModeModel.WorldDoneAndLoadingClosed &&
       ((e =
         Time_1.Time.NowSeconds -
@@ -276,4 +276,4 @@ class MailController extends UiControllerBase_1.UiControllerBase {
           ModelManager_1.ModelManager.MailModel.IfNeedShowNewMail() &&
           ModelManager_1.ModelManager.MailModel.SaveShowNewMailMap());
   });
-// # sourceMappingURL=MailController.js.map
+//# sourceMappingURL=MailController.js.map

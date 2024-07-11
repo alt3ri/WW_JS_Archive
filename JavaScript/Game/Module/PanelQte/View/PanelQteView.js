@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PanelQteView = void 0);
-const UE = require("ue");
-const Time_1 = require("../../../../Core/Common/Time");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const CameraController_1 = require("../../../Camera/CameraController");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const PanelQteController_1 = require("../PanelQteController");
-const CAMERA_SHAKE_OUTER_RADIUS = 500;
-const MIN_BUFF_CD = 1e3;
+const UE = require("ue"),
+  Time_1 = require("../../../../Core/Common/Time"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  CameraController_1 = require("../../../Camera/CameraController"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  PanelQteController_1 = require("../PanelQteController"),
+  CAMERA_SHAKE_OUTER_RADIUS = 500,
+  MIN_BUFF_CD = 1e3;
 class PanelQteView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -96,7 +96,7 @@ class PanelQteView extends UiTickViewBase_1.UiTickViewBase {
       );
   }
   RefreshVisible() {
-    const e =
+    var e =
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.GetChildVisible(
         20,
       );
@@ -111,7 +111,7 @@ class PanelQteView extends UiTickViewBase_1.UiTickViewBase {
         ModelManager_1.ModelManager.PanelQteModel.UpdateTime(e));
   }
   OnBeforeDestroy() {
-    let e;
+    var e;
     this.ClearCameraShake(),
       this.ClearBuff(),
       ModelManager_1.ModelManager.PanelQteModel.IsInQte &&
@@ -134,7 +134,7 @@ class PanelQteView extends UiTickViewBase_1.UiTickViewBase {
           ));
   }
   PlayCameraShake() {
-    let e;
+    var e;
     this.CameraShakeType &&
       ((e = ModelManager_1.ModelManager.CameraModel.CameraLocation),
       CameraController_1.CameraController.PlayWorldCameraShake(
@@ -165,7 +165,7 @@ class PanelQteView extends UiTickViewBase_1.UiTickViewBase {
       ));
   }
   AddBuff() {
-    let e, t, i;
+    var e, t, i;
     this.BuffId &&
       !(Time_1.Time.WorldTime < this.BuffEnableTime) &&
       ((this.BuffEnableTime = Time_1.Time.WorldTime + this.BuffCd),
@@ -185,4 +185,4 @@ class PanelQteView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.PanelQteView = PanelQteView;
-// # sourceMappingURL=PanelQteView.js.map
+//# sourceMappingURL=PanelQteView.js.map

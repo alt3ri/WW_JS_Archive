@@ -7,4 +7,4 @@ class CommonTabComponentData {
   }
 }
 exports.CommonTabComponentData = CommonTabComponentData;
-// # sourceMappingURL=CommonTabComponentData.js.map
+//# sourceMappingURL=CommonTabComponentData.js.map

@@ -4,8 +4,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const FlowActionBase_1 = require("./FlowActionBase");
 class FlowActionJumpTalk extends FlowActionBase_1.FlowActionBase {
   OnExecute() {
-    const e = this.ActionInfo.Params;
-    const t = this.Runner;
+    var e = this.ActionInfo.Params,
+      t = this.Runner;
     this.FinishExecute(!0, !1), t.JumpTalk(e.TalkId);
   }
   OnBackgroundExecute() {
@@ -13,4 +13,4 @@ class FlowActionJumpTalk extends FlowActionBase_1.FlowActionBase {
   }
 }
 exports.FlowActionJumpTalk = FlowActionJumpTalk;
-// # sourceMappingURL=FlowActionJumpTalk.js.map
+//# sourceMappingURL=FlowActionJumpTalk.js.map

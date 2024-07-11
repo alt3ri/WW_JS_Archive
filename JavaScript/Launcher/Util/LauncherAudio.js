@@ -1,20 +1,20 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LauncherAudio = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const LauncherResourceLib_1 = require("./LauncherResourceLib");
-const LauncherLog_1 = require("./LauncherLog");
-const BaseConfigController_1 = require("../BaseConfig/BaseConfigController");
-const PAUSE_AUDIO_EVENT =
-  "/Game/Aki/WwiseAudio/Events/pause_all_wwise_audio.pause_all_wwise_audio";
-const RESUME_AUDIO_EVENT =
-  "/Game/Aki/WwiseAudio/Events/resume_all_wwise_audio.resume_all_wwise_audio";
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  LauncherResourceLib_1 = require("./LauncherResourceLib"),
+  LauncherLog_1 = require("./LauncherLog"),
+  BaseConfigController_1 = require("../BaseConfig/BaseConfigController"),
+  PAUSE_AUDIO_EVENT =
+    "/Game/Aki/WwiseAudio/Events/pause_all_wwise_audio.pause_all_wwise_audio",
+  RESUME_AUDIO_EVENT =
+    "/Game/Aki/WwiseAudio/Events/resume_all_wwise_audio.resume_all_wwise_audio";
 class LauncherAudio {
   static Initialize() {
     this.gU ||
-      (UE.GameplayStatics.GetPlatformName() === "IOS" &&
+      ("IOS" === UE.GameplayStatics.GetPlatformName() &&
         (BaseConfigController_1.BaseConfigController.GetIosAuditFirstDownloadTip()
           ? (UE.KuroAudioStatics.SetIosAuditPackage(!0),
             UE.KuroAudioStatics.ChangeIosAudioSessionProperties(),
@@ -79,4 +79,4 @@ class LauncherAudio {
           UE.AkGameplayStatics.RenderAudio(),
           (_a.oWr = !1)));
   });
-// # sourceMappingURL=LauncherAudio.js.map
+//# sourceMappingURL=LauncherAudio.js.map

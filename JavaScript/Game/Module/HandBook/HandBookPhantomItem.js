@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HandBookPhantomItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-const HandBookCommonItem_1 = require("../HandBook/HandBookCommonItem");
-const HandBookDefine_1 = require("../HandBook/HandBookDefine");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  HandBookCommonItem_1 = require("../HandBook/HandBookCommonItem"),
+  HandBookDefine_1 = require("../HandBook/HandBookDefine");
 class HandBookPhantomItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -31,22 +31,22 @@ class HandBookPhantomItem extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     (this.jZt = new HandBookCommonItem_1.HandBookCommonItem()),
       this.jZt.Initialize(this.GetItem(0).GetOwner());
-    const e = this.kzt.Config;
-    let o = new HandBookDefine_1.HandBookCommonItemData();
-    var i = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
-      1,
-      e.MonsterId,
-    );
-    const t = void 0 === i;
-    var i = void 0 !== i && !i.IsRead;
-    var i =
-      ((o.Icon = e.Icon),
-      (o.IsLock = t),
-      (o.IsNew = i),
-      this.jZt.Refresh(o, !1, 0),
-      this.jZt.BindOnExtendToggleClicked(this.Ozt),
-      this.jZt.SetNewFlagVisible(!1),
-      this.GetText(1));
+    var e = this.kzt.Config,
+      o = new HandBookDefine_1.HandBookCommonItemData(),
+      i = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
+        1,
+        e.MonsterId,
+      ),
+      t = void 0 === i,
+      i = void 0 !== i && !i.IsRead,
+      i =
+        ((o.Icon = e.Icon),
+        (o.IsLock = t),
+        (o.IsNew = i),
+        this.jZt.Refresh(o, !1, 0),
+        this.jZt.BindOnExtendToggleClicked(this.Ozt),
+        this.jZt.SetNewFlagVisible(!1),
+        this.GetText(1));
     this.GetText(3).SetUIActive(!1),
       t
         ? ((o =
@@ -60,7 +60,7 @@ class HandBookPhantomItem extends UiPanelBase_1.UiPanelBase {
     this.Gzt = e;
   }
   SetToggleStateForce(e, o = 0) {
-    this.jZt.SetSelected(e === 1);
+    this.jZt.SetSelected(1 === e);
   }
   OnSelected(e) {
     this.jZt.OnSelected(e);
@@ -70,4 +70,4 @@ class HandBookPhantomItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.HandBookPhantomItem = HandBookPhantomItem;
-// # sourceMappingURL=HandBookPhantomItem.js.map
+//# sourceMappingURL=HandBookPhantomItem.js.map

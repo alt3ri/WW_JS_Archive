@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SoundBoxMarkItemView = void 0);
-const UE = require("ue");
-const EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ServerMarkItemView_1 = require("./ServerMarkItemView");
+const UE = require("ue"),
+  EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ServerMarkItemView_1 = require("./ServerMarkItemView");
 class SoundBoxMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
   constructor(e) {
     super(e), (this.GDi = void 0), (this.Lwn = !1);
   }
   async OnCreateAsync() {
-    let e, t;
+    var e, t;
     !this.GDi &&
       ((e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
         "UiItem_Mark_Radar_Effect",
       )),
       (e = await this.LoadPrefabAsync(e)),
       (this.GDi = e.GetComponentByClass(UE.UIItem.StaticClass())),
-      (e = this.Holder.MapType === 2),
+      (e = 2 === this.Holder.MapType),
       (t = this.GDi.GetChildComponent(0))) &&
       ((t.bAdaptPosAndSizeChanged = e), (t.bResetNiagara = !0));
   }
@@ -57,4 +57,4 @@ class SoundBoxMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
   }
 }
 exports.SoundBoxMarkItemView = SoundBoxMarkItemView;
-// # sourceMappingURL=SoundBoxMarkItemView.js.map
+//# sourceMappingURL=SoundBoxMarkItemView.js.map

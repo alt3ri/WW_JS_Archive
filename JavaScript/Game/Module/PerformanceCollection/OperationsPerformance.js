@@ -4,34 +4,34 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.JankData =
     exports.OperationsPerformance =
       void 0);
-const UE = require("ue");
-const ue_1 = require("ue");
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const TickSystem_1 = require("../../../Core/Tick/TickSystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager");
-const Global_1 = require("../../Global");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LogReportController_1 = require("../LogReport/LogReportController");
-const LogReportDefine_1 = require("../LogReport/LogReportDefine");
-const MenuController_1 = require("../Menu/MenuController");
-const CollectionDataInfo_1 = require("./Data/CollectionDataInfo");
-const PerformanceConfig_1 = require("./PerformanceConfig");
-const SMALL_JANK_TYPE = 1;
-const BIG_JANK_TYPE = 2;
+const UE = require("ue"),
+  ue_1 = require("ue"),
+  CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  TickSystem_1 = require("../../../Core/Tick/TickSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
+  Global_1 = require("../../Global"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  LogReportController_1 = require("../LogReport/LogReportController"),
+  LogReportDefine_1 = require("../LogReport/LogReportDefine"),
+  MenuController_1 = require("../Menu/MenuController"),
+  CollectionDataInfo_1 = require("./Data/CollectionDataInfo"),
+  PerformanceConfig_1 = require("./PerformanceConfig"),
+  SMALL_JANK_TYPE = 1,
+  BIG_JANK_TYPE = 2;
 class JankStatisticsCycle {
   static AddStatisticsNumber(e) {
-    this.NOe === 0
+    0 === this.NOe
       ? (this.y3i = e)
-      : this.NOe === 1
+      : 1 === this.NOe
         ? (this.I3i = e)
         : (this.T3i = e),
       (this.NOe = (this.NOe + 1) % 3);
   }
   static IsReady() {
-    return this.y3i !== 0 && this.I3i !== 0 && this.T3i !== 0;
+    return 0 !== this.y3i && 0 !== this.I3i && 0 !== this.T3i;
   }
   static GetAvg() {
     return (this.y3i + this.I3i + this.T3i) / 3;
@@ -71,7 +71,7 @@ class OperationsPerformance {
     TickSystem_1.TickSystem.Add(this.Tick, "OperationsPerformance.Tick", 2, !0);
   }
   static x3i() {
-    let e, r;
+    var e, r;
     ue_1.KuroStaticLibrary.CountCurFrame() &&
       ((e = ue_1.KuroStaticLibrary.GetRawFrameTime()),
       (r =
@@ -88,7 +88,7 @@ class OperationsPerformance {
       OperationsPerformance.q3i.AddValue(
         ue_1.KuroStaticLibrary.GetRawRHITTime(),
       ),
-      (r.GetFrameRateTemporary() > 0
+      (0 < r.GetFrameRateTemporary()
         ? OperationsPerformance.G3i
         : OperationsPerformance.N3i
       ).AddValue(e));
@@ -110,106 +110,110 @@ class OperationsPerformance {
     );
   }
   static j3i(e) {
-    const r = new JankData();
-    var e =
-      ((r.event_id = "5"), (r.i_jank_type = e), OperationsPerformance.O3i());
-    var e =
-      (e &&
-        ((r.f_player_pos_x = Math.floor(100 * e.X) / 100),
-        (r.f_player_pos_y = Math.floor(100 * e.Y) / 100),
-        (r.f_player_pos_z = Math.floor(100 * e.Z) / 100)),
-      (r.i_inst_id = ModelManager_1.ModelManager.CreatureModel.GetInstanceId()),
-      (r.i_area_id = ModelManager_1.ModelManager.AreaModel.AreaInfo.AreaId),
-      (r.s_device_info = OperationsPerformance.D3i),
-      (r.s_cpu_info = OperationsPerformance.L3i),
-      (r.i_memory = OperationsPerformance.R3i),
-      MenuController_1.MenuController.GetTargetConfig(10));
-    var e =
-      ((r.i_image_quality = void 0 === e ? -1 : e),
-      MenuController_1.MenuController.GetTargetConfig(5));
-    var e =
-      ((r.i_display_mode = void 0 === e ? -1 : e),
-      (r.s_resolution = "-1"),
-      ModelManager_1.ModelManager.PlatformModel.IsMobile()
-        ? (r.s_resolution =
-            MenuController_1.MenuController.GetTargetConfigOptionString(67))
-        : void 0 !== (e = MenuController_1.MenuController.GetTargetConfig(6)) &&
-          void 0 !==
-            (e =
-              GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetResolutionByList(
-                e,
-              )) &&
-          (r.s_resolution = e.X + "*" + e.Y),
-      MenuController_1.MenuController.GetTargetConfig(56));
-    var e =
-      ((r.i_image_detail = void 0 === e ? -1 : e),
-      MenuController_1.MenuController.GetTargetConfig(57));
+    var r = new JankData(),
+      e =
+        ((r.event_id = "5"), (r.i_jank_type = e), OperationsPerformance.O3i()),
+      e =
+        (e &&
+          ((r.f_player_pos_x = Math.floor(100 * e.X) / 100),
+          (r.f_player_pos_y = Math.floor(100 * e.Y) / 100),
+          (r.f_player_pos_z = Math.floor(100 * e.Z) / 100)),
+        (r.i_inst_id =
+          ModelManager_1.ModelManager.CreatureModel.GetInstanceId()),
+        (r.i_area_id = ModelManager_1.ModelManager.AreaModel.AreaInfo.AreaId),
+        (r.s_device_info = OperationsPerformance.D3i),
+        (r.s_cpu_info = OperationsPerformance.L3i),
+        (r.i_memory = OperationsPerformance.R3i),
+        MenuController_1.MenuController.GetTargetConfig(10)),
+      e =
+        ((r.i_image_quality = void 0 === e ? -1 : e),
+        MenuController_1.MenuController.GetTargetConfig(5)),
+      e =
+        ((r.i_display_mode = void 0 === e ? -1 : e),
+        (r.s_resolution = "-1"),
+        ModelManager_1.ModelManager.PlatformModel.IsMobile()
+          ? (r.s_resolution =
+              MenuController_1.MenuController.GetTargetConfigOptionString(67))
+          : void 0 !==
+              (e = MenuController_1.MenuController.GetTargetConfig(6)) &&
+            void 0 !==
+              (e =
+                GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetResolutionByList(
+                  e,
+                )) &&
+            (r.s_resolution = e.X + "*" + e.Y),
+        MenuController_1.MenuController.GetTargetConfig(56)),
+      e =
+        ((r.i_image_detail = void 0 === e ? -1 : e),
+        MenuController_1.MenuController.GetTargetConfig(57));
     r.i_antialising = void 0 === e ? -1 : e;
   }
   static W3i() {
-    const e = new PerformanceData();
-    var r = ((e.event_id = "4"), OperationsPerformance.N3i.GetAvg(0));
-    var r =
-      ((e.f_avg_fps = r !== 0 ? 1e3 / r : 0),
-      (e.i_avg_jank = OperationsPerformance.H3i),
-      (e.i_avg_big_jank = OperationsPerformance.F3i),
-      (e.f_avg_ping = OperationsPerformance.K3i.GetAvg(-1)),
-      (e.i_big_ping_num = OperationsPerformance.Q3i),
-      OperationsPerformance.O3i());
-    var r =
-      (r &&
-        ((e.f_player_pos_x = Math.floor(100 * r.X) / 100),
-        (e.f_player_pos_y = Math.floor(100 * r.Y) / 100),
-        (e.f_player_pos_z = Math.floor(100 * r.Z) / 100)),
-      (e.i_inst_id = ModelManager_1.ModelManager.CreatureModel.GetInstanceId()),
-      (e.i_area_id = ModelManager_1.ModelManager.AreaModel.AreaInfo.AreaId),
-      (e.s_device_info = OperationsPerformance.D3i),
-      (e.s_cpu_info = OperationsPerformance.L3i),
-      (e.i_memory = OperationsPerformance.R3i),
-      (e.f_available_virtual_memory = OperationsPerformance.U3i),
-      (e.f_avg_use_memory_rate = OperationsPerformance.X3i.GetAvg(-1)),
-      (e.f_max_use_memory_rate = OperationsPerformance.X3i.MaxValue),
-      (e.f_avg_used_virtual_memory = OperationsPerformance.$3i.GetAvg(-1)),
-      (e.f_max_used_virtual_memory = OperationsPerformance.$3i.MaxValue),
-      (e.f_avg_use_memory = OperationsPerformance.Y3i.GetAvg(-1)),
-      (e.f_max_use_memory = OperationsPerformance.Y3i.MaxValue),
-      (e.f_avg_cpu_time = OperationsPerformance.w3i.GetAvg(-1)),
-      (e.f_avg_gpu_time = OperationsPerformance.B3i.GetAvg(-1)),
-      (e.f_avg_render_thread_time = OperationsPerformance.b3i.GetAvg(-1)),
-      (e.f_avg_rhi_thread_time = OperationsPerformance.q3i.GetAvg(-1)),
-      (e.f_battery = OperationsPerformance.A3i),
-      (e.f_avg_cpu_frequency = OperationsPerformance.J3i),
-      (e.f_max_cpu_frequency = OperationsPerformance.z3i),
-      (e.o_in_game_scene = OperationsPerformance.Z3i),
-      (e.s_in_game_time = OperationsPerformance.e4i),
-      OperationsPerformance.G3i.GetAvg(0));
-    var r =
-      ((e.f_plot_fps = r > 0 ? 1e3 / r : 0),
-      (e.i_fps_choice =
-        GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
-          .GetCurrentQualityInfo()
-          .GetFrameRate()),
-      MenuController_1.MenuController.GetTargetConfig(10));
-    var r =
-      ((e.i_image_quality = void 0 === r ? -1 : r),
-      MenuController_1.MenuController.GetTargetConfig(5));
-    var r =
-      ((e.i_display_mode = void 0 === r ? -1 : r),
-      (e.s_resolution = "-1"),
-      ModelManager_1.ModelManager.PlatformModel.IsMobile()
-        ? (e.s_resolution =
-            MenuController_1.MenuController.GetTargetConfigOptionString(67))
-        : void 0 !== (r = MenuController_1.MenuController.GetTargetConfig(6)) &&
-          void 0 !==
-            (r =
-              GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetResolutionByList(
-                r,
-              )) &&
-          (e.s_resolution = r.X + "*" + r.Y),
-      MenuController_1.MenuController.GetTargetConfig(56));
-    var r =
-      ((e.i_image_detail = void 0 === r ? -1 : r),
-      MenuController_1.MenuController.GetTargetConfig(57));
+    var e = new PerformanceData(),
+      r = ((e.event_id = "4"), OperationsPerformance.N3i.GetAvg(0)),
+      r =
+        ((e.f_avg_fps = 0 !== r ? 1e3 / r : 0),
+        (e.i_avg_jank = OperationsPerformance.H3i),
+        (e.i_avg_big_jank = OperationsPerformance.F3i),
+        (e.f_avg_ping = OperationsPerformance.K3i.GetAvg(-1)),
+        (e.i_big_ping_num = OperationsPerformance.Q3i),
+        OperationsPerformance.O3i()),
+      r =
+        (r &&
+          ((e.f_player_pos_x = Math.floor(100 * r.X) / 100),
+          (e.f_player_pos_y = Math.floor(100 * r.Y) / 100),
+          (e.f_player_pos_z = Math.floor(100 * r.Z) / 100)),
+        (e.i_inst_id =
+          ModelManager_1.ModelManager.CreatureModel.GetInstanceId()),
+        (e.i_area_id = ModelManager_1.ModelManager.AreaModel.AreaInfo.AreaId),
+        (e.s_device_info = OperationsPerformance.D3i),
+        (e.s_cpu_info = OperationsPerformance.L3i),
+        (e.i_memory = OperationsPerformance.R3i),
+        (e.f_available_virtual_memory = OperationsPerformance.U3i),
+        (e.f_avg_use_memory_rate = OperationsPerformance.X3i.GetAvg(-1)),
+        (e.f_max_use_memory_rate = OperationsPerformance.X3i.MaxValue),
+        (e.f_avg_used_virtual_memory = OperationsPerformance.$3i.GetAvg(-1)),
+        (e.f_max_used_virtual_memory = OperationsPerformance.$3i.MaxValue),
+        (e.f_avg_use_memory = OperationsPerformance.Y3i.GetAvg(-1)),
+        (e.f_max_use_memory = OperationsPerformance.Y3i.MaxValue),
+        (e.f_avg_cpu_time = OperationsPerformance.w3i.GetAvg(-1)),
+        (e.f_avg_gpu_time = OperationsPerformance.B3i.GetAvg(-1)),
+        (e.f_avg_render_thread_time = OperationsPerformance.b3i.GetAvg(-1)),
+        (e.f_avg_rhi_thread_time = OperationsPerformance.q3i.GetAvg(-1)),
+        (e.f_battery = OperationsPerformance.A3i),
+        (e.f_avg_cpu_frequency = OperationsPerformance.J3i),
+        (e.f_max_cpu_frequency = OperationsPerformance.z3i),
+        (e.o_in_game_scene = OperationsPerformance.Z3i),
+        (e.s_in_game_time = OperationsPerformance.e4i),
+        OperationsPerformance.G3i.GetAvg(0)),
+      r =
+        ((e.f_plot_fps = 0 < r ? 1e3 / r : 0),
+        (e.i_fps_choice =
+          GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
+            .GetCurrentQualityInfo()
+            .GetFrameRate()),
+        MenuController_1.MenuController.GetTargetConfig(10)),
+      r =
+        ((e.i_image_quality = void 0 === r ? -1 : r),
+        MenuController_1.MenuController.GetTargetConfig(5)),
+      r =
+        ((e.i_display_mode = void 0 === r ? -1 : r),
+        (e.s_resolution = "-1"),
+        ModelManager_1.ModelManager.PlatformModel.IsMobile()
+          ? (e.s_resolution =
+              MenuController_1.MenuController.GetTargetConfigOptionString(67))
+          : void 0 !==
+              (r = MenuController_1.MenuController.GetTargetConfig(6)) &&
+            void 0 !==
+              (r =
+                GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetResolutionByList(
+                  r,
+                )) &&
+            (e.s_resolution = r.X + "*" + r.Y),
+        MenuController_1.MenuController.GetTargetConfig(56)),
+      r =
+        ((e.i_image_detail = void 0 === r ? -1 : r),
+        MenuController_1.MenuController.GetTargetConfig(57));
     (e.i_antialising = void 0 === r ? -1 : r),
       (e.i_shadow_quality =
         MenuController_1.MenuController.GetTargetConfig(54)),
@@ -233,7 +237,7 @@ class OperationsPerformance {
   }
   static AddPing(e) {
     OperationsPerformance.R2e &&
-      (OperationsPerformance.K3i.Count > 0 &&
+      (0 < OperationsPerformance.K3i.Count &&
         e > OperationsPerformance.K3i.LastValue + 50 &&
         OperationsPerformance.Q3i++,
       OperationsPerformance.K3i.AddValue(e));
@@ -272,11 +276,11 @@ class OperationsPerformance {
       ).Id);
   }
   static ConsumePerformanceData() {
-    const e = OperationsPerformance.N3i.GetAvg(-1);
-    const r = OperationsPerformance.w3i.GetAvg(-1);
-    const o = OperationsPerformance.B3i.GetAvg(-1);
-    const n = OperationsPerformance.b3i.GetAvg(-1);
-    const a = OperationsPerformance.q3i.GetAvg(-1);
+    var e = OperationsPerformance.N3i.GetAvg(-1),
+      r = OperationsPerformance.w3i.GetAvg(-1),
+      o = OperationsPerformance.B3i.GetAvg(-1),
+      n = OperationsPerformance.b3i.GetAvg(-1),
+      a = OperationsPerformance.q3i.GetAvg(-1);
     return (
       OperationsPerformance.N3i.Clear(),
       OperationsPerformance.K3i.Clear(),
@@ -378,7 +382,7 @@ class OperationsPerformance {
     OperationsPerformance.R2e && (OperationsPerformance.R2e = !1);
   }),
   (OperationsPerformance.Tick = (e) => {
-    let r;
+    var r;
     OperationsPerformance.R2e &&
       (OperationsPerformance.x3i(),
       (OperationsPerformance.r4i -= e),
@@ -413,7 +417,7 @@ class OperationsPerformance {
               OperationsPerformance.Z3i.push(4)),
       OperationsPerformance.n4i &&
         (r = OperationsPerformance.N3i.LastValue) &&
-        (r = OperationsPerformance.k3i(r)) > 0 &&
+        0 < (r = OperationsPerformance.k3i(r)) &&
         OperationsPerformance.j3i(r),
       (OperationsPerformance.o4i -= e),
       OperationsPerformance.o4i <= 0) &&
@@ -499,4 +503,4 @@ class PerformanceData extends LogReportDefine_1.PlayerCommonLogData {
   }
 }
 exports.PerformanceData = PerformanceData;
-// # sourceMappingURL=OperationsPerformance.js.map
+//# sourceMappingURL=OperationsPerformance.js.map

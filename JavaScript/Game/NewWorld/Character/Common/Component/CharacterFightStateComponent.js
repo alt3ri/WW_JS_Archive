@@ -1,24 +1,28 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, h) {
-    let r;
-    const s = arguments.length;
-    let a =
-      s < 3 ? e : h === null ? (h = Object.getOwnPropertyDescriptor(e, i)) : h;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var r,
+      s = arguments.length,
+      a =
+        s < 3
+          ? e
+          : null === h
+            ? (h = Object.getOwnPropertyDescriptor(e, i))
+            : h;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       a = Reflect.decorate(t, e, i, h);
     else
-      for (let n = t.length - 1; n >= 0; n--)
-        (r = t[n]) && (a = (s < 3 ? r(a) : s > 3 ? r(e, i, a) : r(e, i)) || a);
-    return s > 3 && a && Object.defineProperty(e, i, a), a;
+      for (var n = t.length - 1; 0 <= n; n--)
+        (r = t[n]) && (a = (s < 3 ? r(a) : 3 < s ? r(e, i, a) : r(e, i)) || a);
+    return 3 < s && a && Object.defineProperty(e, i, a), a;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterFightStateComponent = void 0);
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const CombatDebugController_1 = require("../../../../Utils/CombatDebugController");
-const CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
+const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  CombatDebugController_1 = require("../../../../Utils/CombatDebugController"),
+  CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
 let CharacterFightStateComponent = class CharacterFightStateComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -34,9 +38,9 @@ let CharacterFightStateComponent = class CharacterFightStateComponent extends En
     return (this.aYo = this.Entity.GetComponent(158)), !0;
   }
   PreSwitchRemoteFightState(t) {
-    const e = t >> 8;
-    var t = 255 & t;
-    const i = this.G5r(e, t, !1);
+    var e = t >> 8,
+      t = 255 & t,
+      i = this.G5r(e, t, !1);
     return (
       i ||
         CombatDebugController_1.CombatDebugController.CombatInfo(
@@ -48,7 +52,7 @@ let CharacterFightStateComponent = class CharacterFightStateComponent extends En
     );
   }
   TrySwitchHitState(t, e = !1) {
-    if (t === 7) return this.TrySwitchState(4, 0, e);
+    if (7 === t) return this.TrySwitchState(4, 0, e);
     if (
       e &&
       this.aYo.MoveState ===
@@ -68,12 +72,12 @@ let CharacterFightStateComponent = class CharacterFightStateComponent extends En
   TrySwitchSkillState(t, e = !1) {
     let i = t.InterruptLevel;
     return (
-      i > 255 && (i = 255),
-      t.OverrideType === 1
+      255 < i && (i = 255),
+      1 === t.OverrideType
         ? this.TrySwitchState(3, i, e)
-        : t.OverrideType === 2
+        : 2 === t.OverrideType
           ? this.TrySwitchState(5, i, e)
-          : t.OverrideType === 3
+          : 3 === t.OverrideType
             ? this.TrySwitchState(7, i, e)
             : this.TrySwitchState(1, i, e)
     );
@@ -176,4 +180,4 @@ let CharacterFightStateComponent = class CharacterFightStateComponent extends En
   CharacterFightStateComponent,
 )),
   (exports.CharacterFightStateComponent = CharacterFightStateComponent);
-// # sourceMappingURL=CharacterFightStateComponent.js.map
+//# sourceMappingURL=CharacterFightStateComponent.js.map

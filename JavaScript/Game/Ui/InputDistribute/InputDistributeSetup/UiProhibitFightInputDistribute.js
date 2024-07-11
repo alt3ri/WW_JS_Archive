@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiProhibitFightInputDistribute = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const InputDistributeDefine_1 = require("../InputDistributeDefine");
-const InputDistributeSetup_1 = require("./InputDistributeSetup");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  InputDistributeDefine_1 = require("../InputDistributeDefine"),
+  InputDistributeSetup_1 = require("./InputDistributeSetup");
 class UiProhibitFightInputDistribute extends InputDistributeSetup_1.InputDistributeSetup {
   OnRefresh() {
-    const e = ModelManager_1.ModelManager.InputDistributeModel;
+    var e = ModelManager_1.ModelManager.InputDistributeModel;
     return (
       !!e.HasAnyNotAllowFightInputViewIsOpen() &&
       (Log_1.Log.CheckInfo() &&
@@ -33,4 +33,4 @@ class UiProhibitFightInputDistribute extends InputDistributeSetup_1.InputDistrib
   }
 }
 exports.UiProhibitFightInputDistribute = UiProhibitFightInputDistribute;
-// # sourceMappingURL=UiProhibitFightInputDistribute.js.map
+//# sourceMappingURL=UiProhibitFightInputDistribute.js.map

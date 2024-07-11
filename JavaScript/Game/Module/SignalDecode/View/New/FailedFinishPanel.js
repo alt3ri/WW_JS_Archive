@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FailedFinishPanel = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const LguiUtil_1 = require("../../../Util/LguiUtil");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  LguiUtil_1 = require("../../../Util/LguiUtil");
 class FailedFinishPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -23,7 +23,7 @@ class FailedFinishPanel extends UiPanelBase_1.UiPanelBase {
           this.Close();
       }),
       (this.aut = (e) => {
-        e === "Close" && this.SetUiActive(!1);
+        "Close" === e && this.SetUiActive(!1);
       });
   }
   OnRegisterComponent() {
@@ -44,7 +44,7 @@ class FailedFinishPanel extends UiPanelBase_1.UiPanelBase {
       this.RootItem,
     )),
       this.LevelSequencePlayer.BindSequenceCloseEvent(this.aut),
-      ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType === 3 &&
+      3 === ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
         (LguiUtil_1.LguiUtil.SetLocalText(
           this.GetText(3),
           "SignalMusicFailTips2",
@@ -63,4 +63,4 @@ class FailedFinishPanel extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.FailedFinishPanel = FailedFinishPanel;
-// # sourceMappingURL=FailedFinishPanel.js.map
+//# sourceMappingURL=FailedFinishPanel.js.map

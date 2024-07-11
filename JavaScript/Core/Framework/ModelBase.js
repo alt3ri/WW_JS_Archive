@@ -28,4 +28,4 @@ class ModelBase {
   }
 }
 exports.ModelBase = ModelBase;
-// # sourceMappingURL=ModelBase.js.map
+//# sourceMappingURL=ModelBase.js.map

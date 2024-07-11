@@ -1,15 +1,18 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.LoginModel =
-    exports.LoginNotice =
-    exports.LoginNoticeEx =
-    exports.ServerInfo =
-    exports.ServerData =
-    exports.ReconnectInfo =
-    exports.DEFAULT_SERVER_IP =
-    exports.STREAM_MAINLINE =
-    exports.STREAM =
-      void 0);
+
+Object.defineProperty(exports, "__esModule", {
+  value: true,
+});
+exports.LoginModel =
+  exports.LoginNotice =
+  exports.LoginNoticeEx =
+  exports.ServerInfo =
+  exports.ServerData =
+  exports.ReconnectInfo =
+  exports.DEFAULT_SERVER_IP =
+  exports.STREAM_MAINLINE =
+  exports.STREAM =
+    undefined;
 const UE = require("ue");
 const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
 const Info_1 = require("../../../Core/Common/Info");
@@ -32,140 +35,147 @@ const ThirdPartySdkManager_1 = require("../../Manager/ThirdPartySdkManager");
 const LoginDefine_1 = require("./Data/LoginDefine");
 const Heartbeat_1 = require("./Heartbeat");
 const HeartbeatDefine_1 = require("./HeartbeatDefine");
-(exports.STREAM = "Stream"),
-  (exports.STREAM_MAINLINE = "mainline"),
-  (exports.DEFAULT_SERVER_IP = "127.0.0.1");
+exports.STREAM = "Stream";
+exports.STREAM_MAINLINE = "mainline";
+exports.DEFAULT_SERVER_IP = "127.0.0.1";
 class ReconnectInfo {
   constructor(e, t, i) {
-    (this.Token = ""),
-      (this.Host = ""),
-      (this.Port = 0),
-      (this.Token = e),
-      (this.Host = t),
-      (this.Port = i);
+    this.Token = "";
+    this.Host = "";
+    this.Port = 0;
+    this.Token = e;
+    this.Host = t;
+    this.Port = i;
   }
 }
 exports.ReconnectInfo = ReconnectInfo;
 class MapConfig {
   constructor(e, t) {
-    (this.MapId = 0), (this.MapName = ""), (this.MapId = e), (this.MapName = t);
+    this.MapId = 0;
+    this.MapName = "";
+    this.MapId = e;
+    this.MapName = t;
   }
 }
 class ServerData {
   constructor(e) {
-    (this.Config = new ServerConfig()), e && (this.Config = e);
+    this.Config = new ServerConfig();
+    if (e) {
+      this.Config = e;
+    }
   }
   SetIp(e) {
-    return (this.Config.Ip = e), this;
+    this.Config.Ip = e;
+    return this;
   }
 }
 exports.ServerData = ServerData;
 class ServerConfig extends Json_1.JsonObjBase {
   constructor(e = "", t = "", i = "", o = 0) {
-    super(),
-      (this.Ip = ""),
-      (this.Port = ""),
-      (this.Name = ""),
-      (this.Order = 0),
-      (this.Ip = e),
-      (this.Port = t),
-      (this.Name = i),
-      (this.Order = o);
+    super();
+    this.Ip = "";
+    this.Port = "";
+    this.Name = "";
+    this.Order = 0;
+    this.Ip = e;
+    this.Port = t;
+    this.Name = i;
+    this.Order = o;
   }
 }
 class ServerInfo extends Json_1.JsonObjBase {
   constructor() {
-    super(...arguments),
-      (this.server = ""),
-      (this.address = ""),
-      (this.description = ""),
-      (this.stream = ""),
-      (this.editor = void 0),
-      (this.package = void 0),
-      (this.order = void 0);
+    super(...arguments);
+    this.server = "";
+    this.address = "";
+    this.description = "";
+    this.stream = "";
+    this.editor = undefined;
+    this.package = undefined;
+    this.order = undefined;
   }
 }
 exports.ServerInfo = ServerInfo;
 class LoginNoticeEx extends Json_1.JsonObjBase {
   constructor() {
-    super(...arguments),
-      (this.title = ""),
-      (this.content = ""),
-      (this.whiteList = void 0),
-      (this.startTimeMs = -0),
-      (this.endTimeMs = -0);
+    super(...arguments);
+    this.title = "";
+    this.content = "";
+    this.whiteList = undefined;
+    this.startTimeMs = -0;
+    this.endTimeMs = -0;
   }
 }
 exports.LoginNoticeEx = LoginNoticeEx;
 class LoginNotice {
   constructor() {
-    (this.Id = ""),
-      (this.WhiteLists = void 0),
-      (this.ModifyTime = -0),
-      (this.BeginTime = -0),
-      (this.EndTime = -0),
-      (this.Title = ""),
-      (this.content = "");
+    this.Id = "";
+    this.WhiteLists = undefined;
+    this.ModifyTime = -0;
+    this.BeginTime = -0;
+    this.EndTime = -0;
+    this.Title = "";
+    this.content = "";
   }
   Phrase(e) {
-    (this.WhiteLists = e.whiteList),
-      (this.BeginTime = e.startTimeMs / 1e3),
-      (this.EndTime = e.endTimeMs / 1e3),
-      (this.Title = e.title),
-      (this.content = e.content);
+    this.WhiteLists = e.whiteList;
+    this.BeginTime = e.startTimeMs / 1000;
+    this.EndTime = e.endTimeMs / 1000;
+    this.Title = e.title;
+    this.content = e.content;
   }
 }
 exports.LoginNotice = LoginNotice;
 class SdkLoginConfig {
   constructor(e = "", t = "", i = "") {
-    (this.Uid = ""),
-      (this.UserName = ""),
-      (this.Token = ""),
-      (this.Uid = e),
-      (this.UserName = t),
-      (this.Token = i);
+    this.Uid = "";
+    this.UserName = "";
+    this.Token = "";
+    this.Uid = e;
+    this.UserName = t;
+    this.Token = i;
   }
 }
 class LoginModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments),
-      (this.BornMode = 1),
-      (this.BornLocation = void 0),
-      (this.Platform = ""),
-      (this.Qvi = void 0),
-      (this.Xvi = void 0),
-      (this.$vi = void 0),
-      (this.Yvi = void 0),
-      (this.RBn = void 0),
-      (this.XK = LoginDefine_1.ELoginStatus.Init),
-      (this.Jvi = void 0),
-      (this.zvi = !1),
-      (this.Zvi = void 0),
-      (this.M8e = ""),
-      (this.eMi = void 0),
-      (this.tMi = !1),
-      (this.SmokeTestReady = !1),
-      (this.iMi = 0),
-      (this.oMi = new Map()),
-      (this.rMi = void 0),
-      (this.nMi = !1),
-      (this.sMi = -0),
-      (this.aMi = 0),
-      (this.hMi = 0),
-      (this.LoginNotice = void 0),
-      (this.lMi = 0),
-      (this._Mi = 0),
-      (this.uMi = 0),
-      (this.g9s = void 0),
-      (this.f9s = void 0),
-      (this.p9s = void 0),
-      (this.cMi = void 0),
-      (this.mMi = 10),
-      (this.dMi = void 0),
-      (this.CMi = void 0),
-      (this.gMi = void 0),
-      (this.fMi = void 0),
-      (this.AutoLoginTimerIdInternal = void 0);
+    super(...arguments);
+    this.BornMode = 1;
+    this.BornLocation = undefined;
+    this.Platform = "";
+    this.Qvi = undefined;
+    this.Xvi = undefined;
+    this.$vi = undefined;
+    this.Yvi = undefined;
+    this.RBn = undefined;
+    this.XK = LoginDefine_1.ELoginStatus.Init;
+    this.Jvi = undefined;
+    this.zvi = false;
+    this.Zvi = undefined;
+    this.M8e = "";
+    this.eMi = undefined;
+    this.tMi = false;
+    this.SmokeTestReady = false;
+    this.iMi = 0;
+    this.oMi = new Map();
+    this.rMi = undefined;
+    this.nMi = false;
+    this.sMi = -0;
+    this.aMi = 0;
+    this.hMi = 0;
+    this.LoginNotice = undefined;
+    this.lMi = 0;
+    this._Mi = 0;
+    this.uMi = 0;
+    this.g9s = undefined;
+    this.f9s = undefined;
+    this.p9s = undefined;
+    this.cMi = undefined;
+    this.mMi = 10;
+    this.dMi = undefined;
+    this.CMi = undefined;
+    this.gMi = undefined;
+    this.fMi = undefined;
+    this.AutoLoginTimerIdInternal = undefined;
   }
   get pMi() {
     return LocalStorage_1.LocalStorage.GetGlobal(
@@ -240,93 +250,88 @@ class LoginModel extends ModelBase_1.ModelBase {
     this.p9s = e;
   }
   OnInit() {
-    return (
-      (this.BornMode = 1),
-      (this.BornLocation = new Protocol_1.Aki.Protocol.VBs()),
-      (this.XK = LoginDefine_1.ELoginStatus.Init),
-      (this.hMi = 0),
-      this.InitRecentlyAccountList(),
-      !0
-    );
+    this.BornMode = 1;
+    this.BornLocation = new Protocol_1.Aki.Protocol.VBs();
+    this.XK = LoginDefine_1.ELoginStatus.Init;
+    this.hMi = 0;
+    this.InitRecentlyAccountList();
+    return true;
   }
   OnClear() {
-    return (
-      (this.XK = LoginDefine_1.ELoginStatus.Init),
-      (this.hMi = 0),
-      (this.Qvi = []),
-      (this.Xvi = []),
-      (this.$vi = []),
-      (this.Yvi = []),
-      (this.XK = LoginDefine_1.ELoginStatus.Init),
-      (this.zvi = !1),
-      (this.M8e = ""),
-      (this.eMi = void 0),
-      (this.tMi = !1),
-      (this.Jvi = void 0),
-      (this.lMi = 0),
-      (this._Mi = 0),
-      (this.uMi = 0),
-      (this.g9s = void 0),
-      (this.f9s = void 0),
-      (this.iMi = 0),
-      this.oMi.clear(),
-      !0
-    );
+    this.XK = LoginDefine_1.ELoginStatus.Init;
+    this.hMi = 0;
+    this.Qvi = [];
+    this.Xvi = [];
+    this.$vi = [];
+    this.Yvi = [];
+    this.XK = LoginDefine_1.ELoginStatus.Init;
+    this.zvi = false;
+    this.M8e = "";
+    this.eMi = undefined;
+    this.tMi = false;
+    this.Jvi = undefined;
+    this.lMi = 0;
+    this._Mi = 0;
+    this.uMi = 0;
+    this.g9s = undefined;
+    this.f9s = undefined;
+    this.iMi = 0;
+    this.oMi.clear();
+    return true;
   }
   InitConfig() {
     if (!this.Qvi || !this.Xvi || !this.$vi) {
-      (this.Qvi = new Array()),
-        (this.Xvi = new Array()),
-        (this.$vi = new Array()),
-        (this.Yvi = new Array());
-      const e =
-        ConfigManager_1.ConfigManager.LoginConfig.GetAllInstanceDungeon();
-      if (e)
+      this.Qvi = new Array();
+      this.Xvi = new Array();
+      this.$vi = new Array();
+      this.Yvi = new Array();
+      var e = ConfigManager_1.ConfigManager.LoginConfig.GetAllInstanceDungeon();
+      if (e) {
         for (const t of e) {
           let e =
             ConfigManager_1.ConfigManager.LoginConfig.GetInstanceDungeonNameById(
               t.MapName,
             );
-          void 0 === e && (e = ""), this.Qvi.push(new MapConfig(t.Id, e));
+          if (e === undefined) {
+            e = "";
+          }
+          this.Qvi.push(new MapConfig(t.Id, e));
         }
+      }
     }
   }
   AddServerInfoByCdn() {
     if (this.$vi) {
-      const e = BaseConfigController_1.BaseConfigController.GetLoginServers();
+      var e = BaseConfigController_1.BaseConfigController.GetLoginServers();
       if (e) {
-        e.length <= 0 &&
-          Log_1.Log.CheckInfo() &&
+        if (e.length <= 0 && Log_1.Log.CheckInfo()) {
           Log_1.Log.Info("Login", 11, "CDN的服务器数据列表为空");
-        for (const i of e) {
-          const t = new ServerConfig(
-            i.ip,
-            LoginDefine_1.DEFAULTPORT,
-            i.name,
-            0,
-          );
-          this.$vi.push(t), this.Yvi.push(new ServerData(t));
         }
-      } else
-        Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Login", 11, "拿不到CDN返回的服务器数据");
+        for (const i of e) {
+          var t = new ServerConfig(i.ip, LoginDefine_1.DEFAULTPORT, i.name, 0);
+          this.$vi.push(t);
+          this.Yvi.push(new ServerData(t));
+        }
+      } else if (Log_1.Log.CheckError()) {
+        Log_1.Log.Error("Login", 11, "拿不到CDN返回的服务器数据");
+      }
     }
   }
   AddExtraServer() {
-    const e =
-      UE.BlueprintPathsLibrary.ProjectConfigDir() + "/ServerConfig.json";
-    const t = UE.KuroStaticLibrary.LoadFileToStringArray(e);
-    if (!(t.Num() <= 0))
+    var e = UE.BlueprintPathsLibrary.ProjectConfigDir() + "/ServerConfig.json";
+    var t = UE.KuroStaticLibrary.LoadFileToStringArray(e);
+    if (!(t.Num() <= 0)) {
       for (let e = 0; e < t.Num(); ++e) {
-        const i = Json_1.Json.Parse(t.Get(e));
+        var i = Json_1.Json.Parse(t.Get(e));
         this.$vi.push(i);
       }
+    }
   }
   AddServerInfos(e) {
     if (this.$vi) {
-      const t = Info_1.Info.IsPlayInEditor;
-      for (const i of e)
-        ((t && i.editor) || (!t && i.package)) &&
+      var t = Info_1.Info.IsPlayInEditor;
+      for (const i of e) {
+        if ((t && i.editor) || (!t && i.package)) {
           this.$vi.push(
             new ServerConfig(
               i.address,
@@ -335,22 +340,26 @@ class LoginModel extends ModelBase_1.ModelBase {
               i.order,
             ),
           );
+        }
+      }
     }
   }
   AddDataTableServers() {
     if (this.$vi && GlobalData_1.GlobalData.World) {
-      const e = DataTableUtil_1.DataTableUtil.GetAllDataTableRow(14);
-      if (e)
-        for (const t of e)
+      var e = DataTableUtil_1.DataTableUtil.GetAllDataTableRow(14);
+      if (e) {
+        for (const t of e) {
           this.$vi.push(new ServerConfig(t.IP, t.Port, t.Name, t.Order));
+        }
+      }
     }
   }
   CleanConfig() {
-    (this.Qvi = void 0),
-      (this.Xvi = void 0),
-      (this.$vi = void 0),
-      (this.rMi = void 0),
-      (this.Yvi = void 0);
+    this.Qvi = undefined;
+    this.Xvi = undefined;
+    this.$vi = undefined;
+    this.rMi = undefined;
+    this.Yvi = undefined;
   }
   SetCreatePlayerTime(e) {
     this.sMi = e;
@@ -365,68 +374,88 @@ class LoginModel extends ModelBase_1.ModelBase {
     return this.aMi;
   }
   GetServerIp() {
-    const e = LocalStorage_1.LocalStorage.GetGlobal(
+    var e = LocalStorage_1.LocalStorage.GetGlobal(
       LocalStorageDefine_1.ELocalStorageGlobalKey.ServerIp,
       "-1",
     );
-    return e === "-1" ? void 0 : e;
+    if (e === "-1") {
+      return undefined;
+    } else {
+      return e;
+    }
   }
   SetServerIp(e, t) {
-    Log_1.Log.CheckInfo() &&
+    if (Log_1.Log.CheckInfo()) {
       Log_1.Log.Info(
         "Login",
         9,
         "保存服务器IP",
         ["serverIp", e],
         ["reason", t],
-      ),
-      LocalStorage_1.LocalStorage.SetGlobal(
-        LocalStorageDefine_1.ELocalStorageGlobalKey.ServerIp,
-        e,
       );
+    }
+    LocalStorage_1.LocalStorage.SetGlobal(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.ServerIp,
+      e,
+    );
   }
   TrySetCustomServerPort(e, t) {
-    Log_1.Log.CheckInfo() &&
+    if (Log_1.Log.CheckInfo()) {
       Log_1.Log.Info(
         "Login",
         9,
         "自定义服务器Port",
         ["port", e],
         ["reason", t],
-      ),
-      (this.RBn = e);
+      );
+    }
+    this.RBn = e;
   }
   TryGetRealServerPort() {
-    const e = this.GetCustomServerPort();
-    return e ? ((this.RBn = void 0), e) : this.GetServerPort();
+    var e = this.GetCustomServerPort();
+    if (e) {
+      this.RBn = undefined;
+      return e;
+    } else {
+      return this.GetServerPort();
+    }
   }
   GetCustomServerPort() {
     return this.RBn;
   }
   GetServerPort() {
-    const e = "5500";
-    let t = UE.KismetSystemLibrary.GetCommandLine().split(" ");
-    const i = t.indexOf("-LocalGameServerStartPort");
-    return i === -1 ||
+    var e = "5500";
+    var t = UE.KismetSystemLibrary.GetCommandLine().split(" ");
+    var i = t.indexOf("-LocalGameServerStartPort");
+    if (
+      i === -1 ||
       i + 1 >= t.length ||
       ((t = parseInt(t[i + 1], 10)), isNaN(t))
-      ? e
-      : (t + 1).toString();
+    ) {
+      return e;
+    } else {
+      return (t + 1).toString();
+    }
   }
   GetServerName() {
-    const e = LocalStorage_1.LocalStorage.GetGlobal(
+    var e = LocalStorage_1.LocalStorage.GetGlobal(
       LocalStorageDefine_1.ELocalStorageGlobalKey.ServerName,
       "-1",
     );
-    return e === "-1" ? void 0 : e;
+    if (e === "-1") {
+      return undefined;
+    } else {
+      return e;
+    }
   }
   SetServerName(e) {
     LocalStorage_1.LocalStorage.SetGlobal(
       LocalStorageDefine_1.ELocalStorageGlobalKey.ServerName,
       e,
-    ),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Login", 28, "当前选择服务器Name", ["serverId", e]);
+    );
+    if (Log_1.Log.CheckInfo()) {
+      Log_1.Log.Info("Login", 28, "当前选择服务器Name", ["serverId", e]);
+    }
   }
   GetServerId() {
     return LocalStorage_1.LocalStorage.GetGlobal(
@@ -438,42 +467,51 @@ class LoginModel extends ModelBase_1.ModelBase {
     LocalStorage_1.LocalStorage.SetGlobal(
       LocalStorageDefine_1.ELocalStorageGlobalKey.ServerId,
       e,
-    ),
-      EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.OnSetLoginServerId,
-      ),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Login", 28, "当前选择服务器Id", ["serverId", e]);
+    );
+    EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnSetLoginServerId);
+    if (Log_1.Log.CheckInfo()) {
+      Log_1.Log.Info("Login", 28, "当前选择服务器Id", ["serverId", e]);
+    }
   }
   GetSingleMapId() {
-    const e = LocalStorage_1.LocalStorage.GetGlobal(
+    var e = LocalStorage_1.LocalStorage.GetGlobal(
       LocalStorageDefine_1.ELocalStorageGlobalKey.SingleMapId,
       -1,
     );
-    return e === -1 ? void 0 : e;
+    if (e === -1) {
+      return undefined;
+    } else {
+      return e;
+    }
   }
   SetSingleMapId(e) {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Login", 9, "保存单人副本id", ["singleMapId", e]),
-      LocalStorage_1.LocalStorage.SetGlobal(
-        LocalStorageDefine_1.ELocalStorageGlobalKey.SingleMapId,
-        e,
-      );
+    if (Log_1.Log.CheckInfo()) {
+      Log_1.Log.Info("Login", 9, "保存单人副本id", ["singleMapId", e]);
+    }
+    LocalStorage_1.LocalStorage.SetGlobal(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.SingleMapId,
+      e,
+    );
   }
   GetMultiMapId() {
-    const e = LocalStorage_1.LocalStorage.GetGlobal(
+    var e = LocalStorage_1.LocalStorage.GetGlobal(
       LocalStorageDefine_1.ELocalStorageGlobalKey.MultiMapId,
       -1,
     );
-    return e === -1 ? void 0 : e;
+    if (e === -1) {
+      return undefined;
+    } else {
+      return e;
+    }
   }
   SetMultiMapId(e) {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Login", 9, "保存多人副本id", ["multiMapId", e]),
-      LocalStorage_1.LocalStorage.SetGlobal(
-        LocalStorageDefine_1.ELocalStorageGlobalKey.MultiMapId,
-        e,
-      );
+    if (Log_1.Log.CheckInfo()) {
+      Log_1.Log.Info("Login", 9, "保存多人副本id", ["multiMapId", e]);
+    }
+    LocalStorage_1.LocalStorage.SetGlobal(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.MultiMapId,
+      e,
+    );
   }
   GetAccount() {
     return LocalStorage_1.LocalStorage.GetGlobal(
@@ -485,16 +523,16 @@ class LoginModel extends ModelBase_1.ModelBase {
     LocalStorage_1.LocalStorage.SetGlobal(
       LocalStorageDefine_1.ELocalStorageGlobalKey.Account,
       e,
-    ),
-      this.AddRecentlyAccount(e),
-      ThirdPartySdkManager_1.ThirdPartySdkManager.SetUserInfo(e);
+    );
+    this.AddRecentlyAccount(e);
+    ThirdPartySdkManager_1.ThirdPartySdkManager.SetUserInfo(e);
   }
   GetSelectBoxActive() {
     return (
       LocalStorage_1.LocalStorage.GetGlobal(
         LocalStorageDefine_1.ELocalStorageGlobalKey.SelectBoxActive,
-        !0,
-      ) ?? !1
+        true,
+      ) ?? false
     );
   }
   SetSelectBoxActive(e) {
@@ -516,27 +554,35 @@ class LoginModel extends ModelBase_1.ModelBase {
     return this.Jvi;
   }
   SetLoginStatus(e, t = 0) {
-    e !== this.XK &&
-      (Log_1.Log.CheckInfo() &&
+    if (e !== this.XK) {
+      if (Log_1.Log.CheckInfo()) {
         Log_1.Log.Info(
           "Login",
           9,
           "登录状态变化",
           ["Before", LoginDefine_1.ELoginStatus[this.XK]],
           ["After", LoginDefine_1.ELoginStatus[e]],
-        ),
-      this.XK !== LoginDefine_1.ELoginStatus.Init &&
-      e === LoginDefine_1.ELoginStatus.Init
-        ? (Log_1.Log.CheckError() && Log_1.Log.Error("Login", 22, "登录失败"),
-          Heartbeat_1.Heartbeat.StopHeartBeat(
-            HeartbeatDefine_1.EStopHeartbeat.LoginStatusInit,
-          ),
-          (this.Jvi = this.XK))
-        : (this.Jvi = void 0),
-      (this.XK = e),
+        );
+      }
+      if (
+        this.XK !== LoginDefine_1.ELoginStatus.Init &&
+        e === LoginDefine_1.ELoginStatus.Init
+      ) {
+        if (Log_1.Log.CheckError()) {
+          Log_1.Log.Error("Login", 22, "登录失败");
+        }
+        Heartbeat_1.Heartbeat.StopHeartBeat(
+          HeartbeatDefine_1.EStopHeartbeat.LoginStatusInit,
+        );
+        this.Jvi = this.XK;
+      } else {
+        this.Jvi = undefined;
+      }
+      this.XK = e;
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.LoginStatusChange,
-      ));
+      );
+    }
   }
   IsLoginStatus(e) {
     return this.XK === e;
@@ -554,34 +600,47 @@ class LoginModel extends ModelBase_1.ModelBase {
     return this.Qvi;
   }
   GetSingleMapIp(e) {
-    if (e < this.Qvi.length) return this.Qvi[e].MapId;
+    if (e < this.Qvi.length) {
+      return this.Qvi[e].MapId;
+    }
   }
   GetServerInfoList() {
-    return this.$vi?.sort((e, t) => e.Order - t.Order), this.$vi;
+    this.$vi?.sort((e, t) => e.Order - t.Order);
+    return this.$vi;
   }
   GetServerDataList() {
     return this.Yvi;
   }
   GetServerInfo(e) {
-    if (e < this.$vi.length) return this.$vi[e];
+    if (e < this.$vi.length) {
+      return this.$vi[e];
+    }
   }
   HasReconnectInfo() {
-    return void 0 !== this.Zvi;
+    return this.Zvi !== undefined;
   }
   SetReconnectInfo(e, t, i) {
     this.Zvi = new ReconnectInfo(e, t, i);
   }
   SetReconnectToken(e) {
-    this.Zvi && (this.Zvi.Token = e);
+    if (this.Zvi) {
+      this.Zvi.Token = e;
+    }
   }
   GetReconnectToken() {
-    if (void 0 !== this.Zvi) return this.Zvi.Token;
+    if (this.Zvi !== undefined) {
+      return this.Zvi.Token;
+    }
   }
   GetReconnectHost() {
-    if (void 0 !== this.Zvi) return this.Zvi.Host;
+    if (this.Zvi !== undefined) {
+      return this.Zvi.Host;
+    }
   }
   GetReconnectPort() {
-    if (void 0 !== this.Zvi) return this.Zvi.Port;
+    if (this.Zvi !== undefined) {
+      return this.Zvi.Port;
+    }
   }
   GetPlayerName() {
     return this.M8e;
@@ -598,7 +657,7 @@ class LoginModel extends ModelBase_1.ModelBase {
   IsPlayerSexValid(e) {
     let t = e;
     return (
-      (t = void 0 === e ? this.eMi : t) === LoginDefine_1.ELoginSex.Boy ||
+      (t = e === undefined ? this.eMi : t) === LoginDefine_1.ELoginSex.Boy ||
       t === LoginDefine_1.ELoginSex.Girl
     );
   }
@@ -609,107 +668,114 @@ class LoginModel extends ModelBase_1.ModelBase {
     this.tMi = e;
   }
   CleanCreateData() {
-    (this.tMi = !1), (this.M8e = ""), (this.eMi = void 0);
+    this.tMi = false;
+    this.M8e = "";
+    this.eMi = undefined;
   }
   SetRpcHttp(e, t) {
     const i = ++this.iMi;
     t = TimerSystem_1.TimerSystem.Delay(() => {
-      this.IsLoginStatus(LoginDefine_1.ELoginStatus.LoginHttp) &&
-        (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Login", 9, "http请求超时", ["rpcId", i]),
-        this.oMi.delete(i),
-        e());
+      if (this.IsLoginStatus(LoginDefine_1.ELoginStatus.LoginHttp)) {
+        if (Log_1.Log.CheckDebug()) {
+          Log_1.Log.Debug("Login", 9, "http请求超时", ["rpcId", i]);
+        }
+        this.oMi.delete(i);
+        e();
+      }
     }, t);
-    return this.oMi.set(i, t), i;
+    this.oMi.set(i, t);
+    return i;
   }
   CleanRpcHttp(e) {
-    const t = this.oMi.get(e);
-    return !!t && (TimerSystem_1.TimerSystem.Remove(t), this.oMi.delete(e), !0);
+    return true;
+    var t = this.oMi.get(e);
+    return (
+      !!t && (TimerSystem_1.TimerSystem.Remove(t), this.oMi.delete(e), true)
+    );
   }
   AddLoginFailCount() {
-    this.pMi === 0 &&
-      ((e = ConfigManager_1.ConfigManager.LoginConfig.GetLoginFailResetTime()),
-      this.SMi(e)),
-      this.SetLoginFailCount(this.pMi + 1);
+    if (this.pMi === 0) {
+      e = ConfigManager_1.ConfigManager.LoginConfig.GetLoginFailResetTime();
+      this.SMi(e);
+    }
+    this.SetLoginFailCount(this.pMi + 1);
     var e = ConfigManager_1.ConfigManager.LoginConfig.GetLoginFailParam(
       this.pMi,
     );
     this.EMi(e);
   }
   IsThisTimeCanLogin() {
-    let e = 0.001 * Date.now();
+    var e = Date.now() * 0.001;
     if (this.pMi > 0) {
       var t = ConfigManager_1.ConfigManager.LoginConfig.GetLoginFailResetTime();
-      if (e >= this.MMi + t)
-        return (
-          this.CleanLoginFailCount(
-            LoginDefine_1.ECleanFailCountWay.RefreshTime,
-          ),
-          !0
-        );
+      if (e >= this.MMi + t) {
+        this.CleanLoginFailCount(LoginDefine_1.ECleanFailCountWay.RefreshTime);
+        return true;
+      }
     }
     t =
       this.vMi +
       ConfigManager_1.ConfigManager.LoginConfig.GetLoginFailParam(this.pMi);
     return (
       t <= e ||
-      ((e = new Date(1e3 * t)),
+      ((e = new Date(t * 1000)),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Login", 9, "下次可登录的时间戳", [
           "NextLoginTime",
           TimeUtil_1.TimeUtil.DateFormat(e),
         ]),
-      !1)
+      false)
     );
   }
   CleanLoginFailCount(e) {
-    Log_1.Log.CheckDebug() &&
+    if (Log_1.Log.CheckDebug()) {
       Log_1.Log.Debug("Login", 9, "清空登录失败信息", [
         "way",
         LoginDefine_1.ECleanFailCountWay[e],
-      ]),
-      this.SetLoginFailCount(0, !1),
-      this.EMi(0, !1),
-      this.SMi(0, !1);
+      ]);
+    }
+    this.SetLoginFailCount(0, false);
+    this.EMi(0, false);
+    this.SMi(0, false);
   }
-  SetLoginFailCount(e, t = !0) {
-    (this.pMi = e),
-      t &&
-        Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Login", 9, "登录失败次数增加", [
-          "LoginFailCount",
-          this.pMi,
-        ]);
+  SetLoginFailCount(e, t = true) {
+    this.pMi = e;
+    if (t && Log_1.Log.CheckDebug()) {
+      Log_1.Log.Debug("Login", 9, "登录失败次数增加", [
+        "LoginFailCount",
+        this.pMi,
+      ]);
+    }
   }
-  EMi(e, t = !0) {
-    (this.vMi = 0.001 * Date.now()),
-      t &&
-        ((t = new Date(1e3 * (this.vMi + e))), Log_1.Log.CheckDebug()) &&
-        Log_1.Log.Debug("Login", 9, "设置下次可登录时间", [
-          "NextLoginTime",
-          TimeUtil_1.TimeUtil.DateFormat(t),
-        ]);
+  EMi(e, t = true) {
+    this.vMi = Date.now() * 0.001;
+    if (t && ((t = new Date((this.vMi + e) * 1000)), Log_1.Log.CheckDebug())) {
+      Log_1.Log.Debug("Login", 9, "设置下次可登录时间", [
+        "NextLoginTime",
+        TimeUtil_1.TimeUtil.DateFormat(t),
+      ]);
+    }
   }
-  SMi(e, t = !0) {
-    (this.MMi = 0.001 * Date.now()),
-      t &&
-        ((t = new Date(1e3 * (this.MMi + e))), Log_1.Log.CheckDebug()) &&
-        Log_1.Log.Debug("Login", 9, "设置下次重置登录失败时间", [
-          "ResetLoginFailCountTime",
-          TimeUtil_1.TimeUtil.DateFormat(t),
-        ]);
+  SMi(e, t = true) {
+    this.MMi = Date.now() * 0.001;
+    if (t && ((t = new Date((this.MMi + e) * 1000)), Log_1.Log.CheckDebug())) {
+      Log_1.Log.Debug("Login", 9, "设置下次重置登录失败时间", [
+        "ResetLoginFailCountTime",
+        TimeUtil_1.TimeUtil.DateFormat(t),
+      ]);
+    }
   }
   FixLoginFailInfo() {
-    let e;
-    const t = 0.001 * Date.now();
-    this.MMi > t &&
-      ((e = ConfigManager_1.ConfigManager.LoginConfig.GetLoginFailResetTime()),
-      this.SMi(e)),
-      this.vMi > t &&
-        ((e = ConfigManager_1.ConfigManager.LoginConfig.GetLoginFailParam(
-          this.pMi,
-        )),
-        this.EMi(e));
+    var e;
+    var t = Date.now() * 0.001;
+    if (this.MMi > t) {
+      e = ConfigManager_1.ConfigManager.LoginConfig.GetLoginFailResetTime();
+      this.SMi(e);
+    }
+    if (this.vMi > t) {
+      e = ConfigManager_1.ConfigManager.LoginConfig.GetLoginFailParam(this.pMi);
+      this.EMi(e);
+    }
   }
   SetSdkLoginConfig(e, t, i) {
     this.rMi = new SdkLoginConfig(e, t, i);
@@ -743,32 +809,38 @@ class LoginModel extends ModelBase_1.ModelBase {
   }
   AddRecentlyAccount(i) {
     if (!StringUtils_1.StringUtils.IsEmpty(i)) {
-      for (this.dMi || (this.dMi = []); this.dMi.length >= this.mMi; )
+      for (this.dMi ||= []; this.dMi.length >= this.mMi; ) {
         this.dMi.splice(0, 1);
+      }
       let t = -1;
-      for (let e = 0; e < this.dMi.length; e++)
+      for (let e = 0; e < this.dMi.length; e++) {
         if (this.dMi[e] === i) {
           t = e;
           break;
         }
-      t !== -1 && this.dMi.splice(t, 1), this.dMi.push(i);
+      }
+      if (t !== -1) {
+        this.dMi.splice(t, 1);
+      }
+      this.dMi.push(i);
     }
   }
   InitRecentlyAccountList() {
-    (this.dMi = LocalStorage_1.LocalStorage.GetGlobal(
+    this.dMi = LocalStorage_1.LocalStorage.GetGlobal(
       LocalStorageDefine_1.ELocalStorageGlobalKey.RecentlyAccountList,
-    )),
-      this.dMi || (this.dMi = []);
+    );
+    this.dMi ||= [];
   }
   GetRecentlyAccountList() {
     return this.dMi;
   }
   SaveRecentlyAccountList() {
-    this.dMi &&
+    if (this.dMi) {
       LocalStorage_1.LocalStorage.SetGlobal(
         LocalStorageDefine_1.ELocalStorageGlobalKey.RecentlyAccountList,
         this.dMi,
       );
+    }
   }
   get LoginTraceId() {
     return this.CMi;
@@ -780,29 +852,31 @@ class LoginModel extends ModelBase_1.ModelBase {
     this.gMi = new CustomPromise_1.CustomPromise();
   }
   FinishLoginPromise() {
-    this.gMi?.SetResult(void 0);
+    this.gMi?.SetResult(undefined);
   }
   async WaitLoginPromise() {
-    await this.gMi?.Promise, (this.gMi = void 0);
+    await this.gMi?.Promise;
+    this.gMi = undefined;
   }
   HasLoginPromise() {
-    return void 0 !== this.gMi;
+    return this.gMi !== undefined;
   }
   CreateAutoLoginPromise() {
     this.fMi = new CustomPromise_1.CustomPromise();
   }
   ClearAutoLoginPromise() {
-    this.fMi = void 0;
+    this.fMi = undefined;
   }
   FinishAutoLoginPromise(e) {
     this.fMi.SetResult(e);
   }
   async WaitAutoLoginPromise() {
-    const e = await this.fMi?.Promise;
-    return (this.fMi = void 0), e;
+    var e = await this.fMi?.Promise;
+    this.fMi = undefined;
+    return e;
   }
   HasAutoLoginPromise() {
-    return void 0 !== this.fMi;
+    return this.fMi !== undefined;
   }
   get AutoLoginTimerId() {
     return this.AutoLoginTimerIdInternal;
@@ -811,10 +885,11 @@ class LoginModel extends ModelBase_1.ModelBase {
     this.AutoLoginTimerIdInternal = e;
   }
   ClearAutoLoginTimerId() {
-    void 0 !== this.AutoLoginTimerId &&
-      (TimerSystem_1.TimerSystem.Remove(this.AutoLoginTimerId),
-      (this.AutoLoginTimerId = void 0));
+    if (this.AutoLoginTimerId !== undefined) {
+      TimerSystem_1.TimerSystem.Remove(this.AutoLoginTimerId);
+      this.AutoLoginTimerId = undefined;
+    }
   }
 }
 exports.LoginModel = LoginModel;
-// # sourceMappingURL=LoginModel.js.map
+//# sourceMappingURL=LoginModel.js.map

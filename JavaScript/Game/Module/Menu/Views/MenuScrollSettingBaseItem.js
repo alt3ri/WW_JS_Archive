@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MenuScrollSettingBaseItem = void 0);
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class MenuScrollSettingBaseItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -44,4 +44,4 @@ class MenuScrollSettingBaseItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.MenuScrollSettingBaseItem = MenuScrollSettingBaseItem;
-// # sourceMappingURL=MenuScrollSettingBaseItem.js.map
+//# sourceMappingURL=MenuScrollSettingBaseItem.js.map

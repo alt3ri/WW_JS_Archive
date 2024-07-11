@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MediumItemGridCheckTickComponent = void 0);
-const UE = require("ue");
-const MediumItemGridComponent_1 = require("./MediumItemGridComponent");
+const UE = require("ue"),
+  MediumItemGridComponent_1 = require("./MediumItemGridComponent");
 class MediumItemGridCheckTickComponent extends MediumItemGridComponent_1.MediumItemGridComponent {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -14,7 +14,7 @@ class MediumItemGridCheckTickComponent extends MediumItemGridComponent_1.MediumI
     return "UiItem_ItemSelTick";
   }
   OnRefresh(e) {
-    let t = e.IsCheckTick;
+    var t = e.IsCheckTick;
     void 0 !== t &&
       (this.SetActive(t),
       void 0 !== (t = e.HexColor) && this.SetSpriteColor(t),
@@ -38,4 +38,4 @@ class MediumItemGridCheckTickComponent extends MediumItemGridComponent_1.MediumI
   }
 }
 exports.MediumItemGridCheckTickComponent = MediumItemGridCheckTickComponent;
-// # sourceMappingURL=MediumItemGridCheckTickComponent.js.map
+//# sourceMappingURL=MediumItemGridCheckTickComponent.js.map

@@ -1,5 +1,5 @@
 "use strict";
-let EItemId, EItemFunctionType;
+var EItemId, EItemFunctionType;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CALABASH_ITEM_SHOW_TYPE =
     exports.EItemFunctionType =
@@ -23,4 +23,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       exports.EItemFunctionType || (exports.EItemFunctionType = {})),
   ),
   (exports.CALABASH_ITEM_SHOW_TYPE = 41);
-// # sourceMappingURL=ItemDefines.js.map
+//# sourceMappingURL=ItemDefines.js.map

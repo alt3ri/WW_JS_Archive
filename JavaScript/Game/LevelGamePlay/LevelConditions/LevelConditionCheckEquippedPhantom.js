@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionCheckEquippedPhantom = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const PhantomBattleDefine_1 = require("../../Module/Phantom/PhantomBattle/PhantomBattleDefine");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  PhantomBattleDefine_1 = require("../../Module/Phantom/PhantomBattle/PhantomBattleDefine"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder");
 class LevelConditionCheckEquippedPhantom extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, o) {
-    let n, t;
-    return e.LimitParams.size === 0
+    var n, t;
+    return 0 === e.LimitParams.size
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
@@ -28,7 +28,7 @@ class LevelConditionCheckEquippedPhantom extends LevelGeneralBase_1.LevelConditi
                 `配置错误！条件${e.Id}的声骸位置值的范围是[1-${PhantomBattleDefine_1.MAX_EQUIP_COUNT}]`,
               ),
             !1)
-          : t !== 0 && t !== 1
+          : 0 !== t && 1 !== t
             ? (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "LevelCondition",
@@ -44,8 +44,8 @@ class LevelConditionCheckEquippedPhantom extends LevelGeneralBase_1.LevelConditi
                   e,
                   n - 1,
                 )),
-              Boolean(t) === (e !== 0)));
+              Boolean(t) === (0 !== e)));
   }
 }
 exports.LevelConditionCheckEquippedPhantom = LevelConditionCheckEquippedPhantom;
-// # sourceMappingURL=LevelConditionCheckEquippedPhantom.js.map
+//# sourceMappingURL=LevelConditionCheckEquippedPhantom.js.map

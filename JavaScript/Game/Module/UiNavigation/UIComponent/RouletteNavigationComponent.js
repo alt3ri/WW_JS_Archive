@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RouletteNavigationComponent = void 0);
-const UiNavigationNewController_1 = require("../New/UiNavigationNewController");
-const HotKeyComponent_1 = require("./HotKeyComponent");
+const UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
+  HotKeyComponent_1 = require("./HotKeyComponent");
 class RouletteNavigationComponent extends HotKeyComponent_1.HotKeyComponent {
   constructor() {
     super(...arguments), (this.FPo = void 0), (this.Pbo = !1);
@@ -14,10 +14,9 @@ class RouletteNavigationComponent extends HotKeyComponent_1.HotKeyComponent {
         UiNavigationNewController_1.UiNavigationNewController.Interact(!0));
   }
   OnRelease(e) {
-    const o =
-      UiNavigationNewController_1.UiNavigationNewController.GetCurrentNavigationFocusListener();
-    const t =
-      UiNavigationNewController_1.UiNavigationNewController.Interact(!1);
+    var o =
+        UiNavigationNewController_1.UiNavigationNewController.GetCurrentNavigationFocusListener(),
+      t = UiNavigationNewController_1.UiNavigationNewController.Interact(!1);
     this.FPo === o &&
       this.Pbo &&
       t &&
@@ -27,10 +26,10 @@ class RouletteNavigationComponent extends HotKeyComponent_1.HotKeyComponent {
   }
   OnRefreshSelfHotKeyState(e) {
     e = e.GetFocusListener();
-    void 0 !== e && e.GroupName === "Group1"
+    void 0 !== e && "Group1" === e.GroupName
       ? this.SetVisibleMode(2, !0)
       : this.SetVisibleMode(2, !1);
   }
 }
 exports.RouletteNavigationComponent = RouletteNavigationComponent;
-// # sourceMappingURL=RouletteNavigationComponent.js.map
+//# sourceMappingURL=RouletteNavigationComponent.js.map

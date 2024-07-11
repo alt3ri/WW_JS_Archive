@@ -1,31 +1,36 @@
 "use strict";
-let SceneItemProgressControlComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, s) {
-    let r;
-    const o = arguments.length;
-    let n =
-      o < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      n = Reflect.decorate(t, e, i, s);
-    else
-      for (let h = t.length - 1; h >= 0; h--)
-        (r = t[h]) && (n = (o < 3 ? r(n) : o > 3 ? r(e, i, n) : r(e, i)) || n);
-    return o > 3 && n && Object.defineProperty(e, i, n), n;
-  };
+var SceneItemProgressControlComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, s) {
+      var r,
+        o = arguments.length,
+        n =
+          o < 3
+            ? e
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        n = Reflect.decorate(t, e, i, s);
+      else
+        for (var h = t.length - 1; 0 <= h; h--)
+          (r = t[h]) &&
+            (n = (o < 3 ? r(n) : 3 < o ? r(e, i, n) : r(e, i)) || n);
+      return 3 < o && n && Object.defineProperty(e, i, n), n;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemProgressControlComponent = void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const Net_1 = require("../../../../../Core/Net/Net");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const IUtil_1 = require("../../../../../UniverseEditor/Interface/IUtil");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
+const Log_1 = require("../../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  IUtil_1 = require("../../../../../UniverseEditor/Interface/IUtil"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem");
 let SceneItemProgressControlComponent =
   (SceneItemProgressControlComponent_1 = class SceneItemProgressControlComponent extends (
     EntityComponent_1.EntityComponent
@@ -63,14 +68,14 @@ let SceneItemProgressControlComponent =
         (this.k1n = void 0),
         (this.F1n = 0),
         (this.V1n = (t) => {
-          this.Lo.Control.Type === "CaptureStrategicPoint" &&
+          "CaptureStrategicPoint" === this.Lo.Control.Type &&
             this.O1n !== t &&
             ((this.O1n = t), this.H1n());
         }),
         (this.j1n = (t, e) => {
-          const i = this.Lo.Control;
-          if (i.Type === "CaptureStrategicPoint" && e?.Valid) {
-            let s = e.Entity.GetComponent(3);
+          var i = this.Lo.Control;
+          if ("CaptureStrategicPoint" === i.Type && e?.Valid) {
+            var s = e.Entity.GetComponent(3);
             if (!s?.IsRoleAndCtrlByMe) {
               if (t) {
                 (s = i.EnemyEntitiyMatch),
@@ -95,7 +100,7 @@ let SceneItemProgressControlComponent =
         (this.Rne = void 0),
         this.q1n(),
         (t = this.Lo.Control);
-      return t.Type !== "CaptureStrategicPoint"
+      return "CaptureStrategicPoint" !== t.Type
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelPlay",
@@ -114,8 +119,8 @@ let SceneItemProgressControlComponent =
         !this.mBe || !this.Lie)
       )
         return !1;
-      const t = this.Lo.Control;
-      if (t.Type === "CaptureStrategicPoint") {
+      var t = this.Lo.Control;
+      if ("CaptureStrategicPoint" === t.Type) {
         if (((this.ktn = this.Entity.CheckGetComponent(74)), !this.ktn))
           return !1;
         this.ktn.AddOnPlayerOverlapCallback(this.V1n),
@@ -138,7 +143,7 @@ let SceneItemProgressControlComponent =
     }
     OnEnd() {
       return (
-        this.Lo.Control.Type === "CaptureStrategicPoint" &&
+        "CaptureStrategicPoint" === this.Lo.Control.Type &&
           (this.ktn &&
             (this.ktn.RemoveOnPlayerOverlapCallback(this.V1n),
             this.ktn.RemoveOnEntityOverlapCallback(this.j1n),
@@ -161,7 +166,7 @@ let SceneItemProgressControlComponent =
       );
     }
     OnTick(t) {
-      this.Lo.Control.Type === "CaptureStrategicPoint" && this.K1n(t);
+      "CaptureStrategicPoint" === this.Lo.Control.Type && this.K1n(t);
     }
     W1n() {
       this.mBe?.IsInState(2)
@@ -171,15 +176,15 @@ let SceneItemProgressControlComponent =
           );
     }
     Q1n() {
-      const t = Protocol_1.Aki.Protocol.Xns.create();
+      var t = Protocol_1.Aki.Protocol.Xns.create();
       (t.rkn = MathUtils_1.MathUtils.NumberToLong(
         this.SIe.GetCreatureDataId(),
       )),
         Net_1.Net.Call(9273, t, (t) => {});
     }
     G1n() {
-      const t = this.Lo.Control;
-      t.Type !== "CaptureStrategicPoint" ||
+      var t = this.Lo.Control;
+      "CaptureStrategicPoint" !== t.Type ||
         this.x1n?.CurrentValue !== t.MaxValue ||
         this.mBe?.IsInState(4) ||
         this.Q1n();
@@ -199,7 +204,7 @@ let SceneItemProgressControlComponent =
       this.X1n() && ((this.Rne = this.Disable(t)), this.$1n(!1));
     }
     $1n(t) {
-      this.Lo.Control.Type === "CaptureStrategicPoint" && this.H1n(),
+      "CaptureStrategicPoint" === this.Lo.Control.Type && this.H1n(),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnAnyProgressControlEnableStateChange,
           this.Entity,
@@ -222,8 +227,8 @@ let SceneItemProgressControlComponent =
       return this.x1n;
     }
     q1n() {
-      const t = this.Lo.Control;
-      t.Type === "CaptureStrategicPoint" &&
+      var t = this.Lo.Control;
+      "CaptureStrategicPoint" === t.Type &&
         (this.x1n = {
           ProgressCtrlType: t.Type,
           CurrentValue: t.InitValue,
@@ -241,12 +246,12 @@ let SceneItemProgressControlComponent =
       }
     }
     H1n() {
-      let t;
-      let e = this.F1n;
+      var t,
+        e = this.F1n;
       let i = 0;
       e !==
         (i = this.X1n()
-          ? this.k1n.size > 0
+          ? 0 < this.k1n.size
             ? this.O1n
               ? 1
               : 2
@@ -262,8 +267,8 @@ let SceneItemProgressControlComponent =
         this.Lie.NotifyLock--);
     }
     K1n(e) {
-      const i = this.Lo.Control;
-      if (i.Type === "CaptureStrategicPoint") {
+      var i = this.Lo.Control;
+      if ("CaptureStrategicPoint" === i.Type) {
         let t = 0;
         switch (this.F1n) {
           case 1:
@@ -294,4 +299,4 @@ let SceneItemProgressControlComponent =
   )),
   (exports.SceneItemProgressControlComponent =
     SceneItemProgressControlComponent);
-// # sourceMappingURL=SceneItemProgressControlComponent.js.map
+//# sourceMappingURL=SceneItemProgressControlComponent.js.map

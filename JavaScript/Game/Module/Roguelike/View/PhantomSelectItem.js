@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomSelectItem = void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const PhantomAttrItem_1 = require("./PhantomAttrItem");
+const UE = require("ue"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  PhantomAttrItem_1 = require("./PhantomAttrItem");
 class PhantomSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(t = !0) {
     super(),
@@ -39,15 +39,15 @@ class PhantomSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetExtendToggle(5).SetToggleState(2);
   }
   SetToggleUnChecked() {
-    const t = this.GetExtendToggle(5);
-    t.GetToggleState() !== 0 && t.SetToggleState(0);
+    var t = this.GetExtendToggle(5);
+    0 !== t.GetToggleState() && t.SetToggleState(0);
   }
   SetToggleRaycastTarget(t) {
     this.GetExtendToggle(5).RootUIComp.SetBubbleUpToParent(t),
       this.GetExtendToggle(5).SetSelfInteractive(t);
   }
   IsSelect() {
-    return this.GetExtendToggle(5).GetToggleState() === 1;
+    return 1 === this.GetExtendToggle(5).GetToggleState();
   }
   GetSubItem() {
     return this.GetGuideUiItem("0");
@@ -81,7 +81,7 @@ class PhantomSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.RogueGainEntry && (this.V9i(), this.Lao());
   }
   V9i() {
-    let t = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguePhantomConfig(
+    var t = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguePhantomConfig(
       this.RogueGainEntry.ConfigId,
     );
     t &&
@@ -89,7 +89,7 @@ class PhantomSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.SetTextureByPath(t.PokemonIcon, this.GetTexture(0)),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), t.PokemonSkillDesc),
       this.GetText(2).SetUIActive(
-        ModelManager_1.ModelManager.RoguelikeModel.GetDescModel() === 1,
+        1 === ModelManager_1.ModelManager.RoguelikeModel.GetDescModel(),
       ),
       (t =
         ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueQualityConfigByQualityId(
@@ -102,17 +102,17 @@ class PhantomSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.PhantomAttrLayout.RefreshByDataAsync(
       this.RogueGainEntry.AffixEntryList ?? [],
     ).then(() => {
-      if (this.NewUnlockAttrSet.size > 0) {
+      if (0 < this.NewUnlockAttrSet.size) {
         let e = 0;
         this.PhantomAttrLayout.BindLateUpdate(() => {
-          if (e === 0) e++;
+          if (0 === e) e++;
           else {
-            let t = this.GetItem(8);
-            const r = this.GetItem(9);
+            var t = this.GetItem(8),
+              r = this.GetItem(9);
             const h = this.GetVerticalLayout(3);
-            let e = h.GetSpacing() + h.GetPadding().Top;
-            let i = !1;
-            let s = h.GetPadding().Top;
+            let e = h.GetSpacing() + h.GetPadding().Top,
+              i = !1,
+              s = h.GetPadding().Top;
             this.PhantomAttrLayout.GetLayoutItemList().forEach((t) => {
               this.NewUnlockAttrSet.has(t.AffixEntry.Id) &&
                 (t.PlayComplete(), (i = !0)),
@@ -133,4 +133,4 @@ class PhantomSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.PhantomSelectItem = PhantomSelectItem;
-// # sourceMappingURL=PhantomSelectItem.js.map
+//# sourceMappingURL=PhantomSelectItem.js.map

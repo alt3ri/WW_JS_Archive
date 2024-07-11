@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OnlineProcessView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ChatController_1 = require("../../Chat/ChatController");
-const PlayerHeadItem_1 = require("../../Common/PlayerHeadItem");
-const PersonalOptionItem_1 = require("../../Personal/View/PersonalOptionItem");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ChatController_1 = require("../../Chat/ChatController"),
+  PlayerHeadItem_1 = require("../../Common/PlayerHeadItem"),
+  PersonalOptionItem_1 = require("../../Personal/View/PersonalOptionItem"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
 class OnlineProcessView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -28,26 +28,26 @@ class OnlineProcessView extends UiViewBase_1.UiViewBase {
         t = new PersonalOptionItem_1.PersonalOptionItem(t);
         return (
           t.Refresh(e, !1, i),
-          e === 1
+          1 === e
             ? (this.j6t = t)
-            : e === 2
+            : 2 === e
               ? (this.W6t = t)
-              : e === 3
+              : 3 === e
                 ? (this.K6t = t)
-                : e === 4
+                : 4 === e
                   ? (this.Q6t = t)
-                  : e === 5
+                  : 5 === e
                     ? (this.X6t = t)
-                    : e === 12
+                    : 12 === e
                       ? (this.$6t = t)
-                      : e === 13 && (this.Y6t = t),
+                      : 13 === e && (this.Y6t = t),
           { Key: i, Value: t }
         );
       }),
       (this.yEt = (e) => {
         this.j6t.GetRootItem().SetUIActive(!1),
           this.W6t.GetRootItem().SetUIActive(!1);
-        const t = ModelManager_1.ModelManager.OnlineModel.CachePlayerData;
+        var t = ModelManager_1.ModelManager.OnlineModel.CachePlayerData;
         e === t?.PlayerId &&
           ModelManager_1.ModelManager.ChatModel.IsInMute(t.PlayerId),
           this.RefreshMute();
@@ -125,14 +125,14 @@ class OnlineProcessView extends UiViewBase_1.UiViewBase {
       this.H6t.RebuildLayoutByDataNew(this.o8t());
   }
   o8t() {
-    const e = [];
+    var e = [];
     for (const t of ConfigManager_1.ConfigManager.FriendConfig.GetProcessViewFunctionList())
-      (t === 12 && !ModelManager_1.ModelManager.FunctionModel.IsOpen(10060)) ||
+      (12 === t && !ModelManager_1.ModelManager.FunctionModel.IsOpen(10060)) ||
         e.push(t);
     return e;
   }
   t8t() {
-    const e = ModelManager_1.ModelManager.OnlineModel.CachePlayerData;
+    var e = ModelManager_1.ModelManager.OnlineModel.CachePlayerData;
     (ModelManager_1.ModelManager.FriendModel.SelectedPlayerId = e.PlayerId),
       this.w6t(),
       this.g6t.RefreshByHeadPhotoId(e.HeadId),
@@ -140,35 +140,34 @@ class OnlineProcessView extends UiViewBase_1.UiViewBase {
       this.yEt(e.PlayerId);
   }
   RefreshMute() {
-    var e = ModelManager_1.ModelManager.OnlineModel.CachePlayerData;
-    var e = ModelManager_1.ModelManager.ChatModel.IsInMute(e.PlayerId);
+    var e = ModelManager_1.ModelManager.OnlineModel.CachePlayerData,
+      e = ModelManager_1.ModelManager.ChatModel.IsInMute(e.PlayerId);
     this.GetItem(8).SetUIActive(e);
   }
   C4e() {
-    const e = ModelManager_1.ModelManager.OnlineModel.CachePlayerData;
-    let t = ModelManager_1.ModelManager.FriendModel.IsMyFriend(e.PlayerId);
-    const i = this.GetText(2);
+    var e = ModelManager_1.ModelManager.OnlineModel.CachePlayerData,
+      t = ModelManager_1.ModelManager.FriendModel.IsMyFriend(e.PlayerId),
+      i = this.GetText(2);
     t &&
     void 0 !==
       (t = ModelManager_1.ModelManager.FriendModel.GetFriendById(
         e.PlayerId,
       )?.FriendRemark) &&
-    t !== ""
+    "" !== t
       ? (i.SetText(`(${t})`), (i.useChangeColor = !0))
       : (i.SetText(e?.Name), (i.useChangeColor = !1));
   }
   r8t() {
-    const e =
-      ModelManager_1.ModelManager.OnlineModel.CachePlayerData?.Signature;
-    const t = this.GetText(11);
-    e && e !== "" ? t.SetText(e) : t.SetText("");
+    var e = ModelManager_1.ModelManager.OnlineModel.CachePlayerData?.Signature,
+      t = this.GetText(11);
+    e && "" !== e ? t.SetText(e) : t.SetText("");
   }
   w6t() {
-    var e = ModelManager_1.ModelManager.OnlineModel.CachePlayerData;
-    var e =
-      (this.C4e(),
-      this.r8t(),
-      ModelManager_1.ModelManager.FriendModel.IsMyFriend(e.PlayerId));
+    var e = ModelManager_1.ModelManager.OnlineModel.CachePlayerData,
+      e =
+        (this.C4e(),
+        this.r8t(),
+        ModelManager_1.ModelManager.FriendModel.IsMyFriend(e.PlayerId));
     this.Y6t.GetRootItem().SetUIActive(e),
       this.W6t.GetRootItem().SetUIActive(!1),
       this.X6t.GetRootItem().SetUIActive(!0),
@@ -182,4 +181,4 @@ class OnlineProcessView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.OnlineProcessView = OnlineProcessView;
-// # sourceMappingURL=OnlineProcessView.js.map
+//# sourceMappingURL=OnlineProcessView.js.map

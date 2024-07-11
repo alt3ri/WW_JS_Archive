@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExploreAreaItem = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const ExploreProgressDefine_1 = require("../ExploreProgressDefine");
+const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ExploreProgressDefine_1 = require("../ExploreProgressDefine");
 class ExploreAreaItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -13,7 +13,7 @@ class ExploreAreaItem extends UiPanelBase_1.UiPanelBase {
       (this.EVe = void 0),
       (this.yAt = void 0),
       (this.OnExtendToggleStateChanged = (e) => {
-        this.EVe && this.EVe(this, this.Pe, e === 1);
+        this.EVe && this.EVe(this, this.Pe, 1 === e);
       }),
       (this.DTt = () => !this.yAt || this.yAt());
   }
@@ -39,12 +39,12 @@ class ExploreAreaItem extends UiPanelBase_1.UiPanelBase {
       this.GetExtendToggle(4).CanExecuteChange.Unbind();
   }
   Refresh(e) {
-    const i = (this.Pe = e).AreaId;
-    const t =
-      ModelManager_1.ModelManager.AreaModel.GetCurrentAreaId(
-        ExploreProgressDefine_1.AREA_LEVEL,
-      ) === i;
-    const s = ModelManager_1.ModelManager.ExploreProgressModel.SelectedAreaId;
+    var i = (this.Pe = e).AreaId,
+      t =
+        ModelManager_1.ModelManager.AreaModel.GetCurrentAreaId(
+          ExploreProgressDefine_1.AREA_LEVEL,
+        ) === i,
+      s = ModelManager_1.ModelManager.ExploreProgressModel.SelectedAreaId;
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e.NameId),
       this.GetText(2).SetText(Math.floor(e.Progress).toString() + "%"),
       this.GetItem(3).SetUIActive(!1),
@@ -64,4 +64,4 @@ class ExploreAreaItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ExploreAreaItem = ExploreAreaItem;
-// # sourceMappingURL=ExploreAreaItem.js.map
+//# sourceMappingURL=ExploreAreaItem.js.map

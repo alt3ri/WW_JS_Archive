@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PopupCaptionItem = void 0);
-const UE = require("ue");
-const CommonCurrencyItemListComponent_1 = require("../../Module/Common/CommonCurrencyItemListComponent");
-const LguiUtil_1 = require("../../Module/Util/LguiUtil");
-const UiPanelBase_1 = require("../Base/UiPanelBase");
+const UE = require("ue"),
+  CommonCurrencyItemListComponent_1 = require("../../Module/Common/CommonCurrencyItemListComponent"),
+  LguiUtil_1 = require("../../Module/Util/LguiUtil"),
+  UiPanelBase_1 = require("../Base/UiPanelBase");
 class PopupCaptionItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -90,4 +90,4 @@ class PopupCaptionItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.PopupCaptionItem = PopupCaptionItem;
-// # sourceMappingURL=PopupCaptionItem.js.map
+//# sourceMappingURL=PopupCaptionItem.js.map

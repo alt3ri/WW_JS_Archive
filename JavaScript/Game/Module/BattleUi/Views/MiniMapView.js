@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MiniMapView = void 0);
-const UE = require("ue");
-const Stats_1 = require("../../../../Core/Common/Stats");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const GeneralLogicTreeUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeUtil");
-const MapDefine_1 = require("../../Map/MapDefine");
-const MapUtil_1 = require("../../Map/MapUtil");
-const MiniMap_1 = require("../../Map/View/BaseMap/MiniMap");
-const WorldMapController_1 = require("../../WorldMap/WorldMapController");
-const BattleVisibleChildView_1 = require("./BattleChildView/BattleVisibleChildView");
-const UPDATE_INTERVAL = 100;
+const UE = require("ue"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  GeneralLogicTreeUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeUtil"),
+  MapDefine_1 = require("../../Map/MapDefine"),
+  MapUtil_1 = require("../../Map/MapUtil"),
+  MiniMap_1 = require("../../Map/View/BaseMap/MiniMap"),
+  WorldMapController_1 = require("../../WorldMap/WorldMapController"),
+  BattleVisibleChildView_1 = require("./BattleChildView/BattleVisibleChildView"),
+  UPDATE_INTERVAL = 100;
 class MiniMapView extends BattleVisibleChildView_1.BattleVisibleChildView {
   constructor() {
     super(...arguments),
@@ -30,7 +30,7 @@ class MiniMapView extends BattleVisibleChildView_1.BattleVisibleChildView {
         WorldMapController_1.WorldMapController.OpenView(1, !0);
       }),
       (this.RefreshShow = () => {
-        let e, i, t;
+        var e, i, t;
         this.y_t &&
           (t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity)
             ?.Valid &&
@@ -54,10 +54,10 @@ class MiniMapView extends BattleVisibleChildView_1.BattleVisibleChildView {
     super.Initialize(e), this.InitChildType(4), (this.y_t = !1);
   }
   async InitializeAsync() {
-    let e;
-    let i = ConfigManager_1.ConfigManager.WorldMapConfig.GetAkiMapConfig(
-      MapDefine_1.BIG_WORLD_MAP_ID,
-    );
+    var e,
+      i = ConfigManager_1.ConfigManager.WorldMapConfig.GetAkiMapConfig(
+        MapDefine_1.BIG_WORLD_MAP_ID,
+      );
     i &&
       ((e = this.GetItem(0)),
       (this.I_t = this.GetItem(4)),
@@ -105,7 +105,7 @@ class MiniMapView extends BattleVisibleChildView_1.BattleVisibleChildView {
       (this.BtnBindInfo = [[3, this.T_t]]);
   }
   R_t() {
-    let e, i, t;
+    var e, i, t;
     this.IsUiActiveInHierarchy() &&
       (e = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation()) &&
       ((i = Vector2D_1.Vector2D.Create(e.X, e.Y)),
@@ -128,13 +128,13 @@ class MiniMapView extends BattleVisibleChildView_1.BattleVisibleChildView {
     this.SetVisible(1, e);
   }
   U_t() {
-    const e = this.E_t.GetRootItem();
-    var i = e.GetAnchorOffset();
-    var i = (this.I_t.SetAnchorOffset(i), e.RelativeScale3D);
+    var e = this.E_t.GetRootItem(),
+      i = e.GetAnchorOffset(),
+      i = (this.I_t.SetAnchorOffset(i), e.RelativeScale3D);
     this.I_t.SetRelativeScale3D(i),
       this.I_t.SetWidth(e.Width),
       this.I_t.SetHeight(e.Height);
   }
 }
 (exports.MiniMapView = MiniMapView).D_t = void 0;
-// # sourceMappingURL=MiniMapView.js.map
+//# sourceMappingURL=MiniMapView.js.map

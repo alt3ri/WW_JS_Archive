@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AudioEventPool = void 0);
-const UE = require("ue");
-const Log_1 = require("../Common/Log");
-const Time_1 = require("../Common/Time");
-const ResourceSystem_1 = require("../Resource/ResourceSystem");
+const UE = require("ue"),
+  Log_1 = require("../Common/Log"),
+  Time_1 = require("../Common/Time"),
+  ResourceSystem_1 = require("../Resource/ResourceSystem");
 class AudioEventPoolItem {
   constructor() {
     (this.AudioEvent = void 0), (this.LastActiveTime = 0);
@@ -35,12 +35,12 @@ class AudioEventPool {
   async GetAudioEvent(o) {
     return new Promise((t, i) => {
       const s = this.K6.get(o);
-      let e;
+      var e;
       s?.AudioEvent?.IsValid()
         ? ((s.LastActiveTime = Time_1.Time.Now), t(s.AudioEvent))
         : ((e = `/Game/Aki/WwiseAudio/Events/${o}.` + o),
           ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.AkAudioEvent, (i) => {
-            let e;
+            var e;
             i?.IsValid()
               ? (Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
@@ -70,9 +70,9 @@ class AudioEventPool {
   Tick(i) {
     if (this.PVs) {
       let i = this.BVs;
-      for (; i >= 0 && i > this.BVs - 5; ) {
-        const e = this.xVs[i];
-        const t = this.K6.get(e);
+      for (; 0 <= i && i > this.BVs - 5; ) {
+        var e = this.xVs[i],
+          t = this.K6.get(e);
         t?.AudioEvent?.IsValid()
           ? UE.AkGameplayStatics.IsAudioEventActive(t.AudioEvent)
             ? (t.LastActiveTime = Time_1.Time.Now)
@@ -89,4 +89,4 @@ class AudioEventPool {
   }
 }
 exports.AudioEventPool = AudioEventPool;
-// # sourceMappingURL=AudioEventPool.js.map
+//# sourceMappingURL=AudioEventPool.js.map

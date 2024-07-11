@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemGridVariantSelect = void 0);
-const UE = require("ue");
-const ItemGridAbstract_1 = require("./ItemGridAbstract");
-const ItemGridVariantOne_1 = require("./ItemGridVariantOne");
+const UE = require("ue"),
+  ItemGridAbstract_1 = require("./ItemGridAbstract"),
+  ItemGridVariantOne_1 = require("./ItemGridVariantOne");
 class ItemGridVariantSelect extends ItemGridAbstract_1.ItemGridAbstract {
   constructor() {
     super(...arguments),
@@ -132,4 +132,4 @@ class ItemGridVariantSelect extends ItemGridAbstract_1.ItemGridAbstract {
   }
 }
 exports.ItemGridVariantSelect = ItemGridVariantSelect;
-// # sourceMappingURL=ItemGridVariantSelect.js.map
+//# sourceMappingURL=ItemGridVariantSelect.js.map

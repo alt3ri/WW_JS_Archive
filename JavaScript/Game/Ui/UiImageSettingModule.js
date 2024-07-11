@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiImageSettingModule = void 0);
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const ResourceSystem_1 = require("../../Core/Resource/ResourceSystem");
-const GlobalData_1 = require("../GlobalData");
-const ConfigManager_1 = require("../Manager/ConfigManager");
-const UiConfig_1 = require("./Define/UiConfig");
-const UiResourceLoadModule_1 = require("./UiResourceLoadModule");
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../Core/Resource/ResourceSystem"),
+  GlobalData_1 = require("../GlobalData"),
+  ConfigManager_1 = require("../Manager/ConfigManager"),
+  UiConfig_1 = require("./Define/UiConfig"),
+  UiResourceLoadModule_1 = require("./UiResourceLoadModule");
 class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
   SetSpriteByPathSync(e, t, i, o, n = void 0) {
     GlobalData_1.GlobalData.World &&
@@ -68,17 +68,18 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
     this.SetQualityIconByIdAsync(e, t.QualityId, i, o);
   }
   cdr(e, t, i) {
-    var t = ConfigManager_1.ConfigManager.CommonConfig.GetItemQualityById(t);
-    var e = e.ComponentTags;
-    return e.Num() === 0
+    var t = ConfigManager_1.ConfigManager.CommonConfig.GetItemQualityById(t),
+      e = e.ComponentTags;
+    return 0 === e.Num()
       ? t[i]
       : ((i = e.Get(0).toString()),
+        "string" !=
         typeof t[
           (e =
             ConfigManager_1.ConfigManager.ComponentConfig.GetQualityConfigParam(
               i,
             ))
-        ] !== "string"
+        ]
           ? (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "UiImageSetting",
@@ -145,16 +146,17 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
       this.SetResourceId(i, e));
   }
   mdr(e, t) {
-    let i;
-    var t = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t);
-    var e = e.ComponentTags;
-    return e.Num() === 0
+    var i,
+      t = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t),
+      e = e.ComponentTags;
+    return 0 === e.Num()
       ? t.Icon
       : ((e = e.Get(0).toString()),
+        "string" !=
         typeof t[
           (i =
             ConfigManager_1.ConfigManager.ComponentConfig.GetItemConfigParam(e))
-        ] !== "string"
+        ]
           ? (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "UiImageSetting",
@@ -175,14 +177,15 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
   }
   ddr(e, t, i) {
     var t = t.ComponentTags;
-    return t.Num() === 0
+    return 0 === t.Num()
       ? e
       : ((e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i)),
         (i = t.Get(0).toString()),
+        "string" !=
         typeof e[
           (t =
             ConfigManager_1.ConfigManager.ComponentConfig.GetRoleConfigParam(i))
-        ] !== "string"
+        ]
           ? (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "UiImageSetting",
@@ -203,17 +206,18 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
   }
   Cdr(e, t, i) {
     var t = t.ComponentTags;
-    return t.Num() === 0
+    return 0 === t.Num()
       ? e
       : ((e =
           ConfigManager_1.ConfigManager.ElementInfoConfig.GetElementInfo(i)),
         (i = t.Get(0).toString()),
+        "string" !=
         typeof e[
           (t =
             ConfigManager_1.ConfigManager.ComponentConfig.GetElementConfigParam(
               i,
             ))
-        ] !== "string"
+        ]
           ? (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "UiImageSetting",
@@ -233,20 +237,21 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
     this.SetTextureByPathAsync(e, t);
   }
   gdr(e, t, i) {
-    let o;
-    var t = t.ComponentTags;
-    return t.Num() !== 0 && i
+    var o,
+      t = t.ComponentTags;
+    return 0 !== t.Num() && i
       ? ((i =
           ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterInfoConfig(
             i,
           )),
         (t = t.Get(0).toString()),
+        "string" !=
         typeof i[
           (o =
             ConfigManager_1.ConfigManager.ComponentConfig.GetMonsterConfigParam(
               t,
             ))
-        ] !== "string"
+        ]
           ? (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "LguiUtil",
@@ -267,20 +272,21 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
     this.SetTextureByPathAsync(e, t);
   }
   fdr(e, t, i) {
-    let o;
-    var t = t.ComponentTags;
-    return t.Num() !== 0 && i
+    var o,
+      t = t.ComponentTags;
+    return 0 !== t.Num() && i
       ? ((i =
           ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.GetConfig(
             i,
           )),
         (t = t.Get(0).toString()),
+        "string" !=
         typeof i[
           (o =
             ConfigManager_1.ConfigManager.ComponentConfig.GetDungeonEntranceConfigParam(
               t,
             ))
-        ] !== "string"
+        ]
           ? (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "LguiUtil",
@@ -349,4 +355,4 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
   }
 }
 exports.UiImageSettingModule = UiImageSettingModule;
-// # sourceMappingURL=UiImageSettingModule.js.map
+//# sourceMappingURL=UiImageSettingModule.js.map

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AchievementProgressConfirmItem = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class AchievementProgressConfirmItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
@@ -27,4 +27,4 @@ class AchievementProgressConfirmItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.AchievementProgressConfirmItem = AchievementProgressConfirmItem;
-// # sourceMappingURL=AchievementProgressConfirmItem.js.map
+//# sourceMappingURL=AchievementProgressConfirmItem.js.map

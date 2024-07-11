@@ -1,5 +1,5 @@
 "use strict";
-let EBeginHeartbeat, EStopHeartbeat;
+var EBeginHeartbeat, EStopHeartbeat;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EStopHeartbeat = exports.EBeginHeartbeat = void 0),
   (function (e) {
@@ -18,4 +18,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   })(
     (EStopHeartbeat = exports.EStopHeartbeat || (exports.EStopHeartbeat = {})),
   );
-// # sourceMappingURL=HeartbeatDefine.js.map
+//# sourceMappingURL=HeartbeatDefine.js.map

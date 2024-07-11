@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowController = exports.LOCAL_FLOWINCID = void 0);
-const ControllerWithAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerWithAssistantBase");
-const FlowActionCenter_1 = require("./FlowActionCenter");
-const FlowActionRunner_1 = require("./FlowActionRunner");
-const FlowLaunchCenter_1 = require("./FlowLaunchCenter");
-const FlowNetworks_1 = require("./FlowNetworks");
-const FlowServerNotifyCenter_1 = require("./FlowServerNotifyCenter");
-const assistantMap =
-  ((exports.LOCAL_FLOWINCID = -1),
-  { 0: void 0, 1: void 0, 2: void 0, 3: void 0 });
+const ControllerWithAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerWithAssistantBase"),
+  FlowActionCenter_1 = require("./FlowActionCenter"),
+  FlowActionRunner_1 = require("./FlowActionRunner"),
+  FlowLaunchCenter_1 = require("./FlowLaunchCenter"),
+  FlowNetworks_1 = require("./FlowNetworks"),
+  FlowServerNotifyCenter_1 = require("./FlowServerNotifyCenter"),
+  assistantMap =
+    ((exports.LOCAL_FLOWINCID = -1),
+    { [0]: void 0, 1: void 0, 2: void 0, 3: void 0 });
 class FlowController extends ControllerWithAssistantBase_1.ControllerWithAssistantBase {
   static OnInit() {
-    const t = super.OnInit();
+    var t = super.OnInit();
     return FlowNetworks_1.FlowNetworks.Register(), t;
   }
   static OnClear() {
@@ -118,4 +118,4 @@ class FlowController extends ControllerWithAssistantBase_1.ControllerWithAssista
   }
 }
 (exports.FlowController = FlowController).IsTickEvenPausedInternal = !0;
-// # sourceMappingURL=FlowController.js.map
+//# sourceMappingURL=FlowController.js.map

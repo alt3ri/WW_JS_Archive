@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomBattleFettersView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../../../Ui/Common/PopupCaptionItem");
-const UiManager_1 = require("../../../../Ui/UiManager");
-const PhantomBattleFettersViewItem_1 = require("./PhantomBattleFettersViewItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../../../Ui/Common/PopupCaptionItem"),
+  UiManager_1 = require("../../../../Ui/UiManager"),
+  PhantomBattleFettersViewItem_1 = require("./PhantomBattleFettersViewItem");
 class PhantomBattleFettersView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -17,7 +17,7 @@ class PhantomBattleFettersView extends UiViewBase_1.UiViewBase {
       (this.ZVi = () => {
         ModelManager_1.ModelManager.PhantomBattleModel.CurrentSelectFetterGroupId =
           this.Rpt.GetCurrentSelectGroupId();
-        let e = UiManager_1.UiManager.GetViewByName("VisionEquipmentView");
+        var e = UiManager_1.UiManager.GetViewByName("VisionEquipmentView");
         e
           ? (UiManager_1.UiManager.CloseView(this.Info.Name),
             e.SetActive(!0),
@@ -50,8 +50,8 @@ class PhantomBattleFettersView extends UiViewBase_1.UiViewBase {
       });
   }
   OnBeforeShow() {
-    const e = this.OpenParam;
-    e > 0 && this.Rpt.SelectByFetterId(e);
+    var e = this.OpenParam;
+    0 < e && this.Rpt.SelectByFetterId(e);
   }
   async OnPlayingStartSequenceAsync() {
     await this.Rpt?.PlayStartSequence();
@@ -61,4 +61,4 @@ class PhantomBattleFettersView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.PhantomBattleFettersView = PhantomBattleFettersView;
-// # sourceMappingURL=PhantomBattleFettersView.js.map
+//# sourceMappingURL=PhantomBattleFettersView.js.map

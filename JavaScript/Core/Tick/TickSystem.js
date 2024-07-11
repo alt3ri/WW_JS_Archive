@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TickSystem = exports.Ticker = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../Common/Log");
-const Stats_1 = require("../Common/Stats");
-const Time_1 = require("../Common/Time");
-const SECOND_TO_MILLISECOND = 1e3;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../Common/Log"),
+  Stats_1 = require("../Common/Stats"),
+  Time_1 = require("../Common/Time"),
+  SECOND_TO_MILLISECOND = 1e3;
 class Ticker {
   constructor(t, i, s, e, r = 0, c = !1) {
     (this.Id = t),
@@ -37,16 +37,16 @@ class TickSystem {
     (this.CJ = new UE.KuroTickManager(t)), this.gJ.clear(), this.fJ.clear();
   }
   static Destroy() {
-    for (const [, t] of this.pJ) (0, puerts_1.releaseManualReleaseDelegate)(t);
+    for (var [, t] of this.pJ) (0, puerts_1.releaseManualReleaseDelegate)(t);
     this.CJ.ClearTick();
   }
   static Has(t) {
-    return t > 0 && this.gJ.has(t);
+    return 0 < t && this.gJ.has(t);
   }
   static Add(t, i, s = 0, r = !1) {
     if (t) {
-      const c = ++this.o6;
-      var i = new Ticker(c, t, s, i, 0, r);
+      var c = ++this.o6,
+        i = new Ticker(c, t, s, i, 0, r);
       this.gJ.set(c, i);
       let e = this.fJ.get(s);
       return (
@@ -57,7 +57,7 @@ class TickSystem {
             this.pJ.set(
               s,
               (r = (t) => {
-                const i = t * SECOND_TO_MILLISECOND;
+                var i = t * SECOND_TO_MILLISECOND;
                 for (const s of e)
                   (this.IsPaused && !s.TickEvenPaused) || this.vJ(s, i);
               }),
@@ -70,7 +70,7 @@ class TickSystem {
       Log_1.Log.Error("Tick", 1, "处理方法不存在", ["handle", t]);
   }
   static Remove(t) {
-    const i = this.gJ.get(t);
+    var i = this.gJ.get(t);
     if (!i)
       return (
         Log_1.Log.CheckError() &&
@@ -78,10 +78,10 @@ class TickSystem {
         !1
       );
     this.gJ.delete(t);
-    let s = this.fJ.get(i.Group);
+    var s = this.fJ.get(i.Group);
     return s
       ? (s.delete(i),
-        s.size === 0 &&
+        0 === s.size &&
           (this.fJ.delete(i.Group),
           (s = this.pJ.get(i.Group)),
           this.pJ.delete(i.Group),
@@ -99,7 +99,7 @@ class TickSystem {
         !1);
   }
   static Pause(t) {
-    const i = this.gJ.get(t);
+    var i = this.gJ.get(t);
     return i
       ? (i.Pause = !0)
       : (Log_1.Log.CheckError() &&
@@ -107,7 +107,7 @@ class TickSystem {
         !1);
   }
   static Resume(t) {
-    const i = this.gJ.get(t);
+    var i = this.gJ.get(t);
     return i
       ? !(i.Pause = !1)
       : (Log_1.Log.CheckError() &&
@@ -117,7 +117,7 @@ class TickSystem {
   static vJ(i, s) {
     if (!i.Pause) {
       let t = s;
-      if (i.TickIntervalMs > 0) {
+      if (0 < i.TickIntervalMs) {
         if (((i.CoolDown += s), i.CoolDown < i.TickIntervalMs)) return;
         s = i.CoolDown % i.TickIntervalMs;
         (t = i.CoolDown - s), (i.CoolDown = s);
@@ -168,4 +168,4 @@ class TickSystem {
   (TickSystem.gJ = new Map()),
   (TickSystem.pJ = new Map()),
   (TickSystem.fJ = new Map());
-// # sourceMappingURL=TickSystem.js.map
+//# sourceMappingURL=TickSystem.js.map

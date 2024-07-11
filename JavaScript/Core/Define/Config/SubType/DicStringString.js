@@ -15,13 +15,13 @@ class DicStringString {
     );
   }
   key(t) {
-    const i = this.J7.__offset(this.z7, 4);
+    var i = this.J7.__offset(this.z7, 4);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   value(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.DicStringString = DicStringString;
-// # sourceMappingURL=DicStringString.js.map
+//# sourceMappingURL=DicStringString.js.map

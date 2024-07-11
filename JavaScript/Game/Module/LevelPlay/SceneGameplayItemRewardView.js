@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneGameplayItemRewardView = void 0);
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const CommonResultButtonData_1 = require("../Common/ResultView/CommonResultButtonData");
-const CommonResultView_1 = require("../Common/ResultView/CommonResultView");
-const ItemHintController_1 = require("../ItemHint/ItemHintController");
+const EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  CommonResultButtonData_1 = require("../Common/ResultView/CommonResultButtonData"),
+  CommonResultView_1 = require("../Common/ResultView/CommonResultView"),
+  ItemHintController_1 = require("../ItemHint/ItemHintController");
 class SceneGameplayItemRewardView extends CommonResultView_1.CommonResultView {
   constructor() {
     super(...arguments),
@@ -49,24 +49,24 @@ class SceneGameplayItemRewardView extends CommonResultView_1.CommonResultView {
   }
   Yhi() {
     var e =
-      ModelManager_1.ModelManager.ItemHintModel.ShiftItemRewardListFirst();
-    var e = ItemHintController_1.ItemHintController.CombineAllShowItems(
-      e.ItemReward,
-      !0,
-    );
-    var e = ItemHintController_1.ItemHintController.ConvertRewardListToItem(e);
+        ModelManager_1.ModelManager.ItemHintModel.ShiftItemRewardListFirst(),
+      e = ItemHintController_1.ItemHintController.CombineAllShowItems(
+        e.ItemReward,
+        !0,
+      ),
+      e = ItemHintController_1.ItemHintController.ConvertRewardListToItem(e);
     this.RewardLayout.RebuildLayoutByDataNew(e);
   }
   SetupButtonFormat() {
-    const e = this.zli();
+    var e = this.zli();
     this.RefreshButtonList(e);
   }
   zli() {
-    const e = new Array();
+    var e = new Array();
     return e.push(this.Zli()), e;
   }
   Zli() {
-    const e = new CommonResultButtonData_1.CommonResultButtonData();
+    var e = new CommonResultButtonData_1.CommonResultButtonData();
     return (
       e.SetRefreshCallBack((e) => {
         e.SetBtnText("ButtonTextConfirm");
@@ -77,4 +77,4 @@ class SceneGameplayItemRewardView extends CommonResultView_1.CommonResultView {
   }
 }
 exports.SceneGameplayItemRewardView = SceneGameplayItemRewardView;
-// # sourceMappingURL=SceneGameplayItemRewardView.js.map
+//# sourceMappingURL=SceneGameplayItemRewardView.js.map

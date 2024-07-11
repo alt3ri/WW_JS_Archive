@@ -13,4 +13,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.parseEditorCommand = exports.parseGameCommand = void 0),
   (exports.parseGameCommand = parseGameCommand),
   (exports.parseEditorCommand = parseEditorCommand);
-// # sourceMappingURL=ICommand.js.map
+//# sourceMappingURL=ICommand.js.map

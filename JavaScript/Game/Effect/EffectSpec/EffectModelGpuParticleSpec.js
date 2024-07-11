@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelGpuParticleSpec = void 0);
-const UE = require("ue");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper");
-const EffectSpec_1 = require("./EffectSpec");
+const UE = require("ue"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper"),
+  EffectSpec_1 = require("./EffectSpec");
 class EffectModelGpuParticleSpec extends EffectSpec_1.EffectSpec {
   constructor() {
     super(...arguments),
@@ -15,7 +15,7 @@ class EffectModelGpuParticleSpec extends EffectSpec_1.EffectSpec {
       (this.CachedScaleCurve = void 0);
   }
   OnInit() {
-    let t, i;
+    var t, i;
     return (
       !!this.EffectModel?.Data &&
       ((t = this.Handle.GetSureEffectActor()),
@@ -39,7 +39,7 @@ class EffectModelGpuParticleSpec extends EffectSpec_1.EffectSpec {
         this.CachedRotationCurve.bUseCurve ||
         this.CachedScaleCurve.bUseCurve),
       (this.SceneComponent = this.GpuMeshComponent),
-      this.GpuMeshComponent.SetIsUIScenePrimitive(this.GetEffectType() === 1),
+      this.GpuMeshComponent.SetIsUIScenePrimitive(1 === this.GetEffectType()),
       (this.GpuMeshComponent.bReceivesDecals = !1),
       (this.GpuMeshComponent.CastShadow = !1),
       (this.GpuMeshComponent.MobileCastShadow = !1),
@@ -100,8 +100,8 @@ class EffectModelGpuParticleSpec extends EffectSpec_1.EffectSpec {
   }
   OnEffectTypeChange() {
     this.GpuMeshComponent?.IsValid() &&
-      this.GpuMeshComponent.SetIsUIScenePrimitive(this.GetEffectType() === 1);
+      this.GpuMeshComponent.SetIsUIScenePrimitive(1 === this.GetEffectType());
   }
 }
 exports.EffectModelGpuParticleSpec = EffectModelGpuParticleSpec;
-// # sourceMappingURL=EffectModelGpuParticleSpec.js.map
+//# sourceMappingURL=EffectModelGpuParticleSpec.js.map

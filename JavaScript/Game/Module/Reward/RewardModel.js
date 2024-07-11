@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RewardModel = void 0);
-const UE = require("ue");
-const QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon");
-const GlobalData_1 = require("../../GlobalData");
-const CHECK_GROUND_PROFILE_KEY = "RewardModel_CheckGroundHit";
-const CHECK_WATER_PROFILE_KEY = "RewardModel_CheckWaterHit";
+const UE = require("ue"),
+  QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon"),
+  GlobalData_1 = require("../../GlobalData"),
+  CHECK_GROUND_PROFILE_KEY = "RewardModel_CheckGroundHit",
+  CHECK_WATER_PROFILE_KEY = "RewardModel_CheckWaterHit";
 class RewardModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments), (this.yso = void 0), (this.Iso = void 0);
@@ -51,4 +51,4 @@ class RewardModel extends ModelBase_1.ModelBase {
   }
 }
 exports.RewardModel = RewardModel;
-// # sourceMappingURL=RewardModel.js.map
+//# sourceMappingURL=RewardModel.js.map

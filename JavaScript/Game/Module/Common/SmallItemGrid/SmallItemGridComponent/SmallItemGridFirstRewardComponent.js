@@ -8,4 +8,4 @@ class SmallItemGridFirstRewardComponent extends SmallItemGridVisibleComponent_1.
   }
 }
 exports.SmallItemGridFirstRewardComponent = SmallItemGridFirstRewardComponent;
-// # sourceMappingURL=SmallItemGridFirstRewardComponent.js.map
+//# sourceMappingURL=SmallItemGridFirstRewardComponent.js.map

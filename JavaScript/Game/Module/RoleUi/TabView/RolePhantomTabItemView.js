@@ -4,13 +4,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.RolePhantomItem =
     exports.RolePhantomAttributeItem =
       void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class RolePhantomAttributeItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(), this.CreateThenShowByActor(t.GetOwner());
@@ -23,7 +23,7 @@ class RolePhantomAttributeItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   ShowTemp(t) {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
         t.Id,
       );
@@ -50,14 +50,14 @@ class RolePhantomItem extends UiPanelBase_1.UiPanelBase {
       }),
       (this.OnClickSkillButton = () => {
         var t =
-          ModelManager_1.ModelManager.RoleModel.GetCurSelectMainRoleInstance()
-            .GetPhantomData()
-            .GetDataByIndex(this.Index);
-        var t = {
-          SkillInfoData: 0,
-          SkillId: this.Id,
-          SkillLevel: t.GetPhantomLevel(),
-        };
+            ModelManager_1.ModelManager.RoleModel.GetCurSelectMainRoleInstance()
+              .GetPhantomData()
+              .GetDataByIndex(this.Index),
+          t = {
+            SkillInfoData: 0,
+            SkillId: this.Id,
+            SkillLevel: t.GetPhantomLevel(),
+          };
         UiManager_1.UiManager.OpenView("PhantomBattleSkillInfoView", t);
       }),
       this.CreateThenShowByActor(t.GetOwner()),
@@ -78,11 +78,11 @@ class RolePhantomItem extends UiPanelBase_1.UiPanelBase {
     (this.Id = t), this.Kbe(), this.Pqt(), this.sct();
   }
   UpdateTrialItem(t) {
-    let e;
-    this.GetSprite(2).SetUIActive(t !== 0),
-      this.GetTexture(1).SetUIActive(t !== 0),
-      this.GetItem(4).SetUIActive(t !== 0),
-      t !== 0 &&
+    var e;
+    this.GetSprite(2).SetUIActive(0 !== t),
+      this.GetTexture(1).SetUIActive(0 !== t),
+      this.GetItem(4).SetUIActive(0 !== t),
+      0 !== t &&
         ((e =
           ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t)),
         (e = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(
@@ -93,9 +93,9 @@ class RolePhantomItem extends UiPanelBase_1.UiPanelBase {
         this.odo());
   }
   Kbe() {
-    let t;
-    this.GetTexture(1).SetUIActive(this.Id !== 0),
-      this.Id !== 0 &&
+    var t;
+    this.GetTexture(1).SetUIActive(0 !== this.Id),
+      0 !== this.Id &&
         (t =
           ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
             this.Id,
@@ -103,9 +103,9 @@ class RolePhantomItem extends UiPanelBase_1.UiPanelBase {
         this.SetItemIcon(this.GetTexture(1), t.GetConfigId());
   }
   Pqt() {
-    let t;
-    this.GetSprite(2).SetUIActive(this.Id !== 0),
-      this.Id !== 0 &&
+    var t;
+    this.GetSprite(2).SetUIActive(0 !== this.Id),
+      0 !== this.Id &&
         ((t =
           ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
             this.Id,
@@ -116,10 +116,10 @@ class RolePhantomItem extends UiPanelBase_1.UiPanelBase {
         this.SetSpriteByPath(t.BackgroundSprite, this.GetSprite(2), !1));
   }
   sct() {
-    this.GetItem(4).SetUIActive(this.Id !== 0), this.Id !== 0 && this.odo();
+    this.GetItem(4).SetUIActive(0 !== this.Id), 0 !== this.Id && this.odo();
   }
   odo() {
-    let t =
+    var t =
       ModelManager_1.ModelManager.RoleModel.GetCurSelectMainRoleInstance();
     t &&
       ((t = t.GetPhantomData().GetDataByIndex(this.Index))
@@ -169,7 +169,7 @@ class SkillButtonCompose extends UiPanelBase_1.UiPanelBase {
   }
   Update(t) {
     (this.xe = t),
-      this.xe !== 0 &&
+      0 !== this.xe &&
       ControllerHolder_1.ControllerHolder.PhantomBattleController.CheckIsMain(
         this.xe,
       )
@@ -178,17 +178,17 @@ class SkillButtonCompose extends UiPanelBase_1.UiPanelBase {
   }
   RefreshTexture() {
     var t =
-      ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
-        this.xe,
-      );
-    var t =
-      ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomInstanceByItemId(
-        t.GetConfigId(),
-      );
+        ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
+          this.xe,
+        ),
+      t =
+        ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomInstanceByItemId(
+          t.GetConfigId(),
+        );
     this.SetTextureByPath(
       t.GetPhantomSkillInfoByLevel().BattleViewIcon,
       this.GetTexture(0),
     );
   }
 }
-// # sourceMappingURL=RolePhantomTabItemView.js.map
+//# sourceMappingURL=RolePhantomTabItemView.js.map

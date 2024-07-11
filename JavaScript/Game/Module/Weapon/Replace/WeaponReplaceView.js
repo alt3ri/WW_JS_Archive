@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponReplaceView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const SortEntrance_1 = require("../../Common/FilterSort/Sort/View/SortEntrance");
-const SelectablePropDataUtil_1 = require("../../Common/PropItem/SelectablePropItem/SelectablePropDataUtil");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const UiSceneManager_1 = require("../../UiComponent/UiSceneManager");
-const LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView");
-const WeaponController_1 = require("../WeaponController");
-const WeaponDefine_1 = require("../WeaponDefine");
-const WeaponDetailTipsComponent_1 = require("../WeaponDetailTipsComponent");
-const WeaponReplaceMediumItemGrid_1 = require("./WeaponReplaceMediumItemGrid");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  SortEntrance_1 = require("../../Common/FilterSort/Sort/View/SortEntrance"),
+  SelectablePropDataUtil_1 = require("../../Common/PropItem/SelectablePropItem/SelectablePropDataUtil"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  UiSceneManager_1 = require("../../UiComponent/UiSceneManager"),
+  LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
+  WeaponController_1 = require("../WeaponController"),
+  WeaponDefine_1 = require("../WeaponDefine"),
+  WeaponDetailTipsComponent_1 = require("../WeaponDetailTipsComponent"),
+  WeaponReplaceMediumItemGrid_1 = require("./WeaponReplaceMediumItemGrid");
 class WeaponReplaceView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -33,10 +33,12 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
       (this.pco = void 0),
       (this.W9t = () => {
         var e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-          this.RoleDataId,
-        ).GetRoleId();
-        var e =
-          ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByRoleDataId(e);
+            this.RoleDataId,
+          ).GetRoleId(),
+          e =
+            ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByRoleDataId(
+              e,
+            );
         this.pco.Model?.CheckGetComponent(14)?.SetWeaponByWeaponData(e),
           this.CloseMe();
       }),
@@ -50,8 +52,7 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
         );
       }),
       (this.mOo = () => {
-        const e =
-          new WeaponReplaceMediumItemGrid_1.WeaponReplaceMediumItemGrid();
+        var e = new WeaponReplaceMediumItemGrid_1.WeaponReplaceMediumItemGrid();
         return (
           e.BindOnExtendToggleStateChanged(this.U4e),
           e.BindOnCanExecuteChange(this.T7e),
@@ -67,7 +68,7 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
       }),
       (this.UpdateList = (e) => {
         this.LoopScrollView.ReloadProxyData(this.cOo, e.length, !1),
-          this.SelectedIncId > 0 &&
+          0 < this.SelectedIncId &&
             ((e = this.GetWeaponItemIndex(this.SelectedIncId)),
             this.LoopScrollView.ScrollToGridIndex(e),
             this.LoopScrollView.SelectGridProxy(e, !0));
@@ -80,12 +81,11 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
           );
       }),
       (this.COo = (e) => {
-        let t;
-        let i =
-          ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByRoleDataId(
+        var t,
+          i = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByRoleDataId(
             this.RoleDataId,
-          );
-        let r = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(e);
+          ),
+          r = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(e);
         const s = i.GetRoleId();
         r.HasRole()
           ? ((i = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponName(
@@ -149,7 +149,7 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
   OnStart() {
     (this.SelectedIncId = this.OpenParam),
       (this.pco = UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor());
-    const e = this.GetItem(6).GetOwner();
+    var e = this.GetItem(6).GetOwner();
     (this.LoopScrollView = new LoopScrollView_1.LoopScrollView(
       this.GetLoopScrollViewComponent(0),
       e,
@@ -166,7 +166,7 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
       ));
   }
   SetContrast() {
-    let e;
+    var e;
     (this._Oo = !this._Oo),
       this.lOo &&
         ((e = this._Oo), this.SetWeaponTipsRootItemState(e), e) &&
@@ -174,10 +174,10 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
   }
   OnBeforeShow() {
     ModelManager_1.ModelManager.WeaponModel.SetCurSelectViewName(4);
-    let e;
-    const t = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-      this.SelectedIncId,
-    );
+    var e,
+      t = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
+        this.SelectedIncId,
+      );
     void 0 !== t &&
       (t.HasRole() && (this.RoleDataId = t.GetRoleId()),
       (e = t.GetWeaponConfig()),
@@ -224,7 +224,7 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
       this.UiViewSequence.PlaySequence(e ? "TipStart" : "TipClose");
   }
   SelectedWeaponHandle(e, t = !1) {
-    let i;
+    var i;
     this.SelectedIncId === e ||
       (this.UpdateSelectedTips(e), (i = this.GetWeaponItemIndex(e)) < 0) ||
       (this.LoopScrollView.SelectGridProxy(i, t),
@@ -242,13 +242,13 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
   }
   UpdateCurrentTips() {
     var e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByRoleDataId(
-      this.RoleDataId,
-    );
-    var e =
-      (this.lOo.UpdateComponent(e),
-      ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
         this.RoleDataId,
-      ));
+      ),
+      e =
+        (this.lOo.UpdateComponent(e),
+        ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
+          this.RoleDataId,
+        ));
     this.lOo.UpdateEquip(e.GetRoleId());
   }
   GetWeaponItemIndex(t) {
@@ -257,7 +257,7 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
     return -1;
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
-    if (e.length !== 1 || isNaN(Number(e[0])))
+    if (1 !== e.length || isNaN(Number(e[0])))
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Guide",
@@ -266,16 +266,16 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
           ["configParams", e],
         );
     else {
-      const i = Number(e[0]);
+      var i = Number(e[0]);
       let t = void 0;
       for (let e = 0; e < this.ItemDataList.length; e++) {
-        const r =
+        var r =
           SelectablePropDataUtil_1.SelectablePropDataUtil.GetSelectablePropData(
             this.ItemDataList[e],
           );
         if (r.ItemId === i && ((t = e), r.RoleId !== this.RoleDataId)) break;
       }
-      this.LoopScrollView.IZt !== -1 &&
+      -1 !== this.LoopScrollView.IZt &&
         this.LoopScrollView.ScrollToGridIndex(t);
       e = this.LoopScrollView.GetGrid(t);
       if (e && void 0 !== t) return [e, e];
@@ -290,4 +290,4 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.WeaponReplaceView = WeaponReplaceView;
-// # sourceMappingURL=WeaponReplaceView.js.map
+//# sourceMappingURL=WeaponReplaceView.js.map

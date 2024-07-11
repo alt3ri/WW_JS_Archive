@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuickRoleSelectView = exports.QuickRoleSelectViewData = void 0);
-const UE = require("ue");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiViewBase_1 = require("../../Ui/Base/UiViewBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const FilterSortEntrance_1 = require("../Common/FilterSort/FilterSortEntrance");
-const EditFormationDefine_1 = require("../EditFormation/EditFormationDefine");
-const ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController");
-const LguiUtil_1 = require("../Util/LguiUtil");
-const LoopScrollView_1 = require("../Util/ScrollView/LoopScrollView");
-const TeamRoleGrid_1 = require("./TeamRoleGrid");
+const UE = require("ue"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  FilterSortEntrance_1 = require("../Common/FilterSort/FilterSortEntrance"),
+  EditFormationDefine_1 = require("../EditFormation/EditFormationDefine"),
+  ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  LoopScrollView_1 = require("../Util/ScrollView/LoopScrollView"),
+  TeamRoleGrid_1 = require("./TeamRoleGrid");
 class QuickRoleSelectViewData {
   constructor(i, e, t) {
     (this.UseWay = void 0),
@@ -34,17 +34,17 @@ class QuickRoleSelectView extends UiViewBase_1.UiViewBase {
       (this.jho = void 0),
       (this.Kho = void 0),
       (this.xUt = () => {
-        const e = ModelManager_1.ModelManager.RoleSelectModel.RoleIndexMap;
-        const t = new Array();
+        var e = ModelManager_1.ModelManager.RoleSelectModel.RoleIndexMap,
+          t = new Array();
         for (
           let i = 1;
           i <= EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM;
           i++
         ) {
-          const r = e.get(i);
+          var r = e.get(i);
           r && t.push(r.GetDataId());
         }
-        const i = this.Pe?.CanConfirm;
+        var i = this.Pe?.CanConfirm;
         (i && !i(t)) ||
           (this.Pe?.OnConfirm?.(t),
           UiManager_1.UiManager.CloseView(this.Info.Name));
@@ -53,7 +53,7 @@ class QuickRoleSelectView extends UiViewBase_1.UiViewBase {
         this.Pe?.OnBack?.(), UiManager_1.UiManager.CloseView(this.Info.Name);
       }),
       (this.z9e = () => {
-        const i = new TeamRoleGrid_1.TeamRoleGrid();
+        var i = new TeamRoleGrid_1.TeamRoleGrid();
         return (
           i.BindOnExtendToggleStateChanged(this.ToggleFunction),
           i.BindOnCanExecuteChange(this.CanExecuteChange),
@@ -61,16 +61,16 @@ class QuickRoleSelectView extends UiViewBase_1.UiViewBase {
         );
       }),
       (this.ToggleFunction = (i) => {
-        const e = ModelManager_1.ModelManager.RoleSelectModel.RoleIndexMap;
-        const t = ModelManager_1.ModelManager.RoleSelectModel.SelectedRoleSet;
-        const r = i.Data;
-        if (i.State === 0) {
+        var e = ModelManager_1.ModelManager.RoleSelectModel.RoleIndexMap,
+          t = ModelManager_1.ModelManager.RoleSelectModel.SelectedRoleSet,
+          r = i.Data;
+        if (0 === i.State) {
           for (const o of e)
             if (o[1] === r) {
               e.delete(o[0]), t.delete(r.GetDataId());
               break;
             }
-        } else if (i.State === 1)
+        } else if (1 === i.State)
           for (
             let i = 1;
             i <= EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM;
@@ -85,7 +85,7 @@ class QuickRoleSelectView extends UiViewBase_1.UiViewBase {
       }),
       (this.CanExecuteChange = (i, e, t) => {
         return (
-          t !== 0 ||
+          0 !== t ||
           ((t =
             ModelManager_1.ModelManager.RoleSelectModel.RoleIndexMap.size >=
             EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM) &&
@@ -96,12 +96,12 @@ class QuickRoleSelectView extends UiViewBase_1.UiViewBase {
         );
       }),
       (this.Qho = (i, e) => {
-        const t = ModelManager_1.ModelManager.RoleSelectModel.RoleIndexMap;
-        const r = new Array();
+        var t = ModelManager_1.ModelManager.RoleSelectModel.RoleIndexMap,
+          r = new Array();
         for (let i = 1; i <= EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM; i++)
           t.has(i) && r.push(t.get(i));
         for (const h of i) r.includes(h) || r.push(h);
-        i = r.length > 0;
+        i = 0 < r.length;
         if (
           (this.GetItem(11).SetUIActive(!i),
           this.GetButton(3).RootUIComp.SetUIActive(i),
@@ -110,9 +110,9 @@ class QuickRoleSelectView extends UiViewBase_1.UiViewBase {
         ) {
           this.jho.RefreshByData(r);
           for (const n of t.values()) {
-            const o = this.Kho.indexOf(n);
-            const s = r.indexOf(n);
-            this.jho.IZt >= 0 &&
+            var o = this.Kho.indexOf(n),
+              s = r.indexOf(n);
+            0 <= this.jho.IZt &&
               o !== s &&
               (ModelManager_1.ModelManager.RoleSelectModel.SelectedRoleSet.delete(
                 n.GetDataId(),
@@ -120,7 +120,7 @@ class QuickRoleSelectView extends UiViewBase_1.UiViewBase {
               this.jho.UnsafeGetGridProxy(o)?.OnDeselected(!1));
           }
           for (const l of t.values()) {
-            const a = r.indexOf(l);
+            var a = r.indexOf(l);
             ModelManager_1.ModelManager.RoleSelectModel.SelectedRoleSet.add(
               l.GetDataId(),
             ),
@@ -168,24 +168,24 @@ class QuickRoleSelectView extends UiViewBase_1.UiViewBase {
   }
   OnBeforeShow() {
     this.Kho = this.Pe?.RoleList;
-    const e = this.Pe?.SelectedRoleList;
-    const t =
-      (ModelManager_1.ModelManager.RoleSelectModel.ClearData(),
-      ModelManager_1.ModelManager.RoleSelectModel.RoleIndexMap);
+    var e = this.Pe?.SelectedRoleList,
+      t =
+        (ModelManager_1.ModelManager.RoleSelectModel.ClearData(),
+        ModelManager_1.ModelManager.RoleSelectModel.RoleIndexMap);
     if (e)
       for (
         let i = 1;
         i <= EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM && !(i > e.length);
         i++
       ) {
-        const r = e[i - 1];
+        var r = e[i - 1];
         for (const o of this.Kho)
           if (o.GetDataId() === r) {
             t.set(i, o);
             break;
           }
       }
-    const i = this.GetItem(8);
+    var i = this.GetItem(8);
     (this.ami = new FilterSortEntrance_1.FilterSortEntrance(i, this.Qho)),
       this.Kho.sort(
         (i, e) => e.GetRoleConfig().Priority - i.GetRoleConfig().Priority,
@@ -197,4 +197,4 @@ class QuickRoleSelectView extends UiViewBase_1.UiViewBase {
   }
 }
 exports.QuickRoleSelectView = QuickRoleSelectView;
-// # sourceMappingURL=QuickRoleSelectView.js.map
+//# sourceMappingURL=QuickRoleSelectView.js.map

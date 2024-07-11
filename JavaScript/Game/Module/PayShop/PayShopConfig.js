@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayShopConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
-const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById");
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
-const PayShopById_1 = require("../../../Core/Define/ConfigQuery/PayShopById");
-const PayShopConditionById_1 = require("../../../Core/Define/ConfigQuery/PayShopConditionById");
-const PayShopDirectGoodsByGoodsId_1 = require("../../../Core/Define/ConfigQuery/PayShopDirectGoodsByGoodsId");
-const PayShopGoodsById_1 = require("../../../Core/Define/ConfigQuery/PayShopGoodsById");
-const PayShopGoodsByItemId_1 = require("../../../Core/Define/ConfigQuery/PayShopGoodsByItemId");
-const PayShopTabByShopId_1 = require("../../../Core/Define/ConfigQuery/PayShopTabByShopId");
-const PayShopTabByShopIdAndTabId_1 = require("../../../Core/Define/ConfigQuery/PayShopTabByShopIdAndTabId");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
+const Log_1 = require("../../../Core/Common/Log"),
+  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  PayShopById_1 = require("../../../Core/Define/ConfigQuery/PayShopById"),
+  PayShopConditionById_1 = require("../../../Core/Define/ConfigQuery/PayShopConditionById"),
+  PayShopDirectGoodsByGoodsId_1 = require("../../../Core/Define/ConfigQuery/PayShopDirectGoodsByGoodsId"),
+  PayShopGoodsById_1 = require("../../../Core/Define/ConfigQuery/PayShopGoodsById"),
+  PayShopGoodsByItemId_1 = require("../../../Core/Define/ConfigQuery/PayShopGoodsByItemId"),
+  PayShopTabByShopId_1 = require("../../../Core/Define/ConfigQuery/PayShopTabByShopId"),
+  PayShopTabByShopIdAndTabId_1 = require("../../../Core/Define/ConfigQuery/PayShopTabByShopIdAndTabId"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  ConfigManager_1 = require("../../Manager/ConfigManager");
 class PayShopConfig extends ConfigBase_1.ConfigBase {
   GetPayShopGoodsConfig(o) {
     return PayShopGoodsById_1.configPayShopGoodsById.GetConfig(o);
@@ -22,7 +22,7 @@ class PayShopConfig extends ConfigBase_1.ConfigBase {
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(o);
   }
   GetPayShopConfig(o) {
-    const e = PayShopById_1.configPayShopById.GetConfig(o);
+    var e = PayShopById_1.configPayShopById.GetConfig(o);
     return (
       e ||
         (Log_1.Log.CheckError() &&
@@ -36,7 +36,7 @@ class PayShopConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetPayShopTabConfig(o, e) {
-    const r =
+    var r =
       PayShopTabByShopIdAndTabId_1.configPayShopTabByShopIdAndTabId.GetConfig(
         o,
         e,
@@ -58,7 +58,7 @@ class PayShopConfig extends ConfigBase_1.ConfigBase {
     return PayShopGoodsByItemId_1.configPayShopGoodsByItemId.GetConfig(o);
   }
   GetPayShopDirectGoods(o) {
-    const e =
+    var e =
       PayShopDirectGoodsByGoodsId_1.configPayShopDirectGoodsByGoodsId.GetConfig(
         o,
       );
@@ -75,7 +75,7 @@ class PayShopConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetPayShopCondition(o) {
-    const e = PayShopConditionById_1.configPayShopConditionById.GetConfig(o);
+    var e = PayShopConditionById_1.configPayShopConditionById.GetConfig(o);
     return (
       e ||
         (Log_1.Log.CheckError() &&
@@ -93,9 +93,9 @@ class PayShopConfig extends ConfigBase_1.ConfigBase {
   }
   GetPayShopTableList(o) {
     var o = ConfigCommon_1.ConfigCommon.ToList(
-      PayShopTabByShopId_1.configPayShopTabByShopId.GetConfigList(o),
-    );
-    const e = [];
+        PayShopTabByShopId_1.configPayShopTabByShopId.GetConfigList(o),
+      ),
+      e = [];
     o.sort((o, e) => o.Sort - e.Sort);
     for (const r of o) r.Enable && e.push(r.TabId);
     return e;
@@ -122,4 +122,4 @@ class PayShopConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.PayShopConfig = PayShopConfig;
-// # sourceMappingURL=PayShopConfig.js.map
+//# sourceMappingURL=PayShopConfig.js.map

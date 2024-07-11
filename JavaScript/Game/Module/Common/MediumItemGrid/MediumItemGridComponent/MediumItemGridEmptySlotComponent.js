@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MediumItemGridEmptySlotComponent = void 0);
-const UE = require("ue");
-const MediumItemGridVisibleComponent_1 = require("./MediumItemGridVisibleComponent");
+const UE = require("ue"),
+  MediumItemGridVisibleComponent_1 = require("./MediumItemGridVisibleComponent");
 class MediumItemGridEmptySlotComponent extends MediumItemGridVisibleComponent_1.MediumItemGridVisibleComponent {
   constructor() {
     super(...arguments),
@@ -32,4 +32,4 @@ class MediumItemGridEmptySlotComponent extends MediumItemGridVisibleComponent_1.
   }
 }
 exports.MediumItemGridEmptySlotComponent = MediumItemGridEmptySlotComponent;
-// # sourceMappingURL=MediumItemGridEmptySlotComponent.js.map
+//# sourceMappingURL=MediumItemGridEmptySlotComponent.js.map

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Log_1 = require("../../../../Core/Common/Log");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const GlobalData_1 = require("../../../GlobalData");
-const BlackboardController_1 = require("../../../World/Controller/BlackboardController");
-const TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
-const PI = 3.14;
+const Log_1 = require("../../../../Core/Common/Log"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  GlobalData_1 = require("../../../GlobalData"),
+  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
+  PI = 3.14;
 class TsTaskFindPositionInRange extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -32,8 +32,8 @@ class TsTaskFindPositionInRange extends TsTaskAbortImmediatelyBase_1.default {
     if (s) {
       s = s.CharActorComp;
       if (s?.Valid) {
-        var s = s.Entity;
-        const i = s.Id;
+        var s = s.Entity,
+          i = s.Id;
         if (this.TsRangeCenterKey) {
           var r =
             BlackboardController_1.BlackboardController.GetVectorValueByEntity(
@@ -76,7 +76,7 @@ class TsTaskFindPositionInRange extends TsTaskAbortImmediatelyBase_1.default {
         this.FinishExecute(!1);
   }
   RandomPointInCircle(t) {
-    let e;
+    var e;
     return t <= 0
       ? { X: 0, Y: 0 }
       : ((t = MathUtils_1.MathUtils.GetRandomRange(0, t * t)),
@@ -85,4 +85,4 @@ class TsTaskFindPositionInRange extends TsTaskAbortImmediatelyBase_1.default {
   }
 }
 exports.default = TsTaskFindPositionInRange;
-// # sourceMappingURL=TsTaskFindPositionInRange.js.map
+//# sourceMappingURL=TsTaskFindPositionInRange.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ComboTeachingInputHandler = void 0);
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const InputEnums_1 = require("../../Input/InputEnums");
-const InputFilter_1 = require("../../Input/InputFilter");
+const EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  InputEnums_1 = require("../../Input/InputEnums"),
+  InputFilter_1 = require("../../Input/InputFilter");
 class ComboTeachingInputHandler {
   constructor() {
     this.InputFilter = void 0;
@@ -57,4 +57,4 @@ class ComboTeachingInputHandler {
   PostProcessInput(e, n) {}
 }
 exports.ComboTeachingInputHandler = ComboTeachingInputHandler;
-// # sourceMappingURL=ComboTeachingInputHandler.js.map
+//# sourceMappingURL=ComboTeachingInputHandler.js.map

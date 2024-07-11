@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TimeUtil = void 0);
-const Log_1 = require("../../Core/Common/Log");
-const Time_1 = require("../../Core/Common/Time");
-const CommonDefine_1 = require("../../Core/Define/CommonDefine");
-const Net_1 = require("../../Core/Net/Net");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const StringBuilder_1 = require("../../Core/Utils/StringBuilder");
-const StringUtils_1 = require("../../Core/Utils/StringUtils");
-const ConfigManager_1 = require("../Manager/ConfigManager");
-const EventDefine_1 = require("./Event/EventDefine");
-const EventSystem_1 = require("./Event/EventSystem");
+const Log_1 = require("../../Core/Common/Log"),
+  Time_1 = require("../../Core/Common/Time"),
+  CommonDefine_1 = require("../../Core/Define/CommonDefine"),
+  Net_1 = require("../../Core/Net/Net"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  StringBuilder_1 = require("../../Core/Utils/StringBuilder"),
+  StringUtils_1 = require("../../Core/Utils/StringUtils"),
+  ConfigManager_1 = require("../Manager/ConfigManager"),
+  EventDefine_1 = require("./Event/EventDefine"),
+  EventSystem_1 = require("./Event/EventSystem");
 class TimeUtil {
   static Init(e) {
     this.Ode = e;
@@ -35,11 +35,11 @@ class TimeUtil {
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.CrossDay));
   }
   static InitNextDayTimeStamp() {
-    var e = new Date(Time_1.Time.ServerTimeStamp);
-    var e =
-      (e.getHours() - this.CrossDayHour) * this.Hour +
-      e.getMinutes() * this.Minute +
-      e.getSeconds();
+    var e = new Date(Time_1.Time.ServerTimeStamp),
+      e =
+        (e.getHours() - this.CrossDayHour) * this.Hour +
+        e.getMinutes() * this.Minute +
+        e.getSeconds();
     this.kde =
       (this.OneDaySeconds - e) * this.InverseMillisecond +
       Time_1.Time.ServerTimeStamp +
@@ -85,15 +85,15 @@ class TimeUtil {
     );
   }
   static GetServerUnixTime() {
-    var e = new Date(Time_1.Time.ServerTimeStamp);
-    var e = new Date(
-      e.getUTCFullYear(),
-      e.getUTCMonth(),
-      e.getUTCDate(),
-      e.getUTCHours(),
-      e.getUTCMinutes(),
-      e.getUTCSeconds(),
-    );
+    var e = new Date(Time_1.Time.ServerTimeStamp),
+      e = new Date(
+        e.getUTCFullYear(),
+        e.getUTCMonth(),
+        e.getUTCDate(),
+        e.getUTCHours(),
+        e.getUTCMinutes(),
+        e.getUTCSeconds(),
+      );
     return Math.round(e.getTime() * this.Millisecond);
   }
   static DateFormatString(e) {
@@ -119,7 +119,7 @@ class TimeUtil {
     );
   }
   static GetTimeString(e) {
-    let t;
+    var t;
     return e < 0
       ? ""
       : ((t = (t = e % this.Minute) < 10 ? "0" + t : t.toString()),
@@ -144,15 +144,15 @@ class TimeUtil {
     };
   }
   static CalculateDayGapBetweenNow(e, t) {
-    var i = Time_1.Time.ServerTimeStamp / TimeUtil.InverseMillisecond;
-    const r = new Date();
-    const n = new Date(e * TimeUtil.InverseMillisecond);
-    var i = t ? e - i : i - e;
-    var e =
-      (i < 0 &&
-        Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Mail", 28, "时间非法"),
-      i / 86400);
+    var i = Time_1.Time.ServerTimeStamp / TimeUtil.InverseMillisecond,
+      r = new Date(),
+      n = new Date(e * TimeUtil.InverseMillisecond),
+      i = t ? e - i : i - e,
+      e =
+        (i < 0 &&
+          Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug("Mail", 28, "时间非法"),
+        i / 86400);
     let a = e;
     return (
       e < 2 &&
@@ -167,20 +167,20 @@ class TimeUtil {
     );
   }
   static CalculateDayTimeStampGapBetweenNow(e, t) {
-    const i = Time_1.Time.ServerTimeStamp / TimeUtil.InverseMillisecond;
-    var t = t ? e - i : i - e;
+    var i = Time_1.Time.ServerTimeStamp / TimeUtil.InverseMillisecond,
+      t = t ? e - i : i - e;
     t < 0 && Log_1.Log.CheckDebug() && Log_1.Log.Debug("Mail", 28, "时间非法");
     return Math.ceil(t / 86400);
   }
   static CalculateHourGapBetweenNow(e, t) {
-    const i = TimeUtil.GetServerTimeStamp() / TimeUtil.InverseMillisecond;
-    var t = t ? e - i : i - e;
+    var i = TimeUtil.GetServerTimeStamp() / TimeUtil.InverseMillisecond,
+      t = t ? e - i : i - e;
     t < 0 && Log_1.Log.CheckDebug() && Log_1.Log.Debug("Mail", 28, "时间非法");
     return t / 3600;
   }
   static CalculateMinuteGapBetweenNow(e, t) {
-    const i = Time_1.Time.ServerTimeStamp / TimeUtil.InverseMillisecond;
-    var t = t ? e - i : i - e;
+    var i = Time_1.Time.ServerTimeStamp / TimeUtil.InverseMillisecond,
+      t = t ? e - i : i - e;
     t < 0 && Log_1.Log.CheckDebug() && Log_1.Log.Debug("Mail", 28, "时间非法");
     return t / 60;
   }
@@ -204,7 +204,7 @@ class TimeUtil {
         e >= i;
 
       ) {
-        const n = TimeUtil.Fde[e](t);
+        var n = TimeUtil.Fde[e](t);
         if (n)
           return (
             (r.TimeValue = n[0]),
@@ -220,10 +220,10 @@ class TimeUtil {
   static Vde(e, t, i, r) {
     if (e <= 0)
       return { CountDownText: void 0, RemainingTime: TimeUtil.TimeDeviation };
-    const n = new StringBuilder_1.StringBuilder();
-    let a = e;
-    let m = void 0;
-    let o;
+    var n = new StringBuilder_1.StringBuilder();
+    let a = e,
+      m = void 0;
+    var o;
     (m = i ?? 3), (o = r ?? 1);
     let s = void 0;
     switch (t) {
@@ -237,10 +237,10 @@ class TimeUtil {
         s = CommonDefine_1.remainTimeTextId;
     }
     for (; m >= o; ) {
-      const u = TimeUtil.Fde[m](a);
-      var T = this.Ode.GetTextById(s[m]);
-      const l = u ? u[0] : 0;
-      var T = StringUtils_1.StringUtils.Format(T, l.toString());
+      var u = TimeUtil.Fde[m](a),
+        T = this.Ode.GetTextById(s[m]),
+        l = u ? u[0] : 0,
+        T = StringUtils_1.StringUtils.Format(T, l.toString());
       (a = u ? u[1] : a), n.Append(T), --m;
     }
     return {
@@ -255,8 +255,8 @@ class TimeUtil {
     return TimeUtil.Vde(e, 1, t, i);
   }
   static GetRemainTimeDataFormat(e) {
-    const t = this.GetTimeTypeData(e);
-    return t[0] === 0
+    var t = this.GetTimeTypeData(e);
+    return 0 === t[0]
       ? {
           CountDownText:
             ConfigManager_1.ConfigManager.TextConfig.GetTextById(
@@ -285,7 +285,7 @@ class TimeUtil {
     );
   }
   static IsInTimeSpan(e, t) {
-    const i = TimeUtil.GetServerTime();
+    var i = TimeUtil.GetServerTime();
     return e <= i && i <= t;
   }
 }
@@ -298,8 +298,8 @@ class TimeUtil {
   (TimeUtil.CrossDayHour = 4),
   (TimeUtil.TimeDeviation = 0.1),
   (TimeUtil.Fde = {
-    0: (e) => {
-      if (e > 0) return [(e = Math.floor(e)), e];
+    [0]: (e) => {
+      if (0 < e) return [(e = Math.floor(e)), e];
     },
     1: (e) => {
       if (e >= CommonDefine_1.SECOND_PER_MINUTE)
@@ -326,4 +326,4 @@ class TimeUtil {
         ];
     },
   });
-// # sourceMappingURL=TimeUtil.js.map
+//# sourceMappingURL=TimeUtil.js.map

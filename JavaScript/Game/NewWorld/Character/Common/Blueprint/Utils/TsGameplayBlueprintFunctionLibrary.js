@@ -1,36 +1,36 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Info_1 = require("../../../../../../Core/Common/Info");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const CommonDefine_1 = require("../../../../../../Core/Define/CommonDefine");
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil");
-const GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const StringUtils_1 = require("../../../../../../Core/Utils/StringUtils");
-const TsBaseCharacter_1 = require("../../../../../Character/TsBaseCharacter");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const FormationAttributeController_1 = require("../../../../../Module/Abilities/FormationAttributeController");
-const LogReportController_1 = require("../../../../../Module/LogReport/LogReportController");
-const LogReportDefine_1 = require("../../../../../Module/LogReport/LogReportDefine");
-const PhantomUtil_1 = require("../../../../../Module/Phantom/PhantomUtil");
-const PhotographController_1 = require("../../../../../Module/Photograph/PhotographController");
-const ActorUtils_1 = require("../../../../../Utils/ActorUtils");
-const CombatDebugController_1 = require("../../../../../Utils/CombatDebugController");
-const BulletTypes_1 = require("../../../../Bullet/BulletTypes");
-const SceneItemDynamicAttachTargetComponent_1 = require("../../../../SceneItem/Common/Component/SceneItemDynamicAttachTargetComponent");
-const EntityHandle_1 = require("../../../EntityHandle");
-const AbilityUtils_1 = require("../../Component/Abilities/AbilityUtils");
-const CharacterBuffIds_1 = require("../../Component/Abilities/CharacterBuffIds");
-const CharacterGasDebugComponent_1 = require("../../Component/Abilities/CharacterGasDebugComponent");
-const CharacterUnifiedStateTypes_1 = require("../../Component/Abilities/CharacterUnifiedStateTypes");
-const LockOnDebug_1 = require("../../Component/LockOn/LockOnDebug");
+const UE = require("ue"),
+  Info_1 = require("../../../../../../Core/Common/Info"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  CommonDefine_1 = require("../../../../../../Core/Define/CommonDefine"),
+  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil"),
+  GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  StringUtils_1 = require("../../../../../../Core/Utils/StringUtils"),
+  TsBaseCharacter_1 = require("../../../../../Character/TsBaseCharacter"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  FormationAttributeController_1 = require("../../../../../Module/Abilities/FormationAttributeController"),
+  LogReportController_1 = require("../../../../../Module/LogReport/LogReportController"),
+  LogReportDefine_1 = require("../../../../../Module/LogReport/LogReportDefine"),
+  PhantomUtil_1 = require("../../../../../Module/Phantom/PhantomUtil"),
+  PhotographController_1 = require("../../../../../Module/Photograph/PhotographController"),
+  ActorUtils_1 = require("../../../../../Utils/ActorUtils"),
+  CombatDebugController_1 = require("../../../../../Utils/CombatDebugController"),
+  BulletTypes_1 = require("../../../../Bullet/BulletTypes"),
+  SceneItemDynamicAttachTargetComponent_1 = require("../../../../SceneItem/Common/Component/SceneItemDynamicAttachTargetComponent"),
+  EntityHandle_1 = require("../../../EntityHandle"),
+  AbilityUtils_1 = require("../../Component/Abilities/AbilityUtils"),
+  CharacterBuffIds_1 = require("../../Component/Abilities/CharacterBuffIds"),
+  CharacterGasDebugComponent_1 = require("../../Component/Abilities/CharacterGasDebugComponent"),
+  CharacterUnifiedStateTypes_1 = require("../../Component/Abilities/CharacterUnifiedStateTypes"),
+  LockOnDebug_1 = require("../../Component/LockOn/LockOnDebug");
 class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static ContainsTag(t, e) {
     t = EntitySystem_1.EntitySystem.GetComponent(t, 185);
@@ -67,7 +67,7 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static RemoveActiveGameplayEffect(t, e, i = -1) {
     t = EntitySystem_1.EntitySystem.GetComponent(t, 157);
-    return !!t?.Valid && t.RemoveBuffByHandle(e.Handle, i) > 0;
+    return !!t?.Valid && 0 < t.RemoveBuffByHandle(e.Handle, i);
   }
   static RemoveBuffByTag(t, e) {
     t = EntitySystem_1.EntitySystem.GetComponent(t, 157);
@@ -83,8 +83,8 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static SetPassiveGaSkillId(t, e) {}
   static AddBuffForDebug(t, e, i) {
-    let n;
-    var t = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(t);
+    var n,
+      t = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(t);
     t &&
       ((n = EntitySystem_1.EntitySystem.GetComponent(e, 157))
         ? n.AddBuffForDebug(i, { InstigatorId: t, Reason: "AddBuffForDebug" })
@@ -98,17 +98,17 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
           ));
   }
   static GetSpecialBuffToSkillId(t, e) {
-    return e !== ""
+    return "" !== e
       ? e
       : (e = CharacterBuffIds_1.specialBuffToSkillIdMap.get(t))
         ? e.toString()
         : "";
   }
   static AddBuffFromGA(e, i, n, r, a) {
-    r = TsGameplayBlueprintFunctionLibrary.GetSpecialBuffToSkillId(n, r);
+    var s = TsGameplayBlueprintFunctionLibrary.GetSpecialBuffToSkillId(n, r);
     if (
-      r === "" &&
-      CharacterBuffIds_1.specialIgnoreGaBuff.findIndex((t) => t === n) === -1
+      "" === s &&
+      -1 === CharacterBuffIds_1.specialIgnoreGaBuff.findIndex((t) => t === n)
     )
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Battle", 36, "AddBuffFromGA的SkillId为空", [
@@ -116,29 +116,39 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
           n,
         ]);
     else {
-      let s;
-      const y = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e);
-      if (y) {
+      var y,
+        o = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e);
+      if (o) {
         let t = EntitySystem_1.EntitySystem.GetComponent(e, 33)?.GetSkill(
-          Number(r),
+          Number(s),
         )?.CombatMessageId;
         t ||
-          ((s = EntitySystem_1.EntitySystem.GetComponent(e, 0).GetSummonerId()),
+          ((y = EntitySystem_1.EntitySystem.GetComponent(e, 0).GetSummonerId()),
           (t = (
-            s > 0
+            0 < y
               ? ModelManager_1.ModelManager.CreatureModel.GetEntity(
-                  s,
+                  y,
                 )?.Entity?.GetComponent(33)
               : PhantomUtil_1.PhantomUtil.GetSummonedEntity(
                   EntitySystem_1.EntitySystem.Get(e),
                   Protocol_1.Aki.Protocol.Oqs
                     .Proto_ESummonTypeConcomitantCustom,
                 )?.Entity?.GetComponent(33)
-          )?.GetSkill(Number(r))?.CombatMessageId)),
+          )?.GetSkill(Number(s))?.CombatMessageId)),
+          t ||
+            (Log_1.Log.CheckWarn() &&
+              Log_1.Log.Warn(
+                "Battle",
+                36,
+                "AddBuffFromGA没有上下文",
+                ["skillId", r],
+                ["tmpSkillId", s],
+                ["BuffId", n],
+              )),
           i instanceof TsBaseCharacter_1.default &&
-            ((s = i.CharacterActorComponent.Entity.CheckGetComponent(157))
-              ? s.AddBuff(n, {
-                  InstigatorId: y,
+            ((y = i.CharacterActorComponent.Entity.CheckGetComponent(157))
+              ? y.AddBuff(n, {
+                  InstigatorId: o,
                   Reason: "AddBuffFromGA",
                   PreMessageId: t,
                   OuterStackCount: a,
@@ -199,8 +209,8 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     );
   }
   static GetBuffDebugStringsNoBlueprint(t, e = "") {
-    const i = EntitySystem_1.EntitySystem.GetComponent(t, 157);
-    var t = EntitySystem_1.EntitySystem.GetComponent(t, 20);
+    var i = EntitySystem_1.EntitySystem.GetComponent(t, 157),
+      t = EntitySystem_1.EntitySystem.GetComponent(t, 20);
     return (
       (i?.GetDebugBuffString(e) ?? "未找到buff组件") +
       "\n" +
@@ -273,16 +283,16 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     t && (t.ServerDebugInfoDirty = e);
   }
   static DebugResetBaseVal(t, e, i) {
-    var n = EntitySystem_1.EntitySystem.GetComponent(t, 20);
-    var n =
-      (n && n?.DebugResetBaseValue(e, i),
-      ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(t));
-    var t = StringUtils_1.StringUtils.Format(
-      "GmSetAttribute {0} {1} {2}",
-      n.toString(),
-      e.toString(),
-      i.toString(),
-    );
+    var n = EntitySystem_1.EntitySystem.GetComponent(t, 20),
+      n =
+        (n && n?.DebugResetBaseValue(e, i),
+        ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(t)),
+      t = StringUtils_1.StringUtils.Format(
+        "GmSetAttribute {0} {1} {2}",
+        n.toString(),
+        e.toString(),
+        i.toString(),
+      );
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.RunGm, t);
   }
   static DebugResetFormationValue(t, e) {
@@ -297,12 +307,12 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       : "";
   }
   static RefreshEntityListView(e) {
-    let t;
-    const i = e.GetListItems();
-    const n = new Set();
-    for (let t = i.Num() - 1; t >= 0; t--) {
-      const r = i.Get(t);
-      const a = Number(r.GetName().split(",")[0]);
+    var t,
+      i = e.GetListItems(),
+      n = new Set();
+    for (let t = i.Num() - 1; 0 <= t; t--) {
+      var r = i.Get(t),
+        a = Number(r.GetName().split(",")[0]);
       !Number.isNaN(a) || n.has(a) ? e.RemoveItem(r) : n.add(a);
     }
     for (const s of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
@@ -314,12 +324,12 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
         e.AddItem(t));
   }
   static RefreshEntityComboBox(e) {
-    let t;
-    const i = e.GetOptionCount();
-    const n = new Set();
-    for (let t = i - 1; t >= 0; t--) {
-      const r = e.GetOptionAtIndex(t);
-      const a = Number(/_(?<entityId>\d+)$/.exec(r)?.groups.entityId ?? -1);
+    var t,
+      i = e.GetOptionCount(),
+      n = new Set();
+    for (let t = i - 1; 0 <= t; t--) {
+      var r = e.GetOptionAtIndex(t),
+        a = Number(/_(?<entityId>\d+)$/.exec(r)?.groups.entityId ?? -1);
       a < 0 || n.has(a) || !EntitySystem_1.EntitySystem.Get(a)
         ? e.RemoveOption(r)
         : n.add(a);
@@ -330,9 +340,9 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
           e.AddOption(t + "_" + s.Id));
   }
   static SetEntityComboBox(t, e) {
-    let i = EntitySystem_1.EntitySystem.Get(e);
-    const n = i?.GetComponent(3)?.Actor?.GetName();
-    const r = t.GetSelectedOption();
+    var i = EntitySystem_1.EntitySystem.Get(e),
+      n = i?.GetComponent(3)?.Actor?.GetName(),
+      r = t.GetSelectedOption();
     i && n
       ? Number(/_(?<entityId>\d+)$/.exec(r)?.groups.entityId ?? -1) !== e &&
         (t.FindOptionIndex((i = n + "_" + e)) < 0 && t.AddOption(i),
@@ -347,25 +357,25 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return CombatDebugController_1.CombatDebugController.DebugEntityId ?? 0;
   }
   static RefreshBuffListView(t, e, i = "") {
-    const n = [...i.matchAll(/[0-9]+/g)].map((t) => t[0] ?? "");
-    const r = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(187);
+    var n = [...i.matchAll(/[0-9]+/g)].map((t) => t[0] ?? ""),
+      r = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(187);
     if (r) {
-      let a;
-      let s;
-      const y = e.GetListItems();
-      const o = new Set();
-      for (let t = y.Num() - 1; t >= 0; t--) {
-        const c = y.Get(t);
+      var a,
+        s,
+        y = e.GetListItems(),
+        o = new Set();
+      for (let t = y.Num() - 1; 0 <= t; t--) {
+        var c = y.Get(t);
         const l = r.GetBuffByHandle(Number(c.GetName().split(",")[1]));
         void 0 === l ||
         o.has(l.Handle) ||
-        (n.length > 0 && !n.some((t) => String(l.Id).startsWith(t)))
+        (0 < n.length && !n.some((t) => String(l.Id).startsWith(t)))
           ? e.RemoveItem(c)
           : o.add(l.Handle);
       }
       for (const u of r.GetAllBuffs())
         o.has(u.Handle) ||
-          (n.length > 0 && !n.some((t) => String(u.Id).startsWith(t))) ||
+          (0 < n.length && !n.some((t) => String(u.Id).startsWith(t))) ||
           ((a = new UE.Layer(e, t + "," + u.Handle)), e.AddItem(a));
       if (
         (0, RegisterComponent_1.isComponentInstance)(r, 171) &&
@@ -373,13 +383,13 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       )
         for (const S of r.GetFormationBuffComp().GetAllBuffs())
           o.has(S.Handle) ||
-            (n.length > 0 && !n.some((t) => String(S.Id).startsWith(t))) ||
+            (0 < n.length && !n.some((t) => String(S.Id).startsWith(t))) ||
             ((s = new UE.Layer(e, t + "," + S.Handle)), e.AddItem(s));
     } else e.ClearListItems();
   }
   static GetDebugBuff(t, e) {
-    var t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(187);
-    const i = t?.GetBuffByHandle(e);
+    var t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(187),
+      i = t?.GetBuffByHandle(e);
     return (
       i ||
       (!i && (0, RegisterComponent_1.isComponentInstance)(t, 171)
@@ -406,7 +416,6 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
 ` + e
       : e;
   }
-
   static GetBuffActivateByHandle(t, e) {
     return (
       TsGameplayBlueprintFunctionLibrary.GetDebugBuff(t, e)?.IsActive() ?? !1
@@ -421,19 +430,19 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static GetBuffPeriodStringByHandle(t, e) {
     t = TsGameplayBlueprintFunctionLibrary.GetDebugBuff(t, e);
-    return void 0 !== t && t.Period > 0
+    return void 0 !== t && 0 < t.Period
       ? t.GetRemainPeriod().toFixed(1) + "/" + t.Period.toFixed(1)
       : "无";
   }
   static GetBuffDurationStringByHandle(t, e) {
     t = TsGameplayBlueprintFunctionLibrary.GetDebugBuff(t, e);
-    return void 0 !== t && t.Duration > 0
+    return void 0 !== t && 0 < t.Duration
       ? t.GetRemainDuration().toFixed(1) + "/" + t.Duration.toFixed(1)
       : "无限";
   }
   static GetBuffDurationProgress(t, e) {
     t = TsGameplayBlueprintFunctionLibrary.GetDebugBuff(t, e);
-    return void 0 !== t && t.Duration > 0
+    return void 0 !== t && 0 < t.Duration
       ? t.GetRemainDuration() / t.Duration
       : 1;
   }
@@ -458,28 +467,27 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static GetBuffDebugStringByHandle(t, e) {
     let n = "";
     const r = TsGameplayBlueprintFunctionLibrary.GetDebugBuff(t, e);
-    const i = r?.GetOwnerBuffComponent();
+    var i = r?.GetOwnerBuffComponent();
     if (!r || !i) return n;
     r.Config.GrantedTags?.forEach((t) => {
       n += `附加标签 ${GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(t)}
 `;
     });
-    for (const a of i.BuffEffectManager?.GetEffectsByHandle(r.Handle) ?? []) {
+    for (const a of i.BuffEffectManager?.GetEffectsByHandle(r.Handle) ?? [])
       n += `激活效果 ${a.GetDebugString()}(cd:${(i.GetBuffEffectCd(a.BuffId, a.Index) / CommonDefine_1.MILLIONSECOND_PER_SECOND).toFixed(1)}s)
 `;
-    }
     return (
       r.Config.Modifiers?.forEach((t) => {
-        const e = AbilityUtils_1.AbilityUtils.GetLevelValue(
-          t.Value1 ?? [],
-          r.Level,
-          0,
-        );
-        const i = AbilityUtils_1.AbilityUtils.GetLevelValue(
-          t.Value2 ?? [],
-          r.Level,
-          0,
-        );
+        var e = AbilityUtils_1.AbilityUtils.GetLevelValue(
+            t.Value1 ?? [],
+            r.Level,
+            0,
+          ),
+          i = AbilityUtils_1.AbilityUtils.GetLevelValue(
+            t.Value2 ?? [],
+            r.Level,
+            0,
+          );
         switch (t.CalculationPolicy[0]) {
           case 0:
             n += `属性${Protocol_1.Aki.Protocol.KBs[t.AttributeId]}增加${t.Value1}
@@ -492,7 +500,7 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
           case 2:
           case 4:
             (n +=
-              `属性${Protocol_1.Aki.Protocol.KBs[t.AttributeId]}${t.CalculationPolicy[0] === 2 ? "增加" : "覆盖为"}${t.CalculationPolicy[2] === 1 ? "施加者" : "持有者"}${Protocol_1.Aki.Protocol.KBs[t.CalculationPolicy[1]]}${["基础值", "当前值", "附加值"][t.CalculationPolicy[3]]}的${(0.01 * e).toFixed(1)}%+` +
+              `属性${Protocol_1.Aki.Protocol.KBs[t.AttributeId]}${2 === t.CalculationPolicy[0] ? "增加" : "覆盖为"}${1 === t.CalculationPolicy[2] ? "施加者" : "持有者"}${Protocol_1.Aki.Protocol.KBs[t.CalculationPolicy[1]]}${["基础值", "当前值", "附加值"][t.CalculationPolicy[3]]}的${(0.01 * e).toFixed(1)}%+` +
               i +
               (t.CalculationPolicy[4] ? "(快照)" : "")),
               t.CalculationPolicy[5] &&
@@ -514,7 +522,6 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       n.trimEnd()
     );
   }
-
   static SetDistance(t, e) {
     CharacterGasDebugComponent_1.CharacterGasDebugComponent.SetDistanceMax(e);
   }
@@ -591,7 +598,7 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static GetBeHitBone(t) {
     t = EntitySystem_1.EntitySystem.GetComponent(t, 51);
-    return t?.BeHitBones && t?.BeHitBones?.length > 0
+    return t?.BeHitBones && 0 < t?.BeHitBones?.length
       ? t.BeHitBones[0]
       : FNameUtil_1.FNameUtil.EMPTY;
   }
@@ -1013,7 +1020,7 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     EntitySystem_1.EntitySystem.GetComponent(t, 158)?.SprintRelease();
   }
   static StandPress(t) {
-    const e = EntitySystem_1.EntitySystem.GetComponent(t, 89);
+    var e = EntitySystem_1.EntitySystem.GetComponent(t, 89);
     e &&
       e.PositionState ===
         CharacterUnifiedStateTypes_1.ECharPositionState.Ground &&
@@ -1037,9 +1044,9 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static EnableEntity(t, e) {}
   static UpdateAnimInfoHit(t, e) {
-    let i;
-    let n;
-    let r = EntitySystem_1.EntitySystem.GetComponent(t, 160);
+    var i,
+      n,
+      r = EntitySystem_1.EntitySystem.GetComponent(t, 160);
     r?.Valid &&
       (t = EntitySystem_1.EntitySystem.GetComponent(t, 51)) &&
       ((e = e),
@@ -1058,7 +1065,7 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       ((r.DoubleHitInAir = i), (e.DoubleHitInAirRef = i));
   }
   static UpdateAnimInfoFk(e, i) {
-    let n = EntitySystem_1.EntitySystem.GetComponent(e, 160);
+    var n = EntitySystem_1.EntitySystem.GetComponent(e, 160);
     if (n?.Valid) {
       e = EntitySystem_1.EntitySystem.GetComponent(e, 51);
       if (e) {
@@ -1074,8 +1081,8 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     }
   }
   static UpdateAnimInfoUnifiedState(t, e) {
-    let i;
-    let n = EntitySystem_1.EntitySystem.GetComponent(t, 160);
+    var i,
+      n = EntitySystem_1.EntitySystem.GetComponent(t, 160);
     n?.Valid &&
       (t = EntitySystem_1.EntitySystem.GetComponent(t, 89)) &&
       ((e = e),
@@ -1091,7 +1098,7 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       ((n.CharCameraState = i), (e.CharCameraStateRef = i));
   }
   static UpdateAnimInfoUnifiedStateRoleNpc(t, e) {
-    let i = EntitySystem_1.EntitySystem.GetComponent(t, 160);
+    var i = EntitySystem_1.EntitySystem.GetComponent(t, 160);
     i?.Valid &&
       (t = EntitySystem_1.EntitySystem.GetComponent(t, 89)) &&
       ((e = e),
@@ -1147,8 +1154,8 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return !!t?.Valid && t.IsSkillInCd(e);
   }
   static SendHookSkillUseLogData(t, e) {
-    const i = new LogReportDefine_1.HookSkillUseLogData();
-    var t = EntitySystem_1.EntitySystem.GetComponent(t, 3).ActorLocationProxy;
+    var i = new LogReportDefine_1.HookSkillUseLogData(),
+      t = EntitySystem_1.EntitySystem.GetComponent(t, 3).ActorLocationProxy;
     (i.i_area_id = ModelManager_1.ModelManager.AreaModel.AreaInfo.AreaId),
       (i.i_father_area_id =
         ModelManager_1.ModelManager.AreaModel.AreaInfo.Father),
@@ -1159,8 +1166,8 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       LogReportController_1.LogReportController.LogReport(i);
   }
   static SendManipulateSkillUseLogData(t, e) {
-    const i = new LogReportDefine_1.ManipulateSkillUseLogData();
-    var t = EntitySystem_1.EntitySystem.GetComponent(t, 3).ActorLocationProxy;
+    var i = new LogReportDefine_1.ManipulateSkillUseLogData(),
+      t = EntitySystem_1.EntitySystem.GetComponent(t, 3).ActorLocationProxy;
     (i.i_area_id = ModelManager_1.ModelManager.AreaModel.AreaInfo.AreaId),
       (i.i_father_area_id =
         ModelManager_1.ModelManager.AreaModel.AreaInfo.Father),
@@ -1171,8 +1178,8 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       LogReportController_1.LogReportController.LogReport(i);
   }
   static SendScanSkillUseLogData(t, e) {
-    const i = new LogReportDefine_1.ScanSkillUseLogData();
-    var t = EntitySystem_1.EntitySystem.GetComponent(t, 3).ActorLocationProxy;
+    var i = new LogReportDefine_1.ScanSkillUseLogData(),
+      t = EntitySystem_1.EntitySystem.GetComponent(t, 3).ActorLocationProxy;
     (i.i_area_id = ModelManager_1.ModelManager.AreaModel.AreaInfo.AreaId),
       (i.i_father_area_id =
         ModelManager_1.ModelManager.AreaModel.AreaInfo.Father),
@@ -1183,13 +1190,13 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       LogReportController_1.LogReportController.LogReport(i);
   }
   static DynamicAttachEntityToActor(e, i, n) {
-    const r = EntitySystem_1.EntitySystem.Get(e);
-    var e = EntitySystem_1.EntitySystem.GetComponent(e, 110);
+    var r = EntitySystem_1.EntitySystem.Get(e),
+      e = EntitySystem_1.EntitySystem.GetComponent(e, 110);
     if (r && e) {
       let t = new UE.Transform();
-      let a;
-      var i = EntitySystem_1.EntitySystem.Get(i);
-      let s = i?.GetComponent(1)?.Owner;
+      var a,
+        i = EntitySystem_1.EntitySystem.Get(i),
+        s = i?.GetComponent(1)?.Owner;
       s &&
         (s.IsA(UE.Character.StaticClass())
           ? (a = s).Mesh.DoesSocketExist(n) &&
@@ -1216,8 +1223,8 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     }
   }
   static DynamicDetachEntityFromActor(t) {
-    const e = EntitySystem_1.EntitySystem.Get(t);
-    var t = EntitySystem_1.EntitySystem.GetComponent(t, 110);
+    var e = EntitySystem_1.EntitySystem.Get(t),
+      t = EntitySystem_1.EntitySystem.GetComponent(t, 110);
     e &&
       t &&
       t.UnRegTarget(
@@ -1243,4 +1250,4 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
 }
 exports.default = TsGameplayBlueprintFunctionLibrary;
-// # sourceMappingURL=TsGameplayBlueprintFunctionLibrary.js.map
+//# sourceMappingURL=TsGameplayBlueprintFunctionLibrary.js.map

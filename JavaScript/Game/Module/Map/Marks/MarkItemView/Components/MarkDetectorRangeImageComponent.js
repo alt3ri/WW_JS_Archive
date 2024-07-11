@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MarkDetectorRangeImageComponent = void 0);
-const UE = require("ue");
-const MarkComponent_1 = require("./MarkComponent");
+const UE = require("ue"),
+  MarkComponent_1 = require("./MarkComponent");
 class MarkDetectorRangeImageComponent extends MarkComponent_1.MarkComponent {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UITexture]];
@@ -12,4 +12,4 @@ class MarkDetectorRangeImageComponent extends MarkComponent_1.MarkComponent {
   }
 }
 exports.MarkDetectorRangeImageComponent = MarkDetectorRangeImageComponent;
-// # sourceMappingURL=MarkDetectorRangeImageComponent.js.map
+//# sourceMappingURL=MarkDetectorRangeImageComponent.js.map

@@ -24,22 +24,22 @@ class AiBattleWander {
     );
   }
   id() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetGroupidsAt(t) {
     return this.groupids(t);
   }
   groupids(t) {
-    const s = this.J7.__offset(this.z7, 6);
+    var s = this.J7.__offset(this.z7, 6);
     return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   groupidsLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   groupidsArray() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -50,4 +50,4 @@ class AiBattleWander {
   }
 }
 exports.AiBattleWander = AiBattleWander;
-// # sourceMappingURL=AiBattleWander.js.map
+//# sourceMappingURL=AiBattleWander.js.map

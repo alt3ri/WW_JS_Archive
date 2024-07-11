@@ -23,4 +23,4 @@ class PortalModel extends ModelBase_1.ModelBase {
   }
 }
 exports.PortalModel = PortalModel;
-// # sourceMappingURL=PortalModel.js.map
+//# sourceMappingURL=PortalModel.js.map

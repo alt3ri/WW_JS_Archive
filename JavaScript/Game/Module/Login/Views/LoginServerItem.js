@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoginServerItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class LoginServerItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -65,15 +65,15 @@ class LoginServerItem extends UiPanelBase_1.UiPanelBase {
   Update(e, t) {
     (this.Pe = e), this.GetText(1).SetText(e.name);
     var i =
-      ModelManager_1.ModelManager.LoginServerModel.OnBeginSuggestServerData ===
-      this.Pe;
-    var i =
-      (this.GetItem(7).SetUIActive(i),
-      ModelManager_1.ModelManager.LoginServerModel.GetLoginLevel(
-        ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig()?.Uid ?? "",
-        e.Region,
-      ));
-    var e = i > 0;
+        ModelManager_1.ModelManager.LoginServerModel
+          .OnBeginSuggestServerData === this.Pe,
+      i =
+        (this.GetItem(7).SetUIActive(i),
+        ModelManager_1.ModelManager.LoginServerModel.GetLoginLevel(
+          ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig()?.Uid ?? "",
+          e.Region,
+        )),
+      e = 0 < i;
     this.GetItem(4).SetUIActive(e),
       e &&
         LguiUtil_1.LguiUtil.SetLocalText(this.GetText(5), "OverSeaServerLv", i),
@@ -84,4 +84,4 @@ class LoginServerItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.LoginServerItem = LoginServerItem;
-// # sourceMappingURL=LoginServerItem.js.map
+//# sourceMappingURL=LoginServerItem.js.map

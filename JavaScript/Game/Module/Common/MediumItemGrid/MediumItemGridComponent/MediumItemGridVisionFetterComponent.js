@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MediumItemGridVisionFetterComponent = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const VisionFetterSuitItem_1 = require("../../../Phantom/Vision/View/VisionFetterSuitItem");
-const MediumItemGridComponent_1 = require("./MediumItemGridComponent");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  VisionFetterSuitItem_1 = require("../../../Phantom/Vision/View/VisionFetterSuitItem"),
+  MediumItemGridComponent_1 = require("./MediumItemGridComponent");
 class MediumItemGridVisionFetterComponent extends MediumItemGridComponent_1.MediumItemGridComponent {
   constructor() {
     super(...arguments), (this.PPt = void 0);
@@ -36,4 +36,4 @@ class MediumItemGridVisionFetterComponent extends MediumItemGridComponent_1.Medi
 }
 exports.MediumItemGridVisionFetterComponent =
   MediumItemGridVisionFetterComponent;
-// # sourceMappingURL=MediumItemGridVisionFetterComponent.js.map
+//# sourceMappingURL=MediumItemGridVisionFetterComponent.js.map

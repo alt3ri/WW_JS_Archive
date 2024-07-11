@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PowerItem = void 0);
-const UE = require("ue");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const coinNotEnoughColor = UE.Color.FromHex("9D2437FF");
+const UE = require("ue"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  coinNotEnoughColor = UE.Color.FromHex("9D2437FF");
 class PowerItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(t) {
     super(),
       (this.Hio = void 0),
       (this.wIt = void 0),
       (this.x4e = (t) => {
-        t === 1 && this.wIt(this.Hio);
+        1 === t && this.wIt(this.Hio);
       }),
       this.CreateThenShowByActor(t.GetOwner());
   }
@@ -48,4 +48,4 @@ class PowerItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.PowerItem = PowerItem;
-// # sourceMappingURL=PowerItem.js.map
+//# sourceMappingURL=PowerItem.js.map

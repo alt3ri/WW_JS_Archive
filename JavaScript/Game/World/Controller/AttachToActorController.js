@@ -1,15 +1,15 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AttachToActorController = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const ATTACH_REASON_LENGTH_LIMIT = 4;
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  ATTACH_REASON_LENGTH_LIMIT = 4;
 class AttachToActorController extends ControllerBase_1.ControllerBase {
   static AttachToActor(t, o, r, e, a, n, c, A, _, i = !0) {
-    let s;
+    var s;
     return e
       ? e.length < ATTACH_REASON_LENGTH_LIMIT
         ? (Log_1.Log.CheckError() &&
@@ -81,7 +81,7 @@ class AttachToActorController extends ControllerBase_1.ControllerBase {
         !1);
   }
   static AttachToComponent(t, o, r, e, a, n, c, A, _, i = !0) {
-    let s, L;
+    var s, L;
     return e
       ? e.length < ATTACH_REASON_LENGTH_LIMIT
         ? (Log_1.Log.CheckError() &&
@@ -192,7 +192,7 @@ class AttachToActorController extends ControllerBase_1.ControllerBase {
           Log_1.Log.Error("Entity", 3, "srcActor无效", ["Reason", r]),
         !1
       );
-    const c = t.GetAttachParentActor();
+    var c = t.GetAttachParentActor();
     if (!c?.IsValid()) {
       const A =
         ModelManager_1.ModelManager.AttachToActorModel.GetEntityIdByActor(t);
@@ -239,7 +239,7 @@ class AttachToActorController extends ControllerBase_1.ControllerBase {
         !1);
   }
   static DetachActorByEntity(t, o, r, e, a, n, c) {
-    let A;
+    var A;
     return o
       ? o.length < ATTACH_REASON_LENGTH_LIMIT
         ? (Log_1.Log.CheckError() &&
@@ -304,15 +304,16 @@ class AttachToActorController extends ControllerBase_1.ControllerBase {
   }
   static DetachActorsBeforeDestroyEntity(o) {
     if (!o?.Valid) return !0;
-    const t =
-      ModelManager_1.ModelManager.AttachToActorModel.GetAttachActorEntry(o.Id);
+    var t = ModelManager_1.ModelManager.AttachToActorModel.GetAttachActorEntry(
+      o.Id,
+    );
     if (!t) return !0;
-    const r = t.GetAttachActorItems();
+    var r = t.GetAttachActorItems();
     if (!r?.length) return !0;
     let e = !0;
-    for (let t = r.length - 1; t >= 0; --t) {
-      const a = r[t];
-      a.DetachType === 1 &&
+    for (let t = r.length - 1; 0 <= t; --t) {
+      var a = r[t];
+      1 === a.DetachType &&
         a.Actor?.IsValid() &&
         !this.DetachActorByEntity(
           a.Actor,
@@ -328,15 +329,15 @@ class AttachToActorController extends ControllerBase_1.ControllerBase {
     return e;
   }
   static DetachActorsAfterDestroyEntity(o) {
-    const t =
+    var t =
       ModelManager_1.ModelManager.AttachToActorModel.GetAttachActorEntry(o);
     if (!t) return !0;
-    const r = t.GetAttachActorItems();
+    var r = t.GetAttachActorItems();
     if (!r?.length) return !0;
     let e = !0;
-    for (let t = r.length - 1; t >= 0; --t) {
-      const a = r[t];
-      a.DetachType === 0 &&
+    for (let t = r.length - 1; 0 <= t; --t) {
+      var a = r[t];
+      0 === a.DetachType &&
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Entity",
@@ -362,14 +363,14 @@ class AttachToActorController extends ControllerBase_1.ControllerBase {
     return e;
   }
   static CheckAttachError(o) {
-    const t = ModelManager_1.ModelManager.AttachToActorModel;
-    const r = t.GetAttachActorEntry(o);
+    var t = ModelManager_1.ModelManager.AttachToActorModel,
+      r = t.GetAttachActorEntry(o);
     if (!r) return !0;
-    const e = r.GetAttachActorItems();
+    var e = r.GetAttachActorItems();
     if (!e?.length) return !0;
     let a = !0;
-    for (let t = e.length - 1; t >= 0; --t) {
-      const n = e[t];
+    for (let t = e.length - 1; 0 <= t; --t) {
+      var n = e[t];
       (a = !1),
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -405,8 +406,8 @@ class AttachToActorController extends ControllerBase_1.ControllerBase {
       }
       o = ModelManager_1.ModelManager.AttachToActorModel;
       if (o) {
-        const r = o.GetEntityIdByActor(t);
-        const e = o.GetAttachActorItem(r, t);
+        var r = o.GetEntityIdByActor(t),
+          e = o.GetAttachActorItem(r, t);
         if (e)
           switch (e.DetachType) {
             case 2:
@@ -445,4 +446,4 @@ class AttachToActorController extends ControllerBase_1.ControllerBase {
       }
     }
   });
-// # sourceMappingURL=AttachToActorController.js.map
+//# sourceMappingURL=AttachToActorController.js.map

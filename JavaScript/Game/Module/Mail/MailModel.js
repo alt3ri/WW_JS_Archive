@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MailModel = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LocalStorage_1 = require("../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../Common/LocalStorageDefine");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const MailInstance_1 = require("./MailInstance");
-const MailAttachmentData_1 = require("./Views/MailAttachmentData");
-const ID_SHOW_LENGTH = 3;
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  MailInstance_1 = require("./MailInstance"),
+  MailAttachmentData_1 = require("./Views/MailAttachmentData"),
+  ID_SHOW_LENGTH = 3;
 class MailModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -48,7 +48,7 @@ class MailModel extends ModelBase_1.ModelBase {
       });
   }
   OEi(e) {
-    if (e.GetWasScanned() && e.GetAttachmentStatus() !== 2) {
+    if (e.GetWasScanned() && 2 !== e.GetAttachmentStatus()) {
       if (!this.bEi.has(e.Id))
         return void EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.SwitchUnfinishedFlag,
@@ -67,14 +67,14 @@ class MailModel extends ModelBase_1.ModelBase {
   }
   GetRedDotCouldLightOn() {
     return (
-      this.bEi.size > 0 &&
+      0 < this.bEi.size &&
       ModelManager_1.ModelManager.MailModel.CheckOpenCondition()
     );
   }
   UnScannedRedPoint() {
     if (!ModelManager_1.ModelManager.MailModel.CheckOpenCondition()) return !1;
     let e = !1;
-    if (this.kQ.size > 0)
+    if (0 < this.kQ.size)
       for (const t of this.kQ.values())
         if (!t.GetWasScanned()) {
           e = !0;
@@ -85,18 +85,18 @@ class MailModel extends ModelBase_1.ModelBase {
   GetRedDotImportant() {
     if (!ModelManager_1.ModelManager.MailModel.CheckOpenCondition()) return !1;
     let e = !1;
-    if (this.bEi.size > 0)
+    if (0 < this.bEi.size)
       for (const t of this.bEi.values())
-        if (this.GetMailInstanceById(t).GetMailLevel() === 2) {
+        if (2 === this.GetMailInstanceById(t).GetMailLevel()) {
           e = !0;
           break;
         }
     return e;
   }
   GetLastPickedAttachments() {
-    const e = [];
+    var e = [];
     for (const i of this.GEi) {
-      const t = [{ IncId: 0, ItemId: i.GetItemId() }, i.GetCount()];
+      var t = [{ IncId: 0, ItemId: i.GetItemId() }, i.GetCount()];
       e.push(t);
     }
     return e;
@@ -105,10 +105,10 @@ class MailModel extends ModelBase_1.ModelBase {
     this.ClearLastPickedAttachments();
     const i = new Map();
     for (const r of Object.keys(e)) {
-      const a = this.GetMailInstanceById(r);
+      var a = this.GetMailInstanceById(r);
       a.GetAttachmentInfo().forEach((e) => {
-        var t = i.get(e.Ekn);
-        var t = e.I5n + (t ?? 0);
+        var t = i.get(e.Ekn),
+          t = e.I5n + (t ?? 0);
         i.set(e.Ekn, t);
       }),
         Log_1.Log.CheckInfo() &&
@@ -133,7 +133,7 @@ class MailModel extends ModelBase_1.ModelBase {
     this.BEi = e;
   }
   OpenWebBrowser(e) {
-    e && e !== "" && UE.KismetSystemLibrary.LaunchURL(e);
+    e && "" !== e && UE.KismetSystemLibrary.LaunchURL(e);
   }
   ReloadMailList() {
     (this.wEi.length = 0),
@@ -177,13 +177,13 @@ class MailModel extends ModelBase_1.ModelBase {
         ModelManager_1.ModelManager.MailModel.GetMailCapacity() &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error("Mail", 28, "[MailError]MailBox is fulfilled");
-      const t = new Protocol_1.Aki.Protocol.PNs(i);
+      var t = new Protocol_1.Aki.Protocol.PNs(i);
       this.AddMail(t, !1);
     }
     this.ReloadMailList();
   }
   GetMailCapacity() {
-    let e;
+    var e;
     return (
       this.NEi ||
       ((e = ConfigManager_1.ConfigManager.MailConfig.GetMailSize())
@@ -210,13 +210,13 @@ class MailModel extends ModelBase_1.ModelBase {
         "mailInformation.Proto_Id",
         e.Ekn,
       ]);
-    const t = e.ckn;
-    const i = new MailInstance_1.MailData();
-    const a =
-      (ObjectUtils_1.ObjectUtils.CopyValue(e, i),
-      (i.Id = e.Ekn),
-      (i.ConfigId = e.R5n),
-      e.RAs);
+    var t = e.ckn,
+      i = new MailInstance_1.MailData(),
+      a =
+        (ObjectUtils_1.ObjectUtils.CopyValue(e, i),
+        (i.Id = e.Ekn),
+        (i.ConfigId = e.R5n),
+        e.RAs);
     (i.Time = a.low),
       (i.Level = e.r3n),
       (i.Title = e.AAs),
@@ -227,7 +227,7 @@ class MailModel extends ModelBase_1.ModelBase {
       (i.AttachmentInfos = e.xAs),
       (i.OriginalDeadlineTimeStamp = a.low + e.UAs),
       (i.FinishedDeadlineTimeStamp =
-        MathUtils_1.MathUtils.LongToNumber(e.RAs) > 0 ? e.wAs + a.low : 0),
+        0 < MathUtils_1.MathUtils.LongToNumber(e.RAs) ? e.wAs + a.low : 0),
       this.jEi(i),
       this.kEi(i),
       this.SetMailStatusByStatusCode(t, i),
@@ -241,7 +241,7 @@ class MailModel extends ModelBase_1.ModelBase {
         );
   }
   IfNeedShowNewMail() {
-    const e =
+    var e =
       LocalStorage_1.LocalStorage.GetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.HasShowNewMailTipsMap,
       ) ?? new Map();
@@ -250,7 +250,7 @@ class MailModel extends ModelBase_1.ModelBase {
     return !1;
   }
   SaveShowNewMailMap() {
-    const e =
+    var e =
       LocalStorage_1.LocalStorage.GetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.HasShowNewMailTipsMap,
       ) ?? new Map();
@@ -261,7 +261,7 @@ class MailModel extends ModelBase_1.ModelBase {
     );
   }
   RefreshLocalNewMailMap() {
-    const e =
+    var e =
       LocalStorage_1.LocalStorage.GetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.HasShowNewMailTipsMap,
       ) ?? new Map();
@@ -274,20 +274,20 @@ class MailModel extends ModelBase_1.ModelBase {
     );
   }
   jEi(e) {
-    let t;
-    (e.ConfigId !== 4 && e.ConfigId !== 6) ||
+    var t;
+    (4 !== e.ConfigId && 6 !== e.ConfigId) ||
       ((t = this.VEi(e.Time)), (e.Title = e.Title + t));
   }
   SetMailStatusByStatusCode(e, t) {
-    const i = 1 & e;
-    var e = 2 & e;
+    var i = 1 & e,
+      e = 2 & e;
     let a = 0;
-    t.AttachmentInfos.length === 0
+    0 === t.AttachmentInfos.length
       ? (a = 0)
-      : t.AttachmentInfos.length > 0 && (a = e ? 1 : 2),
+      : 0 < t.AttachmentInfos.length && (a = e ? 1 : 2),
       t.SetWasScanned(i),
       t.SetAttachmentStatus(a),
-      i == 1 && t.UpdateValidTimeWhenReadMail(),
+      1 == i && t.UpdateValidTimeWhenReadMail(),
       this.OEi(t),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -308,11 +308,11 @@ class MailModel extends ModelBase_1.ModelBase {
     return ConfigManager_1.ConfigManager.MailConfig.GetMailFilterConfigById(e);
   }
   GetImportantMails(e) {
-    return (e ?? this.GetMailList()).filter((e) => e.GetMailLevel() === 2);
+    return (e ?? this.GetMailList()).filter((e) => 2 === e.GetMailLevel());
   }
   GetUnScanMails(e) {
     return (e ?? this.GetMailList()).filter((e) => !e.GetWasScanned());
   }
 }
 exports.MailModel = MailModel;
-// # sourceMappingURL=MailModel.js.map
+//# sourceMappingURL=MailModel.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RewardExploreScore = void 0);
-const UE = require("ue");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const GenericLayout_1 = require("../../Util/Layout/GenericLayout");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class RewardExploreScore extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -26,7 +26,7 @@ class RewardExploreScore extends UiPanelBase_1.UiPanelBase {
       this.yPr.SetActive(!0);
   }
   OnStart() {
-    const e = this.GetScrollViewWithScrollbar(0);
+    var e = this.GetScrollViewWithScrollbar(0);
     this.F7e = new GenericLayout_1.GenericLayout(
       e.GetContent().GetComponentByClass(UE.UILayoutBase.StaticClass()),
       this.VOe,
@@ -89,4 +89,4 @@ class NewRecordItem extends UiPanelBase_1.UiPanelBase {
     this.GetItem(2)?.SetUIActive(e);
   }
 }
-// # sourceMappingURL=RewardExploreScore.js.map
+//# sourceMappingURL=RewardExploreScore.js.map

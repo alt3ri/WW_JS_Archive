@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
+const UE = require("ue"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyStateLimitInputCache extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -33,4 +33,4 @@ class TsAnimNotifyStateLimitInputCache extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateLimitInputCache;
-// # sourceMappingURL=TsAnimNotifyStateLimitInputCache.js.map
+//# sourceMappingURL=TsAnimNotifyStateLimitInputCache.js.map

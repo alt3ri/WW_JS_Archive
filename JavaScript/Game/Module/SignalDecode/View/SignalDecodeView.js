@@ -1,27 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SignalDecodeView = void 0);
-const UE = require("ue");
-const Json_1 = require("../../../../Core/Common/Json");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const SignalDecodeGamePlayById_1 = require("../../../../Core/Define/ConfigQuery/SignalDecodeGamePlayById");
-const SignalDecodeTabColorById_1 = require("../../../../Core/Define/ConfigQuery/SignalDecodeTabColorById");
-const SignalDecodeWaveformById_1 = require("../../../../Core/Define/ConfigQuery/SignalDecodeWaveformById");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const GeneralLogicTreeController_1 = require("../../GeneralLogicTree/GeneralLogicTreeController");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const SignalDecodeTabItem_1 = require("./SignalDecodeTabItem");
-const ANIM_TIME = 1500;
-const SLOT_OUTLINE_WIDTH = 3;
-const SLOT_WIDTH = 60;
-const SLOT_INTERVAL = 19;
-const SLOT_PADDING_LEFT = 10;
-const UNIT_HEIGHT = 100;
+const UE = require("ue"),
+  Json_1 = require("../../../../Core/Common/Json"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  SignalDecodeGamePlayById_1 = require("../../../../Core/Define/ConfigQuery/SignalDecodeGamePlayById"),
+  SignalDecodeTabColorById_1 = require("../../../../Core/Define/ConfigQuery/SignalDecodeTabColorById"),
+  SignalDecodeWaveformById_1 = require("../../../../Core/Define/ConfigQuery/SignalDecodeWaveformById"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  GeneralLogicTreeController_1 = require("../../GeneralLogicTree/GeneralLogicTreeController"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  SignalDecodeTabItem_1 = require("./SignalDecodeTabItem"),
+  ANIM_TIME = 1500,
+  SLOT_OUTLINE_WIDTH = 3,
+  SLOT_WIDTH = 60,
+  SLOT_INTERVAL = 19,
+  SLOT_PADDING_LEFT = 10,
+  UNIT_HEIGHT = 100;
 class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -49,23 +49,23 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
           !(TimeUtil_1.TimeUtil.GetServerTime() - this.cVe <= this.zMo)
         ) {
           this.cVe = TimeUtil_1.TimeUtil.GetServerTime();
-          const i = this.VMo[0].GetAnchorOffsetX();
-          var t = this.jMo.get(0);
-          var t = this.tSo(t);
-          var t = Math.abs(t - i);
+          var i = this.VMo[0].GetAnchorOffsetX(),
+            t = this.jMo.get(0),
+            t = this.tSo(t),
+            t = Math.abs(t - i);
           if (!(t > this.ZMo)) {
             for (let i = 0; i < this.VMo.length; i++) {
-              const e = this.VMo[i];
+              var e = this.VMo[i];
               if (!e.IsUIActiveInHierarchy()) return;
-              var s = this.jMo.get(i);
-              var s = this.tSo(s);
+              var s = this.jMo.get(i),
+                s = this.tSo(s);
               e.SetAnchorOffsetX(s);
             }
             this.kMo[this.QMo - 1].SetComplete(),
               TimerSystem_1.TimerSystem.Delay(() => {
                 for (const t of this.VMo) this.iSo(t);
                 (this.VMo.length = 0), this.jMo.clear();
-                const i = ++this.QMo;
+                var i = ++this.QMo;
                 i <= 4 ? this.oSo(i) : this.Gei(-1);
               }, 1e3 * this.zMo);
           }
@@ -108,8 +108,8 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
       this.GetItem(6).SetUIActive(!1),
       this.GetItem(7).SetUIActive(!1),
       this.GetItem(8).SetUIActive(!1);
-    var i = this.GetTexture(11);
-    var i = ((this.WMo = i.GetWidth()), this.GetSprite(2));
+    var i = this.GetTexture(11),
+      i = ((this.WMo = i.GetWidth()), this.GetSprite(2));
     (this.FMo = []),
       this.FMo.push(i),
       (this.VMo = []),
@@ -155,13 +155,13 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
   sSo(i) {
     if (
       ((this.JMo = TimeUtil_1.TimeUtil.GetServerTime() - this.cVe > this.zMo),
-      this.VMo && this.VMo.length !== 0 && this.JMo)
+      this.VMo && 0 !== this.VMo.length && this.JMo)
     )
       for (const e of this.VMo) {
-        var t = e.GetAnchorOffsetX();
-        var t =
-          (e.SetAnchorOffsetX(t + (i / 1e3) * 250 * this.KMo),
-          e.GetAnchorOffsetX());
+        var t = e.GetAnchorOffsetX(),
+          t =
+            (e.SetAnchorOffsetX(t + (i / 1e3) * 250 * this.KMo),
+            e.GetAnchorOffsetX());
         t >= this.WMo &&
           (e.SetAnchorOffsetX(t - this.WMo - 85), e.SetUIActive(!0));
       }
@@ -186,7 +186,7 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   _no(i) {
-    let t, e, s;
+    var t, e, s;
     i.SignalData1
       ? ((this.kMo = []),
         (s = this.GetItem(1)),
@@ -226,9 +226,9 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
         Log_1.Log.Error("Quest", 19, "找不到信号1", ["id", this.OMo]);
   }
   oSo(i) {
-    let t, e, s;
+    var t, e, s;
     this.kMo &&
-      this.kMo.length !== 0 &&
+      0 !== this.kMo.length &&
       ((t = this.kMo[i - 1].WaveformId),
       (e =
         SignalDecodeWaveformById_1.configSignalDecodeWaveformById.GetConfig(t))
@@ -254,8 +254,8 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
       this.GetTexture(11).SetColor(UE.Color.FromHex(i.DefaultColor));
   }
   lSo(i) {
-    const s = this.GetSprite(2);
-    const h = s.GetParentAsUIItem();
+    const s = this.GetSprite(2),
+      h = s.GetParentAsUIItem();
     (this.KMo = i.SpeedRate),
       Json_1.Json.Parse(i.SignalFragment).forEach((i, t) => {
         let e = void 0;
@@ -267,13 +267,13 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
       });
   }
   _So(i, t) {
-    const e = this.GetItem(12);
-    const s = Json_1.Json.Parse(i.MissingParts);
+    var e = this.GetItem(12),
+      s = Json_1.Json.Parse(i.MissingParts);
     this.YMo = i.Offset;
-    for (let i = s.length - 1; i >= 0; --i) {
-      var h;
-      let r = s[i] === 1;
-      const o = this.FMo[i];
+    for (let i = s.length - 1; 0 <= i; --i) {
+      var h,
+        r = 1 === s[i],
+        o = this.FMo[i];
       r
         ? (o.SetUIActive(!0),
           o.SetColor(UE.Color.FromHex(t.VacancyColor)),
@@ -288,10 +288,10 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   uSo() {
-    const i = this.jMo.get(this.YMo);
-    const t = this.tSo(i + 1);
+    var i = this.jMo.get(this.YMo),
+      t = this.tSo(i + 1);
     for (const s of this.VMo) {
-      const e = s.GetAnchorOffsetX();
+      var e = s.GetAnchorOffsetX();
       s.SetAnchorOffsetX(e - t);
     }
   }
@@ -303,7 +303,7 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
     );
   }
   mSo(i, t) {
-    return this.HMo.length === 0
+    return 0 === this.HMo.length
       ? this.cSo(i, t)
       : ((t = this.HMo.pop()).SetHeight(i.GetHeight()), t);
   }
@@ -318,4 +318,4 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.SignalDecodeView = SignalDecodeView;
-// # sourceMappingURL=SignalDecodeView.js.map
+//# sourceMappingURL=SignalDecodeView.js.map

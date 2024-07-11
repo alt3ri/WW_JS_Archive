@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HandBookCommonTypeItem = void 0);
-const UE = require("ue");
-const GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract");
-const GenericLayoutNew_1 = require("../Util/Layout/GenericLayoutNew");
-const HandBookCommonItem_1 = require("./HandBookCommonItem");
+const UE = require("ue"),
+  GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract"),
+  GenericLayoutNew_1 = require("../Util/Layout/GenericLayoutNew"),
+  HandBookCommonItem_1 = require("./HandBookCommonItem");
 class HandBookCommonTypeItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -14,7 +14,7 @@ class HandBookCommonTypeItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.Gzt = void 0),
       (this.LZt = 0),
       (this.DZt = (t, i, e) => {
-        const s = new HandBookCommonItem_1.HandBookCommonItem();
+        var s = new HandBookCommonItem_1.HandBookCommonItem();
         return (
           s.Initialize(i.GetOwner()),
           s.Refresh(t, !1, 0),
@@ -24,7 +24,7 @@ class HandBookCommonTypeItem extends GridProxyAbstract_1.GridProxyAbstract {
         );
       }),
       (this.OnToggleClick = (t) => {
-        const i = t.Data;
+        var i = t.Data;
         this.Gzt && ((t = t.MediumItemGrid), this.Gzt(i, t));
       });
   }
@@ -47,12 +47,12 @@ class HandBookCommonTypeItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.TZt.RebuildLayoutByDataNew(this.HandBookCommonItemDataList);
   }
   InitTitle() {
-    this.HandBookCommonItemDataList.length !== 0 &&
+    0 !== this.HandBookCommonItemDataList.length &&
       this.GetText(0).SetText(this.HandBookCommonItemDataList[0].Title);
   }
   SetToggleChecked() {
-    let t;
-    if (this.HandBookCommonItemList.length > 0)
+    var t;
+    if (0 < this.HandBookCommonItemList.length)
       return (
         (t = this.HandBookCommonItemList[0]).SetSelected(!0),
         t.OnSelected(!0),
@@ -60,7 +60,7 @@ class HandBookCommonTypeItem extends GridProxyAbstract_1.GridProxyAbstract {
       );
   }
   ResetAllToggleState() {
-    const i = this.HandBookCommonItemList.length;
+    var i = this.HandBookCommonItemList.length;
     for (let t = 0; t < i; t++) this.HandBookCommonItemList[t].SetSelected(!1);
   }
   Refresh(t, i, e) {
@@ -83,4 +83,4 @@ class HandBookCommonTypeItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.HandBookCommonTypeItem = HandBookCommonTypeItem;
-// # sourceMappingURL=HandBookCommonTypeItem.js.map
+//# sourceMappingURL=HandBookCommonTypeItem.js.map

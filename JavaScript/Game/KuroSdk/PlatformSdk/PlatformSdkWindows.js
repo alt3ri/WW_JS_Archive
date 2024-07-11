@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlatformSdkWindows = void 0);
-const UE = require("ue");
-const ue_1 = require("ue");
-const Json_1 = require("../../../Core/Common/Json");
-const LanguageSystem_1 = require("../../../Core/Common/LanguageSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const Time_1 = require("../../../Core/Common/Time");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const PublicUtil_1 = require("../../Common/PublicUtil");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const KuroSdkData_1 = require("../KuroSdkData");
-const PlatformSdkBase_1 = require("./PlatformSdkBase");
-const WEBVIEWCD = 5e3;
+const UE = require("ue"),
+  ue_1 = require("ue"),
+  Json_1 = require("../../../Core/Common/Json"),
+  LanguageSystem_1 = require("../../../Core/Common/LanguageSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Time_1 = require("../../../Core/Common/Time"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../Common/PublicUtil"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  KuroSdkData_1 = require("../KuroSdkData"),
+  PlatformSdkBase_1 = require("./PlatformSdkBase"),
+  WEBVIEWCD = 5e3;
 class WindowsSdkRedPointSt extends Json_1.JsonObjBase {
   constructor() {
     super(...arguments), (this.data = ""), (this.error = 0), (this.type = "");
@@ -58,8 +58,8 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
           );
       }),
       (this.CustomerServiceResultCallBack = (e) => {
-        const o = Json_1.Json.Parse(e);
-        const r = Json_1.Json.Parse(o.data);
+        var o = Json_1.Json.Parse(e),
+          r = Json_1.Json.Parse(o.data);
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("KuroSdk", 28, "当前客服红点数量", ["result", e]),
           o &&
@@ -68,7 +68,7 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
                 "num",
                 r.isreddot,
               ]),
-            (this.CurrentCustomerShowState = r.isreddot > 0)),
+            (this.CurrentCustomerShowState = 0 < r.isreddot)),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.SdkCustomerRedPointRefresh,
           );
@@ -97,21 +97,21 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
       ue_1.KuroSDKManager.Get().OnLoginDelegate.Add(this.OnLoginCallBack);
   }
   OpenWebView(e, o, r, t, n) {
-    var _ = new KuroSdkData_1.OpenWebViewParamWindows();
-    var _ =
-      ((_.title = e),
-      (_.url = o),
-      (_.transparent = t),
-      (_.webAccelerated = n),
-      (_.innerbrowser = !0),
-      Json_1.Json.Stringify(_));
+    var _ = new KuroSdkData_1.OpenWebViewParamWindows(),
+      _ =
+        ((_.title = e),
+        (_.url = o),
+        (_.transparent = t),
+        (_.webAccelerated = n),
+        (_.innerbrowser = !0),
+        Json_1.Json.Stringify(_));
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("KuroSdk", 28, "OpenWebView", ["sdkJson", _ ?? ""]),
       ue_1.KuroSDKManager.OpenWebView(e, o, r, t, n, _);
   }
   GetSdkOpenUrlWndInfo(e, o) {
-    const r = new KuroSdkData_1.OpenSdkUrlWndParamWindows();
-    var e = ((r.title = e), (r.url = o), Json_1.Json.Stringify(r));
+    var r = new KuroSdkData_1.OpenSdkUrlWndParamWindows(),
+      e = ((r.title = e), (r.url = o), Json_1.Json.Stringify(r));
     return (
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("KuroSdk", 28, "SdkJson", ["sdkJson", e ?? ""]),
@@ -120,7 +120,7 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
   }
   SdkOpenUrlWnd(e, o, r, t, n = !0) {
     if (ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()) {
-      if (this.LastOpenTime !== 0)
+      if (0 !== this.LastOpenTime)
         if (Time_1.Time.Now - this.LastOpenTime <= WEBVIEWCD)
           return void ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
             "InDisplayCd",
@@ -129,13 +129,13 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
     }
   }
   OpenFeedback() {
-    let e;
-    let o;
-    let r;
-    let t;
-    let n;
-    let _;
-    const s = BaseConfigController_1.BaseConfigController.GetFeedBackUrl();
+    var e,
+      o,
+      r,
+      t,
+      n,
+      _,
+      s = BaseConfigController_1.BaseConfigController.GetFeedBackUrl();
     s
       ? ((_ = s.url),
         (e = ModelManager_1.ModelManager.LoginModel),
@@ -175,8 +175,8 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
     ue_1.KuroSDKManager.ShowExitGameDialog();
   }
   InitializePostWebView() {
-    let e;
-    let o = BaseConfigController_1.BaseConfigController.GetLoginServers();
+    var e,
+      o = BaseConfigController_1.BaseConfigController.GetLoginServers();
     o
       ? (Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 28, "serverId"),
         Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 28, o[0].id),
@@ -210,8 +210,8 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
   }
   GetAgreement() {
     let e = new Array();
-    let o;
-    const r = ue_1.KuroSDKManager.GetSdkParams("game_init_agreement");
+    var o,
+      r = ue_1.KuroSDKManager.GetSdkParams("game_init_agreement");
     return (
       ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk() ||
         ((o = Json_1.Json.Parse(r)), (e = o)),
@@ -221,7 +221,7 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
     );
   }
   SdkPay(e) {
-    let o;
+    var o;
     ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
       ((o = KuroSdkData_1.KuroSdkControllerTool.GetSdkPayRoleInfo()),
       (o = this.qEe(e, o)),
@@ -236,7 +236,7 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
       ue_1.KuroSDKManager.KuroSDKEvent(8, o));
   }
   qEe(e, o) {
-    const r = new KuroSdkData_1.PayInfoWindows();
+    var r = new KuroSdkData_1.PayInfoWindows();
     (r.roleId = o.roleId.toString()),
       (r.roleName = o.roleName.toString()),
       (r.serverId = o.serverId.toString()),
@@ -255,28 +255,30 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
       "}");
   }
   OpenCustomerService(e) {
-    var o = ModelManager_1.ModelManager.LoginModel;
-    const r = new KuroSdkData_1.OpenCustomerServiceParamWindows();
-    var o =
-      ((r.islogin = o.IsSdkLoggedIn()), (r.from = e), Json_1.Json.Stringify(r));
+    var o = ModelManager_1.ModelManager.LoginModel,
+      r = new KuroSdkData_1.OpenCustomerServiceParamWindows(),
+      o =
+        ((r.islogin = o.IsSdkLoggedIn()),
+        (r.from = e),
+        Json_1.Json.Stringify(r));
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("KuroSdk", 28, "WindowsCustomerService", ["json", o]),
       ue_1.KuroSDKManager.OpenCustomerService(o);
   }
   SdkSelectRole() {
-    let e;
+    var e;
     Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 28, "上报选择角色"),
       ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
         ((e = this.ZEe()), ue_1.KuroSDKManager.KuroSDKEvent(2, e));
   }
   SdkCreateRole() {
-    let e;
+    var e;
     Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 28, "上报创建新角色"),
       ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
         ((e = this.tye()), ue_1.KuroSDKManager.KuroSDKEvent(3, e));
   }
   SdkLevelUpRole() {
-    let e;
+    var e;
     Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 28, "上报角色升级"),
       ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
         ((e = this.ZEe()), ue_1.KuroSDKManager.KuroSDKEvent(4, e));
@@ -289,23 +291,23 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
         : "";
   }
   tye() {
-    var e = ModelManager_1.ModelManager.LoginModel;
-    const o = new KuroSdkData_1.RoleInfoWindows();
-    var e =
-      ((o.roleId = this.IEe()),
-      (o.roleName = e.GetPlayerName() ? e.GetPlayerName() : ""),
-      (o.serverId = e.GetServerId() ? e.GetServerId() : ""),
-      (o.serverName = e.GetServerName() ? e.GetServerName() : ""),
-      (o.roleLevel = "1"),
-      (o.vipLevel = "0"),
-      (o.partyName = " "),
-      (o.roleCreateTime = e.GetCreatePlayerTime()
-        ? e.GetCreatePlayerTime()
-        : ""),
-      (o.setBalanceLevelOne = "0"),
-      (o.setBalanceLevelTwo = "0"),
-      (o.setSumPay = "0"),
-      Json_1.Json.Stringify(o) ?? "");
+    var e = ModelManager_1.ModelManager.LoginModel,
+      o = new KuroSdkData_1.RoleInfoWindows(),
+      e =
+        ((o.roleId = this.IEe()),
+        (o.roleName = e.GetPlayerName() ? e.GetPlayerName() : ""),
+        (o.serverId = e.GetServerId() ? e.GetServerId() : ""),
+        (o.serverName = e.GetServerName() ? e.GetServerName() : ""),
+        (o.roleLevel = "1"),
+        (o.vipLevel = "0"),
+        (o.partyName = " "),
+        (o.roleCreateTime = e.GetCreatePlayerTime()
+          ? e.GetCreatePlayerTime()
+          : ""),
+        (o.setBalanceLevelOne = "0"),
+        (o.setBalanceLevelTwo = "0"),
+        (o.setSumPay = "0"),
+        Json_1.Json.Stringify(o) ?? "");
     return (
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("KuroSdk", 28, "SdkGetRoleInfo", ["data", e]),
@@ -313,22 +315,24 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
     );
   }
   ZEe() {
-    const e = ModelManager_1.ModelManager.FunctionModel;
-    var o = ModelManager_1.ModelManager.LoginModel;
-    const r = new KuroSdkData_1.RoleInfoWindows();
-    var o =
-      ((r.roleId = this.IEe()),
-      (r.roleName = e.GetPlayerName() ? e.GetPlayerName() : ""),
-      (r.serverId = o.GetServerId() ? o.GetServerId() : ""),
-      (r.serverName = o.GetServerName() ? o.GetServerName() : ""),
-      (r.roleLevel = e.GetPlayerLevel() ? e.GetPlayerLevel().toString() : "1"),
-      (r.vipLevel = "0"),
-      (r.partyName = " "),
-      (r.roleCreateTime = ""),
-      (r.setBalanceLevelOne = e.GetPlayerCashCoin()),
-      (r.setBalanceLevelTwo = "0"),
-      (r.setSumPay = "0"),
-      Json_1.Json.Stringify(r) ?? "");
+    var e = ModelManager_1.ModelManager.FunctionModel,
+      o = ModelManager_1.ModelManager.LoginModel,
+      r = new KuroSdkData_1.RoleInfoWindows(),
+      o =
+        ((r.roleId = this.IEe()),
+        (r.roleName = e.GetPlayerName() ? e.GetPlayerName() : ""),
+        (r.serverId = o.GetServerId() ? o.GetServerId() : ""),
+        (r.serverName = o.GetServerName() ? o.GetServerName() : ""),
+        (r.roleLevel = e.GetPlayerLevel()
+          ? e.GetPlayerLevel().toString()
+          : "1"),
+        (r.vipLevel = "0"),
+        (r.partyName = " "),
+        (r.roleCreateTime = ""),
+        (r.setBalanceLevelOne = e.GetPlayerCashCoin()),
+        (r.setBalanceLevelTwo = "0"),
+        (r.setSumPay = "0"),
+        Json_1.Json.Stringify(r) ?? "");
     return (
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("KuroSdk", 28, "SdkGetRoleInfo", ["data", o]),
@@ -336,22 +340,22 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
     );
   }
   SetFont() {
-    var e = new KuroSdkData_1.SetFontParamWindows();
-    var e =
-      ((e.name = "文鼎方新书H7GBK_H"),
-      (e.path =
-        UE.BlueprintPathsLibrary.RootDir() +
-        "Client/Binaries/Win64/ThirdParty/KrPcSdk_Mainland/H7GBKHeavy.TTF"),
-      Json_1.Json.Stringify(e) ?? "");
+    var e = new KuroSdkData_1.SetFontParamWindows(),
+      e =
+        ((e.name = "文鼎方新书H7GBK_H"),
+        (e.path =
+          UE.BlueprintPathsLibrary.RootDir() +
+          "Client/Binaries/Win64/ThirdParty/KrPcSdk_Mainland/H7GBKHeavy.TTF"),
+        Json_1.Json.Stringify(e) ?? "");
     ue_1.KuroSDKManager.SetFont(e);
   }
   OnPaymentCallBack(e, o, r) {
     let t = !1;
-    Json_1.Json.Parse(o)?.error === 0 &&
+    0 === Json_1.Json.Parse(o)?.error &&
       ((t = !0), Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info("KuroSdk", 28, "OnPaymentCallBack Windows Success"),
       r(t, o);
   }
 }
 exports.PlatformSdkWindows = PlatformSdkWindows;
-// # sourceMappingURL=PlatformSdkWindows.js.map
+//# sourceMappingURL=PlatformSdkWindows.js.map

@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AdviceController = exports.INFO_ADVICE_ITEM_TYPE = void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const Global_1 = require("../../Global");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const LogReportController_1 = require("../LogReport/LogReportController");
-const LogReportDefine_1 = require("../LogReport/LogReportDefine");
-const AdviceData_1 = require("./AdviceData");
-const PROFILE_KEY = ((exports.INFO_ADVICE_ITEM_TYPE = 20), "Advice");
+const UE = require("ue"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  LogReportController_1 = require("../LogReport/LogReportController"),
+  LogReportDefine_1 = require("../LogReport/LogReportDefine"),
+  AdviceData_1 = require("./AdviceData"),
+  PROFILE_KEY = ((exports.INFO_ADVICE_ITEM_TYPE = 20), "Advice");
 class AdviceController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return this.OnAddEvents(), this.OnRegisterNetEvent(), !0;
@@ -76,16 +76,16 @@ class AdviceController extends ControllerBase_1.ControllerBase {
       Net_1.Net.UnRegister(3560);
   }
   static OpenAdviceConjunctionSelectView() {
-    const e = ModelManager_1.ModelManager.AdviceModel;
+    var e = ModelManager_1.ModelManager.AdviceModel;
     (e.CurrentChangeWordType = 1),
       (e.CurrentSelectWordId = e.CurrentConjunctionId),
       UiManager_1.UiManager.OpenView("AdviceWordView");
   }
   static OpenAdviceWordSelectView(e) {
-    let r;
-    const t = ModelManager_1.ModelManager.AdviceModel;
-    const o = t.CurrentWordMap.get(e);
-    void 0 !== o && o > 0
+    var r,
+      t = ModelManager_1.ModelManager.AdviceModel,
+      o = t.CurrentWordMap.get(e);
+    void 0 !== o && 0 < o
       ? ((r = ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceWordType(o)),
         (t.CurrentSelectSortTypeId = r),
         (t.CurrentSelectSortWordId = o))
@@ -99,10 +99,10 @@ class AdviceController extends ControllerBase_1.ControllerBase {
   }
   static OpenAdviceSentenceSelectView() {
     const e = ModelManager_1.ModelManager.AdviceModel;
-    if (e.CurrentLineModel === 0) {
+    if (0 === e.CurrentLineModel) {
       const e = ModelManager_1.ModelManager.AdviceModel;
       e.CurrentChangeWordType = 0;
-      const r = e.CurrentSentenceWordMap.get(0);
+      var r = e.CurrentSentenceWordMap.get(0);
       (e.CurrentSelectWordId = r),
         (e.CurrentPreSelectSentenceIndex = 0),
         UiManager_1.UiManager.OpenView("AdviceWordView");
@@ -112,7 +112,7 @@ class AdviceController extends ControllerBase_1.ControllerBase {
     UiManager_1.UiManager.OpenView("AdviceExpressionView");
   }
   static OpenAdviceCreateView() {
-    let e;
+    var e;
     ModelManager_1.ModelManager.AdviceModel.GetCreateAdvicePreConditionState()
       ? (ModelManager_1.ModelManager.AdviceModel.ResetWordData(),
         UiManager_1.UiManager.OpenView("AdviceCreateView"))
@@ -131,21 +131,21 @@ class AdviceController extends ControllerBase_1.ControllerBase {
     {
       ModelManager_1.ModelManager.AdviceModel.SetCurrentEntityId(e),
         this.Q6e(e);
-      var e = await UiManager_1.UiManager.OpenViewAsync("AdviceInfoView");
-      var r =
-        (EventSystem_1.EventSystem.Emit(
-          EventDefine_1.EEventName.RefreshAdviceInfoView,
-        ),
-        ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityAdviceData().GetAdviceData());
-      const t =
-        ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityAdviceData();
-      const o = new LogReportDefine_1.AdviceWatchLogData();
-      var r =
-        ((o.l_advice_id = r.GetAdviceBigId().toString()),
-        r.GetAdviceContentData());
+      var e = await UiManager_1.UiManager.OpenViewAsync("AdviceInfoView"),
+        r =
+          (EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.RefreshAdviceInfoView,
+          ),
+          ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityAdviceData().GetAdviceData()),
+        t =
+          ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityAdviceData(),
+        o = new LogReportDefine_1.AdviceWatchLogData(),
+        r =
+          ((o.l_advice_id = r.GetAdviceBigId().toString()),
+          r.GetAdviceContentData());
       const n = new Array();
       r.forEach((e) => {
-        const r = new AdviceData_1.LogAdviceData();
+        var r = new AdviceData_1.LogAdviceData();
         r.Phrase(e), n.push(r);
       }),
         (o.o_content = n),
@@ -169,7 +169,7 @@ class AdviceController extends ControllerBase_1.ControllerBase {
     }
   }
   static K6e() {
-    const e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     if (e?.Valid && e.Entity.GetComponent(185).HasTag(1996802261))
       return (
         ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -180,8 +180,8 @@ class AdviceController extends ControllerBase_1.ControllerBase {
     return !1;
   }
   static Q6e(e) {
-    const r = EntitySystem_1.EntitySystem.Get(e);
-    r.GetComponent(0).GetAdviceInfo().GetAdviceData().GetAdviceMotionId() > 0 &&
+    var r = EntitySystem_1.EntitySystem.Get(e);
+    0 < r.GetComponent(0).GetAdviceInfo().GetAdviceData().GetAdviceMotionId() &&
       ModelManager_1.ModelManager.AdviceModel.GetAdviceMotionActor(
         e,
       ).PlayMotion(e),
@@ -225,7 +225,7 @@ class AdviceController extends ControllerBase_1.ControllerBase {
       });
   }
   static RequestDeleteAdvice(r) {
-    const e = new Protocol_1.Aki.Protocol.$jn();
+    var e = new Protocol_1.Aki.Protocol.$jn();
     (e.Ekn = r),
       Net_1.Net.Call(8923, e, (e) => {
         e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
@@ -237,7 +237,7 @@ class AdviceController extends ControllerBase_1.ControllerBase {
       });
   }
   static RequestVote(e, r, t) {
-    const o = new Protocol_1.Aki.Protocol.jjn();
+    var o = new Protocol_1.Aki.Protocol.jjn();
     (o.Ekn = e),
       (o.Ikn = t),
       Net_1.Net.Call(4749, o, (e) => {
@@ -270,15 +270,15 @@ class AdviceController extends ControllerBase_1.ControllerBase {
     );
   }
   static CheckBehindAdviceActor() {
-    const e = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
-    const r = ModelManager_1.ModelManager.FunctionModel.PlayerId;
-    const t =
-      ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceCannotPutDistance();
+    var e = ModelManager_1.ModelManager.CreatureModel.GetAllEntities(),
+      r = ModelManager_1.ModelManager.FunctionModel.PlayerId,
+      t =
+        ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceCannotPutDistance();
     for (const a of e.values()) {
       var o = a.Entity.GetComponent(0);
       if (o && o.GetAdviceInfo()?.GetPlayerId() === r) {
-        var o = Global_1.Global.BaseCharacter;
-        let n = a.Entity.GetComponent(1)?.Owner;
+        var o = Global_1.Global.BaseCharacter,
+          n = a.Entity.GetComponent(1)?.Owner;
         if (o && a && n) {
           (n = n.K2_GetActorLocation()), (o = o.K2_GetActorLocation());
           if (UE.KismetMathLibrary.Vector_Distance(n, o) <= t) return !0;
@@ -288,35 +288,35 @@ class AdviceController extends ControllerBase_1.ControllerBase {
     return !1;
   }
   static CheckIfStandAndInValidActor() {
-    const e = Vector_1.Vector.Create();
-    const r = Vector_1.Vector.Create();
-    const t = Global_1.Global.BaseCharacter.CharacterActorComponent;
-    var o = t.ActorLocationProxy;
-    const n =
-      (e.DeepCopy(o),
-      (e.Z += t.DefaultHalfHeight),
-      r.DeepCopy(o),
-      (r.Z -= t.DefaultHalfHeight + 300),
-      ModelManager_1.ModelManager.TraceElementModel.GetActorTrace());
-    var o =
-      ((n.WorldContextObject = t.Actor),
-      (n.Radius = t.DefaultRadius),
-      TraceElementCommon_1.TraceElementCommon.SetStartLocation(n, e),
-      TraceElementCommon_1.TraceElementCommon.SetEndLocation(n, r),
-      n.ActorsToIgnore.Empty(),
-      TraceElementCommon_1.TraceElementCommon.ShapeTrace(
-        t.Actor.CapsuleComponent,
-        n,
-        PROFILE_KEY,
-        PROFILE_KEY,
-      ));
+    var e = Vector_1.Vector.Create(),
+      r = Vector_1.Vector.Create(),
+      t = Global_1.Global.BaseCharacter.CharacterActorComponent,
+      o = t.ActorLocationProxy,
+      n =
+        (e.DeepCopy(o),
+        (e.Z += t.DefaultHalfHeight),
+        r.DeepCopy(o),
+        (r.Z -= t.DefaultHalfHeight + 300),
+        ModelManager_1.ModelManager.TraceElementModel.GetActorTrace()),
+      o =
+        ((n.WorldContextObject = t.Actor),
+        (n.Radius = t.DefaultRadius),
+        TraceElementCommon_1.TraceElementCommon.SetStartLocation(n, e),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(n, r),
+        n.ActorsToIgnore.Empty(),
+        TraceElementCommon_1.TraceElementCommon.ShapeTrace(
+          t.Actor.CapsuleComponent,
+          n,
+          PROFILE_KEY,
+          PROFILE_KEY,
+        ));
     if (!o)
       return (
         ModelManager_1.ModelManager.TraceElementModel.ClearActorTrace(), !1
       );
-    const a = n.HitResult.GetHitCount();
+    var a = n.HitResult.GetHitCount();
     for (let e = 0; e < a; ++e) {
-      const i = n.HitResult.Actors.Get(e);
+      var i = n.HitResult.Actors.Get(e);
       if (!this.X6e(i))
         return (
           ModelManager_1.ModelManager.TraceElementModel.ClearActorTrace(), !1
@@ -332,7 +332,7 @@ class AdviceController extends ControllerBase_1.ControllerBase {
         UE.BPI_CreatureInterface_C.StaticClass(),
       )
     ) {
-      const r = e.GetEntityId();
+      var r = e.GetEntityId();
       const t = EntitySystem_1.EntitySystem.Get(r);
       return t?.Valid ? !1 : !0;
     }
@@ -351,13 +351,13 @@ class AdviceController extends ControllerBase_1.ControllerBase {
   }),
   (AdviceController.k6e = (e, r) => {
     var e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(e);
-    e.Parameters.size > 0 &&
+    0 < e.Parameters.size &&
       void 0 !== (e = e.Parameters.get(exports.INFO_ADVICE_ITEM_TYPE)) &&
-      e !== 0 &&
+      0 !== e &&
       AdviceController.OpenAdviceCreateView();
   }),
   (AdviceController.RequestAdviceData = () => {
-    const e = new Protocol_1.Aki.Protocol.qjn();
+    var e = new Protocol_1.Aki.Protocol.qjn();
     Net_1.Net.Call(2962, e, (e) => {
       e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
         ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
@@ -368,14 +368,14 @@ class AdviceController extends ControllerBase_1.ControllerBase {
     });
   }),
   (AdviceController.V6e = (e) => {
-    var r = MathUtils_1.MathUtils.LongToBigInt(e.Ekn);
-    var r = Number(r);
-    var r = EntitySystem_1.EntitySystem.Get(r);
+    var r = MathUtils_1.MathUtils.LongToBigInt(e.Ekn),
+      r = Number(r),
+      r = EntitySystem_1.EntitySystem.Get(r);
     r && r.GetComponent(0).GetAdviceInfo().PhraseContent(e.E3n);
   }),
   (AdviceController.H6e = (e) => {
-    var r = MathUtils_1.MathUtils.LongToNumber(e.Ekn);
-    var r = ModelManager_1.ModelManager.CreatureModel.GetEntity(r);
+    var r = MathUtils_1.MathUtils.LongToNumber(e.Ekn),
+      r = ModelManager_1.ModelManager.CreatureModel.GetEntity(r);
     r?.Valid &&
       ((r = r.Entity.GetComponent(0)).GetAdviceInfo().PhraseVote(e.Tgs),
       ModelManager_1.ModelManager.AdviceModel.OnAdviceVoteUpdate(
@@ -389,4 +389,4 @@ class AdviceController extends ControllerBase_1.ControllerBase {
   (AdviceController.W6e = (e) => {
     ModelManager_1.ModelManager.AdviceModel.SetAdviceShowSetting(e.zkn);
   });
-// # sourceMappingURL=AdviceController.js.map
+//# sourceMappingURL=AdviceController.js.map

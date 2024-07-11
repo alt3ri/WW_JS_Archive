@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventSetTimeSlowDown = void 0);
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const Global_1 = require("../../Global");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  Global_1 = require("../../Global"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventSetTimeSlowDown extends LevelGeneralBase_1.LevelEventBase {
   Execute(e, l) {
     l &&
@@ -15,4 +15,4 @@ class LevelEventSetTimeSlowDown extends LevelGeneralBase_1.LevelEventBase {
   }
 }
 exports.LevelEventSetTimeSlowDown = LevelEventSetTimeSlowDown;
-// # sourceMappingURL=LevelEventSetTimeSlowDown.js.map
+//# sourceMappingURL=LevelEventSetTimeSlowDown.js.map

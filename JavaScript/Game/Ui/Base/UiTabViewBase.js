@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiTabViewBase = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const PerformanceController_1 = require("../../../Core/Performance/PerformanceController");
-const TickSystem_1 = require("../../../Core/Tick/TickSystem");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const UiPanelBase_1 = require("./UiPanelBase");
-const UiViewSequence_1 = require("./UiViewSequence");
+const Log_1 = require("../../../Core/Common/Log"),
+  PerformanceController_1 = require("../../../Core/Performance/PerformanceController"),
+  TickSystem_1 = require("../../../Core/Tick/TickSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  UiPanelBase_1 = require("./UiPanelBase"),
+  UiViewSequence_1 = require("./UiViewSequence");
 class UiTabViewBase extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -19,7 +19,7 @@ class UiTabViewBase extends UiPanelBase_1.UiPanelBase {
       (this.UiViewSequence = void 0),
       (this.m_r = void 0),
       (this.d_r = (e) => {
-        const i = PerformanceController_1.PerformanceController.StartMonitor(
+        var i = PerformanceController_1.PerformanceController.StartMonitor(
           "UiTabViewBase.TickHandler",
         );
         this.OnTickUiTabViewBase(e),
@@ -57,7 +57,7 @@ class UiTabViewBase extends UiPanelBase_1.UiPanelBase {
   }
   OnStartImplement() {
     this.C_r(), this.OnInitBehaviour();
-    const i = this.OperationList.length;
+    var i = this.OperationList.length;
     for (let e = 0; e < i; e++) (0, this.OperationList[e])();
     (this.OperationList = []), this.g_r();
   }
@@ -135,4 +135,4 @@ class UiTabViewBase extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.UiTabViewBase = UiTabViewBase;
-// # sourceMappingURL=UiTabViewBase.js.map
+//# sourceMappingURL=UiTabViewBase.js.map

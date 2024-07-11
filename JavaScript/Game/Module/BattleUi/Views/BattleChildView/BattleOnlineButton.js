@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleOnlineButton = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer");
-const BattleEntranceButton_1 = require("./BattleEntranceButton");
-const onlinePlayerIconList = ["Online1PIcon", "Online2PIcon", "Online3PIcon"];
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  BattleEntranceButton_1 = require("./BattleEntranceButton"),
+  onlinePlayerIconList = ["Online1PIcon", "Online2PIcon", "Online3PIcon"];
 class BattleOnlineButton extends BattleEntranceButton_1.BattleEntranceButton {
   constructor() {
     super(...arguments),
@@ -18,8 +18,8 @@ class BattleOnlineButton extends BattleEntranceButton_1.BattleEntranceButton {
       (this.b$e = void 0),
       (this.q$e = ""),
       (this.G$e = () => {
-        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() ===
-          0 &&
+        0 ===
+          ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() &&
           (this.GetItem(2).SetUIActive(!1), this.EPe?.StopCurrentSequence());
       }),
       (this.N$e = () => {
@@ -53,10 +53,10 @@ class BattleOnlineButton extends BattleEntranceButton_1.BattleEntranceButton {
   }
   OnShowBattleChildView() {
     super.OnShowBattleChildView(),
-      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() ===
-      1
+      1 ===
+      ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState()
         ? (this.GetItem(2).SetUIActive(!0),
-          this.EPe.GetCurrentSequence() === "AutoLoop"
+          "AutoLoop" === this.EPe.GetCurrentSequence()
             ? this.EPe.ReplaySequenceByKey("AutoLoop")
             : this.EPe.PlayLevelSequenceByName("AutoLoop"))
         : (this.GetItem(2).SetUIActive(!1), this.EPe?.StopCurrentSequence()),
@@ -117,8 +117,8 @@ class BattleOnlineButton extends BattleEntranceButton_1.BattleEntranceButton {
   V$e() {
     let e = void 0;
     if (ModelManager_1.ModelManager.GameModeModel.IsMulti) {
-      var t = ModelManager_1.ModelManager.CreatureModel.GetPlayerId();
-      var t = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(t);
+      var t = ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
+        t = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(t);
       if (!t) return;
       e = onlinePlayerIconList[t.PlayerNumber - 1];
     } else
@@ -139,4 +139,4 @@ class BattleOnlineButton extends BattleEntranceButton_1.BattleEntranceButton {
   }
 }
 exports.BattleOnlineButton = BattleOnlineButton;
-// # sourceMappingURL=BattleOnlineButton.js.map
+//# sourceMappingURL=BattleOnlineButton.js.map

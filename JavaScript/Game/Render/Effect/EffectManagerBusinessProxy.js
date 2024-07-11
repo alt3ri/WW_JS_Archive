@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectManagerBusinessProxy = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const Stats_1 = require("../../../Core/Common/Stats");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const EffectSystem_1 = require("../../Effect/EffectSystem");
-const Global_1 = require("../../Global");
+const Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  EffectSystem_1 = require("../../Effect/EffectSystem"),
+  Global_1 = require("../../Global");
 class EffectManagerBusinessProxy {
   constructor() {
     (this.Clr = void 0),
@@ -28,7 +28,7 @@ class EffectManagerBusinessProxy {
         this.flr &&
           e === this.plr &&
           (e = this.flr.GetComponent(33)?.GetSkillInfo(t)) &&
-          e.SkillGenre === 3 &&
+          3 === e.SkillGenre &&
           this.glr.forEach((e) => {
             EffectSystem_1.EffectSystem.IsValid(e) &&
               (Log_1.Log.CheckInfo() &&
@@ -72,4 +72,4 @@ class EffectManagerBusinessProxy {
   }
 }
 exports.EffectManagerBusinessProxy = EffectManagerBusinessProxy;
-// # sourceMappingURL=EffectManagerBusinessProxy.js.map
+//# sourceMappingURL=EffectManagerBusinessProxy.js.map

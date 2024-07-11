@@ -3,16 +3,16 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AbilityUtils = void 0);
 class AbilityUtils {
   static GetLevelValue(t, e, r) {
-    return t && t.length !== 0
-      ? e >= 1 && e - 1 < t.length
+    return t && 0 !== t.length
+      ? 1 <= e && e - 1 < t.length
         ? t[e - 1]
-        : e === 0
+        : 0 === e
           ? t[0]
           : t[t.length - 1]
       : r;
   }
   static GetArrayValue(t, e, r) {
-    return !t || t.length === 0 || e < 0
+    return !t || 0 === t.length || e < 0
       ? r
       : e < t.length
         ? t[e]
@@ -31,4 +31,4 @@ class AbilityUtils {
   }
 }
 exports.AbilityUtils = AbilityUtils;
-// # sourceMappingURL=AbilityUtils.js.map
+//# sourceMappingURL=AbilityUtils.js.map

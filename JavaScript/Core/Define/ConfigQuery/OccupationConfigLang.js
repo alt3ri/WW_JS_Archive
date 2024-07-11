@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configOccupationConfigLang = void 0);
-const LanguageSystem_1 = require("../../Common/LanguageSystem");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const DeserializeConfig_1 = require("../../Config/DeserializeConfig");
-const StringUtils_1 = require("../../Utils/StringUtils");
-const CommonDefine_1 = require("../CommonDefine");
-const TEXTNOTFOUNT = "text not found";
-const DB = "lang_occupation.db";
-const TABLE = "OccupationConfig";
-const COMMAND = "select content from `OccupationConfig` where id = ?";
-const logPair = [
-  ["数据库", DB],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
-const langCache = new Map();
-const initStat = void 0;
-const getLocalTextStat = void 0;
-const LOCAL_TEXT_STAT_PREFIX = "configOccupationConfigLang.GetLocalText(";
+const LanguageSystem_1 = require("../../Common/LanguageSystem"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  DeserializeConfig_1 = require("../../Config/DeserializeConfig"),
+  StringUtils_1 = require("../../Utils/StringUtils"),
+  CommonDefine_1 = require("../CommonDefine"),
+  TEXTNOTFOUNT = "text not found",
+  DB = "lang_occupation.db",
+  TABLE = "OccupationConfig",
+  COMMAND = "select content from `OccupationConfig` where id = ?",
+  logPair = [
+    ["数据库", DB],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ],
+  langCache = new Map(),
+  initStat = void 0,
+  getLocalTextStat = void 0,
+  LOCAL_TEXT_STAT_PREFIX = "configOccupationConfigLang.GetLocalText(";
 exports.configOccupationConfigLang = {
   Init: () => {
     ConfigCommon_1.ConfigCommon.GetLangStatementId(TABLE, DB, COMMAND);
@@ -35,7 +35,7 @@ exports.configOccupationConfigLang = {
     var n = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(e);
     let t = i.get(n);
     if (t) return t;
-    const a = ConfigCommon_1.ConfigCommon.GetLangStatementId(
+    var a = ConfigCommon_1.ConfigCommon.GetLangStatementId(
       TABLE,
       DB,
       COMMAND,
@@ -45,16 +45,17 @@ exports.configOccupationConfigLang = {
       (C =
         ConfigCommon_1.ConfigCommon.CheckStatement(a) &&
         ConfigCommon_1.ConfigCommon.BindInt(a, 1, o, ...logPair, ["Id", o]) &&
-        ConfigCommon_1.ConfigCommon.Step(
-          a,
-          !0,
-          ...logPair,
-          ["传入语言", e],
-          ["查询语言", n],
-          ["文本Id", o],
-        ) > 0)
+        0 <
+          ConfigCommon_1.ConfigCommon.Step(
+            a,
+            !0,
+            ...logPair,
+            ["传入语言", e],
+            ["查询语言", n],
+            ["文本Id", o],
+          ))
     ) {
-      let g = void 0;
+      var g = void 0;
       if (
         (([C, g] = ConfigCommon_1.ConfigCommon.GetValue(
           a,
@@ -96,4 +97,4 @@ exports.configOccupationConfigLang = {
     ConfigCommon_1.ConfigCommon.Reset(a);
   },
 };
-// # sourceMappingURL=OccupationConfigLang.js.map
+//# sourceMappingURL=OccupationConfigLang.js.map

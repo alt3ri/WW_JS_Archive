@@ -7,14 +7,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.PI_DEG_DOUBLE =
     exports.PI_DEG =
       void 0);
-const UE = require("ue");
-const Long = require("../../Core/Define/Net/long");
-const Stack_1 = require("../Container/Stack");
-const MathCommon_1 = require("./Math/MathCommon");
-const Quat_1 = require("./Math/Quat");
-const Rotator_1 = require("./Math/Rotator");
-const Transform_1 = require("./Math/Transform");
-const Vector_1 = require("./Math/Vector");
+const UE = require("ue"),
+  Long = require("../../Core/Define/Net/long"),
+  Stack_1 = require("../Container/Stack"),
+  MathCommon_1 = require("./Math/MathCommon"),
+  Quat_1 = require("./Math/Quat"),
+  Rotator_1 = require("./Math/Rotator"),
+  Transform_1 = require("./Math/Transform"),
+  Vector_1 = require("./Math/Vector");
 (exports.PI_DEG = 180),
   (exports.PI_DEG_DOUBLE = 2 * exports.PI_DEG),
   (exports.intBit = 32n),
@@ -41,7 +41,7 @@ class MathUtils {
     return MathCommon_1.MathCommon.Clamp(t, a, i);
   }
   static GetRangePct(t, a, i) {
-    const s = a - t;
+    var s = a - t;
     return this.IsNearlyZero(s) ? (a <= i ? 1 : 0) : (i - t) / s;
   }
   static RangeClamp(t, a, i, s, r) {
@@ -69,14 +69,14 @@ class MathUtils {
         );
   }
   static LerpDirect2dByMaxAngle(t, a, i, s, r, e) {
-    const o = MathUtils.GetAngleByVector2D(t);
-    let n = MathUtils.GetAngleByVector2D(a);
-    var t = Math.asin(t.Z) * MathUtils.RadToDeg;
-    var a = Math.asin(a.Z) * MathUtils.RadToDeg * i;
+    var o = MathUtils.GetAngleByVector2D(t),
+      n = MathUtils.GetAngleByVector2D(a),
+      t = Math.asin(t.Z) * MathUtils.RadToDeg,
+      a = Math.asin(a.Z) * MathUtils.RadToDeg * i;
     let h = n - o;
-    for (; h > 180; ) h -= 360;
-    for (; -h > 180; ) h += 360;
-    r && (h = h > 0 ? h - 360 : h + 360);
+    for (; 180 < h; ) h -= 360;
+    for (; 180 < -h; ) h += 360;
+    r && (h = 0 < h ? h - 360 : h + 360);
     let c = a - t;
     (i = Math.sqrt(h * h + c * c)),
       s < i && ((h *= s / i), (c *= s / i)),
@@ -88,13 +88,13 @@ class MathUtils {
       (e.Y = Math.sin(n * MathUtils.DegToRad) * a);
   }
   static InterpTo(t, a, i, s) {
-    const r = a - t;
+    var r = a - t;
     return Math.abs(r) < MathCommon_1.MathCommon.KindaSmallNumber
       ? a
       : t + r * this.Clamp(i * s, 0, 1);
   }
   static InterpConstantTo(t, a, i, s) {
-    const r = a - t;
+    var r = a - t;
     return Math.abs(r) < MathCommon_1.MathCommon.KindaSmallNumber
       ? a
       : t + this.Clamp(r, -(a = i * s), a);
@@ -112,9 +112,9 @@ class MathUtils {
         (r.Yaw = a.Yaw - t.Yaw),
         (r.Roll = a.Roll - t.Roll),
         MathCommon_1.MathCommon.VectorNormalizeRotator(r),
-        (r.Pitch = s >= 1 ? r.Pitch : r.Pitch * s),
-        (r.Yaw = s >= 1 ? r.Yaw : r.Yaw * s),
-        (r.Roll = s >= 1 ? r.Roll : r.Roll * s),
+        (r.Pitch = 1 <= s ? r.Pitch : r.Pitch * s),
+        (r.Yaw = 1 <= s ? r.Yaw : r.Yaw * s),
+        (r.Roll = 1 <= s ? r.Roll : r.Roll * s),
         (r.Pitch += t.Pitch),
         (r.Yaw += t.Yaw),
         (r.Roll += t.Roll),
@@ -156,7 +156,7 @@ class MathUtils {
     return t + (a - t) * Math.random();
   }
   static GetRandomVector(t, a) {
-    const i = new UE.Vector();
+    var i = new UE.Vector();
     return (
       (i.X = MathUtils.GetRandomFloatNumber(t, a)),
       (i.Y = MathUtils.GetRandomFloatNumber(t, a)),
@@ -165,7 +165,7 @@ class MathUtils {
     );
   }
   static GetRandomVector2d(t, a) {
-    const i = new UE.Vector2D();
+    var i = new UE.Vector2D();
     return (
       (i.X = MathUtils.GetRandomFloatNumber(t, a)),
       (i.Y = MathUtils.GetRandomFloatNumber(t, a)),
@@ -204,20 +204,20 @@ class MathUtils {
   }
   static InUeRange(t, a) {
     return (
-      (a.LowerBound.Type === 0
+      (0 === a.LowerBound.Type
         ? t > a.LowerBound.Value
         : t >= a.LowerBound.Value) &&
-      (a.UpperBound.Type === 0
+      (0 === a.UpperBound.Type
         ? t < a.UpperBound.Value
         : t <= a.UpperBound.Value)
     );
   }
   static InFastUeRange(t, a) {
     return (
-      (a.LowerBoundType === 0
+      (0 === a.LowerBoundType
         ? t > a.LowerBoundValue
         : t >= a.LowerBoundValue) &&
-      (a.UpperBoundType === 0 ? t < a.UpperBoundValue : t <= a.UpperBoundValue)
+      (0 === a.UpperBoundType ? t < a.UpperBoundValue : t <= a.UpperBoundValue)
     );
   }
   static InUeRangeAngle(t, a) {
@@ -269,20 +269,20 @@ class MathUtils {
     return MathUtils.GetFloatPointFloor(t, a).toFixed(a);
   }
   static SafeDivide(t, a) {
-    return a !== 0 ? t / a : 0;
+    return 0 !== a ? t / a : 0;
   }
   static LongToBigInt(t) {
-    if (typeof t === "number") {
+    if ("number" == typeof t) {
       const i = BigInt(t);
       return i;
     }
-    const a = BigInt(t.low >>> 0);
+    var a = BigInt(t.low >>> 0);
     const i = (BigInt(t.high) << exports.intBit) | a;
     return i;
   }
   static LongToNumber(t) {
-    let a;
-    return typeof t === "number"
+    var a;
+    return "number" == typeof t
       ? t
       : ((a = BigInt(t.low >>> 0)),
         (t = (BigInt(t.high) << exports.intBit) | a),
@@ -303,7 +303,7 @@ class MathUtils {
     return t + (a - t) * this.Lerp(0, 1, Math.pow(i, s));
   }
   static StandardizingPitch(t) {
-    return t > 180 ? t - 360 : t < -180 ? t + 360 : t;
+    return 180 < t ? t - 360 : t < -180 ? t + 360 : t;
   }
   static WrapAngle(t) {
     return MathCommon_1.MathCommon.WrapAngle(t);
@@ -332,21 +332,21 @@ class MathUtils {
     );
   }
   static RotatorToVector(t, a) {
-    var i = MathCommon_1.MathCommon.WrapAngle(t.Pitch);
-    var t = MathCommon_1.MathCommon.WrapAngle(t.Yaw);
-    var i = MathCommon_1.MathCommon.DegreeToRadian(i);
-    var t = MathCommon_1.MathCommon.DegreeToRadian(t);
-    const s = Math.cos(i);
-    var i = Math.sin(i);
-    const r = Math.cos(t);
-    var t = Math.sin(t);
+    var i = MathCommon_1.MathCommon.WrapAngle(t.Pitch),
+      t = MathCommon_1.MathCommon.WrapAngle(t.Yaw),
+      i = MathCommon_1.MathCommon.DegreeToRadian(i),
+      t = MathCommon_1.MathCommon.DegreeToRadian(t),
+      s = Math.cos(i),
+      i = Math.sin(i),
+      r = Math.cos(t),
+      t = Math.sin(t);
     return (a.X = s * r), (a.Y = s * t), (a.Z = i), a;
   }
   static Bisection(t, a, i, s) {
-    let r = a;
-    let e = i;
+    let r = a,
+      e = i;
     for (; e - r > s; ) {
-      const o = (r + e) / 2;
+      var o = (r + e) / 2;
       t(o) ? (e = o) : (r = o + s);
     }
     return r;
@@ -388,13 +388,13 @@ class MathUtils {
   }
   static LookRotation(a, i, s, r) {
     let e = a.X + i.Y + s.Z;
-    if (e > 0) {
+    if (0 < e) {
       e += 1;
-      var o = 0.5 / Math.sqrt(e);
-      var n = o * e;
-      var h = (i.Z - s.Y) * o;
-      var c = (s.X - a.Z) * o;
-      var o = (a.Y - i.X) * o;
+      var o = 0.5 / Math.sqrt(e),
+        n = o * e,
+        h = (i.Z - s.Y) * o,
+        c = (s.X - a.Z) * o,
+        o = (a.Y - i.X) * o;
       r.Set(h, c, o, n);
     } else {
       (h = this.mz()),
@@ -422,9 +422,9 @@ class MathUtils {
     r.Normalize();
   }
   static LookRotationUpFirst(t, a, i) {
-    const s = this.cz;
-    var a = (s.FromUeVector(a), s.Normalize(), this.fz);
-    var t = (s.CrossProduct(t, a), a.Normalize(), this.pz);
+    var s = this.cz,
+      a = (s.FromUeVector(a), s.Normalize(), this.fz),
+      t = (s.CrossProduct(t, a), a.Normalize(), this.pz);
     a.CrossProduct(s, t),
       i instanceof Quat_1.Quat
         ? this.LookRotation(t, a, s, i)
@@ -432,9 +432,9 @@ class MathUtils {
           (this.LookRotation(t, a, s, this.az), this.az.Rotator(i));
   }
   static LookRotationForwardFirst(t, a, i) {
-    const s = this.cz;
-    var t = (s.FromUeVector(t), s.Normalize(), this.fz);
-    var a = (a.CrossProduct(s, t), t.Normalize(), this.pz);
+    var s = this.cz,
+      t = (s.FromUeVector(t), s.Normalize(), this.fz),
+      a = (a.CrossProduct(s, t), t.Normalize(), this.pz);
     s.CrossProduct(t, a),
       i instanceof Quat_1.Quat
         ? this.LookRotation(s, t, a, i)
@@ -445,16 +445,16 @@ class MathUtils {
     return (-2 * t + 3) * t * t;
   }
   static DecimalToBinary(t) {
-    let a = t;
-    let i = "";
+    let a = t,
+      i = "";
     if (a < 0) (i = "-"), (a = 0 - a);
     else {
-      if (a === 0) return "0";
+      if (0 === a) return "0";
       i = "+";
     }
-    for (var s = new Stack_1.Stack(); a > 0; )
+    for (var s = new Stack_1.Stack(); 0 < a; )
       s.Push(Math.floor(a % 2)), (a = Math.floor(a / 2));
-    const r = s.Size;
+    var r = s.Size;
     for (let t = 0; t < r; t++) i += s.Pop().toString();
     return i;
   }
@@ -462,7 +462,7 @@ class MathUtils {
     return Math.acos((t * t + a * a - i * i) / (2 * t * a));
   }
   static GetTriangleCircumradius(t, a, i) {
-    const s = (t + a + i) / 2;
+    var s = (t + a + i) / 2;
     return (
       (t * a * i) /
       (this.CircumradiusRatio * Math.sqrt(s * (s - t) * (s - a) * (s - i)))
@@ -481,9 +481,9 @@ class MathUtils {
       void 0 !== t &&
       void 0 !== a &&
       void 0 !== i &&
-      t !== null &&
-      a !== null &&
-      i !== null &&
+      null !== t &&
+      null !== a &&
+      null !== i &&
       !(isNaN(t) || isNaN(a) || isNaN(i)) &&
       Math.abs(t) < s &&
       Math.abs(a) < s &&
@@ -491,15 +491,15 @@ class MathUtils {
     );
   }
   static IsValidVector(t, a = 1e8) {
-    let i, s;
+    var i, s;
     return (
       !!t &&
       ((i = t.X), (s = t.Y), (t = t.Z), void 0 !== i) &&
       void 0 !== s &&
       void 0 !== t &&
-      i !== null &&
-      s !== null &&
-      t !== null &&
+      null !== i &&
+      null !== s &&
+      null !== t &&
       !(isNaN(i) || isNaN(s) || isNaN(t)) &&
       Math.abs(i) < a &&
       Math.abs(s) < a &&
@@ -507,15 +507,15 @@ class MathUtils {
     );
   }
   static IsValidRotator(t, a = 1e8) {
-    let i, s;
+    var i, s;
     return (
       !!t &&
       ((i = t.Roll), (s = t.Pitch), (t = t.Yaw), void 0 !== i) &&
       void 0 !== s &&
       void 0 !== t &&
-      i !== null &&
-      s !== null &&
-      t !== null &&
+      null !== i &&
+      null !== s &&
+      null !== t &&
       !(isNaN(i) || isNaN(s) || isNaN(t)) &&
       Math.abs(i) < a &&
       Math.abs(s) < a &&
@@ -543,4 +543,4 @@ class MathUtils {
   (MathUtils.CommonTempRotator = Rotator_1.Rotator.Create()),
   (MathUtils.CommonTempQuat = Quat_1.Quat.Create()),
   (MathUtils.az = Quat_1.Quat.Create());
-// # sourceMappingURL=MathUtils.js.map
+//# sourceMappingURL=MathUtils.js.map

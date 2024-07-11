@@ -1,40 +1,40 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GlobalConfigCsv = exports.GlobalConfigCsvLoader = void 0);
-const Log_1 = require("../Misc/Log");
-const CsvLoader_1 = require("./CsvLoader");
-const globalConfigCsvFields = [
-  (0, CsvLoader_1.createCsvField)({
-    Name: "Id",
-    CnName: "Id",
-    Type: "Int",
-    Filter: "1",
-    Condition: "notEmpty && unique",
-    RenderType: 18,
-  }),
-  (0, CsvLoader_1.createCsvField)({
-    Name: "Name",
-    CnName: "变量名",
-    Filter: "1",
-    Condition: "notEmpty && unique",
-  }),
-  (0, CsvLoader_1.createCsvField)({
-    Name: "Desc",
-    CnName: "说明",
-    Filter: "1",
-  }),
-  (0, CsvLoader_1.createCsvField)({
-    Name: "Type",
-    CnName: "变量类型",
-    Condition: "notEmpty",
-    RenderType: 3,
-  }),
-  (0, CsvLoader_1.createCsvField)({
-    Name: "Value",
-    CnName: "值",
-    RenderType: 11,
-  }),
-];
+const Log_1 = require("../Misc/Log"),
+  CsvLoader_1 = require("./CsvLoader"),
+  globalConfigCsvFields = [
+    (0, CsvLoader_1.createCsvField)({
+      Name: "Id",
+      CnName: "Id",
+      Type: "Int",
+      Filter: "1",
+      Condition: "notEmpty && unique",
+      RenderType: 18,
+    }),
+    (0, CsvLoader_1.createCsvField)({
+      Name: "Name",
+      CnName: "变量名",
+      Filter: "1",
+      Condition: "notEmpty && unique",
+    }),
+    (0, CsvLoader_1.createCsvField)({
+      Name: "Desc",
+      CnName: "说明",
+      Filter: "1",
+    }),
+    (0, CsvLoader_1.createCsvField)({
+      Name: "Type",
+      CnName: "变量类型",
+      Condition: "notEmpty",
+      RenderType: 3,
+    }),
+    (0, CsvLoader_1.createCsvField)({
+      Name: "Value",
+      CnName: "值",
+      RenderType: 11,
+    }),
+  ];
 class GlobalConfigCsvLoader extends CsvLoader_1.CsvLoader {
   constructor() {
     super("GlobalConfigCsv", globalConfigCsvFields);
@@ -56,7 +56,7 @@ class GlobalConfigCsv extends CsvLoader_1.GlobalCsv {
     const t = e.Rows;
     e = globalValueConfig;
     Object.entries(e).forEach(([e, o]) => {
-      const a = t.find((e) => e.Id === o.Id);
+      var a = t.find((e) => e.Id === o.Id);
       a
         ? a.Type !== o.Type
           ? (0, Log_1.error)(
@@ -72,4 +72,4 @@ class GlobalConfigCsv extends CsvLoader_1.GlobalCsv {
   }
 }
 exports.GlobalConfigCsv = GlobalConfigCsv;
-// # sourceMappingURL=GlobalConfigCsv.js.map
+//# sourceMappingURL=GlobalConfigCsv.js.map

@@ -1,31 +1,31 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FunctionController = void 0);
-const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
-const Log_1 = require("../../../Core/Common/Log");
-const FunctionOpenViewLimitAll_1 = require("../../../Core/Define/ConfigQuery/FunctionOpenViewLimitAll");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../Ui/UiManager");
-const UiModel_1 = require("../../Ui/UiModel");
-const AchievementController_1 = require("../Achievement/AchievementController");
-const ActivityController_1 = require("../Activity/ActivityController");
-const ChannelController_1 = require("../Channel/ChannelController");
-const GachaController_1 = require("../Gacha/GachaController");
-const BattlePassController_1 = require("../PayShop/BattlePass/BattlePassController");
-const PayShopController_1 = require("../PayShop/PayShopController");
-const PhotographController_1 = require("../Photograph/PhotographController");
-const RoleController_1 = require("../RoleUi/RoleController");
-const RouletteController_1 = require("../Roulette/RouletteController");
-const TutorialController_1 = require("../Tutorial/TutorialController");
-const WorldMapController_1 = require("../WorldMap/WorldMapController");
+const CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
+  FunctionOpenViewLimitAll_1 = require("../../../Core/Define/ConfigQuery/FunctionOpenViewLimitAll"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  UiModel_1 = require("../../Ui/UiModel"),
+  AchievementController_1 = require("../Achievement/AchievementController"),
+  ActivityController_1 = require("../Activity/ActivityController"),
+  ChannelController_1 = require("../Channel/ChannelController"),
+  GachaController_1 = require("../Gacha/GachaController"),
+  BattlePassController_1 = require("../PayShop/BattlePass/BattlePassController"),
+  PayShopController_1 = require("../PayShop/PayShopController"),
+  PhotographController_1 = require("../Photograph/PhotographController"),
+  RoleController_1 = require("../RoleUi/RoleController"),
+  RouletteController_1 = require("../Roulette/RouletteController"),
+  TutorialController_1 = require("../Tutorial/TutorialController"),
+  WorldMapController_1 = require("../WorldMap/WorldMapController");
 class FunctionController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
@@ -68,11 +68,11 @@ class FunctionController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static InitFunctionOpenViewLimit() {
-    const n =
-      FunctionOpenViewLimitAll_1.configFunctionOpenViewLimitAll.GetConfigList();
-    const e = n.length;
+    var n =
+        FunctionOpenViewLimitAll_1.configFunctionOpenViewLimitAll.GetConfigList(),
+      e = n.length;
     for (let o = 0; o < e; o++) {
-      const t = n[o];
+      var t = n[o];
       this.p9t.add(t.ViewName);
     }
   }
@@ -105,11 +105,12 @@ class FunctionController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static async ManualOpenFunctionOpenView(...o) {
-    let n;
-    const e = [];
+    var n,
+      e = [];
     for (const t of o)
+      2 !==
       ConfigManager_1.ConfigManager.FunctionConfig.GetFunctionCondition(t)
-        .ShowUIType !== 2
+        .ShowUIType
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Functional",
@@ -138,8 +139,8 @@ class FunctionController extends UiControllerBase_1.UiControllerBase {
     return !(e.length <= 0) && this.S9t(e);
   }
   static async S9t(o) {
-    var n = Protocol_1.Aki.Protocol.WZn.create();
-    var n = ((n.RFn = o), await Net_1.Net.CallAsync(3861, n));
+    var n = Protocol_1.Aki.Protocol.WZn.create(),
+      n = ((n.RFn = o), await Net_1.Net.CallAsync(3861, n));
     return n.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
       ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
           n.lkn,
@@ -163,8 +164,8 @@ class FunctionController extends UiControllerBase_1.UiControllerBase {
         !(this.j8s = !0)
       );
     let o = !0;
-    let n;
-    const e = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
+    var n,
+      e = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
     for (const t of [1733479717, -1791250236])
       e?.GameplayTagComponent?.HasTag(t) &&
         (e?.GameplayTagComponent?.AddTagAddOrRemoveListener(
@@ -181,7 +182,7 @@ class FunctionController extends UiControllerBase_1.UiControllerBase {
       !!o &&
       !(
         !(n = UiModel_1.UiModel.NormalStack.Peek()) ||
-        (!this.E9t(n.Info.Name) && n.Info.Name !== "BattleView")
+        (!this.E9t(n.Info.Name) && "BattleView" !== n.Info.Name)
       )
     );
   }
@@ -204,7 +205,7 @@ class FunctionController extends UiControllerBase_1.UiControllerBase {
     Net_1.Net.UnRegister(24818), Net_1.Net.UnRegister(7220);
   }
   static OpenFunctionRelateView(o) {
-    let n;
+    var n;
     ModelManager_1.ModelManager.FunctionModel.IsOpen(o)
       ? (n = FunctionController.K8t.get(o))
         ? n()
@@ -308,8 +309,8 @@ class FunctionController extends UiControllerBase_1.UiControllerBase {
     ChannelController_1.ChannelController.OpenKuroStreet();
   }),
   (FunctionController.f9t = () => {
-    const o = ModelManager_1.ModelManager.GameModeModel.IsMulti;
-    const n = ModelManager_1.ModelManager.OnlineModel.IsOnlineDisabled();
+    var o = ModelManager_1.ModelManager.GameModeModel.IsMulti,
+      n = ModelManager_1.ModelManager.OnlineModel.IsOnlineDisabled();
     !o && n
       ? ControllerHolder_1.ControllerHolder.OnlineController.ShowTipsWhenOnlineDisabled()
       : UiManager_1.UiManager.OpenView("OnlineWorldHallView");
@@ -326,4 +327,4 @@ class FunctionController extends UiControllerBase_1.UiControllerBase {
   (FunctionController.l9t = () => {
     BattlePassController_1.BattlePassController.OpenBattlePassView();
   });
-// # sourceMappingURL=FunctionController.js.map
+//# sourceMappingURL=FunctionController.js.map

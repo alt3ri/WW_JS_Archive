@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MarqueeView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const MarqueeController_1 = require("../MarqueeController");
-const TARGETPOSITIONOFFSET = 10;
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  MarqueeController_1 = require("../MarqueeController"),
+  TARGETPOSITIONOFFSET = 10;
 class MarqueeView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -51,7 +51,7 @@ class MarqueeView extends UiTickViewBase_1.UiTickViewBase {
     );
   }
   OnStart() {
-    const e = ModelManager_1.ModelManager.MarqueeModel.PeekMarqueeData();
+    var e = ModelManager_1.ModelManager.MarqueeModel.PeekMarqueeData();
     e &&
       ((ModelManager_1.ModelManager.MarqueeModel.CurMarquee = e),
       (this.oAi = this.GetItem(1)),
@@ -65,11 +65,11 @@ class MarqueeView extends UiTickViewBase_1.UiTickViewBase {
         CommonParamById_1.configCommonParamById.GetIntConfig("marquee_speed")));
   }
   OnTick() {
-    const e = ModelManager_1.ModelManager.MarqueeModel.CurMarquee;
+    var e = ModelManager_1.ModelManager.MarqueeModel.CurMarquee;
     if (e && MarqueeController_1.MarqueeController.CheckCurMarqueeValid(e)) {
       e.Content !== this.sAi?.Content && this.hke(e);
-      const i = TimeUtil_1.TimeUtil.GetServerTime();
-      const t = ModelManager_1.ModelManager.MarqueeModel.GetNextMarquee();
+      var i = TimeUtil_1.TimeUtil.GetServerTime(),
+        t = ModelManager_1.ModelManager.MarqueeModel.GetNextMarquee();
       if (t && t.BeginTime <= i)
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Marquee", 9, "下一条跑马灯到播放时间"),
@@ -102,12 +102,12 @@ class MarqueeView extends UiTickViewBase_1.UiTickViewBase {
     let t = (this.sAi = i).Content.replace(/\r\n/g, " ");
     if (t.includes("{EndTime}")) {
       var i =
-        ModelManager_1.ModelManager.MarqueeModel.GetMarqueeDataLeftTime(i);
-      var i = Math.ceil(i / 60);
-      const r =
-        ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
-          "ShopMinuteText",
-        );
+          ModelManager_1.ModelManager.MarqueeModel.GetMarqueeDataLeftTime(i),
+        i = Math.ceil(i / 60),
+        r =
+          ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
+            "ShopMinuteText",
+          );
       let e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(r);
       (e = e.replace("{0}", i.toString())), (t = t.replace("{EndTime}", e));
     }
@@ -115,4 +115,4 @@ class MarqueeView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.MarqueeView = MarqueeView;
-// # sourceMappingURL=MarqueeView.js.map
+//# sourceMappingURL=MarqueeView.js.map

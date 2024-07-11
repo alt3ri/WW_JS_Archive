@@ -8,4 +8,4 @@ class RolePreviewAgent extends RoleViewAgent_1.RoleViewAgent {
   }
 }
 exports.RolePreviewAgent = RolePreviewAgent;
-// # sourceMappingURL=RolePreviewAgent.js.map
+//# sourceMappingURL=RolePreviewAgent.js.map

@@ -21,13 +21,13 @@ class AiStateMachineConfig {
     );
   }
   id(t) {
-    const i = this.J7.__offset(this.z7, 4);
+    var i = this.J7.__offset(this.z7, 4);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   statemachinejson(t) {
-    const i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 6);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.AiStateMachineConfig = AiStateMachineConfig;
-// # sourceMappingURL=AiStateMachineConfig.js.map
+//# sourceMappingURL=AiStateMachineConfig.js.map

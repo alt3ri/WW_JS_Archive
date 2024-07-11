@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleTriggerController = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../../../Core/Actor/ActorSystem");
-const ControllerBase_1 = require("../../../../Core/Framework/ControllerBase");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const Global_1 = require("../../../Global");
-const CharacterNameDefines_1 = require("../Common/CharacterNameDefines");
-const TRIGGER_HALF_HEIGHT_DEVIATION = 0;
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../../Core/Actor/ActorSystem"),
+  ControllerBase_1 = require("../../../../Core/Framework/ControllerBase"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../Global"),
+  CharacterNameDefines_1 = require("../Common/CharacterNameDefines"),
+  TRIGGER_HALF_HEIGHT_DEVIATION = 0;
 class RoleTriggerController extends ControllerBase_1.ControllerBase {
   static GetMyRoleTrigger() {
     return this.Rtr;
@@ -93,9 +93,9 @@ class RoleTriggerController extends ControllerBase_1.ControllerBase {
   (RoleTriggerController.nye = () => {
     if (!RoleTriggerController.Utr) {
       RoleTriggerController.Utr = !0;
-      let e = void 0;
-      let r = 77 + TRIGGER_HALF_HEIGHT_DEVIATION;
-      let t = 25;
+      let e = void 0,
+        r = 77 + TRIGGER_HALF_HEIGHT_DEVIATION,
+        t = 25;
       Global_1.Global.BaseCharacter
         ? ((e = Global_1.Global.BaseCharacter.GetTransform()),
           (r =
@@ -139,4 +139,4 @@ class RoleTriggerController extends ControllerBase_1.ControllerBase {
       ((RoleTriggerController.Atr = !1),
       RoleTriggerController.xtr?.SetCollisionEnabled(1));
   });
-// # sourceMappingURL=RoleTriggerController.js.map
+//# sourceMappingURL=RoleTriggerController.js.map

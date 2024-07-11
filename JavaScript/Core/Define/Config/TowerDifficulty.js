@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerDifficulty = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
-const IntPair_1 = require("./SubType/IntPair");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  IntPair_1 = require("./SubType/IntPair");
 class TowerDifficulty {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -25,14 +25,14 @@ class TowerDifficulty {
     );
   }
   difficulty() {
-    const t = this.J7.__offset(this.z7, 4);
+    var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetRewardAt(t, i) {
     return this.reward(t);
   }
   reward(t, i) {
-    const r = this.J7.__offset(this.z7, 6);
+    var r = this.J7.__offset(this.z7, 6);
     return r
       ? (i || new IntPair_1.IntPair()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -41,9 +41,9 @@ class TowerDifficulty {
       : null;
   }
   rewardLength() {
-    const t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.TowerDifficulty = TowerDifficulty;
-// # sourceMappingURL=TowerDifficulty.js.map
+//# sourceMappingURL=TowerDifficulty.js.map

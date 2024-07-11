@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleLevelUpSuccessController = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase");
-const UiManager_1 = require("../../../Ui/UiManager");
+const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase"),
+  UiManager_1 = require("../../../Ui/UiManager");
 class RoleLevelUpSuccessController extends UiControllerBase_1.UiControllerBase {
   static OpenSuccessAttributeView(e, r = void 0) {
     UiManager_1.UiManager.OpenView("RoleLevelUpSuccessAttributeView", e, r);
@@ -14,11 +14,11 @@ class RoleLevelUpSuccessController extends UiControllerBase_1.UiControllerBase {
     UiManager_1.UiManager.OpenView("RoleLevelUpSuccessEffectView", e, r);
   }
   static ConvertsAttrListScrollDataToAttributeInfo(e) {
-    const r = {};
-    const a =
-      ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
-        e.Id,
-      );
+    var r = {},
+      a =
+        ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
+          e.Id,
+        );
     return (
       (r.Name = a.Name),
       (r.IconPath = a.Icon),
@@ -40,4 +40,4 @@ class RoleLevelUpSuccessController extends UiControllerBase_1.UiControllerBase {
   }
 }
 exports.RoleLevelUpSuccessController = RoleLevelUpSuccessController;
-// # sourceMappingURL=RoleLevelUpSuccessController.js.map
+//# sourceMappingURL=RoleLevelUpSuccessController.js.map

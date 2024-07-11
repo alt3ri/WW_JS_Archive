@@ -1,33 +1,37 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (e, t, i, r) {
-    let s;
-    const n = arguments.length;
-    let o =
-      n < 3 ? t : r === null ? (r = Object.getOwnPropertyDescriptor(t, i)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var s,
+      n = arguments.length,
+      o =
+        n < 3
+          ? t
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(t, i))
+            : r;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       o = Reflect.decorate(e, t, i, r);
     else
-      for (let a = e.length - 1; a >= 0; a--)
-        (s = e[a]) && (o = (n < 3 ? s(o) : n > 3 ? s(t, i, o) : s(t, i)) || o);
-    return n > 3 && o && Object.defineProperty(t, i, o), o;
+      for (var a = e.length - 1; 0 <= a; a--)
+        (s = e[a]) && (o = (n < 3 ? s(o) : 3 < n ? s(t, i, o) : s(t, i)) || o);
+    return 3 < n && o && Object.defineProperty(t, i, o), o;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneCameraDisplayComponent = exports.SceneSubCamera = void 0);
-const UE = require("ue");
-const ActorSystem_1 = require("../../Core/Actor/ActorSystem");
-const PriorityQueue_1 = require("../../Core/Container/PriorityQueue");
-const EntityComponent_1 = require("../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../Core/Entity/RegisterComponent");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const ModelManager_1 = require("../Manager/ModelManager");
-const UiLayerType_1 = require("../Ui/Define/UiLayerType");
-const InputDistributeController_1 = require("../Ui/InputDistribute/InputDistributeController");
-const InputDistributeDefine_1 = require("../Ui/InputDistribute/InputDistributeDefine");
-const UiLayer_1 = require("../Ui/UiLayer");
-const CameraController_1 = require("./CameraController");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
+  PriorityQueue_1 = require("../../Core/Container/PriorityQueue"),
+  EntityComponent_1 = require("../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../Core/Entity/RegisterComponent"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  UiLayerType_1 = require("../Ui/Define/UiLayerType"),
+  InputDistributeController_1 = require("../Ui/InputDistribute/InputDistributeController"),
+  InputDistributeDefine_1 = require("../Ui/InputDistribute/InputDistributeDefine"),
+  UiLayer_1 = require("../Ui/UiLayer"),
+  CameraController_1 = require("./CameraController");
 class SceneSubCamera {
   constructor() {
     (this.Type = 2),
@@ -60,7 +64,7 @@ class SceneSubCamera {
 }
 (exports.SceneSubCamera = SceneSubCamera).Compare = (e, t) => {
   let i = e.Type - t.Type;
-  return i === 0 && i--, i;
+  return 0 === i && i--, i;
 };
 let SceneCameraDisplayComponent = class SceneCameraDisplayComponent extends EntityComponent_1.EntityComponent {
   constructor() {
@@ -71,16 +75,16 @@ let SceneCameraDisplayComponent = class SceneCameraDisplayComponent extends Enti
       (this.Nxr = void 0),
       (this.Oxr = 0),
       (this.OnModeChanged = (e, t) => {
-        e === 3 && this.IsIdle()
+        3 === e && this.IsIdle()
           ? (CameraController_1.CameraController.ExitCameraMode(3, 1, 0, 0),
             this.ClearRemovedSceneCamera())
-          : t === 3 && e !== t && this.ClearRemovedSceneCamera();
+          : 3 === t && e !== t && this.ClearRemovedSceneCamera();
       }),
       (this.nye = () => {
         (this.Nxr.Camera =
           CameraController_1.CameraController.SpawnCineCamera()),
           (this.bxr = this.Nxr.Camera),
-          CameraController_1.CameraController.Model.CameraMode === 3 &&
+          3 === CameraController_1.CameraController.Model.CameraMode &&
             CameraController_1.CameraController.SetViewTarget(
               this.bxr,
               "SceneCamera.OnWorldDone",
@@ -165,7 +169,7 @@ let SceneCameraDisplayComponent = class SceneCameraDisplayComponent extends Enti
     this.bxr?.IsValid() && (this.bxr.CustomTimeDilation = e);
   }
   GetUnBoundSceneCamera(e) {
-    let t;
+    var t;
     if (!this.qxr.Empty)
       return this.Nxr.IsBinding
         ? (((t = new SceneSubCamera()).Camera =
@@ -224,9 +228,9 @@ let SceneCameraDisplayComponent = class SceneCameraDisplayComponent extends Enti
       (this.Nxr.IsKeepUi = !0);
   }
   SetUiActive(e) {
-    e ? this.Oxr > 0 && this.Oxr-- : this.Oxr++,
-      (this.Oxr !== 0 && e) ||
-        (this.Oxr > 1 && !e) ||
+    e ? 0 < this.Oxr && this.Oxr-- : this.Oxr++,
+      (0 !== this.Oxr && e) ||
+        (1 < this.Oxr && !e) ||
         (UiLayer_1.UiLayer.SetLayerActive(UiLayerType_1.ELayerType.Pop, e),
         UiLayer_1.UiLayer.SetLayerActive(UiLayerType_1.ELayerType.Float, e),
         e
@@ -250,4 +254,4 @@ let SceneCameraDisplayComponent = class SceneCameraDisplayComponent extends Enti
   SceneCameraDisplayComponent,
 )),
   (exports.SceneCameraDisplayComponent = SceneCameraDisplayComponent);
-// # sourceMappingURL=SceneCameraDisplayComponent.js.map
+//# sourceMappingURL=SceneCameraDisplayComponent.js.map

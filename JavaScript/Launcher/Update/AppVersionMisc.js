@@ -5,15 +5,15 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.LauncherVersionMisc =
     exports.AppVersionMisc =
       void 0);
-const UE = require("ue");
-const UrlPrefixDownload_1 = require("../Download/UrlPrefixDownload");
-const RemoteConfig_1 = require("../RemoteConfig");
-const LauncherLanguageLib_1 = require("../Util/LauncherLanguageLib");
-const LauncherLog_1 = require("../Util/LauncherLog");
-const LauncherStorageLib_1 = require("../Util/LauncherStorageLib");
-const AppPathMisc_1 = require("./AppPathMisc");
-const ResourceUpdate_1 = require("./ResourceUpdate");
-const BaseDefine_1 = require("../BaseConfig/BaseDefine");
+const UE = require("ue"),
+  UrlPrefixDownload_1 = require("../Download/UrlPrefixDownload"),
+  RemoteConfig_1 = require("../RemoteConfig"),
+  LauncherLanguageLib_1 = require("../Util/LauncherLanguageLib"),
+  LauncherLog_1 = require("../Util/LauncherLog"),
+  LauncherStorageLib_1 = require("../Util/LauncherStorageLib"),
+  AppPathMisc_1 = require("./AppPathMisc"),
+  ResourceUpdate_1 = require("./ResourceUpdate"),
+  BaseDefine_1 = require("../BaseConfig/BaseDefine");
 class AppVersionMisc {
   constructor() {
     (this.PackageVersion = ""),
@@ -58,20 +58,20 @@ class AppVersionMisc {
       this.LatestVersion !== this.PackageVersion &&
         this.UpdatePreVersionNodes.push(this.PackageVersion);
     for (let e = 0; e < this.UpdateVersionNodes.length - 1; e++) {
-      const t = this.UpdateVersionNodes[e];
+      var t = this.UpdateVersionNodes[e];
       this.UpdatePreVersionNodes.push(t);
     }
   }
   SetVersions(s, i, r, h) {
-    let n = s.split(",");
-    let o = n[n.length - 1];
-    let a = i.split(",");
-    let u = a[a.length - 1];
+    let n = s.split(","),
+      o = n[n.length - 1],
+      a = i.split(","),
+      u = a[a.length - 1];
     if (r) {
       this.LatestVersion = r;
-      var [s, c] = BaseDefine_1.VersionInfo.TryParse(r);
-      var [i, d] = BaseDefine_1.VersionInfo.TryParse(o);
-      const [p, l] = BaseDefine_1.VersionInfo.TryParse(u);
+      var [s, c] = BaseDefine_1.VersionInfo.TryParse(r),
+        [i, d] = BaseDefine_1.VersionInfo.TryParse(o),
+        [p, l] = BaseDefine_1.VersionInfo.TryParse(u);
       if (!s || !i || !p)
         throw (
           (LauncherLog_1.LauncherLog.Error(
@@ -83,8 +83,8 @@ class AppVersionMisc {
           ),
           new Error("转版本号失败"))
         );
-      let e = !1;
-      let t = !1;
+      let e = !1,
+        t = !1;
       if (((this.cyr = !1), BaseDefine_1.VersionInfo.PackageEquals(c, d))) {
         if (c.Patch < d.Patch) {
           this.cyr = !0;
@@ -175,7 +175,7 @@ class AppVersionMisc {
         this.LocalResourceVersions[this.LocalResourceVersions.length - 1] !==
           this.LatestVersion) &&
         this.LocalResourceVersions.push(this.LatestVersion);
-    const t = this.LocalResourceVersions.join(",");
+    var t = this.LocalResourceVersions.join(",");
     LauncherStorageLib_1.LauncherStorageLib.SetGlobalString(
       this.GetUpdateVersionKey(),
       t,
@@ -188,7 +188,7 @@ class AppVersionMisc {
           this.LocalSaveResourceVersions.length - 1
         ] !== this.LatestVersion) &&
         this.LocalSaveResourceVersions.push(this.LatestVersion);
-    const t = this.LocalSaveResourceVersions.join(",");
+    var t = this.LocalSaveResourceVersions.join(",");
     LauncherLog_1.LauncherLog.Info(
       "UpdateSavedVersion",
       ["Type", this.GetResType()],
@@ -208,14 +208,14 @@ class AppVersionMisc {
       );
   }
   ReadPatchFileInfoList() {
-    const e = new AppPathMisc_1.AppPathMisc();
-    var t = this.GetIndexSavePaths(e);
-    var [, t] = ResourceUpdate_1.ResourceUpdate.ReadPatchInfoList(
-      t,
-      this.UpdatePreVersionNodes,
-      this,
-      e,
-    );
+    var e = new AppPathMisc_1.AppPathMisc(),
+      t = this.GetIndexSavePaths(e),
+      [, t] = ResourceUpdate_1.ResourceUpdate.ReadPatchInfoList(
+        t,
+        this.UpdatePreVersionNodes,
+        this,
+        e,
+      );
     return t;
   }
   GetPackageVersion() {
@@ -225,7 +225,7 @@ class AppVersionMisc {
     return this.IndexSha1s;
   }
   GetIndexSavePaths(e) {
-    const t = new Array();
+    var t = new Array();
     for (const s of this.GetIndexFileNames())
       t.push(
         "" +
@@ -240,7 +240,7 @@ class AppVersionMisc {
     return this.UpdatePreVersionNodes;
   }
   GetIndexFileNames() {
-    const e = new Array();
+    var e = new Array();
     for (const t of this.UpdateVersionNodes)
       e.push("" + this.GetIndexFilePrefix() + t + ".txt");
     return e;
@@ -344,15 +344,15 @@ class LanguageVersionMisc extends AppVersionMisc {
     );
   }
   HasMountFile() {
-    const e = this.GetMountFilePath();
+    var e = this.GetMountFilePath();
     return UE.BlueprintPathsLibrary.FileExists(e);
   }
   CalculateLocalSize() {
-    let e;
-    let t;
-    const s = this.ReadPatchFileInfoList();
-    let i = BigInt(0);
-    let r = BigInt(0);
+    var e,
+      t,
+      s = this.ReadPatchFileInfoList();
+    let i = BigInt(0),
+      r = BigInt(0);
     for (const h of s)
       (r = (r = (r = (r += h.PakSize) + h.SigSize) + h.UtocSize) + h.UcasSize),
         UE.BlueprintPathsLibrary.FileExists(h.SavePath + ".pak")
@@ -396,4 +396,4 @@ class LanguageVersionMisc extends AppVersionMisc {
   }
 }
 exports.LanguageVersionMisc = LanguageVersionMisc;
-// # sourceMappingURL=AppVersionMisc.js.map
+//# sourceMappingURL=AppVersionMisc.js.map

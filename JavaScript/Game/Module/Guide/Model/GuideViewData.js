@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuideStepViewData = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager");
 class GuideStepViewData {
   constructor(t) {
     (this._Jt = !0),
@@ -54,7 +54,7 @@ class GuideStepViewData {
     return this.dJt ?? this.mJt;
   }
   SetAttachedUiItem(t) {
-    this.OKt.Config.ContentType !== 4
+    4 !== this.OKt.Config.ContentType
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Guide",
@@ -64,7 +64,7 @@ class GuideStepViewData {
       : (this.mJt = t);
   }
   SetAttachedUiItemForShow(t) {
-    this.OKt.Config.ContentType !== 4
+    4 !== this.OKt.Config.ContentType
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Guide",
@@ -94,4 +94,4 @@ class GuideStepViewData {
   }
 }
 exports.GuideStepViewData = GuideStepViewData;
-// # sourceMappingURL=GuideViewData.js.map
+//# sourceMappingURL=GuideViewData.js.map

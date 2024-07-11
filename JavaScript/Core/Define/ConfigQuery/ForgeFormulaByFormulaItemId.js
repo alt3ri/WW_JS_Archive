@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configForgeFormulaByFormulaItemId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const ForgeFormula_1 = require("../Config/ForgeFormula");
-const DB = "db_forge.db";
-const FILE = "d.锻造.xlsx";
-const TABLE = "ForgeFormula";
-const COMMAND = "select BinData from `ForgeFormula` where FormulaItemId=?";
-const KEY_PREFIX = "ForgeFormulaByFormulaItemId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  ForgeFormula_1 = require("../Config/ForgeFormula"),
+  DB = "db_forge.db",
+  FILE = "d.锻造.xlsx",
+  TABLE = "ForgeFormula",
+  COMMAND = "select BinData from `ForgeFormula` where FormulaItemId=?",
+  KEY_PREFIX = "ForgeFormulaByFormulaItemId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configForgeFormulaByFormulaItemId.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configForgeFormulaByFormulaItemId.GetConfig(";
 exports.configForgeFormulaByFormulaItemId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configForgeFormulaByFormulaItemId = {
       if (
         (n =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "FormulaItemId",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "FormulaItemId",
+              o,
+            ]))
       ) {
-        var n;
-        var r = void 0;
+        var n,
+          r = void 0;
         if (
           (([n, r] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configForgeFormulaByFormulaItemId = {
     }
   },
 };
-// # sourceMappingURL=ForgeFormulaByFormulaItemId.js.map
+//# sourceMappingURL=ForgeFormulaByFormulaItemId.js.map

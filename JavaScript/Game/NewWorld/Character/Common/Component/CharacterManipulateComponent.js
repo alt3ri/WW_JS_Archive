@@ -1,65 +1,70 @@
 "use strict";
-let CharacterManipulateComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, e, i, s) {
-    let h;
-    const r = arguments.length;
-    let a =
-      r < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      a = Reflect.decorate(t, e, i, s);
-    else
-      for (let n = t.length - 1; n >= 0; n--)
-        (h = t[n]) && (a = (r < 3 ? h(a) : r > 3 ? h(e, i, a) : h(e, i)) || a);
-    return r > 3 && a && Object.defineProperty(e, i, a), a;
-  };
+var CharacterManipulateComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, e, i, s) {
+      var h,
+        r = arguments.length,
+        a =
+          r < 3
+            ? e
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        a = Reflect.decorate(t, e, i, s);
+      else
+        for (var n = t.length - 1; 0 <= n; n--)
+          (h = t[n]) &&
+            (a = (r < 3 ? h(a) : 3 < r ? h(e, i, a) : h(e, i)) || a);
+      return 3 < r && a && Object.defineProperty(e, i, a), a;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterManipulateComponent = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const Net_1 = require("../../../../../Core/Net/Net");
-const FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil");
-const Vector_1 = require("../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils");
-const TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon");
-const IUtil_1 = require("../../../../../UniverseEditor/Interface/IUtil");
-const CameraController_1 = require("../../../../Camera/CameraController");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const EffectContext_1 = require("../../../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../../../Effect/EffectSystem");
-const Global_1 = require("../../../../Global");
-const GlobalData_1 = require("../../../../GlobalData");
-const LevelAimLineController_1 = require("../../../../LevelGamePlay/AimLine/LevelAimLineController");
-const LevelGeneralNetworks_1 = require("../../../../LevelGamePlay/LevelGeneralNetworks");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const RenderConfig_1 = require("../../../../Render/Config/RenderConfig");
-const ActorUtils_1 = require("../../../../Utils/ActorUtils");
-const SceneItemManipulableBoomerangCastState_1 = require("../../../SceneItem/Manipulate/SceneItemManipulableBoomerangCastState");
-const SceneItemManipulableCastFreeState_1 = require("../../../SceneItem/Manipulate/SceneItemManipulableCastFreeState");
-const SceneItemManipulableCastToOutletState_1 = require("../../../SceneItem/Manipulate/SceneItemManipulableCastToOutletState");
-const SceneItemManipulableCastToTargetState_1 = require("../../../SceneItem/Manipulate/SceneItemManipulableCastToTargetState");
-const SceneItemManipulableTrackTargetCastToFreeState_1 = require("../../../SceneItem/Manipulate/SceneItemManipulableTrackTargetCastToFreeState");
-const SceneItemManipulableTrackTargetCastToTargetState_1 = require("../../../SceneItem/Manipulate/SceneItemManipulableTrackTargetCastToTargetState");
-const PROFILE_KEY = "CharacterManipulateComponent_LineTarceTestWithTarget";
-const CAST_PITCH_MAX = 75;
-const CAST_PITCH_MIN = -45;
-const TARGET_ACTOR_TAG = new UE.FName("ControlObj");
-const DRAW_SPHERE_DEBUG = !1;
-const MANIPULATE_SKILL_ID = 1003;
-const HIT_COLLISION_NAME = new UE.FName("攻击碰撞");
-const MANIPULATE_CHECK_IGNORE_TAG = new UE.FName("ManipulateCheck_Ignore");
-const NORMAL_CHECK_PRESET_NAME = new UE.FName("被控物检测_Normal");
-const MONSTER_PART_CHECK_PRESET_NAME = new UE.FName("被控物检测_Part");
-const TEMP_HALF_HEIGHT = 80;
-const MAX_CALC_WEIGTH_NUMBER_PER_FRAME = 3;
-const LineTraceColor = new UE.LinearColor(1, 0, 0, 1);
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Net_1 = require("../../../../../Core/Net/Net"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon"),
+  IUtil_1 = require("../../../../../UniverseEditor/Interface/IUtil"),
+  CameraController_1 = require("../../../../Camera/CameraController"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  EffectContext_1 = require("../../../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../../../Effect/EffectSystem"),
+  Global_1 = require("../../../../Global"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  LevelAimLineController_1 = require("../../../../LevelGamePlay/AimLine/LevelAimLineController"),
+  LevelGeneralNetworks_1 = require("../../../../LevelGamePlay/LevelGeneralNetworks"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RenderConfig_1 = require("../../../../Render/Config/RenderConfig"),
+  ActorUtils_1 = require("../../../../Utils/ActorUtils"),
+  SceneItemManipulableBoomerangCastState_1 = require("../../../SceneItem/Manipulate/SceneItemManipulableBoomerangCastState"),
+  SceneItemManipulableCastFreeState_1 = require("../../../SceneItem/Manipulate/SceneItemManipulableCastFreeState"),
+  SceneItemManipulableCastToOutletState_1 = require("../../../SceneItem/Manipulate/SceneItemManipulableCastToOutletState"),
+  SceneItemManipulableCastToTargetState_1 = require("../../../SceneItem/Manipulate/SceneItemManipulableCastToTargetState"),
+  SceneItemManipulableTrackTargetCastToFreeState_1 = require("../../../SceneItem/Manipulate/SceneItemManipulableTrackTargetCastToFreeState"),
+  SceneItemManipulableTrackTargetCastToTargetState_1 = require("../../../SceneItem/Manipulate/SceneItemManipulableTrackTargetCastToTargetState"),
+  PROFILE_KEY = "CharacterManipulateComponent_LineTarceTestWithTarget",
+  CAST_PITCH_MAX = 75,
+  CAST_PITCH_MIN = -45,
+  TARGET_ACTOR_TAG = new UE.FName("ControlObj"),
+  DRAW_SPHERE_DEBUG = !1,
+  MANIPULATE_SKILL_ID = 1003,
+  HIT_COLLISION_NAME = new UE.FName("攻击碰撞"),
+  MANIPULATE_CHECK_IGNORE_TAG = new UE.FName("ManipulateCheck_Ignore"),
+  NORMAL_CHECK_PRESET_NAME = new UE.FName("被控物检测_Normal"),
+  MONSTER_PART_CHECK_PRESET_NAME = new UE.FName("被控物检测_Part"),
+  TEMP_HALF_HEIGHT = 80,
+  MAX_CALC_WEIGTH_NUMBER_PER_FRAME = 3,
+  LineTraceColor = new UE.LinearColor(1, 0, 0, 1);
 let CharacterManipulateComponent =
   (CharacterManipulateComponent_1 = class CharacterManipulateComponent extends (
     EntityComponent_1.EntityComponent
@@ -119,28 +124,28 @@ let CharacterManipulateComponent =
               this.AddOrRemoveManipulateAirTag(!1));
         }),
         (this.U7r = (t) => {
-          t.TagName !== "None" && this.Xte?.AddTag(t?.TagId);
+          "None" !== t.TagName && this.Xte?.AddTag(t?.TagId);
         }),
         (this.P7r = (t) => {
-          t.TagName !== "None" && this.Xte?.RemoveTag(t?.TagId);
+          "None" !== t.TagName && this.Xte?.RemoveTag(t?.TagId);
         }),
         (this.x7r = (e) => {
           for (let t = 0; t < e.Num(); t++) {
-            const i = e.Get(t);
-            i.TagName !== "None" && this.Xte?.AddTag(i?.TagId);
+            var i = e.Get(t);
+            "None" !== i.TagName && this.Xte?.AddTag(i?.TagId);
           }
         }),
         (this.w7r = (e) => {
           for (let t = 0; t < e.Num(); t++) {
-            const i = e.Get(t);
-            i.TagName !== "None" && this.Xte?.RemoveTag(i?.TagId);
+            var i = e.Get(t);
+            "None" !== i.TagName && this.Xte?.RemoveTag(i?.TagId);
           }
         }),
         (this.B7r = () => {
           this.StopManipualte();
         }),
         (this.b7r = (t) => {
-          const e = this.t7r?.GetComponent(177);
+          var e = this.t7r?.GetComponent(177);
           e && (t ? e.AddTag(230094484) : e.RemoveTag(230094484));
         }),
         (this.gIe = (t, e) => {
@@ -321,8 +326,8 @@ let CharacterManipulateComponent =
       );
     }
     GetDrawTarget() {
-      if ((this.ac === 0 || this.ac === 1) && this.Z9r?.Valid) {
-        const t = this.Z9r.GetComponent(1);
+      if ((0 === this.ac || 1 === this.ac) && this.Z9r?.Valid) {
+        var t = this.Z9r.GetComponent(1);
         if (t) return t.Owner;
       }
     }
@@ -330,14 +335,14 @@ let CharacterManipulateComponent =
       this.Z9r = t;
     }
     GetDrawTargetChantTime() {
-      let t;
+      var t;
       return this.Z9r?.Valid && (t = this.Z9r.GetComponent(140))
         ? t.ManipulateBaseConfig.读条时间
         : 0;
     }
     GetCastTarget() {
-      if (this.ac === 3 && this.Z9r?.Valid) {
-        const t = this.Z9r.GetComponent(1);
+      if (3 === this.ac && this.Z9r?.Valid) {
+        var t = this.Z9r.GetComponent(1);
         if (t) return t.Owner;
       }
     }
@@ -359,7 +364,7 @@ let CharacterManipulateComponent =
       );
     }
     H7r(i) {
-      const t = this.Z9r.GetComponent(0)?.GetCreatureDataId();
+      var t = this.Z9r.GetComponent(0)?.GetCreatureDataId();
       const s = Protocol_1.Aki.Protocol.y1s.create();
       (s.rkn = MathUtils_1.MathUtils.NumberToLong(t)),
         (s.W9n = !0),
@@ -383,7 +388,7 @@ let CharacterManipulateComponent =
                   void this.StopManipualte()
                 );
             }
-            let e;
+            var e;
             this.e7r?.Valid
               ? (this.e7r.TryDisableTick("Chant"), this.j7r(i))
               : (((e = Protocol_1.Aki.Protocol.y1s.create()).rkn = s.rkn),
@@ -398,15 +403,15 @@ let CharacterManipulateComponent =
       this.Entity.GetComponent(36)?.SetForceSpeed(
         Vector_1.Vector.ZeroVectorProxy,
       );
-      const e = this.Z9r?.GetComponent(182);
+      var e = this.Z9r?.GetComponent(182);
       if (!e) return this.W7r(), this.StopManipualte(), !1;
-      let i = this.s3o.CharacterMovement.CurrentFloor;
+      var i = this.s3o.CharacterMovement.CurrentFloor;
       if (i && i.HitResult.Actor === e.Owner)
         return this.W7r(), this.StopManipualte(), !1;
       e.SetAutonomous(!0),
         (this.n7r = 0),
         this.Xte?.Valid &&
-          this.e7r.ManipulateBaseConfig.读条时间 > 0 &&
+          0 < this.e7r.ManipulateBaseConfig.读条时间 &&
           this.Xte.AddTag(135557294),
         (this.e7r.CurrentState = this.e7r.ChantState);
       i = this.Z9r.GetComponent(140);
@@ -451,7 +456,7 @@ let CharacterManipulateComponent =
             "State",
             this.ac,
           ]),
-        this.ac !== 4)
+        4 !== this.ac)
       )
         return !1;
       if (!this.t7r.Valid) return !1;
@@ -466,8 +471,8 @@ let CharacterManipulateComponent =
         this.Z9r?.Valid && !this.o7r.IsProjectileAimMode)
       ) {
         let t = !1;
-        let e = this.Z9r.GetComponent(145);
-        let i = this.Z9r.GetComponent(121);
+        var e = this.Z9r.GetComponent(145),
+          i = this.Z9r.GetComponent(121);
         e?.Valid
           ? i?.Valid && e.GetIsIllegal(this.t7r)
             ? (this.K7r(), (t = !0))
@@ -514,8 +519,8 @@ let CharacterManipulateComponent =
       );
     }
     K7r() {
-      const t = this.Q7r();
-      const e = this.o7r.CastFreeState;
+      var t = this.Q7r(),
+        e = this.o7r.CastFreeState;
       e instanceof
       SceneItemManipulableCastFreeState_1.SceneItemManipulableCastFreeState
         ? e.SetForward(t.Vector())
@@ -534,7 +539,7 @@ let CharacterManipulateComponent =
         this.h7r.SetRotation(new UE.Quat(t));
     }
     Q7r() {
-      const t = Global_1.Global.CharacterCameraManager.GetCameraRotation();
+      var t = Global_1.Global.CharacterCameraManager.GetCameraRotation();
       return (
         (t.Pitch = MathUtils_1.MathUtils.Clamp(
           t.Pitch + this.o7r.ManipulateBaseConfig.无锁状态附加仰角,
@@ -558,10 +563,10 @@ let CharacterManipulateComponent =
       )
         return !1;
       this.m7r && (this.W7r(), (this.m7r = !1)),
-        (this.ac !== 3 && this.ac !== 4) ||
+        (3 !== this.ac && 4 !== this.ac) ||
           !this.r7r ||
           this.r7r.ReleaseComponent();
-      const t = (this.t7r ?? this.Z9r)?.GetComponent(140);
+      var t = (this.t7r ?? this.Z9r)?.GetComponent(140);
       return (
         (t.IsCanBeHeld = !1),
         (t.IsProjectileAimMode = !1),
@@ -580,12 +585,10 @@ let CharacterManipulateComponent =
       );
     }
     Reset() {
-      const t = this.t7r ?? this.Z9r;
+      var t = this.t7r ?? this.Z9r;
       if (t) {
-        const i = Vector_1.Vector.Create(
-          t.GetComponent(182).ActorLocationProxy,
-        );
-        const s = Vector_1.Vector.Create(i);
+        var i = Vector_1.Vector.Create(t.GetComponent(182).ActorLocationProxy),
+          s = Vector_1.Vector.Create(i);
         i.Set(i.X, i.Y, i.Z + 500), s.Set(s.X, s.Y, s.Z - 1e3);
         let e = void 0;
         if (
@@ -601,7 +604,7 @@ let CharacterManipulateComponent =
           ) && this.uoe.HitResult.bBlockingHit)
         )
           for (let t = 0; t < this.uoe.HitResult.Actors.Num(); t++) {
-            const h = this.uoe.HitResult.Actors.Get(t);
+            var h = this.uoe.HitResult.Actors.Get(t);
             if (void 0 !== h) {
               e = h.GetName();
               break;
@@ -617,10 +620,10 @@ let CharacterManipulateComponent =
             ["id", this.Entity.Id],
           );
       }
-      this.ac !== 0 && this.Drop(), this.TBo();
+      0 !== this.ac && this.Drop(), this.TBo();
     }
     X7r() {
-      let t;
+      var t;
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Character", 23, "[Manipulate] Hold", [
           "State",
@@ -669,7 +672,7 @@ let CharacterManipulateComponent =
     }
     Precast(t) {
       return (
-        this.ac === 3 &&
+        3 === this.ac &&
         (EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.HideJigsawBaseHint,
         ),
@@ -705,7 +708,7 @@ let CharacterManipulateComponent =
           Vector_1.Vector.ZeroVectorProxy,
         ),
         (this.C7r = void 0);
-      const t = this.t7r ?? this.Z9r;
+      var t = this.t7r ?? this.Z9r;
       t?.GetComponent(177)?.RemoveTag(230094484),
         this.f7r &&
           LevelGeneralNetworks_1.LevelGeneralNetworks.RequestActiveOrDeactiveManipulateFx(
@@ -729,7 +732,7 @@ let CharacterManipulateComponent =
         (this.g7r = void 0);
     }
     $jo(t) {
-      const e = this.s3o.CharacterMovement.CurrentFloor.HitResult.Actor;
+      var e = this.s3o.CharacterMovement.CurrentFloor.HitResult.Actor;
       if (e)
         switch (this.T7r) {
           case 2:
@@ -764,8 +767,7 @@ let CharacterManipulateComponent =
     Y7r(t, e) {
       let i = this.u7r;
       e && (i = this.o7r.ManipulateBaseConfig.投掷锁定范围);
-      const s =
-        ModelManager_1.ModelManager.CameraModel?.FightCameraFinalDistance;
+      var s = ModelManager_1.ModelManager.CameraModel?.FightCameraFinalDistance;
       s && (i += s),
         ModelManager_1.ModelManager.CreatureModel.GetEntitiesInRange(
           i,
@@ -773,13 +775,13 @@ let CharacterManipulateComponent =
           this.AWo,
         );
       for (const o of this.AWo) {
-        const h = o.Entity;
+        var h = o.Entity;
         if (h?.Valid && !h.GetComponent(0)?.IsConcealed) {
           var r = h.GetComponent(182);
           if (!r || t !== r.Owner) {
             if (!e) if (!h.GetComponent(140)?.Valid) continue;
-            var r = h.GetComponent(121);
-            const a = h.GetComponent(122);
+            var r = h.GetComponent(121),
+              a = h.GetComponent(122);
             ((r?.Valid ?? a?.Valid) ||
               h.GetComponent(182)?.GetIsSceneInteractionLoadCompleted()) &&
               this.y7r.push(h);
@@ -793,7 +795,7 @@ let CharacterManipulateComponent =
           this.AWo,
         );
         for (const _ of this.AWo) {
-          const n = _.Entity;
+          var n = _.Entity;
           !n?.Valid || n.GetComponent(0)?.IsConcealed || this.y7r.push(n);
         }
       }
@@ -803,8 +805,8 @@ let CharacterManipulateComponent =
       if (this.y7r)
         for (; i < MAX_CALC_WEIGTH_NUMBER_PER_FRAME; ) {
           if (this.y7r.length <= 0) return void (this.T7r = 1);
-          var s;
-          const h = this.y7r.shift();
+          var s,
+            h = this.y7r.shift();
           h?.Valid &&
             (((s = h.GetComponent(182)) && t === s.Owner) ||
               ((this.E7r = void 0),
@@ -814,7 +816,7 @@ let CharacterManipulateComponent =
         }
     }
     z7r(t, e) {
-      let i;
+      var i;
       this.eHr(t),
         t &&
           this.g7r &&
@@ -893,25 +895,25 @@ let CharacterManipulateComponent =
           this.o7r?.Config?.BaseCfg?.CanRotate && this.R7r(1520676172));
     }
     Z7r(e, t, i) {
-      const s = -MathUtils_1.MathUtils.MaxFloat;
-      const h = e.GetComponent(1);
+      var s = -MathUtils_1.MathUtils.MaxFloat,
+        h = e.GetComponent(1);
       if (!this.iHr(e, t, h)) return s;
-      var r = e.GetComponent(177);
-      const a = e.GetComponent(140);
+      var r = e.GetComponent(177),
+        a = e.GetComponent(140);
       if (a?.Valid && void 0 === a?.ManipulateBaseConfig) return s;
       let n = !1;
-      let o = !1;
-      let _ = 1;
+      let o = !1,
+        _ = 1;
       if (r?.HasTag(-709838471)) return s;
       if (t) {
         if (!this.t7r?.Valid && !this.Z9r?.Valid) return s;
-        var r = e.GetComponent(0);
-        const l = r.GetBaseInfo();
+        var r = e.GetComponent(0),
+          l = r.GetBaseInfo();
         if (!l) return s;
         if (this.t7r.GetComponent(141)?.Valid) {
           r = r.GetAwakedEntities();
           if (
-            r.length > 0 &&
+            0 < r.length &&
             !r.includes(this.t7r.GetComponent(0).GetPbDataId())
           )
             return s;
@@ -940,14 +942,14 @@ let CharacterManipulateComponent =
           if (r) {
             r = e.GetComponent(58);
             let t = !1;
-            if (r.Parts.length > 0)
+            if (0 < r.Parts.length)
               for (const E of r.Parts)
                 if (E.Active) {
                   t = !0;
                   break;
                 }
             n = t
-              ? ((o = !0), !!(e = this.oHr(e, r)) && e.length > 0)
+              ? ((o = !0), !!(e = this.oHr(e, r)) && 0 < e.length)
               : this.rHr(h);
           } else n = this.rHr(h);
       } else {
@@ -962,7 +964,7 @@ let CharacterManipulateComponent =
         (r = this.Entity.GetComponent(0).GetCreatureDataId()),
           (e = a?.GetControllerId());
         n =
-          (n = void 0 === e || e === 0 || (e !== 0 && e === r) ? n : !1) &&
+          (n = void 0 === e || 0 === e || (0 !== e && e === r) ? n : !1) &&
           this.rHr(h);
       }
       return n ? _ * this.nHr(h, i, s, o, t) : s;
@@ -1002,22 +1004,22 @@ let CharacterManipulateComponent =
     }
     rHr(e) {
       this.uoe || this.sHr();
-      var t = Vector_1.Vector.Create();
-      var t =
-        (t.DeepCopy(this.nXt.ActorLocationProxy),
-        t.AdditionEqual(Vector_1.Vector.Create(0, 0, TEMP_HALF_HEIGHT)),
-        t.ToUeVector());
+      var t = Vector_1.Vector.Create(),
+        t =
+          (t.DeepCopy(this.nXt.ActorLocationProxy),
+          t.AdditionEqual(Vector_1.Vector.Create(0, 0, TEMP_HALF_HEIGHT)),
+          t.ToUeVector());
       let i = e.ActorLocation;
-      var s = e.Entity.GetComponent(132);
-      var s =
-        (s?.Valid && (i = s.GetHitPoint().ToUeVector()),
-        e.Entity.GetComponent(145));
-      var s =
-        (s?.Valid && (i = s.GetSocketLocation(this.t7r).ToUeVector()),
-        e.Entity.GetComponent(124));
-      var s =
-        (s?.Valid && (i = s.GetHitPoint().ToUeVector()),
-        e.Entity.GetComponent(140));
+      var s = e.Entity.GetComponent(132),
+        s =
+          (s?.Valid && (i = s.GetHitPoint().ToUeVector()),
+          e.Entity.GetComponent(145)),
+        s =
+          (s?.Valid && (i = s.GetSocketLocation(this.t7r).ToUeVector()),
+          e.Entity.GetComponent(124)),
+        s =
+          (s?.Valid && (i = s.GetHitPoint().ToUeVector()),
+          e.Entity.GetComponent(140));
       s?.Valid && (i = i.op_Addition(s.ManipulateBaseConfig.被感知坐标偏移)),
         TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.uoe, t),
         TraceElementCommon_1.TraceElementCommon.SetEndLocation(this.uoe, i),
@@ -1031,9 +1033,9 @@ let CharacterManipulateComponent =
         ) && this.uoe.HitResult.bBlockingHit)
       )
         for (let t = 0; t < this.uoe.HitResult.Actors.Num(); t++) {
-          const r = this.uoe.HitResult.Actors.Get(t);
+          var r = this.uoe.HitResult.Actors.Get(t);
           if (void 0 !== r) {
-            const a = this.uoe.HitResult.Components.Get(t);
+            var a = this.uoe.HitResult.Components.Get(t);
             if (this.hHr(r, e)) break;
             if (this.lHr(r, a)) {
               h = !1;
@@ -1044,13 +1046,13 @@ let CharacterManipulateComponent =
       return h && this._Hr(this.i7r, h);
     }
     _Hr(e, t) {
-      var i = Vector_1.Vector.Create();
-      var i =
-        (i.DeepCopy(this.nXt.ActorLocationProxy),
-        i.AdditionEqual(Vector_1.Vector.Create(0, 0, TEMP_HALF_HEIGHT)),
-        i.ToUeVector());
-      let s = this.z9r.GetTransform();
-      const h = e?.Entity.GetComponent(140);
+      var i = Vector_1.Vector.Create(),
+        i =
+          (i.DeepCopy(this.nXt.ActorLocationProxy),
+          i.AdditionEqual(Vector_1.Vector.Create(0, 0, TEMP_HALF_HEIGHT)),
+          i.ToUeVector()),
+        s = this.z9r.GetTransform(),
+        h = e?.Entity.GetComponent(140);
       if (!h?.Valid) return t;
       (t = s.TransformPositionNoScale(h.ConfigHoldOffset)),
         TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.uoe, i),
@@ -1062,10 +1064,10 @@ let CharacterManipulateComponent =
         ));
       if (s && this.uoe.HitResult.bBlockingHit)
         for (let t = 0; t < this.uoe.HitResult.Actors.Num(); t++) {
-          const r = this.uoe.HitResult.Actors.Get(t);
+          var r = this.uoe.HitResult.Actors.Get(t);
           if (void 0 !== r) {
             if (this.t7r.GetComponent(143)?.IsChildrenActor(r)) break;
-            const a = this.uoe.HitResult.Components.Get(t);
+            var a = this.uoe.HitResult.Components.Get(t);
             if (this.hHr(r, e)) break;
             if (this.lHr(r, a)) return !1;
           }
@@ -1088,11 +1090,11 @@ let CharacterManipulateComponent =
     }
     F7r() {
       this.c7r || this.aHr();
-      let t = Vector_1.Vector.Create();
-      let e =
-        (t.DeepCopy(this.nXt.ActorLocationProxy),
-        t.AdditionEqual(Vector_1.Vector.Create(0, 0, this.nXt.HalfHeight)),
-        t.ToUeVector());
+      var t = Vector_1.Vector.Create(),
+        e =
+          (t.DeepCopy(this.nXt.ActorLocationProxy),
+          t.AdditionEqual(Vector_1.Vector.Create(0, 0, this.nXt.HalfHeight)),
+          t.ToUeVector());
       const i = Vector_1.Vector.Create();
       i.DeepCopy(this.nXt.ActorForwardProxy),
         i.Normalize(),
@@ -1108,9 +1110,9 @@ let CharacterManipulateComponent =
         ));
       if (e && this.c7r.HitResult.bBlockingHit) {
         for (let t = 0; t < this.c7r.HitResult.Actors.Num(); t++) {
-          let s = this.c7r.HitResult.Actors.Get(t);
+          var s = this.c7r.HitResult.Actors.Get(t);
           if (void 0 !== s && !this.hHr(s, this.i7r)) {
-            const h = this.c7r.HitResult.Components.Get(t);
+            var h = this.c7r.HitResult.Components.Get(t);
             if (this.lHr(s, h)) {
               s = Vector_1.Vector.Create();
               TraceElementCommon_1.TraceElementCommon.GetImpactPoint(
@@ -1126,7 +1128,7 @@ let CharacterManipulateComponent =
                 i.Set(i.X, i.Y, 0),
                 i.Normalize(),
                 s.CrossProduct(i, s),
-                s.Z > 0)
+                0 < s.Z)
               )
                 return void (this.o7r.UsingAssistantHoldOffset = !0);
             }
@@ -1161,114 +1163,113 @@ let CharacterManipulateComponent =
           : this.mHr(t, e, i, h));
     }
     mHr(t, e, i, s) {
-      let h = Vector_1.Vector.Create(t.ActorLocationProxy);
-      var r = t.Entity.GetComponent(145);
-      var r =
-        (r?.Valid && h.DeepCopy(r.GetSocketLocation(this.t7r)),
-        Vector_1.Vector.Create(0, 0, 0));
-      const a =
-        (h.Subtraction(CameraController_1.CameraController.CameraLocation, r),
-        r.Normalize(),
-        e.Normalize(),
-        MathUtils_1.MathUtils.DotProduct(r, e));
-      var r = Vector_1.Vector.Distance(h, this.nXt.ActorLocationProxy);
+      var h = Vector_1.Vector.Create(t.ActorLocationProxy),
+        r = t.Entity.GetComponent(145),
+        r =
+          (r?.Valid && h.DeepCopy(r.GetSocketLocation(this.t7r)),
+          Vector_1.Vector.Create(0, 0, 0)),
+        a =
+          (h.Subtraction(CameraController_1.CameraController.CameraLocation, r),
+          r.Normalize(),
+          e.Normalize(),
+          MathUtils_1.MathUtils.DotProduct(r, e)),
+        r = Vector_1.Vector.Distance(h, this.nXt.ActorLocationProxy);
       let n = -1;
-      var e = t.Entity.GetComponent(140);
-      const o = new Array();
-      const _ = new Array();
+      var e = t.Entity.GetComponent(140),
+        o = new Array(),
+        _ = new Array();
       if (s)
         for (const m of this.o7r.Config.SearchTargetCfg.AngleWeight)
           o.push(m.Angle), _.push(m.Weight);
       else {
-        const l = e.ManipulateBaseConfig.被感知角度权重;
+        var l = e.ManipulateBaseConfig.被感知角度权重;
         for (let t = 0; t < l.Num(); t++) {
-          const v = l.GetKey(t);
-          const E = l.Get(v);
+          var v = l.GetKey(t),
+            E = l.Get(v);
           o.push(v), _.push(E);
         }
       }
       for (let t = 0; t < o.length; t++) {
-        const c = o[t];
+        var c = o[t];
         if (a > Math.cos(((c * this.d7r) / 180) * Math.PI)) {
           n = _[t];
           break;
         }
       }
-      return n === -1
+      return -1 === n
         ? i
         : ((h = s ? this.o7r.ManipulateBaseConfig.投掷锁定范围 : this.u7r),
           n * (h - r));
     }
     uHr(t, e, i) {
-      const s = t.Entity;
-      var t = s.GetComponent(58);
-      let h = -Number.MAX_VALUE;
-      let r = -1;
-      const a = this.oHr(s, t);
+      var s = t.Entity,
+        t = s.GetComponent(58);
+      let h = -Number.MAX_VALUE,
+        r = -1;
+      var a = this.oHr(s, t);
       for (let t = 0; t < a.length; t++) {
-        var n = a[t];
-        var n = this.tHr(s, n.BoneName)[0];
-        const o = Vector_1.Vector.Create(n.GetLocation());
-        let _ = Vector_1.Vector.Create(0, 0, 0);
+        var n = a[t],
+          n = this.tHr(s, n.BoneName)[0],
+          o = Vector_1.Vector.Create(n.GetLocation()),
+          _ = Vector_1.Vector.Create(0, 0, 0);
         o.Subtraction(this.nXt.ActorLocationProxy, _),
           _.Normalize(),
           e.Normalize();
         Vector_1.Vector.Create(n.GetLocation()).SubtractionEqual(
           this.nXt.ActorLocationProxy,
         );
-        const l = MathUtils_1.MathUtils.DotProduct(_, e);
-        var n = Vector_1.Vector.Distance(o, this.nXt.ActorLocationProxy);
+        var l = MathUtils_1.MathUtils.DotProduct(_, e),
+          n = Vector_1.Vector.Distance(o, this.nXt.ActorLocationProxy);
         if (!(n > this.u7r)) {
           let e = -1;
-          const v = new Array();
-          const E = new Array();
+          var v = new Array(),
+            E = new Array();
           for (const m of this.o7r.Config.SearchTargetCfg.AngleWeight)
             v.push(m.Angle), E.push(m.Weight);
           for (let t = 0; t < v.length; t++) {
-            const c = v[t];
+            var c = v[t];
             if (l > Math.cos(((c * this.d7r) / 180) * Math.PI)) {
               e = E[t];
               break;
             }
           }
-          e !== -1 && (_ = e * (this.u7r - n)) > h && ((h = _), (r = t));
+          -1 !== e && (_ = e * (this.u7r - n)) > h && ((h = _), (r = t));
         }
       }
-      return r !== -1 ? ((this.E7r = a[r]), 1e4) : i;
+      return -1 !== r ? ((this.E7r = a[r]), 1e4) : i;
     }
     cHr(t, e, i, s) {
-      const h = t.Entity.GetComponent(122);
+      var h = t.Entity.GetComponent(122);
       let r = -MathUtils_1.MathUtils.MaxFloat;
-      const a = Vector_1.Vector.Create(0, 0, 0);
-      let n = [];
-      let o = [];
+      var a = Vector_1.Vector.Create(0, 0, 0),
+        n = [],
+        o = [];
       e.Normalize();
       let _ = -1;
       if (((n = []), (o = []), s))
         for (const f of this.o7r.Config.SearchTargetCfg.AngleWeight)
           n.push(f.Angle), o.push(f.Weight);
       else {
-        const l =
-          t.Entity.GetComponent(140).ManipulateBaseConfig.被感知角度权重;
+        var l = t.Entity.GetComponent(140).ManipulateBaseConfig.被感知角度权重;
         for (let t = 0; t < l.Num(); t++) {
-          const v = l.GetKey(t);
-          const E = l.Get(v);
+          var v = l.GetKey(t),
+            E = l.Get(v);
           n.push(v), o.push(E);
         }
       }
       for (const u of h.GetAllActivatedBlockPos()) {
         u.Subtraction(CameraController_1.CameraController.CameraLocation, a),
           a.Normalize();
-        var c;
-        const m = MathUtils_1.MathUtils.DotProduct(a, e);
+        var c,
+          m = MathUtils_1.MathUtils.DotProduct(a, e);
         for (let t = 0; t < n.length; t++) {
-          const C = n[t];
+          var C = n[t];
           if (m > Math.cos(((C * this.d7r) / 180) * Math.PI)) {
             _ = o[t];
             break;
           }
         }
-        _ !== -1 && (c = _ * m) > r && (r = c);
+        -1 !== _ && (c = _ * m) > r && (r = c);
       }
       return r === -MathUtils_1.MathUtils.MaxFloat ? i : r;
     }
@@ -1310,16 +1311,17 @@ let CharacterManipulateComponent =
             this.o7r.Config.ThrowCfg.MotionConfig.RenderTrajectoryConfig?.Effect
           ) {
             let t = [];
-            (t = this.Z9r?.Valid
-              ? ((e = this.o7r.CalcCastTargetPointWithEntity(
-                  this.Z9r,
-                )).Subtraction(this.i7r.ActorLocationProxy, e),
-                e.Normalize(),
-                this.o7r.CastFreeState.GetCastPath(e))
-              : ((e = this.Q7r()),
-                this.o7r.CastFreeState.GetCastPath(
-                  Vector_1.Vector.Create(e.Vector()),
-                ))).length > 0 &&
+            0 <
+              (t = this.Z9r?.Valid
+                ? ((e = this.o7r.CalcCastTargetPointWithEntity(
+                    this.Z9r,
+                  )).Subtraction(this.i7r.ActorLocationProxy, e),
+                  e.Normalize(),
+                  this.o7r.CastFreeState.GetCastPath(e))
+                : ((e = this.Q7r()),
+                  this.o7r.CastFreeState.GetCastPath(
+                    Vector_1.Vector.Create(e.Vector()),
+                  ))).length &&
               (this.p7r ||
                 (LevelAimLineController_1.LevelAimLineController.PlayEffect() &&
                   (this.p7r = !0)),
@@ -1353,7 +1355,7 @@ let CharacterManipulateComponent =
           this.Cast();
     }
     StopManipualte() {
-      const t = this.Entity.GetComponent(33);
+      var t = this.Entity.GetComponent(33);
       t.EndSkill(CharacterManipulateComponent_1.SkillId, "StopManipualte"),
         t.EndSkill(
           CharacterManipulateComponent_1.HoldingSkillId,
@@ -1376,8 +1378,8 @@ let CharacterManipulateComponent =
       return this.t7r;
     }
     SetDataFromOldRole(t) {
-      const e = t.Entity.GetComponent(55);
-      e.ac === 3 &&
+      var e = t.Entity.GetComponent(55);
+      3 === e.ac &&
         ((t.Entity.GetComponent(33).SkillTarget = void 0),
         (this.Entity.GetComponent(33).SkillTarget = void 0)),
         e.Reset(),
@@ -1392,7 +1394,7 @@ let CharacterManipulateComponent =
       this.Xte.HasTag(t) && this.Xte.RemoveTag(t);
     }
     ActiveHandFX(t, e = 0) {
-      const i = t.GetComponent(177);
+      var i = t.GetComponent(177);
       i
         ? (i.AddTag(1408918695), (this.v7r = i), (this.f7r = !0))
         : Log_1.Log.CheckError() &&
@@ -1406,8 +1408,8 @@ let CharacterManipulateComponent =
         (this.v7r.RemoveTag(1408918695), (this.v7r = void 0), (this.f7r = !1));
     }
     W7r() {
-      let t;
-      let e = this.Z9r ?? this.t7r;
+      var t,
+        e = this.Z9r ?? this.t7r;
       e?.Valid &&
         ((e = e.GetComponent(0)?.GetCreatureDataId()),
         ((t = Protocol_1.Aki.Protocol.y1s.create()).rkn =
@@ -1416,7 +1418,7 @@ let CharacterManipulateComponent =
         Net_1.Net.Call(19086, t, (t) => {}));
     }
     AddOrRemoveManipulateAirTag(t) {
-      const e = this.ac === 3;
+      var e = 3 === this.ac;
       let i = 0;
       (i = e ? -1976579620 : -1178928415),
         t
@@ -1424,9 +1426,9 @@ let CharacterManipulateComponent =
           : (this.Xte.RemoveTag(-1976579620), this.Xte.RemoveTag(-1178928415));
     }
     tHr(t, e) {
-      let i;
-      let s;
-      const h = t.GetComponent(3)?.Actor?.Mesh;
+      var i,
+        s,
+        h = t.GetComponent(3)?.Actor?.Mesh;
       let r = void 0;
       for ([i, s] of t.GetComponent(58).GroupMapByBone)
         if (s === e.toString()) {
@@ -1434,15 +1436,15 @@ let CharacterManipulateComponent =
           break;
         }
       t = h.GetAllSocketNames();
-      return void 0 !== r && t.FindIndex(r) !== -1
+      return void 0 !== r && -1 !== t.FindIndex(r)
         ? [h.GetSocketTransform(r, 0), r]
         : [void 0, void 0];
     }
     oHr(t, e) {
-      let i;
-      let s;
-      let h;
-      const r = new Array();
+      var i,
+        s,
+        h,
+        r = new Array();
       for (const a of e.Parts)
         a.Active &&
           (([s, i] = this.tHr(t, a.BoneName)), s) &&
@@ -1470,11 +1472,11 @@ let CharacterManipulateComponent =
               ),
             h)) ||
             r.push(a));
-      return r.length > 0 ? r : void 0;
+      return 0 < r.length ? r : void 0;
     }
     ExtraAction() {
-      let t;
-      this.ac === 3 &&
+      var t;
+      3 === this.ac &&
         (this.t7r.Valid || this.o7r.Valid) &&
         (t = this.t7r.GetComponent(122))?.Valid &&
         (this.o7r?.TryRemoveTagById(-1354651119),
@@ -1482,7 +1484,7 @@ let CharacterManipulateComponent =
         this.o7r?.TryAddTagById(-1354651119));
     }
     GetIsCharRotateWithCameraWhenManipulate() {
-      return this.ac !== 2 && this.ac !== 3
+      return 2 !== this.ac && 3 !== this.ac
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Character",
@@ -1494,7 +1496,7 @@ let CharacterManipulateComponent =
     }
     ChangeToProjectileState() {
       return !(
-        this.ac !== 3 ||
+        3 !== this.ac ||
         this.o7r.IsProjectileAimMode ||
         !this.o7r.ManipulateBaseConfig.抛物瞄准模式开关 ||
         ((this.o7r.IsProjectileAimMode = !0),
@@ -1512,7 +1514,7 @@ let CharacterManipulateComponent =
     }
     ChangeToNormalState() {
       return !(
-        this.ac !== 3 ||
+        3 !== this.ac ||
         !this.o7r.IsProjectileAimMode ||
         !this.o7r.ManipulateBaseConfig.抛物瞄准模式开关 ||
         ((this.o7r.IsProjectileAimMode = !1),
@@ -1537,4 +1539,4 @@ let CharacterManipulateComponent =
       CharacterManipulateComponent,
     )),
   (exports.CharacterManipulateComponent = CharacterManipulateComponent);
-// # sourceMappingURL=CharacterManipulateComponent.js.map
+//# sourceMappingURL=CharacterManipulateComponent.js.map

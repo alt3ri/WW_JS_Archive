@@ -7,4 +7,4 @@ class ResonanceDataInfo {
   }
 }
 exports.ResonanceDataInfo = ResonanceDataInfo;
-// # sourceMappingURL=ResonanceDataInfo.js.map
+//# sourceMappingURL=ResonanceDataInfo.js.map

@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelConditionRolePhantomNum = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager");
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelConditionRolePhantomNum extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, r) {
     if (e.LimitParams) {
-      const a = Number(e.LimitParams.get("RoleId"));
+      var a = Number(e.LimitParams.get("RoleId"));
       if (void 0 !== a) {
-        const o = Number(e.LimitParams.get("Value"));
-        const n = e.LimitParams.get("Op");
+        var o = Number(e.LimitParams.get("Value")),
+          n = e.LimitParams.get("Op");
         if (n) {
-          if (a > 0) return this.mLe(a, o, n);
+          if (0 < a) return this.mLe(a, o, n);
           for (const t of ModelManager_1.ModelManager.RoleModel.GetRoleList())
             if (this.mLe(t.GetRoleId(), o, n)) return !0;
         }
@@ -33,4 +33,4 @@ class LevelConditionRolePhantomNum extends LevelGeneralBase_1.LevelConditionBase
   }
 }
 exports.LevelConditionRolePhantomNum = LevelConditionRolePhantomNum;
-// # sourceMappingURL=LevelConditionRolePhantomNum.js.map
+//# sourceMappingURL=LevelConditionRolePhantomNum.js.map

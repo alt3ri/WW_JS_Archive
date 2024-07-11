@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TreasureBoxDetectorMarkItemView = void 0);
-const UE = require("ue");
-const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById");
-const MarkDetectorRangeImageComponent_1 = require("./Components/MarkDetectorRangeImageComponent");
-const ServerMarkItemView_1 = require("./ServerMarkItemView");
+const UE = require("ue"),
+  CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  MarkDetectorRangeImageComponent_1 = require("./Components/MarkDetectorRangeImageComponent"),
+  ServerMarkItemView_1 = require("./ServerMarkItemView");
 class TreasureBoxDetectorMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
   constructor(e) {
     super(e),
@@ -60,4 +60,4 @@ class TreasureBoxDetectorMarkItemView extends ServerMarkItemView_1.ServerMarkIte
   }
 }
 exports.TreasureBoxDetectorMarkItemView = TreasureBoxDetectorMarkItemView;
-// # sourceMappingURL=TreasureBoxDetectorMarkItemView.js.map
+//# sourceMappingURL=TreasureBoxDetectorMarkItemView.js.map

@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configMontageDataById = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const MontageData_1 = require("../Config/MontageData");
-const DB = "db_montagedata.db";
-const FILE = "UniverseEditor/MontageConfig/MontageConfig.csv";
-const TABLE = "MontageData";
-const COMMAND = "select BinData from `MontageData` where Id=?";
-const KEY_PREFIX = "MontageDataById";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  MontageData_1 = require("../Config/MontageData"),
+  DB = "db_montagedata.db",
+  FILE = "UniverseEditor/MontageConfig/MontageConfig.csv",
+  TABLE = "MontageData",
+  COMMAND = "select BinData from `MontageData` where Id=?",
+  KEY_PREFIX = "MontageDataById",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configMontageDataById.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configMontageDataById.GetConfig(";
 exports.configMontageDataById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configMontageDataById = {
       if (
         (a =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "Id",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "Id",
+              o,
+            ]))
       ) {
-        var a;
-        var e = void 0;
+        var a,
+          e = void 0;
         if (
           (([a, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configMontageDataById = {
     }
   },
 };
-// # sourceMappingURL=MontageDataById.js.map
+//# sourceMappingURL=MontageDataById.js.map

@@ -1,2 +1,2 @@
 "use strict";
-// # sourceMappingURL=BulletDataComponent.js.map
+//# sourceMappingURL=BulletDataComponent.js.map

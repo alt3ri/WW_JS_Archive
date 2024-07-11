@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configAkiMapSourceByMapId = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const AkiMapSource_1 = require("../Config/AkiMapSource");
-const DB = "db_instance_dungeon.db";
-const FILE = "f.副本.xlsx";
-const TABLE = "AkiMapSource";
-const COMMAND = "select BinData from `AkiMapSource` where MapId=?";
-const KEY_PREFIX = "AkiMapSourceByMapId";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  AkiMapSource_1 = require("../Config/AkiMapSource"),
+  DB = "db_instance_dungeon.db",
+  FILE = "f.副本.xlsx",
+  TABLE = "AkiMapSource",
+  COMMAND = "select BinData from `AkiMapSource` where MapId=?",
+  KEY_PREFIX = "AkiMapSourceByMapId",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigStat = void 0;
-const CONFIG_STAT_PREFIX = "configAkiMapSourceByMapId.GetConfig(";
+const initStat = void 0,
+  getConfigStat = void 0,
+  CONFIG_STAT_PREFIX = "configAkiMapSourceByMapId.GetConfig(";
 exports.configAkiMapSourceByMapId = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -40,13 +40,14 @@ exports.configAkiMapSourceByMapId = {
       if (
         (i =
           ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
-          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
-            "MapId",
-            o,
-          ]) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
+              "MapId",
+              o,
+            ]))
       ) {
-        var i;
-        var e = void 0;
+        var i,
+          e = void 0;
         if (
           (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -72,4 +73,4 @@ exports.configAkiMapSourceByMapId = {
     }
   },
 };
-// # sourceMappingURL=AkiMapSourceByMapId.js.map
+//# sourceMappingURL=AkiMapSourceByMapId.js.map

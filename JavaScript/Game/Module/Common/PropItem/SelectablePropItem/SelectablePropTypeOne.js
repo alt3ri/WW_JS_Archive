@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SelectablePropTypeOne = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const SelectablePropComponentBase_1 = require("./SelectablePropComponentBase");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  SelectablePropComponentBase_1 = require("./SelectablePropComponentBase");
 class SelectablePropTypeOne extends SelectablePropComponentBase_1.SelectablePropComponentBase {
   constructor() {
     super(...arguments),
@@ -47,15 +47,15 @@ class SelectablePropTypeOne extends SelectablePropComponentBase_1.SelectableProp
   zwt() {
     this.SetItemIcon(this.GetTexture(1), this.PropData.ItemId),
       this.SetItemQualityIcon(this.GetSprite(2), this.PropData.ItemId);
-    const t = this.GetSprite(0);
+    var t = this.GetSprite(0);
     this.PropData.ChipPath
       ? (t.SetUIActive(!0), this.SetSpriteByPath(this.PropData.ChipPath, t, !1))
       : t.SetUIActive(!1);
   }
   SetRoleIconState() {
-    let t;
-    const e = this.GetItem(3);
-    this.PropData.RoleId !== 0
+    var t,
+      e = this.GetItem(3);
+    0 !== this.PropData.RoleId
       ? (e.SetUIActive(!0),
         (t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
           this.PropData.RoleId,
@@ -71,7 +71,7 @@ class SelectablePropTypeOne extends SelectablePropComponentBase_1.SelectableProp
     this.GetItem(7).SetUIActive(this.PropData.GetIsLock());
   }
   eBt() {
-    const t = this.GetItem(5);
+    var t = this.GetItem(5);
     this.PropData.ResonanceLevel
       ? (t.SetUIActive(!0),
         this.GetText(6).SetText(this.PropData.ResonanceLevel.toString()))
@@ -108,4 +108,4 @@ class SelectablePropTypeOne extends SelectablePropComponentBase_1.SelectableProp
   }
 }
 exports.SelectablePropTypeOne = SelectablePropTypeOne;
-// # sourceMappingURL=SelectablePropTypeOne.js.map
+//# sourceMappingURL=SelectablePropTypeOne.js.map

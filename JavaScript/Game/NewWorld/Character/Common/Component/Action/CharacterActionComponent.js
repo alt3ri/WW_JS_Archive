@@ -1,55 +1,60 @@
 "use strict";
-let CharacterActionComponent_1;
-const __decorate =
-  (this && this.__decorate) ||
-  function (t, i, e, o) {
-    let s;
-    const h = arguments.length;
-    let r =
-      h < 3 ? i : o === null ? (o = Object.getOwnPropertyDescriptor(i, e)) : o;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
-      r = Reflect.decorate(t, i, e, o);
-    else
-      for (let n = t.length - 1; n >= 0; n--)
-        (s = t[n]) && (r = (h < 3 ? s(r) : h > 3 ? s(i, e, r) : s(i, e)) || r);
-    return h > 3 && r && Object.defineProperty(i, e, r), r;
-  };
+var CharacterActionComponent_1,
+  __decorate =
+    (this && this.__decorate) ||
+    function (t, i, e, o) {
+      var s,
+        h = arguments.length,
+        r =
+          h < 3
+            ? i
+            : null === o
+              ? (o = Object.getOwnPropertyDescriptor(i, e))
+              : o;
+      if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
+        r = Reflect.decorate(t, i, e, o);
+      else
+        for (var n = t.length - 1; 0 <= n; n--)
+          (s = t[n]) &&
+            (r = (h < 3 ? s(r) : 3 < h ? s(i, e, r) : s(i, e)) || r);
+      return 3 < h && r && Object.defineProperty(i, e, r), r;
+    };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterActionComponent = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Log_1 = require("../../../../../../Core/Common/Log");
-const CommonParamById_1 = require("../../../../../../Core/Define/ConfigCommon/CommonParamById");
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const QueryTypeDefine_1 = require("../../../../../../Core/Define/QueryTypeDefine");
-const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const Rotator_1 = require("../../../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const Vector2D_1 = require("../../../../../../Core/Utils/Math/Vector2D");
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const IAction_1 = require("../../../../../../UniverseEditor/Interface/IAction");
-const CameraController_1 = require("../../../../../Camera/CameraController");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const Global_1 = require("../../../../../Global");
-const InputController_1 = require("../../../../../Input/InputController");
-const LevelGamePlayController_1 = require("../../../../../LevelGamePlay/LevelGamePlayController");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const FOURTY_FIVE = 45;
-const ZERO_EIGHT = 0.8;
-const FIVETY = 50;
-const ONE_HUNDRED_FOURTY = 140;
-const TWO_HUNDRED_TWENTY = 220;
-const COLLISION_RADIUS_IN = 15;
-const COLLISION_RADIUS_OUT = 50;
-const COLLISION_RESET_ANGLE = 91;
-const DEFAULT_CATAPULT_TIME = 0.6;
-const DEFAULT_CATAPULT_GRAVITY = 1960;
-const CATAPULT_SKILL_ID = 400102;
-const SUPER_CATAPULT_SKILL_ID = 400107;
-const BOUNCE_SKILL_ID = 400104;
-const MAX_ANIM_STATE_CHANGE_COUNT = 600;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  QueryTypeDefine_1 = require("../../../../../../Core/Define/QueryTypeDefine"),
+  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  Rotator_1 = require("../../../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  Vector2D_1 = require("../../../../../../Core/Utils/Math/Vector2D"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  IAction_1 = require("../../../../../../UniverseEditor/Interface/IAction"),
+  CameraController_1 = require("../../../../../Camera/CameraController"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../../../Global"),
+  InputController_1 = require("../../../../../Input/InputController"),
+  LevelGamePlayController_1 = require("../../../../../LevelGamePlay/LevelGamePlayController"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  FOURTY_FIVE = 45,
+  ZERO_EIGHT = 0.8,
+  FIVETY = 50,
+  ONE_HUNDRED_FOURTY = 140,
+  TWO_HUNDRED_TWENTY = 220,
+  COLLISION_RADIUS_IN = 15,
+  COLLISION_RADIUS_OUT = 50,
+  COLLISION_RESET_ANGLE = 91,
+  DEFAULT_CATAPULT_TIME = 0.6,
+  DEFAULT_CATAPULT_GRAVITY = 1960,
+  CATAPULT_SKILL_ID = 400102,
+  SUPER_CATAPULT_SKILL_ID = 400107,
+  BOUNCE_SKILL_ID = 400104,
+  MAX_ANIM_STATE_CHANGE_COUNT = 600;
 let CharacterActionComponent =
   (CharacterActionComponent_1 = class CharacterActionComponent extends (
     EntityComponent_1.EntityComponent
@@ -95,11 +100,11 @@ let CharacterActionComponent =
         }),
         (this.j2r = (t) => {
           this.IsSitDown &&
-            t.PlotLevel !== "LevelD" &&
+            "LevelD" !== t.PlotLevel &&
             this.PreLeaveSitDownAction();
         }),
         (this.W2r = (t) => {
-          let i;
+          var i;
           this.Hte.IsAutonomousProxy &&
             t?.Valid &&
             ((i = this.Entity.GetComponent(26)),
@@ -116,7 +121,7 @@ let CharacterActionComponent =
             t.ResetCollision());
         }),
         (this.K2r = (t, i) => {
-          let e, o;
+          var e, o;
           this.Chair &&
             ((e = this.Chair.GetComponent(0)?.GetCreatureDataId()),
             (o = Protocol_1.Aki.Protocol.nNn.create()),
@@ -211,7 +216,7 @@ let CharacterActionComponent =
       return !0;
     }
     OnTick() {
-      let t, i, e;
+      var t, i, e;
       this.Hte.IsAutonomousProxy &&
         (this.IsSitDown &&
           this.Lie.HasTag(30322312) &&
@@ -243,8 +248,8 @@ let CharacterActionComponent =
         ));
     }
     HTe(t, i) {
-      var e = t.Entity.GetComponent(0)?.GetPbDataId() ?? 0;
-      var e = ModelManager_1.ModelManager.CreatureModel.GetOwnerEntity(e);
+      var e = t.Entity.GetComponent(0)?.GetPbDataId() ?? 0,
+        e = ModelManager_1.ModelManager.CreatureModel.GetOwnerEntity(e);
       let o = void 0;
       o =
         e &&
@@ -252,21 +257,21 @@ let CharacterActionComponent =
           ?.Valid
           ? e.Entity.GetComponent(182)
           : t;
-      var e = (0, puerts_1.$ref)(void 0);
-      const s = (o.Owner.GetAttachedActors(e), (0, puerts_1.$unref)(e));
-      const h = s.Num();
+      var e = (0, puerts_1.$ref)(void 0),
+        s = (o.Owner.GetAttachedActors(e), (0, puerts_1.$unref)(e)),
+        h = s.Num();
       for (let t = 0; t < h; ++t) {
-        const r = s.Get(t);
-        const n = (0, puerts_1.$ref)(void 0);
-        const a = (r.GetAttachedActors(n), (0, puerts_1.$unref)(n));
-        const _ = a.Num();
+        var r = s.Get(t),
+          n = (0, puerts_1.$ref)(void 0),
+          a = (r.GetAttachedActors(n), (0, puerts_1.$unref)(n)),
+          _ = a.Num();
         for (let t = 0; t < _; ++t)
           this.Hte.Actor.CapsuleComponent.IgnoreActorWhenMoving(a.Get(t), i);
       }
     }
     ResetCollision() {
       this.G2r = !1;
-      const t = this.Chair.GetComponent(182);
+      var t = this.Chair.GetComponent(182);
       this.HTe(t, !1),
         this.Hte.Actor.CapsuleComponent.SetCollisionResponseToChannel(2, 2),
         (this.Chair = void 0);
@@ -290,10 +295,10 @@ let CharacterActionComponent =
       this.K2r(void 0, void 0);
     }
     OnResponseSit(t, i) {
-      i !== 0 && (this.IsSitDown = !t);
+      0 !== i && (this.IsSitDown = !t);
     }
     DoSitDownAction() {
-      let t, i;
+      var t, i;
       this.Chair &&
         (this.cz.Reset(),
         this.Gce.SetForceSpeed(this.cz),
@@ -326,7 +331,7 @@ let CharacterActionComponent =
         this.K2r(void 0, void 0);
     }
     Y2r() {
-      let t;
+      var t;
       this.Chair &&
         (this.Hte.Actor.CharacterMovement.SetMovementMode(1),
         this.cz.DeepCopy(this.Hte.InputDirectProxy),
@@ -335,7 +340,7 @@ let CharacterActionComponent =
         this.cz.DotProduct(this.Hte.ActorForwardProxy) > ZERO_EIGHT
           ? (this.LeaveSitDownIndex = 0)
           : (this.cz.CrossProduct(this.Hte.ActorForwardProxy, this.fz),
-            this.fz.Z >= 0
+            0 <= this.fz.Z
               ? t.Begin < -FOURTY_FIVE
                 ? (this.LeaveSitDownIndex = 1)
                 : (this.LeaveSitDownIndex = 0)
@@ -350,7 +355,7 @@ let CharacterActionComponent =
           ((this.G2r = !0), this.CalculateChairDir());
     }
     CalculateChairDir() {
-      let t, i, e;
+      var t, i, e;
       this.Chair &&
         this.Hte &&
         ((t = this.Chair.GetComponent(182).ActorLocationProxy),
@@ -367,7 +372,7 @@ let CharacterActionComponent =
       this.Hte.ActorLocationProxy.Subtraction(t.ActorLocationProxy, this.cz),
         (this.cz.Z = 0),
         this.cz.Normalize();
-      const i = this.cz.DotProduct(t.ActorRightProxy);
+      var i = this.cz.DotProduct(t.ActorRightProxy);
       let e = Math.acos(i) * MathUtils_1.MathUtils.RadToDeg;
       return (
         this.cz.CrossProduct(t.ActorRightProxy, this.fz),
@@ -383,7 +388,7 @@ let CharacterActionComponent =
       );
     }
     StartCatapult(t, i) {
-      let e, o, s, h, r, n, a;
+      var e, o, s, h, r, n, a;
       t &&
         i.Param &&
         (a = this.Entity.GetComponent(30)) &&
@@ -433,9 +438,9 @@ let CharacterActionComponent =
     }
     EndCatapult() {}
     StartBounce(t) {
-      let i;
-      let e;
-      const o = this.Entity.GetComponent(30);
+      var i,
+        e,
+        o = this.Entity.GetComponent(30);
       o &&
         (i = this.Entity.GetComponent(33)) &&
         i.BeginSkill(BOUNCE_SKILL_ID, {
@@ -456,7 +461,7 @@ let CharacterActionComponent =
         (this.IsUseCatapultUpAnim = !1));
     }
     EndBounce() {
-      let t = this.Entity.GetComponent(33);
+      var t = this.Entity.GetComponent(33);
       !t ||
         (void 0 !== (t = t.CurrentSkill) && t.SkillId !== BOUNCE_SKILL_ID) ||
         ((t = this.Entity.GetComponent(161)).SetForceSpeed(
@@ -509,4 +514,4 @@ let CharacterActionComponent =
       CharacterActionComponent,
     )),
   (exports.CharacterActionComponent = CharacterActionComponent);
-// # sourceMappingURL=CharacterActionComponent.js.map
+//# sourceMappingURL=CharacterActionComponent.js.map

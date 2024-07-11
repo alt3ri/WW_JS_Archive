@@ -14,4 +14,4 @@ class DungeonDetectFilter extends CommonFilter_1.CommonFilter {
   }
 }
 exports.DungeonDetectFilter = DungeonDetectFilter;
-// # sourceMappingURL=DungeonDetectFilter.js.map
+//# sourceMappingURL=DungeonDetectFilter.js.map

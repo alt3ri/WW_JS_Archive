@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HotPatchKuroSdk = void 0);
-const UE = require("ue");
-const BaseConfigController_1 = require("../BaseConfig/BaseConfigController");
-const LauncherLog_1 = require("../Util/LauncherLog");
-const HotPatchKuroTdm_1 = require("./HotPatchKuroTdm");
-const SdkReportData_1 = require("./SdkReportData");
-const USESDK = "1";
+const UE = require("ue"),
+  BaseConfigController_1 = require("../BaseConfig/BaseConfigController"),
+  LauncherLog_1 = require("../Util/LauncherLog"),
+  HotPatchKuroTdm_1 = require("./HotPatchKuroTdm"),
+  SdkReportData_1 = require("./SdkReportData"),
+  USESDK = "1";
 class HotPatchKuroSdk {
   static CanUseSdk() {
     return !(
@@ -56,10 +56,10 @@ class HotPatchKuroSdk {
     t && this.CanUseSdk() && this.FSr(t);
   }
   static async FSr(t) {
-    t.GetEventName() !== "" &&
+    "" !== t.GetEventName() &&
       (this.OSr && (await this.OSr),
       UE.KuroSDKManager.LogMarketingEvent(t.GetReportString()));
   }
 }
 (exports.HotPatchKuroSdk = HotPatchKuroSdk).OSr = void 0;
-// # sourceMappingURL=HotPatchKuroSdk.js.map
+//# sourceMappingURL=HotPatchKuroSdk.js.map

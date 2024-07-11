@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemConfig = void 0);
-const BackgroundCard_1 = require("../../../Core/Define/Config/BackgroundCard");
-const ItemInfo_1 = require("../../../Core/Define/Config/ItemInfo");
-const PhantomItem_1 = require("../../../Core/Define/Config/PhantomItem");
-const PreviewItem_1 = require("../../../Core/Define/Config/PreviewItem");
-const RogueCurrency_1 = require("../../../Core/Define/Config/RogueCurrency");
-const RoleInfo_1 = require("../../../Core/Define/Config/RoleInfo");
-const WeaponConf_1 = require("../../../Core/Define/Config/WeaponConf");
-const ModelUtil_1 = require("../../../Core/Utils/ModelUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
+const BackgroundCard_1 = require("../../../Core/Define/Config/BackgroundCard"),
+  ItemInfo_1 = require("../../../Core/Define/Config/ItemInfo"),
+  PhantomItem_1 = require("../../../Core/Define/Config/PhantomItem"),
+  PreviewItem_1 = require("../../../Core/Define/Config/PreviewItem"),
+  RogueCurrency_1 = require("../../../Core/Define/Config/RogueCurrency"),
+  RoleInfo_1 = require("../../../Core/Define/Config/RoleInfo"),
+  WeaponConf_1 = require("../../../Core/Define/Config/WeaponConf"),
+  ModelUtil_1 = require("../../../Core/Utils/ModelUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager");
 class ItemConfig {
   constructor() {
     (this.ItemDataType = 0),
@@ -57,9 +57,9 @@ class ItemConfig {
       (this.MainTypeId = i.MainTypeId),
       (this.Name = i.Name),
       (this.ItemBuffType = i.ItemBuffType);
-    let t;
-    let s;
-    let h = i.ShowTypes[0];
+    var t,
+      s,
+      h = i.ShowTypes[0];
     h
       ? (h =
           ConfigManager_1.ConfigManager.InventoryConfig.GetItemShowTypeConfig(
@@ -124,7 +124,7 @@ class ItemConfig {
       (this.ItemBuffType = 0);
   }
   pci(i) {
-    const t = ModelUtil_1.ModelUtil.GetModelConfig(i.MeshId);
+    var t = ModelUtil_1.ModelUtil.GetModelConfig(i.MeshId);
     (this.ItemDataType = 1),
       (this.ItemType = void 0),
       (this.MainTypeId = 1),
@@ -162,7 +162,7 @@ class ItemConfig {
       (this.ItemType = 9),
       (this.MainTypeId = 3),
       (this.Name = i.Name);
-    let t = i.ShowTypes[0];
+    var t = i.ShowTypes[0];
     t
       ? (t =
           ConfigManager_1.ConfigManager.InventoryConfig.GetItemShowTypeConfig(
@@ -182,4 +182,4 @@ class ItemConfig {
   }
 }
 exports.ItemConfig = ItemConfig;
-// # sourceMappingURL=ItemConfig.js.map
+//# sourceMappingURL=ItemConfig.js.map

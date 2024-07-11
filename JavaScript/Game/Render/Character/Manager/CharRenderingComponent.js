@@ -1,28 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharRenderingComponent = void 0);
-const UE = require("ue");
-const Info_1 = require("../../../../Core/Common/Info");
-const Log_1 = require("../../../../Core/Common/Log");
-const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../../GlobalData");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const WorldModel_1 = require("../../../World/Model/WorldModel");
-const RenderConfig_1 = require("../../Config/RenderConfig");
-const RenderModuleConfig_1 = require("../../Manager/RenderModuleConfig");
-const RenderModuleController_1 = require("../../Manager/RenderModuleController");
-const RenderUtil_1 = require("../../Utils/RenderUtil");
-const CharRuntimeMaterialControllerGroupInfo_1 = require("../Components/MaterialController/CharRuntimeMaterialControllerGroupInfo");
-const NEAR_RANGE = 1e3;
-const MIDDLE_RANGE = 2500;
-const FAR_RANGE = 5e3;
-const MOBILE_NEAR_RANGE = 800;
-const MOBILE_MIDDLE_RANGE = 1500;
-const MOBILE_FAR_RANGE = 3e3;
+const UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  WorldModel_1 = require("../../../World/Model/WorldModel"),
+  RenderConfig_1 = require("../../Config/RenderConfig"),
+  RenderModuleConfig_1 = require("../../Manager/RenderModuleConfig"),
+  RenderModuleController_1 = require("../../Manager/RenderModuleController"),
+  RenderUtil_1 = require("../../Utils/RenderUtil"),
+  CharRuntimeMaterialControllerGroupInfo_1 = require("../Components/MaterialController/CharRuntimeMaterialControllerGroupInfo"),
+  NEAR_RANGE = 1e3,
+  MIDDLE_RANGE = 2500,
+  FAR_RANGE = 5e3,
+  MOBILE_NEAR_RANGE = 800,
+  MOBILE_MIDDLE_RANGE = 1500,
+  MOBILE_FAR_RANGE = 3e3;
 class CharRenderingComponent extends UE.ActorComponent {
   constructor() {
     super(...arguments),
@@ -104,7 +104,7 @@ class CharRenderingComponent extends UE.ActorComponent {
             this.CachedOwnerName,
           ]),
         (t = !0)),
-      e === 8 &&
+      8 === e &&
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderCharacter",
@@ -119,9 +119,10 @@ class CharRenderingComponent extends UE.ActorComponent {
         (this.DeltaCount = 0),
         (this.TickCount = 0),
         (this.IsOnMobile =
+          0 ===
           UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldFeatureLevel(
             GlobalData_1.GlobalData.World,
-          ) === 0),
+          )),
         (this.NearDistance = this.IsOnMobile ? MOBILE_NEAR_RANGE : NEAR_RANGE),
         (this.MiddleDistance = this.IsOnMobile
           ? MOBILE_MIDDLE_RANGE
@@ -168,7 +169,7 @@ class CharRenderingComponent extends UE.ActorComponent {
   }
   AddComponent(t, e) {
     let i = !1;
-    const r = RenderConfig_1.RenderConfig.MaterialControlAllCaseArray.length;
+    var r = RenderConfig_1.RenderConfig.MaterialControlAllCaseArray.length;
     for (let e = 0; e < r; e++)
       if (t === RenderConfig_1.RenderConfig.MaterialControlAllCaseArray[e]) {
         i = !0;
@@ -228,12 +229,10 @@ class CharRenderingComponent extends UE.ActorComponent {
         ),
       i)
     ) {
-      const o = this.GetComponent(
-        RenderConfig_1.RenderConfig.IdMaterialContainer,
-      );
-      const n = this.GetComponent(
-        RenderConfig_1.RenderConfig.IdMaterialController,
-      );
+      var o = this.GetComponent(
+          RenderConfig_1.RenderConfig.IdMaterialContainer,
+        ),
+        n = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialController);
       let e = !1;
       n && n.RemoveSkeletalMeshMaterialControllerData(t),
         o &&
@@ -255,12 +254,8 @@ class CharRenderingComponent extends UE.ActorComponent {
         ]);
   }
   RemoveComponentInner(e) {
-    const t = this.GetComponent(
-      RenderConfig_1.RenderConfig.IdMaterialContainer,
-    );
-    const i = this.GetComponent(
-      RenderConfig_1.RenderConfig.IdMaterialController,
-    );
+    var t = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialContainer),
+      i = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialController);
     i && i.RemoveSkeletalMeshMaterialControllerData(e),
       t &&
         !t.RemoveSkeletalComponent(e) &&
@@ -278,9 +273,7 @@ class CharRenderingComponent extends UE.ActorComponent {
     this.IsDebug = e;
   }
   GetDebugInfo() {
-    const e = this.GetComponent(
-      RenderConfig_1.RenderConfig.IdMaterialController,
-    );
+    var e = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialController);
     if (this.IsDebug) return (e.EnableDebug = !0), e.DebugInfo;
     e.EnableDebug = !1;
   }
@@ -292,7 +285,7 @@ class CharRenderingComponent extends UE.ActorComponent {
     this.Update(e);
   }
   ReceiveEndPlay(e) {
-    e !== 2 &&
+    2 !== e &&
       (this.Destroy(),
       RenderModuleController_1.RenderModuleController.RemoveCharRenderShell(
         this,
@@ -320,8 +313,8 @@ class CharRenderingComponent extends UE.ActorComponent {
     let e = RenderModuleController_1.RenderModuleController.IsGamePaused
       ? 0
       : RenderModuleController_1.RenderModuleController.GlobalTimeDilation;
-    let t;
-    return e === 0
+    var t;
+    return 0 === e
       ? 0
       : (this.LogicOwner &&
           this.IsLogicOwnerTsEffectActor &&
@@ -337,27 +330,25 @@ class CharRenderingComponent extends UE.ActorComponent {
     return this.RenderType;
   }
   ResetAllRenderingState() {
-    var e = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialController);
-    var e =
-      (e && e.RemoveAllMaterialControllerData(),
-      this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialContainer));
-    var e =
-      (e && e.ResetAllState(),
-      this.GetComponent(RenderConfig_1.RenderConfig.IdDitherEffect));
+    var e = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialController),
+      e =
+        (e && e.RemoveAllMaterialControllerData(),
+        this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialContainer)),
+      e =
+        (e && e.ResetAllState(),
+        this.GetComponent(RenderConfig_1.RenderConfig.IdDitherEffect));
     e && e.ResetDitherEffect();
   }
   ResetAllRenderingStateForDebug() {
-    const e = this.GetComponent(
-      RenderConfig_1.RenderConfig.IdMaterialController,
-    );
+    var e = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialController);
     e &&
-      e.AllMaterialControlRuntimeDataMap.size > 0 &&
+      0 < e.AllMaterialControlRuntimeDataMap.size &&
       (e.PrintCurrentInfo(), this.ResetAllRenderingState());
   }
   AddMaterialControllerDataGroup(e) {
-    let t;
-    let i;
-    const r = e;
+    var t,
+      i,
+      r = e;
     return r
       ? ((t = ++this.IndexCount),
         this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialController)
@@ -409,9 +400,9 @@ class CharRenderingComponent extends UE.ActorComponent {
     return this.CachedOwner;
   }
   AddMaterialControllerDataInner(e, t) {
-    const i = e;
+    var i = e;
     if (!i) return -1;
-    let r = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialController);
+    var r = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialController);
     if (!r) return -1;
     if (CharRenderingComponent.DisableForDebug)
       return (
@@ -456,40 +447,32 @@ class CharRenderingComponent extends UE.ActorComponent {
     return this.AddMaterialControllerDataInner(e);
   }
   RemoveMaterialControllerData(e) {
-    const t = this.GetComponent(
-      RenderConfig_1.RenderConfig.IdMaterialController,
-    );
+    var t = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialController);
     t && t.RemoveMaterialControllerData(e);
   }
   RemoveMaterialControllerDataWithEnding(e) {
-    const t = this.GetComponent(
-      RenderConfig_1.RenderConfig.IdMaterialController,
-    );
+    var t = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialController);
     t && t.RemoveMaterialControllerDataWithEnding(e);
   }
   AddMaterialControllerDataDestroyCallback(e, t) {
-    const i = this.GetComponent(
-      RenderConfig_1.RenderConfig.IdMaterialController,
-    );
+    var i = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialController);
     i && i.AddMaterialControllerDataDestroyCallback(e, t);
   }
   RemoveMaterialControllerDataDestroyCallback(e, t) {
-    const i = this.GetComponent(
-      RenderConfig_1.RenderConfig.IdMaterialController,
-    );
+    var i = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialController);
     i && i.RemoveMaterialControllerDataDestroyCallback(e, t);
   }
   UpdateNpcDitherComponent() {
-    let e;
+    var e;
     this.IsInit &&
-      (this.RenderType !== 3
+      (3 !== this.RenderType
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error("RenderCharacter", 12, "NPC更新不是NPC类型")
         : (e = this.GetComponent(RenderConfig_1.RenderConfig.IdDitherEffect)) &&
           e.UpdateNpcDitherComponent());
   }
   SetDitherEffect(e, t) {
-    const i = this.GetComponent(RenderConfig_1.RenderConfig.IdDitherEffect);
+    var i = this.GetComponent(RenderConfig_1.RenderConfig.IdDitherEffect);
     i &&
       (i.SetDitherEffect(e, t),
       this.SetBodyEffectOpacity(e),
@@ -497,15 +480,15 @@ class CharRenderingComponent extends UE.ActorComponent {
       this.SetRealtimeShadowOpacity(e));
   }
   RegisterBodyEffect(e) {
-    const t = this.GetComponent(RenderConfig_1.RenderConfig.IdBodyEffect);
+    var t = this.GetComponent(RenderConfig_1.RenderConfig.IdBodyEffect);
     t && t.RegisterEffect(e);
   }
   SetBodyEffectOpacity(e) {
-    const t = this.GetComponent(RenderConfig_1.RenderConfig.IdBodyEffect);
+    var t = this.GetComponent(RenderConfig_1.RenderConfig.IdBodyEffect);
     t && t.SetOpacity(e);
   }
   AddInteraction(e, t = 1) {
-    const i = this.GetComponent(RenderConfig_1.RenderConfig.IdSceneInteraction);
+    var i = this.GetComponent(RenderConfig_1.RenderConfig.IdSceneInteraction);
     i &&
       !i.GetIsPossed() &&
       (i.PossCharacter(e, t),
@@ -521,52 +504,50 @@ class CharRenderingComponent extends UE.ActorComponent {
       (this.OnRoleGoDownFinishEventAdded = !0));
   }
   RemoveInteraction() {
-    const e = this.GetComponent(RenderConfig_1.RenderConfig.IdSceneInteraction);
+    var e = this.GetComponent(RenderConfig_1.RenderConfig.IdSceneInteraction);
     e && e.UnpossCharacter();
   }
   SetMaterialPropertyFloat(e, t, i, r, o) {
-    const n = this.GetComponent(RenderConfig_1.RenderConfig.IdPropertyModifier);
+    var n = this.GetComponent(RenderConfig_1.RenderConfig.IdPropertyModifier);
     n &&
       n.SetPropertyFloat(e, t, i, FNameUtil_1.FNameUtil.GetDynamicFName(r), o);
   }
   SetMaterialPropertyColor(e, t, i, r, o) {
-    const n = this.GetComponent(RenderConfig_1.RenderConfig.IdPropertyModifier);
+    var n = this.GetComponent(RenderConfig_1.RenderConfig.IdPropertyModifier);
     n &&
       n.SetPropertyColor(e, t, i, FNameUtil_1.FNameUtil.GetDynamicFName(r), o);
   }
   SetStarScarEnergy(e) {
-    const t = this.GetComponent(
-      RenderConfig_1.RenderConfig.IdMaterialContainer,
-    );
+    var t = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialContainer);
     t && t.SetStarScarEnergy(e);
   }
   SetCapsuleDither(e) {}
   SetDecalShadowEnabled(e) {
-    const t = this.GetComponent(RenderConfig_1.RenderConfig.IdDecalShadow);
+    var t = this.GetComponent(RenderConfig_1.RenderConfig.IdDecalShadow);
     t && (e ? t.EnableDecalShadow() : t.DisableDecalShadow());
   }
   SetRealtimeShadowEnabled(e) {
-    const t = this.GetComponent(RenderConfig_1.RenderConfig.IdDecalShadow);
+    var t = this.GetComponent(RenderConfig_1.RenderConfig.IdDecalShadow);
     t && (e ? t.EnableRealtimeShadow() : t.DisableRealtimeShadow());
   }
   DisableAllShadowByDecalShadowComponent() {
-    const e = this.GetComponent(RenderConfig_1.RenderConfig.IdDecalShadow);
+    var e = this.GetComponent(RenderConfig_1.RenderConfig.IdDecalShadow);
     e && e.DisableAllShadow();
   }
   AddComponentForDecalShadow(e, t) {
-    const i = this.GetComponent(RenderConfig_1.RenderConfig.IdDecalShadow);
+    var i = this.GetComponent(RenderConfig_1.RenderConfig.IdDecalShadow);
     i && i.AddPrimitiveComponent(e, t);
   }
   RemoveComponentFromDecalShadow(e) {
-    const t = this.GetComponent(RenderConfig_1.RenderConfig.IdDecalShadow);
+    var t = this.GetComponent(RenderConfig_1.RenderConfig.IdDecalShadow);
     t && t.RemovePrimitiveComponent(e);
   }
   SetDecalShadowOpacity(e) {
-    const t = this.GetComponent(RenderConfig_1.RenderConfig.IdDecalShadow);
+    var t = this.GetComponent(RenderConfig_1.RenderConfig.IdDecalShadow);
     t && t.SetDecalShadowOpacity(e);
   }
   SetRealtimeShadowOpacity(e) {
-    const t = this.GetComponent(RenderConfig_1.RenderConfig.IdDecalShadow);
+    var t = this.GetComponent(RenderConfig_1.RenderConfig.IdDecalShadow);
     t && t.SetRealtimeShadowOpacity(e);
   }
   MarkForceUpdateOnce() {
@@ -577,18 +558,18 @@ class CharRenderingComponent extends UE.ActorComponent {
       (CharRenderingComponent.DisableForDebug &&
         this.ResetAllRenderingStateForDebug(),
       (this.TickCount += 1),
-      this.TickCount > 30 &&
+      30 < this.TickCount &&
         (this.CurrentLocation.FromUeVector(
           this.CachedOwner.K2_GetActorLocation(),
         ),
         (this.TickCount = 0)),
       this.IsInit)
     ) {
-      let t;
+      var t;
       this.ForceUpdateOnce ||
       this.IsInDebugMode ||
-      this.RenderType === 5 ||
-      this.IsUiUpdate > 0 ||
+      5 === this.RenderType ||
+      0 < this.IsUiUpdate ||
       !Info_1.Info.IsGameRunning() ||
       ModelManager_1.ModelManager.PlotModel?.IsInPlot
         ? ((this.DeltaCount += 1),
@@ -606,7 +587,7 @@ class CharRenderingComponent extends UE.ActorComponent {
               ((this.DeltaCount += 0.03), (this.DeltaTime += e));
       for (const i of this.AllMaterialControlRuntimeDataGroupMap.values())
         i.IsDead || i.BeforeUpdateState(e, this.GetTimeDilation());
-      if (this.DeltaCount >= 1) {
+      if (1 <= this.DeltaCount) {
         for (const r of this.AllRenderComps) r.GetIsInitSuc() && r.Update();
         for (const o of this.AllRenderComps) o.GetIsInitSuc() && o.LateUpdate();
         (this.DeltaTime = 0), (this.DeltaCount = 0);
@@ -616,12 +597,12 @@ class CharRenderingComponent extends UE.ActorComponent {
   }
   DataGroupAfterUpdate(e) {
     for (const r of this.AllMaterialControlRuntimeDataGroupMap.keys()) {
-      const t = this.AllMaterialControlRuntimeDataGroupMap.get(r);
+      var t = this.AllMaterialControlRuntimeDataGroupMap.get(r);
       t.AfterUpdateState(e), t.IsDead && this.TempRemoveList.push(r);
     }
     if (this.TempRemoveList?.length) {
       for (let e = 0; e < this.TempRemoveList.length; e++) {
-        const i = this.TempRemoveList[e];
+        var i = this.TempRemoveList[e];
         this.AllMaterialControlRuntimeDataGroupMap.delete(i),
           GlobalData_1.GlobalData.BpEventManager.材质播放结束时.Broadcast(i),
           EventSystem_1.EventSystem.EmitWithTarget(
@@ -642,15 +623,11 @@ class CharRenderingComponent extends UE.ActorComponent {
     }
   }
   SetEffectProgress(e, t) {
-    const i = this.GetComponent(
-      RenderConfig_1.RenderConfig.IdMaterialController,
-    );
+    var i = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialController);
     i && i.SetEffectProgress(e, t);
   }
   IsMaterialControllerDataValid(e) {
-    const t = this.GetComponent(
-      RenderConfig_1.RenderConfig.IdMaterialController,
-    );
+    var t = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialController);
     return !!t && void 0 !== t.GetRuntimeMaterialControllerInfo(e);
   }
   Destroy() {
@@ -676,7 +653,7 @@ class CharRenderingComponent extends UE.ActorComponent {
       this.RemoveMaterialControllerData(t),
         this.RemoveMaterialControllerDataGroup(t);
     this.SequenceHandleIds = [];
-    const e = this.GetOwner().Mesh;
+    var e = this.GetOwner().Mesh;
     e.SetCustomPrimitiveDataFloat(0, 0),
       e.SetCustomPrimitiveDataFloat(1, 0),
       (e.ExposeToCinematicsCustomLightFactor = 0),
@@ -744,4 +721,4 @@ class CharRenderingComponent extends UE.ActorComponent {
   (CharRenderingComponent.MotionMeshShadingRate = [3, 6]),
   (CharRenderingComponent.DisableForDebug = !1),
   (exports.default = CharRenderingComponent);
-// # sourceMappingURL=CharRenderingComponent.js.map
+//# sourceMappingURL=CharRenderingComponent.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LordGymItem = void 0);
-const UE = require("ue");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class LordGymItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, i) {
     super(),
@@ -72,4 +72,4 @@ class LordGymItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.LordGymItem = LordGymItem;
-// # sourceMappingURL=LordGymItem.js.map
+//# sourceMappingURL=LordGymItem.js.map

@@ -48,4 +48,4 @@ class BeInviteData {
   }
 }
 exports.BeInviteData = BeInviteData;
-// # sourceMappingURL=BeInviteData.js.map
+//# sourceMappingURL=BeInviteData.js.map

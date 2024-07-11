@@ -8,4 +8,4 @@ class RedDotCalabashUpdate extends RedDotBase_1.RedDotBase {
   }
 }
 exports.RedDotCalabashUpdate = RedDotCalabashUpdate;
-// # sourceMappingURL=RedDotCalabash.js.map
+//# sourceMappingURL=RedDotCalabash.js.map

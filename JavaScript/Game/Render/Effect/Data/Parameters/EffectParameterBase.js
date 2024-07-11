@@ -38,4 +38,4 @@ class EffectParametersBase {
   }
 }
 exports.default = EffectParametersBase;
-// # sourceMappingURL=EffectParameterBase.js.map
+//# sourceMappingURL=EffectParameterBase.js.map

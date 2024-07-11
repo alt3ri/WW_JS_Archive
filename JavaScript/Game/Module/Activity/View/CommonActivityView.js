@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonActivityView = void 0);
-const UE = require("ue");
-const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const RedDotController_1 = require("../../../RedDot/RedDotController");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem");
-const ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
-const HelpController_1 = require("../../Help/HelpController");
-const GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew");
-const ActivityCommonDefine_1 = require("../ActivityCommonDefine");
-const ActivityManager_1 = require("../ActivityManager");
-const ActivityModel_1 = require("../ActivityModel");
-const ActivityPageSelectContent_1 = require("./SubView/ActivityPageSelectContent");
-const ActivitySwitchToggle_1 = require("./SubView/ActivitySwitchToggle");
+const UE = require("ue"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../RedDot/RedDotController"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  HelpController_1 = require("../../Help/HelpController"),
+  GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
+  ActivityCommonDefine_1 = require("../ActivityCommonDefine"),
+  ActivityManager_1 = require("../ActivityManager"),
+  ActivityModel_1 = require("../ActivityModel"),
+  ActivityPageSelectContent_1 = require("./SubView/ActivityPageSelectContent"),
+  ActivitySwitchToggle_1 = require("./SubView/ActivitySwitchToggle");
 class CommonActivityView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -65,12 +65,12 @@ class CommonActivityView extends UiViewBase_1.UiViewBase {
           ?.Id === t && this.j3e?.RefreshView();
       }),
       (this.OnActivityUpdate = () => {
-        const t = () => {
-          EventSystem_1.EventSystem.Emit(
-            EventDefine_1.EEventName.ResetToBattleView,
-          );
-        };
-        const e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(115);
+        var t = () => {
+            EventSystem_1.EventSystem.Emit(
+              EventDefine_1.EEventName.ResetToBattleView,
+            );
+          },
+          e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(115);
         e.FunctionMap.set(1, t),
           e.FunctionMap.set(0, t),
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
@@ -178,7 +178,7 @@ class CommonActivityView extends UiViewBase_1.UiViewBase {
     this.h4e(), await this.l4e();
   }
   h4e() {
-    const t = this.GetScrollViewWithScrollbar(1);
+    var t = this.GetScrollViewWithScrollbar(1);
     this.k3e = new GenericScrollViewNew_1.GenericScrollViewNew(t, this.Z3e);
   }
   async l4e() {
@@ -195,7 +195,7 @@ class CommonActivityView extends UiViewBase_1.UiViewBase {
       this.V3e.BindOnCanToggleExecuteChange(this.z3e);
   }
   OnStart() {
-    const t = this.OpenParam ?? 4;
+    var t = this.OpenParam ?? 4;
     ModelManager_1.ModelManager.ActivityModel.SendActivityViewOpenLogData(t),
       (this.LLn = ActivityCommonDefine_1.activityViewStateSequence[0]),
       this.lqe.SetTitleLocalText("Activity_Title"),
@@ -223,7 +223,7 @@ class CommonActivityView extends UiViewBase_1.UiViewBase {
       this.W3e.clear();
   }
   J3e(t) {
-    ((this.H3e = t) === 0 ? this.V3e : this.F3e).SetToggleState(!1, !1),
+    (0 === (this.H3e = t) ? this.V3e : this.F3e).SetToggleState(!1, !1),
       this.o4e(t);
   }
   _4e(t) {
@@ -248,7 +248,7 @@ class CommonActivityView extends UiViewBase_1.UiViewBase {
     s.sort(ActivityModel_1.ActivityModel.SortFunc),
       (this.K3e = s),
       this.k3e.RefreshByData(s, () => {
-        const e =
+        var e =
           ModelManager_1.ModelManager.ActivityModel.GetCurrentSelectActivityId();
         let i = 0;
         for (let t = 0; t < s.length; t++)
@@ -261,21 +261,21 @@ class CommonActivityView extends UiViewBase_1.UiViewBase {
       });
   }
   t4e() {
-    const t =
+    var t =
       ModelManager_1.ModelManager.ActivityModel.GetCurrentSelectActivity();
     this.u4e(t), this.c4e(t);
   }
   u4e(t) {
-    const e = t.GetTitle();
+    var e = t.GetTitle();
     (this.O3e = t.GetHelpId()),
-      this.lqe.SetHelpBtnActive(this.O3e !== 0),
+      this.lqe.SetHelpBtnActive(0 !== this.O3e),
       this.lqe.SetTitle(e.replace(/<.*?>/g, "")),
       this.RefreshTabIcon();
   }
   async WNe(t) {
     const e = new CustomPromise_1.CustomPromise();
-    const i = this.GetTexture(7);
-    var t = t.LocalConfig.BgResource;
+    var i = this.GetTexture(7),
+      t = t.LocalConfig.BgResource;
     this.SetTextureByPath(t, i, void 0, () => {
       e.SetResult();
     }),
@@ -284,9 +284,9 @@ class CommonActivityView extends UiViewBase_1.UiViewBase {
   async c4e(t) {
     let e = this.W3e.get(t);
     if (!e) {
-      const i = ActivityManager_1.ActivityManager.GetActivityController(t.Type);
-      const s = this.GetItem(5);
-      const n = i.GetActivityResource(t);
+      var i = ActivityManager_1.ActivityManager.GetActivityController(t.Type),
+        s = this.GetItem(5),
+        n = i.GetActivityResource(t);
       if (!(e = i.CreateSubPageComponent(t))) return;
       e.SetData(t), await e.CreateByPathAsync(n, s), this.W3e.set(t, e);
     }
@@ -305,11 +305,11 @@ class CommonActivityView extends UiViewBase_1.UiViewBase {
   }
   RefreshTabIcon() {
     var t =
-      ModelManager_1.ModelManager.ActivityModel.GetCurrentSelectActivity()
-        .LocalConfig;
-    var t = this.N3e ? t.TabResource : t.TabResource2;
+        ModelManager_1.ModelManager.ActivityModel.GetCurrentSelectActivity()
+          .LocalConfig,
+      t = this.N3e ? t.TabResource : t.TabResource2;
     t && this.lqe.SetTitleIcon(t);
   }
 }
 exports.CommonActivityView = CommonActivityView;
-// # sourceMappingURL=CommonActivityView.js.map
+//# sourceMappingURL=CommonActivityView.js.map

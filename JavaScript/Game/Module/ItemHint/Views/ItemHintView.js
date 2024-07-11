@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemHintView = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const ItemHintItem_1 = require("./ItemHintItem");
-const ItemPriorHintItem_1 = require("./ItemPriorHintItem");
-const ListSliderControl_1 = require("./ListSliderControl");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  ItemHintItem_1 = require("./ItemHintItem"),
+  ItemPriorHintItem_1 = require("./ItemPriorHintItem"),
+  ListSliderControl_1 = require("./ListSliderControl");
 class ItemHintView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -69,4 +69,4 @@ class ItemHintView extends UiTickViewBase_1.UiTickViewBase {
   }
 }
 exports.ItemHintView = ItemHintView;
-// # sourceMappingURL=ItemHintView.js.map
+//# sourceMappingURL=ItemHintView.js.map

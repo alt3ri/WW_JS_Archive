@@ -13,7 +13,7 @@ class MathCommon {
     return o;
   }
   static FloatSelect(t, o, a) {
-    return t >= 0 ? o : a;
+    return 0 <= t ? o : a;
   }
   static DegreeToRadian(t) {
     return this.DegToRad * t;
@@ -29,12 +29,12 @@ class MathCommon {
     return t * (1 - a) + o * a;
   }
   static VectorNormalizeRotator(t) {
-    var o = t.Pitch;
-    var a = t.Yaw;
-    var m = t.Roll;
-    var o = this.WrapAngle(o);
-    var a = this.WrapAngle(a);
-    var m = this.WrapAngle(m);
+    var o = t.Pitch,
+      a = t.Yaw,
+      m = t.Roll,
+      o = this.WrapAngle(o),
+      a = this.WrapAngle(a),
+      m = this.WrapAngle(m);
     (t.Pitch = o), (t.Yaw = a), (t.Roll = m);
   }
   static WrapAngle(t) {
@@ -67,4 +67,4 @@ class MathCommon {
   (MathCommon.DegToRad = Math.PI / MathCommon.FlatAngle),
   (MathCommon.RadDividedBy2 = 0.5 * MathCommon.DegToRad),
   (MathCommon.RadToDeg = MathCommon.FlatAngle / Math.PI);
-// # sourceMappingURL=MathCommon.js.map
+//# sourceMappingURL=MathCommon.js.map

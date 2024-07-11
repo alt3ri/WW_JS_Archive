@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FunctionAttachItemGrid = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const AutoAttachItem_1 = require("../../AutoAttach/AutoAttachItem");
-const GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
-const FunctionItem_1 = require("./FunctionItem");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  AutoAttachItem_1 = require("../../AutoAttach/AutoAttachItem"),
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  FunctionItem_1 = require("./FunctionItem");
 class FunctionAttachItemGrid extends AutoAttachItem_1.AutoAttachItem {
   constructor() {
     super(...arguments), (this.P9t = !1);
@@ -54,4 +54,4 @@ class FunctionAttachItemGrid extends AutoAttachItem_1.AutoAttachItem {
   }
 }
 exports.FunctionAttachItemGrid = FunctionAttachItemGrid;
-// # sourceMappingURL=FunctionAttachItemGrid.js.map
+//# sourceMappingURL=FunctionAttachItemGrid.js.map

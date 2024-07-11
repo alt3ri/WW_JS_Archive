@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityTimePointRewardConfig = void 0);
-const TimePointRewardActivityById_1 = require("../../../../../Core/Define/ConfigQuery/TimePointRewardActivityById");
-const TimePointRewardConfigByActivityId_1 = require("../../../../../Core/Define/ConfigQuery/TimePointRewardConfigByActivityId");
-const ConfigBase_1 = require("../../../../../Core/Framework/ConfigBase");
+const TimePointRewardActivityById_1 = require("../../../../../Core/Define/ConfigQuery/TimePointRewardActivityById"),
+  TimePointRewardConfigByActivityId_1 = require("../../../../../Core/Define/ConfigQuery/TimePointRewardConfigByActivityId"),
+  ConfigBase_1 = require("../../../../../Core/Framework/ConfigBase");
 class ActivityTimePointRewardConfig extends ConfigBase_1.ConfigBase {
   GetTimePointRewardById(i) {
     return TimePointRewardActivityById_1.configTimePointRewardActivityById.GetConfig(
@@ -17,4 +17,4 @@ class ActivityTimePointRewardConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.ActivityTimePointRewardConfig = ActivityTimePointRewardConfig;
-// # sourceMappingURL=ActivityTimePointRewardConfig.js.map
+//# sourceMappingURL=ActivityTimePointRewardConfig.js.map

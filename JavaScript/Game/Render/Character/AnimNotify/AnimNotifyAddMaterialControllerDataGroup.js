@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../../../Core/Common/Log");
+const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log");
 class AnimNotifyAddMaterialControllerDataGroup extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.MaterialAssetData = void 0);
@@ -44,7 +44,7 @@ class AnimNotifyAddMaterialControllerDataGroup extends UE.KuroAnimNotify {
         !1
       );
     for (let r = 0; r < this.MaterialAssetData.DataMap.Num(); r++)
-      if (this.MaterialAssetData.DataMap.GetKey(r).DataType !== 0)
+      if (0 !== this.MaterialAssetData.DataMap.GetKey(r).DataType)
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -76,17 +76,18 @@ class AnimNotifyAddMaterialControllerDataGroup extends UE.KuroAnimNotify {
       (t = r.GetOwner()) instanceof UE.TsBaseCharacter_C &&
       (t.CharRenderingComponent.CheckInit() ||
         t.CharRenderingComponent.Init(t.RenderType),
-      t.CharRenderingComponent.AddMaterialControllerDataGroup(
-        this.MaterialAssetData,
-      ) >= 0)
+      0 <=
+        t.CharRenderingComponent.AddMaterialControllerDataGroup(
+          this.MaterialAssetData,
+        ))
     );
   }
   GetNotifyName() {
-    const r = this.MaterialAssetData.GetName();
+    var r = this.MaterialAssetData.GetName();
     return r
       ? "材质控制器组:" + UE.BlueprintPathsLibrary.GetBaseFilename(r, !0)
       : "材质控制器组";
   }
 }
 exports.default = AnimNotifyAddMaterialControllerDataGroup;
-// # sourceMappingURL=AnimNotifyAddMaterialControllerDataGroup.js.map
+//# sourceMappingURL=AnimNotifyAddMaterialControllerDataGroup.js.map

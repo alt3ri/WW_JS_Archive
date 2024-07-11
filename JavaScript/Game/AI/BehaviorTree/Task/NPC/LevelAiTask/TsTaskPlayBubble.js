@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const GlobalData_1 = require("../../../../../GlobalData");
-const CharacterFlowComponent_1 = require("../../../../../NewWorld/Character/Common/Component/Flow/CharacterFlowComponent");
-const DynamicFlowController_1 = require("../../../../../NewWorld/Character/Common/Component/Flow/DynamicFlowController");
-const TsAiController_1 = require("../../../../Controller/TsAiController");
-const TsTaskAbortImmediatelyBase_1 = require("../../TsTaskAbortImmediatelyBase");
+const GlobalData_1 = require("../../../../../GlobalData"),
+  CharacterFlowComponent_1 = require("../../../../../NewWorld/Character/Common/Component/Flow/CharacterFlowComponent"),
+  DynamicFlowController_1 = require("../../../../../NewWorld/Character/Common/Component/Flow/DynamicFlowController"),
+  TsAiController_1 = require("../../../../Controller/TsAiController"),
+  TsTaskAbortImmediatelyBase_1 = require("../../TsTaskAbortImmediatelyBase");
 class TsTaskPlayBubble extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
@@ -28,7 +28,7 @@ class TsTaskPlayBubble extends TsTaskAbortImmediatelyBase_1.default {
       if (this.TsFlowListName) {
         t = t.AiController.CharActorComp;
         if (t) {
-          const o = {
+          var o = {
             FlowListName: this.TsFlowListName,
             FlowId: this.TsFlowId,
             StateId: this.TsStateId,
@@ -45,17 +45,17 @@ class TsTaskPlayBubble extends TsTaskAbortImmediatelyBase_1.default {
     else this.FinishExecute(!1);
   }
   CreateCharacterFlowData(t, e) {
-    const o = new DynamicFlowController_1.CharacterDynamicFlowData();
-    var t = {
-      EntityIds: [t],
-      EnterRadius: CharacterFlowComponent_1.DEFAULT_BUBBLE_ENTER_RANGE,
-      LeaveRadius: CharacterFlowComponent_1.DEFAULT_BUBBLE_LEAVE_RANGE,
-      Flow: e,
-      WaitTime: 0,
-      RedDot: !1,
-    };
+    var o = new DynamicFlowController_1.CharacterDynamicFlowData(),
+      t = {
+        EntityIds: [t],
+        EnterRadius: CharacterFlowComponent_1.DEFAULT_BUBBLE_ENTER_RANGE,
+        LeaveRadius: CharacterFlowComponent_1.DEFAULT_BUBBLE_LEAVE_RANGE,
+        Flow: e,
+        WaitTime: 0,
+        RedDot: !1,
+      };
     return (o.BubbleData = t), o;
   }
 }
 exports.default = TsTaskPlayBubble;
-// # sourceMappingURL=TsTaskPlayBubble.js.map
+//# sourceMappingURL=TsTaskPlayBubble.js.map

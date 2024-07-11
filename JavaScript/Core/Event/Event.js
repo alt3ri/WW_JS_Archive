@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Event = void 0);
-const Log_1 = require("../Common/Log");
-const Stats_1 = require("../Common/Stats");
+const Log_1 = require("../Common/Log"),
+  Stats_1 = require("../Common/Stats");
 class Event {
   constructor(t) {
     (this.rK = t),
@@ -12,8 +12,8 @@ class Event {
       (this.hK = new Array());
   }
   Has(t, e) {
-    let i;
-    var e = Event.lK.get(e);
+    var i,
+      e = Event.lK.get(e);
     return (
       !!e &&
       ((i = this.nK.get(t)) && i.has(e)
@@ -45,18 +45,18 @@ class Event {
         !1
       );
     this.mK(e, !0);
-    const s = this.nK.get(e);
+    var s = this.nK.get(e);
     if (s) {
       !Stats_1.Stat.Enable ||
         ((h = this.rK[e]), Event.dK.get(h)) ||
         ((o = void 0), Event.dK.set(h, o));
       let t = void 0;
       for (const a of s) {
-        const n = a[0];
-        const r = n.deref();
+        var n = a[0],
+          r = n.deref();
         if (r) {
           if (!(t = t || this._K.get(e)) || !t.has(n)) {
-            a[1] === 1 && this.O7(e, n);
+            1 === a[1] && this.O7(e, n);
             Event.CK.get(r);
             try {
               r(...i);
@@ -88,7 +88,7 @@ class Event {
               this.rK[e],
             ]),
             s.delete(n),
-            s.size === 0 && this.nK.delete(e);
+            0 === s.size && this.nK.delete(e);
       }
     }
     this.mK(e, !1);
@@ -123,8 +123,8 @@ class Event {
       !this.cK(t))
     )
       return this.fK(t, s, i);
-    var e = this.nK.get(t);
-    var n = this._K.get(t);
+    var e = this.nK.get(t),
+      n = this._K.get(t);
     if (e && e.has(s))
       return n && n.has(s)
         ? (n.delete(s), !0)
@@ -167,8 +167,8 @@ class Event {
   }
   O7(t, e) {
     if (!this.cK(t)) return this.gK(t, e);
-    const i = this.nK.get(t);
-    const s = this.uK.get(t);
+    var i = this.nK.get(t),
+      s = this.uK.get(t);
     if (!i || !i.has(e))
       return s && s.has(e)
         ? (s.delete(e), !0)
@@ -193,9 +193,9 @@ class Event {
       : (n || ((n = new Set()), this._K.set(t, n)), n.add(e), !0);
   }
   gK(t, e) {
-    const i = this.nK.get(t);
+    var i = this.nK.get(t);
     return i && i.delete(e)
-      ? (i.size === 0 && this.nK.delete(t), !0)
+      ? (0 === i.size && this.nK.delete(t), !0)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Event",
@@ -206,7 +206,7 @@ class Event {
         !1);
   }
   cK(t) {
-    const e = Math.floor(t / 32);
+    var e = Math.floor(t / 32);
     return e < this.hK.length && !!(this.hK[e] & (1 << t % 32));
   }
   mK(t, e) {
@@ -228,4 +228,4 @@ class Event {
 ((exports.Event = Event).lK = new WeakMap()),
   (Event.dK = new Map()),
   (Event.CK = new WeakMap());
-// # sourceMappingURL=Event.js.map
+//# sourceMappingURL=Event.js.map

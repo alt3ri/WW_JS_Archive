@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DamageFilter = void 0);
-const DamageById_1 = require("../../../../../../../Core/Define/ConfigQuery/DamageById");
-const ExtraEffectBase_1 = require("./ExtraEffectBase");
-const ExtraEffectBaseTypes_1 = require("./ExtraEffectBaseTypes");
+const DamageById_1 = require("../../../../../../../Core/Define/ConfigQuery/DamageById"),
+  ExtraEffectBase_1 = require("./ExtraEffectBase"),
+  ExtraEffectBaseTypes_1 = require("./ExtraEffectBaseTypes");
 class DamageFilter extends ExtraEffectBase_1.BuffEffect {
   constructor() {
     super(...arguments), (this.lNe = !1);
@@ -16,17 +16,17 @@ class DamageFilter extends ExtraEffectBase_1.BuffEffect {
     return !this.lNe;
   }
   static ApplyEffects(e, t, r, a, s, f) {
-    const i = e.GetComponent(157);
-    var t = t.GetComponent(157);
+    var i = e.GetComponent(157),
+      t = t.GetComponent(157);
     if (i && t) {
-      let c = e.GetComponent(33);
-      const o = new ExtraEffectBaseTypes_1.RequirementPayload();
-      var s =
-        (s &&
-          ((o.SkillId = s),
-          (c = c.GetSkillInfo(s)),
-          (o.SkillGenre = c?.SkillGenre ?? -1)),
-        f ? DamageById_1.configDamageById.GetConfig(f) : void 0);
+      var c = e.GetComponent(33),
+        o = new ExtraEffectBaseTypes_1.RequirementPayload(),
+        s =
+          (s &&
+            ((o.SkillId = s),
+            (c = c.GetSkillInfo(s)),
+            (o.SkillGenre = c?.SkillGenre ?? -1)),
+          f ? DamageById_1.configDamageById.GetConfig(f) : void 0);
       s &&
         ((o.DamageGenre = s.Type),
         (o.CalculateType = s.CalculateType),
@@ -44,4 +44,4 @@ class DamageFilter extends ExtraEffectBase_1.BuffEffect {
   }
 }
 exports.DamageFilter = DamageFilter;
-// # sourceMappingURL=ExtraEffectDamageFilter.js.map
+//# sourceMappingURL=ExtraEffectDamageFilter.js.map

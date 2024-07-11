@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FightCamera = void 0);
-const Entity_1 = require("../../Core/Entity/Entity");
-const StatDefine_1 = require("../Common/StatDefine");
-const GameBudgetAllocatorConfigCreator_1 = require("../World/Define/GameBudgetAllocatorConfigCreator");
-const FightCameraDisplayComponent_1 = require("./FightCameraDisplayComponent");
-const FightCameraLogicComponent_1 = require("./FightCameraLogicComponent");
+const Entity_1 = require("../../Core/Entity/Entity"),
+  StatDefine_1 = require("../Common/StatDefine"),
+  GameBudgetAllocatorConfigCreator_1 = require("../World/Define/GameBudgetAllocatorConfigCreator"),
+  FightCameraDisplayComponent_1 = require("./FightCameraDisplayComponent"),
+  FightCameraLogicComponent_1 = require("./FightCameraLogicComponent");
 class FightCamera extends Entity_1.Entity {
   constructor() {
     super(...arguments), (this.Zhe = void 0), (this.ele = void 0);
@@ -46,4 +46,4 @@ class FightCamera extends Entity_1.Entity {
   }
 }
 exports.FightCamera = FightCamera;
-// # sourceMappingURL=FightCamera.js.map
+//# sourceMappingURL=FightCamera.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterDitherEffectController = void 0);
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const ObjectUtils_1 = require("../../../../../../Core/Utils/ObjectUtils");
-const TsBaseCharacter_1 = require("../../../../../Character/TsBaseCharacter");
-const MILLISECOND_TO_SECOND = 0.001;
+const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  ObjectUtils_1 = require("../../../../../../Core/Utils/ObjectUtils"),
+  TsBaseCharacter_1 = require("../../../../../Character/TsBaseCharacter"),
+  MILLISECOND_TO_SECOND = 0.001;
 class CharacterDitherEffectController {
   constructor(t, i) {
     (this.O$o = !1),
@@ -32,7 +32,7 @@ class CharacterDitherEffectController {
           )
             ? this.SetHiddenInGame(!0, !1)
             : this.SetHiddenInGame(!1, !1),
-          this.F$o !== 0 && this.$6e.SetDitherEffect(this.k$o, this.F$o)));
+          0 !== this.F$o && this.$6e.SetDitherEffect(this.k$o, this.F$o)));
   }
   EnterAppearEffect(t = 1, i = 3, s = !0) {
     this.j$o && this.SetHiddenInGame(!1, !0),
@@ -87,9 +87,9 @@ class CharacterDitherEffectController {
   }
   W$o(t, i) {
     (this.k$o = MathUtils_1.MathUtils.Clamp(this.k$o + t, 0, 1)),
-      this.k$o === 0 && t < 0
+      0 === this.k$o && t < 0
         ? ((this.O$o = !1), this.SetHiddenInGame(!0, !0))
-        : this.k$o === 1 && t > 0 && (this.O$o = !1),
+        : 1 === this.k$o && 0 < t && (this.O$o = !1),
       this.$6e.SetDitherEffect(this.k$o, i);
   }
   Clear() {
@@ -101,4 +101,4 @@ class CharacterDitherEffectController {
   }
 }
 exports.CharacterDitherEffectController = CharacterDitherEffectController;
-// # sourceMappingURL=CharacterDitherEffectController.js.map
+//# sourceMappingURL=CharacterDitherEffectController.js.map

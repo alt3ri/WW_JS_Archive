@@ -10,16 +10,16 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.LockValue =
     exports.ShieldEffect =
       void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../../../Core/Common/Log");
-const ResourceSystem_1 = require("../../../../../../../Core/Resource/ResourceSystem");
-const DataTableUtil_1 = require("../../../../../../../Core/Utils/DataTableUtil");
-const PanelQteController_1 = require("../../../../../../Module/PanelQte/PanelQteController");
-const PhantomUtil_1 = require("../../../../../../Module/Phantom/PhantomUtil");
-const AbilityUtils_1 = require("../AbilityUtils");
-const ActiveBuffConfigs_1 = require("../Buff/ActiveBuffConfigs");
-const CharacterAttributeTypes_1 = require("../CharacterAttributeTypes");
-const ExtraEffectBase_1 = require("./ExtraEffectBase");
+const UE = require("ue"),
+  Log_1 = require("../../../../../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../../../../../Core/Resource/ResourceSystem"),
+  DataTableUtil_1 = require("../../../../../../../Core/Utils/DataTableUtil"),
+  PanelQteController_1 = require("../../../../../../Module/PanelQte/PanelQteController"),
+  PhantomUtil_1 = require("../../../../../../Module/Phantom/PhantomUtil"),
+  AbilityUtils_1 = require("../AbilityUtils"),
+  ActiveBuffConfigs_1 = require("../Buff/ActiveBuffConfigs"),
+  CharacterAttributeTypes_1 = require("../CharacterAttributeTypes"),
+  ExtraEffectBase_1 = require("./ExtraEffectBase");
 class ShieldEffect extends ExtraEffectBase_1.BuffEffect {
   constructor() {
     super(...arguments), (this.ShieldTemplateId = 0);
@@ -42,7 +42,7 @@ class LockValue extends ExtraEffectBase_1.BuffEffect {
     (this.AttributeId = Number(t.ExtraEffectParameters[0])),
       (this.Offset = Number(t.ExtraEffectParameters[1])),
       (this.Percent = 0),
-      t.ExtraEffectParameters.length > 2 &&
+      2 < t.ExtraEffectParameters.length &&
         (this.Percent = Number(t.ExtraEffectParameters[2]));
   }
   OnCreated() {
@@ -82,7 +82,7 @@ class LockUpperBound extends ExtraEffectBase_1.BuffEffect {
         this.Level,
         0,
       )),
-      t.ExtraEffectParameters.length > 2 &&
+      2 < t.ExtraEffectParameters.length &&
         (this.Percent = Number(t.ExtraEffectParameters[2]));
   }
   OnCreated() {
@@ -124,7 +124,7 @@ class LockLowerBound extends ExtraEffectBase_1.BuffEffect {
         this.Level,
         0,
       )),
-      t.ExtraEffectParameters.length > 2 &&
+      2 < t.ExtraEffectParameters.length &&
         (this.Percent = Number(t.ExtraEffectParameters[2]));
   }
   OnCreated() {
@@ -184,7 +184,7 @@ class TimeScaleEffect extends ExtraEffectBase_1.BuffEffect {
         ["this.CurveDt", void 0 === this.CurveDt],
         ["this.CurveId", this.CurveId],
       ),
-      this.CurveId === -1 || this.CurveDt
+      -1 === this.CurveId || this.CurveDt
         ? this.RQo()
         : (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("Bullet", 36, "AddTimeScaleLoad", [
@@ -203,7 +203,7 @@ class TimeScaleEffect extends ExtraEffectBase_1.BuffEffect {
           ));
   }
   RQo() {
-    const t = this.CurveDt
+    var t = this.CurveDt
       ? DataTableUtil_1.DataTableUtil.GetDataTableRow(
           this.CurveDt,
           this.CurveId.toString(),
@@ -246,7 +246,7 @@ class AddPassiveSkill extends ExtraEffectBase_1.BuffEffect {
       t.ExtraEffectParameters[0].split("#").map((t) => BigInt(t)) ?? [];
   }
   OnCreated() {
-    const t = this.OwnerBuffComponent.GetPassiveSkillComponent();
+    var t = this.OwnerBuffComponent.GetPassiveSkillComponent();
     if (t?.Valid)
       for (const e of this.SkillIds)
         this.Buff
@@ -256,7 +256,7 @@ class AddPassiveSkill extends ExtraEffectBase_1.BuffEffect {
   }
   OnExecute() {}
   OnRemoved() {
-    const t = this.OwnerBuffComponent.GetPassiveSkillComponent();
+    var t = this.OwnerBuffComponent.GetPassiveSkillComponent();
     if (t?.Valid) for (const e of this.SkillIds) t.ForgetPassiveSkill(e, !0);
   }
 }
@@ -270,7 +270,7 @@ class FrozenEffect extends ExtraEffectBase_1.BuffEffect {
   }
   InitParameters(t) {
     (this.LockName = "" + this.ActiveHandleId),
-      t.ExtraEffectParameters.length > 0 &&
+      0 < t.ExtraEffectParameters.length &&
         (this.PanelQteId = Number(t.ExtraEffectParameters[0]));
   }
   OnCreated() {
@@ -293,7 +293,7 @@ class FrozenEffect extends ExtraEffectBase_1.BuffEffect {
       ?.CheckGetComponent(16)
       ?.UnlockFrozen(this.LockName),
       this.PanelQteId &&
-        this.PanelQteHandleId > 0 &&
+        0 < this.PanelQteHandleId &&
         PanelQteController_1.PanelQteController.StopQte(this.PanelQteHandleId);
   }
 }
@@ -314,17 +314,17 @@ class AddBuffToVision extends ExtraEffectBase_1.BuffEffect {
         []));
   }
   OnCreated() {
-    const t = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
-      this.OwnerEntity,
-      this.SummonType,
-      this.SummonIndex,
-    )?.Entity;
-    const e = this.Buff?.MessageId;
-    const s =
-      (e ||
-        (Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Bullet", 36, "没有父Buff的上下文信息")),
-      t?.GetComponent(157));
+    var t = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
+        this.OwnerEntity,
+        this.SummonType,
+        this.SummonIndex,
+      )?.Entity,
+      e = this.Buff?.MessageId,
+      s =
+        (e ||
+          (Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn("Bullet", 36, "没有父Buff的上下文信息")),
+        t?.GetComponent(157));
     if (s)
       for (const i of this.BuffIds)
         s.AddBuff(i, {
@@ -337,7 +337,7 @@ class AddBuffToVision extends ExtraEffectBase_1.BuffEffect {
   }
   OnExecute() {}
   OnRemoved() {
-    const t = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
+    var t = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
       this.OwnerEntity,
       this.SummonType,
     )?.Entity?.GetComponent(157);
@@ -356,7 +356,7 @@ class ModifyToughReduce extends ExtraEffectBase_1.BuffEffect {
       (this.ModifyRate = Number(t.ExtraEffectParameters[0] ?? 0));
   }
   OnCreated() {
-    const t = this.OwnerEntity?.CheckGetComponent(155);
+    var t = this.OwnerEntity?.CheckGetComponent(155);
     t &&
       (this.ModifierHandle = t.AddModifier(
         CharacterAttributeTypes_1.EAttributeId.Proto_ToughReduce,
@@ -365,7 +365,7 @@ class ModifyToughReduce extends ExtraEffectBase_1.BuffEffect {
   }
   OnExecute() {}
   OnRemoved() {
-    const t = this.OwnerEntity?.CheckGetComponent(155);
+    var t = this.OwnerEntity?.CheckGetComponent(155);
     t &&
       t.RemoveModifier(
         CharacterAttributeTypes_1.EAttributeId.Proto_ToughReduce,
@@ -374,4 +374,4 @@ class ModifyToughReduce extends ExtraEffectBase_1.BuffEffect {
   }
 }
 exports.ModifyToughReduce = ModifyToughReduce;
-// # sourceMappingURL=ExtraEffectMisc.js.map
+//# sourceMappingURL=ExtraEffectMisc.js.map

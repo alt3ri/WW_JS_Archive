@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GachaController = void 0);
-const LanguageSystem_1 = require("../../../Core/Common/LanguageSystem");
-const Log_1 = require("../../../Core/Common/Log");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const TimeUtil_1 = require("../../Common/TimeUtil");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
-const InputManager_1 = require("../../Ui/Input/InputManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
-const UiModelResourcesManager_1 = require("../UiComponent/UiModelResourcesManager");
-const GachaDefine_1 = require("./GachaDefine");
-const GachaModel_1 = require("./GachaModel");
-const HULU_BASE_ID = 2e7;
-const HULU_PARTY_ID = 1e5;
+const LanguageSystem_1 = require("../../../Core/Common/LanguageSystem"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  InputManager_1 = require("../../Ui/Input/InputManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  UiModelResourcesManager_1 = require("../UiComponent/UiModelResourcesManager"),
+  GachaDefine_1 = require("./GachaDefine"),
+  GachaModel_1 = require("./GachaModel"),
+  HULU_BASE_ID = 2e7,
+  HULU_PARTY_ID = 1e5;
 class GachaController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
@@ -85,7 +85,7 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
   }
   static GachaHistoryRequest(e) {}
   static IsNewRole(e) {
-    const a = !GachaController.Z7t.has(e);
+    var a = !GachaController.Z7t.has(e);
     return a && GachaController.Z7t.add(e), a;
   }
   static async GachaRequest(e, a) {
@@ -94,8 +94,8 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.RoleModel.GetRoleList().forEach((e) => {
       e && GachaController.Z7t.add(e.GetDataId());
     });
-    let n;
-    var r = await Net_1.Net.CallAsync(8315, r);
+    var n,
+      r = await Net_1.Net.CallAsync(8315, r);
     r &&
       (r.lkn === Protocol_1.Aki.Protocol.lkn.Proto_ErrGachaIsNotInOpenTime
         ? ((n = new ConfirmBoxDefine_1.ConfirmBoxDataNew(67)),
@@ -113,7 +113,7 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
             UiManager_1.UiManager.OpenView("DrawMainView")));
   }
   static GachaInfoRequest(a, e = 0) {
-    let r = TimeUtil_1.TimeUtil.GetServerTime() - this.eHt;
+    var r = TimeUtil_1.TimeUtil.GetServerTime() - this.eHt;
     (this.eHt = TimeUtil_1.TimeUtil.GetServerTime()),
       r < this.tHt
         ? a &&
@@ -162,7 +162,7 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
           }));
   }
   static GachaUsePoolRequest(a, r) {
-    const e = Protocol_1.Aki.Protocol.ZZn.create();
+    var e = Protocol_1.Aki.Protocol.ZZn.create();
     (e.c5n = a),
       (e.C5n = r),
       Net_1.Net.Call(8527, e, (e) => {
@@ -186,32 +186,32 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static PreloadGachaResultResource(e) {
-    const i = [];
-    const _ = new Map();
+    const i = [],
+      _ = new Map();
     ModelManager_1.ModelManager.GachaModel.CurGachaResult.forEach((e, a) => {
-      const r = e.u5n.G3n;
+      var r = e.u5n.G3n;
       let n;
       switch (ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(r)) {
         case 1:
-          var o = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(r);
-          var t =
-            (_.get(r) ||
-              (_.set(r, !0),
-              i.push(
-                ...UiModelResourcesManager_1.UiModelResourcesManager.GetRoleResourcesPath(
-                  o.Id,
-                ),
+          var o = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(r),
+            t =
+              (_.get(r) ||
+                (_.set(r, !0),
+                i.push(
+                  ...UiModelResourcesManager_1.UiModelResourcesManager.GetRoleResourcesPath(
+                    o.Id,
+                  ),
+                )),
+              ModelManager_1.ModelManager.WeaponModel.GetWeaponIdByRoleDataId(
+                o.Id,
               )),
-            ModelManager_1.ModelManager.WeaponModel.GetWeaponIdByRoleDataId(
-              o.Id,
-            ));
-          var t =
-            ((n =
-              UiModelResourcesManager_1.UiModelResourcesManager.GetWeaponResourcesPath(
-                t,
-              )),
-            _.get(r) || (_.set(r, !0), i.push(...n)),
-            ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(o.Id));
+            t =
+              ((n =
+                UiModelResourcesManager_1.UiModelResourcesManager.GetWeaponResourcesPath(
+                  t,
+                )),
+              _.get(r) || (_.set(r, !0), i.push(...n)),
+              ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(o.Id));
           i.push(
             ...UiModelResourcesManager_1.UiModelResourcesManager.GetHuluResourcesPath(
               t.PartyId * HULU_PARTY_ID + HULU_BASE_ID + 1,
@@ -232,10 +232,11 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static CommonShowRoleResult(e, a, r) {
-    let n, o, t;
-    ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
-      e,
-    ) === 1 &&
+    var n, o, t;
+    1 ===
+      ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
+        e,
+      ) &&
       ((n = new Array()),
       (o = new GachaModel_1.GachaResult()),
       ((t = new Protocol_1.Aki.Protocol.u5n()).G3n = e),
@@ -267,7 +268,7 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
       UiManager_1.UiManager.OpenView("DrawMainView");
   }),
   (GachaController.J7t = (e, a) => {
-    e === 10009 &&
+    10009 === e &&
       a &&
       (ModelManager_1.ModelManager.GachaModel.InitGachaPoolOpenRecord(),
       GachaController.GachaInfoRequest(!1));
@@ -284,13 +285,13 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
   (GachaController.eHt = 0),
   (GachaController.tHt = 1),
   (GachaController.OnAfterCloseGachaScent = () => {
-    const e = ModelManager_1.ModelManager.GachaModel.GetCachedGachaInfo();
+    var e = ModelManager_1.ModelManager.GachaModel.GetCachedGachaInfo();
     e &&
       ((ModelManager_1.ModelManager.GachaModel.CurGachaResult = e.GachaResult),
       UiManager_1.UiManager.OpenView("DrawMainView", e.ResultViewData));
   }),
   (GachaController.OpenGachaSelectionView = (e) => {
-    let a;
+    var a;
     UiManager_1.UiManager.IsViewOpen("GachaSelectionView")
       ? EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.GachaSelectionViewRefresh,
@@ -299,4 +300,4 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
       : (((a = new GachaDefine_1.GachaSelectionViewData()).GachaInfo = e),
         UiManager_1.UiManager.OpenView("GachaSelectionView", a));
   });
-// # sourceMappingURL=GachaController.js.map
+//# sourceMappingURL=GachaController.js.map

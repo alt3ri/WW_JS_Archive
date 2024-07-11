@@ -1,16 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CalabashModel = exports.CalabashDevelopRewardData = void 0);
-const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
-const PhantomFetterGroupById_1 = require("../../../Core/Define/ConfigQuery/PhantomFetterGroupById");
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const LocalStorage_1 = require("../../Common/LocalStorage");
-const LocalStorageDefine_1 = require("../../Common/LocalStorageDefine");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CalabashInstance_1 = require("./CalabashInstance");
+const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
+  PhantomFetterGroupById_1 = require("../../../Core/Define/ConfigQuery/PhantomFetterGroupById"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CalabashInstance_1 = require("./CalabashInstance");
 class CalabashDevelopRewardData {
   constructor(e, t) {
     (this.DevelopReward = e),
@@ -70,21 +70,21 @@ class CalabashModel extends ModelBase_1.ModelBase {
       this.InitMonsterIdRecord();
   }
   Q0t() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopList();
     this.V0t || (this.V0t = new Map());
     for (const a of e) {
       var t =
-        ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterInfoConfig(
-          a.MonsterInfoId,
-        );
-      var t = new CalabashDevelopRewardData(a, t.Name);
+          ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterInfoConfig(
+            a.MonsterInfoId,
+          ),
+        t = new CalabashDevelopRewardData(a, t.Name);
       a.IsShow && this.V0t.set(a.MonsterId, t);
     }
   }
   UpdateCalabashDevelopRewardData() {
     for (const t of this.GetUnlockCalabashDevelopRewards()) {
-      const e = this.V0t.get(t[0]);
+      var e = this.V0t.get(t[0]);
       (e.UnlockData = !0),
         e.SetUnlockConditionMap(t[1]),
         (e.RewardNumData = t[1].length);
@@ -92,7 +92,7 @@ class CalabashModel extends ModelBase_1.ModelBase {
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.HasCalabashExp);
   }
   GetCalabashDevelopRewardSortData() {
-    const e = new Array();
+    var e = new Array();
     for (const t of this.V0t.values()) e.push(t);
     return e.sort((e, t) => e.DevelopReward.SortId - t.DevelopReward.SortId), e;
   }
@@ -141,21 +141,21 @@ class CalabashModel extends ModelBase_1.ModelBase {
     return "CalabashCatchGain_" + e;
   }
   GetCalabashDevelopRewardInfoData(e) {
-    const t = this.V0t.get(e);
+    var t = this.V0t.get(e);
     if (t) {
-      const a = new Array();
+      var a = new Array();
       for (const n of t.DevelopReward.DevelopCondition) {
         var r =
-          ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashConditionById(
-            n,
-          );
-        var r = {
-          IsUnlock: void 0 !== t.GetUnlockConditionMap().get(r.Id),
-          Info: r.Description,
-          Num: ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashConditionRewardExp(
-            r,
-          ),
-        };
+            ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashConditionById(
+              n,
+            ),
+          r = {
+            IsUnlock: void 0 !== t.GetUnlockConditionMap().get(r.Id),
+            Info: r.Description,
+            Num: ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashConditionRewardExp(
+              r,
+            ),
+          };
         a.push(r);
       }
       return a;
@@ -163,10 +163,10 @@ class CalabashModel extends ModelBase_1.ModelBase {
   }
   GetCalabashDevelopRewardExpByMonsterId(e) {
     let t = 0;
-    const a = this.V0t.get(e);
+    var a = this.V0t.get(e);
     if (a)
       for (const n of a.DevelopReward.DevelopCondition) {
-        const r =
+        var r =
           ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashConditionById(
             n,
           );
@@ -217,7 +217,7 @@ class CalabashModel extends ModelBase_1.ModelBase {
     ).LevelUpExp;
   }
   GetReceiveRewardStateByLevel(e) {
-    return e === 0
+    return 0 === e
       ? 0
       : this.CalabashInstance.IsRewardedByLevel(e)
         ? 3
@@ -240,7 +240,7 @@ class CalabashModel extends ModelBase_1.ModelBase {
   }
   CheckCanReceiveReward() {
     for (let e = 1; e <= this.CalabashInstance.CalabashCurrentLevel; ++e)
-      if (this.GetReceiveRewardStateByLevel(e) === 2) return !0;
+      if (2 === this.GetReceiveRewardStateByLevel(e)) return !0;
     return !1;
   }
   RecordMonsterId(e) {
@@ -271,7 +271,7 @@ class CalabashModel extends ModelBase_1.ModelBase {
     );
   }
   SaveIfSimpleState(e) {
-    const t = LocalStorage_1.LocalStorage.GetPlayer(
+    var t = LocalStorage_1.LocalStorage.GetPlayer(
       LocalStorageDefine_1.ELocalStoragePlayerKey.CalabashCollectIsSimpleDetail,
     );
     (void 0 !== t && t === e) ||
@@ -285,12 +285,12 @@ class CalabashModel extends ModelBase_1.ModelBase {
       ));
   }
   GetViewTabList() {
-    const e =
+    var e =
       ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTabList(
         "CalabashRootView",
       );
     if (this.OnlyShowBattleFettersTab)
-      return e.filter((e) => e.ChildViewName === "PhantomBattleFettersTabView");
+      return e.filter((e) => "PhantomBattleFettersTabView" === e.ChildViewName);
     const t = [];
     return (
       e.forEach((e) => {
@@ -305,9 +305,9 @@ class CalabashModel extends ModelBase_1.ModelBase {
       return ConfigCommon_1.ConfigCommon.ToList(
         ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomFetterGroupList(),
       );
-    const e = [];
+    var e = [];
     for (const a of this.OnlyShowPhantomFetterGroupIdList ?? []) {
-      const t =
+      var t =
         PhantomFetterGroupById_1.configPhantomFetterGroupById.GetConfig(a);
       t && e.push(t);
     }
@@ -315,4 +315,4 @@ class CalabashModel extends ModelBase_1.ModelBase {
   }
 }
 exports.CalabashModel = CalabashModel;
-// # sourceMappingURL=CalabashModel.js.map
+//# sourceMappingURL=CalabashModel.js.map

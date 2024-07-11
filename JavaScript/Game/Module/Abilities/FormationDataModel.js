@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FormationDataModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector");
 class FormationDataModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -17,4 +17,4 @@ class FormationDataModel extends ModelBase_1.ModelBase {
   }
 }
 exports.FormationDataModel = FormationDataModel;
-// # sourceMappingURL=FormationDataModel.js.map
+//# sourceMappingURL=FormationDataModel.js.map

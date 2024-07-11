@@ -7,42 +7,42 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.RouletteInputBase =
     exports.AngleCalculator =
       void 0);
-const UE = require("ue");
-const Log_1 = require("../../../Core/Common/Log");
-const MathCommon_1 = require("../../../Core/Utils/Math/MathCommon");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const Vector2D_1 = require("../../../Core/Utils/Math/Vector2D");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const Global_1 = require("../../Global");
-const InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
-const InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine");
-const UiLayer_1 = require("../../Ui/UiLayer");
-const KEYBOARD_DEAD_LIMIT = 100;
-const GAMEPAD_DEAD_LIMIT = 0.3;
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  MathCommon_1 = require("../../../Core/Utils/Math/MathCommon"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  Vector2D_1 = require("../../../Core/Utils/Math/Vector2D"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  Global_1 = require("../../Global"),
+  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
+  KEYBOARD_DEAD_LIMIT = 100,
+  GAMEPAD_DEAD_LIMIT = 0.3;
 class AngleCalculator {
   static GetVectorAngle(t, i) {
-    const s = Vector_1.Vector.Create();
-    var e =
-      (Vector_1.Vector.CrossProduct(t, i, s),
-      MathUtils_1.MathUtils.DotProduct(t, i));
-    var e = UE.KismetMathLibrary.DegAcos(e / (t.Size() * i.Size()));
-    return s.Z > 0 ? -1 * e : e;
+    var s = Vector_1.Vector.Create(),
+      e =
+        (Vector_1.Vector.CrossProduct(t, i, s),
+        MathUtils_1.MathUtils.DotProduct(t, i)),
+      e = UE.KismetMathLibrary.DegAcos(e / (t.Size() * i.Size()));
+    return 0 < s.Z ? -1 * e : e;
   }
   static AngleToAreaIndex(i) {
     for (let t = 0; t < this.AngleList.length; t++) {
-      const s = t + 1;
+      var s = t + 1;
       if (this.AngleList[t] < i && i <= this.AngleList[s])
         return this.AngleList.length - s;
     }
     return 0;
   }
   static ConvertLguiPosToScreenPos(t, i) {
-    const s = UiLayer_1.UiLayer.UiRootItem;
-    var t = Vector2D_1.Vector2D.Create(t, i);
-    var i =
-      UiLayer_1.UiLayer.UiRootItem.GetCanvasScaler().ConvertPositionFromLGUICanvasToViewport(
-        t.ToUeVector2D(),
-      );
+    var s = UiLayer_1.UiLayer.UiRootItem,
+      t = Vector2D_1.Vector2D.Create(t, i),
+      i =
+        UiLayer_1.UiLayer.UiRootItem.GetCanvasScaler().ConvertPositionFromLGUICanvasToViewport(
+          t.ToUeVector2D(),
+        );
     return (
       (i.X = MathCommon_1.MathCommon.Clamp(i.X, 0, s.GetWidth())),
       (i.Y = MathCommon_1.MathCommon.Clamp(i.Y, 0, s.GetHeight())),
@@ -90,7 +90,7 @@ class RouletteInputBase {
   UnBindEvent() {}
   InputTick(t) {}
   Tick(t) {
-    let i, s;
+    var i, s;
     return this.ActivateOn
       ? ((i = this.AreaIndex),
         (s = this.Angle),
@@ -113,7 +113,7 @@ class RouletteInputKeyboard extends (exports.RouletteInputBase =
   }
   OnInit() {
     if (!this.BeginPos) {
-      const t = Global_1.Global.CharacterController;
+      var t = Global_1.Global.CharacterController;
       if (!t) return;
       this.BeginPos = t.GetCursorPosition() ?? Vector2D_1.Vector2D.Create();
     }
@@ -122,7 +122,7 @@ class RouletteInputKeyboard extends (exports.RouletteInputBase =
       this.Ngo.Set(0, 0, 0);
   }
   InputTick(t) {
-    let i = Global_1.Global.CharacterController;
+    var i = Global_1.Global.CharacterController;
     i &&
       (i = i.GetCursorPosition()) &&
       (this.Fgo.Set(i.X, i.Y, 0),
@@ -152,7 +152,7 @@ class RouletteInputTouch extends RouletteInputBase {
   }
   OnInit() {
     if (!this.BeginPos) {
-      const t = Global_1.Global.CharacterController;
+      var t = Global_1.Global.CharacterController;
       if (!t) return;
       if (this.Vgo < 0)
         return void (
@@ -182,8 +182,8 @@ class RouletteInputTouch extends RouletteInputBase {
     this.V1t = !1;
   }
   InputTick(t) {
-    let i;
-    this.RouletteViewType !== 0 &&
+    var i;
+    0 !== this.RouletteViewType &&
       (i = Global_1.Global.CharacterController) &&
       (!(this.Vgo < 0) && ((this.V1t = i.IsInTouch(this.Vgo)), this.V1t)
         ? (i = i.GetTouchPosition(this.Vgo)) &&
@@ -223,7 +223,7 @@ class RouletteInputGamepad extends RouletteInputBase {
     this.Hgo.Set(0, 0, 0);
   }
   BindEvent() {
-    this.RouletteViewType === 0
+    0 === this.RouletteViewType
       ? (this.jgo = [
           InputMappingsDefine_1.axisMappings.UiMoveForward,
           InputMappingsDefine_1.axisMappings.UiMoveRight,
@@ -244,7 +244,7 @@ class RouletteInputGamepad extends RouletteInputBase {
     );
   }
   InputTick(t) {
-    (!this.NeedEmptyChoose && this.Hgo.X === 0 && this.Hgo.Y === 0) ||
+    (!this.NeedEmptyChoose && 0 === this.Hgo.X && 0 === this.Hgo.Y) ||
       (this.NeedEmptyChoose &&
       Math.abs(this.Hgo.X) <= GAMEPAD_DEAD_LIMIT &&
       Math.abs(this.Hgo.Y) <= GAMEPAD_DEAD_LIMIT
@@ -258,8 +258,8 @@ class RouletteInputGamepad extends RouletteInputBase {
 }
 (exports.RouletteInputGamepad = RouletteInputGamepad),
   (exports.rouletteInputManager = {
-    0: RouletteInputKeyboard,
+    [0]: RouletteInputKeyboard,
     1: RouletteInputGamepad,
     2: RouletteInputTouch,
   });
-// # sourceMappingURL=RouletteInputManager.js.map
+//# sourceMappingURL=RouletteInputManager.js.map

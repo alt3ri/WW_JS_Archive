@@ -1,26 +1,30 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, s) {
-    let h;
-    const r = arguments.length;
-    let n =
-      r < 3 ? e : s === null ? (s = Object.getOwnPropertyDescriptor(e, i)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var h,
+      r = arguments.length,
+      n =
+        r < 3
+          ? e
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(e, i))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(t, e, i, s);
     else
-      for (let o = t.length - 1; o >= 0; o--)
-        (h = t[o]) && (n = (r < 3 ? h(n) : r > 3 ? h(e, i, n) : h(e, i)) || n);
-    return r > 3 && n && Object.defineProperty(e, i, n), n;
+      for (var o = t.length - 1; 0 <= o; o--)
+        (h = t[o]) && (n = (r < 3 ? h(n) : 3 < r ? h(e, i, n) : h(e, i)) || n);
+    return 3 < r && n && Object.defineProperty(e, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WidgetCameraBlendComponent = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const EntityComponent_1 = require("../../Core/Entity/EntityComponent");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const RegisterComponent_1 = require("../../Core/Entity/RegisterComponent");
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  EntityComponent_1 = require("../../Core/Entity/EntityComponent"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  RegisterComponent_1 = require("../../Core/Entity/RegisterComponent");
 let WidgetCameraBlendComponent = class WidgetCameraBlendComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -75,7 +79,7 @@ let WidgetCameraBlendComponent = class WidgetCameraBlendComponent extends Entity
     this.Kwr(t), this.T_e(t);
   }
   Kwr(t) {
-    let e, i;
+    var e, i;
     this.Owr &&
       ((t = UE.KismetMathLibrary.VLerp(this.Vwr, this.Due.ToUeVector(), t)),
       (e = this.yxr.CineCamera),
@@ -96,7 +100,7 @@ let WidgetCameraBlendComponent = class WidgetCameraBlendComponent extends Entity
           ) && (this.Owr = !1)));
   }
   T_e(t) {
-    let e, i;
+    var e, i;
     this.kwr &&
       ((t = UE.KismetMathLibrary.RLerp(this.Fwr, this.xXo, t, !0)),
       (e = this.yxr.CineCamera),
@@ -119,7 +123,7 @@ let WidgetCameraBlendComponent = class WidgetCameraBlendComponent extends Entity
           ) && (this.Owr = !1)));
   }
   Wwr() {
-    const t = MathUtils_1.MathUtils.SafeDivide(this.qwr - this.bwr, this.qwr);
+    var t = MathUtils_1.MathUtils.SafeDivide(this.qwr - this.bwr, this.qwr);
     let e = 0;
     switch (this.Gwr) {
       case 1:
@@ -141,4 +145,4 @@ let WidgetCameraBlendComponent = class WidgetCameraBlendComponent extends Entity
   WidgetCameraBlendComponent,
 )),
   (exports.WidgetCameraBlendComponent = WidgetCameraBlendComponent);
-// # sourceMappingURL=WidgetCameraBlendComponent.js.map
+//# sourceMappingURL=WidgetCameraBlendComponent.js.map

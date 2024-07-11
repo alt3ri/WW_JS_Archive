@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LanguageToggleBase = exports.LanguageSettingViewBase = void 0);
-const UE = require("ue");
-const LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem");
-const Log_1 = require("../../../../Core/Common/Log");
-const StringBuilder_1 = require("../../../../Core/Utils/StringBuilder");
-const LanguageUpdateManager_1 = require("../../../../Launcher/Update/LanguageUpdateManager");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
-const ButtonItem_1 = require("../../Common/Button/ButtonItem");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView");
-const MenuController_1 = require("../MenuController");
-const MenuTool_1 = require("../MenuTool");
+const UE = require("ue"),
+  LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  StringBuilder_1 = require("../../../../Core/Utils/StringBuilder"),
+  LanguageUpdateManager_1 = require("../../../../Launcher/Update/LanguageUpdateManager"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  ButtonItem_1 = require("../../Common/Button/ButtonItem"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  MenuController_1 = require("../MenuController"),
+  MenuTool_1 = require("../MenuTool");
 class LanguageSettingViewBase extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -30,17 +30,17 @@ class LanguageSettingViewBase extends UiViewBase_1.UiViewBase {
         (this.IsConfirm = !0), this.Jqt();
       }),
       (this.DoSelected = (e, t) => {
-        this.SelectedToggle !== e && t === 1 && this.SelectedToggle?.UnSelect(),
+        this.SelectedToggle !== e && 1 === t && this.SelectedToggle?.UnSelect(),
           (this.SelectedToggle = e),
           this.OnSelected(this.SelectedToggle, t);
       }),
       (this.DoRefreshScrollView = (e, t) => {
-        var i = MenuTool_1.MenuTool.GetAudioCodeById(e);
-        var i = LanguageUpdateManager_1.LanguageUpdateManager.GetUpdater(i);
-        var i =
-          i?.LanguageCode === LanguageSystem_1.LanguageSystem.PackageAudio &&
-          i.Status === 2;
-        var t = this.CreateToggle(t, e, i);
+        var i = MenuTool_1.MenuTool.GetAudioCodeById(e),
+          i = LanguageUpdateManager_1.LanguageUpdateManager.GetUpdater(i),
+          i =
+            i?.LanguageCode === LanguageSystem_1.LanguageSystem.PackageAudio &&
+            2 === i.Status,
+          t = this.CreateToggle(t, e, i);
         t &&
           (i ? (this.SelectedToggle = t) : t.UnSelect(),
           t.SetSelectedCallBack(this.DoSelected),
@@ -67,7 +67,7 @@ class LanguageSettingViewBase extends UiViewBase_1.UiViewBase {
         this.DoRefreshScrollView,
       )),
       this.InitScrollViewData();
-    const e = this.GetText(0);
+    var e = this.GetText(0);
     LguiUtil_1.LguiUtil.SetLocalTextNew(
       e,
       this.MenuDataIns.MenuDataFunctionName ?? "",
@@ -77,13 +77,13 @@ class LanguageSettingViewBase extends UiViewBase_1.UiViewBase {
       });
   }
   InitScrollViewData() {
-    const e = [];
+    var e = [];
     for (const t of MenuTool_1.MenuTool.GetLanguageDefineData())
       e.push(t.LanguageType);
     this.ScrollView.RefreshByData(e.sort((e, t) => e - t));
   }
   OnAfterHide() {
-    const e = MenuController_1.MenuController.GetTargetConfig(
+    var e = MenuController_1.MenuController.GetTargetConfig(
       this.MenuDataIns.MenuDataFunctionId,
     );
     this.IsConfirm &&
@@ -162,4 +162,4 @@ class LanguageToggleBase extends UiPanelBase_1.UiPanelBase {
   OnUnSelected() {}
 }
 exports.LanguageToggleBase = LanguageToggleBase;
-// # sourceMappingURL=LanguageSettingViewBase.js.map
+//# sourceMappingURL=LanguageSettingViewBase.js.map

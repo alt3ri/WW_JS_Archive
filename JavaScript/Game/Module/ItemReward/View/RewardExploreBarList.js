@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RewardExploreBarList = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const TrainingItem_1 = require("../../TrainingDegree/TrainingItem");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  TrainingItem_1 = require("../../TrainingDegree/TrainingItem"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class RewardExploreBarList extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -29,13 +29,13 @@ class RewardExploreBarList extends UiPanelBase_1.UiPanelBase {
     (this.u0i = void 0), (this._0i = void 0), this.c0i();
   }
   Refresh(i, e) {
-    const t = !StringUtils_1.StringUtils.IsEmpty(i);
+    var t = !StringUtils_1.StringUtils.IsEmpty(i);
     t && this.LBt(i), this.m0i(t), this.d0i(e);
   }
   d0i(i) {
     this.c0i();
-    const e = this.GetItem(0);
-    if (i && i.length !== 0) {
+    var e = this.GetItem(0);
+    if (i && 0 !== i.length) {
       for (const t of i) this.C0i(t);
       e.SetUIActive(!0);
     } else e.SetUIActive(!1);
@@ -43,8 +43,8 @@ class RewardExploreBarList extends UiPanelBase_1.UiPanelBase {
   LBt(i) {}
   m0i(i) {}
   C0i(i) {
-    var e = LguiUtil_1.LguiUtil.CopyItem(this._0i, this.u0i);
-    var e = new TrainingItem_1.TrainingItem(e);
+    var e = LguiUtil_1.LguiUtil.CopyItem(this._0i, this.u0i),
+      e = new TrainingItem_1.TrainingItem(e);
     e.SetData(i.TrainingData), e.SetActive(!0), this.Ygi.push(e);
   }
   c0i() {
@@ -53,4 +53,4 @@ class RewardExploreBarList extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.RewardExploreBarList = RewardExploreBarList;
-// # sourceMappingURL=RewardExploreBarList.js.map
+//# sourceMappingURL=RewardExploreBarList.js.map

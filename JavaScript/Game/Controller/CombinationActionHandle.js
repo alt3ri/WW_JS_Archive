@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CombinationActionHandle = void 0);
-const Log_1 = require("../../Core/Common/Log");
-const TimeUtil_1 = require("../Common/TimeUtil");
-const InputSettingsManager_1 = require("../InputSettings/InputSettingsManager");
-const InputDistributeController_1 = require("../Ui/InputDistribute/InputDistributeController");
+const Log_1 = require("../../Core/Common/Log"),
+  TimeUtil_1 = require("../Common/TimeUtil"),
+  InputSettingsManager_1 = require("../InputSettings/InputSettingsManager"),
+  InputDistributeController_1 = require("../Ui/InputDistribute/InputDistributeController");
 class CombinationActionHandle {
   constructor() {
     (this.Hde = void 0),
@@ -17,14 +17,14 @@ class CombinationActionHandle {
   }
   PressAnyKey(t) {
     if (this.Hde) {
-      const i =
+      var i =
         InputSettingsManager_1.InputSettingsManager.GetCombinationActionBindingByKeyName(
           this.Hde,
           t,
         );
       if (i && !(i.size <= 0)) {
         this.jde = t;
-        const e = [];
+        var e = [];
         for (const n of i.values()) e.push(n);
         this.Qde(e);
       }
@@ -80,9 +80,9 @@ class CombinationActionHandle {
   }
   Qde(t) {
     for (const n of (this.Kde = t)) {
-      const i = n.GetActionName();
-      const e = n.GetSecondaryKeyValidTime();
-      if (e > 0)
+      var i = n.GetActionName(),
+        e = n.GetSecondaryKeyValidTime();
+      if (0 < e)
         if (TimeUtil_1.TimeUtil.GetServerTimeStamp() - this.Wde > e) {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -114,7 +114,7 @@ class CombinationActionHandle {
   $de() {
     if (this.Kde)
       for (const i of this.Kde) {
-        const t = i.GetActionName();
+        var t = i.GetActionName();
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "InputSettings",
@@ -137,7 +137,7 @@ class CombinationActionHandle {
   }
   CheckCombinationAction(t) {
     if (this.Hde) {
-      const i = [];
+      var i = [];
       InputSettingsManager_1.InputSettingsManager.GetActionBinding(
         t,
       ).GetKeyNameList(i);
@@ -164,4 +164,4 @@ class CombinationActionHandle {
   }
 }
 exports.CombinationActionHandle = CombinationActionHandle;
-// # sourceMappingURL=CombinationActionHandle.js.map
+//# sourceMappingURL=CombinationActionHandle.js.map

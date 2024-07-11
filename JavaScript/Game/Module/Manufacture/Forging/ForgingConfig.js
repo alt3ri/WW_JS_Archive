@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ForgingConfig = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const ForgeFormulaAll_1 = require("../../../../Core/Define/ConfigQuery/ForgeFormulaAll");
-const ForgeFormulaByFormulaItemId_1 = require("../../../../Core/Define/ConfigQuery/ForgeFormulaByFormulaItemId");
-const ForgeFormulaById_1 = require("../../../../Core/Define/ConfigQuery/ForgeFormulaById");
-const ForgeFormulaByTypeId_1 = require("../../../../Core/Define/ConfigQuery/ForgeFormulaByTypeId");
-const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
-const ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
+const Log_1 = require("../../../../Core/Common/Log"),
+  ForgeFormulaAll_1 = require("../../../../Core/Define/ConfigQuery/ForgeFormulaAll"),
+  ForgeFormulaByFormulaItemId_1 = require("../../../../Core/Define/ConfigQuery/ForgeFormulaByFormulaItemId"),
+  ForgeFormulaById_1 = require("../../../../Core/Define/ConfigQuery/ForgeFormulaById"),
+  ForgeFormulaByTypeId_1 = require("../../../../Core/Define/ConfigQuery/ForgeFormulaByTypeId"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
 class ForgingConfig extends ConfigBase_1.ConfigBase {
   GetLocalText(e) {
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e) ?? "";
   }
   GetForgeFormulaByFormulaItemId(e) {
-    const r =
+    var r =
       ForgeFormulaByFormulaItemId_1.configForgeFormulaByFormulaItemId.GetConfig(
         e,
       );
@@ -30,7 +30,7 @@ class ForgingConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetForgeFormulaById(e) {
-    const r = ForgeFormulaById_1.configForgeFormulaById.GetConfig(e);
+    var r = ForgeFormulaById_1.configForgeFormulaById.GetConfig(e);
     return (
       r ||
         (Log_1.Log.CheckError() &&
@@ -44,7 +44,7 @@ class ForgingConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetForgeList() {
-    const e = ForgeFormulaAll_1.configForgeFormulaAll.GetConfigList();
+    var e = ForgeFormulaAll_1.configForgeFormulaAll.GetConfigList();
     return (
       e ||
         (Log_1.Log.CheckError() &&
@@ -57,8 +57,7 @@ class ForgingConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetForgeListByType(e) {
-    const r =
-      ForgeFormulaByTypeId_1.configForgeFormulaByTypeId.GetConfigList(e);
+    var r = ForgeFormulaByTypeId_1.configForgeFormulaByTypeId.GetConfigList(e);
     return (
       r ||
         (Log_1.Log.CheckError() &&
@@ -73,4 +72,4 @@ class ForgingConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.ForgingConfig = ForgingConfig;
-// # sourceMappingURL=ForgingConfig.js.map
+//# sourceMappingURL=ForgingConfig.js.map

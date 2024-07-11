@@ -8,4 +8,4 @@ class NavigationSlider extends NavigationSelectableBase_1.NavigationSelectableBa
   }
 }
 exports.NavigationSlider = NavigationSlider;
-// # sourceMappingURL=NavigationSlider.js.map
+//# sourceMappingURL=NavigationSlider.js.map

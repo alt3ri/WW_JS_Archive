@@ -5,12 +5,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.ItemMaterialSimpleController =
     exports.ItemMaterialControllerBase =
       void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../Core/Common/Log");
-const RenderConfig_1 = require("../../../Config/RenderConfig");
-const EffectMaterialParameter_1 = require("../../../Effect/Data/Parameters/EffectMaterialParameter");
-const EffectLifeTimeController_1 = require("../../../Effect/EffectLifeTimeController");
-const RenderModuleConfig_1 = require("../../../Manager/RenderModuleConfig");
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  RenderConfig_1 = require("../../../Config/RenderConfig"),
+  EffectMaterialParameter_1 = require("../../../Effect/Data/Parameters/EffectMaterialParameter"),
+  EffectLifeTimeController_1 = require("../../../Effect/EffectLifeTimeController"),
+  RenderModuleConfig_1 = require("../../../Manager/RenderModuleConfig");
 class ItemMaterialControllerBase {
   GetName() {
     return "";
@@ -33,20 +33,20 @@ class ItemMaterialSimpleController extends (exports.ItemMaterialControllerBase =
   }
   ForEachComponent(i, t) {
     if (i?.IsValid()) {
-      const e = this.Actor.K2_GetComponentsByClass(
-        UE.PrimitiveComponent.StaticClass(),
-      );
-      const s = e.Num();
+      var e = this.Actor.K2_GetComponentsByClass(
+          UE.PrimitiveComponent.StaticClass(),
+        ),
+        s = e.Num();
       for (let i = 0; i < s; i++) t(e.Get(i));
     }
   }
   CheckMaterial(t) {
     if (!t?.IsValid()) return !1;
-    const i = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(t);
-    if (i === 2 || i === 4) {
-      const e = t.GetNumMaterials();
+    var i = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(t);
+    if (2 === i || 4 === i) {
+      var e = t.GetNumMaterials();
       for (let i = 0; i < e; i++) {
-        const s = t.GetMaterial(i);
+        var s = t.GetMaterial(i);
         if (s)
           if (
             !UE.KuroRenderingRuntimeBPPluginBPLibrary.MaterialHasParameter_EditorOnly(
@@ -61,10 +61,10 @@ class ItemMaterialSimpleController extends (exports.ItemMaterialControllerBase =
   }
   CachedComponentMaterials(e) {
     if (e?.IsValid() && this.CachedMaterials.findIndex((i) => i[0] === e) < 0) {
-      const s = this.CachedMaterials.push([e, [], []]) - 1;
-      const i = e.GetNumMaterials();
+      var s = this.CachedMaterials.push([e, [], []]) - 1,
+        i = e.GetNumMaterials();
       for (let t = 0; t < i; t++) {
-        const h = e.GetMaterial(t);
+        var h = e.GetMaterial(t);
         let i = void 0;
         this.CachedMaterials[s][1].push(h),
           h
@@ -421,29 +421,29 @@ class ItemMaterialActorController extends ItemMaterialControllerBase {
   }
   ForEachComponent(i, t) {
     if (i?.IsValid()) {
-      const e = this.Actor.K2_GetComponentsByClass(
-        UE.PrimitiveComponent.StaticClass(),
-      );
-      const s = e.Num();
+      var e = this.Actor.K2_GetComponentsByClass(
+          UE.PrimitiveComponent.StaticClass(),
+        ),
+        s = e.Num();
       for (let i = 0; i < s; i++) t(e.Get(i));
     }
   }
   ForEachDecalComponent(i, t) {
     if (i?.IsValid()) {
-      const e = this.Actor.K2_GetComponentsByClass(
-        UE.DecalComponent.StaticClass(),
-      );
-      const s = e.Num();
+      var e = this.Actor.K2_GetComponentsByClass(
+          UE.DecalComponent.StaticClass(),
+        ),
+        s = e.Num();
       for (let i = 0; i < s; i++) t(e.Get(i));
     }
   }
   CheckMaterial(t) {
     if (!t?.IsValid()) return !1;
-    const i = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(t);
-    if (i === 2 || i === 4) {
-      const e = t.GetNumMaterials();
+    var i = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(t);
+    if (2 === i || 4 === i) {
+      var e = t.GetNumMaterials();
       for (let i = 0; i < e; i++) {
-        const s = t.GetMaterial(i);
+        var s = t.GetMaterial(i);
         if (s)
           if (
             !UE.KuroRenderingRuntimeBPPluginBPLibrary.MaterialHasParameter_EditorOnly(
@@ -458,8 +458,8 @@ class ItemMaterialActorController extends ItemMaterialControllerBase {
   }
   CheckDecalMaterial(i) {
     if (!i?.IsValid()) return !1;
-    let t = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(i);
-    if (t === 2 || t === 4) {
+    var t = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(i);
+    if (2 === t || 4 === t) {
       t = i.GetDecalMaterial();
       if (t)
         if (
@@ -474,10 +474,10 @@ class ItemMaterialActorController extends ItemMaterialControllerBase {
   }
   CachedComponentMaterials(e) {
     if (e?.IsValid() && this.CachedMaterials.findIndex((i) => i[0] === e) < 0) {
-      const s = this.CachedMaterials.push([e, [], []]) - 1;
-      const i = e.GetNumMaterials();
+      var s = this.CachedMaterials.push([e, [], []]) - 1,
+        i = e.GetNumMaterials();
       for (let t = 0; t < i; t++) {
-        const h = e.GetMaterial(t);
+        var h = e.GetMaterial(t);
         let i = void 0;
         this.CachedMaterials[s][1].push(h),
           h
@@ -501,8 +501,8 @@ class ItemMaterialActorController extends ItemMaterialControllerBase {
       t?.IsValid() &&
       this.CachedDecalMaterials.findIndex((i) => i[0] === t) < 0
     ) {
-      const e = this.CachedDecalMaterials.push([t, void 0, void 0]) - 1;
-      const s = t.GetDecalMaterial();
+      var e = this.CachedDecalMaterials.push([t, void 0, void 0]) - 1,
+        s = t.GetDecalMaterial();
       let i = void 0;
       (this.CachedDecalMaterials[e][1] = s)
         ? ((i =
@@ -520,9 +520,9 @@ class ItemMaterialActorController extends ItemMaterialControllerBase {
     }
   }
   ResetComponentMaterials(t) {
-    const e = this.CachedMaterials.findIndex((i) => i[0] === t);
-    if (e >= 0) {
-      const s = t.GetNumMaterials();
+    var e = this.CachedMaterials.findIndex((i) => i[0] === t);
+    if (0 <= e) {
+      var s = t.GetNumMaterials();
       for (let i = 0; i < s; i++)
         t.SetMaterial(i, this.CachedMaterials[e][1][i]);
     }
@@ -555,7 +555,7 @@ class ItemMaterialGlobalController extends ItemMaterialControllerBase {
     );
   }
   UpdateParameters(i) {
-    let t;
+    var t;
     this.IsValid() &&
       (this.Data.EnableBaseColorScale &&
         (i || this.Data.BaseColorScale.bUseCurve) &&
@@ -629,7 +629,7 @@ class ItemMaterialGlobalController extends ItemMaterialControllerBase {
       this.UpdateGlobalRim(i));
   }
   UpdateGlobalRim(i) {
-    let t;
+    var t;
     this.IsValid() &&
       this.Data.EnableRimLight &&
       ((i || this.Data.AddRimLightColor.bUseCurve) &&
@@ -720,4 +720,4 @@ class ItemMaterialGlobalController extends ItemMaterialControllerBase {
   }
 }
 exports.ItemMaterialGlobalController = ItemMaterialGlobalController;
-// # sourceMappingURL=ItemMaterialController.js.map
+//# sourceMappingURL=ItemMaterialController.js.map

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcDecisionController = void 0);
-const UE = require("ue");
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
+const UE = require("ue"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem");
 class NpcDecisionController {
   constructor() {
     (this.bre = void 0),
@@ -27,7 +27,7 @@ class NpcDecisionController {
             e.HandleQuestChanged());
       }),
       (this.Nre = () => {
-        let t;
+        var t;
         this.CheckDayState &&
           this.bre &&
           (t = this.bre.TsAiController) &&
@@ -71,4 +71,4 @@ class NpcDecisionController {
   }
 }
 exports.NpcDecisionController = NpcDecisionController;
-// # sourceMappingURL=NpcDecisionController.js.map
+//# sourceMappingURL=NpcDecisionController.js.map

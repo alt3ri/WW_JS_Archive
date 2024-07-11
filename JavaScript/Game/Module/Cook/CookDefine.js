@@ -9,4 +9,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.COOK_TYPE_TEXTURE_KEY = "T_CookingType"),
   (exports.INVENTORY_ACTIVE_COLOR = "aa9b6a"),
   (exports.INVENTORY_DEACTIVE_COLOR = "ece5d8");
-// # sourceMappingURL=CookDefine.js.map
+//# sourceMappingURL=CookDefine.js.map

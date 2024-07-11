@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulableTrackTargetCastToTargetState = void 0);
-const UE = require("ue");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon");
-const Rotator_1 = require("../../../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const CameraController_1 = require("../../../Camera/CameraController");
-const SceneItemManipulableCastState_1 = require("./SceneItemManipulableCastState");
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
+  Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  CameraController_1 = require("../../../Camera/CameraController"),
+  SceneItemManipulableCastState_1 = require("./SceneItemManipulableCastState");
 class SceneItemManipulableTrackTargetCastToTargetState extends SceneItemManipulableCastState_1.SceneItemManipulableCastState {
   constructor(t, e) {
     super(t, e),
@@ -29,7 +29,7 @@ class SceneItemManipulableTrackTargetCastToTargetState extends SceneItemManipula
         ((this.Xii = t?.Actor.Mesh), (this.$ii = e.PartSocketName));
   }
   OnEnter() {
-    let t, e;
+    var t, e;
     super.OnEnter(),
       this.jAo &&
         ((t = this.SceneItem.Config.ThrowCfg.MotionConfig),
@@ -69,31 +69,31 @@ class SceneItemManipulableTrackTargetCastToTargetState extends SceneItemManipula
   }
   OnTick(t) {
     super.OnTick(t), (this.Timer += t);
-    let e = this.knr;
-    let i =
-      (this.Fnr?.IsValid && (e *= this.Fnr.GetFloatValue(this.Timer)),
-      this.unt);
+    let e = this.knr,
+      i =
+        (this.Fnr?.IsValid && (e *= this.Fnr.GetFloatValue(this.Timer)),
+        this.unt);
     this.Onr?.IsValid && (i *= this.Onr.GetFloatValue(this.Timer)),
       this.$rr.Normalize();
-    var s = Vector_1.Vector.Create();
-    const r =
-      (void 0 !== this.$ii
-        ? s.DeepCopy(this.Xii.GetSocketLocation(this.$ii))
-        : s.DeepCopy(this.jAo.ActorLocationProxy),
-      Vector_1.Vector.Create(this.SceneItem.ActorComp.ActorLocationProxy));
-    var s = Vector_1.Vector.Create(s);
-    var o =
-      (s.SubtractionEqual(r),
-      s.Normalize(),
-      Vector_1.Vector.DotProduct(this.$rr, s));
-    var o = Math.acos(o) * MathCommon_1.MathCommon.RadToDeg;
-    var o = MathUtils_1.MathUtils.Clamp(o, -e * t, e * t);
-    let a = Vector_1.Vector.Create();
-    var s =
-      (Vector_1.Vector.CrossProduct(this.$rr, s, a),
-      this.$rr.RotateAngleAxis(o, a, this.$rr),
-      Vector_1.Vector.Create(r));
-    var o = Vector_1.Vector.Create(this.$rr);
+    var s = Vector_1.Vector.Create(),
+      r =
+        (void 0 !== this.$ii
+          ? s.DeepCopy(this.Xii.GetSocketLocation(this.$ii))
+          : s.DeepCopy(this.jAo.ActorLocationProxy),
+        Vector_1.Vector.Create(this.SceneItem.ActorComp.ActorLocationProxy)),
+      s = Vector_1.Vector.Create(s),
+      o =
+        (s.SubtractionEqual(r),
+        s.Normalize(),
+        Vector_1.Vector.DotProduct(this.$rr, s)),
+      o = Math.acos(o) * MathCommon_1.MathCommon.RadToDeg,
+      o = MathUtils_1.MathUtils.Clamp(o, -e * t, e * t),
+      a = Vector_1.Vector.Create(),
+      s =
+        (Vector_1.Vector.CrossProduct(this.$rr, s, a),
+        this.$rr.RotateAngleAxis(o, a, this.$rr),
+        Vector_1.Vector.Create(r)),
+      o = Vector_1.Vector.Create(this.$rr);
     return (
       o.MultiplyEqual(i * t),
       s.AdditionEqual(o),
@@ -117,4 +117,4 @@ class SceneItemManipulableTrackTargetCastToTargetState extends SceneItemManipula
 }
 exports.SceneItemManipulableTrackTargetCastToTargetState =
   SceneItemManipulableTrackTargetCastToTargetState;
-// # sourceMappingURL=SceneItemManipulableTrackTargetCastToTargetState.js.map
+//# sourceMappingURL=SceneItemManipulableTrackTargetCastToTargetState.js.map

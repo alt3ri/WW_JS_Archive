@@ -1,39 +1,43 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, r) {
-    let s;
-    const o = arguments.length;
-    let n =
-      o < 3 ? e : r === null ? (r = Object.getOwnPropertyDescriptor(e, i)) : r;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var s,
+      o = arguments.length,
+      n =
+        o < 3
+          ? e
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(e, i))
+            : r;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(t, e, i, r);
     else
-      for (let a = t.length - 1; a >= 0; a--)
-        (s = t[a]) && (n = (o < 3 ? s(n) : o > 3 ? s(e, i, n) : s(e, i)) || n);
-    return o > 3 && n && Object.defineProperty(e, i, n), n;
+      for (var a = t.length - 1; 0 <= a; a--)
+        (s = t[a]) && (n = (o < 3 ? s(n) : 3 < o ? s(e, i, n) : s(e, i)) || n);
+    return 3 < o && n && Object.defineProperty(e, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemMultiInteractionActorComponent = void 0);
-const puerts_1 = require("puerts");
-const UE = require("ue");
-const Queue_1 = require("../../../Core/Container/Queue");
-const EntityComponent_1 = require("../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent");
-const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
-const DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil");
-const GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const GlobalData_1 = require("../../GlobalData");
-const SceneInteractionLevel_1 = require("../../Render/Scene/Item/SceneInteractionLevel");
-const AttachToActorController_1 = require("../../World/Controller/AttachToActorController");
-const ComponentForceTickController_1 = require("../../World/Controller/ComponentForceTickController");
-const MultiInteractionActorController_1 = require("../../World/Controller/MultiInteractionActorController");
-const CharacterNameDefines_1 = require("../Character/Common/CharacterNameDefines");
-const SceneItemJigsawBaseComponent_1 = require("./Jigsaw/SceneItemJigsawBaseComponent");
-const defaultTagId = -821437887;
-const MAX_GEN_TIME = 3;
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Queue_1 = require("../../../Core/Container/Queue"),
+  EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil"),
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GlobalData_1 = require("../../GlobalData"),
+  SceneInteractionLevel_1 = require("../../Render/Scene/Item/SceneInteractionLevel"),
+  AttachToActorController_1 = require("../../World/Controller/AttachToActorController"),
+  ComponentForceTickController_1 = require("../../World/Controller/ComponentForceTickController"),
+  MultiInteractionActorController_1 = require("../../World/Controller/MultiInteractionActorController"),
+  CharacterNameDefines_1 = require("../Character/Common/CharacterNameDefines"),
+  SceneItemJigsawBaseComponent_1 = require("./Jigsaw/SceneItemJigsawBaseComponent"),
+  defaultTagId = -821437887,
+  MAX_GEN_TIME = 3;
 class InteractionData {
   constructor(t, e) {
     (this.States = void 0),
@@ -63,13 +67,13 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
       (this.gIe = (t, e) => {
         for (const s of [1408918695, -1278190765]) {
           if (t.includes(s))
-            for (const [i] of this.qvn)
+            for (var [i] of this.qvn)
               this.AddTagsByIndex(
                 SceneItemJigsawBaseComponent_1.JigsawIndex.GenObjFromKey(i),
                 s,
               );
           if (e.includes(s))
-            for (const [r] of this.qvn)
+            for (var [r] of this.qvn)
               this.RemoveTagsByIndex(
                 SceneItemJigsawBaseComponent_1.JigsawIndex.GenObjFromKey(r),
                 s,
@@ -87,7 +91,7 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
                   this,
                 )
               );
-            const e = this.Pvn.shift();
+            var e = this.Pvn.shift();
             this.Fvn(e, this.Ixe.MainActor), t++;
           }
         else
@@ -101,21 +105,21 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
   }
   kvn() {
     for (this.Uvn = !0; !this.Nvn.Empty; ) {
-      const t = this.Nvn.Pop();
+      var t = this.Nvn.Pop();
       t.Func(t.Index, t.TagIds);
     }
-    const e = UE.NewArray(UE.Transform);
-    let i = this.Ixe?.MainActor;
+    var e = UE.NewArray(UE.Transform),
+      i = this.Ixe?.MainActor;
     if (i?.CollisionActors?.Num()) {
       i = i.CollisionActors?.Get(0);
       if (i)
         if (i.StaticMeshComponent?.StaticMesh) {
           for (var [, r] of this.qvn) {
-            const s = this.Hte?.ActorTransform;
-            var r = r.GetTransform().GetRelativeTransform(s);
+            var s = this.Hte?.ActorTransform,
+              r = r.GetTransform().GetRelativeTransform(s);
             e.Add(r);
           }
-          let o = this.Hte?.Owner;
+          var o = this.Hte?.Owner;
           o &&
             (o = o.GetComponentByClass(UE.StaticMeshComponent.StaticClass())) &&
             (UE.KuroStaticMeshLibrary.MergeSimpleCollisions(
@@ -142,11 +146,11 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
         EventDefine_1.EEventName.OnLevelTagChanged,
         this.gIe,
       );
-    for (const [, t] of this.qvn)
+    for (var [, t] of this.qvn)
       MultiInteractionActorController_1.MultiInteractionActorController.AddWaitDestroyActor(
         t,
       );
-    let e;
+    var e;
     return (
       this.qvn.clear(),
       this.Ixe?.MainActor?.IsValid() &&
@@ -158,7 +162,7 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
     );
   }
   Fvn(i, t) {
-    const e = this.wvn(i);
+    var e = this.wvn(i);
     const r = UE.KuroStaticLibrary.SpawnActorFromAnother(t, this.Hte.Owner);
     if (r?.IsValid()) {
       AttachToActorController_1.AttachToActorController.AttachToActor(
@@ -200,25 +204,25 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
     }
   }
   Kvn(t) {
-    const e = this.TXr.场景交互物状态列表;
+    var e = this.TXr.场景交互物状态列表;
     for (const r of t) {
-      var i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(r);
-      var i = e.Get(i);
+      var i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(r),
+        i = e.Get(i);
       if (void 0 !== i) return i;
     }
     return 21;
   }
   Vvn(t) {
-    const e = (0, puerts_1.$ref)(UE.NewArray(UE.Actor));
-    const i = (t.GetAttachedActors(e, !0), (0, puerts_1.$unref)(e));
+    var e = (0, puerts_1.$ref)(UE.NewArray(UE.Actor)),
+      i = (t.GetAttachedActors(e, !0), (0, puerts_1.$unref)(e));
     for (let t = 0; t < i.Num(); t++) this.Vvn(i.Get(t));
     this.Bvn.set(t.GetOwner(), t);
   }
   Hvn(e) {
     for (let t = 0; t < e.States.Num(); t++) {
-      var i;
-      const r = e.States.GetKey(t);
-      const s = e.States.Get(r);
+      var i,
+        r = e.States.GetKey(t),
+        s = e.States.Get(r);
       for (let t = 0; t < s.Effects.Num(); t++) {
         const e = s.Effects.Get(t);
         this.Bvn.has(e) && ((i = this.Bvn.get(e)), s.Effects.Set(t, i));
@@ -232,22 +236,22 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
         this.Bvn.has(e) && s.HideActors.Set(t, this.Bvn.get(e));
       }
       for (let t = 0; t < s.MaterialControllers.Num(); t++) {
-        const o = s.MaterialControllers.Get(t);
+        var o = s.MaterialControllers.Get(t);
         for (let t = 0; t < o.Actors.Num(); t++) {
           const e = o.Actors.Get(t);
           this.Bvn.has(e) && o.Actors.Set(t, this.Bvn.get(e));
         }
       }
       for (let t = 0; t < s.StateBasedEffect.Num(); t++) {
-        var n;
-        const a = s.StateBasedEffect.Get(t);
+        var n,
+          a = s.StateBasedEffect.Get(t);
         const e = a.StateBasedEffect;
         this.Bvn.has(e) && ((n = this.Bvn.get(e)), (a.StateBasedEffect = n));
       }
     }
     for (let t = 0; t < e.Effects.Num(); t++) {
-      let h = e.Effects.GetKey(t);
-      const l = e.Effects.Get(h);
+      var h = e.Effects.GetKey(t),
+        l = e.Effects.Get(h);
       for (let t = 0; t < l.Material.Actors.Num(); t++) {
         const e = l.Material.Actors.Get(t);
         this.Bvn.has(e) && l.Material.Actors.Set(t, this.Bvn.get(e));
@@ -255,24 +259,24 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
       this.Bvn.has(l.Effect) && ((h = this.Bvn.get(l.Effect)), (l.Effect = h));
     }
     for (let t = 0; t < e.TagsAndCorrespondingEffects.Num(); t++) {
-      const c = e.TagsAndCorrespondingEffects.GetKey(t);
-      const v = e.TagsAndCorrespondingEffects.Get(c);
+      var c = e.TagsAndCorrespondingEffects.GetKey(t),
+        v = e.TagsAndCorrespondingEffects.Get(c);
       for (let t = 0; t < v.Actors.Num(); t++) {
         const e = v.Actors.Get(t);
         this.Bvn.has(e) && v.Actors.Set(t, this.Bvn.get(e));
       }
       for (let t = 0; t < v.Effects.Num(); t++) {
-        let _ = v.Effects.Get(t);
+        var _ = v.Effects.Get(t);
         this.Bvn.has(_) && ((_ = this.Bvn.get(_)), v.Effects.Set(t, _));
       }
       for (let t = 0; t < v.HideActors.Num(); t++) {
-        const f = v.HideActors.Get(t);
+        var f = v.HideActors.Get(t);
         this.Bvn.has(f) && v.HideActors.Set(t, this.Bvn.get(f));
       }
       for (let t = 0; t < v.MaterialControllers.Num(); t++) {
-        const m = v.MaterialControllers.Get(t);
+        var m = v.MaterialControllers.Get(t);
         for (let t = 0; t < m.Actors.Num(); t++) {
-          const u = m.Actors.Get(t);
+          var u = m.Actors.Get(t);
           this.Bvn.has(u) && m.Actors.Set(t, this.Bvn.get(u));
         }
       }
@@ -280,8 +284,8 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
     this.bvn.set(e, new InteractionData(e.States, e.Effects));
   }
   jvn(t, e) {
-    const i = (0, puerts_1.$ref)(UE.NewArray(UE.Actor));
-    const r = (t.GetAttachedActors(i, !0), (0, puerts_1.$unref)(i));
+    var i = (0, puerts_1.$ref)(UE.NewArray(UE.Actor)),
+      r = (t.GetAttachedActors(i, !0), (0, puerts_1.$unref)(i));
     for (let t = 0; t < r.Num(); t++) this.jvn(r.Get(t), e);
     t.Owner = e;
   }
@@ -297,12 +301,11 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
     var i = GlobalData_1.GlobalData.World;
     let r = this.TXr.场景交互物.AssetPathName?.toString();
     r.includes(".") && (r = r.split(".")[0]);
-    var s = (0, puerts_1.$ref)(!1);
-    var i = UE.LevelStreamingDynamic.LoadLevelInstance(i, r, t, e, s);
-    var s = (0, puerts_1.$unref)(s);
-    var o =
-      GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(defaultTagId);
-    var o = this.TXr.场景交互物状态列表.Get(o);
+    var s = (0, puerts_1.$ref)(!1),
+      i = UE.LevelStreamingDynamic.LoadLevelInstance(i, r, t, e, s),
+      s = (0, puerts_1.$unref)(s),
+      o = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(defaultTagId),
+      o = this.TXr.场景交互物状态列表.Get(o);
     s &&
       i &&
       ((this.Ixe = new SceneInteractionLevel_1.SceneInteractionLevel()),
@@ -323,10 +326,10 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
     this.Ixe.AttachToActor(this.Hte.Owner),
       GlobalData_1.GlobalData.IsPlayInEditor &&
         (this.Ixe.MainActor.ActorLabel = "Template:" + this.Ixe.LevelName);
-    const i = this.Ixe.GetAllActorsInLevel();
+    var i = this.Ixe.GetAllActorsInLevel();
     if (i)
       for (let t = 0, e = i.Num(); t < e; t++) {
-        const r = i.Get(t);
+        var r = i.Get(t);
         r instanceof UE.StaticMeshActor &&
           (r.Tags.Add(CharacterNameDefines_1.CharacterNameDefines.NO_SLIDE),
           r.StaticMeshComponent?.SetReceivesDecals(!1),
@@ -357,11 +360,11 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
     return this.qvn.get(t.GetKey());
   }
   AddTagsByIndex(i, r) {
-    const s = this.qvn.get(i.GetKey());
+    var s = this.qvn.get(i.GetKey());
     if (s?.IsValid() || !this.Uvn) {
-      const o = this.Uvn ? this.Gvn : this.xvn;
-      let t = o.get(i.GetKey());
-      let e = (t || ((t = []), o.set(i.GetKey(), t)), -1);
+      var o = this.Uvn ? this.Gvn : this.xvn;
+      let t = o.get(i.GetKey()),
+        e = (t || ((t = []), o.set(i.GetKey(), t)), -1);
       if (Array.isArray(r))
         for (const n of r)
           (e = t.indexOf(n)) < 0 &&
@@ -381,21 +384,21 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
     }
   }
   RemoveTagsByIndex(i, r) {
-    const s = this.qvn.get(i.GetKey());
+    var s = this.qvn.get(i.GetKey());
     if (s?.IsValid() || !this.Uvn) {
-      const o = this.Uvn ? this.Gvn : this.xvn;
-      let t = o.get(i.GetKey());
-      let e = (t || ((t = []), o.set(i.GetKey(), t)), -1);
+      var o = this.Uvn ? this.Gvn : this.xvn;
+      let t = o.get(i.GetKey()),
+        e = (t || ((t = []), o.set(i.GetKey(), t)), -1);
       if (Array.isArray(r))
         for (const n of r)
-          (e = t.indexOf(n)) > -1 &&
+          -1 < (e = t.indexOf(n)) &&
             (t.splice(e, 1), this.Uvn) &&
             (s.StopExtraEffectOnTagsChange(
               GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(n),
             ),
             this.Wvn(i, n, !1));
       else
-        (e = t.indexOf(r)) > -1 &&
+        -1 < (e = t.indexOf(r)) &&
           (t.splice(e, 1), this.Uvn) &&
           (s.StopExtraEffectOnTagsChange(
             GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(r),
@@ -406,11 +409,11 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
   }
   HasTagByIndex(t, e) {
     t = (this.Uvn ? this.Gvn : this.xvn).get(t.GetKey());
-    return !!t && t.indexOf(e) > -1;
+    return !!t && -1 < t.indexOf(e);
   }
   Wvn(t, e, i) {
     let r = this.ynn.get(t.GetKey());
-    const s = this.qvn.get(t.GetKey());
+    var s = this.qvn.get(t.GetKey());
     i
       ? (void 0 === r && ((r = new Map()), this.ynn.set(t.GetKey(), r)),
         r.has(e) ||
@@ -418,7 +421,7 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
           void 0 !== (t = this.TXr.场景交互物特效列表.Get(i)) &&
             (s.PlayIndependentEffect(t), r.set(e, t))))
       : void 0 !== r &&
-        r.size !== 0 &&
+        0 !== r.size &&
         r.has(e) &&
         ((i = r.get(e)),
         r.delete(e),
@@ -426,19 +429,19 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
         s.PlayIndependentEndEffect(i));
   }
   tsn(t) {
-    var t = t.GetKey();
-    const e = this.qvn.get(t);
-    let i = [];
-    let r = 21;
+    var t = t.GetKey(),
+      e = this.qvn.get(t);
+    let i = [],
+      r = 21;
     this.Gvn.has(t) && (i = this.Gvn.get(t)),
-      (r = i?.length > 0 ? this.Kvn(i) : r) === 21 &&
+      21 === (r = 0 < i?.length ? this.Kvn(i) : r) &&
         ((t =
           GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(defaultTagId)),
         (r = this.TXr.场景交互物状态列表.Get(t))),
       e.SetState(r, !0, !1);
   }
   DynamicRemoveActorByIndex(t) {
-    let e, i;
+    var e, i;
     this.Uvn
       ? ((e = t.GetKey()),
         void 0 !== (i = this.qvn.get(e)) &&
@@ -453,7 +456,7 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
   }
   DynamicAddActorByIndex(e, i) {
     if (this.Uvn) {
-      const r = e.GetKey();
+      var r = e.GetKey();
       let t = this.Gvn.get(r);
       (t = (t = t || []).concat(i)),
         this.Gvn.set(r, t),
@@ -483,4 +486,4 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
 )),
   (exports.SceneItemMultiInteractionActorComponent =
     SceneItemMultiInteractionActorComponent);
-// # sourceMappingURL=SceneItemMultiInteractionActorComponent.js.map
+//# sourceMappingURL=SceneItemMultiInteractionActorComponent.js.map

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletLogicShakeCameraController = void 0);
-const UE = require("ue");
-const ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem");
-const CameraController_1 = require("../../../Camera/CameraController");
-const TimeUtil_1 = require("../../../Common/TimeUtil");
-const BulletLogicController_1 = require("./BulletLogicController");
+const UE = require("ue"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
+  CameraController_1 = require("../../../Camera/CameraController"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  BulletLogicController_1 = require("./BulletLogicController");
 class BulletLogicShakeCameraController extends BulletLogicController_1.BulletLogicController {
   constructor(t, e) {
     super(t, e),
@@ -58,4 +58,4 @@ class BulletLogicShakeCameraController extends BulletLogicController_1.BulletLog
   }
 }
 exports.BulletLogicShakeCameraController = BulletLogicShakeCameraController;
-// # sourceMappingURL=BulletLogicShakeCameraController.js.map
+//# sourceMappingURL=BulletLogicShakeCameraController.js.map

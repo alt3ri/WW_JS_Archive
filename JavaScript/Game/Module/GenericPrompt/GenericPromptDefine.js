@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.genericPromptView = void 0),
   (exports.genericPromptView = {
-    0: "EventConditionFloatTips",
+    [0]: "EventConditionFloatTips",
     1: "DungeonClearanceFloatTips",
     2: "DungeonAutoExitFloatTips",
     3: "ChallengeSuccessFloatTips",
@@ -22,4 +22,4 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     17: "FlowChapterEndTips",
     18: "RemainStarWarningTips",
   });
-// # sourceMappingURL=GenericPromptDefine.js.map
+//# sourceMappingURL=GenericPromptDefine.js.map

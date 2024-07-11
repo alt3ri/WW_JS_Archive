@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SpecialEnergyKeyItem = void 0);
-const UE = require("ue");
-const LongPressKeyItemBase_1 = require("./LongPressKeyItemBase");
+const UE = require("ue"),
+  LongPressKeyItemBase_1 = require("./LongPressKeyItemBase");
 class SpecialEnergyKeyItem extends LongPressKeyItemBase_1.LongPressKeyItemBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -26,4 +26,4 @@ class SpecialEnergyKeyItem extends LongPressKeyItemBase_1.LongPressKeyItemBase {
   }
 }
 exports.SpecialEnergyKeyItem = SpecialEnergyKeyItem;
-// # sourceMappingURL=SpecialEnergyKeyItem.js.map
+//# sourceMappingURL=SpecialEnergyKeyItem.js.map

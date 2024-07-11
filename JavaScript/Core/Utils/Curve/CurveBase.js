@@ -14,12 +14,12 @@ class CurveBase {
     return this.GetCurrentValue(t + e) - this.GetCurrentValue(t);
   }
   GetOffsetRate(t, e) {
-    let r;
-    return t >= 1
+    var r;
+    return 1 <= t
       ? 1
       : ((r = this.GetCurrentValue(t)),
         (this.GetCurrentValue(t + e) - r) / (1 - r));
   }
 }
 exports.CurveBase = CurveBase;
-// # sourceMappingURL=CurveBase.js.map
+//# sourceMappingURL=CurveBase.js.map

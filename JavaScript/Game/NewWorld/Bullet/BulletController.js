@@ -1,51 +1,55 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, e, r, l) {
-    let o;
-    const i = arguments.length;
-    let n =
-      i < 3 ? e : l === null ? (l = Object.getOwnPropertyDescriptor(e, r)) : l;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      i = arguments.length,
+      n =
+        i < 3
+          ? e
+          : null === l
+            ? (l = Object.getOwnPropertyDescriptor(e, r))
+            : l;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(t, e, r, l);
     else
-      for (let a = t.length - 1; a >= 0; a--)
-        (o = t[a]) && (n = (i < 3 ? o(n) : i > 3 ? o(e, r, n) : o(e, r)) || n);
-    return i > 3 && n && Object.defineProperty(e, r, n), n;
+      for (var a = t.length - 1; 0 <= a; a--)
+        (o = t[a]) && (n = (i < 3 ? o(n) : 3 < i ? o(e, r, n) : o(e, r)) || n);
+    return 3 < i && n && Object.defineProperty(e, r, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletController = void 0);
-const UE = require("ue");
-const Info_1 = require("../../../Core/Common/Info");
-const Log_1 = require("../../../Core/Common/Log");
-const Stats_1 = require("../../../Core/Common/Stats");
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const Entity_1 = require("../../../Core/Entity/Entity");
-const EntitySystem_1 = require("../../../Core/Entity/EntitySystem");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const PerformanceDecorators_1 = require("../../../Core/Performance/PerformanceDecorators");
-const Quat_1 = require("../../../Core/Utils/Math/Quat");
-const Rotator_1 = require("../../../Core/Utils/Math/Rotator");
-const Transform_1 = require("../../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const StringUtils_1 = require("../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const StatDefine_1 = require("../../Common/StatDefine");
-const Global_1 = require("../../Global");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const CombatMessage_1 = require("../../Module/CombatMessage/CombatMessage");
-const CharacterBuffIds_1 = require("../Character/Common/Component/Abilities/CharacterBuffIds");
-const BulletActionRunner_1 = require("./Action/BulletActionRunner");
-const BulletConfig_1 = require("./BulletConfig");
-const BulletConstant_1 = require("./BulletConstant");
-const BulletStaticFunction_1 = require("./BulletStaticMethod/BulletStaticFunction");
-const BulletPool_1 = require("./Model/BulletPool");
-const BulletCollisionSystem_1 = require("./System/BulletCollisionSystem");
-const BulletMoveSystem_1 = require("./System/BulletMoveSystem");
+const UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  Entity_1 = require("../../../Core/Entity/Entity"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  PerformanceDecorators_1 = require("../../../Core/Performance/PerformanceDecorators"),
+  Quat_1 = require("../../../Core/Utils/Math/Quat"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Transform_1 = require("../../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  StatDefine_1 = require("../../Common/StatDefine"),
+  Global_1 = require("../../Global"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  CombatMessage_1 = require("../../Module/CombatMessage/CombatMessage"),
+  CharacterBuffIds_1 = require("../Character/Common/Component/Abilities/CharacterBuffIds"),
+  BulletActionRunner_1 = require("./Action/BulletActionRunner"),
+  BulletConfig_1 = require("./BulletConfig"),
+  BulletConstant_1 = require("./BulletConstant"),
+  BulletStaticFunction_1 = require("./BulletStaticMethod/BulletStaticFunction"),
+  BulletPool_1 = require("./Model/BulletPool"),
+  BulletCollisionSystem_1 = require("./System/BulletCollisionSystem"),
+  BulletMoveSystem_1 = require("./System/BulletMoveSystem");
 class BulletController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -163,17 +167,17 @@ class BulletController extends ControllerBase_1.ControllerBase {
               "rowName",
               e,
             ]));
-      const B = t instanceof Entity_1.Entity ? t : t.GetEntityNoBlueprint();
-      const C = ConfigManager_1.ConfigManager.BulletConfig.GetBulletData(
-        B,
-        e,
-        !0,
-        c,
-      );
+      var B = t instanceof Entity_1.Entity ? t : t.GetEntityNoBlueprint(),
+        C = ConfigManager_1.ConfigManager.BulletConfig.GetBulletData(
+          B,
+          e,
+          !0,
+          c,
+        );
       if (C) {
-        let M;
-        var o = BulletController.Qqn(o, C);
-        if (o !== 1 || BulletController.HasAuthority(t))
+        var M,
+          o = BulletController.Qqn(o, C);
+        if (1 !== o || BulletController.HasAuthority(t))
           return (
             (t = this.Z8o(B, C, e, i, n)),
             (M = this.e9o(B, C, e, i, n)),
@@ -214,40 +218,40 @@ class BulletController extends ControllerBase_1.ControllerBase {
     }
   }
   static $qn(t, e, r, l, o) {
-    const i = e.Base.BornPositionStandard;
-    if (i === 1) return this.t9o(t, r);
-    if (i === 5)
+    var i = e.Base.BornPositionStandard;
+    if (1 === i) return this.t9o(t, r);
+    if (5 === i)
       return ModelManager_1.ModelManager.BulletModel.GetEntityIdByCustomKey(
         t.Id,
         e.Base.BlackboardKey,
         r,
       );
-    if (i === 7) return l;
-    if (i === 8) return o;
-    if (i === 10)
+    if (7 === i) return l;
+    if (8 === i) return o;
+    if (10 === i)
       return (l = parseInt(e.Base.BlackboardKey)), this.i9o(t, l, r);
-    if (i === 4) {
+    if (4 === i) {
       o = t.GetComponent(29)?.GetCurrentTarget();
       if (o?.Valid) return o.Id;
-    } else if (i === 9) return this.Xqn();
+    } else if (9 === i) return this.Xqn();
     return 0;
   }
   static Qqn(t, e) {
-    if (ModelManager_1.ModelManager.GameModeModel.IsMulti && t === 0) {
-      if (e.Base.SyncType === 1) return 1;
-      let r = e.Base.BornPositionStandard;
-      if (r === 4 || r === 9 || r === 10) return 1;
+    if (ModelManager_1.ModelManager.GameModeModel.IsMulti && 0 === t) {
+      if (1 === e.Base.SyncType) return 1;
+      var r = e.Base.BornPositionStandard;
+      if (4 === r || 9 === r || 10 === r) return 1;
       r = e.Move.InitVelocityDirStandard;
-      if (r === 10 || r === 5) return 1;
+      if (10 === r || 5 === r) return 1;
       r = e.Move.TrackTarget;
-      if (r === 4 || r === 3) return 1;
+      if (4 === r || 3 === r) return 1;
     }
     return t;
   }
   static CreateBulletForDebug(t, e) {
-    var t = t.GetEntityNoBlueprint()?.Id ?? 0;
-    var t = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(t);
-    const r = new Protocol_1.Aki.Protocol.qQn();
+    var t = t.GetEntityNoBlueprint()?.Id ?? 0,
+      t = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(t),
+      r = new Protocol_1.Aki.Protocol.qQn();
     return (
       (r.Z4n = 0),
       (r.H3n = `@gmcreatebullet ${t} ` + e),
@@ -256,32 +260,32 @@ class BulletController extends ControllerBase_1.ControllerBase {
     );
   }
   static Z8o(t, e, r, l, o) {
-    const i = e.Move.TrackTarget;
-    if (i === 4 || i === 3) {
+    var i = e.Move.TrackTarget;
+    if (4 === i || 3 === i) {
       var n = t.GetComponent(29)?.GetCurrentTarget();
       if (n?.Valid) return n.Id;
     } else {
-      if (i === 5)
+      if (5 === i)
         return ModelManager_1.ModelManager.BulletModel.GetEntityIdByCustomKey(
           t.Id,
           e.Move.TrackTargetBlackboardKey,
           r,
         );
-      if (i === 7) {
+      if (7 === i) {
         if (l) return l;
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("Bullet", 21, "父子弹受击者 VictimId为空", [
             "rowName",
             r,
           ]);
-      } else if (i === 8) {
+      } else if (8 === i) {
         if (o) return o;
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("Bullet", 21, "父子弹目标为空", ["rowName", r]);
       } else {
-        if (i === 6) return t.Id;
-        if (i === 2) return BulletController.t9o(t, r);
-        if (i === 1) {
+        if (6 === i) return t.Id;
+        if (2 === i) return BulletController.t9o(t, r);
+        if (1 === i) {
           if (!ModelManager_1.ModelManager.GameModeModel.IsMulti)
             return Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint();
           (n = t.GetComponent(0)),
@@ -290,14 +294,14 @@ class BulletController extends ControllerBase_1.ControllerBase {
               { ParamType: 2, IsControl: !0 },
             ).EntityHandle);
           if (e?.Valid) return e.Id;
-        } else if (i === 9) return this.Xqn();
+        } else if (9 === i) return this.Xqn();
       }
     }
     return 0;
   }
   static t9o(t, e) {
-    let r;
-    var t = t.GetComponent(33)?.SkillTarget;
+    var r,
+      t = t.GetComponent(33)?.SkillTarget;
     return (
       BulletConstant_1.BulletConstant.OpenCreateLog &&
         ((r = t?.Entity?.GetComponent(1)?.Owner?.GetName()),
@@ -313,29 +317,29 @@ class BulletController extends ControllerBase_1.ControllerBase {
     );
   }
   static Xqn() {
-    const t =
+    var t =
       ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
         29,
       )?.GetCurrentTarget();
     return t?.Valid ? t.Id : 0;
   }
   static e9o(t, e, r, l, o) {
-    const i = e.Move.InitVelocityDirStandard;
-    if (i === 5) {
+    var i = e.Move.InitVelocityDirStandard;
+    if (5 === i) {
       var n = t.GetComponent(29)?.GetCurrentTarget();
       if (n?.Valid) return n.Id;
     } else {
-      if (i === 6)
+      if (6 === i)
         return ModelManager_1.ModelManager.BulletModel.GetEntityIdByCustomKey(
           t.Id,
           e.Move.TrackTargetBlackboardKey,
           r,
         );
-      if (i === 11)
+      if (11 === i)
         return (n = parseInt(e.Move.InitVelocityDirParam)), this.i9o(t, n, r);
-      if (i === 10) return this.Xqn();
-      if (i === 8) return l;
-      if (i === 9) return o;
+      if (10 === i) return this.Xqn();
+      if (8 === i) return l;
+      if (9 === i) return o;
     }
     return 0;
   }
@@ -361,28 +365,28 @@ class BulletController extends ControllerBase_1.ControllerBase {
     } = {},
     g = void 0,
   ) {
-    const h = o === 2;
-    var t = ModelManager_1.ModelManager.BulletModel.CreateBullet(
-      t,
-      e,
-      r,
-      f,
-      l,
-      i,
-      h,
-      a,
-      s,
-      u,
-      _,
-      n,
-      o,
-      g,
-      c,
-      d,
-      B,
-      C,
-      M,
-    );
+    var h = 2 === o,
+      t = ModelManager_1.ModelManager.BulletModel.CreateBullet(
+        t,
+        e,
+        r,
+        f,
+        l,
+        i,
+        h,
+        a,
+        s,
+        u,
+        _,
+        n,
+        o,
+        g,
+        c,
+        d,
+        B,
+        C,
+        M,
+      );
     if (t?.Valid) return t;
   }
   static DestroyBullet(t, e, r = 0) {
@@ -403,37 +407,37 @@ class BulletController extends ControllerBase_1.ControllerBase {
   }
   static CreateBulletNotify(e, r) {
     if (ModelManager_1.ModelManager.GameModeModel.WorldDone && e) {
-      const l = r.vkn;
-      let o = String(MathUtils_1.MathUtils.LongToBigInt(r.wVn));
-      var i = r?.UIs;
-      var i =
-        (i
-          ? (i = ModelManager_1.ModelManager.CreatureModel.GetEntity(
-              MathUtils_1.MathUtils.LongToNumber(i),
-            )?.Entity?.GetComponent(3)) &&
-            this.Mme.FromUeTransform(i.ActorTransform)
-          : void 0 !== r?.$kn || void 0 !== r?.D3n
-            ? (this.Mme.Reset(),
-              (i = r.$kn),
-              (n = r.D3n) &&
-                (this.cie.DeepCopy(n),
-                this.cie.Quaternion(this.o9o),
-                this.Mme.SetRotation(this.o9o)),
-              i && this.Mme.SetLocation(i),
-              this.Mme.SetScale3D(Vector_1.Vector.OneVectorProxy))
-            : (n = e?.CheckGetComponent(3)) &&
-              (this.Mme.SetLocation(n.ActorLocationProxy),
-              this.cie.DeepCopy(n.ActorRotationProxy),
-              this.Mme.SetRotation(n.ActorQuatProxy)),
-        ModelManager_1.ModelManager.CreatureModel.GetEntityId(
-          MathUtils_1.MathUtils.LongToNumber(r.qVn),
-        ));
-      var n = ModelManager_1.ModelManager.CreatureModel.GetEntityId(
-        MathUtils_1.MathUtils.LongToNumber(r.GVn),
-      );
-      const a = ModelManager_1.ModelManager.CreatureModel.GetEntityId(
-        MathUtils_1.MathUtils.LongToNumber(r.L4n),
-      );
+      var l = r.vkn,
+        o = String(MathUtils_1.MathUtils.LongToBigInt(r.wVn)),
+        i = r?.UIs,
+        i =
+          (i
+            ? (i = ModelManager_1.ModelManager.CreatureModel.GetEntity(
+                MathUtils_1.MathUtils.LongToNumber(i),
+              )?.Entity?.GetComponent(3)) &&
+              this.Mme.FromUeTransform(i.ActorTransform)
+            : void 0 !== r?.$kn || void 0 !== r?.D3n
+              ? (this.Mme.Reset(),
+                (i = r.$kn),
+                (n = r.D3n) &&
+                  (this.cie.DeepCopy(n),
+                  this.cie.Quaternion(this.o9o),
+                  this.Mme.SetRotation(this.o9o)),
+                i && this.Mme.SetLocation(i),
+                this.Mme.SetScale3D(Vector_1.Vector.OneVectorProxy))
+              : (n = e?.CheckGetComponent(3)) &&
+                (this.Mme.SetLocation(n.ActorLocationProxy),
+                this.cie.DeepCopy(n.ActorRotationProxy),
+                this.Mme.SetRotation(n.ActorQuatProxy)),
+          ModelManager_1.ModelManager.CreatureModel.GetEntityId(
+            MathUtils_1.MathUtils.LongToNumber(r.qVn),
+          )),
+        n = ModelManager_1.ModelManager.CreatureModel.GetEntityId(
+          MathUtils_1.MathUtils.LongToNumber(r.GVn),
+        ),
+        a = ModelManager_1.ModelManager.CreatureModel.GetEntityId(
+          MathUtils_1.MathUtils.LongToNumber(r.L4n),
+        );
       let t = void 0;
       r.PIs && (t = new UE.Vector(r.PIs.X, r.PIs.Y, r.PIs.Z));
       e = BulletController.r9o(
@@ -495,21 +499,21 @@ class BulletController extends ControllerBase_1.ControllerBase {
   }
   static ModifyBulletParamsNotify(t, e) {
     var r = ModelManager_1.ModelManager.BulletModel.GetIdByBulletHandle(
-      e?.VVn?.E4n,
-    );
-    var r = EntitySystem_1.EntitySystem.Get(r);
-    var e = MathUtils_1.MathUtils.LongToNumber(e.VVn.L4n);
-    const l = ModelManager_1.ModelManager.CreatureModel.GetEntity(e);
-    var e =
-      (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug(
-          "Bullet",
-          21,
-          "收到修改子弹目标通知",
-          ["新的目标id", l.Id],
-          ["CreatureId", e],
-        ),
-      r.GetBulletInfo());
+        e?.VVn?.E4n,
+      ),
+      r = EntitySystem_1.EntitySystem.Get(r),
+      e = MathUtils_1.MathUtils.LongToNumber(e.VVn.L4n),
+      l = ModelManager_1.ModelManager.CreatureModel.GetEntity(e),
+      e =
+        (Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "Bullet",
+            21,
+            "收到修改子弹目标通知",
+            ["新的目标id", l.Id],
+            ["CreatureId", e],
+          ),
+        r.GetBulletInfo());
     e && e.SetTargetById(l.Id);
   }
   static r9o(t, e, r, l, o, i, n, a, s, u = -1, _ = void 0, f = void 0) {
@@ -539,7 +543,7 @@ class BulletController extends ControllerBase_1.ControllerBase {
         Log_1.Log.Error("Bullet", 21, "pos NAN！", ["bulletRowName", r]);
     else {
       t = t.GetComponent(0).CustomServerEntityIds;
-      if (e > t.length || e === 0)
+      if (e > t.length || 0 === e)
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Bullet",
@@ -550,7 +554,7 @@ class BulletController extends ControllerBase_1.ControllerBase {
             ["serverEntityIds", t],
           );
       else {
-        const l = ModelManager_1.ModelManager.CreatureModel.GetEntity(t[e - 1]);
+        var l = ModelManager_1.ModelManager.CreatureModel.GetEntity(t[e - 1]);
         if (l) return l.Id;
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -598,8 +602,8 @@ class BulletController extends ControllerBase_1.ControllerBase {
       t = ModelManager_1.ModelManager.BulletModel.GetBulletSetByAttacker(t);
       if (t)
         for (const o of t) {
-          var r;
-          const l = o.GetBulletInfo();
+          var r,
+            l = o.GetBulletInfo();
           e === l.BulletInitParams.SkillId &&
             ((r = l.BulletDataMain).Move.IsDetachOnSkillEnd &&
               l.Actor.K2_DetachFromActor(1, 1, 1),
@@ -641,4 +645,4 @@ class BulletController extends ControllerBase_1.ControllerBase {
     null,
   ),
   (exports.BulletController = BulletController);
-// # sourceMappingURL=BulletController.js.map
+//# sourceMappingURL=BulletController.js.map

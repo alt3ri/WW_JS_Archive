@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const EntitySystem_1 = require("../../Core/Entity/EntitySystem");
-const FNameUtil_1 = require("../../Core/Utils/FNameUtil");
-const Quat_1 = require("../../Core/Utils/Math/Quat");
-const Rotator_1 = require("../../Core/Utils/Math/Rotator");
-const Vector_1 = require("../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const GlobalData_1 = require("../GlobalData");
-const CharacterUnifiedStateTypes_1 = require("../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes");
-const BlackboardController_1 = require("../World/Controller/BlackboardController");
-const INVALID_LAST_LOCATION_THRESHOLD_SQUARED = 4e6;
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  EntitySystem_1 = require("../../Core/Entity/EntitySystem"),
+  FNameUtil_1 = require("../../Core/Utils/FNameUtil"),
+  Quat_1 = require("../../Core/Utils/Math/Quat"),
+  Rotator_1 = require("../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  GlobalData_1 = require("../GlobalData"),
+  CharacterUnifiedStateTypes_1 = require("../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  BlackboardController_1 = require("../World/Controller/BlackboardController"),
+  INVALID_LAST_LOCATION_THRESHOLD_SQUARED = 4e6;
 class PositionBranchTargetParams {
   constructor() {
     (this.CharActorComp = void 0),
@@ -76,8 +76,8 @@ class PositionBranchTargetParams {
       (this.SocketName = "");
   }
 }
-const paramPool = new Array();
-const paramMap = new Map();
+const paramPool = new Array(),
+  paramMap = new Map();
 class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -142,8 +142,8 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
     if (!(t instanceof TsBaseCharacter_1.default)) return !1;
     t = t.CharacterActorComponent;
     if (!t) return !1;
-    let h;
-    const r = t.Entity.GetComponent(33);
+    var h,
+      r = t.Entity.GetComponent(33);
     let e = void 0;
     if (
       !(e =
@@ -193,8 +193,8 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
     );
   }
   K2_NotifyEnd(t, i) {
-    let s;
-    var t = t.GetOwner();
+    var s,
+      t = t.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
       ((t = t.CharacterActorComponent), !!(s = paramMap.get(t.Entity.Id))) &&
@@ -234,14 +234,14 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
     t = i.NowTime + t;
     if (i.TotalTime <= t) s = 1;
     else if (this.TsMoveCurve) {
-      var h = this.TsMoveCurve.GetFloatValue(i.NowTime / i.TotalTime);
-      var r = this.TsMoveCurve.GetFloatValue(t / i.TotalTime);
-      if (h >= 1) return 0;
+      var h = this.TsMoveCurve.GetFloatValue(i.NowTime / i.TotalTime),
+        r = this.TsMoveCurve.GetFloatValue(t / i.TotalTime);
+      if (1 <= h) return 0;
       s = (r - h) / (1 - h);
     } else {
       (r = MathUtils_1.MathUtils.GetCubicValue(i.NowTime / i.TotalTime)),
         (h = MathUtils_1.MathUtils.GetCubicValue(t / i.TotalTime));
-      if (r >= 1) return 0;
+      if (1 <= r) return 0;
       s = (h - r) / (1 - r);
     }
     return s;
@@ -262,12 +262,12 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
       if (this.TsMaxSpeed <= 0) return;
       var s = this.GetRate(t, i);
       if (s <= 0) return;
-      const r = this.TmpVector.Size();
-      var s = MathUtils_1.MathUtils.Clamp(
-        (r - h) * s,
-        -this.TsMaxSpeed * t,
-        this.TsMaxSpeed * t,
-      );
+      var r = this.TmpVector.Size(),
+        s = MathUtils_1.MathUtils.Clamp(
+          (r - h) * s,
+          -this.TsMaxSpeed * t,
+          this.TsMaxSpeed * t,
+        );
       this.TmpVector.MultiplyEqual(s / r);
     } else
       i.LastLocation.Subtraction(
@@ -329,4 +329,4 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStatePositionBranchTarget;
-// # sourceMappingURL=TsAnimNotifyStatePositionBranchTarget.js.map
+//# sourceMappingURL=TsAnimNotifyStatePositionBranchTarget.js.map

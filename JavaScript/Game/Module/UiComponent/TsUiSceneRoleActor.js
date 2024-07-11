@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const ActorSystem_1 = require("../../../Core/Actor/ActorSystem");
-const UiModelSystem_1 = require("../UiModel/UiModel/UiModelSystem");
-const Vector_1 = require("../../../Core/Utils/Math/Vector");
+const UE = require("ue"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  UiModelSystem_1 = require("../UiModel/UiModel/UiModelSystem"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector");
 class TsUiSceneRoleActor extends UE.Actor {
   constructor() {
     super(...arguments),
@@ -52,4 +52,4 @@ class TsUiSceneRoleActor extends UE.Actor {
   }
 }
 exports.default = TsUiSceneRoleActor;
-// # sourceMappingURL=TsUiSceneRoleActor.js.map
+//# sourceMappingURL=TsUiSceneRoleActor.js.map

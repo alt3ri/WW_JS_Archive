@@ -19,4 +19,4 @@ class PayShopGoodsPrice {
   }
 }
 exports.PayShopGoodsPrice = PayShopGoodsPrice;
-// # sourceMappingURL=PayShopGoodsPrice.js.map
+//# sourceMappingURL=PayShopGoodsPrice.js.map

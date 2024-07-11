@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerAreaItem = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-const ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
-const GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const TowerData_1 = require("../TowerData");
-const TowerModel_1 = require("../TowerModel");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  TowerData_1 = require("../TowerData"),
+  TowerModel_1 = require("../TowerModel");
 class TowerAreaItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(),
@@ -29,11 +29,11 @@ class TowerAreaItem extends GridProxyAbstract_1.GridProxyAbstract {
             this.EPe.PlaySequencePurely("Click"));
       }),
       (this.WFt = (e) => {
-        e === "Click" &&
+        "Click" === e &&
           UiManager_1.UiManager.OpenView("TowerFloorView", this.rLo);
       }),
       (this.aLo = () => {
-        const e = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(
+        var e = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(
           this.nLo,
         );
         this.hLo(e);
@@ -64,7 +64,7 @@ class TowerAreaItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.GetText(1).SetUIActive(!1);
   }
   Refresh(e) {
-    const t = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(e);
+    var t = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(e);
     (this.nLo = e), (this.rLo = t.AreaNum);
     let r = "";
     switch (t.AreaNum) {
@@ -89,11 +89,11 @@ class TowerAreaItem extends GridProxyAbstract_1.GridProxyAbstract {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), r), this.hLo(t);
   }
   hLo(e) {
-    let t = ModelManager_1.ModelManager.TowerModel.GetAreaAllStars(
-      e.Difficulty,
-      e.AreaNum,
-    );
-    const r = this.GetText(3);
+    var t = ModelManager_1.ModelManager.TowerModel.GetAreaAllStars(
+        e.Difficulty,
+        e.AreaNum,
+      ),
+      r = this.GetText(3);
     if (
       ((this.RHt = ModelManager_1.ModelManager.TowerModel.CurrentTowerLock),
       this.GetItem(8)?.SetUIActive(!0),
@@ -131,4 +131,4 @@ class TowerAreaItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
 }
 exports.TowerAreaItem = TowerAreaItem;
-// # sourceMappingURL=TowerAreaItem.js.map
+//# sourceMappingURL=TowerAreaItem.js.map

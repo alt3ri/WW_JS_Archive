@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleFavorData = void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const FavorItemInfo_1 = require("./DataInfo/FavorItemInfo");
-const RoleModuleDataBase_1 = require("./RoleModuleDataBase");
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  FavorItemInfo_1 = require("./DataInfo/FavorItemInfo"),
+  RoleModuleDataBase_1 = require("./RoleModuleDataBase");
 class RoleFavorData extends RoleModuleDataBase_1.RoleModuleDataBase {
   constructor() {
     super(...arguments),
@@ -38,11 +38,11 @@ class RoleFavorData extends RoleModuleDataBase_1.RoleModuleDataBase {
       );
   }
   UpdateUnlockId(e, t, r) {
-    var e = this.GetClientFavorTabType(e);
-    const o = this.Ylo.get(e);
-    const a = o.length;
+    var e = this.GetClientFavorTabType(e),
+      o = this.Ylo.get(e),
+      a = o.length;
     for (let e = 0; e < a; e++) {
-      const n = o[e];
+      var n = o[e];
       n.Id === r && (n.Status = 2);
     }
     EventSystem_1.EventSystem.Emit(
@@ -56,14 +56,14 @@ class RoleFavorData extends RoleModuleDataBase_1.RoleModuleDataBase {
       );
   }
   UpdateCanUnlockId(e, r) {
-    let t;
-    var e = this.GetClientFavorTabType(e);
-    const o = this.Ylo.get(e);
+    var t,
+      e = this.GetClientFavorTabType(e),
+      o = this.Ylo.get(e);
     if (o) {
-      const a = o.length;
+      var a = o.length;
       let t = !1;
       for (let e = 0; e < a; e++) {
-        const n = o[e];
+        var n = o[e];
         if (n.Id === r) {
           (t = !0), (n.Status = 1);
           break;
@@ -79,23 +79,23 @@ class RoleFavorData extends RoleModuleDataBase_1.RoleModuleDataBase {
         this.Ylo.set(e, t);
   }
   Jlo(t) {
-    const r = [];
-    const o = t.length;
+    var r = [],
+      o = t.length;
     for (let e = 0; e < o; e++) {
-      const a = t[e];
+      var a = t[e];
       r.push(this.zlo(a));
     }
     return r;
   }
   zlo(e) {
-    const t = this.GetClientFavorItemStatus(e.n3n);
+    var t = this.GetClientFavorItemStatus(e.n3n);
     return new FavorItemInfo_1.FavorItemInfo(e.Ekn, t);
   }
   GetFavorItemState(t, e) {
-    const r = this.Ylo.get(e);
-    const o = r.length;
+    var r = this.Ylo.get(e),
+      o = r.length;
     for (let e = 0; e < o; e++) {
-      const a = r[e];
+      var a = r[e];
       if (a.Id === t) return a.Status;
     }
     return 0;
@@ -121,29 +121,29 @@ class RoleFavorData extends RoleModuleDataBase_1.RoleModuleDataBase {
           : void 0;
   }
   IsExistCanUnlockFavorItem() {
-    for (const [e] of this.Ylo) if (this.IsFavorItemCanUnlock(e)) return !0;
+    for (var [e] of this.Ylo) if (this.IsFavorItemCanUnlock(e)) return !0;
     return !1;
   }
   IsFavorItemCanUnlock(e) {
-    if (e === 2)
+    if (2 === e)
       return ModelManager_1.ModelManager.MotionModel.IfRoleMotionCanUnlock(
         this.RoleId,
       );
-    const t = this.Ylo.get(e);
+    var t = this.Ylo.get(e);
     if (t) {
-      const r = t.length;
-      for (let e = 0; e < r; e++) if (t[e].Status === 1) return !0;
+      var r = t.length;
+      for (let e = 0; e < r; e++) if (1 === t[e].Status) return !0;
     }
     return !1;
   }
   GetUnlockActionIndexList() {
-    const t = [];
-    const r = this.Ylo.get(2);
+    var t = [],
+      r = this.Ylo.get(2);
     if (r) {
-      const o = r.length;
+      var o = r.length;
       for (let e = 0; e < o; e++) {
-        let a = r[e];
-        a.Status === 2 &&
+        var a = r[e];
+        2 === a.Status &&
           ((a = ConfigManager_1.ConfigManager.MotionConfig.GetMotionConfig(
             a.Id,
           )),
@@ -154,4 +154,4 @@ class RoleFavorData extends RoleModuleDataBase_1.RoleModuleDataBase {
   }
 }
 exports.RoleFavorData = RoleFavorData;
-// # sourceMappingURL=RoleFavorData.js.map
+//# sourceMappingURL=RoleFavorData.js.map

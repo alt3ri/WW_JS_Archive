@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowNetworks = void 0);
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol");
-const Net_1 = require("../../../../Core/Net/Net");
-const ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../Core/Net/Net"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class FlowNetworks {
   static Register() {
     Net_1.Net.Register(13967, this.CXi),
@@ -16,13 +16,13 @@ class FlowNetworks {
       Net_1.Net.UnRegister(7476);
   }
   static RequestGmFinish() {
-    const o = Protocol_1.Aki.Protocol.qQn.create();
+    var o = Protocol_1.Aki.Protocol.qQn.create();
     (o.Z4n = 0),
       (o.H3n = "@skipflow"),
       Net_1.Net.Call(28935, Protocol_1.Aki.Protocol.qQn.create(o), (o) => {});
   }
   static RequestAction(o, t, e) {
-    const r = Protocol_1.Aki.Protocol.eZn.create();
+    var r = Protocol_1.Aki.Protocol.eZn.create();
     (r.E8n = o),
       (r.y8n = t),
       Net_1.Net.Call(27547, r, (o) => {
@@ -30,14 +30,14 @@ class FlowNetworks {
       });
   }
   static RequestFlowEnd(o, t, e, r) {
-    const l = new Protocol_1.Aki.Protocol.Xzn();
-    const _ = ((l.E8n = o), (l.I8n = t), {});
+    var l = new Protocol_1.Aki.Protocol.Xzn(),
+      _ = ((l.E8n = o), (l.I8n = t), {});
     for (const i of e) {
-      const s = i[0];
+      var s = i[0];
       const e = i[1];
-      const n = [];
+      var n = [];
       for (const a of e) {
-        const c = { T8n: a[0], dFn: a[1] };
+        var c = { T8n: a[0], dFn: a[1] };
         n.push(c);
       }
       _[s] = { L8n: n };
@@ -54,7 +54,7 @@ class FlowNetworks {
       });
   }
   static RequestFlowRestart(t) {
-    const o = new Protocol_1.Aki.Protocol.zzn();
+    var o = new Protocol_1.Aki.Protocol.zzn();
     (o.E8n = t),
       Net_1.Net.Call(2177, o, (o) => {
         o
@@ -84,7 +84,7 @@ class FlowNetworks {
         ));
   }
   static RequestSafeTeleport(o, t) {
-    const e = new Protocol_1.Aki.Protocol.g4s();
+    var e = new Protocol_1.Aki.Protocol.g4s();
     (e.E8n = o),
       Net_1.Net.Call(5649, e, (o) => {
         o && o.Kms === Protocol_1.Aki.Protocol.lkn.Sys
@@ -105,4 +105,4 @@ class FlowNetworks {
   (FlowNetworks.fXi = (o) => {
     ControllerHolder_1.ControllerHolder.FlowController.SkipBlackScreenNotify(o);
   });
-// # sourceMappingURL=FlowNetworks.js.map
+//# sourceMappingURL=FlowNetworks.js.map

@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CompositeRewardView = void 0);
-const UE = require("ue");
-const StringUtils_1 = require("../../../../Core/Utils/StringUtils");
-const EventDefine_1 = require("../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
-const UiManager_1 = require("../../../Ui/UiManager");
-const LguiUtil_1 = require("../../Util/LguiUtil");
-const RewardItemList_1 = require("./RewardItemList");
-const RewardProgressBar_1 = require("./RewardProgressBar");
-const ItemRewardController_1 = require("../ItemRewardController");
+const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  RewardItemList_1 = require("./RewardItemList"),
+  RewardProgressBar_1 = require("./RewardProgressBar"),
+  ItemRewardController_1 = require("../ItemRewardController");
 class CompositeRewardView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -63,7 +63,7 @@ class CompositeRewardView extends UiTickViewBase_1.UiTickViewBase {
   }
   async OnBeforeStartAsync() {
     this.sOe = new RewardItemList_1.RewardItemList();
-    const e = this.GetItem(5);
+    var e = this.GetItem(5);
     await this.sOe.CreateThenShowByActorAsync(e.GetOwner(), e),
       (this.Hgi = new RewardProgressBar_1.RewardProgressBar(
         this.GetItem(6).GetOwner(),
@@ -76,7 +76,7 @@ class CompositeRewardView extends UiTickViewBase_1.UiTickViewBase {
       this.N$t() && this.O$t(),
       this.b$t() && this.q$t(),
       this.Wgi() && this.Kgi();
-    const e = this.jIt.GetRewardInfo().AudioId;
+    var e = this.jIt.GetRewardInfo().AudioId;
     ItemRewardController_1.ItemRewardController.PlayAudio(e);
   }
   OnAfterShow() {
@@ -94,25 +94,25 @@ class CompositeRewardView extends UiTickViewBase_1.UiTickViewBase {
     this.Hgi.Tick(e);
   }
   G$t() {
-    var e = this.jIt.GetRewardInfo().Title;
-    var e = !StringUtils_1.StringUtils.IsEmpty(e);
+    var e = this.jIt.GetRewardInfo().Title,
+      e = !StringUtils_1.StringUtils.IsEmpty(e);
     return this.GetItem(4).SetUIActive(e), e;
   }
   mGe() {
-    let e;
-    const t = this.jIt.GetRewardInfo().Title;
+    var e,
+      t = this.jIt.GetRewardInfo().Title;
     StringUtils_1.StringUtils.IsEmpty(t) ||
       ((e = this.GetText(1)), LguiUtil_1.LguiUtil.SetLocalTextNew(e, t));
   }
   Qgi() {
-    var e = this.jIt.GetRewardInfo().TitleIconPath;
-    var e = !StringUtils_1.StringUtils.IsEmpty(e);
-    const t = this.GetTexture(2);
-    const i = this.GetTexture(3);
+    var e = this.jIt.GetRewardInfo().TitleIconPath,
+      e = !StringUtils_1.StringUtils.IsEmpty(e),
+      t = this.GetTexture(2),
+      i = this.GetTexture(3);
     return t.SetUIActive(e), i.SetUIActive(e), e;
   }
   Xgi() {
-    const e = this.jIt.GetRewardInfo().TitleIconPath;
+    var e = this.jIt.GetRewardInfo().TitleIconPath;
     if (!StringUtils_1.StringUtils.IsEmpty(e)) {
       const t = this.GetTexture(2);
       t.SetUIActive(!1),
@@ -122,40 +122,40 @@ class CompositeRewardView extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   N$t() {
-    var e = this.jIt.GetRewardInfo().ContinueText;
-    var e = !StringUtils_1.StringUtils.IsEmpty(e);
+    var e = this.jIt.GetRewardInfo().ContinueText,
+      e = !StringUtils_1.StringUtils.IsEmpty(e);
     return this.GetItem(7).SetUIActive(e), e;
   }
   O$t() {
-    let e;
-    const t = this.jIt.GetRewardInfo().ContinueText;
+    var e,
+      t = this.jIt.GetRewardInfo().ContinueText;
     StringUtils_1.StringUtils.IsEmpty(t) ||
       ((e = this.GetText(7)), LguiUtil_1.LguiUtil.SetLocalTextNew(e, t));
   }
   b$t() {
-    var e = this.jIt.GetRewardInfo().IsItemVisible;
-    const t = this.jIt.GetItemList();
-    var e = e && void 0 !== t && t?.length > 0;
+    var e = this.jIt.GetRewardInfo().IsItemVisible,
+      t = this.jIt.GetItemList(),
+      e = e && void 0 !== t && 0 < t?.length;
     return this.sOe.GetActive() !== e && this.sOe.SetActive(e), e;
   }
   q$t() {
     this.sOe.Refresh(this.jIt.GetItemList());
   }
   Wgi() {
-    var e = this.jIt.GetRewardInfo();
-    var t = this.jIt.GetExtendRewardInfo();
-    var e = e.IsProgressVisible;
-    var t = t.ProgressQueue;
-    var e = e && void 0 !== t && t?.length > 0;
+    var e = this.jIt.GetRewardInfo(),
+      t = this.jIt.GetExtendRewardInfo(),
+      e = e.IsProgressVisible,
+      t = t.ProgressQueue,
+      e = e && void 0 !== t && 0 < t?.length;
     return this.Hgi.SetActive(e), e;
   }
   Kgi() {
-    const e = this.jIt.GetRewardInfo();
-    const t = this.jIt.GetExtendRewardInfo().ProgressQueue;
+    var e = this.jIt.GetRewardInfo(),
+      t = this.jIt.GetExtendRewardInfo().ProgressQueue;
     t &&
-      t.length !== 0 &&
+      0 !== t.length &&
       this.Hgi.Refresh(e.ProgressBarTitle, t, e.ProgressBarAnimationTime);
   }
 }
 exports.CompositeRewardView = CompositeRewardView;
-// # sourceMappingURL=CompositeRewardView.js.map
+//# sourceMappingURL=CompositeRewardView.js.map

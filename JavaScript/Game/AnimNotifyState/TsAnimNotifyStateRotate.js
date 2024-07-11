@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const MathUtils_1 = require("../../Core/Utils/MathUtils");
-const TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
-const GlobalData_1 = require("../GlobalData");
-const MIN_DELTA_TIME = 0.016;
+const UE = require("ue"),
+  MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
+  GlobalData_1 = require("../GlobalData"),
+  MIN_DELTA_TIME = 0.016;
 class TsAnimNotifyStateRotate extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -39,7 +39,7 @@ class TsAnimNotifyStateRotate extends UE.KuroAnimNotifyState {
         if (t.GetComponent(95)?.Active) return !1;
       } else if (this.只在横板模式中生效)
         if (!t.GetComponent(95)?.Active) return !1;
-      const e = t.GetComponent(33);
+      var e = t.GetComponent(33);
       if (!e?.Valid) return !1;
       if (
         (e.SetSkillCanRotate(!0),
@@ -89,7 +89,7 @@ class TsAnimNotifyStateRotate extends UE.KuroAnimNotifyState {
         this.Curve.GetFloatValue(
           this.GetCurrentTriggerOffsetInThisNotifyTick(),
         );
-      const e = this.TotalDuration - this.NowTime;
+      var e = this.TotalDuration - this.NowTime;
       return (
         this.是否平滑旋转 &&
           e > MIN_DELTA_TIME &&
@@ -122,4 +122,4 @@ class TsAnimNotifyStateRotate extends UE.KuroAnimNotifyState {
   }
 }
 exports.default = TsAnimNotifyStateRotate;
-// # sourceMappingURL=TsAnimNotifyStateRotate.js.map
+//# sourceMappingURL=TsAnimNotifyStateRotate.js.map

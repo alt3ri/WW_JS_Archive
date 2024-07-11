@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TipsDataTool = exports.AttributeModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase");
-const MathUtils_1 = require("../../../Core/Utils/MathUtils");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const CommonComponentDefine_1 = require("../Common/CommonComponentDefine");
-const AttributeDefine_1 = require("./AttributeDefine");
+const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  CommonComponentDefine_1 = require("../Common/CommonComponentDefine"),
+  AttributeDefine_1 = require("./AttributeDefine");
 class AttributeModel extends ModelBase_1.ModelBase {
   GetFormatAttributeValueString(e, t, r = !1) {
-    const i = t;
+    var i = t;
     return ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
       e,
     ).IsPercent
@@ -37,4 +37,4 @@ class TipsDataTool {
   }
 }
 exports.TipsDataTool = TipsDataTool;
-// # sourceMappingURL=AttributeModel.js.map
+//# sourceMappingURL=AttributeModel.js.map

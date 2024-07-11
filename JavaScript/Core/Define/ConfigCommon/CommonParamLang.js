@@ -1,22 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configCommonParamLang = void 0);
-const LanguageSystem_1 = require("../../Common/LanguageSystem");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const DeserializeConfig_1 = require("../../Config/DeserializeConfig");
-const DB = "lang_common_param.db";
-const TABLE = "CommonParam";
-const COMMAND = "select content from `CommonParam` where id = ?";
-const logPair = [
-  ["数据库", DB],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
-const langCache = new Map();
-const initStat = void 0;
-const getLocalTextStat = void 0;
-const LOCAL_TEXT_STAT_PREFIX = "configCommonParamLang.GetLocalText(";
+const LanguageSystem_1 = require("../../Common/LanguageSystem"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  DeserializeConfig_1 = require("../../Config/DeserializeConfig"),
+  DB = "lang_common_param.db",
+  TABLE = "CommonParam",
+  COMMAND = "select content from `CommonParam` where id = ?",
+  logPair = [
+    ["数据库", DB],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ],
+  langCache = new Map(),
+  initStat = void 0,
+  getLocalTextStat = void 0,
+  LOCAL_TEXT_STAT_PREFIX = "configCommonParamLang.GetLocalText(";
 exports.configCommonParamLang = {
   Init: () => {
     ConfigCommon_1.ConfigCommon.GetLangStatementId(TABLE, DB, COMMAND);
@@ -29,10 +29,10 @@ exports.configCommonParamLang = {
       );
     let n = langCache.get(o);
     n || ((n = new Map()), langCache.set(o, n));
-    const a = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(e);
-    let i = n.get(a);
+    var a = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(e),
+      i = n.get(a);
     if (i) return i;
-    const m = ConfigCommon_1.ConfigCommon.GetLangStatementId(
+    var m = ConfigCommon_1.ConfigCommon.GetLangStatementId(
       TABLE,
       DB,
       COMMAND,
@@ -45,16 +45,17 @@ exports.configCommonParamLang = {
             "Id",
             o,
           ])) &&
-          ConfigCommon_1.ConfigCommon.Step(
-            m,
-            !0,
-            ...logPair,
-            ["传入语言", e],
-            ["查询语言", a],
-            ["文本Id", o],
-          ) > 0)
+          0 <
+            ConfigCommon_1.ConfigCommon.Step(
+              m,
+              !0,
+              ...logPair,
+              ["传入语言", e],
+              ["查询语言", a],
+              ["文本Id", o],
+            ))
       ) {
-        let C = void 0;
+        var C = void 0;
         if (
           (([g, C] = ConfigCommon_1.ConfigCommon.GetValue(
             m,
@@ -87,4 +88,4 @@ exports.configCommonParamLang = {
     }
   },
 };
-// # sourceMappingURL=CommonParamLang.js.map
+//# sourceMappingURL=CommonParamLang.js.map

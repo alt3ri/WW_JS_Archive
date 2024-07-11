@@ -1,31 +1,35 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, i, e, s) {
-    let o;
-    const h = arguments.length;
-    let n =
-      h < 3 ? i : s === null ? (s = Object.getOwnPropertyDescriptor(i, e)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      h = arguments.length,
+      n =
+        h < 3
+          ? i
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(i, e))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(t, i, e, s);
     else
-      for (let r = t.length - 1; r >= 0; r--)
-        (o = t[r]) && (n = (h < 3 ? o(n) : h > 3 ? o(i, e, n) : o(i, e)) || n);
-    return h > 3 && n && Object.defineProperty(i, e, n), n;
+      for (var r = t.length - 1; 0 <= r; r--)
+        (o = t[r]) && (n = (h < 3 ? o(n) : 3 < h ? o(i, e, n) : o(i, e)) || n);
+    return 3 < h && n && Object.defineProperty(i, e, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlayingMontageInfo =
     exports.PlayMontageConfig =
     exports.BasePerformComponent =
       void 0);
-const Log_1 = require("../../../../../Core/Common/Log");
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
-const ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
-const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const CharacterNameDefines_1 = require("../CharacterNameDefines");
-const SECOND_TO_MILLISECOND = 1e3;
+const Log_1 = require("../../../../../Core/Common/Log"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  CharacterNameDefines_1 = require("../CharacterNameDefines"),
+  SECOND_TO_MILLISECOND = 1e3;
 let BasePerformComponent = class BasePerformComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -88,7 +92,7 @@ let BasePerformComponent = class BasePerformComponent extends EntityComponent_1.
           ),
         -1
       );
-    const h = this._Fr();
+    var h = this._Fr();
     const n = new PlayingMontageInfo(h, t, i, this, e, s, o);
     return (
       this.aFr.set(h, n),
@@ -97,7 +101,7 @@ let BasePerformComponent = class BasePerformComponent extends EntityComponent_1.
         t?.IsValid() &&
           n.CheckPlayCondition() &&
           ((t = (n.BodyMontage = t).SequenceLength * SECOND_TO_MILLISECOND),
-          n.MontageConfig.PlayMontageTime === 0
+          0 === n.MontageConfig.PlayMontageTime
             ? n.MontageConfig.CalculatePlayTime(t)
             : (n.MontageConfig.OncePlayTime = t),
           Log_1.Log.CheckInfo() &&
@@ -187,15 +191,15 @@ class PlayMontageConfig {
       (this.OTe = 0),
       (this.OTe = t),
       (this.NTe = i),
-      (this.IsPlayLoop = e || this.NTe !== 0),
-      (this.IsInfiniteLoop = s || this.NTe === -1 || this.OTe === -1);
+      (this.IsPlayLoop = e || 0 !== this.NTe),
+      (this.IsInfiniteLoop = s || -1 === this.NTe || -1 === this.OTe);
   }
   CalculatePlayTime(t) {
     (this.OncePlayTime = t),
       (this.PlayMontageTime =
-        this.NTe && this.NTe > 0
+        this.NTe && 0 < this.NTe
           ? this.NTe * SECOND_TO_MILLISECOND
-          : this.OTe && this.OTe > 0
+          : this.OTe && 0 < this.OTe
             ? this.OTe * t
             : t),
       this.IsInfiniteLoop ||
@@ -266,4 +270,4 @@ class PlayingMontageInfo {
   }
 }
 exports.PlayingMontageInfo = PlayingMontageInfo;
-// # sourceMappingURL=BasePerformComponent.js.map
+//# sourceMappingURL=BasePerformComponent.js.map

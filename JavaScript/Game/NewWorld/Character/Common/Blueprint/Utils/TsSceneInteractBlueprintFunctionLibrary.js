@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const UE = require("ue");
-const EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem");
-const RewardController_1 = require("../../../../../Module/Reward/RewardController");
+const UE = require("ue"),
+  EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem"),
+  RewardController_1 = require("../../../../../Module/Reward/RewardController");
 class TsSceneInteractBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static GetSitDownState(t) {
     return (
@@ -50,4 +50,4 @@ class TsSceneInteractBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrar
   }
 }
 exports.default = TsSceneInteractBlueprintFunctionLibrary;
-// # sourceMappingURL=TsSceneInteractBlueprintFunctionLibrary.js.map
+//# sourceMappingURL=TsSceneInteractBlueprintFunctionLibrary.js.map

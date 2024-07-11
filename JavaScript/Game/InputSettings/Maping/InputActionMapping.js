@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputActionMapping = void 0);
-const Log_1 = require("../../../Core/Common/Log");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../Manager/ConfigManager");
-const InputActionBinding_1 = require("../Binding/InputActionBinding");
+const Log_1 = require("../../../Core/Common/Log"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  InputActionBinding_1 = require("../Binding/InputActionBinding");
 class InputActionMapping {
   constructor() {
     (this.WSe = new Map()), (this.KSe = new Map()), (this.QSe = new Map());
   }
   Initialize() {
-    const t =
+    var t =
       ConfigManager_1.ConfigManager.InputSettingsConfig.GetAllActionMappingConfig();
     if (t) for (const n of t) this.NewActionBinding(n);
   }
@@ -20,17 +20,17 @@ class InputActionMapping {
     this.WSe.clear(), this.KSe.clear(), this.QSe.clear();
   }
   NewActionBinding(t) {
-    var n = t.ActionName;
-    const i = new InputActionBinding_1.InputActionBinding();
-    var t = (i.Initialize(t), i.GetConfigId());
-    var n = (this.WSe.set(n, i), this.KSe.set(t, i), i.GetActionMappingType());
+    var n = t.ActionName,
+      i = new InputActionBinding_1.InputActionBinding(),
+      t = (i.Initialize(t), i.GetConfigId()),
+      n = (this.WSe.set(n, i), this.KSe.set(t, i), i.GetActionMappingType());
     let e = this.QSe.get(n);
     e || ((e = new Set()), this.QSe.set(n, e)), e.add(i);
   }
   RemoveActionBinding(t) {
-    let n;
-    let i;
-    const e = this.WSe.get(t);
+    var n,
+      i,
+      e = this.WSe.get(t);
     e &&
       ((n = e.GetConfigId()),
       (i = e.GetActionMappingType()),
@@ -52,7 +52,7 @@ class InputActionMapping {
     return this.QSe.get(t);
   }
   SetKeys(t, n) {
-    const i = this.WSe.get(t);
+    var i = this.WSe.get(t);
     i
       ? (i.SetKeys(n),
         EventSystem_1.EventSystem.Emit(
@@ -69,7 +69,7 @@ class InputActionMapping {
         );
   }
   RefreshKeysByActionMappings(t, n) {
-    const i = this.WSe.get(t);
+    var i = this.WSe.get(t);
     i
       ? (i.RefreshKeysByActionMappings(n),
         EventSystem_1.EventSystem.Emit(
@@ -86,7 +86,7 @@ class InputActionMapping {
         );
   }
   AddKeys(t, n) {
-    const i = this.WSe.get(t);
+    var i = this.WSe.get(t);
     i
       ? (i.AddKeys(n),
         EventSystem_1.EventSystem.Emit(
@@ -101,7 +101,7 @@ class InputActionMapping {
         ]);
   }
   RemoveKeys(t, n) {
-    const i = this.WSe.get(t);
+    var i = this.WSe.get(t);
     i
       ? (i.RemoveKeys(n),
         EventSystem_1.EventSystem.Emit(
@@ -116,7 +116,7 @@ class InputActionMapping {
         ]);
   }
   RemoveKeysByCondition(t, n) {
-    const i = this.WSe.get(t);
+    var i = this.WSe.get(t);
     i
       ? (i.RemoveKeysByCondition(n),
         EventSystem_1.EventSystem.Emit(
@@ -134,4 +134,4 @@ class InputActionMapping {
   }
 }
 exports.InputActionMapping = InputActionMapping;
-// # sourceMappingURL=InputActionMapping.js.map
+//# sourceMappingURL=InputActionMapping.js.map

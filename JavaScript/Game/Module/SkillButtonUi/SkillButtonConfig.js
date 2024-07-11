@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkillButtonConfig = void 0);
-const SkillButtonByRoleId_1 = require("../../../Core/Define/ConfigQuery/SkillButtonByRoleId");
-const SkillButtonEffectById_1 = require("../../../Core/Define/ConfigQuery/SkillButtonEffectById");
-const SkillButtonIndexById_1 = require("../../../Core/Define/ConfigQuery/SkillButtonIndexById");
-const SkillCommonButtonAll_1 = require("../../../Core/Define/ConfigQuery/SkillCommonButtonAll");
-const SkillIconByTag_1 = require("../../../Core/Define/ConfigQuery/SkillIconByTag");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const SkillButtonByRoleId_1 = require("../../../Core/Define/ConfigQuery/SkillButtonByRoleId"),
+  SkillButtonEffectById_1 = require("../../../Core/Define/ConfigQuery/SkillButtonEffectById"),
+  SkillButtonIndexById_1 = require("../../../Core/Define/ConfigQuery/SkillButtonIndexById"),
+  SkillCommonButtonAll_1 = require("../../../Core/Define/ConfigQuery/SkillCommonButtonAll"),
+  SkillIconByTag_1 = require("../../../Core/Define/ConfigQuery/SkillIconByTag"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class SkillButtonConfig extends ConfigBase_1.ConfigBase {
   GetAllSkillButtonConfig(e) {
     return SkillButtonByRoleId_1.configSkillButtonByRoleId.GetConfigList(e);
@@ -25,4 +25,4 @@ class SkillButtonConfig extends ConfigBase_1.ConfigBase {
   }
 }
 exports.SkillButtonConfig = SkillButtonConfig;
-// # sourceMappingURL=SkillButtonConfig.js.map
+//# sourceMappingURL=SkillButtonConfig.js.map

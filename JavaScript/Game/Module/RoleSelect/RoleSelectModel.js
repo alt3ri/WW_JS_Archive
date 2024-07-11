@@ -17,4 +17,4 @@ class RoleSelectModel extends ModelBase_1.ModelBase {
   }
 }
 exports.RoleSelectModel = RoleSelectModel;
-// # sourceMappingURL=RoleSelectModel.js.map
+//# sourceMappingURL=RoleSelectModel.js.map

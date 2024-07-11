@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SilentAreaView = void 0);
-const UE = require("ue");
-const EventDefine_1 = require("../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../Common/Event/EventSystem");
-const ModelManager_1 = require("../../../../Manager/ModelManager");
-const BattleVisibleChildView_1 = require("../BattleChildView/BattleVisibleChildView");
-const SilentAreaInfoPanel_1 = require("./SilentAreaInfoPanel");
+const UE = require("ue"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  BattleVisibleChildView_1 = require("../BattleChildView/BattleVisibleChildView"),
+  SilentAreaInfoPanel_1 = require("./SilentAreaInfoPanel");
 class SilentAreaView extends BattleVisibleChildView_1.BattleVisibleChildView {
   constructor() {
     super(...arguments),
@@ -14,7 +14,7 @@ class SilentAreaView extends BattleVisibleChildView_1.BattleVisibleChildView {
       (this.Gct = BigInt(0)),
       (this.Nsr = void 0),
       (this.kqe = (e) => {
-        let t;
+        var t;
         e
           ? ((e = this.GetItem(1)),
             (t = this.Nsr?.GetSilentAreaShowInfo()),
@@ -22,9 +22,9 @@ class SilentAreaView extends BattleVisibleChildView_1.BattleVisibleChildView {
           : this.qct.EndShow();
       }),
       (this.Oct = () => {
-        const e = this.GetExtendToggle(0);
+        var e = this.GetExtendToggle(0);
         e &&
-          (e.GetToggleState() === 1
+          (1 === e.GetToggleState()
             ? e.SetToggleState(0, !0)
             : e.SetToggleState(1, !0));
       });
@@ -88,4 +88,4 @@ class SilentAreaView extends BattleVisibleChildView_1.BattleVisibleChildView {
   }
 }
 exports.SilentAreaView = SilentAreaView;
-// # sourceMappingURL=SilentAreaInfoView.js.map
+//# sourceMappingURL=SilentAreaInfoView.js.map

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventInputDistribute = void 0);
-const Log_1 = require("../../../../Core/Common/Log");
-const LevelEventLockInputState_1 = require("../../../LevelGamePlay/LevelEventLockInputState");
-const InputDistributeSetup_1 = require("./InputDistributeSetup");
+const Log_1 = require("../../../../Core/Common/Log"),
+  LevelEventLockInputState_1 = require("../../../LevelGamePlay/LevelEventLockInputState"),
+  InputDistributeSetup_1 = require("./InputDistributeSetup");
 class LevelEventInputDistribute extends InputDistributeSetup_1.InputDistributeSetup {
   OnRefresh() {
     return (
@@ -21,4 +21,4 @@ class LevelEventInputDistribute extends InputDistributeSetup_1.InputDistributeSe
   }
 }
 exports.LevelEventInputDistribute = LevelEventInputDistribute;
-// # sourceMappingURL=LevelEventInputDistribute.js.map
+//# sourceMappingURL=LevelEventInputDistribute.js.map

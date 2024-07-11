@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configExploreProgressAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const ExploreProgress_1 = require("../Config/ExploreProgress");
-const DB = "db_explore_progress.db";
-const FILE = "t.探索度.xlsx";
-const TABLE = "ExploreProgress";
-const COMMAND = "select BinData from `ExploreProgress`";
-const KEY_PREFIX = "ExploreProgressAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  ExploreProgress_1 = require("../Config/ExploreProgress"),
+  DB = "db_explore_progress.db",
+  FILE = "t.探索度.xlsx",
+  TABLE = "ExploreProgress",
+  COMMAND = "select BinData from `ExploreProgress`",
+  KEY_PREFIX = "ExploreProgressAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configExploreProgressAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configExploreProgressAll = {
     );
   },
   GetConfigList: (o = !0) => {
-    let e;
+    var e;
     if (
       (e = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configExploreProgressAll = {
       }
       const i = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let n = void 0;
+        var n = void 0;
         if (
           (([e, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -66,4 +66,4 @@ exports.configExploreProgressAll = {
     }
   },
 };
-// # sourceMappingURL=ExploreProgressAll.js.map
+//# sourceMappingURL=ExploreProgressAll.js.map

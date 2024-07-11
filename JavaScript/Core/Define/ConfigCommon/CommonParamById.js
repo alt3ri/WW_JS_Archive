@@ -1,28 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configCommonParamById = void 0);
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const DeserializeConfig_1 = require("../../Config/DeserializeConfig");
-const FILE = "c.参数.xlsx";
-const DB = "db_common_param.db";
-const TABLE = "CommonParam";
-const COMMAND = "select BinData from `CommonParam` where KeyName = ?";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  DeserializeConfig_1 = require("../../Config/DeserializeConfig"),
+  FILE = "c.参数.xlsx",
+  DB = "db_common_param.db",
+  TABLE = "CommonParam",
+  COMMAND = "select BinData from `CommonParam` where KeyName = ?",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const intCache = new Map();
-const floatCache = new Map();
-const boolCache = new Map();
-const stringCache = new Map();
-const intListCache = new Map();
-const floatListCache = new Map();
+const intCache = new Map(),
+  floatCache = new Map(),
+  boolCache = new Map(),
+  stringCache = new Map(),
+  intListCache = new Map(),
+  floatListCache = new Map();
 function getDataView(i) {
-  let o, e;
+  var o, e;
   return (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, [
     "command",
     COMMAND,
@@ -35,8 +35,8 @@ function getDataView(i) {
           ...logPair,
           ["Id", i],
         )) &&
-        ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, ["Id", i]) >
-          0)
+        0 <
+          ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, ["Id", i]))
       ? ((e = void 0),
         ([o, e] = ConfigCommon_1.ConfigCommon.GetValue(
           handleId,
@@ -49,19 +49,19 @@ function getDataView(i) {
       : (ConfigCommon_1.ConfigCommon.Reset(handleId), [!1, void 0])
     : [!1, void 0];
 }
-const initStat = void 0;
-const getIntConfigStat = void 0;
-const INT_STAT_PREFIX = "configCommonParamById.GetIntConfig(";
-const getFloatConfigStat = void 0;
-const FLOAT_STAT_PREFIX = "configCommonParamById.GetFloatConfig(";
-const getBoolConfigStat = void 0;
-const BOOL_STAT_PREFIX = "configCommonParamById.GetBoolConfig(";
-const getStringConfigStat = void 0;
-const STRING_STAT_PREFIX = "configCommonParamById.GetStringConfig(";
-const getIntArrayConfigStat = void 0;
-const INT_ARRAY_STAT_PREFIX = "configCommonParamById.GetIntArrayConfig(";
-const getFloatArrayConfigStat = void 0;
-const FLOAT_ARRAY_STAT_PREFIX = "configCommonParamById.GetFloatArrayConfig(";
+const initStat = void 0,
+  getIntConfigStat = void 0,
+  INT_STAT_PREFIX = "configCommonParamById.GetIntConfig(",
+  getFloatConfigStat = void 0,
+  FLOAT_STAT_PREFIX = "configCommonParamById.GetFloatConfig(",
+  getBoolConfigStat = void 0,
+  BOOL_STAT_PREFIX = "configCommonParamById.GetBoolConfig(",
+  getStringConfigStat = void 0,
+  STRING_STAT_PREFIX = "configCommonParamById.GetStringConfig(",
+  getIntArrayConfigStat = void 0,
+  INT_ARRAY_STAT_PREFIX = "configCommonParamById.GetIntArrayConfig(",
+  getFloatArrayConfigStat = void 0,
+  FLOAT_ARRAY_STAT_PREFIX = "configCommonParamById.GetFloatArrayConfig(";
 exports.configCommonParamById = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -120,19 +120,17 @@ exports.configCommonParamById = {
   },
   GetIntArrayConfig: (e) => {
     if ((n = intListCache.get(e))) return n;
-    const [i, a] = getDataView(e);
+    var [i, a] = getDataView(e);
     if (i) {
-      var n = new Array();
-      const t = DeserializeConfig_1.DeserializeConfig.ParseInt(
-        a,
-        0,
-        ...logPair,
-        ["Id", e],
-      );
+      var n = new Array(),
+        t = DeserializeConfig_1.DeserializeConfig.ParseInt(a, 0, ...logPair, [
+          "Id",
+          e,
+        ]);
       if (t.Success) {
         let o = t.Position;
         for (let i = 0; i < t.Value; i++) {
-          const r = DeserializeConfig_1.DeserializeConfig.ParseInt(
+          var r = DeserializeConfig_1.DeserializeConfig.ParseInt(
             a,
             o,
             ...logPair,
@@ -147,19 +145,17 @@ exports.configCommonParamById = {
   },
   GetFloatArrayConfig: (e) => {
     if ((n = floatListCache.get(e))) return n;
-    const [i, a] = getDataView(e);
+    var [i, a] = getDataView(e);
     if (i) {
-      var n = new Array();
-      const t = DeserializeConfig_1.DeserializeConfig.ParseInt(
-        a,
-        0,
-        ...logPair,
-        ["Id", e],
-      );
+      var n = new Array(),
+        t = DeserializeConfig_1.DeserializeConfig.ParseInt(a, 0, ...logPair, [
+          "Id",
+          e,
+        ]);
       if (t.Success) {
         let o = t.Position;
         for (let i = 0; i < t.Value; i++) {
-          const r = DeserializeConfig_1.DeserializeConfig.ParseFloat(
+          var r = DeserializeConfig_1.DeserializeConfig.ParseFloat(
             a,
             o,
             ...logPair,
@@ -173,4 +169,4 @@ exports.configCommonParamById = {
     }
   },
 };
-// # sourceMappingURL=CommonParamById.js.map
+//# sourceMappingURL=CommonParamById.js.map

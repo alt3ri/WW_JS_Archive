@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MapMarkMgr = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem");
-const ObjectUtils_1 = require("../../../../../../Core/Utils/ObjectUtils");
-const EventDefine_1 = require("../../../../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../../../../Common/Event/EventSystem");
-const ConfigManager_1 = require("../../../../../Manager/ConfigManager");
-const ModelManager_1 = require("../../../../../Manager/ModelManager");
-const GeneralLogicTreeUtil_1 = require("../../../../GeneralLogicTree/GeneralLogicTreeUtil");
-const TrackController_1 = require("../../../../Track/TrackController");
-const WorldMapDefine_1 = require("../../../../WorldMap/WorldMapDefine");
-const MapController_1 = require("../../../Controller/MapController");
-const MapDefine_1 = require("../../../MapDefine");
-const MapUtil_1 = require("../../../MapUtil");
-const CustomMarkItem_1 = require("../../../Marks/MarkItem/CustomMarkItem");
-const PlayerMarkItem_1 = require("../../../Marks/MarkItem/PlayerMarkItem");
-const TeleportMarkItem_1 = require("../../../Marks/MarkItem/TeleportMarkItem");
-const MarkItemUtil_1 = require("../../../Marks/MarkItemUtil");
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem"),
+  ObjectUtils_1 = require("../../../../../../Core/Utils/ObjectUtils"),
+  EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  GeneralLogicTreeUtil_1 = require("../../../../GeneralLogicTree/GeneralLogicTreeUtil"),
+  TrackController_1 = require("../../../../Track/TrackController"),
+  WorldMapDefine_1 = require("../../../../WorldMap/WorldMapDefine"),
+  MapController_1 = require("../../../Controller/MapController"),
+  MapDefine_1 = require("../../../MapDefine"),
+  MapUtil_1 = require("../../../MapUtil"),
+  CustomMarkItem_1 = require("../../../Marks/MarkItem/CustomMarkItem"),
+  PlayerMarkItem_1 = require("../../../Marks/MarkItem/PlayerMarkItem"),
+  TeleportMarkItem_1 = require("../../../Marks/MarkItem/TeleportMarkItem"),
+  MarkItemUtil_1 = require("../../../Marks/MarkItemUtil");
 class MapMarkMgr {
   constructor(t, e, i, r) {
     (this.tRi = void 0),
@@ -57,15 +57,15 @@ class MapMarkMgr {
           (this.gRi(t, e.MarkId, !1), this.gRi(t, e.MarkId, !0));
       }),
       (this.fRi = (t, e) => {
-        const i = this.GetMarkItem(t, e);
+        var i = this.GetMarkItem(t, e);
         i &&
           (this.gRi(t, i.MarkId, !1),
           this.hRi.has(e) && this.hRi.delete(e),
           this.RemoveMarkItem(t, e)?.Destroy());
       }),
       (this.gRi = (t, e, i, r = !1) => {
-        let s;
-        var t = this.GetMarkItem(t, e);
+        var s,
+          t = this.GetMarkItem(t, e);
         t &&
           ((s = ModelManager_1.ModelManager.TrackModel.IsTracking(
             t.TrackSource,
@@ -101,8 +101,8 @@ class MapMarkMgr {
         this.sRi.clear();
       }),
       (this.pRi = (t) => {
-        const e = this.GetMarkItemsByType(11);
-        e && e.size > 0 && this.vRi(11), this.MRi(t);
+        var e = this.GetMarkItemsByType(11);
+        e && 0 < e.size && this.vRi(11), this.MRi(t);
       }),
       (this.uDi = (t) => {
         let e = this.GetMarkItem(5, t);
@@ -116,9 +116,9 @@ class MapMarkMgr {
           );
       }),
       (this.Jpe = (t, e, i) => {
-        const r = e.Entity.GetComponent(0);
-        const s = r.GetPbEntityInitData();
-        let n = r.GetEntityConfigType();
+        var r = e.Entity.GetComponent(0),
+          s = r.GetPbEntityInitData(),
+          n = r.GetEntityConfigType();
         n === Protocol_1.Aki.Protocol.USs.Proto_OldEntity ||
           n === Protocol_1.Aki.Protocol.USs.Proto_Character ||
           MapUtil_1.MapUtil.IsTemporaryTeleportEntity(s) ||
@@ -132,7 +132,7 @@ class MapMarkMgr {
       (this.lRi = r),
       (this.tRi = e),
       (this._Ri =
-        t === 2
+        2 === t
           ? MapDefine_1.BIG_WORLD_MAP_ID
           : ModelManager_1.ModelManager.GameModeModel.InstanceDungeon
               .MapConfigId);
@@ -148,18 +148,18 @@ class MapMarkMgr {
       this.ERi(),
       this.yRi(),
       this.MRi(ModelManager_1.ModelManager.CreatureModel.GetAllScenePlayers());
-    for (const [, t] of this.rRi)
-      for (const [, e] of t)
+    for (var [, t] of this.rRi)
+      for (var [, e] of t)
         e.IsTracked &&
-          e.MarkType !== 12 &&
+          12 !== e.MarkType &&
           ModelManager_1.ModelManager.MapModel.SetCurTrackMark([
             e.MarkType,
             e.MarkId,
           ]);
   }
   IRi(t) {
-    const e = Math.floor(Math.round(0.01 * t.X) / MapDefine_1.MARK_SCOPE);
-    var t = Math.floor(Math.round(0.01 * t.Y) / MapDefine_1.MARK_SCOPE);
+    var e = Math.floor(Math.round(0.01 * t.X) / MapDefine_1.MARK_SCOPE),
+      t = Math.floor(Math.round(0.01 * t.Y) / MapDefine_1.MARK_SCOPE);
     return e * MapDefine_1.MARK_HASH_XY_PANDING + t;
   }
   dde() {
@@ -274,15 +274,15 @@ class MapMarkMgr {
     if (t) {
       t = this.rRi.get(t);
       if (t) {
-        for (const [, e] of t)
+        for (var [, e] of t)
           this.hRi.delete(e.MarkId),
             this.RemoveMarkItem(e.MarkType, e.MarkId),
             e.Destroy();
         t.clear();
       }
     } else {
-      for (const [, i] of this.rRi)
-        for (const [, r] of i) this.hRi.delete(r.MarkId), r.Destroy();
+      for (var [, i] of this.rRi)
+        for (var [, r] of i) this.hRi.delete(r.MarkId), r.Destroy();
       this.rRi.clear(),
         this.sRi.clear(),
         this.nRi.clear(),
@@ -291,8 +291,8 @@ class MapMarkMgr {
     }
   }
   TRi(t) {
-    let e;
-    let i = t.WorldPosition;
+    var e,
+      i = t.WorldPosition;
     i &&
       ((i = this.IRi(i)),
       (e = this.nRi.get(i))
@@ -301,8 +301,8 @@ class MapMarkMgr {
       (t.GridId = i));
   }
   LRi(t) {
-    var e = t.GridId;
-    var e = this.nRi.get(e);
+    var e = t.GridId,
+      e = this.nRi.get(e);
     e && e.delete(t);
   }
   AddMarkItem(e, i) {
@@ -315,8 +315,8 @@ class MapMarkMgr {
   }
   RemoveMarkItem(t, e) {
     t = this.GetMarkItemsByType(t);
-    if (t && t.size !== 0) {
-      const i = t.get(e);
+    if (t && 0 !== t.size) {
+      var i = t.get(e);
       if ((t.delete(e), this.hRi.delete(e), i))
         return (
           this.LRi(i),
@@ -327,7 +327,7 @@ class MapMarkMgr {
     }
   }
   DRi(t, e, i) {
-    const r = t.Holder;
+    var r = t.Holder;
     r &&
       this.MapType === r.MapType &&
       void 0 !== e &&
@@ -338,7 +338,7 @@ class MapMarkMgr {
       t.GetRootItem().SetHierarchyIndex(e));
   }
   RRi(t, e, i) {
-    const r = t.Holder;
+    var r = t.Holder;
     r &&
       this.MapType === r.MapType &&
       t.GetRootItem() &&
@@ -356,7 +356,7 @@ class MapMarkMgr {
     return this.rRi.get(t);
   }
   GetMarkItem(t, e) {
-    if (t === 0) {
+    if (0 === t) {
       let t = void 0;
       for (const [, i] of this.GetAllMarkItems()) if ((t = i.get(e))) break;
       return t;
@@ -368,11 +368,11 @@ class MapMarkMgr {
     return this.rRi;
   }
   GetAllMarkItemsByMapId(t) {
-    let e;
-    let i;
-    const r = new Map();
+    var e,
+      i,
+      r = new Map();
     for ([e, i] of this.rRi)
-      for (const [s, n] of i)
+      for (var [s, n] of i)
         if (n.MapId === t) {
           let t = r.get(e);
           t || ((t = new Map()), r.set(e, t)), t.set(s, n);
@@ -380,11 +380,11 @@ class MapMarkMgr {
     return r;
   }
   GetMarkItemsByClickPosition(t) {
-    var t = MapUtil_1.MapUtil.UiPosition2WorldPosition(t);
-    var t = this.IRi(t);
-    const e = [];
+    var t = MapUtil_1.MapUtil.UiPosition2WorldPosition(t),
+      t = this.IRi(t),
+      e = [];
     for (const r of this.URi(t)) {
-      const i = this.nRi.get(r);
+      var i = this.nRi.get(r);
       i && e.push(...i);
     }
     return e;
@@ -403,9 +403,9 @@ class MapMarkMgr {
     ]);
   }
   UpdateNearbyMarkItem(t, e, i) {
-    let r;
-    var t = this.IRi(t);
-    const s = this.URi(t);
+    var r,
+      t = this.IRi(t),
+      s = this.URi(t);
     for (const _ of s) {
       const n = this.nRi.get(_);
       if (n)
@@ -415,13 +415,13 @@ class MapMarkMgr {
             this.hRi.set(M.MarkId, M);
     }
     const n = this.GetMarkItemsByType(11);
-    if (n) for (const [, a] of n) this.hRi.set(a.MarkId, a);
+    if (n) for (var [, a] of n) this.hRi.set(a.MarkId, a);
     for ([, r] of this.hRi)
       e(r), r.IsCanShowView || (this.aRi.add(r), this.hRi.delete(r.MarkId));
     for (const f of this.sRi) e(f);
-    if (this.aRi.size !== 0) {
+    if (0 !== this.aRi.size) {
       for (const v of this.aRi) {
-        const h = v.GridId;
+        var h = v.GridId;
         s.has(h) ||
           (v.LogicUpdate(
             GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation(),
@@ -431,20 +431,20 @@ class MapMarkMgr {
       this.aRi.clear();
     }
     for (const l of s) {
-      const o = this.nRi.get(l);
+      var o = this.nRi.get(l);
       if (o) for (const m of o) e(m);
     }
   }
   ERi() {
     let t = ConfigManager_1.ConfigManager.MapConfig.GetConfigMarks(this._Ri);
-    t.length === 0 &&
+    0 === t.length &&
       this._Ri !== MapDefine_1.BIG_WORLD_MAP_ID &&
-      this.MapType === 2 &&
+      2 === this.MapType &&
       ((this._Ri = MapDefine_1.BIG_WORLD_MAP_ID),
       (t = ConfigManager_1.ConfigManager.MapConfig.GetConfigMarks(this._Ri)));
     for (const n of t) {
       var e;
-      n.MarkId !== 1 &&
+      1 !== n.MarkId &&
         ((e = MarkItemUtil_1.MarkItemUtil.CreateConfigMark(
           n.MarkId,
           n,
@@ -454,12 +454,12 @@ class MapMarkMgr {
         )),
         this.AddMarkItem(n.ObjectType, e));
     }
-    let i, r;
+    var i, r;
     for ([
       i,
       r,
     ] of ModelManager_1.ModelManager.MapModel.GetEntityPendingList()) {
-      let s = EntitySystem_1.EntitySystem.Get(i);
+      var s = EntitySystem_1.EntitySystem.Get(i);
       s
         ? ((s = s.GetComponent(1)?.Owner), this.SRi(r, i, s))
         : Log_1.Log.CheckDebug() &&
@@ -513,4 +513,4 @@ class MapMarkMgr {
   }
 }
 exports.MapMarkMgr = MapMarkMgr;
-// # sourceMappingURL=MapMarkMgr.js.map
+//# sourceMappingURL=MapMarkMgr.js.map

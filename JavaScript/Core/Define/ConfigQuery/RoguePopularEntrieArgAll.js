@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.configRoguePopularEntrieArgAll = void 0);
-const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer");
-const Stats_1 = require("../../Common/Stats");
-const ConfigCommon_1 = require("../../Config/ConfigCommon");
-const RoguePopularEntrieArg_1 = require("../Config/RoguePopularEntrieArg");
-const DB = "db_rogue.db";
-const FILE = "r.肉鸽.xlsx";
-const TABLE = "RoguePopularEntrieArg";
-const COMMAND = "select BinData from `RoguePopularEntrieArg`";
-const KEY_PREFIX = "RoguePopularEntrieArgAll";
-const logPair = [
-  ["数据库", DB],
-  ["文件", FILE],
-  ["表名", TABLE],
-  ["语句", COMMAND],
-];
+const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
+  Stats_1 = require("../../Common/Stats"),
+  ConfigCommon_1 = require("../../Config/ConfigCommon"),
+  RoguePopularEntrieArg_1 = require("../Config/RoguePopularEntrieArg"),
+  DB = "db_rogue.db",
+  FILE = "r.肉鸽.xlsx",
+  TABLE = "RoguePopularEntrieArg",
+  COMMAND = "select BinData from `RoguePopularEntrieArg`",
+  KEY_PREFIX = "RoguePopularEntrieArgAll",
+  logPair = [
+    ["数据库", DB],
+    ["文件", FILE],
+    ["表名", TABLE],
+    ["语句", COMMAND],
+  ];
 let handleId = 0;
-const initStat = void 0;
-const getConfigListStat = void 0;
+const initStat = void 0,
+  getConfigListStat = void 0;
 exports.configRoguePopularEntrieArgAll = {
   Init: () => {
     handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
@@ -28,7 +28,7 @@ exports.configRoguePopularEntrieArgAll = {
     );
   },
   GetConfigList: (o = !0) => {
-    let r;
+    var r;
     if (
       (r = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair))
     ) {
@@ -39,9 +39,9 @@ exports.configRoguePopularEntrieArgAll = {
       }
       const i = new Array();
       for (;;) {
-        if (ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair) !== 1)
+        if (1 !== ConfigCommon_1.ConfigCommon.Step(handleId, !1, ...logPair))
           break;
-        let n = void 0;
+        var n = void 0;
         if (
           (([r, n] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
@@ -67,4 +67,4 @@ exports.configRoguePopularEntrieArgAll = {
     }
   },
 };
-// # sourceMappingURL=RoguePopularEntrieArgAll.js.map
+//# sourceMappingURL=RoguePopularEntrieArgAll.js.map

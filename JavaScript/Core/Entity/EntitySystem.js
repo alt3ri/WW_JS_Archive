@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EntitySystem = void 0);
-const Stats_1 = require("../Common/Stats");
-const GameBudgetInterfaceController_1 = require("../GameBudgetAllocator/GameBudgetInterfaceController");
-const ObjectSystem_1 = require("../Object/ObjectSystem");
-const BINARY_SEARCH_THREADHOLD = 4;
+const Stats_1 = require("../Common/Stats"),
+  GameBudgetInterfaceController_1 = require("../GameBudgetAllocator/GameBudgetInterfaceController"),
+  ObjectSystem_1 = require("../Object/ObjectSystem"),
+  BINARY_SEARCH_THREADHOLD = 4;
 class TickEntityGroup {
   constructor(t) {
     (this.Priority = t), (this.Entities = new Map());
@@ -31,22 +31,22 @@ class TickEntityManager {
       i.Entities.set(t.Id, t);
   }
   JW(e) {
-    const i = this.WW.length;
+    var i = this.WW.length;
     if (i < BINARY_SEARCH_THREADHOLD) {
       for (let t = 0; t < i; ++t) if (this.WW[t].Priority < e) return t;
       return i;
     }
     if (this.WW[0].Priority < e) return 0;
-    let t = 0;
-    let s = i;
-    for (; s - t > 1; ) {
-      const r = (t + s) >> 1;
+    let t = 0,
+      s = i;
+    for (; 1 < s - t; ) {
+      var r = (t + s) >> 1;
       this.WW[r].Priority > e ? (t = r) : (s = r);
     }
     return s;
   }
   Delete(t) {
-    const e = this.KW.get(t);
+    var e = this.KW.get(t);
     void 0 !== e && (this.QW ? this.$W.push(t) : this.zW(t, e));
   }
   zW(t, e) {
@@ -90,7 +90,7 @@ class TickEntityManager {
     }
     this.XW.length = 0;
     for (const s of this.$W) {
-      const e = this.KW.get(s);
+      var e = this.KW.get(s);
       void 0 !== e && this.zW(s, e);
     }
     this.$W.length = 0;
@@ -172,7 +172,7 @@ class EntitySystem {
     );
   }
   static Get(t) {
-    const e =
+    var e =
       ObjectSystem_1.ObjectSystem.Objects[
         t >>> ObjectSystem_1.ObjectSystem.VersionDigit
       ];
@@ -196,4 +196,4 @@ class EntitySystem {
 }
 ((exports.EntitySystem = EntitySystem).iK = new TickEntityManager()),
   (EntitySystem.oK = new TickEntityManager());
-// # sourceMappingURL=EntitySystem.js.map
+//# sourceMappingURL=EntitySystem.js.map

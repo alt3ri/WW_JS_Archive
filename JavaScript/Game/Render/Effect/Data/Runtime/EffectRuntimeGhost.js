@@ -11,4 +11,4 @@ class EffectRuntimeGhost extends EffectRuntimeDataBase_1.default {
   }
 }
 exports.default = EffectRuntimeGhost;
-// # sourceMappingURL=EffectRuntimeGhost.js.map
+//# sourceMappingURL=EffectRuntimeGhost.js.map

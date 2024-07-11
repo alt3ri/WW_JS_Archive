@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ButtonItem = void 0);
-const UE = require("ue");
-const RedDotController_1 = require("../../../RedDot/RedDotController");
-const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-const LguiUtil_1 = require("../../Util/LguiUtil");
+const UE = require("ue"),
+  RedDotController_1 = require("../../../RedDot/RedDotController"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class ButtonItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
@@ -28,7 +28,7 @@ class ButtonItem extends UiPanelBase_1.UiPanelBase {
     this.GetButton(0).AllowEventBubbleUp = t;
   }
   SetText(t) {
-    const e = this.GetText(1);
+    var e = this.GetText(1);
     e && e.SetText(t);
   }
   SetLocalText(t, ...e) {
@@ -53,7 +53,7 @@ class ButtonItem extends UiPanelBase_1.UiPanelBase {
     this.GetItem(2).SetUIActive(t);
   }
   BindRedDot(t, e = 0) {
-    const i = this.GetItem(2);
+    var i = this.GetItem(2);
     i &&
       ((this.QFe = t), this.QFe) &&
       RedDotController_1.RedDotController.BindRedDot(t, i, void 0, e);
@@ -68,4 +68,4 @@ class ButtonItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ButtonItem = ButtonItem;
-// # sourceMappingURL=ButtonItem.js.map
+//# sourceMappingURL=ButtonItem.js.map

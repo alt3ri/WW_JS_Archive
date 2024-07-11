@@ -1,32 +1,36 @@
 "use strict";
-const __decorate =
+var __decorate =
   (this && this.__decorate) ||
   function (t, i, e, s) {
-    let o;
-    const h = arguments.length;
-    let r =
-      h < 3 ? i : s === null ? (s = Object.getOwnPropertyDescriptor(i, e)) : s;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    var o,
+      h = arguments.length,
+      r =
+        h < 3
+          ? i
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(i, e))
+            : s;
+    if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       r = Reflect.decorate(t, i, e, s);
     else
-      for (let n = t.length - 1; n >= 0; n--)
-        (o = t[n]) && (r = (h < 3 ? o(r) : h > 3 ? o(i, e, r) : o(i, e)) || r);
-    return h > 3 && r && Object.defineProperty(i, e, r), r;
+      for (var n = t.length - 1; 0 <= n; n--)
+        (o = t[n]) && (r = (h < 3 ? o(r) : 3 < h ? o(i, e, r) : o(i, e)) || r);
+    return 3 < h && r && Object.defineProperty(i, e, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterPatrolComponent = void 0);
-const Log_1 = require("../../../../../../Core/Common/Log");
-const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent");
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
-const Net_1 = require("../../../../../../Core/Net/Net");
-const Vector_1 = require("../../../../../../Core/Utils/Math/Vector");
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils");
-const IComponent_1 = require("../../../../../../UniverseEditor/Interface/IComponent");
-const GameSplineComponent_1 = require("../../../../../LevelGamePlay/Common/GameSplineComponent");
-const LevelGeneralContextDefine_1 = require("../../../../../LevelGamePlay/LevelGeneralContextDefine");
-const ControllerHolder_1 = require("../../../../../Manager/ControllerHolder");
-const BaseActorComponent_1 = require("../../../../Common/Component/BaseActorComponent");
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  Net_1 = require("../../../../../../Core/Net/Net"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  IComponent_1 = require("../../../../../../UniverseEditor/Interface/IComponent"),
+  GameSplineComponent_1 = require("../../../../../LevelGamePlay/Common/GameSplineComponent"),
+  LevelGeneralContextDefine_1 = require("../../../../../LevelGamePlay/LevelGeneralContextDefine"),
+  ControllerHolder_1 = require("../../../../../Manager/ControllerHolder"),
+  BaseActorComponent_1 = require("../../../../Common/Component/BaseActorComponent");
 class PatrolRecord {
   constructor() {
     (this.IsActive = !1),
@@ -79,13 +83,13 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
         }
       }),
       (this.OnPatrolFinished = () => {
-        const t = this.CurrentPatrol?.OnPatrolEndHandle;
+        var t = this.CurrentPatrol?.OnPatrolEndHandle;
         this.StopPatrol(), t && t(1);
       }),
       (this.OnTriggerSplineActions = (t) => {
-        const i = this.CurrentSplineInfo.SplineId;
-        const e = this.GetRawIndexInSpline(this.CurrentPatrol.LastPointIndex);
-        const s = this.CurrentPatrol.OnTriggerActionsHandle;
+        var i = this.CurrentSplineInfo.SplineId,
+          e = this.GetRawIndexInSpline(this.CurrentPatrol.LastPointIndex),
+          s = this.CurrentPatrol.OnTriggerActionsHandle;
         (this.CurrentPatrol.PatrolState = 2),
           this.PausePatrol("ExecuteSplineAction"),
           s && s(t),
@@ -114,7 +118,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
   StartPatrol(i, e) {
     if (!this.CurrentPatrol?.IsActive)
       if (this.RestoreSplineState(i) || this.InitSpline(i, e)) {
-        let s = new PatrolRecord();
+        var s = new PatrolRecord();
         (this.CurrentPatrol = s),
           (this.CurrentPatrol.IsActive = !0),
           (this.CurrentPatrol.PatrolState = 1),
@@ -153,7 +157,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
           this.ResetState();
   }
   PausePatrol(t) {
-    let i;
+    var i;
     this.CurrentPatrol &&
       (this.PauseKeyMap.has(t)
         ? Log_1.Log.CheckWarn() &&
@@ -186,7 +190,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
             this.PatrolEndRequest())));
   }
   ResumePatrol(t) {
-    let i;
+    var i;
     this.CurrentPatrol &&
       ((i = this.PauseKeyMap.get(t)),
       this.PauseKeyMap.delete(t)
@@ -283,7 +287,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
       );
   }
   InitSpline(t, i) {
-    const e = new GameSplineComponent_1.GameSplineComponent(t);
+    var e = new GameSplineComponent_1.GameSplineComponent(t);
     if (!this.TryInitSplineFromAiPatrol(e) && !e.Initialize())
       return (
         Log_1.Log.CheckError() &&
@@ -311,7 +315,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
           ),
         !1
       );
-    const s = new SplineInfo();
+    var s = new SplineInfo();
     switch (((s.SplineId = t), (this.CurrentSplineInfo = s), e.Option.Type)) {
       case IComponent_1.ESplineType.Patrol:
         (this.CurrentSplineInfo.IsLoop = !1),
@@ -329,9 +333,9 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
       ((this.CurrentSplineInfo.SplineComp = e),
       (this.CurrentSplineInfo.VirtualSplinePoints = e.PathPoint.slice(0)),
       this.CurrentSplineInfo.IsCircle &&
-        this.CurrentSplineInfo.VirtualSplinePoints.length > 2)
+        2 < this.CurrentSplineInfo.VirtualSplinePoints.length)
     )
-      for (let t = e.PathPoint.length - 2; t > 0; --t)
+      for (let t = e.PathPoint.length - 2; 0 < t; --t)
         this.CurrentSplineInfo.VirtualSplinePoints.push(e.PathPoint[t]);
     return !!this.PartitionSpline(i) && (this.SplineInfoList.set(t, s), !0);
   }
@@ -339,13 +343,13 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
     if (!this.CurrentSplineInfo) return !1;
     if (!this.CurrentSplineInfo.VirtualSplinePoints.length) return !1;
     this.CurrentSplineInfo.SegmentsMoveConfig = new Array();
-    let e = [];
-    let s = 0;
-    const o = this.CurrentSplineInfo.VirtualSplinePoints.length;
+    let e = [],
+      s = 0;
+    var o = this.CurrentSplineInfo.VirtualSplinePoints.length;
     for (let t = 0; t < o; ++t) {
-      const h = this.CurrentSplineInfo.VirtualSplinePoints[t];
+      var h = this.CurrentSplineInfo.VirtualSplinePoints[t];
       e.push(h),
-        (t === o - 1 || (h.Actions && h.Actions.length !== 0)) &&
+        (t === o - 1 || (h.Actions && 0 !== h.Actions.length)) &&
           (this.CreateMoveConfig(e, s, i), (s += e.length), (e = []));
     }
     return !0;
@@ -361,10 +365,10 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
       }
   }
   CreatePatrolSplineMoveConfig(i, e, t) {
-    const s = [];
+    var s = [];
     for (let t = 0; t < i.length; t++) {
       const r = i[t];
-      const o = {
+      var o = {
         Index: t,
         Position: r.Point,
         Actions: new Array(),
@@ -379,18 +383,18 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
       };
       s.push(o);
     }
-    var h = this.CurrentSplineInfo.SplineComp.Option;
-    var h = {
-      Points: s,
-      Navigation: h.IsNavigation ?? !1,
-      IsFly: h.IsFloating ?? !1,
-      DebugMode: t.DebugMode ?? !1,
-      Loop: !1,
-      CircleMove: !1,
-      UsePreviousIndex: !1,
-      UseNearestPoint: !1,
-      ReturnFalseWhenNavigationFailed: !1,
-    };
+    var h = this.CurrentSplineInfo.SplineComp.Option,
+      h = {
+        Points: s,
+        Navigation: h.IsNavigation ?? !1,
+        IsFly: h.IsFloating ?? !1,
+        DebugMode: t.DebugMode ?? !1,
+        Loop: !1,
+        CircleMove: !1,
+        UsePreviousIndex: !1,
+        UseNearestPoint: !1,
+        ReturnFalseWhenNavigationFailed: !1,
+      };
     (h.Callback = this.OnSegmentPatrolFinished),
       this.CurrentSplineInfo.SegmentsMoveConfig.push(h);
   }
@@ -413,14 +417,14 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
       );
   }
   MoveAlongPathWithRecord() {
-    let t, i, e;
+    var t, i, e;
     this.CurrentPatrol?.IsActive &&
       this.CurrentSplineInfo &&
-      ((t = (e = this.CurrentPatrol.PatrolState === 2)
+      ((t = (e = 2 === this.CurrentPatrol.PatrolState)
         ? this.CurrentPatrol.LastPointIndex
         : this.GetNextPointIndex()),
       (i = this.GetSegmentInfo(t)),
-      e || i.SegmentIndex !== -1
+      e || -1 !== i.SegmentIndex
         ? (((e =
             this.CurrentSplineInfo.SegmentsMoveConfig[
               i.SegmentIndex
@@ -436,8 +440,9 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
               ["StartIndex", t],
             ),
           this.MoveComp.MoveAlongPath(e))
-        : (i = this.GetSegmentInfo(this.CurrentPatrol.LastPointIndex))
-            .SegmentIndex !== -1 &&
+        : -1 !==
+            (i = this.GetSegmentInfo(this.CurrentPatrol.LastPointIndex))
+              .SegmentIndex &&
           i.IsEnd &&
           this.OnPatrolFinished());
   }
@@ -462,7 +467,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
     return !!t && ((this.CurrentSplineInfo = t), !0);
   }
   PatrolBeginRequest() {
-    let t;
+    var t;
     this.CreatureData.IsMonster() &&
       (((t = Protocol_1.Aki.Protocol.WYn.create()).rkn =
         MathUtils_1.MathUtils.NumberToLong(
@@ -474,7 +479,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
       Net_1.Net.Call(11810, t, () => {}));
   }
   PatrolEndRequest() {
-    let t;
+    var t;
     this.CreatureData.IsMonster() &&
       (((t = Protocol_1.Aki.Protocol.QYn.create()).rkn =
         MathUtils_1.MathUtils.NumberToLong(
@@ -483,9 +488,9 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
       Net_1.Net.Call(21134, t, () => {}));
   }
   DirectionChangeRequest(t) {
-    let i;
+    var i;
     this.CreatureData.IsMonster() &&
-      (t === 0
+      (0 === t
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("AI", 51, "往返式巡逻：回到起点", [
               "PbDataID",
@@ -519,9 +524,9 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
       )
     ) {
       let i = 0;
-      const s = this.CurrentSplineInfo.SegmentsMoveConfig.length;
+      var s = this.CurrentSplineInfo.SegmentsMoveConfig.length;
       for (let t = 0; t < s; ++t) {
-        const o = this.CurrentSplineInfo.SegmentsMoveConfig[t].Points.length;
+        var o = this.CurrentSplineInfo.SegmentsMoveConfig[t].Points.length;
         if (e >= i && e < i + o)
           return { SegmentIndex: t, PointIndex: e - i, IsEnd: e - i == o - 1 };
         i += o;
@@ -549,21 +554,21 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
           ]),
         0
       );
-    const i = this.CurrentSplineInfo.VirtualSplinePoints;
-    let e = 0;
-    let s = Number.MAX_VALUE;
-    const o = this.ActorComp.ActorLocationProxy;
-    const h = Vector_1.Vector.Create();
-    const r = Vector_1.Vector.Create();
+    var i = this.CurrentSplineInfo.VirtualSplinePoints;
+    let e = 0,
+      s = Number.MAX_VALUE;
+    var o = this.ActorComp.ActorLocationProxy,
+      h = Vector_1.Vector.Create(),
+      r = Vector_1.Vector.Create();
     for (let t = 0; t < i.length - 1; t++) {
       h.DeepCopy(i[t].Point),
         r.DeepCopy(i[t + 1].Point),
         this.CacheVector.Set(r.X, r.Y, r.Z),
         this.CacheVector.Subtraction(h, this.CacheVector);
-      let n = this.CacheVector.Size();
+      var n = this.CacheVector.Size();
       this.CacheVector2.Set(o.X, o.Y, o.Z),
         this.CacheVector2.Subtraction(r, this.CacheVector2),
-        this.CacheVector.DotProduct(this.CacheVector2) > 0 ||
+        0 < this.CacheVector.DotProduct(this.CacheVector2) ||
           (this.CacheVector2.Set(o.X, o.Y, o.Z),
           this.CacheVector2.Subtraction(h, this.CacheVector2),
           this.CacheVector.DotProduct(this.CacheVector2) < 0) ||
@@ -574,7 +579,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
     return e;
   }
   GetRawIndexInSpline(t) {
-    let i;
+    var i;
     return this.CurrentSplineInfo
       ? ((i = this.CurrentSplineInfo.SplineComp.PathPoint.length),
         (!this.CurrentSplineInfo.IsCircle && i <= t) ||
@@ -605,21 +610,21 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
   }
   GetNextPointMoveConfig() {
     if (this.CurrentPatrol && this.CurrentSplineInfo?.SegmentsMoveConfig) {
-      var t = this.GetNextPointIndex();
-      var t = this.GetSegmentInfo(t);
-      if (t.SegmentIndex !== -1)
+      var t = this.GetNextPointIndex(),
+        t = this.GetSegmentInfo(t);
+      if (-1 !== t.SegmentIndex)
         return this.CurrentSplineInfo.SegmentsMoveConfig[t.SegmentIndex];
     }
   }
   GetSymmetryPointIndex(t) {
     return this.CurrentSplineInfo?.IsLoop && this.CurrentSplineInfo.IsCircle
-      ? t === 0
+      ? 0 === t
         ? t
         : this.CurrentSplineInfo.VirtualSplinePoints.length - t
       : -1;
   }
   TryInitSplineFromAiPatrol(i) {
-    const t = this.Entity.GetComponent(38)?.AiController.AiPatrol;
+    var t = this.Entity.GetComponent(38)?.AiController.AiPatrol;
     if (!t?.AllPatrolPoints || !t.AllPatrolPoints.length) return !1;
     if (!i.InitializeWithSubPoints(this.CreatureData.GetPbDataId())) return !1;
     i.PathPoint.length = 0;
@@ -635,4 +640,4 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
   CharacterPatrolComponent,
 )),
   (exports.CharacterPatrolComponent = CharacterPatrolComponent);
-// # sourceMappingURL=CharacterPatrolComponent.js.map
+//# sourceMappingURL=CharacterPatrolComponent.js.map

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BuffItemConfig = void 0);
-const BuffById_1 = require("../../../Core/Define/ConfigQuery/BuffById");
-const BuffItemById_1 = require("../../../Core/Define/ConfigQuery/BuffItemById");
-const BuffItemByPublicCdGroup_1 = require("../../../Core/Define/ConfigQuery/BuffItemByPublicCdGroup");
-const BuffItemCdGroupById_1 = require("../../../Core/Define/ConfigQuery/BuffItemCdGroupById");
-const DamageById_1 = require("../../../Core/Define/ConfigQuery/DamageById");
-const ItemInfoById_1 = require("../../../Core/Define/ConfigQuery/ItemInfoById");
-const ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+const BuffById_1 = require("../../../Core/Define/ConfigQuery/BuffById"),
+  BuffItemById_1 = require("../../../Core/Define/ConfigQuery/BuffItemById"),
+  BuffItemByPublicCdGroup_1 = require("../../../Core/Define/ConfigQuery/BuffItemByPublicCdGroup"),
+  BuffItemCdGroupById_1 = require("../../../Core/Define/ConfigQuery/BuffItemCdGroupById"),
+  DamageById_1 = require("../../../Core/Define/ConfigQuery/DamageById"),
+  ItemInfoById_1 = require("../../../Core/Define/ConfigQuery/ItemInfoById"),
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class BuffItemConfig extends ConfigBase_1.ConfigBase {
   GetDamageConfig(e, f) {
     return DamageById_1.configDamageById.GetConfig(f);
@@ -15,9 +15,9 @@ class BuffItemConfig extends ConfigBase_1.ConfigBase {
   GetBuffItemBuffConfig(e) {
     e = this.GetBuffItemConfig(e);
     if (e && e.Buffs?.length) {
-      const f = new Array();
+      var f = new Array();
       for (const u of e.Buffs) {
-        const r = BuffById_1.configBuffById.GetConfig(u);
+        var r = BuffById_1.configBuffById.GetConfig(u);
         r && f.push(r);
       }
       return f;
@@ -28,9 +28,9 @@ class BuffItemConfig extends ConfigBase_1.ConfigBase {
   }
   GetBuffConfigs(e, f) {
     if (f && f?.length) {
-      const r = new Array();
+      var r = new Array();
       for (const t of f) {
-        const u = BuffById_1.configBuffById.GetConfig(t);
+        var u = BuffById_1.configBuffById.GetConfig(t);
         u && r.push(u);
       }
       return r;
@@ -38,11 +38,11 @@ class BuffItemConfig extends ConfigBase_1.ConfigBase {
   }
   IsResurrectionItem(e) {
     e = this.GetBuffItemBuffConfig(e);
-    if (e) for (const f of e) if (f.ExtraEffectID === 101) return !0;
+    if (e) for (const f of e) if (101 === f.ExtraEffectID) return !0;
     return !1;
   }
   IsTeamBuffItem(e) {
-    let f = ItemInfoById_1.configItemInfoById.GetConfig(e);
+    var f = ItemInfoById_1.configItemInfoById.GetConfig(e);
     return (
       !!f && !!f.IsBuffItem && !!(f = this.GetBuffItemConfig(e)) && f.Share
     );
@@ -50,8 +50,8 @@ class BuffItemConfig extends ConfigBase_1.ConfigBase {
   GetBuffItemTotalCdTime(e) {
     e = this.GetBuffItemConfig(e);
     if (!e) return 0;
-    let f = e.PublicCdGroup;
-    if (f > 0) {
+    var f = e.PublicCdGroup;
+    if (0 < f) {
       f = this.GetBuffItemCdGroup(f);
       if (f) return f.CoolDownTime;
     }
@@ -69,9 +69,9 @@ class BuffItemConfig extends ConfigBase_1.ConfigBase {
     return BuffItemCdGroupById_1.configBuffItemCdGroupById.GetConfig(e);
   }
   IsBuffItem(e) {
-    const f = ItemInfoById_1.configItemInfoById.GetConfig(e);
+    var f = ItemInfoById_1.configItemInfoById.GetConfig(e);
     return !!f && !!f.IsBuffItem && void 0 !== this.GetBuffItemConfig(e);
   }
 }
 exports.BuffItemConfig = BuffItemConfig;
-// # sourceMappingURL=BuffItemConfig.js.map
+//# sourceMappingURL=BuffItemConfig.js.map

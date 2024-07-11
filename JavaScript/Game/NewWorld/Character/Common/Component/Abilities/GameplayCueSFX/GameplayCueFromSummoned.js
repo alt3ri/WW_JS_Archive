@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayCueFromSummoned = void 0);
-const UE = require("ue");
-const Log_1 = require("../../../../../../../Core/Common/Log");
-const EntitySystem_1 = require("../../../../../../../Core/Entity/EntitySystem");
-const FNameUtil_1 = require("../../../../../../../Core/Utils/FNameUtil");
-const Rotator_1 = require("../../../../../../../Core/Utils/Math/Rotator");
-const Transform_1 = require("../../../../../../../Core/Utils/Math/Transform");
-const Vector_1 = require("../../../../../../../Core/Utils/Math/Vector");
-const EffectContext_1 = require("../../../../../../Effect/EffectContext/EffectContext");
-const EffectSystem_1 = require("../../../../../../Effect/EffectSystem");
-const BlackboardController_1 = require("../../../../../../World/Controller/BlackboardController");
-const GameplayCueBase_1 = require("./GameplayCueBase");
+const UE = require("ue"),
+  Log_1 = require("../../../../../../../Core/Common/Log"),
+  EntitySystem_1 = require("../../../../../../../Core/Entity/EntitySystem"),
+  FNameUtil_1 = require("../../../../../../../Core/Utils/FNameUtil"),
+  Rotator_1 = require("../../../../../../../Core/Utils/Math/Rotator"),
+  Transform_1 = require("../../../../../../../Core/Utils/Math/Transform"),
+  Vector_1 = require("../../../../../../../Core/Utils/Math/Vector"),
+  EffectContext_1 = require("../../../../../../Effect/EffectContext/EffectContext"),
+  EffectSystem_1 = require("../../../../../../Effect/EffectSystem"),
+  BlackboardController_1 = require("../../../../../../World/Controller/BlackboardController"),
+  GameplayCueBase_1 = require("./GameplayCueBase");
 class GameplayCueFromSummoned extends GameplayCueBase_1.GameplayCueBase {
   constructor() {
     super(...arguments),
@@ -25,10 +25,10 @@ class GameplayCueFromSummoned extends GameplayCueBase_1.GameplayCueBase {
       (this.XXo = !1);
   }
   OnInit() {
-    let t;
-    const e = this.Entity.CheckGetComponent(157)
-      ?.GetBuffByHandle(this.ActiveHandleId)
-      ?.GetInstigator();
+    var t,
+      e = this.Entity.CheckGetComponent(157)
+        ?.GetBuffByHandle(this.ActiveHandleId)
+        ?.GetInstigator();
     e
       ? (this.Vi(),
         (this.KXo = Transform_1.Transform.Create()),
@@ -55,7 +55,7 @@ class GameplayCueFromSummoned extends GameplayCueBase_1.GameplayCueBase {
           0,
         )),
         this.$Xo(),
-        this.CueConfig.Comp === 1 && (this.XXo = !0))
+        1 === this.CueConfig.Comp && (this.XXo = !0))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("Battle", 49, "无法获取召唤物");
   }
@@ -80,39 +80,39 @@ class GameplayCueFromSummoned extends GameplayCueBase_1.GameplayCueBase {
         (this.gXo = 0));
   }
   Vi() {
-    const t = Vector_1.Vector.Create(
-      this.CueConfig.Location.X,
-      this.CueConfig.Location.Y,
-      this.CueConfig.Location.Z,
-    );
-    const e = Rotator_1.Rotator.Create(
-      this.CueConfig.Rotation.Y,
-      this.CueConfig.Rotation.Z,
-      this.CueConfig.Rotation.X,
-    );
-    const i = Vector_1.Vector.Create(
-      this.CueConfig.Scale.X,
-      this.CueConfig.Scale.Y,
-      this.CueConfig.Scale.Z,
-    );
-    const s =
-      ((this.WXo = Transform_1.Transform.Create(e.Quaternion(), t, i)),
-      (this.SXo = new Array()),
-      this.CueConfig.Socket.split("#"));
+    var t = Vector_1.Vector.Create(
+        this.CueConfig.Location.X,
+        this.CueConfig.Location.Y,
+        this.CueConfig.Location.Z,
+      ),
+      e = Rotator_1.Rotator.Create(
+        this.CueConfig.Rotation.Y,
+        this.CueConfig.Rotation.Z,
+        this.CueConfig.Rotation.X,
+      ),
+      i = Vector_1.Vector.Create(
+        this.CueConfig.Scale.X,
+        this.CueConfig.Scale.Y,
+        this.CueConfig.Scale.Z,
+      ),
+      s =
+        ((this.WXo = Transform_1.Transform.Create(e.Quaternion(), t, i)),
+        (this.SXo = new Array()),
+        this.CueConfig.Socket.split("#"));
     for (let t = 0, e = s?.length; t < e; t++)
       this.SXo.push(FNameUtil_1.FNameUtil.GetDynamicFName(s[t]));
   }
   $Xo() {
-    let t, e, i, s;
+    var t, e, i, s;
     EffectSystem_1.EffectSystem.IsValid(this.gXo) &&
       (t = EffectSystem_1.EffectSystem.GetEffectActor(this.gXo)) &&
       t.IsValid() &&
       ((e = this.KXo.GetLocation()),
-      this.SXo.length > 0
+      0 < this.SXo.length
         ? e.FromUeVector(this.HXo.Mesh.GetSocketLocation(this.SXo[0]))
         : e.DeepCopy(this.HXo.CharacterActorComponent.ActorLocationProxy),
       (i = this.QXo.GetLocation()),
-      this.SXo.length > 1
+      1 < this.SXo.length
         ? i.FromUeVector(this.ActorInternal.Mesh.GetSocketLocation(this.SXo[1]))
         : i.DeepCopy(
             this.ActorInternal.CharacterActorComponent.ActorLocationProxy,
@@ -130,4 +130,4 @@ class GameplayCueFromSummoned extends GameplayCueBase_1.GameplayCueBase {
   }
 }
 exports.GameplayCueFromSummoned = GameplayCueFromSummoned;
-// # sourceMappingURL=GameplayCueFromSummoned.js.map
+//# sourceMappingURL=GameplayCueFromSummoned.js.map

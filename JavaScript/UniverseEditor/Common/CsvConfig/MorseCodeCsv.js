@@ -109,4 +109,4 @@ class MorseCodeDifficultyCsvLoader extends CsvLoader_1.CsvLoader {
 exports.MorseCodeDifficultyCsvLoader = MorseCodeDifficultyCsvLoader;
 class MorseCodeDifficultyCsv extends CsvLoader_1.GlobalCsv {}
 exports.MorseCodeDifficultyCsv = MorseCodeDifficultyCsv;
-// # sourceMappingURL=MorseCodeCsv.js.map
+//# sourceMappingURL=MorseCodeCsv.js.map

@@ -1,18 +1,18 @@
 "use strict";
-let _a;
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityController = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol");
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase");
-const Net_1 = require("../../../Core/Net/Net");
-const EventDefine_1 = require("../../Common/Event/EventDefine");
-const EventSystem_1 = require("../../Common/Event/EventSystem");
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
-const ModelManager_1 = require("../../Manager/ModelManager");
-const InputManager_1 = require("../../Ui/Input/InputManager");
-const UiManager_1 = require("../../Ui/UiManager");
-const ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
-const ActivityManager_1 = require("./ActivityManager");
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+  Net_1 = require("../../../Core/Net/Net"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  InputManager_1 = require("../../Ui/Input/InputManager"),
+  UiManager_1 = require("../../Ui/UiManager"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  ActivityManager_1 = require("./ActivityManager");
 class ActivityController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
@@ -50,7 +50,7 @@ class ActivityController extends ControllerBase_1.ControllerBase {
     );
   }
   static CheckIfOpeningActivityAndBackToBattleView() {
-    let e, t;
+    var e, t;
     UiManager_1.UiManager.IsViewOpen("CommonActivityView") &&
       ((e = () => {
         EventSystem_1.EventSystem.Emit(
@@ -119,12 +119,12 @@ class ActivityController extends ControllerBase_1.ControllerBase {
         );
   }
   static OpenActivityContentView(e) {
-    const t = ActivityManager_1.ActivityManager.GetActivityController(e.Type);
+    var t = ActivityManager_1.ActivityManager.GetActivityController(e.Type);
     ModelManager_1.ModelManager.ActivityModel.SetCurrentSelectActivityId(e.Id),
       t.OpenView(e);
   }
   static RequestReadActivity(t) {
-    let e;
+    var e;
     t?.GetIfFirstOpen() &&
       (((e = new Protocol_1.Aki.Protocol.M$n()).YFn = t.Id),
       Net_1.Net.Call(16881, e, (e) => {
@@ -149,8 +149,9 @@ class ActivityController extends ControllerBase_1.ControllerBase {
   }),
   (ActivityController.CheckCanOpen = () => {
     return ModelManager_1.ModelManager.FunctionModel.IsOpen(10053)
-      ? ModelManager_1.ModelManager.ActivityModel.GetCurrentShowingActivities()
-          .length !== 0
+      ? 0 !==
+          ModelManager_1.ModelManager.ActivityModel.GetCurrentShowingActivities()
+            .length
       : (ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           "FunctionDisable",
         ),
@@ -166,7 +167,7 @@ class ActivityController extends ControllerBase_1.ControllerBase {
     ModelManager_1.ModelManager.ActivityModel.InitCache();
   }),
   (ActivityController.RequestActivityData = async () => {
-    let e;
+    var e;
     ModelManager_1.ModelManager.FunctionModel.IsOpen(10053) &&
       ((e = new Protocol_1.Aki.Protocol.v$n()),
       (e = await Net_1.Net.CallAsync(15557, e)).lkn !==
@@ -188,4 +189,4 @@ class ActivityController extends ControllerBase_1.ControllerBase {
     ModelManager_1.ModelManager.ActivityModel.OnDisableActivity(e.R0s),
       ActivityController.u3e();
   });
-// # sourceMappingURL=ActivityController.js.map
+//# sourceMappingURL=ActivityController.js.map

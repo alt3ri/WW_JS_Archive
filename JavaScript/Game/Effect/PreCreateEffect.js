@@ -1,31 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PreCreateEffect = void 0);
-const UE = require("ue");
-const Log_1 = require("../../Core/Common/Log");
-const Stats_1 = require("../../Core/Common/Stats");
-const Queue_1 = require("../../Core/Container/Queue");
-const Protocol_1 = require("../../Core/Define/Net/Protocol");
-const EntitySystem_1 = require("../../Core/Entity/EntitySystem");
-const GameBudgetInterfaceController_1 = require("../../Core/GameBudgetAllocator/GameBudgetInterfaceController");
-const EventDefine_1 = require("../Common/Event/EventDefine");
-const EventSystem_1 = require("../Common/Event/EventSystem");
-const GlobalData_1 = require("../GlobalData");
-const ModelManager_1 = require("../Manager/ModelManager");
-const GameBudgetAllocatorConfigCreator_1 = require("../World/Define/GameBudgetAllocatorConfigCreator");
-const EffectContext_1 = require("./EffectContext/EffectContext");
-const EffectSystem_1 = require("./EffectSystem");
-const HIT_EFFECT_COUNT = 3;
-const FIGHT_EFFECT_LRU_SIZE = 600;
-const NORMAL_EFFECT_LRU_SIZE = 100;
-const CHANGE_COUNT_EVERY_TICK = 3;
-const commonFightEffect = [
-  "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_ChangeRole.DA_Fx_Group_ChangeRole",
-  "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_ChangeRoleStart.DA_Fx_Group_ChangeRoleStart",
-  "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_ChangeRole_Play.DA_Fx_Group_ChangeRole_Play",
-  "/Game/Aki/Effect/EffectAudio/RoleCommon/DA_Au_Role_Common_Char_Change.DA_Au_Role_Common_Char_Change",
-  "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_WeaponEnd.DA_Fx_Group_WeaponEnd",
-];
+const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
+  Stats_1 = require("../../Core/Common/Stats"),
+  Queue_1 = require("../../Core/Container/Queue"),
+  Protocol_1 = require("../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../Core/Entity/EntitySystem"),
+  GameBudgetInterfaceController_1 = require("../../Core/GameBudgetAllocator/GameBudgetInterfaceController"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  GlobalData_1 = require("../GlobalData"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  GameBudgetAllocatorConfigCreator_1 = require("../World/Define/GameBudgetAllocatorConfigCreator"),
+  EffectContext_1 = require("./EffectContext/EffectContext"),
+  EffectSystem_1 = require("./EffectSystem"),
+  HIT_EFFECT_COUNT = 3,
+  FIGHT_EFFECT_LRU_SIZE = 600,
+  NORMAL_EFFECT_LRU_SIZE = 100,
+  CHANGE_COUNT_EVERY_TICK = 3,
+  commonFightEffect = [
+    "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_ChangeRole.DA_Fx_Group_ChangeRole",
+    "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_ChangeRoleStart.DA_Fx_Group_ChangeRoleStart",
+    "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_ChangeRole_Play.DA_Fx_Group_ChangeRole_Play",
+    "/Game/Aki/Effect/EffectAudio/RoleCommon/DA_Au_Role_Common_Char_Change.DA_Au_Role_Common_Char_Change",
+    "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_WeaponEnd.DA_Fx_Group_WeaponEnd",
+  ];
 class PreCreateEffectData {
   constructor(e, t) {
     (this.EntityId = e), (this.Path = t);
@@ -64,8 +64,8 @@ class PreCreateEffect {
       }),
       (this.AiHateAddOrRemove = (e, t) => {
         if (e) {
-          var e = t.CharActorComp.Entity.Id;
-          const r = this.jpe.get(e);
+          var e = t.CharActorComp.Entity.Id,
+            r = this.jpe.get(e);
           if (r) {
             for (; !r.Empty; ) this.Wpe.Push(r.Pop());
             this.jpe.delete(e);
@@ -113,7 +113,7 @@ class PreCreateEffect {
   static IsNeedPreCreateEffect() {
     return (
       !GlobalData_1.GlobalData.IsPlayInEditor ||
-      (ModelManager_1.ModelManager.GameModeModel.MapId > 3e3 &&
+      (3e3 < ModelManager_1.ModelManager.GameModeModel.MapId &&
         ModelManager_1.ModelManager.GameModeModel.MapId < 4e3)
     );
   }
@@ -123,7 +123,7 @@ class PreCreateEffect {
       this.ive());
   }
   ive() {
-    let e = EffectSystem_1.EffectSystem.GetEffectLruCapacity();
+    var e = EffectSystem_1.EffectSystem.GetEffectLruCapacity();
     e !== this.Xpe &&
       (e > this.Xpe
         ? ((e =
@@ -138,7 +138,7 @@ class PreCreateEffect {
   }
   eve() {
     commonFightEffect.forEach((e) => {
-      EffectSystem_1.EffectSystem.GetEffectLruCount(e) === 0 &&
+      0 === EffectSystem_1.EffectSystem.GetEffectLruCount(e) &&
         this.Wpe.Push(new PreCreateEffectData(-1, e));
     });
   }
@@ -162,11 +162,11 @@ class PreCreateEffect {
   }
   AddPreCreateHitEffect(e, t) {
     if (t) {
-      const r = new PreCreateEffectData(e, t);
-      const i =
-        HIT_EFFECT_COUNT -
-        EffectSystem_1.EffectSystem.GetEffectLruCount(t) -
-        this.Kpe.get(t);
+      var r = new PreCreateEffectData(e, t),
+        i =
+          HIT_EFFECT_COUNT -
+          EffectSystem_1.EffectSystem.GetEffectLruCount(t) -
+          this.Kpe.get(t);
       for (let e = 0; e < i; e++) this.ove(r);
       this.Ype &&
         (PreCreateEffect.PreCreateEffectSet.add(t), Log_1.Log.CheckDebug()) &&
@@ -174,23 +174,23 @@ class PreCreateEffect {
     }
   }
   tve() {
-    const e = this.Wpe.Pop();
-    const t =
-      (this.Kpe.get(e.Path) - 1 <= 0
-        ? this.Kpe.delete(e.Path)
-        : this.Kpe.set(e.Path, this.Kpe.get(e.Path) - 1),
-      EffectSystem_1.EffectSystem.SpawnEffect(
-        GlobalData_1.GlobalData.GameInstance,
-        this.Hpe,
-        e.Path,
-        "PreCreateEffect",
-        new EffectContext_1.EffectContext(e.EntityId),
-        3,
-        void 0,
-        void 0,
-        void 0,
-        !0,
-      ));
+    var e = this.Wpe.Pop(),
+      t =
+        (this.Kpe.get(e.Path) - 1 <= 0
+          ? this.Kpe.delete(e.Path)
+          : this.Kpe.set(e.Path, this.Kpe.get(e.Path) - 1),
+        EffectSystem_1.EffectSystem.SpawnEffect(
+          GlobalData_1.GlobalData.GameInstance,
+          this.Hpe,
+          e.Path,
+          "PreCreateEffect",
+          new EffectContext_1.EffectContext(e.EntityId),
+          3,
+          void 0,
+          void 0,
+          void 0,
+          !0,
+        ));
     EffectSystem_1.EffectSystem.StopEffectById(t, "PreCreateEffect", !0),
       this.Ype &&
         Log_1.Log.CheckDebug() &&
@@ -206,7 +206,7 @@ class PreCreateEffect {
           ["EffectHandle", this.constructor.name],
         ),
       this.UnregisterTick());
-    const e =
+    var e =
       GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator
         .TsIdleExecConfig;
     this.yW =
@@ -230,4 +230,4 @@ class PreCreateEffect {
 }
 ((exports.PreCreateEffect = PreCreateEffect).PreCreateEffectSet = new Set()),
   (PreCreateEffect.IsOpenPool = !0);
-// # sourceMappingURL=PreCreateEffect.js.map
+//# sourceMappingURL=PreCreateEffect.js.map

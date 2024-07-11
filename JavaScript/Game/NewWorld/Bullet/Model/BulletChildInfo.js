@@ -16,4 +16,4 @@ class BulletChildInfo {
   }
 }
 exports.BulletChildInfo = BulletChildInfo;
-// # sourceMappingURL=BulletChildInfo.js.map
+//# sourceMappingURL=BulletChildInfo.js.map

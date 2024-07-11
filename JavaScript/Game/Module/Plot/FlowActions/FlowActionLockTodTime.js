@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionLockTodTime = void 0);
-const ModelManager_1 = require("../../../Manager/ModelManager");
-const FlowActionBase_1 = require("./FlowActionBase");
+const ModelManager_1 = require("../../../Manager/ModelManager"),
+  FlowActionBase_1 = require("./FlowActionBase");
 class FlowActionLockTodTime extends FlowActionBase_1.FlowActionBase {
   OnExecute() {
-    const e = this.ActionInfo.Params;
+    var e = this.ActionInfo.Params;
     if (e)
       switch (e.LockState) {
         case "Lock":
@@ -21,4 +21,4 @@ class FlowActionLockTodTime extends FlowActionBase_1.FlowActionBase {
   }
 }
 exports.FlowActionLockTodTime = FlowActionLockTodTime;
-// # sourceMappingURL=FlowActionLockTodTime.js.map
+//# sourceMappingURL=FlowActionLockTodTime.js.map
